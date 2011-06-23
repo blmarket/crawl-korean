@@ -99,7 +99,7 @@ bool FTFontWrapper::load_font(const char *font_name, unsigned int font_size,
         if (!glyph_index)
             continue;
 
-        error = FT_Load_Glyph(face, glyph_index, FT_LOAD_RENDER |
+        error = FT_Load_Glyph(face, glyph_index, FT_LOAD_RENDER | FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH |
             (Options.tile_font_ft_light ? FT_LOAD_TARGET_LIGHT : 0));
         ASSERT(!error);
 
@@ -179,7 +179,7 @@ bool FTFontWrapper::load_font(const char *font_name, unsigned int font_size,
             continue;
         }
 
-        error = FT_Load_Glyph(face, glyph_index, FT_LOAD_RENDER |
+        error = FT_Load_Glyph(face, glyph_index, FT_LOAD_RENDER | FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH |
             (Options.tile_font_ft_light ? FT_LOAD_TARGET_LIGHT : 0));
         ASSERT(!error);
 
