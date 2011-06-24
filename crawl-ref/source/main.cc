@@ -17,8 +17,6 @@
 #include <sstream>
 #include <iostream>
 
-#include <libintl.h>
-
 #ifdef USE_UNIX_SIGNALS
 #include <signal.h>
 #endif
@@ -230,9 +228,13 @@ int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
 
+#ifdef USE_GETTEXT    
+    setlocale(LC_ALL, "ko_KR");
+
     bindtextdomain("Crawl", ".");
     bind_textdomain_codeset("Crawl", "utf-8");
     textdomain("Crawl");
+#endif    
 
 #ifdef DEBUG_GLOBALS
     real_Options = new game_options();

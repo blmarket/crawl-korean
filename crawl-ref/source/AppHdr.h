@@ -21,6 +21,8 @@
 
 #ifdef USE_GETTEXT
 #include <libintl.h>
+#else
+#define gettext
 #endif
 
 #ifdef TARGET_COMPILER_VC
