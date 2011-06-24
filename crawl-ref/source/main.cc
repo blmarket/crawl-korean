@@ -17,6 +17,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <libintl.h>
+
 #ifdef USE_UNIX_SIGNALS
 #include <signal.h>
 #endif
@@ -227,6 +229,11 @@ static void _handle_wizard_command(void);
 int main(int argc, char *argv[])
 {
     setlocale(LC_ALL, "");
+
+    bindtextdomain("Crawl", ".");
+    bind_textdomain_codeset("Crawl", "utf-8");
+    textdomain("Crawl");
+
 #ifdef DEBUG_GLOBALS
     real_Options = new game_options();
     real_you = new player();

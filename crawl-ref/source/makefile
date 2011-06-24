@@ -42,6 +42,7 @@
 #
 #    USE_ICC       -- set to use Intel's compiler
 #    ASSERTS       -- set to enable assertion checks (implied in debug mode)
+#    USE_GETTEXT   -- set to use gettext library for i18n
 #
 #
 # Requirements:
@@ -205,6 +206,10 @@ ifeq ($(uname_S),Darwin)
 		BUILD_SDLIMAGE = YesPlease
 		BUILD_LIBPNG = YesPlease
 	endif
+endif
+ifdef USE_GETTEXT
+	DEFINES_L += -DUSE_GETTEXT
+	EXTRA_LIBS += -lintl
 endif
 ifdef USE_LUAJIT
 	BUILD_LUA := YesPlease

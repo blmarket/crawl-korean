@@ -19,6 +19,10 @@
 #include "platform.h"
 #include <stdint.h>
 
+#ifdef USE_GETTEXT
+#include <libintl.h>
+#endif
+
 #ifdef TARGET_COMPILER_VC
 /* Disable warning about:
    4290: the way VC handles the throw() specifier
