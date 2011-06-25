@@ -1605,7 +1605,7 @@ static void _find_description(bool *again, std::string *error_inout)
         break;
 
     default:
-        *error_inout = "Okay, then.";
+        *error_inout = gettext("Okay, then.");
         *again = false;
         return;
     }
@@ -1622,7 +1622,7 @@ static void _find_description(bool *again, std::string *error_inout)
         char buf[80];
         if (cancelable_get_line(buf, sizeof(buf)) || buf[0] == '\0')
         {
-            *error_inout = "Okay, then.";
+            *error_inout = gettext("Okay, then.");
             return;
         }
 
