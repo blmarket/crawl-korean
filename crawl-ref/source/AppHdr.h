@@ -21,8 +21,10 @@
 
 #ifdef USE_GETTEXT
 #include <libintl.h>
+#define N_
 #else
 #define gettext
+#define N_
 #endif
 
 #ifdef TARGET_COMPILER_VC
