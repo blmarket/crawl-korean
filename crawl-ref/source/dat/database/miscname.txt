@@ -277,15 +277,15 @@ Lucidity slithers from your feeble grasp.
 %%%%
 welcome_spam
 
-Will you prevail where others failed? Will you get the Orb of Zot?
+당신이 다른 사람들이 실패한 이곳에서 승리할 수 있을까? 당신이 조트의 오브를 가질 수 있을까?
 
-The bosom of this dungeon contains the most powerful artefact, the Orb of Zot.
+이 던전의 심장부에는 가장 강력한 유물인 조트의 오브가 있다.
 
-Will you be the one to retrieve the fabulous Orb of Zot from the depths?
+당신이 던전의 깊은 곳에서 대단한 조트의 오브를 가져올 것인가?
 
-The destiny of this world depends on the Orb of Zot. Go down and get it!
+세계의 운명은 조트의 오브에 달려있다. 내려가서 쟁취하라!
 
-They say that the Orb of Zot exists deep, deep down but nobody ever got it.
+사람들은 조트의 오브가 깊고 깊은 곳에 있지만 누구도 거기에 도달하지 못했다고 한다.
 %%%%
 welcome_spam Zot Defence
 
