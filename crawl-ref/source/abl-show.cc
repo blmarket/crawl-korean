@@ -246,191 +246,191 @@ static const ability_def Ability_List[] =
 {
     // NON_ABILITY should always come first
     { ABIL_NON_ABILITY, N_("No ability"), 0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_SPIT_POISON, N_("Spit Poison") 0, 0, 40, 0, ABFLAG_BREATH },
+    { ABIL_SPIT_POISON, N_("Spit Poison"), 0, 0, 40, 0, ABFLAG_BREATH },
 
-    { ABIL_TELEPORTATION, N_("Teleportation") 0, 100, 200, 0, ABFLAG_NONE },
-    { ABIL_BLINK, N_("Blink") 0, 50, 50, 0, ABFLAG_NONE },
+    { ABIL_TELEPORTATION, N_("Teleportation"), 0, 100, 200, 0, ABFLAG_NONE },
+    { ABIL_BLINK, N_("Blink"), 0, 50, 50, 0, ABFLAG_NONE },
 
-    { ABIL_BREATHE_FIRE, N_("Breathe Fire") 0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_FROST, N_("Breathe Frost") 0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POISON, N_("Breathe Poison Gas") 0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_MEPHITIC, N_("Breathe Noxious Fumes")
+    { ABIL_BREATHE_FIRE, N_("Breathe Fire"), 0, 0, 125, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_FROST, N_("Breathe Frost"), 0, 0, 125, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_POISON, N_("Breathe Poison Gas"), 0, 0, 125, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_MEPHITIC, N_("Breathe Noxious Fumes"),
       0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_LIGHTNING, N_("Breathe Lightning")
+    { ABIL_BREATHE_LIGHTNING, N_("Breathe Lightning"),
       0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_POWER, N_("Breathe Energy") 0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_STICKY_FLAME, N_("Breathe Sticky Flame")
+    { ABIL_BREATHE_POWER, N_("Breathe Energy"), 0, 0, 125, 0, ABFLAG_BREATH },
+    { ABIL_BREATHE_STICKY_FLAME, N_("Breathe Sticky Flame"),
       0, 0, 125, 0, ABFLAG_BREATH },
-    { ABIL_BREATHE_STEAM, N_("Breathe Steam") 0, 0, 75, 0, ABFLAG_BREATH },
-    { ABIL_TRAN_BAT, N_("Bat Form") 2, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_BOTTLE_BLOOD, N_("Bottle Blood") 0, 0, 0, 0, ABFLAG_NONE }, // no costs
+    { ABIL_BREATHE_STEAM, N_("Breathe Steam"), 0, 0, 75, 0, ABFLAG_BREATH },
+    { ABIL_TRAN_BAT, N_("Bat Form"), 2, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_BOTTLE_BLOOD, N_("Bottle Blood"), 0, 0, 0, 0, ABFLAG_NONE }, // no costs
 
-    { ABIL_SPIT_ACID, N_("Spit Acid") 0, 0, 125, 0, ABFLAG_BREATH },
+    { ABIL_SPIT_ACID, N_("Spit Acid"), 0, 0, 125, 0, ABFLAG_BREATH },
 
-    { ABIL_FLY, N_("Fly") 3, 0, 100, 0, ABFLAG_NONE },
-    { ABIL_STOP_FLYING, N_("Stop Flying") 0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_HELLFIRE, N_("Hellfire") 0, 250, 200, 0, ABFLAG_NONE },
-    { ABIL_THROW_FLAME, N_("Throw Flame") 0, 20, 50, 0, ABFLAG_NONE },
-    { ABIL_THROW_FROST, N_("Throw Frost") 0, 20, 50, 0, ABFLAG_NONE },
+    { ABIL_FLY, N_("Fly"), 3, 0, 100, 0, ABFLAG_NONE },
+    { ABIL_STOP_FLYING, N_("Stop Flying"), 0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_HELLFIRE, N_("Hellfire"), 0, 250, 200, 0, ABFLAG_NONE },
+    { ABIL_THROW_FLAME, N_("Throw Flame"), 0, 20, 50, 0, ABFLAG_NONE },
+    { ABIL_THROW_FROST, N_("Throw Frost"), 0, 20, 50, 0, ABFLAG_NONE },
 
     // FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
-    // as exhaustion's only (and designed) effect is preventing Berserk. - bwr
-    { ABIL_FLY_II, N_("Fly") 0, 0, 25, 0, ABFLAG_NONE },
-    { ABIL_DELAYED_FIREBALL, N_("Release Delayed Fireball")
+    // as exhaustion's only (and designed), effect is preventing Berserk. - bwr
+    { ABIL_FLY_II, N_("Fly"), 0, 0, 25, 0, ABFLAG_NONE },
+    { ABIL_DELAYED_FIREBALL, N_("Release Delayed Fireball"),
       0, 0, 0, 0, ABFLAG_INSTANT },
-    { ABIL_MUMMY_RESTORATION, N_("Self-Restoration")
+    { ABIL_MUMMY_RESTORATION, N_("Self-Restoration"),
       1, 0, 0, 0, ABFLAG_PERMANENT_MP },
 
     // EVOKE abilities use Evocations and come from items.
     // Teleportation and Blink can also come from mutations
-    // so we have to distinguish them (see above).  The off items
+    // so we have to distinguish them (see above),.  The off items
     // below are labeled EVOKE because they only work now if the
     // player has an item with the evocable power (not just because
-    // you used a wand, potion, or miscast effect).  I didn't see
+    // you used a wand, potion, or miscast effect),.  I didn't see
     // any reason to label them as "Evoke" in the text, they don't
-    // use or train Evocations (the others do).  -- bwr
-    { ABIL_EVOKE_TELEPORTATION, N_("Evoke Teleportation")
+    // use or train Evocations (the others do),.  -- bwr
+    { ABIL_EVOKE_TELEPORTATION, N_("Evoke Teleportation"),
       3, 0, 200, 0, ABFLAG_NONE },
-    { ABIL_EVOKE_BLINK, N_("Evoke Blink") 1, 0, 50, 0, ABFLAG_NONE },
-    { ABIL_RECHARGING, N_("Device Recharging") 1, 0, 0, 0, ABFLAG_PERMANENT_MP },
+    { ABIL_EVOKE_BLINK, N_("Evoke Blink"), 1, 0, 50, 0, ABFLAG_NONE },
+    { ABIL_RECHARGING, N_("Device Recharging"), 1, 0, 0, 0, ABFLAG_PERMANENT_MP },
 
-    { ABIL_EVOKE_BERSERK, N_("Evoke Berserk Rage") 0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_EVOKE_BERSERK, N_("Evoke Berserk Rage"), 0, 0, 0, 0, ABFLAG_NONE },
 
-    { ABIL_EVOKE_TURN_INVISIBLE, N_("Evoke Invisibility")
+    { ABIL_EVOKE_TURN_INVISIBLE, N_("Evoke Invisibility"),
       2, 0, 250, 0, ABFLAG_NONE },
-    { ABIL_EVOKE_TURN_VISIBLE, N_("Turn Visible") 0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_EVOKE_LEVITATE, N_("Evoke Levitation") 1, 0, 100, 0, ABFLAG_NONE },
-    { ABIL_EVOKE_STOP_LEVITATING, N_("Stop Levitating") 0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_EVOKE_TURN_VISIBLE, N_("Turn Visible"), 0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_EVOKE_LEVITATE, N_("Evoke Levitation"), 1, 0, 100, 0, ABFLAG_NONE },
+    { ABIL_EVOKE_STOP_LEVITATING, N_("Stop Levitating"), 0, 0, 0, 0, ABFLAG_NONE },
 
-    { ABIL_END_TRANSFORMATION, N_("End Transformation") 0, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_END_TRANSFORMATION, N_("End Transformation"), 0, 0, 0, 0, ABFLAG_NONE },
 
     // INVOCATIONS:
     // Zin
-    { ABIL_ZIN_SUSTENANCE, N_("Sustenance") 0, 0, 0, 0, ABFLAG_PIETY },
-    { ABIL_ZIN_RECITE, N_("Recite") 0, 0, 0, 0, ABFLAG_BREATH | ABFLAG_DELAY },
-    { ABIL_ZIN_VITALISATION, N_("Vitalisation") 0, 0, 100, 1, ABFLAG_CONF_OK },
-    { ABIL_ZIN_IMPRISON, N_("Imprison") 5, 0, 125, 4, ABFLAG_NONE },
-    { ABIL_ZIN_SANCTUARY, N_("Sanctuary") 7, 0, 150, 15, ABFLAG_NONE },
-    { ABIL_ZIN_CURE_ALL_MUTATIONS, N_("Cure All Mutations")
+    { ABIL_ZIN_SUSTENANCE, N_("Sustenance"), 0, 0, 0, 0, ABFLAG_PIETY },
+    { ABIL_ZIN_RECITE, N_("Recite"), 0, 0, 0, 0, ABFLAG_BREATH | ABFLAG_DELAY },
+    { ABIL_ZIN_VITALISATION, N_("Vitalisation"), 0, 0, 100, 1, ABFLAG_CONF_OK },
+    { ABIL_ZIN_IMPRISON, N_("Imprison"), 5, 0, 125, 4, ABFLAG_NONE },
+    { ABIL_ZIN_SANCTUARY, N_("Sanctuary"), 7, 0, 150, 15, ABFLAG_NONE },
+    { ABIL_ZIN_CURE_ALL_MUTATIONS, N_("Cure All Mutations"),
       0, 0, 0, 0, ABFLAG_NONE },
 
     // The Shining One
-    { ABIL_TSO_DIVINE_SHIELD, N_("Divine Shield") 3, 0, 50, 2, ABFLAG_NONE },
-    { ABIL_TSO_CLEANSING_FLAME, N_("Cleansing Flame") 5, 0, 100, 2, ABFLAG_NONE },
-    { ABIL_TSO_SUMMON_DIVINE_WARRIOR, N_("Summon Divine Warrior")
+    { ABIL_TSO_DIVINE_SHIELD, N_("Divine Shield"), 3, 0, 50, 2, ABFLAG_NONE },
+    { ABIL_TSO_CLEANSING_FLAME, N_("Cleansing Flame"), 5, 0, 100, 2, ABFLAG_NONE },
+    { ABIL_TSO_SUMMON_DIVINE_WARRIOR, N_("Summon Divine Warrior"),
       8, 0, 150, 6, ABFLAG_NONE },
 
     // Kikubaaqudgha
-    { ABIL_KIKU_RECEIVE_CORPSES, N_("Receive Corpses") 3, 0, 50, 2, ABFLAG_NONE },
-    { ABIL_KIKU_TORMENT, N_("Torment") 4, 0, 0, 8, ABFLAG_NONE },
+    { ABIL_KIKU_RECEIVE_CORPSES, N_("Receive Corpses"), 3, 0, 50, 2, ABFLAG_NONE },
+    { ABIL_KIKU_TORMENT, N_("Torment"), 4, 0, 0, 8, ABFLAG_NONE },
 
     // Yredelemnul
-    { ABIL_YRED_INJURY_MIRROR, N_("Injury Mirror") 0, 0, 0, 0, ABFLAG_PIETY },
-    { ABIL_YRED_ANIMATE_REMAINS, N_("Animate Remains") 2, 0, 100, 0, ABFLAG_NONE },
-    { ABIL_YRED_RECALL_UNDEAD_SLAVES, N_("Recall Undead Slaves")
+    { ABIL_YRED_INJURY_MIRROR, N_("Injury Mirror"), 0, 0, 0, 0, ABFLAG_PIETY },
+    { ABIL_YRED_ANIMATE_REMAINS, N_("Animate Remains"), 2, 0, 100, 0, ABFLAG_NONE },
+    { ABIL_YRED_RECALL_UNDEAD_SLAVES, N_("Recall Undead Slaves"),
       2, 0, 50, 0, ABFLAG_NONE },
-    { ABIL_YRED_ANIMATE_DEAD, N_("Animate Dead") 2, 0, 100, 0, ABFLAG_NONE },
-    { ABIL_YRED_DRAIN_LIFE, N_("Drain Life") 6, 0, 200, 2, ABFLAG_NONE },
-    { ABIL_YRED_ENSLAVE_SOUL, N_("Enslave Soul") 8, 0, 150, 4, ABFLAG_NONE },
+    { ABIL_YRED_ANIMATE_DEAD, N_("Animate Dead"), 2, 0, 100, 0, ABFLAG_NONE },
+    { ABIL_YRED_DRAIN_LIFE, N_("Drain Life"), 6, 0, 200, 2, ABFLAG_NONE },
+    { ABIL_YRED_ENSLAVE_SOUL, N_("Enslave Soul"), 8, 0, 150, 4, ABFLAG_NONE },
     // Placeholder for Animate Remains or Animate Dead.
-    { ABIL_YRED_ANIMATE_REMAINS_OR_DEAD, N_("Animate Remains or Dead")
+    { ABIL_YRED_ANIMATE_REMAINS_OR_DEAD, N_("Animate Remains or Dead"),
       2, 0, 100, 0, ABFLAG_NONE },
 
     // Okawaru
-    { ABIL_OKAWARU_HEROISM, N_("Heroism") 2, 0, 50, 1, ABFLAG_NONE },
-    { ABIL_OKAWARU_FINESSE, N_("Finesse") 5, 0, 100, 4, ABFLAG_NONE },
+    { ABIL_OKAWARU_HEROISM, N_("Heroism"), 2, 0, 50, 1, ABFLAG_NONE },
+    { ABIL_OKAWARU_FINESSE, N_("Finesse"), 5, 0, 100, 4, ABFLAG_NONE },
 
     // Makhleb
-    { ABIL_MAKHLEB_MINOR_DESTRUCTION, N_("Minor Destruction")
+    { ABIL_MAKHLEB_MINOR_DESTRUCTION, N_("Minor Destruction"),
       1, 0, 20, 0, ABFLAG_NONE },
-    { ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, N_("Lesser Servant of Makhleb")
+    { ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, N_("Lesser Servant of Makhleb"),
       2, 0, 50, 1, ABFLAG_NONE },
-    { ABIL_MAKHLEB_MAJOR_DESTRUCTION, N_("Major Destruction")
+    { ABIL_MAKHLEB_MAJOR_DESTRUCTION, N_("Major Destruction"),
       4, 0, 100, 1, ABFLAG_NONE },
-    { ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB, N_("Greater Servant of Makhleb")
+    { ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB, N_("Greater Servant of Makhleb"),
       6, 0, 100, 5, ABFLAG_NONE },
 
     // Sif Muna
-    { ABIL_SIF_MUNA_CHANNEL_ENERGY, N_("Channel Energy")
+    { ABIL_SIF_MUNA_CHANNEL_ENERGY, N_("Channel Energy"),
       0, 0, 100, 0, ABFLAG_NONE },
-    { ABIL_SIF_MUNA_FORGET_SPELL, N_("Forget Spell") 5, 0, 0, 8, ABFLAG_NONE },
+    { ABIL_SIF_MUNA_FORGET_SPELL, N_("Forget Spell"), 5, 0, 0, 8, ABFLAG_NONE },
 
     // Trog
     { ABIL_TROG_BURN_SPELLBOOKS, N_("Burn Spellbooks"), 0, 0, 10, 0, ABFLAG_NONE },
-    { ABIL_TROG_BERSERK, N_("Berserk") 0, 0, 200, 0, ABFLAG_NONE },
-    { ABIL_TROG_REGEN_MR, N_("Trog's Hand")
+    { ABIL_TROG_BERSERK, N_("Berserk"), 0, 0, 200, 0, ABFLAG_NONE },
+    { ABIL_TROG_REGEN_MR, N_("Trog's Hand"),
       0, 0, 50, generic_cost::range(2, 3), ABFLAG_NONE },
-    { ABIL_TROG_BROTHERS_IN_ARMS, N_("Brothers in Arms")
+    { ABIL_TROG_BROTHERS_IN_ARMS, N_("Brothers in Arms"),
       0, 0, 100, generic_cost::range(5, 6), ABFLAG_NONE },
 
     // Elyvilon
-    { ABIL_ELYVILON_LIFESAVING, N_("Divine Protection")
+    { ABIL_ELYVILON_LIFESAVING, N_("Divine Protection"),
       0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_ELYVILON_LESSER_HEALING_SELF, N_("Lesser Self-Healing")
+    { ABIL_ELYVILON_LESSER_HEALING_SELF, N_("Lesser Self-Healing"),
       1, 0, 100, generic_cost::range(0, 1), ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_LESSER_HEALING_OTHERS, N_("Lesser Healing")
+    { ABIL_ELYVILON_LESSER_HEALING_OTHERS, N_("Lesser Healing"),
       1, 0, 100, 0, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_PURIFICATION, N_("Purification") 2, 0, 150, 2,
+    { ABIL_ELYVILON_PURIFICATION, N_("Purification"), 2, 0, 150, 2,
       ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_GREATER_HEALING_SELF, N_("Greater Self-Healing")
+    { ABIL_ELYVILON_GREATER_HEALING_SELF, N_("Greater Self-Healing"),
       2, 0, 250, 2, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_GREATER_HEALING_OTHERS, N_("Greater Healing")
+    { ABIL_ELYVILON_GREATER_HEALING_OTHERS, N_("Greater Healing"),
       2, 0, 250, 2, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_RESTORATION, N_("Restoration") 3, 0, 400, 3, ABFLAG_CONF_OK },
-    { ABIL_ELYVILON_DIVINE_VIGOUR, N_("Divine Vigour") 0, 0, 600, 6,
+    { ABIL_ELYVILON_RESTORATION, N_("Restoration"), 3, 0, 400, 3, ABFLAG_CONF_OK },
+    { ABIL_ELYVILON_DIVINE_VIGOUR, N_("Divine Vigour"), 0, 0, 600, 6,
       ABFLAG_CONF_OK },
 
     // Lugonu
-    { ABIL_LUGONU_ABYSS_EXIT, N_("Depart the Abyss") 1, 0, 150, 10, ABFLAG_NONE },
-    { ABIL_LUGONU_BEND_SPACE, N_("Bend Space") 1, 0, 50, 0, ABFLAG_PAIN },
-    { ABIL_LUGONU_BANISH, N_("Banish")
+    { ABIL_LUGONU_ABYSS_EXIT, N_("Depart the Abyss"), 1, 0, 150, 10, ABFLAG_NONE },
+    { ABIL_LUGONU_BEND_SPACE, N_("Bend Space"), 1, 0, 50, 0, ABFLAG_PAIN },
+    { ABIL_LUGONU_BANISH, N_("Banish"),
       4, 0, 200, generic_cost::range(3, 4), ABFLAG_NONE },
-    { ABIL_LUGONU_CORRUPT, N_("Corrupt")
+    { ABIL_LUGONU_CORRUPT, N_("Corrupt"),
       7, scaling_cost::fixed(5), 500, generic_cost::range(10, 14), ABFLAG_NONE },
-    { ABIL_LUGONU_ABYSS_ENTER, N_("Enter the Abyss")
+    { ABIL_LUGONU_ABYSS_ENTER, N_("Enter the Abyss"),
       9, 0, 500, generic_cost::fixed(35), ABFLAG_PAIN },
 
     // Nemelex
-    { ABIL_NEMELEX_DRAW_ONE, N_("Draw One") 2, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_NEMELEX_PEEK_TWO, N_("Peek at Two") 3, 0, 0, 1, ABFLAG_INSTANT },
-    { ABIL_NEMELEX_TRIPLE_DRAW, N_("Triple Draw") 2, 0, 100, 2, ABFLAG_NONE },
-    { ABIL_NEMELEX_MARK_FOUR, N_("Mark Four") 4, 0, 125, 5, ABFLAG_NONE },
-    { ABIL_NEMELEX_STACK_FIVE, N_("Stack Five") 5, 0, 250, 10, ABFLAG_NONE },
+    { ABIL_NEMELEX_DRAW_ONE, N_("Draw One"), 2, 0, 0, 0, ABFLAG_NONE },
+    { ABIL_NEMELEX_PEEK_TWO, N_("Peek at Two"), 3, 0, 0, 1, ABFLAG_INSTANT },
+    { ABIL_NEMELEX_TRIPLE_DRAW, N_("Triple Draw"), 2, 0, 100, 2, ABFLAG_NONE },
+    { ABIL_NEMELEX_MARK_FOUR, N_("Mark Four"), 4, 0, 125, 5, ABFLAG_NONE },
+    { ABIL_NEMELEX_STACK_FIVE, N_("Stack Five"), 5, 0, 250, 10, ABFLAG_NONE },
 
     // Beogh
-    { ABIL_BEOGH_SMITING, N_("Smiting")
+    { ABIL_BEOGH_SMITING, N_("Smiting"),
       3, 0, 80, generic_cost::fixed(3), ABFLAG_NONE },
-    { ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS, N_("Recall Orcish Followers")
+    { ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS, N_("Recall Orcish Followers"),
       2, 0, 50, 0, ABFLAG_NONE },
 
     // Jiyva
-    { ABIL_JIYVA_CALL_JELLY, N_("Request Jelly") 2, 0, 20, 1, ABFLAG_NONE },
-    { ABIL_JIYVA_JELLY_PARALYSE, N_("Jelly Paralyse") 0, 0, 0, 0, ABFLAG_PIETY },
-    { ABIL_JIYVA_SLIMIFY, N_("Slimify") 4, 0, 100, 8, ABFLAG_NONE },
-    { ABIL_JIYVA_CURE_BAD_MUTATION, N_("Cure Bad Mutation")
+    { ABIL_JIYVA_CALL_JELLY, N_("Request Jelly"), 2, 0, 20, 1, ABFLAG_NONE },
+    { ABIL_JIYVA_JELLY_PARALYSE, N_("Jelly Paralyse"), 0, 0, 0, 0, ABFLAG_PIETY },
+    { ABIL_JIYVA_SLIMIFY, N_("Slimify"), 4, 0, 100, 8, ABFLAG_NONE },
+    { ABIL_JIYVA_CURE_BAD_MUTATION, N_("Cure Bad Mutation"),
       8, 0, 200, 15, ABFLAG_NONE },
 
     // Fedhas
-    { ABIL_FEDHAS_EVOLUTION, N_("Evolution") 2, 0, 0, 0, ABFLAG_VARIABLE_FRUIT},
-    { ABIL_FEDHAS_SUNLIGHT, N_("Sunlight") 2, 0, 50, 0, ABFLAG_NONE},
-    { ABIL_FEDHAS_PLANT_RING, N_("Growth") 2, 0, 0, 0, ABFLAG_FRUIT},
-    { ABIL_FEDHAS_SPAWN_SPORES, N_("Reproduction") 4, 0, 100, 0, ABFLAG_NONE},
-    { ABIL_FEDHAS_RAIN, N_("Rain") 4, 0, 150, 4, ABFLAG_NONE},
+    { ABIL_FEDHAS_EVOLUTION, N_("Evolution"), 2, 0, 0, 0, ABFLAG_VARIABLE_FRUIT},
+    { ABIL_FEDHAS_SUNLIGHT, N_("Sunlight"), 2, 0, 50, 0, ABFLAG_NONE},
+    { ABIL_FEDHAS_PLANT_RING, N_("Growth"), 2, 0, 0, 0, ABFLAG_FRUIT},
+    { ABIL_FEDHAS_SPAWN_SPORES, N_("Reproduction"), 4, 0, 100, 0, ABFLAG_NONE},
+    { ABIL_FEDHAS_RAIN, N_("Rain"), 4, 0, 150, 4, ABFLAG_NONE},
 
     // Cheibriados
-    { ABIL_CHEIBRIADOS_PONDEROUSIFY, N_("Make Ponderous")
+    { ABIL_CHEIBRIADOS_PONDEROUSIFY, N_("Make Ponderous"),
       0, 0, 0, 0, ABFLAG_NONE },
-    { ABIL_CHEIBRIADOS_TIME_BEND, N_("Bend Time") 3, 0, 50, 1, ABFLAG_NONE },
-    { ABIL_CHEIBRIADOS_SLOUCH, N_("Slouch") 5, 0, 100, 8, ABFLAG_NONE },
-    { ABIL_CHEIBRIADOS_TIME_STEP, N_("Step From Time")
+    { ABIL_CHEIBRIADOS_TIME_BEND, N_("Bend Time"), 3, 0, 50, 1, ABFLAG_NONE },
+    { ABIL_CHEIBRIADOS_SLOUCH, N_("Slouch"), 5, 0, 100, 8, ABFLAG_NONE },
+    { ABIL_CHEIBRIADOS_TIME_STEP, N_("Step From Time"),
       10, 0, 200, 10, ABFLAG_NONE },
 
     // Ashenzari
-    { ABIL_ASHENZARI_SCRYING, N_("Scrying")
+    { ABIL_ASHENZARI_SCRYING, N_("Scrying"),
       4, 0, 50, generic_cost::range(2, 3), ABFLAG_INSTANT },
-    { ABIL_ASHENZARI_TRANSFER_KNOWLEDGE, N_("Transfer Knowledge")
+    { ABIL_ASHENZARI_TRANSFER_KNOWLEDGE, N_("Transfer Knowledge"),
       0, 0, 0, 20, ABFLAG_NONE },
-    { ABIL_ASHENZARI_END_TRANSFER, N_("End Transfer Knowledge")
+    { ABIL_ASHENZARI_END_TRANSFER, N_("End Transfer Knowledge"),
       0, 0, 0, 0, ABFLAG_NONE },
 
     // zot defence abilities
@@ -458,7 +458,7 @@ static const ability_def Ability_List[] =
     { ABIL_MAKE_ACQUIRE_GOLD, N_("Acquire gold"), 0, 0, 0, 0, ABFLAG_LEVEL_DRAIN, 0 },
     { ABIL_MAKE_ACQUIREMENT, N_("Acquirement"), 0, 0, 0, 0, ABFLAG_LEVEL_DRAIN, 0 },
     { ABIL_MAKE_WATER, N_("Make water"), 0, 0, 0, 0, ABFLAG_NONE, 10 },
-    { ABIL_MAKE_LIGHTNING_SPIRE, N_("Make lightning spire"), 0, 0, 0, 0, ABFLAG_NONE, 100},
+    { ABIL_MAKE_ELECTRIC_EEL, N_("Make electric eel"), 0, 0, 0, 0, ABFLAG_NONE, 100},
     { ABIL_MAKE_BAZAAR, N_("Make bazaar"), 0, 30, 0, 0, ABFLAG_PERMANENT_HP, 100 },
     { ABIL_MAKE_ALTAR, N_("Make altar"), 0, 0, 0, 0, ABFLAG_NONE, 2 },
     { ABIL_MAKE_GRENADES, N_("Make grenades"), 0, 0, 0, 0, ABFLAG_NONE, 2 },
