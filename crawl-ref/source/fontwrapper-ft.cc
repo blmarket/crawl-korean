@@ -254,32 +254,17 @@ bool FTFontWrapper::load_font(const char *font_name, unsigned int font_size,
     return success;
 }
 
-#include <fstream>
-
-static std::ofstream fout("failchars.txt");
-
 // This function should be removed once we can support more than ISO-8859-1.
 ucs_t _fallback_char(ucs_t c)
 {
+    // Weed out characters we can't draw.
     if(c >= 44032 && c <= 55203)
     {
         return c - 44032 + 256;
     }
-    if(c > 255)
-    {
-        fout << (unsigned int)c << std::endl;
-        c = 0xBE;
-    }
+    if(c > 255) // TODO: try to transliterate 
+        c = 0xBF; // reversed question mark
     return c;
-/*
-    // Weed out characters we can't draw.
-    if (c >= MAX_CHARS) // TODO: try to transliterate
-    {
-        fout << (unsigned int)c << std::endl;
-        c = 0xBE; // reversed question mark
-    }
-    return c;
-*/
 }
 
 void FTFontWrapper::render_textblock(unsigned int x_pos, unsigned int y_pos,

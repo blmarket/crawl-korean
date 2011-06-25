@@ -402,63 +402,63 @@ void canned_msg(canned_message_type which_message)
     switch (which_message)
     {
     case MSG_SOMETHING_APPEARS:
-        mprf("Something appears %s!",
-             player_has_feet() ? "at your feet" : "before you");
+        mpr(player_has_feet() ? gettext("Something appears at your feet!"):
+            gettext("Something appears before you!"));
         break;
     case MSG_NOTHING_HAPPENS:
-        mpr("Nothing appears to happen.");
+        mpr(gettext("Nothing appears to happen."));
         break;
     case MSG_YOU_UNAFFECTED:
-        mpr("You are unaffected.");
+        mpr(gettext("You are unaffected."));
         break;
     case MSG_YOU_RESIST:
-        mpr("You resist.");
+        mpr(gettext("You resist."));
         learned_something_new(HINT_YOU_RESIST);
         break;
     case MSG_YOU_PARTIALLY_RESIST:
-        mpr("You partially resist.");
+        mpr(gettext("You partially resist."));
         break;
     case MSG_TOO_BERSERK:
-        mpr("You are too berserk!");
+        mpr(gettext("You are too berserk!"));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_PRESENT_FORM:
-        mpr("You can't do that in your present form.");
+        mpr(gettext("You can't do that in your present form."));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_NOTHING_CARRIED:
-        mpr("You aren't carrying anything.");
+        mpr(gettext("You aren't carrying anything."));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_CANNOT_DO_YET:
-        mpr("You can't do that yet.");
+        mpr(gettext("You can't do that yet."));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_OK:
-        mpr("Okay, then.", MSGCH_PROMPT);
+        mpr(gettext("Okay, then."), MSGCH_PROMPT);
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_UNTHINKING_ACT:
-        mpr("Why would you want to do that?");
+        mpr(gettext("Why would you want to do that?"));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_NOTHING_THERE:
-        mpr("There's nothing there!");
+        mpr(gettext("There's nothing there!"));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_NOTHING_CLOSE_ENOUGH:
-        mpr("There's nothing close enough!");
+        mpr(gettext("There's nothing close enough!"));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_NO_ENERGY:
-        mpr("You don't have the energy to cast that spell.");
+        mpr(gettext("You don't have the energy to cast that spell."));
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_SPELL_FIZZLES:
-        mpr("The spell fizzles.");
+        mpr(gettext("The spell fizzles."));
         break;
     case MSG_HUH:
-        mpr("Huh?", MSGCH_EXAMINE_FILTER);
+        mpr(gettext("Huh?"), MSGCH_EXAMINE_FILTER);
         crawl_state.cancel_cmd_repeat();
         break;
     case MSG_EMPTY_HANDED_ALREADY:
@@ -467,35 +467,35 @@ void canned_msg(canned_message_type which_message)
         const char* when =
             (which_message == MSG_EMPTY_HANDED_ALREADY ? "already" : "now");
         if (you.species == SP_FELID)
-            mprf("Your mouth is %s empty.", when);
+            mprf(gettext("Your mouth is %s empty."), when);
         else if (you.has_usable_claws(true))
-            mprf("You are %s empty-clawed.", when);
+            mprf(gettext("You are %s empty-clawed."), when);
         else if (you.has_usable_tentacles(true))
-            mprf("You are %s empty-tentacled.", when);
+            mprf(gettext("You are %s empty-tentacled."), when);
         else
-            mprf("You are %s empty-handed.", when);
+            mprf(gettext("You are %s empty-handed."), when);
         break;
     }
     case MSG_YOU_BLINK:
-        mpr("You blink.");
+        mpr(gettext("You blink."));
         break;
     case MSG_STRANGE_STASIS:
-        mpr("You feel a strange sense of stasis.");
+        mpr(gettext("You feel a strange sense of stasis."));
         break;
     case MSG_NO_SPELLS:
-        mpr("You don't know any spells.");
+        mpr(gettext("You don't know any spells."));
         break;
     case MSG_MANA_INCREASE:
-        mpr("You feel your mana capacity increase.");
+        mpr(gettext("You feel your mana capacity increase."));
         break;
     case MSG_MANA_DECREASE:
-        mpr("You feel your mana capacity decrease.");
+        mpr(gettext("You feel your mana capacity decrease."));
         break;
     case MSG_DISORIENTED:
-        mpr("You feel momentarily disoriented.");
+        mpr(gettext("You feel momentarily disoriented."));
         break;
     case MSG_TOO_HUNGRY:
-        mpr("You're too hungry.");
+        mpr(gettext("You're too hungry."));
         break;
     }
 }

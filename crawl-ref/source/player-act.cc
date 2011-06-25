@@ -588,7 +588,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     if (berserk())
     {
         if (verbose)
-            mpr("You're already berserk!");
+            mpr(gettext("You're already berserk!"));
         // or else you won't notice -- no message here.
         return (false);
     }
@@ -596,7 +596,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     if (duration[DUR_EXHAUSTED])
     {
         if (verbose)
-            mpr("You're too exhausted to go berserk.");
+            mpr(gettext("You're too exhausted to go berserk."));
         // or else they won't notice -- no message here
         return (false);
     }
@@ -604,14 +604,14 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     if (duration[DUR_DEATHS_DOOR])
     {
         if (verbose)
-            mpr("Your body is effectively dead; that's not a shape for a blood rage.");
+            mpr(gettext("Your body is effectively dead; that's not a shape for a blood rage."));
         return (false);
     }
 
     if (beheld() && !player_equip_unrand(UNRAND_DEMON_AXE))
     {
         if (verbose)
-            mpr("You are too mesmerised to rage.");
+            mpr(gettext("You are too mesmerised to rage."));
         // or else they won't notice -- no message here
         return (false);
     }
@@ -619,7 +619,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     if (afraid())
     {
         if (verbose)
-            mpr("You are too terrified to rage.");
+            mpr(gettext("You are too terrified to rage."));
 
         return (false);
     }
@@ -628,7 +628,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         && (is_undead != US_SEMI_UNDEAD || hunger_state <= HS_SATIATED))
     {
         if (verbose)
-            mpr("You cannot raise a blood rage in your lifeless body.");
+            mpr(gettext("You cannot raise a blood rage in your lifeless body."));
 
         // or else you won't notice -- no message here
         return (false);
@@ -672,7 +672,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     if (you.hunger <= 2066)
     {
         if (verbose)
-            mpr("You're too hungry to go berserk.");
+            mpr(gettext("You're too hungry to go berserk."));
         return (false);
     }
 

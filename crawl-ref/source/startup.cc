@@ -147,7 +147,7 @@ static void _initialize()
 #ifdef USE_TILE_LOCAL
     if (!Options.tile_skip_title && crawl_state.title_screen)
     {
-        tiles.update_title_msg("Loading complete, press any key to start.");
+        tiles.update_title_msg(gettext("Loading complete, press any key to start."));
         tiles.hide_title();
     }
 #endif
@@ -599,7 +599,7 @@ again:
     if (num_saves)
     {
         tmp = new NoSelectTextItem();
-        tmp->set_text("Saved games:");
+        tmp->set_text(gettext("Saved games:"));
         tmp->set_bounds(coord_def(1, save_games_start_y),
                         coord_def(SCROLLER_MARGIN_X, save_games_start_y + 1));
         freeform->attach_item(tmp);
