@@ -1,1 +1,2 @@
+mkdir -p ko_KR/LC_MESSAGES
 msgfmt -o ko_KR/LC_MESSAGES/Crawl.mo Crawl_korean.po
