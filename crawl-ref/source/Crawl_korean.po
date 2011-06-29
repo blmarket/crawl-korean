@@ -1,0 +1,4270 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-28 18:47+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tilereg-msg.cc:42
+msgid "[L-Click] Browse message history"
+msgstr "[L-Click] 과거 메시지 보기"
+
+#: main.cc:392
+msgid "Press <w>?</w> for a list of commands and other information."
+msgstr "<w>?</w>를 누르면 명령 목록 및 기타 정보를 확인할 수 있습니다."
+
+#. Trog
+#: abl-show.cc:359
+msgid "Burn Spellbooks"
+msgstr "마법서 화형"
+
+#. NON_ABILITY should always come first
+#: abl-show.cc:248
+msgid "No ability"
+msgstr "특수능력 없음"
+
+#: abl-show.cc:249
+msgid "Spit Poison"
+msgstr "독침 뱉기"
+
+#: abl-show.cc:251
+msgid "Teleportation"
+msgstr "공간이동"
+
+#: abl-show.cc:252
+msgid "Blink"
+msgstr "순간이동"
+
+#: abl-show.cc:254
+msgid "Breathe Fire"
+msgstr "화염 브레스 내뿜기"
+
+#: abl-show.cc:255
+msgid "Breathe Frost"
+msgstr "냉기 브레스 내뿜기"
+
+#: abl-show.cc:256
+msgid "Breathe Poison Gas"
+msgstr "독구름 브레스 내뿜기"
+
+#: abl-show.cc:257
+msgid "Breathe Noxious Fumes"
+msgstr "유독한 연기 브레스 내뿜기"
+
+#: abl-show.cc:259
+msgid "Breathe Lightning"
+msgstr "번개 브레스 내뿜기"
+
+#: abl-show.cc:261
+msgid "Breathe Energy"
+msgstr "에너지 브레스 내뿜기"
+
+#: abl-show.cc:262
+msgid "Breathe Sticky Flame"
+msgstr "액상 화염 브레스 내뿜기"
+
+#: abl-show.cc:264
+msgid "Breathe Steam"
+msgstr "증기 브레스 내뿜기"
+
+#: abl-show.cc:265
+msgid "Bat Form"
+msgstr "박쥐 변신"
+
+#: abl-show.cc:266
+msgid "Bottle Blood"
+msgstr "피의 병"
+
+#. no costs
+#: abl-show.cc:268
+msgid "Spit Acid"
+msgstr "산성 침 내뱉기"
+
+#. FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
+#. as exhaustion's only (and designed), effect is preventing Berserk. - bwr
+#: abl-show.cc:270 abl-show.cc:278
+msgid "Fly"
+msgstr "비행"
+
+#: abl-show.cc:271
+msgid "Stop Flying"
+msgstr "비행 중지"
+
+#: abl-show.cc:272
+msgid "Hellfire"
+msgstr "헬파이어"
+
+#: abl-show.cc:273
+msgid "Throw Flame"
+msgstr "화염 방출"
+
+#: abl-show.cc:274
+msgid "Throw Frost"
+msgstr "냉기 방출"
+
+#: abl-show.cc:279
+msgid "Release Delayed Fireball"
+msgstr "지연된 화염구 방출"
+
+#: abl-show.cc:281
+msgid "Self-Restoration"
+msgstr "자체 능력 회복"
+
+#. EVOKE abilities use Evocations and come from items.
+#. Teleportation and Blink can also come from mutations
+#. so we have to distinguish them (see above),.  The off items
+#. below are labeled EVOKE because they only work now if the
+#. player has an item with the evocable power (not just because
+#. you used a wand, potion, or miscast effect),.  I didn't see
+#. any reason to label them as "Evoke" in the text, they don't
+#. use or train Evocations (the others do),.  -- bwr
+#: abl-show.cc:292
+msgid "Evoke Teleportation"
+msgstr "공간이동 발동"
+
+#: abl-show.cc:294
+msgid "Evoke Blink"
+msgstr "순간이동 발동"
+
+#: abl-show.cc:295
+msgid "Device Recharging"
+msgstr "재생"
+
+#: abl-show.cc:297
+msgid "Evoke Berserk Rage"
+msgstr "광전사의 분노 발동"
+
+#: abl-show.cc:299
+msgid "Evoke Invisibility"
+msgstr "투명화 발동"
+
+#: abl-show.cc:301
+msgid "Turn Visible"
+msgstr "투명화 해제"
+
+#: abl-show.cc:302
+msgid "Evoke Levitation"
+msgstr "공중부양 발동"
+
+#: abl-show.cc:303
+msgid "Stop Levitating"
+msgstr "공중부양 해제"
+
+#: abl-show.cc:305
+msgid "End Transformation"
+msgstr "변신 해제"
+
+#. INVOCATIONS:
+#. Zin
+#: abl-show.cc:309
+msgid "Sustenance"
+msgstr ""
+
+#: abl-show.cc:310
+msgid "Recite"
+msgstr "암송"
+
+#: abl-show.cc:311
+msgid "Vitalisation"
+msgstr ""
+
+#: abl-show.cc:312
+msgid "Imprison"
+msgstr "구속"
+
+#: abl-show.cc:313
+msgid "Sanctuary"
+msgstr "성지의 부름"
+
+#: abl-show.cc:314
+msgid "Cure All Mutations"
+msgstr "변이의 정화"
+
+#. The Shining One
+#: abl-show.cc:318
+msgid "Divine Shield"
+msgstr "성스러운 보호"
+
+#: abl-show.cc:319
+msgid "Cleansing Flame"
+msgstr "정화의 불꽃"
+
+#: abl-show.cc:320
+msgid "Summon Divine Warrior"
+msgstr "성전사 소환"
+
+#. Kikubaaqudgha
+#: abl-show.cc:324
+msgid "Receive Corpses"
+msgstr "시체 전달"
+
+#: abl-show.cc:325 decks.cc:346
+msgid "Torment"
+msgstr "고통"
+
+#. Yredelemnul
+#: abl-show.cc:328
+msgid "Injury Mirror"
+msgstr "고통의 반사"
+
+#: abl-show.cc:329
+msgid "Animate Remains"
+msgstr "시체의 조종"
+
+#: abl-show.cc:330
+msgid "Recall Undead Slaves"
+msgstr "언데드 노예 소집"
+
+#: abl-show.cc:332
+msgid "Animate Dead"
+msgstr "죽은자 조종"
+
+#: abl-show.cc:333
+msgid "Drain Life"
+msgstr "생명 흡수"
+
+#: abl-show.cc:334
+msgid "Enslave Soul"
+msgstr "영혼 노예화"
+
+#. Placeholder for Animate Remains or Animate Dead.
+#: abl-show.cc:336
+msgid "Animate Remains or Dead"
+msgstr "죽은자와 시체의 조종"
+
+#. Okawaru
+#: abl-show.cc:340
+msgid "Heroism"
+msgstr "영웅심"
+
+#: abl-show.cc:341
+msgid "Finesse"
+msgstr "공격 가속"
+
+#. Makhleb
+#: abl-show.cc:344
+msgid "Minor Destruction"
+msgstr "소파괴"
+
+#: abl-show.cc:346
+msgid "Lesser Servant of Makhleb"
+msgstr "마크레브의 하위 종복 소환"
+
+#: abl-show.cc:348
+msgid "Major Destruction"
+msgstr "대파괴"
+
+#: abl-show.cc:350
+msgid "Greater Servant of Makhleb"
+msgstr "마크레브의 고위 종복 소환"
+
+#. Sif Muna
+#: abl-show.cc:354
+msgid "Channel Energy"
+msgstr "마나 수집"
+
+#: abl-show.cc:356
+msgid "Forget Spell"
+msgstr "마법문 망각"
+
+#: abl-show.cc:360
+msgid "Berserk"
+msgstr "광폭화"
+
+#: abl-show.cc:361
+msgid "Trog's Hand"
+msgstr "트로그의 손길"
+
+#: abl-show.cc:363
+msgid "Brothers in Arms"
+msgstr "전우"
+
+#. Elyvilon
+#: abl-show.cc:367
+msgid "Divine Protection"
+msgstr "성스러운 보호"
+
+#: abl-show.cc:369
+msgid "Lesser Self-Healing"
+msgstr "자기 자신의 치료"
+
+#: abl-show.cc:371
+msgid "Lesser Healing"
+msgstr "치료"
+
+#: abl-show.cc:373
+msgid "Purification"
+msgstr "정화"
+
+#: abl-show.cc:375
+msgid "Greater Self-Healing"
+msgstr "자기 자신의 대치료"
+
+#: abl-show.cc:377
+msgid "Greater Healing"
+msgstr "대치료"
+
+#: abl-show.cc:379
+msgid "Restoration"
+msgstr "능력 회복"
+
+#: abl-show.cc:380
+msgid "Divine Vigour"
+msgstr "성스러운 활력"
+
+#. Lugonu
+#: abl-show.cc:384
+msgid "Depart the Abyss"
+msgstr "어비스 탈출"
+
+#: abl-show.cc:385
+msgid "Bend Space"
+msgstr "공간의 구속"
+
+#: abl-show.cc:386
+msgid "Banish"
+msgstr "추방"
+
+#: abl-show.cc:388
+msgid "Corrupt"
+msgstr "타락"
+
+#: abl-show.cc:390
+msgid "Enter the Abyss"
+msgstr "어비스 입장"
+
+#. Nemelex
+#: abl-show.cc:394
+msgid "Draw One"
+msgstr "한 장 뽑기"
+
+#: abl-show.cc:395
+msgid "Peek at Two"
+msgstr "두 장 뽑기"
+
+#: abl-show.cc:396
+msgid "Triple Draw"
+msgstr "세 장 뽑기"
+
+#: abl-show.cc:397
+msgid "Mark Four"
+msgstr "네 장 마크하기"
+
+#: abl-show.cc:398
+msgid "Stack Five"
+msgstr "다섯 장 쌓기"
+
+#. Beogh
+#: abl-show.cc:401
+msgid "Smiting"
+msgstr "징벌"
+
+#: abl-show.cc:403
+msgid "Recall Orcish Followers"
+msgstr "오크 추종자 부르기"
+
+#. Jiyva
+#: abl-show.cc:407
+msgid "Request Jelly"
+msgstr "젤리 소환"
+
+#: abl-show.cc:408
+msgid "Jelly Paralyse"
+msgstr "젤리 마비"
+
+#: abl-show.cc:409
+msgid "Slimify"
+msgstr "슬라임화"
+
+#: abl-show.cc:410
+msgid "Cure Bad Mutation"
+msgstr "해로운 변이 치료"
+
+#. Fedhas
+#: abl-show.cc:414
+msgid "Evolution"
+msgstr "진화"
+
+#: abl-show.cc:415
+msgid "Sunlight"
+msgstr "햇빛"
+
+#: abl-show.cc:416
+msgid "Growth"
+msgstr "성장"
+
+#: abl-show.cc:417
+msgid "Reproduction"
+msgstr "기생 번식"
+
+#: abl-show.cc:418
+msgid "Rain"
+msgstr "폭우"
+
+#. Cheibriados
+#: abl-show.cc:421
+msgid "Make Ponderous"
+msgstr ""
+
+#: abl-show.cc:423
+msgid "Bend Time"
+msgstr ""
+
+#: abl-show.cc:424
+msgid "Slouch"
+msgstr ""
+
+#: abl-show.cc:425
+msgid "Step From Time"
+msgstr ""
+
+#. Ashenzari
+#: abl-show.cc:429
+msgid "Scrying"
+msgstr ""
+
+#: abl-show.cc:431
+msgid "Transfer Knowledge"
+msgstr ""
+
+#: abl-show.cc:433
+msgid "End Transfer Knowledge"
+msgstr ""
+
+#. zot defence abilities
+#: abl-show.cc:437
+msgid "Make mushroom circle"
+msgstr "버섯 서클 생성"
+
+#: abl-show.cc:438
+msgid "Make dart trap"
+msgstr "다트 트랩 생성"
+
+#: abl-show.cc:439
+msgid "Make plant"
+msgstr "잡초 생성"
+
+#: abl-show.cc:440
+msgid "Make oklob sapling"
+msgstr "오클롭 묘목 생성"
+
+#: abl-show.cc:441
+msgid "Make burning bush"
+msgstr "불타는 수풀 생성"
+
+#: abl-show.cc:442
+msgid "Make oklob plant"
+msgstr "오클롭 잡초 생성"
+
+#: abl-show.cc:443
+msgid "Make ice statue"
+msgstr "얼음의 상 생성"
+
+#: abl-show.cc:444
+msgid "Make crystal statue"
+msgstr "수정의 상 생성"
+
+#: abl-show.cc:445
+msgid "Make silver statue"
+msgstr "은의 상 생성"
+
+#: abl-show.cc:446
+msgid "Make curse skull"
+msgstr "저주받은 해골 생성"
+
+#: abl-show.cc:447
+msgid "Zot-teleport"
+msgstr "조트의 공간이동"
+
+#: abl-show.cc:448
+msgid "Make arrow trap"
+msgstr "화살 함정 생성"
+
+#: abl-show.cc:449
+msgid "Make bolt trap"
+msgstr "석궁화살 함정 생성"
+
+#: abl-show.cc:450
+msgid "Make spear trap"
+msgstr "창의 함정 생성"
+
+#: abl-show.cc:451
+msgid "Make axe trap"
+msgstr "도끼의 함정 생성"
+
+#: abl-show.cc:452
+msgid "Make needle trap"
+msgstr "바늘 함정 생성"
+
+#: abl-show.cc:453
+msgid "Make net trap"
+msgstr "그물 함정 생성"
+
+#: abl-show.cc:454
+msgid "Make teleport trap"
+msgstr "공간이동 함정 생성"
+
+#: abl-show.cc:455
+msgid "Make alarm trap"
+msgstr "알람 함정 생성"
+
+#: abl-show.cc:456
+msgid "Make blade trap"
+msgstr "블레이드 함정 생성"
+
+#: abl-show.cc:457
+msgid "Make oklob circle"
+msgstr "오클롭 서클 생성"
+
+#: abl-show.cc:458
+msgid "Acquire gold"
+msgstr "금화 획득"
+
+#: abl-show.cc:459
+msgid "Acquirement"
+msgstr "아이템 획득"
+
+#: abl-show.cc:460
+msgid "Make water"
+msgstr "물 생성"
+
+#: abl-show.cc:461
+msgid "Make electric eel"
+msgstr "전기 뱀장어 생성"
+
+#: abl-show.cc:462
+msgid "Make bazaar"
+msgstr "시장 생성"
+
+#: abl-show.cc:463
+msgid "Make altar"
+msgstr "제단 생성"
+
+#: abl-show.cc:464
+msgid "Make grenades"
+msgstr "수류탄 생성"
+
+#: abl-show.cc:465
+msgid "Sage"
+msgstr "현자 생성"
+
+#: abl-show.cc:466
+msgid "Remove Curse"
+msgstr "저주 해제"
+
+#: abl-show.cc:468
+msgid "Renounce Religion"
+msgstr "신앙 포기하기"
+
+#: directn.cc:2915
+msgid "dart trap"
+msgstr "다트 함정"
+
+#: directn.cc:2917
+msgid "arrow trap"
+msgstr "화살 함정"
+
+#: directn.cc:2919
+msgid "needle trap"
+msgstr "바늘 함정"
+
+#: directn.cc:2921
+msgid "bolt trap"
+msgstr "석궁화살 함정"
+
+#: directn.cc:2923
+msgid "spear trap"
+msgstr "창 함정"
+
+#: directn.cc:2925
+msgid "axe trap"
+msgstr "도끼 함정"
+
+#: directn.cc:2927
+msgid "blade trap"
+msgstr "칼날 함정"
+
+#: directn.cc:2929
+msgid "net trap"
+msgstr "그물 함정"
+
+#: directn.cc:2931
+msgid "alarm trap"
+msgstr "알람 함정"
+
+#: directn.cc:2933
+msgid "shaft"
+msgstr "낭떠러지"
+
+#: directn.cc:2935
+msgid "teleportation trap"
+msgstr "공간이동 함정"
+
+#: directn.cc:2937
+msgid "Zot trap"
+msgstr "조트 함정"
+
+#: directn.cc:2939
+msgid "passage of Golubria"
+msgstr ""
+
+#: directn.cc:2941
+msgid "pressure plate"
+msgstr ""
+
+#: directn.cc:2944
+msgid "undefined trap"
+msgstr ""
+
+#: directn.cc:2951
+msgid "stone wall"
+msgstr "돌벽"
+
+#: directn.cc:2955
+msgid "wall of the weird stuff which makes up Pandemonium"
+msgstr ""
+
+#: directn.cc:2957
+msgid "rock wall"
+msgstr "바위벽"
+
+#: directn.cc:2959
+msgid "slime covered rock wall"
+msgstr ""
+
+#: directn.cc:2961
+msgid "unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2963
+msgid "open sea"
+msgstr ""
+
+#: directn.cc:2965
+msgid "Endless lava"
+msgstr ""
+
+#: directn.cc:2967
+msgid "closed door"
+msgstr "닫힌 문"
+
+#: directn.cc:2969
+msgid "detected secret door"
+msgstr "탐지된 비밀문"
+
+#: directn.cc:2971
+msgid "metal wall"
+msgstr "철벽"
+
+#: directn.cc:2973
+msgid "wall of green crystal"
+msgstr "녹색 수정 벽"
+
+#: directn.cc:2975
+msgid "translucent rock wall"
+msgstr "투명 바위벽"
+
+#: directn.cc:2977
+msgid "translucent stone wall"
+msgstr "투명 돌벽"
+
+#: directn.cc:2979
+msgid "translucent unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2981
+msgid "iron grate"
+msgstr ""
+
+#. perhaps "mangrove" or such?
+#: directn.cc:2984
+msgid "tree"
+msgstr "나무"
+
+#: directn.cc:2987
+msgid "idol of Beogh"
+msgstr ""
+
+#: directn.cc:2989
+msgid "orcish idol"
+msgstr ""
+
+#: directn.cc:2991
+msgid "wall of solid wax"
+msgstr ""
+
+#: directn.cc:2993
+msgid "granite statue"
+msgstr ""
+
+#: directn.cc:2995
+msgid "Some lava"
+msgstr ""
+
+#: directn.cc:2997
+msgid "Some deep water"
+msgstr ""
+
+#: directn.cc:2999
+msgid "Some shallow water"
+msgstr ""
+
+#: directn.cc:3002
+msgid "Floor"
+msgstr ""
+
+#: directn.cc:3004
+msgid "open door"
+msgstr ""
+
+#: directn.cc:3006
+msgid "escape hatch in the floor"
+msgstr ""
+
+#: directn.cc:3008
+msgid "escape hatch in the ceiling"
+msgstr ""
+
+#: directn.cc:3012
+msgid "stone staircase leading down"
+msgstr ""
+
+#: directn.cc:3019
+msgid "staircase leading out of the dungeon"
+msgstr ""
+
+#: directn.cc:3021
+msgid "stone staircase leading up"
+msgstr ""
+
+#: directn.cc:3023
+msgid "gateway to Hell"
+msgstr ""
+
+#: directn.cc:3025
+msgid "gateway back into the Dungeon"
+msgstr ""
+
+#: directn.cc:3027
+msgid "mechanical trap"
+msgstr ""
+
+#: directn.cc:3029
+msgid "magical trap"
+msgstr ""
+
+#: directn.cc:3031
+msgid "natural trap"
+msgstr ""
+
+#: directn.cc:3033
+msgid "shop"
+msgstr ""
+
+#: directn.cc:3035
+msgid "abandoned shop"
+msgstr ""
+
+#: directn.cc:3037
+msgid "labyrinth entrance"
+msgstr ""
+
+#: directn.cc:3039
+msgid "gateway to the Iron City of Dis"
+msgstr ""
+
+#: directn.cc:3041
+msgid "gateway to the ashen valley of Gehenna"
+msgstr ""
+
+#: directn.cc:3043
+msgid "gateway to the freezing wastes of Cocytus"
+msgstr ""
+
+#: directn.cc:3045
+msgid "gateway to the decaying netherworld of Tartarus"
+msgstr ""
+
+#: directn.cc:3047
+msgid "one-way gate to the infinite horrors of the Abyss"
+msgstr ""
+
+#: directn.cc:3049
+msgid "gateway leading out of the Abyss"
+msgstr ""
+
+#: directn.cc:3051
+msgid "empty arch of ancient stone"
+msgstr ""
+
+#: directn.cc:3053
+msgid "one-way gate leading to the halls of Pandemonium"
+msgstr ""
+
+#: directn.cc:3055
+msgid "gate leading out of Pandemonium"
+msgstr ""
+
+#: directn.cc:3057
+msgid "gate leading to another region of Pandemonium"
+msgstr ""
+
+#: directn.cc:3059
+msgid "staircase to the Dwarven Hall"
+msgstr ""
+
+#: directn.cc:3061
+msgid "staircase to the Orcish Mines"
+msgstr ""
+
+#: directn.cc:3063
+msgid "staircase to the Hive"
+msgstr ""
+
+#: directn.cc:3065
+msgid "staircase to the Lair"
+msgstr ""
+
+#: directn.cc:3067
+msgid "staircase to the Slime Pits"
+msgstr ""
+
+#: directn.cc:3069
+msgid "staircase to the Vaults"
+msgstr ""
+
+#: directn.cc:3071
+msgid "staircase to the Crypt"
+msgstr ""
+
+#: directn.cc:3073
+msgid "staircase to the Hall of Blades"
+msgstr ""
+
+#: directn.cc:3075
+msgid "gate to the Realm of Zot"
+msgstr ""
+
+#: directn.cc:3077
+msgid "staircase to the Ecumenical Temple"
+msgstr ""
+
+#: directn.cc:3079
+msgid "staircase to the Snake Pit"
+msgstr ""
+
+#: directn.cc:3081
+msgid "staircase to the Elven Halls"
+msgstr ""
+
+#: directn.cc:3083
+msgid "staircase to the Tomb"
+msgstr ""
+
+#: directn.cc:3085
+msgid "staircase to the Swamp"
+msgstr ""
+
+#: directn.cc:3087
+msgid "staircase to the Shoals"
+msgstr ""
+
+#. The bazaar description should be set in the bazaar marker; this
+#. is the description for a portal of unknown type.
+#: directn.cc:3091
+msgid "gate leading to a distant place"
+msgstr ""
+
+#: directn.cc:3093
+msgid "gate leading back to the Dungeon"
+msgstr ""
+
+#: directn.cc:3095
+msgid "portal to somewhere"
+msgstr ""
+
+#: directn.cc:3102
+msgid "staircase back to the Dungeon"
+msgstr ""
+
+#: directn.cc:3107
+msgid "staircase back to the Lair"
+msgstr ""
+
+#: directn.cc:3110
+msgid "staircase back to the Vaults"
+msgstr ""
+
+#: directn.cc:3112
+msgid "staircase back to the Mines"
+msgstr ""
+
+#: directn.cc:3114
+msgid "staircase back to the Crypt"
+msgstr ""
+
+#: directn.cc:3116
+msgid "gate leading back out of this place"
+msgstr ""
+
+#: directn.cc:3120
+msgid "glowing silver altar of Zin"
+msgstr ""
+
+#: directn.cc:3122
+msgid "glowing golden altar of the Shining One"
+msgstr ""
+
+#: directn.cc:3124
+msgid "ancient bone altar of Kikubaaqudgha"
+msgstr ""
+
+#: directn.cc:3126
+msgid "basalt altar of Yredelemnul"
+msgstr ""
+
+#: directn.cc:3128
+msgid "shimmering altar of Xom"
+msgstr ""
+
+#: directn.cc:3130
+msgid "radiant altar of Vehumet"
+msgstr ""
+
+#: directn.cc:3132
+msgid "iron altar of Okawaru"
+msgstr ""
+
+#: directn.cc:3134
+msgid "burning altar of Makhleb"
+msgstr ""
+
+#: directn.cc:3136
+msgid "deep blue altar of Sif Muna"
+msgstr ""
+
+#: directn.cc:3138
+msgid "bloodstained altar of Trog"
+msgstr "피로물든 트로그 신의 제단"
+
+#: directn.cc:3140
+msgid "sparkling altar of Nemelex Xobeh"
+msgstr ""
+
+#: directn.cc:3142
+msgid "white marble altar of Elyvilon"
+msgstr ""
+
+#: directn.cc:3144
+msgid "corrupted altar of Lugonu"
+msgstr ""
+
+#: directn.cc:3146
+msgid "roughly hewn altar of Beogh"
+msgstr ""
+
+#: directn.cc:3148
+msgid "viscous altar of Jiyva"
+msgstr ""
+
+#: directn.cc:3150
+msgid "blossoming altar of Fedhas"
+msgstr ""
+
+#: directn.cc:3152
+msgid "snail-covered altar of Cheibriados"
+msgstr ""
+
+#: directn.cc:3154
+msgid "shattered altar of Ashenzari"
+msgstr ""
+
+#: directn.cc:3157
+msgid "fountain of clear blue water"
+msgstr ""
+
+#: directn.cc:3159
+msgid "fountain of sparkling water"
+msgstr ""
+
+#: directn.cc:3161
+msgid "fountain of blood"
+msgstr ""
+
+#: directn.cc:3166
+msgid "dry fountain"
+msgstr ""
+
+#: directn.cc:3168
+msgid "explore horizon"
+msgstr ""
+
+#: command.cc:1592 command.cc:1609 stuff.cc:438 command.cc:1596
+#: command.cc:1613
+msgid "Okay, then."
+msgstr "네, 그러세요."
+
+#: stuff.cc:405
+msgid "Something appears at your feet!"
+msgstr "당신의 발 밑에 뭔가가 나타났다!"
+
+#: stuff.cc:406
+msgid "Something appears before you!"
+msgstr "당신 뒤에 뭔가 나타났다!"
+
+#: stuff.cc:409
+msgid "Nothing appears to happen."
+msgstr "아무 일도 일어나지 않은 것 같다."
+
+#: stuff.cc:412
+msgid "You are unaffected."
+msgstr "당신은 영향받지 않았다."
+
+#: stuff.cc:415
+msgid "You resist."
+msgstr "당신은 저항했다."
+
+#: stuff.cc:419
+msgid "You partially resist."
+msgstr "당신은 일부 저항했다."
+
+#: stuff.cc:422
+msgid "You are too berserk!"
+msgstr "당신은 폭주하고있다!"
+
+#: stuff.cc:426
+msgid "You can't do that in your present form."
+msgstr "당신의 현재 모습으로는 그렇게 할 수 없다."
+
+#: stuff.cc:430
+msgid "You aren't carrying anything."
+msgstr "당신은 아무것도 들고있지 않다."
+
+#: stuff.cc:434
+msgid "You can't do that yet."
+msgstr "당신은 아직 할 수 없다."
+
+#: stuff.cc:442
+msgid "Why would you want to do that?"
+msgstr "왜 그걸 하려는데?"
+
+#: stuff.cc:446
+msgid "There's nothing there!"
+msgstr "아무 것도 없 잖 어!"
+
+#: stuff.cc:450
+msgid "There's nothing close enough!"
+msgstr "가까이에 아무것도 없다!"
+
+#: stuff.cc:454
+msgid "You don't have the energy to cast that spell."
+msgstr "그 주문을 외울 에너지가 없다."
+
+#: stuff.cc:458
+msgid "The spell fizzles."
+msgstr ""
+
+#: stuff.cc:461
+msgid "Huh?"
+msgstr "헐?"
+
+#: stuff.cc:466
+msgid "Your mouth is now empty."
+msgstr "당신은 이제 맨입이다."
+
+#: stuff.cc:468
+msgid "You are now empty-handed."
+msgstr "당신은 이제 맨손이다."
+
+#: stuff.cc:471
+msgid "You blink."
+msgstr "당신은 순간이동했다."
+
+#: stuff.cc:474
+msgid "You feel a strange sense of stasis."
+msgstr ""
+
+#: stuff.cc:477
+msgid "You don't know any spells."
+msgstr "당신은 아무 주문도 모른다."
+
+#: stuff.cc:480
+msgid "You feel your mana capacity increase."
+msgstr "당신은 마나 용량이 늘어났다고 느낀다."
+
+#: stuff.cc:483
+msgid "You feel your mana capacity decrease."
+msgstr "당신은 마나 용량이 줄어들었다고 느낀다."
+
+#: stuff.cc:486
+msgid "You feel momentarily disoriented."
+msgstr "당신은 잠시 방향감각을 상실했다."
+
+#: stuff.cc:489
+msgid "You're too hungry."
+msgstr "당신은 너무 배고프다."
+
+#: player-act.cc:544
+msgid "You're already berserk!"
+msgstr "당신은 이미 폭주하고있다!"
+
+#: player-act.cc:552
+msgid "You're too exhausted to go berserk."
+msgstr "당신은 너무 지쳐서 폭주할 수가 없다."
+
+#: player-act.cc:560
+msgid "Your body is effectively dead; that's not a shape for a blood rage."
+msgstr "당신의 몸은 죽은 상태다; 폭주할 수 있는 상태가 아니다."
+
+#: player-act.cc:567
+msgid "You are too mesmerised to rage."
+msgstr "분노하기엔 유혹이 너무 강렬하다."
+
+#: player-act.cc:575
+msgid "You are too terrified to rage."
+msgstr "분노하기엔 너무 공포에 사로잡혀있다."
+
+#: player-act.cc:584
+msgid "You cannot raise a blood rage in your lifeless body."
+msgstr "당신의 생명력 없는 몸으론 피가 끓을 수 없다."
+
+#: player-act.cc:628
+msgid "You're too hungry to go berserk."
+msgstr "너무 배고프다."
+
+#: abl-show.cc:505
+msgid "no special abilities"
+msgstr "특수 능력을 가지고 있지 않다"
+
+#: abl-show.cc:547
+msgid ""
+"Tendrils and shoots erupt from the earth and gnarl into the form of a plant."
+msgstr ""
+
+#: abl-show.cc:549 abl-show.cc:551
+msgid ""
+"A rhizome shoots up through the ground and merges with vitriolic spirits in "
+"the atmosphere."
+msgstr ""
+
+#: abl-show.cc:553
+msgid "Blackened shoots writhe from the ground and burst into flame!"
+msgstr ""
+
+#: abl-show.cc:555
+msgid "Water vapor collects and crystallizes into an icy humanoid shape."
+msgstr ""
+
+#: abl-show.cc:557
+msgid ""
+"Quartz juts from the ground and forms a humanoid shape. You smell citrus."
+msgstr ""
+
+#: abl-show.cc:559
+msgid ""
+"Droplets of mercury fall from the ceiling and turn to silver, congealing "
+"into a humanoid shape."
+msgstr ""
+
+#: abl-show.cc:561
+msgid "You sculpt a terrible being from the primitive principle of evil."
+msgstr ""
+
+#: abl-show.cc:563
+msgid "You fashion an electric eel."
+msgstr ""
+
+#. / (영구적) MP
+#: abl-show.cc:688
+msgid " Permanent MP"
+msgstr " (영구적) MP"
+
+#: abl-show.cc:690
+msgid " MP"
+msgstr ""
+
+#: abl-show.cc:700
+msgid " Permanent HP"
+msgstr " (영구적) HP"
+
+#: abl-show.cc:702
+msgid " HP"
+msgstr ""
+
+#. / 걍 만복도라고 번역할 것인가!
+#: abl-show.cc:721
+msgid "Food"
+msgstr "만복도"
+
+#. / 신앙도
+#: abl-show.cc:730 abl-show.cc:762
+msgid "Piety"
+msgstr "신앙도"
+
+#: abl-show.cc:738
+msgid "Breath"
+msgstr "호흡"
+
+#: abl-show.cc:746
+msgid "Delay"
+msgstr "지연"
+
+#: abl-show.cc:754 decks.cc:345
+msgid "Pain"
+msgstr "고통"
+
+#: abl-show.cc:770
+msgid "Exhaustion"
+msgstr "탈진"
+
+#. / 비용이 아니라, 즉시 시전임을 알려주는 단어.
+#: abl-show.cc:779
+msgid "Instant"
+msgstr "즉시 시전"
+
+#: abl-show.cc:787 acquire.cc:1608
+msgid "Fruit"
+msgstr "과일"
+
+#: abl-show.cc:795
+msgid "Fruit or Piety"
+msgstr "과일 또는 신앙도"
+
+#: abl-show.cc:803
+msgid "Level drain"
+msgstr ""
+
+#: abl-show.cc:811
+msgid "Stat drain"
+msgstr ""
+
+#: abl-show.cc:816 food.cc:2849
+msgid "None"
+msgstr "없음"
+
+#: abl-show.cc:823
+msgid "extremely large"
+msgstr "매우 큼"
+
+#: abl-show.cc:824
+msgid "large"
+msgstr "큼"
+
+#: abl-show.cc:825
+msgid "moderate"
+msgstr "보통"
+
+#: abl-show.cc:826
+msgid "small"
+msgstr "작음"
+
+#: abl-show.cc:837
+msgid "This ability costs: "
+msgstr "이 능력의 비용    : "
+
+#: abl-show.cc:843
+msgid ""
+"\n"
+"Max MP : "
+msgstr ""
+"\n"
+"최대MP :"
+
+#: abl-show.cc:845
+msgid ""
+"\n"
+"MP     : "
+msgstr ""
+
+#: abl-show.cc:852
+msgid ""
+"\n"
+"Max HP : "
+msgstr ""
+"\n"
+"최대HP :"
+
+#: abl-show.cc:854
+msgid ""
+"\n"
+"HP     : "
+msgstr ""
+
+#: abl-show.cc:862
+msgid ""
+"\n"
+"Hunger : "
+msgstr ""
+"\n"
+"만복도 : "
+
+#: abl-show.cc:869
+msgid ""
+"\n"
+"Piety  : "
+msgstr ""
+"\n"
+"신앙도 : "
+
+#. / 없음.
+#: abl-show.cc:876
+msgid "nothing."
+msgstr "없음.   "
+
+#: abl-show.cc:879
+msgid ""
+"\n"
+"You must catch your breath between uses of this ability."
+msgstr ""
+"\n"
+"이 능력은 호흡을 가다듬기 전엔 사용할 수 없다."
+
+#: abl-show.cc:882
+msgid ""
+"\n"
+"It takes some time before being effective."
+msgstr ""
+"\n"
+"이 능력은 발동되기까지 다소 시간이 필요하다."
+
+#: abl-show.cc:885
+msgid ""
+"\n"
+"Using this ability will hurt you."
+msgstr ""
+"\n"
+"이 능력으로 인해 당신은 부상을 입을 수 있다."
+
+#: abl-show.cc:888
+msgid ""
+"\n"
+"It will drain your piety while it is active."
+msgstr ""
+"\n"
+"이 능력이 발동되는 동안 지속적으로 신앙도가 소모된다."
+
+#: abl-show.cc:891
+msgid ""
+"\n"
+"It cannot be used when exhausted."
+msgstr ""
+"\n"
+"이 능력은 당신을 피로하게 하며, 피로가 쌓인 동안에는 이 능력을 쓸 수 없다."
+
+#: abl-show.cc:894
+msgid ""
+"\n"
+"It is instantaneous."
+msgstr ""
+"\n"
+"이 능력은 즉시 발동된다."
+
+#: abl-show.cc:897
+msgid ""
+"\n"
+"You can use it even if confused."
+msgstr ""
+"\n"
+"이 능력은 혼란한 상태에서도 사용할 수 있다."
+
+#. Still nothing found?
+#: abl-show.cc:1322
+msgid "No description found."
+msgstr "설명 없음."
+
+#: abl-show.cc:1349
+msgid "Sorry, you're too full to transform right now."
+msgstr "당신은 지금 변신하기에는 너무 배부르다."
+
+#: abl-show.cc:1354
+msgid "You can only start flying from the ground."
+msgstr "땅을 딛지 않고서는 날 수 없다."
+
+#: abl-show.cc:1356
+msgid "You're already flying!"
+msgstr "이미 비행중이다!"
+
+#: abl-show.cc:1359
+msgid "Sorry, you're not good enough to have a special ability."
+msgstr "유감이지만, 당신은 그 특수능력을 가질 만큼 뛰어나질 못하다."
+
+#: abl-show.cc:1370
+msgid "You're too confused!"
+msgstr "당신은 너무 혼란한 상태이다!"
+
+#: abl-show.cc:1379
+msgid "Use which ability? (? or * to list) "
+msgstr "어느 능력을 사용합니까? (? 또는 * 키로 목록 보기)"
+
+#: abl-show.cc:1414
+msgid "You can't do that."
+msgstr "그렇게 할 수 없다."
+
+#: abl-show.cc:1455
+msgid "There's no appreciative audience!"
+msgstr "당신의 암송을 들을 존재가 없다!"
+
+#: abl-show.cc:1460
+msgid "There's no-one here to preach to!"
+msgstr "당신의 암송은 효과를 보지 못했다!"
+
+#: abl-show.cc:1472
+msgid "There's already a sanctuary in place on this level."
+msgstr "이미 이 층에는 성지가 건설되어 있다."
+
+#: abl-show.cc:1482
+msgid "Nothing ails you!"
+msgstr "아무 일도 일어나지 않았다!"
+
+#: abl-show.cc:1494
+msgid "You don't need to restore your stats or hit points!"
+msgstr "당신은 당신의 HP와 능력치를 복구할 필요가 없다!"
+
+#: abl-show.cc:1502
+msgid "You aren't in the Abyss!"
+msgstr "이미 어비스 밖이다!"
+
+#: abl-show.cc:1513
+msgid "You're already here!"
+msgstr "이미 들어와 있다!"
+
+#: abl-show.cc:1547
+msgid "You cannot teleport right now."
+msgstr "현재는 공간이동을 할 수가 없다."
+
+#: abl-show.cc:1559
+msgid "You're too exhausted to fly."
+msgstr "당신은 비행하기에 너무 지쳐있다."
+
+#: abl-show.cc:1564
+msgid "You're carrying too much weight to fly."
+msgstr "짐이 너무 무거워 비행할 수가 없다."
+
+#: abl-show.cc:1582
+msgid "Stopping levitation right now would be fatal!"
+msgstr "여기서 공중부양을 멈추는 것은 위험하다!"
+
+#: abl-show.cc:1590
+msgid "Turning into a bat will reduce your strength to zero. Continue?"
+msgstr ""
+"박쥐의 모습으로 변신하는 것은 당신의 힘에 치명적일 수가 있다. 계속하겠는가?"
+
+#: abl-show.cc:1602
+msgid "Turning back right now would cause you to burn!"
+msgstr "이 곳에서 변신을 해제하다간 용암에 빠질 지도 모른다!"
+
+#: abl-show.cc:1603
+msgid "Turning back right now would cause you to drown!"
+msgstr "이 곳에서 변신을 해제하다간 물에 빠질 지도 모른다!"
+
+#: abl-show.cc:1609
+msgid "Turning back will reduce your dexterity to zero. Continue?"
+msgstr "변신을 해제하는 것은 당신의 민첩성에 치명적일 수가 있다. 계속하겠는가?"
+
+#: abl-show.cc:1626
+msgid "You can't escape from the ground with such puny magic!"
+msgstr "이 마법의 힘으로는 지면에서 탈출할 수 없다!"
+
+#: abl-show.cc:1696
+msgid "You fail to use your ability."
+msgstr "특수능력 사용에 실패했다."
+
+#: abl-show.cc:1726
+msgid "Bad breath type!"
+msgstr "잘못된 타입의 브레스다!"
+
+#: abl-show.cc:1753
+msgid "Mushrooms don't grow well in such thickets."
+msgstr "이렇게 복잡한 환경에선 버섯이 잘 자라지 못한다."
+
+#: abl-show.cc:1756
+msgid "Center fungus circle where?"
+msgstr "어느곳에 버섯 서클을 만듭니까?"
+
+#: abl-show.cc:1794
+msgid "Radiation from the Orb interferes with the trap's magic!"
+msgstr "오브에서 나온 힘이 트랩의 마력과 간섭하고 있다!"
+
+#: abl-show.cc:1812
+msgid "Center oklob circle where?"
+msgstr "어디에 오클롭 서클을 만듭니까?"
+
+#: abl-show.cc:1844
+msgid "The dungeon trembles momentarily."
+msgstr "잠깐 동안, 던전 전체에 진동이 느껴졌다."
+
+#: abl-show.cc:1852
+msgid "A mystic portal forms."
+msgstr "신비한 포탈이 나타났다."
+
+#: abl-show.cc:1856
+msgid "A buggy portal flickers into view, then vanishes."
+msgstr "버그 포탈이 잠시 나타났다가 사라졌다."
+
+#: abl-show.cc:1866
+msgid "The dungeon dims for a moment."
+msgstr "던전 전체가 잠시 깜박이는 것 처럼 보였다."
+
+#: abl-show.cc:1877 abl-show.cc:1884
+msgid "You create a living grenade."
+msgstr "걸어 다니는 수류탄이 생성되었다."
+
+#: abl-show.cc:1899
+msgid "You infuse your body with magical energy."
+msgstr "육체 안에 마력 에너지를 불어넣었다."
+
+#: abl-show.cc:1990
+#, c-format
+msgid "You breathe a blast of fire%c"
+msgstr "불의 숨결을 내뿜었다%c"
+
+#: abl-show.cc:2002
+msgid "You exhale a wave of freezing cold."
+msgstr "냉기의 숨결을 내뿜었다."
+
+#: abl-show.cc:2010
+msgid "You exhale a blast of poison gas."
+msgstr "독가스 폭풍을 내뿜었다."
+
+#: abl-show.cc:2017
+msgid "You breathe a wild blast of lightning!"
+msgstr "번개의 숨결을 내뿜었다."
+
+#: abl-show.cc:2025
+msgid "You spit a glob of acid."
+msgstr "산성 침을 뱉어 내었다."
+
+#: abl-show.cc:2036
+msgid "You spit a bolt of dispelling energy."
+msgstr "눈부시게 빛나는 에너지의 숨결을 내뿜었다."
+
+#: abl-show.cc:2047
+msgid "You spit a glob of burning liquid."
+msgstr "액상 화염 덩어리를 뱉어 내었다."
+
+#: abl-show.cc:2058
+msgid "You exhale a blast of scalding steam."
+msgstr "뜨거운 증기 폭풍을 내뿜었다."
+
+#: abl-show.cc:2069
+msgid "You exhale a blast of noxious fumes."
+msgstr "매캐한 연기 숨결을 내뿜었다."
+
+#: abl-show.cc:2104
+msgid "You feel very comfortable in the air."
+msgstr "공중에서 편안함을 느꼈다."
+
+#: abl-show.cc:2141
+msgid "You feel less transparent."
+msgstr "투명한 느낌이 사라져간다."
+
+#: abl-show.cc:2153
+msgid "You feel more buoyant."
+msgstr "당신은 몸이 더 가벼워진 것을 느꼈다."
+
+#: abl-show.cc:2174
+msgid "You feel almost normal."
+msgstr "거의 정상으로 돌아온 듯하다."
+
+#: abl-show.cc:2191
+msgid "That recitation seems somehow inappropriate."
+msgstr "당신의 암송은 그다지 효과를 보지 못했다."
+
+#: abl-show.cc:2208
+msgid "You cannot imprison yourself!"
+msgstr "자기 자신을 구속시킬 수는 없다!"
+
+#: abl-show.cc:2216
+msgid "There is no monster there to imprison!"
+msgstr "구속할 몬스터가 보이지 않는다!"
+
+#: abl-show.cc:2257
+msgid "There are no corpses to sacrifice!"
+msgstr "희생시킬 수 있는 시체가 없다!"
+
+#. / 신이름 torments the living!
+#: abl-show.cc:2261
+msgid " torments the living!"
+msgstr " 은(는) 살아있는 존재들에게 고통을 선사했다!"
+
+#. Strictly speaking, since it is random, it is possible it
+#. actually decreases.  The player doesn't know this, and this
+#. way smart-asses won't re-roll it several times before charging.
+#: abl-show.cc:2271
+msgid "Your dark aura grows in power."
+msgstr "어두운 오오라가 주위에서 빛난다."
+
+#: abl-show.cc:2275
+msgid "You coil in prayer and are bathed in unholy energy."
+msgstr "당신은 몸을 감아서 기도했고, 곧 불경스러운 에너지에 휩싸였다."
+
+#: abl-show.cc:2276
+msgid "You sit in prayer and are bathed in unholy energy."
+msgstr "당신은 앉아서 기도했고, 곧 불경스러운 에너지에 휩싸였다."
+
+#: abl-show.cc:2277
+msgid "You kneel in prayer and are bathed in unholy energy."
+msgstr "당신은 무릎꿇어 기도했고, 곧 불경스러운 에너지에 휩싸였다."
+
+#: abl-show.cc:2311
+msgid "You channel some magical energy."
+msgstr "약간의 마나를 수집했다."
+
+#: abl-show.cc:2318
+msgid "You feel more confident with your borrowed prowess."
+msgstr "영웅적인 기량에 좀 더 자신감을 얻었다."
+
+#: abl-show.cc:2319
+msgid "You gain the combat prowess of a mighty hero."
+msgstr "강력한 영웅의 전투 기량을 얻었다."
+
+#: abl-show.cc:2335
+msgid "Your hands get new energy."
+msgstr "양 손에 새로운 힘이 더해졌다."
+
+#: abl-show.cc:2336
+msgid "You can now deal lightning-fast blows."
+msgstr "당신은 이제 번개같은 공격을 날릴 수 있다."
+
+#: abl-show.cc:2437
+msgid "You renew your call for help."
+msgstr ""
+
+#. / 신의 이름이 인자로 들어옴.
+#: abl-show.cc:2441
+#, c-format
+msgid "You beseech %s to protect your life."
+msgstr ""
+
+#: abl-show.cc:2508
+msgid "You cannot banish yourself!"
+msgstr "자기 자신을 추방할 수는 없다!"
+
+#: abl-show.cc:2615
+msgid "No corpses are in range."
+msgstr "주위에 시체가 보이지 않는다."
+
+#. / 무기 이름이나, 손의 이름이 나온다.
+#: abl-show.cc:2663
+#, c-format
+msgid "A thick mucus forms on %s."
+msgstr ""
+
+#: abl-show.cc:2688
+msgid "You can feel time thicken."
+msgstr ""
+
+#: abl-show.cc:2689
+#, c-format
+msgid "your speed is %d"
+msgstr ""
+
+#: abl-show.cc:2695
+msgid "You extend your astral sight."
+msgstr ""
+
+#: abl-show.cc:2697
+msgid "You gain astral sight."
+msgstr ""
+
+#: abl-show.cc:2715
+msgid "Really renounce your faith, foregoing its fabulous benefits?"
+msgstr ""
+
+#: abl-show.cc:2717
+msgid "Are you sure you won't change your mind later?"
+msgstr ""
+
+#: abl-show.cc:2731
+msgid "Sorry, you can't do that."
+msgstr ""
+
+#: abl-show.cc:2836
+msgid "  Ability - do what?                 Cost                       Success"
+msgstr ""
+
+#: abl-show.cc:2839
+msgid "  Ability - describe what?           Cost                       Success"
+msgstr ""
+
+#: abl-show.cc:2854
+msgid ""
+"Press '<w>!</w>' or '<w>?</w>' to toggle between ability selection and "
+"description."
+msgstr ""
+
+#: food.cc:2849
+msgid "Sultana"
+msgstr ""
+
+#: food.cc:2849
+msgid "Strawberry"
+msgstr ""
+
+#: food.cc:2849
+msgid "Choko"
+msgstr ""
+
+#: food.cc:2849
+msgid "Honeycomb"
+msgstr ""
+
+#: food.cc:2849
+msgid "Ration"
+msgstr ""
+
+#: startup.cc:149
+msgid "Loading complete, press any key to start."
+msgstr ""
+
+#: startup.cc:598
+msgid "Saved games:"
+msgstr ""
+
+#: abyss.cc:635
+msgid "Xom snickers loudly."
+msgstr "좀은 낄낄거리며 폭소했다."
+
+#: abyss.cc:1391
+msgid "This place is already infused with evil and corruption."
+msgstr "이 장소는 이미 사악함과 타락으로 물들어있다."
+
+#. / 아마도 lugonu의 것이겠지...
+#: abyss.cc:1419
+msgid "'s Hand of Corruption reaches out!"
+msgstr "의 타락의 손이 뻗쳐온다!"
+
+#: acquire.cc:1143
+msgid "The demon of the infinite void smiles upon you."
+msgstr "무한한 공허의 악마가 당신에게 미소지었다."
+
+#. / simple_god_message
+#: acquire.cc:1574
+msgid " snickers."
+msgstr "은(는) 낄낄대며 웃었다."
+
+#: acquire.cc:1604
+#, c-format
+msgid "%-24s[c] Jewellery      [d] Book"
+msgstr "%-24s[c] 장신구         [d] 책"
+
+#: acquire.cc:1605
+msgid "[a] Weapon  [b] Armour"
+msgstr "[a] 무기    [b] 방어구"
+
+#: acquire.cc:1606
+#, c-format
+msgid "%-24s[g] Miscellaneous  [h] %s [i] Gold"
+msgstr "%-24s[g] 기타           [h] %s [i] 돈"
+
+#: acquire.cc:1607
+msgid "[e] Staff   [f] Wand"
+msgstr "[e] 지팡이  [f] 마법봉"
+
+#: acquire.cc:1608
+msgid "Food "
+msgstr "음식 "
+
+#: acquire.cc:1609
+msgid "What kind of item would you like to acquire? "
+msgstr "어느 종류의 아이템을 획득할 것인가? "
+
+#: acquire.cc:1635
+msgid "Acquirement interrupted by HUP signal."
+msgstr "HUP Signal에 의해 획득이 중지됨."
+
+#: actor.cc:292
+#, c-format
+msgid "%s fall off the door."
+msgstr "%s은(는) 문 위로 떨어졌다."
+
+#: actor.cc:293
+#, c-format
+msgid "%s fall off the wall."
+msgstr "%s은(는) 벽 위로 떨어졌다."
+
+#. / god message
+#: areas.cc:260
+msgid " revokes the gift of sanctuary."
+msgstr "은(는) 성지의 선물을 해지하였다."
+
+#: areas.cc:290
+msgid "The sanctuary starts shrinking."
+msgstr "성지가 점점 작아지기 시작한다."
+
+#: areas.cc:308
+msgid "The sanctuary disappears."
+msgstr "성지가 사라졌다."
+
+#: areas.cc:421
+msgid "By Zin's power hidden traps are revealed to you."
+msgstr "진의 힘에 의해, 숨겨져 있던 함정들이 나타났다."
+
+#: areas.cc:427
+msgid "By Zin's power the foul cloud within the sanctuary is swept away."
+msgstr "진의 힘에 의해, 성지를 덮고 있던 구름들이 걷혔다."
+
+#: areas.cc:432
+msgid "By Zin's power all foul fumes within the sanctuary are swept away."
+msgstr "진의 힘으로 인해, 성지를 덮고 있던 연기들이 걷혔다."
+
+#: areas.cc:438
+msgid "By Zin's power all blood is cleared from the sanctuary."
+msgstr "진의 힘으로 인해, 성지 내에 있던 핏자국들이 깨끗이 지워졌다."
+
+#: areas.cc:443
+msgid " turns to flee the light!"
+msgstr " 은(는) 빛을 피해 달아나기 시작했다!"
+
+#: areas.cc:445
+msgid "The monsters scatter in all directions!"
+msgstr "몬스터들이 사방팔방으로 흩어졌다!"
+
+#. / monster가 당신의 무기를 노려보았다.
+#: attitude-change.cc:62
+msgid " glares at your weapon."
+msgstr "은(는) 당신의 무기를 노려보았다."
+
+#. / monster가 당신의 무기에 의해 움찔거림.
+#: attitude-change.cc:106
+msgid " flinches from your weapon."
+msgstr "은(는) 당신의 무기에 의해 움찔대었다."
+
+#. / 신의 소환수가 나를 버림.
+#: attitude-change.cc:166
+msgid " abandons you!"
+msgstr "은(는) 당신은 떠났다!"
+
+#. / 신이 회수해감.
+#: attitude-change.cc:216
+msgid " reclaims one of your granted undead slaves!"
+msgstr "은(는) 당신의 언데드 수하 중 하나를 회수하였다!"
+
+#. / 신이 회수해감.
+#: attitude-change.cc:219
+msgid " reclaims your granted undead slaves!"
+msgstr "은(는) 당신의 언데드 수하들을 회수하였다!"
+
+#. / 신이 회수해감.
+#: attitude-change.cc:222
+msgid " reclaims some of your granted undead slaves!"
+msgstr "은(는) 당신의 언데드 수하 중 일부를 회수하였다!"
+
+#. / beogh의 목소리가 이렇게 말함.
+#: attitude-change.cc:280
+msgid "'s voice booms out, \"Who do you think you are?\""
+msgstr "의 목소리가 울려퍼진다, \"너 자신이 누구라고 생각하는가?\""
+
+#: attitude-change.cc:288
+msgid "One of your followers decides to abandon you."
+msgstr "당신의 추종자 중 하나가 당신을 떠나기로 결심했다."
+
+#: attitude-change.cc:290
+msgid "Your followers decide to abandon you."
+msgstr "당신의 추종자들은 당신을 떠나기로 결심했다."
+
+#: attitude-change.cc:292
+msgid "Some of your followers decide to abandon you."
+msgstr "당신의 추종자들 중 일부가 당신을 떠나기로 결심했다."
+
+#: attitude-change.cc:469
+#, c-format
+msgid "%s stares at you suspiciously for a moment, then relaxes."
+msgstr "%s은(는) 잠시 당신을 수상쩍게 노려보았으나, 곧 안심하였다."
+
+#: attitude-change.cc:476
+#, c-format
+msgid "%s trembles before you."
+msgstr "%s은(는) 당신 앞에 몸을 떨었다."
+
+#: attitude-change.cc:488
+#, c-format
+msgid "%s looks hungrier."
+msgstr "%s은(는) 더욱 배고파 보인다."
+
+#: beam.cc:255
+msgid "You hear a mighty clap of thunder!"
+msgstr "커다란 천둥번개 소리가 들린다!"
+
+#: beam.cc:676
+#, c-format
+msgid "%s appears from out of thin air!"
+msgstr "%s이(가) 갑자기 나타났다!"
+
+#: beam.cc:816
+msgid "The damaged grate falls apart into pieces."
+msgstr "쇠살대가 산산히 부서졌다."
+
+#. / slime pit의 slimey wall을 지칭하는 말이 들어가야함.
+#: beam.cc:821
+msgid "slime"
+msgstr "슬라임"
+
+#. / 판데모니엄의 벽을 지칭하는 말임.
+#: beam.cc:824
+msgid "weird stuff"
+msgstr "괴상한 것"
+
+#. / 일반 벽
+#: beam.cc:827
+msgid "rock"
+msgstr "바위"
+
+#: beam.cc:828
+#, c-format
+msgid "The %s liquefies and sinks out of sight."
+msgstr "%s은(는) 액화되어 시야에서 사라졌다."
+
+#: beam.cc:857
+msgid "The wax appears to soften slightly."
+msgstr "밀납이 살짝 부드러워졌다."
+
+#: beam.cc:860
+msgid "You smell warm wax."
+msgstr "당신은 따뜻한 밀납의 냄새를 맡았다."
+
+#: beam.cc:868
+msgid "The wax bubbles and burns!"
+msgstr "밀납이 거품을 내며 타기 시작한다!"
+
+#: beam.cc:870
+msgid "You smell burning wax."
+msgstr "당신은 불타는 밀납의 냄새를 맡았다."
+
+#: beam.cc:883
+msgid "The tree burns like a torch!"
+msgstr "나무가 횃불처럼 불타오른다!"
+
+#: beam.cc:885
+msgid "You smell burning wood."
+msgstr "당신은 나무가 타는 냄새를 맡았다."
+
+#: beam.cc:934
+msgid "You hear a grinding noise."
+msgstr "갈려 없어지는 소음이 들린다."
+
+#: beam.cc:942
+msgid "You hear the screech of bent metal."
+msgstr "금속이 구부러지는 날카로운 소리가 들린다."
+
+#: beam.cc:951
+msgid "You hear a hideous screaming!"
+msgstr "끔찍한 비명소리가 들린다!"
+
+#: beam.cc:953
+msgid "The idol screams as its substance crumbles away!"
+msgstr "입상이 비명소리를 내며 무너져내린다!"
+
+#: beam.cc:957
+msgid "The idol twists and shakes as its substance crumbles away!"
+msgstr "입상이 뒤틀리고 진동하며 무너져 내린다!"
+
+#: beam.cc:963
+msgid "The tree breaks and falls down!"
+msgstr "나무가 부러져 쓰러졌다!"
+
+#: beam.cc:966
+msgid "You hear timber falling."
+msgstr "나뭇가지가 떨어지는 소리가 들린다."
+
+#: behold.cc:35
+#, c-format
+msgid "%s's singing sounds muted, and has no effect on you."
+msgstr "%s의 노랫소리가 멈추었고, 이제 당신에게 영향을 주지 않는다."
+
+#: behold.cc:40
+msgid "The melody is strangely muted, and has no effect on you."
+msgstr "노랫소리가 별안간 멈추었고, 이제 당신에게 영향을 주지 않는다."
+
+#: behold.cc:47 behold.cc:173
+#, c-format
+msgid "%s's is no longer quite as mesmerising!"
+msgstr ""
+
+#: behold.cc:51 behold.cc:177
+msgid "Your mesmeriser suddenly seems less interesting!"
+msgstr "노랫소리가 더이상 흥미롭게 들리지 않는다."
+
+#: behold.cc:64
+#, c-format
+msgid "You are mesmerised by %s!"
+msgstr "당신은 %s의 최면에 걸려있다!"
+
+#: behold.cc:143
+msgid "For a moment, your mind becomes perfectly clear!"
+msgstr "잠시동안, 정신이 완전히 맑아졌다!"
+
+#: behold.cc:163
+#, c-format
+msgid "%s's singing becomes strangely muted."
+msgstr "%s의 노랫소리가 별안간 멈추었다."
+
+#: behold.cc:167
+msgid "Something's singing becomes strangely muted."
+msgstr "누군가의 노랫소리가 별안간 멈추었다."
+
+#: behold.cc:190
+#, c-format
+msgid "You can no longer hear %s's singing!"
+msgstr "더 이상 %s의 노랫소리가 들리지 않는다!"
+
+#: behold.cc:195
+msgid "The silence clears your mind."
+msgstr "고요함에 정신이 맑아졌다."
+
+#: behold.cc:201
+#, c-format
+msgid "%s stops singing."
+msgstr "%s은(는) 노래를 멈추었다."
+
+#: behold.cc:203
+#, c-format
+msgid "%s is no longer quite as mesmerising!"
+msgstr "%s의 노래는 더이상 최면 효과가 없다!"
+
+#: behold.cc:209
+msgid "Something stops singing."
+msgstr "무언가가 노래를 멈추었다."
+
+#: behold.cc:211
+msgid "Your mesmeriser is now quite boring!"
+msgstr "이제 노랫소리가 지루하게 들린다!"
+
+#: behold.cc:256
+msgid "You break out of your daze!"
+msgstr "현혹에서 벗어나 정신을 차렸다!"
+
+#: behold.cc:257
+msgid "You are no longer entranced."
+msgstr "황홀한 감정이 사라졌다."
+
+#: branch.cc:148
+msgid "You sense the appearance of a powerful magical force which warps space."
+msgstr "강력한 마법의 힘이 공간을 왜곡시키는 것을 감지했다"
+
+#: branch.cc:155
+msgid ""
+"A powerful force appears that prevents you from remembering where you've "
+"been."
+msgstr "무언가 강력한 힘이 당신이 어디에 있었는지를 기억하지 못하게 한다."
+
+#. Isn't really a "recovery", but I couldn't think of where
+#. else to send it.
+#: branch.cc:181
+msgid "Space seems to straighten in your vicinity."
+msgstr "당신 주변의 공간들이 바로잡히는 듯 보인다."
+
+#. Isn't really a "recovery", but I couldn't think of where
+#. else to send it.
+#: branch.cc:189
+msgid "An oppressive force seems to lift."
+msgstr "억압해오던 힘이 사라진 듯 하다."
+
+#: cloud.cc:217
+msgid "The forest fire spreads!"
+msgstr "나무에 불이 옮겨 붙었다!"
+
+#: cloud.cc:340
+msgid "The rain has left you waist-deep in water!"
+msgstr "세찬 비로 인해 허리까지 빗물이 차올랐다!"
+
+#. / 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
+#: cloud.cc:861
+#, c-format
+msgid "%s %s in the rain."
+msgstr ""
+
+#: cloud.cc:878
+msgid "The rain washes away your illusions!"
+msgstr "당신의 환영들이 비에 씻겨 사라졌다!"
+
+#: cloud.cc:892
+msgid "You choke on the stench!"
+msgstr "심한 악취에 숨이 막힌다!"
+
+#: cloud.cc:952
+msgid "Strange energies course through your body."
+msgstr "기묘한 에너지가 당신의 몸속을 따라 흘렀다."
+
+#. / 한글화 하기 어려움. 일단 내비둘것.
+#: cloud.cc:1335
+#, c-format
+msgid "%s %s standing in the rain."
+msgstr ""
+
+#. / 한글화 하기 몹시 어려움. 내비둘것.
+#: cloud.cc:1343
+#, c-format
+msgid "%s %s in %s."
+msgstr ""
+
+#: command.cc:215
+msgid ""
+"<cyan>[ +/L-click : Page down.   - : Page up.           Esc/R-click exits.]"
+msgstr ""
+
+#: command.cc:218
+msgid ""
+"<cyan>[ + : Page down.   - : Page up.                           Esc exits.]"
+msgstr ""
+
+#: command.cc:267
+msgid "Adjust (i)tems, (s)pells, or (a)bilities? "
+msgstr "어떤 키를 조절할 것인가?\n[i]아이템 [s]주문 [a]특수능력"
+
+#: command.cc:333
+msgid "Adjust which item?"
+msgstr "어느 아이템 키를 바꿀 것인가?"
+
+#: command.cc:339 command.cc:397 command.cc:480
+msgid "Adjust to which letter? "
+msgstr "어느 키로 바꿀 것인가?"
+
+#. Select starting slot
+#: command.cc:362
+msgid "Adjust which spell? "
+msgstr "어느 주문의 키를 바꿀 것인가?"
+
+#: command.cc:386
+msgid "You don't know that spell."
+msgstr "당신은 습득한 주문이 없다."
+
+#: command.cc:432
+msgid "You don't currently have any abilities."
+msgstr "당신은 현재 아무 특수능력도 가지고 있지 않다."
+
+#: command.cc:439
+msgid "Adjust which ability? (? or * to list) "
+msgstr "어느 특수능력의 키를 바꿀 것인가? (? 또는 *로 리스트)"
+
+#: command.cc:467
+msgid "No such ability."
+msgstr "그런 특수능력은 없다."
+
+#: command.cc:493
+msgid "That would be singularly pointless."
+msgstr "이건 뭐 의미도 없고 감동도 없고..."
+
+#. / 키가 바뀌었음을 알려주는 메시지.
+#. / Swapping with: a - evoke skill 따위의 내용이 됨.
+#: command.cc:505
+msgid "Swapping with: "
+msgstr "키를 교체함: "
+
+#. / Moving to: key - skill name 따위의 내용이 됨.
+#: command.cc:516
+msgid "Moving to: "
+msgstr "키를 이동함: "
+
+#: command.cc:538
+msgid "Cloak  "
+msgstr "망토   "
+
+#: command.cc:539
+msgid "Helmet "
+msgstr "머리   "
+
+#: command.cc:540
+msgid "Gloves "
+msgstr "장갑   "
+
+#: command.cc:541
+msgid "Shield "
+msgstr "방패   "
+
+#: command.cc:542
+msgid "Armour "
+msgstr "갑옷   "
+
+#: command.cc:545
+msgid "Barding"
+msgstr "마갑   "
+
+#: command.cc:546
+msgid "Boots  "
+msgstr "신발   "
+
+#: command.cc:547 command.cc:603
+msgid "unknown"
+msgstr "미확인 "
+
+#: command.cc:551
+msgid "    (unavailable)"
+msgstr "       (착용불가)"
+
+#: command.cc:555 command.cc:609 command.cc:661
+msgid "    (currently unavailable)"
+msgstr "            (현재 착용불가)"
+
+#: command.cc:565
+msgid "    (restricted)"
+msgstr "        (방해됨)"
+
+#: command.cc:592
+msgid "Left ring"
+msgstr "왼손     "
+
+#: command.cc:593
+msgid "Right ring"
+msgstr "오른손    "
+
+#: command.cc:594
+msgid "Amulet"
+msgstr "부적  "
+
+#: command.cc:595
+msgid "1st ring"
+msgstr "첫째 반지  "
+
+#: command.cc:596
+msgid "2nd ring"
+msgstr "둘째 반지  "
+
+#: command.cc:597
+msgid "3rd ring"
+msgstr "셋째 반지  "
+
+#: command.cc:598
+msgid "4th ring"
+msgstr "넷째 반지  "
+
+#: command.cc:599
+msgid "5th ring"
+msgstr "다섯째 반지"
+
+#: command.cc:600
+msgid "6th ring"
+msgstr "여섯째 반지"
+
+#: command.cc:601
+msgid "7th ring"
+msgstr "일곱째 반지"
+
+#: command.cc:602
+msgid "8th ring"
+msgstr "여덟째 반지"
+
+#. Output the current weapon
+#.
+#. Yes, this is already on the screen... I'm outputing it
+#. for completeness and to avoid confusion.
+#: command.cc:645
+msgid "Current   : "
+msgstr "현재      : "
+
+#. / 칼날의 손
+#: command.cc:659
+msgid "    blade "
+msgstr "   칼날의 "
+
+#: command.cc:663
+msgid "    empty "
+msgstr " 비어있는 "
+
+#: command.cc:678
+msgid "Primary   : "
+msgstr "주        : "
+
+#: command.cc:680
+msgid "Secondary : "
+msgstr "보조      : "
+
+#: command.cc:694
+msgid "    none"
+msgstr "    없음"
+
+#. Now we print out the current default fire weapon.
+#: command.cc:703
+msgid "Firing    : "
+msgstr "발사      : "
+
+#: command.cc:714
+msgid "    nothing"
+msgstr "       없음"
+
+#: command.cc:720
+msgid " (empty)"
+msgstr "  (없음)"
+
+#: command.cc:747
+msgid ""
+"<h>Examine surroundings ('<w>x</w><h>' in main):\n"
+"<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
+"<w>Dir.</w>: move cursor in that direction\n"
+"<w>.</w> : move to cursor (also <w>Enter</w>, <w>Del</w>)\n"
+"<w>v</w> : describe monster under cursor\n"
+"<w>+</w> : cycle monsters forward (also <w>=</w>)\n"
+"<w>-</w> : cycle monsters backward\n"
+"<w>*</w> : cycle objects forward\n"
+"<w>/</w> : cycle objects backward (also <w>;</w>)\n"
+"<w>^</w> : cycle through traps\n"
+"<w>_</w> : cycle through altars\n"
+"<w><<</w>/<w>></w> : cycle through up/down stairs\n"
+"<w>Tab</w> : cycle through shops and portals\n"
+"<w>e</w> : create/remove travel exclusion\n"
+"<w>Ctrl-F</w> : monster targeting modes\n"
+"<w>Ctrl-L</w> : targeting via monster list\n"
+"<w>Ctrl-P</w> : repeat prompt\n"
+msgstr "<h>주변을 조사 ('<w>x</w><h>'):\n"
+"<w>Esc</w> : 취소 (<w>Space</w>, <w>x</w>)\n"
+"<w>방향키</w>: 해당 방향으로 커서 이동\n"
+"<w>.</w> : 커서로 이동 (<w>Enter</w>, <w>Del</w>)\n"
+"<w>v</w> : 커서가 가리키는 몬스터 정보 \n"
+"<w>+</w> : 다음 몬스터 선택 (<w>=</w>)\n"
+"<w>-</w> : 이전 몬스터 선택\n"
+"<w>*</w> : 다음 물체 선택\n"
+"<w>/</w> : 이전 물체 선택 (<w>;</w>)\n"
+"<w>^</w> : 함정 선택\n"
+"<w>_</w> : 제단 선택\n"
+"<w><<</w>/<w>></w> : 계단 선택\n"
+"<w>Tab</w> : 상점과 포탈 선택\n"
+"<w>e</w> : 특정 타겟을 제외 또는 해제\n"
+"<w>Ctrl-F</w> : 몬스터 타게팅 모드\n"
+"<w>Ctrl-L</w> : 몬스터 리스트를 통해 타게팅t\n"
+"<w>Ctrl-P</w> : 명령어창 반복\n"
+
+
+#: command.cc:747
+msgid ""
+"<h>Examine surroundings ('<w>x</w><h>' in main):\n"
+"<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
+"<w>Dir.</w>: move cursor in that direction\n"
+"<w>.</w> : move to cursor (also <w>Enter</w>, <w>Del</w>)\n"
+"<w>v</w> : describe monster under cursor\n"
+"<w>+</w> : cycle monsters forward (also <w>=</w>)\n"
+"<w>-</w> : cycle monsters backward\n"
+"<w>*</w> : cycle objects forward\n"
+"<w>/</w> : cycle objects backward (also <w>;</w>)\n"
+"<w>^</w> : cycle through traps\n"
+"<w>_</w> : cycle through altars\n"
+"<w><<</w>/<w>></w> : cycle through up/down stairs\n"
+"<w>Tab</w> : cycle through shops and portals\n"
+"<w>e</w> : create/remove travel exclusion\n"
+"<w>Ctrl-F</w> : monster targeting modes\n"
+"<w>Ctrl-P</w> : repeat prompt\n"
+msgstr "<h>주변을 조사 ('<w>x</w><h>'):\n"
+"<w>Esc</w> : 취소 (<w>Space</w>, <w>x</w>)\n"
+"<w>방향키</w>: 해당 방향으로 커서 이동\n"
+"<w>.</w> : 커서로 이동 (<w>Enter</w>, <w>Del</w>)\n"
+"<w>v</w> : 커서가 가리키는 몬스터 정보 \n"
+"<w>+</w> : 다음 몬스터 선택 (<w>=</w>)\n"
+"<w>-</w> : 이전 몬스터 선택\n"
+"<w>*</w> : 다음 물체 선택\n"
+"<w>/</w> : 이전 물체 선택 (<w>;</w>)\n"
+"<w>^</w> : 함정 선택\n"
+"<w>_</w> : 제단 선택\n"
+"<w><<</w>/<w>></w> : 계단 선택\n"
+"<w>Tab</w> : 상점과 포탈 선택\n"
+"<w>e</w> : 특정 타겟을 제외 또는 해제\n"
+"<w>Ctrl-F</w> : 몬스터 타게팅 모드\n"
+"<w>Ctrl-P</w> : 명령어창 반복\n"
+
+#: command.cc:788
+msgid ""
+"<h>Targeting (zap wands, cast spells, etc.):\n"
+"Most keys from examine surroundings work.\n"
+"Some keys fire at the target. By default,\n"
+"range is respected and beams don't stop.\n"
+"<w>Enter</w> : fire (<w>Space</w>, <w>Del</w>)\n"
+"<w>.</w> : fire, stop at target\n"
+"<w>@</w> : fire, stop at target, ignore range\n"
+"<w>!</w> : fire, don't stop, ignore range\n"
+"<w>p</w> : fire at Previous target (also <w>f</w>)\n"
+"<w>:</w> : show/hide beam path\n"
+"<w>Shift-Dir.</w> : fire straight-line beam\n"
+"\n"
+"<h>Firing or throwing a missile:\n"
+"<w>(</w> : cycle to next suitable missile.\n"
+"<w>)</w> : cycle to previous suitable missile.\n"
+"<w>i</w> : choose from Inventory.\n"
+msgstr "<h>타겟팅 (마법봉 발동, 주문 시전 등등):\n"
+"대부분의 키는 주변을 조사하는데 사용.\n"
+"몇몇 키는 대상에게 마법봉이나 주문 등을 발사하는데 사용(디폴트),\n"
+"사정거리는 더 높이 평가될수 있으며, 발사체는 멈추지 않음.\n"
+"<w>Enter</w> : 발사 (<w>Space</w>, <w>Del</w>)\n"
+"<w>.</w> : 발사, 대상에서 멈춤\n"
+"<w>@</w> : 발사, 대상에서 멈추며 사정거리 무시\n"
+"<w>!</w> : 발사, 멈추지 않으며 사정거리 무시\n"
+"<w>p</w> : 이전 대상에게 발사 (<w>f</w>)\n"
+"<w>:</w> : 발사 경로를 보이기/감추기\n"
+"<w>Shift-Dir.</w> : 해당 직선 방향으로 발사\n"
+"\n"
+"<h>발사체를 발사 혹은 투척함:\n"
+"<w>(</w> : 다음 발사체 선택.\n"
+"<w>)</w> : 이전 발사체 선택.\n"
+"<w>i</w> : 아이템 목록을 통해 선택.\n"
+
+#: command.cc:930
+msgid "Describe which? "
+msgstr "어느 것의 정보를 볼 것인가? "
+
+#: command.cc:935
+msgid "(CTRL-S to sort by monster toughness)"
+msgstr "(CTRL-S키 : 강한 몬스터 순으로 정렬)"
+
+#: command.cc:937
+msgid "(CTRL-S to sort by name)"
+msgstr "(CTRL-S키 : 이름 순으로 정렬)"
+
+#: describe.cc:429 describe.cc:436
+#, c-format
+msgid "It affects your AC (%d)."
+msgstr ""
+
+#: describe.cc:430 describe.cc:437
+#, c-format
+msgid "It affects your evasion (%d)."
+msgstr "이것은 당신의 방어력에 영향을 준다 (%d)."
+
+#: describe.cc:431 describe.cc:438
+#, c-format
+msgid "It affects your strength (%d)."
+msgstr "이것은 당신의 힘에 영향을 준다 (%d)."
+
+#: describe.cc:432 describe.cc:439
+#, c-format
+msgid "It affects your intelligence (%d)."
+msgstr "이것은 당신의 지능에 영향을 준다 (%d)."
+
+#: describe.cc:433 describe.cc:440
+#, c-format
+msgid "It affects your dexterity (%d)."
+msgstr "이것은 당신의 민첩에 영향을 준다 (%d)."
+
+#: describe.cc:434 describe.cc:441
+#, c-format
+msgid "It affects your accuracy (%d)."
+msgstr "이것은 당신의 명중률에 영향을 준다 (%d)."
+
+#: describe.cc:435 describe.cc:442
+#, c-format
+msgid "It affects your damage-dealing abilities (%d)."
+msgstr "이것은 당신의 공격력에 영향을 준다 (%d)."
+
+#: describe.cc:436 describe.cc:443
+msgid "fire"
+msgstr "화염"
+
+#: describe.cc:437 describe.cc:444
+msgid "cold"
+msgstr "냉기"
+
+#: describe.cc:438 describe.cc:445
+msgid "It insulates you from electricity."
+msgstr "이것은 당신을 전기 쇼크로부터 보호한다."
+
+#: describe.cc:439 describe.cc:446
+msgid "It protects you from poison."
+msgstr "이것은 당신을 독으로부터 보호한다."
+
+#: describe.cc:440 describe.cc:447
+msgid "negative energy"
+msgstr "음에너지"
+
+#: describe.cc:441 describe.cc:448
+msgid "It increases your resistance to enchantments."
+msgstr "이것은 마법에 대한 당신의 저항력을 높여준다."
+
+#: describe.cc:442 describe.cc:449
+#, c-format
+msgid "It affects your mana capacity (%d)."
+msgstr "이것은 당신의 마력에 영향을 준다 (%d)."
+
+#: describe.cc:443 describe.cc:450
+msgid "It enhances your eyesight."
+msgstr "이것은 당신의 시야를 향상시킨다."
+
+#: describe.cc:444 describe.cc:451
+msgid "It lets you turn invisible."
+msgstr "이것은 당신이 투명화를 할 수 있게 해준다."
+
+#: describe.cc:445 describe.cc:452
+msgid "It lets you levitate."
+msgstr "이것은 당신이 공중부양을 할 수 있게 해준다."
+
+#: describe.cc:446 describe.cc:453
+msgid "It lets you blink."
+msgstr "이것은 당신이 순간이동을 할 수 있게 해준다."
+
+#: describe.cc:447 describe.cc:454
+msgid "It lets you go berserk."
+msgstr "이것은 당신이 광폭화를 할 수 있게 해준다."
+
+#: describe.cc:448 describe.cc:455
+msgid "It makes noises."
+msgstr "이것은 소음을 유발한다."
+
+#: describe.cc:449 describe.cc:456
+msgid "It prevents spellcasting."
+msgstr "이것은 당신의 주문시전을 방해한다."
+
+#: describe.cc:450 describe.cc:457
+msgid "It causes teleportation."
+msgstr "이것은 뜻하지 않은 공간이동을 일으킨다."
+
+#: describe.cc:451 describe.cc:458
+msgid "It prevents most forms of teleportation."
+msgstr "이것은 대부분의 공간이동을 방해한다."
+
+#: describe.cc:453 describe.cc:460
+msgid "It makes you angry."
+msgstr "이것은 당신을 분노하게 한다."
+
+#: describe.cc:454 describe.cc:461
+msgid "It may recurse itself."
+msgstr "이것은 때때로 자기자신을 저주한다."
+
+#: describe.cc:455 describe.cc:462
+msgid "It slows your movement."
+msgstr "이것은 당신의 이동을 늦춘다."
+
+msgid "It makes you extremely vulnerable to fire."
+msgstr "이것은 당신을 화염에 굉장히 취약하게 만든다."
+
+msgid "It makes you extremely vulnerable to cold."
+msgstr "이것은 당신을 냉기에 굉장히 취약하게 만든다."
+
+msgid "It makes you extremely vulnerable to negative energy."
+msgstr "이것은 당신을 음에너지에 굉장히 취약하게 만든다."
+
+msgid "It makes you very vulnerable to fire."
+msgstr "이것은 당신을 화염에 꽤나 취약하게 만든다."
+
+msgid "It makes you very vulnerable to cold."
+msgstr "이것은 당신을 냉기에 꽤나 취약하게 만든다."
+
+msgid "It makes you very vulnerable to negative energy."
+msgstr "이것은 당신을 음에너지에 꽤나 취약하게 만든다."
+
+#: describe.cc:485 describe.cc:492
+msgid "It makes you vulnerable to fire."
+msgstr "이것은 당신을 화염에 취약하게 만든다."
+
+msgid "It makes you vulnerable to cold."
+msgstr "이것은 당신을 냉기에 취약하게 만든다."
+
+msgid "It makes you vulnerable to negative energy."
+msgstr "이것은 당신을 음에너지에 취약하게 만든다."
+
+#: describe.cc:487 describe.cc:494
+msgid "It protects you from fire."
+msgstr "이것은 당신을 화염으로부터 보호한다."
+
+msgid "It protects you from cold."
+msgstr "이것은 당신을 냉기로부터 보호한다."
+
+msgid "It protects you from negative energy."
+msgstr "이것은 당신을 음에너지로부터 보호한다."
+
+#: describe.cc:488 describe.cc:495
+msgid "It greatly protects you from fire."
+msgstr "이것은 당신을 화염으로부터 상당히 보호한다."
+
+msgid "It greatly protects you from cold."
+msgstr "이것은 당신을 냉기로부터 상당히 보호한다."
+
+msgid "It greatly protects you from negative energy."
+msgstr "이것은 당신을 음에너지로부터 상당히 보호한다."
+
+#: describe.cc:489 describe.cc:496
+msgid "It renders you almost immune to fire."
+msgstr "이것은 당신이 화염에 거의 면역이 되게 한다."
+
+msgid "It renders you almost immune to cold."
+msgstr "이것은 당신이 냉기에 거의 면역이 되게 한다."
+
+msgid "It renders you almost immune to negative energy."
+msgstr "이것은 당신이 음에너지에 거의 면역이 되게 한다."
+
+#: describe.cc:503 describe.cc:510
+msgid ""
+"\n"
+"It greatly speeds your metabolism."
+msgstr "\n이것은 당신의 신진대사 속도를 급격히 가속시킨다."
+
+#: describe.cc:505 describe.cc:512
+msgid ""
+"\n"
+"It speeds your metabolism. "
+msgstr "\n이것은 당신의 신진대사 속도를 가속시킨다."
+
+#: describe.cc:512 describe.cc:519
+msgid ""
+"\n"
+"It makes you much less stealthy."
+msgstr "\n이것은 당신의 은밀한 움직임을 크게 방해한다."
+
+#: describe.cc:514 describe.cc:521
+msgid ""
+"\n"
+"It makes you less stealthy."
+msgstr "\n이것은 당신의 은밀한 움직임을 방해한다."
+
+#: describe.cc:516 describe.cc:523
+msgid ""
+"\n"
+"It makes you more stealthy."
+msgstr "\n이것은 당신의 움직임을 조용하게 한다."
+
+#: describe.cc:518 describe.cc:525
+msgid ""
+"\n"
+"It makes you much more stealthy."
+msgstr "\n이것은 당신의 움직임을 크게 조용하게 한다."
+
+#: describe.cc:524 describe.cc:531
+msgid ""
+"\n"
+"It glows with mutagenic radiation."
+msgstr "\n이것은 돌연변이를 유발하는 방사능으로 빛난다."
+
+#: describe.cc:526 describe.cc:533
+msgid ""
+"\n"
+"It emits mutagenic radiation."
+msgstr "\n이것은 돌연변이를 유발하는 방사능을 발생시킨다."
+
+#: describe.cc:591 describe.cc:598
+msgid " huge, barrel-shaped "
+msgstr " 크고, 통 같은 모양의 "
+
+#: describe.cc:592 describe.cc:599
+msgid " wispy, insubstantial "
+msgstr " 야무지지 못하고, 보잘 것 없어 보이는 "
+
+#: describe.cc:593 describe.cc:600
+msgid " spindly "
+msgstr " 가는 "
+
+#: describe.cc:594 describe.cc:601
+msgid " skeletal "
+msgstr " 뼈가 앙상한 "
+
+#: describe.cc:595 describe.cc:602
+msgid " horribly deformed "
+msgstr " 끔찍하게 변형된 "
+
+#: describe.cc:596 describe.cc:603
+msgid " spiny "
+msgstr " 가시로 뒤덮인 "
+
+#: describe.cc:597 describe.cc:604
+msgid " waif-like "
+msgstr " 앙상한 모습의 "
+
+#: describe.cc:598 describe.cc:605
+msgid " scaly "
+msgstr " 비늘로 뒤덮인 "
+
+#: describe.cc:599 describe.cc:606
+msgid " sickeningly deformed "
+msgstr " 구역질나게 변형된 "
+
+#: describe.cc:600 describe.cc:607
+msgid " bruised and bleeding "
+msgstr " 곳곳이 멍들고 피를 흘리는 "
+
+#: describe.cc:601 describe.cc:608
+msgid " sickly "
+msgstr " 허약해 보이는 "
+
+#: describe.cc:602 describe.cc:609
+msgid " mass of writhing tentacles for a "
+msgstr " 많은 촉수가 흐느적거리는 "
+
+#: describe.cc:603 describe.cc:610
+msgid " mass of ropey tendrils for a "
+msgstr " 많은 가지가 달려있는 "
+
+#: describe.cc:604 describe.cc:611
+msgid " tree trunk-like "
+msgstr " 꼭 베어낸 통나무 같은 "
+
+#: describe.cc:605 describe.cc:612
+msgid " hairy "
+msgstr " 털이 돋아난 "
+
+#: describe.cc:606 describe.cc:613
+msgid " furry "
+msgstr " 털로 덮여있는 "
+
+#: describe.cc:607 describe.cc:614
+msgid " fuzzy "
+msgstr " 보송보송한 털로 둘러싸인 "
+
+#: describe.cc:608 describe.cc:615
+msgid "n obese "
+msgstr " 육중한 "
+
+#: describe.cc:609 describe.cc:616
+msgid " fat "
+msgstr " 뚱뚱한 "
+
+#: describe.cc:610 describe.cc:617
+msgid " slimy "
+msgstr " 점액질의 "
+
+#: describe.cc:611 describe.cc:618
+msgid " wrinkled "
+msgstr " 주름이 난 "
+
+#: describe.cc:612 describe.cc:619
+msgid " metallic "
+msgstr " 금속성의 "
+
+#: describe.cc:613 describe.cc:620
+msgid " glassy "
+msgstr " 유리와 같은 "
+
+#: describe.cc:614 describe.cc:621
+msgid " crystalline "
+msgstr " 수정 재질의 "
+
+#: describe.cc:615 describe.cc:622
+msgid " muscular "
+msgstr " 근육질의 "
+
+#: describe.cc:616 describe.cc:623
+msgid "n icky "
+msgstr " 끈적한 "
+
+#: describe.cc:617 describe.cc:624
+msgid " swollen "
+msgstr " 부어오른 "
+
+#: describe.cc:618 describe.cc:625
+msgid " lumpy "
+msgstr " 종양 투성이의 "
+
+#: describe.cc:619 describe.cc:626
+msgid "n armoured "
+msgstr " 갑옷같은 "
+
+#: describe.cc:620 describe.cc:627
+msgid " carapaced "
+msgstr " 껍질로 둘러싸인 "
+
+#: describe.cc:621 describe.cc:628
+msgid " slender "
+msgstr " 늘씬한 "
+
+#: describe.cc:625 describe.cc:632
+msgid " with small insectoid wings"
+msgstr " 작은 곤충의 날개가 달려있다"
+
+#: describe.cc:626 describe.cc:633
+msgid " with large insectoid wings"
+msgstr " 큰 곤충의 날개가 달려있다"
+
+#: describe.cc:627 describe.cc:634
+msgid " with moth-like wings"
+msgstr " 모기 날개를 달고있다"
+
+#: describe.cc:628 describe.cc:635
+msgid " with butterfly wings"
+msgstr " 나비 날개를 달고있다"
+
+#: describe.cc:629 describe.cc:636
+msgid " with huge, bat-like wings"
+msgstr " 거대한 박쥐 모양의 날개를 달고있다"
+
+#: describe.cc:630 describe.cc:637
+msgid " with fleshy wings"
+msgstr " 살갗으로 된 날개를 달고있다"
+
+#: describe.cc:631 describe.cc:638
+msgid " with small, bat-like wings"
+msgstr " 작은 박쥐 모양의 날개를 달고있다"
+
+#: describe.cc:632 describe.cc:639
+msgid " with hairy wings"
+msgstr " 털이 난 날개를 달고있다"
+
+#: describe.cc:633 describe.cc:640
+msgid " with great feathered wings"
+msgstr " 깃털이 달린 거대한 날개를 달고있다"
+
+#: describe.cc:634 describe.cc:641
+msgid " with shiny metal wings"
+msgstr " 빛나는 금속성의 날개를 달고있다"
+
+#: describe.cc:638 describe.cc:645
+msgid " which hovers in mid-air"
+msgstr " 공중에서 부양하고 있다"
+
+#: describe.cc:639 describe.cc:646
+msgid " with sacs of gas hanging from its back"
+msgstr " 등에 달린 가스 주머니로 공중에 떠있다"
+
+#: describe.cc:643 describe.cc:650
+msgid " covered in tiny crawling spiders"
+msgstr " 작은 거미들로 뒤덮여 있다"
+
+#: describe.cc:644 describe.cc:651
+msgid " covered in tiny crawling insects"
+msgstr " 작은 벌레들로 뒤덮여 있다"
+
+#: describe.cc:645 describe.cc:652
+msgid " and the head of a crocodile"
+msgstr " 악어의 머리를 하고 있다"
+
+#: describe.cc:646 describe.cc:653
+msgid " and the head of a hippopotamus"
+msgstr " 하마의 머리를 하고 있다"
+
+#: describe.cc:647 describe.cc:654
+msgid " and a cruel curved beak for a mouth"
+msgstr " 입에는 소름끼치게 휘어진 부리가 달려있다"
+
+#: describe.cc:648 describe.cc:655
+msgid " and a straight sharp beak for a mouth"
+msgstr " 입에는 쭉 뻗고 날카로운 부리를 가지고 있다"
+
+#: describe.cc:649 describe.cc:656
+msgid " and no head at all"
+msgstr " 머리는 없다"
+
+#: describe.cc:650 describe.cc:657
+msgid " and a hideous tangle of tentacles for a mouth"
+msgstr " 입에는 흉측한 촉수들을 날름거리고 있다"
+
+#: describe.cc:651 describe.cc:658
+msgid " and an elephantine trunk"
+msgstr " 코끼리같이 생긴 코가 달려있다"
+
+#: describe.cc:652 describe.cc:659
+msgid " and an evil-looking proboscis"
+msgstr " 사악해보이는 코가 달려있다"
+
+#: describe.cc:653 describe.cc:660
+msgid " and dozens of eyes"
+msgstr " 수십개의 눈을 가지고 있다"
+
+#: describe.cc:654 describe.cc:661
+msgid " and two ugly heads"
+msgstr " 두 개의 못생긴 머리가 달려있다"
+
+#: describe.cc:655 describe.cc:662
+msgid " and a long serpentine tail"
+msgstr " 길고 꾸불꾸불한 꼬리가 달려있다"
+
+#: describe.cc:656 describe.cc:663
+msgid " and a pair of huge tusks growing from its jaw"
+msgstr " 입가에 한 쌍의 커다란 어금니가 자라 있다"
+
+#: describe.cc:657 describe.cc:664
+msgid " and a single huge eye, in the centre of its forehead"
+msgstr " 앞머리 중앙에 큰 하나의 눈이 달려있다"
+
+#: describe.cc:658 describe.cc:665
+msgid " and spikes of black metal for teeth"
+msgstr " 검은 금속성의 이빨을 가지고 있다"
+
+#: describe.cc:659 describe.cc:666
+msgid " and a disc-shaped sucker for a head"
+msgstr " 머리엔 원반 모양의 빨판이 달려있다"
+
+#: describe.cc:660 describe.cc:667
+msgid " and huge, flapping ears"
+msgstr " 크고 펄럭거리는 귀를 갖고 있다"
+
+#: describe.cc:661 describe.cc:668
+msgid " and a huge, toothy maw in the centre of its chest"
+msgstr " 가슴에 크고 이빨이 난 위장을 내어놓고 있다"
+
+#: describe.cc:662 describe.cc:669
+msgid " and a giant snail shell on its back"
+msgstr " 등에 큰 달팽이집이 달려있다"
+
+#: describe.cc:663 describe.cc:670
+msgid " and a dozen heads"
+msgstr " 12개의 머리가 달려있다"
+
+#: describe.cc:664 describe.cc:671
+msgid " and the head of a jackal"
+msgstr " 자칼 머리를 하고있다"
+
+#: describe.cc:665 describe.cc:672
+msgid " and the head of a baboon"
+msgstr " 원숭이 머리를 하고있다"
+
+#: describe.cc:666 describe.cc:673
+msgid " and a huge, slobbery tongue"
+msgstr " 크고 질척거리는 혀를 내밀고 있다"
+
+#: describe.cc:667 describe.cc:674
+msgid " which is covered in oozing lacerations"
+msgstr " 점액으로 뒤덮여있다"
+
+#: describe.cc:668 describe.cc:675
+msgid " and the head of a frog"
+msgstr " 개구리 머리를 하고 있다"
+
+#: describe.cc:669 describe.cc:676
+msgid " and the head of a yak"
+msgstr " 야크 머리를 하고 있다"
+
+#: describe.cc:670 describe.cc:677
+msgid " and eyes out on stalks"
+msgstr " 자루눈을 하고 있다"
+
+#: describe.cc:674 describe.cc:681
+msgid " It seethes with hatred of the living."
+msgstr ""
+
+#: describe.cc:675 describe.cc:682
+msgid " Tiny orange flames dance around it."
+msgstr ""
+
+#: describe.cc:676 describe.cc:683
+msgid " Tiny purple flames dance around it."
+msgstr ""
+
+#: describe.cc:677 describe.cc:684
+msgid " It is surrounded by a weird haze."
+msgstr ""
+
+#: describe.cc:678 describe.cc:685
+msgid " It glows with a malevolent light."
+msgstr ""
+
+#: describe.cc:679 describe.cc:686
+msgid " It looks incredibly angry."
+msgstr ""
+
+#: describe.cc:680 describe.cc:687
+msgid " It oozes with slime."
+msgstr ""
+
+#: describe.cc:681 describe.cc:688
+msgid " It dribbles constantly."
+msgstr ""
+
+#: describe.cc:682 describe.cc:689
+msgid " Mould grows all over it."
+msgstr ""
+
+#: describe.cc:683 describe.cc:690
+msgid " It looks diseased."
+msgstr ""
+
+#: describe.cc:684 describe.cc:691
+msgid " It looks as frightened of you as you are of it."
+msgstr ""
+
+#: describe.cc:685 describe.cc:692
+msgid " It moves in a series of hideous convulsions."
+msgstr ""
+
+#: describe.cc:686 describe.cc:693
+msgid " It moves with an unearthly grace."
+msgstr ""
+
+#: describe.cc:687 describe.cc:694
+msgid " It hungers for your soul!"
+msgstr ""
+
+#: describe.cc:688 describe.cc:695
+msgid " It leaves a glistening oily trail."
+msgstr ""
+
+#: describe.cc:689 describe.cc:696
+msgid " It shimmers before your eyes."
+msgstr ""
+
+#: describe.cc:690 describe.cc:697
+msgid " It is surrounded by a brilliant glow."
+msgstr ""
+
+#: describe.cc:691 describe.cc:698
+msgid " It radiates an aura of extreme power."
+msgstr ""
+
+#: describe.cc:695 describe.cc:702
+#, c-format
+msgid "A powerful demon, %s has a %s body"
+msgstr "강력한 악마 %s는 %s 몸에"
+
+#: describe.cc:724 describe.cc:731
+msgid " It stinks of brimstone."
+msgstr ""
+
+#: describe.cc:727 describe.cc:734
+msgid " It is surrounded by a sickening stench."
+msgstr ""
+
+#. / 썩은 고기도 먹을 수 있는 플레이어의 경우.
+#: describe.cc:732 describe.cc:739
+msgid " It smells like rotting flesh - yum!"
+msgstr ""
+
+#. / 썩은 고기는 먹을 수 없는 플레이어의 경우.
+#: describe.cc:734 describe.cc:741
+msgid " It smells like rotting flesh."
+msgstr ""
+
+#. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+#: describe.cc:748 describe.cc:755
+msgid ""
+"\n"
+"Accuracy rating: "
+msgstr ""
+
+#. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+#: describe.cc:753 describe.cc:760
+msgid "Damage rating: "
+msgstr ""
+
+#. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+#: describe.cc:758 describe.cc:765
+msgid "Base attack delay: "
+msgstr ""
+
+#: describe.cc:766 describe.cc:773
+#, c-format
+msgid ""
+"\n"
+"Its enchantment level renders it %s to acidic corrosion."
+msgstr ""
+
+#: describe.cc:772 describe.cc:779
+msgid "immune"
+msgstr ""
+
+#: describe.cc:774 describe.cc:781
+msgid "extremely resistant"
+msgstr ""
+
+#: describe.cc:778 describe.cc:785
+msgid ""
+"\n"
+"Being made of crystal renders it very resistant to acidic corrosion."
+msgstr ""
+
+#: describe.cc:783 describe.cc:790
+msgid ""
+"\n"
+"Being of dwarven fabrication renders it very resistant to acidic corrosion."
+msgstr ""
+
+#: describe.cc:787 describe.cc:794
+msgid "resistant"
+msgstr ""
+
+#: describe.cc:789 describe.cc:796
+msgid "somewhat resistant"
+msgstr ""
+
+#: describe.cc:823 describe.cc:830
+msgid ""
+"It emits flame when wielded, causing extra injury to most foes and up to "
+"double damage against particularly susceptible opponents."
+msgstr ""
+
+#: describe.cc:828 describe.cc:835
+msgid " Big, fiery blades are also staple armaments of hydra-hunters."
+msgstr ""
+
+#: describe.cc:833 describe.cc:840
+msgid ""
+"It has been specially enchanted to freeze those struck by it, causing extra "
+"injury to most foes and up to double damage against particularly susceptible "
+"opponents. It can also slow down cold-blooded creatures."
+msgstr ""
+
+#: describe.cc:840 describe.cc:847
+msgid ""
+"It has been blessed by the Shining One to cause great damage to the undead "
+"and demons."
+msgstr ""
+
+#: describe.cc:846 describe.cc:853
+msgid ""
+"It charges the ammunition it shoots with electricity; occasionally upon a "
+"hit, such missiles may discharge and cause terrible harm."
+msgstr ""
+
+#: describe.cc:852 describe.cc:859
+msgid ""
+"Occasionally, upon striking a foe, it will discharge some electrical energy "
+"and cause terrible harm."
+msgstr ""
+
+#: describe.cc:858 describe.cc:865
+msgid "It is especially effective against all of orcish descent."
+msgstr ""
+
+#: describe.cc:862 describe.cc:869
+msgid ""
+"This legendary weapon is deadly to all dragonkind. It also provides some "
+"protection from the breath attacks of dragons and other creatures."
+msgstr ""
+
+#: describe.cc:868 describe.cc:875
+msgid "It poisons the ammo it fires."
+msgstr ""
+
+#: describe.cc:870 describe.cc:877
+msgid "It poisons the flesh of those it strikes."
+msgstr ""
+
+#: describe.cc:873 describe.cc:880
+msgid "It protects the one who wields it against injury (+5 to AC)."
+msgstr ""
+
+#: describe.cc:877 describe.cc:884
+msgid "It affects your evasion (+5 to EV)."
+msgstr ""
+
+#: describe.cc:880 describe.cc:887
+msgid "A truly terrible weapon, it drains the life of those it strikes."
+msgstr ""
+
+#: describe.cc:884 describe.cc:891
+msgid ""
+"Attacks with this weapon take half as long, but cause slightly less damage."
+msgstr ""
+
+#: describe.cc:891 describe.cc:898
+#, c-format
+msgid "Any %s fired from it inflicts extra damage."
+msgstr ""
+
+#: describe.cc:896 describe.cc:903
+msgid "It inflicts extra damage upon your enemies."
+msgstr ""
+
+#: describe.cc:901 describe.cc:908
+msgid "It turns projectiles fired from it into bolts of flame."
+msgstr ""
+
+#: describe.cc:905 describe.cc:912
+msgid "It turns projectiles fired from it into bolts of frost."
+msgstr ""
+
+#: describe.cc:911 describe.cc:918
+msgid ""
+"Each time it fires, it turns the launched projectile into a different, "
+"random type of bolt."
+msgstr ""
+
+#: describe.cc:917 describe.cc:924
+msgid "Each time it hits an enemy it has a different, random effect."
+msgstr ""
+
+#: describe.cc:922 describe.cc:929
+msgid ""
+"It inflicts no extra harm, but heals its wielder somewhat when it strikes a "
+"living foe."
+msgstr ""
+
+#: describe.cc:926 describe.cc:933
+msgid ""
+"In the hands of one skilled in necromantic magic, it inflicts extra damage "
+"on living creatures."
+msgstr ""
+
+#: describe.cc:930 describe.cc:937
+msgid ""
+"It warps and distorts space around it. Unwielding it can cause banishment or "
+"high damage."
+msgstr ""
+
+#: describe.cc:934 describe.cc:941
+msgid "It can be evoked to extend its reach."
+msgstr ""
+
+#: describe.cc:937 describe.cc:1200 describe.cc:944 describe.cc:1211
+msgid ""
+"A skilled user can throw it in such a way that it will return to its owner."
+msgstr ""
+
+#: describe.cc:941 describe.cc:948
+msgid ""
+"Ammo fired by it will pass through the targets it hits, potentially hitting "
+"all targets in its path until it reaches maximum range."
+msgstr ""
+
+#: describe.cc:948 describe.cc:955
+msgid ""
+"If ammo fired by it kills a monster, causing it to leave a corpse, the "
+"corpse will be animated as a zombie friendly to the killer."
+msgstr ""
+
+#: describe.cc:954 describe.cc:961
+msgid ""
+"If a monster killed with it leaves a corpse in good enough shape, the corpse "
+"will be animated as a zombie friendly to the killer."
+msgstr ""
+
+#: describe.cc:960 describe.cc:967
+msgid ""
+"It disrupts the flow of magical energy around spellcasters and certain "
+"magical creatures (including the wielder)."
+msgstr ""
+
+#: describe.cc:980 describe.cc:987
+msgid ""
+"\n"
+"This weapon may have some hidden properties."
+msgstr ""
+
+#: describe.cc:987 describe.cc:994
+msgid ""
+"\n"
+"\n"
+"This weapon falls into the"
+msgstr ""
+
+#: describe.cc:993 describe.cc:1000
+#, c-format
+msgid " '%s' category. "
+msgstr ""
+
+#: describe.cc:1001 describe.cc:1008
+msgid "It is a one handed weapon"
+msgstr ""
+
+#: describe.cc:1004 describe.cc:1011
+msgid ""
+"It can be used with one hand, or more effectively with two (i.e. when not "
+"using a shield)"
+msgstr ""
+
+#: describe.cc:1009 describe.cc:1016
+msgid "It is a two handed weapon"
+msgstr ""
+
+#: describe.cc:1012 describe.cc:1019
+msgid "It is a buggy weapon"
+msgstr ""
+
+#: describe.cc:1020 describe.cc:1027
+msgid ", and it is best used by the strong"
+msgstr ""
+
+#: describe.cc:1022 describe.cc:1029
+msgid ", and it is better for the strong"
+msgstr ""
+
+#: describe.cc:1024 describe.cc:1031
+msgid ", and it is best used by the dexterous"
+msgstr ""
+
+#: describe.cc:1026 describe.cc:1033
+msgid ", and it is better for the dexterous"
+msgstr ""
+
+#: describe.cc:1030 describe.cc:1037
+msgid ""
+"\n"
+"It is too large for you to wield."
+msgstr ""
+
+#: describe.cc:1036 describe.cc:1043
+msgid ""
+"\n"
+"Demonspawn deal slightly more damage with it."
+msgstr ""
+
+#: describe.cc:1042 describe.cc:1049
+msgid ""
+"\n"
+"It is well-crafted and durable. Dwarves deal slightly more damage with it."
+msgstr ""
+
+#: describe.cc:1046 describe.cc:1053
+msgid ""
+"\n"
+"Orcs deal slightly more damage with it."
+msgstr ""
+
+#: describe.cc:1049 describe.cc:1056
+msgid ""
+"\n"
+"Elves are slightly more accurate with it."
+msgstr ""
+
+#: describe.cc:1054 describe.cc:1061
+#, c-format
+msgid " It is most effective when used with %s ammunition."
+msgstr ""
+
+#: describe.cc:1066 describe.cc:1073 describe.cc:1296 describe.cc:1481
+msgid ""
+"\n"
+"It is maximally enchanted."
+msgstr ""
+
+#. / +x,x 까지 강화가 가능하다.
+#: describe.cc:1071 describe.cc:1079
+msgid ""
+"\n"
+"It can be maximally enchanted to +"
+msgstr ""
+
+#: describe.cc:1106 describe.cc:1117
+msgid "brand-new"
+msgstr ""
+
+#: describe.cc:1110 describe.cc:1121
+msgid "a little worn"
+msgstr ""
+
+#: describe.cc:1112 describe.cc:1123
+msgid "slightly damaged"
+msgstr ""
+
+#: describe.cc:1114 describe.cc:1125
+msgid "damaged"
+msgstr ""
+
+#: describe.cc:1116 describe.cc:1127
+msgid "heavily frayed"
+msgstr ""
+
+#: describe.cc:1119 describe.cc:1130
+#, c-format
+msgid "It looks %s."
+msgstr ""
+
+#: describe.cc:1138 describe.cc:1149
+msgid "threw or fired"
+msgstr ""
+
+#: describe.cc:1140 describe.cc:1151
+msgid "threw"
+msgstr ""
+
+#: describe.cc:1143 describe.cc:1154
+msgid "fired"
+msgstr ""
+
+#: describe.cc:1148 describe.cc:1159
+msgid "It turns into a bolt of flame."
+msgstr ""
+
+#: describe.cc:1151 describe.cc:1162
+msgid "It turns into a bolt of frost."
+msgstr ""
+
+#: describe.cc:1176 describe.cc:1187
+msgid "It is coated with poison."
+msgstr ""
+
+#: describe.cc:1179 describe.cc:1190
+msgid "It is tipped with asphyxiating poison."
+msgstr ""
+
+#: describe.cc:1182 describe.cc:1193
+msgid "It is tipped with a paralysing substance."
+msgstr ""
+
+#: describe.cc:1185 describe.cc:1196
+msgid "It is coated with a substance that causes slowness of the body."
+msgstr ""
+
+#: describe.cc:1188 describe.cc:1199
+msgid "It is coated with a fast-acting tranquilizer."
+msgstr ""
+
+#: describe.cc:1191 describe.cc:1202
+msgid "It is tipped with a substance that causes confusion."
+msgstr ""
+
+#: describe.cc:1194 describe.cc:1205
+msgid "It has been contaminated by something likely to cause disease."
+msgstr ""
+
+#: describe.cc:1197 describe.cc:1208
+msgid "It is tipped with a substance that causes a mindless, berserk rage."
+msgstr ""
+
+#: describe.cc:1205 describe.cc:1216
+#, c-format
+msgid ""
+"If it kills a monster, causing it to leave a corpse, the corpse will be "
+"animated as a zombie friendly to the one who %s it."
+msgstr ""
+
+#: describe.cc:1211 describe.cc:1222
+msgid ""
+"It will pass through any targets it hits, potentially hitting all targets in "
+"its path until it reaches maximum range."
+msgstr ""
+
+#: describe.cc:1217 describe.cc:1228
+#, c-format
+msgid ""
+"Any target it hits will blink, with a tendency towards blinking further away "
+"from the one who %s it."
+msgstr ""
+
+#: describe.cc:1224 describe.cc:1235
+msgid ""
+"It will explode into fragments upon hitting a target, hitting an "
+"obstruction, or reaching the end of its range."
+msgstr ""
+
+#: describe.cc:1230 describe.cc:1241
+#, c-format
+msgid ""
+"Compared to normal ammo, it does 30% more damage, is destroyed upon impact "
+"only 1/10th of the time, and weighs three times as much."
+msgstr ""
+
+#: describe.cc:1235 describe.cc:1246
+#, c-format
+msgid ""
+"Silver sears all those touched by chaos. Compared to normal ammo, it does "
+"75% more damage to chaotic and magically transformed beings. It also does "
+"extra damage against mutated beings according to how mutated they are. With "
+"due care, silver ammo can still be handled by those it affects. It weighs "
+"twice as much as normal ammo."
+msgstr ""
+
+#: describe.cc:1261 describe.cc:1272
+#, c-format
+msgid "It is more deadly %s, and it"
+msgstr "이것은 %s 더욱 치명적이며, 또한"
+
+#: describe.cc:1262 describe.cc:1273
+#, c-format
+msgid "It is more deadly %s."
+msgstr "이것은 %s 더욱 치명적이다."
+
+#: describe.cc:1263 describe.cc:1274
+msgid "when thrown by dwarves"
+msgstr "드워프가 던졌을 때"
+
+#: describe.cc:1264 describe.cc:1275
+msgid "when thrown by elves"
+msgstr "엘프가 던졌을 때"
+
+#: describe.cc:1265 describe.cc:1276
+msgid "when thrown by orcs"
+msgstr "오크가 던졌을 때"
+
+#: decks.cc:297
+msgid "the Portal"
+msgstr ""
+
+#: decks.cc:298
+msgid "the Warp"
+msgstr ""
+
+#: decks.cc:299
+msgid "Swap"
+msgstr ""
+
+#: decks.cc:300
+msgid "Velocity"
+msgstr ""
+
+#: decks.cc:301
+msgid "Damnation"
+msgstr ""
+
+#: decks.cc:302
+msgid "Solitude"
+msgstr ""
+
+#: decks.cc:303
+msgid "the Elixir"
+msgstr ""
+
+#: decks.cc:304
+msgid "Battlelust"
+msgstr ""
+
+#: decks.cc:305
+msgid "Metamorphosis"
+msgstr ""
+
+#: decks.cc:306
+msgid "the Helm"
+msgstr ""
+
+#: decks.cc:307
+msgid "the Blade"
+msgstr ""
+
+#: decks.cc:308
+msgid "the Shadow"
+msgstr ""
+
+#: decks.cc:309
+msgid "the Potion"
+msgstr ""
+
+#: decks.cc:310
+msgid "Focus"
+msgstr ""
+
+#: decks.cc:311
+msgid "Shuffle"
+msgstr ""
+
+#: decks.cc:312
+msgid "Experience"
+msgstr ""
+
+#: decks.cc:313
+msgid "the Helix"
+msgstr ""
+
+#: decks.cc:314
+msgid "the Sage"
+msgstr ""
+
+#: decks.cc:315
+msgid "Dowsing"
+msgstr ""
+
+#: decks.cc:316
+msgid "the Trowel"
+msgstr ""
+
+#: decks.cc:317
+msgid "the Minefield"
+msgstr ""
+
+#: decks.cc:318
+msgid "the Stairs"
+msgstr ""
+
+#: decks.cc:319
+msgid "the Genie"
+msgstr ""
+
+#: decks.cc:320
+msgid "the Tomb"
+msgstr ""
+
+#: decks.cc:321
+msgid "Water"
+msgstr ""
+
+#: decks.cc:322
+msgid "Vitrification"
+msgstr ""
+
+#: decks.cc:323
+msgid "the Map"
+msgstr ""
+
+#: decks.cc:324
+msgid "the Banshee"
+msgstr ""
+
+#: decks.cc:325
+msgid "Wild Magic"
+msgstr ""
+
+#: decks.cc:326
+msgid "the Crusade"
+msgstr ""
+
+#: decks.cc:327
+msgid "the Herd"
+msgstr ""
+
+#: decks.cc:328
+msgid "the Pentagram"
+msgstr ""
+
+#: decks.cc:329
+msgid "the Dance"
+msgstr ""
+
+#: decks.cc:330
+msgid "Foxfire"
+msgstr ""
+
+#: decks.cc:331
+msgid "the Bones"
+msgstr ""
+
+#: decks.cc:332
+msgid "Repulsiveness"
+msgstr ""
+
+#: decks.cc:333
+msgid "Summoning"
+msgstr ""
+
+#: decks.cc:334
+msgid "Xom"
+msgstr ""
+
+#: decks.cc:335
+msgid "Famine"
+msgstr ""
+
+#: decks.cc:336
+msgid "the Feast"
+msgstr ""
+
+#: decks.cc:337
+msgid "Warpwright"
+msgstr ""
+
+#: decks.cc:338
+msgid "Flight"
+msgstr ""
+
+#: decks.cc:339
+msgid "Vitriol"
+msgstr ""
+
+#: decks.cc:340
+msgid "Flame"
+msgstr ""
+
+#: decks.cc:341
+msgid "Frost"
+msgstr ""
+
+#: decks.cc:342
+msgid "Venom"
+msgstr ""
+
+#: decks.cc:343
+msgid "the Spark"
+msgstr ""
+
+#: decks.cc:344
+msgid "the Hammer"
+msgstr ""
+
+#: decks.cc:347
+msgid "the Spade"
+msgstr ""
+
+#: decks.cc:348
+msgid "the Bargain"
+msgstr ""
+
+#: decks.cc:349
+msgid "Wrath"
+msgstr ""
+
+#: decks.cc:350
+msgid "the Wraith"
+msgstr ""
+
+#: decks.cc:351
+msgid "the Curse"
+msgstr ""
+
+#: decks.cc:352
+msgid "the Swine"
+msgstr ""
+
+#: decks.cc:353
+msgid "the Alchemist"
+msgstr ""
+
+#: decks.cc:354
+msgid "the Orb"
+msgstr ""
+
+#: decks.cc:355
+msgid "a buggy card"
+msgstr ""
+
+#: decks.cc:357
+msgid "a very buggy card"
+msgstr ""
+
+#: describe.cc:1082
+#, c-format
+msgid ""
+"\n"
+"It can be maximally enchanted to +%s, +%s."
+msgstr ""
+
+#: describe.cc:1087 describe.cc:1300 describe.cc:1478
+#, c-format
+msgid ""
+"\n"
+"It can be maximally enchanted to +%s."
+msgstr ""
+
+#: describe.cc:1282
+msgid "It is more effective in conjunction with "
+msgstr ""
+
+#: describe.cc:1284
+msgid "is more effective in conjunction with "
+msgstr ""
+
+#: describe.cc:1286
+msgid "launchers."
+msgstr ""
+
+#: describe.cc:1291
+msgid ""
+"\n"
+"It will always be destroyed upon impact."
+msgstr ""
+
+#: describe.cc:1308
+msgid ""
+"\n"
+"Armour rating: "
+msgstr ""
+
+#: describe.cc:1312
+msgid "Evasion modifier: "
+msgstr ""
+
+#: describe.cc:1349
+msgid "It allows its wearer to run at a great speed."
+msgstr ""
+
+#: describe.cc:1352
+msgid "It protects its wearer from heat and fire."
+msgstr ""
+
+#: describe.cc:1355
+msgid "It protects its wearer from cold."
+msgstr ""
+
+#: describe.cc:1358
+msgid "It protects its wearer from poison."
+msgstr ""
+
+#: describe.cc:1361
+msgid "It allows its wearer to see invisible things."
+msgstr ""
+
+#: describe.cc:1364
+msgid ""
+"When activated it hides its wearer from the sight of others, but also "
+"increases their metabolic rate by a large amount."
+msgstr ""
+
+#: describe.cc:1369
+msgid "It increases the physical power of its wearer (+3 to strength)."
+msgstr ""
+
+#: describe.cc:1372
+msgid "It increases the dexterity of its wearer (+3 to dexterity)."
+msgstr ""
+
+#: describe.cc:1375
+msgid "It makes you more clever (+3 to intelligence)."
+msgstr ""
+
+#: describe.cc:1378
+msgid "It is very cumbersome, thus slowing your movement."
+msgstr ""
+
+#: describe.cc:1381
+msgid ""
+"It can be activated to allow its wearer to float above the ground and remain "
+"so indefinitely."
+msgstr ""
+
+#: describe.cc:1385
+msgid "It increases its wearer's resistance to enchantments."
+msgstr ""
+
+#: describe.cc:1389
+msgid "It protects its wearer from harm (+3 to AC)."
+msgstr ""
+
+#: describe.cc:1392
+msgid "It enhances the stealth of its wearer."
+msgstr ""
+
+#: describe.cc:1395
+msgid "It protects its wearer from the effects of both cold and heat."
+msgstr ""
+
+#: describe.cc:1401
+msgid "It protects its wearer from the effects of negative energy."
+msgstr ""
+
+#: describe.cc:1405
+msgid "It increases the power of its wearer's magical spells."
+msgstr ""
+
+#: describe.cc:1410
+msgid "It protects its wearer's possessions from damage and destruction."
+msgstr ""
+
+#: describe.cc:1415
+msgid "It reflects blocked things back in the direction they came from."
+msgstr ""
+
+#: describe.cc:1420
+msgid "It shields its wearer from harm at the cost of magical power."
+msgstr ""
+
+#: describe.cc:1426
+msgid ""
+"These improve your skills with ranged weaponry but interfere slightly with "
+"melee combat."
+msgstr ""
+
+#: describe.cc:1443
+msgid ""
+"\n"
+"This armour may have some hidden properties."
+msgstr ""
+
+#: describe.cc:1453
+msgid ""
+"\n"
+"It is well-crafted and durable."
+msgstr ""
+
+#: describe.cc:1456
+msgid ""
+"\n"
+"It is well-crafted and unobstructive"
+msgstr ""
+
+#: describe.cc:1458
+msgid ", and helps its wearer avoid being noticed"
+msgstr ""
+
+#: describe.cc:1462
+msgid ""
+"\n"
+"It fits dwarves well."
+msgstr ""
+
+#: describe.cc:1463
+msgid ""
+"\n"
+"It fits elves well."
+msgstr ""
+
+#: describe.cc:1464
+msgid ""
+"\n"
+"It fits orcs well."
+msgstr ""
+
+#: describe.cc:1472
+msgid ""
+"\n"
+"Enchanting it will turn it into a suit of magical armour."
+msgstr ""
+
+#: describe.cc:1513
+msgid ""
+"\n"
+"It affects your AC ("
+msgstr ""
+
+#: describe.cc:1519
+msgid ""
+"\n"
+"It affects your evasion ("
+msgstr ""
+
+#: describe.cc:1525
+msgid ""
+"\n"
+"It affects your strength ("
+msgstr ""
+
+#: describe.cc:1531
+msgid ""
+"\n"
+"It affects your intelligence ("
+msgstr ""
+
+#: describe.cc:1537
+msgid ""
+"\n"
+"It affects your dexterity ("
+msgstr ""
+
+#: describe.cc:1545
+msgid ""
+"\n"
+"It affects your accuracy ("
+msgstr ""
+
+#: describe.cc:1552
+msgid ""
+"\n"
+"It affects your damage-dealing abilities ("
+msgstr ""
+
+#: describe.cc:1559
+msgid ""
+"This buggy ring affects neither your accuracy nor your damage-dealing "
+"abilities."
+msgstr ""
+
+#: describe.cc:1584
+msgid ""
+"\n"
+"This amulet may have hidden properties."
+msgstr ""
+
+#: describe.cc:1586
+msgid ""
+"\n"
+"This ring may have hidden properties."
+msgstr ""
+
+#: describe.cc:1607
+msgid "This isn't a deck at all!\n"
+msgstr ""
+
+#: describe.cc:1638
+msgid "Drawn card(s): "
+msgstr ""
+
+#: describe.cc:1652
+msgid "Next card(s): "
+msgstr ""
+
+#: describe.cc:1684
+msgid "Marked card(s): "
+msgstr ""
+
+#: describe.cc:1710
+msgid "Seen card(s): "
+msgstr ""
+
+#: describe.cc:1931
+msgid ""
+"\n"
+"This book is beyond your current level of understanding."
+msgstr ""
+
+#: describe.cc:1939
+msgid ""
+"\n"
+"WARNING: If you fail in an attempt to memorise a spell from this book, the "
+"book will lash out at you."
+msgstr ""
+
+#: describe.cc:1966
+#, c-format
+msgid ""
+"\n"
+"It can have at most %d charges."
+msgstr ""
+
+#: describe.cc:1969 describe.cc:2081
+msgid ""
+"\n"
+"It is fully charged."
+msgstr ""
+
+#: describe.cc:1975
+msgid ""
+"\n"
+"Unfortunately, it has no charges left."
+msgstr ""
+
+#. / 썩었지만 먹을 수 있는 경우.
+#: describe.cc:1991
+msgid "It looks nice and ripe."
+msgstr ""
+
+#: describe.cc:1994
+msgid "In fact, it is rotting away before your eyes."
+msgstr ""
+
+#. / 이건 죽어도 못먹어!
+#: describe.cc:2001
+msgid " Eating it is completely out of the question!"
+msgstr ""
+
+#. / 별로 먹고싶지는 않지만...
+#: describe.cc:2008
+msgid "It looks rather unpleasant."
+msgstr ""
+
+#: describe.cc:2013 describe.cc:2038
+msgid ""
+"\n"
+"\n"
+"This meat is poisonous."
+msgstr ""
+
+#: describe.cc:2018
+msgid ""
+"\n"
+"\n"
+"Eating this meat will cause random mutations."
+msgstr ""
+
+#: describe.cc:2024
+msgid ""
+"\n"
+"\n"
+"Eating this meat will cause rotting."
+msgstr ""
+
+#: describe.cc:2029
+msgid ""
+"\n"
+"\n"
+"Meat like this may occasionally cause sickness."
+msgstr ""
+
+#: describe.cc:2035
+msgid ""
+"\n"
+"\n"
+"This meat is poisonous and may cause sickness even if poison resistant."
+msgstr ""
+
+#: describe.cc:2050
+#, c-format
+msgid ""
+"\n"
+"\n"
+"%s disapproves of eating such meat."
+msgstr ""
+
+#: describe.cc:2063
+msgid ""
+"\n"
+"It uses its own mana reservoir for casting spells, and recharges "
+"automatically according to the recharging rate."
+msgstr ""
+
+#: describe.cc:2075
+#, c-format
+msgid ""
+"\n"
+"It can currently hold %d charges. It can be magically recharged to contain "
+"up to %d charges."
+msgstr ""
+
+#: describe.cc:2087
+#, c-format
+msgid ""
+"\n"
+"Its current recharge rate is %+d. It can be magically recharged up to +%d."
+msgstr ""
+
+#: describe.cc:2092
+msgid ""
+"\n"
+"Its recharge rate is at maximum."
+msgstr ""
+
+#: describe.cc:2097
+#, c-format
+msgid ""
+"\n"
+"It can have at most %d charges and +%d recharge rate."
+msgstr ""
+
+#: describe.cc:2112
+msgid ""
+"\n"
+"\n"
+"It falls into the 'Maces & Flails' category."
+msgstr ""
+
+#: describe.cc:2119
+msgid ""
+"\n"
+"\n"
+"It falls into the 'Staves' category."
+msgstr ""
+
+#: describe.cc:2149
+#, c-format
+msgid ""
+"\n"
+"Evaporating this potion will create clouds of %s."
+msgstr ""
+
+#: describe.cc:2172
+msgid ""
+"\n"
+"It has a curse placed upon it."
+msgstr ""
+
+#: describe.cc:2193
+msgid ""
+"\n"
+"\n"
+"This ancient artefact cannot be changed by magic or mundane means."
+msgstr ""
+
+#: describe.cc:2197
+msgid ""
+"\n"
+"\n"
+"It is an ancient artefact."
+msgstr ""
+
+#: describe.cc:2205
+#, c-format
+msgid ""
+"\n"
+"\n"
+"%s opposes the use of such an %s item."
+msgstr ""
+
+#: describe.cc:2207
+msgid "evil"
+msgstr ""
+
+#: describe.cc:2207
+msgid "unholy"
+msgstr ""
+
+#: describe.cc:2212
+#, c-format
+msgid ""
+"\n"
+"\n"
+"%s disapproves of the use of such an item."
+msgstr ""
+
+#: describe.cc:2271
+msgid "UNDESCRIBED PORTAL VAULT ENTRANCE."
+msgstr ""
+
+#: describe.cc:2328
+msgid ""
+"Press '<w>!</w>' to toggle between the overview and the extended description."
+msgstr ""
+
+#: describe.cc:2328
+msgid ""
+"<w>Right-click</w> to toggle between the overview and the extended "
+"description."
+msgstr ""
+
+#: describe.cc:2328
+msgid ""
+"Press '<w>!</w>'<w>Right-click</w> to toggle between the overview and the "
+"extended description."
+msgstr ""
+
+#: describe.cc:2501
+msgid "Select a spell to read its description, to memorise it or to forget it."
+msgstr ""
+
+#: describe.cc:2505
+msgid "Select a spell to read its description."
+msgstr ""
+
+#: describe.cc:2641
+msgid "(w)ield"
+msgstr ""
+
+#: describe.cc:2642
+msgid "(u)nwield"
+msgstr ""
+
+#: describe.cc:2643
+msgid "(q)uiver"
+msgstr ""
+
+#: describe.cc:2644
+msgid "(w)ear"
+msgstr ""
+
+#: describe.cc:2645
+msgid "(t)ake off"
+msgstr ""
+
+#: describe.cc:2646
+msgid "e(v)oke"
+msgstr ""
+
+#: describe.cc:2647
+msgid "(e)at"
+msgstr ""
+
+#: describe.cc:2648
+msgid "(r)ead"
+msgstr ""
+
+#: describe.cc:2649
+msgid "(p)ut on"
+msgstr ""
+
+#: describe.cc:2650
+msgid "(r)emove"
+msgstr ""
+
+#: describe.cc:2651
+msgid "(q)uaff"
+msgstr ""
+
+#: describe.cc:2652
+msgid "(d)rop"
+msgstr ""
+
+#: describe.cc:2653
+msgid "(i)nscribe"
+msgstr ""
+
+#: describe.cc:2654
+msgid "(a)utoinscribe"
+msgstr ""
+
+#: describe.cc:2809
+msgid "You can (i)nscribe or (a)utoinscribe."
+msgstr ""
+
+#: describe.cc:2811
+msgid "You can (a)dd to, (r)eplace or (c)lear the inscription."
+msgstr ""
+
+#: describe.cc:2813
+msgid "You can (a)dd to, (r)eplace, (c)lear the inscription or (A)utoinscribe."
+msgstr ""
+
+#: describe.cc:2858
+msgid "Inscribe with what? "
+msgstr ""
+
+#: describe.cc:2860
+msgid "Add what to inscription? "
+msgstr ""
+
+#: describe.cc:2862
+msgid "Replace inscription with what? "
+msgstr ""
+
+#: dgn-shoals.cc:798
+#, c-format
+msgid "The net is swept off %s."
+msgstr ""
+
+#: dgn-shoals.cc:803
+msgid "The tide washes the net away!"
+msgstr ""
+
+#: dgn-shoals.cc:965
+msgid "The tide rushes in under you."
+msgstr ""
+
+#. / 아마 이거 번역해도 's가 계속 따라붙는 문제가 생길 것.
+#: dgn-shoals.cc:1157
+#, c-format
+msgid "The tide is released from %s call."
+msgstr ""

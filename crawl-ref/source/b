@@ -1,0 +1,1 @@
+make TILES=y USE_GETTEXT=y
