@@ -293,7 +293,7 @@ static void _spread_fire(const cloud_struct &cloud)
                 continue;
 
             if (you.see_cell(*ai))
-                mpr("The forest fire spreads!");
+                mpr(gettext("The forest fire spreads!"));
             nuke_wall(*ai);
             _place_new_cloud(cloud.type, *ai, random2(30)+25, cloud.whose,
                               cloud.killer, cloud.source, cloud.spread_rate,
@@ -414,7 +414,7 @@ static void _maybe_leave_water(const cloud_struct& c)
         if (grd(c.pos) != feat)
         {
             if (you.pos() == c.pos && you.ground_level())
-                mpr("The rain has left you waist-deep in water!");
+                mpr(gettext("The rain has left you waist-deep in water!"));
             dungeon_terrain_changed(c.pos, feat);
         }
     }
@@ -862,7 +862,8 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             if (you.can_see(act))
             {
-                mprf("%s %s in the rain.",
+                /// 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
+                mprf(gettext("%s %s in the rain."),
                      act->name(DESC_CAP_THE).c_str(),
                      act->conj_verb(silenced(act->pos())?
                                     "steam" : "sizzle").c_str());
@@ -879,7 +880,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
 
             if (you.misled())
             {
-                mpr("The rain washes away your illusions!", MSGCH_DURATION);
+                mpr(gettext("The rain washes away your illusions!"), MSGCH_DURATION);
                 you.duration[DUR_MISLED] = 0;
                 affected = true;
             }
@@ -893,7 +894,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             if (1 + random2(27) >= you.experience_level)
             {
-                mpr("You choke on the stench!");
+                mpr(gettext("You choke on the stench!"));
                 // effectively one or two turns, since it will be
                 // decremented right away
                 confuse_player((coinflip() ? 3 : 2));
@@ -978,7 +979,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             if (player)
             {
-                mpr("Strange energies course through your body.");
+                mpr(gettext("Strange energies course through your body."));
                 if (one_chance_in(3))
                     return you.mutate();
                 else
@@ -1356,14 +1357,16 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
             // of spam reduction.
             if (act->is_player())
             {
-                mprf("%s %s standing in the rain.",
+                /// 한글화 하기 어려움. 일단 내비둘것.
+                mprf(gettext("%s %s standing in the rain."),
                      act->name(DESC_CAP_THE).c_str(),
                      act->conj_verb("are").c_str());
             }
         }
         else
         {
-            mprf("%s %s in %s.",
+            /// 한글화 하기 몹시 어려움. 내비둘것.
+            mprf(gettext("%s %s in %s."),
                  act->name(DESC_CAP_THE).c_str(),
                  beneficial ? act->conj_verb("bask").c_str()
                  : (act->conj_verb("are") + " engulfed").c_str(),

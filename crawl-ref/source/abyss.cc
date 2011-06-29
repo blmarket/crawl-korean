@@ -725,7 +725,7 @@ public:
         const bool rune_is_near = abyss_rune_nearness();
 
         if (exit_was_near && !exit_is_near || rune_was_near && !rune_is_near)
-            xom_is_stimulated(200, "Xom snickers loudly.", true);
+            xom_is_stimulated(200, gettext("Xom snickers loudly."), true);
 
         if (!rune_was_near && rune_is_near || !exit_was_near && exit_is_near)
             xom_is_stimulated(200);
@@ -1788,7 +1788,7 @@ bool is_level_incorruptible()
 {
     if (_is_level_corrupted())
     {
-        mpr("This place is already infused with evil and corruption.");
+        mpr(gettext("This place is already infused with evil and corruption."));
         return (true);
     }
 
@@ -1815,7 +1815,8 @@ bool lugonu_corrupt_level(int power)
     if (is_level_incorruptible())
         return (false);
 
-    simple_god_message("'s Hand of Corruption reaches out!");
+    /// 아마도 lugonu의 것이겠지...
+    simple_god_message(gettext("'s Hand of Corruption reaches out!"));
 
     flash_view(MAGENTA);
 

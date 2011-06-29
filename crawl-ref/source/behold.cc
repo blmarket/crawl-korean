@@ -32,23 +32,23 @@ void player::add_beholder(const monster* mon, bool axe)
         {
             if (you.can_see(mon))
             {
-                mprf("%s's singing sounds muted, and has no effect on you.",
+                mprf(gettext("%s's singing sounds muted, and has no effect on you."),
                      mon->name(DESC_CAP_THE).c_str());
             }
             else
             {
-                mpr("The melody is strangely muted, and has no effect on you.");
+                mpr(gettext("The melody is strangely muted, and has no effect on you."));
             }
         }
         else
         {
             if (you.can_see(mon))
             {
-                mprf("%s's is no longer quite as mesmerising!", mon->name(DESC_CAP_THE).c_str());
+                mprf(gettext("%s's is no longer quite as mesmerising!"), mon->name(DESC_CAP_THE).c_str());
             }
             else
             {
-                mpr("Your mesmeriser suddenly seems less interesting!");
+                mpr(gettext("Your mesmeriser suddenly seems less interesting!"));
             }
         }
 
@@ -61,7 +61,7 @@ void player::add_beholder(const monster* mon, bool axe)
         beholders.push_back(mon->mindex());
         if (!axe)
         {
-            mprf(MSGCH_WARN, "You are mesmerised by %s!",
+            mprf(MSGCH_WARN, gettext("You are mesmerised by %s!"),
                              mon->name(DESC_NOCAP_THE).c_str());
         }
     }
@@ -140,7 +140,7 @@ void player::beholders_check_noise(int loudness, bool axe)
 
     if (loudness >= 20 && beheld())
     {
-        mprf("For a moment, your mind becomes perfectly clear!");
+        mprf(gettext("For a moment, your mind becomes perfectly clear!"));
         clear_beholders();
         _removed_beholder();
     }
@@ -160,21 +160,21 @@ static void _removed_beholder_msg(const monster* mon)
         {
             if (you.can_see(mon))
             {
-                mprf("%s's singing becomes strangely muted.",
+                mprf(gettext("%s's singing becomes strangely muted."),
                      mon->name(DESC_CAP_THE).c_str());
             }
             else
-                mpr("Something's singing becomes strangely muted.");
+                mpr(gettext("Something's singing becomes strangely muted."));
         }
         else
         {
             if (you.can_see(mon))
             {
-                mprf("%s's is no longer quite as mesmerising!", mon->name(DESC_CAP_THE).c_str());
+                mprf(gettext("%s's is no longer quite as mesmerising!"), mon->name(DESC_CAP_THE).c_str());
             }
             else
             {
-                mpr("Your mesmeriser suddenly seems less interesting!");
+                mpr(gettext("Your mesmeriser suddenly seems less interesting!"));
             }
         }
 
@@ -187,28 +187,28 @@ static void _removed_beholder_msg(const monster* mon)
         {
             if (_mermaid_beholder(mon))
             {
-                mprf("You can no longer hear %s's singing!",
+                mprf(gettext("You can no longer hear %s's singing!"),
                      mon->name(DESC_NOCAP_THE).c_str());
             }
             else
             {
-                mpr("The silence clears your mind.");
+                mpr(gettext("The silence clears your mind."));
             }
             return;
         }
 
         if (_mermaid_beholder(mon))
-            mprf("%s stops singing.", mon->name(DESC_CAP_THE).c_str());
+            mprf(gettext("%s stops singing."), mon->name(DESC_CAP_THE).c_str());
         else
-            mprf("%s is no longer quite as mesmerising!", mon->name(DESC_CAP_THE).c_str());
+            mprf(gettext("%s is no longer quite as mesmerising!"), mon->name(DESC_CAP_THE).c_str());
 
         return;
     }
 
     if (_mermaid_beholder(mon))
-        mpr("Something stops singing.");
+        mpr(gettext("Something stops singing."));
     else
-        mpr("Your mesmeriser is now quite boring!");
+        mpr(gettext("Your mesmeriser is now quite boring!"));
 }
 
 // Update all beholders' status after changes.
@@ -253,8 +253,8 @@ void player::_removed_beholder()
     if (beholders.empty())
     {
         duration[DUR_MESMERISED] = 0;
-        mpr(coinflip() ? "You break out of your daze!"
-                       : "You are no longer entranced.",
+        mpr(coinflip() ? gettext("You break out of your daze!")
+                       : gettext("You are no longer entranced."),
             MSGCH_DURATION);
     }
 }

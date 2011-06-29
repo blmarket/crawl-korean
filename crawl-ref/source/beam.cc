@@ -254,7 +254,7 @@ spret_type zapping(zap_type ztype, int power, bolt &pbolt,
 
     if (ztype == ZAP_LIGHTNING)
     {
-        noisy(25, you.pos(), "You hear a mighty clap of thunder!");
+        noisy(25, you.pos(), gettext("You hear a mighty clap of thunder!"));
         pbolt.heard = true;
     }
 
@@ -687,7 +687,7 @@ void bolt::initialise_fire()
             && !crawl_state.is_god_acting()
             && (!mon || !mon->observable()))
         {
-            mprf("%s appears from out of thin air!",
+            mprf(gettext("%s appears from out of thin air!"),
                  article_a(name, false).c_str());
         }
     }
@@ -829,16 +829,19 @@ void bolt::digging_wall_effect()
             std::string wall;
             if (feat == DNGN_GRATE)
             {
-                mprf("The damaged grate falls apart into pieces.");
+                mprf(gettext("The damaged grate falls apart into pieces."));
                 return;
             }
             else if (feat == DNGN_SLIMY_WALL)
-                wall = "slime";
+                /// slime pit의 slimey wall을 지칭하는 말이 들어가야함.
+                wall = gettext("slime");
             else if (you.level_type == LEVEL_PANDEMONIUM)
-                wall = "weird stuff";
+                /// 판데모니엄의 벽을 지칭하는 말임.
+                wall = gettext("weird stuff");
             else
-                wall = "rock";
-            mprf("The %s liquefies and sinks out of sight.", wall.c_str());
+                /// 일반 벽
+                wall = gettext("rock");
+            mprf(gettext("The %s liquefies and sinks out of sight."), wall.c_str());
             // This is silent.
         }
         break;
@@ -877,10 +880,10 @@ void bolt::fire_wall_effect()
                 if (you.see_cell(pos()))
                 {
                     emit_message(MSGCH_PLAIN,
-                                 "The wax appears to soften slightly.");
+                                 gettext("The wax appears to soften slightly."));
                 }
                 else if (you.can_smell())
-                    emit_message(MSGCH_PLAIN, "You smell warm wax.");
+                    emit_message(MSGCH_PLAIN, gettext("You smell warm wax."));
             }
         }
         else
@@ -888,9 +891,9 @@ void bolt::fire_wall_effect()
             // Destroy the wall.
             nuke_wall(pos());
             if (you.see_cell(pos()))
-                emit_message(MSGCH_PLAIN, "The wax bubbles and burns!");
+                emit_message(MSGCH_PLAIN, gettext("The wax bubbles and burns!"));
             else if (you.can_smell())
-                emit_message(MSGCH_PLAIN, "You smell burning wax.");
+                emit_message(MSGCH_PLAIN, gettext("You smell burning wax."));
             ASSERT(agent()); // if this is wrong, please preserve friendliness of kc
             place_cloud(CLOUD_FIRE, pos(), random2(10)+15, agent());
             obvious_effect = true;
@@ -903,9 +906,9 @@ void bolt::fire_wall_effect()
             // Destroy the wall.
             nuke_wall(pos());
             if (you.see_cell(pos()))
-                emit_message(MSGCH_PLAIN, "The tree burns like a torch!");
+                emit_message(MSGCH_PLAIN, gettext("The tree burns like a torch!"));
             else if (you.can_smell())
-                emit_message(MSGCH_PLAIN, "You smell burning wood.");
+                emit_message(MSGCH_PLAIN, gettext("You smell burning wood."));
             if (whose_kill() == KC_YOU)
                 did_god_conduct(DID_KILL_PLANT, 1, effect_known);
             else if (whose_kill() == KC_FRIENDLY && !crawl_state.game_is_arena())
@@ -954,7 +957,7 @@ static bool _nuke_wall_msg(dungeon_feature_type feat, const coord_def& p)
         //      nuke_wall_effect. [rob]
         if (hear)
         {
-            msg = "You hear a grinding noise.";
+            msg = gettext("You hear a grinding noise.");
             chan = MSGCH_SOUND;
         }
         break;
@@ -962,7 +965,7 @@ static bool _nuke_wall_msg(dungeon_feature_type feat, const coord_def& p)
     case DNGN_GRATE:
         if (hear)
         {
-            msg = "You hear the screech of bent metal.";
+            msg = gettext("You hear the screech of bent metal.");
             chan = MSGCH_SOUND;
         }
         break;
@@ -971,22 +974,22 @@ static bool _nuke_wall_msg(dungeon_feature_type feat, const coord_def& p)
         if (hear)
         {
             if (see)
-                msg = "You hear a hideous screaming!";
+                msg = gettext("You hear a hideous screaming!");
             else
-                msg = "The idol screams as its substance crumbles away!";
+                msg = gettext("The idol screams as its substance crumbles away!");
             chan = MSGCH_SOUND;
         }
         else if (see)
-            msg = "The idol twists and shakes as its substance crumbles away!";
+            msg = gettext("The idol twists and shakes as its substance crumbles away!");
         break;
 
     case DNGN_TREE:
     case DNGN_SWAMP_TREE:
         if (see)
-            msg = "The tree breaks and falls down!";
+            msg = gettext("The tree breaks and falls down!");
         else if (hear)
         {
-            msg = "You hear timber falling.";
+            msg = gettext("You hear timber falling.");
             chan = MSGCH_SOUND;
         }
         break;

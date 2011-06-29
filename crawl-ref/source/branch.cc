@@ -152,15 +152,15 @@ bool set_branch_flags(uint32_t flags, bool silent, branch_type branch)
     if (you.level_type == LEVEL_DUNGEON && branch == you.where_are_you
         && could_control && !can_control && !silent)
     {
-        mpr("You sense the appearance of a powerful magical force "
-            "which warps space.", MSGCH_WARN);
+        mpr(gettext("You sense the appearance of a powerful magical force "
+            "which warps space."), MSGCH_WARN);
     }
 
     if (you.level_type == LEVEL_DUNGEON && branch == you.where_are_you
         && could_map && !can_map && !silent)
     {
-        mpr("A powerful force appears that prevents you from "
-            "remembering where you've been.", MSGCH_WARN);
+        mpr(gettext("A powerful force appears that prevents you from "
+            "remembering where you've been."), MSGCH_WARN);
     }
 
     return (old_flags != branches[branch].branch_flags);
@@ -185,7 +185,7 @@ bool unset_branch_flags(uint32_t flags, bool silent, branch_type branch)
     {
         // Isn't really a "recovery", but I couldn't think of where
         // else to send it.
-        mpr("Space seems to straighten in your vicinity.", MSGCH_RECOVERY);
+        mpr(gettext("Space seems to straighten in your vicinity."), MSGCH_RECOVERY);
     }
 
     if (you.level_type == LEVEL_DUNGEON && branch == you.where_are_you
@@ -193,7 +193,7 @@ bool unset_branch_flags(uint32_t flags, bool silent, branch_type branch)
     {
         // Isn't really a "recovery", but I couldn't think of where
         // else to send it.
-        mpr("An oppressive force seems to lift.", MSGCH_RECOVERY);
+        mpr(gettext("An oppressive force seems to lift."), MSGCH_RECOVERY);
     }
 
     return (old_flags != branches[branch].branch_flags);

@@ -2982,7 +2982,7 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_GRATE:
         return (gettext("iron grate"));
     case DNGN_TREE:
-    case DNGN_SWAMP_TREE: // perhaps gettext("mangrove") or such?
+    case DNGN_SWAMP_TREE: // perhaps "mangrove" or such?
         return (gettext("tree"));
     case DNGN_ORCISH_IDOL:
         if (you.species == SP_HILL_ORC)

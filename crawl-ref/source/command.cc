@@ -216,11 +216,11 @@ static void _print_version(void)
     // for page up at start of listing.
     cmd_version.set_more(formatted_string::parse_string(
 #ifdef USE_TILE
-                              "<cyan>[ +/L-click : Page down.   - : Page up."
-                              "           Esc/R-click exits.]"));
+                              gettext("<cyan>[ +/L-click : Page down.   - : Page up."
+                              "           Esc/R-click exits.]")));
 #else
-                              "<cyan>[ + : Page down.   - : Page up."
-                              "                           Esc exits.]"));
+                              gettext("<cyan>[ + : Page down.   - : Page up."
+                              "                           Esc exits.]")));
 #endif
 
     cmd_version.add_text(_get_version_information(), true);
@@ -268,7 +268,7 @@ static void _print_version(void)
 
 void adjust(void)
 {
-    mpr("Adjust (i)tems, (s)pells, or (a)bilities? ", MSGCH_PROMPT);
+    mpr(gettext("Adjust (i)tems, (s)pells, or (a)bilities? "), MSGCH_PROMPT);
 
     const int keyin = tolower(get_ch());
 
@@ -344,13 +344,13 @@ static void _adjust_item(void)
         return;
     }
 
-    from_slot = prompt_invent_item("Adjust which item?", MT_INVLIST, -1);
+    from_slot = prompt_invent_item(gettext("Adjust which item?"), MT_INVLIST, -1);
     if (prompt_failed(from_slot))
         return;
 
     mpr(you.inv[from_slot].name(DESC_INVENTORY_EQUIP).c_str());
 
-    to_slot = prompt_invent_item("Adjust to which letter? ",
+    to_slot = prompt_invent_item(gettext("Adjust to which letter? "),
                                  MT_INVLIST,
                                  -1,
                                  false,
@@ -375,7 +375,7 @@ static void _adjust_spell(void)
     }
 
     // Select starting slot
-    mpr("Adjust which spell? ", MSGCH_PROMPT);
+    mpr(gettext("Adjust which spell? "), MSGCH_PROMPT);
 
     int keyin = 0;
     if (Options.auto_list)
@@ -399,7 +399,7 @@ static void _adjust_spell(void)
 
     if (spell == SPELL_NO_SPELL)
     {
-        mpr("You don't know that spell.");
+        mpr(gettext("You don't know that spell."));
         return;
     }
 
@@ -410,7 +410,7 @@ static void _adjust_spell(void)
     keyin = 0;
     while (!isaalpha(keyin))
     {
-        mpr("Adjust to which letter? ", MSGCH_PROMPT);
+        mpr(gettext("Adjust to which letter? "), MSGCH_PROMPT);
         keyin = get_ch();
         if (key_is_escape(keyin))
         {
@@ -445,14 +445,14 @@ static void _adjust_ability(void)
 
     if (talents.empty())
     {
-        mpr("You don't currently have any abilities.");
+        mpr(gettext("You don't currently have any abilities."));
         return;
     }
 
     int selected = -1;
     while (selected < 0)
     {
-        msg::streams(MSGCH_PROMPT) << "Adjust which ability? (? or * to list) "
+        msg::streams(MSGCH_PROMPT) << gettext("Adjust which ability? (? or * to list) ")
                                    << std::endl;
 
         const int keyin = get_ch();
@@ -480,7 +480,7 @@ static void _adjust_ability(void)
             // If we can't, cancel out.
             if (selected < 0)
             {
-                mpr("No such ability.");
+                mpr(gettext("No such ability."));
                 return;
             }
         }
@@ -493,7 +493,7 @@ static void _adjust_ability(void)
 
     const int index1 = letter_to_index(talents[selected].hotkey);
 
-    msg::streams(MSGCH_PROMPT) << "Adjust to which letter? " << std::endl;
+    msg::streams(MSGCH_PROMPT) << gettext("Adjust to which letter? ") << std::endl;
 
     const int keyin = get_ch();
 
@@ -506,7 +506,7 @@ static void _adjust_ability(void)
     const int index2 = letter_to_index(keyin);
     if (index1 == index2)
     {
-        mpr("That would be singularly pointless.");
+        mpr(gettext("That would be singularly pointless."));
         return;
     }
 
@@ -516,7 +516,9 @@ static void _adjust_ability(void)
     {
         if (talents[i].hotkey == keyin)
         {
-            msg::stream << "Swapping with: "
+            /// 키가 바뀌었음을 알려주는 메시지.
+            /// Swapping with: a - evoke skill 따위의 내용이 됨.
+            msg::stream << gettext("Swapping with: ")
                         << static_cast<char>(keyin) << " - "
                         << ability_name(talents[i].which)
                         << std::endl;
@@ -526,7 +528,8 @@ static void _adjust_ability(void)
     }
 
     if (!printed_message)
-        msg::stream << "Moving to: "
+        /// Moving to: key - skill name 따위의 내용이 됨.
+        msg::stream << gettext("Moving to: ")
                     << static_cast<char>(keyin) << " - "
                     << ability_name(talents[selected].which)
                     << std::endl;
@@ -548,24 +551,24 @@ void list_armour()
         estr.str("");
         estr.clear();
 
-        estr << ((i == EQ_CLOAK)       ? "Cloak  " :
-                 (i == EQ_HELMET)      ? "Helmet " :
-                 (i == EQ_GLOVES)      ? "Gloves " :
-                 (i == EQ_SHIELD)      ? "Shield " :
-                 (i == EQ_BODY_ARMOUR) ? "Armour " :
+        estr << ((i == EQ_CLOAK)       ? gettext("Cloak  ") :
+                 (i == EQ_HELMET)      ? gettext("Helmet ") :
+                 (i == EQ_GLOVES)      ? gettext("Gloves ") :
+                 (i == EQ_SHIELD)      ? gettext("Shield ") :
+                 (i == EQ_BODY_ARMOUR) ? gettext("Armour ") :
                  (i == EQ_BOOTS) ?
                  ((you.species == SP_CENTAUR
-                   || you.species == SP_NAGA) ? "Barding"
-                                              : "Boots  ")
-                                 : "unknown")
+                   || you.species == SP_NAGA) ? gettext("Barding")
+                                              : gettext("Boots  "))
+                                 : gettext("unknown"))
              << " : ";
 
         if (!you_can_wear(i, true))
-            estr << "    (unavailable)";
+            estr << gettext("    (unavailable)");
         else if (armour_id != -1 && !you_tran_can_wear(you.inv[armour_id])
                  || !you_tran_can_wear(i))
         {
-            estr << "    (currently unavailable)";
+            estr << gettext("    (currently unavailable)");
         }
         else if (armour_id != -1)
         {
@@ -575,7 +578,7 @@ void list_armour()
                                  "equip");
         }
         else if (!you_can_wear(i))
-            estr << "    (restricted)";
+            estr << gettext("    (restricted)");
         else
             estr << "    none";
 
@@ -602,24 +605,24 @@ void list_jewellery(void)
         int       colour       = MSGCOL_BLACK;
 
         const char *slot =
-                 (i == EQ_LEFT_RING)  ? "Left ring" :
-                 (i == EQ_RIGHT_RING) ? "Right ring" :
-                 (i == EQ_AMULET)     ? "Amulet" :
-                 (i == EQ_RING_ONE)   ? "1st ring" :
-                 (i == EQ_RING_TWO)   ? "2nd ring" :
-                 (i == EQ_RING_THREE) ? "3rd ring" :
-                 (i == EQ_RING_FOUR)  ? "4th ring" :
-                 (i == EQ_RING_FIVE)  ? "5th ring" :
-                 (i == EQ_RING_SIX)   ? "6th ring" :
-                 (i == EQ_RING_SEVEN) ? "7th ring" :
-                 (i == EQ_RING_EIGHT) ? "8th ring"
-                                      : "unknown";
+                 (i == EQ_LEFT_RING)  ? gettext("Left ring") :
+                 (i == EQ_RIGHT_RING) ? gettext("Right ring") :
+                 (i == EQ_AMULET)     ? gettext("Amulet") :
+                 (i == EQ_RING_ONE)   ? gettext("1st ring") :
+                 (i == EQ_RING_TWO)   ? gettext("2nd ring") :
+                 (i == EQ_RING_THREE) ? gettext("3rd ring") :
+                 (i == EQ_RING_FOUR)  ? gettext("4th ring") :
+                 (i == EQ_RING_FIVE)  ? gettext("5th ring") :
+                 (i == EQ_RING_SIX)   ? gettext("6th ring") :
+                 (i == EQ_RING_SEVEN) ? gettext("7th ring") :
+                 (i == EQ_RING_EIGHT) ? gettext("8th ring")
+                                      : gettext("unknown");
 
         std::string item;
         if (jewellery_id != -1 && !you_tran_can_wear(you.inv[jewellery_id])
             || !you_tran_can_wear(i))
         {
-            item = "    (currently unavailable)";
+            item = gettext("    (currently unavailable)");
         }
         else if (jewellery_id != -1)
         {
@@ -655,7 +658,7 @@ void list_weapons(void)
     //
     // Yes, this is already on the screen... I'm outputing it
     // for completeness and to avoid confusion.
-    std::string wstring = "Current   : ";
+    std::string wstring = gettext("Current   : ");
     int         colour;
 
     if (weapon_id != -1)
@@ -668,11 +671,12 @@ void list_weapons(void)
     else
     {
         if (you.form == TRAN_BLADE_HANDS)
-            wstring += "    blade " + blade_parts(true);
+            /// 칼날의 손
+            wstring += gettext("    blade ") + blade_parts(true);
         else if (!you_tran_can_wear(EQ_WEAPON))
-            wstring += "    (currently unavailable)";
+            wstring += gettext("    (currently unavailable)");
         else
-            wstring += "    empty " + blade_parts(true);
+            wstring += gettext("    empty ") + blade_parts(true);
         colour = menu_colour(wstring, "", "equip");
     }
 
@@ -687,9 +691,9 @@ void list_weapons(void)
             continue;
 
         if (i == 0)
-            wstring = "Primary   : ";
+            wstring = gettext("Primary   : ");
         else
-            wstring = "Secondary : ";
+            wstring = gettext("Secondary : ");
 
         colour = MSGCOL_BLACK;
         if (you.inv[i].defined()
@@ -703,7 +707,7 @@ void list_weapons(void)
                                  "equip");
         }
         else
-            wstring += "    none";
+            wstring += gettext("    none");
 
         if (colour == MSGCOL_BLACK)
             colour = menu_colour(wstring, "", "equip");
@@ -712,7 +716,7 @@ void list_weapons(void)
     }
 
     // Now we print out the current default fire weapon.
-    wstring = "Firing    : ";
+    wstring = gettext("Firing    : ");
 
     int slot = you.m_quiver->get_fire_item();
 
@@ -723,13 +727,13 @@ void list_weapons(void)
         you.m_quiver->get_desired_item(&item, &slot);
         if (!item->defined())
         {
-            wstring += "    nothing";
+            wstring += gettext("    nothing");
         }
         else
         {
             wstring += "  - ";
             wstring += item->name(DESC_NOCAP_A);
-            wstring += " (empty)";
+            wstring += gettext(" (empty)");
         }
     }
     else
@@ -756,7 +760,7 @@ static bool _cmdhelp_textfilter(const std::string &tag)
 }
 
 static const char *targeting_help_1 =
-    "<h>Examine surroundings ('<w>x</w><h>' in main):\n"
+    N_("<h>Examine surroundings ('<w>x</w><h>' in main):\n"
     "<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
     "<w>Dir.</w>: move cursor in that direction\n"
     "<w>.</w> : move to cursor (also <w>Enter</w>, <w>Del</w>)\n"
@@ -794,10 +798,10 @@ static const char *targeting_help_1 =
     "<w>Ctrl-B</w>: banish monster\n"
     "<w>Ctrl-K</w>: kill monster\n"
 #endif
-;
+);
 
 static const char *targeting_help_2 =
-    "<h>Targeting (zap wands, cast spells, etc.):\n"
+    N_("<h>Targeting (zap wands, cast spells, etc.):\n"
     "Most keys from examine surroundings work.\n"
     "Some keys fire at the target. By default,\n"
     "range is respected and beams don't stop.\n"
@@ -812,7 +816,7 @@ static const char *targeting_help_2 =
     "<h>Firing or throwing a missile:\n"
     "<w>(</w> : cycle to next suitable missile.\n"
     "<w>)</w> : cycle to previous suitable missile.\n"
-    "<w>i</w> : choose from Inventory.\n"
+    "<w>i</w> : choose from Inventory.\n")
 ;
 
 
@@ -939,14 +943,14 @@ public:
 
     void set_prompt()
         {
-            std::string prompt = "Describe which? ";
+            std::string prompt = gettext("Describe which? ");
 
             if (showing_monsters)
             {
                 if (sort_alpha)
-                    prompt += "(CTRL-S to sort by monster toughness)";
+                    prompt += gettext("(CTRL-S to sort by monster toughness)");
                 else
-                    prompt += "(CTRL-S to sort by name)";
+                    prompt += gettext("(CTRL-S to sort by name)");
             }
             set_title(new MenuEntry(prompt, MEL_TITLE));
         }
@@ -2125,8 +2129,8 @@ void show_targeting_help()
     // Page size is number of lines - one line for --more-- prompt.
     cols.set_pagesize(get_number_of_lines() - 1);
 
-    cols.add_formatted(0, targeting_help_1, true, true);
-    cols.add_formatted(1, targeting_help_2, true, true);
+    cols.add_formatted(0, gettext(targeting_help_1), true, true);
+    cols.add_formatted(1, gettext(targeting_help_2), true, true);
     _show_keyhelp_menu(cols.formatted_lines(), false, Options.easy_exit_menu);
 }
 void show_interlevel_travel_branch_help()

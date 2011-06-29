@@ -277,7 +277,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
                 }
                 // ... so we override it for heavy meleers, who get mostly plates.
                 // A scale mail is wasted acquirement, even if it's any but most
-                // über randart).
+                // uber randart).
                 if (random2(you.skills[SK_SPELLCASTING] * 3
                             + you.skills[SK_DODGING])
                     < random2(you.skills[SK_ARMOUR] * 2))
@@ -1152,7 +1152,7 @@ static bool _do_book_acquirement(item_def &book, int agent)
 static int _failed_acquirement(bool quiet)
 {
     if (!quiet)
-        mpr("The demon of the infinite void smiles upon you.");
+        mpr(gettext("The demon of the infinite void smiles upon you."));
     return (NON_ITEM);
 }
 
@@ -1584,7 +1584,8 @@ int acquirement_create_item(object_class_type class_wanted,
         (agent < NUM_GODS))
     {
         if (agent == GOD_XOM)
-            simple_god_message(" snickers.", GOD_XOM);
+            /// simple_god_message
+            simple_god_message(gettext(" snickers."), GOD_XOM);
         else
             return _failed_acquirement(quiet);
     }
@@ -1614,14 +1615,14 @@ bool acquirement(object_class_type class_wanted, int agent,
     {
         ASSERT(!quiet);
         mesclr();
-        mprf("%-29s[c] Jewellery [d] Book%s",
-            you.species == SP_FELID ? "" : "[a] Weapon [b] Armour",
-            you.species == SP_FELID ? "" : " [e] Staff");
-        mprf("%-11s[g] Miscellaneous [h] %-5s     [i] Gold %s",
-            you.species == SP_FELID ? "" : "[f] Wand",
-            you.religion == GOD_FEDHAS ? "Fruit" : "Food ",
-            you.species == SP_FELID ? "" : "[j] Ammunition");
-        mpr("What kind of item would you like to acquire? (\\ to view known items)", MSGCH_PROMPT);
+        mprf(gettext("%-29s[c] Jewellery [d] Book%s"),
+            you.species == SP_FELID ? "" : gettext("[a] Weapon [b] Armour"),
+            you.species == SP_FELID ? "" : gettext(" [e] Staff"));
+        mprf(gettext("%-11s[g] Miscellaneous [h] %-5s     [i] Gold %s"),
+            you.species == SP_FELID ? "" : gettext("[f] Wand"),
+            you.religion == GOD_FEDHAS ? gettext("Fruit") : gettext("Food "),
+            you.species == SP_FELID ? "" : gettext("[j] Ammunition"));
+        mpr(gettext("What kind of item would you like to acquire? (\\ to view known items)"), MSGCH_PROMPT);
 
         const int keyin = tolower(get_ch());
         switch (keyin)
@@ -1649,7 +1650,7 @@ bool acquirement(object_class_type class_wanted, int agent,
             // to make a selection.
             if (crawl_state.seen_hups)
             {
-                mpr("Acquirement interrupted by HUP signal.", MSGCH_ERROR);
+                mpr(gettext("Acquirement interrupted by HUP signal."), MSGCH_ERROR);
                 you.turn_is_over = false;
                 return (false);
             }

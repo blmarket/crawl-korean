@@ -85,6 +85,13 @@ static void _append_value(std::string & description, int valu, bool plussed)
     description += value_str;
 }
 
+static std::string _get_value(int valu, bool plussed)
+{
+    char value_str[80];
+    sprintf(value_str, plussed ? "%+d" : "%d", valu);
+    return value_str;
+}
+
 int count_desc_lines(const std::string &_desc, const int width)
 {
     std::string desc = get_linebreak_string(_desc, width);
@@ -427,33 +434,33 @@ static std::string _randart_descrip(const item_def &item)
     artefact_desc_properties(item, proprt, known);
 
     const property_descriptor propdescs[] = {
-        { ARTP_AC, "It affects your AC (%d).", false },
-        { ARTP_EVASION, "It affects your evasion (%d).", false},
-        { ARTP_STRENGTH, "It affects your strength (%d).", false},
-        { ARTP_INTELLIGENCE, "It affects your intelligence (%d).", false},
-        { ARTP_DEXTERITY, "It affects your dexterity (%d).", false},
-        { ARTP_ACCURACY, "It affects your accuracy (%d).", false},
-        { ARTP_DAMAGE, "It affects your damage-dealing abilities (%d).", false},
-        { ARTP_FIRE, "fire", true},
-        { ARTP_COLD, "cold", true},
-        { ARTP_ELECTRICITY, "It insulates you from electricity.", false},
-        { ARTP_POISON, "It protects you from poison.", false},
-        { ARTP_NEGATIVE_ENERGY, "negative energy", true},
-        { ARTP_MAGIC, "It increases your resistance to enchantments.", false},
-        { ARTP_MAGICAL_POWER, "It affects your mana capacity (%d).", false},
-        { ARTP_EYESIGHT, "It enhances your eyesight.", false},
-        { ARTP_INVISIBLE, "It lets you turn invisible.", false},
-        { ARTP_LEVITATE, "It lets you levitate.", false},
-        { ARTP_BLINK, "It lets you blink.", false},
-        { ARTP_BERSERK, "It lets you go berserk.", false},
-        { ARTP_NOISES, "It makes noises.", false},
-        { ARTP_PREVENT_SPELLCASTING, "It prevents spellcasting.", false},
-        { ARTP_CAUSE_TELEPORTATION, "It causes teleportation.", false},
-        { ARTP_PREVENT_TELEPORTATION, "It prevents most forms of teleportation.",
+        { ARTP_AC, gettext("It affects your AC (%d)."), false },
+        { ARTP_EVASION, gettext("It affects your evasion (%d)."), false},
+        { ARTP_STRENGTH, gettext("It affects your strength (%d)."), false},
+        { ARTP_INTELLIGENCE, gettext("It affects your intelligence (%d)."), false},
+        { ARTP_DEXTERITY, gettext("It affects your dexterity (%d)."), false},
+        { ARTP_ACCURACY, gettext("It affects your accuracy (%d)."), false},
+        { ARTP_DAMAGE, gettext("It affects your damage-dealing abilities (%d)."), false},
+        { ARTP_FIRE, gettext("fire"), true},
+        { ARTP_COLD, gettext("cold"), true},
+        { ARTP_ELECTRICITY, gettext("It insulates you from electricity."), false},
+        { ARTP_POISON, gettext("It protects you from poison."), false},
+        { ARTP_NEGATIVE_ENERGY, gettext("negative energy"), true},
+        { ARTP_MAGIC, gettext("It increases your resistance to enchantments."), false},
+        { ARTP_MAGICAL_POWER, gettext("It affects your mana capacity (%d)."), false},
+        { ARTP_EYESIGHT, gettext("It enhances your eyesight."), false},
+        { ARTP_INVISIBLE, gettext("It lets you turn invisible."), false},
+        { ARTP_LEVITATE, gettext("It lets you levitate."), false},
+        { ARTP_BLINK, gettext("It lets you blink."), false},
+        { ARTP_BERSERK, gettext("It lets you go berserk."), false},
+        { ARTP_NOISES, gettext("It makes noises."), false},
+        { ARTP_PREVENT_SPELLCASTING, gettext("It prevents spellcasting."), false},
+        { ARTP_CAUSE_TELEPORTATION, gettext("It causes teleportation."), false},
+        { ARTP_PREVENT_TELEPORTATION, gettext("It prevents most forms of teleportation."),
           false},
-        { ARTP_ANGRY,  "It makes you angry.", false},
-        { ARTP_CURSED, "It may recurse itself.", false},
-        { ARTP_PONDEROUS, "It slows your movement.", false},
+        { ARTP_ANGRY,  gettext("It makes you angry."), false},
+        { ARTP_CURSED, gettext("It may recurse itself."), false},
+        { ARTP_PONDEROUS, gettext("It slows your movement."), false},
     };
 
     for (unsigned i = 0; i < ARRAYSZ(propdescs); ++i)
@@ -481,15 +488,15 @@ static std::string _randart_descrip(const item_def &item)
                 idx = std::max(idx, 0);
 
                 const char* prefixes[] = {
-                    "It makes you extremely vulnerable to ",
-                    "It makes you very vulnerable to ",
-                    "It makes you vulnerable to ",
-                    "Buggy descriptor!",
-                    "It protects you from ",
-                    "It greatly protects you from ",
-                    "It renders you almost immune to "
+                    N_("It makes you extremely vulnerable to "),
+                    N_("It makes you very vulnerable to "),
+                    N_("It makes you vulnerable to "),
+                    N_("Buggy descriptor!"),
+                    N_("It protects you from "),
+                    N_("It greatly protects you from "),
+                    N_("It renders you almost immune to ")
                 };
-                sdesc = prefixes[idx] + sdesc + '.';
+                sdesc = gettext((prefixes[idx] + sdesc + '.').c_str());
             }
 
             description += '\n';
@@ -501,33 +508,38 @@ static std::string _randart_descrip(const item_def &item)
     if (known_proprt(ARTP_METABOLISM))
     {
         if (proprt[ ARTP_METABOLISM ] >= 3)
-            description += "\nIt greatly speeds your metabolism.";
+            description += gettext("\nIt greatly speeds your metabolism.");
         else if (proprt[ ARTP_METABOLISM ])
-            description += "\nIt speeds your metabolism. ";
+            description += gettext("\nIt speeds your metabolism. ");
     }
 
     if (known_proprt(ARTP_STEALTH))
     {
         const int stval = proprt[ARTP_STEALTH];
-        char buf[80];
-        snprintf(buf, sizeof buf, "\nIt makes you %s%s stealthy.",
-                 (stval < -20 || stval > 20) ? "much " : "",
-                 (stval < 0) ? "less" : "more");
-        description += buf;
+        if(stval < -20)
+            description += gettext("\nIt makes you much less stealthy.");
+        else if(stval < 0)
+            description += gettext("\nIt makes you less stealthy.");
+        else if(stval < 20)
+            description += gettext("\nIt makes you more stealthy.");
+        else
+            description += gettext("\nIt makes you much more stealthy.");
     }
 
     if (known_proprt(ARTP_MUTAGENIC))
     {
         if (proprt[ ARTP_MUTAGENIC ] > 3)
-            description += "\nIt glows with mutagenic radiation.";
+            description += gettext("\nIt glows with mutagenic radiation.");
         else
-            description += "\nIt emits mutagenic radiation.";
+            description += gettext("\nIt emits mutagenic radiation.");
     }
 
     return description;
 }
 #undef known_proprt
 
+/// 내부적으로 trap 이름으로 가지고 meatspin하는 부분이 있어서 여기서 번역하면
+/// 안될것 같고, 화면 출력하는 부분을 찾아서 번역하던가 해야겠다.
 static const char *trap_names[] =
 {
     "dart", "arrow", "spear", "axe",
@@ -584,126 +596,127 @@ static std::string _describe_demon(const std::string& name, flight_type fly)
     seed_rng(seed);
 
     const char* body_descs[] = {
-        " huge, barrel-shaped ",
-        " wispy, insubstantial ",
-        " spindly ",
-        " skeletal ",
-        " horribly deformed ",
-        " spiny ",
-        " waif-like ",
-        " scaly ",
-        " sickeningly deformed ",
-        " bruised and bleeding ",
-        " sickly ",
-        " mass of writhing tentacles for a ",
-        " mass of ropey tendrils for a ",
-        " tree trunk-like ",
-        " hairy ",
-        " furry ",
-        " fuzzy ",
-        "n obese ",
-        " fat ",
-        " slimy ",
-        " wrinkled ",
-        " metallic ",
-        " glassy ",
-        " crystalline ",
-        " muscular ",
-        "n icky ",
-        " swollen ",
-        " lumpy ",
-        "n armoured ",
-        " carapaced ",
-        " slender "
+        N_(" huge, barrel-shaped "),
+        N_(" wispy, insubstantial "),
+        N_(" spindly "),
+        N_(" skeletal "),
+        N_(" horribly deformed "),
+        N_(" spiny "),
+        N_(" waif-like "),
+        N_(" scaly "),
+        N_(" sickeningly deformed "),
+        N_(" bruised and bleeding "),
+        N_(" sickly "),
+        N_(" mass of writhing tentacles for a "),
+        N_(" mass of ropey tendrils for a "),
+        N_(" tree trunk-like "),
+        N_(" hairy "),
+        N_(" furry "),
+        N_(" fuzzy "),
+        N_("n obese "),
+        N_(" fat "),
+        N_(" slimy "),
+        N_(" wrinkled "),
+        N_(" metallic "),
+        N_(" glassy "),
+        N_(" crystalline "),
+        N_(" muscular "),
+        N_("n icky "),
+        N_(" swollen "),
+        N_(" lumpy "),
+        N_("n armoured "),
+        N_(" carapaced "),
+        N_(" slender ")
     };
 
     const char* wing_names[] = {
-        " with small insectoid wings",
-        " with large insectoid wings",
-        " with moth-like wings",
-        " with butterfly wings",
-        " with huge, bat-like wings",
-        " with fleshy wings",
-        " with small, bat-like wings",
-        " with hairy wings",
-        " with great feathered wings",
-        " with shiny metal wings"
+        N_(" with small insectoid wings"),
+        N_(" with large insectoid wings"),
+        N_(" with moth-like wings"),
+        N_(" with butterfly wings"),
+        N_(" with huge, bat-like wings"),
+        N_(" with fleshy wings"),
+        N_(" with small, bat-like wings"),
+        N_(" with hairy wings"),
+        N_(" with great feathered wings"),
+        N_(" with shiny metal wings")
     };
 
     const char* lev_names[] = {
-        " which hovers in mid-air",
-        " with sacs of gas hanging from its back"
+        N_(" which hovers in mid-air"),
+        N_(" with sacs of gas hanging from its back")
     };
 
     const char* nonfly_names[] = {
-        " covered in tiny crawling spiders",
-        " covered in tiny crawling insects",
-        " and the head of a crocodile",
-        " and the head of a hippopotamus",
-        " and a cruel curved beak for a mouth",
-        " and a straight sharp beak for a mouth",
-        " and no head at all",
-        " and a hideous tangle of tentacles for a mouth",
-        " and an elephantine trunk",
-        " and an evil-looking proboscis",
-        " and dozens of eyes",
-        " and two ugly heads",
-        " and a long serpentine tail",
-        " and a pair of huge tusks growing from its jaw",
-        " and a single huge eye, in the centre of its forehead",
-        " and spikes of black metal for teeth",
-        " and a disc-shaped sucker for a head",
-        " and huge, flapping ears",
-        " and a huge, toothy maw in the centre of its chest",
-        " and a giant snail shell on its back",
-        " and a dozen heads",
-        " and the head of a jackal",
-        " and the head of a baboon",
-        " and a huge, slobbery tongue",
-        " which is covered in oozing lacerations",
-        " and the head of a frog",
-        " and the head of a yak",
-        " and eyes out on stalks",
+        N_(" covered in tiny crawling spiders"),
+        N_(" covered in tiny crawling insects"),
+        N_(" and the head of a crocodile"),
+        N_(" and the head of a hippopotamus"),
+        N_(" and a cruel curved beak for a mouth"),
+        N_(" and a straight sharp beak for a mouth"),
+        N_(" and no head at all"),
+        N_(" and a hideous tangle of tentacles for a mouth"),
+        N_(" and an elephantine trunk"),
+        N_(" and an evil-looking proboscis"),
+        N_(" and dozens of eyes"),
+        N_(" and two ugly heads"),
+        N_(" and a long serpentine tail"),
+        N_(" and a pair of huge tusks growing from its jaw"),
+        N_(" and a single huge eye, in the centre of its forehead"),
+        N_(" and spikes of black metal for teeth"),
+        N_(" and a disc-shaped sucker for a head"),
+        N_(" and huge, flapping ears"),
+        N_(" and a huge, toothy maw in the centre of its chest"),
+        N_(" and a giant snail shell on its back"),
+        N_(" and a dozen heads"),
+        N_(" and the head of a jackal"),
+        N_(" and the head of a baboon"),
+        N_(" and a huge, slobbery tongue"),
+        N_(" which is covered in oozing lacerations"),
+        N_(" and the head of a frog"),
+        N_(" and the head of a yak"),
+        N_(" and eyes out on stalks"),
     };
 
     const char* misc_descs[] = {
-        " It seethes with hatred of the living.",
-        " Tiny orange flames dance around it.",
-        " Tiny purple flames dance around it.",
-        " It is surrounded by a weird haze.",
-        " It glows with a malevolent light.",
-        " It looks incredibly angry.",
-        " It oozes with slime.",
-        " It dribbles constantly.",
-        " Mould grows all over it.",
-        " It looks diseased.",
-        " It looks as frightened of you as you are of it.",
-        " It moves in a series of hideous convulsions.",
-        " It moves with an unearthly grace.",
-        " It hungers for your soul!",
-        " It leaves a glistening oily trail.",
-        " It shimmers before your eyes.",
-        " It is surrounded by a brilliant glow.",
-        " It radiates an aura of extreme power.",
+        N_(" It seethes with hatred of the living."),
+        N_(" Tiny orange flames dance around it."),
+        N_(" Tiny purple flames dance around it."),
+        N_(" It is surrounded by a weird haze."),
+        N_(" It glows with a malevolent light."),
+        N_(" It looks incredibly angry."),
+        N_(" It oozes with slime."),
+        N_(" It dribbles constantly."),
+        N_(" Mould grows all over it."),
+        N_(" It looks diseased."),
+        N_(" It looks as frightened of you as you are of it."),
+        N_(" It moves in a series of hideous convulsions."),
+        N_(" It moves with an unearthly grace."),
+        N_(" It hungers for your soul!"),
+        N_(" It leaves a glistening oily trail."),
+        N_(" It shimmers before your eyes."),
+        N_(" It is surrounded by a brilliant glow."),
+        N_(" It radiates an aura of extreme power."),
     };
 
     std::ostringstream description;
-    description << "A powerful demon, " << name << " has a"
-                << RANDOM_ELEMENT(body_descs) << "body";
+    description << make_stringf(gettext("A powerful demon, %s has a %s body"),
+        gettext(name.c_str()),
+        gettext(RANDOM_ELEMENT(body_descs)));
 
     switch (fly)
     {
     case FL_FLY:
-        description << RANDOM_ELEMENT(wing_names);
+        description << gettext(RANDOM_ELEMENT(wing_names));
         break;
 
     case FL_LEVITATE:
-        description << RANDOM_ELEMENT(lev_names);
+        description << gettext(RANDOM_ELEMENT(lev_names));
         break;
 
     case FL_NONE:  // does not fly
         if (!one_chance_in(4))
-            description << RANDOM_ELEMENT(nonfly_names);
+            description << gettext(RANDOM_ELEMENT(nonfly_names));
         break;
     }
 
@@ -716,15 +729,17 @@ static std::string _describe_demon(const std::string& name, flight_type fly)
             switch (random2(3))
             {
             case 0:
-                description << " It stinks of brimstone.";
+                description << gettext(" It stinks of brimstone.");
                 break;
             case 1:
-                description << " It is surrounded by a sickening stench.";
+                description << gettext(" It is surrounded by a sickening stench.");
                 break;
             case 2:
-                description << " It smells like rotting flesh"
-                            << (player_mutation_level(MUT_SAPROVOROUS) == 3 ?
-                                " - yum!" : ".");
+                description << (player_mutation_level(MUT_SAPROVOROUS) == 3 ? 
+                    /// 썩은 고기도 먹을 수 있는 플레이어의 경우.
+                    gettext(" It smells like rotting flesh - yum!") :
+                    /// 썩은 고기는 먹을 수 없는 플레이어의 경우.
+                    gettext(" It smells like rotting flesh."));
                 break;
             }
         }
@@ -737,46 +752,49 @@ static std::string _describe_demon(const std::string& name, flight_type fly)
 
 void append_weapon_stats(std::string &description, const item_def &item)
 {
-    description += "\nAccuracy rating: ";
+    /// 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+    description += gettext("\nAccuracy rating: ");
     _append_value(description, property(item, PWPN_HIT), true);
     description += "    ";
 
-    description += "Damage rating: ";
+    /// 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+    description += gettext("Damage rating: ");
     _append_value(description, property(item, PWPN_DAMAGE), false);
     description += "   ";
 
-    description += "Base attack delay: ";
+    /// 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
+    description += gettext("Base attack delay: ");
     _append_value(description, property(item, PWPN_SPEED) * 10, false);
-   description += "%";
+    description += "%";
 }
 
 static std::string _corrosion_resistance_string(const item_def &item)
 {
     const int ench = item.base_type == OBJ_WEAPONS ? item.plus2 : item.plus;
-    const char* format = "\nIts enchantment level renders it %s to acidic "
-                         "corrosion.";
+    const char* format = N_("\nIts enchantment level renders it %s to acidic "
+                         "corrosion.");
 
     if (is_artefact(item))
         return "";
     if (ench >= 5 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, "immune");
+        return make_stringf(gettext(format), gettext("immune"));
     else if (ench >= 4 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, "extremely resistant");
+        return make_stringf(gettext(format), gettext("extremely resistant"));
     else if (item.base_type == OBJ_ARMOUR
              && item.sub_type == ARM_CRYSTAL_PLATE_MAIL)
     {
-        return "\nBeing made of crystal renders it very resistant to acidic "
-               "corrosion.";
+        return gettext("\nBeing made of crystal renders it very resistant to acidic "
+               "corrosion.");
     }
     else if (get_equip_race(item) == ISFLAG_DWARVEN)
     {
-        return "\nBeing of dwarven fabrication renders it very resistant to "
-               "acidic corrosion.";
+        return gettext("\nBeing of dwarven fabrication renders it very resistant to "
+               "acidic corrosion.");
     }
     else if (ench >= 3 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, "resistant");
+        return make_stringf(format, gettext("resistant"));
     else if (ench >= 2 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, "somewhat resistant");
+        return make_stringf(format, gettext("somewhat resistant"));
     else
         return "";
 }
@@ -810,146 +828,146 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         switch (spec_ench)
         {
         case SPWPN_FLAMING:
-            description += "It emits flame when wielded, causing extra "
+            description += gettext("It emits flame when wielded, causing extra "
                 "injury to most foes and up to double damage against "
-                "particularly susceptible opponents.";
+                "particularly susceptible opponents.");
             if (get_vorpal_type(item) & (DVORP_SLICING | DVORP_CHOPPING))
             {
-                description += " Big, fiery blades are also staple armaments "
-                    "of hydra-hunters.";
+                description += gettext(" Big, fiery blades are also staple armaments "
+                    "of hydra-hunters.");
             }
             break;
         case SPWPN_FREEZING:
-            description += "It has been specially enchanted to freeze "
+            description += gettext("It has been specially enchanted to freeze "
                 "those struck by it, causing extra injury to most foes "
                 "and up to double damage against particularly "
                 "susceptible opponents. It can also slow down "
-                "cold-blooded creatures.";
+                "cold-blooded creatures.");
             break;
         case SPWPN_HOLY_WRATH:
-            description += "It has been blessed by the Shining One to "
-                "cause great damage to the undead and demons.";
+            description += gettext("It has been blessed by the Shining One to "
+                "cause great damage to the undead and demons.");
             break;
         case SPWPN_ELECTROCUTION:
             if (is_range_weapon(item))
             {
-                description += "It charges the ammunition it shoots with "
+                description += gettext("It charges the ammunition it shoots with "
                     "electricity; occasionally upon a hit, such missiles "
-                    "may discharge and cause terrible harm.";
+                    "may discharge and cause terrible harm.");
             }
             else
             {
-                description += "Occasionally, upon striking a foe, it will "
+                description += gettext("Occasionally, upon striking a foe, it will "
                     "discharge some electrical energy and cause terrible "
-                    "harm.";
+                    "harm.");
             }
             break;
         case SPWPN_ORC_SLAYING:
-            description += "It is especially effective against all of "
-                "orcish descent.";
+            description += gettext("It is especially effective against all of "
+                "orcish descent.");
             break;
         case SPWPN_DRAGON_SLAYING:
-            description += "This legendary weapon is deadly to all "
+            description += gettext("This legendary weapon is deadly to all "
                 "dragonkind. It also provides some protection from the "
-                "breath attacks of dragons and other creatures.";
+                "breath attacks of dragons and other creatures.");
             break;
         case SPWPN_VENOM:
             if (is_range_weapon(item))
-                description += "It poisons the ammo it fires.";
+                description += gettext("It poisons the ammo it fires.");
             else
-                description += "It poisons the flesh of those it strikes.";
+                description += gettext("It poisons the flesh of those it strikes.");
             break;
         case SPWPN_PROTECTION:
-            description += "It protects the one who wields it against "
-                "injury (+5 to AC).";
+            description += gettext("It protects the one who wields it against "
+                "injury (+5 to AC).");
             break;
         case SPWPN_EVASION:
-            description += "It affects your evasion (+5 to EV).";
+            description += gettext("It affects your evasion (+5 to EV).");
             break;
         case SPWPN_DRAINING:
-            description += "A truly terrible weapon, it drains the "
-                "life of those it strikes.";
+            description += gettext("A truly terrible weapon, it drains the "
+                "life of those it strikes.");
             break;
         case SPWPN_SPEED:
-            description += "Attacks with this weapon take half as long, "
-                "but cause slightly less damage.";
+            description += gettext("Attacks with this weapon take half as long, "
+                "but cause slightly less damage.");
             break;
         case SPWPN_VORPAL:
             if (is_range_weapon(item))
             {
-                description += "Any ";
-                description += ammo_name(item);
-                description += " fired from it inflicts extra damage.";
+                description += make_stringf(
+                    gettext("Any %s fired from it inflicts extra damage."), 
+                    gettext(ammo_name(item)));
             }
             else
             {
-                description += "It inflicts extra damage upon your "
-                    "enemies.";
+                description += gettext("It inflicts extra damage upon your "
+                    "enemies.");
             }
             break;
         case SPWPN_FLAME:
-            description += "It turns projectiles fired from it into "
-                "bolts of flame.";
+            description += gettext("It turns projectiles fired from it into "
+                "bolts of flame.");
             break;
         case SPWPN_FROST:
-            description += "It turns projectiles fired from it into "
-                "bolts of frost.";
+            description += gettext("It turns projectiles fired from it into "
+                "bolts of frost.");
             break;
         case SPWPN_CHAOS:
             if (is_range_weapon(item))
             {
-                description += "Each time it fires, it turns the "
+                description += gettext("Each time it fires, it turns the "
                     "launched projectile into a different, random type "
-                    "of bolt.";
+                    "of bolt.");
             }
             else
             {
-                description += "Each time it hits an enemy it has a "
-                    "different, random effect.";
+                description += gettext("Each time it hits an enemy it has a "
+                    "different, random effect.");
             }
             break;
         case SPWPN_VAMPIRICISM:
-            description += "It inflicts no extra harm, but heals its "
-                "wielder somewhat when it strikes a living foe.";
+            description += gettext("It inflicts no extra harm, but heals its "
+                "wielder somewhat when it strikes a living foe.");
             break;
         case SPWPN_PAIN:
-            description += "In the hands of one skilled in necromantic "
-                "magic, it inflicts extra damage on living creatures.";
+            description += gettext("In the hands of one skilled in necromantic "
+                "magic, it inflicts extra damage on living creatures.");
             break;
         case SPWPN_DISTORTION:
-            description += "It warps and distorts space around it. "
-                "Unwielding it can cause banishment or high damage.";
+            description += gettext("It warps and distorts space around it. "
+                "Unwielding it can cause banishment or high damage.");
             break;
         case SPWPN_REACHING:
-            description += "It can be evoked to extend its reach.";
+            description += gettext("It can be evoked to extend its reach.");
             break;
         case SPWPN_RETURNING:
-            description += "A skilled user can throw it in such a way "
-                "that it will return to its owner.";
+            description += gettext("A skilled user can throw it in such a way "
+                "that it will return to its owner.");
             break;
         case SPWPN_PENETRATION:
-            description += "Ammo fired by it will pass through the "
+            description += gettext("Ammo fired by it will pass through the "
                 "targets it hits, potentially hitting all targets in "
-                "its path until it reaches maximum range.";
+                "its path until it reaches maximum range.");
             break;
         case SPWPN_REAPING:
             if (is_range_weapon(item))
             {
-                description += "If ammo fired by it kills a monster, "
+                description += gettext("If ammo fired by it kills a monster, "
                     "causing it to leave a corpse, the corpse will be "
-                    "animated as a zombie friendly to the killer.";
+                    "animated as a zombie friendly to the killer.");
             }
             else
             {
-                description += "If a monster killed with it leaves a "
+                description += gettext("If a monster killed with it leaves a "
                     "corpse in good enough shape, the corpse will be "
-                    "animated as a zombie friendly to the killer.";
+                    "animated as a zombie friendly to the killer.");
             }
             break;
         case SPWPN_ANTIMAGIC:
-            description += "It disrupts the flow of magical energy around "
+            description += gettext("It disrupts the flow of magical energy around "
                     "spellcasters and certain magical creatures (including "
-                    "the wielder).";
+                    "the wielder).");
             break;
         }
     }
@@ -967,63 +985,63 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         if (!item_ident(item, ISFLAG_KNOW_PROPERTIES)
             && item_type_known(item))
         {
-            description += "\nThis weapon may have some hidden properties.";
+            description += gettext("\nThis weapon may have some hidden properties.");
         }
     }
 
     const bool launcher = is_range_weapon(item);
     if (verbose)
     {
-        description += "\n\nThis weapon falls into the";
+        description += gettext("\n\nThis weapon falls into the");
 
         const skill_type skill =
             is_range_weapon(item)? range_skill(item) : weapon_skill(item);
 
         description +=
-            make_stringf(" '%s' category. ",
-                         skill == SK_FIGHTING ? "buggy" : skill_name(skill));
+            make_stringf(gettext(" '%s' category. "),
+                         skill == SK_FIGHTING ? "buggy" : gettext(skill_name(skill)));
 
         if (!launcher)
         {
             switch (hands_reqd(item, you.body_size()))
             {
             case HANDS_ONE:
-                description += "It is a one handed weapon.";
+                description += gettext("It is a one handed weapon.");
                  break;
             case HANDS_HALF:
-                description += "It can be used with one hand, or more "
+                description += gettext("It can be used with one hand, or more "
                        "effectively with two (i.e. when not using a "
-                       "shield).";
+                       "shield).");
                 break;
             case HANDS_TWO:
-                description += "It is a two handed weapon.";
+                description += gettext("It is a two handed weapon.");
                 break;
             case HANDS_DOUBLE:
-                description += "It is a buggy weapon.";
+                description += gettext("It is a buggy weapon.");
                 break;
             }
         }
         if (!you.could_wield(item, true))
-            description += "\nIt is too large for you to wield.";
+            description += gettext("\nIt is too large for you to wield.");
     }
 
     if (verbose)
     {
         if (is_demonic(item) && !launcher)
-            description += "\nDemonspawn deal slightly more damage with it.";
+            description += gettext("\nDemonspawn deal slightly more damage with it.");
         else if (get_equip_race(item) != ISFLAG_NO_RACE)
         {
             iflags_t race = get_equip_race(item);
 
             if (race == ISFLAG_DWARVEN)
-                description += "\nIt is well-crafted and durable. Dwarves "
-                               "deal slightly more damage with it.";
+                description += gettext("\nIt is well-crafted and durable. Dwarves "
+                               "deal slightly more damage with it.");
 
             if (race == ISFLAG_ORCISH)
-                description += "\nOrcs deal slightly more damage with it.";
+                description += gettext("\nOrcs deal slightly more damage with it.");
 
             if (race == ISFLAG_ELVEN)
-                description += "\nElves are slightly more accurate with it.";
+                description += gettext("\nElves are slightly more accurate with it.");
         }
     }
 
@@ -1032,18 +1050,23 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         if (item_ident(item, ISFLAG_KNOW_PLUSES)
             && item.plus >= MAX_WPN_ENCHANT && item.plus2 >= MAX_WPN_ENCHANT)
         {
-            description += "\nIt is maximally enchanted.";
+            description += gettext("\nIt is maximally enchanted.");
         }
         else
         {
-            description += "\nIt can be maximally enchanted to +";
-            _append_value(description, MAX_WPN_ENCHANT, false);
+            /// +x,x 까지 강화가 가능하다.
+            std::string value = _get_value(MAX_WPN_ENCHANT, false);
+            description += gettext("\nIt can be maximally enchanted to +");
             if (item.sub_type != WPN_BLOWGUN)
             {
-                description += ", +";
-                _append_value(description, MAX_WPN_ENCHANT, false);
+                description += make_stringf(gettext("\nIt can be maximally enchanted to +%s, +%s."),
+                    value.c_str(), value.c_str());
             }
-            description += ".";
+            else
+            {
+                description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."),
+                    value.c_str());
+            }
         }
     }
 
@@ -1071,22 +1094,21 @@ static std::string _describe_ammo(const item_def &item)
             std::string how;
 
             if (item.plus > 1)
-                how = "brand-new";
+                how = gettext("brand-new");
             else if (item.plus < 0)
             {
                 if (item.plus > -3)
-                    how = "a little worn";
+                    how = gettext("a little worn");
                 else if (item.plus > -5)
-                    how = "slightly damaged";
+                    how = gettext("slightly damaged");
                 else if (item.plus > -7)
-                    how = "damaged";
+                    how = gettext("damaged");
                 else
-                    how = "heavily frayed";
+                    how = gettext("heavily frayed");
             }
 
-            description += "It looks ";
-            description += how;
-            description += ".";
+            description += make_stringf(gettext("It looks %s."),
+                how.c_str());
         }
     }
 
@@ -1103,20 +1125,21 @@ static std::string _describe_ammo(const item_def &item)
         std::string threw_or_fired;
         if (can_throw)
         {
-            threw_or_fired += "threw";
             if (can_launch)
-                threw_or_fired += " or ";
+                threw_or_fired += gettext("threw or fired");
+            else
+                threw_or_fired += gettext("threw");
         }
-        if (can_launch)
-            threw_or_fired += "fired";
+        else if (can_launch)
+            threw_or_fired += gettext("fired");
 
         switch (item.special)
         {
         case SPMSL_FLAME:
-            description += "It turns into a bolt of flame.";
+            description += gettext("It turns into a bolt of flame.");
             break;
         case SPMSL_FROST:
-            description += "It turns into a bolt of frost.";
+            description += gettext("It turns into a bolt of frost.");
             break;
             break;
         case SPMSL_CHAOS:
@@ -1141,68 +1164,72 @@ static std::string _describe_ammo(const item_def &item)
             always_destroyed = true;
             break;
         case SPMSL_POISONED:
-            description += "It is coated with poison.";
+            description += gettext("It is coated with poison.");
             break;
         case SPMSL_CURARE:
-            description += "It is tipped with asphyxiating poison.";
+            description += gettext("It is tipped with asphyxiating poison.");
             break;
         case SPMSL_PARALYSIS:
-            description += "It is tipped with a paralysing substance.";
+            description += gettext("It is tipped with a paralysing substance.");
             break;
         case SPMSL_SLOW:
-            description += "It is coated with a substance that causes slowness of the body.";
+            description += gettext("It is coated with a substance that causes slowness of the body.");
             break;
         case SPMSL_SLEEP:
-            description += "It is coated with a fast-acting tranquilizer.";
+            description += gettext("It is coated with a fast-acting tranquilizer.");
             break;
         case SPMSL_CONFUSION:
-            description += "It is tipped with a substance that causes confusion.";
+            description += gettext("It is tipped with a substance that causes confusion.");
             break;
         case SPMSL_SICKNESS:
-            description += "It has been contaminated by something likely to cause disease.";
+            description += gettext("It has been contaminated by something likely to cause disease.");
             break;
         case SPMSL_RAGE:
-            description += "It is tipped with a substance that causes a mindless, berserk rage.";
+            description += gettext("It is tipped with a substance that causes a mindless, berserk rage.");
             break;
        case SPMSL_RETURNING:
-            description += "A skilled user can throw it in such a way "
-                "that it will return to its owner.";
+            description += gettext("A skilled user can throw it in such a way "
+                "that it will return to its owner.");
             break;
         case SPMSL_REAPING:
-            description += "If it kills a monster, causing it to leave "
+            description += make_stringf(
+                gettext("If it kills a monster, causing it to leave "
                 "a corpse, the corpse will be animated as a zombie "
-                "friendly to the one who " + threw_or_fired + " it.";
+                "friendly to the one who %s it."),
+                threw_or_fired.c_str());
             break;
         case SPMSL_PENETRATION:
-            description += "It will pass through any targets it hits, "
+            description += gettext("It will pass through any targets it hits, "
                 "potentially hitting all targets in its path until it "
-                "reaches maximum range.";
+                "reaches maximum range.");
             break;
         case SPMSL_DISPERSAL:
-            description += "Any target it hits will blink, with a "
+            description += make_stringf(
+                gettext("Any target it hits will blink, with a "
                 "tendency towards blinking further away from the one "
-                "who " + threw_or_fired + " it.";
+                "who %s it."),
+                threw_or_fired.c_str());
             always_destroyed = true;
             break;
         case SPMSL_EXPLODING:
-            description += "It will explode into fragments upon "
+            description += gettext("It will explode into fragments upon "
                 "hitting a target, hitting an obstruction, or reaching "
-                "the end of its range.";
+                "the end of its range.");
             always_destroyed = true;
             break;
         case SPMSL_STEEL:
-            description += "Compared to normal ammo, it does 30% more "
+            description += gettext("Compared to normal ammo, it does 30% more "
                 "damage, is destroyed upon impact only 1/10th of the "
-                "time, and weighs three times as much.";
+                "time, and weighs three times as much.");
             break;
         case SPMSL_SILVER:
-            description += "Silver sears all those touched by chaos. "
+            description += gettext("Silver sears all those touched by chaos. "
                 "Compared to normal ammo, it does 75% more damage to "
                 "chaotic and magically transformed beings. It also does "
                 "extra damage against mutated beings according to how "
                 "mutated they are. With due care, silver ammo can still "
                 "be handled by those it affects. It weighs twice as much "
-                "as normal ammo.";
+                "as normal ammo.");
             break;
         }
 
@@ -1220,37 +1247,37 @@ static std::string _describe_ammo(const item_def &item)
         {
             iflags_t race = get_equip_race(item);
 
-            description += "It is more deadly when thrown by ";
-            description += (race == ISFLAG_DWARVEN) ? "dwarves" :
-                           (race == ISFLAG_ELVEN)   ? "elves"
-                                                    : "orcs";
-            description += (can_launch) ? ", and it" : ".";
-            description += " ";
+            description += make_stringf(
+                can_launch 
+                    ? gettext("It is more deadly %s, and it")
+                    : gettext("It is more deadly %s."),
+                (race == ISFLAG_DWARVEN) ? gettext("when thrown by dwarves") :
+                (race == ISFLAG_ELVEN)   ? gettext("when thrown by elves")
+                                         : gettext("when thrown by orcs"));
         }
 
         if (can_launch)
         {
             if (!can_throw)
-                description += "It ";
-
-            description += "is more effective in conjunction with ";
-            description += racial_description_string(item);
-            description += "launchers.";
+                description += gettext("It is more effective in conjunction with "); 
+            else
+                description += gettext("is more effective in conjunction with ");
+            description += gettext(racial_description_string(item));
+            description += gettext("launchers.");
         }
     }
 
     if (always_destroyed)
-        description += "\nIt will always be destroyed upon impact.";
+        description += gettext("\nIt will always be destroyed upon impact.");
     else if (item.sub_type != MI_THROWING_NET)
         append_missile_info(description);
 
     if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus >= MAX_WPN_ENCHANT)
-        description += "\nIt is maximally enchanted.";
+        description += gettext("\nIt is maximally enchanted.");
     else
     {
-        description += "\nIt can be maximally enchanted to +";
-        _append_value(description, MAX_WPN_ENCHANT, false);
-        description += ".";
+        std::string value = _get_value(MAX_WPN_ENCHANT, false);
+        description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."), value.c_str());
     }
 
     return (description);
@@ -1258,11 +1285,11 @@ static std::string _describe_ammo(const item_def &item)
 
 void append_armour_stats(std::string &description, const item_def &item)
 {
-    description += "\nArmour rating: ";
+    description += gettext("\nArmour rating: ");
     _append_value(description, property(item, PARM_AC), false);
     description += "       ";
 
-    description += "Evasion modifier: ";
+    description += gettext("Evasion modifier: ");
     _append_value(description, property(item, PARM_EVASION), true);
 }
 
@@ -1299,85 +1326,85 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         switch (ego)
         {
         case SPARM_RUNNING:
-            description += "It allows its wearer to run at a great speed.";
+            description += gettext("It allows its wearer to run at a great speed.");
             break;
         case SPARM_FIRE_RESISTANCE:
-            description += "It protects its wearer from heat and fire.";
+            description += gettext("It protects its wearer from heat and fire.");
             break;
         case SPARM_COLD_RESISTANCE:
-            description += "It protects its wearer from cold.";
+            description += gettext("It protects its wearer from cold.");
             break;
         case SPARM_POISON_RESISTANCE:
-            description += "It protects its wearer from poison.";
+            description += gettext("It protects its wearer from poison.");
             break;
         case SPARM_SEE_INVISIBLE:
-            description += "It allows its wearer to see invisible things.";
+            description += gettext("It allows its wearer to see invisible things.");
             break;
         case SPARM_DARKNESS:
-            description += "When activated it hides its wearer from "
+            description += gettext("When activated it hides its wearer from "
                 "the sight of others, but also increases "
-                "their metabolic rate by a large amount.";
+                "their metabolic rate by a large amount.");
             break;
         case SPARM_STRENGTH:
-            description += "It increases the physical power of its wearer (+3 to strength).";
+            description += gettext("It increases the physical power of its wearer (+3 to strength).");
             break;
         case SPARM_DEXTERITY:
-            description += "It increases the dexterity of its wearer (+3 to dexterity).";
+            description += gettext("It increases the dexterity of its wearer (+3 to dexterity).");
             break;
         case SPARM_INTELLIGENCE:
-            description += "It makes you more clever (+3 to intelligence).";
+            description += gettext("It makes you more clever (+3 to intelligence).");
             break;
         case SPARM_PONDEROUSNESS:
-            description += "It is very cumbersome, thus slowing your movement.";
+            description += gettext("It is very cumbersome, thus slowing your movement.");
             break;
         case SPARM_LEVITATION:
-            description += "It can be activated to allow its wearer to "
-                "float above the ground and remain so indefinitely.";
+            description += gettext("It can be activated to allow its wearer to "
+                "float above the ground and remain so indefinitely.");
             break;
         case SPARM_MAGIC_RESISTANCE:
-            description += "It increases its wearer's resistance "
-                "to enchantments.";
+            description += gettext("It increases its wearer's resistance "
+                "to enchantments.");
             break;
         case SPARM_PROTECTION:
-            description += "It protects its wearer from harm (+3 to AC).";
+            description += gettext("It protects its wearer from harm (+3 to AC).");
             break;
         case SPARM_STEALTH:
-            description += "It enhances the stealth of its wearer.";
+            description += gettext("It enhances the stealth of its wearer.");
             break;
         case SPARM_RESISTANCE:
-            description += "It protects its wearer from the effects "
-                "of both cold and heat.";
+            description += gettext("It protects its wearer from the effects "
+                "of both cold and heat.");
             break;
 
         // These two are only for robes.
         case SPARM_POSITIVE_ENERGY:
-            description += "It protects its wearer from "
-                "the effects of negative energy.";
+            description += gettext("It protects its wearer from "
+                "the effects of negative energy.");
             break;
         case SPARM_ARCHMAGI:
-            description += "It increases the power of its wearer's "
-                "magical spells.";
+            description += gettext("It increases the power of its wearer's "
+                "magical spells.");
             break;
 
         case SPARM_PRESERVATION:
-            description += "It protects its wearer's possessions "
-                "from damage and destruction.";
+            description += gettext("It protects its wearer's possessions "
+                "from damage and destruction.");
             break;
 
         case SPARM_REFLECTION:
-            description += "It reflects blocked things back in the "
-                "direction they came from.";
+            description += gettext("It reflects blocked things back in the "
+                "direction they came from.");
             break;
 
         case SPARM_SPIRIT_SHIELD:
-            description += "It shields its wearer from harm at the cost "
-                "of magical power.";
+            description += gettext("It shields its wearer from harm at the cost "
+                "of magical power.");
             break;
 
         // This is only for bracers (gloves).
         case SPARM_ARCHERY:
-            description += "These improve your skills with ranged weaponry "
-                "but interfere slightly with melee combat.";
+            description += gettext("These improve your skills with ranged weaponry "
+                "but interfere slightly with melee combat.");
             break;
         }
     }
@@ -1393,7 +1420,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
 
         // Can't happen, right? (XXX)
         if (!item_ident(item, ISFLAG_KNOW_PROPERTIES) && item_type_known(item))
-            description += "\nThis armour may have some hidden properties.";
+            description += gettext("\nThis armour may have some hidden properties.");
     }
     else if (get_equip_race(item) != ISFLAG_NO_RACE)
     {
@@ -1403,20 +1430,18 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         iflags_t race = get_equip_race(item);
 
         if (race == ISFLAG_DWARVEN)
-            description += "\nIt is well-crafted and durable.";
+            description += gettext("\nIt is well-crafted and durable.");
         else if (race == ISFLAG_ELVEN)
         {
-            description += "\nIt is well-crafted and unobstructive";
+            description += gettext("\nIt is well-crafted and unobstructive");
             if (item.sub_type == ARM_CLOAK || item.sub_type == ARM_BOOTS)
-                description += ", and helps its wearer avoid being noticed";
+                description += gettext(", and helps its wearer avoid being noticed");
             description += ".";
         }
 
-        description += "\nIt fits ";
-        description += (race == ISFLAG_DWARVEN) ? "dwarves" :
-                       (race == ISFLAG_ELVEN)   ? "elves"
-                                                : "orcs";
-        description += " well.";
+        description += (race == ISFLAG_DWARVEN) ? gettext("\nIt fits dwarves well.") :
+                       (race == ISFLAG_ELVEN)   ? gettext("\nIt fits elves well.")
+                                                : gettext("\nIt fits orcs well.");
     }
 
     if (!is_artefact(item))
@@ -1424,17 +1449,16 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         const int max_ench = armour_max_enchant(item);
         if (armour_is_hide(item))
         {
-            description += "\nEnchanting it will turn it into a suit of "
-                           "magical armour.";
+            description += gettext("\nEnchanting it will turn it into a suit of "
+                           "magical armour.");
         }
         else if (item.plus < max_ench || !item_ident(item, ISFLAG_KNOW_PLUSES))
         {
-            description += "\nIt can be maximally enchanted to +";
-            _append_value(description, max_ench, false);
-            description += ".";
+            std::string value = _get_value(max_ench, false);
+            description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."), value.c_str());
         }
         else
-            description += "\nIt is maximally enchanted.";
+            description += gettext("\nIt is maximally enchanted.");
     }
 
     description += _corrosion_resistance_string(item);
@@ -1466,31 +1490,31 @@ static std::string _describe_jewellery(const item_def &item, bool verbose)
             switch (item.sub_type)
             {
             case RING_PROTECTION:
-                description += "\nIt affects your AC (";
+                description += gettext("\nIt affects your AC (");
                 _append_value(description, item.plus, true);
                 description += ").";
                 break;
 
             case RING_EVASION:
-                description += "\nIt affects your evasion (";
+                description += gettext("\nIt affects your evasion (");
                 _append_value(description, item.plus, true);
                 description += ").";
                 break;
 
             case RING_STRENGTH:
-                description += "\nIt affects your strength (";
+                description += gettext("\nIt affects your strength (");
                 _append_value(description, item.plus, true);
                 description += ").";
                 break;
 
             case RING_INTELLIGENCE:
-                description += "\nIt affects your intelligence (";
+                description += gettext("\nIt affects your intelligence (");
                 _append_value(description, item.plus, true);
                 description += ").";
                 break;
 
             case RING_DEXTERITY:
-                description += "\nIt affects your dexterity (";
+                description += gettext("\nIt affects your dexterity (");
                 _append_value(description, item.plus, true);
                 description += ").";
                 break;
@@ -1498,23 +1522,23 @@ static std::string _describe_jewellery(const item_def &item, bool verbose)
             case RING_SLAYING:
                 if (item.plus != 0)
                 {
-                    description += "\nIt affects your accuracy (";
+                    description += gettext("\nIt affects your accuracy (");
                     _append_value(description, item.plus, true);
                     description += ").";
                 }
 
                 if (item.plus2 != 0)
                 {
-                    description += "\nIt affects your damage-dealing abilities (";
+                    description += gettext("\nIt affects your damage-dealing abilities (");
                     _append_value(description, item.plus2, true);
                     description += ").";
                 }
 
                 if (item.plus == 0 && item.plus2 == 0)
                 {
-                    description += "This buggy ring affects neither your "
+                    description += gettext("This buggy ring affects neither your "
                                    "accuracy nor your damage-dealing "
-                                   "abilities.";
+                                   "abilities.");
                 }
                 break;
 
@@ -1536,9 +1560,10 @@ static std::string _describe_jewellery(const item_def &item, bool verbose)
         if (!item_ident(item, ISFLAG_KNOW_PROPERTIES) ||
             !item_ident(item, ISFLAG_KNOW_TYPE))
         {
-            description += "\nThis ";
-            description += (jewellery_is_amulet(item) ? "amulet" : "ring");
-            description += " may have hidden properties.";
+            if(jewellery_is_amulet(item))
+                description += gettext("\nThis amulet may have hidden properties.");
+            else
+                description += gettext("\nThis ring may have hidden properties.");
         }
     }
 
@@ -1559,7 +1584,7 @@ static bool _check_buggy_deck(const item_def &deck, std::string &desc)
 {
     if (!is_deck(deck))
     {
-        desc += "This isn't a deck at all!\n";
+        desc += gettext("This isn't a deck at all!\n");
         return (true);
     }
 
@@ -1590,7 +1615,7 @@ static std::string _describe_deck(const item_def &item)
     const std::vector<card_type> drawn_cards = get_drawn_cards(item);
     if (!drawn_cards.empty())
     {
-        description += "Drawn card(s): ";
+        description += gettext("Drawn card(s): ");
         for (unsigned int i = 0; i < drawn_cards.size(); ++i)
         {
             if (i != 0)
@@ -1604,7 +1629,7 @@ static std::string _describe_deck(const item_def &item)
     int last_known_card = -1;
     if (top_card_is_known(item))
     {
-        description += "Next card(s): ";
+        description += gettext("Next card(s): ");
         for (int i = 0; i < num_cards; ++i)
         {
             uint8_t flags;
@@ -1613,7 +1638,7 @@ static std::string _describe_deck(const item_def &item)
             {
                 if (i != 0)
                     description += ", ";
-                description += card_name(card);
+                description += gettext(card_name(card));
                 last_known_card = i;
             }
             else
@@ -1636,7 +1661,7 @@ static std::string _describe_deck(const item_def &item)
         std::sort(marked_cards.begin(), marked_cards.end(),
                   _compare_card_names);
 
-        description += "Marked card(s): ";
+        description += gettext("Marked card(s): ");
         for (unsigned int i = 0; i < marked_cards.size(); ++i)
         {
             if (i != 0)
@@ -1662,7 +1687,7 @@ static std::string _describe_deck(const item_def &item)
         std::sort(seen_cards.begin(), seen_cards.end(),
                   _compare_card_names);
 
-        description += "Seen card(s): ";
+        description += gettext("Seen card(s): ");
         for (unsigned int i = 0; i < seen_cards.size(); ++i)
         {
             if (i != 0)
@@ -1901,17 +1926,17 @@ std::string get_item_description(const item_def &item, bool verbose,
 
         if (!player_can_memorise_from_spellbook(item))
         {
-            description << "\nThis book is beyond your current level of "
-                           "understanding.";
+            description << gettext("\nThis book is beyond your current level of "
+                           "understanding.");
 
             if (!item_type_known(item))
                 break;
         }
         else if (is_dangerous_spellbook(item))
         {
-            description << "\nWARNING: If you fail in an attempt to memorise a "
+            description << gettext("\nWARNING: If you fail in an attempt to memorise a "
                            "spell from this book, the book will lash out at "
-                           "you.";
+                           "you.");
         }
 
         if (!verbose
@@ -1936,17 +1961,16 @@ std::string get_item_description(const item_def &item, bool verbose,
             if (item.plus < max_charges
                 || !item_ident(item, ISFLAG_KNOW_PLUSES))
             {
-                description << "\nIt can have at most " << max_charges
-                            << " charges.";
+                description << make_stringf(gettext("\nIt can have at most %d charges."), max_charges);
             }
             else
-                description << "\nIt is fully charged.";
+                description << gettext("\nIt is fully charged.");
         }
 
         if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus == 0
             || item.plus2 == ZAPCOUNT_EMPTY)
         {
-            description << "\nUnfortunately, it has no charges left.";
+            description << gettext("\nUnfortunately, it has no charges left.");
         }
         description << "\n";
         break;
@@ -1961,54 +1985,55 @@ std::string get_item_description(const item_def &item, bool verbose,
             if (food_is_rotten(item))
             {
                 if (player_mutation_level(MUT_SAPROVOROUS) == 3)
-                    description << "It looks nice and ripe.";
+                    /// 썩었지만 먹을 수 있는 경우.
+                    description << gettext("It looks nice and ripe.");
                 else
                 {
-                    description << "In fact, it is rotting away before your "
-                                   "eyes.";
+                    description << gettext("In fact, it is rotting away before your "
+                                   "eyes.");
 
                     if (!you.is_undead
                         && !player_mutation_level(MUT_SAPROVOROUS))
                     {
-                        description << " Eating it is completely out of the "
-                                       "question!";
+                        /// 이건 죽어도 못먹어!
+                        description << gettext(" Eating it is completely out of the "
+                                       "question!");
                     }
                 }
             }
             else if (player_mutation_level(MUT_SAPROVOROUS) < 3)
-                description << "It looks rather unpleasant.";
+                /// 별로 먹고싶지는 않지만...
+                description << gettext("It looks rather unpleasant.");
 
             switch (mons_corpse_effect(item.plus))
             {
             case CE_POISONOUS:
-                description << "\n\nThis meat is poisonous.";
+                description << gettext("\n\nThis meat is poisonous.");
                 break;
             case CE_MUTAGEN_RANDOM:
                 if (you.species != SP_GHOUL)
                 {
-                    description << "\n\nEating this meat will cause random "
-                                   "mutations.";
+                    description << gettext("\n\nEating this meat will cause random "
+                                   "mutations.");
                 }
                 break;
             case CE_ROT:
                 if (you.species != SP_GHOUL)
-                    description << "\n\nEating this meat will cause rotting.";
+                    description << gettext("\n\nEating this meat will cause rotting.");
                 break;
             case CE_CONTAMINATED:
                 if (player_mutation_level(MUT_SAPROVOROUS) < 3)
                 {
-                    description << "\n\nMeat like this may occasionally cause "
-                                   "sickness.";
+                    description << gettext("\n\nMeat like this may occasionally cause "
+                                   "sickness.");
                 }
                 break;
             case CE_POISON_CONTAM:
-                description << "\n\nThis meat is poisonous";
                 if (player_mutation_level(MUT_SAPROVOROUS) < 3)
-                {
-                    description << " and may cause sickness even if poison "
-                                   "resistant";
-                }
-                description << ".";
+                    description << gettext("\n\nThis meat is poisonous and may cause "
+                                   "sickness even if poison resistant.");
+                else
+                    description << gettext("\n\nThis meat is poisonous.");
                 break;
             default:
                 break;
@@ -2019,8 +2044,9 @@ std::string get_item_description(const item_def &item, bool verbose,
                 || you.religion == GOD_ZIN
                    && mons_class_intel(item.plus) >= I_NORMAL)
             {
-                description << "\n\n" << god_name(you.religion) << " disapproves "
-                               "of eating such meat.";
+                std::string _god_name = god_name(you.religion);
+                description << make_stringf(gettext("\n\n%s disapproves of eating such meat."),
+                    _god_name.c_str());
             }
             description << "\n";
         }
@@ -2032,9 +2058,9 @@ std::string get_item_description(const item_def &item, bool verbose,
             if (verbose)
             {
                 description <<
-                    "\nIt uses its own mana reservoir for casting spells, and "
+                    gettext("\nIt uses its own mana reservoir for casting spells, and "
                     "recharges automatically according to the recharging "
-                    "rate.";
+                    "rate.");
 
                 const int max_charges = MAX_ROD_CHARGE;
                 const int max_recharge_rate = MAX_WPN_ENCHANT;
@@ -2043,31 +2069,31 @@ std::string get_item_description(const item_def &item, bool verbose,
                     const int num_charges = item.plus2 / ROD_CHARGE_MULT;
                     if (max_charges > num_charges)
                     {
-                        description << "\nIt can currently hold " << num_charges
-                                    << " charges. It can be magically "
-                                    << "recharged to contain up to "
-                                    << max_charges << " charges.";
+                        description << make_stringf(gettext(
+                            "\nIt can currently hold %d"
+                            " charges. It can be magically "
+                            "recharged to contain up to "
+                            "%d charges."), num_charges, max_charges);
                     }
                     else
-                        description << "\nIt is fully charged.";
+                        description << gettext("\nIt is fully charged.");
 
                     const int recharge_rate = short(item.props["rod_enchantment"]);
                     if (recharge_rate < max_recharge_rate)
                     {
-                        description << "\nIts current recharge rate is "
-                                    << (recharge_rate >= 0 ? "+" : "")
-                                    << recharge_rate << ". It can be magically "
-                                    << "recharged up to +" << max_recharge_rate
-                                    << ".";
+                        description << make_stringf(gettext(
+                            "\nIts current recharge rate is "
+                            "%+d. It can be magically "
+                            "recharged up to +%d."), recharge_rate, max_recharge_rate);
                     }
                     else
-                        description << "\nIts recharge rate is at maximum.";
+                        description << gettext("\nIts recharge rate is at maximum.");
                 }
                 else
                 {
-                    description << "\nIt can have at most " << max_charges
-                                << " charges and +" << max_recharge_rate
-                                << " recharge rate.";
+                    description << make_stringf(gettext(
+                        "\nIt can have at most %d charges and "
+                        "+%d recharge rate."), max_charges, max_recharge_rate);
                 }
             }
             else if (Options.dump_book_spells)
@@ -2081,14 +2107,14 @@ std::string get_item_description(const item_def &item, bool verbose,
             std::string stats = "";
             append_weapon_stats(stats, item);
             description << stats;
-            description << "\n\nIt falls into the 'Maces & Flails' category.";
+            description << gettext("\n\nIt falls into the 'Maces & Flails' category.");
         }
         else
         {
             std::string stats = "";
             append_weapon_stats(stats, item);
             description << stats;
-            description << "\n\nIt falls into the 'Staves' category.";
+            description << gettext("\n\nIt falls into the 'Staves' category.");
         }
         break;
 
@@ -2117,9 +2143,9 @@ std::string get_item_description(const item_def &item, bool verbose,
 #endif
         if (item_type_known(item) && you.has_spell(SPELL_EVAPORATE))
         {
-            description << "\nEvaporating this potion will create clouds of "
-                        << get_evaporate_result_list(item.sub_type)
-                        << ".";
+            description << make_stringf(gettext(
+                "\nEvaporating this potion will create clouds of %s."),
+                gettext(get_evaporate_result_list(item.sub_type).c_str()));
         }
         break;
 
@@ -2141,7 +2167,7 @@ std::string get_item_description(const item_def &item, bool verbose,
     }
 
     if (!verbose && item_known_cursed(item))
-        description << "\nIt has a curse placed upon it.";
+        description << gettext("\nIt has a curse placed upon it.");
     else
     {
         if (verbose)
@@ -2162,31 +2188,27 @@ std::string get_item_description(const item_def &item, bool verbose,
                 if (item.base_type == OBJ_ARMOUR
                     || item.base_type == OBJ_WEAPONS)
                 {
-                    description << "\n\nThis ancient artefact cannot be changed "
-                        "by magic or mundane means.";
+                    description << gettext("\n\nThis ancient artefact cannot be changed "
+                        "by magic or mundane means.");
                 }
                 else
-                    description << "\n\nIt is an ancient artefact.";
+                    description << gettext("\n\nIt is an ancient artefact.");
             }
         }
     }
 
     if (conduct_type ct = good_god_hates_item_handling(item))
     {
-        description << "\n\n" << god_name(you.religion) << " opposes the use of "
-                    << "such an ";
-
-        if (ct == DID_NECROMANCY)
-            description << "evil";
-        else
-            description << "unholy";
-
-        description << " item.";
+        description << make_stringf(gettext(
+            "\n\n%s opposes the use of such an %s item."),
+            gettext(god_name(you.religion).c_str()), 
+            ct == DID_NECROMANCY ? gettext("evil") : gettext("unholy"));
     }
     else if (god_hates_item_handling(item))
     {
-        description << "\n\n" << god_name(you.religion) << " disapproves of the "
-                    << "use of such an item.";
+        description << make_stringf(gettext(
+            "\n\n%s disapproves of the use of such an item."),
+            gettext(god_name(you.religion).c_str()));
     }
 
     return description.str();
@@ -2244,7 +2266,7 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
 
     if (feat == DNGN_ENTER_PORTAL_VAULT && !custom_desc && !mimic)
     {
-        long_desc = "UNDESCRIBED PORTAL VAULT ENTRANCE.";
+        long_desc = gettext("UNDESCRIBED PORTAL VAULT ENTRANCE.");
         custom_desc = true;
     }
 
@@ -2299,13 +2321,13 @@ static bool _print_toggle_message(const describe_info &inf)
     {
         const int bottom_line = std::min(30, get_number_of_lines());
         cgotoxy(1, bottom_line);
-        formatted_string::parse_string(
+        formatted_string::parse_string(gettext(
 #ifndef USE_TILE_LOCAL
             "Press '<w>!</w>'"
 #else
             "<w>Right-click</w>"
 #endif
-            " to toggle between the overview and the extended description.").display();
+            " to toggle between the overview and the extended description.")).display();
 
         mouse_control mc(MOUSE_MODE_MORE);
         const int keyin = getchm();
@@ -2474,11 +2496,11 @@ static bool _describe_spellbook(item_def &item)
 
         if (_can_memorise(item) && !crawl_state.player_is_dead())
         {
-            cprintf("Select a spell to read its description, to "
-                    "memorise it or to forget it.");
+            cprintf(gettext("Select a spell to read its description, to "
+                    "memorise it or to forget it."));
         }
         else
-            cprintf("Select a spell to read its description.");
+            cprintf(gettext("Select a spell to read its description."));
 
         if (_describe_spells(item))
             continue;
@@ -2614,20 +2636,20 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
     static std::map<command_type, std::string> act_str;
     if (act_str_init)
     {
-        act_str[CMD_WIELD_WEAPON]       = "(w)ield";
-        act_str[CMD_UNWIELD_WEAPON]     = "(u)nwield";
-        act_str[CMD_QUIVER_ITEM]        = "(q)uiver";
-        act_str[CMD_WEAR_ARMOUR]        = "(w)ear";
-        act_str[CMD_REMOVE_ARMOUR]      = "(t)ake off";
-        act_str[CMD_EVOKE]              = "e(v)oke";
-        act_str[CMD_EAT]                = "(e)at";
-        act_str[CMD_READ]               = "(r)ead";
-        act_str[CMD_WEAR_JEWELLERY]     = "(p)ut on";
-        act_str[CMD_REMOVE_JEWELLERY]   = "(r)emove";
-        act_str[CMD_QUAFF]              = "(q)uaff";
-        act_str[CMD_DROP]               = "(d)rop";
-        act_str[CMD_INSCRIBE_ITEM]      = "(i)nscribe";
-        act_str[CMD_MAKE_NOTE]          = "(a)utoinscribe";
+        act_str[CMD_WIELD_WEAPON]       = gettext("(w)ield");
+        act_str[CMD_UNWIELD_WEAPON]     = gettext("(u)nwield");
+        act_str[CMD_QUIVER_ITEM]        = gettext("(q)uiver");
+        act_str[CMD_WEAR_ARMOUR]        = gettext("(w)ear");
+        act_str[CMD_REMOVE_ARMOUR]      = gettext("(t)ake off");
+        act_str[CMD_EVOKE]              = gettext("e(v)oke");
+        act_str[CMD_EAT]                = gettext("(e)at");
+        act_str[CMD_READ]               = gettext("(r)ead");
+        act_str[CMD_WEAR_JEWELLERY]     = gettext("(p)ut on");
+        act_str[CMD_REMOVE_JEWELLERY]   = gettext("(r)emove");
+        act_str[CMD_QUAFF]              = gettext("(q)uaff");
+        act_str[CMD_DROP]               = gettext("(d)rop");
+        act_str[CMD_INSCRIBE_ITEM]      = gettext("(i)nscribe");
+        act_str[CMD_MAKE_NOTE]          = gettext("(a)utoinscribe");
         act_str_init = false;
     }
 
@@ -2783,12 +2805,12 @@ void inscribe_item(item_def &item, bool msgwin)
     // Don't prompt for whether to inscribe in the first place unless
     // autoinscribing or clearing an existing inscription become an option.
     if (need_autoinscribe && !is_inscribed)
-        prompt = "You can (i)nscribe or (a)utoinscribe.";
+        prompt = gettext("You can (i)nscribe or (a)utoinscribe.");
     else if (!need_autoinscribe && is_inscribed)
-        prompt = "You can (a)dd to, (r)eplace or (c)lear the inscription.";
+        prompt = gettext("You can (a)dd to, (r)eplace or (c)lear the inscription.");
     else if (need_autoinscribe && is_inscribed)
-        prompt = "You can (a)dd to, (r)eplace, (c)lear the inscription "
-                 "or (A)utoinscribe.";
+        prompt = gettext("You can (a)dd to, (r)eplace, (c)lear the inscription "
+                 "or (A)utoinscribe.");
 
     if (prompt != "")
         if (msgwin)
@@ -2832,11 +2854,11 @@ void inscribe_item(item_def &item, bool msgwin)
     case 'r':
     {
         if (!is_inscribed)
-            prompt = "Inscribe with what? ";
+            prompt = gettext("Inscribe with what? ");
         else if (keyin == 'i' || keyin == 'a' || keyin == 'A')
-            prompt = "Add what to inscription? ";
+            prompt = gettext("Add what to inscription? ");
         else
-            prompt = "Replace inscription with what? ";
+            prompt = gettext("Replace inscription with what? ");
 
         char buf[79];
         int ret;

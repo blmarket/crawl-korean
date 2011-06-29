@@ -793,12 +793,12 @@ static void _clear_net_trapping_status(coord_def c)
     {
         monster* mvictim = victim->as_monster();
         if (you.can_see(mvictim))
-            mprf("The net is swept off %s.", mvictim->name(DESC_NOCAP_THE).c_str());
+            mprf(gettext("The net is swept off %s."), gettext(mvictim->name(DESC_NOCAP_THE).c_str()));
         mons_clear_trapping_net(mvictim);
     }
     else
     {
-        mpr("The tide washes the net away!");
+        mpr(gettext("The tide washes the net away!"));
         clear_trapping_net();
     }
 }
@@ -960,7 +960,7 @@ static void _shoals_apply_tide_at(coord_def c, int tide, bool incremental_tide)
         && !you.permanent_levitation()
         && !you.permanent_flight())
     {
-        mprf(MSGCH_WARN, "The tide rushes in under you.");
+        mprf(MSGCH_WARN, gettext("The tide rushes in under you."));
     }
 }
 
@@ -1151,7 +1151,8 @@ void shoals_release_tide(monster* mons)
     {
         if (player_can_hear(mons->pos()))
         {
-            mprf(MSGCH_SOUND, "The tide is released from %s call.",
+            /// 아마 이거 번역해도 's가 계속 따라붙는 문제가 생길 것.
+            mprf(MSGCH_SOUND, gettext("The tide is released from %s call."),
                  apostrophise(mons->name(DESC_NOCAP_YOUR, true)).c_str());
             if (you.see_cell(mons->pos()))
                 flash_view_delay(ETC_WATER, 150);

@@ -502,7 +502,7 @@ std::string print_abilities()
     const std::vector<talent> talents = your_talents(false);
 
     if (talents.empty())
-        text += "no special abilities";
+        text += gettext("no special abilities");
     else
     {
         for (unsigned int i = 0; i < talents.size(); ++i)
@@ -544,23 +544,23 @@ static std::string _zd_mons_description_for_ability (const ability_def &abil)
     switch (abil.ability)
     {
     case ABIL_MAKE_PLANT:
-        return ("Tendrils and shoots erupt from the earth and gnarl into the form of a plant.");
+        return (gettext("Tendrils and shoots erupt from the earth and gnarl into the form of a plant."));
     case ABIL_MAKE_OKLOB_SAPLING:
-        return ("A rhizome shoots up through the ground and merges with vitriolic spirits in the atmosphere.");
+        return (gettext("A rhizome shoots up through the ground and merges with vitriolic spirits in the atmosphere."));
     case ABIL_MAKE_OKLOB_PLANT:
-        return ("A rhizome shoots up through the ground and merges with vitriolic spirits in the atmosphere.");
+        return (gettext("A rhizome shoots up through the ground and merges with vitriolic spirits in the atmosphere."));
     case ABIL_MAKE_BURNING_BUSH:
-        return ("Blackened shoots writhe from the ground and burst into flame!");
+        return (gettext("Blackened shoots writhe from the ground and burst into flame!"));
     case ABIL_MAKE_ICE_STATUE:
-        return ("Water vapor collects and crystallizes into an icy humanoid shape.");
+        return (gettext("Water vapor collects and crystallizes into an icy humanoid shape."));
     case ABIL_MAKE_OCS:
-        return ("Quartz juts from the ground and forms a humanoid shape. You smell citrus.");
+        return (gettext("Quartz juts from the ground and forms a humanoid shape. You smell citrus."));
     case ABIL_MAKE_SILVER_STATUE:
-        return ("Droplets of mercury fall from the ceiling and turn to silver, congealing into a humanoid shape.");
+        return (gettext("Droplets of mercury fall from the ceiling and turn to silver, congealing into a humanoid shape."));
     case ABIL_MAKE_CURSE_SKULL:
-        return ("You sculpt a terrible being from the primitive principle of evil.");
+        return (gettext("You sculpt a terrible being from the primitive principle of evil."));
     case ABIL_MAKE_LIGHTNING_SPIRE:
-        return ("You mount a charged rod inside a coil.");
+        return (gettext("You mount a charged rod inside a coil."));
     default:
         return ("");
     }
@@ -684,8 +684,10 @@ const std::string make_cost_description(ability_type ability)
     {
         ret << abil.mp_cost;
         if (abil.flags & ABFLAG_PERMANENT_MP)
-            ret << " Permanent";
-        ret << " MP";
+            /// (영구적) MP
+            ret << gettext(" Permanent MP");
+        else
+            ret << gettext(" MP");
     }
 
     if (abil.hp_cost)
@@ -695,8 +697,9 @@ const std::string make_cost_description(ability_type ability)
 
         ret << abil.hp_cost.cost(you.hp_max);
         if (abil.flags & ABFLAG_PERMANENT_HP)
-            ret << " Permanent";
-        ret << " HP";
+            ret << gettext(" Permanent HP");
+        else
+            ret << gettext(" HP");
     }
 
     if (abil.zp_cost)
@@ -714,7 +717,8 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Food";   // randomised and exact amount hidden from player
+        /// 걍 만복도라고 번역할 것인가!
+        ret << gettext("Food");   // randomised and exact amount hidden from player
     }
 
     if (abil.piety_cost)
@@ -722,7 +726,8 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Piety";  // randomised and exact amount hidden from player
+        /// 신앙도
+        ret << gettext("Piety");  // randomised and exact amount hidden from player
     }
 
     if (abil.flags & ABFLAG_BREATH)
@@ -730,7 +735,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Breath";
+        ret << gettext("Breath");
     }
 
     if (abil.flags & ABFLAG_DELAY)
@@ -738,7 +743,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Delay";
+        ret << gettext("Delay");
     }
 
     if (abil.flags & ABFLAG_PAIN)
@@ -746,7 +751,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Pain";
+        ret << gettext("Pain");
     }
 
     if (abil.flags & ABFLAG_PIETY)
@@ -754,7 +759,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Piety";
+        ret << gettext("Piety");
     }
 
     if (abil.flags & ABFLAG_EXHAUSTION)
@@ -762,7 +767,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Exhaustion";
+        ret << gettext("Exhaustion");
     }
 
     if (abil.flags & ABFLAG_INSTANT)
@@ -770,7 +775,8 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Instant"; // not really a cost, more of a bonus - bwr
+        /// 비용이 아니라, 즉시 시전임을 알려주는 단어.
+        ret << gettext("Instant"); // not really a cost, more of a bonus - bwr
     }
 
     if (abil.flags & ABFLAG_FRUIT)
@@ -778,7 +784,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Fruit";
+        ret << gettext("Fruit");
     }
 
     if (abil.flags & ABFLAG_VARIABLE_FRUIT)
@@ -786,7 +792,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Fruit or Piety";
+        ret << gettext("Fruit or Piety");
     }
 
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
@@ -794,7 +800,7 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Level drain";
+        ret << gettext("Level drain");
     }
 
     if (abil.flags & ABFLAG_STAT_DRAIN)
@@ -802,22 +808,22 @@ const std::string make_cost_description(ability_type ability)
         if (!ret.str().empty())
             ret << ", ";
 
-        ret << "Stat drain";
+        ret << gettext("Stat drain");
     }
 
     // If we haven't output anything so far, then the effect has no cost
     if (ret.str().empty())
-        ret << "None";
+        ret << gettext("None");
 
     return (ret.str());
 }
 
 static std::string _get_piety_amount_str(int value)
 {
-    return (value > 15 ? "extremely large" :
-            value > 10 ? "large" :
-            value > 5  ? "moderate" :
-                         "small");
+    return (value > 15 ? gettext("extremely large") :
+            value > 10 ? gettext("large") :
+            value > 5  ? gettext("moderate") :
+                         gettext("small") );
 }
 
 static const std::string _detailed_cost_description(ability_type ability)
@@ -828,24 +834,24 @@ static const std::string _detailed_cost_description(ability_type ability)
     std::string str;
 
     bool have_cost = false;
-    ret << "This ability costs: ";
+    ret << gettext("This ability costs: ");
 
     if (abil.mp_cost > 0)
     {
         have_cost = true;
         if (abil.flags & ABFLAG_PERMANENT_MP)
-            ret << "\nMax MP : ";
+            ret << gettext("\nMax MP : ");
         else
-            ret << "\nMP     : ";
+            ret << gettext("\nMP     : ");
         ret << abil.mp_cost;
     }
     if (abil.hp_cost)
     {
         have_cost = true;
         if (abil.flags & ABFLAG_PERMANENT_HP)
-            ret << "\nMax HP : ";
+            ret << gettext("\nMax HP : ");
         else
-            ret << "\nHP     : ";
+            ret << gettext("\nHP     : ");
         ret << abil.hp_cost.cost(you.hp_max);
     }
 
@@ -853,41 +859,42 @@ static const std::string _detailed_cost_description(ability_type ability)
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
         have_cost = true;
-        ret << "\nHunger : ";
+        ret << gettext("\nHunger : ");
         ret << hunger_cost_string(abil.food_cost + abil.food_cost / 2);
     }
 
     if (abil.piety_cost)
     {
         have_cost = true;
-        ret << "\nPiety  : ";
+        ret << gettext("\nPiety  : ");
         int avgcost = abil.piety_cost.base + abil.piety_cost.add / 2;
         ret << _get_piety_amount_str(avgcost);
     }
 
     if (!have_cost)
-        ret << "nothing.";
+        /// 없음.
+        ret << gettext("nothing.");
 
     if (abil.flags & ABFLAG_BREATH)
-        ret << "\nYou must catch your breath between uses of this ability.";
+        ret << gettext("\nYou must catch your breath between uses of this ability.");
 
     if (abil.flags & ABFLAG_DELAY)
-        ret << "\nIt takes some time before being effective.";
+        ret << gettext("\nIt takes some time before being effective.");
 
     if (abil.flags & ABFLAG_PAIN)
-        ret << "\nUsing this ability will hurt you.";
+        ret << gettext("\nUsing this ability will hurt you.");
 
     if (abil.flags & ABFLAG_PIETY)
-        ret << "\nIt will drain your piety while it is active.";
+        ret << gettext("\nIt will drain your piety while it is active.");
 
     if (abil.flags & ABFLAG_EXHAUSTION)
-        ret << "\nIt cannot be used when exhausted.";
+        ret << gettext("\nIt cannot be used when exhausted.");
 
     if (abil.flags & ABFLAG_INSTANT)
-        ret << "\nIt is instantaneous.";
+        ret << gettext("\nIt is instantaneous.");
 
     if (abil.flags & ABFLAG_CONF_OK)
-        ret << "\nYou can use it even if confused.";
+        ret << gettext("\nYou can use it even if confused.");
 
     return (ret.str());
 }
@@ -1312,7 +1319,7 @@ static void _print_talent_description(const talent& tal)
     }
 
     if (lookup.empty()) // Still nothing found?
-        cprintf("No description found.");
+        cprintf(gettext("No description found."));
     else
     {
         print_description(name + "\n\n" + lookup + "\n"
@@ -1337,17 +1344,17 @@ bool activate_ability()
         // * Vampires can't turn into bats when full of blood.
         // * Permanent flying (Kenku) cannot be turned off.
         if (you.species == SP_VAMPIRE && you.experience_level >= 3)
-            mpr("Sorry, you're too full to transform right now.");
+            mpr(gettext("Sorry, you're too full to transform right now."));
         else if (you.species == SP_KENKU && you.experience_level >= 5
                  || player_mutation_level(MUT_BIG_WINGS))
         {
             if (you.flight_mode() == FL_LEVITATE)
-                mpr("You can only start flying from the ground.");
+                mpr(gettext("You can only start flying from the ground."));
             else if (you.flight_mode() == FL_FLY)
-                mpr("You're already flying!");
+                mpr(gettext("You're already flying!"));
         }
         else
-            mpr("Sorry, you're not good enough to have a special ability.");
+            mpr(gettext("Sorry, you're not good enough to have a special ability."));
 
         crawl_state.zero_turns_taken();
         return (false);
@@ -1358,7 +1365,7 @@ bool activate_ability()
         talents = your_talents(true);
         if (talents.empty())
         {
-            mpr("You're too confused!");
+            mpr(gettext("You're too confused!"));
             crawl_state.zero_turns_taken();
             return (false);
         }
@@ -1367,7 +1374,7 @@ bool activate_ability()
     int selected = -1;
     while (selected < 0)
     {
-        msg::streams(MSGCH_PROMPT) << "Use which ability? (? or * to list) "
+        msg::streams(MSGCH_PROMPT) << gettext("Use which ability? (? or * to list) ")
                                    << std::endl;
 
         const int keyin = get_ch();
@@ -1402,7 +1409,7 @@ bool activate_ability()
             // If we can't, cancel out.
             if (selected < 0)
             {
-                mpr("You can't do that.");
+                mpr(gettext("You can't do that."));
                 crawl_state.zero_turns_taken();
                 return (false);
             }
@@ -1443,12 +1450,12 @@ static bool _check_ability_possible(const ability_def& abil,
         const int result = zin_check_recite_to_monsters(0);
         if (result == -1)
         {
-            mpr("There's no appreciative audience!");
+            mpr(gettext("There's no appreciative audience!"));
             return (false);
         }
         else if (result == 0)
         {
-            mpr("There's no-one here to preach to!");
+            mpr(gettext("There's no-one here to preach to!"));
             return (false);
         }
         return (true);
@@ -1460,7 +1467,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_ZIN_SANCTUARY:
         if (env.sanctuary_time)
         {
-            mpr("There's already a sanctuary in place on this level.");
+            mpr(gettext("There's already a sanctuary in place on this level."));
             return (false);
         }
         return (true);
@@ -1470,7 +1477,7 @@ static bool _check_ability_possible(const ability_def& abil,
             && !you.duration[DUR_CONF] && !you.duration[DUR_SLOW]
             && !you.duration[DUR_PARALYSIS] && !you.petrified())
         {
-            mpr("Nothing ails you!");
+            mpr(gettext("Nothing ails you!"));
             return (false);
         }
         return (true);
@@ -1482,7 +1489,7 @@ static bool _check_ability_possible(const ability_def& abil,
             && you.dex() == you.max_dex()
             && !player_rotted())
         {
-            mprf("You don't need to restore your stats or hit points!");
+            mprf(gettext("You don't need to restore your stats or hit points!"));
             return (false);
         }
         return (true);
@@ -1490,7 +1497,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_LUGONU_ABYSS_EXIT:
         if (you.level_type != LEVEL_ABYSS)
         {
-            mpr("You aren't in the Abyss!");
+            mpr(gettext("You aren't in the Abyss!"));
             return (false);
         }
         return (true);
@@ -1501,7 +1508,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_LUGONU_ABYSS_ENTER:
         if (you.level_type == LEVEL_ABYSS)
         {
-            mpr("You're already here!");
+            mpr(gettext("You're already here!"));
             return (false);
         }
         return (true);
@@ -1535,7 +1542,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_EVOKE_BLINK:
         if (item_blocks_teleport(false, false))
         {
-            mpr("You cannot teleport right now.");
+            mpr(gettext("You cannot teleport right now."));
             return(false);
         }
         return (true);
@@ -1547,12 +1554,12 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_FLY_II:
         if (you.duration[DUR_EXHAUSTED])
         {
-            mpr("You're too exhausted to fly.");
+            mpr(gettext("You're too exhausted to fly."));
             return (false);
         }
         else if (you.burden_state != BS_UNENCUMBERED)
         {
-            mpr("You're carrying too much weight to fly.");
+            mpr(gettext("You're carrying too much weight to fly."));
             return (false);
         }
         return (true);
@@ -1570,7 +1577,7 @@ static bool _activate_talent(const talent& tal)
         if (is_feat_dangerous(env.grid(you.pos()), true)
             && (!you.can_swim() || !feat_is_water(env.grid(you.pos()))))
         {
-            mpr("Stopping levitation right now would be fatal!");
+            mpr(gettext("Stopping levitation right now would be fatal!"));
             crawl_state.zero_turns_taken();
             return (false);
         }
@@ -1578,7 +1585,7 @@ static bool _activate_talent(const talent& tal)
     else if (tal.which == ABIL_TRAN_BAT)
     {
         if (you.strength() <= 5
-            && !yesno("Turning into a bat will reduce your strength to zero. Continue?", false, 'n'))
+            && !yesno(gettext("Turning into a bat will reduce your strength to zero. Continue?"), false, 'n'))
         {
             crawl_state.zero_turns_taken();
             return (false);
@@ -1588,14 +1595,16 @@ static bool _activate_talent(const talent& tal)
     {
         if (feat_dangerous_for_form(TRAN_NONE, env.grid(you.pos())))
         {
-            mprf("Turning back right now would cause you to %s!",
-                 env.grid(you.pos()) == DNGN_LAVA ? "burn" : "drown");
+            mprf(
+                env.grid(you.pos()) == DNGN_LAVA ? 
+                    gettext("Turning back right now would cause you to burn!") :
+                    gettext("Turning back right now would cause you to drown!"));
 
             crawl_state.zero_turns_taken();
             return (false);
         }
         if (player_in_bat_form() && you.dex() <= 5
-            && !yesno("Turning back will reduce your dexterity to zero. Continue?", false, 'n'))
+            && !yesno(gettext("Turning back will reduce your dexterity to zero. Continue?"), false, 'n'))
         {
             crawl_state.zero_turns_taken();
             return (false);
@@ -1612,7 +1621,7 @@ static bool _activate_talent(const talent& tal)
     if ((tal.which == ABIL_EVOKE_LEVITATE || tal.which == ABIL_TRAN_BAT)
         && liquefied(you.pos()) && !you.ground_level())
     {
-        mpr("You can't escape from the ground with such puny magic!", MSGCH_WARN);
+        mpr(gettext("You can't escape from the ground with such puny magic!"), MSGCH_WARN);
         crawl_state.zero_turns_taken();
         return (false);
     }
@@ -1682,7 +1691,7 @@ static bool _activate_talent(const talent& tal)
     // No turning back now... {dlb}
     if (random2avg(100, 3) < tal.fail)
     {
-        mpr("You fail to use your ability.");
+        mpr(gettext("You fail to use your ability."));
         you.turn_is_over = true;
         return (false);
     }
@@ -1712,7 +1721,7 @@ static int _calc_breath_ability_range(ability_type ability)
     case ABIL_BREATHE_STEAM:        return 7;
     case ABIL_BREATHE_POISON:       return 7;
     default:
-        die("Bad breath type!");
+        die(gettext("Bad breath type!"));
         break;
     }
     return (-2);
@@ -1739,10 +1748,10 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_MAKE_FUNGUS:
         if (count_allies() > MAX_MONSTERS / 2)
         {
-            mpr("Mushrooms don't grow well in such thickets.");
+            mpr(gettext("Mushrooms don't grow well in such thickets."));
             return false;
         }
-        args.top_prompt="Center fungus circle where?";
+        args.top_prompt=gettext("Center fungus circle where?");
         direction(abild, args);
         if (!abild.isValid)
         {
@@ -1780,7 +1789,7 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_MAKE_TELEPORT_TRAP:
         if ((you.pos() - env.orb_pos).abs() < 100)
         {
-            mpr("Radiation from the Orb interferes with the trap's magic!");
+            mpr(gettext("Radiation from the Orb interferes with the trap's magic!"));
             return false;
         }
     case ABIL_MAKE_DART_TRAP:
@@ -1798,7 +1807,7 @@ static bool _do_ability(const ability_def& abil)
     // End ZotDef traps
 
     case ABIL_MAKE_OKLOB_CIRCLE:
-        args.top_prompt = "Center oklob circle where?";
+        args.top_prompt = gettext("Center oklob circle where?");
         direction(abild, args);
         if (!abild.isValid)
         {
@@ -1830,7 +1839,7 @@ static bool _do_ability(const ability_def& abil)
         // Early exit: don't clobber important features.
         if (is_critical_feature(grd(you.pos())))
         {
-            mpr("The dungeon trembles momentarily.");
+            mpr(gettext("The dungeon trembles momentarily."));
             return (false);
         }
 
@@ -1838,11 +1847,11 @@ static bool _do_ability(const ability_def& abil)
         const map_def *mapidx = random_map_for_tag("zotdef_bazaar", false);
         if (mapidx && dgn_safe_place_map(mapidx, true, true, you.pos()))
         {
-            mpr("A mystic portal forms.");
+            mpr(gettext("A mystic portal forms."));
         }
         else
         {
-            mpr("A buggy portal flickers into view, then vanishes.");
+            mpr(gettext("A buggy portal flickers into view, then vanishes."));
             return (false);
         }
 
@@ -1852,7 +1861,7 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_MAKE_ALTAR:
         if (!create_altar(true))
         {
-            mpr("The dungeon dims for a moment.");
+            mpr(gettext("The dungeon dims for a moment."));
             return (false);
         }
         break;
@@ -1863,14 +1872,14 @@ static bool _do_ability(const ability_def& abil)
                          you.pos(), you.pet_target,
                          0)) != -1)
         {
-            mpr("You create a living grenade.");
+            mpr(gettext("You create a living grenade."));
         }
         if (create_monster(
                mgen_data(MONS_GIANT_SPORE, BEH_FRIENDLY, &you, 6, 0,
                          you.pos(), you.pet_target,
                          0)) != -1)
         {
-            mpr("You create a living grenade.");
+            mpr(gettext("You create a living grenade."));
         }
         break;
 
@@ -1885,7 +1894,7 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_MUMMY_RESTORATION:
     {
-        mpr("You infuse your body with magical energy.");
+        mpr(gettext("You infuse your body with magical energy."));
         bool did_restore = restore_stat(STAT_ALL, 0, false);
 
         const int oldhpmax = you.hp_max;
@@ -1976,7 +1985,7 @@ static bool _do_ability(const ability_def& abil)
             if (you.form == TRAN_DRAGON)
                 power += 12;
 
-            snprintf(info, INFO_SIZE, "You breathe a blast of fire%c",
+            snprintf(info, INFO_SIZE, gettext("You breathe a blast of fire%c"),
                      (power < 15) ? '.':'!');
 
             if (!zapping(ZAP_BREATHE_FIRE, power, beam, true, info))
@@ -1988,7 +1997,7 @@ static bool _do_ability(const ability_def& abil)
                  (you.form == TRAN_DRAGON) ?
                      2 * you.experience_level : you.experience_level,
                  beam, true,
-                         "You exhale a wave of freezing cold."))
+                         gettext("You exhale a wave of freezing cold.")))
             {
                 return (false);
             }
@@ -1996,14 +2005,14 @@ static bool _do_ability(const ability_def& abil)
 
         case ABIL_BREATHE_POISON:
             if (!zapping(ZAP_BREATHE_POISON, you.experience_level, beam, true,
-                         "You exhale a blast of poison gas."))
+                         gettext("You exhale a blast of poison gas.")))
             {
                 return (false);
             }
             break;
 
         case ABIL_BREATHE_LIGHTNING:
-            mpr("You breathe a wild blast of lightning!");
+            mpr(gettext("You breathe a wild blast of lightning!"));
             disc_of_storms(true);
             break;
 
@@ -2011,7 +2020,7 @@ static bool _do_ability(const ability_def& abil)
             if (!zapping(ZAP_BREATHE_ACID,
                 (you.form == TRAN_DRAGON) ?
                     2 * you.experience_level : you.experience_level,
-                beam, true, "You spit a glob of acid."))
+                beam, true, gettext("You spit a glob of acid.")))
             {
                 return (false);
             }
@@ -2022,7 +2031,7 @@ static bool _do_ability(const ability_def& abil)
                 (you.form == TRAN_DRAGON) ?
                     2 * you.experience_level : you.experience_level,
                 beam, true,
-                         "You spit a bolt of dispelling energy."))
+                         gettext("You spit a bolt of dispelling energy.")))
             {
                 return (false);
             }
@@ -2033,7 +2042,7 @@ static bool _do_ability(const ability_def& abil)
                 (you.form == TRAN_DRAGON) ?
                     2 * you.experience_level : you.experience_level,
                 beam, true,
-                         "You spit a glob of burning liquid."))
+                         gettext("You spit a glob of burning liquid.")))
             {
                 return (false);
             }
@@ -2044,7 +2053,7 @@ static bool _do_ability(const ability_def& abil)
                 (you.form == TRAN_DRAGON) ?
                     2 * you.experience_level : you.experience_level,
                 beam, true,
-                         "You exhale a blast of scalding steam."))
+                         gettext("You exhale a blast of scalding steam.")))
             {
                 return (false);
             }
@@ -2055,7 +2064,7 @@ static bool _do_ability(const ability_def& abil)
                  (you.form == TRAN_DRAGON) ?
                      2 * you.experience_level : you.experience_level,
                  beam, true,
-                          "You exhale a blast of noxious fumes."))
+                          gettext("You exhale a blast of noxious fumes.")))
              {
                  return (false);
              }
@@ -2090,7 +2099,7 @@ static bool _do_ability(const ability_def& abil)
         {
             you.attribute[ATTR_PERM_LEVITATION] = 1;
             float_player(true);
-            mpr("You feel very comfortable in the air.");
+            mpr(gettext("You feel very comfortable in the air."));
         }
         break;
 
@@ -2127,7 +2136,7 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_EVOKE_TURN_VISIBLE:
         ASSERT(!you.attribute[ATTR_INVIS_UNCANCELLABLE]);
-        mpr("You feel less transparent.");
+        mpr(gettext("You feel less transparent."));
         you.duration[DUR_INVIS] = 1;
         break;
 
@@ -2139,7 +2148,7 @@ static bool _do_ability(const ability_def& abil)
             if (standing)
                 float_player(false);
             else
-                mpr("You feel more buoyant.");
+                mpr(gettext("You feel more buoyant."));
         }
         else
             levitate_player(2 * you.skill(SK_EVOCATIONS) + 30);
@@ -2160,7 +2169,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_END_TRANSFORMATION:
-        mpr("You feel almost normal.");
+        mpr(gettext("You feel almost normal."));
         you.set_duration(DUR_TRANSFORMATION, 2);
         break;
 
@@ -2177,7 +2186,7 @@ static bool _do_ability(const ability_def& abil)
             start_delay(DELAY_RECITE, 3, prayertype, you.hp);
         else
         {
-            mpr("That recitation seems somehow inappropriate.");
+            mpr(gettext("That recitation seems somehow inappropriate."));
             return (false);
         }
         break;
@@ -2194,7 +2203,7 @@ static bool _do_ability(const ability_def& abil)
 
         if (beam.target == you.pos())
         {
-            mpr("You cannot imprison yourself!");
+            mpr(gettext("You cannot imprison yourself!"));
             return (false);
         }
 
@@ -2202,7 +2211,7 @@ static bool _do_ability(const ability_def& abil)
 
         if (mons == NULL || !you.can_see(mons))
         {
-            mpr("There is no monster there to imprison!");
+            mpr(gettext("There is no monster there to imprison!"));
             return (false);
         }
 
@@ -2243,22 +2252,22 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_KIKU_TORMENT:
         if (!kiku_take_corpse())
         {
-            mpr("There are no corpses to sacrifice!");
+            mpr(gettext("There are no corpses to sacrifice!"));
             return false;
         }
-        simple_god_message(" torments the living!");
+        /// 신이름 torments the living!
+        simple_god_message(gettext(" torments the living!"));
         torment(&you, TORMENT_KIKUBAAQUDGHA, you.pos());
         break;
 
     case ABIL_YRED_INJURY_MIRROR:
         if (yred_injury_mirror())
-            mpr("You renew your dark mirror aura.");
+            mpr(gettext("You renew your dark mirror aura."));
         else
         {
-            mprf("You %s in prayer and are bathed in unholy energy.",
-                 you.species == SP_NAGA  ? "coil" :
-                 you.species == SP_FELID ? "sit"
-                                         : "kneel");
+            mprf(you.species == SP_NAGA  ? gettext("You coil in prayer and are bathed in unholy energy.") :
+                 you.species == SP_FELID ? gettext("You sit in prayer and are bathed in unholy energy.") 
+                                         : gettext("You kneel in prayer and are bathed in unholy energy."));
         }
         you.duration[DUR_MIRROR_DAMAGE] = 9 * BASELINE_DELAY
                      + random2avg(you.piety * BASELINE_DELAY, 2) / 10;
@@ -2292,15 +2301,15 @@ static bool _do_ability(const ability_def& abil)
     }
 
     case ABIL_SIF_MUNA_CHANNEL_ENERGY:
-        mpr("You channel some magical energy.");
+        mpr(gettext("You channel some magical energy."));
 
         inc_mp(1 + random2(you.skill(SK_INVOCATIONS) / 4 + 2));
         break;
 
     case ABIL_OKAWARU_HEROISM:
         mprf(MSGCH_DURATION, you.duration[DUR_HEROISM]
-             ? "You feel more confident with your borrowed prowess."
-             : "You gain the combat prowess of a mighty hero.");
+             ? gettext("You feel more confident with your borrowed prowess.")
+             : gettext("You gain the combat prowess of a mighty hero."));
 
         you.increase_duration(DUR_HEROISM,
             35 + random2(you.skill(SK_INVOCATIONS) * 8), 80);
@@ -2316,8 +2325,8 @@ static bool _do_ability(const ability_def& abil)
         }
 
         mprf(MSGCH_DURATION, you.duration[DUR_FINESSE]
-             ? "Your hands get new energy."
-             : "You can now deal lightning-fast blows.");
+             ? gettext("Your hands get new energy.")
+             : gettext("You can now deal lightning-fast blows."));
 
         you.increase_duration(DUR_FINESSE,
             40 + random2(you.skill(SK_INVOCATIONS) * 8), 80);
@@ -2418,10 +2427,11 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_ELYVILON_LIFESAVING:
         if (you.duration[DUR_LIFESAVING])
-            mpr("You renew your call for help.");
+            mpr(gettext("You renew your call for help."));
         else
         {
-            mprf("You beseech %s to protect your life.",
+            /// 신의 이름이 인자로 들어옴.
+            mprf(gettext("You beseech %s to protect your life."),
                  god_name(you.religion).c_str());
         }
         // Might be a decrease, this is intentional (like Yred).
@@ -2488,7 +2498,7 @@ static bool _do_ability(const ability_def& abil)
 
         if (beam.target == you.pos())
         {
-            mpr("You cannot banish yourself!");
+            mpr(gettext("You cannot banish yourself!"));
             return (false);
         }
 
@@ -2595,7 +2605,7 @@ static bool _do_ability(const ability_def& abil)
         if (retval <= 0)
         {
             if (retval == 0)
-                mprf("No corpses are in range.");
+                mprf(gettext("No corpses are in range."));
             else
                 canned_msg(MSG_OK);
             return (false);
@@ -2642,7 +2652,8 @@ static bool _do_ability(const ability_def& abil)
         const item_def* const weapon = you.weapon();
         const std::string msg = (weapon) ? weapon->name(DESC_NOCAP_YOUR)
                                          : ("your " + you.hand_name(true));
-        mprf(MSGCH_DURATION, "A thick mucus forms on %s.", msg.c_str());
+        /// 무기 이름이나, 손의 이름이 나온다.
+        mprf(MSGCH_DURATION, gettext("A thick mucus forms on %s."), msg.c_str());
         you.increase_duration(DUR_SLIMIFY,
                               you.skill(SK_INVOCATIONS) * 3 / 2 + 3,
                               100);
@@ -2667,16 +2678,16 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_CHEIBRIADOS_SLOUCH:
-        mpr("You can feel time thicken.");
-        dprf("your speed is %d", player_movement_speed());
+        mpr(gettext("You can feel time thicken."));
+        dprf(gettext("your speed is %d"), player_movement_speed());
         cheibriados_slouch(0);
         break;
 
     case ABIL_ASHENZARI_SCRYING:
         if (you.duration[DUR_SCRYING])
-            mpr("You extend your astral sight.");
+            mpr(gettext("You extend your astral sight."));
         else
-            mpr("You gain astral sight.");
+            mpr(gettext("You gain astral sight."));
         you.duration[DUR_SCRYING] = 100 + random2avg(you.piety * 2, 2);
         you.xray_vision = true;
         break;
@@ -2694,9 +2705,9 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_RENOUNCE_RELIGION:
-        if (yesno("Really renounce your faith, foregoing its fabulous benefits?",
+        if (yesno(gettext("Really renounce your faith, foregoing its fabulous benefits?"),
                   false, 'n')
-            && yesno("Are you sure you won't change your mind later?",
+            && yesno(gettext("Are you sure you won't change your mind later?"),
                      false, 'n'))
         {
             excommunication();
@@ -2710,7 +2721,7 @@ static bool _do_ability(const ability_def& abil)
 
 
     case ABIL_NON_ABILITY:
-        mpr("Sorry, you can't do that.");
+        mpr(gettext("Sorry, you can't do that."));
         break;
 
     default:
@@ -2815,11 +2826,11 @@ int choose_ability_menu(const std::vector<talent>& talents)
 
     abil_menu.set_highlighter(NULL);
     abil_menu.set_title(
-        new MenuEntry("  Ability - do what?                 "
-                      "Cost                       Success"));
+        new MenuEntry(gettext("  Ability - do what?                 "
+                      "Cost                       Success")));
     abil_menu.set_title(
-        new MenuEntry("  Ability - describe what?           "
-                      "Cost                       Success"), false);
+        new MenuEntry(gettext("  Ability - describe what?           "
+                      "Cost                       Success")), false);
 
     abil_menu.set_flags(MF_SINGLESELECT | MF_ANYPRINTABLE
                             | MF_ALWAYS_SHOW_MORE);
@@ -2832,9 +2843,9 @@ int choose_ability_menu(const std::vector<talent>& talents)
     }
     else
     {
-        abil_menu.set_more(formatted_string::parse_string(
+        abil_menu.set_more(formatted_string::parse_string(gettext(
                            "Press '<w>!</w>' or '<w>?</w>' to toggle "
-                           "between ability selection and description."));
+                           "between ability selection and description.")));
     }
 
     abil_menu.action_cycle = Menu::CYCLE_TOGGLE;

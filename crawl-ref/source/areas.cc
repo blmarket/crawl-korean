@@ -286,7 +286,8 @@ bool remove_sanctuary(bool did_attack)
     if (did_attack)
     {
         if (seen_change)
-            simple_god_message(" revokes the gift of sanctuary.", GOD_ZIN);
+            /// god message
+            simple_god_message(gettext(" revokes the gift of sanctuary."), GOD_ZIN);
         did_god_conduct(DID_ATTACK_IN_SANCTUARY, 3);
     }
 
@@ -316,7 +317,7 @@ void decrease_sanctuary_radius()
 
     if (you.running && is_sanctuary(you.pos()))
     {
-        mpr("The sanctuary starts shrinking.", MSGCH_DURATION);
+        mpr(gettext("The sanctuary starts shrinking."), MSGCH_DURATION);
         stop_running();
     }
 
@@ -334,7 +335,7 @@ void decrease_sanctuary_radius()
     {
         _remove_sanctuary_property(env.sanctuary_pos);
         if (you.see_cell(env.sanctuary_pos))
-            mpr("The sanctuary disappears.", MSGCH_DURATION);
+            mpr(gettext("The sanctuary disappears."), MSGCH_DURATION);
     }
 }
 
@@ -447,31 +448,31 @@ void create_sanctuary(const coord_def& center, int time)
     // Messaging.
     if (trap_count > 0)
     {
-        mpr("By Zin's power hidden traps are revealed to you.",
+        mpr(gettext("By Zin's power hidden traps are revealed to you."),
             MSGCH_GOD);
     }
 
     if (cloud_count == 1)
     {
-        mpr("By Zin's power the foul cloud within the sanctuary is "
-            "swept away.", MSGCH_GOD);
+        mpr(gettext("By Zin's power the foul cloud within the sanctuary is "
+            "swept away."), MSGCH_GOD);
     }
     else if (cloud_count > 1)
     {
-        mpr("By Zin's power all foul fumes within the sanctuary are "
-            "swept away.", MSGCH_GOD);
+        mpr(gettext("By Zin's power all foul fumes within the sanctuary are "
+            "swept away."), MSGCH_GOD);
     }
 
     if (blood_count > 0)
     {
-        mpr("By Zin's power all blood is cleared from the sanctuary.",
+        mpr(gettext("By Zin's power all blood is cleared from the sanctuary."),
             MSGCH_GOD);
     }
 
     if (scare_count == 1 && seen_mon != NULL)
-        simple_monster_message(seen_mon, " turns to flee the light!");
+        simple_monster_message(seen_mon, gettext(" turns to flee the light!"));
     else if (scare_count > 0)
-        mpr("The monsters scatter in all directions!");
+        mpr(gettext("The monsters scatter in all directions!"));
 }
 
 
