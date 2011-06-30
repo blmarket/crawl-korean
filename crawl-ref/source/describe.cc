@@ -488,15 +488,16 @@ static std::string _randart_descrip(const item_def &item)
                 idx = std::max(idx, 0);
 
                 const char* prefixes[] = {
-                    N_("It makes you extremely vulnerable to "),
-                    N_("It makes you very vulnerable to "),
-                    N_("It makes you vulnerable to "),
+                    N_("It makes you extremely vulnerable to %s."),
+                    N_("It makes you very vulnerable to %s."),
+                    N_("It makes you vulnerable to %s."),
                     N_("Buggy descriptor!"),
-                    N_("It protects you from "),
-                    N_("It greatly protects you from "),
-                    N_("It renders you almost immune to ")
+                    N_("It protects you from %s."),
+                    N_("It greatly protects you from %s."),
+                    N_("It renders you almost immune to %s.")
                 };
-                sdesc = gettext((prefixes[idx] + sdesc + '.').c_str());
+
+                sdesc = make_stringf(gettext(prefixes[idx]), sdesc.c_str());
             }
 
             description += '\n';
@@ -792,9 +793,9 @@ static std::string _corrosion_resistance_string(const item_def &item)
                "acidic corrosion.");
     }
     else if (ench >= 3 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, gettext("resistant"));
+        return make_stringf(gettext(format), gettext("resistant"));
     else if (ench >= 2 && item_ident(item, ISFLAG_KNOW_PLUSES))
-        return make_stringf(format, gettext("somewhat resistant"));
+        return make_stringf(gettext(format), gettext("somewhat resistant"));
     else
         return "";
 }

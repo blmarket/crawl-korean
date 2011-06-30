@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 15:00+0900\n"
+"POT-Creation-Date: 2011-06-30 18:09+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1115,31 +1115,31 @@ msgstr "당신은 잠시 방향감각을 상실했다."
 msgid "You're too hungry."
 msgstr "당신은 너무 배고프다."
 
-#: player-act.cc:547
+#: player-act.cc:547 player-act.cc:546
 msgid "You're already berserk!"
 msgstr "당신은 이미 폭주하고있다!"
 
-#: player-act.cc:555
+#: player-act.cc:555 player-act.cc:554
 msgid "You're too exhausted to go berserk."
 msgstr "당신은 너무 지쳐서 폭주할 수가 없다."
 
-#: player-act.cc:563
+#: player-act.cc:563 player-act.cc:562
 msgid "Your body is effectively dead; that's not a shape for a blood rage."
 msgstr "당신의 몸은 죽은 상태다; 폭주할 수 있는 상태가 아니다."
 
-#: player-act.cc:570
+#: player-act.cc:570 player-act.cc:569
 msgid "You are too mesmerised to rage."
 msgstr "분노하기엔 유혹이 너무 강렬하다."
 
-#: player-act.cc:578
+#: player-act.cc:578 player-act.cc:577
 msgid "You are too terrified to rage."
 msgstr "분노하기엔 너무 공포에 사로잡혀있다."
 
-#: player-act.cc:587
+#: player-act.cc:587 player-act.cc:586
 msgid "You cannot raise a blood rage in your lifeless body."
 msgstr "당신의 생명력 없는 몸으론 피가 끓을 수 없다."
 
-#: player-act.cc:631
+#: player-act.cc:631 player-act.cc:630
 msgid "You're too hungry to go berserk."
 msgstr "너무 배고프다."
 
@@ -2049,11 +2049,11 @@ msgstr "현혹에서 벗어나 정신을 차렸다!"
 msgid "You are no longer entranced."
 msgstr "황홀한 감정이 사라졌다."
 
-#: branch.cc:148
+#: branch.cc:148 dungeon.cc:586
 msgid "You sense the appearance of a powerful magical force which warps space."
 msgstr "강력한 마법의 힘이 공간을 왜곡시키는 것을 감지했다"
 
-#: branch.cc:155
+#: branch.cc:155 dungeon.cc:592
 msgid ""
 "A powerful force appears that prevents you from remembering where you've "
 "been."
@@ -2531,61 +2531,7 @@ msgstr "이것은 때때로 자기자신을 저주한다."
 msgid "It slows your movement."
 msgstr "이것은 당신의 이동을 늦춘다."
 
-msgid "It makes you extremely vulnerable to fire."
-msgstr "이것은 당신을 화염에 굉장히 취약하게 만든다."
-
-msgid "It makes you extremely vulnerable to cold."
-msgstr "이것은 당신을 냉기에 굉장히 취약하게 만든다."
-
-msgid "It makes you extremely vulnerable to negative energy."
-msgstr "이것은 당신을 음에너지에 굉장히 취약하게 만든다."
-
-msgid "It makes you very vulnerable to fire."
-msgstr "이것은 당신을 화염에 꽤나 취약하게 만든다."
-
-msgid "It makes you very vulnerable to cold."
-msgstr "이것은 당신을 냉기에 꽤나 취약하게 만든다."
-
-msgid "It makes you very vulnerable to negative energy."
-msgstr "이것은 당신을 음에너지에 꽤나 취약하게 만든다."
-
-msgid "It makes you vulnerable to fire."
-msgstr "이것은 당신을 화염에 취약하게 만든다."
-
-msgid "It makes you vulnerable to cold."
-msgstr "이것은 당신을 냉기에 취약하게 만든다."
-
-msgid "It makes you vulnerable to negative energy."
-msgstr "이것은 당신을 음에너지에 취약하게 만든다."
-
-msgid "It protects you from fire."
-msgstr "이것은 당신을 화염으로부터 보호한다."
-
-msgid "It protects you from cold."
-msgstr "이것은 당신을 냉기로부터 보호한다."
-
-msgid "It protects you from negative energy."
-msgstr "이것은 당신을 음에너지로부터 보호한다."
-
-msgid "It greatly protects you from fire."
-msgstr "이것은 당신을 화염으로부터 상당히 보호한다."
-
-msgid "It greatly protects you from cold."
-msgstr "이것은 당신을 냉기로부터 상당히 보호한다."
-
-msgid "It greatly protects you from negative energy."
-msgstr "이것은 당신을 음에너지로부터 상당히 보호한다."
-
-msgid "It renders you almost immune to fire."
-msgstr "이것은 당신이 화염에 거의 면역이 되게 한다."
-
-msgid "It renders you almost immune to cold."
-msgstr "이것은 당신이 냉기에 거의 면역이 되게 한다."
-
-msgid "It renders you almost immune to negative energy."
-msgstr "이것은 당신이 음에너지에 거의 면역이 되게 한다."
-
-#: describe.cc:510
+#: describe.cc:510 describe.cc:511
 msgid ""
 "\n"
 "It greatly speeds your metabolism."
@@ -2593,7 +2539,7 @@ msgstr ""
 "\n"
 "이것은 당신의 신진대사 속도를 급격히 가속시킨다."
 
-#: describe.cc:512
+#: describe.cc:512 describe.cc:513
 msgid ""
 "\n"
 "It speeds your metabolism. "
@@ -2601,7 +2547,7 @@ msgstr ""
 "\n"
 "이것은 당신의 신진대사 속도를 가속시킨다."
 
-#: describe.cc:519
+#: describe.cc:519 describe.cc:520
 msgid ""
 "\n"
 "It makes you much less stealthy."
@@ -2609,7 +2555,7 @@ msgstr ""
 "\n"
 "이것은 당신의 은밀한 움직임을 크게 방해한다."
 
-#: describe.cc:521
+#: describe.cc:521 describe.cc:522
 msgid ""
 "\n"
 "It makes you less stealthy."
@@ -2617,7 +2563,7 @@ msgstr ""
 "\n"
 "이것은 당신의 은밀한 움직임을 방해한다."
 
-#: describe.cc:523
+#: describe.cc:523 describe.cc:524
 msgid ""
 "\n"
 "It makes you more stealthy."
@@ -2625,7 +2571,7 @@ msgstr ""
 "\n"
 "이것은 당신의 움직임을 조용하게 한다."
 
-#: describe.cc:525
+#: describe.cc:525 describe.cc:526
 msgid ""
 "\n"
 "It makes you much more stealthy."
@@ -2633,7 +2579,7 @@ msgstr ""
 "\n"
 "이것은 당신의 움직임을 크게 조용하게 한다."
 
-#: describe.cc:531
+#: describe.cc:531 describe.cc:532
 msgid ""
 "\n"
 "It glows with mutagenic radiation."
@@ -2641,7 +2587,7 @@ msgstr ""
 "\n"
 "이것은 돌연변이를 유발하는 방사능으로 빛난다."
 
-#: describe.cc:533
+#: describe.cc:533 describe.cc:534
 msgid ""
 "\n"
 "It emits mutagenic radiation."
@@ -2649,388 +2595,388 @@ msgstr ""
 "\n"
 "이것은 돌연변이를 유발하는 방사능을 발생시킨다."
 
-#: describe.cc:598
+#: describe.cc:598 describe.cc:599
 msgid " huge, barrel-shaped "
 msgstr " 크고, 통 같은 모양의 "
 
-#: describe.cc:599
+#: describe.cc:599 describe.cc:600
 msgid " wispy, insubstantial "
 msgstr " 야무지지 못하고, 보잘 것 없어 보이는 "
 
-#: describe.cc:600
+#: describe.cc:600 describe.cc:601
 msgid " spindly "
 msgstr " 가는 "
 
-#: describe.cc:601
+#: describe.cc:601 describe.cc:602
 msgid " skeletal "
 msgstr " 뼈가 앙상한 "
 
-#: describe.cc:602
+#: describe.cc:602 describe.cc:603
 msgid " horribly deformed "
 msgstr " 끔찍하게 변형된 "
 
-#: describe.cc:603
+#: describe.cc:603 describe.cc:604
 msgid " spiny "
 msgstr " 가시로 뒤덮인 "
 
-#: describe.cc:604
+#: describe.cc:604 describe.cc:605
 msgid " waif-like "
 msgstr " 앙상한 모습의 "
 
-#: describe.cc:605
+#: describe.cc:605 describe.cc:606
 msgid " scaly "
 msgstr " 비늘로 뒤덮인 "
 
-#: describe.cc:606
+#: describe.cc:606 describe.cc:607
 msgid " sickeningly deformed "
 msgstr " 구역질나게 변형된 "
 
-#: describe.cc:607
+#: describe.cc:607 describe.cc:608
 msgid " bruised and bleeding "
 msgstr " 곳곳이 멍들고 피를 흘리는 "
 
-#: describe.cc:608
+#: describe.cc:608 describe.cc:609
 msgid " sickly "
 msgstr " 허약해 보이는 "
 
-#: describe.cc:609
+#: describe.cc:609 describe.cc:610
 msgid " mass of writhing tentacles for a "
 msgstr " 많은 촉수가 흐느적거리는 "
 
-#: describe.cc:610
+#: describe.cc:610 describe.cc:611
 msgid " mass of ropey tendrils for a "
 msgstr " 많은 가지가 달려있는 "
 
-#: describe.cc:611
+#: describe.cc:611 describe.cc:612
 msgid " tree trunk-like "
 msgstr " 꼭 베어낸 통나무 같은 "
 
-#: describe.cc:612
+#: describe.cc:612 describe.cc:613
 msgid " hairy "
 msgstr " 털이 돋아난 "
 
-#: describe.cc:613
+#: describe.cc:613 describe.cc:614
 msgid " furry "
 msgstr " 털로 덮여있는 "
 
-#: describe.cc:614
+#: describe.cc:614 describe.cc:615
 msgid " fuzzy "
 msgstr " 보송보송한 털로 둘러싸인 "
 
-#: describe.cc:615
+#: describe.cc:615 describe.cc:616
 msgid "n obese "
 msgstr " 육중한 "
 
-#: describe.cc:616
+#: describe.cc:616 describe.cc:617
 msgid " fat "
 msgstr " 뚱뚱한 "
 
-#: describe.cc:617
+#: describe.cc:617 describe.cc:618
 msgid " slimy "
 msgstr " 점액질의 "
 
-#: describe.cc:618
+#: describe.cc:618 describe.cc:619
 msgid " wrinkled "
 msgstr " 주름이 난 "
 
-#: describe.cc:619
+#: describe.cc:619 describe.cc:620
 msgid " metallic "
 msgstr " 금속성의 "
 
-#: describe.cc:620
+#: describe.cc:620 describe.cc:621
 msgid " glassy "
 msgstr " 유리와 같은 "
 
-#: describe.cc:621
+#: describe.cc:621 describe.cc:622
 msgid " crystalline "
 msgstr " 수정 재질의 "
 
-#: describe.cc:622
+#: describe.cc:622 describe.cc:623
 msgid " muscular "
 msgstr " 근육질의 "
 
-#: describe.cc:623
+#: describe.cc:623 describe.cc:624
 msgid "n icky "
 msgstr " 끈적한 "
 
-#: describe.cc:624
+#: describe.cc:624 describe.cc:625
 msgid " swollen "
 msgstr " 부어오른 "
 
-#: describe.cc:625
+#: describe.cc:625 describe.cc:626
 msgid " lumpy "
 msgstr " 종양 투성이의 "
 
-#: describe.cc:626
+#: describe.cc:626 describe.cc:627
 msgid "n armoured "
 msgstr " 갑옷같은 "
 
-#: describe.cc:627
+#: describe.cc:627 describe.cc:628
 msgid " carapaced "
 msgstr " 껍질로 둘러싸인 "
 
-#: describe.cc:628
+#: describe.cc:628 describe.cc:629
 msgid " slender "
 msgstr " 늘씬한 "
 
-#: describe.cc:632
+#: describe.cc:632 describe.cc:633
 msgid " with small insectoid wings"
 msgstr " 작은 곤충의 날개가 달려있다"
 
-#: describe.cc:633
+#: describe.cc:633 describe.cc:634
 msgid " with large insectoid wings"
 msgstr " 큰 곤충의 날개가 달려있다"
 
-#: describe.cc:634
+#: describe.cc:634 describe.cc:635
 msgid " with moth-like wings"
 msgstr " 모기 날개를 달고있다"
 
-#: describe.cc:635
+#: describe.cc:635 describe.cc:636
 msgid " with butterfly wings"
 msgstr " 나비 날개를 달고있다"
 
-#: describe.cc:636
+#: describe.cc:636 describe.cc:637
 msgid " with huge, bat-like wings"
 msgstr " 거대한 박쥐 모양의 날개를 달고있다"
 
-#: describe.cc:637
+#: describe.cc:637 describe.cc:638
 msgid " with fleshy wings"
 msgstr " 살갗으로 된 날개를 달고있다"
 
-#: describe.cc:638
+#: describe.cc:638 describe.cc:639
 msgid " with small, bat-like wings"
 msgstr " 작은 박쥐 모양의 날개를 달고있다"
 
-#: describe.cc:639
+#: describe.cc:639 describe.cc:640
 msgid " with hairy wings"
 msgstr " 털이 난 날개를 달고있다"
 
-#: describe.cc:640
+#: describe.cc:640 describe.cc:641
 msgid " with great feathered wings"
 msgstr " 깃털이 달린 거대한 날개를 달고있다"
 
-#: describe.cc:641
+#: describe.cc:641 describe.cc:642
 msgid " with shiny metal wings"
 msgstr " 빛나는 금속성의 날개를 달고있다"
 
-#: describe.cc:645
+#: describe.cc:645 describe.cc:646
 msgid " which hovers in mid-air"
 msgstr " 공중에서 부양하고 있다"
 
-#: describe.cc:646
+#: describe.cc:646 describe.cc:647
 msgid " with sacs of gas hanging from its back"
 msgstr " 등에 달린 가스 주머니로 공중에 떠있다"
 
-#: describe.cc:650
+#: describe.cc:650 describe.cc:651
 msgid " covered in tiny crawling spiders"
 msgstr " 작은 거미들로 뒤덮여 있다"
 
-#: describe.cc:651
+#: describe.cc:651 describe.cc:652
 msgid " covered in tiny crawling insects"
 msgstr " 작은 벌레들로 뒤덮여 있다"
 
-#: describe.cc:652
+#: describe.cc:652 describe.cc:653
 msgid " and the head of a crocodile"
 msgstr " 악어의 머리를 하고 있다"
 
-#: describe.cc:653
+#: describe.cc:653 describe.cc:654
 msgid " and the head of a hippopotamus"
 msgstr " 하마의 머리를 하고 있다"
 
-#: describe.cc:654
+#: describe.cc:654 describe.cc:655
 msgid " and a cruel curved beak for a mouth"
 msgstr " 입에는 소름끼치게 휘어진 부리가 달려있다"
 
-#: describe.cc:655
+#: describe.cc:655 describe.cc:656
 msgid " and a straight sharp beak for a mouth"
 msgstr " 입에는 쭉 뻗고 날카로운 부리를 가지고 있다"
 
-#: describe.cc:656
+#: describe.cc:656 describe.cc:657
 msgid " and no head at all"
 msgstr " 머리는 없다"
 
-#: describe.cc:657
+#: describe.cc:657 describe.cc:658
 msgid " and a hideous tangle of tentacles for a mouth"
 msgstr " 입에는 흉측한 촉수들을 날름거리고 있다"
 
-#: describe.cc:658
+#: describe.cc:658 describe.cc:659
 msgid " and an elephantine trunk"
 msgstr " 코끼리같이 생긴 코가 달려있다"
 
-#: describe.cc:659
+#: describe.cc:659 describe.cc:660
 msgid " and an evil-looking proboscis"
 msgstr " 사악해보이는 코가 달려있다"
 
-#: describe.cc:660
+#: describe.cc:660 describe.cc:661
 msgid " and dozens of eyes"
 msgstr " 수십개의 눈을 가지고 있다"
 
-#: describe.cc:661
+#: describe.cc:661 describe.cc:662
 msgid " and two ugly heads"
 msgstr " 두 개의 못생긴 머리가 달려있다"
 
-#: describe.cc:662
+#: describe.cc:662 describe.cc:663
 msgid " and a long serpentine tail"
 msgstr " 길고 꾸불꾸불한 꼬리가 달려있다"
 
-#: describe.cc:663
+#: describe.cc:663 describe.cc:664
 msgid " and a pair of huge tusks growing from its jaw"
 msgstr " 입가에 한 쌍의 커다란 어금니가 자라 있다"
 
-#: describe.cc:664
+#: describe.cc:664 describe.cc:665
 msgid " and a single huge eye, in the centre of its forehead"
 msgstr " 앞머리 중앙에 큰 하나의 눈이 달려있다"
 
-#: describe.cc:665
+#: describe.cc:665 describe.cc:666
 msgid " and spikes of black metal for teeth"
 msgstr " 검은 금속성의 이빨을 가지고 있다"
 
-#: describe.cc:666
+#: describe.cc:666 describe.cc:667
 msgid " and a disc-shaped sucker for a head"
 msgstr " 머리엔 원반 모양의 빨판이 달려있다"
 
-#: describe.cc:667
+#: describe.cc:667 describe.cc:668
 msgid " and huge, flapping ears"
 msgstr " 크고 펄럭거리는 귀를 갖고 있다"
 
-#: describe.cc:668
+#: describe.cc:668 describe.cc:669
 msgid " and a huge, toothy maw in the centre of its chest"
 msgstr " 가슴에 크고 이빨이 난 위장을 내어놓고 있다"
 
-#: describe.cc:669
+#: describe.cc:669 describe.cc:670
 msgid " and a giant snail shell on its back"
 msgstr " 등에 큰 달팽이집이 달려있다"
 
-#: describe.cc:670
+#: describe.cc:670 describe.cc:671
 msgid " and a dozen heads"
 msgstr " 12개의 머리가 달려있다"
 
-#: describe.cc:671
+#: describe.cc:671 describe.cc:672
 msgid " and the head of a jackal"
 msgstr " 자칼 머리를 하고있다"
 
-#: describe.cc:672
+#: describe.cc:672 describe.cc:673
 msgid " and the head of a baboon"
 msgstr " 원숭이 머리를 하고있다"
 
-#: describe.cc:673
+#: describe.cc:673 describe.cc:674
 msgid " and a huge, slobbery tongue"
 msgstr " 크고 질척거리는 혀를 내밀고 있다"
 
-#: describe.cc:674
+#: describe.cc:674 describe.cc:675
 msgid " which is covered in oozing lacerations"
 msgstr " 점액으로 뒤덮여있다"
 
-#: describe.cc:675
+#: describe.cc:675 describe.cc:676
 msgid " and the head of a frog"
 msgstr " 개구리 머리를 하고 있다"
 
-#: describe.cc:676
+#: describe.cc:676 describe.cc:677
 msgid " and the head of a yak"
 msgstr " 야크 머리를 하고 있다"
 
-#: describe.cc:677
+#: describe.cc:677 describe.cc:678
 msgid " and eyes out on stalks"
 msgstr " 자루눈을 하고 있다"
 
-#: describe.cc:681
+#: describe.cc:681 describe.cc:682
 msgid " It seethes with hatred of the living."
 msgstr " 이 악마는 살아있는 존재들에 대한 강한 적개심을 표출하고 있다."
 
-#: describe.cc:682
+#: describe.cc:682 describe.cc:683
 msgid " Tiny orange flames dance around it."
 msgstr ""
 " 오렌지 색 빛의 작은 불덩어리들이 이 악마의 주변을 춤추듯 배회하고 있다."
 
-#: describe.cc:683
+#: describe.cc:683 describe.cc:684
 msgid " Tiny purple flames dance around it."
 msgstr " 보랏빛의 작은 불덩어리들이 이 악마의 주변을 춤추듯 배회하고 있다."
 
-#: describe.cc:684
+#: describe.cc:684 describe.cc:685
 msgid " It is surrounded by a weird haze."
 msgstr " 이 악마는 옅으면서도 괴상한 연기에 둘러싸여 있다."
 
-#: describe.cc:685
+#: describe.cc:685 describe.cc:686
 msgid " It glows with a malevolent light."
 msgstr " 이 악마는 불경스러운 빛을 내며 발광하고 있다."
 
-#: describe.cc:686
+#: describe.cc:686 describe.cc:687
 msgid " It looks incredibly angry."
 msgstr " 이 악마는 극도로 분노한 듯 보인다."
 
-#: describe.cc:687
+#: describe.cc:687 describe.cc:688
 msgid " It oozes with slime."
 msgstr " 이 악마는 슬라임 점액을 흘리고 있다."
 
-#: describe.cc:688
+#: describe.cc:688 describe.cc:689
 msgid " It dribbles constantly."
 msgstr " 이 악마는 끊임없이 침을 흘리고 있다."
 
-#: describe.cc:689
+#: describe.cc:689 describe.cc:690
 msgid " Mould grows all over it."
 msgstr " 곰팡이들이 이 악마의 몸에 피어 있다."
 
-#: describe.cc:690
+#: describe.cc:690 describe.cc:691
 msgid " It looks diseased."
 msgstr " 이 악마는 병에 걸린것 같다."
 
-#: describe.cc:691
+#: describe.cc:691 describe.cc:692
 msgid " It looks as frightened of you as you are of it."
 msgstr " 이 악마는 당신이 겁에 질린 만큼 당신에게 겁에 질려 있다."
 
-#: describe.cc:692
+#: describe.cc:692 describe.cc:693
 msgid " It moves in a series of hideous convulsions."
 msgstr " 이 악마는 흉측스럽게 경기를 일으키면서 움직이고 있다."
 
-#: describe.cc:693
+#: describe.cc:693 describe.cc:694
 msgid " It moves with an unearthly grace."
 msgstr " 이 악마는 믿을 수 없을 정도로 우아하게 움직인다."
 
-#: describe.cc:694
+#: describe.cc:694 describe.cc:695
 msgid " It hungers for your soul!"
 msgstr " 이 악마는 당신의 영혼에 굶주려 있다!"
 
-#: describe.cc:695
+#: describe.cc:695 describe.cc:696
 msgid " It leaves a glistening oily trail."
 msgstr " 이 악마는 윤기가 흐르는 기름의 궤적을 남기며 움직이고 있다."
 
-#: describe.cc:696
+#: describe.cc:696 describe.cc:697
 msgid " It shimmers before your eyes."
 msgstr " 이 악마는 당신의 눈 뒤에서 희미하게 빛난다."
 
-#: describe.cc:697
+#: describe.cc:697 describe.cc:698
 msgid " It is surrounded by a brilliant glow."
 msgstr " 이 악마는 화려한 광채를 내고 있다."
 
-#: describe.cc:698
+#: describe.cc:698 describe.cc:699
 msgid " It radiates an aura of extreme power."
 msgstr " 이 악마는 궁극의 힘의 오라를 방출하고 있다."
 
-#: describe.cc:702
+#: describe.cc:702 describe.cc:703
 #, c-format
 msgid "A powerful demon, %s has a %s body"
 msgstr "강력한 악마 %s는 %s 몸에"
 
-#: describe.cc:731
+#: describe.cc:731 describe.cc:732
 msgid " It stinks of brimstone."
 msgstr " 이 악마에게는 고약한 유황 냄새가 난다."
 
-#: describe.cc:734
+#: describe.cc:734 describe.cc:735
 msgid " It is surrounded by a sickening stench."
 msgstr " 이 악마에게서 고약한 악취가 진동하고 있다."
 
 #. / 썩은 고기도 먹을 수 있는 플레이어의 경우.
-#: describe.cc:739
+#: describe.cc:739 describe.cc:740
 msgid " It smells like rotting flesh - yum!"
 msgstr " 이 악마에게선 썩은 고기 냄새가 난다 - 왠지 맛있는 냄새군!"
 
 #. / 썩은 고기는 먹을 수 없는 플레이어의 경우.
-#: describe.cc:741
+#: describe.cc:741 describe.cc:742
 msgid " It smells like rotting flesh."
 msgstr " 이 악마에게선 썩은 고기 냄새가 난다."
 
 #. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
-#: describe.cc:755
+#: describe.cc:755 describe.cc:756
 msgid ""
 "\n"
 "Accuracy rating: "
@@ -3039,16 +2985,16 @@ msgstr ""
 "명중률 등급: "
 
 #. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
-#: describe.cc:760
+#: describe.cc:760 describe.cc:761
 msgid "Damage rating: "
 msgstr "데미지 등급: "
 
 #. / 여백을 확실히 맞춰주시길 바랍니다. 잘 안되면 snprintf로 바꿔야함.
-#: describe.cc:765
+#: describe.cc:765 describe.cc:766
 msgid "Base attack delay: "
 msgstr "공격 딜레이: "
 
-#: describe.cc:773
+#: describe.cc:773 describe.cc:774
 #, c-format
 msgid ""
 "\n"
@@ -3057,15 +3003,15 @@ msgstr ""
 "\n"
 "이 장비의 강화 레벨로 인해, 이 장비는 부식으로부터 %s을 가진다."
 
-#: describe.cc:779
+#: describe.cc:779 describe.cc:780
 msgid "immune"
 msgstr "면역"
 
-#: describe.cc:781
+#: describe.cc:781 describe.cc:782
 msgid "extremely resistant"
 msgstr "뛰어난 저항력"
 
-#: describe.cc:785
+#: describe.cc:785 describe.cc:786
 msgid ""
 "\n"
 "Being made of crystal renders it very resistant to acidic corrosion."
@@ -3073,7 +3019,7 @@ msgstr ""
 "\n"
 "수정으로 만들어진 이 갑옷은 부식에 큰 저항력이 있다."
 
-#: describe.cc:790
+#: describe.cc:790 describe.cc:791
 msgid ""
 "\n"
 "Being of dwarven fabrication renders it very resistant to acidic corrosion."
@@ -3081,15 +3027,15 @@ msgstr ""
 "\n"
 "드워프제 장비들은 부식에 큰 저항력이 있다."
 
-#: describe.cc:794
+#: describe.cc:794 describe.cc:795
 msgid "resistant"
 msgstr "저항력"
 
-#: describe.cc:796
+#: describe.cc:796 describe.cc:797
 msgid "somewhat resistant"
 msgstr "어느정도의 저항력"
 
-#: describe.cc:830
+#: describe.cc:830 describe.cc:831
 msgid ""
 "It emits flame when wielded, causing extra injury to most foes and up to "
 "double damage against particularly susceptible opponents."
@@ -3097,11 +3043,11 @@ msgstr ""
 "손에 쥐었을 때 불길을 내뿜으며, 대부분의 적에게 추가 피해를 입히고불에 약한 "
 "적에게는 최대 두배의 데미지를 준다."
 
-#: describe.cc:835
+#: describe.cc:835 describe.cc:836
 msgid " Big, fiery blades are also staple armaments of hydra-hunters."
 msgstr " 또한 불길에 휩싸인 거대한 칼날은 히드라 사냥꾼들이 즐겨쓰는 장비이다."
 
-#: describe.cc:840
+#: describe.cc:840 describe.cc:841
 msgid ""
 "It has been specially enchanted to freeze those struck by it, causing extra "
 "injury to most foes and up to double damage against particularly susceptible "
@@ -3111,7 +3057,7 @@ msgstr ""
 "는 최대 두배의 데미지를 입힐 수 있고, 뱀과 같은 변온동물의 움직임을 느리게 "
 "할 수 있다. "
 
-#: describe.cc:847
+#: describe.cc:847 describe.cc:848
 msgid ""
 "It has been blessed by the Shining One to cause great damage to the undead "
 "and demons."
@@ -3119,7 +3065,7 @@ msgstr ""
 "「샤이닝 원」의 축복을 받은 무기로,  언데드와 악마들에게 더욱 강력한 피해를 "
 "입힐 수 있다. "
 
-#: describe.cc:853
+#: describe.cc:853 describe.cc:854
 msgid ""
 "It charges the ammunition it shoots with electricity; occasionally upon a "
 "hit, such missiles may discharge and cause terrible harm."
@@ -3127,7 +3073,7 @@ msgstr ""
 "이 무기는 발사체에 전기를 충전하며, 적에게 명중했을 때 이따금씩 전기를 방출하"
 "여 치명적인 피해를 입힐 수 있다."
 
-#: describe.cc:859
+#: describe.cc:859 describe.cc:860
 msgid ""
 "Occasionally, upon striking a foe, it will discharge some electrical energy "
 "and cause terrible harm."
@@ -3135,11 +3081,11 @@ msgstr ""
 "적에게 명중했을 때 이따금씩 전기 에너지를 방출하여 치명적인 피해를 입힐 수 있"
 "다."
 
-#: describe.cc:865
+#: describe.cc:865 describe.cc:866
 msgid "It is especially effective against all of orcish descent."
 msgstr "오크족에게 특히 효과적이다."
 
-#: describe.cc:869
+#: describe.cc:869 describe.cc:870
 msgid ""
 "This legendary weapon is deadly to all dragonkind. It also provides some "
 "protection from the breath attacks of dragons and other creatures."
@@ -3147,62 +3093,62 @@ msgstr ""
 "이 전설적인 무기는 용족에게 특히 치명적이며, 또한 용이나 기타 용족 생물의 브"
 "레스 공격에 대한 보호를 제공한다."
 
-#: describe.cc:875
+#: describe.cc:875 describe.cc:876
 msgid "It poisons the ammo it fires."
 msgstr "발사되는 화살이나 다트 등에 독을 부여한다."
 
-#: describe.cc:877
+#: describe.cc:877 describe.cc:878
 msgid "It poisons the flesh of those it strikes."
 msgstr "이 무기는 공격당한 상대를 독에 걸리게 한다."
 
-#: describe.cc:880
+#: describe.cc:880 describe.cc:881
 msgid "It protects the one who wields it against injury (+5 to AC)."
 msgstr "무기의 사용자를 피해로부터 보호한다 (+5 to AC)"
 
-#: describe.cc:884
+#: describe.cc:884 describe.cc:885
 msgid "It affects your evasion (+5 to EV)."
 msgstr "무기 사용자의 회피력을 상승시킨다 (+5 to EV)"
 
-#: describe.cc:887
+#: describe.cc:887 describe.cc:888
 msgid "A truly terrible weapon, it drains the life of those it strikes."
 msgstr "적의 생명력을 흡수하는, 실로 무시무시한 무기다."
 
-#: describe.cc:891
+#: describe.cc:891 describe.cc:892
 msgid ""
 "Attacks with this weapon take half as long, but cause slightly less damage."
 msgstr ""
 "사용자가 두 배에 가까운 속도로 적을 공격할 수 있도록 하지만, 그로인해 공격 "
 "한 번의 데미지는 약간 낮아진다."
 
-#: describe.cc:898
+#: describe.cc:898 describe.cc:899
 #, c-format
 msgid "Any %s fired from it inflicts extra damage."
 msgstr "발사된 %s는 추가 타격을 입히게 된다."
 
-#: describe.cc:903
+#: describe.cc:903 describe.cc:904
 msgid "It inflicts extra damage upon your enemies."
 msgstr "적에게 추가 타격을 입한다."
 
-#: describe.cc:908
+#: describe.cc:908 describe.cc:909
 msgid "It turns projectiles fired from it into bolts of flame."
 msgstr "발사되는 화살이나 다트 등을 화염으로 감싼다."
 
-#: describe.cc:912
+#: describe.cc:912 describe.cc:913
 msgid "It turns projectiles fired from it into bolts of frost."
 msgstr "발사되는 화살이나 다트 등을 냉기로 감싼다."
 
-#: describe.cc:918
+#: describe.cc:918 describe.cc:919
 msgid ""
 "Each time it fires, it turns the launched projectile into a different, "
 "random type of bolt."
 msgstr ""
 "매 발사시마다, 발사되는 화살이나 다트 등을 무작위 속성의 효과로 감싼다."
 
-#: describe.cc:924
+#: describe.cc:924 describe.cc:925
 msgid "Each time it hits an enemy it has a different, random effect."
 msgstr "적을 공격할 때마다, 적에게 무작위적인 효과를 낸다."
 
-#: describe.cc:929
+#: describe.cc:929 describe.cc:930
 msgid ""
 "It inflicts no extra harm, but heals its wielder somewhat when it strikes a "
 "living foe."
@@ -3210,7 +3156,7 @@ msgstr ""
 "추가 타격을 입히지는 않지만, 살아있는 상대에게 피해를 입힐 경우, 사용자의 체"
 "력을 약간 회복시킨다."
 
-#: describe.cc:933
+#: describe.cc:933 describe.cc:934
 msgid ""
 "In the hands of one skilled in necromantic magic, it inflicts extra damage "
 "on living creatures."
@@ -3218,7 +3164,7 @@ msgstr ""
 "강령술 마법에 숙련된 자가 사용하면, 살아있는 적에게 추가 데미지를 입힐 수 있"
 "다."
 
-#: describe.cc:937
+#: describe.cc:937 describe.cc:938
 msgid ""
 "It warps and distorts space around it. Unwielding it can cause banishment or "
 "high damage."
@@ -3226,16 +3172,16 @@ msgstr ""
 "주위 공간을 비틀고 왜곡시킨다. 이 무기를 손에서 놓으면 추방당하거나 높은 타격"
 "을 입을 수 있다."
 
-#: describe.cc:941
+#: describe.cc:941 describe.cc:942
 msgid "It can be evoked to extend its reach."
 msgstr "이 무기는 발동을 통해 사거리를 늘려 공격하는 것이 가능하다."
 
-#: describe.cc:944 describe.cc:1209 describe.cc:1208
+#: describe.cc:944 describe.cc:1209 describe.cc:1208 describe.cc:945
 msgid ""
 "A skilled user can throw it in such a way that it will return to its owner."
 msgstr "숙련된 사용자가 이 무기를 던지면 이 무기는 주인에게 되돌아온다."
 
-#: describe.cc:948
+#: describe.cc:948 describe.cc:949
 msgid ""
 "Ammo fired by it will pass through the targets it hits, potentially hitting "
 "all targets in its path until it reaches maximum range."
@@ -3243,7 +3189,7 @@ msgstr ""
 "이 무기에서 발사되는 발사체들은 적들을 관통하게 된다. 최선의 상황에서는 발사"
 "체의 이동 경로에 있는 모든 적들을 한 번에 공격할 수도 있다."
 
-#: describe.cc:955
+#: describe.cc:955 describe.cc:956
 msgid ""
 "If ammo fired by it kills a monster, causing it to leave a corpse, the "
 "corpse will be animated as a zombie friendly to the killer."
@@ -3251,7 +3197,7 @@ msgstr ""
 "이 무기에서 발사된 발사체로 몬스터를 죽였고, 시체가 남아있다면, 그 시체는 좀"
 "비로 부활하여 사용자를 따를 것이다."
 
-#: describe.cc:961
+#: describe.cc:961 describe.cc:962
 msgid ""
 "If a monster killed with it leaves a corpse in good enough shape, the corpse "
 "will be animated as a zombie friendly to the killer."
@@ -3259,7 +3205,7 @@ msgstr ""
 "이 무기에 의해 죽은 몬스터의 시체가 온전하다면, 시체는 좀비로 부활하여 사용자"
 "를 따를 것이다."
 
-#: describe.cc:967
+#: describe.cc:967 describe.cc:968
 msgid ""
 "It disrupts the flow of magical energy around spellcasters and certain "
 "magical creatures (including the wielder)."
@@ -3267,7 +3213,7 @@ msgstr ""
 "이 무기는 마법 사용자나 혹은 마법에 의한 창조물들의 마력의 흐름을 방해한다(무"
 "기 사용자도 포함)."
 
-#: describe.cc:987
+#: describe.cc:987 describe.cc:988
 msgid ""
 "\n"
 "This weapon may have some hidden properties."
@@ -3275,11 +3221,11 @@ msgstr ""
 "\n"
 "이 무기는 숨겨진 능력이 있을 것 같다."
 
-#: describe.cc:1006
+#: describe.cc:1006 describe.cc:1007
 msgid "It is a one handed weapon"
 msgstr "한손무기다"
 
-#: describe.cc:1009
+#: describe.cc:1009 describe.cc:1010
 msgid ""
 "It can be used with one hand, or more effectively with two (i.e. when not "
 "using a shield)"
@@ -3287,31 +3233,31 @@ msgstr ""
 "한 손으로 사용할 수도 있지만, 두 손으로(방패 없이) 사용할 경우 더욱 효과적이"
 "다"
 
-#: describe.cc:1014
+#: describe.cc:1014 describe.cc:1015
 msgid "It is a two handed weapon"
 msgstr "양손무기다"
 
-#: describe.cc:1017
+#: describe.cc:1017 describe.cc:1018
 msgid "It is a buggy weapon"
 msgstr "버그무기다"
 
-#: describe.cc:1025
+#: describe.cc:1025 describe.cc:1026
 msgid ", and it is best used by the strong"
 msgstr ". 이 무기는 힘이 강한 자에게 매우 적합하다"
 
-#: describe.cc:1027
+#: describe.cc:1027 describe.cc:1028
 msgid ", and it is better for the strong"
 msgstr ". 이 무기는 힘이 강한 자에게 적합하다"
 
-#: describe.cc:1029
+#: describe.cc:1029 describe.cc:1030
 msgid ", and it is best used by the dexterous"
 msgstr ". 이 무기는 민첩한 자에게 매우 적합하다"
 
-#: describe.cc:1031
+#: describe.cc:1031 describe.cc:1032
 msgid ", and it is better for the dexterous"
 msgstr ". 이 무기는 민첩한 자에게 적합하다"
 
-#: describe.cc:1035
+#: describe.cc:1035 describe.cc:1036
 msgid ""
 "\n"
 "It is too large for you to wield."
@@ -3319,7 +3265,7 @@ msgstr ""
 "\n"
 "너무 커서 들 수가 없다."
 
-#: describe.cc:1041
+#: describe.cc:1041 describe.cc:1042
 msgid ""
 "\n"
 "Demonspawn deal slightly more damage with it."
@@ -3327,7 +3273,7 @@ msgstr ""
 "\n"
 "데몬스폰은 이 무기를 더욱 능숙하게 다룰 수 있다."
 
-#: describe.cc:1047
+#: describe.cc:1047 describe.cc:1048
 msgid ""
 "\n"
 "It is well-crafted and durable. Dwarves deal slightly more damage with it."
@@ -3336,7 +3282,7 @@ msgstr ""
 "상당히 뛰어난 솜씨로 만들어져, 매우 튼튼하다.드워프들은 이 무기를 더욱 능숙하"
 "게 다룰 수 있다."
 
-#: describe.cc:1051
+#: describe.cc:1051 describe.cc:1052
 msgid ""
 "\n"
 "Orcs deal slightly more damage with it."
@@ -3344,7 +3290,7 @@ msgstr ""
 "\n"
 "오크들은 이 무기를 더욱 능숙하게 다룰 수 있다."
 
-#: describe.cc:1054
+#: describe.cc:1054 describe.cc:1055
 msgid ""
 "\n"
 "Elves are slightly more accurate with it."
@@ -3352,13 +3298,13 @@ msgstr ""
 "\n"
 "엘프들은 이 무기를 더욱 정교하게 다룰 수 있다."
 
-#: describe.cc:1059
+#: describe.cc:1059 describe.cc:1060
 #, c-format
 msgid " It is most effective when used with %s ammunition."
 msgstr " 이 무기는 %s 투사체를 이용할 때 가장 효과적이다."
 
 #: describe.cc:1071 describe.cc:1294 describe.cc:1479 describe.cc:1293
-#: describe.cc:1478
+#: describe.cc:1478 describe.cc:1072
 msgid ""
 "\n"
 "It is maximally enchanted."
@@ -4254,7 +4200,7 @@ msgstr ""
 "\n"
 "이것에는 저주가 걸려있다."
 
-#: describe.cc:2191 describe.cc:2190 describe.cc:2197
+#: describe.cc:2191 describe.cc:2190 describe.cc:2197 describe.cc:2198
 msgid ""
 "\n"
 "\n"
@@ -4264,7 +4210,7 @@ msgstr ""
 "\n"
 "이것은 고대의 아티팩트로, 마법이나 일상의 수단으로는 변화시킬 수 없다."
 
-#: describe.cc:2195 describe.cc:2194 describe.cc:2201
+#: describe.cc:2195 describe.cc:2194 describe.cc:2201 describe.cc:2202
 msgid ""
 "\n"
 "\n"
@@ -4274,7 +4220,7 @@ msgstr ""
 "\n"
 "이것은 고대의 아티팩트다."
 
-#: describe.cc:2203 describe.cc:2202 describe.cc:2209
+#: describe.cc:2203 describe.cc:2202 describe.cc:2209 describe.cc:2210
 #, c-format
 msgid ""
 "\n"
@@ -4285,15 +4231,15 @@ msgstr ""
 "\n"
 "%s는 그런 %s한 아이템을 사용하는것을 반대한다."
 
-#: describe.cc:2205 describe.cc:2204 describe.cc:2211
+#: describe.cc:2205 describe.cc:2204 describe.cc:2211 describe.cc:2212
 msgid "evil"
 msgstr "사악"
 
-#: describe.cc:2205 describe.cc:2204 describe.cc:2211
+#: describe.cc:2205 describe.cc:2204 describe.cc:2211 describe.cc:2212
 msgid "unholy"
 msgstr "불경"
 
-#: describe.cc:2210 describe.cc:2209 describe.cc:2216
+#: describe.cc:2210 describe.cc:2209 describe.cc:2216 describe.cc:2217
 #, c-format
 msgid ""
 "\n"
@@ -4304,7 +4250,7 @@ msgstr ""
 "\n"
 "%s는 그런 아이템을 사용하는것을 허락하지 않는다."
 
-#: describe.cc:2269 describe.cc:2268 describe.cc:2275
+#: describe.cc:2269 describe.cc:2268 describe.cc:2275 describe.cc:2276
 msgid "UNDESCRIBED PORTAL VAULT ENTRANCE."
 msgstr ""
 
@@ -4317,97 +4263,97 @@ msgid ""
 "description."
 msgstr "<w>우클릭</w>하면 개요 화면과 세부 설명 화면을 전환할 수 있다."
 
-#: describe.cc:2326 describe.cc:2325 describe.cc:2332
+#: describe.cc:2326 describe.cc:2325 describe.cc:2332 describe.cc:2333
 msgid ""
 "Press '<w>!</w>'<w>Right-click</w> to toggle between the overview and the "
 "extended description."
 msgstr ""
 
-#: describe.cc:2499 describe.cc:2498 describe.cc:2505
+#: describe.cc:2499 describe.cc:2498 describe.cc:2505 describe.cc:2506
 msgid "Select a spell to read its description, to memorise it or to forget it."
 msgstr "설명을 읽거나, 외우거나, 혹은 잊어버릴 주문을 선택하시오."
 
-#: describe.cc:2503 describe.cc:2502 describe.cc:2509
+#: describe.cc:2503 describe.cc:2502 describe.cc:2509 describe.cc:2510
 msgid "Select a spell to read its description."
 msgstr "설명을 읽을 주문을 선택하시오."
 
-#: describe.cc:2639 describe.cc:2638 describe.cc:2645
+#: describe.cc:2639 describe.cc:2638 describe.cc:2645 describe.cc:2646
 msgid "(w)ield"
 msgstr "(w)장비"
 
-#: describe.cc:2640 describe.cc:2639 describe.cc:2646
+#: describe.cc:2640 describe.cc:2639 describe.cc:2646 describe.cc:2647
 msgid "(u)nwield"
 msgstr "(u)해제"
 
-#: describe.cc:2641 describe.cc:2640 describe.cc:2647
+#: describe.cc:2641 describe.cc:2640 describe.cc:2647 describe.cc:2648
 msgid "(q)uiver"
 msgstr "(q)장비"
 
-#: describe.cc:2642 describe.cc:2641 describe.cc:2648
+#: describe.cc:2642 describe.cc:2641 describe.cc:2648 describe.cc:2649
 msgid "(w)ear"
 msgstr "(w)장비"
 
-#: describe.cc:2643 describe.cc:2642 describe.cc:2649
+#: describe.cc:2643 describe.cc:2642 describe.cc:2649 describe.cc:2650
 msgid "(t)ake off"
 msgstr "(t)해제"
 
-#: describe.cc:2644 describe.cc:2643 describe.cc:2650
+#: describe.cc:2644 describe.cc:2643 describe.cc:2650 describe.cc:2651
 msgid "e(v)oke"
 msgstr "(v)발동"
 
-#: describe.cc:2645 describe.cc:2644 describe.cc:2651
+#: describe.cc:2645 describe.cc:2644 describe.cc:2651 describe.cc:2652
 msgid "(e)at"
 msgstr "(e)식사"
 
-#: describe.cc:2646 describe.cc:2645 describe.cc:2652
+#: describe.cc:2646 describe.cc:2645 describe.cc:2652 describe.cc:2653
 msgid "(r)ead"
 msgstr "(r)읽기"
 
-#: describe.cc:2647 describe.cc:2646 describe.cc:2653
+#: describe.cc:2647 describe.cc:2646 describe.cc:2653 describe.cc:2654
 msgid "(p)ut on"
 msgstr "(p)장착"
 
-#: describe.cc:2648 describe.cc:2647 describe.cc:2654
+#: describe.cc:2648 describe.cc:2647 describe.cc:2654 describe.cc:2655
 msgid "(r)emove"
 msgstr "(r)해제"
 
-#: describe.cc:2649 describe.cc:2648 describe.cc:2655
+#: describe.cc:2649 describe.cc:2648 describe.cc:2655 describe.cc:2656
 msgid "(q)uaff"
 msgstr "(q)복용"
 
-#: describe.cc:2650 describe.cc:2649 describe.cc:2656
+#: describe.cc:2650 describe.cc:2649 describe.cc:2656 describe.cc:2657
 msgid "(d)rop"
 msgstr "(d)버림"
 
-#: describe.cc:2651 describe.cc:2650 describe.cc:2657
+#: describe.cc:2651 describe.cc:2650 describe.cc:2657 describe.cc:2658
 msgid "(i)nscribe"
 msgstr "(i)문장 새기기"
 
-#: describe.cc:2652 describe.cc:2651 describe.cc:2658
+#: describe.cc:2652 describe.cc:2651 describe.cc:2658 describe.cc:2659
 msgid "(a)utoinscribe"
 msgstr "(a)자동 문장 새기기"
 
-#: describe.cc:2807 describe.cc:2806 describe.cc:2813
+#: describe.cc:2807 describe.cc:2806 describe.cc:2813 describe.cc:2814
 msgid "You can (i)nscribe or (a)utoinscribe."
 msgstr "당신은 (i)로 문장을 새기거나 (a)로 자동으로 문장을 새길 수 있다."
 
-#: describe.cc:2809 describe.cc:2808 describe.cc:2815
+#: describe.cc:2809 describe.cc:2808 describe.cc:2815 describe.cc:2816
 msgid "You can (a)dd to, (r)eplace or (c)lear the inscription."
 msgstr "당신은 문장을 (a)추가, (r)변경, 혹은 (c)제거할 수 있다."
 
-#: describe.cc:2811 describe.cc:2810 describe.cc:2817
+#: describe.cc:2811 describe.cc:2810 describe.cc:2817 describe.cc:2818
 msgid "You can (a)dd to, (r)eplace, (c)lear the inscription or (A)utoinscribe."
 msgstr "당신은 문장을 (a)추가, (r)변경, (c)제거, 혹은 (A)자동입력할 수 있다."
 
-#: describe.cc:2856 describe.cc:2855 describe.cc:2862
+#: describe.cc:2856 describe.cc:2855 describe.cc:2862 describe.cc:2863
 msgid "Inscribe with what? "
 msgstr "어떤 문장을 새길 것인가? "
 
-#: describe.cc:2858 describe.cc:2857 describe.cc:2864
+#: describe.cc:2858 describe.cc:2857 describe.cc:2864 describe.cc:2865
 msgid "Add what to inscription? "
 msgstr "어떤 문장을 추가할 것인가? "
 
-#: describe.cc:2860 describe.cc:2859 describe.cc:2866
+#: describe.cc:2860 describe.cc:2859 describe.cc:2866 describe.cc:2867
 msgid "Replace inscription with what? "
 msgstr "문장을 어떻게 교체할 것인가? "
 
@@ -4496,7 +4442,7 @@ msgstr ""
 msgid "It renders you almost immune to "
 msgstr ""
 
-#: describe.cc:997
+#: describe.cc:997 describe.cc:998
 #, c-format
 msgid ""
 "\n"
@@ -4517,16 +4463,65 @@ msgstr "이것은 %s 무기로 발사하였을 때 더욱 효과적이다."
 msgid "is more effective in conjunction with %s launchers."
 msgstr "이것은 %s 무기로 발사하였을 때 더욱 효과적이다."
 
-#: describe.cc:2182
+#: describe.cc:2182 describe.cc:2183
 #, c-format
 msgid ""
 "\n"
 "It has a curse placed upon it, and it weighs around %d.%d aum."
-msgstr "\n이것은 저주가 걸려 있으며, 무게는 %d.%d aum이다."
+msgstr ""
+"\n"
+"이것은 저주가 걸려 있으며, 무게는 %d.%d aum이다."
 
-#: describe.cc:2188
+#: describe.cc:2188 describe.cc:2189
 #, c-format
 msgid ""
 "\n"
 "It weighs around %d.%d aum."
-msgstr "\n이것의 무게는 %d.%d aum이다."
+msgstr ""
+"\n"
+"이것의 무게는 %d.%d aum이다."
+
+#: describe.cc:490
+#, c-format
+msgid "It makes you extremely vulnerable to %s."
+msgstr "이것은 당신을 %s에 굉장히 취약하게 만든다."
+
+#: describe.cc:491
+#, c-format
+msgid "It makes you very vulnerable to %s."
+msgstr "이것은 당신을 %s에 꽤나 취약하게 만든다."
+
+#: describe.cc:492
+#, c-format
+msgid "It makes you vulnerable to %s."
+msgstr "이것은 당신을 %s에 취약하게 만든다."
+
+#: describe.cc:494
+#, c-format
+msgid "It protects you from %s."
+msgstr "이것은 당신을 %s(으)로부터 보호한다."
+
+#: describe.cc:495
+#, c-format
+msgid "It greatly protects you from %s."
+msgstr "이것은 당신을 %s(으)로부터 상당히 보호한다."
+
+#: describe.cc:496
+#, c-format
+msgid "It renders you almost immune to %s."
+msgstr "이것은 당신이 %s에 거의 면역이 되게 한다."
+
+#. Isn't really a "recovery", but I couldn't think of where
+#. else to send it.
+#: dungeon.cc:614
+msgid ""
+"You sense the disappearance of a powerful magical force which warped space."
+msgstr "당신은 공간을 왜곡하던 강력한 마법의 힘이 사라지는 것을 느꼈다."
+
+#. Isn't really a "recovery", but I couldn't think of where
+#. else to send it.
+#: dungeon.cc:622
+msgid ""
+"You sense the disappearance of the force that prevented you from remembering "
+"where you've been."
+msgstr "당신이 어디 있었는지 기억하는 것을 방해하던 힘이 사라지는 것을 느꼈다."

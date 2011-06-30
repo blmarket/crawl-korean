@@ -582,14 +582,14 @@ bool set_level_flags(uint32_t flags, bool silent)
 
     if (could_control && !can_control && !silent)
     {
-        mpr("You sense the appearance of a powerful magical force "
-            "which warps space.", MSGCH_WARN);
+        mpr(gettext("You sense the appearance of a powerful magical force "
+            "which warps space."), MSGCH_WARN);
     }
 
     if (could_map && !can_map && !silent)
     {
-        mpr("A powerful force appears that prevents you from "
-            "remembering where you've been.", MSGCH_WARN);
+        mpr(gettext("A powerful force appears that prevents you from "
+            "remembering where you've been."), MSGCH_WARN);
     }
 
     return (old_flags != env.level_flags);
@@ -610,16 +610,16 @@ bool unset_level_flags(uint32_t flags, bool silent)
     {
         // Isn't really a "recovery", but I couldn't think of where
         // else to send it.
-        mpr("You sense the disappearance of a powerful magical force "
-            "which warped space.", MSGCH_RECOVERY);
+        mpr(gettext("You sense the disappearance of a powerful magical force "
+            "which warped space."), MSGCH_RECOVERY);
     }
 
     if (!could_map && can_map && !silent)
     {
         // Isn't really a "recovery", but I couldn't think of where
         // else to send it.
-        mpr("You sense the disappearance of the force that prevented you "
-            "from remembering where you've been.", MSGCH_RECOVERY);
+        mpr(gettext("You sense the disappearance of the force that prevented you "
+            "from remembering where you've been."), MSGCH_RECOVERY);
     }
 
     return (old_flags != env.level_flags);
