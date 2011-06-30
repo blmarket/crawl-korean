@@ -992,14 +992,12 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
     const bool launcher = is_range_weapon(item);
     if (verbose)
     {
-        description += gettext("\n\nThis weapon falls into the");
-
         const skill_type skill =
             is_range_weapon(item)? range_skill(item) : weapon_skill(item);
 
-        description +=
-            make_stringf(gettext(" '%s' category. "),
-                         skill == SK_FIGHTING ? "buggy" : gettext(skill_name(skill)));
+        description += make_stringf(gettext("\n\nThis weapon falls into the "
+            "'%s' category. "),
+            skill == SK_FIGHTING ? "buggy" : gettext(skill_name(skill)));
 
         if (!launcher)
         {
@@ -1056,7 +1054,6 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         {
             /// +x,x 까지 강화가 가능하다.
             std::string value = _get_value(MAX_WPN_ENCHANT, false);
-            description += gettext("\nIt can be maximally enchanted to +");
             if (item.sub_type != WPN_BLOWGUN)
             {
                 description += make_stringf(gettext("\nIt can be maximally enchanted to +%s, +%s."),
@@ -1259,11 +1256,11 @@ static std::string _describe_ammo(const item_def &item)
         if (can_launch)
         {
             if (!can_throw)
-                description += gettext("It is more effective in conjunction with "); 
+                description += make_stringf(gettext("It is more effective in conjunction with %s launchers."), 
+                    racial_description_string(item)); 
             else
-                description += gettext("is more effective in conjunction with ");
-            description += gettext(racial_description_string(item));
-            description += gettext("launchers.");
+                description += make_stringf(gettext("is more effective in conjunction with %s launchers."), 
+                    racial_description_string(item)); 
         }
     }
 
@@ -2174,14 +2171,21 @@ std::string get_item_description(const item_def &item, bool verbose,
         {
             if (need_extra_line)
                 description << "\n";
-            description << "\nIt";
-            if (item_known_cursed(item))
-                description << " has a curse placed upon it, and it";
 
             const int mass = item_mass(item);
-            description << " weighs around " << (mass / 10)
-                        << "." << (mass % 10)
-                        << " aum. "; // arbitrary unit of mass
+
+            if (item_known_cursed(item))
+            {
+                description << make_stringf(gettext(
+                    "\nIt has a curse placed upon it, and it weighs around %d.%d aum."), 
+                    (mass / 10), (mass % 10));
+            }
+            else
+            {
+                description << make_stringf(gettext(
+                    "\nIt weighs around %d.%d aum."), 
+                    (mass / 10), (mass % 10));
+            }
 
             if (is_artefact(item))
             {
