@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-30 18:09+0900\n"
+"POT-Creation-Date: 2011-07-02 18:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1233,7 +1233,7 @@ msgstr "탈진"
 msgid "Instant"
 msgstr "즉시 시전"
 
-#: abl-show.cc:787 acquire.cc:1606
+#: abl-show.cc:787 acquire.cc:1606 acquire.cc:1607
 msgid "Fruit"
 msgstr "과일"
 
@@ -1617,7 +1617,7 @@ msgstr "당신은 앉아서 기도했고, 곧 불경스러운 에너지에 휩�
 msgid "You kneel in prayer and are bathed in unholy energy."
 msgstr "당신은 무릎꿇어 기도했고, 곧 불경스러운 에너지에 휩싸였다."
 
-#: abl-show.cc:2311
+#: abl-show.cc:2311 evoke.cc:763
 msgid "You channel some magical energy."
 msgstr "약간의 마나를 수집했다."
 
@@ -1745,42 +1745,42 @@ msgstr "이 장소는 이미 사악함과 타락으로 물들어있다."
 msgid "'s Hand of Corruption reaches out!"
 msgstr "의 타락의 손이 뻗쳐온다!"
 
-#: acquire.cc:1141
+#: acquire.cc:1141 acquire.cc:1142
 msgid "The demon of the infinite void smiles upon you."
 msgstr "무한한 공허의 악마가 당신에게 미소지었다."
 
 #. / simple_god_message
-#: acquire.cc:1572
+#: acquire.cc:1572 acquire.cc:1573
 msgid " snickers."
 msgstr "은(는) 낄낄대며 웃었다."
 
-#: acquire.cc:1602
+#: acquire.cc:1602 acquire.cc:1603
 #, c-format
 msgid "%-24s[c] Jewellery      [d] Book"
 msgstr "%-24s[c] 장신구         [d] 책"
 
-#: acquire.cc:1603
+#: acquire.cc:1603 acquire.cc:1604
 msgid "[a] Weapon  [b] Armour"
 msgstr "[a] 무기    [b] 방어구"
 
-#: acquire.cc:1604
+#: acquire.cc:1604 acquire.cc:1605
 #, c-format
 msgid "%-24s[g] Miscellaneous  [h] %s [i] Gold"
 msgstr "%-24s[g] 기타           [h] %s [i] 돈"
 
-#: acquire.cc:1605
+#: acquire.cc:1605 acquire.cc:1606
 msgid "[e] Staff   [f] Wand"
 msgstr "[e] 지팡이  [f] 마법봉"
 
-#: acquire.cc:1606
+#: acquire.cc:1606 acquire.cc:1607
 msgid "Food "
 msgstr "음식 "
 
-#: acquire.cc:1607
+#: acquire.cc:1607 acquire.cc:1608
 msgid "What kind of item would you like to acquire? "
 msgstr "어느 종류의 아이템을 획득할 것인가? "
 
-#: acquire.cc:1633
+#: acquire.cc:1633 acquire.cc:1634
 msgid "Acquirement interrupted by HUP signal."
 msgstr "HUP Signal에 의해 획득이 중지됨."
 
@@ -4525,3 +4525,238 @@ msgid ""
 "You sense the disappearance of the force that prevented you from remembering "
 "where you've been."
 msgstr "당신이 어디 있었는지 기억하는 것을 방해하던 힘이 사라지는 것을 느꼈다."
+
+#: evoke.cc:118
+msgid "Your weapon cannot reach that far!"
+msgstr "당신의 무기는 거기까지 닿지 않는다!"
+
+#. Might also be a granite statue/orcish idol which you
+#. can reach _past_.
+#: evoke.cc:126
+msgid "There's a wall in the way."
+msgstr "중간에 벽이 있다."
+
+#. Let's assume friendlies cooperate.
+#: evoke.cc:158
+msgid "You could not reach far enough!"
+msgstr "닿기에 너무 멀다!"
+
+#: evoke.cc:164
+msgid "You reach to attack!"
+msgstr "닿아서 공격했다!"
+
+#: evoke.cc:167
+#, c-format
+msgid "%s is in the way."
+msgstr "%s(이)가 가로막고 있다."
+
+#: evoke.cc:169
+msgid "Something you can't see"
+msgstr "당신이 볼 수 없는 무언가"
+
+#. Must return true, otherwise you get a free discovery
+#. of invisible monsters.
+#: evoke.cc:177
+msgid "You attack empty space."
+msgstr "당신은 빈 공간을 공격했다."
+
+#: evoke.cc:201
+msgid "You can't produce a sound!"
+msgstr "당신은 소리를 낼 수 없다!"
+
+#: evoke.cc:206
+msgid "You produce a weird and mournful sound."
+msgstr "당신은 슬프고 기묘한 소리를 냈다."
+
+#: evoke.cc:210
+msgid "But nothing happens..."
+msgstr "그러나 아무 일도 일어나지 않았다..."
+
+#. / 당신의 지옥으로 가는 길은 이미 열려있다.
+#. / 게리욘의 뿔피리이기때문에 지옥으로 가는길로 의역했습니다.
+#: evoke.cc:253
+msgid "Your way has been unbarred."
+msgstr "지옥으로 가는 길은 이미 열려있다."
+
+#: evoke.cc:257
+msgid "You produce a hideous howling noise!"
+msgstr "당신은 끔찍한 울부짖는 소음을 냈다!"
+
+#: evoke.cc:269
+msgid "You open the flask..."
+msgstr "당신은 플라스크를 열었다..."
+
+#: evoke.cc:280
+msgid "...and a huge efreet comes out."
+msgstr "...그리고 거대한 이프리트가 나타났다."
+
+#: evoke.cc:287
+msgid "It nods graciously at you."
+msgstr "그것은 당신에게 정중하게 인사했다."
+
+# 이거 제대로 번역한건지 모르겠음. 하여튼 이프리트가 적이되는 상황
+#: evoke.cc:288
+msgid "It snaps in your direction!"
+msgstr "그것은 당신의 길을 가로막았다!"
+
+#: evoke.cc:292
+msgid "\"Thank you for releasing me!\""
+msgstr "\"풀어줘서 고맙군!\""
+
+#: evoke.cc:293
+msgid "It howls insanely!"
+msgstr "그것은 미친듯이 울부짖었다!"
+
+#: evoke.cc:315
+msgid "You lack the intelligence to focus on the shapes in the ball."
+msgstr "당신은 공 안의 모습에 집중할 만큼의 지능이 없다."
+
+#: evoke.cc:321
+msgid "You are unable to concentrate on the shapes in the ball."
+msgstr "당신은 공 안의 모습에 집중할 수가 없다."
+
+#: evoke.cc:329
+msgid ""
+"With no energy to recover, the crystal ball of energy is presently useless "
+"to you."
+msgstr "회복할 에너지가 없다면, 현재 당신에게 이 에너지의 수정구는 쓸모없다."
+
+#: evoke.cc:339
+msgid "You lack the skill to use this item."
+msgstr "당신은 이 도구를 사용할 기술이 부족하다."
+
+#: evoke.cc:350 evoke.cc:621
+msgid "You gaze into the crystal ball."
+msgstr "당신은 수정구의 안쪽을 노려보았다."
+
+#: evoke.cc:355
+msgid "using a ball of seeing"
+msgstr "천리안의 구를 사용함"
+
+#: evoke.cc:358 evoke.cc:632 evoke.cc:650
+msgid "You feel your power drain away!"
+msgstr "당신은 당신의 힘이 어디론가 빨려나가는 것을 느꼈다!"
+
+#: evoke.cc:365
+msgid "You see a maze of twisty little passages, all alike."
+msgstr "당신은 꼬인 미로의 일부분을 보았다."
+
+#: evoke.cc:369 evoke.cc:377
+msgid "You see nothing."
+msgstr "당신은 아무것도 보지 못했다."
+
+#: evoke.cc:373
+msgid "You see a map of your surroundings!"
+msgstr "당신은 당신 주변의 지도를 보았다."
+
+#: evoke.cc:394
+msgid "The disc glows for a moment, then fades."
+msgstr "접시는 잠시 빛난 후, 사라졌다."
+
+#: evoke.cc:396
+msgid "Little bolts of electricity crackle over the disc."
+msgstr "접시를 통해 작은 전기의 화살들이 치직거리는 소리를 냈다."
+
+#: evoke.cc:400
+msgid "The disc erupts in an explosion of electricity!"
+msgstr "접시에서 전기 폭발이 뿜어져 나왔다!"
+
+# 번역 품질이 낮을 수 있음.
+#: evoke.cc:445
+#, c-format
+msgid "The book opens to a page covered in %s."
+msgstr "%s의 책을 펼쳤다."
+
+#: evoke.cc:452
+msgid "Read it?"
+msgstr "읽을까?"
+
+#: evoke.cc:459
+msgid "The page is too blurry for you to read."
+msgstr "이 페이지는 당신이 읽기에 너무 흐릿하다."
+
+#: evoke.cc:463
+msgid "You find yourself reciting the magical words!"
+msgstr "당신은 당신만의 마법 언어를 찾아내여 암송하였다!"
+
+#: evoke.cc:468
+msgid "A cloud of weird smoke pours from the book's pages!"
+msgstr "기묘한 증기의 구름이 책 안에서 흘러나왔다!"
+
+#: evoke.cc:474
+msgid "A cloud of choking fumes pours from the book's pages!"
+msgstr "숨막힐듯한 가스의 구름이 책 안에서 흘러나왔다!"
+
+#: evoke.cc:480
+msgid "A cloud of freezing gas pours from the book's pages!"
+msgstr "냉기의 가스 구름이 책 안에서 흘러나왔다!"
+
+#: evoke.cc:488
+msgid "The book disappears in a mighty explosion!"
+msgstr "그 책은 강력한 폭발과 함께 사라졌다!"
+
+#: evoke.cc:500
+msgid "a tome of Destruction"
+msgstr "파멸의 책"
+
+#: evoke.cc:503
+msgid "A horrible Thing appears!"
+msgstr "무서운 것들이 나타났다!"
+
+#: evoke.cc:504
+msgid "It doesn't look too friendly."
+msgstr "그것들이 아주 우호적으로는 보이지 않는다."
+
+#: evoke.cc:550
+#, c-format
+msgid "You read about %s."
+msgstr "%s에 대한 책을 읽었다."
+
+#: evoke.cc:556
+msgid "The manual crumbles into dust."
+msgstr "설명서는 바스러져서 가루가 되었다."
+
+#: evoke.cc:560
+msgid "The manual looks somewhat more worn."
+msgstr "설명서는 좀 더 닳은 듯 보인다."
+
+#: evoke.cc:569
+msgid "You open the lid..."
+msgstr "당신은 뚜껑을 열었다..."
+
+#: evoke.cc:599
+msgid "...and something leaps out!"
+msgstr "...그리고 뭔가가 뛰쳐나왔다!"
+
+#: evoke.cc:606
+msgid "...but nothing happens."
+msgstr "...그러나 아무일도 일어나지 않았다."
+
+#: evoke.cc:609
+msgid "...but the box appears empty."
+msgstr "...그러나 박스는 비어있었다."
+
+#: evoke.cc:628
+msgid "using a ball of energy"
+msgstr "마나의 구를 사용함"
+
+#: evoke.cc:655
+msgid "You are suffused with power!"
+msgstr "당신은 힘이 넘쳐난다!"
+
+#: evoke.cc:681
+msgid "Evoke which item? (* to show all)"
+msgstr "어느 아이템을 발동시킬 것인가? (* 모든 목록 보기)"
+
+#: evoke.cc:857
+msgid "Nothing happens."
+msgstr "아무 일도 일어나지 않았다."
+
+#: evoke.cc:868
+msgid "QUAD DAMAGE!"
+msgstr "쿼드 데미지!"
+
+#: evoke.cc:896
+#, c-format
+msgid "You are wielding %s."
+msgstr "당신은 %s(을/를) 들고 있다."

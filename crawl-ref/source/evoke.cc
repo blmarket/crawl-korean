@@ -116,7 +116,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
 
     if (x_distance > 2 || y_distance > 2)
     {
-        mpr("Your weapon cannot reach that far!");
+        mpr(gettext("Your weapon cannot reach that far!"));
         return (false);
     }
     else if (grd(first_middle) <= DNGN_MAX_NONREACH
@@ -124,7 +124,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     {
         // Might also be a granite statue/orcish idol which you
         // can reach _past_.
-        mpr("There's a wall in the way.");
+        mpr(gettext("There's a wall in the way."));
         return (false);
     }
 
@@ -156,18 +156,18 @@ static bool _reaching_weapon_attack(const item_def& wpn)
                 if (mons->wont_attack())
                 {
                     // Let's assume friendlies cooperate.
-                    mpr("You could not reach far enough!");
+                    mpr(gettext("You could not reach far enough!"));
                     return true;
                 }
             }
         }
         if (success)
-            mpr("You reach to attack!");
+            mpr(gettext("You reach to attack!"));
         else
         {
-            mprf("%s is in the way.",
-                 mons->observable() ? mons->name(DESC_CAP_THE).c_str()
-                                    : "Something you can't see");
+            mprf(gettext("%s is in the way."),
+                 mons->observable() ? gettext(mons->name(DESC_CAP_THE).c_str())
+                                    : gettext("Something you can't see"));
         }
     }
 
@@ -175,7 +175,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     {
         // Must return true, otherwise you get a free discovery
         // of invisible monsters.
-        mpr("You attack empty space.");
+        mpr(gettext("You attack empty space."));
         return (true);
     }
     you_attack(mons->mindex(), false);
@@ -199,16 +199,16 @@ static bool _evoke_horn_of_geryon(item_def &item)
 
     if (silenced(you.pos()))
     {
-        mpr("You can't produce a sound!");
+        mpr(gettext("You can't produce a sound!"));
         return false;
     }
     else if (player_in_branch(BRANCH_VESTIBULE_OF_HELL))
     {
-        mpr("You produce a weird and mournful sound.");
+        mpr(gettext("You produce a weird and mournful sound."));
 
         if (you.char_direction == GDT_ASCENDING)
         {
-            mpr("But nothing happens...");
+            mpr(gettext("But nothing happens..."));
             return false;
         }
 
@@ -249,11 +249,13 @@ static bool _evoke_horn_of_geryon(item_def &item)
             }
 
         if (rc)
-            mpr("Your way has been unbarred.");
+            /// 당신의 지옥으로 가는 길은 이미 열려있다.
+            /// 게리욘의 뿔피리이기때문에 지옥으로 가는길로 의역했습니다.
+            mpr(gettext("Your way has been unbarred."));
     }
     else
     {
-        mpr("You produce a hideous howling noise!", MSGCH_SOUND);
+        mpr(gettext("You produce a hideous howling noise!"), MSGCH_SOUND);
         create_monster(
             mgen_data::hostile_at(MONS_HELL_BEAST, "the horn of Geryon",
                 true, 4, 0, you.pos()));
@@ -265,7 +267,7 @@ static bool _efreet_flask(int slot)
 {
     bool friendly = x_chance_in_y(10 + you.skill(SK_EVOCATIONS) / 3, 20);
 
-    mpr("You open the flask...");
+    mpr(gettext("You open the flask..."));
 
     const int mons =
         create_monster(
@@ -276,20 +278,20 @@ static bool _efreet_flask(int slot)
 
     if (mons != -1)
     {
-        mpr("...and a huge efreet comes out.");
+        mpr(gettext("...and a huge efreet comes out."));
 
         if (player_angers_monster(&menv[mons]))
             friendly = false;
 
         if (silenced(you.pos()))
         {
-            mpr(friendly ? "It nods graciously at you."
-                         : "It snaps in your direction!", MSGCH_TALK_VISUAL);
+            mpr(friendly ? gettext("It nods graciously at you.")
+                         : gettext("It snaps in your direction!"), MSGCH_TALK_VISUAL);
         }
         else
         {
-            mpr(friendly ? "\"Thank you for releasing me!\""
-                         : "It howls insanely!", MSGCH_TALK);
+            mpr(friendly ? gettext("\"Thank you for releasing me!\"")
+                         : gettext("It howls insanely!"), MSGCH_TALK);
         }
     }
     else
@@ -311,13 +313,13 @@ static bool _check_crystal_ball(int subtype, bool known)
 {
     if (you.intel() <= 1)
     {
-        mpr("You lack the intelligence to focus on the shapes in the ball.");
+        mpr(gettext("You lack the intelligence to focus on the shapes in the ball."));
         return (false);
     }
 
     if (you.confused())
     {
-        mpr("You are unable to concentrate on the shapes in the ball.");
+        mpr(gettext("You are unable to concentrate on the shapes in the ball."));
         return (false);
     }
 
@@ -325,8 +327,8 @@ static bool _check_crystal_ball(int subtype, bool known)
         && known
         && you.magic_points == you.max_magic_points)
     {
-        mpr("With no energy to recover, the crystal ball of energy is "
-            "presently useless to you.");
+        mpr(gettext("With no energy to recover, the crystal ball of energy is "
+            "presently useless to you."));
         return (false);
     }
 
@@ -335,7 +337,7 @@ static bool _check_crystal_ball(int subtype, bool known)
         min_evo = 3;
     if (you.skill(SK_EVOCATIONS) < min_evo)
     {
-        mpr("You lack the skill to use this item.");
+        mpr(gettext("You lack the skill to use this item."));
         return false;
     }
 
@@ -346,32 +348,32 @@ static bool _ball_of_seeing(void)
 {
     bool ret = false;
 
-    mpr("You gaze into the crystal ball.");
+    mpr(gettext("You gaze into the crystal ball."));
 
     int use = random2(you.skill(SK_EVOCATIONS) * 6);
 
     if (you.level_type == LEVEL_LABYRINTH)
-        mpr("You see a maze of twisty little passages, all alike.");
+        mpr(gettext("You see a maze of twisty little passages, all alike."));
     else if (use < 2)
-        lose_stat(STAT_INT, 1, false, "using a ball of seeing");
+        lose_stat(STAT_INT, 1, false, gettext("using a ball of seeing"));
     else if (use < 5 && enough_mp(1, true))
     {
-        mpr("You feel your power drain away!");
+        mpr(gettext("You feel your power drain away!"));
         set_mp(0);
         // if you're out of mana, the switch chain falls through to confusion
     }
     else if (use < 10)
         confuse_player(10 + random2(10));
     else if (use < 15 || coinflip())
-        mpr("You see nothing.");
+        mpr(gettext("You see nothing."));
     else if (magic_mapping(6 + you.skill(SK_EVOCATIONS),
                            50 + random2(you.skill(SK_EVOCATIONS)), true))
     {
-        mpr("You see a map of your surroundings!");
+        mpr(gettext("You see a map of your surroundings!"));
         ret = true;
     }
     else
-        mpr("You see nothing.");
+        mpr(gettext("You see nothing."));
 
     return (ret);
 }
@@ -387,13 +389,13 @@ bool disc_of_storms(bool drac_breath)
         canned_msg(MSG_NOTHING_HAPPENS);
     }
     else if (x_chance_in_y(fail_rate, 100) && !drac_breath)
-        mpr("The disc glows for a moment, then fades.");
+        mpr(gettext("The disc glows for a moment, then fades."));
     else if (x_chance_in_y(fail_rate, 100) && !drac_breath)
-        mpr("Little bolts of electricity crackle over the disc.");
+        mpr(gettext("Little bolts of electricity crackle over the disc."));
     else
     {
         if (!drac_breath)
-            mpr("The disc erupts in an explosion of electricity!");
+            mpr(gettext("The disc erupts in an explosion of electricity!"));
         rc = true;
 
         const int disc_count = (drac_breath) ? roll_dice(2, 1 + you.experience_level / 7) :
@@ -438,43 +440,42 @@ void tome_of_power(int slot)
     int powc = 5 + you.skill(SK_EVOCATIONS)
                  + roll_dice(5, you.skill(SK_EVOCATIONS));
 
-    msg::stream << "The book opens to a page covered in "
-                << weird_writing() << '.' << std::endl;
+    msg::stream << make_stringf(gettext("The book opens to a page covered in %s."), weird_writing().c_str()) << std::endl;
 
     you.turn_is_over = true;
     if (!item_ident(you.inv[slot], ISFLAG_KNOW_TYPE))
     {
         set_ident_flags(you.inv[slot], ISFLAG_KNOW_TYPE);
 
-        if (!yesno("Read it?", false, 'n'))
+        if (!yesno(gettext("Read it?"), false, 'n'))
             return;
     }
 
     if (player_mutation_level(MUT_BLURRY_VISION) > 0
         && x_chance_in_y(player_mutation_level(MUT_BLURRY_VISION), 4))
     {
-        mpr("The page is too blurry for you to read.");
+        mpr(gettext("The page is too blurry for you to read."));
         return;
     }
 
-    mpr("You find yourself reciting the magical words!");
+    mpr(gettext("You find yourself reciting the magical words!"));
     practise(EX_WILL_READ_TOME);
 
     if (x_chance_in_y(7, 50))
     {
-        mpr("A cloud of weird smoke pours from the book's pages!");
+        mpr(gettext("A cloud of weird smoke pours from the book's pages!"));
         big_cloud(random_smoke_type(), &you, you.pos(), 20, 10 + random2(8));
         xom_is_stimulated(12);
     }
     else if (x_chance_in_y(2, 43))
     {
-        mpr("A cloud of choking fumes pours from the book's pages!");
+        mpr(gettext("A cloud of choking fumes pours from the book's pages!"));
         big_cloud(CLOUD_POISON, &you, you.pos(), 20, 7 + random2(5));
         xom_is_stimulated(50);
     }
     else if (x_chance_in_y(2, 41))
     {
-        mpr("A cloud of freezing gas pours from the book's pages!");
+        mpr(gettext("A cloud of freezing gas pours from the book's pages!"));
         big_cloud(CLOUD_COLD, &you, you.pos(), 20, 8 + random2(5));
         xom_is_stimulated(50);
     }
@@ -482,7 +483,7 @@ void tome_of_power(int slot)
     {
         if (one_chance_in(5))
         {
-            mpr("The book disappears in a mighty explosion!");
+            mpr(gettext("The book disappears in a mighty explosion!"));
             dec_inv_item_quantity(slot, 1);
         }
 
@@ -494,11 +495,11 @@ void tome_of_power(int slot)
     {
         if (create_monster(
                 mgen_data::hostile_at(MONS_ABOMINATION_SMALL,
-                    "a tome of Destruction",
+                    gettext("a tome of Destruction"),
                     true, 6, 0, you.pos())) != -1)
         {
-            mpr("A horrible Thing appears!");
-            mpr("It doesn't look too friendly.");
+            mpr(gettext("A horrible Thing appears!"));
+            mpr(gettext("It doesn't look too friendly."));
         }
         xom_is_stimulated(200);
     }
@@ -571,8 +572,8 @@ void skill_manual(int slot)
 
     if (!known)
     {
-        std::string prompt = make_stringf("This is a manual of %s. Do you want "
-                                          "to study it?", skill_name(skill));
+        std::string prompt = make_stringf(gettext("This is a manual of %s. Do you want "
+                                          "to study it?"), skill_name(skill));
         if (!yesno(prompt.c_str(), true, 'n'))
         {
             canned_msg(MSG_OK);
@@ -598,7 +599,7 @@ static bool _box_of_beasts(item_def &box)
 {
     bool success = false;
 
-    mpr("You open the lid...");
+    mpr(gettext("You open the lid..."));
 
     if (x_chance_in_y(60 + you.skill(SK_EVOCATIONS), 100))
     {
@@ -628,17 +629,17 @@ static bool _box_of_beasts(item_def &box)
         {
             success = true;
 
-            mpr("...and something leaps out!");
+            mpr(gettext("...and something leaps out!"));
             xom_is_stimulated(10);
         }
     }
     else
     {
         if (!one_chance_in(6))
-            mpr("...but nothing happens.");
+            mpr(gettext("...but nothing happens."));
         else
         {
-            mpr("...but the box appears empty.");
+            mpr(gettext("...but the box appears empty."));
             box.sub_type = MISC_EMPTY_EBONY_CASKET;
         }
     }
@@ -650,15 +651,15 @@ static bool _ball_of_energy(void)
 {
     bool ret = false;
 
-    mpr("You gaze into the crystal ball.");
+    mpr(gettext("You gaze into the crystal ball."));
 
     int use = random2(you.skill(SK_EVOCATIONS) * 6);
 
     if (use < 2)
-        lose_stat(STAT_INT, 1 + random2avg(7, 2), false, "using a ball of energy");
+        lose_stat(STAT_INT, 1 + random2avg(7, 2), false, gettext("using a ball of energy"));
     else if (use < 5 && enough_mp(1, true))
     {
-        mpr("You feel your power drain away!");
+        mpr(gettext("You feel your power drain away!"));
         set_mp(0);
     }
     else if (use < 10)
@@ -672,12 +673,12 @@ static bool _ball_of_energy(void)
         if (random2avg(77 - you.skill(SK_EVOCATIONS) * 2, 4) > proportional
             || one_chance_in(25))
         {
-            mpr("You feel your power drain away!");
+            mpr(gettext("You feel your power drain away!"));
             set_mp(0);
         }
         else
         {
-            mpr("You are suffused with power!");
+            mpr(gettext("You are suffused with power!"));
             inc_mp(5 + random2avg(you.skill(SK_EVOCATIONS), 2));
 
             ret = true;
@@ -703,7 +704,7 @@ bool evoke_item(int slot)
 
     if (slot == -1)
     {
-        slot = prompt_invent_item("Evoke which item? (* to show all)",
+        slot = prompt_invent_item(gettext("Evoke which item? (* to show all)"),
                                    MT_INVLIST,
                                    OSEL_EVOKABLE, true, true, true, 0, -1,
                                    NULL, OPER_EVOKE);
@@ -785,7 +786,7 @@ bool evoke_item(int slot)
             else if (you.magic_points < you.max_magic_points
                      && x_chance_in_y(you.skill(SK_EVOCATIONS) + 11, 40))
             {
-                mpr("You channel some magical energy.");
+                mpr(gettext("You channel some magical energy."));
                 inc_mp(1 + random2(3));
                 make_hungry(50, false, true);
                 pract = 1;
@@ -879,7 +880,7 @@ bool evoke_item(int slot)
 
 #if TAG_MAJOR_VERSION == 32
         case MISC_CRYSTAL_BALL_OF_FIXATION:
-            mpr("Nothing happens.");
+            mpr(gettext("Nothing happens."));
             pract = 0, ident = true;
             break;
 #endif
@@ -890,7 +891,7 @@ bool evoke_item(int slot)
             break;
 
         case MISC_QUAD_DAMAGE:
-            mpr("QUAD DAMAGE!");
+            mpr(gettext("QUAD DAMAGE!"));
             you.duration[DUR_QUAD_DAMAGE] = 30 * BASELINE_DELAY;
             ASSERT(in_inventory(item));
             dec_inv_item_quantity(item.link, 1);
@@ -918,7 +919,7 @@ bool evoke_item(int slot)
         set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
         set_ident_flags(item, ISFLAG_KNOW_TYPE);
 
-        mprf("You are wielding %s.",
+        mprf(gettext("You are wielding %s."),
              item.name(DESC_NOCAP_A).c_str());
 
         you.wield_change = true;
