@@ -1757,20 +1757,20 @@ msgstr "은(는) 낄낄대며 웃었다."
 #: acquire.cc:1602 acquire.cc:1603
 #, c-format
 msgid "%-24s[c] Jewellery      [d] Book"
-msgstr "%-24s[c] 장신구         [d] 책"
+msgstr "%s [c] 장신구     [d] 책 "
 
 #: acquire.cc:1603 acquire.cc:1604
 msgid "[a] Weapon  [b] Armour"
-msgstr "[a] 무기    [b] 방어구"
+msgstr "[a] 무기    [b] 방어구 "
 
 #: acquire.cc:1604 acquire.cc:1605
 #, c-format
 msgid "%-24s[g] Miscellaneous  [h] %s [i] Gold"
-msgstr "%-24s[g] 기타           [h] %s [i] 돈"
+msgstr "%s [g] 기타       [h] %s [i] 돈 "
 
 #: acquire.cc:1605 acquire.cc:1606
 msgid "[e] Staff   [f] Wand"
-msgstr "[e] 지팡이  [f] 마법봉"
+msgstr "[e] 지팡이  [f] 마법봉 "
 
 #: acquire.cc:1606 acquire.cc:1607
 msgid "Food "
