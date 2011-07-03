@@ -136,6 +136,7 @@ int test_melee_hit(int to_hit, int ev, defer_rand& r)
             ((100.0 - MIN_HIT_MISS_PERCENTAGE) * ev) / to_hit;
     }
 
+    /// 디버그 메시지니 번역따위 안함.
     mprf(MSGCH_DIAGNOSTICS,
           "to hit: %d; ev: %d; miss: %0.2f%%; roll: %d; result: %s%s (%d)",
               to_hit, ev, miss, roll, (margin >= 0) ? "hit" : "miss",
@@ -393,11 +394,11 @@ std::string melee_attack::anon_pronoun(pronoun_type pron)
     switch (pron)
     {
     default:
-    case PRONOUN_CAP:              return "It";
-    case PRONOUN_NOCAP:            return "it";
-    case PRONOUN_CAP_POSSESSIVE:   return "Its";
-    case PRONOUN_NOCAP_POSSESSIVE: return "its";
-    case PRONOUN_REFLEXIVE:        return "itself";
+    case PRONOUN_CAP:              return N_("It");
+    case PRONOUN_NOCAP:            return N_("it");
+    case PRONOUN_CAP_POSSESSIVE:   return N_("Its");
+    case PRONOUN_NOCAP_POSSESSIVE: return N_("its");
+    case PRONOUN_REFLEXIVE:        return N_("itself");
     }
 }
 
@@ -408,19 +409,19 @@ std::string melee_attack::anon_name(description_level_type desc,
     {
     case DESC_CAP_THE:
     case DESC_CAP_A:
-        return (actor_invisible ? "It" : "Something");
+        return (actor_invisible ? N_("It") : N_("Something"));
     case DESC_CAP_YOUR:
-        return ("Its");
+        return (N_("Its"));
     case DESC_NOCAP_YOUR:
     case DESC_NOCAP_ITS:
-        return ("its");
+        return (N_("its"));
     case DESC_NONE:
         return ("");
     case DESC_NOCAP_THE:
     case DESC_NOCAP_A:
     case DESC_PLAIN:
     default:
-        return (actor_invisible? "it" : "something");
+        return (actor_invisible? N_("it") : N_("something"));
     }
 }
 
@@ -581,13 +582,13 @@ bool melee_attack::attack()
 
             if (you.can_see(defender))
             {
-                mprf("The %s protects %s from harm.",
+                mprf(gettext("The %s protects %s from harm."),
                      feat_name.c_str(),
                      defender->name(DESC_NOCAP_THE).c_str());
             }
             else
             {
-                mprf("You hit the %s.",
+                mprf(gettext("You hit the %s."),
                      feat_name.c_str());
             }
         }
@@ -600,11 +601,11 @@ bool melee_attack::attack()
             if (!mons_near(defender->as_monster()))
             {
                 simple_monster_message(attacker->as_monster(),
-                                       " hits something.");
+                                       gettext(" hits something."));
             }
             else if (you.can_see(attacker))
             {
-                mprf("%s tries to hit %s, but is blocked by the %s.",
+                mprf(gettext("%s tries to hit %s, but is blocked by the %s."),
                      attacker->name(DESC_CAP_THE).c_str(),
                      defender->name(DESC_NOCAP_THE).c_str(),
                      feat_name.c_str());
@@ -733,13 +734,14 @@ static bool _player_vampire_draws_blood(const monster* mon, const int damage,
     // Now print message, need biting unless already done (never for bat form!)
     if (needs_bite_msg && !player_in_bat_form())
     {
-        mprf("You bite %s, and draw %s blood!",
+        /// 두번째 %s는 그냥 생략하고 '그것의' 정도로 번역해도 될 듯 합니다.
+        mprf(gettext("You bite %s, and draw %s blood!"),
              mon->name(DESC_NOCAP_THE, true).c_str(),
              mon->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str());
     }
     else
     {
-        mprf("You draw %s blood!",
+        mprf(gettext("You draw %s blood!"),
              apostrophise(mon->name(DESC_NOCAP_THE, true)).c_str());
     }
 
@@ -759,7 +761,10 @@ static bool _player_vampire_draws_blood(const monster* mon, const int damage,
         if (heal > 0 && !you.duration[DUR_DEATHS_DOOR])
         {
             inc_hp(heal);
-            mprf("You feel %sbetter.", (you.hp == you.hp_max) ? "much " : "");
+            
+            /// 좋아지거나, 아주 좋아지거나.
+            mprf(gettext("You feel %sbetter."), 
+                (you.hp == you.hp_max) ? gettext("much ") : "");
         }
     }
 
@@ -861,8 +866,13 @@ bool melee_attack::player_attack()
         else if (!shield_blocked && damage_done <= 0)
         {
             no_damage_message =
-                make_stringf("You %s %s.", attack_verb.c_str(),
-                             defender->name(DESC_NOCAP_THE).c_str());
+                /// 첫번째 %s에는 공격한다는 의미의 동사가 번역되어 나오고,
+                /// 이를테면 때렸다, 베었다, 등등.
+                /// 두번째 %s에는 맞는 대상이 나옵니다.
+                /// 추천 번역문장 : "당신은 %$2s을(를) %$1s."
+                make_stringf(gettext("You %s %s."), 
+                            gettext(attack_verb.c_str()),
+                            defender->name(DESC_NOCAP_THE).c_str());
         }
         if (defender->props.exists("helpless"))
             defender->props.erase("helpless");
@@ -1217,7 +1227,8 @@ bool melee_attack::player_aux_test_hit()
         && to_hit >= evasion
         && one_chance_in(20))
     {
-        simple_god_message(" blocks your attack.", GOD_ELYVILON);
+        /// '신 이름'이 앞에 들어감. 현재는 ELYVILON.
+        simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
         dec_penance(GOD_ELYVILON, 1);
         return (false);
     }
@@ -1238,14 +1249,15 @@ bool melee_attack::player_aux_test_hit()
 
     if (to_hit >= phaseless_evasion && defender_visible)
     {
-        mprf("Your %s passes through %s as %s momentarily phases out.",
+        /// 세번째 %s는 생략하고 '그것' 정도로 번역해도 무방함.
+        mprf(gettext("Your %s passes through %s as %s momentarily phases out."),
             aux_attack.c_str(),
             defender->name(DESC_NOCAP_THE).c_str(),
             defender->pronoun(PRONOUN_NOCAP).c_str());
     }
     else
     {
-        mprf("Your %s misses %s.", aux_attack.c_str(),
+        mprf(gettext("Your %s misses %s."), aux_attack.c_str(),
              defender->name(DESC_NOCAP_THE).c_str());
     }
 
@@ -1382,9 +1394,9 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
 
         if (damage_brand == SPWPN_ACID)
         {
-            mprf("%s is splashed with acid.",
-                 defender->name(DESC_CAP_THE).c_str());
-                 corrode_monster(defender->as_monster(), &you);
+            mprf(gettext("%s is splashed with acid."),
+                    defender->name(DESC_CAP_THE).c_str());
+            corrode_monster(defender->as_monster(), &you);
         }
 
         if (damage_brand == SPWPN_VENOM && coinflip())
@@ -1406,10 +1418,13 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
     }
     else // no damage was done
     {
-        mprf("You %s %s%s.",
-             aux_verb.c_str(),
+        /// 첫번째 %s에는 추가공격명(kick, headbutt, punch 등등)
+        /// 두번째에는 맞는 사람
+        /// 세번째에는 ', but do no damage' 혹은 ''가 들어옵니다.
+        mprf(gettext("You %s %s%s."),
+             gettext(aux_verb.c_str()),
              defender->name(DESC_NOCAP_THE).c_str(),
-             you.can_see(defender) ? ", but do no damage" : "");
+             you.can_see(defender) ? gettext(", but do no damage") : "");
     }
     if (defender->props.exists("helpless"))
         defender->props.erase("helpless");
@@ -1460,15 +1475,17 @@ std::string melee_attack::attack_strength_punctuation()
 
 std::string melee_attack::evasion_margin_adverb()
 {
-    return (ev_margin <= -20) ? " completely" :
+    return (ev_margin <= -20) ? N_(" completely") :
            (ev_margin <= -12) ? "" :
-           (ev_margin <= -6)  ? " closely"
-                              : " barely";
+           (ev_margin <= -6)  ? N_(" closely")
+                              : N_(" barely");
 }
 
 void melee_attack::player_announce_aux_hit()
 {
-    mprf("You %s %s%s%s",
+    /// 첫번째에는 공격 이름 : kick, punch, headbutt 
+    /// 두번째는 대상, 세번째는 디버깅 문자(평소엔 ""), 네번째는 느낌표.
+    mprf(gettext("You %s %s%s%s"),
          aux_verb.c_str(),
          defender->name(DESC_NOCAP_THE).c_str(),
          debug_damage_number().c_str(),
@@ -1480,14 +1497,18 @@ void melee_attack::player_announce_hit()
     if (!verb_degree.empty() && verb_degree[0] != ' ')
         verb_degree = " " + verb_degree;
 
-    msg::stream << "You " << attack_verb << ' '
-                << defender->name(DESC_NOCAP_THE)
-                << verb_degree << debug_damage_number()
-                << attack_strength_punctuation()
-                << std::endl;
+    /// 1. 공격 이름 : slice, scratch, claw 등
+    /// 2. 대상 3. 공격의 수식어 4. 디버그 메시지 5. 마침표.
+    msg::stream << make_stringf(gettext("You %s %s%s%s%s")
+        ,attack_verb.c_str()
+        ,defender->name(DESC_NOCAP_THE).c_str()
+        ,verb_degree.c_str()
+        ,debug_damage_number().c_str()
+        ,attack_strength_punctuation().c_str()
+        ) << std::endl;
 }
 
-std::string melee_attack::player_why_missed()
+std::string melee_attack::player_why_missed(const char *target_name)
 {
     const int ev = defender->melee_evasion(attacker);
     const int combined_penalty =
@@ -1503,18 +1524,25 @@ std::string melee_attack::player_why_missed()
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const std::string armour_name =
-            (armour? armour->name(DESC_BASENAME) : std::string("armour"));
+            (armour
+                ? armour->name(DESC_BASENAME)
+                : std::string(gettext("armour")));
 
         if (armour_miss && !shield_miss)
-            return "Your " + armour_name + " prevents you from hitting ";
+            return make_stringf(gettext("Your %s prevents you from hitting %s."),
+                armour_name.c_str(), target_name);
         else if (shield_miss && !armour_miss)
-            return "Your shield prevents you from hitting ";
+            return make_stringf(gettext("Your shield prevents you from hitting %s."),
+                target_name);
         else
-            return ("Your shield and " + armour_name
-                    + " prevent you from hitting ");
+            return make_stringf(gettext(
+                "Your shield and %s prevent you from hitting %s."),
+                armour_name.c_str(), target_name);
     }
 
-    return ("You" + evasion_margin_adverb() + " miss ");
+    /// 1. 거의, 조금, 완전히 등등의 수식어
+    return (gettext("You %s miss %s."), 
+        gettext(evasion_margin_adverb().c_str()), target_name);
 }
 
 void melee_attack::player_warn_miss()
@@ -1524,10 +1552,7 @@ void melee_attack::player_warn_miss()
     if (!defender->asleep())
         behaviour_event(defender->as_monster(), ME_WHACK, MHITYOU);
 
-    msg::stream << player_why_missed()
-                << defender->name(DESC_NOCAP_THE)
-                << "."
-                << std::endl;
+    msg::stream << player_why_missed(defender->name(DESC_NOCAP_THE).c_str()) << std::endl;
 }
 
 int melee_attack::player_hits_monster()
@@ -1542,7 +1567,7 @@ int melee_attack::player_hits_monster()
         && to_hit >= evasion
         && one_chance_in(20))
     {
-        simple_god_message(" blocks your attack.", GOD_ELYVILON);
+        simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
         dec_penance(GOD_ELYVILON, 1);
         return (false);
     }
@@ -1564,10 +1589,11 @@ int melee_attack::player_hits_monster()
         defender->melee_evasion(attacker, EV_IGNORE_PHASESHIFT);
 
     if (to_hit >= phaseless_evasion && defender_visible)
-        msg::stream << "Your attack passes through "
-                    << defender->name(DESC_NOCAP_THE) << " as "
-                    << defender->pronoun(PRONOUN_NOCAP)
-                    << " momentarily phases out." << std::endl;
+        /// 두번째 %s는 생략하고 '그것' 정도로 번역해도 무방함.
+        msg::stream << make_stringf(gettext(
+            "Your attack passes through %s as %s momentarily phases out."),
+            defender->name(DESC_NOCAP_THE).c_str(),
+            defender->pronoun(PRONOUN_NOCAP).c_str()) << std::endl;
 
     return (to_hit - helpful_evasion);
 }
@@ -1708,7 +1734,8 @@ void melee_attack::player_weapon_auto_id()
         && x_chance_in_y(you.skill(wpn_skill), 100))
     {
         set_ident_flags(*weapon, ISFLAG_KNOW_PLUSES);
-        mprf("You are wielding %s.", weapon->name(DESC_NOCAP_A).c_str());
+        mprf(gettext("You are wielding %s.")
+            , weapon->name(DESC_NOCAP_A).c_str());
         more();
         you.wield_change = true;
     }
@@ -1841,9 +1868,9 @@ int melee_attack::player_weapon_type_modify(int damage)
         && you.species != SP_FELID)
     {
         if (weap_type != WPN_UNKNOWN)
-            attack_verb = "hit";
+            attack_verb = N_("hit");
         else
-            attack_verb = "clumsily bash";
+            attack_verb = N_("clumsily bash");
 
         return (damage);
     }
@@ -1858,34 +1885,34 @@ int melee_attack::player_weapon_type_modify(int damage)
         case TRAN_BAT:
         case TRAN_PIG:
             if (damage < HIT_WEAK)
-                attack_verb = "hit";
+                attack_verb = N_("hit");
             else if (damage < HIT_STRONG)
-                attack_verb = "bite";
+                attack_verb = N_("bite");
             else
-                attack_verb = "maul";
+                attack_verb = N_("maul");
             break;
         case TRAN_BLADE_HANDS:
             if (damage < HIT_WEAK)
-                attack_verb = "hit";
+                attack_verb = N_("hit");
             else if (damage < HIT_MED)
-                attack_verb = "slash";
+                attack_verb = N_("slash");
             else if (damage < HIT_STRONG)
-                attack_verb = "slice";
+                attack_verb = N_("slice");
             else
-                attack_verb = "shred";
+                attack_verb = N_("shred");
             break;
         case TRAN_STATUE:
         case TRAN_LICH:
             if (you.has_usable_claws())
             {
                 if (damage < HIT_WEAK)
-                    attack_verb = "scratch";
+                    attack_verb = N_("scratch");
                 else if (damage < HIT_MED)
-                    attack_verb = "claw";
+                    attack_verb = N_("claw");
                 else if (damage < HIT_STRONG)
-                    attack_verb = "mangle";
+                    attack_verb = N_("mangle");
                 else
-                    attack_verb = "eviscerate";
+                    attack_verb = N_("eviscerate");
                 break;
             }
             else if (you.has_usable_tentacles())
@@ -1903,24 +1930,24 @@ int melee_attack::player_weapon_type_modify(int damage)
             // or fall-through
         case TRAN_ICE_BEAST:
             if (damage < HIT_WEAK)
-                attack_verb = "hit";
+                attack_verb = N_("hit");
             else if (damage < HIT_MED)
-                attack_verb = "punch";
+                attack_verb = N_("punch");
             else
-                attack_verb = "pummel";
+                attack_verb = N_("pummel");
             break;
         case TRAN_DRAGON:
             if (damage < HIT_WEAK)
-                attack_verb = "hit";
+                attack_verb = N_("hit");
             else if (damage < HIT_MED)
-                attack_verb = "claw";
+                attack_verb = N_("claw");
             else if (damage < HIT_STRONG)
-                attack_verb = "bite";
+                attack_verb = N_("bite");
             else
             {
-                attack_verb = "maul";
+                attack_verb = N_("maul");
                 if (coinflip())
-                    attack_verb = "trample";
+                    attack_verb = N_("trample");
             }
             break;
         case TRAN_NONE:
@@ -1937,57 +1964,57 @@ int melee_attack::player_weapon_type_modify(int damage)
     {
     case DAM_PIERCE:
         if (damage < HIT_MED)
-            attack_verb = "puncture";
+            attack_verb = N_("puncture");
         else if (damage < HIT_STRONG)
-            attack_verb = "impale";
+            attack_verb = N_("impale");
         else
         {
-            attack_verb = "spit";
+            attack_verb = N_("spit");
             if (defender->atype() == ACT_MONSTER
                 && defender_visible
                 && mons_genus(defender->as_monster()->type) == MONS_HOG)
             {
-                verb_degree = " like the proverbial pig";
+                verb_degree = gettext(" like the proverbial pig");
             }
             else
-                verb_degree = " like a pig";
+                verb_degree = gettext(" like a pig");
         }
         break;
 
     case DAM_SLICE:
         if (damage < HIT_MED)
-            attack_verb = "slash";
+            attack_verb = N_("slash");
         else if (damage < HIT_STRONG)
-            attack_verb = "slice";
+            attack_verb = N_("slice");
         else if (mons_genus(defender->as_monster()->type) == MONS_OGRE)
         {
-            attack_verb = "dice";
-            verb_degree = " like an onion";
+            attack_verb = N_("dice");
+            verb_degree = gettext(" like an onion");
         }
         else
         {
-            attack_verb = "open";
-            verb_degree = " like a pillowcase";
+            attack_verb = N_("open");
+            verb_degree = gettext(" like a pillowcase");
         }
         break;
 
     case DAM_BLUDGEON:
         if (damage < HIT_MED)
-            attack_verb = one_chance_in(4) ? "thump" : "sock";
+            attack_verb = one_chance_in(4) ? N_("thump") : N_("sock");
         else if (damage < HIT_STRONG)
-            attack_verb = "bludgeon";
+            attack_verb = N_("bludgeon");
         else
         {
-            attack_verb = "crush";
-            verb_degree = " like a grape";
+            attack_verb = N_("crush");
+            verb_degree = gettext(" like a grape");
         }
         break;
 
     case DAM_WHIP:
         if (damage < HIT_MED)
-            attack_verb = "whack";
+            attack_verb = N_("whack");
         else if (damage < HIT_STRONG)
-            attack_verb = "thrash";
+            attack_verb = N_("thrash");
         else
         {
             switch(defender->holiness())
@@ -1995,11 +2022,11 @@ int melee_attack::player_weapon_type_modify(int damage)
             case MH_HOLY:
             case MH_NATURAL:
             case MH_DEMONIC:
-                attack_verb = "punish";
-                verb_degree = " causing immense pain";
+                attack_verb = N_("punish");
+                verb_degree = gettext(" causing immense pain");
                 break;
             default:
-                attack_verb = "devastate";
+                attack_verb = N_("devastate");
             }
         }
         break;
@@ -2008,37 +2035,37 @@ int melee_attack::player_weapon_type_modify(int damage)
         if (you.damage_type() == DVORP_CLAWING)
         {
             if (damage < HIT_WEAK)
-                attack_verb = "scratch";
+                attack_verb = N_("scratch");
             else if (damage < HIT_MED)
-                attack_verb = "claw";
+                attack_verb = N_("claw");
             else if (damage < HIT_STRONG)
-                attack_verb = "mangle";
+                attack_verb = N_("mangle");
             else
-                attack_verb = "eviscerate";
+                attack_verb = N_("eviscerate");
         }
         else if (you.damage_type() == DVORP_TENTACLE)
         {
             if (damage < HIT_WEAK)
-                attack_verb = "tentacle-slap";
+                attack_verb = N_("tentacle-slap");
             else if (damage < HIT_MED)
-                attack_verb = "bludgeon";
+                attack_verb = N_("bludgeon");
             else if (damage < HIT_STRONG)
-                attack_verb = "batter";
+                attack_verb = N_("batter");
             else
-                attack_verb = "thrash";
+                attack_verb = N_("thrash");
         }
         else
         {
             if (damage < HIT_MED)
-                attack_verb = "punch";
+                attack_verb = N_("punch");
             else
-                attack_verb = "pummel";
+                attack_verb = N_("pummel");
         }
         break;
 
     case WPN_UNKNOWN:
     default:
-        attack_verb = "hit";
+        attack_verb = N_("hit");
         break;
     }
 
@@ -2118,7 +2145,7 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
             && !one_chance_in(5)
             && !you.duration[DUR_DEATHS_DOOR])
         {
-            mpr("You feel better.");
+            mpr(gettext("You feel better."));
 
             // More than if not killed.
             const int heal = 1 + random2(damage_done);
@@ -2158,7 +2185,8 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
             emit_nodmg_hit_message();
         else
         {
-            mprf("You %s %s, but do no damage.",
+            /// 1. 공격 동사 : slice, dice, punish, 2. 대상
+            mprf(gettext("You %s %s, but do no damage."),
                  attack_verb.c_str(),
                  defender->name(DESC_NOCAP_THE).c_str());
         }
@@ -2196,7 +2224,8 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
         if (defender->as_monster()->add_ench(mon_enchant(ENCH_CONFUSION, 0,
             &you, 20+random2(30)))) // 1-3 turns
         {
-            mprf("%s is stunned!", defender->name(DESC_CAP_THE).c_str());
+            mprf(gettext("%s is stunned!")
+                , defender->name(DESC_CAP_THE).c_str());
         }
     }
 
@@ -2330,7 +2359,8 @@ void melee_attack::calc_elemental_brand_damage(beam_type flavour,
     if (needs_message && special_damage > 0 && verb)
     {
         special_damage_message = make_stringf(
-            "%s %s %s%s",
+            /// 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+            gettext("%s %s %s%s"),
             atk_name(DESC_CAP_THE).c_str(),
             attacker->conj_verb(verb).c_str(),
             mons_defender_name().c_str(),
@@ -2362,7 +2392,8 @@ void melee_attack::drain_defender()
         {
             special_damage_message =
                 make_stringf(
-                    "%s %s %s!",
+                    /// 1. 공격자. 2. drain의 동사형. 그러므로 번역문에서는 생략해버립시다. 3. 대상
+                    gettext("%s %s %s!"),
                     atk_name(DESC_CAP_THE).c_str(),
                     attacker->conj_verb("drain").c_str(),
                     mons_defender_name().c_str());
@@ -2378,11 +2409,12 @@ void melee_attack::rot_defender(int amount, int immediate)
     {
         if (defender->atype() == ACT_MONSTER && defender_visible)
         {
-            special_damage_message =
-                make_stringf(
-                    "%s %s!",
-                    def_name(DESC_CAP_THE).c_str(),
-                    amount > 0 ? "rots" : "looks less resilient");
+            if(amount > 0)
+                special_damage_message = make_stringf(gettext("%s rots!"),
+                    def_name(DESC_CAP_THE).c_str());
+            else
+                special_damage_message = make_stringf(gettext("%s looks less resilient!"),
+                    def_name(DESC_CAP_THE).c_str());
         }
     }
 }
@@ -2401,7 +2433,8 @@ bool melee_attack::distortion_affects_defender()
             if (defender_visible)
             {
                 special_damage_message =
-                    make_stringf("%s %s in the distortional energy.",
+                    /// 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
+                    make_stringf(gettext("%s %s in the distortional energy."),
                                  def_name(DESC_CAP_THE).c_str(),
                                  defender->conj_verb("bask").c_str());
             }
@@ -2417,7 +2450,8 @@ bool melee_attack::distortion_affects_defender()
         {
             special_damage_message =
                 make_stringf(
-                    "Space bends around %s.",
+                    /// 1. 수비자.
+                    gettext("Space bends around %s."),
                 def_name(DESC_NOCAP_THE).c_str());
         }
         special_damage += 1 + random2avg(7, 2);
@@ -2430,7 +2464,8 @@ bool melee_attack::distortion_affects_defender()
         {
             special_damage_message =
                 make_stringf(
-                    "Space warps horribly around %s!",
+                    /// 1. 수비자.
+                    gettext("Space warps horribly around %s!"),
                     def_name(DESC_NOCAP_THE).c_str());
         }
         special_damage += 3 + random2avg(24, 2);
@@ -2493,7 +2528,8 @@ void melee_attack::antimagic_affects_defender()
         int mp_loss = std::min(you.magic_points, random2(damage_done * 2));
         if (!mp_loss)
             return;
-        mpr("You feel your power leaking away.", MSGCH_WARN);
+        /// 아 맨날 이런 문장만 나오면 얼마나 좋아.
+        mpr(gettext("You feel your power leaking away."), MSGCH_WARN);
         dec_mp(mp_loss);
         obvious_effect = true;
     }
@@ -2504,9 +2540,9 @@ void melee_attack::antimagic_affects_defender()
         defender->as_monster()->add_ench(mon_enchant(ENCH_ANTIMAGIC, 0,
                                 attacker, // doesn't matter
                                 random2(damage_done * 2) * BASELINE_DELAY));
-        special_damage_message =
-                    apostrophise(defender->name(DESC_CAP_THE))
-                    + " magic leaks into the air.";
+        /// 1. 수비자의 이름의 소유형
+        special_damage_message = make_stringf(gettext("%s magic leaks into the air."), 
+                    apostrophise(defender->name(DESC_CAP_THE)).c_str());
         obvious_effect = true;
     }
 }
@@ -2521,7 +2557,8 @@ void melee_attack::pain_affects_defender()
         if (defender_visible)
         {
             special_damage_message =
-                make_stringf("%s %s in agony.",
+                /// 1. 수비자. 2. writhe의 동사형. 그러므로 번역문에서는 생략해버립시다.
+                make_stringf(gettext("%s %s in agony."),
                              defender->name(DESC_CAP_THE).c_str(),
                              defender->conj_verb("writhe").c_str());
         }
@@ -2591,15 +2628,16 @@ void melee_attack::chaos_affects_defender()
         if (!skip_chaos_message && you.see_cell(defender->pos()))
         {
             if (defender->atype() == ACT_PLAYER)
-                mpr("You give off a flash of multicoloured light!");
+                mpr(gettext("You give off a flash of multicoloured light!"));
             else if (you.can_see(defender))
             {
                 simple_monster_message(defender->as_monster(),
-                                       " gives off a flash of "
-                                       "multicoloured light!");
+                                       /// 수비자(몬스터)가 그랬음.
+                                       gettext(" gives off a flash of "
+                                       "multicoloured light!"));
             }
             else
-                mpr("There is a flash of multicoloured light!");
+                mpr(gettext("There is a flash of multicoloured light!"));
         }
     }
 
@@ -2662,7 +2700,7 @@ void melee_attack::chaos_affects_defender()
             if (obvious_effect)
             {
                 special_damage_message =
-                    make_stringf("%s is duplicated!",
+                    make_stringf(gettext("%s is duplicated!"),
                                  def_name(DESC_NOCAP_THE).c_str());
             }
 
@@ -2876,7 +2914,8 @@ void melee_attack::chaos_affects_attacker()
     // Create a colourful cloud.
     if (weapon && one_chance_in(1000))
     {
-        mprf("Smoke pours forth from %s!", wep_name(DESC_NOCAP_YOUR).c_str());
+        /// 1. 무기 이름.
+        mprf(gettext("Smoke pours forth from %s!"), wep_name(DESC_NOCAP_YOUR).c_str());
         big_cloud(random_smoke_type(), &you, attacker->pos(), 20,
                   4 + random2(8));
 #ifdef NOTE_DEBUG_CHAOS_EFFECTS
@@ -2895,7 +2934,7 @@ void melee_attack::chaos_affects_attacker()
         {
             std::string noise = getSpeakString("weapon_noise");
             if (!noise.empty())
-                msg = "You hear " + noise;
+                msg = make_stringf(gettext("You hear %s"), noise.c_str());
         }
         else
         {
@@ -3008,7 +3047,8 @@ static bool _make_zombie(monster* mon, int corpse_class, int corpse_index,
         mitm[last_item].link = idx;
 
         animate_remains(mon->pos(), CORPSE_BODY, mon->behaviour,
-                        mon->foe, 0, "a chaos effect", mon->god,
+                        /// 내부 코드에서 사용하는 것 같음.
+                        mon->foe, 0, N_("a chaos effect"), mon->god,
                         true, true, true, &zombie_index);
     }
 
@@ -3020,7 +3060,7 @@ static bool _make_zombie(monster* mon, int corpse_class, int corpse_index,
         mgen_data mg(type, mon->behaviour, 0, 0, 0, mon->pos(),
                      mon->foe, MG_FORCE_PLACE, mon->god,
                      mon->type, mon->number);
-        mg.non_actor_summoner = "a chaos effect";
+        mg.non_actor_summoner = N_("a chaos effect");
         zombie_index = create_monster(mg);
     }
 
@@ -3036,16 +3076,16 @@ static bool _make_zombie(monster* mon, int corpse_class, int corpse_index,
     if (you.can_see(mon))
     {
         if (you.can_see(zombie))
-            simple_monster_message(mon, " turns into a zombie!");
+            simple_monster_message(mon, gettext(" turns into a zombie!"));
         else if (last_item != NON_ITEM)
         {
-            simple_monster_message(mon, "'s equipment vanishes!");
+            simple_monster_message(mon, gettext("'s equipment vanishes!"));
             autotoggle_autopickup(true);
         }
     }
     else
     {
-        simple_monster_message(zombie, " appears from thin air!");
+        simple_monster_message(zombie, gettext(" appears from thin air!"));
         autotoggle_autopickup(false);
     }
 
@@ -3124,7 +3164,7 @@ void melee_attack::do_miscast()
         source = NON_MONSTER;
         if (chaos_brand)
         {
-            cause = "a chaos effect from ";
+            cause = N_("a chaos effect from ");
             // Ignore a lot of item flags to make cause as short as possible,
             // so it will (hopefully) fit onto a single line in the death
             // cause screen.
@@ -3329,9 +3369,9 @@ bool melee_attack::apply_damage_brand()
         {
             special_damage_message =
                 make_stringf(
-                    "%s %s%s",
+                    /// 수비자, 마침표나 느낌표
+                    gettext("%s convulses%s"),
                     def_name(DESC_CAP_THE).c_str(),
-                    defender->conj_verb("convulse").c_str(),
                     special_attack_punctuation().c_str());
         }
         break;
@@ -3344,8 +3384,8 @@ bool melee_attack::apply_damage_brand()
         {
             special_damage_message =
                 defender->atype() == ACT_PLAYER?
-                   "You are electrocuted!"
-                :  "There is a sudden explosion of sparks!";
+                   gettext("You are electrocuted!")
+                :  gettext("There is a sudden explosion of sparks!");
             special_damage = 10 + random2(15);
             special_damage_flavour = BEAM_ELECTRICITY;
 
@@ -3371,9 +3411,9 @@ bool melee_attack::apply_damage_brand()
             {
                 special_damage_message =
                     make_stringf(
-                        "%s %s%s",
+                        /// 수비자, 마침표나 느낌표
+                        gettext("%s convulses%s"),
                         defender->name(DESC_CAP_THE).c_str(),
-                        defender->conj_verb("convulse").c_str(),
                         special_attack_punctuation().c_str());
             }
         }
@@ -3387,9 +3427,9 @@ bool melee_attack::apply_damage_brand()
             {
                 special_damage_message =
                     make_stringf(
-                        "%s %s%s",
+                        /// 수비자, 마침표나 느낌표
+                        gettext("%s convulses%s"),
                         defender->name(DESC_CAP_THE).c_str(),
-                        defender->conj_verb("convulse").c_str(),
                         special_attack_punctuation().c_str());
             }
         }
@@ -3466,17 +3506,19 @@ bool melee_attack::apply_damage_brand()
         // worries on that score.
 
         if (attacker->atype() == ACT_PLAYER)
-            mpr("You feel better.");
+            mpr(gettext("You feel better."));
         else if (attacker_visible)
         {
             if (defender->atype() == ACT_PLAYER)
             {
-                mprf("%s draws strength from your injuries!",
+                /// 1. 공격자의 이름.
+                mprf(gettext("%s draws strength from your injuries!"),
                      attacker->name(DESC_CAP_THE).c_str());
             }
             else
             {
-                mprf("%s is healed.",
+                /// 1. 공격자의 이름.
+                mprf(gettext("%s is healed."),
                      attacker->name(DESC_CAP_THE).c_str());
             }
         }
@@ -3647,14 +3689,14 @@ bool melee_attack::chop_hydra_head(int dam,
 
         if (dam_type == DVORP_CLAWING)
         {
-            static const char *claw_verbs[] = { "rip", "tear", "claw" };
+            static const char *claw_verbs[] = { N_("rip"), N_("tear"), N_("claw") };
             verb = RANDOM_ELEMENT(claw_verbs);
         }
         else
         {
             static const char *slice_verbs[] =
             {
-                "slice", "lop", "chop", "hack"
+                N_("slice"), N_("lop"), N_("chop"), N_("hack")
             };
             verb = RANDOM_ELEMENT(slice_verbs);
         }
@@ -3663,7 +3705,8 @@ bool melee_attack::chop_hydra_head(int dam,
         {
             if (defender_visible)
             {
-                mprf("%s %s %s's last head off!",
+                /// 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
+                mprf(gettext("%s %s %s's last head off!"),
                      atk_name(DESC_CAP_THE).c_str(),
                      attacker->conj_verb(verb).c_str(),
                      def_name(DESC_NOCAP_THE).c_str());
@@ -3682,7 +3725,8 @@ bool melee_attack::chop_hydra_head(int dam,
         {
             if (defender_visible)
             {
-                mprf("%s %s one of %s's heads off!",
+                /// 2. 공격명령의 동사형
+                mprf(gettext("%s %s one of %s's heads off!"),
                      atk_name(DESC_CAP_THE).c_str(),
                      attacker->conj_verb(verb).c_str(),
                      def_name(DESC_NOCAP_THE).c_str());
@@ -3699,13 +3743,13 @@ bool melee_attack::chop_hydra_head(int dam,
                 if (wpn_brand == SPWPN_FLAMING)
                 {
                     if (defender_visible)
-                        mpr("The flame cauterises the wound!");
+                        mpr(gettext("The flame cauterises the wound!"));
                     return (true);
                 }
                 else if (defender->as_monster()->number < limit - 1)
                 {
                     simple_monster_message(defender->as_monster(),
-                                           " grows two more!");
+                                           gettext(" grows two more!"));
                     defender->as_monster()->number += 2;
                     defender->heal(8 + random2(8), true);
                 }
@@ -3776,7 +3820,7 @@ void melee_attack::player_apply_staff_damage()
         if (special_damage)
         {
             special_damage_message =
-                make_stringf("%s is electrocuted!",
+                make_stringf(gettext("%s is electrocuted!"),
                              defender->name(DESC_CAP_THE).c_str());
             special_damage_flavour = BEAM_ELECTRICITY;
         }
@@ -3794,7 +3838,7 @@ void melee_attack::player_apply_staff_damage()
         {
             special_damage_message =
                 make_stringf(
-                    "You freeze %s!",
+                    gettext("You freeze %s!"),
                     defender->name(DESC_NOCAP_THE).c_str());
         }
         break;
@@ -3807,7 +3851,7 @@ void melee_attack::player_apply_staff_damage()
         {
             special_damage_message =
                 make_stringf(
-                    "You crush %s!",
+                    gettext("You crush %s!"),
                     defender->name(DESC_NOCAP_THE).c_str());
         }
         break;
@@ -3823,7 +3867,7 @@ void melee_attack::player_apply_staff_damage()
         {
             special_damage_message =
                 make_stringf(
-                    "You burn %s!",
+                    gettext("You burn %s!"),
                     defender->name(DESC_NOCAP_THE).c_str());
         }
         break;
@@ -3853,7 +3897,7 @@ void melee_attack::player_apply_staff_damage()
             {
                 special_damage_message =
                     make_stringf(
-                        "%s convulses in agony!",
+                        gettext("%s convulses in agony!"),
                         defender->name(DESC_CAP_THE).c_str());
 
                 did_god_conduct(DID_NECROMANCY, 4);
@@ -3893,7 +3937,7 @@ void melee_attack::player_apply_staff_damage()
             set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
             set_ident_type(*weapon, ID_KNOWN_TYPE);
 
-            mprf("You are wielding %s.", weapon->name(DESC_NOCAP_A).c_str());
+            mprf(gettext("You are wielding %s."), weapon->name(DESC_NOCAP_A).c_str());
             more();
             you.wield_change = true;
         }
@@ -4410,13 +4454,13 @@ bool melee_attack::mons_attack_mons()
             {
                 if (attacker->confused() && you.can_see(attacker))
                 {
-                    mpr("Zin prevents your ally from violating sanctuary "
-                        "in its confusion.", MSGCH_GOD);
+                    mpr(gettext("Zin prevents your ally from violating sanctuary "
+                        "in its confusion."), MSGCH_GOD);
                 }
                 else if (attacker->berserk() && you.can_see(attacker))
                 {
-                    mpr("Zin prevents your ally from violating sanctuary "
-                        "in its berserker rage.", MSGCH_GOD);
+                    mpr(gettext("Zin prevents your ally from violating sanctuary "
+                        "in its berserker rage."), MSGCH_GOD);
                 }
 
                 cancel_attack = true;
@@ -4486,7 +4530,7 @@ bool melee_attack::mons_attack_warded_off()
     {
         if (needs_message)
         {
-            mprf("%s tries to attack %s, but flinches away.",
+            mprf(gettext("%s tries to attack %s, but flinches away."),
                  atk_name(DESC_CAP_THE).c_str(),
                  mons_defender_name().c_str());
         }
@@ -4527,7 +4571,8 @@ bool melee_attack::attack_shield_blocked(bool verbose)
 
         if (needs_message && verbose)
         {
-            mprf("%s %s %s attack.",
+            /// 수비자, block, 공격자의 소유형
+            mprf(gettext("%s %s %s attack."),
                  def_name(DESC_CAP_THE).c_str(),
                  defender->conj_verb("block").c_str(),
                  atk_name(DESC_NOCAP_ITS).c_str());
@@ -4726,13 +4771,14 @@ std::string melee_attack::mons_attack_desc(const mon_attack_def &attk)
         if (get_weapon_brand(wpn) == SPWPN_REACHING)
         {
             if (grid_distance(attacker->pos(), defender->pos()) == 2)
-                result += " from afar";
+                /// 멀리서 정도로 번역하면 될듯.
+                result += gettext(" from afar");
         }
 
         if (attacker->type != MONS_DANCING_WEAPON)
         {
-            result += " with ";
-            result += weapon->name(DESC_NOCAP_A);
+            /// 1. 무기 이름. ' %s로 '정도로 번역하면 될 것 같습니다. 사용처를 다 본건 아니지만 아마 morgue에 나올듯.
+            result += make_stringf(gettext(" with %s"), weapon->name(DESC_NOCAP_A).c_str());
         }
 
         return (result);
@@ -4740,7 +4786,7 @@ std::string melee_attack::mons_attack_desc(const mon_attack_def &attk)
     else if (attk.flavour == AF_REACH
              && grid_distance(attacker->pos(), defender->pos()) == 2)
     {
-        return " from afar";
+        return gettext(" from afar");
     }
 
     return ("");
@@ -4758,7 +4804,9 @@ void melee_attack::mons_announce_hit(const mon_attack_def &attk)
 {
     if (needs_message)
     {
-        mprf("%s %s %s%s%s%s",
+        /// 1. 공격자, 2. 공격 동사, 3. 대상, 4. 디버깅 메시지, 5. 부가 설명, 6. 느낌표.
+        /// 대충 1. 5. 2. 3. 4. 6. 정도로 배열하면 될 듯 합니다.
+        mprf(gettext("%s %s %s%s%s%s"),
              atk_name(DESC_CAP_THE).c_str(),
              attacker->conj_verb(mons_attack_verb(attk)).c_str(),
              mons_defender_name().c_str(),
@@ -4772,7 +4820,8 @@ void melee_attack::mons_announce_dud_hit(const mon_attack_def &attk)
 {
     if (needs_message)
     {
-        mprf("%s %s %s but does no damage.",
+        /// 1. 공격자 2. 동사 3. 대상
+        mprf(gettext("%s %s %s but does no damage."),
              atk_name(DESC_CAP_THE).c_str(),
              attacker->conj_verb(mons_attack_verb(attk)).c_str(),
              mons_defender_name().c_str());
@@ -4802,14 +4851,15 @@ void melee_attack::mons_do_poison(const mon_attack_def &attk)
             {
                 if (attacker_visible)
                 {
-                    mprf("%s %s was poisonous!",
+                    /// 1. 공격자 2. 공격 동사
+                    mprf(gettext("%s %s was poisonous!"),
                          apostrophise(attacker->name(DESC_CAP_THE)).c_str(),
                          mons_attack_verb(attk).c_str());
                 }
             }
             else
             {
-                mprf("%s poisons %s!",
+                mprf(gettext("%s poisons %s!"),
                      atk_name(DESC_CAP_THE).c_str(),
                      mons_defender_name().c_str());
             }
@@ -4836,7 +4886,8 @@ void melee_attack::mons_do_napalm()
     {
         if (needs_message)
         {
-            mprf("%s %s covered in liquid flames%s",
+            /// 1. 대상 2. is/are 3. 마침표나 느낌표
+            mprf(gettext("%s %s covered in liquid flames%s"),
                  def_name(DESC_CAP_THE).c_str(),
                  defender->conj_verb("are").c_str(),
                  special_attack_punctuation().c_str());
@@ -4878,7 +4929,7 @@ void melee_attack::splash_monster_with_acid(int strength)
 {
     special_damage += roll_dice(2, 4);
     if (defender_visible)
-        mprf("%s is splashed with acid.", defender->name(DESC_CAP_THE).c_str());
+        mprf(gettext("%s is splashed with acid."), defender->name(DESC_CAP_THE).c_str());
     corrode_monster(defender->as_monster(), attacker);
 }
 
@@ -4886,7 +4937,7 @@ void melee_attack::splash_defender_with_acid(int strength)
 {
     if (defender->atype() == ACT_PLAYER)
     {
-        mpr("You are splashed with acid!");
+        mpr(gettext("You are splashed with acid!"));
         splash_with_acid(strength);
     }
     else
@@ -5022,9 +5073,13 @@ static void _steal_item_from_player(monster* mon)
             mon->inv[MSLOT_GOLD] = idx;
             new_item.set_holding_monster(mon->mindex());
         }
-        mprf("%s steals %s your gold!",
-             mon->name(DESC_CAP_THE).c_str(),
-             stolen_amount == you.gold ? "all" : "some of");
+
+        if(stolen_amount == you.gold)
+            mprf(gettext("%s steals all your gold!"),
+                 mon->name(DESC_CAP_THE).c_str());
+        else
+            mprf(gettext("%s steals some of your gold!"),
+                 mon->name(DESC_CAP_THE).c_str());
 
         you.attribute[ATTR_GOLD_FOUND] -= stolen_amount;
 
@@ -5051,7 +5106,7 @@ static void _steal_item_from_player(monster* mon)
     new_item.pos.reset();
     new_item.link = NON_ITEM;
 
-    mprf("%s steals %s!",
+    mprf(gettext("%s steals %s!"),
          mon->name(DESC_CAP_THE).c_str(),
          new_item.name(DESC_NOCAP_YOUR).c_str());
 
@@ -5129,7 +5184,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
         if (needs_message && special_damage)
         {
-            mprf("%s %s engulfed in flames%s",
+            /// 대상, is/are
+            mprf(gettext("%s %s engulfed in flames%s"),
                  def_name(DESC_CAP_THE).c_str(),
                  defender->conj_verb("are").c_str(),
                  special_attack_punctuation().c_str());
@@ -5148,7 +5204,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
         if (needs_message && special_damage)
         {
-            mprf("%s %s %s%s",
+            /// 공격자, freeze의 동사, 대상, ./!
+            mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
                  attacker->conj_verb("freeze").c_str(),
                  mons_defender_name().c_str(),
@@ -5174,6 +5231,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
         if (needs_message && special_damage)
         {
+            /// 공격자, shock의 동사, 대상, ./!
             mprf("%s %s %s%s",
                  atk_name(DESC_CAP_THE).c_str(),
                  attacker->conj_verb("shock").c_str(),
@@ -5203,9 +5261,9 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
             if (needs_message)
             {
-                mprf("%s %s strength from %s injuries!",
+                /// 공격자, draws, 대상
+                mprf(gettext("%s draws strength from %s injuries!"),
                      atk_name(DESC_CAP_THE).c_str(),
-                     attacker->conj_verb("draw").c_str(),
                      def_name(DESC_NOCAP_ITS).c_str());
             }
 
@@ -5214,7 +5272,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             if ((damage_done > 6 && one_chance_in(3)) || one_chance_in(20))
             {
                 if (defender->atype() == ACT_PLAYER)
-                    mprf("You feel less resilient.");
+                    mprf(gettext("You feel less resilient."));
                 rot_defender(0, coinflip() ? 2 : 1);
             }
         }
@@ -5257,7 +5315,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
             if (defender_visible)
             {
-                mprf("%s %s engulfed in a cloud of spores!",
+                /// 대상, are/is
+                mprf(gettext("%s %s engulfed in a cloud of spores!"),
                      defender->name(DESC_CAP_THE).c_str(),
                      defender->conj_verb("are").c_str());
             }
@@ -5301,7 +5360,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
         if (needs_message)
         {
-            mprf("%s %s %s!",
+            /// 공격자, infuriate, 대상
+            mprf(gettext("%s %s %s!"),
                  atk_name(DESC_CAP_THE).c_str(),
                  attacker->conj_verb("infuriate").c_str(),
                  mons_defender_name().c_str());
@@ -5339,12 +5399,12 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
         {
             if (stolen)
             {
-                mprf("%s devours some of your food!",
+                mprf(gettext("%s devours some of your food!"),
                      atk_name(DESC_CAP_THE).c_str());
             }
             else if (ground)
             {
-                mprf("%s devours some of the food beneath you!",
+                mprf(gettext("%s devours some of the food beneath you!"),
                      atk_name(DESC_CAP_THE).c_str());
             }
         }
@@ -5367,7 +5427,8 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
 
         if (needs_message && special_damage)
         {
-            mprf("%s %s %s%s",
+            /// 공격자, sear, 대상, ./!
+            mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
                  attacker->conj_verb("sear").c_str(),
                  mons_defender_name().c_str(),
@@ -5405,7 +5466,7 @@ void melee_attack::mons_do_passive_freeze()
         if (!hurted)
             return;
 
-        simple_monster_message(mon, " is very cold.");
+        simple_monster_message(mon, gettext(" is very cold."));
 
 #ifndef USE_TILE
         flash_monster_colour(mon, LIGHTBLUE, 200);
@@ -5442,7 +5503,7 @@ void melee_attack::mons_do_eyeball_confusion()
         if (mon->check_res_magic(ench_pow) <= 0
             && mons_class_is_confusable(mon->type))
         {
-            mprf("The eyeballs on your body gaze at %s.",
+            mprf(gettext("The eyeballs on your body gaze at %s."),
                  mon->name(DESC_NOCAP_THE).c_str());
 
             mon->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you,
@@ -5467,7 +5528,7 @@ void melee_attack::mons_do_spines()
             < 0)
         {
             simple_monster_message(attacker->as_monster(),
-                                   " dodges your spines.");
+                                   gettext(" dodges your spines."));
             return;
         }
 
@@ -5483,7 +5544,7 @@ void melee_attack::mons_do_spines()
         if (!defender_invisible)
         {
             simple_monster_message(attacker->as_monster(),
-                                   " is struck by your spines.");
+                                   gettext(" is struck by your spines."));
         }
 
         attacker->hurt(&you, hurt);
@@ -5518,7 +5579,8 @@ bool melee_attack::do_trample()
 
         if (needs_message)
         {
-            mprf("%s %s backwards!",
+            /// 대상, stumble
+            mprf(gettext("%s %s backwards!"),
                  def_name(DESC_CAP_THE).c_str(),
                  defender->conj_verb("stumble").c_str());
         }
@@ -5540,6 +5602,7 @@ bool melee_attack::do_trample()
 
     if (needs_message)
     {
+        /// 대상, hold, its
         mprf("%s %s %s ground!",
              def_name(DESC_CAP_THE).c_str(),
              defender->conj_verb("hold").c_str(),
@@ -5782,7 +5845,8 @@ void melee_attack::mons_perform_attack_rounds()
             {
                 if (needs_message)
                 {
-                    mprf("Helpless, %s %s to dodge %s attack.",
+                    /// 대상, fail, 공격자
+                    mprf(gettext("Helpless, %s %s to dodge %s attack."),
                          mons_defender_name().c_str(),
                          defender->conj_verb("fail").c_str(),
                          atk_name(DESC_NOCAP_ITS).c_str());
@@ -5793,8 +5857,9 @@ void melee_attack::mons_perform_attack_rounds()
             {
                 if (needs_message)
                 {
-                    mprf("%s momentarily %s out as %s "
-                         "attack passes through %s%s",
+                    /// 대상, phase, its, 공격자, ./!
+                    mprf(gettext("%s momentarily %s out as %s "
+                         "attack passes through %s%s"),
                          defender->name(DESC_CAP_THE).c_str(),
                          defender->conj_verb("phase").c_str(),
                          atk_name(DESC_NOCAP_ITS).c_str(),
@@ -5808,7 +5873,8 @@ void melee_attack::mons_perform_attack_rounds()
                 // Misses no matter what.
                 if (needs_message)
                 {
-                    mprf("%s%s misses %s%s",
+                    /// 공격자, 완전히/거의, 대상, ./!
+                    mprf(gettext("%s%s misses %s%s"),
                          atk_name(DESC_CAP_THE).c_str(),
                          evasion_margin_adverb().c_str(),
                          mons_defender_name().c_str(),
@@ -5860,7 +5926,8 @@ void melee_attack::mons_perform_attack_rounds()
                 {
                     if (needs_message)
                     {
-                        mprf("Your shroud bends %s attack away%s",
+                        /// 공격자, ./!
+                        mprf(gettext("Your shroud bends %s attack away%s"),
                              atk_name(DESC_NOCAP_ITS).c_str(),
                              attack_strength_punctuation().c_str());
                     }
@@ -5884,7 +5951,7 @@ void melee_attack::mons_perform_attack_rounds()
                 dprf("ERROR: Non-zero damage after shield block!");
             mons_announce_hit(attk);
             if (shroud_broken)
-                mpr("Your shroud falls apart!", MSGCH_WARN);
+                mpr(gettext("Your shroud falls apart!"), MSGCH_WARN);
             if (defender == &you)
                 practise(EX_MONSTER_WILL_HIT);
 
@@ -6192,11 +6259,12 @@ bool wielded_weapon_check(item_def *weapon, bool no_message)
         if (no_message)
             return (false);
 
-        std::string prompt  = "Really attack while ";
+        std::string prompt;
         if (unarmed_warning)
-            prompt += "being unarmed?";
+            prompt = gettext("Really attack while being unarmed? ");
         else
-            prompt += "wielding " + weapon->name(DESC_NOCAP_YOUR) + "? ";
+            prompt = make_stringf(gettext("Really attack while wielding %s? "),
+                weapon->name(DESC_NOCAP_YOUR).c_str());
 
         const bool result = yesno(prompt.c_str(), true, 'n');
 
@@ -6459,38 +6527,40 @@ static void stab_message(actor *defender, int stab_bonus)
     case 6:     // big melee, monster surrounded/not paying attention
         if (coinflip())
         {
-            mprf("You %s %s from a blind spot!",
-                  (you.species == SP_FELID) ? "pounce on" : "strike",
-                  defender->name(DESC_NOCAP_THE).c_str());
+            mprf( you.species == SP_FELID 
+                ? gettext("You pounce on %s from a blind spot!")
+                : gettext("You strike %s from a blind spot!")
+                  ,defender->name(DESC_NOCAP_THE).c_str());
         }
         else
         {
-            mprf("You catch %s momentarily off-guard.",
+            mprf(gettext("You catch %s momentarily off-guard."),
                   defender->name(DESC_NOCAP_THE).c_str());
         }
         break;
     case 4:     // confused/fleeing
         if (!one_chance_in(3))
         {
-            mprf("You catch %s completely off-guard!",
+            mprf(gettext("You catch %s completely off-guard!"),
                   defender->name(DESC_NOCAP_THE).c_str());
         }
         else
         {
-            mprf("You %s %s from behind!",
-                  (you.species == SP_FELID) ? "pounce on" : "strike",
-                  defender->name(DESC_NOCAP_THE).c_str());
+            mprf( you.species == SP_FELID 
+                ? gettext("You pounce on %s from behind!")
+                : gettext("You strike %s from a behind!")
+                  ,defender->name(DESC_NOCAP_THE).c_str());
         }
         break;
     case 2:
     case 1:
         if (you.species == SP_FELID && coinflip())
         {
-            mprf("You pounce on the unaware %s!",
+            mprf(gettext("You pounce on the unaware %s!"),
                  defender->name(DESC_PLAIN).c_str());
             break;
         }
-        mprf("%s fails to defend %s.",
+        mprf(gettext("%s fails to defend %s."),
               defender->name(DESC_CAP_THE).c_str(),
               defender->pronoun(PRONOUN_REFLEXIVE).c_str());
         break;

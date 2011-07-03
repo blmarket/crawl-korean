@@ -217,7 +217,7 @@ private:
     random_var player_unarmed_speed();
     void player_announce_aux_hit();
     void player_announce_hit();
-    std::string player_why_missed();
+    std::string player_why_missed(const char *target_name);
     void player_warn_miss();
     void player_check_weapon_effects();
     void _monster_die(monster* mons, killer_type killer, int killer_index);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-02 18:51+0900\n"
+"POT-Creation-Date: 2011-07-03 11:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1011,7 +1011,8 @@ msgstr ""
 msgid "explore horizon"
 msgstr ""
 
-#: command.cc:1596 command.cc:1613 stuff.cc:438
+#: command.cc:1596 command.cc:1613 stuff.cc:438 command.cc:1600
+#: command.cc:1617
 msgid "Okay, then."
 msgstr "네, 그러세요."
 
@@ -2125,135 +2126,137 @@ msgstr ""
 "어떤 키를 조절할 것인가?\n"
 "[i]아이템 [s]주문 [a]특수능력"
 
-#: command.cc:333
+#: command.cc:333 command.cc:337
 msgid "Adjust which item?"
 msgstr "어느 아이템 키를 바꿀 것인가?"
 
-#: command.cc:339 command.cc:397 command.cc:480
+#: command.cc:339 command.cc:397 command.cc:480 command.cc:343 command.cc:401
+#: command.cc:484
 msgid "Adjust to which letter? "
 msgstr "어느 키로 바꿀 것인가?"
 
 #. Select starting slot
-#: command.cc:362
+#: command.cc:362 command.cc:366
 msgid "Adjust which spell? "
 msgstr "어느 주문의 키를 바꿀 것인가?"
 
-#: command.cc:386
+#: command.cc:386 command.cc:390
 msgid "You don't know that spell."
 msgstr "당신은 습득한 주문이 없다."
 
-#: command.cc:432
+#: command.cc:432 command.cc:436
 msgid "You don't currently have any abilities."
 msgstr "당신은 현재 아무 특수능력도 가지고 있지 않다."
 
-#: command.cc:439
+#: command.cc:439 command.cc:443
 msgid "Adjust which ability? (? or * to list) "
 msgstr "어느 특수능력의 키를 바꿀 것인가? (? 또는 *로 리스트)"
 
-#: command.cc:467
+#: command.cc:467 command.cc:471
 msgid "No such ability."
 msgstr "그런 특수능력은 없다."
 
-#: command.cc:493
+#: command.cc:493 command.cc:497
 msgid "That would be singularly pointless."
 msgstr "이건 뭐 의미도 없고 감동도 없고..."
 
 #. / 키가 바뀌었음을 알려주는 메시지.
 #. / Swapping with: a - evoke skill 따위의 내용이 됨.
-#: command.cc:505
+#: command.cc:505 command.cc:509
 msgid "Swapping with: "
 msgstr "키를 교체함: "
 
 #. / Moving to: key - skill name 따위의 내용이 됨.
-#: command.cc:516
+#: command.cc:516 command.cc:520
 msgid "Moving to: "
 msgstr "키를 이동함: "
 
-#: command.cc:538
+#: command.cc:538 command.cc:542
 msgid "Cloak  "
 msgstr "망토   "
 
-#: command.cc:539
+#: command.cc:539 command.cc:543
 msgid "Helmet "
 msgstr "머리   "
 
-#: command.cc:540
+#: command.cc:540 command.cc:544
 msgid "Gloves "
 msgstr "장갑   "
 
-#: command.cc:541
+#: command.cc:541 command.cc:545
 msgid "Shield "
 msgstr "방패   "
 
-#: command.cc:542
+#: command.cc:542 command.cc:546
 msgid "Armour "
 msgstr "갑옷   "
 
-#: command.cc:545
+#: command.cc:545 command.cc:549
 msgid "Barding"
 msgstr "마갑   "
 
-#: command.cc:546
+#: command.cc:546 command.cc:550
 msgid "Boots  "
 msgstr "신발   "
 
-#: command.cc:547 command.cc:603
+#: command.cc:547 command.cc:603 command.cc:551 command.cc:607
 msgid "unknown"
 msgstr "미확인 "
 
-#: command.cc:551
+#: command.cc:551 command.cc:555
 msgid "    (unavailable)"
 msgstr "       (착용불가)"
 
-#: command.cc:555 command.cc:609 command.cc:661
+#: command.cc:555 command.cc:609 command.cc:661 command.cc:559 command.cc:613
+#: command.cc:665
 msgid "    (currently unavailable)"
 msgstr "            (현재 착용불가)"
 
-#: command.cc:565
+#: command.cc:565 command.cc:569
 msgid "    (restricted)"
 msgstr "        (방해됨)"
 
-#: command.cc:592
+#: command.cc:592 command.cc:596
 msgid "Left ring"
 msgstr "왼손     "
 
-#: command.cc:593
+#: command.cc:593 command.cc:597
 msgid "Right ring"
 msgstr "오른손    "
 
-#: command.cc:594
+#: command.cc:594 command.cc:598
 msgid "Amulet"
 msgstr "부적  "
 
-#: command.cc:595
+#: command.cc:595 command.cc:599
 msgid "1st ring"
 msgstr "첫째 반지  "
 
-#: command.cc:596
+#: command.cc:596 command.cc:600
 msgid "2nd ring"
 msgstr "둘째 반지  "
 
-#: command.cc:597
+#: command.cc:597 command.cc:601
 msgid "3rd ring"
 msgstr "셋째 반지  "
 
-#: command.cc:598
+#: command.cc:598 command.cc:602
 msgid "4th ring"
 msgstr "넷째 반지  "
 
-#: command.cc:599
+#: command.cc:599 command.cc:603
 msgid "5th ring"
 msgstr "다섯째 반지"
 
-#: command.cc:600
+#: command.cc:600 command.cc:604
 msgid "6th ring"
 msgstr "여섯째 반지"
 
-#: command.cc:601
+#: command.cc:601 command.cc:605
 msgid "7th ring"
 msgstr "일곱째 반지"
 
-#: command.cc:602
+#: command.cc:602 command.cc:606
 msgid "8th ring"
 msgstr "여덟째 반지"
 
@@ -2261,41 +2264,41 @@ msgstr "여덟째 반지"
 #.
 #. Yes, this is already on the screen... I'm outputing it
 #. for completeness and to avoid confusion.
-#: command.cc:645
+#: command.cc:645 command.cc:649
 msgid "Current   : "
 msgstr "현재      : "
 
 #. / 칼날의 손
-#: command.cc:659
+#: command.cc:659 command.cc:663
 msgid "    blade "
 msgstr "   칼날의 "
 
-#: command.cc:663
+#: command.cc:663 command.cc:667
 msgid "    empty "
 msgstr " 비어있는 "
 
-#: command.cc:678
+#: command.cc:678 command.cc:682
 msgid "Primary   : "
 msgstr "주        : "
 
-#: command.cc:680
+#: command.cc:680 command.cc:684
 msgid "Secondary : "
 msgstr "보조      : "
 
-#: command.cc:694
+#: command.cc:694 command.cc:698
 msgid "    none"
 msgstr "    없음"
 
 #. Now we print out the current default fire weapon.
-#: command.cc:703
+#: command.cc:703 command.cc:707
 msgid "Firing    : "
 msgstr "발사      : "
 
-#: command.cc:714
+#: command.cc:714 command.cc:718
 msgid "    nothing"
 msgstr "       없음"
 
-#: command.cc:720
+#: command.cc:720 command.cc:724
 msgid " (empty)"
 msgstr "  (없음)"
 
@@ -2371,7 +2374,7 @@ msgstr ""
 "<w>Ctrl-F</w> : 몬스터 타게팅 모드\n"
 "<w>Ctrl-P</w> : 명령어창 반복\n"
 
-#: command.cc:788
+#: command.cc:788 command.cc:792
 msgid ""
 "<h>Targeting (zap wands, cast spells, etc.):\n"
 "Most keys from examine surroundings work.\n"
@@ -2407,15 +2410,15 @@ msgstr ""
 "<w>)</w> : 이전 발사체 선택.\n"
 "<w>i</w> : 아이템 목록을 통해 선택.\n"
 
-#: command.cc:930
+#: command.cc:930 command.cc:934
 msgid "Describe which? "
 msgstr "어느 것의 정보를 볼 것인가? "
 
-#: command.cc:935
+#: command.cc:935 command.cc:939
 msgid "(CTRL-S to sort by monster toughness)"
 msgstr "(CTRL-S키 : 강한 몬스터 순으로 정렬)"
 
-#: command.cc:937
+#: command.cc:937 command.cc:941
 msgid "(CTRL-S to sort by name)"
 msgstr "(CTRL-S키 : 이름 순으로 정렬)"
 
@@ -4376,7 +4379,7 @@ msgstr ""
 msgid "The tide is released from %s call."
 msgstr ""
 
-#: command.cc:747
+#: command.cc:747 command.cc:751
 msgid ""
 "<h>Examine surroundings ('<w>x</w><h>' in main):\n"
 "<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
@@ -4756,7 +4759,759 @@ msgstr "아무 일도 일어나지 않았다."
 msgid "QUAD DAMAGE!"
 msgstr "쿼드 데미지!"
 
-#: evoke.cc:896
+#: evoke.cc:896 fight.cc:1744 fight.cc:3927
 #, c-format
 msgid "You are wielding %s."
 msgstr "당신은 %s(을/를) 들고 있다."
+
+#: fight.cc:397 fight.cc:412
+msgid "It"
+msgstr "그것"
+
+#: fight.cc:398 fight.cc:424
+msgid "it"
+msgstr "그것"
+
+#: fight.cc:399 fight.cc:414
+msgid "Its"
+msgstr "그것의"
+
+#: fight.cc:400 fight.cc:417
+msgid "its"
+msgstr "그것의"
+
+#: fight.cc:401
+msgid "itself"
+msgstr "그것 자신"
+
+#: fight.cc:412
+msgid "Something"
+msgstr "무언가"
+
+#: fight.cc:424
+msgid "something"
+msgstr "무언가"
+
+#: fight.cc:588
+#, c-format
+msgid "The %s protects %s from harm."
+msgstr "%s는 %s를 위험으로부터 지켰다."
+
+#: fight.cc:594
+#, c-format
+msgid "You hit the %s."
+msgstr "당신은 %s를 쳤다."
+
+#: fight.cc:607
+msgid " hits something."
+msgstr "은/(는) 무언가를 쳤다."
+
+#: fight.cc:611
+#, c-format
+msgid "%s tries to hit %s, but is blocked by the %s."
+msgstr "%s는 %s를 치려고 했지만, %s에 의해 막혔다."
+
+#. / 두번째 %s는 그냥 생략하고 '그것의' 정도로 번역해도 될 듯 합니다.
+#: fight.cc:741
+#, c-format
+msgid "You bite %s, and draw %s blood!"
+msgstr "당신은 %s를 물고 그것의 피를 빨았다!"
+
+#: fight.cc:747
+#, c-format
+msgid "You draw %s blood!"
+msgstr "당신은 %s의 피를 빨았다!"
+
+#. / 좋아지거나, 아주 좋아지거나.
+#: fight.cc:769
+#, c-format
+msgid "You feel %sbetter."
+msgstr "당신은 기분이 %s괜찮아졌다."
+
+#: fight.cc:770
+msgid "much "
+msgstr "아주 "
+
+#. / 첫번째 %s에는 공격한다는 의미의 동사가 번역되어 나오고,
+#. / 이를테면 때렸다, 베었다, 등등.
+#. / 두번째 %s에는 맞는 대상이 나옵니다.
+#. / 추천 번역문장 : "당신은 %$2s을(를) %$1s."
+#: fight.cc:876
+#, c-format
+msgid "You %s %s."
+msgstr "당신은 %2$s을/(를) %1$s 했다."
+
+#. / '신 이름'이 앞에 들어감. 현재는 ELYVILON.
+#: fight.cc:1235 fight.cc:1577
+msgid " blocks your attack."
+msgstr "이(가) 당신의 공격을 막았다."
+
+#. / 세번째 %s는 생략하고 '그것' 정도로 번역해도 무방함.
+#: fight.cc:1257
+#, c-format
+msgid "Your %s passes through %s as %s momentarily phases out."
+msgstr "당신의 %s은/(는) %s가 순간적으로 사라짐에 따라 허공을 갈랐다."
+
+#: fight.cc:1264
+#, c-format
+msgid "Your %s misses %s."
+msgstr "당신의 %s는 %s를 놓쳤다."
+
+#: fight.cc:1401 fight.cc:4911
+#, c-format
+msgid "%s is splashed with acid."
+msgstr "%s은/(는) 산성 액체를 뒤집어썼다!"
+
+#. / 첫번째 %s에는 추가공격명(kick, headbutt, punch 등등)
+#. / 두번째에는 맞는 사람
+#. / 세번째에는 ', but do no damage' 혹은 ''가 들어옵니다.
+#: fight.cc:1428
+#, c-format
+msgid "You %s %s%s."
+msgstr "당신은 %2$s를 %1$s했다 %3$s."
+
+#: fight.cc:1431
+msgid ", but do no damage"
+msgstr ", 그러나 아무런 데미지도 입히지 못했다"
+
+#: fight.cc:1482
+msgid " completely"
+msgstr " 완전히"
+
+#: fight.cc:1484
+msgid " closely"
+msgstr " 아슬아슬하게"
+
+#: fight.cc:1485
+msgid " barely"
+msgstr " 대충"
+
+#. / 첫번째에는 공격 이름 : kick, punch, headbutt
+#. / 두번째는 대상, 세번째는 디버깅 문자(평소엔 ""), 네번째는 느낌표.
+#: fight.cc:1492
+#, c-format
+msgid "You %s %s%s%s"
+msgstr "당신은 %2$s를 %1$s했다%4$s%3$s "
+
+#. / 1. 공격 이름 : slice, scratch, claw 등
+#. / 2. 대상 3. 공격의 수식어 4. 디버그 메시지 5. 마침표.
+#: fight.cc:1506
+#, c-format
+msgid "You %s %s%s%s%s"
+msgstr "당신은 %2$s를 %3$s%1$s%5$s%4$s "
+
+#: fight.cc:1533
+msgid "armour"
+msgstr "갑옷"
+
+#: fight.cc:1536
+#, c-format
+msgid "Your %s prevents you from hitting %s."
+msgstr "당신의 %s가 당신이 %s를 치는 것을 방해한다."
+
+#: fight.cc:1539
+msgid "Your shield prevents you from hitting %s."
+msgstr "당신의 방패가 당신이 %s를 치는 것을 방해한다."
+
+#: fight.cc:1542
+#, c-format
+msgid "Your shield and %s prevent you from hitting %s."
+msgstr "당신의 방패와 %s가 당신이 %s를 치는 것을 방해한다."
+
+#. / 1. 거의, 조금, 완전히 등등의 수식어
+#: fight.cc:1547
+#, c-format
+msgid "You %s miss %s."
+msgstr "당신은 %2$s를%1$s 놓쳤다."
+
+#: fight.cc:1601
+#, c-format
+msgid "Your attack passes through %s as %s momentarily phases out."
+msgstr "당신의 공격은 %s가 순간적으로 사라짐에 따라 허공을 갈랐다."
+
+#: fight.cc:1878 fight.cc:1895 fight.cc:1903 fight.cc:1928 fight.cc:1936
+#: fight.cc:2065
+msgid "hit"
+msgstr ""
+
+#: fight.cc:1880
+msgid "clumsily bash"
+msgstr ""
+
+#: fight.cc:1897 fight.cc:1940
+msgid "bite"
+msgstr ""
+
+#: fight.cc:1899 fight.cc:1943
+msgid "maul"
+msgstr ""
+
+#: fight.cc:1905 fight.cc:1981
+msgid "slash"
+msgstr ""
+
+#: fight.cc:1907 fight.cc:1983 fight.cc:3686
+msgid "slice"
+msgstr ""
+
+#: fight.cc:1909
+msgid "shred"
+msgstr ""
+
+#: fight.cc:1916 fight.cc:2033
+msgid "scratch"
+msgstr ""
+
+#: fight.cc:1918 fight.cc:1938 fight.cc:2035 fight.cc:3679
+msgid "claw"
+msgstr ""
+
+#: fight.cc:1920 fight.cc:2037
+msgid "mangle"
+msgstr ""
+
+#: fight.cc:1922 fight.cc:2039
+msgid "eviscerate"
+msgstr ""
+
+#: fight.cc:1930 fight.cc:2057
+msgid "punch"
+msgstr ""
+
+#: fight.cc:1932 fight.cc:2059
+msgid "pummel"
+msgstr ""
+
+#: fight.cc:1945
+msgid "trample"
+msgstr ""
+
+#: fight.cc:1962
+msgid "puncture"
+msgstr ""
+
+#: fight.cc:1964
+msgid "impale"
+msgstr ""
+
+#: fight.cc:1967
+msgid "spit"
+msgstr ""
+
+#: fight.cc:1972
+msgid " like the proverbial pig"
+msgstr " 유명한 돼지처럼 "
+
+#: fight.cc:1975
+msgid " like a pig"
+msgstr " 돼지처럼 "
+
+#: fight.cc:1986
+msgid "dice"
+msgstr ""
+
+#: fight.cc:1987
+msgid " like an onion"
+msgstr " 양파처럼 "
+
+#: fight.cc:1991
+msgid "open"
+msgstr ""
+
+#: fight.cc:1992
+msgid " like a pillowcase"
+msgstr " 베갯속처럼 "
+
+#: fight.cc:1998
+msgid "thump"
+msgstr ""
+
+#: fight.cc:1998
+msgid "sock"
+msgstr ""
+
+#: fight.cc:2000 fight.cc:2047
+msgid "bludgeon"
+msgstr ""
+
+#: fight.cc:2003
+msgid "crush"
+msgstr ""
+
+#: fight.cc:2004
+msgid " like a grape"
+msgstr " 포도처럼 "
+
+#: fight.cc:2010
+msgid "whack"
+msgstr ""
+
+#: fight.cc:2012 fight.cc:2051
+msgid "thrash"
+msgstr ""
+
+#: fight.cc:2020
+msgid "punish"
+msgstr ""
+
+#: fight.cc:2021
+msgid " causing immense pain"
+msgstr " 강렬한 고통을 유발하며 "
+
+#: fight.cc:2024
+msgid "devastate"
+msgstr ""
+
+#: fight.cc:2045
+msgid "tentacle-slap"
+msgstr ""
+
+#: fight.cc:2049
+msgid "batter"
+msgstr ""
+
+#: fight.cc:2131 fight.cc:3496
+msgid "You feel better."
+msgstr "당신은 기분이 나아졌다."
+
+#. / 1. 공격 동사 : slice, dice, punish, 2. 대상
+#: fight.cc:2172
+#, c-format
+msgid "You %s %s, but do no damage."
+msgstr "당신은 %2$s를 %1$s, 그러나 아무 데미지도 주지 못했다."
+
+#: fight.cc:2210
+#, c-format
+msgid "%s is stunned!"
+msgstr "%s는 기절했다!"
+
+#: player-act.cc:374
+msgid "You"
+msgstr "당신"
+
+#: player-act.cc:375 player-act.cc:379
+msgid "you"
+msgstr "당신"
+
+#: player-act.cc:376
+msgid "Your"
+msgstr "당신의"
+
+#: player-act.cc:377
+msgid "your"
+msgstr "당신의"
+
+#: player-act.cc:378
+msgid "yourself"
+msgstr "당신 자신"
+
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#: fight.cc:2346 fight.cc:5187 fight.cc:5411
+#, c-format
+msgid "%s %s %s%s"
+msgstr "%1$s는 %3$s를 %2$s했다%4$s"
+
+#. / 1. 공격자. 2. drain의 동사형. 그러므로 번역문에서는 생략해버립시다. 3. 대상
+#. / 공격자, infuriate, 대상
+#: fight.cc:2379 fight.cc:5344
+#, c-format
+msgid "%s %s %s!"
+msgstr "%1$s는 %3$s를 %2$s했다!"
+
+#: fight.cc:2396
+#, c-format
+msgid "%s rots!"
+msgstr "%s이(가) 썩는다!"
+
+#: fight.cc:2399
+#, c-format
+msgid "%s looks less resilient!"
+msgstr "%s은/(는) 피부가 좀 푸석푸석해진 것 같다!"
+
+#. / 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
+#: fight.cc:2420
+#, c-format
+msgid "%s %s in the distortional energy."
+msgstr "%s는 뒤틀린 에너지에 노출되었다."
+
+#. / 1. 수비자.
+#: fight.cc:2437
+#, c-format
+msgid "Space bends around %s."
+msgstr "%s 주변의 공간이 구부러졌다."
+
+#. / 1. 수비자.
+#: fight.cc:2451
+#, c-format
+msgid "Space warps horribly around %s!"
+msgstr "%s 주변의 공간이 심하게 요동친다!"
+
+#. / 아 맨날 이런 문장만 나오면 얼마나 좋아.
+#: fight.cc:2515
+msgid "You feel your power leaking away."
+msgstr "당신은 당신의 힘이 빠져나감을 느낀다."
+
+#. / 1. 수비자의 이름의 소유형
+#: fight.cc:2527
+#, c-format
+msgid "%s magic leaks into the air."
+msgstr "%s의 마력이 공중으로 사라진다."
+
+#. / 1. 수비자. 2. writhe의 동사형. 그러므로 번역문에서는 생략해버립시다.
+#: fight.cc:2544
+#, c-format
+msgid "%s %s in agony."
+msgstr "%s는 고통으로 온몸을 비틀었다."
+
+#: fight.cc:2615
+msgid "You give off a flash of multicoloured light!"
+msgstr "당신에게서 여러 색의 빛이 번뜩였다!"
+
+#. / 수비자(몬스터)가 그랬음.
+#: fight.cc:2620
+msgid " gives off a flash of multicoloured light!"
+msgstr "에게서 여러 색의 빛이 번뜩였다!"
+
+#: fight.cc:2624
+msgid "There is a flash of multicoloured light!"
+msgstr "여러 색의 빛이 번뜩였다!"
+
+#: fight.cc:2687
+#, c-format
+msgid "%s is duplicated!"
+msgstr "%s는 복제되었다!"
+
+#. / 1. 무기 이름.
+#: fight.cc:2902
+#, c-format
+msgid "Smoke pours forth from %s!"
+msgstr "%s로부터 연기가 뿜어져 나왔다!"
+
+#: fight.cc:2921
+#, c-format
+msgid "You hear %s"
+msgstr "당신은 %s를 들었다"
+
+#. / 내부 코드에서 사용하는 것 같음.
+#: fight.cc:3035 fight.cc:3047
+msgid "a chaos effect"
+msgstr ""
+
+#: fight.cc:3063
+msgid " turns into a zombie!"
+msgstr "은/(는) 좀비로 변했다!"
+
+#: fight.cc:3066
+msgid "'s equipment vanishes!"
+msgstr "의 장비가 사라졌다!"
+
+#: fight.cc:3072
+msgid " appears from thin air!"
+msgstr "(이)가 나타났다!"
+
+#: fight.cc:3151
+msgid "a chaos effect from "
+msgstr ""
+
+#. / 1. 수비자, 2. convulse의 동사형, 3. 마침표나 느낌표
+#: fight.cc:3357 fight.cc:3400 fight.cc:3417
+#, c-format
+msgid "%s convulses%s"
+msgstr "%1$s는 경련을 일으켰다%3$s"
+
+#: fight.cc:3372
+msgid "You are electrocuted!"
+msgstr "당신은 전기충격을 받았다!"
+
+#: fight.cc:3373
+msgid "There is a sudden explosion of sparks!"
+msgstr "갑자기 스파크가 폭발했다!"
+
+#. / 1. 공격자의 이름.
+#: fight.cc:3502
+#, c-format
+msgid "%s draws strength from your injuries!"
+msgstr "%s는 당신의 상처로부터 힘을 빼앗아갔다!"
+
+#. / 1. 공격자의 이름.
+#: fight.cc:3508
+#, c-format
+msgid "%s is healed."
+msgstr "%s는 회복됐다."
+
+#: fight.cc:3679
+msgid "rip"
+msgstr ""
+
+#: fight.cc:3679
+msgid "tear"
+msgstr ""
+
+#: fight.cc:3686
+msgid "lop"
+msgstr ""
+
+#: fight.cc:3686
+msgid "chop"
+msgstr ""
+
+#: fight.cc:3686
+msgid "hack"
+msgstr ""
+
+#. / 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
+#: fight.cc:3696
+#, c-format
+msgid "%s %s %s's last head off!"
+msgstr "%1$s는 %3$s의 마지막 머리를 %2$s했다!"
+
+#. / 2. 공격명령의 동사형
+#: fight.cc:3716
+#, c-format
+msgid "%s %s one of %s's heads off!"
+msgstr "%1$s는 %3$s의 머리들 중 하나를 %2$s했다!"
+
+#: fight.cc:3733
+msgid "The flame cauterises the wound!"
+msgstr "불꽃이 상처를 지졌다!"
+
+#: fight.cc:3739
+msgid " grows two more!"
+msgstr " 두개 더 늘어났다!"
+
+#: fight.cc:3810
+#, c-format
+msgid "%s is electrocuted!"
+msgstr "%s는 전기충격을 받았다!"
+
+#: fight.cc:3828
+#, c-format
+msgid "You freeze %s!"
+msgstr "당신은 %s을/(를) 얼렸다!"
+
+#: fight.cc:3841
+#, c-format
+msgid "You crush %s!"
+msgstr "당신은 %s을/(를) 분쇄했다!"
+
+#: fight.cc:3857
+#, c-format
+msgid "You burn %s!"
+msgstr "당신은 %s을/(를) 불태웠다!"
+
+#: fight.cc:3887
+#, c-format
+msgid "%s convulses in agony!"
+msgstr "%s는 고통으로 몸부림친다!"
+
+#: fight.cc:4437
+msgid "Zin prevents your ally from violating sanctuary in its confusion."
+msgstr "진은 당신의 동료가 혼란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
+
+#: fight.cc:4442
+msgid "Zin prevents your ally from violating sanctuary in its berserker rage."
+msgstr "진은 당신의 동료가 광란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
+
+#: fight.cc:4513
+#, c-format
+msgid "%s tries to attack %s, but flinches away."
+msgstr "%s는 %s를 공격하려 했으나, 곧 기가 죽었다."
+
+#. / 수비자, block, 공격자의 소유형
+#: fight.cc:4555
+#, c-format
+msgid "%s %s %s attack."
+msgstr "%1$s는 %3$s의 공격을 %2$s했다."
+
+#. / 멀리서 정도로 번역하면 될듯.
+#: fight.cc:4755 fight.cc:4769
+msgid " from afar"
+msgstr " 멀리서"
+
+#. / 1. 무기 이름. ' %s로 '정도로 번역하면 될 것 같습니다. 사용처를 다 본건 아니지만 아마 morgue에 나올듯.
+#: fight.cc:4761
+#, c-format
+msgid " with %s"
+msgstr " %s로 "
+
+#. / 1. 공격자, 2. 공격 동사, 3. 대상, 4. 디버깅 메시지, 5. 부가 설명, 6. 느낌표.
+#. / 대충 1. 5. 2. 3. 4. 6. 정도로 배열하면 될 듯 합니다.
+#: fight.cc:4789
+#, c-format
+msgid "%s %s %s%s%s%s"
+msgstr "%1$s %5$s %2$s %3$s %4$s %6$s"
+
+#. / 1. 공격자 2. 동사 3. 대상
+#: fight.cc:4804
+#, c-format
+msgid "%s %s %s but does no damage."
+msgstr "%1$s는 %3$s를 %2$s했지만 아무런 부상도 입히지 못했다."
+
+#: fight.cc:4834
+#, c-format
+msgid "%s %s was poisonous!"
+msgstr "%s의 %s 때문에 중독됐다!"
+
+#: fight.cc:4841
+#, c-format
+msgid "%s poisons %s!"
+msgstr "%s은/(는) %s를 중독시켰다!"
+
+#. / 1. 대상 2. is/are 3. 마침표나 느낌표
+#: fight.cc:4869
+#, c-format
+msgid "%s %s covered in liquid flames%s"
+msgstr "%1$s는 액체 화염으로 뒤덮여있다%3$s"
+
+#: fight.cc:4919
+msgid "You are splashed with acid!"
+msgstr "당신에게 산성 용액이 튀었다!"
+
+#: fight.cc:5057
+#, c-format
+msgid "%s steals all your gold!"
+msgstr "%s는 당신의 모든 돈을 훔쳤다!"
+
+#: fight.cc:5060
+#, c-format
+msgid "%s steals some of your gold!"
+msgstr "%s는 당신의 돈 일부를 훔쳤다!"
+
+#: fight.cc:5088
+#, c-format
+msgid "%s steals %s!"
+msgstr "%s(이)가 %s를 훔친다!"
+
+#. / 대상, is/are
+#: fight.cc:5167
+#, c-format
+msgid "%s %s engulfed in flames%s"
+msgstr "%1$s는 화염으로 휩싸였다%3$s\0%2$s"
+
+#. / 공격자, draws, 대상
+#: fight.cc:5244
+#, c-format
+msgid "%s draws strength from %s injuries!"
+msgstr "%s는 %s의 상처로부터 힘을 빼앗아간다!"
+
+#: fight.cc:5255
+msgid "You feel less resilient."
+msgstr "당신의 피부가 푸석푸석해진다."
+
+#. / 대상, are/is
+#: fight.cc:5299
+#, c-format
+msgid "%s %s engulfed in a cloud of spores!"
+msgstr "%s는 포자 연기로 둘러싸여있다!"
+
+#: fight.cc:5382
+#, c-format
+msgid "%s devours some of your food!"
+msgstr "%s가 당신의 음식 일부를 먹어치웠다!"
+
+#: fight.cc:5387
+#, c-format
+msgid "%s devours some of the food beneath you!"
+msgstr "%s가 당신 아래 놓여있던 음식 일부를 먹어치웠다!"
+
+#: fight.cc:5449
+msgid " is very cold."
+msgstr "은/(는) 매우 차다."
+
+#: fight.cc:5486
+#, c-format
+msgid "The eyeballs on your body gaze at %s."
+msgstr "당신의 몸에 난 눈알이 %s를 노려보았다."
+
+#: fight.cc:5513
+msgid " dodges your spines."
+msgstr "은/(는) 당신의 가시를 피했다."
+
+#: fight.cc:5530
+msgid " is struck by your spines."
+msgstr "은/(는) 당신의 가시에 맞았다."
+
+#. / 대상, stumble
+#: fight.cc:5566
+#, c-format
+msgid "%s %s backwards!"
+msgstr "%s는 뒤쪽으로 비틀거렸다!"
+
+#. / 대상, fail, 공격자
+#: fight.cc:5832
+#, c-format
+msgid "Helpless, %s %s to dodge %s attack."
+msgstr "속수무책으로, %1$s는 %3$s의 공격을 피하지 못했다."
+
+#. / 대상, phase, its, 공격자, ./!
+#: fight.cc:5844
+#, c-format
+msgid "%s momentarily %s out as %s attack passes through %s%s"
+msgstr "%1$s가 순간적으로 사라짐에 따라 %3$s의 공격은 허공을 갈랐다%5$s"
+
+#. / 공격자, 완전히/거의, 대상, ./!
+#: fight.cc:5860
+#, c-format
+msgid "%s%s misses %s%s"
+msgstr "%1$s은/(는) %3$s를 %2$s 놓쳤다%4$s"
+
+#. / 공격자, ./!
+#: fight.cc:5913
+#, c-format
+msgid "Your shroud bends %s attack away%s"
+msgstr "당신의 장막은 %s의 공격 궤도를 구부렸다%s"
+
+#: fight.cc:5937
+msgid "Your shroud falls apart!"
+msgstr "당신의 장막이 깨졌다!"
+
+#: fight.cc:6248
+msgid "Really attack while being unarmed? "
+msgstr "진짜 맨손으로 공격할거임? "
+
+#: fight.cc:6250
+#, c-format
+msgid "Really attack while wielding %s? "
+msgstr "진짜 %s를 든 채로 공격할거임? "
+
+#: fight.cc:6506
+#, c-format
+msgid "You pounce on %s from a blind spot!"
+msgstr "당신은 사각으로부터 %s를 덮쳤다!"
+
+#: fight.cc:6507
+#, c-format
+msgid "You strike %s from a blind spot!"
+msgstr "당신은 사각으로부터 %s를 가격했다!"
+
+#: fight.cc:6512
+#, c-format
+msgid "You catch %s momentarily off-guard."
+msgstr "당신은 %s가 순간적으로 무방비한 틈을 노렸다."
+
+#: fight.cc:6519
+#, c-format
+msgid "You catch %s completely off-guard!"
+msgstr "당신은 %s가 완전히 무방비한 순간을 노렸다!"
+
+#: fight.cc:6525
+#, c-format
+msgid "You pounce on %s from behind!"
+msgstr "당신은 뒤에서 %s를 덮쳤다!"
+
+#: fight.cc:6526
+#, c-format
+msgid "You strike %s from a behind!"
+msgstr "당신은 뒤에서 %s를 가격했다!"
+
+#: fight.cc:6534
+#, c-format
+msgid "You pounce on the unaware %s!"
+msgstr "당신은 들키지 않은 채로 %s를 덮쳤다!"
+
+#: fight.cc:6538
+#, c-format
+msgid "%s fails to defend %s."
+msgstr "%s는 %s를 방어하는데 실패했다."
