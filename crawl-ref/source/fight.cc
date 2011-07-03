@@ -1541,7 +1541,7 @@ std::string melee_attack::player_why_missed(const char *target_name)
     }
 
     /// 1. 거의, 조금, 완전히 등등의 수식어
-    return (gettext("You %s miss %s."), 
+    return make_stringf(gettext("You %s miss %s."), 
         gettext(evasion_margin_adverb().c_str()), target_name);
 }
 
