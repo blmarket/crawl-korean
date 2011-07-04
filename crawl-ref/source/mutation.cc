@@ -3,6 +3,9 @@
  * @brief Functions for handling player mutations.
 **/
 
+
+//변이 관련 번역 시작.
+
 #include "AppHdr.h"
 #include "mutation.h"
 
@@ -165,12 +168,18 @@ static bool _mutation_is_fully_inactive(mutation_type mut)
             && !you.innate_mutations[mut] && !mdef.physical);
 }
 
+//변이 관련. 던크 한글판[밸런스기준] 을 참조한 부분이 있습니다.
+
 formatted_string describe_mutations()
 {
     std::string result;
     bool have_any = false;
-    const char *mut_title = "Innate Abilities, Weirdness & Mutations";
+    const char *mut_title = "선천적, 불가사의한 & 돌연변이 능력";
     std::string scale_type = "plain brown";
+
+
+	// 원문들 입니다.  const char *mut_title = "Innate Abilities, Weirdness & Mutations";
+	//  std::string scale_type = "plain brown";
 
     // center title
     int offset = 39 - strwidth(mut_title) / 2;
@@ -187,157 +196,245 @@ formatted_string describe_mutations()
     switch (you.species)
     {
     case SP_MERFOLK:
-        result += "You revert to your normal form in water.\n";
+
+		//머포크의 물속 진입시 변이 능력인듯합니다.
+//      result += "You revert to your normal form in water.\n";
+        result += "당신은 물속에서 본연의 모습으로 변한다.\n";
         have_any = true;
         break;
 
     case SP_NAGA:
-        result += "You cannot wear boots.\n";
+
+		//나가의 기본 변이 상태
+		//result += "You cannot wear boots.\n";
+        result += "당신은 신발을 신을 수 없다.\n";
         // Breathe poison replaces spit poison.
         if (!you.mutation[MUT_BREATHE_POISON])
-            result += "You can spit poison.\n";
+			//독뱉기 변이를 가진 경우
+			//result += "You can spit poison.\n";
+            result += "당신은 독을 뱉을 수 있다.\n";
         if (you.experience_level > 2)
         {
             std::ostringstream num;
             num << you.experience_level/3;
-            result += "Your serpentine skin is tough (AC +" + num.str() + ").\n";
+			//이건 아마 피부 강화 인듯
+			//  result += "Your serpentine skin is tough (AC +" + num.str() + ").\n";
+            result += "당신은 강인한 피부를 가지고 있다 (AC +" + num.str() + ").\n";
         }
         have_any = true;
         break;
 
     case SP_GHOUL:
-        result += "Your body is rotting away.\n";
+
+//      result += "Your body is rotting away.\n";
+        result += "당신의 몸은 썩어 문드러진다.\n";
         have_any = true;
         break;
 
     case SP_KENKU:
         if (you.experience_level > 4)
         {
-            result += "You can fly";
+			//    result += "You can fly";
+            result += "당신은 날 수 있다";
             if (you.experience_level > 14)
-                result += " continuously";
+				//레벨 14 이후가 되면 무한날기 가 가능해짐을 뜻하는듯. 계속해서 지만 어디에 추가되는질 몰라서;
+				//      result += " continuously";
+				result += ". 끊임없이.";
             result += ".\n";
             have_any = true;
         }
         break;
 
     case SP_MUMMY:
-        result += "You do not eat or drink.\n";
-        result += "Your flesh is vulnerable to fire.\n";
-        if (you.experience_level > 12)
-        {
-            result += "You are";
-            if (you.experience_level > 25)
-                result += " strongly";
 
-            result += " in touch with the powers of death.\n";
-            result +=
-                "You can restore your body by infusing magical energy.\n";
+		//머미의 변이
+        //result += "You do not eat or drink.\n";
+        //result += "Your flesh is vulnerable to fire.\n";
+        result += "당신은 먹거나 마실 수 없다.\n";
+        result += "당신의 육체는 불에 취약하다.\n";
+        //12레벨이 넘어가면
+		
+		if (you.experience_level > 12)
+        {
+
+			//result += "You are";
+            result += "당신은";
+            if (you.experience_level > 25)
+				//result += " strongly";
+				result += " 강한";
+//result += " in touch with the powers of death.\n";
+            result += " 죽음의 힘으로 부여받은 손길이 있다.\n";
+//	result +=
+//      "You can restore your body by infusing magical energy.\n";
+			result +=
+                "당신은 마법 에너지를 불어넣어 육체를 회복할 수 있다.\n";
         }
         have_any = true;
         break;
 
+		//각종 색색 드라코들
     case SP_GREEN_DRACONIAN:
-        result += "You can breathe blasts of noxious fumes.\n";
+
+		//        result += "You can breathe blasts of noxious fumes.\n";
+        result += "당신은 유독가스를 뿜을 수 있다.\n";
         have_any = true;
-        scale_type = "lurid green";
+
+//끔찍한 녹색?          scale_type = "lurid green";
+        scale_type = "끔찍한 녹색";
         break;
 
     case SP_GREY_DRACONIAN:
-        result += "You can walk through water.\n";
+		//        result += "You can walk through water.\n";
+        result += "당신은 물 속을 걸을 수 있다.\n";
         have_any = true;
-        scale_type = "dull grey";
+		//scale_type = "dull grey";
+        scale_type = "칙칙한 회색";
         break;
 
     case SP_RED_DRACONIAN:
-        result += "You can breathe blasts of fire.\n";
+		//        result += "You can breathe blasts of fire.\n";
+        result += "당신은 불의 숨결을 뿜을 수 있다.\n";
         have_any = true;
-        scale_type = "fiery red";
+		//scale_type = "fiery red";
+        scale_type = "불타는 듯한 빨강";
         break;
 
     case SP_WHITE_DRACONIAN:
-        result += "You can breathe waves of freezing cold.\n";
-        result += "You can buffet flying creatures when you breathe cold.\n";
-        scale_type = "icy white";
+
+		//result += "You can breathe waves of freezing cold.\n";
+        //result += "You can buffet flying creatures when you breathe cold.\n";
+		//
+        result += "당신은 냉기의 숨결을 뿜을 수 있다.\n";
+        result += "당신은 날아다니는 생명체에게 당신의 냉기의 숨결로 공격할 수 있다.\n";
+		//scale_type = "icy white";		
+		scale_type = "얼음에 뒤덮힌 하양";
         have_any = true;
         break;
 
     case SP_BLACK_DRACONIAN:
-        result += "You can breathe wild blasts of lightning.\n";
-        scale_type = "glossy black";
+		//        result += "You can breathe wild blasts of lightning.\n";
+        result += "당신은 거친 전기 폭발의 숨결을 뿜을 수 있다.\n";
+		//      scale_type = "glossy black";
+        scale_type = "윤이나는 검정";
         have_any = true;
         break;
 
     case SP_YELLOW_DRACONIAN:
-        result += "You can spit globs of acid.\n";
-        result += "You can corrode armour when you spit acid.\n";
-        result += "You are resistant to acid.\n";
-        scale_type = "golden yellow";
+		//옐로드라코
+        //result += "You can spit globs of acid.\n";
+        //result += "You can corrode armour when you spit acid.\n";
+        //result += "You are resistant to acid.\n";
+        result += "당신은 산을 뱉을 수 있다..\n";
+        result += "당신은 산을 뱉어서 갑옷을 부식시킬 수 있다.\n";
+        result += "당신은 산에 대한 저항을 가지고 있다.\n";
+		//        scale_type = "golden yellow";
+        scale_type = "황금빛 노랑";
         have_any = true;
         break;
 
     case SP_PURPLE_DRACONIAN:
-        result += "You can breathe bolts of energy.\n";
-        result += "You can dispel enchantments when you breathe energy.\n";
-        scale_type = "rich purple";
+
+		//
+		//result += "You can breathe bolts of energy.\n";
+        //result += "You can dispel enchantments when you breathe energy.\n";
+        //scale_type = "rich purple";
+        result += "당신은 에너지볼트를 뱉을 수 있다.\n";
+        result += "당신은 당신의 에너지볼트로 걸려있는 마법을 해제할 수 있다.\n";
+        scale_type = "짙은 보라";
         have_any = true;
         break;
 
     case SP_MOTTLED_DRACONIAN:
-        result += "You can spit globs of burning liquid.\n";
-        result += "You can ignite nearby creatures when you spit burning liquid.\n";
-        scale_type = "weird mottled";
+
+        //result += "You can spit globs of burning liquid.\n";
+        //result += "You can ignite nearby creatures when you spit burning liquid.\n";
+        //scale_type = "weird mottled";
+        result += "당신은 불타는 액체를 뱉을 수 있다.\n";
+        result += "당신은 불타는 액체로 근처의 생명체에 불을 붙일 수 있다..\n";
+        scale_type = "기묘한 얼룩";
         have_any = true;
         break;
 
     case SP_PALE_DRACONIAN:
-        result += "You can breathe blasts of scalding steam.\n";
-        scale_type = "pale cyan-grey";
+
+        //result += "You can breathe blasts of scalding steam.\n";
+        //scale_type = "pale cyan-grey";
+
+        result += "당신은 뜨거운 증기를 뿜을 수 있다.\n";
+        scale_type = "옅은 남회색";
         have_any = true;
         break;
 
     case SP_KOBOLD:
-        result += "You recuperate from illness quickly.\n";
+		//코볼트 관련
+        //result += "You recuperate from illness quickly.\n";
+		result += "당신은 질병으로부터 빠르게 회복된다. .\n";
         have_any = true;
         break;
 
     case SP_VAMPIRE:
+		//뱀파이어 관련 
         have_any = true;
+//순서대로 저장
+            //result += "<green>You do not heal naturally.</green>\n";
+            //result += "<green>Your natural rate of healing is extremely fast.</green>\n";
+            //result += "<green>You heal slowly.</green>\n";
+            //result += "<green>Your natural rate of healing is unusually fast.</green>\n";
+
         if (you.hunger_state == HS_STARVING)
-            result += "<green>You do not heal naturally.</green>\n";
+            result += "<green>당신은 자연적으로 회복되지 않는다.</green>\n";
         else if (you.hunger_state == HS_ENGORGED)
-            result += "<green>Your natural rate of healing is extremely fast.</green>\n";
+            result += "<green>당신의 치유 속도는 매우 빠르다.</green>\n";
         else if (you.hunger_state < HS_SATIATED)
-            result += "<green>You heal slowly.</green>\n";
+            result += "<green>당신은 느리게 회복된다.</green>\n";
         else if (you.hunger_state >= HS_FULL)
-            result += "<green>Your natural rate of healing is unusually fast.</green>\n";
+            result += "<green>당신의 치유 속도는 비정상적으로 빠르다.</green>\n";
         else
             have_any = false;
 
         if (you.experience_level >= 6)
         {
-            result += "You can bottle blood from corpses.\n";
+			//   렙업하면 피를 병에 담을수 있다져         result += "You can bottle blood from corpses.\n";
+            result += "당신은 시체로부터 피가 담긴 병을 만들 수 있다.\n";
             have_any = true;
         }
         break;
 
+
+		//이젠 딥뒆
     case SP_DEEP_DWARF:
-        result += "You are resistant to damage.\n";
-        result += "You can recharge devices by infusing magical energy.\n";
+
+        //result += "You are resistant to damage.\n";
+        //result += "You can recharge devices by infusing magical energy.\n";
+
+        result += "당신은 모든 피해에 대한 저항력을 가지고 있다.\n";
+        result += "당신은 마법 에너지를 불어넣어 장치를 충전할 수 있다.\n";
         have_any = true;
         break;
 
+		//고양이
     case SP_FELID:
-        result += "You cannot wear armour.\n";
-        result += "You are incapable of any advanced item manipulation.\n";
-        result += "Your paws have sharp claws.\n";
+//        result += "You cannot wear armour.\n";
+  //      result += "You are incapable of any advanced item manipulation.\n";
+    //    result += "Your paws have sharp claws.\n";
+
+
+        result += "당신은 갑옷을 입을 수 없다.\n";
+        result += "당신은 어떠한 도구도 조작할 수 없다.\n";
+        result += "당신의 발들은 날카로운 발톱을 가지고 있다.\n";
         have_any = true;
         break;
 
+		//무너무너
     case SP_OCTOPODE:
-        result += "You cannot wear most types of armour.\n";
-        result += "You can wear up to eight rings at the same time.\n";
-        result += "You are amphibious.\n";
+
+		//result += "You cannot wear most types of armour.\n";
+        //result += "You can wear up to eight rings at the same time.\n";
+        //result += "You are amphibious.\n";
+		
+        result += "당신은 대부분의 갑옷을 입을 수 없다.\n";
+        result += "당신은 동시에 8개의 반지를 착용할 수 있다.\n";
+        result += "당신은 수륙양용이다.\n";
         have_any = true;
         break;
 
@@ -345,35 +442,44 @@ formatted_string describe_mutations()
         break;
     }
 
+	//이건 뭐지..
     switch (you.body_size(PSIZE_TORSO, true))
     {
     case SIZE_LITTLE:
         if (you.species == SP_FELID)
             break;
-        result += "You are tiny and cannot use many weapons and most armour.\n";
+
+		//보니까 고양이 아머 못낄때 뜨는 메시지 같네요
+		//result += "You are tiny and cannot use many weapons and most armour.\n";
+        result += "당신은 아주 작기에 많은 무기와 대부분의 갑옷을 사용할 수 없다.\n";
         have_any = true;
         break;
     case SIZE_SMALL:
-        result += "You are small and have problems with some larger weapons.\n";
+		//이건 그냥 체형이 작은 종족들인듯.
+		//result += "You are small and have problems with some larger weapons.\n";
+        result += "당신은 작아서 몇몇 거대한 무기들을 사용하는 데에 문제가 있다..\n";
         have_any = true;
         break;
     case SIZE_LARGE:
-        result += "You are too large for most types of armour.\n";
+		//      result += "You are too large for most types of armour.\n";
+        result += "당신은 대부분의 갑옷을 입기에는 너무 크다.\n";
         have_any = true;
         break;
     default:
         break;
     }
-
+//뭐지이건.. 드라코들의 방어 관련인가보군요
     if (player_genus(GENPC_DRACONIAN))
     {
         // Draconians are large for the purposes of armour, but only medium for
         // weapons and carrying capacity.
         std::ostringstream num;
         num << 3 + you.experience_level / 3;
-        result += "Your " + scale_type + " scales are hard (AC +" + num.str() + ").\n";
 
-        result += "Your body does not fit into most forms of armour.\n";
+		//        result += "Your " + scale_type + " scales are hard (AC +" + num.str() + ").\n";
+        result += "당신의 " + scale_type + " 비늘은 단단하다 (AC +" + num.str() + ").\n";
+//      result += "Your body does not fit into most forms of armour.\n";
+        result += "당신의 몸은 대부분의 갑옷에 맞지 않는다.\n";
         have_any = true;
     }
 
@@ -381,13 +487,16 @@ formatted_string describe_mutations()
 
     if (beogh_water_walk())
     {
-        result += "<green>You can walk on water.</green>\n";
+		//        result += "<green>You can walk on water.</green>\n";
+
+        result += "<green>당신은 물에서 걸을 수 있다.</green>\n";
         have_any = true;
     }
 
     if (you.duration[DUR_FIRE_SHIELD])
     {
-        result += "<green>You are immune to clouds of flame.</green>\n";
+		//        result += "<green>You are immune to clouds of flame.</green>\n";
+        result += "<green>당신은 화염의 구름에 면역인 상태이다.</green>\n";
         have_any = true;
     }
 
@@ -418,8 +527,13 @@ formatted_string describe_mutations()
     }
 
     if (!have_any)
-        result +=  "You are rather mundane.\n";
 
+		//여긴 변이가 아무것도 안걸린 상태입니다.
+        result +=  "당신은 상당히 재미없다.[변이가 걸려있는게 없습니다.]\n";
+		//result +=  "You are rather mundane.\n";
+
+
+	// 여긴 뭔지 모르겠네요 토글인가?뱀파관련?
     if (you.species == SP_VAMPIRE)
     {
         result += "\n\n";
@@ -429,14 +543,19 @@ formatted_string describe_mutations()
             "Press '<w>!</w>'"
 #else
             "<w>Right-click</w>"
-#endif
-            " to toggle between mutations and properties depending on your\n"
-            "hunger status.\n";
+#endif 
+            //" to toggle between mutations and properties depending on your\n"
+            //"hunger status.\n";
+			
+			" 당신의 변이 상태는 당신의\n"
+            "배고픈 상태에 따라 달라진다.\n";
     }
 
     return (formatted_string::parse_string(result));
 }
 
+
+// 디스플레이면 고쳐도 되는거 인거 같은데 음..
 static void _display_vampire_attributes()
 {
     ASSERT(you.species == SP_VAMPIRE);
@@ -446,44 +565,45 @@ static void _display_vampire_attributes()
 
     std::string result;
 
+	//화면에 표시되는 글자인듯 한데 일단은 다 변경시켜두어 보겠습니다.
     const int lines = 15;
     std::string column[lines][7] =
     {
-       {"                     ", "<lightgreen>Alive</lightgreen>      ", "<green>Full</green>    ",
-        "Satiated  ", "<yellow>Thirsty</yellow>  ", "<yellow>Near...</yellow>  ",
+       {"                     ", "<lightgreen>살아있는</lightgreen>      ", "<green>가득찬</green>    ",
+        "만족한  ", "<yellow>목마른</yellow>  ", "<yellow>아슬아슬한...</yellow>  ",
         "<lightred>Bloodless</lightred>"},
                                 //Alive          Full       Satiated      Thirsty   Near...      Bloodless
-       {"Metabolism           ", "very fast  ", "fast    ", "fast      ", "normal   ", "slow     ", "none  "},
+       {"신진대사             ", "매우 빠른  ", "빠른    ", "빠른      ", "보통     ", "느림     ", "없음  "},
 
-       {"Regeneration         ", "very fast  ", "fast    ", "normal    ", "slow     ", "slow     ", "none  "},
+       {"자연 치유력          ", "매우 빠른  ", "빠른    ", "보통      ", "느림     ", "느림     ", "없음  "},
 
-       {"Stealth boost        ", "none       ", "none    ", "none      ", "minor    ", "major    ", "large "},
+       {"추가 은신 보너스     ", "없음       ", "없음    ", "없음      ", "약간     ", "큰       ", "엄청난"},
 
-       {"Spell hunger         ", "full       ", "full    ", "full      ", "halved   ", "none     ", "none  "},
+       {"마법에 쓰이는 허기   ", "전부       ", "전부    ", "전부      ", "반절     ", "없음     ", "없음  "},
 
-       {"\n<w>Resistances</w>\n"
-        "Poison resistance    ", "           ", "        ", "          ", " +       ", " +       ", " +    "},
+       {"\n<w>저항</w>\n"
+        "독저항               ", "           ", "        ", "          ", " +       ", " +       ", " +    "},
 
-       {"Cold resistance      ", "           ", "        ", "          ", " +       ", " ++      ", " ++   "},
+       {"냉기 저항            ", "           ", "        ", "          ", " +       ", " ++      ", " ++   "},
 
-       {"Negative resistance  ", "           ", "        ", " +        ", " ++      ", " +++     ", " +++  "},
+       {"음에너지 저항        ", "           ", "        ", " +        ", " ++      ", " +++     ", " +++  "},
 
-       {"Rotting resistance   ", "           ", "        ", "          ", " +       ", " +       ", " +    "},
+       {"부패 저항            ", "           ", "        ", "          ", " +       ", " +       ", " +    "},
 
-       {"Torment resistance   ", "           ", "        ", "          ", "         ", "         ", " +    "},
+       {"고통 저항            ", "           ", "        ", "          ", "         ", "         ", " +    "},
 
-       {"\n<w>Other effects</w>\n"
-        "Mutation chance      ", "always     ", "often   ", "sometimes ", "never    ", "never    ", "never "},
+       {"\n<w>다른 효과들</w>\n"
+        "변이 기회            ", "항상       ", "자주    ", "가끔      ", "절대없음 ", "절대없음 ", "절대없음"},
 
-       {"Non-physical \n"
-        "mutation effects     ", "full       ", "capped  ", "capped    ", "none     ", "none     ", "none  "},
+       {"물리적이지 않은 \n"
+        "변이 효과들          ", "전부       ", "한정적인", "한정적인  ", "절대없음 ", "절대없음 ", "절대없음"},
 
-       {"Potion effects       ", "full       ", "full    ", "full      ", "halved   ", "halved   ", "halved"},
+       {"물약 효과            ", "그대로     ", "그대로  ", "그대로    ", "반절     ", "반절     ", "반절  "},
 
-       {"Bat Form             ", "no         ", "no      ", "yes       ", "yes      ", "yes      ", "yes   "},
+       {"박쥐 변신            ", "불가능     ", "불가능  ", "가능      ", "가능     ", "가능     ", "가능  "},
 
-       {"Other transformation \n"
-        "or going berserk     ", "yes        ", "yes     ", "no        ", "no       ", "no       ", "no    "}
+       {"다른 변신  \n"
+        "이나 광폭화 상태     ", "가능       ", "가능    ", "불가능    ", "불가능   ", "불가능   ", "불가능"}
     };
 
     int current = 0;
@@ -530,8 +650,11 @@ static void _display_vampire_attributes()
 #else
         "<w>Right-click</w>"
 #endif
-        " to toggle between mutations and properties depending on your\n"
-        "hunger status.\n";
+		//" to toggle between mutations and properties depending on your\n"
+        //"hunger status.\n";
+			" 당신의 변이 상태는 당신의\n"
+            "배고픈 상태에 따라 달라진다.\n";
+
 
     const formatted_string vp_props = formatted_string::parse_string(result);
     vp_props.display();
@@ -719,7 +842,8 @@ static bool _mut_matches_class(mutation_type mutclass, const mutation_def& mdef)
     case RANDOM_GOOD_MUTATION:
         return (!mdef.bad);
     default:
-        die("invalid mutation class: %d", mutclass);
+		// die("invalid mutation class: %d", mutclass);
+        die("인식 불가능한 변이 등급: %d", mutclass);
     }
 }
 
@@ -818,7 +942,9 @@ static int _handle_conflicting_mutations(mutation_type mutation,
                     delete_mutation(b, true, true);
                     return (1);     // Nothing more to do.
                 default:
-                    die("bad mutation conflict resulution");
+			//	die("bad mutation conflict resulution");
+					
+					die("나쁜 변이가 해결되었다");
                 }
             }
         }
@@ -1021,16 +1147,24 @@ bool mutate(mutation_type which_mutation, bool failMsg,
                     && !one_chance_in(3)))
             {
                 if (failMsg)
-                    mpr("You feel odd for a moment.", MSGCH_MUTATION);
+
+					// 변이 저항시에 뜨는 문구
+#ifdef JP
+					mpr("당신은 순간 이상한 느낌이 들었다.");
+#else
+				    mpr("You feel odd for a moment.", MSGCH_MUTATION);
+#endif
+
                 return (false);
             }
         }
 
-        // Zin's protection.
+        // Zin's protection. 진의 보호?
         if (you.religion == GOD_ZIN && x_chance_in_y(you.piety, MAX_PIETY)
             && !stat_gain_potion)
         {
-            simple_god_message(" protects your body from mutation!");
+			//simple_god_message(" protects your body from mutation!");
+            simple_god_message(" 당신의 몸을 변이로부터 지켜냈다!");
             return (false);
         }
     }
@@ -1064,12 +1198,22 @@ bool mutate(mutation_type which_mutation, bool failMsg,
 
     // Undead bodies don't mutate, they fall apart. -- bwr
     // except for demonspawn (or other permamutations) in lichform -- haranp
+	//언데드의 몸은 변이가 안걸림
+	//데몬스폰은 리치폼머시깅
     if (rotting && !demonspawn)
     {
+
+#ifdef JP
+        mpr("당신의 몸은 부패하였다!", MSGCH_MUTATION);
+#else
         mpr("Your body decomposes!", MSGCH_MUTATION);
+#endif
+
+
 
         if (coinflip())
-            lose_stat(STAT_RANDOM, 1, false, "mutating");
+			//            lose_stat(STAT_RANDOM, 1, false, "mutating");
+            lose_stat(STAT_RANDOM, 1, false, "돌연변이");
         else
         {
             ouch(3, NON_MONSTER, KILLED_BY_ROTTING, "mutation");
@@ -1193,9 +1337,11 @@ bool mutate(mutation_type which_mutation, bool failMsg,
     }
 
     // For all those scale mutations.
+
+	//  원문  notify_stat_change("gaining a mutation");
     you.redraw_armour_class = true;
 
-    notify_stat_change("gaining a mutation");
+    notify_stat_change("변이를 얻었다");
 
     if (gain_msg)
         mpr(mdef.gain[you.mutation[mutat]-1], MSGCH_MUTATION);
@@ -1295,11 +1441,13 @@ static bool _delete_single_mutation_level(mutation_type mutat)
     int slots = player_armour_slots();
     you.mutation[mutat]--;
 
+	//스위치 문이라서 밖에다 저장
+	//        mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, false));
     switch (mutat)
     {
     case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, false));
+        mprf(MSGCH_MUTATION, "당신은 %s을 느꼈다.", _stat_mut_desc(mutat, false));
         lose_msg = false;
         break;
 
@@ -1326,8 +1474,9 @@ static bool _delete_single_mutation_level(mutation_type mutat)
 
     // For all those scale mutations.
     you.redraw_armour_class = true;
-
-    notify_stat_change("losing a mutation");
+	
+	//    notify_stat_change("losing a mutation");
+    notify_stat_change("돌연변이를 잃어버렸다");
 
     if (lose_msg)
         mpr(mdef.lose[you.mutation[mutat]], MSGCH_MUTATION);
@@ -1367,6 +1516,8 @@ bool delete_mutation(mutation_type which_mutation, bool failMsg,
 
     mutation_type mutat = which_mutation;
 
+
+	
     if (!force_mutation)
     {
         if (!god_gift)
@@ -1376,7 +1527,11 @@ bool delete_mutation(mutation_type which_mutation, bool failMsg,
                     || coinflip()))
             {
                 if (failMsg)
+#ifdef JP
+					mpr("당신은 잠깐 이상함을 느꼈다.", MSGCH_MUTATION);
+#else
                     mpr("You feel rather odd for a moment.", MSGCH_MUTATION);
+#endif
                 return (false);
             }
         }
@@ -1798,6 +1953,7 @@ _schedule_ds_mutations(std::vector<mutation_type> muts)
             slots_left.push_back(level);
     }
 
+// 데몬스폰 변이 얻는 레벨
     while (!muts_left.empty())
     {
         if (x_chance_in_y(muts_left.size(), slots_left.size()))
@@ -1807,7 +1963,10 @@ _schedule_ds_mutations(std::vector<mutation_type> muts)
             dt.level_gained = slots_left.front();
             dt.mutation     = muts_left.front();
 
-            dprf("Demonspawn will gain %s at level %d",
+//            dprf("Demonspawn will gain %s at level %d",
+//            get_mutation_def(dt.mutation).wizname, dt.level_gained);
+
+            dprf("데몬스폰은 %d 레벨에 %s을 얻는다 ",
                     get_mutation_def(dt.mutation).wizname, dt.level_gained);
 
             out.push_back(dt);
@@ -1854,6 +2013,8 @@ bool perma_mutate(mutation_type which_mut, int how_much)
     return (levels > 0);
 }
 
+//변이 정도 관련? 인듯
+
 int how_mutated(bool all, bool levels)
 {
     int j = 0;
@@ -1880,7 +2041,7 @@ int how_mutated(bool all, bool levels)
                 j++;
         }
     }
-
+// 여긴 잘 모르니 놔둠..
     dprf("how_mutated(): all = %u, levels = %u, j = %d", all, levels, j);
 
     return (j);
@@ -1927,6 +2088,8 @@ bool balance_demonic_guardian()
 // will be made, if tension is below a threshold (determined by the mutations
 // level and a bit of randomness), guardians may be dismissed in
 // balance_demonic_guardian()
+
+//뭔고하니 위급상황에 나타나주는 악마 수호 똘마니들 인가보군요.
 void check_demonic_guardian()
 {
     const int mutlevel = player_mutation_level(MUT_DEMONIC_GUARDIAN);
@@ -1951,7 +2114,8 @@ void check_demonic_guardian()
                              MONS_SOUL_EATER, MONS_SUN_DEMON, -1);
             break;
         default:
-            die("Invalid demonic guardian level: %d", mutlevel);
+	      //die("Invalid demonic guardian level : %d", mutlevel);
+            die("병약한 악마 수호자의 레벨 : %d", mutlevel);
         }
 
         const int guardian = create_monster(mgen_data(mt, BEH_FRIENDLY, &you,
