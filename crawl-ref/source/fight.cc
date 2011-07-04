@@ -1494,7 +1494,7 @@ void melee_attack::player_announce_aux_hit()
     /// 첫번째에는 공격 이름 : kick, punch, headbutt 
     /// 두번째는 대상, 세번째는 디버깅 문자(평소엔 ""), 네번째는 느낌표.
     mprf(gettext("You %s %s%s%s"),
-         aux_verb.c_str(),
+         translate_verb(NULL, aux_verb.c_str()),
          defender->name(DESC_NOCAP_THE).c_str(),
          debug_damage_number().c_str(),
          attack_strength_punctuation().c_str());
@@ -1508,7 +1508,7 @@ void melee_attack::player_announce_hit()
     /// 1. 공격 이름 : slice, scratch, claw 등
     /// 2. 대상 3. 공격의 수식어 4. 디버그 메시지 5. 마침표.
     msg::stream << make_stringf(gettext("You %s %s%s%s%s")
-        ,attack_verb.c_str()
+        ,translate_verb(NULL, attack_verb.c_str())
         ,defender->name(DESC_NOCAP_THE).c_str()
         ,verb_degree.c_str()
         ,debug_damage_number().c_str()
@@ -2195,7 +2195,7 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
         {
             /// 1. 공격 동사 : slice, dice, punish, 2. 대상
             mprf(gettext("You %s %s, but do no damage."),
-                 attack_verb.c_str(),
+                 translate_verb(NULL, attack_verb.c_str()),
                  defender->name(DESC_NOCAP_THE).c_str());
         }
     }
@@ -5854,6 +5854,7 @@ void melee_attack::mons_perform_attack_rounds()
                 if (needs_message)
                 {
                     /// 대상, fail, 공격자
+                    /// 지금 뭔가 문제있는 코드임.
                     mprf(gettext("Helpless, %s %s to dodge %s attack."),
                          mons_defender_name().c_str(),
                          translate_verb(defender, N_("fail")),
