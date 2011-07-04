@@ -4933,146 +4933,146 @@ msgstr "당신의 공격은 %s가 순간적으로 사라짐에 따라 허공을 
 #: fight.cc:1878 fight.cc:1895 fight.cc:1903 fight.cc:1928 fight.cc:1936
 #: fight.cc:2065 fight.cc:1876 fight.cc:1893 fight.cc:1901 fight.cc:1926
 #: fight.cc:1934 fight.cc:2063
-msgid "hit"
-msgstr ""
+msgid "hit-verb"
+msgstr "공격했다"
 
 #: fight.cc:1880 fight.cc:1878
-msgid "clumsily bash"
-msgstr ""
+msgid "clumsily bash-verb"
+msgstr "서투르게 후려쳤다"
 
 #: fight.cc:1897 fight.cc:1940 fight.cc:1895 fight.cc:1938
-msgid "bite"
-msgstr ""
+msgid "bite-verb"
+msgstr "물었다"
 
 #: fight.cc:1899 fight.cc:1943 fight.cc:1897 fight.cc:1941
-msgid "maul"
-msgstr ""
+msgid "maul-verb"
+msgstr "찢어냈다"
 
 #: fight.cc:1905 fight.cc:1981 fight.cc:1903 fight.cc:1979
-msgid "slash"
-msgstr ""
+msgid "slash-verb"
+msgstr "베었다"
 
 #: fight.cc:1907 fight.cc:1983 fight.cc:3686 fight.cc:1905 fight.cc:1981
 #: fight.cc:3681
-msgid "slice"
-msgstr ""
+msgid "slice-verb"
+msgstr "토막냈다"
 
 #: fight.cc:1909 fight.cc:1907
-msgid "shred"
-msgstr ""
+msgid "shred-verb"
+msgstr "갈았다"
 
 #: fight.cc:1916 fight.cc:2033 fight.cc:1914 fight.cc:2031
-msgid "scratch"
-msgstr ""
+msgid "scratch-verb"
+msgstr "긁었다"
 
 #: fight.cc:1918 fight.cc:1938 fight.cc:2035 fight.cc:3679 fight.cc:1916
 #: fight.cc:1936 fight.cc:2033 fight.cc:3674
-msgid "claw"
-msgstr ""
+msgid "claw-verb"
+msgstr "할퀴었다"
 
 #: fight.cc:1920 fight.cc:2037 fight.cc:1918 fight.cc:2035
-msgid "mangle"
-msgstr ""
+msgid "mangle-verb"
+msgstr "짓이겼다"
 
 #: fight.cc:1922 fight.cc:2039 fight.cc:1920 fight.cc:2037
-msgid "eviscerate"
-msgstr ""
+msgid "eviscerate-verb"
+msgstr "탈장시켰다"
 
 #: fight.cc:1930 fight.cc:2057 fight.cc:1928 fight.cc:2055
-msgid "punch"
-msgstr ""
+msgid "punch-verb"
+msgstr "쳤다"
 
 #: fight.cc:1932 fight.cc:2059 fight.cc:1930 fight.cc:2057
-msgid "pummel"
-msgstr ""
+msgid "pummel-verb"
+msgstr "후려쳤다"
 
 #: fight.cc:1945 fight.cc:1943
-msgid "trample"
-msgstr ""
+msgid "trample-verb"
+msgstr "짓밟았다"
 
 #: fight.cc:1962 fight.cc:1960
-msgid "puncture"
-msgstr ""
+msgid "puncture-verb"
+msgstr "구멍냈다"
 
 #: fight.cc:1964 fight.cc:1962
-msgid "impale"
-msgstr ""
+msgid "impale-verb"
+msgstr "관통했다"
 
 #: fight.cc:1967 fight.cc:1965
-msgid "spit"
-msgstr ""
+msgid "spit-verb"
+msgstr "찔렀다"
 
 #: fight.cc:1972 fight.cc:1970
 msgid " like the proverbial pig"
-msgstr " 유명한 돼지처럼 "
+msgstr " 유명한 돼지처럼"
 
 #: fight.cc:1975 fight.cc:1973
 msgid " like a pig"
-msgstr " 돼지처럼 "
+msgstr " 돼지처럼"
 
 #: fight.cc:1986 fight.cc:1984
-msgid "dice"
-msgstr ""
+msgid "dice-verb"
+msgstr "토막냈다"
 
 #: fight.cc:1987 fight.cc:1985
 msgid " like an onion"
 msgstr " 양파처럼 "
 
 #: fight.cc:1991 fight.cc:1989
-msgid "open"
-msgstr ""
+msgid "open-verb"
+msgstr "열어젖혔다"
 
 #: fight.cc:1992 fight.cc:1990
 msgid " like a pillowcase"
 msgstr " 베갯속처럼 "
 
 #: fight.cc:1998 fight.cc:1996
-msgid "thump"
-msgstr ""
+msgid "thump-verb"
+msgstr "쾅 쳤다"
 
 #: fight.cc:1998 fight.cc:1996
-msgid "sock"
-msgstr ""
+msgid "sock-verb"
+msgstr "강타했다"
 
 #: fight.cc:2000 fight.cc:2047 fight.cc:1998 fight.cc:2045
-msgid "bludgeon"
-msgstr ""
+msgid "bludgeon-verb"
+msgstr "때려팼다"
 
 #: fight.cc:2003 fight.cc:2001
-msgid "crush"
-msgstr ""
+msgid "crush-verb"
+msgstr "으깼다"
 
 #: fight.cc:2004 fight.cc:2002
 msgid " like a grape"
 msgstr " 포도처럼 "
 
 #: fight.cc:2010 fight.cc:2008
-msgid "whack"
-msgstr ""
+msgid "whack-verb"
+msgstr "후려쳤다"
 
 #: fight.cc:2012 fight.cc:2051 fight.cc:2010 fight.cc:2049
-msgid "thrash"
-msgstr ""
+msgid "thrash-verb"
+msgstr "찰지구나"
 
 #: fight.cc:2020 fight.cc:2018
-msgid "punish"
-msgstr ""
+msgid "punish-verb"
+msgstr "처벌했다"
 
 #: fight.cc:2021 fight.cc:2019
 msgid " causing immense pain"
-msgstr " 강렬한 고통을 유발하며 "
+msgstr " 강렬한 고통을 유발시키며 "
 
 #: fight.cc:2024 fight.cc:2022
-msgid "devastate"
-msgstr ""
+msgid "devastate-verb"
+msgstr "파괴했다"
 
 #: fight.cc:2045 fight.cc:2043
-msgid "tentacle-slap"
-msgstr ""
+msgid "tentacle-slap-verb"
+msgstr "촉수로 갈겼다"
 
 #: fight.cc:2049 fight.cc:2047
-msgid "batter"
-msgstr ""
+msgid "batter-verb"
+msgstr "두들겼다"
 
 #: fight.cc:2131 fight.cc:3496 fight.cc:2129 fight.cc:3491
 msgid "You feel better."
@@ -5254,24 +5254,24 @@ msgid "%s is healed."
 msgstr "%s는 회복됐다."
 
 #: fight.cc:3679 fight.cc:3674
-msgid "rip"
-msgstr ""
+msgid "rip-verb"
+msgstr "떼어냈다"
 
 #: fight.cc:3679 fight.cc:3674
-msgid "tear"
-msgstr ""
+msgid "tear-verb"
+msgstr "찢었다"
 
 #: fight.cc:3686 fight.cc:3681
-msgid "lop"
-msgstr ""
+msgid "lop-verb"
+msgstr "잘랐다"
 
 #: fight.cc:3686 fight.cc:3681
-msgid "chop"
-msgstr ""
+msgid "chop-verb"
+msgstr "쪼갰다"
 
 #: fight.cc:3686 fight.cc:3681
-msgid "hack"
-msgstr ""
+msgid "hack-verb"
+msgstr "난도질했다"
 
 #. / 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
 #: fight.cc:3696 fight.cc:3691
@@ -5528,3 +5528,6 @@ msgstr "당신은 들키지 않은 채로 %s를 덮쳤다!"
 #, c-format
 msgid "%s fails to defend %s."
 msgstr "%s는 %s를 방어하는데 실패했다."
+
+msgid "block-verb"
+msgstr "막았다"

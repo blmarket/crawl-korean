@@ -208,7 +208,7 @@ ifeq ($(uname_S),Darwin)
 	endif
 endif
 ifdef USE_GETTEXT
-	DEFINES_L += -DUSE_GETTEXT
+	DEFINES_L += -DUSE_GETTEXT -DKR
 	EXTRA_LIBS += -lintl
 endif
 ifdef USE_LUAJIT

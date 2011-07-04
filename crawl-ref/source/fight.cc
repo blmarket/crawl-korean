@@ -1430,7 +1430,7 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
         /// 두번째에는 맞는 사람
         /// 세번째에는 ', but do no damage' 혹은 ''가 들어옵니다.
         mprf(gettext("You %s %s%s."),
-             gettext(aux_verb.c_str()),
+             translate_verb(NULL, aux_verb.c_str()),
              defender->name(DESC_NOCAP_THE).c_str(),
              you.can_see(defender) ? gettext(", but do no damage") : "");
     }
