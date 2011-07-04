@@ -4579,7 +4579,7 @@ msgstr "그러나 아무 일도 일어나지 않았다..."
 #. / 게리욘의 뿔피리이기때문에 지옥으로 가는길로 의역했습니다.
 #: evoke.cc:253
 msgid "Your way has been unbarred."
-msgstr "지옥으로 가는 길은 이미 열려있다."
+msgstr "지옥으로 가는 길이 열렸다."
 
 #: evoke.cc:257
 msgid "You produce a hideous howling noise!"
@@ -5401,7 +5401,7 @@ msgstr "%s(이)가 %s를 훔친다!"
 #: fight.cc:5167 fight.cc:5163
 #, c-format
 msgid "%s %s engulfed in flames%s"
-msgstr "%1$s는 화염으로 휩싸였다%3$s"
+msgstr "%1$s는 화염으로 휩싸였다%3$s\0%2$s"
 
 #. / 공격자, draws, 대상
 #: fight.cc:5244 fight.cc:5240
