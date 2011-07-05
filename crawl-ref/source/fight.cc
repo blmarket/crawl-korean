@@ -218,12 +218,12 @@ static bool player_fights_well_unarmed(int heavy_armour_penalty)
             && x_chance_in_y(2, 1 + heavy_armour_penalty));
 }
 
-static const char* translate_verb(actor *actor, const char * verb)
+static std::string translate_verb(actor *actor, const std::string &verb)
 {
 #ifndef KR
     return actor ? actor->conj_verb(verb).c_str() : verb;
 #endif
-    return gettext((std::string(verb) + "-verb").c_str());
+    return gettext((verb + "-verb").c_str());
 }
 
 unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
@@ -879,7 +879,7 @@ bool melee_attack::player_attack()
                 /// 두번째 %s에는 맞는 대상이 나옵니다.
                 /// 추천 번역문장 : "당신은 %$2s을(를) %$1s."
                 make_stringf(gettext("You %s %s."), 
-                            translate_verb(NULL, attack_verb.c_str()),
+                            translate_verb(NULL, attack_verb).c_str(),
                             defender->name(DESC_NOCAP_THE).c_str());
         }
         if (defender->props.exists("helpless"))
@@ -1430,7 +1430,7 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
         /// 두번째에는 맞는 사람
         /// 세번째에는 ', but do no damage' 혹은 ''가 들어옵니다.
         mprf(gettext("You %s %s%s."),
-             translate_verb(NULL, aux_verb.c_str()),
+             translate_verb(NULL, aux_verb).c_str(),
              defender->name(DESC_NOCAP_THE).c_str(),
              you.can_see(defender) ? gettext(", but do no damage") : "");
     }
@@ -1494,7 +1494,7 @@ void melee_attack::player_announce_aux_hit()
     /// 첫번째에는 공격 이름 : kick, punch, headbutt 
     /// 두번째는 대상, 세번째는 디버깅 문자(평소엔 ""), 네번째는 느낌표.
     mprf(gettext("You %s %s%s%s"),
-         translate_verb(NULL, aux_verb.c_str()),
+         translate_verb(NULL, aux_verb).c_str(),
          defender->name(DESC_NOCAP_THE).c_str(),
          debug_damage_number().c_str(),
          attack_strength_punctuation().c_str());
@@ -1508,7 +1508,7 @@ void melee_attack::player_announce_hit()
     /// 1. 공격 이름 : slice, scratch, claw 등
     /// 2. 대상 3. 공격의 수식어 4. 디버그 메시지 5. 마침표.
     msg::stream << make_stringf(gettext("You %s %s%s%s%s")
-        ,translate_verb(NULL, attack_verb.c_str())
+        ,translate_verb(NULL, attack_verb).c_str()
         ,defender->name(DESC_NOCAP_THE).c_str()
         ,verb_degree.c_str()
         ,debug_damage_number().c_str()
@@ -2195,7 +2195,7 @@ bool melee_attack::player_monattk_hit_effects(bool mondied)
         {
             /// 1. 공격 동사 : slice, dice, punish, 2. 대상
             mprf(gettext("You %s %s, but do no damage."),
-                 translate_verb(NULL, attack_verb.c_str()),
+                 translate_verb(NULL, attack_verb).c_str(),
                  defender->name(DESC_NOCAP_THE).c_str());
         }
     }
@@ -2370,7 +2370,7 @@ void melee_attack::calc_elemental_brand_damage(beam_type flavour,
             /// 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
             gettext("%s %s %s%s"),
             atk_name(DESC_CAP_THE).c_str(),
-            translate_verb(attacker, verb),
+            translate_verb(attacker, verb).c_str(),
             mons_defender_name().c_str(),
             special_attack_punctuation().c_str());
     }
@@ -2400,10 +2400,10 @@ void melee_attack::drain_defender()
         {
             special_damage_message =
                 make_stringf(
-                    /// 1. 공격자. 2. drain의 동사형. 그러므로 번역문에서는 생략해버립시다. 3. 대상
+                    /// 1. 공격자. 2. drain의 동사형. 3. 대상
                     gettext("%s %s %s!"),
                     atk_name(DESC_CAP_THE).c_str(),
-                    translate_verb(attacker, N_("drain")),
+                    translate_verb(attacker, N_("drain")).c_str(),
                     mons_defender_name().c_str());
         }
 
@@ -2444,7 +2444,7 @@ bool melee_attack::distortion_affects_defender()
                     /// 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
                     make_stringf(gettext("%s %s in the distortional energy."),
                                  def_name(DESC_CAP_THE).c_str(),
-                                 translate_verb(defender, N_("bask")));
+                                 translate_verb(defender, N_("bask")).c_str());
             }
 
             defender->heal(1 + random2avg(7, 2), true); // heh heh
@@ -2568,7 +2568,7 @@ void melee_attack::pain_affects_defender()
                 /// 1. 수비자. 2. writhe의 동사형.
                 make_stringf(gettext("%s %s in agony."),
                              defender->name(DESC_CAP_THE).c_str(),
-                             translate_verb(defender, N_("writhe")));
+                             translate_verb(defender, N_("writhe")).c_str());
         }
         special_damage += random2(1 + attacker->skill(SK_NECROMANCY));
     }
@@ -3716,7 +3716,7 @@ bool melee_attack::chop_hydra_head(int dam,
                 /// 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
                 mprf(gettext("%s %s %s's last head off!"),
                      atk_name(DESC_CAP_THE).c_str(),
-                     translate_verb(attacker, verb),
+                     translate_verb(attacker, verb).c_str(),
                      def_name(DESC_NOCAP_THE).c_str());
             }
             defender->as_monster()->number--;
@@ -3736,7 +3736,7 @@ bool melee_attack::chop_hydra_head(int dam,
                 /// 2. 공격명령의 동사형
                 mprf(gettext("%s %s one of %s's heads off!"),
                      atk_name(DESC_CAP_THE).c_str(),
-                     translate_verb(attacker, verb),
+                     translate_verb(attacker, verb).c_str(),
                      def_name(DESC_NOCAP_THE).c_str());
             }
             defender->as_monster()->number--;
@@ -4582,7 +4582,7 @@ bool melee_attack::attack_shield_blocked(bool verbose)
             /// 수비자, block, 공격자의 소유형
             mprf(gettext("%s %s %s attack."),
                  def_name(DESC_CAP_THE).c_str(),
-                 translate_verb(defender, N_("block")),
+                 translate_verb(defender, N_("block")).c_str(),
                  atk_name(DESC_NOCAP_ITS).c_str());
         }
 
@@ -4816,7 +4816,7 @@ void melee_attack::mons_announce_hit(const mon_attack_def &attk)
         /// 대충 1. 5. 2. 3. 4. 6. 정도로 배열하면 될 듯 합니다.
         mprf(gettext("%s %s %s%s%s%s"),
              atk_name(DESC_CAP_THE).c_str(),
-             translate_verb(attacker, mons_attack_verb(attk).c_str()),
+             translate_verb(attacker, mons_attack_verb(attk).c_str()).c_str(),
              mons_defender_name().c_str(),
              debug_damage_number().c_str(),
              mons_attack_desc(attk).c_str(),
@@ -4831,7 +4831,7 @@ void melee_attack::mons_announce_dud_hit(const mon_attack_def &attk)
         /// 1. 공격자 2. 동사 3. 대상
         mprf(gettext("%s %s %s but does no damage."),
              atk_name(DESC_CAP_THE).c_str(),
-             translate_verb(attacker, mons_attack_verb(attk).c_str()),
+             translate_verb(attacker, mons_attack_verb(attk).c_str()).c_str(),
              mons_defender_name().c_str());
     }
 }
@@ -5215,7 +5215,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, freeze의 동사, 대상, ./!
             mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("freeze")),
+                 translate_verb(attacker, N_("freeze")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
 
@@ -5242,7 +5242,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, shock의 동사, 대상, ./!
             mprf("%s %s %s%s",
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, "shock"),
+                 translate_verb(attacker, N_("shock")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
         }
@@ -5371,7 +5371,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, infuriate, 대상
             mprf(gettext("%s %s %s!"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("infuriate")),
+                 translate_verb(attacker, N_("infuriate")).c_str(),
                  mons_defender_name().c_str());
         }
 
@@ -5438,7 +5438,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, sear, 대상, ./!
             mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("sear")),
+                 translate_verb(attacker, N_("sear")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
 
@@ -5590,7 +5590,7 @@ bool melee_attack::do_trample()
             /// 대상, stumble
             mprf(gettext("%s %s backwards!"),
                  def_name(DESC_CAP_THE).c_str(),
-                 translate_verb(defender, N_("stumble")));
+                 translate_verb(defender, N_("stumble")).c_str());
         }
 
         if (defender->as_player())
@@ -5613,7 +5613,7 @@ bool melee_attack::do_trample()
         /// 대상, hold, its
         mprf("%s %s %s ground!",
              def_name(DESC_CAP_THE).c_str(),
-             translate_verb(defender, "hold"),
+             translate_verb(defender, N_("hold")).c_str(),
              defender->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str());
     }
 
@@ -5857,7 +5857,7 @@ void melee_attack::mons_perform_attack_rounds()
                     /// 지금 뭔가 문제있는 코드임.
                     mprf(gettext("Helpless, %s %s to dodge %s attack."),
                          mons_defender_name().c_str(),
-                         translate_verb(defender, N_("fail")),
+                         translate_verb(defender, N_("fail")).c_str(),
                          atk_name(DESC_NOCAP_ITS).c_str());
                 }
                 this_round_hit = true;
@@ -5870,7 +5870,7 @@ void melee_attack::mons_perform_attack_rounds()
                     mprf(gettext("%s momentarily %s out as %s "
                          "attack passes through %s%s"),
                          defender->name(DESC_CAP_THE).c_str(),
-                         translate_verb(defender, N_("phase")),
+                         translate_verb(defender, N_("phase")).c_str(),
                          atk_name(DESC_NOCAP_ITS).c_str(),
                          defender->pronoun(PRONOUN_OBJECTIVE).c_str(),
                          attack_strength_punctuation().c_str());

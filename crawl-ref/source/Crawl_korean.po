@@ -5456,7 +5456,7 @@ msgstr "%s는 뒤쪽으로 비틀거렸다!"
 #: fight.cc:5832 fight.cc:5827
 #, c-format
 msgid "Helpless, %s %s to dodge %s attack."
-msgstr "속수무책으로, %1$s는 %3$s의 공격을 피하지 못했다. %2$s"
+msgstr "속수무책으로, %1$s는 %3$s의 공격을 피하지 못했다."
 
 #. / 대상, phase, its, 공격자, ./!
 #: fight.cc:5844 fight.cc:5839
