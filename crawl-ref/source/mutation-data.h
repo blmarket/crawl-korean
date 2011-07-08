@@ -13,19 +13,19 @@
 #define MUTATION_DATA_H
 
 { MUT_TOUGH_SKIN,                0,  3, false,  true,
-  "tough skin",
+  N_("tough skin"),
 
-  {"You have tough skin (AC +1).",
-   "You have very tough skin (AC +2).",
-   "You have extremely tough skin (AC +3)."},
+  {N_("You have tough skin (AC +1)."),
+   N_("You have very tough skin (AC +2)."),
+   N_("You have extremely tough skin (AC +3).")},
 
-  {"Your skin toughens.",
-   "Your skin toughens.",
-   "Your skin toughens."},
+  {N_("Your skin toughens."),
+   N_("Your skin toughens."),
+   N_("Your skin toughens.")},
 
-  {"Your skin feels delicate.",
-   "Your skin feels delicate.",
-   "Your skin feels delicate."},
+  {N_("Your skin feels delicate."),
+   N_("Your skin feels delicate."),
+   N_("Your skin feels delicate.")},
 
   "tough skin"
 },
@@ -33,7 +33,7 @@
 { MUT_STRONG,                     8, 14, false,  true,
   NULL,
 
-  {"Your muscles are strong (Str +", "", ""},
+  {N_("Your muscles are strong (Str +"), "", ""},
   {"", "", ""},
   {"", "", ""},
 
@@ -43,7 +43,7 @@
 { MUT_CLEVER,                     8, 14, false,  true,
   NULL,
 
-  {"Your mind is acute (Int +", "", ""},
+  {N_("Your mind is acute (Int +"), "", ""},
   {"", "", ""},
   {"", "", ""},
 
@@ -53,7 +53,7 @@
 { MUT_AGILE,                      8, 14, false,  true,
   NULL,
 
-  {"You are agile (Dex +", "", ""},
+  {N_("You are agile (Dex +"), "", ""},
   {"", "", ""},
   {"", "", ""},
 
@@ -61,165 +61,165 @@
 },
 
 { MUT_POISON_RESISTANCE,          4,  1, false, false,
-  "poison resistance",
+  N_("poison resistance"),
 
-  {"Your system is resistant to poisons.", "", ""},
-  {"You feel healthy.", "",  ""},
-  {"You feel a little less healthy.", "", ""},
+  {N_("Your system is resistant to poisons."), "", ""},
+  {N_("You feel healthy."), "",  ""},
+  {N_("You feel a little less healthy."), "", ""},
 
   "poison resistance"
 },
 
 { MUT_CARNIVOROUS,                5,  3, false, false,
-  "carnivore",
+  N_("carnivore"),
 
-  {"Your digestive system is specialised to digest meat.",
-   "Your digestive system is highly specialised to digest meat.",
-   "You are carnivorous and can eat meat at any time."},
+  {N_("Your digestive system is specialised to digest meat."),
+   N_("Your digestive system is highly specialised to digest meat."),
+   N_("You are carnivorous and can eat meat at any time.")},
 
-  {"You hunger for flesh.",
-   "You hunger for flesh.",
-   "You hunger for flesh."},
+  {N_("You hunger for flesh."),
+   N_("You hunger for flesh."),
+   N_("You hunger for flesh.")},
 
-  {"You feel able to eat a more balanced diet.",
-   "You feel able to eat a more balanced diet.",
-   "You feel able to eat a more balanced diet."},
+  {N_("You feel able to eat a more balanced diet."),
+   N_("You feel able to eat a more balanced diet."),
+   N_("You feel able to eat a more balanced diet.")},
 
   "carnivorous"
 },
 
 { MUT_HERBIVOROUS,                5,  3,  true, false,
-  "herbivore",
+  N_("herbivore"),
 
-  {"You digest meat inefficiently.",
-   "You digest meat very inefficiently.",
-   "You are a herbivore."},
+  {N_("You digest meat inefficiently."),
+   N_("You digest meat very inefficiently."),
+   N_("You are a herbivore.")},
 
-  {"You hunger for vegetation.",
-   "You hunger for vegetation.",
-   "You hunger for vegetation."},
+  {N_("You hunger for vegetation."),
+   N_("You hunger for vegetation."),
+   N_("You hunger for vegetation.")},
 
-  {"You feel able to eat a more balanced diet.",
-   "You feel able to eat a more balanced diet.",
-   "You feel able to eat a more balanced diet."},
+  {N_("You feel able to eat a more balanced diet."),
+   N_("You feel able to eat a more balanced diet."),
+   N_("You feel able to eat a more balanced diet.")},
 
   "herbivorous"
 },
 
 { MUT_HEAT_RESISTANCE,            4,  3, false, false,
-  "fire resistance",
+  N_("fire resistance"),
 
-  {"Your flesh is heat resistant.",
-   "Your flesh is very heat resistant.",
-   "Your flesh is almost immune to the effects of heat."},
+  {N_("Your flesh is heat resistant."),
+   N_("Your flesh is very heat resistant."),
+   N_("Your flesh is almost immune to the effects of heat.")},
 
-  {"You feel a sudden chill.",
-   "You feel a sudden chill.",
-   "You feel a sudden chill."},
+  {N_("You feel a sudden chill."),
+   N_("You feel a sudden chill."),
+   N_("You feel a sudden chill.")},
 
-  {"You feel hot for a moment.",
-   "You feel hot for a moment.",
-   "You feel hot for a moment."},
+  {N_("You feel hot for a moment."),
+   N_("You feel hot for a moment."),
+   N_("You feel hot for a moment.")},
 
   "heat resistance"
 },
 
 { MUT_COLD_RESISTANCE,            4,  3, false, false,
-  "cold resistance",
+  N_("cold resistance"),
 
-  {"Your flesh is cold resistant.",
-   "Your flesh is very cold resistant.",
-   "Your flesh is almost immune to the effects of cold."},
+  {N_("Your flesh is cold resistant."),
+   N_("Your flesh is very cold resistant."),
+   N_("Your flesh is almost immune to the effects of cold.")},
 
-  {"You feel hot for a moment.",
-   "You feel hot for a moment.",
-   "You feel hot for a moment."},
+  {N_("You feel hot for a moment."),
+   N_("You feel hot for a moment."),
+   N_("You feel hot for a moment.")},
 
-  {"You feel a sudden chill.",
-   "You feel a sudden chill.",
-   "You feel a sudden chill."},
+  {N_("You feel a sudden chill."),
+   N_("You feel a sudden chill."),
+   N_("You feel a sudden chill.")},
 
   "cold resistance"
 },
 
 { MUT_DEMONIC_GUARDIAN,            0,  3, false, false,
-  "demonic guardian",
+  N_("demonic guardian"),
 
-  {"A weak demonic guardian rushes to your aid.",
-   "A demonic guardian rushes to your aid.",
-   "A powerful demonic guardian rushes to your aid."},
+  {N_("A weak demonic guardian rushes to your aid."),
+   N_("A demonic guardian rushes to your aid."),
+   N_("A powerful demonic guardian rushes to your aid.")},
 
-  {"You feel the presence of a demonic guardian.",
-   "Your guardian grows in power.",
-   "Your guardian grows in power."},
+  {N_("You feel the presence of a demonic guardian."),
+   N_("Your guardian grows in power."),
+   N_("Your guardian grows in power.")},
 
-  {"Your demonic guardian is gone.",
-   "Your demonic guardian is weakened.",
-   "Your demonic guardian is weakened."},
+  {N_("Your demonic guardian is gone."),
+   N_("Your demonic guardian is weakened."),
+   N_("Your demonic guardian is weakened.")},
 
   "demonic guardian"
 },
 
 { MUT_SHOCK_RESISTANCE,           2,  1, false, false,
-  "electricity resistance",
+  N_("electricity resistance"),
 
-  {"You are resistant to electric shocks.", "", ""},
-  {"You feel insulated.", "", ""},
-  {"You feel conductive.", "", ""},
+  {N_("You are resistant to electric shocks."), "", ""},
+  {N_("You feel insulated."), "", ""},
+  {N_("You feel conductive."), "", ""},
 
   "shock resistance"
 },
 
 { MUT_REGENERATION,               3,  3, false, false,
-  "regeneration",
+  N_("regeneration"),
 
-  {"Your natural rate of healing is unusually fast.",
-   "You heal very quickly.",
-   "You regenerate."},
+  {N_("Your natural rate of healing is unusually fast."),
+   N_("You heal very quickly."),
+   N_("You regenerate.")},
 
-  {"You begin to heal more quickly.",
-   "You begin to heal more quickly.",
-   "You begin to regenerate."},
+  {N_("You begin to heal more quickly."),
+   N_("You begin to heal more quickly."),
+   N_("You begin to regenerate.")},
 
-  {"Your rate of healing slows.",
-   "Your rate of healing slows.",
-   "Your rate of healing slows."},
+  {N_("Your rate of healing slows."),
+   N_("Your rate of healing slows."),
+   N_("Your rate of healing slows.")},
 
   "regeneration"
 },
 
 { MUT_SLOW_HEALING,               3,  3,  true, false,
-  "slow healing",
+  N_("slow healing"),
 
-  {"You heal slowly.",
-   "You heal very slowly.",
-   "You do not heal naturally."},
+  {N_("You heal slowly."),
+   N_("You heal very slowly."),
+   N_("You do not heal naturally.")},
 
-  {"You begin to heal more slowly.",
-   "You begin to heal more slowly.",
-   "You stop healing."},
+  {N_("You begin to heal more slowly."),
+   N_("You begin to heal more slowly."),
+   N_("You stop healing.")},
 
-  {"Your rate of healing increases.",
-   "Your rate of healing increases.",
-   "Your rate of healing increases."},
+  {N_("Your rate of healing increases."),
+   N_("Your rate of healing increases."),
+   N_("Your rate of healing increases.")},
 
   "slow healing"
 },
 
 { MUT_FAST_METABOLISM,           10,  3,  true, false,
-  "fast metabolism",
+  N_("fast metabolism"),
 
-  {"You have a fast metabolism.",
-   "You have a very fast metabolism.",
-   "Your metabolism is lightning-fast."},
+  {N_("You have a fast metabolism."),
+   N_("You have a very fast metabolism."),
+   N_("Your metabolism is lightning-fast.")},
 
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
-   "You feel a little hungry."},
+  {N_("You feel a little hungry."),
+   N_("You feel a little hungry."),
+   N_("You feel a little hungry.")},
 
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
-   "Your metabolism slows."},
+  {N_("Your metabolism slows."),
+   N_("Your metabolism slows."),
+   N_("Your metabolism slows.")},
 
   "fast metabolism"
 },
@@ -244,7 +244,7 @@
 
 { MUT_WEAK,                      10, 14,  true,  true,
   NULL,
-  {"You are weak (Str -", "", ""},
+  {N_("You are weak (Str -"), "", ""},
   {"", "", ""},
   {"", "", ""},
   "weak"
@@ -252,7 +252,7 @@
 
 { MUT_DOPEY,                     10, 14,  true,  true,
   NULL,
-  {"You are dopey (Int -", "", ""},
+  {N_("You are dopey (Int -"), "", ""},
   {"", "", ""},
   {"", "", ""},
   "dopey",
@@ -260,196 +260,196 @@
 
 { MUT_CLUMSY,                    10, 14,  true,  true,
   NULL,
-  {"You are clumsy (Dex -", "", ""},
+  {N_("You are clumsy (Dex -"), "", ""},
   {"", "", ""},
   {"", "", ""},
   "clumsy"
 },
 
 { MUT_TELEPORT_CONTROL,           2,  1, false, false,
-  "teleport control",
+  N_("teleport control"),
 
-  {"You can control translocations.", "", ""},
-  {"You feel controlled.", "", ""},
-  {"You feel random.", "", ""},
+  {N_("You can control translocations."), "", ""},
+  {N_("You feel controlled."), "", ""},
+  {N_("You feel random."), "", ""},
 
   "teleport control"
 },
 
 { MUT_TELEPORT,                   3,  3,  true, false,
-  "teleportitis",
+  N_("teleportitis"),
 
-  {"Space occasionally distorts in your vicinity.",
-   "Space sometimes distorts in your vicinity.",
-   "Space frequently distorts in your vicinity."},
+  {N_("Space occasionally distorts in your vicinity."),
+   N_("Space sometimes distorts in your vicinity."),
+   N_("Space frequently distorts in your vicinity.")},
 
-  {"You feel weirdly uncertain.",
-   "You feel even more weirdly uncertain.",
-   "You feel even more weirdly uncertain."},
+  {N_("You feel weirdly uncertain."),
+   N_("You feel even more weirdly uncertain."),
+   N_("You feel even more weirdly uncertain.")},
 
-  {"You feel stable.",
-   "You feel stable.",
-   "You feel stable."},
+  {N_("You feel stable."),
+   N_("You feel stable."),
+   N_("You feel stable.")},
 
   "teleport"
 },
 
 { MUT_MAGIC_RESISTANCE,           5,  3, false, false,
-  "magic resistance",
+  N_("magic resistance"),
 
-  {"You are resistant to hostile enchantments.",
-   "You are highly resistant to hostile enchantments.",
-   "You are extremely resistant to the effects of hostile enchantments."},
+  {N_("You are resistant to hostile enchantments."),
+   N_("You are highly resistant to hostile enchantments."),
+   N_("You are extremely resistant to the effects of hostile enchantments.")},
 
-  {"You feel resistant to hostile enchantments.",
-   "You feel more resistant to hostile enchantments.",
-   "You feel almost impervious to the effects of hostile enchantments."},
+  {N_("You feel resistant to hostile enchantments."),
+   N_("You feel more resistant to hostile enchantments."),
+   N_("You feel almost impervious to the effects of hostile enchantments.")},
 
-  {"You feel less resistant to hostile enchantments.",
-   "You feel less resistant to hostile enchantments.",
-   "You feel vulnerable to magic hostile enchantments."},
+  {N_("You feel less resistant to hostile enchantments."),
+   N_("You feel less resistant to hostile enchantments."),
+   N_("You feel vulnerable to magic hostile enchantments.")},
 
   "magic resistance"
 },
 
 { MUT_FAST,                       1,  3, false, false,
-  "speed",
+  N_("speed"),
 
-  {"You cover ground quickly.",
-   "You cover ground very quickly.",
-   "You cover ground extremely quickly."},
+  {N_("You cover ground quickly."),
+   N_("You cover ground very quickly."),
+   N_("You cover ground extremely quickly.")},
 
-  {"You feel quick.",
-   "You feel quick.",
-   "You feel quick."},
+  {N_("You feel quick."),
+   N_("You feel quick."),
+   N_("You feel quick.")},
 
-  {"You feel sluggish.",
-   "You feel sluggish.",
-   "You feel sluggish."},
+  {N_("You feel sluggish."),
+   N_("You feel sluggish."),
+   N_("You feel sluggish.")},
 
   "fast"
 },
 
 { MUT_SLOW,                       3,  3, true, false,
-  "slowness",
+  N_("slowness"),
 
-  {"You cover ground slowly.",
-   "You cover ground very slowly.",
-   "You cover ground extremely slowly."},
+  {N_("You cover ground slowly."),
+   N_("You cover ground very slowly."),
+   N_("You cover ground extremely slowly.")},
 
-  {"You feel sluggish.",
-   "You feel sluggish.",
-   "You feel sluggish."},
+  {N_("You feel sluggish."),
+   N_("You feel sluggish."),
+   N_("You feel sluggish.")},
 
-  {"You feel quick.",
-   "You feel quick.",
-   "You feel quick."},
+  {N_("You feel quick."),
+   N_("You feel quick."),
+   N_("You feel quick.")},
 
   "slow"
 },
 
 { MUT_ACUTE_VISION,               2,  1, false, false,
-  "see invisible",
+  N_("see invisible"),
 
-  {"You have supernaturally acute eyesight.", "", ""},
+  {N_("You have supernaturally acute eyesight."), "", ""},
 
-  {"Your vision sharpens.",
-   "Your vision sharpens.",
-   "Your vision sharpens."},
+  {N_("Your vision sharpens."),
+   N_("Your vision sharpens."),
+   N_("Your vision sharpens.")},
 
-  {"Your vision seems duller.",
-   "Your vision seems duller.",
-   "Your vision seems duller."},
+  {N_("Your vision seems duller."),
+   N_("Your vision seems duller."),
+   N_("Your vision seems duller.")},
 
   "acute vision"
 },
 
 { MUT_DEFORMED,                   8,  3,  true,  true,
-  "deformed body",
+  N_("deformed body"),
 
-  {"Armour fits poorly on your unusually shaped body.",
-   "Armour fits poorly on your deformed body.",
-   "Armour fits poorly on your badly deformed body."},
+  {N_("Armour fits poorly on your unusually shaped body."),
+   N_("Armour fits poorly on your deformed body."),
+   N_("Armour fits poorly on your badly deformed body.")},
 
-  {"Your body twists unusually.",
-   "Your body twists and deforms.",
-   "Your body twists and deforms."},
+  {N_("Your body twists unusually."),
+   N_("Your body twists and deforms."),
+   N_("Your body twists and deforms.")},
 
-  {"Your body's shape seems more normal.",
-   "Your body's shape seems slightly more normal.",
-   "Your body's shape seems slightly more normal."},
+  {N_("Your body's shape seems more normal."),
+   N_("Your body's shape seems slightly more normal."),
+   N_("Your body's shape seems slightly more normal.")},
 
   "deformed"
 },
 
 { MUT_TELEPORT_AT_WILL,           0,  3, false, false,
-  "teleport at will",
+  N_("teleport at will"),
 
-  {"You can teleport at will.",
-   "You are good at teleporting at will.",
-   "You can teleport instantly at will."},
+  {N_("You can teleport at will."),
+   N_("You are good at teleporting at will."),
+   N_("You can teleport instantly at will.")},
 
-  {"You feel jumpy.",
-   "You feel more jumpy.",
-   "You feel even more jumpy."},
+  {N_("You feel jumpy."),
+   N_("You feel more jumpy."),
+   N_("You feel even more jumpy.")},
 
-  {"You feel a little less jumpy.",
-   "You feel less jumpy.",
-   "You feel less jumpy."},
+  {N_("You feel a little less jumpy."),
+   N_("You feel less jumpy."),
+   N_("You feel less jumpy.")},
 
   "teleport at will"
 },
 
 { MUT_SPIT_POISON,                8,  3, false, false,
-  "spit poison",
+  N_("spit poison"),
 
-  {"You can spit poison.",
-   "You can spit moderately strong poison.",
-   "You can spit strong poison."},
+  {N_("You can spit poison."),
+   N_("You can spit moderately strong poison."),
+   N_("You can spit strong poison.")},
 
-  {"There is a nasty taste in your mouth for a moment.",
-   "There is a nasty taste in your mouth for a moment.",
-   "There is a nasty taste in your mouth for a moment."},
+  {N_("There is a nasty taste in your mouth for a moment."),
+   N_("There is a nasty taste in your mouth for a moment."),
+   N_("There is a nasty taste in your mouth for a moment.")},
 
-  {"You feel an ache in your throat.",
-   "You feel an ache in your throat.",
-   "You feel an ache in your throat."},
+  {N_("You feel an ache in your throat."),
+   N_("You feel an ache in your throat."),
+   N_("You feel an ache in your throat.")},
 
   "spit poison"
 },
 
 { MUT_BREATHE_FLAMES,             4,  3, false, false,
-  "breathe flames",
+  N_("breathe flames"),
 
-  {"You can breathe flames.",
-   "You can breathe fire.",
-   "You can breathe blasts of fire."},
+  {N_("You can breathe flames."),
+   N_("You can breathe fire."),
+   N_("You can breathe blasts of fire.")},
 
-  {"Your throat feels hot.",
-   "Your throat feels hot.",
-   "Your throat feels hot."},
+  {N_("Your throat feels hot."),
+   N_("Your throat feels hot."),
+   N_("Your throat feels hot.")},
 
-  {"A chill runs up and down your throat.",
-   "A chill runs up and down your throat.",
-   "A chill runs up and down your throat."},
+  {N_("A chill runs up and down your throat."),
+   N_("A chill runs up and down your throat."),
+   N_("A chill runs up and down your throat.")},
 
   "breathe flames"
 },
 
 { MUT_BLINK,                      3,  3, false, false,
-  "blink",
+  N_("blink"),
 
-  {"You can translocate small distances at will.",
-   "You are good at translocating small distances at will.",
-   "You can translocate small distances instantaneously."},
+  {N_("You can translocate small distances at will."),
+   N_("You are good at translocating small distances at will."),
+   N_("You can translocate small distances instantaneously.")},
 
-  {"You feel jittery.",
-   "You feel more jittery.",
-   "You feel even more jittery."},
+  {N_("You feel jittery."),
+   N_("You feel more jittery."),
+   N_("You feel even more jittery.")},
 
-  {"You feel a little less jittery.",
-   "You feel less jittery.",
-   "You feel less jittery."},
+  {N_("You feel a little less jittery."),
+   N_("You feel less jittery."),
+   N_("You feel less jittery.")},
 
   "blink"
 },
@@ -457,17 +457,17 @@
 { MUT_STRONG_STIFF,              10,  3, false,  true,
   NULL,
 
-  {"Your muscles are strong, but stiff (Str +1, Dex -1).",
-   "Your muscles are very strong, but stiff (Str +2, Dex -2).",
-   "Your muscles are extremely strong, but stiff (Str +3, Dex -3)."},
+  {N_("Your muscles are strong, but stiff (Str +1, Dex -1)."),
+   N_("Your muscles are very strong, but stiff (Str +2, Dex -2)."),
+   N_("Your muscles are extremely strong, but stiff (Str +3, Dex -3).")},
 
-  {"Your muscles feel sore.",
-   "Your muscles feel sore.",
-   "Your muscles feel sore."},
+  {N_("Your muscles feel sore."),
+   N_("Your muscles feel sore."),
+   N_("Your muscles feel sore.")},
 
-  {"Your muscles feel loose.",
-   "Your muscles feel loose.",
-   "Your muscles feel loose."},
+  {N_("Your muscles feel loose."),
+   N_("Your muscles feel loose."),
+   N_("Your muscles feel loose.")},
 
   "strong stiff"
 },
@@ -475,117 +475,117 @@
 { MUT_FLEXIBLE_WEAK,             10,  3, false,  true,
   NULL,
 
-  {"Your muscles are flexible, but weak (Str -1, Dex +1).",
-   "Your muscles are very flexible, but weak (Str -2, Dex +2).",
-   "Your muscles are extremely flexible, but weak (Str -3, Dex +3)."},
+  {N_("Your muscles are flexible, but weak (Str -1, Dex +1)."),
+   N_("Your muscles are very flexible, but weak (Str -2, Dex +2)."),
+   N_("Your muscles are extremely flexible, but weak (Str -3, Dex +3).")},
 
-  {"Your muscles feel loose.",
-   "Your muscles feel loose.",
-   "Your muscles feel loose."},
+  {N_("Your muscles feel loose."),
+   N_("Your muscles feel loose."),
+   N_("Your muscles feel loose.")},
 
-  {"Your muscles feel sore.",
-   "Your muscles feel sore.",
-   "Your muscles feel sore."},
+  {N_("Your muscles feel sore."),
+   N_("Your muscles feel sore."),
+   N_("Your muscles feel sore.")},
 
   "flexible weak"
 },
 
 { MUT_SCREAM,                     6,  3,  true, false,
-  "screaming",
+  N_("screaming"),
 
-  {"You occasionally shout uncontrollably.",
-   "You sometimes yell uncontrollably.",
-   "You frequently scream uncontrollably."},
+  {N_("You occasionally shout uncontrollably."),
+   N_("You sometimes yell uncontrollably."),
+   N_("You frequently scream uncontrollably.")},
 
-  {"You feel the urge to shout.",
-   "You feel a strong urge to yell.",
-   "You feel a strong urge to scream."},
+  {N_("You feel the urge to shout."),
+   N_("You feel a strong urge to yell."),
+   N_("You feel a strong urge to scream.")},
 
-  {"Your urge to shout disappears.",
-   "Your urge to yell lessens.",
-   "Your urge to scream lessens."},
+  {N_("Your urge to shout disappears."),
+   N_("Your urge to yell lessens."),
+   N_("Your urge to scream lessens.")},
 
   "scream"
 },
 
 { MUT_CLARITY,                    6,  1, false, false,
-  "clarity",
+  N_("clarity"),
 
-  {"You possess an exceptional clarity of mind.", "", ""},
-  {"Your thoughts seem clearer.", "", ""},
-  {"Your thinking seems confused.", "", ""},
+  {N_("You possess an exceptional clarity of mind."), "", ""},
+  {N_("Your thoughts seem clearer."), "", ""},
+  {N_("Your thinking seems confused."), "", ""},
 
   "clarity"
 },
 
 { MUT_BERSERK,                    7,  3,  true, false,
-  "berserk",
+  N_("berserk"),
 
-  {"You tend to lose your temper in combat.",
-   "You often lose your temper in combat.",
-   "You have an uncontrollable temper."},
+  {N_("You tend to lose your temper in combat."),
+   N_("You often lose your temper in combat."),
+   N_("You have an uncontrollable temper.")},
 
-  {"You feel a little pissed off.",
-   "You feel angry.",
-   "You feel extremely angry at everything!"},
+  {N_("You feel a little pissed off."),
+   N_("You feel angry."),
+   N_("You feel extremely angry at everything!")},
 
-  {"You feel a little more calm.",
-   "You feel a little less angry.",
-   "You feel a little less angry."},
+  {N_("You feel a little more calm."),
+   N_("You feel a little less angry."),
+   N_("You feel a little less angry.")},
 
   "berserk"
 },
 
 { MUT_DETERIORATION,             10,  3,  true, false,
-  "deterioration",
+  N_("deterioration"),
 
-  {"Your body is slowly deteriorating.",
-   "Your body is deteriorating.",
-   "Your body is rapidly deteriorating."},
+  {N_("Your body is slowly deteriorating."),
+   N_("Your body is deteriorating."),
+   N_("Your body is rapidly deteriorating.")},
 
-  {"You feel yourself wasting away.",
-   "You feel yourself wasting away.",
-   "You feel your body start to fall apart."},
+  {N_("You feel yourself wasting away."),
+   N_("You feel yourself wasting away."),
+   N_("You feel your body start to fall apart.")},
 
-  {"You feel healthier.",
-   "You feel a little healthier.",
-   "You feel a little healthier."},
+  {N_("You feel healthier."),
+   N_("You feel a little healthier."),
+   N_("You feel a little healthier.")},
 
   "deterioration"
 },
 
 { MUT_BLURRY_VISION,             10,  3,  true, false,
-  "blurry vision",
+  N_("blurry vision"),
 
-  {"Your vision is a little blurry.",
-   "Your vision is quite blurry.",
-   "Your vision is extremely blurry."},
+  {N_("Your vision is a little blurry."),
+   N_("Your vision is quite blurry."),
+   N_("Your vision is extremely blurry.")},
 
-  {"Your vision blurs.",
-   "Your vision blurs.",
-   "Your vision blurs."},
+  {N_("Your vision blurs."),
+   N_("Your vision blurs."),
+   N_("Your vision blurs.")},
 
-  {"Your vision sharpens.",
-   "Your vision sharpens a little.",
-   "Your vision sharpens a little."},
+  {N_("Your vision sharpens."),
+   N_("Your vision sharpens a little."),
+   N_("Your vision sharpens a little.")},
 
   "blurry vision"
 },
 
 { MUT_MUTATION_RESISTANCE,        4,  3, false, false,
-  "mutation resistance",
+  N_("mutation resistance"),
 
-  {"You are somewhat resistant to further mutation.",
-   "You are somewhat resistant to both further mutation and mutation removal.",
-   "Your current mutations are irrevocably fixed, and you can mutate no more."},
+  {N_("You are somewhat resistant to further mutation."),
+   N_("You are somewhat resistant to both further mutation and mutation removal."),
+   N_("Your current mutations are irrevocably fixed, and you can mutate no more.")},
 
-  {"You feel genetically stable.",
-   "You feel genetically stable.",
-   "You feel genetically immutable."},
+  {N_("You feel genetically stable."),
+   N_("You feel genetically stable."),
+   N_("You feel genetically immutable.")},
 
-  {"You feel genetically unstable.",
-   "You feel genetically unstable.",
-   "You feel genetically unstable."},
+  {N_("You feel genetically unstable."),
+   N_("You feel genetically unstable."),
+   N_("You feel genetically unstable.")},
 
   "mutation resistance"
 },
@@ -593,17 +593,17 @@
 { MUT_FRAIL,                     10,  3,  true,  true,
   NULL,
 
-  {"You are frail (-10% HP).",
-   "You are very frail (-20% HP).",
-   "You are extremely frail (-30% HP)."},
+  {N_("You are frail (-10% HP)."),
+   N_("You are very frail (-20% HP)."),
+   N_("You are extremely frail (-30% HP).")},
 
-  {"You feel frail.",
-   "You feel frail.",
-   "You feel frail."},
+  {N_("You feel frail."),
+   N_("You feel frail."),
+   N_("You feel frail.")},
 
-  {"You feel robust.",
-   "You feel robust.",
-   "You feel robust."},
+  {N_("You feel robust."),
+   N_("You feel robust."),
+   N_("You feel robust.")},
 
   "frail"
 },
@@ -611,51 +611,51 @@
 { MUT_ROBUST,                     5,  3, false,  true,
   NULL,
 
-  {"You are robust (+10% HP).",
-   "You are very robust (+20% HP).",
-   "You are extremely robust (+30% HP)."},
+  {N_("You are robust (+10% HP)."),
+   N_("You are very robust (+20% HP)."),
+   N_("You are extremely robust (+30% HP).")},
 
-  {"You feel robust.",
-   "You feel robust.",
-   "You feel robust."},
+  {N_("You feel robust."),
+   N_("You feel robust."),
+   N_("You feel robust.")},
 
-  {"You feel frail.",
-   "You feel frail.",
-   "You feel frail."},
+  {N_("You feel frail."),
+   N_("You feel frail."),
+   N_("You feel frail.")},
 
   "robust"
 },
 
 { MUT_UNBREATHING,                0,  1, false, false,
-  "unbreathing",
+  N_("unbreathing"),
 
-  {"You do not need to breathe.", "", ""},
-  {"You feel breathless.", "", ""},
+  {N_("You do not need to breathe."), "", ""},
+  {N_("You feel breathless."), "", ""},
   {"", "", ""},
 
   "unbreathing"
 },
 
 { MUT_TORMENT_RESISTANCE,         0,  1, false, false,
-  "torment resistance",
+  N_("torment resistance"),
 
-  {"You are immune to unholy pain and torment.", "", ""},
-  {"You feel a strange anaesthesia.", "", ""},
+  {N_("You are immune to unholy pain and torment."), "", ""},
+  {N_("You feel a strange anaesthesia."), "", ""},
   {"", "", ""},
 
   "torment resistance"
 },
 
 { MUT_NEGATIVE_ENERGY_RESISTANCE, 0,  3, false, false,
-  "life protection",
+  N_("life protection"),
 
-  {"You resist negative energy.",
-   "You are quite resistant to negative energy.",
-   "You are immune to negative energy."},
+  {N_("You resist negative energy."),
+   N_("You are quite resistant to negative energy."),
+   N_("You are immune to negative energy.")},
 
-  {"You feel negative.",
-   "You feel negative.",
-   "You feel negative."},
+  {N_("You feel negative."),
+   N_("You feel negative."),
+   N_("You feel negative.")},
 
   {"", "", ""},
 
@@ -663,30 +663,30 @@
 },
 
 { MUT_HURL_HELLFIRE,              0,  1, false, false,
-  "hurl hellfire",
+  N_("hurl hellfire"),
 
-  {"You can hurl blasts of hellfire.", "", ""},
-  {"You smell fire and brimstone.", "", ""},
+  {N_("You can hurl blasts of hellfire."), "", ""},
+  {N_("You smell fire and brimstone."), "", ""},
   {"", "", ""},
 
   "hurl hellfire"
 },
 
 { MUT_THROW_FLAMES,               0,  1, false, false,
-  "throw flames of Gehenna",
+  N_("throw flames of Gehenna"),
 
-  {"You can throw forth the flames of Gehenna.", "", ""},
-  {"You smell the fires of Gehenna.", "", ""},
+  {N_("You can throw forth the flames of Gehenna."), "", ""},
+  {N_("You smell the fires of Gehenna."), "", ""},
   {"", "", ""},
 
   "throw flames"
 },
 
 { MUT_THROW_FROST,                0,  1, false, false,
-  "throw frost of Cocytus",
+  N_("throw frost of Cocytus"),
 
-  {"You can throw forth the frost of Cocytus.", "", ""},
-  {"You feel the icy cold of Cocytus chill your soul.", "", ""},
+  {N_("You can throw forth the frost of Cocytus."), "", ""},
+  {N_("You feel the icy cold of Cocytus chill your soul."), "", ""},
   {"", "", ""},
 
   "throw frost"
@@ -694,189 +694,189 @@
 
 // body-slot facets
 { MUT_HORNS,                      7,  3, false,  true,
-  "horns",
+  N_("horns"),
 
-  {"You have a pair of small horns on your head.",
-   "You have a pair of horns on your head.",
-   "You have a pair of large horns on your head."},
+  {N_("You have a pair of small horns on your head."),
+   N_("You have a pair of horns on your head."),
+   N_("You have a pair of large horns on your head.")},
 
-  {"A pair of horns grows on your head!",
-   "The horns on your head grow some more.",
-   "The horns on your head grow some more."},
+  {N_("A pair of horns grows on your head!"),
+   N_("The horns on your head grow some more."),
+   N_("The horns on your head grow some more.")},
 
-  {"The horns on your head shrink away.",
-   "The horns on your head shrink a bit.",
-   "The horns on your head shrink a bit."},
+  {N_("The horns on your head shrink away."),
+   N_("The horns on your head shrink a bit."),
+   N_("The horns on your head shrink a bit.")},
 
   "horns"
 },
 
 { MUT_BEAK,                       1,  1, false,  true,
-  "beak",
+  N_("beak"),
 
-  {"You have a beak for a mouth.", "", ""},
-  {"Your mouth lengthens and hardens into a beak!", "", ""},
-  {"Your beak shortens and softens into a mouth.", "", ""},
+  {N_("You have a beak for a mouth."), "", ""},
+  {N_("Your mouth lengthens and hardens into a beak!"), "", ""},
+  {N_("Your beak shortens and softens into a mouth."), "", ""},
 
   "beak"
 },
 
 { MUT_CLAWS,                      2,  3, false,  true,
-  "claws",
+  N_("claws"),
 
-  {"You have sharp fingernails.",
-   "You have very sharp fingernails.",
-   "You have claws for hands."},
+  {N_("You have sharp fingernails."),
+   N_("You have very sharp fingernails."),
+   N_("You have claws for hands.")},
 
-  {"Your fingernails lengthen.",
-   "Your fingernails sharpen.",
-   "Your hands twist into claws."},
+  {N_("Your fingernails lengthen."),
+   N_("Your fingernails sharpen."),
+   N_("Your hands twist into claws.")},
 
-  {"Your fingernails shrink to normal size.",
-   "Your fingernails look duller.",
-   "Your hands feel fleshier."},
+  {N_("Your fingernails shrink to normal size."),
+   N_("Your fingernails look duller."),
+   N_("Your hands feel fleshier.")},
 
   "claws"
 },
 
 { MUT_FANGS,                      1,  3, false,  true,
-  "fangs",
+  N_("fangs"),
 
-  {"You have very sharp teeth.",
-   "You have extremely sharp teeth.",
-   "You have razor-sharp teeth."},
+  {N_("You have very sharp teeth."),
+   N_("You have extremely sharp teeth."),
+   N_("You have razor-sharp teeth.")},
 
-  {"Your teeth lengthen and sharpen.",
-   "Your teeth lengthen and sharpen some more.",
-   "Your teeth are very long and razor-sharp."},
+  {N_("Your teeth lengthen and sharpen."),
+   N_("Your teeth lengthen and sharpen some more."),
+   N_("Your teeth are very long and razor-sharp.")},
 
-  {"Your teeth shrink to normal size.",
-   "Your teeth shrink and become duller.",
-   "Your teeth shrink and become duller."},
+  {N_("Your teeth shrink to normal size."),
+   N_("Your teeth shrink and become duller."),
+   N_("Your teeth shrink and become duller.")},
 
   "fangs"
 },
 
 { MUT_HOOVES,                     5,  3, false,  true,
-  "hooves",
+  N_("hooves"),
 
-  {"You have large cloven feet.",
-   "You have hoof-like feet.",
-   "You have hooves in place of feet."},
+  {N_("You have large cloven feet."),
+   N_("You have hoof-like feet."),
+   N_("You have hooves in place of feet.")},
 
-  {"Your feet thicken and deform.",
-   "Your feet thicken and deform.",
-   "Your feet have mutated into hooves."},
+  {N_("Your feet thicken and deform."),
+   N_("Your feet thicken and deform."),
+   N_("Your feet have mutated into hooves.")},
 
-  {"Your hooves expand and flesh out into feet!",
-   "Your hooves look more like feet.",
-   "Your hooves look more like feet."},
+  {N_("Your hooves expand and flesh out into feet!"),
+   N_("Your hooves look more like feet."),
+   N_("Your hooves look more like feet.")},
 
   "hooves"
 },
 
 { MUT_ANTENNAE,                   4,  3, false,  true,
-  "antennae",
+  N_("antennae"),
 
-  {"You have a pair of small antennae on your head.",
-   "You have a pair of antennae on your head.",
-   "You have a pair of large antennae on your head (SInv)."},
+  {N_("You have a pair of small antennae on your head."),
+   N_("You have a pair of antennae on your head."),
+   N_("You have a pair of large antennae on your head (SInv).")},
 
-  {"A pair of antennae grows on your head!",
-   "The antennae on your head grow some more.",
-   "The antennae on your head grow some more."},
+  {N_("A pair of antennae grows on your head!"),
+   N_("The antennae on your head grow some more."),
+   N_("The antennae on your head grow some more.")},
 
-  {"The antennae on your head shrink away.",
-   "The antennae on your head shrink a bit.",
-   "The antennae on your head shrink a bit."},
+  {N_("The antennae on your head shrink away."),
+   N_("The antennae on your head shrink a bit."),
+   N_("The antennae on your head shrink a bit.")},
 
   "antennae"
 },
 
 { MUT_TALONS,                     5,  3, false,  true,
-  "talons",
+  N_("talons"),
 
-  {"You have sharp toenails.",
-   "You have razor-sharp toenails.",
-   "You have claws for feet."},
+  {N_("You have sharp toenails."),
+   N_("You have razor-sharp toenails."),
+   N_("You have claws for feet.")},
 
-  {"Your toenails lengthen and sharpen.",
-   "Your toenails lengthen and sharpen.",
-   "Your feet stretch into talons."},
+  {N_("Your toenails lengthen and sharpen."),
+   N_("Your toenails lengthen and sharpen."),
+   N_("Your feet stretch into talons.")},
 
-  {"Your talons dull and shrink into feet.",
-   "Your talons look more like feet.",
-   "Your talons look more like feet."},
+  {N_("Your talons dull and shrink into feet."),
+   N_("Your talons look more like feet."),
+   N_("Your talons look more like feet.")},
 
   "talons"
 },
 
 { MUT_TENTACLES,                 0,  3, false, true,
-  "tentacles",
+  N_("tentacles"),
 
-  {"You have a mass of small tentacles instead of fingers.",
-   "You have a mass of tentacles instead of hands.",
-   "You have a mass of large tentacles instead of arms."},
+  {N_("You have a mass of small tentacles instead of fingers."),
+   N_("You have a mass of tentacles instead of hands."),
+   N_("You have a mass of large tentacles instead of arms.")},
 
-  {"Your fingers turn into small tentacles.",
-   "Your hands turn into tentacles.",
-   "Your arms turn into large tentacles."},
+  {N_("Your fingers turn into small tentacles."),
+   N_("Your hands turn into tentacles."),
+   N_("Your arms turn into large tentacles.")},
 
-  {"Your fingers look less like tentacles.",
-   "Your hands look less like tentacles.",
-   "Your arms look less like tentacles."},
+  {N_("Your fingers look less like tentacles."),
+   N_("Your hands look less like tentacles."),
+   N_("Your arms look less like tentacles.")},
 
    "tentacles"
 },
 
 // Naga only
 { MUT_BREATHE_POISON,             0,  1, false, false,
-  "breathe poison",
+  N_("breathe poison"),
 
-  {"You can exhale a cloud of poison.", "", ""},
-  {"You taste something nasty.", "", ""},
-  {"Your breath is less nasty.", "", ""},
+  {N_("You can exhale a cloud of poison."), "", ""},
+  {N_("You taste something nasty."), "", ""},
+  {N_("Your breath is less nasty."), "", ""},
 
   "breathe poison"
 },
 
 // Naga and Draconian only
 { MUT_STINGER,                    0,  3, false,  true,
-  "stinger",
+  N_("stinger"),
 
-  {"Your tail ends in a poisonous barb.",
-   "Your tail ends in a sharp poisonous barb.",
-   "Your tail ends in a wickedly sharp and poisonous barb."},
+  {N_("Your tail ends in a poisonous barb."),
+   N_("Your tail ends in a sharp poisonous barb."),
+   N_("Your tail ends in a wickedly sharp and poisonous barb.")},
 
-  {"A poisonous barb forms on the end of your tail.",
-   "The barb on your tail looks sharper.",
-   "The barb on your tail looks very sharp."},
+  {N_("A poisonous barb forms on the end of your tail."),
+   N_("The barb on your tail looks sharper."),
+   N_("The barb on your tail looks very sharp.")},
 
-  {"The barb on your tail disappears.",
-   "The barb on your tail seems less sharp.",
-   "The barb on your tail seems less sharp."},
+  {N_("The barb on your tail disappears."),
+   N_("The barb on your tail seems less sharp."),
+   N_("The barb on your tail seems less sharp.")},
 
   "stinger"
 },
 
 // Draconian only
 { MUT_BIG_WINGS,                  0,  1, false,  true,
-  "large and strong wings",
+  N_("large and strong wings"),
 
-  {"Your wings are large and strong.", "", ""},
-  {"Your wings grow larger and stronger.", "", ""},
-  {"Your wings shrivel and weaken.", "", ""},
+  {N_("Your wings are large and strong."), "", ""},
+  {N_("Your wings grow larger and stronger."), "", ""},
+  {N_("Your wings shrivel and weaken."), "", ""},
 
   "big wings"
 },
 
 // species-dependent innate mutations
 { MUT_SAPROVOROUS,                0,  3, false, false,
-  "saprovore",
+  N_("saprovore"),
 
-  {"You can tolerate rotten meat.",
-   "You can eat rotten meat.",
-   "You thrive on rotten meat."},
+  {N_("You can tolerate rotten meat."),
+   N_("You can eat rotten meat."),
+   N_("You thrive on rotten meat.")},
   {"", "", ""},
   {"", "", ""},
 
@@ -884,9 +884,9 @@
 },
 
 { MUT_GOURMAND,                   0,  1, false, false,
-  "gourmand",
+  N_("gourmand"),
 
-  {"You like to eat raw meat.", "", ""},
+  {N_("You like to eat raw meat."), "", ""},
   {"", "", ""},
   {"", "", ""},
 
@@ -896,17 +896,17 @@
 { MUT_SHAGGY_FUR,                 2,  3, false,  true,
   NULL,
 
-  {"You are covered in fur (AC +1).",
-   "You are covered in thick fur (AC +2).",
-   "Your thick and shaggy fur keeps you warm (AC +3, rC+)."},
+  {N_("You are covered in fur (AC +1)."),
+   N_("You are covered in thick fur (AC +2)."),
+   N_("Your thick and shaggy fur keeps you warm (AC +3, rC+).")},
 
-  {"Fur sprouts all over your body.",
-   "Your fur grows into a thick mane.",
-   "Your thick fur grows shaggy and warm."},
+  {N_("Fur sprouts all over your body."),
+   N_("Your fur grows into a thick mane."),
+   N_("Your thick fur grows shaggy and warm.")},
 
-  {"You shed all your fur.",
-   "Your thick fur recedes somewhat.",
-   "Your shaggy fur recedes somewhat."},
+  {N_("You shed all your fur."),
+   N_("Your thick fur recedes somewhat."),
+   N_("Your shaggy fur recedes somewhat.")},
 
   "shaggy fur"
 },
@@ -914,17 +914,17 @@
 { MUT_HIGH_MAGIC,                 2,  3, false, false,
   NULL,
 
-  {"You have an increased reservoir of magic (+10% MP).",
-   "You have a considerably increased reservoir of magic (+20% MP).",
-   "You have a greatly increased reservoir of magic (+30% MP)."},
+  {N_("You have an increased reservoir of magic (+10% MP)."),
+   N_("You have a considerably increased reservoir of magic (+20% MP)."),
+   N_("You have a greatly increased reservoir of magic (+30% MP).")},
 
-  {"You feel more energetic.",
-   "You feel more energetic.",
-   "You feel more energetic."},
+  {N_("You feel more energetic."),
+   N_("You feel more energetic."),
+   N_("You feel more energetic.")},
 
-  {"You feel less energetic.",
-   "You feel less energetic.",
-   "You feel less energetic."},
+  {N_("You feel less energetic."),
+   N_("You feel less energetic."),
+   N_("You feel less energetic.")},
 
   "high mp"
 },
@@ -932,17 +932,17 @@
 { MUT_LOW_MAGIC,                  9,  3,  true, false,
   NULL,
 
-  {"Your magical capacity is low (-10% MP).",
-   "Your magical capacity is very low (-20% MP).",
-   "Your magical capacity is extremely low (-30% MP)."},
+  {N_("Your magical capacity is low (-10% MP)."),
+   N_("Your magical capacity is very low (-20% MP)."),
+   N_("Your magical capacity is extremely low (-30% MP).")},
 
-  {"You feel less energetic.",
-   "You feel less energetic.",
-   "You feel less energetic."},
+  {N_("You feel less energetic."),
+   N_("You feel less energetic."),
+   N_("You feel less energetic.")},
 
-  {"You feel more energetic.",
-   "You feel more energetic.",
-   "You feel more energetic."},
+  {N_("You feel more energetic."),
+   N_("You feel more energetic."),
+   N_("You feel more energetic.")},
 
   "low mp"
 },
@@ -950,13 +950,13 @@
 { MUT_STOCHASTIC_TORMENT_RESISTANCE, 0,  3, false, false,
   NULL,
 
-  {"You are somewhat able to resist unholy torments (1 in 5 success).",
-   "You are decently able to resist unholy torments (2 in 5 success).",
-   "You are rather able to resist unholy torments (3 in 5 success)."},
+  {N_("You are somewhat able to resist unholy torments (1 in 5 success)."),
+   N_("You are decently able to resist unholy torments (2 in 5 success)."),
+   N_("You are rather able to resist unholy torments (3 in 5 success).")},
 
-  {"You feel a slight anaesthesia.",
-   "You feel a slight anaesthesia.",
-   "You feel a strange anaesthesia."},
+  {N_("You feel a slight anaesthesia."),
+   N_("You feel a slight anaesthesia."),
+   N_("You feel a strange anaesthesia.")},
 
   {"","",""},
 
@@ -964,19 +964,19 @@
 },
 
 { MUT_PASSIVE_MAPPING,            3,  3, false, false,
-  "sense surroundings",
+  N_("sense surroundings"),
 
-  {"You passively map a small area around you.",
-   "You passively map the area around you.",
-   "You passively map a large area around you."},
+  {N_("You passively map a small area around you."),
+   N_("You passively map the area around you."),
+   N_("You passively map a large area around you.")},
 
-  {"You feel a strange attunement to the structure of the dungeons.",
-   "Your attunement to dungeon structure grows.",
-   "Your attunement to dungeon structure grows further."},
+  {N_("You feel a strange attunement to the structure of the dungeons."),
+   N_("Your attunement to dungeon structure grows."),
+   N_("Your attunement to dungeon structure grows further.")},
 
-  {"You feel slightly disoriented.",
-   "You feel slightly disoriented.",
-   "You feel slightly disoriented."},
+  {N_("You feel slightly disoriented."),
+   N_("You feel slightly disoriented."),
+   N_("You feel slightly disoriented.")},
 
   "passive mapping"
 },
@@ -984,106 +984,106 @@
 { MUT_ICEMAIL,                    0,  1, false, false,
   NULL,
 
-  {"A meltable icy envelope protects you from harm and freezing vapours (AC +", "", ""},
-  {"An icy envelope takes form around you.", "", ""},
+  {N_("A meltable icy envelope protects you from harm and freezing vapours (AC +"), "", ""},
+  {N_("An icy envelope takes form around you."), "", ""},
   {"", "", ""},
 
   "icemail"
 },
 
 { MUT_CONSERVE_SCROLLS,           0,  1, false, false,
-  "conserve scrolls",
+  N_("conserve scrolls"),
 
-  {"You are very good at protecting items from fire.", "", ""},
-  {"You feel less concerned about heat.", "", ""},
+  {N_("You are very good at protecting items from fire."), "", ""},
+  {N_("You feel less concerned about heat."), "", ""},
   {"", "", ""},
 
-  "conserve scrolls",
+  N_("conserve scrolls"),
 },
 
 { MUT_CONSERVE_POTIONS,           0,  1, false, false,
-  "conserve potions",
+  N_("conserve potions"),
 
-  {"You are very good at protecting items from cold.", "", ""},
-  {"You feel less concerned about cold.", "", ""},
+  {N_("You are very good at protecting items from cold."), "", ""},
+  {N_("You feel less concerned about cold."), "", ""},
   {"", "", ""},
-  "conserve potions",
+  N_("conserve potions"),
 },
 
 { MUT_PASSIVE_FREEZE,             0,  1, false, false,
-  "passive freeze",
+  N_("passive freeze"),
 
-  {"A frigid envelope surrounds you and freezes all who hurt you.", "", ""},
-  {"Your skin feels very cold.", "", ""},
+  {N_("A frigid envelope surrounds you and freezes all who hurt you."), "", ""},
+  {N_("Your skin feels very cold."), "", ""},
   {"", "", ""},
 
-  "passive freeze",
+  N_("passive freeze"),
 },
 
 { MUT_NIGHTSTALKER,               0,  3, false, true,
-  "nightstalker",
+  N_("nightstalker"),
 
-  {"You are slightly more attuned to the shadows.",
-   "You are significantly more attuned to the shadows.",
-   "You are completely attuned to the shadows."},
+  {N_("You are slightly more attuned to the shadows."),
+   N_("You are significantly more attuned to the shadows."),
+   N_("You are completely attuned to the shadows.")},
 
-  {"You slip into the darkness of the dungeon.",
-   "You slip further into the darkness.",
-   "You are surrounded by darkness."},
+  {N_("You slip into the darkness of the dungeon."),
+   N_("You slip further into the darkness."),
+   N_("You are surrounded by darkness.")},
 
-  {"Your affinity for the darkness vanishes.",
-   "Your affinity for the darkness weakens.",
-   "Your affinity for the darkness weakens."},
+  {N_("Your affinity for the darkness vanishes."),
+   N_("Your affinity for the darkness weakens."),
+   N_("Your affinity for the darkness weakens.")},
 
   "nightstalker"
 },
 
 { MUT_SPINY,                      0,  3, false, true,
-  "spiny",
+  N_("spiny"),
 
-  {"You are partially covered in sharp spines.",
-   "You are mostly covered in sharp spines.",
-   "You are completely covered in sharp spines."},
+  {N_("You are partially covered in sharp spines."),
+   N_("You are mostly covered in sharp spines."),
+   N_("You are completely covered in sharp spines.")},
 
-  {"Sharp spines emerge from parts of your body.",
-   "Sharp spines emerge from more of your body.",
-   "Sharp spines emerge from your entire body."},
+  {N_("Sharp spines emerge from parts of your body."),
+   N_("Sharp spines emerge from more of your body."),
+   N_("Sharp spines emerge from your entire body.")},
 
-  {"Your sharp spines disappear entirely.",
-   "Your sharp spines retract somewhat.",
-   "Your sharp spines retract somewhat."},
+  {N_("Your sharp spines disappear entirely."),
+   N_("Your sharp spines retract somewhat."),
+   N_("Your sharp spines retract somewhat.")},
 
   "spiny"
 },
 
 { MUT_POWERED_BY_DEATH,           0,  3, false, false,
-  "powered by death",
+  N_("powered by death"),
 
-  {"You can steal the life force of nearby defeated enemies.",
-   "You can steal the life force of defeated enemies.",
-   "You can steal the life force of all defeated enemies in sight."},
+  {N_("You can steal the life force of nearby defeated enemies."),
+   N_("You can steal the life force of defeated enemies."),
+   N_("You can steal the life force of all defeated enemies in sight.")},
 
-  {"A wave of death washes over you.",
-   "The wave of death grows in power.",
-   "The wave of death grows in power."},
+  {N_("A wave of death washes over you."),
+   N_("The wave of death grows in power."),
+   N_("The wave of death grows in power.")},
 
-  {"Your control of surrounding life forces is gone.",
-   "Your control of surrounding life forces weakens.",
-   "Your control of surrounding life forces weakens."},
+  {N_("Your control of surrounding life forces is gone."),
+   N_("Your control of surrounding life forces weakens."),
+   N_("Your control of surrounding life forces weakens.")},
 
   "powered by death"
 },
 
 { MUT_POWERED_BY_PAIN,            0,  3, false, false,
-  "powered by pain",
+  N_("powered by pain"),
 
-  {"You sometimes regain a little magical energy from taking damage.",
-   "You sometimes regain magical energy from taking damage.",
-   "You sometimes regain a lot of magical energy from taking damage."},
+  {N_("You sometimes regain a little magical energy from taking damage."),
+   N_("You sometimes regain magical energy from taking damage."),
+   N_("You sometimes regain a lot of magical energy from taking damage.")},
 
-  {"You feel energised by your suffering.",
-   "You feel even more energised by your suffering.",
-   "You feel completely energised by your suffering."},
+  {N_("You feel energised by your suffering."),
+   N_("You feel even more energised by your suffering."),
+   N_("You feel completely energised by your suffering.")},
 
   {"", "", ""},
 
@@ -1094,17 +1094,17 @@
 { MUT_GELATINOUS_BODY,            0,  3, false, true,
   NULL,
 
-  {"Your rubbery body absorbs attacks (AC +1).",
-   "Your pliable body absorbs attacks (AC +1, EV +1).",
-   "Your gelatinous body deflects attacks (AC +2, EV +2)."},
+  {N_("Your rubbery body absorbs attacks (AC +1)."),
+   N_("Your pliable body absorbs attacks (AC +1, EV +1)."),
+   N_("Your gelatinous body deflects attacks (AC +2, EV +2).")},
 
-   {"Your body becomes stretchy.",
-    "Your body becomes more malleable.",
-    "Your body becomes viscous."},
+   {N_("Your body becomes stretchy."),
+    N_("Your body becomes more malleable."),
+    N_("Your body becomes viscous.")},
 
-   {"Your body returns to its normal consistency.",
-    "Your body becomes less viscous.",
-    "Your body becomes less viscous."},
+   {N_("Your body returns to its normal consistency."),
+    N_("Your body becomes less viscous."),
+    N_("Your body becomes less viscous.")},
 
     "gelatinous body"
 },
@@ -1112,73 +1112,73 @@
 { MUT_EYEBALLS,                   0,  3, false, true,
   NULL,
 
-  {"Your body is partially covered in golden eyeballs (Acc +3).",
-   "Your body is mostly covered in golden eyeballs (Acc +5).",
-   "Your body is completely covered in golden eyeballs (Acc +7, SInv)."},
+  {N_("Your body is partially covered in golden eyeballs (Acc +3)."),
+   N_("Your body is mostly covered in golden eyeballs (Acc +5)."),
+   N_("Your body is completely covered in golden eyeballs (Acc +7, SInv).")},
 
-   {"Eyeballs grow over part of your body.",
-    "Eyeballs cover a large portion of your body.",
-    "Eyeballs cover you completely."},
+   {N_("Eyeballs grow over part of your body."),
+    N_("Eyeballs cover a large portion of your body."),
+    N_("Eyeballs cover you completely.")},
 
-   {"The eyeballs on your body disappear.",
-    "The eyeballs on your body recede somewhat.",
-    "The eyeballs on your body recede somewhat."},
+   {N_("The eyeballs on your body disappear."),
+    N_("The eyeballs on your body recede somewhat."),
+    N_("The eyeballs on your body recede somewhat.")},
 
     "eyeballs"
 },
 
 { MUT_TRANSLUCENT_SKIN,           0,  3, false, true,
-  "translucent skin",
+  N_("translucent skin"),
 
-  {"Your skin is partially translucent.",
-   "Your skin is mostly translucent (Stlth).",
-   "Your transparent skin reduces the accuracy of your foes (Stlth)."},
+  {N_("Your skin is partially translucent."),
+   N_("Your skin is mostly translucent (Stlth)."),
+   N_("Your transparent skin reduces the accuracy of your foes (Stlth).")},
 
-  {"Your skin becomes partially translucent.",
-   "Your skin becomes more translucent.",
-   "Your skin becomes completely transparent."},
+  {N_("Your skin becomes partially translucent."),
+   N_("Your skin becomes more translucent."),
+   N_("Your skin becomes completely transparent.")},
 
-  {"Your skin returns to its normal opacity.",
-   "Your skin's translucency fades.",
-   "Your skin's transparency fades."},
+  {N_("Your skin returns to its normal opacity."),
+   N_("Your skin's translucency fades."),
+   N_("Your skin's transparency fades.")},
 
    "translucent skin"
 },
 
 { MUT_PSEUDOPODS,                 0,  3, false, true,
-  "pseudopods",
+  N_("pseudopods"),
 
-  {"Armour fits poorly on your pseudopods.",
-   "Armour fits poorly on your large pseudopods.",
-   "Armour fits poorly on your massive pseudopods."},
+  {N_("Armour fits poorly on your pseudopods."),
+   N_("Armour fits poorly on your large pseudopods."),
+   N_("Armour fits poorly on your massive pseudopods.")},
 
-  {"Pseudopods emerge from your body.",
-   "Your pseudopods grow in size.",
-   "Your pseudopods grow in size."},
+  {N_("Pseudopods emerge from your body."),
+   N_("Your pseudopods grow in size."),
+   N_("Your pseudopods grow in size.")},
 
-  {"Your pseudopods retract into your body.",
-   "Your pseudopods become smaller.",
-   "Your pseudopods become smaller."},
+  {N_("Your pseudopods retract into your body."),
+   N_("Your pseudopods become smaller."),
+   N_("Your pseudopods become smaller.")},
 
    "pseudopods"
 },
 
 { MUT_FOOD_JELLY,                       0,  1, false, true,
-  "spawn jellies when eating",
+  N_("spawn jellies when eating"),
 
-  {"You occasionally spawn a jelly by eating.", "", ""},
-  {"You feel more connected to the slimes.", "", ""},
-  {"Your connection to the slimes vanishes.", "", ""},
+  {N_("You occasionally spawn a jelly by eating."), "", ""},
+  {N_("You feel more connected to the slimes."), "", ""},
+  {N_("Your connection to the slimes vanishes."), "", ""},
 
   "jelly spawner"
 },
 
 { MUT_ACIDIC_BITE,                      0,  1, false, true,
-  "acidic bite",
+  N_("acidic bite"),
 
-  {"You have acidic saliva.", "", ""},
-  {"Acid begins to drip from your mouth.", "", ""},
-  {"Your mouth feels dry.", "", ""},
+  {N_("You have acidic saliva."), "", ""},
+  {N_("Acid begins to drip from your mouth."), "", ""},
+  {N_("Your mouth feels dry."), "", ""},
 
   "acidic bite"
 },
@@ -1187,17 +1187,17 @@
 { MUT_DISTORTION_FIELD,                 2,  3, false, false,
   NULL,
 
-  {"You are surrounded by a mild repulsion field (EV +2).",
-   "You are surrounded by a moderate repulsion field (EV +3).",
-   "You are surrounded by a strong repulsion field (EV +4, rMsl)."},
+  {N_("You are surrounded by a mild repulsion field (EV +2)."),
+   N_("You are surrounded by a moderate repulsion field (EV +3)."),
+   N_("You are surrounded by a strong repulsion field (EV +4, rMsl).")},
 
-  {"You begin to radiate repulsive energy.",
-   "Your repulsive radiation grows stronger.",
-   "Your repulsive radiation grows stronger."},
+  {N_("You begin to radiate repulsive energy."),
+   N_("Your repulsive radiation grows stronger."),
+   N_("Your repulsive radiation grows stronger.")},
 
-  {"You feel less repulsive.",
-   "You feel less repulsive.",
-   "You feel less repulsive."},
+  {N_("You feel less repulsive."),
+   N_("You feel less repulsive."),
+   N_("You feel less repulsive.")},
 
   "repulsion field"
 },
@@ -1205,17 +1205,17 @@
 { MUT_ICY_BLUE_SCALES,                  2,  3, false, true,
   NULL,
 
-  {"You are partially covered in colourless scales (AC +1).",
-   "You are mostly covered in icy blue scales (AC +2, EV -1).",
-   "You are completely covered in icy blue scales (AC +3, EV -1, rC+)."},
+  {N_("You are partially covered in colourless scales (AC +1)."),
+   N_("You are mostly covered in icy blue scales (AC +2, EV -1)."),
+   N_("You are completely covered in icy blue scales (AC +3, EV -1, rC+).")},
 
-  {"Colourless scales grow over part of your body.",
-   "Your colourless scales turn blue and spread over more of your body.",
-   "Icy blue scales cover your body completely."},
+  {N_("Colourless scales grow over part of your body."),
+   N_("Your colourless scales turn blue and spread over more of your body."),
+   N_("Icy blue scales cover your body completely.")},
 
-  {"Your colourless scales disappear.",
-   "Your icy blue scales recede somewhat.",
-   "Your icy blue scales recede somewhat."},
+  {N_("Your colourless scales disappear."),
+   N_("Your icy blue scales recede somewhat."),
+   N_("Your icy blue scales recede somewhat.")},
 
   "icy blue scales"
 },
@@ -1223,17 +1223,17 @@
 { MUT_IRIDESCENT_SCALES,                2,  3, false,  true,
   NULL,
 
-  {"You are partially covered in iridescent scales (AC +4).",
-   "You are mostly covered in iridescent scales (AC +6).",
-   "You are completely covered in iridescent scales (AC +8)."},
+  {N_("You are partially covered in iridescent scales (AC +4)."),
+   N_("You are mostly covered in iridescent scales (AC +6)."),
+   N_("You are completely covered in iridescent scales (AC +8).")},
 
-  {"Iridescent scales grow over part of your body.",
-   "Iridescent scales spread over more of your body.",
-   "Iridescent scales cover you completely."},
+  {N_("Iridescent scales grow over part of your body."),
+   N_("Iridescent scales spread over more of your body."),
+   N_("Iridescent scales cover you completely.")},
 
-  {"Your iridescent scales disappear.",
-   "Your iridescent scales recede somewhat.",
-   "Your iridescent scales recede somewhat."},
+  {N_("Your iridescent scales disappear."),
+   N_("Your iridescent scales recede somewhat."),
+   N_("Your iridescent scales recede somewhat.")},
 
   "iridescent scales"
 },
@@ -1241,17 +1241,17 @@
 { MUT_LARGE_BONE_PLATES,                2,  3, false,  true,
   NULL,
 
-  {"You are partially covered in large bone plates (AC +2, SH +2).",
-   "You are mostly covered in large bone plates (AC +3, SH +3).",
-   "You are completely covered in large bone plates (AC +4, SH +4)."},
+  {N_("You are partially covered in large bone plates (AC +2, SH +2)."),
+   N_("You are mostly covered in large bone plates (AC +3, SH +3)."),
+   N_("You are completely covered in large bone plates (AC +4, SH +4).")},
 
-  {"Large bone plates grow over parts of your arms.",
-   "Large bone plates spread over more of your arms.",
-   "Large bone plates cover your arms completely."},
+  {N_("Large bone plates grow over parts of your arms."),
+   N_("Large bone plates spread over more of your arms."),
+   N_("Large bone plates cover your arms completely.")},
 
-  {"Your large bone plates disappear.",
-   "Your large bone plates recede somewhat.",
-   "Your large bone plates recede somewhat."},
+  {N_("Your large bone plates disappear."),
+   N_("Your large bone plates recede somewhat."),
+   N_("Your large bone plates recede somewhat.")},
 
   "large bone plates"
 },
@@ -1259,17 +1259,17 @@
 { MUT_MOLTEN_SCALES,                    2,  3, false, true,
   NULL,
 
-  {"You are partially covered in colourless scales (AC +1).",
-   "You are mostly covered in molten scales (AC +2, EV -1).",
-   "You are completely covered in molten scales (AC +3, EV -1, rF+)."},
+  {N_("You are partially covered in colourless scales (AC +1)."),
+   N_("You are mostly covered in molten scales (AC +2, EV -1)."),
+   N_("You are completely covered in molten scales (AC +3, EV -1, rF+).")},
 
-  {"Colourless scales grow over part of your body.",
-   "Your colourless scales turn molten and spread over more of your body.",
-   "Molten scales cover your body completely."},
+  {N_("Colourless scales grow over part of your body."),
+   N_("Your colourless scales turn molten and spread over more of your body."),
+   N_("Molten scales cover your body completely.")},
 
-  {"Your colourless scales disappear.",
-   "Your molten scales recede somewhat.",
-   "Your molten scales recede somewhat."},
+  {N_("Your colourless scales disappear."),
+   N_("Your molten scales recede somewhat."),
+   N_("Your molten scales recede somewhat.")},
 
   "molten scales"
 },
@@ -1277,17 +1277,17 @@
 { MUT_ROUGH_BLACK_SCALES,              2,  3, false,  true,
   NULL,
 
-  {"You are partially covered in rough black scales (AC +4, Dex -1).",
-   "You are mostly covered in rough black scales (AC +7, Dex -2).",
-   "You are completely covered in rough black scales (AC +10, Dex -3)."},
+  {N_("You are partially covered in rough black scales (AC +4, Dex -1)."),
+   N_("You are mostly covered in rough black scales (AC +7, Dex -2)."),
+   N_("You are completely covered in rough black scales (AC +10, Dex -3).")},
 
-  {"Rough black scales grow over part of your body.",
-   "Rough black scales spread over more of your body.",
-   "Rough black scales cover you completely."},
+  {N_("Rough black scales grow over part of your body."),
+   N_("Rough black scales spread over more of your body."),
+   N_("Rough black scales cover you completely.")},
 
-  {"Your rough black scales disappear.",
-   "Your rough black scales recede somewhat.",
-   "Your rough black scales recede somewhat."},
+  {N_("Your rough black scales disappear."),
+   N_("Your rough black scales recede somewhat."),
+   N_("Your rough black scales recede somewhat.")},
 
   "rough black scales"
 },
@@ -1295,17 +1295,17 @@
 { MUT_RUGGED_BROWN_SCALES,              2,  3, false,  true,
   NULL,
 
-  {"You are partially covered in rugged brown scales (AC +2, +3% HP).",
-   "You are mostly covered in rugged brown scales (AC +2, +5% HP).",
-   "You are completely covered in rugged brown scales (AC +2, +7% HP)."},
+  {N_("You are partially covered in rugged brown scales (AC +2, +3% HP)."),
+   N_("You are mostly covered in rugged brown scales (AC +2, +5% HP)."),
+   N_("You are completely covered in rugged brown scales (AC +2, +7% HP).")},
 
-  {"Rugged brown scales grow over part of your body.",
-   "Rugged brown scales spread over more of your body.",
-   "Rugged brown scales cover you completely."},
+  {N_("Rugged brown scales grow over part of your body."),
+   N_("Rugged brown scales spread over more of your body."),
+   N_("Rugged brown scales cover you completely.")},
 
-  {"Your rugged brown scales disappear.",
-   "Your rugged brown scales recede somewhat.",
-   "Your rugged brown scales recede somewhat."},
+  {N_("Your rugged brown scales disappear."),
+   N_("Your rugged brown scales recede somewhat."),
+   N_("Your rugged brown scales recede somewhat.")},
 
   "rugged brown scales"
 },
@@ -1313,17 +1313,17 @@
 { MUT_SLIMY_GREEN_SCALES,            2,  3, false, true,
   NULL,
 
-  {"You are partially covered in colourless scales (AC +1).",
-   "You are mostly covered in slimy green scales (AC +2, EV -1).",
-   "You are completely covered in slimy green scales (AC +3, EV -2, rPois)."},
+  {N_("You are partially covered in colourless scales (AC +1)."),
+   N_("You are mostly covered in slimy green scales (AC +2, EV -1)."),
+   N_("You are completely covered in slimy green scales (AC +3, EV -2, rPois).")},
 
-  {"Colourless scales grow over part of your body.",
-   "Your colourless scales turn green and spread over more of your body.",
-   "Slimy green scales cover your body completely."},
+  {N_("Colourless scales grow over part of your body."),
+   N_("Your colourless scales turn green and spread over more of your body."),
+   N_("Slimy green scales cover your body completely.")},
 
-  {"Your colourless scales disappear.",
-   "Your slimy green scales recede somewhat.",
-   "Your slimy green scales recede somewhat."},
+  {N_("Your colourless scales disappear."),
+   N_("Your slimy green scales recede somewhat."),
+   N_("Your slimy green scales recede somewhat.")},
 
   "slimy green scales"
 },
@@ -1331,17 +1331,17 @@
 { MUT_THIN_METALLIC_SCALES,            2,  3, false, true,
   NULL,
 
-  {"You are partially covered in colourless scales (AC +1).",
-   "You are mostly covered in thin metallic scales (AC +2).",
-   "You are completely covered in thin metallic scales (AC +3, rElec)."},
+  {N_("You are partially covered in colourless scales (AC +1)."),
+   N_("You are mostly covered in thin metallic scales (AC +2)."),
+   N_("You are completely covered in thin metallic scales (AC +3, rElec).")},
 
-  {"Colourless scales grow over part of your body.",
-   "Your colourless scales are metallic and spread over more of your body.",
-   "Thin metallic scales cover your body completely."},
+  {N_("Colourless scales grow over part of your body."),
+   N_("Your colourless scales are metallic and spread over more of your body."),
+   N_("Thin metallic scales cover your body completely.")},
 
-  {"Your colourless scales disappear.",
-   "Your thin metallic scales recede somewhat.",
-   "Your thin metallic scales recede somewhat."},
+  {N_("Your colourless scales disappear."),
+   N_("Your thin metallic scales recede somewhat."),
+   N_("Your thin metallic scales recede somewhat.")},
 
   "thin metallic scales"
 },
@@ -1349,17 +1349,17 @@
 { MUT_THIN_SKELETAL_STRUCTURE,          2,  3, false,  true,
   NULL,
 
-  {"You have a somewhat thin skeletal structure (Dex +2, Str -1, Stlth).",
-   "You have a moderately thin skeletal structure (Dex +4, Str -2, Stlth).",
-   "You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth)."},
+  {N_("You have a somewhat thin skeletal structure (Dex +2, Str -1, Stlth)."),
+   N_("You have a moderately thin skeletal structure (Dex +4, Str -2, Stlth)."),
+   N_("You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth).")},
 
-  {"Your bones become slightly less dense.",
-   "Your bones become somewhat less dense.",
-   "Your bones become less dense."},
+  {N_("Your bones become slightly less dense."),
+   N_("Your bones become somewhat less dense."),
+   N_("Your bones become less dense.")},
 
-  {"Your skeletal structure returns to normal.",
-   "Your skeletal structure densifies.",
-   "Your skeletal structure densifies."},
+  {N_("Your skeletal structure returns to normal."),
+   N_("Your skeletal structure densifies."),
+   N_("Your skeletal structure densifies.")},
 
   "thin skeletal structure"
 },
@@ -1367,35 +1367,35 @@
 { MUT_YELLOW_SCALES,                    2,  3, false,  true,
   NULL,
 
-  {"You are partially covered in colourless scales (AC +1).",
-   "You are mostly covered in yellow scales (AC +2, rAcid+).",
-   "You are completely covered in yellow scales (AC +3, rAcid++)."},
+  {N_("You are partially covered in colourless scales (AC +1)."),
+   N_("You are mostly covered in yellow scales (AC +2, rAcid+)."),
+   N_("You are completely covered in yellow scales (AC +3, rAcid++).")},
 
-  {"Colourless scales grow over part of your body.",
-   "Your colourless scales turn yellow and spread over more of your body.",
-   "Yellow scales cover you completely."},
+  {N_("Colourless scales grow over part of your body."),
+   N_("Your colourless scales turn yellow and spread over more of your body."),
+   N_("Yellow scales cover you completely.")},
 
-  {"Your colourless scales disappear.",
-   "Your yellow scales recede somewhat.",
-   "Your yellow scales recede somewhat."},
+  {N_("Your colourless scales disappear."),
+   N_("Your yellow scales recede somewhat."),
+   N_("Your yellow scales recede somewhat.")},
 
   "yellow scales"
 },
 
 { MUT_CAMOUFLAGE,           1,   3, false, true,
-  "camouflage",
+  N_("camouflage"),
 
-  {"Your skin changes color to match your surroundings (Stlth).",
-   "Your skin blends seamlessly with your surroundings (Stlth).",
-   "Your skin perfectly mimics your surroundings (Stlth)."},
+  {N_("Your skin changes color to match your surroundings (Stlth)."),
+   N_("Your skin blends seamlessly with your surroundings (Stlth)."),
+   N_("Your skin perfectly mimics your surroundings (Stlth).")},
 
-  {"Your skin functions as natural camouflage.",
-   "Your natural camouflage becomes more effective.",
-   "Your natural camouflage becomes more effective."},
+  {N_("Your skin functions as natural camouflage."),
+   N_("Your natural camouflage becomes more effective."),
+   N_("Your natural camouflage becomes more effective.")},
 
-  {"Your skin no longer functions as natural camouflage.",
-   "Your natural camouflage becomes less effective.",
-   "Your natural camouflage becomes less effective."},
+  {N_("Your skin no longer functions as natural camouflage."),
+   N_("Your natural camouflage becomes less effective."),
+   N_("Your natural camouflage becomes less effective.")},
 
    "camouflage"
 }

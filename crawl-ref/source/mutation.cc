@@ -1637,17 +1637,17 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         || mut == MUT_DOPEY || mut == MUT_CLUMSY)
     {
         std::ostringstream ostr;
-        ostr << mdef.have[0] << level << ").";
+        ostr << gettext(mdef.have[0]) << level << ").";
         result = ostr.str();
     }
     else if (mut == MUT_ICEMAIL)
     {
         std::ostringstream ostr;
-        ostr << mdef.have[0] << player_icemail_armour_class() << ").";
+        ostr << gettext(mdef.have[0]) << player_icemail_armour_class() << ").";
         result = ostr.str();
     }
     else if (result.empty() && level > 0)
-        result = mdef.have[level - 1];
+        result = gettext(mdef.have[level - 1]);
 
     if (fully_inactive || player_mutation_level(mut) < you.mutation[mut])
     {
