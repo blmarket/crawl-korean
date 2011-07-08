@@ -209,7 +209,9 @@ ifeq ($(uname_S),Darwin)
 endif
 ifdef USE_GETTEXT
 	DEFINES_L += -DUSE_GETTEXT -DKR
-	EXTRA_LIBS += -lintl
+	ifdef WIN32
+		EXTRA_LIBS += -lintl
+	endif
 endif
 ifdef USE_LUAJIT
 	BUILD_LUA := YesPlease
