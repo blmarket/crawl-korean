@@ -1,1 +1,1 @@
-xgettext --keyword=N_ -c -j --from-code utf-8 -o Crawl_korean.po *.cc
+xgettext --keyword=N_ -c -j --from-code utf-8 -o Crawl_korean.po *.cc *.h
