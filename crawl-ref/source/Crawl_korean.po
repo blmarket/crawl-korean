@@ -5020,11 +5020,11 @@ msgstr " 양파처럼 "
 
 #: fight.cc:1991 fight.cc:1989
 msgid "open-verb"
-msgstr "열어젖혔"
+msgstr "열어제꼈"
 
 #: fight.cc:1992 fight.cc:1990
 msgid " like a pillowcase"
-msgstr " 베갯속처럼 "
+msgstr " 베갯잇처럼 "
 
 #: fight.cc:1998 fight.cc:1996
 msgid "thump-verb"
