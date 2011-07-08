@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Misc stuff.
 **/
@@ -96,9 +96,17 @@ int holy_word_player(int pow, int caster, actor *attacker)
     if (!hploss)
         return (0);
 
+#ifdef KR
+    mpr("성스러운 언어로 인해, 온 몸이 격렬하게 발작했다!");
+#else
     mpr("You are blasted by holy energy!");
+#endif
 
+#ifdef KR
+    const char *aux = "성스러운 언어"; // 이쪽은 사망원인쪽에 들어가는 스트링인듯
+#else
     const char *aux = "holy word";
+#endif
 
     kill_method_type type = KILLED_BY_MONSTER;
     if (invalid_monster_index(caster))
@@ -109,6 +117,19 @@ int holy_word_player(int pow, int caster, actor *attacker)
 
         switch (caster)
         {
+#ifdef KR
+        case HOLY_WORD_SCROLL:
+            aux = "성스러운 언어의 마법 스크롤";
+            break;
+
+        case HOLY_WORD_ZIN:
+            aux = "진의 성스러운 언어";
+            break;
+
+        case HOLY_WORD_TSO:
+            aux = "샤이닝원의 성스러운 언어";
+            break;
+#else
         case HOLY_WORD_SCROLL:
             aux = "scroll of holy word";
             break;
@@ -120,6 +141,7 @@ int holy_word_player(int pow, int caster, actor *attacker)
         case HOLY_WORD_TSO:
             aux = "the Shining One's holy word";
             break;
+#endif
         }
     }
 
@@ -155,10 +177,17 @@ int holy_word_monsters(coord_def where, int pow, int caster,
     else
         hploss = roll_dice(3, 15) + (random2(pow) / 10);
 
+#ifdef KR
+    if (hploss && caster != HOLY_WORD_ZIN)
+        simple_monster_message(mons, "은(는) 크게 경련을 일으켰다!");
+    if (hploss && caster == HOLY_WORD_ZIN)
+        simple_monster_message(mons, "은(는) 「진」의 성스러운 언어로 인해 격렬한 발작을 일으켰다!");
+#else
     if (hploss && caster != HOLY_WORD_ZIN)
         simple_monster_message(mons, " convulses!");
     if (hploss && caster == HOLY_WORD_ZIN)
         simple_monster_message(mons, " is blasted by Zin's holy word!");
+#endif
 
     mons->hurt(attacker, hploss, BEAM_MISSILE, false);
 
@@ -195,9 +224,14 @@ int holy_word(int pow, int caster, const coord_def& where, bool silent,
 {
     if (!silent && attacker)
     {
+#ifdef KR
+        mprf("%s은(는) 성스러운 단어를 읊었다!",
+             attacker->name(DESC_CAP_THE).c_str());
+#else
         mprf("%s %s a Word of immense power!",
              attacker->name(DESC_CAP_THE).c_str(),
              attacker->conj_verb("speak").c_str());
+#endif
     }
 
     // We could use actor.get_los(), but maybe it's NULL.
@@ -241,12 +275,20 @@ int torment_player(actor *attacker, int taux)
             if (random2(600) < you.piety) // 13.33% to 33.33% chance
             {
                 hploss = 0;
+#ifdef KR
+                simple_god_message("은(는) 당신을 지옥의 고통으로부터 보호했다!");
+#else
                 simple_god_message(" shields you from torment!");
+#endif
             }
             else if (random2(250) < you.piety) // 24% to 80% chance
             {
                 hploss -= random2(hploss - 1);
+#ifdef KR
+                simple_god_message("은(는) 당신을 지옥의 고통으로부터 어느 정도 보호했다!");
+#else
                 simple_god_message(" partially shields you from torment!");
+#endif
             }
         }
     }
@@ -254,13 +296,25 @@ int torment_player(actor *attacker, int taux)
 
     if (!hploss)
     {
+#ifdef KR
+        mpr("당신은 사악한 에너지의 격동을 느꼈다.");
+#else
         mpr("You feel a surge of unholy energy.");
+#endif
         return (0);
     }
 
+#ifdef KR
+    mpr("당신의 육체가 고통으로 경련을 일으켰다!");
+#else
     mpr("Your body is wracked with pain!");
+#endif
 
+#ifdef KR
+    const char *aux = "사악한 고통";
+#else
     const char *aux = "torment";
+#endif
 
     kill_method_type type = KILLED_BY_MONSTER;
     if (invalid_monster_index(taux))
@@ -273,26 +327,46 @@ int torment_player(actor *attacker, int taux)
         {
         case TORMENT_CARDS:
         case TORMENT_SPELL:
+#ifdef KR
+            aux = "고통의 주문";
+#else
             aux = "Symbol of Torment";
+#endif
             break;
 
         case TORMENT_SPWLD:
             // XXX: If we ever make any other weapon / randart eligible
             // to torment, this will be incorrect.
+#ifdef KR
+            aux = "고통의 지팡이";
+#else
             aux = "Sceptre of Torment";
+#endif
             break;
 
         case TORMENT_SCROLL:
+#ifdef KR
+            aux = "고문의 마법 두루마리";
+#else
             aux = "scroll of torment";
+#endif
             break;
 
         case TORMENT_XOM:
             type = KILLED_BY_XOM;
+#ifdef KR
+            aux = "좀의 장난";
+#else
             aux = "Xom's torment";
+#endif
             break;
 
         case TORMENT_KIKUBAAQUDGHA:
+#ifdef KR
+            aux = "키쿠바쿠드하의 사악한 고통";
+#else
             aux = "Kikubaaqudgha's torment";
+#endif
             break;
         }
     }
@@ -327,7 +401,11 @@ int torment_monsters(coord_def where, actor *attacker, int taux)
 
     if (hploss && !mons_is_firewood(mons))
     {
+#ifdef KR
+        simple_monster_message(mons, "은(는) 고통으로 격렬하게 경련한다!");
+#else
         simple_monster_message(mons, " convulses!");
+#endif
 
         // Currently, torment doesn't annoy the monsters it affects
         // because it can't kill them, and because hostile monsters use
@@ -360,7 +438,11 @@ void immolation(int pow, int caster, coord_def where, bool known,
 {
     ASSERT(!crawl_state.game_is_arena());
 
+#ifdef KR
+    const char *aux = "화염의 폭발";
+#else
     const char *aux = "immolation";
+#endif
 
     bolt beam;
 
@@ -368,6 +450,19 @@ void immolation(int pow, int caster, coord_def where, bool known,
     {
         switch (caster)
         {
+#ifdef KR
+        case IMMOLATION_SCROLL:
+            aux = "희생의 마법 두루마리";
+            break;
+
+        case IMMOLATION_SPELL:
+            aux = "마법 주문 실패로 인한 폭발";
+            break;
+
+        case IMMOLATION_TOME:
+            aux = "파괴의 학술서의 폭발";
+            break;
+#else
         case IMMOLATION_SCROLL:
             aux = "scroll of immolation";
             break;
@@ -379,6 +474,7 @@ void immolation(int pow, int caster, coord_def where, bool known,
         case IMMOLATION_TOME:
             aux = "an exploding Tome of Destruction";
             break;
+#endif
         }
     }
 
@@ -474,7 +570,11 @@ void cleansing_flame(int pow, int caster, coord_def where,
 {
     ASSERT(!crawl_state.game_is_arena());
 
+#ifdef KR
+    const char *aux = "정화의 불꽃";
+#else
     const char *aux = "cleansing flame";
+#endif
 
     bolt beam;
 
@@ -483,7 +583,11 @@ void cleansing_flame(int pow, int caster, coord_def where,
         switch (caster)
         {
         case CLEANSING_FLAME_TSO:
+#ifdef KR
+            aux = "샤이닝 원의 정화의 불꽃";
+#else
             aux = "the Shining One's cleansing flame";
+#endif
             break;
         }
     }
@@ -530,13 +634,23 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
 
     if (gate_type == DNGN_ENTER_ABYSS)
     {
+#ifdef KR
+        mark_milestone("abyss.enter",
+                       _who_banished(who) + "은(는) 어비스로 빠져들었다!");
+#else
         mark_milestone("abyss.enter",
                        "is cast into the Abyss!" + _who_banished(who));
+#endif
     }
     else if (gate_type == DNGN_EXIT_ABYSS)
     {
+#ifdef KR
+        mark_milestone("abyss.exit",
+                       _who_banished(who) + "은(는) 어비스로부터 탈출했다!");
+#else
         mark_milestone("abyss.exit",
                        "escaped from the Abyss!" + _who_banished(who));
+#endif
     }
 
     std::string cast_into;
@@ -546,16 +660,28 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     case DNGN_ENTER_ABYSS:
         if (you.level_type == LEVEL_ABYSS)
         {
+#ifdef KR
+            mpr("잠시 구속감을 느꼈다.");
+#else
             mpr("You feel trapped.");
+#endif
             return;
         }
+#ifdef KR
+        cast_into = "어비스";
+#else
         cast_into = "the Abyss";
+#endif
         break;
 
     case DNGN_EXIT_ABYSS:
         if (you.level_type != LEVEL_ABYSS)
         {
+#ifdef KR
+            mpr("잠시 현기증을 느꼈다.");
+#else
             mpr("You feel dizzy for a moment.");
+#endif
             return;
         }
         break;
@@ -563,10 +689,18 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     case DNGN_ENTER_PANDEMONIUM:
         if (you.level_type == LEVEL_PANDEMONIUM)
         {
+#ifdef KR
+            mpr("잠시 구속감을 느꼈다.");
+#else
             mpr("You feel trapped.");
+#endif
             return;
         }
+#ifdef KR
+        cast_into = "판데모니움";
+#else
         cast_into = "Pandemonium";
+#endif
         break;
 
     case DNGN_TRANSIT_PANDEMONIUM:
@@ -580,7 +714,11 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     case DNGN_EXIT_PANDEMONIUM:
         if (you.level_type != LEVEL_PANDEMONIUM)
         {
+#ifdef KR
+            mpr("잠시 현기증을 느꼈다.");
+#else
             mpr("You feel dizzy for a moment.");
+#endif
             return;
         }
         break;
@@ -588,10 +726,18 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     case DNGN_ENTER_LABYRINTH:
         if (you.level_type == LEVEL_LABYRINTH)
         {
+#ifdef KR
+            mpr("잠시 구속감을 느꼈다.");
+#else
             mpr("You feel trapped.");
+#endif
             return;
         }
+#ifdef KR
+		cast_into = "미궁";
+#else
         cast_into = "a Labyrinth";
+#endif
         break;
 
     case DNGN_ENTER_HELL:
@@ -601,10 +747,18 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
     case DNGN_ENTER_TARTARUS:
         if (player_in_hell() || player_in_branch(BRANCH_VESTIBULE_OF_HELL))
         {
+#ifdef KR
+            mpr("잠시 현기증을 느꼈다.");
+#else
             mpr("You feel dizzy for a moment.");
+#endif
             return;
         }
+#ifdef KR
+        cast_into = "지옥";
+#else
         cast_into = "Hell";
+#endif
         break;
 
     default:
@@ -617,6 +771,58 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
         // down_stairs() will take care of setting things.
         you.entry_cause = EC_UNKNOWN;
     }
+#ifdef KR
+
+	/* 이 부분은 bainshed() 함수를 호출할 때, 어떤 원인으로
+	   어비스 등으로 추방되었는지에 따라 결과값을 바꾸는 부분인데...
+	   전형적으로 빡치게하는(?) 다른 소스코드에서 아예 문자열값으로
+	   인자를 넘겨주는 부분이죠... 몇몇 소스코드 (decks.cc)에서는 그나마
+	   문자열값으로 바로 넘겨주는데 대부분은 who 라는 변수로 넘겨주더군요;
+	   who 라는 변수가 어디서 사용되며 어떻게 만들어지는거에 대해서 연구가 필요할듯합니다.
+	   오리던크에서는 꽤 간단하게 구현이 되어있는데 돌죽은 참;;
+	   일단은 임시방편으로 영문과 한글을 모두 받는 것으로 수정해봅니다.
+
+	   추방되는쪽 번역을 하면서, 만약 여기랑 겹치는 단어가 나오면 잘 기억했다가
+	   한글단어를 맞춰야겠네요. */
+
+    else if (who.find("self") != std::string::npos || who == you.your_name
+             || who == "you" || who == "You" || who.find("스스로") != std::string::npos)
+    {
+        you.entry_cause = EC_SELF_EXPLICIT;
+    }
+    else if ((who.find("distortion") != std::string::npos) || (who.find("왜곡") != std::string::npos))
+    {
+        if ((who.find("wield") != std::string::npos) || (who.find("장비") != std::string::npos))
+        {
+            if (who.find("unknowing") != std::string::npos)
+                you.entry_cause = EC_SELF_ACCIDENT;
+            else
+                you.entry_cause = EC_SELF_RISKY;
+        }
+        else if (who.find("affixation") != std::string::npos) 
+            you.entry_cause = EC_SELF_ACCIDENT;
+        else if (who.find("branding")  != std::string::npos) // 일단 요 3개는 보류;
+            you.entry_cause = EC_SELF_RISKY;
+        else
+            you.entry_cause = EC_MONSTER;
+    }
+    else if (who == "drawing a card") // decks.cc 에서 넘겨주네요. 그나마 쉬운 부분
+        you.entry_cause = EC_SELF_RISKY;
+    else if ((who.find("you miscast") != std::string::npos) || (who.find("you miscast") != std::string::npos)) // 이건 어디서 오는거죠; 어렵다;
+        you.entry_cause = EC_MISCAST;
+    else if (who == "wizard command") // who == 는 직접 넘겨주는 것, who.find는 간접적으로 문장을 넘겨주는거인듯하네요
+        you.entry_cause = EC_SELF_EXPLICIT;
+    else if ((who.find("effects of Hell") != std::string::npos) || (who.find("지옥의 효과") != std::string::npos)) // 이부분은 같은 effects.cc 안에 문장이 있는듯하네요.
+        you.entry_cause = EC_ENVIRONMENT;
+    else if ((who.find("Zot") != std::string::npos) || (who.find("조트") != std::string::npos))
+        you.entry_cause = EC_TRAP;
+    else if ((who.find("trap") != std::string::npos) || (who.find("함정") != std::string::npos))
+        you.entry_cause = EC_TRAP;
+    else
+        you.entry_cause = EC_MONSTER;
+
+
+#else
     else if (who.find("self") != std::string::npos || who == you.your_name
              || who == "you" || who == "You")
     {
@@ -652,13 +858,18 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
         you.entry_cause = EC_TRAP;
     else
         you.entry_cause = EC_MONSTER;
+#endif
 
     if (!crawl_state.is_god_acting())
         you.entry_cause_god = GOD_NO_GOD;
 
     if (!cast_into.empty() && you.entry_cause != EC_SELF_EXPLICIT)
     {
+#ifdef KR
+        const std::string what = _who_banished(who) + "은(는) " + cast_into + "에 빠져들었다!";
+#else
         const std::string what = "Cast into " + cast_into + _who_banished(who);
+#endif
         take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
     }
 
@@ -691,9 +902,12 @@ bool forget_spell(void)
 
     if (slot == -1)              // should never happen though
         return (false);
-
+#ifdef KR
+    mprf("%s에 대한 마법 지식이 한순간에 흐릿해졌고, 마침내 주문을 잊었다!", spell_title(you.spells[slot]));
+#else
     mprf("Your knowledge of %s becomes hazy all of a sudden, and you forget "
          "the spell!", spell_title(you.spells[slot]));
+#endif
 
     del_spell_from_memory_by_slot(slot);
     return (true);
@@ -716,9 +930,17 @@ void direct_effect(monster* source, spell_type spell,
     {
     case SPELL_SMITING:
         if (def)
+#ifdef KR
+            simple_monster_message(def, "에게 일격이 가해졌다.");
+#else
             simple_monster_message(def, " is smitten.");
+#endif
         else
+#ifdef KR
+            mpr("무엇인가가 당신에게 일격을 가한다!");
+#else
             mpr("Something smites you!");
+#endif
 
         pbolt.name       = "smiting";
         pbolt.flavour    = BEAM_MISSILE;
@@ -729,13 +951,20 @@ void direct_effect(monster* source, spell_type spell,
     case SPELL_AIRSTRIKE:
         // Damage averages 14 for 5HD, 18 for 10HD, 28 for 20HD, +50% if flying.
         if (def)
-            simple_monster_message(def, " is struck by the twisting air!");
-        else
+            simple_monster_message(def, "은(는) 소용돌이치는 대기에 빨려들었다!"); // strike를 빨려들었다라고 해석하기 좀 이상하지만..
+        else                                                                       // 소용돌이치는 대기에 몰아침당했다! 이쪽은 너무 번역투같아서요.
         {
+#ifdef KR
+            if (you.flight_mode())
+                mpr("소용돌이치는 대기가 비행중인 당신을 격렬하게 덮쳤다!");
+            else
+                mpr("소용돌이치는 대기가 당신에게 몰아쳤다!");
+#else
             if (you.flight_mode())
                 mpr("The air twists around and violently strikes you in flight!");
             else
                 mpr("The air twists around and strikes you!");
+#endif
         }
 
         pbolt.name       = "airstrike";
@@ -759,19 +988,35 @@ void direct_effect(monster* source, spell_type spell,
             if (one_chance_in(3)
                 && lose_stat(STAT_INT, 1, source))
             {
+#ifdef KR
+                mpr("무엇인가가 당신의 지능을 빨아들였다!");
+#else
                 mpr("Something feeds on your intellect!");
+#endif
                 xom_is_stimulated(50);
             }
             else
+#ifdef KR
+				mpr("무엇인가가 당신의 지능을 빨아들이려 한다!");
+#else
                 mpr("Something tries to feed on your intellect!");
+#endif
         }
         break;
 
     case SPELL_HAUNT:
         if (!def)
+#ifdef KR
+            mpr("으스스한 기분을 느꼈다.");
+#else
             mpr("You feel haunted.");
+#endif
         else
+#ifdef KR
+            mpr("사악한 존재가 주변에 있음을 감지했다.");
+#else
             mpr("You sense an evil presence.");
+#endif
         mons_cast_haunt(source);
         break;
 
@@ -784,19 +1029,34 @@ void direct_effect(monster* source, spell_type spell,
 
     case SPELL_SUMMON_SPECTRAL_ORCS:
         if (def)
+#ifdef KR
+            simple_monster_message(def, " 주변에 죽은 오크들의 망령이 나타났다.");
+#else
             simple_monster_message(def, " is surrounded by Orcish apparitions.");
+#endif
         else
+#ifdef KR
+            mpr("당신 주변에 죽은 오크들의 망령이 나타났다.");
+#else
             mpr("Orcish apparitions take form around you.");
+#endif
         mons_cast_spectral_orcs(source);
         break;
 
     case SPELL_HOLY_FLAMES:
         if (holy_flames(source, defender))
         {
+#ifdef KR
+            if (!def)
+                mpr("성스러운 불꽃이 갑자기 당신 주위를 휘감았다!");
+            else
+                simple_monster_message(def, " 주위에 성스러운 불꽃이 휘감겨 나타났다!");
+#else
             if (!def)
                 mpr("Blessed fire suddenly surrounds you!");
             else
                 simple_monster_message(def, " is surrounded by blessed fire!");
+#endif
         }
         break;
 
@@ -828,41 +1088,82 @@ void random_uselessness(int scroll_slot)
     switch (temp_rand)
     {
     case 0:
+#ifdef KR
+        mprf("먼지가 %s(으)로 빛났다!", weird_glowing_colour().c_str()); // .txt 파일에서 색깔을 불러오더군요
+#else
         mprf("The dust glows %s!", weird_glowing_colour().c_str());
+#endif
         break;
 
     case 1:
+#ifdef KR
+        mprf("두루마리가 당신의 %s 안에서 재구성된다!", // %s 부분은 misc.cc에 있습니다.
+#else
         mprf("The scroll reassembles itself in your %s!",
              you.hand_name(true).c_str());
+#endif
         inc_inv_item_quantity(scroll_slot, 1);
         break;
 
     case 2:
         if (you.weapon())
         {
+#ifdef KR
+            mprf("%s은(는) 잠시동안 %s(으)로 빛났다.",
+                 you.weapon()->name(DESC_CAP_YOUR).c_str(),
+                 weird_glowing_colour().c_str());
+#else
             mprf("%s glows %s for a moment.",
                  you.weapon()->name(DESC_CAP_YOUR).c_str(),
                  weird_glowing_colour().c_str());
+#endif
         }
         else
         {
+#ifdef KR
+            mprf("당신의 %s은(는) 잠시동안 %s(으)로 빛났다.",
+                 your_hand(true).c_str(), weird_glowing_colour().c_str());
+#else
             mprf("Your %s glow %s for a moment.",
                  you.hand_name(true).c_str(), weird_glowing_colour().c_str());
+#endif
         }
         break;
 
     case 3:
+#ifdef KR
+        if (you.species == SP_MUMMY)
+            mpr("몸을 휘감은 붕대가 살며시 떨렸다.");
+        else // if (you.can_smell())
+            mprf("%s 냄새를 맡았다.", weird_smell().c_str());
+        break;
+#else
         if (you.species == SP_MUMMY)
             mpr("Your bandages flutter.");
         else // if (you.can_smell())
             mprf("You smell %s.", weird_smell().c_str());
         break;
+#endif
 
     case 4:
+#ifdef KR
+        mpr("당신은 갑자기 피할 수 없는 파멸의 감각을 경험했다!");
+#else
         mpr("You experience a momentary feeling of inescapable doom!");
+#endif
         break;
 
     case 5:
+#ifdef KR
+        temp_rand = random2(3);
+        if (player_mutation_level(MUT_BEAK) || one_chance_in(3))
+            mpr("당신의 머리가 아파왔다!");
+        else if (you.species == SP_MUMMY || coinflip())
+            mpr("귀가 근질근질해졌다!");
+        else
+            mpr("코가 갑자기 씰룩씰룩거렸다!");
+        break;
+#else
         temp_rand = random2(3);
         if (player_mutation_level(MUT_BEAK) || one_chance_in(3))
             mpr("Your brain hurts!");
@@ -871,15 +1172,24 @@ void random_uselessness(int scroll_slot)
         else
             mpr("Your nose twitches suddenly!");
         break;
+#endif
 
     case 6:
+#ifdef KR
+        mpr("당신은 작은 벨이 울리는 소리를 들었다.", MSGCH_SOUND);
+#else
         mpr("You hear the tinkle of a tiny bell.", MSGCH_SOUND);
+#endif
         noisy(2, you.pos());
         cast_summon_butterflies(100);
         break;
 
     case 7:
+#ifdef KR
+        mprf(MSGCH_SOUND, "당신은 %s을(를) 들었다.", weird_sound().c_str());
+#else
         mprf(MSGCH_SOUND, "You hear %s.", weird_sound().c_str());
+#endif
         noisy(2, you.pos());
         break;
     }
@@ -891,8 +1201,13 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
     {
         if (item_slot == -1)
         {
+#ifdef KR
+            item_slot = prompt_invent_item("어느 아이템을 충전하는가?", MT_INVLIST,
+                                            OSEL_RECHARGE, true, true, false);
+#else
             item_slot = prompt_invent_item("Charge which item?", MT_INVLIST,
                                             OSEL_RECHARGE, true, true, false);
+#endif
         }
         if (prompt_failed(item_slot))
             return (-1);
@@ -901,7 +1216,11 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
 
         if (!item_is_rechargeable(wand, known, true))
         {
+#ifdef KR
+            mpr("충전할 아이템을 선택하시오. (Esc키로 취소)");
+#else
             mpr("Choose an item to recharge, or Esc to abort.");
+#endif
             if (Options.auto_list)
                 more();
 
@@ -913,9 +1232,10 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
         if (wand.base_type != OBJ_WANDS && !item_is_rod(wand))
             return (0);
 
+        int charge_gain = 0;
         if (wand.base_type == OBJ_WANDS)
         {
-            int charge_gain = wand_charge_value(wand.sub_type);
+            charge_gain = wand_charge_value(wand.sub_type);
 
             const int new_charges =
                 std::max<int>(
@@ -930,18 +1250,30 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
 
             if (charged && item_ident(wand, ISFLAG_KNOW_PLUSES))
             {
+#ifdef KR
+                snprintf(info, INFO_SIZE, " 그리고 이제 %d회의 충전이 남아있다%s",
+                         new_charges, new_charges == 1 ? "!" : ".");
+                desc = info;
+#else
                 snprintf(info, INFO_SIZE, " and now has %d charge%s",
                          new_charges, new_charges == 1 ? "" : "s");
                 desc = info;
+#endif
             }
 
             if (pre_msg)
                 mpr(pre_msg->c_str());
-
+#ifdef KR
+            mprf("%s은(는) 잠시 %s%s.",
+                 wand.name(DESC_CAP_YOUR).c_str(),
+                 charged ? "빛을 발했다" : "깜박거렸다",
+                 desc.c_str());
+#else
             mprf("%s %s for a moment%s.",
                  wand.name(DESC_CAP_YOUR).c_str(),
                  charged ? "glows" : "flickers",
                  desc.c_str());
+#endif
 
             // Reinitialise zap counts.
             wand.plus  = new_charges;
@@ -967,7 +1299,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                 work = true;
             }
 
-            if (short(wand.props["rod_enchantment"]) < MAX_WPN_ENCHANT)
+            if (short(wand.props["rod_enchantment"]) < MAX_WPN_ENCHANT) // props 건들지 않고;
             {
                 static_cast<short&>(wand.props["rod_enchantment"])
                     += random_range(1,2);
@@ -983,8 +1315,11 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
 
             if (pre_msg)
                 mpr(pre_msg->c_str());
-
+#ifdef KR
+            mprf("%s 은(는) 잠시동안 빛을 발했다.", wand.name(DESC_CAP_YOUR).c_str());
+#else
             mprf("%s glows for a moment.", wand.name(DESC_CAP_YOUR).c_str());
+#endif
         }
 
         you.wield_change = true;
@@ -1044,6 +1379,22 @@ void yell(bool force)
     int noise_level = 12; // "shout"
 
     // Tweak volume for different kinds of vocalisation.
+#ifdef KR
+    if (shout_verb == "으르렁 거리는 소리")
+        noise_level = 18;
+    else if (shout_verb == "째지는 소리")
+        noise_level = 8;
+    else if (shout_verb == "\"끽\"하는 소리")
+        noise_level = 4;
+    else if (shout_verb == "__NONE")
+        noise_level = 0;
+    else if (shout_verb == "크게 고함")
+        noise_level = 14;
+    else if (shout_verb == "비명")
+        noise_level = 16;
+	else if (shout_verb == "고함" || shout_verb == "\"야옹\"하는 소리" || shout_verb == "\"갸울\"하는 소리" || shout_verb == "\"꿀꿀\"하는 소리")
+		noise_level = 12;
+#else
     if (shout_verb == "roar")
         noise_level = 18;
     else if (shout_verb == "hiss")
@@ -1056,6 +1407,7 @@ void yell(bool force)
         noise_level = 14;
     else if (shout_verb == "scream")
         noise_level = 16;
+#endif
 
     if (silenced(you.pos()) || you.cannot_speak())
         noise_level = 0;
@@ -1066,33 +1418,66 @@ void yell(bool force)
         {
             if (shout_verb == "__NONE" || you.paralysed())
             {
+#ifdef KR
+                mprf("당신은 %s을(를) 내려고 했었으나, "
+                     "당신은 소리를 낼 수 없었다!",
+                     shout_verb == "__NONE" ? "비명 소리를"
+                                            : shout_verb.c_str());
+#else
                 mprf("You feel a strong urge to %s, but "
                      "you are unable to make a sound!",
                      shout_verb == "__NONE" ? "scream"
                                             : shout_verb.c_str());
+#endif
             }
             else
             {
+#ifdef KR
+                mprf("째지는 %s이(가) 목구멍까지 절로 올라왔으나, "
+                     "아무 소리도 나지 않았다!",
+					 shout_verb == "째지는 소리" ? "높은 소리" :
+								   "크게 고함"   ? "큰 고함"
+					                             : shout_verb.c_str());
+#else
                 mprf("You feel a %s rip itself from your throat, "
                      "but you make no sound!",
                      shout_verb.c_str());
+#endif
             }
         }
         else
+#ifdef KR
+            mpr("당신은 소리를 낼 수 없었다!");
+#else
             mpr("You are unable to make a sound!");
+#endif
 
         return;
     }
 
     if (force)
     {
+#ifdef KR
+        mprf("%s이(가) 목구멍으로부터 절로 나왔다!", 
+			shout_verb == "크게 고함" ? "큰 고함" : shout_verb.c_str());
+#else
         mprf("A %s rips itself from your throat!", shout_verb.c_str());
+#endif
         noisy(noise_level, you.pos());
         return;
     }
 
+#ifdef KR
+    mpr("뭐라고 말할 것인가?", MSGCH_PROMPT);
+#else
     mpr("What do you say?", MSGCH_PROMPT);
+#endif
+
+#ifdef KR
+    mprf(" t - 소리친다.");
+#else
     mprf(" t - %s!", cap_shout.c_str());
+#endif
 
     if (!you.berserk())
     {
@@ -1102,17 +1487,32 @@ void yell(bool force)
             const monster* target = &menv[you.prev_targ];
             if (target->alive() && you.can_see(target))
             {
+#ifdef KR
+                previous = "   p - 당신과 같은 목표를 공격.";
+#else
                 previous = "   p - Attack previous target.";
+#endif
                 targ_prev = true;
             }
         }
 
+#ifdef KR
+        mprf("아군에게 명령: a - 새로운 목표를 공격.%s", previous.c_str());
+        mpr("               s - 공격을 중지.");
+        mpr("               w - 이 곳에 대기.           f - 따라오라고 하기.");
+#else
         mprf("Orders for allies: a - Attack new target.%s", previous.c_str());
         mpr("                   s - Stop attacking.");
         mpr("                   w - Wait here.           f - Follow me.");
+#endif
     }
+#ifdef KR
+    mprf(" 그 외 - 조용히 있는다%s.",
+         one_chance_in(20) ? " (그리고 바보취급받는다)" : "");
+#else
     mprf(" Anything else - Stay silent%s.",
          one_chance_in(20) ? " (and be thought a fool)" : "");
+#endif
 
     unsigned char keyn = get_ch();
     mesclr();
@@ -1121,7 +1521,11 @@ void yell(bool force)
     {
     case '!':    // for players using the old keyset
     case 't':
+#ifdef KR
+        mprf(MSGCH_SOUND, "당신은 %s을(를) 쳐서 주의를 끌었다!", shout_verb.c_str());
+#else
         mprf(MSGCH_SOUND, "You %s for attention!", shout_verb.c_str());
+#endif
         noisy(noise_level, you.pos());
         you.turn_is_over = true;
         return;
@@ -1133,14 +1537,26 @@ void yell(bool force)
         {
             // Don't reset patrol points for 'Stop fighting!'
             _set_allies_patrol_point(true);
+#ifdef KR
+            mpr("따라와!");
+#else
             mpr("Follow me!");
+#endif
         }
         else
+#ifdef KR
+            mpr("공격 중지!");
+#else
             mpr("Stop fighting!");
+#endif
         break;
 
     case 'w':
+#ifdef KR
+        mpr("대기!");
+#else
         mpr("Wait here!");
+#endif
         mons_targd = MHITNOT;
         _set_allies_patrol_point();
         break;
@@ -1168,8 +1584,13 @@ void yell(bool force)
 
         if (env.sanctuary_time > 0)
         {
+#ifdef KR
+            if (!yesno("그렇게 공격 명령을 내릴 시, 당신의 성지가 훼손될 수 있다."
+                       "그래도 명령하겠는가?", false, 'n'))
+#else
             if (!yesno("An ally attacking under your orders might violate "
                        "sanctuary; order anyway?", false, 'n'))
+#endif
             {
                 canned_msg(MSG_OK);
                 return;
@@ -1181,7 +1602,11 @@ void yell(bool force)
             args.restricts = DIR_TARGET;
             args.mode = TARG_HOSTILE;
             args.needs_path = false;
+#ifdef KR
+            args.top_prompt = "어느 것을 노립니까?";
+#else
             args.top_prompt = "Gang up on whom?";
+#endif
             direction(targ, args);
         }
 
@@ -1203,14 +1628,22 @@ void yell(bool force)
 
             if (cancel)
             {
+#ifdef KR
+                mpr("뭐, 그렇게 하지.");
+#else
                 mpr("Yeah, whatever.");
+#endif
                 return;
             }
         }
         break;
 
     default:
+#ifdef KR
+        mpr("그래 좋아.");
+#else
         mpr("Okely-dokely.");
+#endif
         return;
     }
 
@@ -1220,7 +1653,11 @@ void yell(bool force)
     _set_friendly_foes(keyn == 's' || keyn == 'w');
 
     if (mons_targd != MHITNOT && mons_targd != MHITYOU)
+#ifdef KR
+        mpr("공격!");
+#else
         mpr("Attack!");
+#endif
 
     noisy(10, you.pos());
 }
@@ -1266,7 +1703,11 @@ static void _hell_effects()
     if ((you.religion == GOD_ZIN && x_chance_in_y(you.piety, MAX_PIETY))
         || is_sanctuary(you.pos()))
     {
+#ifdef KR
+        simple_god_message("의 성스러운 힘이 지옥의 저주로부터 당신을 보호한다!");
+#else
         simple_god_message("'s power protects you from the chaos of Hell!");
+#endif
         return;
     }
 
@@ -1275,6 +1716,30 @@ static void _hell_effects()
     bool summon_instead = false;
     monster_type which_beastie = MONS_NO_MONSTER;
 
+#ifdef KR
+    mpr((temp_rand ==  0) ? "\"너는 여기서 살아 나갈수 없다!\"" :
+        (temp_rand ==  1) ? "\"죽어라, 유한한 존재여!\""  :
+        (temp_rand ==  2) ? "\"우리들을 거역한 자는 결코 용서하지 않는다!\"" :
+        (temp_rand ==  3) ? "\"침입자는 여기에서는 환영받지 못한다!\"" :
+        (temp_rand ==  4) ? "\"너는 여기에 있을 수 있는 존재가 아니다!\"" :
+        (temp_rand ==  5) ? "\"빨리 꺼져라. 우물쭈물 하지 말고!\"" :
+        (temp_rand ==  6) ? "\"너는 이제 우리의 것이다!\"" :
+        // plain messages
+        (temp_rand ==  7) ? (you.can_smell()) ? "유황의 지독한 냄새를 맡았다."
+                                                 : "유황이 비와 같이 쏟아졌다." :
+        (temp_rand ==  8) ? "미아가 된 것처럼 느꼈다." :
+        (temp_rand ==  9) ? "공포에 떨었다." :
+        // warning
+        (temp_rand == 10) ? "무서운 죽음의 예감을 느꼈다....." :
+        (temp_rand == 11) ? "무엇인가 무서운 일이 일어났다."  :
+        (temp_rand == 12) ? "고대의 악의 존재에게 감시되고 있는 것을 느꼈다." :
+        (temp_rand == 13) ? "돌연, 왜소하고 약해진 것 같다." :
+        (temp_rand == 14) ? "적대적인 존재를 느꼈다." :
+        // sounds
+        (temp_rand == 15) ? "몸 깊은 곳까지 떨리게하는 절규가 대기를 채웠다." :
+        (temp_rand == 16) ? "기괴하고 무서운 말을 들었다....."
+                          : "악마와 같은 웃음소리를 들었다!",
+#else
     mpr((temp_rand ==  0) ? "\"You will not leave this place.\"" :
         (temp_rand ==  1) ? "\"Die, mortal!\"" :
         (temp_rand ==  2) ? "\"We do not forgive those who trespass against us!\"" :
@@ -1297,6 +1762,7 @@ static void _hell_effects()
         (temp_rand == 15) ? "A gut-wrenching scream fills the air!" :
         (temp_rand == 16) ? "You hear words spoken in a strange and terrible language..."
                           : "You hear diabolical laughter!",
+#endif
         (temp_rand <  7 ? MSGCH_TALK :
          temp_rand < 10 ? MSGCH_PLAIN :
          temp_rand < 15 ? MSGCH_WARN
@@ -1322,7 +1788,8 @@ static void _hell_effects()
 
         MiscastEffect(&you, HELL_EFFECT_MISCAST, which_miscast,
                       4 + random2(6), random2avg(97, 3),
-                      "the effects of Hell");
+                      "the effects of Hell"); // 아까 있던 추방 원인 함수에 스트링자체로
+											  // 인자 넘겨줍니다; 즉 해석하면 안됨
     }
     else if (temp_rand > 7) // 10 in 27 odds {dlb}
     {
@@ -1370,6 +1837,7 @@ static void _hell_effects()
 
         if (summon_instead)
         {
+
             create_monster(
                 mgen_data::hostile_at(which_beastie, "the effects of Hell",
                     true, 0, 0, you.pos()));
@@ -1393,7 +1861,7 @@ static void _hell_effects()
         mgen_data mg;
         mg.pos = you.pos();
         mg.foe = MHITYOU;
-        mg.non_actor_summoner = "the effects of Hell";
+        mg.non_actor_summoner = "the effects of Hell"; // 이것들도 마찬가지
         create_monster(mg);
 
         for (int i = 0; i < 4; ++i)
@@ -1628,7 +2096,11 @@ void change_labyrinth(bool msg)
     if (targets.empty())
     {
         if (msg)
+#ifdef KR
+            mpr("탐험하지 않은 벽 격자가 없다!"); // 디버그 메시지인가?
+#else
             mpr("No unexplored wall grids found!");
+#endif
         return;
     }
 
@@ -1636,7 +2108,10 @@ void change_labyrinth(bool msg)
     {
         mprf(MSGCH_DIAGNOSTICS, "Changing labyrinth from (%d, %d) to (%d, %d)",
              c1.x, c1.y, c2.x, c2.y);
+    }
 
+    if (msg)
+    {
         std::string path_str = "";
         mpr("Here's the list of targets: ", MSGCH_DIAGNOSTICS);
         for (unsigned int i = 0; i < targets.size(); i++)
@@ -1645,7 +2120,7 @@ void change_labyrinth(bool msg)
             path_str += info;
         }
         mpr(path_str.c_str(), MSGCH_DIAGNOSTICS);
-        mprf(MSGCH_DIAGNOSTICS, "-> #targets = %u", (unsigned int)targets.size());
+        mprf(MSGCH_DIAGNOSTICS, "-> #targets = %d", targets.size()); // 디버그의 냄새가 심하게 나서 일단 번역보류
     }
 
 #ifdef WIZARD
@@ -1688,8 +2163,13 @@ void change_labyrinth(bool msg)
         {
             if (msg)
             {
+#ifdef KR
+                mpr("무언가가 잘못되었다 - 길이 없다!", // 이것역시 디버그같지만;
+                    MSGCH_DIAGNOSTICS);
+#else
                 mpr("Something went badly wrong - no path found!",
                     MSGCH_DIAGNOSTICS);
+#endif
             }
             continue;
         }
@@ -1751,7 +2231,7 @@ void change_labyrinth(bool msg)
         if (msg)
         {
             mprf(MSGCH_DIAGNOSTICS, "Switch %d (%d, %d) with %d (%d, %d).",
-                 (int) old_grid, c.x, c.y, (int) grd(p), p.x, p.y);
+                 (int) old_grid, c.x, c.y, (int) grd(p), p.x, p.y); // 이런건 확실히 디버그메시지죠.
         }
 #ifdef WIZARD
         if (you.wizard)
@@ -1892,10 +2372,17 @@ void change_labyrinth(bool msg)
                                            : random2(4));
     switch (which)
     {
+#ifdef KR
+    case 0: mpr("특이한 잡음이 들렸다!"); break;
+    case 1: mpr("고대의 장비들이 삐걱거리는 소리가 들렸다!"); break;
+    case 2: mpr("갑자기 딛고 있던 바닥이 흔들렸다!"); break;
+    case 3: mpr("갑자기 드래프트를 느꼈다!"); break; // 이거 대체 무슨 뜻인가요; drift가 오타난건가?
+#else
     case 0: mpr("You hear an odd grinding sound!"); break;
     case 1: mpr("You hear the creaking of ancient gears!"); break;
     case 2: mpr("The floor suddenly vibrates beneath you!"); break;
     case 3: mpr("You feel a sudden draft!"); break;
+#endif
     }
 }
 
@@ -2048,40 +2535,73 @@ static void _rot_inventory_food(int time_delta)
             case 1:
             case 2:
                 temp_rand = random2(8);
+#ifdef KR
+                msg = (temp_rand  < 5) ? "무엇인가가 썩는 냄새를 맡았다." :
+                      (temp_rand == 5) ? "고기 썩는 냄새를 맡았다." :
+                      (temp_rand == 6) ? "무언가 썩는 냄새가 난다."
+                                       : "짐 속에 무엇인가가 썩고있다.";
+#else
                 msg = (temp_rand  < 5) ? "You smell something rotten." :
                       (temp_rand == 5) ? "You smell rotting flesh." :
                       (temp_rand == 6) ? "You smell decay."
                                        : "There is something rotten in your inventory.";
+#endif
                 break;
 
             // level 3 saprovores like it
             case 3:
                 temp_rand = random2(8);
+#ifdef KR
+                msg = (temp_rand  < 5) ? "무엇인가가 썩는 냄새를 맡았다." :
+                      (temp_rand == 5) ? "고기 썩는 냄새가 식욕을 자극했다." :
+                      (temp_rand == 6) ? "고기 썩는 냄새를 맡았다. 맛있는 냄새군!"
+                                       : "우와! 뭔가 먹음직스런것이 당신의 짐 속에 있다.";
+#else
                 msg = (temp_rand  < 5) ? "You smell something rotten." :
                       (temp_rand == 5) ? "The smell of rotting flesh makes you hungry." :
                       (temp_rand == 6) ? "You smell decay. Yum-yum."
                                        : "Wow! There is something tasty in your inventory.";
+#endif
                 break;
 
             default:
+#ifdef KR
+                temp_rand = random2(8);
+                msg = (temp_rand  < 5) ? "무엇인가가 썩는 지독한 냄새를 맡았다." :
+                      (temp_rand == 5) ? "고기가 썩는 냄새로 속이 메스꺼워졌다." :
+                      (temp_rand == 6) ? "부패하는 지독한 냄새를 맡았다. 우웩!"
+                                       : "우웩! 당신의 짐안에 속이 안 좋아지는 뭔가가 있다.";
+#else
                 temp_rand = random2(8);
                 msg = (temp_rand  < 5) ? "You smell something rotten." :
                       (temp_rand == 5) ? "The smell of rotting flesh makes you sick." :
                       (temp_rand == 6) ? "You smell decay. Yuck!"
                                        : "Ugh! There is something really disgusting in your inventory.";
+#endif
                 break;
             }
         }
         else if (Options.list_rotten)
+#ifdef KR
+            msg = "당신의 짐 속의 무언가가 썩기 시작했다.";
+#else
             msg = "Something in your inventory has become rotten.";
+#endif
 
         if (Options.list_rotten)
         {
+#ifdef KR
+            mprf(MSGCH_ROTTEN_MEAT, "%s (슬롯 %s)",
+                 msg.c_str(),
+                 comma_separated_line(rotten_items.begin(),
+                                      rotten_items.end()).c_str());
+#else
             mprf(MSGCH_ROTTEN_MEAT, "%s (slot%s %s)",
                  msg.c_str(),
                  rotten_items.size() > 1 ? "s" : "",
                  comma_separated_line(rotten_items.begin(),
                                       rotten_items.end()).c_str());
+#endif
         }
         else if (!msg.empty())
             mpr(msg.c_str(), MSGCH_ROTTEN_MEAT);
@@ -2094,6 +2614,42 @@ static void _rot_inventory_food(int time_delta)
         if ((num_chunks_gone + num_bones_gone + num_corpses_gone
              + num_corpses_rotted) > 0)
         {
+#ifdef KR // 엉어랑 우리말이랑 어순이 비슷했다면 좋았을텐데;
+            std::string msg;
+
+            msg += "당신의 짐 안의 ";
+
+            if (num_chunks_gone == num_chunks
+                && num_bones_gone == num_bones
+                && (num_corpses_gone + num_corpses_rotted) == num_corpses)
+            {
+                msg = "모든 ";
+            }
+            else
+                msg = "일부 ";
+
+            std::vector<std::string> strs;
+            if (num_chunks_gone > 0)
+                strs.push_back("시체로부터 나온 고기가 ");
+            if (num_bones_gone > 0)
+                strs.push_back("뼈가 ");
+            if ((num_corpses_gone + num_corpses_rotted) > 0)
+                strs.push_back("시체가 ");
+
+
+            if (num_corpses_rotted == 0)
+                msg += "결국 완전히 썩어 ";
+            else if ((num_chunks_gone + num_bones_gone
+                      + num_corpses_gone) == 0)
+            {
+                msg += "부분적으로 썩어 ";
+            }
+            else
+                msg += "완전히 혹은 부분적으로 썩어 ";
+
+            msg += "사라졌다.";
+            mprf(MSGCH_ROTTEN_MEAT, "%s", msg.c_str());
+#else
             std::string msg;
             if (num_chunks_gone == num_chunks
                 && num_bones_gone == num_bones
@@ -2127,6 +2683,7 @@ static void _rot_inventory_food(int time_delta)
 
             msg += "rotted away.";
             mprf(MSGCH_ROTTEN_MEAT, "%s", msg.c_str());
+#endif
         }
         burden_change();
     }
@@ -2209,8 +2766,12 @@ void handle_time()
                  && you.piety >= piety_breakpoint(0)
                  && coinflip()))
         {
+#ifdef KR
+            mpr("당신의 병이 체력을 뺴앗아 갔다.", MSGCH_WARN);
+#else
             mpr("Your disease is taking its toll.", MSGCH_WARN);
-            lose_stat(STAT_RANDOM, 1, false, "disease");
+#endif
+            lose_stat(STAT_RANDOM, 1, false, "disease"); // 이부분은 나중에 player-stats.cc에서 참조하는군요
         }
     }
 
@@ -2276,13 +2837,21 @@ void handle_time()
 
         if (glow_effect && is_sanctuary(you.pos()))
         {
+#ifdef KR
+            mpr("당신의 육체는 격렬하게 방출된 에너지로 떨렸고, 「진」은 그 에너지를 진정시켜주었다.", MSGCH_GOD);
+#else
             mpr("Your body momentarily shudders from a surge of wild "
                 "energies until Zin's power calms it.", MSGCH_GOD);
+#endif
         }
         else if (glow_effect)
         {
+#ifdef KR
+            mpr("당신의 육체는 격렬하게 방출된 에너지로 떨렸다!", MSGCH_WARN);
+#else
             mpr("Your body shudders with the violent release "
                 "of wild energies!", MSGCH_WARN);
+#endif
 
             // For particularly violent releases, make a little boom.
             // Undead enjoy extra contamination explosion damage because
@@ -2379,6 +2948,18 @@ void handle_time()
         {
             switch (random2(3))
             {
+#ifdef KR
+                case 0:
+                    simple_god_message("은(는) '쏴~'하는 소리를 냈다.");
+                    break;
+                case 1:
+                    mprf(MSGCH_SOUND, "당신은%s 철퍼덕 하는 소리를 들었다.",
+                         total_jellies > 1 ? " 연속해서" : "");
+                    break;
+                case 2:
+                    simple_god_message("은(는) 말했다. \"나뉘어라, 그리고 먹어치워라!\"!");
+                    break;
+#else
                 case 0:
                     simple_god_message(" gurgles merrily.");
                     break;
@@ -2390,6 +2971,7 @@ void handle_time()
                 case 2:
                     simple_god_message(" says: Divide and consume!");
                     break;
+#endif
             }
         }
     }
@@ -2969,13 +3551,21 @@ int spawn_corpse_mushrooms(item_def &corpse,
         if (res)
         {
             corpse.special = 0;
-
+#ifdef KR
+            if (you.see_cell(corpse.pos))
+                mpr("독버섯들이 당신 눈 앞에 고리 모양으로 자라났다.");
+            else if (ring_seen > 1)
+                mpr("독버섯 몇 개가 기이한 호를 그리며 자라났다.");
+            else if (ring_seen > 0)
+                mpr("독버섯이 자라났다."); // toadstool 몬스터 이름을 다르게 바꾼다면, 이쪽도 따라서 바꾸어야겠죠.
+#else
             if (you.see_cell(corpse.pos))
                 mpr("A ring of toadstools grows before your very eyes.");
             else if (ring_seen > 1)
                 mpr("Some toadstools grow in a peculiar arc.");
             else if (ring_seen > 0)
                 mpr("A toadstool grows.");
+#endif
 
             seen_targets = -1;
 
@@ -3046,7 +3636,11 @@ int spawn_corpse_mushrooms(item_def &corpse,
                 placed_targets++;
                 if (current == you.pos())
                 {
+#ifdef KR
+                    mprf("당신의 발에 독버섯이 자라났다.");
+#else
                     mprf("A toadstool grows at your feet.");
+#endif
                     current=  env.mons[mushroom].pos();
                 }
                 else if (you.see_cell(current))
@@ -3114,6 +3708,15 @@ bool mushroom_spawn_message(int seen_targets, int seen_corpses)
 {
     if (seen_targets > 0)
     {
+#ifdef KR
+        std::string what  = seen_targets  > 1 ? "독버섯들"
+                                              : "독버섯";
+        std::string where = seen_corpses  > 1 ? "근처의 시체들" :
+                            seen_corpses == 1 ? "근처의 시체"
+                                              : "바닥";
+        mprf("%s이(가) %s에서 자라났다.",
+             what.c_str(), where.c_str());
+#else
         std::string what  = seen_targets  > 1 ? "Some toadstools"
                                               : "A toadstool";
         std::string where = seen_corpses  > 1 ? "nearby corpses" :
@@ -3121,6 +3724,7 @@ bool mushroom_spawn_message(int seen_targets, int seen_corpses)
                                               : "the ground";
         mprf("%s grow%s from %s.",
              what.c_str(), seen_targets > 1 ? "" : "s", where.c_str());
+#endif
 
         return (true);
     }
@@ -3255,8 +3859,13 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 
     if (in_inv && rod.plus == rod.plus2)
     {
+#ifdef KR
+        msg::stream << "당신의 " << rod.name(DESC_QUALNAME) << "은 재충전되었다." // 마법봉으로 끝나니 은(는)으로 쓸필요 없겠네요.
+                    << std::endl;
+#else
         msg::stream << "Your " << rod.name(DESC_QUALNAME) << " has recharged."
                     << std::endl;
+#endif
         if (is_resting())
             stop_running();
     }
@@ -3299,9 +3908,15 @@ void slime_wall_damage(actor* act, int delay)
 
         if (you.religion != GOD_JIYVA || you.penance[GOD_JIYVA])
         {
+#ifdef KR
+            splash_with_acid(strength, false,
+                             (walls > 1) ? "근처의 산성질 벽들에 의해 온 몸에 화상을 입었다!"
+                                         : "근처의 산성질 벽에 의해 온 몸에 화상을 입었다!");
+#else
             splash_with_acid(strength, false,
                              (walls > 1) ? "The walls burn you!"
                                          : "The wall burns you!");
+#endif
         }
     }
     else
@@ -3316,8 +3931,13 @@ void slime_wall_damage(actor* act, int delay)
                                               roll_dice(2, strength));
          if (dam > 0 && you.can_see(mon))
          {
+#ifdef KR
+             mprf((walls > 1) ? "%s은(는) 근처 산성질 벽들에 의해 온 몸에 화상을 입었다!" : "%s은(는) 근처 산성질 벽에 의해 온 몸에 화상을 입었다!",
+                  mon->name(DESC_NOCAP_THE).c_str());
+#else
              mprf((walls > 1) ? "The walls burn %s!" : "The wall burns %s!",
                   mon->name(DESC_NOCAP_THE).c_str());
+#endif
          }
          mon->hurt(NULL, dam, BEAM_ACID);
     }
