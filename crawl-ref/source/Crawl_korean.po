@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-03 23:14+0900\n"
+"POT-Creation-Date: 2011-07-08 23:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -210,7 +210,7 @@ msgstr "성전사 소환"
 msgid "Receive Corpses"
 msgstr "시체 전달"
 
-#: abl-show.cc:325 decks.cc:346
+#: abl-show.cc:325 decks.cc:346 decks.cc:347
 msgid "Torment"
 msgstr "고통"
 
@@ -957,7 +957,7 @@ msgstr ""
 
 #: directn.cc:3138
 msgid "bloodstained altar of Trog"
-msgstr "피로물든 트로그 신의 제단"
+msgstr ""
 
 #: directn.cc:3140
 msgid "sparkling altar of Nemelex Xobeh"
@@ -1084,35 +1084,35 @@ msgstr "헐?"
 msgid "Your mouth is now empty."
 msgstr "당신은 이제 맨입이다."
 
-#: stuff.cc:468
+#: stuff.cc:468 stuff.cc:472
 msgid "You are now empty-handed."
 msgstr "당신은 이제 맨손이다."
 
-#: stuff.cc:471
+#: stuff.cc:471 stuff.cc:475
 msgid "You blink."
 msgstr "당신은 순간이동했다."
 
-#: stuff.cc:474
+#: stuff.cc:474 stuff.cc:478
 msgid "You feel a strange sense of stasis."
 msgstr ""
 
-#: stuff.cc:477
+#: stuff.cc:477 stuff.cc:481
 msgid "You don't know any spells."
 msgstr "당신은 아무 주문도 모른다."
 
-#: stuff.cc:480
+#: stuff.cc:480 stuff.cc:484
 msgid "You feel your mana capacity increase."
 msgstr "당신은 마나 용량이 늘어났다고 느낀다."
 
-#: stuff.cc:483
+#: stuff.cc:483 stuff.cc:487
 msgid "You feel your mana capacity decrease."
 msgstr "당신은 마나 용량이 줄어들었다고 느낀다."
 
-#: stuff.cc:486
+#: stuff.cc:486 stuff.cc:490
 msgid "You feel momentarily disoriented."
 msgstr "당신은 잠시 방향감각을 상실했다."
 
-#: stuff.cc:489
+#: stuff.cc:489 stuff.cc:493
 msgid "You're too hungry."
 msgstr "당신은 너무 배고프다."
 
@@ -1221,7 +1221,7 @@ msgstr "호흡"
 msgid "Delay"
 msgstr "지연"
 
-#: abl-show.cc:754 decks.cc:345
+#: abl-show.cc:754 decks.cc:345 decks.cc:346
 msgid "Pain"
 msgstr "고통"
 
@@ -1250,7 +1250,7 @@ msgstr ""
 msgid "Stat drain"
 msgstr ""
 
-#: abl-show.cc:816 food.cc:2849
+#: abl-show.cc:816 food.cc:2849 food.cc:2848
 msgid "None"
 msgstr "없음"
 
@@ -1618,7 +1618,7 @@ msgstr "당신은 앉아서 기도했고, 곧 불경스러운 에너지에 휩�
 msgid "You kneel in prayer and are bathed in unholy energy."
 msgstr "당신은 무릎꿇어 기도했고, 곧 불경스러운 에너지에 휩싸였다."
 
-#: abl-show.cc:2311 evoke.cc:763
+#: abl-show.cc:2311 evoke.cc:763 evoke.cc:762
 msgid "You channel some magical energy."
 msgstr "약간의 마나를 수집했다."
 
@@ -1705,23 +1705,23 @@ msgid ""
 "description."
 msgstr ""
 
-#: food.cc:2849
+#: food.cc:2849 food.cc:2848
 msgid "Sultana"
 msgstr ""
 
-#: food.cc:2849
+#: food.cc:2849 food.cc:2848
 msgid "Strawberry"
 msgstr ""
 
-#: food.cc:2849
+#: food.cc:2849 food.cc:2848
 msgid "Choko"
 msgstr ""
 
-#: food.cc:2849
+#: food.cc:2849 food.cc:2848
 msgid "Honeycomb"
 msgstr ""
 
-#: food.cc:2849
+#: food.cc:2849 food.cc:2848
 msgid "Ration"
 msgstr ""
 
@@ -1898,84 +1898,84 @@ msgstr "%s은(는) 더욱 배고파 보인다."
 msgid "You hear a mighty clap of thunder!"
 msgstr "커다란 천둥번개 소리가 들린다!"
 
-#: beam.cc:676
+#: beam.cc:676 beam.cc:686
 #, c-format
 msgid "%s appears from out of thin air!"
 msgstr "%s이(가) 갑자기 나타났다!"
 
-#: beam.cc:816
+#: beam.cc:816 beam.cc:826
 msgid "The damaged grate falls apart into pieces."
 msgstr "쇠살대가 산산히 부서졌다."
 
 #. / slime pit의 slimey wall을 지칭하는 말이 들어가야함.
-#: beam.cc:821
+#: beam.cc:821 beam.cc:831
 msgid "slime"
 msgstr "슬라임"
 
 #. / 판데모니엄의 벽을 지칭하는 말임.
-#: beam.cc:824
+#: beam.cc:824 beam.cc:834
 msgid "weird stuff"
 msgstr "괴상한 것"
 
 #. / 일반 벽
-#: beam.cc:827
+#: beam.cc:827 beam.cc:837
 msgid "rock"
 msgstr "바위"
 
-#: beam.cc:828
+#: beam.cc:828 beam.cc:838
 #, c-format
 msgid "The %s liquefies and sinks out of sight."
 msgstr "%s은(는) 액화되어 시야에서 사라졌다."
 
-#: beam.cc:857
+#: beam.cc:857 beam.cc:867
 msgid "The wax appears to soften slightly."
 msgstr "밀납이 살짝 부드러워졌다."
 
-#: beam.cc:860
+#: beam.cc:860 beam.cc:870
 msgid "You smell warm wax."
 msgstr "당신은 따뜻한 밀납의 냄새를 맡았다."
 
-#: beam.cc:868
+#: beam.cc:868 beam.cc:878
 msgid "The wax bubbles and burns!"
 msgstr "밀납이 거품을 내며 타기 시작한다!"
 
-#: beam.cc:870
+#: beam.cc:870 beam.cc:880
 msgid "You smell burning wax."
 msgstr "당신은 불타는 밀납의 냄새를 맡았다."
 
-#: beam.cc:883
+#: beam.cc:883 beam.cc:893
 msgid "The tree burns like a torch!"
 msgstr "나무가 횃불처럼 불타오른다!"
 
-#: beam.cc:885
+#: beam.cc:885 beam.cc:895
 msgid "You smell burning wood."
 msgstr "당신은 나무가 타는 냄새를 맡았다."
 
-#: beam.cc:934
+#: beam.cc:934 beam.cc:944
 msgid "You hear a grinding noise."
 msgstr "갈려 없어지는 소음이 들린다."
 
-#: beam.cc:942
+#: beam.cc:942 beam.cc:952
 msgid "You hear the screech of bent metal."
 msgstr "금속이 구부러지는 날카로운 소리가 들린다."
 
-#: beam.cc:951
+#: beam.cc:951 beam.cc:961
 msgid "You hear a hideous screaming!"
 msgstr "끔찍한 비명소리가 들린다!"
 
-#: beam.cc:953
+#: beam.cc:953 beam.cc:963
 msgid "The idol screams as its substance crumbles away!"
 msgstr "입상이 비명소리를 내며 무너져내린다!"
 
-#: beam.cc:957
+#: beam.cc:957 beam.cc:967
 msgid "The idol twists and shakes as its substance crumbles away!"
 msgstr "입상이 뒤틀리고 진동하며 무너져 내린다!"
 
-#: beam.cc:963
+#: beam.cc:963 beam.cc:973
 msgid "The tree breaks and falls down!"
 msgstr "나무가 부러져 쓰러졌다!"
 
-#: beam.cc:966
+#: beam.cc:966 beam.cc:976
 msgid "You hear timber falling."
 msgstr "나뭇가지가 떨어지는 소리가 들린다."
 
@@ -3472,235 +3472,235 @@ msgstr "엘프가 던졌을 때"
 msgid "when thrown by orcs"
 msgstr "오크가 던졌을 때"
 
-#: decks.cc:297
+#: decks.cc:297 decks.cc:298
 msgid "the Portal"
 msgstr ""
 
-#: decks.cc:298
+#: decks.cc:298 decks.cc:299
 msgid "the Warp"
 msgstr ""
 
-#: decks.cc:299
+#: decks.cc:299 decks.cc:300
 msgid "Swap"
 msgstr ""
 
-#: decks.cc:300
+#: decks.cc:300 decks.cc:301
 msgid "Velocity"
 msgstr ""
 
-#: decks.cc:301
+#: decks.cc:301 decks.cc:302
 msgid "Damnation"
 msgstr ""
 
-#: decks.cc:302
+#: decks.cc:302 decks.cc:303
 msgid "Solitude"
 msgstr ""
 
-#: decks.cc:303
+#: decks.cc:303 decks.cc:304
 msgid "the Elixir"
 msgstr ""
 
-#: decks.cc:304
+#: decks.cc:304 decks.cc:305
 msgid "Battlelust"
 msgstr ""
 
-#: decks.cc:305
+#: decks.cc:305 decks.cc:306
 msgid "Metamorphosis"
 msgstr ""
 
-#: decks.cc:306
+#: decks.cc:306 decks.cc:307
 msgid "the Helm"
 msgstr ""
 
-#: decks.cc:307
+#: decks.cc:307 decks.cc:308
 msgid "the Blade"
 msgstr ""
 
-#: decks.cc:308
+#: decks.cc:308 decks.cc:309
 msgid "the Shadow"
 msgstr ""
 
-#: decks.cc:309
+#: decks.cc:309 decks.cc:310
 msgid "the Potion"
 msgstr ""
 
-#: decks.cc:310
+#: decks.cc:310 decks.cc:311
 msgid "Focus"
 msgstr ""
 
-#: decks.cc:311
+#: decks.cc:311 decks.cc:312
 msgid "Shuffle"
 msgstr ""
 
-#: decks.cc:312
+#: decks.cc:312 decks.cc:313
 msgid "Experience"
 msgstr ""
 
-#: decks.cc:313
+#: decks.cc:313 decks.cc:314
 msgid "the Helix"
 msgstr ""
 
-#: decks.cc:314
+#: decks.cc:314 decks.cc:315
 msgid "the Sage"
 msgstr ""
 
-#: decks.cc:315
+#: decks.cc:315 decks.cc:316
 msgid "Dowsing"
 msgstr ""
 
-#: decks.cc:316
+#: decks.cc:316 decks.cc:317
 msgid "the Trowel"
 msgstr ""
 
-#: decks.cc:317
+#: decks.cc:317 decks.cc:318
 msgid "the Minefield"
 msgstr ""
 
-#: decks.cc:318
+#: decks.cc:318 decks.cc:319
 msgid "the Stairs"
 msgstr ""
 
-#: decks.cc:319
+#: decks.cc:319 decks.cc:320
 msgid "the Genie"
 msgstr ""
 
-#: decks.cc:320
+#: decks.cc:320 decks.cc:321
 msgid "the Tomb"
 msgstr ""
 
-#: decks.cc:321
+#: decks.cc:321 decks.cc:322
 msgid "Water"
 msgstr ""
 
-#: decks.cc:322
+#: decks.cc:322 decks.cc:323
 msgid "Vitrification"
 msgstr ""
 
-#: decks.cc:323
+#: decks.cc:323 decks.cc:324
 msgid "the Map"
 msgstr ""
 
-#: decks.cc:324
+#: decks.cc:324 decks.cc:325
 msgid "the Banshee"
 msgstr ""
 
-#: decks.cc:325
+#: decks.cc:325 decks.cc:326
 msgid "Wild Magic"
 msgstr ""
 
-#: decks.cc:326
+#: decks.cc:326 decks.cc:327
 msgid "the Crusade"
 msgstr ""
 
-#: decks.cc:327
+#: decks.cc:327 decks.cc:328
 msgid "the Herd"
 msgstr ""
 
-#: decks.cc:328
+#: decks.cc:328 decks.cc:329
 msgid "the Pentagram"
 msgstr ""
 
-#: decks.cc:329
+#: decks.cc:329 decks.cc:330
 msgid "the Dance"
 msgstr ""
 
-#: decks.cc:330
+#: decks.cc:330 decks.cc:331
 msgid "Foxfire"
 msgstr ""
 
-#: decks.cc:331
+#: decks.cc:331 decks.cc:332
 msgid "the Bones"
 msgstr ""
 
-#: decks.cc:332
+#: decks.cc:332 decks.cc:333
 msgid "Repulsiveness"
 msgstr ""
 
-#: decks.cc:333
+#: decks.cc:333 decks.cc:334
 msgid "Summoning"
 msgstr ""
 
-#: decks.cc:334
+#: decks.cc:334 decks.cc:335
 msgid "Xom"
 msgstr ""
 
-#: decks.cc:335
+#: decks.cc:335 decks.cc:336
 msgid "Famine"
 msgstr ""
 
-#: decks.cc:336
+#: decks.cc:336 decks.cc:337
 msgid "the Feast"
 msgstr ""
 
-#: decks.cc:337
+#: decks.cc:337 decks.cc:338
 msgid "Warpwright"
 msgstr ""
 
-#: decks.cc:338
+#: decks.cc:338 decks.cc:339
 msgid "Flight"
 msgstr ""
 
-#: decks.cc:339
+#: decks.cc:339 decks.cc:340
 msgid "Vitriol"
 msgstr ""
 
-#: decks.cc:340
+#: decks.cc:340 decks.cc:341
 msgid "Flame"
 msgstr ""
 
-#: decks.cc:341
+#: decks.cc:341 decks.cc:342
 msgid "Frost"
 msgstr ""
 
-#: decks.cc:342
+#: decks.cc:342 decks.cc:343
 msgid "Venom"
 msgstr ""
 
-#: decks.cc:343
+#: decks.cc:343 decks.cc:344
 msgid "the Spark"
 msgstr ""
 
-#: decks.cc:344
+#: decks.cc:344 decks.cc:345
 msgid "the Hammer"
 msgstr ""
 
-#: decks.cc:347
+#: decks.cc:347 decks.cc:348
 msgid "the Spade"
 msgstr ""
 
-#: decks.cc:348
+#: decks.cc:348 decks.cc:349
 msgid "the Bargain"
 msgstr ""
 
-#: decks.cc:349
+#: decks.cc:349 decks.cc:350
 msgid "Wrath"
 msgstr ""
 
-#: decks.cc:350
+#: decks.cc:350 decks.cc:351
 msgid "the Wraith"
 msgstr ""
 
-#: decks.cc:351
+#: decks.cc:351 decks.cc:352
 msgid "the Curse"
 msgstr ""
 
-#: decks.cc:352
+#: decks.cc:352 decks.cc:353
 msgid "the Swine"
 msgstr ""
 
-#: decks.cc:353
+#: decks.cc:353 decks.cc:354
 msgid "the Alchemist"
 msgstr ""
 
-#: decks.cc:354
+#: decks.cc:354 decks.cc:355
 msgid "the Orb"
 msgstr ""
 
-#: decks.cc:355
+#: decks.cc:355 decks.cc:356
 msgid "a buggy card"
 msgstr ""
 
-#: decks.cc:357
+#: decks.cc:357 decks.cc:358
 msgid "a very buggy card"
 msgstr ""
 
@@ -4360,21 +4360,21 @@ msgstr "어떤 문장을 추가할 것인가? "
 msgid "Replace inscription with what? "
 msgstr "문장을 어떻게 교체할 것인가? "
 
-#: dgn-shoals.cc:798
+#: dgn-shoals.cc:798 dgn-shoals.cc:796
 #, c-format
 msgid "The net is swept off %s."
 msgstr ""
 
-#: dgn-shoals.cc:803
+#: dgn-shoals.cc:803 dgn-shoals.cc:801
 msgid "The tide washes the net away!"
 msgstr ""
 
-#: dgn-shoals.cc:965
+#: dgn-shoals.cc:965 dgn-shoals.cc:963
 msgid "The tide rushes in under you."
 msgstr ""
 
 #. / 아마 이거 번역해도 's가 계속 따라붙는 문제가 생길 것.
-#: dgn-shoals.cc:1157
+#: dgn-shoals.cc:1157 dgn-shoals.cc:1155
 #, c-format
 msgid "The tide is released from %s call."
 msgstr ""
@@ -4628,7 +4628,7 @@ msgstr "회복할 에너지가 없다면, 현재 당신에게 이 에너지의 �
 msgid "You lack the skill to use this item."
 msgstr "당신은 이 도구를 사용할 기술이 부족하다."
 
-#: evoke.cc:350 evoke.cc:621
+#: evoke.cc:350 evoke.cc:621 evoke.cc:620
 msgid "You gaze into the crystal ball."
 msgstr "당신은 수정구의 안쪽을 노려보았다."
 
@@ -4636,7 +4636,7 @@ msgstr "당신은 수정구의 안쪽을 노려보았다."
 msgid "using a ball of seeing"
 msgstr "천리안의 구를 사용함"
 
-#: evoke.cc:358 evoke.cc:632 evoke.cc:650
+#: evoke.cc:358 evoke.cc:632 evoke.cc:650 evoke.cc:631 evoke.cc:649
 msgid "You feel your power drain away!"
 msgstr "당신은 당신의 힘이 어디론가 빨려나가는 것을 느꼈다!"
 
@@ -4652,183 +4652,184 @@ msgstr "당신은 아무것도 보지 못했다."
 msgid "You see a map of your surroundings!"
 msgstr "당신은 당신 주변의 지도를 보았다."
 
-#: evoke.cc:394
+#: evoke.cc:394 evoke.cc:393
 msgid "The disc glows for a moment, then fades."
 msgstr "접시는 잠시 빛난 후, 사라졌다."
 
-#: evoke.cc:396
+#: evoke.cc:396 evoke.cc:395
 msgid "Little bolts of electricity crackle over the disc."
 msgstr "접시를 통해 작은 전기의 화살들이 치직거리는 소리를 냈다."
 
-#: evoke.cc:400
+#: evoke.cc:400 evoke.cc:399
 msgid "The disc erupts in an explosion of electricity!"
 msgstr "접시에서 전기 폭발이 뿜어져 나왔다!"
 
 # 번역 품질이 낮을 수 있음.
-#: evoke.cc:445
+#: evoke.cc:445 evoke.cc:444
 #, c-format
 msgid "The book opens to a page covered in %s."
 msgstr "%s의 책을 펼쳤다."
 
-#: evoke.cc:452
+#: evoke.cc:452 evoke.cc:451
 msgid "Read it?"
 msgstr "읽을까?"
 
-#: evoke.cc:459
+#: evoke.cc:459 evoke.cc:458
 msgid "The page is too blurry for you to read."
 msgstr "이 페이지는 당신이 읽기에 너무 흐릿하다."
 
-#: evoke.cc:463
+#: evoke.cc:463 evoke.cc:462
 msgid "You find yourself reciting the magical words!"
 msgstr "당신은 당신만의 마법 언어를 찾아내여 암송하였다!"
 
-#: evoke.cc:468
+#: evoke.cc:468 evoke.cc:467
 msgid "A cloud of weird smoke pours from the book's pages!"
 msgstr "기묘한 증기의 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:474
+#: evoke.cc:474 evoke.cc:473
 msgid "A cloud of choking fumes pours from the book's pages!"
 msgstr "숨막힐듯한 가스의 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:480
+#: evoke.cc:480 evoke.cc:479
 msgid "A cloud of freezing gas pours from the book's pages!"
 msgstr "냉기의 가스 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:488
+#: evoke.cc:488 evoke.cc:487
 msgid "The book disappears in a mighty explosion!"
 msgstr "그 책은 강력한 폭발과 함께 사라졌다!"
 
-#: evoke.cc:500
+#: evoke.cc:500 evoke.cc:499
 msgid "a tome of Destruction"
 msgstr "파멸의 책"
 
-#: evoke.cc:503
+#: evoke.cc:503 evoke.cc:502
 msgid "A horrible Thing appears!"
 msgstr "무서운 것들이 나타났다!"
 
-#: evoke.cc:504
+#: evoke.cc:504 evoke.cc:503
 msgid "It doesn't look too friendly."
 msgstr "그것들이 아주 우호적으로는 보이지 않는다."
 
-#: evoke.cc:550
+#: evoke.cc:550 evoke.cc:549
 #, c-format
 msgid "You read about %s."
 msgstr "%s에 대한 책을 읽었다."
 
-#: evoke.cc:556
+#: evoke.cc:556 evoke.cc:555
 msgid "The manual crumbles into dust."
 msgstr "설명서는 바스러져서 가루가 되었다."
 
-#: evoke.cc:560
+#: evoke.cc:560 evoke.cc:559
 msgid "The manual looks somewhat more worn."
 msgstr "설명서는 좀 더 닳은 듯 보인다."
 
-#: evoke.cc:569
+#: evoke.cc:569 evoke.cc:568
 msgid "You open the lid..."
 msgstr "당신은 뚜껑을 열었다..."
 
-#: evoke.cc:599
+#: evoke.cc:599 evoke.cc:598
 msgid "...and something leaps out!"
 msgstr "...그리고 뭔가가 뛰쳐나왔다!"
 
-#: evoke.cc:606
+#: evoke.cc:606 evoke.cc:605
 msgid "...but nothing happens."
 msgstr "...그러나 아무일도 일어나지 않았다."
 
-#: evoke.cc:609
+#: evoke.cc:609 evoke.cc:608
 msgid "...but the box appears empty."
 msgstr "...그러나 박스는 비어있었다."
 
-#: evoke.cc:628
+#: evoke.cc:628 evoke.cc:627
 msgid "using a ball of energy"
 msgstr "마나의 구를 사용함"
 
-#: evoke.cc:655
+#: evoke.cc:655 evoke.cc:654
 msgid "You are suffused with power!"
 msgstr "당신은 힘이 넘쳐난다!"
 
-#: evoke.cc:681
+#: evoke.cc:681 evoke.cc:680
 msgid "Evoke which item? (* to show all)"
 msgstr "어느 아이템을 발동시킬 것인가? (* 모든 목록 보기)"
 
-#: evoke.cc:857
+#: evoke.cc:857 evoke.cc:856
 msgid "Nothing happens."
 msgstr "아무 일도 일어나지 않았다."
 
-#: evoke.cc:868
+#: evoke.cc:868 evoke.cc:867
 msgid "QUAD DAMAGE!"
 msgstr "쿼드 데미지!"
 
 #: evoke.cc:896 fight.cc:1744 fight.cc:3927 fight.cc:1742 fight.cc:3922
+#: evoke.cc:895 fight.cc:1750 fight.cc:3930
 #, c-format
 msgid "You are wielding %s."
 msgstr "당신은 %s(을/를) 들고 있다."
 
-#: fight.cc:397 fight.cc:412
+#: fight.cc:397 fight.cc:412 fight.cc:405 fight.cc:420
 msgid "It"
 msgstr "그것"
 
-#: fight.cc:398 fight.cc:424
+#: fight.cc:398 fight.cc:424 fight.cc:406 fight.cc:432
 msgid "it"
 msgstr "그것"
 
-#: fight.cc:399 fight.cc:414
+#: fight.cc:399 fight.cc:414 fight.cc:407 fight.cc:422
 msgid "Its"
 msgstr "그것의"
 
-#: fight.cc:400 fight.cc:417
+#: fight.cc:400 fight.cc:417 fight.cc:408 fight.cc:425
 msgid "its"
 msgstr "그것의"
 
-#: fight.cc:401
+#: fight.cc:401 fight.cc:409
 msgid "itself"
 msgstr "그것 자신"
 
-#: fight.cc:412
+#: fight.cc:412 fight.cc:420
 msgid "Something"
 msgstr "무언가"
 
-#: fight.cc:424
+#: fight.cc:424 fight.cc:432
 msgid "something"
 msgstr "무언가"
 
-#: fight.cc:588
+#: fight.cc:588 fight.cc:596
 #, c-format
 msgid "The %s protects %s from harm."
 msgstr "%s는 %s를 위험으로부터 지켰다."
 
-#: fight.cc:594
+#: fight.cc:594 fight.cc:602
 #, c-format
 msgid "You hit the %s."
 msgstr "당신은 %s를 쳤다."
 
-#: fight.cc:607
+#: fight.cc:607 fight.cc:615
 msgid " hits something."
 msgstr "은/(는) 무언가를 쳤다."
 
-#: fight.cc:611
+#: fight.cc:611 fight.cc:619
 #, c-format
 msgid "%s tries to hit %s, but is blocked by the %s."
 msgstr "%s는 %s를 치려고 했지만, %s에 의해 막혔다."
 
 #. / 두번째 %s는 그냥 생략하고 '그것의' 정도로 번역해도 될 듯 합니다.
-#: fight.cc:741
+#: fight.cc:741 fight.cc:749
 #, c-format
 msgid "You bite %s, and draw %s blood!"
 msgstr "당신은 %s를 물고 그것의 피를 빨았다!"
 
-#: fight.cc:747
+#: fight.cc:747 fight.cc:755
 #, c-format
 msgid "You draw %s blood!"
 msgstr "당신은 %s의 피를 빨았다!"
 
 #. / 좋아지거나, 아주 좋아지거나.
-#: fight.cc:769
+#: fight.cc:769 fight.cc:777
 #, c-format
 msgid "You feel %sbetter."
 msgstr "당신은 기분이 %s괜찮아졌다."
 
-#: fight.cc:770
+#: fight.cc:770 fight.cc:778
 msgid "much "
 msgstr "아주 "
 
@@ -4836,28 +4837,28 @@ msgstr "아주 "
 #. / 이를테면 때렸다, 베었다, 등등.
 #. / 두번째 %s에는 맞는 대상이 나옵니다.
 #. / 추천 번역문장 : "당신은 %$2s을(를) %$1s."
-#: fight.cc:876
+#: fight.cc:876 fight.cc:884
 #, c-format
 msgid "You %s %s."
 msgstr "당신은 %2$s을/(를) %1$s다."
 
 #. / '신 이름'이 앞에 들어감. 현재는 ELYVILON.
-#: fight.cc:1235 fight.cc:1577 fight.cc:1575
+#: fight.cc:1235 fight.cc:1577 fight.cc:1575 fight.cc:1243 fight.cc:1583
 msgid " blocks your attack."
 msgstr "이(가) 당신의 공격을 막았다."
 
 #. / 세번째 %s는 생략하고 '그것' 정도로 번역해도 무방함.
-#: fight.cc:1257
+#: fight.cc:1257 fight.cc:1265
 #, c-format
 msgid "Your %s passes through %s as %s momentarily phases out."
 msgstr "당신의 %s은/(는) %s가 순간적으로 사라짐에 따라 허공을 갈랐다."
 
-#: fight.cc:1264
+#: fight.cc:1264 fight.cc:1272
 #, c-format
 msgid "Your %s misses %s."
 msgstr "당신의 %s는 %s를 놓쳤다."
 
-#: fight.cc:1401 fight.cc:4911 fight.cc:4907
+#: fight.cc:1401 fight.cc:4911 fight.cc:4907 fight.cc:1409 fight.cc:4915
 #, c-format
 msgid "%s is splashed with acid."
 msgstr "%s은/(는) 산성 액체를 뒤집어썼다!"
@@ -4865,67 +4866,67 @@ msgstr "%s은/(는) 산성 액체를 뒤집어썼다!"
 #. / 첫번째 %s에는 추가공격명(kick, headbutt, punch 등등)
 #. / 두번째에는 맞는 사람
 #. / 세번째에는 ', but do no damage' 혹은 ''가 들어옵니다.
-#: fight.cc:1428
+#: fight.cc:1428 fight.cc:1436
 #, c-format
 msgid "You %s %s%s."
 msgstr "당신은 %2$s를 %1$s다%3$s."
 
-#: fight.cc:1431
+#: fight.cc:1431 fight.cc:1439
 msgid ", but do no damage"
 msgstr ", 그러나 아무런 데미지도 입히지 못했다"
 
-#: fight.cc:1482
+#: fight.cc:1482 fight.cc:1490
 msgid " completely"
 msgstr " 완전히"
 
-#: fight.cc:1484
+#: fight.cc:1484 fight.cc:1492
 msgid " closely"
 msgstr " 아슬아슬하게"
 
-#: fight.cc:1485
+#: fight.cc:1485 fight.cc:1493
 msgid " barely"
 msgstr " 대충"
 
 #. / 첫번째에는 공격 이름 : kick, punch, headbutt
 #. / 두번째는 대상, 세번째는 디버깅 문자(평소엔 ""), 네번째는 느낌표.
-#: fight.cc:1492
+#: fight.cc:1492 fight.cc:1500
 #, c-format
 msgid "You %s %s%s%s"
 msgstr "당신은 %2$s를 %1$s다%4$s%3$s "
 
 #. / 1. 공격 이름 : slice, scratch, claw 등
 #. / 2. 대상 3. 공격의 수식어 4. 디버그 메시지 5. 마침표.
-#: fight.cc:1506
+#: fight.cc:1506 fight.cc:1514
 #, c-format
 msgid "You %s %s%s%s%s"
 msgstr "당신은 %2$s를 %3$s%1$s다%5$s%4$s "
 
-#: fight.cc:1533
+#: fight.cc:1533 fight.cc:1541
 msgid "armour"
 msgstr "갑옷"
 
-#: fight.cc:1536
+#: fight.cc:1536 fight.cc:1544
 #, c-format
 msgid "Your %s prevents you from hitting %s."
 msgstr "당신의 %s가 당신이 %s를 치는 것을 방해한다."
 
-#: fight.cc:1539
+#: fight.cc:1539 fight.cc:1547
 #, c-format
 msgid "Your shield prevents you from hitting %s."
 msgstr "당신의 방패가 당신이 %s를 치는 것을 방해한다."
 
-#: fight.cc:1542 fight.cc:1543
+#: fight.cc:1542 fight.cc:1543 fight.cc:1551
 #, c-format
 msgid "Your shield and %s prevent you from hitting %s."
 msgstr "당신의 방패와 %s가 당신이 %s를 치는 것을 방해한다."
 
 #. / 1. 거의, 조금, 완전히 등등의 수식어
-#: fight.cc:1547 fight.cc:1548
+#: fight.cc:1547 fight.cc:1548 fight.cc:1556
 #, c-format
 msgid "You %s miss %s."
 msgstr "당신은 %2$s를%1$s 놓쳤다."
 
-#: fight.cc:1601 fight.cc:1599
+#: fight.cc:1601 fight.cc:1599 fight.cc:1607
 #, c-format
 msgid "Your attack passes through %s as %s momentarily phases out."
 msgstr "당신의 공격은 %s가 순간적으로 사라짐에 따라 허공을 갈랐다."
@@ -5002,11 +5003,11 @@ msgstr "관통했"
 msgid "spit-verb"
 msgstr "찔렀"
 
-#: fight.cc:1972 fight.cc:1970
+#: fight.cc:1972 fight.cc:1970 fight.cc:1978
 msgid " like the proverbial pig"
 msgstr " 유명한 돼지처럼"
 
-#: fight.cc:1975 fight.cc:1973
+#: fight.cc:1975 fight.cc:1973 fight.cc:1981
 msgid " like a pig"
 msgstr " 돼지처럼"
 
@@ -5014,7 +5015,7 @@ msgstr " 돼지처럼"
 msgid "dice-verb"
 msgstr "토막냈"
 
-#: fight.cc:1987 fight.cc:1985
+#: fight.cc:1987 fight.cc:1985 fight.cc:1993
 msgid " like an onion"
 msgstr " 양파처럼 "
 
@@ -5022,7 +5023,7 @@ msgstr " 양파처럼 "
 msgid "open-verb"
 msgstr "열어제꼈"
 
-#: fight.cc:1992 fight.cc:1990
+#: fight.cc:1992 fight.cc:1990 fight.cc:1998
 msgid " like a pillowcase"
 msgstr " 베갯잇처럼 "
 
@@ -5042,7 +5043,7 @@ msgstr "때려팼"
 msgid "crush-verb"
 msgstr "으깼"
 
-#: fight.cc:2004 fight.cc:2002
+#: fight.cc:2004 fight.cc:2002 fight.cc:2010
 msgid " like a grape"
 msgstr " 포도처럼 "
 
@@ -5058,7 +5059,7 @@ msgstr "찰지구나"
 msgid "punish-verb"
 msgstr "처벌했"
 
-#: fight.cc:2021 fight.cc:2019
+#: fight.cc:2021 fight.cc:2019 fight.cc:2027
 msgid " causing immense pain"
 msgstr " 강렬한 고통을 유발시키며 "
 
@@ -5074,17 +5075,18 @@ msgstr "촉수로 갈겼"
 msgid "batter-verb"
 msgstr "두들겼"
 
-#: fight.cc:2131 fight.cc:3496 fight.cc:2129 fight.cc:3491
+#: fight.cc:2131 fight.cc:3496 fight.cc:2129 fight.cc:3491 fight.cc:2137
+#: fight.cc:3499
 msgid "You feel better."
 msgstr "당신은 기분이 나아졌다."
 
 #. / 1. 공격 동사 : slice, dice, punish, 2. 대상
-#: fight.cc:2172 fight.cc:2170
+#: fight.cc:2172 fight.cc:2170 fight.cc:2178
 #, c-format
 msgid "You %s %s, but do no damage."
 msgstr "당신은 %2$s를 %1$s지만, 아무 데미지도 주지 못했다."
 
-#: fight.cc:2210 fight.cc:2208
+#: fight.cc:2210 fight.cc:2208 fight.cc:2216
 #, c-format
 msgid "%s is stunned!"
 msgstr "%s는 기절했다!"
@@ -5115,8 +5117,17 @@ msgstr "당신 자신"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2346 fight.cc:5187 fight.cc:5411 fight.cc:2344 fight.cc:5183
-#: fight.cc:5406
+#: fight.cc:5406 fight.cc:2352 fight.cc:5191 fight.cc:5414
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
@@ -5125,130 +5136,139 @@ msgstr "%1$s는 %3$s를 %2$s다%4$s"
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 그러므로 번역문에서는 생략해버립시다. 3. 대상
 #. / 공격자, infuriate, 대상
-#: fight.cc:2379 fight.cc:5344 fight.cc:2377 fight.cc:5339
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#: fight.cc:2379 fight.cc:5344 fight.cc:2377 fight.cc:5339 fight.cc:2385
+#: fight.cc:5347
 #, c-format
 msgid "%s %s %s!"
 msgstr "%1$s는 %3$s를 %2$s다!"
 
-#: fight.cc:2396 fight.cc:2394
+#: fight.cc:2396 fight.cc:2394 fight.cc:2402
 #, c-format
 msgid "%s rots!"
 msgstr "%s이(가) 썩는다!"
 
-#: fight.cc:2399 fight.cc:2397
+#: fight.cc:2399 fight.cc:2397 fight.cc:2405
 #, c-format
 msgid "%s looks less resilient!"
 msgstr "%s은/(는) 피부가 좀 푸석푸석해진 것 같다!"
 
 #. / 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
-#: fight.cc:2420 fight.cc:2418
+#: fight.cc:2420 fight.cc:2418 fight.cc:2426
 #, c-format
 msgid "%s %s in the distortional energy."
 msgstr "%s는 뒤틀린 에너지에 노출되었다."
 
 #. / 1. 수비자.
-#: fight.cc:2437 fight.cc:2435
+#: fight.cc:2437 fight.cc:2435 fight.cc:2443
 #, c-format
 msgid "Space bends around %s."
 msgstr "%s 주변의 공간이 구부러졌다."
 
 #. / 1. 수비자.
-#: fight.cc:2451 fight.cc:2449
+#: fight.cc:2451 fight.cc:2449 fight.cc:2457
 #, c-format
 msgid "Space warps horribly around %s!"
 msgstr "%s 주변의 공간이 심하게 요동친다!"
 
 #. / 아 맨날 이런 문장만 나오면 얼마나 좋아.
-#: fight.cc:2515 fight.cc:2513
+#: fight.cc:2515 fight.cc:2513 fight.cc:2521
 msgid "You feel your power leaking away."
 msgstr "당신은 당신의 힘이 빠져나감을 느낀다."
 
 #. / 1. 수비자의 이름의 소유형
-#: fight.cc:2527 fight.cc:2525
+#: fight.cc:2527 fight.cc:2525 fight.cc:2533
 #, c-format
 msgid "%s magic leaks into the air."
 msgstr "%s의 마력이 공중으로 사라진다."
 
 #. / 1. 수비자. 2. writhe의 동사형. 그러므로 번역문에서는 생략해버립시다.
-#: fight.cc:2544 fight.cc:2542
+#. / 1. 수비자. 2. writhe의 동사형.
+#: fight.cc:2544 fight.cc:2542 fight.cc:2550
 #, c-format
 msgid "%s %s in agony."
 msgstr "%s는 고통으로 온몸을 비틀었다."
 
-#: fight.cc:2615 fight.cc:2613
+#: fight.cc:2615 fight.cc:2613 fight.cc:2621
 msgid "You give off a flash of multicoloured light!"
 msgstr "당신에게서 여러 색의 빛이 번뜩였다!"
 
 #. / 수비자(몬스터)가 그랬음.
-#: fight.cc:2620 fight.cc:2618
+#: fight.cc:2620 fight.cc:2618 fight.cc:2626
 msgid " gives off a flash of multicoloured light!"
 msgstr "에게서 여러 색의 빛이 번뜩였다!"
 
-#: fight.cc:2624 fight.cc:2622
+#: fight.cc:2624 fight.cc:2622 fight.cc:2630
 msgid "There is a flash of multicoloured light!"
 msgstr "여러 색의 빛이 번뜩였다!"
 
-#: fight.cc:2687 fight.cc:2685
+#: fight.cc:2687 fight.cc:2685 fight.cc:2693
 #, c-format
 msgid "%s is duplicated!"
 msgstr "%s는 복제되었다!"
 
 #. / 1. 무기 이름.
-#: fight.cc:2902 fight.cc:2900
+#: fight.cc:2902 fight.cc:2900 fight.cc:2908
 #, c-format
 msgid "Smoke pours forth from %s!"
 msgstr "%s로부터 연기가 뿜어져 나왔다!"
 
-#: fight.cc:2921 fight.cc:2919
+#: fight.cc:2921 fight.cc:2919 fight.cc:2927
 #, c-format
 msgid "You hear %s"
 msgstr "당신은 %s를 들었다"
 
 #. / 내부 코드에서 사용하는 것 같음.
-#: fight.cc:3035 fight.cc:3047 fight.cc:3033 fight.cc:3045
+#: fight.cc:3035 fight.cc:3047 fight.cc:3033 fight.cc:3045 fight.cc:3041
+#: fight.cc:3053
 msgid "a chaos effect"
 msgstr ""
 
-#: fight.cc:3063 fight.cc:3061
+#: fight.cc:3063 fight.cc:3061 fight.cc:3069
 msgid " turns into a zombie!"
 msgstr "은/(는) 좀비로 변했다!"
 
-#: fight.cc:3066 fight.cc:3064
+#: fight.cc:3066 fight.cc:3064 fight.cc:3072
 msgid "'s equipment vanishes!"
 msgstr "의 장비가 사라졌다!"
 
-#: fight.cc:3072 fight.cc:3070
+#: fight.cc:3072 fight.cc:3070 fight.cc:3078
 msgid " appears from thin air!"
 msgstr "(이)가 나타났다!"
 
-#: fight.cc:3151 fight.cc:3149
+#: fight.cc:3151 fight.cc:3149 fight.cc:3157
 msgid "a chaos effect from "
 msgstr ""
 
 #. / 1. 수비자, 2. convulse의 동사형, 3. 마침표나 느낌표
 #. / 수비자, 마침표나 느낌표
 #: fight.cc:3357 fight.cc:3400 fight.cc:3417 fight.cc:3355 fight.cc:3397
-#: fight.cc:3413
+#: fight.cc:3413 fight.cc:3363 fight.cc:3405 fight.cc:3421
 #, c-format
 msgid "%s convulses%s"
 msgstr "%1$s는 경련을 일으켰다%2$s"
 
-#: fight.cc:3372 fight.cc:3369
+#: fight.cc:3372 fight.cc:3369 fight.cc:3377
 msgid "You are electrocuted!"
 msgstr "당신은 전기충격을 받았다!"
 
-#: fight.cc:3373 fight.cc:3370
+#: fight.cc:3373 fight.cc:3370 fight.cc:3378
 msgid "There is a sudden explosion of sparks!"
 msgstr "갑자기 스파크가 폭발했다!"
 
 #. / 1. 공격자의 이름.
-#: fight.cc:3502 fight.cc:3497
+#: fight.cc:3502 fight.cc:3497 fight.cc:3505
 #, c-format
 msgid "%s draws strength from your injuries!"
 msgstr "%s는 당신의 상처로부터 힘을 빼앗아갔다!"
 
 #. / 1. 공격자의 이름.
-#: fight.cc:3508 fight.cc:3503
+#: fight.cc:3508 fight.cc:3503 fight.cc:3511
 #, c-format
 msgid "%s is healed."
 msgstr "%s는 회복됐다."
@@ -5274,257 +5294,260 @@ msgid "hack-verb"
 msgstr "난도질했"
 
 #. / 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
-#: fight.cc:3696 fight.cc:3691
+#: fight.cc:3696 fight.cc:3691 fight.cc:3699
 #, c-format
 msgid "%s %s %s's last head off!"
 msgstr "%1$s는 %3$s의 마지막 머리를 %2$s다!"
 
 #. / 2. 공격명령의 동사형
-#: fight.cc:3716 fight.cc:3711
+#: fight.cc:3716 fight.cc:3711 fight.cc:3719
 #, c-format
 msgid "%s %s one of %s's heads off!"
 msgstr "%1$s는 %3$s의 머리들 중 하나를 %2$s다!"
 
-#: fight.cc:3733 fight.cc:3728
+#: fight.cc:3733 fight.cc:3728 fight.cc:3736
 msgid "The flame cauterises the wound!"
 msgstr "불꽃이 상처를 지졌다!"
 
-#: fight.cc:3739 fight.cc:3734
+#: fight.cc:3739 fight.cc:3734 fight.cc:3742
 msgid " grows two more!"
 msgstr " 두개 더 늘어났다!"
 
-#: fight.cc:3810 fight.cc:3805
+#: fight.cc:3810 fight.cc:3805 fight.cc:3813
 #, c-format
 msgid "%s is electrocuted!"
 msgstr "%s는 전기충격을 받았다!"
 
-#: fight.cc:3828 fight.cc:3823
+#: fight.cc:3828 fight.cc:3823 fight.cc:3831
 #, c-format
 msgid "You freeze %s!"
 msgstr "당신은 %s을/(를) 얼렸다!"
 
-#: fight.cc:3841 fight.cc:3836
+#: fight.cc:3841 fight.cc:3836 fight.cc:3844
 #, c-format
 msgid "You crush %s!"
 msgstr "당신은 %s을/(를) 분쇄했다!"
 
-#: fight.cc:3857 fight.cc:3852
+#: fight.cc:3857 fight.cc:3852 fight.cc:3860
 #, c-format
 msgid "You burn %s!"
 msgstr "당신은 %s을/(를) 불태웠다!"
 
-#: fight.cc:3887 fight.cc:3882
+#: fight.cc:3887 fight.cc:3882 fight.cc:3890
 #, c-format
 msgid "%s convulses in agony!"
 msgstr "%s는 고통으로 몸부림친다!"
 
-#: fight.cc:4437 fight.cc:4432
+#: fight.cc:4437 fight.cc:4432 fight.cc:4440
 msgid "Zin prevents your ally from violating sanctuary in its confusion."
 msgstr "진은 당신의 동료가 혼란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
 
-#: fight.cc:4442 fight.cc:4437
+#: fight.cc:4442 fight.cc:4437 fight.cc:4445
 msgid "Zin prevents your ally from violating sanctuary in its berserker rage."
 msgstr "진은 당신의 동료가 광란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
 
-#: fight.cc:4513 fight.cc:4508
+#: fight.cc:4513 fight.cc:4508 fight.cc:4516
 #, c-format
 msgid "%s tries to attack %s, but flinches away."
 msgstr "%s는 %s를 공격하려 했으나, 곧 기가 죽었다."
 
 #. / 수비자, block, 공격자의 소유형
-#: fight.cc:4555 fight.cc:4550
+#: fight.cc:4555 fight.cc:4550 fight.cc:4558
 #, c-format
 msgid "%s %s %s attack."
 msgstr "%1$s는 %3$s의 공격을 %2$s다."
 
 #. / 멀리서 정도로 번역하면 될듯.
-#: fight.cc:4755 fight.cc:4769 fight.cc:4750 fight.cc:4764
+#: fight.cc:4755 fight.cc:4769 fight.cc:4750 fight.cc:4764 fight.cc:4758
+#: fight.cc:4772
 msgid " from afar"
 msgstr " 멀리서"
 
 #. / 1. 무기 이름. ' %s로 '정도로 번역하면 될 것 같습니다. 사용처를 다 본건 아니지만 아마 morgue에 나올듯.
-#: fight.cc:4761 fight.cc:4756
+#: fight.cc:4761 fight.cc:4756 fight.cc:4764
 #, c-format
 msgid " with %s"
 msgstr " %s로 "
 
 #. / 1. 공격자, 2. 공격 동사, 3. 대상, 4. 디버깅 메시지, 5. 부가 설명, 6. 느낌표.
 #. / 대충 1. 5. 2. 3. 4. 6. 정도로 배열하면 될 듯 합니다.
-#: fight.cc:4789 fight.cc:4784
+#: fight.cc:4789 fight.cc:4784 fight.cc:4792
 #, c-format
 msgid "%s %s %s%s%s%s"
 msgstr "%1$s%5$s %3$s을/(를) %2$s다%6$s %4$s"
 
 #. / 1. 공격자 2. 동사 3. 대상
-#: fight.cc:4804 fight.cc:4799
+#: fight.cc:4804 fight.cc:4799 fight.cc:4807
 #, c-format
 msgid "%s %s %s but does no damage."
 msgstr "%1$s는 %3$s를 %2$s지만 아무런 부상도 입히지 못했다."
 
 #. / 1. 공격자 2. 공격 동사
-#: fight.cc:4834 fight.cc:4830
+#: fight.cc:4834 fight.cc:4830 fight.cc:4838
 #, c-format
 msgid "%s %s was poisonous!"
 msgstr "%s의 %s 때문에 중독됐다!"
 
-#: fight.cc:4841 fight.cc:4837
+#: fight.cc:4841 fight.cc:4837 fight.cc:4845
 #, c-format
 msgid "%s poisons %s!"
 msgstr "%s은/(는) %s를 중독시켰다!"
 
 #. / 1. 대상 2. is/are 3. 마침표나 느낌표
-#: fight.cc:4869 fight.cc:4865
+#: fight.cc:4869 fight.cc:4865 fight.cc:4873
 #, c-format
 msgid "%s %s covered in liquid flames%s"
 msgstr "%1$s는 액체 화염으로 뒤덮여있다%3$s"
 
-#: fight.cc:4919 fight.cc:4915
+#: fight.cc:4919 fight.cc:4915 fight.cc:4923
 msgid "You are splashed with acid!"
 msgstr "당신에게 산성 용액이 튀었다!"
 
-#: fight.cc:5057 fight.cc:5053
+#: fight.cc:5057 fight.cc:5053 fight.cc:5061
 #, c-format
 msgid "%s steals all your gold!"
 msgstr "%s는 당신의 모든 돈을 훔쳤다!"
 
-#: fight.cc:5060 fight.cc:5056
+#: fight.cc:5060 fight.cc:5056 fight.cc:5064
 #, c-format
 msgid "%s steals some of your gold!"
 msgstr "%s는 당신의 돈 일부를 훔쳤다!"
 
-#: fight.cc:5088 fight.cc:5084
+#: fight.cc:5088 fight.cc:5084 fight.cc:5092
 #, c-format
 msgid "%s steals %s!"
 msgstr "%s(이)가 %s를 훔친다!"
 
 #. / 대상, is/are
-#: fight.cc:5167 fight.cc:5163
+#: fight.cc:5167 fight.cc:5163 fight.cc:5171
 #, c-format
 msgid "%s %s engulfed in flames%s"
-msgstr "%1$s는 화염으로 휩싸였다%3$s\0%2$s"
+msgstr "%1$s는 화염으로 휩싸였다%3$s"
 
 #. / 공격자, draws, 대상
-#: fight.cc:5244 fight.cc:5240
+#: fight.cc:5244 fight.cc:5240 fight.cc:5248
 #, c-format
 msgid "%s draws strength from %s injuries!"
 msgstr "%s는 %s의 상처로부터 힘을 빼앗아간다!"
 
-#: fight.cc:5255 fight.cc:5250
+#: fight.cc:5255 fight.cc:5250 fight.cc:5258
 msgid "You feel less resilient."
 msgstr "당신의 피부가 푸석푸석해진다."
 
 #. / 대상, are/is
-#: fight.cc:5299 fight.cc:5294
+#: fight.cc:5299 fight.cc:5294 fight.cc:5302
 #, c-format
 msgid "%s %s engulfed in a cloud of spores!"
 msgstr "%s는 포자 연기로 둘러싸여있다!"
 
-#: fight.cc:5382 fight.cc:5377
+#: fight.cc:5382 fight.cc:5377 fight.cc:5385
 #, c-format
 msgid "%s devours some of your food!"
 msgstr "%s가 당신의 음식 일부를 먹어치웠다!"
 
-#: fight.cc:5387 fight.cc:5382
+#: fight.cc:5387 fight.cc:5382 fight.cc:5390
 #, c-format
 msgid "%s devours some of the food beneath you!"
 msgstr "%s가 당신 아래 놓여있던 음식 일부를 먹어치웠다!"
 
-#: fight.cc:5449 fight.cc:5444
+#: fight.cc:5449 fight.cc:5444 fight.cc:5452
 msgid " is very cold."
 msgstr "은/(는) 매우 차다."
 
-#: fight.cc:5486 fight.cc:5481
+#: fight.cc:5486 fight.cc:5481 fight.cc:5489
 #, c-format
 msgid "The eyeballs on your body gaze at %s."
 msgstr "당신의 몸에 난 눈알이 %s를 노려보았다."
 
-#: fight.cc:5513 fight.cc:5508
+#: fight.cc:5513 fight.cc:5508 fight.cc:5516
 msgid " dodges your spines."
 msgstr "은/(는) 당신의 가시를 피했다."
 
-#: fight.cc:5530 fight.cc:5525
+#: fight.cc:5530 fight.cc:5525 fight.cc:5533
 msgid " is struck by your spines."
 msgstr "은/(는) 당신의 가시에 맞았다."
 
 #. / 대상, stumble
-#: fight.cc:5566 fight.cc:5561
+#: fight.cc:5566 fight.cc:5561 fight.cc:5569
 #, c-format
 msgid "%s %s backwards!"
 msgstr "%s는 뒤쪽으로 비틀거렸다!"
 
 #. / 대상, fail, 공격자
-#: fight.cc:5832 fight.cc:5827
+#. / 대상, fail, 공격자
+#. / 지금 뭔가 문제있는 코드임.
+#: fight.cc:5832 fight.cc:5827 fight.cc:5836
 #, c-format
 msgid "Helpless, %s %s to dodge %s attack."
 msgstr "속수무책으로, %1$s는 %3$s의 공격을 피하지 못했다."
 
 #. / 대상, phase, its, 공격자, ./!
-#: fight.cc:5844 fight.cc:5839
+#: fight.cc:5844 fight.cc:5839 fight.cc:5848
 #, c-format
 msgid "%s momentarily %s out as %s attack passes through %s%s"
 msgstr "%1$s가 순간적으로 사라짐에 따라 %3$s의 공격은 허공을 갈랐다%5$s"
 
 #. / 공격자, 완전히/거의, 대상, ./!
-#: fight.cc:5860 fight.cc:5855
+#: fight.cc:5860 fight.cc:5855 fight.cc:5864
 #, c-format
 msgid "%s%s misses %s%s"
 msgstr "%1$s은/(는) %3$s를%2$s 놓쳤다%4$s"
 
 #. / 공격자, ./!
-#: fight.cc:5913 fight.cc:5908
+#: fight.cc:5913 fight.cc:5908 fight.cc:5917
 #, c-format
 msgid "Your shroud bends %s attack away%s"
 msgstr "당신의 장막은 %s의 공격 궤도를 구부렸다%s"
 
-#: fight.cc:5937 fight.cc:5932
+#: fight.cc:5937 fight.cc:5932 fight.cc:5941
 msgid "Your shroud falls apart!"
 msgstr "당신의 장막이 깨졌다!"
 
-#: fight.cc:6248 fight.cc:6243
+#: fight.cc:6248 fight.cc:6243 fight.cc:6252
 msgid "Really attack while being unarmed? "
 msgstr "진짜 맨손으로 공격할거임? "
 
-#: fight.cc:6250 fight.cc:6245
+#: fight.cc:6250 fight.cc:6245 fight.cc:6254
 #, c-format
 msgid "Really attack while wielding %s? "
 msgstr "진짜 %s를 든 채로 공격할거임? "
 
-#: fight.cc:6506 fight.cc:6501
+#: fight.cc:6506 fight.cc:6501 fight.cc:6510
 #, c-format
 msgid "You pounce on %s from a blind spot!"
 msgstr "당신은 사각으로부터 %s를 덮쳤다!"
 
-#: fight.cc:6507 fight.cc:6502
+#: fight.cc:6507 fight.cc:6502 fight.cc:6511
 #, c-format
 msgid "You strike %s from a blind spot!"
 msgstr "당신은 사각으로부터 %s를 가격했다!"
 
-#: fight.cc:6512 fight.cc:6507
+#: fight.cc:6512 fight.cc:6507 fight.cc:6516
 #, c-format
 msgid "You catch %s momentarily off-guard."
 msgstr "당신은 %s가 순간적으로 무방비한 틈을 노렸다."
 
-#: fight.cc:6519 fight.cc:6514
+#: fight.cc:6519 fight.cc:6514 fight.cc:6523
 #, c-format
 msgid "You catch %s completely off-guard!"
 msgstr "당신은 %s가 완전히 무방비한 순간을 노렸다!"
 
-#: fight.cc:6525 fight.cc:6520
+#: fight.cc:6525 fight.cc:6520 fight.cc:6529
 #, c-format
 msgid "You pounce on %s from behind!"
 msgstr "당신은 뒤에서 %s를 덮쳤다!"
 
-#: fight.cc:6526 fight.cc:6521
+#: fight.cc:6526 fight.cc:6521 fight.cc:6530
 #, c-format
 msgid "You strike %s from a behind!"
 msgstr "당신은 뒤에서 %s를 가격했다!"
 
-#: fight.cc:6534 fight.cc:6529
+#: fight.cc:6534 fight.cc:6529 fight.cc:6538
 #, c-format
 msgid "You pounce on the unaware %s!"
 msgstr "당신은 들키지 않은 채로 %s를 덮쳤다!"
 
-#: fight.cc:6538 fight.cc:6533
+#: fight.cc:6538 fight.cc:6533 fight.cc:6542
 #, c-format
 msgid "%s fails to defend %s."
 msgstr "%s는 %s를 방어하는데 실패했다."
@@ -5549,3 +5572,2239 @@ msgstr "쥐어짰"
 
 msgid "burn-verb"
 msgstr "불태웠"
+
+#: fight.cc:1884 fight.cc:1901 fight.cc:1909 fight.cc:1934 fight.cc:1942
+#: fight.cc:2071
+msgid "hit"
+msgstr ""
+
+#: fight.cc:1886
+msgid "clumsily bash"
+msgstr ""
+
+#: fight.cc:1903 fight.cc:1946
+msgid "bite"
+msgstr ""
+
+#: fight.cc:1905 fight.cc:1949
+msgid "maul"
+msgstr ""
+
+#: fight.cc:1911 fight.cc:1987
+msgid "slash"
+msgstr ""
+
+#: fight.cc:1913 fight.cc:1989 fight.cc:3689
+msgid "slice"
+msgstr ""
+
+#: fight.cc:1915
+msgid "shred"
+msgstr ""
+
+#: fight.cc:1922 fight.cc:2039
+msgid "scratch"
+msgstr ""
+
+#: fight.cc:1924 fight.cc:1944 fight.cc:2041 fight.cc:3682
+msgid "claw"
+msgstr ""
+
+#: fight.cc:1926 fight.cc:2043
+msgid "mangle"
+msgstr ""
+
+#: fight.cc:1928 fight.cc:2045
+msgid "eviscerate"
+msgstr ""
+
+#: fight.cc:1936 fight.cc:2063
+msgid "punch"
+msgstr ""
+
+#: fight.cc:1938 fight.cc:2065
+msgid "pummel"
+msgstr ""
+
+#: fight.cc:1951
+msgid "trample"
+msgstr ""
+
+#: fight.cc:1968
+msgid "puncture"
+msgstr ""
+
+#: fight.cc:1970
+msgid "impale"
+msgstr ""
+
+#: fight.cc:1973
+msgid "spit"
+msgstr ""
+
+#: fight.cc:1992
+msgid "dice"
+msgstr ""
+
+#: fight.cc:1997
+msgid "open"
+msgstr ""
+
+#: fight.cc:2004
+msgid "thump"
+msgstr ""
+
+#: fight.cc:2004
+msgid "sock"
+msgstr ""
+
+#: fight.cc:2006 fight.cc:2053
+msgid "bludgeon"
+msgstr ""
+
+#: fight.cc:2009
+msgid "crush"
+msgstr ""
+
+#: fight.cc:2016
+msgid "whack"
+msgstr ""
+
+#: fight.cc:2018 fight.cc:2057
+msgid "thrash"
+msgstr ""
+
+#: fight.cc:2026
+msgid "punish"
+msgstr ""
+
+#: fight.cc:2030
+msgid "devastate"
+msgstr ""
+
+#: fight.cc:2051
+msgid "tentacle-slap"
+msgstr ""
+
+#: fight.cc:2055
+msgid "batter"
+msgstr ""
+
+#: fight.cc:2387
+msgid "drain"
+msgstr ""
+
+#: fight.cc:2428
+msgid "bask"
+msgstr ""
+
+#: fight.cc:2552
+msgid "writhe"
+msgstr ""
+
+#: fight.cc:3682
+msgid "rip"
+msgstr ""
+
+#: fight.cc:3682
+msgid "tear"
+msgstr ""
+
+#: fight.cc:3689
+msgid "lop"
+msgstr ""
+
+#: fight.cc:3689
+msgid "chop"
+msgstr ""
+
+#: fight.cc:3689
+msgid "hack"
+msgstr ""
+
+#: fight.cc:4560
+msgid "block"
+msgstr ""
+
+#: fight.cc:5193
+msgid "freeze"
+msgstr ""
+
+#: fight.cc:5220
+msgid "shock"
+msgstr ""
+
+#: fight.cc:5349
+msgid "infuriate"
+msgstr ""
+
+#: fight.cc:5416
+msgid "sear"
+msgstr ""
+
+#: fight.cc:5571
+msgid "stumble"
+msgstr ""
+
+#: fight.cc:5594
+msgid "hold"
+msgstr ""
+
+#: fight.cc:5838
+msgid "fail"
+msgstr ""
+
+#: fight.cc:5851
+msgid "phase"
+msgstr ""
+
+#: stuff.cc:468
+msgid "You are now empty-clawed."
+msgstr ""
+
+#: stuff.cc:470
+msgid "You are now empty-tentacled."
+msgstr ""
+
+#: mutation-data.h:16
+msgid "tough skin"
+msgstr ""
+
+#: mutation-data.h:18
+msgid "You have tough skin (AC +1)."
+msgstr ""
+
+#: mutation-data.h:19
+msgid "You have very tough skin (AC +2)."
+msgstr ""
+
+#: mutation-data.h:20
+msgid "You have extremely tough skin (AC +3)."
+msgstr ""
+
+#: mutation-data.h:22 mutation-data.h:23 mutation-data.h:24
+msgid "Your skin toughens."
+msgstr ""
+
+#: mutation-data.h:26 mutation-data.h:27 mutation-data.h:28
+msgid "Your skin feels delicate."
+msgstr ""
+
+#: mutation-data.h:36
+msgid "Your muscles are strong (Str +"
+msgstr ""
+
+#: mutation-data.h:46
+msgid "Your mind is acute (Int +"
+msgstr ""
+
+#: mutation-data.h:56
+msgid "You are agile (Dex +"
+msgstr ""
+
+#: mutation-data.h:64
+msgid "poison resistance"
+msgstr ""
+
+#: mutation-data.h:66
+msgid "Your system is resistant to poisons."
+msgstr ""
+
+#: mutation-data.h:67
+msgid "You feel healthy."
+msgstr ""
+
+#: mutation-data.h:68
+msgid "You feel a little less healthy."
+msgstr ""
+
+#: mutation-data.h:74
+msgid "carnivore"
+msgstr ""
+
+#: mutation-data.h:76
+msgid "Your digestive system is specialised to digest meat."
+msgstr ""
+
+#: mutation-data.h:77
+msgid "Your digestive system is highly specialised to digest meat."
+msgstr ""
+
+#: mutation-data.h:78
+msgid "You are carnivorous and can eat meat at any time."
+msgstr ""
+
+#: mutation-data.h:80 mutation-data.h:81 mutation-data.h:82
+msgid "You hunger for flesh."
+msgstr ""
+
+#: mutation-data.h:84 mutation-data.h:85 mutation-data.h:86
+#: mutation-data.h:102 mutation-data.h:103 mutation-data.h:104
+msgid "You feel able to eat a more balanced diet."
+msgstr ""
+
+#: mutation-data.h:92
+msgid "herbivore"
+msgstr ""
+
+#: mutation-data.h:94
+msgid "You digest meat inefficiently."
+msgstr ""
+
+#: mutation-data.h:95
+msgid "You digest meat very inefficiently."
+msgstr ""
+
+#: mutation-data.h:96
+msgid "You are a herbivore."
+msgstr ""
+
+#: mutation-data.h:98 mutation-data.h:99 mutation-data.h:100
+msgid "You hunger for vegetation."
+msgstr ""
+
+#: mutation-data.h:110
+msgid "fire resistance"
+msgstr ""
+
+#: mutation-data.h:112
+msgid "Your flesh is heat resistant."
+msgstr ""
+
+#: mutation-data.h:113
+msgid "Your flesh is very heat resistant."
+msgstr ""
+
+#: mutation-data.h:114
+msgid "Your flesh is almost immune to the effects of heat."
+msgstr ""
+
+#: mutation-data.h:116 mutation-data.h:117 mutation-data.h:118
+#: mutation-data.h:138 mutation-data.h:139 mutation-data.h:140
+msgid "You feel a sudden chill."
+msgstr ""
+
+#: mutation-data.h:120 mutation-data.h:121 mutation-data.h:122
+#: mutation-data.h:134 mutation-data.h:135 mutation-data.h:136
+msgid "You feel hot for a moment."
+msgstr ""
+
+#: mutation-data.h:128
+msgid "cold resistance"
+msgstr ""
+
+#: mutation-data.h:130
+msgid "Your flesh is cold resistant."
+msgstr ""
+
+#: mutation-data.h:131
+msgid "Your flesh is very cold resistant."
+msgstr ""
+
+#: mutation-data.h:132
+msgid "Your flesh is almost immune to the effects of cold."
+msgstr ""
+
+#: mutation-data.h:146
+msgid "demonic guardian"
+msgstr ""
+
+#: mutation-data.h:148
+msgid "A weak demonic guardian rushes to your aid."
+msgstr ""
+
+#: mutation-data.h:149
+msgid "A demonic guardian rushes to your aid."
+msgstr ""
+
+#: mutation-data.h:150
+msgid "A powerful demonic guardian rushes to your aid."
+msgstr ""
+
+#: mutation-data.h:152
+msgid "You feel the presence of a demonic guardian."
+msgstr ""
+
+#: mutation-data.h:153 mutation-data.h:154
+msgid "Your guardian grows in power."
+msgstr ""
+
+#: mutation-data.h:156
+msgid "Your demonic guardian is gone."
+msgstr ""
+
+#: mutation-data.h:157 mutation-data.h:158
+msgid "Your demonic guardian is weakened."
+msgstr ""
+
+#: mutation-data.h:164
+msgid "electricity resistance"
+msgstr ""
+
+#: mutation-data.h:166
+msgid "You are resistant to electric shocks."
+msgstr ""
+
+#: mutation-data.h:167
+msgid "You feel insulated."
+msgstr ""
+
+#: mutation-data.h:168
+msgid "You feel conductive."
+msgstr ""
+
+#: mutation-data.h:174
+msgid "regeneration"
+msgstr ""
+
+#: mutation-data.h:176
+msgid "Your natural rate of healing is unusually fast."
+msgstr ""
+
+#: mutation-data.h:177
+msgid "You heal very quickly."
+msgstr ""
+
+#: mutation-data.h:178
+msgid "You regenerate."
+msgstr ""
+
+#: mutation-data.h:180 mutation-data.h:181
+msgid "You begin to heal more quickly."
+msgstr ""
+
+#: mutation-data.h:182
+msgid "You begin to regenerate."
+msgstr ""
+
+#: mutation-data.h:184 mutation-data.h:185 mutation-data.h:186
+msgid "Your rate of healing slows."
+msgstr ""
+
+#: mutation-data.h:192
+msgid "slow healing"
+msgstr ""
+
+#: mutation-data.h:194
+msgid "You heal slowly."
+msgstr ""
+
+#: mutation-data.h:195
+msgid "You heal very slowly."
+msgstr ""
+
+#: mutation-data.h:196
+msgid "You do not heal naturally."
+msgstr ""
+
+#: mutation-data.h:198 mutation-data.h:199
+msgid "You begin to heal more slowly."
+msgstr ""
+
+#: mutation-data.h:200
+msgid "You stop healing."
+msgstr ""
+
+#: mutation-data.h:202 mutation-data.h:203 mutation-data.h:204
+msgid "Your rate of healing increases."
+msgstr ""
+
+#: mutation-data.h:210
+msgid "fast metabolism"
+msgstr ""
+
+#: mutation-data.h:212
+msgid "You have a fast metabolism."
+msgstr ""
+
+#: mutation-data.h:213
+msgid "You have a very fast metabolism."
+msgstr ""
+
+#: mutation-data.h:214
+msgid "Your metabolism is lightning-fast."
+msgstr ""
+
+#: mutation-data.h:216 mutation-data.h:217 mutation-data.h:218
+msgid "You feel a little hungry."
+msgstr ""
+
+#: mutation-data.h:220 mutation-data.h:221 mutation-data.h:222
+msgid "Your metabolism slows."
+msgstr ""
+
+#: mutation-data.h:247
+msgid "You are weak (Str -"
+msgstr ""
+
+#: mutation-data.h:255
+msgid "You are dopey (Int -"
+msgstr ""
+
+#: mutation-data.h:263
+msgid "You are clumsy (Dex -"
+msgstr ""
+
+#: mutation-data.h:270
+msgid "teleport control"
+msgstr ""
+
+#: mutation-data.h:272
+msgid "You can control translocations."
+msgstr ""
+
+#: mutation-data.h:273
+msgid "You feel controlled."
+msgstr ""
+
+#: mutation-data.h:274
+msgid "You feel random."
+msgstr ""
+
+#: mutation-data.h:280
+msgid "teleportitis"
+msgstr ""
+
+#: mutation-data.h:282
+msgid "Space occasionally distorts in your vicinity."
+msgstr ""
+
+#: mutation-data.h:283
+msgid "Space sometimes distorts in your vicinity."
+msgstr ""
+
+#: mutation-data.h:284
+msgid "Space frequently distorts in your vicinity."
+msgstr ""
+
+#: mutation-data.h:286
+msgid "You feel weirdly uncertain."
+msgstr ""
+
+#: mutation-data.h:287 mutation-data.h:288
+msgid "You feel even more weirdly uncertain."
+msgstr ""
+
+#: mutation-data.h:290 mutation-data.h:291 mutation-data.h:292
+msgid "You feel stable."
+msgstr ""
+
+#: mutation-data.h:298
+msgid "magic resistance"
+msgstr ""
+
+#: mutation-data.h:300
+msgid "You are resistant to hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:301
+msgid "You are highly resistant to hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:302
+msgid "You are extremely resistant to the effects of hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:304
+msgid "You feel resistant to hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:305
+msgid "You feel more resistant to hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:306
+msgid "You feel almost impervious to the effects of hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:308 mutation-data.h:309
+msgid "You feel less resistant to hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:310
+msgid "You feel vulnerable to magic hostile enchantments."
+msgstr ""
+
+#: mutation-data.h:316
+msgid "speed"
+msgstr ""
+
+#: mutation-data.h:318
+msgid "You cover ground quickly."
+msgstr ""
+
+#: mutation-data.h:319
+msgid "You cover ground very quickly."
+msgstr ""
+
+#: mutation-data.h:320
+msgid "You cover ground extremely quickly."
+msgstr ""
+
+#: mutation-data.h:322 mutation-data.h:323 mutation-data.h:324
+#: mutation-data.h:344 mutation-data.h:345 mutation-data.h:346
+msgid "You feel quick."
+msgstr ""
+
+#: mutation-data.h:326 mutation-data.h:327 mutation-data.h:328
+#: mutation-data.h:340 mutation-data.h:341 mutation-data.h:342
+msgid "You feel sluggish."
+msgstr ""
+
+#: mutation-data.h:334
+msgid "slowness"
+msgstr ""
+
+#: mutation-data.h:336
+msgid "You cover ground slowly."
+msgstr ""
+
+#: mutation-data.h:337
+msgid "You cover ground very slowly."
+msgstr ""
+
+#: mutation-data.h:338
+msgid "You cover ground extremely slowly."
+msgstr ""
+
+#: mutation-data.h:352
+msgid "see invisible"
+msgstr ""
+
+#: mutation-data.h:354
+msgid "You have supernaturally acute eyesight."
+msgstr ""
+
+#: mutation-data.h:356 mutation-data.h:357 mutation-data.h:358
+#: mutation-data.h:568
+msgid "Your vision sharpens."
+msgstr ""
+
+#: mutation-data.h:360 mutation-data.h:361 mutation-data.h:362
+msgid "Your vision seems duller."
+msgstr ""
+
+#: mutation-data.h:368
+msgid "deformed body"
+msgstr ""
+
+#: mutation-data.h:370
+msgid "Armour fits poorly on your unusually shaped body."
+msgstr ""
+
+#: mutation-data.h:371
+msgid "Armour fits poorly on your deformed body."
+msgstr ""
+
+#: mutation-data.h:372
+msgid "Armour fits poorly on your badly deformed body."
+msgstr ""
+
+#: mutation-data.h:374
+msgid "Your body twists unusually."
+msgstr ""
+
+#: mutation-data.h:375 mutation-data.h:376
+msgid "Your body twists and deforms."
+msgstr ""
+
+#: mutation-data.h:378
+msgid "Your body's shape seems more normal."
+msgstr ""
+
+#: mutation-data.h:379 mutation-data.h:380
+msgid "Your body's shape seems slightly more normal."
+msgstr ""
+
+#: mutation-data.h:386
+msgid "teleport at will"
+msgstr ""
+
+#: mutation-data.h:388
+msgid "You can teleport at will."
+msgstr ""
+
+#: mutation-data.h:389
+msgid "You are good at teleporting at will."
+msgstr ""
+
+#: mutation-data.h:390
+msgid "You can teleport instantly at will."
+msgstr ""
+
+#: mutation-data.h:392
+msgid "You feel jumpy."
+msgstr ""
+
+#: mutation-data.h:393
+msgid "You feel more jumpy."
+msgstr ""
+
+#: mutation-data.h:394
+msgid "You feel even more jumpy."
+msgstr ""
+
+#: mutation-data.h:396
+msgid "You feel a little less jumpy."
+msgstr ""
+
+#: mutation-data.h:397 mutation-data.h:398
+msgid "You feel less jumpy."
+msgstr ""
+
+#: mutation-data.h:404
+msgid "spit poison"
+msgstr ""
+
+#: mutation-data.h:406
+msgid "You can spit poison."
+msgstr ""
+
+#: mutation-data.h:407
+msgid "You can spit moderately strong poison."
+msgstr ""
+
+#: mutation-data.h:408
+msgid "You can spit strong poison."
+msgstr ""
+
+#: mutation-data.h:410 mutation-data.h:411 mutation-data.h:412
+msgid "There is a nasty taste in your mouth for a moment."
+msgstr ""
+
+#: mutation-data.h:414 mutation-data.h:415 mutation-data.h:416
+msgid "You feel an ache in your throat."
+msgstr ""
+
+#: mutation-data.h:422
+msgid "breathe flames"
+msgstr ""
+
+#: mutation-data.h:424
+msgid "You can breathe flames."
+msgstr ""
+
+#: mutation-data.h:425
+msgid "You can breathe fire."
+msgstr ""
+
+#: mutation-data.h:426
+msgid "You can breathe blasts of fire."
+msgstr ""
+
+#: mutation-data.h:428 mutation-data.h:429 mutation-data.h:430
+msgid "Your throat feels hot."
+msgstr ""
+
+#: mutation-data.h:432 mutation-data.h:433 mutation-data.h:434
+msgid "A chill runs up and down your throat."
+msgstr ""
+
+#: mutation-data.h:440
+msgid "blink"
+msgstr ""
+
+#: mutation-data.h:442
+msgid "You can translocate small distances at will."
+msgstr ""
+
+#: mutation-data.h:443
+msgid "You are good at translocating small distances at will."
+msgstr ""
+
+#: mutation-data.h:444
+msgid "You can translocate small distances instantaneously."
+msgstr ""
+
+#: mutation-data.h:446
+msgid "You feel jittery."
+msgstr ""
+
+#: mutation-data.h:447
+msgid "You feel more jittery."
+msgstr ""
+
+#: mutation-data.h:448
+msgid "You feel even more jittery."
+msgstr ""
+
+#: mutation-data.h:450
+msgid "You feel a little less jittery."
+msgstr ""
+
+#: mutation-data.h:451 mutation-data.h:452
+msgid "You feel less jittery."
+msgstr ""
+
+#: mutation-data.h:460
+msgid "Your muscles are strong, but stiff (Str +1, Dex -1)."
+msgstr ""
+
+#: mutation-data.h:461
+msgid "Your muscles are very strong, but stiff (Str +2, Dex -2)."
+msgstr ""
+
+#: mutation-data.h:462
+msgid "Your muscles are extremely strong, but stiff (Str +3, Dex -3)."
+msgstr ""
+
+#: mutation-data.h:464 mutation-data.h:465 mutation-data.h:466
+#: mutation-data.h:486 mutation-data.h:487 mutation-data.h:488
+msgid "Your muscles feel sore."
+msgstr ""
+
+#: mutation-data.h:468 mutation-data.h:469 mutation-data.h:470
+#: mutation-data.h:482 mutation-data.h:483 mutation-data.h:484
+msgid "Your muscles feel loose."
+msgstr ""
+
+#: mutation-data.h:478
+msgid "Your muscles are flexible, but weak (Str -1, Dex +1)."
+msgstr ""
+
+#: mutation-data.h:479
+msgid "Your muscles are very flexible, but weak (Str -2, Dex +2)."
+msgstr ""
+
+#: mutation-data.h:480
+msgid "Your muscles are extremely flexible, but weak (Str -3, Dex +3)."
+msgstr ""
+
+#: mutation-data.h:494
+msgid "screaming"
+msgstr ""
+
+#: mutation-data.h:496
+msgid "You occasionally shout uncontrollably."
+msgstr ""
+
+#: mutation-data.h:497
+msgid "You sometimes yell uncontrollably."
+msgstr ""
+
+#: mutation-data.h:498
+msgid "You frequently scream uncontrollably."
+msgstr ""
+
+#: mutation-data.h:500
+msgid "You feel the urge to shout."
+msgstr ""
+
+#: mutation-data.h:501
+msgid "You feel a strong urge to yell."
+msgstr ""
+
+#: mutation-data.h:502
+msgid "You feel a strong urge to scream."
+msgstr ""
+
+#: mutation-data.h:504
+msgid "Your urge to shout disappears."
+msgstr ""
+
+#: mutation-data.h:505
+msgid "Your urge to yell lessens."
+msgstr ""
+
+#: mutation-data.h:506
+msgid "Your urge to scream lessens."
+msgstr ""
+
+#: mutation-data.h:512
+msgid "clarity"
+msgstr ""
+
+#: mutation-data.h:514
+msgid "You possess an exceptional clarity of mind."
+msgstr ""
+
+#: mutation-data.h:515
+msgid "Your thoughts seem clearer."
+msgstr ""
+
+#: mutation-data.h:516
+msgid "Your thinking seems confused."
+msgstr ""
+
+#: mutation-data.h:522
+msgid "berserk"
+msgstr ""
+
+#: mutation-data.h:524
+msgid "You tend to lose your temper in combat."
+msgstr ""
+
+#: mutation-data.h:525
+msgid "You often lose your temper in combat."
+msgstr ""
+
+#: mutation-data.h:526
+msgid "You have an uncontrollable temper."
+msgstr ""
+
+#: mutation-data.h:528
+msgid "You feel a little pissed off."
+msgstr ""
+
+#: mutation-data.h:529
+msgid "You feel angry."
+msgstr ""
+
+#: mutation-data.h:530
+msgid "You feel extremely angry at everything!"
+msgstr ""
+
+#: mutation-data.h:532
+msgid "You feel a little more calm."
+msgstr ""
+
+#: mutation-data.h:533 mutation-data.h:534
+msgid "You feel a little less angry."
+msgstr ""
+
+#: mutation-data.h:540
+msgid "deterioration"
+msgstr ""
+
+#: mutation-data.h:542
+msgid "Your body is slowly deteriorating."
+msgstr ""
+
+#: mutation-data.h:543
+msgid "Your body is deteriorating."
+msgstr ""
+
+#: mutation-data.h:544
+msgid "Your body is rapidly deteriorating."
+msgstr ""
+
+#: mutation-data.h:546 mutation-data.h:547
+msgid "You feel yourself wasting away."
+msgstr ""
+
+#: mutation-data.h:548
+msgid "You feel your body start to fall apart."
+msgstr ""
+
+#: mutation-data.h:550
+msgid "You feel healthier."
+msgstr ""
+
+#: mutation-data.h:551 mutation-data.h:552
+msgid "You feel a little healthier."
+msgstr ""
+
+#: mutation-data.h:558
+msgid "blurry vision"
+msgstr ""
+
+#: mutation-data.h:560
+msgid "Your vision is a little blurry."
+msgstr ""
+
+#: mutation-data.h:561
+msgid "Your vision is quite blurry."
+msgstr ""
+
+#: mutation-data.h:562
+msgid "Your vision is extremely blurry."
+msgstr ""
+
+#: mutation-data.h:564 mutation-data.h:565 mutation-data.h:566
+msgid "Your vision blurs."
+msgstr ""
+
+#: mutation-data.h:569 mutation-data.h:570
+msgid "Your vision sharpens a little."
+msgstr ""
+
+#: mutation-data.h:576
+msgid "mutation resistance"
+msgstr ""
+
+#: mutation-data.h:578
+msgid "You are somewhat resistant to further mutation."
+msgstr ""
+
+#: mutation-data.h:579
+msgid ""
+"You are somewhat resistant to both further mutation and mutation removal."
+msgstr ""
+
+#: mutation-data.h:580
+msgid ""
+"Your current mutations are irrevocably fixed, and you can mutate no more."
+msgstr ""
+
+#: mutation-data.h:582 mutation-data.h:583
+msgid "You feel genetically stable."
+msgstr ""
+
+#: mutation-data.h:584
+msgid "You feel genetically immutable."
+msgstr ""
+
+#: mutation-data.h:586 mutation-data.h:587 mutation-data.h:588
+msgid "You feel genetically unstable."
+msgstr ""
+
+#: mutation-data.h:596
+msgid "You are frail (-10% HP)."
+msgstr ""
+
+#: mutation-data.h:597
+msgid "You are very frail (-20% HP)."
+msgstr ""
+
+#: mutation-data.h:598
+msgid "You are extremely frail (-30% HP)."
+msgstr ""
+
+#: mutation-data.h:600 mutation-data.h:601 mutation-data.h:602
+#: mutation-data.h:622 mutation-data.h:623 mutation-data.h:624
+msgid "You feel frail."
+msgstr ""
+
+#: mutation-data.h:604 mutation-data.h:605 mutation-data.h:606
+#: mutation-data.h:618 mutation-data.h:619 mutation-data.h:620
+msgid "You feel robust."
+msgstr ""
+
+#: mutation-data.h:614
+msgid "You are robust (+10% HP)."
+msgstr ""
+
+#: mutation-data.h:615
+msgid "You are very robust (+20% HP)."
+msgstr ""
+
+#: mutation-data.h:616
+msgid "You are extremely robust (+30% HP)."
+msgstr ""
+
+#: mutation-data.h:630
+msgid "unbreathing"
+msgstr ""
+
+#: mutation-data.h:632
+msgid "You do not need to breathe."
+msgstr ""
+
+#: mutation-data.h:633
+msgid "You feel breathless."
+msgstr ""
+
+#: mutation-data.h:640
+msgid "torment resistance"
+msgstr ""
+
+#: mutation-data.h:642
+msgid "You are immune to unholy pain and torment."
+msgstr ""
+
+#: mutation-data.h:643 mutation-data.h:959
+msgid "You feel a strange anaesthesia."
+msgstr ""
+
+#: mutation-data.h:650
+msgid "life protection"
+msgstr ""
+
+#: mutation-data.h:652
+msgid "You resist negative energy."
+msgstr ""
+
+#: mutation-data.h:653
+msgid "You are quite resistant to negative energy."
+msgstr ""
+
+#: mutation-data.h:654
+msgid "You are immune to negative energy."
+msgstr ""
+
+#: mutation-data.h:656 mutation-data.h:657 mutation-data.h:658
+msgid "You feel negative."
+msgstr ""
+
+#: mutation-data.h:666
+msgid "hurl hellfire"
+msgstr ""
+
+#: mutation-data.h:668
+msgid "You can hurl blasts of hellfire."
+msgstr ""
+
+#: mutation-data.h:669
+msgid "You smell fire and brimstone."
+msgstr ""
+
+#: mutation-data.h:676
+msgid "throw flames of Gehenna"
+msgstr ""
+
+#: mutation-data.h:678
+msgid "You can throw forth the flames of Gehenna."
+msgstr ""
+
+#: mutation-data.h:679
+msgid "You smell the fires of Gehenna."
+msgstr ""
+
+#: mutation-data.h:686
+msgid "throw frost of Cocytus"
+msgstr ""
+
+#: mutation-data.h:688
+msgid "You can throw forth the frost of Cocytus."
+msgstr ""
+
+#: mutation-data.h:689
+msgid "You feel the icy cold of Cocytus chill your soul."
+msgstr ""
+
+#: mutation-data.h:697
+msgid "horns"
+msgstr ""
+
+#: mutation-data.h:699
+msgid "You have a pair of small horns on your head."
+msgstr ""
+
+#: mutation-data.h:700
+msgid "You have a pair of horns on your head."
+msgstr ""
+
+#: mutation-data.h:701
+msgid "You have a pair of large horns on your head."
+msgstr ""
+
+#: mutation-data.h:703
+msgid "A pair of horns grows on your head!"
+msgstr ""
+
+#: mutation-data.h:704 mutation-data.h:705
+msgid "The horns on your head grow some more."
+msgstr ""
+
+#: mutation-data.h:707
+msgid "The horns on your head shrink away."
+msgstr ""
+
+#: mutation-data.h:708 mutation-data.h:709
+msgid "The horns on your head shrink a bit."
+msgstr ""
+
+#: mutation-data.h:715
+msgid "beak"
+msgstr ""
+
+#: mutation-data.h:717
+msgid "You have a beak for a mouth."
+msgstr ""
+
+#: mutation-data.h:718
+msgid "Your mouth lengthens and hardens into a beak!"
+msgstr ""
+
+#: mutation-data.h:719
+msgid "Your beak shortens and softens into a mouth."
+msgstr ""
+
+#: mutation-data.h:725
+msgid "claws"
+msgstr ""
+
+#: mutation-data.h:727
+msgid "You have sharp fingernails."
+msgstr ""
+
+#: mutation-data.h:728
+msgid "You have very sharp fingernails."
+msgstr ""
+
+#: mutation-data.h:729
+msgid "You have claws for hands."
+msgstr ""
+
+#: mutation-data.h:731
+msgid "Your fingernails lengthen."
+msgstr ""
+
+#: mutation-data.h:732
+msgid "Your fingernails sharpen."
+msgstr ""
+
+#: mutation-data.h:733
+msgid "Your hands twist into claws."
+msgstr ""
+
+#: mutation-data.h:735
+msgid "Your fingernails shrink to normal size."
+msgstr ""
+
+#: mutation-data.h:736
+msgid "Your fingernails look duller."
+msgstr ""
+
+#: mutation-data.h:737
+msgid "Your hands feel fleshier."
+msgstr ""
+
+#: mutation-data.h:743
+msgid "fangs"
+msgstr ""
+
+#: mutation-data.h:745
+msgid "You have very sharp teeth."
+msgstr ""
+
+#: mutation-data.h:746
+msgid "You have extremely sharp teeth."
+msgstr ""
+
+#: mutation-data.h:747
+msgid "You have razor-sharp teeth."
+msgstr ""
+
+#: mutation-data.h:749
+msgid "Your teeth lengthen and sharpen."
+msgstr ""
+
+#: mutation-data.h:750
+msgid "Your teeth lengthen and sharpen some more."
+msgstr ""
+
+#: mutation-data.h:751
+msgid "Your teeth are very long and razor-sharp."
+msgstr ""
+
+#: mutation-data.h:753
+msgid "Your teeth shrink to normal size."
+msgstr ""
+
+#: mutation-data.h:754 mutation-data.h:755
+msgid "Your teeth shrink and become duller."
+msgstr ""
+
+#: mutation-data.h:761
+msgid "hooves"
+msgstr ""
+
+#: mutation-data.h:763
+msgid "You have large cloven feet."
+msgstr ""
+
+#: mutation-data.h:764
+msgid "You have hoof-like feet."
+msgstr ""
+
+#: mutation-data.h:765
+msgid "You have hooves in place of feet."
+msgstr ""
+
+#: mutation-data.h:767 mutation-data.h:768
+msgid "Your feet thicken and deform."
+msgstr ""
+
+#: mutation-data.h:769
+msgid "Your feet have mutated into hooves."
+msgstr ""
+
+#: mutation-data.h:771
+msgid "Your hooves expand and flesh out into feet!"
+msgstr ""
+
+#: mutation-data.h:772 mutation-data.h:773
+msgid "Your hooves look more like feet."
+msgstr ""
+
+#: mutation-data.h:779
+msgid "antennae"
+msgstr ""
+
+#: mutation-data.h:781
+msgid "You have a pair of small antennae on your head."
+msgstr ""
+
+#: mutation-data.h:782
+msgid "You have a pair of antennae on your head."
+msgstr ""
+
+#: mutation-data.h:783
+msgid "You have a pair of large antennae on your head (SInv)."
+msgstr ""
+
+#: mutation-data.h:785
+msgid "A pair of antennae grows on your head!"
+msgstr ""
+
+#: mutation-data.h:786 mutation-data.h:787
+msgid "The antennae on your head grow some more."
+msgstr ""
+
+#: mutation-data.h:789
+msgid "The antennae on your head shrink away."
+msgstr ""
+
+#: mutation-data.h:790 mutation-data.h:791
+msgid "The antennae on your head shrink a bit."
+msgstr ""
+
+#: mutation-data.h:797
+msgid "talons"
+msgstr ""
+
+#: mutation-data.h:799
+msgid "You have sharp toenails."
+msgstr ""
+
+#: mutation-data.h:800
+msgid "You have razor-sharp toenails."
+msgstr ""
+
+#: mutation-data.h:801
+msgid "You have claws for feet."
+msgstr ""
+
+#: mutation-data.h:803 mutation-data.h:804
+msgid "Your toenails lengthen and sharpen."
+msgstr ""
+
+#: mutation-data.h:805
+msgid "Your feet stretch into talons."
+msgstr ""
+
+#: mutation-data.h:807
+msgid "Your talons dull and shrink into feet."
+msgstr ""
+
+#: mutation-data.h:808 mutation-data.h:809
+msgid "Your talons look more like feet."
+msgstr ""
+
+#: mutation-data.h:815
+msgid "tentacles"
+msgstr ""
+
+#: mutation-data.h:817
+msgid "You have a mass of small tentacles instead of fingers."
+msgstr ""
+
+#: mutation-data.h:818
+msgid "You have a mass of tentacles instead of hands."
+msgstr ""
+
+#: mutation-data.h:819
+msgid "You have a mass of large tentacles instead of arms."
+msgstr ""
+
+#: mutation-data.h:821
+msgid "Your fingers turn into small tentacles."
+msgstr ""
+
+#: mutation-data.h:822
+msgid "Your hands turn into tentacles."
+msgstr ""
+
+#: mutation-data.h:823
+msgid "Your arms turn into large tentacles."
+msgstr ""
+
+#: mutation-data.h:825
+msgid "Your fingers look less like tentacles."
+msgstr ""
+
+#: mutation-data.h:826
+msgid "Your hands look less like tentacles."
+msgstr ""
+
+#: mutation-data.h:827
+msgid "Your arms look less like tentacles."
+msgstr ""
+
+#: mutation-data.h:834
+msgid "breathe poison"
+msgstr ""
+
+#: mutation-data.h:836
+msgid "You can exhale a cloud of poison."
+msgstr ""
+
+#: mutation-data.h:837
+msgid "You taste something nasty."
+msgstr ""
+
+#: mutation-data.h:838
+msgid "Your breath is less nasty."
+msgstr ""
+
+#: mutation-data.h:845
+msgid "stinger"
+msgstr ""
+
+#: mutation-data.h:847
+msgid "Your tail ends in a poisonous barb."
+msgstr ""
+
+#: mutation-data.h:848
+msgid "Your tail ends in a sharp poisonous barb."
+msgstr ""
+
+#: mutation-data.h:849
+msgid "Your tail ends in a wickedly sharp and poisonous barb."
+msgstr ""
+
+#: mutation-data.h:851
+msgid "A poisonous barb forms on the end of your tail."
+msgstr ""
+
+#: mutation-data.h:852
+msgid "The barb on your tail looks sharper."
+msgstr ""
+
+#: mutation-data.h:853
+msgid "The barb on your tail looks very sharp."
+msgstr ""
+
+#: mutation-data.h:855
+msgid "The barb on your tail disappears."
+msgstr ""
+
+#: mutation-data.h:856 mutation-data.h:857
+msgid "The barb on your tail seems less sharp."
+msgstr ""
+
+#: mutation-data.h:864
+msgid "large and strong wings"
+msgstr ""
+
+#: mutation-data.h:866
+msgid "Your wings are large and strong."
+msgstr ""
+
+#: mutation-data.h:867
+msgid "Your wings grow larger and stronger."
+msgstr ""
+
+#: mutation-data.h:868
+msgid "Your wings shrivel and weaken."
+msgstr ""
+
+#: mutation-data.h:875
+msgid "saprovore"
+msgstr ""
+
+#: mutation-data.h:877
+msgid "You can tolerate rotten meat."
+msgstr ""
+
+#: mutation-data.h:878
+msgid "You can eat rotten meat."
+msgstr ""
+
+#: mutation-data.h:879
+msgid "You thrive on rotten meat."
+msgstr ""
+
+#: mutation-data.h:887
+msgid "gourmand"
+msgstr ""
+
+#: mutation-data.h:889
+msgid "You like to eat raw meat."
+msgstr ""
+
+#: mutation-data.h:899
+msgid "You are covered in fur (AC +1)."
+msgstr ""
+
+#: mutation-data.h:900
+msgid "You are covered in thick fur (AC +2)."
+msgstr ""
+
+#: mutation-data.h:901
+msgid "Your thick and shaggy fur keeps you warm (AC +3, rC+)."
+msgstr ""
+
+#: mutation-data.h:903
+msgid "Fur sprouts all over your body."
+msgstr ""
+
+#: mutation-data.h:904
+msgid "Your fur grows into a thick mane."
+msgstr ""
+
+#: mutation-data.h:905
+msgid "Your thick fur grows shaggy and warm."
+msgstr ""
+
+#: mutation-data.h:907
+msgid "You shed all your fur."
+msgstr ""
+
+#: mutation-data.h:908
+msgid "Your thick fur recedes somewhat."
+msgstr ""
+
+#: mutation-data.h:909
+msgid "Your shaggy fur recedes somewhat."
+msgstr ""
+
+#: mutation-data.h:917
+msgid "You have an increased reservoir of magic (+10% MP)."
+msgstr ""
+
+#: mutation-data.h:918
+msgid "You have a considerably increased reservoir of magic (+20% MP)."
+msgstr ""
+
+#: mutation-data.h:919
+msgid "You have a greatly increased reservoir of magic (+30% MP)."
+msgstr ""
+
+#: mutation-data.h:921 mutation-data.h:922 mutation-data.h:923
+#: mutation-data.h:943 mutation-data.h:944 mutation-data.h:945
+msgid "You feel more energetic."
+msgstr ""
+
+#: mutation-data.h:925 mutation-data.h:926 mutation-data.h:927
+#: mutation-data.h:939 mutation-data.h:940 mutation-data.h:941
+msgid "You feel less energetic."
+msgstr ""
+
+#: mutation-data.h:935
+msgid "Your magical capacity is low (-10% MP)."
+msgstr ""
+
+#: mutation-data.h:936
+msgid "Your magical capacity is very low (-20% MP)."
+msgstr ""
+
+#: mutation-data.h:937
+msgid "Your magical capacity is extremely low (-30% MP)."
+msgstr ""
+
+#: mutation-data.h:953
+msgid "You are somewhat able to resist unholy torments (1 in 5 success)."
+msgstr ""
+
+#: mutation-data.h:954
+msgid "You are decently able to resist unholy torments (2 in 5 success)."
+msgstr ""
+
+#: mutation-data.h:955
+msgid "You are rather able to resist unholy torments (3 in 5 success)."
+msgstr ""
+
+#: mutation-data.h:957 mutation-data.h:958
+msgid "You feel a slight anaesthesia."
+msgstr ""
+
+#: mutation-data.h:967
+msgid "sense surroundings"
+msgstr ""
+
+#: mutation-data.h:969
+msgid "You passively map a small area around you."
+msgstr ""
+
+#: mutation-data.h:970
+msgid "You passively map the area around you."
+msgstr ""
+
+#: mutation-data.h:971
+msgid "You passively map a large area around you."
+msgstr ""
+
+#: mutation-data.h:973
+msgid "You feel a strange attunement to the structure of the dungeons."
+msgstr ""
+
+#: mutation-data.h:974
+msgid "Your attunement to dungeon structure grows."
+msgstr ""
+
+#: mutation-data.h:975
+msgid "Your attunement to dungeon structure grows further."
+msgstr ""
+
+#: mutation-data.h:977 mutation-data.h:978 mutation-data.h:979
+msgid "You feel slightly disoriented."
+msgstr ""
+
+#: mutation-data.h:987
+msgid ""
+"A meltable icy envelope protects you from harm and freezing vapours (AC +"
+msgstr ""
+
+#: mutation-data.h:988
+msgid "An icy envelope takes form around you."
+msgstr ""
+
+#: mutation-data.h:995 mutation-data.h:1001
+msgid "conserve scrolls"
+msgstr ""
+
+#: mutation-data.h:997
+msgid "You are very good at protecting items from fire."
+msgstr ""
+
+#: mutation-data.h:998
+msgid "You feel less concerned about heat."
+msgstr ""
+
+#: mutation-data.h:1005 mutation-data.h:1010
+msgid "conserve potions"
+msgstr ""
+
+#: mutation-data.h:1007
+msgid "You are very good at protecting items from cold."
+msgstr ""
+
+#: mutation-data.h:1008
+msgid "You feel less concerned about cold."
+msgstr ""
+
+#: mutation-data.h:1014 mutation-data.h:1020
+msgid "passive freeze"
+msgstr ""
+
+#: mutation-data.h:1016
+msgid "A frigid envelope surrounds you and freezes all who hurt you."
+msgstr ""
+
+#: mutation-data.h:1017
+msgid "Your skin feels very cold."
+msgstr ""
+
+#: mutation-data.h:1024
+msgid "nightstalker"
+msgstr ""
+
+#: mutation-data.h:1026
+msgid "You are slightly more attuned to the shadows."
+msgstr ""
+
+#: mutation-data.h:1027
+msgid "You are significantly more attuned to the shadows."
+msgstr ""
+
+#: mutation-data.h:1028
+msgid "You are completely attuned to the shadows."
+msgstr ""
+
+#: mutation-data.h:1030
+msgid "You slip into the darkness of the dungeon."
+msgstr ""
+
+#: mutation-data.h:1031
+msgid "You slip further into the darkness."
+msgstr ""
+
+#: mutation-data.h:1032
+msgid "You are surrounded by darkness."
+msgstr ""
+
+#: mutation-data.h:1034
+msgid "Your affinity for the darkness vanishes."
+msgstr ""
+
+#: mutation-data.h:1035 mutation-data.h:1036
+msgid "Your affinity for the darkness weakens."
+msgstr ""
+
+#: mutation-data.h:1042
+msgid "spiny"
+msgstr ""
+
+#: mutation-data.h:1044
+msgid "You are partially covered in sharp spines."
+msgstr ""
+
+#: mutation-data.h:1045
+msgid "You are mostly covered in sharp spines."
+msgstr ""
+
+#: mutation-data.h:1046
+msgid "You are completely covered in sharp spines."
+msgstr ""
+
+#: mutation-data.h:1048
+msgid "Sharp spines emerge from parts of your body."
+msgstr ""
+
+#: mutation-data.h:1049
+msgid "Sharp spines emerge from more of your body."
+msgstr ""
+
+#: mutation-data.h:1050
+msgid "Sharp spines emerge from your entire body."
+msgstr ""
+
+#: mutation-data.h:1052
+msgid "Your sharp spines disappear entirely."
+msgstr ""
+
+#: mutation-data.h:1053 mutation-data.h:1054
+msgid "Your sharp spines retract somewhat."
+msgstr ""
+
+#: mutation-data.h:1060
+msgid "powered by death"
+msgstr ""
+
+#: mutation-data.h:1062
+msgid "You can steal the life force of nearby defeated enemies."
+msgstr ""
+
+#: mutation-data.h:1063
+msgid "You can steal the life force of defeated enemies."
+msgstr ""
+
+#: mutation-data.h:1064
+msgid "You can steal the life force of all defeated enemies in sight."
+msgstr ""
+
+#: mutation-data.h:1066
+msgid "A wave of death washes over you."
+msgstr ""
+
+#: mutation-data.h:1067 mutation-data.h:1068
+msgid "The wave of death grows in power."
+msgstr ""
+
+#: mutation-data.h:1070
+msgid "Your control of surrounding life forces is gone."
+msgstr ""
+
+#: mutation-data.h:1071 mutation-data.h:1072
+msgid "Your control of surrounding life forces weakens."
+msgstr ""
+
+#: mutation-data.h:1078
+msgid "powered by pain"
+msgstr ""
+
+#: mutation-data.h:1080
+msgid "You sometimes regain a little magical energy from taking damage."
+msgstr ""
+
+#: mutation-data.h:1081
+msgid "You sometimes regain magical energy from taking damage."
+msgstr ""
+
+#: mutation-data.h:1082
+msgid "You sometimes regain a lot of magical energy from taking damage."
+msgstr ""
+
+#: mutation-data.h:1084
+msgid "You feel energised by your suffering."
+msgstr ""
+
+#: mutation-data.h:1085
+msgid "You feel even more energised by your suffering."
+msgstr ""
+
+#: mutation-data.h:1086
+msgid "You feel completely energised by your suffering."
+msgstr ""
+
+#: mutation-data.h:1097
+msgid "Your rubbery body absorbs attacks (AC +1)."
+msgstr ""
+
+#: mutation-data.h:1098
+msgid "Your pliable body absorbs attacks (AC +1, EV +1)."
+msgstr ""
+
+#: mutation-data.h:1099
+msgid "Your gelatinous body deflects attacks (AC +2, EV +2)."
+msgstr ""
+
+#: mutation-data.h:1101
+msgid "Your body becomes stretchy."
+msgstr ""
+
+#: mutation-data.h:1102
+msgid "Your body becomes more malleable."
+msgstr ""
+
+#: mutation-data.h:1103
+msgid "Your body becomes viscous."
+msgstr ""
+
+#: mutation-data.h:1105
+msgid "Your body returns to its normal consistency."
+msgstr ""
+
+#: mutation-data.h:1106 mutation-data.h:1107
+msgid "Your body becomes less viscous."
+msgstr ""
+
+#: mutation-data.h:1115
+msgid "Your body is partially covered in golden eyeballs (Acc +3)."
+msgstr ""
+
+#: mutation-data.h:1116
+msgid "Your body is mostly covered in golden eyeballs (Acc +5)."
+msgstr ""
+
+#: mutation-data.h:1117
+msgid "Your body is completely covered in golden eyeballs (Acc +7, SInv)."
+msgstr ""
+
+#: mutation-data.h:1119
+msgid "Eyeballs grow over part of your body."
+msgstr ""
+
+#: mutation-data.h:1120
+msgid "Eyeballs cover a large portion of your body."
+msgstr ""
+
+#: mutation-data.h:1121
+msgid "Eyeballs cover you completely."
+msgstr ""
+
+#: mutation-data.h:1123
+msgid "The eyeballs on your body disappear."
+msgstr ""
+
+#: mutation-data.h:1124 mutation-data.h:1125
+msgid "The eyeballs on your body recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1131
+msgid "translucent skin"
+msgstr ""
+
+#: mutation-data.h:1133
+msgid "Your skin is partially translucent."
+msgstr ""
+
+#: mutation-data.h:1134
+msgid "Your skin is mostly translucent (Stlth)."
+msgstr ""
+
+#: mutation-data.h:1135
+msgid "Your transparent skin reduces the accuracy of your foes (Stlth)."
+msgstr ""
+
+#: mutation-data.h:1137
+msgid "Your skin becomes partially translucent."
+msgstr ""
+
+#: mutation-data.h:1138
+msgid "Your skin becomes more translucent."
+msgstr ""
+
+#: mutation-data.h:1139
+msgid "Your skin becomes completely transparent."
+msgstr ""
+
+#: mutation-data.h:1141
+msgid "Your skin returns to its normal opacity."
+msgstr ""
+
+#: mutation-data.h:1142
+msgid "Your skin's translucency fades."
+msgstr ""
+
+#: mutation-data.h:1143
+msgid "Your skin's transparency fades."
+msgstr ""
+
+#: mutation-data.h:1149
+msgid "pseudopods"
+msgstr ""
+
+#: mutation-data.h:1151
+msgid "Armour fits poorly on your pseudopods."
+msgstr ""
+
+#: mutation-data.h:1152
+msgid "Armour fits poorly on your large pseudopods."
+msgstr ""
+
+#: mutation-data.h:1153
+msgid "Armour fits poorly on your massive pseudopods."
+msgstr ""
+
+#: mutation-data.h:1155
+msgid "Pseudopods emerge from your body."
+msgstr ""
+
+#: mutation-data.h:1156 mutation-data.h:1157
+msgid "Your pseudopods grow in size."
+msgstr ""
+
+#: mutation-data.h:1159
+msgid "Your pseudopods retract into your body."
+msgstr ""
+
+#: mutation-data.h:1160 mutation-data.h:1161
+msgid "Your pseudopods become smaller."
+msgstr ""
+
+#: mutation-data.h:1167
+msgid "spawn jellies when eating"
+msgstr ""
+
+#: mutation-data.h:1169
+msgid "You occasionally spawn a jelly by eating."
+msgstr ""
+
+#: mutation-data.h:1170
+msgid "You feel more connected to the slimes."
+msgstr ""
+
+#: mutation-data.h:1171
+msgid "Your connection to the slimes vanishes."
+msgstr ""
+
+#: mutation-data.h:1177
+msgid "acidic bite"
+msgstr ""
+
+#: mutation-data.h:1179
+msgid "You have acidic saliva."
+msgstr ""
+
+#: mutation-data.h:1180
+msgid "Acid begins to drip from your mouth."
+msgstr ""
+
+#: mutation-data.h:1181
+msgid "Your mouth feels dry."
+msgstr ""
+
+#: mutation-data.h:1190
+msgid "You are surrounded by a mild repulsion field (EV +2)."
+msgstr ""
+
+#: mutation-data.h:1191
+msgid "You are surrounded by a moderate repulsion field (EV +3)."
+msgstr ""
+
+#: mutation-data.h:1192
+msgid "You are surrounded by a strong repulsion field (EV +4, rMsl)."
+msgstr ""
+
+#: mutation-data.h:1194
+msgid "You begin to radiate repulsive energy."
+msgstr ""
+
+#: mutation-data.h:1195 mutation-data.h:1196
+msgid "Your repulsive radiation grows stronger."
+msgstr ""
+
+#: mutation-data.h:1198 mutation-data.h:1199 mutation-data.h:1200
+msgid "You feel less repulsive."
+msgstr ""
+
+#: mutation-data.h:1208 mutation-data.h:1262 mutation-data.h:1316
+#: mutation-data.h:1334 mutation-data.h:1370
+msgid "You are partially covered in colourless scales (AC +1)."
+msgstr ""
+
+#: mutation-data.h:1209
+msgid "You are mostly covered in icy blue scales (AC +2, EV -1)."
+msgstr ""
+
+#: mutation-data.h:1210
+msgid "You are completely covered in icy blue scales (AC +3, EV -1, rC+)."
+msgstr ""
+
+#: mutation-data.h:1212 mutation-data.h:1266 mutation-data.h:1320
+#: mutation-data.h:1338 mutation-data.h:1374
+msgid "Colourless scales grow over part of your body."
+msgstr ""
+
+#: mutation-data.h:1213
+msgid "Your colourless scales turn blue and spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1214
+msgid "Icy blue scales cover your body completely."
+msgstr ""
+
+#: mutation-data.h:1216 mutation-data.h:1270 mutation-data.h:1324
+#: mutation-data.h:1342 mutation-data.h:1378
+msgid "Your colourless scales disappear."
+msgstr ""
+
+#: mutation-data.h:1217 mutation-data.h:1218
+msgid "Your icy blue scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1226
+msgid "You are partially covered in iridescent scales (AC +4)."
+msgstr ""
+
+#: mutation-data.h:1227
+msgid "You are mostly covered in iridescent scales (AC +6)."
+msgstr ""
+
+#: mutation-data.h:1228
+msgid "You are completely covered in iridescent scales (AC +8)."
+msgstr ""
+
+#: mutation-data.h:1230
+msgid "Iridescent scales grow over part of your body."
+msgstr ""
+
+#: mutation-data.h:1231
+msgid "Iridescent scales spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1232
+msgid "Iridescent scales cover you completely."
+msgstr ""
+
+#: mutation-data.h:1234
+msgid "Your iridescent scales disappear."
+msgstr ""
+
+#: mutation-data.h:1235 mutation-data.h:1236
+msgid "Your iridescent scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1244
+msgid "You are partially covered in large bone plates (AC +2, SH +2)."
+msgstr ""
+
+#: mutation-data.h:1245
+msgid "You are mostly covered in large bone plates (AC +3, SH +3)."
+msgstr ""
+
+#: mutation-data.h:1246
+msgid "You are completely covered in large bone plates (AC +4, SH +4)."
+msgstr ""
+
+#: mutation-data.h:1248
+msgid "Large bone plates grow over parts of your arms."
+msgstr ""
+
+#: mutation-data.h:1249
+msgid "Large bone plates spread over more of your arms."
+msgstr ""
+
+#: mutation-data.h:1250
+msgid "Large bone plates cover your arms completely."
+msgstr ""
+
+#: mutation-data.h:1252
+msgid "Your large bone plates disappear."
+msgstr ""
+
+#: mutation-data.h:1253 mutation-data.h:1254
+msgid "Your large bone plates recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1263
+msgid "You are mostly covered in molten scales (AC +2, EV -1)."
+msgstr ""
+
+#: mutation-data.h:1264
+msgid "You are completely covered in molten scales (AC +3, EV -1, rF+)."
+msgstr ""
+
+#: mutation-data.h:1267
+msgid "Your colourless scales turn molten and spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1268
+msgid "Molten scales cover your body completely."
+msgstr ""
+
+#: mutation-data.h:1271 mutation-data.h:1272
+msgid "Your molten scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1280
+msgid "You are partially covered in rough black scales (AC +4, Dex -1)."
+msgstr ""
+
+#: mutation-data.h:1281
+msgid "You are mostly covered in rough black scales (AC +7, Dex -2)."
+msgstr ""
+
+#: mutation-data.h:1282
+msgid "You are completely covered in rough black scales (AC +10, Dex -3)."
+msgstr ""
+
+#: mutation-data.h:1284
+msgid "Rough black scales grow over part of your body."
+msgstr ""
+
+#: mutation-data.h:1285
+msgid "Rough black scales spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1286
+msgid "Rough black scales cover you completely."
+msgstr ""
+
+#: mutation-data.h:1288
+msgid "Your rough black scales disappear."
+msgstr ""
+
+#: mutation-data.h:1289 mutation-data.h:1290
+msgid "Your rough black scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1298
+msgid "You are partially covered in rugged brown scales (AC +2, +3% HP)."
+msgstr ""
+
+#: mutation-data.h:1299
+msgid "You are mostly covered in rugged brown scales (AC +2, +5% HP)."
+msgstr ""
+
+#: mutation-data.h:1300
+msgid "You are completely covered in rugged brown scales (AC +2, +7% HP)."
+msgstr ""
+
+#: mutation-data.h:1302
+msgid "Rugged brown scales grow over part of your body."
+msgstr ""
+
+#: mutation-data.h:1303
+msgid "Rugged brown scales spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1304
+msgid "Rugged brown scales cover you completely."
+msgstr ""
+
+#: mutation-data.h:1306
+msgid "Your rugged brown scales disappear."
+msgstr ""
+
+#: mutation-data.h:1307 mutation-data.h:1308
+msgid "Your rugged brown scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1317
+msgid "You are mostly covered in slimy green scales (AC +2, EV -1)."
+msgstr ""
+
+#: mutation-data.h:1318
+msgid "You are completely covered in slimy green scales (AC +3, EV -2, rPois)."
+msgstr ""
+
+#: mutation-data.h:1321
+msgid "Your colourless scales turn green and spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1322
+msgid "Slimy green scales cover your body completely."
+msgstr ""
+
+#: mutation-data.h:1325 mutation-data.h:1326
+msgid "Your slimy green scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1335
+msgid "You are mostly covered in thin metallic scales (AC +2)."
+msgstr ""
+
+#: mutation-data.h:1336
+msgid "You are completely covered in thin metallic scales (AC +3, rElec)."
+msgstr ""
+
+#: mutation-data.h:1339
+msgid "Your colourless scales are metallic and spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1340
+msgid "Thin metallic scales cover your body completely."
+msgstr ""
+
+#: mutation-data.h:1343 mutation-data.h:1344
+msgid "Your thin metallic scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1352
+msgid "You have a somewhat thin skeletal structure (Dex +2, Str -1, Stlth)."
+msgstr ""
+
+#: mutation-data.h:1353
+msgid "You have a moderately thin skeletal structure (Dex +4, Str -2, Stlth)."
+msgstr ""
+
+#: mutation-data.h:1354
+msgid ""
+"You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth)."
+msgstr ""
+
+#: mutation-data.h:1356
+msgid "Your bones become slightly less dense."
+msgstr ""
+
+#: mutation-data.h:1357
+msgid "Your bones become somewhat less dense."
+msgstr ""
+
+#: mutation-data.h:1358
+msgid "Your bones become less dense."
+msgstr ""
+
+#: mutation-data.h:1360
+msgid "Your skeletal structure returns to normal."
+msgstr ""
+
+#: mutation-data.h:1361 mutation-data.h:1362
+msgid "Your skeletal structure densifies."
+msgstr ""
+
+#: mutation-data.h:1371
+msgid "You are mostly covered in yellow scales (AC +2, rAcid+)."
+msgstr ""
+
+#: mutation-data.h:1372
+msgid "You are completely covered in yellow scales (AC +3, rAcid++)."
+msgstr ""
+
+#: mutation-data.h:1375
+msgid "Your colourless scales turn yellow and spread over more of your body."
+msgstr ""
+
+#: mutation-data.h:1376
+msgid "Yellow scales cover you completely."
+msgstr ""
+
+#: mutation-data.h:1379 mutation-data.h:1380
+msgid "Your yellow scales recede somewhat."
+msgstr ""
+
+#: mutation-data.h:1386
+msgid "camouflage"
+msgstr ""
+
+#: mutation-data.h:1388
+msgid "Your skin changes color to match your surroundings (Stlth)."
+msgstr ""
+
+#: mutation-data.h:1389
+msgid "Your skin blends seamlessly with your surroundings (Stlth)."
+msgstr ""
+
+#: mutation-data.h:1390
+msgid "Your skin perfectly mimics your surroundings (Stlth)."
+msgstr ""
+
+#: mutation-data.h:1392
+msgid "Your skin functions as natural camouflage."
+msgstr ""
+
+#: mutation-data.h:1393 mutation-data.h:1394
+msgid "Your natural camouflage becomes more effective."
+msgstr ""
+
+#: mutation-data.h:1396
+msgid "Your skin no longer functions as natural camouflage."
+msgstr ""
+
+#: mutation-data.h:1397 mutation-data.h:1398
+msgid "Your natural camouflage becomes less effective."
+msgstr ""
