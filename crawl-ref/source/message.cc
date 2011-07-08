@@ -308,7 +308,8 @@ class message_window
     {
         cgotoxy(1, n + 1, GOTO_MSG);
         line.display();
-        cprintf("%*s", width() - line.width(), "");
+        ::clear_to_end_of_line();
+        //cprintf("%*s", width() - line.width(), "");
     }
 
     // Place cursor at end of last non-empty line to handle prompts.
