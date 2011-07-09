@@ -1,1 +1,3 @@
-xgettext --keyword=N_ -c -j --from-code utf-8 -o Crawl_korean.po *.cc *.h
+xgettext --omit-header --keyword --keyword=V_ -c --from-code utf-8 -o Crawl_verbs.po *.cc
+xgettext --omit-header --keyword=N_ -c --from-code utf-8 -o Crawl_mutation.po mutation-data.h
+xgettext --keyword=N_ -c -j -x Crawl_mutation.po --from-code utf-8 -o Crawl_korean.po *.cc
