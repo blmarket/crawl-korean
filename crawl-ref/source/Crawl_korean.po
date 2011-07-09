@@ -5716,7 +5716,7 @@ msgstr "은(는) 크게 경련을 일으켰다!"
 
 #: effects_work.cc:161
 msgid " is blasted by Zin's holy word!"
-msgstr "은(는) 「진」의 성스러운 언어로 인해 격렬한 발작을 일으켰다!";
+msgstr "은(는) 「진」의 성스러운 언어로 인해 격렬한 발작을 일으켰다!"
 
 #. / 1. 주어, 2. speak/speaks
 #: effects_work.cc:199
