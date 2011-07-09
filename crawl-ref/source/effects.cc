@@ -3278,7 +3278,7 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 
     if (in_inv && rod.plus == rod.plus2)
     {
-        msg::stream << make_string(gettext("Your %s has recharged."), rod.name(DESC_QUALNAME).c_str())
+        msg::stream << make_stringf(gettext("Your %s has recharged."), rod.name(DESC_QUALNAME).c_str())
                     << std::endl;
         if (is_resting())
             stop_running();
