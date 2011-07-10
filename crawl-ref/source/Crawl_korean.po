@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 23:04+0900\n"
+"POT-Creation-Date: 2011-07-11 01:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1011,7 +1011,8 @@ msgstr ""
 msgid "explore horizon"
 msgstr ""
 
-#: command.cc:1600 command.cc:1617 stuff.cc:438
+#: command.cc:1600 command.cc:1617 stuff.cc:438 command.cc:1606
+#: command.cc:1623
 msgid "Okay, then."
 msgstr "네, 그러세요."
 
@@ -2080,180 +2081,182 @@ msgid "The rain has left you waist-deep in water!"
 msgstr "세찬 비로 인해 허리까지 빗물이 차올랐다!"
 
 #. / 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
-#: cloud.cc:861 cloud.cc:870
+#: cloud.cc:861 cloud.cc:870 cloud.cc:873
 #, c-format
 msgid "%s %s in the rain."
 msgstr ""
 
-#: cloud.cc:878 cloud.cc:887
+#: cloud.cc:878 cloud.cc:887 cloud.cc:890
 msgid "The rain washes away your illusions!"
 msgstr "당신의 환영들이 비에 씻겨 사라졌다!"
 
-#: cloud.cc:892 cloud.cc:901
+#: cloud.cc:892 cloud.cc:901 cloud.cc:904
 msgid "You choke on the stench!"
 msgstr "심한 악취에 숨이 막힌다!"
 
-#: cloud.cc:952 cloud.cc:986
+#: cloud.cc:952 cloud.cc:986 cloud.cc:989
 msgid "Strange energies course through your body."
 msgstr "기묘한 에너지가 당신의 몸속을 따라 흘렀다."
 
 #. / 한글화 하기 어려움. 일단 내비둘것.
-#: cloud.cc:1335 cloud.cc:1369
+#: cloud.cc:1335 cloud.cc:1369 cloud.cc:1372
 #, c-format
 msgid "%s %s standing in the rain."
 msgstr ""
 
 #. / 한글화 하기 몹시 어려움. 내비둘것.
-#: cloud.cc:1343 cloud.cc:1377
+#: cloud.cc:1343 cloud.cc:1377 cloud.cc:1380
 #, c-format
 msgid "%s %s in %s."
 msgstr ""
 
-#: command.cc:215
+#: command.cc:215 command.cc:219
 msgid ""
 "<cyan>[ +/L-click : Page down.   - : Page up.           Esc/R-click exits.]"
 msgstr ""
 
-#: command.cc:218
+#: command.cc:218 command.cc:222
 msgid ""
 "<cyan>[ + : Page down.   - : Page up.                           Esc exits.]"
 msgstr ""
 
-#: command.cc:267
+#: command.cc:267 command.cc:271
 msgid "Adjust (i)tems, (s)pells, or (a)bilities? "
 msgstr ""
 "어떤 키를 조절할 것인가?\n"
 "[i]아이템 [s]주문 [a]특수능력"
 
-#: command.cc:337
+#: command.cc:337 command.cc:341
 msgid "Adjust which item?"
 msgstr "어느 아이템 키를 바꿀 것인가?"
 
-#: command.cc:343 command.cc:401 command.cc:484
+#: command.cc:343 command.cc:401 command.cc:484 command.cc:347 command.cc:407
+#: command.cc:490
 msgid "Adjust to which letter? "
 msgstr "어느 키로 바꿀 것인가?"
 
 #. Select starting slot
-#: command.cc:366
+#: command.cc:366 command.cc:372
 msgid "Adjust which spell? "
 msgstr "어느 주문의 키를 바꿀 것인가?"
 
-#: command.cc:390
+#: command.cc:390 command.cc:396
 msgid "You don't know that spell."
 msgstr "당신은 습득한 주문이 없다."
 
-#: command.cc:436
+#: command.cc:436 command.cc:442
 msgid "You don't currently have any abilities."
 msgstr "당신은 현재 아무 특수능력도 가지고 있지 않다."
 
-#: command.cc:443
+#: command.cc:443 command.cc:449
 msgid "Adjust which ability? (? or * to list) "
 msgstr "어느 특수능력의 키를 바꿀 것인가? (? 또는 *로 리스트)"
 
-#: command.cc:471
+#: command.cc:471 command.cc:477
 msgid "No such ability."
 msgstr "그런 특수능력은 없다."
 
-#: command.cc:497
+#: command.cc:497 command.cc:503
 msgid "That would be singularly pointless."
 msgstr "이건 뭐 의미도 없고 감동도 없고..."
 
 #. / 키가 바뀌었음을 알려주는 메시지.
 #. / Swapping with: a - evoke skill 따위의 내용이 됨.
-#: command.cc:509
+#: command.cc:509 command.cc:515
 msgid "Swapping with: "
 msgstr "키를 교체함: "
 
 #. / Moving to: key - skill name 따위의 내용이 됨.
-#: command.cc:520
+#: command.cc:520 command.cc:526
 msgid "Moving to: "
 msgstr "키를 이동함: "
 
-#: command.cc:542
+#: command.cc:542 command.cc:548
 msgid "Cloak  "
 msgstr "망토   "
 
-#: command.cc:543
+#: command.cc:543 command.cc:549
 msgid "Helmet "
 msgstr "머리   "
 
-#: command.cc:544
+#: command.cc:544 command.cc:550
 msgid "Gloves "
 msgstr "장갑   "
 
-#: command.cc:545
+#: command.cc:545 command.cc:551
 msgid "Shield "
 msgstr "방패   "
 
-#: command.cc:546
+#: command.cc:546 command.cc:552
 msgid "Armour "
 msgstr "갑옷   "
 
-#: command.cc:549
+#: command.cc:549 command.cc:555
 msgid "Barding"
 msgstr "마갑   "
 
-#: command.cc:550
+#: command.cc:550 command.cc:556
 msgid "Boots  "
 msgstr "신발   "
 
-#: command.cc:551 command.cc:607
+#: command.cc:551 command.cc:607 command.cc:557 command.cc:613
 msgid "unknown"
 msgstr "미확인 "
 
-#: command.cc:555
+#: command.cc:555 command.cc:561
 msgid "    (unavailable)"
 msgstr "       (착용불가)"
 
-#: command.cc:559 command.cc:613 command.cc:665
+#: command.cc:559 command.cc:613 command.cc:665 command.cc:565 command.cc:619
+#: command.cc:671
 msgid "    (currently unavailable)"
 msgstr "            (현재 착용불가)"
 
-#: command.cc:569
+#: command.cc:569 command.cc:575
 msgid "    (restricted)"
 msgstr "        (방해됨)"
 
-#: command.cc:596
+#: command.cc:596 command.cc:602
 msgid "Left ring"
 msgstr "왼손     "
 
-#: command.cc:597
+#: command.cc:597 command.cc:603
 msgid "Right ring"
 msgstr "오른손    "
 
-#: command.cc:598
+#: command.cc:598 command.cc:604
 msgid "Amulet"
 msgstr "부적  "
 
-#: command.cc:599
+#: command.cc:599 command.cc:605
 msgid "1st ring"
 msgstr "첫째 반지  "
 
-#: command.cc:600
+#: command.cc:600 command.cc:606
 msgid "2nd ring"
 msgstr "둘째 반지  "
 
-#: command.cc:601
+#: command.cc:601 command.cc:607
 msgid "3rd ring"
 msgstr "셋째 반지  "
 
-#: command.cc:602
+#: command.cc:602 command.cc:608
 msgid "4th ring"
 msgstr "넷째 반지  "
 
-#: command.cc:603
+#: command.cc:603 command.cc:609
 msgid "5th ring"
 msgstr "다섯째 반지"
 
-#: command.cc:604
+#: command.cc:604 command.cc:610
 msgid "6th ring"
 msgstr "여섯째 반지"
 
-#: command.cc:605
+#: command.cc:605 command.cc:611
 msgid "7th ring"
 msgstr "일곱째 반지"
 
-#: command.cc:606
+#: command.cc:606 command.cc:612
 msgid "8th ring"
 msgstr "여덟째 반지"
 
@@ -2261,41 +2264,41 @@ msgstr "여덟째 반지"
 #.
 #. Yes, this is already on the screen... I'm outputing it
 #. for completeness and to avoid confusion.
-#: command.cc:649
+#: command.cc:649 command.cc:655
 msgid "Current   : "
 msgstr "현재      : "
 
 #. / 칼날의 손
-#: command.cc:663
+#: command.cc:663 command.cc:669
 msgid "    blade "
 msgstr "   칼날의 "
 
-#: command.cc:667
+#: command.cc:667 command.cc:673
 msgid "    empty "
 msgstr " 비어있는 "
 
-#: command.cc:682
+#: command.cc:682 command.cc:688
 msgid "Primary   : "
 msgstr "주        : "
 
-#: command.cc:684
+#: command.cc:684 command.cc:690
 msgid "Secondary : "
 msgstr "보조      : "
 
-#: command.cc:698
+#: command.cc:698 command.cc:704
 msgid "    none"
 msgstr "    없음"
 
 #. Now we print out the current default fire weapon.
-#: command.cc:707
+#: command.cc:707 command.cc:713
 msgid "Firing    : "
 msgstr "발사      : "
 
-#: command.cc:718
+#: command.cc:718 command.cc:724
 msgid "    nothing"
 msgstr "       없음"
 
-#: command.cc:724
+#: command.cc:724 command.cc:730
 msgid " (empty)"
 msgstr "  (없음)"
 
@@ -2371,7 +2374,7 @@ msgstr ""
 "<w>Ctrl-F</w> : 몬스터 타게팅 모드\n"
 "<w>Ctrl-P</w> : 명령어창 반복\n"
 
-#: command.cc:792
+#: command.cc:792 command.cc:798
 msgid ""
 "<h>Targeting (zap wands, cast spells, etc.):\n"
 "Most keys from examine surroundings work.\n"
@@ -2407,15 +2410,15 @@ msgstr ""
 "<w>)</w> : 이전 발사체 선택.\n"
 "<w>i</w> : 아이템 목록을 통해 선택.\n"
 
-#: command.cc:934
+#: command.cc:934 command.cc:940
 msgid "Describe which? "
 msgstr "어느 것의 정보를 볼 것인가? "
 
-#: command.cc:939
+#: command.cc:939 command.cc:945
 msgid "(CTRL-S to sort by monster toughness)"
 msgstr "(CTRL-S키 : 강한 몬스터 순으로 정렬)"
 
-#: command.cc:941
+#: command.cc:941 command.cc:947
 msgid "(CTRL-S to sort by name)"
 msgstr "(CTRL-S키 : 이름 순으로 정렬)"
 
@@ -4374,7 +4377,7 @@ msgstr ""
 msgid "The tide is released from %s call."
 msgstr ""
 
-#: command.cc:751
+#: command.cc:751 command.cc:757
 msgid ""
 "<h>Examine surroundings ('<w>x</w><h>' in main):\n"
 "<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
@@ -5078,12 +5081,197 @@ msgstr "당신 자신"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2352 fight.cc:5191 fight.cc:5414 fight.cc:2366 fight.cc:5205
 #: fight.cc:5428
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -6430,4 +6618,22 @@ msgstr "알 수 없는 명령어."
 
 #: main.cc:2064
 msgid "Unknown command. (For a list of commands type <w>??<lightgrey>.)"
+msgstr ""
+
+#: newgame.cc:107
+msgid "Viable character"
+msgstr ""
+
+#: newgame.cc:109
+msgid "Random character"
+msgstr ""
+
+#: newgame.cc:112 newgame.cc:116
+#, c-format
+msgid "Random %s"
+msgstr ""
+
+#: newgame.cc:112 newgame.cc:116
+#, c-format
+msgid "Viable %s"
 msgstr ""

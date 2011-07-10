@@ -975,7 +975,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
     switch (atk)
     {
     case UNAT_KICK:
-        aux_attack = aux_verb = "kick";
+        aux_attack = aux_verb = V_("kick");
         aux_damage = 5;
 
         if (player_mutation_level(MUT_HOOVES))
@@ -985,7 +985,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         }
         else if (you.has_usable_talons())
         {
-            aux_verb = "claw";
+            aux_verb = V_("claw");
 
             // Max talon damage: 8.
             aux_damage += player_mutation_level(MUT_TALONS);
@@ -999,13 +999,13 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         if (player_mutation_level(MUT_BEAK)
             && (!player_mutation_level(MUT_HORNS) || coinflip()))
         {
-            aux_attack = aux_verb = "peck";
+            aux_attack = aux_verb = V_("peck");
             aux_damage++;
             noise_factor = 75;
         }
         else
         {
-            aux_attack = aux_verb = "headbutt";
+            aux_attack = aux_verb = V_("headbutt");
             // Minotaurs used to get +5 damage here, now they get
             // +6 because of the horns.
             aux_damage += player_mutation_level(MUT_HORNS) * 3;
@@ -1024,7 +1024,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_TAILSLAP:
-        aux_attack = aux_verb = "tail-slap";
+        aux_attack = aux_verb = V_("tail-slap");
 
         aux_damage = 6 * you.has_usable_tail();
 
@@ -1039,24 +1039,24 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PUNCH:
-        aux_attack = aux_verb = "punch";
+        aux_attack = aux_verb = V_("punch");
         aux_damage = 5 + you.skill(SK_UNARMED_COMBAT) / 3;
 
         if (you.form == TRAN_BLADE_HANDS)
         {
-            aux_verb = "slash";
+            aux_verb = V_("slash");
             aux_damage += 6;
             noise_factor = 75;
         }
         else if (you.has_usable_claws())
         {
-            aux_verb = "claw";
+            aux_verb = V_("claw");
             aux_damage += roll_dice(you.has_claws(), 3);
         }
         else if (you.has_usable_tentacles())
         {
             // From 1 to 3 bonus damage, so not as good as claws.
-            aux_verb = "tentacle-slap";
+            aux_verb = V_("tentacle-slap");
             aux_damage += you.has_usable_tentacles();
             noise_factor = 125;
         }
@@ -1064,7 +1064,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_BITE:
-        aux_attack = aux_verb = "bite";
+        aux_attack = aux_verb = V_("bite");
         aux_damage += you.has_usable_fangs() * 2
                       + you.skill(SK_UNARMED_COMBAT) / 5;
         noise_factor = 75;
@@ -1089,7 +1089,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PSEUDOPODS:
-        aux_attack = aux_verb = "bludgeon";
+        aux_attack = aux_verb = V_("bludgeon");
         aux_damage += 4 * you.has_usable_pseudopods();
         noise_factor = 125;
         break;
@@ -1097,7 +1097,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
     // Tentacles both gives you a main attack (replacing punch)
     // and this secondary, high-damage attack.
     case UNAT_TENTACLES:
-        aux_attack = aux_verb = "squeeze";
+        aux_attack = aux_verb = V_("squeeze");
         aux_damage += 4 * you.has_usable_tentacles();
         noise_factor = 100; // Quieter than slapping.
         break;
@@ -1893,34 +1893,34 @@ int melee_attack::player_weapon_type_modify(int damage)
         case TRAN_BAT:
         case TRAN_PIG:
             if (damage < HIT_WEAK)
-                attack_verb = N_("hit");
+                attack_verb = V_("hit");
             else if (damage < HIT_STRONG)
-                attack_verb = N_("bite");
+                attack_verb = V_("bite");
             else
-                attack_verb = N_("maul");
+                attack_verb = V_("maul");
             break;
-        case TRAN_BLADE_HANDS:
+        case TRAV_BLADE_HANDS:
             if (damage < HIT_WEAK)
-                attack_verb = N_("hit");
+                attack_verb = V_("hit");
             else if (damage < HIT_MED)
-                attack_verb = N_("slash");
+                attack_verb = V_("slash");
             else if (damage < HIT_STRONG)
-                attack_verb = N_("slice");
+                attack_verb = V_("slice");
             else
-                attack_verb = N_("shred");
+                attack_verb = V_("shred");
             break;
-        case TRAN_STATUE:
-        case TRAN_LICH:
+        case TRAV_STATUE:
+        case TRAV_LICH:
             if (you.has_usable_claws())
             {
                 if (damage < HIT_WEAK)
-                    attack_verb = N_("scratch");
+                    attack_verb = V_("scratch");
                 else if (damage < HIT_MED)
-                    attack_verb = N_("claw");
+                    attack_verb = V_("claw");
                 else if (damage < HIT_STRONG)
-                    attack_verb = N_("mangle");
+                    attack_verb = V_("mangle");
                 else
-                    attack_verb = N_("eviscerate");
+                    attack_verb = V_("eviscerate");
                 break;
             }
             else if (you.has_usable_tentacles())
@@ -1936,26 +1936,26 @@ int melee_attack::player_weapon_type_modify(int damage)
                 break;
             }
             // or fall-through
-        case TRAN_ICE_BEAST:
+        case TRAV_ICE_BEAST:
             if (damage < HIT_WEAK)
-                attack_verb = N_("hit");
+                attack_verb = V_("hit");
             else if (damage < HIT_MED)
-                attack_verb = N_("punch");
+                attack_verb = V_("punch");
             else
-                attack_verb = N_("pummel");
+                attack_verb = V_("pummel");
             break;
-        case TRAN_DRAGON:
+        case TRAV_DRAGON:
             if (damage < HIT_WEAK)
-                attack_verb = N_("hit");
+                attack_verb = V_("hit");
             else if (damage < HIT_MED)
-                attack_verb = N_("claw");
+                attack_verb = V_("claw");
             else if (damage < HIT_STRONG)
-                attack_verb = N_("bite");
+                attack_verb = V_("bite");
             else
             {
-                attack_verb = N_("maul");
+                attack_verb = V_("maul");
                 if (coinflip())
-                    attack_verb = N_("trample");
+                    attack_verb = V_("trample");
             }
             break;
         case TRAN_NONE:

@@ -21,11 +21,13 @@
 
 #ifdef USE_GETTEXT
 #include <libintl.h>
-#define N_
 #else
 #define gettext
-#define N_
 #endif
+
+#define N_
+#define M_
+#define V_
 
 #ifdef TARGET_COMPILER_VC
 /* Disable warning about:
