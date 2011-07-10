@@ -991,7 +991,7 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
 
     case CMD_NO_CMD:
     case CMD_NO_CMD_DEFAULT:
-        mpr("Unknown command, not repeating.");
+        mpr(gettext("Unknown command, not repeating."));
         return (false);
 
     default:
@@ -2070,12 +2070,12 @@ void process_command(command_type cmd)
     default:
         if (crawl_state.game_is_hints())
         {
-           std::string msg = "Unknown command. (For a list of commands type "
-                             "<w>?\?<lightgrey>.)";
+           std::string msg = gettext("Unknown command. (For a list of commands type "
+                             "<w>?\?<lightgrey>.)");
            mpr(msg);
         }
         else // well, not examine, but...
-           mpr("Unknown command.", MSGCH_EXAMINE_FILTER);
+           mpr(gettext("Unknown command."), MSGCH_EXAMINE_FILTER);
         break;
     }
 }

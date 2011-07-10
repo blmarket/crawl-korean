@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 11:00+0900\n"
+"POT-Creation-Date: 2011-07-09 23:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1723,24 +1724,24 @@ msgstr ""
 msgid "Ration"
 msgstr ""
 
-#: startup.cc:149
+#: startup.cc:149 startup.cc:150
 msgid "Loading complete, press any key to start."
 msgstr ""
 
-#: startup.cc:598
+#: startup.cc:598 startup.cc:602
 msgid "Saved games:"
 msgstr ""
 
-#: abyss.cc:635
+#: abyss.cc:635 abyss.cc:726
 msgid "Xom snickers loudly."
 msgstr "좀은 낄낄거리며 폭소했다."
 
-#: abyss.cc:1391
+#: abyss.cc:1391 abyss.cc:1819
 msgid "This place is already infused with evil and corruption."
 msgstr "이 장소는 이미 사악함과 타락으로 물들어있다."
 
 #. / 아마도 lugonu의 것이겠지...
-#: abyss.cc:1419
+#: abyss.cc:1419 abyss.cc:1847
 msgid "'s Hand of Corruption reaches out!"
 msgstr "의 타락의 손이 뻗쳐온다!"
 
@@ -1896,84 +1897,84 @@ msgstr "%s은(는) 더욱 배고파 보인다."
 msgid "You hear a mighty clap of thunder!"
 msgstr "커다란 천둥번개 소리가 들린다!"
 
-#: beam.cc:686
+#: beam.cc:686 beam.cc:687
 #, c-format
 msgid "%s appears from out of thin air!"
 msgstr "%s이(가) 갑자기 나타났다!"
 
-#: beam.cc:826
+#: beam.cc:826 beam.cc:827
 msgid "The damaged grate falls apart into pieces."
 msgstr "쇠살대가 산산히 부서졌다."
 
 #. / slime pit의 slimey wall을 지칭하는 말이 들어가야함.
-#: beam.cc:831
+#: beam.cc:831 beam.cc:832
 msgid "slime"
 msgstr "슬라임"
 
 #. / 판데모니엄의 벽을 지칭하는 말임.
-#: beam.cc:834
+#: beam.cc:834 beam.cc:835
 msgid "weird stuff"
 msgstr "괴상한 것"
 
 #. / 일반 벽
-#: beam.cc:837
+#: beam.cc:837 beam.cc:838
 msgid "rock"
 msgstr "바위"
 
-#: beam.cc:838
+#: beam.cc:838 beam.cc:839
 #, c-format
 msgid "The %s liquefies and sinks out of sight."
 msgstr "%s은(는) 액화되어 시야에서 사라졌다."
 
-#: beam.cc:867
+#: beam.cc:867 beam.cc:868
 msgid "The wax appears to soften slightly."
 msgstr "밀납이 살짝 부드러워졌다."
 
-#: beam.cc:870
+#: beam.cc:870 beam.cc:871
 msgid "You smell warm wax."
 msgstr "당신은 따뜻한 밀납의 냄새를 맡았다."
 
-#: beam.cc:878
+#: beam.cc:878 beam.cc:879
 msgid "The wax bubbles and burns!"
 msgstr "밀납이 거품을 내며 타기 시작한다!"
 
-#: beam.cc:880
+#: beam.cc:880 beam.cc:881
 msgid "You smell burning wax."
 msgstr "당신은 불타는 밀납의 냄새를 맡았다."
 
-#: beam.cc:893
+#: beam.cc:893 beam.cc:894
 msgid "The tree burns like a torch!"
 msgstr "나무가 횃불처럼 불타오른다!"
 
-#: beam.cc:895
+#: beam.cc:895 beam.cc:896
 msgid "You smell burning wood."
 msgstr "당신은 나무가 타는 냄새를 맡았다."
 
-#: beam.cc:944
+#: beam.cc:944 beam.cc:945
 msgid "You hear a grinding noise."
 msgstr "갈려 없어지는 소음이 들린다."
 
-#: beam.cc:952
+#: beam.cc:952 beam.cc:953
 msgid "You hear the screech of bent metal."
 msgstr "금속이 구부러지는 날카로운 소리가 들린다."
 
-#: beam.cc:961
+#: beam.cc:961 beam.cc:962
 msgid "You hear a hideous screaming!"
 msgstr "끔찍한 비명소리가 들린다!"
 
-#: beam.cc:963
+#: beam.cc:963 beam.cc:964
 msgid "The idol screams as its substance crumbles away!"
 msgstr "입상이 비명소리를 내며 무너져내린다!"
 
-#: beam.cc:967
+#: beam.cc:967 beam.cc:968
 msgid "The idol twists and shakes as its substance crumbles away!"
 msgstr "입상이 뒤틀리고 진동하며 무너져 내린다!"
 
-#: beam.cc:973
+#: beam.cc:973 beam.cc:974
 msgid "The tree breaks and falls down!"
 msgstr "나무가 부러져 쓰러졌다!"
 
-#: beam.cc:976
+#: beam.cc:976 beam.cc:977
 msgid "You hear timber falling."
 msgstr "나뭇가지가 떨어지는 소리가 들린다."
 
@@ -2048,11 +2049,11 @@ msgstr "현혹에서 벗어나 정신을 차렸다!"
 msgid "You are no longer entranced."
 msgstr "황홀한 감정이 사라졌다."
 
-#: branch.cc:148 dungeon.cc:586
+#: branch.cc:148 dungeon.cc:586 branch.cc:149 dungeon.cc:587
 msgid "You sense the appearance of a powerful magical force which warps space."
 msgstr "강력한 마법의 힘이 공간을 왜곡시키는 것을 감지했다"
 
-#: branch.cc:155 dungeon.cc:592
+#: branch.cc:155 dungeon.cc:592 branch.cc:156 dungeon.cc:593
 msgid ""
 "A powerful force appears that prevents you from remembering where you've "
 "been."
@@ -2060,13 +2061,13 @@ msgstr "무언가 강력한 힘이 당신이 어디에 있었는지를 기억하
 
 #. Isn't really a "recovery", but I couldn't think of where
 #. else to send it.
-#: branch.cc:181
+#: branch.cc:181 branch.cc:182
 msgid "Space seems to straighten in your vicinity."
 msgstr "당신 주변의 공간들이 바로잡히는 듯 보인다."
 
 #. Isn't really a "recovery", but I couldn't think of where
 #. else to send it.
-#: branch.cc:189
+#: branch.cc:189 branch.cc:190
 msgid "An oppressive force seems to lift."
 msgstr "억압해오던 힘이 사라진 듯 하다."
 
@@ -2079,31 +2080,31 @@ msgid "The rain has left you waist-deep in water!"
 msgstr "세찬 비로 인해 허리까지 빗물이 차올랐다!"
 
 #. / 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
-#: cloud.cc:861
+#: cloud.cc:861 cloud.cc:870
 #, c-format
 msgid "%s %s in the rain."
 msgstr ""
 
-#: cloud.cc:878
+#: cloud.cc:878 cloud.cc:887
 msgid "The rain washes away your illusions!"
 msgstr "당신의 환영들이 비에 씻겨 사라졌다!"
 
-#: cloud.cc:892
+#: cloud.cc:892 cloud.cc:901
 msgid "You choke on the stench!"
 msgstr "심한 악취에 숨이 막힌다!"
 
-#: cloud.cc:952
+#: cloud.cc:952 cloud.cc:986
 msgid "Strange energies course through your body."
 msgstr "기묘한 에너지가 당신의 몸속을 따라 흘렀다."
 
 #. / 한글화 하기 어려움. 일단 내비둘것.
-#: cloud.cc:1335
+#: cloud.cc:1335 cloud.cc:1369
 #, c-format
 msgid "%s %s standing in the rain."
 msgstr ""
 
 #. / 한글화 하기 몹시 어려움. 내비둘것.
-#: cloud.cc:1343
+#: cloud.cc:1343 cloud.cc:1377
 #, c-format
 msgid "%s %s in %s."
 msgstr ""
@@ -4504,14 +4505,14 @@ msgstr "이것은 당신이 %s에 거의 면역이 되게 한다."
 
 #. Isn't really a "recovery", but I couldn't think of where
 #. else to send it.
-#: dungeon.cc:614
+#: dungeon.cc:614 dungeon.cc:615
 msgid ""
 "You sense the disappearance of a powerful magical force which warped space."
 msgstr "당신은 공간을 왜곡하던 강력한 마법의 힘이 사라지는 것을 느꼈다."
 
 #. Isn't really a "recovery", but I couldn't think of where
 #. else to send it.
-#: dungeon.cc:622
+#: dungeon.cc:622 dungeon.cc:623
 msgid ""
 "You sense the disappearance of the force that prevented you from remembering "
 "where you've been."
@@ -4745,7 +4746,7 @@ msgstr "아무 일도 일어나지 않았다."
 msgid "QUAD DAMAGE!"
 msgstr "쿼드 데미지!"
 
-#: evoke.cc:895 fight.cc:1750 fight.cc:3930
+#: evoke.cc:895 fight.cc:1750 fight.cc:3930 fight.cc:3944
 #, c-format
 msgid "You are wielding %s."
 msgstr "당신은 %s(을/를) 들고 있다."
@@ -4843,7 +4844,7 @@ msgstr "당신의 %s은/(는) %s가 순간적으로 사라짐에 따라 허공�
 msgid "Your %s misses %s."
 msgstr "당신의 %s는 %s를 놓쳤다."
 
-#: fight.cc:1409 fight.cc:4915
+#: fight.cc:1409 fight.cc:4915 fight.cc:4929
 #, c-format
 msgid "%s is splashed with acid."
 msgstr "%s은/(는) 산성 액체를 뒤집어썼다!"
@@ -5027,17 +5028,17 @@ msgstr "촉수로 갈겼"
 msgid "batter-verb"
 msgstr "두들겼"
 
-#: fight.cc:2137 fight.cc:3499
+#: fight.cc:2137 fight.cc:3499 fight.cc:2151 fight.cc:3513
 msgid "You feel better."
 msgstr "당신은 기분이 나아졌다."
 
 #. / 1. 공격 동사 : slice, dice, punish, 2. 대상
-#: fight.cc:2178
+#: fight.cc:2178 fight.cc:2192
 #, c-format
 msgid "You %s %s, but do no damage."
 msgstr "당신은 %2$s를 %1$s지만, 아무 데미지도 주지 못했다."
 
-#: fight.cc:2216
+#: fight.cc:2216 fight.cc:2230
 #, c-format
 msgid "%s is stunned!"
 msgstr "%s는 기절했다!"
@@ -5068,7 +5069,17 @@ msgstr "당신 자신"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
-#: fight.cc:2352 fight.cc:5191 fight.cc:5414
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#: fight.cc:2352 fight.cc:5191 fight.cc:5414 fight.cc:2366 fight.cc:5205
+#: fight.cc:5428
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
@@ -5077,128 +5088,135 @@ msgstr "%1$s는 %3$s를 %2$s다%4$s"
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
-#: fight.cc:2385 fight.cc:5347
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#: fight.cc:2385 fight.cc:5347 fight.cc:2399 fight.cc:5361
 #, c-format
 msgid "%s %s %s!"
 msgstr "%1$s는 %3$s를 %2$s다!"
 
-#: fight.cc:2402
+#: fight.cc:2402 fight.cc:2416
 #, c-format
 msgid "%s rots!"
 msgstr "%s이(가) 썩는다!"
 
-#: fight.cc:2405
+#: fight.cc:2405 fight.cc:2419
 #, c-format
 msgid "%s looks less resilient!"
 msgstr "%s은/(는) 피부가 좀 푸석푸석해진 것 같다!"
 
 #. / 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
-#: fight.cc:2426
+#: fight.cc:2426 fight.cc:2440
 #, c-format
 msgid "%s %s in the distortional energy."
 msgstr "%s는 뒤틀린 에너지에 노출되었다."
 
 #. / 1. 수비자.
-#: fight.cc:2443
+#: fight.cc:2443 fight.cc:2457
 #, c-format
 msgid "Space bends around %s."
 msgstr "%s 주변의 공간이 구부러졌다."
 
 #. / 1. 수비자.
-#: fight.cc:2457
+#: fight.cc:2457 fight.cc:2471
 #, c-format
 msgid "Space warps horribly around %s!"
 msgstr "%s 주변의 공간이 심하게 요동친다!"
 
 #. / 아 맨날 이런 문장만 나오면 얼마나 좋아.
-#: fight.cc:2521
+#: fight.cc:2521 fight.cc:2535
 msgid "You feel your power leaking away."
 msgstr "당신은 당신의 힘이 빠져나감을 느낀다."
 
 #. / 1. 수비자의 이름의 소유형
-#: fight.cc:2533
+#: fight.cc:2533 fight.cc:2547
 #, c-format
 msgid "%s magic leaks into the air."
 msgstr "%s의 마력이 공중으로 사라진다."
 
 #. / 1. 수비자. 2. writhe의 동사형.
-#: fight.cc:2550
+#: fight.cc:2550 fight.cc:2564
 #, c-format
 msgid "%s %s in agony."
 msgstr "%s는 고통으로 온몸을 비틀었다."
 
-#: fight.cc:2621
+#: fight.cc:2621 fight.cc:2635
 msgid "You give off a flash of multicoloured light!"
 msgstr "당신에게서 여러 색의 빛이 번뜩였다!"
 
 #. / 수비자(몬스터)가 그랬음.
-#: fight.cc:2626
+#: fight.cc:2626 fight.cc:2640
 msgid " gives off a flash of multicoloured light!"
 msgstr "에게서 여러 색의 빛이 번뜩였다!"
 
-#: fight.cc:2630
+#: fight.cc:2630 fight.cc:2644
 msgid "There is a flash of multicoloured light!"
 msgstr "여러 색의 빛이 번뜩였다!"
 
-#: fight.cc:2693
+#: fight.cc:2693 fight.cc:2707
 #, c-format
 msgid "%s is duplicated!"
 msgstr "%s는 복제되었다!"
 
 #. / 1. 무기 이름.
-#: fight.cc:2908
+#: fight.cc:2908 fight.cc:2922
 #, c-format
 msgid "Smoke pours forth from %s!"
 msgstr "%s로부터 연기가 뿜어져 나왔다!"
 
-#: fight.cc:2927
+#: fight.cc:2927 fight.cc:2941
 #, c-format
 msgid "You hear %s"
 msgstr "당신은 %s를 들었다"
 
 #. / 내부 코드에서 사용하는 것 같음.
-#: fight.cc:3041 fight.cc:3053
+#: fight.cc:3041 fight.cc:3053 fight.cc:3055 fight.cc:3067
 msgid "a chaos effect"
 msgstr ""
 
-#: fight.cc:3069
+#: fight.cc:3069 fight.cc:3083
 msgid " turns into a zombie!"
 msgstr "은/(는) 좀비로 변했다!"
 
-#: fight.cc:3072
+#: fight.cc:3072 fight.cc:3086
 msgid "'s equipment vanishes!"
 msgstr "의 장비가 사라졌다!"
 
-#: fight.cc:3078
+#: fight.cc:3078 fight.cc:3092
 msgid " appears from thin air!"
 msgstr "(이)가 나타났다!"
 
-#: fight.cc:3157
+#: fight.cc:3157 fight.cc:3171
 msgid "a chaos effect from "
 msgstr ""
 
 #. / 수비자, 마침표나 느낌표
-#: fight.cc:3363 fight.cc:3405 fight.cc:3421
+#: fight.cc:3363 fight.cc:3405 fight.cc:3421 fight.cc:3377 fight.cc:3419
+#: fight.cc:3435
 #, c-format
 msgid "%s convulses%s"
 msgstr "%1$s는 경련을 일으켰다%2$s"
 
-#: fight.cc:3377
+#: fight.cc:3377 fight.cc:3391
 msgid "You are electrocuted!"
 msgstr "당신은 전기충격을 받았다!"
 
-#: fight.cc:3378
+#: fight.cc:3378 fight.cc:3392
 msgid "There is a sudden explosion of sparks!"
 msgstr "갑자기 스파크가 폭발했다!"
 
 #. / 1. 공격자의 이름.
-#: fight.cc:3505
+#: fight.cc:3505 fight.cc:3519
 #, c-format
 msgid "%s draws strength from your injuries!"
 msgstr "%s는 당신의 상처로부터 힘을 빼앗아갔다!"
 
 #. / 1. 공격자의 이름.
-#: fight.cc:3511
+#: fight.cc:3511 fight.cc:3525
 #, c-format
 msgid "%s is healed."
 msgstr "%s는 회복됐다."
@@ -5219,258 +5237,258 @@ msgid "hack-verb"
 msgstr "난도질했"
 
 #. / 1. 공격자 2. 공격명령의 동사형, 여러가지가 나올 수 있음. 3. 대상
-#: fight.cc:3699
+#: fight.cc:3699 fight.cc:3713
 #, c-format
 msgid "%s %s %s's last head off!"
 msgstr "%1$s는 %3$s의 마지막 머리를 %2$s다!"
 
 #. / 2. 공격명령의 동사형
-#: fight.cc:3719
+#: fight.cc:3719 fight.cc:3733
 #, c-format
 msgid "%s %s one of %s's heads off!"
 msgstr "%1$s는 %3$s의 머리들 중 하나를 %2$s다!"
 
-#: fight.cc:3736
+#: fight.cc:3736 fight.cc:3750
 msgid "The flame cauterises the wound!"
 msgstr "불꽃이 상처를 지졌다!"
 
-#: fight.cc:3742
+#: fight.cc:3742 fight.cc:3756
 msgid " grows two more!"
 msgstr " 두개 더 늘어났다!"
 
-#: fight.cc:3813
+#: fight.cc:3813 fight.cc:3827
 #, c-format
 msgid "%s is electrocuted!"
 msgstr "%s는 전기충격을 받았다!"
 
-#: fight.cc:3831
+#: fight.cc:3831 fight.cc:3845
 #, c-format
 msgid "You freeze %s!"
 msgstr "당신은 %s을/(를) 얼렸다!"
 
-#: fight.cc:3844
+#: fight.cc:3844 fight.cc:3858
 #, c-format
 msgid "You crush %s!"
 msgstr "당신은 %s을/(를) 분쇄했다!"
 
-#: fight.cc:3860
+#: fight.cc:3860 fight.cc:3874
 #, c-format
 msgid "You burn %s!"
 msgstr "당신은 %s을/(를) 불태웠다!"
 
-#: fight.cc:3890
+#: fight.cc:3890 fight.cc:3904
 #, c-format
 msgid "%s convulses in agony!"
 msgstr "%s는 고통으로 몸부림친다!"
 
-#: fight.cc:4440
+#: fight.cc:4440 fight.cc:4454
 msgid "Zin prevents your ally from violating sanctuary in its confusion."
 msgstr "진은 당신의 동료가 혼란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
 
-#: fight.cc:4445
+#: fight.cc:4445 fight.cc:4459
 msgid "Zin prevents your ally from violating sanctuary in its berserker rage."
 msgstr "진은 당신의 동료가 광란에 빠져 성소를 더럽히는 것을 용납하지 않았다."
 
-#: fight.cc:4516
+#: fight.cc:4516 fight.cc:4530
 #, c-format
 msgid "%s tries to attack %s, but flinches away."
 msgstr "%s는 %s를 공격하려 했으나, 곧 기가 죽었다."
 
 #. / 수비자, block, 공격자의 소유형
-#: fight.cc:4558
+#: fight.cc:4558 fight.cc:4572
 #, c-format
 msgid "%s %s %s attack."
 msgstr "%1$s는 %3$s의 공격을 %2$s다."
 
 #. / 멀리서 정도로 번역하면 될듯.
-#: fight.cc:4758 fight.cc:4772
+#: fight.cc:4758 fight.cc:4772 fight.cc:4786
 msgid " from afar"
 msgstr " 멀리서"
 
 #. / 1. 무기 이름. ' %s로 '정도로 번역하면 될 것 같습니다. 사용처를 다 본건 아니지만 아마 morgue에 나올듯.
-#: fight.cc:4764
+#: fight.cc:4764 fight.cc:4778
 #, c-format
 msgid " with %s"
 msgstr " %s로 "
 
 #. / 1. 공격자, 2. 공격 동사, 3. 대상, 4. 디버깅 메시지, 5. 부가 설명, 6. 느낌표.
 #. / 대충 1. 5. 2. 3. 4. 6. 정도로 배열하면 될 듯 합니다.
-#: fight.cc:4792
+#: fight.cc:4792 fight.cc:4806
 #, c-format
 msgid "%s %s %s%s%s%s"
 msgstr "%1$s%5$s %3$s을/(를) %2$s다%6$s %4$s"
 
 #. / 1. 공격자 2. 동사 3. 대상
-#: fight.cc:4807
+#: fight.cc:4807 fight.cc:4821
 #, c-format
 msgid "%s %s %s but does no damage."
 msgstr "%1$s는 %3$s를 %2$s지만 아무런 부상도 입히지 못했다."
 
 #. / 1. 공격자 2. 공격 동사
-#: fight.cc:4838
+#: fight.cc:4838 fight.cc:4852
 #, c-format
 msgid "%s %s was poisonous!"
 msgstr "%s의 %s 때문에 중독됐다!"
 
-#: fight.cc:4845
+#: fight.cc:4845 fight.cc:4859
 #, c-format
 msgid "%s poisons %s!"
 msgstr "%s은/(는) %s를 중독시켰다!"
 
 #. / 1. 대상 2. is/are 3. 마침표나 느낌표
-#: fight.cc:4873
+#: fight.cc:4873 fight.cc:4887
 #, c-format
 msgid "%s %s covered in liquid flames%s"
 msgstr "%1$s는 액체 화염으로 뒤덮여있다%3$s"
 
-#: fight.cc:4923
+#: fight.cc:4923 fight.cc:4937
 msgid "You are splashed with acid!"
 msgstr "당신에게 산성 용액이 튀었다!"
 
-#: fight.cc:5061
+#: fight.cc:5061 fight.cc:5075
 #, c-format
 msgid "%s steals all your gold!"
 msgstr "%s는 당신의 모든 돈을 훔쳤다!"
 
-#: fight.cc:5064
+#: fight.cc:5064 fight.cc:5078
 #, c-format
 msgid "%s steals some of your gold!"
 msgstr "%s는 당신의 돈 일부를 훔쳤다!"
 
-#: fight.cc:5092
+#: fight.cc:5092 fight.cc:5106
 #, c-format
 msgid "%s steals %s!"
 msgstr "%s(이)가 %s를 훔친다!"
 
 #. / 대상, is/are
-#: fight.cc:5171
+#: fight.cc:5171 fight.cc:5185
 #, c-format
 msgid "%s %s engulfed in flames%s"
 msgstr "%1$s는 화염으로 휩싸였다%3$s"
 
 #. / 공격자, draws, 대상
-#: fight.cc:5248
+#: fight.cc:5248 fight.cc:5262
 #, c-format
 msgid "%s draws strength from %s injuries!"
 msgstr "%s는 %s의 상처로부터 힘을 빼앗아간다!"
 
-#: fight.cc:5258
+#: fight.cc:5258 fight.cc:5272
 msgid "You feel less resilient."
 msgstr "당신의 피부가 푸석푸석해진다."
 
 #. / 대상, are/is
-#: fight.cc:5302
+#: fight.cc:5302 fight.cc:5316
 #, c-format
 msgid "%s %s engulfed in a cloud of spores!"
 msgstr "%s는 포자 연기로 둘러싸여있다!"
 
-#: fight.cc:5385
+#: fight.cc:5385 fight.cc:5399
 #, c-format
 msgid "%s devours some of your food!"
 msgstr "%s가 당신의 음식 일부를 먹어치웠다!"
 
-#: fight.cc:5390
+#: fight.cc:5390 fight.cc:5404
 #, c-format
 msgid "%s devours some of the food beneath you!"
 msgstr "%s가 당신 아래 놓여있던 음식 일부를 먹어치웠다!"
 
-#: fight.cc:5452
+#: fight.cc:5452 fight.cc:5466
 msgid " is very cold."
 msgstr "은/(는) 매우 차다."
 
-#: fight.cc:5489
+#: fight.cc:5489 fight.cc:5503
 #, c-format
 msgid "The eyeballs on your body gaze at %s."
 msgstr "당신의 몸에 난 눈알이 %s를 노려보았다."
 
-#: fight.cc:5516
+#: fight.cc:5516 fight.cc:5530
 msgid " dodges your spines."
 msgstr "은/(는) 당신의 가시를 피했다."
 
-#: fight.cc:5533
+#: fight.cc:5533 fight.cc:5547
 msgid " is struck by your spines."
 msgstr "은/(는) 당신의 가시에 맞았다."
 
 #. / 대상, stumble
-#: fight.cc:5569
+#: fight.cc:5569 fight.cc:5583
 #, c-format
 msgid "%s %s backwards!"
 msgstr "%s는 뒤쪽으로 비틀거렸다!"
 
 #. / 대상, fail, 공격자
 #. / 지금 뭔가 문제있는 코드임.
-#: fight.cc:5836
+#: fight.cc:5836 fight.cc:5850
 #, c-format
 msgid "Helpless, %s %s to dodge %s attack."
 msgstr "속수무책으로, %1$s는 %3$s의 공격을 피하지 못했다."
 
 #. / 대상, phase, its, 공격자, ./!
-#: fight.cc:5848
+#: fight.cc:5848 fight.cc:5862
 #, c-format
 msgid "%s momentarily %s out as %s attack passes through %s%s"
 msgstr "%1$s가 순간적으로 사라짐에 따라 %3$s의 공격은 허공을 갈랐다%5$s"
 
 #. / 공격자, 완전히/거의, 대상, ./!
-#: fight.cc:5864
+#: fight.cc:5864 fight.cc:5878
 #, c-format
 msgid "%s%s misses %s%s"
 msgstr "%1$s은/(는) %3$s를%2$s 놓쳤다%4$s"
 
 #. / 공격자, ./!
-#: fight.cc:5917
+#: fight.cc:5917 fight.cc:5931
 #, c-format
 msgid "Your shroud bends %s attack away%s"
 msgstr "당신의 장막은 %s의 공격 궤도를 구부렸다%s"
 
-#: fight.cc:5941
+#: fight.cc:5941 fight.cc:5955
 msgid "Your shroud falls apart!"
 msgstr "당신의 장막이 깨졌다!"
 
-#: fight.cc:6252
+#: fight.cc:6252 fight.cc:6266
 msgid "Really attack while being unarmed? "
 msgstr "진짜 맨손으로 공격할거임? "
 
-#: fight.cc:6254
+#: fight.cc:6254 fight.cc:6268
 #, c-format
 msgid "Really attack while wielding %s? "
 msgstr "진짜 %s를 든 채로 공격할거임? "
 
-#: fight.cc:6510
+#: fight.cc:6510 fight.cc:6524
 #, c-format
 msgid "You pounce on %s from a blind spot!"
 msgstr "당신은 사각으로부터 %s를 덮쳤다!"
 
-#: fight.cc:6511
+#: fight.cc:6511 fight.cc:6525
 #, c-format
 msgid "You strike %s from a blind spot!"
 msgstr "당신은 사각으로부터 %s를 가격했다!"
 
-#: fight.cc:6516
+#: fight.cc:6516 fight.cc:6530
 #, c-format
 msgid "You catch %s momentarily off-guard."
 msgstr "당신은 %s가 순간적으로 무방비한 틈을 노렸다."
 
-#: fight.cc:6523
+#: fight.cc:6523 fight.cc:6537
 #, c-format
 msgid "You catch %s completely off-guard!"
 msgstr "당신은 %s가 완전히 무방비한 순간을 노렸다!"
 
-#: fight.cc:6529
+#: fight.cc:6529 fight.cc:6543
 #, c-format
 msgid "You pounce on %s from behind!"
 msgstr "당신은 뒤에서 %s를 덮쳤다!"
 
-#: fight.cc:6530
+#: fight.cc:6530 fight.cc:6544
 #, c-format
 msgid "You strike %s from a behind!"
 msgstr "당신은 뒤에서 %s를 가격했다!"
 
-#: fight.cc:6538
+#: fight.cc:6538 fight.cc:6552
 #, c-format
 msgid "You pounce on the unaware %s!"
 msgstr "당신은 들키지 않은 채로 %s를 덮쳤다!"
 
-#: fight.cc:6542
+#: fight.cc:6542 fight.cc:6556
 #, c-format
 msgid "%s fails to defend %s."
 msgstr "%s는 %s를 방어하는데 실패했다."
@@ -5517,7 +5535,7 @@ msgstr ""
 msgid "slash"
 msgstr ""
 
-#: fight.cc:1913 fight.cc:1989 fight.cc:3689
+#: fight.cc:1913 fight.cc:1989 fight.cc:3689 fight.cc:3703
 msgid "slice"
 msgstr ""
 
@@ -5529,7 +5547,7 @@ msgstr ""
 msgid "scratch"
 msgstr ""
 
-#: fight.cc:1924 fight.cc:1944 fight.cc:2041 fight.cc:3682
+#: fight.cc:1924 fight.cc:1944 fight.cc:2041 fight.cc:3682 fight.cc:3696
 msgid "claw"
 msgstr ""
 
@@ -5613,71 +5631,71 @@ msgstr ""
 msgid "batter"
 msgstr ""
 
-#: fight.cc:2387
+#: fight.cc:2387 fight.cc:2401
 msgid "drain"
 msgstr ""
 
-#: fight.cc:2428
+#: fight.cc:2428 fight.cc:2442
 msgid "bask"
 msgstr ""
 
-#: fight.cc:2552
+#: fight.cc:2552 fight.cc:2566
 msgid "writhe"
 msgstr ""
 
-#: fight.cc:3682
+#: fight.cc:3682 fight.cc:3696
 msgid "rip"
 msgstr ""
 
-#: fight.cc:3682
+#: fight.cc:3682 fight.cc:3696
 msgid "tear"
 msgstr ""
 
-#: fight.cc:3689
+#: fight.cc:3689 fight.cc:3703
 msgid "lop"
 msgstr ""
 
-#: fight.cc:3689
+#: fight.cc:3689 fight.cc:3703
 msgid "chop"
 msgstr ""
 
-#: fight.cc:3689
+#: fight.cc:3689 fight.cc:3703
 msgid "hack"
 msgstr ""
 
-#: fight.cc:4560
+#: fight.cc:4560 fight.cc:4574
 msgid "block"
 msgstr ""
 
-#: fight.cc:5193
+#: fight.cc:5193 fight.cc:5207
 msgid "freeze"
 msgstr ""
 
-#: fight.cc:5220
+#: fight.cc:5220 fight.cc:5234
 msgid "shock"
 msgstr ""
 
-#: fight.cc:5349
+#: fight.cc:5349 fight.cc:5363
 msgid "infuriate"
 msgstr ""
 
-#: fight.cc:5416
+#: fight.cc:5416 fight.cc:5430
 msgid "sear"
 msgstr ""
 
-#: fight.cc:5571
+#: fight.cc:5571 fight.cc:5585
 msgid "stumble"
 msgstr ""
 
-#: fight.cc:5594
+#: fight.cc:5594 fight.cc:5608
 msgid "hold"
 msgstr ""
 
-#: fight.cc:5838
+#: fight.cc:5838 fight.cc:5852
 msgid "fail"
 msgstr ""
 
-#: fight.cc:5851
+#: fight.cc:5851 fight.cc:5865
 msgid "phase"
 msgstr ""
 
@@ -5689,351 +5707,353 @@ msgstr ""
 msgid "You are now empty-tentacled."
 msgstr ""
 
-#: effects_work.cc:98
+#: effects_work.cc:98 effects.cc:99
 msgid "You are blasted by holy energy!"
 msgstr "당신은 신성한 에너지에 강타당했다!"
 
-#: effects_work.cc:100
+#: effects_work.cc:100 effects.cc:101
 msgid "holy word"
 msgstr "성스러운 언어"
 
-#: effects_work.cc:112
+#: effects_work.cc:112 effects.cc:113
 msgid "scroll of holy word"
 msgstr "성스러운 언어의 두루마리"
 
-#: effects_work.cc:116
+#: effects_work.cc:116 effects.cc:117
 msgid "Zin's holy word"
 msgstr "진의 성스러운 언어"
 
-#: effects_work.cc:120
+#: effects_work.cc:120 effects.cc:121
 msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
-#: effects_work.cc:159 effects_work.cc:331
+#: effects_work.cc:159 effects_work.cc:331 effects.cc:160 effects.cc:332
 msgid " convulses!"
 msgstr "은(는) 크게 경련을 일으켰다!"
 
-#: effects_work.cc:161
+#: effects_work.cc:161 effects.cc:162
 msgid " is blasted by Zin's holy word!"
 msgstr "은(는) 「진」의 성스러운 언어로 인해 격렬한 발작을 일으켰다!"
 
 #. / 1. 주어, 2. speak/speaks
-#: effects_work.cc:199
+#: effects_work.cc:199 effects.cc:200
 #, c-format
 msgid "%s %s a Word of immense power!"
 msgstr "%s는 성스러운 힘의 단어를 읊었다!"
 
-#: effects_work.cc:245
+#: effects_work.cc:245 effects.cc:246
 msgid " shields you from torment!"
 msgstr "께서 당신을 고통으로부터 보호했다!"
 
-#: effects_work.cc:250
+#: effects_work.cc:250 effects.cc:251
 msgid " partially shields you from torment!"
 msgstr "께서 당신을 고통으로부터 일부 보호했다!"
 
-#: effects_work.cc:258
+#: effects_work.cc:258 effects.cc:259
 msgid "You feel a surge of unholy energy."
 msgstr "당신은 사악한 에너지의 격동을 느꼈다."
 
-#: effects_work.cc:262
+#: effects_work.cc:262 effects.cc:263
 msgid "Your body is wracked with pain!"
 msgstr "당신의 육체가 고통으로 경련을 일으켰다!"
 
-#: effects_work.cc:264
+#: effects_work.cc:264 effects.cc:265
 msgid "torment"
 msgstr "사악한 고통"
 
-#: effects_work.cc:277
+#: effects_work.cc:277 effects.cc:278
 msgid "Symbol of Torment"
 msgstr "사악한 고통의 문양"
 
 #. XXX: If we ever make any other weapon / randart eligible
 #. to torment, this will be incorrect.
-#: effects_work.cc:283
+#: effects_work.cc:283 effects.cc:284
 msgid "Sceptre of Torment"
 msgstr "사악한 고통의 지팡이"
 
-#: effects_work.cc:287
+#: effects_work.cc:287 effects.cc:288
 msgid "scroll of torment"
 msgstr "사악한 고통의 두루마리"
 
-#: effects_work.cc:292
+#: effects_work.cc:292 effects.cc:293
 msgid "Xom's torment"
 msgstr "좀의 사악한 고통"
 
-#: effects_work.cc:296
+#: effects_work.cc:296 effects.cc:297
 msgid "Kikubaaqudgha's torment"
 msgstr "키쿠바쿠드하의 사악한 고통"
 
-#: effects_work.cc:364
+#: effects_work.cc:364 effects.cc:365
 msgid "immolation"
 msgstr "제물"
 
-#: effects_work.cc:373
+#: effects_work.cc:373 effects.cc:374
 msgid "scroll of immolation"
 msgstr "제물의 두루마리"
 
-#: effects_work.cc:377
+#: effects_work.cc:377 effects.cc:378
 msgid "a fiery explosion"
 msgstr ""
 
-#: effects_work.cc:381
+#: effects_work.cc:381 effects.cc:382
 msgid "an exploding Tome of Destruction"
 msgstr "파괴의 책이 폭발"
 
-#: effects_work.cc:390
+#: effects_work.cc:390 effects.cc:391
 msgid "fiery explosion"
 msgstr ""
 
-#: effects_work.cc:447
+#: effects_work.cc:447 effects.cc:448
 msgid "electric current"
 msgstr ""
 
-#: effects_work.cc:448
+#: effects_work.cc:448 effects.cc:449
 msgid "shocks"
 msgstr ""
 
-#: effects_work.cc:450
+#: effects_work.cc:450 effects.cc:451
 msgid "arcing electricity"
 msgstr ""
 
-#: effects_work.cc:478
+#: effects_work.cc:478 effects.cc:479
 msgid "cleansing flame"
 msgstr "정화의 불꽃"
 
-#: effects_work.cc:487
+#: effects_work.cc:487 effects.cc:488
 msgid "the Shining One's cleansing flame"
 msgstr "샤이닝 원의 정화의 불꽃"
 
-#: effects_work.cc:496
+#: effects_work.cc:496 effects.cc:497
 msgid "golden flame"
 msgstr "금빛의 화염"
 
-#: effects_work.cc:535
+#: effects_work.cc:535 effects.cc:536
 msgid "is cast into the Abyss!"
 msgstr "어비스로 빠져들었다!"
 
-#: effects_work.cc:540
+#: effects_work.cc:540 effects.cc:541
 msgid "escaped from the Abyss!"
 msgstr "어비스로부터 탈출!"
 
-#: effects_work.cc:550 effects_work.cc:567 effects_work.cc:592
+#: effects_work.cc:550 effects_work.cc:567 effects_work.cc:592 effects.cc:551
+#: effects.cc:568 effects.cc:593
 msgid "You feel trapped."
 msgstr "잠시 구속감을 느꼈다."
 
-#: effects_work.cc:553
+#: effects_work.cc:553 effects.cc:554
 msgid "the Abyss"
 msgstr "어비스"
 
-#: effects_work.cc:559 effects_work.cc:584 effects_work.cc:605
+#: effects_work.cc:559 effects_work.cc:584 effects_work.cc:605 effects.cc:560
+#: effects.cc:585 effects.cc:606
 msgid "You feel dizzy for a moment."
 msgstr "잠시 현기증을 느꼈다."
 
-#: effects_work.cc:570
+#: effects_work.cc:570 effects.cc:571
 msgid "Pandemonium"
 msgstr "판데모니엄"
 
-#: effects_work.cc:595
+#: effects_work.cc:595 effects.cc:596
 msgid "a Labyrinth"
 msgstr "미궁"
 
-#: effects_work.cc:608
+#: effects_work.cc:608 effects.cc:609
 msgid "Hell"
 msgstr "지옥"
 
-#: effects_work.cc:662
+#: effects_work.cc:662 effects.cc:663
 #, c-format
 msgid "Cast into %s%s"
 msgstr "%s(으)로 전송됨%s"
 
-#: effects_work.cc:694
+#: effects_work.cc:694 effects.cc:698
 #, c-format
 msgid ""
 "Your knowledge of %s becomes hazy all of a sudden, and you forget the spell!"
 msgstr "당신의 %s에 대한 지식이 순간 흐릿해졌고, 마침내 주문을 까먹었다!"
 
-#: effects_work.cc:718
+#: effects_work.cc:718 effects.cc:722
 msgid " is smitten."
 msgstr "은/(는) 징벌을 받았다."
 
-#: effects_work.cc:720
+#: effects_work.cc:720 effects.cc:724
 msgid "Something smites you!"
 msgstr "무엇인가가 당신을 벌했다!"
 
-#: effects_work.cc:722
+#: effects_work.cc:722 effects.cc:726
 msgid "smiting"
 msgstr "징벌"
 
-#: effects_work.cc:724
+#: effects_work.cc:724 effects.cc:728
 msgid "by divine providence"
 msgstr "신의 섭리에 의해"
 
-#: effects_work.cc:731
+#: effects_work.cc:731 effects.cc:735
 msgid " is struck by the twisting air!"
 msgstr "은/(는) 소용돌이에 휘말렸다!"
 
-#: effects_work.cc:735
+#: effects_work.cc:735 effects.cc:739
 msgid "The air twists around and violently strikes you in flight!"
 msgstr "소용돌이치는 대기가 비행중인 당신을 격렬하게 덮쳤다!"
 
-#: effects_work.cc:737
+#: effects_work.cc:737 effects.cc:741
 msgid "The air twists around and strikes you!"
 msgstr "소용돌이치는 대기가 당신에게 몰아쳤다!"
 
-#: effects_work.cc:740
+#: effects_work.cc:740 effects.cc:744
 msgid "airstrike"
 msgstr "공중폭격"
 
-#: effects_work.cc:742
+#: effects_work.cc:742 effects.cc:746
 msgid "by the air"
 msgstr "대기로부터"
 
-#: effects_work.cc:761
+#: effects_work.cc:761 effects.cc:765
 msgid "Something feeds on your intellect!"
 msgstr "무엇인가가 당신의 지능을 흡수했다!"
 
-#: effects_work.cc:765
+#: effects_work.cc:765 effects.cc:769
 msgid "Something tries to feed on your intellect!"
 msgstr "무엇인가가 당신의 지능을 흡수하려 한다!"
 
-#: effects_work.cc:771
+#: effects_work.cc:771 effects.cc:775
 msgid "You feel haunted."
 msgstr "으스스한 기분을 느꼈다."
 
-#: effects_work.cc:773
+#: effects_work.cc:773 effects.cc:777
 msgid "You sense an evil presence."
 msgstr "사악한 존재가 주변에 있음을 감지했다."
 
-#: effects_work.cc:786
+#: effects_work.cc:786 effects.cc:790
 msgid " is surrounded by Orcish apparitions."
 msgstr " 주변에 죽은 오크의 망령들이 나타났다."
 
-#: effects_work.cc:788
+#: effects_work.cc:788 effects.cc:792
 msgid "Orcish apparitions take form around you."
 msgstr "당신 주변에 죽은 오크의 망령들이 나타났다."
 
-#: effects_work.cc:7iii96
+#: effects_work.cc:7iii96 effects.cc:800
 msgid "Blessed fire suddenly surrounds you!"
 msgstr "성스러운 불꽃이 갑자기 당신 주위를 휘감았다!"
 
-#: effects_work.cc:798
+#: effects_work.cc:798 effects.cc:802
 msgid " is surrounded by blessed fire!"
 msgstr " 주위에 성스러운 불꽃이 휘감겨 나타났다!"
 
 #. / 색깔 이름이 나와야 할듯.
-#: effects_work.cc:831
+#: effects_work.cc:831 effects.cc:835
 #, c-format
 msgid "The dust glows %s!"
 msgstr "먼지가 %s 색으로 빛났다!"
 
-#: effects_work.cc:835
+#: effects_work.cc:835 effects.cc:839
 #, c-format
 msgid "The scroll reassembles itself in your %s!"
 msgstr "두루마리가 당신의 %s 안에서 재구성된다!"
 
 #. / 1. 무기 이름, 2. 괴...한 색깔 이름.
-#: effects_work.cc:844
+#: effects_work.cc:844 effects.cc:848
 #, c-format
 msgid "%s glows %s for a moment."
 msgstr "%s는 잠시 %s 색으로 빛났다."
 
 #. / 1. 손,발,촉수 등등... 2. 괴..한 색깔 이름.
-#: effects_work.cc:851
+#: effects_work.cc:851 effects.cc:855
 #, c-format
 msgid "Your %s glow %s for a moment."
 msgstr "당신은 %s는 잠시 %s 색으로 빛났다."
 
-#: effects_work.cc:858
+#: effects_work.cc:858 effects.cc:862
 msgid "Your bandages flutter."
 msgstr "몸을 감은 붕대가 살며시 떨렸다."
 
 #. if (you.can_smell())
 #. / 1. 이상한 냄새
-#: effects_work.cc:861
+#: effects_work.cc:861 effects.cc:865
 #, c-format
 msgid "You smell %s."
 msgstr "%s 냄새를 맡았다."
 
-#: effects_work.cc:865
+#: effects_work.cc:865 effects.cc:869
 msgid "You experience a momentary feeling of inescapable doom!"
 msgstr "당신은 일순간 피할수없는 파멸의 감각을 경험했다!"
 
-#: effects_work.cc:871
+#: effects_work.cc:871 effects.cc:875
 msgid "Your brain hurts!"
 msgstr "당신의 머리가 아프다!"
 
-#: effects_work.cc:873
+#: effects_work.cc:873 effects.cc:877
 msgid "Your ears itch!"
 msgstr "당신의 귀가 근질거렸다!"
 
-#: effects_work.cc:875
+#: effects_work.cc:875 effects.cc:879
 msgid "Your nose twitches suddenly!"
 msgstr "당신의 코가 갑자기 씰룩거렸다!"
 
-#: effects_work.cc:879
+#: effects_work.cc:879 effects.cc:883
 msgid "You hear the tinkle of a tiny bell."
 msgstr "당신은 작은 벨이 울리는 소리를 들었다."
 
 #. / 이상한 소리
-#: effects_work.cc:886
+#: effects_work.cc:886 effects.cc:890
 #, c-format
 msgid "You hear %s."
 msgstr "당신은 %s를 들었다."
 
-#: effects_work.cc:898
+#: effects_work.cc:898 effects.cc:902
 msgid "Charge which item?"
 msgstr "어느 아이템을 충전할 것인가?"
 
-#: effects_work.cc:908
+#: effects_work.cc:908 effects.cc:912
 msgid "Choose an item to recharge, or Esc to abort."
 msgstr "충전할 아이템을 너택하시오. (Esc키로 취소)"
 
 #. / 1. 새로운 충전 횟수, 2. 복수면 s를 붙여줌
-#: effects_work.cc:938
+#: effects_work.cc:938 effects.cc:942
 #, c-format
 msgid " and now has %d charge%s"
 msgstr ", 그리고 이제 %d회의 충전이 남아있다"
 
-#: effects_work.cc:948
+#: effects_work.cc:948 effects.cc:952
 #, c-format
 msgid "%s glows for a moment%s."
 msgstr "%s는 잠시 빛을 발했다%s."
 
-#: effects_work.cc:949
+#: effects_work.cc:949 effects.cc:953
 #, c-format
 msgid "%s flickers for a moment%s."
 msgstr "%s는 잠시 깜박거렸다%s."
 
 #. / 1. 완드 이름.
-#: effects_work.cc:995
+#: effects_work.cc:995 effects.cc:999
 #, c-format
 msgid "%s glows for a moment."
 msgstr "%s은/(는) 잠시동안 빛을 발했다."
 
 #. "shout"
 #. Tweak volume for different kinds of vocalisation.
-#: effects_work.cc:1053
+#: effects_work.cc:1053 effects.cc:1057
 msgid "roar"
 msgstr "포효"
 
-#: effects_work.cc:1055
+#: effects_work.cc:1055 effects.cc:1059
 msgid "hiss"
 msgstr "쉭~소리"
 
-#: effects_work.cc:1057
+#: effects_work.cc:1057 effects.cc:1061
 msgid "squeak"
 msgstr "찍소리"
 
-#: effects_work.cc:1059
+#: effects_work.cc:1059 effects.cc:1063
 msgid "__NONE"
 msgstr ""
 
-#: effects_work.cc:1061
+#: effects_work.cc:1061 effects.cc:1065
 msgid "yell"
 msgstr "고함"
 
-#: effects_work.cc:1063
+#: effects_work.cc:1063 effects.cc:1067
 msgid "scream"
 msgstr "비명"
 
@@ -6041,348 +6061,373 @@ msgid "shout"
 msgstr "외침"
 
 #. / 1. 비명, 고함, 괴성
-#: effects_work.cc:1076
+#: effects_work.cc:1076 effects.cc:1080
 #, c-format
 msgid "You feel a strong urge to %s, but you are unable to make a sound!"
 msgstr "당신은 %s을/(를) 지르려고 하였으나, 당신은 소리를 낼 수 없었다!"
 
 #. / 1. 비명, 고함, 괴성
-#: effects_work.cc:1084
+#: effects_work.cc:1084 effects.cc:1088
 #, c-format
 msgid "You feel a %s rip itself from your throat, but you make no sound!"
 msgstr "%s이/(가) 목구멍으로부터 절로 새어나왔으나, 아무 소리도 나지 않았다!"
 
-#: effects_work.cc:1090
+#: effects_work.cc:1090 effects.cc:1094
 msgid "You are unable to make a sound!"
 msgstr "당신은 소리를 낼 수 없다!"
 
 #. / 1. 비명, 고함, 괴성
-#: effects_work.cc:1098
+#: effects_work.cc:1098 effects.cc:1102
 #, c-format
 msgid "A %s rips itself from your throat!"
 msgstr "%s이/(가) 목구멍으로부터 절로 나왔다!"
 
 #. / 동료 order 메뉴인듯.
-#: effects_work.cc:1104
+#: effects_work.cc:1104 effects.cc:1108
 msgid "What do you say?"
 msgstr "뭐라고 말할 것인가?"
 
-#: effects_work.cc:1116
+#: effects_work.cc:1116 effects.cc:1120
 msgid "   p - Attack previous target."
 msgstr "   p - 당신과 같은 목표를 공격."
 
 #. / 이전에 때리던 target이 있으면 "   p - Attack previous target."의 번역물이 여기 들어감.
-#: effects_work.cc:1122
+#: effects_work.cc:1122 effects.cc:1126
 #, c-format
 msgid "Orders for allies: a - Attack new target.%s"
 msgstr "아군에게 명령:     a - 새로운 목표를 공격.%s"
 
-#: effects_work.cc:1123
+#: effects_work.cc:1123 effects.cc:1127
 msgid "                   s - Stop attacking."
 msgstr "                   s - 공격을 중지."
 
-#: effects_work.cc:1124
+#: effects_work.cc:1124 effects.cc:1128
 msgid "                   w - Wait here.           f - Follow me."
 msgstr "                   w - 이곳에 대기.         f - 나를 따라와."
 
-#: effects_work.cc:1126
+#: effects_work.cc:1126 effects.cc:1130
 #, c-format
 msgid " Anything else - Stay silent%s."
 msgstr " 그 외 - 조용히 있는다%s."
 
-#: effects_work.cc:1127
+#: effects_work.cc:1127 effects.cc:1131
 msgid " (and be thought a fool)"
 msgstr " (그리고 바보취급을 받는다)"
 
 #. / 1. 고함의 종류 (shout, roar, squeak) 이걸 동사로 번역해야 함.
-#: effects_work.cc:1137
+#: effects_work.cc:1137 effects.cc:1141
 #, c-format
 msgid "You %s for attention!"
 msgstr "당신은 %s(으)로 주의를 끌었다!"
 
-#: effects_work.cc:1149
+#: effects_work.cc:1149 effects.cc:1153
 msgid "Follow me!"
 msgstr "따라와!"
 
-#: effects_work.cc:1152
+#: effects_work.cc:1152 effects.cc:1156
 msgid "Stop fighting!"
 msgstr "공격 중지!"
 
-#: effects_work.cc:1156
+#: effects_work.cc:1156 effects.cc:1160
 msgid "Wait here!"
 msgstr "대기!"
 
-#: effects_work.cc:1184
+#: effects_work.cc:1184 effects.cc:1188
 msgid ""
 "An ally attacking under your orders might violate sanctuary; order anyway?"
-msgstr "그렇게 공격 명령을 내릴 시, 성지가 훼손될 것 같다; 그래도 진행하겠는가?"
+msgstr ""
+"그렇게 공격 명령을 내릴 시, 성지가 훼손될 것 같다; 그래도 진행하겠는가?"
 
-#: effects_work.cc:1197
+#: effects_work.cc:1197 effects.cc:1201
 msgid "Gang up on whom?"
 msgstr "어느 것을 노립니까?"
 
-#: effects_work.cc:1219
+#: effects_work.cc:1219 effects.cc:1223
 msgid "Yeah, whatever."
 msgstr "뭐, 상관없겠지."
 
-#: effects_work.cc:1226
+#: effects_work.cc:1226 effects.cc:1230
 msgid "Okely-dokely."
 msgstr "그래 좋아."
 
-#: effects_work.cc:1236
+#: effects_work.cc:1236 effects.cc:1240
 msgid "Attack!"
 msgstr "공격!"
 
 #. / ZIN의 힘인듯.
-#: effects_work.cc:1283
+#: effects_work.cc:1283 effects.cc:1287
 msgid "'s power protects you from the chaos of Hell!"
 msgstr "의 성스러운 힘이 지옥의 혼돈으로부터 당신을 보호한다!"
 
-#: effects_work.cc:1292
+#: effects_work.cc:1292 effects.cc:1296
 msgid "\"You will not leave this place.\""
 msgstr "\"너는 여기서 걸어나갈 수 없다.\""
 
-#: effects_work.cc:1293
+#: effects_work.cc:1293 effects.cc:1297
 msgid "\"Die, mortal!\""
 msgstr "\"죽어라, 필멸자여!\""
 
-#: effects_work.cc:1294
+#: effects_work.cc:1294 effects.cc:1298
 msgid "\"We do not forgive those who trespass against us!\""
 msgstr "\"우리는 우리를 거역하고 이곳에 침입한 자를 용서치 않는다!\""
 
-#: effects_work.cc:1295
+#: effects_work.cc:1295 effects.cc:1299
 msgid "\"Trespassers are not welcome here!\""
 msgstr "\"침입자는 여기서 환영받지 못한다!\""
 
-#: effects_work.cc:1296
+#: effects_work.cc:1296 effects.cc:1300
 msgid "\"You do not belong in this place!\""
 msgstr "\"너는 여기에 속한 존재가 아니다!\""
 
-#: effects_work.cc:1297
+#: effects_work.cc:1297 effects.cc:1301
 msgid "\"Leave now, before it is too late!\""
 msgstr "\"빨리 꺼져라, 우물쭈물 하지 말고!\""
 
-#: effects_work.cc:1298
+#: effects_work.cc:1298 effects.cc:1302
 msgid "\"We have you now!\""
 msgstr "\"너는 이제 우리의 것이다!\""
 
 #. plain messages
-#: effects_work.cc:1300
+#: effects_work.cc:1300 effects.cc:1304
 msgid "You smell brimstone."
 msgstr "유황 냄새가 난다."
 
-#: effects_work.cc:1301
+#: effects_work.cc:1301 effects.cc:1305
 msgid "Brimstone rains from above."
 msgstr "유황이 비처럼 쏟아졌다."
 
-#: effects_work.cc:1302
+#: effects_work.cc:1302 effects.cc:1306
 msgid "You feel lost and a long, long way from home..."
 msgstr "길을 읽고 미아가 된 느낌이다..."
 
-#: effects_work.cc:1303
+#: effects_work.cc:1303 effects.cc:1307
 msgid "You shiver with fear."
 msgstr "공포로 떨었다."
 
 #. warning
-#: effects_work.cc:1305
+#: effects_work.cc:1305 effects.cc:1309
 msgid "You feel a terrible foreboding..."
 msgstr "무서운 죽음의 예감을 느꼈다..."
 
-#: effects_work.cc:1306
+#: effects_work.cc:1306 effects.cc:1310
 msgid "Something frightening happens."
 msgstr "뭔가 무서운 일이 일어났다."
 
-#: effects_work.cc:1307
+#: effects_work.cc:1307 effects.cc:1311
 msgid "You sense an ancient evil watching you..."
 msgstr "고대의 악이 당신을 감시하는 것을 느꼈다..."
 
-#: effects_work.cc:1308
+#: effects_work.cc:1308 effects.cc:1312
 msgid "You suddenly feel all small and vulnerable."
 msgstr "돌연, 왜소하고 약해진 것 같다."
 
-#: effects_work.cc:1309
+#: effects_work.cc:1309 effects.cc:1313
 msgid "You sense a hostile presence."
 msgstr "적대적인 존재를 느꼈다."
 
 #. sounds
-#: effects_work.cc:1311
+#: effects_work.cc:1311 effects.cc:1315
 msgid "A gut-wrenching scream fills the air!"
 msgstr "몸 깊은 곳까지 떨리게한는 절규가 대기를 채웠다!"
 
-#: effects_work.cc:1312
+#: effects_work.cc:1312 effects.cc:1316
 msgid "You hear words spoken in a strange and terrible language..."
 msgstr "기괴하고 무서운 말을 들었다..."
 
-#: effects_work.cc:1313
+#: effects_work.cc:1313 effects.cc:1317
 msgid "You hear diabolical laughter!"
 msgstr "악마와 같은 웃음소리를 들었다!"
 
-#: effects_work.cc:1909
+#: effects_work.cc:1909 effects.cc:1913
 msgid "You hear an odd grinding sound!"
 msgstr "특이한 잡음이 들렸다!"
 
-#: effects_work.cc:1910
+#: effects_work.cc:1910 effects.cc:1914
 msgid "You hear the creaking of ancient gears!"
 msgstr "고대의 장비들이 삐걱거리는 소리가 들렸다!"
 
-#: effects_work.cc:1911
+#: effects_work.cc:1911 effects.cc:1915
 msgid "The floor suddenly vibrates beneath you!"
 msgstr "갑자기 바닥이 흔들렸다!"
 
-#: effects_work.cc:1912
+#: effects_work.cc:1912 effects.cc:1916
 msgid "You feel a sudden draft!"
 msgstr "갑작스런 진동이 느껴졌다!"
 
 #: effects_work.cc:2065 effects_work.cc:2074 effects_work.cc:2082
+#: effects.cc:2069 effects.cc:2078 effects.cc:2086
 msgid "You smell something rotten."
 msgstr "무언가 썩는 냄새가 난다."
 
-#: effects_work.cc:2066
+#: effects_work.cc:2066 effects.cc:2070
 msgid "You smell rotting flesh."
 msgstr "고기 썩는 냄새가 난다."
 
-#: effects_work.cc:2067
+#: effects_work.cc:2067 effects.cc:2071
 msgid "You smell decay."
 msgstr "무언가 썩는 냄새가 난다."
 
-#: effects_work.cc:2068
+#: effects_work.cc:2068 effects.cc:2072
 msgid "There is something rotten in your inventory."
 msgstr "짐 속의 뭔가가 썩는 듯 하다."
 
-#: effects_work.cc:2075
+#: effects_work.cc:2075 effects.cc:2079
 msgid "The smell of rotting flesh makes you hungry."
 msgstr "고기 썩는 냄새가 식욕을 자극한다."
 
-#: effects_work.cc:2076
+#: effects_work.cc:2076 effects.cc:2080
 msgid "You smell decay. Yum-yum."
 msgstr "썩는 냄새가 난다. 냠냠."
 
-#: effects_work.cc:2077
+#: effects_work.cc:2077 effects.cc:2081
 msgid "Wow! There is something tasty in your inventory."
 msgstr "우와! 내 짐속에 뭔가 맛있는 것이 있어."
 
-#: effects_work.cc:2083
+#: effects_work.cc:2083 effects.cc:2087
 msgid "The smell of rotting flesh makes you sick."
 msgstr "고기가 썩는 냄새로 속이 메스꺼워졌다."
 
-#: effects_work.cc:2084
+#: effects_work.cc:2084 effects.cc:2088
 msgid "You smell decay. Yuck!"
 msgstr "부패하는 지독한 냄새를 맡았다. 우웩!"
 
-#: effects_work.cc:2085
+#: effects_work.cc:2085 effects.cc:2089
 msgid "Ugh! There is something really disgusting in your inventory."
 msgstr "웩! 당신의 짐 안에 진짜 토나오는 무언가가 있다."
 
-#: effects_work.cc:2090
+#: effects_work.cc:2090 effects.cc:2094
 msgid "Something in your inventory has become rotten."
 msgstr "당신의 짐 속 무언가가 썩기 시작했다."
 
-#: effects_work.cc:2226
+#: effects_work.cc:2226 effects.cc:2230
 msgid "Your disease is taking its toll."
 msgstr "당신은 병에 대한 댓가를 치르고 있다."
 
-#: effects_work.cc:2287
+#: effects_work.cc:2287 effects.cc:2291
 msgid ""
 "Your body momentarily shudders from a surge of wild energies until Zin's "
 "power calms it."
-msgstr "당신의 육체는 격렬하게 방출된 에너지로 떨렸고, 「진」은 그 에너지를 진정시켜주었다."
+msgstr ""
+"당신의 육체는 격렬하게 방출된 에너지로 떨렸고, 「진」은 그 에너지를 진정시켜"
+"주었다."
 
-#: effects_work.cc:2292
+#: effects_work.cc:2292 effects.cc:2296
 msgid "Your body shudders with the violent release of wild energies!"
 msgstr "당신의 육체는 격렬하게 방출된 에너지로 떨렸다!"
 
-#: effects_work.cc:2308
+#: effects_work.cc:2308 effects.cc:2312
 msgid "magical storm"
 msgstr "마력의 폭풍"
 
-#: effects_work.cc:2310
+#: effects_work.cc:2310 effects.cc:2314
 msgid "a magical explosion"
 msgstr "마력 폭발"
 
 #. / 앞에 신 이름이 나옴.
-#: effects_work.cc:2387
+#: effects_work.cc:2387 effects.cc:2396
 msgid " gurgles merrily."
 msgstr "께서 '쏴~'하는 소리를 냈다."
 
-#: effects_work.cc:2391
+#: effects_work.cc:2391 effects.cc:2400
 msgid "You hear a series of splatters."
 msgstr "당신은 연속해서 철퍼덕거리는 소리들을 들었다."
 
-#: effects_work.cc:2392
+#: effects_work.cc:2392 effects.cc:2401
 msgid "You hear a splatter"
 msgstr "당신은 철퍼덕거리는 소리를 들었다."
 
 #. / 앞에 신 이름이 나옴
-#: effects_work.cc:2396
+#: effects_work.cc:2396 effects.cc:2405
 msgid " says: Divide and consume!"
 msgstr "께서 명하길: 나뉘어라, 그리고 먹어치워라!"
 
-#: effects_work.cc:2977
+#: effects_work.cc:2977 effects.cc:2985
 msgid "A ring of toadstools grows before your very eyes."
 msgstr "독버섯들이 당신의 눈 앞에 고리 모양으로 자라났다."
 
-#: effects_work.cc:2979
+#: effects_work.cc:2979 effects.cc:2987
 msgid "Some toadstools grow in a peculiar arc."
 msgstr "독버섯 몇 개가 기이한 호를 그리며 자라났다."
 
-#: effects_work.cc:2981
+#: effects_work.cc:2981 effects.cc:2989
 msgid "A toadstool grows."
 msgstr "독버섯이 자라났다."
 
-#: effects_work.cc:3052
+#: effects_work.cc:3052 effects.cc:3060
 msgid "A toadstool grows at your feet."
 msgstr "당신의 발에 독버섯이 자라났다."
 
-#: effects_work.cc:3121
+#: effects_work.cc:3121 effects.cc:3128
 msgid "Some toadstools"
 msgstr "독버섯들"
 
-#: effects_work.cc:3122
+#: effects_work.cc:3122 effects.cc:3129
 msgid "A toadstool"
 msgstr "독버섯"
 
-#: effects_work.cc:3123
+#: effects_work.cc:3123 effects.cc:3130
 msgid "nearby corpses"
 msgstr "근처의 시체들"
 
-#: effects_work.cc:3124
+#: effects_work.cc:3124 effects.cc:3131
 msgid "a nearby corpse"
 msgstr "근처의 시체"
 
-#: effects_work.cc:3125
+#: effects_work.cc:3125 effects.cc:3132
 msgid "the ground"
 msgstr "바닥"
 
 #. / 버섯, 시체 혹은 땅
-#: effects_work.cc:3128
+#: effects_work.cc:3128 effects.cc:3135
 #, c-format
 msgid "%s grow from %s."
 msgstr "%s이 %s에서 자라났다."
 
-#: effects_work.cc:3128
+#: effects_work.cc:3128 effects.cc:3135
 #, c-format
 msgid "%s grows from %s."
 msgstr "%s이 %s에서 자라났다."
 
-#: effects_work.cc:3261
+#: effects_work.cc:3261 effects.cc:3268
 #, c-format
 msgid "Your %s has recharged."
 msgstr "당신의 %s은 재충전되었다."
 
-#: effects_work.cc:3306
+#: effects_work.cc:3306 effects.cc:3313
 msgid "The walls burn you!"
 msgstr "근처 산성질 벽에 의해 화상을 입었다!"
 
-#: effects_work.cc:3307
+#: effects_work.cc:3307 effects.cc:3314
 msgid "The wall burns you!"
 msgstr "근처 산성질 벽에 의해 화상을 입었다!"
 
-#: effects_work.cc:3322
+#: effects_work.cc:3322 effects.cc:3329
 #, c-format
 msgid "The walls burn %s!"
 msgstr "%s은/(는) 근처 산성질 벽에 의해 화상을 입었다!"
 
-#: effects_work.cc:3322
+#: effects_work.cc:3322 effects.cc:3329
 #, c-format
 msgid "The wall burns %s!"
 msgstr "%s은/(는) 근처 산성질 벽에 의해 화상을 입었다!"
+
+#: abl-show.cc:461
+msgid "Make lightning spire"
+msgstr ""
+
+#: abl-show.cc:563
+msgid "You mount a charged rod inside a coil."
+msgstr ""
+
+#: main.cc:988
+msgid "Unknown command, not repeating."
+msgstr ""
+
+#. well, not examine, but...
+#: main.cc:2069
+msgid "Unknown command."
+msgstr "알 수 없는 명령어."
+
+#: main.cc:2064
+msgid "Unknown command. (For a list of commands type <w>??<lightgrey>.)"
+msgstr ""

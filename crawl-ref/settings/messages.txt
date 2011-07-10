@@ -1,4 +1,4 @@
-### Highlighting of various messages
+﻿### Highlighting of various messages
 
 msc := message_colour
 
@@ -44,6 +44,7 @@ msc = $warning:no longer ripe
 #
 msc = $boring:You start (resting|searching)
 msc = $boring:Unknown command
+msc = $boring:알 수 없는 명령어
 msc = $boring:disappears? in a puff of smoke
 msc = $boring:dissolves? into (sparkling lights|shadows)
 #
