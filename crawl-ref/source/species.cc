@@ -169,56 +169,56 @@ std::string species_name(species_type speci, bool genus, bool adj)
     {
     case GENPC_DRACONIAN:
         if (adj || genus)  // adj doesn't care about exact species
-            res = "Draconian";
+            res = M_("Draconian");
         else
         {
             switch (speci)
             {
-            case SP_RED_DRACONIAN:     res = "Red Draconian";     break;
-            case SP_WHITE_DRACONIAN:   res = "White Draconian";   break;
-            case SP_GREEN_DRACONIAN:   res = "Green Draconian";   break;
-            case SP_YELLOW_DRACONIAN:  res = "Yellow Draconian";  break;
-            case SP_GREY_DRACONIAN:    res = "Grey Draconian";    break;
-            case SP_BLACK_DRACONIAN:   res = "Black Draconian";   break;
-            case SP_PURPLE_DRACONIAN:  res = "Purple Draconian";  break;
-            case SP_MOTTLED_DRACONIAN: res = "Mottled Draconian"; break;
-            case SP_PALE_DRACONIAN:    res = "Pale Draconian";    break;
+            case SP_RED_DRACONIAN:     res = M_("Red Draconian");     break;
+            case SP_WHITE_DRACONIAN:   res = M_("White Draconian");   break;
+            case SP_GREEN_DRACONIAN:   res = M_("Green Draconian");   break;
+            case SP_YELLOW_DRACONIAN:  res = M_("Yellow Draconian");  break;
+            case SP_GREY_DRACONIAN:    res = M_("Grey Draconian");    break;
+            case SP_BLACK_DRACONIAN:   res = M_("Black Draconian");   break;
+            case SP_PURPLE_DRACONIAN:  res = M_("Purple Draconian");  break;
+            case SP_MOTTLED_DRACONIAN: res = M_("Mottled Draconian"); break;
+            case SP_PALE_DRACONIAN:    res = M_("Pale Draconian");    break;
 
             case SP_BASE_DRACONIAN:
             default:
-                res = "Draconian";
+                res = M_("Draconian");
                 break;
             }
         }
         break;
     case GENPC_ELVEN:
         if (adj)  // doesn't care about species/genus
-            res = "Elven";
+            res = M_("Elven");
         else if (genus)
-            res = "Elf";
+            res = M_("Elf");
         else
         {
             switch (speci)
             {
-            case SP_HIGH_ELF:   res = "High Elf";   break;
-            case SP_DEEP_ELF:   res = "Deep Elf";   break;
-            case SP_SLUDGE_ELF: res = "Sludge Elf"; break;
-            default:            res = "Elf";        break;
+            case SP_HIGH_ELF:   res = M_("High Elf");   break;
+            case SP_DEEP_ELF:   res = M_("Deep Elf");   break;
+            case SP_SLUDGE_ELF: res = M_("Sludge Elf"); break;
+            default:            res = M_("Elf");        break;
             }
         }
         break;
     case GENPC_DWARVEN:
         if (adj)  // doesn't care about species/genus
-            res = "Dwarven";
+            res = M_("Dwarven");
         else if (genus)
-            res = "Dwarf";
+            res = M_("Dwarf");
         else
         {
             switch (speci)
             {
-            case SP_MOUNTAIN_DWARF: res = "Mountain Dwarf";            break;
-            case SP_DEEP_DWARF:     res = "Deep Dwarf";                break;
-            default:                res = "Dwarf";                     break;
+            case SP_MOUNTAIN_DWARF: res = M_("Mountain Dwarf");            break;
+            case SP_DEEP_DWARF:     res = M_("Deep Dwarf");                break;
+            default:                res = M_("Dwarf");                     break;
             }
         }
         break;
@@ -226,30 +226,30 @@ std::string species_name(species_type speci, bool genus, bool adj)
     default:
         switch (speci)
         {
-        case SP_HUMAN:      res = "Human";                             break;
-        case SP_HALFLING:   res = "Halfling";                          break;
-        case SP_KOBOLD:     res = "Kobold";                            break;
-        case SP_MUMMY:      res = "Mummy";                             break;
-        case SP_NAGA:       res = "Naga";                              break;
-        case SP_CENTAUR:    res = "Centaur";                           break;
-        case SP_SPRIGGAN:   res = "Spriggan";                          break;
-        case SP_MINOTAUR:   res = "Minotaur";                          break;
-        case SP_KENKU:      res = "Kenku";                             break;
+        case SP_HUMAN:      res = M_("Human");                             break;
+        case SP_HALFLING:   res = M_("Halfling");                          break;
+        case SP_KOBOLD:     res = M_("Kobold");                            break;
+        case SP_MUMMY:      res = M_("Mummy");                             break;
+        case SP_NAGA:       res = M_("Naga");                              break;
+        case SP_CENTAUR:    res = M_("Centaur");                           break;
+        case SP_SPRIGGAN:   res = M_("Spriggan");                          break;
+        case SP_MINOTAUR:   res = M_("Minotaur");                          break;
+        case SP_KENKU:      res = M_("Kenku");                             break;
 
         case SP_HILL_ORC:
-            res = (adj ? "Orcish" : genus ? "Orc" : "Hill Orc");
+            res = (adj ? M_("Orcish") : genus ? M_("Orc") : M_("Hill Orc"));
             break;
 
-        case SP_OGRE:       res = (adj ? "Ogreish"    : "Ogre");       break;
-        case SP_TROLL:      res = (adj ? "Trollish"   : "Troll");      break;
-        case SP_DEMIGOD:    res = (adj ? "Divine"     : "Demigod");    break;
-        case SP_DEMONSPAWN: res = (adj ? "Demonic"    : "Demonspawn"); break;
-        case SP_GHOUL:      res = (adj ? "Ghoulish"   : "Ghoul");      break;
-        case SP_MERFOLK:    res = (adj ? "Merfolkian" : "Merfolk");    break;
-        case SP_VAMPIRE:    res = (adj ? "Vampiric"   : "Vampire");    break;
-        case SP_FELID:      res = (adj ? "Feline"     : "Felid");      break;
-        case SP_OCTOPODE:   res = (adj ? "Octopoid"   : "Octopode");   break;
-        default:            res = (adj ? "Yakish"     : "Yak");        break;
+        case SP_OGRE:       res = (adj ? M_("Ogreish")    : M_("Ogre"));       break;
+        case SP_TROLL:      res = (adj ? M_("Trollish")   : M_("Troll"));      break;
+        case SP_DEMIGOD:    res = (adj ? M_("Divine")     : M_("Demigod"));    break;
+        case SP_DEMONSPAWN: res = (adj ? M_("Demonic")    : M_("Demonspawn")); break;
+        case SP_GHOUL:      res = (adj ? M_("Ghoulish")   : M_("Ghoul"));      break;
+        case SP_MERFOLK:    res = (adj ? M_("Merfolkian") : M_("Merfolk"));    break;
+        case SP_VAMPIRE:    res = (adj ? M_("Vampiric")   : M_("Vampire"));    break;
+        case SP_FELID:      res = (adj ? M_("Feline")     : M_("Felid"));      break;
+        case SP_OCTOPODE:   res = (adj ? M_("Octopoid")   : M_("Octopode"));   break;
+        default:            res = (adj ? M_("Yakish")     : M_("Yak"));        break;
         }
     }
     return res;

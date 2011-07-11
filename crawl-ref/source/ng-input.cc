@@ -57,7 +57,7 @@ static void _show_name_prompt(int where)
     cgotoxy(1, where);
     textcolor(CYAN);
 
-    cprintf("\nWhat is your name today? ");
+    cprintf(gettext("\nWhat is your name today? "));
 
     textcolor(LIGHTGREY);
 }

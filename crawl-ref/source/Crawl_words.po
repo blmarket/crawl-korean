@@ -1,0 +1,368 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-11 16:35+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. adj doesn't care about exact species
+#: species.cc:172 species.cc:189
+msgid "Draconian"
+msgstr "드라코니언"
+
+#: species.cc:177
+msgid "Red Draconian"
+msgstr "붉은 드라코니언"
+
+#: species.cc:178
+msgid "White Draconian"
+msgstr "흰 드라코니언"
+
+#: species.cc:179
+msgid "Green Draconian"
+msgstr "녹색 드라코니언"
+
+#: species.cc:180
+msgid "Yellow Draconian"
+msgstr "노란 드라코니언"
+
+#: species.cc:181
+msgid "Grey Draconian"
+msgstr "회색 드라코니언"
+
+#: species.cc:182
+msgid "Black Draconian"
+msgstr "검은 드라코니언"
+
+#: species.cc:183
+msgid "Purple Draconian"
+msgstr "보랏빛 드라코니언"
+
+#: species.cc:184
+msgid "Mottled Draconian"
+msgstr "점박이 드라코니언"
+
+#: species.cc:185
+msgid "Pale Draconian"
+msgstr "창백한 드라코니언"
+
+#. doesn't care about species/genus
+#: species.cc:196
+msgid "Elven"
+msgstr ""
+
+#: species.cc:198 species.cc:206
+msgid "Elf"
+msgstr "엘프"
+
+#: species.cc:203
+msgid "High Elf"
+msgstr "하이엘프"
+
+#: species.cc:204
+msgid "Deep Elf"
+msgstr "순종 엘프"
+
+#: species.cc:205
+msgid "Sludge Elf"
+msgstr "잡종 엘프"
+
+#. doesn't care about species/genus
+#: species.cc:212
+msgid "Dwarven"
+msgstr ""
+
+#: species.cc:214 species.cc:221
+msgid "Dwarf"
+msgstr "드워프"
+
+#: species.cc:219
+msgid "Mountain Dwarf"
+msgstr "산드워프"
+
+#: species.cc:220
+msgid "Deep Dwarf"
+msgstr "순종 드워프"
+
+#: species.cc:229
+msgid "Human"
+msgstr "인간"
+
+#: species.cc:230
+msgid "Halfling"
+msgstr "하플링"
+
+#: species.cc:231
+msgid "Kobold"
+msgstr "코볼트"
+
+#: species.cc:232
+msgid "Mummy"
+msgstr "미이라"
+
+#: species.cc:233
+msgid "Naga"
+msgstr "나가"
+
+#: species.cc:234
+msgid "Centaur"
+msgstr "켄타우로스"
+
+#: species.cc:235
+msgid "Spriggan"
+msgstr "스프리건"
+
+#: species.cc:236
+msgid "Minotaur"
+msgstr "미노타"
+
+#: species.cc:237
+msgid "Kenku"
+msgstr "켄쿠"
+
+#: species.cc:240
+msgid "Orcish"
+msgstr ""
+
+#: species.cc:240
+msgid "Orc"
+msgstr "오크"
+
+#: species.cc:240
+msgid "Hill Orc"
+msgstr "언덕 오크"
+
+#: species.cc:243
+msgid "Ogreish"
+msgstr ""
+
+#: species.cc:243
+msgid "Ogre"
+msgstr "오우거"
+
+#: species.cc:244
+msgid "Trollish"
+msgstr ""
+
+#: species.cc:244
+msgid "Troll"
+msgstr "트롤"
+
+#: species.cc:245
+msgid "Divine"
+msgstr "신성한"
+
+#: species.cc:245
+msgid "Demigod"
+msgstr "반신족"
+
+#: species.cc:246
+msgid "Demonic"
+msgstr ""
+
+#: species.cc:246
+msgid "Demonspawn"
+msgstr "악마족"
+
+#: species.cc:247
+msgid "Ghoulish"
+msgstr ""
+
+#: species.cc:247
+msgid "Ghoul"
+msgstr "구울"
+
+#: species.cc:248
+msgid "Merfolkian"
+msgstr ""
+
+#: species.cc:248
+msgid "Merfolk"
+msgstr "멀포크"
+
+#: species.cc:249
+msgid "Vampiric"
+msgstr ""
+
+#: species.cc:249
+msgid "Vampire"
+msgstr "뱀파이어"
+
+#: species.cc:250
+msgid "Feline"
+msgstr ""
+
+#: species.cc:250
+msgid "Felid"
+msgstr "고양이족"
+
+#: species.cc:251
+msgid "Octopoid"
+msgstr ""
+
+#: species.cc:251
+msgid "Octopode"
+msgstr "문어족"
+
+#: species.cc:252
+msgid "Yakish"
+msgstr ""
+
+#: species.cc:252
+msgid "Yak"
+msgstr "야크"
+
+#: jobs.cc:24
+msgid "Fighter"
+msgstr "투사"
+
+#: jobs.cc:24
+msgid "Wizard"
+msgstr "마법사"
+
+#: jobs.cc:24
+msgid "Priest"
+msgstr "성직자"
+
+#: jobs.cc:25
+msgid "Gladiator"
+msgstr "검투사"
+
+#: jobs.cc:25
+msgid "Necromancer"
+msgstr "강령술사"
+
+#: jobs.cc:27
+msgid "Paladin"
+msgstr "성기사"
+
+#: jobs.cc:29
+msgid "Assassin"
+msgstr "암살자"
+
+#: jobs.cc:29
+msgid "Berserker"
+msgstr "광전사"
+
+#: jobs.cc:29
+msgid "Hunter"
+msgstr "사냥꾼"
+
+#: jobs.cc:29
+msgid "Conjurer"
+msgstr "마도사"
+
+#: jobs.cc:29
+msgid "Enchanter"
+msgstr "연금술사"
+
+#: jobs.cc:30
+msgid "Fire Elementalist"
+msgstr "화염법사"
+
+#: jobs.cc:30
+msgid "Ice Elementalist"
+msgstr "냉기법사"
+
+#: jobs.cc:30
+msgid "Summoner"
+msgstr "소환사"
+
+#: jobs.cc:30
+msgid "Air Elementalist"
+msgstr "대기법사"
+
+#: jobs.cc:31
+msgid "Earth Elementalist"
+msgstr "대지법사"
+
+#: jobs.cc:31
+msgid "Skald"
+msgstr "스칼드"
+
+#: jobs.cc:32
+msgid "Venom Mage"
+msgstr "독 법사"
+
+#: jobs.cc:33
+msgid "Chaos Knight"
+msgstr "혼돈의 기사"
+
+#: jobs.cc:33
+msgid "Transmuter"
+msgstr "변이술사"
+
+#: jobs.cc:33
+msgid "Healer"
+msgstr "힐러"
+
+#: jobs.cc:35
+msgid "Reaver"
+msgstr "리버"
+
+#: jobs.cc:37
+msgid "Stalker"
+msgstr "스토커"
+
+#: jobs.cc:38
+msgid "Monk"
+msgstr "몽크"
+
+#: jobs.cc:38
+msgid "Warper"
+msgstr "이동술사"
+
+#: jobs.cc:38
+msgid "Wanderer"
+msgstr "방랑자"
+
+#: jobs.cc:38
+msgid "Artificer"
+msgstr "기술자"
+
+#: jobs.cc:38
+msgid "Arcane Marksman"
+msgstr ""
+
+#: jobs.cc:39
+msgid "Death Knight"
+msgstr "죽음의 기사"
+
+#: jobs.cc:39
+msgid "Abyssal Knight"
+msgstr "심연의 기사"
+
+#: jobs.cc:70
+msgid "Unemployed"
+msgstr "무직자"
+
+#: newgame.cc:1011
+msgid "Warrior"
+msgstr "전사"
+
+#: newgame.cc:1017
+msgid "Adventurer"
+msgstr "모험가"
+
+#: newgame.cc:1023
+msgid "Zealot"
+msgstr "광신자"
+
+#: newgame.cc:1030
+msgid "Warrior-mage"
+msgstr "전투법사"
+
+#: newgame.cc:1036
+msgid "Mage"
+msgstr "법사"

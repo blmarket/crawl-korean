@@ -1,2 +1,9 @@
 mkdir -p ko_KR/LC_MESSAGES
-msgfmt -o ko_KR/LC_MESSAGES/Crawl.mo Crawl_korean.po Crawl_mutation.po
+cp Crawl_korean.po tmp.po
+echo "" >> tmp.po
+tail Crawl_mutation.po -n +19 >> tmp.po
+echo "" >> tmp.po
+tail Crawl_words.po -n +19 >> tmp.po
+echo "" >> tmp.po
+tail Crawl_verbs.po -n +13 >> tmp.po
+msgfmt -v -f -o ko_KR/LC_MESSAGES/Crawl.mo tmp.po

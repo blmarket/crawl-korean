@@ -1,0 +1,134 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-11 14:28+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "hit-verb"
+msgstr "공격했"
+
+msgid "clumsily bash-verb"
+msgstr "서투르게 후려쳤"
+
+msgid "bite-verb"
+msgstr "물었"
+
+msgid "maul-verb"
+msgstr "찢어냈"
+
+msgid "slash-verb"
+msgstr "베었"
+
+msgid "slice-verb"
+msgstr "토막냈"
+
+msgid "shred-verb"
+msgstr "갈았"
+
+msgid "scratch-verb"
+msgstr "긁었"
+
+msgid "claw-verb"
+msgstr "할퀴었"
+
+msgid "mangle-verb"
+msgstr "짓이겼"
+
+msgid "eviscerate-verb"
+msgstr "탈장시켰"
+
+msgid "punch-verb"
+msgstr "쳤"
+
+msgid "pummel-verb"
+msgstr "후려쳤"
+
+msgid "trample-verb"
+msgstr "짓밟았"
+
+msgid "puncture-verb"
+msgstr "구멍냈"
+
+msgid "impale-verb"
+msgstr "관통했"
+
+msgid "spit-verb"
+msgstr "찔렀"
+
+msgid "dice-verb"
+msgstr "토막냈"
+
+msgid "open-verb"
+msgstr "열어제꼈"
+
+msgid "thump-verb"
+msgstr "쾅 쳤"
+
+msgid "sock-verb"
+msgstr "강타했"
+
+msgid "bludgeon-verb"
+msgstr "때려팼"
+
+msgid "crush-verb"
+msgstr "으깼"
+
+msgid "whack-verb"
+msgstr "후려쳤"
+
+msgid "thrash-verb"
+msgstr "찰지구나"
+
+msgid "punish-verb"
+msgstr "처벌했"
+
+msgid "devastate-verb"
+msgstr "파괴했"
+
+msgid "tentacle-slap-verb"
+msgstr "촉수로 갈겼"
+
+msgid "batter-verb"
+msgstr "두들겼"
+
+msgid "kick-verb"
+msgstr "발로 찼"
+
+msgid "peck-verb"
+msgstr "쪼았"
+
+msgid "headbutt-verb"
+msgstr "받아버렸"
+
+msgid "tail-slap-verb"
+msgstr "꼬리로 뺨다구를 후려쳤"
+
+msgid "squeeze-verb"
+msgstr "쥐어짰"
+
+msgid "rip-verb"
+msgstr "떼어냈"
+
+msgid "tear-verb"
+msgstr "찢었"
+
+msgid "lop-verb"
+msgstr "잘랐"
+
+msgid "chop-verb"
+msgstr "쪼갰"
+
+msgid "hack-verb"
+msgstr "난도질했"
+
+msgid "block-verb"
+msgstr "막았"
+
+msgid "burn-verb"
+msgstr "불태웠"

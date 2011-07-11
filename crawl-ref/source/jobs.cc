@@ -21,22 +21,22 @@ static const char * Job_Abbrev_List[ NUM_JOBS ] =
       "DK", "AK" };
 
 static const char * Job_Name_List[ NUM_JOBS ] =
-    { "Fighter", "Wizard", "Priest",
-      "Gladiator", "Necromancer",
+    { M_("Fighter"), M_("Wizard"), M_("Priest"),
+      M_("Gladiator"), M_("Necromancer"),
 #if TAG_MAJOR_VERSION == 32
-      "Paladin",
+      M_("Paladin"),
 #endif
-      "Assassin", "Berserker", "Hunter", "Conjurer", "Enchanter",
-      "Fire Elementalist", "Ice Elementalist", "Summoner", "Air Elementalist",
-      "Earth Elementalist", "Skald",
-      "Venom Mage",
-      "Chaos Knight", "Transmuter", "Healer",
+      M_("Assassin"), M_("Berserker"), M_("Hunter"), M_("Conjurer"), M_("Enchanter"),
+      M_("Fire Elementalist"), M_("Ice Elementalist"), M_("Summoner"), M_("Air Elementalist"),
+      M_("Earth Elementalist"), M_("Skald"),
+      M_("Venom Mage"),
+      M_("Chaos Knight"), M_("Transmuter"), M_("Healer"),
 #if TAG_MAJOR_VERSION == 32
-      "Reaver",
+      M_("Reaver"),
 #endif
-      "Stalker",
-      "Monk", "Warper", "Wanderer", "Artificer", "Arcane Marksman",
-      "Death Knight", "Abyssal Knight" };
+      M_("Stalker"),
+      M_("Monk"), M_("Warper"), M_("Wanderer"), M_("Artificer"), M_("Arcane Marksman"),
+      M_("Death Knight"), M_("Abyssal Knight") };
 
 const char *get_job_abbrev(int which_job)
 {
@@ -67,7 +67,7 @@ job_type get_job_by_abbrev(const char *abbrev)
 const char *get_job_name(int which_job)
 {
     if (which_job == JOB_UNKNOWN)
-        return "Unemployed";
+        return M_("Unemployed");
     COMPILE_CHECK(ARRAYSZ(Job_Name_List) == NUM_JOBS);
     ASSERT(which_job >= 0 && which_job < NUM_JOBS);
 
