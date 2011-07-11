@@ -1899,7 +1899,7 @@ int melee_attack::player_weapon_type_modify(int damage)
             else
                 attack_verb = V_("maul");
             break;
-        case TRAV_BLADE_HANDS:
+        case TRAN_BLADE_HANDS:
             if (damage < HIT_WEAK)
                 attack_verb = V_("hit");
             else if (damage < HIT_MED)
@@ -1909,8 +1909,8 @@ int melee_attack::player_weapon_type_modify(int damage)
             else
                 attack_verb = V_("shred");
             break;
-        case TRAV_STATUE:
-        case TRAV_LICH:
+        case TRAN_STATUE:
+        case TRAN_LICH:
             if (you.has_usable_claws())
             {
                 if (damage < HIT_WEAK)
@@ -1936,7 +1936,7 @@ int melee_attack::player_weapon_type_modify(int damage)
                 break;
             }
             // or fall-through
-        case TRAV_ICE_BEAST:
+        case TRAN_ICE_BEAST:
             if (damage < HIT_WEAK)
                 attack_verb = V_("hit");
             else if (damage < HIT_MED)
@@ -1944,7 +1944,7 @@ int melee_attack::player_weapon_type_modify(int damage)
             else
                 attack_verb = V_("pummel");
             break;
-        case TRAV_DRAGON:
+        case TRAN_DRAGON:
             if (damage < HIT_WEAK)
                 attack_verb = V_("hit");
             else if (damage < HIT_MED)
