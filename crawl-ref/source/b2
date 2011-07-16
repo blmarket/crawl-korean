@@ -1,0 +1,1 @@
+make install -j 3 TILES=y USE_GETTEXT=y prefix=/c/Users/Neon/crawl DATADIR=data/ SAVEDIR=saves/
