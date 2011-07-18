@@ -1,33 +1,31 @@
-%%%%
+﻿%%%%
 A basalt altar of Yredelemnul
 
-An altar to Yredelemnul the Dark, worked from columnar basalt.
+'어둠의  이레델렘눌'의 제단이다. 현무암 재질의 기둥들로 만들어져 있다.
 %%%%
 A bloodstained altar of Trog
 
-An altar to Trog the Wrathful, crudely made by what seem to be the hands of giants and covered with bloodstains.
+'분노의 트로그'의 제단이다. 거인의 손으로 대강 만든듯한 모습으로, 핏자국으로 덮여져 있다.
 %%%%
 A blossoming altar of Fedhas
 
-An altar to Fedhas Madash, covered in vibrant and colourful plant life.
+'페다스 마대쉬'의 제단이다. 활기찬 생명력을 보이는 형형색색의 식물과 꽃들로 덮여있다.
 %%%%
 A burning altar of Makhleb
 
-An ever-burning altar to Makhleb the Destroyer. Strange, twisting shapes are visible in the flames.
+'파괴의 마크레브'의 불타는 제단이다. 기이하게 꼬여 가면서, 모양을 바꾸는 화염이 제단 위로 불타고 있다.
 %%%%
 A closed detected secret door
 
-A wooden door, cunningly hidden. It used to be a secret door but at least for you it's not a secret anymore.
-
-To open it, try simply walking into it, or press 'O'.
+교묘하게 숨겨진 비밀 나무 문이지만, 당신이 발견한 지금 더 이상 비밀문이 아니다. 문을 열려면 'O' 키를 누르거나, 간단하게 문으로 이동하면 된다.
 %%%%
 A closed door
 
-A wooden door. To open it, try simply walking into it, or press 'O'.
+나무 문이다. 문을 열려면 'O'키를 누르거나, 간단하게 문으로 이동하면 된다.
 %%%%
 A corrupted altar of Lugonu
 
-An altar to Lugonu the Unformed, possibly dedicated to some other power before it was irrevocably corrupted.
+'불안정의 루고누'의 제단이다. 아마도 제단이 최종적으로 타락하기 전, 무언가 다른 힘에 의해 봉헌되었을 것이다.
 %%%%
 A crawl-hole back to the Lair
 
@@ -35,93 +33,91 @@ You can climb it to get back to less cramped spaces with less cobwebs.
 %%%%
 A deep blue altar of Sif Muna
 
-An altar of the deepest blue, covered in intricate patterns and writings in long forgotten scripts, devoted to Sif Muna the Loreminder.
+감청색의 제단으로, 복잡한 문양들과 긴 고대 언어의 문장들이 '지식의 시프 무나'에 의하여, 제단에 가득 쓰여져 있다. 
 %%%%
 A dry fountain
 
-A dried-up fountain that has seen better days.
+상태가 좋지 않아 보이는, 바싹 마른 분수다.
 %%%%
 A flagged portal
 
-Whoever built that castle on the other side, they wanted to sort their treasure undisturbed.
+누군가가 보물을 숨기기 위하여 만들어 놓은, 어딘가의 창고로 통하는 포탈이다.
 %%%%
 A fountain of clear blue water
 
-Press 'q' to drink from this fountain. Not that it would have any effect, though...
+'q' 키를 눌러, 이 분수의 물을 마실 수 있다. 다만 당신이 아무것도 먹지 않고 오브를 찾는 것에 도전하는것이 아닌 이상, 마시지 않고 가만히 두는것이 눈요기에는 좋을거 같다.
 %%%%
 A fountain of blood
 
-Press 'q' to drink from this fountain, if you absolutely wish to.
+'q' 키를 눌러 이 분수의 핏물을 마실 수 있다. 물론 원한다면..
 %%%%
 A fountain of sparkling water
 
-Press 'q' to drink from this magic fountain. Expect magical effects, as long as it's still magic.
+'q' 키를 눌러 이 마법 분수의 물을 마실 수 있다. 마법 분수이기 때문에.. 이런저런 마법 효과가 나타나는 건 알고 있겠지?
 %%%%
 A gate leading back out of this place
 
-This gate leads back to the dungeon. Just don't forget your runes if you intend to return.
+모험을 끝내고, 던전의 밖으로 나가는 문이다. 이 곳으로 나가기 전에, 룬과 오브를 잘 챙겼는지 다시 한번 확인하라!
 %%%%
 A gate leading out of Pandemonium
 
-Finally, a gate that leads back to the dungeon.
+끝끝내 찾아낸, 던전으로 돌아가는 문이다.
 %%%%
 A gate leading to another region of Pandemonium
 
-This gate leads to yet another region of Pandemonium. There'll always be more.
+판데모니움의, 아직 가보지 못한 다른 지역으로 통하는 통로이다. 이와 같은 통로는 판데모니움 어딘가에 항상 존재한다.
 %%%%
 A one-way gate leading to the halls of Pandemonium
 
-This gate leads to the endless halls of Pandemonium. Tales about successful lootings of these netherworlds are rare. Even the strongest and most experienced characters can die there. On the other hand, these halls contain several runes and lots of valuable items. It is much easier to get in than to get out.
+이 통로는, 판데모니움의 끝 없는 커다란 홀로 통한다. 이와 같은 지하 세계를 약탈하는데 성공했다는 이야기는 매우 드물다. 가장 강력하면서도 경험많은 용사들도 이 곳에서 죽어나갈 수 있다. 달리 말하면, 이 곳은 몇몇 '조트의 룬'과 값진 보물들들 찾을 수 있는 곳이기도 하긴 하지만, 들어가는 건 자유지만 나올땐 아닐 것이다.
 %%%%
 A gate to the Realm of Zot
 
-This gate leads to the Realm of Zot, the final stage of your quest as its deepest level houses the infamous Orb of Zot. Both the Orb and this Realm have a fearsome and questionable reputation, but one piece of information seems to be for certain: The monsters inhabiting this area and protecting the Orb are strong and strange - some of them nowhere encountered but here.
+'조트의 렐름으'로 통하는 관문으로, 당신의 여정의 마지막 시련이 되는 이 곳은 악명 높은 '조트의 오브'가 소장되어 있는 던전의 가장 깊은 곳이다. 오브와, 이 렐름은 공포스러우면서도, 의문 투성이인 곳인데, 그래도 일단 분명한 것은, 이 지역에 서식하고, 오브를 지키는 몬스터들은 당신이 어디서도 보지 못한, 강력하면서도 낯선 몬스터들이라는 점이다.
 %%%%
 A gateway to a bazaar
 
-Aside from the vendors who've set up their stores at various places in the dungeon, there are others trying to make a living by travelling from place to place. Bazaars feature a number of different shops and often have better stock than the sedentary ones, sometimes even at a bargain. Once you hear the clinking of coins, be sure to hurry up and find the impromptu marketplace before the caravan moves on!
-
-Also be warned that their nomadic lifestyle has taught these sellers to appropriate any items an adventurer might leave behind, and then leave quickly, probably to sell them elsewhere.
+던전 안에는, 방랑 행상인들이 모여 상점을 꾸린 특별한 공간이 있는데, 이와 같은 상점이 모인 시장으로 통하는 포탈이다. 이와 같은 시장들은 여러 종류의 다양한 상점들로 이루어져있고, 던전 내에 고립되어 머물러 있는 상점에 비해 더 좋은 물건을, 때때로 할인행사도 하면서 파는 경우도 있다. 충분한 금화들을 가지고 있다면, 이 즉흥적인 상점들의 지역이 다른 곳으로 옮겨가기 전에 서둘러 이 곳을 찾아야 할 것이다! 또한 주의할 점은, 이 상점들의 방랑상인들은 판매자들이 모두 떠나면, 빠르게 떠나 버리기 때문에, 다시 찾을 수 없다는 점이다.
 %%%%
 A gateway leading out of the Abyss
 
-A gateway out of this accursed place, shimmering and shifting in the impermanent landscape.
+이 저주받은 장소로부터 탈출하는 관문으로, 형태가 계속해서 변하면서, 희미하게 빛을 내고 있다.
 %%%%
 A gateway to the ashen valley of Gehenna
 
-You can feel the heat. Gehenna seems to be made out of nothing but flames, lava and hellfire.
+마치 화염과 용암, 지옥불 외에는 아무 것도 없는 곳이라는 생각이 들 정도로, 게헨나로 통하는 문으로부터 뜨거운 열기가 느껴지고 있다.
 %%%%
 A gateway to Hell
 
-This gateway leads to the Vestibule of Hell. Few would go there voluntarily.
+지옥의 입구로 통하는 문이다. 물론 자진해서 이곳에 들어가는 자들은 극소수다.
 %%%%
 A gateway to the Iron City of Dis
 
-Who will stand the test of iron?
+누가 이 철의 시험대 위에 설 것인가?
 %%%%
 A gateway to the decaying netherworld of Tartarus
 
-This place seems to radiate negative energy.
+관문 안으로부터, 부정적인 음에너지가 뿜어져 나오는 것이 보인다.
 %%%%
 A gateway to the freezing wastes of Cocytus
 
-From the frost-bitten lands, a cold chill touches your soul.
+온통 서리로 덮인 대지의, 당신의 영혼까지 얼어붙게 만들 만한 코큐투스로 향하는 문이다.
 %%%%
 A glowing drain
 
-Every settlement brings forth the unpleasant sewers and drains, ignored by most but hideaways for others. Old tales speak of dangerous creatures, bathing in disgustingly smelling green water, preying on each other without mercy. The tales also allude to valuable items left by daring and unfortunate visitors, left to grow mildew in the damp caverns.
+던전 안에 정착한 존재들도, 이 불쾌한 하수구 근처에서는 좀처럼 살지 않는다. 대부분의 존재들에게 무시되지만, 몇몇 존재들에게는 은신처로 사용되는 이곳은, 옛날 이야기에 따르면 위험한 생명체들이 역겨운 냄새가 나는 녹색 물에서 뒹굴면서, 서로간의 무자비한 동족상잔을 벌인다고도 한다. 하지만, 또한 이 축축한 굴에서 쓰러져, 흰곰팡이가 피어버린 불행한 방문자들이 남긴 값진 아이템들을 찾을 수도 있다고도 하더라.
 %%%%
 A glowing golden altar of the Shining One
 
-An altar to The Shining One, made from the purest gold and almost blinding in its radiance.
+'샤이닝 원'의 순금으로 만들어진 눈부신 제단이다.
 %%%%
 A glowing silver altar of Zin
 
-An altar to Zin the Law-Giver, made from silver as pristine as Zin's followers are expected to be, and glowing gently.
+'질서를 가져오는 자, 진' 의 부드럽게 빛나는 제단으로, 진의 사제들에 의하여, 은으로 매우 청결하게 만들어져 있다. 
 %%%%
 A granite statue
 
-Despite the hardness of the stone, this statue's features have long withered away.
+단단한 암석으로 만들어졌음에도 불구, 긴 풍화 작용으로 인해 이곳 저곳 손상된 모양을 하고 있다.
 %%%%
 A hole to the Spider Nest
 
@@ -129,27 +125,28 @@ This is more of a natural sloped shaft than a stairway, but it will do. If you w
 %%%%
 A labyrinth entrance
 
-A gateway to an intricate maze designed by subtle and malicious minds, its exit guarded by a fearsome monster. Many a hapless adventurer has lost his way in the twisted, shifting passages, and starved to death.
+미묘하게 적의가 느껴지는 의지에 의해 건설된 복잡한 미궁으로 통하는 입구다. 미궁의 끝에는 무서운 몬스터가, 출구를 지키고 있다. 많은 불쌍한 모험가들이, 이 비비 꼬인 미로 속에서, 끝내 길을 찾지 못하고 굶어 죽고 말았다.
 %%%%
 A magical trap
 
-A magical device designed to harm trespassers that can't be deactivated.
+침입자들을 격퇴하기 위해 만들어진 마법 장치로, 이것은 해제가 불가능하다.
 %%%%
 A mechanical trap
 
-A mechanical contraption designed to harm trespassers. A skilled adventurer can try to disarm it, though.
+침입자들을 격퇴하기 위해 만들어진 기계적 장치로, 능숙한 모험가는 이 함정을 무력화시키는 것도 가능하다.
 %%%%
 A natural trap
 
-A natural hazard, although it looks almost as if designed to harm trespassers.
+자연적으로 만들어진 위험물이다. 완전히 침입자들을 격퇴하기 위해 일부러 만들었다고 해도 믿을 정도로..
 %%%%
 A metal wall
 
-A wall of bluish-grey metal. As every dungeon electrician knows, this stuff will ground.
+푸르스름한 회색 빛을 띄는 철로 만들어진 벽이다. 
+# 다음 문장은 대략 '던전의 전기 기술자들은, 이 벽을 통해 접지한다' 뭐 이런 내용인것같은데, 한글로 옮기니 어색해서 생략
 %%%%
 A one-way gate to the infinite horrors of the Abyss
 
-A one-way gate to a demon-haunted realm, riven by chaos, its very substance impermanent and whimsical, filled with creatures out of nightmare.
+악마들로 우글대는 어비스로 통하는 일방통행 문이다. 혼돈으로 분열된 이 곳은, 어비스를 구성하는 물질들도 시시각각으로 기괴하게 변화해가며, 악몽에서나 나올듯한 존재들로 가득한 곳이다.
 %%%%
 A passage of Golubria
 
@@ -157,103 +154,103 @@ This unstable gateway allows instantaneous travel to another nearby passage of G
 %%%%
 A portal to somewhere
 
-A gash-like tear in reality that looks into some terrifying, starry otherworld. Thankfully, the magic that opened this portal prevents its vacuum from consuming and swallowing everything in sight.
+눈물방울 상처처럼 생긴 이 관문의 현상 안쪽은, 어쩌면 무서우면서도, 어쩌면 꿈과 같은 다른 세계로 연결되어 있다. 다행인 점은, 이 열려있는 관문의 마력이 주위의 모든 것들을 빨아들이는 진공같은 존재는 아니라는 점이랄까.
 %%%%
 A radiant altar of Vehumet
 
-An altar, ablaze in the lights of Iskenderun and promising great destructive powers to those who would follow Vehumet.
+'이스킨데룬'의 광채와, 베후멧을 추종하여 파괴 마법을 약속받은 자들의 빛으로 불타오르는 제단이다.
 %%%%
 A rock wall
 
-This wall consists of simple rock.
+평범한 바위로 이루어져 있는 벽이다.
 %%%%
 A roughly hewn altar of Beogh
 
-An altar to Beogh, unmistakably roughly hewn by orcish artisans.
+오크 공예가에 의해, 거칠지만 명백하게 조각되어있는 '베오그'의 제단이다.
 %%%%
 A sand-covered staircase
 
-You can make out a staircase leading downwards into a small tomb. Sand surrounds the staircase and is continuously pouring onto it. Before long the staircase will be gone. They say that some distant relatives of the pharaohs were entombed here.
+이 계단을 통해, 작은 무덤으로 내려갈 수 있다. 계단 주위를 덮고 있는 모래들이 계속해서 쌓여가고 있으며, 시간이 흐르면 완전히 모래에 파묻혀 사라질 것이다. 몇몇 이들에 따르면, 고대 파라오의 사돈의 팔촌 쯤 되는 이들이 이 곳에 묻혀있었다고 한다.
 %%%%
 A shaft
 
-A deep hole. Who knows where you might end up if you were to fall through it?
+깊은 구멍이다. 이 곳으로 빠지면, 어디로 떨어질지는 모른다.
 %%%%
 A shattered altar of Ashenzari
 
-This crystal altar shattered to pieces when Ashenzari was cursed. But still, there is power here: a dark aura holds the shards in mid-explosion, suspended in time and space much like the god they herald.
+탐험의 신, '아센자리'가 저주받기 전까지는 수정으로 만들어졌었으나, 지금은 산산히 부서진 제단이다. 제단 위에, 시공간이 묶여 있는 건지 부서진 조각들의 파편이 공중에 그대로 남아 있는 것을 보면, 여전히 마력을 발하는 것 같다.
 %%%%
 A shimmering altar of Xom
 
-This altar constantly shimmers in all visible colours and probably some invisible ones, too, matching the whims of Xom the Unpredictable, to whom it is dedicated.
+당신이 알고 있는 모든 색으로 바뀌어 가면서, 아마도 조금씩 모양까지 바뀌어가는 이 제단은, 혼돈의 신 '좀'의 변덕스러움을 잘 나타내준다.
 %%%%
 A shop
 
-A shop in the dungeon, beyond sight of the world above, manned by a secretive and reclusive shopkeeper who cannot be bargained with, grants no refunds, and is interested in nothing you may have to sell. Some shops hawk antiques of unknown provenance, and offer little hint as to the quality or nature of their goods.
+다른 세상에서는 볼 수 없을, 던전 안에 있는 상점이다. 수상하고도 쓸쓸한 느낌의 상점 주인은, 할인 판매나 환불은 해주지 않는다. 물론 당신이 가지고 있는 물건에도 흥미가 없으므로, 당신에게 물건을 사지도 않을 것이다. 몇몇 상점들은, 알려지지 않은 골동품을 판매하기도 하는데, 물건의 종류나, 질에 따른 약간의 힌트만 제공한다.
 %%%%
 A slime covered rock wall
 
-This rock wall is thickly coated with bright green slime. Ewwwwww.
+이 암벽은, 슬라임질의 산성 점액으로 두껍게 덮여 있다. 으으.
 %%%%
 A snail-covered altar of Cheibriados
 
-This altar somehow seems more stationary than the others.
+이 제단은, 다른 제단과 비교해서도 더욱 정적으로 보인다.
 %%%%
 A sparkling altar of Nemelex Xobeh
 
-This altar sparkles with a lightshow brighter than any gambling den's to attract followers for Nemelex Xobeh.
+모험가들에게 흥미를 끌어, 네멜렉스 죠베의 추종자를 늘리기 위해서인지, 이 제단은 어떤 도박신의 제단보다도 더욱 밝은 빛으로 반짝이고 있다.
 %%%%
 A staircase back to the Crypt
 
-These stairs lead back up to the Crypt.
+납골당으로 돌아가는 계단이다.
 %%%%
 A staircase back to the Dungeon
 
-These stairs lead back up to the familiarity of the dungeon.
+익숙한 메인 던전으로 돌아가는 계단이다.
 %%%%
 A staircase back to the Lair
 
-These stairs lead back up to the Lair of Beasts.
+짐승 소굴로 돌아가는 계단이다.
 %%%%
 A staircase back to the Mines
 
-These wide stairs lead back to the Orcish Mines.
+오크 광산으로 돌아가는 계단이다.
 %%%%
 A staircase back to the Vaults
 
-These stairs lead back to the mighty Vaults.
+보물창고로 돌아가는 계단이다.
 %%%%
 A staircase to the Crypt
 
-These stairs lead to an ancient crypt. Unfortunately, not everything that was buried there had the decency to stay dead.
+납골당으로 향하는 계단이다. 불행하게도 이 곳에 묻힌 존재들은, 가만히 죽은 상태로 있는 미덕을 가지고 있지 않다.
 %%%%
 A staircase to the Ecumenical Temple
 
-An entrance to a temple of Gods, a place of peace and refuge from the insanity of the dungeon.
+만신전으로 향하는 계단이다. 던전의 광기로부터의 도피처이자, 평화로움을 느낄 수 있는 장소이다.
 %%%%
 A staircase to the Elven Halls
 
-A wide stair down to the murky depths of the halls of the deep elves, skilled warriors with blades and bows, and fearsome sorcerers and magicians.
+딥 엘프의 방으로 통하는 어두컴컴하고 넓은 계단이다. 도검과 활에 숙련된 딥 엘프 전사들과, 딥 엘프 마법사들이 기다리고 있다.
 %%%%
 A staircase to the Hall of Blades
 
-These stairs lead to the Hall of Blades. The steps seem to have been beaten and chipped by assaults from the animated weapons therein.
+칼날의 방으로 향하는 계단이다. 이 계단은, 이 곳 안에 있을 움직이는 무기들의 공격으로 인해서인지, 곳곳이 부서지고 조각나 있다.
 %%%%
 A staircase to the Hive
 
-You hear an angry and manifold buzzing.
+맹렬한 붕붕 하는 소리가 계단 밖으로 수없이 울려 퍼진다.
 %%%%
 A staircase to the Lair
 
-These stairs lead down to the Lair of Beasts, for a change of climate.
+메인 던전과는 분위기가 확실히 다른, 짐승 소굴로 향하는 계단이다.
 %%%%
 A staircase to the Orcish Mines
 
-An entrance to the mines of the orcs, filled with their gold, but treacherous and easy to get trapped in.
+오크 광산으로 향하는 계단이다. 오크들이 모아 놓은 금화로 가득하지만, 보기보다 위험하고, 무엇보다 갇히기 쉬운 곳이다.
 %%%%
 A staircase to the Dwarven Hall
 
-An entrance to the well-worked hall of the dwarves. You think you can smell ale.
+드워프들에 의해, 꼼꼼하게 만들어져 있는 입구다. 왠지 맥주 냄새가 풍겨오는 듯 하다.
 %%%%
 A staircase to the Enchanted Forest
 
@@ -261,80 +258,80 @@ An entrance to the spriggan forest. Snap a twig and you're dead. Actually, they 
 %%%%
 A staircase to the Shoals
 
-Here be the Shoals: exotic underground beaches, salty spray and creatures that bite, stab and maul.
+해안으로 통하는 계단이다. 이국적인 지하 해변이 펼쳐지는 신기한 곳으로, 바닷물의 물보라와, 물고 찌르는 거친 생명체들이 사는 곳이다.
 %%%%
 A staircase to the Slime Pits
 
-An entrance to the amorphous realm of acids, jellies and slimes.
+산성 덩어리 젤리와 슬라임 등등 무형 생명체들의 왕국으로 통하는 계단이다.
 %%%%
 A staircase to the Snake Pit
 
-Here is the way to the home of the serpent, the lair of the naga.
+독사들의 고향이자, 나가의 소굴로 통하는 계단이다.
 %%%%
 A staircase to the Swamp
 
-A stair to a swampy wasteland, complete with ooze, muck, flies and large slavering carnivorous monsters.
+축축한 황무지로 통하는 계단이다. 온통 진흙과 오물들이 지면에 가득하며, 커다란 포식동물과 파리들이 즐비하다.
 %%%%
 A staircase to the Tomb
 
-A way to the Tomb of the Ancients, a place of damnation, of horrors animated by the vilest necromancy.
+사악한 강령술로 일어난 공포들로 저주받은 장소인, 고대 무덤으로 향하는 계단이다. 
 %%%%
 A staircase to the Vaults
 
-These stairs lead down into the Vaults, said to be home to great treasures. They are sprinkled with spots of blood.
+보물창고로 향하는 계단이다. 커다란 보물들이 가득한 곳이지만, 입구 곳곳에 묻어있는 핏자국을 보면 그리 녹록하지도 않을듯 하다.
 %%%%
 A stone staircase leading down
 
-These stairs lead further down.
+아래층으로 내려가는 계단이다.
 %%%%
 A stone staircase leading up
 
-These stairs lead back up.
+윗 층으로 올라오는 계단이다.
 %%%%
 A stone wall
 
-A harder obstacle than rock walls. Only the mightiest magic can shatter stone walls.
+암벽에 비해 훨씬 단단한 돌벽이다. 강력한 마법으로만 이 벽을 파괴할 수 있다.
 %%%%
 A translucent rock wall
 
-The mineral this rock consists of is as translucent as good quality glass. Whether it is natural or magical, you can't tell.
+이 암벽은, 웬만큼 좋은 유리만큼 투명한 미네랄들로 구성되어 있다. 이 벽이 자연적으로 만들어진 것인지, 마법으로 만들어진 것인지는 알 수 없다.
 %%%%
 A translucent stone wall
 
-A harder obstacle than rock walls. Only the mightiest magic can shatter stone walls. It has been imbued with arcane magics which render it translucent.
+암벽에 비해 훨씬 단단한 돌벽이다. 강력한 마법으로만 이 벽을 파괴할 수 있다. 신비로운 마법을 통해, 투명해지게 되었다.
 %%%%
 A translucent unnaturally hard rock wall
 
-This wall is imbued with magic that not only makes it indestructible but also makes it translucent like glass.
+이 벽은, 강력한 마법으로 인해 절대 부서지지 않으면서도, 유리처럼 투명한 성질을 가지게 되었다.
 %%%%
 %%%%
 A trap
 
-It's a trap!
+함정이다.
 %%%%
 A tree
 
-While the dungeon is filled with dim magic light, in most places it is not bright enough to sustain any larger plants. It is uneven, though, and there are spots where, with the grace of Fedhas, trees as big as those on the surface can grow underground.
+던전 안에 희미한 마법의 빛이 퍼졌을 때, 대부분의 장소들은 잡초 이상의 식물이 자랄 정도로 빛이 충분하지 않았지만, '페다스'의 은총이 닿았던 던전 내의 몇몇 흔치 않은 지역에는, 던전 밖에서나 볼 수 있는 커다란 나무들이 자라기도 하였다.
 %%%%
 A viscous altar of Jiyva
 
-A slimy, ever-shifting altar to Jiyva. You're not sure what it's made from, and you don't really want to know.
+끈적한 점액들이 흘러 내리는 슬라임의 신 '지이바'의 제단이다. 이 재단이 무엇으로 이루어졌는지는 알 수 도 없고, 알고 싶은 마음도 생기지 않는다.
 %%%%
 A wall of green crystal
 
-For some reason, some dungeon walls, like this one, have been made of this polished crystal, imbued with arcane magics. They prevent its easy destruction, and make it reflect heat and cold.
+어떤 이유인지, 던전의 몇몇 벽들은 이 벽 처럼 신비한 마법을 통해, 윤기나는 크리스탈로 만들어져 있다. 쉽게 부서지지도 않을 뿐더러, 열기와 냉기를 반사해내는 성질이 있다.
 %%%%
 A wall of solid wax
 
-These walls are built by bees. Occasionally a dungeon architect will manipulate bees into building wax walls for aesthetic reasons. (Theirs, not the bees'.) They are susceptible to fire and will melt and burn, given sufficient heat.
+벌들에 의해 만들어진 벽이다. 가끔 던전의 구조 자체가, 벌들이 밀납으로 이러한 벽을 만드는 원인이 되기도 하는데, 이 벽은 불에는 민감하여, 불에 닿으면 열기를 내면서 녹아내린다.
 %%%%
 A wall of the weird stuff which makes up Pandemonium
 
-This wall is made from the weird stuff which makes up Pandemonium, but seems to be like rock in most other aspects.
+판데모니움을 이루고 있는, 기이한 재료로 만들어진 벽이다. 다만 보통의 암벽처럼 보이기도 하다.
 %%%%
 A white marble altar of Elyvilon
 
-An altar to Elyvilon the Healer, made from purest white marble and topped by a sculpture of the Chalice of Purification.
+치유의 신 '엘라이빌론'의 제단이다. 꼭대기에는 정화의 성배가 조각되어 있으며, 제단은 순백색의 대리석으로 만들어져 있다.
 %%%%
 A web
 
@@ -342,72 +339,65 @@ The spider who left this web must have been huge, as it seems to be made for tra
 %%%%
 An abandoned shop
 
-This shop has been abandoned.
+문 닫은 상점이다.
 %%%%
 An ancient bone altar of Kikubaaqudgha
 
-Ancient bones were piled here to form an altar to the terrible Demon-God Kikubaaqudgha.
+고대의 해골들이 쌓여 만들어진 끔찍한 악마신 '키쿠바쿠드하'의 제단이다.
 %%%%
 An empty arch of ancient stone
 
-A stone archway that seems to have stood here forever and doesn't seem to lead anywhere in particular.
+특정한 장소로 통하지 않지만, 없어지지 않고 이 곳에 영원히 존재할 아치형의 돌로 이루어진 관문이다.
 %%%%
 An escape hatch in the ceiling
 
-A spring-loaded one-way escape hatch set in the ceiling.
+용수철을 이용한 원리로 만들어진, 천장에 붙어 있는 일방 통행 탈출구다.
 %%%%
 An escape hatch in the floor
 
-A spring-loaded one-way escape hatch set in the dungeon floor, allowing the adventurer beset by adversaries to exchange the perils of this level for the perils of the next.
+용수철을 이용한 원리로 만들어진, 바닥에 붙어 있는 일방 통행 탈출구이다. 현재 층의 위험을 피하기 위해 이 곳에 들어왔더니 아래층의 또 다른 위험에 빠지는 일이 허다하지만.
 %%%%
 An iron altar of Okawaru
 
-An altar of iron and steel dedicated to the Warmaster Okawaru. Its edges are surprisingly sharp.
+철과 강철로 만들어진, 전쟁의 신 '오카와루'의 제단이다. 제단 십자가의 끝이 놀랍도록 날카롭다.
 %%%%
 An iron grate
 
-This iron grate looks rusted, as if it could be disrupted with a spell or a wand quite easily. It's too strong to be breakable by hand, though.
+녹이 슨 철창으로, 주문이나 마법봉을 통해 이 철창을 뚫어 낼 수 있을것 같지만, 그냥 손이나 도구를 사용해서 이 철창을 부수기엔 힘들어 보인다.
 %%%%
 An open door
 
-A wooden door. You can close it by standing next to it and {{
-if crawl.is_tiles() then
-    return "either doing Ctrl-L-Click on the door or pressing 'C'."
-else
-    return "pressing 'C'."
-end}}
+나무 문이다. 문의 옆에 서서, C키를 누르는 것으로 문을 닫을 수 있다. (타일 버전은 Ctrl+좌클릭으로도 문을 닫을 수 있다.)
 %%%%
 An orcish idol
 
-An idol of the orc god Beogh.
+오크의 신 '베오그'의 동상이다.
 %%%%
 An unnaturally hard rock wall
 
-You cannot affect this wall by any means.
+어째서인지, 흠집조차 나지 않는 암벽이다.
 %%%%
 An unnaturally hard stone wall
 
-This stone wall is harder than... stone. In fact, there's exactly nothing you can do about it.
+일단 그냥 돌벽보다는 확실히 단단한 돌벽이다.. 사실상 흠집도 낼 수 없을 것이다.
 %%%%
 Endless lava
 
-A sea of fire and brimstone that goes as far as you can see. Which is not far because of thick smoke.
-
-Unlike small pools of lava where flight or levitation may allow short trips, floating above this inferno would cook you in no time thanks to runaway convection.
+불과 유황이 끊임없이 뿜어져나오는 용암의 바다다. 사실 두껍고 시꺼먼 연기 때문에 그렇지 보이는 만큼 폭이 넓지는 않지만. 다만 비행이나 부유를 통해 넘어갈 수 있는 작은 용암 구덩이와는 달리, 이 '인페르노'에 가까운 용암 위로 넘어가려고 시도했다가는, 당신의 비행이 끝나는 걸 느낄 새도 없이 한 줌의 재로 돌아가 버릴 것이다.
 %%%%
 Floor
 
-Dungeon floor.
+던전 바닥이다.
 %%%%
 Some deep water
 
-This water is as deep as it is dangerous. No sane traveller would try to set foot into it, apart from those who fly or swim. Let it be a warning for you: many confused adventurers found their death at the depths, and an untimely end of levitation drowned even more hopeful trespassers.
+익사할 위험을 지닌, 깊은 물이다. '제정신이 제대로 박혀 있는' 여행자라면, 비행이나 수영을 할 수 있지 않은 이상, 이 위로 그냥 발을 딛진 않을 것이다. 이 말을 살짝 뒤집에서 경고를 하자면, 많은 '제정신이 제대로 박혀 있지 못한' 모험가들이 깊은 물에 빠져 가라앉아 버리는 일도 있고, 혹은 공중부양의 지속시간이 지나 버려, 빠져 죽어 버리는 모험가들도 있다는 이야기.
 %%%%
 Some lava
 
-An intensely hot pool of molten rock, emitting clouds of sulphurous smoke.
+용해되어있는 암석들로 이루어진, 극히 뜨거운 용암이다. 흡사 지옥 같은 연기를 내뿜고 있다.
 %%%%
 Some shallow water
 
-This waist-deep, misty water makes movement and combat cumbersome for landlubbers - sometimes dangerous, but never directly fatal.
+얕은 물로, 이 물 위에서는 지상 생물들의 움직임이나 전투가 힘들어진다. 직접적으로 치명적인 위협이 되는 건 아니지만 때때로 위험할 수도 있다.
 %%%%

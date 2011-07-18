@@ -1,286 +1,310 @@
-%%%%
+﻿%%%%
 No God
 
-"God is dead." - Nietzsche
-(It's a bug if you ever see this.)
+"신은 죽었다." - 니체
+(이 메시지를 본다면 아마 버그겠지.)
 %%%%
 random
 
 Random
-(It's a bug if you ever see this.)
+(이 메시지를 본다면 아마 버그겠지.)
 %%%%
 Buggy
 
 Buggy
-(It's a bug if you ever see this.)
+(이 메시지를 본다면 아마 버그겠지.)
 %%%%
 Zin
 
-Zin is a God for those focused on inner strength. Followers must remain pure of body and soul, refraining from unholy, evil, unclean or chaotic magic; the use of mutations and the consumption of intelligent beings' flesh. They may preach to or imprison the unenlightened, and can ultimately gain a divine refuge. Zin values selflessness and long-standing faith. Zin's followers can safely convert to Elyvilon and the Shining One.
+절대 질서의 신, '진'은 내면의 힘을 중시하는 자들의 신이다. 진의 신도들은, 항상 몸과 마음을 순결하게 유지해야 하며, 어떠한 부정하거나 사악한 마법, 변이술, 그리고 지성을 가진 생명체의 시체를 먹는 일을 배격해야 한다.
+신도들은 교화되지 않는 자들을 가두거나 설교할 수 있으며, 궁극적으로는 신성한 안식처를 만들 수 있다. 진은 사심이 없는 자세와, 변함 없이 지속되는 긴 신앙을 높이 평가한다. 진의 신도들은, 징벌 없이 엘라이빌론 혹은 샤이닝 원으로 개종할 수 있다.
 %%%%
 The Shining One
 
-The Shining One is a powerful deity on a crusade against all evil. Followers and their allies may be granted various blessings upon mercilessly slaying evil and unholy beings. Worshippers must never use unholy or evil magic, and are expected to prove their moral superiority by fighting honourably. Long-standing persistence is appreciated. The Shining One does not mind shifting worship to Elyvilon or Zin.
+성전의 신, '샤이닝 원'은 모든 악에 대한 성전에 임하는 강력한 신이다. 샤이닝 원의 신도들과, 그의 동료들은 사악하고 부정한 존재들을 무자비하게 토벌할 수 있도록, 신의 은총을 받을 수 있다. 물론 신도들은 사악하거나 부정한 주문을 외워서는 안 되며, 항상 정정당당한 전투에 임함으로써, 자신의 도덕적인 고결함을 끊임없이 증명시켜야 한다.
+샤이닝 원은 변함 없이 지속되는 긴 신앙을 높이 평가한다. 또한 샤이닝 원은, 자신의 신도가 진 혹은 엘라이빌론으로 개종하는 것에 대해 화를 내지 않을 것이다.
 %%%%
 Kikubaaqudgha
 
-Kikubaaqudgha is a terrible Demon-God, served by those who wish to indulge in the powers of death. Kikubaaqudgha is evil, and requires the deaths of living creatures and demons as often as possible.
+악마의 신, '키쿠바쿠드하'는 죽음의 힘을 탐구하는 자들에게 숭배되는, 공포스러운 신이다. 사악한 키쿠다쿠드하는, 살아있는 생명체 혹은 다른 악마들을 가능한 한 많이 살육하는 행위를 높이 평가한다.
 %%%%
 Yredelemnul
 
-Yredelemnul the Dark is an evil God worshipped by those who seek powers over death and the undead. Followers, who must oppose all things holy, can raise legions of servile undead, and gain a number of other useful (if unpleasant) powers. Yredelemnul appreciates killing, but prefers corpses to be put to use rather than sacrificed. Destroying artificial beings is also favoured, as they are neither truly alive nor subject to death or undeath.
+어둠의 신, '이레데넴눌'은 죽음과 언데들을 지배하는 권능을 원하는 자들에게 숭배되는 신이다. 신도들은 모든 신성한 것에 적대함으로써, 언데드 수하 군단을 일으킬 수 있으며, 수많은, 유용하고도 불경스러운 권능을 얻는다. 
+이레데넴눌은 살육을 기뻐하지만, 시체를 공양하기보단 사용하기를 원한다. 인공적인 존재들을 파괴하는 행위도 이레데넴눌을 기쁘게 만드는데,  그것들은 살아있지도 않지만, 죽음의 권능으로 쓸 수 없는 것들이기 때문이다.
 %%%%
 Xom
 
-Xom is a wild and unpredictable God of chaos, who seeks not worshippers but playthings with which to toy. Many choose to follow Xom in the hope of receiving fabulous rewards and mighty powers, but Xom is nothing if not capricious. Also, there is nothing a follower can do to influence Xom's mood.
+혼돈의 신, '좀'은 제멋대로고 변덕스러운 신이다. 좀은 신도가 아닌, 자신의 장난감을 원한다. 많은 이들이 값진 보상과 강력한 힘을 바라며 좀의 신도가 되지만, 좀은 그들을 변덕스럽게만 취급한다. 따라서, 좀의 신도가 좀의 기분을 바꾸기 위해 할 수 있는 일은 아마 없다.
 %%%%
 Vehumet
 
-Vehumet is a God of the destructive powers of magic. Followers gain various useful powers to enhance their command of the hermetic arts, and the most favoured stand to gain access to some of the fearsome spells in Vehumet's library. One's devotion to Vehumet can be proven by the causing of as much carnage and destruction as possible.
+파괴 마법의 신, '베후멧'은 이름 그대로 파괴 마법의 신이다. 베후멧의 신도들은, 파괴적인 마법을 더욱 잘 다루기 위하여, 여러가지 유용한 권능을 얻을 수 있으며, 가장 총애받는 신도들은 베후멧의 도서관에 소장된 무시무시한 주문들을 접할 기회를 얻을 수 있다.
+베후멧에 대한 헌신은, 가능한 한 살육과 파괴를 일으키는 것으로 증명할 수 있다.
 %%%%
 Okawaru
 
-Okawaru is a dangerous and powerful God of battle. Followers can gain a number of powers useful in combat as well as various rewards, but must constantly prove themselves through battle and the sacrifice of corpses. Okawaru despises those who harm their allies.
+전쟁의 신, '오카와루'는 위험하고 강력한 전쟁의 신이다. 오카와루의 신도들은 전투시 유용한 각종 권능과, 다양한 선물들을 하사받을 수 있지만, 끊임없는 전투와 시체의 공양으로, 자신를 증명하여야 한다.
+오카와루는 자신의 동료를 생각하지 않는 자들을 경멸한다.
 %%%%
 Makhleb
 
-Makhleb the Destroyer is a fearsome deity of bloodshed and mortification of the flesh. Followers are expected to cleanse others by inflicting suffering and death on them in Makhleb's name, and can gain further favour by ravaging the freshly dead. Dedicated followers may also access the raw energies and hell-spawned servants of chaos, so that they may better break the impure world and its false laws for this evil God's glory.
+파괴와 폭력의 신, '마크레브'는 유혈과 죽음을 불러오는 무시무시한 신이다. 마크레브의 신도들은 마크레브의 이름으로 적에게 고통을 부르고, 죽음을 통해 '정화'화여야 하며, 신선한 시체들을 공양함으로써 더 많은 총애를 받을 수 있다.
+헌신적인 신도들은 마크레브의 영광을 위해, 부도덕한 세계와 거짓된 규칙을 깨어버릴 수 있는 원초적인 마력과, 혼돈의 악마 하인들을 수하로 얻을 수 있다.
 %%%%
 Sif Muna
 
-Sif Muna the Loreminder is a contemplative but powerful deity, served by those who seek magical knowledge. The Loreminder appreciates the training of spell casting skills.
+지식의 신, '시프 무나'는 항상 명상에 잠겨 있지만, 강력한 신으로써, 마법의 지식을 탐구하는 자들이 숭배한다.
+지식의 수호자 시프 무나는, 마법 기술의 연마를 통한 끊임없는 지식을 추구하는 행위를 높이 평가한다.
 %%%%
 Trog
 
-Trog is an ancient God of anger and violence. Followers are expected to kill in Trog's name and sacrifice the dead, and in return gain power in battle and also occasional rewards. Trog hates all wizards, and loves to see their spellbooks burn. Followers are forbidden the use of spell magic.
+분노의 신, '트로그'는 분노와 폭력의 고대신이다. 신도들은 트로그의 이름으로 살상하고, 시체를 바쳐야 하지만 그 보답으로 유용한 권능들을 사용할 수 있으며, 종종 트로그의 선물을 받을 수 있다.
+트로그는 모든 마법사들을 증오하며, 그들의 마법책이 불타는 것을 좋아한다. 모든 신도들은 마법의 사용이 금지된다.
 %%%%
 Nemelex Xobeh
 
-Nemelex is a strange and unpredictable trickster God, whose powers can be invoked through the magical packs of cards painted in the ichor of demons. Followers are expected to sedulously sacrifice valuable items, the type of which will influence the gifts. Followers are also advised to trust in the cards and use them as much as possible. However, the Trickster can ensure that fortune favours the bold.
+광대의 신, '네멜렉스 죠베'는 종잡을 수 없는 괴짜 신이다. 그의 힘은 악마의 피로 그려진 카드들의 뭉치로 끌어낼 수 있다. 신도들은 끈기있게 값진 물건들을 공물로 바쳐야 하며, 공물의 종류에 따라 다른 보상을 받을 수 있다. 또한 신도들은, 수하받은 카드에 대한 믿음을 가지고, 가능한 한 자주 사용하여야 한다. 
+이 장난스러운 신은, '행운의 여신은 위험을 무릅쓰고 행동하는 자에게 미소짓는다'라는 말을 보장해 줄 것이다.
+
 %%%%
 Elyvilon
 
-Elyvilon the Healer welcomes all good souls who are prepared for long worship and devotion. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons. Elyvilon does not mind if worshippers shift to Zin or the Shining One.
+치유의 신, '엘라이빌론'은 오랜 신앙과 헌신에 준비된 순수한 영혼들을 환영한다. 엘라이빌론의 신도들은, 강력한 치유의 권능을 얻게 될 것이다. 치유하는 자, 엘라이빌론은 평화주의의 교리를 좋아하기 때문에, 신도들이 유혈 사태를 피하는데 여러 도움을 준다. 또한 전투에 사용되는 무기들을 파괴하는 행위를 높이 평가한다. 
+엘라이빌론은 자신의 신도가 진이나 샤이닝 원으로 개종하더라도, 화를 내지 않을 것이다.
 %%%%
 Lugonu
 
-Lugonu the Unformed revels in the chaos of the Abyss. Followers are sent out to cause bloodshed and corruption in the overworld, and must do so unflaggingly to earn this evil God's favour.
+심연의 신, '루고누'는 어비스의 혼돈 속에서 흥청대는 신이다. 루고누의 신도들은 바깥 세상에 유혈과 타락을 초래하기 위해 보내지며, 이 사악한 신의 환심을 얻기 위해 부단히 노력해야 한다.
 %%%%
 Beogh
 
-Beogh is the deity worshipped by the cave orcs native to parts of the dungeon. Only orcs may devote their service to Beogh, and must prove their devotion by bloodshed and the blessing of dead orcs. Devout followers of Beogh can smite their foes, and especially fervent devotees of Beogh may even gain followers of their own, for the orcs still look for their Messiah.
+오크의 신, '베오그'는 본래 던전의 한 지역에서 거주하는, 동굴 오크들의 신이다. 오직 오크들만이 베오그를 섬길 수 있으며, 유혈과 오크 시체의 축복을 통해 자신의 헌신을 증명해야 한다.
+베오그의 독실한 신도들은, 적에게 천벌의 일격을 내릴 수 있으며, 특히 열렬한 신도들은, 자신만의 구세주를 찾고 있는, 그들만의 오크 추종자를 얻을 수 있다.
 %%%%
 Fedhas
 
-Fedhas Madash is the god of plant and fungal life. Fedhas demands that followers encourage the decomposition of corpses. Fedhas forbids followers from harming any species under Fedhas' protection, and from using any necromantic effects that interfere with corpses. In return Fedhas grants a number of abilities that promote the growth of plants and fungi. These abilities may incidentally prove useful to adventurers.
+식물의 신, '페다스 마디쉬'는 식물과 균류의 신이다. 페다스는 신도들에게, 모든 시체가 자연히 흙으로 돌아가도록 둘 것을 명한다. 또한 페다스는 페다스의 보호 내에 있는 어떠한 종의 식물도 해하는 것을 금하며,자연의 섭리를 방해하는 강령술 또한 금지한다.
+이에 대한 보답으로써, 페다스는 식물과 균류의 성장을 촉진할 수 있는 여러 권능을 수여한다. 이 권능들은, 유연하게 사용한다면 신자들의 모험에 유용하다.
 %%%%
 Cheibriados
 
-Cheibriados is a god who meditates on the mystery of time. Those who choose to follow this deity's path will learn to eschew unnecessary haste, slow down both themselves and others, and hurt those who refuse to slow down. Especially devout followers may even temporarily abandon the flow of time and its needless disturbances.
+느림의 신, '체브리아도스'는 시간의 신비 속에서 명상하는 신이다. 이 신이 추구하는 바를 따르기로 한 신도들은, 쓸데 없이 서두르지 않고, 자신과 상대 모두 느긋함을 가지고, 이런 느긋함을 거부하는 존재들을 해할 것을 배운다. 
+특별히 독실한 신자들은, 일시적으로 시간의 흐름이라는, 쓸데 없는 방해를 내버릴 수 있다.
 %%%%
 Ashenzari
 
-While it seems inconceivable that the divine could be shackled, Ashenzari is just that: being purposely nailed to the sky for eternity, the unbudging god is all-knowing, all-seeing. Devoted worshippers are allowed to grasp shreds of this knowledge and foresight, but be warned: to Ashenzari, power and blessing and curse are all the same thing.
+신에게 족쇄를 채운다는 것이 믿기지 않을 지도 모르지만, 탐험의 신, '아센자리'는 영원을 위해 하늘에 못박혔다. 이 움직이지 않는 신은, 모든 것을 알고 있으며, 모든 것을 본다. 아센자리의 열렬한 신도는 그 지식과 예견력을 손에 넣을 수 있다.
+하지만 주의하라. 아센자리에게 권능과 축복과 저주는 모두 동일한 것이다.
 %%%%
 Jiyva
 
-Jiyva is the chaotic ancient deity of the slimes. Followers are expected to support the spread and satiation of their fellow slimes by allowing them to consume items and are forbidden from harming any slimes. Jiyva will even occasionally consume items left elsewhere in the Dungeon by followers. Especially favoured followers will become as shapeless as their god, as their attributes and mutations shift around under Jiyva's influence.
+슬라임의 신, '지바'는 혼돈의 고대신이다. 신도들은 슬라임들의 증식을 돕고, 슬라임들에게 여러 물건들을 먹여야 하며, 슬라임을 해해서는 안된다. 
+지바는 종종 신도가 던전 어딘가에 버려둔 아이템을 먹어치우며, 특별히 총애받는 신도는 자신의 신처럼 형체 없는 모습이 되어가며, 그 능력과 돌연변이가 지바의 영향을 받아 변화하게 된다.
 %%%%
 Zin powers
 
-Zin grants followers the ability to preach to the unenlightened masses. With sufficient piety, a starving follower can pray for nutrition. Later, followers will gain powers to purify and strengthen their bodies, and can eventually find temporary safety in a divine refuge. As piety grows, followers will be protected from disease, miasma, mutation and rotting. Apart from that, Zin may occasionally directly intervene to save a follower's life.
+진은 교화되지 않은 자들을 설교할 수 있는 권능을 부여한다. 또한, 충분한 신앙심을 가진 굶주린 신도는, 기도를 통하여 굶주림을 해소할 수 있다. 시간이 지나면, 신도들은 자신의 몸을 강화하고 정화시킬 수 있는 권능을 얻으며, 궁극적으로 신에게 일시적인 보호를 받을 수 있다.
+신앙이 깊어질수록, 신도는 병, 변이, 부패로부터 보호를 받을 수 있으며, 별개로 진은 종종 신도의 목숨을 구하기 위해 직접 개입할 수도 있다.
 %%%%
 The Shining One powers
 
-Followers of the Shining One are surrounded by a halo that reveals their enemies to them. They gain power by killing evil beings. The Shining One will keep summoned and charmed allies on their side longer, should the allies prove worthy of the crusade. Followers will gain use of a divine shield to protect them in battle. Later, they can channel blasts of cleansing flame that are particularly damaging to unholy beings. Eventually, they can ask the Shining One to send them powerful divine beings as allies. The Shining One may occasionally directly intervene to save a follower's life. With growing piety the Shining One will protect a follower's life force.
+샤이닝 원의 신도들은, 적들을 비출 후광에 휩싸이게 된다. 샤이닝 원의 신도들은, 악한 존재들을 멸할 수 있는 권능들을 얻는다. 또한 샤이닝 원은, 소환되거나 매혹된 동료들이, 성전에 도움이 됨을 증명하는 한, 더욱 오래 남아있을 수 있도록 해 준다. 신도들은 전투에서 자신을 지켜 줄 신성한 방패를 사용할 수 있다. 이후, 신도들은 사악한 존재들을 멸할 정화의 불꽃을 불러올 수 있다. 궁극적으로 신도들은 샤이닝 원에게, 그들을 도와줄 신성한 존재를 보내줄 것을 요청할 수 있다.
+샤이닝 원은 신도들의 목숨을 지키기 위해 종종 직접 개입하며, 신앙심이 깊어짐에 따라 신도들의 생명을 더욱 잘 지켜 줄 것이다.
 %%%%
 Kikubaaqudgha powers
 
-Kikubaaqudgha will send corpses to followers, enhance servants' necromantic prowess with gifts of spellbooks, and imbue their weapons with pain. Especially fervent followers can protect themselves from torment, or even invoke it themselves by offering a cadaver to Kikubaaqudgha.
+키쿠바쿠드하는 신도들에게 시체를 보낼 것이며, 마법책을 선물하여 신도의 강령술 능력을 향상시키고, 무기에 고통 마법을 부여해 줄 것이다. 특히 총애받는 신도는 지옥의 고통으로부터 보호받을 수 있으며, 혹은 시체를 키쿠바쿠드하에게 바침으로써 지옥의 고통을 불러낼 수 있다.
 %%%%
 Yredelemnul powers
 
-Yredelemnul gives you the power to raise skeletons and corpses to fight on your side, to recall your undead followers to your vicinity, and to heal hit points by draining the life force of living creatures. Eventually, you'll gain the power to bind a monster's soul, and make it fight for you instead. Yredelemnul will sporadically gift you with stronger undead servants. Also, with sufficient piety, Yredelemnul will mirror any injury you have to suffer onto the attacker.
+이레데렘눌은 해골과 시체를 일으켜 부하로 삼을 수 있는 권능과 신도의 곁으로 언데드 하인들을 소환할 수 있는 능력과 살아있는 생명체의 생명력을 빨아들여 피해를 복구할 수 있는 권능을 부여한다. 궁극적으로는 적의 영혼을 속박하여 아군으로 만들 수 있는 권능을 받는다. 이레데렘눌은 가끔 당신에게 더 강력한 언데드 하인을 선물하기도 한다. 또한 충분히 신앙심이 깊다면 이레데렘눌은 당신에게 가해지는 어떤 피해도 공격자에게 반사할 것이다.
 %%%%
 Xom powers
 
-To worship Xom is to live riskily. In a good mood Xom may shower you with gifts, while at other times this capricious god could decide to "spice things up a little" and send you to your doom. If you prove yourself the stronger, so much the better; if not, well, there'll be other playthings...
+좀을 믿는 것은 위험을 짊어진다는 것이다. 좀이 기분이 좋을 때는 당신에게 각종 선물을 내릴 것이나, 그렇지 않을 때는 이 변덕스런 신은 "조금 가지고 놀아 볼까?" 며 당신을 파멸로 몰아갈 것이다. 만약 당신이 강하다는 것을 증명한다면, 더 나아질 것이다. 혹여 그렇지 못한다면, 글쎄. 좀은 또 다른 장난감을 손에 넣겠지...
 %%%%
-# no active powers of Vehumet
+Vehumet powers
+
+베후멧은, 딱히 능동적인 신의 권능을 제공하지는 않지만, 자신의 신도들의 파괴적인 마법 사용을 도와주며, 이와 같은 마법을 통해 멸한 적의 마력을, 무의식적으로 흡수할 수 있는 권능을 제공한다. 
+만약 당신의 충실하게 베후멧의 의도를 따라왔다면, 베후멧은 자신의 도서관에 소장된 강력한 마법서들을 당신에게 선물해줄 수도 있다.
 %%%%
 Okawaru powers
 
-Followers will soon gain the ability to temporarily increase their skills in combat, and, much later, to deal much faster blows. Okawaru will eventually gift followers with weapons and armour.
+오카와루의 신도들은, 곧 전투 기술에 일시적으로 능숙해질 수 있는 권능을 받으며, 이후에는 더욱 빠른 공격을 가능하게 해주는 권능을 얻는다.
+궁극적으로, 오카와루는 신도들에게 각종 무기와 갑옷을 선물한다.
 %%%%
 Makhleb powers
 
-Makhleb offers followers various means to inflict immense damage, and to call in help from powerful demons. They will gain power upon killing beings.
+마크레브는 커다란 피해를 입힐 수 있는 각종 파괴술과, 강력한 악마를 불러 당신을 돕게 만들 수 있는 권능을 신도들에게 내린다. 적을 죽임으로써 신도들은 더 많은 권능을 얻게 될 것이다.
 %%%%
 Sif Muna powers
 
-Followers of Sif Muna can channel magical energy when they need it the most, and they gain a power to forget any spell at will, so as to learn new ones. Sif Muna protects spellcasters against the negative effects of miscasting a spell. Over time, followers will get spellbooks containing all spells to be found in the realm.
+시프 무나의 신도들은 필요할 때, 주변으로부터 마력 에너지를 수집할 수 있다. 또한 선택적인, 주문 기억 제거를 신의 권능으로써 사용할 수 있다. 
+시프 무나는 추종자들을 마법 실패의 부작용으로부터 보호해주며, 시간이 더 지나면, 신도들은 '던전 크롤'에 존재하는 그 어떤 마법도 시프 무나가 선물하는 책을 통해 배울 수 있다.
 %%%%
 Trog powers
 
-Trog offers various powers to help you in battle, namely the ability to go berserk at will, and the ability to make wounds heal more quickly while increasing resistance to magical effects. Later, followers may call in powerful raging allies. Eventually, Trog will gift followers with weapons focused on damage.
+트로그는 전투에서 도움이 되는 여러 권능들을 내린다. 마음대로 광폭화할 수 있는 권능과 상처를 빠르게 치유하고 마법 저항력을 강화할 수 있는 권능을 얻으며, 이후 신도들은 강력하고 광포한 동료들을 불러낼 수 있다. 궁극적으로 트로그는 피해를 주는 데 특화된 무기를 선물한다.
 %%%%
 Nemelex Xobeh powers
 
-The Trickster's followers gain various ways to influence fate when playing cards.
+이 장난꾼의 신도들은 카드를 가지고 놀면서 앞날에 영향을 줄 수 있는 수단들을 얻는다.
 %%%%
 Elyvilon powers
 
-The Healer offers followers means to heal themselves from damage and other ill effects. Elyvilon also allows healing of hostile monsters, trying to turn them neutral. Elyvilon may directly intervene to save a follower's life, especially when called upon; highly pious followers can be sure of such aid.
+치유하는 자, 엘리빌론은 신도들에게 피해와 상태이상을 치료할 수 있는 수단을 내린다. 또한 적대적인 몬스터를 치유하여 중립적으로 만들 수 있도록 해 준다. 
+엘리빌론은 특히 신도가 도움을 청할 때 신도의 목숨을 지키기 위해 직접 개입하기도 한다. 높은 신앙심을 가진 신도는 이런 도움을 확실히 받을 수 있다.
 %%%%
 Lugonu powers
 
-Followers of Lugonu gain powers to depart the Abyss at will, to banish monsters there, and eventually to gate themselves into this realm of chaos - at the cost of a part of their soul. Apart from that, they can cause distortional damage to monsters, and gain an ability to corrupt the ordered world, enabling them to open a gate for creatures of the Abyss to pass through.
+루고누의 신도는 마음대로 어비스에서 나갈 수 있는 권능과 몬스터를 어비스로 추방할 권능, 그리고 궁극적으론 자기 영혼의 일부를 제물로 삼아 자신을 어비스로 이동시킬 권능을 얻는다.
+그 외로, 신도는 적에게 왜곡으로 인한 피해를 입힐 수 있으며, 질서의 세계를 혼란시키기 위해 어비스의 존재들이 나올 수 있는 관문을 열 수 있는 권능을 얻는다.
 %%%%
 Beogh powers
 
-Beogh encourages followers to make use of orcish gear found in the dungeon. Followers can smite their foes, and will even gain orcish followers of their own, who may be blessed by Beogh in battle and can be recalled within a level as needed. Eventually, they'll gain the power to walk on water. Beogh will sometimes directly intervene to save a follower's life.
+베오그는 신도들에게 던전에서 찾을 수 있는 오크제 장비를 착용할 것을 권장한다. 신도들은 적에게 천벌의 일격을 날릴 수 있고, 자신만의 오크 추종자를 얻을 수 있으며, 전투중에 오크 추종자를 축복하기도 하고, 추종자들을 신도 곁으로 소환해낼 수 있는 권능을 부여하기도 한다. 
+궁극적으로 물 위를 걸을 수도 있다. 베오그는 종종 신도의 목숨을 구하기 위해 직접 개입한다.
 %%%%
 Fedhas powers
 
-Plants and fungi will not attack Fedhas' worshippers without provocation. Fedhas' worshippers may walk through plants or fungi, and even fire missiles or spells through them without causing harm. Fedhas grants the ability to promote plants and fungi into stronger species. Followers can eventually grow a wall of plants and create explosive spores from corpses. They are also granted some control over the weather, being able to call sunlight and eventually rainstorms.
+식물과 균류는 도발하지 않는 한 페다스의 신도를 공격하지 않는다. 페다스의 신도들은 식물과 버섯을 통과할 수 있으며, 식물을 통과하여 화염 투사체나 마법을 날릴 수 있다. 페다스는 식물이나 버섯을 더 강한 종으로 성장시킬 수 있는 권능을 내린다. 추종자는 궁극적으로 식물의 벽이나 시체에서 폭발성 포자를 생성할 수 있다. 
+또한 신도들은 햇빛이나 폭풍우를 부를 수 있는 등 날씨를 조종할 수 있는 권능을 받는다.
 %%%%
 Cheibriados powers
 
-Followers of Cheibriados are rewarded for moving slowly and killing creatures which are faster than they are. Moving too quickly or using magically hastened weapons is frowned upon. Cheibriados rewards the faithful with a slowed metabolism, the power to slow other creatures, the power to harm those who move more quickly than they do, and, finally, the ability to step out of the flow of time.
+체브리아도스의 신도들은 느리게 움직이며, 자신보다 빠른 적을 살상함으로써 보상을 받는다. 반면 너무 빠르게 움직이거나 마법적으로 가속된 무기를 사용하는 것을 못마땅해한다. 체브리아도스는 느린 신진대사와, 적을 느리게 할 수 있는 권능과, 자신보다 빨리 움직이는 적에 피해를 입힐 수 있는 권능을 부여하며, 궁극적으로는 시간의 흐름에서 빠져나갈 수 있는 권능을 내린다.
 %%%%
 Jiyva powers
 
-Jiyva's followers can request jellies, turn monsters to slime, and eventually remove their harmful mutations. As their piety grows, Jiyva will, with increasing frequency, drop jellies into the dungeon, rearrange followers' attributes to favour the attribute last chosen when gaining an experience level, and grant mutation gifts. Slimes will never harm a follower of Jiyva, and Jiyva demands the same conduct in return. Eventually, all visible slimes will join in on prayers, preventing them from moving for awhile.
+지바의 신도들은 젤리를 부르고, 적을 슬라임으로 바꾸며, 궁극적으로는 나쁜 돌연변이를 제거할 수 있다. 신앙심이 깊어질수록 지바는 더 많은 빈도로 던전에 젤리를 내보내며, 신자의 능력을 레벨업 때 가장 최근에 선택한 능력치 위주로 재구성해 주며, 돌연변이를 선물로 내린다. 슬라임은 지바의 신도를 해치지 않으며, 지바는 신도에게도 똑같이 행동할 것을 요구한다. 
+궁극적으로, 기도함으로써 볼 수 있는 모든 슬라임이 동료가 되어 잠시동안 움직이지 않을 것이다.
 %%%%
 Ashenzari powers
 
-Ashenzari exhorts followers to garb themselves with curses, and provides rewards for time spent using cursed armour, jewelry or weapons. Ashenzari's ultimate desire, however, is not for devotion but the knowledge of all things. Pious worshippers willing to part with a portion of their knowledge will receive a great portion of Ashenzari's in return.
+아센자리는 신도들에게 저주를 짊어질 것을 권하며, 저주받은 갑옷이나 장신구, 혹은 무기를 사용한 시간만큼 보상을 내린다. 하지만 아센자리의 궁극적인 욕구는 모든 것에 대한 지식이다. 자신의 지식을 내놓는 경건한 신도는 보답으로 아센자리의 더 많은 지식을 손에 넣게 될 것이다.
 %%%%
 Zin lastname
 
-Zin the Law-Giver
+질서를 불러오는 자, 진
 %%%%
 Yredelemnul lastname
 
-Yredelemnul the Dark
+어둠의 지배자, 이레데넴눌
 %%%%
 Okawaru lastname
 
-Warmaster Okawaru
+전쟁의 지배자, 오카와루
 %%%%
 Makhleb lastname
 
-Makhleb the Destroyer
+파괴자, 마크레브
 %%%%
 Sif Muna lastname
 
-Sif Muna the Loreminder
+지식의 수호자, 시프 무나
 %%%%
 Trog lastname
 
-Trog the Wrathful
+진노하는 자, 트로그
 %%%%
 Elyvilon lastname
 
-Elyvilon the Healer
+치유하는 자, 엘라이빌론
 %%%%
 Lugonu lastname
 
-Lugonu the Unformed
+부정형의 지배자, 루고누
 %%%%
 Beogh lastname
 
-Beogh the Brigand
+약탈자, 베오그
 %%%%
 Fedhas lastname
 
-Fedhas Madash
+페다스 마다쉬
 %%%%
 Cheibriados lastname
 
-Cheibriados the Contemplative
+사색하는 자, 체브리아도스
 %%%%
 Ashenzari lastname
 
-Ashenzari the Shackled
+속박된 자, 아센자리
 %%%%
 Xom lastname
 
 w:280
-Xom of Chaos
+혼돈의 좀
 
 w:5
-Xom the Random
+무작위의 좀
 
 w:5
-Xom the Random Number God
+난수의 좀
 
-Xom the Tricky
-
-w:5
-Xom the Less-Predictable
+교활함의 좀
 
 w:5
-Xom the Unpredictable
-
-Xom of Many Doors
-
-Xom the Capricious
+변덕스러움의 좀
 
 w:5
-Xom of Bloodstained Whimsey
+예측 불가의 좀
+
+수많은 갈림길의 좀
+
+변덕의 좀
 
 w:5
-Xom of Enforced Whimsey
-
-Xom of Bone-Dry Humour
+피로 물든 좀
 
 w:5
-Xom of Malevolent Giggling
+아이디어의 집행자 좀
+
+잔혹한 재치의 좀
 
 w:5
-Xom of Malicious Giggling
+사악한 장난의 좀
 
 w:5
-Xom the Psychotic
+악의 있는 농담의 좀
 
 w:5
-Xom the Psychopath
+광기의 좀
+
+w:5
+병질자의 좀
 
 w:2
-Xom of Gnomic Intent
+장난의 좀
 
 w:2
-Xom of Ineffable Intent
+공포의 좀
 
 w:2
-Xom of Fickle Intent
+변덕심의 좀
 
 w:2
-Xom of Swiftly Tilting Intent
+전언 철회의 좀
 
 w:2
-Xom of Unknown Intent
-
-Xom the Fickle
-
-Xom of Unknown Intention
+알 수 없는 의도의 좀
 
 w:4
-The Xom-Meister
+좀 - 메이스터
 
 w:2
-The Xom-Meister, Xom-a-lom-a-ding-dong
+좀 - 메이스터, 좀-어-롬-어-딩-동
 
 w:2
-The Xom-Meister, Xom-o-Rama
+좀 - 메이스터, 좀-오-라마
 
 w:2
-The Xom-Meister, Xom-Xom-bo-Bom, Banana-Fana-fo-Fom
+좀 - 메이스터, 좀-좀-보-봄, 바나나-파나-포-폼
 
 w:5
-Xom the Begetter of Turbulence
+소란을 가져오는 자, 좀
 
 w:5
-Xom the Begetter of Discontinuities
+무질서를 가져오는 자, 좀
 %%%%

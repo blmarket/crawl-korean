@@ -1,149 +1,150 @@
-%%%%
+﻿%%%%
 CMD_REST
 
-Heal and search a bit
+휴식
 %%%%
 CMD_REST verbose
 
-Spend up to 100 turns for regenerating health, recharging magic, and/or searching. Resting is interrupted as soon as a hostile monster comes into view.
+100턴을 소비하여, 체력과 마력을 회복하고, 주변을 살펴본다. 적대적인 몬스터가 시야에 들어오거나, 혹은 체력이 가득 차거나 함정을 찾는 등의 일이 발생하면, 휴식은 중지된다.
 %%%%
 CMD_EXPLORE
 
-Autoexplore the current level
+자동 탐색
 %%%%
 CMD_EXPLORE verbose
 
-Lets your character travel on autopilot towards unexplored areas of the current level and collect items subject to autopickup on the way. Travel stops as soon as a hostile monster comes into view, and also to announce items or features found.
+현재 캐릭터가 위치한 층의, 가보지 않은 미지의 지역들을 자동으로 탐사하고, 자동 줍기가 설정된 아이템을 자동으로 줍는다. 적대적인 몬스터 혹은 자동 줍기가 설정된 아이템이 목격되었을 때, 자동 탐색은 중지된다.
 %%%%
 CMD_INTERLEVEL_TRAVEL
 
-Travel to distant levels
+자동 이동
 %%%%
 CMD_INTERLEVEL_TRAVEL verbose
 
-Autotravel to distant levels. Travel is interrupted by monsters coming into view.
+다른 층으로 자동으로 이동한다. 적대적인 몬스터를 만났을 경우, 자동 이동은 중지된다.
 %%%%
 CMD_USE_ABILITY
 
-Use divine or innate abilities
+신의 권능 혹은 특수능력 발동
 %%%%
 CMD_PRAY
 
-Pray to your god
+신에게 기도
 %%%%
 CMD_PRAY verbose
 
-If your god likes sacrifices, this will offer a corpse or other item. Also, if you're standing on an altar this allows you to join the corresponding god. For some gods, praying also has other special effects.
+희생을 좋아하는 신에게는, 기도를 통하여 시체 혹은 아이템을 바칠 수 있다. 또한, 제단 위에서 기도했을 경우에는, 신과의 교신이 허용된다. 몇몇 신들의 경우, 기도를 통해 특별한 효과를 얻을수도 있다.
 %%%%
 CMD_SEARCH_STASHES
 
-Search for items/features
+아이템,특이지점 검색
 %%%%
 CMD_SEARCH_STASHES verbose
 
-Search for items or features seen elsewhere, then travel there.
+다른 곳에서 보았던 아이템 혹은 특이지점이 있는 곳 까지 자동으로 이동한다.
 %%%%
 CMD_REPLAY_MESSAGES
 
-Reread recent messages
+과거 메세지 기록 확인
 %%%%
 CMD_RESISTS_SCREEN
 
-Display character's overview
+캐릭터 정보
 %%%%
 CMD_RESISTS_SCREEN verbose
 
-Displays information about known resistances, abilities, equipment stats, etc.
+캐릭터의 저항력, 특수 능력, 장비 등의 정보를 열람한다.
 %%%%
 CMD_DISPLAY_OVERMAP
 
-Display dungeon overmap
+던전 정보
 %%%%
 CMD_DISPLAY_OVERMAP verbose
 
-Displays location of branch entries, shops and other features you've encountered so far.
+지금까지 발견해온 서브 던전의 출입구나 상점 등 특이 지점들의 위치를 다시 확인한다. 
 %%%%
 CMD_DISPLAY_RELIGION
 
-Display religious status
+신앙 정보
 %%%%
 CMD_DISPLAY_RELIGION verbose
 
-Displays your god's likes and dislikes, conduct, and your current religious standing and divine abilities.
+당신이 믿고 있는 신의 계율 혹은 호불호, 그리고 당신이 신으로부터 받는 총애의 정도와, 사용가능한 신의 권능을 확인한다.
 %%%%
 CMD_DISPLAY_MUTATIONS
 
-Display mutations
+변이 정보 확인
 %%%%
 CMD_DISPLAY_SKILLS
 
-Manage skills
+특수 능력 관리
 %%%%
 CMD_DISPLAY_CHARACTER_STATUS
 
-Display character's status
+캐릭터 스테이터스 정보
 %%%%
 CMD_DISPLAY_CHARACTER_STATUS verbose
 
-Displays active enchantments and a few other things.
+발동된 주술과, 기타 사항을 확인한다.
 %%%%
 CMD_DISPLAY_KNOWN_OBJECTS
 
-List discovered item types
+발견된 아이템 목록
 %%%%
 CMD_SAVE_GAME_NOW
 
-Save and exit
+저장 후 종료
 %%%%
 CMD_SAVE_GAME_NOW verbose
 
-Saves the game for later and exits. Once you resume the game, the save file is deleted again.
+현재 게임을 저장하고 종료한다.
+다시 게임을 시작하면, 이전의 세이브 파일은 없어진다.
 %%%%
 CMD_EDIT_PLAYER_TILE
 
-Modify the player tile
+아바타 변경
 %%%%
 CMD_EDIT_PLAYER_TILE verbose
 
-Modify equipment and species tile displayed in the player doll.
+현재 표시되는 플레이어 아바타를 변경한다. (외모, 장비 등등)
 %%%%
 CMD_DISPLAY_COMMANDS
 
-Game help
+게임 도움말
 %%%%
 CMD_DISPLAY_COMMANDS verbose
 
-List of commands, options, etc.
+명령어 리스트와 옵션, 기타 등등을 열람한다.
 %%%%
 CMD_CHARACTER_DUMP
 
-Dump character progress
+캐릭터 덤프 파일 생성
 %%%%
 CMD_CHARACTER_DUMP verbose
 
-Dump a huge amount of information about your character into a file 'playername.txt' in the morgue directory, to peruse at your leasure. This includes main stats, equipment, spells, skills, notes, etc.
+moruge 폴더의 '(플레이어명).txt' 파일에, 캐릭터에 대한 자세한 정보를 저장한다. 이 파일에는, 메인 스테이터스와 장비, 주문, 스킬, 주요사항, 잡은 몬스터 등의 자세한 정보가 포함된다.
 %%%%
 CMD_AUTOFIGHT
 
-Hit the closest monster
+가장 가까운 몬스터 공격
 %%%%
 CMD_AUTOFIGHT verbose
 
-Move towards the closest hostile monster and attack it with your wielded weapon.
+가장 가까이에 위치한 몬스터의 근처로 이동하여, 현재 장비하고 있는 무기로 공격한다.
 %%%%
 CMD_AUTOFIGHT_NOMOVE
 
-Hit an adjacent monster
+인접 몬스터 공격
 %%%%
 CMD_AUTOFIGHT_NOMOVE verbose
 
-Attack a monster next to you with your wielded weapon.
+근처에 있는 몬스터를, 현재 장비하고 있는 무기로 공격한다.
 %%%%
 CMD_SEARCH
 
-Wait a single turn
+1턴간 대기
 %%%%
 CMD_SEARCH verbose
 
-Spend a single turn waiting, resting and searching.
+1턴간 대기한다. 그 동안 체력, 마력을 회복하고, 주변을 탐색한다.
 %%%%

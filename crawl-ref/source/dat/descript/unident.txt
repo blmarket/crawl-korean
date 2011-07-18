@@ -1,42 +1,41 @@
-%%%%
+﻿%%%%
 amulet
 
-A piece of jewellery.
+장신구의 일종이다.
 %%%%
 book
 
-A book of magic spells. Beware, for some of the more powerful grimoires
-are not to be toyed with.
+마법 주문이 담겨 있는 마법서들이다. 강력한 마법서들은 취급에 매우 주의해야 한다.
 %%%%
 crystal ball
 
-A sphere of clear crystal.
+투명한 수정으로 만들어진 구체.
 %%%%
 deck of cards
 
-A deck of cards.
+무엇인지 알 수 없는, 카드들의 묶음이다.
 %%%%
 potion
 
-A small bottle of liquid.
+작은 병에 담긴, 알 수 없는 액체이다.
 %%%%
 ring
 
-A piece of jewellery.
+장신구의 일종이다.
 %%%%
 rod
 
-A stick imbued with magical properties.
+마력이 깃들어 있는 막대이다. v 키를 통해 발동시킬 수 있다.
 %%%%
 scroll
 
-A scroll of paper covered in magical writing.
+마법의 언어가 쓰여진, 종이로 만들어진 두루마리.
 %%%%
 staff
 
-A stick imbued with magical properties.
+마력이 깃든 지팡이.
 %%%%
 wand
 
-A stick. Maybe it's magical.
+마력이 깃들어 있는 막대이다. v 키를 통해 발동시킬 수 있다.
 %%%%

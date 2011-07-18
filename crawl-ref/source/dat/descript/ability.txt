@@ -1,421 +1,413 @@
-%%%%
+﻿%%%%
 No ability
 
-If you get this description, it is a bug.
+이 문장을 읽었다면, 버그이므로 버그 리포트를 하라.
 %%%%
 Spit Poison
 
-Spit poison at a targeted monster.
+지정한 몬스터에게 독침을 내뱉는다.
 %%%%
 Teleportation
 
-Teleport yourself to a random location on the level.
+같은 층의 임의의 장소로 순간이동한다. 
 %%%%
 Blink ability
 
-Randomly translocate a short distance.
+짧은 거리 내의 임의의 장소로 순간적으로 이동한다.
 %%%%
 Breathe Energy
 
-Breathe a blast of power at a targeted monster, possibly removing some of its enchantments.
+대상 적에게 마력이 깃든 숨결을 내뿜는다. 이 숨결은 적에게 걸린 주술을 없앨 수 있다.
 %%%%
 Breathe Fire
 
-Breathe a blast of fire at a targeted monster, possibly leaving fire clouds in its wake.
+대상 적에게 화염을 내뿜는다. 화염의 숨결이 지나간 자리에는 불의 구름이 남을 수 있다.
 %%%%
 Breathe Frost
 
-Breathe a blast of frost at a targeted monster.
+대상 적에게 냉기를 내뿜는다. 
 %%%%
 Breathe Poison Gas
 
-Breathe a blast of poison gas at a targeted monster.
+대상 적에게 독가스를 내뿜는다.
 %%%%
 Breathe Lightning
 
-Release a great discharge of electricity causing an uncontrollable lightning storm.
+막대한 전기를 방출하여, 통제할수 없는 번개 폭풍을 뿜어낸다.
 %%%%
 Breathe Sticky Flame
 
-Breathe a blast of sticky flame at a targeted monster. As the name suggests, sticky flame will stick around, so the monster may be covered in flames for several rounds until they eventually go out. It may splash on impact.
+대상 적에게 끈적한 화염을 내뿜는다. 이름에서 알 수 있듯이, 끈적이는 화염은 적에게 달라붙어, 꺼질때까지 적을 괴롭히게 된다. 또한 내뿜을때 주변으로 퍼지는 성질이 있다.
 %%%%
 Breathe Steam
 
-Breathe a jet of steam at a targeted monster.
+대상 적에게 뜨거운 증기 제트를 내뿜는다.
 %%%%
 Breathe Noxious Fumes
 
-Breathe a blast of noxious fumes at a targeted monster.
+대상 적에게 독성을 띤 구름을 내뿜는다.
 %%%%
 Bat Form
 
-Turn into a speedy vampire bat. In bat form, you can neither interact with items in any form (except picking them up or dropping them), nor cast spells. Note that Bat Form will decrease your current Strength while increasing your Dexterity. Thus, you won't be able to change form if your Strength is too low.
+재빠른 흡혈박쥐로 변신한다. 박쥐가 되면, 어떤 아이템도 사용할 수 없으며 (떨어트리거나 줍는 것은 가능하다.)주문도 사용할 수 없다. 변신 중에는 민첩해지나, 힘이 약해지므로, 당신의 힘이 너무 약하다면 변신할 수 없다.
 %%%%
 Bottle Blood
 
-At experience level 6 and higher, Vampires can bottle the blood from non-rotten and blood-containing corpses they are standing on. Doing so requires a butchery tool and the capability of wielding it, as is the case for butchering.
+6레벨 이상의 뱀파이어는, 피를 머금은 썩지 않은 시체로 피의 물약을 만들 수 있다. 고기를 자를때와 같이 날붙이를 준비해야 한다.
 %%%%
 Spit Acid
 
-Spit acid at a targeted monster.
+대상 적에게 강산성의 액체를 내뱉는다.
 %%%%
 # Both for Fly I and II.
 Fly
 
-Start flying.
+공중으로 날아오른다.
 %%%%
 Hellfire
 
-Blast your enemies with hellfire.
+대상이 된 몬스터와 주변의 몬스터, 지형을 지옥불로 태워버린다.
 %%%%
 Throw Flame ability
 
-Throw a blast of flame at a targeted monster.
+대상이 된 몬스터에게 화염 덩어리를 투척한다.
 %%%%
 Throw Frost ability
 
-Throw a blast of frost at a targeted monster.
+대상이 된 몬스터에게 냉기 덩어리를 투척한다.
 %%%%
 Release Delayed Fireball
 
-Instantly release a previously memorised (delayed) fireball without additional cost in terms of magic or hunger.
+이전에 축적하였던 화염구를, 마력이나 포만감의 소비 없이 즉시 사용한다.
 %%%%
 Self-Restoration
 
-At the permanent loss of one magic point restore your Strength, Dexterity and Intelligence, and heal a large amount of rotted hit points.
+영구적으로 최대 마력을 1 소비하고, 능력치의 감소와 부패를 회복한다.
 %%%%
 Device Recharging
 
-At the permanent loss of one magic point recharge a wand or rod.
+영구적으로 최대 마력을 1 소비하고, 마법봉 혹은 마법 막대를 재충전한다.
 %%%%
 Evoke Teleportation
 
-Teleport yourself to a random location on the level.
+현재 층의 임의의 장소로 공간이동한다.
 %%%%
 Evoke Blink
 
-Randomly translocate a short distance.
+짧은 거리 내의 임의의 장소로 순간이동한다.
 %%%%
 Evoke Berserk Rage
 
-Go berserk. Going berserk greatly, if temporarily, increases your hit points and damage output in melee fights. It will time out quickly if you don't kill anything, but may be extended by multiple kills. While berserk, you cannot perform a number of actions such as, for example, (un)wield a weapon, quaff something, evoke wands or items, or cast spells. Such a rage is usually followed by deep exhaustion, a time during which you are slowed down, cannot berserk again, and occasionally even pass out.
+광폭화 상태가 되어, 체력과 근접전투력을 크게 향상시킨다. 아무도 죽이지 않는다면 금방 분노가 풀리지만, 적을 죽이면 죽일수록 분노가 지속된다. 분노가 끝나면, 움직임이 느려지며 당분간 다시 광전사 상태가 될 수 없으며, 심지어 잠시 기절할수도 있다. 또한 분노한 상태에서는 장비 장착, 물약 마시기, 마법봉 발동, 주문 시전 등 이성이 필요한 행동들을 하는 것도 불가능하다.
 %%%%
 Evoke Invisibility
 
-Turn yourself invisible for a limited amount of time. Turning invisible increases your magical contamination and may eventually cause glowing.
+당신의 몸을 잠시동한 투명하게 만든다. 투명 상태에서는 당신의 마법 오염도가 증가하며, 마법 오염도가 너무 많이 쌓이면 발광 상태가 될 수 있다.
 %%%%
 Turn Visible
 
-Turn visible again.
+투명화를 해제한다.
 %%%%
 Evoke Levitation
 
-Start levitating. During levitation you can safely cross water and similar obstacles. Be warned, though, that levitation may time out at inopportune moments and cause you to fall to your death. While levitating, you cannot interact with items on the floor or pick them up.
+공중으로 떠오른다. 떠오른 상태에서는 물과 같은 장애물을 무리 없이 지나갈 수 있게 된다. 부유는 적절치 않은 때에 해제되어(예를 들어, 깊은 물이나 용암 위) 때때로 당신을 죽음에 이르게 할 수도 있다. 부유 상태에서는 땅에 떨어진 것을 줍거나 계단을 오르내릴 수 없다.
 %%%%
 Stop Levitating
 
-Stop levitating.
+공중부양을 해제하고, 땅으로 내려온다.
 %%%%
 End Transformation
 
-Revert to your normal form, with a short delay.
+변신 해제
+
+당신의 원래 모습으로 돌아온다. 변신 해제에는, 약간의 지연이 걸린다.
 %%%%
-# Zin
+# Zin(진)
 Recite
 
-Preach to monsters about Zin's laws, which can lead to various results. There are four books you can preach from:
+"진"의 규율을 설법하여, 다양한 효과를 유발한다. 4종류의 책으로 설교할 수 있다.
 
-* Book of Abominations: This book deals with the very thing most abhorrent to Zin - chaos in all its forms. These recitations will invoke Zin's most powerful smiting.
+혐오의 서 : 이 규율의 내용은, 진이 증오하는 것들에 효과적이다. 
+이 설교는 진의 심판을 더욱 강하게 만든다.
 
-* Book of Ablutions: The impure are nearly as loathed by the Law-Giver. Recitations from this book will deal damage to such creatures.
+정화의 서 : 부도덕한 존재들은, 진이 경멸하는 대상이다. 
+이 책의 설교는, 그런 이들에게 피해를 준다.
 
-* Book of Apostates: Intelligent creatures who do not worship Zin but do no other evil will be dealt with least harshly. The recitations from this book merely sow confusion. Yet those who dare to worship a god alien to Zin may be permanently deprived of means to spread their foul faith.
+변절의 서 : 이 설교는 적들에게 혼란을 유발한다. 지성체가 아닌 악한 이에게는 그다지 효과를 볼 수 없으며, 
+진에 대해 삐뚤어진 믿음을 가진 이는 믿음을 전파할 기회를 앗아간다.
 
-* Book of Anathema: Demons and the undead are hated by Zin. This book gives you means to rebuke them.
+반대의 서 : 진이 싫어하는 악마와 언데드들을, 이 책의 설교를 꾸짖을 수 있다.
 %%%%
 Vitalisation
 
-Vitalise yourself. This will remove a negative affliction from you, or restore one of your attributes. In case neither of these is necessary, it will give you temporary boosts to your attributes instead.
+당신에게 활력을 부여한다. 나쁜 병과 상태이상을 제거해 주거나, 혹은 잠시동안 능력을 향상시켜준다.
 %%%%
 Imprison
 
-Temporarily imprison a monster surrounded by empty space in rock. It only works on monsters receptive to Recite, as such monsters will feel the effects of Recite once the prison naturally disappears.
+잠시동안 적의 주변 빈 공간을 바위로 둘러싼다. 감금의 권능은, 당신의 암송을 들을 수 있는 적에게만 유효하다. 이러한 적들이 감금의 효과를 느끼면, 감옥은 이내 사라지게 된다.
 %%%%
 Sanctuary
 
-For a short duration gain safety in a divine refuge. While you are inside the sanctuary, monsters will not attack you, but the protection will disappear at once should you breach the divine peace.
+짧은 시간동안 신성한 구역을 만든다. 구역 안에서는 적이 당신을 공격하지 못하지만, 당신이 성지 안에서의 평온을 깬다면 성지로부터의 보호는 사라진다.
 %%%%
 Cure All Mutations
 
-Cure all your mutations - but only once.
+단 한번에 한해서, 모든 돌연변이를 치료한다.
 %%%%
-# The Shining One
+# The Shining One(샤이닝 원)
 Divine Shield
 
-The Shining One grants you a divine shield. Because it is held aloft by godly power, it does not interfere with your equipment. However, it is controlled by your willpower, and your skill with Shields will improve it.
+샤이닝 원이 내려준 신성한 방패의 힘을, 당신의 방패에 가한다. 이것은 당신이 양손 무기를 들었을 때도 사용이 가능하다.
 %%%%
 Cleansing Flame
 
-Invoke a huge blast of divine fury centered on you, severely damaging undead and demons. All other hostiles also take damage, if less so, whereas you and your allies are never affected.
+당신의 주변에 성스러운 불꽃을 일으킨다. 언데드와 악마에게 특히 효과적이며, 주변의 모든 적들을 공격하지만, 당신의 동료들은 이 불로부터 무사할 것이다.
 %%%%
 Summon Divine Warrior
 
-Summon an Angel or Daeva, powerful warriors against evil. They may be blessed by the Shining One to stay longer or even permanently in this world.
+악에 대항하는 강력한 천사를 소환한다. 그들은 샤이닝 원의 가호를 받아, 좀 더 오래 머물거나 혹은 쓰러질 때까지 당신 곁에서 싸워줄 수도 있다.
 %%%%
-# Kikubaaqudgha
+# Kikubaaqudgha (키쿠바쿠드하)
 Receive Corpses
 
-Create one or more reanimatable monster corpses near yourself. The number and freshness of these are dependent on Necromancy skill.
+하나 이상의 멀쩡한 시체를 당신에게 선사한다. 강령술에 능하다면, 더욱 신선한 시체를 더 많이 받을 수 있다.
 %%%%
 Torment
 
-Sacrifice a cadaver to make everyone in sight, including you, experience all the pain that being suffered in its life. This will decimate the resilience of all those who can feel it.
-
-Kikubaaqudgha may choose to protect you from it... or may not.
+시체를 희생하여, 당신을 포함한 시야 내의 모든 이에게, 평생동안 최악의 고통으로 기억될 고통을 선사한다. 이 고통을 느낀 이들은, 자생력을 상실하게 된다. '키쿠바쿠드하'는, 내킬 때에는 당신을 고통으로부터 구제해 줄 수도 있다.
 %%%%
-# Yredelemnul
+# Yredelemnul(이레데넴눌)
 Animate Remains
 
-Reanimate a single corpse or skeleton as a follower. Note that zombies and skeletons cannot leave the level they were created on.
+뼈나 시체를 일으켜, 당신의 종으로 삼는다. 이 권능으로 살아난 좀비와 해골은, 다른 층으로 이동할 수 없다.
 %%%%
 Recall Undead Slaves
 
-Recall your undead followers from anywhere on the level to your immediate surroundings.
+이 층 어딘가를 떠돌고 있을 당신의 언데드 수하들을 당신의 눈 앞으로 다시 불러온다.
 %%%%
 Injury Mirror
 
-Hurt attacking monsters by reflecting damage they do to you back at them.
+당신이 적에게 받은 고통을, 적에게도 느끼게 해 준다.
 %%%%
 Animate Dead ability
 
-Reanimate all corpses and skeletons in your vicinity as followers. Note that zombies and skeletons cannot leave the level they were created on.
+당신 주변의 시체들을 당신의 언데드 수하로서 일으킨다. 이 권능으로 살아난 좀비와 해골은 다른 층으로 이동할 수 없다.
 %%%%
 Drain Life
 
-Heal hit points by draining the life force of the monsters surrounding you.
+주변 적들의 생명력을 흡수하여, 당신의 것으로 만든다. 
 %%%%
 Enslave Soul
 
-Mark a living intelligent monster's soul as ripe for the taking. Once the marked monster dies, its soul will be yours.
-
-The enslaved soul will retain the monster's faculties, equipment and abilities, as well as some of its innate healing. However, only a relatively uninjured monster can have its soul marked, and only one soul can be enslaved at a time. Furthermore, the duration of the mark is dependent on Invocations skill.
-
-Note that enslaved souls can follow you beyond the level they were created on.
+살아있는, 지성이 있는 적의 영혼에 각인을 새긴다. 그가 죽는다면, 그의 영혼을 당신의 것으로 만든다. 지배당한 영혼은, 살아 생전의 장비와 능력에, 타고난 재생력과 같은 특징들을 그대로 이어받는다. 각인은 부상하지 않은 적에게 새기기 쉬우며, 한번에 하나의 영혼만 부릴 수 있다. 기도술이 높을수록, 각인은 오래 남는다.
 %%%%
 Animate Remains or Dead
 
 If you get this description, it is a bug.
 %%%%
-# Okawaru
+# Okawaru(오카와루)
 Heroism
 
-Temporarily increase all of your combat skills, including the ability to sneak around or avoid traps.
+잠시동안 당신의 전투능력을 향상시킨다. 또한 함정도 더욱 잘 피하게 된다.
 %%%%
 Finesse
 
-Greatly increase your combat speed, with no loss of accuracy. This unnatural effect causes small amounts of magic contamination, prolonged exposure to which may be bad for your health.
+공격 속도를 정확도 하락 없이 큰 폭으로 향상한다. 단, 이와 같은 부자연스러운 효과는 마법 오염을 일으킬 수 있으므로, 너무 잦은 사용은 좋지 않다.
 %%%%
-# Makhleb
+# Makhleb(마크레브)
 Minor Destruction
 
-Shoot a random harmful blast at the targeted monster.
+대상이 된 적을, 임의의 파괴 마법으로 공격한다.
 %%%%
 Lesser Servant of Makhleb
 
-Summon a minor demon, with a chance of being hostile at low Invocations skill.
+마크레브의 이름으로 하급 악마를 불러낸다. 기도술이 낮다면, 적대적인 상태로 소환될 수도 있다.
 %%%%
 Major Destruction
 
-Shoot a random harmful beam or explosion at the targeted monster.
+대상이 된 적을, 파괴의 광선이나 폭발로 공격한다.
 %%%%
 Greater Servant of Makhleb
 
-Summon a major demon, with a chance of being hostile at low Invocations skill.
+마크레브의 이름으로 상급 악마를 불러낸다. 기도술이 낮다면, 적대적인 상태로 소환될 수도 있다.
 %%%%
-# Sif Muna
+# Sif Muna(시프 무나)
 Channel Energy
 
-Replenish your magical reservoir by an amount depending on your Invocations skill.
+당신의 마력을 조금 회복한다. 회복하는 양은 기도술의 영향을 받는다.
 %%%%
 Forget Spell
 
-Forget any spell out of the ones you've currently memorised, so as to free memory to learn others.
+한번 기억한 주문을 잊어버리고 다른 주문을 배울수 있게 마법 포인트를 반환받는다.
 %%%%
-# Trog
+# Trog(트로그)
 Burn Spellbooks
 
-Set all spellbooks within your field of vision on fire. The fire is fuelled by Trog's hatred, and Trog likes it most when you don't even care which books of madness burst into flames.
+주변의 책이란 책은 모조리 불태운다. 트로그의, 마법을 향한 분노가 책을 불태우므로, 트로그는 당신이 어떤 책을 태우든 신경쓰지 않고 기뻐할 것이다.
 %%%%
 Berserk
 
-Go berserk. Going berserk greatly, if temporarily, increases your hit points and damage output in melee fights. It will time out quickly if you don't kill anything, but may be extended by multiple kills. While berserk, you cannot perform a number of actions such as, for example, (un)wield a weapon, quaff something, evoke wands or items, or cast spells. Such a rage is usually followed by deep exhaustion, a time during which you are slowed down, and cannot berserk again. Unlike other sources of rage, depending on your piety Trog may occasionally prevent you from passing out.
+광폭화 상태가 되어, 체력과 근접전투력을 크게 향상시킨다. 아무도 죽이지 않는다면 금방 분노가 풀리지만, 적을 죽이면 죽일수록 분노가 지속된다. 분노가 끝나면, 움직임이 느려지며 당분간 다시 광전사 상태가 될 수 없으며, 심지어 잠시 기절할수도 있다. 또한 분노한 상태에서는 장비 장착, 물약 마시기, 마법봉 발동, 주문 시전 등 이성이 필요한 행동들을 하는 것도 불가능하다.
 %%%%
 Trog's Hand
 
-Invoke a powerful regeneration ability which stacks with all other sources and even allows otherwise non-healing species to regenerate. This will also increase protection from magical effects.
+당신이 스스로 회복할 능력이 없더라도, 이 강력한 손길은 당신에게 강력한 재생력을 부여하며, 주술적인 효과로부터 보호해준다.
 %%%%
 Brothers in Arms
 
-Summon huge angry allies to wreak havoc.
+분노한 몬스터들이 소환되어, 당신의 편에 써서 함께 싸워 줄 것이다.
 %%%%
-# Elyvilon
+# Elyvilon(엘라이빌론)
 Divine Protection
 
-Beseech Elyvilon to save your life. If you are mortally wounded, the Healer may undo the killing blow. Especially pious individuals may be certain of this help, but in that case, any actual intervention costs piety (as opposed to merely asking for intervention, which is always free).
-
-Beware: killing others while asking to be spared yourself is a major sin!
+엘리빌론에게 구제를 빈다. 독실한 신도일수록, 죽음을 야기 할 수 있는 부상을 입었을때, 위험에서 좀 더 확실히 벗어나게 될 것이다. 가호를 요청할 때는 아무 대가가 필요하지 않으나, 실제로 가호가 작용할때는 신앙도가 소모된다.
+주의: 가호를 비는 중, 누군가를 죽이는 것은 매우 중대한 죄악이다!
 %%%%
 Lesser Healing
 
-Depending on your Invocations skill, heal a creature other than you by a small amount. Using this ability on hostile monsters will try to make them neutral. This works best on animals, worse on humanoids of your species, still worse on other humanoids, and worst of all on demons and undead. Mindless creatures cannot be pacified, and no monster can be pacified while it is asleep. The chance for successful pacification depends on the healing power.
-
-Whether the pacification succeeds or not, the invested food and magic point are lost. If it does succeed, the monster is healed and you gain half the monster's experience value and possibly some piety. Otherwise, the monster is unaffected and you gain nothing.
-
-You can also heal allies and neutral monsters.
+기도술에 따라, 다른 이를 치료한다. 당신에게 적의를 품은 적들도, 치료를 받으면 적의가 사그라들지도 모른다.
 %%%%
 Lesser Self-Healing
 
-Depending on your Invocations skill, heal a small amount of hit points.
+기도술에 따라, 당신의 체력을 조금 회복한다.
 %%%%
 Purification
 
-Purge your body of bad effects such as sickness, poisoning, slowness, petrification, confusion and rotting.
+각종 질병과 상태이상으로부터 당신을 해방시킨다.
 %%%%
 Greater Healing
 
-Depending on your Invocations skill, heal a creature other than you by a moderate amount. Using this ability on hostile monsters will try to make them neutral. This works best on animals, worse on humanoids of your species, still worse on other humanoids, and worst of all on demons and undead. Mindless creatures cannot be pacified, and no monster can be pacified while it is asleep. The chance for successful pacification depends on the healing power, so it is significantly better than using Lesser Healing.
-
-Whether the pacification succeeds or not, the invested food, piety and magic points are lost. If it does succeed, the monster is healed and you gain half the monster's experience value and possibly some piety. Otherwise, the monster is unaffected and you gain nothing.
-
-You can also heal allies and neutral monsters.
+기도술에 따라, 다른 이를 치료한다. 당신에게 적의를 품은 적들도, 치료를 받으면 적의가 사그라들지도 모른다.
 %%%%
 Greater Self-Healing
 
-Depending on your Invocations skill, heal a moderate amount of hit points. Roughly, Greater Healing will allow you to heal three times the amount of Lesser Healing at a slightly higher total piety cost.
+당신의 기도술에 따라, 신앙도를 조금 더 소모시키는 것으로, 하급 치료의 세 배에 달하는 체력을 회복한다.
 %%%%
 Restoration
 
-Fully restore your Strength, Dexterity and Intelligence, and heal a large amount of rotted hit points.
+감소된 능력치 혹은 부패된 몸을 원래대로 복원한다.
 %%%%
 Divine Vigour
 
-Depending on your Invocations skill, restore a large amount of, and temporarily increase, both your hit points and your magic points.
+기도술에 따라서, 당신의 체력과 마력을 회복하고 일시적으로 증대시킨다.
 %%%%
-# Lugonu
+# Lugonu (루고누)
 Depart the Abyss
 
-Leave the Abyss to return into the branch and level you last were in when you left the dungeon.
+어비스를 떠나, 원래 있던 던전으로 되돌아간다.
 %%%%
 Bend Space
 
-Bend the fabric of space around you, instantly translocating you a small distance, and possibly also translocating and damaging monsters in your vicinity.
+주변의 공간을 비틀어, 짧은 거리를 순간이동하며, 공간의 왜곡에 휩쓸린 적들에게 피해를 준다.
 %%%%
 Banish
 
-Attempt to banish a monster into the Abyss.
+적을 어비스로 추방시킨다.
 %%%%
 Corrupt
 
-Corrupt the current level by unleashing Abyssal energies on it. This will cause the level to largely change appearance, and will gate in demons from the Abyss bent on causing destruction. This will not work on levels already corrupted or in the Abyss.
+자신이 있는 층을 타락에 빠트린다. 주변의 모습이 달라지며, 어비스의 악마들도 나타나 난동을 부리게 된다. 이미 타락한 층에는 사용할 수 없다.
 %%%%
 Enter the Abyss
 
-Transfer yourself to Lugonu's realm instantly... at a cost.
+루고누의 왕국으로 진입한다. 물론 어느정도의 대가도 지불해야 한다.
 %%%%
-# Nemelex Xobeh
+# Nemelex Xobeh (네멜렉스 죠베)
 Draw One
 
-Choose any deck in your inventory and draw a card from it.
+가지고 있는 카드 중 한 장을 뽑는다.
 %%%%
 Peek at Two
 
-Draw two cards from any deck in your inventory, look at them, and shuffle them back into the deck. The deck will be inscribed as containing those two cards, and, if they are different, this will identify the deck.
+가진 카드 중 두 장을 뽑아서 본 후 다시 섞는다. 두 장의 카드를 보고 어떤 카드 혹은 덱인지 알아낼 수도 있다.
 %%%%
 Triple Draw
+
+가진 카드 중 세 장을 뽑아, 한 장만 취하고 다른 두 카드는 버린다.
 
 Draw three cards from any deck in your inventory, look at them, and decide which one to keep, discarding the other two.
 %%%%
 Mark Four
 
-Draw four cards from any deck in your inventory, mark and remember them, so that you can tell when they are on top, and shuffle them back into the deck. The deck will be inscribed as containing those cards, and doing so will identify the deck.
+가진 카드 중 네 장을 뽑아, 덱의 맨 위로 올라오면 알 수 있도록 표시해둔다. 이것으로 덱이 어떤 카드를 포함하는지 알 수 있게 된다.
 %%%%
 Stack Five
 
-Draw five cards from any deck in your inventory, losing the rest of the deck. Look at the cards and sort them into any order you'd like. Subsequently, you can draw these cards in the order you chose.
+가진 카드 중 다섯장을 뽑아, 그 덱의 나머지 카드는 버리고, 다섯장의 카드를 원하는 순서대로 정렬한다. 요점은, 당신이 원한 순서대로 이 카드들을 사용할 수 있다는 것이다.
 %%%%
-# Beogh
+# Beogh (베오그)
 Smiting
 
-Smite an enemy within your field of vision. This doesn't require a direct path, just seeing the enemy is enough.
+적에게 징벌을 내린다. 적이 보이기만 한다면 장애물에 상관 없이 사용이 가능하다.
 %%%%
 Recall Orcish Followers
 
-Recall your orcish followers from anywhere on the level to your immediate surroundings.
+층 어딘가를 떠돌고 있는 당신의 오크 추종자를 눈앞으로 불러낸다.
 %%%%
-# Fedhas
+# Fedhas(페다스)
 Sunlight
 
-Call sunlight down over a small area of the dungeon. Monsters illuminated by the light will be easier to hit. Water affected by the sunlight will evaporate. In particular, deep water will become shallow water, and shallow water will dry up completely, revealing the dungeon floor.
+던전 내부의 좁은 지역에 강한 햇빛을 비춘다. 빛을 받은 적은 좀 더 명중시키기 수월해진다. 깊은 물이 햇빛을 받으면 증발하여 얕아지며, 얕은 물은 말라버린다.
 %%%%
 Growth
 
-Use fruit to grow a ring of plants around yourself. If a complete ring cannot be formed (because you do not have enough fruit), plants will grow on squares adjacent to you that are close to monsters. The plants you create gain bonus HP proportional to your invocations skill.
+과일을 사용하여, 주변에 식물들을 기른다. 과일이 모자르다면, 적이 있는 방향부터 당신을 둘러싸면서 식물이 자라게 된다. 기도술이 충분하다면, 당신이 기른 식물들은 평범한 식물보다 더욱 튼튼하다.
 %%%%
 Rain
 
-Cause rain to fall around yourself, turning the dungeon floor into shallow water and shallow water into deep water.
+주변에 비를 내려, 물이 고이게 하고, 얕은 물은 더욱 깊게 만든다.
 %%%%
 Reproduction
 
-Create giant spores from corpses in your line of sight. The spores will explode, causing damage to you or your enemies.
+주변의 시체로부터 거대 포자를 만든다. 이 포자는 폭발하여, 모든 것들에게 피해를 입힌다.
 %%%%
 Evolution
 
-Turn plants and fungi adjacent to you into stronger species. Upgrading fungi requires piety, upgrading plants requires fruit. Plants upgraded gain a bonus to attack accuracy proportional to the user's invocations skill, and oklob plants are more likely to spit acid at higher invocations.
+식물이나 버섯을, 좀 더 강한 종으로 변모시킨다. 버섯은 신앙도를 소모하고, 식물은 과일을 필요로 한다. 진화한 식물들은 당신의 기도술이 높을수록 더욱 강력해지며, 특히 오클롭 잡초는 좀 더 자주 산을 내뿜을 것이다.
 %%%%
-# Cheibriados
+# Cheibriados (체브리아도스)
 Make Ponderous
 
-Alter a piece of body armour of your choice so it slows the wearer down. This is generally bad for hasty people, those who appreciate taking the time may benefit from Cheibriados' favour when they are not so fast.
+당신의 갑옷을 더욱 무겁게 한다. 무거워진 갑옷은 더 높은 방어력을 가지지만, 당신의 움직임을 느리게 만든다. 민첩한 존재들에게는 좋지 못한 일이지만, 체브리아도스는 느려진 당신에게 흐뭇해 할 것이다.
 %%%%
 Bend Time
 
-Slow down everyone who's standing just next to you.
+주변에 있는 이들의 속도를 느리게 한다.
 %%%%
 Slouch
 
-Cause damage to everyone in sight who is moving faster than you. Those magically hasted will be hurt particularly painfully.
+당신보다 재빠르게 움직이는 모든 것들에게 고통을 선사한다. 특히 마법적 가속을 가진 이들에게 효과적이다.
 %%%%
 Step From Time
 
-Remove yourself from the flow of time. Things around you will happen at their usual busy pace, monsters will wander, perishable items will decay, plants will grow. After some time has passed, you will return in the same state as the very second you departed.
+잠시동안 현재 층, 현재 시간에서 사라진다. 주변의 다른 존재들은 평소처럼 움직이게 되며, 적들은 떠돌아다니고 시체들은 부패하며, 식물들은 자라난다. 시간이 지난 뒤에, 당신은 전과 같은 모습으로 제자리에 돌아온다.
 %%%%
 Renounce Religion
 
-Renounce your faith. This will make your character leave your god (and usually anger said god).
+현재 가진 신앙을 포기한다. 신앙의 포기는, 당신의 신의 분노를 일으키게 된다.
 %%%%
-# Jiyva
+# Jiyva (지바)
 Request Jelly
 
-Create a neutral jelly that will wander the floor and digest items.
+중립적인 젤리를 소환한다. 이들은 주변을 배회하며, 아이템을 먹는다.
 %%%%
 Slimify
 
-Coat a wielded weapon or your fists with slime, turning the next living or undead monster hit into a neutral slime.
+무기 혹은 주먹에 점액을 두른다. 이 점액은 되살아난 존재 혹은 언데드들을 슬라임으로 바꾼다.
 %%%%
 Cure Bad Mutation
 
-Remove a randomly selected bad mutation.
+나쁜 변이들을 랜덤하게 치료한다.
 %%%%
-# Ashenzari
+# Ashenzari (아센자리) 
 Scrying
 
-Gain astral sight to see through walls. This is not enough to let you target spells and abilities, even those that work through glass.
+벽 너머를 보는 초자연적인 시력을 얻는다. 다만 유리를 통과할 수 있는 마법이 벽을 통과할 수 있게 되는 것은 아니다.
 %%%%
 Transfer Knowledge
 
-Sacrifice part of one of your skills to improve another.
+하나의 기술을 희생하여, 다른 기술을 향상시킨다.
 %%%%
 End Transfer Knowledge
 
-Abort an ongoing skill transfer.
+지식 수혈을 중단한다.
