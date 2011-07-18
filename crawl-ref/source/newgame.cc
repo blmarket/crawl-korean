@@ -664,7 +664,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("+ - Viable species"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -687,7 +687,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("# - Viable character"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -703,7 +703,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -718,7 +718,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 3;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -733,7 +733,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("* - Random species"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -748,7 +748,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_text(gettext("! - Random character"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -774,7 +774,7 @@ static void _construct_species_menu(const newgame_def* ng,
     }
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 4;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -794,7 +794,7 @@ static void _construct_species_menu(const newgame_def* ng,
         tmp->set_text(tmp_string);
         min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
         min_coord.y = SPECIAL_KEYS_START_Y + 3;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -1068,7 +1068,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     TextItem* tmp = new TextItem();
     tmp->set_text(gettext("+ - Viable background"));
     coord_def min_coord = coord_def(X_MARGIN, SPECIAL_KEYS_START_Y);
-    coord_def max_coord = coord_def(min_coord.x + tmp->get_text().size(),
+    coord_def max_coord = coord_def(min_coord.x + strwidth(tmp->get_text().c_str()),
                                     min_coord.y + 1);
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1091,7 +1091,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->set_text(gettext("# - Viable character"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1107,7 +1107,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1122,7 +1122,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 3;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1137,7 +1137,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->set_text(gettext("* - Random background"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1152,7 +1152,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->set_text(gettext("! - Random character"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1180,7 +1180,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     }
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 4;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1198,7 +1198,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
         tmp->set_text("Tab - " + _char_description(defaults));
         min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
         min_coord.y = SPECIAL_KEYS_START_Y + 3;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -1446,7 +1446,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_text(gettext("+ - Viable random choice"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1461,7 +1461,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1476,7 +1476,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1491,7 +1491,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_text(gettext("* - Random weapon"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1508,7 +1508,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_description_text(gettext("Lets you return back to Character choice menu"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 3;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1534,7 +1534,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
         tmp->set_text(text);
         min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
         min_coord.y = SPECIAL_KEYS_START_Y + 2;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -1906,7 +1906,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     //tmp->set_text("+ - Viable random choice");
     //min_coord.x = X_MARGIN;
     //min_coord.y = SPECIAL_KEYS_START_Y;
-    //max_coord.x = min_coord.x + tmp->get_text().size();
+    //max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     //max_coord.y = min_coord.y + 1;
     //tmp->set_bounds(min_coord, max_coord);
     //tmp->set_fg_colour(BROWN);
@@ -1920,7 +1920,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1935,7 +1935,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1950,7 +1950,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->set_text(gettext("* - Random wand"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1967,7 +1967,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->set_description_text(gettext("Lets you return back to Character choice menu"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 3;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    max_coord.x = min_coord.x + tmp->get_text().size();
+    max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     max_coord.y = min_coord.y + 1;
     tmp->set_bounds(min_coord, max_coord);
     tmp->set_fg_colour(BROWN);
@@ -1999,7 +1999,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
         tmp->set_text(text);
         min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
         min_coord.y = SPECIAL_KEYS_START_Y + 2;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -2214,7 +2214,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->set_text(gettext("% - List aptitudes"));
         min_coord.x = X_MARGIN;
         min_coord.y = SPECIAL_KEYS_START_Y + 1;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -2229,7 +2229,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->set_text(gettext("? - Help"));
         min_coord.x = X_MARGIN;
         min_coord.y = SPECIAL_KEYS_START_Y + 2;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -2244,7 +2244,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->set_text(gettext("* - Random map"));
         min_coord.x = X_MARGIN + COLUMN_WIDTH;
         min_coord.y = SPECIAL_KEYS_START_Y + 1;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
@@ -2263,7 +2263,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
     //tmp->set_description_text("Lets you return back to Character choice menu");
     //min_coord.x = X_MARGIN + COLUMN_WIDTH - 3;
     //min_coord.y = SPECIAL_KEYS_START_Y + 1;
-    //max_coord.x = min_coord.x + tmp->get_text().size();
+    //max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
     //max_coord.y = min_coord.y + 1;
     //tmp->set_bounds(min_coord, max_coord);
     //tmp->set_fg_colour(BROWN);
@@ -2287,7 +2287,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->set_text(text);
         min_coord.x = X_MARGIN + COLUMN_WIDTH - 2;
         min_coord.y = SPECIAL_KEYS_START_Y + 2;
-        max_coord.x = min_coord.x + tmp->get_text().size();
+        max_coord.x = min_coord.x + strwidth(tmp->get_text().c_str());
         max_coord.y = min_coord.y + 1;
         tmp->set_bounds(min_coord, max_coord);
         tmp->set_fg_colour(BROWN);
