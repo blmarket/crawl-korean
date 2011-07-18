@@ -141,13 +141,13 @@ static std::string _welcome(const newgame_def* ng)
     // 이름이 있다면,
     if (!ng->name.empty())
     {
-	/// 이를테면 Neonssi the Minotaur Berserker가 계산되겠지만,
-	/// 번역하면 미노타 광전사 Neonssi 가 되게 하는게 목표.
-	text = make_stringf(gettext("%s the %s"), ng->name.c_str(), text.c_str());
+        /// 이를테면 Neonssi the Minotaur Berserker가 계산되겠지만,
+        /// 번역하면 미노타 광전사 Neonssi 가 되게 하는게 목표.
+        text = make_stringf(gettext("%s the %s"), ng->name.c_str(), text.c_str());
     }
     else if (!text.empty()) // 이름이 없는 경우
     {
-	text = make_stringf(gettext("unnamed %s"), text.c_str());
+        text = make_stringf(gettext("unnamed %s"), text.c_str());
     }
 
     if(text.empty()) return gettext("Welcome.");
