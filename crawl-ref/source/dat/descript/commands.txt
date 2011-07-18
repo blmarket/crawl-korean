@@ -1,4 +1,8 @@
 ﻿%%%%
+dummy_cmd
+
+dummy_cmd
+%%%%
 CMD_REST
 
 휴식

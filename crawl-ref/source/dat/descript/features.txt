@@ -1,4 +1,8 @@
-﻿%%%%
+%%%%
+dummy_feat
+
+10층에서딸꾹
+%%%%
 A basalt altar of Yredelemnul
 
 '어둠의  이레델렘눌'의 제단이다. 현무암 재질의 기둥들로 만들어져 있다.

@@ -715,7 +715,7 @@ static void _construct_species_menu(const newgame_def* ng,
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("? - Help");
+    tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 3;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1066,7 +1066,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
 
     // Add all the special button entries
     TextItem* tmp = new TextItem();
-    tmp->set_text("+ - Viable background");
+    tmp->set_text(gettext("+ - Viable background"));
     coord_def min_coord = coord_def(X_MARGIN, SPECIAL_KEYS_START_Y);
     coord_def max_coord = coord_def(min_coord.x + tmp->get_text().size(),
                                     min_coord.y + 1);
@@ -1083,12 +1083,12 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
         tmp->set_id(M_RANDOM);
     }
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Picks a random viable background based on your current species choice");
+    tmp->set_description_text(gettext("Picks a random viable background based on your current species choice"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("# - Viable character");
+    tmp->set_text(gettext("# - Viable character"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1098,13 +1098,13 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->add_hotkey('#');
     tmp->set_id(M_VIABLE_CHAR);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Shuffles through random viable character combinations "
-                              "until you accept one");
+    tmp->set_description_text(gettext("Shuffles through random viable character combinations "
+                              "until you accept one"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("% - List aptitudes");
+    tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1114,12 +1114,12 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->add_hotkey('%');
     tmp->set_id(M_APTITUDES);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Lists the numerical skill train aptitudes for all races");
+    tmp->set_description_text(gettext("Lists the numerical skill train aptitudes for all races"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("? - Help");
+    tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 3;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1129,12 +1129,12 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->add_hotkey('?');
     tmp->set_id(M_HELP);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Opens the help screen");
+    tmp->set_description_text(gettext("Opens the help screen"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("* - Random background");
+    tmp->set_text(gettext("* - Random background"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1144,12 +1144,12 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->add_hotkey('*');
     tmp->set_id(M_RANDOM);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Picks a random background");
+    tmp->set_description_text(gettext("Picks a random background"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("! - Random character");
+    tmp->set_text(gettext("! - Random character"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1159,8 +1159,8 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp->add_hotkey('!');
     tmp->set_id(M_RANDOM_CHAR);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Shuffles through random character combinations "
-                              "until you accept one");
+    tmp->set_description_text(gettext("Shuffles through random character "
+			      "combinations until you accept one"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -1168,13 +1168,14 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     tmp = new TextItem();
     if (ng->species != SP_UNKNOWN)
     {
-        tmp->set_text("Space - Change species");
-        tmp->set_description_text("Lets you change your species choice");
+        tmp->set_text(gettext("Space - Change species"));
+        tmp->set_description_text(gettext(
+	    "Lets you change your species choice"));
     }
     else
     {
-        tmp->set_text("Space - Pick species first");
-        tmp->set_description_text("Lets you pick your species first");
+        tmp->set_text(gettext("Space - Pick species first"));
+        tmp->set_description_text(gettext("Lets you pick your species first"));
 
     }
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 4;
@@ -1204,7 +1205,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
         tmp->add_hotkey('\t');
         tmp->set_id(M_DEFAULT_CHOICE);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Play a new game with your previous choice");
+        tmp->set_description_text(gettext("Play a new game with your previous choice"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
     }
@@ -1472,7 +1473,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("? - Help");
+    tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1916,7 +1917,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     //tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("% - List aptitudes");
+    tmp->set_text(gettext("% - List aptitudes"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1926,12 +1927,12 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->add_hotkey('%');
     tmp->set_id(M_APTITUDES);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Lists the numerical skill train aptitudes for all races");
+    tmp->set_description_text(gettext("Lists the numerical skill train aptitudes for all races"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("? - Help");
+    tmp->set_text(gettext("? - Help"));
     min_coord.x = X_MARGIN;
     min_coord.y = SPECIAL_KEYS_START_Y + 2;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1941,12 +1942,12 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->add_hotkey('?');
     tmp->set_id(M_HELP);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Opens the help screen");
+    tmp->set_description_text(gettext("Opens the help screen"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new TextItem();
-    tmp->set_text("* - Random wand");
+    tmp->set_text(gettext("* - Random wand"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH;
     min_coord.y = SPECIAL_KEYS_START_Y;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -1956,14 +1957,14 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
     tmp->add_hotkey('*');
     tmp->set_id(M_RANDOM);
     tmp->set_highlight_colour(LIGHTGRAY);
-    tmp->set_description_text("Picks a random wand");
+    tmp->set_description_text(gettext("Picks a random wand"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
     // Adjust the end marker to align the - because Bksp text is longer by 3
     tmp = new TextItem();
-    tmp->set_text("Bksp - Return to character menu");
-    tmp->set_description_text("Lets you return back to Character choice menu");
+    tmp->set_text(gettext("Bksp - Return to character menu"));
+    tmp->set_description_text(gettext("Lets you return back to Character choice menu"));
     min_coord.x = X_MARGIN + COLUMN_WIDTH - 3;
     min_coord.y = SPECIAL_KEYS_START_Y + 1;
     max_coord.x = min_coord.x + tmp->get_text().size();
@@ -2005,7 +2006,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
         tmp->add_hotkey('\t');
         tmp->set_id(M_DEFAULT_CHOICE);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Select your previous wand choice");
+        tmp->set_description_text(gettext("Select your previous wand choice"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
     }
@@ -2210,7 +2211,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
     if (!crawl_state.game_is_tutorial())
     {
         tmp = new TextItem();
-        tmp->set_text("% - List aptitudes");
+        tmp->set_text(gettext("% - List aptitudes"));
         min_coord.x = X_MARGIN;
         min_coord.y = SPECIAL_KEYS_START_Y + 1;
         max_coord.x = min_coord.x + tmp->get_text().size();
@@ -2220,12 +2221,12 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->add_hotkey('%');
         tmp->set_id(M_APTITUDES);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Lists the numerical skill train aptitudes for all races");
+        tmp->set_description_text(gettext("Lists the numerical skill train aptitudes for all races"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
 
         tmp = new TextItem();
-        tmp->set_text("? - Help");
+        tmp->set_text(gettext("? - Help"));
         min_coord.x = X_MARGIN;
         min_coord.y = SPECIAL_KEYS_START_Y + 2;
         max_coord.x = min_coord.x + tmp->get_text().size();
@@ -2235,12 +2236,12 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->add_hotkey('?');
         tmp->set_id(M_HELP);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Opens the help screen");
+        tmp->set_description_text(gettext("Opens the help screen"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
 
         tmp = new TextItem();
-        tmp->set_text("* - Random map");
+        tmp->set_text(gettext("* - Random map"));
         min_coord.x = X_MARGIN + COLUMN_WIDTH;
         min_coord.y = SPECIAL_KEYS_START_Y + 1;
         max_coord.x = min_coord.x + tmp->get_text().size();
@@ -2250,7 +2251,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->add_hotkey('*');
         tmp->set_id(M_RANDOM);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Picks a random sprint map");
+        tmp->set_description_text(gettext("Picks a random sprint map"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
     }
@@ -2293,7 +2294,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
         tmp->add_hotkey('\t');
         tmp->set_id(M_DEFAULT_CHOICE);
         tmp->set_highlight_colour(LIGHTGRAY);
-        tmp->set_description_text("Select your previous sprint map and character");
+        tmp->set_description_text(gettext("Select your previous sprint map and character"));
         menu->attach_item(tmp);
         tmp->set_visible(true);
     }

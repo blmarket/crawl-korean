@@ -1,4 +1,8 @@
 ﻿%%%%
+dummy_monsters
+
+루미쨔응
+%%%%
 # Glyph-specific suffixes
 # Only for non-uniques nagas.
 __cap-N_suffix

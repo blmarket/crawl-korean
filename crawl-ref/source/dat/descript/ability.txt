@@ -1,4 +1,8 @@
 ﻿%%%%
+dummy_ability
+
+앗싸리
+%%%%
 No ability
 
 이 문장을 읽었다면, 버그이므로 버그 리포트를 하라.
@@ -411,3 +415,4 @@ Transfer Knowledge
 End Transfer Knowledge
 
 지식 수혈을 중단한다.
+%%%%

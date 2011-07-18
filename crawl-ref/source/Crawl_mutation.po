@@ -644,27 +644,27 @@ msgstr "당신은 빈번하게 자신도 모르게 비명을 지른다."
 
 #: mutation-data.h:500
 msgid "You feel the urge to shout."
-msgstr "제어하기 힘든 외침이 성대를 타고 올라옴을 느꼈다."
+msgstr "제어하기 힘든 외침이 목구멍을 타고 올라옴을 느꼈다."
 
 #: mutation-data.h:501
 msgid "You feel a strong urge to yell."
-msgstr "제어하기 힘든 고함이 성대를 타고 올라옴을 느꼈다."
+msgstr "제어하기 힘든 고함이 목구멍을 타고 올라옴을 느꼈다."
 
 #: mutation-data.h:502
 msgid "You feel a strong urge to scream."
-msgstr "제어하기 힘든 비명이 성대를 타고 올라옴을 느꼈다."
+msgstr "제어하기 힘든 비명이 목구멍을 타고 올라옴을 느꼈다."
 
 #: mutation-data.h:504
 msgid "Your urge to shout disappears."
-msgstr "당신의 성대가 안정되었음을 느꼈다."
+msgstr "당신의 목이 안정되었음을 느꼈다."
 
 #: mutation-data.h:505
 msgid "Your urge to yell lessens."
-msgstr "당신의 성대가 약간 안정되었음을 느꼈다."
+msgstr "당신의 목이 약간 안정되었음을 느꼈다."
 
 #: mutation-data.h:506
 msgid "Your urge to scream lessens."
-msgstr "당신의 성대가 약간 안정되었음을 느꼈다."
+msgstr "당신의 목이 약간 안정되었음을 느꼈다."
 
 #: mutation-data.h:512
 msgid "clarity"
@@ -810,11 +810,11 @@ msgstr "당신은 허약하다. (-10% HP)"
 
 #: mutation-data.h:597
 msgid "You are very frail (-20% HP)."
-msgstr "당신은 상당히 허약하다. (-10% HP)"
+msgstr "당신은 상당히 허약하다. (-20% HP)"
 
 #: mutation-data.h:598
 msgid "You are extremely frail (-30% HP)."
-msgstr "당신은 대단히 허약하다. (-10% HP)"
+msgstr "당신은 대단히 허약하다. (-30% HP)"
 
 #: mutation-data.h:600 mutation-data.h:601 mutation-data.h:602
 #: mutation-data.h:622 mutation-data.h:623 mutation-data.h:624
@@ -832,11 +832,11 @@ msgstr "당신은 건강하다. (+10% HP)"
 
 #: mutation-data.h:615
 msgid "You are very robust (+20% HP)."
-msgstr "당신은 꽤나 건강하다. (+10% HP)"
+msgstr "당신은 꽤나 건강하다. (+20% HP)"
 
 #: mutation-data.h:616
 msgid "You are extremely robust (+30% HP)."
-msgstr "당신은 대단히 건강하다. (+10% HP)"
+msgstr "당신은 대단히 건강하다. (+30% HP)"
 
 #: mutation-data.h:630
 msgid "unbreathing"
@@ -1623,7 +1623,7 @@ msgstr "몸에 황금색 눈알들이 자라났다."
 
 #: mutation-data.h:1120
 msgid "Eyeballs cover a large portion of your body."
-msgstr "몸의 더욱 넓은 부분에 황금색 눈알들이 자라났다."
+msgstr "몸에 황금색 눈알들이 더욱 많이 자라났다."
 
 #: mutation-data.h:1121
 msgid "Eyeballs cover you completely."
@@ -1675,7 +1675,7 @@ msgstr "피부의 반투명함이 약해졌다."
 
 #: mutation-data.h:1143
 msgid "Your skin's transparency fades."
-msgstr "피부의 투명함이 상실되었다."
+msgstr "피부가 반투명하게 돌아갔다."
 
 #: mutation-data.h:1149
 msgid "pseudopods"
@@ -1798,7 +1798,7 @@ msgstr "당신의 무색 비늘이 사라졌다."
 
 #: mutation-data.h:1217 mutation-data.h:1218
 msgid "Your icy blue scales recede somewhat."
-msgstr "당신의 무색 비늘이 다소 감소했다."
+msgstr "당신의 무색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1226
 msgid "You are partially covered in iridescent scales (AC +4)."
@@ -1830,7 +1830,7 @@ msgstr "당신의 무지개빛 비늘이 사라졌다."
 
 #: mutation-data.h:1235 mutation-data.h:1236
 msgid "Your iridescent scales recede somewhat."
-msgstr "당신의 무지개빛 비늘이 감소했다."
+msgstr "당신의 무지개빛 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1244
 msgid "You are partially covered in large bone plates (AC +2, SH +2)."
@@ -1862,7 +1862,7 @@ msgstr "당신의 뼈 갑옷이 사라졌다."
 
 #: mutation-data.h:1253 mutation-data.h:1254
 msgid "Your large bone plates recede somewhat."
-msgstr "당신의 뼈 갑옷이 감소했다."
+msgstr "당신의 뼈 갑옷이 일부 사라졌다."
 
 #: mutation-data.h:1263
 msgid "You are mostly covered in molten scales (AC +2, EV -1)."
@@ -1882,7 +1882,7 @@ msgstr "얼룩무늬의 비늘이 당신의 몸을 완전하게 덮었다."
 
 #: mutation-data.h:1271 mutation-data.h:1272
 msgid "Your molten scales recede somewhat."
-msgstr "당신의 얼룩무늬 비늘이 감소했다."
+msgstr "당신의 얼룩무늬 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1280
 msgid "You are partially covered in rough black scales (AC +4, Dex -1)."
@@ -1914,7 +1914,7 @@ msgstr "당신의 거친 검은색 비늘이 사라졌다."
 
 #: mutation-data.h:1289 mutation-data.h:1290
 msgid "Your rough black scales recede somewhat."
-msgstr "당신의 거친 검은색 비늘이 감소했다."
+msgstr "당신의 거친 검은색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1298
 msgid "You are partially covered in rugged brown scales (AC +2, +3% HP)."
@@ -1946,7 +1946,7 @@ msgstr "당신의 질긴 갈색 비늘이 사라졌다."
 
 #: mutation-data.h:1307 mutation-data.h:1308
 msgid "Your rugged brown scales recede somewhat."
-msgstr "당신의 질긴 갈색 비늘이 감소했다."
+msgstr "당신의 질긴 갈색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1317
 msgid "You are mostly covered in slimy green scales (AC +2, EV -1)."
@@ -1966,7 +1966,7 @@ msgstr "끈적이는 녹색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1325 mutation-data.h:1326
 msgid "Your slimy green scales recede somewhat."
-msgstr "끈적이는 녹색 비늘이 감소했다."
+msgstr "끈적이는 녹색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1335
 msgid "You are mostly covered in thin metallic scales (AC +2)."
@@ -1986,40 +1986,40 @@ msgstr "얇은 금속빛의 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1343 mutation-data.h:1344
 msgid "Your thin metallic scales recede somewhat."
-msgstr "당신의 얇은 금속빛 비늘이 감소했다."
+msgstr "당신의 얇은 금속빛 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1352
 msgid "You have a somewhat thin skeletal structure (Dex +2, Str -1, Stlth)."
-msgstr "당신은 약간 얇은 뼈 구조를 가지고 있다. (민첩 +2, 힘 -1, 은밀)"
+msgstr "당신은 약간 마른 골격 구조를 가지고 있다. (민첩 +2, 힘 -1, 은밀)"
 
 #: mutation-data.h:1353
 msgid "You have a moderately thin skeletal structure (Dex +4, Str -2, Stlth)."
-msgstr "당신은 얇은 뼈 구조를 가지고 있다. (민첩 +4, 힘 -2, 은밀)"
+msgstr "당신은 마른 골격 구조를 가지고 있다. (민첩 +4, 힘 -2, 은밀)"
 
 #: mutation-data.h:1354
 msgid ""
 "You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth)."
-msgstr "당신은 부자연스럽게 얇은 뼈 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
+msgstr "당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
 
 #: mutation-data.h:1356
 msgid "Your bones become slightly less dense."
-msgstr "당신의 몸의 뼈들이 물렁해졌다."
+msgstr "당신의 골격이 유연해진 것을 느꼈다."
 
 #: mutation-data.h:1357
 msgid "Your bones become somewhat less dense."
-msgstr "당신의 몸의 뼈들이 얇아졌다."
+msgstr "당신의 골격이 얇아진 것을 느꼈다."
 
 #: mutation-data.h:1358
 msgid "Your bones become less dense."
-msgstr "당신의 몸의 뼈들의 밀도가 떨어졌다."
+msgstr "온 몸의 뼈들이 가벼워진 느낌이다."
 
 #: mutation-data.h:1360
 msgid "Your skeletal structure returns to normal."
-msgstr "당신의 몸의 물렁한 뼈들이, 원래대로 튼튼해졌다."
+msgstr "골격이 뻣뻣해졌지만, 더욱 튼튼해진걸 느꼈다."
 
 #: mutation-data.h:1361 mutation-data.h:1362
 msgid "Your skeletal structure densifies."
-msgstr "당신 몸의 뼈들의 물렁함이 덜해졌다."
+msgstr "온 몸의 뼈들이 뻣뻣해진것을 느꼈다."
 
 #: mutation-data.h:1371
 msgid "You are mostly covered in yellow scales (AC +2, rAcid+)."
@@ -2039,7 +2039,7 @@ msgstr "노란색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1379 mutation-data.h:1380
 msgid "Your yellow scales recede somewhat."
-msgstr "당신의 노란색 비늘이 감소했다."
+msgstr "당신의 노란색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1386
 msgid "camouflage"
@@ -2067,7 +2067,7 @@ msgstr "당신의 피부는 더욱 효과적으로 보호색을 띄기 시작했
 
 #: mutation-data.h:1396
 msgid "Your skin no longer functions as natural camouflage."
-msgstr "당신의 피부는 더 이상 주변 환경에 딸하 변하지 않는다."
+msgstr "당신의 피부는 더 이상 주변 환경에 따라 변하지 않는다."
 
 #: mutation-data.h:1397 mutation-data.h:1398
 msgid "Your natural camouflage becomes less effective."
