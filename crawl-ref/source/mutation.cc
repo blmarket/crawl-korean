@@ -1963,11 +1963,8 @@ _schedule_ds_mutations(std::vector<mutation_type> muts)
             dt.level_gained = slots_left.front();
             dt.mutation     = muts_left.front();
 
-//            dprf("Demonspawn will gain %s at level %d",
-//            get_mutation_def(dt.mutation).wizname, dt.level_gained);
-
-            dprf("데몬스폰은 %d 레벨에 %s을 얻는다 ",
-                    get_mutation_def(dt.mutation).wizname, dt.level_gained);
+            dprf("Demonspawn will gain %s at level %d",
+            get_mutation_def(dt.mutation).wizname, dt.level_gained);
 
             out.push_back(dt);
 
