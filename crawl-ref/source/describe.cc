@@ -2928,14 +2928,17 @@ static void _append_spell_stats(const spell_type spell,
     if (rod)
     {
         snprintf(info, INFO_SIZE,
-                 "\nLevel: %d",
+		 /// 1. 스펠 레벨이 숫자로 들어옴.
+                 gettext("\nLevel: %d"),
                  spell_difficulty(spell));
     }
     else
     {
         const std::string schools = spell_schools_string(spell);
         snprintf(info, INFO_SIZE,
-                 "\nLevel: %d        School%s:  %s    (%s)",
+		 /// 1. 스펠 레벨(숫자), 2. 학파가 여러개면 s가, 아니면 아무것도 안들어옴.
+		 /// 3. 마법 학파, 4. 성공 확률
+                 gettext("\nLevel: %d        School%s:  %s    (%s)"),
                  spell_difficulty(spell),
                  schools.find("/") != std::string::npos ? "s" : "",
                  schools.c_str(),
@@ -2968,6 +2971,7 @@ static int _get_spell_description(const spell_type spell,
         description += long_descrip;
     else
     {
+	/// 버그에 해당하는 상황임.
         description += "This spell has no description. "
                        "Casting it may therefore be unwise. "
 #ifdef DEBUG
@@ -2980,20 +2984,20 @@ static int _get_spell_description(const spell_type spell,
     if (god_hates_spell(spell, you.religion))
     {
         description += god_name(you.religion)
-                       + " frowns upon the use of this spell.\n";
+                       + gettext(" frowns upon the use of this spell.\n");
     }
     else if (god_likes_spell(spell, you.religion))
     {
         description += god_name(you.religion)
-                       + " supports the use of this spell.\n";
+                       + gettext(" supports the use of this spell.\n");
     }
     if (item && !player_can_memorise_from_spellbook(*item))
     {
-        description += "The spell is scrawled in ancient runes that are beyond "
-                       "your current level of understanding.\n";
+        description += gettext("The spell is scrawled in ancient runes that are beyond "
+                       "your current level of understanding.\n");
     }
     if (spell_is_useless(spell))
-        description += "This spell will have no effect right now.\n";
+        description += gettext("This spell will have no effect right now.\n");
 
     if (crawl_state.player_is_dead())
         return (BOOK_NEITHER);
@@ -3011,16 +3015,16 @@ static int _get_spell_description(const spell_type spell,
         if (you.has_spell(spell))
         {
             description += "\n\n";
-            description += "(F)orget this spell by destroying the book.";
+            description += gettext("(F)orget this spell by destroying the book.");
             if (you.religion == GOD_SIF_MUNA)
-                description +="\nSif Muna frowns upon the destroying of books.";
+                description += gettext("\nSif Muna frowns upon the destroying of books.");
             return (BOOK_FORGET);
         }
         else if (player_can_memorise_from_spellbook(*item)
                  && !you_cannot_memorise(spell, undead))
         {
             description += "\n\n";
-            description += "(M)emorise this spell.";
+            description += gettext("(M)emorise this spell.");
             return (BOOK_MEM);
         }
 

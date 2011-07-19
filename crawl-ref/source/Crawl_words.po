@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-19 18:02+0900\n"
+"POT-Creation-Date: 2011-07-19 21:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2650,3 +2651,910 @@ msgstr "강한 감지된 몬스터(T)"
 #: mon-data.h:6424
 msgid "nasty sensed monster"
 msgstr "겁나센 감지된 몬스터(T)"
+
+#: spl-util.cc:895
+msgid "Conjuration"
+msgstr ""
+
+#: spl-util.cc:897
+msgid "Hexes"
+msgstr ""
+
+#: spl-util.cc:899
+msgid "Charms"
+msgstr ""
+
+#. / 마법 학파로서의 Fire
+#: spl-util.cc:902
+msgid "Fire"
+msgstr ""
+
+#. / 마법 학파로서의 Ice
+#: spl-util.cc:905
+msgid "Ice"
+msgstr ""
+
+#: spl-util.cc:907
+msgid "Transmutation"
+msgstr ""
+
+#: spl-util.cc:909
+msgid "Necromancy"
+msgstr ""
+
+#: spl-util.cc:911
+msgid "Holy"
+msgstr ""
+
+#: spl-util.cc:913 decks.cc:334
+msgid "Summoning"
+msgstr ""
+
+#: spl-util.cc:915
+msgid "Divination"
+msgstr ""
+
+#: spl-util.cc:917
+msgid "Translocation"
+msgstr ""
+
+#. / 마법 학파로서의 Poison
+#: spl-util.cc:920
+msgid "Poison"
+msgstr ""
+
+#. / 마법 학파로서의 Earth
+#: spl-util.cc:923
+msgid "Earth"
+msgstr ""
+
+#. / 마법 학파로서의 Air
+#: spl-util.cc:926
+msgid "Air"
+msgstr ""
+
+#: spl-util.cc:928
+msgid "Random"
+msgstr ""
+
+#: decks.cc:298
+msgid "the Portal"
+msgstr ""
+
+#: decks.cc:299
+msgid "the Warp"
+msgstr ""
+
+#: decks.cc:300
+msgid "Swap"
+msgstr ""
+
+#: decks.cc:301
+msgid "Velocity"
+msgstr ""
+
+#: decks.cc:302
+msgid "Damnation"
+msgstr ""
+
+#: decks.cc:303
+msgid "Solitude"
+msgstr ""
+
+#: decks.cc:304
+msgid "the Elixir"
+msgstr ""
+
+#: decks.cc:305
+msgid "Battlelust"
+msgstr ""
+
+#: decks.cc:306
+msgid "Metamorphosis"
+msgstr ""
+
+#: decks.cc:307
+msgid "the Helm"
+msgstr ""
+
+#: decks.cc:308
+msgid "the Blade"
+msgstr ""
+
+#: decks.cc:309
+msgid "the Shadow"
+msgstr ""
+
+#: decks.cc:310
+msgid "the Potion"
+msgstr ""
+
+#: decks.cc:311
+msgid "Focus"
+msgstr ""
+
+#: decks.cc:312
+msgid "Shuffle"
+msgstr ""
+
+#: decks.cc:313
+msgid "Experience"
+msgstr ""
+
+#: decks.cc:314
+msgid "the Helix"
+msgstr ""
+
+#: decks.cc:315
+msgid "the Sage"
+msgstr ""
+
+#: decks.cc:316
+msgid "Dowsing"
+msgstr ""
+
+#: decks.cc:317
+msgid "the Trowel"
+msgstr ""
+
+#: decks.cc:318
+msgid "the Minefield"
+msgstr ""
+
+#: decks.cc:319
+msgid "the Stairs"
+msgstr ""
+
+#: decks.cc:320
+msgid "the Genie"
+msgstr ""
+
+#: decks.cc:321
+msgid "the Tomb"
+msgstr ""
+
+#: decks.cc:322
+msgid "Water"
+msgstr ""
+
+#: decks.cc:323
+msgid "Vitrification"
+msgstr ""
+
+#: decks.cc:324
+msgid "the Map"
+msgstr ""
+
+#: decks.cc:325
+msgid "the Banshee"
+msgstr ""
+
+#: decks.cc:326
+msgid "Wild Magic"
+msgstr ""
+
+#: decks.cc:327
+msgid "the Crusade"
+msgstr ""
+
+#: decks.cc:328
+msgid "the Herd"
+msgstr ""
+
+#: decks.cc:329
+msgid "the Pentagram"
+msgstr ""
+
+#: decks.cc:330
+msgid "the Dance"
+msgstr ""
+
+#: decks.cc:331
+msgid "Foxfire"
+msgstr ""
+
+#: decks.cc:332
+msgid "the Bones"
+msgstr ""
+
+#: decks.cc:333
+msgid "Repulsiveness"
+msgstr ""
+
+#: decks.cc:335
+msgid "Xom"
+msgstr ""
+
+#: decks.cc:336
+msgid "Famine"
+msgstr ""
+
+#: decks.cc:337
+msgid "the Feast"
+msgstr ""
+
+#: decks.cc:338
+msgid "Warpwright"
+msgstr ""
+
+#: decks.cc:339
+msgid "Flight"
+msgstr ""
+
+#: decks.cc:340
+msgid "Vitriol"
+msgstr ""
+
+#: decks.cc:341
+msgid "Flame"
+msgstr ""
+
+#: decks.cc:342
+msgid "Frost"
+msgstr ""
+
+#: decks.cc:343
+msgid "Venom"
+msgstr ""
+
+#: decks.cc:344
+msgid "the Spark"
+msgstr ""
+
+#: decks.cc:345
+msgid "the Hammer"
+msgstr ""
+
+#: decks.cc:347 abl-show.cc:325
+msgid "Torment"
+msgstr ""
+
+#: decks.cc:348
+msgid "the Spade"
+msgstr ""
+
+#: decks.cc:349
+msgid "the Bargain"
+msgstr ""
+
+#: decks.cc:350
+msgid "Wrath"
+msgstr ""
+
+#: decks.cc:351
+msgid "the Wraith"
+msgstr ""
+
+#: decks.cc:352
+msgid "the Curse"
+msgstr ""
+
+#: decks.cc:353
+msgid "the Swine"
+msgstr ""
+
+#: decks.cc:354
+msgid "the Alchemist"
+msgstr ""
+
+#: decks.cc:355
+msgid "the Orb"
+msgstr ""
+
+#: decks.cc:356
+msgid "a buggy card"
+msgstr ""
+
+#: decks.cc:358
+msgid "a very buggy card"
+msgstr ""
+
+#. / 걍 만복도라고 번역할 것인가!
+#: abl-show.cc:721
+msgid "Food"
+msgstr "만복도"
+
+#. / 신앙도
+#: abl-show.cc:730 abl-show.cc:762
+msgid "Piety"
+msgstr "신앙도"
+
+#: abl-show.cc:738
+msgid "Breath"
+msgstr "호흡"
+
+#: abl-show.cc:746
+msgid "Delay"
+msgstr "지연"
+
+#: abl-show.cc:754 decks.cc:346
+msgid "Pain"
+msgstr "고통"
+
+#: abl-show.cc:770
+msgid "Exhaustion"
+msgstr "탈진"
+
+#. / 비용이 아니라, 즉시 시전임을 알려주는 단어.
+#: abl-show.cc:779
+msgid "Instant"
+msgstr "즉시 시전"
+
+#: abl-show.cc:787 acquire.cc:1607
+msgid "Fruit"
+msgstr "과일"
+
+#: abl-show.cc:795
+msgid "Fruit or Piety"
+msgstr "과일 또는 신앙도"
+
+#: abl-show.cc:803
+msgid "Level drain"
+msgstr ""
+
+#: abl-show.cc:811
+msgid "Stat drain"
+msgstr ""
+
+#: abl-show.cc:816 food.cc:2848 food.cc:2851 food.cc:2852
+msgid "None"
+msgstr "없음"
+
+#. NON_ABILITY should always come first
+#: abl-show.cc:248
+msgid "No ability"
+msgstr ""
+
+#: abl-show.cc:249
+msgid "Spit Poison"
+msgstr ""
+
+#: abl-show.cc:251
+msgid "Teleportation"
+msgstr ""
+
+#: abl-show.cc:252
+msgid "Blink"
+msgstr ""
+
+#: abl-show.cc:254
+msgid "Breathe Fire"
+msgstr ""
+
+#: abl-show.cc:255
+msgid "Breathe Frost"
+msgstr ""
+
+#: abl-show.cc:256
+msgid "Breathe Poison Gas"
+msgstr ""
+
+#: abl-show.cc:257
+msgid "Breathe Noxious Fumes"
+msgstr ""
+
+#: abl-show.cc:259
+msgid "Breathe Lightning"
+msgstr ""
+
+#: abl-show.cc:261
+msgid "Breathe Energy"
+msgstr ""
+
+#: abl-show.cc:262
+msgid "Breathe Sticky Flame"
+msgstr ""
+
+#: abl-show.cc:264
+msgid "Breathe Steam"
+msgstr ""
+
+#: abl-show.cc:265
+msgid "Bat Form"
+msgstr ""
+
+#: abl-show.cc:266
+msgid "Bottle Blood"
+msgstr ""
+
+#. no costs
+#: abl-show.cc:268
+msgid "Spit Acid"
+msgstr ""
+
+#. FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
+#. as exhaustion's only (and designed), effect is preventing Berserk. - bwr
+#: abl-show.cc:270 abl-show.cc:278
+msgid "Fly"
+msgstr ""
+
+#: abl-show.cc:271
+msgid "Stop Flying"
+msgstr ""
+
+#: abl-show.cc:272
+msgid "Hellfire"
+msgstr ""
+
+#: abl-show.cc:273
+msgid "Throw Flame"
+msgstr ""
+
+#: abl-show.cc:274
+msgid "Throw Frost"
+msgstr ""
+
+#: abl-show.cc:279
+msgid "Release Delayed Fireball"
+msgstr ""
+
+#: abl-show.cc:281
+msgid "Self-Restoration"
+msgstr ""
+
+#. EVOKE abilities use Evocations and come from items.
+#. Teleportation and Blink can also come from mutations
+#. so we have to distinguish them (see above),.  The off items
+#. below are labeled EVOKE because they only work now if the
+#. player has an item with the evocable power (not just because
+#. you used a wand, potion, or miscast effect),.  I didn't see
+#. any reason to label them as "Evoke" in the text, they don't
+#. use or train Evocations (the others do),.  -- bwr
+#: abl-show.cc:292
+msgid "Evoke Teleportation"
+msgstr ""
+
+#: abl-show.cc:294
+msgid "Evoke Blink"
+msgstr ""
+
+#: abl-show.cc:295
+msgid "Device Recharging"
+msgstr ""
+
+#: abl-show.cc:297
+msgid "Evoke Berserk Rage"
+msgstr ""
+
+#: abl-show.cc:299
+msgid "Evoke Invisibility"
+msgstr ""
+
+#: abl-show.cc:301
+msgid "Turn Visible"
+msgstr ""
+
+#: abl-show.cc:302
+msgid "Evoke Levitation"
+msgstr ""
+
+#: abl-show.cc:303
+msgid "Stop Levitating"
+msgstr ""
+
+#: abl-show.cc:305
+msgid "End Transformation"
+msgstr ""
+
+#. INVOCATIONS:
+#. Zin
+#: abl-show.cc:309
+msgid "Sustenance"
+msgstr ""
+
+#: abl-show.cc:310
+msgid "Recite"
+msgstr ""
+
+#: abl-show.cc:311
+msgid "Vitalisation"
+msgstr ""
+
+#: abl-show.cc:312
+msgid "Imprison"
+msgstr ""
+
+#: abl-show.cc:313
+msgid "Sanctuary"
+msgstr ""
+
+#: abl-show.cc:314
+msgid "Cure All Mutations"
+msgstr ""
+
+#. The Shining One
+#: abl-show.cc:318
+msgid "Divine Shield"
+msgstr ""
+
+#: abl-show.cc:319
+msgid "Cleansing Flame"
+msgstr ""
+
+#: abl-show.cc:320
+msgid "Summon Divine Warrior"
+msgstr ""
+
+#. Kikubaaqudgha
+#: abl-show.cc:324
+msgid "Receive Corpses"
+msgstr ""
+
+#. Yredelemnul
+#: abl-show.cc:328
+msgid "Injury Mirror"
+msgstr ""
+
+#: abl-show.cc:329
+msgid "Animate Remains"
+msgstr ""
+
+#: abl-show.cc:330
+msgid "Recall Undead Slaves"
+msgstr ""
+
+#: abl-show.cc:332
+msgid "Animate Dead"
+msgstr ""
+
+#: abl-show.cc:333
+msgid "Drain Life"
+msgstr ""
+
+#: abl-show.cc:334
+msgid "Enslave Soul"
+msgstr ""
+
+#. Placeholder for Animate Remains or Animate Dead.
+#: abl-show.cc:336
+msgid "Animate Remains or Dead"
+msgstr ""
+
+#. Okawaru
+#: abl-show.cc:340
+msgid "Heroism"
+msgstr ""
+
+#: abl-show.cc:341
+msgid "Finesse"
+msgstr ""
+
+#. Makhleb
+#: abl-show.cc:344
+msgid "Minor Destruction"
+msgstr ""
+
+#: abl-show.cc:346
+msgid "Lesser Servant of Makhleb"
+msgstr ""
+
+#: abl-show.cc:348
+msgid "Major Destruction"
+msgstr ""
+
+#: abl-show.cc:350
+msgid "Greater Servant of Makhleb"
+msgstr ""
+
+#. Sif Muna
+#: abl-show.cc:354
+msgid "Channel Energy"
+msgstr ""
+
+#: abl-show.cc:356
+msgid "Forget Spell"
+msgstr ""
+
+#. Trog
+#: abl-show.cc:359
+msgid "Burn Spellbooks"
+msgstr ""
+
+#: abl-show.cc:360
+msgid "Berserk"
+msgstr ""
+
+#: abl-show.cc:361
+msgid "Trog's Hand"
+msgstr ""
+
+#: abl-show.cc:363
+msgid "Brothers in Arms"
+msgstr ""
+
+#. Elyvilon
+#: abl-show.cc:367
+msgid "Divine Protection"
+msgstr ""
+
+#: abl-show.cc:369
+msgid "Lesser Self-Healing"
+msgstr ""
+
+#: abl-show.cc:371
+msgid "Lesser Healing"
+msgstr ""
+
+#: abl-show.cc:373
+msgid "Purification"
+msgstr ""
+
+#: abl-show.cc:375
+msgid "Greater Self-Healing"
+msgstr ""
+
+#: abl-show.cc:377
+msgid "Greater Healing"
+msgstr ""
+
+#: abl-show.cc:379
+msgid "Restoration"
+msgstr ""
+
+#: abl-show.cc:380
+msgid "Divine Vigour"
+msgstr ""
+
+#. Lugonu
+#: abl-show.cc:384
+msgid "Depart the Abyss"
+msgstr ""
+
+#: abl-show.cc:385
+msgid "Bend Space"
+msgstr ""
+
+#: abl-show.cc:386
+msgid "Banish"
+msgstr ""
+
+#: abl-show.cc:388
+msgid "Corrupt"
+msgstr ""
+
+#: abl-show.cc:390
+msgid "Enter the Abyss"
+msgstr ""
+
+#. Nemelex
+#: abl-show.cc:394
+msgid "Draw One"
+msgstr ""
+
+#: abl-show.cc:395
+msgid "Peek at Two"
+msgstr ""
+
+#: abl-show.cc:396
+msgid "Triple Draw"
+msgstr ""
+
+#: abl-show.cc:397
+msgid "Mark Four"
+msgstr ""
+
+#: abl-show.cc:398
+msgid "Stack Five"
+msgstr ""
+
+#. Beogh
+#: abl-show.cc:401
+msgid "Smiting"
+msgstr ""
+
+#: abl-show.cc:403
+msgid "Recall Orcish Followers"
+msgstr ""
+
+#. Jiyva
+#: abl-show.cc:407
+msgid "Request Jelly"
+msgstr ""
+
+#: abl-show.cc:408
+msgid "Jelly Paralyse"
+msgstr ""
+
+#: abl-show.cc:409
+msgid "Slimify"
+msgstr ""
+
+#: abl-show.cc:410
+msgid "Cure Bad Mutation"
+msgstr ""
+
+#. Fedhas
+#: abl-show.cc:414
+msgid "Evolution"
+msgstr ""
+
+#: abl-show.cc:415
+msgid "Sunlight"
+msgstr ""
+
+#: abl-show.cc:416
+msgid "Growth"
+msgstr ""
+
+#: abl-show.cc:417
+msgid "Reproduction"
+msgstr ""
+
+#: abl-show.cc:418
+msgid "Rain"
+msgstr ""
+
+#. Cheibriados
+#: abl-show.cc:421
+msgid "Make Ponderous"
+msgstr ""
+
+#: abl-show.cc:423
+msgid "Bend Time"
+msgstr ""
+
+#: abl-show.cc:424
+msgid "Slouch"
+msgstr ""
+
+#: abl-show.cc:425
+msgid "Step From Time"
+msgstr ""
+
+#. Ashenzari
+#: abl-show.cc:429
+msgid "Scrying"
+msgstr ""
+
+#: abl-show.cc:431
+msgid "Transfer Knowledge"
+msgstr ""
+
+#: abl-show.cc:433
+msgid "End Transfer Knowledge"
+msgstr ""
+
+#. zot defence abilities
+#: abl-show.cc:437
+msgid "Make mushroom circle"
+msgstr ""
+
+#: abl-show.cc:438
+msgid "Make dart trap"
+msgstr ""
+
+#: abl-show.cc:439
+msgid "Make plant"
+msgstr ""
+
+#: abl-show.cc:440
+msgid "Make oklob sapling"
+msgstr ""
+
+#: abl-show.cc:441
+msgid "Make burning bush"
+msgstr ""
+
+#: abl-show.cc:442
+msgid "Make oklob plant"
+msgstr ""
+
+#: abl-show.cc:443
+msgid "Make ice statue"
+msgstr ""
+
+#: abl-show.cc:444
+msgid "Make crystal statue"
+msgstr ""
+
+#: abl-show.cc:445
+msgid "Make silver statue"
+msgstr ""
+
+#: abl-show.cc:446
+msgid "Make curse skull"
+msgstr ""
+
+#: abl-show.cc:447
+msgid "Zot-teleport"
+msgstr ""
+
+#: abl-show.cc:448
+msgid "Make arrow trap"
+msgstr ""
+
+#: abl-show.cc:449
+msgid "Make bolt trap"
+msgstr ""
+
+#: abl-show.cc:450
+msgid "Make spear trap"
+msgstr ""
+
+#: abl-show.cc:451
+msgid "Make axe trap"
+msgstr ""
+
+#: abl-show.cc:452
+msgid "Make needle trap"
+msgstr ""
+
+#: abl-show.cc:453
+msgid "Make net trap"
+msgstr ""
+
+#: abl-show.cc:454
+msgid "Make teleport trap"
+msgstr ""
+
+#: abl-show.cc:455
+msgid "Make alarm trap"
+msgstr ""
+
+#: abl-show.cc:456
+msgid "Make blade trap"
+msgstr ""
+
+#: abl-show.cc:457
+msgid "Make oklob circle"
+msgstr ""
+
+#: abl-show.cc:458
+msgid "Acquire gold"
+msgstr ""
+
+#: abl-show.cc:459
+msgid "Acquirement"
+msgstr ""
+
+#: abl-show.cc:460
+msgid "Make water"
+msgstr ""
+
+#: abl-show.cc:461
+msgid "Make lightning spire"
+msgstr ""
+
+#: abl-show.cc:462
+msgid "Make bazaar"
+msgstr ""
+
+#: abl-show.cc:463
+msgid "Make altar"
+msgstr ""
+
+#: abl-show.cc:464
+msgid "Make grenades"
+msgstr ""
+
+#: abl-show.cc:465
+msgid "Sage"
+msgstr ""
+
+#: abl-show.cc:466
+msgid "Remove Curse"
+msgstr ""
+
+#: abl-show.cc:468
+msgid "Renounce Religion"
+msgstr ""
+
+#: food.cc:2852
+msgid "Sultana"
+msgstr ""
+
+#: food.cc:2852
+msgid "Strawberry"
+msgstr ""
+
+#: food.cc:2852
+msgid "Choko"
+msgstr ""
+
+#: food.cc:2852
+msgid "Honeycomb"
+msgstr ""
+
+#: food.cc:2852
+msgid "Ration"
+msgstr ""

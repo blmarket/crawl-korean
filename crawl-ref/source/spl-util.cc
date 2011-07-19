@@ -892,35 +892,40 @@ const char* spelltype_long_name(int which_spelltype)
     switch (which_spelltype)
     {
     case SPTYP_CONJURATION:
-        return ("Conjuration");
+        return M_("Conjuration");
     case SPTYP_HEXES:
-        return ("Hexes");
+        return M_("Hexes");
     case SPTYP_CHARMS:
-        return ("Charms");
+        return M_("Charms");
     case SPTYP_FIRE:
-        return ("Fire");
+	/// 마법 학파로서의 Fire
+        return M_("Fire");
     case SPTYP_ICE:
-        return ("Ice");
+	/// 마법 학파로서의 Ice
+        return M_("Ice");
     case SPTYP_TRANSMUTATION:
-        return ("Transmutation");
+        return M_("Transmutation");
     case SPTYP_NECROMANCY:
-        return ("Necromancy");
+        return M_("Necromancy");
     case SPTYP_HOLY:
-        return ("Holy");
+        return M_("Holy");
     case SPTYP_SUMMONING:
-        return ("Summoning");
+        return M_("Summoning");
     case SPTYP_DIVINATION:
-        return ("Divination");
+        return M_("Divination");
     case SPTYP_TRANSLOCATION:
-        return ("Translocation");
+        return M_("Translocation");
     case SPTYP_POISON:
-        return ("Poison");
+	/// 마법 학파로서의 Poison
+        return M_("Poison");
     case SPTYP_EARTH:
-        return ("Earth");
+	/// 마법 학파로서의 Earth
+        return M_("Earth");
     case SPTYP_AIR:
-        return ("Air");
+	/// 마법 학파로서의 Air
+        return M_("Air");
     case SPTYP_RANDOM:
-        return ("Random");
+        return M_("Random");
     default:
         return "Bug";
     }

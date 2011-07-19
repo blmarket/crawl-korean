@@ -1620,7 +1620,7 @@ bool acquirement(object_class_type class_wanted, int agent,
             you.species == SP_FELID ? "" : gettext(" [e] Staff"));
         mprf(gettext("%-11s[g] Miscellaneous [h] %-5s     [i] Gold %s"),
             you.species == SP_FELID ? "" : gettext("[f] Wand"),
-            you.religion == GOD_FEDHAS ? gettext("Fruit") : gettext("Food "),
+            you.religion == GOD_FEDHAS ? gettext(M_("Fruit")) : gettext(M_("Food ")),
             you.species == SP_FELID ? "" : gettext("[j] Ammunition"));
         mpr(gettext("What kind of item would you like to acquire? (\\ to view known items)"), MSGCH_PROMPT);
 

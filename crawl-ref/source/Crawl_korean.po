@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-19 18:02+0900\n"
+"POT-Creation-Date: 2011-07-19 21:14+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,737 +24,6 @@ msgstr "[L-Click] 과거 메시지 보기"
 #: main.cc:392
 msgid "Press <w>?</w> for a list of commands and other information."
 msgstr "<w>?</w>를 누르면 명령 목록 및 기타 정보를 확인할 수 있습니다."
-
-#. Trog
-#: abl-show.cc:359
-msgid "Burn Spellbooks"
-msgstr "마법서 화형"
-
-#. NON_ABILITY should always come first
-#: abl-show.cc:248
-msgid "No ability"
-msgstr "특수능력 없음"
-
-#: abl-show.cc:249
-msgid "Spit Poison"
-msgstr "독침 뱉기"
-
-#: abl-show.cc:251
-msgid "Teleportation"
-msgstr "공간이동"
-
-#: abl-show.cc:252
-msgid "Blink"
-msgstr "순간이동"
-
-#: abl-show.cc:254
-msgid "Breathe Fire"
-msgstr "화염 브레스 내뿜기"
-
-#: abl-show.cc:255
-msgid "Breathe Frost"
-msgstr "냉기 브레스 내뿜기"
-
-#: abl-show.cc:256
-msgid "Breathe Poison Gas"
-msgstr "독구름 브레스 내뿜기"
-
-#: abl-show.cc:257
-msgid "Breathe Noxious Fumes"
-msgstr "유독한 연기 브레스 내뿜기"
-
-#: abl-show.cc:259
-msgid "Breathe Lightning"
-msgstr "번개 브레스 내뿜기"
-
-#: abl-show.cc:261
-msgid "Breathe Energy"
-msgstr "에너지 브레스 내뿜기"
-
-#: abl-show.cc:262
-msgid "Breathe Sticky Flame"
-msgstr "액상 화염 브레스 내뿜기"
-
-#: abl-show.cc:264
-msgid "Breathe Steam"
-msgstr "증기 브레스 내뿜기"
-
-#: abl-show.cc:265
-msgid "Bat Form"
-msgstr "박쥐 변신"
-
-#: abl-show.cc:266
-msgid "Bottle Blood"
-msgstr "피의 병"
-
-#. no costs
-#: abl-show.cc:268
-msgid "Spit Acid"
-msgstr "산성 침 내뱉기"
-
-#. FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
-#. as exhaustion's only (and designed), effect is preventing Berserk. - bwr
-#: abl-show.cc:270 abl-show.cc:278
-msgid "Fly"
-msgstr "비행"
-
-#: abl-show.cc:271
-msgid "Stop Flying"
-msgstr "비행 중지"
-
-#: abl-show.cc:272
-msgid "Hellfire"
-msgstr "헬파이어"
-
-#: abl-show.cc:273
-msgid "Throw Flame"
-msgstr "화염 방출"
-
-#: abl-show.cc:274
-msgid "Throw Frost"
-msgstr "냉기 방출"
-
-#: abl-show.cc:279
-msgid "Release Delayed Fireball"
-msgstr "지연된 화염구 방출"
-
-#: abl-show.cc:281
-msgid "Self-Restoration"
-msgstr "자체 능력 회복"
-
-#. EVOKE abilities use Evocations and come from items.
-#. Teleportation and Blink can also come from mutations
-#. so we have to distinguish them (see above),.  The off items
-#. below are labeled EVOKE because they only work now if the
-#. player has an item with the evocable power (not just because
-#. you used a wand, potion, or miscast effect),.  I didn't see
-#. any reason to label them as "Evoke" in the text, they don't
-#. use or train Evocations (the others do),.  -- bwr
-#: abl-show.cc:292
-msgid "Evoke Teleportation"
-msgstr "공간이동 발동"
-
-#: abl-show.cc:294
-msgid "Evoke Blink"
-msgstr "순간이동 발동"
-
-#: abl-show.cc:295
-msgid "Device Recharging"
-msgstr "재생"
-
-#: abl-show.cc:297
-msgid "Evoke Berserk Rage"
-msgstr "광전사의 분노 발동"
-
-#: abl-show.cc:299
-msgid "Evoke Invisibility"
-msgstr "투명화 발동"
-
-#: abl-show.cc:301
-msgid "Turn Visible"
-msgstr "투명화 해제"
-
-#: abl-show.cc:302
-msgid "Evoke Levitation"
-msgstr "공중부양 발동"
-
-#: abl-show.cc:303
-msgid "Stop Levitating"
-msgstr "공중부양 해제"
-
-#: abl-show.cc:305
-msgid "End Transformation"
-msgstr "변신 해제"
-
-#. INVOCATIONS:
-#. Zin
-#: abl-show.cc:309
-msgid "Sustenance"
-msgstr ""
-
-#: abl-show.cc:310
-msgid "Recite"
-msgstr "암송"
-
-#: abl-show.cc:311
-msgid "Vitalisation"
-msgstr ""
-
-#: abl-show.cc:312
-msgid "Imprison"
-msgstr "구속"
-
-#: abl-show.cc:313
-msgid "Sanctuary"
-msgstr "성지의 부름"
-
-#: abl-show.cc:314
-msgid "Cure All Mutations"
-msgstr "변이의 정화"
-
-#. The Shining One
-#: abl-show.cc:318
-msgid "Divine Shield"
-msgstr "성스러운 보호"
-
-#: abl-show.cc:319
-msgid "Cleansing Flame"
-msgstr "정화의 불꽃"
-
-#: abl-show.cc:320
-msgid "Summon Divine Warrior"
-msgstr "성전사 소환"
-
-#. Kikubaaqudgha
-#: abl-show.cc:324
-msgid "Receive Corpses"
-msgstr "시체 전달"
-
-#: abl-show.cc:325 decks.cc:347
-msgid "Torment"
-msgstr "고통"
-
-#. Yredelemnul
-#: abl-show.cc:328
-msgid "Injury Mirror"
-msgstr "고통의 반사"
-
-#: abl-show.cc:329
-msgid "Animate Remains"
-msgstr "시체의 조종"
-
-#: abl-show.cc:330
-msgid "Recall Undead Slaves"
-msgstr "언데드 노예 소집"
-
-#: abl-show.cc:332
-msgid "Animate Dead"
-msgstr "죽은자 조종"
-
-#: abl-show.cc:333
-msgid "Drain Life"
-msgstr "생명 흡수"
-
-#: abl-show.cc:334
-msgid "Enslave Soul"
-msgstr "영혼 노예화"
-
-#. Placeholder for Animate Remains or Animate Dead.
-#: abl-show.cc:336
-msgid "Animate Remains or Dead"
-msgstr "죽은자와 시체의 조종"
-
-#. Okawaru
-#: abl-show.cc:340
-msgid "Heroism"
-msgstr "영웅심"
-
-#: abl-show.cc:341
-msgid "Finesse"
-msgstr "공격 가속"
-
-#. Makhleb
-#: abl-show.cc:344
-msgid "Minor Destruction"
-msgstr "소파괴"
-
-#: abl-show.cc:346
-msgid "Lesser Servant of Makhleb"
-msgstr "마크레브의 하위 종복 소환"
-
-#: abl-show.cc:348
-msgid "Major Destruction"
-msgstr "대파괴"
-
-#: abl-show.cc:350
-msgid "Greater Servant of Makhleb"
-msgstr "마크레브의 고위 종복 소환"
-
-#. Sif Muna
-#: abl-show.cc:354
-msgid "Channel Energy"
-msgstr "마나 수집"
-
-#: abl-show.cc:356
-msgid "Forget Spell"
-msgstr "마법문 망각"
-
-#: abl-show.cc:360
-msgid "Berserk"
-msgstr "광폭화"
-
-#: abl-show.cc:361
-msgid "Trog's Hand"
-msgstr "트로그의 손길"
-
-#: abl-show.cc:363
-msgid "Brothers in Arms"
-msgstr "전우"
-
-#. Elyvilon
-#: abl-show.cc:367
-msgid "Divine Protection"
-msgstr "성스러운 보호"
-
-#: abl-show.cc:369
-msgid "Lesser Self-Healing"
-msgstr "자기 자신의 치료"
-
-#: abl-show.cc:371
-msgid "Lesser Healing"
-msgstr "치료"
-
-#: abl-show.cc:373
-msgid "Purification"
-msgstr "정화"
-
-#: abl-show.cc:375
-msgid "Greater Self-Healing"
-msgstr "자기 자신의 대치료"
-
-#: abl-show.cc:377
-msgid "Greater Healing"
-msgstr "대치료"
-
-#: abl-show.cc:379
-msgid "Restoration"
-msgstr "능력 회복"
-
-#: abl-show.cc:380
-msgid "Divine Vigour"
-msgstr "성스러운 활력"
-
-#. Lugonu
-#: abl-show.cc:384
-msgid "Depart the Abyss"
-msgstr "어비스 탈출"
-
-#: abl-show.cc:385
-msgid "Bend Space"
-msgstr "공간의 구속"
-
-#: abl-show.cc:386
-msgid "Banish"
-msgstr "추방"
-
-#: abl-show.cc:388
-msgid "Corrupt"
-msgstr "타락"
-
-#: abl-show.cc:390
-msgid "Enter the Abyss"
-msgstr "어비스 입장"
-
-#. Nemelex
-#: abl-show.cc:394
-msgid "Draw One"
-msgstr "한 장 뽑기"
-
-#: abl-show.cc:395
-msgid "Peek at Two"
-msgstr "두 장 뽑기"
-
-#: abl-show.cc:396
-msgid "Triple Draw"
-msgstr "세 장 뽑기"
-
-#: abl-show.cc:397
-msgid "Mark Four"
-msgstr "네 장 마크하기"
-
-#: abl-show.cc:398
-msgid "Stack Five"
-msgstr "다섯 장 쌓기"
-
-#. Beogh
-#: abl-show.cc:401
-msgid "Smiting"
-msgstr "징벌"
-
-#: abl-show.cc:403
-msgid "Recall Orcish Followers"
-msgstr "오크 추종자 부르기"
-
-#. Jiyva
-#: abl-show.cc:407
-msgid "Request Jelly"
-msgstr "젤리 소환"
-
-#: abl-show.cc:408
-msgid "Jelly Paralyse"
-msgstr "젤리 마비"
-
-#: abl-show.cc:409
-msgid "Slimify"
-msgstr "슬라임화"
-
-#: abl-show.cc:410
-msgid "Cure Bad Mutation"
-msgstr "해로운 변이 치료"
-
-#. Fedhas
-#: abl-show.cc:414
-msgid "Evolution"
-msgstr "진화"
-
-#: abl-show.cc:415
-msgid "Sunlight"
-msgstr "햇빛"
-
-#: abl-show.cc:416
-msgid "Growth"
-msgstr "성장"
-
-#: abl-show.cc:417
-msgid "Reproduction"
-msgstr "기생 번식"
-
-#: abl-show.cc:418
-msgid "Rain"
-msgstr "폭우"
-
-#. Cheibriados
-#: abl-show.cc:421
-msgid "Make Ponderous"
-msgstr ""
-
-#: abl-show.cc:423
-msgid "Bend Time"
-msgstr ""
-
-#: abl-show.cc:424
-msgid "Slouch"
-msgstr ""
-
-#: abl-show.cc:425
-msgid "Step From Time"
-msgstr ""
-
-#. Ashenzari
-#: abl-show.cc:429
-msgid "Scrying"
-msgstr ""
-
-#: abl-show.cc:431
-msgid "Transfer Knowledge"
-msgstr ""
-
-#: abl-show.cc:433
-msgid "End Transfer Knowledge"
-msgstr ""
-
-#. zot defence abilities
-#: abl-show.cc:437
-msgid "Make mushroom circle"
-msgstr "버섯 서클 생성"
-
-#: abl-show.cc:438
-msgid "Make dart trap"
-msgstr "다트 트랩 생성"
-
-#: abl-show.cc:439
-msgid "Make plant"
-msgstr "잡초 생성"
-
-#: abl-show.cc:440
-msgid "Make oklob sapling"
-msgstr "오클롭 묘목 생성"
-
-#: abl-show.cc:441
-msgid "Make burning bush"
-msgstr "불타는 수풀 생성"
-
-#: abl-show.cc:442
-msgid "Make oklob plant"
-msgstr "오클롭 잡초 생성"
-
-#: abl-show.cc:443
-msgid "Make ice statue"
-msgstr "얼음의 상 생성"
-
-#: abl-show.cc:444
-msgid "Make crystal statue"
-msgstr "수정의 상 생성"
-
-#: abl-show.cc:445
-msgid "Make silver statue"
-msgstr "은의 상 생성"
-
-#: abl-show.cc:446
-msgid "Make curse skull"
-msgstr "저주받은 해골 생성"
-
-#: abl-show.cc:447
-msgid "Zot-teleport"
-msgstr "조트의 공간이동"
-
-#: abl-show.cc:448
-msgid "Make arrow trap"
-msgstr "화살 함정 생성"
-
-#: abl-show.cc:449
-msgid "Make bolt trap"
-msgstr "석궁화살 함정 생성"
-
-#: abl-show.cc:450
-msgid "Make spear trap"
-msgstr "창의 함정 생성"
-
-#: abl-show.cc:451
-msgid "Make axe trap"
-msgstr "도끼의 함정 생성"
-
-#: abl-show.cc:452
-msgid "Make needle trap"
-msgstr "바늘 함정 생성"
-
-#: abl-show.cc:453
-msgid "Make net trap"
-msgstr "그물 함정 생성"
-
-#: abl-show.cc:454
-msgid "Make teleport trap"
-msgstr "공간이동 함정 생성"
-
-#: abl-show.cc:455
-msgid "Make alarm trap"
-msgstr "알람 함정 생성"
-
-#: abl-show.cc:456
-msgid "Make blade trap"
-msgstr "블레이드 함정 생성"
-
-#: abl-show.cc:457
-msgid "Make oklob circle"
-msgstr "오클롭 서클 생성"
-
-#: abl-show.cc:458
-msgid "Acquire gold"
-msgstr "금화 획득"
-
-#: abl-show.cc:459
-msgid "Acquirement"
-msgstr "아이템 획득"
-
-#: abl-show.cc:460
-msgid "Make water"
-msgstr "물 생성"
-
-msgid "Make electric eel"
-msgstr "전기 뱀장어 생성"
-
-#: abl-show.cc:462
-msgid "Make bazaar"
-msgstr "시장 생성"
-
-#: abl-show.cc:463
-msgid "Make altar"
-msgstr "제단 생성"
-
-#: abl-show.cc:464
-msgid "Make grenades"
-msgstr "수류탄 생성"
-
-#: abl-show.cc:465
-msgid "Sage"
-msgstr "현자 생성"
-
-#: abl-show.cc:466
-msgid "Remove Curse"
-msgstr "저주 해제"
-
-#: abl-show.cc:468
-msgid "Renounce Religion"
-msgstr "신앙 포기하기"
-
-#: directn.cc:2915 directn.cc:2917
-msgid "dart trap"
-msgstr "다트 함정"
-
-#: directn.cc:2917 directn.cc:2919
-msgid "arrow trap"
-msgstr "화살 함정"
-
-#: directn.cc:2919 directn.cc:2921
-msgid "needle trap"
-msgstr "바늘 함정"
-
-#: directn.cc:2921 directn.cc:2923
-msgid "bolt trap"
-msgstr "석궁화살 함정"
-
-#: directn.cc:2923 directn.cc:2925
-msgid "spear trap"
-msgstr "창 함정"
-
-#: directn.cc:2925 directn.cc:2927
-msgid "axe trap"
-msgstr "도끼 함정"
-
-#: directn.cc:2927 directn.cc:2929
-msgid "blade trap"
-msgstr "칼날 함정"
-
-#: directn.cc:2929 directn.cc:2931
-msgid "net trap"
-msgstr "그물 함정"
-
-#: directn.cc:2931 directn.cc:2933
-msgid "alarm trap"
-msgstr "알람 함정"
-
-#: directn.cc:2933 directn.cc:2935
-msgid "shaft"
-msgstr "낭떠러지"
-
-#: directn.cc:2935 directn.cc:2937
-msgid "teleportation trap"
-msgstr "공간이동 함정"
-
-#: directn.cc:2937 directn.cc:2939
-msgid "Zot trap"
-msgstr "조트 함정"
-
-#: directn.cc:2939 directn.cc:2941
-msgid "passage of Golubria"
-msgstr ""
-
-#: directn.cc:2941 directn.cc:2943
-msgid "pressure plate"
-msgstr ""
-
-#: directn.cc:2944 directn.cc:2946
-msgid "undefined trap"
-msgstr ""
-
-#: directn.cc:2951 directn.cc:2953
-msgid "stone wall"
-msgstr "돌벽"
-
-#: directn.cc:2955 directn.cc:2957
-msgid "wall of the weird stuff which makes up Pandemonium"
-msgstr ""
-
-#: directn.cc:2957 directn.cc:2959
-msgid "rock wall"
-msgstr "바위벽"
-
-#: directn.cc:2959 directn.cc:2961
-msgid "slime covered rock wall"
-msgstr ""
-
-#: directn.cc:2961 directn.cc:2963
-msgid "unnaturally hard rock wall"
-msgstr ""
-
-#: directn.cc:2963 directn.cc:2965
-msgid "open sea"
-msgstr ""
-
-#: directn.cc:2965 directn.cc:2967
-msgid "Endless lava"
-msgstr ""
-
-#: directn.cc:2967 directn.cc:2969
-msgid "closed door"
-msgstr "닫힌 문"
-
-#: directn.cc:2969 directn.cc:2971
-msgid "detected secret door"
-msgstr "탐지된 비밀문"
-
-#: directn.cc:2971 directn.cc:2973
-msgid "metal wall"
-msgstr "철벽"
-
-#: directn.cc:2973 directn.cc:2975
-msgid "wall of green crystal"
-msgstr "녹색 수정 벽"
-
-#: directn.cc:2975 directn.cc:2977
-msgid "translucent rock wall"
-msgstr "투명 바위벽"
-
-#: directn.cc:2977 directn.cc:2979
-msgid "translucent stone wall"
-msgstr "투명 돌벽"
-
-#: directn.cc:2979 directn.cc:2981
-msgid "translucent unnaturally hard rock wall"
-msgstr ""
-
-#: directn.cc:2981 directn.cc:2983
-msgid "iron grate"
-msgstr ""
-
-#. perhaps "mangrove" or such?
-#: directn.cc:2984 directn.cc:2986
-msgid "tree"
-msgstr "나무"
-
-#: directn.cc:2987 directn.cc:2989
-msgid "idol of Beogh"
-msgstr ""
-
-#: directn.cc:2989 directn.cc:2991
-msgid "orcish idol"
-msgstr ""
-
-#: directn.cc:2991 directn.cc:2993
-msgid "wall of solid wax"
-msgstr ""
-
-#: directn.cc:2993 directn.cc:2995
-msgid "granite statue"
-msgstr ""
-
-#: directn.cc:2995 directn.cc:2997
-msgid "Some lava"
-msgstr ""
-
-#: directn.cc:2997 directn.cc:2999
-msgid "Some deep water"
-msgstr ""
-
-#: directn.cc:2999 directn.cc:3001
-msgid "Some shallow water"
-msgstr ""
-
-#: directn.cc:3002 directn.cc:3004
-msgid "Floor"
-msgstr ""
-
-#: directn.cc:3004 directn.cc:3006
-msgid "open door"
-msgstr ""
-
-#: directn.cc:3006 directn.cc:3008
-msgid "escape hatch in the floor"
-msgstr ""
-
-#: directn.cc:3008 directn.cc:3010
-msgid "escape hatch in the ceiling"
-msgstr ""
-
-#: directn.cc:3012 directn.cc:3014
-msgid "stone staircase leading down"
-msgstr ""
-
-#: directn.cc:3019 directn.cc:3021
-msgid "staircase leading out of the dungeon"
-msgstr ""
-
-#: directn.cc:3021 directn.cc:3023
-msgid "stone staircase leading up"
-msgstr ""
-
-#: directn.cc:3023 directn.cc:3025
-msgid "gateway to Hell"
-msgstr ""
-
-#: directn.cc:3025 directn.cc:3027
-msgid "gateway back into the Dungeon"
-msgstr ""
 
 #: directn.cc:3027 directn.cc:3029
 msgid "mechanical trap"
@@ -1199,57 +469,6 @@ msgstr " (영구적) HP"
 #: abl-show.cc:702
 msgid " HP"
 msgstr ""
-
-#. / 걍 만복도라고 번역할 것인가!
-#: abl-show.cc:721
-msgid "Food"
-msgstr "만복도"
-
-#. / 신앙도
-#: abl-show.cc:730 abl-show.cc:762
-msgid "Piety"
-msgstr "신앙도"
-
-#: abl-show.cc:738
-msgid "Breath"
-msgstr "호흡"
-
-#: abl-show.cc:746
-msgid "Delay"
-msgstr "지연"
-
-#: abl-show.cc:754 decks.cc:346
-msgid "Pain"
-msgstr "고통"
-
-#: abl-show.cc:770
-msgid "Exhaustion"
-msgstr "탈진"
-
-#. / 비용이 아니라, 즉시 시전임을 알려주는 단어.
-#: abl-show.cc:779
-msgid "Instant"
-msgstr "즉시 시전"
-
-#: abl-show.cc:787 acquire.cc:1607
-msgid "Fruit"
-msgstr "과일"
-
-#: abl-show.cc:795
-msgid "Fruit or Piety"
-msgstr "과일 또는 신앙도"
-
-#: abl-show.cc:803
-msgid "Level drain"
-msgstr ""
-
-#: abl-show.cc:811
-msgid "Stat drain"
-msgstr ""
-
-#: abl-show.cc:816 food.cc:2848 food.cc:2851 food.cc:2852
-msgid "None"
-msgstr "없음"
 
 #: abl-show.cc:823
 msgid "extremely large"
@@ -1700,26 +919,6 @@ msgstr ""
 msgid ""
 "Press '<w>!</w>' or '<w>?</w>' to toggle between ability selection and "
 "description."
-msgstr ""
-
-#: food.cc:2848 food.cc:2851 food.cc:2852
-msgid "Sultana"
-msgstr ""
-
-#: food.cc:2848 food.cc:2851 food.cc:2852
-msgid "Strawberry"
-msgstr ""
-
-#: food.cc:2848 food.cc:2851 food.cc:2852
-msgid "Choko"
-msgstr ""
-
-#: food.cc:2848 food.cc:2851 food.cc:2852
-msgid "Honeycomb"
-msgstr ""
-
-#: food.cc:2848 food.cc:2851 food.cc:2852
-msgid "Ration"
 msgstr ""
 
 #: startup.cc:150
@@ -3469,238 +2668,6 @@ msgstr "엘프가 던졌을 때"
 msgid "when thrown by orcs"
 msgstr "오크가 던졌을 때"
 
-#: decks.cc:298
-msgid "the Portal"
-msgstr ""
-
-#: decks.cc:299
-msgid "the Warp"
-msgstr ""
-
-#: decks.cc:300
-msgid "Swap"
-msgstr ""
-
-#: decks.cc:301
-msgid "Velocity"
-msgstr ""
-
-#: decks.cc:302
-msgid "Damnation"
-msgstr ""
-
-#: decks.cc:303
-msgid "Solitude"
-msgstr ""
-
-#: decks.cc:304
-msgid "the Elixir"
-msgstr ""
-
-#: decks.cc:305
-msgid "Battlelust"
-msgstr ""
-
-#: decks.cc:306
-msgid "Metamorphosis"
-msgstr ""
-
-#: decks.cc:307
-msgid "the Helm"
-msgstr ""
-
-#: decks.cc:308
-msgid "the Blade"
-msgstr ""
-
-#: decks.cc:309
-msgid "the Shadow"
-msgstr ""
-
-#: decks.cc:310
-msgid "the Potion"
-msgstr ""
-
-#: decks.cc:311
-msgid "Focus"
-msgstr ""
-
-#: decks.cc:312
-msgid "Shuffle"
-msgstr ""
-
-#: decks.cc:313
-msgid "Experience"
-msgstr ""
-
-#: decks.cc:314
-msgid "the Helix"
-msgstr ""
-
-#: decks.cc:315
-msgid "the Sage"
-msgstr ""
-
-#: decks.cc:316
-msgid "Dowsing"
-msgstr ""
-
-#: decks.cc:317
-msgid "the Trowel"
-msgstr ""
-
-#: decks.cc:318
-msgid "the Minefield"
-msgstr ""
-
-#: decks.cc:319
-msgid "the Stairs"
-msgstr ""
-
-#: decks.cc:320
-msgid "the Genie"
-msgstr ""
-
-#: decks.cc:321
-msgid "the Tomb"
-msgstr ""
-
-#: decks.cc:322
-msgid "Water"
-msgstr ""
-
-#: decks.cc:323
-msgid "Vitrification"
-msgstr ""
-
-#: decks.cc:324
-msgid "the Map"
-msgstr ""
-
-#: decks.cc:325
-msgid "the Banshee"
-msgstr ""
-
-#: decks.cc:326
-msgid "Wild Magic"
-msgstr ""
-
-#: decks.cc:327
-msgid "the Crusade"
-msgstr ""
-
-#: decks.cc:328
-msgid "the Herd"
-msgstr ""
-
-#: decks.cc:329
-msgid "the Pentagram"
-msgstr ""
-
-#: decks.cc:330
-msgid "the Dance"
-msgstr ""
-
-#: decks.cc:331
-msgid "Foxfire"
-msgstr ""
-
-#: decks.cc:332
-msgid "the Bones"
-msgstr ""
-
-#: decks.cc:333
-msgid "Repulsiveness"
-msgstr ""
-
-#: decks.cc:334
-msgid "Summoning"
-msgstr ""
-
-#: decks.cc:335
-msgid "Xom"
-msgstr ""
-
-#: decks.cc:336
-msgid "Famine"
-msgstr ""
-
-#: decks.cc:337
-msgid "the Feast"
-msgstr ""
-
-#: decks.cc:338
-msgid "Warpwright"
-msgstr ""
-
-#: decks.cc:339
-msgid "Flight"
-msgstr ""
-
-#: decks.cc:340
-msgid "Vitriol"
-msgstr ""
-
-#: decks.cc:341
-msgid "Flame"
-msgstr ""
-
-#: decks.cc:342
-msgid "Frost"
-msgstr ""
-
-#: decks.cc:343
-msgid "Venom"
-msgstr ""
-
-#: decks.cc:344
-msgid "the Spark"
-msgstr ""
-
-#: decks.cc:345
-msgid "the Hammer"
-msgstr ""
-
-#: decks.cc:348
-msgid "the Spade"
-msgstr ""
-
-#: decks.cc:349
-msgid "the Bargain"
-msgstr ""
-
-#: decks.cc:350
-msgid "Wrath"
-msgstr ""
-
-#: decks.cc:351
-msgid "the Wraith"
-msgstr ""
-
-#: decks.cc:352
-msgid "the Curse"
-msgstr ""
-
-#: decks.cc:353
-msgid "the Swine"
-msgstr ""
-
-#: decks.cc:354
-msgid "the Alchemist"
-msgstr ""
-
-#: decks.cc:355
-msgid "the Orb"
-msgstr ""
-
-#: decks.cc:356
-msgid "a buggy card"
-msgstr ""
-
-#: decks.cc:358
-msgid "a very buggy card"
-msgstr ""
-
 #: describe.cc:1080 describe.cc:1059
 #, c-format
 msgid ""
@@ -5012,12 +3979,47 @@ msgstr "당신 자신"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2366 fight.cc:5205 fight.cc:5428 fight.cc:2361 fight.cc:5200
 #: fight.cc:5423
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -6313,10 +5315,6 @@ msgstr "%s은/(는) 근처 산성질 벽에 의해 화상을 입었다!"
 msgid "The wall burns %s!"
 msgstr "%s은/(는) 근처 산성질 벽에 의해 화상을 입었다!"
 
-#: abl-show.cc:461
-msgid "Make lightning spire"
-msgstr ""
-
 #: abl-show.cc:563
 msgid "You mount a charged rod inside a coil."
 msgstr ""
@@ -6677,3 +5675,247 @@ msgstr "당신의 %s"
 #, c-format
 msgid "your %s"
 msgstr "당신의 %s"
+
+#. / 1. 스펠 레벨이 숫자로 들어옴.
+#: describe.cc:2918
+#, c-format
+msgid ""
+"\n"
+"Level: %d"
+msgstr ""
+"\n"
+"등급: %d"
+
+#. / 1. 스펠 레벨(숫자), 2. 학파가 여러개면 s가, 아니면 아무것도 안들어옴.
+#. / 3. 마법 학파, 4. 성공 확률
+#: describe.cc:2927
+#, c-format
+msgid ""
+"\n"
+"Level: %d        School%s:  %s    (%s)"
+msgstr ""
+"\n"
+"등급: %1$d        학파:  %3$s    (%4$s)"
+
+#: describe.cc:2973
+msgid " frowns upon the use of this spell.\n"
+msgstr "께서는 이 마법을 사용하시는 것을 내켜하지 않으신다.\n"
+
+#: describe.cc:2978
+msgid " supports the use of this spell.\n"
+msgstr "께서 이 마법의 사용을 도우신다.\n"
+
+#: describe.cc:2982
+msgid ""
+"The spell is scrawled in ancient runes that are beyond your current level of "
+"understanding.\n"
+msgstr "이 마법은 당신의 이해수준을 넘는 고대의 룬으로 감싸여 있다.\n"
+
+#: describe.cc:2986
+msgid "This spell will have no effect right now.\n"
+msgstr "이 마법은 당장은 아무 효과도 없다.\n"
+
+#: describe.cc:3004
+msgid "(F)orget this spell by destroying the book."
+msgstr "(F)책을 파괴해서 이 마법을 잊는다."
+
+#: describe.cc:3006
+msgid ""
+"\n"
+"Sif Muna frowns upon the destroying of books."
+msgstr ""
+"\n"
+"시프 무나께서는 책의 파괴를 내켜하지 않으신다."
+
+#: describe.cc:3013
+msgid "(M)emorise this spell."
+msgstr "(M)이 마법을 암기한다.(T)"
+
+#: directn.cc:2917
+msgid "dart trap"
+msgstr ""
+
+#: directn.cc:2919
+msgid "arrow trap"
+msgstr ""
+
+#: directn.cc:2921
+msgid "needle trap"
+msgstr ""
+
+#: directn.cc:2923
+msgid "bolt trap"
+msgstr ""
+
+#: directn.cc:2925
+msgid "spear trap"
+msgstr ""
+
+#: directn.cc:2927
+msgid "axe trap"
+msgstr ""
+
+#: directn.cc:2929
+msgid "blade trap"
+msgstr ""
+
+#: directn.cc:2931
+msgid "net trap"
+msgstr ""
+
+#: directn.cc:2933
+msgid "alarm trap"
+msgstr ""
+
+#: directn.cc:2935
+msgid "shaft"
+msgstr ""
+
+#: directn.cc:2937
+msgid "teleportation trap"
+msgstr ""
+
+#: directn.cc:2939
+msgid "Zot trap"
+msgstr ""
+
+#: directn.cc:2941
+msgid "passage of Golubria"
+msgstr ""
+
+#: directn.cc:2943
+msgid "pressure plate"
+msgstr ""
+
+#: directn.cc:2946
+msgid "undefined trap"
+msgstr ""
+
+#: directn.cc:2953
+msgid "stone wall"
+msgstr ""
+
+#: directn.cc:2957
+msgid "wall of the weird stuff which makes up Pandemonium"
+msgstr ""
+
+#: directn.cc:2959
+msgid "rock wall"
+msgstr ""
+
+#: directn.cc:2961
+msgid "slime covered rock wall"
+msgstr ""
+
+#: directn.cc:2963
+msgid "unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2965
+msgid "open sea"
+msgstr ""
+
+#: directn.cc:2967
+msgid "Endless lava"
+msgstr ""
+
+#: directn.cc:2969
+msgid "closed door"
+msgstr ""
+
+#: directn.cc:2971
+msgid "detected secret door"
+msgstr ""
+
+#: directn.cc:2973
+msgid "metal wall"
+msgstr ""
+
+#: directn.cc:2975
+msgid "wall of green crystal"
+msgstr ""
+
+#: directn.cc:2977
+msgid "translucent rock wall"
+msgstr ""
+
+#: directn.cc:2979
+msgid "translucent stone wall"
+msgstr ""
+
+#: directn.cc:2981
+msgid "translucent unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2983
+msgid "iron grate"
+msgstr ""
+
+#. perhaps "mangrove" or such?
+#: directn.cc:2986
+msgid "tree"
+msgstr ""
+
+#: directn.cc:2989
+msgid "idol of Beogh"
+msgstr ""
+
+#: directn.cc:2991
+msgid "orcish idol"
+msgstr ""
+
+#: directn.cc:2993
+msgid "wall of solid wax"
+msgstr ""
+
+#: directn.cc:2995
+msgid "granite statue"
+msgstr ""
+
+#: directn.cc:2997
+msgid "Some lava"
+msgstr ""
+
+#: directn.cc:2999
+msgid "Some deep water"
+msgstr ""
+
+#: directn.cc:3001
+msgid "Some shallow water"
+msgstr ""
+
+#: directn.cc:3004
+msgid "Floor"
+msgstr ""
+
+#: directn.cc:3006
+msgid "open door"
+msgstr ""
+
+#: directn.cc:3008
+msgid "escape hatch in the floor"
+msgstr ""
+
+#: directn.cc:3010
+msgid "escape hatch in the ceiling"
+msgstr ""
+
+#: directn.cc:3014
+msgid "stone staircase leading down"
+msgstr ""
+
+#: directn.cc:3021
+msgid "staircase leading out of the dungeon"
+msgstr ""
+
+#: directn.cc:3023
+msgid "stone staircase leading up"
+msgstr ""
+
+#: directn.cc:3025
+msgid "gateway to Hell"
+msgstr ""
+
+#: directn.cc:3027
+msgid "gateway back into the Dungeon"
+msgstr ""

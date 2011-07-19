@@ -1934,7 +1934,7 @@ std::string spell_schools_string(spell_type spell)
         {
             if (already)
                 desc += "/";
-            desc += spelltype_long_name(1 << i);
+            desc += gettext(spelltype_long_name(1 << i));
             already = true;
         }
     }

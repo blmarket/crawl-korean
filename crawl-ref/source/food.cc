@@ -2853,7 +2853,7 @@ const char* hunger_cost_string(const int hunger)
     // Spell hunger is "Fruit" if casting the spell five times costs at
     // most one "Fruit".
     const char* hunger_descriptions[] = {
-        N_("None"), N_("Sultana"), N_("Strawberry"), N_("Choko"), N_("Honeycomb"), N_("Ration")
+        M_("None"), M_("Sultana"), M_("Strawberry"), M_("Choko"), M_("Honeycomb"), M_("Ration")
     };
 
     const int breakpoints[] = { 1, 15, 41, 121, 401 };
