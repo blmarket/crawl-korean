@@ -227,7 +227,7 @@ static monsterentry mondata[] = {
 
 // ants ('a')
 {
-    MONS_WORKER_ANT, 'a', RED, "worker ant",
+    MONS_WORKER_ANT, 'a', RED, M_("worker ant"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     450, 10, MONS_WORKER_ANT, MONS_WORKER_ANT, MH_NATURAL, -3,
@@ -239,7 +239,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_QUEEN_ANT, 'a', LIGHTRED, "queen ant",
+    MONS_QUEEN_ANT, 'a', LIGHTRED, M_("queen ant"),
     M_NO_SKELETON | M_NO_FLAGS,
     MR_VUL_POISON,
     900, 10, MONS_WORKER_ANT, MONS_QUEEN_ANT, MH_NATURAL, -3,
@@ -251,7 +251,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SOLDIER_ANT, 'a', WHITE, "soldier ant",
+    MONS_SOLDIER_ANT, 'a', WHITE, M_("soldier ant"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     600, 10, MONS_WORKER_ANT, MONS_SOLDIER_ANT, MH_NATURAL, -3,
@@ -263,7 +263,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ANT_LARVA, 'a', LIGHTGREY, "ant larva",
+    MONS_ANT_LARVA, 'a', LIGHTGREY, M_("ant larva"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     150, 5, MONS_WORKER_ANT, MONS_ANT_LARVA, MH_NATURAL, -3,
@@ -276,7 +276,7 @@ static monsterentry mondata[] = {
 
 // batty monsters ('b')
 {
-    MONS_BAT, 'b', LIGHTGREY, "bat",
+    MONS_BAT, 'b', LIGHTGREY, M_("bat"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BATTY,
     MR_NO_FLAGS,
     150, 4, MONS_BAT, MONS_BAT, MH_NATURAL, -1,
@@ -288,7 +288,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BUTTERFLY, 'b', BLACK, "butterfly",
+    MONS_BUTTERFLY, 'b', BLACK, M_("butterfly"),
     M_NO_SKELETON | M_CONFUSED | M_NO_EXP_GAIN,
     MR_VUL_POISON,
     0, 10, MONS_BUTTERFLY, MONS_BUTTERFLY, MH_NATURAL, -3,
@@ -300,7 +300,7 @@ static monsterentry mondata[] = {
 },
 
 { // one vault + player transform (Vp ability)
-    MONS_VAMPIRE_BAT, 'b', DARKGREY, "vampire bat",
+    MONS_VAMPIRE_BAT, 'b', DARKGREY, M_("vampire bat"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BATTY | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 8, MONS_BAT, MONS_VAMPIRE_BAT, MH_UNDEAD, -1,
@@ -312,7 +312,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIRE_BAT, 'b', LIGHTRED, "fire bat",
+    MONS_FIRE_BAT, 'b', LIGHTRED, M_("fire bat"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BATTY,
     MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 8, MONS_BAT, MONS_FIRE_BAT, MH_NATURAL, -1,
@@ -324,7 +324,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_RAVEN, 'b', BLUE, "raven",
+    MONS_RAVEN, 'b', BLUE, M_("raven"),
     M_SENSE_INVIS,
     MR_NO_FLAGS,
     250, 9, MONS_RAVEN, MONS_RAVEN, MH_NATURAL, -2,
@@ -336,7 +336,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PHOENIX, 'b', ETC_FIRE, "phoenix",
+    MONS_PHOENIX, 'b', ETC_FIRE, M_("phoenix"),
     M_WARM_BLOOD | M_ALWAYS_CORPSE | M_UNFINISHED,
     MR_RES_POISON,
     480, 12, MONS_PHOENIX, MONS_PHOENIX, MH_HOLY, -3,
@@ -349,7 +349,7 @@ static monsterentry mondata[] = {
 
 // centaurs ('c')
 {
-    MONS_CENTAUR, 'c', BROWN, "centaur",
+    MONS_CENTAUR, 'c', BROWN, M_("centaur"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 10, MONS_CENTAUR, MONS_CENTAUR, MH_NATURAL, -3,
@@ -361,7 +361,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CENTAUR_WARRIOR, 'c', YELLOW, "centaur warrior",
+    MONS_CENTAUR_WARRIOR, 'c', YELLOW, M_("centaur warrior"),
     M_WARM_BLOOD | M_FIGHTER | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 12, MONS_CENTAUR, MONS_CENTAUR, MH_NATURAL, -3,
@@ -373,7 +373,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_YAKTAUR, 'c', RED, "yaktaur",
+    MONS_YAKTAUR, 'c', RED, M_("yaktaur"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1900, 10, MONS_YAKTAUR, MONS_YAKTAUR, MH_NATURAL, -3,
@@ -385,7 +385,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_YAKTAUR_CAPTAIN, 'c', LIGHTRED, "yaktaur captain",
+    MONS_YAKTAUR_CAPTAIN, 'c', LIGHTRED, M_("yaktaur captain"),
     M_WARM_BLOOD | M_FIGHTER | M_SPEAKS,
     MR_NO_FLAGS,
     1900, 10, MONS_YAKTAUR, MONS_YAKTAUR, MH_NATURAL, -3,
@@ -400,7 +400,7 @@ static monsterentry mondata[] = {
 {   // Base draconian - for use like MONS_HUMAN, MONS_ELF although we
     // now store the draconian subspecies in base_monster for those
     // listed as species MONS_DRACONIAN.
-    MONS_DRACONIAN, 'd', BROWN, "draconian",
+    MONS_DRACONIAN, 'd', BROWN, M_("draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -1,
@@ -412,7 +412,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLACK_DRACONIAN, 'd', BLUE, "black draconian",
+    MONS_BLACK_DRACONIAN, 'd', BLUE, M_("black draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     mrd(MR_RES_ELEC, 2),
     900, 10, MONS_DRACONIAN, MONS_BLACK_DRACONIAN, MH_NATURAL, -2,
@@ -424,7 +424,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_YELLOW_DRACONIAN, 'd', YELLOW, "yellow draconian",
+    MONS_YELLOW_DRACONIAN, 'd', YELLOW, M_("yellow draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_ACID,
     900, 10, MONS_DRACONIAN, MONS_YELLOW_DRACONIAN, MH_NATURAL, -2,
@@ -438,7 +438,7 @@ static monsterentry mondata[] = {
 {
     // Colours are used for picking the right tile for Tiamat,
     // so this needs to be different from the grey draconian. (jpeg)
-    MONS_PALE_DRACONIAN, 'd', CYAN, "pale draconian",
+    MONS_PALE_DRACONIAN, 'd', CYAN, M_("pale draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_STEAM,
     900, 10, MONS_DRACONIAN, MONS_PALE_DRACONIAN, MH_NATURAL, -2,
@@ -450,7 +450,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREEN_DRACONIAN, 'd', GREEN, "green draconian",
+    MONS_GREEN_DRACONIAN, 'd', GREEN, M_("green draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     900, 10, MONS_DRACONIAN, MONS_GREEN_DRACONIAN, MH_NATURAL, -2,
@@ -463,7 +463,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PURPLE_DRACONIAN, 'd', MAGENTA, "purple draconian",
+    MONS_PURPLE_DRACONIAN, 'd', MAGENTA, M_("purple draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_PURPLE_DRACONIAN, MH_NATURAL, -8,
@@ -475,7 +475,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_RED_DRACONIAN, 'd', RED, "red draconian",
+    MONS_RED_DRACONIAN, 'd', RED, M_("red draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_FIRE,
     900, 10, MONS_DRACONIAN, MONS_RED_DRACONIAN, MH_NATURAL, -2,
@@ -487,7 +487,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WHITE_DRACONIAN, 'd', WHITE, "white draconian",
+    MONS_WHITE_DRACONIAN, 'd', WHITE, M_("white draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_COLD,
     900, 10, MONS_DRACONIAN, MONS_WHITE_DRACONIAN, MH_NATURAL, -2,
@@ -499,7 +499,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREY_DRACONIAN, 'd', LIGHTGREY, "grey draconian",
+    MONS_GREY_DRACONIAN, 'd', LIGHTGREY, M_("grey draconian"),
     M_COLD_BLOOD | M_UNBREATHING | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_GREY_DRACONIAN, MH_NATURAL, -2,
@@ -512,7 +512,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MOTTLED_DRACONIAN, 'd', LIGHTMAGENTA, "mottled draconian",
+    MONS_MOTTLED_DRACONIAN, 'd', LIGHTMAGENTA, M_("mottled draconian"),
     M_COLD_BLOOD | M_SPEAKS,
     MR_RES_FIRE | MR_RES_STICKY_FLAME,
     900, 10, MONS_DRACONIAN, MONS_MOTTLED_DRACONIAN, MH_NATURAL, -2,
@@ -524,7 +524,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_CALLER, 'd', BROWN, "draconian caller",
+    MONS_DRACONIAN_CALLER, 'd', BROWN, M_("draconian caller"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -3,
@@ -536,7 +536,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_MONK, 'd', BLUE, "draconian monk",
+    MONS_DRACONIAN_MONK, 'd', BLUE, M_("draconian monk"),
     M_FIGHTER | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -3,
@@ -549,7 +549,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_ZEALOT, 'd', LIGHTGREEN, "draconian zealot",
+    MONS_DRACONIAN_ZEALOT, 'd', LIGHTGREEN, M_("draconian zealot"),
     M_SPELLCASTER | M_PRIEST | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -3,
@@ -561,7 +561,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_SHIFTER, 'd', LIGHTCYAN, "draconian shifter",
+    MONS_DRACONIAN_SHIFTER, 'd', LIGHTCYAN, M_("draconian shifter"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -4,
@@ -573,7 +573,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_ANNIHILATOR, 'd', LIGHTBLUE, "draconian annihilator",
+    MONS_DRACONIAN_ANNIHILATOR, 'd', LIGHTBLUE, M_("draconian annihilator"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -4,
@@ -585,7 +585,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_KNIGHT, 'd', CYAN, "draconian knight",
+    MONS_DRACONIAN_KNIGHT, 'd', CYAN, M_("draconian knight"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_FIGHTER | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -4,
@@ -597,7 +597,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRACONIAN_SCORCHER, 'd', LIGHTRED, "draconian scorcher",
+    MONS_DRACONIAN_SCORCHER, 'd', LIGHTRED, M_("draconian scorcher"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_COLD_BLOOD | M_SPEAKS,
     MR_RES_HELLFIRE,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -4,
@@ -611,7 +611,7 @@ static monsterentry mondata[] = {
 // elves ('e')
 //mv: have to exist because it's (and should be) a valid polymorph target.
 {
-    MONS_ELF, 'e', RED, "elf",
+    MONS_ELF, 'e', RED, M_("elf"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -3,
@@ -623,7 +623,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_SOLDIER, 'e', RED, "deep elf soldier",
+    MONS_DEEP_ELF_SOLDIER, 'e', RED, M_("deep elf soldier"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_FIGHTER | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -635,7 +635,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_FIGHTER, 'e', LIGHTRED, "deep elf fighter",
+    MONS_DEEP_ELF_FIGHTER, 'e', LIGHTRED, M_("deep elf fighter"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_FIGHTER | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -647,7 +647,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_KNIGHT, 'e', CYAN, "deep elf knight",
+    MONS_DEEP_ELF_KNIGHT, 'e', CYAN, M_("deep elf knight"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_FIGHTER | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -659,7 +659,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_BLADEMASTER, 'e', LIGHTCYAN, "deep elf blademaster",
+    MONS_DEEP_ELF_BLADEMASTER, 'e', LIGHTCYAN, M_("deep elf blademaster"),
     M_WARM_BLOOD | M_FIGHTER | M_TWO_WEAPONS | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -671,7 +671,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_MASTER_ARCHER, 'e', LIGHTGREY, "deep elf master archer",
+    MONS_DEEP_ELF_MASTER_ARCHER, 'e', LIGHTGREY, M_("deep elf master archer"),
     M_WARM_BLOOD | M_ARCHER | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -5,
@@ -684,7 +684,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_MAGE, 'e', MAGENTA, "deep elf mage",
+    MONS_DEEP_ELF_MAGE, 'e', MAGENTA, M_("deep elf mage"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 12, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -696,7 +696,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_SUMMONER, 'e', BROWN, "deep elf summoner",
+    MONS_DEEP_ELF_SUMMONER, 'e', BROWN, M_("deep elf summoner"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -708,7 +708,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_CONJURER, 'e', BLUE, "deep elf conjurer",
+    MONS_DEEP_ELF_CONJURER, 'e', BLUE, M_("deep elf conjurer"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -720,7 +720,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_PRIEST, 'e', GREEN, "deep elf priest",
+    MONS_DEEP_ELF_PRIEST, 'e', GREEN, M_("deep elf priest"),
     M_SPELLCASTER | M_PRIEST | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -732,7 +732,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_HIGH_PRIEST, 'e', LIGHTGREEN, "deep elf high priest",
+    MONS_DEEP_ELF_HIGH_PRIEST, 'e', LIGHTGREEN, M_("deep elf high priest"),
     M_SPELLCASTER | M_SPEAKS | M_PRIEST | M_WARM_BLOOD | M_SEE_INVIS,
     MR_RES_HELLFIRE,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -744,7 +744,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_DEMONOLOGIST, 'e', YELLOW, "deep elf demonologist",
+    MONS_DEEP_ELF_DEMONOLOGIST, 'e', YELLOW, M_("deep elf demonologist"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -756,7 +756,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_ANNIHILATOR, 'e', LIGHTBLUE, "deep elf annihilator",
+    MONS_DEEP_ELF_ANNIHILATOR, 'e', LIGHTBLUE, M_("deep elf annihilator"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -768,7 +768,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_SORCERER, 'e', LIGHTMAGENTA, "deep elf sorcerer",
+    MONS_DEEP_ELF_SORCERER, 'e', LIGHTMAGENTA, M_("deep elf sorcerer"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -780,7 +780,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_ELF_DEATH_MAGE, 'e', WHITE, "deep elf death mage",
+    MONS_DEEP_ELF_DEATH_MAGE, 'e', WHITE, M_("deep elf death mage"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -793,7 +793,7 @@ static monsterentry mondata[] = {
 
 // fungi ('f')
 {
-    MONS_TOADSTOOL, 'f', BLACK, "toadstool",
+    MONS_TOADSTOOL, 'f', BLACK, M_("toadstool"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON,
     0, 10, MONS_FUNGUS, MONS_TOADSTOOL, MH_PLANT, MAG_IMMUNE,
@@ -805,7 +805,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FUNGUS, 'f', LIGHTGREY, "fungus",
+    MONS_FUNGUS, 'f', LIGHTGREY, M_("fungus"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON,
     0, 10, MONS_FUNGUS, MONS_FUNGUS, MH_PLANT, MAG_IMMUNE,
@@ -817,7 +817,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BALLISTOMYCETE, 'f', MAGENTA, "ballistomycete",
+    MONS_BALLISTOMYCETE, 'f', MAGENTA, M_("ballistomycete"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON,
     0, 10, MONS_FUNGUS, MONS_BALLISTOMYCETE, MH_PLANT, MAG_IMMUNE,
@@ -829,7 +829,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HYPERACTIVE_BALLISTOMYCETE, 'f', LIGHTRED, "hyperactive ballistomycete",
+    MONS_HYPERACTIVE_BALLISTOMYCETE, 'f', LIGHTRED, M_("hyperactive ballistomycete"),
     M_STATIONARY | M_NO_POLY_TO,
     MR_RES_POISON,
     0, 10, MONS_FUNGUS, MONS_BALLISTOMYCETE, MH_PLANT, MAG_IMMUNE,
@@ -842,7 +842,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WANDERING_MUSHROOM, 'f', BROWN, "wandering mushroom",
+    MONS_WANDERING_MUSHROOM, 'f', BROWN, M_("wandering mushroom"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_FUNGUS, MONS_WANDERING_MUSHROOM, MH_PLANT, -3,
@@ -855,7 +855,7 @@ static monsterentry mondata[] = {
 
 // goblins ('g')
 {
-    MONS_GOBLIN, 'g', LIGHTGREY, "goblin",
+    MONS_GOBLIN, 'g', LIGHTGREY, M_("goblin"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     400, 10, MONS_GOBLIN, MONS_GOBLIN, MH_NATURAL, -1,
@@ -867,7 +867,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HOBGOBLIN, 'g', BROWN, "hobgoblin",
+    MONS_HOBGOBLIN, 'g', BROWN, M_("hobgoblin"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     500, 10, MONS_GOBLIN, MONS_HOBGOBLIN, MH_NATURAL, -1,
@@ -879,7 +879,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GNOLL, 'g', YELLOW, "gnoll",
+    MONS_GNOLL, 'g', YELLOW, M_("gnoll"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     680, 10, MONS_GNOLL, MONS_GNOLL, MH_NATURAL, -3,
@@ -891,7 +891,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BOGGART, 'g', MAGENTA, "boggart",
+    MONS_BOGGART, 'g', MAGENTA, M_("boggart"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD,
     MR_NO_FLAGS,
     0, 14, MONS_BOGGART, MONS_BOGGART, MH_NATURAL, -7,
@@ -904,7 +904,7 @@ static monsterentry mondata[] = {
 
 // hounds and hogs ('h')
 {
-    MONS_JACKAL, 'h', BROWN, "jackal",
+    MONS_JACKAL, 'h', BROWN, M_("jackal"),
     M_WARM_BLOOD | M_BLOOD_SCENT,
     MR_NO_FLAGS,
     360, 10, MONS_HOUND, MONS_JACKAL, MH_NATURAL, -1,
@@ -916,7 +916,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HOUND, 'h', YELLOW, "hound",
+    MONS_HOUND, 'h', YELLOW, M_("hound"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BLOOD_SCENT,
     MR_NO_FLAGS,
     300, 10, MONS_HOUND, MONS_HOUND, MH_NATURAL, -3,
@@ -928,7 +928,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WARG, 'h', WHITE, "warg",
+    MONS_WARG, 'h', WHITE, M_("warg"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BLOOD_SCENT,
     MR_RES_POISON,
     750, 12, MONS_HOUND, MONS_WARG, MH_NATURAL, -6,
@@ -941,7 +941,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WOLF, 'h', LIGHTGREY, "wolf",
+    MONS_WOLF, 'h', LIGHTGREY, M_("wolf"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BLOOD_SCENT,
     MR_NO_FLAGS,
     450, 10, MONS_HOUND, MONS_WOLF, MH_NATURAL, -3,
@@ -954,7 +954,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WAR_DOG, 'h', CYAN, "war dog",
+    MONS_WAR_DOG, 'h', CYAN, M_("war dog"),
     M_SENSE_INVIS | M_WARM_BLOOD | M_BLOOD_SCENT,
     MR_NO_FLAGS,
     450, 19, MONS_HOUND, MONS_WAR_DOG, MH_NATURAL, -3,
@@ -966,7 +966,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HOG, 'h', RED, "hog",
+    MONS_HOG, 'h', RED, M_("hog"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     450, 10, MONS_HOG, MONS_HOG, MH_NATURAL, -3,
@@ -978,7 +978,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELL_HOUND, 'h', LIGHTCYAN, "hell hound",
+    MONS_HELL_HOUND, 'h', LIGHTCYAN, M_("hell hound"),
     M_SENSE_INVIS | M_BLOOD_SCENT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     450, 10, MONS_HOUND, MONS_HELL_HOUND, MH_DEMONIC, -3,
@@ -990,7 +990,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELL_HOG, 'h', LIGHTRED, "hell hog",
+    MONS_HELL_HOG, 'h', LIGHTRED, M_("hell hog"),
     M_SPELLCASTER | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     450, 10, MONS_HOG, MONS_HELL_HOG, MH_DEMONIC, -3,
@@ -1002,7 +1002,7 @@ static monsterentry mondata[] = {
 },
 
 {   // effect of porkalator cast on holies
-    MONS_HOLY_SWINE, 'h', YELLOW, "holy swine",
+    MONS_HOLY_SWINE, 'h', YELLOW, M_("holy swine"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     450, 10, MONS_HOG, MONS_HOLY_SWINE, MH_HOLY, -3,
@@ -1014,7 +1014,7 @@ static monsterentry mondata[] = {
 },
 
 {   // a dummy monster for recolouring
-    MONS_FELID, 'h', DARKGREY, "felid",
+    MONS_FELID, 'h', DARKGREY, M_("felid"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     200, 10, MONS_FELID, MONS_FELID, MH_NATURAL, -6,
@@ -1027,7 +1027,7 @@ static monsterentry mondata[] = {
 
 // spriggans ('i')
 {
-    MONS_SPRIGGAN, 'i', LIGHTGREY, "spriggan",
+    MONS_SPRIGGAN, 'i', LIGHTGREY, M_("spriggan"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS,
     MR_NO_FLAGS,
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1039,7 +1039,7 @@ static monsterentry mondata[] = {
 },
 
 {   // both the guy and his ride as one monster
-    MONS_SPRIGGAN_RIDER, 'i', LIGHTBLUE, "spriggan rider",
+    MONS_SPRIGGAN_RIDER, 'i', LIGHTBLUE, M_("spriggan rider"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_FIGHTER,
     MR_VUL_POISON, // the mount
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1051,7 +1051,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_DRUID, 'i', GREEN, "spriggan druid",
+    MONS_SPRIGGAN_DRUID, 'i', GREEN, M_("spriggan druid"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_NO_FLAGS,
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1063,7 +1063,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_BERSERKER, 'i', LIGHTRED, "spriggan berserker",
+    MONS_SPRIGGAN_BERSERKER, 'i', LIGHTRED, M_("spriggan berserker"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_FIGHTER | M_PRIEST,
     MR_NO_FLAGS,
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1075,7 +1075,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_AIR_MAGE, 'i', LIGHTCYAN, "spriggan air mage",
+    MONS_SPRIGGAN_AIR_MAGE, 'i', LIGHTCYAN, M_("spriggan air mage"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_DEFLECT_MISSILES,
     mrd(MR_RES_ELEC, 2),
@@ -1088,7 +1088,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_DEFENDER, 'i', YELLOW, "spriggan defender",
+    MONS_SPRIGGAN_DEFENDER, 'i', YELLOW, M_("spriggan defender"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_FIGHTER,
     MR_NO_FLAGS,
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1100,7 +1100,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_THE_ENCHANTRESS, 'i', LIGHTMAGENTA, "the Enchantress",
+    MONS_THE_ENCHANTRESS, 'i', LIGHTMAGENTA, M_("the Enchantress"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_UNIQUE
         | M_SPELLCASTER | M_ACTUAL_SPELLS | M_DEFLECT_MISSILES
         | M_PHASE_SHIFT,
@@ -1115,7 +1115,7 @@ static monsterentry mondata[] = {
 
 // slugs ('j')
 {
-    MONS_GIANT_SLUG, 'j', GREEN, "giant slug",
+    MONS_GIANT_SLUG, 'j', GREEN, M_("giant slug"),
     M_NO_SKELETON,
     MR_NO_FLAGS,
     850, 4, MONS_GIANT_SLUG, MONS_GIANT_SLUG, MH_NATURAL, -3,
@@ -1127,7 +1127,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_AGATE_SNAIL, 'j', LIGHTGREEN, "agate snail",
+    MONS_AGATE_SNAIL, 'j', LIGHTGREEN, M_("agate snail"),
     M_NO_SKELETON,
     MR_NO_FLAGS,
     950, 2, MONS_GIANT_SLUG, MONS_AGATE_SNAIL, MH_NATURAL, -3,
@@ -1139,7 +1139,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ELEPHANT_SLUG, 'j', LIGHTGREY, "elephant slug",
+    MONS_ELEPHANT_SLUG, 'j', LIGHTGREY, M_("elephant slug"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     1800, 5, MONS_GIANT_SLUG, MONS_ELEPHANT_SLUG, MH_NATURAL, -3,
@@ -1152,7 +1152,7 @@ static monsterentry mondata[] = {
 
 // killer bees ('k')
 {
-    MONS_QUEEN_BEE, 'k', YELLOW, "queen bee",
+    MONS_QUEEN_BEE, 'k', YELLOW, M_("queen bee"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     300, 14, MONS_KILLER_BEE, MONS_QUEEN_BEE, MH_NATURAL, -3,
@@ -1164,7 +1164,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KILLER_BEE, 'k', BROWN, "killer bee",
+    MONS_KILLER_BEE, 'k', BROWN, M_("killer bee"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     150, 11, MONS_KILLER_BEE, MONS_KILLER_BEE, MH_NATURAL, -3,
@@ -1176,7 +1176,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BUMBLEBEE, 'k', RED, "bumblebee",
+    MONS_BUMBLEBEE, 'k', RED, M_("bumblebee"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     200, 10, MONS_KILLER_BEE, MONS_BUMBLEBEE, MH_NATURAL, -3,
@@ -1188,7 +1188,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KILLER_BEE_LARVA, 'k', LIGHTGREY, "killer bee larva",
+    MONS_KILLER_BEE_LARVA, 'k', LIGHTGREY, M_("killer bee larva"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     100, 5, MONS_KILLER_BEE, MONS_KILLER_BEE_LARVA, MH_NATURAL, -3,
@@ -1200,7 +1200,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIREFLY, 'k', LIGHTBLUE, "giant firefly",
+    MONS_FIREFLY, 'k', LIGHTBLUE, M_("giant firefly"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     200, 10, MONS_FIREFLY, MONS_FIREFLY, MH_NATURAL, -7,
@@ -1213,7 +1213,7 @@ static monsterentry mondata[] = {
 
 // lizards ('l')
 {
-    MONS_GIANT_NEWT, 'l', GREEN, "giant newt",
+    MONS_GIANT_NEWT, 'l', GREEN, M_("giant newt"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     170, 10, MONS_GIANT_NEWT, MONS_GIANT_NEWT, MH_NATURAL, -3,
@@ -1225,7 +1225,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_GECKO, 'l', YELLOW, "giant gecko",
+    MONS_GIANT_GECKO, 'l', YELLOW, M_("giant gecko"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     250, 16, MONS_GIANT_NEWT, MONS_GIANT_GECKO, MH_NATURAL, -3,
@@ -1237,7 +1237,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IGUANA, 'l', BLUE, "iguana",
+    MONS_IGUANA, 'l', BLUE, M_("iguana"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     400, 13, MONS_GIANT_NEWT, MONS_IGUANA, MH_NATURAL, -3,
@@ -1249,7 +1249,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BASILISK, 'l', MAGENTA, "basilisk",
+    MONS_BASILISK, 'l', MAGENTA, M_("basilisk"),
     M_COLD_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     450, 15, MONS_GIANT_NEWT, MONS_BASILISK, MH_NATURAL, -3,
@@ -1261,7 +1261,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KOMODO_DRAGON, 'l', LIGHTRED, "komodo dragon",
+    MONS_KOMODO_DRAGON, 'l', LIGHTRED, M_("komodo dragon"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     800, 10, MONS_GIANT_NEWT, MONS_KOMODO_DRAGON, MH_NATURAL, -3,
@@ -1274,7 +1274,7 @@ static monsterentry mondata[] = {
 
 // drakes (also 'l', but dragon type)
 {
-    MONS_SWAMP_DRAKE, 'l', BROWN, "swamp drake",
+    MONS_SWAMP_DRAKE, 'l', BROWN, M_("swamp drake"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON,
     900, 16, MONS_DRAGON, MONS_SWAMP_DRAKE, MH_NATURAL, -3,
@@ -1286,7 +1286,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIRE_DRAKE, 'l', RED, "fire drake",
+    MONS_FIRE_DRAKE, 'l', RED, M_("fire drake"),
     M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_FIRE,
     1000, 10, MONS_DRAGON, MONS_FIRE_DRAKE, MH_NATURAL, -3,
@@ -1298,7 +1298,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LINDWURM, 'l', LIGHTCYAN, "lindwurm",
+    MONS_LINDWURM, 'l', LIGHTCYAN, M_("lindwurm"),
     M_WARM_BLOOD | M_GLOWS_LIGHT,
     MR_NO_FLAGS,
     950, 13, MONS_DRAGON, MONS_LINDWURM, MH_NATURAL, -3,
@@ -1311,7 +1311,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEATH_DRAKE, 'l', LIGHTGREY, "death drake",
+    MONS_DEATH_DRAKE, 'l', LIGHTGREY, M_("death drake"),
     M_SPELLCASTER | M_COLD_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON | MR_RES_ROTTING,
     900, 11, MONS_DRAGON, MONS_DEATH_DRAKE, MH_NATURAL, -3,
@@ -1324,7 +1324,7 @@ static monsterentry mondata[] = {
 
 // merfolk ('m')
 {
-    MONS_MERFOLK, 'm', LIGHTRED, "merfolk",
+    MONS_MERFOLK, 'm', LIGHTRED, M_("merfolk"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     500, 4, MONS_MERFOLK, MONS_MERFOLK, MH_NATURAL, -3,
@@ -1336,7 +1336,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MERFOLK_IMPALER, 'm', YELLOW, "merfolk impaler",
+    MONS_MERFOLK_IMPALER, 'm', YELLOW, M_("merfolk impaler"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     500, 8, MONS_MERFOLK, MONS_MERFOLK, MH_NATURAL, -3,
@@ -1349,7 +1349,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MERFOLK_JAVELINEER, 'm', WHITE, "merfolk javelineer",
+    MONS_MERFOLK_JAVELINEER, 'm', WHITE, M_("merfolk javelineer"),
     M_WARM_BLOOD | M_ARCHER | M_SPEAKS,
     MR_NO_FLAGS,
     500, 8, MONS_MERFOLK, MONS_MERFOLK, MH_NATURAL, -4,
@@ -1361,7 +1361,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MERFOLK_AQUAMANCER, 'm', GREEN, "merfolk aquamancer",
+    MONS_MERFOLK_AQUAMANCER, 'm', GREEN, M_("merfolk aquamancer"),
     M_WARM_BLOOD | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS,
     MR_NO_FLAGS,
     500, 8, MONS_MERFOLK, MONS_MERFOLK, MH_NATURAL, -4,
@@ -1373,7 +1373,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MERMAID, 'm', CYAN, "mermaid",
+    MONS_MERMAID, 'm', CYAN, M_("mermaid"),
     M_SPELLCASTER | M_WARM_BLOOD | M_SPEAKS | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     500, 10, MONS_MERMAID, MONS_MERMAID, MH_NATURAL, -5,
@@ -1385,7 +1385,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SIREN, 'm', LIGHTCYAN, "siren",
+    MONS_SIREN, 'm', LIGHTCYAN, M_("siren"),
     M_SPELLCASTER | M_WARM_BLOOD | M_SPEAKS | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     500, 10, MONS_MERMAID, MONS_SIREN, MH_NATURAL, -7,
@@ -1398,7 +1398,7 @@ static monsterentry mondata[] = {
 
 // rotting monsters ('n')
 {
-    MONS_NECROPHAGE, 'n', LIGHTGREY, "necrophage",
+    MONS_NECROPHAGE, 'n', LIGHTGREY, M_("necrophage"),
     M_NO_FLAGS,
     MR_RES_COLD,
     500, 12, MONS_GHOUL, MONS_NECROPHAGE, MH_UNDEAD, -5,
@@ -1410,7 +1410,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GHOUL, 'n', RED, "ghoul",
+    MONS_GHOUL, 'n', RED, M_("ghoul"),
     M_NO_FLAGS,
     MR_RES_COLD,
     500, 10, MONS_GHOUL, MONS_GHOUL, MH_UNDEAD, -5,
@@ -1422,7 +1422,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ROTTING_HULK, 'n', BROWN, "rotting hulk",
+    MONS_ROTTING_HULK, 'n', BROWN, M_("rotting hulk"),
     M_NO_FLAGS,
     MR_RES_COLD,
     780, 10, MONS_GHOUL, MONS_ROTTING_HULK, MH_UNDEAD, -5,
@@ -1435,7 +1435,7 @@ static monsterentry mondata[] = {
 
 // orcs ('o')
 {
-    MONS_ORC, 'o', LIGHTRED, "orc",
+    MONS_ORC, 'o', LIGHTRED, M_("orc"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 15, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
@@ -1447,7 +1447,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_WIZARD, 'o', MAGENTA, "orc wizard",
+    MONS_ORC_WIZARD, 'o', MAGENTA, M_("orc wizard"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 10, MONS_ORC, MONS_ORC, MH_NATURAL, -5,
@@ -1459,7 +1459,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_PRIEST, 'o', GREEN, "orc priest",
+    MONS_ORC_PRIEST, 'o', GREEN, M_("orc priest"),
     M_SPELLCASTER | M_PRIEST | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 10, MONS_ORC, MONS_ORC, MH_NATURAL, -4,
@@ -1471,7 +1471,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_WARRIOR, 'o', YELLOW, "orc warrior",
+    MONS_ORC_WARRIOR, 'o', YELLOW, M_("orc warrior"),
     M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 16, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
@@ -1483,7 +1483,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_KNIGHT, 'o', CYAN, "orc knight",
+    MONS_ORC_KNIGHT, 'o', CYAN, M_("orc knight"),
     M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 10, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
@@ -1495,7 +1495,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_WARLORD, 'o', LIGHTCYAN, "orc warlord",
+    MONS_ORC_WARLORD, 'o', LIGHTCYAN, M_("orc warlord"),
     M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 11, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
@@ -1507,7 +1507,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_SORCERER, 'o', LIGHTMAGENTA, "orc sorcerer",
+    MONS_ORC_SORCERER, 'o', LIGHTMAGENTA, M_("orc sorcerer"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_ACTUAL_SPELLS
         | M_WARM_BLOOD,
     MR_RES_FIRE,
@@ -1520,7 +1520,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORC_HIGH_PRIEST, 'o', LIGHTGREEN, "orc high priest",
+    MONS_ORC_HIGH_PRIEST, 'o', LIGHTGREEN, M_("orc high priest"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_PRIEST | M_WARM_BLOOD,
     MR_RES_HELLFIRE,
     600, 10, MONS_ORC, MONS_ORC, MH_NATURAL, -4,
@@ -1535,7 +1535,7 @@ static monsterentry mondata[] = {
 
 // Dummy monster, just for the genus.
 { // never spawns
-    MONS_GHOST, 'p', LIGHTGREY, "ghost",
+    MONS_GHOST, 'p', LIGHTGREY, M_("ghost"),
     M_INSUBSTANTIAL | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_GHOST, MONS_GHOST, MH_UNDEAD, 0,
@@ -1549,7 +1549,7 @@ static monsterentry mondata[] = {
 // XP modifier is 5 for these, because they really aren't all that
 // dangerous, but still come out at 200+ XP
 {
-    MONS_PHANTOM, 'p', BLUE, "phantom",
+    MONS_PHANTOM, 'p', BLUE, M_("phantom"),
     M_INSUBSTANTIAL,
     mrd(MR_RES_COLD, 2),
     0, 5, MONS_GHOST, MONS_PHANTOM, MH_UNDEAD, -4,
@@ -1561,7 +1561,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HUNGRY_GHOST, 'p', GREEN, "hungry ghost",
+    MONS_HUNGRY_GHOST, 'p', GREEN, M_("hungry ghost"),
     M_SENSE_INVIS | M_INSUBSTANTIAL | M_SPEAKS,
     mrd(MR_RES_COLD, 2),
     0, 8, MONS_GHOST, MONS_HUNGRY_GHOST, MH_UNDEAD, -4,
@@ -1573,7 +1573,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FLAYED_GHOST, 'p', RED, "flayed ghost",
+    MONS_FLAYED_GHOST, 'p', RED, M_("flayed ghost"),
     M_INSUBSTANTIAL | M_SPEAKS,
     MR_NO_FLAGS,
     0, 10, MONS_GHOST, MONS_FLAYED_GHOST, MH_UNDEAD, -4,
@@ -1586,7 +1586,7 @@ static monsterentry mondata[] = {
 
 // player ghost - stats are stored in ghost struct
 {
-    MONS_PLAYER_GHOST, 'p', WHITE, "player ghost",
+    MONS_PLAYER_GHOST, 'p', WHITE, M_("player ghost"),
     M_FIGHTER | M_SPEAKS | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_INSUBSTANTIAL | M_NO_POLY_TO,
     MR_NO_FLAGS,
@@ -1601,7 +1601,7 @@ static monsterentry mondata[] = {
 // player illusion (Mara) - stats are stored in ghost struct. Undead/demonic
 // flags are set based on the current player's species!
 {
-    MONS_PLAYER_ILLUSION, '@', WHITE, "player illusion",
+    MONS_PLAYER_ILLUSION, '@', WHITE, M_("player illusion"),
     M_FIGHTER | M_SPEAKS | M_SPELLCASTER | M_ACTUAL_SPELLS | M_INSUBSTANTIAL
         | M_NO_POLY_TO,
     MR_RES_POISON,
@@ -1614,7 +1614,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW, 'p', MAGENTA, "shadow",
+    MONS_SHADOW, 'p', MAGENTA, M_("shadow"),
     M_SEE_INVIS | M_INSUBSTANTIAL | M_GLOWS_LIGHT,
     mrd(MR_RES_COLD, 3),
     0, 16, MONS_WRAITH, MONS_SHADOW, MH_UNDEAD, -5,
@@ -1626,7 +1626,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SILENT_SPECTRE, 'p', CYAN, "silent spectre",
+    MONS_SILENT_SPECTRE, 'p', CYAN, M_("silent spectre"),
     M_SPEAKS /* uh... */ | M_SEE_INVIS | M_INSUBSTANTIAL,
     mrd(MR_RES_COLD, 3),
     0, 10, MONS_WRAITH, MONS_SILENT_SPECTRE, MH_UNDEAD, -4,
@@ -1638,7 +1638,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPIRIT, 'p', YELLOW, "spirit",
+    MONS_SPIRIT, 'p', YELLOW, M_("spirit"),
     M_SPELLCASTER | M_INSUBSTANTIAL | M_FLEEING | M_UNFINISHED,
     MR_RES_POISON,
     0, 5, MONS_SPIRIT, MONS_SPIRIT, MH_HOLY, -4,
@@ -1651,7 +1651,7 @@ static monsterentry mondata[] = {
 
 // never spawned as a monster.
 {
-    MONS_PLAYER, '@', LIGHTGREY, "player",
+    MONS_PLAYER, '@', LIGHTGREY, M_("player"),
     M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 15, MONS_PLAYER_ILLUSION, MONS_PLAYER_ILLUSION, MH_NATURAL, -5,
@@ -1664,7 +1664,7 @@ static monsterentry mondata[] = {
 
 // dwarves ('q')
 { // Another dummy monster.  Zombies and poly allowed.
-    MONS_DWARF, 'q', LIGHTGREY, "dwarf",
+    MONS_DWARF, 'q', LIGHTGREY, M_("dwarf"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_DWARF, MONS_DWARF, MH_NATURAL, -3,
@@ -1676,7 +1676,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF, 'q', BROWN, "deep dwarf",
+    MONS_DEEP_DWARF, 'q', BROWN, M_("deep dwarf"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 10, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1688,7 +1688,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF_SCION, 'q', YELLOW, "deep dwarf scion",
+    MONS_DEEP_DWARF_SCION, 'q', YELLOW, M_("deep dwarf scion"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 10, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1700,7 +1700,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF_ARTIFICER, 'q', BLUE, "deep dwarf artificer",
+    MONS_DEEP_DWARF_ARTIFICER, 'q', BLUE, M_("deep dwarf artificer"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 10, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1712,7 +1712,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF_NECROMANCER, 'q', MAGENTA, "deep dwarf necromancer",
+    MONS_DEEP_DWARF_NECROMANCER, 'q', MAGENTA, M_("deep dwarf necromancer"),
     M_WARM_BLOOD | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 10, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1724,7 +1724,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF_BERSERKER, 'q', LIGHTRED, "deep dwarf berserker",
+    MONS_DEEP_DWARF_BERSERKER, 'q', LIGHTRED, M_("deep dwarf berserker"),
     M_WARM_BLOOD | M_SPELLCASTER | M_PRIEST | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 10, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1736,7 +1736,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_DWARF_DEATH_KNIGHT, 'q', GREEN, "deep dwarf death knight",
+    MONS_DEEP_DWARF_DEATH_KNIGHT, 'q', GREEN, M_("deep dwarf death knight"),
     M_WARM_BLOOD | M_SPELLCASTER | M_PRIEST | M_SPEAKS | M_NO_REGEN,
     MR_NO_FLAGS,
     600, 12, MONS_DWARF, MONS_DEEP_DWARF, MH_NATURAL, -6,
@@ -1748,7 +1748,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_UNBORN_DEEP_DWARF, 'q', WHITE, "unborn deep dwarf",
+    MONS_UNBORN_DEEP_DWARF, 'q', WHITE, M_("unborn deep dwarf"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS | M_NO_REGEN,
     MR_RES_COLD,
     600, 14, MONS_DWARF, MONS_DEEP_DWARF, MH_UNDEAD, -8,
@@ -1760,7 +1760,7 @@ static monsterentry mondata[] = {
 },
 
 { // one vault.  Polymorph disabled.
-    MONS_GNOME, 'q', LIGHTBLUE, "gnome",
+    MONS_GNOME, 'q', LIGHTBLUE, M_("gnome"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     400, 10, MONS_GNOME, MONS_GNOME, MH_NATURAL, -3,
@@ -1773,7 +1773,7 @@ static monsterentry mondata[] = {
 
 // rodents ('r')
 {
-    MONS_RAT, 'r', BROWN, "rat",
+    MONS_RAT, 'r', BROWN, M_("rat"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     200, 1, MONS_RAT, MONS_RAT, MH_NATURAL, -1,
@@ -1785,7 +1785,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_QUOKKA, 'r', WHITE, "quokka",
+    MONS_QUOKKA, 'r', WHITE, M_("quokka"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     300, 10, MONS_QUOKKA, MONS_QUOKKA, MH_NATURAL, -1,
@@ -1797,7 +1797,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREY_RAT, 'r', LIGHTGREY, "grey rat",
+    MONS_GREY_RAT, 'r', LIGHTGREY, M_("grey rat"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     220, 26, MONS_RAT, MONS_GREY_RAT, MH_NATURAL, -3,
@@ -1809,7 +1809,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREEN_RAT, 'r', LIGHTGREEN, "green rat",
+    MONS_GREEN_RAT, 'r', LIGHTGREEN, M_("green rat"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     220, 13, MONS_RAT, MONS_GREEN_RAT, MH_NATURAL, -3,
@@ -1821,7 +1821,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORANGE_RAT, 'r', LIGHTRED, "orange rat",
+    MONS_ORANGE_RAT, 'r', LIGHTRED, M_("orange rat"),
     M_WARM_BLOOD | M_GLOWS_LIGHT,
     MR_NO_FLAGS,
     300, 10, MONS_RAT, MONS_ORANGE_RAT, MH_NATURAL, -3,
@@ -1833,7 +1833,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LABORATORY_RAT, 'r', BLACK, "laboratory rat",
+    MONS_LABORATORY_RAT, 'r', BLACK, M_("laboratory rat"),
     M_WARM_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     300, 10, MONS_RAT, MONS_LABORATORY_RAT, MH_NATURAL, -3,
@@ -1845,7 +1845,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PORCUPINE, 'r', BLUE, "porcupine",
+    MONS_PORCUPINE, 'r', BLUE, M_("porcupine"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     220, 26, MONS_RAT, MONS_PORCUPINE, MH_NATURAL, -3,
@@ -1858,7 +1858,7 @@ static monsterentry mondata[] = {
 
 // spiders and insects ('s')
 {
-    MONS_GIANT_COCKROACH, 's', BROWN, "giant cockroach",
+    MONS_GIANT_COCKROACH, 's', BROWN, M_("giant cockroach"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     250, 10, MONS_GIANT_COCKROACH, MONS_GIANT_COCKROACH, MH_NATURAL, -1,
@@ -1870,7 +1870,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_MITE, 's', LIGHTRED, "giant mite",
+    MONS_GIANT_MITE, 's', LIGHTRED, M_("giant mite"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     300, 10, MONS_GIANT_MITE, MONS_GIANT_MITE, MH_NATURAL, -1,
@@ -1882,7 +1882,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_CENTIPEDE, 's', GREEN, "giant centipede",
+    MONS_GIANT_CENTIPEDE, 's', GREEN, M_("giant centipede"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     250, 10, MONS_GIANT_CENTIPEDE, MONS_GIANT_CENTIPEDE, MH_NATURAL, -3,
@@ -1894,7 +1894,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SCORPION, 's', YELLOW, "scorpion",
+    MONS_SCORPION, 's', YELLOW, M_("scorpion"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     320, 13, MONS_SCORPION, MONS_SCORPION, MH_NATURAL, -3,
@@ -1906,7 +1906,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EMPEROR_SCORPION, 's', LIGHTGREY, "emperor scorpion",
+    MONS_EMPEROR_SCORPION, 's', LIGHTGREY, M_("emperor scorpion"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     900, 10, MONS_SCORPION, MONS_EMPEROR_SCORPION, MH_NATURAL, -3,
@@ -1919,7 +1919,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPIDER, 's', CYAN, "spider",
+    MONS_SPIDER, 's', CYAN, M_("spider"),
     M_NO_SKELETON | M_WEB_SENSE,
     MR_VUL_POISON,
     250, 10, MONS_SPIDER, MONS_SPIDER, MH_NATURAL, -3,
@@ -1931,7 +1931,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TARANTELLA, 's', LIGHTMAGENTA, "tarantella",
+    MONS_TARANTELLA, 's', LIGHTMAGENTA, M_("tarantella"),
     M_NO_SKELETON | M_WEB_SENSE,
     MR_VUL_POISON,
     300, 10, MONS_SPIDER, MONS_TARANTELLA, MH_NATURAL, -3,
@@ -1943,7 +1943,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JUMPING_SPIDER, 's', LIGHTBLUE, "jumping spider",
+    MONS_JUMPING_SPIDER, 's', LIGHTBLUE, M_("jumping spider"),
     M_NO_SKELETON | M_SPELLCASTER | M_FAKE_SPELLS | M_WEB_SENSE,
     MR_VUL_POISON,
     300, 10, MONS_SPIDER, MONS_JUMPING_SPIDER, MH_NATURAL, -3,
@@ -1955,7 +1955,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WOLF_SPIDER, 's', WHITE, "wolf spider",
+    MONS_WOLF_SPIDER, 's', WHITE, M_("wolf spider"),
     M_NO_SKELETON | M_WEB_SENSE,
     MR_VUL_POISON,
     900, 10, MONS_SPIDER, MONS_WOLF_SPIDER, MH_NATURAL, -3,
@@ -1967,7 +1967,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TRAPDOOR_SPIDER, 's', LIGHTCYAN, "trapdoor spider",
+    MONS_TRAPDOOR_SPIDER, 's', LIGHTCYAN, M_("trapdoor spider"),
     M_NO_SKELETON | M_SUBMERGES | M_WEB_SENSE,
     MR_VUL_POISON,
     240, 10, MONS_SPIDER, MONS_TRAPDOOR_SPIDER, MH_NATURAL, -3,
@@ -1981,7 +1981,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_REDBACK, 's', RED, "redback",
+    MONS_REDBACK, 's', RED, M_("redback"),
     M_NO_SKELETON | M_WEB_SENSE,
     MR_VUL_POISON,
     130, 14, MONS_SPIDER, MONS_REDBACK, MH_NATURAL, -3,
@@ -1993,7 +1993,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEMONIC_CRAWLER, 's', LIGHTGREEN, "demonic crawler",
+    MONS_DEMONIC_CRAWLER, 's', LIGHTGREEN, M_("demonic crawler"),
     M_NO_SKELETON | M_SEE_INVIS,
     MR_RES_ELEC | MR_RES_POISON | MR_RES_COLD | MR_RES_FIRE,
     900, 12, MONS_DEMONIC_CRAWLER, MONS_DEMONIC_CRAWLER, MH_DEMONIC, -6,
@@ -2007,7 +2007,7 @@ static monsterentry mondata[] = {
 
 // testudines and crocodiles ('t')
 {
-    MONS_CROCODILE, 't', BROWN, "crocodile",
+    MONS_CROCODILE, 't', BROWN, M_("crocodile"),
     M_COLD_BLOOD | M_SUBMERGES,
     MR_NO_FLAGS,
     800, 10, MONS_CROCODILE, MONS_CROCODILE, MH_NATURAL, -3,
@@ -2019,7 +2019,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BABY_ALLIGATOR, 't', BLUE, "baby alligator",
+    MONS_BABY_ALLIGATOR, 't', BLUE, M_("baby alligator"),
     M_COLD_BLOOD | M_SPELLCASTER | M_SUBMERGES | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     300, 10, MONS_CROCODILE, MONS_BABY_ALLIGATOR, MH_NATURAL, -3,
@@ -2031,7 +2031,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ALLIGATOR, 't', LIGHTBLUE, "alligator",
+    MONS_ALLIGATOR, 't', LIGHTBLUE, M_("alligator"),
     M_COLD_BLOOD | M_SPELLCASTER | M_SUBMERGES | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     850, 10, MONS_CROCODILE, MONS_ALLIGATOR, MH_NATURAL, -3,
@@ -2044,7 +2044,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SNAPPING_TURTLE, 't', GREEN, "snapping turtle",
+    MONS_SNAPPING_TURTLE, 't', GREEN, M_("snapping turtle"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     600, 10, MONS_SNAPPING_TURTLE, MONS_SNAPPING_TURTLE, MH_NATURAL, -3,
@@ -2059,7 +2059,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_ALLIGATOR_SNAPPING_TURTLE, 't', LIGHTGREEN,
-        "alligator snapping turtle",
+        M_("alligator snapping turtle"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     1100, 10, MONS_SNAPPING_TURTLE, MONS_ALLIGATOR_SNAPPING_TURTLE,
@@ -2072,7 +2072,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIRE_CRAB, 't', LIGHTRED, "fire crab",
+    MONS_FIRE_CRAB, 't', LIGHTRED, M_("fire crab"),
     M_NO_SKELETON,
     MR_VUL_POISON | mrd(MR_RES_FIRE, 3),
     320, 13, MONS_FIRE_CRAB, MONS_FIRE_CRAB, MH_NATURAL, -4,
@@ -2085,7 +2085,7 @@ static monsterentry mondata[] = {
 
 // ugly things ('u')
 {
-    MONS_UGLY_THING, 'u', BLACK, "ugly thing",
+    MONS_UGLY_THING, 'u', BLACK, M_("ugly thing"),
     M_WARM_BLOOD | M_GLOWS_RADIATION | M_HERD,
     MR_NO_FLAGS,
     600, 10, MONS_UGLY_THING, MONS_UGLY_THING, MH_NATURAL, -3,
@@ -2097,7 +2097,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VERY_UGLY_THING, 'u', BLACK, "very ugly thing",
+    MONS_VERY_UGLY_THING, 'u', BLACK, M_("very ugly thing"),
     M_WARM_BLOOD | M_GLOWS_RADIATION | M_HERD,
     MR_NO_FLAGS,
     830, 10, MONS_UGLY_THING, MONS_VERY_UGLY_THING, MH_NATURAL, -3,
@@ -2110,7 +2110,7 @@ static monsterentry mondata[] = {
 
 // vortices ('v')
 {
-    MONS_FIRE_VORTEX, 'v', RED, "fire vortex",
+    MONS_FIRE_VORTEX, 'v', RED, M_("fire vortex"),
     M_CONFUSED | M_INSUBSTANTIAL | M_GLOWS_LIGHT,
     MR_RES_POISON | mrd(MR_RES_FIRE, 3) | MR_VUL_COLD | MR_RES_ELEC,
     0, 5, MONS_FIRE_VORTEX, MONS_FIRE_VORTEX, MH_NONLIVING, MAG_IMMUNE,
@@ -2122,7 +2122,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPATIAL_VORTEX, 'v', BLACK, "spatial vortex",
+    MONS_SPATIAL_VORTEX, 'v', BLACK, M_("spatial vortex"),
     M_CONFUSED | M_INSUBSTANTIAL | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 5, MONS_FIRE_VORTEX, MONS_SPATIAL_VORTEX, MH_NONLIVING, MAG_IMMUNE,
@@ -2134,7 +2134,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VAPOUR, 'v', LIGHTCYAN, "vapour",
+    MONS_VAPOUR, 'v', LIGHTCYAN, M_("vapour"),
     M_SPELLCASTER | M_SEE_INVIS | M_INVIS | M_CONFUSED | M_INSUBSTANTIAL,
     mrd(MR_RES_ELEC, 3) | MR_RES_POISON,
     0, 10, MONS_VAPOUR, MONS_VAPOUR, MH_NONLIVING, MAG_IMMUNE,
@@ -2146,7 +2146,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_INSUBSTANTIAL_WISP, 'v', LIGHTGREY, "insubstantial wisp",
+    MONS_INSUBSTANTIAL_WISP, 'v', LIGHTGREY, M_("insubstantial wisp"),
     M_INSUBSTANTIAL,
     mrd(MR_RES_ELEC | MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD, 2),
     0, 15, MONS_INSUBSTANTIAL_WISP, MONS_INSUBSTANTIAL_WISP,
@@ -2159,7 +2159,7 @@ static monsterentry mondata[] = {
 },
 
 { // miscast only
-    MONS_TWISTER, 'v', ETC_AIR, "twister",
+    MONS_TWISTER, 'v', ETC_AIR, M_("twister"),
     M_CONFUSED | M_INSUBSTANTIAL | M_BATTY | M_NO_POLY_TO,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | mrd(MR_RES_ELEC, 3),
     0, 5, MONS_FIRE_VORTEX, MONS_TWISTER, MH_NONLIVING, MAG_IMMUNE,
@@ -2172,7 +2172,7 @@ static monsterentry mondata[] = {
 
 // worms ('w')
 {
-    MONS_WORM, 'w', LIGHTRED, "worm",
+    MONS_WORM, 'w', LIGHTRED, M_("worm"),
     M_NO_SKELETON,
     MR_NO_FLAGS,
     400, 3, MONS_WORM, MONS_WORM, MH_NATURAL, -2,
@@ -2184,7 +2184,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BRAIN_WORM, 'w', LIGHTMAGENTA, "brain worm",
+    MONS_BRAIN_WORM, 'w', LIGHTMAGENTA, M_("brain worm"),
     M_NO_SKELETON | M_SPELLCASTER,
     MR_NO_FLAGS,
     280, 10, MONS_WORM, MONS_BRAIN_WORM, MH_NATURAL, -3,
@@ -2196,7 +2196,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SWAMP_WORM, 'w', BROWN, "swamp worm",
+    MONS_SWAMP_WORM, 'w', BROWN, M_("swamp worm"),
     M_NO_SKELETON | M_SUBMERGES,
     MR_NO_FLAGS,
     450, 10, MONS_WORM, MONS_SWAMP_WORM, MH_NATURAL, -3,
@@ -2208,7 +2208,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPINY_WORM, 'w', LIGHTGREEN, "spiny worm",
+    MONS_SPINY_WORM, 'w', LIGHTGREEN, M_("spiny worm"),
     M_NO_SKELETON,
     MR_VUL_POISON | MR_RES_ACID,
     1650, 13, MONS_WORM, MONS_SPINY_WORM, MH_NATURAL, -3,
@@ -2220,7 +2220,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_LEECH, 'w', RED, "giant leech",
+    MONS_GIANT_LEECH, 'w', RED, M_("giant leech"),
     M_NO_SKELETON | M_BLOOD_SCENT,
     MR_NO_FLAGS,
     1000, 10, MONS_WORM, MONS_GIANT_LEECH, MH_NATURAL, -3,
@@ -2233,7 +2233,7 @@ static monsterentry mondata[] = {
 
 // small abominations ('x')
 {
-    MONS_UNSEEN_HORROR, 'x', MAGENTA, "unseen horror",
+    MONS_UNSEEN_HORROR, 'x', MAGENTA, M_("unseen horror"),
     M_SEE_INVIS | M_INVIS | M_BATTY,
     MR_NO_FLAGS,
     0, 12, MONS_UNSEEN_HORROR, MONS_UNSEEN_HORROR, MH_NATURAL, -3,
@@ -2246,7 +2246,7 @@ static monsterentry mondata[] = {
 
 {
     // Coloured with mon-util.cc:random_small_abomination_colour.
-    MONS_ABOMINATION_SMALL, 'x', BLACK, "small abomination",
+    MONS_ABOMINATION_SMALL, 'x', BLACK, M_("small abomination"),
     M_NO_FLAGS,
     MR_NO_FLAGS,
     0, 10, MONS_ABOMINATION_SMALL, MONS_ABOMINATION_SMALL, MH_DEMONIC, -5,
@@ -2259,7 +2259,7 @@ static monsterentry mondata[] = {
 
 // flying insects ('y')
 {
-    MONS_YELLOW_WASP, 'y', YELLOW, "yellow wasp",
+    MONS_YELLOW_WASP, 'y', YELLOW, M_("yellow wasp"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     170, 15, MONS_YELLOW_WASP, MONS_YELLOW_WASP, MH_NATURAL, -3,
@@ -2271,7 +2271,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VAMPIRE_MOSQUITO, 'y', BROWN, "vampire mosquito",
+    MONS_VAMPIRE_MOSQUITO, 'y', BROWN, M_("vampire mosquito"),
     M_NO_SKELETON | M_BLOOD_SCENT,
     MR_VUL_POISON,
     200, 10, MONS_VAMPIRE_MOSQUITO, MONS_VAMPIRE_MOSQUITO, MH_UNDEAD, -3,
@@ -2284,7 +2284,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_RED_WASP, 'y', RED, "red wasp",
+    MONS_RED_WASP, 'y', RED, M_("red wasp"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     180, 12, MONS_YELLOW_WASP, MONS_RED_WASP, MH_NATURAL, -3,
@@ -2296,7 +2296,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GHOST_MOTH, 'y', MAGENTA, "ghost moth",
+    MONS_GHOST_MOTH, 'y', MAGENTA, M_("ghost moth"),
     M_NO_SKELETON | M_INVIS,
     MR_RES_POISON | MR_RES_COLD,
     600, 30, MONS_GHOST_MOTH, MONS_GHOST_MOTH, MH_NATURAL, -6,
@@ -2309,7 +2309,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MOTH_OF_WRATH, 'y', LIGHTRED, "moth of wrath",
+    MONS_MOTH_OF_WRATH, 'y', LIGHTRED, M_("moth of wrath"),
     M_NO_SKELETON,
     MR_NO_FLAGS,
     300, 10, MONS_MOTH_OF_WRATH, MONS_MOTH_OF_WRATH, MH_NATURAL, -3,
@@ -2326,7 +2326,7 @@ static monsterentry mondata[] = {
 // zombie, skeleton and simulacra species depend on corpse species,
 // or else are chosen randomly
 {
-    MONS_ZOMBIE_SMALL, 'z', BROWN, "small zombie",
+    MONS_ZOMBIE_SMALL, 'z', BROWN, M_("small zombie"),
     M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 9, MONS_ZOMBIE_SMALL, MONS_ZOMBIE_SMALL, MH_UNDEAD, -1,
@@ -2338,7 +2338,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SKELETON_SMALL, 'z', LIGHTGREY, "small skeleton",
+    MONS_SKELETON_SMALL, 'z', LIGHTGREY, M_("small skeleton"),
     M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 9, MONS_SKELETON_SMALL, MONS_SKELETON_SMALL, MH_UNDEAD, -1,
@@ -2350,7 +2350,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SIMULACRUM_SMALL, 'z', ETC_ICE, "small simulacrum",
+    MONS_SIMULACRUM_SMALL, 'z', ETC_ICE, M_("small simulacrum"),
     M_NO_REGEN,
     MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 9, MONS_SIMULACRUM_SMALL, MONS_SIMULACRUM_SMALL, MH_UNDEAD, -1,
@@ -2362,7 +2362,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WIGHT, 'z', GREEN, "wight",
+    MONS_WIGHT, 'z', GREEN, M_("wight"),
     M_NO_FLAGS,
     mrd(MR_RES_COLD, 2),
     0, 16, MONS_WIGHT, MONS_WIGHT, MH_UNDEAD, -4,
@@ -2374,7 +2374,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SKELETAL_WARRIOR, 'z', CYAN, "skeletal warrior",
+    MONS_SKELETAL_WARRIOR, 'z', CYAN, M_("skeletal warrior"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_RES_COLD,
     0, 10, MONS_SKELETAL_WARRIOR, MONS_SKELETAL_WARRIOR, MH_UNDEAD, -7,
@@ -2386,7 +2386,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FLYING_SKULL, 'z', WHITE, "flying skull",
+    MONS_FLYING_SKULL, 'z', WHITE, M_("flying skull"),
     M_NO_FLAGS,
     MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 10, MONS_SKELETON_SMALL, MONS_FLYING_SKULL, MH_UNDEAD, -3,
@@ -2398,7 +2398,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FLAMING_CORPSE, 'z', RED, "flaming corpse",
+    MONS_FLAMING_CORPSE, 'z', RED, M_("flaming corpse"),
     M_SENSE_INVIS | M_GLOWS_LIGHT,
     mrd(MR_RES_FIRE, 3) | MR_RES_STICKY_FLAME,
     0, 17, MONS_FLAMING_CORPSE, MONS_FLAMING_CORPSE, MH_UNDEAD, -4,
@@ -2412,7 +2412,7 @@ static monsterentry mondata[] = {
 // These nasties are never randomly generated, only sometimes specially
 // placed in the Crypt.
 {
-    MONS_CURSE_SKULL, 'z', LIGHTCYAN, "curse skull",
+    MONS_CURSE_SKULL, 'z', LIGHTCYAN, M_("curse skull"),
     M_SPELLCASTER | M_SEE_INVIS | M_STATIONARY | M_SPEAKS | M_NOISY_SPELLS,
     mrd(MR_RES_ELEC | MR_RES_COLD, 2) | MR_RES_HELLFIRE,
     0, 50, MONS_LICH, MONS_CURSE_SKULL, MH_UNDEAD, MAG_IMMUNE,
@@ -2425,7 +2425,7 @@ static monsterentry mondata[] = {
 
 // Curse toes move at half the speed with which they attack.
 {
-    MONS_CURSE_TOE, 'z', YELLOW, "curse toe",
+    MONS_CURSE_TOE, 'z', YELLOW, M_("curse toe"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_ELEC, 2) | MR_RES_HELLFIRE | MR_RES_COLD,
     0, 60, MONS_LICH, MONS_CURSE_TOE, MH_UNDEAD, MAG_IMMUNE,
@@ -2438,7 +2438,7 @@ static monsterentry mondata[] = {
 
 // angelic beings ('A')
 {
-    MONS_ANGEL, 'A', WHITE, "Angel",
+    MONS_ANGEL, 'A', WHITE, M_("Angel"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_GLOWS_LIGHT,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2),
     0, 10, MONS_ANGEL, MONS_ANGEL, MH_HOLY, -8,
@@ -2451,7 +2451,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CHERUB, 'A', WHITE, "Cherub",
+    MONS_CHERUB, 'A', WHITE, M_("Cherub"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_GLOWS_LIGHT
         | M_UNFINISHED,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2),
@@ -2465,7 +2465,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DAEVA, 'A', YELLOW, "Daeva",
+    MONS_DAEVA, 'A', YELLOW, M_("Daeva"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_GLOWS_LIGHT,
     MR_RES_POISON,
     0, 12, MONS_ANGEL, MONS_DAEVA, MH_HOLY, -8,
@@ -2492,7 +2492,7 @@ static monsterentry mondata[] = {
 
 // beetles ('B')
 {
-    MONS_GOLIATH_BEETLE, 'B', BLUE, "goliath beetle",
+    MONS_GOLIATH_BEETLE, 'B', BLUE, M_("goliath beetle"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     800, 12, MONS_GOLIATH_BEETLE, MONS_GOLIATH_BEETLE, MH_NATURAL, -3,
@@ -2504,7 +2504,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BOULDER_BEETLE, 'B', LIGHTGREY, "boulder beetle",
+    MONS_BOULDER_BEETLE, 'B', LIGHTGREY, M_("boulder beetle"),
     M_NO_SKELETON,
     MR_VUL_POISON,
     2050, 8, MONS_GOLIATH_BEETLE, MONS_BOULDER_BEETLE, MH_NATURAL, -3,
@@ -2516,7 +2516,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BORING_BEETLE, 'B', BROWN, "boring beetle",
+    MONS_BORING_BEETLE, 'B', BROWN, M_("boring beetle"),
     M_NO_SKELETON | M_BURROWS,
     MR_VUL_POISON,
     1300, 10, MONS_GOLIATH_BEETLE, MONS_BORING_BEETLE, MH_NATURAL, -3,
@@ -2529,7 +2529,7 @@ static monsterentry mondata[] = {
 
 // cyclopes and giants ('C')
 { // dummy for the genus, never spawns
-    MONS_GIANT, 'C', LIGHTGREY, "giant",
+    MONS_GIANT, 'C', LIGHTGREY, M_("giant"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     1700, 7, MONS_GIANT, MONS_GIANT, MH_NATURAL, -3,
@@ -2541,7 +2541,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HILL_GIANT, 'C', LIGHTRED, "hill giant",
+    MONS_HILL_GIANT, 'C', LIGHTRED, M_("hill giant"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1700, 7, MONS_GIANT, MONS_HILL_GIANT, MH_NATURAL, -3,
@@ -2553,7 +2553,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CYCLOPS, 'C', YELLOW, "cyclops",
+    MONS_CYCLOPS, 'C', YELLOW, M_("cyclops"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     2200, 14, MONS_GIANT, MONS_CYCLOPS, MH_NATURAL, -3,
@@ -2565,7 +2565,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ETTIN, 'C', BROWN, "ettin",
+    MONS_ETTIN, 'C', BROWN, M_("ettin"),
     M_WARM_BLOOD | M_TWO_WEAPONS | M_SPEAKS,
     MR_NO_FLAGS,
     2500, 12, MONS_GIANT, MONS_ETTIN, MH_NATURAL, -3,
@@ -2577,7 +2577,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIRE_GIANT, 'C', RED, "fire giant",
+    MONS_FIRE_GIANT, 'C', RED, M_("fire giant"),
     M_FIGHTER | M_SPELLCASTER | M_WARM_BLOOD | M_SENSE_INVIS | M_SPEAKS,
     mrd(MR_RES_FIRE, 2),
     2000, 11, MONS_GIANT, MONS_FIRE_GIANT, MH_NATURAL, -4,
@@ -2589,7 +2589,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FROST_GIANT, 'C', LIGHTBLUE, "frost giant",
+    MONS_FROST_GIANT, 'C', LIGHTBLUE, M_("frost giant"),
     M_FIGHTER | M_SPELLCASTER | M_WARM_BLOOD | M_SENSE_INVIS | M_SPEAKS,
     mrd(MR_RES_COLD, 2),
     2100, 11, MONS_GIANT, MONS_FROST_GIANT, MH_NATURAL, -4,
@@ -2601,7 +2601,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_STONE_GIANT, 'C', LIGHTGREY, "stone giant",
+    MONS_STONE_GIANT, 'C', LIGHTGREY, M_("stone giant"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     2700, 10, MONS_GIANT, MONS_STONE_GIANT, MH_NATURAL, -4,
@@ -2613,7 +2613,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TITAN, 'C', MAGENTA, "titan",
+    MONS_TITAN, 'C', MAGENTA, M_("titan"),
     M_FIGHTER | M_SPELLCASTER | M_WARM_BLOOD | M_SENSE_INVIS | M_SPEAKS,
     mrd(MR_RES_ELEC, 2),
     3200, 12, MONS_GIANT, MONS_TITAN, MH_NATURAL, -7,
@@ -2626,7 +2626,7 @@ static monsterentry mondata[] = {
 
 // dragons ('D')
 {
-    MONS_WYVERN, 'D', LIGHTRED, "wyvern",
+    MONS_WYVERN, 'D', LIGHTRED, M_("wyvern"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1200, 15, MONS_WYVERN, MONS_WYVERN, MH_NATURAL, -3,
@@ -2638,7 +2638,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DRAGON, 'D', GREEN, "dragon",
+    MONS_DRAGON, 'D', GREEN, M_("dragon"),
     M_WARM_BLOOD,
     MR_RES_POISON | mrd(MR_RES_FIRE, 2) | MR_VUL_COLD,
     2400, 12, MONS_DRAGON, MONS_DRAGON, MH_NATURAL, -4,
@@ -2651,7 +2651,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HYDRA, 'D', LIGHTGREEN, "hydra",
+    MONS_HYDRA, 'D', LIGHTGREEN, M_("hydra"),
     M_WARM_BLOOD,
     MR_RES_POISON,
     1800, 11, MONS_HYDRA, MONS_HYDRA, MH_NATURAL, -3,
@@ -2663,7 +2663,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ICE_DRAGON, 'D', WHITE, "ice dragon",
+    MONS_ICE_DRAGON, 'D', WHITE, M_("ice dragon"),
     M_COLD_BLOOD,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 2),
     2400, 10, MONS_DRAGON, MONS_ICE_DRAGON, MH_NATURAL, -3,
@@ -2676,7 +2676,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_STEAM_DRAGON, 'D', BLUE, "steam dragon",
+    MONS_STEAM_DRAGON, 'D', BLUE, M_("steam dragon"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_STEAM,
     1500, 29, MONS_DRAGON, MONS_STEAM_DRAGON, MH_NATURAL, -3,
@@ -2688,7 +2688,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SWAMP_DRAGON, 'D', BROWN, "swamp dragon",
+    MONS_SWAMP_DRAGON, 'D', BROWN, M_("swamp dragon"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON,
     2200, 11, MONS_DRAGON, MONS_SWAMP_DRAGON, MH_NATURAL, -3,
@@ -2701,7 +2701,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MOTTLED_DRAGON, 'D', LIGHTMAGENTA, "mottled dragon",
+    MONS_MOTTLED_DRAGON, 'D', LIGHTMAGENTA, M_("mottled dragon"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_STICKY_FLAME,
     1300, 16, MONS_DRAGON, MONS_MOTTLED_DRAGON, MH_NATURAL, -3,
@@ -2713,7 +2713,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_QUICKSILVER_DRAGON, 'D', LIGHTCYAN, "quicksilver dragon",
+    MONS_QUICKSILVER_DRAGON, 'D', LIGHTCYAN, M_("quicksilver dragon"),
     M_SPELLCASTER | M_SENSE_INVIS | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     1900, 14, MONS_DRAGON, MONS_QUICKSILVER_DRAGON, MH_NATURAL, -7,
@@ -2725,7 +2725,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_DRAGON, 'D', CYAN, "iron dragon",
+    MONS_IRON_DRAGON, 'D', CYAN, M_("iron dragon"),
     M_SPELLCASTER | M_SENSE_INVIS | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD,
     2800, 14, MONS_DRAGON, MONS_IRON_DRAGON, MH_NATURAL, -7,
@@ -2738,7 +2738,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_STORM_DRAGON, 'D', LIGHTBLUE, "storm dragon",
+    MONS_STORM_DRAGON, 'D', LIGHTBLUE, M_("storm dragon"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS,
     mrd(MR_RES_ELEC, 3) | MR_RES_COLD,
     2700, 13, MONS_DRAGON, MONS_STORM_DRAGON, MH_NATURAL, -5,
@@ -2751,7 +2751,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GOLDEN_DRAGON, 'D', YELLOW, "golden dragon",
+    MONS_GOLDEN_DRAGON, 'D', YELLOW, M_("golden dragon"),
     M_SPELLCASTER | M_SENSE_INVIS | M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_RES_ELEC | MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD,
     3000, 26, MONS_DRAGON, MONS_GOLDEN_DRAGON, MH_NATURAL, -8,
@@ -2764,7 +2764,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW_DRAGON, 'D', MAGENTA, "shadow dragon",
+    MONS_SHADOW_DRAGON, 'D', MAGENTA, M_("shadow dragon"),
     M_SPELLCASTER | M_SEE_INVIS | M_COLD_BLOOD | M_FAKE_SPELLS,
     MR_RES_POISON | mrd(MR_RES_COLD, 2),
     1800, 12, MONS_DRAGON, MONS_SHADOW_DRAGON, MH_NATURAL, -5,
@@ -2777,7 +2777,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BONE_DRAGON, 'D', LIGHTGREY, "bone dragon",
+    MONS_BONE_DRAGON, 'D', LIGHTGREY, M_("bone dragon"),
     M_SENSE_INVIS,
     MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 12, MONS_DRAGON, MONS_BONE_DRAGON, MH_UNDEAD, -4,
@@ -2790,7 +2790,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PEARL_DRAGON, 'D', ETC_HOLY, "pearl dragon",
+    MONS_PEARL_DRAGON, 'D', ETC_HOLY, M_("pearl dragon"),
     M_SPELLCASTER | M_SENSE_INVIS | M_WARM_BLOOD | M_GLOWS_LIGHT,
     MR_NO_FLAGS,
     1900, 16, MONS_DRAGON, MONS_PEARL_DRAGON, MH_HOLY, -7,
@@ -2804,7 +2804,7 @@ static monsterentry mondata[] = {
 
 // elementals (E)
 {
-    MONS_EARTH_ELEMENTAL, 'E', ETC_EARTH, "earth elemental",
+    MONS_EARTH_ELEMENTAL, 'E', ETC_EARTH, M_("earth elemental"),
     M_NO_FLAGS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 13, MONS_EARTH_ELEMENTAL, MONS_EARTH_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
@@ -2816,7 +2816,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FIRE_ELEMENTAL, 'E', ETC_FIRE, "fire elemental",
+    MONS_FIRE_ELEMENTAL, 'E', ETC_FIRE, M_("fire elemental"),
     M_INSUBSTANTIAL | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD | MR_RES_ELEC,
     0, 10, MONS_EARTH_ELEMENTAL, MONS_FIRE_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
@@ -2828,7 +2828,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WATER_ELEMENTAL, 'E', ETC_WATER, "water elemental",
+    MONS_WATER_ELEMENTAL, 'E', ETC_WATER, M_("water elemental"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_VUL_FIRE | MR_RES_ELEC,
     0, 10, MONS_EARTH_ELEMENTAL, MONS_WATER_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
@@ -2840,7 +2840,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_AIR_ELEMENTAL, 'E', ETC_AIR, "air elemental",
+    MONS_AIR_ELEMENTAL, 'E', ETC_AIR, M_("air elemental"),
     M_SEE_INVIS | M_INSUBSTANTIAL | M_GLOWS_LIGHT,
     mrd(MR_RES_ELEC, 3) | MR_RES_POISON,
     0, 6, MONS_EARTH_ELEMENTAL, MONS_AIR_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
@@ -2852,7 +2852,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_ELEMENTAL, 'E', ETC_IRON, "iron elemental",
+    MONS_IRON_ELEMENTAL, 'E', ETC_IRON, M_("iron elemental"),
     M_SPELLCASTER,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 13, MONS_EARTH_ELEMENTAL, MONS_IRON_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
@@ -2865,7 +2865,7 @@ static monsterentry mondata[] = {
 
 // frogs ('F')
 {
-    MONS_GIANT_FROG, 'F', GREEN, "giant frog",
+    MONS_GIANT_FROG, 'F', GREEN, M_("giant frog"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     600, 10, MONS_GIANT_FROG, MONS_GIANT_FROG, MH_NATURAL, -3,
@@ -2879,7 +2879,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPINY_FROG, 'F', YELLOW, "spiny frog",
+    MONS_SPINY_FROG, 'F', YELLOW, M_("spiny frog"),
     M_COLD_BLOOD,
     MR_RES_POISON,
     700, 16, MONS_GIANT_FROG, MONS_SPINY_FROG, MH_NATURAL, -3,
@@ -2893,7 +2893,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLINK_FROG, 'F', LIGHTGREEN, "blink frog",
+    MONS_BLINK_FROG, 'F', LIGHTGREEN, M_("blink frog"),
     M_COLD_BLOOD | M_PHASE_SHIFT,
     MR_NO_FLAGS,
     450, 13, MONS_BLINK_FROG, MONS_BLINK_FROG, MH_NATURAL, -5,
@@ -2906,7 +2906,7 @@ static monsterentry mondata[] = {
 
 // eyes ('G')
 {
-    MONS_GIANT_EYEBALL, 'G', WHITE, "giant eyeball",
+    MONS_GIANT_EYEBALL, 'G', WHITE, M_("giant eyeball"),
     M_NO_SKELETON,
     MR_RES_ASPHYX,
     400, 10, MONS_GIANT_EYEBALL, MONS_GIANT_EYEBALL, MH_NATURAL, -3,
@@ -2918,7 +2918,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EYE_OF_DRAINING, 'G', LIGHTGREY, "eye of draining",
+    MONS_EYE_OF_DRAINING, 'G', LIGHTGREY, M_("eye of draining"),
     M_NO_SKELETON | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_ASPHYX,
     400, 10, MONS_GIANT_EYEBALL, MONS_EYE_OF_DRAINING, MH_NATURAL, MAG_IMMUNE,
@@ -2930,7 +2930,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_ORANGE_BRAIN, 'G', LIGHTRED, "giant orange brain",
+    MONS_GIANT_ORANGE_BRAIN, 'G', LIGHTRED, M_("giant orange brain"),
     M_WARM_BLOOD | M_NO_SKELETON | M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_ASPHYX,
     500, 13, MONS_GIANT_ORANGE_BRAIN, MONS_GIANT_ORANGE_BRAIN, MH_NATURAL, -8,
@@ -2942,7 +2942,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREAT_ORB_OF_EYES, 'G', LIGHTGREEN, "great orb of eyes",
+    MONS_GREAT_ORB_OF_EYES, 'G', LIGHTGREEN, M_("great orb of eyes"),
     M_NO_SKELETON | M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_POISON,
     700, 13, MONS_GIANT_EYEBALL, MONS_GREAT_ORB_OF_EYES, MH_NATURAL, MAG_IMMUNE,
@@ -2954,7 +2954,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHINING_EYE, 'G', LIGHTMAGENTA, "shining eye",
+    MONS_SHINING_EYE, 'G', LIGHTMAGENTA, M_("shining eye"),
     M_NO_SKELETON | M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_RADIATION,
     MR_RES_ASPHYX,
     450, 14, MONS_GIANT_EYEBALL, MONS_SHINING_EYE, MH_NATURAL, MAG_IMMUNE,
@@ -2966,7 +2966,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EYE_OF_DEVASTATION, 'G', YELLOW, "eye of devastation",
+    MONS_EYE_OF_DEVASTATION, 'G', YELLOW, M_("eye of devastation"),
     M_NO_SKELETON | M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_ASPHYX,
     450, 11, MONS_GIANT_EYEBALL, MONS_EYE_OF_DEVASTATION,
@@ -2979,7 +2979,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GOLDEN_EYE, 'G', ETC_GOLD, "golden eye",
+    MONS_GOLDEN_EYE, 'G', ETC_GOLD, M_("golden eye"),
     M_BATTY | M_GLOWS_LIGHT,
     MR_RES_ASPHYX,
     0, 17, MONS_GIANT_EYEBALL, MONS_GOLDEN_EYE, MH_NATURAL, MAG_IMMUNE,
@@ -2991,7 +2991,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_OPHAN, 'G', RED, "ophan",
+    MONS_OPHAN, 'G', RED, M_("ophan"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_ASPHYX,
     0, 14, MONS_ANGEL, MONS_OPHAN, MH_HOLY, MAG_IMMUNE,
@@ -3004,7 +3004,7 @@ static monsterentry mondata[] = {
 
 // hybrids ('H')
 {
-    MONS_HIPPOGRIFF, 'H', BROWN, "hippogriff",
+    MONS_HIPPOGRIFF, 'H', BROWN, M_("hippogriff"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1150, 8, MONS_HIPPOGRIFF, MONS_HIPPOGRIFF, MH_NATURAL, -3,
@@ -3017,7 +3017,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MANTICORE, 'H', RED, "manticore",
+    MONS_MANTICORE, 'H', RED, M_("manticore"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1200, 10, MONS_MANTICORE, MONS_MANTICORE, MH_NATURAL, -3,
@@ -3030,7 +3030,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MINOTAUR, 'H', LIGHTRED, "minotaur",
+    MONS_MINOTAUR, 'H', LIGHTRED, M_("minotaur"),
     M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     900, 10, MONS_MINOTAUR, MONS_MINOTAUR, MH_NATURAL, -3,
@@ -3044,7 +3044,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GRIFFON, 'H', YELLOW, "griffon",
+    MONS_GRIFFON, 'H', YELLOW, M_("griffon"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1700, 5, MONS_GRIFFON, MONS_GRIFFON, MH_NATURAL, -3,
@@ -3057,7 +3057,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPHINX, 'H', LIGHTGREY, "sphinx",
+    MONS_SPHINX, 'H', LIGHTGREY, M_("sphinx"),
     M_SENSE_INVIS | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1800, 12, MONS_SPHINX, MONS_SPHINX, MH_NATURAL, -3,
@@ -3070,7 +3070,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HARPY, 'H', GREEN, "harpy",
+    MONS_HARPY, 'H', GREEN, M_("harpy"),
     M_WARM_BLOOD | M_BATTY,
     MR_RES_POISON,
     480, 9, MONS_HARPY, MONS_HARPY, MH_NATURAL, -3,
@@ -3085,7 +3085,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KENKU, 'H', LIGHTBLUE, "kenku", // likely to become 'Q'
+    MONS_KENKU, 'H', LIGHTBLUE, M_("kenku"), // likely to become 'Q'
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_KENKU, MONS_KENKU, MH_NATURAL, -3,
@@ -3098,7 +3098,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHEDU, 'H', WHITE, "shedu",
+    MONS_SHEDU, 'H', WHITE, M_("shedu"),
     M_WARM_BLOOD | M_ALWAYS_CORPSE | M_SPELLCASTER,
     MR_RES_POISON,
     480, 12, MONS_PHOENIX, MONS_SHEDU, MH_HOLY, -3,
@@ -3111,7 +3111,7 @@ static monsterentry mondata[] = {
 
 // various beasts ('I')
 {
-    MONS_ICE_BEAST, 'I', WHITE, "ice beast",
+    MONS_ICE_BEAST, 'I', WHITE, M_("ice beast"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_RES_ASPHYX | MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 13, MONS_ICE_BEAST, MONS_ICE_BEAST, MH_NATURAL, -3,
@@ -3123,7 +3123,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SKY_BEAST, 'I', LIGHTCYAN, "sky beast",
+    MONS_SKY_BEAST, 'I', LIGHTCYAN, M_("sky beast"),
     M_NO_SKELETON,
     MR_RES_ASPHYX | mrd(MR_RES_ELEC, 3),
     480, 13, MONS_SKY_BEAST, MONS_SKY_BEAST, MH_NATURAL, -3,
@@ -3136,7 +3136,7 @@ static monsterentry mondata[] = {
 
 // jellies ('J')
 {
-    MONS_OOZE, 'J', LIGHTGREY, "ooze",
+    MONS_OOZE, 'J', LIGHTGREY, M_("ooze"),
     M_SENSE_INVIS,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
     0, 3, MONS_JELLY, MONS_OOZE, MH_NATURAL, -6,
@@ -3148,7 +3148,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JELLY, 'J', LIGHTRED, "jelly",
+    MONS_JELLY, 'J', LIGHTRED, M_("jelly"),
     M_SEE_INVIS | M_SPLITS | M_ACID_SPLASH,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
     0, 15, MONS_JELLY, MONS_JELLY, MH_NATURAL, -3,
@@ -3160,7 +3160,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SLIME_CREATURE, 'J', GREEN, "slime creature",
+    MONS_SLIME_CREATURE, 'J', GREEN, M_("slime creature"),
     M_NO_FLAGS | M_HERD,
     MR_RES_POISON | MR_RES_ASPHYX,
     0, 5, MONS_JELLY, MONS_SLIME_CREATURE, MH_NATURAL, -3,
@@ -3172,7 +3172,7 @@ static monsterentry mondata[] = {
 },
 
 {   // not an actual monster, it's here just to allow recoloring
-    MONS_MERGED_SLIME_CREATURE, 'J', LIGHTGREEN, "merged slime creature",
+    MONS_MERGED_SLIME_CREATURE, 'J', LIGHTGREEN, M_("merged slime creature"),
     M_NO_POLY_TO,
     MR_RES_POISON | MR_RES_ASPHYX,
     0, 5, MONS_JELLY, MONS_SLIME_CREATURE, MH_NATURAL, -3,
@@ -3184,7 +3184,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PULSATING_LUMP, 'J', RED, "pulsating lump",
+    MONS_PULSATING_LUMP, 'J', RED, M_("pulsating lump"),
     M_SENSE_INVIS,
     MR_RES_POISON | MR_RES_ASPHYX,
     0, 3, MONS_JELLY, MONS_PULSATING_LUMP, MH_NATURAL, -3,
@@ -3196,7 +3196,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_AMOEBA, 'J', BLUE, "giant amoeba",
+    MONS_GIANT_AMOEBA, 'J', BLUE, M_("giant amoeba"),
     M_NO_SKELETON | M_SENSE_INVIS,
     MR_RES_POISON | MR_RES_ASPHYX,
     700, 7, MONS_JELLY, MONS_GIANT_AMOEBA, MH_NATURAL, -3,
@@ -3208,7 +3208,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BROWN_OOZE, 'J', BROWN, "brown ooze",
+    MONS_BROWN_OOZE, 'J', BROWN, M_("brown ooze"),
     M_SENSE_INVIS | M_ACID_SPLASH,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
     0, 11, MONS_JELLY, MONS_BROWN_OOZE, MH_NATURAL, -7,
@@ -3220,7 +3220,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_AZURE_JELLY, 'J', LIGHTBLUE, "azure jelly",
+    MONS_AZURE_JELLY, 'J', LIGHTBLUE, M_("azure jelly"),
     M_SENSE_INVIS,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_COLD | MR_VUL_FIRE | MR_RES_ELEC
         | MR_RES_ACID,
@@ -3234,7 +3234,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEATH_OOZE, 'J', MAGENTA, "death ooze",
+    MONS_DEATH_OOZE, 'J', MAGENTA, M_("death ooze"),
     M_SENSE_INVIS,
     MR_RES_COLD | MR_RES_ACID,
     0, 13, MONS_JELLY, MONS_DEATH_OOZE, MH_UNDEAD, -8,
@@ -3246,7 +3246,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ACID_BLOB, 'J', LIGHTCYAN, "acid blob",
+    MONS_ACID_BLOB, 'J', LIGHTCYAN, M_("acid blob"),
     M_SENSE_INVIS | M_ACID_SPLASH,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
     0, 12, MONS_JELLY, MONS_ACID_BLOB, MH_NATURAL, -7,
@@ -3259,7 +3259,7 @@ static monsterentry mondata[] = {
 
 // kobolds ('K')
 {
-    MONS_KOBOLD, 'K', BROWN, "kobold",
+    MONS_KOBOLD, 'K', BROWN, M_("kobold"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     400, 10, MONS_KOBOLD, MONS_KOBOLD, MH_NATURAL, -1,
@@ -3271,7 +3271,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BIG_KOBOLD, 'K', YELLOW, "big kobold",
+    MONS_BIG_KOBOLD, 'K', YELLOW, M_("big kobold"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     500, 7, MONS_KOBOLD, MONS_BIG_KOBOLD, MH_NATURAL, -3,
@@ -3283,7 +3283,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KOBOLD_DEMONOLOGIST, 'K', MAGENTA, "kobold demonologist",
+    MONS_KOBOLD_DEMONOLOGIST, 'K', MAGENTA, M_("kobold demonologist"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     400, 18, MONS_KOBOLD, MONS_KOBOLD, MH_NATURAL, -5,
@@ -3296,7 +3296,7 @@ static monsterentry mondata[] = {
 
 // liches ('L')
 {
-    MONS_LICH, 'L', LIGHTGREY, "lich",
+    MONS_LICH, 'L', LIGHTGREY, M_("lich"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_COLD, 2),
     0, 18, MONS_LICH, MONS_LICH, MH_UNDEAD, -11,
@@ -3308,7 +3308,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ANCIENT_LICH, 'L', WHITE, "ancient lich",
+    MONS_ANCIENT_LICH, 'L', WHITE, M_("ancient lich"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_COLD, 2) | MR_RES_FIRE | MR_RES_ELEC,
     0, 24, MONS_LICH, MONS_LICH, MH_UNDEAD, -14,
@@ -3321,7 +3321,7 @@ static monsterentry mondata[] = {
 
 // mummies ('M')
 {
-    MONS_MUMMY, 'M', LIGHTGREY, "mummy",
+    MONS_MUMMY, 'M', LIGHTGREY, M_("mummy"),
     M_NO_FLAGS,
     MR_VUL_FIRE | MR_RES_COLD,
     0, 21, MONS_MUMMY, MONS_MUMMY, MH_UNDEAD, -5,
@@ -3333,7 +3333,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BOG_MUMMY, 'M', BROWN, "bog mummy",
+    MONS_BOG_MUMMY, 'M', BROWN, M_("bog mummy"),
     M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_RES_FIRE | MR_RES_COLD,
     0, 21, MONS_MUMMY, MONS_BOG_MUMMY, MH_UNDEAD, -5,
@@ -3346,7 +3346,7 @@ static monsterentry mondata[] = {
 
 
 {
-    MONS_GUARDIAN_MUMMY, 'M', YELLOW, "guardian mummy",
+    MONS_GUARDIAN_MUMMY, 'M', YELLOW, M_("guardian mummy"),
     M_FIGHTER | M_SEE_INVIS,
     MR_RES_COLD,
     0, 13, MONS_MUMMY, MONS_GUARDIAN_MUMMY, MH_UNDEAD, -5,
@@ -3358,7 +3358,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREATER_MUMMY, 'M', WHITE, "greater mummy",
+    MONS_GREATER_MUMMY, 'M', WHITE, M_("greater mummy"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     MR_RES_COLD | MR_RES_ELEC,
     0, 24, MONS_MUMMY, MONS_MUMMY, MH_UNDEAD, MAG_IMMUNE,
@@ -3370,7 +3370,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MUMMY_PRIEST, 'M', RED, "mummy priest",
+    MONS_MUMMY_PRIEST, 'M', RED, M_("mummy priest"),
     M_SPELLCASTER | M_PRIEST | M_SEE_INVIS | M_SPEAKS,
     MR_RES_COLD | MR_RES_ELEC,
     0, 20, MONS_MUMMY, MONS_MUMMY, MH_UNDEAD, MAG_IMMUNE,
@@ -3383,7 +3383,7 @@ static monsterentry mondata[] = {
 
 // nagas ('N')
 {
-    MONS_NAGA, 'N', GREEN, "naga",
+    MONS_NAGA, 'N', GREEN, M_("naga"),
     M_SPELLCASTER | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     1000, 10, MONS_NAGA, MONS_NAGA, MH_NATURAL, -6,
@@ -3395,7 +3395,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NAGA_MAGE, 'N', RED, "naga mage",
+    MONS_NAGA_MAGE, 'N', RED, M_("naga mage"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     1000, 13, MONS_NAGA, MONS_NAGA, MH_NATURAL, -6,
@@ -3407,7 +3407,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NAGA_WARRIOR, 'N', BLUE, "naga warrior",
+    MONS_NAGA_WARRIOR, 'N', BLUE, M_("naga warrior"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     1000, 8, MONS_NAGA, MONS_NAGA, MH_NATURAL, -6,
@@ -3419,7 +3419,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREATER_NAGA, 'N', LIGHTMAGENTA, "greater naga",
+    MONS_GREATER_NAGA, 'N', LIGHTMAGENTA, M_("greater naga"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD
         | M_SPEAKS,
     MR_RES_POISON,
@@ -3433,7 +3433,7 @@ static monsterentry mondata[] = {
 
 // ogres ('O')
 {
-    MONS_OGRE, 'O', BROWN, "ogre",
+    MONS_OGRE, 'O', BROWN, M_("ogre"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1300, 9, MONS_OGRE, MONS_OGRE, MH_NATURAL, -3,
@@ -3447,7 +3447,7 @@ static monsterentry mondata[] = {
 // These guys get understated because the experience code can't see
 // that they wield two weapons... I'm raising their xp modifier. - bwr
 {
-    MONS_TWO_HEADED_OGRE, 'O', LIGHTRED, "two-headed ogre",
+    MONS_TWO_HEADED_OGRE, 'O', LIGHTRED, M_("two-headed ogre"),
     M_WARM_BLOOD | M_TWO_WEAPONS | M_SPEAKS,
     MR_NO_FLAGS,
     1390, 15, MONS_OGRE, MONS_TWO_HEADED_OGRE, MH_NATURAL, -4,
@@ -3459,7 +3459,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_OGRE_MAGE, 'O', MAGENTA, "ogre mage",
+    MONS_OGRE_MAGE, 'O', MAGENTA, M_("ogre mage"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1300, 16, MONS_OGRE, MONS_OGRE, MH_NATURAL, -6,
@@ -3472,7 +3472,7 @@ static monsterentry mondata[] = {
 
 // plants ('P')
 {
-    MONS_PLANT, 'P', GREEN, "plant",
+    MONS_PLANT, 'P', GREEN, M_("plant"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON,
     0, 10, MONS_PLANT, MONS_PLANT, MH_PLANT, MAG_IMMUNE,
@@ -3484,7 +3484,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_OKLOB_SAPLING, 'P', LIGHTCYAN, "oklob sapling",
+    MONS_OKLOB_SAPLING, 'P', LIGHTCYAN, M_("oklob sapling"),
     // if we decide to allow this for normal games, please remove M_NO_POLY_TO
     M_STATIONARY | M_NO_POLY_TO,
     MR_RES_POISON | MR_RES_ACID,
@@ -3497,7 +3497,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_OKLOB_PLANT, 'P', LIGHTGREEN, "oklob plant",
+    MONS_OKLOB_PLANT, 'P', LIGHTGREEN, M_("oklob plant"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ACID,
     0, 10, MONS_PLANT, MONS_OKLOB_PLANT, MH_PLANT, -3,
@@ -3509,7 +3509,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BUSH, 'P', BROWN, "bush",
+    MONS_BUSH, 'P', BROWN, M_("bush"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON | MR_VUL_FIRE,
     0, 10, MONS_PLANT, MONS_BUSH, MH_PLANT, MAG_IMMUNE,
@@ -3521,7 +3521,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BURNING_BUSH, 'P', RED, "burning bush",
+    MONS_BURNING_BUSH, 'P', RED, M_("burning bush"),
     // if we decide to allow this for normal games, please remove M_NO_POLY_TO
     M_STATIONARY | M_SEE_INVIS | M_NO_POLY_TO,
     MR_RES_POISON | MR_RES_FIRE,
@@ -3535,7 +3535,7 @@ static monsterentry mondata[] = {
 
 // rakshasas and efreeti ('R')
 {
-    MONS_EFREET, 'R', RED, "efreet",
+    MONS_EFREET, 'R', RED, M_("efreet"),
     M_SPELLCASTER | M_SPEAKS | M_GLOWS_LIGHT,
     MR_RES_POISON | mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 12, MONS_EFREET, MONS_EFREET, MH_DEMONIC, -3,
@@ -3547,7 +3547,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_RAKSHASA, 'R', YELLOW, "rakshasa",
+    MONS_RAKSHASA, 'R', YELLOW, M_("rakshasa"),
     M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_POISON,
     0, 15, MONS_RAKSHASA, MONS_RAKSHASA, MH_DEMONIC, -10,
@@ -3560,7 +3560,7 @@ static monsterentry mondata[] = {
 
 // fake R - conjured by the R's illusion spell.
 {
-    MONS_RAKSHASA_FAKE, 'R', YELLOW, "rakshasa",
+    MONS_RAKSHASA_FAKE, 'R', YELLOW, M_("rakshasa"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_RAKSHASA_FAKE, MONS_RAKSHASA_FAKE, MH_DEMONIC, MAG_IMMUNE,
@@ -3573,7 +3573,7 @@ static monsterentry mondata[] = {
 
 // snakes ('S')
 {
-    MONS_SMALL_SNAKE, 'S', GREEN, "small snake",
+    MONS_SMALL_SNAKE, 'S', GREEN, M_("small snake"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     100, 13, MONS_SNAKE, MONS_SMALL_SNAKE, MH_NATURAL, -1,
@@ -3585,7 +3585,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SNAKE, 'S', LIGHTGREEN, "snake",
+    MONS_SNAKE, 'S', LIGHTGREEN, M_("snake"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     200, 10, MONS_SNAKE, MONS_SNAKE, MH_NATURAL, -3,
@@ -3597,7 +3597,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WATER_MOCCASIN, 'S', BROWN, "water moccasin",
+    MONS_WATER_MOCCASIN, 'S', BROWN, M_("water moccasin"),
     M_COLD_BLOOD,
     MR_RES_POISON,
     300, 11, MONS_SNAKE, MONS_WATER_MOCCASIN, MH_NATURAL, -3,
@@ -3609,7 +3609,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLACK_MAMBA, 'S', BLUE, "black mamba",
+    MONS_BLACK_MAMBA, 'S', BLUE, M_("black mamba"),
     M_COLD_BLOOD,
     MR_RES_POISON,
     500, 12, MONS_SNAKE, MONS_BLACK_MAMBA, MH_NATURAL, -3,
@@ -3621,7 +3621,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SEA_SNAKE, 'S', LIGHTCYAN, "sea snake",
+    MONS_SEA_SNAKE, 'S', LIGHTCYAN, M_("sea snake"),
     M_COLD_BLOOD | M_SUBMERGES,
     MR_NO_FLAGS,
     400, 10, MONS_SNAKE, MONS_SEA_SNAKE, MH_NATURAL, -3,
@@ -3633,7 +3633,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ANACONDA, 'S', LIGHTGREY, "anaconda",
+    MONS_ANACONDA, 'S', LIGHTGREY, M_("anaconda"),
     M_COLD_BLOOD,
     MR_NO_FLAGS,
     750, 10, MONS_SNAKE, MONS_ANACONDA, MH_NATURAL, -3,
@@ -3645,7 +3645,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GUARDIAN_SERPENT, 'S', WHITE, "guardian serpent",
+    MONS_GUARDIAN_SERPENT, 'S', WHITE, M_("guardian serpent"),
     M_SPELLCASTER | M_SEE_INVIS | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     800, 10, MONS_GUARDIAN_SERPENT, MONS_GUARDIAN_SERPENT, MH_NATURAL, -6,
@@ -3658,7 +3658,7 @@ static monsterentry mondata[] = {
 
 // trolls ('T')
 {
-    MONS_TROLL, 'T', BROWN, "troll",
+    MONS_TROLL, 'T', BROWN, M_("troll"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 10, MONS_TROLL, MONS_TROLL, MH_NATURAL, -3,
@@ -3671,7 +3671,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ROCK_TROLL, 'T', LIGHTGREY, "rock troll",
+    MONS_ROCK_TROLL, 'T', LIGHTGREY, M_("rock troll"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1600, 11, MONS_TROLL, MONS_ROCK_TROLL, MH_NATURAL, -4,
@@ -3684,7 +3684,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_TROLL, 'T', CYAN, "iron troll",
+    MONS_IRON_TROLL, 'T', CYAN, M_("iron troll"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_RES_FIRE | MR_RES_COLD,
     1800, 10, MONS_TROLL, MONS_IRON_TROLL, MH_NATURAL, -5,
@@ -3697,7 +3697,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEEP_TROLL, 'T', YELLOW, "deep troll",
+    MONS_DEEP_TROLL, 'T', YELLOW, M_("deep troll"),
     M_WARM_BLOOD | M_SENSE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 13, MONS_TROLL, MONS_DEEP_TROLL, MH_NATURAL, -3,
@@ -3711,7 +3711,7 @@ static monsterentry mondata[] = {
 
 // bears ('U')
 {
-    MONS_GRIZZLY_BEAR, 'U', LIGHTGREY, "grizzly bear",
+    MONS_GRIZZLY_BEAR, 'U', LIGHTGREY, M_("grizzly bear"),
     M_WARM_BLOOD | M_SPELLCASTER| M_FAKE_SPELLS,
     MR_NO_FLAGS,
     1100, 10, MONS_GRIZZLY_BEAR, MONS_GRIZZLY_BEAR, MH_NATURAL, -3,
@@ -3724,7 +3724,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_POLAR_BEAR, 'U', WHITE, "polar bear",
+    MONS_POLAR_BEAR, 'U', WHITE, M_("polar bear"),
     M_WARM_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS,
     MR_RES_COLD,
     1200, 12, MONS_GRIZZLY_BEAR, MONS_POLAR_BEAR, MH_NATURAL, -3,
@@ -3737,7 +3737,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLACK_BEAR, 'U', BLUE, "black bear",
+    MONS_BLACK_BEAR, 'U', BLUE, M_("black bear"),
     M_WARM_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     800, 9, MONS_GRIZZLY_BEAR, MONS_BLACK_BEAR, MH_NATURAL, -3,
@@ -3751,7 +3751,7 @@ static monsterentry mondata[] = {
 
 // vampires ('V')
 {
-    MONS_VAMPIRE, 'V', RED, "vampire",
+    MONS_VAMPIRE, 'V', RED, M_("vampire"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS | M_BLOOD_SCENT
         | M_WARM_BLOOD,
     MR_RES_COLD,
@@ -3765,7 +3765,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VAMPIRE_KNIGHT, 'V', CYAN, "vampire knight",
+    MONS_VAMPIRE_KNIGHT, 'V', CYAN, M_("vampire knight"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS
         | M_BLOOD_SCENT | M_WARM_BLOOD,
     MR_RES_COLD,
@@ -3779,7 +3779,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VAMPIRE_MAGE, 'V', MAGENTA, "vampire mage",
+    MONS_VAMPIRE_MAGE, 'V', MAGENTA, M_("vampire mage"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS | M_BLOOD_SCENT
         | M_WARM_BLOOD,
     MR_RES_COLD,
@@ -3794,7 +3794,7 @@ static monsterentry mondata[] = {
 
 // wraiths ('W')
 {
-    MONS_WRAITH, 'W', WHITE, "wraith",
+    MONS_WRAITH, 'W', WHITE, M_("wraith"),
     M_SEE_INVIS | M_INSUBSTANTIAL,
     MR_RES_COLD,
     0, 14, MONS_WRAITH, MONS_WRAITH, MH_UNDEAD, -7,
@@ -3806,7 +3806,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW_WRAITH, 'W', MAGENTA, "shadow wraith",
+    MONS_SHADOW_WRAITH, 'W', MAGENTA, M_("shadow wraith"),
     M_SEE_INVIS | M_INVIS | M_INSUBSTANTIAL,
     MR_NO_FLAGS,
     0, 15, MONS_WRAITH, MONS_SHADOW_WRAITH, MH_UNDEAD, -8,
@@ -3818,7 +3818,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FREEZING_WRAITH, 'W', LIGHTBLUE, "freezing wraith",
+    MONS_FREEZING_WRAITH, 'W', LIGHTBLUE, M_("freezing wraith"),
     M_SEE_INVIS | M_INSUBSTANTIAL,
     MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 10, MONS_WRAITH, MONS_FREEZING_WRAITH, MH_UNDEAD, -4,
@@ -3830,7 +3830,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EIDOLON, 'W', LIGHTGREY, "eidolon",
+    MONS_EIDOLON, 'W', LIGHTGREY, M_("eidolon"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT | M_INSUBSTANTIAL,
     MR_RES_COLD,
     0, 14, MONS_WRAITH, MONS_EIDOLON, MH_UNDEAD, -8,
@@ -3843,7 +3843,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PHANTASMAL_WARRIOR, 'W', LIGHTGREEN, "phantasmal warrior",
+    MONS_PHANTASMAL_WARRIOR, 'W', LIGHTGREEN, M_("phantasmal warrior"),
     M_SEE_INVIS | M_GLOWS_LIGHT | M_INSUBSTANTIAL,
     MR_RES_COLD,
     0, 13, MONS_WRAITH, MONS_PHANTASMAL_WARRIOR, MH_UNDEAD, -6,
@@ -3856,7 +3856,7 @@ static monsterentry mondata[] = {
 
 // spectral thing - similar to zombies/skeletons
 {
-    MONS_SPECTRAL_THING, 'W', GREEN, "spectral thing",
+    MONS_SPECTRAL_THING, 'W', GREEN, M_("spectral thing"),
     M_SEE_INVIS | M_GLOWS_LIGHT | M_INSUBSTANTIAL,
     MR_RES_COLD,
     0, 11, MONS_WRAITH, MONS_SPECTRAL_THING, MH_UNDEAD, MAG_IMMUNE,
@@ -3870,7 +3870,7 @@ static monsterentry mondata[] = {
 // large abominations ('X')
 {
     // coloured with mon-util.cc:random_large_abomination_colour.
-    MONS_ABOMINATION_LARGE, 'X', BLACK, "large abomination",
+    MONS_ABOMINATION_LARGE, 'X', BLACK, M_("large abomination"),
     M_NO_FLAGS,
     MR_NO_FLAGS,
     0, 10, MONS_ABOMINATION_SMALL, MONS_ABOMINATION_LARGE, MH_DEMONIC, -7,
@@ -3882,7 +3882,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TENTACLED_MONSTROSITY, 'X', GREEN, "tentacled monstrosity",
+    MONS_TENTACLED_MONSTROSITY, 'X', GREEN, M_("tentacled monstrosity"),
     M_SEE_INVIS,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 10, MONS_TENTACLED_MONSTROSITY, MONS_TENTACLED_MONSTROSITY,
@@ -3896,7 +3896,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORB_GUARDIAN, 'X', MAGENTA, "Orb Guardian",
+    MONS_ORB_GUARDIAN, 'X', MAGENTA, M_("Orb Guardian"),
     M_FIGHTER | M_SEE_INVIS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 20, MONS_ORB_GUARDIAN, MONS_ORB_GUARDIAN, MH_NATURAL, -6,
@@ -3909,7 +3909,7 @@ static monsterentry mondata[] = {
 
 // yaks, sheep and elephants ('Y')
 {
-    MONS_SHEEP, 'Y', LIGHTGREY, "sheep",
+    MONS_SHEEP, 'Y', LIGHTGREY, M_("sheep"),
     M_WARM_BLOOD | M_HERD,
     MR_NO_FLAGS,
     900, 10, MONS_SHEEP, MONS_SHEEP, MH_NATURAL, -3,
@@ -3921,7 +3921,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_YAK, 'Y', BROWN, "yak",
+    MONS_YAK, 'Y', BROWN, M_("yak"),
     M_WARM_BLOOD | M_HERD,
     MR_NO_FLAGS,
     1200, 9, MONS_YAK, MONS_YAK, MH_NATURAL, -3,
@@ -3933,7 +3933,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DEATH_YAK, 'Y', YELLOW, "death yak",
+    MONS_DEATH_YAK, 'Y', YELLOW, M_("death yak"),
     M_WARM_BLOOD | M_HERD,
     MR_NO_FLAGS,
     1500, 8, MONS_YAK, MONS_DEATH_YAK, MH_NATURAL, -5,
@@ -3945,7 +3945,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CATOBLEPAS, 'Y', MAGENTA, "catoblepas",
+    MONS_CATOBLEPAS, 'Y', MAGENTA, M_("catoblepas"),
     M_SPELLCASTER | M_WARM_BLOOD | M_FAKE_SPELLS | M_NO_FLEE,
     MR_NO_FLAGS,
     1400, 8, MONS_YAK, MONS_CATOBLEPAS, MH_NATURAL, -5,
@@ -3957,7 +3957,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ELEPHANT, 'Y', GREEN, "elephant",
+    MONS_ELEPHANT, 'Y', GREEN, M_("elephant"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1600, 8, MONS_ELEPHANT, MONS_ELEPHANT, MH_NATURAL, -5,
@@ -3970,7 +3970,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DIRE_ELEPHANT, 'Y', BLUE, "dire elephant",
+    MONS_DIRE_ELEPHANT, 'Y', BLUE, M_("dire elephant"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     2200, 8, MONS_ELEPHANT, MONS_DIRE_ELEPHANT, MH_NATURAL, -5,
@@ -3983,7 +3983,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELLEPHANT, 'Y', LIGHTRED, "hellephant",
+    MONS_HELLEPHANT, 'Y', LIGHTRED, M_("hellephant"),
     M_WARM_BLOOD | M_SPELLCASTER,
     MR_NO_FLAGS,
     2800, 10, MONS_ELEPHANT, MONS_HELLEPHANT, MH_DEMONIC, -5,
@@ -3996,7 +3996,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_APIS, 'Y', WHITE, "apis",
+    MONS_APIS, 'Y', WHITE, M_("apis"),
     M_WARM_BLOOD,
     MR_NO_FLAGS,
     1800, 8, MONS_APIS, MONS_APIS, MH_HOLY, -5,
@@ -4011,7 +4011,7 @@ static monsterentry mondata[] = {
 // zombie, skeleton and simulacra species depend on corpse species,
 // or else are chosen randomly
 {
-    MONS_ZOMBIE_LARGE, 'Z', BROWN, "large zombie",
+    MONS_ZOMBIE_LARGE, 'Z', BROWN, M_("large zombie"),
     M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 9, MONS_ZOMBIE_SMALL, MONS_ZOMBIE_LARGE, MH_UNDEAD, -1,
@@ -4023,7 +4023,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SKELETON_LARGE, 'Z', LIGHTGREY, "large skeleton",
+    MONS_SKELETON_LARGE, 'Z', LIGHTGREY, M_("large skeleton"),
     M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 9, MONS_SKELETON_SMALL, MONS_SKELETON_LARGE, MH_UNDEAD, -1,
@@ -4035,7 +4035,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SIMULACRUM_LARGE, 'Z', ETC_ICE, "large simulacrum",
+    MONS_SIMULACRUM_LARGE, 'Z', ETC_ICE, M_("large simulacrum"),
     M_NO_REGEN,
     MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 9, MONS_SIMULACRUM_SMALL, MONS_SIMULACRUM_LARGE, MH_UNDEAD, -1,
@@ -4048,7 +4048,7 @@ static monsterentry mondata[] = {
 
 // water monsters
 {
-    MONS_BIG_FISH, ';', LIGHTGREEN, "big fish",
+    MONS_BIG_FISH, ';', LIGHTGREEN, M_("big fish"),
     M_COLD_BLOOD | M_SUBMERGES,
     MR_NO_FLAGS,
     300, 7, MONS_BIG_FISH, MONS_BIG_FISH, MH_NATURAL, -3,
@@ -4060,7 +4060,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_GOLDFISH, ';', LIGHTRED, "giant goldfish",
+    MONS_GIANT_GOLDFISH, ';', LIGHTRED, M_("giant goldfish"),
     M_COLD_BLOOD | M_SUBMERGES,
     MR_NO_FLAGS,
     450, 5, MONS_BIG_FISH, MONS_GIANT_GOLDFISH, MH_NATURAL, -3,
@@ -4072,7 +4072,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ELECTRIC_EEL, ';', LIGHTBLUE, "electric eel",
+    MONS_ELECTRIC_EEL, ';', LIGHTBLUE, M_("electric eel"),
     M_COLD_BLOOD | M_SUBMERGES,
     mrd(MR_RES_ELEC, 2),
     300, 19, MONS_ELECTRIC_EEL, MONS_ELECTRIC_EEL, MH_NATURAL, -3,
@@ -4084,7 +4084,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JELLYFISH, 'J', CYAN, "jellyfish",
+    MONS_JELLYFISH, 'J', CYAN, M_("jellyfish"),
     M_NO_SKELETON | M_SUBMERGES,
     MR_RES_POISON,
     200, 10, MONS_JELLYFISH, MONS_JELLYFISH, MH_NATURAL, -3,
@@ -4100,7 +4100,7 @@ static monsterentry mondata[] = {
 // Technically they have skeletons, but Crawl needs skeletons made
 // of bone or similar materials (e.g. chitin)
 {
-    MONS_SHARK, ';', WHITE, "shark",
+    MONS_SHARK, ';', WHITE, M_("shark"),
     M_NO_SKELETON | M_COLD_BLOOD | M_BLOOD_SCENT | M_SUBMERGES,
     MR_NO_FLAGS,
     2000, 9, MONS_SHARK, MONS_SHARK, MH_NATURAL, -3,
@@ -4113,7 +4113,7 @@ static monsterentry mondata[] = {
 
 // A kraken and its tentacles get a random colour from ETC_KRAKEN.
 {
-    MONS_KRAKEN, 'X', BLACK, "kraken",
+    MONS_KRAKEN, 'X', BLACK, M_("kraken"),
     M_NO_SKELETON | M_COLD_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS,
     MR_NO_FLAGS,
     3000, 6, MONS_KRAKEN, MONS_KRAKEN, MH_NATURAL, -3,
@@ -4125,7 +4125,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KRAKEN_TENTACLE, 'w', BLACK, "tentacle",
+    MONS_KRAKEN_TENTACLE, 'w', BLACK, M_("tentacle"),
     M_COLD_BLOOD | M_NO_EXP_GAIN | M_STATIONARY | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 10, MONS_KRAKEN, MONS_KRAKEN_TENTACLE, MH_NATURAL, MAG_IMMUNE,
@@ -4137,7 +4137,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KRAKEN_TENTACLE_SEGMENT, '*', BLACK, "tentacle segment",
+    MONS_KRAKEN_TENTACLE_SEGMENT, '*', BLACK, M_("tentacle segment"),
     M_COLD_BLOOD | M_NO_EXP_GAIN | M_STATIONARY | M_SUBMERGES | M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 10, MONS_KRAKEN, MONS_KRAKEN_TENTACLE_SEGMENT, MH_NATURAL, MAG_IMMUNE,
@@ -4150,7 +4150,7 @@ static monsterentry mondata[] = {
 
 // Octopode race, not a 'normal' octopus.
 {
-    MONS_OCTOPODE, 'X', LIGHTCYAN, "octopode",
+    MONS_OCTOPODE, 'X', LIGHTCYAN, M_("octopode"),
     M_NO_SKELETON | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     700, 10, MONS_KRAKEN, MONS_OCTOPODE, MH_NATURAL, -1,
@@ -4164,7 +4164,7 @@ static monsterentry mondata[] = {
 
 // lava monsters
 {
-    MONS_LAVA_WORM, 'w', RED, "lava worm",
+    MONS_LAVA_WORM, 'w', RED, M_("lava worm"),
     M_NO_SKELETON | M_SUBMERGES,
     mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 6, MONS_LAVA_WORM, MONS_LAVA_WORM, MH_NATURAL, -3,
@@ -4176,7 +4176,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LAVA_FISH, ';', RED, "lava fish",
+    MONS_LAVA_FISH, ';', RED, M_("lava fish"),
     M_WARM_BLOOD | M_SUBMERGES,
     mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 10, MONS_BIG_FISH, MONS_LAVA_FISH, MH_NATURAL, -3,
@@ -4188,7 +4188,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LAVA_SNAKE, 'S', RED, "lava snake",
+    MONS_LAVA_SNAKE, 'S', RED, M_("lava snake"),
     M_WARM_BLOOD | M_SUBMERGES,
     mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 17, MONS_SNAKE, MONS_LAVA_SNAKE, MH_NATURAL, -3,
@@ -4200,7 +4200,7 @@ static monsterentry mondata[] = {
 },
 
 {   // mv: was another lava thing
-    MONS_SALAMANDER, 'N', LIGHTRED, "salamander",
+    MONS_SALAMANDER, 'N', LIGHTRED, M_("salamander"),
     M_FIGHTER | M_WARM_BLOOD | M_SUBMERGES,
     mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 10, MONS_SALAMANDER, MONS_SALAMANDER, MH_NATURAL, -3,
@@ -4213,7 +4213,7 @@ static monsterentry mondata[] = {
 
 // monsters moving through rock
 {
-    MONS_ROCK_WORM, 'w', BROWN, "rock worm",
+    MONS_ROCK_WORM, 'w', BROWN, M_("rock worm"),
     M_NO_SKELETON,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     850, 12, MONS_WORM, MONS_ROCK_WORM, MH_NATURAL, -3,
@@ -4226,7 +4226,7 @@ static monsterentry mondata[] = {
 
 // humans ('@')
 {
-    MONS_HUMAN, '@', LIGHTGREY, "human",
+    MONS_HUMAN, '@', LIGHTGREY, M_("human"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -4238,7 +4238,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SLAVE, '@', WHITE, "slave",
+    MONS_SLAVE, '@', WHITE, M_("slave"),
     M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -4250,7 +4250,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELL_KNIGHT, '@', RED, "hell knight",
+    MONS_HELL_KNIGHT, '@', RED, M_("hell knight"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_HELLFIRE,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -4262,7 +4262,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NECROMANCER, '@', WHITE, "necromancer",
+    MONS_NECROMANCER, '@', WHITE, M_("necromancer"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -4,
@@ -4274,7 +4274,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WIZARD, '@', MAGENTA, "wizard",
+    MONS_WIZARD, '@', MAGENTA, M_("wizard"),
     M_SPELLCASTER | M_SPEAKS | M_ACTUAL_SPELLS | M_WARM_BLOOD,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -4,
@@ -4286,7 +4286,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_VAULT_GUARD, '@', CYAN, "vault guard",
+    MONS_VAULT_GUARD, '@', CYAN, M_("vault guard"),
     M_FIGHTER | M_WARM_BLOOD | M_SENSE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
     550, 12, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -4298,7 +4298,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHAPESHIFTER, '@', LIGHTRED, "shapeshifter",
+    MONS_SHAPESHIFTER, '@', LIGHTRED, M_("shapeshifter"),
     M_NO_SKELETON,
     MR_NO_FLAGS,
     600, 10, MONS_SHAPESHIFTER, MONS_SHAPESHIFTER, MH_NATURAL, -6,
@@ -4310,7 +4310,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GLOWING_SHAPESHIFTER, '@', RED, "glowing shapeshifter",
+    MONS_GLOWING_SHAPESHIFTER, '@', RED, M_("glowing shapeshifter"),
     M_NO_SKELETON | M_GLOWS_RADIATION,
     MR_NO_FLAGS,
     600, 10, MONS_SHAPESHIFTER, MONS_GLOWING_SHAPESHIFTER, MH_NATURAL, -6,
@@ -4322,7 +4322,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KILLER_KLOWN, '@', BLACK, "Killer Klown",
+    MONS_KILLER_KLOWN, '@', BLACK, M_("Killer Klown"),
     M_SEE_INVIS | M_SPEAKS | M_WARM_BLOOD,
     MR_NO_FLAGS,
     0, 17, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -6,
@@ -4334,7 +4334,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PALADIN, '@', WHITE, "paladin",
+    MONS_PALADIN, '@', WHITE, M_("paladin"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_HOLY, -3,
@@ -4346,7 +4346,7 @@ static monsterentry mondata[] = {
 },
 
 {   // dummy, for now.  Spawns in a single vault.
-    MONS_DEMONSPAWN, '@', DARKGREY, "demonspawn", // likely to become '6'
+    MONS_DEMONSPAWN, '@', DARKGREY, M_("demonspawn"), // likely to become '6'
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_DEMONSPAWN, MH_DEMONIC, -3,
@@ -4358,7 +4358,7 @@ static monsterentry mondata[] = {
 },
 
 {   // dummy; spawns in a single vault.
-    MONS_DEMIGOD, '@', YELLOW, "demigod",
+    MONS_DEMIGOD, '@', YELLOW, M_("demigod"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_DEMIGOD, MH_NATURAL, -4,
@@ -4370,7 +4370,7 @@ static monsterentry mondata[] = {
 },
 
 {   // dummy... literally; single vault
-    MONS_HALFLING, '@', LIGHTGREY, "halfling",
+    MONS_HALFLING, '@', LIGHTGREY, M_("halfling"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     400, 10, MONS_HUMAN, MONS_HALFLING, MH_NATURAL, -2,
@@ -4384,7 +4384,7 @@ static monsterentry mondata[] = {
 // mimics
 {
     // Gold mimics are the only mimics that actually use their name. - bwr
-    MONS_GOLD_MIMIC, '$', YELLOW, "pile of gold coins",
+    MONS_GOLD_MIMIC, '$', YELLOW, M_("pile of gold coins"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_GOLD_MIMIC, MONS_GOLD_MIMIC, MH_NONLIVING, -3,
@@ -4397,7 +4397,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WEAPON_MIMIC, ')', BLACK, "weapon mimic",
+    MONS_WEAPON_MIMIC, ')', BLACK, M_("weapon mimic"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_GOLD_MIMIC, MONS_WEAPON_MIMIC, MH_NONLIVING, -3,
@@ -4410,7 +4410,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ARMOUR_MIMIC, '[', BLACK, "armour mimic",
+    MONS_ARMOUR_MIMIC, '[', BLACK, M_("armour mimic"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_GOLD_MIMIC, MONS_ARMOUR_MIMIC, MH_NONLIVING, -3,
@@ -4423,7 +4423,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SCROLL_MIMIC, '?', LIGHTGREY, "scroll mimic",
+    MONS_SCROLL_MIMIC, '?', LIGHTGREY, M_("scroll mimic"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_GOLD_MIMIC, MONS_SCROLL_MIMIC, MH_NONLIVING, -3,
@@ -4436,7 +4436,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_POTION_MIMIC, '!', BLACK, "potion mimic",
+    MONS_POTION_MIMIC, '!', BLACK, M_("potion mimic"),
     M_STATIONARY,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_GOLD_MIMIC, MONS_POTION_MIMIC, MH_NONLIVING, -3,
@@ -4450,7 +4450,7 @@ static monsterentry mondata[] = {
 
 // Feature mimics.
 {
-    MONS_DOOR_MIMIC, '+', LIGHTGRAY, "door mimic",
+    MONS_DOOR_MIMIC, '+', LIGHTGRAY, M_("door mimic"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_DOOR_MIMIC, MONS_DOOR_MIMIC, MH_NONLIVING, -3,
@@ -4463,7 +4463,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PORTAL_MIMIC, '\\', ETC_SHIMMER_BLUE, "portal mimic",
+    MONS_PORTAL_MIMIC, '\\', ETC_SHIMMER_BLUE, M_("portal mimic"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_DOOR_MIMIC, MONS_PORTAL_MIMIC, MH_NONLIVING, -3,
@@ -4476,7 +4476,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_STAIR_MIMIC, '>', LIGHTGRAY, "stair mimic",
+    MONS_STAIR_MIMIC, '>', LIGHTGRAY, M_("stair mimic"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_DOOR_MIMIC, MONS_STAIR_MIMIC, MH_NONLIVING, -3,
@@ -4489,7 +4489,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHOP_MIMIC, '\\', YELLOW, "shop mimic",
+    MONS_SHOP_MIMIC, '\\', YELLOW, M_("shop mimic"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_DOOR_MIMIC, MONS_SHOP_MIMIC, MH_NONLIVING, -3,
@@ -4502,7 +4502,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FOUNTAIN_MIMIC, '}', ETC_SHIMMER_BLUE, "fountain mimic",
+    MONS_FOUNTAIN_MIMIC, '}', ETC_SHIMMER_BLUE, M_("fountain mimic"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_DOOR_MIMIC, MONS_FOUNTAIN_MIMIC, MH_NONLIVING, -3,
@@ -4518,7 +4518,7 @@ static monsterentry mondata[] = {
 // These are named more explicitly when they attack, also when you use 'x'
 // to examine them.
 {
-    MONS_DANCING_WEAPON, '(', BLACK, "dancing weapon",
+    MONS_DANCING_WEAPON, '(', BLACK, M_("dancing weapon"),
     M_FIGHTER,
     MR_RES_POISON | mrd(MR_RES_FIRE | MR_RES_COLD, 2) | mrd(MR_RES_ELEC, 3),
     0, 10, MONS_DANCING_WEAPON, MONS_DANCING_WEAPON, MH_NONLIVING, MAG_IMMUNE,
@@ -4531,7 +4531,7 @@ static monsterentry mondata[] = {
 
 // Demonic tentacle things.
 {
-    MONS_ELDRITCH_TENTACLE, 'w', BLACK, "eldritch tentacle",
+    MONS_ELDRITCH_TENTACLE, 'w', BLACK, M_("eldritch tentacle"),
     M_NO_POLY_TO | M_STATIONARY | M_SEE_INVIS,
     mrd(MR_RES_POISON | MR_RES_COLD | MR_RES_ELEC, 3) | MR_RES_HELLFIRE
         | MR_RES_ACID | MR_RES_STICKY_FLAME,
@@ -4546,7 +4546,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ELDRITCH_TENTACLE_SEGMENT, '*', BLACK, "eldritch tentacle segment",
+    MONS_ELDRITCH_TENTACLE_SEGMENT, '*', BLACK, M_("eldritch tentacle segment"),
     M_NO_EXP_GAIN | M_STATIONARY | M_NO_POLY_TO | M_SEE_INVIS,
     mrd(MR_RES_POISON | MR_RES_COLD | MR_RES_ELEC, 3) | MR_RES_HELLFIRE
         | MR_RES_ACID | MR_RES_STICKY_FLAME,
@@ -4562,7 +4562,7 @@ static monsterentry mondata[] = {
 // minor demons: imps, etc. ('5')
 // note: these things regenerate
 {
-    MONS_IMP, '5', RED, "imp",
+    MONS_IMP, '5', RED, M_("imp"),
     M_SPEAKS,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 13, MONS_IMP, MONS_IMP, MH_DEMONIC, -9,
@@ -4574,7 +4574,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_QUASIT, '5', LIGHTGREY, "quasit",
+    MONS_QUASIT, '5', LIGHTGREY, M_("quasit"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD,
     0, 13, MONS_QUASIT, MONS_QUASIT, MH_DEMONIC, 5,
@@ -4587,7 +4587,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WHITE_IMP, '5', WHITE, "white imp",
+    MONS_WHITE_IMP, '5', WHITE, M_("white imp"),
     M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_COLD, 2) | MR_VUL_FIRE,
     0, 10, MONS_IMP, MONS_WHITE_IMP, MH_DEMONIC, -3,
@@ -4599,7 +4599,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LEMURE, '5', YELLOW, "lemure",
+    MONS_LEMURE, '5', YELLOW, M_("lemure"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_LEMURE, MONS_LEMURE, MH_DEMONIC, -3,
@@ -4612,7 +4612,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_UFETUBUS, '5', LIGHTCYAN, "ufetubus",
+    MONS_UFETUBUS, '5', LIGHTCYAN, M_("ufetubus"),
     M_NO_FLAGS,
     MR_VUL_FIRE | MR_RES_COLD,
     0, 28, MONS_UFETUBUS, MONS_UFETUBUS, MH_DEMONIC, -3,
@@ -4624,7 +4624,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_IMP, '5', CYAN, "iron imp",
+    MONS_IRON_IMP, '5', CYAN, M_("iron imp"),
     M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2) | MR_RES_HELLFIRE | MR_RES_COLD,
     0, 14, MONS_IRON_IMP, MONS_IRON_IMP, MH_DEMONIC, -3,
@@ -4636,7 +4636,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MIDGE, '5', LIGHTGREEN, "midge",
+    MONS_MIDGE, '5', LIGHTGREEN, M_("midge"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_MIDGE, MONS_MIDGE, MH_DEMONIC, -3,
@@ -4648,7 +4648,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW_IMP, '5', MAGENTA, "shadow imp",
+    MONS_SHADOW_IMP, '5', MAGENTA, M_("shadow imp"),
     M_SEE_INVIS | M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_COLD, 2),
     0, 11, MONS_IMP, MONS_SHADOW_IMP, MH_DEMONIC, -3,
@@ -4661,7 +4661,7 @@ static monsterentry mondata[] = {
 
 // devils etc. ('4')
 {
-    MONS_RED_DEVIL, '4', RED, "red devil",
+    MONS_RED_DEVIL, '4', RED, M_("red devil"),
     M_FIGHTER,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 10, MONS_RED_DEVIL, MONS_RED_DEVIL, MH_DEMONIC, -7,
@@ -4673,7 +4673,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ROTTING_DEVIL, '4', GREEN, "rotting devil",
+    MONS_ROTTING_DEVIL, '4', GREEN, M_("rotting devil"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_RES_COLD,
     0, 10, MONS_ROTTING_DEVIL, MONS_ROTTING_DEVIL, MH_DEMONIC, -7,
@@ -4685,7 +4685,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HAIRY_DEVIL, '4', LIGHTRED, "hairy devil",
+    MONS_HAIRY_DEVIL, '4', LIGHTRED, M_("hairy devil"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_HAIRY_DEVIL, MONS_HAIRY_DEVIL, MH_DEMONIC, -4,
@@ -4697,10 +4697,10 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SIXFIRHY, '4', LIGHTBLUE, "sixfirhy",
+    MONS_SIXFIRHY, '4', LIGHTBLUE, M_("sixfirhy"),
     M_NO_FLAGS,
     MR_NO_FLAGS, // Can't have RES_ELEC since most sources of damage do nothing
-                 // in that case.  We want to "suffer" the damage to get healed.
+                 // in that case.  We want to M_("suffer") the damage to get healed.
     0, 6, MONS_SIXFIRHY, MONS_SIXFIRHY, MH_DEMONIC, -6,
     { {AT_HIT, AF_ELEC, 15}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 7, 3, 5, 0 },
@@ -4710,7 +4710,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELLWING, '4', LIGHTGREY, "hellwing",
+    MONS_HELLWING, '4', LIGHTGREY, M_("hellwing"),
     M_SPELLCASTER,
     MR_RES_POISON,
     0, 12, MONS_HELLWING, MONS_HELLWING, MH_DEMONIC, -6,
@@ -4723,7 +4723,7 @@ static monsterentry mondata[] = {
 
 // middle demons ('3')
 {
-    MONS_SMOKE_DEMON, '3', LIGHTGREY, "smoke demon",
+    MONS_SMOKE_DEMON, '3', LIGHTGREY, M_("smoke demon"),
     M_SPELLCASTER | M_INSUBSTANTIAL | M_UNBREATHING,
     MR_RES_POISON | mrd(MR_RES_FIRE, 2),
     0, 12, MONS_SMOKE_DEMON, MONS_SMOKE_DEMON, MH_DEMONIC, -6,
@@ -4736,7 +4736,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TORMENTOR, '3', YELLOW, "tormentor",
+    MONS_TORMENTOR, '3', YELLOW, M_("tormentor"),
     M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON | MR_RES_FIRE,
     0, 10, MONS_TORMENTOR, MONS_TORMENTOR, MH_DEMONIC, -6,
@@ -4748,7 +4748,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLUE_DEVIL, '3', BLUE, "blue devil",
+    MONS_BLUE_DEVIL, '3', BLUE, M_("blue devil"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 10, MONS_BLUE_DEVIL, MONS_BLUE_DEVIL, MH_DEMONIC, -5,
@@ -4760,7 +4760,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_DEVIL, '3', CYAN, "iron devil",
+    MONS_IRON_DEVIL, '3', CYAN, M_("iron devil"),
     M_NO_FLAGS,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2) | MR_RES_HELLFIRE | MR_RES_COLD,
     0, 10, MONS_IRON_DEVIL, MONS_IRON_DEVIL, MH_DEMONIC, -6,
@@ -4772,7 +4772,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NEQOXEC, '3', LIGHTMAGENTA, "neqoxec",
+    MONS_NEQOXEC, '3', LIGHTMAGENTA, M_("neqoxec"),
     M_SPELLCASTER,
     MR_RES_POISON,
     0, 12, MONS_NEQOXEC, MONS_NEQOXEC, MH_DEMONIC, -6,
@@ -4784,7 +4784,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORANGE_DEMON, '3', LIGHTRED, "orange demon",
+    MONS_ORANGE_DEMON, '3', LIGHTRED, M_("orange demon"),
     M_NO_FLAGS,
     MR_NO_FLAGS,
     0, 12, MONS_ORANGE_DEMON, MONS_ORANGE_DEMON, MH_DEMONIC, -6,
@@ -4797,7 +4797,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_YNOXINUL, '3', LIGHTCYAN, "ynoxinul",
+    MONS_YNOXINUL, '3', LIGHTCYAN, M_("ynoxinul"),
     M_SPELLCASTER | M_SENSE_INVIS,
     mrd(MR_RES_ELEC, 2) | MR_RES_POISON | MR_RES_COLD,
     0, 12, MONS_YNOXINUL, MONS_YNOXINUL, MH_DEMONIC, -6,
@@ -4809,7 +4809,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW_DEMON, '3', MAGENTA, "shadow demon",
+    MONS_SHADOW_DEMON, '3', MAGENTA, M_("shadow demon"),
     M_SEE_INVIS | M_INVIS,
     MR_RES_POISON | mrd(MR_RES_COLD, 2),
     0, 12, MONS_SHADOW_DEMON, MONS_SHADOW_DEMON, MH_DEMONIC, -7,
@@ -4821,7 +4821,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CHAOS_SPAWN, '3', ETC_RANDOM, "chaos spawn",
+    MONS_CHAOS_SPAWN, '3', ETC_RANDOM, M_("chaos spawn"),
     M_SEE_INVIS,
     MR_NO_FLAGS,
     0, 12, MONS_CHAOS_SPAWN, MONS_CHAOS_SPAWN, MH_DEMONIC, -7,
@@ -4835,7 +4835,7 @@ static monsterentry mondata[] = {
 // reaper etc. ('2')
 
 {   // with randomised stats
-    MONS_HELL_BEAST, '2', BROWN, "hell beast",
+    MONS_HELL_BEAST, '2', BROWN, M_("hell beast"),
     M_FIGHTER,
     MR_NO_FLAGS,
     0, 10, MONS_HELL_BEAST, MONS_HELL_BEAST, MH_DEMONIC, -3,
@@ -4848,7 +4848,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HELLION, '2', ETC_FIRE, "hellion",
+    MONS_HELLION, '2', ETC_FIRE, M_("hellion"),
     M_SPELLCASTER | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 12, MONS_HELLION, MONS_HELLION, MH_DEMONIC, -7,
@@ -4860,7 +4860,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SUN_DEMON, '2', YELLOW, "sun demon",
+    MONS_SUN_DEMON, '2', YELLOW, M_("sun demon"),
     M_SENSE_INVIS | M_GLOWS_LIGHT,
     MR_RES_ELEC | MR_RES_POISON | MR_VUL_COLD | MR_RES_HELLFIRE,
     0, 14, MONS_SUN_DEMON, MONS_SUN_DEMON, MH_DEMONIC, -6,
@@ -4872,7 +4872,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_REAPER, '2', LIGHTGREY, "reaper",
+    MONS_REAPER, '2', LIGHTGREY, M_("reaper"),
     M_FIGHTER | M_SEE_INVIS | M_SPEAKS,
     MR_RES_POISON | MR_RES_COLD,
     0, 10, MONS_REAPER, MONS_REAPER, MH_DEMONIC, MAG_IMMUNE,
@@ -4884,7 +4884,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SOUL_EATER, '2', MAGENTA, "soul eater",
+    MONS_SOUL_EATER, '2', MAGENTA, M_("soul eater"),
     M_SEE_INVIS,
     MR_RES_POISON | MR_RES_COLD,
     0, 12, MONS_SOUL_EATER, MONS_SOUL_EATER, MH_DEMONIC, -10,
@@ -4896,7 +4896,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ICE_DEVIL, '2', WHITE, "ice devil",
+    MONS_ICE_DEVIL, '2', WHITE, M_("ice devil"),
     M_NO_FLAGS,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 11, MONS_ICE_DEVIL, MONS_ICE_DEVIL, MH_DEMONIC, -6,
@@ -4908,7 +4908,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LOROCYPROCA, '2', BLUE, "Lorocyproca",
+    MONS_LOROCYPROCA, '2', BLUE, M_("Lorocyproca"),
     M_SENSE_INVIS | M_INVIS,
     MR_RES_POISON | MR_RES_COLD | MR_RES_FIRE | MR_RES_ELEC,
     0, 12, MONS_LOROCYPROCA, MONS_LOROCYPROCA, MH_DEMONIC, -7,
@@ -4921,7 +4921,7 @@ static monsterentry mondata[] = {
 
 // fiends, etc. ('1')
 {
-    MONS_FIEND, '1', LIGHTRED, "Fiend",
+    MONS_FIEND, '1', LIGHTRED, M_("Fiend"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 15, MONS_FIEND, MONS_FIEND, MH_DEMONIC, -12,
@@ -4934,7 +4934,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ICE_FIEND, '1', WHITE, "Ice Fiend",
+    MONS_ICE_FIEND, '1', WHITE, M_("Ice Fiend"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 3),
     0, 12, MONS_FIEND, MONS_ICE_FIEND, MH_DEMONIC, -12,
@@ -4946,7 +4946,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SHADOW_FIEND, '1', MAGENTA, "Shadow Fiend",
+    MONS_SHADOW_FIEND, '1', MAGENTA, M_("Shadow Fiend"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_POISON | mrd(MR_RES_COLD, 2) | MR_RES_ELEC,
     0, 10, MONS_FIEND, MONS_SHADOW_FIEND, MH_DEMONIC, -13,
@@ -4959,7 +4959,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PIT_FIEND, '1', BROWN, "Pit Fiend",
+    MONS_PIT_FIEND, '1', BROWN, M_("Pit Fiend"),
     M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_RES_COLD | mrd(MR_RES_ELEC, 2),
     0, 15, MONS_FIEND, MONS_PIT_FIEND, MH_DEMONIC, -12,
@@ -4972,7 +4972,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EXECUTIONER, '1', LIGHTGREY, "Executioner",
+    MONS_EXECUTIONER, '1', LIGHTGREY, M_("Executioner"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD | MR_RES_POISON,
     0, 14, MONS_EXECUTIONER, MONS_EXECUTIONER, MH_DEMONIC, -9,
@@ -4985,7 +4985,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GREEN_DEATH, '1', GREEN, "Green Death",
+    MONS_GREEN_DEATH, '1', GREEN, M_("Green Death"),
     M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_POISON,
     0, 13, MONS_GREEN_DEATH, MONS_GREEN_DEATH, MH_DEMONIC, -9,
@@ -4997,7 +4997,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLUE_DEATH, '1', BLUE, "Blue Death",
+    MONS_BLUE_DEATH, '1', BLUE, M_("Blue Death"),
     M_SPELLCASTER | M_SEE_INVIS,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD | MR_RES_ELEC, 2),
     0, 13, MONS_BLUE_DEATH, MONS_BLUE_DEATH, MH_DEMONIC, -9,
@@ -5009,7 +5009,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BALRUG, '1', RED, "Balrug",
+    MONS_BALRUG, '1', RED, M_("Balrug"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_GLOWS_LIGHT,
     MR_RES_POISON | MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 15, MONS_BALRUG, MONS_BALRUG, MH_DEMONIC, -9,
@@ -5021,7 +5021,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CACODEMON, '1', YELLOW, "Cacodemon",
+    MONS_CACODEMON, '1', YELLOW, M_("Cacodemon"),
     M_SPELLCASTER | M_SEE_INVIS,
     mrd(MR_RES_POISON | MR_RES_ELEC, 3),
     0, 14, MONS_CACODEMON, MONS_CACODEMON, MH_DEMONIC, -9,
@@ -5048,7 +5048,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CLAY_GOLEM, '8', BROWN, "clay golem",
+    MONS_CLAY_GOLEM, '8', BROWN, M_("clay golem"),
     M_SEE_INVIS | M_ARTIFICIAL,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 10, MONS_GOLEM, MONS_CLAY_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5060,7 +5060,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_WOOD_GOLEM, '8', YELLOW, "wood golem",
+    MONS_WOOD_GOLEM, '8', YELLOW, M_("wood golem"),
     M_ARTIFICIAL,
     MR_RES_POISON | MR_VUL_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 10, MONS_GOLEM, MONS_WOOD_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5072,7 +5072,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_STONE_GOLEM, '8', LIGHTGREY, "stone golem",
+    MONS_STONE_GOLEM, '8', LIGHTGREY, M_("stone golem"),
     M_ARTIFICIAL,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 10, MONS_GOLEM, MONS_STONE_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5084,7 +5084,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_GOLEM, '8', CYAN, "iron golem",
+    MONS_IRON_GOLEM, '8', CYAN, M_("iron golem"),
     M_ARTIFICIAL,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 10, MONS_GOLEM, MONS_IRON_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5096,7 +5096,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CRYSTAL_GOLEM, '8', GREEN, "crystal golem",
+    MONS_CRYSTAL_GOLEM, '8', GREEN, M_("crystal golem"),
     M_SEE_INVIS | M_SPEAKS | M_ARTIFICIAL,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 10, MONS_GOLEM, MONS_CRYSTAL_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5108,7 +5108,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TOENAIL_GOLEM, '8', RED, "toenail golem",
+    MONS_TOENAIL_GOLEM, '8', RED, M_("toenail golem"),
     M_ARTIFICIAL,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
     0, 10, MONS_GOLEM, MONS_TOENAIL_GOLEM, MH_NONLIVING, MAG_IMMUNE,
@@ -5120,7 +5120,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ELECTRIC_GOLEM, '8', LIGHTCYAN, "electric golem",
+    MONS_ELECTRIC_GOLEM, '8', LIGHTCYAN, M_("electric golem"),
     M_SPELLCASTER | M_SEE_INVIS | M_INSUBSTANTIAL | M_GLOWS_LIGHT | M_SPEAKS
         | M_ARTIFICIAL,
     mrd(MR_RES_ELEC | MR_RES_POISON, 3) | MR_RES_FIRE | MR_RES_COLD,
@@ -5135,7 +5135,7 @@ static monsterentry mondata[] = {
 
 // statues and statue-like things (also '8')
 {
-    MONS_ICE_STATUE, '8', LIGHTBLUE, "ice statue",
+    MONS_ICE_STATUE, '8', LIGHTBLUE, M_("ice statue"),
     M_ARTIFICIAL | M_SPELLCASTER | M_STATIONARY | M_SPEAKS,
     MR_RES_POISON | MR_VUL_FIRE | mrd(MR_RES_COLD, 3) | mrd(MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_ICE_STATUE, MH_NONLIVING, MAG_IMMUNE,
@@ -5147,7 +5147,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SILVER_STATUE, '8', WHITE, "silver statue",
+    MONS_SILVER_STATUE, '8', WHITE, M_("silver statue"),
     M_ARTIFICIAL | M_STATIONARY | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_SILVER_STATUE, MH_NONLIVING, MAG_IMMUNE,
@@ -5159,7 +5159,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORANGE_STATUE, '8', LIGHTRED, "orange crystal statue",
+    MONS_ORANGE_STATUE, '8', LIGHTRED, M_("orange crystal statue"),
     M_ARTIFICIAL | M_STATIONARY | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_ORANGE_STATUE, MH_NONLIVING, MAG_IMMUNE,
@@ -5171,7 +5171,7 @@ static monsterentry mondata[] = {
 },
 
 { // always redefined
-    MONS_STATUE, '8', LIGHTGREY, "statue",
+    MONS_STATUE, '8', LIGHTGREY, M_("statue"),
     M_ARTIFICIAL | M_STATIONARY | M_SPEAKS | M_ARCHER | M_NO_POLY_TO,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_STATUE, MONS_STATUE, MH_NONLIVING, MAG_IMMUNE,
@@ -5183,7 +5183,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TRAINING_DUMMY, '8', LIGHTGREY, "training dummy",
+    MONS_TRAINING_DUMMY, '8', LIGHTGREY, M_("training dummy"),
     M_STATIONARY,
     MR_NO_FLAGS,
     0, 10, MONS_TRAINING_DUMMY, MONS_TRAINING_DUMMY, MH_NONLIVING, MAG_IMMUNE,
@@ -5195,7 +5195,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PILLAR_OF_SALT, '8', WHITE, "pillar of salt",
+    MONS_PILLAR_OF_SALT, '8', WHITE, M_("pillar of salt"),
     M_NO_EXP_GAIN | M_STATIONARY,
     MR_RES_POISON,
     0, 10, MONS_PILLAR_OF_SALT, MONS_PILLAR_OF_SALT, MH_NONLIVING, MAG_IMMUNE,
@@ -5207,7 +5207,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LIGHTNING_SPIRE, '{', LIGHTCYAN, "lightning spire",
+    MONS_LIGHTNING_SPIRE, '{', LIGHTCYAN, M_("lightning spire"),
     M_STATIONARY | M_NO_POLY_TO,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
     0, 10, MONS_LIGHTNING_SPIRE, MONS_LIGHTNING_SPIRE, MH_NONLIVING, MAG_IMMUNE,
@@ -5220,7 +5220,7 @@ static monsterentry mondata[] = {
 
 // gargoyles ('9')
 {
-    MONS_GARGOYLE, '9', LIGHTGREY, "gargoyle",
+    MONS_GARGOYLE, '9', LIGHTGREY, M_("gargoyle"),
     M_ARTIFICIAL,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2),
     0, 26, MONS_GARGOYLE, MONS_GARGOYLE, MH_NONLIVING, -6,
@@ -5233,7 +5233,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_METAL_GARGOYLE, '9', CYAN, "metal gargoyle",
+    MONS_METAL_GARGOYLE, '9', CYAN, M_("metal gargoyle"),
     M_ARTIFICIAL,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2),
     0, 18, MONS_GARGOYLE, MONS_METAL_GARGOYLE, MH_NONLIVING, -6,
@@ -5246,7 +5246,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MOLTEN_GARGOYLE, '9', RED, "molten gargoyle",
+    MONS_MOLTEN_GARGOYLE, '9', RED, M_("molten gargoyle"),
     M_ARTIFICIAL,
     MR_RES_POISON | MR_RES_ELEC | mrd(MR_RES_FIRE, 3),
     0, 18, MONS_GARGOYLE, MONS_MOLTEN_GARGOYLE, MH_NONLIVING, -6,
@@ -5261,7 +5261,7 @@ static monsterentry mondata[] = {
 // major demons ('&')
 // Random demon in pan - only one per level.  Stats are stored in ghost struct.
 {
-    MONS_PANDEMONIUM_LORD, '&', BLACK, "pandemonium lord",
+    MONS_PANDEMONIUM_LORD, '&', BLACK, M_("pandemonium lord"),
     M_FIGHTER | M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON,
     0, 14, MONS_PANDEMONIUM_LORD, MONS_PANDEMONIUM_LORD, MH_DEMONIC, -5,
@@ -5274,7 +5274,7 @@ static monsterentry mondata[] = {
 
 // Demon in hell.  Currently only used as genus/species for hell guardians.
 { // dummy, never spawns
-    MONS_HELL_LORD, '&', BLACK, "hell lord",
+    MONS_HELL_LORD, '&', BLACK, M_("hell lord"),
     M_FIGHTER | M_SPELLCASTER | M_SPEAKS | M_NO_POLY_TO,
     MR_RES_POISON,
     0, 14, MONS_HELL_LORD, MONS_HELL_LORD, MH_DEMONIC, -5,
@@ -5287,7 +5287,7 @@ static monsterentry mondata[] = {
 
 // explodey things / orb of fire ('*')
 {
-    MONS_BALL_LIGHTNING, '*', LIGHTCYAN, "ball lightning",
+    MONS_BALL_LIGHTNING, '*', LIGHTCYAN, M_("ball lightning"),
     M_CONFUSED | M_SPELLCASTER | M_INSUBSTANTIAL
         | M_GLOWS_LIGHT | M_FAKE_SPELLS,
     mrd(MR_RES_ELEC | MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD, 3),
@@ -5300,7 +5300,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GIANT_SPORE, '*', GREEN, "giant spore",
+    MONS_GIANT_SPORE, '*', GREEN, M_("giant spore"),
     M_NO_FLAGS,
     MR_RES_POISON,
     0, 10, MONS_PLANT, MONS_GIANT_SPORE, MH_PLANT, -3,
@@ -5312,7 +5312,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORB_OF_FIRE, '*', RED, "orb of fire",
+    MONS_ORB_OF_FIRE, '*', RED, M_("orb of fire"),
     M_SPELLCASTER | M_SEE_INVIS | M_INSUBSTANTIAL | M_GLOWS_LIGHT
         | M_GLOWS_RADIATION,
     mrd(MR_RES_POISON | MR_RES_ELEC, 3) | MR_RES_HELLFIRE | MR_RES_COLD,
@@ -5325,7 +5325,7 @@ static monsterentry mondata[] = {
 },
 
 { // not an actual monster, used by a spell
-    MONS_ORB_OF_DESTRUCTION, '*', WHITE, "orb of destruction",
+    MONS_ORB_OF_DESTRUCTION, '*', WHITE, M_("orb of destruction"),
     M_INSUBSTANTIAL | M_GLOWS_LIGHT | M_NO_EXP_GAIN | M_NO_POLY_TO,
     mrd(MR_RES_POISON | MR_RES_COLD | MR_RES_ELEC, 3) | MR_RES_HELLFIRE
         | MR_RES_ACID | MR_RES_STICKY_FLAME,
@@ -5339,7 +5339,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_BLESSED_TOE, '*', YELLOW, "blessed toe",
+    MONS_BLESSED_TOE, '*', YELLOW, M_("blessed toe"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_UNFINISHED,
     mrd(MR_RES_ELEC, 2) | MR_RES_POISON | MR_RES_COLD,
     0, 65, MONS_BLESSED_TOE, MONS_BLESSED_TOE, MH_HOLY, MAG_IMMUNE,
@@ -5351,7 +5351,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SILVER_STAR, '*', ETC_SILVER, "silver star",
+    MONS_SILVER_STAR, '*', ETC_SILVER, M_("silver star"),
     M_SPELLCASTER | M_SEE_INVIS | M_INSUBSTANTIAL | M_GLOWS_LIGHT
         | M_UNFINISHED,
     mrd(MR_RES_POISON | MR_RES_ELEC, 3) | MR_RES_HELLFIRE | MR_RES_COLD,
@@ -5365,7 +5365,7 @@ static monsterentry mondata[] = {
 
 // other symbols
 {
-    MONS_DEATH_COB, '%', YELLOW, "death cob",
+    MONS_DEATH_COB, '%', YELLOW, M_("death cob"),
     M_SPEAKS,
     MR_RES_COLD,
     0, 10, MONS_DEATH_COB, MONS_DEATH_COB, MH_UNDEAD, -3,
@@ -5377,9 +5377,9 @@ static monsterentry mondata[] = {
 },
 
 // non-human uniques
-// "A"ngels.
+// M_("A")ngels.
 {
-    MONS_MENNAS, 'A', ETC_SILVER, "Mennas",
+    MONS_MENNAS, 'A', ETC_SILVER, M_("Mennas"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS
         | M_GLOWS_LIGHT | M_UNIQUE,
     MR_RES_POISON | mrd(MR_RES_ELEC, 2),
@@ -5392,9 +5392,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "c"entaurs.
+// M_("c")entaurs.
 {
-    MONS_NESSOS, 'c', MAGENTA, "Nessos",
+    MONS_NESSOS, 'c', MAGENTA, M_("Nessos"),
     M_UNIQUE | M_WARM_BLOOD  | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 12, MONS_CENTAUR, MONS_CENTAUR, MH_NATURAL, -3,
@@ -5405,9 +5405,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// "C"yclopses and giants.
+// M_("C")yclopses and giants.
 {
-    MONS_CHUCK, 'C', WHITE, "Chuck",
+    MONS_CHUCK, 'C', WHITE, M_("Chuck"),
     M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,
     MR_NO_FLAGS,
     2300, 10, MONS_GIANT, MONS_STONE_GIANT, MH_NATURAL, -4,
@@ -5419,7 +5419,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_IRON_GIANT, 'C', CYAN, "the iron giant",
+    MONS_IRON_GIANT, 'C', CYAN, M_("the iron giant"),
     M_WARM_BLOOD | M_SPEAKS | M_SPELLCASTER | M_FIGHTER | M_UNIQUE,
     MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD,
     3500, 10, MONS_GIANT, MONS_IRON_GIANT, MH_NATURAL, -4,
@@ -5431,7 +5431,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_POLYPHEMUS, 'C', GREEN, "Polyphemus",
+    MONS_POLYPHEMUS, 'C', GREEN, M_("Polyphemus"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     2200, 10, MONS_GIANT, MONS_CYCLOPS, MH_NATURAL, -3,
@@ -5444,7 +5444,7 @@ static monsterentry mondata[] = {
 
 // Antaeus is now demonic so that he'll resist torment. - bwr
 {
-    MONS_ANTAEUS, 'C', LIGHTCYAN, "Antaeus",
+    MONS_ANTAEUS, 'C', LIGHTCYAN, M_("Antaeus"),
     M_UNIQUE | M_WARM_BLOOD | M_FIGHTER | M_SPELLCASTER | M_SPEAKS,
     mrd(MR_RES_ELEC | MR_RES_COLD, 2) | MR_VUL_FIRE,
     0, 15, MONS_GIANT, MONS_TITAN, MH_DEMONIC, -9,
@@ -5455,9 +5455,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_GIANT
 },
 
-// "d"raconians.
+// M_("d")raconians.
 {
-    MONS_TIAMAT, 'd', BLACK, "Tiamat",
+    MONS_TIAMAT, 'd', BLACK, M_("Tiamat"),
     M_UNIQUE | M_SEE_INVIS | M_COLD_BLOOD | M_SPEAKS,
     MR_RES_POISON,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -5,
@@ -5469,9 +5469,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "D"ragons and hydras.
+// M_("D")ragons and hydras.
 {
-    MONS_XTAHUA, 'D', RED, "Xtahua",
+    MONS_XTAHUA, 'D', RED, M_("Xtahua"),
     M_UNIQUE | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_FIRE, 2) | MR_VUL_COLD,
     2400, 18, MONS_DRAGON, MONS_DRAGON, MH_NATURAL, -7,
@@ -5484,7 +5484,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LERNAEAN_HYDRA, 'D', YELLOW, "the Lernaean hydra",
+    MONS_LERNAEAN_HYDRA, 'D', YELLOW, M_("the Lernaean hydra"),
     M_UNIQUE | M_COLD_BLOOD,
     MR_RES_POISON,
     2100, 11, MONS_HYDRA, MONS_HYDRA, MH_NATURAL, -3,
@@ -5496,7 +5496,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SERPENT_OF_HELL, 'D', RED, "the Serpent of Hell",
+    MONS_SERPENT_OF_HELL, 'D', RED, M_("the Serpent of Hell"),
     M_SPELLCASTER | M_SENSE_INVIS | M_UNIQUE | M_FAKE_SPELLS,
     MR_RES_POISON,
     0, 18, MONS_DRAGON, MONS_DRAGON, MH_DEMONIC, -13,
@@ -5508,9 +5508,9 @@ static monsterentry mondata[] = {
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_HUGE
 },
 
-// "e"lves
+// M_("e")lves
 {
-    MONS_DUVESSA, 'e', BLUE, "Duvessa",
+    MONS_DUVESSA, 'e', BLUE, M_("Duvessa"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -5522,7 +5522,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DOWAN, 'e', RED, "Dowan",
+    MONS_DOWAN, 'e', RED, M_("Dowan"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
@@ -5533,9 +5533,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "F"rogs.
+// M_("F")rogs.
 {
-    MONS_PRINCE_RIBBIT, 'F', LIGHTCYAN, "Prince Ribbit",
+    MONS_PRINCE_RIBBIT, 'F', LIGHTCYAN, M_("Prince Ribbit"),
     M_UNIQUE | M_COLD_BLOOD | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS
         | M_PHASE_SHIFT,
     MR_NO_FLAGS,
@@ -5547,9 +5547,9 @@ static monsterentry mondata[] = {
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_SMALL
 },
 
-// "g"oblins and gnolls.
+// M_("g")oblins and gnolls.
 {
-    MONS_IJYB, 'g', BLUE, "Ijyb",
+    MONS_IJYB, 'g', BLUE, M_("Ijyb"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     400, 5, MONS_GOBLIN, MONS_GOBLIN, MH_NATURAL, -3,
@@ -5561,7 +5561,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GRUM, 'g', LIGHTRED, "Grum",
+    MONS_GRUM, 'g', LIGHTRED, M_("Grum"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     680, 19, MONS_GNOLL, MONS_GNOLL, MH_NATURAL, -3,
@@ -5573,7 +5573,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CRAZY_YIUF, 'g', BLACK, "Crazy Yiuf",
+    MONS_CRAZY_YIUF, 'g', BLACK, M_("Crazy Yiuf"),
     M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,
     MR_NO_FLAGS,
     680, 10, MONS_GNOLL, MONS_GNOLL, MH_NATURAL, -3,
@@ -5584,9 +5584,9 @@ static monsterentry mondata[] = {
     MONUSE_STARTING_EQUIPMENT, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// Spr"i"ggans.
+// SprM_("i")ggans.
 {
-    MONS_AGNES, 'i', LIGHTCYAN, "Agnes",
+    MONS_AGNES, 'i', LIGHTCYAN, M_("Agnes"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS,
     MR_NO_FLAGS,
     200, 20, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -5597,9 +5597,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_LITTLE
 },
 
-// "J"ellies.
+// M_("J")ellies.
 {
-    MONS_ROYAL_JELLY, 'J', YELLOW, "the royal jelly",
+    MONS_ROYAL_JELLY, 'J', YELLOW, M_("the royal jelly"),
     M_SENSE_INVIS | M_ACID_SPLASH | M_NO_REGEN
         | M_UNIQUE,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
@@ -5612,7 +5612,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DISSOLUTION, 'J', LIGHTMAGENTA, "Dissolution",
+    MONS_DISSOLUTION, 'J', LIGHTMAGENTA, M_("Dissolution"),
     M_UNIQUE | M_SENSE_INVIS | M_ACID_SPLASH | M_BURROWS | M_PRIEST | M_SPEAKS
         | M_SPELLCASTER,
     MR_RES_POISON | MR_RES_ASPHYX | MR_RES_ACID,
@@ -5626,7 +5626,7 @@ static monsterentry mondata[] = {
 
 // Snails and other gastropods.
 {
-    MONS_GASTRONOK, 'j', LIGHTRED, "Gastronok",
+    MONS_GASTRONOK, 'j', LIGHTRED, M_("Gastronok"),
     M_NO_SKELETON | M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS
         | M_SPEAKS | M_NO_WAND,
     MR_NO_FLAGS,
@@ -5638,9 +5638,9 @@ static monsterentry mondata[] = {
     MONUSE_STARTING_EQUIPMENT, MONEAT_FOOD, SIZE_BIG
 },
 
-// "K"obolds.
+// M_("K")obolds.
 {
-    MONS_SONJA, 'K', RED, "Sonja",
+    MONS_SONJA, 'K', RED, M_("Sonja"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -5655,7 +5655,7 @@ static monsterentry mondata[] = {
 
 {
     // XP modifier is very high to compensate for 4 created-friendly humans
-    MONS_PIKEL, 'K', BLUE, "Pikel",
+    MONS_PIKEL, 'K', BLUE, M_("Pikel"),
     M_WARM_BLOOD | M_SPEAKS | M_UNIQUE | M_NO_WAND,
     MR_NO_FLAGS,
     500, 32, MONS_KOBOLD, MONS_BIG_KOBOLD, MH_NATURAL, -3,
@@ -5666,10 +5666,10 @@ static monsterentry mondata[] = {
     MONUSE_STARTING_EQUIPMENT, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "L"iches.
+// M_("L")iches.
 {
     // May be re-spawned after his death.
-    MONS_BORIS, 'L', RED, "Boris",
+    MONS_BORIS, 'L', RED, M_("Boris"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS,
     MR_RES_COLD | mrd(MR_RES_ELEC, 2),
     0, 15, MONS_LICH, MONS_LICH, MH_UNDEAD, -11,
@@ -5681,9 +5681,9 @@ static monsterentry mondata[] = {
     MONUSE_STARTING_EQUIPMENT, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "M"ummies.
+// M_("M")ummies.
 {
-    MONS_MENKAURE, 'M', MAGENTA, "Menkaure",
+    MONS_MENKAURE, 'M', MAGENTA, M_("Menkaure"),
     M_UNIQUE | M_SPEAKS | M_SEE_INVIS | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_VUL_FIRE | MR_RES_COLD,
     0, 48, MONS_MUMMY, MONS_MUMMY, MH_UNDEAD, -5,
@@ -5695,7 +5695,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KHUFU, 'M', LIGHTRED, "Khufu",
+    MONS_KHUFU, 'M', LIGHTRED, M_("Khufu"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS | M_UNIQUE,
     MR_RES_COLD | mrd(MR_RES_ELEC, 2),
     0, 20, MONS_MUMMY, MONS_MUMMY, MH_UNDEAD, MAG_IMMUNE,
@@ -5706,9 +5706,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "m"erfolk.
+// M_("m")erfolk.
 {
-    MONS_ILSUIW, 'm', LIGHTGREEN, "Ilsuiw",
+    MONS_ILSUIW, 'm', LIGHTGREEN, M_("Ilsuiw"),
     M_UNIQUE | M_WARM_BLOOD | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SPEAKS,
     MR_NO_FLAGS,
     500, 10, MONS_MERFOLK, MONS_MERFOLK, MH_NATURAL, -7,
@@ -5719,9 +5719,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "O"gres.
+// M_("O")gres.
 {
-    MONS_EROLCHA, 'O', LIGHTBLUE, "Erolcha",
+    MONS_EROLCHA, 'O', LIGHTBLUE, M_("Erolcha"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -5733,9 +5733,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// "o"rcs.
+// M_("o")rcs.
 {
-    MONS_BLORK_THE_ORC, 'o', BROWN, "Blork the orc",
+    MONS_BLORK_THE_ORC, 'o', BROWN, M_("Blork the orc"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 15, MONS_ORC, MONS_ORC, MH_NATURAL, -4,
@@ -5747,7 +5747,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_URUG, 'o', RED, "Urug",
+    MONS_URUG, 'o', RED, M_("Urug"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     600, 20, MONS_ORC, MONS_ORC, MH_NATURAL, -5,
@@ -5759,7 +5759,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NERGALLE, 'o', WHITE, "Nergalle",
+    MONS_NERGALLE, 'o', WHITE, M_("Nergalle"),
     M_UNIQUE | M_SPELLCASTER | M_SEE_INVIS | M_ACTUAL_SPELLS | M_WARM_BLOOD
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -5772,7 +5772,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SAINT_ROKA, 'o', LIGHTBLUE, "Saint Roka",
+    MONS_SAINT_ROKA, 'o', LIGHTBLUE, M_("Saint Roka"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPELLCASTER | M_PRIEST | M_SPEAKS,
     MR_NO_FLAGS,
     600, 15, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
@@ -5783,9 +5783,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "p"  ghostlies.
+// M_("p")  ghostlies.
 {
-    MONS_TERPSICHORE, 'p', LIGHTMAGENTA, "Terpsichore",
+    MONS_TERPSICHORE, 'p', LIGHTMAGENTA, M_("Terpsichore"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS
       | M_SPEAKS | M_DEFLECT_MISSILES,
     MR_NO_FLAGS,
@@ -5799,7 +5799,7 @@ static monsterentry mondata[] = {
 
 // Dwarves
 {
-    MONS_WIGLAF, 'q', YELLOW, "Wiglaf",
+    MONS_WIGLAF, 'q', YELLOW, M_("Wiglaf"),
     M_UNIQUE | M_SPELLCASTER | M_PRIEST | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 8, MONS_DWARF, MONS_DWARF, MH_NATURAL, -5,
@@ -5812,7 +5812,7 @@ static monsterentry mondata[] = {
 
 // Rakshasas and demons.
 {
-    MONS_AZRAEL, 'R', LIGHTRED, "Azrael",
+    MONS_AZRAEL, 'R', LIGHTRED, M_("Azrael"),
     M_UNIQUE | M_SPELLCASTER | M_GLOWS_LIGHT | M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_FIRE, 3) | MR_VUL_COLD,
     0, 12, MONS_EFREET, MONS_EFREET, MH_DEMONIC, -3,
@@ -5824,7 +5824,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MARA, 'R', LIGHTMAGENTA, "Mara",
+    MONS_MARA, 'R', LIGHTMAGENTA, M_("Mara"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_UNIQUE,
     MR_RES_POISON | mrd(MR_RES_FIRE, 2),
     0, 25, MONS_RAKSHASA, MONS_RAKSHASA, MH_DEMONIC, -6,
@@ -5838,7 +5838,7 @@ static monsterentry mondata[] = {
 // Illusions of Mara. Only two ever exist at the one time; identical stats to
 // Mara.
 {
-    MONS_MARA_FAKE, 'R', LIGHTMAGENTA, "Mara",
+    MONS_MARA_FAKE, 'R', LIGHTMAGENTA, M_("Mara"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     MR_RES_POISON | mrd(MR_RES_FIRE, 2),
     0, 20, MONS_RAKSHASA_FAKE, MONS_RAKSHASA_FAKE, MH_DEMONIC, -6,
@@ -5849,9 +5849,9 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
-// "S"nakes and guardian serpents.
+// M_("S")nakes and guardian serpents.
 {
-    MONS_AIZUL, 'S', LIGHTMAGENTA, "Aizul",
+    MONS_AIZUL, 'S', LIGHTMAGENTA, M_("Aizul"),
     M_SPELLCASTER | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS
         | M_ACTUAL_SPELLS | M_UNIQUE,
     MR_RES_POISON,
@@ -5863,10 +5863,10 @@ static monsterentry mondata[] = {
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// "T"rolls.
+// M_("T")rolls.
 {
     // Snorg can go berserk.
-    MONS_SNORG, 'T', LIGHTGREEN, "Snorg",
+    MONS_SNORG, 'T', LIGHTGREEN, M_("Snorg"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1500, 25, MONS_TROLL, MONS_TROLL, MH_NATURAL, -6,
@@ -5879,7 +5879,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PURGY, 'T', GREEN, "Purgy",
+    MONS_PURGY, 'T', GREEN, M_("Purgy"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     1100, 10, MONS_TROLL, MONS_TROLL, MH_NATURAL, -2,
@@ -5891,9 +5891,9 @@ static monsterentry mondata[] = {
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// "V"ampires.
+// M_("V")ampires.
 {
-    MONS_JORY, 'V', LIGHTRED, "Jory",
+    MONS_JORY, 'V', LIGHTRED, M_("Jory"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_SPEAKS
         | M_BLOOD_SCENT | M_WARM_BLOOD | M_UNIQUE,
     MR_RES_COLD,
@@ -5908,7 +5908,7 @@ static monsterentry mondata[] = {
 
 // Elephants.
 {
-    MONS_NELLIE, 'Y', LIGHTMAGENTA, "Nellie",
+    MONS_NELLIE, 'Y', LIGHTMAGENTA, M_("Nellie"),
     M_WARM_BLOOD | M_SPELLCASTER | M_UNIQUE | M_SPEAKS,
     MR_NO_FLAGS,
     2300, 8, MONS_ELEPHANT, MONS_HELLEPHANT, MH_DEMONIC, -5,
@@ -5920,9 +5920,9 @@ static monsterentry mondata[] = {
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_GIANT
 },
 
-// Skulls and "z" undead.
+// Skulls and M_("z") undead.
 {
-    MONS_MURRAY, 'z', LIGHTRED, "Murray",
+    MONS_MURRAY, 'z', LIGHTRED, M_("Murray"),
     M_UNIQUE | M_SPELLCASTER | M_SEE_INVIS | M_NOISY_SPELLS | M_SPEAKS,
     mrd(MR_RES_ELEC | MR_RES_COLD, 2) | MR_RES_HELLFIRE,
     0, 10, MONS_LICH, MONS_CURSE_SKULL, MH_UNDEAD, MAG_IMMUNE,
@@ -5935,7 +5935,7 @@ static monsterentry mondata[] = {
 
 // numbers!
 {
-    MONS_IGNACIO, '1', LIGHTMAGENTA, "Ignacio",
+    MONS_IGNACIO, '1', LIGHTMAGENTA, M_("Ignacio"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     MR_RES_ELEC | MR_RES_FIRE | MR_RES_COLD | MR_RES_POISON,
     0, 14, MONS_EXECUTIONER, MONS_EXECUTIONER, MH_DEMONIC, -9,
@@ -5948,7 +5948,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GRINDER, '5', BLUE, "Grinder",
+    MONS_GRINDER, '5', BLUE, M_("Grinder"),
     M_UNIQUE | M_SEE_INVIS | M_SPELLCASTER | M_SPEAKS | M_NO_HT_WAND,
     MR_RES_POISON | mrd(MR_RES_COLD, 2),
     0, 11, MONS_IMP, MONS_SHADOW_IMP, MH_DEMONIC, -3,
@@ -5962,7 +5962,7 @@ static monsterentry mondata[] = {
 {
     // Roxanne obviously can't use items, but we want to equip her with
     // a spellbook, so MONUSE_STARTING_EQUIPMENT is necessary.
-    MONS_ROXANNE, '8', BLUE, "Roxanne",
+    MONS_ROXANNE, '8', BLUE, M_("Roxanne"),
     M_ARTIFICIAL | M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_STATIONARY
         | M_SPEAKS,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 2),
@@ -5976,7 +5976,7 @@ static monsterentry mondata[] = {
 
 // human uniques
 {
-    MONS_TERENCE, '@', LIGHTCYAN, "Terence",
+    MONS_TERENCE, '@', LIGHTCYAN, M_("Terence"),
     M_UNIQUE | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 10, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -5988,7 +5988,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JESSICA, '@', LIGHTGREY, "Jessica",
+    MONS_JESSICA, '@', LIGHTGREY, M_("Jessica"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 125, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -6000,7 +6000,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SIGMUND, '@', YELLOW, "Sigmund",
+    MONS_SIGMUND, '@', YELLOW, M_("Sigmund"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS| M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -3,
@@ -6012,7 +6012,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EDMUND, '@', RED, "Edmund",
+    MONS_EDMUND, '@', RED, M_("Edmund"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 15, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -4,
@@ -6024,7 +6024,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PSYCHE, '@', LIGHTMAGENTA, "Psyche",
+    MONS_PSYCHE, '@', LIGHTMAGENTA, M_("Psyche"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -4,
@@ -6036,7 +6036,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DONALD, '@', BLUE, "Donald",
+    MONS_DONALD, '@', BLUE, M_("Donald"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6048,7 +6048,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JOSEPH, '@', CYAN, "Joseph",
+    MONS_JOSEPH, '@', CYAN, M_("Joseph"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 15, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6060,7 +6060,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ERICA, '@', MAGENTA, "Erica",
+    MONS_ERICA, '@', MAGENTA, M_("Erica"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6072,7 +6072,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JOSEPHINE, '@', WHITE, "Josephine",
+    MONS_JOSEPHINE, '@', WHITE, M_("Josephine"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6084,7 +6084,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_HAROLD, '@', LIGHTGREEN, "Harold",
+    MONS_HAROLD, '@', LIGHTGREEN, M_("Harold"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6097,7 +6097,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_JOZEF, '@', LIGHTMAGENTA, "Jozef",
+    MONS_JOZEF, '@', LIGHTMAGENTA, M_("Jozef"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6110,7 +6110,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MAUD, '@', RED, "Maud",
+    MONS_MAUD, '@', RED, M_("Maud"),
     M_UNIQUE | M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 15, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6122,7 +6122,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LOUISE, '@', BLUE, "Louise",
+    MONS_LOUISE, '@', BLUE, M_("Louise"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 15, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6134,7 +6134,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FRANCES, '@', YELLOW, "Frances",
+    MONS_FRANCES, '@', YELLOW, M_("Frances"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6147,7 +6147,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_RUPERT, '@', LIGHTRED, "Rupert",
+    MONS_RUPERT, '@', LIGHTRED, M_("Rupert"),
     M_UNIQUE | M_SPELLCASTER | M_SPELL_NO_SILENT | M_WARM_BLOOD | M_SEE_INVIS
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6160,7 +6160,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_KIRKE, '@', LIGHTGREEN, "Kirke",
+    MONS_KIRKE, '@', LIGHTGREEN, M_("Kirke"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS
         | M_SPEAKS | M_DEFLECT_MISSILES,
     MR_NO_FLAGS,
@@ -6173,7 +6173,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NORRIS, '@', LIGHTRED, "Norris",
+    MONS_NORRIS, '@', LIGHTRED, M_("Norris"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD
         | M_SEE_INVIS | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6186,7 +6186,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FREDERICK, '@', GREEN, "Frederick",
+    MONS_FREDERICK, '@', GREEN, M_("Frederick"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD  | M_SEE_INVIS
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6199,7 +6199,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MARGERY, '@', LIGHTRED, "Margery",
+    MONS_MARGERY, '@', LIGHTRED, M_("Margery"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS
         | M_SPEAKS,
     MR_NO_FLAGS,
@@ -6212,7 +6212,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_EUSTACHIO, '@', GREEN, "Eustachio",
+    MONS_EUSTACHIO, '@', GREEN, M_("Eustachio"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 20, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -5,
@@ -6224,7 +6224,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MAURICE, '@', GREEN, "Maurice",
+    MONS_MAURICE, '@', GREEN, M_("Maurice"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 24, MONS_HUMAN, MONS_HUMAN, MH_NATURAL, -4,
@@ -6236,7 +6236,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_NIKOLA, '@', LIGHTCYAN, "Nikola",
+    MONS_NIKOLA, '@', LIGHTCYAN, M_("Nikola"),
     M_UNIQUE | M_SPELLCASTER | M_ACTUAL_SPELLS | M_WARM_BLOOD | M_SEE_INVIS
         | M_SPEAKS,
     MR_NO_FLAGS, // Xom would hate MR_RES_ELEC here.
@@ -6250,7 +6250,7 @@ static monsterentry mondata[] = {
 
 // unique major demons ('&')
 {
-    MONS_MNOLEG, '&', LIGHTGREEN, "Mnoleg",
+    MONS_MNOLEG, '&', LIGHTGREEN, M_("Mnoleg"),
     M_UNIQUE | M_FIGHTER | M_SEE_INVIS | M_SPELLCASTER | M_SPEAKS,
     mrd(MR_RES_ELEC, 2) | MR_RES_POISON | MR_RES_FIRE,
     0, 15, MONS_PANDEMONIUM_LORD, MONS_PANDEMONIUM_LORD, MH_DEMONIC, MAG_IMMUNE,
@@ -6262,7 +6262,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LOM_LOBON, '&', LIGHTBLUE, "Lom Lobon",
+    MONS_LOM_LOBON, '&', LIGHTBLUE, M_("Lom Lobon"),
     M_UNIQUE | M_FIGHTER | M_SEE_INVIS | M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON | MR_RES_FIRE | mrd(MR_RES_COLD | MR_RES_ELEC, 3),
     0, 15, MONS_PANDEMONIUM_LORD, MONS_PANDEMONIUM_LORD, MH_DEMONIC, MAG_IMMUNE,
@@ -6274,7 +6274,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_CEREBOV, '&', RED, "Cerebov",
+    MONS_CEREBOV, '&', RED, M_("Cerebov"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     MR_RES_POISON | MR_RES_HELLFIRE,
     0, 15, MONS_PANDEMONIUM_LORD, MONS_PANDEMONIUM_LORD, MH_DEMONIC, -6,
@@ -6286,7 +6286,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GLOORX_VLOQ, '&', LIGHTGREY, "Gloorx Vloq",
+    MONS_GLOORX_VLOQ, '&', LIGHTGREY, M_("Gloorx Vloq"),
     M_UNIQUE | M_FIGHTER | M_SEE_INVIS | M_SPELLCASTER | M_SPEAKS,
     MR_RES_POISON | MR_RES_COLD | mrd(MR_RES_ELEC, 2),
     0, 15, MONS_PANDEMONIUM_LORD, MONS_PANDEMONIUM_LORD, MH_DEMONIC, -14,
@@ -6298,7 +6298,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_GERYON, '&', GREEN, "Geryon",
+    MONS_GERYON, '&', GREEN, M_("Geryon"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS
         | M_SPELL_NO_SILENT,
     MR_NO_FLAGS,
@@ -6311,7 +6311,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_DISPATER, '&', MAGENTA, "Dispater",
+    MONS_DISPATER, '&', MAGENTA, M_("Dispater"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_ELEC, 3) | MR_RES_POISON | MR_RES_HELLFIRE | MR_RES_COLD,
     0, 15, MONS_HELL_LORD, MONS_HELL_LORD, MH_DEMONIC, -10,
@@ -6323,7 +6323,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ASMODEUS, '&', LIGHTMAGENTA, "Asmodeus",
+    MONS_ASMODEUS, '&', LIGHTMAGENTA, M_("Asmodeus"),
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     MR_RES_ELEC | MR_RES_POISON | MR_RES_HELLFIRE,
     0, 25, MONS_HELL_LORD, MONS_HELL_LORD, MH_DEMONIC, -12,
@@ -6335,7 +6335,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ERESHKIGAL, '&', WHITE, "Ereshkigal",
+    MONS_ERESHKIGAL, '&', WHITE, M_("Ereshkigal"),
     M_UNIQUE | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS,
     mrd(MR_RES_ELEC, 2) | MR_RES_POISON | MR_RES_COLD,
     0, 15, MONS_HELL_LORD, MONS_HELL_LORD, MH_DEMONIC, -10,
@@ -6350,7 +6350,7 @@ static monsterentry mondata[] = {
 // unkillable, just sits there doing nothing but casting Shadow Creatures
 // over and over.
 {
-    MONS_TEST_SPAWNER, 'X', WHITE, "test spawner",
+    MONS_TEST_SPAWNER, 'X', WHITE, M_("test spawner"),
     M_SPELLCASTER | M_STATIONARY | M_INSUBSTANTIAL | M_NO_POLY_TO,
     mrd(MR_RES_ELEC | MR_RES_POISON | MR_RES_FIRE | MR_RES_HELLFIRE
         | MR_RES_COLD | MR_RES_ACID | MR_RES_STICKY_FLAME | MR_RES_STEAM, 127),
@@ -6364,7 +6364,7 @@ static monsterentry mondata[] = {
 
 // an unspecified monster
 {
-    MONS_SENSED, '{', LIGHTRED, "sensed monster",
+    MONS_SENSED, '{', LIGHTRED, M_("sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
@@ -6376,7 +6376,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SENSED_FRIENDLY, '{', GREEN, "friendly sensed monster",
+    MONS_SENSED_FRIENDLY, '{', GREEN, M_("friendly sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
@@ -6388,7 +6388,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SENSED_TRIVIAL, '{', LIGHTGRAY, "trivial sensed monster",
+    MONS_SENSED_TRIVIAL, '{', LIGHTGRAY, M_("trivial sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
@@ -6400,7 +6400,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SENSED_EASY, '{', BROWN, "easy sensed monster",
+    MONS_SENSED_EASY, '{', BROWN, M_("easy sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
@@ -6412,7 +6412,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SENSED_TOUGH, '{', RED, "tough sensed monster",
+    MONS_SENSED_TOUGH, '{', RED, M_("tough sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
@@ -6424,7 +6424,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SENSED_NASTY, '{', LIGHTRED, "nasty sensed monster",
+    MONS_SENSED_NASTY, '{', LIGHTRED, M_("nasty sensed monster"),
     M_NO_POLY_TO,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,

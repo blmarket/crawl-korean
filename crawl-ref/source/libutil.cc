@@ -85,9 +85,11 @@ std::string apply_description(description_level_type desc,
     switch (desc)
     {
     case DESC_CAP_THE:
-        return ("The " + name);
+	/// 한국어에는 The에 해당하는 번역이 따로 없지요.
+        return (make_stringf(gettext("The %s"), name.c_str()));
     case DESC_NOCAP_THE:
-        return ("the " + name);
+	/// 한국어에는 The에 해당하는 번역이 따로 없지요.
+        return (make_stringf(gettext("the %s"), name.c_str()));
     case DESC_CAP_A:
         return (quantity > 1 ? number_to_string(quantity, in_words) + name
                              : article_a(name, false));
@@ -95,9 +97,9 @@ std::string apply_description(description_level_type desc,
         return (quantity > 1 ? number_to_string(quantity, in_words) + name
                              : article_a(name, true));
     case DESC_CAP_YOUR:
-        return ("Your " + name);
+        return (make_stringf(gettext("Your %s"), name.c_str()));
     case DESC_NOCAP_YOUR:
-        return ("your " + name);
+        return (make_stringf(gettext("your %s"), name.c_str()));
     case DESC_PLAIN:
     default:
         return (name);

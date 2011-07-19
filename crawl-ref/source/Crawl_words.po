@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-19 00:44+0900\n"
+"POT-Creation-Date: 2011-07-19 18:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -367,3 +366,2287 @@ msgstr "전투법사"
 #: newgame.cc:1036
 msgid "Mage"
 msgstr "법사"
+
+msgid "program bug"
+msgstr "프로그램 버그"
+
+#: mon-data.h:228
+msgid "worker ant"
+msgstr "거대 개미"
+
+#: mon-data.h:240
+msgid "queen ant"
+msgstr "여왕 개미"
+
+#: mon-data.h:252
+msgid "soldier ant"
+msgstr "병정 개미"
+
+#: mon-data.h:264
+msgid "ant larva"
+msgstr "개미 유충"
+
+#: mon-data.h:289
+msgid "butterfly"
+msgstr "나비"
+
+#. one vault + player transform (Vp ability)
+#: mon-data.h:301
+msgid "vampire bat"
+msgstr "흡혈박쥐"
+
+#: mon-data.h:313
+msgid "fire bat"
+msgstr "불박쥐"
+
+#: mon-data.h:325
+msgid "raven"
+msgstr "까마귀"
+
+#: mon-data.h:337
+msgid "phoenix"
+msgstr "불사조"
+
+#: mon-data.h:350
+msgid "centaur"
+msgstr "센타우르"
+
+#: mon-data.h:362
+msgid "centaur warrior"
+msgstr "센타우르 전사"
+
+#: mon-data.h:374
+msgid "yaktaur"
+msgstr "야크타우어"
+
+#: mon-data.h:386
+msgid "yaktaur captain"
+msgstr "야크타우어 캡틴"
+
+#. draconians ('d')
+#. Base draconian - for use like MONS_HUMAN, MONS_ELF although we
+#. now store the draconian subspecies in base_monster for those
+#. listed as species MONS_DRACONIAN.
+#: mon-data.h:401
+msgid "draconian"
+msgstr "드라코니언"
+
+#: mon-data.h:413
+msgid "black draconian"
+msgstr "검은 드라코니언"
+
+#: mon-data.h:425
+msgid "yellow draconian"
+msgstr "노란 드라코니언"
+
+#. Colours are used for picking the right tile for Tiamat,
+#. so this needs to be different from the grey draconian. (jpeg)
+#: mon-data.h:439
+msgid "pale draconian"
+msgstr "옅은색 드라코니언"
+
+#: mon-data.h:451
+msgid "green draconian"
+msgstr "녹색 드라코니언"
+
+#: mon-data.h:464
+msgid "purple draconian"
+msgstr "보라색 드라코니언"
+
+#: mon-data.h:476
+msgid "red draconian"
+msgstr "붉은 드라코니언"
+
+#: mon-data.h:488
+msgid "white draconian"
+msgstr "흰 드라코니언"
+
+#: mon-data.h:500
+msgid "grey draconian"
+msgstr "회색 드라코니언"
+
+#: mon-data.h:513
+msgid "mottled draconian"
+msgstr "얼룩무늬 드라코니언"
+
+#: mon-data.h:525
+msgid "draconian caller"
+msgstr "드라코니언 소환사"
+
+#: mon-data.h:537
+msgid "draconian monk"
+msgstr "드라코니언 수도승"
+
+#: mon-data.h:550
+msgid "draconian zealot"
+msgstr "드라코니언 광전사"
+
+#: mon-data.h:562
+msgid "draconian shifter"
+msgstr "드라코니언 전이술사"
+
+#: mon-data.h:574
+msgid "draconian annihilator"
+msgstr "드라코니언 파괴술사"
+
+#: mon-data.h:586
+msgid "draconian knight"
+msgstr "드라코니언 기사"
+
+#: mon-data.h:598
+msgid "draconian scorcher"
+msgstr "드라코니언 화염술사"
+
+#: mon-data.h:624
+msgid "deep elf soldier"
+msgstr "딥 엘프 병사"
+
+#: mon-data.h:636
+msgid "deep elf fighter"
+msgstr "딥 엘프 전사"
+
+#: mon-data.h:648
+msgid "deep elf knight"
+msgstr "딥 엘프 기사"
+
+#: mon-data.h:660
+msgid "deep elf blademaster"
+msgstr "딥 엘프 검술사"
+
+#: mon-data.h:672
+msgid "deep elf master archer"
+msgstr "딥 엘프 저격수"
+
+#: mon-data.h:685
+msgid "deep elf mage"
+msgstr "딥 엘프 마법사"
+
+#: mon-data.h:697
+msgid "deep elf summoner"
+msgstr "딥 엘프 소환술사"
+
+#: mon-data.h:709
+msgid "deep elf conjurer"
+msgstr "딥 엘프 요술사"
+
+#: mon-data.h:721
+msgid "deep elf priest"
+msgstr "딥 엘프 사제"
+
+#: mon-data.h:733
+msgid "deep elf high priest"
+msgstr "딥 엘프 고위 사제"
+
+#: mon-data.h:745
+msgid "deep elf demonologist"
+msgstr "딥 엘프 악마술사"
+
+#: mon-data.h:757
+msgid "deep elf annihilator"
+msgstr "딥 엘프 파괴술사"
+
+#: mon-data.h:769
+msgid "deep elf sorcerer"
+msgstr "딥 엘프 소서러"
+
+#: mon-data.h:781
+msgid "deep elf death mage"
+msgstr "딥 엘프 죽음 마술사"
+
+#: mon-data.h:794
+msgid "toadstool"
+msgstr "버섯"
+
+#: mon-data.h:806
+msgid "fungus"
+msgstr "도깨비 버섯"
+
+#: mon-data.h:818
+msgid "ballistomycete"
+msgstr "발리스토마이세트"
+
+#: mon-data.h:830
+msgid "hyperactive ballistomycete"
+msgstr "발동된 발리스토마이세트"
+
+#: mon-data.h:843
+msgid "wandering mushroom"
+msgstr "방황하는 버섯"
+
+#: mon-data.h:856
+msgid "goblin"
+msgstr "고블린"
+
+#: mon-data.h:868
+msgid "hobgoblin"
+msgstr "홉고블린"
+
+#: mon-data.h:880
+msgid "gnoll"
+msgstr "놀"
+
+#: mon-data.h:892
+msgid "boggart"
+msgstr "보가트"
+
+#: mon-data.h:905
+msgid "jackal"
+msgstr "자칼"
+
+#: mon-data.h:917
+msgid "hound"
+msgstr "하운드"
+
+#: mon-data.h:929
+msgid "warg"
+msgstr "워그"
+
+#: mon-data.h:942
+msgid "wolf"
+msgstr "늑대"
+
+#: mon-data.h:955
+msgid "war dog"
+msgstr "군용견"
+
+#: mon-data.h:967
+msgid "hog"
+msgstr "돼지"
+
+#: mon-data.h:979
+msgid "hell hound"
+msgstr "헬하운드"
+
+#: mon-data.h:991
+msgid "hell hog"
+msgstr "지옥의 돼지"
+
+#. effect of porkalator cast on holies
+#: mon-data.h:1003
+msgid "holy swine"
+msgstr "천국의 돼지"
+
+#. a dummy monster for recolouring
+#: mon-data.h:1015
+msgid "felid"
+msgstr "묘신족"
+
+#: mon-data.h:1028
+msgid "spriggan"
+msgstr "스프리건"
+
+#. both the guy and his ride as one monster
+#: mon-data.h:1040
+msgid "spriggan rider"
+msgstr "스프리건 기마사"
+
+#: mon-data.h:1052
+msgid "spriggan druid"
+msgstr "스프리건 드루이드"
+
+#: mon-data.h:1064
+msgid "spriggan berserker"
+msgstr "스프리건 광전사"
+
+#: mon-data.h:1076
+msgid "spriggan air mage"
+msgstr "스프리건 대기술사"
+
+#: mon-data.h:1089
+msgid "spriggan defender"
+msgstr "스프리건 수비사"
+
+msgid "the enchantress"
+msgstr "스프리건 대주술사"
+
+#: mon-data.h:1116
+msgid "giant slug"
+msgstr "거대한 슬러그"
+
+#: mon-data.h:1128
+msgid "agate snail"
+msgstr "아가테 달팽이"
+
+#: mon-data.h:1140
+msgid "elephant slug"
+msgstr "코끼리 슬러그"
+
+#: mon-data.h:1153
+msgid "queen bee"
+msgstr "여왕벌"
+
+#: mon-data.h:1165
+msgid "killer bee"
+msgstr "킬러비"
+
+#: mon-data.h:1177
+msgid "bumblebee"
+msgstr "땡벌"
+
+#: mon-data.h:1189
+msgid "killer bee larva"
+msgstr "킬러비 유충"
+
+#: mon-data.h:1201
+msgid "giant firefly"
+msgstr "개똥벌레"
+
+#: mon-data.h:1214
+msgid "giant newt"
+msgstr "뉴트"
+
+#: mon-data.h:1226
+msgid "giant gecko"
+msgstr "게코"
+
+#: mon-data.h:1238
+msgid "iguana"
+msgstr "이구아나"
+
+#: mon-data.h:1250
+msgid "basilisk"
+msgstr "바실리스크"
+
+#: mon-data.h:1262
+msgid "komodo dragon"
+msgstr "코모도 용"
+
+#: mon-data.h:1275
+msgid "swamp drake"
+msgstr "늪지 드레이크"
+
+#: mon-data.h:1287
+msgid "fire drake"
+msgstr "파이어 드레이크"
+
+#: mon-data.h:1299
+msgid "lindwurm"
+msgstr "린드브룸"
+
+#: mon-data.h:1312
+msgid "death drake"
+msgstr "죽음의 드레이크"
+
+#: mon-data.h:1325
+msgid "merfolk"
+msgstr "머포크"
+
+#: mon-data.h:1337
+msgid "merfolk impaler"
+msgstr "머포크 창병"
+
+#: mon-data.h:1350
+msgid "merfolk javelineer"
+msgstr "머포크 투창병"
+
+#: mon-data.h:1362
+msgid "merfolk aquamancer"
+msgstr "머포크 아쿠아맨서"
+
+#: mon-data.h:1374
+msgid "mermaid"
+msgstr "인어"
+
+#: mon-data.h:1386
+msgid "siren"
+msgstr "세이렌"
+
+#: mon-data.h:1399
+msgid "necrophage"
+msgstr "시체 포식자"
+
+#: mon-data.h:1411
+msgid "ghoul"
+msgstr "구울"
+
+#: mon-data.h:1423
+msgid "rotting hulk"
+msgstr "썩어가는 거인"
+
+#: mon-data.h:1436
+msgid "orc"
+msgstr "오크"
+
+#: mon-data.h:1448
+msgid "orc wizard"
+msgstr "오크 마법사"
+
+#: mon-data.h:1460
+msgid "orc priest"
+msgstr "오크 사제"
+
+#: mon-data.h:1472
+msgid "orc warrior"
+msgstr "오크 전사"
+
+#: mon-data.h:1484
+msgid "orc knight"
+msgstr "오크 기사"
+
+#: mon-data.h:1496
+msgid "orc warlord"
+msgstr "오크 워로드"
+
+#: mon-data.h:1508
+msgid "orc sorcerer"
+msgstr "오크 상급 마법사"
+
+#: mon-data.h:1521
+msgid "orc high priest"
+msgstr "오크 상급 사제"
+
+#. phantoms and ghosts ('p')
+#. Dummy monster, just for the genus.
+#. never spawns
+#: mon-data.h:1536
+msgid "ghost"
+msgstr "유령"
+
+#: mon-data.h:1550
+msgid "phantom"
+msgstr "환영"
+
+#: mon-data.h:1562
+msgid "hungry ghost"
+msgstr "배고픈 유령"
+
+#: mon-data.h:1574
+msgid "flayed ghost"
+msgstr "가죽이 벗겨진 유령"
+
+#: mon-data.h:1587
+msgid "player ghost"
+msgstr "플레이어 망령"
+
+#: mon-data.h:1602
+msgid "player illusion"
+msgstr "플레이어 환영"
+
+#: mon-data.h:1615
+msgid "shadow"
+msgstr "그림자"
+
+#: mon-data.h:1627
+msgid "silent spectre"
+msgstr "고요한 악령"
+
+#: mon-data.h:1639
+msgid "spirit"
+msgstr "영혼"
+
+#: mon-data.h:1652
+msgid "player"
+msgstr "플레이어"
+
+msgid "drarf"
+msgstr "드워프"
+
+#: mon-data.h:1677
+msgid "deep dwarf"
+msgstr "딥 드워프"
+
+#: mon-data.h:1689
+msgid "deep dwarf scion"
+msgstr "딥 드워프 스키온"
+
+#: mon-data.h:1701
+msgid "deep dwarf artificer"
+msgstr "딥 드워프 공구사"
+
+#: mon-data.h:1713
+msgid "deep dwarf necromancer"
+msgstr "딥 드워프 강령술사"
+
+#: mon-data.h:1725
+msgid "deep dwarf berserker"
+msgstr "딥 드워프 광전사"
+
+#: mon-data.h:1737
+msgid "deep dwarf death knight"
+msgstr "딥 드워프 죽음의 기사"
+
+#: mon-data.h:1749
+msgid "unborn deep dwarf"
+msgstr "딥 드워프 언데드"
+
+#. one vault.  Polymorph disabled.
+#: mon-data.h:1761
+msgid "gnome"
+msgstr "노움"
+
+#: mon-data.h:1774
+msgid "rat"
+msgstr "쥐"
+
+#: mon-data.h:1786
+msgid "quokka"
+msgstr "쿠와카"
+
+#: mon-data.h:1798
+msgid "grey rat"
+msgstr "회색 쥐"
+
+#: mon-data.h:1810
+msgid "green rat"
+msgstr "초록색 쥐"
+
+#: mon-data.h:1822
+msgid "orange rat"
+msgstr "오렌지색 쥐"
+
+#: mon-data.h:1834
+msgid "laboratory rat"
+msgstr "실험실 쥐"
+
+#: mon-data.h:1846
+msgid "porcupine"
+msgstr "호저"
+
+#: mon-data.h:1859
+msgid "giant cockroach"
+msgstr "거대 바퀴벌레"
+
+#: mon-data.h:1871
+msgid "giant mite"
+msgstr "거대한 진드기"
+
+#: mon-data.h:1883
+msgid "giant centipede"
+msgstr "거대한 지네"
+
+#: mon-data.h:1895
+msgid "scorpion"
+msgstr "전갈"
+
+#: mon-data.h:1907
+msgid "emperor scorpion"
+msgstr "황제 전갈"
+
+#: mon-data.h:1920
+msgid "spider"
+msgstr "거미"
+
+msgid "tarantulla"
+msgstr "타란튤라"
+
+#: mon-data.h:1944
+msgid "jumping spider"
+msgstr "깡충거미"
+
+#: mon-data.h:1956
+msgid "wolf spider"
+msgstr "늑대 거미"
+
+#: mon-data.h:1968
+msgid "trapdoor spider"
+msgstr "문짝 거미"
+
+#: mon-data.h:1982
+msgid "redback"
+msgstr "붉은 등 거미"
+
+#: mon-data.h:1994
+msgid "demonic crawler"
+msgstr "악마의 벌레"
+
+#: mon-data.h:2008
+msgid "crocodile"
+msgstr "악어 도마뱀"
+
+#: mon-data.h:2020
+msgid "baby alligator"
+msgstr "새끼 악어"
+
+#: mon-data.h:2032
+msgid "alligator"
+msgstr "악어"
+
+#: mon-data.h:2045
+msgid "snapping turtle"
+msgstr "늑대 거북이"
+
+#: mon-data.h:2060
+msgid "alligator snapping turtle"
+msgstr "악어 거북이"
+
+#: mon-data.h:2073
+msgid "fire crab"
+msgstr "꽃게"
+
+#: mon-data.h:2086
+msgid "ugly thing"
+msgstr "못생긴 것"
+
+#: mon-data.h:2098
+msgid "very ugly thing"
+msgstr "아주 못생긴 것"
+
+#: mon-data.h:2111
+msgid "fire vortex"
+msgstr "화염의 소용돌이"
+
+#: mon-data.h:2123
+msgid "spatial vortex"
+msgstr "시공의 소용돌이"
+
+#: mon-data.h:2135
+msgid "vapour"
+msgstr "증기"
+
+#: mon-data.h:2147
+msgid "insubstantial wisp"
+msgstr "희미한 위습"
+
+#. miscast only
+#: mon-data.h:2160
+msgid "twister"
+msgstr "회오리"
+
+#: mon-data.h:2173
+msgid "worm"
+msgstr "벌레"
+
+#: mon-data.h:2185
+msgid "brain worm"
+msgstr "뇌수 벌레"
+
+#: mon-data.h:2197
+msgid "swamp worm"
+msgstr "늪지 벌레"
+
+#: mon-data.h:2209
+msgid "spiny worm"
+msgstr "가시 벌레"
+
+#: mon-data.h:2221
+msgid "giant leech"
+msgstr "거대 거머리"
+
+#: mon-data.h:2234
+msgid "unseen horror"
+msgstr "보이지 않는 두려움"
+
+#. Coloured with mon-util.cc:random_small_abomination_colour.
+#: mon-data.h:2247
+msgid "small abomination"
+msgstr "작은 어보미네이션"
+
+#: mon-data.h:2272
+msgid "vampire mosquito"
+msgstr "흡혈귀 모기"
+
+#: mon-data.h:2260
+msgid "yellow wasp"
+msgstr "말벌"
+
+#: mon-data.h:2285
+msgid "red wasp"
+msgstr "붉은 말벌"
+
+#: mon-data.h:2297
+msgid "ghost moth"
+msgstr "유령 나방"
+
+#: mon-data.h:2310
+msgid "moth of wrath"
+msgstr "진노의 나방"
+
+#: mon-data.h:2327
+msgid "small zombie"
+msgstr "작은 좀비"
+
+#: mon-data.h:2339
+msgid "small skeleton"
+msgstr "작은 해골"
+
+#: mon-data.h:2351
+msgid "small simulacrum"
+msgstr "작은 환영"
+
+#: mon-data.h:2363
+msgid "wight"
+msgstr "와이트"
+
+#: mon-data.h:2375
+msgid "skeletal warrior"
+msgstr "해골 전사"
+
+#: mon-data.h:2387
+msgid "flying skull"
+msgstr "날아다니는 해골"
+
+#: mon-data.h:2399
+msgid "flaming corpse"
+msgstr "불타는 시체"
+
+#: mon-data.h:2413
+msgid "curse skull"
+msgstr "저주받은 해골"
+
+#: mon-data.h:2426
+msgid "curse toe"
+msgstr "저주받은 발가락"
+
+msgid "angel"
+msgstr "천사"
+
+msgid "cherub"
+msgstr "체러브"
+
+msgid "daeva"
+msgstr "데바"
+
+#: mon-data.h:2480
+msgid "goliath beetle"
+msgstr "거대 투구벌레"
+
+#: mon-data.h:2492
+msgid "boulder beetle"
+msgstr "암석 투구벌레"
+
+#: mon-data.h:2504
+msgid "boring beetle"
+msgstr "천공 투구벌레"
+
+#. cyclopes and giants ('C')
+#. dummy for the genus, never spawns
+#: mon-data.h:2517
+msgid "giant"
+msgstr "거인"
+
+#: mon-data.h:2529
+msgid "hill giant"
+msgstr "산악 거인"
+
+#: mon-data.h:2541
+msgid "cyclops"
+msgstr "사이클롭스"
+
+#: mon-data.h:2553
+msgid "ettin"
+msgstr "에틴"
+
+#: mon-data.h:2565
+msgid "fire giant"
+msgstr "화염 거인"
+
+#: mon-data.h:2577
+msgid "frost giant"
+msgstr "냉기 거인"
+
+#: mon-data.h:2589
+msgid "stone giant"
+msgstr "바위 거인"
+
+#: mon-data.h:2601
+msgid "titan"
+msgstr "타이탄"
+
+#: mon-data.h:2614
+msgid "wyvern"
+msgstr "와이번"
+
+#: mon-data.h:2626
+msgid "dragon"
+msgstr "용"
+
+#: mon-data.h:2639
+msgid "hydra"
+msgstr "히드라"
+
+#: mon-data.h:2651
+msgid "ice dragon"
+msgstr "얼음 용"
+
+#: mon-data.h:2664
+msgid "steam dragon"
+msgstr "증기 용"
+
+#: mon-data.h:2676
+msgid "swamp dragon"
+msgstr "늪지 용"
+
+#: mon-data.h:2689
+msgid "mottled dragon"
+msgstr "얼룩무늬 용"
+
+#: mon-data.h:2701
+msgid "quicksilver dragon"
+msgstr "수은의 용"
+
+#: mon-data.h:2713
+msgid "iron dragon"
+msgstr "철의 용"
+
+#: mon-data.h:2726
+msgid "storm dragon"
+msgstr "폭풍 용"
+
+#: mon-data.h:2739
+msgid "golden dragon"
+msgstr "황금 용"
+
+#: mon-data.h:2752
+msgid "shadow dragon"
+msgstr "그림자 용"
+
+#: mon-data.h:2765
+msgid "bone dragon"
+msgstr "해골 용"
+
+#: mon-data.h:2778
+msgid "pearl dragon"
+msgstr "진주 용"
+
+#: mon-data.h:2792
+msgid "earth elemental"
+msgstr "대지의 정령"
+
+#: mon-data.h:2804
+msgid "fire elemental"
+msgstr "불의 정령"
+
+#: mon-data.h:2816
+msgid "water elemental"
+msgstr "물의 정령"
+
+#: mon-data.h:2828
+msgid "air elemental"
+msgstr "대기의 정령"
+
+#: mon-data.h:2840
+msgid "iron elemental"
+msgstr "철의 정령"
+
+#: mon-data.h:2853
+msgid "giant frog"
+msgstr "거대한 개구리"
+
+#: mon-data.h:2867
+msgid "giant toad"
+msgstr "거대한 갈색 개구리"
+
+#: mon-data.h:2879
+msgid "spiny frog"
+msgstr "가시투성이 개구리"
+
+#: mon-data.h:2893
+msgid "blink frog"
+msgstr "깜박거리는 개구리"
+
+#: mon-data.h:2906
+msgid "giant eyeball"
+msgstr "거대한 눈알"
+
+#: mon-data.h:2918
+msgid "eye of draining"
+msgstr "흡성 눈알"
+
+#: mon-data.h:2930
+msgid "giant orange brain"
+msgstr "거대한 오렌지색 뇌"
+
+#: mon-data.h:2942
+msgid "great orb of eyes"
+msgstr "대형 눈알 구체"
+
+#: mon-data.h:2954
+msgid "shining eye"
+msgstr "빛나는 눈"
+
+#: mon-data.h:2966
+msgid "eye of devastation"
+msgstr "파괴의 눈"
+
+#: mon-data.h:2979
+msgid "golden eye"
+msgstr "황금의 눈"
+
+#: mon-data.h:2991
+msgid "ophan"
+msgstr "오판"
+
+#: mon-data.h:3004
+msgid "hippogriff"
+msgstr "히포그리프"
+
+#: mon-data.h:3017
+msgid "manticore"
+msgstr "맨티코어"
+
+#: mon-data.h:3030
+msgid "minotaur"
+msgstr "미노타우르스"
+
+#: mon-data.h:3044
+msgid "griffon"
+msgstr "그리폰"
+
+#: mon-data.h:3057
+msgid "sphinx"
+msgstr "스핑크스"
+
+#: mon-data.h:3070
+msgid "harpy"
+msgstr "하피"
+
+#: mon-data.h:3085
+msgid "kenku"
+msgstr "켄쿠"
+
+#: mon-data.h:3098
+msgid "shedu"
+msgstr "셰두"
+
+#: mon-data.h:3111
+msgid "ice beast"
+msgstr "얼음 짐승"
+
+#: mon-data.h:3123
+msgid "sky beast"
+msgstr "하늘 짐승"
+
+#: mon-data.h:3136
+msgid "ooze"
+msgstr "진흙괴물"
+
+#: mon-data.h:3148
+msgid "jelly"
+msgstr "젤리"
+
+#: mon-data.h:3160
+msgid "slime creature"
+msgstr "슬라임"
+
+#. not an actual monster, it's here just to allow recoloring
+#: mon-data.h:3172
+msgid "merged slime creature"
+msgstr "합쳐진 슬라임"
+
+#: mon-data.h:3196
+msgid "giant amoeba"
+msgstr "거대한 아메바"
+
+#: mon-data.h:3208
+msgid "brown ooze"
+msgstr "갈색 진흙괴물"
+
+#: mon-data.h:3220
+msgid "azure jelly"
+msgstr "담청색 젤리"
+
+#: mon-data.h:3234
+msgid "death ooze"
+msgstr "죽음의 젤리"
+
+#: mon-data.h:3246
+msgid "acid blob"
+msgstr "산성 덩이"
+
+#: mon-data.h:3259
+msgid "kobold"
+msgstr "코볼트"
+
+#: mon-data.h:3271
+msgid "big kobold"
+msgstr "거대한 코볼트"
+
+#: mon-data.h:3283
+msgid "kobold demonologist"
+msgstr "코볼트 악마술사"
+
+#: mon-data.h:3296
+msgid "lich"
+msgstr "리치"
+
+#: mon-data.h:3308
+msgid "ancient lich"
+msgstr "고대의 리치"
+
+#: mon-data.h:3321
+msgid "mummy"
+msgstr "미라"
+
+#: mon-data.h:3333
+msgid "bog mummy"
+msgstr "수렁 미라"
+
+#: mon-data.h:3346
+msgid "guardian mummy"
+msgstr "미라 수호자"
+
+#: mon-data.h:3358
+msgid "greater mummy"
+msgstr "고대의 미라"
+
+#: mon-data.h:3370
+msgid "mummy priest"
+msgstr "미라 사제"
+
+#: mon-data.h:3383
+msgid "naga"
+msgstr "나가"
+
+#: mon-data.h:3395
+msgid "naga mage"
+msgstr "나가 마술사"
+
+#: mon-data.h:3407
+msgid "naga warrior"
+msgstr "나가 전사"
+
+#: mon-data.h:3419
+msgid "greater naga"
+msgstr "거대 나가"
+
+#: mon-data.h:3433
+msgid "ogre"
+msgstr "오우거"
+
+#: mon-data.h:3447
+msgid "two-headed ogre"
+msgstr "쌍두 오우거"
+
+#: mon-data.h:3459
+msgid "ogre mage"
+msgstr "오우거 마술사"
+
+#: mon-data.h:3472
+msgid "plant"
+msgstr "잡초"
+
+#: mon-data.h:3484
+msgid "oklob sapling"
+msgstr "오클롭 새싹"
+
+#: mon-data.h:3497
+msgid "oklob plant"
+msgstr "오클롭 잡초"
+
+#: mon-data.h:3509
+msgid "bush"
+msgstr "풀숲"
+
+#: mon-data.h:3521
+msgid "burning bush"
+msgstr "불타는 풀숲"
+
+#: mon-data.h:3535
+msgid "efreet"
+msgstr "이프리트"
+
+#: mon-data.h:3547 mon-data.h:3560
+msgid "rakshasa"
+msgstr "락샤샤"
+
+#: mon-data.h:3573
+msgid "small snake"
+msgstr "작은 뱀"
+
+#: mon-data.h:3585
+msgid "snake"
+msgstr "뱀"
+
+#: mon-data.h:3597
+msgid "water moccasin"
+msgstr "물뱀"
+
+#: mon-data.h:3609
+msgid "black mamba"
+msgstr "블랙 맘바"
+
+#: mon-data.h:3621
+msgid "viper"
+msgstr "살모사"
+
+#: mon-data.h:3633
+msgid "sea snake"
+msgstr "바다뱀"
+
+#: mon-data.h:3645
+msgid "anaconda"
+msgstr "아나콘다"
+
+#: mon-data.h:3657
+msgid "guardian serpent"
+msgstr "수호자 뱀"
+
+#: mon-data.h:3670
+msgid "troll"
+msgstr "트롤"
+
+#: mon-data.h:3683
+msgid "rock troll"
+msgstr "바위 트롤"
+
+#: mon-data.h:3696
+msgid "iron troll"
+msgstr "강철 트롤"
+
+#: mon-data.h:3709
+msgid "deep troll"
+msgstr "동굴 트롤"
+
+#: mon-data.h:3723
+msgid "grizzly bear"
+msgstr "그리즐리 곰"
+
+#: mon-data.h:3736
+msgid "polar bear"
+msgstr "북극 곰"
+
+#: mon-data.h:3749
+msgid "black bear"
+msgstr "흑곰"
+
+#: mon-data.h:3763
+msgid "vampire"
+msgstr "뱀파이어"
+
+#: mon-data.h:3777
+msgid "vampire knight"
+msgstr "뱀파이어 기사"
+
+#: mon-data.h:3791
+msgid "vampire mage"
+msgstr "뱀파이어 마법사"
+
+#: mon-data.h:3806
+msgid "wraith"
+msgstr "레이쓰"
+
+#: mon-data.h:3818
+msgid "shadow wraith"
+msgstr "그림자 레이쓰"
+
+#: mon-data.h:3830
+msgid "freezing wraith"
+msgstr "냉기의 레이쓰"
+
+#: mon-data.h:3842
+msgid "eidolon"
+msgstr "허깨비"
+
+#: mon-data.h:3855
+msgid "phantasmal warrior"
+msgstr "유령 전사"
+
+#: mon-data.h:3868
+msgid "spectral thing"
+msgstr "유령 같은 것"
+
+#. coloured with mon-util.cc:random_large_abomination_colour.
+#: mon-data.h:3882
+msgid "large abomination"
+msgstr "어보미네이션"
+
+#: mon-data.h:3894
+msgid "tentacled monstrosity"
+msgstr "촉수 괴물"
+
+msgid "orb guardian"
+msgstr "오브 수호자"
+
+#: mon-data.h:3921
+msgid "sheep"
+msgstr "양"
+
+#: mon-data.h:3933
+msgid "yak"
+msgstr "야크"
+
+#: mon-data.h:3945
+msgid "death yak"
+msgstr "죽음의 야크"
+
+#: mon-data.h:3969
+msgid "elephant"
+msgstr "코끼리"
+
+#: mon-data.h:3982
+msgid "dire elephant"
+msgstr "굶주린 코끼리"
+
+#: mon-data.h:3995
+msgid "hellephant"
+msgstr "지옥의 코끼리"
+
+#: mon-data.h:4008
+msgid "apis"
+msgstr "아피스"
+
+#: mon-data.h:4023
+msgid "large zombie"
+msgstr "큰 좀비"
+
+#: mon-data.h:4035
+msgid "large skeleton"
+msgstr "큰 해골"
+
+#: mon-data.h:4047
+msgid "large simulacrum"
+msgstr "큰 환영"
+
+#: mon-data.h:4060
+msgid "big fish"
+msgstr "거대한 물고기"
+
+#: mon-data.h:4072
+msgid "giant goldfish"
+msgstr "거대한 금붕어"
+
+#: mon-data.h:4084
+msgid "electric eel"
+msgstr "전기 뱀장어"
+
+#: mon-data.h:4096
+msgid "jellyfish"
+msgstr "해파리"
+
+#: mon-data.h:4112
+msgid "shark"
+msgstr "상어"
+
+#: mon-data.h:4125
+msgid "kraken"
+msgstr "크라켄"
+
+#: mon-data.h:4137
+msgid "tentacle"
+msgstr "촉수"
+
+#: mon-data.h:4149
+msgid "tentacle segment"
+msgstr "촉수의 일부"
+
+#: mon-data.h:4162
+msgid "octopode"
+msgstr "문어족"
+
+#: mon-data.h:4176
+msgid "lava worm"
+msgstr "용암 벌레"
+
+#: mon-data.h:4188
+msgid "lava fish"
+msgstr "용암 물고기"
+
+#: mon-data.h:4200
+msgid "lava snake"
+msgstr "용암 뱀"
+
+#. mv: was another lava thing
+#: mon-data.h:4212
+msgid "salamander"
+msgstr "살라맨더"
+
+#: mon-data.h:4225
+msgid "rock worm"
+msgstr "바위 벌레"
+
+#: mon-data.h:4238
+msgid "human"
+msgstr "인간"
+
+#: mon-data.h:4250
+msgid "slave"
+msgstr "노예"
+
+#: mon-data.h:4262
+msgid "hell knight"
+msgstr "지옥의 기사"
+
+#: mon-data.h:4274
+msgid "necromancer"
+msgstr "강령술사"
+
+#: mon-data.h:4286
+msgid "wizard"
+msgstr "마법사"
+
+#: mon-data.h:4298
+msgid "vault guard"
+msgstr "보물창고 호위병"
+
+#: mon-data.h:4310
+msgid "shapeshifter"
+msgstr "변형괴물"
+
+#: mon-data.h:4322
+msgid "glowing shapeshifter"
+msgstr "발광하는 변형괴물"
+
+msgid "killer klown"
+msgstr "살인 피에로"
+
+#: mon-data.h:4346
+msgid "paladin"
+msgstr "성기사"
+
+#. dummy, for now.  Spawns in a single vault.
+#: mon-data.h:4358
+msgid "demonspawn"
+msgstr "데몬스폰"
+
+#. dummy; spawns in a single vault.
+#: mon-data.h:4370
+msgid "demigod"
+msgstr "반신족"
+
+#. dummy... literally; single vault
+#: mon-data.h:4382
+msgid "halfling"
+msgstr "하플링"
+
+#. Gold mimics are the only mimics that actually use their name. - bwr
+#: mon-data.h:4396
+msgid "pile of gold coins"
+msgstr "금화 미믹"
+
+#: mon-data.h:4409
+msgid "weapon mimic"
+msgstr "무기 미믹"
+
+#: mon-data.h:4422
+msgid "armour mimic"
+msgstr "방어구 미믹"
+
+#: mon-data.h:4435
+msgid "scroll mimic"
+msgstr "두루마리 미믹"
+
+#: mon-data.h:4448
+msgid "potion mimic"
+msgstr "물약 미믹"
+
+#: mon-data.h:4462
+msgid "door mimic"
+msgstr "문짝 미믹"
+
+#: mon-data.h:4475
+msgid "portal mimic"
+msgstr "포탈 미믹"
+
+#: mon-data.h:4488
+msgid "stair mimic"
+msgstr "계단 미믹"
+
+#: mon-data.h:4501
+msgid "shop mimic"
+msgstr "상점 미믹"
+
+#: mon-data.h:4514
+msgid "fountain mimic"
+msgstr "분수 미믹"
+
+#: mon-data.h:4530
+msgid "dancing weapon"
+msgstr "춤추는 무기"
+
+#: mon-data.h:4543
+msgid "eldritch tentacle"
+msgstr "섬뜩한 촉수"
+
+#: mon-data.h:4558
+msgid "eldritch tentacle segment"
+msgstr "섬뜩한 촉수의 일부"
+
+#: mon-data.h:4574
+msgid "imp"
+msgstr "임프"
+
+#: mon-data.h:4586
+msgid "quasit"
+msgstr "쿼시트"
+
+#: mon-data.h:4599
+msgid "white imp"
+msgstr "흰색 임프"
+
+#: mon-data.h:4611
+msgid "lemure"
+msgstr "리머"
+
+#: mon-data.h:4624
+msgid "ufetubus"
+msgstr "우페터버스"
+
+#: mon-data.h:4636
+msgid "iron imp"
+msgstr "철의 임프"
+
+#: mon-data.h:4648
+msgid "midge"
+msgstr "밋지"
+
+#: mon-data.h:4660
+msgid "shadow imp"
+msgstr "그림자 임프"
+
+#: mon-data.h:4673
+msgid "red devil"
+msgstr "레드 데빌"
+
+#: mon-data.h:4685
+msgid "rotting devil"
+msgstr "부패의 악마"
+
+#: mon-data.h:4697
+msgid "hairy devil"
+msgstr "덥수룩한 악마"
+
+#: mon-data.h:4709
+msgid "sixfirhy"
+msgstr "식스파이리"
+
+#: mon-data.h:4722
+msgid "hellwing"
+msgstr "헬 윙"
+
+#: mon-data.h:4735
+msgid "smoke demon"
+msgstr "연기의 악마"
+
+#: mon-data.h:4748
+msgid "tormentor"
+msgstr "고문의 악마"
+
+#: mon-data.h:4760
+msgid "blue devil"
+msgstr "파란 악마"
+
+#: mon-data.h:4772
+msgid "iron devil"
+msgstr "철의 악마"
+
+#: mon-data.h:4784
+msgid "neqoxec"
+msgstr "네퀘젝"
+
+#: mon-data.h:4796
+msgid "orange demon"
+msgstr "오렌지색 악마"
+
+#: mon-data.h:4809
+msgid "ynoxinul"
+msgstr "녹시놀"
+
+#: mon-data.h:4821
+msgid "shadow demon"
+msgstr "그림자의 악마"
+
+#: mon-data.h:4833
+msgid "chaos spawn"
+msgstr "혼돈의 악마"
+
+#. reaper etc. ('2')
+#. with randomised stats
+#: mon-data.h:4847
+msgid "hell beast"
+msgstr "짐승"
+
+#: mon-data.h:4860
+msgid "hellion"
+msgstr "헬리온"
+
+#: mon-data.h:4872
+msgid "sun demon"
+msgstr "태양의 악마"
+
+#: mon-data.h:4884
+msgid "reaper"
+msgstr "리퍼"
+
+#: mon-data.h:4896
+msgid "soul eater"
+msgstr "영혼을 먹는 악마"
+
+#: mon-data.h:4908
+msgid "ice devil"
+msgstr "얼음의 악마"
+
+msgid "lorocyproca"
+msgstr "롤로시프로카"
+
+msgid "fiend"
+msgstr "핀드"
+
+msgid "ice fiend"
+msgstr "아이스 핀드"
+
+msgid "shadow fiend"
+msgstr "셰도우 핀드"
+
+msgid "pit fiend"
+msgstr "피트 핀드"
+
+msgid "executioner"
+msgstr "처형의 악마"
+
+msgid "green death"
+msgstr "초록의 섬멸자"
+
+msgid "blue death"
+msgstr "파랑의 섬멸자"
+
+msgid "balrug"
+msgstr "발록"
+
+msgid "cacodemon"
+msgstr "캐커데몬"
+
+#: mon-data.h:5048
+msgid "clay golem"
+msgstr "진흙 골렘"
+
+#: mon-data.h:5060
+msgid "wood golem"
+msgstr "나무 골렘"
+
+#: mon-data.h:5072
+msgid "stone golem"
+msgstr "바위 골렘"
+
+#: mon-data.h:5084
+msgid "iron golem"
+msgstr "강철 골렘"
+
+#: mon-data.h:5096
+msgid "crystal golem"
+msgstr "수정 골렘"
+
+#: mon-data.h:5108
+msgid "toenail golem"
+msgstr "손톱 골렘"
+
+#: mon-data.h:5120
+msgid "electric golem"
+msgstr "벼락 골렘"
+
+#: mon-data.h:5135
+msgid "ice statue"
+msgstr "얼음의 상"
+
+#: mon-data.h:5147
+msgid "silver statue"
+msgstr "은의 상"
+
+#: mon-data.h:5159
+msgid "orange crystal statue"
+msgstr "주황빛 수정의 상"
+
+#. always redefined
+#: mon-data.h:5171
+msgid "statue"
+msgstr "동상"
+
+#: mon-data.h:5183
+msgid "training dummy"
+msgstr "허수아비"
+
+#: mon-data.h:5195
+msgid "pillar of salt"
+msgstr "소금기둥"
+
+#: mon-data.h:5220
+msgid "gargoyle"
+msgstr "가고일"
+
+#: mon-data.h:5233
+msgid "metal gargoyle"
+msgstr "금속 가고일"
+
+#: mon-data.h:5246
+msgid "molten gargoyle"
+msgstr "용암의 가고일"
+
+#: mon-data.h:5261
+msgid "pandemonium lord"
+msgstr "판데모니움의 악마"
+
+#. Demon in hell.  Currently only used as genus/species for hell guardians.
+#. dummy, never spawns
+#: mon-data.h:5274
+msgid "hell lord"
+msgstr "지옥의 군주"
+
+#: mon-data.h:5287
+msgid "ball lightning"
+msgstr "번개의 구"
+
+#: mon-data.h:5300
+msgid "giant spore"
+msgstr "지옥의 포자"
+
+#: mon-data.h:5312
+msgid "orb of fire"
+msgstr "화염의 구"
+
+#. not an actual monster, used by a spell
+#: mon-data.h:5325
+msgid "orb of destruction"
+msgstr "파괴의 구"
+
+#: mon-data.h:5339
+msgid "blessed toe"
+msgstr "축복받은 발가락"
+
+#: mon-data.h:5351
+msgid "silver star"
+msgstr "실버 스타"
+
+#: mon-data.h:5365
+msgid "death cob"
+msgstr "살인 옥수수"
+
+msgid "mennas"
+msgstr "멘나스"
+
+msgid "nessos"
+msgstr "네소스"
+
+msgid "chuck"
+msgstr "척"
+
+#: mon-data.h:5419
+msgid "the iron giant"
+msgstr "강철의 거인"
+
+msgid "polyphemus"
+msgstr "폴리페머스"
+
+msgid "antaeus"
+msgstr "앤터이우스"
+
+msgid "tiamat"
+msgstr "티아마트"
+
+msgid "xtahua"
+msgstr "싸후아"
+
+msgid "the lernaean hydra"
+msgstr "고대의 히드라"
+
+msgid "the serpent of hell"
+msgstr "지옥의 독사"
+
+msgid "duvessa"
+msgstr "드뷔사"
+
+msgid "dowan"
+msgstr "도완"
+
+msgid "prince ribbit"
+msgstr "리빗트 왕자"
+
+msgid "ijyb"
+msgstr "이지브"
+
+msgid "grum"
+msgstr "그룸"
+
+msgid "crazy yiuf"
+msgstr "크레이지 이요프"
+
+msgid "agnes"
+msgstr "아그네스"
+
+#: mon-data.h:5599
+msgid "the royal jelly"
+msgstr "로얄 젤리"
+
+msgid "dissolution"
+msgstr "디스솔루션"
+
+msgid "gastronok"
+msgstr "가스트로노크"
+
+msgid "sonja"
+msgstr "소냐"
+
+msgid "pikel"
+msgstr "피켈"
+
+msgid "boris"
+msgstr "보리스"
+
+msgid "menkaure"
+msgstr "멘카우어"
+
+msgid "khufu"
+msgstr "쿠푸"
+
+msgid "ilsuiw"
+msgstr "아일스이웨"
+
+msgid "erolcha"
+msgstr "에롤차"
+
+msgid "blork the orc"
+msgstr "블로크 더 오크"
+
+msgid "urug"
+msgstr "우룩"
+
+msgid "nergalle"
+msgstr "네르갈리"
+
+msgid "saint roka"
+msgstr "세인트 로카"
+
+msgid "terpsichore"
+msgstr "테르프시코레"
+
+msgid "wiglaf"
+msgstr "루그라프"
+
+msgid "azrael"
+msgstr "아즈라엘"
+
+msgid "mara"
+msgstr "마라"
+
+msgid "aizul"
+msgstr "아이줄"
+
+msgid "snorg"
+msgstr "스노그"
+
+msgid "purgy"
+msgstr "퍼기"
+
+msgid "jory"
+msgstr "조리"
+
+msgid "nellie"
+msgstr "넬리"
+
+msgid "murray"
+msgstr "머레이"
+
+msgid "ignacio"
+msgstr "이그나시오"
+
+msgid "grinder"
+msgstr "그라인더"
+
+msgid "roxanne"
+msgstr "록산느"
+
+msgid "terence"
+msgstr "테렌스"
+
+msgid "jessica"
+msgstr "제시카"
+
+msgid "sigmund"
+msgstr "지그문트"
+
+msgid "edmund"
+msgstr "에드먼드"
+
+msgid "psyche"
+msgstr "사이키"
+
+msgid "donald"
+msgstr "도널드"
+
+msgid "joseph"
+msgstr "요세프"
+
+msgid "erica"
+msgstr "에리카"
+
+msgid "josephine"
+msgstr "조세핀"
+
+msgid "harold"
+msgstr "해럴드"
+
+msgid "jozef"
+msgstr "요제프"
+
+msgid "maud"
+msgstr "마우드"
+
+msgid "louise"
+msgstr "루이즈"
+
+msgid "frances"
+msgstr "프랜시스"
+
+msgid "kirke"
+msgstr "키르케"
+
+msgid "norris"
+msgstr "노리스"
+
+msgid "frederick"
+msgstr "프레드릭"
+
+msgid "margery"
+msgstr "마저리"
+
+msgid "eustachio"
+msgstr "우스타치오"
+
+msgid "maurice"
+msgstr "마우러스"
+
+msgid "nikola"
+msgstr "니콜라"
+
+msgid "mnoleg"
+msgstr "무노레그"
+
+msgid "lom lobon"
+msgstr "롬-로본"
+
+msgid "cerebov"
+msgstr "세레보브"
+
+msgid "gloorx vloq"
+msgstr "그룩스-브루크"
+
+msgid "geryon"
+msgstr "게리욘"
+
+msgid "dispater"
+msgstr "디스페이터"
+
+msgid "asmodeus"
+msgstr "아스모데우스"
+
+msgid "ereshkigal"
+msgstr "에레쉬키갈"
+
+#: mon-data.h:6350
+msgid "test spawner"
+msgstr "테스트 스포너"
+
+#: mon-info.cc:592
+msgid "Lernaean hydra"
+msgstr "러내안 히드라(T)"
+
+#: mon-info.cc:594
+msgid "royal jelly"
+msgstr "로얄 젤리(T)"
+
+#: mon-info.cc:596
+msgid "Serpent of Hell"
+msgstr "서펜트 오브 헬(T)"
+
+#: mon-info.cc:598
+msgid "INVALID MONSTER"
+msgstr "버그입니다(T)"
+
+#: mon-data.h:277
+msgid "bat"
+msgstr "박쥐(T)"
+
+#: mon-data.h:612
+msgid "elf"
+msgstr "엘프"
+
+#: mon-data.h:1101
+msgid "the Enchantress"
+msgstr "더 인챈트리스(T)"
+
+#. dwarves ('q')
+#. Another dummy monster.  Zombies and poly allowed.
+#: mon-data.h:1665
+msgid "dwarf"
+msgstr "드워프"
+
+#: mon-data.h:1932
+msgid "tarantella"
+msgstr "타란텔라(T)"
+
+#: mon-data.h:2439
+msgid "Angel"
+msgstr "엔젤(T)"
+
+#: mon-data.h:2452
+msgid "Cherub"
+msgstr "체럽(T)"
+
+#: mon-data.h:2466
+msgid "Daeva"
+msgstr "데바(T)"
+
+#: mon-data.h:3184
+msgid "pulsating lump"
+msgstr "꿈틀거리는 종양(T)"
+
+#: mon-data.h:3908
+msgid "Orb Guardian"
+msgstr "오브 가디언(T)"
+
+#: mon-data.h:3957
+msgid "catoblepas"
+msgstr "카토블레파스(T)"
+
+#: mon-data.h:4334
+msgid "Killer Klown"
+msgstr "킬러 클론(T)"
+
+#: mon-data.h:4920
+msgid "Lorocyproca"
+msgstr "로로시프로카(T)"
+
+#: mon-data.h:4933
+msgid "Fiend"
+msgstr "핀드(T)"
+
+#: mon-data.h:4946
+msgid "Ice Fiend"
+msgstr "아이스 핀드(T)"
+
+#: mon-data.h:4958
+msgid "Shadow Fiend"
+msgstr "쉐도우 핀드(T)"
+
+#: mon-data.h:4971
+msgid "Pit Fiend"
+msgstr "핏 핀드(T)"
+
+#: mon-data.h:4984
+msgid "Executioner"
+msgstr "익스큐서너(T)"
+
+#: mon-data.h:4997
+msgid "Green Death"
+msgstr "그린 데스(T)"
+
+#: mon-data.h:5009
+msgid "Blue Death"
+msgstr "블루 데스(T)"
+
+#: mon-data.h:5021
+msgid "Balrug"
+msgstr "발록(T)"
+
+#: mon-data.h:5033
+msgid "Cacodemon"
+msgstr "카코데몬(T)"
+
+#: mon-data.h:5207
+msgid "lightning spire"
+msgstr "라이트닝 스파이어(T)"
+
+#: mon-data.h:5379
+msgid "Mennas"
+msgstr "메나스(T)"
+
+#: mon-data.h:5394
+msgid "Nessos"
+msgstr "네소스(T)"
+
+#: mon-data.h:5407
+msgid "Chuck"
+msgstr "척(T)"
+
+#: mon-data.h:5431
+msgid "Polyphemus"
+msgstr "폴리페무스(T)"
+
+#: mon-data.h:5444
+msgid "Antaeus"
+msgstr "안타에우스(T)"
+
+#: mon-data.h:5457
+msgid "Tiamat"
+msgstr "티아맷(T)"
+
+#: mon-data.h:5471
+msgid "Xtahua"
+msgstr "크타후아(T)"
+
+#: mon-data.h:5484
+msgid "the Lernaean hydra"
+msgstr "더 러내인 히드라(T)"
+
+#: mon-data.h:5496
+msgid "the Serpent of Hell"
+msgstr "더 서펜트 오브 헬(T)"
+
+#: mon-data.h:5510
+msgid "Duvessa"
+msgstr "두베사(T)"
+
+#: mon-data.h:5522
+msgid "Dowan"
+msgstr "도완(T)"
+
+#: mon-data.h:5535
+msgid "Prince Ribbit"
+msgstr "프린스 리빗(T)"
+
+#: mon-data.h:5549
+msgid "Ijyb"
+msgstr "이집(T)"
+
+#: mon-data.h:5561
+msgid "Grum"
+msgstr "그룸(T)"
+
+#: mon-data.h:5573
+msgid "Crazy Yiuf"
+msgstr "크레이지 이우프(T)"
+
+#: mon-data.h:5586
+msgid "Agnes"
+msgstr "아그네스(T)"
+
+#: mon-data.h:5612
+msgid "Dissolution"
+msgstr "디솔루션(T)"
+
+#: mon-data.h:5626
+msgid "Gastronok"
+msgstr "가수트로녹(T)"
+
+#: mon-data.h:5640
+msgid "Sonja"
+msgstr "손자(T)"
+
+#. XP modifier is very high to compensate for 4 created-friendly humans
+#: mon-data.h:5655
+msgid "Pikel"
+msgstr "피켈(T)"
+
+#. May be re-spawned after his death.
+#: mon-data.h:5669
+msgid "Boris"
+msgstr "보리스(T)"
+
+#: mon-data.h:5683
+msgid "Menkaure"
+msgstr "멘카우레(T)"
+
+#: mon-data.h:5695
+msgid "Khufu"
+msgstr "쿠푸(T)"
+
+#: mon-data.h:5708
+msgid "Ilsuiw"
+msgstr "일수이우(T)"
+
+#: mon-data.h:5721
+msgid "Erolcha"
+msgstr "에롤차 이 나쁜X(T)"
+
+#: mon-data.h:5735
+msgid "Blork the orc"
+msgstr "블록 더 오크(T)"
+
+#: mon-data.h:5747
+msgid "Urug"
+msgstr "우르그(T)"
+
+#: mon-data.h:5759
+msgid "Nergalle"
+msgstr "네르갈(T)"
+
+#: mon-data.h:5772
+msgid "Saint Roka"
+msgstr "성자 로카(T)"
+
+#: mon-data.h:5785
+msgid "Terpsichore"
+msgstr "텊시코어(T)"
+
+#: mon-data.h:5799
+msgid "Wiglaf"
+msgstr "이글라프(T)"
+
+#: mon-data.h:5812
+msgid "Azrael"
+msgstr "아즈라엘(T)"
+
+#: mon-data.h:5824 mon-data.h:5838
+msgid "Mara"
+msgstr "마라(T)"
+
+#: mon-data.h:5851
+msgid "Aizul"
+msgstr "아이줄(T)"
+
+#. Snorg can go berserk.
+#: mon-data.h:5866
+msgid "Snorg"
+msgstr "스노그(T)"
+
+#: mon-data.h:5879
+msgid "Purgy"
+msgstr "퍼기(T)"
+
+#: mon-data.h:5893
+msgid "Jory"
+msgstr "조리(T)"
+
+#: mon-data.h:5908
+msgid "Nellie"
+msgstr "넬리(T)"
+
+#: mon-data.h:5922
+msgid "Murray"
+msgstr "머레이(T)"
+
+#: mon-data.h:5935
+msgid "Ignacio"
+msgstr "이그나시오(T)"
+
+#: mon-data.h:5948
+msgid "Grinder"
+msgstr "그라인더(T)"
+
+#. Roxanne obviously can't use items, but we want to equip her with
+#. a spellbook, so MONUSE_STARTING_EQUIPMENT is necessary.
+#: mon-data.h:5962
+msgid "Roxanne"
+msgstr "록산느(T)"
+
+#: mon-data.h:5976
+msgid "Terence"
+msgstr "테렌스(T)"
+
+#: mon-data.h:5988
+msgid "Jessica"
+msgstr "제시카(T)"
+
+#: mon-data.h:6000
+msgid "Sigmund"
+msgstr "시그문드(T)"
+
+#: mon-data.h:6012
+msgid "Edmund"
+msgstr "에드문드(T)"
+
+#: mon-data.h:6024
+msgid "Psyche"
+msgstr "프시케(T)"
+
+#: mon-data.h:6036
+msgid "Donald"
+msgstr "도날드(T)"
+
+#: mon-data.h:6048
+msgid "Joseph"
+msgstr "조셉(T)"
+
+#: mon-data.h:6060
+msgid "Erica"
+msgstr "에리카(T)"
+
+#: mon-data.h:6072
+msgid "Josephine"
+msgstr "조세핀(T)"
+
+#: mon-data.h:6084
+msgid "Harold"
+msgstr "해롤드(T)"
+
+#: mon-data.h:6097
+msgid "Jozef"
+msgstr "조제프(T)"
+
+#: mon-data.h:6110
+msgid "Maud"
+msgstr "마우드(T)"
+
+#: mon-data.h:6122
+msgid "Louise"
+msgstr "루이즈(T)"
+
+#: mon-data.h:6134
+msgid "Frances"
+msgstr "프란체스(T)"
+
+#: mon-data.h:6147
+msgid "Rupert"
+msgstr "루퍼트(T)"
+
+#: mon-data.h:6160
+msgid "Kirke"
+msgstr "커크(T)"
+
+#: mon-data.h:6173
+msgid "Norris"
+msgstr "노리스(T)"
+
+#: mon-data.h:6186
+msgid "Frederick"
+msgstr "프레데릭(T)"
+
+#: mon-data.h:6199
+msgid "Margery"
+msgstr "말게리(T)"
+
+#: mon-data.h:6212
+msgid "Eustachio"
+msgstr "유스타치오(T)"
+
+#: mon-data.h:6224
+msgid "Maurice"
+msgstr "마우리스(T)"
+
+#: mon-data.h:6236
+msgid "Nikola"
+msgstr "니콜라(T)"
+
+#: mon-data.h:6250
+msgid "Mnoleg"
+msgstr "므놀렉(T)"
+
+#: mon-data.h:6262
+msgid "Lom Lobon"
+msgstr "롬 로본(T)"
+
+#: mon-data.h:6274
+msgid "Cerebov"
+msgstr "세레보브 오오미(T)"
+
+#: mon-data.h:6286
+msgid "Gloorx Vloq"
+msgstr "글록스 블록(T)"
+
+#: mon-data.h:6298
+msgid "Geryon"
+msgstr "게르욘(T)"
+
+#: mon-data.h:6311
+msgid "Dispater"
+msgstr "디스패터(T)"
+
+#: mon-data.h:6323
+msgid "Asmodeus"
+msgstr "아스모데우스(T)"
+
+#: mon-data.h:6335
+msgid "Ereshkigal"
+msgstr "에레쉬키갈(T)"
+
+#: mon-data.h:6364
+msgid "sensed monster"
+msgstr "감지된 몬스터(T)"
+
+#: mon-data.h:6376
+msgid "friendly sensed monster"
+msgstr "우호적인 감지된 몬스터(T)"
+
+#: mon-data.h:6388
+msgid "trivial sensed monster"
+msgstr "일반적인 감지된 몬스터(T)"
+
+#: mon-data.h:6400
+msgid "easy sensed monster"
+msgstr "쉬운 감지된 몬스터(T)"
+
+#: mon-data.h:6412
+msgid "tough sensed monster"
+msgstr "강한 감지된 몬스터(T)"
+
+#: mon-data.h:6424
+msgid "nasty sensed monster"
+msgstr "겁나센 감지된 몬스터(T)"

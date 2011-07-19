@@ -149,6 +149,7 @@ static bool _blocked_ray(const coord_def &where,
 
 static bool _is_public_key(std::string key)
 {
+    /// prop으로 쓰이는 key들이므로 건들지 마세요.
     if (key == "helpless" || key == "wand_known")
         return true;
     else
@@ -585,20 +586,20 @@ std::string monster_info::_core_name() const
     std::string s;
 
     if (is(MB_NAME_REPLACE))
-        s = mname;
+        s = gettext(mname.c_str());
     else if (nametype == MONS_LERNAEAN_HYDRA)
-        s = "Lernaean hydra"; // TODO: put this into mon-data.h
+        s = gettext(M_("Lernaean hydra")); // TODO: put this into mon-data.h
     else if (nametype == MONS_ROYAL_JELLY)
-        s = "royal jelly";
+        s = gettext(M_("royal jelly"));
     else if (nametype == MONS_SERPENT_OF_HELL)
-        s = "Serpent of Hell";
+        s = gettext(M_("Serpent of Hell"));
     else if (invalid_monster_type(nametype) && nametype != MONS_PROGRAM_BUG)
-        s = "INVALID MONSTER";
+        s = gettext(M_("INVALID MONSTER"));
     else
     {
-        const char* slime_sizes[] = {"buggy ", "", "large ", "very large ",
-                                               "enormous ", "titanic "};
-        s = get_monster_data(nametype)->name;
+        const char* slime_sizes[] = {N_("buggy "), "", N_("large "), N_("very large "),
+                                               N_("enormous "), N_("titanic ")};
+        s = gettext(get_monster_data(nametype)->name);
 
         switch (type)
         {
@@ -638,13 +639,13 @@ std::string monster_info::_core_name() const
             break;
 
         case MONS_PLAYER_GHOST:
-            s = apostrophise(mname) + " ghost";
+            s = apostrophise(mname) + gettext(" ghost");
             break;
         case MONS_PLAYER_ILLUSION:
-            s = apostrophise(mname) + " illusion";
+            s = apostrophise(mname) + gettext(" illusion");
             break;
         case MONS_PANDEMONIUM_LORD:
-            s = mname;
+            s = gettext(mname.c_str());
             break;
         default:
             break;
@@ -652,9 +653,9 @@ std::string monster_info::_core_name() const
     }
 
     if (is(MB_NAME_SUFFIX))
-        s += " " + mname;
+        s += " " + std::string(gettext(mname.c_str()));
     else if (is(MB_NAME_ADJECTIVE))
-        s = mname + " " + s;
+        s = std::string(gettext(mname.c_str())) + " " + s;
 
     return s;
 }
@@ -685,16 +686,18 @@ std::string monster_info::common_name(description_level_type desc) const
     std::ostringstream ss;
 
     if (props.exists("helpless"))
-        ss << "helpless ";
+	/// 뒤에 계속 뭐가 붙는 형태가 됩니다.
+	/// 이를테면 helpless submerged spectral electric-eel
+        ss << gettext("helpless ");
 
     if (is(MB_SUBMERGED))
-        ss << "submerged ";
+        ss << gettext("submerged ");
 
     if (type == MONS_SPECTRAL_THING && !is(MB_NAME_ZOMBIE))
-        ss << "spectral ";
+        ss << gettext("spectral ");
 
     if (type == MONS_BALLISTOMYCETE)
-        ss << (number ? "active " : "");
+        ss << (number ? gettext("active ") : "");
 
     if ((mons_genus(type) == MONS_HYDRA
             || mons_genus(base_type) == MONS_HYDRA)
@@ -702,16 +705,22 @@ std::string monster_info::common_name(description_level_type desc) const
     {
         if (number < 11)
         {
+#ifdef KR
+            const char* cardinals[] = {"한", "두", "세", "네", "다섯",
+                                       "여섯", "일곱", "여덟", "아홉", "열"};
+#else
             const char* cardinals[] = {"one", "two", "three", "four", "five",
                                        "six", "seven", "eight", "nine", "ten"};
+#endif
             ss << cardinals[number - 1];
         }
         else
             ss << make_stringf("%d", number);
 
-        ss << "-headed ";
+        ss << gettext("-headed ");
     }
 
+    /// _core
     std::string core = _core_name();
     ss << core;
 
@@ -721,20 +730,20 @@ std::string monster_info::common_name(description_level_type desc) const
     case MONS_ZOMBIE_SMALL:
     case MONS_ZOMBIE_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << " zombie";
+            ss << gettext(" zombie");
         break;
     case MONS_SKELETON_SMALL:
     case MONS_SKELETON_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << " skeleton";
+            ss << gettext(" skeleton");
         break;
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << " simulacrum";
+            ss << gettext(" simulacrum");
         break;
     case MONS_PILLAR_OF_SALT:
-        ss << " shaped pillar of salt";
+        ss << gettext(" shaped pillar of salt");
         break;
     default:
         break;
@@ -745,7 +754,7 @@ std::string monster_info::common_name(description_level_type desc) const
         // If momentarily in original form, don't display "shaped
         // shifter".
         if (mons_genus(type) != MONS_SHAPESHIFTER)
-            ss << " shaped shifter";
+            ss << gettext(" shaped shifter");
     }
 
     std::string s;
@@ -774,7 +783,7 @@ std::string monster_info::proper_name(description_level_type desc) const
         if (desc == DESC_NOCAP_ITS)
             return apostrophise(mname);
         else
-            return mname;
+            return gettext(mname.c_str());
     }
     else
         return common_name(desc);

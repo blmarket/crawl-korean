@@ -1999,7 +1999,8 @@ msgstr "당신은 마른 골격 구조를 가지고 있다. (민첩 +4, 힘 -2, 
 #: mutation-data.h:1354
 msgid ""
 "You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth)."
-msgstr "당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
+msgstr ""
+"당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
 
 #: mutation-data.h:1356
 msgid "Your bones become slightly less dense."

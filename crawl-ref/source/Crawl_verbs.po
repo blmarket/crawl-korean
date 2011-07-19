@@ -132,3 +132,6 @@ msgstr "막았"
 
 msgid "burn-verb"
 msgstr "불태웠"
+
+msgid "gore-verb"
+msgstr "들이받았"
