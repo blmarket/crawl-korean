@@ -809,7 +809,7 @@ static void _sdump_inventory(dump_params &par)
                     if (you.inv[j].defined() && you.inv[j].base_type == i)
                     {
                         text += " ";
-                        text += you.inv[j].name(DESC_INVENTORY_EQUIP);
+                        text += you.inv[j].name(true, DESC_INVENTORY_EQUIP);
 
                         inv_count--;
 

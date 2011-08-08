@@ -199,7 +199,7 @@ bool can_wield(item_def *weapon, bool say_reason,
             {
                 set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
                 if (in_inventory(*weapon))
-                    mpr(weapon->name(DESC_INVENTORY_EQUIP).c_str());
+                    mpr(weapon->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
             else if (is_artefact(*weapon) && !item_type_known(*weapon))
                 artefact_wpn_learn_prop(*weapon, ARTP_BRAND);
@@ -221,7 +221,7 @@ bool can_wield(item_def *weapon, bool say_reason,
             {
                 set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
                 if (in_inventory(*weapon))
-                    mpr(weapon->name(DESC_INVENTORY_EQUIP).c_str());
+                    mpr(weapon->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
             else if (is_artefact(*weapon) && !item_type_known(*weapon))
                 artefact_wpn_learn_prop(*weapon, ARTP_BRAND);
@@ -351,7 +351,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             if (needs_handle_warning(*wpn, OPER_WIELD))
             {
                 const std::string prompt =
-                    "Really unwield " + wpn->name(DESC_INVENTORY) + "?";
+                    "Really unwield " + wpn->name(true, DESC_INVENTORY) + "?";
                 if (!yesno(prompt.c_str(), false, 'n'))
                     return (false);
             }
@@ -399,7 +399,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
     equip_item(EQ_WEAPON, item_slot, show_weff_messages);
 
     if (show_wield_msg)
-        mpr(new_wpn.name(DESC_INVENTORY_EQUIP).c_str());
+        mpr(new_wpn.name(true, DESC_INVENTORY_EQUIP).c_str());
 
     check_item_hint(new_wpn, old_talents);
 
@@ -788,7 +788,7 @@ bool do_wear_armour(int item, bool quiet)
             if (!quiet)
             {
                 mprf("%s is stuck to your body!",
-                     you.inv[you.equip[EQ_BODY_ARMOUR]].name(DESC_CAP_YOUR)
+                     you.inv[you.equip[EQ_BODY_ARMOUR]].name(true, DESC_CAP_YOUR)
                                                        .c_str());
             }
             return (false);
@@ -856,7 +856,7 @@ bool takeoff_armour(int item)
     if (item == you.equip[slot] && you.melded[slot])
     {
         mprf("%s is melded into your body!",
-             invitem.name(DESC_CAP_YOUR).c_str());
+             invitem.name(true, DESC_CAP_YOUR).c_str());
         return (false);
     }
 
@@ -874,7 +874,7 @@ bool takeoff_armour(int item)
     // If we get here, we're wearing the item.
     if (invitem.cursed())
     {
-        mprf("%s is stuck to your body!", invitem.name(DESC_CAP_YOUR).c_str());
+        mprf("%s is stuck to your body!", invitem.name(true, DESC_CAP_YOUR).c_str());
         return (false);
     }
 
@@ -1055,7 +1055,7 @@ void fire_target_behaviour::set_prompt()
     {
         const char* colour = (selected_from_inventory ? "lightgrey" : "w");
         msg << "<" << colour << ">"
-            << active_item()->name(DESC_INVENTORY_EQUIP)
+            << active_item()->name(true, DESC_INVENTORY_EQUIP)
             << "</" << colour << ">";
     }
 
@@ -1250,7 +1250,7 @@ bool fire_warn_if_impossible(bool silent)
         {
             if (!silent)
                 mprf("You cannot shoot with your %s while held in a net!",
-                     weapon->name(DESC_BASENAME).c_str());
+                     weapon->name(true, DESC_BASENAME).c_str());
             return (true);
         }
         // Else shooting is possible.
@@ -2016,7 +2016,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     ASSERT(!exploding || !is_artefact(item));
 
-    beam.name = item.name(DESC_PLAIN, false, false, false);
+    beam.name = item.name(false, DESC_PLAIN, false, false, false);
 
     // Note that bow_brand is known since the bow is equipped.
 
@@ -2081,9 +2081,9 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     }
 
     if (beam_changed)
-        beam.name = item.name(DESC_PLAIN, false, false, false);
+        beam.name = item.name(false, DESC_PLAIN, false, false, false);
 
-    ammo_name = item.name(DESC_PLAIN);
+    ammo_name = item.name(false, DESC_PLAIN);
 
     ASSERT(beam.flavour == BEAM_MISSILE || !is_artefact(item));
 
@@ -2175,11 +2175,11 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
              expl->name   += " fragments";
 
              const std::string short_name =
-                 item.name(DESC_PLAIN, false, false, false, false,
+                 item.name(false, DESC_PLAIN, false, false, false, false,
                            ISFLAG_IDENT_MASK | ISFLAG_COSMETIC_MASK
                            | ISFLAG_RACIAL_MASK);
 
-             expl->name = replace_all(expl->name, item.name(DESC_PLAIN),
+             expl->name = replace_all(expl->name, item.name(false, DESC_PLAIN),
                                       short_name);
          }
          expl->name = "explosion of " + expl->name;
@@ -2334,7 +2334,7 @@ void throw_noise(actor* act, const bolt &pbolt, const item_def &ammo)
 
     default:
         die("Invalid launcher '%s'",
-                 launcher->name(DESC_PLAIN).c_str());
+                 launcher->name(false, DESC_PLAIN).c_str());
         return;
     }
     if (act->atype() == ACT_PLAYER || you.can_see(act))
@@ -2781,7 +2781,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 ammo_ided = true;
                 identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
                 mprf("You are firing %s.",
-                     you.inv[throw_2].name(DESC_NOCAP_A).c_str());
+                     you.inv[throw_2].name(true, DESC_NOCAP_A).c_str());
             }
         }
         else if (!teleport && x_chance_in_y(shoot_skill, 100))
@@ -2789,7 +2789,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             item_def& weapon = *you.weapon();
             set_ident_flags(weapon, ISFLAG_KNOW_PLUSES);
 
-            mprf("You are wielding %s.", weapon.name(DESC_NOCAP_A).c_str());
+            mprf("You are wielding %s.", weapon.name(true, DESC_NOCAP_A).c_str());
 
             more();
             you.wield_change = true;
@@ -2984,7 +2984,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
             ammo_ided = true;
             mprf("You are throwing %s.",
-                 you.inv[throw_2].name(DESC_NOCAP_A).c_str());
+                 you.inv[throw_2].name(true, DESC_NOCAP_A).c_str());
         }
     }
 
@@ -3114,7 +3114,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         viewwindow();
         pbolt.fire();
 
-        msg::stream << item.name(DESC_CAP_THE) << " returns to your pack!"
+        msg::stream << item.name(true, DESC_CAP_THE) << " returns to your pack!"
                     << std::endl;
 
         // Player saw the item return.
@@ -3131,7 +3131,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // Should have returned but didn't.
         if (returning && item_type_known(you.inv[throw_2]))
         {
-            msg::stream << item.name(DESC_CAP_THE)
+            msg::stream << item.name(true, DESC_CAP_THE)
                         << " fails to return to your pack!" << std::endl;
         }
         dec_inv_item_quantity(throw_2, 1);
@@ -3160,7 +3160,7 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where)
 {
     ASSERT(item != NULL);
 
-    std::string name = item->name(DESC_PLAIN, false, true, false);
+    std::string name = item->name(false, DESC_PLAIN, false, true, false);
 
     // Exploding missiles are always destroyed.
     if (name.find("explod") != std::string::npos)
@@ -3234,7 +3234,7 @@ static int _prompt_ring_to_remove(int new_ring)
     const item_def *right = you.slot_item(EQ_RIGHT_RING, true);
 
     mesclr();
-    mprf("Wearing %s.", you.inv[new_ring].name(DESC_NOCAP_A).c_str());
+    mprf("Wearing %s.", you.inv[new_ring].name(true, DESC_NOCAP_A).c_str());
 
     const char lslot = index_to_letter(left->link);
     const char rslot = index_to_letter(right->link);
@@ -3243,8 +3243,8 @@ static int _prompt_ring_to_remove(int new_ring)
          "You're wearing two rings. Remove which one? (%c/%c/<</>/Esc)",
          lslot, rslot);
 
-    mprf(" << or %s", left->name(DESC_INVENTORY).c_str());
-    mprf(" > or %s", right->name(DESC_INVENTORY).c_str());
+    mprf(" << or %s", left->name(true, DESC_INVENTORY).c_str());
+    mprf(" > or %s", right->name(true, DESC_INVENTORY).c_str());
     flush_prev_message();
 
     // Deactivate choice from tile inventory.
@@ -3289,7 +3289,7 @@ static int _prompt_ring_to_remove_octopode(int new_ring)
 //         one_slot, two_slot, three_slot, four_slot, five_slot, six_slot, seven_slot, eight_slot);
 
     for (int i = 0; i < 8; i++)
-        mprf("%s", rings[i]->name(DESC_INVENTORY).c_str());
+        mprf("%s", rings[i]->name(true, DESC_INVENTORY).c_str());
     flush_prev_message();
 
     // Deactivate choice from tile inventory.
@@ -3839,7 +3839,7 @@ bool remove_ring(int slot, bool announce)
         if (announce)
         {
             mprf("%s is stuck to you!",
-                 you.inv[you.equip[hand_used]].name(DESC_CAP_YOUR).c_str());
+                 you.inv[you.equip[hand_used]].name(true, DESC_CAP_YOUR).c_str());
         }
         else
             mpr("It's stuck to you!");
@@ -3854,7 +3854,7 @@ bool remove_ring(int slot, bool announce)
     if (!safe_to_remove_or_wear(you.inv[ring_wear_2], true))
         return (false);
 
-    mprf("You remove %s.", you.inv[ring_wear_2].name(DESC_NOCAP_YOUR).c_str());
+    mprf("You remove %s.", you.inv[ring_wear_2].name(true, DESC_NOCAP_YOUR).c_str());
     unequip_item(hand_used);
 
     you.time_taken /= 2;
@@ -4122,7 +4122,7 @@ void zap_wand(int slot)
         if (wand.sub_type == WAND_RANDOM_EFFECTS)
             mpr("You feel that this wand is rather unreliable.");
 
-        mpr(wand.name(DESC_INVENTORY_EQUIP).c_str());
+        mpr(wand.name(true, DESC_INVENTORY_EQUIP).c_str());
     }
     else
         set_ident_type(wand, ID_TRIED_TYPE);
@@ -4276,7 +4276,7 @@ void drink(int slot)
     {
         set_ident_flags(potion, ISFLAG_IDENT_MASK);
         set_ident_type(potion, ID_KNOWN_TYPE);
-        mpr("It was a " + potion.name(DESC_QUALNAME) + ".");
+        mpr("It was a " + potion.name(true, DESC_QUALNAME) + ".");
     }
     else if (!alreadyknown)
     {
@@ -4464,7 +4464,7 @@ static bool _vorpalise_weapon(bool already_known)
     {
         alert_nearby_monsters();
         mprf("%s emits a brilliant flash of light!",
-             wpn.name(DESC_CAP_YOUR).c_str());
+             wpn.name(true, DESC_CAP_YOUR).c_str());
         set_item_ego_type(wpn, OBJ_WEAPONS, SPWPN_VORPAL);
         return (true);
     }
@@ -4474,7 +4474,7 @@ static bool _vorpalise_weapon(bool already_known)
         return (false);
 
     // There's a temporary brand, attempt to make it permanent.
-    const std::string itname = wpn.name(DESC_CAP_YOUR);
+    const std::string itname = wpn.name(true, DESC_CAP_YOUR);
     bool success = true;
     bool msg = true;
 
@@ -4652,7 +4652,7 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
     }
 
     // Get item name now before changing enchantment.
-    std::string iname = wpn.name(DESC_CAP_YOUR);
+    std::string iname = wpn.name(true, DESC_CAP_YOUR);
 
     if (!uncurse_only)
     {
@@ -4694,7 +4694,7 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
             if (!quiet)
             {
                 mprf("%s glows silver for a moment.",
-                     wpn.name(DESC_CAP_YOUR).c_str());
+                     wpn.name(true, DESC_CAP_YOUR).c_str());
             }
         }
 
@@ -4754,7 +4754,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
         if (!quiet)
         {
             mprf("%s glows purple and changes!",
-                 arm.name(DESC_CAP_YOUR).c_str());
+                 arm.name(true, DESC_CAP_YOUR).c_str());
         }
 
         ac_change = property(arm, PARM_AC);
@@ -4775,7 +4775,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
             if (!quiet)
             {
                 mprf("%s glows silver for a moment.",
-                     arm.name(DESC_CAP_YOUR).c_str());
+                     arm.name(true, DESC_CAP_YOUR).c_str());
             }
 
             do_uncurse_item(arm, true, true);
@@ -4794,7 +4794,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
     if (!quiet)
     {
         mprf("%s glows green for a moment.",
-             arm.name(DESC_CAP_YOUR).c_str());
+             arm.name(true, DESC_CAP_YOUR).c_str());
     }
 
     arm.plus++;
@@ -4936,7 +4936,7 @@ static bool _scroll_modify_item(item_def scroll)
         }
         else
         {
-            you.type_id_props["SCR_ID"] = item.name(DESC_PLAIN, false,
+            you.type_id_props["SCR_ID"] = item.name(false, DESC_PLAIN, false,
                                                     false, false);
         }
         break;
@@ -4945,13 +4945,13 @@ static bool _scroll_modify_item(item_def scroll)
         {
             if (recharge_wand(item_slot, false))
                 return (true);
-            you.type_id_props["SCR_RC"] = item.name(DESC_PLAIN, false,
+            you.type_id_props["SCR_RC"] = item.name(false, DESC_PLAIN, false,
                                                     false, false);
             return (false);
         }
         else
         {
-            you.type_id_props["SCR_RC"] = item.name(DESC_PLAIN, false,
+            you.type_id_props["SCR_RC"] = item.name(false, DESC_PLAIN, false,
                                                     false, false);
         }
         break;
@@ -4962,13 +4962,13 @@ static bool _scroll_modify_item(item_def scroll)
             // (If so, already prints the "Nothing happens" message.)
             if (_handle_enchant_armour(item_slot) > 0)
                 return (true);
-            you.type_id_props["SCR_EA"] = item.name(DESC_PLAIN, false,
+            you.type_id_props["SCR_EA"] = item.name(false, DESC_PLAIN, false,
                                                     false, false);
             return (false);
         }
         else
         {
-            you.type_id_props["SCR_EA"] = item.name(DESC_PLAIN, false,
+            you.type_id_props["SCR_EA"] = item.name(false, DESC_PLAIN, false,
                                                     false, false);
         }
         break;
@@ -5177,7 +5177,7 @@ void read_scroll(int slot)
     // respective functions.
     std::string pre_succ_msg =
             make_stringf("As you read the %s, it crumbles to dust.",
-                          scroll.name(DESC_QUALNAME).c_str());
+                          scroll.name(true, DESC_QUALNAME).c_str());
     if (you.confused()
         || (which_scroll != SCR_IMMOLATION
             && !_is_cancellable_scroll(which_scroll)))
@@ -5356,7 +5356,7 @@ void read_scroll(int slot)
             // and not fully enchanted, or at least needs to be uncursed.
 
             // Get item name now before changing enchantment.
-            std::string iname = wpn.name(DESC_CAP_YOUR);
+            std::string iname = wpn.name(true, DESC_CAP_YOUR);
 
             // Uncursing is always possible.
             bool success = is_cursed;
@@ -5530,7 +5530,7 @@ void read_scroll(int slot)
     if (id_the_scroll)
         set_ident_flags(scroll, ISFLAG_KNOW_TYPE); // for notes
 
-    std::string scroll_name = scroll.name(DESC_QUALNAME).c_str();
+    std::string scroll_name = scroll.name(true, DESC_QUALNAME).c_str();
 
     if (!cancel_scroll)
         dec_inv_item_quantity(item_slot, 1);
@@ -5593,7 +5593,7 @@ bool stasis_blocks_effect(bool calc_unid,
 
         if (msg)
         {
-            const std::string name(amulet? amulet->name(DESC_CAP_YOUR) :
+            const std::string name(amulet? amulet->name(true, DESC_CAP_YOUR) :
                                    "Something");
             const std::string message =
                 make_stringf(msg, name.c_str());
@@ -5617,7 +5617,7 @@ bool stasis_blocks_effect(bool calc_unid,
         {
             set_ident_type(*amulet, ID_KNOWN_TYPE);
             mprf("You are wearing: %s",
-                  amulet->name(DESC_INVENTORY_EQUIP).c_str());
+                  amulet->name(true, DESC_INVENTORY_EQUIP).c_str());
         }
         return (true);
     }
@@ -5705,7 +5705,7 @@ static bool _prompt_eat_bad_food(const item_def food)
     std::string colour            = "";
     std::string colour_off        = "";
 
-    const int col = menu_colour(food.name(DESC_NOCAP_A), food_colour, "pickup");
+    const int col = menu_colour(food.name(false, DESC_NOCAP_A), food_colour, "pickup");
     if (col != -1)
         colour = colour_to_str(col);
 

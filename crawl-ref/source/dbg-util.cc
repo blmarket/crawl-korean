@@ -244,7 +244,7 @@ void debug_dump_mon(const monster* mon, bool recurse)
             continue;
         }
 
-        fprintf(stderr, "%s", item.name(DESC_PLAIN, false, true).c_str());
+        fprintf(stderr, "%s", item.name(false, DESC_PLAIN, false, true).c_str());
 
         if (!item.held_by_monster())
         {

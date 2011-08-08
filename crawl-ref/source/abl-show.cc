@@ -2650,7 +2650,7 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_JIYVA_SLIMIFY:
     {
         const item_def* const weapon = you.weapon();
-        const std::string msg = (weapon) ? weapon->name(DESC_NOCAP_YOUR)
+        const std::string msg = (weapon) ? weapon->name(true, DESC_NOCAP_YOUR)
                                          : ("your " + you.hand_name(true));
         /// 무기 이름이나, 손의 이름이 나온다.
         mprf(MSGCH_DURATION, gettext("A thick mucus forms on %s."), msg.c_str());

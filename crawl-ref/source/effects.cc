@@ -846,7 +846,7 @@ void random_uselessness(int scroll_slot)
         {
             /// 1. 무기 이름, 2. 괴...한 색깔 이름.
             mprf(gettext("%s glows %s for a moment."),
-                 you.weapon()->name(DESC_CAP_YOUR).c_str(),
+                 you.weapon()->name(true, DESC_CAP_YOUR).c_str(),
                  weird_glowing_colour().c_str());
         }
         else
@@ -950,7 +950,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
             mprf( charged 
                 ? gettext("%s glows for a moment%s.") 
                 : gettext("%s flickers for a moment%s."),
-                 wand.name(DESC_CAP_YOUR).c_str(),
+                 wand.name(true, DESC_CAP_YOUR).c_str(),
                  desc.c_str());
 
             // Reinitialise zap counts.
@@ -995,7 +995,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                 mpr(pre_msg->c_str());
 
             /// 1. 완드 이름.
-            mprf(gettext("%s glows for a moment."), wand.name(DESC_CAP_YOUR).c_str());
+            mprf(gettext("%s glows for a moment."), wand.name(true, DESC_CAP_YOUR).c_str());
         }
 
         you.wield_change = true;
@@ -3278,7 +3278,7 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 
     if (in_inv && rod.plus == rod.plus2)
     {
-        msg::stream << make_stringf(gettext("Your %s has recharged."), rod.name(DESC_QUALNAME).c_str())
+        msg::stream << make_stringf(gettext("Your %s has recharged."), rod.name(true, DESC_QUALNAME).c_str())
                     << std::endl;
         if (is_resting())
             stop_running();

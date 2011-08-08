@@ -920,7 +920,7 @@ bool evoke_item(int slot)
         set_ident_flags(item, ISFLAG_KNOW_TYPE);
 
         mprf(gettext("You are wielding %s."),
-             item.name(DESC_NOCAP_A).c_str());
+             item.name(true, DESC_NOCAP_A).c_str());
 
         you.wield_change = true;
     }

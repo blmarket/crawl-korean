@@ -1582,7 +1582,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
             }
 
             // Start constructing the message.
-            std::string msg = shot.name(DESC_CAP_A) + " shoots out and ";
+            std::string msg = shot.name(true, DESC_CAP_A) + " shoots out and ";
 
             // Check for shield blocking.
             // Exercise only if the trap was unknown (to prevent scumming.)
@@ -1646,7 +1646,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
             if (you.see_cell(act.pos()))
             {
                 mprf("%s %s %s%s!",
-                     shot.name(DESC_CAP_A).c_str(),
+                     shot.name(true, DESC_CAP_A).c_str(),
                      hit ? "hits" : "misses",
                      act.name(DESC_NOCAP_THE).c_str(),
                      (hit && damage_taken == 0
@@ -1859,7 +1859,7 @@ void handle_items_on_shaft(const coord_def& pos, bool open_shaft)
             if (env.map_knowledge(pos).seen())
             {
                 mprf("%s falls through the shaft.",
-                     mitm[o].name(DESC_INVENTORY).c_str());
+                     mitm[o].name(true, DESC_INVENTORY).c_str());
             }
             // Item will be randomly placed on the destination level.
             mitm[o].pos = INVALID_COORD;

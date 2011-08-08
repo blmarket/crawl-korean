@@ -1774,7 +1774,7 @@ std::string get_item_description(const item_def &item, bool verbose,
     std::ostringstream description;
 
     if (!dump)
-        description << item.name(DESC_INVENTORY_EQUIP);
+        description << item.name(true, DESC_INVENTORY_EQUIP);
 
 #ifdef DEBUG_DIAGNOSTICS
     if (!dump)
@@ -1812,7 +1812,7 @@ std::string get_item_description(const item_def &item, bool verbose,
         if (dump)
         {
             description << "["
-                        << item.name(DESC_DBNAME, true, false, false)
+                        << item.name(false, DESC_DBNAME, true, false, false)
                         << "]";
             need_base_desc = false;
         }
@@ -1837,7 +1837,7 @@ std::string get_item_description(const item_def &item, bool verbose,
 
         if (need_base_desc)
         {
-            std::string db_name = item.name(DESC_DBNAME, true, false, false);
+            std::string db_name = item.name(false, DESC_DBNAME, true, false, false);
             std::string db_desc = getLongDescription(db_name);
             if (!noquote && !is_known_artefact(item))
             {
@@ -1864,7 +1864,7 @@ std::string get_item_description(const item_def &item, bool verbose,
                 }
                 else
                 {
-                    description << article_a(item.name(DESC_CAP_A, true,
+                    description << article_a(item.name(true, DESC_CAP_A, true,
                                                        false, false), false);
                     description << ".\n";
                 }
@@ -2667,7 +2667,7 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
         else if (at == actions.end() - 2)
             prompt += " or ";
     }
-    prompt += " the " + item.name(DESC_BASENAME) + ".";
+    prompt += " the " + item.name(true, DESC_BASENAME) + ".";
     prompt = "<cyan>" + prompt + "</cyan>";
     formatted_string::parse_string(prompt).display();
 
@@ -2799,7 +2799,7 @@ static void _safe_newline()
 void inscribe_item(item_def &item, bool msgwin)
 {
     if (msgwin)
-        mpr(item.name(DESC_INVENTORY).c_str(), MSGCH_EQUIPMENT);
+        mpr(item.name(true, DESC_INVENTORY).c_str(), MSGCH_EQUIPMENT);
 
     const bool is_inscribed = !item.inscription.empty();
 
@@ -2916,7 +2916,7 @@ void inscribe_item(item_def &item, bool msgwin)
 
     if (msgwin)
     {
-        mpr(item.name(DESC_INVENTORY).c_str(), MSGCH_EQUIPMENT);
+        mpr(item.name(true, DESC_INVENTORY).c_str(), MSGCH_EQUIPMENT);
         you.wield_change  = true;
     }
 }
@@ -3645,7 +3645,7 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
                 has_item = true;
             }
             inf.body << "    " << i << ") "
-                     << mitm[mons.inv[i]].name(DESC_NOCAP_A, false, true);
+                     << mitm[mons.inv[i]].name(false, DESC_NOCAP_A, false, true);
         }
     }
 

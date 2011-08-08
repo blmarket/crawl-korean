@@ -549,7 +549,7 @@ public:
     {
     }
 
-    std::string name(description_level_type descrip,
+    std::string name(bool allow_translate, description_level_type descrip,
                      bool terse = false, bool ident = false,
                      bool with_inscription = true,
                      bool quantity_in_words = false,

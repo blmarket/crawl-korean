@@ -588,7 +588,7 @@ void full_describe_view()
             if (items.empty())
             {
                 mprf(MSGCH_ERROR, "No items found in stash, but top item is %s",
-                     mitm[oid].name(DESC_PLAIN).c_str());
+                     mitm[oid].name(false, DESC_PLAIN).c_str());
                 more();
             }
 #endif
@@ -2095,7 +2095,7 @@ std::string get_terse_square_desc(const coord_def &gc)
         const monster& mons = *monster_at(gc);
 
         if (mons_is_item_mimic(mons.type) && mons_is_unknown_mimic(&mons))
-            desc = get_mimic_item(&mons).name(DESC_PLAIN);
+            desc = get_mimic_item(&mons).name(false, DESC_PLAIN);
         else if (mons_is_feat_mimic(mons.type) && mons_is_unknown_mimic(&mons))
             desc = feature_description(gc, false, DESC_PLAIN, false);
         else
@@ -2104,7 +2104,7 @@ std::string get_terse_square_desc(const coord_def &gc)
     else if (you.visible_igrd(gc) != NON_ITEM)
     {
         if (mitm[you.visible_igrd(gc)].defined())
-            desc = mitm[you.visible_igrd(gc)].name(DESC_PLAIN);
+            desc = mitm[you.visible_igrd(gc)].name(false, DESC_PLAIN);
     }
     else
         desc = feature_description(gc, false, DESC_PLAIN, false);
@@ -3446,12 +3446,12 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
 
     if (weap && (!ident || item_type_known(*weap)))
     {
-        name1 = weap->name(DESC_NOCAP_A, false, false, true,
+        name1 = weap->name(true, DESC_NOCAP_A, false, false, true,
                            false, ISFLAG_KNOW_CURSE);
     }
     if (alt && (!ident || item_type_known(*alt)) && mi.two_weapons)
     {
-        name2 = alt->name(DESC_NOCAP_A, false, false, true,
+        name2 = alt->name(true, DESC_NOCAP_A, false, false, true,
                           false, ISFLAG_KNOW_CURSE);
     }
 
@@ -3462,7 +3462,7 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
     {
         item_def dup = *weap;
         ++dup.quantity;
-        name1 = dup.name(DESC_NOCAP_A, false, false, true, true,
+        name1 = dup.name(true, DESC_NOCAP_A, false, false, true, true,
                          ISFLAG_KNOW_CURSE);
         name2.clear();
     }
@@ -3807,7 +3807,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += " wearing ";
-            desc += mon_arm->name(DESC_NOCAP_A);
+            desc += mon_arm->name(true, DESC_NOCAP_A);
         }
 
         if (mon_shd)
@@ -3818,7 +3818,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += " wearing ";
-            desc += mon_shd->name(DESC_NOCAP_A);
+            desc += mon_shd->name(true, DESC_NOCAP_A);
         }
 
         if (mon_qvr)
@@ -3829,7 +3829,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += " quivering ";
-            desc += mon_qvr->name(DESC_NOCAP_A);
+            desc += mon_qvr->name(true, DESC_NOCAP_A);
         }
 
         if (mon_carry)
@@ -3841,7 +3841,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
 
             if (mon_alt)
             {
-                desc += mon_alt->name(DESC_NOCAP_A);
+                desc += mon_alt->name(true, DESC_NOCAP_A);
                 if (mon_has_wand)
                     desc += " and ";
             }
@@ -3849,7 +3849,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
             if (mon_has_wand)
             {
                 if (mi.props["wand_known"])
-                    desc += mon_wnd->name(DESC_NOCAP_A);
+                    desc += mon_wnd->name(true, DESC_NOCAP_A);
                 else
                     desc += "a wand";
             }

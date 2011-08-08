@@ -282,7 +282,7 @@ bool InventoryRegion::update_tip_text(std::string& tip)
             tip += " - ";
         }
 
-        tip += item.name(DESC_NOCAP_A);
+        tip += item.name(true, DESC_NOCAP_A);
 
         if (!display_actions)
             return (true);
@@ -326,7 +326,7 @@ bool InventoryRegion::update_tip_text(std::string& tip)
         if (!item.defined())
             return (false);
 
-        tip = item.name(DESC_INVENTORY_EQUIP);
+        tip = item.name(false, DESC_INVENTORY_EQUIP);
 
         if (!display_actions)
             return (true);
@@ -579,9 +579,9 @@ void InventoryRegion::draw_tag()
     bool floor = m_items[curs_index].flag & TILEI_FLAG_FLOOR;
 
     if (floor && mitm[idx].defined())
-        draw_desc(mitm[idx].name(DESC_PLAIN).c_str());
+        draw_desc(mitm[idx].name(true, DESC_PLAIN).c_str());
     else if (!floor && you.inv[idx].defined())
-        draw_desc(you.inv[idx].name(DESC_INVENTORY_EQUIP).c_str());
+        draw_desc(you.inv[idx].name(true, DESC_INVENTORY_EQUIP).c_str());
 }
 
 void InventoryRegion::activate()

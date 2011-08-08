@@ -1,4 +1,4 @@
-﻿# SOME DESCRIPTIVE TITLE.
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-25 21:28+0900\n"
+"POT-Creation-Date: 2011-07-28 16:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3685,12 +3685,17 @@ msgstr "%s는 기절했다!"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -5415,248 +5420,248 @@ msgstr ""
 #. non-terse
 #. handled elsewhere
 #. ranged weapon brands
-#: itemname.cc:427 itemname.cc:466
+#: itemname.cc:427 itemname.cc:466 itemname.cc:438 itemname.cc:477
 msgid " (flame)"
 msgstr " (화염)"
 
-#: itemname.cc:427
+#: itemname.cc:427 itemname.cc:438
 msgid " of flaming"
 msgstr "화염의 "
 
-#: itemname.cc:428
+#: itemname.cc:428 itemname.cc:439
 msgid " (freeze)"
 msgstr " (냉기)"
 
-#: itemname.cc:428
+#: itemname.cc:428 itemname.cc:439
 msgid " of freezing"
 msgstr "냉기의 "
 
-#: itemname.cc:429
+#: itemname.cc:429 itemname.cc:440
 msgid " (holy)"
 msgstr " (신성)"
 
-#: itemname.cc:429
+#: itemname.cc:429 itemname.cc:440
 msgid " of holy wrath"
 msgstr "신성한 분노의 "
 
-#: itemname.cc:430
+#: itemname.cc:430 itemname.cc:441
 msgid " (elec)"
 msgstr " (감전)"
 
-#: itemname.cc:430
+#: itemname.cc:430 itemname.cc:441
 msgid " of electrocution"
 msgstr "감전의 "
 
-#: itemname.cc:431
+#: itemname.cc:431 itemname.cc:442
 msgid " (slay orc)"
 msgstr " (오크사냥)"
 
-#: itemname.cc:431
+#: itemname.cc:431 itemname.cc:442
 msgid " of orc slaying"
 msgstr "오크사냥꾼의 "
 
-#: itemname.cc:432
+#: itemname.cc:432 itemname.cc:443
 msgid " (slay drac)"
 msgstr " (용사냥)"
 
-#: itemname.cc:432
+#: itemname.cc:432 itemname.cc:443
 msgid " of dragon slaying"
 msgstr "용사냥꾼의 "
 
-#: itemname.cc:433
+#: itemname.cc:433 itemname.cc:444
 msgid " (venom)"
 msgstr " (독)"
 
-#: itemname.cc:433
+#: itemname.cc:433 itemname.cc:444
 msgid " of venom"
 msgstr "독의 "
 
-#: itemname.cc:434
+#: itemname.cc:434 itemname.cc:445
 msgid " (protect)"
 msgstr " (보호)"
 
-#: itemname.cc:434
+#: itemname.cc:434 itemname.cc:445
 msgid " of protection"
 msgstr "보호의 "
 
-#: itemname.cc:435
+#: itemname.cc:435 itemname.cc:446
 msgid " (evade)"
 msgstr " (회피)"
 
-#: itemname.cc:435
+#: itemname.cc:435 itemname.cc:446
 msgid " of evasion"
 msgstr "회피의 "
 
-#: itemname.cc:436
+#: itemname.cc:436 itemname.cc:447
 msgid " (drain)"
 msgstr " (흡수)"
 
-#: itemname.cc:436
+#: itemname.cc:436 itemname.cc:447
 msgid " of draining"
 msgstr "흡수의 "
 
-#: itemname.cc:437
+#: itemname.cc:437 itemname.cc:448
 msgid " (speed)"
 msgstr " (신속)"
 
-#: itemname.cc:437
+#: itemname.cc:437 itemname.cc:448
 msgid " of speed"
 msgstr "신속의 "
 
-#: itemname.cc:438
+#: itemname.cc:438 itemname.cc:449
 msgid " (pain)"
 msgstr " (고통)"
 
-#: itemname.cc:438
+#: itemname.cc:438 itemname.cc:449
 msgid " of pain"
 msgstr "고통의 "
 
-#: itemname.cc:439
+#: itemname.cc:439 itemname.cc:450
 msgid " (distort)"
 msgstr " (왜곡)"
 
-#: itemname.cc:439
+#: itemname.cc:439 itemname.cc:450
 msgid " of distortion"
 msgstr "왜곡의 "
 
-#: itemname.cc:440
+#: itemname.cc:440 itemname.cc:451
 msgid " (reach)"
 msgstr ""
 
-#: itemname.cc:440
+#: itemname.cc:440 itemname.cc:451
 msgid " of reaching"
 msgstr "reaching의 "
 
-#: itemname.cc:441
+#: itemname.cc:441 itemname.cc:452
 msgid " (return)"
 msgstr " (복귀)"
 
-#: itemname.cc:441
+#: itemname.cc:441 itemname.cc:452
 msgid " of returning"
 msgstr "복귀하는 "
 
-#: itemname.cc:444
+#: itemname.cc:444 itemname.cc:455
 msgid " (vamp)"
 msgstr " (흡혈)"
 
-#: itemname.cc:448
+#: itemname.cc:448 itemname.cc:459
 msgid " (velocity)"
 msgstr " (속도)"
 
-#: itemname.cc:448
+#: itemname.cc:448 itemname.cc:459
 msgid " of velocity"
 msgstr "속도의 "
 
-#: itemname.cc:453
+#: itemname.cc:453 itemname.cc:464
 msgid " (crush)"
 msgstr " (분쇄)"
 
-#: itemname.cc:453
+#: itemname.cc:453 itemname.cc:464
 msgid " of crushing"
 msgstr "분쇄의 "
 
-#: itemname.cc:454
+#: itemname.cc:454 itemname.cc:465
 msgid " (slice)"
 msgstr " (절단)"
 
-#: itemname.cc:454
+#: itemname.cc:454 itemname.cc:465
 msgid " of slicing"
 msgstr "절단의 "
 
-#: itemname.cc:455
+#: itemname.cc:455 itemname.cc:466
 msgid " (pierce)"
 msgstr " (관통)"
 
-#: itemname.cc:455
+#: itemname.cc:455 itemname.cc:466
 msgid " of piercing"
 msgstr "관통의 "
 
-#: itemname.cc:456
+#: itemname.cc:456 itemname.cc:467
 msgid " (chop)"
 msgstr " (쪼갬)"
 
-#: itemname.cc:456
+#: itemname.cc:456 itemname.cc:467
 msgid " of chopping"
 msgstr "쪼개는 "
 
-#: itemname.cc:457
+#: itemname.cc:457 itemname.cc:468
 msgid " (slash)"
 msgstr " (가르기)"
 
-#: itemname.cc:457
+#: itemname.cc:457 itemname.cc:468
 msgid " of slashing"
 msgstr "갈라내는 "
 
-#: itemname.cc:458
+#: itemname.cc:458 itemname.cc:469
 msgid " (stab)"
 msgstr " (찌름)"
 
-#: itemname.cc:458
+#: itemname.cc:458 itemname.cc:469
 msgid " of stabbing"
 msgstr "찔러넣는 "
 
-#: itemname.cc:462
+#: itemname.cc:462 itemname.cc:473
 msgid " (antimagic)"
 msgstr " (안티매직)"
 
-#: itemname.cc:466
+#: itemname.cc:466 itemname.cc:477
 msgid " of flame"
 msgstr "불꽃의 "
 
-#: itemname.cc:467
+#: itemname.cc:467 itemname.cc:478
 msgid " (frost)"
 msgstr " (서리)"
 
-#: itemname.cc:467
+#: itemname.cc:467 itemname.cc:478
 msgid " of frost"
 msgstr "서리의 "
 
-#: itemname.cc:468
+#: itemname.cc:468 itemname.cc:479
 msgid " (penet)"
 msgstr " (투과)"
 
-#: itemname.cc:468
+#: itemname.cc:468 itemname.cc:479
 msgid " of penetration"
 msgstr "투과하는 "
 
-#: itemname.cc:469
+#: itemname.cc:469 itemname.cc:480
 msgid " (reap)"
 msgstr ""
 
-#: itemname.cc:469
+#: itemname.cc:469 itemname.cc:480
 msgid " of reaping"
 msgstr "reaping의 "
 
 #. both ranged and non-ranged
-#: itemname.cc:472
+#: itemname.cc:472 itemname.cc:483
 msgid " (chaos)"
 msgstr " (혼돈)"
 
-#: itemname.cc:472
+#: itemname.cc:472 itemname.cc:483
 msgid " of chaos"
 msgstr "혼돈의 "
 
-#: itemname.cc:1107
+#: itemname.cc:1107 itemname.cc:1118
 msgid "orc "
 msgstr "오크 "
 
-#: itemname.cc:1107
+#: itemname.cc:1107 itemname.cc:1118
 msgid "orcish "
 msgstr "오크족 "
 
-#: itemname.cc:1109
+#: itemname.cc:1109 itemname.cc:1120
 msgid "elf "
 msgstr "엘프 "
 
-#: itemname.cc:1109
+#: itemname.cc:1109 itemname.cc:1120
 msgid "elven "
 msgstr "엘프족 "
 
-#: itemname.cc:1111
+#: itemname.cc:1111 itemname.cc:1122
 msgid "dwarf "
 msgstr "드워프 "
 
-#: itemname.cc:1111
+#: itemname.cc:1111 itemname.cc:1122
 msgid "dwarven "
 msgstr "드워프족 "
 
@@ -5773,12 +5778,12 @@ msgstr "뽑음: "
 msgid "left: "
 msgstr "남음: "
 
-#: itemname.cc:1807 itemname.cc:1806
+#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819
 #, c-format
 msgid "%s%smanual"
 msgstr "%s%s설명서"
 
-#: itemname.cc:1807 itemname.cc:1806
+#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819
 #, c-format
 msgid "%s%sbook"
 msgstr "%s%s주문서"
@@ -5792,7 +5797,7 @@ msgstr "%s의 설명서"
 #: itemname.cc:1829 itemname.cc:1828
 #, c-format
 msgid "book of %s"
-msgstr "%s의 주문서"
+msgstr "%1$s의 주문서"
 
 #: abl-show.cc:2267
 msgid "You renew your dark mirror aura."

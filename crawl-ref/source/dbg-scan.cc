@@ -84,7 +84,7 @@ void debug_item_scan(void)
             {
                 mprf(MSGCH_ERROR, "Linked invalid item at (%d,%d)!",
                      ri->x, ri->y);
-                _dump_item(mitm[obj].name(DESC_PLAIN).c_str(), obj, mitm[obj]);
+                _dump_item(mitm[obj].name(false, DESC_PLAIN).c_str(), obj, mitm[obj]);
             }
 
             // Check that item knows what stack it's in.
@@ -92,7 +92,7 @@ void debug_item_scan(void)
             {
                 mprf(MSGCH_ERROR,"Item position incorrect at (%d,%d)!",
                      ri->x, ri->y);
-                _dump_item(mitm[obj].name(DESC_PLAIN).c_str(),
+                _dump_item(mitm[obj].name(false, DESC_PLAIN).c_str(),
                             obj, mitm[obj]);
             }
 
@@ -114,7 +114,7 @@ void debug_item_scan(void)
         if (!mitm[i].defined())
             continue;
 
-        strlcpy(name, mitm[i].name(DESC_PLAIN).c_str(), sizeof(name));
+        strlcpy(name, mitm[i].name(false, DESC_PLAIN).c_str(), sizeof(name));
 
         const monster* mon = mitm[i].holding_monster();
 
@@ -412,7 +412,7 @@ void debug_mons_scan()
                                  "item (midx = %d)",
                      m->full_name(DESC_PLAIN, true).c_str(),
                      pos.x, pos.y, i);
-                _dump_item(item.name(DESC_PLAIN, false, true).c_str(),
+                _dump_item(item.name(false, DESC_PLAIN, false, true).c_str(),
                             idx, item);
                 continue;
             }
@@ -426,7 +426,7 @@ void debug_mons_scan()
                                  "monster %s (%d, %d) [midx = %d]",
                      m->full_name(DESC_PLAIN, true).c_str(),
                      m->pos().x, m->pos().y, i,
-                     item.name(DESC_PLAIN).c_str(),
+                     item.name(false, DESC_PLAIN).c_str(),
                      holder->full_name(DESC_PLAIN, true).c_str(),
                      holder->pos().x, holder->pos().y, holder->mindex());
 

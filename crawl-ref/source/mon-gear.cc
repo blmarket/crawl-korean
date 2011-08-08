@@ -36,7 +36,7 @@ static void _give_monster_item(monster* mon, int thing,
     item_def &mthing = mitm[thing];
     ASSERT(mthing.defined());
 
-    dprf("Giving %s to %s...", mthing.name(DESC_PLAIN).c_str(),
+    dprf("Giving %s to %s...", mthing.name(false, DESC_PLAIN).c_str(),
          mon->name(DESC_PLAIN, true).c_str());
 
     mthing.pos.reset();
@@ -76,7 +76,7 @@ static void _give_monster_item(monster* mon, int thing,
                    : mon->pickup_item(mthing, false, true)))
     {
         dprf("Destroying %s because %s doesn't want it!",
-             mthing.name(DESC_PLAIN, false, true).c_str(),
+             mthing.name(false, DESC_PLAIN, false, true).c_str(),
              mon->name(DESC_PLAIN, true).c_str());
         destroy_item(thing, true);
         return;

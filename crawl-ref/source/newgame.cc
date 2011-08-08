@@ -1870,7 +1870,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
         {
             item_def rod;
             make_rod(rod, STAFF_STRIKING, 8);
-            text += rod.name(DESC_QUALNAME, false, true);
+            text += rod.name(true, DESC_QUALNAME, false, true);
         }
         else
         {

@@ -442,7 +442,7 @@ std::string melee_attack::wep_name(description_level_type desc,
     ASSERT(weapon != NULL);
 
     if (attacker->atype() == ACT_PLAYER)
-        return weapon->name(desc, false, false, false, false, ignore_flags);
+        return weapon->name(true, desc, false, false, false, false, ignore_flags);
 
     std::string name;
     bool possessive = false;
@@ -460,7 +460,7 @@ std::string melee_attack::wep_name(description_level_type desc,
     if (possessive)
         name = apostrophise(atk_name(desc)) + " ";
 
-    name += weapon->name(DESC_PLAIN, false, false, false, false, ignore_flags);
+    name += weapon->name(true, DESC_PLAIN, false, false, false, false, ignore_flags);
 
     return (name);
 }
@@ -1526,7 +1526,7 @@ std::string melee_attack::player_why_missed(const char *target_name)
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const std::string armour_name =
             (armour
-                ? armour->name(DESC_BASENAME)
+                ? armour->name(true, DESC_BASENAME)
                 : std::string(gettext("armour")));
 
         if (armour_miss && !shield_miss)
@@ -1736,7 +1736,7 @@ void melee_attack::player_weapon_auto_id()
     {
         set_ident_flags(*weapon, ISFLAG_KNOW_PLUSES);
         mprf(gettext("You are wielding %s.")
-            , weapon->name(DESC_NOCAP_A).c_str());
+            , weapon->name(true, DESC_NOCAP_A).c_str());
         more();
         you.wield_change = true;
     }
@@ -3938,7 +3938,7 @@ void melee_attack::player_apply_staff_damage()
             set_ident_flags(*weapon, ISFLAG_KNOW_TYPE);
             set_ident_type(*weapon, ID_KNOWN_TYPE);
 
-            mprf(gettext("You are wielding %s."), weapon->name(DESC_NOCAP_A).c_str());
+            mprf(gettext("You are wielding %s."), weapon->name(true, DESC_NOCAP_A).c_str());
             more();
             you.wield_change = true;
         }
@@ -4779,7 +4779,7 @@ std::string melee_attack::mons_attack_desc(const mon_attack_def &attk)
         if (attacker->type != MONS_DANCING_WEAPON)
         {
             /// 1. 무기 이름. ' %s로 '정도로 번역하면 될 것 같습니다. 사용처를 다 본건 아니지만 아마 morgue에 나올듯.
-            result += make_stringf(gettext(" with %s"), weapon->name(DESC_NOCAP_A).c_str());
+            result += make_stringf(gettext(" with %s"), weapon->name(true, DESC_NOCAP_A).c_str());
         }
 
         return (result);
@@ -5109,7 +5109,7 @@ static void _steal_item_from_player(monster* mon)
 
     mprf(gettext("%s steals %s!"),
          mon->name(DESC_CAP_THE).c_str(),
-         new_item.name(DESC_NOCAP_YOUR).c_str());
+         new_item.name(true, DESC_NOCAP_YOUR).c_str());
 
     unlink_item(index);
     mon->inv[mslot] = index;
@@ -6266,7 +6266,7 @@ bool wielded_weapon_check(item_def *weapon, bool no_message)
             prompt = gettext("Really attack while being unarmed? ");
         else
             prompt = make_stringf(gettext("Really attack while wielding %s? "),
-                weapon->name(DESC_NOCAP_YOUR).c_str());
+                weapon->name(true, DESC_NOCAP_YOUR).c_str());
 
         const bool result = yesno(prompt.c_str(), true, 'n');
 

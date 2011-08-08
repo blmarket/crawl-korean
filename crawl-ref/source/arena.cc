@@ -180,7 +180,7 @@ namespace arena
         {
             item_def &item = mitm[items[i]];
             fprintf(file, "        %s\n",
-                    item.name(DESC_PLAIN, false, true).c_str());
+                    item.name(false, DESC_PLAIN, false, true).c_str());
         }
     }
 

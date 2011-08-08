@@ -807,7 +807,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, " wields %s.",
-                 item.name(DESC_NOCAP_A, false, false, true, false,
+                 item.name(true, DESC_NOCAP_A, false, false, true, false,
                            ISFLAG_CURSED).c_str());
         msg = simple_monster_message(this, info);
     }
@@ -889,7 +889,7 @@ void monster::equip_armour(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, " wears %s.",
-                 item.name(DESC_NOCAP_A).c_str());
+                 item.name(true, DESC_NOCAP_A).c_str());
         simple_monster_message(this, info);
     }
 
@@ -937,7 +937,7 @@ void monster::unequip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, " unwields %s.",
-                             item.name(DESC_NOCAP_A, false, false, true, false,
+                             item.name(true, DESC_NOCAP_A, false, false, true, false,
                              ISFLAG_CURSED).c_str());
         msg = simple_monster_message(this, info);
     }
@@ -991,7 +991,7 @@ void monster::unequip_armour(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, " takes off %s.",
-                 item.name(DESC_NOCAP_A).c_str());
+                 item.name(true, DESC_NOCAP_A).c_str());
         simple_monster_message(this, info);
     }
 
@@ -1055,7 +1055,7 @@ void monster::pickup_message(const item_def &item, int near)
         mprf("%s picks up %s.",
              name(DESC_CAP_THE).c_str(),
              item.base_type == OBJ_GOLD ? "some gold"
-                                        : item.name(DESC_NOCAP_A).c_str());
+                                        : item.name(true, DESC_NOCAP_A).c_str());
     }
 }
 
@@ -1073,14 +1073,14 @@ bool monster::pickup(item_def &item, int slot, int near, bool force_merge)
             {
                 mprf(MSGCH_DIAGNOSTICS, "Monster %s already holding item %s.",
                      name(DESC_PLAIN, true).c_str(),
-                     item.name(DESC_PLAIN, false, true).c_str());
+                     item.name(false, DESC_PLAIN, false, true).c_str());
                 return (false);
             }
             else
             {
                 mprf(MSGCH_DIAGNOSTICS, "Item %s thinks it's already held by "
                                         "monster %s.",
-                     item.name(DESC_PLAIN, false, true).c_str(),
+                     item.name(false, DESC_PLAIN, false, true).c_str(),
                      name(DESC_PLAIN, true).c_str());
             }
         }
@@ -1088,14 +1088,14 @@ bool monster::pickup(item_def &item, int slot, int near, bool force_merge)
         {
             mprf(MSGCH_DIAGNOSTICS, "Item %s, held by dead monster, being "
                                     "picked up by monster %s.",
-                 item.name(DESC_PLAIN, false, true).c_str(),
+                 item.name(false, DESC_PLAIN, false, true).c_str(),
                  name(DESC_PLAIN, true).c_str());
         }
         else
         {
             mprf(MSGCH_DIAGNOSTICS, "Item %s, held by monster %s, being "
                                     "picked up by monster %s.",
-                 item.name(DESC_PLAIN, false, true).c_str(),
+                 item.name(false, DESC_PLAIN, false, true).c_str(),
                  other_mon->name(DESC_PLAIN, true).c_str(),
                  name(DESC_PLAIN, true).c_str());
         }
@@ -1190,7 +1190,7 @@ bool monster::drop_item(int eslot, int near)
         if (need_message(near))
         {
             mprf("%s %s as %s drops %s!",
-                 pitem->name(DESC_CAP_THE).c_str(),
+                 pitem->name(true, DESC_CAP_THE).c_str(),
                  summoned_poof_msg(this, *pitem).c_str(),
                  name(DESC_NOCAP_THE).c_str(),
                  pitem->quantity > 1 ? "them" : "it");
@@ -1204,7 +1204,7 @@ bool monster::drop_item(int eslot, int near)
         if (need_message(near))
         {
             mprf("%s drops %s.", name(DESC_CAP_THE).c_str(),
-                 pitem->name(DESC_NOCAP_A).c_str());
+                 pitem->name(true, DESC_NOCAP_A).c_str());
         }
 
         if (!move_item_to_grid(&item_index, pos(), swimming()))

@@ -182,7 +182,7 @@ void add_item_to_transit(const level_id &lid, const item_def &i)
     i_transit_list &ilist = transiting_items[lid];
     ilist.push_back(i);
 
-    dprf("Item in transit: %s", i.name(DESC_PLAIN).c_str());
+    dprf("Item in transit: %s", i.name(false, DESC_PLAIN).c_str());
 
     const int how_many = ilist.size();
     if (how_many > MAX_LOST)

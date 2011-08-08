@@ -270,7 +270,7 @@ static void _dump_player(FILE *file)
 
             fprintf(file, "    slot #%d: otherwise valid item '%s' has "
                           "invalid quantity %d\n",
-                    i, item.name(DESC_PLAIN, false, true).c_str(),
+                    i, item.name(false, DESC_PLAIN, false, true).c_str(),
                     orig_quant);
             item.quantity = orig_quant;
             continue;
@@ -278,7 +278,7 @@ static void _dump_player(FILE *file)
         else if (!item.defined())
             continue;
 
-        const std::string name = item.name(DESC_PLAIN, false, true);
+        const std::string name = item.name(false, DESC_PLAIN, false, true);
 
         if (item.link != i)
         {
@@ -331,7 +331,7 @@ static void _dump_player(FILE *file)
             suffix += ")";
         }
         fprintf(file, ": %s%s\n",
-                you.inv[eq].name(DESC_PLAIN, false, true).c_str(), suffix.c_str());
+                you.inv[eq].name(false, DESC_PLAIN, false, true).c_str(), suffix.c_str());
     }
     fprintf(file, "\n");
 

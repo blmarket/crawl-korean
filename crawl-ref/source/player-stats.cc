@@ -272,7 +272,7 @@ void notify_stat_change(stat_type which_stat, int8_t amount, bool suppress_msg,
 void notify_stat_change(stat_type which_stat, int8_t amount, bool suppress_msg,
                         const item_def &cause, bool removed)
 {
-    std::string name = cause.name(DESC_NOCAP_THE, false, true, false, false,
+    std::string name = cause.name(true, DESC_NOCAP_THE, false, true, false, false,
                                   ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES);
     std::string verb;
 
@@ -455,7 +455,7 @@ bool lose_stat(stat_type which_stat, int8_t stat_loss, bool force,
             {
                 set_ident_type(*ring, ID_KNOWN_TYPE);
                 mprf("You are wearing: %s",
-                     ring->name(DESC_INVENTORY_EQUIP).c_str());
+                     ring->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
     }
@@ -502,7 +502,7 @@ bool lose_stat(stat_type which_stat, int8_t stat_loss,
 bool lose_stat(stat_type which_stat, int8_t stat_loss,
                const item_def &cause, bool removed, bool force)
 {
-    std::string name = cause.name(DESC_NOCAP_THE, false, true, false, false,
+    std::string name = cause.name(true, DESC_NOCAP_THE, false, true, false, false,
                                   ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES);
     std::string verb;
 

@@ -270,7 +270,7 @@ static std::string _fsim_weapon(int missile_slot)
 {
     if (const item_def* weapon = you.weapon())
     {
-        std::string item_buf = weapon->name(DESC_PLAIN, true);
+        std::string item_buf = weapon->name(false, DESC_PLAIN, true);
 
         // If it's a ranged weapon, add the description of the missile
         // if applicable.
@@ -281,13 +281,13 @@ static std::string _fsim_weapon(int missile_slot)
                                     : missile_slot);
 
             if (missile < ENDOFPACK && missile >= 0)
-                item_buf += " with " + you.inv[missile].name(DESC_PLAIN);
+                item_buf += " with " + you.inv[missile].name(false, DESC_PLAIN);
         }
 
         return item_buf;
     }
     else if (missile_slot != -1)
-        return you.inv[missile_slot].name(DESC_PLAIN);
+        return you.inv[missile_slot].name(false, DESC_PLAIN);
     else
         return "unarmed";
 }
@@ -496,7 +496,7 @@ int fsim_kit_equip(const std::string &kit)
             if (!you.inv[i].defined())
                 continue;
 
-            if (you.inv[i].name(DESC_PLAIN).find(weapon) != std::string::npos)
+            if (you.inv[i].name(false, DESC_PLAIN).find(weapon) != std::string::npos)
             {
                 if (i != you.equip[EQ_WEAPON])
                 {
@@ -518,7 +518,7 @@ int fsim_kit_equip(const std::string &kit)
             if (!you.inv[i].defined())
                 continue;
 
-            if (you.inv[i].name(DESC_PLAIN).find(missile) != std::string::npos)
+            if (you.inv[i].name(false, DESC_PLAIN).find(missile) != std::string::npos)
             {
                 missile_slot = i;
                 break;

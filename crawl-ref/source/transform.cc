@@ -191,7 +191,7 @@ static void _remove_equipment(const std::set<equipment_type>& removed,
                 unequip = true;
         }
 
-        mprf("%s %s%s %s", equip->name(DESC_CAP_YOUR).c_str(),
+        mprf("%s %s%s %s", equip->name(true, DESC_CAP_YOUR).c_str(),
              unequip ? "fall" : "meld",
              equip->quantity > 1 ? "" : "s",
              unequip ? "away!" : "into your body.");
@@ -264,7 +264,7 @@ static void _unmeld_equipment_slot(equipment_type e)
         if (you.slot_item(EQ_SHIELD)
             && is_shield_incompatible(item, you.slot_item(EQ_SHIELD)))
         {
-            mpr(item.name(DESC_CAP_YOUR) + " is pushed off your body!");
+            mpr(item.name(true, DESC_CAP_YOUR) + " is pushed off your body!");
             unequip_item(e);
         }
         else
@@ -288,7 +288,7 @@ static void _unmeld_equipment_slot(equipment_type e)
         if (force_remove)
         {
             mprf("%s is pushed off your body!",
-                 item.name(DESC_CAP_YOUR).c_str());
+                 item.name(true, DESC_CAP_YOUR).c_str());
             unequip_item(e);
         }
         else
@@ -904,7 +904,7 @@ void untransform(bool skip_wielding, bool skip_move)
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         mprf(MSGCH_DURATION, "%s cracks your icy armour.",
-             armour->name(DESC_CAP_YOUR).c_str());
+             armour->name(true, DESC_CAP_YOUR).c_str());
     }
 
     if (hp_downscale != 10 && you.hp != you.hp_max)

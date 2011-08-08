@@ -693,7 +693,7 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
 
     static char gift_buf[100];
     snprintf(gift_buf, sizeof(gift_buf), "god gift: %s",
-             mitm[thing_created].name(DESC_PLAIN).c_str());
+             mitm[thing_created].name(true, DESC_PLAIN).c_str());
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, gift_buf), true);
 
     mitm[thing_created].inscription = "god gift";
@@ -720,7 +720,7 @@ static void _xom_acquirement(object_class_type force_class)
 
     static char gift_buf[100];
     snprintf(gift_buf, sizeof(gift_buf), "god gift: %s",
-             mitm[item_index].name(DESC_PLAIN).c_str());
+             mitm[item_index].name(true, DESC_PLAIN).c_str());
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, gift_buf), true);
 
     stop_running();
@@ -1064,7 +1064,7 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
 
         msg += " ";
 
-        msg += item.name(DESC_PLAIN, false, false, false);
+        msg += item.name(true, DESC_PLAIN, false, false, false);
 
         msg += " is briefly surrounded by a scintillating aura of "
                "random colours.";
@@ -1643,7 +1643,7 @@ static int _xom_swap_weapons(bool debug = false)
 
     mprf("%s wields %s!",
          mon->name(DESC_CAP_THE).c_str(),
-         myweapon.name(DESC_NOCAP_YOUR).c_str());
+         myweapon.name(true, DESC_NOCAP_YOUR).c_str());
     mon->equip(myweapon, MSLOT_WEAPON, 0);
 
     // Item is gone from player's inventory.
@@ -1679,7 +1679,7 @@ static int _xom_swap_weapons(bool debug = false)
 
     mprf("You wield %s %s!",
          mon->name(DESC_NOCAP_ITS).c_str(),
-         you.inv[freeslot].name(DESC_PLAIN).c_str());
+         you.inv[freeslot].name(true, DESC_PLAIN).c_str());
 
     equip_item(EQ_WEAPON, freeslot);
 
@@ -1816,7 +1816,7 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
 
             // Output some text since otherwise snakes will disappear silently.
             mprf("%s reforms as %s", mi->name(DESC_CAP_THE).c_str(),
-                 doodad.name(DESC_NOCAP_A).c_str());
+                 doodad.name(true, DESC_NOCAP_A).c_str());
 
             // Dismiss monster silently.
             move_item_to_grid(&thing_created, mi->pos());
@@ -1915,7 +1915,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
 
     mprf("%s %s dances into the air!",
          apostrophise(mon->name(DESC_CAP_THE)).c_str(),
-         mitm[wpn].name(DESC_PLAIN).c_str());
+         mitm[wpn].name(true, DESC_PLAIN).c_str());
 
     destroy_item(menv[mons].inv[MSLOT_WEAPON]);
 
@@ -2631,11 +2631,11 @@ static void _xom_zero_miscast()
 
         std::string name;
         if (item.quantity == 1)
-            name = item.name(DESC_CAP_YOUR, false, false, false);
+            name = item.name(false, DESC_CAP_YOUR, false, false, false);
         else
         {
             name  = "One of ";
-            name += item.name(DESC_NOCAP_YOUR, false, false, false);
+            name += item.name(false, DESC_NOCAP_YOUR, false, false, false);
         }
         messages.push_back(name + " falls out of your pack, then "
                            "immediately jumps back in!");
@@ -2695,7 +2695,7 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_HELMET)))
     {
         std::string str = "Your ";
-        str += item->name(DESC_BASENAME, false, false, false);
+        str += item->name(false, DESC_BASENAME, false, false, false);
         str += " leaps into the air, briefly spins, then lands back on "
                "your head!";
 
@@ -2705,7 +2705,7 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_BOOTS)) && item->sub_type == ARM_BOOTS
         && !you.cannot_act())
     {
-        std::string name = item->name(DESC_BASENAME, false, false, false);
+        std::string name = item->name(false, DESC_BASENAME, false, false, false);
         name = replace_all(name, "pair of ", "");
 
         std::string str = "You compulsively click the heels of your ";
@@ -2716,13 +2716,13 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_SHIELD)))
     {
         std::string str = "Your ";
-        str += item->name(DESC_BASENAME, false, false, false);
+        str += item->name(false, DESC_BASENAME, false, false, false);
         str += " spins!";
 
         messages.push_back(str);
 
         str = "Your ";
-        str += item->name(DESC_BASENAME, false, false, false);
+        str += item->name(false, DESC_BASENAME, false, false, false);
         str += " briefly flashes a lurid colour!";
         messages.push_back(str);
     }
@@ -2730,7 +2730,7 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_BODY_ARMOUR)))
     {
         std::string str;
-        std::string name = item->name(DESC_BASENAME, false, false, false);
+        std::string name = item->name(false, DESC_BASENAME, false, false, false);
 
         if (name.find("dragon") != std::string::npos)
         {
@@ -2777,7 +2777,7 @@ static void _xom_zero_miscast()
 
         item = &you.inv[idx];
 
-        std::string name = item->name(DESC_CAP_YOUR, false, false, false);
+        std::string name = item->name(false, DESC_CAP_YOUR, false, false, false);
         std::string verb = coinflip() ? "glow" : "vibrate";
 
         if (item->quantity == 1)
@@ -3398,7 +3398,7 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
             return (XOM_BAD_ANIMATE_WPN);
 
         const item_def& weapon = *you.weapon();
-        const std::string wep_name = weapon.name(DESC_PLAIN);
+        const std::string wep_name = weapon.name(false, DESC_PLAIN);
         rc = cast_tukimas_dance(100, GOD_XOM, true);
 
         if (rc)

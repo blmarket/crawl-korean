@@ -398,13 +398,13 @@ static void _print_stats_wp(int y)
         const item_def& wpn = *you.weapon();
 
         const std::string prefix = menu_colour_item_prefix(wpn);
-        const int prefcol = menu_colour(wpn.name(DESC_INVENTORY), prefix);
+        const int prefcol = menu_colour(wpn.name(false, DESC_INVENTORY), prefix);
         if (prefcol != -1)
             col = prefcol;
         else
             col = LIGHTGREY;
 
-        text = wpn.name(DESC_INVENTORY, true, false, true);
+        text = wpn.name(true, DESC_INVENTORY, true, false, true);
     }
     else
     {
@@ -485,12 +485,12 @@ static void _print_stats_qv(int y)
         const item_def& quiver = you.inv[q];
         const std::string prefix = menu_colour_item_prefix(quiver);
         const int prefcol =
-            menu_colour(quiver.name(DESC_INVENTORY), prefix);
+            menu_colour(quiver.name(false, DESC_INVENTORY), prefix);
         if (prefcol != -1)
             col = prefcol;
         else
             col = LIGHTGREY;
-        text = quiver.name(DESC_INVENTORY, true);
+        text = quiver.name(true, DESC_INVENTORY, true);
     }
     else
     {
@@ -1419,7 +1419,7 @@ static void _print_overview_screen_equip(column_composer& cols,
             const item_def& item = you.inv[item_idx];
             const bool melded    = !player_wearing_slot(e_order[i]);
             const std::string prefix = menu_colour_item_prefix(item);
-            const int prefcol = menu_colour(item.name(DESC_INVENTORY), prefix);
+            const int prefcol = menu_colour(item.name(false, DESC_INVENTORY), prefix);
             const int col = prefcol == -1 ? LIGHTGREY : prefcol;
 
             // Colour melded equipment dark grey.
@@ -1434,7 +1434,7 @@ static void _print_overview_screen_equip(column_composer& cols,
                      equip_char,
                      colname,
                      melded ? "melded " : "",
-                     chop_string(item.name(DESC_PLAIN, true), 42, false).c_str(),
+                     chop_string(item.name(true, DESC_PLAIN, true), 42, false).c_str(),
                      colname);
             equip_chars.push_back(equip_char);
         }

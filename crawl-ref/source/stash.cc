@@ -100,7 +100,7 @@ std::string stash_annotate_item(const char *s,
     if (item->quantity > 1)
     {
         text += "\n";
-        text += item->name(DESC_BASENAME);
+        text += item->name(false, DESC_BASENAME);
     }
 
     return text;
@@ -486,7 +486,7 @@ static short _min_rot(const item_def &item)
 // stash-tracking pre/suffixes.
 std::string Stash::stash_item_name(const item_def &item)
 {
-    std::string name = item.name(DESC_NOCAP_A);
+    std::string name = item.name(false, DESC_NOCAP_A);
 
     if (!_is_rottable(item))
         return name;
@@ -2032,7 +2032,7 @@ bool StashTracker::display_search_results(
         if (!res.matching_items.empty())
         {
             const item_def &first(*res.matching_items.begin());
-            const int itemcol = menu_colour(first.name(DESC_PLAIN).c_str(),
+            const int itemcol = menu_colour(first.name(false, DESC_PLAIN).c_str(),
                                             menu_colour_item_prefix(first),
                                             "pickup");
             if (itemcol != -1)

@@ -60,7 +60,7 @@ static void _make_all_books()
         set_ident_flags(book, ISFLAG_KNOW_TYPE);
         set_ident_flags(book, ISFLAG_IDENT_MASK);
 
-        mprf("%s", book.name(DESC_PLAIN).c_str());
+        mprf("%s", book.name(false, DESC_PLAIN).c_str());
     }
 }
 
@@ -465,7 +465,7 @@ void wizard_tweak_object(void)
 
         while (true)
         {
-            mpr(you.inv[item].name(DESC_INVENTORY_EQUIP).c_str());
+            mpr(you.inv[item].name(false, DESC_INVENTORY_EQUIP).c_str());
 
             if (is_art)
             {
@@ -611,7 +611,7 @@ void wizard_create_all_artefacts()
         item.quantity = 1;
         set_ident_flags(item, ISFLAG_IDENT_MASK);
 
-        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(DESC_NOCAP_A)
+        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_NOCAP_A)
                                         << " (" << debug_art_val_str(item)
                                         << ")" << std::endl;
         move_item_to_grid(&islot, you.pos());
@@ -631,7 +631,7 @@ void wizard_create_all_artefacts()
         set_ident_flags(item, ISFLAG_IDENT_MASK);
         move_item_to_grid(&islot, you.pos());
 
-        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(DESC_NOCAP_A)
+        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_NOCAP_A)
                                         << std::endl;
     }
 }
@@ -720,7 +720,7 @@ void wizard_make_object_randart()
     if (eq != EQ_NONE)
         equip_item(eq, invslot);
 
-    mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
+    mpr(item.name(false, DESC_INVENTORY_EQUIP).c_str());
 }
 
 // Returns whether an item of this type can be cursed.
@@ -820,7 +820,7 @@ void wizard_list_items()
             if (env.shop[i].type != SHOP_UNASSIGNED)
             {
                 for (stack_iterator si(coord_def(0, i+5)); si; ++si)
-                    mpr(si->name(DESC_PLAIN, false, false, false).c_str());
+                    mpr(si->name(false, DESC_PLAIN, false, false, false).c_str());
             }
 
         mpr("");
@@ -836,7 +836,7 @@ void wizard_list_items()
         if (item.link != NON_ITEM)
         {
             mprf("(%2d,%2d): %s", item.pos.x, item.pos.y,
-                 item.name(DESC_PLAIN, false, false, false).c_str());
+                 item.name(false, DESC_PLAIN, false, false, false).c_str());
         }
     }
 
@@ -850,7 +850,7 @@ void wizard_list_items()
         if (item != NON_ITEM)
         {
             mprf("%3d at (%2d,%2d): %s", item, ri->x, ri->y,
-                 mitm[item].name(DESC_PLAIN, false, false, false).c_str());
+                 mitm[item].name(false, DESC_PLAIN, false, false, false).c_str());
         }
     }
 }
@@ -1036,7 +1036,7 @@ static void _debug_acquirement_stats(FILE *ostat)
             const bool melded    = !player_wearing_slot(e_order[i]);
 
             fprintf(ostat, "%-7s: %s %s\n", equip_slot_to_name(eqslot),
-                    item.name(DESC_PLAIN, true).c_str(),
+                    item.name(false, DESC_PLAIN, true).c_str(),
                     melded ? "(melded)" : "");
             naked = false;
         }
@@ -1268,7 +1268,7 @@ static void _debug_acquirement_stats(FILE *ostat)
             continue;
 
         item.sub_type = i;
-        std::string name = item.name(desc, terse, true);
+        std::string name = item.name(false, desc, terse, true);
 
         max_width = std::max(max_width, strwidth(name));
     }
@@ -1286,7 +1286,7 @@ static void _debug_acquirement_stats(FILE *ostat)
             continue;
 
         item.sub_type = i;
-        std::string name = item.name(desc, terse, true);
+        std::string name = item.name(false, desc, terse, true);
 
         fprintf(ostat, format_str, name.c_str(),
                 (float) subtype_quants[i] * 100.0 / (float) total_quant);

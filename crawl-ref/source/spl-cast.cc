@@ -109,7 +109,7 @@ static bool _surge_identify_boosters(spell_type spell)
                                         ID_KNOWN_TYPE);
                         set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
                         mprf("You are wearing: %s",
-                             ring.name(DESC_INVENTORY_EQUIP).c_str());
+                             ring.name(true, DESC_INVENTORY_EQUIP).c_str());
                     }
                 }
             }
@@ -953,7 +953,7 @@ static int _setup_evaporate_cast()
     else
     {
         mprf(MSGCH_PROMPT, "Where do you want to aim %s?",
-             you.inv[rc].name(DESC_NOCAP_YOUR).c_str());
+             you.inv[rc].name(true, DESC_NOCAP_YOUR).c_str());
     }
     return rc;
 }

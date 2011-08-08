@@ -181,7 +181,7 @@ void jiyva_eat_offlevel_items()
                     break;
 
                 dprf("Eating %s on %s",
-                     si->name(DESC_PLAIN).c_str(), lid.describe().c_str());
+                     si->name(false, DESC_PLAIN).c_str(), lid.describe().c_str());
 
                 // Needs a message now to explain possible hp or mp
                 // gain from jiyva_slurp_bonus()
@@ -561,7 +561,7 @@ bool ash_id_item(item_def& item, bool silent)
             you.wield_change = true;
 
         if (!silent)
-            mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
+            mpr(item.name(true, DESC_INVENTORY_EQUIP).c_str());
 
         seen_item(item);
         return true;

@@ -595,7 +595,7 @@ int place_monster_corpse(const monster* mons, bool silent,
             else
             {
                 mprf("%s appears out of nowhere!",
-                     mitm[o].name(DESC_CAP_A).c_str());
+                     mitm[o].name(true, DESC_CAP_A).c_str());
             }
         }
         if (o != NON_ITEM && !silent)
@@ -3222,7 +3222,7 @@ void corrode_monster(monster* mons, const actor* evildoer)
                 {
                     mprf("The acid corrodes %s %s!",
                          apostrophise(mons->name(DESC_NOCAP_THE)).c_str(),
-                         thing_chosen.name(DESC_PLAIN).c_str());
+                         thing_chosen.name(true, DESC_PLAIN).c_str());
                 }
             }
         }

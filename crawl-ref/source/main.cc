@@ -2337,7 +2337,7 @@ static void _decrement_durations()
             const int temp_effect = get_weapon_brand(weapon);
 
             set_item_ego_type(weapon, OBJ_WEAPONS, SPWPN_NORMAL);
-            std::string msg = weapon.name(DESC_CAP_YOUR);
+            std::string msg = weapon.name(true, DESC_CAP_YOUR);
 
             switch (temp_effect)
             {

@@ -111,7 +111,7 @@ int spellbook_contents(item_def &book, read_book_action_type action,
     formatted_string out;
     out.textcolor(LIGHTGREY);
 
-    out.cprintf("%s", book.name(DESC_CAP_THE).c_str());
+    out.cprintf("%s", book.name(true, DESC_CAP_THE).c_str());
 
     out.cprintf("\n\n Spells                             Type                      Level\n");
 
@@ -351,7 +351,7 @@ void init_spell_rarities()
 
                 end(1, false, "Spellbook '%s' contains invalid spell "
                              "'%s'",
-                    item.name(DESC_PLAIN, false, true).c_str(),
+                    item.name(false, DESC_PLAIN, false, true).c_str(),
                     spell_title(spell));
             }
 #endif
@@ -664,7 +664,7 @@ static void _index_book(item_def& book, spells_to_books &book_hash,
     if (spells_in_book == 0)
     {
         mprf(MSGCH_ERROR, "Spellbook \"%s\" contains no spells! Please "
-             "file a bug report.", book.name(DESC_PLAIN).c_str());
+             "file a bug report.", book.name(false, DESC_PLAIN).c_str());
         book_errors = true;
     }
 }
@@ -1248,7 +1248,7 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         prompt += make_stringf("is %s, a dangerous spellbook which will "
                                "strike back at you if your memorisation "
                                "attempt fails. Attempt to memorise anyway?",
-                               fakebook.name(DESC_NOCAP_THE).c_str());
+                               fakebook.name(true, DESC_NOCAP_THE).c_str());
 
         // Deactivate choice from tile inventory.
         mouse_control mc(MOUSE_MODE_MORE);
@@ -1351,7 +1351,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
     prompt += make_stringf("Forgetting %s from %s will destroy the book! "
                            "Are you sure?",
                            spell_title(spell),
-                           book->name(DESC_NOCAP_THE).c_str());
+                           book->name(true, DESC_NOCAP_THE).c_str());
 
     // Deactivate choice from tile inventory.
     mouse_control mc(MOUSE_MODE_MORE);
@@ -2573,6 +2573,6 @@ void destroy_spellbook(const item_def &book)
     // book is a gift of Sif Muna or it contains its name in its title
     did_god_conduct(DID_DESTROY_SPELLBOOK, maxlevel + 5,
                     origin_is_god_gift(book, &god) && god == GOD_SIF_MUNA
-                    || book.name(DESC_PLAIN).find("Sif Muna")
+                    || book.name(false, DESC_PLAIN).find("Sif Muna")
                        != std::string::npos);
 }

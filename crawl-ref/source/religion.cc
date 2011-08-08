@@ -3099,11 +3099,11 @@ void print_sacrifice_message(god_type god, const item_def &item,
         simple_god_message(
             make_stringf(" %sreclaims %s.",
                          piety_gain ? "gladly " : "",
-                         item.name(DESC_NOCAP_THE).c_str()).c_str(),
+                         item.name(true, DESC_NOCAP_THE).c_str()).c_str(),
             GOD_SHINING_ONE);
         return;
     }
-    const std::string itname = item.name(your ? DESC_CAP_YOUR : DESC_CAP_THE);
+    const std::string itname = item.name(true, your ? DESC_CAP_YOUR : DESC_CAP_THE);
     mpr(_sacrifice_message(_Sacrifice_Messages[god][piety_gain], itname,
                            itname.find("glowing") != std::string::npos,
                            item.quantity > 1,

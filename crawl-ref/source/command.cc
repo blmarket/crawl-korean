@@ -309,10 +309,10 @@ void swap_inv_slots(int from_slot, int to_slot, bool verbose)
 
     if (verbose)
     {
-        mpr(you.inv[to_slot].name(DESC_INVENTORY_EQUIP).c_str());
+        mpr(you.inv[to_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
 
         if (you.inv[from_slot].defined())
-            mpr(you.inv[from_slot].name(DESC_INVENTORY_EQUIP).c_str());
+            mpr(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
     }
 
     if (to_slot == you.equip[EQ_WEAPON] || from_slot == you.equip[EQ_WEAPON])
@@ -348,7 +348,7 @@ static void _adjust_item(void)
     if (prompt_failed(from_slot))
         return;
 
-    mpr(you.inv[from_slot].name(DESC_INVENTORY_EQUIP).c_str());
+    mpr(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
 
     to_slot = prompt_invent_item(gettext("Adjust to which letter? "),
                                  MT_INVLIST,
@@ -572,7 +572,7 @@ void list_armour()
         }
         else if (armour_id != -1)
         {
-            estr << you.inv[armour_id].name(DESC_INVENTORY);
+            estr << you.inv[armour_id].name(true, DESC_INVENTORY);
             colour = menu_colour(estr.str(),
                                  menu_colour_item_prefix(you.inv[armour_id]),
                                  "equip");
@@ -626,7 +626,7 @@ void list_jewellery(void)
         }
         else if (jewellery_id != -1)
         {
-            item = you.inv[jewellery_id].name(DESC_INVENTORY);
+            item = you.inv[jewellery_id].name(true, DESC_INVENTORY);
             std::string
                 prefix = menu_colour_item_prefix(you.inv[jewellery_id]);
             colour = menu_colour(item, prefix, "equip");
@@ -663,7 +663,7 @@ void list_weapons(void)
 
     if (weapon_id != -1)
     {
-        wstring += you.inv[weapon_id].name(DESC_INVENTORY_EQUIP);
+        wstring += you.inv[weapon_id].name(true, DESC_INVENTORY_EQUIP);
         colour = menu_colour(wstring,
                              menu_colour_item_prefix(you.inv[weapon_id]),
                              "equip");
@@ -701,7 +701,7 @@ void list_weapons(void)
                 || you.inv[i].base_type == OBJ_STAVES
                 || you.inv[i].base_type == OBJ_MISCELLANY))
         {
-            wstring += you.inv[i].name(DESC_INVENTORY_EQUIP);
+            wstring += you.inv[i].name(true, DESC_INVENTORY_EQUIP);
             colour = menu_colour(wstring,
                                  menu_colour_item_prefix(you.inv[i]),
                                  "equip");
@@ -732,13 +732,13 @@ void list_weapons(void)
         else
         {
             wstring += "  - ";
-            wstring += item->name(DESC_NOCAP_A);
+            wstring += item->name(true, DESC_NOCAP_A);
             wstring += gettext(" (empty)");
         }
     }
     else
     {
-        wstring += you.inv[slot].name(DESC_INVENTORY_EQUIP);
+        wstring += you.inv[slot].name(true, DESC_INVENTORY_EQUIP);
         colour = menu_colour(wstring,
                              menu_colour_item_prefix(you.inv[slot]),
                              "equip");
@@ -1282,7 +1282,7 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
             if (which_spell_in_book(i, j) == type)
             {
                 item.sub_type = i;
-                books.push_back(item.name(DESC_PLAIN));
+                books.push_back(item.name(false, DESC_PLAIN));
             }
 
     item.base_type = OBJ_STAVES;
@@ -1294,7 +1294,7 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
 
         for (int j = 0; j < 8; j++)
             if (which_spell_in_book(book, j) == type)
-                rods.push_back(item.name(DESC_PLAIN));
+                rods.push_back(item.name(false, DESC_PLAIN));
     }
 
     if (!books.empty())

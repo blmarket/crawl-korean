@@ -1213,7 +1213,7 @@ static bool _handle_wand(monster* mons, bolt &beem)
     beem = _generate_item_beem(beem, theBeam, mons);
 
     beem.aux_source =
-        wand.name(DESC_QUALNAME, false, true, false, false);
+        wand.name(false, DESC_QUALNAME, false, true, false, false);
 
     const int wand_type = wand.sub_type;
     switch (wand_type)
@@ -1615,10 +1615,10 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
     else
     {
         // build shoot message
-        msg += item.name(DESC_NOCAP_A, false, false, false);
+        msg += item.name(true, DESC_NOCAP_A, false, false, false);
 
         // build beam name
-        pbolt.name = item.name(DESC_PLAIN, false, false, false);
+        pbolt.name = item.name(false, DESC_PLAIN, false, false, false);
     }
     msg += ".";
 
@@ -2576,7 +2576,7 @@ static bool _monster_eat_item(monster* mons, bool nearby)
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_EATERS)
         mprf(MSGCH_DIAGNOSTICS,
              "%s eating %s", mons->name(DESC_PLAIN, true).c_str(),
-             si->name(DESC_PLAIN).c_str());
+             si->name(false, DESC_PLAIN).c_str());
 #endif
 
         int quant = si->quantity;
@@ -2693,7 +2693,7 @@ static bool _monster_eat_single_corpse(monster* mons, item_def& item,
     if (nearby)
     {
         mprf("%s eats %s.", mons->name(DESC_CAP_THE).c_str(),
-             item.name(DESC_NOCAP_THE).c_str());
+             item.name(true, DESC_NOCAP_THE).c_str());
     }
 
     // Assume that eating a corpse requires butchering it.  Use logic

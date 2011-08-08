@@ -644,7 +644,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         {
             const item_def *amulet = you.slot_item(EQ_AMULET, false);
             mprf("You cannot go berserk with %s on.",
-                 amulet? amulet->name(DESC_NOCAP_YOUR).c_str() : "your amulet");
+                 amulet? amulet->name(true, DESC_NOCAP_YOUR).c_str() : "your amulet");
         }
         return (false);
     }
@@ -661,7 +661,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
                 set_ident_type(amu->base_type, amu->sub_type, ID_KNOWN_TYPE);
                 set_ident_flags(*amu, ISFLAG_KNOW_PROPERTIES);
                 mprf("You are wearing: %s",
-                     amu->name(DESC_INVENTORY_EQUIP).c_str());
+                     amu->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
 

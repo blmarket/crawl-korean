@@ -779,7 +779,7 @@ static void _deck_ident(item_def& deck)
     if (in_inventory(deck) && !item_ident(deck, ISFLAG_KNOW_TYPE))
     {
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        mprf("This is %s.", deck.name(DESC_NOCAP_A).c_str());
+        mprf("This is %s.", deck.name(true, DESC_NOCAP_A).c_str());
         you.wield_change = true;
     }
 }
@@ -1407,7 +1407,7 @@ void evoke_deck(item_def& deck)
     {
         mpr("Your skill with magical items lets you identify the deck.");
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        msg::streams(MSGCH_EQUIPMENT) << deck.name(DESC_INVENTORY)
+        msg::streams(MSGCH_EQUIPMENT) << deck.name(true, DESC_INVENTORY)
                                       << std::endl;
     }
 
@@ -1958,7 +1958,7 @@ static void _blade_card(int power, deck_rarity_type rarity)
             if (wpn)
             {
                 mprf("%s vibrate%s crazily for a second.",
-                     wpn->name(DESC_CAP_YOUR).c_str(),
+                     wpn->name(true, DESC_CAP_YOUR).c_str(),
                      wpn->quantity == 1 ? "s" : "");
             }
             else
@@ -3202,7 +3202,7 @@ void shuffle_all_decks_on_level()
         {
 #ifdef DEBUG_DIAGNOSTICS
             mprf(MSGCH_DIAGNOSTICS, "Shuffling: %s on level %d, branch %d",
-                 item.name(DESC_PLAIN).c_str(),
+                 item.name(false, DESC_PLAIN).c_str(),
                  static_cast<int>(you.absdepth0),
                  static_cast<int>(you.where_are_you));
 #endif
@@ -3222,7 +3222,7 @@ static bool _shuffle_inventory_decks()
         {
 #ifdef DEBUG_DIAGNOSTICS
             mprf(MSGCH_DIAGNOSTICS, "Shuffling in inventory: %s",
-                 item.name(DESC_PLAIN).c_str());
+                 item.name(false, DESC_PLAIN).c_str());
 #endif
             _unmark_and_shuffle_deck(item);
 

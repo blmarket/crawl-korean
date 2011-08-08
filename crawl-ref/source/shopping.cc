@@ -277,14 +277,14 @@ static std::string _shop_print_stock(const std::vector<int>& stock,
         {
             // Colour stock according to menu colours.
             const std::string colprf = menu_colour_item_prefix(item);
-            const int col = menu_colour(item.name(DESC_NOCAP_A),
+            const int col = menu_colour(item.name(false, DESC_NOCAP_A),
                                         colprf, "shop");
             textcolor(col != -1 ? col : LIGHTGREY);
         }
         else
             textcolor(i % 2 ? LIGHTGREY : WHITE);
 
-        std::string item_name = item.name(DESC_NOCAP_A, false, id);
+        std::string item_name = item.name(true, DESC_NOCAP_A, false, id);
         if (unknown)
             item_name += " (unknown)";
 
@@ -561,7 +561,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
                             // Take a note of the purchase.
                             take_note(Note(NOTE_BUY_ITEM, gp_value, 0,
-                                           item.name(DESC_NOCAP_A).c_str()));
+                                           item.name(true, DESC_NOCAP_A).c_str()));
 
                             // But take no further similar notes.
                             item.flags |= ISFLAG_NOTED_GET;
@@ -2279,7 +2279,7 @@ bool ShoppingList::add_thing(const item_def &item, int cost,
     if (find_thing(item, pos) != -1)
     {
         mprf(MSGCH_ERROR, "%s is already on the shopping list.",
-             item.name(DESC_CAP_THE).c_str());
+             item.name(false, DESC_CAP_THE).c_str());
         return (false);
     }
 
@@ -2358,7 +2358,7 @@ bool ShoppingList::del_thing(const item_def &item,
     if (idx == -1)
     {
         mprf(MSGCH_ERROR, "%s isn't on shopping list, can't delete it.",
-             item.name(DESC_CAP_THE).c_str());
+             item.name(true, DESC_CAP_THE).c_str());
         return (false);
     }
 
@@ -2695,7 +2695,7 @@ void ShoppingList::fill_out_menu(Menu& shopmenu)
             const item_def &item = get_thing_item(thing);
 
             const std::string colprf = menu_colour_item_prefix(item);
-            const int col = menu_colour(item.name(DESC_NOCAP_A),
+            const int col = menu_colour(item.name(false, DESC_NOCAP_A),
                                         colprf, "shop");
 
             if (col != -1)
@@ -2957,7 +2957,7 @@ std::string ShoppingList::name_thing(const CrawlHashTable& thing,
     if (thing_is_item(thing))
     {
         const item_def &item = get_thing_item(thing);
-        return item.name(descrip);
+        return item.name(false, descrip);
     }
     else
     {
@@ -2984,6 +2984,6 @@ std::string ShoppingList::describe_thing(const CrawlHashTable& thing,
 // Item name without curse-status or inscription.
 std::string ShoppingList::item_name_simple(const item_def& item, bool ident)
 {
-    return item.name(DESC_PLAIN, false, ident, false, false,
+    return item.name(false, DESC_PLAIN, false, ident, false, false,
                      ISFLAG_KNOW_CURSE);
 }

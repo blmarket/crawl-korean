@@ -165,7 +165,7 @@ void weapon_switch(int targ)
         if (!can_wield(&you.inv[targ]))
         {
             mprf("Not switching back to %s.",
-                 you.inv[targ].name(DESC_INVENTORY).c_str());
+                 you.inv[targ].name(true, DESC_INVENTORY).c_str());
             return;
         }
     }
@@ -506,7 +506,7 @@ bool butchery(int which_corpse, bool bottle_blood)
         {
             corpse_id = -1;
 
-            std::string corpse_name = si->name(DESC_NOCAP_A);
+            std::string corpse_name = si->name(true, DESC_NOCAP_A);
 
             // We don't need to check for undead because
             // * Mummies can't eat.
@@ -1209,7 +1209,7 @@ int eat_from_floor(bool skip_chunks)
                 if (can_ingest(wonteat, false))
                 {
                     mprf(MSGCH_DIAGNOSTICS, "Error: Can eat %s after all?",
-                         wonteat.name(DESC_PLAIN).c_str());
+                         wonteat.name(false, DESC_PLAIN).c_str());
                 }
             }
             else // Several different food items.
@@ -1352,7 +1352,7 @@ bool eat_from_inventory()
                 if (can_ingest(*wonteat, false))
                 {
                     mprf(MSGCH_DIAGNOSTICS, "Error: Can eat %s after all?",
-                         wonteat->name(DESC_PLAIN).c_str());
+                         wonteat->name(false, DESC_PLAIN).c_str());
                 }
             }
             else // Several different food items.
@@ -2443,7 +2443,7 @@ bool check_amu_the_gourmand(bool reqid)
             // subtype.  Other properties may still be hidden.
             set_ident_flags(you.inv[amulet], ISFLAG_KNOW_TYPE);
             set_ident_type(OBJ_JEWELLERY, AMU_THE_GOURMAND, ID_KNOWN_TYPE);
-            mpr(you.inv[amulet].name(DESC_INVENTORY, false).c_str());
+            mpr(you.inv[amulet].name(true, DESC_INVENTORY, false).c_str());
         }
 
         return (true);

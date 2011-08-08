@@ -1126,7 +1126,7 @@ void hints_first_item(const item_def &item)
 #else
     const coord_def gc = item.pos;
     tiles.place_cursor(CURSOR_TUTORIAL, gc);
-    tiles.add_text_tag(TAG_TUTORIAL, item.name(DESC_CAP_A), gc);
+    tiles.add_text_tag(TAG_TUTORIAL, item.name(false, DESC_CAP_A), gc);
 #endif
 
     text += "is an item. If you move there and press <w>g</w> or "
@@ -1644,7 +1644,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 text << " ";
 #else
                 tiles.place_cursor(CURSOR_TUTORIAL, gc);
-                tiles.add_text_tag(TAG_TUTORIAL, mitm[i].name(DESC_CAP_A), gc);
+                tiles.add_text_tag(TAG_TUTORIAL, mitm[i].name(false, DESC_CAP_A), gc);
 #endif
 
                 text << "is a corpse.";
@@ -3677,7 +3677,7 @@ void hints_describe_item(const item_def &item)
        case OBJ_MISSILES:
             if (is_throwable(&you, item))
             {
-                ostr << item.name(DESC_CAP_YOUR)
+                ostr << item.name(true, DESC_CAP_YOUR)
                      << " can be <w>%</w>ired without the use of a launcher. ";
                 ostr << _hints_throw_stuff(item);
                 cmd.push_back(CMD_FIRE);
@@ -3700,7 +3700,7 @@ void hints_describe_item(const item_def &item)
 
                 ostr << "<w>%</w>ire "
                      << (item.quantity > 1 ? "these" : "this")
-                     << " " << item.name(DESC_BASENAME)
+                     << " " << item.name(false, DESC_BASENAME)
                      << (item.quantity > 1? "s" : "")
                      << ". You'll ";
                 ostr << _hints_target_mode();
@@ -3710,7 +3710,7 @@ void hints_describe_item(const item_def &item)
             {
                 ostr << "To shoot "
                      << (item.quantity > 1 ? "these" : "this")
-                     << " " << item.name(DESC_BASENAME)
+                     << " " << item.name(false, DESC_BASENAME)
                      << (item.quantity > 1? "s" : "")
                      << ", first you need to <w>%</w>ield an appropriate "
                         "launcher.";

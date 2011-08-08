@@ -74,10 +74,10 @@ InvEntry::InvEntry(const item_def &i) : MenuEntry("", MEL_ITEM), item(&i)
         // We need to do this in order to get the 'wielded' annotation.
         // We then toss out the first four characters, which look
         // like this: "a - ". Ow. FIXME.
-        text = i.name(DESC_INVENTORY_EQUIP, false).substr(4);
+        text = i.name(true, DESC_INVENTORY_EQUIP, false).substr(4);
     }
     else
-        text = i.name(DESC_NOCAP_A, false);
+        text = i.name(true, DESC_NOCAP_A, false);
 
     if (i.base_type != OBJ_GOLD && in_inventory(i))
         add_hotkey(index_to_letter(i.link));
@@ -92,14 +92,14 @@ InvEntry::InvEntry(const item_def &i) : MenuEntry("", MEL_ITEM), item(&i)
 const std::string &InvEntry::get_basename() const
 {
     if (basename.empty())
-        basename = item->name(DESC_BASENAME);
+        basename = item->name(false, DESC_BASENAME);
     return (basename);
 }
 
 const std::string &InvEntry::get_qualname() const
 {
     if (qualname.empty())
-        qualname = item->name(DESC_QUALNAME);
+        qualname = item->name(false, DESC_QUALNAME);
     return (qualname);
 }
 
@@ -1543,7 +1543,7 @@ bool check_old_item_warning(const item_def& item,
         return (true);
 
     // now ask
-    prompt += old_item.name(DESC_INVENTORY);
+    prompt += old_item.name(true, DESC_INVENTORY);
     prompt += "?";
     return yesno(prompt.c_str(), false, 'n');
 }
@@ -1690,8 +1690,8 @@ bool check_warning_inscriptions(const item_def& item,
         }
 
         std::string prompt = "Really " + _operation_verb(oper) + " ";
-        prompt += (in_inventory(item) ? item.name(DESC_INVENTORY)
-                                      : item.name(DESC_NOCAP_A));
+        prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
+                                      : item.name(true, DESC_NOCAP_A));
         if (_nasty_stasis(item, oper))
             prompt += std::string(" while ")
                       + (you.duration[DUR_TELEPORT] ? "about to teleport" :
@@ -1917,7 +1917,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
                       bool msg)
 {
     const std::string error = item_is_melded(item)
-            ? "Your " + item.name(DESC_QUALNAME) + " is melded into your body."
+            ? "Your " + item.name(true, DESC_QUALNAME) + " is melded into your body."
             : "That item can only be evoked when wielded.";
 
     if (is_unrandom_artefact(item))

@@ -1064,7 +1064,7 @@ static int _ignite_poison_affect_item(item_def& item, bool in_inv)
         if (set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FLAMING))
         {
             mprf("%s bursts into flame!",
-                 item.name(DESC_CAP_YOUR).c_str());
+                 item.name(true, DESC_CAP_YOUR).c_str());
 
             you.wield_change = true;
 
@@ -1117,10 +1117,10 @@ static int _ignite_poison_affect_item(item_def& item, bool in_inv)
         {
             if (item.base_type == OBJ_POTIONS)
                 mprf("%s explode%s!",
-                     item.name(DESC_PLAIN).c_str(), item.quantity == 1 ? "s" : "");
+                     item.name(true, DESC_PLAIN).c_str(), item.quantity == 1 ? "s" : "");
             else
                 mprf("Your %s burn%s!",
-                     item.name(DESC_PLAIN).c_str(), item.quantity == 1 ? "s" : "");
+                     item.name(true, DESC_PLAIN).c_str(), item.quantity == 1 ? "s" : "");
         }
 
         if (item.base_type == OBJ_CORPSES &&
@@ -1696,7 +1696,7 @@ spret_type cast_fragmentation(int pow, const dist& spd, bool fail)
     {
         if (si->base_type == OBJ_CORPSES)
         {
-            std::string nm = si->name(DESC_CAP_THE);
+            std::string nm = si->name(true, DESC_CAP_THE);
             if (si->sub_type == CORPSE_BODY)
             {
                 if (!explode_corpse(*si, spd.target))

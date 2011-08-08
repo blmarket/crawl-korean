@@ -402,7 +402,7 @@ move_again:
             if (victim->atype() == ACT_PLAYER)
             {
                 mprf("Your %s reflects %s!",
-                    shield->name(DESC_PLAIN).c_str(),
+                    shield->name(true, DESC_PLAIN).c_str(),
                     mon.name(DESC_NOCAP_THE, true).c_str());
                 ident_reflector(shield);
             }
@@ -414,7 +414,7 @@ move_again:
                         victim->name(DESC_CAP_THE, true).c_str(),
                         mon.name(DESC_NOCAP_THE, true).c_str(),
                         mon.pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str(),
-                        shield->name(DESC_PLAIN).c_str());
+                        shield->name(true, DESC_PLAIN).c_str());
                     ident_reflector(shield);
                 }
                 else

@@ -879,7 +879,7 @@ bool berserk_check_wielded_weapon()
         || you.attribute[ATTR_WEAPON_SWAP_INTERRUPTED])
     {
         std::string prompt = "Do you really want to go berserk while "
-                             "wielding " + weapon.name(DESC_NOCAP_YOUR)
+                             "wielding " + weapon.name(true, DESC_NOCAP_YOUR)
                              + "?";
 
         if (!yesno(prompt.c_str(), true, 'n'))
@@ -4701,7 +4701,7 @@ bool confuse_player(int amount, bool resistable)
                 set_ident_type(amu->base_type, amu->sub_type, ID_KNOWN_TYPE);
                 set_ident_flags(*amu, ISFLAG_KNOW_TYPE);
                 mprf("You are wearing: %s",
-                     amu->name(DESC_INVENTORY_EQUIP).c_str());
+                     amu->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
         return (false);
@@ -5134,7 +5134,7 @@ void float_player(bool fly)
             set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
             set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
             mprf("You are wearing: %s",
-                 amu.name(DESC_INVENTORY_EQUIP).c_str());
+                 amu.name(true, DESC_INVENTORY_EQUIP).c_str());
         }
     }
 

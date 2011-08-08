@@ -649,7 +649,7 @@ void bolt::initialise_fire()
             return;
         }
 
-        std::string item_name   = item ? item->name(DESC_PLAIN, false, true)
+        std::string item_name   = item ? item->name(false, DESC_PLAIN, false, true)
                                        : "none";
 
         std::string dbg_source_name = "unknown";
@@ -1339,7 +1339,7 @@ void bolt::do_fire()
 #ifdef DEBUG
         dprf("fire_beam() called on already done beam "
              "'%s' (item = '%s')", name.c_str(),
-             item ? item->name(DESC_PLAIN).c_str() : "none");
+             item ? item->name(false, DESC_PLAIN).c_str() : "none");
 #endif
         return;
     }
@@ -2417,7 +2417,7 @@ void bolt::drop_object()
         if (you.see_cell(pos()))
         {
             mprf("%s %s!",
-                 item->name(DESC_CAP_THE).c_str(),
+                 item->name(true, DESC_CAP_THE).c_str(),
                  summoned_poof_msg(beam_source, *item).c_str());
         }
         item_was_destroyed(*item, beam_source);
@@ -2446,7 +2446,7 @@ void bolt::drop_object()
         // Large rocks mulch to stone.
         bool in_view = you.see_cell(pos());
         if (in_view)
-            mprf("%s shatters into pieces!", item->name(DESC_CAP_THE).c_str());
+            mprf("%s shatters into pieces!", item->name(true, DESC_CAP_THE).c_str());
         noisy(12, pos(), in_view ? NULL : "You hear a cracking sound!");
 
         item->sub_type = MI_STONE;
@@ -3038,7 +3038,7 @@ void bolt::reflect()
 #ifdef DEBUG
         dprf("Bolt reflected by neither player nor "
              "monster (bolt = %s, item = %s)", name.c_str(),
-             item ? item->name(DESC_PLAIN).c_str() : "none");
+             item ? item->name(false, DESC_PLAIN).c_str() : "none");
 #endif
     }
 
@@ -3137,7 +3137,7 @@ bool bolt::misses_player()
             if (is_reflectable(you.shield()))
             {
                 mprf("Your %s reflects the %s!",
-                      you.shield()->name(DESC_PLAIN).c_str(),
+                      you.shield()->name(true, DESC_PLAIN).c_str(),
                       name.c_str());
                 ident_reflector(you.shield());
                 reflect();
@@ -4193,7 +4193,7 @@ bool bolt::attempt_block(monster* mon)
                          mon->name(DESC_CAP_THE).c_str(),
                          name.c_str(),
                          mon->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str(),
-                         shield->name(DESC_PLAIN).c_str());
+                         shield->name(true, DESC_PLAIN).c_str());
                     ident_reflector(shield);
                 }
                 else if (you.see_cell(pos()))
@@ -5108,7 +5108,7 @@ void bolt::refine_for_explosion()
     std::string tmp;
     if (item != NULL)
     {
-        tmp  = "The " + item->name(DESC_PLAIN, false, false, false)
+        tmp  = "The " + item->name(true, DESC_PLAIN, false, false, false)
                + " explodes!";
 
         seeMsg  = tmp.c_str();
@@ -5719,7 +5719,7 @@ std::string bolt::get_short_name() const
         return (short_name);
 
     if (item != NULL && item->defined())
-        return item->name(DESC_NOCAP_A, false, false, false, false,
+        return item->name(false, DESC_NOCAP_A, false, false, false, false,
                           ISFLAG_IDENT_MASK | ISFLAG_COSMETIC_MASK
                           | ISFLAG_RACIAL_MASK);
 

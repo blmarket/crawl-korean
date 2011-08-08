@@ -449,9 +449,9 @@ static void _item_corrode(int slot)
     if (!suppress_msg)
     {
         if (it_resists)
-            mprf("%s resists.", item.name(DESC_CAP_YOUR).c_str());
+            mprf("%s resists.", item.name(true, DESC_CAP_YOUR).c_str());
         else
-            mprf("The acid corrodes %s!", item.name(DESC_NOCAP_YOUR).c_str());
+            mprf("The acid corrodes %s!", item.name(true, DESC_NOCAP_YOUR).c_str());
     }
 
     if (!it_resists)
@@ -570,7 +570,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             }
 
             // Get name and quantity before destruction.
-            const std::string item_name = you.inv[i].name(DESC_PLAIN);
+            const std::string item_name = you.inv[i].name(false, DESC_PLAIN);
             const int quantity = you.inv[i].quantity;
             num_dest = 0;
 

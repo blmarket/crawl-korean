@@ -74,6 +74,8 @@
 #include "viewgeom.h"
 #include "xom.h"
 
+#include <fstream>
+
 #define PORTAL_VAULT_ORIGIN_KEY "portal_vault_origin"
 
 static bool _invisible_to_player(const item_def& item);
@@ -450,7 +452,7 @@ void unlink_item(int dest)
         }
         mprf(MSGCH_ERROR, "Item %s claims to be held by monster %s, but "
                           "it isn't in the monster's inventory.",
-             mitm[dest].name(DESC_PLAIN, false, true).c_str(),
+             mitm[dest].name(false, DESC_PLAIN, false, true).c_str(),
              mons->name(DESC_PLAIN, true).c_str());
         // Don't return so the debugging code can take a look at it.
     }
@@ -500,7 +502,7 @@ void unlink_item(int dest)
 #ifdef DEBUG
     // Okay, the sane ways are gone... let's warn the player:
     mprf(MSGCH_ERROR, "BUG WARNING: Problems unlinking item '%s', (%d, %d)!!!",
-         mitm[dest].name(DESC_PLAIN).c_str(),
+         mitm[dest].name(false, DESC_PLAIN).c_str(),
          mitm[dest].pos.x, mitm[dest].pos.y);
 
     // Okay, first we scan all items to see if we have something
@@ -998,7 +1000,7 @@ static int _first_corpse_monnum(const coord_def& where)
 
 static std::string _milestone_rune(const item_def &item)
 {
-    return std::string("found ") + item.name(DESC_NOCAP_A) + ".";
+    return std::string("found ") + item.name(true, DESC_NOCAP_A) + ".";
 }
 
 static void _milestone_check(const item_def &item)
@@ -1016,7 +1018,7 @@ static void _check_note_item(item_def &item)
 
     if (item_is_rune(item) || item_is_orb(item) || is_artefact(item))
     {
-        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(DESC_NOCAP_A).c_str(),
+        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
                        origin_desc(item).c_str()));
         item.flags |= ISFLAG_NOTED_GET;
 
@@ -1215,7 +1217,7 @@ bool pickup_single_item(int link, int qty)
     {
         const std::string prompt
                 = make_stringf("Pick up how many of %s (; or enter for all)? ",
-                               item->name(DESC_NOCAP_THE,
+                               item->name(true, DESC_NOCAP_THE,
                                     false, false, false).c_str());
 
         qty = prompt_for_quantity(prompt.c_str());
@@ -2537,7 +2539,7 @@ static inline std::string _autopickup_item_name(const item_def &item)
 {
     return userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item, true)
            + menu_colour_item_prefix(item, false) + " "
-           + item.name(DESC_PLAIN);
+           + item.name(false, DESC_PLAIN);
 }
 
 static bool _is_option_autopickup(const item_def &item, std::string &iname)
@@ -2725,7 +2727,7 @@ static bool _interesting_explore_pickup(const item_def& item)
     std::vector<text_pattern> &ignore = Options.explore_stop_pickup_ignore;
     if (!ignore.empty())
     {
-        const std::string name = item.name(DESC_PLAIN);
+        const std::string name = item.name(false, DESC_PLAIN);
 
         for (unsigned int i = 0; i < ignore.size(); i++)
             if (ignore[i].matches(name))
@@ -2998,7 +3000,7 @@ static bool _find_subtype_by_name(item_def &item,
         {
             item.plus = j;
 
-            if (name == lowercase_string(item.name(DESC_PLAIN)))
+            if(name == lowercase_string(item.name(false, DESC_PLAIN)))
             {
                 type_wanted = i;
                 i = ntypes;
@@ -3302,7 +3304,7 @@ static void _rune_from_specs(const char* _specs, item_def &item)
         {
             item.plus = i;
 
-            strlcpy(obj_name, item.name(DESC_PLAIN).c_str(), sizeof(obj_name));
+            strlcpy(obj_name, item.name(false, DESC_PLAIN).c_str(), sizeof(obj_name));
 
             if (strstr(strlwr(obj_name), specs))
                 return;
@@ -3386,7 +3388,7 @@ static void _deck_from_specs(const char* _specs, item_def &item)
             item.plus     = 1;
             init_deck(item);
             // Remove "plain " from front.
-            std::string name = item.name(DESC_PLAIN).substr(6);
+            std::string name = item.name(false, DESC_PLAIN).substr(6);
             item.props.clear();
 
             if (name.find(type_str) != std::string::npos)
@@ -3558,7 +3560,7 @@ bool get_item_by_name(item_def *item, char* specs,
         for (int i = 0; i < get_max_subtype(item->base_type); ++i)
         {
             item->sub_type = i;
-            strlcpy(obj_name, item->name(DESC_PLAIN).c_str(), sizeof(obj_name));
+            strlcpy(obj_name, item->name(false, DESC_PLAIN).c_str(), sizeof(obj_name));
 
             ptr = strstr(strlwr(obj_name), specs);
             if (ptr != NULL)
@@ -3662,7 +3664,7 @@ bool get_item_by_name(item_def *item, char* specs,
             for (int i = SPWPN_NORMAL + 1; i < SPWPN_DEBUG_RANDART; ++i)
             {
                 item->special = i;
-                strlcpy(obj_name, item->name(DESC_PLAIN).c_str(), sizeof(obj_name));
+                strlcpy(obj_name, item->name(false, DESC_PLAIN).c_str(), sizeof(obj_name));
 
                 ptr = strstr(strlwr(obj_name), strlwr(buf));
                 if (ptr != NULL)

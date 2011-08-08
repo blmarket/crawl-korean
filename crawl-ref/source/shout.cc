@@ -454,7 +454,7 @@ void item_noise(const item_def &item, std::string msg, int loudness)
     // replace weapon references
     msg = replace_all(msg, "@The_weapon@", "The @weapon@");
     msg = replace_all(msg, "@the_weapon@", "the @weapon@");
-    msg = replace_all(msg, "@weapon@", item.name(DESC_BASENAME));
+    msg = replace_all(msg, "@weapon@", item.name(false, DESC_BASENAME));
 
     // replace references to player name and god
     msg = replace_all(msg, "@player_name@", you.your_name);
@@ -482,7 +482,7 @@ void noisy_equipment()
 
     if (is_unrandom_artefact(*weapon))
     {
-        std::string name = weapon->name(DESC_PLAIN, false, true, false, false,
+        std::string name = weapon->name(false, DESC_PLAIN, false, true, false, false,
                                         ISFLAG_IDENT_MASK);
         msg = getSpeakString(name);
         if (msg == "NONE")

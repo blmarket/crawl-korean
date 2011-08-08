@@ -663,7 +663,7 @@ void handle_delay()
             {
                 mprf(MSGCH_MULTITURN_ACTION,
                      "You start bottling blood from the %s.",
-                     mitm[delay.parm1].name(DESC_PLAIN).c_str());
+                     mitm[delay.parm1].name(true, DESC_PLAIN).c_str());
             }
             else
             {
@@ -674,11 +674,11 @@ void handle_delay()
                 case SLOT_CLAWS:            tool = "claws"; break;
                 case SLOT_TEETH:            tool = "teeth"; break;
                 case SLOT_BIRDIE:           tool = "beak and talons"; break;
-                default: tool = you.inv[delay.parm3].name(DESC_QUALNAME);
+                default: tool = you.inv[delay.parm3].name(true, DESC_QUALNAME);
                 }
                 mprf(MSGCH_MULTITURN_ACTION,
                      "You start butchering the %s with your %s.",
-                     mitm[delay.parm1].name(DESC_PLAIN).c_str(), tool.c_str());
+                     mitm[delay.parm1].name(true, DESC_PLAIN).c_str(), tool.c_str());
             }
             break;
 
@@ -870,12 +870,12 @@ void handle_delay()
         {
         case DELAY_ARMOUR_ON:
             mprf(MSGCH_MULTITURN_ACTION, "You continue putting on %s.",
-                 you.inv[delay.parm1].name(DESC_NOCAP_YOUR).c_str());
+                 you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
             break;
 
         case DELAY_ARMOUR_OFF:
             mprf(MSGCH_MULTITURN_ACTION, "You continue taking off %s.",
-                 you.inv[delay.parm1].name(DESC_NOCAP_YOUR).c_str());
+                 you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
             break;
 
         case DELAY_BUTCHER:
@@ -1006,7 +1006,7 @@ static void _finish_delay(const delay_queue_item &delay)
         ASSERT(you.equip[slot] == delay.parm1);
 
         mprf("You finish taking off %s.",
-             you.inv[delay.parm1].name(DESC_NOCAP_YOUR).c_str());
+             you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
         unequip_item(slot);
 
         break;
@@ -1172,7 +1172,7 @@ static void _finish_delay(const delay_queue_item &delay)
             {
                 mprf("You finish %s the %s into pieces.",
                      delay.parm3 <= SLOT_CLAWS ? "ripping" : "chopping",
-                     mitm[delay.parm1].name(DESC_PLAIN).c_str());
+                     mitm[delay.parm1].name(true, DESC_PLAIN).c_str());
 
                 if (god_hates_cannibalism(you.religion)
                     && is_player_same_species(item.plus))
@@ -1323,7 +1323,7 @@ static void _armour_wear_effects(const int item_slot)
         if (Options.autoinscribe_artefacts && is_artefact(arm))
             add_autoinscription(arm, artefact_auto_inscription(arm));
     }
-    mprf("You finish putting on %s.", arm.name(DESC_NOCAP_YOUR).c_str());
+    mprf("You finish putting on %s.", arm.name(true, DESC_NOCAP_YOUR).c_str());
 
     if (eq_slot == EQ_BODY_ARMOUR)
     {

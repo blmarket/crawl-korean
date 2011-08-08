@@ -88,7 +88,7 @@ static int _newwave_weapon_colour(const item_def &item)
     int item_colour = BLACK;
     // fixed artefacts get predefined colours
 
-    std::string itname = item.name(DESC_PLAIN);
+    std::string itname = item.name(false, DESC_PLAIN);
     lowercase(itname);
 
     if (is_artefact(item))
@@ -264,7 +264,7 @@ static int _missile_colour(const item_def &item)
 static int _newwave_armour_colour(const item_def &item)
 {
     int item_colour = BLACK;
-    std::string itname = item.name(DESC_PLAIN);
+    std::string itname = item.name(false, DESC_PLAIN);
     lowercase(itname);
 
     if (is_artefact(item))
@@ -1640,7 +1640,7 @@ bool is_weapon_brand_ok(int type, int brand, bool strict)
     case NUM_SPECIAL_WEAPONS:
     case NUM_REAL_SPECIAL_WEAPONS:
         die("invalid brand %d on weapon %d (%s)", brand, type,
-            item.name(DESC_PLAIN).c_str());
+            item.name(false, DESC_PLAIN).c_str());
         break;
     }
 
@@ -3295,7 +3295,7 @@ int items(bool allow_uniques,
           && !is_missile_brand_ok(item.sub_type, item.special, false))
     {
         mprf(MSGCH_ERROR, "Invalid brand on item %s, annulling.",
-            item.name(DESC_PLAIN, false, true, false, false, ISFLAG_KNOW_PLUSES
+            item.name(true, DESC_PLAIN, false, true, false, false, ISFLAG_KNOW_PLUSES
                       | ISFLAG_KNOW_CURSE).c_str());
         item.special = 0;
     }

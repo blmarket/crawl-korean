@@ -50,6 +50,14 @@ static bool _is_random_name_vowel(char let);
 static char _random_vowel(int seed);
 static char _random_cons(int seed);
 
+static bool translate_flag;
+
+static const char * check_gettext(const char *ptr)
+{
+    if(translate_flag == false || ptr[0] == 0) return ptr;
+    return gettext(ptr);
+}
+
 bool is_vowel(const ucs_t chr)
 {
     const char low = towlower(chr);
@@ -65,10 +73,11 @@ std::string quant_name(const item_def &item, int quant,
     item_def tmp = item;
     tmp.quantity = quant;
 
-    return tmp.name(des, terse);
+    return tmp.name(false, des, terse);
 }
 
-std::string item_def::name(description_level_type descrip,
+std::string item_def::name(bool allow_translate,
+                           description_level_type descrip,
                            bool terse, bool ident,
                            bool with_inscription,
                            bool quantity_in_words,
@@ -82,6 +91,8 @@ std::string item_def::name(description_level_type descrip,
 
     if (descrip == DESC_NONE)
         return ("");
+
+    translate_flag = allow_translate;
 
     std::ostringstream buff;
 
@@ -386,41 +397,41 @@ const char* missile_brand_name(special_missile_type brand, mbn_type t)
     switch (brand)
     {
     case SPMSL_FLAME:
-        return "flame";
+        return M_("flame");
     case SPMSL_FROST:
-        return "frost";
+        return M_("frost");
     case SPMSL_POISONED:
-        return (t == MBN_NAME ? "poisoned" : "poison");
+        return (t == MBN_NAME ? M_("poisoned") : M_("poison"));
     case SPMSL_CURARE:
-        return (t == MBN_NAME ? "curare-tipped" : "curare");
+        return (t == MBN_NAME ? M_("curare-tipped") : M_("curare"));
     case SPMSL_EXPLODING:
-        return (t == MBN_TERSE ? "explode" : "exploding");
+        return (t == MBN_TERSE ? M_("explode") : M_("exploding"));
     case SPMSL_STEEL:
-        return "steel";
+        return M_("steel");
     case SPMSL_SILVER:
-        return "silver";
+        return M_("silver");
     case SPMSL_PARALYSIS:
-        return "paralysis";
+        return M_("paralysis");
     case SPMSL_SLOW:
-        return (t == MBN_TERSE ? "slow" : "slowing");
+        return (t == MBN_TERSE ? M_("slow") : M_("slowing"));
     case SPMSL_SLEEP:
-        return (t == MBN_TERSE ? "sleep" : "sleeping");
+        return (t == MBN_TERSE ? M_("sleep") : M_("sleeping"));
     case SPMSL_CONFUSION:
-        return (t == MBN_TERSE ? "conf" : "confusion");
+        return (t == MBN_TERSE ? M_("conf") : M_("confusion"));
     case SPMSL_SICKNESS:
-        return (t == MBN_TERSE ? "sick" : "sickness");
+        return (t == MBN_TERSE ? M_("sick") : M_("sickness"));
     case SPMSL_RAGE:
-        return "frenzy";
+        return M_("frenzy");
     case SPMSL_RETURNING:
-        return (t == MBN_TERSE ? "return" : "returning");
+        return (t == MBN_TERSE ? M_("return") : M_("returning"));
     case SPMSL_CHAOS:
-        return "chaos";
+        return M_("chaos");
     case SPMSL_PENETRATION:
-        return (t == MBN_TERSE ? "penet" : "penetration");
+        return (t == MBN_TERSE ? M_("penet") : M_("penetration"));
     case SPMSL_REAPING:
-        return (t == MBN_TERSE ? "reap" : "reaping");
+        return (t == MBN_TERSE ? M_("reap") : M_("reaping"));
     case SPMSL_DISPERSAL:
-        return (t == MBN_TERSE ? "disperse" : "dispersal");
+        return (t == MBN_TERSE ? M_("disperse") : M_("dispersal"));
     case SPMSL_NORMAL:
     default:
         return "";
@@ -432,52 +443,52 @@ const char* weapon_brand_name(const item_def& item, bool terse)
     switch (get_weapon_brand(item))
     {
     case SPWPN_NORMAL: return "";
-    case SPWPN_FLAMING: return ((terse) ? " (flame)" : " of flaming");
-    case SPWPN_FREEZING: return ((terse) ? " (freeze)" : " of freezing");
-    case SPWPN_HOLY_WRATH: return ((terse) ? " (holy)" : " of holy wrath");
-    case SPWPN_ELECTROCUTION: return ((terse) ? " (elec)":" of electrocution");
-    case SPWPN_ORC_SLAYING: return ((terse) ? " (slay orc)":" of orc slaying");
-    case SPWPN_DRAGON_SLAYING: return ((terse) ? " (slay drac)":" of dragon slaying");
-    case SPWPN_VENOM: return ((terse) ? " (venom)" : " of venom");
-    case SPWPN_PROTECTION: return ((terse) ? " (protect)" : " of protection");
-    case SPWPN_EVASION: return ((terse) ? " (evade)" : " of evasion");
-    case SPWPN_DRAINING: return ((terse) ? " (drain)" : " of draining");
-    case SPWPN_SPEED: return ((terse) ? " (speed)" : " of speed");
-    case SPWPN_PAIN: return ((terse) ? " (pain)" : " of pain");
-    case SPWPN_DISTORTION: return ((terse) ? " (distort)" : " of distortion");
-    case SPWPN_REACHING: return ((terse) ? " (reach)" : " of reaching");
-    case SPWPN_RETURNING: return ((terse) ? " (return)" : " of returning");
+    case SPWPN_FLAMING: return ((terse) ? N_(" (flame)") : N_(" of flaming"));
+    case SPWPN_FREEZING: return ((terse) ? N_(" (freeze)") : N_(" of freezing"));
+    case SPWPN_HOLY_WRATH: return ((terse) ? N_(" (holy)") : N_(" of holy wrath"));
+    case SPWPN_ELECTROCUTION: return ((terse) ? N_(" (elec)"):N_(" of electrocution"));
+    case SPWPN_ORC_SLAYING: return ((terse) ? N_(" (slay orc)"):N_(" of orc slaying"));
+    case SPWPN_DRAGON_SLAYING: return ((terse) ? N_(" (slay drac)"):N_(" of dragon slaying"));
+    case SPWPN_VENOM: return ((terse) ? N_(" (venom)") : N_(" of venom"));
+    case SPWPN_PROTECTION: return ((terse) ? N_(" (protect)") : N_(" of protection"));
+    case SPWPN_EVASION: return ((terse) ? N_(" (evade)") : N_(" of evasion"));
+    case SPWPN_DRAINING: return ((terse) ? N_(" (drain)") : N_(" of draining"));
+    case SPWPN_SPEED: return ((terse) ? N_(" (speed)") : N_(" of speed"));
+    case SPWPN_PAIN: return ((terse) ? N_(" (pain)") : N_(" of pain"));
+    case SPWPN_DISTORTION: return ((terse) ? N_(" (distort)") : N_(" of distortion"));
+    case SPWPN_REACHING: return ((terse) ? N_(" (reach)") : N_(" of reaching"));
+    case SPWPN_RETURNING: return ((terse) ? N_(" (return)") : N_(" of returning"));
 
     case SPWPN_VAMPIRICISM:
-        return ((terse) ? " (vamp)" : ""); // non-terse already handled
+        return ((terse) ? N_(" (vamp)") : ""); // non-terse already handled
 
     case SPWPN_VORPAL:
         if (is_range_weapon(item))
-            return ((terse) ? " (velocity)" : " of velocity");
+            return ((terse) ? N_(" (velocity)") : N_(" of velocity"));
         else
         {
             switch (get_vorpal_type(item))
             {
-            case DVORP_CRUSHING: return ((terse) ? " (crush)" :" of crushing");
-            case DVORP_SLICING:  return ((terse) ? " (slice)" : " of slicing");
-            case DVORP_PIERCING: return ((terse) ? " (pierce)":" of piercing");
-            case DVORP_CHOPPING: return ((terse) ? " (chop)" : " of chopping");
-            case DVORP_SLASHING: return ((terse) ? " (slash)" :" of slashing");
-            case DVORP_STABBING: return ((terse) ? " (stab)" : " of stabbing");
+            case DVORP_CRUSHING: return ((terse) ? N_(" (crush)") :N_(" of crushing"));
+            case DVORP_SLICING:  return ((terse) ? N_(" (slice)") : N_(" of slicing"));
+            case DVORP_PIERCING: return ((terse) ? N_(" (pierce)"):N_(" of piercing"));
+            case DVORP_CHOPPING: return ((terse) ? N_(" (chop)") : N_(" of chopping"));
+            case DVORP_SLASHING: return ((terse) ? N_(" (slash)") :N_(" of slashing"));
+            case DVORP_STABBING: return ((terse) ? N_(" (stab)") : N_(" of stabbing"));
             default:             return "";
             }
         }
-    case SPWPN_ANTIMAGIC: return terse ? " (antimagic)" : ""; // non-terse
+    case SPWPN_ANTIMAGIC: return terse ? N_(" (antimagic)") : ""; // non-terse
                                                       // handled elsewhere
 
     // ranged weapon brands
-    case SPWPN_FLAME: return ((terse) ? " (flame)" : " of flame");
-    case SPWPN_FROST: return ((terse) ? " (frost)" : " of frost");
-    case SPWPN_PENETRATION: return ((terse) ? " (penet)" : " of penetration");
-    case SPWPN_REAPING: return ((terse) ? " (reap)" : " of reaping");
+    case SPWPN_FLAME: return ((terse) ? N_(" (flame)") : N_(" of flame"));
+    case SPWPN_FROST: return ((terse) ? N_(" (frost)") : N_(" of frost"));
+    case SPWPN_PENETRATION: return ((terse) ? N_(" (penet)") : N_(" of penetration"));
+    case SPWPN_REAPING: return ((terse) ? N_(" (reap)") : N_(" of reaping"));
 
     // both ranged and non-ranged
-    case SPWPN_CHAOS: return ((terse) ? " (chaos)" : " of chaos");
+    case SPWPN_CHAOS: return ((terse) ? N_(" (chaos)") : N_(" of chaos"));
 
     // randart brands
     default: return "";
@@ -492,28 +503,28 @@ const char* armour_ego_name(const item_def& item, bool terse)
         switch (get_armour_ego_type(item))
         {
         case SPARM_NORMAL:            return "";
-        case SPARM_RUNNING:           return "running";
-        case SPARM_FIRE_RESISTANCE:   return "fire resistance";
-        case SPARM_COLD_RESISTANCE:   return "cold resistance";
-        case SPARM_POISON_RESISTANCE: return "poison resistance";
-        case SPARM_SEE_INVISIBLE:     return "see invisible";
-        case SPARM_DARKNESS:          return "darkness";
-        case SPARM_STRENGTH:          return "strength";
-        case SPARM_DEXTERITY:         return "dexterity";
-        case SPARM_INTELLIGENCE:      return "intelligence";
-        case SPARM_PONDEROUSNESS:     return "ponderousness";
-        case SPARM_LEVITATION:        return "levitation";
-        case SPARM_MAGIC_RESISTANCE:  return "magic resistance";
-        case SPARM_PROTECTION:        return "protection";
-        case SPARM_STEALTH:           return "stealth";
-        case SPARM_RESISTANCE:        return "resistance";
-        case SPARM_POSITIVE_ENERGY:   return "positive energy";
-        case SPARM_ARCHMAGI:          return "the Archmagi";
-        case SPARM_PRESERVATION:      return "preservation";
-        case SPARM_REFLECTION:        return "reflection";
-        case SPARM_SPIRIT_SHIELD:     return "spirit shield";
-        case SPARM_ARCHERY:           return "archery";
-        default:                      return "bugginess";
+        case SPARM_RUNNING:           return M_("running");
+        case SPARM_FIRE_RESISTANCE:   return M_("fire resistance");
+        case SPARM_COLD_RESISTANCE:   return M_("cold resistance");
+        case SPARM_POISON_RESISTANCE: return M_("poison resistance");
+        case SPARM_SEE_INVISIBLE:     return M_("see invisible");
+        case SPARM_DARKNESS:          return M_("darkness");
+        case SPARM_STRENGTH:          return M_("strength");
+        case SPARM_DEXTERITY:         return M_("dexterity");
+        case SPARM_INTELLIGENCE:      return M_("intelligence");
+        case SPARM_PONDEROUSNESS:     return M_("ponderousness");
+        case SPARM_LEVITATION:        return M_("levitation");
+        case SPARM_MAGIC_RESISTANCE:  return M_("magic resistance");
+        case SPARM_PROTECTION:        return M_("protection");
+        case SPARM_STEALTH:           return M_("stealth");
+        case SPARM_RESISTANCE:        return M_("resistance");
+        case SPARM_POSITIVE_ENERGY:   return M_("positive energy");
+        case SPARM_ARCHMAGI:          return M_("the Archmagi");
+        case SPARM_PRESERVATION:      return M_("preservation");
+        case SPARM_REFLECTION:        return M_("reflection");
+        case SPARM_SPIRIT_SHIELD:     return M_("spirit shield");
+        case SPARM_ARCHERY:           return M_("archery");
+        default:                      return M_("bugginess");
         }
     }
     else
@@ -551,27 +562,27 @@ const char* wand_type_name(int wandtype)
 {
     switch (static_cast<wand_type>(wandtype))
     {
-    case WAND_FLAME:           return "flame";
-    case WAND_FROST:           return "frost";
-    case WAND_SLOWING:         return "slowing";
-    case WAND_HASTING:         return "hasting";
-    case WAND_MAGIC_DARTS:     return "magic darts";
-    case WAND_HEALING:         return "healing";
-    case WAND_PARALYSIS:       return "paralysis";
-    case WAND_FIRE:            return "fire";
-    case WAND_COLD:            return "cold";
-    case WAND_CONFUSION:       return "confusion";
-    case WAND_INVISIBILITY:    return "invisibility";
-    case WAND_DIGGING:         return "digging";
-    case WAND_FIREBALL:        return "fireball";
-    case WAND_TELEPORTATION:   return "teleportation";
-    case WAND_LIGHTNING:       return "lightning";
-    case WAND_POLYMORPH_OTHER: return "polymorph other";
-    case WAND_ENSLAVEMENT:     return "enslavement";
-    case WAND_DRAINING:        return "draining";
-    case WAND_RANDOM_EFFECTS:  return "random effects";
-    case WAND_DISINTEGRATION:  return "disintegration";
-    default:                   return "bugginess";
+    case WAND_FLAME:           return M_("flame");
+    case WAND_FROST:           return M_("frost");
+    case WAND_SLOWING:         return M_("slowing");
+    case WAND_HASTING:         return M_("hasting");
+    case WAND_MAGIC_DARTS:     return M_("magic darts");
+    case WAND_HEALING:         return M_("healing");
+    case WAND_PARALYSIS:       return M_("paralysis");
+    case WAND_FIRE:            return M_("fire");
+    case WAND_COLD:            return M_("cold");
+    case WAND_CONFUSION:       return M_("confusion");
+    case WAND_INVISIBILITY:    return M_("invisibility");
+    case WAND_DIGGING:         return M_("digging");
+    case WAND_FIREBALL:        return M_("fireball");
+    case WAND_TELEPORTATION:   return M_("teleportation");
+    case WAND_LIGHTNING:       return M_("lightning");
+    case WAND_POLYMORPH_OTHER: return M_("polymorph other");
+    case WAND_ENSLAVEMENT:     return M_("enslavement");
+    case WAND_DRAINING:        return M_("draining");
+    case WAND_RANDOM_EFFECTS:  return M_("random effects");
+    case WAND_DISINTEGRATION:  return M_("disintegration");
+    default:                   return M_("bugginess");
     }
 }
 
@@ -580,22 +591,22 @@ static const char* wand_secondary_string(int s)
     switch (s)
     {
     case 0:  return "";
-    case 1:  return "jewelled ";
-    case 2:  return "curved ";
-    case 3:  return "long ";
-    case 4:  return "short ";
-    case 5:  return "twisted ";
-    case 6:  return "crooked ";
-    case 7:  return "forked ";
-    case 8:  return "shiny ";
-    case 9:  return "blackened ";
-    case 10: return "tapered ";
-    case 11: return "glowing ";
-    case 12: return "worn ";
-    case 13: return "encrusted ";
-    case 14: return "runed ";
-    case 15: return "sharpened ";
-    default: return "buggily ";
+    case 1:  return M_("jewelled ");
+    case 2:  return M_("curved ");
+    case 3:  return M_("long ");
+    case 4:  return M_("short ");
+    case 5:  return M_("twisted ");
+    case 6:  return M_("crooked ");
+    case 7:  return M_("forked ");
+    case 8:  return M_("shiny ");
+    case 9:  return M_("blackened ");
+    case 10: return M_("tapered ");
+    case 11: return M_("glowing ");
+    case 12: return M_("worn ");
+    case 13: return M_("encrusted ");
+    case 14: return M_("runed ");
+    case 15: return M_("sharpened ");
+    default: return M_("buggily ");
     }
 }
 
@@ -603,19 +614,19 @@ static const char* wand_primary_string(int p)
 {
     switch (p)
     {
-    case 0:  return "iron";
-    case 1:  return "brass";
-    case 2:  return "bone";
-    case 3:  return "wooden";
-    case 4:  return "copper";
-    case 5:  return "gold";
-    case 6:  return "silver";
-    case 7:  return "bronze";
-    case 8:  return "ivory";
-    case 9:  return "glass";
-    case 10: return "lead";
-    case 11: return "fluorescent";
-    default: return "buggy";
+    case 0:  return M_("iron");
+    case 1:  return M_("brass");
+    case 2:  return M_("bone");
+    case 3:  return M_("wooden");
+    case 4:  return M_("copper");
+    case 5:  return M_("gold");
+    case 6:  return M_("silver");
+    case 7:  return M_("bronze");
+    case 8:  return M_("ivory");
+    case 9:  return M_("glass");
+    case 10: return M_("lead");
+    case 11: return M_("fluorescent");
+    default: return M_("buggy");
     }
 }
 
@@ -623,37 +634,37 @@ static const char* potion_type_name(int potiontype)
 {
     switch (static_cast<potion_type>(potiontype))
     {
-    case POT_HEALING:           return "healing";
-    case POT_HEAL_WOUNDS:       return "heal wounds";
-    case POT_SPEED:             return "speed";
-    case POT_MIGHT:             return "might";
-    case POT_AGILITY:           return "agility";
-    case POT_BRILLIANCE:        return "brilliance";
-    case POT_GAIN_STRENGTH:     return "gain strength";
-    case POT_GAIN_DEXTERITY:    return "gain dexterity";
-    case POT_GAIN_INTELLIGENCE: return "gain intelligence";
-    case POT_LEVITATION:        return "levitation";
-    case POT_POISON:            return "poison";
-    case POT_SLOWING:           return "slowing";
-    case POT_PARALYSIS:         return "paralysis";
-    case POT_CONFUSION:         return "confusion";
-    case POT_INVISIBILITY:      return "invisibility";
-    case POT_PORRIDGE:          return "porridge";
-    case POT_DEGENERATION:      return "degeneration";
-    case POT_DECAY:             return "decay";
-    case POT_WATER:             return "water";
-    case POT_EXPERIENCE:        return "experience";
-    case POT_MAGIC:             return "magic";
-    case POT_RESTORE_ABILITIES: return "restore abilities";
-    case POT_STRONG_POISON:     return "strong poison";
-    case POT_BERSERK_RAGE:      return "berserk rage";
-    case POT_CURE_MUTATION:     return "cure mutation";
-    case POT_MUTATION:          return "mutation";
-    case POT_BLOOD:             return "blood";
-    case POT_BLOOD_COAGULATED:  return "coagulated blood";
-    case POT_RESISTANCE:        return "resistance";
-    case POT_FIZZING:           return "fizzing liquid";
-    default:                    return "bugginess";
+    case POT_HEALING:           return M_("healing");
+    case POT_HEAL_WOUNDS:       return M_("heal wounds");
+    case POT_SPEED:             return M_("speed");
+    case POT_MIGHT:             return M_("might");
+    case POT_AGILITY:           return M_("agility");
+    case POT_BRILLIANCE:        return M_("brilliance");
+    case POT_GAIN_STRENGTH:     return M_("gain strength");
+    case POT_GAIN_DEXTERITY:    return M_("gain dexterity");
+    case POT_GAIN_INTELLIGENCE: return M_("gain intelligence");
+    case POT_LEVITATION:        return M_("levitation");
+    case POT_POISON:            return M_("poison");
+    case POT_SLOWING:           return M_("slowing");
+    case POT_PARALYSIS:         return M_("paralysis");
+    case POT_CONFUSION:         return M_("confusion");
+    case POT_INVISIBILITY:      return M_("invisibility");
+    case POT_PORRIDGE:          return M_("porridge");
+    case POT_DEGENERATION:      return M_("degeneration");
+    case POT_DECAY:             return M_("decay");
+    case POT_WATER:             return M_("water");
+    case POT_EXPERIENCE:        return M_("experience");
+    case POT_MAGIC:             return M_("magic");
+    case POT_RESTORE_ABILITIES: return M_("restore abilities");
+    case POT_STRONG_POISON:     return M_("strong poison");
+    case POT_BERSERK_RAGE:      return M_("berserk rage");
+    case POT_CURE_MUTATION:     return M_("cure mutation");
+    case POT_MUTATION:          return M_("mutation");
+    case POT_BLOOD:             return M_("blood");
+    case POT_BLOOD_COAGULATED:  return M_("coagulated blood");
+    case POT_RESISTANCE:        return M_("resistance");
+    case POT_FIZZING:           return M_("fizzing liquid");
+    default:                    return M_("bugginess");
     }
 }
 
@@ -662,36 +673,36 @@ static const char* scroll_type_name(int scrolltype)
     switch (static_cast<scroll_type>(scrolltype))
     {
 #if TAG_MAJOR_VERSION == 32
-    case SCR_PAPER:              return "old paper";
+    case SCR_PAPER:              return M_("old paper");
 #endif
-    case SCR_IDENTIFY:           return "identify";
-    case SCR_TELEPORTATION:      return "teleportation";
-    case SCR_FEAR:               return "fear";
-    case SCR_NOISE:              return "noise";
-    case SCR_REMOVE_CURSE:       return "remove curse";
-    case SCR_DETECT_CURSE:       return "detect curse";
-    case SCR_SUMMONING:          return "summoning";
-    case SCR_ENCHANT_WEAPON_I:   return "enchant weapon I";
-    case SCR_ENCHANT_ARMOUR:     return "enchant armour";
-    case SCR_TORMENT:            return "torment";
-    case SCR_RANDOM_USELESSNESS: return "random uselessness";
-    case SCR_CURSE_WEAPON:       return "curse weapon";
-    case SCR_CURSE_ARMOUR:       return "curse armour";
-    case SCR_CURSE_JEWELLERY:    return "curse jewellery";
-    case SCR_IMMOLATION:         return "immolation";
-    case SCR_BLINKING:           return "blinking";
-    case SCR_MAGIC_MAPPING:      return "magic mapping";
-    case SCR_FOG:                return "fog";
-    case SCR_ACQUIREMENT:        return "acquirement";
-    case SCR_ENCHANT_WEAPON_II:  return "enchant weapon II";
-    case SCR_VORPALISE_WEAPON:   return "vorpalise weapon";
-    case SCR_RECHARGING:         return "recharging";
-    case SCR_ENCHANT_WEAPON_III: return "enchant weapon III";
-    case SCR_HOLY_WORD:          return "holy word";
-    case SCR_VULNERABILITY:      return "vulnerability";
-    case SCR_SILENCE:            return "silence";
-    case SCR_AMNESIA:            return "amnesia";
-    default:                     return "bugginess";
+    case SCR_IDENTIFY:           return M_("identify");
+    case SCR_TELEPORTATION:      return M_("teleportation");
+    case SCR_FEAR:               return M_("fear");
+    case SCR_NOISE:              return M_("noise");
+    case SCR_REMOVE_CURSE:       return M_("remove curse");
+    case SCR_DETECT_CURSE:       return M_("detect curse");
+    case SCR_SUMMONING:          return M_("summoning");
+    case SCR_ENCHANT_WEAPON_I:   return M_("enchant weapon I");
+    case SCR_ENCHANT_ARMOUR:     return M_("enchant armour");
+    case SCR_TORMENT:            return M_("torment");
+    case SCR_RANDOM_USELESSNESS: return M_("random uselessness");
+    case SCR_CURSE_WEAPON:       return M_("curse weapon");
+    case SCR_CURSE_ARMOUR:       return M_("curse armour");
+    case SCR_CURSE_JEWELLERY:    return M_("curse jewellery");
+    case SCR_IMMOLATION:         return M_("immolation");
+    case SCR_BLINKING:           return M_("blinking");
+    case SCR_MAGIC_MAPPING:      return M_("magic mapping");
+    case SCR_FOG:                return M_("fog");
+    case SCR_ACQUIREMENT:        return M_("acquirement");
+    case SCR_ENCHANT_WEAPON_II:  return M_("enchant weapon II");
+    case SCR_VORPALISE_WEAPON:   return M_("vorpalise weapon");
+    case SCR_RECHARGING:         return M_("recharging");
+    case SCR_ENCHANT_WEAPON_III: return M_("enchant weapon III");
+    case SCR_HOLY_WORD:          return M_("holy word");
+    case SCR_VULNERABILITY:      return M_("vulnerability");
+    case SCR_SILENCE:            return M_("silence");
+    case SCR_AMNESIA:            return M_("amnesia");
+    default:                     return M_("bugginess");
     }
 }
 
@@ -699,43 +710,43 @@ static const char* jewellery_type_name(int jeweltype)
 {
     switch (static_cast<jewellery_type>(jeweltype))
     {
-    case RING_REGENERATION:          return "ring of regeneration";
-    case RING_PROTECTION:            return "ring of protection";
-    case RING_PROTECTION_FROM_FIRE:  return "ring of protection from fire";
-    case RING_POISON_RESISTANCE:     return "ring of poison resistance";
-    case RING_PROTECTION_FROM_COLD:  return "ring of protection from cold";
-    case RING_STRENGTH:              return "ring of strength";
-    case RING_SLAYING:               return "ring of slaying";
-    case RING_SEE_INVISIBLE:         return "ring of see invisible";
-    case RING_INVISIBILITY:          return "ring of invisibility";
-    case RING_HUNGER:                return "ring of hunger";
-    case RING_TELEPORTATION:         return "ring of teleportation";
-    case RING_EVASION:               return "ring of evasion";
-    case RING_SUSTAIN_ABILITIES:     return "ring of sustain abilities";
-    case RING_SUSTENANCE:            return "ring of sustenance";
-    case RING_DEXTERITY:             return "ring of dexterity";
-    case RING_INTELLIGENCE:          return "ring of intelligence";
-    case RING_WIZARDRY:              return "ring of wizardry";
-    case RING_MAGICAL_POWER:         return "ring of magical power";
-    case RING_LEVITATION:            return "ring of levitation";
-    case RING_LIFE_PROTECTION:       return "ring of life protection";
-    case RING_PROTECTION_FROM_MAGIC: return "ring of protection from magic";
-    case RING_FIRE:                  return "ring of fire";
-    case RING_ICE:                   return "ring of ice";
-    case RING_TELEPORT_CONTROL:      return "ring of teleport control";
-    case AMU_RAGE:              return "amulet of rage";
-    case AMU_CLARITY:           return "amulet of clarity";
-    case AMU_WARDING:           return "amulet of warding";
-    case AMU_RESIST_CORROSION:  return "amulet of resist corrosion";
-    case AMU_THE_GOURMAND:      return "amulet of the gourmand";
-    case AMU_CONSERVATION:      return "amulet of conservation";
-    case AMU_CONTROLLED_FLIGHT: return "amulet of controlled flight";
-    case AMU_INACCURACY:        return "amulet of inaccuracy";
-    case AMU_RESIST_MUTATION:   return "amulet of resist mutation";
-    case AMU_GUARDIAN_SPIRIT:   return "amulet of guardian spirit";
-    case AMU_FAITH:             return "amulet of faith";
-    case AMU_STASIS:            return "amulet of stasis";
-    default: return "buggy jewellery";
+    case RING_REGENERATION:          return M_("ring of regeneration");
+    case RING_PROTECTION:            return M_("ring of protection");
+    case RING_PROTECTION_FROM_FIRE:  return M_("ring of protection from fire");
+    case RING_POISON_RESISTANCE:     return M_("ring of poison resistance");
+    case RING_PROTECTION_FROM_COLD:  return M_("ring of protection from cold");
+    case RING_STRENGTH:              return M_("ring of strength");
+    case RING_SLAYING:               return M_("ring of slaying");
+    case RING_SEE_INVISIBLE:         return M_("ring of see invisible");
+    case RING_INVISIBILITY:          return M_("ring of invisibility");
+    case RING_HUNGER:                return M_("ring of hunger");
+    case RING_TELEPORTATION:         return M_("ring of teleportation");
+    case RING_EVASION:               return M_("ring of evasion");
+    case RING_SUSTAIN_ABILITIES:     return M_("ring of sustain abilities");
+    case RING_SUSTENANCE:            return M_("ring of sustenance");
+    case RING_DEXTERITY:             return M_("ring of dexterity");
+    case RING_INTELLIGENCE:          return M_("ring of intelligence");
+    case RING_WIZARDRY:              return M_("ring of wizardry");
+    case RING_MAGICAL_POWER:         return M_("ring of magical power");
+    case RING_LEVITATION:            return M_("ring of levitation");
+    case RING_LIFE_PROTECTION:       return M_("ring of life protection");
+    case RING_PROTECTION_FROM_MAGIC: return M_("ring of protection from magic");
+    case RING_FIRE:                  return M_("ring of fire");
+    case RING_ICE:                   return M_("ring of ice");
+    case RING_TELEPORT_CONTROL:      return M_("ring of teleport control");
+    case AMU_RAGE:              return M_("amulet of rage");
+    case AMU_CLARITY:           return M_("amulet of clarity");
+    case AMU_WARDING:           return M_("amulet of warding");
+    case AMU_RESIST_CORROSION:  return M_("amulet of resist corrosion");
+    case AMU_THE_GOURMAND:      return M_("amulet of the gourmand");
+    case AMU_CONSERVATION:      return M_("amulet of conservation");
+    case AMU_CONTROLLED_FLIGHT: return M_("amulet of controlled flight");
+    case AMU_INACCURACY:        return M_("amulet of inaccuracy");
+    case AMU_RESIST_MUTATION:   return M_("amulet of resist mutation");
+    case AMU_GUARDIAN_SPIRIT:   return M_("amulet of guardian spirit");
+    case AMU_FAITH:             return M_("amulet of faith");
+    case AMU_STASIS:            return M_("amulet of stasis");
+    default: return M_("buggy jewellery");
     }
 }
 
@@ -743,18 +754,18 @@ static const char* ring_secondary_string(int s)
 {
     switch (s)
     {
-    case 1:  return "encrusted ";
-    case 2:  return "glowing ";
-    case 3:  return "tubular ";
-    case 4:  return "runed ";
-    case 5:  return "blackened ";
-    case 6:  return "scratched ";
-    case 7:  return "small ";
-    case 8:  return "large ";
-    case 9:  return "twisted ";
-    case 10: return "shiny ";
-    case 11: return "notched ";
-    case 12: return "knobbly ";
+    case 1:  return M_("encrusted ");
+    case 2:  return M_("glowing ");
+    case 3:  return M_("tubular ");
+    case 4:  return M_("runed ");
+    case 5:  return M_("blackened ");
+    case 6:  return M_("scratched ");
+    case 7:  return M_("small ");
+    case 8:  return M_("large ");
+    case 9:  return M_("twisted ");
+    case 10: return M_("shiny ");
+    case 11: return M_("notched ");
+    case 12: return M_("knobbly ");
     default: return "";
     }
 }
@@ -765,21 +776,21 @@ static const char* ring_primary_string(int p)
 {
     switch (p)
     {
-    case 0:  return "wooden";
-    case 1:  return "silver";
-    case 2:  return "golden";
-    case 3:  return "iron";
-    case 4:  return "steel";
-    case 5:  return "bronze";
-    case 6:  return "brass";
-    case 7:  return "copper";
-    case 8:  return "granite";
-    case 9:  return "ivory";
-    case 10: return "bone";
-    case 11: return "marble";
-    case 12: return "jade";
-    case 13: return "glass";
-    default: return "buggy";
+    case 0:  return M_("wooden");
+    case 1:  return M_("silver");
+    case 2:  return M_("golden");
+    case 3:  return M_("iron");
+    case 4:  return M_("steel");
+    case 5:  return M_("bronze");
+    case 6:  return M_("brass");
+    case 7:  return M_("copper");
+    case 8:  return M_("granite");
+    case 9:  return M_("ivory");
+    case 10: return M_("bone");
+    case 11: return M_("marble");
+    case 12: return M_("jade");
+    case 13: return M_("glass");
+    default: return M_("buggy");
     }
 }
 
@@ -787,19 +798,19 @@ static const char* amulet_secondary_string(int s)
 {
     switch (s)
     {
-    case 0:  return "dented ";
-    case 1:  return "square ";
-    case 2:  return "thick ";
-    case 3:  return "thin ";
-    case 4:  return "runed ";
-    case 5:  return "blackened ";
-    case 6:  return "glowing ";
-    case 7:  return "small ";
-    case 8:  return "large ";
-    case 9:  return "twisted ";
-    case 10: return "tiny ";
-    case 11: return "triangular ";
-    case 12: return "lumpy ";
+    case 0:  return M_("dented ");
+    case 1:  return M_("square ");
+    case 2:  return M_("thick ");
+    case 3:  return M_("thin ");
+    case 4:  return M_("runed ");
+    case 5:  return M_("blackened ");
+    case 6:  return M_("glowing ");
+    case 7:  return M_("small ");
+    case 8:  return M_("large ");
+    case 9:  return M_("twisted ");
+    case 10: return M_("tiny ");
+    case 11: return M_("triangular ");
+    case 12: return M_("lumpy ");
     default: return "";
     }
 }
@@ -808,21 +819,21 @@ static const char* amulet_primary_string(int p)
 {
     switch (p)
     {
-    case 0:  return "zirconium";
-    case 1:  return "sapphire";
-    case 2:  return "golden";
-    case 3:  return "emerald";
-    case 4:  return "garnet";
-    case 5:  return "bronze";
-    case 6:  return "brass";
-    case 7:  return "copper";
-    case 8:  return "ruby";
-    case 9:  return "ivory";
-    case 10: return "bone";
-    case 11: return "platinum";
-    case 12: return "jade";
-    case 13: return "fluorescent";
-    default: return "buggy";
+    case 0:  return M_("zirconium");
+    case 1:  return M_("sapphire");
+    case 2:  return M_("golden");
+    case 3:  return M_("emerald");
+    case 4:  return M_("garnet");
+    case 5:  return M_("bronze");
+    case 6:  return M_("brass");
+    case 7:  return M_("copper");
+    case 8:  return M_("ruby");
+    case 9:  return M_("ivory");
+    case 10: return M_("bone");
+    case 11: return M_("platinum");
+    case 12: return M_("jade");
+    case 13: return M_("fluorescent");
+    default: return M_("buggy");
     }
 }
 
@@ -830,29 +841,29 @@ const char* rune_type_name(int p)
 {
     switch (static_cast<rune_type>(p))
     {
-    case RUNE_DIS:         return "iron";
-    case RUNE_GEHENNA:     return "obsidian";
-    case RUNE_COCYTUS:     return "icy";
-    case RUNE_TARTARUS:    return "bone";
-    case RUNE_SLIME_PITS:  return "slimy";
-    case RUNE_VAULTS:      return "silver";
-    case RUNE_SNAKE_PIT:   return "serpentine";
-    case RUNE_ELVEN_HALLS: return "elven";
-    case RUNE_TOMB:        return "golden";
-    case RUNE_SWAMP:       return "decaying";
-    case RUNE_SHOALS:      return "barnacled";
-    case RUNE_SPIDER_NEST: return "gossamer";
-    case RUNE_FOREST:      return "mossy";
+    case RUNE_DIS:         return M_("iron");
+    case RUNE_GEHENNA:     return M_("obsidian");
+    case RUNE_COCYTUS:     return M_("icy");
+    case RUNE_TARTARUS:    return M_("bone");
+    case RUNE_SLIME_PITS:  return M_("slimy");
+    case RUNE_VAULTS:      return M_("silver");
+    case RUNE_SNAKE_PIT:   return M_("serpentine");
+    case RUNE_ELVEN_HALLS: return M_("elven");
+    case RUNE_TOMB:        return M_("golden");
+    case RUNE_SWAMP:       return M_("decaying");
+    case RUNE_SHOALS:      return M_("barnacled");
+    case RUNE_SPIDER_NEST: return M_("gossamer");
+    case RUNE_FOREST:      return M_("mossy");
 
     // pandemonium and abyss runes:
-    case RUNE_DEMONIC:     return "demonic";
-    case RUNE_ABYSSAL:     return "abyssal";
+    case RUNE_DEMONIC:     return M_("demonic");
+    case RUNE_ABYSSAL:     return M_("abyssal");
 
     // special pandemonium runes:
-    case RUNE_MNOLEG:      return "glowing";
-    case RUNE_LOM_LOBON:   return "magical";
-    case RUNE_CEREBOV:     return "fiery";
-    case RUNE_GLOORX_VLOQ: return "dark";
+    case RUNE_MNOLEG:      return M_("glowing");
+    case RUNE_LOM_LOBON:   return M_("magical");
+    case RUNE_CEREBOV:     return M_("fiery");
+    case RUNE_GLOORX_VLOQ: return M_("dark");
     default:               return "buggy";
     }
 }
@@ -861,10 +872,10 @@ static const char* deck_rarity_name(deck_rarity_type rarity)
 {
     switch (rarity)
     {
-    case DECK_RARITY_COMMON:    return "plain";
-    case DECK_RARITY_RARE:      return "ornate";
-    case DECK_RARITY_LEGENDARY: return "legendary";
-    default:                    return "buggy rarity";
+    case DECK_RARITY_COMMON:    return M_("plain");
+    case DECK_RARITY_RARE:      return M_("ornate");
+    case DECK_RARITY_LEGENDARY: return M_("legendary");
+    default:                    return M_("buggy rarity");
     }
 }
 
@@ -877,42 +888,42 @@ static const char* misc_type_name(int type, bool known)
         if (type == MISC_CRYSTAL_BALL_OF_ENERGY
             || type == MISC_CRYSTAL_BALL_OF_SEEING)
         {
-            return "crystal ball";
+            return M_("crystal ball");
         }
     }
 
     switch (static_cast<misc_item_type>(type))
     {
-    case MISC_DECK_OF_ESCAPE:      return "deck of escape";
-    case MISC_DECK_OF_DESTRUCTION: return "deck of destruction";
-    case MISC_DECK_OF_DUNGEONS:    return "deck of dungeons";
-    case MISC_DECK_OF_SUMMONING:   return "deck of summonings";
-    case MISC_DECK_OF_WONDERS:     return "deck of wonders";
-    case MISC_DECK_OF_PUNISHMENT:  return "deck of punishment";
-    case MISC_DECK_OF_WAR:         return "deck of war";
-    case MISC_DECK_OF_CHANGES:     return "deck of changes";
-    case MISC_DECK_OF_DEFENCE:     return "deck of defence";
+    case MISC_DECK_OF_ESCAPE:      return M_("deck of escape");
+    case MISC_DECK_OF_DESTRUCTION: return M_("deck of destruction");
+    case MISC_DECK_OF_DUNGEONS:    return M_("deck of dungeons");
+    case MISC_DECK_OF_SUMMONING:   return M_("deck of summonings");
+    case MISC_DECK_OF_WONDERS:     return M_("deck of wonders");
+    case MISC_DECK_OF_PUNISHMENT:  return M_("deck of punishment");
+    case MISC_DECK_OF_WAR:         return M_("deck of war");
+    case MISC_DECK_OF_CHANGES:     return M_("deck of changes");
+    case MISC_DECK_OF_DEFENCE:     return M_("deck of defence");
 
-    case MISC_CRYSTAL_BALL_OF_ENERGY:   return "crystal ball of energy";
+    case MISC_CRYSTAL_BALL_OF_ENERGY:   return M_("crystal ball of energy");
 #if TAG_MAJOR_VERSION == 32
     case MISC_CRYSTAL_BALL_OF_FIXATION: return "old crystal ball";
 #endif
-    case MISC_CRYSTAL_BALL_OF_SEEING:   return "crystal ball of seeing";
-    case MISC_BOX_OF_BEASTS:            return "box of beasts";
-    case MISC_EMPTY_EBONY_CASKET:       return "empty ebony casket";
-    case MISC_AIR_ELEMENTAL_FAN:        return "air elemental fan";
-    case MISC_LAMP_OF_FIRE:             return "lamp of fire";
-    case MISC_LANTERN_OF_SHADOWS:       return "lantern of shadows";
-    case MISC_HORN_OF_GERYON:           return "horn of Geryon";
-    case MISC_DISC_OF_STORMS:           return "disc of storms";
-    case MISC_BOTTLED_EFREET:           return "bottled efreet";
+    case MISC_CRYSTAL_BALL_OF_SEEING:   return M_("crystal ball of seeing");
+    case MISC_BOX_OF_BEASTS:            return M_("box of beasts");
+    case MISC_EMPTY_EBONY_CASKET:       return M_("empty ebony casket");
+    case MISC_AIR_ELEMENTAL_FAN:        return M_("air elemental fan");
+    case MISC_LAMP_OF_FIRE:             return M_("lamp of fire");
+    case MISC_LANTERN_OF_SHADOWS:       return M_("lantern of shadows");
+    case MISC_HORN_OF_GERYON:           return M_("horn of Geryon");
+    case MISC_DISC_OF_STORMS:           return M_("disc of storms");
+    case MISC_BOTTLED_EFREET:           return M_("bottled efreet");
     case MISC_STONE_OF_EARTH_ELEMENTALS:
-        return "stone of earth elementals";
-    case MISC_QUAD_DAMAGE:              return "quad damage";
+        return M_("stone of earth elementals");
+    case MISC_QUAD_DAMAGE:              return M_("quad damage");
 
     case MISC_RUNE_OF_ZOT:
     default:
-        return "buggy miscellaneous item";
+        return M_("buggy miscellaneous item");
     }
 }
 
@@ -921,14 +932,14 @@ static const char* book_secondary_string(int s)
     switch (s)
     {
     case 0:  return "";
-    case 1:  return "chunky ";
-    case 2:  return "thick ";
-    case 3:  return "thin ";
-    case 4:  return "wide ";
-    case 5:  return "glowing ";
-    case 6:  return "dog-eared ";
-    case 7:  return "oblong ";
-    case 8:  return "runed ";
+    case 1:  return M_("chunky ");
+    case 2:  return M_("thick ");
+    case 3:  return M_("thin ");
+    case 4:  return M_("wide ");
+    case 5:  return M_("glowing ");
+    case 6:  return M_("dog-eared ");
+    case 7:  return M_("oblong ");
+    case 8:  return M_("runed ");
     case 9:  return "";
     case 10: return "";
     case 11: return "";
@@ -940,11 +951,11 @@ static const char* book_primary_string(int p)
 {
     switch (p)
     {
-    case 0:  return "paperback ";
-    case 1:  return "hardcover ";
-    case 2:  return "leatherbound ";
-    case 3:  return "metal-bound ";
-    case 4:  return "papyrus ";
+    case 0:  return M_("paperback ");
+    case 1:  return M_("hardcover ");
+    case 2:  return M_("leatherbound ");
+    case 3:  return M_("metal-bound ");
+    case 4:  return M_("papyrus ");
     case 5:  return "";
     case 6:  return "";
     default: return "buggy ";
@@ -960,53 +971,53 @@ static const char* _book_type_name(int booktype)
     case BOOK_MINOR_MAGIC_II:
     case BOOK_MINOR_MAGIC_III:
 #endif
-        return "Minor Magic";
+        return M_("Minor Magic");
 #if TAG_MAJOR_VERSION == 32
     case BOOK_CONJURATIONS_I:
 #endif
     case BOOK_CONJURATIONS_II:
-        return "Conjurations";
-    case BOOK_FLAMES:                 return "Flames";
-    case BOOK_FROST:                  return "Frost";
-    case BOOK_SUMMONINGS:             return "Summonings";
-    case BOOK_FIRE:                   return "Fire";
-    case BOOK_ICE:                    return "Ice";
-    case BOOK_SPATIAL_TRANSLOCATIONS: return "Spatial Translocations";
-    case BOOK_ENCHANTMENTS:           return "Enchantments";
-    case BOOK_TEMPESTS:               return "the Tempests";
-    case BOOK_DEATH:                  return "Death";
-    case BOOK_HINDERANCE:             return "Hinderance";
-    case BOOK_CHANGES:                return "Changes";
-    case BOOK_TRANSFIGURATIONS:       return "Transfigurations";
-    case BOOK_WAR_CHANTS:             return "War Chants";
-    case BOOK_CLOUDS:                 return "Clouds";
-    case BOOK_NECROMANCY:             return "Necromancy";
-    case BOOK_CALLINGS:               return "Callings";
-    case BOOK_MALEDICT:               return "Maledictions";
-    case BOOK_AIR:                    return "Air";
-    case BOOK_SKY:                    return "the Sky";
-    case BOOK_WARP:                   return "the Warp";
-    case BOOK_ENVENOMATIONS:          return "Envenomations";
-    case BOOK_ANNIHILATIONS:          return "Annihilations";
-    case BOOK_UNLIFE:                 return "Unlife";
-    case BOOK_CONTROL:                return "Control";
-    case BOOK_MUTATIONS:              return "Morphology";
-    case BOOK_GEOMANCY:               return "Geomancy";
-    case BOOK_EARTH:                  return "the Earth";
-    case BOOK_WIZARDRY:               return "Wizardry";
-    case BOOK_POWER:                  return "Power";
-    case BOOK_CANTRIPS:               return "Cantrips";
-    case BOOK_PARTY_TRICKS:           return "Party Tricks";
-    case BOOK_STALKING:               return "Stalking";
-    case BOOK_DEBILITATION:           return "Debilitation";
-    case BOOK_DRAGON:                 return "the Dragon";
-    case BOOK_BURGLARY:               return "Burglary";
-    case BOOK_DREAMS:                 return "Dreams";
-    case BOOK_ALCHEMY:                return "Alchemy";
-    case BOOK_BEASTS:                 return "Beasts";
-    case BOOK_RANDART_LEVEL:          return "Fixed Level";
-    case BOOK_RANDART_THEME:          return "Fixed Theme";
-    default:                          return "Bugginess";
+        return M_("Conjurations");
+    case BOOK_FLAMES:                 return M_("Flames");
+    case BOOK_FROST:                  return M_("Frost");
+    case BOOK_SUMMONINGS:             return M_("Summonings");
+    case BOOK_FIRE:                   return M_("Fire");
+    case BOOK_ICE:                    return M_("Ice");
+    case BOOK_SPATIAL_TRANSLOCATIONS: return M_("Spatial Translocations");
+    case BOOK_ENCHANTMENTS:           return M_("Enchantments");
+    case BOOK_TEMPESTS:               return M_("the Tempests");
+    case BOOK_DEATH:                  return M_("Death");
+    case BOOK_HINDERANCE:             return M_("Hinderance");
+    case BOOK_CHANGES:                return M_("Changes");
+    case BOOK_TRANSFIGURATIONS:       return M_("Transfigurations");
+    case BOOK_WAR_CHANTS:             return M_("War Chants");
+    case BOOK_CLOUDS:                 return M_("Clouds");
+    case BOOK_NECROMANCY:             return M_("Necromancy");
+    case BOOK_CALLINGS:               return M_("Callings");
+    case BOOK_MALEDICT:               return M_("Maledictions");
+    case BOOK_AIR:                    return M_("Air");
+    case BOOK_SKY:                    return M_("the Sky");
+    case BOOK_WARP:                   return M_("the Warp");
+    case BOOK_ENVENOMATIONS:          return M_("Envenomations");
+    case BOOK_ANNIHILATIONS:          return M_("Annihilations");
+    case BOOK_UNLIFE:                 return M_("Unlife");
+    case BOOK_CONTROL:                return M_("Control");
+    case BOOK_MUTATIONS:              return M_("Morphology");
+    case BOOK_GEOMANCY:               return M_("Geomancy");
+    case BOOK_EARTH:                  return M_("the Earth");
+    case BOOK_WIZARDRY:               return M_("Wizardry");
+    case BOOK_POWER:                  return M_("Power");
+    case BOOK_CANTRIPS:               return M_("Cantrips");
+    case BOOK_PARTY_TRICKS:           return M_("Party Tricks");
+    case BOOK_STALKING:               return M_("Stalking");
+    case BOOK_DEBILITATION:           return M_("Debilitation");
+    case BOOK_DRAGON:                 return M_("the Dragon");
+    case BOOK_BURGLARY:               return M_("Burglary");
+    case BOOK_DREAMS:                 return M_("Dreams");
+    case BOOK_ALCHEMY:                return M_("Alchemy");
+    case BOOK_BEASTS:                 return M_("Beasts");
+    case BOOK_RANDART_LEVEL:          return M_("Fixed Level");
+    case BOOK_RANDART_THEME:          return M_("Fixed Theme");
+    default:                          return M_("Bugginess");
     }
 }
 
@@ -1082,11 +1093,11 @@ const char* racial_description_string(const item_def& item, bool terse)
     switch (get_equip_race(item))
     {
     case ISFLAG_ORCISH:
-        return terse ? "orc " : "orcish ";
+        return terse ? N_("orc ") : N_("orcish ");
     case ISFLAG_ELVEN:
-        return terse ? "elf " : "elven ";
+        return terse ? N_("elf ") : N_("elven ");
     case ISFLAG_DWARVEN:
-        return terse ? "dwarf " : "dwarven ";
+        return terse ? N_("dwarf ") : N_("dwarven ");
     default:
         return "";
     }
@@ -1268,10 +1279,10 @@ std::string item_def::name_aux(description_level_type desc,
             // that maintains this behaviour. -- bwr
             // Nor for artefacts. Again, the state should be obvious. --jpeg
             if (cursed())
-                buff << "cursed ";
+                buff << check_gettext("cursed ");
             else if (Options.show_uncursed && !know_pluses
                      && (!know_type || !is_artefact(*this)))
-                buff << "uncursed ";
+                buff << check_gettext("uncursed ");
         }
 
         if (know_pluses)
@@ -1289,20 +1300,20 @@ std::string item_def::name_aux(description_level_type desc,
 
         if (is_artefact(*this) && !dbname)
         {
-            buff << get_artefact_name(*this);
+            buff << check_gettext(get_artefact_name(*this).c_str());
             break;
         }
         else if (flags & ISFLAG_BLESSED_WEAPON && !dbname)
         {   // Since Angels and Daevas can get blessed base items, we
             // need a separate flag for this, so they can still have
             // their holy weapons.
-            buff << "Blessed ";
+            buff << check_gettext("Blessed ");
             if (weapon_skill(*this) == SK_MACES_FLAILS)
-                buff << "Scourge";
+                buff << check_gettext(M_("Scourge"));
             else if (weapon_skill(*this) == SK_POLEARMS)
-                buff << "Trishula";
+                buff << check_gettext(M_("Trishula"));
             else
-                buff << "Blade";
+                buff << check_gettext(M_("Blade"));
             break;
         }
 
@@ -1312,11 +1323,11 @@ std::string item_def::name_aux(description_level_type desc,
             {
             case ISFLAG_RUNED:
                 if (!testbits(ignore_flags, ISFLAG_RUNED))
-                    buff << "runed ";
+                    buff << check_gettext(M_("runed "));
                 break;
             case ISFLAG_GLOWING:
                 if (!testbits(ignore_flags, ISFLAG_GLOWING))
-                    buff << "glowing ";
+                    buff << check_gettext(M_("glowing "));
                 break;
             }
         }
@@ -1331,17 +1342,16 @@ std::string item_def::name_aux(description_level_type desc,
         {
             int brand = get_weapon_brand(*this);
             if (brand == SPWPN_VAMPIRICISM)
-                buff << "vampiric ";
+                buff << check_gettext(M_("vampiric "));
             else if (brand == SPWPN_ANTIMAGIC)
-                buff << "anti-magic ";
+                buff << check_gettext(M_("anti-magic "));
         }
-        buff << item_base_name(*this);
 
-        if (know_brand)
-            buff << weapon_brand_name(*this, terse);
-
-        if (know_curse && cursed() && terse)
-            buff << " (curse)";
+        /// 1. 무기 이름 2. 브랜드( of flaming)의 번역형 3. 저주가 걸려있으면 (curse)
+        buff << make_stringf(check_gettext("%s%s%s"),
+            check_gettext(item_base_name(*this).c_str()),
+            know_brand ? weapon_brand_name(*this, terse) : "",
+            (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
         break;
 
     case OBJ_MISSILES:
@@ -1352,7 +1362,7 @@ std::string item_def::name_aux(description_level_type desc,
             && get_equip_desc(*this) == ISFLAG_RUNED
             && !testbits(ignore_flags, ISFLAG_RUNED))
         {
-            buff << "runed ";
+            buff << check_gettext(M_("runed "));
         }
 
         if (know_brand && !terse && _missile_brand_is_prefix(brand))
@@ -1367,7 +1377,7 @@ std::string item_def::name_aux(description_level_type desc,
         if (!basename && !dbname)
             buff << racial_description_string(*this, terse);
 
-        buff << ammo_name(static_cast<missile_type>(item_typ));
+        buff << check_gettext(ammo_name(static_cast<missile_type>(item_typ)));
 
         if (know_brand && brand != SPMSL_NORMAL)
         {
@@ -1385,7 +1395,7 @@ std::string item_def::name_aux(description_level_type desc,
             && get_equip_desc(*this) == ISFLAG_RUNED
             && !testbits(ignore_flags, ISFLAG_RUNED))
         {
-            buff << " (runed)";
+            buff << check_gettext(" (runed)");
         }
 
         break;
@@ -1394,9 +1404,9 @@ std::string item_def::name_aux(description_level_type desc,
         if (know_curse && !terse)
         {
             if (cursed())
-                buff << "cursed ";
+                buff << check_gettext("cursed ");
             else if (Options.show_uncursed && !know_pluses)
-                buff << "uncursed ";
+                buff << check_gettext("uncursed ");
         }
 
         if (know_pluses)
@@ -1406,12 +1416,12 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (item_typ == ARM_GLOVES || item_typ == ARM_BOOTS)
-            buff << "pair of ";
+            buff << check_gettext("pair of ");
 
         // When asking for the base item name, randartism is ignored.
         if (is_artefact(*this) && !basename && !dbname)
         {
-            buff << get_artefact_name(*this);
+            buff << check_gettext(get_artefact_name(*this).c_str());
             break;
         }
 
@@ -1427,25 +1437,25 @@ std::string item_def::name_aux(description_level_type desc,
                     || get_armour_slot(*this) == EQ_HELMET
                        && !is_hard_helmet(*this))
                 {
-                    buff << "embroidered ";
+                    buff << check_gettext(M_("embroidered "));
                 }
                 else if (item_typ != ARM_LEATHER_ARMOUR
                          && item_typ != ARM_ANIMAL_SKIN)
                 {
-                    buff << "shiny ";
+                    buff << check_gettext(M_("shiny "));
                 }
                 else
-                    buff << "dyed ";
+                    buff << check_gettext(M_("dyed "));
                 break;
 
             case ISFLAG_RUNED:
                 if (!testbits(ignore_flags, ISFLAG_RUNED))
-                    buff << "runed ";
+                    buff << check_gettext(M_("runed "));
                 break;
 
             case ISFLAG_GLOWING:
                 if (!testbits(ignore_flags, ISFLAG_GLOWING))
-                    buff << "glowing ";
+                    buff << check_gettext(M_("glowing "));
                 break;
             }
         }
@@ -1462,14 +1472,14 @@ std::string item_def::name_aux(description_level_type desc,
 
             buff <<
                    ((dhelm == THELM_DESC_PLAIN)    ? "" :
-                    (dhelm == THELM_DESC_WINGED)   ? "winged "  :
-                    (dhelm == THELM_DESC_HORNED)   ? "horned "  :
-                    (dhelm == THELM_DESC_CRESTED)  ? "crested " :
-                    (dhelm == THELM_DESC_PLUMED)   ? "plumed "  :
-                    (dhelm == THELM_DESC_SPIKED)   ? "spiked "  :
-                    (dhelm == THELM_DESC_VISORED)  ? "visored " :
-                    (dhelm == THELM_DESC_GOLDEN)   ? "golden "
-                                                   : "buggy ");
+                    (dhelm == THELM_DESC_WINGED)   ? check_gettext(M_("winged "))  :
+                    (dhelm == THELM_DESC_HORNED)   ? check_gettext(M_("horned "))  :
+                    (dhelm == THELM_DESC_CRESTED)  ? check_gettext(M_("crested ")) :
+                    (dhelm == THELM_DESC_PLUMED)   ? check_gettext(M_("plumed "))  :
+                    (dhelm == THELM_DESC_SPIKED)   ? check_gettext(M_("spiked "))  :
+                    (dhelm == THELM_DESC_VISORED)  ? check_gettext(M_("visored ")) :
+                    (dhelm == THELM_DESC_GOLDEN)   ? check_gettext(M_("golden "))
+                                                   : check_gettext(M_("buggy ")));
         }
 
         if (!basename && item_typ == ARM_GLOVES)
@@ -1477,10 +1487,10 @@ std::string item_def::name_aux(description_level_type desc,
             const short dglov = get_gloves_desc(*this);
 
             buff <<
-                   ((dglov == TGLOV_DESC_GLOVES)    ? "gloves" :
-                    (dglov == TGLOV_DESC_GAUNTLETS) ? "gauntlets" :
-                    (dglov == TGLOV_DESC_BRACERS)   ? "bracers" :
-                                                      "bug-ridden gloves");
+                   check_gettext((dglov == TGLOV_DESC_GLOVES)    ? M_("gloves") :
+                           (dglov == TGLOV_DESC_GAUNTLETS) ? M_("gauntlets") :
+                           (dglov == TGLOV_DESC_BRACERS)   ? M_("bracers") :
+                                                             M_("bug-ridden gloves"));
         }
         else
             buff << item_base_name(*this);
@@ -1491,15 +1501,17 @@ std::string item_def::name_aux(description_level_type desc,
 
             if (sparm != SPARM_NORMAL)
             {
-                if (!terse)
-                    buff << " of ";
-
                 // "naga barding of running" doesn't make any sense, and yes,
                 // they are possible.
                 if (sub_type == ARM_NAGA_BARDING && sparm == SPARM_RUNNING)
-                    buff << (terse ? "speed" : "speedy slithering");
+                    buff << (terse ? "speed" : " of speedy slithering");
                 else
-                    buff << armour_ego_name(*this, terse);
+                {
+                    if(!terse)
+                        buff << make_stringf(check_gettext(" of %s"), check_gettext(armour_ego_name(*this, terse)));
+                    else
+                        buff << check_gettext(armour_ego_name(*this, terse));
+                }
             }
         }
 
@@ -1510,17 +1522,19 @@ std::string item_def::name_aux(description_level_type desc,
     case OBJ_WANDS:
         if (basename)
         {
-            buff << "wand";
+            buff << check_gettext(M_("wand"));
             break;
         }
 
         if (know_type)
-            buff << "wand of " << wand_type_name(item_typ);
+        {
+            buff << make_stringf(check_gettext("wand of %s"), check_gettext(wand_type_name(item_typ)));
+        }
         else
         {
-            buff << wand_secondary_string(this->special / NDSC_WAND_PRI)
-                 << wand_primary_string(this->special % NDSC_WAND_PRI)
-                 << " wand";
+            buff << make_stringf(check_gettext("%s%s wand"), 
+                check_gettext(wand_secondary_string(this->special / NDSC_WAND_PRI)),
+                check_gettext(wand_primary_string(this->special % NDSC_WAND_PRI)));
         }
 
         if (know_pluses)
@@ -1528,107 +1542,110 @@ std::string item_def::name_aux(description_level_type desc,
         else if (!dbname && with_inscription)
         {
             if (item_plus2 == ZAPCOUNT_EMPTY)
-                buff << " {empty}";
+                buff << check_gettext(" {empty}");
             else if (item_plus2 == ZAPCOUNT_MAX_CHARGED)
-                buff << " {fully recharged}";
+                buff << check_gettext(" {fully recharged}");
             else if (item_plus2 == ZAPCOUNT_RECHARGED)
-                buff << " {recharged}";
+                buff << check_gettext(" {recharged}");
             else if (item_plus2 > 0)
-                buff << " {zapped: " << item_plus2 << '}';
+                buff << make_stringf(check_gettext(" {zapped: %d}"), item_plus2);
         }
         break;
 
     case OBJ_POTIONS:
         if (basename)
         {
-            buff << "potion";
+            buff << check_gettext(M_("potion"));
             break;
         }
 
         if (know_type)
-            buff << "potion of " << potion_type_name(item_typ);
+            /// 1. healing, heal wounds 등 포션에 붙는 말이 번역되서 들어옴. 이를테면
+            /// healing = 회복, heal wounds = 상처 치료
+            buff << make_stringf(check_gettext("potion of %s"), 
+                check_gettext(potion_type_name(item_typ)));
         else
         {
             const int pqual   = PQUAL(this->plus);
             const int pcolour = PCOLOUR(this->plus);
 
             static const char *potion_qualifiers[] = {
-                "",  "bubbling ", "fuming ", "fizzy ", "viscous ", "lumpy ",
-                "smoky ", "glowing ", "sedimented ", "metallic ", "murky ",
-                "gluggy ", "oily ", "slimy ", "emulsified "
+                "",  M_("bubbling "), M_("fuming "), M_("fizzy "), M_("viscous "), M_("lumpy "),
+                M_("smoky "), M_("glowing "), M_("sedimented "), M_("metallic "), M_("murky "),
+                M_("gluggy "), M_("oily "), M_("slimy "), M_("emulsified ")
             };
             COMPILE_CHECK(ARRAYSZ(potion_qualifiers) == PDQ_NQUALS);
 
             static const char *potion_colours[] = {
-                "clear", "blue", "black", "silvery", "cyan", "purple",
-                "orange", "inky", "red", "yellow", "green", "brown", "pink",
-                "white"
+                M_("clear"), M_("blue"), M_("black"), M_("silvery"), M_("cyan"), M_("purple"),
+                M_("orange"), M_("inky"), M_("red"), M_("yellow"), M_("green"), M_("brown"), M_("pink"),
+                M_("white")
             };
             COMPILE_CHECK(ARRAYSZ(potion_colours) == PDC_NCOLOURS);
 
             const char *qualifier =
                 (pqual < 0 || pqual >= PDQ_NQUALS) ? "bug-filled "
-                                    : potion_qualifiers[pqual];
+                                    : check_gettext(potion_qualifiers[pqual]);
 
             const char *clr =  (pcolour < 0 || pcolour >= PDC_NCOLOURS) ?
-                                   "bogus" : potion_colours[pcolour];
+                                   "bogus" : check_gettext(potion_colours[pcolour]);
 
-            buff << qualifier << clr << " potion";
+            /// 1. fuming, slimy 등의 수식어가 번역되서 들어옴. eg> 연기나는, 끈적이는
+            /// 2. clear, blue 등의 색깔이 번역되서 들어옴. eg> 맑은, 푸른
+            buff << make_stringf(check_gettext("%s%s potion"), qualifier, clr);
         }
         break;
 
     case OBJ_FOOD:
         switch (item_typ)
         {
-        case FOOD_MEAT_RATION: buff << "meat ration"; break;
-        case FOOD_BREAD_RATION: buff << "bread ration"; break;
-        case FOOD_PEAR: buff << "pear"; break;
-        case FOOD_APPLE: buff << "apple"; break;
-        case FOOD_CHOKO: buff << "choko"; break;
-        case FOOD_HONEYCOMB: buff << "honeycomb"; break;
-        case FOOD_ROYAL_JELLY: buff << "royal jelly"; break;
-        case FOOD_SNOZZCUMBER: buff << "snozzcumber"; break;
-        case FOOD_PIZZA: buff << "slice of pizza"; break;
-        case FOOD_APRICOT: buff << "apricot"; break;
-        case FOOD_ORANGE: buff << "orange"; break;
-        case FOOD_BANANA: buff << "banana"; break;
-        case FOOD_STRAWBERRY: buff << "strawberry"; break;
-        case FOOD_RAMBUTAN: buff << "rambutan"; break;
-        case FOOD_LEMON: buff << "lemon"; break;
-        case FOOD_GRAPE: buff << "grape"; break;
-        case FOOD_SULTANA: buff << "sultana"; break;
-        case FOOD_LYCHEE: buff << "lychee"; break;
-        case FOOD_BEEF_JERKY: buff << "beef jerky"; break;
-        case FOOD_CHEESE: buff << "cheese"; break;
-        case FOOD_SAUSAGE: buff << "sausage"; break;
-        case FOOD_AMBROSIA: buff << "piece of ambrosia"; break;
+        case FOOD_MEAT_RATION: buff << check_gettext(M_("meat ration")); break;
+        case FOOD_BREAD_RATION: buff << check_gettext(M_("bread ration")); break;
+        case FOOD_PEAR: buff << check_gettext(M_("pear")); break;
+        case FOOD_APPLE: buff << check_gettext(M_("apple")); break;
+        case FOOD_CHOKO: buff << check_gettext(M_("choko")); break;
+        case FOOD_HONEYCOMB: buff << check_gettext(M_("honeycomb")); break;
+        case FOOD_ROYAL_JELLY: buff << check_gettext(M_("royal jelly")); break;
+        case FOOD_SNOZZCUMBER: buff << check_gettext(M_("snozzcumber")); break;
+        case FOOD_PIZZA: buff << check_gettext(M_("slice of pizza")); break;
+        case FOOD_APRICOT: buff << check_gettext(M_("apricot")); break;
+        case FOOD_ORANGE: buff << check_gettext(M_("orange")); break;
+        case FOOD_BANANA: buff << check_gettext(M_("banana")); break;
+        case FOOD_STRAWBERRY: buff << check_gettext(M_("strawberry")); break;
+        case FOOD_RAMBUTAN: buff << check_gettext(M_("rambutan")); break;
+        case FOOD_LEMON: buff << check_gettext(M_("lemon")); break;
+        case FOOD_GRAPE: buff << check_gettext(M_("grape")); break;
+        case FOOD_SULTANA: buff << check_gettext(M_("sultana")); break;
+        case FOOD_LYCHEE: buff << check_gettext(M_("lychee")); break;
+        case FOOD_BEEF_JERKY: buff << check_gettext(M_("beef jerky")); break;
+        case FOOD_CHEESE: buff << check_gettext(M_("cheese")); break;
+        case FOOD_SAUSAGE: buff << check_gettext(M_("sausage")); break;
+        case FOOD_AMBROSIA: buff << check_gettext(M_("piece of ambrosia")); break;
         case FOOD_CHUNK:
             if (!basename && !dbname)
             {
-                if (food_is_rotten(*this) && it_plus != MONS_ROTTING_HULK)
-                    buff << "rotting ";
-
-                buff << "chunk of "
-                     << mons_type_name(it_plus, DESC_PLAIN)
-                     << " flesh";
+                buff << make_stringf(check_gettext("%schunk of %s flesh"), 
+                    (food_is_rotten(*this) && it_plus != MONS_ROTTING_HULK) ? check_gettext(M_("rotting ")) : "",
+                    check_gettext(mons_type_name(it_plus, DESC_PLAIN).c_str()));
             }
             else
-                buff << "chunk of flesh";
+                buff << check_gettext("chunk of flesh");
             break;
         }
 
         break;
 
     case OBJ_SCROLLS:
-        buff << "scroll";
         if (basename)
+        {
+            buff << check_gettext(M_("scroll"));
             break;
-        else
-            buff << " ";
+        }
 
         if (know_type)
         {
-            buff << "of " << scroll_type_name(item_typ);
+            /// 1. 스크롤의 type이 번역되어 들어옴. eg> 공포, 소음, 보석 저주, 무기 저주, 무기 강화 I
+            buff << make_stringf(check_gettext("scroll of %s"), check_gettext(scroll_type_name(item_typ)));
         }
         else
         {
@@ -1636,7 +1653,7 @@ std::string item_def::name_aux(description_level_type desc,
                 this->special
                 + (static_cast<uint32_t>(it_plus) << 8)
                 + (static_cast<uint32_t>(OBJ_SCROLLS) << 16);
-            buff << "labeled " << make_name(sseed, true);
+            buff << make_stringf(check_gettext("scroll labeled %s"), make_name(sseed, true).c_str());
         }
         break;
 
@@ -1645,9 +1662,9 @@ std::string item_def::name_aux(description_level_type desc,
         if (basename)
         {
             if (jewellery_is_amulet(*this))
-                buff << "amulet";
+                buff << check_gettext(M_("amulet"));
             else
-                buff << "ring";
+                buff << check_gettext(M_("ring"));
 
             break;
         }
@@ -1657,7 +1674,7 @@ std::string item_def::name_aux(description_level_type desc,
         if (know_curse)
         {
             if (cursed())
-                buff << "cursed ";
+                buff << check_gettext("cursed ");
             else if (Options.show_uncursed && !terse && desc != DESC_PLAIN
                      && (!is_randart || !know_type)
                      && (!ring_has_pluses(*this) || !know_pluses)
@@ -1665,13 +1682,13 @@ std::string item_def::name_aux(description_level_type desc,
                      // no need to belabour the obvious.
                      && get_equip_slot(this) == -1)
             {
-                buff << "uncursed ";
+                buff << check_gettext("uncursed ");
             }
         }
 
         if (is_randart && !dbname)
         {
-            buff << get_artefact_name(*this);
+            buff << check_gettext(get_artefact_name(*this).c_str());
             break;
         }
 
@@ -1689,21 +1706,21 @@ std::string item_def::name_aux(description_level_type desc,
                 buff << ' ';
             }
 
-            buff << jewellery_type_name(item_typ);
+            buff << check_gettext(jewellery_type_name(item_typ));
         }
         else
         {
             if (jewellery_is_amulet(*this))
             {
-                buff << amulet_secondary_string(this->special / NDSC_JEWEL_PRI)
-                     << amulet_primary_string(this->special % NDSC_JEWEL_PRI)
-                     << " amulet";
+                buff << make_stringf(check_gettext("%s%s amulet"), 
+                    check_gettext(amulet_secondary_string(this->special / NDSC_JEWEL_PRI)),
+                    check_gettext(amulet_primary_string(this->special % NDSC_JEWEL_PRI)));
             }
             else  // i.e., a ring
             {
-                buff << ring_secondary_string(this->special / NDSC_JEWEL_PRI)
-                     << ring_primary_string(this->special % NDSC_JEWEL_PRI)
-                     << " ring";
+                buff << make_stringf(check_gettext("%s%s ring"),
+                    check_gettext(ring_secondary_string(this->special / NDSC_JEWEL_PRI)),
+                    check_gettext(ring_primary_string(this->special % NDSC_JEWEL_PRI)));
             }
         }
         break;
@@ -1712,8 +1729,8 @@ std::string item_def::name_aux(description_level_type desc,
         if (item_typ == MISC_RUNE_OF_ZOT)
         {
             if (!dbname)
-                buff << rune_type_name(it_plus) << " ";
-            buff << "rune of Zot";
+                buff << check_gettext(rune_type_name(it_plus)) << " ";
+            buff << check_gettext(M_("rune of Zot"));
         }
         else
         {
@@ -1721,7 +1738,7 @@ std::string item_def::name_aux(description_level_type desc,
             {
                 if (basename)
                 {
-                    buff << "deck of cards";
+                    buff << check_gettext(M_("deck of cards"));
                     break;
                 }
                 else if (bad_deck(*this))
@@ -1730,16 +1747,16 @@ std::string item_def::name_aux(description_level_type desc,
                     break;
                 }
                 if (!dbname)
-                    buff << deck_rarity_name(deck_rarity(*this)) << ' ';
+                    buff << check_gettext(deck_rarity_name(deck_rarity(*this))) << ' ';
             }
-            buff << misc_type_name(item_typ, know_type);
+            buff << check_gettext(misc_type_name(item_typ, know_type));
             if (is_deck(*this) && !dbname
                 && (top_card_is_known(*this) || this->plus2 != 0))
             {
                 buff << " {";
                 // A marked deck!
                 if (top_card_is_known(*this))
-                    buff << card_name(top_card(*this));
+                    buff << check_gettext(card_name(top_card(*this)));
 
                 // How many cards have been drawn, or how many are
                 // left.
@@ -1749,9 +1766,9 @@ std::string item_def::name_aux(description_level_type desc,
                         buff << ", ";
 
                     if (this->plus2 > 0)
-                        buff << "drawn: ";
+                        buff << check_gettext("drawn: ");
                     else
-                        buff << "left: ";
+                        buff << check_gettext("left: ");
 
                     buff << abs(this->plus2);
                 }
@@ -1764,36 +1781,37 @@ std::string item_def::name_aux(description_level_type desc,
     case OBJ_BOOKS:
         if (is_random_artefact(*this) && !dbname && !basename)
         {
-            buff << get_artefact_name(*this);
+            buff << check_gettext(get_artefact_name(*this).c_str());
             if (!know_type)
-                buff << "book";
+                buff << check_gettext(M_("book"));
             break;
         }
         if (basename)
-            buff << (item_typ == BOOK_MANUAL ? "manual" : "book");
+            buff << (item_typ == BOOK_MANUAL ? check_gettext(M_("manual")) : check_gettext(M_("book")));
         else if (!know_type)
         {
-            buff << book_secondary_string(this->special / NDSC_BOOK_PRI)
-                 << book_primary_string(this->special % NDSC_BOOK_PRI)
-                 << (item_typ == BOOK_MANUAL ? "manual" : "book");
+            buff << make_stringf( check_gettext(item_typ == BOOK_MANUAL ? N_("%s%smanual") : N_("%s%sbook")),
+                check_gettext(book_secondary_string(this->special / NDSC_BOOK_PRI)),
+                check_gettext(book_primary_string(this->special % NDSC_BOOK_PRI)));
         }
         else if (item_typ == BOOK_MANUAL)
         {
             if (dbname)
-                buff << "manual";
+                buff << check_gettext(M_("manual"));
             else
-                buff << "manual of " << skill_name((skill_type)it_plus);
+                buff << make_stringf(check_gettext("manual of %s"), check_gettext(skill_name((skill_type)it_plus)));
         }
         else if (item_typ == BOOK_NECRONOMICON)
-            buff << "Necronomicon";
+            buff << check_gettext(M_("Necronomicon"));
         else if (item_typ == BOOK_GRAND_GRIMOIRE)
-            buff << "Grand Grimoire";
+            buff << check_gettext(M_("Grand Grimoire"));
         else if (item_typ == BOOK_DESTRUCTION)
-            buff << "tome of Destruction";
+            buff << check_gettext(M_("tome of Destruction"));
         else if (item_typ == BOOK_YOUNG_POISONERS)
-            buff << "Young Poisoner's Handbook";
+            buff << check_gettext(M_("Young Poisoner's Handbook"));
         else
-            buff << "book of " << _book_type_name(item_typ);
+            /// 1. 책의 종류가 번역되어 들어옴. eg> 화염, 냉기, 대기, 추적, 천공
+            buff << make_stringf(check_gettext("book of %s"), check_gettext(_book_type_name(item_typ)));
         break;
 
     case OBJ_STAVES:
@@ -2063,7 +2081,7 @@ void set_ident_type(item_def &item, item_type_id_state_type setting,
         && !(item.flags & (ISFLAG_NOTED_ID | ISFLAG_NOTED_GET)))
     {
         // Make a note of it.
-        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(DESC_NOCAP_A).c_str(),
+        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
                        origin_desc(item).c_str()));
 
         // Sometimes (e.g. shops) you can ID an item before you get it;
@@ -2120,7 +2138,7 @@ public:
     virtual std::string get_text(const bool = false) const
     {
         int flags = item->base_type == OBJ_WANDS ? 0 : ISFLAG_KNOW_PLUSES;
-        return std::string(" ") + item->name(DESC_PLAIN, false, true,
+        return std::string(" ") + item->name(false, DESC_PLAIN, false, true,
                                              false, false, flags);
     }
 };
@@ -2138,8 +2156,8 @@ bool identified_item_names(const item_def *it1,
                             const item_def *it2)
 {
     int flags = it1->base_type == OBJ_WANDS ? 0 : ISFLAG_KNOW_PLUSES;
-    return it1->name(DESC_PLAIN, false, true, false, false, flags)
-         < it2->name(DESC_PLAIN, false, true, false, false, flags);
+    return it1->name(false, DESC_PLAIN, false, true, false, false, flags)
+         < it2->name(false, DESC_PLAIN, false, true, false, false, flags);
 }
 
 void check_item_knowledge(bool unknown_items)
@@ -2619,7 +2637,7 @@ bool is_interesting_item(const item_def& item)
         return (true);
 
     const std::string iname = menu_colour_item_prefix(item, false) + " "
-                              + item.name(DESC_PLAIN);
+                              + item.name(false, DESC_PLAIN);
     for (unsigned i = 0; i < Options.note_items.size(); ++i)
         if (Options.note_items[i].matches(iname))
             return (true);
@@ -3291,7 +3309,7 @@ std::string get_menu_colour_prefix_tags(const item_def &item,
     std::string cprf       = menu_colour_item_prefix(item);
     std::string colour     = "";
     std::string colour_off = "";
-    std::string item_name  = item.name(desc);
+    std::string item_name  = item.name(false, desc);
     int col = menu_colour(item_name, cprf, "pickup");
 
     if (col != -1)
@@ -3315,7 +3333,7 @@ std::string get_message_colour_tags(const item_def &item,
     std::string cprf       = menu_colour_item_prefix(item);
     std::string colour     = "";
     std::string colour_off = "";
-    std::string item_name  = item.name(desc);
+    std::string item_name  = item.name(false, desc);
     cprf += " " + item_name;
 
     int col = -1;
@@ -3383,7 +3401,7 @@ void init_item_name_cache()
                 item.special = DECK_RARITY_COMMON;
                 init_deck(item);
             }
-            std::string name = item.name(DESC_DBNAME, true, true);
+            std::string name = item.name(false, DESC_DBNAME, true, true);
             lowercase(name);
             glyph g = get_item_glyph(&item);
 

@@ -97,7 +97,7 @@ int identify(int power, int item_slot, std::string *pre_msg)
         }
 
         // Output identified item.
-        mpr(item.name(DESC_INVENTORY_EQUIP).c_str());
+        mpr(item.name(true, DESC_INVENTORY_EQUIP).c_str());
         if (item_slot == you.equip[EQ_WEAPON])
             you.wield_change = true;
 
@@ -784,7 +784,7 @@ bool detect_curse(int scroll, bool suppress_msg)
                 item.quantity--;
 
             mprf("%s softly glows as it is inspected for curses.",
-                 item.name(DESC_CAP_YOUR).c_str());
+                 item.name(true, DESC_CAP_YOUR).c_str());
         }
         else
             mpr("Your items softly glow as they are inspected for curses.");
