@@ -2218,9 +2218,9 @@ static std::string _mon_special_name(const monster& mon, description_level_type 
         switch (desc)
         {
         case DESC_CAP_THE: case DESC_CAP_A:
-            return ("It");
+            return gettext(M_("It"));
         case DESC_NOCAP_THE: case DESC_NOCAP_A: case DESC_PLAIN:
-            return ("it");
+            return gettext(M_("it"));
         default:
             return ("it (buggy)");
         }
