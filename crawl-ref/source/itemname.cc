@@ -170,7 +170,7 @@ std::string item_def::name(bool allow_translate,
         case DESC_CAP_A:
         case DESC_CAP_YOUR:
         case DESC_CAP_THE:
-            buff << "The ";
+            buff << check_gettext("The ");
             break;
         case DESC_NOCAP_A:
         case DESC_NOCAP_YOUR:
@@ -178,7 +178,7 @@ std::string item_def::name(bool allow_translate,
         case DESC_NOCAP_ITS:
         case DESC_INVENTORY_EQUIP:
         case DESC_INVENTORY:
-            buff << "the ";
+            buff << check_gettext("the ");
             break;
         default:
         case DESC_PLAIN:
@@ -189,11 +189,11 @@ std::string item_def::name(bool allow_translate,
     {
         switch (descrip)
         {
-        case DESC_CAP_THE:    buff << "The "; break;
-        case DESC_NOCAP_THE:  buff << "the "; break;
-        case DESC_CAP_YOUR:   buff << "Your "; break;
-        case DESC_NOCAP_YOUR: buff << "your "; break;
-        case DESC_NOCAP_ITS:  buff << "its "; break;
+        case DESC_CAP_THE:    buff << check_gettext(M_("The ")); break;
+        case DESC_NOCAP_THE:  buff << check_gettext(M_("the ")); break;
+        case DESC_CAP_YOUR:   buff << check_gettext(M_("Your ")); break;
+        case DESC_NOCAP_YOUR: buff << check_gettext(M_("your ")); break;
+        case DESC_NOCAP_ITS:  buff << check_gettext(M_("its ")); break;
         case DESC_CAP_A:
         case DESC_NOCAP_A:
         case DESC_INVENTORY_EQUIP:
@@ -214,25 +214,32 @@ std::string item_def::name(bool allow_translate,
     }
     else
     {
-        switch (descrip)
+        #ifdef KR
+        if(translate_flag == false) 
         {
-        case DESC_CAP_THE:    buff << "The "; break;
-        case DESC_NOCAP_THE:  buff << "the "; break;
-        case DESC_CAP_A:      buff << (startvowel ? "An " : "A "); break;
+        #endif
+            switch (descrip)
+            {
+            case DESC_CAP_THE:    buff << check_gettext(M_("The ")); break;
+            case DESC_NOCAP_THE:  buff << check_gettext(M_("the ")); break;
+            case DESC_CAP_A:      buff << (startvowel ? check_gettext(M_("An ")) : check_gettext(M_("A "))); break;
 
-        case DESC_CAP_YOUR:   buff << "Your "; break;
-        case DESC_NOCAP_YOUR: buff << "your "; break;
-        case DESC_NOCAP_ITS:  buff << "its "; break;
+            case DESC_CAP_YOUR:   buff << check_gettext(M_("Your ")); break;
+            case DESC_NOCAP_YOUR: buff << check_gettext(M_("your ")); break;
+            case DESC_NOCAP_ITS:  buff << check_gettext(M_("its ")); break;
 
-        case DESC_NOCAP_A:
-        case DESC_INVENTORY_EQUIP:
-        case DESC_INVENTORY:
-                              buff << (startvowel ? "an " : "a "); break;
+            case DESC_NOCAP_A:
+            case DESC_INVENTORY_EQUIP:
+            case DESC_INVENTORY:
+                                  buff << (startvowel ? check_gettext(M_("an ")) : check_gettext(M_("a "))); break;
 
-        case DESC_PLAIN:
-        default:
-            break;
+            case DESC_PLAIN:
+            default:
+                break;
+            }
+        #ifdef KR
         }
+        #endif
     }
 
     buff << auxname;

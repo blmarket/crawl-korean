@@ -1746,16 +1746,16 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 const char* failure_rate_to_string(int fail)
 {
-    return (fail == 100) ? "Useless"   : // 0% success chance
-           (fail > 77)   ? "Terrible"  : // 0-5%
-           (fail > 59)   ? "Very Poor" : // 5-30%
-           (fail > 50)   ? "Poor"      : // 30-50%
-           (fail > 40)   ? "Fair"      : // 50-70%
-           (fail > 35)   ? "Good"      : // 70-80%
-           (fail > 28)   ? "Very Good" : // 80-90%
-           (fail > 22)   ? "Great"     : // 90-95%
-           (fail >  0)   ? "Excellent"   // 95-100%
-                         : "Perfect";    // 100%
+    return (fail == 100) ? M_("Useless")   : // 0% success chance
+           (fail > 77)   ? M_("Terrible")  : // 0-5%
+           (fail > 59)   ? M_("Very Poor") : // 5-30%
+           (fail > 50)   ? M_("Poor")      : // 30-50%
+           (fail > 40)   ? M_("Fair")      : // 50-70%
+           (fail > 35)   ? M_("Good")      : // 70-80%
+           (fail > 28)   ? M_("Very Good") : // 80-90%
+           (fail > 22)   ? M_("Great")     : // 90-95%
+           (fail >  0)   ? M_("Excellent")   // 95-100%
+                         : M_("Perfect");    // 100%
 }
 
 const char* spell_hunger_string(spell_type spell, bool rod)

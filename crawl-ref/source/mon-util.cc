@@ -3071,28 +3071,28 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
     switch (variant)
     {
         case PRONOUN_CAP:
-            return ((gender == GENDER_NEUTER) ? "It" :
-                    (gender == GENDER_MALE)   ? "He" : "She");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("It")) :
+                    (gender == GENDER_MALE)   ? gettext(M_("He")) : gettext(M_("She")));
 
         case PRONOUN_NOCAP:
-            return ((gender == GENDER_NEUTER) ? "it" :
-                    (gender == GENDER_MALE)   ? "he" : "she");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("it")) :
+                    (gender == GENDER_MALE)   ? gettext(M_("he")) : gettext(M_("she")));
 
         case PRONOUN_CAP_POSSESSIVE:
-            return ((gender == GENDER_NEUTER) ? "Its" :
-                    (gender == GENDER_MALE)   ? "His" : "Her");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("Its")) :
+                    (gender == GENDER_MALE)   ? gettext(M_("His")) : gettext(M_("Her")));
 
         case PRONOUN_NOCAP_POSSESSIVE:
-            return ((gender == GENDER_NEUTER) ? "its" :
-                    (gender == GENDER_MALE)   ? "his" : "her");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("its")) :
+                    (gender == GENDER_MALE)   ? gettext(M_("his")) : gettext(M_("her")));
 
         case PRONOUN_REFLEXIVE:  // Awkward at start of sentence, always lower.
-            return ((gender == GENDER_NEUTER) ? "itself"  :
-                    (gender == GENDER_MALE)   ? "himself" : "herself");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("itself"))  :
+                    (gender == GENDER_MALE)   ? gettext(M_("himself")) : gettext(M_("herself")));
 
         case PRONOUN_OBJECTIVE:  // Awkward at start of sentence, always lower.
-            return ((gender == GENDER_NEUTER) ? "it"  :
-                    (gender == GENDER_MALE)   ? "him" : "her");
+            return ((gender == GENDER_NEUTER) ? gettext(M_("it"))  :
+                    (gender == GENDER_MALE)   ? gettext(M_("him")) : gettext(M_("her")));
      }
 
     return ("");

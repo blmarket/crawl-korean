@@ -113,7 +113,7 @@ int spellbook_contents(item_def &book, read_book_action_type action,
 
     out.cprintf("%s", book.name(true, DESC_CAP_THE).c_str());
 
-    out.cprintf("\n\n Spells                             Type                      Level\n");
+    out.cprintf(gettext("\n\n Spells                             Type                      Level\n"));
 
     for (j = 0; j < SPELLBOOK_SIZE; j++)
     {
@@ -163,11 +163,11 @@ int spellbook_contents(item_def &book, read_book_action_type action,
         out.cprintf(strng);
         out.cprintf(" - ");
 
-        out.cprintf("%s", chop_string(spell_title(stype), 29).c_str());
+        out.cprintf("%s", chop_string(gettext(spell_title(stype)), 29).c_str());
 
         std::string schools;
         if (action == RBOOK_USE_STAFF)
-            schools = "Evocations";
+            schools = gettext(M_("Evocations"));
         else
         {
             bool first = true;
@@ -177,7 +177,7 @@ int spellbook_contents(item_def &book, read_book_action_type action,
                 {
                     if (!first)
                         schools += "/";
-                    schools += spelltype_long_name(1 << i);
+                    schools += gettext(spelltype_long_name(1 << i));
                     first = false;
                 }
             }
@@ -192,7 +192,7 @@ int spellbook_contents(item_def &book, read_book_action_type action,
     switch (action)
     {
     case RBOOK_USE_STAFF:
-        out.cprintf("Select a spell to cast.\n");
+        out.cprintf(gettext("Select a spell to cast.\n"));
         break;
 
     case RBOOK_READ_SPELL:
@@ -200,11 +200,11 @@ int spellbook_contents(item_def &book, read_book_action_type action,
             && item_type_known(book)
             && player_can_memorise_from_spellbook(book))
         {
-            out.cprintf("Select a spell to read its description, to "
-                         "memorise it or to forget it.\n");
+            out.cprintf(gettext("Select a spell to read its description, to "
+                         "memorise it or to forget it.\n"));
         }
         else
-            out.cprintf("Select a spell to read its description.\n");
+            out.cprintf(gettext("Select a spell to read its description.\n"));
         break;
 
     default:
@@ -460,9 +460,9 @@ void mark_had_book(int booktype)
 void inscribe_book_highlevel(item_def &book)
 {
     if (!item_type_known(book)
-        && book.inscription.find("highlevel") == std::string::npos)
+        && book.inscription.find(gettext(M_("highlevel"))) == std::string::npos)
     {
-        add_inscription(book, "highlevel");
+        add_inscription(book, gettext(M_("highlevel")));
     }
 }
 
@@ -471,7 +471,7 @@ int read_book(item_def &book, read_book_action_type action)
     if (book.base_type == OBJ_BOOKS && !item_type_known(book)
         && !player_can_memorise_from_spellbook(book))
     {
-        mpr("This book is beyond your current level of understanding.");
+        mpr(gettext("This book is beyond your current level of understanding."));
         more();
 
         inscribe_book_highlevel(book);
@@ -663,6 +663,7 @@ static void _index_book(item_def& book, spells_to_books &book_hash,
 
     if (spells_in_book == 0)
     {
+        /// 에러상황이므로 번역안함.
         mprf(MSGCH_ERROR, "Spellbook \"%s\" contains no spells! Please "
              "file a bug report.", book.name(false, DESC_PLAIN).c_str());
         book_errors = true;
@@ -725,17 +726,17 @@ static bool _get_mem_list(spell_list &mem_spells,
         {
             if (num_unknown > 1)
             {
-                mpr("You must pick up those books before reading them.",
+                mpr(gettext("You must pick up those books before reading them."),
                     MSGCH_PROMPT);
             }
             else if (num_unknown == 1)
             {
-                mpr("You must pick up this book before reading it.",
+                mpr(gettext("You must pick up this book before reading it."),
                     MSGCH_PROMPT);
             }
             else
             {
-                mpr("You aren't carrying or standing over any spellbooks.",
+                mpr(gettext("You aren't carrying or standing over any spellbooks."),
                     MSGCH_PROMPT);
             }
         }
@@ -750,9 +751,9 @@ static bool _get_mem_list(spell_list &mem_spells,
     {
         if (!just_check)
         {
-            mprf(MSGCH_PROMPT, "All of the spellbooks%s are beyond your "
-                 "current level of comprehension.",
-                 num_on_ground == 0 ? " you're carrying" : "");
+            mprf(MSGCH_PROMPT, gettext("All of the spellbooks%s are beyond your "
+                 "current level of comprehension."),
+                 num_on_ground == 0 ? gettext(" you're carrying") : "");
         }
         return (false);
     }
@@ -760,7 +761,7 @@ static bool _get_mem_list(spell_list &mem_spells,
     {
         if (!just_check)
         {
-            mpr("None of the spellbooks you are carrying contain any spells.",
+            mpr(gettext("None of the spellbooks you are carrying contain any spells."),
                 MSGCH_PROMPT);
         }
         return (false);
@@ -801,7 +802,7 @@ static bool _get_mem_list(spell_list &mem_spells,
     if (num_memable > 0 && you.spell_no >= MAX_KNOWN_SPELLS)
     {
         if (!just_check)
-            mpr("Your head is already too full of spells!");
+            mpr(gettext("Your head is already too full of spells!"));
         return (false);
     }
 
@@ -815,15 +816,27 @@ static bool _get_mem_list(spell_list &mem_spells,
     unsigned int total = num_known + num_race + num_low_xl + num_low_levels;
 
     if (num_known == total)
-        mpr("You already know all available spells.", MSGCH_PROMPT);
+        mpr(gettext("You already know all available spells."), MSGCH_PROMPT);
     else if (num_race == total || (num_known + num_race) == total)
     {
-        const bool lichform = (you.form == TRAN_LICH);
-        const std::string species = "a " + species_name(you.species);
-        mprf(MSGCH_PROMPT,
-             "You cannot memorise any of the available spells because you "
-             "are %s.", lichform ? "in Lich form"
-                                 : lowercase_string(species).c_str());
+        if(you.form == TRAN_LICH)
+        {
+            mprf(MSGCH_PROMPT,
+                    gettext("You cannot memorise any of the available spells because you "
+                        "are in Lich form."));
+        }
+        else
+        {
+#ifdef KR
+            mprf(MSGCH_PROMPT,
+                    gettext("You cannot memorise any of the available spells because you "
+                        "are %s."), gettext(species_name(you.species).c_str()));
+#else
+            mprf(MSGCH_PROMPT,
+                    gettext("You cannot memorise any of the available spells because you "
+                        "are a %s."), lowercase_string(species).c_str());
+#endif
+        }
     }
     else if (num_low_levels > 0 || num_low_xl > 0)
     {
@@ -839,9 +852,9 @@ static bool _get_mem_list(spell_list &mem_spells,
 
     if (num_unreadable)
     {
-        mprf(MSGCH_PROMPT, "Additionally, %u of your spellbooks are beyond "
+        mprf(MSGCH_PROMPT, gettext("Additionally, %u of your spellbooks are beyond "
              "your current level of understanding, and thus none of the "
-             "spells in them are available to you.", num_unreadable);
+             "spells in them are available to you."), num_unreadable);
     }
 
     return (false);
@@ -945,30 +958,30 @@ static spell_type _choose_mem_spell(spell_list &spells,
 #ifdef USE_TILE_LOCAL
     // [enne] Hack.  Use a separate title, so the column headers are aligned.
     spell_menu.set_title(
-        new MenuEntry(" Your Spells - Memorisation  (toggle to descriptions with '!')",
+        new MenuEntry(gettext(" Your Spells - Memorisation  (toggle to descriptions with '!')"),
             MEL_TITLE));
 
     spell_menu.set_title(
-        new MenuEntry(" Your Spells - Descriptions  (toggle to memorisation with '!')",
+        new MenuEntry(gettext(" Your Spells - Descriptions  (toggle to memorisation with '!')"),
             MEL_TITLE), false);
 
     {
         MenuEntry* me =
-            new MenuEntry("     Spells                        Type          "
-                          "                Success  Level",
+            new MenuEntry(gettext("     Spells                        Type          "
+                          "                Success  Level"),
                 MEL_ITEM);
         me->colour = BLUE;
         spell_menu.add_entry(me);
     }
 #else
     spell_menu.set_title(
-        new MenuEntry("     Spells (Memorisation)         Type          "
-                      "                Success  Level",
+        new MenuEntry(gettext("     Spells (Memorisation)         Type          "
+                      "                Success  Level"),
             MEL_TITLE));
 
     spell_menu.set_title(
-        new MenuEntry("     Spells (Description)          Type          "
-                      "                Success  Level",
+        new MenuEntry(gettext("     Spells (Description)          Type          "
+                      "                Success  Level"),
             MEL_TITLE), false);
 #endif
 
@@ -978,31 +991,29 @@ static spell_type _choose_mem_spell(spell_list &spells,
     spell_menu.action_cycle = Menu::CYCLE_TOGGLE;
     spell_menu.menu_action  = Menu::ACT_EXECUTE;
 
-    std::string more_str = make_stringf("<lightgreen>%d spell level%s left"
-                                        "<lightgreen>",
-                                        player_spell_levels(),
-                                        (player_spell_levels() > 1
-                                         || player_spell_levels() == 0) ? "s" : "");
+    std::string more_str = make_stringf(ngettext("<lightgreen>%d spell level left<lightgreen>",
+                                                 "<lightgreen>%d spell levels left<lightgreen>",
+                                                 player_spell_levels()), player_spell_levels());
 
     if (num_unreadable > 0)
     {
-        more_str += make_stringf(", <lightmagenta>%u overly difficult "
-                                 "spellbook%s</lightmagenta>",
-                                 num_unreadable,
-                                 num_unreadable > 1 ? "s" : "");
+        more_str += make_stringf(ngettext(", <lightmagenta>%u overly difficult spellbook</lightmagenta>",
+                                          ", <lightmagenta>%u overly difficult spellbooks</lightmagenta>", 
+                                          num_unreadable), 
+                                    num_unreadable);
     }
 
     if (num_race > 0)
     {
-        more_str += make_stringf(", <lightred>%u spell%s unmemorisable"
-                                 "</lightred>",
-                                 num_race,
-                                 num_race > 1 ? "s" : "");
+        more_str += make_stringf(ngettext(", <lightred>%u spell unmemorisable</lightred>",
+                                          ", <lightred>%u spells unmemorisable</lightred>",
+                                          num_race),
+                                 num_race);
     }
 
 #ifndef USE_TILE_LOCAL
     // Tiles menus get this information in the title.
-    more_str += "   Toggle display with '<w>!</w>'";
+    more_str += gettext("   Toggle display with '<w>!</w>'");
 #endif
 
     spell_menu.set_more(formatted_string::parse_string(more_str));
@@ -1042,14 +1053,14 @@ static spell_type _choose_mem_spell(spell_list &spells,
         desc << "<" << colour_to_str(colour) << ">";
 
         desc << std::left;
-        desc << chop_string(spell_title(spell), 30);
+        desc << chop_string(gettext(spell_title(spell)), 30);
         desc << spell_schools_string(spell);
 
         int so_far = strwidth(desc.str()) - (colour_to_str(colour).length()+2);
         if (so_far < 60)
             desc << std::string(60 - so_far, ' ');
 
-        desc << chop_string(failure_rate_to_string(spell_fail(spell)), 12)
+        desc << chop_string(gettext(failure_rate_to_string(spell_fail(spell))), 12)
              << spell_difficulty(spell);
 
         desc << "</" << colour_to_str(colour) << ">";
@@ -1100,7 +1111,7 @@ bool can_learn_spell(bool silent)
     if (you.stat_zero[STAT_INT])
     {
         if (!silent)
-            mpr("Your brain is not functional enough to learn spells.");
+            mpr(gettext("Your brain is not functional enough to learn spells."));
         return (false);
     }
 
@@ -1108,8 +1119,8 @@ bool can_learn_spell(bool silent)
     {
         if (!silent)
         {
-            mpr("You can't use spell magic! I'm afraid it's scrolls only "
-                "for now.");
+            mpr(gettext("You can't use spell magic! I'm afraid it's scrolls only "
+                "for now."));
         }
         return (false);
     }
@@ -1117,7 +1128,7 @@ bool can_learn_spell(bool silent)
     if (you.confused())
     {
         if (!silent)
-            mpr("You are too confused!");
+            mpr(gettext("You are too confused!"));
         return (false);
     }
 
@@ -1167,17 +1178,20 @@ std::string desc_cannot_memorise_reason(bool undead)
     const bool lichform = (undead
                            && you.form == TRAN_LICH);
 
-    std::string desc = "You cannot ";
-    if (lichform)
-        desc += "currently ";
-    desc += "memorise or cast this spell because you are ";
-
-    if (lichform)
-        desc += "in Lich form";
+    std::string desc;
+    if(lichform == false)
+    {
+        desc = make_stringf(gettext("You cannot memorise or cast this spell because you are a %s."),
+#ifdef KR
+                    gettext(species_name(you.species).c_str()));
+#else
+                    lowercase_string(species_name(you.species));
+#endif
+    }
     else
-        desc += "a " + lowercase_string(species_name(you.species));
-
-    desc += ".";
+    {
+        desc = gettext("You cannot currently memorise or cast this spell because you are in Lich form.");
+    }
 
     return (desc);
 }
@@ -1199,25 +1213,25 @@ static bool _learn_spell_checks(spell_type specspell)
 
     if (you.has_spell(specspell))
     {
-        mpr("You already know that spell!");
+        mpr(gettext("You already know that spell!"));
         return (false);
     }
 
     if (you.spell_no >= MAX_KNOWN_SPELLS)
     {
-        mpr("Your head is already too full of spells!");
+        mpr(gettext("Your head is already too full of spells!"));
         return (false);
     }
 
     if (you.experience_level < spell_difficulty(specspell))
     {
-        mpr("You're too inexperienced to learn that spell!");
+        mpr(gettext("You're too inexperienced to learn that spell!"));
         return (false);
     }
 
     if (player_spell_levels() < spell_levels_required(specspell))
     {
-        mpr("You can't memorise that many levels of magic yet!");
+        mpr(gettext("You can't memorise that many levels of magic yet!"));
         return (false);
     }
     return (true);
@@ -1235,9 +1249,10 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         std::string prompt;
 
         if (is_safest_book)
-            prompt = "The only spellbook you have which contains that spell ";
+            /// 뒤에 is %s, a dangerous... 의 해석문이 붙게 됨.
+            prompt = gettext("The only spellbook you have which contains that spell ");
         else
-            prompt = "The spellbook you are reading from ";
+            prompt = gettext("The spellbook you are reading from ");
 
         item_def fakebook;
         fakebook.base_type = OBJ_BOOKS;
@@ -1245,9 +1260,10 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         fakebook.quantity  = 1;
         fakebook.flags    |= ISFLAG_IDENT_MASK;
 
-        prompt += make_stringf("is %s, a dangerous spellbook which will "
+        /// 앞에 The spellbook ... 에 해당하는 해석문이 붙음.
+        prompt += make_stringf(gettext("is %s, a dangerous spellbook which will "
                                "strike back at you if your memorisation "
-                               "attempt fails. Attempt to memorise anyway?",
+                               "attempt fails. Attempt to memorise anyway?"),
                                fakebook.name(true, DESC_NOCAP_THE).c_str());
 
         // Deactivate choice from tile inventory.
@@ -1262,22 +1278,22 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
     const int temp_rand1 = random2(3);
     const int temp_rand2 = random2(4);
 
-    mprf("This spell is %s %s to %s.",
-         ((chance >= 80) ? "very" :
-          (chance >= 60) ? "quite" :
-          (chance >= 45) ? "rather" :
-          (chance >= 30) ? "somewhat"
-                         : "not that"),
-         ((temp_rand1 == 0) ? "difficult" :
-          (temp_rand1 == 1) ? "tricky"
-                            : "challenging"),
-         ((temp_rand2 == 0) ? "memorise" :
-          (temp_rand2 == 1) ? "commit to memory" :
-          (temp_rand2 == 2) ? "learn"
-                            : "absorb"));
+    mprf(gettext("This spell is %s %s to %s."),
+         ((chance >= 80) ? gettext(M_("very")) :
+          (chance >= 60) ? gettext(M_("quite")) :
+          (chance >= 45) ? gettext(M_("rather")) :
+          (chance >= 30) ? gettext(M_("somewhat"))
+                         : gettext(M_("not that"))),
+         ((temp_rand1 == 0) ? gettext(M_("difficult")) :
+          (temp_rand1 == 1) ? gettext(M_("tricky"))
+                            : gettext(M_("challenging"))),
+         ((temp_rand2 == 0) ? gettext(M_("memorise")) :
+          (temp_rand2 == 1) ? gettext(M_("commit to memory")) :
+          (temp_rand2 == 2) ? gettext(M_("learn"))
+                            : gettext(M_("absorb"))));
 
     snprintf(info, INFO_SIZE,
-             "Memorise %s, consuming %d spell level%s and leaving %d?",
+             gettext("Memorise %s, consuming %d spell level%s and leaving %d?"),
              spell_title(specspell), spell_levels_required(specspell),
              spell_levels_required(specspell) != 1 ? "s" : "",
              player_spell_levels() - spell_levels_required(specspell));
@@ -1293,34 +1309,34 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
     if (player_mutation_level(MUT_BLURRY_VISION) > 0
         && x_chance_in_y(player_mutation_level(MUT_BLURRY_VISION), 4))
     {
-        mpr("The writing blurs into unreadable gibberish.");
+        mpr(gettext("The writing blurs into unreadable gibberish."));
         you.turn_is_over = true;
         return (false);
     }
 
     if (random2(40) + random2(40) + random2(40) < chance)
     {
-        mpr("You fail to memorise the spell.");
+        mpr(gettext("You fail to memorise the spell."));
         learned_something_new(HINT_MEMORISE_FAILURE);
         you.turn_is_over = true;
 
         if (book == BOOK_NECRONOMICON)
         {
-            mpr("The pages of the Necronomicon glow with a dark malevolence...");
+            mpr(gettext("The pages of the Necronomicon glow with a dark malevolence..."));
             MiscastEffect(&you, MISC_MISCAST, SPTYP_NECROMANCY,
                            8, random2avg(88, 3),
                            "reading the Necronomicon");
         }
         else if (book == BOOK_GRAND_GRIMOIRE)
         {
-            mpr("This book does not appreciate being disturbed by one of your ineptitude!");
+            mpr(gettext("This book does not appreciate being disturbed by one of your ineptitude!"));
             MiscastEffect(&you, MISC_MISCAST, SPTYP_SUMMONING,
                            7, random2avg(88, 3),
                            "reading the Grand Grimoire");
         }
         else if (book == BOOK_ANNIHILATIONS)
         {
-            mpr("This book does not appreciate being disturbed by one of your ineptitude!");
+            mpr(gettext("This book does not appreciate being disturbed by one of your ineptitude!"));
             MiscastEffect(&you, MISC_MISCAST, SPTYP_CONJURATION,
                            8, random2avg(88, 3),
                            "reading the book of Annihilations");
@@ -1348,8 +1364,9 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
 {
     std::string prompt;
 
-    prompt += make_stringf("Forgetting %s from %s will destroy the book! "
-                           "Are you sure?",
+    /// 1. 마법 이름, 2. 책 이름.
+    prompt += make_stringf(gettext("Forgetting %s from %s will destroy the book! "
+                           "Are you sure?"),
                            spell_title(spell),
                            book->name(true, DESC_NOCAP_THE).c_str());
 
@@ -1360,7 +1377,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
         canned_msg(MSG_OK);
         return (false);
     }
-    mprf("As you tear out the page describing %s, the book crumbles to dust.",
+    mprf(gettext("As you tear out the page describing %s, the book crumbles to dust."),
         spell_title(spell));
 
     if (del_spell_from_memory(spell))
@@ -1422,7 +1439,7 @@ int staff_spell(int staff)
     else
     {
         mprf(MSGCH_PROMPT,
-             "Evoke which spell from the rod ([a-%c] spell [?*] list)? ",
+             gettext("Evoke which spell from the rod ([a-%c] spell [?*] list)? "),
              'a' + num_spells - 1);
 
         // Note that auto_list is ignored here.
@@ -1473,7 +1490,7 @@ int staff_spell(int staff)
 
     if (istaff.plus < mana)
     {
-        mpr("The rod doesn't have enough magic points.");
+        mpr(gettext("The rod doesn't have enough magic points."));
         crawl_state.zero_turns_taken();
         // Don't lose a turn for trying to evoke without enough MP - that's
         // needlessly cruel for an honest error.
@@ -1486,7 +1503,7 @@ int staff_spell(int staff)
     if (you.level_type == LEVEL_LABYRINTH
         && testbits(flags, SPFLAG_MAPPING))
     {
-        mpr("Something interferes with your magic!");
+        mpr(gettext("Something interferes with your magic!"));
     }
     // All checks passed, we can cast the spell.
     else if (your_spells(spell, power, false, false)

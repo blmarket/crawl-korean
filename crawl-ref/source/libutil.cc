@@ -1,5 +1,4 @@
-/**
- * @file
+/** * @file
  * @brief Functions that may be missing from some systems
 **/
 
@@ -438,6 +437,10 @@ std::string pluralise(const std::string &name,
     {
         return (pluralise(name.substr(0, pos)) + name.substr(pos));
     }
+
+#ifdef KR
+    return name + "들";
+#endif
 
     if (ends_with(name, "us"))
     {

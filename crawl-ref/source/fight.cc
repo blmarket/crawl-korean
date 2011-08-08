@@ -5846,7 +5846,7 @@ void melee_attack::mons_perform_attack_rounds()
             {
                 if (needs_message)
                 {
-                    /// 대상, fail, 공격자
+                    /// 대상, fail, 공격자의 소유형
                     /// 지금 뭔가 문제있는 코드임.
                     mprf(gettext("Helpless, %s %s to dodge %s attack."),
                          mons_defender_name().c_str(),
