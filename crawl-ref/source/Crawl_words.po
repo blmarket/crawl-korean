@@ -52,16 +52,16 @@ msgstr "보랏빛 드라코니언"
 
 #: species.cc:184
 msgid "Mottled Draconian"
-msgstr "점박이 드라코니언"
+msgstr "얼룩무늬 드라코니언"
 
 #: species.cc:185
 msgid "Pale Draconian"
-msgstr "창백한 드라코니언"
+msgstr "무색 드라코니언"
 
 #. doesn't care about species/genus
 #: species.cc:196
 msgid "Elven"
-msgstr ""
+msgstr "엘븐"
 
 #: species.cc:198 species.cc:206
 msgid "Elf"
@@ -69,20 +69,20 @@ msgstr "엘프"
 
 #: species.cc:203
 msgid "High Elf"
-msgstr "하이엘프"
+msgstr "하이 엘프"
 
 #: species.cc:204
 msgid "Deep Elf"
-msgstr "순종 엘프"
+msgstr "딥 엘프"
 
 #: species.cc:205
 msgid "Sludge Elf"
-msgstr "잡종 엘프"
+msgstr "슬럿지 엘프"
 
 #. doesn't care about species/genus
 #: species.cc:212
 msgid "Dwarven"
-msgstr ""
+msgstr "드워븐"
 
 #: species.cc:214 species.cc:221
 msgid "Dwarf"
@@ -90,11 +90,11 @@ msgstr "드워프"
 
 #: species.cc:219
 msgid "Mountain Dwarf"
-msgstr "산드워프"
+msgstr "마운틴 드워프"
 
 #: species.cc:220
 msgid "Deep Dwarf"
-msgstr "순종 드워프"
+msgstr "딥 드워프"
 
 #: species.cc:229
 msgid "Human"
@@ -110,7 +110,7 @@ msgstr "코볼트"
 
 #: species.cc:232
 msgid "Mummy"
-msgstr "미이라"
+msgstr "미라"
 
 #: species.cc:233
 msgid "Naga"
@@ -126,7 +126,7 @@ msgstr "스프리건"
 
 #: species.cc:236
 msgid "Minotaur"
-msgstr "미노타"
+msgstr "미노타우르스"
 
 #: species.cc:237
 msgid "Kenku"
@@ -134,7 +134,7 @@ msgstr "켄쿠"
 
 #: species.cc:240
 msgid "Orcish"
-msgstr ""
+msgstr "오키쉬"
 
 #: species.cc:240
 msgid "Orc"
@@ -146,7 +146,7 @@ msgstr "언덕 오크"
 
 #: species.cc:243
 msgid "Ogreish"
-msgstr ""
+msgstr "오우거리시"
 
 #: species.cc:243
 msgid "Ogre"
@@ -154,7 +154,7 @@ msgstr "오우거"
 
 #: species.cc:244
 msgid "Trollish"
-msgstr ""
+msgstr "트롤리시"
 
 #: species.cc:244
 msgid "Troll"
@@ -162,7 +162,7 @@ msgstr "트롤"
 
 #: species.cc:245
 msgid "Divine"
-msgstr "신성한"
+msgstr "디바인"
 
 #: species.cc:245
 msgid "Demigod"
@@ -170,15 +170,15 @@ msgstr "반신족"
 
 #: species.cc:246
 msgid "Demonic"
-msgstr ""
+msgstr "데모닉"
 
 #: species.cc:246
 msgid "Demonspawn"
-msgstr "악마족"
+msgstr "데몬스폰"
 
 #: species.cc:247
 msgid "Ghoulish"
-msgstr ""
+msgstr "구울리시"
 
 #: species.cc:247
 msgid "Ghoul"
@@ -186,15 +186,15 @@ msgstr "구울"
 
 #: species.cc:248
 msgid "Merfolkian"
-msgstr ""
+msgstr "머포키안"
 
 #: species.cc:248
 msgid "Merfolk"
-msgstr "멀포크"
+msgstr "머포크"
 
 #: species.cc:249
 msgid "Vampiric"
-msgstr ""
+msgstr "뱀파이어릭"
 
 #: species.cc:249
 msgid "Vampire"
@@ -202,23 +202,23 @@ msgstr "뱀파이어"
 
 #: species.cc:250
 msgid "Feline"
-msgstr ""
+msgstr "펠린"
 
 #: species.cc:250
 msgid "Felid"
-msgstr "고양이족"
+msgstr "펠리드"
 
 #: species.cc:251
 msgid "Octopoid"
-msgstr ""
+msgstr "옥토퍼이드"
 
 #: species.cc:251
 msgid "Octopode"
-msgstr "문어족"
+msgstr "옥토퍼드"
 
 #: species.cc:252
 msgid "Yakish"
-msgstr ""
+msgstr "야키쉬"
 
 #: species.cc:252
 msgid "Yak"
@@ -394,11 +394,11 @@ msgstr "나비"
 #. one vault + player transform (Vp ability)
 #: mon-data.h:301
 msgid "vampire bat"
-msgstr "흡혈박쥐"
+msgstr "흡혈 박쥐"
 
 #: mon-data.h:313
 msgid "fire bat"
-msgstr "불박쥐"
+msgstr "불 박쥐"
 
 #: mon-data.h:325
 msgid "raven"
@@ -1965,6 +1965,10 @@ msgstr "용암의 가고일"
 msgid "pandemonium lord"
 msgstr "판데모니움의 악마"
 
+#. (DECEIT) 추가부분
+msgid "elemental master"
+msgstr "정령술사"
+
 #. Demon in hell.  Currently only used as genus/species for hell guardians.
 #. dummy, never spawns
 #: mon-data.h:5274
@@ -2225,6 +2229,8 @@ msgstr "에레쉬키갈"
 msgid "test spawner"
 msgstr "테스트 스포너"
 
+
+
 #: mon-info.cc:592
 msgid "Lernaean hydra"
 msgstr "러내안 히드라(T)"
@@ -2251,7 +2257,7 @@ msgstr "엘프"
 
 #: mon-data.h:1101
 msgid "the Enchantress"
-msgstr "더 인챈트리스(T)"
+msgstr "스프리건 대주술사"
 
 #. dwarves ('q')
 #. Another dummy monster.  Zombies and poly allowed.
@@ -2717,237 +2723,239 @@ msgstr ""
 msgid "Random"
 msgstr ""
 
+#. / (DECEIT) 여기서부터는 카드이름 (한글화 게시판의 한글명 참조)
 #: decks.cc:298
 msgid "the Portal"
-msgstr ""
+msgstr "관문"
 
 #: decks.cc:299
 msgid "the Warp"
-msgstr ""
+msgstr "전이"
 
 #: decks.cc:300
 msgid "Swap"
-msgstr ""
+msgstr "바꿔치기"
 
 #: decks.cc:301
 msgid "Velocity"
-msgstr ""
+msgstr "신속"
 
 #: decks.cc:302
 msgid "Damnation"
-msgstr ""
+msgstr "지옥살이"
 
 #: decks.cc:303
 msgid "Solitude"
-msgstr ""
+msgstr "고독"
 
 #: decks.cc:304
 msgid "the Elixir"
-msgstr ""
+msgstr "엘릭서"
 
 #: decks.cc:305
 msgid "Battlelust"
-msgstr ""
+msgstr "투쟁"
 
 #: decks.cc:306
 msgid "Metamorphosis"
-msgstr ""
+msgstr "탈바꿈"
 
 #: decks.cc:307
 msgid "the Helm"
-msgstr ""
+msgstr "투구"
 
 #: decks.cc:308
 msgid "the Blade"
-msgstr ""
+msgstr "칼날"
 
 #: decks.cc:309
 msgid "the Shadow"
-msgstr ""
+msgstr "그림자"
 
 #: decks.cc:310
 msgid "the Potion"
-msgstr ""
+msgstr "물약"
 
 #: decks.cc:311
 msgid "Focus"
-msgstr ""
+msgstr "집중"
 
 #: decks.cc:312
 msgid "Shuffle"
-msgstr ""
+msgstr "뒤섞임"
 
 #: decks.cc:313
 msgid "Experience"
-msgstr ""
+msgstr "경험"
 
 #: decks.cc:314
 msgid "the Helix"
-msgstr ""
+msgstr "나선조직"
 
 #: decks.cc:315
 msgid "the Sage"
-msgstr ""
+msgstr "현자"
 
 #: decks.cc:316
 msgid "Dowsing"
-msgstr ""
+msgstr "탐지"
 
 #: decks.cc:317
 msgid "the Trowel"
-msgstr ""
+msgstr "모종삽"
 
 #: decks.cc:318
 msgid "the Minefield"
-msgstr ""
+msgstr "지뢰밭"
 
 #: decks.cc:319
 msgid "the Stairs"
-msgstr ""
+msgstr "계단"
 
 #: decks.cc:320
 msgid "the Genie"
-msgstr ""
+msgstr "램프 요정"
 
 #: decks.cc:321
 msgid "the Tomb"
-msgstr ""
+msgstr "무덤"
 
 #: decks.cc:322
 msgid "Water"
-msgstr ""
+msgstr "홍수"
 
 #: decks.cc:323
 msgid "Vitrification"
-msgstr ""
+msgstr "유리"
 
 #: decks.cc:324
 msgid "the Map"
-msgstr ""
+msgstr "지도"
 
 #: decks.cc:325
 msgid "the Banshee"
-msgstr ""
+msgstr "밴시"
 
 #: decks.cc:326
 msgid "Wild Magic"
-msgstr ""
+msgstr "거친 마법"
 
 #: decks.cc:327
 msgid "the Crusade"
-msgstr ""
+msgstr "박멸"
 
 #: decks.cc:328
 msgid "the Herd"
-msgstr ""
+msgstr "짐승떼"
 
 #: decks.cc:329
 msgid "the Pentagram"
-msgstr ""
+msgstr "오망성"
 
 #: decks.cc:330
 msgid "the Dance"
-msgstr ""
+msgstr "무도"
 
 #: decks.cc:331
 msgid "Foxfire"
-msgstr ""
+msgstr "등불"
 
 #: decks.cc:332
 msgid "the Bones"
-msgstr ""
+msgstr "뼈"
 
 #: decks.cc:333
 msgid "Repulsiveness"
-msgstr ""
+msgstr "혐오"
 
 #: decks.cc:335
 msgid "Xom"
-msgstr ""
+msgstr "좀"
 
 #: decks.cc:336
 msgid "Famine"
-msgstr ""
+msgstr "굶주림"
 
 #: decks.cc:337
 msgid "the Feast"
-msgstr ""
+msgstr "성찬"
 
 #: decks.cc:338
 msgid "Warpwright"
-msgstr ""
+msgstr "전이 기술자"
 
 #: decks.cc:339
 msgid "Flight"
-msgstr ""
+msgstr "도주"
 
 #: decks.cc:340
 msgid "Vitriol"
-msgstr ""
+msgstr "부식"
 
 #: decks.cc:341
 msgid "Flame"
-msgstr ""
+msgstr "불꽃"
 
+#./ (DECEIT) "frost"는 보통 다른곳에서는 원래 뜻 대신 대개 '냉기'로 번역됩니다.
 #: decks.cc:342
 msgid "Frost"
-msgstr ""
+msgstr "서리"
 
 #: decks.cc:343
 msgid "Venom"
-msgstr ""
+msgstr "독액"
 
 #: decks.cc:344
 msgid "the Spark"
-msgstr ""
+msgstr "공전"
 
 #: decks.cc:345
 msgid "the Hammer"
-msgstr ""
+msgstr "망치"
 
 #: decks.cc:347 abl-show.cc:325
 msgid "Torment"
-msgstr ""
+msgstr "고문"
 
 #: decks.cc:348
 msgid "the Spade"
-msgstr ""
+msgstr "삽질"
 
 #: decks.cc:349
 msgid "the Bargain"
-msgstr ""
+msgstr "바겐세일"
 
 #: decks.cc:350
 msgid "Wrath"
-msgstr ""
+msgstr "진노"
 
 #: decks.cc:351
 msgid "the Wraith"
-msgstr ""
+msgstr "망령"
 
 #: decks.cc:352
 msgid "the Curse"
-msgstr ""
+msgstr "저주"
 
 #: decks.cc:353
 msgid "the Swine"
-msgstr ""
+msgstr "돼지"
 
 #: decks.cc:354
 msgid "the Alchemist"
-msgstr ""
+msgstr "연금술사"
 
 #: decks.cc:355
 msgid "the Orb"
-msgstr ""
+msgstr "구체"
 
 #: decks.cc:356
 msgid "a buggy card"
-msgstr ""
+msgstr "버그"
 
 #: decks.cc:358
 msgid "a very buggy card"
-msgstr ""
+msgstr "레알 버그"
 
 #. / 걍 만복도라고 번역할 것인가!
 #: abl-show.cc:721
@@ -2990,11 +2998,11 @@ msgstr "과일 또는 신앙도"
 
 #: abl-show.cc:803
 msgid "Level drain"
-msgstr ""
+msgstr "레벨 흡수"
 
 #: abl-show.cc:811
 msgid "Stat drain"
-msgstr ""
+msgstr "능력치 흡수"
 
 #: abl-show.cc:816 food.cc:2848 food.cc:2851 food.cc:2852
 msgid "None"
@@ -3003,94 +3011,94 @@ msgstr "없음"
 #. NON_ABILITY should always come first
 #: abl-show.cc:248
 msgid "No ability"
-msgstr ""
+msgstr "특수 능력 없음"
 
 #: abl-show.cc:249
 msgid "Spit Poison"
-msgstr ""
+msgstr "독침 내뱉기"
 
 #: abl-show.cc:251
 msgid "Teleportation"
-msgstr ""
+msgstr "공간이동"
 
 #: abl-show.cc:252
 msgid "Blink"
-msgstr ""
+msgstr "순간이동"
 
 #: abl-show.cc:254
 msgid "Breathe Fire"
-msgstr ""
+msgstr "화염의 숨결"
 
 #: abl-show.cc:255
 msgid "Breathe Frost"
-msgstr ""
+msgstr "냉기의 숨결"
 
 #: abl-show.cc:256
 msgid "Breathe Poison Gas"
-msgstr ""
+msgstr "독소의 숨결"
 
 #: abl-show.cc:257
 msgid "Breathe Noxious Fumes"
-msgstr ""
+msgstr "독구름의 숨결"
 
 #: abl-show.cc:259
 msgid "Breathe Lightning"
-msgstr ""
+msgstr "번개의 숨결"
 
 #: abl-show.cc:261
 msgid "Breathe Energy"
-msgstr ""
+msgstr "마력의 숨결"
 
 #: abl-show.cc:262
 msgid "Breathe Sticky Flame"
-msgstr ""
+msgstr "끈적이는 화염의 숨결"
 
 #: abl-show.cc:264
 msgid "Breathe Steam"
-msgstr ""
+msgstr "증기의 숨결"
 
 #: abl-show.cc:265
 msgid "Bat Form"
-msgstr ""
+msgstr "박쥐 변신"
 
 #: abl-show.cc:266
 msgid "Bottle Blood"
-msgstr ""
+msgstr "피의 물약 제조"
 
 #. no costs
 #: abl-show.cc:268
 msgid "Spit Acid"
-msgstr ""
+msgstr "산성침 내뱉기"
 
 #. FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
 #. as exhaustion's only (and designed), effect is preventing Berserk. - bwr
 #: abl-show.cc:270 abl-show.cc:278
 msgid "Fly"
-msgstr ""
+msgstr "비행"
 
 #: abl-show.cc:271
 msgid "Stop Flying"
-msgstr ""
+msgstr "비행 중지"
 
 #: abl-show.cc:272
 msgid "Hellfire"
-msgstr ""
+msgstr "지옥불"
 
 #: abl-show.cc:273
 msgid "Throw Flame"
-msgstr ""
+msgstr "불꽃 투척"
 
 #: abl-show.cc:274
 msgid "Throw Frost"
-msgstr ""
+msgstr "냉기 투척"
 
 #: abl-show.cc:279
 msgid "Release Delayed Fireball"
-msgstr ""
+msgstr "축적된 화염구 방출"
 
 #: abl-show.cc:281
 msgid "Self-Restoration"
-msgstr ""
+msgstr "자체 능력 회복"
 
 #. EVOKE abilities use Evocations and come from items.
 #. Teleportation and Blink can also come from mutations
@@ -3106,410 +3114,410 @@ msgstr ""
 
 #: abl-show.cc:294
 msgid "Evoke Blink"
-msgstr ""
+msgstr "순간이동 발동"
 
 #: abl-show.cc:295
 msgid "Device Recharging"
-msgstr ""
+msgstr "장비 재충전"
 
 #: abl-show.cc:297
 msgid "Evoke Berserk Rage"
-msgstr ""
+msgstr "광전사의 분노 발동"
 
 #: abl-show.cc:299
 msgid "Evoke Invisibility"
-msgstr ""
+msgstr "투명화 발동"
 
 #: abl-show.cc:301
 msgid "Turn Visible"
-msgstr ""
+msgstr "투명화 해제"
 
 #: abl-show.cc:302
 msgid "Evoke Levitation"
-msgstr ""
+msgstr "공중부양 발동"
 
 #: abl-show.cc:303
 msgid "Stop Levitating"
-msgstr ""
+msgstr "공중부양 해제"
 
 #: abl-show.cc:305
 msgid "End Transformation"
-msgstr ""
+msgstr "변신 해제"
 
 #. INVOCATIONS:
 #. Zin
 #: abl-show.cc:309
 msgid "Sustenance"
-msgstr ""
+msgstr "자양"
 
 #: abl-show.cc:310
 msgid "Recite"
-msgstr ""
+msgstr "설교"
 
 #: abl-show.cc:311
 msgid "Vitalisation"
-msgstr ""
+msgstr "활력"
 
 #: abl-show.cc:312
 msgid "Imprison"
-msgstr ""
+msgstr "구속"
 
 #: abl-show.cc:313
 msgid "Sanctuary"
-msgstr ""
+msgstr "성지"
 
 #: abl-show.cc:314
 msgid "Cure All Mutations"
-msgstr ""
+msgstr "변이 정화"
 
 #. The Shining One
 #: abl-show.cc:318
 msgid "Divine Shield"
-msgstr ""
+msgstr "성스러운 방패"
 
 #: abl-show.cc:319
 msgid "Cleansing Flame"
-msgstr ""
+msgstr "정화의 불꽃"
 
 #: abl-show.cc:320
 msgid "Summon Divine Warrior"
-msgstr ""
+msgstr "성전사 소환"
 
 #. Kikubaaqudgha
 #: abl-show.cc:324
 msgid "Receive Corpses"
-msgstr ""
+msgstr "시체 하사"
 
 #. Yredelemnul
 #: abl-show.cc:328
 msgid "Injury Mirror"
-msgstr ""
+msgstr "고통 반사"
 
 #: abl-show.cc:329
 msgid "Animate Remains"
-msgstr ""
+msgstr "산송장 부대"
 
 #: abl-show.cc:330
 msgid "Recall Undead Slaves"
-msgstr ""
+msgstr "언데드 소집"
 
 #: abl-show.cc:332
 msgid "Animate Dead"
-msgstr ""
+msgstr "송장 일으키기"
 
 #: abl-show.cc:333
 msgid "Drain Life"
-msgstr ""
+msgstr "생명력 흡수"
 
 #: abl-show.cc:334
 msgid "Enslave Soul"
-msgstr ""
+msgstr "영혼 지배"
 
 #. Placeholder for Animate Remains or Animate Dead.
 #: abl-show.cc:336
 msgid "Animate Remains or Dead"
-msgstr ""
+msgstr "죽은 자 일으키기"
 
 #. Okawaru
 #: abl-show.cc:340
 msgid "Heroism"
-msgstr ""
+msgstr "영웅화"
 
 #: abl-show.cc:341
 msgid "Finesse"
-msgstr ""
+msgstr "공격 가속"
 
 #. Makhleb
 #: abl-show.cc:344
 msgid "Minor Destruction"
-msgstr ""
+msgstr "소파괴"
 
 #: abl-show.cc:346
 msgid "Lesser Servant of Makhleb"
-msgstr ""
+msgstr "마크레브의 하위 종복 소환"
 
 #: abl-show.cc:348
 msgid "Major Destruction"
-msgstr ""
+msgstr "대파괴"
 
 #: abl-show.cc:350
 msgid "Greater Servant of Makhleb"
-msgstr ""
+msgstr "마크레브의 고위 종복 소환"
 
 #. Sif Muna
 #: abl-show.cc:354
 msgid "Channel Energy"
-msgstr ""
+msgstr "마력 수집"
 
 #: abl-show.cc:356
 msgid "Forget Spell"
-msgstr ""
+msgstr "마법주문 망각"
 
 #. Trog
 #: abl-show.cc:359
 msgid "Burn Spellbooks"
-msgstr ""
+msgstr "마법책 태우기"
 
 #: abl-show.cc:360
 msgid "Berserk"
-msgstr ""
+msgstr "광폭화"
 
 #: abl-show.cc:361
 msgid "Trog's Hand"
-msgstr ""
+msgstr "트로그의 손길"
 
 #: abl-show.cc:363
 msgid "Brothers in Arms"
-msgstr ""
+msgstr "전우"
 
 #. Elyvilon
 #: abl-show.cc:367
 msgid "Divine Protection"
-msgstr ""
+msgstr "성스러운 가호"
 
 #: abl-show.cc:369
 msgid "Lesser Self-Healing"
-msgstr ""
+msgstr "자기자신의 소치료"
 
 #: abl-show.cc:371
 msgid "Lesser Healing"
-msgstr ""
+msgstr "소치료"
 
 #: abl-show.cc:373
 msgid "Purification"
-msgstr ""
+msgstr "정화"
 
 #: abl-show.cc:375
 msgid "Greater Self-Healing"
-msgstr ""
+msgstr "자기자신의 대치료"
 
 #: abl-show.cc:377
 msgid "Greater Healing"
-msgstr ""
+msgstr "대치료"
 
 #: abl-show.cc:379
 msgid "Restoration"
-msgstr ""
+msgstr "능력 회복"
 
 #: abl-show.cc:380
 msgid "Divine Vigour"
-msgstr ""
+msgstr "신성한 원기 부여"
 
 #. Lugonu
 #: abl-show.cc:384
 msgid "Depart the Abyss"
-msgstr ""
+msgstr "어비스 탈출"
 
 #: abl-show.cc:385
 msgid "Bend Space"
-msgstr ""
+msgstr "공간 왜곡"
 
 #: abl-show.cc:386
 msgid "Banish"
-msgstr ""
+msgstr "추방"
 
 #: abl-show.cc:388
 msgid "Corrupt"
-msgstr ""
+msgstr "타락"
 
 #: abl-show.cc:390
 msgid "Enter the Abyss"
-msgstr ""
+msgstr "어비스 입장"
 
 #. Nemelex
 #: abl-show.cc:394
 msgid "Draw One"
-msgstr ""
+msgstr "한 장 뽑기"
 
 #: abl-show.cc:395
 msgid "Peek at Two"
-msgstr ""
+msgstr "두 장 뽑아 섞기"
 
 #: abl-show.cc:396
 msgid "Triple Draw"
-msgstr ""
+msgstr "석 장 뽑아 고르기"
 
 #: abl-show.cc:397
 msgid "Mark Four"
-msgstr ""
+msgstr "넉 장 뽑아 표시"
 
 #: abl-show.cc:398
 msgid "Stack Five"
-msgstr ""
+msgstr "다섯 장 뽑아 쌓기"
 
 #. Beogh
 #: abl-show.cc:401
 msgid "Smiting"
-msgstr ""
+msgstr "천벌의 일격"
 
 #: abl-show.cc:403
 msgid "Recall Orcish Followers"
-msgstr ""
+msgstr "오크 추종자 소집"
 
 #. Jiyva
 #: abl-show.cc:407
 msgid "Request Jelly"
-msgstr ""
+msgstr "젤리 소환"
 
 #: abl-show.cc:408
 msgid "Jelly Paralyse"
-msgstr ""
+msgstr "젤리 마비"
 
 #: abl-show.cc:409
 msgid "Slimify"
-msgstr ""
+msgstr "점액 두르기"
 
 #: abl-show.cc:410
 msgid "Cure Bad Mutation"
-msgstr ""
+msgstr "악성 변이 치료"
 
 #. Fedhas
 #: abl-show.cc:414
 msgid "Evolution"
-msgstr ""
+msgstr "진화"
 
 #: abl-show.cc:415
 msgid "Sunlight"
-msgstr ""
+msgstr "햇빛"
 
 #: abl-show.cc:416
 msgid "Growth"
-msgstr ""
+msgstr "성장"
 
 #: abl-show.cc:417
 msgid "Reproduction"
-msgstr ""
+msgstr "번식"
 
 #: abl-show.cc:418
 msgid "Rain"
-msgstr ""
+msgstr "강우"
 
 #. Cheibriados
 #: abl-show.cc:421
 msgid "Make Ponderous"
-msgstr ""
+msgstr "중량화"
 
 #: abl-show.cc:423
 msgid "Bend Time"
-msgstr ""
+msgstr "시간 왜곡"
 
 #: abl-show.cc:424
 msgid "Slouch"
-msgstr ""
+msgstr "게으름의 복수"
 
 #: abl-show.cc:425
 msgid "Step From Time"
-msgstr ""
+msgstr "시간 도약"
 
 #. Ashenzari
 #: abl-show.cc:429
 msgid "Scrying"
-msgstr ""
+msgstr "투시"
 
 #: abl-show.cc:431
 msgid "Transfer Knowledge"
-msgstr ""
+msgstr "지식 전송"
 
 #: abl-show.cc:433
 msgid "End Transfer Knowledge"
-msgstr ""
+msgstr "지식 전송 중지"
 
 #. zot defence abilities
 #: abl-show.cc:437
 msgid "Make mushroom circle"
-msgstr ""
+msgstr "버섯의 원 생성"
 
 #: abl-show.cc:438
 msgid "Make dart trap"
-msgstr ""
+msgstr "다트 함정 생성"
 
 #: abl-show.cc:439
 msgid "Make plant"
-msgstr ""
+msgstr "잡초 생성"
 
 #: abl-show.cc:440
 msgid "Make oklob sapling"
-msgstr ""
+msgstr "오클롭 새싹 생성"
 
 #: abl-show.cc:441
 msgid "Make burning bush"
-msgstr ""
+msgstr "불타는 수풀 생성"
 
 #: abl-show.cc:442
 msgid "Make oklob plant"
-msgstr ""
+msgstr "오클롭 잡초 생성"
 
 #: abl-show.cc:443
 msgid "Make ice statue"
-msgstr ""
+msgstr "얼음의 상 생성"
 
 #: abl-show.cc:444
 msgid "Make crystal statue"
-msgstr ""
+msgstr "수정의 상 생성"
 
 #: abl-show.cc:445
 msgid "Make silver statue"
-msgstr ""
+msgstr "은의 상 생성"
 
 #: abl-show.cc:446
 msgid "Make curse skull"
-msgstr ""
+msgstr "저주받은 해골 생성"
 
 #: abl-show.cc:447
 msgid "Zot-teleport"
-msgstr ""
+msgstr "조트 공간이동"
 
 #: abl-show.cc:448
 msgid "Make arrow trap"
-msgstr ""
+msgstr "화살 함정 생성"
 
 #: abl-show.cc:449
 msgid "Make bolt trap"
-msgstr ""
+msgstr "석궁화살 함정 생성"
 
 #: abl-show.cc:450
 msgid "Make spear trap"
-msgstr ""
+msgstr "창 함정 생성"
 
 #: abl-show.cc:451
 msgid "Make axe trap"
-msgstr ""
+msgstr "도끼 함정 생성"
 
 #: abl-show.cc:452
 msgid "Make needle trap"
-msgstr ""
+msgstr "바늘 함정 생성"
 
 #: abl-show.cc:453
 msgid "Make net trap"
-msgstr ""
+msgstr "그물 함정 생성"
 
 #: abl-show.cc:454
 msgid "Make teleport trap"
-msgstr ""
+msgstr "공간이동 함정 생성"
 
 #: abl-show.cc:455
 msgid "Make alarm trap"
-msgstr ""
+msgstr "알람 함정 생성"
 
 #: abl-show.cc:456
 msgid "Make blade trap"
-msgstr ""
+msgstr "칼날 함정 생성"
 
 #: abl-show.cc:457
 msgid "Make oklob circle"
-msgstr ""
+msgstr "오클롭의 원 생성"
 
 #: abl-show.cc:458
 msgid "Acquire gold"
-msgstr ""
+msgstr "골드 획득"
 
 #: abl-show.cc:459
 msgid "Acquirement"
-msgstr ""
+msgstr "아이템 획득"
 
 #: abl-show.cc:460
 msgid "Make water"
-msgstr ""
+msgstr "물 생성"
 
 #: abl-show.cc:461
 msgid "Make lightning spire"
@@ -3517,44 +3525,45 @@ msgstr ""
 
 #: abl-show.cc:462
 msgid "Make bazaar"
-msgstr ""
+msgstr "시장 생성"
 
 #: abl-show.cc:463
 msgid "Make altar"
-msgstr ""
+msgstr "제단 생성"
 
 #: abl-show.cc:464
 msgid "Make grenades"
-msgstr ""
+msgstr "수류탄 생성"
 
 #: abl-show.cc:465
 msgid "Sage"
-msgstr ""
+msgstr "현자"
 
 #: abl-show.cc:466
 msgid "Remove Curse"
-msgstr ""
+msgstr "저주 해제"
 
 #: abl-show.cc:468
 msgid "Renounce Religion"
-msgstr ""
+msgstr "신앙 포기하기"
 
 #: food.cc:2852
 msgid "Sultana"
-msgstr ""
+msgstr "건포도"
 
 #: food.cc:2852
 msgid "Strawberry"
-msgstr ""
+msgstr "딸기"
 
 #: food.cc:2852
 msgid "Choko"
-msgstr ""
+msgstr "초코 열매"
 
 #: food.cc:2852
 msgid "Honeycomb"
-msgstr ""
+msgstr "벌집"
 
+#./ (DECEIT) Bread Ration(휴대용 빵), Meat Ration(휴대용 고기)로 받는게 좋을듯합니다.
 #: food.cc:2852
 msgid "Ration"
-msgstr ""
+msgstr "보존 식량"

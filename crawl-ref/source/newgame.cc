@@ -627,7 +627,7 @@ static void _construct_species_menu(const newgame_def* ng,
             && job_allowed(species, ng->job) == CC_BANNED)
         {
             text = "    ";
-            text += species_name(species);
+            text += gettext(species_name(species).c_str());
             text += " N/A";
             tmp->set_fg_colour(DARKGRAY);
             tmp->set_highlight_colour(RED);
