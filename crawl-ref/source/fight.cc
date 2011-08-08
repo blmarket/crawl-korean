@@ -1258,7 +1258,7 @@ bool melee_attack::player_aux_test_hit()
     }
     else
     {
-        mprf(gettext("Your %s misses %s."), aux_attack.c_str(),
+        mprf(gettext("Your %s misses %s."), gettext(aux_attack.c_str()),
              defender->name(DESC_NOCAP_THE).c_str());
     }
 

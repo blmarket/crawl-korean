@@ -548,6 +548,11 @@ std::string apostrophise(const std::string &name)
     if (name.empty())
         return (name);
 
+// korean hack.
+#ifdef KR
+    return name + "의";
+#endif
+
     if (name == "you" || name == "You")
         return (name + "r");
 

@@ -59,9 +59,9 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
             fail_check();
             success = true;
 
-            mpr("The chunk of flesh you are holding crumbles to dust.");
+            mpr(gettext("The chunk of flesh you are holding crumbles to dust."));
 
-            mpr("A flood of magical energy pours into your mind!");
+            mpr(gettext("A flood of magical energy pours into your mind!"));
 
             inc_mp(5 + random2(2 + pow / 15));
 
@@ -77,11 +77,11 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
             fail_check();
             success = true;
 
-            mprf("The blood within %s froths and boils.",
-                 you.inv[wielded].quantity > 1 ? "one of your flasks"
-                                               : "the flask you are holding");
+            mprf(gettext("The blood within %s froths and boils."),
+                 you.inv[wielded].quantity > 1 ? gettext("one of your flasks")
+                                               : gettext("the flask you are holding"));
 
-            mpr("A flood of magical energy pours into your mind!");
+            mpr(gettext("A flood of magical energy pours into your mind!"));
 
             inc_mp(5 + random2(2 + pow / 15));
 
@@ -96,17 +96,17 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
     {
         if (you.duration[DUR_DEATHS_DOOR])
         {
-            mpr("A conflicting enchantment prevents the spell from "
-                "coming into effect.");
+            mpr(gettext("A conflicting enchantment prevents the spell from "
+                "coming into effect."));
         }
         else if (you.species == SP_VAMPIRE && you.hunger_state <= HS_SATIATED
                  || you.is_undead == US_UNDEAD)
         {
-            mpr("You don't have enough blood to draw power from your "
-                "own body.");
+            mpr(gettext("You don't have enough blood to draw power from your "
+                "own body."));
         }
         else if (!enough_hp(2, true))
-             mpr("Your attempt to draw power from your own body fails.");
+             mpr(gettext("Your attempt to draw power from your own body fails."));
         else
         {
             // For vampires.
@@ -132,9 +132,9 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
                     break;
             }
             if (success)
-                mpr("You draw magical energy from your own body!");
+                mpr(gettext("You draw magical energy from your own body!"));
             else
-                mpr("Your attempt to draw power from your own body fails.");
+                mpr(gettext("Your attempt to draw power from your own body fails."));
 
             make_hungry(food, false);
         }
@@ -152,7 +152,7 @@ spret_type cast_death_channel(int pow, god_type god, bool fail)
     }
 
     fail_check();
-    mpr("Malign forces permeate your being, awaiting release.");
+    mpr(gettext("Malign forces permeate your being, awaiting release."));
 
     you.increase_duration(DUR_DEATH_CHANNEL, 15 + random2(1 + pow/3), 100);
 
@@ -228,7 +228,7 @@ bool recall(int type_recalled)
             && mons->move_to_pos(empty))
         {
             // only informed if monsters recalled are visible {dlb}:
-            if (simple_monster_message(mons, " is recalled."))
+            if (simple_monster_message(mons, gettext(" is recalled.")))
                 success = true;
         }
         else
@@ -236,7 +236,7 @@ bool recall(int type_recalled)
     }
 
     if (!success)
-        mpr("Nothing appears to have answered your call.");
+        mpr(gettext("Nothing appears to have answered your call."));
 
     return (success);
 }
@@ -246,9 +246,9 @@ spret_type cast_phase_shift(int pow, bool fail)
 {
     fail_check();
     if (!you.duration[DUR_PHASE_SHIFT])
-        mpr("You feel the strange sensation of being on two planes at once.");
+        mpr(gettext("You feel the strange sensation of being on two planes at once."));
     else
-        mpr("You feel the material plane grow further away.");
+        mpr(gettext("You feel the material plane grow further away."));
 
     you.increase_duration(DUR_PHASE_SHIFT, 5 + random2(pow), 30);
     you.redraw_evasion = true;
@@ -286,7 +286,7 @@ spret_type cast_passwall(const coord_def& delta, int pow, bool fail)
     int walls = (dest - you.pos()).rdist() - 1;
     if (walls == 0)
     {
-        mpr("That's not a passable wall.");
+        mpr(gettext("That's not a passable wall."));
         return SPRET_ABORT;
     }
 
@@ -295,13 +295,13 @@ spret_type cast_passwall(const coord_def& delta, int pow, bool fail)
     // Below here, failing to cast yields information to the
     // player, so we don't make the spell abort (return true).
     if (!in_bounds(dest))
-        mpr("You sense an overwhelming volume of rock.");
+        mpr(gettext("You sense an overwhelming volume of rock."));
     else if (feat_is_solid(grd(dest)))
-        mpr("Something is blocking your path through the rock.");
+        mpr(gettext("Something is blocking your path through the rock."));
     else if (walls > maxrange)
-        mpr("This rock feels extremely deep.");
+        mpr(gettext("This rock feels extremely deep."));
     else if (walls > range)
-        mpr("You fail to penetrate the rock.");
+        mpr(gettext("You fail to penetrate the rock."));
     else
     {
         std::string msg;
@@ -345,7 +345,7 @@ spret_type cast_intoxicate(int pow, bool fail)
         && lose_stat(STAT_INT, 1 + random2(3), false,
                       "casting intoxication"))
     {
-        mpr("Your head spins!");
+        mpr(gettext("Your head spins!"));
     }
 
     apply_area_visible(_intoxicate_monsters, pow, true);
@@ -374,14 +374,14 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
             if (!check_range)
             {
                 fail_check();
-                mpr("The spell fizzles.");
+                mpr(gettext("The spell fizzles."));
                 return SPRET_SUCCESS;
             }
 
             if (num_corpses == -1)
-                mpr("You can't reach the corpse!");
+                mpr(gettext("You can't reach the corpse!"));
             else
-                mpr("There aren't any corpses here.");
+                mpr(gettext("There aren't any corpses here."));
             return SPRET_ABORT;
         case 1:
             // Use the only corpse available without prompting.
@@ -397,7 +397,7 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
                     const std::string corpsedesc =
                         get_menu_colour_prefix_tags(*si, DESC_NOCAP_THE);
                     const std::string prompt =
-                        make_stringf("Distill a potion from %s?",
+                        make_stringf(gettext("Distill a potion from %s?"),
                                      corpsedesc.c_str());
 
                     if (yesno(prompt.c_str(), true, 0, false))
@@ -497,12 +497,12 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
     // Always identify said potion.
     set_ident_type(*corpse, ID_KNOWN_TYPE);
 
-    mprf("You extract %s from the corpse.",
+    mprf(gettext("You extract %s from the corpse."),
          corpse->name(true, DESC_NOCAP_A).c_str());
 
     // Try to move the potion to the player (for convenience).
     if (move_item_to_player(corpse->index(), 1) != 1)
-        mpr("Unfortunately, you can't carry it right now!");
+        mpr(gettext("Unfortunately, you can't carry it right now!"));
 
     if (was_orc)
         did_god_conduct(DID_DESECRATE_ORCISH_REMAINS, 2);
@@ -514,7 +514,7 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
 
 void remove_condensation_shield()
 {
-    mpr("Your icy shield evaporates.", MSGCH_DURATION);
+    mpr(gettext("Your icy shield evaporates."), MSGCH_DURATION);
     you.duration[DUR_CONDENSATION_SHIELD] = 0;
     you.redraw_armour_class = true;
 }
@@ -530,9 +530,9 @@ spret_type cast_condensation_shield(int pow, bool fail)
     fail_check();
 
     if (you.duration[DUR_CONDENSATION_SHIELD] > 0)
-        mpr("The disc of vapour around you crackles some more.");
+        mpr(gettext("The disc of vapour around you crackles some more."));
     else
-        mpr("A crackling disc of dense vapour forms in the air!");
+        mpr(gettext("A crackling disc of dense vapour forms in the air!"));
     you.increase_duration(DUR_CONDENSATION_SHIELD, 15 + random2(pow), 40);
     you.redraw_armour_class = true;
 
@@ -545,26 +545,26 @@ spret_type cast_stoneskin(int pow, bool fail)
         && you.form != TRAN_STATUE
         && you.form != TRAN_BLADE_HANDS)
     {
-        mpr("This spell does not affect your current form.");
+        mpr(gettext("This spell does not affect your current form."));
         return SPRET_ABORT;
     }
 
     if (you.duration[DUR_ICY_ARMOUR])
     {
-        mpr("This spell conflicts with another spell still in effect.");
+        mpr(gettext("This spell conflicts with another spell still in effect."));
         return SPRET_ABORT;
     }
 
     fail_check();
 
     if (you.duration[DUR_STONESKIN])
-        mpr("Your skin feels harder.");
+        mpr(gettext("Your skin feels harder."));
     else
     {
         if (you.form == TRAN_STATUE)
-            mpr("Your stone body feels more resilient.");
+            mpr(gettext("Your stone body feels more resilient."));
         else
-            mpr("Your skin hardens.");
+            mpr(gettext("Your skin hardens."));
 
         you.redraw_armour_class = true;
     }
@@ -578,15 +578,15 @@ spret_type cast_darkness(int pow, bool fail)
 {
     if (you.haloed())
     {
-        mpr("It would have no effect in that bright light!");
+        mpr(gettext("It would have no effect in that bright light!"));
         return SPRET_ABORT;
     }
 
     fail_check();
     if (you.duration[DUR_DARKNESS])
-        mprf(MSGCH_DURATION, "It gets a bit darker.");
+        mprf(MSGCH_DURATION, gettext("It gets a bit darker."));
     else
-        mprf(MSGCH_DURATION, "It gets dark.");
+        mprf(MSGCH_DURATION, gettext("It gets dark."));
     you.increase_duration(DUR_DARKNESS, 15 + random2(1 + pow/3), 100);
     update_vision_range();
 

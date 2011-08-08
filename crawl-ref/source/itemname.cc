@@ -1348,10 +1348,27 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         /// 1. 무기 이름 2. 브랜드( of flaming)의 번역형 3. 저주가 걸려있으면 (curse)
-        buff << make_stringf(check_gettext("%s%s%s"),
+#ifdef KR
+        if(terse)
+        {
+            buff << make_stringf("%s%s%s",
+                check_gettext(item_base_name(*this).c_str()),
+                know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
+                (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+        }
+        else
+        {
+            buff << make_stringf("%s%s%s",
+                know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
+                check_gettext(item_base_name(*this).c_str()),
+                (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+        }
+#else
+        buff << make_stringf("%s%s%s",
             check_gettext(item_base_name(*this).c_str()),
-            know_brand ? weapon_brand_name(*this, terse) : "",
+            know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
             (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+#endif
         break;
 
     case OBJ_MISSILES:
@@ -1482,37 +1499,50 @@ std::string item_def::name_aux(description_level_type desc,
                                                    : check_gettext(M_("buggy ")));
         }
 
-        if (!basename && item_typ == ARM_GLOVES)
+        // 어순을 바꿔야 할 곳이라서 코드를 많이 고치게 됨.
         {
-            const short dglov = get_gloves_desc(*this);
-
-            buff <<
-                   check_gettext((dglov == TGLOV_DESC_GLOVES)    ? M_("gloves") :
-                           (dglov == TGLOV_DESC_GAUNTLETS) ? M_("gauntlets") :
-                           (dglov == TGLOV_DESC_BRACERS)   ? M_("bracers") :
-                                                             M_("bug-ridden gloves"));
-        }
-        else
-            buff << item_base_name(*this);
-
-        if (know_ego && !is_artefact(*this))
-        {
-            const special_armour_type sparm = get_armour_ego_type(*this);
-
-            if (sparm != SPARM_NORMAL)
+            std::string itembasename, itemegoname;
+            if (!basename && item_typ == ARM_GLOVES)
             {
-                // "naga barding of running" doesn't make any sense, and yes,
-                // they are possible.
-                if (sub_type == ARM_NAGA_BARDING && sparm == SPARM_RUNNING)
-                    buff << (terse ? "speed" : " of speedy slithering");
-                else
+                const short dglov = get_gloves_desc(*this);
+
+                itembasename = check_gettext((dglov == TGLOV_DESC_GLOVES)    ? M_("gloves") :
+                               (dglov == TGLOV_DESC_GAUNTLETS) ? M_("gauntlets") :
+                               (dglov == TGLOV_DESC_BRACERS)   ? M_("bracers") :
+                                                                 M_("bug-ridden gloves"));
+            }
+            else
+                itembasename = check_gettext(item_base_name(*this).c_str());
+
+            if (know_ego && !is_artefact(*this))
+            {
+                const special_armour_type sparm = get_armour_ego_type(*this);
+
+                if (sparm != SPARM_NORMAL)
                 {
-                    if(!terse)
-                        buff << make_stringf(check_gettext(" of %s"), check_gettext(armour_ego_name(*this, terse)));
+                    // "naga barding of running" doesn't make any sense, and yes,
+                    // they are possible.
+                    if (sub_type == ARM_NAGA_BARDING && sparm == SPARM_RUNNING)
+                        itemegoname = (terse ? "speed" : " of speedy slithering");
                     else
-                        buff << check_gettext(armour_ego_name(*this, terse));
+                    {
+                        if(!terse)
+                            itemegoname = make_stringf(check_gettext(" of %s")
+                                , check_gettext(armour_ego_name(*this, terse)));
+                        else
+                            itemegoname = check_gettext(armour_ego_name(*this, terse));
+                    }
                 }
             }
+
+#ifdef KR
+            if(translate_flag == false)
+                buff << itembasename << itemegoname;
+            else
+                buff << itemegoname << itembasename;
+#else
+            buff << itembasename << itemegoname;
+#endif
         }
 
         if (know_curse && cursed() && terse)

@@ -100,11 +100,17 @@ msgstr "두들겼"
 msgid "kick-verb"
 msgstr "발로 찼"
 
+msgid "kick"
+msgstr "발차기"
+
 msgid "peck-verb"
 msgstr "쪼았"
 
 msgid "headbutt-verb"
 msgstr "받아버렸"
+
+msgid "headbutt"
+msgstr "박치기"
 
 msgid "tail-slap-verb"
 msgstr "꼬리로 뺨다구를 후려쳤"

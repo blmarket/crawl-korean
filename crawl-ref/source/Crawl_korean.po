@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 10:11+0900\n"
+"POT-Creation-Date: 2011-08-01 08:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,7 +85,7 @@ msgstr "가까이에는 아무 것도 없다!"
 msgid "You don't have the energy to cast that spell."
 msgstr "당신에게는 주문을 시전하기 위한 에너지가 부족하다."
 
-#: stuff.cc:458
+#: stuff.cc:458 spl-other.cc:378
 msgid "The spell fizzles."
 msgstr "주문은 실패했다."
 
@@ -575,7 +575,7 @@ msgstr "당신은 앉아서 기도했고, 곧 불경스러운 에너지에 휩�
 msgid "You kneel in prayer and are bathed in unholy energy."
 msgstr "당신은 무릎꿇어 기도했고, 곧 불경스러운 에너지에 휩싸였다."
 
-#: abl-show.cc:2306 evoke.cc:799
+#: abl-show.cc:2306 evoke.cc:799 evoke.cc:790
 msgid "You channel some magical energy."
 msgstr "약간의 마나를 수집했다."
 
@@ -3317,84 +3317,85 @@ msgstr "회복할 에너지가 없다면, 현재 당신에게 이 에너지의 �
 msgid "You lack the skill to use this item."
 msgstr "당신은 이 도구를 사용할 기술이 부족하다."
 
-#: evoke.cc:351 evoke.cc:657
+#: evoke.cc:351 evoke.cc:657 evoke.cc:655
 msgid "You gaze into the crystal ball."
 msgstr "당신은 수정구의 안쪽을 노려보았다."
 
-#: evoke.cc:356
+#: evoke.cc:356 evoke.cc:358
 msgid "using a ball of seeing"
 msgstr "천리안의 구를 사용함"
 
-#: evoke.cc:359 evoke.cc:668 evoke.cc:686
+#: evoke.cc:359 evoke.cc:668 evoke.cc:686 evoke.cc:361 evoke.cc:663
+#: evoke.cc:677
 msgid "You feel your power drain away!"
 msgstr "당신은 당신의 힘이 어디론가 빨려나가는 것을 느꼈다!"
 
-#: evoke.cc:366
+#: evoke.cc:366 evoke.cc:356
 msgid "You see a maze of twisty little passages, all alike."
 msgstr "당신은 꼬인 미로의 일부분을 보았다."
 
-#: evoke.cc:370 evoke.cc:378
+#: evoke.cc:370 evoke.cc:378 evoke.cc:368 evoke.cc:376
 msgid "You see nothing."
 msgstr "당신은 아무것도 보지 못했다."
 
-#: evoke.cc:374
+#: evoke.cc:374 evoke.cc:372
 msgid "You see a map of your surroundings!"
 msgstr "당신은 당신 주변의 지도를 보았다."
 
-#: evoke.cc:394
+#: evoke.cc:394 evoke.cc:392
 msgid "The disc glows for a moment, then fades."
 msgstr "접시는 잠시 빛난 후, 사라졌다."
 
-#: evoke.cc:396
+#: evoke.cc:396 evoke.cc:394
 msgid "Little bolts of electricity crackle over the disc."
 msgstr "접시를 통해 작은 전기의 화살들이 치직거리는 소리를 냈다."
 
-#: evoke.cc:400
+#: evoke.cc:400 evoke.cc:398
 msgid "The disc erupts in an explosion of electricity!"
 msgstr "접시에서 전기 폭발이 뿜어져 나왔다!"
 
-#: evoke.cc:445
+#: evoke.cc:445 evoke.cc:443
 #, c-format
 msgid "The book opens to a page covered in %s."
 msgstr "%s(이)라고 씌여진 페이지를 펼쳤다."
 
-#: evoke.cc:452
+#: evoke.cc:452 evoke.cc:450
 msgid "Read it?"
 msgstr "읽을 것인가?"
 
-#: evoke.cc:459
+#: evoke.cc:459 evoke.cc:457
 msgid "The page is too blurry for you to read."
 msgstr "이 페이지는 글씨가 너무 흐려져서 읽을 수 없다."
 
-#: evoke.cc:463
+#: evoke.cc:463 evoke.cc:461
 msgid "You find yourself reciting the magical words!"
 msgstr "자신도 모르게 마법 주문을 외우고 있는걸 알았다!"
 
-#: evoke.cc:468
+#: evoke.cc:468 evoke.cc:466
 msgid "A cloud of weird smoke pours from the book's pages!"
 msgstr "기묘한 증기의 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:474
+#: evoke.cc:474 evoke.cc:472
 msgid "A cloud of choking fumes pours from the book's pages!"
 msgstr "숨막힐듯한 가스의 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:480
+#: evoke.cc:480 evoke.cc:478
 msgid "A cloud of freezing gas pours from the book's pages!"
 msgstr "냉기의 가스 구름이 책 안에서 흘러나왔다!"
 
-#: evoke.cc:488
+#: evoke.cc:488 evoke.cc:486
 msgid "The book disappears in a mighty explosion!"
 msgstr "강력한 폭발과 함께 책이 사라졌다!"
 
-#: evoke.cc:500
+#: evoke.cc:500 evoke.cc:498
 msgid "a tome of Destruction"
 msgstr "파괴의 학술서"
 
-#: evoke.cc:503
+#: evoke.cc:503 evoke.cc:501
 msgid "A horrible Thing appears!"
 msgstr "무서운 존재가 나타났다!"
 
-#: evoke.cc:504
+#: evoke.cc:504 evoke.cc:502
 msgid "It doesn't look too friendly."
 msgstr "그것들은 도저히 우호적으로 보이지 않는다."
 
@@ -3407,43 +3408,44 @@ msgstr "설명서가 먼지가 되어 사라졌다."
 msgid "The manual looks somewhat more worn."
 msgstr "설명서는 전보다 좀 더 닳은 듯 보인다."
 
-#: evoke.cc:605
+#: evoke.cc:605 evoke.cc:603
 msgid "You open the lid..."
 msgstr "당신은 뚜껑을 열었다..."
 
-#: evoke.cc:635
+#: evoke.cc:635 evoke.cc:633
 msgid "...and something leaps out!"
 msgstr "...그리고 뭔가가 뛰쳐나왔다!"
 
-#: evoke.cc:642
+#: evoke.cc:642 evoke.cc:640
 msgid "...but nothing happens."
 msgstr "...그러나 아무일도 일어나지 않았다."
 
-#: evoke.cc:645
+#: evoke.cc:645 evoke.cc:643
 msgid "...but the box appears empty."
 msgstr "...그러나 상자 안은 비어있었다."
 
-#: evoke.cc:664
+#: evoke.cc:664 evoke.cc:660
 msgid "using a ball of energy"
 msgstr "마나의 구를 사용함"
 
-#: evoke.cc:691
+#: evoke.cc:691 evoke.cc:682
 msgid "You are suffused with power!"
 msgstr "마나가 채워졌다!"
 
-#: evoke.cc:717
+#: evoke.cc:717 evoke.cc:708
 msgid "Evoke which item? (* to show all)"
 msgstr "어느 아이템을 발동시킬 것인가? (* 모든 목록 보기)"
 
-#: evoke.cc:893
+#: evoke.cc:893 evoke.cc:884
 msgid "Nothing happens."
 msgstr "아무 일도 일어나지 않았다."
 
-#: evoke.cc:904
+#: evoke.cc:904 evoke.cc:895
 msgid "QUAD DAMAGE!"
 msgstr "쿼드 데미지!"
 
 #: evoke.cc:932 fight.cc:1745 fight.cc:3949 fight.cc:1738 fight.cc:3942
+#: evoke.cc:923
 #, c-format
 msgid "You are wielding %s."
 msgstr "당신은 %s(을/를) 들고 있다."
@@ -3625,12 +3627,187 @@ msgstr "당신은 %2$s를 %1$s지만, 아무 데미지도 주지 못했다."
 msgid "%s is stunned!"
 msgstr "%s는 기절했다!"
 
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #: fight.cc:2404 fight.cc:5366 fight.cc:2397 fight.cc:5359
 #, c-format
 msgid "%s %s %s!"
@@ -3820,7 +3997,7 @@ msgstr "%s는 %s를 공격하려 했으나, 곧 기가 죽었다."
 #: fight.cc:4577 fight.cc:4570
 #, c-format
 msgid "%s %s %s attack."
-msgstr "%1$s는 %3$s의 공격을 %2$s다."
+msgstr "%1$s는 %3$s 공격을 %2$s다."
 
 #. / 멀리서 정도로 번역하면 될듯.
 #: fight.cc:4777 fight.cc:4791 fight.cc:4770 fight.cc:4784
@@ -5087,7 +5264,7 @@ msgstr "이것은 양손 무기이다."
 msgid "It is a buggy weapon."
 msgstr "이것은 버그 무기이다."
 
-#: evoke.cc:578
+#: evoke.cc:578 evoke.cc:576
 #, c-format
 msgid "This is a manual of %s. Do you want to study it?"
 msgstr "이것은 %s에 관한 설명서이다. 공부하겠는가?"
@@ -5309,7 +5486,7 @@ msgstr ""
 #. ranged weapon brands
 #: itemname.cc:427 itemname.cc:466 itemname.cc:438 itemname.cc:477
 msgid " (flame)"
-msgstr " (화염)"
+msgstr "(화염) "
 
 #: itemname.cc:427 itemname.cc:438
 msgid " of flaming"
@@ -5317,7 +5494,7 @@ msgstr "화염의 "
 
 #: itemname.cc:428 itemname.cc:439
 msgid " (freeze)"
-msgstr " (냉기)"
+msgstr "(냉기) "
 
 #: itemname.cc:428 itemname.cc:439
 msgid " of freezing"
@@ -5325,7 +5502,7 @@ msgstr "냉기의 "
 
 #: itemname.cc:429 itemname.cc:440
 msgid " (holy)"
-msgstr " (신성)"
+msgstr "(신성) "
 
 #: itemname.cc:429 itemname.cc:440
 msgid " of holy wrath"
@@ -5333,7 +5510,7 @@ msgstr "신성한 분노의 "
 
 #: itemname.cc:430 itemname.cc:441
 msgid " (elec)"
-msgstr " (감전)"
+msgstr "(감전) "
 
 #: itemname.cc:430 itemname.cc:441
 msgid " of electrocution"
@@ -5341,7 +5518,7 @@ msgstr "감전의 "
 
 #: itemname.cc:431 itemname.cc:442
 msgid " (slay orc)"
-msgstr " (오크사냥)"
+msgstr "(오크사냥) "
 
 #: itemname.cc:431 itemname.cc:442
 msgid " of orc slaying"
@@ -5349,7 +5526,7 @@ msgstr "오크사냥꾼의 "
 
 #: itemname.cc:432 itemname.cc:443
 msgid " (slay drac)"
-msgstr " (용사냥)"
+msgstr "(용사냥) "
 
 #: itemname.cc:432 itemname.cc:443
 msgid " of dragon slaying"
@@ -5357,7 +5534,7 @@ msgstr "용사냥꾼의 "
 
 #: itemname.cc:433 itemname.cc:444
 msgid " (venom)"
-msgstr " (독)"
+msgstr "(독) "
 
 #: itemname.cc:433 itemname.cc:444
 msgid " of venom"
@@ -5365,7 +5542,7 @@ msgstr "독의 "
 
 #: itemname.cc:434 itemname.cc:445
 msgid " (protect)"
-msgstr " (보호)"
+msgstr "(보호) "
 
 #: itemname.cc:434 itemname.cc:445
 msgid " of protection"
@@ -5373,7 +5550,7 @@ msgstr "보호의 "
 
 #: itemname.cc:435 itemname.cc:446
 msgid " (evade)"
-msgstr " (회피)"
+msgstr "(회피) "
 
 #: itemname.cc:435 itemname.cc:446
 msgid " of evasion"
@@ -5381,7 +5558,7 @@ msgstr "회피의 "
 
 #: itemname.cc:436 itemname.cc:447
 msgid " (drain)"
-msgstr " (흡수)"
+msgstr "(흡수) "
 
 #: itemname.cc:436 itemname.cc:447
 msgid " of draining"
@@ -5389,7 +5566,7 @@ msgstr "흡수의 "
 
 #: itemname.cc:437 itemname.cc:448
 msgid " (speed)"
-msgstr " (신속)"
+msgstr "(신속) "
 
 #: itemname.cc:437 itemname.cc:448
 msgid " of speed"
@@ -5397,7 +5574,7 @@ msgstr "신속의 "
 
 #: itemname.cc:438 itemname.cc:449
 msgid " (pain)"
-msgstr " (고통)"
+msgstr "(고통) "
 
 #: itemname.cc:438 itemname.cc:449
 msgid " of pain"
@@ -5405,7 +5582,7 @@ msgstr "고통의 "
 
 #: itemname.cc:439 itemname.cc:450
 msgid " (distort)"
-msgstr " (왜곡)"
+msgstr "(왜곡) "
 
 #: itemname.cc:439 itemname.cc:450
 msgid " of distortion"
@@ -5421,7 +5598,7 @@ msgstr "reaching의 "
 
 #: itemname.cc:441 itemname.cc:452
 msgid " (return)"
-msgstr " (복귀)"
+msgstr "(복귀) "
 
 #: itemname.cc:441 itemname.cc:452
 msgid " of returning"
@@ -5429,11 +5606,11 @@ msgstr "복귀하는 "
 
 #: itemname.cc:444 itemname.cc:455
 msgid " (vamp)"
-msgstr " (흡혈)"
+msgstr "(흡혈) "
 
 #: itemname.cc:448 itemname.cc:459
 msgid " (velocity)"
-msgstr " (속도)"
+msgstr "(속도) "
 
 #: itemname.cc:448 itemname.cc:459
 msgid " of velocity"
@@ -5441,7 +5618,7 @@ msgstr "속도의 "
 
 #: itemname.cc:453 itemname.cc:464
 msgid " (crush)"
-msgstr " (분쇄)"
+msgstr "(분쇄) "
 
 #: itemname.cc:453 itemname.cc:464
 msgid " of crushing"
@@ -5449,7 +5626,7 @@ msgstr "분쇄의 "
 
 #: itemname.cc:454 itemname.cc:465
 msgid " (slice)"
-msgstr " (절단)"
+msgstr "(절단) "
 
 #: itemname.cc:454 itemname.cc:465
 msgid " of slicing"
@@ -5457,7 +5634,7 @@ msgstr "절단의 "
 
 #: itemname.cc:455 itemname.cc:466
 msgid " (pierce)"
-msgstr " (관통)"
+msgstr "(관통) "
 
 #: itemname.cc:455 itemname.cc:466
 msgid " of piercing"
@@ -5465,7 +5642,7 @@ msgstr "관통의 "
 
 #: itemname.cc:456 itemname.cc:467
 msgid " (chop)"
-msgstr " (쪼갬)"
+msgstr "(쪼갬) "
 
 #: itemname.cc:456 itemname.cc:467
 msgid " of chopping"
@@ -5473,7 +5650,7 @@ msgstr "쪼개는 "
 
 #: itemname.cc:457 itemname.cc:468
 msgid " (slash)"
-msgstr " (가르기)"
+msgstr "(가르기) "
 
 #: itemname.cc:457 itemname.cc:468
 msgid " of slashing"
@@ -5481,7 +5658,7 @@ msgstr "갈라내는 "
 
 #: itemname.cc:458 itemname.cc:469
 msgid " (stab)"
-msgstr " (찌름)"
+msgstr "(찌름) "
 
 #: itemname.cc:458 itemname.cc:469
 msgid " of stabbing"
@@ -5489,7 +5666,7 @@ msgstr "찔러넣는 "
 
 #: itemname.cc:462 itemname.cc:473
 msgid " (antimagic)"
-msgstr " (안티매직)"
+msgstr "(안티매직) "
 
 #: itemname.cc:466 itemname.cc:477
 msgid " of flame"
@@ -5497,7 +5674,7 @@ msgstr "불꽃의 "
 
 #: itemname.cc:467 itemname.cc:478
 msgid " (frost)"
-msgstr " (서리)"
+msgstr "(서리) "
 
 #: itemname.cc:467 itemname.cc:478
 msgid " of frost"
@@ -5505,7 +5682,7 @@ msgstr "서리의 "
 
 #: itemname.cc:468 itemname.cc:479
 msgid " (penet)"
-msgstr " (투과)"
+msgstr "(투과) "
 
 #: itemname.cc:468 itemname.cc:479
 msgid " of penetration"
@@ -5522,7 +5699,7 @@ msgstr "reaping의 "
 #. both ranged and non-ranged
 #: itemname.cc:472 itemname.cc:483
 msgid " (chaos)"
-msgstr " (혼돈)"
+msgstr "(혼돈) "
 
 #: itemname.cc:472 itemname.cc:483
 msgid " of chaos"
@@ -5665,12 +5842,14 @@ msgstr "뽑음: "
 msgid "left: "
 msgstr "남음: "
 
-#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819
+#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819 itemname.cc:1847
+#: itemname.cc:1849
 #, c-format
 msgid "%s%smanual"
 msgstr "%s%s설명서"
 
-#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819
+#: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819 itemname.cc:1847
+#: itemname.cc:1849
 #, c-format
 msgid "%s%sbook"
 msgstr "%s%s주문서"
@@ -5696,12 +5875,168 @@ msgstr ""
 msgid "%s%s%s"
 msgstr "%2$s%1$s%3$s"
 
-#: itemname.cc:1881
+#: itemname.cc:1881 itemname.cc:1909 itemname.cc:1911
 #, c-format
 msgid "rod of %s"
 msgstr "%s의 막대"
 
-#: itemname.cc:1882
+#: itemname.cc:1882 itemname.cc:1910 itemname.cc:1912
 #, c-format
 msgid "staff of %s"
 msgstr "%s의 지팡이"
+
+#: spl-other.cc:62
+msgid "The chunk of flesh you are holding crumbles to dust."
+msgstr ""
+
+#: spl-other.cc:64 spl-other.cc:84
+msgid "A flood of magical energy pours into your mind!"
+msgstr ""
+
+#: spl-other.cc:80
+#, c-format
+msgid "The blood within %s froths and boils."
+msgstr ""
+
+#: spl-other.cc:81
+msgid "one of your flasks"
+msgstr ""
+
+#: spl-other.cc:82
+msgid "the flask you are holding"
+msgstr ""
+
+#: spl-other.cc:99
+msgid "A conflicting enchantment prevents the spell from coming into effect."
+msgstr ""
+
+#: spl-other.cc:105
+msgid "You don't have enough blood to draw power from your own body."
+msgstr ""
+
+#: spl-other.cc:109 spl-other.cc:137
+msgid "Your attempt to draw power from your own body fails."
+msgstr ""
+
+#: spl-other.cc:135
+msgid "You draw magical energy from your own body!"
+msgstr ""
+
+#: spl-other.cc:155
+msgid "Malign forces permeate your being, awaiting release."
+msgstr ""
+
+#. only informed if monsters recalled are visible {dlb}:
+#: spl-other.cc:231
+msgid " is recalled."
+msgstr ""
+
+#: spl-other.cc:239
+msgid "Nothing appears to have answered your call."
+msgstr ""
+
+#: spl-other.cc:249
+msgid "You feel the strange sensation of being on two planes at once."
+msgstr ""
+
+#: spl-other.cc:251
+msgid "You feel the material plane grow further away."
+msgstr ""
+
+#: spl-other.cc:289
+msgid "That's not a passable wall."
+msgstr ""
+
+#: spl-other.cc:298
+msgid "You sense an overwhelming volume of rock."
+msgstr ""
+
+#: spl-other.cc:300
+msgid "Something is blocking your path through the rock."
+msgstr ""
+
+#: spl-other.cc:304
+msgid "You sense a large body of water on the other side of the rock."
+msgstr ""
+
+#: spl-other.cc:306
+msgid "You sense an intense heat on the other side of the rock."
+msgstr ""
+
+#: spl-other.cc:312
+msgid "This rock feels extremely deep."
+msgstr ""
+
+#: spl-other.cc:314
+msgid "You fail to penetrate the rock."
+msgstr ""
+
+#: spl-other.cc:349
+msgid "Your head spins!"
+msgstr "머리가 빙빙 돈다!"
+
+#: spl-other.cc:383
+msgid "You can't reach the corpse!"
+msgstr "당신은 시체에 닿을 수 없다!"
+
+#: spl-other.cc:385
+msgid "There aren't any corpses here."
+msgstr "여기엔 어떤 시체도 없다."
+
+#: spl-other.cc:401
+#, c-format
+msgid "Distill a potion from %s?"
+msgstr "%s에서 포션을 추출할까요?"
+
+#: spl-other.cc:501
+#, c-format
+msgid "You extract %s from the corpse."
+msgstr "당신은 시체로부터 %s를 뽑아냈다."
+
+#: spl-other.cc:506
+msgid "Unfortunately, you can't carry it right now!"
+msgstr "불행하게도, 그것을 들 수 없다!"
+
+#: spl-other.cc:518
+msgid "Your icy shield evaporates."
+msgstr ""
+
+#: spl-other.cc:534
+msgid "The disc of vapour around you crackles some more."
+msgstr ""
+
+#: spl-other.cc:536
+msgid "A crackling disc of dense vapour forms in the air!"
+msgstr ""
+
+#: spl-other.cc:549
+msgid "This spell does not affect your current form."
+msgstr ""
+
+#: spl-other.cc:555
+msgid "This spell conflicts with another spell still in effect."
+msgstr ""
+
+#: spl-other.cc:562
+msgid "Your skin feels harder."
+msgstr ""
+
+#: spl-other.cc:566
+msgid "Your stone body feels more resilient."
+msgstr ""
+
+#: spl-other.cc:568
+msgid "Your skin hardens."
+msgstr "피부가 단단해졌다."
+
+#: spl-other.cc:582
+msgid "It would have no effect in that bright light!"
+msgstr ""
+
+#: spl-other.cc:588
+msgid "It gets a bit darker."
+msgstr ""
+
+#: spl-other.cc:590
+msgid "It gets dark."
+msgstr ""
