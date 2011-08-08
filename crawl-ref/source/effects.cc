@@ -723,7 +723,7 @@ void direct_effect(monster* source, spell_type spell,
         else
             mpr(gettext("Something smites you!"));
 
-        pbolt.name       = N_("smiting");
+        pbolt.name       = M_("smiting");
         pbolt.flavour    = BEAM_MISSILE;
         pbolt.aux_source = N_("by divine providence");
         damage_taken     = 7 + random2avg(11, 2);
@@ -741,7 +741,7 @@ void direct_effect(monster* source, spell_type spell,
                 mpr(gettext("The air twists around and strikes you!"));
         }
 
-        pbolt.name       = N_("airstrike");
+        pbolt.name       = M_("airstrike");
         pbolt.flavour    = BEAM_AIR;
         pbolt.aux_source = N_("by the air");
 

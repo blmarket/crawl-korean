@@ -145,7 +145,7 @@ std::string vmake_stringf(const char* s, va_list args)
     va_copy(orig_args, args);
     size_t len = vsnprintf(buf1, sizeof buf1, s, orig_args);
     va_end(orig_args);
-    if (len < sizeof buf1)
+    if (len < sizeof buf1 || len+1 == 0)
         return (buf1);
 
     char *buf2 = (char*)malloc(len + 1);

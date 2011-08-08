@@ -6564,7 +6564,7 @@ static void stab_message(actor *defender, int stab_bonus)
         }
         mprf(gettext("%s fails to defend %s."),
               defender->name(DESC_CAP_THE).c_str(),
-              defender->pronoun(PRONOUN_REFLEXIVE).c_str());
+              gettext(defender->pronoun(PRONOUN_REFLEXIVE).c_str()));
         break;
     }
 }

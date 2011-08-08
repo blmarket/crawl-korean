@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-28 16:49+0900\n"
+"POT-Creation-Date: 2011-07-31 10:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3605,7 +3605,7 @@ msgstr "그것의"
 
 #: fight.cc:409 fight.cc:402
 msgid "itself"
-msgstr "그것 자신"
+msgstr "자기 자신"
 
 #: fight.cc:420 fight.cc:413
 msgid "Something"
@@ -3628,6 +3628,7 @@ msgid "poisoned"
 msgstr ""
 
 #: itemname.cc:385 itemname.cc:628 itemname.cc:396 itemname.cc:639
+#: itemname.cc:1085
 msgid "poison"
 msgstr ""
 
@@ -3816,11 +3817,11 @@ msgstr ""
 msgid "healing"
 msgstr ""
 
-#: itemname.cc:553 describe.cc:444 itemname.cc:564
+#: itemname.cc:553 describe.cc:444 itemname.cc:564 itemname.cc:1083
 msgid "fire"
 msgstr "화염"
 
-#: itemname.cc:554 describe.cc:445 itemname.cc:565
+#: itemname.cc:554 describe.cc:445 itemname.cc:565 itemname.cc:1084
 msgid "cold"
 msgstr "냉기"
 
@@ -4100,7 +4101,8 @@ msgstr ""
 msgid "detect curse"
 msgstr ""
 
-#: itemname.cc:665 itemname.cc:676
+#. rods
+#: itemname.cc:665 itemname.cc:676 itemname.cc:1092 itemname.cc:1095
 msgid "summoning"
 msgstr ""
 
@@ -6287,3 +6289,84 @@ msgstr "피자"
 #: itemprop.cc:442
 msgid "ambrosia"
 msgstr "암브로시아"
+
+#. staves
+#: itemname.cc:1081
+msgid "wizardry"
+msgstr ""
+
+#: itemname.cc:1082
+msgid "power"
+msgstr ""
+
+#: itemname.cc:1086
+msgid "energy"
+msgstr ""
+
+#: itemname.cc:1087
+msgid "death"
+msgstr ""
+
+#: itemname.cc:1088
+msgid "conjuration"
+msgstr ""
+
+#: itemname.cc:1089
+msgid "enchantment"
+msgstr ""
+
+#: itemname.cc:1090
+msgid "air"
+msgstr ""
+
+#: itemname.cc:1091
+msgid "earth"
+msgstr ""
+
+#: itemname.cc:1096
+msgid "channeling"
+msgstr ""
+
+#: itemname.cc:1097
+msgid "warding"
+msgstr ""
+
+#: effects.cc:726 itemname.cc:1098
+msgid "smiting"
+msgstr "천벌의 일격"
+
+#: itemname.cc:1099
+msgid "striking"
+msgstr ""
+
+#: itemname.cc:1100
+msgid "demonology"
+msgstr ""
+
+#: itemname.cc:1101
+msgid "venom"
+msgstr ""
+
+#: itemname.cc:1107
+msgid "destruction"
+msgstr ""
+
+#: itemname.cc:1865
+msgid "rod"
+msgstr ""
+
+#: itemname.cc:1865
+msgid "staff"
+msgstr ""
+
+#: effects.cc:744
+msgid "airstrike"
+msgstr "공중폭격"
+
+#: itemname.cc:1924
+msgid "corpse"
+msgstr "시체"
+
+#: itemname.cc:1926
+msgid "skeleton"
+msgstr "해골"

@@ -73,7 +73,7 @@ std::string quant_name(const item_def &item, int quant,
     item_def tmp = item;
     tmp.quantity = quant;
 
-    return tmp.name(false, des, terse);
+    return tmp.name(true, des, terse);
 }
 
 std::string item_def::name(bool allow_translate,
@@ -1056,33 +1056,33 @@ static const char* staff_type_name(int stafftype)
     switch (static_cast<stave_type>(stafftype))
     {
     // staves
-    case STAFF_WIZARDRY:    return "wizardry";
-    case STAFF_POWER:       return "power";
-    case STAFF_FIRE:        return "fire";
-    case STAFF_COLD:        return "cold";
-    case STAFF_POISON:      return "poison";
-    case STAFF_ENERGY:      return "energy";
-    case STAFF_DEATH:       return "death";
-    case STAFF_CONJURATION: return "conjuration";
-    case STAFF_ENCHANTMENT: return "enchantment";
-    case STAFF_AIR:         return "air";
-    case STAFF_EARTH:       return "earth";
-    case STAFF_SUMMONING:   return "summoning";
+    case STAFF_WIZARDRY:    return M_("wizardry");
+    case STAFF_POWER:       return M_("power");
+    case STAFF_FIRE:        return M_("fire");
+    case STAFF_COLD:        return M_("cold");
+    case STAFF_POISON:      return M_("poison");
+    case STAFF_ENERGY:      return M_("energy");
+    case STAFF_DEATH:       return M_("death");
+    case STAFF_CONJURATION: return M_("conjuration");
+    case STAFF_ENCHANTMENT: return M_("enchantment");
+    case STAFF_AIR:         return M_("air");
+    case STAFF_EARTH:       return M_("earth");
+    case STAFF_SUMMONING:   return M_("summoning");
 
     // rods
-    case STAFF_SPELL_SUMMONING: return "summoning";
-    case STAFF_CHANNELING:      return "channeling";
-    case STAFF_WARDING:         return "warding";
-    case STAFF_SMITING:         return "smiting";
-    case STAFF_STRIKING:        return "striking";
-    case STAFF_DEMONOLOGY:      return "demonology";
-    case STAFF_VENOM:           return "venom";
+    case STAFF_SPELL_SUMMONING: return M_("summoning");
+    case STAFF_CHANNELING:      return M_("channeling");
+    case STAFF_WARDING:         return M_("warding");
+    case STAFF_SMITING:         return M_("smiting");
+    case STAFF_STRIKING:        return M_("striking");
+    case STAFF_DEMONOLOGY:      return M_("demonology");
+    case STAFF_VENOM:           return M_("venom");
 
     case STAFF_DESTRUCTION_I:
     case STAFF_DESTRUCTION_II:
     case STAFF_DESTRUCTION_III:
     case STAFF_DESTRUCTION_IV:
-        return "destruction";
+        return M_("destruction");
 
     default: return "bugginess";
     }
@@ -1335,7 +1335,7 @@ std::string item_def::name_aux(description_level_type desc,
         if (!basename && !dbname && know_racial)
         {
             // Always give racial type (it does have game effects).
-            buff << racial_description_string(*this, terse);
+            buff << check_gettext(racial_description_string(*this, terse));
         }
 
         if (know_brand && !terse)
@@ -1375,7 +1375,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (!basename && !dbname)
-            buff << racial_description_string(*this, terse);
+            buff << check_gettext(racial_description_string(*this, terse));
 
         buff << check_gettext(ammo_name(static_cast<missile_type>(item_typ)));
 
@@ -1463,7 +1463,7 @@ std::string item_def::name_aux(description_level_type desc,
         if (!basename && !dbname)
         {
             // always give racial description (has game effects)
-            buff << racial_description_string(*this, terse);
+            buff << check_gettext(racial_description_string(*this, terse));
         }
 
         if (!basename && !dbname && is_hard_helmet(*this))
@@ -1818,12 +1818,12 @@ std::string item_def::name_aux(description_level_type desc,
         if (know_curse && !terse)
         {
             if (cursed())
-                buff << "cursed ";
+                buff << check_gettext("cursed ");
             else if (Options.show_uncursed && desc != DESC_PLAIN
                      && !know_pluses
                      && (!know_type || !is_artefact(*this)))
             {
-                buff << "uncursed ";
+                buff << check_gettext("uncursed ");
             }
         }
 
@@ -1831,11 +1831,11 @@ std::string item_def::name_aux(description_level_type desc,
         {
             if (!basename)
             {
-                buff << staff_secondary_string(this->special / NDSC_STAVE_PRI)
-                     << staff_primary_string(this->special % NDSC_STAVE_PRI);
+                buff << check_gettext(staff_secondary_string(this->special / NDSC_STAVE_PRI))
+                     << check_gettext(staff_primary_string(this->special % NDSC_STAVE_PRI));
             }
 
-            buff << (item_is_rod(*this) ? "rod" : "staff");
+            buff << (item_is_rod(*this) ? check_gettext(M_("rod")) : check_gettext(M_("staff")));
         }
         else
         {
@@ -1850,27 +1850,29 @@ std::string item_def::name_aux(description_level_type desc,
                 buff << " ";
             }
 
-            buff << (item_is_rod(*this) ? "rod" : "staff")
-                 << " of " << staff_type_name(item_typ);
+            buff << make_stringf(item_is_rod(*this) 
+                ? check_gettext(N_("rod of %s")) 
+                : check_gettext(N_("staff of %s")),
+                check_gettext(staff_type_name(item_typ)));
         }
 
         if (know_curse && cursed() && terse)
-            buff << " (curse)";
+            buff << check_gettext(" (curse)");
         break;
 
     // rearranged 15 Apr 2000 {dlb}:
     case OBJ_ORBS:
-        buff.str("Orb of Zot");
+        buff.str(check_gettext("Orb of Zot"));
         break;
 
     case OBJ_GOLD:
-        buff << "gold piece";
+        buff << check_gettext("gold piece");
         break;
 
     case OBJ_CORPSES:
     {
         if (food_is_rotten(*this) && !dbname && it_plus != MONS_ROTTING_HULK)
-            buff << "rotting ";
+            buff << check_gettext("rotting ");
 
         uint64_t name_type, name_flags = 0;
 
@@ -1885,16 +1887,16 @@ std::string item_def::name_aux(description_level_type desc,
             buff << _name << " ";
         else if (!dbname && !starts_with(_name, "the "))
         {
-            buff << mons_type_name(it_plus, DESC_PLAIN) << ' ';
+            buff << check_gettext(mons_type_name(it_plus, DESC_PLAIN).c_str()) << ' ';
 
             if (!_name.empty() && shaped)
                 buff << _name << ' ';
         }
 
         if (item_typ == CORPSE_BODY)
-            buff << "corpse";
+            buff << check_gettext(M_("corpse"));
         else if (item_typ == CORPSE_SKELETON)
-            buff << "skeleton";
+            buff << check_gettext(M_("skeleton"));
         else
             buff << "corpse bug";
 
@@ -3309,8 +3311,8 @@ std::string get_menu_colour_prefix_tags(const item_def &item,
     std::string cprf       = menu_colour_item_prefix(item);
     std::string colour     = "";
     std::string colour_off = "";
-    std::string item_name  = item.name(false, desc);
-    int col = menu_colour(item_name, cprf, "pickup");
+    std::string item_name  = item.name(true, desc);
+    int col = menu_colour(item.name(false, desc), cprf, "pickup");
 
     if (col != -1)
         colour = colour_to_str(col);
@@ -3323,7 +3325,7 @@ std::string get_menu_colour_prefix_tags(const item_def &item,
         item_name = colour + item_name + colour_off;
     }
 
-    return (item_name);
+    return item_name;
 }
 
 std::string get_message_colour_tags(const item_def &item,

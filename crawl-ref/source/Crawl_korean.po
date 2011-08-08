@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-28 16:49+0900\n"
+"POT-Creation-Date: 2011-07-31 10:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3625,117 +3625,12 @@ msgstr "당신은 %2$s를 %1$s지만, 아무 데미지도 주지 못했다."
 msgid "%s is stunned!"
 msgstr "%s는 기절했다!"
 
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s는 %3$s를 %2$s다%4$s"
 
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
 #: fight.cc:2404 fight.cc:5366 fight.cc:2397 fight.cc:5359
 #, c-format
 msgid "%s %s %s!"
@@ -4468,10 +4363,6 @@ msgstr "은/(는) 징벌을 받았다."
 msgid "Something smites you!"
 msgstr "무엇인가가 당신에게 일격을 가한다!"
 
-#: effects.cc:726
-msgid "smiting"
-msgstr "천벌의 일격"
-
 #: effects.cc:728
 msgid "by divine providence"
 msgstr "신의 섭리에 의해"
@@ -4487,10 +4378,6 @@ msgstr "소용돌이치는 대기가 비행중인 당신을 격렬하게 덮쳤�
 #: effects.cc:741
 msgid "The air twists around and strikes you!"
 msgstr "소용돌이치는 대기가 당신에게 몰아쳤다!"
-
-#: effects.cc:744
-msgid "airstrike"
-msgstr "공중폭격"
 
 #: effects.cc:746
 msgid "by the air"
@@ -5697,17 +5584,17 @@ msgstr "한 쌍의 "
 #: itemname.cc:1523 itemname.cc:1522
 #, c-format
 msgid " of %s"
-msgstr "%s의 "
+msgstr "%1$s의 "
 
 #: itemname.cc:1543 itemname.cc:1542
 #, c-format
 msgid "wand of %s"
-msgstr "%s의 마법봉"
+msgstr "%1$s의 마법봉"
 
 #: itemname.cc:1547 itemname.cc:1546
 #, c-format
 msgid "%s%s wand"
-msgstr "%s%s 마법봉"
+msgstr "%1$s%2$s 마법봉"
 
 #: itemname.cc:1557 itemname.cc:1556
 msgid " {empty}"
@@ -5797,7 +5684,7 @@ msgstr "%s의 설명서"
 #: itemname.cc:1829 itemname.cc:1828
 #, c-format
 msgid "book of %s"
-msgstr "%1$s의 주문서"
+msgstr "%s의 주문서"
 
 #: abl-show.cc:2267
 msgid "You renew your dark mirror aura."
@@ -5808,3 +5695,13 @@ msgstr ""
 #, c-format
 msgid "%s%s%s"
 msgstr "%2$s%1$s%3$s"
+
+#: itemname.cc:1881
+#, c-format
+msgid "rod of %s"
+msgstr "%s의 막대"
+
+#: itemname.cc:1882
+#, c-format
+msgid "staff of %s"
+msgstr "%s의 지팡이"
