@@ -135,3 +135,30 @@ msgstr "불태웠"
 
 msgid "gore-verb"
 msgstr "들이받았"
+
+msgid "sting-verb"
+msgstr "쏘았"
+
+msgid "touch-verb"
+msgstr "만졌"
+
+msgid "engulf-verb"
+msgstr ""
+
+msgid "constrict-verb"
+msgstr ""
+
+msgid "trunk-slap-verb"
+msgstr "코로 후려쳤"
+
+msgid "snap closed at-verb"
+msgstr ""
+
+msgid "splash-verb"
+msgstr ""
+
+msgid "melt-verb"
+msgstr "녹였"
+
+msgid "freeze-verb"
+msgstr "얼렸"

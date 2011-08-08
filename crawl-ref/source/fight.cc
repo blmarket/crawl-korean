@@ -402,11 +402,11 @@ std::string melee_attack::anon_pronoun(pronoun_type pron)
     switch (pron)
     {
     default:
-    case PRONOUN_CAP:              return N_("It");
-    case PRONOUN_NOCAP:            return N_("it");
-    case PRONOUN_CAP_POSSESSIVE:   return N_("Its");
-    case PRONOUN_NOCAP_POSSESSIVE: return N_("its");
-    case PRONOUN_REFLEXIVE:        return N_("itself");
+    case PRONOUN_CAP:              return gettext(M_("It"));
+    case PRONOUN_NOCAP:            return gettext(M_("it"));
+    case PRONOUN_CAP_POSSESSIVE:   return gettext(M_("Its"));
+    case PRONOUN_NOCAP_POSSESSIVE: return gettext(M_("its"));
+    case PRONOUN_REFLEXIVE:        return gettext(M_("itself"));
     }
 }
 
@@ -417,19 +417,19 @@ std::string melee_attack::anon_name(description_level_type desc,
     {
     case DESC_CAP_THE:
     case DESC_CAP_A:
-        return (actor_invisible ? N_("It") : N_("Something"));
+        return (actor_invisible ? gettext(M_("It")) : gettext(M_("Something")));
     case DESC_CAP_YOUR:
-        return (N_("Its"));
+        return gettext(M_("Its"));
     case DESC_NOCAP_YOUR:
     case DESC_NOCAP_ITS:
-        return (N_("its"));
+        return gettext(M_("its"));
     case DESC_NONE:
         return ("");
     case DESC_NOCAP_THE:
     case DESC_NOCAP_A:
     case DESC_PLAIN:
     default:
-        return (actor_invisible? N_("it") : N_("something"));
+        return (actor_invisible? gettext(M_("it")) : gettext(M_("something")));
     }
 }
 
@@ -3359,13 +3359,13 @@ bool melee_attack::apply_damage_brand()
     case SPWPN_FLAMING:
         res = fire_res_apply_cerebov_downgrade(defender->res_fire());
         calc_elemental_brand_damage(BEAM_FIRE, res,
-                                    defender->is_icy() ? "melt" : "burn");
+                                    defender->is_icy() ? V_("melt") : V_("burn"));
         defender->expose_to_element(BEAM_FIRE);
         extra_noise += 1;
         break;
 
     case SPWPN_FREEZING:
-        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), "freeze");
+        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), V_("freeze"));
         defender->expose_to_element(BEAM_COLD);
         break;
 
@@ -4738,28 +4738,28 @@ std::string melee_attack::mons_attack_verb(const mon_attack_def &attk)
     static const char *attack_types[] =
     {
         "",
-        "hit",         // including weapon attacks
-        "bite",
-        "sting",
+        V_("hit"),         // including weapon attacks
+        V_("bite"),
+        V_("sting"),
 
         // spore
-        "hit",
+        V_("hit"),
 
-        "touch",
-        "engulf",
-        "claw",
-        "peck",
-        "headbutt",
-        "punch",
-        "kick",
-        "tentacle-slap",
-        "tail-slap",
-        "gore",
-        "constrict",
-        "trample",
-        "trunk-slap",
-        "snap closed at",
-        "splash"
+        V_("touch"),
+        V_("engulf"),
+        V_("claw"),
+        V_("peck"),
+        V_("headbutt"),
+        V_("punch"),
+        V_("kick"),
+        V_("tentacle-slap"),
+        V_("tail-slap"),
+        V_("gore"),
+        V_("constrict"),
+        V_("trample"),
+        V_("trunk-slap"),
+        V_("snap closed at"),
+        V_("splash")
     };
 
     ASSERT(attk.type <

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-19 21:14+0900\n"
+"POT-Creation-Date: 2011-07-25 15:25+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2229,8 +2229,6 @@ msgstr "에레쉬키갈"
 msgid "test spawner"
 msgstr "테스트 스포너"
 
-
-
 #: mon-info.cc:592
 msgid "Lernaean hydra"
 msgstr "러내안 히드라(T)"
@@ -2896,7 +2894,7 @@ msgstr "부식"
 msgid "Flame"
 msgstr "불꽃"
 
-#./ (DECEIT) "frost"는 보통 다른곳에서는 원래 뜻 대신 대개 '냉기'로 번역됩니다.
+#. / (DECEIT) "frost"는 보통 다른곳에서는 원래 뜻 대신 대개 '냉기'로 번역됩니다.
 #: decks.cc:342
 msgid "Frost"
 msgstr "서리"
@@ -3563,7 +3561,55 @@ msgstr "초코 열매"
 msgid "Honeycomb"
 msgstr "벌집"
 
-#./ (DECEIT) Bread Ration(휴대용 빵), Meat Ration(휴대용 고기)로 받는게 좋을듯합니다.
+#. / (DECEIT) Bread Ration(휴대용 빵), Meat Ration(휴대용 고기)로 받는게 좋을듯합니다.
 #: food.cc:2852
 msgid "Ration"
 msgstr "보존 식량"
+
+#: player-act.cc:374 player-act.cc:352
+msgid "You"
+msgstr "당신"
+
+#: player-act.cc:375 player-act.cc:379 player-act.cc:355
+msgid "you"
+msgstr "당신"
+
+#: player-act.cc:376 player-act.cc:357
+msgid "Your"
+msgstr "당신의"
+
+#: player-act.cc:377 player-act.cc:360
+msgid "your"
+msgstr "당신의"
+
+#: player-act.cc:378
+msgid "yourself"
+msgstr "당신 자신"
+
+#: fight.cc:405 fight.cc:420
+msgid "It"
+msgstr "그것"
+
+#: fight.cc:406 fight.cc:432
+msgid "it"
+msgstr "그것"
+
+#: fight.cc:407 fight.cc:422
+msgid "Its"
+msgstr "그것의"
+
+#: fight.cc:408 fight.cc:425
+msgid "its"
+msgstr "그것의"
+
+#: fight.cc:409
+msgid "itself"
+msgstr "그것 자신"
+
+#: fight.cc:420
+msgid "Something"
+msgstr "무언가"
+
+#: fight.cc:432
+msgid "something"
+msgstr "무언가"

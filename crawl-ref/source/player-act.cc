@@ -349,28 +349,28 @@ void player::make_hungry(int hunger_increase, bool silent)
         ::lessen_hunger(-hunger_increase, silent);
 }
 
-static std::string _pronoun_you(description_level_type desc)
+static const char * _pronoun_you(description_level_type desc)
 {
     switch (desc)
     {
     case DESC_NONE:
         return "";
     case DESC_CAP_A: case DESC_CAP_THE:
-        return "You";
+        return M_("You");
     case DESC_NOCAP_A: case DESC_NOCAP_THE:
     default:
-        return "you";
+        return M_("you");
     case DESC_CAP_YOUR:
-        return "Your";
+        return M_("Your");
     case DESC_NOCAP_YOUR:
     case DESC_NOCAP_ITS:
-        return "your";
+        return M_("your");
     }
 }
 
 std::string player::name(description_level_type dt, bool) const
 {
-    return (_pronoun_you(dt));
+    return (gettext(_pronoun_you(dt)));
 }
 
 std::string player::pronoun(pronoun_type pro, bool) const
@@ -378,12 +378,12 @@ std::string player::pronoun(pronoun_type pro, bool) const
     switch (pro)
     {
     default:
-    case PRONOUN_CAP:               return N_("You");
-    case PRONOUN_NOCAP:             return N_("you");
-    case PRONOUN_CAP_POSSESSIVE:    return N_("Your");
-    case PRONOUN_NOCAP_POSSESSIVE:  return N_("your");
-    case PRONOUN_REFLEXIVE:         return N_("yourself");
-    case PRONOUN_OBJECTIVE:         return N_("you");
+    case PRONOUN_CAP:               return M_("You");
+    case PRONOUN_NOCAP:             return M_("you");
+    case PRONOUN_CAP_POSSESSIVE:    return M_("Your");
+    case PRONOUN_NOCAP_POSSESSIVE:  return M_("your");
+    case PRONOUN_REFLEXIVE:         return M_("yourself");
+    case PRONOUN_OBJECTIVE:         return M_("you");
     }
 }
 
