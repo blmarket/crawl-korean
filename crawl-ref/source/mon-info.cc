@@ -597,8 +597,8 @@ std::string monster_info::_core_name() const
         s = gettext(M_("INVALID MONSTER"));
     else
     {
-        const char* slime_sizes[] = {N_("buggy "), "", N_("large "), N_("very large "),
-                                               N_("enormous "), N_("titanic ")};
+        const char* slime_sizes[] = {M_("buggy "), "", M_("large "), M_("very large "),
+                                               M_("enormous "), M_("titanic ")};
         s = gettext(get_monster_data(nametype)->name);
 
         switch (type)

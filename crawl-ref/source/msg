@@ -1,7 +1,7 @@
 mkdir -p ko_KR/LC_MESSAGES
 cp Crawl_korean.po tmp.po
 echo "" >> tmp.po
-tail Crawl_mutation.po -n +19 >> tmp.po
+tail Crawl_mutation.po -n +12 >> tmp.po
 echo "" >> tmp.po
 tail Crawl_words.po -n +19 >> tmp.po
 echo "" >> tmp.po

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-25 15:25+0900\n"
+"POT-Creation-Date: 2011-07-25 21:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2233,7 +2233,7 @@ msgstr "테스트 스포너"
 msgid "Lernaean hydra"
 msgstr "러내안 히드라(T)"
 
-#: mon-info.cc:594
+#: mon-info.cc:594 itemname.cc:1620 itemname.cc:1619
 msgid "royal jelly"
 msgstr "로얄 젤리(T)"
 
@@ -2669,12 +2669,12 @@ msgid "Charms"
 msgstr ""
 
 #. / 마법 학파로서의 Fire
-#: spl-util.cc:902
+#: spl-util.cc:902 itemname.cc:994
 msgid "Fire"
 msgstr ""
 
 #. / 마법 학파로서의 Ice
-#: spl-util.cc:905
+#: spl-util.cc:905 itemname.cc:995
 msgid "Ice"
 msgstr ""
 
@@ -2682,7 +2682,7 @@ msgstr ""
 msgid "Transmutation"
 msgstr ""
 
-#: spl-util.cc:909
+#: spl-util.cc:909 itemname.cc:1005
 msgid "Necromancy"
 msgstr ""
 
@@ -2713,7 +2713,7 @@ msgid "Earth"
 msgstr ""
 
 #. / 마법 학파로서의 Air
-#: spl-util.cc:926
+#: spl-util.cc:926 itemname.cc:1008
 msgid "Air"
 msgstr ""
 
@@ -2726,7 +2726,7 @@ msgstr ""
 msgid "the Portal"
 msgstr "관문"
 
-#: decks.cc:299
+#: decks.cc:299 itemname.cc:1010
 msgid "the Warp"
 msgstr "전이"
 
@@ -2895,7 +2895,7 @@ msgid "Flame"
 msgstr "불꽃"
 
 #. / (DECEIT) "frost"는 보통 다른곳에서는 원래 뜻 대신 대개 '냉기'로 번역됩니다.
-#: decks.cc:342
+#: decks.cc:342 itemname.cc:992
 msgid "Frost"
 msgstr "서리"
 
@@ -3586,30 +3586,2235 @@ msgstr "당신의"
 msgid "yourself"
 msgstr "당신 자신"
 
-#: fight.cc:405 fight.cc:420
+#: fight.cc:405 fight.cc:420 fight.cc:398 fight.cc:413
 msgid "It"
 msgstr "그것"
 
-#: fight.cc:406 fight.cc:432
+#: fight.cc:406 fight.cc:432 fight.cc:399 fight.cc:425
 msgid "it"
 msgstr "그것"
 
-#: fight.cc:407 fight.cc:422
+#: fight.cc:407 fight.cc:422 fight.cc:400 fight.cc:415
 msgid "Its"
 msgstr "그것의"
 
-#: fight.cc:408 fight.cc:425
+#: fight.cc:408 fight.cc:425 fight.cc:401 fight.cc:418
 msgid "its"
 msgstr "그것의"
 
-#: fight.cc:409
+#: fight.cc:409 fight.cc:402
 msgid "itself"
 msgstr "그것 자신"
 
-#: fight.cc:420
+#: fight.cc:420 fight.cc:413
 msgid "Something"
 msgstr "무언가"
 
-#: fight.cc:432
+#: fight.cc:432 fight.cc:425
 msgid "something"
 msgstr "무언가"
+
+#: itemname.cc:381 itemname.cc:546
+msgid "flame"
+msgstr ""
+
+#: itemname.cc:383 itemname.cc:547
+msgid "frost"
+msgstr ""
+
+#: itemname.cc:385
+msgid "poisoned"
+msgstr ""
+
+#: itemname.cc:385 itemname.cc:628
+msgid "poison"
+msgstr ""
+
+#: itemname.cc:387
+msgid "curare-tipped"
+msgstr ""
+
+#: itemname.cc:387
+msgid "curare"
+msgstr ""
+
+#: itemname.cc:389
+msgid "explode"
+msgstr ""
+
+#: itemname.cc:389
+msgid "exploding"
+msgstr ""
+
+#: itemname.cc:391 itemname.cc:764
+msgid "steel"
+msgstr ""
+
+#: itemname.cc:393 itemname.cc:604 itemname.cc:761 itemname.cc:830
+msgid "silver"
+msgstr ""
+
+#: itemname.cc:395 itemname.cc:552 itemname.cc:630
+msgid "paralysis"
+msgstr ""
+
+#: itemname.cc:397
+msgid "slow"
+msgstr ""
+
+#: itemname.cc:397 itemname.cc:548 itemname.cc:629
+msgid "slowing"
+msgstr ""
+
+#: itemname.cc:399
+msgid "sleep"
+msgstr ""
+
+#: itemname.cc:399
+msgid "sleeping"
+msgstr ""
+
+#: itemname.cc:401
+msgid "conf"
+msgstr ""
+
+#: itemname.cc:401 itemname.cc:555 itemname.cc:631
+msgid "confusion"
+msgstr ""
+
+#: itemname.cc:403
+msgid "sick"
+msgstr ""
+
+#: itemname.cc:403
+msgid "sickness"
+msgstr ""
+
+#: itemname.cc:405
+msgid "frenzy"
+msgstr ""
+
+#: itemname.cc:407
+msgid "return"
+msgstr ""
+
+#: itemname.cc:407
+msgid "returning"
+msgstr ""
+
+#: itemname.cc:409
+msgid "chaos"
+msgstr ""
+
+#: itemname.cc:411
+msgid "penet"
+msgstr ""
+
+#: itemname.cc:411
+msgid "penetration"
+msgstr ""
+
+#: itemname.cc:413
+msgid "reap"
+msgstr ""
+
+#: itemname.cc:413
+msgid "reaping"
+msgstr ""
+
+#: itemname.cc:415
+msgid "disperse"
+msgstr ""
+
+#: itemname.cc:415
+msgid "dispersal"
+msgstr ""
+
+#: itemname.cc:487
+msgid "running"
+msgstr ""
+
+#: itemname.cc:492
+msgid "darkness"
+msgstr ""
+
+#: itemname.cc:493
+msgid "strength"
+msgstr ""
+
+#: itemname.cc:494
+msgid "dexterity"
+msgstr ""
+
+#: itemname.cc:495
+msgid "intelligence"
+msgstr ""
+
+#: itemname.cc:496
+msgid "ponderousness"
+msgstr ""
+
+#: itemname.cc:497 itemname.cc:627
+msgid "levitation"
+msgstr ""
+
+#: itemname.cc:499
+msgid "protection"
+msgstr ""
+
+#: itemname.cc:500
+msgid "stealth"
+msgstr ""
+
+#: itemname.cc:501 itemname.cc:646
+msgid "resistance"
+msgstr ""
+
+#: itemname.cc:502
+msgid "positive energy"
+msgstr ""
+
+#: itemname.cc:503
+msgid "the Archmagi"
+msgstr ""
+
+#: itemname.cc:504
+msgid "preservation"
+msgstr ""
+
+#: itemname.cc:505
+msgid "reflection"
+msgstr ""
+
+#: itemname.cc:506
+msgid "spirit shield"
+msgstr ""
+
+#: itemname.cc:507
+msgid "archery"
+msgstr ""
+
+#: itemname.cc:508 itemname.cc:566 itemname.cc:648 itemname.cc:686
+msgid "bugginess"
+msgstr ""
+
+#: itemname.cc:549
+msgid "hasting"
+msgstr ""
+
+#: itemname.cc:550
+msgid "magic darts"
+msgstr ""
+
+#: itemname.cc:551 itemname.cc:618
+msgid "healing"
+msgstr ""
+
+#: itemname.cc:553 describe.cc:444
+msgid "fire"
+msgstr "화염"
+
+#: itemname.cc:554 describe.cc:445
+msgid "cold"
+msgstr "냉기"
+
+#: itemname.cc:556 itemname.cc:632
+msgid "invisibility"
+msgstr ""
+
+#: itemname.cc:557
+msgid "digging"
+msgstr ""
+
+#: itemname.cc:558
+msgid "fireball"
+msgstr ""
+
+#: itemname.cc:559 itemname.cc:660
+msgid "teleportation"
+msgstr ""
+
+#: itemname.cc:560
+msgid "lightning"
+msgstr ""
+
+#: itemname.cc:561
+msgid "polymorph other"
+msgstr ""
+
+#: itemname.cc:562
+msgid "enslavement"
+msgstr ""
+
+#: itemname.cc:563
+msgid "draining"
+msgstr ""
+
+#: itemname.cc:564
+msgid "random effects"
+msgstr ""
+
+#: itemname.cc:565
+msgid "disintegration"
+msgstr ""
+
+#: itemname.cc:575
+msgid "jewelled "
+msgstr ""
+
+#: itemname.cc:576
+msgid "curved "
+msgstr ""
+
+#: itemname.cc:577
+msgid "long "
+msgstr ""
+
+#: itemname.cc:578
+msgid "short "
+msgstr ""
+
+#: itemname.cc:579 itemname.cc:746 itemname.cc:791
+msgid "twisted "
+msgstr ""
+
+#: itemname.cc:580
+msgid "crooked "
+msgstr ""
+
+#: itemname.cc:581
+msgid "forked "
+msgstr ""
+
+#: itemname.cc:582 itemname.cc:747 itemname.cc:1457 itemname.cc:1456
+msgid "shiny "
+msgstr ""
+
+#: itemname.cc:583 itemname.cc:742 itemname.cc:787
+msgid "blackened "
+msgstr ""
+
+#: itemname.cc:584
+msgid "tapered "
+msgstr ""
+
+#: itemname.cc:585 itemname.cc:739 itemname.cc:788 itemname.cc:950
+#: itemname.cc:1586 itemname.cc:1341 itemname.cc:1470 itemname.cc:1469
+#: itemname.cc:1585
+msgid "glowing "
+msgstr ""
+
+#: itemname.cc:586
+msgid "worn "
+msgstr ""
+
+#: itemname.cc:587 itemname.cc:738
+msgid "encrusted "
+msgstr ""
+
+#: itemname.cc:588 itemname.cc:741 itemname.cc:786 itemname.cc:953
+#: itemname.cc:1337 itemname.cc:1465 itemname.cc:1377 itemname.cc:1376
+#: itemname.cc:1464
+msgid "runed "
+msgstr ""
+
+#: itemname.cc:589
+msgid "sharpened "
+msgstr ""
+
+#: itemname.cc:590
+msgid "buggily "
+msgstr ""
+
+#: itemname.cc:598 itemname.cc:763 itemname.cc:825
+msgid "iron"
+msgstr ""
+
+#: itemname.cc:599 itemname.cc:766 itemname.cc:809
+msgid "brass"
+msgstr ""
+
+#: itemname.cc:600 itemname.cc:770 itemname.cc:813 itemname.cc:828
+msgid "bone"
+msgstr ""
+
+#: itemname.cc:601 itemname.cc:760
+msgid "wooden"
+msgstr ""
+
+#: itemname.cc:602 itemname.cc:767 itemname.cc:810
+msgid "copper"
+msgstr ""
+
+#: itemname.cc:603
+msgid "gold"
+msgstr ""
+
+#: itemname.cc:605 itemname.cc:765 itemname.cc:808
+msgid "bronze"
+msgstr ""
+
+#: itemname.cc:606 itemname.cc:769 itemname.cc:812
+msgid "ivory"
+msgstr ""
+
+#: itemname.cc:607 itemname.cc:773
+msgid "glass"
+msgstr ""
+
+#: itemname.cc:608
+msgid "lead"
+msgstr ""
+
+#: itemname.cc:609 itemname.cc:816
+msgid "fluorescent"
+msgstr ""
+
+#: itemname.cc:610 itemname.cc:774 itemname.cc:817
+msgid "buggy"
+msgstr ""
+
+#: itemname.cc:619
+msgid "heal wounds"
+msgstr ""
+
+#: itemname.cc:621
+msgid "might"
+msgstr ""
+
+#: itemname.cc:622
+msgid "agility"
+msgstr ""
+
+#: itemname.cc:623
+msgid "brilliance"
+msgstr ""
+
+#: itemname.cc:624
+msgid "gain strength"
+msgstr ""
+
+#: itemname.cc:625
+msgid "gain dexterity"
+msgstr ""
+
+#: itemname.cc:626
+msgid "gain intelligence"
+msgstr ""
+
+#: itemname.cc:633
+msgid "porridge"
+msgstr ""
+
+#: itemname.cc:634
+msgid "degeneration"
+msgstr ""
+
+#: itemname.cc:635
+msgid "decay"
+msgstr ""
+
+#: itemname.cc:636
+msgid "water"
+msgstr ""
+
+#: itemname.cc:637
+msgid "experience"
+msgstr ""
+
+#: itemname.cc:638
+msgid "magic"
+msgstr ""
+
+#: itemname.cc:639
+msgid "restore abilities"
+msgstr ""
+
+#: itemname.cc:640
+msgid "strong poison"
+msgstr ""
+
+#: itemname.cc:641
+msgid "berserk rage"
+msgstr ""
+
+#: itemname.cc:642
+msgid "cure mutation"
+msgstr ""
+
+#: itemname.cc:643
+msgid "mutation"
+msgstr ""
+
+#: itemname.cc:644
+msgid "blood"
+msgstr ""
+
+#: itemname.cc:645
+msgid "coagulated blood"
+msgstr ""
+
+#: itemname.cc:647
+msgid "fizzing liquid"
+msgstr ""
+
+#: itemname.cc:657
+msgid "old paper"
+msgstr ""
+
+#: itemname.cc:659
+msgid "identify"
+msgstr ""
+
+#: itemname.cc:661
+msgid "fear"
+msgstr ""
+
+#: itemname.cc:662
+msgid "noise"
+msgstr ""
+
+#: itemname.cc:663
+msgid "remove curse"
+msgstr ""
+
+#: itemname.cc:664
+msgid "detect curse"
+msgstr ""
+
+#: itemname.cc:665
+msgid "summoning"
+msgstr ""
+
+#: itemname.cc:666
+msgid "enchant weapon I"
+msgstr ""
+
+#: itemname.cc:667
+msgid "enchant armour"
+msgstr ""
+
+#: effects.cc:265 itemname.cc:668
+msgid "torment"
+msgstr "사악한 고통"
+
+#: itemname.cc:669
+msgid "random uselessness"
+msgstr ""
+
+#: itemname.cc:670
+msgid "curse weapon"
+msgstr ""
+
+#: itemname.cc:671
+msgid "curse armour"
+msgstr ""
+
+#: itemname.cc:672
+msgid "curse jewellery"
+msgstr ""
+
+#: effects.cc:365 itemname.cc:673
+msgid "immolation"
+msgstr "제물"
+
+#: itemname.cc:674
+msgid "blinking"
+msgstr ""
+
+#: itemname.cc:675
+msgid "magic mapping"
+msgstr ""
+
+#: itemname.cc:676
+msgid "fog"
+msgstr ""
+
+#: itemname.cc:677
+msgid "acquirement"
+msgstr ""
+
+#: itemname.cc:678
+msgid "enchant weapon II"
+msgstr ""
+
+#: itemname.cc:679
+msgid "vorpalise weapon"
+msgstr ""
+
+#: itemname.cc:680
+msgid "recharging"
+msgstr ""
+
+#: itemname.cc:681
+msgid "enchant weapon III"
+msgstr ""
+
+#: effects.cc:101 itemname.cc:682
+msgid "holy word"
+msgstr "성스러운 언어"
+
+#: itemname.cc:683
+msgid "vulnerability"
+msgstr ""
+
+#: itemname.cc:684
+msgid "silence"
+msgstr ""
+
+#: itemname.cc:685
+msgid "amnesia"
+msgstr ""
+
+#: itemname.cc:694
+msgid "ring of regeneration"
+msgstr ""
+
+#: itemname.cc:695
+msgid "ring of protection"
+msgstr ""
+
+#: itemname.cc:696
+msgid "ring of protection from fire"
+msgstr ""
+
+#: itemname.cc:697
+msgid "ring of poison resistance"
+msgstr ""
+
+#: itemname.cc:698
+msgid "ring of protection from cold"
+msgstr ""
+
+#: itemname.cc:699
+msgid "ring of strength"
+msgstr ""
+
+#: itemname.cc:700
+msgid "ring of slaying"
+msgstr ""
+
+#: itemname.cc:701
+msgid "ring of see invisible"
+msgstr ""
+
+#: itemname.cc:702
+msgid "ring of invisibility"
+msgstr ""
+
+#: itemname.cc:703
+msgid "ring of hunger"
+msgstr ""
+
+#: itemname.cc:704
+msgid "ring of teleportation"
+msgstr ""
+
+#: itemname.cc:705
+msgid "ring of evasion"
+msgstr ""
+
+#: itemname.cc:706
+msgid "ring of sustain abilities"
+msgstr ""
+
+#: itemname.cc:707
+msgid "ring of sustenance"
+msgstr ""
+
+#: itemname.cc:708
+msgid "ring of dexterity"
+msgstr ""
+
+#: itemname.cc:709
+msgid "ring of intelligence"
+msgstr ""
+
+#: itemname.cc:710
+msgid "ring of wizardry"
+msgstr ""
+
+#: itemname.cc:711
+msgid "ring of magical power"
+msgstr ""
+
+#: itemname.cc:712
+msgid "ring of levitation"
+msgstr ""
+
+#: itemname.cc:713
+msgid "ring of life protection"
+msgstr ""
+
+#: itemname.cc:714
+msgid "ring of protection from magic"
+msgstr ""
+
+#: itemname.cc:715
+msgid "ring of fire"
+msgstr ""
+
+#: itemname.cc:716
+msgid "ring of ice"
+msgstr ""
+
+#: itemname.cc:717
+msgid "ring of teleport control"
+msgstr ""
+
+#: itemname.cc:718
+msgid "amulet of rage"
+msgstr ""
+
+#: itemname.cc:719
+msgid "amulet of clarity"
+msgstr ""
+
+#: itemname.cc:720
+msgid "amulet of warding"
+msgstr ""
+
+#: itemname.cc:721
+msgid "amulet of resist corrosion"
+msgstr ""
+
+#: itemname.cc:722
+msgid "amulet of the gourmand"
+msgstr ""
+
+#: itemname.cc:723
+msgid "amulet of conservation"
+msgstr ""
+
+#: itemname.cc:724
+msgid "amulet of controlled flight"
+msgstr ""
+
+#: itemname.cc:725
+msgid "amulet of inaccuracy"
+msgstr ""
+
+#: itemname.cc:726
+msgid "amulet of resist mutation"
+msgstr ""
+
+#: itemname.cc:727
+msgid "amulet of guardian spirit"
+msgstr ""
+
+#: itemname.cc:728
+msgid "amulet of faith"
+msgstr ""
+
+#: itemname.cc:729
+msgid "amulet of stasis"
+msgstr ""
+
+#: itemname.cc:730
+msgid "buggy jewellery"
+msgstr ""
+
+#: itemname.cc:740
+msgid "tubular "
+msgstr ""
+
+#: itemname.cc:743
+msgid "scratched "
+msgstr ""
+
+#: itemname.cc:1494 mon-info.cc:601 itemname.cc:1493
+msgid "buggy "
+msgstr "버그 "
+
+#: mon-info.cc:601 itemname.cc:745 itemname.cc:790
+msgid "large "
+msgstr "큰 "
+
+#: mon-info.cc:601
+msgid "very large "
+msgstr "꽤 큰 "
+
+#: mon-info.cc:602
+msgid "enormous "
+msgstr "거대한 "
+
+#: mon-info.cc:602
+msgid "titanic "
+msgstr "매우 거대한 "
+
+#: itemname.cc:744 itemname.cc:789
+msgid "small "
+msgstr ""
+
+#: itemname.cc:748
+msgid "notched "
+msgstr ""
+
+#: itemname.cc:749
+msgid "knobbly "
+msgstr ""
+
+#: itemname.cc:762 itemname.cc:805 itemname.cc:833
+msgid "golden"
+msgstr ""
+
+#: itemname.cc:768
+msgid "granite"
+msgstr ""
+
+#: itemname.cc:771
+msgid "marble"
+msgstr ""
+
+#: itemname.cc:772 itemname.cc:815
+msgid "jade"
+msgstr ""
+
+#: itemname.cc:782
+msgid "dented "
+msgstr ""
+
+#: itemname.cc:783
+msgid "square "
+msgstr ""
+
+#: itemname.cc:784 itemname.cc:947
+msgid "thick "
+msgstr ""
+
+#: itemname.cc:785 itemname.cc:948
+msgid "thin "
+msgstr ""
+
+#: itemname.cc:792
+msgid "tiny "
+msgstr ""
+
+#: itemname.cc:793
+msgid "triangular "
+msgstr ""
+
+#: itemname.cc:794 itemname.cc:1585 itemname.cc:1584
+msgid "lumpy "
+msgstr ""
+
+#: itemname.cc:803
+msgid "zirconium"
+msgstr ""
+
+#: itemname.cc:804
+msgid "sapphire"
+msgstr ""
+
+#: itemname.cc:806
+msgid "emerald"
+msgstr ""
+
+#: itemname.cc:807
+msgid "garnet"
+msgstr ""
+
+#: itemname.cc:811
+msgid "ruby"
+msgstr ""
+
+#: itemname.cc:814
+msgid "platinum"
+msgstr ""
+
+#: itemname.cc:826
+msgid "obsidian"
+msgstr ""
+
+#: itemname.cc:827
+msgid "icy"
+msgstr ""
+
+#: itemname.cc:829
+msgid "slimy"
+msgstr ""
+
+#: itemname.cc:831
+msgid "serpentine"
+msgstr ""
+
+#: itemname.cc:832
+msgid "elven"
+msgstr ""
+
+#: itemname.cc:834
+msgid "decaying"
+msgstr ""
+
+#: itemname.cc:835
+msgid "barnacled"
+msgstr ""
+
+#: itemname.cc:836
+msgid "gossamer"
+msgstr ""
+
+#: itemname.cc:837
+msgid "mossy"
+msgstr ""
+
+#. pandemonium and abyss runes:
+#: itemname.cc:840
+msgid "demonic"
+msgstr ""
+
+#: itemname.cc:841
+msgid "abyssal"
+msgstr ""
+
+#. special pandemonium runes:
+#: itemname.cc:844
+msgid "glowing"
+msgstr ""
+
+#: itemname.cc:845
+msgid "magical"
+msgstr ""
+
+#: itemname.cc:846
+msgid "fiery"
+msgstr ""
+
+#: itemname.cc:847
+msgid "dark"
+msgstr ""
+
+#: itemname.cc:856
+msgid "plain"
+msgstr ""
+
+#: itemname.cc:857
+msgid "ornate"
+msgstr ""
+
+#: itemname.cc:858
+msgid "legendary"
+msgstr ""
+
+#: itemname.cc:859
+msgid "buggy rarity"
+msgstr ""
+
+#: itemname.cc:869
+msgid "deck of escape"
+msgstr ""
+
+#: itemname.cc:870
+msgid "deck of destruction"
+msgstr ""
+
+#: itemname.cc:871
+msgid "deck of dungeons"
+msgstr ""
+
+#: itemname.cc:872
+msgid "deck of summonings"
+msgstr ""
+
+#: itemname.cc:873
+msgid "deck of wonders"
+msgstr ""
+
+#: itemname.cc:874
+msgid "deck of punishment"
+msgstr ""
+
+#: itemname.cc:875
+msgid "deck of war"
+msgstr ""
+
+#: itemname.cc:876
+msgid "deck of changes"
+msgstr ""
+
+#: itemname.cc:877
+msgid "deck of defence"
+msgstr ""
+
+#: itemname.cc:879
+msgid "crystal ball of energy"
+msgstr ""
+
+#: itemname.cc:881
+msgid "old crystal ball"
+msgstr ""
+
+#: itemname.cc:883
+msgid "crystal ball of seeing"
+msgstr ""
+
+#: itemname.cc:884
+msgid "box of beasts"
+msgstr ""
+
+#: itemname.cc:885
+msgid "empty ebony casket"
+msgstr ""
+
+#: itemname.cc:886
+msgid "air elemental fan"
+msgstr ""
+
+#: itemname.cc:887
+msgid "lamp of fire"
+msgstr ""
+
+#: itemname.cc:888
+msgid "lantern of shadows"
+msgstr ""
+
+#: itemname.cc:889
+msgid "horn of Geryon"
+msgstr ""
+
+#: itemname.cc:890
+msgid "disc of storms"
+msgstr ""
+
+#: itemname.cc:891
+msgid "bottled efreet"
+msgstr ""
+
+#: itemname.cc:893
+msgid "stone of earth elementals"
+msgstr ""
+
+#: itemname.cc:894 itemname.cc:931
+msgid "quad damage"
+msgstr ""
+
+#: itemname.cc:898
+msgid "buggy miscellaneous item"
+msgstr ""
+
+#: itemname.cc:914 itemname.cc:1751 itemname.cc:1750
+msgid "deck of cards"
+msgstr ""
+
+#: itemname.cc:920
+msgid "crystal ball"
+msgstr ""
+
+#: itemname.cc:923
+msgid "small ebony casket"
+msgstr ""
+
+#: itemname.cc:924
+msgid "gauzy fan"
+msgstr ""
+
+#: itemname.cc:925
+msgid "blazing lamp"
+msgstr ""
+
+#: itemname.cc:926
+msgid "bone lantern"
+msgstr ""
+
+#: itemname.cc:927
+msgid "silver horn"
+msgstr ""
+
+#: itemname.cc:928
+msgid "grey disc"
+msgstr ""
+
+#: itemname.cc:929
+msgid "nondescript stone"
+msgstr ""
+
+#: itemname.cc:930
+msgid "sealed bronze flask"
+msgstr ""
+
+#: itemname.cc:946
+msgid "chunky "
+msgstr ""
+
+#: itemname.cc:949
+msgid "wide "
+msgstr ""
+
+#: itemname.cc:951
+msgid "dog-eared "
+msgstr ""
+
+#: itemname.cc:952
+msgid "oblong "
+msgstr ""
+
+#: itemname.cc:965
+msgid "paperback "
+msgstr ""
+
+#: itemname.cc:966
+msgid "hardcover "
+msgstr ""
+
+#: itemname.cc:967
+msgid "leatherbound "
+msgstr ""
+
+#: itemname.cc:968
+msgid "metal-bound "
+msgstr ""
+
+#: itemname.cc:969
+msgid "papyrus "
+msgstr ""
+
+#: itemname.cc:985
+msgid "Minor Magic"
+msgstr ""
+
+#: itemname.cc:990
+msgid "Conjurations"
+msgstr ""
+
+#: itemname.cc:991
+msgid "Flames"
+msgstr ""
+
+#: itemname.cc:993
+msgid "Summonings"
+msgstr ""
+
+#: itemname.cc:996
+msgid "Spatial Translocations"
+msgstr ""
+
+#: itemname.cc:997
+msgid "Enchantments"
+msgstr ""
+
+#: itemname.cc:998
+msgid "the Tempests"
+msgstr ""
+
+#: itemname.cc:999
+msgid "Death"
+msgstr ""
+
+#: itemname.cc:1000
+msgid "Hinderance"
+msgstr ""
+
+#: itemname.cc:1001
+msgid "Changes"
+msgstr ""
+
+#: itemname.cc:1002
+msgid "Transfigurations"
+msgstr ""
+
+#: itemname.cc:1003
+msgid "War Chants"
+msgstr ""
+
+#: itemname.cc:1004
+msgid "Clouds"
+msgstr ""
+
+#: itemname.cc:1006
+msgid "Callings"
+msgstr ""
+
+#: itemname.cc:1007
+msgid "Maledictions"
+msgstr ""
+
+#: itemname.cc:1009
+msgid "the Sky"
+msgstr ""
+
+#: itemname.cc:1011
+msgid "Envenomations"
+msgstr ""
+
+#: itemname.cc:1012
+msgid "Annihilations"
+msgstr ""
+
+#: itemname.cc:1013
+msgid "Unlife"
+msgstr ""
+
+#: itemname.cc:1014
+msgid "Control"
+msgstr ""
+
+#: itemname.cc:1015
+msgid "Morphology"
+msgstr ""
+
+#: itemname.cc:1016
+msgid "Geomancy"
+msgstr ""
+
+#: itemname.cc:1017
+msgid "the Earth"
+msgstr ""
+
+#: itemname.cc:1018
+msgid "Wizardry"
+msgstr ""
+
+#: itemname.cc:1019
+msgid "Power"
+msgstr ""
+
+#: itemname.cc:1020
+msgid "Cantrips"
+msgstr ""
+
+#: itemname.cc:1021
+msgid "Party Tricks"
+msgstr ""
+
+#: itemname.cc:1022
+msgid "Stalking"
+msgstr ""
+
+#: itemname.cc:1023
+msgid "Brands"
+msgstr ""
+
+#: itemname.cc:1024
+msgid "the Dragon"
+msgstr ""
+
+#: itemname.cc:1025
+msgid "Burglary"
+msgstr ""
+
+#: itemname.cc:1026
+msgid "Dreams"
+msgstr ""
+
+#: itemname.cc:1027
+msgid "Alchemy"
+msgstr ""
+
+#: itemname.cc:1028
+msgid "Beasts"
+msgstr ""
+
+#: itemname.cc:1029
+msgid "Fixed Level"
+msgstr ""
+
+#: itemname.cc:1030
+msgid "Fixed Theme"
+msgstr ""
+
+#: itemname.cc:1031
+msgid "Bugginess"
+msgstr ""
+
+#: itemname.cc:1323
+msgid "Scourge"
+msgstr ""
+
+#: itemname.cc:1325
+msgid "Trishula"
+msgstr ""
+
+#: itemname.cc:1327
+msgid "Blade"
+msgstr ""
+
+#: itemname.cc:1502 itemname.cc:1501
+msgid "gloves"
+msgstr ""
+
+#: itemname.cc:1503 itemname.cc:1502
+msgid "gauntlets"
+msgstr ""
+
+#: itemname.cc:1504 itemname.cc:1503
+msgid "bracers"
+msgstr ""
+
+#: itemname.cc:1505 itemname.cc:1504
+msgid "bug-ridden gloves"
+msgstr ""
+
+#: itemname.cc:1537 itemname.cc:1536
+msgid "wand"
+msgstr ""
+
+#: itemname.cc:1570 itemname.cc:1569
+msgid "potion"
+msgstr ""
+
+#: itemname.cc:1585 itemname.cc:1584
+msgid "bubbling "
+msgstr ""
+
+#: itemname.cc:1585 itemname.cc:1584
+msgid "fuming "
+msgstr ""
+
+#: itemname.cc:1585 itemname.cc:1584
+msgid "fizzy "
+msgstr ""
+
+#: itemname.cc:1585 itemname.cc:1584
+msgid "viscous "
+msgstr ""
+
+#: itemname.cc:1586 itemname.cc:1585
+msgid "smoky "
+msgstr ""
+
+#: itemname.cc:1586 itemname.cc:1585
+msgid "sedimented "
+msgstr ""
+
+#: itemname.cc:1586 itemname.cc:1585
+msgid "metallic "
+msgstr ""
+
+#: itemname.cc:1586 itemname.cc:1585
+msgid "murky "
+msgstr ""
+
+#: itemname.cc:1587 itemname.cc:1586
+msgid "gluggy "
+msgstr ""
+
+#: itemname.cc:1587 itemname.cc:1586
+msgid "oily "
+msgstr ""
+
+#: itemname.cc:1587 itemname.cc:1586
+msgid "slimy "
+msgstr ""
+
+#: itemname.cc:1587 itemname.cc:1586
+msgid "emulsified "
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "clear"
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "blue"
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "black"
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "silvery"
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "cyan"
+msgstr ""
+
+#: itemname.cc:1592 itemname.cc:1591
+msgid "purple"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1624 itemname.cc:1592 itemname.cc:1623
+msgid "orange"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "inky"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "red"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "yellow"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "green"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "brown"
+msgstr ""
+
+#: itemname.cc:1593 itemname.cc:1592
+msgid "pink"
+msgstr ""
+
+#: itemname.cc:1594 itemname.cc:1593
+msgid "white"
+msgstr ""
+
+#: itemname.cc:1614 itemname.cc:1613
+msgid "meat ration"
+msgstr ""
+
+#: itemname.cc:1615 itemname.cc:1614
+msgid "bread ration"
+msgstr ""
+
+#: itemname.cc:1616 itemname.cc:1615
+msgid "pear"
+msgstr ""
+
+#: itemname.cc:1617 itemname.cc:1616
+msgid "apple"
+msgstr ""
+
+#: itemname.cc:1618 itemname.cc:1617
+msgid "choko"
+msgstr ""
+
+#: itemname.cc:1619 itemname.cc:1618
+msgid "honeycomb"
+msgstr ""
+
+#: itemname.cc:1621 itemname.cc:1620
+msgid "snozzcumber"
+msgstr ""
+
+#: itemname.cc:1622 itemname.cc:1621
+msgid "slice of pizza"
+msgstr ""
+
+#: itemname.cc:1623 itemname.cc:1622
+msgid "apricot"
+msgstr ""
+
+#: itemname.cc:1625 itemname.cc:1624
+msgid "banana"
+msgstr ""
+
+#: itemname.cc:1626 itemname.cc:1625
+msgid "strawberry"
+msgstr ""
+
+#: itemname.cc:1627 itemname.cc:1626
+msgid "rambutan"
+msgstr ""
+
+#: itemname.cc:1628 itemname.cc:1627
+msgid "lemon"
+msgstr ""
+
+#: itemname.cc:1629 itemname.cc:1628
+msgid "grape"
+msgstr ""
+
+#: itemname.cc:1630 itemname.cc:1629
+msgid "sultana"
+msgstr ""
+
+#: itemname.cc:1631 itemname.cc:1630
+msgid "lychee"
+msgstr ""
+
+#: itemname.cc:1632 itemname.cc:1631
+msgid "beef jerky"
+msgstr ""
+
+#: itemname.cc:1633 itemname.cc:1632
+msgid "cheese"
+msgstr ""
+
+#: itemname.cc:1634 itemname.cc:1633
+msgid "sausage"
+msgstr ""
+
+#: itemname.cc:1635 itemname.cc:1634
+msgid "piece of ambrosia"
+msgstr ""
+
+#: itemname.cc:1640 itemname.cc:1639
+msgid "rotting "
+msgstr ""
+
+#: itemname.cc:1652 itemname.cc:1651
+msgid "scroll"
+msgstr ""
+
+#: itemname.cc:1675 itemname.cc:1674
+msgid "amulet"
+msgstr ""
+
+#: itemname.cc:1677 itemname.cc:1676
+msgid "ring"
+msgstr ""
+
+#: itemname.cc:1796 itemname.cc:1800 itemname.cc:1795 itemname.cc:1799
+msgid "book"
+msgstr ""
+
+#: itemname.cc:1800 itemname.cc:1815 itemname.cc:1799 itemname.cc:1814
+msgid "manual"
+msgstr ""
+
+#: itemname.cc:1804 itemname.cc:1803
+msgid "ancient heavily glowing book"
+msgstr ""
+
+#: itemname.cc:1820 itemname.cc:1819
+msgid "Necronomicon"
+msgstr ""
+
+#: itemname.cc:1822 itemname.cc:1821
+msgid "Grand Grimoire"
+msgstr ""
+
+#: itemname.cc:1824 itemname.cc:1823
+msgid "tome of Destruction"
+msgstr ""
+
+#: itemname.cc:1826 itemname.cc:1825
+msgid "Young Poisoner's Handbook"
+msgstr ""
+
+#: mutation-data.h:16
+msgid "tough skin"
+msgstr "단단한 피부"
+
+#: itemname.cc:490 mutation-data.h:64
+msgid "poison resistance"
+msgstr "독 저항"
+
+#: mutation-data.h:74
+msgid "carnivore"
+msgstr "육식성"
+
+#: mutation-data.h:92
+msgid "herbivore"
+msgstr "채식성"
+
+#: itemname.cc:488 mutation-data.h:110
+msgid "fire resistance"
+msgstr "화염 저항"
+
+#: mutation-data.h:146
+msgid "demonic guardian"
+msgstr "수호 악마"
+
+#: mutation-data.h:164
+msgid "electricity resistance"
+msgstr "전기 저항"
+
+#: mutation-data.h:174
+msgid "regeneration"
+msgstr "재생"
+
+#: mutation-data.h:192
+msgid "slow healing"
+msgstr "느린 치유속도"
+
+#: mutation-data.h:210
+msgid "fast metabolism"
+msgstr "신진대사 가속"
+
+#: mutation-data.h:270
+msgid "teleport control"
+msgstr "공간이동 제어"
+
+#: mutation-data.h:280
+msgid "teleportitis"
+msgstr "공간 왜곡"
+
+#: itemname.cc:498 mutation-data.h:298
+msgid "magic resistance"
+msgstr "마법 저항"
+
+#: itemname.cc:620 mutation-data.h:316
+msgid "speed"
+msgstr "속도 증가"
+
+#: mutation-data.h:334
+msgid "slowness"
+msgstr "속도 감소"
+
+#: itemname.cc:491 mutation-data.h:352
+msgid "see invisible"
+msgstr "투명 감지"
+
+#: mutation-data.h:368
+msgid "deformed body"
+msgstr "뒤틀린 몸"
+
+#: mutation-data.h:386
+msgid "teleport at will"
+msgstr "공간이동"
+
+#: mutation-data.h:404
+msgid "spit poison"
+msgstr "독 뱉기"
+
+#: mutation-data.h:422
+msgid "breathe flames"
+msgstr "화염 입김"
+
+#: mutation-data.h:440
+msgid "blink"
+msgstr "순간이동"
+
+#: mutation-data.h:494
+msgid "screaming"
+msgstr "비명"
+
+#: mutation-data.h:512
+msgid "clarity"
+msgstr "명석함"
+
+#: mutation-data.h:522
+msgid "berserk"
+msgstr "광폭화"
+
+#: mutation-data.h:540
+msgid "deterioration"
+msgstr "능력 저하"
+
+#: mutation-data.h:558
+msgid "blurry vision"
+msgstr "흐린 시야"
+
+#: mutation-data.h:576
+msgid "mutation resistance"
+msgstr "돌연변이 저항"
+
+#: mutation-data.h:630
+msgid "unbreathing"
+msgstr "무호흡"
+
+#: mutation-data.h:640
+msgid "torment resistance"
+msgstr "고통 면역"
+
+#: mutation-data.h:650
+msgid "life protection"
+msgstr "생명력 보호"
+
+#: mutation-data.h:666
+msgid "hurl hellfire"
+msgstr "지옥불"
+
+#: mutation-data.h:676
+msgid "throw flames of Gehenna"
+msgstr "게헨나의 불꽃"
+
+#: mutation-data.h:686
+msgid "throw frost of Cocytus"
+msgstr "코큐투스의 냉기"
+
+#: mutation-data.h:697
+msgid "horns"
+msgstr "뿔"
+
+#: mutation-data.h:715
+msgid "beak"
+msgstr "부리"
+
+#: mutation-data.h:725
+msgid "claws"
+msgstr "손톱"
+
+#: mutation-data.h:743
+msgid "fangs"
+msgstr "송곳니"
+
+#: mutation-data.h:761
+msgid "hooves"
+msgstr "발굽"
+
+#: mutation-data.h:779
+msgid "antennae"
+msgstr "더듬이"
+
+#: mutation-data.h:797
+msgid "talons"
+msgstr "발톱"
+
+#: mutation-data.h:815
+msgid "tentacles"
+msgstr "촉수"
+
+#: mutation-data.h:834
+msgid "breathe poison"
+msgstr "독구름"
+
+#: mutation-data.h:845
+msgid "stinger"
+msgstr "독침"
+
+#: mutation-data.h:864
+msgid "large and strong wings"
+msgstr "크고 강한 날개"
+
+#: mutation-data.h:875
+msgid "saprovore"
+msgstr "썩은 고기 내성"
+
+#: mutation-data.h:887
+msgid "gourmand"
+msgstr "대식가"
+
+#: mutation-data.h:967
+msgid "sense surroundings"
+msgstr "주변 감지"
+
+#: mutation-data.h:1024
+msgid "nightstalker"
+msgstr "은신"
+
+#: mutation-data.h:1042
+msgid "spiny"
+msgstr "가시"
+
+#: mutation-data.h:1060
+msgid "powered by death"
+msgstr "죽음으로부터의 힘"
+
+#: mutation-data.h:1078
+msgid "powered by pain"
+msgstr "고통으로부터의 힘"
+
+#: mutation-data.h:1131
+msgid "translucent skin"
+msgstr "반투명 피부"
+
+#: mutation-data.h:1149
+msgid "pseudopods"
+msgstr "종양"
+
+#: mutation-data.h:1167
+msgid "spawn jellies when eating"
+msgstr "식사시 젤리 소환"
+
+#: mutation-data.h:1177
+msgid "acidic bite"
+msgstr "산성 침"
+
+#: mutation-data.h:1386
+msgid "camouflage"
+msgstr "보호색"
+
+#: itemname.cc:489 mutation-data.h:128
+msgid "cold resistance"
+msgstr "냉기 저항"
+
+#: mutation-data.h:228
+msgid "slow metabolism"
+msgstr ""
+
+#: mutation-data.h:995
+msgid "conserve scrolls"
+msgstr ""
+
+#: mutation-data.h:1005
+msgid "conserve potions"
+msgstr ""
+
+#: mutation-data.h:1014
+msgid "passive freeze"
+msgstr ""
+
+#: describe.cc:447 describe.cc:448
+msgid "negative energy"
+msgstr "음에너지"
+
+#: itemname.cc:1452 itemname.cc:1451
+msgid "embroidered "
+msgstr ""
+
+#: itemname.cc:1460 itemname.cc:1459
+msgid "dyed "
+msgstr ""
+
+#: itemname.cc:1356
+msgid "vampiric "
+msgstr ""
+
+#: itemname.cc:1358
+msgid "anti-magic "
+msgstr ""
+
+#: itemname.cc:1487 itemname.cc:1486
+msgid "winged "
+msgstr ""
+
+#: itemname.cc:1488 itemname.cc:1487
+msgid "horned "
+msgstr ""
+
+#: itemname.cc:1489 itemname.cc:1488
+msgid "crested "
+msgstr ""
+
+#: itemname.cc:1490 itemname.cc:1489
+msgid "plumed "
+msgstr ""
+
+#: itemname.cc:1491 itemname.cc:1490
+msgid "spiked "
+msgstr ""
+
+#: itemname.cc:1492 itemname.cc:1491
+msgid "visored "
+msgstr ""
+
+#: itemname.cc:1493 itemname.cc:1492
+msgid "golden "
+msgstr ""
+
+#: itemname.cc:1743 itemname.cc:1742
+msgid "rune of Zot"
+msgstr ""
+
+#: directn.cc:3029
+msgid "mechanical trap"
+msgstr "기계적 함정"
+
+#: directn.cc:3031
+msgid "magical trap"
+msgstr "마법 함정"
+
+#: directn.cc:3033
+msgid "natural trap"
+msgstr "자연적 함정"
+
+#: directn.cc:3035
+msgid "shop"
+msgstr "상점"
+
+#: directn.cc:3037
+msgid "abandoned shop"
+msgstr "문 닫은 상점"
+
+#: directn.cc:3039
+msgid "labyrinth entrance"
+msgstr "미궁의 입구"
+
+#: directn.cc:3041
+msgid "gateway to the Iron City of Dis"
+msgstr "철의 도시 디스로 향하는 문"
+
+#: directn.cc:3043
+msgid "gateway to the ashen valley of Gehenna"
+msgstr "재로 덮인 계곡 게헨나로 향하는 문"
+
+#: directn.cc:3045
+msgid "gateway to the freezing wastes of Cocytus"
+msgstr "얼어붙은 황무지 코큐투스로 향하는 문"
+
+#: directn.cc:3047
+msgid "gateway to the decaying netherworld of Tartarus"
+msgstr "부패의 지하세계 타르타로스로 향하는 문"
+
+#: directn.cc:3049
+msgid "one-way gate to the infinite horrors of the Abyss"
+msgstr "무한 공포의 어비스로 통하는 일방통행 문"
+
+#: directn.cc:3051
+msgid "gateway leading out of the Abyss"
+msgstr "어비스의 탈출구"
+
+#: directn.cc:3053
+msgid "empty arch of ancient stone"
+msgstr "오래된 돌로 만들어진 아치형 문"
+
+#: directn.cc:3055
+msgid "one-way gate leading to the halls of Pandemonium"
+msgstr "판데모니움의 큰 방으로 이어지는 일방통행 통로"
+
+#: directn.cc:3057
+msgid "gate leading out of Pandemonium"
+msgstr "판데모니움의 출구"
+
+#: directn.cc:3059
+msgid "gate leading to another region of Pandemonium"
+msgstr "판데모니움의 다른 지역으로의 통로"
+
+#: directn.cc:3061
+msgid "staircase to the Dwarven Hall"
+msgstr "드워프의 방으로의 계단"
+
+#: directn.cc:3063
+msgid "staircase to the Orcish Mines"
+msgstr "오크 광산으로의 계단"
+
+#: directn.cc:3065
+msgid "staircase to the Hive"
+msgstr "벌집으로의 계단"
+
+#: directn.cc:3067
+msgid "staircase to the Lair"
+msgstr "짐승 소굴로의 계단"
+
+#: directn.cc:3069
+msgid "staircase to the Slime Pits"
+msgstr "슬라임 소굴로의 계단"
+
+#: directn.cc:3071
+msgid "staircase to the Vaults"
+msgstr "보물창고로의 계단"
+
+#: directn.cc:3073
+msgid "staircase to the Crypt"
+msgstr "납골당으로의 계단"
+
+#: directn.cc:3075
+msgid "staircase to the Hall of Blades"
+msgstr "칼날의 방으로의 계단"
+
+#: directn.cc:3077
+msgid "gate to the Realm of Zot"
+msgstr "조트의 렐름 입구"
+
+#: directn.cc:3079
+msgid "staircase to the Ecumenical Temple"
+msgstr "만신전으로의 계단"
+
+#: directn.cc:3081
+msgid "staircase to the Snake Pit"
+msgstr "뱀의 소굴로의 계단"
+
+#: directn.cc:3083
+msgid "staircase to the Elven Halls"
+msgstr "엘프의 방으로의 계단"
+
+#: directn.cc:3085
+msgid "staircase to the Tomb"
+msgstr "무덤으로의 계단"
+
+#: directn.cc:3087
+msgid "staircase to the Swamp"
+msgstr "늪지로의 계단"
+
+#: directn.cc:3089
+msgid "staircase to the Shoals"
+msgstr "해안으로의 계단"
+
+#. The bazaar description should be set in the bazaar marker; this
+#. is the description for a portal of unknown type.
+#: directn.cc:3093
+msgid "gate leading to a distant place"
+msgstr "먼 곳으로의 관문"
+
+#: directn.cc:3095
+msgid "gate leading back to the Dungeon"
+msgstr "던전으로 돌아가는 관문"
+
+#: directn.cc:3097
+msgid "portal to somewhere"
+msgstr "어딘가로 통하는 관문"
+
+#: directn.cc:3104
+msgid "staircase back to the Dungeon"
+msgstr "메인 던전으로 돌아가는 계단"
+
+#: directn.cc:3109
+msgid "staircase back to the Lair"
+msgstr "짐승 소굴로 돌아가는 계단"
+
+#: directn.cc:3112
+msgid "staircase back to the Vaults"
+msgstr "보물창고로 돌아가는 계단"
+
+#: directn.cc:3114
+msgid "staircase back to the Mines"
+msgstr "오크 광산으로 돌아가는 계단"
+
+#: directn.cc:3116
+msgid "staircase back to the Crypt"
+msgstr "납골당으로 돌아가는 계단"
+
+#: directn.cc:3118
+msgid "gate leading back out of this place"
+msgstr "던전 출구"
+
+#: directn.cc:3122
+msgid "glowing silver altar of Zin"
+msgstr "'진'의 빛나는 은빛 제단"
+
+#: directn.cc:3124
+msgid "glowing golden altar of the Shining One"
+msgstr "'샤이닝 원'의 빛나는 황금 제단"
+
+#: directn.cc:3126
+msgid "ancient bone altar of Kikubaaqudgha"
+msgstr "'키쿠바쿠드하'의 고대의 뼈로 만들어진 제단"
+
+#: directn.cc:3128
+msgid "basalt altar of Yredelemnul"
+msgstr "'이레데렘눌'의 현무암으로 만들어진 제단"
+
+#: directn.cc:3130
+msgid "shimmering altar of Xom"
+msgstr "'좀'의 미광이 흔들거리는 제단"
+
+#: directn.cc:3132
+msgid "radiant altar of Vehumet"
+msgstr "'베후멧'의 빛을 발하는 제단"
+
+#: directn.cc:3134
+msgid "iron altar of Okawaru"
+msgstr "'오카와루'의 철의 제단"
+
+#: directn.cc:3136
+msgid "burning altar of Makhleb"
+msgstr "'마크레브'의 불길이 이는 제단"
+
+#: directn.cc:3138
+msgid "deep blue altar of Sif Muna"
+msgstr "'시프 무나'의 감청색 제단"
+
+#: directn.cc:3140
+msgid "bloodstained altar of Trog"
+msgstr "'트로그'의 피로 물든 제단"
+
+#: directn.cc:3142
+msgid "sparkling altar of Nemelex Xobeh"
+msgstr "'네멜렉스 죠베'의 빛나는 제단"
+
+#: directn.cc:3144
+msgid "white marble altar of Elyvilon"
+msgstr "'엘라이빌론'의 흰 대리석 제단"
+
+#: directn.cc:3146
+msgid "corrupted altar of Lugonu"
+msgstr "'루고누'의 타락한 제단"
+
+#: directn.cc:3148
+msgid "roughly hewn altar of Beogh"
+msgstr "'베오그'의 거칠게 조각된 제단"
+
+#: directn.cc:3150
+msgid "viscous altar of Jiyva"
+msgstr "'지바'의 끈적끈적한 제단"
+
+#: directn.cc:3152
+msgid "blossoming altar of Fedhas"
+msgstr "'페다스'의 꽃들이 만개한 제단"
+
+#: directn.cc:3154
+msgid "snail-covered altar of Cheibriados"
+msgstr "'체브리아도스'의 달팽이집에 덮인 제단"
+
+#: directn.cc:3156
+msgid "shattered altar of Ashenzari"
+msgstr "'아센자리'의 산산히 부서진 제단"
+
+#: directn.cc:3159
+msgid "fountain of clear blue water"
+msgstr "맑은 물의 분수"
+
+#: directn.cc:3161
+msgid "fountain of sparkling water"
+msgstr "거품이 이는 물의 분수"
+
+#: directn.cc:3163
+msgid "fountain of blood"
+msgstr "피의 분수"
+
+#: directn.cc:3168
+msgid "dry fountain"
+msgstr "마른 분수"
+
+#: directn.cc:3170
+msgid "explore horizon"
+msgstr ""
+
+#: directn.cc:2917
+msgid "dart trap"
+msgstr ""
+
+#: directn.cc:2919
+msgid "arrow trap"
+msgstr ""
+
+#: directn.cc:2921
+msgid "needle trap"
+msgstr ""
+
+#: directn.cc:2923
+msgid "bolt trap"
+msgstr ""
+
+#: directn.cc:2925
+msgid "spear trap"
+msgstr ""
+
+#: directn.cc:2927
+msgid "axe trap"
+msgstr ""
+
+#: directn.cc:2929
+msgid "blade trap"
+msgstr ""
+
+#: directn.cc:2931
+msgid "net trap"
+msgstr ""
+
+#: directn.cc:2933
+msgid "alarm trap"
+msgstr ""
+
+#: directn.cc:2935
+msgid "shaft"
+msgstr ""
+
+#: directn.cc:2937
+msgid "teleportation trap"
+msgstr ""
+
+#: directn.cc:2939
+msgid "Zot trap"
+msgstr ""
+
+#: directn.cc:2941
+msgid "passage of Golubria"
+msgstr ""
+
+#: directn.cc:2943
+msgid "pressure plate"
+msgstr ""
+
+#: directn.cc:2946
+msgid "undefined trap"
+msgstr ""
+
+#: directn.cc:2953
+msgid "stone wall"
+msgstr ""
+
+#: directn.cc:2957
+msgid "wall of the weird stuff which makes up Pandemonium"
+msgstr ""
+
+#: directn.cc:2959
+msgid "rock wall"
+msgstr ""
+
+#: directn.cc:2961
+msgid "slime covered rock wall"
+msgstr ""
+
+#: directn.cc:2963
+msgid "unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2965
+msgid "open sea"
+msgstr ""
+
+#: directn.cc:2967
+msgid "Endless lava"
+msgstr ""
+
+#: directn.cc:2969
+msgid "closed door"
+msgstr ""
+
+#: directn.cc:2971
+msgid "detected secret door"
+msgstr ""
+
+#: directn.cc:2973
+msgid "metal wall"
+msgstr ""
+
+#: directn.cc:2975
+msgid "wall of green crystal"
+msgstr ""
+
+#: directn.cc:2977
+msgid "translucent rock wall"
+msgstr ""
+
+#: directn.cc:2979
+msgid "translucent stone wall"
+msgstr ""
+
+#: directn.cc:2981
+msgid "translucent unnaturally hard rock wall"
+msgstr ""
+
+#: directn.cc:2983
+msgid "iron grate"
+msgstr ""
+
+#. perhaps M_("mangrove") or such?
+#: directn.cc:2986
+msgid "tree"
+msgstr ""
+
+#: directn.cc:2989
+msgid "idol of Beogh"
+msgstr ""
+
+#: directn.cc:2991
+msgid "orcish idol"
+msgstr ""
+
+#: directn.cc:2993
+msgid "wall of solid wax"
+msgstr ""
+
+#: directn.cc:2995
+msgid "granite statue"
+msgstr ""
+
+#: directn.cc:2997
+msgid "Some lava"
+msgstr ""
+
+#: directn.cc:2999
+msgid "Some deep water"
+msgstr ""
+
+#: directn.cc:3001
+msgid "Some shallow water"
+msgstr ""
+
+#: directn.cc:3004
+msgid "Floor"
+msgstr ""
+
+#: directn.cc:3006
+msgid "open door"
+msgstr ""
+
+#: directn.cc:3008
+msgid "escape hatch in the floor"
+msgstr ""
+
+#: directn.cc:3010
+msgid "escape hatch in the ceiling"
+msgstr ""
+
+#: directn.cc:3014
+msgid "stone staircase leading down"
+msgstr ""
+
+#: directn.cc:3021
+msgid "staircase leading out of the dungeon"
+msgstr ""
+
+#: directn.cc:3023
+msgid "stone staircase leading up"
+msgstr ""
+
+#: directn.cc:3025
+msgid "gateway to Hell"
+msgstr ""
+
+#: directn.cc:3027
+msgid "gateway back into the Dungeon"
+msgstr ""

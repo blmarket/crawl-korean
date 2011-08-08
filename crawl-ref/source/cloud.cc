@@ -36,6 +36,7 @@
 #include "tiledef-gui.h"
 #include "tiledef-main.h"
 #endif
+#include "korean.h"
 
 static int _actor_cloud_damage(actor *act, const cloud_struct &cloud,
                                bool maximum_damage);
@@ -862,11 +863,10 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             if (you.can_see(act))
             {
-                /// 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
                 mprf(gettext("%s %s in the rain."),
                      act->name(DESC_CAP_THE).c_str(),
-                     act->conj_verb(silenced(act->pos())?
-                                    "steam" : "sizzle").c_str());
+                     translate_verb(act, silenced(act->pos())?
+                                    V_("steam") : V_("sizzle")).c_str());
             }
         }
         if (player)
@@ -1357,19 +1357,17 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
             // of spam reduction.
             if (act->is_player())
             {
-                /// 한글화 하기 어려움. 일단 내비둘것.
                 mprf(gettext("%s %s standing in the rain."),
                      act->name(DESC_CAP_THE).c_str(),
-                     act->conj_verb("are").c_str());
+                     translate_verb(act, V_("are")).c_str());
             }
         }
         else
         {
-            /// 한글화 하기 몹시 어려움. 내비둘것.
             mprf(gettext("%s %s in %s."),
                  act->name(DESC_CAP_THE).c_str(),
-                 beneficial ? act->conj_verb("bask").c_str()
-                 : (act->conj_verb("are") + " engulfed").c_str(),
+                 beneficial ? translate_verb(act, V_("bask")).c_str()
+                 : gettext((translate_verb(act,"are") + " engulfed").c_str()),
                  cloud_name().c_str());
         }
     }

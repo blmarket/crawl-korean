@@ -98,7 +98,7 @@ int holy_word_player(int pow, int caster, actor *attacker)
 
     mpr(gettext("You are blasted by holy energy!"));
 
-    const char *aux = N_("holy word");
+    const char *aux = M_("holy word");
 
     kill_method_type type = KILLED_BY_MONSTER;
     if (invalid_monster_index(caster))
@@ -262,7 +262,7 @@ int torment_player(actor *attacker, int taux)
 
     mpr(gettext("Your body is wracked with pain!"));
 
-    const char *aux = N_("torment");
+    const char *aux = M_("torment");
 
     kill_method_type type = KILLED_BY_MONSTER;
     if (invalid_monster_index(taux))
@@ -362,7 +362,7 @@ void immolation(int pow, int caster, coord_def where, bool known,
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    const char *aux = N_("immolation");
+    const char *aux = M_("immolation");
 
     bolt beam;
 

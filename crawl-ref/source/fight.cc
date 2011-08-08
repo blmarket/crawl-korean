@@ -84,6 +84,7 @@
 #ifdef NOTE_DEBUG_CHAOS_EFFECTS
 #include "notes.h"
 #endif
+#include "korean.h"
 
 const int HIT_WEAK   = 7;
 const int HIT_MED    = 18;
@@ -216,14 +217,6 @@ static bool player_fights_well_unarmed(int heavy_armour_penalty)
     return (you.burden_state == BS_UNENCUMBERED
             && x_chance_in_y(you.skill(SK_UNARMED_COMBAT), 20)
             && x_chance_in_y(2, 1 + heavy_armour_penalty));
-}
-
-static std::string translate_verb(actor *actor, const std::string &verb)
-{
-#ifndef KR
-    return actor ? actor->conj_verb(verb).c_str() : verb;
-#endif
-    return gettext((verb + "-verb").c_str());
 }
 
 unchivalric_attack_type is_unchivalric_attack(const actor *attacker,

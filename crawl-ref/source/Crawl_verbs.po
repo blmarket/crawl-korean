@@ -162,3 +162,18 @@ msgstr "녹였"
 
 msgid "freeze-verb"
 msgstr "얼렸"
+
+msgid "steam-verb"
+msgstr ""
+
+msgid "sizzle-verb"
+msgstr ""
+
+msgid "are-verb"
+msgstr ""
+
+msgid "bask-verb"
+msgstr ""
+
+msgid "are-verb engulfed"
+msgstr "휩싸였"

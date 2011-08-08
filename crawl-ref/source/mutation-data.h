@@ -13,7 +13,7 @@
 #define MUTATION_DATA_H
 
 { MUT_TOUGH_SKIN,                0,  3, false,  true,
-  N_("tough skin"),
+  M_("tough skin"),
 
   {N_("You have tough skin (AC +1)."),
    N_("You have very tough skin (AC +2)."),
@@ -61,7 +61,7 @@
 },
 
 { MUT_POISON_RESISTANCE,          4,  1, false, false,
-  N_("poison resistance"),
+  M_("poison resistance"),
 
   {N_("Your system is resistant to poisons."), "", ""},
   {N_("You feel healthy."), "",  ""},
@@ -71,7 +71,7 @@
 },
 
 { MUT_CARNIVOROUS,                5,  3, false, false,
-  N_("carnivore"),
+  M_("carnivore"),
 
   {N_("Your digestive system is specialised to digest meat."),
    N_("Your digestive system is highly specialised to digest meat."),
@@ -89,7 +89,7 @@
 },
 
 { MUT_HERBIVOROUS,                5,  3,  true, false,
-  N_("herbivore"),
+  M_("herbivore"),
 
   {N_("You digest meat inefficiently."),
    N_("You digest meat very inefficiently."),
@@ -107,7 +107,7 @@
 },
 
 { MUT_HEAT_RESISTANCE,            4,  3, false, false,
-  N_("fire resistance"),
+  M_("fire resistance"),
 
   {N_("Your flesh is heat resistant."),
    N_("Your flesh is very heat resistant."),
@@ -125,7 +125,7 @@
 },
 
 { MUT_COLD_RESISTANCE,            4,  3, false, false,
-  N_("cold resistance"),
+  M_("cold resistance"),
 
   {N_("Your flesh is cold resistant."),
    N_("Your flesh is very cold resistant."),
@@ -143,7 +143,7 @@
 },
 
 { MUT_DEMONIC_GUARDIAN,            0,  3, false, false,
-  N_("demonic guardian"),
+  M_("demonic guardian"),
 
   {N_("A weak demonic guardian rushes to your aid."),
    N_("A demonic guardian rushes to your aid."),
@@ -161,7 +161,7 @@
 },
 
 { MUT_SHOCK_RESISTANCE,           2,  1, false, false,
-  N_("electricity resistance"),
+  M_("electricity resistance"),
 
   {N_("You are resistant to electric shocks."), "", ""},
   {N_("You feel insulated."), "", ""},
@@ -171,7 +171,7 @@
 },
 
 { MUT_REGENERATION,               3,  3, false, false,
-  N_("regeneration"),
+  M_("regeneration"),
 
   {N_("Your natural rate of healing is unusually fast."),
    N_("You heal very quickly."),
@@ -189,7 +189,7 @@
 },
 
 { MUT_SLOW_HEALING,               3,  3,  true, false,
-  N_("slow healing"),
+  M_("slow healing"),
 
   {N_("You heal slowly."),
    N_("You heal very slowly."),
@@ -207,7 +207,7 @@
 },
 
 { MUT_FAST_METABOLISM,           10,  3,  true, false,
-  N_("fast metabolism"),
+  M_("fast metabolism"),
 
   {N_("You have a fast metabolism."),
    N_("You have a very fast metabolism."),
@@ -225,19 +225,19 @@
 },
 
 { MUT_SLOW_METABOLISM,            7,  3, false, false,
-  "slow metabolism",
+  M_("slow metabolism"),
 
-  {"You have a slow metabolism.",
-   "You have a slow metabolism.",
-   "You need consume almost no food."},
+  {N_("You have a slow metabolism."),
+   N_("You have a slow metabolism."),
+   N_("You need consume almost no food.")},
 
-  {"Your metabolism slows.",
-   "Your metabolism slows.",
-   "Your metabolism slows."},
+  {N_("Your metabolism slows."),
+   N_("Your metabolism slows."),
+   N_("Your metabolism slows.")},
 
-  {"You feel a little hungry.",
-   "You feel a little hungry.",
-   "You feel a little hungry."},
+  {N_("You feel a little hungry."),
+   N_("You feel a little hungry."),
+   N_("You feel a little hungry.")},
 
   "slow metabolism"
 },
@@ -267,7 +267,7 @@
 },
 
 { MUT_TELEPORT_CONTROL,           2,  1, false, false,
-  N_("teleport control"),
+  M_("teleport control"),
 
   {N_("You can control translocations."), "", ""},
   {N_("You feel controlled."), "", ""},
@@ -277,7 +277,7 @@
 },
 
 { MUT_TELEPORT,                   3,  3,  true, false,
-  N_("teleportitis"),
+  M_("teleportitis"),
 
   {N_("Space occasionally distorts in your vicinity."),
    N_("Space sometimes distorts in your vicinity."),
@@ -295,7 +295,7 @@
 },
 
 { MUT_MAGIC_RESISTANCE,           5,  3, false, false,
-  N_("magic resistance"),
+  M_("magic resistance"),
 
   {N_("You are resistant to hostile enchantments."),
    N_("You are highly resistant to hostile enchantments."),
@@ -313,7 +313,7 @@
 },
 
 { MUT_FAST,                       1,  3, false, false,
-  N_("speed"),
+  M_("speed"),
 
   {N_("You cover ground quickly."),
    N_("You cover ground very quickly."),
@@ -331,7 +331,7 @@
 },
 
 { MUT_SLOW,                       3,  3, true, false,
-  N_("slowness"),
+  M_("slowness"),
 
   {N_("You cover ground slowly."),
    N_("You cover ground very slowly."),
@@ -349,7 +349,7 @@
 },
 
 { MUT_ACUTE_VISION,               2,  1, false, false,
-  N_("see invisible"),
+  M_("see invisible"),
 
   {N_("You have supernaturally acute eyesight."), "", ""},
 
@@ -365,7 +365,7 @@
 },
 
 { MUT_DEFORMED,                   8,  3,  true,  true,
-  N_("deformed body"),
+  M_("deformed body"),
 
   {N_("Armour fits poorly on your unusually shaped body."),
    N_("Armour fits poorly on your deformed body."),
@@ -383,7 +383,7 @@
 },
 
 { MUT_TELEPORT_AT_WILL,           0,  3, false, false,
-  N_("teleport at will"),
+  M_("teleport at will"),
 
   {N_("You can teleport at will."),
    N_("You are good at teleporting at will."),
@@ -401,7 +401,7 @@
 },
 
 { MUT_SPIT_POISON,                8,  3, false, false,
-  N_("spit poison"),
+  M_("spit poison"),
 
   {N_("You can spit poison."),
    N_("You can spit moderately strong poison."),
@@ -419,7 +419,7 @@
 },
 
 { MUT_BREATHE_FLAMES,             4,  3, false, false,
-  N_("breathe flames"),
+  M_("breathe flames"),
 
   {N_("You can breathe flames."),
    N_("You can breathe fire."),
@@ -437,7 +437,7 @@
 },
 
 { MUT_BLINK,                      3,  3, false, false,
-  N_("blink"),
+  M_("blink"),
 
   {N_("You can translocate small distances at will."),
    N_("You are good at translocating small distances at will."),
@@ -491,7 +491,7 @@
 },
 
 { MUT_SCREAM,                     6,  3,  true, false,
-  N_("screaming"),
+  M_("screaming"),
 
   {N_("You occasionally shout uncontrollably."),
    N_("You sometimes yell uncontrollably."),
@@ -509,7 +509,7 @@
 },
 
 { MUT_CLARITY,                    6,  1, false, false,
-  N_("clarity"),
+  M_("clarity"),
 
   {N_("You possess an exceptional clarity of mind."), "", ""},
   {N_("Your thoughts seem clearer."), "", ""},
@@ -519,7 +519,7 @@
 },
 
 { MUT_BERSERK,                    7,  3,  true, false,
-  N_("berserk"),
+  M_("berserk"),
 
   {N_("You tend to lose your temper in combat."),
    N_("You often lose your temper in combat."),
@@ -537,7 +537,7 @@
 },
 
 { MUT_DETERIORATION,             10,  3,  true, false,
-  N_("deterioration"),
+  M_("deterioration"),
 
   {N_("Your body is slowly deteriorating."),
    N_("Your body is deteriorating."),
@@ -555,7 +555,7 @@
 },
 
 { MUT_BLURRY_VISION,             10,  3,  true, false,
-  N_("blurry vision"),
+  M_("blurry vision"),
 
   {N_("Your vision is a little blurry."),
    N_("Your vision is quite blurry."),
@@ -573,7 +573,7 @@
 },
 
 { MUT_MUTATION_RESISTANCE,        4,  3, false, false,
-  N_("mutation resistance"),
+  M_("mutation resistance"),
 
   {N_("You are somewhat resistant to further mutation."),
    N_("You are somewhat resistant to both further mutation and mutation removal."),
@@ -627,7 +627,7 @@
 },
 
 { MUT_UNBREATHING,                0,  1, false, false,
-  N_("unbreathing"),
+  M_("unbreathing"),
 
   {N_("You do not need to breathe."), "", ""},
   {N_("You feel breathless."), "", ""},
@@ -637,7 +637,7 @@
 },
 
 { MUT_TORMENT_RESISTANCE,         0,  1, false, false,
-  N_("torment resistance"),
+  M_("torment resistance"),
 
   {N_("You are immune to unholy pain and torment."), "", ""},
   {N_("You feel a strange anaesthesia."), "", ""},
@@ -647,7 +647,7 @@
 },
 
 { MUT_NEGATIVE_ENERGY_RESISTANCE, 0,  3, false, false,
-  N_("life protection"),
+  M_("life protection"),
 
   {N_("You resist negative energy."),
    N_("You are quite resistant to negative energy."),
@@ -663,7 +663,7 @@
 },
 
 { MUT_HURL_HELLFIRE,              0,  1, false, false,
-  N_("hurl hellfire"),
+  M_("hurl hellfire"),
 
   {N_("You can hurl blasts of hellfire."), "", ""},
   {N_("You smell fire and brimstone."), "", ""},
@@ -673,7 +673,7 @@
 },
 
 { MUT_THROW_FLAMES,               0,  1, false, false,
-  N_("throw flames of Gehenna"),
+  M_("throw flames of Gehenna"),
 
   {N_("You can throw forth the flames of Gehenna."), "", ""},
   {N_("You smell the fires of Gehenna."), "", ""},
@@ -683,7 +683,7 @@
 },
 
 { MUT_THROW_FROST,                0,  1, false, false,
-  N_("throw frost of Cocytus"),
+  M_("throw frost of Cocytus"),
 
   {N_("You can throw forth the frost of Cocytus."), "", ""},
   {N_("You feel the icy cold of Cocytus chill your soul."), "", ""},
@@ -694,7 +694,7 @@
 
 // body-slot facets
 { MUT_HORNS,                      7,  3, false,  true,
-  N_("horns"),
+  M_("horns"),
 
   {N_("You have a pair of small horns on your head."),
    N_("You have a pair of horns on your head."),
@@ -712,7 +712,7 @@
 },
 
 { MUT_BEAK,                       1,  1, false,  true,
-  N_("beak"),
+  M_("beak"),
 
   {N_("You have a beak for a mouth."), "", ""},
   {N_("Your mouth lengthens and hardens into a beak!"), "", ""},
@@ -722,7 +722,7 @@
 },
 
 { MUT_CLAWS,                      2,  3, false,  true,
-  N_("claws"),
+  M_("claws"),
 
   {N_("You have sharp fingernails."),
    N_("You have very sharp fingernails."),
@@ -740,7 +740,7 @@
 },
 
 { MUT_FANGS,                      1,  3, false,  true,
-  N_("fangs"),
+  M_("fangs"),
 
   {N_("You have very sharp teeth."),
    N_("You have extremely sharp teeth."),
@@ -758,7 +758,7 @@
 },
 
 { MUT_HOOVES,                     5,  3, false,  true,
-  N_("hooves"),
+  M_("hooves"),
 
   {N_("You have large cloven feet."),
    N_("You have hoof-like feet."),
@@ -776,7 +776,7 @@
 },
 
 { MUT_ANTENNAE,                   4,  3, false,  true,
-  N_("antennae"),
+  M_("antennae"),
 
   {N_("You have a pair of small antennae on your head."),
    N_("You have a pair of antennae on your head."),
@@ -794,7 +794,7 @@
 },
 
 { MUT_TALONS,                     5,  3, false,  true,
-  N_("talons"),
+  M_("talons"),
 
   {N_("You have sharp toenails."),
    N_("You have razor-sharp toenails."),
@@ -812,7 +812,7 @@
 },
 
 { MUT_TENTACLES,                 0,  3, false, true,
-  N_("tentacles"),
+  M_("tentacles"),
 
   {N_("You have a mass of small tentacles instead of fingers."),
    N_("You have a mass of tentacles instead of hands."),
@@ -831,7 +831,7 @@
 
 // Naga only
 { MUT_BREATHE_POISON,             0,  1, false, false,
-  N_("breathe poison"),
+  M_("breathe poison"),
 
   {N_("You can exhale a cloud of poison."), "", ""},
   {N_("You taste something nasty."), "", ""},
@@ -842,7 +842,7 @@
 
 // Naga and Draconian only
 { MUT_STINGER,                    0,  3, false,  true,
-  N_("stinger"),
+  M_("stinger"),
 
   {N_("Your tail ends in a poisonous barb."),
    N_("Your tail ends in a sharp poisonous barb."),
@@ -861,7 +861,7 @@
 
 // Draconian only
 { MUT_BIG_WINGS,                  0,  1, false,  true,
-  N_("large and strong wings"),
+  M_("large and strong wings"),
 
   {N_("Your wings are large and strong."), "", ""},
   {N_("Your wings grow larger and stronger."), "", ""},
@@ -872,7 +872,7 @@
 
 // species-dependent innate mutations
 { MUT_SAPROVOROUS,                0,  3, false, false,
-  N_("saprovore"),
+  M_("saprovore"),
 
   {N_("You can tolerate rotten meat."),
    N_("You can eat rotten meat."),
@@ -884,7 +884,7 @@
 },
 
 { MUT_GOURMAND,                   0,  1, false, false,
-  N_("gourmand"),
+  M_("gourmand"),
 
   {N_("You like to eat raw meat."), "", ""},
   {"", "", ""},
@@ -964,7 +964,7 @@
 },
 
 { MUT_PASSIVE_MAPPING,            3,  3, false, false,
-  N_("sense surroundings"),
+  M_("sense surroundings"),
 
   {N_("You passively map a small area around you."),
    N_("You passively map the area around you."),
@@ -992,36 +992,36 @@
 },
 
 { MUT_CONSERVE_SCROLLS,           0,  1, false, false,
-  N_("conserve scrolls"),
+  M_("conserve scrolls"),
 
   {N_("You are very good at protecting items from fire."), "", ""},
   {N_("You feel less concerned about heat."), "", ""},
   {"", "", ""},
 
-  N_("conserve scrolls"),
+  "conserve scrolls",
 },
 
 { MUT_CONSERVE_POTIONS,           0,  1, false, false,
-  N_("conserve potions"),
+  M_("conserve potions"),
 
   {N_("You are very good at protecting items from cold."), "", ""},
   {N_("You feel less concerned about cold."), "", ""},
   {"", "", ""},
-  N_("conserve potions"),
+  "conserve potions",
 },
 
 { MUT_PASSIVE_FREEZE,             0,  1, false, false,
-  N_("passive freeze"),
+  M_("passive freeze"),
 
   {N_("A frigid envelope surrounds you and freezes all who hurt you."), "", ""},
   {N_("Your skin feels very cold."), "", ""},
   {"", "", ""},
 
-  N_("passive freeze"),
+  "passive freeze",
 },
 
 { MUT_NIGHTSTALKER,               0,  3, false, true,
-  N_("nightstalker"),
+  M_("nightstalker"),
 
   {N_("You are slightly more attuned to the shadows."),
    N_("You are significantly more attuned to the shadows."),
@@ -1039,7 +1039,7 @@
 },
 
 { MUT_SPINY,                      0,  3, false, true,
-  N_("spiny"),
+  M_("spiny"),
 
   {N_("You are partially covered in sharp spines."),
    N_("You are mostly covered in sharp spines."),
@@ -1057,7 +1057,7 @@
 },
 
 { MUT_POWERED_BY_DEATH,           0,  3, false, false,
-  N_("powered by death"),
+  M_("powered by death"),
 
   {N_("You can steal the life force of nearby defeated enemies."),
    N_("You can steal the life force of defeated enemies."),
@@ -1075,7 +1075,7 @@
 },
 
 { MUT_POWERED_BY_PAIN,            0,  3, false, false,
-  N_("powered by pain"),
+  M_("powered by pain"),
 
   {N_("You sometimes regain a little magical energy from taking damage."),
    N_("You sometimes regain magical energy from taking damage."),
@@ -1128,7 +1128,7 @@
 },
 
 { MUT_TRANSLUCENT_SKIN,           0,  3, false, true,
-  N_("translucent skin"),
+  M_("translucent skin"),
 
   {N_("Your skin is partially translucent."),
    N_("Your skin is mostly translucent (Stlth)."),
@@ -1146,7 +1146,7 @@
 },
 
 { MUT_PSEUDOPODS,                 0,  3, false, true,
-  N_("pseudopods"),
+  M_("pseudopods"),
 
   {N_("Armour fits poorly on your pseudopods."),
    N_("Armour fits poorly on your large pseudopods."),
@@ -1164,7 +1164,7 @@
 },
 
 { MUT_FOOD_JELLY,                       0,  1, false, true,
-  N_("spawn jellies when eating"),
+  M_("spawn jellies when eating"),
 
   {N_("You occasionally spawn a jelly by eating."), "", ""},
   {N_("You feel more connected to the slimes."), "", ""},
@@ -1174,7 +1174,7 @@
 },
 
 { MUT_ACIDIC_BITE,                      0,  1, false, true,
-  N_("acidic bite"),
+  M_("acidic bite"),
 
   {N_("You have acidic saliva."), "", ""},
   {N_("Acid begins to drip from your mouth."), "", ""},
@@ -1383,7 +1383,7 @@
 },
 
 { MUT_CAMOUFLAGE,           1,   3, false, true,
-  N_("camouflage"),
+  M_("camouflage"),
 
   {N_("Your skin changes color to match your surroundings (Stlth)."),
    N_("Your skin blends seamlessly with your surroundings (Stlth)."),

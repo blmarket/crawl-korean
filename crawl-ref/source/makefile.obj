@@ -78,6 +78,7 @@ itemprop.o \
 items.o \
 jobs.o \
 kills.o \
+korean.o \
 l_colour.o \
 l_crawl.o \
 l_debug.o \

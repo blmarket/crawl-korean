@@ -2912,124 +2912,125 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         switch (trap)
         {
         case TRAP_DART:
-            return (gettext("dart trap"));
+            return (gettext(M_("dart trap")));
         case TRAP_ARROW:
-            return (gettext("arrow trap"));
+            return (gettext(M_("arrow trap")));
         case TRAP_NEEDLE:
-            return (gettext("needle trap"));
+            return (gettext(M_("needle trap")));
         case TRAP_BOLT:
-            return (gettext("bolt trap"));
+            return (gettext(M_("bolt trap")));
         case TRAP_SPEAR:
-            return (gettext("spear trap"));
+            return (gettext(M_("spear trap")));
         case TRAP_AXE:
-            return (gettext("axe trap"));
+            return (gettext(M_("axe trap")));
         case TRAP_BLADE:
-            return (gettext("blade trap"));
+            return (gettext(M_("blade trap")));
         case TRAP_NET:
-            return (gettext("net trap"));
+            return (gettext(M_("net trap")));
         case TRAP_ALARM:
-            return (gettext("alarm trap"));
+            return (gettext(M_("alarm trap")));
         case TRAP_SHAFT:
-            return (gettext("shaft"));
+            return (gettext(M_("shaft")));
         case TRAP_TELEPORT:
-            return (gettext("teleportation trap"));
+            return (gettext(M_("teleportation trap")));
         case TRAP_ZOT:
-            return (gettext("Zot trap"));
+            return (gettext(M_("Zot trap")));
         case TRAP_GOLUBRIA:
-            return (gettext("passage of Golubria"));
+            return (gettext(M_("passage of Golubria")));
         case TRAP_PLATE:
-            return (gettext("pressure plate"));
+            return (gettext(M_("pressure plate")));
         case TRAP_WEB:
-            return (gettext("web"));
+            return (gettext(M_("web")));
         default:
             error_message_to_player();
-            return (gettext("undefined trap"));
+            return (gettext(M_("undefined trap")));
         }
     }
 
     switch (grid)
     {
     case DNGN_STONE_WALL:
-        return (gettext("stone wall"));
+        return (gettext(M_("stone wall")));
     case DNGN_ROCK_WALL:
     case DNGN_SECRET_DOOR:
         if (you.level_type == LEVEL_PANDEMONIUM)
-            return (gettext("wall of the weird stuff which makes up Pandemonium"));
+            return (gettext(M_("wall of the weird stuff which makes up Pandemonium")));
         else
-            return (gettext("rock wall"));
+            return (gettext(M_("rock wall")));
     case DNGN_SLIMY_WALL:
-        return (gettext("slime covered rock wall"));
+        return (gettext(M_("slime covered rock wall")));
     case DNGN_PERMAROCK_WALL:
-        return (gettext("unnaturally hard rock wall"));
+        return (gettext(M_("unnaturally hard rock wall")));
     case DNGN_OPEN_SEA:
-        return (gettext("open sea"));
+        return (gettext(M_("open sea")));
     case DNGN_LAVA_SEA:
-        return (gettext("Endless lava"));
+        return (gettext(M_("Endless lava")));
     case DNGN_CLOSED_DOOR:
-        return (gettext("closed door"));
+        return (gettext(M_("closed door")));
     case DNGN_DETECTED_SECRET_DOOR:
-        return (gettext("detected secret door"));
+        return (gettext(M_("detected secret door")));
     case DNGN_METAL_WALL:
-        return (gettext("metal wall"));
+        return (gettext(M_("metal wall")));
     case DNGN_GREEN_CRYSTAL_WALL:
-        return (gettext("wall of green crystal"));
+        return (gettext(M_("wall of green crystal")));
     case DNGN_CLEAR_ROCK_WALL:
-        return (gettext("translucent rock wall"));
+        return (gettext(M_("translucent rock wall")));
     case DNGN_CLEAR_STONE_WALL:
-        return (gettext("translucent stone wall"));
+        return (gettext(M_("translucent stone wall")));
     case DNGN_CLEAR_PERMAROCK_WALL:
-        return (gettext("translucent unnaturally hard rock wall"));
+        return (gettext(M_("translucent unnaturally hard rock wall")));
     case DNGN_GRATE:
-        return (gettext("iron grate"));
+        return (gettext(M_("iron grate")));
     case DNGN_TREE:
-    case DNGN_SWAMP_TREE: // perhaps "mangrove" or such?
-        return (gettext("tree"));
+    case DNGN_SWAMP_TREE: // perhaps M_("mangrove") or such?
+        return (gettext(M_("tree")));
     case DNGN_ORCISH_IDOL:
         if (you.species == SP_HILL_ORC)
-           return (gettext("idol of Beogh"));
+           return (gettext(M_("idol of Beogh")));
         else
-           return (gettext("orcish idol"));
+           return (gettext(M_("orcish idol")));
     case DNGN_WAX_WALL:
-        return (gettext("wall of solid wax"));
+        return (gettext(M_("wall of solid wax")));
     case DNGN_GRANITE_STATUE:
-        return (gettext("granite statue"));
+        return (gettext(M_("granite statue")));
     case DNGN_LAVA:
-        return (gettext("Some lava"));
+        return (gettext(M_("Some lava")));
     case DNGN_DEEP_WATER:
-        return (gettext("Some deep water"));
+        return (gettext(M_("Some deep water")));
     case DNGN_SHALLOW_WATER:
-        return (gettext("Some shallow water"));
+        return (gettext(M_("Some shallow water")));
     case DNGN_UNDISCOVERED_TRAP:
     case DNGN_FLOOR:
-        return (gettext("Floor"));
+        return (gettext(M_("Floor")));
     case DNGN_OPEN_DOOR:
-        return (gettext("open door"));
+        return (gettext(M_("open door")));
     case DNGN_ESCAPE_HATCH_DOWN:
-        return (gettext("escape hatch in the floor"));
+        return (gettext(M_("escape hatch in the floor")));
     case DNGN_ESCAPE_HATCH_UP:
-        return (gettext("escape hatch in the ceiling"));
+        return (gettext(M_("escape hatch in the ceiling")));
     case DNGN_STONE_STAIRS_DOWN_I:
     case DNGN_STONE_STAIRS_DOWN_II:
     case DNGN_STONE_STAIRS_DOWN_III:
-        return (gettext("stone staircase leading down"));
+        return (gettext(M_("stone staircase leading down")));
     case DNGN_STONE_STAIRS_UP_I:
     case DNGN_STONE_STAIRS_UP_II:
     case DNGN_STONE_STAIRS_UP_III:
         if (player_in_branch(BRANCH_MAIN_DUNGEON)
             && player_branch_depth() == 1)
         {
-            return (gettext("staircase leading out of the dungeon"));
+            return (gettext(M_("staircase leading out of the dungeon")));
         }
-        return (gettext("stone staircase leading up"));
+        return (gettext(M_("stone staircase leading up")));
     case DNGN_ENTER_HELL:
-        return (gettext("gateway to Hell"));
+        return (gettext(M_("gateway to Hell")));
     case DNGN_EXIT_HELL:
-        return (gettext("gateway back into the Dungeon"));
+        return (gettext(M_("gateway back into the Dungeon")));
     case DNGN_TRAP_MECHANICAL:
-        return (gettext("mechanical trap"));
+        return (gettext(M_("mechanical trap")));
     case DNGN_TRAP_MAGICAL:
-        return (gettext("magical trap"));
+        return (gettext(M_("magical trap")));
     case DNGN_TRAP_NATURAL:
+<<<<<<< HEAD
 <<<<<<< HEAD
         return ("natural trap");
     case DNGN_TRAP_WEB:
@@ -3037,61 +3038,65 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
 =======
         return (gettext("natural trap"));
 >>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
+=======
+        return (gettext(M_("natural trap")));
+>>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_ENTER_SHOP:
-        return (gettext("shop"));
+        return (gettext(M_("shop")));
     case DNGN_ABANDONED_SHOP:
-        return (gettext("abandoned shop"));
+        return (gettext(M_("abandoned shop")));
     case DNGN_ENTER_LABYRINTH:
-        return (gettext("labyrinth entrance"));
+        return (gettext(M_("labyrinth entrance")));
     case DNGN_ENTER_DIS:
-        return (gettext("gateway to the Iron City of Dis"));
+        return (gettext(M_("gateway to the Iron City of Dis")));
     case DNGN_ENTER_GEHENNA:
-        return (gettext("gateway to the ashen valley of Gehenna"));
+        return (gettext(M_("gateway to the ashen valley of Gehenna")));
     case DNGN_ENTER_COCYTUS:
-        return (gettext("gateway to the freezing wastes of Cocytus"));
+        return (gettext(M_("gateway to the freezing wastes of Cocytus")));
     case DNGN_ENTER_TARTARUS:
-        return (gettext("gateway to the decaying netherworld of Tartarus"));
+        return (gettext(M_("gateway to the decaying netherworld of Tartarus")));
     case DNGN_ENTER_ABYSS:
-        return (gettext("one-way gate to the infinite horrors of the Abyss"));
+        return (gettext(M_("one-way gate to the infinite horrors of the Abyss")));
     case DNGN_EXIT_ABYSS:
-        return (gettext("gateway leading out of the Abyss"));
+        return (gettext(M_("gateway leading out of the Abyss")));
     case DNGN_STONE_ARCH:
-        return (gettext("empty arch of ancient stone"));
+        return (gettext(M_("empty arch of ancient stone")));
     case DNGN_ENTER_PANDEMONIUM:
-        return (gettext("one-way gate leading to the halls of Pandemonium"));
+        return (gettext(M_("one-way gate leading to the halls of Pandemonium")));
     case DNGN_EXIT_PANDEMONIUM:
-        return (gettext("gate leading out of Pandemonium"));
+        return (gettext(M_("gate leading out of Pandemonium")));
     case DNGN_TRANSIT_PANDEMONIUM:
-        return (gettext("gate leading to another region of Pandemonium"));
+        return (gettext(M_("gate leading to another region of Pandemonium")));
     case DNGN_ENTER_DWARVEN_HALL:
-        return (gettext("staircase to the Dwarven Hall"));
+        return (gettext(M_("staircase to the Dwarven Hall")));
     case DNGN_ENTER_ORCISH_MINES:
-        return (gettext("staircase to the Orcish Mines"));
+        return (gettext(M_("staircase to the Orcish Mines")));
     case DNGN_ENTER_HIVE:
-        return (gettext("staircase to the Hive"));
+        return (gettext(M_("staircase to the Hive")));
     case DNGN_ENTER_LAIR:
-        return (gettext("staircase to the Lair"));
+        return (gettext(M_("staircase to the Lair")));
     case DNGN_ENTER_SLIME_PITS:
-        return (gettext("staircase to the Slime Pits"));
+        return (gettext(M_("staircase to the Slime Pits")));
     case DNGN_ENTER_VAULTS:
-        return (gettext("staircase to the Vaults"));
+        return (gettext(M_("staircase to the Vaults")));
     case DNGN_ENTER_CRYPT:
-        return (gettext("staircase to the Crypt"));
+        return (gettext(M_("staircase to the Crypt")));
     case DNGN_ENTER_HALL_OF_BLADES:
-        return (gettext("staircase to the Hall of Blades"));
+        return (gettext(M_("staircase to the Hall of Blades")));
     case DNGN_ENTER_ZOT:
-        return (gettext("gate to the Realm of Zot"));
+        return (gettext(M_("gate to the Realm of Zot")));
     case DNGN_ENTER_TEMPLE:
-        return (gettext("staircase to the Ecumenical Temple"));
+        return (gettext(M_("staircase to the Ecumenical Temple")));
     case DNGN_ENTER_SNAKE_PIT:
-        return (gettext("staircase to the Snake Pit"));
+        return (gettext(M_("staircase to the Snake Pit")));
     case DNGN_ENTER_ELVEN_HALLS:
-        return (gettext("staircase to the Elven Halls"));
+        return (gettext(M_("staircase to the Elven Halls")));
     case DNGN_ENTER_TOMB:
-        return (gettext("staircase to the Tomb"));
+        return (gettext(M_("staircase to the Tomb")));
     case DNGN_ENTER_SWAMP:
-        return (gettext("staircase to the Swamp"));
+        return (gettext(M_("staircase to the Swamp")));
     case DNGN_ENTER_SHOALS:
+<<<<<<< HEAD
 <<<<<<< HEAD
         return ("staircase to the Shoals");
     case DNGN_ENTER_SPIDER_NEST:
@@ -3101,11 +3106,15 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
 =======
         return (gettext("staircase to the Shoals"));
 >>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
+=======
+        return (gettext(M_("staircase to the Shoals")));
+>>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_ENTER_PORTAL_VAULT:
         // The bazaar description should be set in the bazaar marker; this
         // is the description for a portal of unknown type.
-        return (gettext("gate leading to a distant place"));
+        return (gettext(M_("gate leading to a distant place")));
     case DNGN_EXIT_PORTAL_VAULT:
+<<<<<<< HEAD
 <<<<<<< HEAD
         return ("gate leading back to the Dungeon");
     case DNGN_MALIGN_GATEWAY:
@@ -3115,6 +3124,11 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_TEMP_PORTAL:
         return (gettext("portal to somewhere"));
 >>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
+=======
+        return (gettext(M_("gate leading back to the Dungeon")));
+    case DNGN_TEMP_PORTAL:
+        return (gettext(M_("portal to somewhere")));
+>>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_RETURN_FROM_DWARVEN_HALL:
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_HIVE:
@@ -3122,15 +3136,20 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_RETURN_FROM_VAULTS:
     case DNGN_RETURN_FROM_TEMPLE:
 <<<<<<< HEAD
+<<<<<<< HEAD
     case DNGN_RETURN_FROM_FOREST:
         return ("staircase back to the Dungeon");
 =======
         return (gettext("staircase back to the Dungeon"));
 >>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
+=======
+        return (gettext(M_("staircase back to the Dungeon")));
+>>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_RETURN_FROM_SLIME_PITS:
     case DNGN_RETURN_FROM_SNAKE_PIT:
     case DNGN_RETURN_FROM_SWAMP:
     case DNGN_RETURN_FROM_SHOALS:
+<<<<<<< HEAD
 <<<<<<< HEAD
         return ("staircase back to the Lair");
     case DNGN_RETURN_FROM_SPIDER_NEST:
@@ -3138,67 +3157,70 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
 =======
         return (gettext("staircase back to the Lair"));
 >>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
+=======
+        return (gettext(M_("staircase back to the Lair")));
+>>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_RETURN_FROM_CRYPT:
     case DNGN_RETURN_FROM_HALL_OF_BLADES:
-        return (gettext("staircase back to the Vaults"));
+        return (gettext(M_("staircase back to the Vaults")));
     case DNGN_RETURN_FROM_ELVEN_HALLS:
-        return (gettext("staircase back to the Mines"));
+        return (gettext(M_("staircase back to the Mines")));
     case DNGN_RETURN_FROM_TOMB:
-        return (gettext("staircase back to the Crypt"));
+        return (gettext(M_("staircase back to the Crypt")));
     case DNGN_RETURN_FROM_ZOT:
-        return (gettext("gate leading back out of this place"));
+        return (gettext(M_("gate leading back out of this place")));
 
     // altars
     case DNGN_ALTAR_ZIN:
-        return (gettext("glowing silver altar of Zin"));
+        return (gettext(M_("glowing silver altar of Zin")));
     case DNGN_ALTAR_SHINING_ONE:
-        return (gettext("glowing golden altar of the Shining One"));
+        return (gettext(M_("glowing golden altar of the Shining One")));
     case DNGN_ALTAR_KIKUBAAQUDGHA:
-        return (gettext("ancient bone altar of Kikubaaqudgha"));
+        return (gettext(M_("ancient bone altar of Kikubaaqudgha")));
     case DNGN_ALTAR_YREDELEMNUL:
-        return (gettext("basalt altar of Yredelemnul"));
+        return (gettext(M_("basalt altar of Yredelemnul")));
     case DNGN_ALTAR_XOM:
-        return (gettext("shimmering altar of Xom"));
+        return (gettext(M_("shimmering altar of Xom")));
     case DNGN_ALTAR_VEHUMET:
-        return (gettext("radiant altar of Vehumet"));
+        return (gettext(M_("radiant altar of Vehumet")));
     case DNGN_ALTAR_OKAWARU:
-        return (gettext("iron altar of Okawaru"));
+        return (gettext(M_("iron altar of Okawaru")));
     case DNGN_ALTAR_MAKHLEB:
-        return (gettext("burning altar of Makhleb"));
+        return (gettext(M_("burning altar of Makhleb")));
     case DNGN_ALTAR_SIF_MUNA:
-        return (gettext("deep blue altar of Sif Muna"));
+        return (gettext(M_("deep blue altar of Sif Muna")));
     case DNGN_ALTAR_TROG:
-        return (gettext("bloodstained altar of Trog"));
+        return (gettext(M_("bloodstained altar of Trog")));
     case DNGN_ALTAR_NEMELEX_XOBEH:
-        return (gettext("sparkling altar of Nemelex Xobeh"));
+        return (gettext(M_("sparkling altar of Nemelex Xobeh")));
     case DNGN_ALTAR_ELYVILON:
-        return (gettext("white marble altar of Elyvilon"));
+        return (gettext(M_("white marble altar of Elyvilon")));
     case DNGN_ALTAR_LUGONU:
-        return (gettext("corrupted altar of Lugonu"));
+        return (gettext(M_("corrupted altar of Lugonu")));
     case DNGN_ALTAR_BEOGH:
-        return (gettext("roughly hewn altar of Beogh"));
+        return (gettext(M_("roughly hewn altar of Beogh")));
     case DNGN_ALTAR_JIYVA:
-        return (gettext("viscous altar of Jiyva"));
+        return (gettext(M_("viscous altar of Jiyva")));
     case DNGN_ALTAR_FEDHAS:
-        return (gettext("blossoming altar of Fedhas"));
+        return (gettext(M_("blossoming altar of Fedhas")));
     case DNGN_ALTAR_CHEIBRIADOS:
-        return (gettext("snail-covered altar of Cheibriados"));
+        return (gettext(M_("snail-covered altar of Cheibriados")));
     case DNGN_ALTAR_ASHENZARI:
-        return (gettext("shattered altar of Ashenzari"));
+        return (gettext(M_("shattered altar of Ashenzari")));
 
     case DNGN_FOUNTAIN_BLUE:
-        return (gettext("fountain of clear blue water"));
+        return (gettext(M_("fountain of clear blue water")));
     case DNGN_FOUNTAIN_SPARKLING:
-        return (gettext("fountain of sparkling water"));
+        return (gettext(M_("fountain of sparkling water")));
     case DNGN_FOUNTAIN_BLOOD:
-        return (gettext("fountain of blood"));
+        return (gettext(M_("fountain of blood")));
     case DNGN_DRY_FOUNTAIN_BLUE:
     case DNGN_DRY_FOUNTAIN_SPARKLING:
     case DNGN_DRY_FOUNTAIN_BLOOD:
     case DNGN_PERMADRY_FOUNTAIN:
-        return (gettext("dry fountain"));
+        return (gettext(M_("dry fountain")));
     case DNGN_EXPLORE_HORIZON:
-        return (gettext("explore horizon"));
+        return (gettext(M_("explore horizon")));
     default:
         return ("");
     }
