@@ -458,7 +458,7 @@ static const ability_def Ability_List[] =
     { ABIL_MAKE_ACQUIRE_GOLD, M_("Acquire gold"), 0, 0, 0, 0, ABFLAG_LEVEL_DRAIN, 0 },
     { ABIL_MAKE_ACQUIREMENT, M_("Acquirement"), 0, 0, 0, 0, ABFLAG_LEVEL_DRAIN, 0 },
     { ABIL_MAKE_WATER, M_("Make water"), 0, 0, 0, 0, ABFLAG_NONE, 10 },
-    { ABIL_MAKE_ELECTRIC_EEL, M_("Make electric eel"), 0, 0, 0, 0, ABFLAG_NONE, 100},
+    { ABIL_MAKE_LIGHTNING_SPIRE, M_("Make lightning spire"), 0, 0, 0, 0, ABFLAG_NONE, 100},
     { ABIL_MAKE_BAZAAR, M_("Make bazaar"), 0, 30, 0, 0, ABFLAG_PERMANENT_HP, 100 },
     { ABIL_MAKE_ALTAR, M_("Make altar"), 0, 0, 0, 0, ABFLAG_NONE, 2 },
     { ABIL_MAKE_GRENADES, M_("Make grenades"), 0, 0, 0, 0, ABFLAG_NONE, 2 },
