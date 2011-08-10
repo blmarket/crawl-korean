@@ -775,7 +775,7 @@ static void _place_displaced_monsters()
         {
             maybe_bloodify_square(mon->pos());
             if (you.can_see(mon))
-                simple_monster_message(mon, " is pulled into the abyss.",
+                simple_monster_message(mon, gettext(" is pulled into the abyss."),
                         MSGCH_BANISHMENT);
             _abyss_lose_monster(*mon);
 

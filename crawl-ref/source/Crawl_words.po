@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-02 00:20+0900\n"
+"POT-Creation-Date: 2011-08-10 22:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3589,26 +3589,29 @@ msgid "yourself"
 msgstr "당신 자신"
 
 #: fight.cc:405 fight.cc:420 fight.cc:398 fight.cc:413 monster.cc:2221
-#: mon-util.cc:3061
+#: mon-util.cc:3061 mon-util.cc:3067
 msgid "It"
 msgstr "그것"
 
 #. Awkward at start of sentence, always lower.
 #: fight.cc:406 fight.cc:432 fight.cc:399 fight.cc:425 monster.cc:2223
-#: mon-util.cc:3065 mon-util.cc:3081
+#: mon-util.cc:3065 mon-util.cc:3081 mon-util.cc:3071 mon-util.cc:3087
+#: travel.cc:876
 msgid "it"
 msgstr "그것"
 
 #: fight.cc:407 fight.cc:422 fight.cc:400 fight.cc:415 mon-util.cc:3069
+#: mon-util.cc:3075
 msgid "Its"
 msgstr "그것의"
 
 #: fight.cc:408 fight.cc:425 fight.cc:401 fight.cc:418 mon-util.cc:3073
+#: mon-util.cc:3079
 msgid "its"
 msgstr "그것의"
 
 #. Awkward at start of sentence, always lower.
-#: fight.cc:409 fight.cc:402 mon-util.cc:3077
+#: fight.cc:409 fight.cc:402 mon-util.cc:3077 mon-util.cc:3083
 msgid "itself"
 msgstr "자기 자신"
 
@@ -3834,12 +3837,12 @@ msgid "healing"
 msgstr ""
 
 #: itemname.cc:553 describe.cc:444 itemname.cc:564 itemname.cc:1083
-#: itemname.cc:571 itemname.cc:1090
+#: itemname.cc:571 itemname.cc:1090 describe.cc:443
 msgid "fire"
 msgstr "화염"
 
 #: itemname.cc:554 describe.cc:445 itemname.cc:565 itemname.cc:1084
-#: itemname.cc:572 itemname.cc:1091
+#: itemname.cc:572 itemname.cc:1091 describe.cc:444
 msgid "cold"
 msgstr "냉기"
 
@@ -6531,47 +6534,47 @@ msgstr ""
 msgid "a "
 msgstr ""
 
-#: mon-util.cc:3062
+#: mon-util.cc:3062 mon-util.cc:3068
 msgid "He"
 msgstr ""
 
-#: mon-util.cc:3062
+#: mon-util.cc:3062 mon-util.cc:3068
 msgid "She"
 msgstr ""
 
-#: mon-util.cc:3066
+#: mon-util.cc:3066 mon-util.cc:3072
 msgid "he"
 msgstr ""
 
-#: mon-util.cc:3066
+#: mon-util.cc:3066 mon-util.cc:3072
 msgid "she"
 msgstr ""
 
-#: mon-util.cc:3070
+#: mon-util.cc:3070 mon-util.cc:3076
 msgid "His"
 msgstr ""
 
-#: mon-util.cc:3070
+#: mon-util.cc:3070 mon-util.cc:3076
 msgid "Her"
 msgstr ""
 
-#: mon-util.cc:3074
+#: mon-util.cc:3074 mon-util.cc:3080
 msgid "his"
 msgstr ""
 
-#: mon-util.cc:3074 mon-util.cc:3082
+#: mon-util.cc:3074 mon-util.cc:3082 mon-util.cc:3080 mon-util.cc:3088
 msgid "her"
 msgstr ""
 
-#: mon-util.cc:3078
+#: mon-util.cc:3078 mon-util.cc:3084
 msgid "himself"
 msgstr ""
 
-#: mon-util.cc:3078
+#: mon-util.cc:3078 mon-util.cc:3084
 msgid "herself"
 msgstr ""
 
-#: mon-util.cc:3082
+#: mon-util.cc:3082 mon-util.cc:3088
 msgid "him"
 msgstr ""
 
@@ -6583,51 +6586,51 @@ msgstr ""
 msgid "highlevel"
 msgstr ""
 
-#: spl-book.cc:1277
+#: spl-book.cc:1277 spl-book.cc:1283
 msgid "very"
 msgstr ""
 
-#: spl-book.cc:1278
+#: spl-book.cc:1278 spl-book.cc:1284
 msgid "quite"
 msgstr ""
 
-#: spl-book.cc:1279
+#: spl-book.cc:1279 spl-book.cc:1285
 msgid "rather"
 msgstr ""
 
-#: spl-book.cc:1280
+#: spl-book.cc:1280 spl-book.cc:1286
 msgid "somewhat"
 msgstr ""
 
-#: spl-book.cc:1281
+#: spl-book.cc:1281 spl-book.cc:1287
 msgid "not that"
 msgstr ""
 
-#: spl-book.cc:1282
+#: spl-book.cc:1282 spl-book.cc:1288
 msgid "difficult"
 msgstr ""
 
-#: spl-book.cc:1283
+#: spl-book.cc:1283 spl-book.cc:1289
 msgid "tricky"
 msgstr ""
 
-#: spl-book.cc:1284
+#: spl-book.cc:1284 spl-book.cc:1290
 msgid "challenging"
 msgstr ""
 
-#: spl-book.cc:1285
+#: spl-book.cc:1285 spl-book.cc:1291
 msgid "memorise"
 msgstr ""
 
-#: spl-book.cc:1286
+#: spl-book.cc:1286 spl-book.cc:1292
 msgid "commit to memory"
 msgstr ""
 
-#: spl-book.cc:1287
+#: spl-book.cc:1287 spl-book.cc:1293
 msgid "learn"
 msgstr ""
 
-#: spl-book.cc:1288
+#: spl-book.cc:1288 spl-book.cc:1294
 msgid "absorb"
 msgstr ""
 
@@ -6678,4 +6681,16 @@ msgstr ""
 #. 95-100%
 #: spl-cast.cc:1749
 msgid "Perfect"
+msgstr ""
+
+#: travel.cc:875
+msgid "an item"
+msgstr ""
+
+#: travel.cc:875
+msgid "some items"
+msgstr ""
+
+#: travel.cc:876
+msgid "them"
 msgstr ""

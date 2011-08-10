@@ -831,7 +831,7 @@ static void _explore_find_target_square()
 
         if (!estatus)
         {
-            mpr("Done exploring.");
+            mpr(gettext("Done exploring."));
             learned_something_new(HINT_DONE_EXPLORE);
         }
         else
@@ -842,7 +842,7 @@ static void _explore_find_target_square()
             if (estatus & EST_PARTLY_EXPLORED)
                 inacc.push_back("places");
 
-            mprf("Partly explored, can't reach some %s.",
+            mprf(gettext("Partly explored, can't reach some %s."),
                  comma_separated_line(inacc.begin(),
                                       inacc.end()).c_str());
         }
@@ -879,9 +879,9 @@ void explore_pickup_event(int did_pickup, int tried_pickup)
         {
             const std::string prompt =
                 make_stringf(
-                    "Could not pick up %s here; shall I ignore %s?",
-                    tried_pickup == 1? "an item" : "some items",
-                    tried_pickup == 1? "it" : "them");
+                    gettext("Could not pick up %s here; shall I ignore %s?"),
+                    tried_pickup == 1? gettext(M_("an item")) : gettext(M_("some items")),
+                    tried_pickup == 1? gettext(M_("it")) : gettext(M_("them")));
 
             // Make Escape => 'n' and stop run.
             explicit_keymap map;
@@ -918,14 +918,14 @@ command_type travel()
 
     if (Options.travel_key_stop && kbhit())
     {
-        mprf("Key pressed, stopping %s.", you.running.runmode_name().c_str());
+        mprf(gettext("Key pressed, stopping %s."), you.running.runmode_name().c_str());
         stop_running();
         return CMD_NO_CMD;
     }
 
     if (you.confused())
     {
-        mprf("You're confused, stopping %s.",
+        mprf(gettext("You're confused, stopping %s."),
              you.running.runmode_name().c_str());
         stop_running();
         return CMD_NO_CMD;
@@ -934,7 +934,7 @@ command_type travel()
     // Excluded squares are only safe if marking stairs, i.e. another level.
     if (is_excluded(you.pos()) && !is_stair_exclusion(you.pos()))
     {
-        mprf("You're in a travel-excluded area, stopping %s.",
+        mprf(gettext("You're in a travel-excluded area, stopping %s."),
              you.running.runmode_name().c_str());
         stop_running();
         return CMD_NO_CMD;
@@ -2491,7 +2491,7 @@ static void _start_translevel_travel()
     if (level_id::current() == level_target.p.id
         && (level_target.p.pos.x == -1 || level_target.p.pos == you.pos()))
     {
-        mpr("You're already here!");
+        mpr(gettext("You're already here!"));
         return ;
     }
 
@@ -2522,15 +2522,15 @@ void start_translevel_travel(const travel_target &pos)
     if (!can_travel_to(pos.p.id))
     {
         if (!can_travel_interlevel())
-            mpr("Sorry, you can't auto-travel out of here.");
+            mpr(gettext("Sorry, you can't auto-travel out of here."));
         else
-            mpr("Sorry, I don't know how to get there.");
+            mpr(gettext("Sorry, I don't know how to get there."));
         return;
     }
 
     if (pos.p.is_valid() && !in_bounds(pos.p.pos))
     {
-        mpr("Sorry, I don't know how to get there.");
+        mpr(gettext("Sorry, I don't know how to get there."));
         return;
     }
 
@@ -2554,7 +2554,7 @@ void start_translevel_travel(const travel_target &pos)
         {
             if (!_loadlev_populate_stair_distances(pos.p))
             {
-                mpr("Level memory is imperfect, aborting.");
+                mpr(gettext("Level memory is imperfect, aborting."));
                 return ;
             }
         }
@@ -2913,7 +2913,7 @@ static bool _find_transtravel_square(const level_pos &target, bool verbose)
         if (target.id != current
             || target.pos.x != -1 && target.pos != you.pos())
         {
-            mpr("Sorry, I don't know how to get there.");
+            mpr(gettext("Sorry, I don't know how to get there."));
         }
     }
 
@@ -2960,7 +2960,7 @@ void start_explore(bool grab_items)
 
     if (!player_in_mappable_area())
     {
-        mpr("It would help if you knew where you were, first.");
+        mpr(gettext("It would help if you knew where you were, first."));
         return;
     }
 
@@ -2975,7 +2975,7 @@ void start_explore(bool grab_items)
         && Options.stash_tracking != STM_ALL)
     {
         Options.explore_greedy = false;
-        mpr("Greedy explore is available only if stash_tracking = all");
+        mpr(gettext("Greedy explore is available only if stash_tracking = all"));
         more();
         you.running = RMODE_EXPLORE;
     }
@@ -2990,11 +2990,11 @@ void start_explore(bool grab_items)
 void do_explore_cmd()
 {
     if (you.hunger_state == HS_STARVING && !you_min_hunger())
-        mpr("You need to eat something NOW!");
+        mpr(gettext("You need to eat something NOW!"));
     else if (you.berserk())
-        mpr("Calm down first, please.");
+        mpr(gettext("Calm down first, please."));
     else if (you.level_type == LEVEL_LABYRINTH)
-        mpr("No exploration algorithm can help you here.");
+        mpr(gettext("No exploration algorithm can help you here."));
     else                        // Start exploring
         start_explore(Options.explore_greedy);
 }
@@ -3698,9 +3698,9 @@ void TravelCache::delete_waypoint()
     while (get_waypoint_count())
     {
         mesclr();
-        mpr("Existing waypoints:");
+        mpr(gettext("Existing waypoints:"));
         list_waypoints();
-        mpr("Delete which waypoint? (* - delete all, Esc - exit) ",
+        mpr(gettext("Delete which waypoint? (* - delete all, Esc - exit) "),
             MSGCH_PROMPT);
 
         int key = getchm();
@@ -3728,14 +3728,14 @@ void TravelCache::delete_waypoint()
     }
 
     mesclr();
-    mpr("All waypoints deleted. Have a nice day!");
+    mpr(gettext("All waypoints deleted. Have a nice day!"));
 }
 
 void TravelCache::add_waypoint(int x, int y)
 {
     if (!can_travel_interlevel())
     {
-        mpr("Sorry, you can't set a waypoint here.");
+        mpr(gettext("Sorry, you can't set a waypoint here."));
         return;
     }
 
@@ -3744,12 +3744,12 @@ void TravelCache::add_waypoint(int x, int y)
     const bool waypoints_exist = get_waypoint_count();
     if (waypoints_exist)
     {
-        mpr("Existing waypoints:");
+        mpr(gettext("Existing waypoints:"));
         list_waypoints();
     }
 
-    mprf(MSGCH_PROMPT, "Assign waypoint to what number? (0-9%s) ",
-         waypoints_exist? ", D - delete waypoint" : "");
+    mprf(MSGCH_PROMPT, gettext("Assign waypoint to what number? (0-9%s) "),
+         waypoints_exist? gettext(", D - delete waypoint") : "");
 
     int keyin = tolower(get_ch());
 
@@ -3788,15 +3788,15 @@ void TravelCache::add_waypoint(int x, int y)
     if (overwrite)
     {
         if (lid == old_lid) // same level
-            mprf("Waypoint %d re-assigned to your current position.", waynum);
+            mprf(gettext("Waypoint %d re-assigned to your current position."), waynum);
         else
         {
-            mprf("Waypoint %d re-assigned from %s to %s.",
+            mprf(gettext("Waypoint %d re-assigned from %s to %s."),
                  waynum, old_dest.c_str(), new_dest.c_str());
         }
     }
     else
-        mprf("Waypoint %d assigned to %s.", waynum, new_dest.c_str());
+        mprf(gettext("Waypoint %d assigned to %s."), waynum, new_dest.c_str());
 
     update_waypoints();
 }
@@ -4407,11 +4407,11 @@ bool explore_discoveries::prompt_stop() const
     if (!es_flags)
         return (marker_stop);
 
-    say_any(items, "Found %s items.");
-    say_any(shops, "Found %s shops.");
-    say_any(apply_quantities(altars), "Found %s altars.");
-    say_any(apply_quantities(portals), "Found %s gates.");
-    say_any(apply_quantities(stairs), "Found %s stairs.");
+    say_any(items, gettext("Found %s items."));
+    say_any(shops, gettext("Found %s shops."));
+    say_any(apply_quantities(altars), gettext("Found %s altars."));
+    say_any(apply_quantities(portals), gettext("Found %s gates."));
+    say_any(apply_quantities(stairs), gettext("Found %s stairs."));
 
     return ((Options.explore_stop_prompt & es_flags) != es_flags
             || marker_stop
@@ -4427,12 +4427,12 @@ void do_interlevel_travel()
     {
         if (you.running.pos == you.pos())
         {
-            mpr("You're already here.");
+            mpr(gettext("You're already here."));
             return;
         }
         else if (!you.running.pos.x || !you.running.pos.y)
         {
-            mpr("Sorry, you can't auto-travel out of here.");
+            mpr(gettext("Sorry, you can't auto-travel out of here."));
             return;
         }
 

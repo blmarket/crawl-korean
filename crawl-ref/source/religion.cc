@@ -100,115 +100,115 @@ static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
 {
     // No god
     {
-        " & eaten by a bored swarm of bugs.",
-        " & eaten by a swarm of bugs.",
-        " & eaten by a ravening swarm of bugs."
+        "은(는) 버그로 사라졌다.",
+        "은(는) 버그로 사라졌다.",
+        "은(는) 버그로 사라졌다."
     },
     // Zin
     {
-        " <>barely glow%</> and disappear%.",
-        " <>glow% silver</> and disappear%.",
-        " <>glow% blindingly silver</> and disappear%.",
+        "은(는) <>희미한 빛</>으로 반짝이고는 사라졌다.",
+        "은(는) <>은색</>으로 반짝이고는 사라졌다.",
+        "은(는) <>눈부신 은색</>으로 반짝이고는 사라졌다.",
     },
     // TSO
     {
-        " glow% a dingy golden colour and disappear%.",
-        " glow% a golden colour and disappear%.",
-        " glow% a brilliant golden colour and disappear%.",
+        "은(는) 거무칙칙한 금색으로 반짝이고는 사라졌다.",
+        "은(는) 빛나는 금색으로 반짝이고는 사라졌다.",
+        "은(는) 찬란한 금빛으로 반짝이고는 사자렸다.",
     },
     // Kikubaaqudgha
     {
-        " convulse% and rot% away.",
-        " convulse% madly and rot% away.",
-        " convulse% furiously and rot% away.",
+        "은(는) 눈 깜짝할 사이에 썩어 없어졌다.",
+        "은(는) 요란하게 요동치면서 썩어 없어졌다.",
+        "은(는) 격렬하게 요동치면서 썩어 없어졌다.",
     },
     // Yredelemnul
     {
-        " slowly crumble% to dust.",
-        " crumble% to dust.",
-        " turn% to dust in an instant.",
+        "은(는) 한 줌의 먼지로 천천히 분해되었다.",
+        "은(는) 한 줌의 먼지로 분해되었다.",
+        "은(는) 한 줌의 먼지로 순식간에 분해되었다.",
     },
-    // Xom (no sacrifices)
+    // Xom (no sacrifices) 버그메시지. 정상적인 상황에서 나오지 않음
     {
-        " & eaten by a bored bug.",
-        " & eaten by a bug.",
-        " & eaten by a greedy bug.",
+        "을(를) 좀이 빼앗아 갔다.",
+        "을(를) 욕심 많은 츤데레 좀쨔응이 빼앗아서 가지고 놀았다.",
+        "은(는) 어케 됐는지 나도 몰라. 라고 좀은 발뺌했다.",
     },
     // Vehumet
     {
-        " fade% into nothingness.",
-        " burn% into nothingness.",
-        " explode% into nothingness.",
+        "은(는) 서서히 사라져갔다.",
+        "은(는) 불꽃과 함께 사라졌다.",
+        "은(는) 폭발과 함께 사라졌다.",
     },
     // Okawaru
     {
-        " slowly burn% to ash.",
-        " & consumed by flame.",
-        " & consumed in a burst of flame.",
+        "은(는) 천천히 불타 재로 사라졌다.",
+        "은(는) 불꽃에 휩싸여 사라졌다.",
+        "은(는) 불꽃의 폭발로 구워져 버렸다.",
     },
     // Makhleb
     {
-        " disappear% without a sign.",
-        " flare% red and disappear%.",
-        " flare% blood-red and disappear%.",
+        "은(는) 두서없이 사라졌다.",
+        "은(는) 붉은 불꽃을 내며 타버렸다.",
+        "은(는) 피빛의 불꽃을 내며 불타 사라졌다.",
     },
     // Sif Muna
     {
-        " & gone without a[dditional] glow.",
-        " glow% slightly [brighter ]for a moment, and & gone.",
-        " glow% [brighter ]for a moment, and & gone.",
+        "은(는) 서서히 사라졌다.",
+        "은(는) 잠시 희미한 빛을 내었고, 곧 사라졌다.",
+        "은(는) 잠시 반짝였고, 곧 사라졌다.",
     },
     // Trog
     {
-        " & slowly consumed by flames.",
-        " & consumed in a column of flame.",
-        " & consumed in a roaring column of flame.",
+        "은(는) 불기둥에 휩싸여 사라졌다.",
+        "은(는) 격렬한 불기둥에 휩싸여 사라졌다.",
+        "은(는) 굉음을 내며 나타난 불기둥에 휩싸여 사라졌다.",
     },
     // Nemelex
     {
-        " disappear% without a[dditional] glow.",
-        " glow% slightly [brighter ]and disappear%.",
-        " glow% with a rainbow of weird colours and disappear%.",
+        "은(는) 잠시 반짝이다가 사라졌다.",
+        "은(는) 형형색색으로 반짝이다가 사라졌다.",
+        "은(는) 기묘한 무지개색으로 반짝이다가 사라졌다.",
     },
     // Elyvilon
     {
-        " barely shimmer% and break% into pieces.",
-        " shimmer% and break% into pieces.",
-        " shimmer% wildly and break% into pieces.",
+        "은(는) 희미한 빛을 내면서, 산산히 부서졌다.",
+        "은(는) 밝은 빛을 내면서, 산산히 부서졌다.",
+        "은(는) 격렬한 빛을 내면서, 산산히 부서졌다.",
     },
     // Lugonu
     {
-        " disappear% into the void.",
-        " & consumed by the void.",
-        " & voraciously consumed by the void.",
+        "은(는) 공허 속으로 사라졌다.",
+        "은(는) 공허 속으로 집어삼켜졌다.",
+        "은(는) 공허 속으로 게걸스럽게 집어삼켜졌다.",
     },
     // Beogh
     {
-        " slowly crumble% into the ground.",
-        " crumble% into the ground.",
-        " disintegrate% into the ground.",
+        "은(는) 천천히 부스러졌다.",
+        "은(는) 부스러졌다.",
+        "은(는) 산산히 부서졌다.",
     },
     // Jiyva
     {
-        " slowly dissolve% into ooze.",
-        " dissolve% into ooze.",
-        " disappear% with a satisfied slurp.",
+        "은(는) 점액질로 천천히 용해되었다.",
+        "은(는) 점액질로 용해되었다.",
+        "은(는) 후루룩 소리를 내며 순식간에 용해되었다.",
     },
     // Fedhas
     {
-        " & slowly absorbed by the ecosystem.",
-        " & absorbed by the ecosystem.",
-        " & instantly absorbed by the ecosystem.",
+        "은(는) 천천히 자연 속 한 줌의 흙으로 되돌아갔다.",
+        "은(는) 자연 속 한 줌의 흙으로 되돌아가 흡수되었다.",
+        "은(는) 순식간에 자연 속 한 줌의 흙으로 되돌아갔다.",
     },
     // Cheibriados (slow god, so better sacrifices are slower)
     {
-        " freeze% in place and instantly disappear%.",
-        " freeze% in place and disappear%.",
-        " freeze% in place and slowly fade%.",
+        "이(가) 순식간에 얼어붙고, 사라졌다.",
+        "이(가) 얼어붙었고, 곧 사라졌다.",
+        "이(가) 얼어붙고, 천천히 깜박이며 사라졌다.",
     },
     // Ashenzari
     {
-        " flicker% black.",
+        "은(는) 검은 빛으로 깜박였다.",
         " pulsate% black.",          // unused
         " strongly pulsate% black.", // unused
     },
@@ -219,113 +219,112 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // no god
     { "", "", "", "", "" },
     // Zin
-    { "recite Zin's Axioms of Law",
-      "call upon Zin for vitalisation",
-      "call upon Zin to imprison the lawless",
+    { "'진'의 가르침과 섭리를 설교할 수 있다.",
+      "'진'의 활력을 얻을 수 있다.",
+      "부정한 존재들을 '진'의 이름으로 가둘 수 있다.",
       "",
-      "call upon Zin to create a sanctuary" },
+      "'진'의 이름으로 성지를 생성할 수 있다." },
     // TSO
-    { "You and your allies can gain power from killing the unholy and evil.",
-      "call upon the Shining One for a divine shield",
+    { "'샤이닝 원'의 이름으로, 언데드와 악마를 살생함으로써 힘을 얻을 수 있다.",
+      "'샤이닝 원'의 성스러운 방패를 사용할 수 있다.",
       "",
-      "channel blasts of cleansing flame",
-      "summon a divine warrior" },
+      "폭발적인 정화의 불꽃을 시전할 수 있다.",
+      "수호천사를 불러낼 수 있다." },
     // Kikubaaqudgha
-    { "receive cadavers from Kikubaaqudgha",
-      "Kikubaaqudgha is protecting you from some side-effects of death magic.",
+    { "'키쿠바쿠드하'에게 시체를 하사받을 수 있다.",
+      "강령술의 부작용으로부터 '키쿠바쿠드하'의 보호를 받는다.",
       "",
-      "Kikubaaqudgha is protecting you from unholy torment.",
-      "invoke torment by sacrificing a corpse" },
+      "지옥의 고통으로부터 '키쿠바쿠드하'의 보호를 받는다.",
+      "시체를 희생함으로, 지옥의 고통을 불러올 수 있다." },
     // Yredelemnul
-    { "animate {yred_dead}",
-      "recall your undead slaves and mirror injuries on your foes",
-      "[animate {yred_dead}]",
-      "drain ambient lifeforce",
-      "enslave living souls" },
+    { "{yred_dead}을 불러 일으킬 수 있다.",
+      "당신의 언데드 수하들을 순간적으로 곁으로 소집하고, 당신과 수하들의 고통을 적에게 반사할 수 있다.",
+      "[animate {yred_dead}]", //일단보류
+      "주변의 생명력을 빨아들일 수 있다.",
+      "살아있는 영혼을 지배할 수 있다" },
     // Xom
     { "", "", "", "", "" },
     // Vehumet
-    { "gain magical power from killing",
-      "Vehumet is aiding your destructive magics.",
-      "Vehumet is extending the range of your destructive magics.",
-      "Vehumet is reducing the cost of your expensive destructive magics.",
+    { "'베후멧'의 이름으로 한 살생으로 마력을 얻을 수 있다.",
+      "'베후멧'으로부터 파괴 마법의 도움을 받는다.",
+      "'베후멧'의 도움으로 더 먼 거리까지 파괴 마법을 시전할 수 있다.",
+      "'베후멧'의 도움으로, 파괴 마법을 더욱 손쉽게 사용할 수 있다.",
       "" },
     // Okawaru
-    { "gain great but temporary skills",
+    { "일시적으로 더욱 향상된 전투 기술을 발휘할 수 있다.",
       "",
       "",
       "",
-      "speed up your combat" },
+      "당신의 공격 속도를 일시적으로 크게 향상시킬 수 있다." },
     // Makhleb
-    { "gain power from killing",
-      "harness Makhleb's destructive might",
-      "summon a lesser servant of Makhleb",
-      "hurl Makhleb's greater destruction",
-      "summon a greater servant of Makhleb" },
+    { "'마크레브'의 이름으로 한 살생으로 힘을 얻을 수 있다.",
+      "'마크레브'의 파괴의 힘을 다룰 수 있다.",
+      "'마크레브'의 하급 종복을 소환할 수 있다.",
+      "'마크레브'의 강력한 파괴의 힘 다룰 수 있다.",
+      "'마크레브'의 고위 종복을 소환할 수 있다." },
     // Sif Muna
-    { "tap ambient magical fields",
-      "freely open your mind to new spells",
+    { "주변에서 마력을 수집할 수 있다.",
+      "새로운 주문을 기억하기 위해 기억을 말소시킬 수 있다",
       "",
-      "Sif Muna is protecting you from miscast magic.",
+      "주문 사용의 부작용으로부터 '시프 무나'의 보호를 받을 수 있다.",
       "" },
     // Trog
-    { "go berserk at will",
-      "regenerate and be protected from hostile enchantments",
+    { "당신의 의지대로 광폭화를 할 수 있다.",
+      "'트로그'의 힘으로 빠른 재생 능력과 마법 저항을 얻을 수 있다.",
       "",
-      "call in reinforcements",
+      "'트로그'의 전사들을 소환할 수 있다.",
       "" },
     // Nemelex
-    { "draw cards from decks in your inventory",
-      "peek at two random cards from a deck",
-      "choose one out of three cards",
-      "mark four cards in a deck",
-      "order the top five cards of a deck, losing the rest" },
+    { "가지고 있는 한 장의 카드를 곧바로 사용할 수 있다.",
+      "카드 덱 중 두 장의 카드를 미리 확인할 수 있다.",
+      "석 장의 카드 중 한 장을 선택하여 사용할 수 있다.",
+      "카드 덱 중 넉 장의 카드에 표시를 해둘 수 있다.",
+      "카드 덱 중 상위 다섯 장의 카드의 순서를 바꿀 수 있다. 덱의 나머지 카드들은 사라진다." },
     // Elyvilon
-    { "provide lesser healing for yourself and others",
-      "purify yourself",
-      "provide greater healing for yourself and others",
-      "restore your abilities",
-      "call upon Elyvilon for divine vigour" },
+    { "미약한 치유를 '엘라이빌론'에게 요청할 수 있다.",
+      "스스로를 정화시킬 수 있다.",
+      "강력한 치유를 '엘라이빌론'에게 요청할 수 있다.",
+      "스스로 능력치를 회복할 수 있다.",
+      "'엘라이빌론'의 성스러운 활력을 불러낼 수 있다." },
     // Lugonu
-    { "depart the Abyss",
-      "bend space around yourself",
-      "banish your foes",
-      "corrupt the fabric of space",
-      "gate yourself to the Abyss - for a price" },
+    { "언제든지 어비스를 탈출할 수 있다.",
+      "당신 주변의 공간을 왜곡시킬 수 있다.",
+      "방해되는 적들을 어비스로 추방시킬 수 있다.",
+      "공간 구조를 타락시킬 수 있다.",
+      "어느 정도의 대가를 통해 어비스로 곧바로 이동할 수 있다." },
     // Beogh
-    { "Beogh supports the use of orcish gear.",
-      "smite your foes",
-      "gain orcish followers",
-      "recall your orcish followers",
-      "walk on water" },
+    { "오크제 장비를 사용함으로써 '베오그'의 도움을 받을 수 있다.",
+      "신의 힘으로 적을 징벌할 수 있다.",
+      "오크 추종자를 얻을 수 있다.",
+      "당신을 따르는 오크 추종자들을 순간적으로 곁으로 소집할 수 있다.",
+      "물 위를 걸을 수 있다." },
     // Jiyva
-    { "request a jelly",
+    { "젤리를 불러낼 수 있다.",
       "",
       "",
-      "turn your foes to slime",
-      "call upon Jiyva to remove your harmful mutations"
+      "적들을 슬라임화시킬 수 있다.",
+      "'지이바'의 힘으로, 나쁜 변이를 제거할 수 있다."
     },
     // Fedhas
-    { "induce evolution",
-      "call sunshine",
-      "cause a ring of plants to grow",
-      "spawn explosive spores",
-      "control the weather"
+    { "식물의 진화를 촉진할 수 있다.",
+      "던전 내에 한 줄기 햇빛을 불러올 수 있다.",
+      "당신 주변을 식물로 둘러쌀 수 있다.",
+      "폭발하는 포자를 불러낼 수 있다.",
+      "날씨를 변화시킬 수 있다."
     },
     // Cheibriados
-    { "Cheibriados slows and strengthens your metabolism, "
-      "and supports the use of ponderous armour.",
-      "bend time to slow others",
+    { "'체브리아도스'의 힘으로, 당신의 신진대사를 느리게 할 수 있고, 당신의 갑옷에 느림의 속성을 부여할 수 있다.",
+      "주변의 시간의 흐름을 묶어, 느리게 만들 수 있다.",
       "",
-      "inflict damage to those overly hasty",
-      "step out of the time flow"
+      "당신보다 빠른 존재들에게 느림의 징벌을 가할 수 있다.",
+      "시간의 흐름으로 부터, 잠시 빠져나올 수 있다."
     },
     // Ashenzari
     { "",
-      "The more cursed you are, the more Ashenzari supports your skills.",
-      "Ashenzari keeps your vision and mind clear.",
-      "scry through walls",
-      "Ashenzari helps you to reconsider your skills."
+      "스스로를 저주함으로써, 기술에 대한 도움을 받을 수 있다.",
+      "'아센자리'를 통해, 당신의 시야와 마음을 맑게 유지할 수 있다.",
+      "벽 너머로 투시를 할 수 있다.",
+      "당신의 경험이 바탕이 된 기술들을 재구성할 수 있다."
     },
 };
 
@@ -334,113 +333,112 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     // no god
     { "", "", "", "", "" },
     // Zin
-    { "recite Zin's Axioms of Law",
-      "call upon Zin for vitalisation",
-      "call upon Zin to imprison the lawless",
+    { "'진'의 가르침을 설교할 수 없다.",
+      "'진'의 활력을 얻을 수 없다.",
+      "부정한 존재들을 가둘 수 없다.",
       "",
-      "call upon Zin to create a sanctuary" },
+      "성지를 생성할 수 없다." },
     // TSO
-    { "You and your allies can no longer gain power from killing the unholy and evil.",
-      "call upon the Shining One for a divine shield",
+    { "악마나 언데드의 살생으로 힘을 얻을 수 없다.",
+      "성스러운 방패를 사용할 수 없다.",
       "",
-      "channel blasts of cleansing flame",
-      "summon a divine warrior" },
+      "정화의 불꽃을 시전할 수 없다.",
+      "수호천사를 불러낼 수 없다." },
     // Kikubaaqudgha
-    { "receive cadavers from Kikubaaqudgha",
-      "Kikubaaqudgha is no longer shielding you from miscast death magic.",
+    { "'키쿠바쿠드하'에게 시체를 하사받을 수 없다.",
+      "강령술의 부작용으로부터 보호를 받을 수 없다.",
       "",
-      "Kikubaaqudgha will no longer protect you from unholy torment.",
-      "invoke torment by sacrificing a corpse" },
+      "지옥의 고통으로부터 보호를 받을 수 없다.",
+      "지옥의 고통을 불러올 수 없다." },
     // Yredelemnul
-    { "animate {yred_dead}",
-      "recall your undead slaves and mirror injuries on your foes",
-      "[animate {yred_dead}]",
-      "drain ambient lifeforce",
-      "enslave living souls" },
+    { "{yred_dead}을 다룰 수 없다.",
+      "언데드 수하들을 소집하거나, 고통을 적에게 반사할 수 없다.",
+      "[animate {yred_dead}]", //일단보류
+      "생명력을 빨아들일 수 없다.",
+      "영혼을 지배할 수 없다" },
     // Xom
     { "", "", "", "", "" },
     // Vehumet
-    { "gain magical power from killing",
-      "Vehumet will no longer aid your destructive magics.",
-      "Vehumet will no longer extend the range of your destructive magics.",
-      "Vehumet will no longer reduce the cost of your destructive magics.",
+    { "살생으로 마력을 얻을 수 없다.",
+      "파괴 마법의 도움을 받지 못한다.",
+      "더 먼 거리까지 파괴 마법을 시전할 수 없다.",
+      "파괴 마법을 적은 노력으로 사용할 수 없다.",
       "" },
     // Okawaru
-    { "gain great but temporary skills",
+    { "향상된 전투 기술을 발휘할 수 없다.",
       "",
       "",
       "",
-      "speed up your combat" },
+      "공격 속도를 일시적으로 크게 향상시킬 수 없다." },
     // Makhleb
-    { "gain power from killing",
-      "harness Makhleb's destructive might",
-      "summon a lesser servant of Makhleb",
-      "hurl Makhleb's greater destruction",
-      "summon a greater servant of Makhleb" },
+    { "'마크레브'의 이름으로 한 살생으로 힘을 얻을 수 없다.",
+      "'마크레브'의 파괴의 힘을 다룰 수 없다.",
+      "'마크레브'의 하급 종복을 소환할 수 없다.",
+      "'마크레브'의 강력한 파괴의 힘 다룰 수 없다.",
+      "'마크레브'의 고위 종복을 소환할 수 없다." },
     // Sif Muna
-    { "tap ambient magical fields",
-      "forget spells at will",
+    { "주변에서 마력을 수집할 수 없다.",
+      "주문을 망각할 수 없다",
       "",
-      "Sif Muna will no longer protect you from miscast magic.",
+      "주문 사용의 부작용으로부터 보호를 받을 수 없다.",
       "" },
     // Trog
-    { "go berserk at will",
-      "regenerate and be protected from hostile enchantments",
+    { "의지대로 광폭화를 할 수 없다.",
+      "빠른 재생 능력과 마법 저항을 얻을 수 없다.",
       "",
-      "call in reinforcements",
+      "'트로그'의 전사들을 소환할 수 없다.",
       "" },
     // Nemelex
-    { "draw cards from decks in your inventory",
-      "peek at random cards",
-      "choose one out of three cards",
-      "mark decks",
-      "stack decks" },
+    { "한 장의 카드를 곧바로 사용할 수 없다.",
+      "두 장의 카드를 미리 확인할 수 없다.",
+      "석 장의 카드를 선택하여 사용할 수 없다.",
+      "넉 장의 카드에 표시를 해둘 수 없다.",
+      "다섯 장의 카드를 취할 수 없다." },
     // Elyvilon
-    { "provide lesser healing",
-      "purify yourself",
-      "provide greater healing",
-      "restore your abilities",
-      "call upon Elyvilon for divine vigour" },
+    { "미약한 치유를 시전할 수 없다.",
+      "스스로를 정화시킬 수 없다.",
+      "강력한 치유를 시전할 수 없다.",
+      "스스로 능력치를 회복할 수 없다.",
+      "성스러운 활력을 불러낼 수 없다." },
     // Lugonu
-    { "depart the Abyss at will",
-      "bend space around yourself",
-      "banish your foes",
-      "corrupt the fabric of space",
-      "gate yourself to the Abyss" },
+    { "어비스에서 자유롭게 탈출할 수 없다.",
+      "주변 공간을 왜곡시킬 수 없다.",
+      "적들을 어비스로 추방시킬 수 없다.",
+      "공간 구조를 타락시킬 수 없다.",
+      "어비스로 곧바로 이동할 수 없다." },
     // Beogh
-    { "Beogh no longer supports the use of orcish gear.",
-      "smite your foes",
-      "gain orcish followers",
-      "recall your orcish followers",
-      "walk on water" },
+    { "오크제 장비를 사용함으로써 보너스를 받을 수 없다.",
+      "천벌의 일격을 사용할 수 없다.",
+      "오크 추종자를 얻을 수 없다.",
+      "오크 추종자들을 소집할 수 없다.",
+      "물 위를 걸을 수 없다." },
     // Jiyva
-    { "request a jelly",
+    { "젤리를 불러낼 수 없다.",
       "",
       "",
-      "turn your foes to slime",
-      "call upon Jiyva to remove your harmful mutations"
+      "적들을 슬라임화시킬 수 없다.",
+      "변이를 제거할 수 없다."
     },
     // Fedhas
-    { "induce evolution",
-      "call sunshine",
-      "cause a ring of plants to grow",
-      "spawn explosive spores",
-      "control the weather"
+    { "진화를 촉진할 수 없다.",
+      "햇빛을 불러올 수 없다.",
+      "주변을 식물로 둘러쌀 수 없다.",
+      "포자를 불러낼 수 없다.",
+      "날씨를 변화시킬 수 없다."
     },
     // Cheibriados
-    { "Cheibriados will no longer slow or strengthen your metabolism, "
-      "or support the use of ponderous armour.",
-      "bend time to slow others",
+    { "'체브리아도스'의 기본적 권능을 사용할 수 없다.",
+      "주변의 시간의 흐름에 영향을 줄 수 없다.",
       "",
-      "inflict damage to those overly hasty",
-      "step out of the time flow"
+      "당신보다 빠른 존재들을 벌할 수 없다.",
+      "시간의 흐름으로 부터 빠져나오지 못한다."
     },
     // Ashenzari
     { "",
-      "Ashenzari no longer supports your skills.",
-      "Ashenzari no longer keeps your vision and mind clear.",
-      "scry through walls",
-      "Ashenzari no longer helps you to reconsider your skills."
+      "스스로를 저주하여도 도움을 받을 수 없다.",
+      "당신의 시야와 마음을 맑게 유지할 수 없다.",
+      "투시를 할 수 없다.",
+      "당신의 된 기술들을 재구성할 수 없다."
     },
 };
 
@@ -1044,7 +1042,7 @@ static void _inc_penance(god_type god, int val)
         else if (god == GOD_SHINING_ONE)
         {
             if (you.haloed())
-                mpr("Your divine halo fades away.");
+                mpr("당신의 성스러운 후광이 사라졌다.");
 
             if (you.duration[DUR_DIVINE_SHIELD])
                 tso_remove_divine_shield();
@@ -1335,7 +1333,7 @@ static bool _give_nemelex_gift(bool forced = false)
             deck.colour  = deck_rarity_to_color(rarity);
             deck.inscription = "god gift";
 
-            simple_god_message(" grants you a gift!");
+            simple_god_message("은(는) 당신에게 선물을 하사했다!");
             more();
             canned_msg(MSG_SOMETHING_APPEARS);
 
@@ -2070,7 +2068,7 @@ bool do_god_gift(bool forced)
             success = acquirement(gift_type, you.religion);
             if (success)
             {
-                simple_god_message(" grants you a gift!");
+                simple_god_message("은(는) 당신에게 선물을 하사했다!");
                 more();
 
                 if (gift_type == OBJ_MISSILES)
@@ -2102,8 +2100,7 @@ bool do_god_gift(bool forced)
                 threshold = std::min(threshold,
                     static_cast<unsigned int>(MAX_YRED_SERVANT_THRESHOLD));
                 yred_random_servants(threshold);
-
-                _delayed_monster_done(" grants you @an@ undead servant@s@!",
+                _delayed_monster_done("은(는) 당신에게 언데드 수하를 내려주었다!",
                                       "", _delayed_gift_callback);
                 success = true;
             }
@@ -2121,7 +2118,7 @@ bool do_god_gift(bool forced)
                     take_note(Note(NOTE_GOD_GIFT, you.religion));
                 }
                 else
-                    mpr("You feel as though nothing has changed.");
+                    mpr("아무것도 변화하지 않은 느낌이다.");
             }
             break;
 
@@ -2212,7 +2209,7 @@ bool do_god_gift(bool forced)
 
                 if (success)
                 {
-                    simple_god_message(" grants you a gift!");
+                    simple_god_message("은(는) 당신에게 선물을 하사했다!");
                     more();
 
                     // HACK: you.num_total_gifts keeps track of
@@ -2255,7 +2252,7 @@ bool do_zin_sustenance()
 {
     if (!zin_sustenance())
         return false;
-    god_speaks(you.religion, "Your stomach feels content.");
+    god_speaks(you.religion, "가엾이 굶주리는 자네에게, 내 신의 음식을 내려주겠노라.");
     set_hunger(6000, true);
     lose_piety(5 + random2avg(10, 2) + (you.gift_timeout ? 5 : 0));
     _inc_gift_timeout(30 + random2avg(10, 2));
@@ -2437,9 +2434,9 @@ std::string adjust_abil_message(const char *pmsg, bool allow_upgrades)
     if ((pos = pm.find("{yred_dead}")) != -1)
     {
         if (yred_can_animate_dead())
-            pm.replace(pos, 11, "legions of the dead");
+            pm.replace(pos, 11, "죽음의 군단들");
         else
-            pm.replace(pos, 11, "remains");
+            pm.replace(pos, 11, "시체들");
     }
 
     return (pm);
@@ -2492,11 +2489,11 @@ void dock_piety(int piety_loss, int penance)
         if (last_piety_lecture != you.num_turns)
         {
             // output guilt message:
-            mprf("You feel%sguilty.",
-                 (piety_loss == 1) ? " a little " :
-                 (piety_loss <  5) ? " " :
-                 (piety_loss < 10) ? " very "
-                                   : " extremely ");
+            mprf("당신은 %s죄의식을 느꼈다.",
+                 (piety_loss == 1) ? "약간 " :
+                 (piety_loss <  5) ? "" :
+                 (piety_loss < 10) ? "강한 "
+                                   : "극심하게 ");
         }
 
         last_piety_lecture = you.num_turns;
@@ -2510,7 +2507,7 @@ void dock_piety(int piety_loss, int penance)
         if (last_penance_lecture != you.num_turns)
         {
             god_speaks(you.religion,
-                       "\"You will pay for your transgression, mortal!\"");
+                       "\"너는 네 업보의 대가를 치르게 될 것이다!\"");
         }
         last_penance_lecture = you.num_turns;
         _inc_penance(penance);
@@ -2630,13 +2627,13 @@ static void _gain_piety_point()
             redraw_skill(you.your_name, player_title());
 
             if (_abil_chg_message(god_gain_power_messages[you.religion][i],
-                                  "You can now %s.", i))
+                                  "당신은 이제 %s", i))
             {
                 learned_something_new(HINT_NEW_ABILITY_GOD);
             }
 
             if (you.religion == GOD_SHINING_ONE && i == 0)
-                mpr("A divine halo surrounds you!");
+                mpr("성스러운 후광이 당신에게 비쳐졌다!");
 
             if (you.religion == GOD_ASHENZARI)
             {
@@ -2688,19 +2685,19 @@ static void _gain_piety_point()
             switch (you.religion)
             {
                 case GOD_ZIN:
-                    simple_god_message(" will now cure all your mutations... once.");
+                    simple_god_message("은(는) 단 한번, 당신의 모든 변이를 치료해줄 것이다.");
                     break;
                 case GOD_SHINING_ONE:
-                    simple_god_message(" will now bless your weapon at an altar... once.");
+                    simple_god_message("은(는) 단 한번, 제단에 있는 당신의 무기에 축복을 부여해 줄 것이다.");
                     break;
                 case GOD_KIKUBAAQUDGHA:
-                    simple_god_message(" will now enhance your necromancy at an altar... once.");
+                    simple_god_message("은(는) 단 한번, 제단에 있는 당신의 강령술을 강화시켜줄 것이다.");
                     break;
                 case GOD_LUGONU:
-                    simple_god_message(" will now corrupt your weapon at an altar... once.");
+                    simple_god_message("은(는) 단 한번, 제단에 있는 당신의 무기를 왜곡시켜줄 것이다.");
                     break;
                 case GOD_JIYVA:
-                    simple_god_message(" will now unseal the treasures of the Slime Pits.");
+                    simple_god_message("은, 슬라임 핏에 있는 보물방의 봉인을 풀어줄 것이다.");
                     dlua.callfn("dgn_set_persistent_var", "sb", "fix_slime_vaults", true);
                     // If we're on Slime:6, pretend we just entered the level
                    // in order to bring down the vault walls.
@@ -2762,16 +2759,16 @@ void lose_piety(int pgn)
 
             if (you.religion == GOD_ZIN)
                 simple_god_message(
-                    " is no longer ready to cure all your mutations.");
+                    "은(는) 이제 변이를 치유해줄 준비가 되어 있지 않다.");
             else if (you.religion == GOD_SHINING_ONE)
                 simple_god_message(
-                    " is no longer ready to bless your weapon.");
+                    "은(는) 이제 무기에 축복을 부여할 준비가 되어 있지 않다.");
             else if (you.religion == GOD_KIKUBAAQUDGHA)
                 simple_god_message(
-                    " is no longer ready to enhance your necromancy.");
+                    "은(는) 이제 당신의 강령술을 강화시킬 준비가 되어 있지 않다.");
             else if (you.religion == GOD_LUGONU)
                 simple_god_message(
-                    " is no longer ready to corrupt your weapon.");
+                    "은(는) 이제 무기에 왜곡을 부여할 준비가 되어 있지 않다.");
         }
 
         for (int i = 0; i < MAX_GOD_ABILITIES; ++i)
@@ -2784,7 +2781,7 @@ void lose_piety(int pgn)
                 redraw_skill(you.your_name, player_title());
 
                 _abil_chg_message(god_lose_power_messages[you.religion][i],
-                                  "You can no longer %s.", i);
+                                  "당신은 이제 더이상 %s", i);
 
                 if (_need_water_walking() && !beogh_water_walk())
                     fall_into_a_pool(you.pos(), true, grd(you.pos()));
@@ -2869,17 +2866,14 @@ void excommunication(god_type new_god)
     you.wield_change = true;
     you.redraw_quiver = true;
 
-    mpr("You have lost your religion!");
+    mpr("당신은 지금까지의 신앙을 잃었다!");
     more();
 
     mark_milestone("god.renounce", "abandoned " + god_name(old_god) + ".");
 
     if (god_hates_your_god(old_god, new_god))
     {
-        simple_god_message(
-            make_stringf(" does not appreciate desertion%s!",
-                         god_hates_your_god_reaction(old_god, new_god).c_str()).c_str(),
-            old_god);
+        simple_god_message("은(는) 당신이 신앙을 파기한 것을 기분 좋게 생각하지 않는다!", old_god);
     }
 
     switch (old_god)
@@ -2896,7 +2890,7 @@ void excommunication(god_type new_god)
         you.duration[DUR_MIRROR_DAMAGE] = 0;
         if (query_da_counter(DACT_ALLY_YRED_SLAVE))
         {
-            simple_god_message(" reclaims all of your granted undead slaves!",
+            simple_god_message("은(는) 당신의 모든 언데드 수하를 거두어들였다!",
                                GOD_YREDELEMNUL);
             add_daction(DACT_ALLY_YRED_SLAVE);
         }
@@ -2923,9 +2917,8 @@ void excommunication(god_type new_god)
     case GOD_BEOGH:
         if (query_da_counter(DACT_ALLY_BEOGH))
         {
-            simple_god_message("'s voice booms out, \"Who do you think you "
-                               "are?\"", GOD_BEOGH);
-            mpr("All of your followers decide to abandon you.",
+            simple_god_message("은(는) 격노하며 소리쳤다. \"대체 넌 뭐 하는 놈인가?\"", GOD_BEOGH);
+            mpr("당신의 모든 오크 추종자들이, 당신을 더이상 따르지 않기로 결심했다!",
                 MSGCH_MONSTER_ENCHANT);
             add_daction(DACT_ALLY_BEOGH);
         }
@@ -2952,7 +2945,7 @@ void excommunication(god_type new_god)
 
     case GOD_SHINING_ONE:
         if (was_haloed)
-            mpr("Your divine halo fades away.");
+            mpr("성스러운 후광이 사라졌다.");
 
         if (you.duration[DUR_DIVINE_SHIELD])
             tso_remove_divine_shield();
@@ -3004,7 +2997,7 @@ void excommunication(god_type new_god)
 
         if (query_da_counter(DACT_ALLY_SLIME))
         {
-            mpr("All of your fellow slimes turn on you.", MSGCH_MONSTER_ENCHANT);
+            mpr("던전의 슬라임들은 이제 더 이상 당신의 동료가 아니다!", MSGCH_MONSTER_ENCHANT);
             add_daction(DACT_ALLY_SLIME);
         }
 
@@ -3017,7 +3010,7 @@ void excommunication(god_type new_god)
     case GOD_FEDHAS:
         if (query_da_counter(DACT_ALLY_PLANT))
         {
-            mpr("The plants of the dungeon turn on you.", MSGCH_GOD, GOD_FEDHAS);
+            mpr("던전의 식물들은 이제 더 이상 당신의 동료가 아니다!", MSGCH_GOD, GOD_FEDHAS);
             add_daction(DACT_ALLY_PLANT);
         }
         _inc_penance(old_god, 30);
@@ -3042,7 +3035,7 @@ void excommunication(god_type new_god)
     // all non-hostile holy beings that worship a good god hostile.
     if (!is_good_god(new_god) && query_da_counter(DACT_ALLY_HOLY))
     {
-        mpr("The divine host forsakes you.", MSGCH_MONSTER_ENCHANT);
+        mpr("성스러운 존재들이 당신을 저버리고 배신했다.", MSGCH_MONSTER_ENCHANT);
         add_daction(DACT_ALLY_HOLY);
     }
 
@@ -3096,11 +3089,7 @@ void print_sacrifice_message(god_type god, const item_def &item,
     {
         // Weapons blessed by TSO don't get destroyed but are instead
         // returned whence they came. (jpeg)
-        simple_god_message(
-            make_stringf(" %sreclaims %s.",
-                         piety_gain ? "gladly " : "",
-                         item.name(true, DESC_NOCAP_THE).c_str()).c_str(),
-            GOD_SHINING_ONE);
+        simple_god_message("은(는), 당신이 '엘라이빌론'에게 바친 축복받은 아이템을 되가져갔다.",GOD_SHINING_ONE);
         return;
     }
     const std::string itname = item.name(true, your ? DESC_CAP_YOUR : DESC_CAP_THE);
@@ -3270,7 +3259,7 @@ void god_welcome_identify_gear()
     if (amulet && amulet->sub_type == AMU_FAITH)
     {
         // The flash happens independent of item id.
-        mpr("Your amulet flashes!", MSGCH_GOD);
+        mpr("당신의 부적이 반짝였다!", MSGCH_GOD);
         flash_view_delay(god_colour(you.religion), 300);
         set_ident_type(*amulet, ID_KNOWN_TYPE);
         set_ident_flags(*amulet, ISFLAG_KNOW_TYPE);
@@ -3296,12 +3285,12 @@ void god_welcome_identify_gear()
 
 void god_pitch(god_type which_god)
 {
-    mprf("You %s the altar of %s.",
-         you.species == SP_NAGA ? "coil in front of" :
+    mprf("당신은 %s의 제단%s",
+		 god_name(which_god).c_str(),
+         you.species == SP_NAGA ? "앞에 몸을 꼬아 앉았다." :
          // < TGWi> you curl up on the altar and go to sleep
-         you.species == SP_FELID  ? "sit before"
-                                : "kneel at",
-         god_name(which_god).c_str());
+         you.species == SP_FELID  ? "앞에 살포시 앉았다."
+                                : "에 무릎꿇었다.");
     more();
 
     // Note: using worship we could make some gods not allow followers to
@@ -3312,28 +3301,28 @@ void god_pitch(god_type which_god)
     {
         you.turn_is_over = false;
         if (which_god == GOD_SIF_MUNA)
-            simple_god_message(" does not accept worship from the ignorant!",
+            simple_god_message("은(는) 당신과 같은 비지식인으로부터의 숭배는 받아들이지 않는다!",
                                which_god);
         else if (!transformed_player_can_join_god(which_god))
-            simple_god_message(" says: How dare you come in such a loathsome form!",
+            simple_god_message("은(는) 말했다. \"어찌 그러한 몰골로 나를 숭배하려 하는가! 썩 물러가라!\"",
                                which_god);
         else
-            simple_god_message(" does not accept worship from those such as you!",
+            simple_god_message("은(는) 당신 같은 존재로부터의 숭배는 받아들이지 않는다!",
                                which_god);
         return;
     }
 
     if (which_god == GOD_LUGONU && you.penance[GOD_LUGONU])
     {
-        simple_god_message(" is most displeased with you!", which_god);
+        simple_god_message("은(는) 당신에게 매우 불쾌한 기색을 보였다!", which_god);
         divine_retribution(GOD_LUGONU, true);
         return;
     }
 
     describe_god(which_god, false);
 
-    snprintf(info, INFO_SIZE, "Do you wish to %sjoin this religion?",
-             (you.worshipped[which_god]) ? "re" : "");
+    snprintf(info, INFO_SIZE, "당신은 이 종파를 %s신앙하는 것을 희망합니까?",
+             (you.worshipped[which_god]) ? "다시 " : "");
 
     cgotoxy(1, 18, GOTO_CRT);
     textcolor(channel_to_colour(MSGCH_PROMPT));
@@ -3381,8 +3370,8 @@ void god_pitch(god_type which_god)
                    + god_name(you.religion) + ".");
 
     simple_god_message(
-        make_stringf(" welcomes you%s!",
-                     you.worshipped[which_god] ? " back" : "").c_str());
+        make_stringf("은(는) 당신의 입교를 %s환영했다!",
+                     you.worshipped[which_god] ? "다시 " : "").c_str());
     more();
     if (crawl_state.game_is_tutorial())
     {
@@ -3408,41 +3397,39 @@ void god_pitch(god_type which_god)
         && query_da_counter(DACT_ALLY_UNHOLY_EVIL))
     {
         add_daction(DACT_ALLY_UNHOLY_EVIL);
-        mpr("Your unholy and evil allies forsake you.", MSGCH_MONSTER_ENCHANT);
+        mpr("당신의 언데드와 악마 동료들이 당신을 저버리고 배신했다.", MSGCH_MONSTER_ENCHANT);
     }
 
     if (you.religion == GOD_ZIN
         && query_da_counter(DACT_ALLY_UNCLEAN_CHAOTIC))
     {
         add_daction(DACT_ALLY_UNCLEAN_CHAOTIC);
-        mpr("Your unclean and chaotic allies forsake you.", MSGCH_MONSTER_ENCHANT);
+        mpr("당신의 혼돈의 동료들이 당신을 저버리고 배신했다.", MSGCH_MONSTER_ENCHANT);
     }
     else if (you.religion == GOD_TROG
              && query_da_counter(DACT_ALLY_SPELLCASTER))
     {
         add_daction(DACT_ALLY_SPELLCASTER);
-        mpr("Your magic-using allies forsake you.", MSGCH_MONSTER_ENCHANT);
+        mpr("당신의 마법사용자 동료들이 당신을 저버리고 배신했다.", MSGCH_MONSTER_ENCHANT);
     }
 
     if (you.religion == GOD_ELYVILON)
     {
-        mpr("You can now call upon Elyvilon to destroy weapons lying on the "
-            "ground.", MSGCH_GOD);
+        mpr("당신은 이제 엘라이빌론에게 기도를 드림으로, 바닥에 있는 무기들을 회수할 수 있다.", MSGCH_GOD);
     }
     else if (you.religion == GOD_TROG)
     {
-        mpr("You can now call upon Trog to burn spellbooks in your "
-            "surroundings.", MSGCH_GOD);
+        mpr("당신은 트로그의 힘으로, 주변의 마법서들을 불사를 수 있다.", MSGCH_GOD);
     }
     else if (you.religion == GOD_FEDHAS)
     {
-        mpr("You can now call upon Fedhas to speed up the decay of corpses.",
+        mpr("당신은 페다스에게 기도를 드림으로, 시체들의 부패를 촉진시킬 수 있다.",
             MSGCH_GOD);
-        mpr("The plants of the dungeon cease their hostilities.", MSGCH_GOD);
+        mpr("던전의 식물들이, 당신에게 더 이상 적대감을 보이지 않는다.", MSGCH_GOD);
     }
     else if (you.religion == GOD_CHEIBRIADOS)
     {
-        mpr("You can now call upon Cheibriados to make your armour ponderous.",
+        mpr("당신은 이제 당신의 방어구에 느림의 속성을 부여할 수 있다.",
             MSGCH_GOD);
     }
 
@@ -3461,16 +3448,16 @@ void god_pitch(god_type which_god)
         switch (you.religion)
         {
         case GOD_ELYVILON:
-            simple_god_message((" says: Farewell. Go and aid the meek with "
-                               + god_name(you.religion) + ".").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
+                               + god_name(you.religion) + "와 함께, 순수한 자들을 도와주어라.").c_str(), old_god);
             break;
         case GOD_SHINING_ONE:
-            simple_god_message((" says: Farewell. Go and vanquish evil with "
-                               + god_name(you.religion) + ".").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
+                               + god_name(you.religion) + "와 함께, 악한 자들을 무찌르거라.").c_str(), old_god);
             break;
         case GOD_ZIN:
-            simple_god_message((" says: Farewell. Go and enforce order with "
-                               + god_name(you.religion) + ".").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
+                               + god_name(you.religion) + "와 함께, 가르침을 전파하거라.").c_str(), old_god);
             break;
         default:
             mpr("Unknown good god.", MSGCH_ERROR);
@@ -3487,7 +3474,7 @@ void god_pitch(god_type which_god)
         {
             _inc_penance(GOD_SHINING_ONE, 30);
             god_speaks(GOD_SHINING_ONE,
-                       "\"You will pay for your evil ways, mortal!\"");
+                       "\"넌 네 악행의 대가를 치르게 될 것이다!\"");
         }
     }
 
@@ -3511,7 +3498,7 @@ void god_pitch(god_type which_god)
                          MHITNOT, 0, GOD_JIYVA);
 
             _delayed_monster(mg);
-            simple_god_message(" grants you a jelly!");
+            simple_god_message("은(는) 당신에게 젤리를 선물했다!");
         }
     }
 
