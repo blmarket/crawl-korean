@@ -64,7 +64,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 
 std::string god_prayer_reaction()
 {
-    std::string result = getmiscname(god_name(you.religion).c_str());
+    std::string result = god_name(you.religion).c_str();
     if (crawl_state.player_is_dead())
         result += "은(는) ";
     else
@@ -119,7 +119,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
         return (false);
     }
 
-    std::string prompt = "정말로 " + wpn.name(DESC_NOCAP_YOUR)
+    std::string prompt = "정말로 " + wpn.name(true, DESC_NOCAP_YOUR)
                        + " ";
     if (brand == SPWPN_PAIN)
         prompt += "에 피로 물든 고통을 부여하겠는가";
