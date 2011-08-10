@@ -6307,7 +6307,7 @@ msgstr "이 층은 다 둘러보았다."
 #: travel.cc:837
 #, c-format
 msgid "Partly explored, can't reach some %s."
-msgstr "일부 둘러보았지만, %s에는 도달하지 못했다."
+msgstr "일부 둘러보았지만, 도달하지 못한 %s도 있다."
 
 #: travel.cc:874
 #, c-format
