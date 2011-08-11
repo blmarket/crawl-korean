@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-11 23:21+0900\n"
+"POT-Creation-Date: 2011-08-11 23:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3804,12 +3804,17 @@ msgstr "%s은(는) 기절했다!"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s은(는) %3$s%2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -7525,4 +7530,217 @@ msgstr ""
 
 #: godconduct.cc:993
 msgid " appreciates your kill."
+msgstr ""
+
+#. XXX: Not the prettiest of messages, but the player
+#. deserves to know whenever this kicks in. -- bwr
+#: items.cc:179
+msgid "Too many items on level, removing some."
+msgstr ""
+
+#: items.cc:610
+msgid "A great rumbling fills the air... the Orb of Zot has been destroyed!"
+msgstr ""
+
+#: items.cc:759 items.cc:1286
+msgid "There are no items here."
+msgstr ""
+
+#: items.cc:767
+#, c-format
+msgid "You see here %s."
+msgstr ""
+
+#: items.cc:786
+msgid "Items here: "
+msgstr ""
+
+#: items.cc:826
+msgid "There are many items here."
+msgstr ""
+
+#: items.cc:856
+msgid "Select items to pick up or press _ for help"
+msgstr ""
+
+#: items.cc:858
+msgid "Select pick up quantity by entering a number, then select the item"
+msgstr ""
+
+#: items.cc:885 items.cc:1252 items.cc:1355
+msgid "You can't carry that much weight."
+msgstr ""
+
+#: items.cc:887 items.cc:1246 items.cc:1357
+msgid "You can't carry that many items."
+msgstr ""
+
+#. / milesone에 적을 목적인듯.
+#: items.cc:1003
+#, c-format
+msgid "found %s."
+msgstr ""
+
+#: items.cc:1161
+#, c-format
+msgid "You bought %s in a shop "
+msgstr ""
+
+#: items.cc:1167
+#, c-format
+msgid "You acquired %s "
+msgstr ""
+
+#: items.cc:1170
+msgid "You drew the Genie "
+msgstr ""
+
+#: items.cc:1178
+#, c-format
+msgid "%s gifted %s to you "
+msgstr ""
+
+#: items.cc:1191
+msgid "You subdued it "
+msgstr ""
+
+#: items.cc:1194
+#, c-format
+msgid "You took %s off %s "
+msgstr ""
+
+#: items.cc:1200
+#, c-format
+msgid "You found %s "
+msgstr ""
+
+#: items.cc:1215
+#, c-format
+msgid "Pick up how many of %s (; or enter for all)? "
+msgstr ""
+
+#: items.cc:1290
+msgid "You can't reach the bottom while floating on water."
+msgstr ""
+
+#: items.cc:1306
+msgid "There are several objects here."
+msgstr ""
+
+#: items.cc:1321
+#, c-format
+msgid "Pick up %s? ((y)es/(n)o/(a)ll/(m)enu/*?g,/q)"
+msgstr ""
+
+#: items.cc:1586
+msgid "You cannot pick up the net that holds you!"
+msgstr ""
+
+#: items.cc:1596
+msgid ""
+"You must possess at least fifteen runes to touch the sacred Orb which you "
+"defend."
+msgstr ""
+
+#. / 1. 골드 수량, 2. 골드가 1이 아니면 s가 붙음.
+#: items.cc:1613
+#, c-format
+msgid "You now have %d gold piece%s."
+msgstr ""
+
+#: items.cc:1630
+#, c-format
+msgid "You pick up the %s rune and feel its power."
+msgstr ""
+
+#: items.cc:1634
+msgid "You have collected all the runes! Now go and win!"
+msgstr ""
+
+#. might be inappropriate in new Sprints, please change it then
+#: items.cc:1639
+#, c-format
+msgid "%d runes! That's enough to enter the realm of Zot."
+msgstr ""
+
+#: items.cc:1643
+#, c-format
+msgid "You now have %d runes."
+msgstr ""
+
+#: items.cc:1653
+msgid " appreciates your discovery of this rune."
+msgstr ""
+
+#: items.cc:1692 items.cc:1762
+msgid "You can only carry some of what is here."
+msgstr ""
+
+#: items.cc:1729
+msgid "These items seem quite similar."
+msgstr ""
+
+#: items.cc:1833
+msgid "Now all you have to do is get back out of the dungeon!"
+msgstr ""
+
+#: items.cc:2149 items.cc:2173
+msgid "You will have to take that off first."
+msgstr ""
+
+#: items.cc:2163
+msgid "That object is stuck to you!"
+msgstr ""
+
+#: items.cc:2212
+msgid "Too many items on this level, not dropping the item."
+msgstr ""
+
+#: items.cc:2216
+#, c-format
+msgid "You drop %s."
+msgstr ""
+
+#: items.cc:2262
+msgid "No item to drop."
+msgstr ""
+
+#: items.cc:2399
+msgid "Drop what? (Press _ for help.)"
+msgstr ""
+
+#: items.cc:2856
+msgid "You can't pick everything up without burdening yourself."
+msgstr ""
+
+#: items.cc:2888
+msgid "You can't carry any more."
+msgstr ""
+
+#: items.cc:2890
+msgid "Your pack is full."
+msgstr ""
+
+#: items.cc:3317
+msgid "Which rune (ESC to exit)? "
+msgstr ""
+
+#: items.cc:3395
+msgid "[a] escape     [b] destruction [c] dungeons [d] summoning [e] wonders"
+msgstr ""
+
+#: items.cc:3398
+msgid "[f] punishment [g] war         [h] changes  [i] defence"
+msgstr ""
+
+#: items.cc:3400
+msgid "Which deck (ESC to exit)? "
+msgstr ""
+
+#: items.cc:3440
+msgid "[a] plain [b] ornate [c] legendary? (ESC to exit)"
+msgstr ""
+
+#: items.cc:3472
+msgid "How many cards? "
 msgstr ""

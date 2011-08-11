@@ -177,7 +177,7 @@ static int _cull_items(void)
 
     // XXX: Not the prettiest of messages, but the player
     // deserves to know whenever this kicks in. -- bwr
-    mpr("Too many items on level, removing some.", MSGCH_WARN);
+    mpr(gettext("Too many items on level, removing some."), MSGCH_WARN);
 
     // Rules:
     //  1. Don't cleanup anything nearby the player
@@ -608,8 +608,8 @@ static void _note_item_destruction(const item_def &item)
 {
     if (item_is_orb(item))
     {
-        mprf(MSGCH_WARN, "A great rumbling fills the air... "
-             "the Orb of Zot has been destroyed!");
+        mprf(MSGCH_WARN, gettext("A great rumbling fills the air... "
+             "the Orb of Zot has been destroyed!"));
         mark_milestone("orb.destroy", "destroyed the Orb of Zot");
     }
 }
@@ -757,7 +757,7 @@ void item_check(bool verbose)
     if (items.empty())
     {
         if (verbose)
-            strm << "There are no items here." << std::endl;
+            strm << gettext("There are no items here.") << std::endl;
         return;
     }
 
@@ -765,7 +765,7 @@ void item_check(bool verbose)
     {
         item_def it(*items[0]);
         std::string name = get_menu_colour_prefix_tags(it, DESC_NOCAP_A);
-        strm << "You see here " << name << '.' << std::endl;
+        strm << make_stringf(gettext("You see here %s."), name.c_str()) << std::endl;
         _maybe_give_corpse_hint(it);
         return;
     }
@@ -784,7 +784,7 @@ void item_check(bool verbose)
         }
         std::sort(item_chars.begin(), item_chars.end());
 
-        std::string out_string = "Items here: ";
+        std::string out_string = gettext("Items here: ");
         int cur_state = -1;
         for (unsigned int i = 0; i < item_chars.size(); ++i)
         {
@@ -824,7 +824,7 @@ void item_check(bool verbose)
         }
     }
     else if (!done_init_line)
-        strm << "There are many items here." << std::endl;
+        strm << gettext("There are many items here.") << std::endl;
 
     if (items.size() > 2 && crawl_state.game_is_hints_tutorial())
     {
@@ -854,9 +854,9 @@ void pickup_menu(int item_link)
     std::vector<const item_def*> items;
     item_list_on_square(items, item_link, false);
 
-    std::string prompt = "Select items to pick up or press _ for help";
+    std::string prompt = gettext("Select items to pick up or press _ for help");
     if (items.size() == 1 && items[0]->quantity > 1)
-        prompt = "Select pick up quantity by entering a number, then select the item";
+        prompt = gettext("Select pick up quantity by entering a number, then select the item");
     std::vector<SelItem> selected =
         select_items(items, prompt.c_str());
     redraw_screen();
@@ -883,9 +883,9 @@ void pickup_menu(int item_link)
                 {
                     n_tried_pickup++;
                     if (result == 0)
-                        pickup_warning = "You can't carry that much weight.";
+                        pickup_warning = gettext("You can't carry that much weight.");
                     else
-                        pickup_warning = "You can't carry that many items.";
+                        pickup_warning = gettext("You can't carry that many items.");
 
                     if (mitm[j].defined())
                         mitm[j].flags = oldflags;
@@ -1000,7 +1000,8 @@ static int _first_corpse_monnum(const coord_def& where)
 
 static std::string _milestone_rune(const item_def &item)
 {
-    return std::string("found ") + item.name(true, DESC_NOCAP_A) + ".";
+    /// milesone에 적을 목적인듯.
+    return make_stringf(gettext("found %s."), item.name(true, DESC_NOCAP_A).c_str());
 }
 
 static void _milestone_check(const item_def &item)
@@ -1158,16 +1159,16 @@ std::string origin_desc(const item_def &item)
             switch (iorig)
             {
             case IT_SRC_SHOP:
-                desc += "You bought " + _article_it(item) + " in a shop ";
+                desc += make_stringf(gettext("You bought %s in a shop "), gettext(_article_it(item).c_str()));
                 break;
             case IT_SRC_START:
                 desc += "Buggy Original Equipment: ";
                 break;
             case AQ_SCROLL:
-                desc += "You acquired " + _article_it(item) + " ";
+                desc += make_stringf(gettext("You acquired %s "), gettext(_article_it(item).c_str()));
                 break;
             case AQ_CARD_GENIE:
-                desc += "You drew the Genie ";
+                desc += gettext("You drew the Genie ");
                 break;
             case AQ_WIZMODE:
                 desc += "Your wizardly powers created "+ _article_it(item)+ " ";
@@ -1175,8 +1176,9 @@ std::string origin_desc(const item_def &item)
             default:
                 if (iorig > GOD_NO_GOD && iorig < NUM_GODS)
                 {
-                    desc += god_name(static_cast<god_type>(iorig))
-                        + " gifted " + _article_it(item) + " to you ";
+                    desc += make_stringf(gettext("%s gifted %s to you "),
+			god_name(static_cast<god_type>(iorig)).c_str(),
+			gettext(_article_it(item).c_str()));
                 }
                 else
                 {
@@ -1187,15 +1189,17 @@ std::string origin_desc(const item_def &item)
             }
         }
         else if (item.orig_monnum - 1 == MONS_DANCING_WEAPON)
-            desc += "You subdued it ";
+            desc += gettext("You subdued it ");
         else
         {
-            desc += "You took " + _article_it(item) + " off "
-                    + origin_monster_name(item) + " ";
+            desc += make_stringf(gettext("You took %s off %s "),
+		    gettext(_article_it(item).c_str()),
+                    origin_monster_name(item).c_str());
         }
     }
     else
-        desc += "You found " + _article_it(item) + " ";
+        desc += make_stringf(gettext("You found %s "),
+		gettext(_article_it(item).c_str()));
 
     desc += _origin_place_desc(item);
     return (desc);
@@ -1216,7 +1220,7 @@ bool pickup_single_item(int link, int qty)
     if (qty == 0 && item->quantity > 1 && item->base_type != OBJ_GOLD)
     {
         const std::string prompt
-                = make_stringf("Pick up how many of %s (; or enter for all)? ",
+                = make_stringf(gettext("Pick up how many of %s (; or enter for all)? "),
                                item->name(true, DESC_NOCAP_THE,
                                     false, false, false).c_str());
 
@@ -1247,13 +1251,13 @@ bool pickup_single_item(int link, int qty)
 
     if (num == -1)
     {
-        mpr("You can't carry that many items.");
+        mpr(gettext("You can't carry that many items."));
         learned_something_new(HINT_HEAVY_LOAD);
         return (false);
     }
     else if (num == 0)
     {
-        mpr("You can't carry that much weight.");
+        mpr(gettext("You can't carry that much weight."));
         learned_something_new(HINT_HEAVY_LOAD);
         return (false);
     }
@@ -1287,11 +1291,11 @@ void pickup(bool partial_quantity)
 
     if (o == NON_ITEM)
     {
-        mpr("There are no items here.");
+        mpr(gettext("There are no items here."));
     }
     else if (you.form == TRAN_ICE_BEAST && grd(you.pos()) == DNGN_DEEP_WATER)
     {
-        mpr("You can't reach the bottom while floating on water.");
+        mpr(gettext("You can't reach the bottom while floating on water."));
     }
     else if (mitm[o].link == NON_ITEM)      // just one item?
     {
@@ -1307,7 +1311,7 @@ void pickup(bool partial_quantity)
     else
     {
         int next;
-        mpr("There are several objects here.");
+        mpr(gettext("There are several objects here."));
         std::string pickup_warning;
         while (o != NON_ITEM)
         {
@@ -1322,8 +1326,8 @@ void pickup(bool partial_quantity)
 
             if (keyin != 'a')
             {
-                std::string prompt = "Pick up %s? ("
-                                     "(y)es/(n)o/(a)ll/(m)enu/*?g,/q)";
+                std::string prompt = gettext("Pick up %s? ("
+                                     "(y)es/(n)o/(a)ll/(m)enu/*?g,/q)");
 
                 mprf(MSGCH_PROMPT, prompt.c_str(),
                      get_menu_colour_prefix_tags(mitm[o],
@@ -1356,9 +1360,9 @@ void pickup(bool partial_quantity)
                 if (result == 0 || result == -1)
                 {
                     if (result == 0)
-                        pickup_warning = "You can't carry that much weight.";
+                        pickup_warning = gettext("You can't carry that much weight.");
                     else
-                        pickup_warning = "You can't carry that many items.";
+                        pickup_warning = gettext("You can't carry that many items.");
 
                     mitm[o].flags = old_flags;
                 }
@@ -1588,7 +1592,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 {
     if (item_is_stationary(mitm[obj]))
     {
-        mpr("You cannot pick up the net that holds you!");
+        mpr(gettext("You cannot pick up the net that holds you!"));
         // Fake a successful pickup (return 1), so we can continue to
         // pick up anything else that might be on this square.
         return (1);
@@ -1598,7 +1602,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
     {
         if (runes_in_pack() < 15)
         {
-            mpr("You must possess at least fifteen runes to touch the sacred Orb which you defend.");
+            mpr(gettext("You must possess at least fifteen runes to touch the sacred Orb which you defend."));
             return (1);
         }
     }
@@ -1614,7 +1618,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
         if (!quiet)
         {
-            mprf("You now have %d gold piece%s.",
+	    /// 1. 골드 수량, 2. 골드가 1이 아니면 s가 붙음.
+            mprf(gettext("You now have %d gold piece%s."),
                  you.gold, you.gold != 1 ? "s" : "");
         }
 
@@ -1631,22 +1636,22 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
         if (!quiet)
         {
-            mprf("You pick up the %s rune and feel its power.",
+            mprf(gettext("You pick up the %s rune and feel its power."),
                  rune_type_name(mitm[obj].plus));
             int nrunes = runes_in_pack();
             if (nrunes >= you.obtainable_runes)
-                mpr("You have collected all the runes! Now go and win!");
+                mpr(gettext("You have collected all the runes! Now go and win!"));
             else if (nrunes == NUMBER_OF_RUNES_NEEDED
                      && !crawl_state.game_is_zotdef())
             {
                 // might be inappropriate in new Sprints, please change it then
-                mprf("%d runes! That's enough to enter the realm of Zot.",
+                mprf(gettext("%d runes! That's enough to enter the realm of Zot."),
                      nrunes);
             }
             else if (nrunes > 1)
-                mprf("You now have %d runes.", nrunes);
+                mprf(gettext("You now have %d runes."), nrunes);
 
-            mpr("Press } to see all the runes you have collected.");
+            mpr(gettext("Press } to see all the runes you have collected."));
         }
 
         dungeon_events.fire_position_event(
@@ -1656,7 +1661,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         you.turn_is_over = true;
         if (you.religion == GOD_ASHENZARI)
         {
-            simple_god_message(" appreciates your discovery of this rune.");
+            simple_god_message(gettext(" appreciates your discovery of this rune."));
             // Important!  This should _not_ be scaled by bondage level, as
             // otherwise people would curse just before picking up.
             gain_piety(10, 1);
@@ -1695,7 +1700,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
             if (items_stack(you.inv[m], mitm[obj], false, true))
             {
                 if (!quiet && partial_pickup)
-                    mpr("You can only carry some of what is here.");
+                    mpr(gettext("You can only carry some of what is here."));
 
                 _check_note_item(mitm[obj]);
 
@@ -1732,7 +1737,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
                 if (ident_flags(mitm[obj]) != ident_flags(you.inv[m]))
                 {
                     if (!quiet)
-                        mpr("These items seem quite similar.");
+                        mpr(gettext("These items seem quite similar."));
                     mitm[obj].flags |=
                         ident_flags(you.inv[m]) & you.inv[m].flags;
                     you.inv[m].flags |=
@@ -1765,7 +1770,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         return (-1);
 
     if (!quiet && partial_pickup)
-        mpr("You can only carry some of what is here.");
+        mpr(gettext("You can only carry some of what is here."));
 
     int freeslot = find_free_slot(mitm[obj]);
     if (freeslot < 0 || freeslot >= ENDOFPACK
@@ -1837,8 +1842,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         env.orb_pos = you.pos(); // can be wrong in wizmode
         orb_pickup_noise(you.pos(), 30);
 
-        mpr("The lords of Pandemonium are not amused; beware!", MSGCH_WARN);
-        mpr("Now all you have to do is get back out of the dungeon!", MSGCH_ORB);
+        mpr(gettext("The lords of Pandemonium are not amused; beware!"), MSGCH_WARN);
+        mpr(gettext("Now all you have to do is get back out of the dungeon!"), MSGCH_ORB);
 
         you.char_direction = GDT_ASCENDING;
         xom_is_stimulated(200, XM_INTRIGUED);
@@ -2155,7 +2160,7 @@ bool drop_item(int item_dropped, int quant_drop)
     {
         if (!Options.easy_unequip)
         {
-            mpr("You will have to take that off first.");
+            mpr(gettext("You will have to take that off first."));
             return (false);
         }
 
@@ -2169,7 +2174,7 @@ bool drop_item(int item_dropped, int quant_drop)
         && you.inv[item_dropped].base_type == OBJ_WEAPONS
         && you.inv[item_dropped].cursed())
     {
-        mpr("That object is stuck to you!");
+        mpr(gettext("That object is stuck to you!"));
         return (false);
     }
 
@@ -2179,7 +2184,7 @@ bool drop_item(int item_dropped, int quant_drop)
         {
             if (!Options.easy_unequip)
             {
-                mpr("You will have to take that off first.");
+                mpr(gettext("You will have to take that off first."));
             }
             else if (check_warning_inscriptions(you.inv[item_dropped],
                                                 OPER_TAKEOFF))
@@ -2215,11 +2220,11 @@ bool drop_item(int item_dropped, int quant_drop)
     if (!copy_item_to_grid(you.inv[item_dropped],
                             you.pos(), quant_drop, true, true))
     {
-        mpr("Too many items on this level, not dropping the item.");
+        mpr(gettext("Too many items on this level, not dropping the item."));
         return (false);
     }
 
-    mprf("You drop %s.",
+    mprf(gettext("You drop %s."),
          quant_name(you.inv[item_dropped], quant_drop, DESC_NOCAP_A).c_str());
 
     bool quiet = silenced(you.pos());
@@ -2263,7 +2268,7 @@ void drop_last()
     }
 
     if (items_to_drop.empty())
-        mprf("No item to drop.");
+        mprf(gettext("No item to drop."));
     else
     {
         you.last_pickup.clear();
@@ -2402,7 +2407,7 @@ void drop()
     }
 
     std::vector<SelItem> tmp_items;
-    tmp_items = prompt_invent_items("Drop what? (Press _ for help.)", MT_DROP,
+    tmp_items = prompt_invent_items(gettext("Drop what? (Press _ for help.)"), MT_DROP,
                                      -1, _drop_menu_title, true, true, 0,
                                      &Options.drop_filter, _drop_selitem_text,
                                      &items_for_multidrop);
@@ -2862,8 +2867,8 @@ static void _do_autopickup()
                 {
                     if (!n_tried_pickup)
                     {
-                        mpr("You can't pick everything up without burdening "
-                            "yourself.");
+                        mpr(gettext("You can't pick everything up without burdening "
+                            "yourself."));
                     }
                     n_tried_pickup++;
                     num_to_take = num_can_take;
@@ -2894,9 +2899,9 @@ static void _do_autopickup()
             {
                 n_tried_pickup++;
                 if (result == 0)
-                    pickup_warning = "You can't carry any more.";
+                    pickup_warning = gettext("You can't carry any more.");
                 else
-                    pickup_warning = "Your pack is full.";
+                    pickup_warning = gettext("Your pack is full.");
                 mitm[o].flags = iflags;
             }
             else
@@ -3323,7 +3328,7 @@ static void _rune_from_specs(const char* _specs, item_def &item)
                 line.clear();
             }
         }
-        mpr("Which rune (ESC to exit)? ", MSGCH_PROMPT);
+        mpr(gettext("Which rune (ESC to exit)? "), MSGCH_PROMPT);
 
         int keyin = tolower(get_ch());
 
@@ -3401,12 +3406,12 @@ static void _deck_from_specs(const char* _specs, item_def &item)
         while (true)
         {
             mpr(
-"[a] escape     [b] destruction [c] dungeons [d] summoning [e] wonders",
+gettext("[a] escape     [b] destruction [c] dungeons [d] summoning [e] wonders"),
                 MSGCH_PROMPT);
             mpr(
-"[f] punishment [g] war         [h] changes  [i] defence",
+gettext("[f] punishment [g] war         [h] changes  [i] defence"),
                 MSGCH_PROMPT);
-            mpr("Which deck (ESC to exit)? ");
+            mpr(gettext("Which deck (ESC to exit)? "));
 
             const int keyin = tolower(get_ch());
 
@@ -3446,7 +3451,7 @@ static void _deck_from_specs(const char* _specs, item_def &item)
     {
         while (true)
         {
-            mpr("[a] plain [b] ornate [c] legendary? (ESC to exit)",
+            mpr(gettext("[a] plain [b] ornate [c] legendary? (ESC to exit)"),
                 MSGCH_PROMPT);
 
             int keyin = tolower(get_ch());
@@ -3478,7 +3483,7 @@ static void _deck_from_specs(const char* _specs, item_def &item)
         static_cast<deck_rarity_type>(DECK_RARITY_COMMON + rarity_val);
     item.special = rarity;
 
-    int num = prompt_for_int("How many cards? ", false);
+    int num = prompt_for_int(gettext("How many cards? "), false);
 
     if (num <= 0)
     {
