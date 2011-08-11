@@ -205,7 +205,7 @@ const deck_archetype deck_of_punishment[] = {
 static void _check_odd_card(uint8_t flags)
 {
     if ((flags & CFLAG_ODDITY) && !(flags & CFLAG_SEEN))
-        mpr("This card doesn't seem to belong here.");
+        mpr(gettext("This card doesn't seem to belong here."));
 }
 
 static bool _card_forbidden(card_type card)
@@ -461,9 +461,9 @@ static card_type _draw_top_card(item_def& deck, bool message,
     if (message)
     {
         if (_flags & CFLAG_MARKED)
-            mprf("You draw %s.", card_name(card));
+            mprf(gettext("You draw %s."), gettext(card_name(card)));
         else
-            mprf("You draw a card... It is %s.", card_name(card));
+            mprf(gettext("You draw a card... It is %s."), gettext(card_name(card)));
 
         _check_odd_card(_flags);
     }
@@ -752,7 +752,7 @@ static int _choose_inventory_deck(const char* prompt)
 
     if (!is_deck(you.inv[slot]))
     {
-        mpr("That isn't a deck!");
+        mpr(gettext("That isn't a deck!"));
         return -1;
     }
 
@@ -762,7 +762,7 @@ static int _choose_inventory_deck(const char* prompt)
 // Select a deck from inventory and draw a card from it.
 bool choose_deck_and_draw()
 {
-    const int slot = _choose_inventory_deck("Draw from which deck?");
+    const int slot = _choose_inventory_deck(gettext("Draw from which deck?"));
 
     if (slot == -1)
     {
@@ -779,7 +779,7 @@ static void _deck_ident(item_def& deck)
     if (in_inventory(deck) && !item_ident(deck, ISFLAG_KNOW_TYPE))
     {
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        mprf("This is %s.", deck.name(true, DESC_NOCAP_A).c_str());
+        mprf(gettext("This is %s."), deck.name(true, DESC_NOCAP_A).c_str());
         you.wield_change = true;
     }
 }
@@ -807,7 +807,7 @@ static void _deck_lose_card(item_def& deck)
 // Return false if the operation was failed/aborted along the way.
 bool deck_peek()
 {
-    const int slot = _choose_inventory_deck("Peek at which deck?");
+    const int slot = _choose_inventory_deck(gettext("Peek at which deck?"));
     if (slot == -1)
     {
         crawl_state.zero_turns_taken();
@@ -821,7 +821,7 @@ bool deck_peek()
     if (cards_in_deck(deck) > 2)
     {
         _deck_lose_card(deck);
-        mpr("A card falls out of the deck.");
+        mpr(gettext("A card falls out of the deck."));
     }
 
     CrawlVector &cards     = deck.props["cards"].get_vector();
@@ -834,7 +834,7 @@ bool deck_peek()
 
     if (num_cards == 1)
     {
-        mpr("There's only one card in the deck!");
+        mpr(gettext("There's only one card in the deck!"));
 
         _set_card_and_flags(deck, 0, card1, flags1 | CFLAG_SEEN | CFLAG_MARKED);
         deck.props["num_marked"]++;
@@ -856,13 +856,13 @@ bool deck_peek()
     if (already_seen && x_chance_in_y(already_seen, 2))
         deck.props["non_brownie_draws"]++;
 
-    mprf("You draw two cards from the deck. They are: %s and %s.",
+    mprf(gettext("You draw two cards from the deck. They are: %s and %s."),
          card_name(card1), card_name(card2));
 
     _set_card_and_flags(deck, 0, card1, flags1 | CFLAG_SEEN);
     _set_card_and_flags(deck, 1, card2, flags2 | CFLAG_SEEN);
 
-    mpr("You shuffle the cards back into the deck.");
+    mpr(gettext("You shuffle the cards back into the deck."));
     _shuffle_deck(deck);
 
     // Peeking identifies the deck.
@@ -884,7 +884,7 @@ bool deck_identify_first(int slot)
     _set_card_and_flags(deck, -1, card, flags | CFLAG_SEEN | CFLAG_MARKED);
     deck.props["num_marked"]++;
 
-    mprf("You get a glimpse of the first card. It is %s.", card_name(card));
+    mprf(gettext("You get a glimpse of the first card. It is %s."), card_name(card));
     return (true);
 
 }
@@ -896,7 +896,7 @@ bool deck_identify_first(int slot)
 // failed/aborted along the way.
 bool deck_mark()
 {
-    const int slot = _choose_inventory_deck("Mark which deck?");
+    const int slot = _choose_inventory_deck(gettext("Mark which deck?"));
     if (slot == -1)
     {
         crawl_state.zero_turns_taken();
@@ -909,7 +909,7 @@ bool deck_mark()
     CrawlHashTable &props = deck.props;
     if (props["num_marked"].get_byte() > 0)
     {
-        mpr("The deck is already marked.");
+        mpr(gettext("The deck is already marked."));
         crawl_state.zero_turns_taken();
         return (false);
     }
@@ -922,18 +922,18 @@ bool deck_mark()
             _deck_lose_card(deck);
 
         if (num_lost == 1)
-            mpr("A card falls out of the deck.");
+            mpr(gettext("A card falls out of the deck."));
         else if (num_lost > 1)
-            mpr("Some cards fall out of the deck.");
+            mpr(gettext("Some cards fall out of the deck."));
     }
 
     const int num_cards   = cards_in_deck(deck);
     const int num_to_mark = (num_cards < 4 ? num_cards : 4);
 
     if (num_cards == 1)
-        mpr("There's only one card left!");
+        mpr(gettext("There's only one card left!"));
     else if (num_cards < 4)
-        mprf("The deck only has %d cards.", num_cards);
+        mprf(gettext("The deck only has %d cards."), num_cards);
 
     std::vector<std::string> names;
     for (int i = 0; i < num_to_mark; ++i)
@@ -946,18 +946,18 @@ bool deck_mark()
 
         names.push_back(card_name(card));
     }
-    mpr_comma_separated_list("You draw and mark ", names);
+    mpr_comma_separated_list(gettext("You draw and mark "), names);
     props["num_marked"] = (char) num_to_mark;
 
     if (num_cards == 1)
         ;
     else if (num_cards < 4)
     {
-        mprf("You shuffle the deck.");
+        mprf(gettext("You shuffle the deck."));
         deck.plus2 = -num_cards;
     }
     else
-        mprf("You shuffle the cards back into the deck.");
+        mprf(gettext("You shuffle the cards back into the deck."));
 
     _shuffle_deck(deck);
     _deck_ident(deck);
@@ -1007,7 +1007,7 @@ static void _describe_cards(std::vector<card_type> cards)
 // Return false if the operation was failed/aborted along the way.
 bool deck_stack()
 {
-    const int slot = _choose_inventory_deck("Stack which deck?");
+    const int slot = _choose_inventory_deck(gettext("Stack which deck?"));
     if (slot == -1)
     {
         crawl_state.zero_turns_taken();
@@ -1021,7 +1021,7 @@ bool deck_stack()
     CrawlHashTable &props = deck.props;
     if (props["num_marked"].get_byte() > 0)
     {
-        mpr("You can't stack a marked deck.");
+        mpr(gettext("You can't stack a marked deck."));
         crawl_state.zero_turns_taken();
         return (false);
     }
@@ -1031,14 +1031,14 @@ bool deck_stack()
     const int num_to_stack = (num_cards < 5 ? num_cards : 5);
 
     if (num_cards == 1)
-        mpr("There's only one card left!");
+        mpr(gettext("There's only one card left!"));
     else if (num_cards < 5)
-        mprf("The deck only has %d cards.", num_to_stack);
+        mprf(gettext("The deck only has %d cards."), num_to_stack);
     else if (num_cards == 5)
-        mpr("The deck has exactly five cards.");
+        mpr(gettext("The deck has exactly five cards."));
     else
     {
-        mprf("You draw the first five cards out of %d and discard the rest.",
+        mprf(gettext("You draw the first five cards out of %d and discard the rest."),
              num_cards);
     }
     more();
@@ -1083,11 +1083,11 @@ bool deck_stack()
                 clrscr();
                 cgotoxy(1,1);
                 textcolor(WHITE);
-                cprintf("Press a digit to select a card, then another digit "
-                        "to swap it.");
+                cprintf(gettext("Press a digit to select a card, then another digit "
+                        "to swap it."));
                 cgotoxy(1,10);
-                cprintf("Press ? for the card descriptions, or Enter to "
-                        "accept.");
+                cprintf(gettext("Press ? for the card descriptions, or Enter to "
+                        "accept."));
 
                 _redraw_stacked_cards(draws, selected);
                 need_prompt_redraw = false;
@@ -1099,7 +1099,7 @@ bool deck_stack()
             {
                 cgotoxy(1,11);
                 textcolor(LIGHTGREY);
-                cprintf("Are you sure? (press y or Y to confirm)");
+                cprintf(gettext("Are you sure? (press y or Y to confirm)"));
                 if (toupper(getchk()) == 'Y')
                     break;
 
@@ -1150,7 +1150,7 @@ bool deck_stack()
 // Draw the next three cards, discard two and pick one.
 bool deck_triple_draw()
 {
-    const int slot = _choose_inventory_deck("Triple draw from which deck?");
+    const int slot = _choose_inventory_deck(gettext("Triple draw from which deck?"));
     if (slot == -1)
     {
         crawl_state.zero_turns_taken();
@@ -1195,7 +1195,7 @@ bool deck_triple_draw()
     {
         if (need_prompt_redraw)
         {
-            mpr("You draw... (choose one card, ? for their descriptions)");
+            mpr(gettext("You draw... (choose one card, ? for their descriptions)"));
             for (int i = 0; i < num_to_draw; ++i)
             {
                 msg::streams(MSGCH_PROMPT) << (static_cast<char>(i + 'a')) << " - "
@@ -1242,7 +1242,7 @@ bool deck_triple_draw()
     deck_rarity_type rarity = deck_rarity(deck);
     if (cards_in_deck(deck) == 0)
     {
-        mpr("The deck of cards disappears in a puff of smoke.");
+        mpr(gettext("The deck of cards disappears in a puff of smoke."));
         if (slot == you.equip[EQ_WEAPON])
             unwield_item();
 
@@ -1263,7 +1263,7 @@ void draw_from_deck_of_punishment()
     card_type card = _random_card(MISC_DECK_OF_PUNISHMENT, DECK_RARITY_COMMON,
                                   oddity);
 
-    mpr("You draw a card...");
+    mpr(gettext("You draw a card..."));
     card_effect(card, DECK_RARITY_COMMON);
 }
 
@@ -1343,9 +1343,9 @@ void evoke_deck(item_def& deck)
             card = _choose_from_archetype(deck_of_punishment, rarity);
             if (card != old_card)
             {
-                simple_god_message(" seems to have exchanged this card "
-                                   "behind your back!", GOD_NEMELEX_XOBEH);
-                mprf("It's actually %s.", card_name(card));
+                simple_god_message(gettext(" seems to have exchanged this card "
+                                   "behind your back!"), GOD_NEMELEX_XOBEH);
+                mprf(gettext("It's actually %s."), card_name(card));
                 // You never completely appease Nemelex, but the effects
                 // get less frequent.
                 you.penance[GOD_NEMELEX_XOBEH] -=
@@ -1373,7 +1373,7 @@ void evoke_deck(item_def& deck)
     const bool deck_gone = (cards_in_deck(deck) == 0);
     if (deck_gone)
     {
-        mpr("The deck of cards disappears in a puff of smoke.");
+        mpr(gettext("The deck of cards disappears in a puff of smoke."));
         dec_inv_item_quantity(deck.link, 1);
         // Finishing the deck will earn a point, even if it
         // was marked or stacked.
@@ -1405,7 +1405,7 @@ void evoke_deck(item_def& deck)
     if (!deck_gone && allow_id
         && you.skill(SK_EVOCATIONS) > 5 + random2(35))
     {
-        mpr("Your skill with magical items lets you identify the deck.");
+        mpr(gettext("Your skill with magical items lets you identify the deck."));
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
         msg::streams(MSGCH_EQUIPMENT) << deck.name(true, DESC_INVENTORY)
                                       << std::endl;
@@ -1497,7 +1497,7 @@ static void _swap_monster_card(int power, deck_rarity_type rarity)
     // Don't choose yourself unless there are no monsters nearby.
     monster* mon_to_swap = choose_random_nearby_monster(0);
     if (!mon_to_swap)
-        mpr("You spin around.");
+        mpr(gettext("You spin around."));
     else
         swap_with_monster(mon_to_swap);
 }
@@ -1557,7 +1557,7 @@ static void _warpwright_card(int power, deck_rarity_type rarity)
 {
     if (you.level_type == LEVEL_ABYSS)
     {
-        mpr("The power of the Abyss blocks your magic.");
+        mpr(gettext("The power of the Abyss blocks your magic."));
         return;
     }
 
@@ -1608,7 +1608,7 @@ static void _flight_card(int power, deck_rarity_type rarity)
             if (place_specific_trap(you.pos(), TRAP_SHAFT))
             {
                 find_trap(you.pos())->reveal();
-                mpr("A shaft materialises beneath you!");
+                mpr(gettext("A shaft materialises beneath you!"));
             }
         }
     }
@@ -1669,7 +1669,7 @@ static void _stairs_card(int power, deck_rarity_type rarity)
 
     if (stairs_avail.empty())
     {
-        mpr("No stairs available to move.");
+        mpr(gettext("No stairs available to move."));
         return;
     }
 
@@ -1692,7 +1692,7 @@ static int _drain_monsters(coord_def where, int pow, int, actor *)
             return (0);
 
         if (!mon->drain_exp(&you, false, pow / 50))
-            simple_monster_message(mon, " is unaffected.");
+            simple_monster_message(mon, gettext(" is unaffected."));
     }
 
     return (1);
@@ -1742,7 +1742,7 @@ static bool _damaging_card(card_type card, int power, deck_rarity_type rarity)
     case CARD_PAIN:
         if (power_level == 2)
         {
-            mprf("You have drawn %s.", card_name(card));
+            mprf(gettext("You have drawn %s."), card_name(card));
             _mass_drain(power);
             return (true);
         }
@@ -1820,12 +1820,12 @@ static void _battle_lust_card(int power, deck_rarity_type rarity)
     if (power_level >= 2)
     {
         you.set_duration(DUR_SLAYING, random2(power/6) + 1,
-                         0, "You feel deadly.");
+                         0, gettext("You feel deadly."));
     }
     else if (power_level == 1)
     {
         you.set_duration(DUR_BUILDING_RAGE, 2,
-                         0, "You feel your rage building.");
+                         0, gettext("You feel your rage building."));
     }
     else if (power_level == 0)
         potion_effect(POT_MIGHT, random2(power/4));
@@ -1894,7 +1894,7 @@ static void _helm_card(int power, deck_rarity_type rarity)
             DUR_RESIST_FIRE, DUR_RESIST_COLD
         };
         const char* resist_names[4] = {
-            "poison", "electricity", "fire", "cold"
+            M_("poison"), M_("electricity"), M_("fire"), M_("cold")
         };
 
         for (int i = 0; i < 4 && num_resists; ++i)
@@ -1905,8 +1905,8 @@ static void _helm_card(int power, deck_rarity_type rarity)
             {
                 // Add a temporary resistance.
                 you.increase_duration(possible_resists[i], random2(power/7) +1);
-                msg::stream << "You feel resistant to " << resist_names[i]
-                            << '.' << std::endl;
+                msg::stream << make_stringf(gettext("You feel resistant to %s.\n"),
+		    gettext(resist_names[i]));
                 --num_resists;
             }
         }
@@ -1915,7 +1915,7 @@ static void _helm_card(int power, deck_rarity_type rarity)
     if (do_shield)
     {
         if (you.duration[DUR_MAGIC_SHIELD] == 0)
-            mpr("A magical shield forms in front of you.");
+            mpr(gettext("A magical shield forms in front of you."));
         you.increase_duration(DUR_MAGIC_SHIELD, random2(power/6) + 1);
     }
 }
@@ -1924,7 +1924,7 @@ static void _blade_card(int power, deck_rarity_type rarity)
 {
     if (you.species == SP_FELID)
     {
-        mpr("You feel like a smilodon for a moment.");
+        mpr(gettext("You feel like a smilodon for a moment."));
         return;
     }
 
@@ -1957,12 +1957,13 @@ static void _blade_card(int power, deck_rarity_type rarity)
 
             if (wpn)
             {
-                mprf("%s vibrate%s crazily for a second.",
+		/// 1. item 이름(번역된 것), 2. 복수형이면 s가 붙음.
+                mprf(gettext("%s vibrate%s crazily for a second."),
                      wpn->name(true, DESC_CAP_YOUR).c_str(),
                      wpn->quantity == 1 ? "s" : "");
             }
             else
-                mprf("Your %s twitch.", you.hand_name(true).c_str());
+                mprf(gettext("Your %s twitch."), you.hand_name(true).c_str());
         }
     }
 }
@@ -1973,8 +1974,8 @@ static void _shadow_card(int power, deck_rarity_type rarity)
 
     if (power_level >= 1)
     {
-        mpr(you.duration[DUR_STEALTH] ? "You feel more catlike."
-                                      : "You feel stealthy.");
+        mpr(you.duration[DUR_STEALTH] ? gettext("You feel more catlike.")
+                                      : gettext("You feel stealthy."));
         you.increase_duration(DUR_STEALTH, random2(power/4) + 1);
     }
 
@@ -2083,9 +2084,9 @@ static void _experience_card(int power, deck_rarity_type rarity)
     const int power_level = get_power_level(power, rarity);
 
     if (you.experience_level < 27)
-        mpr("You feel more experienced.");
+        mpr(gettext("You feel more experienced."));
     else
-        mpr("You feel knowledgeable.");
+        mpr(gettext("You feel knowledgeable."));
 
     more();
     skill_menu(SKMF_EXPERIENCE_CARD, std::min(power * 50, HIGH_EXP_POOL));
@@ -2113,7 +2114,7 @@ static void _remove_bad_mutation()
 {
     // Ensure that only bad mutations are removed.
     if (!delete_mutation(RANDOM_BAD_MUTATION, false, false, false, true))
-        mpr("You feel transcendent for a moment.");
+        mpr(gettext("You feel transcendent for a moment."));
 }
 
 static void _helix_card(int power, deck_rarity_type rarity)
@@ -2232,13 +2233,13 @@ void sage_card(int power, deck_rarity_type rarity)
     }
 
     if (result == SK_NONE)
-        mpr("You feel omnipotent.");  // All skills maxed.
+        mpr(gettext("You feel omnipotent."));  // All skills maxed.
     else
     {
         you.set_duration(DUR_SAGE, random2(1800) + 200);
         you.sage_bonus_skill   = result;
         you.sage_bonus_degree  = power / 25;
-        mprf(MSGCH_PLAIN, "You feel studious about %s.", skill_name(result));
+        mprf(MSGCH_PLAIN, gettext("You feel studious about %s."), skill_name(result));
     }
 }
 
@@ -2292,19 +2293,19 @@ static void _water_card(int power, deck_rarity_type rarity)
     const int power_level = get_power_level(power, rarity);
     if (power_level == 0)
     {
-        mpr("You create a pond!");
+        mpr(gettext("You create a pond!"));
         create_pond(you.pos(), 4, false);
     }
     else if (power_level == 1)
     {
-        mpr("You feel the tide rushing in!");
+        mpr(gettext("You feel the tide rushing in!"));
         create_pond(you.pos(), 6, true);
         for (int i = 0; i < 2; ++i)
             _deepen_water(you.pos(), 6);
     }
     else
     {
-        mpr("Water floods your area!");
+        mpr(gettext("Water floods your area!"));
 
         // Flood all visible squares.
         for (radius_iterator ri(you.pos(), LOS_RADIUS, false); ri; ++ri)
@@ -2352,7 +2353,7 @@ static void _dowsing_card(int power, deck_rarity_type rarity)
     if (things_to_do[2])
     {
         you.set_duration(DUR_TELEPATHY, random2(power/4), 0,
-                         "You feel telepathic!");
+                         gettext("You feel telepathic!"));
         detect_creatures(1 + you.duration[DUR_TELEPATHY] / 2 / BASELINE_DELAY,
                          true);
     }
@@ -2373,7 +2374,8 @@ bool create_altar(bool disallow_no_altar)
 
         if (grd(you.pos()) != DNGN_FLOOR)
         {
-            mprf("An altar to %s grows from the floor before you!",
+	    /// 1. 신의 이름.
+            mprf(gettext("An altar to %s grows from the floor before you!"),
                  god_name(god).c_str());
             return (true);
         }
@@ -2387,7 +2389,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
     // Early exit: don't clobber important features.
     if (is_critical_feature(grd(you.pos())))
     {
-        mpr("The dungeon trembles momentarily.");
+        mpr(gettext("The dungeon trembles momentarily."));
         return;
     }
 
@@ -2405,7 +2407,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
         const map_def *map = random_map_for_tag("trowel_portal");
         if (!map)
         {
-            mpr("A buggy portal flickers into view, then vanishes.");
+            mpr(gettext("A buggy portal flickers into view, then vanishes."));
         }
         else
         {
@@ -2413,7 +2415,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
                 no_messages n;
                 dgn_safe_place_map(map, true, true, you.pos());
             }
-            mpr("A mystic portal forms.");
+            mpr(gettext("A mystic portal forms."));
         }
         done_stuff = true;
     }
@@ -2435,7 +2437,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
                         RANDOM_ELEMENT(statues), "the Trowel card",
                         true, 0, 0, you.pos())) != -1)
             {
-                mpr("A menacing statue appears!");
+                mpr(gettext("A menacing statue appears!"));
                 num_made++;
             }
 
@@ -2449,12 +2451,12 @@ static void _trowel_card(int power, deck_rarity_type rarity)
                               BEH_FRIENDLY, &you, 5, 0,
                               you.pos(), MHITYOU)) != -1)
             {
-                mpr("You construct a golem!");
+                mpr(gettext("You construct a golem!"));
                 num_made++;
             }
 
             if (num_made == 2)
-                mpr("The constructs glare at each other.");
+                mpr(gettext("The constructs glare at each other."));
 
             done_stuff = (num_made > 0);
         }
@@ -2469,7 +2471,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
                 };
                 // We leave the items on the square
                 grd(pos) = RANDOM_ELEMENT(statfeat);
-                mpr("A statue takes form beside you.");
+                mpr(gettext("A statue takes form beside you."));
                 done_stuff = true;
             }
         }
@@ -2485,15 +2487,15 @@ static void _genie_card(int power, deck_rarity_type rarity)
 {
     if (coinflip())
     {
-        mpr("A genie takes form and thunders: "
-            "\"Choose your reward, mortal!\"");
+        mpr(gettext("A genie takes form and thunders: "
+            "\"Choose your reward, mortal!\""));
         more();
         acquirement(OBJ_RANDOM, AQ_CARD_GENIE);
     }
     else
     {
-        mpr("A genie takes form and thunders: "
-            "\"You disturbed me, fool!\"");
+        mpr(gettext("A genie takes form and thunders: "
+            "\"You disturbed me, fool!\""));
         potion_effect(coinflip() ? POT_DEGENERATION : POT_DECAY, 40);
     }
 }
@@ -2516,14 +2518,14 @@ static void _godly_wrath()
     }
 
     if (tries <= 0)
-        mpr("You somehow manage to escape divine attention...");
+        mpr(gettext("You somehow manage to escape divine attention..."));
 }
 
 static void _curse_card(int power, deck_rarity_type rarity)
 {
     const int power_level = get_power_level(power, rarity);
 
-    mpr("You feel a malignant aura surround you.");
+    mpr(gettext("You feel a malignant aura surround you."));
     if (power_level >= 2)
     {
         // Curse (almost) everything.
@@ -2569,7 +2571,8 @@ static void _crusade_card(int power, deck_rarity_type rarity)
             // Might be too good.
             if (mi->hit_dice * 35 < random2(power))
             {
-                simple_monster_message(*mi, " is converted.");
+		/// Crusader 카드에 의해 아군으로 바뀌었을 때.
+                simple_monster_message(*mi, gettext(" is converted."));
 
                 if (one_chance_in(5 - power_level))
                 {
@@ -2620,7 +2623,7 @@ static void _summon_demon_card(int power, deck_rarity_type rarity)
                       you.pos(), MHITYOU),
             false) == -1)
     {
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
     }
 }
 
@@ -2675,7 +2678,7 @@ static void _summon_any_monster(int power, deck_rarity_type rarity)
                                  3, 0, chosen_spot, MHITYOU),
                        false) == -1)
     {
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
     }
 }
 
@@ -2750,7 +2753,7 @@ static void _summon_dancing_weapon(int power, deck_rarity_type rarity)
         menv[mon].dancing_weapon_init();
     }
     else
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
 }
 
 static void _summon_flying(int power, deck_rarity_type rarity)
@@ -2796,7 +2799,7 @@ static void _summon_skeleton(int power, deck_rarity_type rarity)
                                  you.pos(), MHITYOU),
                        false) == -1)
     {
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
     }
 }
 
@@ -2819,7 +2822,7 @@ static void _summon_ugly(int power, deck_rarity_type rarity)
                                  you.pos(), MHITYOU),
                        false) == -1)
     {
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
     }
 }
 
@@ -2839,7 +2842,7 @@ static void _alchemist_card(int power, deck_rarity_type rarity)
         inc_hp(hp);
         gold_used -= hp * 2;
         done_stuff = true;
-        mpr("You feel better.");
+        mpr(gettext("You feel better."));
         dprf("Gained %d health, %d gold remaining.", hp, gold_used);
     }
 
@@ -2852,13 +2855,13 @@ static void _alchemist_card(int power, deck_rarity_type rarity)
             inc_mp(mp);
             gold_used -= mp * 5;
             done_stuff = true;
-            mpr("You feel your power returning.");
+            mpr(gettext("You feel your power returning."));
             dprf("Gained %d magic, %d gold remaining.", mp, gold_used);
         }
     }
 
     if (done_stuff)
-        mpr("Some of your gold vanishes!");
+        mpr(gettext("Some of your gold vanishes!"));
     else
         canned_msg(MSG_NOTHING_HAPPENS);
 
@@ -2916,7 +2919,7 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
             && which_card != CARD_SPARK && which_card != CARD_PAIN
             && which_card != CARD_VENOM && which_card != CARD_ORB)
         {
-           mprf("You have drawn %s.", card_name(which_card));
+           mprf(gettext("You have drawn %s."), card_name(which_card));
         }
     }
 
@@ -2926,11 +2929,11 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
         {
             // Being a self-centered deity, Xom *always* finds this
             // maximally hilarious.
-            god_speaks(GOD_XOM, "Xom roars with laughter!");
+            god_speaks(GOD_XOM, gettext("Xom roars with laughter!"));
             you.gift_timeout = 200;
         }
         else if (you.penance[GOD_XOM])
-            god_speaks(GOD_XOM, "Xom laughs nastily.");
+            god_speaks(GOD_XOM, gettext("Xom laughs nastily."));
     }
 
     switch (which_card)
@@ -2983,7 +2986,7 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_VENOM:
         if (coinflip())
         {
-            mprf("You have drawn %s.", card_name(which_card));
+            mprf(gettext("You have drawn %s."), card_name(which_card));
             your_spells(SPELL_OLGREBS_TOXIC_RADIANCE, random2(power/4), false);
         }
         else
@@ -3007,7 +3010,7 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
 
     case CARD_MAP:
         if (!magic_mapping(random2(power/8) + 18, random2(power), true))
-            mpr("The map is blank.");
+            mpr(gettext("The map is blank."));
         break;
 
     case CARD_WILD_MAGIC:
@@ -3019,14 +3022,14 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
 
     case CARD_FAMINE:
         if (you.is_undead == US_UNDEAD)
-            mpr("You feel rather smug.");
+            mpr(gettext("You feel rather smug."));
         else
             set_hunger(500, true);
         break;
 
     case CARD_FEAST:
         if (you.is_undead == US_UNDEAD)
-            mpr("You feel a horrible emptiness.");
+            mpr(gettext("You feel a horrible emptiness."));
         else
             set_hunger(12000, true);
         break;
@@ -3034,19 +3037,19 @@ bool card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_SWINE:
         if (!transform(1 + power/2 + random2(power/2), TRAN_PIG, true))
         {
-            mpr("You feel like a pig.");
+            mpr(gettext("You feel like a pig."));
             break;
         }
         break;
 
     case NUM_CARDS:
         // The compiler will complain if any card remains unhandled.
-        mpr("You have drawn a buggy card!");
+        mpr(gettext("You have drawn a buggy card!"));
         break;
     }
 
     if (you.religion == GOD_NEMELEX_XOBEH && !rc)
-        simple_god_message(" does not approve of your wasteful card use.");
+        simple_god_message(gettext(" does not approve of your wasteful card use."));
 
     return rc;
 }
@@ -3241,5 +3244,5 @@ void nemelex_shuffle_decks()
     // Wildly inaccurate, but of similar quality as the old code which
     // was triggered by the presence of any deck anywhere.
     if (you.num_total_gifts[GOD_NEMELEX_XOBEH])
-        god_speaks(GOD_NEMELEX_XOBEH, "You hear Nemelex Xobeh chuckle.");
+        god_speaks(GOD_NEMELEX_XOBEH, gettext("You hear Nemelex Xobeh chuckle."));
 }

@@ -12,7 +12,6 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3798,27 +3797,12 @@ msgstr "%s은(는) 기절했다!"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
-#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
-#. / 공격자, freeze의 동사, 대상, ./!
-#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s은(는) %3$s%2$s다%4$s"
 
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
-#. / 1. 공격자. 2. drain의 동사형. 3. 대상
-#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -7073,139 +7057,364 @@ msgstr ""
 msgid "You took %s off %s "
 msgstr ""
 
-#: items.cc:1200
-#, c-format
-msgid "You found %s "
+msgid "<yellow>Hello, welcome to Dungeon Crawl Stone Soup "
+msgstr "<yellow>안녕, 던전 크롤 돌죽에 잘 왔다! 버전 : "
+
+#: ng-input.cc:18
+msgid "<yellow>Hello, welcome to "
 msgstr ""
 
-#: items.cc:1215
-#, c-format
-msgid "Pick up how many of %s (; or enter for all)? "
-msgstr "몇 개의 %s을(를) 주울 것인가? (';' 또는 엔터키로 모두 줍기)"
-
-#: items.cc:1290
-msgid "You can't reach the bottom while floating on water."
-msgstr "물 위를 떠 다니고 있는 상태에서는, 바닥에 손이 닿지 않는다."
-
-#: items.cc:1306
-msgid "There are several objects here."
-msgstr "여기에는 몇 개의 물건이 있다."
-
-#: items.cc:1321
-#, c-format
-msgid "Pick up %s? ((y)es/(n)o/(a)ll/(m)enu/*?g,/q)"
-msgstr "%s을(를) 주울 것인가? ((y)예/(n)아니오/(a)모두/(m)메뉴/*?g,/q)"
-
-#: items.cc:1586
-# (deceit, 110814) 오역일 확률 높음
-msgid "You cannot pick up the net that holds you!"
-msgstr "당신을 잡은 그물을 가질 수는 없다!"
-
-#: items.cc:1596
+#: ng-input.cc:18
 msgid ""
-"You must possess at least fifteen runes to touch the sacred Orb which you "
-"defend."
-msgstr "당신이 보호하는 '신성의 오브'에 접근하기 위해서는, 적어도 15개의 룬이 필요하다."
+"!</yellow>\n"
+"<brown>(c) Copyright 1997-2002 Linley Henzell, 2002-2011 Crawl DevTeam\n"
+"Read the instructions for legal details.</brown> "
+msgstr ""
+"</yellow>\n"
+"<brown>(c) Copyright 1997-2002 Linley Henzell, 2002-2011 Crawl DevTeam, "
+"Translated by DECEIT, Neons, jolgame\n"
+"Read the instructions for legal details.</brown> "
 
-#. / 1. 골드 수량, 2. 골드가 1이 아니면 s가 붙음.
-#: items.cc:1613
-#, c-format
-msgid "You now have %d gold piece%s."
-msgstr "당신은 이제 %d개의 금화를 가지고 있다."
-
-#: items.cc:1630
-#, c-format
-msgid "You pick up the %s rune and feel its power."
-msgstr "당신은 %s의 룬을 주웠고, 룬이 발하는 마력을 느꼈다."
-
-#: items.cc:1634
-msgid "You have collected all the runes! Now go and win!"
-msgstr "당신은 모든 룬을 모으는 데 성공했다!"
-
-#. might be inappropriate in new Sprints, please change it then
-#: items.cc:1639
-#, c-format
-msgid "%d runes! That's enough to enter the realm of Zot."
-msgstr "%d개의 룬을 모았다! 이제 '조트의 렐름'에 출입하는 것이 가능하다."
-
-#: items.cc:1643
-#, c-format
-msgid "You now have %d runes."
-msgstr "당신은 이제 %d개의 룬을 모았다."
-
-#: items.cc:1653
-msgid " appreciates your discovery of this rune."
-msgstr "은(는) 당신이 룬을 발견한 것을 기뻐했다."
-
-#: items.cc:1692 items.cc:1762
-msgid "You can only carry some of what is here."
-msgstr "여기에 있는 것의 일부 밖에 가질 수 없다."
-
-#: items.cc:1729
-msgid "These items seem quite similar."
-msgstr "이 물건들은 꽤 비슷해 보인다."
-
-#: items.cc:1833
-msgid "Now all you have to do is get back out of the dungeon!"
-msgstr "지금 당신이 해야 할 일은 던젼에서  탈출하는 것이다!"
-
-#: items.cc:2149 items.cc:2173
-msgid "You will have to take that off first."
-msgstr "먼저 착용해제 부터 해야한다."
-
-#: items.cc:2163
-msgid "That object is stuck to you!"
-msgstr "그것은 당신의 몸에 달라붙어 있다"
-
-#: items.cc:2212
-msgid "Too many items on this level, not dropping the item."
-msgstr "이 층에는 너무 많은 물건이 있어, 더 이상 물건을 버릴 수 없다."
-
-#: items.cc:2216
-#, c-format
-msgid "You drop %s."
-msgstr "%s을(를) 버렸다."
-
-#: items.cc:2262
-msgid "No item to drop."
-msgstr "버릴 물건이 없다."
-
-#: items.cc:2399
-msgid "Drop what? (Press _ for help.)"
-msgstr "무엇을 버릴 것인가? (_ 키로 도움말)"
-
-#: items.cc:2856
-msgid "You can't pick everything up without burdening yourself."
+#: ng-input.cc:27
+msgid "<lightred>(No init file "
 msgstr ""
 
-#: items.cc:2888
-msgid "You can't carry any more."
-msgstr "더 이상 들 수 없다."
+#: ng-input.cc:29
+msgid "<lightgrey>(Read options from "
+msgstr ""
 
-#: items.cc:2890
-msgid "Your pack is full."
-msgstr "당신의 짐은 가득찼다."
+#: decks.cc:208
+msgid "This card doesn't seem to belong here."
+msgstr ""
 
-#: items.cc:3317
-msgid "Which rune (ESC to exit)? "
-msgstr "어느 룬을 선택하는가? (ESC키로 종료)"
+#: decks.cc:464
+#, c-format
+msgid "You draw %s."
+msgstr ""
 
-#: items.cc:3395
-msgid "[a] escape     [b] destruction [c] dungeons [d] summoning [e] wonders"
-msgstr "[a] 탈출의 덱     [b] 파괴의 덱  [c] 던전의 덱  [d] 소환의 덱 "
+#: decks.cc:466
+#, c-format
+msgid "You draw a card... It is %s."
+msgstr ""
 
-#: items.cc:3398
-msgid "[f] punishment [g] war         [h] changes  [i] defence"
-msgstr "[e] 불가사의의 덱 [f] 징벌의 덱  [g] 전쟁의 덱  [h] 변화의 덱  [i] 방어의 덱"
+#: decks.cc:755
+msgid "That isn't a deck!"
+msgstr ""
 
-#: items.cc:3400
-msgid "Which deck (ESC to exit)? "
-msgstr "어느 덱을 선택하는가? (ESC키로 종료)"
+#: decks.cc:765
+msgid "Draw from which deck?"
+msgstr ""
 
-#: items.cc:3440
-msgid "[a] plain [b] ornate [c] legendary? (ESC to exit)"
-msgstr "[a] 평이한 덱 [b] 화려한 덱 [c] 전설적인 덱 (ESC키로 종료)"
+#: decks.cc:782
+#, c-format
+msgid "This is %s."
+msgstr ""
 
-#: items.cc:3472
-msgid "How many cards? "
-msgstr "몇 장 선택하는가?"
+#: decks.cc:810
+msgid "Peek at which deck?"
+msgstr ""
+
+#: decks.cc:824 decks.cc:925
+msgid "A card falls out of the deck."
+msgstr ""
+
+#: decks.cc:837
+msgid "There's only one card in the deck!"
+msgstr ""
+
+#: decks.cc:859
+#, c-format
+msgid "You draw two cards from the deck. They are: %s and %s."
+msgstr ""
+
+#: decks.cc:865 decks.cc:960
+msgid "You shuffle the cards back into the deck."
+msgstr ""
+
+#: decks.cc:887
+#, c-format
+msgid "You get a glimpse of the first card. It is %s."
+msgstr ""
+
+#: decks.cc:899
+msgid "Mark which deck?"
+msgstr ""
+
+#: decks.cc:912
+msgid "The deck is already marked."
+msgstr ""
+
+#: decks.cc:927
+msgid "Some cards fall out of the deck."
+msgstr ""
+
+#: decks.cc:934 decks.cc:1034
+msgid "There's only one card left!"
+msgstr ""
+
+#: decks.cc:936 decks.cc:1036
+#, c-format
+msgid "The deck only has %d cards."
+msgstr ""
+
+#: decks.cc:949
+msgid "You draw and mark "
+msgstr ""
+
+#: decks.cc:956
+msgid "You shuffle the deck."
+msgstr ""
+
+#: decks.cc:1010
+msgid "Stack which deck?"
+msgstr ""
+
+#: decks.cc:1024
+msgid "You can't stack a marked deck."
+msgstr ""
+
+#: decks.cc:1038
+msgid "The deck has exactly five cards."
+msgstr ""
+
+#: decks.cc:1041
+#, c-format
+msgid "You draw the first five cards out of %d and discard the rest."
+msgstr ""
+
+#: decks.cc:1086
+msgid "Press a digit to select a card, then another digit to swap it."
+msgstr ""
+
+#: decks.cc:1089
+msgid "Press ? for the card descriptions, or Enter to accept."
+msgstr ""
+
+#: decks.cc:1102
+msgid "Are you sure? (press y or Y to confirm)"
+msgstr ""
+
+#: decks.cc:1153
+msgid "Triple draw from which deck?"
+msgstr ""
+
+#: decks.cc:1198
+msgid "You draw... (choose one card, ? for their descriptions)"
+msgstr ""
+
+#: decks.cc:1245 decks.cc:1376
+msgid "The deck of cards disappears in a puff of smoke."
+msgstr ""
+
+#: decks.cc:1266
+msgid "You draw a card..."
+msgstr ""
+
+#: decks.cc:1346
+msgid " seems to have exchanged this card behind your back!"
+msgstr ""
+
+#: decks.cc:1348
+#, c-format
+msgid "It's actually %s."
+msgstr ""
+
+#: decks.cc:1408
+msgid "Your skill with magical items lets you identify the deck."
+msgstr ""
+
+#: decks.cc:1500
+msgid "You spin around."
+msgstr ""
+
+#: decks.cc:1560
+msgid "The power of the Abyss blocks your magic."
+msgstr ""
+
+#: decks.cc:1611
+msgid "A shaft materialises beneath you!"
+msgstr ""
+
+#: decks.cc:1672
+msgid "No stairs available to move."
+msgstr ""
+
+#: decks.cc:1695
+msgid " is unaffected."
+msgstr ""
+
+#: decks.cc:1745 decks.cc:2923 decks.cc:2990
+#, c-format
+msgid "You have drawn %s."
+msgstr ""
+
+#: decks.cc:1823
+msgid "You feel deadly."
+msgstr ""
+
+#: decks.cc:1828
+msgid "You feel your rage building."
+msgstr ""
+
+#: decks.cc:1908
+#, c-format
+msgid "You feel resistant to %s.\n"
+msgstr ""
+
+#: decks.cc:1918
+msgid "A magical shield forms in front of you."
+msgstr ""
+
+#: decks.cc:1927
+msgid "You feel like a smilodon for a moment."
+msgstr ""
+
+#. / 1. item 이름(번역된 것), 2. 복수형이면 s가 붙음.
+#: decks.cc:1961
+#, c-format
+msgid "%s vibrate%s crazily for a second."
+msgstr ""
+
+#: decks.cc:1966
+#, c-format
+msgid "Your %s twitch."
+msgstr ""
+
+#: decks.cc:1977
+msgid "You feel more catlike."
+msgstr ""
+
+#: decks.cc:1978
+msgid "You feel stealthy."
+msgstr ""
+
+#: decks.cc:2087
+msgid "You feel more experienced."
+msgstr ""
+
+#: decks.cc:2089
+msgid "You feel knowledgeable."
+msgstr ""
+
+#: decks.cc:2118
+msgid "You feel transcendent for a moment."
+msgstr ""
+
+#: decks.cc:2237
+msgid "You feel omnipotent."
+msgstr ""
+
+#: decks.cc:2243
+#, c-format
+msgid "You feel studious about %s."
+msgstr ""
+
+#: decks.cc:2297
+msgid "You create a pond!"
+msgstr ""
+
+#: decks.cc:2302
+msgid "You feel the tide rushing in!"
+msgstr ""
+
+#: decks.cc:2309
+msgid "Water floods your area!"
+msgstr ""
+
+#: decks.cc:2357
+msgid "You feel telepathic!"
+msgstr ""
+
+#. / 1. 신의 이름.
+#: decks.cc:2379
+#, c-format
+msgid "An altar to %s grows from the floor before you!"
+msgstr ""
+
+#: decks.cc:2441
+msgid "A menacing statue appears!"
+msgstr ""
+
+#: decks.cc:2455
+msgid "You construct a golem!"
+msgstr ""
+
+#: decks.cc:2460
+msgid "The constructs glare at each other."
+msgstr ""
+
+#: decks.cc:2475
+msgid "A statue takes form beside you."
+msgstr ""
+
+#: decks.cc:2491
+msgid "A genie takes form and thunders: \"Choose your reward, mortal!\""
+msgstr ""
+
+#: decks.cc:2498
+msgid "A genie takes form and thunders: \"You disturbed me, fool!\""
+msgstr ""
+
+#: decks.cc:2522
+msgid "You somehow manage to escape divine attention..."
+msgstr ""
+
+#: decks.cc:2529
+msgid "You feel a malignant aura surround you."
+msgstr ""
+
+#. / Crusader 카드에 의해 아군으로 바뀌었을 때.
+#: decks.cc:2576
+msgid " is converted."
+msgstr ""
+
+#: decks.cc:2627 decks.cc:2682 decks.cc:2757 decks.cc:2803 decks.cc:2826
+msgid "You see a puff of smoke."
+msgstr ""
+
+#: decks.cc:2859
+msgid "You feel your power returning."
+msgstr ""
+
+#: decks.cc:2865
+msgid "Some of your gold vanishes!"
+msgstr ""
+
+#. Being a self-centered deity, Xom *always* finds this
+#. maximally hilarious.
+#: decks.cc:2933
+msgid "Xom roars with laughter!"
+msgstr ""
+
+#: decks.cc:2937
+msgid "Xom laughs nastily."
+msgstr ""
+
+#: decks.cc:3014
+msgid "The map is blank."
+msgstr ""
+
+#: decks.cc:3026
+msgid "You feel rather smug."
+msgstr ""
+
+#: decks.cc:3033
+msgid "You feel a horrible emptiness."
+msgstr ""
+
+#: decks.cc:3041
+msgid "You feel like a pig."
+msgstr ""
+
+#. The compiler will complain if any card remains unhandled.
+#: decks.cc:3048
+msgid "You have drawn a buggy card!"
+msgstr ""
+
+#: decks.cc:3053
+msgid " does not approve of your wasteful card use."
+msgstr ""
+
+#: decks.cc:3248
+msgid "You hear Nemelex Xobeh chuckle."
+msgstr ""

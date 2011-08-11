@@ -178,13 +178,13 @@ msgid "steam-verb"
 msgstr "(steam-verb)"
 
 msgid "sizzle-verb"
-msgstr "(sizzle-verb)"
+msgstr ""
 
 msgid "bask-verb"
 msgstr "(버그,bask-verb) 은(는) 휩싸였"
 
 msgid "are-verb engulfed"
-msgstr "(버그,are-verb engulfed)휩싸였"
+msgstr "휩싸였"
 
 msgid "are-verb"
-msgstr "(are-verb)있"
+msgstr "있"
