@@ -74,8 +74,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_ELYVILON:
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent "
-                                       "blood-drinking, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent "
+                                       "blood-drinking, just this once."));
                     break;
                 }
                 if (you.religion == GOD_SHINING_ONE)
@@ -115,8 +115,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 }
                 else
                 {
-                    simple_god_message(" forgives your inadvertent necromancy, "
-                                       "just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent necromancy, "
+                                       "just this once."));
                 }
             }
             break;
@@ -132,8 +132,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_ELYVILON:
                 if (!known && thing_done != DID_ATTACK_HOLY && thing_done != DID_VIOLATE_HOLY_CORPSE)
                 {
-                    simple_god_message(" forgives your inadvertent unholy act, "
-                                       "just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent unholy act, "
+                                       "just this once."));
                     break;
                 }
 
@@ -159,8 +159,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             {
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent holy act, "
-                                       "just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent holy act, "
+                                       "just this once."));
                     break;
                 }
                 retval = true;
@@ -180,9 +180,9 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
 
                     if (!known)
                     {
-                        simple_god_message(" forgives your inadvertent "
+                        simple_god_message(gettext(" forgives your inadvertent "
                                            "dishonourable attack, just this "
-                                           "once.");
+                                           "once."));
                         break;
                     }
                 }
@@ -218,8 +218,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_ELYVILON:
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent attack on a "
-                                       "neutral, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent attack on a "
+                                       "neutral, just this once."));
                     break;
                 }
                 penance = level/2 + 1;
@@ -228,8 +228,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_ZIN:
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent attack on a "
-                                       "neutral, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent attack on a "
+                                       "neutral, just this once."));
                     break;
                 }
                 piety_change = -(level/2 + 1);
@@ -256,8 +256,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             {
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent attack on "
-                                       "an ally, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent attack on "
+                                       "an ally, just this once."));
                     break;
                 }
 
@@ -324,8 +324,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 // Killing is only disapproved of during prayer.
                 if (you.duration[DUR_LIFESAVING])
                 {
-                    simple_god_message(" does not appreciate your shedding "
-                                       "blood when asking for salvation!");
+                    simple_god_message(gettext(" does not appreciate your shedding "
+                                       "blood when asking for salvation!"));
                     retval = true;
                     piety_change = -level;
                     penance = level * 2;
@@ -345,7 +345,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 piety_denom = level + 18 - you.experience_level / 2;
                 piety_change = piety_denom - 6;
@@ -372,7 +372,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 // Holy gods are easier to please this way.
                 piety_denom = level + 18 - (is_good_god(you.religion) ? 0 :
@@ -401,7 +401,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 // Holy gods are easier to please this way.
                 piety_denom = level + 18 - (is_good_god(you.religion) ? 0 :
@@ -421,7 +421,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             if (you.religion == GOD_SHINING_ONE
                 && !god_hates_attacking_friend(you.religion, victim))
             {
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 4;
@@ -433,7 +433,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             if (you.religion == GOD_ZIN
                 && !god_hates_attacking_friend(you.religion, victim))
             {
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 4;
@@ -444,8 +444,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             if (you.religion == GOD_BEOGH
                 && !god_hates_attacking_friend(you.religion, victim))
             {
-                simple_god_message(" appreciates your killing of a heretic "
-                                   "priest.");
+                simple_god_message(gettext(" appreciates your killing of a heretic "
+                                   "priest."));
                 retval = true;
                 piety_denom = level + 10;
                 piety_change = piety_denom - 6;
@@ -456,8 +456,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             if (you.religion == GOD_TROG
                 && !god_hates_attacking_friend(you.religion, victim))
             {
-                simple_god_message(" appreciates your killing of a magic "
-                                   "user.");
+                simple_god_message(gettext(" appreciates your killing of a magic "
+                                   "user."));
                 retval = true;
                 piety_denom = level + 10;
                 piety_change = piety_denom - 6;
@@ -482,10 +482,10 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (speed_delta > 0 && x_chance_in_y(speed_delta, 12))
                 {
                     piety_change *= 2;
-                    simple_god_message(" thoroughly appreciates the change of pace.");
+                    simple_god_message(gettext(" thoroughly appreciates the change of pace."));
                 }
                 else
-                    simple_god_message(" appreciates the change of pace.");
+                    simple_god_message(gettext(" appreciates the change of pace."));
             }
             break;
 
@@ -493,7 +493,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             if (you.religion == GOD_YREDELEMNUL
                 && !god_hates_attacking_friend(you.religion, victim))
             {
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 3;
@@ -532,15 +532,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 3;
 
                 if (you.religion == GOD_YREDELEMNUL)
                 {
-                    simple_god_message(" appreciates your killing of a holy "
-                                       "being.");
+                    simple_god_message(gettext(" appreciates your killing of a holy "
+                                       "being."));
                     piety_change *= 2;
                 }
                 break;
@@ -561,7 +561,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your slave's kill.");
+                simple_god_message(gettext(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 3;
@@ -596,7 +596,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 3;
@@ -616,7 +616,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
-                simple_god_message(" accepts your slave's kill.");
+                simple_god_message(gettext(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -636,7 +636,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_TROG:
             case GOD_BEOGH:
             case GOD_LUGONU:
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -655,7 +655,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
-                simple_god_message(" accepts your slave's kill.");
+                simple_god_message(gettext(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -675,7 +675,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - (is_good_god(you.religion) ? 0 :
                                             you.experience_level/3);
@@ -694,7 +694,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_KIKUBAAQUDGHA:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-                simple_god_message(" accepts your slave's kill.");
+                simple_god_message(gettext(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -713,7 +713,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - (is_good_god(you.religion) ? 0 :
                                             you.experience_level/3);
@@ -730,7 +730,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_NATURAL_EVIL_KILLED_BY_SERVANT:
             if (you.religion == GOD_SHINING_ONE)
             {
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10;
                 piety_change = piety_denom - 6;
@@ -741,7 +741,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_CHAOTIC_KILLED_BY_SERVANT:
             if (you.religion == GOD_ZIN)
             {
-                simple_god_message(" accepts your collateral kill.");
+                simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
 
                 piety_denom = level + 10;
@@ -752,7 +752,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_ARTIFICIAL_KILLED_BY_UNDEAD_SLAVE:
             if (you.religion == GOD_YREDELEMNUL)
             {
-                simple_god_message(" accepts your slave's kill.");
+                simple_god_message(gettext(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 18;
                 piety_change = piety_denom - 3;
@@ -841,8 +841,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             {
                 if (!known && thing_done != DID_CAUSE_GLOWING)
                 {
-                    simple_god_message(" forgives your inadvertent chaotic "
-                                       "act, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent chaotic "
+                                       "act, just this once."));
                     break;
                 }
 
@@ -851,15 +851,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                     static long last_glowing_lecture = -1L;
                     if (!level)
                     {
-                        simple_god_message(" is not enthusiastic about the "
-                                           "mutagenic glow surrounding you.");
+                        simple_god_message(gettext(" is not enthusiastic about the "
+                                           "mutagenic glow surrounding you."));
                     }
                     else if (last_glowing_lecture != you.num_turns)
                     {
                         last_glowing_lecture = you.num_turns;
                         // Increase contamination within yellow glow.
-                        simple_god_message(" does not appreciate the extra "
-                                           "mutagenic glow surrounding you!");
+                        simple_god_message(gettext(" does not appreciate the extra "
+                                           "mutagenic glow surrounding you!"));
                     }
                 }
 
@@ -886,8 +886,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent unclean "
-                                       "act, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent unclean "
+                                       "act, just this once."));
                     break;
                 }
                 piety_change = -level;
@@ -901,8 +901,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
                 if (!known)
                 {
-                    simple_god_message(" forgives your inadvertent chaotic "
-                                       "act, just this once.");
+                    simple_god_message(gettext(" forgives your inadvertent chaotic "
+                                       "act, just this once."));
                     break;
                 }
                 piety_change = -level;
@@ -940,10 +940,10 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             {
                 if (!known)
                 {
-                    simple_god_message(" forgives your accidental hurry, just this once.");
+                    simple_god_message(gettext(" forgives your accidental hurry, just this once."));
                     break;
                 }
-                simple_god_message(" thinks you should slow down.");
+                simple_god_message(gettext(" thinks you should slow down."));
                 piety_change = -level;
                 if (level > 5)
                     penance = level - 5;
@@ -990,9 +990,9 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             gain_piety(gain, 700);
             piety_denom = 700;
             if (piety_change > 3200)
-                simple_god_message(" appreciates your kill.");
+                simple_god_message(gettext(" appreciates your kill."));
             else if (piety_change > 9) // might still be miniscule
-                simple_god_message(" accepts your kill.");
+                simple_god_message(gettext(" accepts your kill."));
             retval = true;
         }
 #endif

@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-11 23:39+0900\n"
+"POT-Creation-Date: 2011-08-11 23:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3797,12 +3798,22 @@ msgstr "%s은(는) 기절했다!"
 #. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
 #. / 공격자, freeze의 동사, 대상, ./!
 #. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
+#. / 뭔가 해야되는데 뭘 해야할지 잘 모르겠음. 솔직히 말해서 머리가 아픔.
+#. / 공격자, freeze의 동사, 대상, ./!
+#. / 공격자, sear, 대상, ./!
 #: fight.cc:2371 fight.cc:5210 fight.cc:5433 fight.cc:2364 fight.cc:5203
 #: fight.cc:5426
 #, c-format
 msgid "%s %s %s%s"
 msgstr "%1$s은(는) %3$s%2$s다%4$s"
 
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
+#. / 1. 공격자. 2. drain의 동사형. 3. 대상
+#. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -7417,4 +7428,101 @@ msgstr ""
 
 #: decks.cc:3248
 msgid "You hear Nemelex Xobeh chuckle."
+msgstr ""
+
+#: godconduct.cc:77
+msgid " forgives your inadvertent blood-drinking, just this once."
+msgstr ""
+
+#: godconduct.cc:118
+msgid " forgives your inadvertent necromancy, just this once."
+msgstr ""
+
+#: godconduct.cc:135
+msgid " forgives your inadvertent unholy act, just this once."
+msgstr ""
+
+#: godconduct.cc:162
+msgid " forgives your inadvertent holy act, just this once."
+msgstr ""
+
+#: godconduct.cc:183
+msgid " forgives your inadvertent dishonourable attack, just this once."
+msgstr ""
+
+#: godconduct.cc:221 godconduct.cc:231
+msgid " forgives your inadvertent attack on a neutral, just this once."
+msgstr ""
+
+#: godconduct.cc:259
+msgid " forgives your inadvertent attack on an ally, just this once."
+msgstr ""
+
+#: godconduct.cc:327
+msgid " does not appreciate your shedding blood when asking for salvation!"
+msgstr ""
+
+#. might still be miniscule
+#: godconduct.cc:348 godconduct.cc:375 godconduct.cc:404 godconduct.cc:424
+#: godconduct.cc:436 godconduct.cc:496 godconduct.cc:535 godconduct.cc:995
+msgid " accepts your kill."
+msgstr "은/는 당신의 살해에 기꺼워했다."
+
+#: godconduct.cc:447
+msgid " appreciates your killing of a heretic priest."
+msgstr ""
+
+#: godconduct.cc:459
+msgid " appreciates your killing of a magic user."
+msgstr ""
+
+#: godconduct.cc:485
+msgid " thoroughly appreciates the change of pace."
+msgstr ""
+
+#: godconduct.cc:488
+msgid " appreciates the change of pace."
+msgstr ""
+
+#: godconduct.cc:542
+msgid " appreciates your killing of a holy being."
+msgstr ""
+
+#: godconduct.cc:564 godconduct.cc:619 godconduct.cc:658 godconduct.cc:697
+#: godconduct.cc:755
+msgid " accepts your slave's kill."
+msgstr ""
+
+#: godconduct.cc:599 godconduct.cc:639 godconduct.cc:678 godconduct.cc:716
+#: godconduct.cc:733 godconduct.cc:744
+msgid " accepts your collateral kill."
+msgstr ""
+
+#: godconduct.cc:844 godconduct.cc:904
+msgid " forgives your inadvertent chaotic act, just this once."
+msgstr ""
+
+#: godconduct.cc:854
+msgid " is not enthusiastic about the mutagenic glow surrounding you."
+msgstr ""
+
+#. Increase contamination within yellow glow.
+#: godconduct.cc:861
+msgid " does not appreciate the extra mutagenic glow surrounding you!"
+msgstr ""
+
+#: godconduct.cc:889
+msgid " forgives your inadvertent unclean act, just this once."
+msgstr ""
+
+#: godconduct.cc:943
+msgid " forgives your accidental hurry, just this once."
+msgstr ""
+
+#: godconduct.cc:946
+msgid " thinks you should slow down."
+msgstr ""
+
+#: godconduct.cc:993
+msgid " appreciates your kill."
 msgstr ""
