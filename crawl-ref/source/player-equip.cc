@@ -198,8 +198,8 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         {
             if (msg)
             {
-                mprf("You feel %s.", proprt[ARTP_AC] > 0?
-                     "well-protected" : "more vulnerable");
+                mprf(gettext("You feel %s."), proprt[ARTP_AC] > 0?
+                     pgettext("_equip_artefact_effect", "well-protected") : pgettext("_equip_artefact_effect", "more vulnerable"));
             }
             artefact_wpn_learn_prop(item, ARTP_AC);
         }
@@ -212,8 +212,8 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         {
             if (msg)
             {
-                mprf("You feel somewhat %s.", proprt[ARTP_EVASION] > 0?
-                     "nimbler" : "more awkward");
+                mprf(gettext("You feel somewhat %s."), proprt[ARTP_EVASION] > 0?
+                     pgettext("_equip_artefact_effect", "nimbler") : pgettext("_equip_artefact_effect", "more awkward"));
             }
             artefact_wpn_learn_prop(item, ARTP_EVASION);
         }
@@ -222,7 +222,7 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_PONDEROUS] && !unmeld)
     {
         if (msg)
-            mpr("You feel rather ponderous.");
+            mpr(gettext("You feel rather ponderous."));
         che_handle_change(CB_PONDEROUS_COUNT, 1);
     }
 
@@ -261,9 +261,9 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         if (msg)
         {
             if (you.airborne())
-                mpr("You feel vaguely more buoyant than before.");
+                mpr(gettext("You feel vaguely more buoyant than before."));
             else
-                mpr("You feel buoyant.");
+                mpr(gettext("You feel buoyant."));
         }
         artefact_wpn_learn_prop(item, ARTP_LEVITATE);
     }
@@ -271,7 +271,7 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (unknown_proprt(ARTP_INVISIBLE) && !you.duration[DUR_INVIS])
     {
         if (msg)
-            mpr("You become transparent for a moment.");
+            mpr(gettext("You become transparent for a moment."));
         artefact_wpn_learn_prop(item, ARTP_INVISIBLE);
     }
 
@@ -279,7 +279,7 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         && !items_give_ability(item.link, ARTP_BERSERK))
     {
         if (msg)
-            mpr("You feel a brief urge to hack something to bits.");
+            mpr(gettext("You feel a brief urge to hack something to bits."));
         artefact_wpn_learn_prop(item, ARTP_BERSERK);
     }
 
@@ -324,8 +324,8 @@ static void _unequip_artefact_effect(item_def &item,
         you.redraw_armour_class = true;
         if (!known[ARTP_AC] && msg)
         {
-            mprf("You feel less %s.",
-                 proprt[ARTP_AC] > 0? "well-protected" : "vulnerable");
+            mprf(gettext("You feel less %s."),
+                 proprt[ARTP_AC] > 0? pgettext("_unequip_artefact_effect", "well-protected") : pgettext("_unequip_artefact_effect", "vulnerable"));
         }
     }
 
@@ -334,15 +334,15 @@ static void _unequip_artefact_effect(item_def &item,
         you.redraw_evasion = true;
         if (!known[ARTP_EVASION] && msg)
         {
-            mprf("You feel less %s.",
-                 proprt[ARTP_EVASION] > 0? "nimble" : "awkward");
+            mprf(gettext("You feel less %s."),
+                 proprt[ARTP_EVASION] > 0? pgettext("_unequip_artefact_effect", "nimble") : pgettext("_unequip_artefact_effect", "awkward"));
         }
     }
 
     if (proprt[ARTP_PONDEROUS] && !meld)
     {
         if (msg)
-            mpr("That put a bit of spring back into your step.");
+            mpr(gettext("That put a bit of spring back into your step."));
         che_handle_change(CB_PONDEROUS_COUNT, -1);
     }
 
@@ -402,21 +402,21 @@ static void _unequip_artefact_effect(item_def &item,
 static void _equip_use_warning(const item_def& item)
 {
     if (is_holy_item(item) && you.religion == GOD_YREDELEMNUL)
-        mpr("You really shouldn't be using a holy item like this.");
+        mpr(gettext("You really shouldn't be using a holy item like this."));
     else if (is_unholy_item(item) && is_good_god(you.religion))
-        mpr("You really shouldn't be using an unholy item like this.");
+        mpr(gettext("You really shouldn't be using an unholy item like this."));
     else if (is_corpse_violating_item(item) && you.religion == GOD_FEDHAS)
-        mpr("You really shouldn't be using a corpse-violating item like this.");
+        mpr(gettext("You really shouldn't be using a corpse-violating item like this."));
     else if (is_evil_item(item) && is_good_god(you.religion))
-        mpr("You really shouldn't be using an evil item like this.");
+        mpr(gettext("You really shouldn't be using an evil item like this."));
     else if (is_unclean_item(item) && you.religion == GOD_ZIN)
-        mpr("You really shouldn't be using an unclean item like this.");
+        mpr(gettext("You really shouldn't be using an unclean item like this."));
     else if (is_chaotic_item(item) && you.religion == GOD_ZIN)
-        mpr("You really shouldn't be using a chaotic item like this.");
+        mpr(gettext("You really shouldn't be using a chaotic item like this."));
     else if (is_hasty_item(item) && you.religion == GOD_CHEIBRIADOS)
-        mpr("You really shouldn't be using a fast item like this.");
+        mpr(gettext("You really shouldn't be using a fast item like this."));
     else if (is_poisoned_item(item) && you.religion == GOD_SHINING_ONE)
-        mpr("You really shouldn't be using a poisoned item like this.");
+        mpr(gettext("You really shouldn't be using a poisoned item like this."));
 }
 
 
@@ -424,7 +424,7 @@ static void _wield_cursed(item_def& item, bool known_cursed, bool unmeld)
 {
     if (!item.cursed() || unmeld)
         return;
-    mprf("It sticks to your %s!", you.hand_name(false).c_str());
+    mprf(gettext("It sticks to your %s!"), you.hand_name(false).c_str());
     int amusement = 16;
     if (!known_cursed)
     {
@@ -458,7 +458,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         if (item.sub_type == MISC_LANTERN_OF_SHADOWS)
         {
             if (showMsgs)
-                mpr("The area is filled with flickering shadows.");
+                mpr(gettext("The area is filled with flickering shadows."));
 
             you.attribute[ATTR_SHADOWS] = 1;
             update_vision_range();
@@ -482,7 +482,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
 
             if ((you.max_magic_points + 13) *
                 (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
-                mpr("You feel your mana capacity is already quite full.");
+                mpr(gettext("You feel your mana capacity is already quite full."));
             else
                 canned_msg(MSG_MANA_INCREASE);
 
@@ -534,121 +534,121 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 switch (special)
                 {
                 case SPWPN_FLAMING:
-                    mpr("It bursts into flame!");
+                    mpr(gettext("It bursts into flame!"));
                     break;
 
                 case SPWPN_FREEZING:
-                    mpr("It glows with a cold blue light!");
+                    mpr(gettext("It glows with a cold blue light!"));
                     break;
 
                 case SPWPN_HOLY_WRATH:
-                    mpr("It softly glows with a divine radiance!");
+                    mpr(gettext("It softly glows with a divine radiance!"));
                     break;
 
                 case SPWPN_ELECTROCUTION:
                     if (!silenced(you.pos()))
                     {
-                        mpr("You hear the crackle of electricity.",
+                        mpr(gettext("You hear the crackle of electricity."),
                             MSGCH_SOUND);
                     }
                     else
-                        mpr("You see sparks fly.");
+                        mpr(gettext("You see sparks fly."));
                     break;
 
                 case SPWPN_ORC_SLAYING:
                     mpr((you.species == SP_HILL_ORC)
-                            ? "You feel a sudden desire to commit suicide."
-                            : "You feel a sudden desire to kill orcs!");
+                            ? gettext("You feel a sudden desire to commit suicide.")
+                            : gettext("You feel a sudden desire to kill orcs!"));
                     break;
 
                 case SPWPN_DRAGON_SLAYING:
                     mpr(player_genus(GENPC_DRACONIAN)
                         || you.form == TRAN_DRAGON
-                            ? "You feel a sudden desire to commit suicide."
-                            : "You feel a sudden desire to slay dragons!");
+                            ? gettext("You feel a sudden desire to commit suicide.")
+                            : gettext("You feel a sudden desire to slay dragons!"));
                     break;
 
                 case SPWPN_VENOM:
-                    mpr("It begins to drip with poison!");
+                    mpr(gettext("It begins to drip with poison!"));
                     break;
 
                 case SPWPN_PROTECTION:
-                    mpr("You feel protected!");
+                    mpr(gettext("You feel protected!"));
                     break;
 
                 case SPWPN_EVASION:
-                    mpr("You feel nimbler!");
+                    mpr(gettext("You feel nimbler!"));
                     break;
 
                 case SPWPN_DRAINING:
-                    mpr("You sense an unholy aura.");
+                    mpr(gettext("You sense an unholy aura."));
                     break;
 
                 case SPWPN_SPEED:
-                    mprf("Your %s tingle!",
+                    mprf(gettext("Your %s tingle!"),
                          you.hand_name(true).c_str());
                     break;
 
                 case SPWPN_FLAME:
-                    mpr("It bursts into flame!");
+                    mpr(gettext("It bursts into flame!"));
                     break;
 
                 case SPWPN_FROST:
-                    mpr("It is covered in frost.");
+                    mpr(gettext("It is covered in frost."));
                     break;
 
                 case SPWPN_VAMPIRICISM:
                     if (you.species == SP_VAMPIRE)
                     {
-                        mpr("You feel a bloodthirsty glee!");
+                        mpr(gettext("You feel a bloodthirsty glee!"));
                         break;
                     }
 
                     if (you.is_undead == US_ALIVE)
                     {
-                        mpr("You feel a dreadful hunger.");
+                        mpr(gettext("You feel a dreadful hunger."));
                         // takes player from Full to Hungry
                         if (!unmeld)
                             make_hungry(4500, false, false);
                     }
                     else
-                        mpr("You feel an empty sense of dread.");
+                        mpr(gettext("You feel an empty sense of dread."));
                     break;
 
                 case SPWPN_RETURNING:
-                    mpr("It wiggles slightly.");
+                    mpr(gettext("It wiggles slightly."));
                     break;
 
                 case SPWPN_PAIN:
                 {
                     const char* your_arm = you.arm_name(false).c_str();
                     if (you.skill(SK_NECROMANCY) == 0)
-                        mpr("You have a feeling of ineptitude.");
+                        mpr(gettext("You have a feeling of ineptitude."));
                     else if (you.skill(SK_NECROMANCY) <= 6)
-                        mprf("Pain shudders through your %s!", your_arm);
+                        mprf(gettext("Pain shudders through your %s!"), your_arm);
                     else
-                        mprf("A searing pain shoots up your %s!", your_arm);
+                        mprf(gettext("A searing pain shoots up your %s!"), your_arm);
                     break;
                 }
 
                 case SPWPN_CHAOS:
-                    mpr("It is briefly surrounded by a scintillating aura "
-                        "of random colours.");
+                    mpr(gettext("It is briefly surrounded by a scintillating aura "
+                        "of random colours."));
                     break;
 
                 case SPWPN_PENETRATION:
-                    mprf("Your %s briefly pass through it before you manage "
-                         "to get a firm grip on it.",
+                    mprf(gettext("Your %s briefly pass through it before you manage "
+                         "to get a firm grip on it."),
                          you.hand_name(true).c_str());
                     break;
 
                 case SPWPN_REAPING:
-                    mpr("It is briefly surrounded by shifting shadows.");
+                    mpr(gettext("It is briefly surrounded by shifting shadows."));
                     break;
 
                 case SPWPN_ANTIMAGIC:
                     // Even if your maxmp is 0.
-                    mpr("You feel magic leave you.");
+                    mpr(gettext("You feel magic leave you."));
                     break;
 
                 default:
@@ -668,7 +668,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 break;
 
             case SPWPN_DISTORTION:
-                mpr("Space warps around you for a moment!");
+                mpr(gettext("Space warps around you for a moment!"));
 
                 if (!was_known)
                 {
@@ -732,34 +732,34 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
             {
             case SPWPN_FLAMING:
                 if (showMsgs)
-                    mprf("%s stops flaming.", msg.c_str());
+                    mprf(gettext("%s stops flaming."), msg.c_str());
                 break;
 
             case SPWPN_FREEZING:
             case SPWPN_HOLY_WRATH:
                 if (showMsgs)
-                    mprf("%s stops glowing.", msg.c_str());
+                    mprf(gettext("%s stops glowing."), msg.c_str());
                 break;
 
             case SPWPN_ELECTROCUTION:
                 if (showMsgs)
-                    mprf("%s stops crackling.", msg.c_str());
+                    mprf(gettext("%s stops crackling."), msg.c_str());
                 break;
 
             case SPWPN_VENOM:
                 if (showMsgs)
-                    mprf("%s stops dripping with poison.", msg.c_str());
+                    mprf(gettext("%s stops dripping with poison."), msg.c_str());
                 break;
 
             case SPWPN_PROTECTION:
                 if (showMsgs)
-                    mpr("You feel less protected.");
+                    mpr(gettext("You feel less protected."));
                 you.redraw_armour_class = true;
                 break;
 
             case SPWPN_EVASION:
                 if (showMsgs)
-                    mpr("You feel like more of a target.");
+                    mpr(gettext("You feel like more of a target."));
                 you.redraw_evasion = true;
                 break;
 
@@ -767,9 +767,9 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                 if (showMsgs)
                 {
                     if (you.species == SP_VAMPIRE)
-                        mpr("You feel your glee subside.");
+                        mpr(gettext("You feel your glee subside."));
                     else
-                        mpr("You feel the dreadful sensation subside.");
+                        mpr(gettext("You feel the dreadful sensation subside."));
                 }
                 break;
 
@@ -798,7 +798,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
 
             case SPWPN_ANTIMAGIC:
                 calc_mp();
-                mpr("You feel magic returning to you.");
+                mpr(gettext("You feel magic returning to you."));
                 break;
 
                 // NOTE: When more are added here, *must* duplicate unwielding
@@ -811,7 +811,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                 set_item_ego_type(item, OBJ_WEAPONS, SPWPN_NORMAL);
 
                 // We're letting this through even if hiding messages.
-                mpr("Your branding evaporates.");
+                mpr(gettext("Your branding evaporates."));
             }
         }
     }
@@ -838,29 +838,29 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
         {
         case SPARM_RUNNING:
             if (!you.fishtail)
-                mpr("You feel quick.");
+                mpr(pgettext("_equip_armour_effect", "You feel quick."));
             break;
 
         case SPARM_FIRE_RESISTANCE:
-            mpr("You feel resistant to fire.");
+            mpr(gettext("You feel resistant to fire."));
             break;
 
         case SPARM_COLD_RESISTANCE:
-            mpr("You feel resistant to cold.");
+            mpr(gettext("You feel resistant to cold."));
             break;
 
         case SPARM_POISON_RESISTANCE:
-            mpr("You feel healthy.");
+            mpr(pgettext("_equip_armour_effect", "You feel healthy."));
             break;
 
         case SPARM_SEE_INVISIBLE:
-            mpr("You feel perceptive.");
+            mpr(gettext("You feel perceptive."));
             autotoggle_autopickup(false);
             break;
 
         case SPARM_DARKNESS:
             if (!you.duration[DUR_INVIS])
-                mpr("You become transparent for a moment.");
+                mpr(gettext("You become transparent for a moment."));
             break;
 
         case SPARM_STRENGTH:
@@ -878,55 +878,55 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
         case SPARM_PONDEROUSNESS:
             if (!unmeld)
             {
-                mpr("You feel rather ponderous.");
+                mpr(gettext("You feel rather ponderous."));
                 che_handle_change(CB_PONDEROUS_COUNT, 1);
                 you.redraw_evasion = true;
             }
             break;
 
         case SPARM_LEVITATION:
-            mpr("You feel rather light.");
+            mpr(gettext("You feel rather light."));
             break;
 
         case SPARM_MAGIC_RESISTANCE:
-            mpr("You feel resistant to hostile enchantments.");
+            mpr(pgettext("_equip_armour_effect", "You feel resistant to hostile enchantments."));
             break;
 
         case SPARM_PROTECTION:
-            mpr("You feel protected.");
+            mpr(gettext("You feel protected."));
             break;
 
         case SPARM_STEALTH:
-            mpr("You feel stealthy.");
+            mpr(gettext("You feel stealthy."));
             break;
 
         case SPARM_RESISTANCE:
-            mpr("You feel resistant to extremes of temperature.");
+            mpr(gettext("You feel resistant to extremes of temperature."));
             break;
 
         case SPARM_POSITIVE_ENERGY:
-            mpr("Your life force is being protected.");
+            mpr(gettext("Your life force is being protected."));
             break;
 
         case SPARM_ARCHMAGI:
             if (!you.skill(SK_SPELLCASTING))
-                mpr("You feel strangely lacking in power.");
+                mpr(gettext("You feel strangely lacking in power."));
             else
-                mpr("You feel powerful.");
+                mpr(gettext("You feel powerful."));
             break;
 
         case SPARM_SPIRIT_SHIELD:
             if (player_spirit_shield() < 2)
             {
                 set_mp(0);
-                mpr("You feel spirits watching over you.");
+                mpr(gettext("You feel spirits watching over you."));
                 if (you.species == SP_DEEP_DWARF)
-                    mpr("Now linked to your health, your magic stops regenerating.");
+                    mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
             break;
 
         case SPARM_ARCHERY:
-            mpr("You feel that your aim is more steady.");
+            mpr(gettext("You feel that your aim is more steady."));
             break;
         }
     }
@@ -939,7 +939,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
 
     if (arm.cursed() && !unmeld)
     {
-        mpr("Oops, that feels deathly cold.");
+        mpr(gettext("Oops, that feels deathly cold."));
         learned_something_new(HINT_YOU_CURSED);
 
         if (!known_cursed)
@@ -981,25 +981,25 @@ static void _unequip_armour_effect(item_def& item, bool meld)
     {
     case SPARM_RUNNING:
         if (!you.fishtail)
-            mpr("You feel rather sluggish.");
+            mpr(gettext("You feel rather sluggish."));
         break;
 
     case SPARM_FIRE_RESISTANCE:
-        mpr("\"Was it this warm in here before?\"");
+        mpr(gettext("\"Was it this warm in here before?\""));
         break;
 
     case SPARM_COLD_RESISTANCE:
-        mpr("You catch a bit of a chill.");
+        mpr(gettext("You catch a bit of a chill."));
         break;
 
     case SPARM_POISON_RESISTANCE:
         if (!player_res_poison())
-            mpr("You feel less healthy.");
+            mpr(gettext("You feel less healthy."));
         break;
 
     case SPARM_SEE_INVISIBLE:
         if (!you.can_see_invisible())
-            mpr("You feel less perceptive.");
+            mpr(gettext("You feel less perceptive."));
         break;
 
     case SPARM_DARKNESS:
@@ -1043,35 +1043,35 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         break;
 
     case SPARM_MAGIC_RESISTANCE:
-        mpr("You feel less resistant to hostile enchantments.");
+        mpr(pgettext("_unequip_armour_effect", "You feel less resistant to hostile enchantments."));
         break;
 
     case SPARM_PROTECTION:
-        mpr("You feel less protected.");
+        mpr(gettext("You feel less protected."));
         break;
 
     case SPARM_STEALTH:
-        mpr("You feel less stealthy.");
+        mpr(gettext("You feel less stealthy."));
         break;
 
     case SPARM_RESISTANCE:
-        mpr("You feel hot and cold all over.");
+        mpr(gettext("You feel hot and cold all over."));
         break;
 
     case SPARM_POSITIVE_ENERGY:
-        mpr("You feel vulnerable.");
+        mpr(gettext("You feel vulnerable."));
         break;
 
     case SPARM_ARCHMAGI:
-        mpr("You feel strangely numb.");
+        mpr(gettext("You feel strangely numb."));
         break;
 
     case SPARM_SPIRIT_SHIELD:
         if (!player_spirit_shield())
         {
-            mpr("You feel strangely alone.");
+            mpr(gettext("You feel strangely alone."));
             if (you.species == SP_DEEP_DWARF)
-                mpr("Your magic begins regenerating once more.");
+                mpr(gettext("Your magic begins regenerating once more."));
         }
         else if (player_equip(EQ_AMULET, AMU_GUARDIAN_SPIRIT, true))
         {
@@ -1080,14 +1080,14 @@ static void _unequip_armour_effect(item_def& item, bool meld)
             {
                 set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
                 set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
+                mprf(gettext("You are wearing: %s"),
                      amu.name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
         break;
 
     case SPARM_ARCHERY:
-        mpr("Your aim is not that steady anymore.");
+        mpr(gettext("Your aim is not that steady anymore."));
         break;
 
     default:
@@ -1103,14 +1103,14 @@ static void _remove_amulet_of_faith(item_def &item)
     if (you.religion != GOD_NO_GOD
         && you.religion != GOD_XOM)
     {
-        simple_god_message(" seems less interested in you.");
+        simple_god_message(gettext(" seems less interested in you."));
 
         const int piety_loss = div_rand_round(you.piety, 3);
         // Piety penalty for removing the Amulet of Faith.
         if (you.piety - piety_loss > 10)
         {
             mprf(MSGCH_GOD,
-                 "%s leaches power out of you as you remove it.",
+                 gettext("%s leaches power out of you as you remove it."),
                  item.name(true, DESC_CAP_YOUR).c_str());
             dprf("%s: piety leach: %d",
                  item.name(false, DESC_PLAIN).c_str(), piety_loss);
@@ -1172,8 +1172,8 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                 ident = ID_KNOWN_TYPE;
             else if (!known_pluses)
             {
-                mprf("You feel %s.", item.plus > 0 ?
-                     "well-protected" : "more vulnerable");
+                mprf(gettext("You feel %s."), item.plus > 0 ?
+                     pgettext("_equip_jewellery_effect", "well-protected") : pgettext("_equip_jewellery_effect", "more vulnerable"));
             }
             learn_pluses = true;
         }
@@ -1182,7 +1182,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case RING_INVISIBILITY:
         if (!you.duration[DUR_INVIS])
         {
-            mpr("You become transparent for a moment.");
+            mpr(gettext("You become transparent for a moment."));
             if (artefact)
                 fake_rap = ARTP_INVISIBLE;
             else
@@ -1197,7 +1197,8 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             if (!artefact)
                 ident = ID_KNOWN_TYPE;
             else if (!known_pluses)
-                mprf("You feel %s.", item.plus > 0? "nimbler" : "more awkward");
+                mprf(gettext("You feel %s."), 
+                    item.plus > 0? pgettext("_equip_jewellery_effect", "nimbler") : pgettext("_equip_jewellery_effect", "more awkward"));
             learn_pluses = true;
         }
         break;
@@ -1247,7 +1248,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case RING_MAGICAL_POWER:
         if ((you.max_magic_points + 9) *
             (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
-            mpr("You feel your mana capacity is already quite full.");
+            mpr(gettext("You feel your mana capacity is already quite full."));
         else
             canned_msg(MSG_MANA_INCREASE);
 
@@ -1262,9 +1263,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (!scan_artefacts(ARTP_LEVITATE))
         {
             if (you.airborne())
-                mpr("You feel vaguely more buoyant than before.");
+                mpr(gettext("You feel vaguely more buoyant than before."));
             else
-                mpr("You feel buoyant.");
+                mpr(gettext("You feel buoyant."));
             if (artefact)
                 fake_rap = ARTP_LEVITATE;
             else
@@ -1274,9 +1275,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     case RING_TELEPORTATION:
         if (crawl_state.game_is_sprint())
-            mpr("You feel a slight, muted jump rush through you.");
+            mpr(gettext("You feel a slight, muted jump rush through you."));
         else
-            mpr("You feel slightly jumpy.");
+            mpr(gettext("You feel slightly jumpy."));
         if (artefact)
             fake_rap = ARTP_CAUSE_TELEPORTATION;
         else
@@ -1286,7 +1287,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case AMU_RAGE:
         if (!scan_artefacts(ARTP_BERSERK))
         {
-            mpr("You feel a brief urge to hack something to bits.");
+            mpr(gettext("You feel a brief urge to hack something to bits."));
             if (artefact)
                 fake_rap = ARTP_BERSERK;
             else
@@ -1297,7 +1298,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case AMU_FAITH:
         if (you.religion != GOD_NO_GOD)
         {
-            mpr("You feel a surge of divine interest.", MSGCH_GOD);
+            mpr(gettext("You feel a surge of divine interest."), MSGCH_GOD);
             ident = ID_KNOWN_TYPE;
         }
         break;
@@ -1309,7 +1310,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (you.species != SP_MUMMY
             && player_mutation_level(MUT_HERBIVOROUS) < 3)
         {
-            mpr("You feel a craving for the dungeon's cuisine.");
+            mpr(gettext("You feel a craving for the dungeon's cuisine."));
             ident = ID_KNOWN_TYPE;
         }
         break;
@@ -1326,9 +1327,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (player_spirit_shield() < 2)
         {
             set_mp(0);
-            mpr("You feel your power drawn to a protective spirit.");
+            mpr(gettext("You feel your power drawn to a protective spirit."));
             if (you.species == SP_DEEP_DWARF)
-                mpr("Now linked to your health, your magic stops regenerating.");
+                mpr(gettext("Now linked to your health, your magic stops regenerating."));
             ident = ID_KNOWN_TYPE;
         }
         break;
@@ -1349,9 +1350,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             amount += 30 + random2(150);
         if (amount)
         {
-            mprf("The amulet engulfs you in a%s magical discharge!",
-                 (amount > 250) ? " massive" :
-                 (amount >  50) ? " violent" :
+            mprf(gettext("The amulet engulfs you in a%s magical discharge!"),
+                 (amount > 250) ? pgettext("_equip_jewellery_effect", " massive") :
+                 (amount >  50) ? pgettext("_equip_jewellery_effect", " violent") :
                                   "");
             ident = ID_KNOWN_TYPE;
 
@@ -1363,16 +1364,16 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             if (you.duration[DUR_SLOW])
                 dir--;
             if (dir > 0)
-                mpr("You abruptly slow down.", MSGCH_DURATION);
+                mpr(gettext("You abruptly slow down."), MSGCH_DURATION);
             else if (dir < 0)
-                mpr("Your slowness suddenly goes away.", MSGCH_DURATION);
+                mpr(gettext("Your slowness suddenly goes away."), MSGCH_DURATION);
             if (you.duration[DUR_TELEPORT])
-                mpr("You feel strangely stable.", MSGCH_DURATION);
+                mpr(gettext("You feel strangely stable."), MSGCH_DURATION);
             if (you.duration[DUR_BERSERK])
-                mpr("You violently calm down.", MSGCH_DURATION);
+                mpr(gettext("You violently calm down."), MSGCH_DURATION);
             // my thesaurus says this usage is correct
             if (you.duration[DUR_FINESSE])
-                mpr("Your hands get arrested.", MSGCH_DURATION);
+                mpr(gettext("Your hands get arrested."), MSGCH_DURATION);
             you.duration[DUR_HASTE] = 0;
             you.duration[DUR_SLOW] = 0;
             you.duration[DUR_TELEPORT] = 0;
@@ -1414,7 +1415,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     if (item.cursed())
     {
-        mprf("Oops, that %s feels deathly cold.",
+        mprf(gettext("Oops, that %s feels deathly cold."),
              jewellery_is_amulet(item)? "amulet" : "ring");
         learned_something_new(HINT_YOU_CURSED);
 
@@ -1520,7 +1521,7 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg)
 
     case AMU_GUARDIAN_SPIRIT:
         if (you.species == SP_DEEP_DWARF)
-            mpr("Your magic begins regenerating once more.");
+            mpr(gettext("Your magic begins regenerating once more."));
         break;
     }
 

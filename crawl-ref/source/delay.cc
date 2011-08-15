@@ -231,11 +231,12 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
             }
 
         const std::string butcher_verb =
-                (delay.type == DELAY_BUTCHER      ? "butchering" :
-                 delay.type == DELAY_BOTTLE_BLOOD ? "bottling blood from"
-                                                  : "sacrificing");
+                (delay.type == DELAY_BUTCHER      ? pgettext("stop_delay", "butchering") :
+                 delay.type == DELAY_BOTTLE_BLOOD ? pgettext("stop_delay", "bottling blood from")
+                                                  : pgettext("stop_delay", "sacrificing"));
 
-        mprf("You stop %s the corpse%s.", butcher_verb.c_str(),
+        /// 1. butchering, bottling blood from, sacrificing 중 하나의 번역문. 2. s가 붙거나 안붙거나.
+        mprf(gettext("You stop %s the corpse%s."), butcher_verb.c_str(),
              multiple_corpses ? "s" : "");
 
         _pop_delay();
@@ -246,20 +247,20 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
     case DELAY_MEMORISE:
         // Losing work here is okay... having to start from
         // scratch is a reasonable behaviour. -- bwr
-        mpr("Your memorisation is interrupted.");
+        mpr(gettext("Your memorisation is interrupted."));
         _pop_delay();
         break;
 
     case DELAY_MULTIDROP:
         // No work lost
         if (!items_for_multidrop.empty())
-            mpr("You stop dropping stuff.");
+            mpr(gettext("You stop dropping stuff."));
         _pop_delay();
         break;
 
     case DELAY_RECITE:
-        mprf(MSGCH_PLAIN, "Your recitation is interrupted.");
-        mpr("You feel short of breath.");
+        mprf(MSGCH_PLAIN, gettext("Your recitation is interrupted."));
+        mpr(gettext("You feel short of breath."));
         _pop_delay();
         break;
 
@@ -296,7 +297,7 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
 
     case DELAY_FEED_VAMPIRE:
     {
-        mpr("You stop draining the corpse.");
+        mpr(gettext("You stop draining the corpse."));
 
         did_god_conduct(DID_DRINK_BLOOD, 8);
 
@@ -314,7 +315,7 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
                 && item.base_type == OBJ_CORPSES
                 && item.pos == you.pos()))
         {
-            mpr("All blood oozes out of the corpse!");
+            mpr(gettext("All blood oozes out of the corpse!"));
 
             bleed_onto_floor(you.pos(), static_cast<monster_type>(item.plus),
                              delay.duration, false);
@@ -357,9 +358,9 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
     case DELAY_DESCENDING_STAIRS: // short... and probably what people want
         if (stop_stair_travel)
         {
-            mprf("You stop %s the stairs.",
-                 delay.type == DELAY_ASCENDING_STAIRS ? "ascending"
-                                                      : "descending");
+            mprf(gettext("You stop %s the stairs."),
+                 delay.type == DELAY_ASCENDING_STAIRS ? pgettext("stop_delay", "ascending")
+                                                      : pgettext("stop_delay", "descending"));
             _pop_delay();
         }
         break;
@@ -367,7 +368,7 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
     case DELAY_PASSWALL:
         if (stop_stair_travel)
         {
-            mpr("Your meditation is interrupted.");
+            mpr(gettext("Your meditation is interrupted."));
             _pop_delay();
         }
         break;
@@ -420,7 +421,7 @@ void handle_interrupted_swap(bool swap_if_safe, bool force_unsafe)
     const bool       prompt = Options.prompt_for_swap && !safe;
     const delay_type delay  = current_delay_action();
 
-    const char* prompt_str  = "Switch back to main weapon?";
+    const char* prompt_str  = gettext("Switch back to main weapon?");
 
     // If we're going to prompt then update the window so the player can
     // see what the monsters are.
@@ -647,11 +648,11 @@ void handle_delay()
         switch (delay.type)
         {
         case DELAY_ARMOUR_ON:
-            mpr("You start putting on your armour.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You start putting on your armour."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_ARMOUR_OFF:
-            mpr("You start removing your armour.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You start removing your armour."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_BUTCHER:
@@ -662,7 +663,7 @@ void handle_delay()
             if (delay.type == DELAY_BOTTLE_BLOOD)
             {
                 mprf(MSGCH_MULTITURN_ACTION,
-                     "You start bottling blood from the %s.",
+                     gettext("You start bottling blood from the %s."),
                      mitm[delay.parm1].name(true, DESC_PLAIN).c_str());
             }
             else
@@ -670,24 +671,25 @@ void handle_delay()
                 std::string tool;
                 switch (delay.parm3)
                 {
-                case SLOT_BUTCHERING_KNIFE: tool = "knife"; break;
-                case SLOT_CLAWS:            tool = "claws"; break;
-                case SLOT_TEETH:            tool = "teeth"; break;
-                case SLOT_BIRDIE:           tool = "beak and talons"; break;
+                case SLOT_BUTCHERING_KNIFE: tool = pgettext("handle_delay", "knife"); break;
+                case SLOT_CLAWS:            tool = pgettext("handle_delay", "claws"); break;
+                case SLOT_TEETH:            tool = pgettext("handle_delay", "teeth"); break;
+                case SLOT_BIRDIE:           tool = pgettext("handle_delay", "beak and talons"); break;
                 default: tool = you.inv[delay.parm3].name(true, DESC_QUALNAME);
                 }
                 mprf(MSGCH_MULTITURN_ACTION,
-                     "You start butchering the %s with your %s.",
+                     /// 1. 아이템 이름, 2. knife, claws, teeth, beak and talons, 혹은 아이템 이름 중 하나.
+                     gettext("You start butchering the %s with your %s."),
                      mitm[delay.parm1].name(true, DESC_PLAIN).c_str(), tool.c_str());
             }
             break;
 
         case DELAY_MEMORISE:
-            mpr("You start memorising the spell.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You start memorising the spell."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_PASSWALL:
-            mpr("You begin to meditate on the wall.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You begin to meditate on the wall."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_RECITE:
@@ -699,7 +701,7 @@ void handle_delay()
             delay.len = 7;
             for (size_t n = 0; n < delay.len; n++)
                 delay.trits[n] = random2(3);
-            mprf(MSGCH_PLAIN, "You clear your throat and prepare to recite %s.",
+            mprf(MSGCH_PLAIN, gettext("You clear your throat and prepare to recite %s."),
                  _get_zin_recite_speech(delay.trits, delay.len,
                                         delay.parm1, -1).c_str());
             break;
@@ -753,7 +755,7 @@ void handle_delay()
     {
         if (delay.type == DELAY_BOTTLE_BLOOD && you.experience_level < 6)
         {
-            mpr("You cannot bottle blood anymore!");
+            mpr(gettext("You cannot bottle blood anymore!"));
             stop_delay();
             return;
         }
@@ -769,7 +771,7 @@ void handle_delay()
         {
             if (mitm[ delay.parm1 ].sub_type == CORPSE_SKELETON)
             {
-                mpr("The corpse rots away into a skeleton!");
+                mpr(gettext("The corpse rots away into a skeleton!"));
                 if (delay.type == DELAY_BUTCHER
                     || delay.type == DELAY_BOTTLE_BLOOD) // Shouldn't happen.
                 {
@@ -794,7 +796,7 @@ void handle_delay()
                     // previously rotten. (special < 100 is the rottenness check).
                     if (delay.parm2 >= 100)
                     {
-                        mpr("The corpse rots.", MSGCH_ROTTEN_MEAT);
+                        mpr(gettext("The corpse rots."), MSGCH_ROTTEN_MEAT);
                         if (you.is_undead != US_UNDEAD
                             && player_mutation_level(MUT_SAPROVOROUS) < 3)
                         {
@@ -807,8 +809,8 @@ void handle_delay()
                     // Vampires won't continue bottling rotting corpses.
                     if (delay.type == DELAY_BOTTLE_BLOOD)
                     {
-                        mpr("You stop bottling this corpse's foul-smelling "
-                            "blood!");
+                        mpr(gettext("You stop bottling this corpse's foul-smelling "
+                            "blood!"));
                         _pop_delay();
                         return;
                     }
@@ -869,22 +871,22 @@ void handle_delay()
         switch (delay.type)
         {
         case DELAY_ARMOUR_ON:
-            mprf(MSGCH_MULTITURN_ACTION, "You continue putting on %s.",
+            mprf(MSGCH_MULTITURN_ACTION, gettext("You continue putting on %s."),
                  you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
             break;
 
         case DELAY_ARMOUR_OFF:
-            mprf(MSGCH_MULTITURN_ACTION, "You continue taking off %s.",
+            mprf(MSGCH_MULTITURN_ACTION, gettext("You continue taking off %s."),
                  you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
             break;
 
         case DELAY_BUTCHER:
-            mprf(MSGCH_MULTITURN_ACTION, "You continue butchering the corpse.");
+            mprf(MSGCH_MULTITURN_ACTION, gettext("You continue butchering the corpse."));
             break;
 
         case DELAY_BOTTLE_BLOOD:
-            mprf(MSGCH_MULTITURN_ACTION, "You continue bottling blood from "
-                                         "the corpse.");
+            mprf(MSGCH_MULTITURN_ACTION, gettext("You continue bottling blood from "
+                                         "the corpse."));
             break;
 
         case DELAY_JEWELLERY_ON:
@@ -896,11 +898,11 @@ void handle_delay()
             break;
 
         case DELAY_MEMORISE:
-            mpr("You continue memorising.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You continue memorising."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_PASSWALL:
-            mpr("You continue meditating on the rock.",
+            mpr(gettext("You continue meditating on the rock."),
                 MSGCH_MULTITURN_ACTION);
             break;
 
@@ -947,7 +949,7 @@ void handle_delay()
             break;
 
         case DELAY_EAT:
-            mpr("You continue eating.", MSGCH_MULTITURN_ACTION);
+            mpr(gettext("You continue eating."), MSGCH_MULTITURN_ACTION);
             break;
 
         case DELAY_FEED_VAMPIRE:
@@ -956,12 +958,12 @@ void handle_delay()
                                             : mitm[delay.parm2]);
             if (food_is_rotten(corpse))
             {
-                mpr("This corpse has started to rot.", MSGCH_ROTTEN_MEAT);
+                mpr(gettext("This corpse has started to rot."), MSGCH_ROTTEN_MEAT);
                 _xom_check_corpse_waste();
                 stop_delay();
                 return;
             }
-            mprf(MSGCH_MULTITURN_ACTION, "You continue drinking.");
+            mprf(MSGCH_MULTITURN_ACTION, gettext("You continue drinking."));
             vampire_nutrition_per_turn(corpse, 0);
             break;
         }
@@ -1005,7 +1007,7 @@ static void _finish_delay(const delay_queue_item &delay)
         const equipment_type slot = get_armour_slot(you.inv[delay.parm1]);
         ASSERT(you.equip[slot] == delay.parm1);
 
-        mprf("You finish taking off %s.",
+        mprf(gettext("You finish taking off %s."),
              you.inv[delay.parm1].name(true, DESC_NOCAP_YOUR).c_str());
         unequip_item(slot);
 
@@ -1013,7 +1015,7 @@ static void _finish_delay(const delay_queue_item &delay)
     }
 
     case DELAY_EAT:
-        mprf("You finish eating.");
+        mprf(gettext("You finish eating."));
         // For chunks, warn the player if they're not getting much
         // nutrition. Also, print the other eating messages only now.
         if (delay.parm1)
@@ -1024,7 +1026,7 @@ static void _finish_delay(const delay_queue_item &delay)
 
     case DELAY_FEED_VAMPIRE:
     {
-        mprf("You finish drinking.");
+        mprf(gettext("You finish drinking."));
 
         did_god_conduct(DID_DRINK_BLOOD, 8);
 
@@ -1062,7 +1064,7 @@ static void _finish_delay(const delay_queue_item &delay)
     }
 
     case DELAY_MEMORISE:
-        mpr("You finish memorising.");
+        mpr(gettext("You finish memorising."));
         add_spell_to_memory(static_cast<spell_type>(delay.parm1));
         break;
 
@@ -1081,14 +1083,14 @@ static void _finish_delay(const delay_queue_item &delay)
                 speech += closure;
             }
         }
-        mprf(MSGCH_PLAIN, "You finish reciting %s", speech.c_str());
-        mpr("You feel short of breath.");
+        mprf(MSGCH_PLAIN, gettext("You finish reciting %s"), speech.c_str());
+        mpr(gettext("You feel short of breath."));
         break;
     }
 
     case DELAY_PASSWALL:
     {
-        mpr("You finish merging with the rock.");
+        mpr(gettext("You finish merging with the rock."));
         more();  // or the above message won't be seen
 
         const coord_def pass(delay.parm1, delay.parm2);
@@ -1138,10 +1140,10 @@ static void _finish_delay(const delay_queue_item &delay)
         {
             if (item.sub_type == CORPSE_SKELETON)
             {
-                mprf("The corpse rots away into a skeleton just before you "
-                     "finish %s!",
-                     (delay.type == DELAY_BOTTLE_BLOOD ? "bottling its blood"
-                                                       : "butchering"));
+                mprf(gettext("The corpse rots away into a skeleton just before you "
+                     "finish %s!"),
+                     (delay.type == DELAY_BOTTLE_BLOOD ? pgettext("_finish_delay", "bottling its blood")
+                                                       : pgettext("_finish_delay", "butchering")));
 
                 if (player_mutation_level(MUT_SAPROVOROUS) == 3)
                     _xom_check_corpse_waste();
@@ -1153,7 +1155,7 @@ static void _finish_delay(const delay_queue_item &delay)
 
             if (delay.type == DELAY_BOTTLE_BLOOD)
             {
-                mpr("You finish bottling this corpse's blood.");
+                mpr(gettext("You finish bottling this corpse's blood."));
 
                 const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
                 const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
@@ -1170,27 +1172,30 @@ static void _finish_delay(const delay_queue_item &delay)
             }
             else
             {
-                mprf("You finish %s the %s into pieces.",
-                     delay.parm3 <= SLOT_CLAWS ? "ripping" : "chopping",
+                /// 1. ripping or chopping, 2. 아이템 이름(시체?)
+                mprf(gettext("You finish %s the %s into pieces."),
+                     delay.parm3 <= SLOT_CLAWS ? 
+                        pgettext("_finish_delay", "ripping") : 
+                        pgettext("_finish_delay", "chopping"),
                      mitm[delay.parm1].name(true, DESC_PLAIN).c_str());
 
                 if (god_hates_cannibalism(you.religion)
                     && is_player_same_species(item.plus))
                 {
-                    simple_god_message(" expects more respect for your"
-                                       " departed relatives.");
+                    simple_god_message(gettext(" expects more respect for your"
+                                       " departed relatives."));
                 }
                 else if (is_good_god(you.religion)
                     && mons_class_holiness(item.plus) == MH_HOLY)
                 {
-                    simple_god_message(" expects more respect for holy"
-                                       " creatures!");
+                    simple_god_message(gettext(" expects more respect for holy"
+                                       " creatures!"));
                 }
                 else if (you.religion == GOD_ZIN
                          && mons_class_intel(item.plus) >= I_NORMAL)
                 {
-                    simple_god_message(" expects more respect for this"
-                                       " departed soul.");
+                    simple_god_message(gettext(" expects more respect for this"
+                                       " departed soul."));
                 }
 
                 const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
@@ -1204,7 +1209,7 @@ static void _finish_delay(const delay_queue_item &delay)
                 if (you.berserk()
                     && you.berserk_penalty != NO_BERSERK_PENALTY)
                 {
-                    mpr("You enjoyed that.");
+                    mpr(gettext("You enjoyed that."));
                     you.berserk_penalty = 0;
                 }
 
@@ -1231,9 +1236,10 @@ static void _finish_delay(const delay_queue_item &delay)
         }
         else
         {
-            mprf("You stop %s.",
-                 delay.type == DELAY_BUTCHER ? "butchering the corpse"
-                                             : "bottling this corpse's blood");
+            /// butchering the corpse 혹은 bottling this corpse's blood의 번역문
+            mprf(gettext("You stop %s."),
+                 delay.type == DELAY_BUTCHER ? gettext("butchering the corpse")
+                                             : gettext("bottling this corpse's blood"));
             _pop_delay();
         }
         StashTrack.update_stash(you.pos()); // Stash-track the generated items.
@@ -1261,11 +1267,11 @@ static void _finish_delay(const delay_queue_item &delay)
                                 you.pos(), delay.parm2,
                                 true))
         {
-            mpr("Too many items on this level, not dropping the item.");
+            mpr(gettext("Too many items on this level, not dropping the item."));
         }
         else
         {
-            mprf("You drop %s.", quant_name(you.inv[delay.parm1], delay.parm2,
+            mprf(gettext("You drop %s."), quant_name(you.inv[delay.parm1], delay.parm2,
                                             DESC_NOCAP_A).c_str());
             dec_inv_item_quantity(delay.parm1, delay.parm2);
         }
@@ -1285,7 +1291,7 @@ static void _finish_delay(const delay_queue_item &delay)
         break;
 
     default:
-        mpr("You finish doing something.");
+        mpr(gettext("You finish doing something."));
         break;
     }
 
@@ -1323,7 +1329,7 @@ static void _armour_wear_effects(const int item_slot)
         if (Options.autoinscribe_artefacts && is_artefact(arm))
             add_autoinscription(arm, artefact_auto_inscription(arm));
     }
-    mprf("You finish putting on %s.", arm.name(true, DESC_NOCAP_YOUR).c_str());
+    mprf(gettext("You finish putting on %s."), arm.name(true, DESC_NOCAP_YOUR).c_str());
 
     if (eq_slot == EQ_BODY_ARMOUR)
     {
@@ -1365,7 +1371,7 @@ static command_type _get_running_command()
         if (!is_resting() && you.running.hp == you.hp
             && you.running.mp == you.magic_points)
         {
-            mpr("Done searching.");
+            mpr(gettext("Done searching."));
         }
         return CMD_MOVE_NOWHERE;
     }
@@ -1616,7 +1622,7 @@ inline static bool _monster_warning(activity_interrupt_type ai,
 {
     if (ai == AI_SENSE_MONSTER)
     {
-        mpr("You sense a monster nearby.", MSGCH_WARN);
+        mpr(gettext("You sense a monster nearby."), MSGCH_WARN);
         return true;
     }
     if (ai != AI_SEE_MONSTER)
@@ -1642,7 +1648,7 @@ inline static bool _monster_warning(activity_interrupt_type ai,
         if (testbits(mon->flags, MF_WAS_IN_VIEW)
             && !(atype == DELAY_NOT_DELAYED))
         {
-            mprf(MSGCH_WARN, "%s is too close now for your liking.",
+            mprf(MSGCH_WARN, gettext("%s is too close now for your liking."),
                  mon->name(DESC_CAP_THE).c_str());
         }
     }
@@ -1663,41 +1669,38 @@ inline static bool _monster_warning(activity_interrupt_type ai,
         else if (at.context == "thin air")
         {
             if (mon->type == MONS_AIR_ELEMENTAL)
-                text += " forms itself from the air.";
+                text += gettext(" forms itself from the air.");
             else
-                text += " appears from thin air!";
+                text += gettext(" appears from thin air!");
         }
         // The monster surfaced and submerged in the same turn without
         // doing anything else.
         else if (at.context == "surfaced")
-            text += "surfaces briefly.";
+            text += gettext("surfaces briefly.");
         else if (at.context == "surfaces")
-            text += " surfaces.";
+            text += gettext(" surfaces.");
         else if (at.context.find("bursts forth") != std::string::npos)
         {
-            text += " bursts forth from the ";
-            if (mons_primary_habitat(mon) == HT_LAVA)
-                text += "lava";
-            else if (mons_primary_habitat(mon) == HT_WATER)
-                text += "water";
-            else
-                text += "realm of bugdom";
-            text += ".";
+            text += make_stringf(gettext(
+                " bursts forth from the %s."),
+                (mons_primary_habitat(mon) == HT_LAVA) ? pgettext("_monster_warning", "lava") :
+                (mons_primary_habitat(mon) == HT_WATER) ? pgettext("_monster_warning", "water") :
+                "realm of bugdom");
         }
         else if (at.context.find("emerges") != std::string::npos)
-            text += " emerges from the water.";
+            text += gettext(" emerges from the water.");
         else if (at.context.find("leaps out") != std::string::npos)
         {
             if (mon->type == MONS_TRAPDOOR_SPIDER)
             {
-                text += " leaps out from its hiding place under the "
-                        "floor!";
+                text += gettext(" leaps out from its hiding place under the "
+                        "floor!");
             }
             else
-                text += " leaps out from hiding!";
+                text += gettext(" leaps out from hiding!");
         }
         else
-            text += " comes into view.";
+            text += gettext(" comes into view.");
 
         ash_id_monster_equipment(const_cast<monster* >(mon));
         bool ash_id = mon->props.exists("ash_id") && mon->props["ash_id"];
@@ -1746,7 +1749,7 @@ void autotoggle_autopickup(bool off)
         {
             Options.autopickup_on = -1;
             mprf(MSGCH_WARN,
-                 "Deactivating autopickup; reactivate with <w>%s</w>.",
+                 gettext("Deactivating autopickup; reactivate with <w>%s</w>."),
                  command_to_string(CMD_TOGGLE_AUTOPICKUP).c_str());
         }
         if (crawl_state.game_is_hints())
@@ -1758,7 +1761,7 @@ void autotoggle_autopickup(bool off)
     else if (Options.autopickup_on < 0) // was turned off automatically
     {
         Options.autopickup_on = 1;
-        mprf(MSGCH_WARN, "Reactivating autopickup.");
+        mprf(MSGCH_WARN, gettext("Reactivating autopickup."));
     }
 }
 
@@ -1803,9 +1806,9 @@ bool interrupt_activity(activity_interrupt_type ai,
     const delay_queue_item &item = you.delay_queue.front();
 
     if (ai == AI_FULL_HP)
-        mpr("HP restored.");
+        mpr(gettext("HP restored."));
     else if (ai == AI_FULL_MP)
-        mpr("Magic restored.");
+        mpr(gettext("Magic restored."));
 
     if (_should_stop_activity(item, ai, at))
     {

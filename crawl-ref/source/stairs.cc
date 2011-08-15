@@ -46,6 +46,7 @@
 #include "travel.h"
 #include "view.h"
 #include "xom.h"
+#include "korean.h"
 
 bool check_annotation_exclusion_warning()
 {
@@ -293,7 +294,7 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
         {
             mprf(gettext("You %s downwards."),
                  translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
-                     (you.airborne() ? "float" : "slide")));
+                     (you.airborne() ? "float" : "slide")).c_str());
         }
     }
     else if (feat_is_gate(stair))
@@ -301,13 +302,13 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
         mprf(going_up ? gettext("You %s up through the gate.") 
             : gettext("You %s down through the gate."),
              translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "go")));
+                   (you.airborne() ? "float" : "go")).c_str());
     }
     else
     {
         mprf(going_up ? gettext("You %s upwards.") : gettext("You %s downwards."),
              translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "climb")));
+                   (you.airborne() ? "float" : "climb")).c_str());
     }
 }
 
