@@ -191,10 +191,11 @@ static void _remove_equipment(const std::set<equipment_type>& removed,
                 unequip = true;
         }
 
-        mprf("%s %s%s %s", equip->name(true, DESC_CAP_YOUR).c_str(),
-             unequip ? "fall" : "meld",
+        /// 1. 아이템 이름, 2. fall 혹은 meld의 번역문, 3. s가 붙거나 안붙거나 4. away! or into your body의 번역문
+        mprf(pgettext("_remove_equipment", "%s %s%s %s"), equip->name(true, DESC_CAP_YOUR).c_str(),
+             unequip ? pgettext("_remove_equipment", "fall") : pgettext("_remove_equipment", "meld"),
              equip->quantity > 1 ? "" : "s",
-             unequip ? "away!" : "into your body.");
+             unequip ? pgettext("_remove_equipment", "away!") : pgettext("_remove_equipment", "into your body."));
 
         if (unequip)
         {
@@ -287,7 +288,7 @@ static void _unmeld_equipment_slot(equipment_type e)
 
         if (force_remove)
         {
-            mprf("%s is pushed off your body!",
+            mprf(gettext("%s is pushed off your body!"),
                  item.name(true, DESC_CAP_YOUR).c_str());
             unequip_item(e);
         }
@@ -353,7 +354,7 @@ void transformation_expiration_warning()
     if (you.duration[DUR_TRANSFORMATION]
             <= get_expiration_threshold(DUR_TRANSFORMATION))
     {
-        mpr("You have a feeling this form won't last long.");
+        mpr(gettext("You have a feeling this form won't last long."));
     }
 }
 
@@ -397,10 +398,10 @@ monster_type transform_mons()
 std::string blade_parts(bool terse)
 {
     if (you.species == SP_FELID)
-        return terse ? "paws" : "front paws";
+        return terse ? M_("paws") : M_("front paws");
     if (you.species == SP_OCTOPODE)
-        return "tentacles";
-    return "hands";
+        return M_("tentacles");
+    return M_("hands");
 }
 
 monster_type dragon_form_dragon_type()
@@ -473,8 +474,8 @@ static bool _transformation_is_safe(transformation_type which_trans,
 
     if (!quiet)
     {
-        mprf("You would %s in your new form.",
-             feat == DNGN_DEEP_WATER ? "drown" : "burn");
+        mprf(gettext("You would %s in your new form."),
+             feat == DNGN_DEEP_WATER ? pgettext("_transformation_is_safe", "drown") : pgettext("_transformation_is_safe", "burn"));
     }
     return (false);
 }
@@ -494,7 +495,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
     if (!just_check && you.religion == GOD_ZIN
         && x_chance_in_y(you.piety, MAX_PIETY) && which_trans != TRAN_NONE)
     {
-        simple_god_message(" protects your body from unnatural transformation!");
+        simple_god_message(gettext(" protects your body from unnatural transformation!"));
         return (false);
     }
 
@@ -521,9 +522,9 @@ bool transform(int pow, transformation_type which_trans, bool force,
                 return (true);
 
             if (which_trans == TRAN_PIG)
-                mpr("You feel you'll be a pig longer.");
+                mpr(gettext("You feel you'll be a pig longer."));
             else
-                mpr("You extend your transformation's duration.");
+                mpr(gettext("You extend your transformation's duration."));
             you.increase_duration(DUR_TRANSFORMATION, random2(pow), 100);
             transformation_expiration_warning();
 
@@ -532,7 +533,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         else
         {
             if (!force && which_trans != TRAN_PIG)
-                mpr("You cannot extend your transformation any further!");
+                mpr(gettext("You cannot extend your transformation any further!"));
             return (false);
         }
     }
@@ -563,7 +564,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
             || which_trans != TRAN_BAT && you.hunger_state <= HS_SATIATED))
     {
         if (!force)
-            mpr("Your unliving flesh cannot be transformed in this way.");
+            mpr(gettext("Your unliving flesh cannot be transformed in this way."));
         return (_abort_or_fizzle(just_check));
     }
 
@@ -571,8 +572,8 @@ bool transform(int pow, transformation_type which_trans, bool force,
     {
         if (!force)
         {
-            mpr("The transformation conflicts with an enchantment "
-                "already in effect.");
+            mpr(gettext("The transformation conflicts with an enchantment "
+                "already in effect."));
         }
         return (_abort_or_fizzle(just_check));
     }
@@ -584,13 +585,13 @@ bool transform(int pow, transformation_type which_trans, bool force,
     std::string msg;
 
     if (was_in_water && form_can_fly(which_trans))
-        msg = "You fly out of the water as you turn into ";
+        msg = gettext("You fly out of the water as you turn into %s");
     else if (form_can_fly(previous_trans)
              && form_can_swim(which_trans)
              && feat_is_water(grd(you.pos())))
-        msg = "As you dive into the water, you turn into ";
+        msg = gettext("As you dive into the water, you turn into %s");
     else
-        msg = "You turn into ";
+        msg = gettext("You turn into %s");
 
     switch (which_trans)
     {
@@ -598,14 +599,14 @@ bool transform(int pow, transformation_type which_trans, bool force,
         tran_name = "spider";
         dex       = 5;
         dur       = std::min(10 + random2(pow) + random2(pow), 60);
-        msg      += "a venomous arachnid creature.";
+        msg       = make_stringf(msg.c_str(), gettext("a venomous arachnid creature."));
         break;
 
     case TRAN_BLADE_HANDS:
         tran_name = ("Blade " + uppercase_first(blade_parts(true))).c_str();
         dur       = std::min(10 + random2(pow), 100);
-        msg       = "Your " + blade_parts()
-                    + " turn into razor-sharp scythe blades.";
+        msg       = make_stringf(gettext("Your %s turn into razor-sharp scythe blades."),
+                                gettext(blade_parts().c_str()));
         break;
 
     case TRAN_STATUE:
@@ -614,29 +615,29 @@ bool transform(int pow, transformation_type which_trans, bool force,
         dex       = -2;
         dur       = std::min(20 + random2(pow) + random2(pow), 100);
         if (player_genus(GENPC_DWARVEN) && one_chance_in(10))
-            msg = "You inwardly fear your resemblance to a lawn ornament.";
+            msg = gettext("You inwardly fear your resemblance to a lawn ornament.");
         else
-            msg += "a living statue of rough stone.";
+            msg = make_stringf(msg.c_str(), gettext("a living statue of rough stone."));
         break;
 
     case TRAN_ICE_BEAST:
         tran_name = "ice beast";
         dur       = std::min(30 + random2(pow) + random2(pow), 100);
-        msg      += "a creature of crystalline ice.";
+        msg       = make_stringf(msg.c_str(), gettext("a creature of crystalline ice."));
         break;
 
     case TRAN_DRAGON:
         tran_name = "dragon";
         str       = 10;
         dur       = std::min(20 + random2(pow) + random2(pow), 100);
-        msg      += "a fearsome dragon!";
+        msg       = make_stringf(msg.c_str(), gettext("a fearsome dragon!"));
         break;
 
     case TRAN_LICH:
         tran_name = "lich";
         str       = 3;
         dur       = std::min(20 + random2(pow) + random2(pow), 100);
-        msg       = "Your body is suffused with negative energy!";
+        msg       = gettext("Your body is suffused with negative energy!");
         break;
 
     case TRAN_BAT:
@@ -645,15 +646,15 @@ bool transform(int pow, transformation_type which_trans, bool force,
         dex       = 5;
         dur       = std::min(20 + random2(pow) + random2(pow), 100);
         if (you.species == SP_VAMPIRE)
-            msg += "a vampire bat.";
+            msg = make_stringf(msg.c_str(), "a vampire bat.");
         else
-            msg += "a bat.";
+            msg = make_stringf(msg.c_str(), "a bat.");
         break;
 
     case TRAN_PIG:
         tran_name = "pig";
         dur       = pow;
-        msg       = "You have been turned into a pig!";
+        msg       = gettext("You have been turned into a pig!");
         you.transform_uncancellable = true;
         break;
 
@@ -714,18 +715,18 @@ bool transform(int pow, transformation_type which_trans, bool force,
     {
     case TRAN_STATUE:
         if (you.duration[DUR_STONESKIN])
-            mpr("Your new body merges with your stone armour.");
+            mpr(gettext("Your new body merges with your stone armour."));
         break;
 
     case TRAN_ICE_BEAST:
         if (you.duration[DUR_ICY_ARMOUR])
-            mpr("Your new body merges with your icy armour.");
+            mpr(gettext("Your new body merges with your icy armour."));
         break;
 
     case TRAN_DRAGON:
         if (you.attribute[ATTR_HELD])
         {
-            mpr("The net rips apart!");
+            mpr(gettext("The net rips apart!"));
             you.attribute[ATTR_HELD] = 0;
             you.redraw_quiver = true;
             int net = get_trapping_net(you.pos());
@@ -738,7 +739,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         // undead cannot regenerate -- bwr
         if (you.duration[DUR_REGENERATION])
         {
-            mpr("You stop regenerating.", MSGCH_DURATION);
+            mpr(gettext("You stop regenerating."), MSGCH_DURATION);
             you.duration[DUR_REGENERATION] = 0;
         }
 
@@ -803,7 +804,7 @@ void untransform(bool skip_wielding, bool skip_move)
     switch (old_form)
     {
     case TRAN_SPIDER:
-        mpr("Your transformation has ended.", MSGCH_DURATION);
+        mpr(gettext("Your transformation has ended."), MSGCH_DURATION);
         notify_stat_change(STAT_DEX, -5, true,
                      "losing the spider transformation");
         if (!skip_move)
@@ -811,7 +812,7 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_BAT:
-        mpr("Your transformation has ended.", MSGCH_DURATION);
+        mpr(gettext("Your transformation has ended."), MSGCH_DURATION);
         notify_stat_change(STAT_DEX, -5, true,
                      "losing the bat transformation");
         notify_stat_change(STAT_STR, 5, true,
@@ -819,13 +820,13 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_BLADE_HANDS:
-        mprf(MSGCH_DURATION, "Your %s revert to their normal proportions.",
-             blade_parts().c_str());
+        mprf(MSGCH_DURATION, gettext("Your %s revert to their normal proportions."),
+             gettext(blade_parts().c_str()));
         you.wield_change = true;
         break;
 
     case TRAN_STATUE:
-        mpr("You revert to your normal fleshy form.", MSGCH_DURATION);
+        mpr(gettext("You revert to your normal fleshy form."), MSGCH_DURATION);
         notify_stat_change(STAT_DEX, 2, true,
                      "losing the statue transformation");
         notify_stat_change(STAT_STR, -2, true,
@@ -838,7 +839,7 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_ICE_BEAST:
-        mpr("You warm up again.", MSGCH_DURATION);
+        mpr(gettext("You warm up again."), MSGCH_DURATION);
 
         // Note: if the core goes down, the combined effect soon disappears,
         // but the reverse isn't true. -- bwr
@@ -847,20 +848,20 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_DRAGON:
-        mpr("Your transformation has ended.", MSGCH_DURATION);
+        mpr(gettext("Your transformation has ended."), MSGCH_DURATION);
         notify_stat_change(STAT_STR, -10, true,
                     "losing the dragon transformation");
         break;
 
     case TRAN_LICH:
-        mpr("You feel yourself come back to life.", MSGCH_DURATION);
+        mpr(gettext("You feel yourself come back to life."), MSGCH_DURATION);
         notify_stat_change(STAT_STR, -3, true,
                     "losing the lich transformation");
         you.is_undead = US_ALIVE;
         break;
 
     case TRAN_PIG:
-        mpr("Your transformation has ended.", MSGCH_DURATION);
+        mpr(gettext("Your transformation has ended."), MSGCH_DURATION);
         break;
 
     default:
@@ -903,7 +904,7 @@ void untransform(bool skip_wielding, bool skip_move)
         you.duration[DUR_ICY_ARMOUR] = 1;
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
-        mprf(MSGCH_DURATION, "%s cracks your icy armour.",
+        mprf(MSGCH_DURATION, gettext("%s cracks your icy armour."),
              armour->name(true, DESC_CAP_YOUR).c_str());
     }
 
