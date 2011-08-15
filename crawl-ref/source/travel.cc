@@ -4360,8 +4360,8 @@ template <class C> void explore_discoveries::say_any(
         return;
     }
 
-    const std::string message = "Found " +
-        comma_separated_line(coll.begin(), coll.end()) + ".";
+    const std::string message = make_stringf(gettext("Found %s."), 
+        comma_separated_line(coll.begin(), coll.end()).c_str());
 
     if (strwidth(message) >= get_number_of_cols())
         mprf(stub, number_in_words(coll.size()).c_str());

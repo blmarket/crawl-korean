@@ -54,9 +54,9 @@ bool check_annotation_exclusion_warning()
     if (grd(you.pos()) == DNGN_ENTER_LABYRINTH
         && player_mutation_level(MUT_TELEPORT))
     {
-        mpr("Within the labyrinth you'll only be able to teleport away from "
-            "the exit!");
-        if (!yesno("Continue anyway?", false, 'N', true, false))
+        mpr(gettext("Within the labyrinth you'll only be able to teleport away from "
+            "the exit!"));
+        if (!yesno(gettext("Continue anyway?"), false, 'N', true, false))
         {
             canned_msg(MSG_OK);
             interrupt_activity(AI_FORCE_INTERRUPT);
@@ -74,7 +74,7 @@ bool check_annotation_exclusion_warning()
         && next_level_id != level_id::current()
         && next_level_id.level_type == LEVEL_DUNGEON)
     {
-        mpr("Warning, next level annotated: " +
+        mpr(gettext("Warning, next level annotated: ") +
             colour_string(get_level_annotation(next_level_id), YELLOW),
             MSGCH_PROMPT);
         might_be_dangerous = true;
@@ -84,12 +84,12 @@ bool check_annotation_exclusion_warning()
              && feat_is_travelable_stair(grd(you.pos()))
              && !strstr(get_exclusion_desc(you.pos()).c_str(), "cloud"))
     {
-        mpr("This staircase is marked as excluded!", MSGCH_WARN);
+        mpr(gettext("This staircase is marked as excluded!"), MSGCH_WARN);
         might_be_dangerous = true;
     }
 
     if (might_be_dangerous
-        && !yesno("Enter next level anyway?", true, 'n', true, false))
+        && !yesno(gettext("Enter next level anyway?"), true, 'n', true, false))
     {
         canned_msg(MSG_OK);
         interrupt_activity(AI_FORCE_INTERRUPT);
@@ -237,7 +237,7 @@ static bool _stair_moves_pre(dungeon_feature_type stair)
 
     std::string verb = stair_climb_verb(stair);
 
-    mprf("%s moves away as you attempt to %s it!", stair_str.c_str(),
+    mprf(gettext("%s moves away as you attempt to %s it!"), stair_str.c_str(),
          verb.c_str());
 
     you.turn_is_over = true;
@@ -274,7 +274,7 @@ static void _mark_portal_return_point(const coord_def &pos)
 static void _exit_stair_message(dungeon_feature_type stair, bool /* going_up */)
 {
     if (feat_is_escape_hatch(stair))
-        mpr("The hatch slams shut behind you.");
+        mpr(gettext("The hatch slams shut behind you."));
 }
 
 static void _climb_message(dungeon_feature_type stair, bool going_up,
@@ -284,31 +284,30 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
         return;
 
     if (feat_is_portal(stair))
-        mpr("The world spins around you as you enter the gateway.");
+        mpr(gettext("The world spins around you as you enter the gateway."));
     else if (feat_is_escape_hatch(stair))
     {
         if (going_up)
-            mpr("A mysterious force pulls you upwards.");
+            mpr(gettext("A mysterious force pulls you upwards."));
         else
         {
-            mprf("You %s downwards.",
-                 you.flight_mode() == FL_FLY ? "fly" :
-                     (you.airborne() ? "float" : "slide"));
+            mprf(gettext("You %s downwards."),
+                 translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
+                     (you.airborne() ? "float" : "slide")));
         }
     }
     else if (feat_is_gate(stair))
     {
-        mprf("You %s %s through the gate.",
-             you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "go"),
-             going_up ? "up" : "down");
+        mprf(going_up ? gettext("You %s up through the gate.") 
+            : gettext("You %s down through the gate."),
+             translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
+                   (you.airborne() ? "float" : "go")));
     }
     else
     {
-        mprf("You %s %swards.",
-             you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "climb"),
-             going_up ? "up" : "down");
+        mprf(going_up ? gettext("You %s upwards.") : gettext("You %s downwards."),
+             translate_verb(NULL, you.flight_mode() == FL_FLY ? "fly" :
+                   (you.airborne() ? "float" : "climb")));
     }
 }
 
@@ -365,8 +364,8 @@ static void _leaving_level_now(dungeon_feature_type stair_used)
 
     if (strwidth(newname_abbrev) > MAX_NOTE_PLACE_LEN)
     {
-        mprf(MSGCH_ERROR, "'%s' is too long for a portal vault name "
-                          "abbreviation, truncating", newname_abbrev.c_str());
+        mprf(MSGCH_ERROR, gettext("'%s' is too long for a portal vault name "
+                          "abbreviation, truncating"), newname_abbrev.c_str());
         newname_abbrev = chop_string(newname_abbrev, MAX_NOTE_PLACE_LEN, false);
     }
 
@@ -584,11 +583,11 @@ void up_stairs(dungeon_feature_type force_stair,
     else if (feat_stair_direction(stair_find) != CMD_GO_UPSTAIRS)
     {
         if (stair_find == DNGN_STONE_ARCH)
-            mpr("There is nothing on the other side of the stone arch.");
+            mpr(gettext("There is nothing on the other side of the stone arch."));
         else if (stair_find == DNGN_ABANDONED_SHOP)
-            mpr("This shop appears to be closed.");
+            mpr(gettext("This shop appears to be closed."));
         else
-            mpr("You can't go up here.");
+            mpr(gettext("You can't go up here."));
         return;
     }
 
@@ -604,11 +603,12 @@ void up_stairs(dungeon_feature_type force_stair,
         && !feat_is_escape_hatch(stair_find)
         && coinflip())
     {
-        const char* fall_where = "down the stairs";
+        const char* fall_where = gettext("down the stairs");
         if (!feat_is_staircase(stair_find))
-            fall_where = "through the gate";
+            fall_where = gettext("through the gate");
 
-        mprf("In your confused state, you trip and fall back %s.", fall_where);
+        /// 1. down the stairs의 번역문 혹은 through the gate의 번역문. 아님 그냥 %s를 제거하고 문장을 구성해도 될듯.
+        mprf(gettext("In your confused state, you trip and fall back %s."), fall_where);
         if (!feat_is_staircase(stair_find))
             ouch(1, NON_MONSTER, KILLED_BY_FALLING_THROUGH_GATE);
         else
@@ -643,7 +643,7 @@ void up_stairs(dungeon_feature_type force_stair,
 
     if (you.absdepth0 < 0)
     {
-        mpr("You have escaped!");
+        mpr(gettext("You have escaped!"));
 
         for (int i = 0; i < ENDOFPACK; i++)
         {
@@ -660,7 +660,7 @@ void up_stairs(dungeon_feature_type force_stair,
     if (old_level.branch == BRANCH_VESTIBULE_OF_HELL
         && !player_in_branch(BRANCH_VESTIBULE_OF_HELL))
     {
-        mpr("Thank you for visiting Hell. Please come again soon.");
+        mpr(gettext("Thank you for visiting Hell. Please come again soon."));
     }
 
     // Fixup exits from the Hell branches.
@@ -679,9 +679,9 @@ void up_stairs(dungeon_feature_type force_stair,
     const dungeon_feature_type stair_taken = stair_find;
 
     if (you.flight_mode() == FL_LEVITATE && !feat_is_gate(stair_find))
-        mpr("You float upwards... And bob straight up to the ceiling!");
+        mpr(gettext("You float upwards... And bob straight up to the ceiling!"));
     else if (you.flight_mode() == FL_FLY && !feat_is_gate(stair_find))
-        mpr("You fly upwards.");
+        mpr(gettext("You fly upwards."));
     else
         _climb_message(stair_find, true, old_level.level_type);
 
@@ -689,7 +689,7 @@ void up_stairs(dungeon_feature_type force_stair,
 
     if (old_level.branch != you.where_are_you && you.level_type == LEVEL_DUNGEON)
     {
-        mprf("Welcome back to %s!",
+        mprf(gettext("Welcome back to %s!"),
              branches[you.where_are_you].longname);
     }
 
@@ -717,7 +717,7 @@ void up_stairs(dungeon_feature_type force_stair,
     seen_monsters_react();
 
     if (!allow_control_teleport(true))
-        mpr("You sense a powerful magical force warping space.", MSGCH_WARN);
+        mpr(gettext("You sense a powerful magical force warping space."), MSGCH_WARN);
 
     request_autopickup();
 }
@@ -833,17 +833,17 @@ void down_stairs(dungeon_feature_type force_stair,
     else if (feat_stair_direction(stair_find) != CMD_GO_DOWNSTAIRS && !shaft)
     {
         if (stair_find == DNGN_STONE_ARCH)
-            mpr("There is nothing on the other side of the stone arch.");
+            mpr(gettext("There is nothing on the other side of the stone arch."));
         else if (stair_find == DNGN_ABANDONED_SHOP)
-            mpr("This shop appears to be closed.");
+            mpr(gettext("This shop appears to be closed."));
         else
-            mpr("You can't go down here!");
+            mpr(gettext("You can't go down here!"));
         return;
     }
 
     if (stair_find == DNGN_ENTER_HELL && you.level_type != LEVEL_DUNGEON)
     {
-        mpr("You can't enter Hell from outside the dungeon!",
+        mpr(gettext("You can't enter Hell from outside the dungeon!"),
             MSGCH_ERROR);
         return;
     }
@@ -855,13 +855,13 @@ void down_stairs(dungeon_feature_type force_stair,
         // Down stairs in vestibule are one-way!
         // This doesn't make any sense. Why would there be any down stairs
         // in the Vestibule? {due, 9/2010}
-        mpr("A mysterious force prevents you from descending the staircase.");
+        mpr(gettext("A mysterious force prevents you from descending the staircase."));
         return;
     }
 
     if (stair_find == DNGN_STONE_ARCH)
     {
-        mpr("There is nothing on the other side of the stone arch.");
+        mpr(gettext("There is nothing on the other side of the stone arch."));
         return;
     }
 
@@ -876,14 +876,14 @@ void down_stairs(dungeon_feature_type force_stair,
         if (you.flight_mode() == FL_LEVITATE && !force_stair)
         {
             if (known_trap)
-                mpr("You can't fall through a shaft while levitating.");
+                mpr(gettext("You can't fall through a shaft while levitating."));
             return;
         }
 
         if (!is_valid_shaft_level())
         {
             if (known_trap)
-                mpr("The shaft disappears in a puff of logic!");
+                mpr(gettext("The shaft disappears in a puff of logic!"));
             _maybe_destroy_trap(you.pos());
             return;
         }
@@ -893,9 +893,9 @@ void down_stairs(dungeon_feature_type force_stair,
         {
             if (known_trap)
             {
-                mpr("Strange, the shaft seems to lead back to this level.");
-                mpr("The strain on the space-time continuum destroys the "
-                    "shaft!");
+                mpr(gettext("Strange, the shaft seems to lead back to this level."));
+                mpr(gettext("The strain on the space-time continuum destroys the "
+                    "shaft!"));
             }
             _maybe_destroy_trap(you.pos());
             return;
@@ -907,12 +907,12 @@ void down_stairs(dungeon_feature_type force_stair,
                                     short_place_name(shaft_dest) + ".");
 
         if (you.flight_mode() != FL_FLY || force_stair)
-            mpr("You fall through a shaft!");
+            mpr(gettext("You fall through a shaft!"));
         if (you.flight_mode() == FL_FLY && !force_stair)
-            mpr("You dive down through the shaft.");
+            mpr(gettext("You dive down through the shaft."));
 
         // Shafts are one-time-use.
-        mpr("The shaft crumbles and collapses.");
+        mpr(gettext("The shaft crumbles and collapses."));
         _maybe_destroy_trap(you.pos());
     }
 
@@ -928,11 +928,12 @@ void down_stairs(dungeon_feature_type force_stair,
             switch (NUMBER_OF_RUNES_NEEDED)
             {
             case 1:
-                mpr("You need a rune to enter this place.");
+                mpr(gettext("You need a rune to enter this place."));
                 break;
 
             default:
-                mprf("You need at least %d runes to enter this place.",
+                /// 1. 필요한 룬의 갯수. 0.9버전에선 3개겠죠.
+                mprf(gettext("You need at least %d runes to enter this place."),
                      NUMBER_OF_RUNES_NEEDED);
             }
             return;
@@ -941,28 +942,28 @@ void down_stairs(dungeon_feature_type force_stair,
         ASSERT(runes.size() >= 3);
 
         std::random_shuffle(runes.begin(), runes.end());
-        mprf("You insert the %s rune into the lock.", rune_type_name(runes[0]));
+        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[0]));
 #ifdef USE_TILE
         tiles.add_overlay(you.pos(), tileidx_zap(GREEN));
         update_screen();
 #else
         flash_view(LIGHTGREEN);
 #endif
-        mpr("The lock glows an eerie green colour!");
+        mpr(gettext("The lock glows an eerie green colour!"));
         more();
 
-        mprf("You insert the %s rune into the lock.", rune_type_name(runes[1]));
+        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[1]));
         big_cloud(CLOUD_BLUE_SMOKE, &you, you.pos(), 20, 7 + random2(7));
         viewwindow();
-        mpr("Heavy smoke blows from the lock!");
+        mpr(gettext("Heavy smoke blows from the lock!"));
         more();
 
-        mprf("You insert the %s rune into the lock.", rune_type_name(runes[2]));
+        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[2]));
 
         if (silenced(you.pos()))
-            mpr("The gate opens wide!");
+            mpr(gettext("The gate opens wide!"));
         else
-            mpr("With a loud hiss the gate opens wide!");
+            mpr(gettext("With a loud hiss the gate opens wide!"));
         more();
 
         you.opened_zot = true;
@@ -1043,13 +1044,13 @@ void down_stairs(dungeon_feature_type force_stair,
 
     if (stair_find == DNGN_EXIT_ABYSS || stair_find == DNGN_EXIT_PANDEMONIUM)
     {
-        mpr("You pass through the gate.");
+        mpr(gettext("You pass through the gate."));
         if (!you.wizard || !crawl_state.is_replaying_keys())
             more();
     }
 
     if (old_level.level_type != you.level_type && you.level_type == LEVEL_DUNGEON)
-        mprf("Welcome back to %s!", branches[you.where_are_you].longname);
+        mprf(gettext("Welcome back to %s!"), branches[you.where_are_you].longname);
 
     if (!you.airborne()
         && you.confused()
@@ -1057,11 +1058,11 @@ void down_stairs(dungeon_feature_type force_stair,
         && force_stair != DNGN_ENTER_ABYSS
         && coinflip())
     {
-        const char* fall_where = "down the stairs";
+        const char* fall_where = gettext("down the stairs");
         if (!feat_is_staircase(stair_find))
-            fall_where = "through the gate";
+            fall_where = gettext("through the gate");
 
-        mprf("In your confused state, you trip and fall %s.", fall_where);
+        mprf(gettext("In your confused state, you trip and fall %s."), fall_where);
         // Note that this only does damage; it doesn't cancel the level
         // transition.
         if (!feat_is_staircase(stair_find))
@@ -1087,19 +1088,19 @@ void down_stairs(dungeon_feature_type force_stair,
         // XXX: Ideally, we want to hint at the wall rule (rock > metal),
         //      and that the walls can shift occasionally.
         // Are these too long?
-        mpr("As you enter the labyrinth, previously moving walls settle noisily into place.");
-        mpr("You hear the metallic echo of a distant snort before it fades into the rock.");
+        mpr(gettext("As you enter the labyrinth, previously moving walls settle noisily into place."));
+        mpr(gettext("You hear the metallic echo of a distant snort before it fades into the rock."));
         mark_milestone("br.enter", "entered a Labyrinth.");
         break;
 
     case LEVEL_ABYSS:
         if (!force_stair)
-            mpr("You enter the Abyss!");
+            mpr(gettext("You enter the Abyss!"));
 
-        mpr("To return, you must find a gate leading back.");
+        mpr(gettext("To return, you must find a gate leading back."));
         if (you.religion == GOD_CHEIBRIADOS)
         {
-            mpr("You feel Cheibriados slowing down the madness of this place.",
+            mpr(gettext("You feel Cheibriados slowing down the madness of this place."),
                 MSGCH_GOD, GOD_CHEIBRIADOS);
         }
         learned_something_new(HINT_ABYSS);
@@ -1107,11 +1108,11 @@ void down_stairs(dungeon_feature_type force_stair,
 
     case LEVEL_PANDEMONIUM:
         if (old_level.level_type == LEVEL_PANDEMONIUM)
-            mpr("You pass into a different region of Pandemonium.");
+            mpr(gettext("You pass into a different region of Pandemonium."));
         else
         {
-            mpr("You enter the halls of Pandemonium!");
-            mpr("To return, you must find a gate leading back.");
+            mpr(gettext("You enter the halls of Pandemonium!"));
+            mpr(gettext("To return, you must find a gate leading back."));
         }
         break;
 
@@ -1136,8 +1137,8 @@ void down_stairs(dungeon_feature_type force_stair,
 
     if (stair_find == DNGN_ENTER_HELL)
     {
-        mpr("Welcome to Hell!");
-        mpr("Please enjoy your stay.");
+        mpr(gettext("Welcome to Hell!"));
+        mpr(gettext("Please enjoy your stay."));
 
         // Kill -more- prompt if we're traveling.
         if (!you.running && !force_stair)
@@ -1247,7 +1248,7 @@ void down_stairs(dungeon_feature_type force_stair,
     you.clear_fearmongers();
 
     if (!allow_control_teleport(true))
-        mpr("You sense a powerful magical force warping space.", MSGCH_WARN);
+        mpr(gettext("You sense a powerful magical force warping space."), MSGCH_WARN);
 
     trackers_init_new_level(true);
 

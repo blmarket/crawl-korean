@@ -2821,27 +2821,27 @@ void describe_floor()
 {
     dungeon_feature_type grid = env.map_knowledge(you.pos()).feat();
 
-    std::string prefix = "There is ";
     std::string feat;
-    std::string suffix = " here.";
 
+    feat = feature_description(you.pos(), true,
+                               DESC_NOCAP_A, false);
+    if (feat.empty())
+        return;
+
+    std::string msg;
     switch (grid)
     {
     case DNGN_FLOOR:
         return;
 
     case DNGN_ENTER_SHOP:
-        prefix = "There is an entrance to ";
+        msg = make_stringf(gettext("There is an entrance to %s here."), feat.c_str());
         break;
 
     default:
+        msg = make_stringf(gettext("There is %s here."), feat.c_str());
         break;
     }
-
-    feat = feature_description(you.pos(), true,
-                               DESC_NOCAP_A, false);
-    if (feat.empty())
-        return;
 
     msg_channel_type channel = MSGCH_EXAMINE;
 
@@ -2849,9 +2849,9 @@ void describe_floor()
     if (feat_is_water(grid) && player_likes_water())
         channel = MSGCH_EXAMINE_FILTER;
 
-    mpr((prefix + feat + suffix).c_str(), channel);
+    mpr(msg.c_str(), channel);
     if (grid == DNGN_ENTER_LABYRINTH && you.is_undead != US_UNDEAD)
-        mpr("Beware, for starvation awaits!", MSGCH_EXAMINE);
+        mpr(gettext("Beware, for starvation awaits!"), MSGCH_EXAMINE);
 }
 
 std::string thing_do_grammar(description_level_type dtype,

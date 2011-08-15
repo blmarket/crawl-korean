@@ -217,8 +217,8 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         {
             set_auto_exclude(mon);
 
-            std::string text = get_monster_equipment_desc(mon, DESC_WEAPON);
-            text += " comes into view.";
+            std::string text = make_stringf(gettext("%s comes into view."),
+                get_monster_equipment_desc(mon, DESC_WEAPON).c_str());
             mpr(text, MSGCH_WARN);
         }
 

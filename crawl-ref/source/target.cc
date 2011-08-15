@@ -16,7 +16,7 @@ static std::string _wallmsg(coord_def c)
 {
     ASSERT(map_bounds(c)); // there'd be an information leak
     const char *wall = feat_type_name(grd(c));
-    return "There is " + article_a(wall) + " there.";
+    return make_stringf(gettext("There is %s there."), article_a(wall).c_str());
 }
 
 bool targetter::set_aim(coord_def a)
@@ -64,9 +64,9 @@ targetter_smite::targetter_smite(const actor* act, int ran,
 bool targetter_smite::valid_aim(coord_def a)
 {
     if (a != origin && !cell_see_cell(origin, a))
-        return notify_fail("You cannot see that place.");
+        return notify_fail(gettext("You cannot see that place."));
     if ((origin - a).abs() > range2)
-        return notify_fail("Out of range.");
+        return notify_fail(gettext("Out of range."));
     if (!affects_walls && feat_is_solid(grd(a)))
         return notify_fail(_wallmsg(a));
     return true;
@@ -127,16 +127,16 @@ targetter_reach::targetter_reach(const actor* act, reach_type ran) :
 bool targetter_reach::valid_aim(coord_def a)
 {
     if (origin == a)
-        return notify_fail("That would be overly suicidal.");
+        return notify_fail(gettext("That would be overly suicidal."));
     if (!cell_see_cell(origin, a))
-        return notify_fail("You cannot see that place.");
+        return notify_fail(gettext("You cannot see that place."));
     if (!agent->see_cell_no_trans(a))
-        return notify_fail("You can't get through.");
+        return notify_fail(gettext("You can't get through."));
 
     int dist = (origin - a).abs();
 
     if (dist > (range == REACH_TWO ? 8 : range == REACH_KNIGHT ? 5 : 2))
-        return notify_fail("You can't reach that far!");
+        return notify_fail(gettext("You can't reach that far!"));
 
     return true;
 }
@@ -181,15 +181,15 @@ static bool _cloudable(coord_def loc)
 bool targetter_cloud::valid_aim(coord_def a)
 {
     if (agent && (origin - a).abs() > range2)
-        return notify_fail("Out of range.");
+        return notify_fail(gettext("Out of range."));
     if (!map_bounds(a) || agent && origin != a && !cell_see_cell(origin, a))
-        return notify_fail("You cannot see that place.");
+        return notify_fail(gettext("You cannot see that place."));
     if (feat_is_solid(grd(a)))
         return notify_fail(_wallmsg(a));
     if (agent)
     {
         if (env.cgrid(a) != EMPTY_CLOUD)
-            return notify_fail("There's already a cloud there.");
+            return notify_fail(gettext("There's already a cloud there."));
         ASSERT(_cloudable(a));
     }
     return true;
