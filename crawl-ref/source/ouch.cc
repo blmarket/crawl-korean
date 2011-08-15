@@ -88,7 +88,7 @@ static void _maybe_melt_player_enchantments(beam_type flavour, int damage)
 
         if (you.mutation[MUT_ICEMAIL])
         {
-            mpr("Your icy envelope dissipates!", MSGCH_DURATION);
+            mpr(gettext("Your icy envelope dissipates!"), MSGCH_DURATION);
             you.duration[DUR_ICEMAIL_DEPLETED] = ICEMAIL_TIME;
             you.redraw_armour_class = true;
         }
@@ -129,7 +129,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
         hurted = resist_adjust_damage(&you, flavour,
                                       you.res_water_drowning(), hurted, true);
         if (!hurted && doEffects)
-            mpr("You shrug off the wave.");
+            mpr(gettext("You shrug off the wave."));
         break;
 
     case BEAM_STEAM:
@@ -139,7 +139,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             canned_msg(MSG_YOU_RESIST);
         else if (hurted > original && doEffects)
         {
-            mpr("The steam scalds you terribly!");
+            mpr(gettext("The steam scalds you terribly!"));
             xom_is_stimulated(200);
         }
         break;
@@ -151,7 +151,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             canned_msg(MSG_YOU_RESIST);
         else if (hurted > original && doEffects)
         {
-            mpr("The fire burns you terribly!");
+            mpr(gettext("The fire burns you terribly!"));
             xom_is_stimulated(200);
         }
         break;
@@ -163,7 +163,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             canned_msg(MSG_YOU_RESIST);
         else if (hurted > original && doEffects)
         {
-            mpr("You feel a terrible chill!");
+            mpr(gettext("You feel a terrible chill!"));
             xom_is_stimulated(200);
         }
         break;
@@ -231,7 +231,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             canned_msg(MSG_YOU_PARTIALLY_RESIST);
         else if (hurted > original && doEffects)
         {
-            mpr("You feel a painful chill!");
+            mpr(gettext("You feel a painful chill!"));
             xom_is_stimulated(200);
         }
         break;
@@ -244,7 +244,7 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             canned_msg(MSG_YOU_PARTIALLY_RESIST);
         else if (hurted > original && doEffects)
         {
-            mpr("The lava burns you terribly!");
+            mpr(gettext("The lava burns you terribly!"));
             xom_is_stimulated(200);
         }
         break;
@@ -290,10 +290,10 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             hurted += hurted / 2;
 
         if (original && !hurted && doEffects)
-            mpr("The beam of light passes harmlessly through you.");
+            mpr(gettext("The beam of light passes harmlessly through you."));
         else if (hurted > original && doEffects)
         {
-            mpr("The light scorches you terribly!");
+            mpr(gettext("The light scorches you terribly!"));
             xom_is_stimulated(200);
         }
         break;
@@ -351,7 +351,7 @@ void splash_with_acid(int acid_strength, bool corrode_items,
 
     if (post_res_dam > 0)
     {
-        mpr(hurt_message.empty() ? "The acid burns!" : hurt_message);
+        mpr(hurt_message.empty() ? gettext("The acid burns!") : hurt_message);
 
         if (post_res_dam < dam)
             canned_msg(MSG_YOU_RESIST);
@@ -372,7 +372,7 @@ void weapon_acid(int acid_strength)
 
     if (hand_thing == -1)
     {
-        msg::stream << "Your " << you.hand_name(true) << " burn!" << std::endl;
+        msg::stream << make_stringf(gettext("Your %s burn!"), you.hand_name(true).c_str()) << std::endl;
         ouch(roll_dice(1, acid_strength), NON_MONSTER, KILLED_BY_ACID);
     }
     else if (x_chance_in_y(acid_strength + 1, 20))
@@ -449,9 +449,9 @@ static void _item_corrode(int slot)
     if (!suppress_msg)
     {
         if (it_resists)
-            mprf("%s resists.", item.name(true, DESC_CAP_YOUR).c_str());
+            mprf(gettext("%s resists."), item.name(true, DESC_CAP_YOUR).c_str());
         else
-            mprf("The acid corrodes %s!", item.name(true, DESC_NOCAP_YOUR).c_str());
+            mprf(gettext("The acid corrodes %s!"), item.name(true, DESC_NOCAP_YOUR).c_str());
     }
 
     if (!it_resists)
@@ -522,7 +522,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     if (flavour == BEAM_SPORE
         && you.religion == GOD_FEDHAS)
     {
-        simple_god_message(" protects your food from the spores.",
+        simple_god_message(gettext(" protects your food from the spores."),
                            GOD_FEDHAS);
         return (false);
     }
@@ -597,15 +597,15 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             {
                 switch (target_class)
                 {
-                case OBJ_SCROLLS:
-                    mprf("%s %s catch%s fire!",
+                case OBJ_SCROLLS: // (deceit, 110815) quantity / item name / 'es' or blank.
+                    mprf(gettext("%s %s catch%s fire!"), 
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
                          (num_dest == 1) ? "es" : "");
                     break;
 
-                case OBJ_POTIONS:
-                    mprf("%s %s freeze%s and shatter%s!",
+                case OBJ_POTIONS: // (deceit, 110815) similar as the previous sentence.
+                    mprf(gettext("%s %s freeze%s and shatter%s!"), 
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
                          (num_dest == 1) ? "s" : "",
@@ -615,18 +615,18 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                 case OBJ_FOOD:
                     // Message handled elsewhere.
                     if (flavour == BEAM_DEVOUR_FOOD)
-                        break;
-                    mprf("%s %s %s covered with spores!",
+                        break; // (deceit, 110815) Number of foods you've losted, itemname, is/are.
+                    mprf(gettext("%s %s %s covered with spores!"), 
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
-                         (num_dest == 1) ? "is" : "are");
+                         (num_dest == 1) ? "is" : "are"); 
                      break;
 
-                default:
-                    mprf("%s %s %s destroyed!",
+                default: // (deceit, 110815) same as 'covered with spores'.
+                    mprf(gettext("%s %s %s destroyed!"),
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
-                         (num_dest == 1) ? "is" : "are");
+                         (num_dest == 1) ? "is" : "are");  
                      break;
                 }
 
@@ -636,8 +636,8 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     }
 
     if (jiyva_block)
-    {
-        mprf("%s shields %s delectables from destruction.",
+    {   // (deceit, 110815) god name, (some of) your
+        mprf(gettext("%s shields %s delectables from destruction."), 
              god_name(GOD_JIYVA).c_str(),
              (total_dest > 0) ? "some of your" : "your");
     }
@@ -698,22 +698,22 @@ bool expose_items_to_element(beam_type flavour, const coord_def& where,
         switch (target_class)
         {
         case OBJ_SCROLLS:
-            mprf("You see %s of smoke.",
+            mprf(gettext("You see %s of smoke."),
                  (num_dest > 1) ? "some puffs" : "a puff");
             break;
 
         case OBJ_POTIONS:
-            mprf("You see %s shatter.",
+            mprf(gettext("You see %s shatter."),
                  (num_dest > 1) ? "some glass" : "glass");
             break;
 
         case OBJ_FOOD:
-            mprf("You see %s of spores.",
+            mprf(gettext("You see %s of spores."),
                  (num_dest > 1) ? "some clouds" : "a cloud");
             break;
 
         default:
-            mprf("%s on the floor %s destroyed!",
+            mprf(gettext("%s on the floor %s destroyed!"),
                  (num_dest > 1) ? "Some items" : "An item",
                  (num_dest > 1) ? "were" : "was");
             break;
@@ -760,7 +760,7 @@ void lose_level()
     you.experience_level--;
 
     mprf(MSGCH_WARN,
-         "You are now level %d!", you.experience_level);
+         gettext("You are now level %d!"), you.experience_level);
 
     ouch(4, NON_MONSTER, KILLED_BY_DRAINING);
     dec_mp(1);
@@ -769,7 +769,7 @@ void lose_level()
     calc_mp();
 
     char buf[200];
-    sprintf(buf, "HP: %d/%d MP: %d/%d",
+    sprintf(buf, gettext("HP: %d/%d MP: %d/%d"),
             you.hp, you.hp_max, you.magic_points, you.max_magic_points);
     take_note(Note(NOTE_XP_LEVEL_CHANGE, you.experience_level, 0, buf));
 
@@ -826,7 +826,7 @@ bool drain_exp(bool announce_full)
 
         if (undrained > 0 || pool_undrained > 0)
         {
-            simple_god_message(" protects your life force!");
+            simple_god_message(gettext(" protects your life force!"));
             if (undrained > 0)
                 exp_drained -= undrained;
             if (pool_undrained > 0)
@@ -842,7 +842,7 @@ bool drain_exp(bool announce_full)
 
     if (exp_drained > 0)
     {
-        mpr("You feel drained.");
+        mpr(gettext("You feel drained."));
         xom_is_stimulated(15);
         you.experience -= exp_drained;
         you.exp_available -= pool_drained;
@@ -1008,10 +1008,10 @@ static void _maybe_spawn_jellies(int dam, const char* aux,
 
             if (count_created > 0)
             {
-                mprf("You shudder from the %s and a %s!",
+                mprf(gettext("You shudder from the %s and a %s!"),
                      death_type == KILLED_BY_MONSTER ? "blow" : "blast",
-                     count_created > 1 ? "flood of jellies pours out from you"
-                                       : "jelly pops out");
+                     count_created > 1 ? gettext("flood of jellies pours out from you")
+                                       : gettext("jelly pops out"));
             }
         }
     }
@@ -1027,7 +1027,7 @@ static void _pain_recover_mp(int dam)
         {
             int gain_mp = roll_dice(3, 2 + 3 * player_mutation_level(MUT_POWERED_BY_PAIN));
 
-            mpr("You focus.");
+            mpr(gettext("You focus."));
             inc_mp(gain_mp);
         }
     }
@@ -1151,7 +1151,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
         if (dam >= you.hp && god_protects_from_harm())
         {
-            simple_god_message(" protects you from harm!");
+            simple_god_message(gettext(" protects you from harm!"));
             return;
         }
 
@@ -1168,14 +1168,14 @@ void ouch(int dam, int death_source, kill_method_type death_type,
         // Even if we have low HP messages off, we'll still give a
         // big hit warning (in this case, a hit for half our HPs) -- bwr
         if (dam > 0 && you.hp_max <= dam * 2)
-            mpr("Ouch! That really hurt!", MSGCH_DANGER);
+            mpr(gettext("Ouch! That really hurt!"), MSGCH_DANGER);
 
         if (you.hp > 0)
         {
             if (Options.hp_warning
                 && you.hp <= (you.hp_max * Options.hp_warning) / 100)
             {
-                mpr("* * * LOW HITPOINT WARNING * * *", MSGCH_DANGER);
+                mpr(gettext("* * * LOW HITPOINT WARNING * * *"), MSGCH_DANGER);
                 dungeon_events.fire_event(DET_HP_WARNING);
             }
 
@@ -1187,7 +1187,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
             std::string damage_desc;
             if (!see_source)
             {
-                damage_desc = make_stringf("something (%d)", dam);
+                damage_desc = make_stringf(gettext("something (%d)"), dam); // milestone???
             }
             else
             {
@@ -1307,7 +1307,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
         stop_delay(true);
 
-        mprnojoin("You die...");
+        mprnojoin(gettext("You die..."));
         xom_death_message((kill_method_type) se.get_death_type());
         more();
 
@@ -1411,14 +1411,14 @@ void _end_game(scorefile_entry &se)
         && se.get_death_type() != KILLED_BY_QUITTING
         && se.get_death_type() != KILLED_BY_WINNING)
     {
-        mprnojoin("You die...");      // insert player name here? {dlb}
+        mprnojoin(gettext("You die..."));      // insert player name here? {dlb}
         xom_death_message((kill_method_type) se.get_death_type());
 
         switch (you.religion)
         {
         case GOD_FEDHAS:
-            simple_god_message(" appreciates your contribution to the "
-                               "ecosystem.");
+            simple_god_message(gettext(" appreciates your contribution to the "
+                               "ecosystem."));
             break;
 
         case GOD_NEMELEX_XOBEH:
@@ -1431,24 +1431,24 @@ void _end_game(scorefile_entry &se)
 
             if (holi == MH_NONLIVING || holi == MH_UNDEAD)
             {
-                simple_god_message(" rasps: \"You have failed me! "
-                                   "Welcome... oblivion!\"");
+                simple_god_message(gettext(" rasps: \"You have failed me! "
+                                   "Welcome... oblivion!\""));
             }
             else
             {
-                simple_god_message(" rasps: \"You have failed me! "
-                                   "Welcome... death!\"");
+                simple_god_message(gettext(" rasps: \"You have failed me! "
+                                   "Welcome... death!\""));
             }
             break;
         }
 
         case GOD_YREDELEMNUL:
             if (you.is_undead)
-                simple_god_message(" claims you as an undead slave.");
+                simple_god_message(gettext(" claims you as an undead slave."));
             else if (se.get_death_type() != KILLED_BY_DISINT
                      && se.get_death_type() != KILLED_BY_LAVA)
             {
-                mpr("Your body rises from the dead as a mindless zombie.",
+                mpr(gettext("Your body rises from the dead as a mindless zombie."),
                     MSGCH_GOD);
             }
             // No message if you're not undead and your corpse is lost.
@@ -1467,7 +1467,7 @@ void _end_game(scorefile_entry &se)
 
     if (!dump_char(_morgue_name(se.get_death_time()), false, true, &se))
     {
-        mpr("Char dump unsuccessful! Sorry about that.");
+        mpr(gettext("Char dump unsuccessful! Sorry about that."));
         if (!crawl_state.seen_hups)
             more();
         clrscr();
@@ -1487,11 +1487,11 @@ void _end_game(scorefile_entry &se)
     textcolor(LIGHTGREY);
 
     // Prompt for saving macros.
-    if (crawl_state.unsaved_macros && yesno("Save macros?", true, 'n'))
+    if (crawl_state.unsaved_macros && yesno(gettext("Save macros?"), true, 'n'))
         macro_save();
 
     clrscr();
-    cprintf("Goodbye, %s.", you.your_name.c_str());
+    cprintf(gettext("Goodbye, %s."), you.your_name.c_str());
     cprintf("\n\n    "); // Space padding where # would go in list format
 
     std::string hiscore = hiscores_format_single_long(se, true);
@@ -1500,14 +1500,14 @@ void _end_game(scorefile_entry &se)
 
     cprintf("%s", hiscore.c_str());
 
-    cprintf("\nBest Crawlers - %s\n",
+    cprintf(gettext("\nBest Crawlers - %s\n"),
             crawl_state.game_type_name().c_str());
 
     // "- 5" gives us an extra line in case the description wraps on a line.
     hiscores_print_list(get_number_of_lines() - lines - 5);
 
 #ifndef DGAMELAUNCH
-    cprintf("\nYou can find your morgue file in the '%s' directory.",
+    cprintf(gettext("\nYou can find your morgue file in the '%s' directory."),
             morgue_directory().c_str());
 #endif
 

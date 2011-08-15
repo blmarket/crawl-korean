@@ -64,7 +64,7 @@
 #include "view.h"
 #include "viewchar.h"
 #include "xom.h"
-
+#include "korean.h"
 static bool _wounded_damaged(mon_holy_type holi);
 
 static int _make_mimic_item(monster_type type)
@@ -249,7 +249,7 @@ bool curse_an_item(bool quiet)
     {
         if (!quiet)
         {
-            mprf(MSGCH_GOD, "The curse is absorbed by %s.",
+            mprf(MSGCH_GOD, gettext("The curse is absorbed by %s."),
                  god_name(GOD_ASHENZARI).c_str());
         }
         return (false);
@@ -591,10 +591,10 @@ int place_monster_corpse(const monster* mons, bool silent,
         if (force && !silent)
         {
             if (you.can_see(mons))
-                simple_monster_message(mons, " turns back into a corpse!");
+                simple_monster_message(mons, gettext(" turns back into a corpse!"));
             else
             {
-                mprf("%s appears out of nowhere!",
+                mprf(gettext("%s appears out of nowhere!"),
                      mitm[o].name(true, DESC_CAP_A).c_str());
             }
         }
@@ -797,7 +797,7 @@ static void _give_player_experience(int experience, killer_type killer,
 
     // Give a message for monsters dying out of sight.
     if (exp_gain > 0 && !was_visible)
-        mpr("You feel a bit more experienced.");
+        mpr(gettext("You feel a bit more experienced."));
 }
 
 static void _give_experience(int player_exp, int monster_exp,
@@ -859,9 +859,9 @@ static bool _ely_protect_ally(monster* mons)
 
     mons->hit_points = 1;
 
-    snprintf(info, INFO_SIZE, " protects %s from harm!%s",
+    snprintf(info, INFO_SIZE, gettext(" protects %s from harm!%s"),
              mons->name(DESC_NOCAP_THE).c_str(),
-             coinflip() ? "" : " You feel responsible.");
+             coinflip() ? "" : gettext(" You feel responsible."));
 
     simple_god_message(info);
     lose_piety(1);
@@ -902,7 +902,7 @@ static bool _ely_heal_monster(monster* mons, killer_type killer, int i)
 
     dprf("new hp: %d, ely penance: %d", mons->hit_points, ely_penance);
 
-    snprintf(info, INFO_SIZE, "%s heals %s%s",
+    snprintf(info, INFO_SIZE, gettext("%s heals %s%s"),
              god_name(god, false).c_str(),
              mons->name(DESC_NOCAP_THE).c_str(),
              mons->hit_points * 2 <= mons->max_hit_points ? "." : "!");
@@ -1013,13 +1013,13 @@ static void _jiyva_died()
 
     if (silenced(you.pos()))
     {
-        god_speaks(GOD_JIYVA, "With an infernal shudder, the power ruling "
-                   "this place vanishes!");
+        god_speaks(GOD_JIYVA, gettext("With an infernal shudder, the power ruling "
+                   "this place vanishes!"));
     }
     else
     {
-        god_speaks(GOD_JIYVA, "With infernal noise, the power ruling this "
-                   "place vanishes!");
+        god_speaks(GOD_JIYVA, gettext("With infernal noise, the power ruling this "
+                   "place vanishes!"));
     }
 }
 
@@ -1122,23 +1122,23 @@ static void _mummy_curse(monster* mons, killer_type killer, int index)
         if (you.religion == GOD_KIKUBAAQUDGHA && !player_under_penance()
             && you.piety >= piety_breakpoint(1))
         {
-            simple_god_message(" averts the curse.");
+            simple_god_message(gettext(" averts the curse."));
             return;
         }
 
-        mpr("You feel nervous for a moment...", MSGCH_MONSTER_SPELL);
+        mpr(gettext("You feel nervous for a moment..."), MSGCH_MONSTER_SPELL);
         curse_an_item();
     }
     else
     {
         if (index == NON_MONSTER)
         {
-            mpr("You feel extremely nervous for a moment...",
+            mpr(gettext("You feel extremely nervous for a moment..."),
                 MSGCH_MONSTER_SPELL);
         }
         else if (you.can_see(target))
         {
-            mprf(MSGCH_MONSTER_SPELL, "A malignant aura surrounds %s.",
+            mprf(MSGCH_MONSTER_SPELL, gettext("A malignant aura surrounds %s."),
                  target->name(DESC_NOCAP_THE).c_str());
         }
         MiscastEffect(target, mons->mindex(), SPTYP_NECROMANCY,
@@ -1220,21 +1220,21 @@ static bool _explode_monster(monster* mons, killer_type killer,
     if (type == MONS_GIANT_SPORE)
     {
         setup_spore_explosion(beam, *mons);
-        sanct_msg    = "By Zin's power, the giant spore's explosion is "
-                       "contained.";
+        sanct_msg    = gettext("By Zin's power, the giant spore's explosion is "
+                       "contained.");
     }
     else if (type == MONS_BALL_LIGHTNING)
     {
         setup_lightning_explosion(beam, *mons);
-        sanct_msg    = "By Zin's power, the ball lightning's explosion "
-                       "is contained.";
+        sanct_msg    = gettext("By Zin's power, the ball lightning's explosion "
+                       "is contained.");
     }
     else if (mons->has_ench(ENCH_INNER_FLAME))
     {
         setup_inner_flame_explosion(beam, *mons);
         mons->flags    |= MF_EXPLODE_KILL;
-        sanct_msg       = "By Zin's power, the fiery explosion "
-                          "is contained.";
+        sanct_msg       = gettext("By Zin's power, the fiery explosion "
+                          "is contained.");
         beam.aux_source = "an exploding inner flame";
     }
     else
@@ -1258,7 +1258,7 @@ static bool _explode_monster(monster* mons, killer_type killer,
         if (is_sanctuary(mons->pos()))
             mpr(sanct_msg, MSGCH_GOD);
         else
-            mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "%s explodes!",
+            mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, gettext("%s explodes!"),
                  mons->full_name(DESC_CAP_THE).c_str());
     }
 
@@ -1308,7 +1308,7 @@ static void _monster_die_cloud(const monster* mons, bool corpse, bool silent,
         if (mons_weight(mons_species(mons->type)) == 0)
             return;
 
-        prefix = "'s corpse ";
+        prefix = gettext("'s corpse ");
     }
 
     std::string msg = summoned_poof_msg(mons) + "!";
@@ -1465,7 +1465,7 @@ static int _destroy_tentacles(monster* head)
     return tent;
 }
 
-static std::string _killer_type_name(killer_type killer)
+static std::string _killer_type_name(killer_type killer) // lua???Ì¶?, ?ÌºÎº?À» ?Ø¼??Ï¸? ?ÈµÉµ??Õ´Ï´?.
 {
     switch(killer)
     {
@@ -1508,7 +1508,7 @@ static void _make_spectral_thing(monster* mons, bool quiet)
         // Headless hydras cannot be made spectral hydras, sorry.
         if (spectre_type == MONS_HYDRA && mons->number == 0)
         {
-            mprf("A glowing mist gathers momentarily, then fades.");
+            mprf(gettext("A glowing mist gathers momentarily, then fades."));
             return;
         }
 
@@ -1524,7 +1524,7 @@ static void _make_spectral_thing(monster* mons, bool quiet)
         if (spectre != -1)
         {
             if (!quiet)
-                mpr("A glowing mist starts to gather...");
+                mpr(gettext("A glowing mist starts to gather..."));
 
             // If the original monster has been drained or levelled up,
             // its HD might be different from its class HD, in which
@@ -1676,7 +1676,7 @@ int monster_die(monster* mons, killer_type killer,
 
             you.increase_duration(DUR_BERSERK, bonus);
 
-            mpr("You feel the power of Trog in you as your rage grows.",
+            mpr(gettext("You feel the power of Trog in you as your rage grows."),
                 MSGCH_GOD, GOD_TROG);
         }
         else if (wearing_amulet(AMU_RAGE) && one_chance_in(30))
@@ -1685,7 +1685,7 @@ int monster_die(monster* mons, killer_type killer,
 
             you.increase_duration(DUR_BERSERK, bonus);
 
-            mpr("Your amulet glows a violent red.");
+            mpr(gettext("Your amulet glows a violent red."));
         }
     }
 
@@ -1715,7 +1715,7 @@ int monster_die(monster* mons, killer_type killer,
     {
         if (!silent && !mons_reset && !was_banished)
         {
-            simple_monster_message(mons, " dissipates!",
+            simple_monster_message(mons, gettext(" dissipates!"),
                                    MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
             silent = true;
         }
@@ -1734,7 +1734,7 @@ int monster_die(monster* mons, killer_type killer,
     {
         if (!silent && !mons_reset && !was_banished)
         {
-            simple_monster_message(mons, " vapourises!",
+            simple_monster_message(mons, gettext(" vapourises!"),
                                    MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
             silent = true;
         }
@@ -1765,7 +1765,7 @@ int monster_die(monster* mons, killer_type killer,
         {
             if (!summoned_it)
             {
-                simple_monster_message(mons, " falls from the air.",
+                simple_monster_message(mons, gettext(" falls from the air."),
                                        MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
                 silent = true;
             }
@@ -1788,8 +1788,8 @@ int monster_die(monster* mons, killer_type killer,
             if (you.can_see(mons))
             {
                 mpr(silenced(mons->pos()) ?
-                    "The tentacle is hauled back through the portal!" :
-                    "With a roar, the tentacle is hauled back through the portal!",
+                    gettext("The tentacle is hauled back through the portal!") :
+                    gettext("With a roar, the tentacle is hauled back through the portal!"),
                     MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
             }
             silent = true;
@@ -1823,28 +1823,28 @@ int monster_die(monster* mons, killer_type killer,
                     && !fake_abjuration
                     && (targ_holy == MH_NATURAL || targ_holy == MH_HOLY));
 
-            if (death_message)
+            if (death_message) // (deceit, 110815) ???????? ?Ù¸?????, ??Ä¡?? ?Ü¾î°¡ ??À» ?? ?Ö¾? ?Ï´? ?Ì·??? ?Ó½Ã¹????Õ´Ï´?. ?? ?Á°? ??Á¤?????Ò±????
             {
                 if (killer == KILL_YOU_CONF
                     && (anon || !invalid_monster_index(killer_index)))
                 {
-                    mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "%s is %s!",
+                    mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, gettext("%s is %s!"), 
                          mons->name(DESC_CAP_THE).c_str(),
-                         exploded                        ? "blown up" :
-                         _wounded_damaged(targ_holy)     ? "destroyed"
-                                                         : "killed");
+                         exploded                        ? pgettext("_killer_type_name", "blown up") :
+                         _wounded_damaged(targ_holy)     ? pgettext("_killer_type_name", "destroyed")
+                                                         : pgettext("_killer_type_name", "killed"));
                 }
                 else
                 {
-                    mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, "You %s %s!",
-                         exploded                        ? "blow up" :
-                         _wounded_damaged(targ_holy)     ? "destroy"
-                                                         : "kill",
+                    mprf(MSGCH_MONSTER_DAMAGE, MDAM_DEAD, gettext("You %s %s!"),
+                         exploded                        ? pgettext("_killer_type_name", "blow up") :
+                         _wounded_damaged(targ_holy)     ? pgettext("_killer_type_name", "destroy")
+                                                         : pgettext("_killer_type_name", "kill"),
                          mons->name(DESC_NOCAP_THE).c_str());
                 }
 
                 if ((created_friendly || was_neutral) && gives_xp)
-                    mpr("That felt strangely unrewarding.");
+                    mpr(gettext("That felt strangely unrewarding."));
             }
 
             // Killing triggers hints mode lesson.
@@ -1959,7 +1959,7 @@ int monster_die(monster* mons, killer_type killer,
                 {
                     int heal = random2(1 + 2 * mons->hit_dice);
                     if (heal > 0)
-                        mprf("You feel a little better.");
+                        mprf(gettext("You feel a little better."));
                     inc_hp(heal);
                 }
             }
@@ -1980,7 +1980,7 @@ int monster_die(monster* mons, killer_type killer,
                             random2(2 + mons->hit_dice / 3);
                     if (mana > 0)
                     {
-                        mpr("You feel your power returning.");
+                        mpr(gettext("You feel your power returning."));
                         inc_mp(mana);
                     }
                 }
@@ -2010,9 +2010,9 @@ int monster_die(monster* mons, killer_type killer,
             if (!silent)
             {
                 const char* msg =
-                    exploded                     ? " is blown up!" :
-                    _wounded_damaged(targ_holy)  ? " is destroyed!"
-                                                 : " dies!";
+                    exploded                     ? gettext(" is blown up!") :
+                    _wounded_damaged(targ_holy)  ? gettext(" is destroyed!")
+                                                 : gettext(" dies!");
                 simple_monster_message(mons, msg, MSGCH_MONSTER_DAMAGE,
                                        MDAM_DEAD);
             }
@@ -2216,7 +2216,7 @@ int monster_die(monster* mons, killer_type killer,
                     // prefers demons).
                     if (you.magic_points < you.max_magic_points)
                     {
-                        mpr("You feel your power returning.");
+                        mpr(gettext("You feel your power returning."));
                         inc_mp(1 + random2(mons->hit_dice / 2));
                     }
                 }
@@ -2238,7 +2238,7 @@ int monster_die(monster* mons, killer_type killer,
                         && killer_mon->hit_points < killer_mon->max_hit_points)
                     {
                         simple_monster_message(killer_mon,
-                                               " looks invigorated.");
+                                               gettext(" looks invigorated."));
                         killer_mon->heal(1 + random2(mons->hit_dice / 4));
                     }
                 }
@@ -2270,21 +2270,21 @@ int monster_die(monster* mons, killer_type killer,
                     if (mons_genus(mons->type) == MONS_SNAKE)
                     {
                         // Sticks to Snake
-                        simple_monster_message(mons, " withers and dies!",
+                        simple_monster_message(mons, gettext(" withers and dies!"),
                             MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
                     }
                     else if (mons->type == MONS_SPECTRAL_THING)
                     {
                         // Death Channel
-                        simple_monster_message(mons, " fades into mist!");
+                        simple_monster_message(mons, gettext(" fades into mist!"));
                     }
                 }
                 else
                 {
                     const char* msg =
-                        exploded                     ? " is blown up!" :
-                        _wounded_damaged(targ_holy)  ? " is destroyed!"
-                                                     : " dies!";
+                        exploded                     ? gettext(" is blown up!") :
+                        _wounded_damaged(targ_holy)  ? gettext(" is destroyed!")
+                                                     : gettext(" dies!");
                     simple_monster_message(mons, msg, MSGCH_MONSTER_DAMAGE,
                                            MDAM_DEAD);
                 }
@@ -2397,7 +2397,7 @@ int monster_die(monster* mons, killer_type killer,
     else if (mons_base_type(mons) == MONS_KRAKEN)
     {
         if (_destroy_tentacles(mons) && !in_transit)
-            mpr("The dead kraken's tentacles slide back into the water.");
+            mpr(gettext("The dead kraken's tentacles slide back into the water."));
     }
     else if ((mons->type == MONS_KRAKEN_TENTACLE_SEGMENT
                   || mons->type == MONS_KRAKEN_TENTACLE)
@@ -2543,8 +2543,8 @@ int monster_die(monster* mons, killer_type killer,
         && !(mons->flags & MF_KNOWN_MIMIC)
         && mons->is_shapeshifter())
     {
-        simple_monster_message(mons, "'s shape twists and changes as "
-                               "it dies.");
+        simple_monster_message(mons, gettext("'s shape twists and changes as "
+                               "it dies."));
     }
 
     // If we kill an invisible monster reactivate autopickup.
@@ -2578,7 +2578,7 @@ void monster_cleanup(monster* mons)
 
     if (mons->has_ench(ENCH_AWAKEN_FOREST))
     {
-        forest_message(mons->pos(), "The forest abruptly stops moving.");
+        forest_message(mons->pos(), gettext("The forest abruptly stops moving."));
         env.forest_awoken_until = 0;
     }
 
@@ -2728,7 +2728,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     // There's not a single valid target on the '&' demon tier, so unless we
     // make one, let's ban this outright.
     if (source_tier == -1)
-        return (simple_monster_message(mons, "'s appearance momentarily alters."));
+        return (simple_monster_message(mons, gettext("'s appearance momentarily alters.")));
     relax = 1;
 
     if (targetc == RANDOM_MONSTER)
@@ -2751,7 +2751,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
                 relax++;
 
             if (relax > 50)
-                return (simple_monster_message(mons, " shudders."));
+                return (simple_monster_message(mons, gettext(" shudders.")));
         }
         while (tries-- && (!_valid_morph(mons, targetc)
                            || source_tier != target_tier && !x_chance_in_y(relax, 200)
@@ -2762,7 +2762,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     if (!_valid_morph(mons, targetc))
     {
         return (simple_monster_message(mons,
-                                       " looks momentarily different."));
+                                       gettext(" looks momentarily different.")));
     }
 
     // Messaging.
@@ -2797,32 +2797,32 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
     std::string new_name = "";
     if (mons->type == MONS_OGRE && targetc == MONS_TWO_HEADED_OGRE)
-        str_polymon = " grows a second head";
-    else
+        str_polymon = gettext(" grows a second head");
+    else // (deceit, 110815) ?? ?ÎºÐº???, ????À¸?? ???Ï¿? ??Á¶?? Á¶?? ?Ù²Ù¾??À´Ï´?. ???????Î¶??? "changes into" ??À½?? ?????Í¸??? ??????, ???â¼­?? ?????Í¸? ??À½?? ???ç°¡ ?Àµ??? ?Ù²Ù¾??À´Ï´?.
     {
         if (mons->is_shapeshifter())
-            str_polymon = " changes into ";
+            str_polymon = gettext(" changes into ");
         else if (degenerated)
-            str_polymon = " degenerates into ";
+            str_polymon = gettext(" degenerates into ");
         else if (slimified)
         {
             // Message used for the Slimify ability.
-            str_polymon = " quivers uncontrollably and liquefies into ";
+            str_polymon = gettext(" quivers uncontrollably and liquefies into ");
         }
         else
-            str_polymon = " evaporates and reforms as ";
+            str_polymon = gettext(" evaporates and reforms as ");
 
         if (!can_see_new)
         {
             new_name = "something unseen";
-            str_polymon += "something you cannot see";
+            str_polymon = gettext("something you cannot see") + str_polymon;
         }
         else
         {
             str_polymon += mons_type_name(targetc, DESC_NOCAP_A);
 
             if (targetc == MONS_PULSATING_LUMP)
-                str_polymon += " of flesh";
+                str_polymon += gettext(" of flesh");
         }
     }
     str_polymon += "!";
@@ -2990,7 +2990,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
     if (!player_messaged && you.can_see(mons))
     {
-        mprf("%s appears out of thin air!", mons->name(DESC_CAP_A).c_str());
+        mprf(gettext("%s appears out of thin air!"), mons->name(DESC_CAP_A).c_str());
         autotoggle_autopickup(false);
         player_messaged = true;
     }
@@ -3220,7 +3220,7 @@ void corrode_monster(monster* mons, const actor* evildoer)
                 mons->ac--;
                 if (you.can_see(mons))
                 {
-                    mprf("The acid corrodes %s %s!",
+                    mprf(gettext("The acid corrodes %s %s!"),
                          apostrophise(mons->name(DESC_NOCAP_THE)).c_str(),
                          thing_chosen.name(true, DESC_PLAIN).c_str());
                 }
@@ -3234,7 +3234,7 @@ void corrode_monster(monster* mons, const actor* evildoer)
 
         if (you.can_see(mons))
         {
-            mprf("%s writhes in agony as %s flesh is eaten away!",
+            mprf(gettext("%s writhes in agony as %s flesh is eaten away!"),
                  mons->name(DESC_CAP_THE).c_str(),
                  mons->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str());
         }
@@ -3277,11 +3277,11 @@ bool swap_places(monster* mons, const coord_def &loc)
 
     if (monster_at(loc))
     {
-        mpr("Something prevents you from swapping places.");
+        mpr(gettext("Something prevents you from swapping places."));
         return (false);
     }
 
-    mpr("You swap places.");
+    mpr(gettext("You swap places."));
 
     mgrd(mons->pos()) = NON_MONSTER;
 
@@ -3308,14 +3308,14 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
     if (mons_is_projectile(mons->type))
     {
         if (!quiet)
-            mpr("It's unwise to walk into this.");
+            mpr(gettext("It's unwise to walk into this."));
         return (false);
     }
 
     if (mons->caught())
     {
         if (!quiet)
-            simple_monster_message(mons, " is held in a net!");
+            simple_monster_message(mons, gettext(" is held in a net!"));
         return (false);
     }
 
@@ -3342,7 +3342,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
     {
         // Might not be ideal, but it's better than insta-killing
         // the monster... maybe try for a short blink instead? - bwr
-        simple_monster_message(mons, " resists.");
+        simple_monster_message(mons, gettext(" resists."));
         // FIXME: AI_HIT_MONSTER isn't ideal.
         interrupt_activity(AI_HIT_MONSTER, mons);
     }
@@ -3426,7 +3426,9 @@ std::string get_wounds_description_sentence(const monster* mons)
     if (wounds.empty())
         return "";
     else
-        return mons->pronoun(PRONOUN_CAP) + " is " + wounds + ".";
+        return make_stringf(pgettext("get_wounds_descriptions_sentence", "%s is %s."),
+                            mons->pronoun(PRONOUN_CAP).c_str(),
+                            wounds.c_str());
 }
 
 std::string get_wounds_description(const monster* mons, bool colour)
@@ -3456,10 +3458,8 @@ void print_wounds(const monster* mons)
         return;
 
     mon_dam_level_type dam_level = mons_get_damage_level(mons);
-    std::string desc = get_damage_level_string(mons->holiness(), dam_level);
+    std::string desc = make_stringf(gettext(" is %s."), get_damage_level_string(mons->holiness(), dam_level).c_str());
 
-    desc.insert(0, " is ");
-    desc += ".";
     simple_monster_message(mons, desc.c_str(), MSGCH_MONSTER_DAMAGE,
                            dam_level);
 }
@@ -3480,24 +3480,24 @@ static void _mons_indicate_level_exit(const monster* mon)
     const bool is_shaft = (get_trap_type(mon->pos()) == TRAP_SHAFT);
 
     if (feat_is_gate(feat))
-        simple_monster_message(mon, " passes through the gate.");
+        simple_monster_message(mon, gettext(" passes through the gate."));
     else if (feat_is_travelable_stair(feat))
     {
         command_type dir = feat_stair_direction(feat);
         simple_monster_message(mon,
-            make_stringf(" %s the %s.",
-                dir == CMD_GO_UPSTAIRS     ? "goes up" :
-                dir == CMD_GO_DOWNSTAIRS   ? "goes down"
-                                           : "takes",
-                feat_is_escape_hatch(feat) ? "escape hatch"
-                                           : "stairs").c_str());
+            make_stringf(gettext(" %s the %s."),
+                dir == CMD_GO_UPSTAIRS     ? pgettext("mon-stuff.cc", "goes up") :
+                dir == CMD_GO_DOWNSTAIRS   ? pgettext("mon-stuff.cc", "goes down")
+                                           : pgettext("mon-stuff.cc", "takes"),
+                feat_is_escape_hatch(feat) ? pgettext("mon-stuff.cc", "escape hatch")
+                                           : pgettext("mon-stuff.cc", "stairs")).c_str());
     }
     else if (is_shaft)
     {
         simple_monster_message(mon,
-            make_stringf(" %s the shaft.",
-                mons_flies(mon) ? "goes down"
-                                : "jumps into").c_str());
+            make_stringf(gettext(" %s the shaft."),
+                mons_flies(mon) ? pgettext("mon-stuff.cc", "goes down")
+                                : pgettext("mon-stuff.cc", "jumps into")).c_str());
     }
 }
 
@@ -3964,9 +3964,9 @@ void mons_check_pool(monster* mons, const coord_def &oldpos,
         // something has fallen into the lava.
         if (message && (oldpos == mons->pos() || grd(oldpos) != grid))
         {
-            mprf("%s falls into the %s!",
+            mprf(gettext("%s falls into the %s!"),
                  mons->name(DESC_CAP_THE).c_str(),
-                 grid == DNGN_LAVA ? "lava" : "water");
+                 grid == DNGN_LAVA ? gettext(M_("lava")) : gettext(M_("water")));
         }
 
         if (grid == DNGN_LAVA && mons->res_fire() >= 2)
@@ -3980,17 +3980,17 @@ void mons_check_pool(monster* mons, const coord_def &oldpos,
             {
                 if (grid == DNGN_LAVA)
                 {
-                    simple_monster_message(mons, " is incinerated.",
+                    simple_monster_message(mons, gettext(" is incinerated."),
                                            MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
                 }
                 else if (mons_genus(mons->type) == MONS_MUMMY)
                 {
-                    simple_monster_message(mons, " falls apart.",
+                    simple_monster_message(mons, gettext(" falls apart."),
                                            MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
                 }
                 else
                 {
-                    simple_monster_message(mons, " drowns.",
+                    simple_monster_message(mons, gettext(" drowns."),
                                            MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
                 }
             }
@@ -4333,12 +4333,12 @@ void monster_teleport(monster* mons, bool instan, bool silent)
         if (mons->del_ench(ENCH_TP))
         {
             if (!silent)
-                simple_monster_message(mons, " seems more stable.");
+                simple_monster_message(mons, gettext(" seems more stable."));
         }
         else
         {
             if (!silent)
-                simple_monster_message(mons, " looks slightly unstable.");
+                simple_monster_message(mons, gettext(" looks slightly unstable."));
 
             mons->add_ench(mon_enchant(ENCH_TP, 0, 0,
                                        random_range(20, 30)));
@@ -4390,7 +4390,7 @@ void monster_teleport(monster* mons, bool instan, bool silent)
     bool was_seen = !silent && you.can_see(mons) && !mons_is_lurking(mons);
 
     if (!silent)
-        simple_monster_message(mons, " disappears!");
+        simple_monster_message(mons, gettext(" disappears!"));
 
     _mimic_update_stash(mons);
     const coord_def oldplace = mons->pos();
@@ -4429,7 +4429,7 @@ void monster_teleport(monster* mons, bool instan, bool silent)
     if (!silent && now_visible)
     {
         if (was_seen)
-            simple_monster_message(mons, " reappears nearby!");
+            simple_monster_message(mons, gettext(" reappears nearby!"));
         else
         {
             // Even if it doesn't interrupt an activity (the player isn't
@@ -4437,7 +4437,7 @@ void monster_teleport(monster* mons, bool instan, bool silent)
             // a message.
             activity_interrupt_data ai(mons, "thin air");
             if (!interrupt_activity(AI_SEE_MONSTER, ai))
-                simple_monster_message(mons, " appears out of thin air!");
+                simple_monster_message(mons, gettext(" appears out of thin air!"));
         }
     }
 
@@ -4478,7 +4478,7 @@ void mons_clear_trapping_net(monster* mon)
     mon->del_ench(ENCH_HELD, true);
 }
 
-std::string summoned_poof_msg(const monster* mons, bool plural)
+std::string summoned_poof_msg(const monster* mons, bool plural) // (deceit, 110815) ?Ì°?Àº mutation.cc?????? ????À» ??Á¶?Ï´Â°? ?Ö³×¿?. ?? ?Ï³?
 {
     int  summon_type = 0;
     bool valid_mon   = false;
@@ -4488,25 +4488,25 @@ std::string summoned_poof_msg(const monster* mons, bool plural)
         valid_mon = true;
     }
 
-    std::string msg      = "disappear%s in a puff of smoke";
+    std::string msg      = gettext("disappear%s in a puff of smoke");
     bool        no_chaos = false;
 
     switch (summon_type)
     {
     case SPELL_SHADOW_CREATURES:
-        msg      = "dissolve%s into shadows";
+        msg      = gettext("dissolve%s into shadows");
         no_chaos = true;
         break;
 
     case MON_SUMM_CHAOS:
-        msg = "degenerate%s into a cloud of primal chaos";
+        msg = gettext("degenerate%s into a cloud of primal chaos");
         break;
 
     case MON_SUMM_WRATH:
     case MON_SUMM_AID:
         if (valid_mon && is_good_god(mons->god))
         {
-            msg      = "dissolve%s into sparkling lights";
+            msg      = gettext("dissolve%s into sparkling lights");
             no_chaos = true;
         }
         break;
@@ -4517,25 +4517,27 @@ std::string summoned_poof_msg(const monster* mons, bool plural)
         if (mons->god == GOD_XOM && !no_chaos && one_chance_in(10)
             || mons->type == MONS_CHAOS_SPAWN)
         {
-            msg = "degenerate%s into a cloud of primal chaos";
+            msg = gettext("degenerate%s into a cloud of primal chaos");
         }
 
         if (mons->is_holy()
             && summon_type != SPELL_SHADOW_CREATURES
             && summon_type != MON_SUMM_CHAOS)
         {
-            msg = "dissolve%s into sparkling lights";
+            msg = gettext("dissolve%s into sparkling lights");
         }
 
         if (mons_is_slime(mons)
             && mons->god == GOD_JIYVA)
         {
-            msg = "dissolve%s into a puddle of slime";
+            msg = gettext("dissolve%s into a puddle of slime");
         }
     }
 
+#ifndef KR
     // Conjugate.
     msg = make_stringf(msg.c_str(), plural ? "" : "s");
+#endif
 
     return (msg);
 }
@@ -4586,9 +4588,9 @@ bool mons_reaped(actor *killer, monster* victim)
     monster* zombie = &menv[midx];
 
     if (you.can_see(victim))
-        mprf("%s turns into a zombie!", victim->name(DESC_CAP_THE).c_str());
+        mprf(gettext("%s turns into a zombie!"), victim->name(DESC_CAP_THE).c_str());
     else if (you.can_see(zombie))
-        mprf("%s appears out of thin air!", zombie->name(DESC_CAP_THE).c_str());
+        mprf(gettext("%s appears out of thin air!"), zombie->name(DESC_CAP_THE).c_str());
 
     player_angers_monster(zombie);
 
