@@ -114,7 +114,7 @@ void mons_cast_mislead(monster* mons)
 
     if (player_mental_clarity(true))
     {
-        mpr("Your vision blurs momentarily.");
+        mpr(gettext("Your vision blurs momentarily."));
         return;
     }
 
@@ -128,7 +128,7 @@ void mons_cast_mislead(monster* mons)
 
         if (old_value <= 0)
         {
-            mpr("But for a moment, strange images dance in front of your eyes.", MSGCH_WARN);
+            mpr(gettext("But for a moment, strange images dance in front of your eyes."), MSGCH_WARN);
 #ifdef USE_TILE
             tiles.add_overlay(you.pos(), tileidx_zap(MAGENTA));
             update_screen();
@@ -138,7 +138,7 @@ void mons_cast_mislead(monster* mons)
             more();
         }
         else
-            mpr("You are even more misled!", MSGCH_WARN);
+            mpr(gettext("You are even more misled!"), MSGCH_WARN);
 
         learned_something_new(HINT_YOU_ENCHANTED);
 
