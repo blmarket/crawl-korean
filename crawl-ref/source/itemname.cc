@@ -1189,6 +1189,7 @@ std::string sub_type_string(object_class_type type, int sub_type,
     }
 }
 
+/// lua 스크립트에 넘겨주는 놈이니 건드리지 말긔.
 std::string ego_type_string (const item_def &item)
 {
     switch (item.base_type)
@@ -1390,7 +1391,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_brand && !terse && _missile_brand_is_prefix(brand))
-            buff << missile_brand_name(brand, MBN_NAME) << ' ';
+            buff << check_gettext(missile_brand_name(brand, MBN_NAME)) << ' ';
 
         if (know_pluses)
         {
