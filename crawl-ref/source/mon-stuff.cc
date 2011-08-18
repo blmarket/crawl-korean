@@ -3396,27 +3396,27 @@ std::string get_damage_level_string(mon_holy_type holi,
     switch (mdam)
     {
     case MDAM_ALMOST_DEAD:
-        ss << "almost";
-        ss << (_wounded_damaged(holi) ? " destroyed" : " dead");
+        ss << pgettext("get_damage_level_string", "almost");
+        ss << (_wounded_damaged(holi) ? pgettext("get_damage_level_string", " destroyed") : pgettext("get_damage_level_string", " dead"));
         return ss.str();
     case MDAM_SEVERELY_DAMAGED:
-        ss << "severely";
+        ss << pgettext("get_damage_level_string", "severely");
         break;
     case MDAM_HEAVILY_DAMAGED:
-        ss << "heavily";
+        ss << pgettext("get_damage_level_string", "heavily");
         break;
     case MDAM_MODERATELY_DAMAGED:
-        ss << "moderately";
+        ss << pgettext("get_damage_level_string", "moderately");
         break;
     case MDAM_LIGHTLY_DAMAGED:
-        ss << "lightly";
+        ss << pgettext("get_damage_level_string", "lightly");
         break;
     case MDAM_OKAY:
     default:
-        ss << "not";
+        ss << pgettext("get_damage_level_string", "not");
         break;
     }
-    ss << (_wounded_damaged(holi) ? " damaged" : " wounded");
+    ss << (_wounded_damaged(holi) ? pgettext("get_damage_level_string", " damaged") : pgettext("get_damage_level_string", " wounded"));
     return ss.str();
 }
 
@@ -3426,7 +3426,7 @@ std::string get_wounds_description_sentence(const monster* mons)
     if (wounds.empty())
         return "";
     else
-        return make_stringf(pgettext("get_wounds_descriptions_sentence", "%s is %s."),
+        return make_stringf(pgettext("get_damage_level_string", "%s is %s."),
                             mons->pronoun(PRONOUN_CAP).c_str(),
                             wounds.c_str());
 }
