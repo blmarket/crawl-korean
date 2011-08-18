@@ -335,7 +335,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Dungeon Crawl";
+    text = gettext("Dungeon Crawl");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -343,8 +343,8 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Dungeon Crawl: The main game: full of monsters, "
-                              "items, gods and danger!");
+    tmp->set_description_text(gettext("Dungeon Crawl: The main game: full of monsters, "
+                              "items, gods and danger!"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -354,7 +354,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Tutorial for Dungeon Crawl";
+    text = gettext("Tutorial for Dungeon Crawl");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -362,8 +362,8 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Tutorial that covers the basics of "
-                              "Dungeon Crawl survival.");
+    tmp->set_description_text(gettext("Tutorial that covers the basics of "
+                              "Dungeon Crawl survival."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -373,7 +373,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Hints mode for Dungeon Crawl";
+    text = gettext("Hints mode for Dungeon Crawl");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -381,8 +381,8 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("A mostly normal game that provides more "
-                              "advanced hints than the tutorial.");
+    tmp->set_description_text(gettext("A mostly normal game that provides more "
+                              "advanced hints than the tutorial."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -392,7 +392,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Dungeon Sprint";
+    text = gettext("Dungeon Sprint");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -400,7 +400,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Hard, fixed single level game mode.");
+    tmp->set_description_text(gettext("Hard, fixed single level game mode."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -410,7 +410,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Zot Defence";
+    text = gettext("Zot Defence");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -418,7 +418,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Defend the Orb of Zot against waves of critters.");
+    tmp->set_description_text(gettext("Defend the Orb of Zot against waves of critters."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -428,7 +428,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "Instructions";
+    text = gettext("Instructions");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -436,7 +436,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Help menu.");
+    tmp->set_description_text(gettext("Help menu."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 
@@ -446,7 +446,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "The Arena";
+    text = gettext("The Arena");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -454,7 +454,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("Pit computer controlled teams versus each other!");
+    tmp->set_description_text(gettext("Pit computer controlled teams versus each other!"));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 }
@@ -583,14 +583,14 @@ again:
     _construct_save_games_menu(save_games, chars);
 
     NoSelectTextItem* tmp = new NoSelectTextItem();
-    tmp->set_text("Enter your name:");
+    tmp->set_text(gettext("Enter your name:"));
     tmp->set_bounds(coord_def(1, NAME_START_Y),
                     coord_def(SCROLLER_MARGIN_X, NAME_START_Y + 1));
     freeform->attach_item(tmp);
     tmp->set_visible(true);
 
     tmp = new NoSelectTextItem();
-    tmp->set_text("Choices:");
+    tmp->set_text(gettext("Choices:"));
     tmp->set_bounds(coord_def(1, GAME_MODES_START_Y),
                     coord_def(SCROLLER_MARGIN_X, GAME_MODES_START_Y + 1));
     freeform->attach_item(tmp);
@@ -607,14 +607,14 @@ again:
     }
 
     tmp = new NoSelectTextItem();
-    std::string text = "Use the up/down keys to select the type of game "
+    std::string text = gettext("Use the up/down keys to select the type of game "
                        "or load a character.\n"
                        "You can type your name; if you leave it blank "
                        "you will be asked later.\n"
-                       "Press Enter to start";
+                       "Press Enter to start");
     // TODO: this should include a description of that character.
     if (_game_defined(defaults))
-        text += ", Tab to repeat the last game's choice";
+        text += gettext(", Tab to repeat the last game's choice");
     text += ".\n";
     tmp->set_text(text);
     tmp->set_bounds(coord_def(1, help_start), coord_def(max_col - 1, help_end));
