@@ -3311,11 +3311,11 @@ std::string feature_description(const coord_def& where, bool covering,
     if (covering)
     {
         if (is_bloodcovered(where))
-            covering_description = ", spattered with blood";
+            covering_description = gettext(", spattered with blood");
         else if (glowing_mold(where))
-            covering_description = ", covered with glowing mold";
+            covering_description = gettext(", covered with glowing mold");
         else if (is_moldy(where))
-            covering_description = ", covered with mold";
+            covering_description = gettext(", covered with mold");
     }
 
     if (!marker_desc.empty())
