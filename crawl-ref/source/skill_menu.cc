@@ -468,49 +468,49 @@ std::string SkillMenuSwitch::get_help()
     switch (m_state)
     {
     case SKM_MODE_AUTO:
-        return "In automatic mode, the skills you use are trained.";
+        return gettext("In automatic mode, the skills you use are trained.");
     case SKM_MODE_MANUAL:
-        return "In manual mode, the skills you have selected are trained.";
+        return gettext("In manual mode, the skills you have selected are trained.");
     case SKM_DO_PRACTISE:
         if (m_skm->is_set(SKMF_SIMPLE))
             return hints_skills_info();
         else
         {
-            return "Press the letter of a skill to choose whether you want to "
-                   "practise it. Skills marked with '-' will not be trained.";
+            return gettext("Press the letter of a skill to choose whether you want to "
+                   "practise it. Skills marked with '-' will not be trained.");
         }
     case SKM_DO_FOCUS:
-        return "Press the letter of a skill to cycle between "
+        return gettext("Press the letter of a skill to cycle between "
                "<darkgrey>disabled</darkgrey> (-), enabled (+) and "
                "<white>focused</white> (*). Focused skills train twice as "
-               "fast as others.";
+               "fast as others.");
     case SKM_LEVEL_ENHANCED:
         if (m_skm->is_set(SKMF_ENHANCED))
         {
-            return make_stringf("Skills enhanced by the power of %s are in "
-                                "<blue>blue</blue>. ",
+            return make_stringf(gettext("Skills enhanced by the power of %s are in "
+                                "<blue>blue</blue>. "),
                                 god_name(you.religion).c_str());
         }
         else
         {
-            return "Skills reduced by the power of Ashenzari are in "
-                   "<red>red</red>. ";
+            return gettext("Skills reduced by the power of Ashenzari are in "
+                   "<red>red</red>. ");
         }
     case SKM_VIEW_TRAINING:
         if (m_skm->is_set(SKMF_SIMPLE))
             return hints_skill_training_info();
         else
         {
-            return "The percentage of the experience used to train each skill "
-                   "is in <brown>brown</brown>.\n";
+            return gettext("The percentage of the experience used to train each skill "
+                   "is in <brown>brown</brown>.\n");
         }
     case SKM_VIEW_PROGRESS:
-        return "The percentage of the progress done before reaching next "
-               "level is in <cyan>cyan</cyan>.\n";
+        return gettext("The percentage of the progress done before reaching next "
+               "level is in <cyan>cyan</cyan>.\n");
     case SKM_VIEW_TRANSFER:
-        return "The progress of the knowledge transfer is displayed in "
+        return gettext("The progress of the knowledge transfer is displayed in "
                "<cyan>cyan</cyan> in front of the skill receiving the "
-               "knowledge. The donating skill is marked with '*'.";
+               "knowledge. The donating skill is marked with '*'.");
     default: return "";
     }
 }
@@ -773,7 +773,7 @@ bool SkillMenu::exit()
 
     if (!enabled_skill && !maxed_out)
     {
-        set_help("You need to enable at least one skill.");
+        set_help(gettext("You need to enable at least one skill."));
         return false;
     }
 
@@ -824,9 +824,9 @@ void SkillMenu::help()
         if (is_set(SKMF_SIMPLE))
             text = hints_skills_description_info();
         else
-            text = "Press the letter of a skill to read its description. "
+            text = gettext("Press the letter of a skill to read its description. "
                    "Press ? for an explanation of how skills work and the "
-                   "various modes.";
+                   "various modes.");
         set_help(text);
     }
     else
@@ -1086,21 +1086,21 @@ void SkillMenu::set_default_help()
     std::string text;
     if (is_set(SKMF_RESKILL_FROM))
     {
-        text = "Select a skill as the source of the knowledge transfer. The "
+        text = gettext("Select a skill as the source of the knowledge transfer. The "
                "chosen skill will be reduced to the level shown in "
-               "<brown>brown</brown>.";
+               "<brown>brown</brown>.");
     }
     else if (is_set(SKMF_RESKILL_TO))
     {
-        text = "Select a skill as the destination of the knowledge transfer. "
+        text = gettext("Select a skill as the destination of the knowledge transfer. "
                "The chosen skill will be raised to the level shown in "
-               "<cyan>cyan</cyan>.";
+               "<cyan>cyan</cyan>.");
     }
     else if (is_set(SKMF_EXPERIENCE))
     {
-        text = "Select the skills you want to be trained. "
+        text = gettext("Select the skills you want to be trained. "
                "The chosen skills will be raised to the level shown in "
-               "<cyan>cyan</cyan>.";
+               "<cyan>cyan</cyan>.");
     }
     else if (is_set(SKMF_SIMPLE))
         text = hints_skills_info();
@@ -1115,27 +1115,27 @@ void SkillMenu::set_default_help()
             text += m_switches[SKM_LEVEL]->get_help();
         }
         else
-            text += "The species aptitude is in <red>red</red>. ";
+            text += gettext("The species aptitude is in <red>red</red>. ");
 
         if (is_set(SKMF_CROSSTRAIN))
-            text += "Crosstraining is in <green>green</green>. ";
+            text += gettext("Crosstraining is in <green>green</green>. ");
         if (is_set(SKMF_ANTITRAIN))
-            text += "Antitraining is in <magenta>magenta</magenta>. ";
+            text += gettext("Antitraining is in <magenta>magenta</magenta>. ");
 
         if (is_set(SKMF_CROSSTRAIN) && is_set(SKMF_ANTITRAIN))
         {
-            text += "The skill responsible for the bonus or malus is "
-                    "marked with '*'.";
+            text += gettext("The skill responsible for the bonus or malus is "
+                    "marked with '*'.");
         }
         else if (is_set(SKMF_CROSSTRAIN))
         {
-            text += "The skill responsible for the bonus is marked with "
-                    "'<green>*</green>'.";
+            text += gettext("The skill responsible for the bonus is marked with "
+                    "'<green>*</green>'.");
         }
         else if (is_set(SKMF_ANTITRAIN))
         {
-            text += "The skill responsible for the malus is marked with "
-                    "'<magenta>*</magenta>'.";
+            text += gettext("The skill responsible for the malus is marked with "
+                    "'<magenta>*</magenta>'.");
         }
     }
 
@@ -1239,17 +1239,17 @@ void SkillMenu::toggle_practise(skill_type sk, int keyn)
 void SkillMenu::set_title()
 {
     const char* format = is_set(SKMF_RESKILLING)
-                                ? "Transfer Knowledge: select the %s skill"
-                                : "You have %s. Select the skills to train.";
+                                ? gettext("Transfer Knowledge: select the %s skill")
+                                : gettext("You have %s. Select the skills to train.");
     std::string t;
     if (is_set(SKMF_RESKILL_FROM))
-        t = make_stringf(format, "source");
+        t = make_stringf(format, pgettext("SkillMenu::set_title", "source"));
     else if (is_set(SKMF_RESKILL_TO))
-        t = make_stringf(format, "destination");
+        t = make_stringf(format, pgettext("SkillMenu::set_title", "destination"));
     else if (is_set(SKMF_EXPERIENCE_CARD))
-        t = make_stringf(format, "drawn an Experience card");
+        t = make_stringf(format, pgettext("SkillMenu::set_title", "drawn an Experience card"));
     else if (is_set(SKMF_EXPERIENCE_POTION))
-        t = make_stringf(format, "quaffed a potion of experience");
+        t = make_stringf(format, pgettext("SkillMenu::set_title", "quaffed a potion of experience"));
 
     m_title->set_text(t);
 }

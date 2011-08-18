@@ -231,9 +231,9 @@ bool monster::gain_exp(int exp)
     if (levels_gained)
     {
         if (mons_intel(this) >= I_NORMAL)
-            simple_monster_message(&mcopy, " looks more experienced.");
+            simple_monster_message(&mcopy, gettext(" looks more experienced."));
         else
-            simple_monster_message(&mcopy, " looks stronger.");
+            simple_monster_message(&mcopy, gettext(" looks stronger."));
     }
 
     if (hit_dice < MAX_MONS_HD && experience >= mexplevs[hit_dice + 1])

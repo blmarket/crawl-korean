@@ -255,10 +255,10 @@ bool ugly_thing_mutate(monster* ugly, bool proximity)
                 proximity_type = 2;
             }
 
-            src  = " from ";
-            src += proximity_type == 0 ? "you" :
-                   proximity_type == 1 ? "its kin"
-                                       : "its neighbour";
+            src  = make_stringf(pgettext("ugly_thing_mutate", " from %s"), 
+                   proximity_type == 0 ? pgettext("ugly_thing_mutate", "you") :
+                   proximity_type == 1 ? pgettext("ugly_thing_mutate", "its kin")
+                                       : pgettext("ugly_thing_mutate", "its neighbour"));
 
             success = true;
         }
@@ -267,7 +267,7 @@ bool ugly_thing_mutate(monster* ugly, bool proximity)
     if (success)
     {
         simple_monster_message(ugly,
-            make_stringf(" basks in the mutagenic energy%s and changes!",
+            make_stringf(gettext(" basks in the mutagenic energy%s and changes!"),
                          src.c_str()).c_str());
 
         ugly->uglything_mutate(mon_colour);
@@ -376,7 +376,7 @@ static int _do_split(monster* thing, coord_def & target)
     // XXX copy summoner info
 
     if (you.can_see(thing))
-        mprf("%s splits.", thing->name(DESC_CAP_A).c_str());
+        mprf(gettext("%s splits."), thing->name(DESC_CAP_A).c_str());
 
     int split_off = thing->number / 2;
     float max_per_blob = thing->max_hit_points / float(thing->number);
@@ -453,19 +453,19 @@ static bool _do_merge(monster* initial_slime, monster* merge_to)
     {
         if (you.can_see(initial_slime))
         {
-            mprf("Two slime creatures merge to form %s.",
+            mprf(gettext("Two slime creatures merge to form %s."),
                  merge_to->name(DESC_NOCAP_A).c_str());
         }
         else
         {
-            mprf("A slime creature suddenly becomes %s.",
+            mprf(gettext("A slime creature suddenly becomes %s."),
                  merge_to->name(DESC_NOCAP_A).c_str());
         }
 
         flash_view_delay(LIGHTGREEN, 150);
     }
     else if (you.can_see(initial_slime))
-        mpr("A slime creature suddenly disappears!");
+        mpr(gettext("A slime creature suddenly disappears!"));
 
     // Have to 'kill' the slime doing the merging.
     monster_die(initial_slime, KILL_MISC, NON_MONSTER, true);
@@ -712,14 +712,14 @@ static bool _siren_movement_effect(const monster* mons)
             if (!do_resist)
             {
                 const coord_def oldpos = you.pos();
-                mprf("The pull of her song draws you forwards.");
+                mprf(gettext("The pull of her song draws you forwards."));
 
                 if (swapping)
                 {
                     if (monster_at(oldpos))
                     {
-                        mprf("Something prevents you from swapping places "
-                             "with %s.",
+                        mprf(gettext("Something prevents you from swapping places "
+                             "with %s."),
                              mon->name(DESC_NOCAP_THE).c_str());
                         return (do_resist);
                     }
@@ -732,7 +732,7 @@ static bool _siren_movement_effect(const monster* mons)
                     // Plunk it down.
                     mgrd(mon->pos()) = swap_mon;
 
-                    mprf("You swap places with %s.",
+                    mprf(gettext("You swap places with %s."),
                          mon->name(DESC_NOCAP_THE).c_str());
                 }
                 move_player_to_grid(newpos, true, true);
@@ -764,7 +764,7 @@ static bool _silver_statue_effects(monster* mons)
     if (foe && mons->can_see(foe) && !one_chance_in(3))
     {
         const std::string msg =
-            "'s eyes glow " + weird_glowing_colour() + '.';
+            make_stringf(gettext("'s eyes glow %s."), weird_glowing_colour().c_str());
         simple_monster_message(mons, msg.c_str(), MSGCH_WARN);
 
         create_monster(
@@ -800,9 +800,9 @@ static bool _orange_statue_effects(monster* mons)
         if (you.can_see(foe))
         {
             if (foe == &you)
-                mprf(MSGCH_WARN, "A hostile presence attacks your mind!");
+                mprf(MSGCH_WARN, gettext("A hostile presence attacks your mind!"));
             else if (you.can_see(mons))
-                mprf(MSGCH_WARN, "%s fixes %s piercing gaze on %s.",
+                mprf(MSGCH_WARN, gettext("%s fixes %s piercing gaze on %s."),
                      mons->name(DESC_CAP_THE).c_str(),
                      mons->pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str(),
                      foe->name(DESC_NOCAP_THE).c_str());
@@ -873,7 +873,7 @@ static void _orc_battle_cry(monster* chief)
         {
             if (you.can_see(chief) && player_can_hear(chief->pos()))
             {
-                mprf(MSGCH_SOUND, "%s roars a battle-cry!",
+                mprf(MSGCH_SOUND, gettext("%s roars a battle-cry!"),
                      chief->name(DESC_CAP_THE).c_str());
             }
 
@@ -891,7 +891,7 @@ static void _orc_battle_cry(monster* chief)
                 if (seen_affected.size() == 1)
                 {
                     who = seen_affected[0]->name(DESC_CAP_THE);
-                    mprf(channel, "%s goes into a battle-frenzy!", who.c_str());
+                    mprf(channel, gettext("%s goes into a battle-frenzy!"), who.c_str());
                 }
                 else
                 {
@@ -907,8 +907,8 @@ static void _orc_battle_cry(monster* chief)
                     }
                     who = get_monster_data(type)->name;
 
-                    mprf(channel, "%s %s go into a battle-frenzy!",
-                         chief->friendly() ? "Your" : "The",
+                    mprf(channel, gettext("%s %s go into a battle-frenzy!"),
+                         chief->friendly() ? gettext(M_("Your")) : gettext(M_("The")),
                          pluralise(who).c_str());
                 }
             }
@@ -947,7 +947,7 @@ static bool _make_monster_angry(const monster* mon, monster* targ)
 
     if (you.can_see(mon))
     {
-        mprf("%s goads %s on!", mon->name(DESC_CAP_THE).c_str(),
+        mprf(gettext("%s goads %s on!"), mon->name(DESC_CAP_THE).c_str(),
              targ->name(DESC_NOCAP_THE).c_str());
     }
 
@@ -1045,7 +1045,7 @@ static void _establish_connection(int tentacle,
         if (!last_mon)
         {
             // Should be something there, what to do if there isn't?
-            mprf("Error! failed to place monster in tentacle connect change");
+            mprf(gettext("Error! failed to place monster in tentacle connect change"));
             break;
         }
         int last_mon_idx = last_mon->mindex();
@@ -1087,7 +1087,7 @@ static void _establish_connection(int tentacle,
         else
         {
             // connector placement failed, what to do?
-            mprf("connector placement failed at %d %d", current->pos.x, current->pos.y);
+            mprf(gettext("connector placement failed at %d %d"), current->pos.x, current->pos.y);
         }
 
         last = current;
@@ -1841,7 +1841,7 @@ void move_kraken_tentacles(monster* kraken)
 
         if (!tentacle)
         {
-            mprf("missing tentacle in path");
+            mprf(gettext("missing tentacle in path"));
             continue;
         }
 
@@ -2108,7 +2108,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         if (mons_should_fire(beem))
         {
             make_mons_stop_fleeing(mons);
-            simple_monster_message(mons, " spits lava!");
+            simple_monster_message(mons, gettext(" spits lava!"));
             beem.fire();
             used = true;
         }
@@ -2146,7 +2146,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         {
             make_mons_stop_fleeing(mons);
             simple_monster_message(mons,
-                                   " shoots out a bolt of electricity!");
+                                   gettext(" shoots out a bolt of electricity!"));
             beem.fire();
             used = true;
         }
@@ -2279,7 +2279,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             mons->add_ench(rot);
 
             if (mons->visible_to(&you))
-                simple_monster_message(mons, " begins to rapidly decay!");
+                simple_monster_message(mons, gettext(" begins to rapidly decay!"));
         }
         break;
 
@@ -2295,7 +2295,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             if (mons_is_fleeing(mons))
                 behaviour_event(mons, ME_CORNERED);
 
-            simple_monster_message(mons, " withdraws into its shell!");
+            simple_monster_message(mons, gettext(" withdraws into its shell!"));
         }
         break;
 
@@ -2334,7 +2334,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         if (mons_should_fire(beem))
         {
             make_mons_stop_fleeing(mons);
-            simple_monster_message(mons, " flicks its tail!");
+            simple_monster_message(mons, gettext(" flicks its tail!"));
             beem.fire();
             used = true;
             // Decrement # of volleys left.
@@ -2465,8 +2465,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
             if (you.can_see(mons))
             {
                 simple_monster_message(mons,
-                    make_stringf(" chants %s song.",
-                    already_mesmerised ? "her luring" : "a haunting").c_str(),
+                    make_stringf(gettext(" chants %s song."),
+                    already_mesmerised ? pgettext("mesmerise", "her luring") : pgettext("mesmerise", "a haunting")).c_str(),
                     spl);
 
                 if (mons->type == MONS_SIREN)
@@ -2483,15 +2483,15 @@ bool mon_special_ability(monster* mons, bolt & beem)
                 // If you're already mesmerised by an invisible mermaid she
                 // can still prolong the enchantment; otherwise you "resist".
                 if (already_mesmerised)
-                    mpr("You hear a luring song.", MSGCH_SOUND);
+                    mpr(gettext("You hear a luring song."), MSGCH_SOUND);
                 else
                 {
                     if (one_chance_in(4)) // reduce spamminess
                     {
                         if (coinflip())
-                            mpr("You hear a haunting song.", MSGCH_SOUND);
+                            mpr(gettext("You hear a haunting song."), MSGCH_SOUND);
                         else
-                            mpr("You hear an eerie melody.", MSGCH_SOUND);
+                            mpr(gettext("You hear an eerie melody."), MSGCH_SOUND);
 
                         canned_msg(MSG_YOU_RESIST); // flavour only
                     }
@@ -2585,14 +2585,14 @@ void mon_nearby_ability(monster* mons)
         {
             const bool can_see = you.can_see(mons);
             if (can_see && you.can_see(foe))
-                mprf("%s blinks at %s.",
+                mprf(gettext("%s blinks at %s."),
                      mons->name(DESC_CAP_THE).c_str(),
                      foe->name(DESC_NOCAP_THE).c_str());
 
             int confuse_power = 2 + random2(3);
 
             if (foe->atype() == ACT_PLAYER && !can_see)
-                mpr("You feel you are being watched by something.");
+                mpr(gettext("You feel you are being watched by something."));
 
             int res_margin = foe->check_res_magic((mons->hit_dice * 5)
                              * confuse_power);
@@ -2618,12 +2618,12 @@ void mon_nearby_ability(monster* mons)
         {
             const bool can_see = you.can_see(mons);
             if (can_see && you.can_see(foe))
-                mprf("%s stares at %s.",
+                mprf(gettext("%s stares at %s."),
                      mons->name(DESC_CAP_THE).c_str(),
                      foe->name(DESC_NOCAP_THE).c_str());
 
             if (foe->atype() == ACT_PLAYER && !can_see)
-                mpr("You feel you are being watched by something.");
+                mpr(gettext("You feel you are being watched by something."));
 
             // Subtly different from old paralysis behaviour, but
             // it'll do.
@@ -2636,9 +2636,9 @@ void mon_nearby_ability(monster* mons)
         if (_eyeball_will_use_ability(mons) && foe->atype() == ACT_PLAYER)
         {
             if (you.can_see(mons))
-                simple_monster_message(mons, " stares at you.");
+                simple_monster_message(mons, gettext(" stares at you."));
             else
-                mpr("You feel you are being watched by something.");
+                mpr(gettext("You feel you are being watched by something."));
 
             int mp = std::min(5 + random2avg(13, 3), you.magic_points);
             dec_mp(mp);
@@ -2694,7 +2694,7 @@ void ballisto_on_move(monster* mons, const coord_def & position)
                     // Don't leave mold on squares we place ballistos on
                     remove_mold(position);
                     if  (you.can_see(&env.mons[rc]))
-                        mprf("A ballistomycete grows in the wake of the spore.");
+                        mprf(gettext("A ballistomycete grows in the wake of the spore."));
                 }
 
                 mons->number = 40;
@@ -2783,7 +2783,7 @@ void activate_ballistomycetes(monster* mons, const coord_def & origin,
             && any_friendly
             && mons->type == MONS_BALLISTOMYCETE)
         {
-            mpr("Your fungal colony was destroyed.");
+            mpr(gettext("Your fungal colony was destroyed."));
             dock_piety(5, 0);
         }
 
@@ -2805,8 +2805,8 @@ void activate_ballistomycetes(monster* mons, const coord_def & origin,
         {
             if (player_kill)
             {
-                mpr("Having destroyed the fungal colony, you feel a bit more "
-                    "experienced.");
+                mpr(gettext("Having destroyed the fungal colony, you feel a bit more "
+                    "experienced."));
                 gain_exp(500);
             }
 

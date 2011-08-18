@@ -59,13 +59,13 @@ void orb_pickup_noise (const coord_def& where, int loudness, const char* msg, co
         if (msg)
             mpr(msg, MSGCH_ORB);
         else
-            mpr("The orb lets out a hideous shriek!", MSGCH_ORB);
+            mpr(gettext("The orb lets out a hideous shriek!"), MSGCH_ORB);
     }
     else
     {
         if (msg2)
             mpr(msg2, MSGCH_ORB);
         else
-            mpr("The orb lets out a furious burst of light!", MSGCH_ORB);
+            mpr(gettext("The orb lets out a furious burst of light!"), MSGCH_ORB);
     }
 }

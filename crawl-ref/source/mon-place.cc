@@ -1272,25 +1272,24 @@ int place_monster(mgen_data mg, bool force_pos, bool dont_place)
         if (menv[id].visible_to(&you))
             msg = menv[id].name(DESC_CAP_A);
         else if (shoved)
-            msg = "Something";
+            msg = gettext(M_("Something"));
 
         if (shoved)
         {
-            msg += " shoves you out of the ";
-            if (stair_type == DCHAR_ARCH)
-                msg += "gateway!";
-            else
-                msg += "stairwell!";
+            msg += make_stringf(gettext(" shoves you out of the %s!"),
+                (stair_type == DCHAR_ARCH) ? 
+                    pgettext("place_monster", "gateway") : 
+                    pgettext("place_monster", "stairwell"));
             mpr(msg.c_str());
         }
         else if (!msg.empty())
         {
             if (stair_type == DCHAR_STAIRS_DOWN)
-                msg += " comes up the stairs.";
+                msg += gettext(" comes up the stairs.");
             else if (stair_type == DCHAR_STAIRS_UP)
-                msg += " comes down the stairs.";
+                msg += gettext(" comes down the stairs.");
             else if (stair_type == DCHAR_ARCH)
-                msg += " comes through the gate.";
+                msg += gettext(" comes through the gate.");
             else
                 msg = "";
 
@@ -3500,15 +3499,15 @@ bool player_angers_monster(monster* mon)
             std::string aura;
 
             if (holy)
-                aura = "holy";
+                aura = pgettext("players_angers_monster", "holy");
             else if (unholy)
-                aura = "unholy";
+                aura = pgettext("players_angers_monster", "unholy");
             else if (lawful)
-                aura = "lawful";
+                aura = pgettext("players_angers_monster", "lawful");
             else if (antimagical)
-                aura = "anti-magical";
+                aura = pgettext("players_angers_monster", "anti-magical");
 
-            mprf("%s is enraged by your %s aura!",
+            mprf(gettext("%s is enraged by your %s aura!"),
                  mon->name(DESC_CAP_THE).c_str(), aura.c_str());
         }
 
@@ -3587,7 +3586,7 @@ int create_monster(mgen_data mg, bool fail_msg)
     // Determine whether creating a monster is successful (summd != -1) {dlb}:
     // then handle the outcome. {dlb}:
     if (fail_msg && summd == -1 && you.see_cell(mg.pos))
-        mpr("You see a puff of smoke.");
+        mpr(gettext("You see a puff of smoke."));
 
     // The return value is either -1 (failure of some sort)
     // or the index of the monster placed (if I read things right). {dlb}

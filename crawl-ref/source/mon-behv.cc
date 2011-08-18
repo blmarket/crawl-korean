@@ -206,7 +206,7 @@ void handle_behaviour(monster* mon)
             const int loss = div_rand_round(10, mon->speed);
             if (loss)
             {
-                mpr("Your flesh rots away as the Orb of Zot is desecrated.",
+                mpr(gettext("Your flesh rots away as the Orb of Zot is desecrated."),
                     MSGCH_DANGER);
                 rot_hp(loss);
                 ouch(1, mon->mindex(), KILLED_BY_ROTTING);

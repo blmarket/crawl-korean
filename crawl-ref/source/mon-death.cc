@@ -65,7 +65,7 @@ void pikel_band_neutralise()
         }
     }
     if (any_vis)
-        mprf("With Pikel's spell broken, the former slaves thank you for their freedom.");
+        mprf(gettext("With Pikel's spell broken, the former slaves thank you for their freedom."));
 
     add_daction(DACT_PIKEL_SLAVES);
 }
@@ -177,28 +177,28 @@ void hogs_to_humans()
                 human++;
         }
         else if (could_see && !can_see)
-            mpr("The hog vanishes!");
+            mpr(gettext("The hog vanishes!"));
         else if (!could_see && can_see)
-            mprf("%s appears from out of thin air!",
+            mprf(gettext("%s appears from out of thin air!"),
                  mi->name(DESC_CAP_A).c_str());
     }
 
     if (any == 1)
     {
         if (any == human)
-            mpr("No longer under Kirke's spell, the hog turns into a human!");
+            mpr(gettext("No longer under Kirke's spell, the hog turns into a human!"));
         else
-            mpr("No longer under Kirke's spell, the hog returns to its "
-                "original form!");
+            mpr(gettext("No longer under Kirke's spell, the hog returns to its "
+                "original form!"));
     }
     else if (any > 1)
     {
         if (any == human)
-            mpr("No longer under Kirke's spell, all hogs revert to their "
-                "human forms!");
+            mpr(gettext("No longer under Kirke's spell, all hogs revert to their "
+                "human forms!"));
         else
-            mpr("No longer under Kirke's spell, all hogs revert to their "
-                "original forms!");
+            mpr(gettext("No longer under Kirke's spell, all hogs revert to their "
+                "original forms!"));
     }
 
     // Revert the player as well.
@@ -356,7 +356,7 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
         if (mons->observable())
         {
             mons->add_ench(ENCH_HASTE);
-            simple_monster_message(mons, " seems to find hidden reserves of power!");
+            simple_monster_message(mons, gettext(" seems to find hidden reserves of power!"));
         }
         else
             mons->props["dowan_upgrade"] = bool(true);
@@ -416,7 +416,7 @@ void elven_twins_pacify (monster* twin)
         gain_piety(random2(mons->max_hit_points / (2 + you.piety / 20)), 2);
 
     if (mons_near(mons))
-        simple_monster_message(mons, " likewise turns neutral.");
+        simple_monster_message(mons, gettext(" likewise turns neutral."));
 
     mons_pacify(mons, ATT_NEUTRAL);
 }
@@ -477,9 +477,9 @@ void elven_twins_unpacify (monster* twin)
 void spirit_fades (monster *spirit)
 {
     if (mons_near(spirit))
-        simple_monster_message(spirit, " fades away with a wail!", MSGCH_TALK);
+        simple_monster_message(spirit, gettext(" fades away with a wail!"), MSGCH_TALK);
     else
-        mpr("You hear a distant wailing.", MSGCH_TALK);
+        mpr(gettext("You hear a distant wailing."), MSGCH_TALK);
 
     const coord_def c = spirit->pos();
 
@@ -502,9 +502,9 @@ void spirit_fades (monster *spirit)
     monster *new_mon = &menv[mon_id];
 
     if (mons_near(new_mon))
-        simple_monster_message(new_mon, " seeks to avenge the fallen spirit!", MSGCH_TALK);
+        simple_monster_message(new_mon, gettext(" seeks to avenge the fallen spirit!"), MSGCH_TALK);
     else
-        mpr("A powerful presence appears to avenge a fallen spirit!", MSGCH_TALK);
+        mpr(gettext("A powerful presence appears to avenge a fallen spirit!"), MSGCH_TALK);
 
 }
 
@@ -585,7 +585,7 @@ void shedu_do_resurrection (const monster* mons)
         behaviour_event(my_pair, ME_DISTURB, MHITNOT, my_pair->pos());
 
     if (you.can_see(my_pair))
-        simple_monster_message(my_pair, " ceases action and prepares to resurrect its fallen mate.");
+        simple_monster_message(my_pair, gettext(" ceases action and prepares to resurrect its fallen mate."));
 
     my_pair->add_ench(ENCH_PREPARING_RESURRECT);
 }
@@ -689,9 +689,9 @@ void shedu_do_actual_resurrection (monster* mons)
     my_pair->flags |= MF_BAND_MEMBER;
 
     if (from_inventory)
-        simple_monster_message(mons, " resurrects its mate from your pack!");
+        simple_monster_message(mons, gettext(" resurrects its mate from your pack!"));
     else if (you.can_see(mons))
-        simple_monster_message(mons, " resurrects its mate from the grave!");
+        simple_monster_message(mons, gettext(" resurrects its mate from the grave!"));
     else if (you.can_see(my_pair))
-        simple_monster_message(mons, " rises from the grave!");
+        simple_monster_message(mons, gettext(" rises from the grave!"));
 }

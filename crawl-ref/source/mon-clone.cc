@@ -129,11 +129,11 @@ static void _mons_summon_monster_illusion(monster* caster,
         if (cloning_visible)
         {
             if (!you.can_see(caster))
-                mprf("%s seems to step out of %s!",
+                mprf(gettext("%s seems to step out of %s!"),
                      foe->name(DESC_CAP_THE).c_str(),
                      foe->pronoun(PRONOUN_REFLEXIVE).c_str());
             else
-                mprf("%s seems to draw %s out of %s!",
+                mprf(gettext("%s seems to draw %s out of %s!"),
                      caster->name(DESC_CAP_THE).c_str(),
                      foe->name(DESC_NOCAP_THE).c_str(),
                      foe->pronoun(PRONOUN_REFLEXIVE).c_str());
@@ -205,7 +205,7 @@ void mons_summon_illusion_from(monster* mons, actor *foe,
                           6, spell_cast, mons->pos(), mons->foe, 0));
         if (midx != -1)
         {
-            mpr("There is a horrible, sudden wrenching feeling in your soul!",
+            mpr(gettext("There is a horrible, sudden wrenching feeling in your soul!"),
                 MSGCH_WARN);
 
             monster* clone = &menv[midx];
@@ -335,7 +335,7 @@ int clone_mons(const monster* orig, bool quiet, bool* obvious,
     if (you.can_see(orig) && you.can_see(mons))
     {
         if (!quiet)
-            simple_monster_message(orig, " is duplicated!");
+            simple_monster_message(orig, gettext(" is duplicated!"));
         *obvious = true;
     }
 
