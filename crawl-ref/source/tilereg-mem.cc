@@ -40,7 +40,8 @@ void MemoriseRegion::draw_tag()
         return;
 
     const spell_type spell = (spell_type) idx;
-    std::string desc = make_stringf("%s    (%s)    %d/%d spell slot%s",
+    /// 1. spell_title 2. failure_rate 3. level required 4. cur levels 5. s or not
+    std::string desc = make_stringf(gettext("%s    (%s)    %d/%d spell slot%s"),
                                     spell_title(spell),
                                     failure_rate_to_string(spell_fail(spell)),
                                     spell_levels_required(spell),
@@ -81,8 +82,8 @@ bool MemoriseRegion::update_tab_tip_text(std::string &tip, bool active)
     const char *prefix2 = active ? "" : "          ";
 
     tip = make_stringf("%s%s\n%s%s",
-                       prefix1, "Display spells in carried books",
-                       prefix2, "Memorise spells");
+                       prefix1, gettext("Display spells in carried books"),
+                       prefix2, gettext("Memorise spells"));
 
     return (true);
 }
@@ -99,14 +100,14 @@ bool MemoriseRegion::update_tip_text(std::string& tip)
     int flag = m_items[item_idx].flag;
     std::vector<command_type> cmd;
     if (flag & TILEI_FLAG_INVALID)
-        tip = "You cannot memorise this spell now.";
+        tip = gettext("You cannot memorise this spell now.");
     else
     {
-        tip = "[L-Click] Memorise (%)";
+        tip = gettext("[L-Click] Memorise (%)");
         cmd.push_back(CMD_MEMORISE_SPELL);
     }
 
-    tip += "\n[R-Click] Describe";
+    tip += gettext("\n[R-Click] Describe");
 
     insert_commands(tip, cmd);
     return (true);

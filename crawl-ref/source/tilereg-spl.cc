@@ -79,8 +79,8 @@ bool SpellRegion::update_tab_tip_text(std::string &tip, bool active)
     const char *prefix2 = active ? "" : "          ";
 
     tip = make_stringf("%s%s\n%s%s",
-                       prefix1, "Display memorised spells",
-                       prefix2, "Cast spells");
+                       prefix1, gettext("Display memorised spells"),
+                       prefix2, gettext("Cast spells"));
 
     return (true);
 }
@@ -97,14 +97,14 @@ bool SpellRegion::update_tip_text(std::string& tip)
     int flag = m_items[item_idx].flag;
     std::vector<command_type> cmd;
     if (flag & TILEI_FLAG_INVALID)
-        tip = "You cannot cast this spell right now.";
+        tip = gettext("You cannot cast this spell right now.");
     else
     {
-        tip = "[L-Click] Cast (%)";
+        tip = gettext("[L-Click] Cast (%)");
         cmd.push_back(CMD_CAST_SPELL);
     }
 
-    tip += "\n[R-Click] Describe (%)";
+    tip += gettext("\n[R-Click] Describe (%)");
     cmd.push_back(CMD_DISPLAY_SPELLS);
     insert_commands(tip, cmd);
 

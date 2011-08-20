@@ -160,7 +160,7 @@ void seen_monsters_react()
         {
             mi->add_ench(ENCH_HASTE);
             mi->props.erase("dowan_upgrade");
-            simple_monster_message(*mi, " seems to find hidden reserves of power!");
+            simple_monster_message(*mi, gettext(" seems to find hidden reserves of power!"));
         }
     }
 }
@@ -191,12 +191,12 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
 
         message += name;
         if (count == types.size() - 1)
-            message += " and ";
+            message += gettext(M_(" and "));
         else if (count < types.size())
             message += ", ";
         ++count;
     }
-    return make_stringf("%s come into view.", message.c_str());
+    return make_stringf(gettext("%s come into view."), message.c_str());
 }
 
 /*
@@ -318,7 +318,7 @@ void update_monsters_in_view()
         }
 
         bool warning = false;
-        std::string warning_msg = "Ashenzari warns you: ";
+        std::string warning_msg = gettext("Ashenzari warns you: ");
         for (unsigned int i = 0; i < size; ++i)
         {
             const monster* mon = monsters[i];
@@ -333,13 +333,13 @@ void update_monsters_in_view()
             if (size == 1)
                 warning_msg += mon->pronoun(PRONOUN_CAP);
             else if (mon->type == MONS_DANCING_WEAPON)
-                warning_msg += "There";
+                warning_msg += pgettext("Ashenzari", "There");
             else if (types[mon->type] == 1)
                 warning_msg += mon->full_name(DESC_CAP_THE);
             else
                 warning_msg += mon->full_name(DESC_CAP_A);
 
-            warning_msg += " is";
+            warning_msg += pgettext("Ashenzari", " is");
             warning_msg += get_monster_equipment_desc(mon, DESC_IDENTIFIED,
                                                       DESC_NONE);
             warning_msg += ".";
@@ -574,25 +574,27 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
     if (!suppress_msg)
     {
         if (did_map)
-            mpr("You feel aware of your surroundings.");
+            mpr(gettext("You feel aware of your surroundings."));
         else
             canned_msg(MSG_DISORIENTED);
 
         std::vector<std::string> sensed;
 
         if (num_altars > 0)
-            sensed.push_back(make_stringf("%d altar%s", num_altars,
+            /// 1. num, 2. s or not
+            sensed.push_back(make_stringf(gettext("%d altar%s"), num_altars,
                                           num_altars > 1 ? "s" : ""));
 
         if (num_shops_portals > 0)
         {
             const char* plur = num_shops_portals > 1 ? "s" : "";
-            sensed.push_back(make_stringf("%d shop%s/portal%s",
+            /// 1. num, 2.3. s or not
+            sensed.push_back(make_stringf(gettext("%d shop%s/portal%s"),
                                           num_shops_portals, plur, plur));
         }
 
         if (!sensed.empty())
-            mpr_comma_separated_list("You sensed ", sensed);
+            mpr_comma_separated_list(gettext("You sensed "), sensed);
     }
 
     return (did_map);
@@ -1171,9 +1173,9 @@ void toggle_show_terrain()
 {
     _show_terrain = !_show_terrain;
     if (_show_terrain)
-        mpr("Showing terrain only.");
+        mpr(gettext("Showing terrain only."));
     else
-        mpr("Returning to normal view.");
+        mpr(gettext("Returning to normal view."));
 }
 
 void reset_show_terrain()

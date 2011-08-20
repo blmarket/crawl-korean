@@ -64,7 +64,7 @@ bool CommandRegion::update_tab_tip_text(std::string &tip, bool active)
     const char *prefix = active ? "" : "[L-Click] ";
 
     tip = make_stringf("%s%s",
-                       prefix, "Execute commands");
+                       prefix, gettext("Execute commands"));
 
     return (true);
 }

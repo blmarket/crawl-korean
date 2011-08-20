@@ -88,12 +88,12 @@ void tutorial_init_hint(const char* hintstr)
 
 void tutorial_death_message()
 {
-    mprnojoin("You die...");
-    mprnojoin("In Crawl, death is a sad but common occurence. "
+    mprnojoin(gettext("You die..."));
+    mprnojoin(gettext("In Crawl, death is a sad but common occurence. "
               "Note that there's usually something you could have done to "
               "survive, for example by using some kind of item, running away, "
               "resting between fights, or by avoiding combat entirely. "
-              "Keep trying, eventually you'll prevail!",
+              "Keep trying, eventually you'll prevail!"),
               MSGCH_TUTORIAL);
     more();
 }

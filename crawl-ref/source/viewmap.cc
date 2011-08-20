@@ -615,7 +615,7 @@ static void _draw_title(const coord_def& cpos, const feature_list& feats)
 
     const int columns = get_number_of_cols();
     const formatted_string help =
-        formatted_string::parse_string("(Press <w>?</w> for help)");
+        formatted_string::parse_string(gettext("(Press <w>?</w> for help)"));
     const int helplen = help.width();
 
     if (columns < helplen)

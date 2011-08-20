@@ -503,7 +503,7 @@ static item_def* _get_evokable_item(const actor* target)
     InvMenu menu(MF_SINGLESELECT | MF_ANYPRINTABLE
                  | MF_ALLOW_FORMATTING | MF_SELECT_BY_PAGE);
     menu.set_type(MT_ANY);
-    menu.set_title("Wand to zap?");
+    menu.set_title(gettext("Wand to zap?"));
     menu.load_items(list);
     menu.show();
     std::vector<SelItem> sel = menu.get_selitems();
@@ -535,7 +535,7 @@ static bool _evoke_item_on_target(actor* target)
         if (item->plus2 == ZAPCOUNT_EMPTY
             || item_type_known(*item) && item->plus <= 0)
         {
-            mpr("That wand is empty.");
+            mpr(gettext("That wand is empty."));
             return (false);
         }
     }
@@ -612,28 +612,28 @@ static bool _cast_spell_on_target(actor* target)
 
     if (!_spell_in_range(spell, target))
     {
-        mprf("%s is out of range for that spell.",
+        mprf(gettext("%s is out of range for that spell."),
              target->name(DESC_CAP_THE).c_str());
         return (true);
     }
 
     if (spell_mana(spell) > you.magic_points)
     {
-        mpr("You don't have enough mana to cast that spell.");
+        mpr(gettext("You don't have enough mana to cast that spell."));
         return (true);
     }
 
     int item_slot = -1;
     if (spell == SPELL_EVAPORATE)
     {
-        const int pot = prompt_invent_item("Throw which potion?", MT_INVLIST,
+        const int pot = prompt_invent_item(gettext("Throw which potion?"), MT_INVLIST,
                                            OBJ_POTIONS);
 
         if (prompt_failed(pot))
             return (false);
         else if (you.inv[pot].base_type != OBJ_POTIONS)
         {
-            mpr("This spell works only on potions!");
+            mpr(gettext("This spell works only on potions!"));
             return (false);
         }
         item_slot = you.inv[pot].slot;
@@ -1019,7 +1019,8 @@ static std::string _check_spell_evokable(const actor* target,
     std::string str = "";
     if (_have_appropriate_spell(target))
     {
-        str += "\n[Ctrl + L-Click] Cast spell (%)";
+        /// (%)는 예약어인듯.
+        str += gettext("\n[Ctrl + L-Click] Cast spell (%)");
         cmd.push_back(CMD_CAST_SPELL);
     }
 
@@ -1033,7 +1034,8 @@ static std::string _check_spell_evokable(const actor* target,
         if (!tiles.is_fullscreen())
             key = "Ctrl-Shift";
 #endif
-        str += "\n[" + key + " + L-Click] Zap wand (%)";
+        /// (%)는 예약어인듯.
+        str += "\n[" + key + gettext(" + L-Click] Zap wand (%)");
         cmd.push_back(CMD_EVOKE);
     }
 
@@ -1081,11 +1083,11 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
                 {
                     const monster* mon = monster_at(gc);
                     if (!mon || mon->friendly() || !mon->visible_to(&you))
-                        _add_tip(tip, "[L-Click] Move");
+                        _add_tip(tip, gettext("[L-Click] Move"));
                     else if (mon)
                     {
                         tip = mon->name(DESC_CAP_A);
-                        _add_tip(tip, "[L-Click] Attack");
+                        _add_tip(tip, gettext("[L-Click] Attack"));
                     }
                 }
             }
@@ -1094,7 +1096,7 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
                 && you.see_cell_no_trans(target->pos())
                 && you.m_quiver->get_fire_item() != -1)
             {
-                _add_tip(tip, "[Shift + L-Click] Fire (%)");
+                _add_tip(tip, gettext("[Shift + L-Click] Fire (%)"));
                 cmd.push_back(CMD_FIRE);
             }
 
@@ -1103,19 +1105,19 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
         else if (!cell_is_solid(gc)) // no monster or player
         {
             if (adjacent(gc, you.pos()))
-                _add_tip(tip, "[L-Click] Move");
+                _add_tip(tip, gettext("[L-Click] Move"));
             else if (env.map_knowledge(gc).feat() != DNGN_UNSEEN
                      && i_feel_safe())
             {
-                _add_tip(tip, "[L-Click] Travel");
+                _add_tip(tip, gettext("[L-Click] Travel"));
             }
         }
         else if (feat_is_closed_door(grd(gc)))
         {
             if (!adjacent(gc, you.pos()) && i_feel_safe())
-                _add_tip(tip, "[L-Click] Travel");
+                _add_tip(tip, gettext("[L-Click] Travel"));
 
-            _add_tip(tip, "[L-Click] Open door (%)");
+            _add_tip(tip, gettext("[L-Click] Open door (%)"));
             cmd.push_back(CMD_OPEN_DOOR);
         }
     }
@@ -1125,7 +1127,7 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
     {
         if (you.see_cell(gc) && env.map_knowledge(gc).item())
         {
-            _add_tip(tip, "[L-Click] Pick up items (%)");
+            _add_tip(tip, gettext("[L-Click] Pick up items (%)"));
             cmd.push_back(CMD_PICKUP);
         }
 
@@ -1133,13 +1135,13 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
         const command_type dir = feat_stair_direction(feat);
         if (dir != CMD_NO_CMD)
         {
-            _add_tip(tip, "[Shift + L-Click] ");
+            _add_tip(tip, gettext("[Shift + L-Click] "));
             if (feat == DNGN_ENTER_SHOP)
-                tip += "enter shop";
+                tip += gettext("enter shop");
             else if (feat_is_gate(feat))
-                tip += "enter gate";
+                tip += gettext("enter gate");
             else
-                tip += "use stairs";
+                tip += gettext("use stairs");
 
             tip += " (%)";
             cmd.push_back(dir);
@@ -1147,7 +1149,7 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
         else if (feat_is_altar(feat)
                  && player_can_join_god(feat_altar_god(feat)))
         {
-            _add_tip(tip, "[Shift + L-Click] pray on altar (%)");
+            _add_tip(tip, gettext("[Shift + L-Click] pray on altar (%)"));
             cmd.push_back(CMD_PRAY);
         }
     }
@@ -1156,20 +1158,20 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
     if (gc == you.pos())
     {
         // Character overview.
-        _add_tip(tip, "[R-Click] Overview (%)");
+        _add_tip(tip, gettext("[R-Click] Overview (%)"));
         cmd.push_back(CMD_RESISTS_SCREEN);
 
         // Religion.
         if (you.religion != GOD_NO_GOD)
         {
-            _add_tip(tip, "[Shift + R-Click] Religion (%)");
+            _add_tip(tip, gettext("[Shift + R-Click] Religion (%)"));
             cmd.push_back(CMD_DISPLAY_RELIGION);
         }
     }
     else if (you.see_cell(gc)
              && env.map_knowledge(gc).feat() != DNGN_UNSEEN)
     {
-        _add_tip(tip, "[R-Click] Describe");
+        _add_tip(tip, gettext("[R-Click] Describe"));
     }
 
     if (!tip.empty())

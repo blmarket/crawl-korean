@@ -31,7 +31,7 @@ bool StatRegion::update_tip_text(std::string& tip)
     if (mouse_control::current_mode() != MOUSE_MODE_COMMAND)
         return (false);
 
-    tip = "[L-Click] Rest / Search for a while";
+    tip = gettext("[L-Click] Rest / Search for a while");
     return (true);
 }
 

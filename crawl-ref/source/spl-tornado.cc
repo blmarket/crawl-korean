@@ -124,7 +124,7 @@ spret_type cast_tornado(int powc, bool fail)
     }
 
     if (friendlies
-        && !yesno("There are friendlies around, are you sure you want to hurt them?",
+        && !yesno(gettext("There are friendlies around, are you sure you want to hurt them?"),
                   true, 'n'))
     {
         return SPRET_ABORT;
@@ -132,9 +132,9 @@ spret_type cast_tornado(int powc, bool fail)
 
     fail_check();
 
-    mprf("A great vortex of raging winds %s.",
-         you.airborne() ? "appears around you"
-                        : "appears and lifts you up");
+    mprf(gettext("A great vortex of raging winds %s."),
+         you.airborne() ? pgettext("cast_tornado", "appears around you")
+                        : pgettext("cast_tornado", "appears and lifts you up"));
 
     if (you.fishtail)
         merfolk_stop_swimming();
@@ -278,7 +278,7 @@ void tornado_damage(actor *caster, int dur)
                 grd(*dam_i) = DNGN_FLOOR;
                 set_terrain_changed(*dam_i);
                 if (you.see_cell(*dam_i))
-                    mpr("A tree falls to the hurricane!");
+                    mpr(gettext("A tree falls to the hurricane!"));
                 if (caster == &you)
                     did_god_conduct(DID_KILL_PLANT, 1);
             }
@@ -332,7 +332,7 @@ void tornado_damage(actor *caster, int dur)
                     {
                         bool standing = !you.airborne();
                         if (standing)
-                            mpr("The vortex of raging winds lifts you up.");
+                            mpr(gettext("The vortex of raging winds lifts you up."));
                         you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
                         you.duration[DUR_LEVITATION]
                             = std::max(you.duration[DUR_LEVITATION], 20);

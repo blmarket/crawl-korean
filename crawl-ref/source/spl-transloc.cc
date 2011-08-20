@@ -72,7 +72,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
 
     if (crawl_state.is_repeating_cmd())
     {
-        crawl_state.cant_cmd_repeat("You can't repeat controlled blinks.");
+        crawl_state.cant_cmd_repeat(gettext("You can't repeat controlled blinks."));
         crawl_state.cancel_cmd_again();
         crawl_state.cancel_cmd_repeat();
         return (1);
@@ -91,7 +91,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
-        mpr("The power of the Abyss keeps you in your place!");
+        mpr(gettext("The power of the Abyss keeps you in your place!"));
     }
     else if (you.confused() && !wizard_blink)
     {
@@ -104,7 +104,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
-        mpr("The orb interferes with your control of the blink!", MSGCH_ORB);
+        mpr(gettext("The orb interferes with your control of the blink!"), MSGCH_ORB);
         if (high_level_controlled_blink && coinflip())
             return (cast_semi_controlled_blink(pow));
         random_blink(false);
@@ -113,7 +113,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
-        mpr("A powerful magic interferes with your control of the blink.");
+        mpr(gettext("A powerful magic interferes with your control of the blink."));
         if (high_level_controlled_blink)
             return (cast_semi_controlled_blink(pow));
         random_blink(false);
@@ -127,13 +127,13 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             args.restricts = DIR_TARGET;
             args.needs_path = false;
             args.may_target_monster = false;
-            args.top_prompt = "Blink to where?";
+            args.top_prompt = gettext("Blink to where?");
             direction(beam, args);
 
             if (!beam.isValid || beam.target == you.pos())
             {
                 if (!wizard_blink
-                    && !yesno("Are you sure you want to cancel this blink?",
+                    && !yesno(gettext("Are you sure you want to cancel this blink?"),
                               false, 'n'))
                 {
                     mesclr();
@@ -146,7 +146,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             monster* beholder = you.get_beholder(beam.target);
             if (!wizard_blink && beholder)
             {
-                mprf("You cannot blink away from %s!",
+                mprf(gettext("You cannot blink away from %s!"),
                     beholder->name(DESC_NOCAP_THE, true).c_str());
                 continue;
             }
@@ -154,7 +154,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             monster* fearmonger = you.get_fearmonger(beam.target);
             if (!wizard_blink && fearmonger)
             {
-                mprf("You cannot blink closer to %s!",
+                mprf(gettext("You cannot blink closer to %s!"),
                     fearmonger->name(DESC_NOCAP_THE, true).c_str());
                 continue;
             }
@@ -162,12 +162,12 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             if (grd(beam.target) == DNGN_OPEN_SEA)
             {
                 mesclr();
-                mpr("You can't blink into the sea!");
+                mpr(gettext("You can't blink into the sea!"));
             }
             else if (grd(beam.target) == DNGN_LAVA_SEA)
             {
                 mesclr();
-                mpr("You can't blink into the sea of lava!");
+                mpr(gettext("You can't blink into the sea of lava!"));
             }
             else if (!check_moveto(beam.target, "blink"))
             {
@@ -185,12 +185,12 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
                     break;
 
                 mesclr();
-                mpr("You can't blink through translucent walls.");
+                mpr(gettext("You can't blink through translucent walls."));
             }
             else
             {
                 mesclr();
-                mpr("You can only blink to visible locations.");
+                mpr(gettext("You can only blink to visible locations."));
             }
         }
 
@@ -204,7 +204,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
 
         if (feat_is_solid(grd(beam.target)) || monster_at(beam.target))
         {
-            mpr("Oops! Maybe something was there already.");
+            mpr(gettext("Oops! Maybe something was there already."));
             random_blink(false);
         }
         else if (you.level_type == LEVEL_ABYSS && !wizard_blink)
@@ -250,21 +250,21 @@ void random_blink(bool allow_partial_control, bool override_abyss)
              && !override_abyss
              && _abyss_blocks_teleport(false))
     {
-        mpr("The power of the Abyss keeps you in your place!");
+        mpr(gettext("The power of the Abyss keeps you in your place!"));
     }
     // First try to find a random square not adjacent to the player,
     // then one adjacent if that fails.
     else if (!random_near_space(you.pos(), target)
              && !random_near_space(you.pos(), target, true))
     {
-        mpr("You feel jittery for a moment.");
+        mpr(gettext("You feel jittery for a moment."));
     }
 
     //jmf: Add back control, but effect is cast_semi_controlled_blink(pow).
     else if (player_control_teleport() && !you.confused() && allow_partial_control
              && allow_control_teleport())
     {
-        mpr("You may select the general direction of your translocation.");
+        mpr(gettext("You may select the general direction of your translocation."));
         cast_semi_controlled_blink(100);
         maybe_id_ring_TC();
     }
@@ -291,9 +291,9 @@ bool allow_control_teleport(bool quiet)
     if (!quiet && !retval && player_control_teleport())
     {
         if (you.char_direction == GDT_ASCENDING)
-            mpr("The orb prevents control of your teleportation!", MSGCH_ORB);
+            mpr(gettext("The orb prevents control of your teleportation!"), MSGCH_ORB);
         else
-            mpr("A powerful magic prevents control of your teleportation.");
+            mpr(gettext("A powerful magic prevents control of your teleportation."));
     }
 
     return (retval);
@@ -314,23 +314,23 @@ void you_teleport(void)
         canned_msg(MSG_STRANGE_STASIS);
     else if (you.duration[DUR_TELEPORT])
     {
-        mpr("You feel strangely stable.");
+        mpr(gettext("You feel strangely stable."));
         you.duration[DUR_TELEPORT] = 0;
     }
     else
     {
-        mpr("You feel strangely unstable.");
+        mpr(gettext("You feel strangely unstable."));
 
         int teleport_delay = 3 + random2(3);
 
         if (you.level_type == LEVEL_ABYSS && !one_chance_in(5))
         {
-            mpr("You have a feeling this translocation may take a while to kick in...");
+            mpr(gettext("You have a feeling this translocation may take a while to kick in..."));
             teleport_delay += 5 + random2(10);
         }
         else if (you.char_direction == GDT_ASCENDING && coinflip())
         {
-            mpr("You feel the orb delaying this translocation!", MSGCH_ORB);
+            mpr(gettext("You feel the orb delaying this translocation!"), MSGCH_ORB);
             teleport_delay += 5 + random2(5);
         }
 
@@ -446,8 +446,8 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
         // Only have the messages and the more prompt for non-wizard.
         if (!wizard_tele)
         {
-            mpr("You may choose your destination (press '.' or delete to select).");
-            mpr("Expect minor deviation.");
+            mpr(gettext("You may choose your destination (press '.' or delete to select)."));
+            mpr(gettext("Expect minor deviation."));
             more();
         }
 
@@ -462,8 +462,8 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             // location, so cancel the teleport.
             if (crawl_state.seen_hups)
             {
-                mpr("Controlled teleport interrupted by HUP signal, "
-                    "cancelling teleport.", MSGCH_ERROR);
+                mpr(gettext("Controlled teleport interrupted by HUP signal, "
+                    "cancelling teleport."), MSGCH_ERROR);
                 if (!wizard_tele)
                     contaminate_player(1, true);
                 return (false);
@@ -475,7 +475,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             {
                 if (!wizard_tele)
                 {
-                    if (!yesno("Are you sure you want to cancel this teleport?",
+                    if (!yesno(gettext("Are you sure you want to cancel this teleport?"),
                                true, 'n'))
                     {
                         continue;
@@ -490,9 +490,9 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             monster* beholder = you.get_beholder(pos);
             if (beholder && !wizard_tele)
             {
-                mprf("You cannot teleport away from %s!",
+                mprf(gettext("You cannot teleport away from %s!"),
                      beholder->name(DESC_NOCAP_THE, true).c_str());
-                mpr("Choose another destination (press '.' or delete to select).");
+                mpr(gettext("Choose another destination (press '.' or delete to select)."));
                 more();
                 continue;
             }
@@ -500,9 +500,9 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             monster* fearmonger = you.get_fearmonger(pos);
             if (fearmonger && !wizard_tele)
             {
-                mprf("You cannot teleport closer to %s!",
+                mprf(gettext("You cannot teleport closer to %s!"),
                      fearmonger->name(DESC_NOCAP_THE, true).c_str());
-                mpr("Choose another destination (press '.' or delete to select).");
+                mpr(gettext("Choose another destination (press '.' or delete to select)."));
                 more();
                 continue;
             }
@@ -525,7 +525,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
 
         if (!in_bounds(pos))
         {
-            mpr("Nearby solid objects disrupt your rematerialisation!");
+            mpr(gettext("Nearby solid objects disrupt your rematerialisation!"));
             is_controlled = false;
         }
 
@@ -545,7 +545,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             {
                 is_controlled = false;
                 large_change = false;
-                mpr("A strong magical force throws you back!", MSGCH_WARN);
+                mpr(gettext("A strong magical force throws you back!"), MSGCH_WARN);
             }
             else
             {
@@ -598,12 +598,12 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
                || testbits(env.pgrid(newpos), FPROP_NO_RTELE_INTO));
 
         if (newpos == old_pos)
-            mpr("Your surroundings flicker for a moment.");
+            mpr(gettext("Your surroundings flicker for a moment."));
         else if (you.see_cell(newpos))
-            mpr("Your surroundings seem slightly different.");
+            mpr(gettext("Your surroundings seem slightly different."));
         else
         {
-            mpr("Your surroundings suddenly seem different.");
+            mpr(gettext("Your surroundings suddenly seem different."));
             large_change = true;
         }
 
@@ -716,14 +716,14 @@ spret_type cast_portal_projectile(int pow, bool fail)
 
     if (cell_is_solid(target.target))
     {
-        mpr("You can't shoot at gazebos.");
+        mpr(gettext("You can't shoot at gazebos."));
         return SPRET_ABORT;
     }
 
     // Can't use portal through walls. (That'd be just too cheap!)
     if (you.trans_wall_blocking(target.target))
     {
-        mpr("A translucent wall is in the way.");
+        mpr(gettext("A translucent wall is in the way."));
         return SPRET_ABORT;
     }
 
@@ -743,7 +743,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 
     if (you.trans_wall_blocking(where))
     {
-        mpr("Something is in the way.");
+        mpr(gettext("Something is in the way."));
         return SPRET_ABORT;
     }
 
@@ -752,7 +752,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     // weaken this for high power.
     if (grd(where) == DNGN_DEEP_WATER || grd(where) == DNGN_LAVA)
     {
-        mpr("The density of the terrain blocks your spell.");
+        mpr(gettext("The density of the terrain blocks your spell."));
         return SPRET_ABORT;
     }
 
@@ -767,14 +767,14 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
             if (mons_is_item_mimic(m->type) && you.can_see(m))
             {
                 fail_check();
-                mprf("%s twitches.", m->name(DESC_CAP_THE).c_str());
+                mprf(gettext("%s twitches."), m->name(DESC_CAP_THE).c_str());
                 // Nothing else gives this message, so identify the mimic.
                 discover_mimic(m);
                 return SPRET_SUCCESS;  // otherwise you get free mimic ID
             }
         }
 
-        mpr("There are no items there.");
+        mpr(gettext("There are no items there."));
         return SPRET_ABORT;
     }
 
@@ -783,13 +783,13 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     // Can't apport the Orb in zotdef
     if (crawl_state.game_is_zotdef() && item_is_orb(item))
     {
-        mpr("You cannot apport the sacred Orb!");
+        mpr(gettext("You cannot apport the sacred Orb!"));
         return SPRET_ABORT;
     }
 
     // Protect the player from destroying the item.
     if (feat_virtually_destroys_item(grd(you.pos()), item)
-        && !yesno("Really apport while over this terrain?",
+        && !yesno(gettext("Really apport while over this terrain?"),
                   false, 'n'))
     {
         canned_msg(MSG_OK);
@@ -810,10 +810,10 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         if (item_is_orb(item))
         {
             orb_pickup_noise(where, 30);
-            mpr("The mass is resisting your pull.");
+            mpr(gettext("The mass is resisting your pull."));
         }
         else
-            mpr("The mass is resisting your pull.");
+            mpr(gettext("The mass is resisting your pull."));
 
             return SPRET_SUCCESS;
     }
@@ -828,14 +828,14 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         // There's also a 1-in-6 flat chance of apport failing.
         if (one_chance_in(6))
         {
-            orb_pickup_noise(where, 30, "The orb shrieks and becomes a dead weight against your magic!",
-                             "The orb lets out a furious burst of light and becomes a dead weight against your magic!");
+            orb_pickup_noise(where, 30, gettext("The orb shrieks and becomes a dead weight against your magic!"),
+                             gettext("The orb lets out a furious burst of light and becomes a dead weight against your magic!"));
             return SPRET_SUCCESS;
         }
         else // Otherwise it's just a noisy little shiny thing
         {
-            orb_pickup_noise(where, 30, "The orb shrieks as your magic touches it!",
-                             "The orb lets out a furious burst of light as your magic touches it!");
+            orb_pickup_noise(where, 30, gettext("The orb shrieks as your magic touches it!"),
+                             gettext("The orb lets out a furious burst of light as your magic touches it!"));
         }
     }
 
@@ -880,7 +880,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 
         if (feat_virtually_destroys_item(grd(new_spot), item))
         {
-            mpr("Not with that terrain in the way!");
+            mpr(gettext("Not with that terrain in the way!"));
             return SPRET_SUCCESS;
         }
     }
@@ -889,7 +889,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         new_spot = you.pos();
 
     // Actually move the item.
-    mprf("Yoink! You pull the item%s towards yourself.",
+    mprf(gettext("Yoink! You pull the item%s towards yourself."),
          (item.quantity > 1) ? "s" : "");
 
     if (max_units < item.quantity)
@@ -897,7 +897,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         if (!copy_item_to_grid(item, new_spot, max_units))
         {
             // Always >1 item.
-            mpr("They abruptly stop in place!");
+            mpr(gettext("They abruptly stop in place!"));
             // Too late to abort.
             return SPRET_SUCCESS;
         }
@@ -1012,10 +1012,10 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
     if (tries >= 100)
     {
         if (you.trans_wall_blocking(randomized_where))
-            mpr("You cannot create a passage on the other side of the transparent wall.");
+            mpr(gettext("You cannot create a passage on the other side of the transparent wall."));
         else
             // XXX: bleh, dumb message
-            mpr("Creating a passage of Golubria requires sufficient empty space.");
+            mpr(gettext("Creating a passage of Golubria requires sufficient empty space."));
         return SPRET_ABORT;
     }
 
@@ -1024,7 +1024,7 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
     {
         fail_check();
         // lose a turn
-        mpr("A powerful magic interferes with the creation of the passage.");
+        mpr(gettext("A powerful magic interferes with the creation of the passage."));
         place_cloud(CLOUD_TLOC_ENERGY, randomized_where, 3 + random2(3), &you);
         return SPRET_SUCCESS;
     }
@@ -1036,7 +1036,7 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
     trap_def *trap = find_trap(randomized_where);
     if (!trap)
     {
-        mpr("Something buggy happened.");
+        mpr(gettext("Something buggy happened."));
         return SPRET_ABORT;
     }
 

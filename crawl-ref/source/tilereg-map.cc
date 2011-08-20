@@ -309,12 +309,12 @@ bool MapRegion::update_tip_text(std::string& tip)
     if (!player_in_mappable_area())
         return (false);
 
-    tip = "[L-Click] Travel / [R-Click] View";
+    tip = gettext("[L-Click] Travel / [R-Click] View");
     if (you.level_type != LEVEL_LABYRINTH
         && (you.hunger_state > HS_STARVING || you_min_hunger())
         && i_feel_safe())
     {
-        tip += "\n[Shift + L-Click] Autoexplore";
+        tip += gettext("\n[Shift + L-Click] Autoexplore");
     }
     return (true);
 }

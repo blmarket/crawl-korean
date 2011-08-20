@@ -48,7 +48,8 @@ void SkillRegion::draw_tag()
                                 get_skill_percentage(skill));
     }
 
-    std::string desc = make_stringf("%-14s Skill %2d  %s Aptitude %c%d",
+    /// 1. skillname 2. cur skils, 3. progress%, 4.5. +x, x
+    std::string desc = make_stringf(gettext("%-14s Skill %2d  %s Aptitude %c%d"),
                                     skill_name(skill),
                                     you.skills[skill],
                                     progress.c_str(),
@@ -77,9 +78,9 @@ int SkillRegion::handle_mouse(MouseEvent &event)
 #endif
         m_last_clicked_item = item_idx;
         if (you.skills[skill] == 0)
-            mpr("You cannot toggle a skill you don't have yet.");
+            mpr(gettext("You cannot toggle a skill you don't have yet."));
         else if (you.skills[skill] >= 27)
-            mpr("There's no point to toggling this skill anymore.");
+            mpr(gettext("There's no point to toggling this skill anymore."));
         else
         {
             tiles.set_need_redraw();
@@ -102,7 +103,7 @@ bool SkillRegion::update_tab_tip_text(std::string &tip, bool active)
     const char *prefix = active ? "" : "[L-Click] ";
 
     tip = make_stringf("%s%s",
-                       prefix, "Manage skills");
+                       prefix, gettext("Manage skills"));
 
     return (true);
 }
@@ -118,23 +119,23 @@ bool SkillRegion::update_tip_text(std::string& tip)
 
     const int flag = m_items[item_idx].flag;
     if (flag & TILEI_FLAG_INVALID)
-        tip = "You don't have this skill yet.";
+        tip = gettext("You don't have this skill yet.");
     else
     {
         const skill_type skill = (skill_type) m_items[item_idx].idx;
 
         tip = "[L-Click] ";
         if (you.train[skill])
-            tip += "Disable training";
+            tip += gettext("Disable training");
         else
-            tip += "Enable training";
+            tip += gettext("Enable training");
     }
 #ifdef WIZARD
     if (you.wizard)
         tip += "\n[Ctrl + L-Click] Change skill level (wizmode)";
 #endif
 
-    tip += "\n[R-Click] Describe";
+    tip += gettext("\n[R-Click] Describe");
 
     return (true);
 }

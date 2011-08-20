@@ -57,7 +57,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
     const bool jump = type == MONS_JUMPING_SPIDER;
 
     if (!quiet)
-        simple_monster_message(this, jump ? " leaps!" : " blinks!");
+        simple_monster_message(this, jump ? gettext(" leaps!") : gettext(" blinks!"));
 
     if (!(flags & MF_WAS_IN_VIEW))
         seen_context = "thin air";

@@ -712,12 +712,12 @@ bool feat_destroys_item(dungeon_feature_type feat, const item_def &item,
     case DNGN_SHALLOW_WATER:
     case DNGN_DEEP_WATER:
         if (noisy)
-            mprf(MSGCH_SOUND, "You hear a splash.");
+            mprf(MSGCH_SOUND, gettext("You hear a splash."));
         return (false);
 
     case DNGN_LAVA:
         if (noisy)
-            mprf(MSGCH_SOUND, "You hear a sizzling splash.");
+            mprf(MSGCH_SOUND, gettext("You hear a sizzling splash."));
         return (true);
 
     default:
@@ -734,17 +734,17 @@ bool feat_virtually_destroys_item(dungeon_feature_type feat, const item_def &ite
     {
     case DNGN_SHALLOW_WATER:
         if (noisy)
-            mprf(MSGCH_SOUND, "You hear a splash.");
+            mprf(MSGCH_SOUND, gettext("You hear a splash."));
         return (false);
 
     case DNGN_DEEP_WATER:
         if (noisy)
-            mprf(MSGCH_SOUND, "You hear a splash.");
+            mprf(MSGCH_SOUND, gettext("You hear a splash."));
         return (true);
 
     case DNGN_LAVA:
         if (noisy)
-            mprf(MSGCH_SOUND, "You hear a sizzling splash.");
+            mprf(MSGCH_SOUND, gettext("You hear a sizzling splash."));
         return (true);
 
     default:
@@ -1106,7 +1106,7 @@ static void _announce_swap_real(coord_def orig_pos, coord_def dest_pos)
 
     std::string orig_actor, dest_actor;
     if (orig_pos == you.pos())
-        orig_actor = "you";
+        orig_actor = gettext(M_("you"));
     else if (const monster* m = monster_at(orig_pos))
     {
         if (you.can_see(m))
@@ -1114,7 +1114,7 @@ static void _announce_swap_real(coord_def orig_pos, coord_def dest_pos)
     }
 
     if (dest_pos == you.pos())
-        dest_actor = "you";
+        dest_actor = gettext(M_("you"));
     else if (const monster* m = monster_at(dest_pos))
     {
         if (you.can_see(m))
@@ -1122,26 +1122,34 @@ static void _announce_swap_real(coord_def orig_pos, coord_def dest_pos)
     }
 
     std::ostringstream str;
-    str << orig_name << " ";
+    str << orig_name;
     if (you.see_cell(orig_pos) && !you.see_cell(dest_pos))
     {
-        str << "suddenly disappears";
+        str << pgettext("swap", " suddenly disappears");
         if (!orig_actor.empty())
-            str << " from " << prep << " " << orig_actor;
+            str << make_stringf(pgettext("swap", " from %s %s"), 
+                                prep.c_str(),
+                                orig_actor.c_str());
     }
     else if (!you.see_cell(orig_pos) && you.see_cell(dest_pos))
     {
-        str << "suddenly appears";
+        str << pgettext("swap", " suddenly appears");
         if (!dest_actor.empty())
-            str << " " << prep << " " << dest_actor;
+            str << make_stringf(pgettext("swap", " %s %s"), 
+                                prep.c_str(),
+                                orig_actor.c_str());
     }
     else
     {
-        str << "moves";
+        str << pgettext("swap", " moves");
         if (!orig_actor.empty())
-            str << " from " << prep << " " << orig_actor;
+            str << make_stringf(pgettext("swap", " from %s %s"), 
+                                prep.c_str(),
+                                orig_actor.c_str());
         if (!dest_actor.empty())
-            str << " to " << prep << " " << dest_actor;
+            str << make_stringf(pgettext("swap", " to %s %s"), 
+                                prep.c_str(),
+                                orig_actor.c_str());
     }
     str << "!";
     mpr(str.str().c_str());
@@ -1238,7 +1246,7 @@ bool swap_features(const coord_def &pos1, const coord_def &pos2,
 
     if (!in_bounds(temp))
     {
-        mpr("swap_features(): No boring squares on level?", MSGCH_ERROR);
+        mpr(gettext("swap_features(): No boring squares on level?"), MSGCH_ERROR);
         return (false);
     }
 
@@ -1420,9 +1428,9 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
     if (terrain != DNGN_LAVA && (beogh_water_walk() || you.can_swim()))
         return (false);
 
-    mprf("You fall into the %s!",
-         (terrain == DNGN_LAVA)       ? "lava" :
-         (terrain == DNGN_DEEP_WATER) ? "water"
+    mprf(gettext("You fall into the %s!"),
+         (terrain == DNGN_LAVA)       ? gettext(M_("lava")) :
+         (terrain == DNGN_DEEP_WATER) ? gettext(M_("water"))
                                       : "programming rift");
 
     more();
@@ -1434,13 +1442,13 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
 
         if (resist <= 0)
         {
-            mpr("The lava burns you to a cinder!");
+            mpr(gettext("The lava burns you to a cinder!"));
             ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_LAVA);
         }
         else
         {
             // should boost # of bangs per damage in the future {dlb}
-            mpr("The lava burns you!");
+            mpr(gettext("The lava burns you!"));
             ouch((10 + roll_dice(2, 50)) / resist, NON_MONSTER, KILLED_BY_LAVA);
         }
 
@@ -1475,16 +1483,16 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
     else
     {
         if (you.form == TRAN_STATUE)
-            mpr("You sink like a stone!");
+            mpr(gettext("You sink like a stone!"));
         else
-            mpr("You try to escape, but your burden drags you down!");
+            mpr(gettext("You try to escape, but your burden drags you down!"));
     }
 
     if (escape)
     {
         if (in_bounds(empty) && !is_feat_dangerous(grd(empty)) || clinging)
         {
-            mpr("You manage to scramble free!");
+            mpr(gettext("You manage to scramble free!"));
             if (!clinging)
                 move_player_to_grid(empty, false, false);
 
@@ -1495,7 +1503,7 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
         }
     }
 
-    mpr("You drown...");
+    mpr(gettext("You drown..."));
 
     if (terrain == DNGN_LAVA)
         ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_LAVA);
@@ -1549,29 +1557,29 @@ std::string feat_preposition(dungeon_feature_type feat, bool active,
     if (dir == CMD_NO_CMD)
     {
         if (feat == DNGN_STONE_ARCH)
-            return "beside";
+            return pgettext("swap", "beside");
         else if (feat_is_solid(feat)) // Passwall?
         {
             if (active)
-                return "inside";
+                return pgettext("swap", "inside");
             else
-                return "around";
+                return pgettext("swap", "around");
         }
         else if (!airborne)
         {
             if (feat == DNGN_LAVA || feat_is_water(feat))
             {
                 if (active)
-                    return "into";
+                    return pgettext("swap", "into");
                 else
-                    return "around";
+                    return pgettext("swap", "around");
             }
             else
             {
                 if (active)
-                    return "onto";
+                    return pgettext("swap", "onto");
                 else
-                    return "under";
+                    return pgettext("swap", "under");
             }
         }
     }
@@ -1579,29 +1587,29 @@ std::string feat_preposition(dungeon_feature_type feat, bool active,
     if (dir == CMD_GO_UPSTAIRS && feat_is_escape_hatch(feat))
     {
         if (active)
-            return "under";
+            return pgettext("swap", "under");
         else
-            return "above";
+            return pgettext("swap", "above");
     }
 
     if (airborne)
     {
         if (active)
-            return "over";
+            return pgettext("swap", "over");
         else
-            return "beneath";
+            return pgettext("swap", "beneath");
     }
 
     if (dir == CMD_GO_DOWNSTAIRS
         && (feat_is_staircase(feat) || feat_is_escape_hatch(feat)))
     {
         if (active)
-            return "onto";
+            return pgettext("swap", "onto");
         else
-            return "beneath";
+            return pgettext("swap", "beneath");
     }
     else
-        return "beside";
+        return pgettext("swap", "beside");
 }
 
 std::string stair_climb_verb(dungeon_feature_type feat)
