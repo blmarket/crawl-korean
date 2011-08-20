@@ -42,13 +42,13 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
                                                       pow, true))
         || !in_bounds(where))
     {
-        mpr("That's too far away.");
+        mpr(gettext("That's too far away."));
         return SPRET_ABORT;
     }
 
     if (you.trans_wall_blocking(where))
     {
-        mpr("A translucent wall is in the way.");
+        mpr(gettext("A translucent wall is in the way."));
         return SPRET_ABORT;
     }
 
@@ -57,20 +57,20 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
         switch (grd(where))
         {
         case DNGN_WAX_WALL:
-            mpr("The flames aren't hot enough to melt wax walls!");
+            mpr(gettext("The flames aren't hot enough to melt wax walls!"));
             break;
         case DNGN_METAL_WALL:
-            mpr("You can't ignite solid metal!");
+            mpr(gettext("You can't ignite solid metal!"));
             break;
         case DNGN_GREEN_CRYSTAL_WALL:
-            mpr("You can't ignite solid crystal!");
+            mpr(gettext("You can't ignite solid crystal!"));
             break;
         case DNGN_TREE:
         case DNGN_SWAMP_TREE:
-            mpr("The flames aren't hot enough to burn down trees!");
+            mpr(gettext("The flames aren't hot enough to burn down trees!"));
             break;
         default:
-            mpr("You can't ignite solid rock!");
+            mpr(gettext("You can't ignite solid rock!"));
             break;
         }
         return SPRET_ABORT;
@@ -80,7 +80,7 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
 
     if (cloud != EMPTY_CLOUD && env.cloud[cloud].type != CLOUD_FIRE)
     {
-        mpr("There's already a cloud there!");
+        mpr(gettext("There's already a cloud there!"));
         return SPRET_ABORT;
     }
 
@@ -90,14 +90,14 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
     {
         if (you.can_see(mons) && !mons_is_unknown_mimic(mons))
         {
-            mpr("You can't place the cloud on a creature.");
+            mpr(gettext("You can't place the cloud on a creature."));
             return SPRET_ABORT;
         }
 
         fail_check();
 
         // FIXME: maybe should do _paranoid_option_disable() here?
-        mpr("You see a ghostly outline there, and the spell fizzles.");
+        mpr(gettext("You see a ghostly outline there, and the spell fizzles."));
         return SPRET_SUCCESS;      // Don't give free detection!
     }
 
@@ -107,7 +107,7 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
     {
         // Reinforce the cloud - but not too much.
         // It must be a fire cloud from a previous test.
-        mpr("The fire roars with new energy!");
+        mpr(gettext("The fire roars with new energy!"));
         const int extra_dur = 2 + std::min(random2(pow) / 2, 20);
         env.cloud[cloud].decay += extra_dur * 5;
         env.cloud[cloud].set_whose(KC_YOU);
@@ -116,7 +116,7 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
     {
         const int durat = std::min(5 + (random2(pow)/2) + (random2(pow)/2), 23);
         place_cloud(CLOUD_FIRE, where, durat, &you);
-        mpr("The fire roars!");
+        mpr(gettext("The fire roars!"));
     }
     noisy(2, where);
 
@@ -170,13 +170,13 @@ spret_type cast_big_c(int pow, cloud_type cty, const actor *caster, bolt &beam,
     if (distance(beam.target, you.pos()) > dist_range(beam.range)
         || !in_bounds(beam.target))
     {
-        mpr("That is beyond the maximum range.");
+        mpr(gettext("That is beyond the maximum range."));
         return SPRET_ABORT;
     }
 
     if (cell_is_solid(beam.target))
     {
-        mpr("You can't place clouds on a wall.");
+        mpr(gettext("You can't place clouds on a wall."));
         return SPRET_ABORT;
     }
 
@@ -200,14 +200,14 @@ spret_type cast_ring_of_flames(int power, bool fail)
     // You shouldn't be able to cast this in the rain. {due}
     if (in_what_cloud(CLOUD_RAIN))
     {
-        mpr("Your spell sizzles in the rain.");
+        mpr(gettext("Your spell sizzles in the rain."));
         return SPRET_ABORT;
     }
 
     fail_check();
     you.increase_duration(DUR_FIRE_SHIELD,
                           5 + (power / 10) + (random2(power) / 5), 50,
-                          "The air around you leaps into flame!");
+                          gettext("The air around you leaps into flame!"));
     manage_fire_shield(1);
     return SPRET_SUCCESS;
 }
@@ -229,7 +229,7 @@ void manage_fire_shield(int delay)
 
     if (!you.duration[DUR_FIRE_SHIELD])
     {
-        mpr("Your ring of flames gutters out.", MSGCH_DURATION);
+        mpr(gettext("Your ring of flames gutters out."), MSGCH_DURATION);
         return;
     }
 
@@ -237,7 +237,7 @@ void manage_fire_shield(int delay)
 
 
     if (old_dur > threshold && you.duration[DUR_FIRE_SHIELD] < threshold)
-        mpr("Your ring of flames is guttering out.", MSGCH_WARN);
+        mpr(gettext("Your ring of flames is guttering out."), MSGCH_WARN);
 
     // Place fire clouds all around you
     for (adjacent_iterator ai(you.pos()); ai; ++ai)
@@ -276,7 +276,7 @@ void corpse_rot(actor* caster)
     }
 
     if (you.can_smell() && you.can_see(caster))
-        mpr("You smell decay.");
+        mpr(gettext("You smell decay."));
 
     // Should make zombies decay into skeletons?
 }
@@ -396,7 +396,7 @@ std::string get_evaporate_result_list(int potion)
 
         // This relies on all smoke types being handled as blue.
         if (new_cloud == CLOUD_BLUE_SMOKE)
-            clouds_list.push_back("coloured smoke");
+            clouds_list.push_back(gettext(M_("coloured smoke")));
         else
             clouds_list.push_back(cloud_type_name((cloud_type) new_cloud));
 
@@ -404,7 +404,7 @@ std::string get_evaporate_result_list(int potion)
     }
 
     return comma_separated_line(clouds_list.begin(), clouds_list.end(),
-                                " or ", ", ");
+                                " 혹은 ", ", ");
 }
 
 

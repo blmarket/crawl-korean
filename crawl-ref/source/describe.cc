@@ -2143,7 +2143,7 @@ std::string get_item_description(const item_def &item, bool verbose,
         {
             description << make_stringf(gettext(
                 "\nEvaporating this potion will create clouds of %s."),
-                gettext(get_evaporate_result_list(item.sub_type).c_str()));
+                get_evaporate_result_list(item.sub_type).c_str());
         }
         break;
 

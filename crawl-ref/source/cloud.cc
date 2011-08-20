@@ -1242,24 +1242,24 @@ std::string cloud_name_at_index(int cloudno)
 // _terse_cloud_names may be referenced by fog machines.
 static const char *_terse_cloud_names[] =
 {
-    "?",
-    "flame", "noxious fumes", "freezing vapour", "poison gas",
-    "black smoke", "grey smoke", "blue smoke",
-    "purple smoke", "translocational energy", "fire",
-    "steam", "gloom", "ink", "blessed fire", "foul pestilence", "thin mist",
-    "seething chaos", "rain", "mutagenic fog", "magical condensation",
-    "raging winds", "calcifying dust",
+    M_("?"),
+    M_("flame"), M_("noxious fumes"), M_("freezing vapour"), M_("poison gas"),
+    M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
+    M_("purple smoke"), M_("translocational energy"), M_("fire"),
+    M_("steam"), M_("gloom"), M_("ink"), M_("blessed fire"), M_("foul pestilence"), M_("thin mist"),
+    M_("seething chaos"), M_("rain"), M_("mutagenic fog"), M_("magical condensation"),
+    M_("raging winds"), M_("calcifying dust"),
 };
 
 static const char *_verbose_cloud_names[] =
 {
-    "?",
-    "roaring flames", "noxious fumes", "freezing vapours", "poison gas",
-    "black smoke", "grey smoke", "blue smoke",
-    "purple smoke", "translocational energy", "roaring flames",
-    "a cloud of scalding steam", "thick gloom", "ink", "blessed fire",
-    "dark miasma", "thin mist", "seething chaos", "the rain",
-    "mutagenic fog", "magical condensation", "raging winds", "calcifying dust",
+    M_("?"),
+    M_("roaring flames"), M_("noxious fumes"), M_("freezing vapours"), M_("poison gas"),
+    M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
+    M_("purple smoke"), M_("translocational energy"), M_("roaring flames"),
+    M_("a cloud of scalding steam"), M_("thick gloom"), M_("ink"), M_("blessed fire"),
+    M_("dark miasma"), M_("thin mist"), M_("seething chaos"), M_("the rain"),
+    M_("mutagenic fog"), M_("magical condensation"), M_("raging winds"), M_("calcifying dust"),
 };
 
 std::string cloud_type_name(cloud_type type, bool terse)
@@ -1269,7 +1269,7 @@ std::string cloud_type_name(cloud_type type, bool terse)
 
     return (type <= CLOUD_NONE || type >= NUM_CLOUD_TYPES
             ? "buggy goodness"
-            : (terse? _terse_cloud_names : _verbose_cloud_names)[type]);
+            : gettext((terse? _terse_cloud_names : _verbose_cloud_names)[type]));
 }
 
 ////////////////////////////////////////////////////////////////////////
