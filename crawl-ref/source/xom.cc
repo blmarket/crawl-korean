@@ -4219,9 +4219,8 @@ static int _death_is_worth_saving(const kill_method_type killed_by,
     case KILLED_BY_STUPIDITY:
     case KILLED_BY_WEAKNESS:
     case KILLED_BY_CLUMSINESS:
-        if (strstr(aux, "행사함") == NULL && strstr(aux, "지치게함") == NULL
-            && strstr(aux, "사라짐") == NULL)					//        if (strstr(aux, "wielding") == NULL && strstr(aux, "wearing") == NULL
-																//&& strstr(aux, "removing") == NULL)
+        if (strstr(aux, "wielding") == NULL && strstr(aux, "wearing") == NULL
+                && strstr(aux, "removing") == NULL)
         {
             return (true);
         }
