@@ -191,7 +191,7 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
 
         message += name;
         if (count == types.size() - 1)
-            message += gettext(M_(" and "));
+            message += gettext(" and ");
         else if (count < types.size())
             message += ", ";
         ++count;

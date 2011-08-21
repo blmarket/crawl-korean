@@ -236,29 +236,34 @@ static void _change_skill_level(skill_type exsk, int n)
 
     if (you.skills[exsk] == 27)
     {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have mastered %s!"), skill_name(exsk));
+        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have mastered %s!"), gettext(skill_name(exsk)));
     }
     else if (you.skills[exsk] == 1 && n > 0)
     {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have gained %s skill!"), skill_name(exsk));
+        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have gained %s skill!"), gettext(skill_name(exsk)));
         hints_gained_new_skill(exsk);
     }
     else if (!you.skills[exsk])
     {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have lost %s skill!"), skill_name(exsk));
+        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have lost %s skill!"), gettext(skill_name(exsk)));
         lose_skill(exsk);
         need_reset = true;
     }
     else if (abs(n) == 1 && you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, gettext("Your %s skill %s to level %d!"),
-             skill_name(exsk), (n > 0) ? pgettext("_change_skill_level", "increases") : pgettext("_change_skill_level", "decreases"),
+             gettext(skill_name(exsk)), 
+             (n > 0) ? pgettext("_change_skill_level", "increases") 
+                     : pgettext("_change_skill_level", "decreases"),
              you.skills[exsk]);
     }
     else if (you.num_turns)
     {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("Your %s skill %s %d levels and is now at "
-             "level %d!"), skill_name(exsk), (n > 0) ? pgettext("_change_skill_level", "gained") : pgettext("_change_skill_level", "lost"),
+        mprf(MSGCH_INTRINSIC_GAIN, 
+             gettext("Your %s skill %s %d levels and is now at level %d!"), 
+             gettext(skill_name(exsk)), 
+             (n > 0) ? pgettext("_change_skill_level", "gained") 
+                     : pgettext("_change_skill_level", "lost"),
              abs(n), you.skills[exsk]);
     }
 

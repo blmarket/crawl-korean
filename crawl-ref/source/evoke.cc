@@ -539,12 +539,12 @@ void stop_studying_manual(bool finish)
     const skill_type sk = you.manual_skill;
     if (finish)
     {
-        mprf("You have finished your manual of %s and toss it away.",
-             skill_name(sk));
+        mprf(gettext("You have finished your manual of %s and toss it away."),
+             gettext(skill_name(sk)));
         dec_inv_item_quantity(you.manual_index, 1);
     }
     else
-        mprf("You stop studying %s.", skill_name(sk));
+        mprf(gettext("You stop studying %s."), gettext(skill_name(sk)));
 
     you.manual_skill = SK_NONE;
     you.manual_index = -1;
@@ -584,7 +584,7 @@ void skill_manual(int slot)
     if (!is_invalid_skill(you.manual_skill))
         stop_studying_manual();
 
-    mprf("You start studying %s.", skill_name(skill));
+    mprf(gettext("You start studying %s."), gettext(skill_name(skill)));
     you.manual_skill = skill;
     you.manual_index = slot;
     if (!you.skills[skill])

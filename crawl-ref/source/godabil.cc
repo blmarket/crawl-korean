@@ -3274,9 +3274,9 @@ bool ashenzari_transfer_knowledge()
     // We reset the view to force view transfer next time.
     you.skill_menu_view = SKM_NONE;
 
-    mprf("As you forget about %s, you feel ready to understand %s.",
-         skill_name(you.transfer_from_skill),
-         skill_name(you.transfer_to_skill));
+    mprf(gettext("As you forget about %s, you feel ready to understand %s."),
+         gettext(skill_name(you.transfer_from_skill)),
+         gettext(skill_name(you.transfer_to_skill)));
 
     you.transfer_total_skill_points = you.transfer_skill_points;
 
@@ -3288,17 +3288,18 @@ bool ashenzari_end_transfer(bool finished, bool force)
 {
     if (!force && !finished)
     {
-        mprf("You are currently transferring knowledge from %s to %s.",
-             skill_name(you.transfer_from_skill),
-             skill_name(you.transfer_to_skill));
-        if (!yesno("Are you sure you want to cancel the transfer?", false, 'n'))
+        mprf(gettext("You are currently transferring knowledge from %s to %s."),
+             gettext(skill_name(you.transfer_from_skill)),
+             gettext(skill_name(you.transfer_to_skill)));
+        if (!yesno(gettext("Are you sure you want to cancel the transfer?"), false, 'n'))
             return false;
     }
 
-    mprf("You %s forgetting about %s and learning about %s.",
-         finished ? "have finished" : "stop",
-         skill_name(you.transfer_from_skill),
-         skill_name(you.transfer_to_skill));
+    mprf(gettext("You %s forgetting about %s and learning about %s."),
+         finished ? pgettext("ashenzari_end_transfer", "have finished") 
+                  : pgettext("ashenzari_end_transfer", "stop"),
+         gettext(skill_name(you.transfer_from_skill)),
+         gettext(skill_name(you.transfer_to_skill)));
     you.transfer_from_skill = SK_NONE;
     you.transfer_to_skill = SK_NONE;
     you.transfer_skill_points = 0;

@@ -72,51 +72,51 @@ typedef skill_title_key_t stk;
 const char *skills[NUM_SKILLS][6] =
 {
   //  Skill name        levels 1-7       levels 8-14        levels 15-20       levels 21-26      level 27
-    {"Fighting",       "Skirmisher",    "Fighter",         "Warrior",         "Slayer",         "Conqueror"},
-    {"Short Blades",   "Cutter",        "Slicer",          "Swashbuckler",    "Blademaster",    "Eviscerator"},
-    {"Long Blades",    "Slasher",       "Carver",          "Fencer",          "@Adj@ Blade",    "Swordmaster"},
-    {"Axes",           "Chopper",       "Cleaver",         "Severer",         "Executioner",    "Axe Maniac"},
-    {"Maces & Flails", "Cudgeler",      "Basher",          "Bludgeoner",      "Shatterer",      "Skullcrusher"},
-    {"Polearms",       "Poker",         "Spear-Bearer",    "Impaler",         "Phalangite",     "@Adj@ Porcupine"},
-    {"Staves",         "Twirler",       "Cruncher",        "Stickfighter",    "Pulveriser",     "Chief of Staff"},
-    {"Slings",         "Vandal",        "Slinger",         "Whirler",         "Slingshot",      "@Adj@ Catapult"},
-    {"Bows",           "Shooter",       "Archer",          "Marks@genus@",    "Crack Shot",     "Merry @Genus@"},
-    {"Crossbows",      "Bolt Thrower",  "Quickloader",     "Sharpshooter",    "Sniper",         "@Adj@ Arbalest"},
-    {"Throwing",       "Chucker",       "Thrower",         "Deadly Accurate", "Hawkeye",        "@Adj@ Ballista"},
-    {"Armour",         "Covered",       "Protected",       "Tortoise",        "Impregnable",    "Invulnerable"},
-    {"Dodging",        "Ducker",        "Nimble",          "Spry",            "Acrobat",        "Intangible"},
-    {"Stealth",        "Sneak",         "Covert",          "Unseen",          "Imperceptible",  "Ninja"},
-    {"Stabbing",       "Miscreant",     "Blackguard",      "Backstabber",     "Cutthroat",      "Politician"},
-    {"Shields",        "Shield-Bearer", "Hoplite",         "Blocker",         "Peltast",        "@Adj@ Barricade"},
-    {"Traps & Doors",  "Scout",         "Disarmer",        "Vigilant",        "Perceptive",     "Dungeon Master"},
+    {M_("Fighting"),       M_("Skirmisher"),    M_("Fighter"),         M_("Warrior"),         M_("Slayer"),         M_("Conqueror")},
+    {M_("Short Blades"),   M_("Cutter"),        M_("Slicer"),          M_("Swashbuckler"),    M_("Blademaster"),    M_("Eviscerator")},
+    {M_("Long Blades"),    M_("Slasher"),       M_("Carver"),          M_("Fencer"),          M_("@Adj@ Blade"),    M_("Swordmaster")},
+    {M_("Axes"),           M_("Chopper"),       M_("Cleaver"),         M_("Severer"),         M_("Executioner"),    M_("Axe Maniac")},
+    {M_("Maces & Flails"), M_("Cudgeler"),      M_("Basher"),          M_("Bludgeoner"),      M_("Shatterer"),      M_("Skullcrusher")},
+    {M_("Polearms"),       M_("Poker"),         M_("Spear-Bearer"),    M_("Impaler"),         M_("Phalangite"),     M_("@Adj@ Porcupine")},
+    {M_("Staves"),         M_("Twirler"),       M_("Cruncher"),        M_("Stickfighter"),    M_("Pulveriser"),     M_("Chief of Staff")},
+    {M_("Slings"),         M_("Vandal"),        M_("Slinger"),         M_("Whirler"),         M_("Slingshot"),      M_("@Adj@ Catapult")},
+    {M_("Bows"),           M_("Shooter"),       M_("Archer"),          M_("Marks@genus@"),    M_("Crack Shot"),     M_("Merry @Genus@")},
+    {M_("Crossbows"),      M_("Bolt Thrower"),  M_("Quickloader"),     M_("Sharpshooter"),    M_("Sniper"),         M_("@Adj@ Arbalest")},
+    {M_("Throwing"),       M_("Chucker"),       M_("Thrower"),         M_("Deadly Accurate"), M_("Hawkeye"),        M_("@Adj@ Ballista")},
+    {M_("Armour"),         M_("Covered"),       M_("Protected"),       M_("Tortoise"),        M_("Impregnable"),    M_("Invulnerable")},
+    {M_("Dodging"),        M_("Ducker"),        M_("Nimble"),          M_("Spry"),            M_("Acrobat"),        M_("Intangible")},
+    {M_("Stealth"),        M_("Sneak"),         M_("Covert"),          M_("Unseen"),          M_("Imperceptible"),  M_("Ninja")},
+    {M_("Stabbing"),       M_("Miscreant"),     M_("Blackguard"),      M_("Backstabber"),     M_("Cutthroat"),      M_("Politician")},
+    {M_("Shields"),        M_("Shield-Bearer"), M_("Hoplite"),         M_("Blocker"),         M_("Peltast"),        M_("@Adj@ Barricade")},
+    {M_("Traps & Doors"),  M_("Scout"),         M_("Disarmer"),        M_("Vigilant"),        M_("Perceptive"),     M_("Dungeon Master")},
     // STR based fighters, for DEX/martial arts titles see below.  Felids get their own cathegory, too.
-    {"Unarmed Combat", "Ruffian",       "Grappler",        "Brawler",         "Wrestler",       "@Weight@weight Champion"},
+    {M_("Unarmed Combat"), M_("Ruffian"),       M_("Grappler"),        M_("Brawler"),         M_("Wrestler"),       M_("@Weight@weight Champion")},
 
-    {"Spellcasting",   "Magician",      "Thaumaturge",     "Eclecticist",     "Sorcerer",       "Archmage"},
-    {"Conjurations",   "Ruinous",       "Conjurer",        "Destroyer",       "Devastator",     "Annihilator"},
-    {"Hexes",          "Vexing",        "Jinx",            "Bewitcher",       "Maledictor",     "Spellbinder"},
-    {"Charms",         "Charmwright",   "Infuser",         "Anointer",        "Gracecrafter",   "Miracle Worker"},
-    {"Summonings",     "Caller",        "Summoner",        "Convoker",        "Demonologist",   "Hellbinder"},
-    {"Necromancy",     "Grave Robber",  "Reanimator",      "Necromancer",     "Thanatomancer",  "@Genus_Short@ of Death"},
-    {"Translocations", "Grasshopper",   "Placeless @Genus@", "Blinker",       "Portalist",      "Plane @Walker@"},
-    {"Transmutations", "Changer",       "Transmogrifier",  "Alchemist",       "Malleable",      "Shapeless @Genus@"},
+    {M_("Spellcasting"),   M_("Magician"),      M_("Thaumaturge"),     M_("Eclecticist"),     M_("Sorcerer"),       M_("Archmage")},
+    {M_("Conjurations"),   M_("Ruinous"),       M_("Conjurer"),        M_("Destroyer"),       M_("Devastator"),     M_("Annihilator")},
+    {M_("Hexes"),          M_("Vexing"),        M_("Jinx"),            M_("Bewitcher"),       M_("Maledictor"),     M_("Spellbinder")},
+    {M_("Charms"),         M_("Charmwright"),   M_("Infuser"),         M_("Anointer"),        M_("Gracecrafter"),   M_("Miracle Worker")},
+    {M_("Summonings"),     M_("Caller"),        M_("Summoner"),        M_("Convoker"),        M_("Demonologist"),   M_("Hellbinder")},
+    {M_("Necromancy"),     M_("Grave Robber"),  M_("Reanimator"),      M_("Necromancer"),     M_("Thanatomancer"),  M_("@Genus_Short@ of Death")},
+    {M_("Translocations"), M_("Grasshopper"),   M_("Placeless @Genus@"), M_("Blinker"),       M_("Portalist"),      M_("Plane @Walker@")},
+    {M_("Transmutations"), M_("Changer"),       M_("Transmogrifier"),  M_("Alchemist"),       M_("Malleable"),      M_("Shapeless @Genus@")},
 
-    {"Fire Magic",     "Firebug",       "Arsonist",        "Scorcher",        "Pyromancer",     "Infernalist"},
-    {"Ice Magic",      "Chiller",       "Frost Mage",      "Gelid",           "Cryomancer",     "Englaciator"},
-    {"Air Magic",      "Gusty",         "Cloud Mage",      "Aerator",         "Anemomancer",    "Meteorologist"},
-    {"Earth Magic",    "Digger",        "Geomancer",       "Earth Mage",      "Metallomancer",  "Petrodigitator"},
-    {"Poison Magic",   "Stinger",       "Tainter",         "Polluter",        "Contaminator",   "Envenomancer"},
+    {M_("Fire Magic"),     M_("Firebug"),       M_("Arsonist"),        M_("Scorcher"),        M_("Pyromancer"),     M_("Infernalist")},
+    {M_("Ice Magic"),      M_("Chiller"),       M_("Frost Mage"),      M_("Gelid"),           M_("Cryomancer"),     M_("Englaciator")},
+    {M_("Air Magic"),      M_("Gusty"),         M_("Cloud Mage"),      M_("Aerator"),         M_("Anemomancer"),    M_("Meteorologist")},
+    {M_("Earth Magic"),    M_("Digger"),        M_("Geomancer"),       M_("Earth Mage"),      M_("Metallomancer"),  M_("Petrodigitator")},
+    {M_("Poison Magic"),   M_("Stinger"),       M_("Tainter"),         M_("Polluter"),        M_("Contaminator"),   M_("Envenomancer")},
 
     // These titles apply to atheists only, worshippers of the various gods
     // use the god titles instead, depending on piety or, in Xom's case, mood.
-    {"Invocations",    "Unbeliever",    "Agnostic",        "Dissident",       "Heretic",        "Apostate"},
-    {"Evocations",     "Charlatan",     "Prestidigitator", "Fetichist",       "Evocator",       "Talismancer"},
+    {M_("Invocations"),    M_("Unbeliever"),    M_("Agnostic"),        M_("Dissident"),       M_("Heretic"),        M_("Apostate")},
+    {M_("Evocations"),     M_("Charlatan"),     M_("Prestidigitator"), M_("Fetichist"),       M_("Evocator"),       M_("Talismancer")},
 };
 
 const char *martial_arts_titles[6] =
-    {"Unarmed Combat", "Insei", "Martial Artist", "Black Belt", "Sensei", "Grand Master"};
+    {M_("Unarmed Combat"), M_("Insei"), M_("Martial Artist"), M_("Black Belt"), M_("Sensei"), M_("Grand Master")};
 const char *claw_and_tooth_titles[6] =
-    {"Unarmed Combat", "Scratcher", "Gouger", "Ripper", "Eviscerator", "Sabretooth"};
+    {M_("Unarmed Combat"), M_("Scratcher"), M_("Gouger"), M_("Ripper"), M_("Eviscerator"), M_("Sabretooth")};
 
 struct species_skill_aptitude
 {
@@ -175,6 +175,7 @@ int get_skill_percentage(const skill_type x)
     return ((percent_done / 5) * 5);
 }
 
+/// command.cc에서 skill_filter 등으로 원문을 필요로함.
 const char *skill_name(skill_type which_skill)
 {
     return (skills[which_skill][0]);

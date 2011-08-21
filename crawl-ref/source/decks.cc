@@ -2239,7 +2239,7 @@ void sage_card(int power, deck_rarity_type rarity)
         you.set_duration(DUR_SAGE, random2(1800) + 200);
         you.sage_bonus_skill   = result;
         you.sage_bonus_degree  = power / 25;
-        mprf(MSGCH_PLAIN, gettext("You feel studious about %s."), skill_name(result));
+        mprf(MSGCH_PLAIN, gettext("You feel studious about %s."), gettext(skill_name(result)));
     }
 }
 

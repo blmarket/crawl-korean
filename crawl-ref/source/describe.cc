@@ -4187,14 +4187,14 @@ static std::string _describe_ash_skill_boost()
             // the same level.
             ASSERT(bonus == it->second);
             if (it->first == SK_CONJURATIONS)
-                skills += "Magic schools";
+                skills += gettext(M_("Magic schools"));
             else
-                skills += skill_name(it->first);
+                skills += gettext(skill_name(it->first));
 
             if (boosted_skills.size() > 2)
                 skills += ", ";
             else if (boosted_skills.size() == 2)
-                skills += " and ";
+                skills += gettext(" and ");
 
             boosted_skills.erase(it);
             ++it;
@@ -4252,17 +4252,17 @@ static void _detailed_god_description(god_type which_god)
         switch (which_god)
         {
         case GOD_TROG:
-            broken = "Note that Trog does not demand training of the "
+            broken = gettext("Note that Trog does not demand training of the "
                      "Invocations skill. All abilities are purely based on "
-                     "piety.";
+                     "piety.");
             break;
 
         case GOD_ZIN:
-            broken = "Zin will feed starving followers upon <w>p</w>rayer.";
+            broken = gettext("Zin will feed starving followers upon <w>p</w>rayer.");
             break;
 
         case GOD_ELYVILON:
-            broken = "Using your healing abilities on hostile monsters may "
+            broken = gettext("Using your healing abilities on hostile monsters may "
                      "pacify them, turning them neutral. Pacification works "
                      "best on natural beasts, worse on humanoids of your "
                      "species, worse on other humanoids, worst of all on "
@@ -4270,13 +4270,13 @@ static void _detailed_god_description(god_type which_god)
                      "mindless monsters. If it succeeds, the monster is "
                      "healed and you gain half of its experience value and "
                      "possibly some piety. Pacified monsters try to leave "
-                     "the level.";
+                     "the level.");
             break;
 
         case GOD_NEMELEX_XOBEH:
             if (which_god == you.religion)
             {
-                broken = "The piety increase when sacrificing mostly depends "
+                broken = gettext("The piety increase when sacrificing mostly depends "
                          "on the value of the item. To prevent items from "
                          "being accidentally sacrificed, you can "
                          "<w>i</w>nscribe them with <w>!p</w> (protects the "
@@ -4291,7 +4291,7 @@ static void _detailed_god_description(god_type which_god)
                          "Evocations skill help here, as the power of Nemelex's "
                          "abilities is governed by Evocations instead of "
                          "Invocations. The type of the deck gifts strongly "
-                         "depends on the dominating item class sacrificed:\n";
+                         "depends on the dominating item class sacrificed:\n");
 
                 for (int i = 0; i < NUM_NEMELEX_GIFT_TYPES; ++i)
                 {
@@ -4300,21 +4300,21 @@ static void _detailed_god_description(god_type which_god)
                     switch (i)
                     {
                     case NEM_GIFT_ESCAPE:
-                        desc = "decks of Escape      -- armour";
+                        desc = gettext("decks of Escape      -- armour");
                         break;
                     case NEM_GIFT_DESTRUCTION:
-                        desc = "decks of Destruction -- weapons and ammunition";
+                        desc = gettext("decks of Destruction -- weapons and ammunition");
                         break;
                     case NEM_GIFT_DUNGEONS:
-                        desc = "decks of Dungeons    -- jewellery, books, "
-                                                    "miscellaneous items";
+                        desc = gettext("decks of Dungeons    -- jewellery, books, "
+                                                    "miscellaneous items");
                         break;
                     case NEM_GIFT_SUMMONING:
-                        desc = "decks of Summoning   -- corpses, chunks, blood";
+                        desc = gettext("decks of Summoning   -- corpses, chunks, blood");
                         break;
                     case NEM_GIFT_WONDERS:
-                        desc = "decks of Wonders     -- consumables: food, potions, "
-                                                    "scrolls, wands";
+                        desc = gettext("decks of Wonders     -- consumables: food, potions, "
+                                                    "scrolls, wands");
                         break;
                     }
                     broken += make_stringf(" %c %s%s%s\n",
@@ -4376,13 +4376,13 @@ void describe_god(god_type which_god, bool give_title)
     if (give_title)
     {
         textcolor(WHITE);
-        cprintf("                                  Religion\n");
+        cprintf(gettext("                                  Religion\n"));
         textcolor(LIGHTGREY);
     }
 
     if (which_god == GOD_NO_GOD) //mv: No god -> say it and go away.
     {
-        cprintf("\nYou are not religious.");
+        cprintf(gettext("\nYou are not religious."));
         get_ch();
         return;
     }
@@ -4439,13 +4439,13 @@ void describe_god(god_type which_god, bool give_title)
 
         cprintf((which_god == GOD_NEMELEX_XOBEH
                      && which_god_penance > 0 && which_god_penance <= 100)
-                                             ? "%s doesn't play fair with you." :
-                 (which_god_penance >= 50)   ? "%s's wrath is upon you!" :
-                 (which_god_penance >= 20)   ? "%s is annoyed with you." :
-                 (which_god_penance >=  5)   ? "%s well remembers your sins." :
-                 (which_god_penance >   0)   ? "%s is ready to forgive your sins." :
-                 (you.worshipped[which_god]) ? "%s is ambivalent towards you."
-                                             : "%s is neutral towards you.",
+                                             ? gettext("%s doesn't play fair with you.") :
+                 (which_god_penance >= 50)   ? gettext("%s's wrath is upon you!") :
+                 (which_god_penance >= 20)   ? gettext("%s is annoyed with you.") :
+                 (which_god_penance >=  5)   ? gettext("%s well remembers your sins.") :
+                 (which_god_penance >   0)   ? gettext("%s is ready to forgive your sins.") :
+                 (you.worshipped[which_god]) ? gettext("%s is ambivalent towards you.")
+                                             : gettext("%s is neutral towards you."),
                  god_name(which_god).c_str());
     }
     else
@@ -4457,7 +4457,7 @@ void describe_god(god_type which_god, bool give_title)
         //mv: The following code shows abilities given by your god (if any).
 
         textcolor(LIGHTGREY);
-        cprintf("\n\nGranted powers:                                                          (Cost)\n");
+        cprintf(gettext("\n\nGranted powers:                                                          (Cost)\n"));
         textcolor(colour);
 
         // mv: Some gods can protect you from harm.
@@ -4475,25 +4475,26 @@ void describe_god(god_type which_god, bool give_title)
             switch (elyvilon_lifesaving())
             {
             case 1:
-                when = ", especially when called upon";
+                /// elyvilon (sometimes) watches over you", especially when called upon"
+                when = gettext(", especially when called upon");
                 prot_chance += 100 - 3000/you.piety;
                 break;
             case 2:
-                when = ", and always does so when called upon";
+                /// elyvilon (sometimes) watches over you", and always does ..."
+                when = gettext(", and always does so when called upon");
                 prot_chance = 100;
             }
 
-            const char *how = (prot_chance >= 85) ? "carefully" :
-                              (prot_chance >= 55) ? "often" :
-                              (prot_chance >= 25) ? "sometimes"
-                                                  : "occasionally";
+            const char *how = (prot_chance >= 85) ? pgettext("elyvilon_save", "carefully") :
+                              (prot_chance >= 55) ? pgettext("elyvilon_save", "often") :
+                              (prot_chance >= 25) ? pgettext("elyvilon_save", "sometimes")
+                                                  : pgettext("elyvilon_save", "occasionally");
 
-            std::string buf = god_name(which_god);
-            buf += " ";
-            buf += how;
-            buf += " watches over you";
-            buf += when;
-            buf += ".";
+            /// 1. 신 이름, 2. context "elyvilon_save" 참조. 시간에 관한 단어, 3. 특수조건을 설명하는 구, 없을수도 있다.
+            std::string buf = make_stringf(gettext("%s %s watches over you%s."), 
+                    god_name(which_god).c_str(),
+                    how,
+                    when);
 
             _print_final_god_abil_desc(which_god, buf, ABIL_NON_ABILITY);
         }
@@ -4503,37 +4504,40 @@ void describe_god(god_type which_god, bool give_title)
             if (zin_sustenance(false))
             {
                 have_any = true;
-                std::string buf = "Praying to "
-                                  + god_name(which_god)
-                                  + " will provide sustenance if starving.";
+                std::string buf = make_stringf(
+                                  gettext("Praying to %s will provide sustenance if starving."),
+                                  god_name(which_god).c_str());
                 _print_final_god_abil_desc(which_god, buf,
                                            ABIL_ZIN_SUSTENANCE);
             }
-            const char *how = (you.piety >= 150) ? "carefully" :
-                              (you.piety >= 100) ? "often" :
-                              (you.piety >=  50) ? "sometimes" :
-                                                   "occasionally";
+            const char *how = (you.piety >= 150) ? pgettext("zin_shield", "carefully") :
+                              (you.piety >= 100) ? pgettext("zin_shield", "often") :
+                              (you.piety >=  50) ? pgettext("zin_shield", "sometimes") :
+                                                   pgettext("zin_shield", "occasionally");
 
-            cprintf("%s %s shields you from unclean and chaotic effects.\n",
+            /// 1. god name, 2. context "zin_shield", words about times.
+            cprintf(gettext("%s %s shields you from unclean and chaotic effects.\n"),
                     god_name(which_god).c_str(), how);
         }
         else if (which_god == GOD_SHINING_ONE)
         {
             have_any = true;
-            const char *how = (you.piety >= 150) ? "carefully" :
-                              (you.piety >= 100) ? "often" :
-                              (you.piety >=  50) ? "sometimes" :
-                                                   "occasionally";
+            const char *how = (you.piety >= 150) ? pgettext("tso_shield", "carefully") :
+                              (you.piety >= 100) ? pgettext("tso_shield", "often") :
+                              (you.piety >=  50) ? pgettext("tso_shield", "sometimes") :
+                                                   pgettext("tso_shield", "occasionally");
 
-            cprintf("%s %s shields you from negative energy.\n",
+            /// 1. god name, 2. context tso_shield
+            cprintf(gettext("%s %s shields you from negative energy.\n"),
                     god_name(which_god).c_str(), how);
         }
         else if (which_god == GOD_TROG)
         {
             have_any = true;
-            std::string buf = "You can call upon "
-                              + god_name(which_god)
-                              + " to burn spellbooks in your surroundings.";
+            /// 1. god name.
+            std::string buf = make_stringf(gettext("You can call upon %s"
+                              " to burn spellbooks in your surroundings."),
+                              god_name(which_god).c_str());
             _print_final_god_abil_desc(which_god, buf,
                                        ABIL_TROG_BURN_SPELLBOOKS);
         }
@@ -4543,25 +4547,26 @@ void describe_god(god_type which_god, bool give_title)
             {
                 have_any = true;
                 _print_final_god_abil_desc(which_god,
-                                           "Your slimes' item consumption is "
-                                           "temporarily halted under prayer.",
+                                           gettext("Your slimes' item consumption is "
+                                           "temporarily halted under prayer."),
                                            ABIL_JIYVA_JELLY_PARALYSE);
             }
             if (you.piety >= piety_breakpoint(2))
             {
                 have_any = true;
-                cprintf("%s shields you from corrosive effects.\n",
+                /// 1. god name
+                cprintf(gettext("%s shields you from corrosive effects.\n"),
                         god_name(which_god).c_str());
             }
             if (you.piety >= piety_breakpoint(1))
             {
                 have_any = true;
-                std::string buf = "You gain nutrition";
+                std::string buf = gettext("You gain nutrition");
                 if (you.piety >= piety_breakpoint(4))
-                    buf += ", power and health";
+                    buf += pgettext("jiyva_help", ", power and health");
                 else if (you.piety >= piety_breakpoint(3))
-                    buf += " and power";
-                buf += " when your fellow slimes consume items.\n";
+                    buf += pgettext("jiyva_help", " and power");
+                buf += gettext(" when your fellow slimes consume items.\n");
                 _print_final_god_abil_desc(which_god, buf,
                                            ABIL_NON_ABILITY);
             }
@@ -4570,23 +4575,23 @@ void describe_god(god_type which_god, bool give_title)
         {
             have_any = true;
             _print_final_god_abil_desc(which_god,
-                                       "You can pray to speed up decomposition.",
+                                       gettext("You can pray to speed up decomposition."),
                                        ABIL_NON_ABILITY);
             _print_final_god_abil_desc(which_god,
-                                       "You can walk through plants and "
-                                       "fire through allied plants.",
+                                       gettext("You can walk through plants and "
+                                       "fire through allied plants."),
                                        ABIL_NON_ABILITY);
         }
         else if (which_god == GOD_ASHENZARI)
         {
             have_any = true;
             _print_final_god_abil_desc(which_god,
-                "You are provided with a bounty of information.",
+                gettext("You are provided with a bounty of information."),
                 ABIL_NON_ABILITY);
-            std::string buf = "You can pray to bestow "
-                              + apostrophise(god_name(which_god))
-                              + " curse upon scrolls that usually remove "
-                                "them.";
+            std::string buf = make_stringf(gettext("You can pray to bestow "
+                              "%s curse upon scrolls that usually remove "
+                                "them."),
+                              apostrophise(god_name(which_god)).c_str());
             _print_final_god_abil_desc(which_god, buf,
                                        ABIL_NON_ABILITY);
         }
@@ -4602,7 +4607,7 @@ void describe_god(god_type which_god, bool give_title)
                 }
         }
         if (!have_any)
-            cprintf("None.\n");
+            cprintf(gettext("None.\n"));
     }
 
     int bottom_line = get_number_of_lines();
@@ -4644,7 +4649,7 @@ std::string get_skill_description(skill_type skill, bool need_title)
 
     if (need_title)
     {
-        result = lookup;
+        result = gettext(lookup.c_str());
         result += "\n\n";
     }
 
@@ -4658,47 +4663,48 @@ std::string get_skill_description(skill_type skill, bool need_title)
         std::vector<std::string> unarmed_attacks;
 
         if (you.has_usable_tail())
-            unarmed_attacks.push_back("slap with your tail");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "slap with your tail"));
 
         if (you.has_usable_fangs())
-            unarmed_attacks.push_back("bite with your sharp teeth");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "bite with your sharp teeth"));
         else if (player_mutation_level(MUT_BEAK))
-            unarmed_attacks.push_back("peck with your beak");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "peck with your beak"));
 
         if (player_mutation_level(MUT_HORNS))
-            unarmed_attacks.push_back("headbutt with your horns");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "headbutt with your horns"));
         else if (you.species == SP_NAGA)
-            unarmed_attacks.push_back("do a headbutt attack");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "do a headbutt attack"));
 
         if (player_mutation_level(MUT_HOOVES))
-            unarmed_attacks.push_back("kick with your hooves");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "kick with your hooves"));
         else if (player_mutation_level(MUT_TALONS))
-            unarmed_attacks.push_back("claw with your talons");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "claw with your talons"));
         else if (you.species != SP_NAGA && you.species != SP_FELID
                  && !you.fishtail)
         {
-            unarmed_attacks.push_back("deliver a kick");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "deliver a kick"));
         }
 
         if (you.has_usable_pseudopods())
-            unarmed_attacks.push_back("bludgeon with your pseudopods");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "bludgeon with your pseudopods"));
 
         if (you.has_usable_tentacles())
-            unarmed_attacks.push_back("slap with your tentacles");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "slap with your tentacles"));
 
         if (you.species == SP_FELID)
-            unarmed_attacks.push_back("use your claws");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "use your claws"));
         else if (you.species != SP_OCTOPODE && !you.weapon())
-            unarmed_attacks.push_back("throw a punch");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "throw a punch"));
         else if (you.species != SP_OCTOPODE && you.has_usable_offhand())
-            unarmed_attacks.push_back("punch with your free hand");
+            unarmed_attacks.push_back(pgettext("unarmed_attacks", "punch with your free hand"));
 
         if (!unarmed_attacks.empty())
         {
-            std::string broken = "For example, you could ";
+            /// 뒤에 사용가능한 unarmed_attacks가 나열됨.
+            std::string broken = gettext("For example, you could ");
                         broken += comma_separated_line(unarmed_attacks.begin(),
                                                        unarmed_attacks.end(),
-                                                       " or ", ", ");
+                                                       gettext(" or "), ", ");
                         broken += ".";
             linebreak_string(broken, get_number_of_cols() - 1);
 
@@ -4712,19 +4718,19 @@ std::string get_skill_description(skill_type skill, bool need_title)
         if (you.species == SP_DEMIGOD)
         {
             result += "\n";
-            result += "How on earth did you manage to pick this up?";
+            result += gettext("How on earth did you manage to pick this up?");
         }
         else if (you.religion == GOD_TROG)
         {
             result += "\n";
-            result += "Note that Trog doesn't use Invocations, due to its "
-                      "close connection to magic.";
+            result += gettext("Note that Trog doesn't use Invocations, due to its "
+                      "close connection to magic.");
         }
         else if (you.religion == GOD_NEMELEX_XOBEH)
         {
             result += "\n";
-            result += "Note that Nemelex uses Evocations rather than "
-                      "Invocations.";
+            result += gettext("Note that Nemelex uses Evocations rather than "
+                      "Invocations.");
         }
         break;
 
@@ -4732,7 +4738,7 @@ std::string get_skill_description(skill_type skill, bool need_title)
         if (you.religion == GOD_NEMELEX_XOBEH)
         {
             result += "\n";
-            result += "This is the skill all of Nemelex's abilities rely on.";
+            result += gettext("This is the skill all of Nemelex's abilities rely on.");
         }
         break;
 
@@ -4740,8 +4746,8 @@ std::string get_skill_description(skill_type skill, bool need_title)
         if (you.religion == GOD_TROG)
         {
             result += "\n";
-            result += "Keep in mind, though, that Trog will greatly disapprove "
-                      "of this.";
+            result += gettext("Keep in mind, though, that Trog will greatly disapprove "
+                      "of this.");
         }
         break;
     default:
