@@ -5561,13 +5561,16 @@ std::string player_save_info::short_desc() const
     if (!qualifier.empty())
         desc << "[" << qualifier << "] ";
 
-    desc << name << ", a level " << experience_level << ' '
-         << species_name << ' ' << class_name;
+    desc << make_stringf(gettext("%s, a level %d %s %s"),
+                         name.c_str(),
+                         experience_level,
+                         gettext(species_name.c_str()),
+                         gettext(class_name.c_str()));
 
     if (religion == GOD_JIYVA)
-        desc << " of " << god_name << " " << jiyva_second_name;
+        desc << pgettext("god_info", " of ") << gettext(god_name.c_str()) << " " << jiyva_second_name;
     else if (religion != GOD_NO_GOD)
-        desc << " of " << god_name;
+        desc << pgettext("god_info", " of ") << gettext(god_name.c_str());
 
 #ifdef WIZARD
     if (wizard)
