@@ -5568,9 +5568,9 @@ std::string player_save_info::short_desc() const
                          gettext(class_name.c_str()));
 
     if (religion == GOD_JIYVA)
-        desc << pgettext("god_info", " of ") << gettext(god_name.c_str()) << " " << jiyva_second_name;
+        desc << make_stringf(pgettext("god_info", " of %s %s"),gettext(god_name.c_str()),jiyva_second_name.c_str());
     else if (religion != GOD_NO_GOD)
-        desc << pgettext("god_info", " of ") << gettext(god_name.c_str());
+        desc << make_stringf(pgettext("god_info", " of %s"),gettext(god_name.c_str()));
 
 #ifdef WIZARD
     if (wizard)
