@@ -1125,31 +1125,31 @@ static void _announce_swap_real(coord_def orig_pos, coord_def dest_pos)
     str << orig_name;
     if (you.see_cell(orig_pos) && !you.see_cell(dest_pos))
     {
-        str << pgettext("swap", " suddenly disappears");
-        if (!orig_actor.empty())
-            str << make_stringf(pgettext("swap", " from %s %s"), 
+        str << make_stringf(pgettext("swap", " suddenly disappears%s"),
+                    orig_actor.empty() ? "" : 
+                    make_stringf(pgettext("swap", " from %s %s"), 
                                 prep.c_str(),
-                                orig_actor.c_str());
+                                orig_actor.c_str()).c_str());
     }
     else if (!you.see_cell(orig_pos) && you.see_cell(dest_pos))
     {
-        str << pgettext("swap", " suddenly appears");
-        if (!dest_actor.empty())
-            str << make_stringf(pgettext("swap", " %s %s"), 
+        str << make_stringf(pgettext("swap", " suddenly appears%s"),
+                    dest_actor.empty() ? "" :
+                    make_stringf(pgettext("swap", " %s %s"), 
                                 prep.c_str(),
-                                orig_actor.c_str());
+                                orig_actor.c_str()).c_str());
     }
     else
     {
-        str << pgettext("swap", " moves");
-        if (!orig_actor.empty())
-            str << make_stringf(pgettext("swap", " from %s %s"), 
+        str << make_stringf(pgettext("swap", " moves%s%s"),
+                    orig_actor.empty() ? "" : 
+                    make_stringf(pgettext("swap", " from %s %s"), 
                                 prep.c_str(),
-                                orig_actor.c_str());
-        if (!dest_actor.empty())
-            str << make_stringf(pgettext("swap", " to %s %s"), 
+                                orig_actor.c_str()).c_str(),
+                    dest_actor.empty() ? "" :
+                    make_stringf(pgettext("swap", " to %s %s"), 
                                 prep.c_str(),
-                                orig_actor.c_str());
+                                orig_actor.c_str()).c_str());
     }
     str << "!";
     mpr(str.str().c_str());
@@ -1246,7 +1246,7 @@ bool swap_features(const coord_def &pos1, const coord_def &pos2,
 
     if (!in_bounds(temp))
     {
-        mpr(gettext("swap_features(): No boring squares on level?"), MSGCH_ERROR);
+        mpr("swap_features(): No boring squares on level?", MSGCH_ERROR);
         return (false);
     }
 
