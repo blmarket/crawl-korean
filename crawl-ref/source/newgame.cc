@@ -29,6 +29,7 @@
 #include "state.h"
 #include "stuff.h"
 #include "tutorial.h"
+#include "korean.h"
 
 #ifdef USE_TILE_LOCAL
 #include "tilereg-crt.h"
@@ -956,7 +957,7 @@ void job_group::attach(const newgame_def* ng, const newgame_def& defaults,
 {
     TextItem* tmp = new NoSelectTextItem();
     std::string text;
-    tmp->set_text(gettext(name));
+    tmp->set_text(pgettext_expr("Jobgroup", name));
     tmp->set_fg_colour(WHITE);
     coord_def min_coord(2 + position.x, 3 + position.y);
     coord_def max_coord(min_coord.x + width, min_coord.y + 1);
@@ -1027,32 +1028,32 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     job_group jobs_order[] =
     {
         {
-            M_("Warrior"),
+            P_("Jobgroup","Warrior"),
             coord_def(0, 0), 15,
             {JOB_FIGHTER, JOB_GLADIATOR, JOB_MONK, JOB_HUNTER, JOB_ASSASSIN,
              JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
-            M_("Adventurer"),
+            P_("Jobgroup","Adventurer"),
             coord_def(0, 7), 15,
             {JOB_ARTIFICER, JOB_WANDERER, JOB_UNKNOWN, JOB_UNKNOWN,
              JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
-            M_("Zealot"),
+            P_("Jobgroup", "Zealot"),
             coord_def(15, 0), 20,
             {JOB_BERSERKER, JOB_ABYSSAL_KNIGHT, JOB_CHAOS_KNIGHT,
              JOB_DEATH_KNIGHT, JOB_PRIEST, JOB_HEALER, JOB_UNKNOWN,
              JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
-            M_("Warrior-mage"),
+            P_("Jobgroup", "Warrior-mage"),
             coord_def(35, 0), 21,
             {JOB_SKALD, JOB_TRANSMUTER, JOB_WARPER, JOB_ARCANE_MARKSMAN,
              JOB_ENCHANTER, JOB_STALKER, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
-            M_("Mage"),
+            P_("Jobgroup", "Mage"),
             coord_def(56, 0), 23,
             {JOB_WIZARD, JOB_CONJURER, JOB_SUMMONER, JOB_NECROMANCER,
              JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,

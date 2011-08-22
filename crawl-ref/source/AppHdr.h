@@ -30,6 +30,7 @@
 #define N_
 #define M_
 #define V_
+#define P_(msgctxt, msgid) msgid
 
 #ifdef TARGET_COMPILER_VC
 /* Disable warning about:

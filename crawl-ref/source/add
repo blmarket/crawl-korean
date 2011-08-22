@@ -8,4 +8,4 @@ xgettext --omit-header --keyword --keyword=V_ -M-verb -c --force-po --from-code 
 
 xgettext --omit-header --keyword=N_ -c -j --force-po --from-code utf-8 -o Crawl_mutation.po mutation-data.h
 xgettext --keyword --keyword=M_ -c -j --force-po --from-code utf-8 -o Crawl_words.po *.cc *.h
-xgettext --keyword=N_ -c -j --from-code utf-8 -o Crawl_korean.po *.cc
+xgettext --keyword=N_ --keyword=P_:1c,2 -c -j --from-code utf-8 -o Crawl_korean.po *.cc
