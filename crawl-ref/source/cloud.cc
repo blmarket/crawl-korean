@@ -1269,7 +1269,7 @@ std::string cloud_type_name(cloud_type type, bool terse)
 
     return (type <= CLOUD_NONE || type >= NUM_CLOUD_TYPES
             ? "buggy goodness"
-            : gettext((terse? _terse_cloud_names : _verbose_cloud_names)[type]));
+            : (terse? _terse_cloud_names : _verbose_cloud_names)[type]);
 }
 
 ////////////////////////////////////////////////////////////////////////
