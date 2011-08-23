@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions used to print player related info.
 **/
@@ -410,51 +410,51 @@ static void _print_stats_wp(int y)
     {
         const std::string prefix = "-) ";
         col = LIGHTGREY;
-        text = "Nothing wielded"; // Default
+        text = "무장하지 않음"; // Default
 
         if (you.has_usable_claws(true))
-            text = "Claws";
+            text = "손톱";
         if (you.has_usable_tentacles(true))
-            text = "Tentacles";
+            text = "촉수";
 
         if (you.species == SP_FELID)
-            text = "Teeth and claws";
+            text = "이빨과 손톱";
 
         switch (you.form)
         {
             case TRAN_SPIDER:
                 col = LIGHTGREEN;
-                text = "Fangs (venom)";
+                text = "독니";
                 break;
             case TRAN_BLADE_HANDS:
                 col = RED;
-                text = "Blade " + blade_parts(true);
+                text = "칼날의 " + blade_parts(true);
                 break;
             case TRAN_STATUE:
                 col = LIGHTGREY;
                 if (you.has_usable_claws(true))
-                    text = "Stone claws";
+                    text = "바위 손톱";
                 else if (you.has_usable_tentacles(true))
-                    text = "Stone tentacles";
+                    text = "바위 촉수";
                 else
-                    text = "Stone fists";
+                    text = "바위 주먹";
                 break;
             case TRAN_ICE_BEAST:
                 col = WHITE;
-                text = "Ice fists (freeze)";
+                text = "얼음 주먹";
                 break;
             case TRAN_DRAGON:
                 col = GREEN;
-                text = "Teeth and claws";
+                text = "이빨과 발톱";
                 break;
             case TRAN_LICH:
                 col = MAGENTA;
-                text += " (drain)";
+                text += " (흡수)";
                 break;
             case TRAN_BAT:
             case TRAN_PIG:
                 col = LIGHTGREY;
-                text = "Teeth";
+                text = "궁뎅이";
                 break;
             case TRAN_NONE:
             default:
@@ -466,7 +466,7 @@ static void _print_stats_wp(int y)
 
     cgotoxy(1, y, GOTO_STAT);
     textcolor(Options.status_caption_colour);
-    cprintf("Wp: ");
+    cprintf("장비: ");
     textcolor(col);
     int w = crawl_view.hudsz.x - 4;
     cprintf("%s", chop_string(text, w).c_str());
@@ -499,19 +499,19 @@ static void _print_stats_qv(int y)
         if (fire_warn_if_impossible(true))
         {
             col  = DARKGREY;
-            text = "Unavailable";
+            text = "사용할 수 없음";
         }
         else
         {
             col  = LIGHTGREY;
-            text = "Nothing quivered";
+            text = "없음";
         }
 
         text = prefix + text;
     }
     cgotoxy(1, y, GOTO_STAT);
     textcolor(Options.status_caption_colour);
-    cprintf("Qv: ");
+    cprintf("보조: ");
     textcolor(col);
     int w = crawl_view.hudsz.x - 4;
     cprintf("%s", chop_string(text, w).c_str());
@@ -747,13 +747,13 @@ void print_stats(void)
         cprintf("%d/%d (%d) ",
                 you.experience_level, you.skill_cost_level, you.exp_available);
 #else
-        cprintf("XL: ");
+        cprintf("레벨:");
         textcolor(HUD_VALUE_COLOUR);
         cprintf("%2d ", you.experience_level);
         if (you.experience_level < 27)
         {
             textcolor(Options.status_caption_colour);
-            cprintf("Next: ");
+            cprintf("경험: ");
             textcolor(HUD_VALUE_COLOUR);
             cprintf("%s ", _get_exp_progress().c_str());
         }
@@ -858,9 +858,9 @@ static std::string _level_description_string_hud()
 
 void print_stats_level()
 {
-    cgotoxy(19, 8, GOTO_STAT);
+    cgotoxy(15, 8, GOTO_STAT);
     textcolor(HUD_CAPTION_COLOUR);
-    cprintf("Place: ");
+    cprintf("장소:  ");
 
     textcolor(HUD_VALUE_COLOUR);
 #ifdef DEBUG_DIAGNOSTICS
@@ -872,8 +872,9 @@ void print_stats_level()
 
 void redraw_skill(const std::string &your_name, const std::string &job_name)
 {
-    std::string title = your_name + " the " + job_name;
-
+	std::string title = gettext(job_name.c_str());
+	title += " " + your_name;
+    //std::string title = your_name + " the " + job_name; (deceit, 110822)
     unsigned int in_len = strwidth(title);
     const unsigned int WIDTH = crawl_view.hudsz.x;
     if (in_len > WIDTH)
@@ -912,10 +913,10 @@ void redraw_skill(const std::string &your_name, const std::string &job_name)
     textcolor(YELLOW);
     cgotoxy(1, 2, GOTO_STAT);
     std::string species = species_name(you.species);
-    nowrap_eol_cprintf("%s", species.c_str());
+    nowrap_eol_cprintf("%s", gettext(species.c_str()));
     if (you.religion != GOD_NO_GOD)
     {
-        std::string god = " of ";
+        std::string god = ",   ";
         god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
                                          : god_name(you.religion);
         nowrap_eol_cprintf("%s", god.c_str());
@@ -959,20 +960,20 @@ void draw_border(void)
     textcolor(Options.status_caption_colour);
 
     //cgotoxy(1, 3, GOTO_STAT); cprintf("Hp:");
-    cgotoxy(1, 4, GOTO_STAT); cprintf("Magic:");
+    cgotoxy(1, 4, GOTO_STAT); cprintf("MP   :");
     cgotoxy(1, 5, GOTO_STAT); cprintf("AC:");
     cgotoxy(1, 6, GOTO_STAT); cprintf("EV:");
     cgotoxy(1, 7, GOTO_STAT); cprintf("SH:");
 
-    cgotoxy(19, 5, GOTO_STAT); cprintf("Str:");
-    cgotoxy(19, 6, GOTO_STAT); cprintf("Int:");
-    cgotoxy(19, 7, GOTO_STAT); cprintf("Dex:");
+    cgotoxy(19, 5, GOTO_STAT); cprintf("힘  :");
+    cgotoxy(19, 6, GOTO_STAT); cprintf("지능:");
+    cgotoxy(19, 7, GOTO_STAT); cprintf("민첩:");
 
     if (Options.show_gold_turns)
     {
         int yhack = crawl_state.game_is_zotdef();
-        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf("Gold:");
-        cgotoxy(19, 9 + yhack, GOTO_STAT); cprintf("Turn:");
+        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf("소지금:");
+        cgotoxy(19, 9 + yhack, GOTO_STAT); cprintf("턴:");
     }
     // Line 8 is exp pool, Level
 }
@@ -1007,7 +1008,7 @@ static std::string _get_monster_name(const monster_info& mi,
     int col;
     mi.to_string(count, monpane_desc, col, fullname);
 
-    if (count == 1)
+    if (count == 1) // (deceit, 110822 : 한글판에선 필요없는 부분으로 주석처리)
     {
         if (!mi.is(MB_NAME_THE))
         {
@@ -1017,7 +1018,7 @@ static std::string _get_monster_name(const monster_info& mi,
         }
         else if (adj)
             desc = "the " + desc;
-    }
+    } 
 
     desc += monpane_desc;
     return (desc);
@@ -1059,10 +1060,10 @@ std::string mpr_monster_list(bool past)
     std::string msg = "";
     if (mons.empty())
     {
-        msg  = "There ";
-        msg += (past ? "were" : "are");
-        msg += " no monsters in sight!";
-
+        //msg  = "There ";
+        //msg += (past ? "were" : "are");
+        //msg += " no monsters in sight!";
+		msg += make_stringf("시야 내에 몬스터가 %s!",(past ? "없었다" : "없다"));
         return (msg);
     }
 
@@ -1081,15 +1082,15 @@ std::string mpr_monster_list(bool past)
 
     describe.push_back(_get_monster_name(mons[mons.size()-1], count, true).c_str());
 
-    msg = "You ";
-    msg += (past ? "could" : "can");
-    msg += " see ";
-
+    msg = "당신은 ";
+    //msg += (past ? "could" : "can");
+    //msg += " see ";
+	
     if (describe.size() == 1)
         msg += describe[0];
     else
         msg += comma_separated_line(describe.begin(), describe.end());
-    msg += ".";
+	msg += (past ? "을(를) 볼 수 있었다." : "을(를) 보았다."); //msg += ".";
 
     return (msg);
 }
@@ -1307,10 +1308,10 @@ static const char* _itosym3(int stat)
 
 static const char *s_equip_slot_names[] =
 {
-    "Weapon", "Cloak",  "Helmet", "Gloves", "Boots",
-    "Shield", "Armour", "Left Ring", "Right Ring", "Amulet",
-    "First Ring", "Second Ring", "Third Ring", "Fourth Ring",
-    "Fifth Ring", "Sixth Ring", "Seventh Ring", "Eighth Ring",
+    "무기", "망토", "투구", "장갑", "신발", //"Weapon", "Cloak",  "Helmet", "Gloves", "Boots",
+    "방패", "갑옷", "왼손", "오른손", "부적", // "Shield", "Armour", "Left Ring", "Right Ring", "Amulet",
+    "반지1", "반지2", "반지3", "반지4", //	"First Ring", "Second Ring", "Third Ring", "Fourth Ring",
+    "반지5", "반지6", "반지7", "반지8", //"Fifth Ring", "Sixth Ring", "Seventh Ring", "Eighth Ring",
 };
 
 const char *equip_slot_to_name(int equip)
@@ -1319,13 +1320,13 @@ const char *equip_slot_to_name(int equip)
         || equip == EQ_LEFT_RING || equip == EQ_RIGHT_RING
         || equip >= EQ_RING_ONE && equip <= EQ_RING_EIGHT)
     {
-        return "Ring";
+        return "반지";
     }
 
     if (equip == EQ_BOOTS
         && (you.species == SP_CENTAUR || you.species == SP_NAGA))
     {
-        return "Barding";
+        return "마갑";
     }
 
     if (equip < 0 || equip >= NUM_EQUIP)
@@ -1441,39 +1442,39 @@ static void _print_overview_screen_equip(column_composer& cols,
         else if (e_order[i] == EQ_WEAPON
                  && you.skill(SK_UNARMED_COMBAT))
         {
-            snprintf(buf, sizeof buf, "%s  - Unarmed", slot);
+            snprintf(buf, sizeof buf, "%s  - 무장하지 않음", slot);
         }
         else if (e_order[i] == EQ_WEAPON
                  && you.form == TRAN_BLADE_HANDS)
         {
-            snprintf(buf, sizeof buf, "%s  - Blade Hands", slot);
+            snprintf(buf, sizeof buf, "%s  - 칼날의 손", slot);
         }
         else if (e_order[i] == EQ_BOOTS
                  && (you.species == SP_NAGA || you.species == SP_CENTAUR))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(no %s)</darkgrey>", slot_name_lwr);
+                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr);
         }
         else if (!you_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s unavailable)</darkgrey>", slot_name_lwr);
+                     "<darkgrey>(%s 사용 불가)</darkgrey>", slot_name_lwr);
         }
         else if (!you_tran_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s currently unavailable)</darkgrey>",
+                     "<darkgrey>(%s 현재 사용 불가)</darkgrey>",
                      slot_name_lwr);
         }
         else if (!you_can_wear(e_order[i]))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s restricted)</darkgrey>", slot_name_lwr);
+                     "<darkgrey>(%s 제한됨)</darkgrey>", slot_name_lwr);
         }
         else
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(no %s)</darkgrey>", slot_name_lwr);
+                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr);
         }
         cols.add_formatted(2, buf, false);
     }
@@ -1481,20 +1482,20 @@ static void _print_overview_screen_equip(column_composer& cols,
 
 static std::string _overview_screen_title(int sw)
 {
-    char title[50];
-    snprintf(title, sizeof title, " the %s ", player_title().c_str());
-
     char species_job[50];
     snprintf(species_job, sizeof species_job,
-             "(%s %s)",
-             species_name(you.species).c_str(),
-             you.class_name.c_str());
+             "%s %s ",
+             gettext(species_name(you.species).c_str()),
+             gettext(you.class_name.c_str()));
+
+	char title[50];
+    snprintf(title, sizeof title, "%s ", gettext(player_title().c_str()));
 
     char time_turns[50] = "";
 
     handle_real_time();
     snprintf(time_turns, sizeof time_turns,
-             " Turns: %d, Time: %s",
+             "총 턴수: %d, 플레이 시간: %s",
              you.num_turns, make_time_string(you.real_time, true).c_str());
 
     int linelength = strwidth(you.your_name) + strwidth(title)
@@ -1522,9 +1523,10 @@ static std::string _overview_screen_title(int sw)
 
     std::string text;
     text = "<yellow>";
-    text += you.your_name;
-    text += title;
+	text += title;
     text += species_job;
+    text += you.your_name;
+
 
     const int num_spaces = sw - linelength - 1;
     if (num_spaces > 0)
@@ -1552,9 +1554,9 @@ static std::string _god_powers(bool simple)
     if (you.religion == GOD_XOM)
     {
         if (!you.gift_timeout)
-            godpowers += simple ? "- BORED" : " - BORED";
+            godpowers += simple ? "- 지루함" : " - 지루함";
         else if (you.gift_timeout == 1)
-            godpowers += simple ? "- getting BORED" : " - getting BORED";
+            godpowers += simple ? "- 지루해짐" : " - 지루해짐";
         return (simple ? godpowers
                        : colour_string(godpowers, god_colour(you.religion)));
     }
@@ -1639,7 +1641,7 @@ static std::vector<formatted_string> _get_overview_stats()
     }
     cols1.add_formatted(0, buf, false);
 
-    snprintf(buf, sizeof buf, "Gold %d", you.gold);
+    snprintf(buf, sizeof buf, "소지금 %d", you.gold);
     cols1.add_formatted(0, buf, false);
 
     snprintf(buf, sizeof buf, "AC %2d" , you.armour_class());
@@ -1661,21 +1663,21 @@ static std::vector<formatted_string> _get_overview_stats()
     {
         if (boosted_str)
         {
-            snprintf(buf, sizeof buf, "Str <lightblue>%2d</lightblue>",
+            snprintf(buf, sizeof buf, "힘   <lightblue>%2d</lightblue>",
                      you.strength());
         }
         else
-            snprintf(buf, sizeof buf, "Str %2d", you.strength());
+            snprintf(buf, sizeof buf, "힘   %2d", you.strength());
     }
     else
     {
         if (boosted_str)
         {
-            snprintf(buf, sizeof buf, "Str <lightblue>%2d (%d)</lightblue>",
+            snprintf(buf, sizeof buf, "힘   <lightblue>%2d (%d)</lightblue>",
                      you.strength(), you.max_strength());
         }
         else
-            snprintf(buf, sizeof buf, "Str <yellow>%2d</yellow> (%d)",
+            snprintf(buf, sizeof buf, "힘   <yellow>%2d</yellow> (%d)",
                      you.strength(), you.max_strength());
     }
     cols1.add_formatted(2, buf, false);
@@ -1684,21 +1686,21 @@ static std::vector<formatted_string> _get_overview_stats()
     {
         if (boosted_int)
         {
-            snprintf(buf, sizeof buf, "Int <lightblue>%2d</lightblue>",
+            snprintf(buf, sizeof buf, "지능 <lightblue>%2d</lightblue>",
                      you.intel());
         }
         else
-            snprintf(buf, sizeof buf, "Int %2d", you.intel());
+            snprintf(buf, sizeof buf, "지능 %2d", you.intel());
     }
     else
     {
         if (boosted_int)
         {
-            snprintf(buf, sizeof buf, "Int <lightblue>%2d (%d)</lightblue>",
+            snprintf(buf, sizeof buf, "지능 <lightblue>%2d (%d)</lightblue>",
                      you.intel(), you.max_intel());
         }
         else
-            snprintf(buf, sizeof buf, "Int <yellow>%2d</yellow> (%d)",
+            snprintf(buf, sizeof buf, "지능 <yellow>%2d</yellow> (%d)",
                      you.intel(), you.max_intel());
     }
     cols1.add_formatted(2, buf, false);
@@ -1707,21 +1709,21 @@ static std::vector<formatted_string> _get_overview_stats()
     {
         if (boosted_dex)
         {
-            snprintf(buf, sizeof buf, "Dex <lightblue>%2d</lightblue>",
+            snprintf(buf, sizeof buf, "민첩 <lightblue>%2d</lightblue>",
                      you.dex());
         }
         else
-            snprintf(buf, sizeof buf, "Dex %2d", you.dex());
+            snprintf(buf, sizeof buf, "민첩 %2d", you.dex());
     }
     else
     {
         if (boosted_dex)
         {
-            snprintf(buf, sizeof buf, "Dex <lightblue>%2d (%d)</lightblue>",
+            snprintf(buf, sizeof buf, "민첩 <lightblue>%2d (%d)</lightblue>",
                      you.dex(), you.max_dex());
         }
         else
-            snprintf(buf, sizeof buf, "Dex <yellow>%2d</yellow> (%d)",
+            snprintf(buf, sizeof buf, "민첩 <yellow>%2d</yellow> (%d)",
                      you.dex(), you.max_dex());
     }
     cols1.add_formatted(2, buf, false);
@@ -1735,24 +1737,24 @@ static std::vector<formatted_string> _get_overview_stats()
     char lives[40];
     if (you.species == SP_FELID)
     {
-        snprintf(lives, sizeof(lives), "Lives: %d, deaths: %d",
+        snprintf(lives, sizeof(lives), "생명: %d, 죽은 횟수: %d",
                  you.lives, you.deaths);
     }
     else
         lives[0] = 0;
 
     snprintf(buf, sizeof buf,
-             "XL: %d%s\n"
-             "God: %s\n"
-             "Spells: %2d memorised, %2d level%s left\n"
+             "레벨: %d%s\n"
+             "신앙: %s\n"
+             "주문: %2d레벨 기억함, %2d레벨%s 남음\n"
              "%s",
              you.experience_level,
-             (you.experience_level < 27 ? make_stringf("   Next: %s",
+             (you.experience_level < 27 ? make_stringf("   경험: %s",
                                            _get_exp_progress().c_str()).c_str()
                                         : ""),
              godpowers.c_str(),
              you.spell_no, player_spell_levels(),
-             (player_spell_levels() == 1) ? "" : "s",
+             (player_spell_levels() == 1) ? "" : "",
              lives);
     cols1.add_formatted(3, buf, false);
 
@@ -1782,15 +1784,15 @@ static std::vector<formatted_string> _get_overview_resistances(
                        || you.religion == GOD_ZIN && you.piety >= 150);
 
     snprintf(buf, sizeof buf,
-             "%sRes.Fire  : %s\n"
-             "%sRes.Cold  : %s\n"
-             "%sLife Prot.: %s\n"
-             "%sRes.Acid. : %s\n"
-             "%sRes.Poison: %s\n"
-             "%sRes.Elec. : %s\n"
-             "%sSust.Abil.: %s\n"
-             "%sRes.Mut.  : %s\n"
-             "%sRes.Rott. : %s\n",
+             "%s화염 저항 : %s\n"
+             "%s냉기 저항 : %s\n"
+             "%s약화 저항 : %s\n"
+             "%s산성 저항 : %s\n"
+             "%s독소 저항 : %s\n"
+             "%s전기 저항 : %s\n"
+             "%s능력 유지 : %s\n"
+             "%s변이 저항 : %s\n"
+             "%s부패 저항 : %s\n",
              _determine_colour_string(rfire, 3), _itosym3(rfire),
              _determine_colour_string(rcold, 3), _itosym3(rcold),
              _determine_colour_string(rlife, 3), _itosym3(rlife),
@@ -1808,13 +1810,13 @@ static std::vector<formatted_string> _get_overview_resistances(
 
     if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
     {
-        pregourmand = "Gourmand  : ";
+        pregourmand = "대식가    : ";
         postgourmand = _itosym1(1);
         saplevel = 1;
     }
     else
     {
-        pregourmand = "Saprovore : ";
+        pregourmand = "육식성    : ";
         postgourmand = _itosym3(saplevel);
     }
     snprintf(buf, sizeof buf, "%s%s%s",
@@ -1829,12 +1831,12 @@ static std::vector<formatted_string> _get_overview_resistances(
     const int rclar = player_mental_clarity(calc_unid);
     const int rspir = player_spirit_shield(calc_unid);
     snprintf(buf, sizeof buf,
-             "%sSee Invis. : %s\n"
-             "%sWarding    : %s\n"
-             "%sConserve   : %s\n"
-             "%sRes.Corr.  : %s\n"
-             "%sClarity    : %s\n"
-             "%sSpirit.Shd : %s\n"
+             "%s투명 보기  : %s\n"
+             "%s결계       : %s\n"
+             "%s물품 보호  : %s\n"
+             "%s부식 저지  : %s\n"
+             "%s명석함     : %s\n"
+             "%s수호 정령  : %s\n"
              ,
              _determine_colour_string(rinvi, 1), _itosym1(rinvi),
              _determine_colour_string(rward, 2), _itosym2(rward),
@@ -1851,18 +1853,18 @@ static std::vector<formatted_string> _get_overview_resistances(
     const int rrtel = !!player_teleport(calc_unid);
     if (notele && !stasis)
     {
-        snprintf(buf, sizeof buf, "%sPrev.Telep.: %s",
+        snprintf(buf, sizeof buf, "%s전이방해   : %s",
                  _determine_colour_string(-1, 1), _itosym1(1));
     }
     else
     if (rrtel && !stasis)
     {
-        snprintf(buf, sizeof buf, "%sRnd.Telep. : %s",
+        snprintf(buf, sizeof buf, "%s랜덤이동   : %s",
                  _determine_colour_string(-1, 1), _itosym1(1));
     }
     else
     {
-        snprintf(buf, sizeof buf, "%sStasis     : %s",
+        snprintf(buf, sizeof buf, "%s정체       : %s",
                  _determine_colour_string(stasis, 1), _itosym1(stasis));
     }
     cols.add_formatted(1, buf, false);
@@ -1872,9 +1874,9 @@ static std::vector<formatted_string> _get_overview_resistances(
     const int rlevi = you.airborne();
     const int rcfli = wearing_amulet(AMU_CONTROLLED_FLIGHT, calc_unid);
     snprintf(buf, sizeof buf,
-             "%sCtrl.Telep.: %s\n"
-             "%sLevitation : %s\n"
-             "%sCtrl.Flight: %s\n",
+             "%s좌표이동   : %s\n"
+             "%s공중부양   : %s\n"
+             "%s비행제어   : %s\n",
              _determine_colour_string(rctel, 1), _itosym1(rctel),
              _determine_colour_string(rlevi, 1), _itosym1(rlevi),
              _determine_colour_string(rcfli, 1), _itosym1(rcfli));
@@ -1893,8 +1895,8 @@ static char _get_overview_screen_results()
     overview.set_flags(MF_SINGLESELECT | MF_ALWAYS_SHOW_MORE | MF_NOWRAP);
     overview.set_more(formatted_string::parse_string(
 #ifdef USE_TILE
-                        "<cyan>[ +/L-click : Page down.   - : Page up."
-                        "           Esc/R-click exits.]"));
+                        "<cyan>[ +/L-click : 아래 페이지.   - : 위 페이지."
+						"           Esc/R-click: 종료.]"));
 #else
                         "<cyan>[ + : Page down.   - : Page up."
                         "                           Esc exits.]"));
@@ -1980,37 +1982,35 @@ void print_overview_screen()
 std::string stealth_desc(int stealth)
 {
     std::string prefix =
-         (stealth <  10) ? "extremely un" :
-         (stealth <  30) ? "very un" :
-         (stealth <  60) ? "un" :
-         (stealth <  90) ? "fairly " :
+         (stealth <  10) ? "극히 미미한" :
+         (stealth <  30) ? "매우 약한" :
+         (stealth <  60) ? "약한" :
+         (stealth <  90) ? "보통의 " :
          (stealth < 120) ? "" :
-         (stealth < 160) ? "quite " :
-         (stealth < 220) ? "very " :
-         (stealth < 300) ? "extremely " :
-         (stealth < 400) ? "extraordinarily " :
-         (stealth < 520) ? "incredibly "
-                         : "uncannily ";
-    return (prefix + "stealthy");
+         (stealth < 160) ? "상당한 " :
+         (stealth < 220) ? "강한 " :
+         (stealth < 300) ? "아주 강한 " :
+         (stealth < 400) ? "대단히 강한 " :
+         (stealth < 520) ? "극히 강한 "
+                         : "거의 보이지 않는 ";
+    return (prefix + "은밀함");
 }
 
 std::string magic_res_adjective(int mr)
 {
     if (mr == MAG_IMMUNE)
-        return "immune";
+        return "면역";
 
-    std::string prefix =
-            (mr <  10) ? "not" :
-            (mr <  30) ? "slightly" :
-            (mr <  60) ? "somewhat" :
-            (mr <  90) ? "quite" :
-            (mr < 120) ? "very" :
-            (mr < 150) ? "extremely" :
-            (mr < 190) ? "extraordinarily" :
-            (mr < 240) ? "incredibly" :
-            (mr < 300) ? "uncannily"
-                       : "almost entirely";
-    return prefix + " resistant";
+    return ((mr <  10) ? "저항력이 없다" :
+            (mr <  30) ? "약간의 저항력이 있다" :
+            (mr <  60) ? "어느정도 저항력이 있다" :
+            (mr <  90) ? "꽤 저항력이 있다" :
+            (mr < 120) ? "큰 저항력이 있다" :
+            (mr < 150) ? "아주 큰 저항력이 있다" :
+            (mr < 190) ? "대단히 큰 저항력이 있다" :
+            (mr < 240) ? "극도로 큰 저항력이 있다 " :
+            (mr < 300) ? "거의 면역이다"
+                       : "면역이다");
 }
 
 // Creates rows of short descriptions for current
@@ -2095,16 +2095,17 @@ static std::string _status_mut_abilities(int sw)
     int move_cost = (player_speed() * player_movement_speed()) / 10;
     if (move_cost != 10)
     {
-        std::string help = (move_cost <   8) ? "very quick" :
-                           (move_cost <  10) ? "quick" :
-                           (move_cost <  13) ? "slow"
-                                             : "very slow";
+        std::string help = (move_cost <   8) ? "매우 빠름" :
+                           (move_cost <  10) ? "빠름" :
+                           (move_cost <  13) ? "느림"
+                                             : "매우 느람";
 
         status.push_back(help);
     }
 
-    status.push_back(magic_res_adjective(player_res_magic(false))
-                     + " to hostile enchantments");
+    status.push_back("적대적인 주술에 대해 " +
+					 magic_res_adjective(player_res_magic(false))
+                     );
 
     // character evaluates their ability to sneak around:
     status.push_back(stealth_desc(check_stealth()));
@@ -2129,86 +2130,86 @@ static std::string _status_mut_abilities(int sw)
     switch (you.species)   //mv: following code shows innate abilities - if any
     {
       case SP_MERFOLK:
-          mutations.push_back("change form in water");
+          mutations.push_back("물 속에서의 모습 변화");
           break;
 
       case SP_NAGA:
           // breathe poison replaces spit poison:
           if (!player_mutation_level(MUT_BREATHE_POISON))
-              mutations.push_back("spit poison");
+              mutations.push_back("독 뱉기");
           else
-              mutations.push_back("breathe poison");
+              mutations.push_back("독구름 뱉기");
           break;
 
       case SP_KENKU:
           if (you.experience_level > 4)
           {
-              std::string help = "able to fly";
+              std::string help = "비행 가능";
               if (you.experience_level > 14)
-                  help += " continuously";
+                  help = "능숙한 " + help;
               mutations.push_back(help);
           }
           break;
 
       case SP_MUMMY:
-          mutations.push_back("no food or potions");
-          mutations.push_back("fire vulnerability");
+          mutations.push_back("물약,음식 섭취 불가");
+          mutations.push_back("불에 취약함");
           if (you.experience_level > 12)
           {
-              std::string help = "in touch with death";
+              std::string help = "죽음의 힘에 특화";
               if (you.experience_level > 25)
-                  help = "strongly " + help;
+                  help = "강한 " + help;
               mutations.push_back(help);
           }
           break;
 
       case SP_KOBOLD:
-          mutations.push_back("disease resistance");
+          mutations.push_back("질병 저항");
           break;
 
       case SP_DEEP_DWARF:
-          mutations.push_back("damage resistance");
+          mutations.push_back("피해 경감");
           break;
 
       case SP_FELID:
-          mutations.push_back("paw claws");
+          mutations.push_back("날카로운 발톱");
           break;
 
       case SP_RED_DRACONIAN:
-          mutations.push_back("breathe fire");
+          mutations.push_back("불의 숨결");
           break;
 
       case SP_WHITE_DRACONIAN:
-          mutations.push_back("breathe frost");
+          mutations.push_back("냉기의 숨결");
           break;
 
       case SP_GREEN_DRACONIAN:
-          mutations.push_back("breathe noxious fumes");
+          mutations.push_back("독구름의 숨결");
           break;
 
       case SP_YELLOW_DRACONIAN:
-          mutations.push_back("spit acid");
-          mutations.push_back("acid resistance");
+          mutations.push_back("산성 침 뱉기");
+          mutations.push_back("산성 저항");
           break;
 
       case SP_GREY_DRACONIAN:
-          mutations.push_back("walk through water");
+          mutations.push_back("물 위 걷기");
           break;
 
       case SP_BLACK_DRACONIAN:
-          mutations.push_back("breathe lightning");
+          mutations.push_back("번개의 숨결");
           break;
 
       case SP_PURPLE_DRACONIAN:
-          mutations.push_back("breathe power");
+          mutations.push_back("마력의 숨결");
           break;
 
       case SP_MOTTLED_DRACONIAN:
-          mutations.push_back("breathe sticky flames");
+          mutations.push_back("액체 화염의 숨결");
           break;
 
       case SP_PALE_DRACONIAN:
-          mutations.push_back("breathe steam");
+          mutations.push_back("증기의 숨결");
           break;
 
       default:
@@ -2219,23 +2220,23 @@ static std::string _status_mut_abilities(int sw)
     if (player_genus(GENPC_OGREISH) || you.species == SP_TROLL
         || player_genus(GENPC_DRACONIAN) || you.species == SP_SPRIGGAN)
     {
-        mutations.push_back("unfitting armour");
+        mutations.push_back("방어구가 맞지 않음");
     }
 
     if (you.species == SP_FELID)
     {
-        mutations.push_back("no armour");
-        mutations.push_back("no advanced items");
+        mutations.push_back("방어구 사용 불가");
+        mutations.push_back("고급 소모템 사용불가");
     }
 
     if (you.species == SP_OCTOPODE)
     {
-        mutations.push_back("almost no armour");
-        mutations.push_back("amphibious");
+        mutations.push_back("대부분의 방어구가 맞지 않음");
+        mutations.push_back("수륙양용");
     }
 
     if (beogh_water_walk())
-        mutations.push_back("walk on water");
+        mutations.push_back("물 위 걷기");
 
     std::string current;
     for (unsigned i = 0; i < NUM_MUTATIONS; ++i)
@@ -2251,7 +2252,7 @@ static std::string _status_mut_abilities(int sw)
 
         if (mdef.short_desc)
         {
-            current += mdef.short_desc;
+            current += gettext(mdef.short_desc);
 
             if (mdef.levels > 1)
             {
@@ -2314,14 +2315,14 @@ static std::string _status_mut_abilities(int sw)
                 current = info;
                 break;
             case MUT_STOCHASTIC_TORMENT_RESISTANCE:
-                snprintf(info, INFO_SIZE, "%d%% torment resistance", level*20);
+                snprintf(info, INFO_SIZE, "%d%% 고통 저항", level*20);
                 current = info;
                 break;
             case MUT_ICEMAIL:
                 AC_change += player_icemail_armour_class();
                 break;
             case MUT_EYEBALLS:
-                 snprintf(info, INFO_SIZE, "+%d accuracy", level*2+1);
+                 snprintf(info, INFO_SIZE, "+%d 명중률", level*2+1);
                  current = info;
                  break;
 
@@ -2329,7 +2330,7 @@ static std::string _status_mut_abilities(int sw)
             case MUT_DISTORTION_FIELD:
                 EV_change += level + 1;
                 if (level == 3)
-                    current = "repel missiles";
+                    current = "발사체 방어";
                 break;
             case MUT_ICY_BLUE_SCALES:
                 AC_change += level;
@@ -2401,22 +2402,22 @@ static std::string _status_mut_abilities(int sw)
     }
     if (Str_change)
     {
-        snprintf(info, INFO_SIZE, "Str %s%d", (Str_change > 0 ? "+" : ""), Str_change);
+        snprintf(info, INFO_SIZE, "힘 %s%d", (Str_change > 0 ? "+" : ""), Str_change);
         mutations.push_back(info);
     }
     if (Int_change)
     {
-        snprintf(info, INFO_SIZE, "Int %s%d", (Int_change > 0 ? "+" : ""), Int_change);
+        snprintf(info, INFO_SIZE, "지능 %s%d", (Int_change > 0 ? "+" : ""), Int_change);
         mutations.push_back(info);
     }
     if (Dex_change)
     {
-        snprintf(info, INFO_SIZE, "Dex %s%d", (Dex_change > 0 ? "+" : ""), Dex_change);
+        snprintf(info, INFO_SIZE, "민첩 %s%d", (Dex_change > 0 ? "+" : ""), Dex_change);
         mutations.push_back(info);
     }
 
     if (mutations.empty())
-        text +=  "no striking features";
+        text +=  "변이 없음";
     else
     {
         text += comma_separated_line(mutations.begin(), mutations.end(),
@@ -2438,10 +2439,9 @@ static std::string _status_mut_abilities(int sw)
             runes.push_back(rune_type_name(i));
     if (!runes.empty())
     {
-        text += make_stringf("\n<w>%s:</w> %d/%d rune%s: %s",
+        text += make_stringf("\n<w>%s:</w> %d/%d 룬: %s",
                     stringize_glyph(get_item_symbol(SHOW_ITEM_MISCELLANY)).c_str(),
                     runes.size(), you.obtainable_runes,
-                    you.obtainable_runes == 1 ? "" : "s",
                     comma_separated_line(runes.begin(), runes.end(),
                                          ", ", ", ").c_str());
     }

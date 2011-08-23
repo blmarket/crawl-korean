@@ -39,16 +39,16 @@ int allowed_deaths_door_hp(void)
 spret_type cast_deaths_door(int pow, bool fail)
 {
     if (you.is_undead)
-        mpr("????�� ?̹? ??�� ???̴?!");//mpr("You're already dead!");
+        mpr("당신은 이미 죽은 몸이다!");//mpr("You're already dead!");
     else if (you.duration[DUR_EXHAUSTED])
-        mpr("?????? ??��?? ???? ????⿡?? ?ʹ? ?????ִ?!");//mpr("You are too exhausted to enter Death's door!");
+        mpr("당신이 죽음의 문에 들어가기에는 너무 지쳐있다!");//mpr("You are too exhausted to enter Death's door!");
     else if (you.duration[DUR_DEATHS_DOOR])
-        mpr("?????? ??���� ???? ?ֿ??? ?źεǾ???.");//mpr("Your appeal for an extension has been denied.");
+        mpr("당신의 생존을 향한 애원이 거부되었다.");//mpr("Your appeal for an extension has been denied.");
     else
     {
         fail_check();
-        mpr("????�� ???? ?????????̴?!");//mpr("You feel invincible!");
-        mpr("????�� ?𷡽ð迡?? ?𷡰? ?帣?? ?Ҹ??? ??��?Ű???...",//mpr("You seem to hear sand running through an hourglass...",
+        mpr("당신은 현재 무적상태이다!");//mpr("You feel invincible!");
+        mpr("당신은 모래시계에서 모래가 흐르는 소리를 들은거같다...",//mpr("You seem to hear sand running through an hourglass...",
             MSGCH_SOUND);
 
         set_hp(allowed_deaths_door_hp());
@@ -67,35 +67,35 @@ spret_type cast_deaths_door(int pow, bool fail)
 
 void remove_ice_armour()
 {
-    mpr("?????? ??�� ????�� ???? ????��??.", MSGCH_DURATION);//mpr("Your icy armour melts away.", MSGCH_DURATION);
+    mpr("당신의 얼음 갑옷은 녹아 없어졌다.", MSGCH_DURATION);//mpr("Your icy armour melts away.", MSGCH_DURATION);
     you.redraw_armour_class = true;
     you.duration[DUR_ICY_ARMOUR] = 0;
 }
-//??��???? ?????ε?.
+//얼음갑옷 관련인듯.
 spret_type ice_armour(int pow, bool fail)
 {
     if (!player_effectively_in_light_armour())
     {
-        mpr("????�� ?? ??�� ????? ?Ծ???.");//mpr("You are wearing too much armour.");
+        mpr("당신은 더 많은 방어구를 입었다.");//mpr("You are wearing too much armour.");
         return SPRET_ABORT;
     }
 
     if (you.duration[DUR_STONESKIN])
     {
-        mpr("?? ????�� ?ٸ? ?????? ?? ȿ???? ?浹?Ѵ?.");//mpr("The spell conflicts with another spell still in effect.");
+        mpr("이 마법은 다른 마법과 그 효과가 충돌한다.");//mpr("The spell conflicts with another spell still in effect.");
         return SPRET_ABORT;
     }
 
     fail_check();
 
     if (you.duration[DUR_ICY_ARMOUR])
-        mpr("?????? ??�� ????�� ?β???.");//mpr("Your icy armour thickens.");
+        mpr("당신의 얼음 갑옷은 두껍다.");//mpr("Your icy armour thickens.");
     else
     {
         if (you.form == TRAN_ICE_BEAST)
-            mpr("?????? ??����?? ?? ??�� ???? ź??????�� ?��???.");//mpr("Your icy body feels more resilient.");
+            mpr("당신의 얼음으로 된 몸은 더욱 탄력적임을 느꼈다.");//mpr("Your icy body feels more resilient.");
         else
-            mpr("??����?? ?? ?????? ?????? ??�� ?ڵ??´?!");//mpr("A film of ice covers your body!");
+            mpr("얼음으로 된 가죽이 당신의 몸을 뒤덮는다!");//mpr("A film of ice covers your body!");
 
         you.redraw_armour_class = true;
     }
@@ -110,7 +110,7 @@ spret_type missile_prot(int pow, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_REPEL_MISSILES, 8 + roll_dice(2, pow), 100,
-                          "????�� ????ü???κ??? ??ȣ?޴? ??�� ?��???.");//"You feel protected from missiles.");
+                          "당신은 투사체들로부터 보호받는 것을 느꼈다.");//"You feel protected from missiles.");
     return SPRET_SUCCESS;
 }
 
@@ -118,17 +118,17 @@ spret_type deflection(int pow, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_DEFLECT_MISSILES, 15 + random2(pow), 100,
-                          "????�� ????ü???κ??? ?ſ? ??????�� ?????ߴ?.");//"You feel very safe from missiles.");
+                          "당신은 투사체들로부터 매우 안전함을 인지했다.");//"You feel very safe from missiles.");
     return SPRET_SUCCESS;
 }
 
 void remove_regen(bool divine_ability)
 {
-    mpr("?????? ?Ǻδ? ???۰Ÿ?�� ??????.", MSGCH_DURATION);//mpr("Your skin stops crawling.", MSGCH_DURATION);
+    mpr("당신의 피부는 우글거림을 멈췄다.", MSGCH_DURATION);//mpr("Your skin stops crawling.", MSGCH_DURATION);
     you.duration[DUR_REGENERATION] = 0;
     if (divine_ability)
     {
-        mpr("????�� ???????? ???? ȿ???? ???? ???׷?�� ?Ҿ???.", MSGCH_DURATION);//mpr("You feel less resistant to hostile enchantments.", MSGCH_DURATION);
+        mpr("당신은 적대적인 마법 효과에 대한 저항력을 잃었다.", MSGCH_DURATION);//mpr("You feel less resistant to hostile enchantments.", MSGCH_DURATION);
         you.attribute[ATTR_DIVINE_REGENERATION] = 0;
     }
 }
@@ -137,11 +137,11 @@ spret_type cast_regen(int pow, bool divine_ability, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_REGENERATION, 5 + roll_dice(2, pow / 3 + 1), 100,
-                          "?????? ?Ǻδ? ???۰Ÿ???");//"Your skin crawls.");
+                          "당신의 피부는 우글거린다");//"Your skin crawls.");
 
     if (divine_ability)
     {
-        mpr("????�� ???????? ???? ȿ???? ???? ???׷?�� ?��???..");//mpr("You feel resistant to hostile enchantments.");
+        mpr("당신은 적대적인 마법 효과에 대한 저항력을 느꼇다..");//mpr("You feel resistant to hostile enchantments.");
         you.attribute[ATTR_DIVINE_REGENERATION] = 1;
     }
     return SPRET_SUCCESS;
@@ -152,11 +152,11 @@ spret_type cast_revivification(int pow, bool fail)
     if (you.hp == you.hp_max)
         canned_msg(MSG_NOTHING_HAPPENS);
     else if (you.hp_max < 21)
-        mpr("????�� ?? ????�� ??â?? ü???? ???ڶ???.");//mpr("You lack the resilience to cast this spell.");
+        mpr("당신은 이 마법을 영창할 체력이 모자라다.");//mpr("You lack the resilience to cast this spell.");
     else
     {
         fail_check();
-        mpr("?????? ??ü?? ?????? ???뽺?? ????��?? ġ???Ǿ???.");//mpr("Your body is healed in an amazingly painful way.");
+        mpr("당신의 신체는 굉장히 고통스런 방법으로 치료되었다.");//mpr("Your body is healed in an amazingly painful way.");
 
         int loss = 2;
         for (int i = 0; i < 9; ++i)
@@ -168,7 +168,7 @@ spret_type cast_revivification(int pow, bool fail)
 
         if (you.duration[DUR_DEATHS_DOOR])
         {
-            mpr("Your life is in your own hands once again.", MSGCH_DURATION);
+            mpr("당신의 삶은 다시한번 당신의 손에 쥐어졌다.", MSGCH_DURATION);//mpr("Your life is in your own hands once again.", MSGCH_DURATION);
             // XXX: better cause name?
             paralyse_player("Death's Door abortion", 5 + random2(5));
             confuse_player(10 + random2(10));
@@ -184,13 +184,13 @@ spret_type cast_swiftness(int power, bool fail)
 {
     if (you.in_water())
     {
-        mpr("?????? ??ǰ?? ?Ͼ???!");//mpr("The water foams!");
+        mpr("물에서 거품이 일었다!");//mpr("The water foams!");
         return SPRET_ABORT;
     }
 
     if (!you.duration[DUR_SWIFTNESS] && player_movement_speed() <= 6)
     {
-        mpr("????�� ???ݺ??? ?? ?????? ?? ????.");//mpr("You can't move any more quickly.");
+        mpr("당신은 지금보다 더 빨라질 수 없다.");//mpr("You can't move any more quickly.");
         return SPRET_ABORT;
     }
 
@@ -199,17 +199,17 @@ spret_type cast_swiftness(int power, bool fail)
     // [dshaligram] Removed the on-your-feet bit.  Sounds odd when
     // you're levitating, for instance.
     you.increase_duration(DUR_SWIFTNESS, 20 + random2(power), 100,
-                          "????�� ??ø????�� ?��???.");//"You feel quick.");
+                          "당신은 민첩해짐을 느꼈다.");//"You feel quick.");
     did_god_conduct(DID_HASTY, 8, true);
 
     return SPRET_SUCCESS;
 }
-// ???????̼? ????
+// 레비테이션 마법
 spret_type cast_levitation(int power, bool fail)
 {
     if (liquefied(you.pos()) && you.ground_level())
     {
-        mpr("?̷? ??�� ????�� ?߷?��?κ??? ????�� ???? ?? ????!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
+        mpr("이런 작은 마법은 중력으로부터 당신을 당길 수 없다!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
         return SPRET_ABORT;
     }
 
@@ -223,8 +223,8 @@ spret_type cast_fly(int power, bool fail)
 {
     if (liquefied(you.pos()) && you.ground_level())
     {
-        mpr("?̷? ??�� ????�� ?߷?��?κ??? ????�� ???? ?? ????!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
-        return SPRET_ABORT;//?׷? ?????? ????��?δ? ????»?? ????�� ??? ?? ???ٴ?! by ????Ʈ
+        mpr("이런 작은 마법은 중력으로부터 당신을 당길 수 없다!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
+        return SPRET_ABORT;//그런 후잡한 마법으로는 레다쨩의 마법을 벗어날 수 없다능! by 군발트
     }
 
     fail_check();
@@ -239,7 +239,7 @@ spret_type cast_fly(int power, bool fail)
     if (!was_levitating)
         float_player(true);
     else
-        mpr("????�� ?η?�� ?��???.");//mpr("You feel more buoyant.");
+        mpr("당신은 부력을 느꼈다.");//mpr("You feel more buoyant.");
     return SPRET_SUCCESS;
 }
 
@@ -247,7 +247,7 @@ spret_type cast_insulation(int power, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_INSULATION, 10 + random2(power), 100,
-                          "????�� ???????°? ?Ǿ???.");//"You feel insulated.");
+                          "당신은 절연상태가 되었다.");//"You feel insulated.");
     return SPRET_SUCCESS;
 }
 
@@ -255,7 +255,7 @@ spret_type cast_teleport_control(int power, bool fail)
 {
     fail_check();
     you.increase_duration(DUR_CONTROL_TELEPORT, 10 + random2(power), 50,
-                          "????�� ??�� ?????̵?�� ��???? ?? ?ִ?.");//"You feel in control.");
+                          "당신은 이제 공간이동을 제어할 수 있다.");//"You feel in control.");
     return SPRET_SUCCESS;
 }
 
@@ -274,7 +274,7 @@ int cast_selective_amnesia(std::string *pre_msg)
     // Pick a spell to forget.
     while (true)
     {
-        mpr("???? ????�� ???￡?? ???? ???ΰ? ([?*] ???? [ESC] ????)? ", MSGCH_PROMPT);//mpr("Forget which spell ([?*] list [ESC] exit)? ", MSGCH_PROMPT);
+        mpr("어느 마법을 기억에서 지울 것인가 ([?*] 목록 [ESC] 취소)? ", MSGCH_PROMPT);//mpr("Forget which spell ([?*] list [ESC] exit)? ", MSGCH_PROMPT);
         keyin = get_ch();
 
         if (key_is_escape(keyin))
@@ -299,7 +299,7 @@ int cast_selective_amnesia(std::string *pre_msg)
         slot = get_spell_slot_by_letter(keyin);
 
         if (spell == SPELL_NO_SPELL)
-            mpr("????�� ?? ????�� ?𸥴?");//mpr("You don't know that spell.");
+            mpr("당신은 그 마법을 모른다");//mpr("You don't know that spell.");
         else
             break;
     }
@@ -313,8 +313,8 @@ int cast_selective_amnesia(std::string *pre_msg)
     if (ep_gain > 0)
     {
         inc_mp(ep_gain);
-        mpr("?ֹ?�� ?ع??Ͽ? ?? ???翡?????? ???ſ??? ?ǵ?????");//mpr("The spell releases its latent energy back to you as "
-            //"it unravels.");byũ?ѷ?.
+        mpr("주문을 해방하여 그 잠재에너지를 당신에게 되돌린다");//mpr("The spell releases its latent energy back to you as "
+            //"it unravels.");by크롤러.
     }
 
     return (1);
@@ -324,10 +324,10 @@ spret_type cast_see_invisible(int pow, bool fail)
 {
     fail_check();
     if (you.can_see_invisible())
-        mpr("????�� ?÷??? ???? ??ī?ο? ????�� ?��???.");//mpr("You feel as though your vision will be sharpened longer."); ?? ũ?ѷ?
+        mpr("당신은 시력이 더욱 날카로워 진것을 느꼇다.");//mpr("You feel as though your vision will be sharpened longer."); 는 크롤러
     else
     {
-        mpr("?????? ?÷?�� ??ī?Ӵ?.");//mpr("Your vision seems to sharpen."); ??????
+        mpr("당신의 시력은 날카롭다.");//mpr("Your vision seems to sharpen."); 토순이
 
         // We might have to turn autopickup back on again.
         autotoggle_autopickup(false);
@@ -342,7 +342,7 @@ spret_type cast_silence(int pow, bool fail)
 {
     fail_check();
     if (!you.attribute[ATTR_WAS_SILENCED])
-        mpr("??�� ��???? ????�� ???մ?.");//mpr("A profound silence engulfs you.");
+        mpr("깊은 정적이 당신을 감쌌다.");//mpr("A profound silence engulfs you.");
 
     you.attribute[ATTR_WAS_SILENCED] = 1;
 
@@ -361,15 +361,15 @@ spret_type cast_liquefaction(int pow, bool fail)
     if (!you.stand_on_solid_ground())
     {
         if (!you.ground_level())
-            mpr("????�� ???? ???? ??�� ???·? ?? ????�� ??â?? ?? ????.");//mpr("You can't cast this spell without touching the ground.");
+            mpr("당신은 땅에 닿지 않은 상태로 이 마법을 영창할 수 없다.");//mpr("You can't cast this spell without touching the ground.");
         else
-            mpr("?? ????�� ??â?ϱ? ��?ؼ? ?? ?????? ???? ?ʿ??ϴ?.");//mpr("You need to be on clear, solid ground to cast this spell."); by ?Ѻ???
+            mpr("이 마법을 영창하기 위해서 빈 공간의 땅이 필요하다.");//mpr("You need to be on clear, solid ground to cast this spell."); by 뚜병진
         return (SPRET_ABORT);
     }
 
     if (you.duration[DUR_LIQUEFYING] || liquefied(you.pos()))
     {
-        mpr("?? ??�� ?̹? ??ȭ?Ǿ???. ????�� ???ٷ��? ?? ???̴?.");//        mpr("The ground here is already liquefied! You'll have to wait.");
+        mpr("이 땅은 이미 액화되었다. 당신은 기다려야 할 것이다.");//        mpr("The ground here is already liquefied! You'll have to wait.");
         return (SPRET_ABORT);
     }
 
@@ -378,7 +378,7 @@ spret_type cast_liquefaction(int pow, bool fail)
     flash_view_delay(YELLOW, 80);
     flash_view_delay(BROWN, 140);
 
-    mpr("???? ?ֺ??? ??�� ??ȭ???·? ?ٲ?????!");//mpr("The ground around you becomes liquefied!");
+    mpr("당신 주변의 땅은 액화상태로 바뀌었다!");//mpr("The ground around you becomes liquefied!");
 
     you.increase_duration(DUR_LIQUEFYING, 10 + random2avg(pow, 2), 100);
     invalidate_agrid(true);
@@ -389,9 +389,9 @@ spret_type cast_shroud_of_golubria(int pow, bool fail)
 {
     fail_check();
     if (you.duration[DUR_SHROUD_OF_GOLUBRIA])
-        mpr("????�� ?????? ?帷�� ???Ž??״?.");//mpr("You renew your shroud.");
+        mpr("당신은 당신의 장막을 갱신시켰다.");//mpr("You renew your shroud.");
     else
-        mpr("?????? ??�� ???? ?ְ??? ??�� ?帷��?? ?ڵ?????.");//mpr("Space distorts slightly along a thin shroud covering your body.");
+        mpr("당신의 몸은 공간 왜곡의 얇은 장막으로 뒤덮였다.");//mpr("Space distorts slightly along a thin shroud covering your body.");
 
     you.increase_duration(DUR_SHROUD_OF_GOLUBRIA, 7 + roll_dice(2, pow), 50);
     return SPRET_SUCCESS;
