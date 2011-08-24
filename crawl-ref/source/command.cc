@@ -113,7 +113,7 @@ static std::string _get_version_information(void)
 
 static std::string _get_version_features(void)
 {
-    std::string result  = "<w>Features</w>\n";
+    std::string result  = gettext("<w>Features</w>\n");
                 result += "--------\n";
 
     for (unsigned int i = 0; i < ARRAYSZ(features); i++)
@@ -188,13 +188,13 @@ static std::string _get_version_changes(void)
     if (start)
     {
         result += "\n";
-        result += "For a more complete list of changes, see changelog.txt "
-                  "in the docs/ directory.";
+        result += gettext("For a more complete list of changes, see changelog.txt "
+                  "in the docs/ directory.");
     }
     else
     {
-        result += "For a list of changes, see changelog.txt in the docs/ "
-                  "directory.";
+        result += gettext("For a list of changes, see changelog.txt in the docs/ "
+                  "directory.");
     }
 
     result += "\n\n";
@@ -1204,23 +1204,23 @@ static void _append_non_item(std::string &desc, std::string key)
 
     if (flags & SPFLAG_TESTING)
     {
-        desc += "\nThis is a testing spell, only available via the "
-                "&Z wizard command.";
+        desc += gettext("\nThis is a testing spell, only available via the "
+                "&Z wizard command.");
     }
     else if (flags & SPFLAG_MONSTER)
     {
-        desc += "\nThis is a monster-only spell, only available via the "
-                "&Z wizard command.";
+        desc += gettext("\nThis is a monster-only spell, only available via the "
+                "&Z wizard command.");
     }
     else if (flags & SPFLAG_CARD)
     {
-        desc += "\nThis is a card-effect spell, unavailable in ordinary "
-                "spellbooks.";
+        desc += gettext("\nThis is a card-effect spell, unavailable in ordinary "
+                "spellbooks.");
     }
     else
     {
-        desc += "\nOdd, this spell can't be found anywhere. Please "
-                "file a bug report.";
+        desc += gettext("\nOdd, this spell can't be found anywhere. Please "
+                "file a bug report.");
     }
 
 #ifdef WIZARD
@@ -1231,8 +1231,8 @@ static void _append_non_item(std::string &desc, std::string key)
     {
         if (flags & (SPFLAG_TESTING | SPFLAG_MONSTER))
         {
-            desc += "\n\nYou aren't in wizard mode, so you shouldn't be "
-                    "seeing this entry. Please file a bug report.";
+            desc += gettext("\n\nYou aren't in wizard mode, so you shouldn't be "
+                    "seeing this entry. Please file a bug report.");
         }
     }
 }
@@ -1246,7 +1246,7 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
     if (type == SPELL_NO_SPELL)
         return (false);
 
-    desc += "\nType:       ";
+    desc += gettext("\nType:       ");
     bool already = false;
 
     for (int i = 0; i <= SPTYP_LAST_EXPONENT; i++)
@@ -1261,9 +1261,9 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
         }
     }
     if (!already)
-        desc += "None";
+        desc += pgettext("book","None");
 
-    desc += make_stringf("\nLevel:      %d", spell_difficulty(type));
+    desc += make_stringf(gettext("\nLevel:      %d"), spell_difficulty(type));
 
     bool undead = false;
     if (you_cannot_memorise(type, undead))
@@ -1299,26 +1299,26 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
 
     if (!books.empty())
     {
-        desc += "\n\nThis spell can be found in the following book";
-        if (books.size() > 1)
-            desc += "s";
+        desc += gettext("\n\nThis spell can be found in the following book");
+//      if (books.size() > 1)
+//          desc += "s";
         desc += ":\n";
         desc += comma_separated_line(books.begin(), books.end(), "\n", "\n");
 
         if (!rods.empty())
         {
-            desc += "\n\n... and the following rod";
-            if (rods.size() > 1)
-                desc += "s";
+            desc += gettext("\n\n... and the following rod");
+//          if (rods.size() > 1)
+//              desc += "s"; 
             desc += ":\n";
             desc += comma_separated_line(rods.begin(), rods.end(), "\n", "\n");
         }
     }
     else // rods-only
     {
-        desc += "\n\nThis spell can be found in the following rod";
-        if (rods.size() > 1)
-            desc += "s";
+        desc += gettext("\n\nThis spell can be found in the following rod");
+//      if (rods.size() > 1)
+//          desc += "s";
         desc += ":\n";
         desc += comma_separated_line(rods.begin(), rods.end(), "\n", "\n");
     }
@@ -1344,7 +1344,7 @@ static bool _do_description(std::string key, std::string type,
         if (is_good_god(which_god))
         {
             inf.suffix = "\n\n" + god_name(which_god) +
-                         " won't accept worship from undead or evil beings.";
+                         gettext(" won't accept worship from undead or evil beings.");
         }
         std::string help = get_god_powers(which_god);
         if (!help.empty())
@@ -1414,14 +1414,14 @@ static bool _do_description(std::string key, std::string type,
                         // FIXME: Duplicates messages from describe.cc.
                         if (!player_can_memorise_from_spellbook(mitm[thing_created]))
                         {
-                            desc += "This book is beyond your current level "
-                                    "of understanding.";
+                            desc += gettext("This book is beyond your current level "
+                                    "of understanding.");
                         }
                         else if (is_dangerous_spellbook(mitm[thing_created].sub_type))
                         {
-                            desc += "WARNING: If you fail in an attempt to "
+                            desc += gettext("WARNING: If you fail in an attempt to "
                                     "memorise a spell from this book, the book "
-                                    "will lash out at you.";
+                                    "will lash out at you.");
                         }
 #endif
                         append_spells(desc, mitm[thing_created]);
@@ -1459,11 +1459,11 @@ static bool _handle_FAQ()
     std::vector<std::string> question_keys = getAllFAQKeys();
     if (question_keys.empty())
     {
-        mpr("No questions found in FAQ! Please submit a bug report!");
+        mpr(gettext("No questions found in FAQ! Please submit a bug report!"));
         return (false);
     }
     Menu FAQmenu(MF_SINGLESELECT | MF_ANYPRINTABLE | MF_ALLOW_FORMATTING);
-    MenuEntry *title = new MenuEntry("Frequently Asked Questions");
+    MenuEntry *title = new MenuEntry(gettext("Frequently Asked Questions"));
     title->colour = YELLOW;
     FAQmenu.set_title(title);
     const int width = std::min(80, get_number_of_cols());
@@ -1510,8 +1510,8 @@ static bool _handle_FAQ()
             std::string answer = getFAQ_Answer(key);
             if (answer.empty())
             {
-                answer = "No answer found in the FAQ! Please submit a "
-                         "bug report!";
+                answer = gettext("No answer found in the FAQ! Please submit a "
+                         "bug report!");
             }
             answer = "Q: " + getFAQ_Question(key) + "\n" + answer;
             linebreak_string(answer, width - 1);
@@ -1532,8 +1532,8 @@ static void _find_description(bool *again, std::string *error_inout)
 
     if (!error_inout->empty())
         mpr(error_inout->c_str(), MSGCH_PROMPT);
-    mpr("Describe a (M)onster, (S)pell, s(K)ill, (I)tem, (F)eature, (G)od, "
-        "(A)bility, (B)ranch, or (C)ard? ", MSGCH_PROMPT);
+    mpr(gettext("Describe a (M)onster, (S)pell, s(K)ill, (I)tem, (F)eature, (G)od, "
+        "(A)bility, (B)ranch, or (C)ard? "), MSGCH_PROMPT);
     int ch;
     {
         cursor_control con(true);
@@ -1557,8 +1557,8 @@ static void _find_description(bool *again, std::string *error_inout)
     {
     case 'M':
         type       = "monster";
-        extra      = " Enter a single letter to list monsters displayed by "
-                     "that symbol.";
+        extra      = gettext(" Enter a single letter to list monsters displayed by "
+                     "that symbol.");
         filter     = _monster_filter;
         recap      = _recap_mon_keys;
         doing_mons = true;
@@ -1582,8 +1582,8 @@ static void _find_description(bool *again, std::string *error_inout)
         break;
     case 'I':
         type        = "item";
-        extra       = " Enter a single letter to list items displayed by "
-                      "that symbol.";
+        extra       = gettext(" Enter a single letter to list items displayed by "
+                      "that symbol.");
         filter      = _item_filter;
         doing_items = true;
         break;
@@ -1619,10 +1619,10 @@ static void _find_description(bool *again, std::string *error_inout)
     if (want_regex)
     {
         mprf(MSGCH_PROMPT,
-             "Describe a %s; partial names and regexps are fine.%s",
+             gettext("Describe a %s; partial names and regexps are fine.%s"),
              type.c_str(), extra.c_str());
 
-        mpr("Describe what? ", MSGCH_PROMPT);
+        mpr(gettext("Describe what? "), MSGCH_PROMPT);
         char buf[80];
         if (cancelable_get_line(buf, sizeof(buf)) || buf[0] == '\0')
         {
@@ -1637,8 +1637,8 @@ static void _find_description(bool *again, std::string *error_inout)
 
         if (regex.empty())
         {
-            *error_inout = "Description must contain at least "
-                "one non-space.";
+            *error_inout = gettext("Description must contain at least "
+                "one non-space.");
             return;
         }
     }
@@ -1989,11 +1989,11 @@ static int _show_keyhelp_menu(const std::vector<formatted_string> &lines,
     // for page up at start of listing.
     cmd_help.set_more(formatted_string::parse_string(
 #ifdef USE_TILE
-                            "<cyan>[ +/L-click : Page down.   - : Page up."
-                            "           Esc/R-click exits.]"));
+                            gettext("<cyan>[ +/L-click : Page down.   - : Page up."
+                            "           Esc/R-click exits.]")));
 #else
-                            "<cyan>[ + : Page down.   - : Page up."
-                            "                           Esc exits.]"));
+                            gettext("<cyan>[ + : Page down.   - : Page up."
+                            "                           Esc exits.]")));
 #endif
 
     if (with_manual)
@@ -2004,7 +2004,7 @@ static int _show_keyhelp_menu(const std::vector<formatted_string> &lines,
 
         cols.add_formatted(
             0,
-            "<h>Dungeon Crawl Help\n"
+            gettext("<h>Dungeon Crawl Help\n"
             "\n"
             "Press one of the following keys to\n"
             "obtain more information on a certain\n"
@@ -2023,12 +2023,12 @@ static int _show_keyhelp_menu(const std::vector<formatted_string> &lines,
             "<w>T</w>: Tiles key help\n"
 #endif
             "<w>V</w>: Version information\n"
-            "<w>Home</w>: This screen\n",
+            "<w>Home</w>: This screen\n"),
             true, true, _cmdhelp_textfilter);
 
         cols.add_formatted(
             1,
-            "<h>Manual Contents\n\n"
+            gettext("<h>Manual Contents\n\n"
             "<w>*</w>       Table of contents\n"
             "<w>A</w>.      Overview\n"
             "<w>B</w>.      Starting Screen\n"
@@ -2049,7 +2049,7 @@ static int _show_keyhelp_menu(const std::vector<formatted_string> &lines,
             "<w>3</w>.      List of Skills\n"
             "<w>4</w>.      List of Keys and Commands\n"
             "<w>5</w>.      List of Enchantments\n"
-            "<w>6</w>.      Inscriptions\n",
+            "<w>6</w>.      Inscriptions\n"),
             true, true, _cmdhelp_textfilter);
 
         std::vector<formatted_string> blines = cols.formatted_lines();
@@ -2239,10 +2239,10 @@ static void _add_formatted_keyhelp(column_composer &cols)
 {
     cols.add_formatted(
             0,
-            "<h>Movement:\n"
+            gettext("<h>Movement:\n"
             "To move in a direction or to attack, \n"
             "use the numpad (try Numlock off and \n"
-            "on) or vi keys:\n",
+            "on) or vi keys:\n"),
             true, true, _cmdhelp_textfilter);
 
     _add_insert_commands(cols, 0, "                 <w>7 8 9      % % %",
@@ -2256,250 +2256,250 @@ static void _add_formatted_keyhelp(column_composer &cols)
 
     cols.add_formatted(
             0,
-            "<h>Rest/Search:\n",
+            gettext("<h>Rest/Search:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_SEARCH, "wait a turn; searches adjacent", 2);
+    _add_command(cols, 0, CMD_SEARCH, gettext("wait a turn; searches adjacent"), 2);
     cols.add_formatted(
             0,
-            "    squares (also <w>numpad-5</w>, <w>.</w>, <w>Del</w>)\n",
+            gettext("    squares (also <w>numpad-5</w>, <w>.</w>, <w>Del</w>)\n"),
             false, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_REST, "rest and long search; stops when", 2);
+    _add_command(cols, 0, CMD_REST, gettext("rest and long search; stops when"), 2);
     cols.add_formatted(
             0,
-            "    Health or Magic become full,\n"
+            gettext("    Health or Magic become full,\n"
             "    something is detected, or after\n"
-            "    100 turns over (<w>Shift-numpad-5</w>)\n",
+            "    100 turns over (<w>Shift-numpad-5</w>)\n"),
             false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             0,
-            "<h>Extended Movement:\n",
+            gettext("<h>Extended Movement:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_EXPLORE, "auto-explore");
-    _add_command(cols, 0, CMD_INTERLEVEL_TRAVEL, "interlevel travel");
-    _add_command(cols, 0, CMD_SEARCH_STASHES, "Find items");
-    _add_command(cols, 0, CMD_FIX_WAYPOINT, "set Waypoint");
-    _add_command(cols, 0, CMD_FORGET_STASH, "Exclude square from searches");
+    _add_command(cols, 0, CMD_EXPLORE, gettext("auto-explore"));
+    _add_command(cols, 0, CMD_INTERLEVEL_TRAVEL, gettext("interlevel travel"));
+    _add_command(cols, 0, CMD_SEARCH_STASHES, gettext("Find items"));
+    _add_command(cols, 0, CMD_FIX_WAYPOINT, gettext("set Waypoint"));
+    _add_command(cols, 0, CMD_FORGET_STASH, gettext("Exclude square from searches"));
 
     cols.add_formatted(
             0,
-            "<w>/ Dir.</w>, <w>Shift-Dir.</w>: long walk\n"
+            gettext("<w>/ Dir.</w>, <w>Shift-Dir.</w>: long walk\n"
             "<w>* Dir.</w>, <w>Ctrl-Dir.</w> : open/close door, \n"
-            "         untrap, attack without move\n",
+            "         untrap, attack without move\n"),
             false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             0,
-            "\n"
-            "<h>Item types (and common commands)\n",
+            gettext("\n"
+            "<h>Item types (and common commands)\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_insert_commands(cols, 0, "<cyan>)</cyan> : hand weapons (<w>%</w>ield)",
+    _add_insert_commands(cols, 0, gettext("<cyan>)</cyan> : hand weapons (<w>%</w>ield)"),
                          CMD_WIELD_WEAPON, 0);
-    _add_insert_commands(cols, 0, "<brown>(</brown> : missiles (<w>%</w>uiver, "
-                                  "<w>%</w>ire, <w>%</w>/<w>%</w> cycle)",
+    _add_insert_commands(cols, 0, gettext("<brown>(</brown> : missiles (<w>%</w>uiver, "
+                                  "<w>%</w>ire, <w>%</w>/<w>%</w> cycle)"),
                          CMD_QUIVER_ITEM, CMD_FIRE, CMD_CYCLE_QUIVER_FORWARD,
                          CMD_CYCLE_QUIVER_BACKWARD, 0);
-    _add_insert_commands(cols, 0, "<cyan>[</cyan> : armour (<w>%</w>ear and <w>%</w>ake off)",
+    _add_insert_commands(cols, 0, gettext("<cyan>[</cyan> : armour (<w>%</w>ear and <w>%</w>ake off)"),
                          CMD_WEAR_ARMOUR, CMD_REMOVE_ARMOUR, 0);
-    _add_insert_commands(cols, 0, "<brown>percent</brown> : corpses and food "
-                                  "(<w>%</w>hop up and <w>%</w>at)",
+    _add_insert_commands(cols, 0, gettext("<brown>percent</brown> : corpses and food "
+                                  "(<w>%</w>hop up and <w>%</w>at)"),
                          CMD_BUTCHER, CMD_EAT, 0);
-    _add_insert_commands(cols, 0, "<w>?</w> : scrolls (<w>%</w>ead)",
+    _add_insert_commands(cols, 0, gettext("<w>?</w> : scrolls (<w>%</w>ead)"),
                          CMD_READ, 0);
-    _add_insert_commands(cols, 0, "<magenta>!</magenta> : potions (<w>%</w>uaff)",
+    _add_insert_commands(cols, 0, gettext("<magenta>!</magenta> : potions (<w>%</w>uaff)"),
                          CMD_QUAFF, 0);
-    _add_insert_commands(cols, 0, "<blue>=</blue> : rings (<w>%</w>ut on and <w>%</w>emove)",
+    _add_insert_commands(cols, 0, gettext("<blue>=</blue> : rings (<w>%</w>ut on and <w>%</w>emove)"),
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
-    _add_insert_commands(cols, 0, "<red>\"</red> : amulets (<w>%</w>ut on and <w>%</w>emove)",
+    _add_insert_commands(cols, 0, gettext("<red>\"</red> : amulets (<w>%</w>ut on and <w>%</w>emove)"),
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
-    _add_insert_commands(cols, 0, "<lightgrey>/</lightgrey> : wands (e<w>%</w>oke)",
+    _add_insert_commands(cols, 0, gettext("<lightgrey>/</lightgrey> : wands (e<w>%</w>oke)"),
                          CMD_EVOKE, 0);
 
     std::string item_types = "<lightcyan>";
     item_types += stringize_glyph(get_item_symbol(SHOW_ITEM_BOOK));
     item_types +=
-        "</lightcyan> : books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)";
+        gettext("</lightcyan> : books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)");
     _add_insert_commands(cols, 0, item_types,
                          CMD_READ, CMD_MEMORISE_SPELL, CMD_CAST_SPELL,
                          CMD_FORCE_CAST_SPELL, 0);
-    _add_insert_commands(cols, 0, "<brown>\\</brown> : staves and rods (<w>%</w>ield and e<w>%</w>oke)",
+    _add_insert_commands(cols, 0, gettext("<brown>\\</brown> : staves and rods (<w>%</w>ield and e<w>%</w>oke)"),
                          CMD_WIELD_WEAPON, CMD_EVOKE_WIELDED, 0);
-    _add_insert_commands(cols, 0, "<lightgreen>}</lightgreen> : miscellaneous items (e<w>%</w>oke)",
+    _add_insert_commands(cols, 0, gettext("<lightgreen>}</lightgreen> : miscellaneous items (e<w>%</w>oke)"),
                          CMD_EVOKE, 0);
-    _add_insert_commands(cols, 0, "<yellow>$</yellow> : gold (<w>%</w> counts gold)",
+    _add_insert_commands(cols, 0, gettext("<yellow>$</yellow> : gold (<w>%</w> counts gold)"),
                          CMD_LIST_GOLD, 0);
 
     cols.add_formatted(
             0,
-            "<lightmagenta>0</lightmagenta> : the Orb of Zot\n"
-            "    Carry it to the surface and win!\n",
+            gettext("<lightmagenta>0</lightmagenta> : the Orb of Zot\n"
+            "    Carry it to the surface and win!\n"),
             false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             0,
-            "<h>Other Gameplay Actions:\n",
+            gettext("<h>Other Gameplay Actions:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_insert_commands(cols, 0, 2, "use special Ability (<w>%!</w> for help)",
+    _add_insert_commands(cols, 0, 2, gettext("use special Ability (<w>%!</w> for help)"),
                          CMD_USE_ABILITY, CMD_USE_ABILITY, 0);
-    _add_insert_commands(cols, 0, 2, "Pray (<w>%</w> and <w>%!</w> for help)",
+    _add_insert_commands(cols, 0, 2, gettext("Pray (<w>%</w> and <w>%!</w> for help)"),
                          CMD_PRAY, CMD_DISPLAY_RELIGION, CMD_DISPLAY_RELIGION, 0);
-    _add_command(cols, 0, CMD_CAST_SPELL, "cast spell, abort without targets", 2);
-    _add_command(cols, 0, CMD_FORCE_CAST_SPELL, "cast spell, no matter what", 2);
-    _add_command(cols, 0, CMD_DISPLAY_SPELLS, "list all spells", 2);
+    _add_command(cols, 0, CMD_CAST_SPELL, gettext("cast spell, abort without targets"), 2);
+    _add_command(cols, 0, CMD_FORCE_CAST_SPELL, gettext("cast spell, no matter what"), 2);
+    _add_command(cols, 0, CMD_DISPLAY_SPELLS, gettext("list all spells"), 2);
 
-    _add_insert_commands(cols, 0, 2, "tell allies (<w>%t</w> to shout)",
+    _add_insert_commands(cols, 0, 2, gettext("tell allies (<w>%t</w> to shout)"),
                          CMD_SHOUT, CMD_SHOUT, 0);
-    _add_command(cols, 0, CMD_PREV_CMD_AGAIN, "re-do previous command", 2);
-    _add_command(cols, 0, CMD_REPEAT_CMD, "repeat next command # of times", 2);
+    _add_command(cols, 0, CMD_PREV_CMD_AGAIN, gettext("re-do previous command"), 2);
+    _add_command(cols, 0, CMD_REPEAT_CMD, gettext("repeat next command # of times"), 2);
 
     cols.add_formatted(
             0,
-            "<h>Non-Gameplay Commands / Info\n",
+            gettext("<h>Non-Gameplay Commands / Info\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_REPLAY_MESSAGES, "show Previous messages");
-    _add_command(cols, 0, CMD_REDRAW_SCREEN, "Redraw screen");
-    _add_command(cols, 0, CMD_CLEAR_MAP, "Clear main and level maps");
-    _add_command(cols, 0, CMD_ANNOTATE_LEVEL, "annotate the dungeon level", 2);
-    _add_command(cols, 0, CMD_CHARACTER_DUMP, "dump character to file", 2);
-    _add_insert_commands(cols, 0, 2, "add note (use <w>%:</w> to read notes)",
+    _add_command(cols, 0, CMD_REPLAY_MESSAGES, gettext("show Previous messages"));
+    _add_command(cols, 0, CMD_REDRAW_SCREEN, gettext("Redraw screen"));
+    _add_command(cols, 0, CMD_CLEAR_MAP, gettext("Clear main and level maps"));
+    _add_command(cols, 0, CMD_ANNOTATE_LEVEL, gettext("annotate the dungeon level"), 2);
+    _add_command(cols, 0, CMD_CHARACTER_DUMP, gettext("dump character to file"), 2);
+    _add_insert_commands(cols, 0, 2, gettext("add note (use <w>%:</w> to read notes)"),
                          CMD_MAKE_NOTE, CMD_DISPLAY_COMMANDS, 0);
-    _add_command(cols, 0, CMD_MACRO_ADD, "add macro (also <w>Ctrl-D</w>)", 2);
-    _add_command(cols, 0, CMD_ADJUST_INVENTORY, "reassign inventory/spell letters", 2);
+    _add_command(cols, 0, CMD_MACRO_ADD, gettext("add macro (also <w>Ctrl-D</w>)"), 2);
+    _add_command(cols, 0, CMD_ADJUST_INVENTORY, gettext("reassign inventory/spell letters"), 2);
 #ifdef USE_TILE_LOCAL
-    _add_command(cols, 0, CMD_EDIT_PLAYER_TILE, "edit player doll", 2);
+    _add_command(cols, 0, CMD_EDIT_PLAYER_TILE, gettext("edit player doll"), 2);
 #else
-    _add_command(cols, 0, CMD_READ_MESSAGES, "read messages (online play only)", 2);
+    _add_command(cols, 0, CMD_READ_MESSAGES, gettext("read messages (online play only)"), 2);
 #endif
 
     cols.add_formatted(
             1,
-            "<h>Game Saving and Quitting:\n",
+            gettext("<h>Game Saving and Quitting:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_SAVE_GAME, "Save game and exit");
-    _add_command(cols, 1, CMD_SAVE_GAME_NOW, "Save and exit without query");
-    _add_command(cols, 1, CMD_QUIT, "Quit without saving");
+    _add_command(cols, 1, CMD_SAVE_GAME, gettext("Save game and exit"));
+    _add_command(cols, 1, CMD_SAVE_GAME_NOW, gettext("Save and exit without query"));
+    _add_command(cols, 1, CMD_QUIT, gettext("Quit without saving"));
 
     cols.add_formatted(
             1,
-            "<h>Player Character Information:\n",
+            gettext("<h>Player Character Information:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_DISPLAY_CHARACTER_STATUS, "display character status", 2);
-    _add_command(cols, 1, CMD_DISPLAY_SKILLS, "show skill screen", 2);
-    _add_command(cols, 1, CMD_RESISTS_SCREEN, "show resistances", 2);
-    _add_command(cols, 1, CMD_DISPLAY_RELIGION, "show religion screen", 2);
-    _add_command(cols, 1, CMD_DISPLAY_MUTATIONS, "show Abilities/mutations", 2);
-    _add_command(cols, 1, CMD_DISPLAY_KNOWN_OBJECTS, "show item knowledge", 2);
-    _add_command(cols, 1, CMD_DISPLAY_RUNES, "show runes collected", 2);
-    _add_command(cols, 1, CMD_LIST_ARMOUR, "display worn armour", 2);
-    _add_command(cols, 1, CMD_LIST_WEAPONS, "display current weapons", 2);
-    _add_command(cols, 1, CMD_LIST_JEWELLERY, "display worn jewellery", 2);
-    _add_command(cols, 1, CMD_LIST_GOLD, "display gold in possession", 2);
-    _add_command(cols, 1, CMD_EXPERIENCE_CHECK, "display experience info", 2);
+    _add_command(cols, 1, CMD_DISPLAY_CHARACTER_STATUS, gettext("display character status"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_SKILLS, gettext("show skill screen"), 2);
+    _add_command(cols, 1, CMD_RESISTS_SCREEN, gettext("show resistances"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_RELIGION, gettext("show religion screen"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_MUTATIONS, gettext("show Abilities/mutations"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_KNOWN_OBJECTS, gettext("show item knowledge"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_RUNES, gettext("show runes collected"), 2);
+    _add_command(cols, 1, CMD_LIST_ARMOUR, gettext("display worn armour"), 2);
+    _add_command(cols, 1, CMD_LIST_WEAPONS, gettext("display current weapons"), 2);
+    _add_command(cols, 1, CMD_LIST_JEWELLERY, gettext("display worn jewellery"), 2);
+    _add_command(cols, 1, CMD_LIST_GOLD, gettext("display gold in possession"), 2);
+    _add_command(cols, 1, CMD_EXPERIENCE_CHECK, gettext("display experience info"), 2);
 
     cols.add_formatted(
             1,
-            "<h>Dungeon Interaction and Information:\n",
+            gettext("<h>Dungeon Interaction and Information:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_insert_commands(cols, 1, "<w>%</w>/<w>%</w> : Open/Close door",
+    _add_insert_commands(cols, 1, gettext("<w>%</w>/<w>%</w> : Open/Close door"),
                          CMD_OPEN_DOOR, CMD_CLOSE_DOOR, 0);
-    _add_insert_commands(cols, 1, "<w>%</w>/<w>%</w> : use staircase",
+    _add_insert_commands(cols, 1, gettext("<w>%</w>/<w>%</w> : use staircase"),
                          CMD_GO_UPSTAIRS, CMD_GO_DOWNSTAIRS, 0);
 
 
-    _add_command(cols, 1, CMD_INSPECT_FLOOR, "examine occupied tile and");
-    cols.add_formatted(1, "         pickup part of a single stack\n",
+    _add_command(cols, 1, CMD_INSPECT_FLOOR, gettext("examine occupied tile and"));
+    cols.add_formatted(1, gettext("         pickup part of a single stack\n"),
                        false, true, _cmdhelp_textfilter);
 
 
-    _add_command(cols, 1, CMD_LOOK_AROUND, "eXamine surroundings/targets");
-    _add_insert_commands(cols, 1, 7, "eXamine level map (<w>%?</w> for help)",
+    _add_command(cols, 1, CMD_LOOK_AROUND, gettext("eXamine surroundings/targets"));
+    _add_insert_commands(cols, 1, 7, gettext("eXamine level map (<w>%?</w> for help)"),
                          CMD_DISPLAY_MAP, CMD_DISPLAY_MAP, 0);
-    _add_command(cols, 1, CMD_FULL_VIEW, "list monsters, items, features in view");
-    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, "show dungeon Overview");
-    _add_command(cols, 1, CMD_TOGGLE_AUTOPICKUP, "toggle auto-pickup");
-    _add_command(cols, 1, CMD_TOGGLE_FRIENDLY_PICKUP, "change ally pickup behaviour");
+    _add_command(cols, 1, CMD_FULL_VIEW, gettext("list monsters, items, features in view"));
+    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, gettext("show dungeon Overview"));
+    _add_command(cols, 1, CMD_TOGGLE_AUTOPICKUP, gettext("toggle auto-pickup"));
+    _add_command(cols, 1, CMD_TOGGLE_FRIENDLY_PICKUP, gettext("change ally pickup behaviour"));
 
     cols.add_formatted(
             1,
-            "<h>Item Interaction (inventory):\n",
+            gettext("<h>Item Interaction (inventory):\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_DISPLAY_INVENTORY, "show Inventory list", 2);
-    _add_command(cols, 1, CMD_LIST_EQUIPMENT, "show inventory of equipped items", 2);
-    _add_command(cols, 1, CMD_INSCRIBE_ITEM, "inscribe item", 2);
-    _add_command(cols, 1, CMD_FIRE, "Fire next appropriate item", 2);
-    _add_command(cols, 1, CMD_THROW_ITEM_NO_QUIVER, "select an item and Fire it", 2);
-    _add_command(cols, 1, CMD_QUIVER_ITEM, "select item slot to be quivered", 2);
+    _add_command(cols, 1, CMD_DISPLAY_INVENTORY, gettext("show Inventory list"), 2);
+    _add_command(cols, 1, CMD_LIST_EQUIPMENT, gettext("show inventory of equipped items"), 2);
+    _add_command(cols, 1, CMD_INSCRIBE_ITEM, gettext("inscribe item"), 2);
+    _add_command(cols, 1, CMD_FIRE, gettext("Fire next appropriate item"), 2);
+    _add_command(cols, 1, CMD_THROW_ITEM_NO_QUIVER, gettext("select an item and Fire it"), 2);
+    _add_command(cols, 1, CMD_QUIVER_ITEM, gettext("select item slot to be quivered"), 2);
 
     {
-        std::string interact = (you.species == SP_VAMPIRE ? "Drain corpses"
-                                                          : "Eat food");
-        interact += " (tries floor first)\n";
+        std::string interact = (you.species == SP_VAMPIRE ? gettext("Drain corpses")
+                                                          : gettext("Eat food"));
+        interact += gettext(" (tries floor first)\n");
         _add_command(cols, 1, CMD_EAT, interact, 2);
     }
 
-    _add_command(cols, 1, CMD_QUAFF, "Quaff a potion", 2);
-    _add_command(cols, 1, CMD_READ, "Read a scroll or book", 2);
-    _add_command(cols, 1, CMD_MEMORISE_SPELL, "Memorise a spell from a book", 2);
-    _add_command(cols, 1, CMD_WIELD_WEAPON, "Wield an item (<w>-</w> for none)", 2);
-    _add_command(cols, 1, CMD_WEAPON_SWAP, "wield item a, or switch to b", 2);
+    _add_command(cols, 1, CMD_QUAFF, gettext("Quaff a potion"), 2);
+    _add_command(cols, 1, CMD_READ, gettext("Read a scroll or book"), 2);
+    _add_command(cols, 1, CMD_MEMORISE_SPELL, gettext("Memorise a spell from a book"), 2);
+    _add_command(cols, 1, CMD_WIELD_WEAPON, gettext("Wield an item (<w>-</w> for none)"), 2);
+    _add_command(cols, 1, CMD_WEAPON_SWAP, gettext("wield item a, or switch to b"), 2);
 
-    _add_insert_commands(cols, 1, "    (use <w>%</w> to assign slots)",
+    _add_insert_commands(cols, 1, gettext("    (use <w>%</w> to assign slots)"),
                          CMD_ADJUST_INVENTORY, 0);
 
-    _add_command(cols, 1, CMD_EVOKE_WIELDED, "eVoke power of wielded item", 2);
-    _add_command(cols, 1, CMD_EVOKE, "eVoke wand and miscellaneous item", 2);
+    _add_command(cols, 1, CMD_EVOKE_WIELDED, gettext("eVoke power of wielded item"), 2);
+    _add_command(cols, 1, CMD_EVOKE, gettext("eVoke wand and miscellaneous item"), 2);
 
-    _add_insert_commands(cols, 1, "<w>%</w>/<w>%</w> : Wear or Take off armour",
+    _add_insert_commands(cols, 1, gettext("<w>%</w>/<w>%</w> : Wear or Take off armour"),
                          CMD_WEAR_ARMOUR, CMD_REMOVE_ARMOUR, 0);
-    _add_insert_commands(cols, 1, "<w>%</w>/<w>%</w> : Put on or Remove jewellery",
+    _add_insert_commands(cols, 1, gettext("<w>%</w>/<w>%</w> : Put on or Remove jewellery"),
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
 
     cols.add_formatted(
             1,
-            "<h>Item Interaction (floor):\n",
+            gettext("<h>Item Interaction (floor):\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_PICKUP, "pick up items (also <w>g</w>)", 2);
+    _add_command(cols, 1, CMD_PICKUP, gettext("pick up items (also <w>g</w>)"), 2);
     cols.add_formatted(
             1,
-            "    (press twice for pick up menu)\n",
+            gettext("    (press twice for pick up menu)\n"),
             false, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_DROP, "Drop an item", 2);
-    _add_insert_commands(cols, 1, "<w>%#</w>: Drop exact number of items",
+    _add_command(cols, 1, CMD_DROP, gettext("Drop an item"), 2);
+    _add_insert_commands(cols, 1, gettext("<w>%#</w>: Drop exact number of items"),
                          CMD_DROP, 0);
-    _add_command(cols, 1, CMD_DROP_LAST, "Drop the last item(s) you picked up", 2);
-    _add_command(cols, 1, CMD_BUTCHER, "Chop up a corpse", 2);
+    _add_command(cols, 1, CMD_DROP_LAST, gettext("Drop the last item(s) you picked up"), 2);
+    _add_command(cols, 1, CMD_BUTCHER, gettext("Chop up a corpse"), 2);
 
     {
-        std::string interact = (you.species == SP_VAMPIRE ? "Drain corpses on"
-                                                          : "Eat food from");
-        interact += " floor\n";
+        std::string interact = (you.species == SP_VAMPIRE ? gettext("Drain corpses on")
+                                                          : gettext("Eat food from"));
+        interact += pgettext("command"," floor\n");
         _add_command(cols, 1, CMD_EAT, interact, 2);
     }
 
     cols.add_formatted(
             1,
-            "<h>Additional help:\n",
+            gettext("<h>Additional help:\n"),
             true, true, _cmdhelp_textfilter);
 
     std::string text =
-            "Many commands have context sensitive "
+            gettext("Many commands have context sensitive "
             "help, among them <w>%</w>, <w>%</w>, <w>%</w> (or any "
             "form of targeting), <w>%</w>, and <w>%</w>.\n"
             "You can read descriptions of your "
             "current spells (<w>%</w>), skills (<w>%?</w>) and "
-            "abilities (<w>%!</w>).";
+            "abilities (<w>%!</w>).");
     insert_commands(text, CMD_DISPLAY_MAP, CMD_LOOK_AROUND, CMD_FIRE,
                     CMD_SEARCH_STASHES, CMD_INTERLEVEL_TRAVEL,
                     CMD_DISPLAY_SPELLS, CMD_DISPLAY_SKILLS, CMD_USE_ABILITY,
@@ -2516,10 +2516,10 @@ static void _add_formatted_hints_help(column_composer &cols)
     // First column.
     cols.add_formatted(
             0,
-            "<h>Movement:\n"
+            gettext("<h>Movement:\n"
             "To move in a direction or to attack, \n"
             "use the numpad (try Numlock off and \n"
-            "on) or vi keys:\n",
+            "on) or vi keys:\n"),
             false, true, _cmdhelp_textfilter);
 
     _add_insert_commands(cols, 0, "                 <w>7 8 9      % % %",
@@ -2532,111 +2532,111 @@ static void _add_formatted_hints_help(column_composer &cols)
                          CMD_MOVE_DOWN_LEFT, CMD_MOVE_DOWN, CMD_MOVE_DOWN_RIGHT, 0);
 
     cols.add_formatted(0, " ", false, true, _cmdhelp_textfilter);
-    cols.add_formatted(0, "<w>Shift-Dir.</w> runs into one direction",
+    cols.add_formatted(0, gettext("<w>Shift-Dir.</w> runs into one direction"),
                        false, true, _cmdhelp_textfilter);
-    _add_insert_commands(cols, 0, "<w>%</w> or <w>%</w> : ascend/descend the stairs",
+    _add_insert_commands(cols, 0, gettext("<w>%</w> or <w>%</w> : ascend/descend the stairs"),
                          CMD_GO_UPSTAIRS, CMD_GO_DOWNSTAIRS, 0);
-    _add_command(cols, 0, CMD_EXPLORE, "autoexplore", 2);
+    _add_command(cols, 0, CMD_EXPLORE, gettext("autoexplore"), 2);
 
     cols.add_formatted(
             0,
-            "<h>Rest/Search:\n",
+            gettext("<h>Rest/Search:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_SEARCH, "wait a turn; searches adjacent", 2);
+    _add_command(cols, 0, CMD_SEARCH, gettext("wait a turn; searches adjacent"), 2);
     cols.add_formatted(
             0,
-            "    squares (also <w>numpad-5</w>, <w>.</w>, <w>Del</w>)\n",
+            gettext("    squares (also <w>numpad-5</w>, <w>.</w>, <w>Del</w>)\n"),
             false, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 0, CMD_REST, "rest and long search; stops when", 2);
+    _add_command(cols, 0, CMD_REST, gettext("rest and long search; stops when"), 2);
     cols.add_formatted(
             0,
-            "    Health or Magic become full,\n"
+            gettext("    Health or Magic become full,\n"
             "    something is detected, or after\n"
-            "    100 turns over (<w>Shift-numpad-5</w>)\n",
+            "    100 turns over (<w>Shift-numpad-5</w>)\n"),
             false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             0,
-            "\n<h>Attacking monsters\n"
+            gettext("\n<h>Attacking monsters\n"
             "Walking into a monster will attack it\n"
-            "with the wielded weapon or barehanded.",
+            "with the wielded weapon or barehanded."),
             false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             0,
-            "\n<h>Ranged combat and magic\n",
+            gettext("\n<h>Ranged combat and magic\n"),
             false, true, _cmdhelp_textfilter);
 
-    _add_insert_commands(cols, 0, "<w>%</w> to throw/fire missiles",
+    _add_insert_commands(cols, 0, gettext("<w>%</w> to throw/fire missiles"),
                          CMD_FIRE, 0);
-    _add_insert_commands(cols, 0, "<w>%</w>/<w>%</w> to cast spells "
-                                  "(<w>%?/%</w> lists spells)",
+    _add_insert_commands(cols, 0, gettext("<w>%</w>/<w>%</w> to cast spells "
+                                  "(<w>%?/%</w> lists spells)"),
                          CMD_CAST_SPELL, CMD_FORCE_CAST_SPELL, CMD_CAST_SPELL,
                          CMD_DISPLAY_SPELLS, 0);
-    _add_command(cols, 0, CMD_MEMORISE_SPELL, "Memorise a new spell", 2);
-    _add_command(cols, 0, CMD_READ, "read a book to forget a spell", 2);
+    _add_command(cols, 0, CMD_MEMORISE_SPELL, gettext("Memorise a new spell"), 2);
+    _add_command(cols, 0, CMD_READ, gettext("read a book to forget a spell"), 2);
 
     // Second column.
     cols.add_formatted(
-            1, "<h>Item types (and common commands)\n",
+            1, gettext("<h>Item types (and common commands)\n"),
             false, true, _cmdhelp_textfilter);
 
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<cyan>)</cyan> : "
 #endif
-                         "hand weapons (<w>%</w>ield)",
+                         gettext("hand weapons (<w>%</w>ield)"),
                          CMD_WIELD_WEAPON, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<brown>(</brown> : "
 #endif
-                         "missiles (<w>%</w>uiver, <w>%</w>ire, <w>%</w>/<w>%</w> cycle)",
+                         gettext("missiles (<w>%</w>uiver, <w>%</w>ire, <w>%</w>/<w>%</w> cycle)"),
                          CMD_QUIVER_ITEM, CMD_FIRE, CMD_CYCLE_QUIVER_FORWARD,
                          CMD_CYCLE_QUIVER_BACKWARD, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<cyan>[</cyan> : "
 #endif
-                         "armour (<w>%</w>ear and <w>%</w>ake off)",
+                         gettext("armour (<w>%</w>ear and <w>%</w>ake off)"),
                          CMD_WEAR_ARMOUR, CMD_REMOVE_ARMOUR, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<brown>percent</brown> : "
 #endif
-                         "corpses and food (<w>%</w>hop up and <w>%</w>at)",
+                         gettext("corpses and food (<w>%</w>hop up and <w>%</w>at)"),
                          CMD_BUTCHER, CMD_EAT, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<w>?</w> : "
 #endif
-                         "scrolls (<w>%</w>ead)",
+                         gettext("scrolls (<w>%</w>ead)"),
                          CMD_READ, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<magenta>!</magenta> : "
 #endif
-                         "potions (<w>%</w>uaff)",
+                         gettext("potions (<w>%</w>uaff)"),
                          CMD_QUAFF, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<blue>=</blue> : "
 #endif
-                         "rings (<w>%</w>ut on and <w>%</w>emove)",
+                         gettext("rings (<w>%</w>ut on and <w>%</w>emove)"),
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<red>\"</red> : "
 #endif
-                         "amulets (<w>%</w>ut on and <w>%</w>emove)",
+                         gettext("amulets (<w>%</w>ut on and <w>%</w>emove)"),
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<lightgrey>/</lightgrey> : "
 #endif
-                         "wands (e<w>%</w>oke)",
+                         gettext("wands (e<w>%</w>oke)"),
                          CMD_EVOKE, 0);
 
     std::string item_types =
@@ -2646,7 +2646,7 @@ static void _add_formatted_hints_help(column_composer &cols)
     item_types +=
         "</lightcyan> : "
 #endif
-        "books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)";
+        gettext("books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)");
     _add_insert_commands(cols, 1, item_types,
                          CMD_READ, CMD_MEMORISE_SPELL, CMD_CAST_SPELL,
                          CMD_FORCE_CAST_SPELL, 0);
@@ -2658,36 +2658,36 @@ static void _add_formatted_hints_help(column_composer &cols)
     item_types +=
         "</brown> : "
 #endif
-        "staves and rods (<w>%</w>ield and e<w>%</w>oke)";
+        gettext("staves and rods (<w>%</w>ield and e<w>%</w>oke)");
     _add_insert_commands(cols, 1, item_types,
                          CMD_WIELD_WEAPON, CMD_EVOKE_WIELDED, 0);
 
     cols.add_formatted(1, " ", false, true, _cmdhelp_textfilter);
-    _add_command(cols, 1, CMD_DISPLAY_INVENTORY, "list inventory (select item to view it)", 2);
-    _add_command(cols, 1, CMD_PICKUP, "pick up item from ground (also <w>g</w>)", 2);
-    _add_command(cols, 1, CMD_DROP, "drop item", 2);
-    _add_command(cols, 1, CMD_DROP_LAST, "drop the last item(s) you picked up", 2);
+    _add_command(cols, 1, CMD_DISPLAY_INVENTORY, gettext("list inventory (select item to view it)"), 2);
+    _add_command(cols, 1, CMD_PICKUP, gettext("pick up item from ground (also <w>g</w>)"), 2);
+    _add_command(cols, 1, CMD_DROP, gettext("drop item"), 2);
+    _add_command(cols, 1, CMD_DROP_LAST, gettext("drop the last item(s) you picked up"), 2);
 
     cols.add_formatted(
             1,
-            "<h>Additional important commands\n",
+            gettext("<h>Additional important commands\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_SAVE_GAME_NOW, "Save the game and exit", 2);
-    _add_command(cols, 1, CMD_REPLAY_MESSAGES, "show previous messages", 2);
-    _add_command(cols, 1, CMD_USE_ABILITY, "use an ability", 2);
-    _add_command(cols, 1, CMD_RESISTS_SCREEN, "show character overview", 2);
-    _add_command(cols, 1, CMD_DISPLAY_RELIGION, "show religion overview", 2);
-    _add_command(cols, 1, CMD_DISPLAY_MAP, "show map of the whole level", 2);
-    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, "show dungeon overview", 2);
+    _add_command(cols, 1, CMD_SAVE_GAME_NOW, gettext("Save the game and exit"), 2);
+    _add_command(cols, 1, CMD_REPLAY_MESSAGES, gettext("show previous messages"), 2);
+    _add_command(cols, 1, CMD_USE_ABILITY, gettext("use an ability"), 2);
+    _add_command(cols, 1, CMD_RESISTS_SCREEN, gettext("show character overview"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_RELIGION, gettext("show religion overview"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_MAP, gettext("show map of the whole level"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, gettext("show dungeon overview"), 2);
 
     cols.add_formatted(
             1,
-            "\n<h>Targeting\n"
+            gettext("\n<h>Targeting\n"
             "<w>Enter</w> or <w>.</w> or <w>Del</w> : confirm target\n"
             "<w>+</w> and <w>-</w> : cycle between targets\n"
             "<w>f</w> or <w>p</w> : shoot at previous target\n"
-            "         if still alive and in sight\n",
+            "         if still alive and in sight\n"),
             false, true, _cmdhelp_textfilter);
 }
 
@@ -2725,7 +2725,7 @@ int list_wizard_commands(bool do_redraw_screen)
     cols.set_pagesize(get_number_of_lines());
 
     cols.add_formatted(0,
-                       "<yellow>Player stats</yellow>\n"
+                       gettext("<yellow>Player stats</yellow>\n"
                        "<w>A</w>      : set all skills to level\n"
                        "<w>Ctrl-D</w> : change enchantments/durations\n"
                        "<w>g</w>      : exercise a skill\n"
@@ -2768,11 +2768,11 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>}</w>      : detect all traps on level\n"
                        "<w>)</w>      : change Shoals' tide speed\n"
                        "<w>Ctrl-E</w> : dump level builder information\n"
-                       "<w>Ctrl-R</w> : regenerate current level\n",
+                       "<w>Ctrl-R</w> : regenerate current level\n"),
                        true, true);
 
     cols.add_formatted(1,
-                       "<yellow>Other player related effects</yellow>\n"
+                       gettext("<yellow>Other player related effects</yellow>\n"
                        "<w>c</w>      : card effect\n"
 #ifdef DEBUG_BONES
                        "<w>Ctrl-G</w> : save/load ghost (bones file)\n"
@@ -2816,7 +2816,7 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<yellow>Wizard targeting commands</yellow>\n"
                        "<w>x?</w>     : list targeted commands\n"
                        "\n"
-                       "<w>?</w>      : list wizard commands\n",
+                       "<w>?</w>      : list wizard commands\n"),
                        true, true);
 
     int key = _show_keyhelp_menu(cols.formatted_lines(), false,
