@@ -275,26 +275,26 @@ int torment_player(actor *attacker, int taux)
         {
         case TORMENT_CARDS:
         case TORMENT_SPELL:
-            aux = N_("Symbol of Torment");
+            aux = M_("Symbol of Torment");
             break;
 
         case TORMENT_SPWLD:
             // XXX: If we ever make any other weapon / randart eligible
             // to torment, this will be incorrect.
-            aux = N_("Sceptre of Torment");
+            aux = M_("Sceptre of Torment");
             break;
 
         case TORMENT_SCROLL:
-            aux = N_("scroll of torment");
+            aux = M_("scroll of torment");
             break;
 
         case TORMENT_XOM:
             type = KILLED_BY_XOM;
-            aux = N_("Xom's torment");
+            aux = M_("Xom's torment");
             break;
 
         case TORMENT_KIKUBAAQUDGHA:
-            aux = N_("Kikubaaqudgha's torment");
+            aux = M_("Kikubaaqudgha's torment");
             break;
         }
     }
