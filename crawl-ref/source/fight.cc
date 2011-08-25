@@ -5233,7 +5233,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
         if (needs_message && special_damage)
         {
             /// 공격자, shock의 동사, 대상, ./!
-            mprf("%s %s %s%s",
+            mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
                  translate_verb(attacker, N_("shock")).c_str(),
                  mons_defender_name().c_str(),
