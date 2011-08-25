@@ -115,13 +115,13 @@ bool can_wield(item_def *weapon, bool say_reason,
 
     if (you.melded[EQ_WEAPON] && unwield)
     {
-        SAY(mpr("Your weapon is melded into your body!"));
+        SAY(mpr(gettext("Your weapon is melded into your body!")));
         return (false);
     }
 
     if (!can_equip(EQ_WEAPON, ignore_temporary_disability))
     {
-        SAY(mpr("You can't wield anything in your present form."));
+        SAY(mpr(gettext("You can't wield anything in your present form.")));
         return (false);
     }
 
@@ -131,8 +131,8 @@ bool can_wield(item_def *weapon, bool say_reason,
            || you.weapon()->base_type == OBJ_STAVES)
         && you.weapon()->cursed())
     {
-        SAY(mprf("You can't unwield your weapon%s!",
-                 !unwield ? " to draw a new one" : ""));
+        SAY(mprf(gettext("You can't unwield your weapon%s!"),
+                 !unwield ? gettext(" to draw a new one") : ""));
         return (false);
     }
 
@@ -144,7 +144,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     {
         if (you.equip[i] != -1 && &you.inv[you.equip[i]] == weapon)
         {
-            SAY(mpr("You are wearing that object!"));
+            SAY(mpr(gettext("You are wearing that object!")));
             return (false);
         }
     }
@@ -153,7 +153,7 @@ bool can_wield(item_def *weapon, bool say_reason,
         && (weapon->base_type == OBJ_WEAPONS
             || weapon->base_type == OBJ_STAVES))
     {
-        SAY(mpr("You can't use weapons."));
+        SAY(mpr(gettext("You can't use weapons.")));
         return (false);
     }
 
@@ -164,7 +164,7 @@ bool can_wield(item_def *weapon, bool say_reason,
             || weapon->base_type == OBJ_WEAPONS
                && item_mass(*weapon) >= 300))
     {
-        SAY(mpr("That's too large and heavy for you to wield."));
+        SAY(mpr(gettext("That's too large and heavy for you to wield.")));
         return (false);
     }
 
@@ -173,7 +173,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     {
         if (!ignore_temporary_disability && is_shield_incompatible(*weapon))
         {
-            SAY(mpr("You can't wield that with a shield."));
+            SAY(mpr(gettext("You can't wield that with a shield.")));
             return (false);
         }
         else
@@ -184,7 +184,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     if (you.body_size(PSIZE_BODY) < SIZE_MEDIUM
         && !check_weapon_wieldable_size(*weapon, you.body_size(PSIZE_BODY)))
     {
-        SAY(mpr("That's too large for you to wield."));
+        SAY(mpr(gettext("That's too large for you to wield.")));
         return (false);
     }
 
@@ -192,7 +192,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     {
         if (say_reason)
         {
-            mpr("This weapon is holy and will not allow you to wield it.");
+            mpr(gettext("This weapon is holy and will not allow you to wield it."));
             // If it's a standard weapon, you know its ego now.
             if (!is_artefact(*weapon) && !is_blessed(*weapon)
                 && !item_type_known(*weapon))
@@ -214,7 +214,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     {
         if (say_reason)
         {
-            mpr("As you grasp it, you feel a great hunger. Being not satiated, you stop.");
+            mpr(gettext("As you grasp it, you feel a great hunger. Being not satiated, you stop."));
             // If it's a standard weapon, you know its ego now.
             if (!is_artefact(*weapon) && !is_blessed(*weapon)
                 && !item_type_known(*weapon))
@@ -231,7 +231,7 @@ bool can_wield(item_def *weapon, bool say_reason,
 
     if (!ignore_temporary_disability && is_shield_incompatible(*weapon))
     {
-        SAY(mpr("You can't wield that with a shield."));
+        SAY(mpr(gettext("You can't wield that with a shield.")));
         return (false);
     }
 
@@ -318,7 +318,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
         if (!auto_wield)
         {
             item_slot = prompt_invent_item(
-                            "Wield which item (- for none, * to show all)?",
+                            gettext("Wield which item (- for none, * to show all)?"),
                             MT_INVLIST, OSEL_WIELD,
                             true, true, true, '-', -1, NULL, OPER_WIELD);
         }
@@ -330,14 +330,14 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
         return (false);
     else if (item_slot == you.equip[EQ_WEAPON])
     {
-        mpr("You are already wielding that!");
+        mpr(gettext("You are already wielding that!"));
         return (true);
     }
 
     // Now we really change weapons! (Most likely, at least...)
     if (you.duration[DUR_SURE_BLADE])
     {
-        mpr("The bond with your blade fades away.");
+        mpr(gettext("The bond with your blade fades away."));
         you.duration[DUR_SURE_BLADE] = 0;
     }
     // Reset the warning counter.
@@ -351,7 +351,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             if (needs_handle_warning(*wpn, OPER_WIELD))
             {
                 const std::string prompt =
-                    "Really unwield " + wpn->name(true, DESC_INVENTORY) + "?";
+                    gettext("Really unwield ") + wpn->name(true, DESC_INVENTORY) + pgettext("wield_weapon","?");
                 if (!yesno(prompt.c_str(), false, 'n'))
                     return (false);
             }
@@ -421,8 +421,8 @@ static const char *shield_base_name(const item_def *shield)
 
 static const char *shield_impact_degree(int impact)
 {
-    return (impact > 160 ? "severely "      :
-            impact > 130 ? "significantly " :
+    return (impact > 160 ? N_("severely ")      :
+            impact > 130 ? N_("significantly ") :
             impact > 110 ? ""
                          : NULL);
 }
@@ -438,12 +438,12 @@ static void warn_launcher_shield_slowdown(const item_def &launcher)
     if (slowspeed > normspeed)
     {
         const char *slow_degree =
-            shield_impact_degree(slowspeed * 100 / normspeed);
+            gettext(shield_impact_degree(slowspeed * 100 / normspeed));
 
         if (slow_degree)
         {
             mprf(MSGCH_WARN,
-                    "Your %s %sslows your rate of fire.",
+                    gettext("Your %s %sslows your rate of fire."),
                     shield_base_name(you.shield()),
                     slow_degree);
         }
@@ -466,7 +466,7 @@ void warn_shield_penalties()
     else if (weapon->base_type == OBJ_WEAPONS
              && weapon_skill(*weapon) == SK_STAVES)
     {
-        mprf(MSGCH_WARN, "Your %s severely limits your weapon's effectiveness.",
+        mprf(MSGCH_WARN, gettext("Your %s severely limits your weapon's effectiveness."),
              shield_base_name(you.shield()));
     }
 }
@@ -477,10 +477,10 @@ void warn_armour_penalties()
 
     if (penalty > 0)
     {
-        mprf(MSGCH_WARN, "Your low strength makes using this armour %smore difficult.",
-             (penalty < 3) ? "a little " :
+        mprf(MSGCH_WARN, gettext("Your low strength makes using this armour %smore difficult."),
+             (penalty < 3) ? pgettext("item_use","a little ") :
              (penalty < 5) ? "" :
-                             "a lot ");
+                             pgettext("item_use","a lot "));
     }
 }
 
@@ -539,13 +539,13 @@ void wear_armour(int slot) // slot is for tiles
 {
     if (you.species == SP_FELID)
     {
-        mpr("You can't wear anything.");
+        mpr(gettext("You can't wear anything."));
         return;
     }
 
     if (!player_can_handle_equipment())
     {
-        mpr("You can't wear anything in your present form.");
+        mpr(gettext("You can't wear anything in your present form."));
         return;
     }
 
@@ -553,7 +553,7 @@ void wear_armour(int slot) // slot is for tiles
 
     if (slot != -1)
         armour_wear_2 = slot;
-    else if (!armour_prompt("Wear which item?", &armour_wear_2, OPER_WEAR))
+    else if (!armour_prompt(gettext("Wear which item?"), &armour_wear_2, OPER_WEAR))
         return;
 
     do_wear_armour(armour_wear_2, false);
@@ -579,7 +579,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     if (base_type != OBJ_ARMOUR || you.species == SP_FELID)
     {
         if (verbose)
-           mpr("You can't wear that.");
+           mpr(gettext("You can't wear that."));
 
         return (false);
     }
@@ -590,7 +590,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     if (you.species == SP_OCTOPODE && slot != EQ_HELMET && slot != EQ_SHIELD)
     {
         if (verbose)
-            mpr("You can't wear that!");
+            mpr(gettext("You can't wear that!"));
         return (false);
     }
 
@@ -602,10 +602,10 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
             if (ignore_temporary || !player_is_shapechanged())
                 return (true);
             else if (verbose)
-                mpr("You can wear that only in your normal form.");
+                mpr(gettext("You can wear that only in your normal form."));
         }
         else if (verbose)
-            mpr("You can't wear that!");
+            mpr(gettext("You can't wear that!"));
         return (false);
     }
 
@@ -618,8 +618,8 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     if (bad_size)
     {
         if (verbose)
-            mprf("This armour is too %s for you!",
-                 (bad_size > 0) ? "big" : "small");
+            mprf(gettext("This armour is too %s for you!"),
+                 (bad_size > 0) ? pgettext("item_use","big") : pgettext("item_use","small"));
 
         return (false);
     }
@@ -629,7 +629,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (you.has_claws(false) == 3)
         {
             if (verbose)
-                mpr("You can't wear gloves with your huge claws!");
+                mpr(gettext("You can't wear gloves with your huge claws!"));
             return (false);
         }
     }
@@ -639,21 +639,21 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (player_mutation_level(MUT_HOOVES) == 3)
         {
             if (verbose)
-                mpr("You can't wear boots with hooves!");
+                mpr(gettext("You can't wear boots with hooves!"));
             return (false);
         }
 
         if (player_mutation_level(MUT_TALONS) == 3)
         {
             if (verbose)
-                mpr("Boots don't fit your talons!");
+                mpr(gettext("Boots don't fit your talons!"));
            return (false);
         }
 
         if (you.species == SP_NAGA)
         {
             if (verbose)
-                mpr("You can't wear that!");
+                mpr(gettext("You can't wear that!"));
             return (false);
         }
 
@@ -661,7 +661,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
             && you.fishtail)
         {
             if (verbose)
-               mpr("You don't currently have feet!");
+               mpr(gettext("You don't currently have feet!"));
             return (false);
         }
     }
@@ -672,14 +672,14 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (player_mutation_level(MUT_HORNS) == 3)
         {
             if (verbose)
-                mpr("You can't wear any headgear with your large horns!");
+                mpr(gettext("You can't wear any headgear with your large horns!"));
             return (false);
         }
 
         if (player_mutation_level(MUT_ANTENNAE) == 3)
         {
            if (verbose)
-                mpr("You can't wear any headgear with your large antennae!");
+                mpr(gettext("You can't wear any headgear with your large antennae!"));
             return (false);
         }
 
@@ -690,28 +690,28 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (player_mutation_level(MUT_HORNS))
         {
             if (verbose)
-                mpr("You can't wear that with your horns!");
+                mpr(gettext("You can't wear that with your horns!"));
             return (false);
         }
 
         if (player_mutation_level(MUT_BEAK))
         {
             if (verbose)
-                mpr("You can't wear that with your beak!");
+                mpr(gettext("You can't wear that with your beak!"));
             return (false);
         }
 
         if (player_mutation_level(MUT_ANTENNAE))
         {
             if (verbose)
-                mpr("You can't wear that with your antennae!");
+                mpr(gettext("You can't wear that with your antennae!"));
             return (false);
         }
 
         if (you.species == SP_OCTOPODE)
         {
             if (verbose)
-                mpr("You can't wear that!");
+                mpr(gettext("You can't wear that!"));
             return (false);
         }
     }
@@ -719,7 +719,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     if (!can_equip(slot, ignore_temporary))
     {
         if (verbose)
-            mpr("You can't wear that in your present form.");
+            mpr(gettext("You can't wear that in your present form."));
         return (false);
     }
 
@@ -732,7 +732,7 @@ bool do_wear_armour(int item, bool quiet)
     if (!invitem.defined())
     {
         if (!quiet)
-           mpr("You don't have any such object.");
+           mpr(gettext("You don't have any such object."));
         return (false);
     }
 
@@ -744,7 +744,7 @@ bool do_wear_armour(int item, bool quiet)
     if (item == you.equip[EQ_WEAPON])
     {
         if (!quiet)
-           mpr("You are wielding that object!");
+           mpr(gettext("You are wielding that object!"));
         return (false);
     }
 
@@ -754,7 +754,7 @@ bool do_wear_armour(int item, bool quiet)
             return (!takeoff_armour(item));
         else
         {
-            mpr("You're already wearing that object!");
+            mpr(gettext("You're already wearing that object!"));
             return (false);
         }
     }
@@ -769,7 +769,7 @@ bool do_wear_armour(int item, bool quiet)
         {
             const char* how_many = you.has_tentacles(false) == 3 ? "nine"
                                                                  : "three";
-            mprf("You'd need %s %s to do that!", how_many,
+            mprf(gettext("You'd need %s %s to do that!"), how_many,
                  you.hand_name(true).c_str());
         }
         return (false);
@@ -787,7 +787,7 @@ bool do_wear_armour(int item, bool quiet)
         {
             if (!quiet)
             {
-                mprf("%s is stuck to your body!",
+                mprf(gettext("%s is stuck to your body!"),
                      you.inv[you.equip[EQ_BODY_ARMOUR]].name(true, DESC_CAP_YOUR)
                                                        .c_str());
             }
@@ -804,7 +804,7 @@ bool do_wear_armour(int item, bool quiet)
         else
         {
             if (!quiet)
-               mpr("Your cloak prevents you from wearing the armour.");
+               mpr(gettext("Your cloak prevents you from wearing the armour."));
             return (false);
         }
     }
@@ -842,7 +842,7 @@ bool takeoff_armour(int item)
 
     if (invitem.base_type != OBJ_ARMOUR)
     {
-        mpr("You aren't wearing that!");
+        mpr(gettext("You aren't wearing that!"));
         return (false);
     }
 
@@ -855,7 +855,7 @@ bool takeoff_armour(int item)
     const equipment_type slot = get_armour_slot(invitem);
     if (item == you.equip[slot] && you.melded[slot])
     {
-        mprf("%s is melded into your body!",
+        mprf(gettext("%s is melded into your body!"),
              invitem.name(true, DESC_CAP_YOUR).c_str());
         return (false);
     }
@@ -866,7 +866,7 @@ bool takeoff_armour(int item)
             return do_wear_armour(item, true);
         else
         {
-            mpr("You aren't wearing that object!");
+            mpr(gettext("You aren't wearing that object!"));
             return (false);
         }
     }
@@ -874,7 +874,7 @@ bool takeoff_armour(int item)
     // If we get here, we're wearing the item.
     if (invitem.cursed())
     {
-        mprf("%s is stuck to your body!", invitem.name(true, DESC_CAP_YOUR).c_str());
+        mprf(gettext("%s is stuck to your body!"), invitem.name(true, DESC_CAP_YOUR).c_str());
         return (false);
     }
 
@@ -898,7 +898,7 @@ bool takeoff_armour(int item)
             }
             else
             {
-                mpr("Your cloak prevents you from removing the armour.");
+                mpr(gettext("Your cloak prevents you from removing the armour."));
                 return (false);
             }
         }
@@ -914,7 +914,7 @@ bool takeoff_armour(int item)
         case EQ_BOOTS:
             if (item != you.equip[slot])
             {
-                mpr("You aren't wearing that!");
+                mpr(gettext("You aren't wearing that!"));
                 return (false);
             }
             break;
@@ -1027,7 +1027,7 @@ void fire_target_behaviour::set_prompt()
     // Build the action.
     if (!active_item())
     {
-        msg << "Firing ";
+        msg << pgettext("item_use","Firing ");
     }
     else
     {
@@ -1035,15 +1035,15 @@ void fire_target_behaviour::set_prompt()
                                                     *active_item());
         switch (projected)
         {
-        case LRET_FUMBLED:  msg << "Awkwardly throwing "; break;
-        case LRET_LAUNCHED: msg << "Firing ";             break;
-        case LRET_THROWN:   msg << "Throwing ";           break;
+        case LRET_FUMBLED:  msg << pgettext("item_use","Awkwardly throwing "); break;
+        case LRET_LAUNCHED: msg << pgettext("item_use","Firing ");             break;
+        case LRET_THROWN:   msg << pgettext("item_use","Throwing ");           break;
         }
     }
 
     // And a key hint.
-    msg << (no_other_items ? "(i - inventory)"
-                           : "(i - inventory. (,) - cycle)")
+    msg << (no_other_items ? gettext("(i - inventory)")
+                           : gettext("(i - inventory. (,) - cycle)"))
         << ": ";
 
     // Describe the selected item for firing.
@@ -1189,7 +1189,7 @@ static int _fire_prompt_for_item()
     if (inv_count() < 1)
         return -1;
 
-    int slot = prompt_invent_item("Fire/throw which item? (* to show all)",
+    int slot = prompt_invent_item(gettext("Fire/throw which item? (* to show all)"),
                                    MT_INVLIST,
                                    OSEL_THROWABLE, true, true, true, 0, -1,
                                    NULL, OPER_FIRE);
@@ -1208,12 +1208,12 @@ static bool _fire_validate_item(int slot, std::string &err)
             || you.inv[slot].base_type == OBJ_STAVES)
         && you.inv[slot].cursed())
     {
-        err = "That weapon is stuck to your " + you.hand_name(false) + "!";
+        err = gettext("That weapon is stuck to your ") + you.hand_name(false) + "!";
         return (false);
     }
     else if (wearing_slot(slot))
     {
-        err = "You are wearing that object!";
+        err = gettext("You are wearing that object!");
         return (false);
     }
     return (true);
@@ -1225,7 +1225,7 @@ bool fire_warn_if_impossible(bool silent)
     if (you.species == SP_FELID)
     {
         if (!silent)
-            mpr("You can't grasp things well enough to throw them.");
+            mpr(gettext("You can't grasp things well enough to throw them."));
         return (true);
     }
 
@@ -1243,13 +1243,13 @@ bool fire_warn_if_impossible(bool silent)
         if (!weapon || !is_range_weapon(*weapon))
         {
             if (!silent)
-                mpr("You cannot throw anything while held in a net!");
+                mpr(gettext("You cannot throw anything while held in a net!"));
             return (true);
         }
         else if (weapon->sub_type != WPN_BLOWGUN)
         {
             if (!silent)
-                mprf("You cannot shoot with your %s while held in a net!",
+                mprf(gettext("You cannot shoot with your %s while held in a net!"),
                      weapon->name(true, DESC_BASENAME).c_str());
             return (true);
         }
@@ -1554,7 +1554,7 @@ static bool _silver_damages_victim(bolt &beam, actor* victim, int &dmg,
         return (false);
 
     if (!beam.is_tracer && you.can_see(victim))
-       dmg_msg = "The silver sears " + victim->name(DESC_NOCAP_THE) + "!";
+       dmg_msg = gettext("The silver sears ") + victim->name(DESC_NOCAP_THE) + pgettext("_silver_damages_victim","!");
 
     return (false);
 }
@@ -1654,9 +1654,9 @@ static bool _dispersal_hit_victim(bolt& beam, actor* victim, int dmg,
         const bool        seen = you.can_see(mon);
         const std::string name = mon->name(DESC_CAP_THE);
         if (was_seen && seen)
-            mprf("%s blinks!", name.c_str());
+            mprf(gettext("%s blinks!"), name.c_str());
         else if (was_seen && !seen)
-            mprf("%s vanishes!", name.c_str());
+            mprf(gettext("%s vanishes!"), name.c_str());
     }
 
     return (true);
@@ -1685,17 +1685,17 @@ static bool _charged_hit_victim(bolt &beam, actor* victim, int &dmg,
     if (you.can_see(victim))
     {
         if (victim->atype() == ACT_PLAYER)
-            dmg_msg = "You are electrocuted!";
+            dmg_msg = gettext("You are electrocuted!");
         else if (victim->type == MONS_SIXFIRHY)
-            dmg_msg = victim->name(DESC_CAP_THE) + " is charged up!";
+            dmg_msg = victim->name(DESC_CAP_THE) + gettext(" is charged up!");
         else
-            dmg_msg = "There is a sudden explosion of sparks!";
+            dmg_msg = gettext("There is a sudden explosion of sparks!");
     }
 
     if (feat_is_water(grd(victim->pos())))
     {
         if (you.can_see(victim))
-            mpr("Electricity arcs through the water!");
+            mpr(gettext("Electricity arcs through the water!"));
 
         conduct_electricity(victim->pos(), beam.agent());
         beam.finish_beam();
@@ -1713,7 +1713,7 @@ static bool _blessed_hit_victim(bolt &beam, actor* victim, int &dmg,
 
         if (!beam.is_tracer && you.can_see(victim))
            dmg_msg = victim->name(DESC_CAP_THE) + " "
-                   + victim->conj_verb("convulse") + "!";
+                   + victim->conj_verb(pgettext("item_use","convulse")) + "!";
     }
 
     return (false);
@@ -1783,7 +1783,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (resist_roll < victim->get_experience_level())
     {
         if (victim->atype() == ACT_MONSTER)
-            simple_monster_message(victim->as_monster(), " resists.");
+            simple_monster_message(victim->as_monster(), gettext(" resists."));
         else
             canned_msg(MSG_YOU_RESIST);
         return (false);
@@ -2287,7 +2287,7 @@ static void _merge_ammo_in_inventory(int slot)
         if (items_stack(you.inv[i], you.inv[slot]))
         {
             if (!done_anything)
-                mpr("You combine your ammunition.");
+                mpr(gettext("You combine your ammunition."));
 
             inc_inv_item_quantity(slot, you.inv[i].quantity, true);
             dec_inv_item_quantity(i, you.inv[i].quantity);
@@ -2317,19 +2317,19 @@ void throw_noise(actor* act, const bolt &pbolt, const item_def &ammo)
 
     case WPN_SLING:
         level = 1;
-        msg   = "You hear a whirring sound.";
+        msg   = gettext("You hear a whirring sound.");
         break;
      case WPN_BOW:
         level = 5;
-        msg   = "You hear a twanging sound.";
+        msg   = gettext("You hear a twanging sound.");
         break;
      case WPN_LONGBOW:
         level = 6;
-        msg   = "You hear a loud twanging sound.";
+        msg   = gettext("You hear a loud twanging sound.");
         break;
      case WPN_CROSSBOW:
         level = 7;
-        msg   = "You hear a thunk.";
+        msg   = gettext("You hear a thunk.");
         break;
 
     default:
@@ -2780,7 +2780,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_PLUSES);
                 ammo_ided = true;
                 identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
-                mprf("You are firing %s.",
+                mprf(gettext("You are firing %s."),
                      you.inv[throw_2].name(true, DESC_NOCAP_A).c_str());
             }
         }
@@ -2789,7 +2789,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             item_def& weapon = *you.weapon();
             set_ident_flags(weapon, ISFLAG_KNOW_PLUSES);
 
-            mprf("You are wielding %s.", weapon.name(true, DESC_NOCAP_A).c_str());
+            mprf(gettext("You are wielding %s."), weapon.name(true, DESC_NOCAP_A).c_str());
 
             more();
             you.wield_change = true;
@@ -2983,7 +2983,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_PLUSES);
             identify_floor_missiles_matching(item, ISFLAG_KNOW_PLUSES);
             ammo_ided = true;
-            mprf("You are throwing %s.",
+            mprf(gettext("You are throwing %s."),
                  you.inv[throw_2].name(true, DESC_NOCAP_A).c_str());
         }
     }
@@ -3049,10 +3049,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
               pbolt.hit, pbolt.damage.num, pbolt.damage.size);
 
     // Create message.
-    mprf("%s %s%s %s.",
-          teleport  ? "Magically, you" : "You",
-          projected ? "" : "awkwardly ",
-          projected == LRET_LAUNCHED ? "shoot" : "throw",
+    mprf(pgettext("item_use","%s %s%s %s."),
+          teleport  ? pgettext("item_use","Magically, you") : pgettext("item_use","You"),
+          projected ? "" : pgettext("item_use","awkwardly "),
+          projected == LRET_LAUNCHED ? pgettext("item_use","shoot") : pgettext("item_use","throw"),
           ammo_name.c_str());
 
     // Ensure we're firing a 'missile'-type beam.
@@ -3114,7 +3114,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         viewwindow();
         pbolt.fire();
 
-        msg::stream << item.name(true, DESC_CAP_THE) << " returns to your pack!"
+        msg::stream << item.name(true, DESC_CAP_THE) << gettext(" returns to your pack!")
                     << std::endl;
 
         // Player saw the item return.
@@ -3132,7 +3132,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         if (returning && item_type_known(you.inv[throw_2]))
         {
             msg::stream << item.name(true, DESC_CAP_THE)
-                        << " fails to return to your pack!" << std::endl;
+                        << gettext(" fails to return to your pack!") << std::endl;
         }
         dec_inv_item_quantity(throw_2, 1);
         if (unwielded)
@@ -3234,17 +3234,17 @@ static int _prompt_ring_to_remove(int new_ring)
     const item_def *right = you.slot_item(EQ_RIGHT_RING, true);
 
     mesclr();
-    mprf("Wearing %s.", you.inv[new_ring].name(true, DESC_NOCAP_A).c_str());
+    mprf(gettext("Wearing %s."), you.inv[new_ring].name(true, DESC_NOCAP_A).c_str());
 
     const char lslot = index_to_letter(left->link);
     const char rslot = index_to_letter(right->link);
 
     mprf(MSGCH_PROMPT,
-         "You're wearing two rings. Remove which one? (%c/%c/<</>/Esc)",
+         gettext("You're wearing two rings. Remove which one? (%c/%c/<</>/Esc)"),
          lslot, rslot);
 
-    mprf(" << or %s", left->name(true, DESC_INVENTORY).c_str());
-    mprf(" > or %s", right->name(true, DESC_INVENTORY).c_str());
+    mprf(gettext(" << or %s"), left->name(true, DESC_INVENTORY).c_str());
+    mprf(gettext(" > or %s"), right->name(true, DESC_INVENTORY).c_str());
     flush_prev_message();
 
     // Deactivate choice from tile inventory.
@@ -3283,7 +3283,7 @@ static int _prompt_ring_to_remove_octopode(int new_ring)
 //    mprf("Wearing %s.", you.inv[new_ring].name(DESC_NOCAP_A).c_str());
 
     mprf(MSGCH_PROMPT,
-         "You're wearing eight rings. Remove which one?");
+         gettext("You're wearing eight rings. Remove which one?"));
 //I think it looks better without the letters.
 // (%c/%c/%c/%c/%c/%c/%c/%c/Esc)",
 //         one_slot, two_slot, three_slot, four_slot, five_slot, six_slot, seven_slot, eight_slot);
@@ -3399,19 +3399,19 @@ bool safe_to_remove_or_wear(const item_def &item, bool remove, bool quiet)
     if (remove)
     {
         if (item.base_type == OBJ_WEAPONS)
-            verb = "Unwield";
+            verb = pgettext("item_use","Unwield");
         else
-            verb = "Remov";
+            verb = pgettext("item_use","Remov");
     }
     else
     {
         if (item.base_type == OBJ_WEAPONS)
-            verb = "Wield";
+            verb = pgettext("item_use","Wield");
         else
-            verb = "Wear";
+            verb = pgettext("item_use","Wear");
     }
 
-    std::string prompt = make_stringf("%sing this item will reduce your %s to zero or below. Continue?",
+    std::string prompt = make_stringf(gettext("%sing this item will reduce your %s to zero or below. Continue?"),
                                       verb.c_str(), stat_desc(red_stat, SD_NAME));
     if (!yesno(prompt.c_str(), true, 'n', true, false))
     {
@@ -3449,8 +3449,8 @@ bool safe_to_remove(const item_def &item, bool quiet)
             return (false);
         else
         {
-            std::string fname = (feat == DNGN_LAVA ? "lava" : "deep water");
-            std::string prompt = "Really remove this item over " + fname + "?";
+            std::string fname = (feat == DNGN_LAVA ? pgettext("item_use","lava") : pgettext("item_use","deep water"));
+            std::string prompt = gettext("Really remove this item over ") + fname + "?";
             return (yesno(prompt.c_str(), false, 'n'));
         }
     }
@@ -3471,7 +3471,7 @@ static bool _swap_rings(int ring_slot)
 
     if (lring->cursed() && rring->cursed())
     {
-        mprf("You're already wearing two cursed rings!");
+        mprf(gettext("You're already wearing two cursed rings!"));
         return (false);
     }
 
@@ -3546,7 +3546,7 @@ static bool _swap_rings_octopode(int ring_slot)
     // We can't put a ring on, because we're wearing 8 cursed ones.
     if (cursed == 8)
     {
-        mpr("You're already wearing eight cursed rings! Isn't that enough for you?");
+        mpr(gettext("You're already wearing eight cursed rings! Isn't that enough for you?"));
         return (false);
     }
     // The simple case - only one uncursed ring.
@@ -3589,20 +3589,20 @@ bool puton_item(int item_slot)
                 return (!remove_ring(item_slot));
             else
             {
-                mpr("You're already wearing that object!");
+                mpr(gettext("You're already wearing that object!"));
                 return (false);
             }
         }
 
     if (item_slot == you.equip[EQ_WEAPON])
     {
-        mpr("You are wielding that object.");
+        mpr(gettext("You are wielding that object."));
         return (false);
     }
 
     if (item.base_type != OBJ_JEWELLERY)
     {
-        mpr("You can only put on jewellery.");
+        mpr(gettext("You can only put on jewellery."));
         return (false);
     }
 
@@ -3627,7 +3627,7 @@ bool puton_item(int item_slot)
         // Cursed gloves cannot be removed.
         if (gloves && gloves->cursed())
         {
-            mpr("You can't take your gloves off to put on a ring!");
+            mpr(gettext("You can't take your gloves off to put on a ring!"));
             return (false);
         }
 
@@ -3703,7 +3703,7 @@ bool puton_ring(int slot)
 {
     if (!player_can_handle_equipment())
     {
-        mpr("You can't put on anything in your present form.");
+        mpr(gettext("You can't put on anything in your present form."));
         return (false);
     }
 
@@ -3725,7 +3725,7 @@ bool puton_ring(int slot)
         item_slot = slot;
     else
     {
-        item_slot = prompt_invent_item("Put on which piece of jewellery?",
+        item_slot = prompt_invent_item(gettext("Put on which piece of jewellery?"),
                                         MT_INVLIST, OBJ_JEWELLERY, true, true,
                                         true, 0, -1, NULL, OPER_PUTON);
     }
@@ -3740,7 +3740,7 @@ bool remove_ring(int slot, bool announce)
 {
     if (!player_can_handle_equipment())
     {
-        mpr("You can't wear or remove anything in your present form.");
+        mpr(gettext("You can't wear or remove anything in your present form."));
         return (false);
     }
 
@@ -3760,7 +3760,7 @@ bool remove_ring(int slot, bool announce)
 
     if (!left && !right && !amu && !octopode_with_ring)
     {
-        mpr("You aren't wearing any rings or amulets.");
+        mpr(gettext("You aren't wearing any rings or amulets."));
         return (false);
     }
 
@@ -3774,7 +3774,7 @@ bool remove_ring(int slot, bool announce)
     const bool gloves_cursed = gloves && gloves->cursed();
     if (gloves_cursed && !amu)
     {
-        mpr("You can't take your gloves off to remove any rings!");
+        mpr(gettext("You can't take your gloves off to remove any rings!"));
         return (false);
     }
 
@@ -3788,7 +3788,7 @@ bool remove_ring(int slot, bool announce)
     if (hand_used == EQ_NONE)
     {
         const int equipn =
-            (slot == -1)? prompt_invent_item("Remove which piece of jewellery?",
+            (slot == -1)? prompt_invent_item(gettext("Remove which piece of jewellery?"),
                                              MT_INVLIST,
                                              OBJ_JEWELLERY, true, true, true,
                                              0, -1, NULL, OPER_REMOVE)
@@ -3800,30 +3800,30 @@ bool remove_ring(int slot, bool announce)
         hand_used = item_equip_slot(you.inv[equipn]);
         if (hand_used == EQ_NONE)
         {
-            mpr("You aren't wearing that.");
+            mpr(gettext("You aren't wearing that."));
             return (false);
         }
         else if (you.inv[equipn].base_type != OBJ_JEWELLERY)
         {
-            mpr("That isn't a piece of jewellery.");
+            mpr(gettext("That isn't a piece of jewellery."));
             return (false);
         }
     }
 
     if (you.equip[hand_used] == -1)
     {
-        mpr("I don't think you really meant that.");
+        mpr(gettext("I don't think you really meant that."));
         return (false);
     }
     else if (you.melded[hand_used])
     {
-        mpr("You can't take that off while it's melded.");
+        mpr(gettext("You can't take that off while it's melded."));
         return (false);
     }
     else if (gloves_cursed
              && (hand_used == EQ_LEFT_RING || hand_used == EQ_RIGHT_RING))
     {
-        mpr("You can't take your gloves off to remove any rings!");
+        mpr(gettext("You can't take your gloves off to remove any rings!"));
         return (false);
     }
 
@@ -3838,11 +3838,11 @@ bool remove_ring(int slot, bool announce)
     {
         if (announce)
         {
-            mprf("%s is stuck to you!",
+            mprf(gettext("%s is stuck to you!"),
                  you.inv[you.equip[hand_used]].name(true, DESC_CAP_YOUR).c_str());
         }
         else
-            mpr("It's stuck to you!");
+            mpr(gettext("It's stuck to you!"));
 
         set_ident_flags(you.inv[you.equip[hand_used]], ISFLAG_KNOW_CURSE);
         return (false);
@@ -3854,7 +3854,7 @@ bool remove_ring(int slot, bool announce)
     if (!safe_to_remove_or_wear(you.inv[ring_wear_2], true))
         return (false);
 
-    mprf("You remove %s.", you.inv[ring_wear_2].name(true, DESC_NOCAP_YOUR).c_str());
+    mprf(gettext("You remove %s."), you.inv[ring_wear_2].name(true, DESC_NOCAP_YOUR).c_str());
     unequip_item(hand_used);
 
     you.time_taken /= 2;
@@ -3881,12 +3881,12 @@ static bool _dont_use_invis()
 
     if (you.haloed() || you.glows_naturally())
     {
-        mpr("You can't turn invisible.");
+        mpr(gettext("You can't turn invisible."));
         return (true);
     }
     else if (get_contamination_level() > 1
-             && !yesno("Invisibility will do you no good right now; "
-                       "use anyway?", false, 'n'))
+             && !yesno(gettext("Invisibility will do you no good right now; "
+                       "use anyway?"), false, 'n'))
     {
         return (true);
     }
@@ -3898,7 +3898,7 @@ void zap_wand(int slot)
 {
     if (you.species == SP_FELID)
     {
-        mpr("You have no means to grasp a wand firmly enough.");
+        mpr(gettext("You have no means to grasp a wand firmly enough."));
         return;
     }
 
@@ -3935,7 +3935,7 @@ void zap_wand(int slot)
         item_slot = slot;
     else
     {
-        item_slot = prompt_invent_item("Zap which item?",
+        item_slot = prompt_invent_item(gettext("Zap which item?"),
                                        MT_INVLIST,
                                        OBJ_WANDS,
                                        true, true, true, 0, -1, NULL,
@@ -3963,7 +3963,7 @@ void zap_wand(int slot)
     {
         if (wand.plus2 == ZAPCOUNT_EMPTY)
         {
-            mpr("This wand has no charges.");
+            mpr(gettext("This wand has no charges."));
             return;
         }
         has_charges = false;
@@ -4007,7 +4007,7 @@ void zap_wand(int slot)
         (alreadyknown && wand.sub_type != WAND_RANDOM_EFFECTS) ?
         _wand_range(type_zapped) : _max_wand_range();
     const std::string zap_title =
-        "Zapping: " + get_menu_colour_prefix_tags(wand, DESC_INVENTORY);
+        gettext("Zapping: ") + get_menu_colour_prefix_tags(wand, DESC_INVENTORY);
     direction_chooser_args args;
     args.mode = targ_mode;
     args.range = tracer_range;
@@ -4026,7 +4026,7 @@ void zap_wand(int slot)
         if (wand.sub_type == WAND_TELEPORTATION
             && item_blocks_teleport(false, false))
         {
-            mpr("You cannot teleport right now.");
+            mpr(gettext("You cannot teleport right now."));
             return;
         }
         else if (wand.sub_type == WAND_INVISIBILITY
@@ -4120,7 +4120,7 @@ void zap_wand(int slot)
     {
         set_ident_type(wand, ID_KNOWN_TYPE);
         if (wand.sub_type == WAND_RANDOM_EFFECTS)
-            mpr("You feel that this wand is rather unreliable.");
+            mpr(gettext("You feel that this wand is rather unreliable."));
 
         mpr(wand.name(true, DESC_INVENTORY_EQUIP).c_str());
     }
@@ -4133,11 +4133,11 @@ void zap_wand(int slot)
     {
         if (!item_ident(wand, ISFLAG_KNOW_PLUSES))
         {
-            mpr("Your skill with magical items lets you calculate "
-                "the power of this device...");
+            mpr(gettext("Your skill with magical items lets you calculate "
+                "the power of this device..."));
         }
 
-        mprf("This wand has %d charge%s left.",
+        mprf(gettext("This wand has %d charge%s left."),
              wand.plus, wand.plus == 1 ? "" : "s");
 
         set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
@@ -4160,11 +4160,11 @@ void prompt_inscribe_item()
 {
     if (inv_count() < 1)
     {
-        mpr("You don't have anything to inscribe.");
+        mpr(gettext("You don't have anything to inscribe."));
         return;
     }
 
-    int item_slot = prompt_invent_item("Inscribe which item?",
+    int item_slot = prompt_invent_item(gettext("Inscribe which item?"),
                                        MT_INVLIST, OSEL_ANY);
 
     if (prompt_failed(item_slot))
@@ -4179,14 +4179,14 @@ static void _vampire_corpse_help()
         return;
 
     if (check_blood_corpses_on_ground() || count_corpses_in_pack(true) > 0)
-        mpr("If it's blood you're after, try <w>e</w>.");
+        mpr(gettext("If it's blood you're after, try <w>e</w>."));
 }
 
 void drink(int slot)
 {
     if (you.is_undead == US_UNDEAD)
     {
-        mpr("You can't drink.");
+        mpr(gettext("You can't drink."));
         return;
     }
 
@@ -4220,7 +4220,7 @@ void drink(int slot)
 
     if (slot == -1)
     {
-        slot = prompt_invent_item("Drink which item?",
+        slot = prompt_invent_item(gettext("Drink which item?"),
                                   MT_INVLIST, OBJ_POTIONS,
                                   true, true, true, 0, -1, NULL,
                                   OPER_QUAFF);
@@ -4238,7 +4238,7 @@ void drink(int slot)
         if (you.species == SP_VAMPIRE && potion.base_type == OBJ_CORPSES)
             eat_food(slot);
         else
-            mpr("You can't drink that!");
+            mpr(gettext("You can't drink that!"));
         return;
     }
 
@@ -4247,7 +4247,7 @@ void drink(int slot)
     if (alreadyknown && you.hunger_state == HS_ENGORGED
         && (is_blood_potion(potion) || potion.sub_type == POT_PORRIDGE))
     {
-        mpr("You are much too full right now.");
+        mpr(gettext("You are much too full right now."));
         return;
     }
 
@@ -4276,7 +4276,7 @@ void drink(int slot)
     {
         set_ident_flags(potion, ISFLAG_IDENT_MASK);
         set_ident_type(potion, ID_KNOWN_TYPE);
-        mpr("It was a " + potion.name(true, DESC_QUALNAME) + ".");
+        mpr(gettext("It was a ") + potion.name(true, DESC_QUALNAME) + pgettext("drink","."));
     }
     else if (!alreadyknown)
     {
@@ -4327,25 +4327,25 @@ static bool _drink_fountain()
     potion_type fountain_effect = POT_WATER;
     if (feat == DNGN_FOUNTAIN_BLUE)
     {
-        if (!yesno("Drink from the fountain?", true, 'n'))
+        if (!yesno(gettext("Drink from the fountain?"), true, 'n'))
             return (false);
 
-        mpr("You drink the pure, clear water.");
+        mpr(gettext("You drink the pure, clear water."));
     }
     else if (feat == DNGN_FOUNTAIN_BLOOD)
     {
-        if (!yesno("Drink from the fountain of blood?", true, 'n'))
+        if (!yesno(gettext("Drink from the fountain of blood?"), true, 'n'))
             return (false);
 
-        mpr("You drink the blood.");
+        mpr(gettext("You drink the blood."));
         fountain_effect = POT_BLOOD;
     }
     else
     {
-        if (!yesno("Drink from the sparkling fountain?", true, 'n'))
+        if (!yesno(gettext("Drink from the sparkling fountain?"), true, 'n'))
             return (false);
 
-        mpr("You drink the sparkling water.");
+        mpr(gettext("You drink the sparkling water."));
 
         fountain_effect = static_cast<potion_type>(
             random_choose_weighted(467, POT_WATER,
@@ -4409,7 +4409,7 @@ static bool _drink_fountain()
 
     if (gone_dry)
     {
-        mpr("The fountain dries up!");
+        mpr(gettext("The fountain dries up!"));
 
         grd(you.pos()) = static_cast<dungeon_feature_type>(feat
                          + DNGN_DRY_FOUNTAIN_BLUE - DNGN_FOUNTAIN_BLUE);
@@ -4463,7 +4463,7 @@ static bool _vorpalise_weapon(bool already_known)
     if (get_weapon_brand(wpn) == SPWPN_NORMAL)
     {
         alert_nearby_monsters();
-        mprf("%s emits a brilliant flash of light!",
+        mprf(gettext("%s emits a brilliant flash of light!"),
              wpn.name(true, DESC_CAP_YOUR).c_str());
         set_item_ego_type(wpn, OBJ_WEAPONS, SPWPN_VORPAL);
         return (true);
@@ -4482,44 +4482,44 @@ static bool _vorpalise_weapon(bool already_known)
     {
     case SPWPN_VORPAL:
         if (get_vorpal_type(wpn) != DVORP_CRUSHING)
-            mprf("%s's sharpness seems more permanent.", itname.c_str());
+            mprf(gettext("%s's sharpness seems more permanent."), itname.c_str());
         else
-            mprf("%s's heaviness feels very stable.", itname.c_str());
+            mprf(gettext("%s's heaviness feels very stable."), itname.c_str());
         break;
 
     case SPWPN_FLAME:
     case SPWPN_FLAMING:
-        mprf("%s is engulfed in an explosion of flames!", itname.c_str());
+        mprf(gettext("%s is engulfed in an explosion of flames!"), itname.c_str());
         immolation(10, IMMOLATION_SCROLL, you.pos(), already_known, &you);
         break;
 
     case SPWPN_FROST:
     case SPWPN_FREEZING:
         if (get_weapon_brand(wpn) == SPWPN_FROST)
-            mprf("%s is covered with a thick layer of frost!", itname.c_str());
+            mprf(gettext("%s is covered with a thick layer of frost!"), itname.c_str());
         else
-            mprf("%s glows brilliantly blue for a moment.", itname.c_str());
+            mprf(gettext("%s glows brilliantly blue for a moment."), itname.c_str());
         cast_refrigeration(60, false, false);
         break;
 
     case SPWPN_DRAINING:
-        mprf("%s thirsts for the lives of mortals!", itname.c_str());
+        mprf(gettext("%s thirsts for the lives of mortals!"), itname.c_str());
         drain_exp();
         break;
 
     case SPWPN_VENOM:
-        mprf("%s seems more permanently poisoned.", itname.c_str());
+        mprf(gettext("%s seems more permanently poisoned."), itname.c_str());
         cast_toxic_radiance();
         break;
 
     case SPWPN_ELECTROCUTION:
-        mprf("%s releases a massive orb of lightning.", itname.c_str());
+        mprf(gettext("%s releases a massive orb of lightning."), itname.c_str());
         _explosion(you.pos(), &you, BEAM_ELECTRICITY, "electricity",
                    "electrocution affixation");
         break;
 
     case SPWPN_CHAOS:
-        mprf("%s erupts in a glittering mayhem of all colours.", itname.c_str());
+        mprf(gettext("%s erupts in a glittering mayhem of all colours."), itname.c_str());
         success = !one_chance_in(3); // You mean, you wanted this... guaranteed?
         // but the eruption _is_ guaranteed.  What it will do is not.
         _explosion(you.pos(), &you, BEAM_CHAOS, "chaos eruption", "chaos affixation");
@@ -4552,7 +4552,7 @@ static bool _vorpalise_weapon(bool already_known)
 
     case SPWPN_PAIN:
         // Can't fix pain brand (balance)...you just get tormented.
-        mprf("%s shrieks out in agony!", itname.c_str());
+        mprf(gettext("%s shrieks out in agony!"), itname.c_str());
 
         torment_monsters(you.pos(), &you, TORMENT_GENERIC);
         success = false;
@@ -4567,7 +4567,7 @@ static bool _vorpalise_weapon(bool already_known)
     case SPWPN_DISTORTION:
         // [dshaligram] Attempting to fix a distortion brand gets you a free
         // distortion effect, and no permabranding. Sorry, them's the breaks.
-        mprf("%s twongs alarmingly.", itname.c_str());
+        mprf(gettext("%s twongs alarmingly."), itname.c_str());
 
         // from unwield_item
         MiscastEffect(&you, NON_MONSTER, SPTYP_TRANSLOCATION, 9, 90,
@@ -4576,13 +4576,13 @@ static bool _vorpalise_weapon(bool already_known)
         break;
 
     case SPWPN_ANTIMAGIC:
-        mprf("%s repels your magic.", itname.c_str());
+        mprf(gettext("%s repels your magic."), itname.c_str());
         set_mp(0);
         success = false;
         break;
 
     case SPWPN_HOLY_WRATH:
-        mprf("%s emits a blast of cleansing flame.", itname.c_str());
+        mprf(gettext("%s emits a blast of cleansing flame."), itname.c_str());
         _explosion(you.pos(), &you, BEAM_HOLY, "cleansing flame",
                    "holy wrath affixation");
         success = false;
@@ -4661,14 +4661,14 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
             if (to_hit)
             {
                 if (!quiet)
-                    mprf("%s glows green for a moment.", iname.c_str());
+                    mprf(gettext("%s glows green for a moment."), iname.c_str());
 
                 wpn.plus++;
             }
             else
             {
                 if (!quiet)
-                    mprf("%s glows red for a moment.", iname.c_str());
+                    mprf(gettext("%s glows red for a moment."), iname.c_str());
 
                 wpn.plus2++;
             }
@@ -4677,7 +4677,7 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
         {
             if (!quiet)
             {
-                mprf("%s glow%s red for a moment.", iname.c_str(),
+                mprf(gettext("%s glow%s red for a moment."), iname.c_str(),
                      wpn.quantity > 1 ? "" : "s");
             }
 
@@ -4693,7 +4693,7 @@ bool enchant_weapon(enchant_stat_type which_stat, bool quiet, item_def &wpn)
         {
             if (!quiet)
             {
-                mprf("%s glows silver for a moment.",
+                mprf(gettext("%s glows silver for a moment."),
                      wpn.name(true, DESC_CAP_YOUR).c_str());
             }
         }
@@ -4753,7 +4753,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
     {
         if (!quiet)
         {
-            mprf("%s glows purple and changes!",
+            mprf(gettext("%s glows purple and changes!"),
                  arm.name(true, DESC_CAP_YOUR).c_str());
         }
 
@@ -4774,7 +4774,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
         {
             if (!quiet)
             {
-                mprf("%s glows silver for a moment.",
+                mprf(gettext("%s glows silver for a moment."),
                      arm.name(true, DESC_CAP_YOUR).c_str());
             }
 
@@ -4793,7 +4793,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
     // Output message before changing enchantment and curse status.
     if (!quiet)
     {
-        mprf("%s glows green for a moment.",
+        mprf(gettext("%s glows green for a moment."),
              arm.name(true, DESC_CAP_YOUR).c_str());
     }
 
@@ -4810,7 +4810,7 @@ static int _handle_enchant_armour(int item_slot, std::string *pre_msg)
     {
         if (item_slot == -1)
         {
-            item_slot = prompt_invent_item("Enchant which item?", MT_INVLIST,
+            item_slot = prompt_invent_item(gettext("Enchant which item?"), MT_INVLIST,
                                            OSEL_ENCH_ARM, true, true, false);
         }
         if (prompt_failed(item_slot))
@@ -4820,7 +4820,7 @@ static int _handle_enchant_armour(int item_slot, std::string *pre_msg)
 
         if (!is_enchantable_armour(arm, true, true))
         {
-            mpr("Choose some type of armour to enchant, or Esc to abort.");
+            mpr(gettext("Choose some type of armour to enchant, or Esc to abort."));
             if (Options.auto_list)
                 more();
 
@@ -4855,7 +4855,7 @@ static void _handle_read_book(int item_slot)
 
     if (you.stat_zero[STAT_INT])
     {
-        mpr("Reading books requires mental cohesion, which you lack.");
+        mpr(gettext("Reading books requires mental cohesion, which you lack."));
         return;
     }
 
@@ -4864,7 +4864,7 @@ static void _handle_read_book(int item_slot)
     if (book.sub_type == BOOK_DESTRUCTION)
     {
         if (silenced(you.pos()))
-            mpr("This book does not work if you cannot read it aloud!");
+            mpr(gettext("This book does not work if you cannot read it aloud!"));
         else
             tome_of_power(item_slot);
         return;
@@ -4917,7 +4917,7 @@ static bool _scroll_modify_item(item_def scroll)
     // Get the slot of the item the scroll is to be used on.
     // Ban the scroll's own slot from the prompt to avoid the stupid situation
     // where you use identify on itself.
-    item_slot = prompt_invent_item("Use on which item? (\\ to view known items)",
+    item_slot = prompt_invent_item(gettext("Use on which item? (\\ to view known items)"),
                                    MT_INVLIST, OSEL_ANY, true, true, false, 0,
                                    item_slot, NULL, OPER_ANY, true);
 
@@ -5007,7 +5007,7 @@ static void _vulnerability_scroll()
     }
 
     you.set_duration(DUR_LOWERED_MR, 40, 0,
-                     "Magic dampens, then quickly surges around you.");
+                     gettext("Magic dampens, then quickly surges around you."));
 }
 
 bool _is_cancellable_scroll(scroll_type scroll)
@@ -5040,7 +5040,7 @@ void read_scroll(int slot)
     }
 
     int item_slot = (slot != -1) ? slot
-                                 : prompt_invent_item("Read which item?",
+                                 : prompt_invent_item(gettext("Read which item?"),
                                                        MT_INVLIST,
                                                        OBJ_SCROLLS,
                                                        true, true, true, 0, -1,
@@ -5053,7 +5053,7 @@ void read_scroll(int slot)
 
     if (scroll.base_type != OBJ_BOOKS && scroll.base_type != OBJ_SCROLLS)
     {
-        mpr("You can't read that!");
+        mpr(gettext("You can't read that!"));
         crawl_state.zero_turns_taken();
         return;
     }
@@ -5067,7 +5067,7 @@ void read_scroll(int slot)
 
     if (silenced(you.pos()))
     {
-        mpr("Magic scrolls do not work when you're silenced!");
+        mpr(gettext("Magic scrolls do not work when you're silenced!"));
         crawl_state.zero_turns_taken();
         return;
     }
@@ -5083,7 +5083,7 @@ void read_scroll(int slot)
         case SCR_TELEPORTATION:
             if (item_blocks_teleport(false, false))
             {
-                mpr("You cannot teleport right now.");
+                mpr(gettext("You cannot teleport right now."));
                 return;
             }
             break;
@@ -5099,7 +5099,7 @@ void read_scroll(int slot)
         case SCR_VORPALISE_WEAPON:
             if (!you.weapon())
             {
-                mpr("You are not wielding a weapon.");
+                mpr(gettext("You are not wielding a weapon."));
                 return;
             }
             break;
@@ -5159,7 +5159,7 @@ void read_scroll(int slot)
         // mpr("You stumble in your attempt to read the scroll. Nothing happens!");
         // mpr("Your reading takes too long for the scroll to take effect.");
         // mpr("Your low mental capacity makes reading really difficult. You give up!");
-        mpr("You try to decipher the scroll, but fail in the attempt.");
+        mpr(gettext("You try to decipher the scroll, but fail in the attempt."));
         return;
     }
 
@@ -5168,15 +5168,15 @@ void read_scroll(int slot)
         && x_chance_in_y(player_mutation_level(MUT_BLURRY_VISION), 5))
     {
         mpr((player_mutation_level(MUT_BLURRY_VISION) == 3 && one_chance_in(3))
-                        ? "This scroll appears to be blank."
-                        : "The writing blurs in front of your eyes.");
+                        ? gettext("This scroll appears to be blank.")
+                        : gettext("The writing blurs in front of your eyes."));
         return;
     }
 
     // For cancellable scrolls leave printing this message to their
     // respective functions.
     std::string pre_succ_msg =
-            make_stringf("As you read the %s, it crumbles to dust.",
+            make_stringf(gettext("As you read the %s, it crumbles to dust."),
                           scroll.name(true, DESC_QUALNAME).c_str());
     if (you.confused()
         || (which_scroll != SCR_IMMOLATION
@@ -5246,7 +5246,7 @@ void read_scroll(int slot)
         break;
 
     case SCR_ACQUIREMENT:
-        mpr("This is a scroll of acquirement!");
+        mpr(gettext("This is a scroll of acquirement!"));
         more();
         acquirement(OBJ_RANDOM, AQ_SCROLL);
         break;
@@ -5260,7 +5260,7 @@ void read_scroll(int slot)
     }
 
     case SCR_NOISE:
-        noisy(25, you.pos(), "You hear a loud clanging noise!");
+        noisy(25, you.pos(), gettext("You hear a loud clanging noise!"));
         break;
 
     case SCR_SUMMONING:
@@ -5271,7 +5271,7 @@ void read_scroll(int slot)
                                       MG_FORCE_BEH));
         if (mons != -1)
         {
-            mpr("A horrible Thing appears!");
+            mpr(gettext("A horrible Thing appears!"));
             player_angers_monster(&menv[mons]);
         }
         else
@@ -5283,7 +5283,7 @@ void read_scroll(int slot)
     }
 
     case SCR_FOG:
-        mpr("The scroll dissolves into smoke.");
+        mpr(gettext("The scroll dissolves into smoke."));
         big_cloud(random_smoke_type(), &you, you.pos(), 50, 8 + random2(8));
         break;
 
@@ -5300,7 +5300,7 @@ void read_scroll(int slot)
         break;
 
     case SCR_IMMOLATION:
-        mprf("The scroll explodes in your %s!", you.hand_name(true).c_str());
+        mprf(gettext("The scroll explodes in your %s!"), you.hand_name(true).c_str());
 
         // Doesn't destroy scrolls anymore, so no special check needed. (jpeg)
         immolation(10, IMMOLATION_SCROLL, you.pos(), alreadyknown, &you);
@@ -5387,7 +5387,7 @@ void read_scroll(int slot)
 
             if (success)
             {
-                mprf("%s glow%s bright yellow for a while.", iname.c_str(),
+                mprf(gettext("%s glow%s bright yellow for a while."), iname.c_str(),
                      wpn.quantity > 1 ? "" : "s");
             }
             else
@@ -5515,7 +5515,7 @@ void read_scroll(int slot)
         break;
 
     default:
-        mpr("Read a buggy scroll, please report this.");
+        mpr(gettext("Read a buggy scroll, please report this."));
         break;
     }
 
@@ -5537,8 +5537,8 @@ void read_scroll(int slot)
 
     if (id_the_scroll && !alreadyknown && which_scroll != SCR_ACQUIREMENT)
     {
-        mprf("It %s a %s.",
-             you.inv[item_slot].quantity < prev_quantity ? "was" : "is",
+        mprf(gettext("It %s a %s."),
+             you.inv[item_slot].quantity < prev_quantity ? pgettext("item_use","was") : pgettext("item_use","is"),
              scroll_name.c_str());
     }
 
@@ -5553,7 +5553,7 @@ void read_scroll(int slot)
 
 void examine_object(void)
 {
-    int item_slot = prompt_invent_item("Examine which item?",
+    int item_slot = prompt_invent_item(gettext("Examine which item?"),
                                         MT_INVLIST, -1,
                                         true, true, true, 0, -1, NULL,
                                         OPER_EXAMINE);
@@ -5594,7 +5594,7 @@ bool stasis_blocks_effect(bool calc_unid,
         if (msg)
         {
             const std::string name(amulet? amulet->name(true, DESC_CAP_YOUR) :
-                                   "Something");
+                                   pgettext("item_use","Something"));
             const std::string message =
                 make_stringf(msg, name.c_str());
 
@@ -5616,7 +5616,7 @@ bool stasis_blocks_effect(bool calc_unid,
         if (amulet && identify && !item_type_known(*amulet))
         {
             set_ident_type(*amulet, ID_KNOWN_TYPE);
-            mprf("You are wearing: %s",
+            mprf(gettext("You are wearing: %s"),
                   amulet->name(true, DESC_INVENTORY_EQUIP).c_str());
         }
         return (true);
@@ -5678,7 +5678,7 @@ void tile_item_drop(int idx, bool partdrop)
     int quantity = you.inv[idx].quantity;
     if (partdrop && quantity > 1)
     {
-        quantity = prompt_for_int("Drop how many? ", true);
+        quantity = prompt_for_int(gettext("Drop how many? "), true);
         if (quantity < 1)
         {
             canned_msg(MSG_OK);
@@ -5717,17 +5717,17 @@ static bool _prompt_eat_bad_food(const item_def food)
     }
 
     const std::string qualifier = colour
-                                  + (is_poisonous(food)      ? "poisonous" :
-                                     is_mutagenic(food)      ? "mutagenic" :
-                                     causes_rot(food)        ? "rot-inducing" :
-                                     is_forbidden_food(food) ? "forbidden" : "")
+                                  + (is_poisonous(food)      ? pgettext("_prompt_eat_bad_food","poisonous") :
+                                     is_mutagenic(food)      ? pgettext("_prompt_eat_bad_food","mutagenic") :
+                                     causes_rot(food)        ? pgettext("_prompt_eat_bad_food","rot-inducing") :
+                                     is_forbidden_food(food) ? pgettext("_prompt_eat_bad_food","forbidden") : "")
                                   + colour_off;
 
-    std::string prompt  = "Really ";
-                prompt += (you.species == SP_VAMPIRE ? "drink from" : "eat");
-                prompt += " this " + qualifier;
-                prompt += (food.base_type == OBJ_CORPSES ? " corpse"
-                                                         : " chunk of meat");
+    std::string prompt  = pgettext("_prompt_eat_bad_food","Really "); // (deceit, 110825) 원래 코드에서 어순을 바꿈.
+	            prompt += pgettext("_prompt_eat_bad_food"," this ") + qualifier;
+				prompt += (food.base_type == OBJ_CORPSES ? pgettext("_prompt_eat_bad_food"," corpse")
+                                                         : pgettext("_prompt_eat_bad_food"," chunk of meat"));
+                prompt += (you.species == SP_VAMPIRE ? pgettext("_prompt_eat_bad_food","drink from") : pgettext("_prompt_eat_bad_food","eat"));
                 prompt += "?";
 
     if (!yesno(prompt.c_str(), false, 'n'))
@@ -5837,7 +5837,7 @@ void tile_item_use(int idx)
         case OBJ_ARMOUR:
             if (!player_can_handle_equipment())
             {
-                mpr("You can't wear or remove anything in your present form.");
+                mpr(gettext("You can't wear or remove anything in your present form."));
                 return;
             }
             if (equipped && !equipped_weapon)

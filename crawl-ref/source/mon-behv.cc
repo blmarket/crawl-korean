@@ -1086,13 +1086,13 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             if (mon->friendly() && !crawl_state.game_is_arena())
             {
                 mon->foe = MHITYOU;
-                msg = "PLAIN:@The_monster@ returns to your side!";
+                msg = gettext("PLAIN:@The_monster@ returns to your side!");
             }
             else if (mon->type != MONS_KRAKEN_TENTACLE)
             {
                 msg = getSpeakString(mon->name(DESC_PLAIN) + " cornered");
                 if (msg.empty())
-                    msg = "PLAIN:@The_monster@ turns to fight!";
+                    msg = gettext("PLAIN:@The_monster@ turns to fight!");
             }
         }
 

@@ -108,7 +108,7 @@ static bool _surge_identify_boosters(spell_type spell)
                         set_ident_type(ring.base_type, ring.sub_type,
                                         ID_KNOWN_TYPE);
                         set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
-                        mprf("You are wearing: %s",
+                        mprf(gettext("You are wearing: %s"),
                              ring.name(true, DESC_INVENTORY_EQUIP).c_str());
                     }
                 }
@@ -128,14 +128,14 @@ static void _surge_power(spell_type spell)
 
     if (enhanced)               // one way or the other {dlb}
     {
-        mprf("You feel a%s %s",
-             (enhanced < -2)  ? "n extraordinarily" :
-             (enhanced == -2) ? "n extremely" :
-             (enhanced == 2)  ? " strong" :
-             (enhanced > 2)   ? " huge"
+        mprf(gettext("You feel a%s %s"),
+             (enhanced < -2)  ? gettext("n extraordinarily") :
+             (enhanced == -2) ? gettext("n extremely") :
+             (enhanced == 2)  ? gettext(" strong") :
+             (enhanced > 2)   ? gettext(" huge")
                               : "",
-             (enhanced < 0) ? "numb sensation."
-                            : "surge of power!");
+             (enhanced < 0) ? gettext("numb sensation.")
+                            : gettext("surge of power!"));
     }
 }
 
@@ -147,8 +147,8 @@ static std::string _spell_base_description(spell_type spell)
 
     desc << "<" << colour_to_str(highlight) << ">" << std::left;
 
-    // spell name
-    desc << chop_string(spell_title(spell), 30);
+    // spell name (deceit, 110825 이곳에 gettext 씌움)
+    desc << chop_string(gettext(spell_title(spell)), 30);
 
     // spell schools
     desc << spell_schools_string(spell);
@@ -157,8 +157,8 @@ static std::string _spell_base_description(spell_type spell)
     if (so_far < 60)
         desc << std::string(60 - so_far, ' ');
 
-    // spell fail rate, level
-    desc << chop_string(failure_rate_to_string(spell_fail(spell)), 12)
+    // spell fail rate, level 이곳 역시..
+    desc << chop_string(gettext(failure_rate_to_string(spell_fail(spell))), 12)
          << spell_difficulty(spell);
     desc << "</" << colour_to_str(highlight) <<">";
 
@@ -212,10 +212,10 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
         // [enne] - Hack.  Make title an item so that it's aligned.
         ToggleableMenuEntry* me =
             new ToggleableMenuEntry(
-                " Your Spells                       Type          "
-                "                Success   Level",
-                " Your Spells                       Power         "
-                "Range           Hunger    Level",
+                gettext(" Your Spells                       Type          "
+                "                Success   Level"),
+                gettext(" Your Spells                       Power         "
+                "Range           Hunger    Level"),
                 MEL_ITEM);
         me->colour = BLUE;
         spell_menu.add_entry(me);
@@ -223,25 +223,25 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
 #else
     spell_menu.set_title(
         new ToggleableMenuEntry(
-            " Your Spells                       Type          "
-            "                Success   Level",
-            " Your Spells                       Power         "
-            "Range           Hunger    Level",
+            gettext(" Your Spells                       Type          "
+            "                Success   Level"),
+            gettext(" Your Spells                       Power         "
+            "Range           Hunger    Level"),
             MEL_TITLE));
 #endif
     spell_menu.set_highlighter(NULL);
     spell_menu.set_tag("spell");
     spell_menu.add_toggle_key('!');
 
-    std::string more_str = "Press '!' ";
+    std::string more_str = gettext("Press '!' ");
     if (toggle_with_I)
     {
         spell_menu.add_toggle_key('I');
-        more_str += "or 'I' ";
+        more_str += gettext("or 'I' ");
     }
     if (!viewing)
         spell_menu.menu_action = Menu::ACT_EXECUTE;
-    more_str += "to toggle spell view.";
+    more_str += gettext("to toggle spell view.");
     spell_menu.set_more(formatted_string(more_str));
 
     // If there's only a single spell in the offered spell list,
@@ -571,14 +571,14 @@ static bool _can_cast()
 
     if (you.stat_zero[STAT_INT])
     {
-        mpr("You lack the mental capacity to cast spells.");
+        mpr(gettext("You lack the mental capacity to cast spells."));
         return false;
     }
 
     // Randart weapons.
     if (scan_artefacts(ARTP_PREVENT_SPELLCASTING))
     {
-        mpr("Something interferes with your magic!");
+        mpr(gettext("Something interferes with your magic!"));
         return false;
     }
 
@@ -596,7 +596,7 @@ static bool _can_cast()
 
     if (silenced(you.pos()))
     {
-        mpr("You cannot cast spells when silenced!");
+        mpr(gettext("You cannot cast spells when silenced!"));
         more();
         return false;
     }
@@ -649,12 +649,12 @@ bool cast_a_spell(bool check_range, spell_type spell)
                 }
 
                 if (you.last_cast_spell == SPELL_NO_SPELL)
-                    mpr("Cast which spell? (? or * to list) ", MSGCH_PROMPT);
+                    mpr(gettext("Cast which spell? (? or * to list) "), MSGCH_PROMPT);
                 else
                 {
-                    mprf(MSGCH_PROMPT, "Casting: <w>%s</w>",
+                    mprf(MSGCH_PROMPT, gettext("Casting: <w>%s</w>"),
                          spell_title(you.last_cast_spell));
-                    mpr("Confirm with . or Enter, or press ? or * to list all spells.", MSGCH_PROMPT);
+                    mpr(gettext("Confirm with . or Enter, or press ? or * to list all spells."), MSGCH_PROMPT);
                 }
 
                 keyin = get_ch();
@@ -691,7 +691,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
         }
         else if (!isaalpha(keyin))
         {
-            mpr("You don't know that spell.");
+            mpr(gettext("You don't know that spell."));
             crawl_state.zero_turns_taken();
             return (false);
         }
@@ -703,14 +703,14 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
     if (spell == SPELL_NO_SPELL)
     {
-        mpr("You don't know that spell.");
+        mpr(gettext("You don't know that spell."));
         crawl_state.zero_turns_taken();
         return (false);
     }
 
     if (spell_mana(spell) > you.magic_points)
     {
-        mpr("You don't have enough magic to cast that spell.");
+        mpr(gettext("You don't have enough magic to cast that spell."));
         return (false);
     }
 
@@ -718,8 +718,8 @@ bool cast_a_spell(bool check_range, spell_type spell)
     {
         // Abort if there are no hostiles within range, but flash the range
         // markers for a short while.
-        mpr("There are no visible monsters within range! (Use <w>Z</w> to "
-            "cast anyway.)");
+        mpr(gettext("There are no visible monsters within range! (Use <w>Z</w> to "
+            "cast anyway.)"));
 
         if (Options.darken_beyond_range)
         {
@@ -862,7 +862,7 @@ bool spell_is_uncastable(spell_type spell, std::string &msg)
 {
     if (you.undead_or_demonic() && is_holy_spell(spell))
     {
-        msg = "You can't use this type of magic!";
+        msg = gettext("You can't use this type of magic!");
         return (true);
     }
 
@@ -871,13 +871,13 @@ bool spell_is_uncastable(spell_type spell, std::string &msg)
     // to be extended here. - bwr
     if (spell != SPELL_NECROMUTATION && you_cannot_memorise(spell))
     {
-        msg = "You cannot cast that spell in your current form!";
+        msg = gettext("You cannot cast that spell in your current form!");
         return (true);
     }
 
     if (_vampire_cannot_cast(spell))
     {
-        msg = "Your current blood level is not sufficient to cast that spell.";
+        msg = gettext("Your current blood level is not sufficient to cast that spell.");
         return (true);
     }
 
@@ -939,7 +939,7 @@ static void _try_monster_cast(spell_type spell, int powc,
 
 static int _setup_evaporate_cast()
 {
-    int rc = prompt_invent_item("Throw which potion?", MT_INVLIST, OBJ_POTIONS);
+    int rc = prompt_invent_item(gettext("Throw which potion?"), MT_INVLIST, OBJ_POTIONS);
 
     if (prompt_failed(rc))
     {
@@ -947,12 +947,12 @@ static int _setup_evaporate_cast()
     }
     else if (you.inv[rc].base_type != OBJ_POTIONS)
     {
-        mpr("This spell works only on potions!");
+        mpr(gettext("This spell works only on potions!"));
         rc = -1;
     }
     else
     {
-        mprf(MSGCH_PROMPT, "Where do you want to aim %s?",
+        mprf(MSGCH_PROMPT, gettext("Where do you want to aim %s?"),
              you.inv[rc].name(true, DESC_NOCAP_YOUR).c_str());
     }
     return rc;
@@ -973,7 +973,7 @@ static void _maybe_cancel_repeat(spell_type spell)
     {
     case SPELL_DELAYED_FIREBALL:
     case SPELL_TUKIMAS_DANCE:
-        crawl_state.cant_cmd_repeat(make_stringf("You can't repeat %s.",
+        crawl_state.cant_cmd_repeat(make_stringf(gettext("You can't repeat %s."),
                                                  spell_title(spell)));
         break;
 
@@ -1000,7 +1000,7 @@ static bool _spellcasting_aborted(spell_type spell,
 
     if (is_prevented_teleport(spell))
     {
-        mpr("You cannot teleport right now.");
+        mpr(gettext("You cannot teleport right now."));
         return (true);
     }
 
@@ -1008,26 +1008,26 @@ static bool _spellcasting_aborted(spell_type spell,
         && spell == SPELL_FULSOME_DISTILLATION
         && !corpse_at(you.pos()))
     {
-        mpr("There aren't any corpses here.");
+        mpr(gettext("There aren't any corpses here."));
         return (true);
     }
 
     if (spell == SPELL_GOLUBRIAS_PASSAGE && !can_cast_golubrias_passage())
     {
-        mpr("Only one passage may be opened at a time.");
+        mpr(gettext("Only one passage may be opened at a time."));
         return (true);
     }
 
     if (spell == SPELL_MALIGN_GATEWAY && !can_cast_malign_gateway())
     {
-        mpr("The dungeon can only cope with one malign gateway at a time!");
+        mpr(gettext("The dungeon can only cope with one malign gateway at a time!"));
         return (true);
     }
 
     if (spell == SPELL_TORNADO
         && (you.duration[DUR_TORNADO] || you.duration[DUR_TORNADO_COOLDOWN]))
     {
-        mpr("You need to wait for the winds to calm down.");
+        mpr(gettext("You need to wait for the winds to calm down."));
         return (true);
     }
 
@@ -1110,7 +1110,7 @@ spret_type your_spells(spell_type spell, int powc,
                 return (SPRET_ABORT);
         }
         else if (dir == DIR_DIR)
-            mpr(prompt ? prompt : "Which direction?", MSGCH_PROMPT);
+            mpr(prompt ? prompt : gettext("Which direction?"), MSGCH_PROMPT);
 
         const bool needs_path = (!testbits(flags, SPFLAG_GRID)
                                  && !testbits(flags, SPFLAG_TARGET));
@@ -1122,7 +1122,7 @@ spret_type your_spells(spell_type spell, int powc,
 
         targetter *hitfunc = _spell_targetter(spell, powc, range);
 
-        std::string title = "Aiming: <white>";
+        std::string title = gettext("Aiming: <white>");
         title += spell_title(spell);
         title += "</white>";
 
@@ -1144,7 +1144,7 @@ spret_type your_spells(spell_type spell, int powc,
         if (testbits(flags, SPFLAG_NOT_SELF) && spd.isMe())
         {
             if (spell == SPELL_TELEPORT_OTHER || spell == SPELL_POLYMORPH_OTHER)
-                mpr("Sorry, this spell works on others only.");
+                mpr(gettext("Sorry, this spell works on others only."));
             else
                 canned_msg(MSG_UNTHINKING_ACT);
 
@@ -1170,7 +1170,7 @@ spret_type your_spells(spell_type spell, int powc,
         if (you.religion != GOD_SIF_MUNA
             && you.penance[GOD_SIF_MUNA] && one_chance_in(20))
         {
-            god_speaks(GOD_SIF_MUNA, "You feel a surge of divine spite.");
+            god_speaks(GOD_SIF_MUNA, gettext("You feel a surge of divine spite."));
 
             // This will cause failure and increase the miscast effect.
             spfl = -you.penance[GOD_SIF_MUNA];
@@ -1181,8 +1181,8 @@ spret_type your_spells(spell_type spell, int powc,
                  && one_chance_in(20))
         {
             // And you thought you'd Necromutate your way out of penance...
-            simple_god_message(" does not allow the disloyal to dabble in "
-                               "death!", GOD_KIKUBAAQUDGHA);
+            simple_god_message(gettext(" does not allow the disloyal to dabble in "
+                               "death!"), GOD_KIKUBAAQUDGHA);
 
             // The spell still goes through, but you get a miscast anyway.
             MiscastEffect(&you, -god, SPTYP_NECROMANCY,
@@ -1195,8 +1195,8 @@ spret_type your_spells(spell_type spell, int powc,
         if (testbits(env.level_flags, LFLAG_NO_MAGIC_MAP)
             && testbits(flags, SPFLAG_MAPPING))
         {
-            mpr("The warped magic of this place twists your spell in on "
-                "itself!", MSGCH_WARN);
+            mpr(gettext("The warped magic of this place twists your spell in on "
+                "itself!"), MSGCH_WARN);
             spfl = spfail_chance / 2 - 1;
         }
 
@@ -1217,7 +1217,7 @@ spret_type your_spells(spell_type spell, int powc,
 
     case SPRET_FAIL:
     {
-        mprf("You miscast %s.", spell_title(spell));
+        mprf(gettext("You miscast %s."), spell_title(spell));
         flush_input_buffer(FLUSH_ON_FAILURE);
         learned_something_new(HINT_SPELL_MISCAST);
 
@@ -1261,11 +1261,11 @@ spret_type your_spells(spell_type spell, int powc,
 
         if (is_valid_spell(spell))
         {
-            mprf(MSGCH_ERROR, "Spell '%s' is not a player castable spell.",
+            mprf(MSGCH_ERROR, gettext("Spell '%s' is not a player castable spell."),
                  spell_title(spell));
         }
         else
-            mpr("Invalid spell!", MSGCH_ERROR);
+            mpr(gettext("Invalid spell!"), MSGCH_ERROR);
 
         return (SPRET_ABORT);
     }
@@ -1384,7 +1384,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 32
     case SPELL_SYMBOL_OF_TORMENT:
-        mpr("Sorry, this spell is gone!");
+        mpr(gettext("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1525,7 +1525,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 32
     case SPELL_RESIST_POISON:
-        mpr("Sorry, this spell is gone!");
+        mpr(gettext("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1588,7 +1588,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 32
     case SPELL_ALTER_SELF:
-        mpr("You feel quite happy just as you are, actually.");
+        mpr(gettext("You feel quite happy just as you are, actually."));
         return SPRET_ABORT;
 #endif
 
@@ -1616,7 +1616,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 32
     case SPELL_STONEMAIL:
-        mpr("Sorry, this spell is gone!");
+        mpr(gettext("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1635,7 +1635,7 @@ static spret_type _do_cast(spell_type spell, int powc,
     // other
 #if TAG_MAJOR_VERSION == 32
     case SPELL_EXTENSION:
-        mpr("Sorry, this spell is gone!");
+        mpr(gettext("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1671,15 +1671,15 @@ static spret_type _do_cast(spell_type spell, int powc,
     // XXX: This one too.
     case SPELL_DETECT_TRAPS:
         if (_can_cast_detect())
-            mprf("You detect %s", (detect_traps(powc) > 0) ? "traps!"
-                                                           : "nothing.");
+            mprf(gettext("You detect %s"), (detect_traps(powc) > 0) ? gettext("traps!")
+                                                           : pgettext("spl-cast","nothing."));
         break;
 
     // Only a Xom spell, no failure.
     case SPELL_DETECT_ITEMS:
         if (_can_cast_detect())
-            mprf("You detect %s", (detect_items(powc) > 0) ? "items!"
-                                                           : "nothing.");
+            mprf(gettext("You detect %s"), (detect_items(powc) > 0) ? gettext("items!")
+                                                           : pgettext("spl-cast","nothing."));
         break;
 
     // Only a Xom spell, no failure.
@@ -1692,7 +1692,7 @@ static spret_type _do_cast(spell_type spell, int powc,
         const int num_creatures = detect_creatures(powc);
 
         if (!num_creatures)
-            mpr("You detect nothing.");
+            mpr(gettext("You detect nothing."));
         else if (num_creatures == prev_detected)
         {
             // This is not strictly true. You could have cast
@@ -1700,10 +1700,10 @@ static spret_type _do_cast(spell_type spell, int powc,
             // glyph is still on the map when the original one has been
             // killed. Then another one is spawned, so the number is
             // the same as before. There's no way we can check this however.
-            mpr("You detect no further creatures.");
+            mpr(gettext("You detect no further creatures."));
         }
         else
-            mpr("You detect creatures!");
+            mpr(gettext("You detect creatures!"));
         break;
     }
 
@@ -1822,8 +1822,8 @@ std::string spell_noise_string(spell_type spell)
     const int noise = std::max(casting_noise, effect_noise);
 
     const char* noise_descriptions[] = {
-        "Silent", "Almost silent", "Quiet", "A bit loud", "Loud", "Very loud",
-        "Extremely loud", "Deafening"
+        M_("Silent"), M_("Almost silent"), M_("Quiet"), M_("A bit loud"), M_("Loud"), M_("Very loud"),
+        M_("Extremely loud"), M_("Deafening")
     };
 
     const int breakpoints[] = { 1, 2, 4, 8, 15, 20, 30 };
@@ -1833,10 +1833,10 @@ std::string spell_noise_string(spell_type spell)
 
 #ifdef WIZARD
     if (you.wizard)
-        return make_stringf("%s (%d)", desc, noise);
+        return make_stringf("%s (%d)", gettext(desc), noise);
     else
 #endif
-        return desc;
+        return gettext(desc);
 }
 
 int spell_power_colour(spell_type spell)
