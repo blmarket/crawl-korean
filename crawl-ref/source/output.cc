@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file
  * @brief Functions used to print player related info.
 **/
@@ -872,8 +872,8 @@ void print_stats_level()
 
 void redraw_skill(const std::string &your_name, const std::string &job_name)
 {
-	std::string title = gettext(job_name.c_str());
-	title += " " + your_name;
+    std::string title = gettext(job_name.c_str());
+    title += " " + your_name;
     //std::string title = your_name + " the " + job_name; (deceit, 110822)
     unsigned int in_len = strwidth(title);
     const unsigned int WIDTH = crawl_view.hudsz.x;
@@ -916,7 +916,7 @@ void redraw_skill(const std::string &your_name, const std::string &job_name)
     nowrap_eol_cprintf("%s", gettext(species.c_str()));
     if (you.religion != GOD_NO_GOD)
     {
-        std::string god = ",   ";
+        std::string god = ", ";
         god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
                                          : god_name(you.religion);
         nowrap_eol_cprintf("%s", god.c_str());
@@ -1008,7 +1008,8 @@ static std::string _get_monster_name(const monster_info& mi,
     int col;
     mi.to_string(count, monpane_desc, col, fullname);
 
-    if (count == 1) // (deceit, 110822 : 한글판에선 필요없는 부분으로 주석처리)
+#ifndef KR
+    if (count == 1) 
     {
         if (!mi.is(MB_NAME_THE))
         {
@@ -1019,6 +1020,7 @@ static std::string _get_monster_name(const monster_info& mi,
         else if (adj)
             desc = "the " + desc;
     } 
+#endif
 
     desc += monpane_desc;
     return (desc);
@@ -1063,7 +1065,7 @@ std::string mpr_monster_list(bool past)
         //msg  = "There ";
         //msg += (past ? "were" : "are");
         //msg += " no monsters in sight!";
-		msg += make_stringf("시야 내에 몬스터가 %s!",(past ? "없었다" : "없다"));
+        msg += make_stringf("시야 내에 몬스터가 %s!",(past ? "없었다" : "없다"));
         return (msg);
     }
 
@@ -1083,8 +1085,6 @@ std::string mpr_monster_list(bool past)
     describe.push_back(_get_monster_name(mons[mons.size()-1], count, true).c_str());
 
     msg = "당신은 ";
-    //msg += (past ? "could" : "can");
-    //msg += " see ";
 	
     if (describe.size() == 1)
         msg += describe[0];
@@ -1488,7 +1488,7 @@ static std::string _overview_screen_title(int sw)
              gettext(species_name(you.species).c_str()),
              gettext(you.class_name.c_str()));
 
-	char title[50];
+    char title[50];
     snprintf(title, sizeof title, "%s ", gettext(player_title().c_str()));
 
     char time_turns[50] = "";
