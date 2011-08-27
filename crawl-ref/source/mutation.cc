@@ -36,6 +36,7 @@
 #include "godpassive.h"
 #include "itemprop.h"
 #include "items.h"
+#include "korean.h"
 #include "macro.h"
 #include "menu.h"
 #include "mgen_data.h"
@@ -1328,7 +1329,7 @@ bool mutate(mutation_type which_mutation, bool failMsg,
     {
     case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, "You feel %s.", _stat_mut_desc(mutat, true));
+        mprf(MSGCH_MUTATION, gettext("You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, true)));
         gain_msg = false;
         break;
 
@@ -1447,7 +1448,7 @@ static bool _delete_single_mutation_level(mutation_type mutat)
     {
     case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, "당신은 %s을 느꼈다.", _stat_mut_desc(mutat, false));
+        mprf(MSGCH_MUTATION, gettext("You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, false)));
         lose_msg = false;
         break;
 

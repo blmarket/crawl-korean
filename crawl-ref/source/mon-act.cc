@@ -200,7 +200,7 @@ static bool _swap_monsters(monster* mover, monster* moved)
 
     if (you.can_see(mover) && you.can_see(moved))
     {
-        mprf("%s and %s swap places.", mover->name(DESC_CAP_THE).c_str(),
+        mprf(gettext("%s and %s swap places."), mover->name(DESC_CAP_THE).c_str(),
              moved->name(DESC_NOCAP_THE).c_str());
     }
 
@@ -862,7 +862,7 @@ static bool _handle_scroll(monster* mons)
             if (mons->caught() || mons_is_fleeing(mons)
                 || mons->pacified())
             {
-                simple_monster_message(mons, " reads a scroll.");
+                simple_monster_message(mons, gettext(" reads a scroll."));
                 monster_teleport(mons, false);
                 read  = true;
                 ident = ID_KNOWN_TYPE;
@@ -876,7 +876,7 @@ static bool _handle_scroll(monster* mons)
         {
             if (mons_near(mons))
             {
-                simple_monster_message(mons, " reads a scroll.");
+                simple_monster_message(mons, gettext(" reads a scroll."));
                 monster_blink(mons);
                 read  = true;
                 ident = ID_KNOWN_TYPE;
@@ -887,7 +887,7 @@ static bool _handle_scroll(monster* mons)
     case SCR_SUMMONING:
         if (mons_near(mons))
         {
-            simple_monster_message(mons, " reads a scroll.");
+            simple_monster_message(mons, gettext(" reads a scroll."));
             const int mon = create_monster(
                 mgen_data(MONS_ABOMINATION_SMALL, SAME_ATTITUDE(mons),
                           mons, 0, 0, mons->pos(), mons->foe,
@@ -898,7 +898,7 @@ static bool _handle_scroll(monster* mons)
             {
                 if (you.can_see(&menv[mon]))
                 {
-                    mprf("%s appears!", menv[mon].name(DESC_CAP_A).c_str());
+                    mprf(gettext("%s appears!"), menv[mon].name(DESC_CAP_A).c_str());
                     ident = ID_KNOWN_TYPE;
                 }
                 player_angers_monster(&menv[mon]);
@@ -988,10 +988,10 @@ static void _rod_fired_pre(monster* mons, bool nice_spell)
     if (!nice_spell)
         make_mons_stop_fleeing(mons);
 
-    if (!simple_monster_message(mons, " zaps a rod.")
+    if (!simple_monster_message(mons, gettext(" zaps a rod."))
         && !silenced(you.pos()))
     {
-        mpr("You hear a zap.", MSGCH_SOUND);
+        mpr(gettext("You hear a zap."), MSGCH_SOUND);
     }
 }
 
@@ -1306,10 +1306,10 @@ static bool _handle_wand(monster* mons, bolt &beem)
         if (!niceWand)
             make_mons_stop_fleeing(mons);
 
-        if (!simple_monster_message(mons, " zaps a wand."))
+        if (!simple_monster_message(mons, gettext(" zaps a wand.")))
         {
             if (!silenced(you.pos()))
-                mpr("You hear a zap.", MSGCH_SOUND);
+                mpr(gettext("You hear a zap."), MSGCH_SOUND);
         }
 
         // charge expenditure {dlb}
@@ -1608,19 +1608,21 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
     // Now, if a monster is, for some reason, throwing something really
     // stupid, it will have baseHit of 0 and damage of 0.  Ah well.
     std::string msg = mons->name(DESC_CAP_THE);
-    msg += ((projected == LRET_LAUNCHED) ? " shoots " : " throws ");
+    std::string obj_name;
 
     if (!pbolt.name.empty() && projected == LRET_LAUNCHED)
-        msg += article_a(pbolt.name);
+        obj_name = article_a(pbolt.name);
     else
     {
         // build shoot message
-        msg += item.name(true, DESC_NOCAP_A, false, false, false);
+        obj_name = item.name(true, DESC_NOCAP_A, false, false, false);
 
         // build beam name
         pbolt.name = item.name(false, DESC_PLAIN, false, false, false);
     }
-    msg += ".";
+    msg += make_stringf((projected == LRET_LAUNCHED) ? gettext(" shoots %s.") :
+                                                       gettext(" throws %s."),
+                        obj_name.c_str()); 
 
     if (mons->observable())
         mpr(msg.c_str());
@@ -1721,10 +1723,10 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
         // Otherwise we get "The weapon returns whence it came from!" regardless.
         if (you.see_cell(pbolt.target) || you.can_see(mons))
         {
-            msg::stream << "The weapon returns "
+            msg::stream << gettext("The weapon returns ")
                         << (you.can_see(mons)?
-                              ("to " + mons->name(DESC_NOCAP_THE))
-                            : "from whence it came")
+                              (pgettext("_mons_throw","to ") + mons->name(DESC_NOCAP_THE))
+                            : gettext("from whence it came"))
                         << "!" << std::endl;
         }
 
@@ -2094,7 +2096,7 @@ void handle_monster_move(monster* mons)
 
         if (mons->has_ench(ENCH_DAZED) && one_chance_in(5))
         {
-            simple_monster_message(mons, " is lost in a daze.");
+            simple_monster_message(mons, gettext(" is lost in a daze."));
             mons->speed_increment -= non_move_energy;
             continue;
         }
@@ -2531,9 +2533,9 @@ static bool _jelly_divide(monster* parent)
 
     mgrd(child->pos()) = child->mindex();
 
-    if (!simple_monster_message(parent, " splits in two!"))
+    if (!simple_monster_message(parent, gettext(" splits in two!")))
         if (player_can_hear(parent->pos()) || player_can_hear(child->pos()))
-            mpr("You hear a squelching noise.", MSGCH_SOUND);
+            mpr(gettext("You hear a squelching noise."), MSGCH_SOUND);
 
     if (crawl_state.game_is_arena())
         arena_placed_monster(child);
@@ -2619,8 +2621,8 @@ static bool _monster_eat_item(monster* mons, bool nearby)
 
         if (eaten && !shown_msg && player_can_hear(mons->pos()))
         {
-            mprf(MSGCH_SOUND, "You hear a%s slurping noise.",
-                 nearby ? "" : " distant");
+            mprf(MSGCH_SOUND, gettext("You hear a%s slurping noise."),
+                 nearby ? "" : gettext(" distant"));
             shown_msg = true;
         }
 
@@ -2628,7 +2630,7 @@ static bool _monster_eat_item(monster* mons, bool nearby)
         {
             gain = sacrifice_item_stack(*si, &js);
             if (gain > PIETY_NONE)
-                simple_god_message(" appreciates your sacrifice.");
+                simple_god_message(gettext(" appreciates your sacrifice."));
 
             jiyva_slurp_message(js);
         }
@@ -2663,9 +2665,9 @@ static bool _monster_eat_item(monster* mons, bool nearby)
             place_cloud(CLOUD_MIASMA, mons->pos(), 4 + random2(5), mons);
 
         if (death_ooze_ate_good)
-            simple_monster_message(mons, " twists violently!");
+            simple_monster_message(mons, gettext(" twists violently!"));
         else if (eaten_net)
-            simple_monster_message(mons, " devours the net!");
+            simple_monster_message(mons, gettext(" devours the net!"));
         else
             _jelly_divide(mons);
     }
@@ -2692,7 +2694,7 @@ static bool _monster_eat_single_corpse(monster* mons, item_def& item,
 
     if (nearby)
     {
-        mprf("%s eats %s.", mons->name(DESC_CAP_THE).c_str(),
+        mprf(gettext("%s eats %s."), mons->name(DESC_CAP_THE).c_str(),
              item.name(true, DESC_NOCAP_THE).c_str());
     }
 
@@ -2760,7 +2762,7 @@ static bool _monster_eat_food(monster* mons, bool nearby)
             {
                 if (nearby)
                 {
-                    mprf("%s eats %s.", mons->name(DESC_CAP_THE).c_str(),
+                    mprf(gettext("%s eats %s."), mons->name(DESC_CAP_THE).c_str(),
                          quant_name(*si, 1, DESC_NOCAP_THE).c_str());
                 }
 
@@ -3005,27 +3007,27 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
 
         if (was_secret)
         {
-            mprf("%s was actually a secret door!",
+            mprf(gettext("%s was actually a secret door!"),
                  feature_description(grid, NUM_TRAPS, "",
                                      DESC_CAP_THE, false).c_str());
             learned_something_new(HINT_FOUND_SECRET_DOOR, pos);
         }
 
-        std::string open_str = "opens the ";
+        std::string open_str = pgettext("_mons_open_door", "opens the ");
         open_str += adj;
         open_str += noun;
-        open_str += ".";
+        open_str += pgettext("_mons_open_door",".");
 
         mons->seen_context = open_str;
 
         if (!you.can_see(mons))
         {
-            mprf("Something unseen %s", open_str.c_str());
+            mprf(gettext("Something unseen %s"), open_str.c_str());
             interrupt_activity(AI_FORCE_INTERRUPT);
         }
         else if (!you_are_delayed())
         {
-            mprf("%s %s", mons->name(DESC_CAP_A).c_str(),
+            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_CAP_A).c_str(),
                  open_str.c_str());
         }
     }
@@ -3393,8 +3395,8 @@ static void _jelly_grows(monster* mons)
 {
     if (player_can_hear(mons->pos()))
     {
-        mprf(MSGCH_SOUND, "You hear a%s slurping noise.",
-             mons_near(mons) ? "" : " distant");
+        mprf(MSGCH_SOUND, gettext("You hear a%s slurping noise."),
+             mons_near(mons) ? "" : gettext(" distant"));
     }
 
     mons->hit_points += 5;
@@ -3514,11 +3516,11 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
 
             if (!you.can_see(mons))
             {
-                mpr("The door mysteriously vanishes.");
+                mpr(gettext("The door mysteriously vanishes."));
                 interrupt_activity(AI_FORCE_INTERRUPT);
             }
             else
-                simple_monster_message(mons, " eats the door!");
+                simple_monster_message(mons, gettext(" eats the door!"));
         }
     } // done door-eating jellies
 
@@ -3526,7 +3528,7 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     // moved back out of view, leaing the player nothing to see, so give
     // this message to avoid confusion.
     if (mons->seen_context == _just_seen && !you.see_cell(f))
-        simple_monster_message(mons, " moves out of view.");
+        simple_monster_message(mons, gettext(" moves out of view."));
     else if (crawl_state.game_is_hints() && (mons->flags & MF_WAS_IN_VIEW)
              && !you.see_cell(f))
     {
@@ -3632,7 +3634,7 @@ static bool _monster_move(monster* mons)
             {
                 if (one_chance_in(10))
                 {
-                    mprf(MSGCH_TALK_VISUAL, "%s rages.",
+                    mprf(MSGCH_TALK_VISUAL, gettext("%s rages."),
                          mons->name(DESC_CAP_THE).c_str());
                 }
                 noisy(noise_level, mons->pos(), mons->mindex());
@@ -3680,7 +3682,7 @@ static bool _monster_move(monster* mons)
         }
         if (adj_move.empty())
         {
-            simple_monster_message(mons, " flops around on dry land!");
+            simple_monster_message(mons, gettext(" flops around on dry land!"));
             return (false);
         }
 
@@ -3698,7 +3700,7 @@ static bool _monster_move(monster* mons)
         if (newpos == you.pos() && mons->wont_attack()
             || (mon2 && mons->wont_attack() == mon2->wont_attack()))
         {
-            simple_monster_message(mons, " flops around on dry land!");
+            simple_monster_message(mons, gettext(" flops around on dry land!"));
             return (false);
         }
 
@@ -3797,14 +3799,14 @@ static bool _monster_move(monster* mons)
                 if (you.see_cell(target))
                 {
                     const bool actor_visible = you.can_see(mons);
-                    mprf("%s knocks down a tree!",
+                    mprf(gettext("%s knocks down a tree!"),
                          actor_visible?
-                         mons->name(DESC_CAP_THE).c_str() : "Something");
+                         mons->name(DESC_CAP_THE).c_str() : gettext(M_("Something")));
                     noisy(25, target);
                 }
                 else
                 {
-                    noisy(25, target, "You hear a crashing sound.");
+                    noisy(25, target, gettext("You hear a crashing sound."));
                 }
             }
             else if (player_can_hear(mons->pos() + mmov))
@@ -3812,8 +3814,8 @@ static bool _monster_move(monster* mons)
                 // Message depends on whether caused by boring beetle or
                 // acid (Dissolution).
                 mpr((mons->type == MONS_BORING_BEETLE) ?
-                    "You hear a grinding noise." :
-                    "You hear a sizzling sound.", MSGCH_SOUND);
+                    gettext("You hear a grinding noise.") :
+                    gettext("You hear a sizzling sound."), MSGCH_SOUND);
             }
         }
     }

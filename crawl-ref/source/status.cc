@@ -837,9 +837,9 @@ static void _describe_stat_zero(status_info* inf, stat_type st)
     {
         inf->light_colour = you.stat(st) ? LIGHTRED : RED;
         inf->light_text   = gettext(s0_names[st]);
-        inf->short_text   = make_stringf(gettext("lost %s"), stat_desc(st, SD_NAME));
+        inf->short_text   = make_stringf(gettext("lost %s"), gettext(stat_desc(st, SD_NAME)));
         inf->long_text    = make_stringf(you.stat(st) ?
                 gettext("You are recovering from loss of %s.") : gettext("You have no %s!"),
-                stat_desc(st, SD_NAME));
+                gettext(stat_desc(st, SD_NAME)));
     }
 }

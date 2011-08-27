@@ -8,6 +8,7 @@
 #include "files.h"
 #include "itemname.h"
 #include "item_use.h"
+#include "korean.h"
 #include "libutil.h"
 #include "macro.h"
 #include "mon-util.h"
@@ -69,10 +70,10 @@ static void _handle_stat_change(const char *aux = NULL, bool see_source = true);
 void attribute_increase()
 {
     crawl_state.stat_gain_prompt = true;
-    mpr("Your experience leads to an increase in your attributes!",
+    mpr(gettext("Your experience leads to an increase in your attributes!"),
         MSGCH_INTRINSIC_GAIN);
     learned_something_new(HINT_CHOOSE_STAT);
-    mpr("Increase (S)trength, (I)ntelligence, or (D)exterity? ", MSGCH_PROMPT);
+    mpr(gettext("Increase (S)trength, (I)ntelligence, or (D)exterity? "), MSGCH_PROMPT);
     mouse_control mc(MOUSE_MODE_MORE);
 
     while (true)
@@ -181,7 +182,7 @@ void jiyva_stat_action()
         }
     if (choices)
     {
-        simple_god_message("'s power touches on your attributes.");
+        simple_god_message(gettext("'s power touches on your attributes."));
         const std::string cause = "the 'helpfulness' of "
                                   + god_name(you.religion);
         modify_stat(static_cast<stat_type>(stat_up_choice), 1, true, cause.c_str());
@@ -205,9 +206,9 @@ static kill_method_type _statloss_killtype(stat_type stat)
 }
 
 const char* descs[NUM_STATS][NUM_STAT_DESCS] = {
-    { "strength", "weakened", "weaker", "stronger" },
-    { "intelligence", "dopey", "stupid", "clever" },
-    { "dexterity", "clumsy", "clumsy", "agile" }
+    { M_("strength"), P_("stat", "weakened"), P_("stat", "weaker"), P_("stat", "stronger") },
+    { M_("intelligence"), P_("stat", "dopey"), P_("stat", "stupid"), P_("stat", "clever") },
+    { M_("dexterity"), P_("stat", "clumsy"), P_("stat", "clumsy"), P_("stat", "agile") }
 };
 
 const char* stat_desc(stat_type stat, stat_desc_type desc)
@@ -234,8 +235,8 @@ void modify_stat(stat_type which_stat, int8_t amount, bool suppress_msg,
     if (!suppress_msg)
     {
         mprf((amount > 0) ? MSGCH_INTRINSIC_GAIN : MSGCH_WARN,
-             "You feel %s.",
-             stat_desc(which_stat, (amount > 0) ? SD_INCREASE : SD_DECREASE));
+             pgettext("stat", "You feel %s."),
+             pgettext_expr("stat", stat_desc(which_stat, (amount > 0) ? SD_INCREASE : SD_DECREASE)));
     }
 
     you.base_stats[which_stat] += amount;
@@ -262,8 +263,8 @@ void notify_stat_change(stat_type which_stat, int8_t amount, bool suppress_msg,
     if (!suppress_msg)
     {
         mprf((amount > 0) ? MSGCH_INTRINSIC_GAIN : MSGCH_WARN,
-             "You feel %s.",
-             stat_desc(which_stat, (amount > 0) ? SD_INCREASE : SD_DECREASE));
+             pgettext("stat", "You feel %s."),
+             pgettext_expr("stat", stat_desc(which_stat, (amount > 0) ? SD_INCREASE : SD_DECREASE)));
     }
 
     _handle_stat_change(which_stat, cause, see_source);
@@ -454,16 +455,16 @@ bool lose_stat(stat_type which_stat, int8_t stat_loss, bool force,
                 && ring->sub_type == RING_SUSTAIN_ABILITIES)
             {
                 set_ident_type(*ring, ID_KNOWN_TYPE);
-                mprf("You are wearing: %s",
+                mprf(gettext("You are wearing: %s"),
                      ring->name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
     }
 
     mprf(stat_loss > 0 ? MSGCH_WARN : MSGCH_PLAIN,
-         "You feel %s%s.",
-         stat_desc(which_stat, SD_LOSS),
-         stat_loss > 0 ? "" : " for a moment");
+         pgettext("stat", "You feel %s%s."),
+         pgettext_expr("stat", stat_desc(which_stat, SD_LOSS)),
+         stat_loss > 0 ? "" : gettext(" for a moment"));
 
     if (stat_loss > 0)
     {
@@ -539,11 +540,11 @@ static std::string _stat_name(stat_type stat)
     switch (stat)
     {
     case STAT_STR:
-        return ("strength");
+        return (M_("strength"));
     case STAT_INT:
-        return ("intelligence");
+        return (M_("intelligence"));
     case STAT_DEX:
-        return ("dexterity");
+        return (M_("dexterity"));
     default:
         die("invalid stat");
     }
@@ -591,8 +592,8 @@ bool restore_stat(stat_type which_stat, int8_t stat_gain,
     if (!suppress_msg)
     {
         mprf(recovery ? MSGCH_RECOVERY : MSGCH_PLAIN,
-             "You feel your %s returning.",
-             _stat_name(which_stat).c_str());
+             gettext("You feel your %s returning."),
+             gettext(_stat_name(which_stat).c_str()));
     }
 
     if (stat_gain == 0 || stat_gain > you.stat_loss[which_stat])
@@ -625,7 +626,7 @@ static void _handle_stat_change(stat_type stat, const char* cause, bool see_sour
     {
         you.stat_zero[stat] = STAT_ZERO_START;
         you.stat_zero_cause[stat] = cause;
-        mprf(MSGCH_WARN, "You have lost your %s.", stat_desc(stat, SD_NAME));
+        mprf(MSGCH_WARN, gettext("You have lost your %s."), gettext(stat_desc(stat, SD_NAME)));
         // 2 to 5 turns of paralysis (XXX: decremented right away?)
         you.increase_duration(DUR_PARALYSIS, 2 + random2(3));
     }
@@ -674,7 +675,7 @@ void update_stat_zero()
             you.stat_zero[s]--;
             if (you.stat_zero[s] == 0)
             {
-                mprf("Your %s has recovered.", stat_desc(s, SD_NAME));
+                mprf(gettext("Your %s has recovered."), gettext(stat_desc(s, SD_NAME)));
                 you.redraw_stats[s] = true;
             }
         }
@@ -703,14 +704,14 @@ void update_stat_zero()
     case 1:
         if (you.duration[DUR_PARALYSIS])
             break;
-        mprf(MSGCH_WARN, "You faint for lack of %s.",
-                         stat_desc(para_stat, SD_NAME));
+        mprf(MSGCH_WARN, gettext("You faint for lack of %s."),
+                         gettext(stat_desc(para_stat, SD_NAME)));
         you.increase_duration(DUR_PARALYSIS, 1 + roll_dice(1,3));
         break;
     default:
         if (you.duration[DUR_PARALYSIS])
             break;
-        mprf(MSGCH_WARN, "Your lost attributes cause you to faint.");
+        mprf(MSGCH_WARN, gettext("Your lost attributes cause you to faint."));
         you.increase_duration(DUR_PARALYSIS, 1 + roll_dice(num_para, 3));
         break;
     }
