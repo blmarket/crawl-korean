@@ -1566,7 +1566,7 @@ static void _experience_check()
     {
         int xp_needed = (you.experience - exp_needed(you.experience_level)) * 100 /
                         (exp_needed(you.experience_level + 1) - exp_needed(you.experience_level));
-        /// 1. 필요 경험치, 2. 다음 레벨
+        /// 1. 현재 경험치%, 2. 다음 레벨
         mprf(gettext("You are %d%% of the way to level %d."),
               xp_needed,
               you.experience_level + 1);
