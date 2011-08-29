@@ -1869,9 +1869,9 @@ int melee_attack::player_weapon_type_modify(int damage)
         && you.species != SP_FELID)
     {
         if (weap_type != WPN_UNKNOWN)
-            attack_verb = N_("hit");
+            attack_verb = V_("hit");
         else
-            attack_verb = N_("clumsily bash");
+            attack_verb = V_("clumsily bash");
 
         return (damage);
     }
@@ -1965,12 +1965,12 @@ int melee_attack::player_weapon_type_modify(int damage)
     {
     case DAM_PIERCE:
         if (damage < HIT_MED)
-            attack_verb = N_("puncture");
+            attack_verb = V_("puncture");
         else if (damage < HIT_STRONG)
-            attack_verb = N_("impale");
+            attack_verb = V_("impale");
         else
         {
-            attack_verb = N_("spit");
+            attack_verb = V_("spit");
             if (defender->atype() == ACT_MONSTER
                 && defender_visible
                 && mons_genus(defender->as_monster()->type) == MONS_HOG)
@@ -1984,38 +1984,38 @@ int melee_attack::player_weapon_type_modify(int damage)
 
     case DAM_SLICE:
         if (damage < HIT_MED)
-            attack_verb = N_("slash");
+            attack_verb = V_("slash");
         else if (damage < HIT_STRONG)
-            attack_verb = N_("slice");
+            attack_verb = V_("slice");
         else if (mons_genus(defender->as_monster()->type) == MONS_OGRE)
         {
-            attack_verb = N_("dice");
+            attack_verb = V_("dice");
             verb_degree = gettext(" like an onion");
         }
         else
         {
-            attack_verb = N_("open");
+            attack_verb = V_("open");
             verb_degree = gettext(" like a pillowcase");
         }
         break;
 
     case DAM_BLUDGEON:
         if (damage < HIT_MED)
-            attack_verb = one_chance_in(4) ? N_("thump") : N_("sock");
+            attack_verb = one_chance_in(4) ? V_("thump") : V_("sock");
         else if (damage < HIT_STRONG)
-            attack_verb = N_("bludgeon");
+            attack_verb = V_("bludgeon");
         else
         {
-            attack_verb = N_("crush");
+            attack_verb = V_("crush");
             verb_degree = gettext(" like a grape");
         }
         break;
 
     case DAM_WHIP:
         if (damage < HIT_MED)
-            attack_verb = N_("whack");
+            attack_verb = V_("whack");
         else if (damage < HIT_STRONG)
-            attack_verb = N_("thrash");
+            attack_verb = V_("thrash");
         else
         {
             switch(defender->holiness())
@@ -2023,11 +2023,11 @@ int melee_attack::player_weapon_type_modify(int damage)
             case MH_HOLY:
             case MH_NATURAL:
             case MH_DEMONIC:
-                attack_verb = N_("punish");
+                attack_verb = V_("punish");
                 verb_degree = gettext(" causing immense pain");
                 break;
             default:
-                attack_verb = N_("devastate");
+                attack_verb = V_("devastate");
             }
         }
         break;
@@ -2036,37 +2036,37 @@ int melee_attack::player_weapon_type_modify(int damage)
         if (you.damage_type() == DVORP_CLAWING)
         {
             if (damage < HIT_WEAK)
-                attack_verb = N_("scratch");
+                attack_verb = V_("scratch");
             else if (damage < HIT_MED)
-                attack_verb = N_("claw");
+                attack_verb = V_("claw");
             else if (damage < HIT_STRONG)
-                attack_verb = N_("mangle");
+                attack_verb = V_("mangle");
             else
-                attack_verb = N_("eviscerate");
+                attack_verb = V_("eviscerate");
         }
         else if (you.damage_type() == DVORP_TENTACLE)
         {
             if (damage < HIT_WEAK)
-                attack_verb = N_("tentacle-slap");
+                attack_verb = V_("tentacle-slap");
             else if (damage < HIT_MED)
-                attack_verb = N_("bludgeon");
+                attack_verb = V_("bludgeon");
             else if (damage < HIT_STRONG)
-                attack_verb = N_("batter");
+                attack_verb = V_("batter");
             else
-                attack_verb = N_("thrash");
+                attack_verb = V_("thrash");
         }
         else
         {
             if (damage < HIT_MED)
-                attack_verb = N_("punch");
+                attack_verb = V_("punch");
             else
-                attack_verb = N_("pummel");
+                attack_verb = V_("pummel");
         }
         break;
 
     case WPN_UNKNOWN:
     default:
-        attack_verb = N_("hit");
+        attack_verb = V_("hit");
         break;
     }
 
@@ -2396,7 +2396,7 @@ void melee_attack::drain_defender()
                     /// 1. 공격자. 2. drain의 동사형. 3. 대상
                     gettext("%s %s %s!"),
                     atk_name(DESC_CAP_THE).c_str(),
-                    translate_verb(attacker, N_("drain")).c_str(),
+                    translate_verb(attacker, V_("drain")).c_str(),
                     mons_defender_name().c_str());
         }
 
@@ -2437,7 +2437,7 @@ bool melee_attack::distortion_affects_defender()
                     /// 1. 방어하는 사람 2. bask의 동사형. 그러므로 번역문에서는 생략해버립시다.
                     make_stringf(gettext("%s %s in the distortional energy."),
                                  def_name(DESC_CAP_THE).c_str(),
-                                 translate_verb(defender, N_("bask")).c_str());
+                                 translate_verb(defender, V_("bask")).c_str());
             }
 
             defender->heal(1 + random2avg(7, 2), true); // heh heh
@@ -2561,7 +2561,7 @@ void melee_attack::pain_affects_defender()
                 /// 1. 수비자. 2. writhe의 동사형.
                 make_stringf(gettext("%s %s in agony."),
                              defender->name(DESC_CAP_THE).c_str(),
-                             translate_verb(defender, N_("writhe")).c_str());
+                             translate_verb(defender, V_("writhe")).c_str());
         }
         special_damage += random2(1 + attacker->skill(SK_NECROMANCY));
     }
@@ -3690,14 +3690,14 @@ bool melee_attack::chop_hydra_head(int dam,
 
         if (dam_type == DVORP_CLAWING)
         {
-            static const char *claw_verbs[] = { N_("rip"), N_("tear"), N_("claw") };
+            static const char *claw_verbs[] = { M_("rip"), M_("tear"), M_("claw") };
             verb = RANDOM_ELEMENT(claw_verbs);
         }
         else
         {
             static const char *slice_verbs[] =
             {
-                N_("slice"), N_("lop"), N_("chop"), N_("hack")
+                M_("slice"), M_("lop"), M_("chop"), M_("hack")
             };
             verb = RANDOM_ELEMENT(slice_verbs);
         }
@@ -4575,7 +4575,7 @@ bool melee_attack::attack_shield_blocked(bool verbose)
             /// 수비자, block, 공격자의 소유형
             mprf(gettext("%s %s %s attack."),
                  def_name(DESC_CAP_THE).c_str(),
-                 translate_verb(defender, N_("block")).c_str(),
+                 translate_verb(defender, V_("block")).c_str(),
                  atk_name(DESC_NOCAP_ITS).c_str());
         }
 
@@ -5208,7 +5208,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, freeze의 동사, 대상, ./!
             mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("freeze")).c_str(),
+                 translate_verb(attacker, V_("freeze")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
 
@@ -5235,7 +5235,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, shock의 동사, 대상, ./!
             mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("shock")).c_str(),
+                 translate_verb(attacker, V_("shock")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
         }
@@ -5364,7 +5364,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, infuriate, 대상
             mprf(gettext("%s %s %s!"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("infuriate")).c_str(),
+                 translate_verb(attacker, V_("infuriate")).c_str(),
                  mons_defender_name().c_str());
         }
 
@@ -5431,7 +5431,7 @@ void melee_attack::mons_apply_attack_flavour(const mon_attack_def &attk)
             /// 공격자, sear, 대상, ./!
             mprf(gettext("%s %s %s%s"),
                  atk_name(DESC_CAP_THE).c_str(),
-                 translate_verb(attacker, N_("sear")).c_str(),
+                 translate_verb(attacker, V_("sear")).c_str(),
                  mons_defender_name().c_str(),
                  special_attack_punctuation().c_str());
 

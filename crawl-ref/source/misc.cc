@@ -48,6 +48,7 @@
 #include "itemprop.h"
 #include "items.h"
 #include "item_use.h"
+#include "korean.h"
 #include "libutil.h"
 #include "macro.h"
 #include "makeitem.h"
@@ -432,15 +433,15 @@ void maybe_coagulate_blood_potions_floor(int obj)
 static std::string _get_desc_quantity(const int quant, const int total)
 {
     if (total == quant)
-        return "Your";
+        return P_("potion_rot", "Your");
     else if (quant == 1)
-        return "One of your";
+        return P_("potion_rot", "One of your");
     else if (quant == 2)
-        return "Two of your";
+        return P_("potion_rot", "Two of your");
     else if (quant >= (total * 3) / 4)
-        return "Most of your";
+        return P_("potion_rot", "Most of your");
     else
-        return "Some of your";
+        return P_("potion_rot", "Some of your");
 }
 
 // Prints messages for blood potions coagulating in inventory (coagulate = true)
@@ -451,8 +452,10 @@ static void _potion_stack_changed_message(item_def &potion, int num_changed,
     ASSERT(num_changed > 0);
 
     verb = replace_all(verb, "%s", num_changed == 1 ? "s" : "");
-    mprf(MSGCH_ROTTEN_MEAT, "%s %s %s.",
-         _get_desc_quantity(num_changed, potion.quantity).c_str(),
+    /// 포션이 썩거나(blood->coagulated) 저주받았을 때(->decay) 나오는 메시지.
+    /// 1. 갯수를 의미하는 단어. 2. 포션 이름 3. 동사
+    mprf(MSGCH_ROTTEN_MEAT, pgettext("potion_rot", "%s %s %s."),
+         pgettext_expr("potion_rot", _get_desc_quantity(num_changed, potion.quantity).c_str()),
          potion.name(true, DESC_PLAIN, false).c_str(),
          verb.c_str());
 }
@@ -527,7 +530,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     {
         // Only coagulated blood can rot.
         ASSERT(blood.sub_type == POT_BLOOD_COAGULATED);
-        _potion_stack_changed_message(blood, rot_count, "rot%s away");
+        _potion_stack_changed_message(blood, rot_count, pgettext("porion_rot", "rot%s away"));
         blood.quantity -= rot_count;
 
         if (!knew_coag)
@@ -556,7 +559,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     const bool knew_blood = get_ident_type(OBJ_POTIONS, POT_BLOOD)
                                 == ID_KNOWN_TYPE;
 
-    _potion_stack_changed_message(blood, coag_count, "coagulate%s");
+    _potion_stack_changed_message(blood, coag_count, pgettext("potion_rot", "coagulate%s"));
 
     request_autoinscribe();
 
@@ -1231,7 +1234,7 @@ void search_around(bool only_adjacent)
 
             if (grd(*ri) == DNGN_SECRET_DOOR && x_chance_in_y(effective+1, 17))
             {
-                mpr("You found a secret door!");
+                mpr(gettext("You found a secret door!"));
                 reveal_secret_door(*ri);
                 practise(EX_FOUND_SECRET_DOOR);
             }
@@ -1242,7 +1245,7 @@ void search_around(bool only_adjacent)
                 if (ptrap)
                 {
                     ptrap->reveal();
-                    mprf("You found %s trap!",
+                    mprf(gettext("You found %s trap!"),
                          ptrap->name(DESC_NOCAP_A).c_str());
                     learned_something_new(HINT_SEEN_TRAP, *ri);
                     practise(EX_TRAP_FOUND);
@@ -1261,7 +1264,7 @@ void search_around(bool only_adjacent)
 
 void emergency_untransform()
 {
-    mpr("You quickly transform back into your natural form.");
+    mpr(gettext("You quickly transform back into your natural form."));
     untransform(false, true); // We're already entering the water.
 
     if (you.species == SP_MERFOLK)
@@ -1274,12 +1277,12 @@ void merfolk_start_swimming(bool stepped)
         return;
 
     if (stepped)
-        mpr("Your legs become a tail as you enter the water.");
+        mpr(gettext("Your legs become a tail as you enter the water."));
     else
-        mpr("Your legs become a tail as you dive into the water.");
+        mpr(gettext("Your legs become a tail as you dive into the water."));
 
     if (you.invisible())
-        mpr("...but don't expect to remain undetected.");
+        mpr(gettext("...but don't expect to remain undetected."));
 
     you.fishtail = true;
     remove_one_equip(EQ_BOOTS);
@@ -1353,9 +1356,9 @@ bool go_berserk(bool intentional, bool potion)
 
     if (stasis_blocks_effect(true,
                              true,
-                             "%s thrums violently and saps your rage.",
+                             gettext("%s thrums violently and saps your rage."),
                              3,
-                             "%s vibrates violently and saps your rage."))
+                             gettext("%s vibrates violently and saps your rage.")))
     {
         return (false);
     }
@@ -1363,7 +1366,7 @@ bool go_berserk(bool intentional, bool potion)
     if (crawl_state.game_is_hints())
         Hints.hints_berserk_counter++;
 
-    mpr("A red film seems to cover your vision as you go berserk!");
+    mpr(gettext("A red film seems to cover your vision as you go berserk!"));
 
     you.duration[DUR_FINESSE] = 0; // Totally incompatible.
 
@@ -1377,15 +1380,15 @@ bool go_berserk(bool intentional, bool potion)
         if (intentional)
         {
             did_god_conduct(DID_HASTY, 8);
-            simple_god_message(" forces you to slow down.");
+            simple_god_message(gettext(" forces you to slow down."));
         }
         else
-            simple_god_message(" protects you from inadvertent hurry.");
+            simple_god_message(gettext(" protects you from inadvertent hurry."));
     }
     else
-        mpr("You feel yourself moving faster!");
+        mpr(gettext("You feel yourself moving faster!"));
 
-    mpr("You feel mighty!");
+    mpr(gettext("You feel mighty!"));
 
     // Cutting the duration in half since berserk causes haste and hasted
     // actions have half the usual delay. This keeps player turns
@@ -1610,7 +1613,7 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
             {
                 if (announce)
                 {
-                    mprf(MSGCH_WARN, "You're standing in a cloud of %s!",
+                    mprf(MSGCH_WARN, gettext("You're standing in a cloud of %s!"),
                          cloud_name_at_index(cloudidx).c_str());
                 }
                 return (false);
@@ -1634,14 +1637,14 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
     {
         const monster& m = *visible[0];
         const std::string monname = mons_is_mimic(m.type)
-                                  ? "A mimic"
+                                  ? gettext(M_("A mimic"))
                                   : m.name(DESC_CAP_A);
-        msg = make_stringf("%s is nearby!", monname.c_str());
+        msg = make_stringf(gettext("%s is nearby!"), monname.c_str());
     }
     else if (visible.size() > 1)
-        msg = "There are monsters nearby!";
+        msg = gettext("There are monsters nearby!");
     else if (_exposed_monsters_nearby(want_move))
-        msg = "There is a strange disturbance nearby!";
+        msg = gettext("There is a strange disturbance nearby!");
     else
         return (true);
 
@@ -1784,19 +1787,23 @@ static void _drop_tomb(const coord_def& pos, bool premature)
     if (count)
     {
         if (seen_change && !zin)
-            mprf("The walls disappear%s!",
-                 premature ? " prematurely" : "");
+            mprf(gettext("The walls disappear%s!"),
+                 premature ? gettext(" prematurely") : "");
         else if (seen_change && zin)
-            mprf("Zin %s %s %s.",
-            (mon) ? "releases" : "dismisses",
-            (mon) ? mon->name(DESC_NOCAP_THE).c_str() : "the silver walls,",
-            (mon) ? "from its prison" : "but there is nothing inside them");
+        {
+            if(mon)
+                mprf(gettext("Zin releases %s from its prison."), 
+                    mon->name(DESC_NOCAP_THE).c_str());
+            else
+                mpr(gettext("Zin dismisses the silver walls, but there is "
+                            "nothing inside them."));
+        }
         else
         {
             if (!silenced(you.pos()))
-                mpr("You hear a deep rumble.", MSGCH_SOUND);
+                mpr(gettext("You hear a deep rumble."), MSGCH_SOUND);
             else
-                mpr("You feel the ground shudder.");
+                mpr(gettext("You feel the ground shudder."));
         }
     }
 }
@@ -2041,12 +2048,12 @@ void revive()
     if (you.hp_max <= 0)
     {
         you.lives = 0;
-        mpr("You are too frail to live.");
+        mpr(gettext("You are too frail to live."));
         // possible only with an extreme abuse of Borgnjor's
         ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_DRAINING);
     }
 
-    mpr("You rejoin the land of the living...");
+    mpr(gettext("You rejoin the land of the living..."));
     more();
 }
 
@@ -2213,37 +2220,37 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     {
         // Listed in the form: "your rat", "Blork the orc".
         std::string mon_name = mon->name(DESC_PLAIN);
-        mon_name = std::string("your ") +
-                   (you.religion == GOD_OKAWARU ? "ally the " : "") +
+        mon_name = std::string(gettext(M_("your "))) +
+                   (you.religion == GOD_OKAWARU ? gettext(M_("ally the ")) : "") +
                    mon_name;
         std::string verb = "";
         bool need_mon_name = true;
         if (beam_attack)
         {
-            verb = "fire ";
             if (mon_target)
-                verb += "at ";
+                verb = gettext("fire at %s");
             else if (you.pos() < beam_target && beam_target < mon->pos()
                      || you.pos() > beam_target && beam_target > mon->pos())
             {
                 if (autohit_first)
                     return (false);
 
-                verb += "in " + apostrophise(mon_name) + " direction";
+                verb = make_stringf(gettext("fire in %s direction"),
+                                    apostrophise(mon_name).c_str());
                 need_mon_name = false;
             }
             else
-                verb += "through ";
+                verb += gettext("fire through %s");
         }
         else
-            verb = "attack ";
+            verb = gettext("attack %s");
 
         if (need_mon_name)
-            verb += mon_name;
+            verb = make_stringf(verb.c_str(), mon_name.c_str());
 
-        snprintf(info, INFO_SIZE, "Really %s%s?",
+        snprintf(info, INFO_SIZE, gettext("Really %s%s?"),
                  verb.c_str(),
-                 (inSanctuary) ? ", despite your sanctuary" : "");
+                 (inSanctuary) ? gettext(", despite your sanctuary") : "");
 
         prompt = true;
     }
@@ -2255,20 +2262,21 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
                 && you.religion == GOD_SHINING_ONE
                 && !tso_unchivalric_attack_safe_monster(mon))
     {
-        snprintf(info, INFO_SIZE, "Really %s the %s%s%s%s%s?",
-                 (beam_attack) ? (mon_target) ? "fire at"
-                                              : "fire through"
-                               : "attack",
-                 (isUnchivalric) ? "helpless "
+        /// 1. 동사, 2. helpless 3. friendly,non-hostile,neutral, 4. holy, 5. 몬스터 이름, 6. 수식어구
+        snprintf(info, INFO_SIZE, gettext("Really %s the %s%s%s%s%s?"),
+                 (beam_attack) ? (mon_target) ? gettext(M_("fire at"))
+                                              : gettext(M_("fire through"))
+                               : gettext(M_("attack")),
+                 (isUnchivalric) ? gettext("helpless ")
                                  : "",
-                 (isFriendly)    ? "friendly " :
-                 (wontAttack)    ? "non-hostile " :
-                 (isNeutral)     ? "neutral "
+                 (isFriendly)    ? gettext("friendly ") :
+                 (wontAttack)    ? gettext("non-hostile ") :
+                 (isNeutral)     ? gettext("neutral ")
                                  : "",
-                 (isHoly)        ? "holy "
+                 (isHoly)        ? gettext("holy ")
                                  : "",
                  mon->name(DESC_PLAIN).c_str(),
-                 (inSanctuary)   ? ", despite your sanctuary"
+                 (inSanctuary)   ? gettext(", despite your sanctuary")
                                  : "");
 
         prompt = true;
@@ -2346,7 +2354,7 @@ void swap_with_monster(monster* mon_to_swap)
     // Be nice: no swapping into uninhabitable environments.
     if (!you.is_habitable(newpos) || !mon.is_habitable(you.pos()))
     {
-        mpr("You spin around.");
+        mpr(gettext("You spin around."));
         return;
     }
 
@@ -2356,7 +2364,8 @@ void swap_with_monster(monster* mon_to_swap)
     // If it was submerged, it surfaces first.
     mon.del_ench(ENCH_SUBMERGED);
 
-    mprf("You swap places with %s.", mon.name(DESC_NOCAP_THE).c_str());
+    mprf(gettext("You swap places with %s."), 
+         mon.name(DESC_NOCAP_THE).c_str());
 
     // Pick the monster up.
     mgrd(newpos) = NON_MONSTER;
@@ -2393,9 +2402,9 @@ void swap_with_monster(monster* mon_to_swap)
         {
             you.attribute[ATTR_HELD] = 10;
             if (get_trapping_net(you.pos()) != NON_ITEM)
-                mpr("You become entangled in the net!");
+                mpr(gettext("You become entangled in the net!"));
             else
-                mpr("You get stuck in the web!");
+                mpr(gettext("You get stuck in the web!"));
             you.redraw_quiver = true; // Account for being in a net.
             // Xom thinks this is hilarious if you trap yourself this way.
             if (you_caught)
@@ -2448,7 +2457,7 @@ void maybe_id_ring_TC()
             {
                 set_ident_type(ring.base_type, ring.sub_type, ID_KNOWN_TYPE);
                 set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
+                mprf(gettext("You are wearing: %s"),
                      ring.name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
@@ -2480,7 +2489,8 @@ int apply_chunked_AC(int dam, int ac)
 void entered_malign_portal(actor* act)
 {
     if (you.can_see(act))
-        mprf("The portal repels %s, its terrible forces doing untold damage!", (act->atype() == ACT_PLAYER) ? "you" : act->name(DESC_NOCAP_THE).c_str());
+        mprf(gettext("The portal repels %s, its terrible forces doing untold damage!"), 
+             (act->atype() == ACT_PLAYER) ? gettext(M_("you")) : act->name(DESC_NOCAP_THE).c_str());
 
     act->blink(false);
     if (act->atype() == ACT_PLAYER)
@@ -2498,6 +2508,12 @@ void handle_real_time(time_t t)
 
 std::string part_stack_string(const int num, const int total)
 {
+#ifdef KR
+    if (num == total)
+        return "전부";
+    return make_stringf("%d개", num);
+#endif
+
     if (num == total)
         return "Your";
 
