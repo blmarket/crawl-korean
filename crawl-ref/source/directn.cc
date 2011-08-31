@@ -362,13 +362,13 @@ void direction_chooser::print_top_prompt() const
 
 void direction_chooser::print_key_hints() const
 {
-    std::string prompt = "Press: ? - help";
+    std::string prompt = gettext("Press: ? - help");
 
     if (just_looking)
     {
         if (you.see_cell(target()))
-            prompt += ", v - describe";
-        prompt += ", . - travel";
+            prompt += gettext(", v - describe");
+        prompt += gettext(", . - travel");
     }
     else
     {
@@ -377,11 +377,11 @@ void direction_chooser::print_key_hints() const
         {
         case DIR_NONE:
             if (!target_unshifted)
-                prompt += ", Shift-Dir - straight line";
+                prompt += gettext(", Shift-Dir - straight line");
             prompt += hint_string;
             break;
         case DIR_TARGET:
-            prompt += ", Dir - move target cursor";
+            prompt += gettext(", Dir - move target cursor");
             prompt += hint_string;
             break;
         case DIR_DIR:
@@ -601,7 +601,7 @@ void full_describe_view()
 
     if (list_mons.empty() && list_items.empty() && list_features.empty())
     {
-        mprf("No monsters, items or features are visible.");
+        mprf(gettext("No monsters, items or features are visible."));
         return;
     }
 
@@ -637,8 +637,11 @@ void full_describe_view()
         action += "travel"; // toggle travels to items/features
     }
     title = "Visible " + title;
-    std::string title1 = title + " (select to " + action + ", '!' to examine):";
-    title += " (select for more detail, '!' to " + action + "):";
+    std::string title1 = make_stringf(gettext("%s  (select to %s, '!' to examine):"),
+                                      title.c_str(),
+                                      action.c_str());
+    title += make_stringf(gettext(" (select for more detail, '!' to %s):"),
+                          action.c_str());
 
     desc_menu.set_title(new MenuEntry(title, MEL_TITLE), false);
     desc_menu.set_title(new MenuEntry(title1, MEL_TITLE));
@@ -679,7 +682,7 @@ void full_describe_view()
                                                          DESC_CAP_A, true);
 
             if (mi->is(MB_MESMERIZING))
-                str += ", keeping you mesmerised";
+                str += gettext(", keeping you mesmerised");
 
             if (mi->dam != MDAM_OKAY)
                 str += ", " + mi->damage_desc();
@@ -970,11 +973,11 @@ bool direction_chooser::move_is_ok() const
             if (you.see_cell(target()))
             {
                 ASSERT(you.xray_vision);
-                mpr("Your divination affects just sight, not spellcasting.",
+                mpr(gettext("Your divination affects just sight, not spellcasting."),
                     MSGCH_EXAMINE_FILTER);
             }
             else
-                mpr("Sorry, you can't target what you can't see.",
+                mpr(gettext("Sorry, you can't target what you can't see."),
                     MSGCH_EXAMINE_FILTER);
             return (false);
         }
@@ -989,7 +992,7 @@ bool direction_chooser::move_is_ok() const
 
             if (cancel_at_self)
             {
-                mpr("Sorry, you can't target yourself.", MSGCH_EXAMINE_FILTER);
+                mpr(gettext("Sorry, you can't target yourself."), MSGCH_EXAMINE_FILTER);
                 return (false);
             }
 
@@ -999,12 +1002,12 @@ bool direction_chooser::move_is_ok() const
             {
                 if (Options.allow_self_target == CONFIRM_CANCEL)
                 {
-                    mpr("That would be overly suicidal.", MSGCH_EXAMINE_FILTER);
+                    mpr(gettext("That would be overly suicidal."), MSGCH_EXAMINE_FILTER);
                     return (false);
                 }
                 else if (Options.allow_self_target == CONFIRM_PROMPT)
                 {
-                    return yesno("Really target yourself?", false, 'n');
+                    return yesno(gettext("Really target yourself?"), false, 'n');
                 }
             }
         }
@@ -1012,7 +1015,7 @@ bool direction_chooser::move_is_ok() const
 
     // Some odd cases
     if (!moves.isValid && !moves.isCancel)
-        return yesno("Are you sure you want to fizzle?", false, 'n');
+        return yesno(gettext("Are you sure you want to fizzle?"), false, 'n');
 
     return (true);
 }
@@ -1116,14 +1119,14 @@ coord_def direction_chooser::find_default_target() const
             {
                 // Special colouring in tutorial or hints mode.
                 const bool need_hint = Hints.hints_events[HINT_TARGET_NO_FOE];
-                mpr("All monsters which could be auto-targeted are covered by "
+                mpr(gettext("All monsters which could be auto-targeted are covered by "
                     "a wall or statue which interrupts your line of fire, even "
-                    "though it doesn't interrupt your line of sight.",
+                    "though it doesn't interrupt your line of sight."),
                     need_hint ? MSGCH_TUTORIAL : MSGCH_PROMPT);
 
                 if (need_hint)
                 {
-                    mpr("To return to the main mode, press <w>Escape</w>.",
+                    mpr(gettext("To return to the main mode, press <w>Escape</w>."),
                         MSGCH_TUTORIAL);
                     Hints.hints_events[HINT_TARGET_NO_FOE] = false;
                 }
@@ -1325,7 +1328,7 @@ bool direction_chooser::select(bool allow_out_of_range, bool endpoint)
 {
     if (!allow_out_of_range && !in_range(target()))
     {
-        mpr(hitfunc? hitfunc->why_not : "That is beyond the maximum range.",
+        mpr(hitfunc? hitfunc->why_not : gettext("That is beyond the maximum range."),
             MSGCH_EXAMINE_FILTER);
         return false;
     }
@@ -1347,7 +1350,7 @@ bool direction_chooser::handle_signals()
         moves.isValid  = false;
         moves.isCancel = true;
 
-        mpr("Targeting interrupted by HUP signal.", MSGCH_ERROR);
+        mpr(gettext("Targeting interrupted by HUP signal."), MSGCH_ERROR);
         return true;
     }
     return false;
@@ -1370,7 +1373,7 @@ void direction_chooser::print_target_description(bool &did_cloud) const
         print_target_monster_description(did_cloud);
 
     if (!in_range(target()))
-        mpr(hitfunc ? hitfunc->why_not : "Out of range.", MSGCH_EXAMINE_FILTER);
+        mpr(hitfunc ? hitfunc->why_not : gettext("Out of range."), MSGCH_EXAMINE_FILTER);
 }
 
 std::string direction_chooser::target_interesting_terrain_description() const
@@ -3030,17 +3033,9 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_TRAP_MAGICAL:
         return (gettext(M_("magical trap")));
     case DNGN_TRAP_NATURAL:
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return ("natural trap");
-    case DNGN_TRAP_WEB:
-        return ("web");
-=======
-        return (gettext("natural trap"));
->>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
-=======
         return (gettext(M_("natural trap")));
->>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
+    case DNGN_TRAP_WEB:
+        return (gettext(M_("web")));
     case DNGN_ENTER_SHOP:
         return (gettext(M_("shop")));
     case DNGN_ABANDONED_SHOP:
@@ -3096,70 +3091,34 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_ENTER_SWAMP:
         return (gettext(M_("staircase to the Swamp")));
     case DNGN_ENTER_SHOALS:
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return ("staircase to the Shoals");
-    case DNGN_ENTER_SPIDER_NEST:
-        return ("hole to the Spider Nest");
-    case DNGN_ENTER_FOREST:
-        return ("staircase to the Enchanted Forest");
-=======
-        return (gettext("staircase to the Shoals"));
->>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
-=======
         return (gettext(M_("staircase to the Shoals")));
->>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
+    case DNGN_ENTER_SPIDER_NEST:
+        return (gettext(M_("hole to the Spider Nest")));
+    case DNGN_ENTER_FOREST:
+        return (gettext(M_("staircase to the Enchanted Forest")));
     case DNGN_ENTER_PORTAL_VAULT:
         // The bazaar description should be set in the bazaar marker; this
         // is the description for a portal of unknown type.
         return (gettext(M_("gate leading to a distant place")));
     case DNGN_EXIT_PORTAL_VAULT:
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return ("gate leading back to the Dungeon");
-    case DNGN_MALIGN_GATEWAY:
-        return ("portal to somewhere");
-=======
-        return (gettext("gate leading back to the Dungeon"));
-    case DNGN_TEMP_PORTAL:
-        return (gettext("portal to somewhere"));
->>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
-=======
         return (gettext(M_("gate leading back to the Dungeon")));
-    case DNGN_TEMP_PORTAL:
+    case DNGN_MALIGN_GATEWAY:
         return (gettext(M_("portal to somewhere")));
->>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_RETURN_FROM_DWARVEN_HALL:
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_HIVE:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_VAULTS:
     case DNGN_RETURN_FROM_TEMPLE:
-<<<<<<< HEAD
-<<<<<<< HEAD
     case DNGN_RETURN_FROM_FOREST:
-        return ("staircase back to the Dungeon");
-=======
-        return (gettext("staircase back to the Dungeon"));
->>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
-=======
         return (gettext(M_("staircase back to the Dungeon")));
->>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
     case DNGN_RETURN_FROM_SLIME_PITS:
     case DNGN_RETURN_FROM_SNAKE_PIT:
     case DNGN_RETURN_FROM_SWAMP:
     case DNGN_RETURN_FROM_SHOALS:
-<<<<<<< HEAD
-<<<<<<< HEAD
-        return ("staircase back to the Lair");
-    case DNGN_RETURN_FROM_SPIDER_NEST:
-        return ("crawl-hole back to the Lair");
-=======
-        return (gettext("staircase back to the Lair"));
->>>>>>> 86a40a3... ability 관련 부분을 한글화한당께!
-=======
         return (gettext(M_("staircase back to the Lair")));
->>>>>>> f34a439... translate_verb 함수를 밖으로 빼냄. 앞으로 korean.h에 추가할 것들.
+    case DNGN_RETURN_FROM_SPIDER_NEST:
+        return (gettext(M_("crawl-hole back to the Lair")));
     case DNGN_RETURN_FROM_CRYPT:
     case DNGN_RETURN_FROM_HALL_OF_BLADES:
         return (gettext(M_("staircase back to the Vaults")));
@@ -3470,12 +3429,12 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
     if (name1.empty())
         return (desc);
 
-    desc += " wielding ";
-    desc += name1;
+    desc += make_stringf(gettext(" wielding %s"),
+                         name1.c_str());
 
     if (!name2.empty())
     {
-        desc += " and ";
+        desc += gettext(" and ");
         desc += name2;
     }
 
@@ -3697,26 +3656,26 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         {
             std::string str = "";
             if (mi.is(MB_CHARMED))
-                str = "charmed";
+                str = pgettext("mondesc", "charmed");
             else if (mi.attitude == ATT_FRIENDLY)
-                str = "friendly";
+                str = pgettext("mondesc", "friendly");
             else if (mi.attitude == ATT_GOOD_NEUTRAL)
-                str = "peaceful";
+                str = pgettext("mondesc", "peaceful");
             else if (mi.attitude != ATT_HOSTILE)
-                str = "neutral";
+                str = pgettext("mondesc", "neutral");
 
             if (mi.is(MB_SUMMONED))
             {
                 if (!str.empty())
                     str += ", ";
-                str += "summoned";
+                str += pgettext("mondesc", "summoned");
             }
 
             if (mi.is(MB_PERM_SUMMON))
             {
                 if (!str.empty())
                     str += ", ";
-                str += "durably summoned";
+                str += pgettext("mondesc", "durably summoned");
             }
 
             if (mi.type == MONS_DANCING_WEAPON
@@ -3728,15 +3687,15 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                     str += " ";
 
                 if (mi.type == MONS_DANCING_WEAPON)
-                    str += "dancing weapon";
+                    str += pgettext("mondesc", "dancing weapon");
                 else if (mi.type == MONS_PANDEMONIUM_LORD)
-                    str += "pandemonium lord";
+                    str += pgettext("mondesc", "pandemonium lord");
                 else if (mi.type == MONS_PLAYER_GHOST)
-                    str += "ghost";
+                    str += pgettext("mondesc", "ghost");
                 else if (mi.type == MONS_PLAYER_ILLUSION)
-                    str += "illusion";
+                    str += pgettext("mondesc", "illusion");
                 else
-                    str += "mimic";
+                    str += pgettext("mondesc", "mimic");
             }
             if (!str.empty())
                 desc += " (" + str + ")";
@@ -3802,48 +3761,48 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         if (mon_arm)
         {
             if (found_sth)
-                desc += (!mon_shd && !mon_qvr && !mon_carry) ? " and" : ",";
+                desc += (!mon_shd && !mon_qvr && !mon_carry) ? gettext(" and") : ",";
             else
                 found_sth = true;
 
-            desc += " wearing ";
+            desc += gettext(" wearing ");
             desc += mon_arm->name(true, DESC_NOCAP_A);
         }
 
         if (mon_shd)
         {
             if (found_sth)
-                desc += (!mon_qvr && !mon_carry) ? " and" : ",";
+                desc += (!mon_qvr && !mon_carry) ? gettext(" and") : ",";
             else
                 found_sth = true;
 
-            desc += " wearing ";
+            desc += gettext(" wearing ");
             desc += mon_shd->name(true, DESC_NOCAP_A);
         }
 
         if (mon_qvr)
         {
             if (found_sth)
-                desc += !mon_carry ? " and" : ",";
+                desc += !mon_carry ? gettext(" and") : ",";
             else
                 found_sth = true;
 
-            desc += " quivering ";
+            desc += gettext(" quivering ");
             desc += mon_qvr->name(true, DESC_NOCAP_A);
         }
 
         if (mon_carry)
         {
             if (found_sth)
-                desc += " and";
+                desc += gettext(" and");
 
-            desc += " carrying ";
+            desc += gettext(" carrying ");
 
             if (mon_alt)
             {
                 desc += mon_alt->name(true, DESC_NOCAP_A);
                 if (mon_has_wand)
-                    desc += " and ";
+                    desc += gettext(" and ");
             }
 
             if (mon_has_wand)
@@ -3851,7 +3810,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 if (mi.props["wand_known"])
                     desc += mon_wnd->name(true, DESC_NOCAP_A);
                 else
-                    desc += "a wand";
+                    desc += gettext("a wand");
             }
         }
     }
@@ -3863,27 +3822,27 @@ static bool _print_cloud_desc(const coord_def where)
 {
     std::vector<std::string> areas;
     if (is_sanctuary(where))
-        areas.push_back("lies inside a sanctuary");
+        areas.push_back(gettext("lies inside a sanctuary"));
     if (silenced(where))
-        areas.push_back("is shrouded in silence");
+        areas.push_back(gettext("is shrouded in silence"));
     if (haloed(where) && !antihaloed(where))
-        areas.push_back("is lit by a halo");
+        areas.push_back(gettext("is lit by a halo"));
     if (antihaloed(where) && !haloed(where))
-        areas.push_back("is wreathed by an umbra");
+        areas.push_back(gettext("is wreathed by an umbra"));
     if (liquefied(where))
-        areas.push_back("is liquefied");
+        areas.push_back(gettext("is liquefied"));
     if (orb_haloed(where))
-        areas.push_back("is covered in magical glow");
+        areas.push_back(gettext("is covered in magical glow"));
     if (!areas.empty())
     {
-        mprf("This square %s.",
+        mprf(gettext("This square %s."),
              comma_separated_line(areas.begin(), areas.end()).c_str());
     }
 
     if (env.cgrid(where) == EMPTY_CLOUD)
         return false;
 
-    mprf(MSGCH_EXAMINE, "There is a cloud of %s here.",
+    mprf(MSGCH_EXAMINE, gettext("There is a cloud of %s here."),
          cloud_name_at_index(env.cgrid(where)).c_str());
     return true;
 }
@@ -3897,17 +3856,17 @@ static bool _print_item_desc(const coord_def where, bool under_mimic)
 
     // If a mimic is on this square, we pretend it's the first item - bwr
     if (under_mimic)
-        mpr("There is something else lying underneath.", MSGCH_FLOOR_ITEMS);
+        mpr(gettext("There is something else lying underneath."), MSGCH_FLOOR_ITEMS);
     else
     {
         std::string name = get_menu_colour_prefix_tags(mitm[targ_item],
                                                        DESC_NOCAP_A);
-        mprf(MSGCH_FLOOR_ITEMS, "You see %s here.", name.c_str());
+        mprf(MSGCH_FLOOR_ITEMS, gettext("You see %s here."), name.c_str());
 
         if (mitm[ targ_item ].link != NON_ITEM)
         {
             mprf(MSGCH_FLOOR_ITEMS,
-                 "There is something else lying underneath.");
+                 gettext("There is something else lying underneath."));
         }
     }
     return true;
@@ -3975,21 +3934,21 @@ static void _describe_cell(const coord_def& where, bool in_range)
 #ifdef DEBUG_DIAGNOSTICS
         if (!mon->visible_to(&you))
         {
-            mprf(MSGCH_DIAGNOSTICS, "There is a non-visible %smonster here.",
-                 _mon_exposed_in_water(mon) ? "exposed by water " :
-                 _mon_exposed_in_cloud(mon) ? "exposed by cloud " : "");
+            mprf(MSGCH_DIAGNOSTICS, gettext("There is a non-visible %smonster here."),
+                 _mon_exposed_in_water(mon) ? gettext("exposed by water ") :
+                 _mon_exposed_in_cloud(mon) ? gettext("exposed by cloud ") : "");
         }
 #else
         if (!mon->visible_to(&you))
         {
             if (_mon_exposed_in_water(mon))
             {
-                mpr("There is a strange disturbance in the water here.",
+                mpr(gettext("There is a strange disturbance in the water here."),
                     MSGCH_EXAMINE_FILTER);
             }
             else if (_mon_exposed_in_cloud(mon))
             {
-                mpr("There is a strange disturbance in the cloud here.",
+                mpr(gettext("There is a strange disturbance in the cloud here."),
                     MSGCH_EXAMINE_FILTER);
             }
 
@@ -4004,7 +3963,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
                 const std::string name =
                         get_menu_colour_prefix_tags(get_mimic_item(mon),
                                                     DESC_NOCAP_A);
-                mprf(MSGCH_FLOOR_ITEMS, "You see %s here.", name.c_str());
+                mprf(MSGCH_FLOOR_ITEMS, gettext("You see %s here."), name.c_str());
                 mimic_item = true;
             }
             else
@@ -4017,7 +3976,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
 
             if (!in_range)
             {
-                mprf(MSGCH_EXAMINE_FILTER, "%s is out of range.",
+                mprf(MSGCH_EXAMINE_FILTER, gettext("%s is out of range."),
                      mon->pronoun(PRONOUN_CAP).c_str());
             }
 #ifndef DEBUG_DIAGNOSTICS
@@ -4032,9 +3991,9 @@ static void _describe_cell(const coord_def& where, bool in_range)
         {
             std::string msg;
 #ifdef USE_TILE_LOCAL
-            msg = "(<w>Right-click</w> for more information.)";
+            msg = gettext("(<w>Right-click</w> for more information.)");
 #else
-            msg = "(Press <w>v</w> for more information.)";
+            msg = gettext("(Press <w>v</w> for more information.)");
 #endif
             mpr(msg);
         }
@@ -4058,9 +4017,9 @@ static void _describe_cell(const coord_def& where, bool in_range)
     if (crawl_state.game_is_hints() && hints_pos_interesting(where.x, where.y))
     {
 #ifdef USE_TILE_LOCAL
-        feature_desc += " (<w>Right-click</w> for more information.)";
+        feature_desc += gettext(" (<w>Right-click</w> for more information.)");
 #else
-        feature_desc += " (Press <w>v</w> for more information.)";
+        feature_desc += gettext(" (Press <w>v</w> for more information.)");
 #endif
         mpr(feature_desc);
     }
@@ -4077,9 +4036,9 @@ static void _describe_cell(const coord_def& where, bool in_range)
         if (_interesting_feature(feat))
         {
 #ifdef USE_TILE_LOCAL
-            feature_desc += " (Right-click for more information.)";
+            feature_desc += gettext(" (Right-click for more information.)");
 #else
-            feature_desc += " (Press 'v' for more information.)";
+            feature_desc += gettext(" (Press 'v' for more information.)");
 #endif
         }
 
