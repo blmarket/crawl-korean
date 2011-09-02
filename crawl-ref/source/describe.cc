@@ -2945,13 +2945,13 @@ static void _append_spell_stats(const spell_type spell,
                  failure_rate_to_string(spell_fail(spell)));
     }
     description += info;
-    description += "\n\nPower : ";
+    description += gettext("\n\nPower : ");
     description += spell_power_string(spell, rod);
-    description += "\nRange : ";
+    description += gettext("\nRange : ");
     description += spell_range_string(spell, rod);
-    description += "\nHunger: ";
+    description += gettext("\nHunger: ");
     description += spell_hunger_string(spell, rod);
-    description += "\nNoise : ";
+    description += gettext("\nNoise : ");
     description += spell_noise_string(spell);
 }
 
@@ -3078,21 +3078,21 @@ static std::string _describe_draconian_role(monster_type type)
     switch (type)
     {
     case MONS_DRACONIAN_SHIFTER:
-        return "It darts around disconcertingly without taking a step.";
+        return gettext("It darts around disconcertingly without taking a step.");
     case MONS_DRACONIAN_SCORCHER:
-        return "Its scales are sooty from years of magical pyrotechnics.";
+        return gettext("Its scales are sooty from years of magical pyrotechnics.");
     case MONS_DRACONIAN_ZEALOT:
-        return "In its gaze you see all the malefic power of its "
-               "terrible god.";
+        return gettext("In its gaze you see all the malefic power of its "
+               "terrible god.");
     case MONS_DRACONIAN_ANNIHILATOR:
-        return "Crackling balls of pure energy hum and spark up and down its "
-               "scaled fists and arms.";
+        return gettext("Crackling balls of pure energy hum and spark up and down its "
+               "scaled fists and arms.");
     case MONS_DRACONIAN_CALLER:
-        return "It looks especially reptilian, and eager for company.";
+        return gettext("It looks especially reptilian, and eager for company.");
     case MONS_DRACONIAN_MONK:
-        return "It looks unnaturally strong and dangerous with its fists.";
+        return gettext("It looks unnaturally strong and dangerous with its fists.");
     case MONS_DRACONIAN_KNIGHT:
-        return "It wields a deadly weapon with menacing efficiency.";
+        return gettext("It wields a deadly weapon with menacing efficiency.");
     default:
         return ("");
     }
@@ -3103,23 +3103,23 @@ static std::string _describe_draconian_colour(int species)
     switch (species)
     {
     case MONS_BLACK_DRACONIAN:
-        return "Sparks crackle and flare out of its mouth and nostrils.";
+        return gettext("Sparks crackle and flare out of its mouth and nostrils.");
     case MONS_MOTTLED_DRACONIAN:
-        return "Liquid flames drip from its mouth.";
+        return gettext("Liquid flames drip from its mouth.");
     case MONS_YELLOW_DRACONIAN:
-        return "Acid fumes swirl around it.";
+        return gettext("Acid fumes swirl around it.");
     case MONS_GREEN_DRACONIAN:
-        return "Venom steams and drips from its jaws.";
+        return gettext("Venom steams and drips from its jaws.");
     case MONS_PURPLE_DRACONIAN:
-        return "Its outline shimmers with wild energies.";
+        return gettext("Its outline shimmers with wild energies.");
     case MONS_RED_DRACONIAN:
-        return "Smoke pours from its nostrils.";
+        return gettext("Smoke pours from its nostrils.");
     case MONS_WHITE_DRACONIAN:
-        return "Frost pours from its nostrils.";
+        return gettext("Frost pours from its nostrils.");
     case MONS_GREY_DRACONIAN:
-        return "Its scales and tail are adapted to the water.";
+        return gettext("Its scales and tail are adapted to the water.");
     case MONS_PALE_DRACONIAN:
-        return "It is cloaked in a pall of superheated steam.";
+        return gettext("It is cloaked in a pall of superheated steam.");
     }
     return ("");
 }
@@ -3130,27 +3130,28 @@ static std::string _describe_draconian(const monster_info& mi)
     const int subsp = mi.draco_subspecies();
 
     if (subsp == MONS_DRACONIAN)
-        description += "A ";
+        /// 쓸모없는 부분이지만, 원본과의 호환성을 위해 남겨둡시다.
+        description += pgettext("draconian", "A ");
     else
-        description += "A muscular ";
+        description += pgettext("draconian","A muscular ");
 
     switch (subsp)
     {
-    case MONS_DRACONIAN:            description += "brown-";   break;
-    case MONS_BLACK_DRACONIAN:      description += "black-";   break;
-    case MONS_MOTTLED_DRACONIAN:    description += "mottled-"; break;
-    case MONS_YELLOW_DRACONIAN:     description += "yellow-";  break;
-    case MONS_GREEN_DRACONIAN:      description += "green-";   break;
-    case MONS_PURPLE_DRACONIAN:     description += "purple-";  break;
-    case MONS_RED_DRACONIAN:        description += "red-";     break;
-    case MONS_WHITE_DRACONIAN:      description += "white-";   break;
-    case MONS_GREY_DRACONIAN:       description += "grey-";    break;
-    case MONS_PALE_DRACONIAN:       description += "pale-";    break;
+    case MONS_DRACONIAN:            description += pgettext("draconian","brown-");   break;
+    case MONS_BLACK_DRACONIAN:      description += pgettext("draconian","black-");   break;
+    case MONS_MOTTLED_DRACONIAN:    description += pgettext("draconian","mottled-"); break;
+    case MONS_YELLOW_DRACONIAN:     description += pgettext("draconian","yellow-");  break;
+    case MONS_GREEN_DRACONIAN:      description += pgettext("draconian","green-");   break;
+    case MONS_PURPLE_DRACONIAN:     description += pgettext("draconian","purple-");  break;
+    case MONS_RED_DRACONIAN:        description += pgettext("draconian","red-");     break;
+    case MONS_WHITE_DRACONIAN:      description += pgettext("draconian","white-");   break;
+    case MONS_GREY_DRACONIAN:       description += pgettext("draconian","grey-");    break;
+    case MONS_PALE_DRACONIAN:       description += pgettext("draconian","pale-");    break;
     default:
         break;
     }
 
-    description += "scaled humanoid with wings.";
+    description += gettext("scaled humanoid with wings.");
 
     if (subsp != MONS_DRACONIAN)
     {
@@ -3170,23 +3171,23 @@ static std::string _describe_draconian(const monster_info& mi)
 }
 
 static const char* _get_resist_name(mon_resist_flags res_type)
-{
+{ // (deceit, 110902 여기서부터, 소스코드 직접수정으로 처리)
     switch (res_type)
     {
     case MR_RES_ELEC:
-        return "electricity";
+        return "전기"; //("electricity");
     case MR_RES_POISON:
-        return "poison";
+        return "독"; //("poison");
     case MR_RES_FIRE:
-        return "fire";
+        return "화염"; //("fire");
     case MR_RES_STEAM:
-        return "steam";
+        return "증기"; //("steam");
     case MR_RES_COLD:
-        return "cold";
+        return "냉기"; //("cold");
     case MR_RES_ACID:
-        return "acid";
+        return "부식"; //("acid");
     case MR_RES_ROTTING:
-        return "rotting";
+        return "부패"; //("rotting");
     default:
         return "buggy resistance";
     }
@@ -3257,86 +3258,86 @@ static std::string _monster_stat_description(const monster_info& mi)
     std::vector<std::string> resist_descriptions;
     if (!extreme_resists.empty())
     {
-        const std::string tmp = "extremely resistant to "
-            + comma_separated_line(extreme_resists.begin(),
-                                   extreme_resists.end());
+        const std::string tmp = // "extremely resistant to " +
+            comma_separated_line(extreme_resists.begin(),
+                                   extreme_resists.end()) + "에 극히 높은 저항력을 가지고 있다";
         resist_descriptions.push_back(tmp);
     }
     if (!high_resists.empty())
     {
-        const std::string tmp = "very resistant to "
-            + comma_separated_line(high_resists.begin(), high_resists.end());
+        const std::string tmp = // "very resistant to " +
+              comma_separated_line(high_resists.begin(), high_resists.end()) + "에 강한 저항력을 가지고 있다";
         resist_descriptions.push_back(tmp);
     }
     if (!base_resists.empty())
     {
-        const std::string tmp = "resistant to "
-            + comma_separated_line(base_resists.begin(), base_resists.end());
+        const std::string tmp = // "resistant to " +
+              comma_separated_line(base_resists.begin(), base_resists.end()) + "에 저항력을 가지고 있다";
         resist_descriptions.push_back(tmp);
     }
 
-    const char* pronoun = mi.pronoun(PRONOUN_CAP);
+    const char* pronoun = "이것"; // mi.pronoun(PRONOUN_CAP);
 
     result << pronoun << " looks " << _get_threat_desc(mi.threat) << ".\n";
 
     if (!resist_descriptions.empty())
     {
-        result << pronoun << " is "
+        result << pronoun << "은 " // " is "
                << comma_separated_line(resist_descriptions.begin(),
                                        resist_descriptions.end(),
-                                       "; and ", "; ")
+                                       "; 그리고 ", "; ") //"; and ", "; ")
                << ".\n";
     }
 
     // Is monster susceptible to anything? (On a new line.)
     if (!suscept.empty())
     {
-        result << pronoun << " is susceptible to "
+        result << pronoun << "은 " // " is susceptible to "
                << comma_separated_line(suscept.begin(), suscept.end())
-               << ".\n";
+               << "에 취약하다.\n"; //".\n";
     }
 
     int mr = mi.res_magic();
     // How resistant is it? Same scale as the player.
     if (mr >= 10)
     {
-        result << pronoun << make_stringf(" is %s to hostile enchantments.\n",
+        result << pronoun << make_stringf(gettext(" is %s to hostile enchantments.\n"),
                                           magic_res_adjective(mr).c_str());
     }
 
     if (mons_class_flag(mi.type, M_STATIONARY) && !mons_is_tentacle(mi.type))
-        result << pronoun << " cannot move.\n";
+        result << pronoun << gettext(" cannot move.\n");
 
     // Monsters can glow from both light and radiation.
     if (mons_class_flag(mi.type, M_GLOWS_LIGHT))
-        result << pronoun << " is outlined in light.\n";
+        result << pronoun << "은 희미한 빛을 발하고 있다.\n"; //result << pronoun << " is outlined in light.\n";
     if (mons_class_flag(mi.type, M_GLOWS_RADIATION))
-        result << pronoun << " is glowing with mutagenic radiation.\n";
+        result << pronoun << "은 돌연변이를 유발하는 방사능을 방출하고 있다.\n"; //result << pronoun << " is glowing with mutagenic radiation.\n";
 
     // These differ between ghost demon monsters, so would be spoily.
     if (!mons_is_ghost_demon(mi.type))
     {
         // Seeing/sensing invisible.
         if (mons_class_flag(mi.type, M_SEE_INVIS))
-            result << pronoun << " can see invisible.\n";
+            result << pronoun << "은 투명한 존재를 볼 수 있다.\n"; //result << pronoun << " can see invisible.\n";
         else if (mons_class_flag(mi.type, M_SENSE_INVIS))
-            result << pronoun << " can sense the presence of invisible creatures.\n";
+            result << pronoun << "은 투명한 존재가 있음을 감지할 수 있다.\n"; //result << pronoun << " can sense the presence of invisible creatures.\n";
 
         // Unusual monster speed.
         const int speed = mi.base_speed();
         if (speed != 10 && speed != 0)
         {
-            result << pronoun << " is ";
+            result << pronoun << "은 "; // " is ";
             if (speed < 7)
-                result << "very slow";
+                result << "매우 느리게 움직인다"; //"very slow";
             else if (speed < 10)
-                result << "slow";
+                result << "느리게 움직인다"; //"slow";
             else if (speed > 20)
-                result << "extremely fast";
+                result << "쏜살같이 빠르게 움직인다"; //"extremely fast";
             else if (speed > 15)
-                result << "very fast";
+                result << "매우 빠르게 움직이다"; //"very fast";
             else if (speed > 10)
-                result << "fast";
+                result << "빠르게 움직인다"; //"fast";
             result << ".\n";
         }
     }
@@ -3347,41 +3348,41 @@ static std::string _monster_stat_description(const monster_info& mi)
     // their flavour description.
     if (mi.fly != FL_NONE)
     {
-        result << pronoun << " can "
-               << (mi.fly == FL_FLY ? "fly" : "levitate") << ".\n";
+        result << pronoun << "은 " //result << pronoun << " can "
+               << (mi.fly == FL_FLY ? "비행이 가능하다" : "공중부양이 가능하다") << ".\n"; //       << (mi.fly == FL_FLY ? "fly" : "levitate") << ".\n";
     }
 
     // Unusual regeneration rates.
     if (!mi.can_regenerate())
-        result << pronoun << " cannot regenerate.\n";
+        result << pronoun << "은 재생 능력이 없다.\n"; //result << pronoun << " cannot regenerate.\n";
     else if (monster_descriptor(mi.type, MDSC_REGENERATES))
-        result << pronoun << " regenerates quickly.\n";
+        result << pronoun << "은 빠른 재생 능력이 있다.\n"; //result << pronoun << " regenerates quickly.\n";
 
     // Size
     const char *sizes[NUM_SIZE_LEVELS] = {
-        "tiny",
-        "little",
-        "small",
+        "매우 작은", //"tiny",
+        "작은", //"little",
+        "약간 작은", //"small",
         NULL,     // don't display anything for 'medium'
-        "large",
-        "big",
-        "giant",
-        "huge",
+        "조금 큰", //"large",
+        "큰", //"big",
+        "매우 큰", //"giant",
+        "거대한", //"huge",
     };
 
     const char *mimic_sizes[6]= {
-        "as big as a fountain",
-        "as big as a shop",
-        "as big as a staircase",
-        "as big as a trap",
-        "as big as a portal",
-        "as big as a door",
+        "은 분수만한 크기이다", //"as big as a fountain",
+        "은 상점만한 크기이다", //"as big as a shop",
+        "은 돌 계단만한 크기이다", //"as big as a staircase",
+        "은 다트 함정만한 크기이다", //"as big as a trap",
+        "은 던전 입구만한 크기이다", //"as big as a portal",
+        "은 문짝만한 크기이다", //"as big as a door",
     };
 
     if (mons_is_feat_mimic(mi.type))
-        result << pronoun << " is " << mimic_sizes[MONS_FOUNTAIN_MIMIC-mi.type] << ".\n";
+        result << pronoun << mimic_sizes[MONS_FOUNTAIN_MIMIC-mi.type] << ".\n"; // result << pronoun << " is " << mimic_sizes[MONS_FOUNTAIN_MIMIC-mi.type] << ".\n";
     else if (sizes[mi.body_size()])
-        result << pronoun << " is " << sizes[mi.body_size()] << ".\n";
+        result << pronoun << "은 " << sizes[mi.body_size()] << " 덩치를 가졌다.\n"; // result << pronoun << " is " << sizes[mi.body_size()] << ".\n";
 
     return (result.str());
 }
@@ -3447,12 +3448,12 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
     case MONS_VAMPIRE_KNIGHT:
     case MONS_VAMPIRE_MAGE:
         if (you.is_undead == US_ALIVE && mi.attitude == ATT_HOSTILE)
-            inf.body << "\nIt wants to drink your blood!\n";
+            inf.body << gettext("\nIt wants to drink your blood!\n");
         break;
 
     case MONS_REAPER:
         if (you.is_undead == US_ALIVE && mi.attitude == ATT_HOSTILE)
-            inf.body <<  "\nIt has come for your soul!\n";
+            inf.body <<  gettext("\nIt has come for your soul!\n");
         break;
 
     case MONS_DRACONIAN:
@@ -3494,31 +3495,31 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         switch (mi.colour)
         {
         case RED:
-            inf.body << "A huge red glowing dragon, burning with hellfire.\n";
+            inf.body << gettext("A huge red glowing dragon, burning with hellfire.\n");
             break;
 
         case WHITE:
-            inf.body << "A huge gleaming white dragon, covered in shards of ice.\n";
+            inf.body << gettext("A huge gleaming white dragon, covered in shards of ice.\n");
             break;
 
         case CYAN:
-            inf.body << "A huge metallic dragon, glowing with power.\n";
+            inf.body << gettext("A huge metallic dragon, glowing with power.\n");
             break;
 
         case MAGENTA:
-            inf.body << "A huge and dark dragon, wreathed in terrifying shadows.\n";
+            inf.body << gettext("A huge and dark dragon, wreathed in terrifying shadows.\n");
             break;
 
         default:
-            inf.body << "Well now, isn't this buggy?\n";
+            inf.body << gettext("Well now, isn't this buggy?\n");
         }
         break;
 
     case MONS_PROGRAM_BUG:
-        inf.body << "If this monster is a \"program bug\", then it's "
+        inf.body << gettext("If this monster is a \"program bug\", then it's "
                 "recommended that you save your game and reload.  Please report "
                 "monsters who masquerade as program bugs or run around the "
-                "dungeon without a proper description to the authorities.\n";
+                "dungeon without a proper description to the authorities.\n");
         break;
 
     default:
@@ -3548,32 +3549,32 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
 
     if (!mons_class_can_use_stairs(mi.type))
     {
-        inf.body << "\n" << mi.pronoun(PRONOUN_CAP)
-                 << " is incapable of using stairs.\n";
+        inf.body << "\n" // << mi.pronoun(PRONOUN_CAP)
+                 << gettext(" is incapable of using stairs.\n");
     }
 
     if (mi.intel() == I_PLANT)
-        inf.body << mi.pronoun(PRONOUN_CAP) << " is mindless.\n";
+        inf.body /* << mi.pronoun(PRONOUN_CAP) */ << gettext(" is mindless.\n");
 
     if (mi.is(MB_CHAOTIC))
     {
-        inf.body << mi.pronoun(PRONOUN_CAP)
-                 << " is vulnerable to silver and hated by Zin.\n";
+        inf.body // << mi.pronoun(PRONOUN_CAP)
+                 << gettext(" is vulnerable to silver and hated by Zin.\n");
     }
 
     if (mi.is(MB_SUMMONED))
     {
-        inf.body << "\n" << "This monster has been summoned, and is thus only "
+        inf.body << "\n" << gettext("This monster has been summoned, and is thus only "
                        "temporary. Killing it yields no experience, nutrition "
-                       "or items.\n";
+                       "or items.\n");
     }
 
     if (mi.is(MB_PERM_SUMMON))
     {
-        inf.body << "\n" << "This monster has been summoned in a durable "
+        inf.body << "\n" << gettext("This monster has been summoned in a durable "
                        "way, and only partially exists. Killing it yields no "
                        "experience, nutrition or items. You cannot easily "
-                       "abjure it, though.\n";
+                       "abjure it, though.\n");
     }
 
     if (!inf.quote.empty())
@@ -3703,23 +3704,23 @@ void describe_monsters(const monster_info &mi, bool force_seen,
 }
 
 static const char* xl_rank_names[] = {
-    "weakling",
-    "average",
-    "experienced",
-    "powerful",
-    "mighty",
-    "great",
-    "awesomely powerful",
-    "legendary"
+    "약한",//"weakling",
+    "평범한",//"average",
+    "경험이 쌓인",//"experienced",
+    "힘 있는",//"powerful",
+    "탁월한",//"mighty",
+    "위대한",//"great",
+    "무서운 힘의",//"awesomely powerful",
+    "전설적인"//"legendary"
 };
 
 static std::string _xl_rank_name(const int xl_rank)
 {
     const char* rank = xl_rank_names[xl_rank];
 
-    std::string name = make_stringf("a%s %s",
+    std::string name = make_stringf(pgettext("xlrank","a%s %s"),
                                     is_vowel(rank[0]) ? "n" : "",
-                                    rank);
+                                    gettext(rank));
     return name;
 }
 
@@ -3730,18 +3731,18 @@ std::string short_ghost_description(const monster *mon, bool abbrev)
     const ghost_demon &ghost = *(mon->ghost);
     const char* rank = xl_rank_names[ghost_level_to_rank(ghost.xl)];
 
-    std::string desc = make_stringf("%s %s %s",
-                        rank,
+    std::string desc = make_stringf(pgettext("xlrank","%s %s %s"),
+                        gettext(rank),
                         species_name(ghost.species).c_str(),
                         get_job_name(ghost.job));
 
-    if (abbrev || strwidth(desc) > 40)
-    {
-        desc = make_stringf("%s %s%s",
-                            rank,
-                            get_species_abbrev(ghost.species),
-                            get_job_abbrev(ghost.job));
-    }
+    //if (abbrev || strwidth(desc) > 40)
+    //{
+    //    desc = make_stringf(pgettext("xlrank","%s %s%s"),
+    //                        gettext(rank),
+    //                        get_species_abbrev(ghost.species),
+    //                        get_job_abbrev(ghost.job));
+    //} (deceit, 110902) 한글판에선 이 코드부분이 불필요하므로 삭제
 
     return desc;
 }
@@ -3785,14 +3786,14 @@ std::string get_ghost_description(const monster_info &mi, bool concise)
 
     default:
         break;
-    }
+    } // (deceit, 110902) 코드 수정부분
 
-    gstr << mi.mname << " the "
+    gstr // << mi.mname << " the "
          << skill_title_by_rank(mi.u.ghost.best_skill,
                         mi.u.ghost.best_skill_rank,
                         gspecies,
                         str, dex, mi.u.ghost.religion)
-         << ", " << _xl_rank_name(mi.u.ghost.xl_rank) << " ";
+         << ", " << _xl_rank_name(mi.u.ghost.xl_rank) << " " << mi.mname ; // (deceit, 110902) 수정부분
 
     if (concise)
     {
@@ -3808,8 +3809,8 @@ std::string get_ghost_description(const monster_info &mi, bool concise)
 
     if (mi.u.ghost.religion != GOD_NO_GOD)
     {
-        gstr << " of "
-             << god_name(mi.u.ghost.religion);
+        gstr << god_name(mi.u.ghost.religion) //<< " of "
+             << "의 신자"; //<< god_name(mi.u.ghost.religion);
     }
 
     return (gstr.str());
@@ -3833,7 +3834,7 @@ static bool _print_final_god_abil_desc(int god, const std::string &final_msg,
               ((abil == ABIL_ELYVILON_LESSER_HEALING_OTHERS
                 || abil == ABIL_ELYVILON_GREATER_HEALING_OTHERS
                 || abil == ABIL_YRED_RECALL_UNDEAD_SLAVES) ?
-                    "Various" : make_cost_description(abil))
+                    pgettext("goddesc","Various") : make_cost_description(abil))
             + ")";
 
     if (cost != "(None)")
@@ -3866,7 +3867,7 @@ static bool _print_god_abil_desc(int god, int numpower)
         return (false);
 
     if (!isupper(pmsg[0])) // Complete sentence given?
-        buf = "You can " + buf + ".";
+        buf = pgettext("goddesc","You can ") + buf; // + ".";
 
     // This might be ABIL_NON_ABILITY for passive abilities.
     const ability_type abil = god_abilities[god][numpower];
@@ -3888,10 +3889,10 @@ static std::string _describe_favour(god_type which_god)
     if (player_under_penance())
     {
         const int penance = you.penance[which_god];
-        return (penance >= 50) ? "Godly wrath is upon you!" :
-               (penance >= 20) ? "You've transgressed heavily! Be penitent!" :
-               (penance >=  5) ? "You are under penance."
-                               : "You should show more discipline.";
+        return (penance >= 50) ? gettext("Godly wrath is upon you!") :
+               (penance >= 20) ? gettext("You've transgressed heavily! Be penitent!") :
+               (penance >=  5) ? gettext("You are under penance.")
+                               : gettext("You should show more discipline.");
     }
 
     if (which_god == GOD_XOM)
@@ -3914,14 +3915,14 @@ static std::string _religion_help(god_type god)
     switch (god)
     {
     case GOD_ZIN:
-        result += "You can pray at an altar to donate your money.";
+        result += gettext("You can pray at an altar to donate your money.");
         if (!player_under_penance() && you.piety > 160
             && !you.num_total_gifts[god])
         {
             if (!result.empty())
                 result += " ";
 
-            result += "You can have all your mutations cured.";
+            result += gettext("You can have all your mutations cured.");
         }
         break;
 
@@ -3933,17 +3934,17 @@ static std::string _religion_help(god_type god)
             if (!result.empty())
                 result += " ";
 
-            result += "You radiate a ";
+            result += gettext("You radiate a ");
 
             if (halo_size > 37)
-                result += "large ";
+                result += pgettext("tso","large ");
             else if (halo_size > 10)
                 result += "";
             else
-                result += "small ";
+                result += pgettext("tso","small ");
 
-            result += "righteous aura, and all beings within it are "
-                      "easier to hit.";
+            result += gettext("righteous aura, and all beings within it are "
+                      "easier to hit.");
         }
         if (!player_under_penance() && you.piety > 160
             && !you.num_total_gifts[god])
@@ -3951,25 +3952,25 @@ static std::string _religion_help(god_type god)
             if (!result.empty())
                 result += " ";
 
-            result += "You can pray at an altar to have your weapon "
+            result += gettext("You can pray at an altar to have your weapon "
                       "blessed, especially a long blade or demon "
-                      "weapon.";
+                      "weapon.");
         }
         break;
     }
 
     case GOD_ELYVILON:
-        result += "You can pray to destroy weapons on the ground in "
-                + apostrophise(god_name(god)) + " name. Inscribe them "
-                + "with !p, !* or =p to avoid sacrificing them accidentally.";
+        result += gettext("You can pray to destroy weapons on the ground in ")
+                + apostrophise(god_name(god)) + gettext(" name. Inscribe them ")
+                + gettext("with !p, !* or =p to avoid sacrificing them accidentally.");
         break;
 
     case GOD_LUGONU:
         if (!player_under_penance() && you.piety > 160
             && !you.num_total_gifts[god])
         {
-            result += "You can pray at an altar to have your weapon "
-                      "corrupted.";
+            result += gettext("You can pray at an altar to have your weapon "
+                      "corrupted.");
         }
         break;
 
@@ -3977,36 +3978,36 @@ static std::string _religion_help(god_type god)
         if (!player_under_penance() && you.piety > 160
             && !you.num_total_gifts[god])
         {
-            result += "You can pray at an altar to have your necromancy "
-                      "enhanced.";
+            result += gettext("You can pray at an altar to have your necromancy "
+                      "enhanced.");
         }
         break;
 
     case GOD_BEOGH:
-        result += "You can pray to sacrifice all orcish remains on your "
+        result += gettext("You can pray to sacrifice all orcish remains on your "
                   "square. Inscribe orcish remains with !p, !* or =p to avoid "
-                  "sacrificing them accidentally.";
+                  "sacrificing them accidentally.");
         break;
 
     case GOD_NEMELEX_XOBEH:
-        result += "You can pray to sacrifice all items on your square. "
+        result += gettext("You can pray to sacrifice all items on your square. "
                   "Inscribe items with !p, !* or =p to avoid sacrificing "
-                  "them accidentally.";
+                  "them accidentally.");
         break;
 
     case GOD_VEHUMET:
         if (you.piety >= piety_breakpoint(1))
         {
-            result += god_name(god) + " assists you in casting "
-                      "Conjurations and Summonings.";
+            result += god_name(god) + gettext(" assists you in casting "
+                      "Conjurations and Summonings.");
         }
         break;
 
     case GOD_FEDHAS:
         if (you.piety >= piety_breakpoint(0))
         {
-            result += "Evolving plants requires fruit, "
-                      "evolving fungi requires piety.";
+            result += gettext("Evolving plants requires fruit, "
+                      "evolving fungi requires piety.");
         }
 
     default:
@@ -4018,9 +4019,9 @@ static std::string _religion_help(god_type god)
         if (!result.empty())
             result += " ";
 
-        result += "You can pray to sacrifice all fresh corpses on your "
+        result += gettext("You can pray to sacrifice all fresh corpses on your "
                   "square. Inscribe fresh corpses with !p, !* or =p to avoid "
-                  "sacrificing them accidentally.";
+                  "sacrificing them accidentally.");
     }
 
     return result;
@@ -4030,82 +4031,81 @@ static std::string _religion_help(god_type god)
 // doesn't use piety the same way as the other gods, so these are just
 // placeholders.
 const char *divine_title[NUM_GODS][8] =
-{
-    // No god.
-    {"Buglet",             "Firebug",               "Bogeybug",                 "Bugger",
-     "Bugbear",            "Bugged One",            "Giant Bug",                "Lord of the Bugs"},
+{   // (deceit, 110901) 이곳 역시 직접수정하는게 편할듯
+    {"버그맨",             "열혈 버그",             "버그 친구",                 "버그 전문가",
+     "버그 괴물",          "버그를 불러오는 자",    "거대한 버그",               "버그의 제왕"},
 
     // Zin.
-    {"Sinner",             "Anchorite",             "Apologist",                "Pious",
-     "Devout",             "Orthodox",              "Immaculate",               "Bringer of Law"},
+    {"참회자",             "은자",                  "총애자",                   "독실함의 신도",
+     "경건한 자",          "정교회",                "은총의 사도",              "질서를 부르는 자"},
 
     // The Shining One.
-    {"Sinner",             "Acolyte",               "Righteous",                "Unflinching",
-     "Holy Warrior",       "Exorcist",              "Demon Slayer",             "Bringer of Light"},
+    {"참회자",             "복사",	                "준법자",                   "불굴자",
+     "성전의 기사",        "퇴마사",                "악의 처단자",              "빛을 부르는 자"},
 
     // Kikubaaqudgha -- scholarly death.
-    {"Sinner",             "Purveyor of Pain",      "Death's Scholar",          "Merchant of Misery",
-     "Death's Artisan",    "Dealer of Despair",     "Black Sun",                "Lord of Darkness"},
+    {"참회자",             "고통을 부르는 자",      "죽음의 학자",              "비극의 소환자",
+     "죽음의 장본인",      "절망의 제안자",         "검은 태양",                "어둠의 군주"},
 
     // Yredelemnul -- zombie death.
-    {"Sinner",             "Zealot",                "Exhumer",                  "Fey %s",
-     "Soul Tainter",       "Sculptor of Flesh",     "Harbinger of Death",       "Grim Reaper"},
+    {"참회자",             "광신도",                "발굴자",                   "현실혼동자",
+     "영혼 타락자",        "살점의 조각가",         "죽음의 사자",              "사신의 대행자"},
 
     // Xom.
-    {"Toy",                "Toy",                   "Toy",                      "Toy",
-     "Toy",                "Toy",                   "Toy",                      "Toy"},
+    {"좀의 장난감",        "좀의 장난감",           "좀의 장난감",              "좀의 장난감",
+     "좀의 장난감",        "좀의 장난감",           "좀의 장난감",              "좀의 장난감"},
 
     // Vehumet -- battle mage theme.
-    {"Meek",               "Sorcerer's Apprentice", "Scholar of Destruction",   "Caster of Ruination",
-     "Battle Magician",    "Warlock",               "Annihilator",              "Luminary of Lethal Lore"},
+    {"무기력자",           "마법 견습생",           "파괴의 연구자",            "파괴마법술사",
+     "최전장의 마법사",    "워록",                  "섬멸자",                   "재앙의 통달자"},
 
     // Okawaru -- battle theme.
-    {"Coward",             "Struggler",             "Combatant",                "Warrior",
-     "Knight",             "Warmonger",             "Commander",                "Victor of a Thousand Battles"},
+    {"겁쟁이",           "발버둥치는 자",         "전투원",                "전사",
+     "기사",             "전투광",                "사령관",                "백전노장"},
 
     // Makhleb -- chaos theme.
-    {"Orderly",            "Spawn of Chaos",        "Disciple of Annihilation", "Fanfare of Bloodshed",
-     "Fiendish",           "Demolition %s",         "Pandemonic",               "Champion of Chaos"},
+    {"허수아비",           "무질서한 자",           "파괴의 추종자",             "학살의 광대",
+     "재앙의 전조",        "파멸의 참조자",         "균형 도살자",               "혼돈의 아버지"},
 
     // Sif Muna -- scholarly theme.
-    {"Ignorant",           "Disciple",              "Student",                  "Adept",
-     "Scribe",             "Scholar",               "Sage",                     "Genius of the Arcane"},
+    {"일자무식",           "제자",                  "수제자",                   "우등생",
+     "지식인",             "학자",                  "현자",                     "불가사의의 대천재"},
 
     // Trog -- anger theme.
-    {"Faithless",          "Troglodyte",            "Angry Troglodyte",         "Frenzied",
-     "%s of Prey",         "Rampant",               "Wild %s",                  "Bane of Scribes"},
+    {"믿음이 부족한 자",   "혈거인",                "분노를 안은 혈거인",       "광란자",
+     "광폭자",             "걷잡을 수 없는 자",     "본능의 지배자",            "필경사의 골칫거리"},
 
     // Nemelex Xobeh -- alluding to Tarot and cards.
-    {"Unlucky %s",         "Pannier",               "Jester",                   "Fortune-Teller",
-     "Soothsayer",         "Magus",                 "Cardsharp",                "Hand of Fortune"},
+    {"불운자",          "도박꾼",                  "어릿광대",                  "점쟁이",
+     "예언자",             "점성술사",              "타짜",                     "행운을 부르는 손"},
 
     // Elyvilon.
-    {"Sinner",             "Comforter",             "Caregiver",                "Practitioner",
-     "Pacifier",           "Purifying %s",          "Faith Healer",             "Bringer of Life"},
+    {"참회자",             "위로하는 자",           "간호하는 자",              "의사",
+     "평화주의자",         "정화의 바람",           "믿음의 치유사",            "생명의 전도사"},
 
     // Lugonu -- distortion theme.
-    {"Faithless",          "Abyss-Baptised",        "Unweaver",                 "Distorting %s",
-     "Agent of Entropy",   "Schismatic",            "Envoy of Void",            "Corrupter of Planes"},
+	{"믿음이 부족한 자",	"회의주의자",			"심연의 세례자",			"왜곡자",
+	 "이면자" ,				"무질서의 대리인",		"공허의 인도자",			"차원의 왜곡자" },
 
     // Beogh -- messiah theme.
-    {"Apostate",           "Messenger",             "Proselytiser",             "Priest",
-     "Missionary",         "Evangelist",            "Apostle",                  "Messiah"},
+    {"배교자",           "신탁을 받은자",           "오크의 포교자",            "베오그의 사제",
+     "베오그의 선교사",  "복음의 전파자",           "베오그의 사도",            "메시아"},
 
     // Jiyva -- slime and jelly theme.
-    {"Scum",               "Jelly",                 "Squelcher",                "Dissolver",
-     "Putrid Slime",       "Consuming %s",          "Archjelly",                "Royal Jelly"},
+    {"진흙괴물",          "젤리",					 "슬라임",                   "갈색 진흙괴물",
+     "담청색 젤리",       "죽음의 젤리",			 "산성 덩이",                "로얄 젤리"},
 
     // Fedhas Madash -- nature theme.  Titles could use some work
-    {"Walking Fertiliser", "Green %s",              "Inciter",                  "Photosynthesist",
-     "Cultivator",         "Green Death",           "Nimbus",                   "Force of Nature"},
+    {"비료 대행자",        "식물 재배자",           "숲의 수호자",              "광합성하는 자",
+     "초록을 일구는 자",   "자연의 대리인",         "비구름을 부르는 자",       "대자연의 화신"},
 
     // Cheibriados -- slow theme
-    {"Unwound %s",         "Timekeeper",            "Righteous Timekeeper",     "Chronographer",
-     "Splendid Chronographer", "Chronicler",        "Eternal Chronicler",       "Ticktocktomancer"},
+    {"무풍",               "정시출근",              "시간의 사수",              "시간 관측사",
+     "시공 관측사",        "시공의 관리자",         "시간축을 달리는",          "영겁의 유지자" },
 
     // Ashenzari -- divination theme
-    {"Star-crossed",       "Cursed",                "Initiated",                "Seer",
-     "Soothsayer",         "Oracle",                "Illuminatus",              "Omniscient"},
+    {"운명이 꼬인 자",       "저주받은 자",         "옭아매는 자",              "예지하는 자",
+     "먼 곳을 보는 자",      "앞을 보는 자",        "미래를 비추는 자",         "베리타스의 추구자"},
 };
 
 static int _piety_level()
@@ -4138,8 +4138,8 @@ static std::string _describe_ash_skill_boost()
 {
     if (!you.bondage_level)
     {
-        return "Ashenzari won't support your skills until you bind yourself "
-               "with cursed items.";
+        return gettext("Ashenzari won't support your skills until you bind yourself "
+               "with cursed items.");
     }
 
     static const char* bondage_parts[NUM_ET] = { "Weapon hand", "Shield hand",
@@ -4147,9 +4147,9 @@ static std::string _describe_ash_skill_boost()
     static const char* bonus_level[3] = { "Low", "Medium", "High" };
     std::ostringstream desc;
     desc.setf(std::ios::left);
-    desc << std::setw(18) << "Bounded part";
-    desc << std::setw(30) << "Boosted skills";
-    desc << "Bonus\n";
+    desc << std::setw(18) << gettext("Bounded part");
+    desc << std::setw(30) << gettext("Boosted skills");
+    desc << gettext("Bonus\n");
 
     for (int i = ET_WEAPON; i < NUM_ET; i++)
     {
@@ -4158,9 +4158,9 @@ static std::string _describe_ash_skill_boost()
 
         desc << std::setw(18);
         if (i == ET_WEAPON && you.bondage[i] == 3)
-            desc << "Hands";
+            desc << pgettext("boost","Hands");
         else
-            desc << bondage_parts[i];
+            desc << gettext(bondage_parts[i]);
 
         std::string skills;
         std::map<skill_type, int8_t> boosted_skills = ash_get_boosted_skills(eq_type(i));
@@ -4201,7 +4201,7 @@ static std::string _describe_ash_skill_boost()
         }
 
         desc << std::setw(30) << skills;
-        desc << bonus_level[bonus -1] << "\n";
+        desc << gettext(bonus_level[bonus -1]) << "\n";
     }
 
     return desc.str();
