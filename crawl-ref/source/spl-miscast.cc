@@ -644,7 +644,7 @@ bool MiscastEffect::_malign_gateway()
         env.grid(point) = DNGN_MALIGN_GATEWAY;
 
         noisy(10, point);
-        all_msg = "The dungeon shakes, a horrible noise fills the air, and a portal to some otherworldly place is opened!";
+        all_msg = gettext("The dungeon shakes, a horrible noise fills the air, and a portal to some otherworldly place is opened!");
         msg_ch = MSGCH_WARN;
         do_msg();
     }
@@ -760,12 +760,12 @@ static std::string _hair_str(actor* target, bool &plural)
     if (you.species == SP_MUMMY)
     {
         plural = true;
-        return "bandages";
+        return pgettext("hair","bandages");
     }
     else
     {
         plural = false;
-        return "hair";
+        return pgettext("hair","hair");
     }
 }
 
@@ -779,39 +779,39 @@ void MiscastEffect::_conjuration(int severity)
         switch (random2(num))
         {
         case 0:
-            you_msg      = "Sparks fly from your @hands@!";
-            mon_msg_seen = "Sparks fly from @the_monster@'s @hands@!";
+            you_msg      = gettext("Sparks fly from your @hands@!");
+            mon_msg_seen = gettext("Sparks fly from @the_monster@'s @hands@!");
             break;
         case 1:
-            you_msg      = "The air around you crackles with energy!";
-            mon_msg_seen = "The air around @the_monster@ crackles "
-                           "with energy!";
+            you_msg      = gettext("The air around you crackles with energy!");
+            mon_msg_seen = gettext("The air around @the_monster@ crackles "
+                           "with energy!");
             break;
         case 2:
-            you_msg      = "Wisps of smoke drift from your @hands@.";
-            mon_msg_seen = "Wisps of smoke drift from @the_monster@'s "
-                           "@hands@.";
+            you_msg      = gettext("Wisps of smoke drift from your @hands@.");
+            mon_msg_seen = gettext("Wisps of smoke drift from @the_monster@'s "
+                           "@hands@.");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "You are momentarily dazzled by a flash of light!";
-            mon_msg_seen = "@The_monster@ emits a flash of light!";
+            you_msg      = gettext("You are momentarily dazzled by a flash of light!");
+            mon_msg_seen = gettext("@The_monster@ emits a flash of light!");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = gettext("@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("miscast"," for a moment.");
             break;
         case 6:
-            you_msg      = "Your skin tingles.";
-            mon_msg_seen = "@The_monster@ twitches.";
+            you_msg      = gettext("Your skin tingles.");
+            mon_msg_seen = gettext("@The_monster@ twitches.");
             break;
         case 7:
-            you_msg      = "Your skin glows momentarily.";
-            mon_msg_seen = "@The_monster@ glows momentarily.";
+            you_msg      = gettext("Your skin glows momentarily.");
+            mon_msg_seen = gettext("@The_monster@ glows momentarily.");
             // A small glow isn't going to make it past invisibility.
             break;
         case 8:
@@ -820,16 +820,16 @@ void MiscastEffect::_conjuration(int severity)
             break;
         case 9:
             if (you.can_smell())
-                all_msg = "You smell something strange.";
+                all_msg = gettext("You smell something strange.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 10:
         {
             // Player only (for now).
             bool plural;
             std::string hair = _hair_str(target, plural);
-            you_msg = make_stringf("Your %s stand%s on end.", hair.c_str(),
+            you_msg = make_stringf(gettext("Your %s stand%s on end."), hair.c_str(),
                                    plural ? "" : "s");
         }
         }
@@ -840,15 +840,15 @@ void MiscastEffect::_conjuration(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg        = "Smoke pours from your @hands@!";
-            mon_msg_seen   = "Smoke pours from @the_monster@'s @hands@!";
-            mon_msg_unseen = "Smoke appears from out of nowhere!";
+            you_msg        = gettext("Smoke pours from your @hands@!");
+            mon_msg_seen   = gettext("Smoke pours from @the_monster@'s @hands@!");
+            mon_msg_unseen = gettext("Smoke appears from out of nowhere!");
 
             _big_cloud(CLOUD_GREY_SMOKE, 20, 7 + random2(7));
             break;
         case 1:
-            you_msg      = "A wave of violent energy washes through your body!";
-            mon_msg_seen = "@The_monster@ lurches violently!";
+            you_msg      = gettext("A wave of violent energy washes through your body!");
+            mon_msg_seen = gettext("@The_monster@ lurches violently!");
             _ouch(6 + random2avg(7, 2));
             break;
         }
@@ -858,15 +858,15 @@ void MiscastEffect::_conjuration(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg      = "Energy rips through your body!";
-            mon_msg_seen = "@The_monster@ jerks violently!";
+            you_msg      = gettext("Energy rips through your body!");
+            mon_msg_seen = gettext("@The_monster@ jerks violently!");
             _ouch(9 + random2avg(17, 2));
             break;
         case 1:
-            you_msg        = "You are caught in a violent explosion!";
-            mon_msg_seen   = "@The_monster@ is caught in a violent explosion!";
-            mon_msg_unseen = "A violent explosion happens from out of thin "
-                             "air!";
+            you_msg        = gettext("You are caught in a violent explosion!");
+            mon_msg_seen   = gettext("@The_monster@ is caught in a violent explosion!");
+            mon_msg_unseen = gettext("A violent explosion happens from out of thin "
+                             "air!");
 
             beam.flavour = BEAM_MISSILE;
             beam.damage  = dice_def(3, 12);
@@ -882,13 +882,13 @@ void MiscastEffect::_conjuration(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg      = "You are blasted with magical energy!";
-            mon_msg_seen = "@The_monster@ is blasted with magical energy!";
+            you_msg      = gettext("You are blasted with magical energy!");
+            mon_msg_seen = gettext("@The_monster@ is blasted with magical energy!");
             // No message for invis monsters?
             _ouch(12 + random2avg(29, 2));
             break;
         case 1:
-            all_msg = "There is a sudden explosion of magical energy!";
+            all_msg = gettext("There is a sudden explosion of magical energy!");
 
             beam.flavour = BEAM_MISSILE;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -906,23 +906,23 @@ void MiscastEffect::_conjuration(int severity)
 static void _your_hands_glow(actor* target, std::string& you_msg,
                              std::string& mon_msg_seen, bool pluralise)
 {
-    you_msg      = "Your @hands@ ";
-    mon_msg_seen = "@The_monster@'s @hands@ ";
+    you_msg      = gettext("Your @hands@ ");
+    mon_msg_seen = gettext("@The_monster@'s @hands@ ");
     // No message for invisible monsters.
 
     if (pluralise)
     {
-        you_msg      += "glow";
-        mon_msg_seen += "glow";
+        you_msg      += pgettext("glow","glow");
+        mon_msg_seen += pgettext("glow","glow");
     }
     else
     {
-        you_msg      += "glows";
-        mon_msg_seen += "glows";
+        you_msg      += pgettext("glow","glows");
+        mon_msg_seen += pgettext("glow","glows");
     }
 
-    you_msg      += " momentarily.";
-    mon_msg_seen += " momentarily.";
+    you_msg      += pgettext("glow"," momentarily.");
+    mon_msg_seen += pgettext("glow"," momentarily.");
 }
 
 void MiscastEffect::_enchantment(int severity)
@@ -936,35 +936,35 @@ void MiscastEffect::_enchantment(int severity)
             _your_hands_glow(target, you_msg, mon_msg_seen, can_plural_hand);
             break;
         case 1:
-            you_msg      = "The air around you crackles with energy!";
-            mon_msg_seen = "The air around @the_monster@ crackles with"
-                           " energy!";
+            you_msg      = gettext("The air around you crackles with energy!");
+            mon_msg_seen = gettext("The air around @the_monster@ crackles with"
+                           " energy!");
             break;
         case 2:
-            you_msg        = "Multicoloured lights dance before your eyes!";
-            mon_msg_seen   = "Multicoloured lights dance around @the_monster@!";
-            mon_msg_unseen = "Multicoloured lights dance in the air!";
+            you_msg        = gettext("Multicoloured lights dance before your eyes!");
+            mon_msg_seen   = gettext("Multicoloured lights dance around @the_monster@!");
+            mon_msg_unseen = gettext("Multicoloured lights dance in the air!");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "Waves of light ripple over your body.";
-            mon_msg_seen = "Waves of light ripple over @the_monster@'s body.";
+            you_msg      = gettext("Waves of light ripple over your body.");
+            mon_msg_seen = gettext("Waves of light ripple over @the_monster@'s body.");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = gettext("@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("miscast"," for a moment.");
             break;
         case 6:
-            you_msg      = "Your skin tingles.";
-            mon_msg_seen = "@The_monster@ twitches.";
+            you_msg      = gettext("Your skin tingles.");
+            mon_msg_seen = gettext("@The_monster@ twitches.");
             break;
         case 7:
-            you_msg      = "Your skin glows momentarily.";
-            mon_msg_seen = "@The_monster@'s body glows momentarily.";
+            you_msg      = gettext("Your skin glows momentarily.");
+            mon_msg_seen = gettext("@The_monster@'s body glows momentarily.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -973,13 +973,13 @@ void MiscastEffect::_enchantment(int severity)
         case 9:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear something strange.";
+                all_msg        = gettext("You hear something strange.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
                 return;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "Your skull vibrates slightly.";
+                you_msg = gettext("Your skull vibrates slightly.");
             break;
         }
         do_msg();
@@ -1025,7 +1025,7 @@ void MiscastEffect::_enchantment(int severity)
         case 2:
             if (target->atype() == ACT_PLAYER)
             {
-                mpr("You sense a malignant aura.");
+                mpr(gettext("You sense a malignant aura."));
                 curse_an_item();
                 break;
             }
@@ -1058,7 +1058,7 @@ void MiscastEffect::_enchantment(int severity)
             do
                 curse_an_item();
             while (!one_chance_in(3));
-            mpr("You sense an overwhelmingly malignant aura!");
+            mpr(gettext("You sense an overwhelmingly malignant aura!"));
             break;
         }
         break;
@@ -1073,46 +1073,46 @@ void MiscastEffect::_translocation(int severity)
         switch (random2(10))
         {
         case 0:
-            you_msg      = "Space warps around you.";
-            mon_msg_seen = "Space warps around @the_monster@.";
+            you_msg      = gettext("Space warps around you.");
+            mon_msg_seen = gettext("Space warps around @the_monster@.");
             break;
         case 1:
-            you_msg      = "The air around you crackles with energy!";
-            mon_msg_seen = "The air around @the_monster@ crackles with "
-                           "energy!";
+            you_msg      = gettext("The air around you crackles with energy!");
+            mon_msg_seen = gettext("The air around @the_monster@ crackles with "
+                           "energy!");
             break;
         case 2:
-            you_msg      = "You feel a wrenching sensation.";
-            mon_msg_seen = "@The_monster@ jerks violently for a moment.";
+            you_msg      = gettext("You feel a wrenching sensation.");
+            mon_msg_seen = gettext("@The_monster@ jerks violently for a moment.");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "You spin around.";
-            mon_msg_seen = "@The_monster@ spins around.";
+            you_msg      = gettext("You spin around.");
+            mon_msg_seen = gettext("@The_monster@ spins around.");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = gettext("@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("miscast"," for a moment.");
             break;
         case 6:
-            you_msg      = "Your skin tingles.";
-            mon_msg_seen = "@The_monster@ twitches.";
+            you_msg      = gettext("Your skin tingles.");
+            mon_msg_seen = gettext("@The_monster@ twitches.");
             break;
         case 7:
-            you_msg      = "The world appears momentarily distorted!";
-            mon_msg_seen = "@The_monster@ appears momentarily distorted!";
+            you_msg      = gettext("The world appears momentarily distorted!");
+            mon_msg_seen = gettext("@The_monster@ appears momentarily distorted!");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
             // care of elsewhere.
             break;
         case 9:
-            you_msg      = "You feel uncomfortable.";
-            mon_msg_seen = "@The_monster@ scowls.";
+            you_msg      = gettext("You feel uncomfortable.");
+            mon_msg_seen = gettext("@The_monster@ scowls.");
             break;
         }
         do_msg();
@@ -1124,24 +1124,24 @@ void MiscastEffect::_translocation(int severity)
         case 0:
         case 1:
         case 2:
-            you_msg        = "You are caught in a localised field of spatial "
-                             "distortion.";
-            mon_msg_seen   = "@The_monster@ is caught in a localised field of "
-                             "spatial distortion.";
-            mon_msg_unseen = "A piece of empty space twists and distorts.";
+            you_msg        = gettext("You are caught in a localised field of spatial "
+                             "distortion.");
+            mon_msg_seen   = gettext("@The_monster@ is caught in a localised field of "
+                             "spatial distortion.");
+            mon_msg_unseen = gettext("A piece of empty space twists and distorts.");
             _ouch(4 + random2avg(9, 2));
             break;
         case 3:
         case 4:
-            you_msg        = "Space bends around you!";
-            mon_msg_seen   = "Space bends around @the_monster@!";
-            mon_msg_unseen = "A piece of empty space twists and distorts.";
+            you_msg        = gettext("Space bends around you!");
+            mon_msg_seen   = gettext("Space bends around @the_monster@!");
+            mon_msg_unseen = gettext("A piece of empty space twists and distorts.");
             if (_ouch(4 + random2avg(7, 2)) && target->alive())
                 target->blink(false);
             break;
         case 5:
             if (_create_monster(MONS_SPATIAL_VORTEX, 3))
-                all_msg = "Space twists in upon itself!";
+                all_msg = gettext("Space twists in upon itself!");
             do_msg();
             break;
         }
@@ -1158,19 +1158,19 @@ void MiscastEffect::_translocation(int severity)
             case 0:
             case 1:
             case 2:
-                you_msg        = "You are caught in a strong localised spatial "
-                                 "distortion.";
-                mon_msg_seen   = "@The_monster@ is caught in a strong localised "
-                                 "spatial distortion.";
-                mon_msg_unseen = "A piece of empty space twists and writhes.";
+                you_msg        = gettext("You are caught in a strong localised spatial "
+                                 "distortion.");
+                mon_msg_seen   = gettext("@The_monster@ is caught in a strong localised "
+                                 "spatial distortion.");
+                mon_msg_unseen = gettext("A piece of empty space twists and writhes.");
                 _ouch(9 + random2avg(23, 2));
                 reroll = false;
                 break;
             case 3:
             case 4:
-                you_msg        = "Space warps around you!";
-                mon_msg_seen   = "Space warps around @the_monster@!";
-                mon_msg_unseen = "A piece of empty space twists and writhes.";
+                you_msg        = gettext("Space warps around you!");
+                mon_msg_seen   = gettext("Space warps around @the_monster@!");
+                mon_msg_unseen = gettext("A piece of empty space twists and writhes.");
                 if (_ouch(5 + random2avg(9, 2)) && target->alive())
                 {
                     if (one_chance_in(3))
@@ -1192,7 +1192,7 @@ void MiscastEffect::_translocation(int severity)
                 }
 
                 if (success)
-                    all_msg = "Space twists in upon itself!";
+                    all_msg = gettext("Space twists in upon itself!");
                 reroll = false;
                 break;
             }
@@ -1215,18 +1215,18 @@ void MiscastEffect::_translocation(int severity)
             switch (random2(target->atype() == ACT_PLAYER ? 4 : 3))
             {
             case 0:
-                you_msg        = "You are caught in an extremely strong localised "
-                                 "spatial distortion!";
-                mon_msg_seen   = "@The_monster@ is caught in an extremely strong "
-                                 "localised spatial distortion!";
-                mon_msg_unseen = "A rift temporarily opens in the fabric of space!";
+                you_msg        = gettext("You are caught in an extremely strong localised "
+                                 "spatial distortion!");
+                mon_msg_seen   = gettext("@The_monster@ is caught in an extremely strong "
+                                 "localised spatial distortion!");
+                mon_msg_unseen = gettext("A rift temporarily opens in the fabric of space!");
                 _ouch(15 + random2avg(29, 2));
                 reroll = false;
                 break;
             case 1:
-                you_msg        = "Space warps crazily around you!";
-                mon_msg_seen   = "Space warps crazily around @the_monster@!";
-                mon_msg_unseen = "A rift temporarily opens in the fabric of space!";
+                you_msg        = gettext("Space warps crazily around you!");
+                mon_msg_seen   = gettext("Space warps crazily around @the_monster@!");
+                mon_msg_unseen = gettext("A rift temporarily opens in the fabric of space!");
                 if (_ouch(9 + random2avg(17, 2)) && target->alive())
                 {
                     target->teleport(true);
@@ -1257,45 +1257,45 @@ void MiscastEffect::_summoning(int severity)
         switch (random2(10))
         {
         case 0:
-            you_msg      = "Shadowy shapes form in the air around you, "
-                           "then vanish.";
-            mon_msg_seen = "Shadowy shapes form in the air around "
-                           "@the_monster@, then vanish.";
+            you_msg      = gettext("Shadowy shapes form in the air around you, "
+                           "then vanish.");
+            mon_msg_seen = gettext("Shadowy shapes form in the air around "
+                           "@the_monster@, then vanish.");
             break;
         case 1:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear strange voices.";
+                all_msg        = gettext("You hear strange voices.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "You feel momentarily dizzy.";
+                you_msg = gettext("You feel momentarily dizzy.");
             break;
         case 2:
-            you_msg = "Your head hurts.";
+            you_msg = gettext("Your head hurts.");
             // Monster messages needed.
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg = "Your brain hurts!";
+            you_msg = gettext("Your brain hurts!");
             // Monster messages needed.
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = gettext("@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("miscast"," for a moment.");
             break;
         case 6:
-            you_msg      = "The world appears momentarily distorted.";
-            mon_msg_seen = "@The_monster@ appears momentarily distorted.";
+            you_msg      = gettext("The world appears momentarily distorted.");
+            mon_msg_seen = gettext("@The_monster@ appears momentarily distorted.");
             break;
         case 7:
-            you_msg      = "Space warps around you.";
-            mon_msg_seen = "Space warps around @the_monster@.";
+            you_msg      = gettext("Space warps around you.");
+            mon_msg_seen = gettext("Space warps around @the_monster@.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -1304,13 +1304,13 @@ void MiscastEffect::_summoning(int severity)
         case 9:
             if (neither_end_silenced())
             {
-                you_msg        = "Distant voices call out to you!";
-                mon_msg_seen   = "Distant voices call out to @the_monster@!";
+                you_msg        = gettext("Distant voices call out to you!");
+                mon_msg_seen   = gettext("Distant voices call out to @the_monster@!");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "You feel watched.";
+                you_msg = gettext("You feel watched.");
             break;
         }
         do_msg();
@@ -1322,22 +1322,22 @@ void MiscastEffect::_summoning(int severity)
         case 0:             // identical to translocation
         case 1:
         case 2:
-            you_msg        = "You are caught in a localised spatial "
-                             "distortion.";
-            mon_msg_seen   = "@The_monster@ is caught in a localised spatial "
-                             "distortion.";
-            mon_msg_unseen = "An empty piece of space distorts and twists.";
+            you_msg        = gettext("You are caught in a localised spatial "
+                             "distortion.");
+            mon_msg_seen   = gettext("@The_monster@ is caught in a localised spatial "
+                             "distortion.");
+            mon_msg_unseen = gettext("An empty piece of space distorts and twists.");
             _ouch(5 + random2avg(9, 2));
             break;
         case 3:
             if (_create_monster(MONS_SPATIAL_VORTEX, 3))
-                all_msg = "Space twists in upon itself!";
+                all_msg = gettext("Space twists in upon itself!");
             do_msg();
             break;
         case 4:
         case 5:
             if (_create_monster(summon_any_demon(DEMON_LESSER), 5, true))
-                all_msg = "Something appears in a flash of light!";
+                all_msg = gettext("Something appears in a flash of light!");
             do_msg();
             break;
         }
@@ -1357,7 +1357,7 @@ void MiscastEffect::_summoning(int severity)
             }
 
             if (success)
-                all_msg = "Space twists in upon itself!";
+                all_msg = gettext("Space twists in upon itself!");
             do_msg();
             break;
         }
@@ -1365,7 +1365,7 @@ void MiscastEffect::_summoning(int severity)
         case 1:
         case 2:
             if (_create_monster(summon_any_demon(DEMON_COMMON), 5, true))
-                all_msg = "Something forms from out of thin air!";
+                all_msg = gettext("Something forms from out of thin air!");
             do_msg();
             break;
 
@@ -1383,9 +1383,9 @@ void MiscastEffect::_summoning(int severity)
 
             if (success && neither_end_silenced())
             {
-                you_msg        = "A chorus of chattering voices calls out to"
-                                 " you!";
-                mon_msg        = "A chorus of chattering voices calls out!";
+                you_msg        = gettext("A chorus of chattering voices calls out to"
+                                 " you!");
+                mon_msg        = gettext("A chorus of chattering voices calls out!");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 3;
             }
@@ -1404,14 +1404,14 @@ void MiscastEffect::_summoning(int severity)
             {
             case 0:
                 if (_create_monster(MONS_ABOMINATION_SMALL, 0, true))
-                    all_msg = "Something forms from out of thin air.";
+                    all_msg = gettext("Something forms from out of thin air.");
                 do_msg();
                 reroll = false;
                 break;
 
             case 1:
                 if (_create_monster(summon_any_demon(DEMON_GREATER), 0, true))
-                    all_msg = "You sense a hostile presence.";
+                    all_msg = gettext("You sense a hostile presence.");
                 do_msg();
                 reroll = false;
                 break;
@@ -1428,9 +1428,9 @@ void MiscastEffect::_summoning(int severity)
 
                 if (success)
                 {
-                    you_msg = "Something turns its malign attention towards "
-                              "you...";
-                    mon_msg = "You sense a malign presence.";
+                    you_msg = gettext("Something turns its malign attention towards "
+                              "you...");
+                    mon_msg = gettext("You sense a malign presence.");
                 }
                 do_msg();
                 reroll = false;
@@ -1459,40 +1459,40 @@ void MiscastEffect::_divination_you(int severity)
         switch (random2(10))
         {
         case 0:
-            mpr("Weird images run through your mind.");
+            mpr(gettext("Weird images run through your mind."));
             break;
         case 1:
             if (!silenced(you.pos()))
             {
-                mpr("You hear strange voices.", MSGCH_SOUND);
+                mpr(gettext("You hear strange voices."), MSGCH_SOUND);
                 noisy(2, you.pos());
             }
             else
-                mpr("Your nose twitches.");
+                mpr(gettext("Your nose twitches."));
             break;
         case 2:
-            mpr("Your head hurts.");
+            mpr(gettext("Your head hurts."));
             break;
         case 3:
-            mpr("You feel a strange surge of energy!");
+            mpr(gettext("You feel a strange surge of energy!"));
             break;
         case 4:
-            mpr("Your brain hurts!");
+            mpr(gettext("Your brain hurts!"));
             break;
         case 5:
-            mpr("Strange energies run through your body.");
+            mpr(gettext("Strange energies run through your body."));
             break;
         case 6:
-            mpr("Everything looks hazy for a moment.");
+            mpr(gettext("Everything looks hazy for a moment."));
             break;
         case 7:
-            mpr("You seem to have forgotten something, but you can't remember what it was!");
+            mpr(gettext("You seem to have forgotten something, but you can't remember what it was!"));
             break;
         case 8:
             canned_msg(MSG_NOTHING_HAPPENS);
             break;
         case 9:
-            mpr("You feel uncomfortable.");
+            mpr(gettext("You feel uncomfortable."));
             break;
         }
         break;
@@ -1501,7 +1501,7 @@ void MiscastEffect::_divination_you(int severity)
         switch (random2(2))
         {
         case 0:
-            mpr("You feel a little dazed.");
+            mpr(gettext("You feel a little dazed."));
             break;
         case 1:
             potion_effect(POT_CONFUSION, 10);
@@ -1514,20 +1514,20 @@ void MiscastEffect::_divination_you(int severity)
         {
         case 0:
             if (you.is_undead)
-                mpr("You suddenly recall your previous life!");
+                mpr(gettext("You suddenly recall your previous life!"));
             else if (_lose_stat(STAT_INT, 1 + random2(3)))
             {
-                mpr("You have damaged your brain!");
+                mpr(gettext("You have damaged your brain!"));
             }
             else if (!did_msg)
-                mpr("You have a terrible headache.");
+                mpr(gettext("You have a terrible headache."));
             break;
         case 1:
-            mpr("You lose your focus.");
+            mpr(gettext("You lose your focus."));
             if (you.magic_points > 0)
             {
                 dec_mp(3 + random2(10));
-                mpr("You suddenly feel drained of magical energy!", MSGCH_WARN);
+                mpr(gettext("You suddenly feel drained of magical energy!"), MSGCH_WARN);
             }
             break;
         }
@@ -1539,22 +1539,22 @@ void MiscastEffect::_divination_you(int severity)
         switch (random2(2))
         {
         case 0:
-            mpr("You lose concentration completely!");
+            mpr(gettext("You lose concentration completely!"));
             if (you.magic_points > 0)
             {
                 dec_mp(5 + random2(20));
-                mpr("You suddenly feel drained of magical energy!", MSGCH_WARN);
+                mpr(gettext("You suddenly feel drained of magical energy!"), MSGCH_WARN);
             }
             break;
         case 1:
             if (you.is_undead)
-                mpr("You suddenly recall your previous life.");
+                mpr(gettext("You suddenly recall your previous life."));
             else if (_lose_stat(STAT_INT, 3 + random2(3)))
             {
-                mpr("You have damaged your brain!");
+                mpr(gettext("You have damaged your brain!"));
             }
             else if (!did_msg)
-                mpr("You have a terrible headache.");
+                mpr(gettext("You have a terrible headache."));
             break;
         }
 
@@ -1573,17 +1573,17 @@ void MiscastEffect::_divination_mon(int severity)
     switch (severity)
     {
     case 0:         // just a harmless message
-        mon_msg_seen = "@The_monster@ looks momentarily confused.";
+        mon_msg_seen = gettext("@The_monster@ looks momentarily confused.");
         break;
 
     case 1:         // more annoying things
         switch (random2(2))
         {
         case 0:
-            mon_msg_seen = "@The_monster@ looks slightly disoriented.";
+            mon_msg_seen = gettext("@The_monster@ looks slightly disoriented.");
             break;
         case 1:
-            mon_msg_seen = "@The_monster@ looks disoriented.";
+            mon_msg_seen = gettext("@The_monster@ looks disoriented.");
             target->confuse(
                 act_source,
                 1 + random2(3 + act_source->get_experience_level()));
@@ -1592,14 +1592,14 @@ void MiscastEffect::_divination_mon(int severity)
         break;
 
     case 2:         // even more annoying things
-        mon_msg_seen = "@The_monster@ shudders.";
+        mon_msg_seen = gettext("@The_monster@ shudders.");
         target->confuse(
             act_source,
             5 + random2(3 + act_source->get_experience_level()));
         break;
 
     case 3:         // nasty
-        mon_msg_seen = "@The_monster@ reels.";
+        mon_msg_seen = gettext("@The_monster@ reels.");
         if (one_chance_in(7))
             target_as_monster()->forget_random_spell();
         target->confuse(
@@ -1630,13 +1630,13 @@ void MiscastEffect::_necromancy(int severity)
         else if (death_curse)
         {
             if (coinflip())
-            {
-                simple_god_message(" averts the curse.");
+            { // (deceit, 110901) god message
+                simple_god_message(gettext(" averts the curse."));
                 return;
             }
             else
-            {
-                simple_god_message(" partially averts the curse.");
+            { // (deceit, 110901) god message
+                simple_god_message(gettext(" partially averts the curse."));
                 severity = std::max(severity - 1, 0);
             }
         }
@@ -1649,45 +1649,45 @@ void MiscastEffect::_necromancy(int severity)
         {
         case 0:
             if (you.can_smell())
-                all_msg = "You smell decay.";
+                all_msg = gettext("You smell decay.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 1:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear strange and distant voices.";
+                all_msg        = gettext("You hear strange and distant voices.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 3;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "You feel homesick.";
+                you_msg = gettext("You feel homesick.");
             break;
         case 2:
-            you_msg = "Pain shoots through your body.";
+            you_msg = gettext("Pain shoots through your body.");
             // Monster messages needed.
             break;
         case 3:
-            you_msg = "Your bones ache.";
+            you_msg = gettext("Your bones ache.");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "The world around you seems to dim momentarily.";
-            mon_msg_seen = "@The_monster@ seems to dim momentarily.";
+            you_msg      = gettext("The world around you seems to dim momentarily.");
+            mon_msg_seen = gettext("@The_monster@ seems to dim momentarily.");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = pgettext("necromancy","@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("necromancy"," for a moment.");
             break;
         case 6:
-            you_msg      = "You shiver with cold.";
-            mon_msg_seen = "@The_monster@ shivers with cold.";
+            you_msg      = gettext("You shiver with cold.");
+            mon_msg_seen = gettext("@The_monster@ shivers with cold.");
             break;
         case 7:
-            you_msg        = "You sense a malignant aura.";
-            mon_msg_seen   = "@The_monster@ is briefly tinged with black.";
-            mon_msg_unseen = "The air has a black tinge for a moment.";
+            you_msg        = gettext("You sense a malignant aura.");
+            mon_msg_seen   = gettext("@The_monster@ is briefly tinged with black.");
+            mon_msg_unseen = gettext("The air has a black tinge for a moment.");
             // Monster messages needed.
             break;
         case 8:
@@ -1695,8 +1695,8 @@ void MiscastEffect::_necromancy(int severity)
             // care of elsewhere.
             break;
         case 9:
-            you_msg      = "You feel very uncomfortable.";
-            mon_msg_seen = "@The_monster@ scowls horribly.";
+            you_msg      = gettext("You feel very uncomfortable.");
+            mon_msg_seen = gettext("@The_monster@ scowls horribly.");
             break;
         }
         do_msg();
@@ -1708,20 +1708,20 @@ void MiscastEffect::_necromancy(int severity)
         case 0:
             if (target->res_torment())
             {
-                you_msg      = "You feel weird for a moment.";
-                mon_msg_seen = "@The_monster@ has a weird expression for a "
-                               "moment.";
+                you_msg      = gettext("You feel weird for a moment.");
+                mon_msg_seen = gettext("@The_monster@ has a weird expression for a "
+                               "moment.");
             }
             else
             {
-                you_msg      = "Pain shoots through your body!";
-                mon_msg_seen = "@The_monster@ convulses with pain!";
+                you_msg      = gettext("Pain shoots through your body!");
+                mon_msg_seen = gettext("@The_monster@ convulses with pain!");
                 _ouch(5 + random2avg(15, 2));
             }
             break;
         case 1:
-            you_msg      = "You feel horribly lethargic.";
-            mon_msg_seen = "@The_monster@ looks incredibly listless.";
+            you_msg      = gettext("You feel horribly lethargic.");
+            mon_msg_seen = gettext("@The_monster@ looks incredibly listless.");
             _potion_effect(POT_SLOWING, 15);
             break;
         case 2:
@@ -1730,7 +1730,7 @@ void MiscastEffect::_necromancy(int severity)
                 if (you.can_smell())
                 {
                     // identical to a harmless message
-                    all_msg = "You smell decay.";
+                    all_msg = gettext("You smell decay.");
                 }
 
                 if (target->atype() == ACT_PLAYER)
@@ -1742,7 +1742,7 @@ void MiscastEffect::_necromancy(int severity)
             else if (you.species == SP_MUMMY)
             {
                 // Monster messages needed.
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             }
             break;
         }
@@ -1765,17 +1765,17 @@ void MiscastEffect::_necromancy(int severity)
 
             if (success)
             {
-                you_msg        = "Flickering shadows surround you.";
-                mon_msg_seen   = "Flickering shadows surround @the_monster@.";
-                mon_msg_unseen = "Shadows flicker in the thin air.";
+                you_msg        = gettext("Flickering shadows surround you.");
+                mon_msg_seen   = gettext("Flickering shadows surround @the_monster@.");
+                mon_msg_unseen = gettext("Shadows flicker in the thin air.");
             }
             do_msg();
             break;
         }
 
         case 1:
-            you_msg      = "You are engulfed in negative energy!";
-            mon_msg_seen = "@The_monster@ is engulfed in negative energy!";
+            you_msg      = gettext("You are engulfed in negative energy!");
+            mon_msg_seen = gettext("@The_monster@ is engulfed in negative energy!");
 
             if (lethality_margin == 0 || you.experience > 0
                 || !avoid_lethal(you.hp))
@@ -1795,15 +1795,15 @@ void MiscastEffect::_necromancy(int severity)
         case 2:
             if (target->res_torment())
             {
-                you_msg      = "You feel weird for a moment.";
-                mon_msg_seen = "@The_monster@ has a weird expression for a "
-                               "moment.";
+                you_msg      = gettext("You feel weird for a moment.");
+                mon_msg_seen = gettext("@The_monster@ has a weird expression for a "
+                               "moment.");
             }
             else
             {
-                you_msg      = "You convulse helplessly as pain tears through "
-                               "your body!";
-                mon_msg_seen = "@The_monster@ convulses helplessly with pain!";
+                you_msg      = gettext("You convulse helplessly as pain tears through "
+                               "your body!");
+                mon_msg_seen = gettext("@The_monster@ convulses helplessly with pain!");
                 _ouch(15 + random2avg(23, 2));
             }
             if (!did_msg)
@@ -1819,9 +1819,9 @@ void MiscastEffect::_necromancy(int severity)
         case 0:
             if (target->holiness() == MH_UNDEAD)
             {
-                you_msg      = "Something just walked over your grave. No, "
-                               "really!";
-                mon_msg_seen = "@The_monster@ seems frightened for a moment.";
+                you_msg      = gettext("Something just walked over your grave. No, "
+                               "really!");
+                mon_msg_seen = gettext("@The_monster@ seems frightened for a moment.");
                 do_msg();
             }
             else
@@ -1835,9 +1835,9 @@ void MiscastEffect::_necromancy(int severity)
         case 2:
             if (_create_monster(MONS_SOUL_EATER, 4, true))
             {
-                you_msg        = "Something reaches out for you...";
-                mon_msg_seen   = "Something reaches out for @the_monster@...";
-                mon_msg_unseen = "Something reaches out from thin air...";
+                you_msg        = gettext("Something reaches out for you...");
+                mon_msg_seen   = gettext("Something reaches out for @the_monster@...");
+                mon_msg_unseen = gettext("Something reaches out from thin air...");
             }
             do_msg();
             break;
@@ -1845,16 +1845,16 @@ void MiscastEffect::_necromancy(int severity)
         case 3:
             if (_create_monster(MONS_REAPER, 4, true))
             {
-                you_msg        = "Death has come for you...";
-                mon_msg_seen   = "Death has come for @the_monster@...";
-                mon_msg_unseen = "Death appears from thin air...";
+                you_msg        = gettext("Death has come for you...");
+                mon_msg_seen   = gettext("Death has come for @the_monster@...");
+                mon_msg_unseen = gettext("Death appears from thin air...");
             }
             do_msg();
             break;
 
         case 4:
-            you_msg      = "You are engulfed in negative energy!";
-            mon_msg_seen = "@The_monster@ is engulfed in negative energy!";
+            you_msg      = gettext("You are engulfed in negative energy!");
+            mon_msg_seen = gettext("@The_monster@ is engulfed in negative energy!");
 
             if (lethality_margin == 0 || you.experience > 0
                 || !avoid_lethal(you.hp))
@@ -1889,37 +1889,37 @@ void MiscastEffect::_transmutation(int severity)
             _your_hands_glow(target, you_msg, mon_msg_seen, can_plural_hand);
             break;
         case 1:
-            you_msg        = "The air around you crackles with energy!";
-            mon_msg_seen   = "The air around @the_monster@ crackles with "
-                             "energy!";
-            mon_msg_unseen = "The thin air crackles with energy!";
+            you_msg        = gettext("The air around you crackles with energy!");
+            mon_msg_seen   = gettext("The air around @the_monster@ crackles with "
+                             "energy!");
+            mon_msg_unseen = gettext("The thin air crackles with energy!");
             break;
         case 2:
-            you_msg        = "Multicoloured lights dance before your eyes!";
-            mon_msg_seen   = "Multicoloured lights dance around @the_monster@!";
-            mon_msg_unseen = "Multicoloured lights dance in the air!";
+            you_msg        = gettext("Multicoloured lights dance before your eyes!");
+            mon_msg_seen   = gettext("Multicoloured lights dance around @the_monster@!");
+            mon_msg_unseen = gettext("Multicoloured lights dance in the air!");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg        = "Waves of light ripple over your body.";
-            mon_msg_seen   = "Waves of light ripple over @the_monster@'s body.";
-            mon_msg_unseen = "Waves of light ripple in the air.";
+            you_msg        = gettext("Waves of light ripple over your body.");
+            mon_msg_seen   = gettext("Waves of light ripple over @the_monster@'s body.");
+            mon_msg_unseen = gettext("Waves of light ripple in the air.");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = "@The_monster@ glows " + weird_glowing_colour() +
-                           " for a moment.";
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = gettext("@The_monster@ glows ") + weird_glowing_colour() +
+                           pgettext("miscast"," for a moment.");
             break;
         case 6:
-            you_msg      = "Your skin tingles.";
-            mon_msg_seen = "@The_monster@ twitches.";
+            you_msg      = gettext("Your skin tingles.");
+            mon_msg_seen = gettext("@The_monster@ twitches.");
             break;
         case 7:
-            you_msg      = "Your skin glows momentarily.";
-            mon_msg_seen = "@The_monster@'s body glows momentarily.";
+            you_msg      = gettext("Your skin glows momentarily.");
+            mon_msg_seen = gettext("@The_monster@'s body glows momentarily.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -1927,16 +1927,16 @@ void MiscastEffect::_transmutation(int severity)
             break;
         case 9:
             if (you.can_smell())
-                all_msg = "You smell something strange.";
+                all_msg = gettext("You smell something strange.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 10:
         {
             // Player only (for now).
             bool plural;
             std::string hair = _hair_str(target, plural);
-            you_msg = make_stringf("Your %s momentarily turn%s into snakes!",
+            you_msg = make_stringf(gettext("Your %s momentarily turn%s into snakes!"),
                                    hair.c_str(), plural ? "" : "s");
         }
         }
@@ -1947,8 +1947,8 @@ void MiscastEffect::_transmutation(int severity)
         switch (random2(crawl_state.game_is_arena() ? 1 : 2))
         {
         case 0:
-            you_msg      = "Your body is twisted painfully.";
-            mon_msg_seen = "@The_monster@'s body twists unnaturally.";
+            you_msg      = gettext("Your body is twisted painfully.");
+            mon_msg_seen = gettext("@The_monster@'s body twists unnaturally.");
             _ouch(1 + random2avg(11, 2));
             break;
         case 1:
@@ -1962,8 +1962,8 @@ void MiscastEffect::_transmutation(int severity)
         switch (random2(target->atype() == ACT_PLAYER ? 4 : 3))
         {
         case 0:
-            you_msg      = "Your body is twisted very painfully!";
-            mon_msg_seen = "@The_monster@'s body twists and writhes.";
+            you_msg      = gettext("Your body is twisted very painfully!");
+            mon_msg_seen = gettext("@The_monster@'s body twists and writhes.");
             _ouch(3 + random2avg(23, 2));
             break;
         case 1:
@@ -1985,9 +1985,9 @@ void MiscastEffect::_transmutation(int severity)
         switch (random2(3))
         {
         case 0:
-            you_msg = "Your body is flooded with distortional energies!";
-            mon_msg = "@The_monster@'s body is flooded with distortional "
-                      "energies!";
+            you_msg = gettext("Your body is flooded with distortional energies!");
+            mon_msg = gettext("@The_monster@'s body is flooded with distortional "
+                      "energies!");
             if (_ouch(3 + random2avg(18, 2)) && target->alive()
                 && target->atype() == ACT_PLAYER)
             {
@@ -2008,7 +2008,7 @@ void MiscastEffect::_transmutation(int severity)
 
             if (target->atype() == ACT_PLAYER)
             {
-                you_msg = "You feel very strange.";
+                you_msg = gettext("You feel very strange.");
                 delete_mutation(RANDOM_MUTATION, true, false, false, false);
             }
             _ouch(5 + random2avg(23, 2));
@@ -2026,7 +2026,7 @@ void MiscastEffect::_transmutation(int severity)
 
             if (target->atype() == ACT_PLAYER)
             {
-                you_msg = "Your body is distorted in a weirdly horrible way!";
+                you_msg = gettext("Your body is distorted in a weirdly horrible way!");
                 // We don't need messages when the mutation fails,
                 // because we give our own (which is justified anyway as
                 // you take damage).
@@ -2049,38 +2049,38 @@ void MiscastEffect::_fire(int severity)
         switch (random2(10))
         {
         case 0:
-            you_msg      = "Sparks fly from your @hands@!";
-            mon_msg_seen = "Sparks fly from @the_monster@'s @hands@!";
+            you_msg      = gettext("Sparks fly from your @hands@!");
+            mon_msg_seen = gettext("Sparks fly from @the_monster@'s @hands@!");
             break;
         case 1:
-            you_msg      = "The air around you burns with energy!";
-            mon_msg_seen = "The air around @the_monster@ burns with energy!";
+            you_msg      = gettext("The air around you burns with energy!");
+            mon_msg_seen = gettext("The air around @the_monster@ burns with energy!");
             break;
         case 2:
-            you_msg      = "Wisps of smoke drift from your @hands@.";
-            mon_msg_seen = "Wisps of smoke drift from @the_monster@'s @hands@.";
+            you_msg      = gettext("Wisps of smoke drift from your @hands@.");
+            mon_msg_seen = gettext("Wisps of smoke drift from @the_monster@'s @hands@.");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
             if (you.can_smell())
-                all_msg = "You smell smoke.";
+                all_msg = gettext("You smell smoke.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 5:
-            you_msg = "Heat runs through your body.";
+            you_msg = gettext("Heat runs through your body.");
             // Monster messages needed.
             break;
         case 6:
-            you_msg = "You feel uncomfortably hot.";
+            you_msg = gettext("You feel uncomfortably hot.");
             // Monster messages needed.
             break;
         case 7:
-            you_msg      = "Lukewarm flames ripple over your body.";
-            mon_msg_seen = "Dim flames ripple over @the_monster@'s body.";
+            you_msg      = gettext("Lukewarm flames ripple over your body.");
+            mon_msg_seen = gettext("Dim flames ripple over @the_monster@'s body.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -2089,12 +2089,12 @@ void MiscastEffect::_fire(int severity)
         case 9:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear a sizzling sound.";
+                all_msg        = gettext("You hear a sizzling sound.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "You feel like you have heartburn.";
+                you_msg = gettext("You feel like you have heartburn.");
             break;
         }
         do_msg();
@@ -2104,16 +2104,16 @@ void MiscastEffect::_fire(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg        = "Smoke pours from your @hands@!";
-            mon_msg_seen   = "Smoke pours from @the_monster@'s @hands@!";
-            mon_msg_unseen = "Smoke appears out of nowhere!";
+            you_msg        = gettext("Smoke pours from your @hands@!");
+            mon_msg_seen   = gettext("Smoke pours from @the_monster@'s @hands@!");
+            mon_msg_unseen = gettext("Smoke appears out of nowhere!");
 
             _big_cloud(random_smoke_type(), 20, 7 + random2(7));
             break;
 
         case 1:
-            you_msg      = "Flames sear your flesh.";
-            mon_msg_seen = "Flames sear @the_monster@.";
+            you_msg      = gettext("Flames sear your flesh.");
+            mon_msg_seen = gettext("Flames sear @the_monster@.");
             if (target->res_fire() < 0)
             {
                 if (!_ouch(2 + random2avg(13, 2)))
@@ -2131,17 +2131,17 @@ void MiscastEffect::_fire(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg        = "You are blasted with fire.";
-            mon_msg_seen   = "@The_monster@ is blasted with fire.";
-            mon_msg_unseen = "A flame briefly burns in thin air.";
+            you_msg        = gettext("You are blasted with fire.");
+            mon_msg_seen   = gettext("@The_monster@ is blasted with fire.");
+            mon_msg_unseen = gettext("A flame briefly burns in thin air.");
             if (_ouch(5 + random2avg(29, 2), BEAM_FIRE) && target->alive())
                 target->expose_to_element(BEAM_FIRE, 5);
             break;
 
         case 1:
-            you_msg        = "You are caught in a fiery explosion!";
-            mon_msg_seen   = "@The_monster@ is caught in a fiery explosion!";
-            mon_msg_unseen = "Fire explodes from out of thin air!";
+            you_msg        = gettext("You are caught in a fiery explosion!");
+            mon_msg_seen   = gettext("@The_monster@ is caught in a fiery explosion!");
+            mon_msg_unseen = gettext("Fire explodes from out of thin air!");
 
             beam.flavour = BEAM_FIRE;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2158,15 +2158,15 @@ void MiscastEffect::_fire(int severity)
         switch (random2(3))
         {
         case 0:
-            you_msg        = "You are blasted with searing flames!";
-            mon_msg_seen   = "@The_monster@ is blasted with searing flames!";
-            mon_msg_unseen = "A large flame burns hotly for a moment in the "
-                             "thin air.";
+            you_msg        = gettext("You are blasted with searing flames!");
+            mon_msg_seen   = gettext("@The_monster@ is blasted with searing flames!");
+            mon_msg_unseen = gettext("A large flame burns hotly for a moment in the "
+                             "thin air.");
             if (_ouch(9 + random2avg(33, 2), BEAM_FIRE) && target->alive())
                 target->expose_to_element(BEAM_FIRE, 10);
             break;
         case 1:
-            all_msg = "There is a sudden and violent explosion of flames!";
+            all_msg = gettext("There is a sudden and violent explosion of flames!");
 
             beam.flavour = BEAM_FIRE;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2180,8 +2180,8 @@ void MiscastEffect::_fire(int severity)
 
         case 2:
         {
-            you_msg      = "You are covered in liquid flames!";
-            mon_msg_seen = "@The_monster@ is covered in liquid flames!";
+            you_msg      = gettext("You are covered in liquid flames!");
+            mon_msg_seen = gettext("@The_monster@ is covered in liquid flames!");
             do_msg();
 
             if (target->atype() == ACT_PLAYER)
@@ -2219,38 +2219,38 @@ void MiscastEffect::_ice(int severity)
         switch (random2(num))
         {
         case 0:
-            you_msg      = "You shiver with cold.";
-            mon_msg_seen = "@The_monster@ shivers with cold.";
+            you_msg      = gettext("You shiver with cold.");
+            mon_msg_seen = gettext("@The_monster@ shivers with cold.");
             break;
         case 1:
-            you_msg = "A chill runs through your body.";
+            you_msg = gettext("A chill runs through your body.");
             // Monster messages needed.
             break;
         case 2:
-            you_msg        = "Wisps of condensation drift from your @hands@.";
-            mon_msg_seen   = "Wisps of condensation drift from @the_monster@'s "
-                             "@hands@.";
-            mon_msg_unseen = "Wisps of condensation drift in the air.";
+            you_msg        = gettext("Wisps of condensation drift from your @hands@.");
+            mon_msg_seen   = gettext("Wisps of condensation drift from @the_monster@'s "
+                             "@hands@.");
+            mon_msg_unseen = gettext("Wisps of condensation drift in the air.");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "Your @hands@ feel@hand_conj@ numb with cold.";
+            you_msg      = gettext("Your @hands@ feel@hand_conj@ numb with cold.");
             // Monster messages needed.
             break;
         case 5:
-            you_msg = "A chill runs through your body.";
+            you_msg = gettext("A chill runs through your body.");
             // Monster messages needed.
             break;
         case 6:
-            you_msg = "You feel uncomfortably cold.";
+            you_msg = gettext("You feel uncomfortably cold.");
             // Monster messages needed.
             break;
         case 7:
-            you_msg      = "Frost covers your body.";
-            mon_msg_seen = "Frost covers @the_monster@'s body.";
+            you_msg      = gettext("Frost covers your body.");
+            mon_msg_seen = gettext("Frost covers @the_monster@'s body.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -2259,18 +2259,18 @@ void MiscastEffect::_ice(int severity)
         case 9:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear a crackling sound.";
+                all_msg        = gettext("You hear a crackling sound.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "A snowflake lands on your nose.";
+                you_msg = gettext("A snowflake lands on your nose.");
             break;
-        case 10:
+        case 10: // (deceit, 110901) make_stringf 붙여 수정.
             if (feat_is_water(feat))
-                all_msg  = "A thin layer of ice forms on " + feat_name;
+                all_msg = make_stringf(gettext("A thin layer of ice forms on %s"),feat_name.c_str()); // all_msg  = gettext("A thin layer of ice forms on ") + feat_name;
             else
-                all_msg  = "Frost spreads across " + feat_name;
+                all_msg = make_stringf(gettext("Frost spreads across %s"),feat_name.c_str()); // all_msg  = gettext("Frost spreads across ") + feat_name;
             break;
         }
         do_msg();
@@ -2280,12 +2280,12 @@ void MiscastEffect::_ice(int severity)
         switch (random2(2))
         {
         case 0:
-            mpr("You feel extremely cold.");
+            mpr(gettext("You feel extremely cold."));
             // Monster messages needed.
             break;
         case 1:
-            you_msg      = "You are covered in a thin layer of ice.";
-            mon_msg_seen = "@The_monster@ is covered in a thin layer of ice.";
+            you_msg      = gettext("You are covered in a thin layer of ice.");
+            mon_msg_seen = gettext("@The_monster@ is covered in a thin layer of ice.");
             if (target->res_cold() < 0)
             {
                 if (!_ouch(4 + random2avg(5, 2)))
@@ -2303,17 +2303,17 @@ void MiscastEffect::_ice(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg = "Heat is drained from your body.";
+            you_msg = gettext("Heat is drained from your body.");
             // Monster messages needed.
             if (_ouch(5 + random2(6) + random2(7), BEAM_COLD) && target->alive())
                 target->expose_to_element(BEAM_COLD, 4);
             break;
 
         case 1:
-            you_msg        = "You are caught in an explosion of ice and frost!";
-            mon_msg_seen   = "@The_monster@ is caught in an explosion of "
-                             "ice and frost!";
-            mon_msg_unseen = "Ice and frost explode from out of thin air!";
+            you_msg        = gettext("You are caught in an explosion of ice and frost!");
+            mon_msg_seen   = gettext("@The_monster@ is caught in an explosion of "
+                             "ice and frost!");
+            mon_msg_unseen = gettext("Ice and frost explode from out of thin air!");
 
             beam.flavour = BEAM_COLD;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2330,15 +2330,15 @@ void MiscastEffect::_ice(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg      = "You are blasted with ice!";
-            mon_msg_seen = "@The_monster@ is blasted with ice!";
+            you_msg      = gettext("You are blasted with ice!");
+            mon_msg_seen = gettext("@The_monster@ is blasted with ice!");
             if (_ouch(9 + random2avg(23, 2), BEAM_ICE) && target->alive())
                 target->expose_to_element(BEAM_COLD, 9);
             break;
         case 1:
-            you_msg        = "Freezing gasses pour from your @hands@!";
-            mon_msg_seen   = "Freezing gasses pour from @the_monster@'s "
-                             "@hands@!";
+            you_msg        = gettext("Freezing gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Freezing gasses pour from @the_monster@'s "
+                             "@hands@!");
 
             _big_cloud(CLOUD_COLD, 20, 8 + random2(4));
             break;
@@ -2363,47 +2363,47 @@ void MiscastEffect::_earth(int severity)
         switch (random2(num))
         {
         case 0:
-            you_msg = "You feel earthy.";
+            you_msg = gettext("You feel earthy.");
             // Monster messages needed.
             break;
         case 1:
-            you_msg        = "You are showered with tiny particles of grit.";
-            mon_msg_seen   = "@The_monster@ is showered with tiny particles "
-                             "of grit.";
-            mon_msg_unseen = "Tiny particles of grit hang in the air for a "
-                             "moment.";
+            you_msg        = gettext("You are showered with tiny particles of grit.");
+            mon_msg_seen   = gettext("@The_monster@ is showered with tiny particles "
+                             "of grit.");
+            mon_msg_unseen = gettext("Tiny particles of grit hang in the air for a "
+                             "moment.");
             break;
         case 2:
-            you_msg        = "Sand pours from your @hands@.";
-            mon_msg_seen   = "Sand pours from @the_monster@'s @hands@.";
-            mon_msg_unseen = "Sand pours from out of thin air.";
+            you_msg        = gettext("Sand pours from your @hands@.");
+            mon_msg_seen   = gettext("Sand pours from @the_monster@'s @hands@.");
+            mon_msg_unseen = gettext("Sand pours from out of thin air.");
             break;
         case 3:
-            you_msg = "You feel a surge of energy from the ground.";
+            you_msg = gettext("You feel a surge of energy from the ground.");
             // Monster messages needed.
             break;
         case 4:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear a distant rumble.";
+                all_msg        = gettext("You hear a distant rumble.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (target->atype() == ACT_PLAYER)
-                you_msg = "You sympathise with the stones.";
+                you_msg = gettext("You sympathise with the stones.");
             break;
         case 5:
-            you_msg = "You feel gritty.";
+            you_msg = gettext("You feel gritty.");
             // Monster messages needed.
             break;
         case 6:
-            you_msg      = "You feel momentarily lethargic.";
-            mon_msg_seen = "@The_monster@ looks momentarily listless.";
+            you_msg      = gettext("You feel momentarily lethargic.");
+            mon_msg_seen = gettext("@The_monster@ looks momentarily listless.");
             break;
         case 7:
-            you_msg        = "Motes of dust swirl before your eyes.";
-            mon_msg_seen   = "Motes of dust swirl around @the_monster@.";
-            mon_msg_unseen = "Motes of dust swirl around in the air.";
+            you_msg        = gettext("Motes of dust swirl before your eyes.");
+            mon_msg_seen   = gettext("Motes of dust swirl around @the_monster@.");
+            mon_msg_unseen = gettext("Motes of dust swirl around in the air.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -2415,8 +2415,8 @@ void MiscastEffect::_earth(int severity)
             std::string        feet       = you.foot_name(true, &pluralised);
             std::ostringstream str;
 
-            str << "Your " << feet << (pluralised ? " feel" : " feels")
-                << " warm.";
+            str << pgettext("earth","Your ") << feet << (pluralised ? pgettext("earth"," feel") : pgettext("earth"," feels"))
+                << pgettext("earth"," warm.");
 
             you_msg = str.str();
             // Monster messages needed.
@@ -2425,20 +2425,20 @@ void MiscastEffect::_earth(int severity)
         case 10:
             if (target->cannot_move())
             {
-                you_msg      = "You briefly vibrate.";
-                mon_msg_seen = "@The_monster@ briefly vibrates.";
+                you_msg      = gettext("You briefly vibrate.");
+                mon_msg_seen = gettext("@The_monster@ briefly vibrates.");
             }
             else
             {
-                you_msg      = "You momentarily stiffen.";
-                mon_msg_seen = "@The_monster@ momentarily stiffens.";
+                you_msg      = gettext("You momentarily stiffen.");
+                mon_msg_seen = gettext("@The_monster@ momentarily stiffens.");
             }
             break;
         case 11:
-            all_msg = "The floor vibrates.";
+            all_msg = gettext("The floor vibrates.");
             break;
         case 12:
-            all_msg = "The floor shifts beneath you alarmingly!";
+            all_msg = gettext("The floor shifts beneath you alarmingly!");
             break;
         }
         do_msg();
@@ -2451,20 +2451,20 @@ void MiscastEffect::_earth(int severity)
             switch (random2(3))
             {
             case 0:
-                you_msg        = "You are hit by flying rocks!";
-                mon_msg_seen   = "@The_monster@ is hit by flying rocks!";
-                mon_msg_unseen = "Flying rocks appear out of thin air!";
+                you_msg        = gettext("You are hit by flying rocks!");
+                mon_msg_seen   = gettext("@The_monster@ is hit by flying rocks!");
+                mon_msg_unseen = gettext("Flying rocks appear out of thin air!");
                 break;
             case 1:
-                you_msg        = "You are blasted with sand!";
-                mon_msg_seen   = "@The_monster@ is blasted with sand!";
-                mon_msg_unseen = "A miniature sandstorm briefly appears!";
+                you_msg        = gettext("You are blasted with sand!");
+                mon_msg_seen   = gettext("@The_monster@ is blasted with sand!");
+                mon_msg_unseen = gettext("A miniature sandstorm briefly appears!");
                 break;
             case 2:
-                you_msg        = "Rocks fall onto you out of nowhere!";
-                mon_msg_seen   = "Rocks fall onto @the_monster@ out of "
-                                 "nowhere!";
-                mon_msg_unseen = "Rocks fall out of nowhere!";
+                you_msg        = gettext("Rocks fall onto you out of nowhere!");
+                mon_msg_seen   = gettext("Rocks fall onto @the_monster@ out of "
+                                 "nowhere!");
+                mon_msg_unseen = gettext("Rocks fall out of nowhere!");
                 break;
             }
             _ouch(random2avg(13, 2) + 10 - random2(1 + target->armour_class()));
@@ -2476,11 +2476,11 @@ void MiscastEffect::_earth(int severity)
         switch (random2(1))
         {
         case 0:
-            you_msg        = "You are caught in an explosion of flying "
-                             "shrapnel!";
-            mon_msg_seen   = "@The_monster@ is caught in an explosion of "
-                             "flying shrapnel!";
-            mon_msg_unseen = "Flying shrapnel explodes from thin air!";
+            you_msg        = gettext("You are caught in an explosion of flying "
+                             "shrapnel!");
+            mon_msg_seen   = gettext("@The_monster@ is caught in an explosion of "
+                             "flying shrapnel!");
+            mon_msg_unseen = gettext("Flying shrapnel explodes from thin air!");
 
             beam.flavour = BEAM_FRAG;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2512,13 +2512,13 @@ void MiscastEffect::_air(int severity)
         switch (random2(num))
         {
         case 0:
-            you_msg      = "You feel momentarily weightless.";
-            mon_msg_seen = "@The_monster@ bobs in the air for a moment.";
+            you_msg      = gettext("You feel momentarily weightless.");
+            mon_msg_seen = gettext("@The_monster@ bobs in the air for a moment.");
             break;
         case 1:
-            you_msg      = "Wisps of vapour drift from your @hands@.";
-            mon_msg_seen = "Wisps of vapour drift from @the_monster@'s "
-                           "@hands@.";
+            you_msg      = gettext("Wisps of vapour drift from your @hands@.");
+            mon_msg_seen = gettext("Wisps of vapour drift from @the_monster@'s "
+                           "@hands@.");
             break;
         case 2:
         {
@@ -2530,35 +2530,35 @@ void MiscastEffect::_air(int severity)
 
             if (pluralised)
             {
-                you_msg      = "Sparks of electricity dance between your "
-                               "@hands@.";
-                mon_msg_seen = "Sparks of electricity dance between "
-                               "@the_monster@'s @hands@.";
+                you_msg      = gettext("Sparks of electricity dance between your "
+                               "@hands@.");
+                mon_msg_seen = gettext("Sparks of electricity dance between "
+                               "@the_monster@'s @hands@.");
             }
             else
             {
-                you_msg      = "Sparks of electricity dance over your "
-                               "@hand@.";
-                mon_msg_seen = "Sparks of electricity dance over "
-                               "@the_monster@'s @hand@.";
+                you_msg      = gettext("Sparks of electricity dance over your "
+                               "@hand@.");
+                mon_msg_seen = gettext("Sparks of electricity dance over "
+                               "@the_monster@'s @hand@.");
             }
             break;
         }
         case 3:
-            you_msg      = "You are blasted with air!";
-            mon_msg_seen = "@The_monster@ is blasted with air!";
+            you_msg      = gettext("You are blasted with air!");
+            mon_msg_seen = gettext("@The_monster@ is blasted with air!");
             break;
         case 4:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear a whooshing sound.";
+                all_msg        = gettext("You hear a whooshing sound.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (you.can_smell())
-                all_msg = "You smell ozone.";
+                all_msg = gettext("You smell ozone.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 5:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
@@ -2567,43 +2567,43 @@ void MiscastEffect::_air(int severity)
         case 6:
             if (neither_end_silenced())
             {
-                all_msg        = "You hear a crackling sound.";
+                all_msg        = gettext("You hear a crackling sound.");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 2;
             }
             else if (you.can_smell())
-                all_msg = "You smell something musty.";
+                all_msg = gettext("You smell something musty.");
             else if (you.species == SP_MUMMY)
-                you_msg = "Your bandages flutter.";
+                you_msg = gettext("Your bandages flutter.");
             break;
         case 7:
-            you_msg      = "There is a short, sharp shower of sparks.";
-            mon_msg_seen = "@The_monster@ is briefly showered in sparks.";
+            you_msg      = gettext("There is a short, sharp shower of sparks.");
+            mon_msg_seen = gettext("@The_monster@ is briefly showered in sparks.");
             break;
         case 8:
             if (silenced(you.pos()))
             {
-               you_msg        = "The wind whips around you!";
-               mon_msg_seen   = "The wind whips around @the_monster@!";
-               mon_msg_unseen = "The wind whips!";
+               you_msg        = gettext("The wind whips around you!");
+               mon_msg_seen   = gettext("The wind whips around @the_monster@!");
+               mon_msg_unseen = gettext("The wind whips!");
             }
             else
             {
-               you_msg        = "The wind howls around you!";
-               mon_msg_seen   = "The wind howls around @the_monster@!";
-               mon_msg_unseen = "The wind howls!";
+               you_msg        = gettext("The wind howls around you!");
+               mon_msg_seen   = gettext("The wind howls around @the_monster@!");
+               mon_msg_unseen = gettext("The wind howls!");
             }
             break;
         case 9:
-            you_msg = "Ouch! You gave yourself an electric shock.";
+            you_msg = gettext("Ouch! You gave yourself an electric shock.");
             // Monster messages needed.
             break;
         case 10:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 11:
-            you_msg = "You feel electric!";
+            you_msg = gettext("You feel electric!");
             // Monster messages needed.
             break;
         case 12:
@@ -2611,7 +2611,7 @@ void MiscastEffect::_air(int severity)
             // Player only (for now).
             bool plural;
             std::string hair = _hair_str(target, plural);
-            you_msg = make_stringf("Your %s stand%s on end.", hair.c_str(),
+            you_msg = make_stringf(gettext("Your %s stand%s on end."), hair.c_str(),
                                    plural ? "" : "s");
             break;
         }
@@ -2623,23 +2623,23 @@ void MiscastEffect::_air(int severity)
         switch (random2(3))
         {
         case 0:
-            you_msg        = "Electricity courses through your body.";
-            mon_msg_seen   = "@The_monster@ is jolted!";
-            mon_msg_unseen = "Something invisible sparkles with electricity.";
+            you_msg        = gettext("Electricity courses through your body.");
+            mon_msg_seen   = gettext("@The_monster@ is jolted!");
+            mon_msg_unseen = gettext("Something invisible sparkles with electricity.");
             _ouch(4 + random2avg(9, 2), BEAM_ELECTRICITY);
             break;
         case 1:
-            you_msg        = "Noxious gasses pour from your @hands@!";
-            mon_msg_seen   = "Noxious gasses pour from @the_monster@'s "
-                             "@hands@!";
-            mon_msg_unseen = "Noxious gasses appear from out of thin air!";
+            you_msg        = gettext("Noxious gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Noxious gasses pour from @the_monster@'s "
+                             "@hands@!");
+            mon_msg_unseen = gettext("Noxious gasses appear from out of thin air!");
 
             _big_cloud(CLOUD_STINK, 20, 9 + random2(4));
             break;
         case 2:
-            you_msg        = "You are under the weather.";
-            mon_msg_seen   = "@The_monster@ looks under the weather.";
-            mon_msg_unseen = "Inclement weather forms around a spot in thin air.";
+            you_msg        = gettext("You are under the weather.");
+            mon_msg_seen   = gettext("@The_monster@ looks under the weather.");
+            mon_msg_unseen = gettext("Inclement weather forms around a spot in thin air.");
 
             _big_cloud(CLOUD_RAIN, 20, 20 + random2(20));
             break;
@@ -2650,12 +2650,12 @@ void MiscastEffect::_air(int severity)
         switch (random2(2))
         {
         case 0:
-            you_msg        = "You are caught in an explosion of electrical "
-                             "discharges!";
-            mon_msg_seen   = "@The_monster@ is caught in an explosion of "
-                             "electrical discharges!";
-            mon_msg_unseen = "Electrical discharges explode from out of "
-                             "thin air!";
+            you_msg        = gettext("You are caught in an explosion of electrical "
+                             "discharges!");
+            mon_msg_seen   = gettext("@The_monster@ is caught in an explosion of "
+                             "electrical discharges!");
+            mon_msg_unseen = gettext("Electrical discharges explode from out of "
+                             "thin air!");
 
             beam.flavour = BEAM_ELECTRICITY;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2667,10 +2667,10 @@ void MiscastEffect::_air(int severity)
             _explosion();
             break;
         case 1:
-            you_msg        = "Venomous gasses pour from your @hands@!";
-            mon_msg_seen   = "Venomous gasses pour from @the_monster@'s "
-                             "@hands@!";
-            mon_msg_unseen = "Venomous gasses pour forth from the thin air!";
+            you_msg        = gettext("Venomous gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Venomous gasses pour from @the_monster@'s "
+                             "@hands@!");
+            mon_msg_unseen = gettext("Venomous gasses pour forth from the thin air!");
 
             _big_cloud(CLOUD_POISON, 20, 8 + random2(5));
             break;
@@ -2682,18 +2682,18 @@ void MiscastEffect::_air(int severity)
         {
         case 0:
             if (_create_monster(MONS_BALL_LIGHTNING, 3))
-                all_msg = "A ball of electricity appears!";
+                all_msg = gettext("A ball of electricity appears!");
             do_msg();
             break;
         case 1:
-            you_msg        = "The air twists around and strikes you!";
-            mon_msg_seen   = "@The_monster@ is struck by twisting air!";
-            mon_msg_unseen = "The air madly twists around a spot.";
+            you_msg        = gettext("The air twists around and strikes you!");
+            mon_msg_seen   = gettext("@The_monster@ is struck by twisting air!");
+            mon_msg_unseen = gettext("The air madly twists around a spot.");
             _ouch(12 + random2avg(29, 2), BEAM_AIR);
             break;
         case 2:
             if (_create_monster(MONS_TWISTER, 1))
-                all_msg = "A huge vortex of air appears!";
+                all_msg = gettext("A huge vortex of air appears!");
             do_msg();
             break;
         }
@@ -2709,47 +2709,47 @@ void MiscastEffect::_poison(int severity)
         switch (random2(10))
         {
         case 0:
-            you_msg      = "You feel mildly nauseous.";
-            mon_msg_seen = "@The_monster@ briefly looks nauseous.";
+            you_msg      = gettext("You feel mildly nauseous.");
+            mon_msg_seen = gettext("@The_monster@ briefly looks nauseous.");
             break;
         case 1:
-            you_msg      = "You feel slightly ill.";
-            mon_msg_seen = "@The_monster@ briefly looks sick.";
+            you_msg      = gettext("You feel slightly ill.");
+            mon_msg_seen = gettext("@The_monster@ briefly looks sick.");
             break;
         case 2:
-            you_msg      = "Wisps of poison gas drift from your @hands@.";
-            mon_msg_seen = "Wisps of poison gas drift from @the_monster@'s "
-                           "@hands@.";
+            you_msg      = gettext("Wisps of poison gas drift from your @hands@.");
+            mon_msg_seen = gettext("Wisps of poison gas drift from @the_monster@'s "
+                           "@hands@.");
             break;
         case 3:
-            you_msg = "You feel a strange surge of energy!";
+            you_msg = gettext("You feel a strange surge of energy!");
             // Monster messages needed.
             break;
         case 4:
-            you_msg      = "You feel faint for a moment.";
-            mon_msg_seen = "@The_monster@ looks faint for a moment.";
+            you_msg      = gettext("You feel faint for a moment.");
+            mon_msg_seen = gettext("@The_monster@ looks faint for a moment.");
             break;
         case 5:
-            you_msg      = "You feel sick.";
-            mon_msg_seen = "@The_monster@ looks sick.";
+            you_msg      = gettext("You feel sick.");
+            mon_msg_seen = gettext("@The_monster@ looks sick.");
             break;
         case 6:
-            you_msg      = "You feel odd.";
-            mon_msg_seen = "@The_monster@ has an odd expression for a "
-                           "moment.";
+            you_msg      = gettext("You feel odd.");
+            mon_msg_seen = gettext("@The_monster@ has an odd expression for a "
+                           "moment.");
             break;
         case 7:
-            you_msg      = "You feel weak for a moment.";
-            mon_msg_seen = "@The_monster@ looks weak for a moment.";
+            you_msg      = gettext("You feel weak for a moment.");
+            mon_msg_seen = gettext("@The_monster@ looks weak for a moment.");
             break;
         case 8:
             // Set nothing; canned_msg(MSG_NOTHING_HAPPENS) will be taken
             // care of elsewhere.
             break;
         case 9:
-            you_msg        = "Your vision is briefly tinged with green.";
-            mon_msg_seen   = "@The_monster@ is briefly tinged with green.";
-            mon_msg_unseen = "The air has a green tinge for a moment.";
+            you_msg        = gettext("Your vision is briefly tinged with green.");
+            mon_msg_seen   = gettext("@The_monster@ is briefly tinged with green.");
+            mon_msg_unseen = gettext("The air has a green tinge for a moment.");
             break;
         }
         do_msg();
@@ -2761,18 +2761,18 @@ void MiscastEffect::_poison(int severity)
         case 0:
             if (target->res_poison() <= 0)
             {
-                you_msg      = "You feel sick.";
-                mon_msg_seen = "@The_monster@ looks sick.";
+                you_msg      = pgettext("poison","You feel sick.");
+                mon_msg_seen = gettext("@The_monster@ looks sick.");
                 _do_poison(2 + random2(3));
             }
             do_msg();
             break;
 
         case 1:
-            you_msg        = "Noxious gasses pour from your @hands@!";
-            mon_msg_seen   = "Noxious gasses pour from @the_monster@'s "
-                             "@hands@!";
-            mon_msg_unseen = "Noxious gasses pour forth from the thin air!";
+            you_msg        = gettext("Noxious gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Noxious gasses pour from @the_monster@'s "
+                             "@hands@!");
+            mon_msg_unseen = gettext("Noxious gasses pour forth from the thin air!");
             place_cloud(CLOUD_STINK, target->pos(), 2 + random2(4), guilty);
             break;
         }
@@ -2785,18 +2785,18 @@ void MiscastEffect::_poison(int severity)
         case 0:
             if (target->res_poison() <= 0)
             {
-                you_msg      = "You feel very sick.";
-                mon_msg_seen = "@The_monster@ looks very sick.";
+                you_msg      = gettext("You feel very sick.");
+                mon_msg_seen = gettext("@The_monster@ looks very sick.");
                 _do_poison(3 + random2avg(9, 2));
             }
             do_msg();
             break;
 
         case 1:
-            you_msg        = "Noxious gasses pour from your @hands@!";
-            mon_msg_seen   = "Noxious gasses pour from @the_monster@'s "
-                             "@hands@!";
-            mon_msg_unseen = "Noxious gasses pour forth from the thin air!";
+            you_msg        = gettext("Noxious gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Noxious gasses pour from @the_monster@'s "
+                             "@hands@!");
+            mon_msg_unseen = gettext("Noxious gasses pour forth from the thin air!");
 
             _big_cloud(CLOUD_STINK, 20, 8 + random2(5));
             break;
@@ -2817,17 +2817,17 @@ void MiscastEffect::_poison(int severity)
         case 0:
             if (target->res_poison() <= 0)
             {
-                you_msg      = "You feel incredibly sick.";
-                mon_msg_seen = "@The_monster@ looks incredibly sick.";
+                you_msg      = gettext("You feel incredibly sick.");
+                mon_msg_seen = gettext("@The_monster@ looks incredibly sick.");
                 _do_poison(10 + random2avg(19, 2));
             }
             do_msg();
             break;
         case 1:
-            you_msg        = "Venomous gasses pour from your @hands@!";
-            mon_msg_seen   = "Venomous gasses pour from @the_monster@'s "
-                             "@hands@!";
-            mon_msg_unseen = "Venomous gasses pour forth from the thin air!";
+            you_msg        = gettext("Venomous gasses pour from your @hands@!");
+            mon_msg_seen   = gettext("Venomous gasses pour from @the_monster@'s "
+                             "@hands@!");
+            mon_msg_unseen = gettext("Venomous gasses pour forth from the thin air!");
 
             _big_cloud(CLOUD_POISON, 20, 7 + random2(7));
             break;

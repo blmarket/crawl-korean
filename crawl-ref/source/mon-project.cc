@@ -54,7 +54,7 @@ spret_type cast_iood(actor *caster, int pow, bolt *beam, float vx, float vy,
                 GOD_NO_GOD), true, true);
     if (mind == -1)
     {
-        mpr("Failed to spawn projectile.", MSGCH_WARN);
+        mpr(gettext("Failed to spawn projectile."), MSGCH_WARN);
         /*canned_msg(MSG_NOTHING_HAPPENS);*/
         return SPRET_SUCCESS;
     }
@@ -149,7 +149,7 @@ static bool _in_front(float vx, float vy, float dx, float dy, float angle)
 static void _iood_dissipate(monster& mon, bool msg = true)
 {
     if (msg)
-        simple_monster_message(&mon, " dissipates.");
+        simple_monster_message(&mon, gettext(" dissipates."));
     dprf("iood: dissipating");
     monster_die(&mon, KILL_DISMISSED, NON_MONSTER);
 }
@@ -222,7 +222,7 @@ static bool _iood_hit(monster& mon, const coord_def &pos, bool big_boom = false)
     if (dist < 3)
         beam.name = "wavering " + beam.name;
     if (dist < 2)
-        beam.hit_verb = "weakly hits";
+        beam.hit_verb = M_("weakly hits");
     beam.ex_size = 1;
     beam.loudness = 7;
 
@@ -341,7 +341,7 @@ move_again:
         if (cell_is_solid(pos))
         {
             if (you.see_cell(pos))
-                mprf("%s hits %s", mon.name(DESC_CAP_THE, true).c_str(),
+                mprf(gettext("%s hits %s"), mon.name(DESC_CAP_THE, true).c_str(),
                      feature_description(pos, false, DESC_NOCAP_A).c_str());
         }
 
@@ -351,9 +351,9 @@ move_again:
         if (mons && mons_is_projectile(victim->type))
         {
             if (mon.observable())
-                mpr("The orbs collide in a blinding explosion!");
+                mpr(gettext("The orbs collide in a blinding explosion!"));
             else
-                noisy(40, pos, "You hear a loud magical explosion!");
+                noisy(40, pos, gettext("You hear a loud magical explosion!"));
             monster_die(mons, KILL_DISMISSED, NON_MONSTER);
             _iood_hit(mon, pos, true);
             return (true);
@@ -387,12 +387,12 @@ move_again:
             {
                 if (victim->atype() == ACT_PLAYER)
                 {
-                    mprf("You block %s.", mon.name(DESC_NOCAP_THE, true).c_str());
+                    mprf(gettext("You block %s."), mon.name(DESC_NOCAP_THE, true).c_str());
                 }
                 else
                 {
-                    simple_monster_message(mons, (" blocks "
-                        + mon.name(DESC_NOCAP_THE, true) + ".").c_str());
+                    simple_monster_message(mons, (pgettext("iood"," blocks ")
+                        + mon.name(DESC_NOCAP_THE, true) + pgettext("iood",".")).c_str());
                 }
                 victim->shield_block_succeeded(&mon);
                 _iood_dissipate(mon);
@@ -401,7 +401,7 @@ move_again:
 
             if (victim->atype() == ACT_PLAYER)
             {
-                mprf("Your %s reflects %s!",
+                mprf(gettext("Your %s reflects %s!"),
                     shield->name(true, DESC_PLAIN).c_str(),
                     mon.name(DESC_NOCAP_THE, true).c_str());
                 ident_reflector(shield);
@@ -410,7 +410,7 @@ move_again:
             {
                 if (victim->observable())
                 {
-                    mprf("%s reflects %s with %s %s!",
+                    mprf(gettext("%s reflects %s with %s %s!"),
                         victim->name(DESC_CAP_THE, true).c_str(),
                         mon.name(DESC_NOCAP_THE, true).c_str(),
                         mon.pronoun(PRONOUN_NOCAP_POSSESSIVE).c_str(),
@@ -419,7 +419,7 @@ move_again:
                 }
                 else
                 {
-                    mprf("%s bounces off thin air!",
+                    mprf(gettext("%s bounces off thin air!"),
                         mon.name(DESC_CAP_THE, true).c_str());
                 }
             }
@@ -439,7 +439,7 @@ move_again:
 
         // Yay for inconsistencies in beam-vs-player and beam-vs-monsters.
         if (victim == &you)
-            mprf("%s hits you!", mon.name(DESC_CAP_THE, true).c_str());
+            mprf(gettext("%s hits you!"), mon.name(DESC_CAP_THE, true).c_str());
 
         if (_iood_hit(mon, pos))
             return (true);
