@@ -421,8 +421,8 @@ static const char *shield_base_name(const item_def *shield)
 
 static const char *shield_impact_degree(int impact)
 {
-    return (impact > 160 ? N_("severely ")      :
-            impact > 130 ? N_("significantly ") :
+    return (impact > 160 ? gettext("severely ")      :
+            impact > 130 ? gettext("significantly ") :
             impact > 110 ? ""
                          : NULL);
 }
@@ -438,7 +438,7 @@ static void warn_launcher_shield_slowdown(const item_def &launcher)
     if (slowspeed > normspeed)
     {
         const char *slow_degree =
-            gettext(shield_impact_degree(slowspeed * 100 / normspeed));
+            shield_impact_degree(slowspeed * 100 / normspeed);
 
         if (slow_degree)
         {
