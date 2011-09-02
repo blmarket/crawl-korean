@@ -21,6 +21,7 @@
 
 #define FONT_PER_ROW 128
 #define MAX_CHARS 16384
+#define MAX_WCWIDTH 2 // font renders double-width characters. (like korean chars)
 
 FontWrapper* FontWrapper::create()
 {
@@ -707,7 +708,7 @@ void FTFontWrapper::store(FontBuffer &buf, float &x, float &y,
 
 unsigned int FTFontWrapper::char_width() const
 {
-    return (m_max_advance.x);
+    return (m_max_advance.x + (MAX_WCWIDTH - 1)) / MAX_WCWIDTH;
 }
 
 unsigned int FTFontWrapper::char_height() const
