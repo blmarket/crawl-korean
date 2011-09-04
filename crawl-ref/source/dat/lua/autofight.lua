@@ -62,19 +62,19 @@ local function move_towards(dx, dy, attack_only)
   local move = nil
   local msg = nil
   if dx == 0 and dy == 0 then
-    msg = "No unsafe monster in view!"
+    msg = "적대적인 몬스터가 보이지 않는다!"
   elseif reaching(dx, dy) then
     move = 'vf'
   elseif ranged() then
     if you.see_cell_no_trans(dx, dy) then
       move = 'ff'
     else
-      msg = "There's something in the way."
+      msg = "경로에 무엇인가가 있다."
     end
   elseif adjacent(dx, dy) then
     move = delta_to_vi(dx, dy)
   elseif attack_only then
-    msg = "That monster is too far!"
+    msg = "그 몬스터는 너무 멀리 있다!"
   elseif abs(dx) > abs(dy) then
     move = try_move(sign(dx), 0)
     if move == nil then move = try_move(sign(dx), sign(dy)) end
@@ -91,7 +91,7 @@ local function move_towards(dx, dy, attack_only)
   if msg then
     crawl.mpr(msg)
   elseif move == nil then
-    crawl.mpr("Failed to move towards target.")
+    crawl.mpr("대상으로의 이동을 실패했다.")
   else
     crawl.process_keys(move)
   end
