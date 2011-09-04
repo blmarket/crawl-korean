@@ -335,7 +335,7 @@ bool del_spell_from_memory_by_slot(int slot)
     if (you.last_cast_spell == you.spells[slot])
         you.last_cast_spell = SPELL_NO_SPELL;
 
-    mprf("Your memory of %s unravels.", spell_title(you.spells[slot]));
+    mprf("Your memory of %s unravels.", gettext(spell_title(you.spells[slot])));
     you.spells[ slot ] = SPELL_NO_SPELL;
 
     for (j = 0; j < 52; j++)

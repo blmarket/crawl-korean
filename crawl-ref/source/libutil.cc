@@ -616,16 +616,16 @@ static std::string pow_in_words(int pow)
 static std::string tens_in_words(unsigned num)
 {
     static const char *numbers[] = {
-        "", "one", "two", "three", "four", "five", "six", "seven",
-        "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
-        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+        "", "한 ", "두 ", "세 ", "네 ", "다섯", "여섯", "일곱", //"", "one", "two", "three", "four", "five", "six", "seven",
+        "여덟", "아홉", "열", "열한", "열두", "열세", "열네",   //"eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "열다섯", "열여섯", "열일곱", "열여덟", "열아홉", "스무"//"fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
     };
     static const char *tens[] = {
-        "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
-        "eighty", "ninety"
+        "", "", "스물", "서른", "마흔", "쉰", "예순", "일흔", // "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+        "여든", "아흔"                                       // "eighty", "ninety"
     };
-
-    if (num < 20)
+	
+    if (num < 21) // (deceit, 110903) '스물마리' 와 같은 표현을 방지하기 위해, 21로 수정.
         return numbers[num];
 
     int ten = num / 10, digit = num % 10;

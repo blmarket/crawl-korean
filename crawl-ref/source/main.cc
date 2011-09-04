@@ -371,8 +371,8 @@ static void _launch_game()
         msg::stream << (game_start ? gettext("<yellow>Welcome,") : gettext("<yellow>Welcome back,"))
                     << make_stringf(gettext("%s the %s %s.</yellow>"),
                                     you.your_name.c_str(),
-                                    species_name(you.species).c_str(),
-                                    you.class_name.c_str())
+                                    gettext(species_name(you.species).c_str()),
+                                    gettext(you.class_name.c_str()))
                     << std::endl;
     }
 

@@ -404,7 +404,7 @@ static void _adjust_spell(void)
     }
 
     // Print targeted spell.
-    mprf("%c - %s", keyin, spell_title(spell));
+    mprf("%c - %s", keyin, gettext(spell_title(spell)));
 
     // Select target slot.
     keyin = 0;
@@ -430,13 +430,13 @@ static void _adjust_spell(void)
     you.spell_letter_table[index_1] = tmp;
 
     // print out spell in new slot
-    mprf("%c - %s", input_2, spell_title(get_spell_by_letter(input_2)));
+    mprf("%c - %s", input_2, gettext(spell_title(get_spell_by_letter(input_2))));
 
     // print out other spell if one was involved (now at input_1)
     spell = get_spell_by_letter(input_1);
 
     if (spell != SPELL_NO_SPELL)
-        mprf("%c - %s", input_1, spell_title(spell));
+        mprf("%c - %s", input_1, gettext(spell_title(spell)));
 }
 
 static void _adjust_ability(void)
@@ -488,7 +488,7 @@ static void _adjust_ability(void)
 
     msg::stream << static_cast<char>(talents[selected].hotkey)
                 << " - "
-                << ability_name(talents[selected].which)
+                << gettext(ability_name(talents[selected].which))
                 << std::endl;
 
     const int index1 = letter_to_index(talents[selected].hotkey);
@@ -520,7 +520,7 @@ static void _adjust_ability(void)
             /// Swapping with: a - evoke skill 따위의 내용이 됨.
             msg::stream << gettext("Swapping with: ")
                         << static_cast<char>(keyin) << " - "
-                        << ability_name(talents[i].which)
+                        << gettext(ability_name(talents[i].which))
                         << std::endl;
             printed_message = true;
             break;
@@ -531,7 +531,7 @@ static void _adjust_ability(void)
         /// Moving to: key - skill name 따위의 내용이 됨.
         msg::stream << gettext("Moving to: ")
                     << static_cast<char>(keyin) << " - "
-                    << ability_name(talents[selected].which)
+                    << gettext(ability_name(talents[selected].which))
                     << std::endl;
 
     // Swap references in the letter table.

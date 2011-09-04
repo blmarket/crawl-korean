@@ -182,7 +182,7 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
         else
             desc = DESC_PLAIN;
 
-        name = mons_type_name(it->first, desc);
+        name = gettext(mons_type_name(it->first, desc).c_str());
         if (it->second > 1)
         {
             name = make_stringf("%d%s", it->second, // (deceit, 110903) °ø¹é »èÁ¦.

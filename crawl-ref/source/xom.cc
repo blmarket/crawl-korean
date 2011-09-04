@@ -680,7 +680,7 @@ static int _xom_makes_you_cast_random_spell(int sever, int tension,
 
     static char spell_buf[100];
     snprintf(spell_buf, sizeof(spell_buf), "'%s' 마법 시전",
-             spell_title(spell));
+             gettext(spell_title(spell)));
     take_note(Note(NOTE_XOM_EFFECT, you.piety, tension, spell_buf), true);
 
     your_spells(spell, sever, false);

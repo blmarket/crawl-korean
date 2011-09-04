@@ -899,7 +899,7 @@ bool forget_spell(void)
     if (slot == -1)              // should never happen though
         return (false);
 #ifdef KR
-    mprf("%s에 대한 마법 지식이 한순간에 흐릿해졌고, 마침내 주문을 잊었다!", spell_title(you.spells[slot]));
+    mprf("%s에 대한 마법 지식이 한순간에 흐릿해졌고, 마침내 주문을 잊었다!", gettext(spell_title(you.spells[slot])));
 #else
     mprf("Your knowledge of %s becomes hazy all of a sudden, and you forget "
          "the spell!", spell_title(you.spells[slot]));

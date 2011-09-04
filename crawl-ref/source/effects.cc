@@ -696,7 +696,7 @@ bool forget_spell(void)
         return (false);
 
     mprf(gettext("Your knowledge of %s becomes hazy all of a sudden, and you forget "
-         "the spell!"), spell_title(you.spells[slot]));
+         "the spell!"), gettext(spell_title(you.spells[slot])));
 
     del_spell_from_memory_by_slot(slot);
     return (true);

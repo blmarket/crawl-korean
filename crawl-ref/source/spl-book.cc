@@ -1294,7 +1294,7 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
 
     snprintf(info, INFO_SIZE,
              gettext("Memorise %s, consuming %d spell level%s and leaving %d?"),
-             spell_title(specspell), spell_levels_required(specspell),
+             gettext(spell_title(specspell)), spell_levels_required(specspell),
              spell_levels_required(specspell) != 1 ? "s" : "",
              player_spell_levels() - spell_levels_required(specspell));
 
@@ -1367,7 +1367,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
     /// 1. 마법 이름, 2. 책 이름.
     prompt += make_stringf(gettext("Forgetting %s from %s will destroy the book! "
                            "Are you sure?"),
-                           spell_title(spell),
+                           gettext(spell_title(spell)),
                            book->name(true, DESC_NOCAP_THE).c_str());
 
     // Deactivate choice from tile inventory.
@@ -1378,7 +1378,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
         return (false);
     }
     mprf(gettext("As you tear out the page describing %s, the book crumbles to dust."),
-        spell_title(spell));
+        gettext(spell_title(spell)));
 
     if (del_spell_from_memory(spell))
     {

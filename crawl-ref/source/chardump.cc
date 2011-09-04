@@ -959,7 +959,7 @@ static void _sdump_spells(dump_params &par)
 
                 spell_line += letter;
                 spell_line += " - ";
-                spell_line += spell_title(spell);
+                spell_line += gettext(spell_title(spell));
 
                 spell_line = chop_string(spell_line, 24);
                 spell_line += "  ";
@@ -982,7 +982,7 @@ static void _sdump_spells(dump_params &par)
 
                 spell_line = chop_string(spell_line, 54);
 
-                spell_line += failure_rate_to_string(spell_fail(spell));
+                spell_line += gettext(failure_rate_to_string(spell_fail(spell)));
 
                 spell_line = chop_string(spell_line, 66);
 

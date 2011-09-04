@@ -298,7 +298,7 @@ std::string Note::describe(bool when, bool where, bool what) const
             result << "Learned a level "
                    << spell_difficulty(static_cast<spell_type>(first))
                    << " spell: "
-                   << spell_title(static_cast<spell_type>(first));
+                   << gettext(spell_title(static_cast<spell_type>(first)));
             break;
         case NOTE_GET_GOD:
             result << "Became a worshipper of "

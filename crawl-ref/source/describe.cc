@@ -1714,7 +1714,7 @@ void append_spells(std::string &desc, const item_def &item)
             continue;
 
         std::string name = (is_memorised(stype) ? "*" : "");
-                    name += spell_title(stype);
+                    name += gettext(spell_title(stype));
         desc += chop_string(name, 35);
 
         std::string schools;
@@ -2255,9 +2255,9 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
     if (long_desc.empty())
     {
         db_name   = feature_description(pos, false, DESC_CAP_A, false, true);
-        long_desc = getLongDescription(db_name);
+        long_desc = getLongDescription(gettext(db_name.c_str()));
     }
-
+	
     bool custom_desc = false;
 
     const std::string marker_desc =
@@ -2942,7 +2942,7 @@ static void _append_spell_stats(const spell_type spell,
                  spell_difficulty(spell),
                  schools.find("/") != std::string::npos ? "s" : "",
                  schools.c_str(),
-                 failure_rate_to_string(spell_fail(spell)));
+                 gettext(failure_rate_to_string(spell_fail(spell))));
     }
     description += info;
     description += gettext("\n\nPower : ");

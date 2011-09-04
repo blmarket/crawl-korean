@@ -174,7 +174,7 @@ static std::string _spell_extra_description(spell_type spell)
     desc << "<" << colour_to_str(highlight) << ">" << std::left;
 
     // spell name
-    desc << chop_string(spell_title(spell), 30);
+    desc << chop_string(gettext(spell_title(spell)), 30);
 
     // spell power, spell range, hunger level, level
     const std::string rangestring = spell_range_string(spell);
@@ -653,7 +653,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
                 else
                 {
                     mprf(MSGCH_PROMPT, gettext("Casting: <w>%s</w>"),
-                         spell_title(you.last_cast_spell));
+                         gettext(spell_title(you.last_cast_spell)));
                     mpr(gettext("Confirm with . or Enter, or press ? or * to list all spells."), MSGCH_PROMPT);
                 }
 
@@ -974,7 +974,7 @@ static void _maybe_cancel_repeat(spell_type spell)
     case SPELL_DELAYED_FIREBALL:
     case SPELL_TUKIMAS_DANCE:
         crawl_state.cant_cmd_repeat(make_stringf(gettext("You can't repeat %s."),
-                                                 spell_title(spell)));
+                                                 gettext(spell_title(spell))));
         break;
 
     default:
@@ -1123,7 +1123,7 @@ spret_type your_spells(spell_type spell, int powc,
         targetter *hitfunc = _spell_targetter(spell, powc, range);
 
         std::string title = gettext("Aiming: <white>");
-        title += spell_title(spell);
+        title += gettext(spell_title(spell));
         title += "</white>";
 
         if (!spell_direction(spd, beam, dir, targ, range,
@@ -1217,7 +1217,7 @@ spret_type your_spells(spell_type spell, int powc,
 
     case SPRET_FAIL:
     {
-        mprf(gettext("You miscast %s."), spell_title(spell));
+        mprf(gettext("You miscast %s."), gettext(spell_title(spell)));
         flush_input_buffer(FLUSH_ON_FAILURE);
         learned_something_new(HINT_SPELL_MISCAST);
 
@@ -1262,7 +1262,7 @@ spret_type your_spells(spell_type spell, int powc,
         if (is_valid_spell(spell))
         {
             mprf(MSGCH_ERROR, gettext("Spell '%s' is not a player castable spell."),
-                 spell_title(spell));
+                 gettext(spell_title(spell)));
         }
         else
             mpr(gettext("Invalid spell!"), MSGCH_ERROR);

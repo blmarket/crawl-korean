@@ -509,7 +509,7 @@ std::string print_abilities()
         {
             if (i)
                 text += ", ";
-            text += ability_name(talents[i].which);
+            text += gettext(ability_name(talents[i].which));
         }
     }
 
@@ -1291,7 +1291,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
 
 const char* ability_name(ability_type ability)
 {
-    return gettext(_get_ability_def(ability).name);
+    return _get_ability_def(ability).name;
 }
 
 std::vector<const char*> get_ability_names()
@@ -1322,7 +1322,7 @@ static void _print_talent_description(const talent& tal)
         cprintf(gettext("No description found."));
     else
     {
-        print_description(name + "\n\n" + lookup + "\n"
+        print_description(gettext(name.c_str()) + "\n\n" + lookup + "\n"
                           + _detailed_cost_description(tal.which));
     }
     getchm();
@@ -2911,9 +2911,9 @@ static std::string _describe_talent(const talent& tal)
 
     std::ostringstream desc;
     desc << std::left
-         << chop_string(ability_name(tal.which), 32)
+         << chop_string(gettext(ability_name(tal.which)), 32)
          << chop_string(make_cost_description(tal.which), 27)
-         << chop_string(failure_rate_to_string(tal.fail), 10);
+         << chop_string(gettext(failure_rate_to_string(tal.fail)), 10);
     return desc.str();
 }
 

@@ -44,8 +44,8 @@ void SpellRegion::draw_tag()
     const spell_type spell = (spell_type) idx;
     std::string desc = make_stringf("%d MP    %s    (%s)",
                                     spell_difficulty(spell),
-                                    spell_title(spell),
-                                    failure_rate_to_string(spell_fail(spell)));
+                                    gettext(spell_title(spell)),
+                                    gettext(failure_rate_to_string(spell_fail(spell))));
     draw_desc(desc.c_str());
 }
 
