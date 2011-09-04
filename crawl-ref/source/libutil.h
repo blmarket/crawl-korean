@@ -97,7 +97,7 @@ std::vector<std::string> strip_multiple_tag_prefix(std::string &s, const std::st
 std::string strip_tag_prefix(std::string &s, const std::string &tagprefix);
 
 std::string article_a(const std::string &name, bool lowercase = true);
-std::string pluralise(
+std::string pluralise(unsigned int plu_type,
     const std::string &name,
     const char *stock_plural_quals[] = standard_plural_qualifiers,
     const char *no_of[] = NULL);

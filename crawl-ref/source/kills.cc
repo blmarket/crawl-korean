@@ -417,8 +417,8 @@ static std::string n_names(const std::string &name, int n)
     if (n > 1)
     {
         char buf[20];
-        snprintf(buf, sizeof buf, "%d ", n);
-        return buf + pluralise(name, standard_plural_qualifiers,
+        snprintf(buf, sizeof buf, "%d", n);
+        return buf + pluralise(PLU_MON,name, standard_plural_qualifiers,
                                modifier_suffixes);
     }
     else

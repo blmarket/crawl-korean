@@ -1692,7 +1692,7 @@ static void _find_description(bool *again, std::string *error_inout)
         else
         {
             *error_inout  = "No matching ";
-            *error_inout += pluralise(type);
+            *error_inout += pluralise(PLU_DEFAULT,type);
             *error_inout += ".";
         }
         return;
@@ -1708,7 +1708,7 @@ static void _find_description(bool *again, std::string *error_inout)
         else
         {
             std::ostringstream os;
-            os << "Too many matching " << pluralise(type)
+            os << "Too many matching " << pluralise(PLU_DEFAULT,type)
                << " (" << key_list.size() << ") to display.";
             *error_inout = os.str();
         }

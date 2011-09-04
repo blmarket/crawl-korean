@@ -3539,7 +3539,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         std::string genus = mons_type_name(mons_genus(m_foe->type), DESC_PLAIN);
 
         msg = replace_all(msg, "@foe_genus@", genus);
-        msg = replace_all(msg, "@foe_genus_plural@", pluralise(genus));
+        msg = replace_all(msg, "@foe_genus_plural@", pluralise(PLU_SUFFIX,genus));
 
         foe_species = genus;
     }

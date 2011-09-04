@@ -468,7 +468,7 @@ std::string player::foot_name(bool plural, bool *can_plural) const
         return (plural ? "feet" : "foot");
 
     if (plural && *can_plural)
-        str = pluralise(str);
+        str = pluralise(PLU_DEFAULT,str);
 
     return str;
 }
@@ -500,7 +500,7 @@ std::string player::arm_name(bool plural, bool *can_plural) const
         str = adj + " " + str;
 
     if (plural)
-        str = pluralise(str);
+        str = pluralise(PLU_DEFAULT,str);
 
     return (str);
 }

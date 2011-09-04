@@ -4387,8 +4387,8 @@ std::vector<std::string> explore_discoveries::apply_quantities(
         else
         {
             things.push_back(number_in_words(nt.thing)
-                             + " "
-                             + pluralise(nt.name, feature_plural_qualifiers));
+                             // + " " (deceit, 110903) 공백삭제
+                             + pluralise(PLU_MISC, nt.name, feature_plural_qualifiers));
         }
     }
     return (things);

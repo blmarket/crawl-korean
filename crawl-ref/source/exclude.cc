@@ -631,7 +631,7 @@ std::string exclude_set::get_exclusion_desc()
                     else
                     {
                         snprintf(info, INFO_SIZE, "%d %s",
-                                 count, pluralise(old_desc).c_str());
+                                 count, pluralise(PLU_DEFAULT,old_desc).c_str());
                         desc.push_back(info);
                         count = 1;
                     }
@@ -644,7 +644,7 @@ std::string exclude_set::get_exclusion_desc()
         else
         {
             snprintf(info, INFO_SIZE, "%d %s",
-                     count, pluralise(old_desc).c_str());
+                     count, pluralise(PLU_DEFAULT,old_desc).c_str());
             desc.push_back(info);
         }
     }

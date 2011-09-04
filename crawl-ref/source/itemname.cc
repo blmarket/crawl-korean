@@ -207,9 +207,9 @@ std::string item_def::name(bool allow_translate,
             && descrip != DESC_DBNAME)
         {
             if (quantity_in_words)
-                buff << number_in_words(this->quantity) << " ";
+                buff << number_in_words(this->quantity) << " "; // (deceit, 110903) 공백을 삭제해야 할 부분.  
             else
-                buff << this->quantity << " ";
+                buff << this->quantity << " "; // 이것도..
         }
     }
     else
@@ -1952,7 +1952,7 @@ std::string item_def::name_aux(description_level_type desc,
 
     // One plural to rule them all.
     if (need_plural && this->quantity > 1 && !basename && !qualname)
-        buff.str(pluralise(buff.str()));
+        buff.str(pluralise(PLU_MISC,buff.str()));
 
     // Disambiguation.
     if (!terse && !basename && !dbname && know_type

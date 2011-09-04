@@ -2290,7 +2290,7 @@ std::string monster::conj_verb(const std::string &verb) const
         return (verb + "s");
     }
 
-    return (pluralise(verb));
+    return verb; // (pluralise(verb)); (deceit,110903) 한글판에서는, verb를 pluralise시키지 않고 그냥 리턴.
 }
 
 std::string monster::hand_name(bool plural, bool *can_plural) const
@@ -2408,7 +2408,7 @@ std::string monster::hand_name(bool plural, bool *can_plural) const
    }
 
    if (plural && *can_plural)
-       str = pluralise(str);
+       str = pluralise(PLU_DEFAULT,str);
 
    return (str);
 }
@@ -2523,7 +2523,7 @@ std::string monster::foot_name(bool plural, bool *can_plural) const
    }
 
    if (plural && *can_plural)
-       str = pluralise(str);
+       str = pluralise(PLU_DEFAULT,str);
 
    return (str);
 }
@@ -2573,7 +2573,7 @@ std::string monster::arm_name(bool plural, bool *can_plural) const
         str = adj + " " + str;
 
     if (plural)
-        str = pluralise(str);
+        str = pluralise(PLU_DEFAULT, str);
 
     return (str);
 }

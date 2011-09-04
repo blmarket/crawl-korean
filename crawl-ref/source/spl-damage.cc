@@ -379,7 +379,7 @@ static std::string _describe_monsters(const counted_monster_list &list)
             ++i;
 
         const std::string name =
-            cm.second > 1 ? pluralise(cm.first->name(desc))
+            cm.second > 1 ? pluralise(PLU_SUFFIX,cm.first->name(desc))
                           : cm.first->name(desc);
         out << name;
     }

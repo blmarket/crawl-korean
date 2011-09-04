@@ -466,7 +466,7 @@ void MiscastEffect::do_msg(bool suppress_nothing_happens)
         plural = can_plural_hand;
         msg = replace_all(msg, "@hand@",  hand_str);
         if (can_plural_hand)
-            msg = replace_all(msg, "@hands@", pluralise(hand_str));
+            msg = replace_all(msg, "@hands@", pluralise(PLU_DEFAULT,hand_str));
         else
             msg = replace_all(msg, "@hands@", hand_str);
     }

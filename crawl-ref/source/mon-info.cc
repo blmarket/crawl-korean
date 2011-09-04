@@ -967,7 +967,7 @@ void monster_info::to_string(int count, std::string& desc,
     else
     {
         // TODO: this should be done in a much cleaner way, with code to merge multiple monster_infos into a single common structure
-        out << count << " ";
+        out << count; // << " "; (deceit, 110903) 공백 없앰.
 
         // Don't pluralise uniques, ever.  Multiple copies of the same unique
         // are unlikely in the dungeon currently, but quite common in the
@@ -985,17 +985,17 @@ void monster_info::to_string(int count, std::string& desc,
         }
         else if (mons_genus(type) == MONS_DRACONIAN)
         {
-            out << pluralise(mons_type_name(MONS_DRACONIAN, DESC_PLAIN));
+            out << pluralise(PLU_MON_SUFFIX,mons_type_name(MONS_DRACONIAN, DESC_PLAIN));
         }
         else if (type == MONS_UGLY_THING || type == MONS_VERY_UGLY_THING
                 || type == MONS_DANCING_WEAPON || type == MONS_LABORATORY_RAT
                 || !fullname)
         {
-            out << pluralise(mons_type_name(type, DESC_PLAIN));
+            out << pluralise(PLU_MON_SUFFIX,mons_type_name(type, DESC_PLAIN));
         }
         else
         {
-            out << pluralise(common_name());
+            out << pluralise(PLU_MON_SUFFIX,common_name());
         }
     }
 

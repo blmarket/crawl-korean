@@ -2850,7 +2850,7 @@ static void _xom_zero_miscast()
         else if (item->sub_type == ARM_ROBE)
         {
             str  = "당신은 잠시 당신의 ";//str  = "You briefly become tangled in your ";
-            str += pluralise(name);
+            str += pluralise(PLU_SUFFIX,name);
             str += "에 의해 뒤엉켰다.";//            str += ".";
         }
         else if (item->sub_type >= ARM_RING_MAIL

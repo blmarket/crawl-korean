@@ -3610,4 +3610,14 @@ enum wizard_option_type
 
 #endif
 
+enum pluralise_type
+{
+	PLU_DEFAULT,
+	PLU_MISC,
+	PLU_MISC_SUFFIX,
+	PLU_MON,
+	PLU_MON_SUFFIX,
+	PLU_SUFFIX,
+};
+
 #endif // ENUM_H

@@ -416,7 +416,7 @@ const char *standard_plural_qualifiers[] =
 
 // Pluralises a monster or item name.  This'll need to be updated for
 // correctness whenever new monsters/items are added.
-std::string pluralise(const std::string &name,
+std::string pluralise(unsigned int plu_type, const std::string &name,
                       const char *qualifiers[],
                       const char *no_qualifier[])
 {
@@ -428,18 +428,38 @@ std::string pluralise(const std::string &name,
             if ((pos = name.find(qualifiers[i])) != std::string::npos
                 && !ends_with(name, no_qualifier))
             {
-                return pluralise(name.substr(0, pos)) + name.substr(pos);
+                return pluralise(plu_type,name.substr(0, pos)) + name.substr(pos);
             }
     }
 
     if (!name.empty() && name[name.length() - 1] == ')'
         && (pos = name.rfind(" (")) != std::string::npos)
     {
-        return (pluralise(name.substr(0, pos)) + name.substr(pos));
+        return (pluralise(plu_type,name.substr(0, pos)) + name.substr(pos));
     }
 
 #ifdef KR
-    return name + "들";
+	switch(plu_type)
+	{
+	case PLU_MISC:
+		return "개의 " + name;
+		break;
+	case PLU_MISC_SUFFIX:
+		return "개의 " + name + "들";
+		break;
+	case PLU_MON:
+		return "마리의 " + name;
+		break;
+	case PLU_MON_SUFFIX:
+		return "마리의 " + name + "들";
+		break;
+	case PLU_SUFFIX:
+		return name + "들";
+		break;
+	case PLU_DEFAULT:
+	default:
+		break;
+	}
 #endif
 
     if (ends_with(name, "us"))

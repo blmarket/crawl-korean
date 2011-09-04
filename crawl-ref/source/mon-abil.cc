@@ -909,7 +909,7 @@ static void _orc_battle_cry(monster* chief)
 
                     mprf(channel, gettext("%s %s go into a battle-frenzy!"),
                          chief->friendly() ? gettext(M_("Your")) : gettext(M_("The")),
-                         pluralise(who).c_str());
+                         pluralise(PLU_SUFFIX,who).c_str());
                 }
             }
         }

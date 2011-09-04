@@ -185,8 +185,8 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
         name = mons_type_name(it->first, desc);
         if (it->second > 1)
         {
-            name = make_stringf("%d %s", it->second,
-                                pluralise(name).c_str());
+            name = make_stringf("%d%s", it->second, // (deceit, 110903) °ø¹é »èÁ¦.
+                                pluralise(PLU_MON_SUFFIX,name).c_str());
         }
 
         message += name;
