@@ -421,11 +421,11 @@ static bool _reroll_random(newgame_def* ng)
 
     std::string specs = chop_string(species_name(ng->species), 79, false);
 
-    cprintf("You are a%s %s %s.\n",
-            (is_vowel(specs[0])) ? "n" : "", specs.c_str(),
-            get_job_name(ng->job));
+    cprintf(gettext("You are a%s %s %s.\n"),
+            (is_vowel(specs[0])) ? "n" : "", gettext(specs.c_str()),
+            gettext(get_job_name(ng->job)));
 
-    cprintf("\nDo you want to play this combination? (ynq) [y]");
+    cprintf(gettext("\nDo you want to play this combination? (ynq) [y]"));
     char c = getchm();
     if (key_is_escape(c) || tolower(c) == 'q')
         game_ended();
@@ -1586,7 +1586,7 @@ static bool _prompt_weapon(const newgame_def* ng, newgame_def* ng_choice,
     highlighter->set_visible(true);
 
     textcolor(CYAN);
-    cprintf("\nYou have a choice of weapons:  ");
+    cprintf(gettext("\nYou have a choice of weapons:  "));
 
     while (true)
     {
@@ -1601,7 +1601,7 @@ static bool _prompt_weapon(const newgame_def* ng, newgame_def* ng_choice,
             switch (keyn)
             {
             case 'X':
-                cprintf("\nGoodbye!");
+                cprintf(gettext("\nGoodbye!"));
                 end(0);
                 break;
             case ' ':
@@ -1871,7 +1871,7 @@ static void _construct_wand_menu(const startup_wand_type& defwand,
         {
             item_def rod;
             make_rod(rod, STAFF_STRIKING, 8);
-            text += rod.name(true, DESC_QUALNAME, false, true);
+            text += rod.name(false, DESC_QUALNAME, false, true); // (deceit, 110905) 임시 수정.
         }
         else
         {
@@ -2047,7 +2047,7 @@ static bool _prompt_wand(const newgame_def* ng, newgame_def* ng_choice,
     highlighter->set_visible(true);
 
     textcolor(CYAN);
-    cprintf("\nYou have a choice of tools:");
+    cprintf(gettext("\nYou have a choice of tools:"));
 
     while (true)
     {
@@ -2062,7 +2062,7 @@ static bool _prompt_wand(const newgame_def* ng, newgame_def* ng_choice,
             switch (keyn)
             {
             case 'X':
-                cprintf("\nGoodbye!");
+                cprintf(gettext("\nGoodbye!"));
                 end(0);
                 break;
             case ' ':

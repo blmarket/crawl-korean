@@ -262,7 +262,7 @@ static bool _check_moveto_terrain(const coord_def& p,
         if (msg != "")
             prompt = msg + " ";
 
-        prompt += "Are you sure you want to " + move_verb;
+        // prompt += "Are you sure you want to " + move_verb;
         /// 1. 이동 동사, 2. into 혹은 over, 3. deep water 혹은 lava의 번역문, 4. while you ... 에 해당하는 절
         prompt += make_stringf(gettext("Are you sure you want to %s%s%s%s"),
             move_verb.c_str(),
