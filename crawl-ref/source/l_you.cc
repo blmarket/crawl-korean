@@ -155,7 +155,7 @@ static int l_you_genus(lua_State *ls)
     std::string genus = species_name(you.species, true);
     lowercase(genus);
     if (plural)
-        genus = pluralise(genus);
+        genus = pluralise(PLU_DEFAULT, genus);
     lua_pushstring(ls, genus.c_str());
     return (1);
 }

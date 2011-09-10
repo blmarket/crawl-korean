@@ -424,7 +424,7 @@ std::string player::hand_name(bool plural, bool *can_plural) const
         return (plural ? "hands" : "hand");
 
     if (plural && *can_plural)
-        str = pluralise(str);
+        str = pluralise(PLU_DEFAULT, str);
 
     return str;
 }

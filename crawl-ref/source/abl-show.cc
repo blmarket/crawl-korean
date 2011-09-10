@@ -1322,7 +1322,7 @@ static void _print_talent_description(const talent& tal)
         cprintf(gettext("No description found."));
     else
     {
-        print_description(gettext(name.c_str()) + "\n\n" + lookup + "\n"
+        print_description(std::string(gettext(name.c_str())) + "\n\n" + lookup + "\n"
                           + _detailed_cost_description(tal.which));
     }
     getchm();
