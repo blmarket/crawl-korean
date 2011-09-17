@@ -90,6 +90,8 @@
 #include "viewgeom.h"
 #include "xom.h"
 
+#include "korean.h"
+
 static void _moveto_maybe_repel_stairs()
 {
     const dungeon_feature_type new_grid = env.grid(you.pos());
