@@ -93,8 +93,9 @@
 static const spell_type _xom_nontension_spells[] =
 {
     FAKE_SPELL_MAGIC_MAPPING, SPELL_DETECT_ITEMS, SPELL_SUMMON_BUTTERFLIES,
-    SPELL_DETECT_CREATURES, SPELL_FLY, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
-    SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_NECROMUTATION
+    SPELL_DETECT_CREATURES, SPELL_FLY, SPELL_BEASTLY_APPENDAGE,
+    SPELL_SPIDER_FORM, SPELL_STATUE_FORM, SPELL_ICE_FORM, SPELL_DRAGON_FORM,
+    SPELL_NECROMUTATION
 };
 
 // Spells to be cast at tension > 0, i.e. usually in battle situations.
@@ -106,8 +107,9 @@ static const spell_type _xom_tension_spells[] =
     SPELL_POISON_WEAPON, SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS,
     SPELL_WARP_BRAND, SPELL_TUKIMAS_DANCE, SPELL_RECALL,
     SPELL_SUMMON_BUTTERFLIES, SPELL_SUMMON_SMALL_MAMMALS,
-    SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM, SPELL_FLY, SPELL_SPIDER_FORM,
-    SPELL_STATUE_FORM, SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_ANIMATE_DEAD,
+    SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM, SPELL_FLY,
+    SPELL_BEASTLY_APPENDAGE, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
+    SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_ANIMATE_DEAD,
     SPELL_SHADOW_CREATURES, SPELL_SUMMON_HORRIBLE_THINGS,
     SPELL_CALL_CANINE_FAMILIAR, SPELL_SUMMON_ICE_BEAST, SPELL_SUMMON_UGLY_THING,
     SPELL_CONJURE_BALL_LIGHTNING, SPELL_SUMMON_HYDRA, SPELL_SUMMON_DRAGON,
@@ -554,6 +556,9 @@ static bool _transformation_check(const spell_type spell)
     transformation_type tran = TRAN_NONE;
     switch (spell)
     {
+    case SPELL_BEASTLY_APPENDAGE:
+        tran = TRAN_APPENDAGE;
+        break;
     case SPELL_SPIDER_FORM:
         tran = TRAN_SPIDER;
         break;
@@ -1847,10 +1852,10 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
 static int _xom_random_stickable(const int HD)
 {
     int c;
-    static const int arr[12] = {WPN_CLUB, WPN_QUARTERSTAFF, WPN_BOW, WPN_SPEAR,
-                                WPN_BLOWGUN, WPN_GLAIVE, WPN_HALBERD, WPN_ANKUS,
-                                WPN_SCYTHE, WPN_LONGBOW, WPN_GIANT_CLUB,
-                                WPN_GIANT_SPIKED_CLUB};
+    static const int arr[13] = {WPN_CLUB, WPN_STAFF, WPN_QUARTERSTAFF, WPN_BOW,
+                                WPN_SPEAR, WPN_BLOWGUN, WPN_GLAIVE, WPN_HALBERD,
+                                WPN_ANKUS, WPN_SCYTHE, WPN_LONGBOW,
+                                WPN_GIANT_CLUB, WPN_GIANT_SPIKED_CLUB};
 
     // Maximum snake hd is 11 (anaconda) so random2(hd) gives us 0-10
     // weapon_rarity also gives us 1-10.
@@ -2763,7 +2768,7 @@ static void _xom_zero_miscast()
     }
 
     if (!player_genus(GENPC_DRACONIAN) && you.species != SP_MUMMY
-        && (you.form == TRAN_NONE || you.form == TRAN_BLADE_HANDS))
+        && !form_changed_physiology())
     {
         messages.push_back("당신의 눈썹은 갑자기 무지막지하게 풍성해졌다.");//messages.push_back("Your eyebrows briefly feel incredibly bushy.");
         messages.push_back("당신의 눈썹은 꿈틀거렸다.");//messages.push_back("Your eyebrows wriggle.");

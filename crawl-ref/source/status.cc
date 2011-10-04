@@ -564,17 +564,18 @@ static void _describe_backlit(status_info* inf)
         inf->light_colour = _bad_ench_colour(get_contamination_level(), 2, 3);
     else if (you.duration[DUR_QUAD_DAMAGE])
         inf->light_colour = BLUE;
-    else if (you.duration[DUR_CORONA])
-        inf->light_colour = LIGHTBLUE;
     else if (you.duration[DUR_LIQUID_FLAMES])
         inf->light_colour = RED;
-    else if (!you.antihaloed() && you.haloed())
+    else if (you.halo_radius2() > 0)
+        return;
+    else if (you.duration[DUR_CORONA])
+        inf->light_colour = LIGHTBLUE;
+    else if (!you.umbraed() && you.haloed())
         inf->light_colour = YELLOW;
 
     inf->light_text   = "Glow";
     inf->short_text   = "glowing";
     inf->long_text    = "You are glowing.";
-
 }
 
 static void _describe_regen(status_info* inf)
@@ -820,6 +821,11 @@ static void _describe_transform(status_info* inf)
         inf->light_text = gettext(M_("Statue"));
         inf->short_text = gettext(M_("statue-form"));
         inf->long_text  = gettext("You are a statue.");
+        break;
+    case TRAN_APPENDAGE:
+        inf->light_text = "App";
+        inf->short_text = "appendage";
+        inf->long_text  = "You have a beastly appendage.";
         break;
     case TRAN_NONE:
         break;

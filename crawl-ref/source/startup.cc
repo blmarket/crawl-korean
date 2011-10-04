@@ -224,9 +224,7 @@ static void _post_init(bool newc)
     if (newc && you.char_direction == GDT_GAME_START)
     {
         // Randomise colours properly for the Abyss.
-#ifdef NEW_ABYSS
         generate_abyss();
-#endif
         init_pandemonium();
     }
 
@@ -316,6 +314,7 @@ static void _post_init(bool newc)
         run_map_epilogues();
 }
 
+#ifndef DGAMELAUNCH
 /**
  * Helper for show_startup_menu()
  * constructs the game modes section
@@ -848,6 +847,7 @@ again:
         }
     }
 }
+#endif
 
 static void _choose_arena_teams(newgame_def* choice,
                                 const newgame_def& defaults)

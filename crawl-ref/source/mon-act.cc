@@ -158,7 +158,7 @@ static bool _swap_monsters(monster* mover, monster* moved)
     // A friendly or good-neutral monster moving past a fleeing hostile
     // or neutral monster, or vice versa.
     if (mover->wont_attack() == moved->wont_attack()
-        || mons_is_fleeing(mover) == mons_is_fleeing(moved))
+        || mons_is_retreating(mover) == mons_is_retreating(moved))
     {
         return (false);
     }
@@ -396,7 +396,7 @@ static void _set_mons_move_dir(const monster* mons,
     // Move the monster.
     *dir = delta->sgn();
 
-    if (mons_is_fleeing(mons) && mons->travel_target != MTRAV_WALL
+    if (mons_is_retreating(mons) && mons->travel_target != MTRAV_WALL
         && (!mons->friendly() || mons->target != you.pos()))
     {
         *dir *= -1;
@@ -795,7 +795,7 @@ static bool _handle_reaching(monster* mons)
         // The monster has to be attacking the correct position.
         && mons->target == foepos
         // With a reaching attack with a large enough range:
-        && (delta.abs() <= (range == REACH_TWO ? 8 : range == REACH_KNIGHT ? 5 : 2))
+        && delta.abs() <= reach_range(range)
         // And with no dungeon furniture in the way of the reaching
         // attack; if the middle square is empty, skip the LOS check.
         && (grd(middle) > DNGN_MAX_NONREACH
@@ -1827,14 +1827,19 @@ static bool _handle_throw(monster* mons, bolt & beem)
 
     item_def *missile = &mitm[mon_item];
 
-    // Throwing a net at a target that is already caught would be
-    // completely useless, so bail out.
     const actor *act = actor_at(beem.target);
     if (missile->base_type == OBJ_MISSILES
         && missile->sub_type == MI_THROWING_NET
-        && act && act->caught())
+        && act)
     {
-        return (false);
+        // Throwing a net at a target that is already caught would be
+        // completely useless, so bail out.
+        if (act->caught())
+            return (false);
+        // Netting targets that are already permanently stuck in place
+        // is similarly useless.
+        if (mons_class_is_stationary(act->type))
+            return (false);
     }
 
     // If the attack needs a launcher that we can't wield, bail out.
@@ -1918,7 +1923,7 @@ void handle_monster_move(monster* mons)
     fedhas_neutralise(mons);
 
     // Monster just summoned (or just took stairs), skip this action.
-    if (testbits(mons->flags, MF_JUST_SUMMONED))
+    if (!mons_is_mimic(mons->type) && testbits(mons->flags, MF_JUST_SUMMONED))
     {
         mons->flags &= ~MF_JUST_SUMMONED;
         return;
@@ -1926,7 +1931,14 @@ void handle_monster_move(monster* mons)
 
     mon_acting mact(mons);
 
-    _monster_add_energy(mons);
+    // Mimics get enough energy to act immediately when revealed.
+    if (mons_is_mimic(mons->type) && testbits(mons->flags, MF_JUST_SUMMONED))
+    {
+        mons->speed_increment = 80;
+        mons->flags &= ~MF_JUST_SUMMONED;
+    }
+    else
+        _monster_add_energy(mons);
 
     // Handle clouds on nonmoving monsters.
     if (mons->speed == 0)
@@ -2655,8 +2667,10 @@ static bool _monster_eat_item(monster* mons, bool nearby)
         {
             // This is done manually instead of using heal_monster(),
             // because that function doesn't work quite this way. - bwr
+            int base_max = mons_avg_hp(mons->type);
             mons->hit_points += hps_changed;
-            mons->hit_points = std::min(mons->hit_points, MAX_MONSTER_HP);
+            mons->hit_points = std::min(MAX_MONSTER_HP,
+                               std::min(base_max * 2, mons->hit_points));
             mons->max_hit_points = std::max(mons->hit_points,
                                                mons->max_hit_points);
         }
@@ -3108,7 +3122,7 @@ static bool _mons_can_displace(const monster* mpusher,
         return (false);
 
     // Fleeing monsters of the same type may push past higher ranking ones.
-    if (!monster_senior(mpusher, mpushee, mons_is_fleeing(mpusher)))
+    if (!monster_senior(mpusher, mpushee, mons_is_retreating(mpusher)))
         return (false);
 
     return (true);
@@ -3351,7 +3365,7 @@ static void _find_good_alternate_move(monster* mons,
             if (good_move[mon_compass[newdir].x+1][mon_compass[newdir].y+1])
                 dist[i] = distance(mons->pos()+mon_compass[newdir], target);
             else
-                dist[i] = (mons_is_fleeing(mons)) ? (-FAR_AWAY) : FAR_AWAY;
+                dist[i] = mons_is_retreating(mons) ? (-FAR_AWAY) : FAR_AWAY;
         }
 
         const int dir0 = ((dir + 8 + sdir) % 8);
@@ -3362,7 +3376,7 @@ static void _find_good_alternate_move(monster* mons,
             continue;
 
         // Which one was better? -- depends on FLEEING or not.
-        if (mons_is_fleeing(mons))
+        if (mons_is_retreating(mons))
         {
             if (dist[0] >= dist[1] && dist[0] >= current_distance)
             {

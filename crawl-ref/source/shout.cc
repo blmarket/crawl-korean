@@ -51,7 +51,7 @@ static void _actor_apply_noise(actor *act,
 
 void handle_monster_shouts(monster* mons, bool force)
 {
-    if (!force && x_chance_in_y(you.skill(SK_STEALTH), 30))
+    if (!force && x_chance_in_y(you.skill(SK_STEALTH, 100), 3000))
         return;
 
     // Friendly or neutral monsters don't shout.
@@ -376,7 +376,12 @@ bool check_awaken(monster* mons)
 
     // On the other hand, shrouding has the reverse effect:
     if (you.umbra() && you.visible_to(mons))
-        mons_perc -= 50 * LOS_RADIUS / you.current_vision;
+        mons_perc -= 30 * LOS_RADIUS / you.current_vision;
+
+    // The shifting glow from the Orb, while too unstable to negate invis
+    // or affect to-hit, affects stealth even more than regular glow.
+    if (orb_haloed(you.pos()))
+        mons_perc += 80;
 
     if (mons_perc < 0)
         mons_perc = 0;

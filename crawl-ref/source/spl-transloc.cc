@@ -100,7 +100,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
         random_blink(false);
     }
     // The orb sometimes degrades controlled blinks to completely uncontrolled.
-    else if (you.char_direction == GDT_ASCENDING && !wizard_blink)
+    else if (orb_haloed(you.pos()) && !wizard_blink)
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
@@ -285,12 +285,12 @@ bool allow_control_teleport(bool quiet)
 {
     bool retval = !(testbits(env.level_flags, LFLAG_NO_TELE_CONTROL)
                     || testbits(get_branch_flags(), BFLAG_NO_TELE_CONTROL)
-                    || you.char_direction == GDT_ASCENDING);
+                    || orb_haloed(you.pos()));
 
     // Tell the player why if they have teleport control.
     if (!quiet && !retval && player_control_teleport())
     {
-        if (you.char_direction == GDT_ASCENDING)
+        if (orb_haloed(you.pos()))
             mpr(gettext("The orb prevents control of your teleportation!"), MSGCH_ORB);
         else
             mpr(gettext("A powerful magic prevents control of your teleportation."));
@@ -328,7 +328,7 @@ void you_teleport(void)
             mpr(gettext("You have a feeling this translocation may take a while to kick in..."));
             teleport_delay += 5 + random2(10);
         }
-        else if (you.char_direction == GDT_ASCENDING && coinflip())
+        else if (orb_haloed(you.pos()) && coinflip())
         {
             mpr(gettext("You feel the orb delaying this translocation!"), MSGCH_ORB);
             teleport_delay += 5 + random2(5);
@@ -342,7 +342,7 @@ void you_teleport(void)
 static bool _cell_vetoes_teleport (const coord_def cell, bool  check_monsters = true)
 {
     // Monsters always veto teleport.
-    if (monster_at(cell) && check_monsters)
+    if ((monster_at(cell) || mimic_at(cell)) && check_monsters)
         return (true);
 
     // As do all clouds; this may change.
@@ -425,7 +425,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
     viewwindow();
     StashTrack.update_stash(you.pos());
 
-    if (you.level_type == LEVEL_ABYSS)
+    if (you.level_type == LEVEL_ABYSS && !wizard_tele)
     {
         abyss_teleport(new_abyss_area);
         if (you.pet_target != MHITYOU)
@@ -761,19 +761,6 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     const int item_idx = igrd(where);
     if (item_idx == NON_ITEM || !in_bounds(where))
     {
-        // Maybe the player *thought* there was something there (a mimic.)
-        if (monster* m = monster_at(where))
-        {
-            if (mons_is_item_mimic(m->type) && you.can_see(m))
-            {
-                fail_check();
-                mprf(gettext("%s twitches."), m->name(DESC_CAP_THE).c_str());
-                // Nothing else gives this message, so identify the mimic.
-                discover_mimic(m);
-                return SPRET_SUCCESS;  // otherwise you get free mimic ID
-            }
-        }
-
         mpr(gettext("There are no items there."));
         return SPRET_ABORT;
     }
@@ -884,6 +871,9 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
             return SPRET_SUCCESS;
         }
     }
+    // Item mimics land in front of you (and they will be revealed).
+    else if (item.flags & ISFLAG_MIMIC)
+        new_spot =  beam.path_taken[0];
     // If power is high enough it'll just come straight to you.
     else
         new_spot = you.pos();

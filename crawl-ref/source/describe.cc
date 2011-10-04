@@ -43,7 +43,6 @@
 #include "menu.h"
 #include "message.h"
 #include "mon-stuff.h"
-#include "mon-util.h"
 #include "output.h"
 #include "player.h"
 #include "quiver.h"
@@ -58,6 +57,7 @@
 #include "spl-cast.h"
 #include "spl-util.h"
 #include "stash.h"
+#include "terrain.h"
 #include "transform.h"
 #include "hints.h"
 #include "xom.h"
@@ -225,7 +225,6 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "*TELE",  ARTP_CAUSE_TELEPORTATION,   2 },
         { "Hunger", ARTP_METABOLISM,            2 }, // handled specially
         { "Noisy",  ARTP_NOISES,                2 },
-        { "Slow",   ARTP_PONDEROUS,             2 },
 
         // Evokable abilities come second
         { "+Blink", ARTP_BLINK,                 2 },
@@ -251,10 +250,12 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "Dam",    ARTP_DAMAGE,                0 },
 
         // Qualitative attributes
+        { "HP",     ARTP_HP,                    0 },
         { "MP",     ARTP_MAGICAL_POWER,         0 },
         { "SInv",   ARTP_EYESIGHT,              2 },
         { "Stlth",  ARTP_STEALTH,               2 }, // handled specially
         { "Curse",  ARTP_CURSED,                2 },
+        { "Clar",   ARTP_CLARITY,               2 },
     };
 
     // For randart jewellery, note the base jewellery type if it's not
@@ -342,6 +343,8 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
                 {
                     work << "+";
                 }
+                else if (propanns[i].prop == ARTP_METABOLISM && val < 0)
+                    work << "-";
                 else if (propanns[i].prop == ARTP_STEALTH)
                 {
                     if (val > 20)
@@ -441,12 +444,13 @@ static std::string _randart_descrip(const item_def &item)
         { ARTP_DEXTERITY, gettext("It affects your dexterity (%d)."), false},
         { ARTP_ACCURACY, gettext("It affects your accuracy (%d)."), false},
         { ARTP_DAMAGE, gettext("It affects your damage-dealing abilities (%d)."), false},
-        { ARTP_FIRE, gettext(M_("fire")), true},
-        { ARTP_COLD, gettext(M_("cold")), true},
+        { ARTP_FIRE, M_("fire"), true},
+        { ARTP_COLD, M_("cold"), true},
         { ARTP_ELECTRICITY, gettext("It insulates you from electricity."), false},
         { ARTP_POISON, gettext("It protects you from poison."), false},
-        { ARTP_NEGATIVE_ENERGY, gettext(M_("negative energy")), true},
+        { ARTP_NEGATIVE_ENERGY, M_("negative energy"), true},
         { ARTP_MAGIC, gettext("It increases your resistance to enchantments."), false},
+        { ARTP_HP, gettext("It affects your health (%d)."), false},
         { ARTP_MAGICAL_POWER, gettext("It affects your mana capacity (%d)."), false},
         { ARTP_EYESIGHT, gettext("It enhances your eyesight."), false},
         { ARTP_INVISIBLE, gettext("It lets you turn invisible."), false},
@@ -460,7 +464,7 @@ static std::string _randart_descrip(const item_def &item)
           false},
         { ARTP_ANGRY,  gettext("It makes you angry."), false},
         { ARTP_CURSED, gettext("It may recurse itself."), false},
-        { ARTP_PONDEROUS, gettext("It slows your movement."), false},
+        { ARTP_CLARITY, gettext("It protects you against confusion."), false},
     };
 
     for (unsigned i = 0; i < ARRAYSZ(propdescs); ++i)
@@ -1324,7 +1328,10 @@ static std::string _describe_armour(const item_def &item, bool verbose)
         switch (ego)
         {
         case SPARM_RUNNING:
-            description += gettext("It allows its wearer to run at a great speed.");
+            if (item.sub_type == ARM_NAGA_BARDING)
+                description += gettext("It allows its wearer to slither at a great speed.");
+            else
+                description += gettext("It allows its wearer to run at a great speed.");
             break;
         case SPARM_FIRE_RESISTANCE:
             description += gettext("It protects its wearer from heat and fire.");
@@ -2227,18 +2234,7 @@ static std::string _get_feature_description_wide(int feat)
 void get_feature_desc(const coord_def &pos, describe_info &inf)
 {
     dungeon_feature_type feat = grd(pos);
-    bool mimic = false;
-    monster* mimic_mons = NULL;
 
-    if (monster_at(pos))
-    {
-        mimic_mons = monster_at(pos);
-        if (mons_is_feat_mimic(mimic_mons->type) && mons_is_unknown_mimic(mimic_mons))
-        {
-            mimic = true;
-            feat = get_mimic_feat(mimic_mons);
-        }
-    }
     std::string desc      = feature_description(pos, false, DESC_CAP_A, false);
     std::string db_name   = feat == DNGN_ENTER_SHOP ? "A shop" : desc;
     std::string long_desc = getLongDescription(db_name);
@@ -2269,7 +2265,7 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
         custom_desc = true;
     }
 
-    if (feat == DNGN_ENTER_PORTAL_VAULT && !custom_desc && !mimic)
+    if (feat == DNGN_ENTER_PORTAL_VAULT && !custom_desc)
     {
         long_desc = gettext("UNDESCRIBED PORTAL VAULT ENTRANCE.");
         custom_desc = true;
@@ -2673,7 +2669,8 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
 
     keyin = tolower(getch_ck());
     command_type action = _get_action(keyin, actions);
-    int slot = letter_to_index(item.link);
+    int slot = item.link;
+    ASSERT(slot >= 0 && slot < ENDOFPACK);
 
     switch (action)
     {
@@ -2918,6 +2915,7 @@ void inscribe_item(item_def &item, bool msgwin)
     {
         mpr(item.name(true, DESC_INVENTORY).c_str(), MSGCH_EQUIPMENT);
         you.wield_change  = true;
+        you.redraw_quiver = true;
     }
 }
 
@@ -2985,6 +2983,8 @@ static int _get_spell_description(const spell_type spell,
     {
         description += god_name(you.religion)
                        + gettext(" frowns upon the use of this spell.\n");
+        if (god_loathes_spell(spell, you.religion))
+            description += gettext("You'd be excommunicated if you dared to cast it!\n");
     }
     else if (god_likes_spell(spell, you.religion))
     {
@@ -3201,6 +3201,7 @@ static const char* _get_threat_desc(mon_threat_level_type threat)
     case MTHRT_EASY:    return "easy";
     case MTHRT_TOUGH:   return "dangerous";
     case MTHRT_NASTY:   return "extremely dangerous";
+    case MTHRT_UNDEF:
     default:            return "buggily threatening";
     }
 }
@@ -3278,7 +3279,8 @@ static std::string _monster_stat_description(const monster_info& mi)
 
     const char* pronoun = "이것"; // mi.pronoun(PRONOUN_CAP);
 
-    result << pronoun << " looks " << _get_threat_desc(mi.threat) << ".\n";
+    if (mi.threat != MTHRT_UNDEF)
+        result << pronoun << " looks " << _get_threat_desc(mi.threat) << ".\n";
 
     if (!resist_descriptions.empty())
     {
@@ -3370,17 +3372,13 @@ static std::string _monster_stat_description(const monster_info& mi)
         "거대한", //"huge",
     };
 
-    const char *mimic_sizes[6]= {
-        "은 분수만한 크기이다", //"as big as a fountain",
-        "은 상점만한 크기이다", //"as big as a shop",
-        "은 돌 계단만한 크기이다", //"as big as a staircase",
-        "은 다트 함정만한 크기이다", //"as big as a trap",
-        "은 던전 입구만한 크기이다", //"as big as a portal",
-        "은 문짝만한 크기이다", //"as big as a door",
-    };
-
     if (mons_is_feat_mimic(mi.type))
-        result << pronoun << mimic_sizes[MONS_FOUNTAIN_MIMIC-mi.type] << ".\n"; // result << pronoun << " is " << mimic_sizes[MONS_FOUNTAIN_MIMIC-mi.type] << ".\n";
+    {
+        result << pronoun << " is as big as "
+               << thing_do_grammar(DESC_NOCAP_A, true, false,
+                                   feat_type_name(mi.get_mimic_feature()))
+               << "\n";
+    }
     else if (sizes[mi.body_size()])
         result << pronoun << "은 " << sizes[mi.body_size()] << " 덩치를 가졌다.\n"; // result << pronoun << " is " << sizes[mi.body_size()] << ".\n";
 
@@ -3420,7 +3418,7 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         inf.quote = getQuoteString(db_name);
 
     std::string symbol;
-    symbol += get_monster_data(mi.type)->showchar;
+    symbol += get_monster_data(mi.type)->basechar;
     if (isaupper(symbol[0]))
         symbol = "cap-" + symbol;
 
@@ -4501,22 +4499,14 @@ void describe_god(god_type which_god, bool give_title)
 
         if (which_god == GOD_ZIN)
         {
-            if (zin_sustenance(false))
-            {
-                have_any = true;
-                std::string buf = make_stringf(
-                                  gettext("Praying to %s will provide sustenance if starving."),
-                                  god_name(which_god).c_str());
-                _print_final_god_abil_desc(which_god, buf,
-                                           ABIL_ZIN_SUSTENANCE);
-            }
-            const char *how = (you.piety >= 150) ? pgettext("zin_shield", "carefully") :
-                              (you.piety >= 100) ? pgettext("zin_shield", "often") :
-                              (you.piety >=  50) ? pgettext("zin_shield", "sometimes") :
-                                                   pgettext("zin_shield", "occasionally");
+            have_any = true;
+            const char *how = (you.piety >= 150) ? "carefully" :
+                              (you.piety >= 100) ? "often" :
+                              (you.piety >=  50) ? "sometimes" :
+                                                   "occasionally";
 
-            /// 1. god name, 2. context "zin_shield", words about times.
-            cprintf(gettext("%s %s shields you from unclean and chaotic effects.\n"),
+            /// 1. god_name 2. how(carefully, often, sometimes etc)
+            cprintf(gettext("%s %s shields you from chaos.\n"),
                     god_name(which_god).c_str(), how);
         }
         else if (which_god == GOD_SHINING_ONE)

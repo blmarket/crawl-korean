@@ -4754,7 +4754,7 @@ VISUAL:@The_monster@ strides towards you, then pauses, indecisive.
 %%%%
 _Menkaure_rare_
 
-@Possessive@ ankle releases a plume of dust as @pronoun@ confides, "I'm not really a mummy, you know."
+@The_monster@'s ankle releases a plume of dust as @pronoun@ confides, "I'm not really a mummy, you know."
 
 VISUAL:@The_monster@ forgets how to to speak, silenced by the ages.
 
@@ -4785,7 +4785,7 @@ rustles
 whispers
 ## END Menkaure ##
 %%%%
-############ MENNAS ### A silent Angel.
+############ MENNAS ### A silent angel.
 Mennas
 
 VISUAL:@The_monster@ gestures at you. @player_only@
@@ -5962,13 +5962,6 @@ hell lord
 
 @_hell_lord_taunt_@
 %%%%
-################## #########################################
-butterfly
-
-VISUAL SPELL:The butterfly flaps @possessive@ wings in an oddly mesmeric pattern.
-VISUAL WARN:You feel entranced by @possessive@ movement.
-%%%%
-################## Imps#####################################
 imp
 
 w:1
@@ -6235,7 +6228,7 @@ w:1
 w:1
 @The_monster@ says @to_foe@, "@player_god@ be with thee, mortal!"
 
-# The good gods are assumed to work closely together, so a Daeva praising
+# The good gods are assumed to work closely together, so a daeva praising
 # Elyvilon is actually flavour.
 w:1
 @The_monster@ says @to_foe@, "Praised be @good_god@ in the heavens above!"
@@ -6636,8 +6629,10 @@ _friendly_beogh_speech_rare_
 
 @The_monster@ @says_or_shouts@, "Our fallen brethren won't be forgotten."
 
+@The_monster@ nervously looks @at_foe@.
+
 # messages submitted by Lemuel
-@The_monster@ says @to_foe@, "I'd rather not die in your service, @player_name@."
+@The_monster@ looks @at_foe@ and says, "I'd rather not die in your service, @player_name@."
 
 @The_monster@ chants, "I shall fear no evil, for @player_name@ is my saviour."
 

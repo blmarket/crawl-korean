@@ -5,7 +5,7 @@ dummy_spells
 %%%%
 Abjuration
 
-적대적인 소환물들을 원래의 장소로 송환한다. 송환이 실패하는 경우도 있지만, 적어도 소환물들이 이 세계에 머무르는 시간을 더 짧게 줄이게 된다.
+This spell attempts to send the targeted hostile summoned creature to the place whence it came, or at least shorten its stay in the caster's locality.
 %%%%
 Agony
 
@@ -31,6 +31,10 @@ Apportation
 
 바닥에 쌓인 아이템 중 가장 위에 놓여 있는 아이템이나 비슷한 종류의 아이템들을 시전자에게 가깝게 이동시킨다. 다만 아이템이 너무 무거울 경우에는, 이 주문이 실패할 확률이 높아진다. 몇몇 아이템들은, 이 주문으로 도저히 움직이기 힘들 정도로 무거운 경우도 있다. 또 한 가지 주의할 점은, 화살과 같이 묶음 형태의 아이템에게 사용했을 때는, 마력이 부족했을 경우, 일부 아이템이 허공으로 사라져 버리는 위험 부담이 존재한다는 것이다.
 '조트의 오브'와 같이, 매우 강력한 마력을 가진 아이템은 이 주문에 대해 적극적으로 저항이 가능하다.
+%%%%
+Beastly Appendage
+
+This spell makes you temporarily replace one or a pair of appendages with an animal counterpart, giving you an extra attack. It is not powerful enough to meld armour.
 %%%%
 Blade Hands
 
@@ -339,6 +343,10 @@ Malign Gateway
 
 이 세계에 공간의 구멍을 만들어, 미지의 타락한 세계로 통하는 일시적인 차원 관문을 연다. 그 곳의 악랄한 거주자들이 그들의 촉수로 찌르는 모습을 본다면, 그 누구도 이것의 근처에 가까워지려고 하지 않을 것이다.
 %%%%
+Mass Abjuration
+
+This spell attempts to send all hostile summoned creatures in sight to the place whence they came, or at least shorten their stay in the caster's locality.
+%%%%
 Mass Confusion
 
 시전자를 바라보고 있는 모든 존재에게 혼란을 유발시킨다.
@@ -570,7 +578,7 @@ Summon Swarm
 %%%%
 Summon Ugly Thing
 
-이계의 끔찍하게 변이된 존재들을 소환하여 시전자를 따르게 한다. 이 끔찍한 존재들은 자신이 소환된 것을 달갑지 않게 여길수도 있다.
+This spell summons a mutated otherworldly creature to the caster's aid.
 %%%%
 Sure Blade
 
@@ -578,7 +586,7 @@ Sure Blade
 %%%%
 Swiftness
 
-시전자의 이동 속도를 높여준다. 비행중인 시전자는 특히 더욱 빠르게 움직일 수 있다.
+This spell imbues its caster with the ability to achieve great movement speeds. But this speed comes at a price: the caster is less stealthy and more likely to blunder into traps while the spell is in effect.
 %%%%
 Teleport Other
 

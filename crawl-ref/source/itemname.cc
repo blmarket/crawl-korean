@@ -189,11 +189,11 @@ std::string item_def::name(bool allow_translate,
     {
         switch (descrip)
         {
-        case DESC_CAP_THE:    buff << check_gettext(M_("The ")); break;
-        case DESC_NOCAP_THE:  buff << check_gettext(M_("the ")); break;
-        case DESC_CAP_YOUR:   buff << check_gettext(M_("Your ")); break;
-        case DESC_NOCAP_YOUR: buff << check_gettext(M_("your ")); break;
-        case DESC_NOCAP_ITS:  buff << check_gettext(M_("its ")); break;
+        case DESC_CAP_THE:    buff << check_gettext("The "); break;
+        case DESC_NOCAP_THE:  buff << check_gettext("the "); break;
+        case DESC_CAP_YOUR:   buff << check_gettext("Your "); break;
+        case DESC_NOCAP_YOUR: buff << check_gettext("your "); break;
+        case DESC_NOCAP_ITS:  buff << check_gettext("its "); break;
         case DESC_CAP_A:
         case DESC_NOCAP_A:
         case DESC_INVENTORY_EQUIP:
@@ -510,7 +510,11 @@ const char* armour_ego_name(const item_def& item, bool terse)
         switch (get_armour_ego_type(item))
         {
         case SPARM_NORMAL:            return "";
-        case SPARM_RUNNING:           return M_("running");
+        case SPARM_RUNNING:
+            if (item.sub_type == ARM_NAGA_BARDING)
+                                      return M_("speedy slithering");
+            else
+                                      return M_("running");
         case SPARM_FIRE_RESISTANCE:   return M_("fire resistance");
         case SPARM_COLD_RESISTANCE:   return M_("cold resistance");
         case SPARM_POISON_RESISTANCE: return M_("poison resistance");
@@ -539,7 +543,11 @@ const char* armour_ego_name(const item_def& item, bool terse)
         switch (get_armour_ego_type(item))
         {
         case SPARM_NORMAL:            return "";
-        case SPARM_RUNNING:           return " {run}";
+        case SPARM_RUNNING:
+            if (item.sub_type == ARM_NAGA_BARDING)
+                                      return " {sslith}";
+            else
+                                      return " {run}";
         case SPARM_FIRE_RESISTANCE:   return " {rF+}";
         case SPARM_COLD_RESISTANCE:   return " {rC+}";
         case SPARM_POISON_RESISTANCE: return " {rPois}";
@@ -1312,7 +1320,7 @@ std::string item_def::name_aux(description_level_type desc,
             break;
         }
         else if (flags & ISFLAG_BLESSED_WEAPON && !dbname)
-        {   // Since Angels and Daevas can get blessed base items, we
+        {   // Since angels and daevas can get blessed base items, we
             // need a separate flag for this, so they can still have
             // their holy weapons.
             buff << check_gettext("Blessed ");
@@ -2912,7 +2920,7 @@ bool is_useless_item(const item_def &item, bool temp)
         if (you.species == SP_FELID)
             return (true);
 
-        if (!you.could_wield(item, true)
+        if (!you.could_wield(item, true, !temp)
             && !is_throwable(&you, item))
         {
             // Weapon is too large (or small) to be wielded and cannot
@@ -2969,13 +2977,8 @@ bool is_useless_item(const item_def &item, bool temp)
         return (!can_wear_armour(item, false, true));
 
     case OBJ_SCROLLS:
-        // No scroll is useless if you haven't learned spellcasting yet,
-        // except if you worship Trog.
-        if (!item_type_known(item)
-            || !you.skills[SK_SPELLCASTING] && you.religion != GOD_TROG)
-        {
+        if (!item_type_known(item))
             return (false);
-        }
 
         // A bad item is always useless.
         if (is_bad_item(item, temp))
@@ -3093,7 +3096,8 @@ bool is_useless_item(const item_def &item, bool temp)
                       && you.species != SP_GHOUL // makes clean chunks
                                                  // contaminated
                     || player_mutation_level(MUT_HERBIVOROUS) == 3
-                    || you.species == SP_MUMMY);
+                    || you.is_undead
+                        && you.species != SP_GHOUL);
 
         case AMU_FAITH:
             return (you.species == SP_DEMIGOD);
@@ -3203,6 +3207,15 @@ bool is_useless_item(const item_def &item, bool temp)
         default:
             return (false);
         }
+
+    case OBJ_BOOKS:
+        if (item.sub_type != BOOK_MANUAL || !item_type_known(item))
+            return (false);
+        if (you.skills[item.plus] >= 27)
+            return (true);
+        if (is_useless_skill((skill_type)item.plus))
+            return (true);
+        return (false);
 
     default:
         return (false);

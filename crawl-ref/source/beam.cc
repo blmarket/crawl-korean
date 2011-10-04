@@ -2189,41 +2189,29 @@ void fire_tracer(const monster* mons, bolt &pbolt, bool explode_only)
     pbolt.is_tracer = false;
 }
 
-// When a mimic is hit by a ranged attack, it teleports away (the slow
-// way) and changes its appearance - the appearance change is in
-// monster_teleport() in mon-stuff.cc.
-void mimic_alert(monster* mimic)
-{
-    if (!mimic->alive())
-        return;
-
-    bool should_id = !testbits(mimic->flags, MF_KNOWN_MIMIC)
-                     && mimic->observable();
-
-    // If we got here, we at least got a resists message, if not
-    // a full wounds printing. Thus, might as well id the mimic.
-    if (mimic->has_ench(ENCH_TP) || mons_is_feat_mimic(mimic->type))
-    {
-        if (should_id)
-            discover_mimic(mimic);
-
-        return;
-    }
-
-    const bool instant_tele = !one_chance_in(3);
-    monster_teleport(mimic, instant_tele);
-
-    // At least for this short while, we know it's a mimic.
-    if (!instant_tele && should_id)
-        discover_mimic(mimic);
-}
-
 static void _create_feat_at(coord_def center,
                             dungeon_feature_type overwriteable,
                             dungeon_feature_type newfeat)
 {
     if (grd(center) == overwriteable)
         dungeon_terrain_changed(center, newfeat, true, false, true);
+}
+
+static coord_def _random_point_visible_from(const coord_def &c,
+                                            int radius,
+                                            int margin = 1,
+                                            int tries = 5)
+{
+    while (tries-- > 0)
+    {
+        const coord_def point = dgn_random_point_from(c, radius, margin);
+        if (point.origin())
+            continue;
+        if (!cell_see_cell(c, point, LOS_SOLID))
+            continue;
+        return point;
+    }
+    return coord_def();
 }
 
 static void _create_feat_splash(coord_def center,
@@ -2236,7 +2224,7 @@ static void _create_feat_splash(coord_def center,
     _create_feat_at(center, overwriteable, newfeat);
     for (int i = 0; i < nattempts; ++i)
     {
-        const coord_def newp(dgn_random_point_visible_from(center, radius));
+        const coord_def newp(_random_point_visible_from(center, radius));
         if (newp.origin() || grd(newp) != overwriteable)
             continue;
         _create_feat_at(newp, overwriteable, newfeat);
@@ -2725,19 +2713,14 @@ void bolt::affect_place_explosion_clouds()
             cl_type = CLOUD_STEAM;
             break;
         }
-
-        place_cloud(cl_type, p, duration, agent());
+        const coord_def center = (aimed_at_feet ? source : ray.pos());
+        if (p == center || x_chance_in_y(125 + ench_power, 225))
+            place_cloud(cl_type, p, duration, agent());
     }
 
     // then check for more specific explosion cloud types.
     if (name == "ice storm")
         place_cloud(CLOUD_COLD, p, 2 + random2avg(5,2), agent());
-
-    if (name == "stinking cloud")
-    {
-        const int duration =  1 + random2(4) + random2((ench_power / 50) + 1);
-        place_cloud(CLOUD_STINK, p, duration, agent());
-    }
 
     if (name == "great blast of fire")
     {
@@ -3619,8 +3602,12 @@ void bolt::affect_player()
         blood_spray(you.pos(), MONS_PLAYER, hurted / 5);
 
     // Confusion effect for spore explosions
-    if (flavour == BEAM_SPORE && hurted && you.holiness() != MH_UNDEAD)
+    if (flavour == BEAM_SPORE && hurted
+        && you.holiness() != MH_UNDEAD
+        && !you.is_unbreathing())
+    {
         potion_effect(POT_CONFUSION, 1);
+    }
 
     // handling of missiles
     if (item && item->base_type == OBJ_MISSILES)
@@ -4048,10 +4035,6 @@ void bolt::enchantment_affect_monster(monster* mon)
 
     if (mon->alive())           // Aftereffects.
     {
-        // Mimics become known.
-        if (mons_is_mimic(mon->type))
-            mimic_alert(mon);
-
         // Message or record the success/failure.
         switch (ench_result)
         {
@@ -4112,31 +4095,20 @@ void bolt::monster_post_hit(monster* mon, int dmg)
         }
     }
 
-    bool wake_mimic = true;
-
     // Handle missile effects.
     if (item && item->base_type == OBJ_MISSILES)
     {
         // SPMSL_POISONED handled via callback _poison_hit_victim() in
         // item_use.cc
-        if (item->special == SPMSL_CURARE)
-        {
-            if (ench_power == AUTOMATIC_HIT
-                && _curare_hits_monster(agent(), mon, 2)
-                && !mon->alive())
-            {
-                wake_mimic = false;
-            }
-        }
+        if (item->special == SPMSL_CURARE && ench_power == AUTOMATIC_HIT)
+            _curare_hits_monster(agent(), mon, 2);
     }
 
     if (name == "bolt of energy"
         || origin_spell == SPELL_QUICKSILVER_BOLT) // purple draconian breath
         debuff_monster(mon);
 
-    if (wake_mimic && mons_is_mimic(mon->type))
-        mimic_alert(mon);
-    else if (dmg)
+    if (dmg)
         beogh_follower_convert(mon, true);
 
     if ((flavour == BEAM_WATER && origin_spell == SPELL_PRIMAL_WAVE) ||
@@ -4387,7 +4359,8 @@ void bolt::affect_monster(monster* mon)
     const bool engulfs = (is_explosion || is_big_cloud);
 
     if (engulfs && flavour == BEAM_SPORE
-        && mon->holiness() == MH_NATURAL)
+        && mon->holiness() == MH_NATURAL
+        && !mon->is_unbreathing())
     {
         apply_enchantment_to_monster(mon);
     }
@@ -4786,7 +4759,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         }
 
         obvious_effect = true;
-        const int duration = you.skill(SK_INVOCATIONS) * 3 / 4 + 2;
+        const int duration = you.skill_rdiv(SK_INVOCATIONS, 3, 4) + 2;
         mon->add_ench(mon_enchant(ENCH_SOUL_RIPE, 0, agent(), duration * 10));
         simple_monster_message(mon, gettext("'s soul is now ripe for the taking."));
         return (MON_AFFECTED);
@@ -5456,6 +5429,8 @@ void bolt::determine_affected_cells(explosion_map& m, const coord_def& delta,
 
     const dungeon_feature_type dngn_feat = grd(loc);
 
+    bool at_wall = false;
+
     // Check to see if we're blocked by a wall.
     if (feat_is_wall(dngn_feat)
         || dngn_feat == DNGN_SECRET_DOOR
@@ -5466,6 +5441,8 @@ void bolt::determine_affected_cells(explosion_map& m, const coord_def& delta,
         // solid cells at the center of the explosion.
         if (stop_at_walls && !(delta.origin() && affects_wall(dngn_feat)))
             return;
+        // But remember that we are at a wall.
+        at_wall = true;
     }
 
     if (feat_is_solid(dngn_feat) && !feat_is_wall(dngn_feat) && stop_at_statues)
@@ -5494,9 +5471,16 @@ void bolt::determine_affected_cells(explosion_map& m, const coord_def& delta,
         if (m(new_delta + centre) <= count)
             continue;
 
+        // If we were at a wall, only move to visible squares.
+        if (at_wall && !you.see_cell(loc + Compass[i]))
+            continue;
+
         int cadd = 5;
-        // Changing direction (e.g. looking around a wall) costs more.
-        if (delta.x * Compass[i].x < 0 || delta.y * Compass[i].y < 0)
+        // Circling around the center is always free.
+        if (hits && delta.rdist() == 1 && new_delta.rdist() == 1)
+            cadd = 0;
+        // Otherwise changing direction (e.g. looking around a wall) costs more.
+        else if (delta.x * Compass[i].x < 0 || delta.y * Compass[i].y < 0)
             cadd = 17;
 
         determine_affected_cells(m, new_delta, count + cadd, r,

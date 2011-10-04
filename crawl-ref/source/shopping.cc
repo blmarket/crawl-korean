@@ -132,9 +132,9 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
     {
         shop_list = "[<w>$</w>] ";
         if (num_selected > 0)
-            shop_list += "Selected -> shopping list";
+            shop_list += "selected -> shopping list";
         else if (num_in_list > 0)
-            shop_list += "Shopping list -> selected";
+            shop_list += "shopping list -> selected";
         else
             shop_list = "";
     }
@@ -164,16 +164,16 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
 
     if (!pkeys.empty())
     {
-        pkeys = "[" + pkeys + "] Select Item to "
-                + (viewing ? "Examine" : "Buy");
+        pkeys = "[" + pkeys + "] select item to "
+                + (viewing ? "examine" : "buy");
     }
     fs = formatted_string::parse_string(make_stringf(
             "[<w>x</w>/<w>Esc</w>"
 #ifdef USE_TILE
             "/<w>R-Click</w>"
 #endif
-            "] exit            [<w>!</w>] %s   %s",
-            (viewing ? "to buy items    " : "to examine items"),
+            "] exit           [<w>!</w>] %s  %s",
+            (viewing ? "buy items      " : "examine items  "),
             pkeys.c_str()));
 
     fs.cprintf("%*s", get_number_of_cols() - fs.width() - 1, "");
@@ -185,8 +185,8 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
 #ifdef USE_TILE
             "/<w>L-Click</w>"
 #endif
-            "] make purchase   [<w>\\</w>] list known items   "
-            "[<w>?</w>/<w>*</w>] inventory");
+            "] make purchase  [<w>\\</w>] list known items "
+            "[<w>?</w>] inventory  [<w>*</w>] invert selection");
 
     fs.cprintf("%*s", get_number_of_cols() - fs.width() - 1, "");
     fs.display();
@@ -600,7 +600,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             // Toggle between browsing and shopping.
             viewing = !viewing;
         }
-        else if (key == '?' || key == '*')
+        else if (key == '?')
             browse_inventory(false);
         else if (key == '$')
         {
@@ -650,6 +650,19 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                         if (shopping_list.is_on_list(item))
                             shopping_list.del_thing(item);
                     }
+                }
+            }
+        }
+        else if (key=='*')
+        {
+            total_cost = 0;
+            for (unsigned i = 0; i < selected.size(); ++i)
+            {
+                selected[i] = !selected[i];
+                if (selected[i])
+                {
+                    total_cost += _shop_get_item_value(mitm[stock[i]],
+                                                       shop.greed, id_stock);
                 }
             }
         }
@@ -806,9 +819,6 @@ int artefact_value(const item_def &item)
     else if (prop[ ARTP_COLD ] < 0)
         ret -= 10;
 
-    if (prop[ARTP_PONDEROUS])
-        ret -= 10;
-
     // These normally come alone or in resist/susceptible pairs...
     // we're making items a bit more expensive if they have both positive.
     if (prop[ ARTP_FIRE ] > 0 && prop[ ARTP_COLD ] > 0)
@@ -909,6 +919,7 @@ unsigned int item_value(item_def item, bool ident)
             break;
 
         case WPN_DAGGER:
+        case WPN_STAFF:
             valued += 20;
             break;
 
@@ -932,7 +943,6 @@ unsigned int item_value(item_def item, bool ident)
             valued += 31;
             break;
 
-        case WPN_QUARTERSTAFF:
         case WPN_SHORT_SWORD:
         case WPN_SPEAR:
             valued += 32;
@@ -946,6 +956,7 @@ unsigned int item_value(item_def item, bool ident)
         case WPN_WAR_AXE:
         case WPN_MORNINGSTAR:
         case WPN_SABRE:
+        case WPN_QUARTERSTAFF:
             valued += 40;
             break;
 
@@ -1424,7 +1435,7 @@ unsigned int item_value(item_def item, bool ident)
                 break;
 
             case SPARM_PONDEROUSNESS:
-                valued *= 5;
+                valued /= 3;
                 break;
             }
 
@@ -2157,18 +2168,8 @@ std::string shop_name(const coord_def& where)
 {
     const shop_struct *cshop = get_shop(where);
 
-    // paranoia and shop mimics
-    if (grd(where) != DNGN_ENTER_SHOP)
-    {
-        if (monster_at(where))
-        {
-            monster* mmimic = monster_at(where);
-            if (mons_is_feat_mimic(mmimic->type) && mmimic->props.exists("shop_name"))
-                return mmimic->props["shop_name"].get_string();
-        }
-
-        return ("");
-    }
+    // paranoia
+    ASSERT(grd(where) == DNGN_ENTER_SHOP);
 
     if (!cshop)
     {

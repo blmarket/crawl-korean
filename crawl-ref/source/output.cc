@@ -16,6 +16,7 @@
 #include "species.h"
 
 #include "abl-show.h"
+#include "areas.h"
 #include "branch.h"
 #include "cio.h"
 #include "colour.h"
@@ -457,6 +458,7 @@ static void _print_stats_wp(int y)
                 text = "궁뎅이";
                 break;
             case TRAN_NONE:
+            case TRAN_APPENDAGE:
             default:
                 break;
         }
@@ -698,17 +700,6 @@ static bool _need_stats_printed()
 }
 #endif
 
-static std::string _get_exp_progress()
-{
-    if (you.experience_level >= 27)
-        return "";
-
-    const int current = exp_needed(you.experience_level);
-    const int next    = exp_needed(you.experience_level + 1);
-    return make_stringf("%2d%%",
-                        (you.experience - current) * 100 / (next - current));
-}
-
 void print_stats(void)
 {
     cursor_control coff(false);
@@ -755,7 +746,7 @@ void print_stats(void)
             textcolor(Options.status_caption_colour);
             cprintf("경험: ");
             textcolor(HUD_VALUE_COLOUR);
-            cprintf("%s ", _get_exp_progress().c_str());
+            cprintf("%2d%% ", get_exp_progress());
         }
 #endif
         if (crawl_state.game_is_zotdef())
@@ -844,7 +835,7 @@ static std::string _level_description_string_hud()
             if (you.level_type_name.find(":") != std::string::npos)
                 short_name = you.level_type_name;
             else
-                short_name = article_a(upcase_first(you.level_type_name),
+                short_name = article_a(uppercase_first(you.level_type_name),
                                        false);
         }
         else
@@ -1338,7 +1329,7 @@ const char *equip_slot_to_name(int equip)
 int equip_name_to_slot(const char *s)
 {
     for (int i = 0; i < NUM_EQUIP; ++i)
-        if (!stricmp(s_equip_slot_names[i], s))
+        if (!strcasecmp(s_equip_slot_names[i], s))
             return i;
 
     return -1;
@@ -1404,10 +1395,7 @@ static void _print_overview_screen_equip(column_composer& cols,
         if (you.species != SP_OCTOPODE && eqslot > EQ_AMULET)
             continue;
 
-        char slot_name_lwr[15];
-        snprintf(slot_name_lwr, sizeof slot_name_lwr, "%s",
-                 equip_slot_to_name(eqslot));
-        strlwr(slot_name_lwr);
+        const std::string slot_name_lwr = lowercase_string(equip_slot_to_name(eqslot));
 
         char slot[15] = "";
         // uncomment (and change 42 to 33) to bring back slot names
@@ -1453,28 +1441,28 @@ static void _print_overview_screen_equip(column_composer& cols,
                  && (you.species == SP_NAGA || you.species == SP_CENTAUR))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr);
+                     gettext("<darkgrey>(no %s)</darkgrey>"), slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s 사용 불가)</darkgrey>", slot_name_lwr);
+                     gettext("<darkgrey>(%s unavailable)</darkgrey>"), slot_name_lwr.c_str());
         }
         else if (!you_tran_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s 현재 사용 불가)</darkgrey>",
-                     slot_name_lwr);
+                     gettext("<darkgrey>(%s currently unavailable)</darkgrey>"),
+                     slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i]))
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s 제한됨)</darkgrey>", slot_name_lwr);
+                     gettext("<darkgrey>(%s restricted)</darkgrey>"), slot_name_lwr.c_str());
         }
         else
         {
             snprintf(buf, sizeof buf,
-                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr);
+                     gettext("<darkgrey>(no %s)</darkgrey>"), slot_name_lwr.c_str());
         }
         cols.add_formatted(2, buf, false);
     }
@@ -1749,8 +1737,8 @@ static std::vector<formatted_string> _get_overview_stats()
              "주문: %2d레벨 기억함, %2d레벨%s 남음\n"
              "%s",
              you.experience_level,
-             (you.experience_level < 27 ? make_stringf("   경험: %s",
-                                           _get_exp_progress().c_str()).c_str()
+             (you.experience_level < 27 ? make_stringf(gettext("   Next: %2d%%"),
+                                                   get_exp_progress()).c_str()
                                         : ""),
              godpowers.c_str(),
              you.spell_no, player_spell_levels(),
@@ -1848,8 +1836,7 @@ static std::vector<formatted_string> _get_overview_resistances(
 
     const int stasis = wearing_amulet(AMU_STASIS, calc_unid);
     const int notele = scan_artefacts(ARTP_PREVENT_TELEPORTATION, calc_unid)
-                       || crawl_state.game_is_zotdef()
-                          && you.char_direction == GDT_ASCENDING;
+                       || crawl_state.game_is_zotdef() && orb_haloed(you.pos());
     const int rrtel = !!player_teleport(calc_unid);
     if (notele && !stasis)
     {
@@ -2439,9 +2426,10 @@ static std::string _status_mut_abilities(int sw)
             runes.push_back(rune_type_name(i));
     if (!runes.empty())
     {
-        text += make_stringf("\n<w>%s:</w> %d/%d 룬: %s",
+        text += make_stringf("\n<w>%s:</w> %d/%d 룬%s: %s",
                     stringize_glyph(get_item_symbol(SHOW_ITEM_MISCELLANY)).c_str(),
-                    runes.size(), you.obtainable_runes,
+                    (int)runes.size(), you.obtainable_runes,
+                    you.obtainable_runes == 1 ? "" : "s",
                     comma_separated_line(runes.begin(), runes.end(),
                                          ", ", ", ").c_str());
     }

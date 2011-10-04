@@ -16,10 +16,6 @@
 
 #include <sstream>
 
-#if defined(UNIX) && !defined(USE_TILE)
-#include "libunix.h"
-#endif
-
 #include "externs.h"
 
 #include "abl-show.h"
@@ -75,6 +71,31 @@ static const body_facet_def _body_facets[] =
     { EQ_BOOTS, MUT_HOOVES, 3 },
     { EQ_BOOTS, MUT_TALONS, 3 }
 };
+
+equipment_type beastly_slot(int mut)
+{
+    switch (mut)
+    {
+    case MUT_HORNS:
+        return EQ_HELMET;
+    case MUT_ANTENNAE:
+        return EQ_HELMET;
+    case MUT_BEAK:
+        return EQ_HELMET;
+    case MUT_CLAWS:
+        return EQ_GLOVES;
+    case MUT_TENTACLES:
+        return EQ_GLOVES;
+    case MUT_HOOVES:
+        return EQ_BOOTS;
+    case MUT_TALONS:
+        return EQ_BOOTS;
+    case MUT_TENTACLE_SPIKE:
+        return EQ_BOOTS;
+    default:
+        return EQ_NONE;
+    }
+}
 
 static int mut_index[NUM_MUTATIONS];
 
@@ -474,13 +495,9 @@ formatted_string describe_mutations()
     {
         // Draconians are large for the purposes of armour, but only medium for
         // weapons and carrying capacity.
-        std::ostringstream num;
-        num << 3 + you.experience_level / 3;
-
-		//        result += "Your " + scale_type + " scales are hard (AC +" + num.str() + ").\n";
-        result += "당신의 " + scale_type + " 비늘은 단단하다 (AC +" + num.str() + ").\n";
-//      result += "Your body does not fit into most forms of armour.\n";
-        result += "당신의 몸은 대부분의 갑옷에 맞지 않는다.\n";
+        result += make_stringf(gettext("Your %s scales are hard (AC +%d).\n"),
+                               scale_type.c_str(), 4 + you.experience_level / 3);
+        result += gettext("Your body does not fit into most forms of armour.\n");
         have_any = true;
     }
 
@@ -736,6 +753,7 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_FANGS:
     case MUT_HOOVES:
     case MUT_TALONS:
+    case MUT_TENTACLE_SPIKE:
     case MUT_BREATHE_POISON:
     case MUT_STINGER:
     case MUT_BIG_WINGS:
@@ -989,7 +1007,7 @@ static int _body_covered()
     return (covered);
 }
 
-static bool _physiology_mutation_conflict(mutation_type mutat)
+bool physiology_mutation_conflict(mutation_type mutat)
 {
     // If demonspawn, and mutat is a scale, see if they were going
     // to get it sometime in the future anyway; otherwise, conflict.
@@ -1019,10 +1037,14 @@ static bool _physiology_mutation_conflict(mutation_type mutat)
         return (true);
     }
 
+    // Need tentacles to grow something on them.
+    if (mutat == MUT_TENTACLE_SPIKE && you.species != SP_OCTOPODE)
+        return (true);
+
     if ((mutat == MUT_HOOVES || mutat == MUT_TALONS) && !player_has_feet())
         return (true);
 
-    // Already innate.
+    // Only Nagas can get this upgrade.
     if (mutat == MUT_BREATHE_POISON && you.species != SP_NAGA)
         return (true);
 
@@ -1030,8 +1052,8 @@ static bool _physiology_mutation_conflict(mutation_type mutat)
     if (mutat == MUT_BREATHE_FLAMES && you.species == SP_RED_DRACONIAN)
         return (true);
 
-    // Green Draconians can already breathe poison, so they don't need
-    // to spit it.
+    // Green Draconians can breathe mephitic, poison is not really redundant
+    // but its name might confuse players a bit ("noxious" vs "poison").
     if (mutat == MUT_SPIT_POISON && you.species == SP_GREEN_DRACONIAN)
         return (true);
 
@@ -1285,7 +1307,7 @@ bool mutate(mutation_type which_mutation, bool failMsg,
         }
     }
 
-    if (_physiology_mutation_conflict(mutat))
+    if (physiology_mutation_conflict(mutat))
         return (false);
 
     const mutation_def& mdef = get_mutation_def(mutat);
@@ -1320,8 +1342,6 @@ bool mutate(mutation_type which_mutation, bool failMsg,
 
     bool gain_msg = true;
 
-    // Count our slots before giving the mutation.
-    int slots = player_armour_slots();
     you.mutation[mutat]++;
 
     // More than three messages, need to give them by hand.
@@ -1346,11 +1366,6 @@ bool mutate(mutation_type which_mutation, bool failMsg,
 
     if (gain_msg)
         mpr(mdef.gain[you.mutation[mutat]-1], MSGCH_MUTATION);
-
-    // Did we lose a slot?
-    slots = player_armour_slots() - slots;
-    if (slots != 0)
-        che_handle_change(CB_SLOTS, slots);
 
     // Do post-mutation effects.
     switch (mutat)
@@ -1438,8 +1453,6 @@ static bool _delete_single_mutation_level(mutation_type mutat)
 
     bool lose_msg = true;
 
-    // Count our slots before giving the mutation.
-    int slots = player_armour_slots();
     you.mutation[mutat]--;
 
 	//스위치 문이라서 밖에다 저장
@@ -1490,11 +1503,6 @@ static bool _delete_single_mutation_level(mutation_type mutat)
     }
     if (mutat == MUT_LOW_MAGIC || mutat == MUT_HIGH_MAGIC)
         calc_mp();
-
-    // Did we gain a slot?
-    slots = player_armour_slots() - slots;
-    if (slots != 0)
-        che_handle_change(CB_SLOTS, slots);
 
     take_note(Note(NOTE_LOSE_MUTATION, mutat, you.mutation[mutat]));
 
@@ -1678,6 +1686,8 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         }
         else if (fully_inactive)
             colourname = "darkgrey";
+        else if (you.form == TRAN_APPENDAGE && you.attribute[ATTR_APPENDAGE] == mut)
+            colourname = "lightgreen";
         else if (_is_slime_mutation(mut))
             colourname = "green";
 
@@ -1988,8 +1998,8 @@ bool perma_mutate(mutation_type which_mut, int how_much)
 {
     ASSERT(is_valid_mutation(which_mut));
 
-    how_much = std::min(static_cast<short>(how_much),
-                        get_mutation_def(which_mut).levels);
+    int cap = get_mutation_def(which_mut).levels;
+    how_much = std::min(how_much, cap);
 
     int rc = 1;
     // clear out conflicting mutations
@@ -2000,12 +2010,12 @@ bool perma_mutate(mutation_type which_mut, int how_much)
 
     int levels = 0;
     while (how_much-- > 0)
-        if (you.mutation[which_mut] > you.innate_mutations[which_mut]
-            || mutate(which_mut, false, true, false, false, true))
-        {
-            levels++;
-        }
-
+    {
+        if (you.mutation[which_mut] < cap)
+            if (!mutate(which_mut, false, true, false, false, true))
+                return levels; // a partial success was still possible
+        levels++;
+    }
     you.innate_mutations[which_mut] += levels;
 
     return (levels > 0);
@@ -2144,6 +2154,7 @@ void check_antennae_detect()
 
     for (radius_iterator ri(you.pos(), radius, C_ROUND); ri; ++ri)
     {
+        discover_mimic(*ri);
         monster* mon = monster_at(*ri);
         map_cell& cell = env.map_knowledge(*ri);
         if (!mon)
@@ -2164,8 +2175,6 @@ void check_antennae_detect()
             const monster_type remembered_monster = cell.monster();
             if (remembered_monster != mon->type)
             {
-                if (mons_is_unknown_mimic(mon))
-                    discover_mimic(mon);
                 monster_type mc = MONS_SENSED;
                 if (you.religion == GOD_ASHENZARI && !player_under_penance())
                     mc = ash_monster_tier(mon);

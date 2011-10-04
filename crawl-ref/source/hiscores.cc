@@ -148,6 +148,7 @@ void hiscores_new_entry(const scorefile_entry &ne)
     // If we've still not inserted it, it's not a highscore.
     if (!inserted)
     {
+        newest_entry = -1; // This might not be the first game
         _hs_close(scores, "a+", score_file_name());
         return;
     }
@@ -740,7 +741,7 @@ void scorefile_entry::set_base_xlog_fields() const
     else if (crawl_state.game_is_zotdef())
         score_version += "-zotdef.1";
     fields->add_field("v", "%s", Version::Short().c_str());
-    fields->add_field("lv", score_version.c_str());
+    fields->add_field("lv", "%s", score_version.c_str());
     if (tiles)
         fields->add_field("tiles", "%d", tiles);
     fields->add_field("name", "%s", name.c_str());
@@ -785,7 +786,7 @@ void scorefile_entry::set_base_xlog_fields() const
         fields->add_field("wiz", "%d", wiz_mode);
 
     fields->add_field("start", "%s", make_date_string(birth_time).c_str());
-    fields->add_field("dur",   "%d", real_time);
+    fields->add_field("dur",   "%d", (int)real_time);
     fields->add_field("turn",  "%d", num_turns);
 
     if (num_diff_runes)
@@ -823,7 +824,7 @@ void scorefile_entry::set_score_fields() const
     set_base_xlog_fields();
 
     fields->add_field("sc", "%d", points);
-    fields->add_field("ktyp", ::kill_method_name(kill_method_type(death_type)));
+    fields->add_field("ktyp", "%s", ::kill_method_name(kill_method_type(death_type)));
 
     const std::string killer = death_source_desc();
     fields->add_field("killer", "%s", killer.c_str());
@@ -1167,7 +1168,7 @@ void scorefile_entry::init(time_t dt)
      */
 
     // do points first.
-    uint64_t pt = you.gold; // sprint games could overflow a 32 bit value
+    uint64_t pt = std::min(you.gold, 1000000); // sprint games could overflow a 32 bit value
     pt += _award_modified_experience();
 
     num_runes      = runes_in_pack();
@@ -1178,11 +1179,12 @@ void scorefile_entry::init(time_t dt)
     if (death_type == KILLED_BY_WINNING)
     {
         pt += 250000; // the Orb
-        pt += num_runes * 10000;
-        pt += (num_runes + 2) * (num_runes + 2) * 1000;
+        pt += num_runes * 2000 + 4000;
         pt += ((uint64_t)250000) * 25000 * num_runes * num_runes
             / (1+you.num_turns);
     }
+    pt += num_runes * 10000;
+    pt += num_runes * (num_runes + 2) * 1000;
 
     // Players will have a hard time getting 1/10 of this (see XP cap):
     if (pt > 99999999)

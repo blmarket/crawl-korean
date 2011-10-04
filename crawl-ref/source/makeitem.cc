@@ -876,10 +876,15 @@ static weapon_type _determine_weapon_subtype(int item_level)
     weapon_type rc = WPN_UNKNOWN;
 
     const weapon_type common_subtypes[] = {
-        WPN_QUARTERSTAFF, WPN_SLING,
+        WPN_SLING,
         WPN_SPEAR, WPN_HAND_AXE, WPN_MACE,
         WPN_DAGGER, WPN_DAGGER, WPN_CLUB,
-        WPN_HAMMER, WPN_WHIP, WPN_SABRE
+        WPN_HAMMER, WPN_WHIP, WPN_SHORT_SWORD
+    };
+
+    const weapon_type good_common_subtypes[] = {
+        WPN_QUARTERSTAFF, WPN_FALCHION, WPN_LONG_SWORD, WPN_WAR_AXE,
+        WPN_TRIDENT, WPN_FLAIL, WPN_SABRE
     };
 
     const weapon_type rare_subtypes[] = {
@@ -894,7 +899,10 @@ static weapon_type _determine_weapon_subtype(int item_level)
         rc = RANDOM_ELEMENT(rare_subtypes);
     }
     else if (x_chance_in_y(20 - item_level, 20))
-        rc = RANDOM_ELEMENT(common_subtypes);
+        if (x_chance_in_y(7, item_level+7))
+            rc = RANDOM_ELEMENT(common_subtypes);
+        else
+            rc = RANDOM_ELEMENT(good_common_subtypes);
     else
     {
         // Pick a weapon based on rarity.
@@ -1450,9 +1458,6 @@ static brand_type _determine_weapon_brand(const item_def& item, int item_level)
 
             if (one_chance_in(5))
                 rc = SPWPN_DRAGON_SLAYING;
-
-            if (one_chance_in(3))
-                rc = SPWPN_REACHING;
             break;
 
         case WPN_SLING:
@@ -1476,11 +1481,14 @@ static brand_type _determine_weapon_brand(const item_def& item, int item_level)
             break;
         }
 
-        // Quarterstaff - not powerful, as this would make the 'staves'
-        // skill just too good.
+        // Staves
+        case WPN_STAFF:
         case WPN_QUARTERSTAFF:
-            if (one_chance_in(15))
+            if (one_chance_in(30))
                 rc = SPWPN_ANTIMAGIC;
+
+            if (one_chance_in(30))
+                rc = SPWPN_HOLY_WRATH;
 
             if (one_chance_in(30))
                 rc = SPWPN_PAIN;
@@ -1488,11 +1496,14 @@ static brand_type _determine_weapon_brand(const item_def& item, int item_level)
             if (_got_distortion_roll(item_level))
                 rc = SPWPN_DISTORTION;
 
-            if (one_chance_in(5))
+            if (one_chance_in(10))
                 rc = SPWPN_SPEED;
 
             if (one_chance_in(10))
                 rc = SPWPN_VORPAL;
+
+            if (one_chance_in(10))
+                rc = SPWPN_DRAINING;
 
             if (one_chance_in(6))
                 rc = SPWPN_PROTECTION;
@@ -1523,15 +1534,14 @@ static brand_type _determine_weapon_brand(const item_def& item, int item_level)
             if (one_chance_in(25))
                 rc = SPWPN_ANTIMAGIC;
 
-            if (one_chance_in(5))       // 4.9%, 7.3% blades
+            if (one_chance_in(5))       // 4.9% whips, 7.3% rest
                 rc = SPWPN_VAMPIRICISM;
 
-            if (one_chance_in(10))      // 2.7%, 4.0% blades
+            if (one_chance_in(10))      // 2.7% whips, 4.0% rest
                 rc = SPWPN_PAIN;
 
-            if (one_chance_in(3)        // 13.6%, 0% blades
-                && (item.sub_type == WPN_DEMON_WHIP
-                    || item.sub_type == WPN_DEMON_TRIDENT))
+            if (one_chance_in(3)        // 13.6% of whips
+                && item.sub_type == WPN_DEMON_WHIP)
             {
                 rc = SPWPN_REACHING;
             }
@@ -1590,6 +1600,12 @@ bool is_weapon_brand_ok(int type, int brand, bool strict)
 
     if (weapon_skill(OBJ_WEAPONS, type) != SK_POLEARMS
         && brand == SPWPN_DRAGON_SLAYING)
+    {
+        return (false);
+    }
+
+    if (weapon_skill(OBJ_WEAPONS, type) == SK_POLEARMS
+        && brand == SPWPN_REACHING)
     {
         return (false);
     }
@@ -2519,7 +2535,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
                                                     item_level));
 
             if (get_armour_ego_type(item) == SPARM_PONDEROUSNESS)
-                item.plus += 3 + random2(4);
+                item.plus += 3 + random2(8);
         }
     }
     else if (one_chance_in(12))
@@ -2601,13 +2617,33 @@ static int _wand_max_initial_charges(int subtype)
     }
 }
 
-static void _generate_wand_item(item_def& item, int force_type)
+bool is_high_tier_wand(int type)
+{
+    switch(type)
+    {
+    case WAND_PARALYSIS:
+    case WAND_FIRE:
+    case WAND_COLD:
+    case WAND_LIGHTNING:
+    case WAND_DRAINING:
+    case WAND_DISINTEGRATION:
+        return true;
+    default:
+        return false;
+    }
+}
+
+static void _generate_wand_item(item_def& item, int force_type, int item_level)
 {
     // Determine sub_type.
     if (force_type != OBJ_RANDOM)
         item.sub_type = force_type;
     else
-        item.sub_type = _random_wand_subtype();
+    {
+        do
+            item.sub_type = _random_wand_subtype();
+        while (item_level < 2 && is_high_tier_wand(item.sub_type));
+    }
 
     // Generate charges randomly...
     item.plus = random2avg(_wand_max_initial_charges(item.sub_type), 3);
@@ -2738,6 +2774,7 @@ static void _generate_potion_item(item_def& item, int force_type,
                                                0);
         }
         while (stype == POT_POISON && item_level < 1
+               || stype == POT_BERSERK_RAGE && item_level < 2
                || stype == POT_STRONG_POISON && item_level < 11
                || (agent == GOD_XOM && _is_boring_item(OBJ_POTIONS, stype)
                    && --tries > 0));
@@ -3233,7 +3270,7 @@ int items(bool allow_uniques,
         break;
 
     case OBJ_WANDS:
-        _generate_wand_item(item, force_type);
+        _generate_wand_item(item, force_type, item_level);
         break;
 
     case OBJ_FOOD:

@@ -67,8 +67,8 @@ static void _make_all_books()
 void wizard_create_spec_object_by_name()
 {
     char buf[500];
-    mprf(MSGCH_PROMPT, "Enter name of item: ");
-    if (cancelable_get_line(buf, sizeof buf) || !*buf)
+    mprf(MSGCH_PROMPT, "Enter name of item (or ITEM spec): ");
+    if (cancelable_get_line_autohist(buf, sizeof buf) || !*buf)
     {
         canned_msg(MSG_OK);
         return;
@@ -304,7 +304,9 @@ const char* _prop_name[ARTP_NUM_PROPERTIES] = {
     "Curse",
     "Stlth",
     "MP",
-    "Slow"
+    "Slow",
+    "HP",
+    "Clar",
 };
 
 #define ARTP_VAL_BOOL 0
@@ -341,7 +343,9 @@ int8_t _prop_type[ARTP_NUM_PROPERTIES] = {
     ARTP_VAL_POS,  //CURSED
     ARTP_VAL_ANY,  //STEALTH
     ARTP_VAL_ANY,  //MAGICAL_POWER
-    ARTP_VAL_BOOL  //PONDEROUS
+    ARTP_VAL_BOOL, //*UNUSED*
+    ARTP_VAL_ANY,  //HP
+    ARTP_VAL_BOOL, //CLARITY
 };
 
 static void _tweak_randart(item_def &item)
@@ -835,8 +839,9 @@ void wizard_list_items()
 
         if (item.link != NON_ITEM)
         {
-            mprf("(%2d,%2d): %s", item.pos.x, item.pos.y,
-                 item.name(false, DESC_PLAIN, false, false, false).c_str());
+            mprf("(%2d,%2d): %s%s", item.pos.x, item.pos.y,
+                 item.name(false, DESC_PLAIN, false, false, false).c_str(),
+                 item.flags & ISFLAG_MIMIC ? " mimic" : "");
         }
     }
 
@@ -849,8 +854,9 @@ void wizard_list_items()
         int item = igrd(*ri);
         if (item != NON_ITEM)
         {
-            mprf("%3d at (%2d,%2d): %s", item, ri->x, ri->y,
-                 mitm[item].name(false, DESC_PLAIN, false, false, false).c_str());
+            mprf("%3d at (%2d,%2d): %s%s", item, ri->x, ri->y,
+                 mitm[item].name(false, DESC_PLAIN, false, false, false).c_str(),
+                 mitm[item].flags & ISFLAG_MIMIC ? " mimic" : "");
         }
     }
 }
@@ -1349,13 +1355,16 @@ static void _debug_rap_stats(FILE *ostat)
         -1, //ARTP_CAUSE_TELEPORTATION
         -1, //ARTP_PREVENT_TELEPORTATION
         -1, //ARTP_ANGRY
-        -1, //ARTP_METABOLISM
+         0, //ARTP_METABOLISM
         -1, //ARTP_MUTAGENIC
          0, //ARTP_ACCURACY
          0, //ARTP_DAMAGE
         -1, //ARTP_CURSED
          0, //ARTP_STEALTH
          0, //ARTP_MAGICAL_POWER
+         0, // *UNUSED*,
+         0, //ARTP_HP,
+         1, //ARTP_CLARITY
          -1
     };
 
@@ -1496,7 +1505,9 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_CURSED",
         "ARTP_STEALTH",
         "ARTP_MAGICAL_POWER",
-        "ARTP_PONDEROUS"
+        "ARTP_*UNUSED*",
+        "ARTP_HP",
+        "ARTP_CLARITY",
     };
 
     fprintf(ostat, "                            All    Good   Bad\n");

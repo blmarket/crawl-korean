@@ -30,6 +30,7 @@
 #include "options.h"
 #include "player.h"
 #include "religion.h"
+#include "spl-book.h"
 #include "quiver.h"
 #include "random.h"
 #include "shopping.h"
@@ -206,7 +207,7 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
     { WPN_SPIKED_FLAIL,      M_("spiked flail"),       12, -2, 16, 190,  8,
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
         DAMV_PIERCING | DAM_BLUDGEON, 10 },
-    { WPN_DIRE_FLAIL,        M_("dire flail"),         13, -3, 14, 240,  9,
+    { WPN_DIRE_FLAIL,        M_("dire flail"),         13, -3, 13, 240,  9,
         SK_MACES_FLAILS, HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
         DAMV_PIERCING | DAM_BLUDGEON, 10 },
     { WPN_EVENINGSTAR,       M_("eveningstar"),        14, -1, 15, 180,  8,
@@ -280,10 +281,10 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
     { WPN_BLESSED_DOUBLE_SWORD,  M_("blessed double sword"),  16, -2, 14, 220,  5,
         SK_LONG_BLADES,  HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_SLICING, 0 },
-    { WPN_GREAT_SWORD,           M_("great sword"),           16, -3, 17, 250,  6,
+    { WPN_GREAT_SWORD,           M_("great sword"),           16, -3, 16, 250,  6,
         SK_LONG_BLADES,  HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_SLICING, 10 },
-    { WPN_BLESSED_GREAT_SWORD,   M_("blessed great sword"),   17, -4, 16, 250,  6,
+    { WPN_BLESSED_GREAT_SWORD,   M_("blessed great sword"),   17, -4, 15, 250,  6,
         SK_LONG_BLADES,  HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_SLICING, 0 },
     { WPN_TRIPLE_SWORD,          M_("triple sword"),          19, -4, 19, 260,  6,
@@ -303,7 +304,7 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
     { WPN_BROAD_AXE,         M_("broad axe"),          14, -2, 16, 230,  8,
         SK_AXES,         HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_CHOPPING, 10 },
-    { WPN_BATTLEAXE,         M_("battleaxe"),          17, -4, 18, 250,  8,
+    { WPN_BATTLEAXE,         M_("battleaxe"),          17, -4, 17, 250,  8,
         SK_AXES,         HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CHOPPING, 10 },
     { WPN_EXECUTIONERS_AXE,  M_("executioner\'s axe"), 20, -6, 20, 280,  9,
@@ -311,25 +312,25 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
         DAMV_CHOPPING, 2 },
 
     // Polearms
-    { WPN_SPEAR,             M_("spear"),               7,  4, 11,  50,  3,
+    { WPN_SPEAR,             M_("spear"),               6,  4, 11,  50,  3,
         SK_POLEARMS,     HANDS_HALF,   SIZE_SMALL,  MI_NONE, true,
         DAMV_PIERCING, 10 },
-    { WPN_TRIDENT,           M_("trident"),            10,  3, 13, 160,  4,
+    { WPN_TRIDENT,           M_("trident"),             9,  3, 13, 160,  4,
         SK_POLEARMS,     HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_PIERCING, 10 },
-    { WPN_HALBERD,           M_("halberd"),            13, -3, 16, 200,  5,
+    { WPN_HALBERD,           M_("halberd"),            13, -3, 14, 200,  5,
         SK_POLEARMS,     HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CHOPPING | DAM_PIERCE, 10 },
     { WPN_SCYTHE,            M_("scythe"),             14, -4, 20, 220,  7,
         SK_POLEARMS,     HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_SLICING, 10 },
-    { WPN_DEMON_TRIDENT,     M_("demon trident"),      13,  1, 13, 160,  4,
+    { WPN_DEMON_TRIDENT,     M_("demon trident"),      12,  1, 13, 160,  4,
         SK_POLEARMS,     HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_PIERCING, 2 },
-    { WPN_TRISHULA,          M_("trishula"),           14,  0, 13, 160,  4,
+    { WPN_TRISHULA,          M_("trishula"),           13,  0, 13, 160,  4,
         SK_POLEARMS,     HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_PIERCING, 0 },
-    { WPN_GLAIVE,            M_("glaive"),             15, -3, 18, 200,  6,
+    { WPN_GLAIVE,            M_("glaive"),             15, -3, 16, 200,  6,
         SK_POLEARMS,     HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CHOPPING, 10 },
     { WPN_BARDICHE,          M_("bardiche"),           18, -6, 20, 200,  8,
@@ -337,10 +338,13 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
         DAMV_CHOPPING, 2 },
 
     // Staves
-    { WPN_QUARTERSTAFF,      M_("quarterstaff"),        7,  6, 12, 180,  7,
+    { WPN_STAFF,             M_("staff"),               5,  5, 12, 150,  6,
+        SK_STAVES,       HANDS_DOUBLE, SIZE_MEDIUM, MI_NONE, false,
+        DAMV_CRUSHING, 0 },
+    { WPN_QUARTERSTAFF,      M_("quarterstaff"),        10, 3, 13, 180,  7,
         SK_STAVES,       HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
         DAMV_CRUSHING, 10 },
-    { WPN_LAJATANG,          M_("lajatang"),           14, -3, 14, 200,  3,
+    { WPN_LAJATANG,          M_("lajatang"),            16,-3, 14, 200,  3,
         SK_STAVES,       HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
         DAMV_SLICING, 2 },
 
@@ -1399,7 +1403,6 @@ int weapon_rarity(int w_type)
 
     case WPN_HAND_AXE:
     case WPN_MACE:
-    case WPN_QUARTERSTAFF:
         return (9);
 
     case WPN_BOW:
@@ -1409,6 +1412,7 @@ int weapon_rarity(int w_type)
     case WPN_SHORT_SWORD:
     case WPN_SLING:
     case WPN_SPEAR:
+    case WPN_QUARTERSTAFF:
         return (8);
 
     case WPN_FALCHION:
@@ -1432,6 +1436,7 @@ int weapon_rarity(int w_type)
     case WPN_BROAD_AXE:
     case WPN_SPIKED_FLAIL:
     case WPN_WHIP:
+    case WPN_STAFF:
         return (4);
 
     case WPN_GREAT_MACE:
@@ -1829,7 +1834,7 @@ int weapon_str_weight(const item_def &wpn)
     ASSERT (wpn.base_type == OBJ_WEAPONS || wpn.base_type == OBJ_STAVES);
 
     if (wpn.base_type == OBJ_STAVES)
-        return (Weapon_prop[ Weapon_index[WPN_QUARTERSTAFF] ].str_weight);
+        return (Weapon_prop[ Weapon_index[WPN_STAFF] ].str_weight);
 
     return (Weapon_prop[ Weapon_index[wpn.sub_type] ].str_weight);
 }
@@ -1889,6 +1894,55 @@ skill_type range_skill(object_class_type wclass, int wtype)
     return (range_skill(wpn));
 }
 
+static bool _item_trains_evocations(const item_def& item)
+{
+    if (item_is_evokable(item, false, false, false, false, false))
+        return true;
+
+    if (is_artefact(item) && (artefact_wpn_property(item, ARTP_INVISIBLE)
+                              || artefact_wpn_property(item, ARTP_LEVITATE)
+                              || artefact_wpn_property(item, ARTP_BLINK)
+                              || artefact_wpn_property(item, ARTP_BERSERK)))
+    {
+        return true;
+    }
+
+    if (item.base_type == OBJ_JEWELLERY)
+        switch (item.sub_type)
+        {
+        case RING_INVISIBILITY:
+        case RING_TELEPORTATION:
+        case RING_LEVITATION:
+        case AMU_RAGE:
+            return true;
+        }
+
+    return false;
+}
+
+bool item_skills(const item_def &item, std::set<skill_type> &skills)
+{
+    skill_type sk = weapon_skill(item);
+    if (sk != SK_FIGHTING)
+        skills.insert(sk);
+
+    sk = range_skill(item);
+    if (sk != SK_THROWING)
+        skills.insert(sk);
+
+    if (_item_trains_evocations(item))
+        skills.insert(SK_EVOCATIONS);
+
+    if (item_is_rod(item) && item_type_known(item))
+    {
+        int sp = 0;
+        while (sp < SPELLBOOK_SIZE && is_valid_spell_in_book(item, sp))
+            if (which_spell_in_book(item, sp++) == SPELL_CONDENSATION_SHIELD)
+                skills.insert(SK_SHIELDS);
+    }
+
+    return !skills.empty();
+}
 
 // Calculate the bonus to melee EV for using "wpn", with "skill" and "dex"
 // to protect a body of size "body".
@@ -1900,10 +1954,8 @@ int weapon_ev_bonus(const item_def &wpn, int skill, size_type body, int dex,
     int ret = 0;
 
     // Note: ret currently measured in halves (see skill factor).
-    if (is_whip_type(wpn.sub_type))
+    if (is_whip_type(wpn.sub_type) || weapon_skill(wpn) == SK_POLEARMS)
         ret = 3 + (dex / 5);
-    else if (weapon_skill(wpn) == SK_POLEARMS)
-        ret = 2 + (dex / 5);
 
     // Weapons of reaching are naturally a bit longer/flexier.
     if (!hide_hidden || item_type_known(wpn))
@@ -1940,7 +1992,7 @@ static size_type weapon_size(const item_def &item)
     ASSERT (item.base_type == OBJ_WEAPONS || item.base_type == OBJ_STAVES);
 
     if (item.base_type == OBJ_STAVES)
-        return (Weapon_prop[ Weapon_index[WPN_QUARTERSTAFF] ].fit_size);
+        return (Weapon_prop[ Weapon_index[WPN_STAFF] ].fit_size);
 
     return (Weapon_prop[ Weapon_index[item.sub_type] ].fit_size);
 }
@@ -2095,6 +2147,33 @@ launch_retval is_launched(const actor *actor, const item_def *launcher,
     }
 
     return (is_throwable(actor, missile) ? LRET_THROWN : LRET_FUMBLED);
+}
+
+//
+// Reaching functions:
+//
+reach_type weapon_reach(const item_def &item)
+{
+    if (weapon_skill(item) == SK_POLEARMS)
+        return REACH_TWO;
+    if (get_weapon_brand(item) == SPWPN_REACHING)
+        return REACH_TWO;
+    return REACH_NONE;
+}
+
+int reach_range(reach_type rt)
+{
+    switch (rt)
+    {
+    case REACH_NONE:
+        return 2;
+    case REACH_KNIGHT:
+        return 5;
+    case REACH_TWO:
+        return 8;
+    default:
+        die("invalid reaching type: %d", rt);
+    }
 }
 
 //
@@ -2522,7 +2601,7 @@ int property(const item_def &item, int prop_type)
         break;
 
     case OBJ_STAVES:
-        weapon_sub = item_is_rod(item) ? WPN_CLUB : WPN_QUARTERSTAFF;
+        weapon_sub = item_is_rod(item) ? WPN_CLUB : WPN_STAFF;
 
         if (prop_type == PWPN_DAMAGE)
             return (Weapon_prop[ Weapon_index[weapon_sub] ].dam);

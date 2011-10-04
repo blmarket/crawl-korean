@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <stdio.h>
 #include <time.h>
 #include "externs.h"
 #include "format.h"
@@ -188,6 +189,17 @@ public:
 #ifdef USE_TILE_LOCAL
     virtual bool get_tiles(std::vector<tile_def>& tileset) const;
 #endif
+};
+
+class GodMenuEntry : public MenuEntry
+{
+public:
+    GodMenuEntry(const std::string& txt = std::string());
+
+    virtual std::string get_text(const bool unused = false) const;
+private:
+    god_type god;
+    std::string colour_text;
 };
 
 #ifdef USE_TILE_LOCAL

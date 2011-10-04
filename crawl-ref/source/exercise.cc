@@ -1,7 +1,7 @@
 /**
  * @file
  * @brief Collects all calls to skills.cc:exercise for
- *            easier changes to the training modell.
+ *            easier changes to the training model.
 **/
 
 #include "AppHdr.h"
@@ -18,7 +18,7 @@
 #include "sprint.h"
 #include "state.h"
 
-static skill_type _abil_skill(ability_type abil)
+skill_type abil_skill(ability_type abil)
 {
     switch (abil)
     {
@@ -69,7 +69,6 @@ static skill_type _abil_skill(ability_type abil)
     case ABIL_TSO_CLEANSING_FLAME:
     case ABIL_OKAWARU_FINESSE:
     case ABIL_CHEIBRIADOS_SLOUCH:
-    case ABIL_ELYVILON_RESTORATION:
     case ABIL_LUGONU_CORRUPT:
     case ABIL_JIYVA_CURE_BAD_MUTATION:
     case ABIL_CHEIBRIADOS_TIME_STEP:
@@ -131,7 +130,6 @@ static int _abil_degree(ability_type abil)
     case ABIL_BEOGH_SMITING:
         return (2 + random2(2));
     case ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB:
-    case ABIL_ELYVILON_PURIFICATION:
     case ABIL_LUGONU_BEND_SPACE:
     case ABIL_FEDHAS_SUNLIGHT:
     case ABIL_FEDHAS_PLANT_RING:
@@ -159,7 +157,7 @@ static int _abil_degree(ability_type abil)
 
     case ABIL_CHEIBRIADOS_SLOUCH:
         return (4 + random2(4));
-    case ABIL_ELYVILON_RESTORATION:
+    case ABIL_ELYVILON_PURIFICATION:
         return (4 + random2(6));
 
     case ABIL_LUGONU_CORRUPT:
@@ -207,7 +205,6 @@ static void _exercise_spell(spell_type spell, bool success)
     // exercise skills in that random order. That way, first skill don't
     // stay in the queue for a shorter time.
     bool conj = false;
-    bool unknown = false;
     std::vector<skill_type> disc;
     for (int ndx = 0; ndx <= SPTYP_LAST_EXPONENT; ndx++)
     {
@@ -217,15 +214,12 @@ static void _exercise_spell(spell_type spell, bool success)
         skill = spell_type2skill(1 << ndx);
         if (skill == SK_CONJURATIONS)
             conj = true;
-        if (!you.skills[skill])
-            unknown = true;
 
         disc.push_back(skill);
     }
 
-    // We slow down the training of spells with
-    //conjuration (except if trying to learn a new skill).
-    if (conj && !unknown && !x_chance_in_y(skillcount, 4))
+    // We slow down the training of spells with conjurations.
+    if (conj && !x_chance_in_y(skillcount, 4))
         return;
 
     std::random_shuffle(disc.begin(), disc.end());
@@ -260,10 +254,14 @@ static bool _check_train_armour(int amount)
 {
     if (const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false))
     {
+        // Don't train armour if we have no EVP.
+        if (!property(*armour, PARM_EVASION))
+            return (false);
+
         // XXX: animal skin; should be a better way to get at that.
         const int mass_base = 100;
         const int mass = std::max(item_mass(*armour) - mass_base, 0);
-        if (x_chance_in_y(mass, 50 * you.skill(SK_ARMOUR)))
+        if (x_chance_in_y(mass, you.skill(SK_ARMOUR, 50)))
         {
             exercise(SK_ARMOUR, amount);
             return (true);
@@ -404,7 +402,7 @@ void practise(exer_type ex, int param1)
     case EX_USED_ABIL:
     {
         ability_type abil = static_cast<ability_type>(param1);
-        sk = _abil_skill(abil);
+        sk = abil_skill(abil);
         deg = _abil_degree(abil);
         if (sk != SK_NONE)
             exercise(sk, deg);
@@ -451,16 +449,6 @@ void practise(exer_type ex, int param1)
 
     case EX_REMOVE_NET:
         exercise(SK_TRAPS_DOORS, 1);
-        break;
-
-    case EX_SAGE:
-        sk = static_cast<skill_type>(param1);
-        exercise(sk, 20);
-        break;
-
-    case EX_READ_MANUAL:
-        sk = static_cast<skill_type>(param1);
-        exercise(sk, 500);
         break;
 
     case EX_SHIELD_BLOCK:

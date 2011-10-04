@@ -42,7 +42,7 @@ void wizard_change_species(void)
 
     if (specs[0] == '\0')
         return;
-    strlwr(specs);
+    std::string spec = lowercase_string(specs);
 
     species_type sp = SP_UNKNOWN;
 
@@ -51,10 +51,10 @@ void wizard_change_species(void)
         const species_type si = static_cast<species_type>(i);
         const std::string sp_name = lowercase_string(species_name(si));
 
-        std::string::size_type pos = sp_name.find(specs);
+        std::string::size_type pos = sp_name.find(spec);
         if (pos != std::string::npos)
         {
-            if (pos == 0 && *specs)
+            if (pos == 0)
             {
                 // We prefer prefixes over partial matches.
                 sp = si;
@@ -401,7 +401,7 @@ void wizard_set_skill_level(skill_type skill)
         else
         {
             const int old_amount = you.skills[skill];
-            const int points = skill_exp_needed(amount, skill);
+            const int points = skill_exp_needed(std::min(amount, 27), skill);
 
             you.skill_points[skill] = points + 1;
             you.ct_skill_points[skill] = 0;
@@ -412,8 +412,6 @@ void wizard_set_skill_level(skill_type skill)
                 you.train[skill] = 0;
                 check_selected_skills();
             }
-            else if (!amount)
-                lose_skill(skill);
 
             reset_training();
             calc_total_skill_points();
@@ -553,19 +551,19 @@ bool wizard_add_mutation()
     if (specs[0] == '\0')
         return (false);
 
-    strlwr(specs);
+    std::string spec = lowercase_string(specs);
 
     mutation_type mutat = NUM_MUTATIONS;
 
-    if (strcmp(specs, "good") == 0)
+    if (spec == "good")
         mutat = RANDOM_GOOD_MUTATION;
-    else if (strcmp(specs, "bad") == 0)
+    else if (spec == "bad")
         mutat = RANDOM_BAD_MUTATION;
-    else if (strcmp(specs, "any") == 0)
+    else if (spec == "any")
         mutat = RANDOM_MUTATION;
-    else if (strcmp(specs, "xom") == 0)
+    else if (spec == "xom")
         mutat = RANDOM_XOM_MUTATION;
-    else if (strcmp(specs, "slime") == 0)
+    else if (spec == "slime")
         mutat = RANDOM_SLIME_MUTATION;
 
     if (mutat != NUM_MUTATIONS)
@@ -592,13 +590,13 @@ bool wizard_add_mutation()
             continue;
 
         const mutation_def& mdef = get_mutation_def(mut);
-        if (strcmp(specs, mdef.wizname) == 0)
+        if (spec == mdef.wizname)
         {
             mutat = mut;
             break;
         }
 
-        if (strstr(mdef.wizname, specs))
+        if (strstr(mdef.wizname, spec.c_str()))
             partial_matches.push_back(mut);
     }
 
@@ -620,7 +618,7 @@ bool wizard_add_mutation()
                 matches.push_back(get_mutation_def(partial_matches[i]).wizname);
 
             std::string prefix = "No exact match for mutation '" +
-                std::string(specs) +  "', possible matches are: ";
+                spec +  "', possible matches are: ";
 
             // Use mpr_comma_separated_list() because the list
             // might be *LONG*.
@@ -673,14 +671,14 @@ void wizard_get_religion(void)
     if (specs[0] == '\0')
         return;
 
-    strlwr(specs);
+    std::string spec = lowercase_string(specs);
 
     god_type god = GOD_NO_GOD;
 
     for (int i = 1; i < NUM_GODS; ++i)
     {
         const god_type gi = static_cast<god_type>(i);
-        if (lowercase_string(god_name(gi)).find(specs) != std::string::npos)
+        if (lowercase_string(god_name(gi)).find(spec) != std::string::npos)
         {
             god = gi;
             break;

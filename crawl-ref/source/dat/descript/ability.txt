@@ -57,7 +57,7 @@ Bat Form
 %%%%
 Bottle Blood
 
-6레벨 이상의 뱀파이어는, 피를 머금은 썩지 않은 시체로 피의 물약을 만들 수 있다. 고기를 자를때와 같이 날붙이를 준비해야 한다.
+At experience level 6 and higher, Vampires can bottle the blood from non-rotten and blood-containing corpses they are standing on. Doing so requires the capability of wielding your knife, as is the case for butchering.
 %%%%
 Spit Acid
 
@@ -144,11 +144,11 @@ Recite
 %%%%
 Vitalisation
 
-당신에게 활력을 부여한다. 나쁜 병과 상태이상을 제거해 주거나, 혹은 잠시동안 능력을 향상시켜준다.
+Vitalise yourself, gaining divine stamina and sustenance from Zin. Divine stamina protects you from sickness, poisoning, petrification, confusion and rot, and temporarily boosts and sustains your Strength, Intelligence and Dexterity.
 %%%%
 Imprison
 
-잠시동안 적의 주변 빈 공간을 바위로 둘러싼다. 감금의 권능은, 당신의 암송을 들을 수 있는 적에게만 유효하다. 이러한 적들이 감금의 효과를 느끼면, 감옥은 이내 사라지게 된다.
+Temporarily imprison a monster surrounded by empty space in walls of silver. The duration of the prison is increased by Invocations skill, but strong enemies will be able to break free more easily.
 %%%%
 Sanctuary
 
@@ -169,7 +169,7 @@ Cleansing Flame
 %%%%
 Summon Divine Warrior
 
-악에 대항하는 강력한 천사를 소환한다. 그들은 샤이닝 원의 가호를 받아, 좀 더 오래 머물거나 혹은 쓰러질 때까지 당신 곁에서 싸워줄 수도 있다.
+Summon an angel or daeva, powerful warriors against evil. They may be blessed by the Shining One to stay longer or even permanently in this world.
 %%%%
 # Kikubaaqudgha (키쿠바쿠드하)
 Receive Corpses
@@ -277,7 +277,7 @@ Lesser Self-Healing
 %%%%
 Purification
 
-각종 질병과 상태이상으로부터 당신을 해방시킨다.
+Purge your body of all bad effects such as sickness, poisoning, slowness, petrification, confusion and rot, and fully restore your Strength, Dexterity and Intelligence.
 %%%%
 Greater Healing
 
@@ -286,10 +286,6 @@ Greater Healing
 Greater Self-Healing
 
 당신의 기도술에 따라, 신앙도를 조금 더 소모시키는 것으로, 하급 치료의 세 배에 달하는 체력을 회복한다.
-%%%%
-Restoration
-
-감소된 능력치 혹은 부패된 몸을 원래대로 복원한다.
 %%%%
 Divine Vigour
 
@@ -369,11 +365,6 @@ Evolution
 
 식물이나 버섯을, 좀 더 강한 종으로 변모시킨다. 버섯은 신앙도를 소모하고, 식물은 과일을 필요로 한다. 진화한 식물들은 당신의 기도술이 높을수록 더욱 강력해지며, 특히 오클롭 잡초는 좀 더 자주 산을 내뿜을 것이다.
 %%%%
-# Cheibriados (체브리아도스)
-Make Ponderous
-
-당신의 갑옷을 더욱 무겁게 한다. 무거워진 갑옷은 더 높은 방어력을 가지지만, 당신의 움직임을 느리게 만든다. 민첩한 존재들에게는 좋지 못한 일이지만, 체브리아도스는 느려진 당신에게 흐뭇해 할 것이다.
-%%%%
 Bend Time
 
 주변에 있는 이들의 속도를 느리게 한다.
@@ -414,5 +405,121 @@ Transfer Knowledge
 %%%%
 End Transfer Knowledge
 
-지식 수혈을 중단한다.
+Abort an ongoing skill transfer.
 %%%%
+# Zotdef
+Make dart trap
+
+Create a dart trap at the targeted location.
+%%%%
+Make oklob sapling
+
+Plant an oklob sapling with the ability to spit acid at the targeted location.
+%%%%
+Make arrow trap
+
+Create an arrow trap at the targeted location.
+%%%%
+Make plant
+
+Cause a plant to grow at the targeted location.
+%%%%
+Remove Curse
+
+Uncurse all of your equipment.
+%%%%
+Make burning bush
+
+Plant a burning bush with the ability to throw fire and see invisible monsters at the targeted location.
+%%%%
+Make altar
+
+Create an altar to a random god at your location.
+%%%%
+Make grenades
+
+Spawn a number of explosive giant spores around you.
+%%%%
+Make oklob plant
+
+Plant a fully grown oklob plant with the ability to spit acid at the targeted location.
+%%%%
+Make net trap
+
+Create a net trap at the targeted location.
+%%%%
+Make ice statue
+
+Construct a statue with various icy abilities at the targeted location.
+%%%%
+Make spear trap
+
+Create a spear trap at the targeted location.
+%%%%
+Make alarm trap
+
+Create an alarm trap to alert you to the presence of monsters at the targeted location.
+%%%%
+Make mushroom circle
+
+Grow a circle of fungi centred at the targeted location.
+%%%%
+Make bolt trap
+
+Create a bolt trap at the targeted location.
+%%%%
+Make crystal statue
+
+Construct a statue with the ability to confuse monsters at the targeted location.
+%%%%
+Make needle trap
+
+Create a poisonous needle trap at the targeted location.
+%%%%
+Zot-teleport
+
+Perform a controlled teleport.
+%%%%
+Make water
+
+Create a pool of shallow water at your location.
+%%%%
+Make axe trap
+
+Create an axe trap at the targeted location.
+%%%%
+Make lightning spire
+
+Construct a lightning spire with the ability to throw electricity at the targeted location.
+%%%%
+Make silver statue
+
+Construct a statue with the ability to summon friendly demons at the targeted location.
+%%%%
+Make bazaar
+
+Create a portal to a bazaar at your location.
+%%%%
+Acquire gold
+
+Acquire a large quantity of gold.
+%%%%
+Make oklob circle
+
+Grow a circle of oklob plants centred at the targeted location.
+%%%%
+Sage
+
+Funnel some of your earned experience towards a certain skill and train it faster than normal.
+%%%%
+Acquirement
+
+Acquire a chosen type of item.
+%%%%
+Make blade trap
+
+Create a blade trap at the targeted location.
+%%%%
+Make curse skull
+
+Construct a curse skull with the ability to summon the undead at the targeted location, at the cost of a necromantic backlash to yourself.

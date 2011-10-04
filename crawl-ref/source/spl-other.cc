@@ -274,7 +274,7 @@ static bool _feat_is_passwallable(dungeon_feature_type feat)
 
 spret_type cast_passwall(const coord_def& delta, int pow, bool fail)
 {
-    int shallow = 1 + (you.skill(SK_EARTH_MAGIC) / 8);
+    int shallow = 1 + you.skill(SK_EARTH_MAGIC) / 8;
     int range = shallow + random2(pow) / 25;
     int maxrange = shallow + pow / 25;
 
@@ -321,8 +321,6 @@ spret_type cast_passwall(const coord_def& delta, int pow, bool fail)
 
 static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
 {
-    UNUSED(pow);
-
     monster* mons = monster_at(where);
     if (mons == NULL
         || mons_intel(mons) < I_NORMAL
@@ -332,14 +330,19 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
         return 0;
     }
 
-    mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
-    return 1;
+    if (x_chance_in_y(40 + pow/3, 100))
+    {
+        mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
+        return 1;
+    }
+    return 0;
 }
 
 spret_type cast_intoxicate(int pow, bool fail)
 {
     fail_check();
-    potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
+    if (x_chance_in_y(60 - pow/3, 100))
+        potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
 
     if (one_chance_in(20)
         && lose_stat(STAT_INT, 1 + random2(3), false,
@@ -542,6 +545,7 @@ spret_type cast_condensation_shield(int pow, bool fail)
 spret_type cast_stoneskin(int pow, bool fail)
 {
     if (you.form != TRAN_NONE
+        && you.form != TRAN_APPENDAGE
         && you.form != TRAN_STATUE
         && you.form != TRAN_BLADE_HANDS)
     {

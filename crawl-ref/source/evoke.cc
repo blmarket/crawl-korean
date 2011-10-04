@@ -72,6 +72,8 @@ void shadow_lantern_effect()
     }
 }
 
+extern bool apply_berserk_penalty;
+
 static bool _reaching_weapon_attack(const item_def& wpn)
 {
     dist beam;
@@ -128,6 +130,12 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         return (false);
     }
 
+    // Failing to hit someone due to a friend blocking is infuriating,
+    // shadow-boxing empty space is not (and would be abusable to wait
+    // with no penalty).
+    if (mons)
+        apply_berserk_penalty = false;
+
     // Choose one of the two middle squares (which might be the same).
     const coord_def middle =
                      (grd(first_middle) <= DNGN_MAX_NONREACH ? second_middle :
@@ -179,15 +187,6 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         return (true);
     }
     you_attack(mons->mindex(), false);
-
-    if ((beam.target - you.pos()).abs() > 2)
-    {
-        // Reaching to mimics might be done over water, consider this ranged.
-        // It's silly for a weapon attack...
-        if (monster* m = monster_at(beam.target))
-        if (mons_is_mimic(m->type))
-            mimic_alert(m);
-    }
 
     return (true);
 }
@@ -265,7 +264,7 @@ static bool _evoke_horn_of_geryon(item_def &item)
 
 static bool _efreet_flask(int slot)
 {
-    bool friendly = x_chance_in_y(10 + you.skill(SK_EVOCATIONS) / 3, 20);
+    bool friendly = x_chance_in_y(300 + you.skill(SK_EVOCATIONS, 10), 600);
 
     mpr(gettext("You open the flask..."));
 
@@ -350,7 +349,7 @@ static bool _ball_of_seeing(void)
 
     mpr(gettext("You gaze into the crystal ball."));
 
-    int use = random2(you.skill(SK_EVOCATIONS) * 6);
+    int use = random2(you.skill(SK_EVOCATIONS, 6));
 
     if (you.level_type == LEVEL_LABYRINTH)
         mpr(gettext("You see a maze of twisty little passages, all alike."));
@@ -380,7 +379,7 @@ static bool _ball_of_seeing(void)
 
 bool disc_of_storms(bool drac_breath)
 {
-    const int fail_rate = (30 - you.skill(SK_EVOCATIONS));
+    const int fail_rate = 30 - you.skill(SK_EVOCATIONS);
     bool rc = false;
 
     if ((player_res_electricity() || x_chance_in_y(fail_rate, 100))
@@ -399,7 +398,7 @@ bool disc_of_storms(bool drac_breath)
         rc = true;
 
         const int disc_count = (drac_breath) ? roll_dice(2, 1 + you.experience_level / 7) :
-                                roll_dice(2, 1 + you.skill(SK_EVOCATIONS) / 7);
+            roll_dice(2, 1 + you.skill_rdiv(SK_EVOCATIONS, 1, 7));
 
         for (int i = 0; i < disc_count; ++i)
         {
@@ -409,11 +408,13 @@ bool disc_of_storms(bool drac_breath)
 
             const zap_type which_zap = RANDOM_ELEMENT(types);
 
+            // range has no tracer, so randomness is ok
             beam.range = (drac_breath) ? you.experience_level / 3 + 5 :
-                                         you.skill(SK_EVOCATIONS)/3 + 5; // 5--14
+                you.skill_rdiv(SK_EVOCATIONS, 1, 3) + 5; // 5--14
             beam.source = you.pos();
             beam.target = you.pos() + coord_def(random2(13)-6, random2(13)-6);
-            int power = (drac_breath) ? 25 + you.experience_level : 30 + you.skill(SK_EVOCATIONS) * 2;
+            int power = (drac_breath) ? 25 + you.experience_level : 30
+                                           + you.skill(SK_EVOCATIONS, 2);
             // Non-controlleable, so no player tracer.
             zapping(which_zap, power, beam);
 
@@ -507,7 +508,7 @@ void tome_of_power(int slot)
     {
         viewwindow();
 
-        int temp_rand = random2(23) + random2(you.skill(SK_EVOCATIONS) / 3);
+        int temp_rand = random2(23) + random2(you.skill_rdiv(SK_EVOCATIONS, 1, 3));
 
         if (temp_rand > 25)
             temp_rand = 25;
@@ -548,11 +549,8 @@ void stop_studying_manual(bool finish)
 
     you.manual_skill = SK_NONE;
     you.manual_index = -1;
-    if (!you.skills[sk])
-    {
-        lose_skill(sk);
-        reset_training();
-    }
+    if (training_restricted(sk))
+        you.stop_train.insert(sk);
 }
 
 void skill_manual(int slot)
@@ -562,6 +560,14 @@ void skill_manual(int slot)
     if (!known)
         set_ident_flags(manual, ISFLAG_KNOW_TYPE);
     const skill_type skill = static_cast<skill_type>(manual.plus);
+
+    if (is_useless_skill(skill))
+    {
+        if (!known)
+            mprf("This is a manual of %s.", skill_name(skill));
+        mpr("You have no use for it.");
+        return;
+    }
 
     if (skill == you.manual_skill)
     {
@@ -587,11 +593,7 @@ void skill_manual(int slot)
     mprf(gettext("You start studying %s."), gettext(skill_name(skill)));
     you.manual_skill = skill;
     you.manual_index = slot;
-    if (!you.skills[skill])
-    {
-        gain_skill(skill);
-        reset_training();
-    }
+    you.start_train.insert(skill);
     you.turn_is_over = true;
 }
 
@@ -618,7 +620,8 @@ static bool _box_of_beasts(item_def &box)
             mon = RANDOM_ELEMENT(beasts);
         while (player_will_anger_monster(mon));
 
-        const bool friendly = (!one_chance_in(you.skill(SK_EVOCATIONS) + 5));
+        const bool friendly = !x_chance_in_y(100,
+                                   you.skill(SK_EVOCATIONS, 100) + 500);
 
         if (create_monster(
                 mgen_data(mon,
@@ -653,7 +656,7 @@ static bool _ball_of_energy(void)
 
     mpr(gettext("You gaze into the crystal ball."));
 
-    int use = random2(you.skill(SK_EVOCATIONS) * 6);
+    int use = random2(you.skill(SK_EVOCATIONS, 6));
 
     if (use < 2)
         lose_stat(STAT_INT, 1 + random2avg(7, 2), false, gettext("using a ball of energy"));
@@ -670,7 +673,7 @@ static bool _ball_of_energy(void)
     {
         int proportional = (you.magic_points * 100) / you.max_magic_points;
 
-        if (random2avg(77 - you.skill(SK_EVOCATIONS) * 2, 4) > proportional
+        if (random2avg(77 - you.skill(SK_EVOCATIONS, 2), 4) > proportional
             || one_chance_in(25))
         {
             mpr(gettext("You feel your power drain away!"));
@@ -690,7 +693,9 @@ static bool _ball_of_energy(void)
 
 bool evoke_item(int slot)
 {
-    if (you.berserk())
+    if (you.berserk() && (slot == -1
+                       || slot != you.equip[EQ_WEAPON]
+                       || !weapon_reach(*you.weapon())))
     {
         canned_msg(MSG_TOO_BERSERK);
         return (false);
@@ -723,7 +728,7 @@ bool evoke_item(int slot)
 
     item_def& item = you.inv[slot];
     // Also handles messages.
-    if (!item_is_evokable(item, false, false, true))
+    if (!item_is_evokable(item, true, false, false, true))
         return (false);
 
     int pract = 0; // By how much Evocations is practised.
@@ -749,7 +754,7 @@ bool evoke_item(int slot)
     case OBJ_WEAPONS:
         ASSERT(wielded);
 
-        if (get_weapon_brand(item) == SPWPN_REACHING)
+        if (weapon_reach(item))
         {
             if (_reaching_weapon_attack(item))
             {
@@ -784,7 +789,7 @@ bool evoke_item(int slot)
                 return (false);
             }
             else if (you.magic_points < you.max_magic_points
-                     && x_chance_in_y(you.skill(SK_EVOCATIONS) + 11, 40))
+                     && x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 1100, 4000))
             {
                 mpr(gettext("You channel some magical energy."));
                 inc_mp(1 + random2(3));
@@ -831,7 +836,7 @@ bool evoke_item(int slot)
             break;
 
         case MISC_AIR_ELEMENTAL_FAN:
-            if (you.skill(SK_EVOCATIONS) <= random2(30))
+            if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
             {
@@ -842,7 +847,7 @@ bool evoke_item(int slot)
             break;
 
         case MISC_LAMP_OF_FIRE:
-            if (you.skill(SK_EVOCATIONS) <= random2(30))
+            if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
             {
@@ -853,7 +858,7 @@ bool evoke_item(int slot)
             break;
 
         case MISC_STONE_OF_EARTH_ELEMENTALS:
-            if (you.skill(SK_EVOCATIONS) <= random2(30))
+            if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
             {

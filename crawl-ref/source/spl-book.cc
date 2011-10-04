@@ -512,6 +512,7 @@ bool you_cannot_memorise(spell_type spell, bool &undead)
     case US_HUNGRY_DEAD: // Ghouls
         switch (spell)
         {
+        case SPELL_BEASTLY_APPENDAGE:
         case SPELL_BLADE_HANDS:
         case SPELL_BORGNJORS_REVIVIFICATION:
         case SPELL_CURE_POISON:
@@ -547,6 +548,7 @@ bool you_cannot_memorise(spell_type spell, bool &undead)
     case US_UNDEAD: // Mummies
         switch (spell)
         {
+        case SPELL_BEASTLY_APPENDAGE:
         case SPELL_BLADE_HANDS:
         case SPELL_BORGNJORS_REVIVIFICATION:
         case SPELL_CURE_POISON:
@@ -910,7 +912,7 @@ static bool _sort_mem_spells(spell_type a, spell_type b)
     if (spell_difficulty(a) != spell_difficulty(b))
         return (spell_difficulty(a) < spell_difficulty(b));
 
-    return (stricmp(spell_title(a), spell_title(b)) < 0);
+    return (strcasecmp(spell_title(a), spell_title(b)) < 0);
 }
 
 std::vector<spell_type> get_mem_spell_list(std::vector<int> &books)

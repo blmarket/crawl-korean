@@ -174,6 +174,9 @@ static bool _snakable_weapon(const item_def& item)
     return (item.base_type == OBJ_WEAPONS
            && (item.sub_type == WPN_CLUB
             || item.sub_type == WPN_SPEAR
+            || item.sub_type == WPN_TRIDENT
+            || item.sub_type == WPN_DEMON_TRIDENT
+            || item.sub_type == WPN_STAFF
             || item.sub_type == WPN_QUARTERSTAFF
             || item.sub_type == WPN_SCYTHE
             || item.sub_type == WPN_GIANT_CLUB
@@ -183,6 +186,7 @@ static bool _snakable_weapon(const item_def& item)
             || item.sub_type == WPN_ANKUS
             || item.sub_type == WPN_HALBERD
             || item.sub_type == WPN_GLAIVE
+            || item.sub_type == WPN_BARDICHE
             || item.sub_type == WPN_BLOWGUN)
            && !is_artefact(item));
 }
@@ -226,7 +230,7 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
         if (wpn.quantity < how_many_max)
             how_many_max = wpn.quantity;
 
-        for (int i = 0; i <= how_many_max; i++)
+        for (int i = 0; i < how_many_max; i++)
         {
             monster_type mon;
 
@@ -257,11 +261,9 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
         // the really big sticks (so bonus applies really only to trolls
         // and ogres).  Still, it's unlikely any character is strong
         // enough to bother lugging a few of these around. - bwr
-        monster_type mon;
+        monster_type mon = MONS_SNAKE;
 
-        if (item_mass(wpn) < 300)
-            mon = MONS_SNAKE;
-        else
+        if (get_weapon_brand(wpn) == SPWPN_VENOM || item_mass(wpn) >= 300)
             mon = MONS_WATER_MOCCASIN;
 
         if (pow > 20 && one_chance_in(3))
@@ -285,9 +287,6 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
             snake->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, dur));
         }
     }
-
-    if (wpn.quantity < count)
-        count = wpn.quantity;
 
     if (!count)
     {
@@ -668,11 +667,9 @@ spret_type cast_summon_ugly_thing(int pow, god_type god, bool fail)
 
     const int dur = std::min(2 + (random2(pow) / 4), 6);
 
-    const bool friendly = (random2(pow) > 3);
-
     if (create_monster(
             mgen_data(mon,
-                      friendly ? BEH_FRIENDLY : BEH_HOSTILE, &you,
+                      BEH_FRIENDLY, &you,
                       dur, SPELL_SUMMON_UGLY_THING,
                       you.pos(),
                       MHITYOU,
@@ -680,9 +677,6 @@ spret_type cast_summon_ugly_thing(int pow, god_type god, bool fail)
     {
         mpr((mon == MONS_VERY_UGLY_THING) ? "A very ugly thing appears."
                                           : "An ugly thing appears.");
-
-        if (!friendly)
-            mpr("It doesn't look very happy.");
     }
     else
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -987,7 +981,9 @@ spret_type cast_tukimas_ball(actor *caster, int pow, god_type god,
                              0,
                              // if you animate the weapon, your god gets mad
                              // if it poisons/drains stuff
-                             god);
+                             god,
+                             MONS_NO_MONSTER, 0, BLACK,
+                             pow);
                 mg.props[TUKIMA_WEAPON] = wpn;
                 int mons = create_monster(mg);
                 bool success = (mons != -1);
@@ -1188,7 +1184,7 @@ static bool _summon_demon_wrapper(int pow, god_type god, int spell,
         if (!player_angers_monster(&menv[mons]) && !friendly)
         {
             mpr(charmed ? "You don't feel so good about this..."
-                        : "It doesn't look very happy.");
+                        : "It doesn't seem very happy.");
         }
         else if (friendly && mons_genus(mon) == MONS_IMP)
         {
@@ -1296,12 +1292,24 @@ spret_type cast_shadow_creatures(god_type god, bool fail)
     const int mons =
         create_monster(
             mgen_data(RANDOM_MOBILE_MONSTER, BEH_FRIENDLY, &you,
-                      2, SPELL_SHADOW_CREATURES,
-                      you.pos(), MHITYOU,
+                      1, // This duration is only used for band members.
+                      SPELL_SHADOW_CREATURES, you.pos(), MHITYOU,
                       MG_FORCE_BEH, god), false);
 
     if (mons != -1)
+    {
+        // Choose a new duration based on HD.
+        int x = std::max(menv[mons].hit_dice - 3, 1);
+        int d = div_rand_round(17,x);
+        if (d < 1)
+            d = 1;
+        if (d > 4)
+            d = 4;
+        mon_enchant me = mon_enchant(ENCH_ABJ, d);
+        me.set_duration(&menv[mons], &me);
+        menv[mons].update_ench(me);
         player_angers_monster(&menv[mons]);
+    }
     else
         mpr("The shadows disperse without effect.");
 
@@ -1706,8 +1714,8 @@ static bool _raise_remains(const coord_def &pos, int corps, beh_type beha,
 
     // Use the original monster type as the zombified type here, to get
     // the proper stats from it.
-    mgen_data mg(mon, beha, as, 0, 0, pos, hitting, MG_FORCE_BEH, god,
-                 static_cast<monster_type>(monnum), number);
+    mgen_data mg(mon, beha, as, 0, 0, pos, hitting, MG_FORCE_BEH|MG_FORCE_PLACE,
+                 god, static_cast<monster_type>(monnum), number);
 
     // No experience for monsters animated by god wrath or the Sword of Zongulrok
     if (nas != "")
@@ -2207,12 +2215,10 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
         monster_type mon = ((chance > 22) ? MONS_PHANTOM :            //  8%
                             (chance > 20) ? MONS_HUNGRY_GHOST :       //  8%
                             (chance > 18) ? MONS_FLAYED_GHOST :       //  8%
-                            (chance >  7) ? MONS_WRAITH :             // 44%/40%
-                            (chance >  2) ? MONS_FREEZING_WRAITH      // 20%/16%
+                            (chance > 16) ? MONS_SHADOW_WRAITH:       //  8%
+                            (chance >  6) ? MONS_WRAITH :             // 40%
+                            (chance >  2) ? MONS_FREEZING_WRAITH      // 16%
                                           : MONS_PHANTASMAL_WARRIOR); // 12%
-
-        if ((chance == 3 || chance == 8) && you.can_see_invisible())
-            mon = MONS_SHADOW_WRAITH;                               //  0%/8%
 
         const int mons =
             create_monster(
@@ -2253,53 +2259,75 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
     return SPRET_SUCCESS;
 }
 
-spret_type abjuration(int pow, bool fail)
+static int _abjuration(int pow, monster *mon)
 {
-    fail_check();
-    mpr("Send 'em back where they came from!");
-
     // Scale power into something comparable to summon lifetime.
     const int abjdur = pow * 12;
 
-    for (monster_iterator mon(you.get_los()); mon; ++mon)
+    // XXX: make this a prompt
+    if (mon->wont_attack())
+        return (false);
+
+    int duration;
+    if (mon->is_summoned(&duration))
     {
-        if (mon->wont_attack())
-            continue;
+        int sockage = std::max(fuzz_value(abjdur, 60, 30), 40);
+        dprf("%s abj: dur: %d, abj: %d",
+             mon->name(DESC_PLAIN).c_str(), duration, sockage);
 
-        int duration;
-        if (mon->is_summoned(&duration))
+        bool shielded = false;
+        // TSO and Trog's abjuration protection.
+        if (mons_is_god_gift(mon, GOD_SHINING_ONE))
         {
-            int sockage = std::max(fuzz_value(abjdur, 60, 30), 40);
-            dprf("%s abj: dur: %d, abj: %d",
-                 mon->name(DESC_PLAIN).c_str(), duration, sockage);
-
-            bool shielded = false;
-            // TSO and Trog's abjuration protection.
-            if (mons_is_god_gift(*mon, GOD_SHINING_ONE))
+            sockage = sockage * (30 - mon->hit_dice) / 45;
+            if (sockage < duration)
             {
-                sockage = sockage * (30 - mon->hit_dice) / 45;
-                if (sockage < duration)
-                {
-                    simple_god_message(" protects a fellow warrior from your evil magic!",
-                                       GOD_SHINING_ONE);
-                    shielded = true;
-                }
+                simple_god_message(" protects a fellow warrior from your evil magic!",
+                                   GOD_SHINING_ONE);
+                shielded = true;
             }
-            else if (mons_is_god_gift(*mon, GOD_TROG))
-            {
-                sockage = sockage * 8 / 15;
-                if (sockage < duration)
-                {
-                    simple_god_message(" shields an ally from your puny magic!",
-                                       GOD_TROG);
-                    shielded = true;
-                }
-            }
-
-            mon_enchant abj = mon->get_ench(ENCH_ABJ);
-            if (!mon->lose_ench_duration(abj, sockage) && !shielded)
-                simple_monster_message(*mon, " shudders.");
         }
+        else if (mons_is_god_gift(mon, GOD_TROG))
+        {
+            sockage = sockage * 8 / 15;
+            if (sockage < duration)
+            {
+                simple_god_message(" shields an ally from your puny magic!",
+                                   GOD_TROG);
+                shielded = true;
+            }
+        }
+
+        mon_enchant abj = mon->get_ench(ENCH_ABJ);
+        if (!mon->lose_ench_duration(abj, sockage) && !shielded)
+            simple_monster_message(mon, " shudders.");
     }
+
+    return (true);
+}
+
+spret_type cast_abjuration(int pow, monster *mon, bool fail)
+{
+    fail_check();
+    if (mon)
+    {
+        mpr("Send 'em back where they came from!");
+        _abjuration(pow, mon);
+    }
+    else
+        canned_msg(MSG_NOTHING_HAPPENS);
+
+    return SPRET_SUCCESS;
+}
+
+spret_type cast_mass_abjuration(int pow, bool fail)
+{
+    fail_check();
+    mpr("Send 'em back where they came from!");
+    for (monster_iterator mi(you.get_los()); mi; ++mi)
+    {
+        _abjuration(pow, *mi);
+    }
+
     return SPRET_SUCCESS;
 }

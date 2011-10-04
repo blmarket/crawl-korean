@@ -457,7 +457,7 @@ static void _pan_wave(int power)
                 MONS_GLOORX_VLOQ, MONS_GERYON, MONS_DISPATER,
                 MONS_ASMODEUS, MONS_ERESHKIGAL, MONS_PANDEMONIUM_LORD, END};
     monster_type weakboss[] = {MONS_PANDEMONIUM_LORD, MONS_FIEND,
-                MONS_PIT_FIEND, MONS_ICE_FIEND, MONS_BLUE_DEATH, END};
+                MONS_PIT_FIEND, MONS_ICE_FIEND, MONS_BLIZZARD_DEMON, END};
 
     for (int i = 0; i <= NSLOTS; i++)
     {
@@ -467,7 +467,7 @@ static void _pan_wave(int power)
             monster_type mon_type = static_cast<monster_type>(random2(NUM_MONSTERS));
             monsterentry *mentry = get_monster_data(mon_type);
             int pow = random2avg(power, 2);
-            switch (mentry->showchar)
+            switch (mentry->basechar)
             {
             case '5': if (pow > 4) continue; break;
             case '4': if (pow > 4) continue; break;
@@ -757,7 +757,7 @@ void zotdef_set_wave()
 std::string zotdef_debug_wave_desc()
 {
     std::string list = you.zotdef_wave_name + " [";
-    for (int i = 0; i <= NSLOTS; i++)
+    for (int i = 0; i <= (crawl_state.game_is_zotdef() ? NSLOTS : 9); i++)
     {
         if (i)
             list += ", ";

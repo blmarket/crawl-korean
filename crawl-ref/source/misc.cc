@@ -59,7 +59,6 @@
 #include "mon-pathfind.h"
 #include "mon-info.h"
 #include "mon-iter.h"
-#include "mon-util.h"
 #include "mon-stuff.h"
 #include "ng-setup.h"
 #include "ouch.h"
@@ -1368,7 +1367,11 @@ bool go_berserk(bool intentional, bool potion)
 
     mpr(gettext("A red film seems to cover your vision as you go berserk!"));
 
-    you.duration[DUR_FINESSE] = 0; // Totally incompatible.
+    if (you.duration[DUR_FINESSE] > 0)
+    {
+        you.duration[DUR_FINESSE] = 0; // Totally incompatible.
+        mpr("Finesse? Hah! Time to rip out guts!");
+    }
 
     if (you.religion == GOD_CHEIBRIADOS)
     {
@@ -1501,9 +1504,6 @@ static bool _mons_is_always_safe(const monster *mon)
 bool mons_is_safe(const monster* mon, const bool want_move,
                   const bool consider_user_options, bool check_dist)
 {
-    if (mons_is_unknown_mimic(mon))
-        return (true);
-
     int  dist    = grid_distance(you.pos(), mon->pos());
 
     bool is_safe = (_mons_is_always_safe(mon)
@@ -1543,8 +1543,7 @@ bool mons_is_safe(const monster* mon, const bool want_move,
 }
 
 // Return all nearby monsters in range (default: LOS) that the player
-// is able to recognise as being monsters (i.e. no unknown mimics or
-// submerged creatures.)
+// is able to recognise as being monsters (i.e. no submerged creatures.)
 //
 // want_move       (??) Somehow affects what monsters are considered dangerous
 // just_check      Return zero or one monsters only
@@ -1575,7 +1574,6 @@ std::vector<monster* > get_nearby_monsters(bool want_move,
             if (mon->alive()
                 && (!require_visible || mon->visible_to(&you))
                 && !mon->submerged()
-                && !mons_is_unknown_mimic(mon)
                 && (!dangerous_only || !mons_is_safe(mon, want_move,
                                                      consider_user_options,
                                                      check_dist)))
@@ -2137,6 +2135,7 @@ void run_environment_effects()
     run_corruption_effects(you.time_taken);
     shoals_apply_tides(div_rand_round(you.time_taken, BASELINE_DELAY),
                        false, true);
+    abyss_morph(you.time_taken);
     timeout_tombs(you.time_taken);
     timeout_malign_gateways(you.time_taken);
 }
@@ -2193,99 +2192,130 @@ void reveal_secret_door(const coord_def& p)
     learned_something_new(HINT_FOUND_SECRET_DOOR, p);
 }
 
-bool stop_attack_prompt(const monster* mon, bool beam_attack,
-                        coord_def beam_target, bool autohit_first)
+bool bad_attack(const monster *mon, std::string& adj, std::string& suffix)
 {
     ASSERT(!crawl_state.game_is_arena());
-
     if (you.confused() || !you.can_see(mon))
         return (false);
 
     bool retval = false;
-    bool prompt = false;
+    adj.clear();
+    suffix.clear();
 
-    const bool mon_target    = (beam_target == mon->pos());
-    const bool inSanctuary   = (is_sanctuary(you.pos())
-                                || is_sanctuary(mon->pos()));
-    const bool wontAttack    = mon->wont_attack();
-    const bool isFriendly    = mon->friendly();
-    const bool isNeutral     = mon->neutral();
-    const bool isUnchivalric = is_unchivalric_attack(&you, mon);
-    const bool isHoly        = mon->is_holy()
-                                   && (mon->attitude != ATT_HOSTILE
-                                       || testbits(mon->flags, MF_NO_REWARD)
-                                       || testbits(mon->flags, MF_WAS_NEUTRAL));
+    if (is_sanctuary(you.pos()) || is_sanctuary(mon->pos()))
+        suffix = gettext(", despite your sanctuary");
 
-    if (isFriendly)
+    if (mon->friendly())
     {
-        // Listed in the form: "your rat", "Blork the orc".
-        std::string mon_name = mon->name(DESC_PLAIN);
-        mon_name = std::string(gettext(M_("your "))) +
-                   (you.religion == GOD_OKAWARU ? gettext(M_("ally the ")) : "") +
-                   mon_name;
-        std::string verb = "";
-        bool need_mon_name = true;
-        if (beam_attack)
-        {
-            if (mon_target)
-                verb = gettext("fire at %s");
-            else if (you.pos() < beam_target && beam_target < mon->pos()
-                     || you.pos() > beam_target && beam_target > mon->pos())
-            {
-                if (autohit_first)
-                    return (false);
+        if (you.religion == GOD_OKAWARU)
+            adj = gettext("your ally the ");
+        else
+            adj = gettext("your ");
+        return true;
+    }
 
-                verb = make_stringf(gettext("fire in %s direction"),
-                                    apostrophise(mon_name).c_str());
-                need_mon_name = false;
-            }
-            else
-                verb += gettext("fire through %s");
+    if (is_unchivalric_attack(&you, mon)
+        && you.religion == GOD_SHINING_ONE
+        && !tso_unchivalric_attack_safe_monster(mon))
+    {
+        adj += gettext("helpless ");
+    }
+    if (mon->wont_attack())
+        adj += gettext("non-hostile ");
+    if (mon->neutral() && is_good_god(you.religion))
+        adj += gettext("neutral ");
+    if (mon->is_holy() && is_good_god(you.religion))
+        adj += gettext("holy ");
+
+    if (you.religion == GOD_JIYVA && mons_is_slime(mon))
+        retval = true;
+
+    return retval || !adj.empty() || !suffix.empty();
+}
+
+bool stop_attack_prompt(const monster* mon, bool beam_attack,
+                        coord_def beam_target, bool autohit_first)
+{
+    if (you.confused() || !you.can_see(mon))
+        return (false);
+
+    std::string adj, suffix;
+    if (!bad_attack(mon, adj, suffix))
+        return false;
+
+    // Listed in the form: "your rat", "Blork the orc".
+    std::string mon_name = mon->name(DESC_PLAIN);
+    if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
+        mon_name.erase(0, 4);
+    if (adj.find("your"))
+        adj = "the " + adj;
+    mon_name = adj + mon_name;
+    std::string verb;
+    if (beam_attack)
+    {
+        verb = "fire ";
+        if (beam_target == mon->pos())
+            verb += "at ";
+        else if (you.pos() < beam_target && beam_target < mon->pos()
+                 || you.pos() > beam_target && beam_target > mon->pos())
+        {
+            if (autohit_first)
+                return (false);
+
+            verb += "in " + apostrophise(mon_name) + " direction";
+            mon_name = "";
         }
         else
-            verb = gettext("attack %s");
-
-        if (need_mon_name)
-            verb = make_stringf(verb.c_str(), mon_name.c_str());
-
-        snprintf(info, INFO_SIZE, gettext("Really %s%s?"),
-                 verb.c_str(),
-                 (inSanctuary) ? gettext(", despite your sanctuary") : "");
-
-        prompt = true;
+            verb += "through ";
     }
-    else if (inSanctuary || wontAttack
-             || (you.religion == GOD_JIYVA && mons_is_slime(mon)
-                 && !mon->is_shapeshifter())
-             || (isNeutral || isHoly) && is_good_god(you.religion)
-             || isUnchivalric
-                && you.religion == GOD_SHINING_ONE
-                && !tso_unchivalric_attack_safe_monster(mon))
+    else
+        verb = "attack ";
+
+    snprintf(info, INFO_SIZE, "Really %s%s%s?",
+             verb.c_str(), mon_name.c_str(), suffix.c_str());
+
+    return !yesno(info, false, 'n');
+}
+
+bool stop_attack_prompt(targetter &hitfunc, std::string verb)
+{
+    if (you.confused())
+        return false;
+
+    std::string adj, suffix;
+    counted_monster_list victims;
+    for (distance_iterator di(hitfunc.origin, false, true, LOS_RADIUS); di; ++di)
     {
-        /// 1. 동사, 2. helpless 3. friendly,non-hostile,neutral, 4. holy, 5. 몬스터 이름, 6. 수식어구
-        snprintf(info, INFO_SIZE, gettext("Really %s the %s%s%s%s%s?"),
-                 (beam_attack) ? (mon_target) ? gettext(M_("fire at"))
-                                              : gettext(M_("fire through"))
-                               : gettext(M_("attack")),
-                 (isUnchivalric) ? gettext("helpless ")
-                                 : "",
-                 (isFriendly)    ? gettext("friendly ") :
-                 (wontAttack)    ? gettext("non-hostile ") :
-                 (isNeutral)     ? gettext("neutral ")
-                                 : "",
-                 (isHoly)        ? gettext("holy ")
-                                 : "",
-                 mon->name(DESC_PLAIN).c_str(),
-                 (inSanctuary)   ? gettext(", despite your sanctuary")
-                                 : "");
-
-        prompt = true;
+        if (hitfunc.is_affected(*di) <= AFF_NO)
+            continue;
+        const monster* mon = monster_at(*di);
+        std::string adjn, suffixn;
+        if (mon && you.can_see(mon) && bad_attack(mon, adjn, suffixn))
+        {
+            if (victims.empty()) // record the adjectives for the first listed
+                adj = adjn, suffix = suffixn;
+            victims.add(mon);
+        }
     }
 
-    if (prompt)
-        retval = !yesno(info, false, 'n');
+    if (victims.empty())
+        return false;
 
-    return (retval);
+    // Listed in the form: "your rat", "Blork the orc".
+    std::string mon_name = victims.describe(DESC_PLAIN);
+    if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
+        mon_name.erase(0, 4);
+    if (adj.find("your"))
+        adj = "the " + adj;
+    mon_name = adj + mon_name;
+
+    if (verb != "attack")
+        verb += " at";
+
+    snprintf(info, INFO_SIZE, "Really %s %s%s?",
+             verb.c_str(), mon_name.c_str(), suffix.c_str());
+
+    return !yesno(info, false, 'n');
 }
 
 bool is_orckind(const actor *act)
@@ -2531,4 +2561,51 @@ unsigned int breakpoint_rank(int val, const int breakpoints[],
         ++result;
 
     return result;
+}
+
+void counted_monster_list::add(const monster* mons)
+{
+    const std::string name = mons->name(DESC_PLAIN);
+    for (counted_list::iterator i = list.begin(); i != list.end(); ++i)
+    {
+        if (i->first->name(DESC_PLAIN) == name)
+        {
+            i->second++;
+            return;
+        }
+    }
+    list.push_back(counted_monster(mons, 1));
+}
+
+int counted_monster_list::count()
+{
+    int nmons = 0;
+    for (counted_list::const_iterator i = list.begin(); i != list.end(); ++i)
+        nmons += i->second;
+    return (nmons);
+}
+
+std::string counted_monster_list::describe(description_level_type desc)
+{
+    std::string out;
+
+    for (counted_list::const_iterator i = list.begin(); i != list.end();)
+    {
+        const counted_monster &cm(*i);
+        if (i != list.begin())
+        {
+            ++i;
+            out += (i == list.end() ? " and " : ", ");
+        }
+        else
+            ++i;
+
+        out += cm.second > 1 ? pluralise(PLU_DEFAULT, cm.first->name(desc))
+                             : cm.first->name(desc);
+
+        // yay capitalization hacks, may we merge Cryp71c's branch already please?
+        if (desc == DESC_CAP_THE)
+            desc = DESC_NOCAP_THE;
+    }
+    return out;
 }

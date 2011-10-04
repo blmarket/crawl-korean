@@ -119,7 +119,7 @@ bool can_wield(item_def *weapon, bool say_reason,
         return (false);
     }
 
-    if (!can_equip(EQ_WEAPON, ignore_temporary_disability))
+    if (!ignore_temporary_disability && !form_can_wield(you.form))
     {
         SAY(mpr(gettext("You can't wield anything in your present form.")));
         return (false);
@@ -274,11 +274,15 @@ static bool _valid_weapon_swap(const item_def &item)
     return (false);
 }
 
-// If force is true, don't check weapon inscriptions.
-// (Assuming the player was already prompted for that.)
+/**
+ * @param force If true, don't check weapon inscriptions.
+ * (Assuming the player was already prompted for that.)
+ */
 bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
                   bool force, bool show_unwield_msg, bool show_wield_msg)
 {
+    const bool was_barehanded = you.equip[EQ_WEAPON] == -1;
+
     if (inv_count() < 1)
     {
         canned_msg(MSG_NOTHING_CARRIED);
@@ -365,7 +369,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             // Switching to bare hands is extra fast.
             you.turn_is_over = true;
             you.time_taken *= 3;
-            you.time_taken /= 10;
+            you.time_taken /= 5;
         }
         else
             canned_msg(MSG_EMPTY_HANDED_ALREADY);
@@ -386,12 +390,22 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
     if (you.weapon() && !unwield_item(show_weff_messages))
         return (false);
 
-    if (!can_wield(&new_wpn, true))
-        return (false);
+    // Ensure wieldable, stat loss non-fatal
+    if (!can_wield(&new_wpn, true)
+        || !safe_to_remove_or_wear(new_wpn, false))
+    {
+        if (!was_barehanded)
+        {
+            canned_msg(MSG_EMPTY_HANDED_NOW);
 
-    // Check for stat losses.
-    if (!safe_to_remove_or_wear(new_wpn, false))
-        return (false);
+            // Switching to bare hands is extra fast.
+            you.turn_is_over = true;
+            you.time_taken *= 3;
+            you.time_taken /= 10;
+
+            return (false);
+        }
+    }
 
     const unsigned int old_talents = your_talents(false).size();
 
@@ -456,15 +470,15 @@ void warn_shield_penalties()
     if (!you.shield())
         return;
 
-    // Warnings are limited to bows and quarterstaves at the moment.
+    // Warnings are limited to launchers and staves at the moment.
     const item_def *weapon = you.weapon();
     if (!weapon)
         return;
 
     if (is_range_weapon(*weapon))
         warn_launcher_shield_slowdown(*weapon);
-    else if (weapon->base_type == OBJ_WEAPONS
-             && weapon_skill(*weapon) == SK_STAVES)
+    else if (weapon_skill(*weapon) == SK_STAVES
+             && cmp_weapon_size(*weapon, SIZE_LARGE) >= 0)
     {
         mprf(MSGCH_WARN, gettext("Your %s severely limits your weapon's effectiveness."),
              shield_base_name(you.shield()));
@@ -594,6 +608,14 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         return (false);
     }
 
+    if (player_genus(GENPC_DRACONIAN) && slot == EQ_BODY_ARMOUR)
+    {
+        if (verbose)
+            mprf("Your wings%s won't fit in that.", you.mutation[MUT_BIG_WINGS]
+                 ? "" : ", even vestigial as they are,");
+        return (false);
+    }
+
     if (sub_type == ARM_NAGA_BARDING || sub_type == ARM_CENTAUR_BARDING)
     {
         if (you.species == SP_NAGA && sub_type == ARM_NAGA_BARDING
@@ -610,9 +632,6 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     }
 
     size_type player_size = you.body_size(PSIZE_TORSO, ignore_temporary);
-    // Draconians are medium for weapons, large for armour.
-    if (player_genus(GENPC_DRACONIAN)) // no transforms which alter size allow armour
-        player_size = SIZE_LARGE;
     int bad_size = fit_armour_size(item, player_size);
 
     if (bad_size)
@@ -622,6 +641,16 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
                  (bad_size > 0) ? pgettext("item_use","big") : pgettext("item_use","small"));
 
         return (false);
+    }
+
+    if (you.form == TRAN_APPENDAGE
+        && ignore_temporary
+        && slot == beastly_slot(you.attribute[ATTR_APPENDAGE])
+        && you.mutation[you.attribute[ATTR_APPENDAGE]])
+    {
+        unwind_var<uint8_t> mutv(you.mutation[you.attribute[ATTR_APPENDAGE]], 0);
+        // disable the mutation then check again
+        return can_wear_armour(item, verbose, ignore_temporary);
     }
 
     if (sub_type == ARM_GLOVES)
@@ -657,8 +686,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
             return (false);
         }
 
-        if (!ignore_temporary
-            && you.fishtail)
+        if (!ignore_temporary && you.fishtail)
         {
             if (verbose)
                mpr(gettext("You don't currently have feet!"));
@@ -684,39 +712,46 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         }
 
         // Soft helmets (caps and wizard hats) always fit, otherwise.
-        if (!is_hard_helmet(item) && !player_is_shapechanged())
-            return (true);
-
-        if (player_mutation_level(MUT_HORNS))
+        if (is_hard_helmet(item))
         {
-            if (verbose)
-                mpr(gettext("You can't wear that with your horns!"));
-            return (false);
-        }
+            if (player_mutation_level(MUT_HORNS))
+            {
+                if (verbose)
+                    mpr(gettext("You can't wear that with your horns!"));
+                return (false);
+            }
 
-        if (player_mutation_level(MUT_BEAK))
-        {
-            if (verbose)
-                mpr(gettext("You can't wear that with your beak!"));
-            return (false);
-        }
+            if (player_mutation_level(MUT_BEAK))
+            {
+                if (verbose)
+                    mpr(gettext("You can't wear that with your beak!"));
+                return (false);
+            }
 
-        if (player_mutation_level(MUT_ANTENNAE))
-        {
-            if (verbose)
-                mpr(gettext("You can't wear that with your antennae!"));
-            return (false);
-        }
+            if (player_mutation_level(MUT_ANTENNAE))
+            {
+                if (verbose)
+                    mpr(gettext("You can't wear that with your antennae!"));
+                return (false);
+            }
 
-        if (you.species == SP_OCTOPODE)
-        {
-            if (verbose)
-                mpr(gettext("You can't wear that!"));
-            return (false);
+            if (player_genus(GENPC_DRACONIAN))
+            {
+                if (verbose)
+                    mpr(gettext("You can't wear that with your reptilian head."));
+                return (false);
+            }
+
+            if (you.species == SP_OCTOPODE)
+            {
+                if (verbose)
+                    mpr(gettext("You can't wear that!"));
+                return (false);
+            }
         }
     }
 
-    if (!can_equip(slot, ignore_temporary))
+    if (!ignore_temporary && !form_can_wear_item(item, you.form))
     {
         if (verbose)
             mpr(gettext("You can't wear that in your present form."));
@@ -1399,8 +1434,7 @@ int launcher_shield_slowdown(const item_def &launcher, const item_def *shield)
 
     // Adjust for shields skill.
     if (speed_adjust > 100)
-        speed_adjust -= ((speed_adjust - 100) * 5 / 10)
-                            * you.skill(SK_SHIELDS) / 27;
+        speed_adjust -= you.skill_rdiv(SK_SHIELDS, speed_adjust - 100, 27 * 2);
 
     return (speed_adjust);
 }
@@ -1413,7 +1447,7 @@ int launcher_final_speed(const item_def &launcher, const item_def *shield)
     const int  str_weight   = weapon_str_weight(launcher);
     const int  dex_weight   = 10 - str_weight;
     const skill_type launcher_skill = range_skill(launcher);
-    const int shoot_skill = you.skill(launcher_skill);
+    const int shoot_skill4 = you.skill(launcher_skill, 4);
     const int bow_brand = get_weapon_brand(launcher);
 
     int speed_base = 10 * property(launcher, PWPN_SPEED);
@@ -1438,15 +1472,14 @@ int launcher_final_speed(const item_def &launcher, const item_def *shield)
     if (you.attribute[ATTR_HELD])
     {
         int speed_adjust = 105; // Analogous to buckler and one-handed weapon.
-        speed_adjust -= ((speed_adjust - 100) * 5 / 10)
-                            * you.skill(SK_THROWING) / 27;
+        speed_adjust -= you.skill_rdiv(SK_THROWING, speed_adjust - 100, 27 * 2);
 
         // Also reduce the speed cap.
         speed_base = speed_base * speed_adjust / 100;
         speed_min =  speed_min  * speed_adjust / 100;
     }
 
-    int speed = speed_base - 4 * shoot_skill * speed_stat / 250;
+    int speed = speed_base - shoot_skill4 * speed_stat / 250;
     if (speed < speed_min)
         speed = speed_min;
 
@@ -1740,7 +1773,7 @@ static int _blowgun_power_roll(bolt &beam)
     }
     else
     {
-        base_power = agent->skill(SK_THROWING);
+        base_power = agent->skill_rdiv(SK_THROWING);
         blowgun = agent->weapon();
     }
 
@@ -1765,7 +1798,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (!agent || agent->atype() == ACT_MONSTER || beam.reflections > 0)
         return (true);
 
-    const int skill = you.skill(SK_THROWING);
+    const int skill = you.skill_rdiv(SK_THROWING);
     const item_def* wp = agent->weapon();
     ASSERT(wp && wp->sub_type == WPN_BLOWGUN);
     const int enchantment = wp->plus;
@@ -2357,9 +2390,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     int shoot_skill = 0;
     bool ammo_ided = false;
 
-    // launcher weapon sub-type
-    weapon_type lnchType;
-
     int baseHit      = 0, baseDam = 0;       // from thrown or ammo
     int ammoHitBonus = 0, ammoDamBonus = 0;  // from thrown or ammo
     int lnchHitBonus = 0, lnchDamBonus = 0;  // special add from launcher
@@ -2530,12 +2560,6 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     if (!teleport)
         pbolt.set_target(thr);
 
-    // Get the launcher class, type.  Convenience.
-    if (!you.weapon())
-        lnchType = NUM_WEAPONS;
-    else
-        lnchType = static_cast<weapon_type>(you.weapon()->sub_type);
-
     // baseHit and damage for generic objects
     baseHit = std::min(0, you.strength() - item_mass(item) / 10);
     baseDam = item_mass(item) / 100;
@@ -2635,7 +2659,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // [jpeg] Throwing now only affects actual throwing weapons,
         // i.e. not launched ones. (Sep 10, 2007)
 
-        shoot_skill = you.skill(launcher_skill);
+        shoot_skill = you.skill_rdiv(launcher_skill);
         effSkill    = shoot_skill;
 
         const int speed = launcher_final_speed(launcher, you.shield());
@@ -2802,28 +2826,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     // check for returning ammo from launchers
     if (returning && projected == LRET_LAUNCHED)
     {
-        switch (lnchType)
-        {
-            case WPN_CROSSBOW:
-                if (returning && !one_chance_in(1 + skill_bump(SK_CROSSBOWS)))
-                    did_return = true;
-                break;
-            case WPN_SLING:
-                if (returning && !one_chance_in(1 + skill_bump(SK_SLINGS)))
-                    did_return = true;
-                break;
-            case WPN_BOW:
-            case WPN_LONGBOW:
-                if (returning && !one_chance_in(1 + skill_bump(SK_BOWS)))
-                    did_return = true;
-                break;
-            case WPN_BLOWGUN:
-                if (returning && !one_chance_in(1 + skill_bump(SK_THROWING)))
-                    did_return = true;
-                break;
-            default:
-                break;
-        }
+        if (!x_chance_in_y(1, 1 + skill_bump(range_skill(*you.weapon()))))
+            did_return = true;
     }
 
     // CALCULATIONS FOR THROWN WEAPONS
@@ -2831,7 +2835,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     {
         returning = returning && !teleport;
 
-        if (returning && !one_chance_in(1 + skill_bump(SK_THROWING)))
+        if (returning && !x_chance_in_y(1, 1 + skill_bump(SK_THROWING)))
             did_return = true;
 
         baseHit = 0;
@@ -2888,7 +2892,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 }
             }
 
-            exHitBonus = you.skill(SK_THROWING) * 2;
+            exHitBonus = you.skill(SK_THROWING, 2);
 
             baseDam = property(item, PWPN_DAMAGE);
 
@@ -2909,8 +2913,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 baseDam++;
             }
 
-            exDamBonus =
-                (10 * (you.skill(SK_THROWING) / 2 + you.strength() - 10)) / 12;
+            exDamBonus = (you.skill(SK_THROWING, 5) + you.strength() * 10 - 100)
+                       / 12;
 
             // Now, exDamBonus is a multiplier.  The full multiplier
             // is applied to base damage, but only a third is applied
@@ -2934,13 +2938,13 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             case MI_DART:
                 // Darts also using throwing skills, now.
                 exHitBonus += skill_bump(SK_THROWING);
-                exDamBonus += you.skill(SK_THROWING) * 3 / 5;
+                exDamBonus += you.skill(SK_THROWING, 3) / 5;
                 break;
 
             case MI_JAVELIN:
                 // Javelins use throwing skill.
                 exHitBonus += skill_bump(SK_THROWING);
-                exDamBonus += you.skill(SK_THROWING) * 3 / 5;
+                exDamBonus += you.skill(SK_THROWING, 3) / 5;
 
                 // Adjust for strength and dex.
                 exDamBonus = str_adjust_thrown_damage(exDamBonus);
@@ -2958,7 +2962,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
 
                 // ...but accuracy is important for this one.
                 baseHit = 1;
-                exHitBonus += (skill_bump(SK_THROWING) * 7 / 2);
+                exHitBonus += skill_bump(SK_THROWING, 7) / 2;
                 // Adjust for strength and dex.
                 exHitBonus = dex_adjust_thrown_tohit(exHitBonus);
                 break;
@@ -2977,7 +2981,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // ID check
         if (!teleport
             && !item_ident(you.inv[throw_2], ISFLAG_KNOW_PLUSES)
-            && x_chance_in_y(you.skill(SK_THROWING), 100))
+            && x_chance_in_y(you.skill(SK_THROWING, 100), 10000))
         {
             set_ident_flags(item, ISFLAG_KNOW_PLUSES);
             set_ident_flags(you.inv[throw_2], ISFLAG_KNOW_PLUSES);
@@ -3103,6 +3107,9 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         did_god_conduct(DID_CORPSE_VIOLATION, 2,
                         bow_brand == SPWPN_REAPING || ammo_brand_known);
     }
+
+    if (bow_brand == SPWPN_SPEED)
+        did_god_conduct(DID_HASTY, 1, true);
 
     if (ammo_brand == SPMSL_RAGE)
         did_god_conduct(DID_HASTY, 6 + random2(3), ammo_brand_known);
@@ -4058,7 +4065,7 @@ void zap_wand(int slot)
     beam.set_target(zap_wand);
 
     const bool aimed_at_self = (beam.target == you.pos());
-    const int power = 15 + you.skill(SK_EVOCATIONS) * 5 / 2;
+    const int power = 15 + you.skill(SK_EVOCATIONS, 5) / 2;
 
     // Check whether we may hit friends, use "safe" values for random effects
     // and unknown wands (highest possible range, and unresistable beam
@@ -4129,7 +4136,7 @@ void zap_wand(int slot)
 
     if (item_type_known(wand)
         && (item_ident(wand, ISFLAG_KNOW_PLUSES)
-            || you.skill(SK_EVOCATIONS) > 5 + random2(15)))
+            || you.skill(SK_EVOCATIONS, 10) > 50 + random2(141)))
     {
         if (!item_ident(wand, ISFLAG_KNOW_PLUSES))
         {
@@ -4521,10 +4528,13 @@ static bool _vorpalise_weapon(bool already_known)
     case SPWPN_CHAOS:
         mprf(gettext("%s erupts in a glittering mayhem of all colours."), itname.c_str());
         success = !one_chance_in(3); // You mean, you wanted this... guaranteed?
+        // need to affix it immediately, otherwise transformation will break it
+        if (success)
+            you.duration[DUR_WEAPON_BRAND] = 0;
         // but the eruption _is_ guaranteed.  What it will do is not.
         _explosion(you.pos(), &you, BEAM_CHAOS, "chaos eruption", "chaos affixation");
         xom_is_stimulated(200);
-        switch(random2(success? 4 : 2))
+        switch(random2(success? 2 : 4))
         {
         case 3:
             if (transform(50, coinflip() ? TRAN_PIG :
@@ -5578,8 +5588,7 @@ bool item_blocks_teleport(bool calc_unid, bool permit_id)
 {
     return (scan_artefacts(ARTP_PREVENT_TELEPORTATION, calc_unid)
             || stasis_blocks_effect(calc_unid, permit_id, NULL)
-            || crawl_state.game_is_zotdef()
-               && you.char_direction == GDT_ASCENDING);
+            || crawl_state.game_is_zotdef() && orb_haloed(you.pos()));
 }
 
 bool stasis_blocks_effect(bool calc_unid,
@@ -5819,7 +5828,7 @@ void tile_item_use(int idx)
                 return;
             }
             // Evoke misc. items, rods, or wands.
-            if (item_is_evokable(item))
+            if (item_is_evokable(item, false))
             {
                 evoke_item(idx);
                 return;
@@ -5866,7 +5875,7 @@ void tile_item_use(int idx)
             return;
 
         case OBJ_BOOKS:
-            if (!item_is_spellbook(item) || you.skill(SK_SPELLCASTING) == 0)
+            if (!item_is_spellbook(item) || !you.skill(SK_SPELLCASTING))
             {
                 if (check_warning_inscriptions(item, OPER_READ))
                     _handle_read_book(idx);

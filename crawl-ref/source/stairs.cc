@@ -111,8 +111,10 @@ static void _player_change_level_reset()
 
 static level_id _stair_destination_override()
 {
-    const std::string force_place =
+    const std::string force_place = (grd(you.pos()) == DNGN_EXIT_ABYSS) ?
+        static_cast<std::string>(you.props["abyss_return_desc"]) :
         env.markers.property_at(you.pos(), MAT_ANY, "dstplace");
+
     if (!force_place.empty())
     {
         try
@@ -461,6 +463,25 @@ static void _leaving_level_now(dungeon_feature_type stair_used)
     }
 
     _clear_golubria_traps();
+
+    if (grd(you.pos()) == DNGN_EXIT_ABYSS) {
+        you.level_type_name =
+            static_cast<std::string>(you.props["abyss_return_name"]);
+        you.level_type_name_abbrev =
+            static_cast<std::string>(you.props["abyss_return_abbrev"]);
+        you.level_type_origin =
+            static_cast<std::string>(you.props["abyss_return_origin"]);
+        you.level_type_tag =
+            static_cast<std::string>(you.props["abyss_return_tag"]);
+        you.level_type_ext =
+            static_cast<std::string>(you.props["abyss_return_ext"]);
+        you.props.erase("abyss_return_desc");
+        you.props.erase("abyss_return_name");
+        you.props.erase("abyss_return_abbrev");
+        you.props.erase("abyss_return_origin");
+        you.props.erase("abyss_return_tag");
+        you.props.erase("abyss_return_ext");
+    }
 }
 
 static void _set_entry_cause(entry_cause_type default_cause,
@@ -1104,6 +1125,7 @@ void down_stairs(dungeon_feature_type force_stair,
             mpr(gettext("You feel Cheibriados slowing down the madness of this place."),
                 MSGCH_GOD, GOD_CHEIBRIADOS);
         }
+        you.abyss_speed /= 2;
         learned_something_new(HINT_ABYSS);
         break;
 
@@ -1130,10 +1152,12 @@ void down_stairs(dungeon_feature_type force_stair,
 
     if (entered_branch)
     {
-        if (branches[you.where_are_you].entry_message)
-            mpr(branches[you.where_are_you].entry_message);
+        const branch_type branch = you.where_are_you;
+        if (branches[branch].entry_message)
+            mpr(branches[branch].entry_message);
         else
-            mprf("Welcome to %s!", branches[you.where_are_you].longname);
+            mprf("Welcome to %s!", branches[branch].longname);
+        enter_branch(branch, old_level);
     }
 
     if (stair_find == DNGN_ENTER_HELL)
@@ -1215,25 +1239,6 @@ void down_stairs(dungeon_feature_type force_stair,
         default:
             die("unknown level type");
         }
-    }
-
-    switch (you.level_type)
-    {
-    case LEVEL_ABYSS:
-        grd(you.pos()) = DNGN_FLOOR;
-
-        init_pandemonium();     // colours only
-        break;
-
-    case LEVEL_PANDEMONIUM:
-        init_pandemonium();
-
-        for (int pc = random2avg(28, 3); pc > 0; pc--)
-            pandemonium_mons();
-        break;
-
-    default:
-        break;
     }
 
     you.turn_is_over = true;

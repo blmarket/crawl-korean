@@ -105,7 +105,7 @@ const deck_archetype deck_of_transport[] = {
 };
 
 const deck_archetype deck_of_emergency[] = {
-    { CARD_TOMB,       {5, 5, 5} },
+    { CARD_TOMB,       {4, 4, 4} },
     { CARD_BANSHEE,    {5, 5, 5} },
     { CARD_DAMNATION,  {0, 1, 2} },
     { CARD_SOLITUDE,   {5, 5, 5} },
@@ -1437,6 +1437,7 @@ int get_power_level(int power, deck_rarity_type rarity)
     case DECK_RARITY_RANDOM:
         die("unset deck rarity");
     }
+    dprf("Power level: %d", power_level);
     return power_level;
 }
 
@@ -1444,20 +1445,10 @@ int get_power_level(int power, deck_rarity_type rarity)
 static void _portal_card(int power, deck_rarity_type rarity)
 {
     const int control_level = get_power_level(power, rarity);
-    bool instant = false;
     bool controlled = false;
-    if (control_level >= 2)
-    {
-        instant = true;
+
+    if (x_chance_in_y(control_level, 2))
         controlled = true;
-    }
-    else if (control_level == 1)
-    {
-        if (coinflip())
-            instant = true;
-        else
-            controlled = true;
-    }
 
     int threshold = 6;
     const bool was_controlled = player_control_teleport();
@@ -1468,10 +1459,10 @@ static void _portal_card(int power, deck_rarity_type rarity)
     if (controlled && (!was_controlled || short_control))
         you.set_duration(DUR_CONTROL_TELEPORT, threshold); // Long enough to kick in.
 
-    if (instant)
-        you_teleport_now(true);
-    else
-        you_teleport();
+    if (x_chance_in_y(control_level, 2))
+        random_blink(false);
+
+    you_teleport();
 }
 
 static void _warp_card(int power, deck_rarity_type rarity)
@@ -1528,10 +1519,10 @@ static void _damnation_card(int power, deck_rarity_type rarity)
     const int power_level = get_power_level(power, rarity);
     int nemelex_bonus = 0;
     if (you.religion == GOD_NEMELEX_XOBEH && !player_under_penance())
-        nemelex_bonus = you.piety / 20;
+        nemelex_bonus = you.piety;
 
-    int extra_targets = power_level + random2(you.skill(SK_EVOCATIONS)
-                                              + nemelex_bonus) / 12;
+    int extra_targets = power_level + random2(you.skill(SK_EVOCATIONS, 20)
+                                              + nemelex_bonus) / 240;
 
     for (int i = 0; i < 1 + extra_targets; ++i)
     {
@@ -1935,36 +1926,39 @@ static void _blade_card(int power, deck_rarity_type rarity)
     wield_weapon(false);
 
     const int power_level = get_power_level(power, rarity);
+    brand_type brand;
+
     if (power_level >= 2)
     {
         cast_tukimas_dance(random2(power/4));
+        return;
     }
     else if (power_level == 1)
     {
-        cast_sure_blade(random2(power/4));
+        brand_type brands[] = {SPWPN_DISTORTION, SPWPN_PAIN,
+            SPWPN_ANTIMAGIC, SPWPN_CHAOS, SPWPN_ELECTROCUTION};
+        brand = RANDOM_ELEMENT(brands);
     }
     else
     {
-        const brand_type brands[] = {
-            SPWPN_FLAMING, SPWPN_FREEZING, SPWPN_VENOM, SPWPN_DRAINING,
-            SPWPN_VORPAL, SPWPN_DISTORTION, SPWPN_PAIN, SPWPN_ANTIMAGIC,
-            SPWPN_CHAOS,
-        };
+        brand_type brands[] = {SPWPN_FLAMING, SPWPN_FREEZING, SPWPN_VENOM,
+            SPWPN_DRAINING, SPWPN_VORPAL};
+        brand = RANDOM_ELEMENT(brands);
+    }
 
-        if (!brand_weapon(RANDOM_ELEMENT(brands), random2(power/4)))
+    if (!brand_weapon(brand, random2(power/4)))
+    {
+        item_def* wpn = you.weapon();
+
+        if (wpn)
         {
-            item_def* wpn = you.weapon();
-
-            if (wpn)
-            {
-		/// 1. item 이름(번역된 것), 2. 복수형이면 s가 붙음.
-                mprf(gettext("%s vibrate%s crazily for a second."),
-                     wpn->name(true, DESC_CAP_YOUR).c_str(),
-                     wpn->quantity == 1 ? "s" : "");
-            }
-            else
-                mprf(gettext("Your %s twitch."), you.hand_name(true).c_str());
+            /// 1. item name, 2. 's' if quantity is 1
+            mprf(gettext("%s vibrate%s crazily for a second."),
+                 wpn->name(true, DESC_CAP_YOUR).c_str(),
+                 wpn->quantity == 1 ? "s" : "");
         }
+        else
+            mprf("Your %s twitch.", you.hand_name(true).c_str());
     }
 }
 
@@ -2571,33 +2565,13 @@ static void _crusade_card(int power, deck_rarity_type rarity)
             // Might be too good.
             if (mi->hit_dice * 35 < random2(power))
             {
-		/// Crusader 카드에 의해 아군으로 바뀌었을 때.
                 simple_monster_message(*mi, gettext(" is converted."));
-
-                if (one_chance_in(5 - power_level))
-                {
-                    mi->attitude = ATT_FRIENDLY;
-
-                    // If you worship a god that lets you recruit
-                    // permanent followers, or a god allied with one,
-                    // count this as a recruitment.
-                    if (is_good_god(you.religion)
-                        || you.religion == GOD_BEOGH
-                            && mons_genus(mi->type) == MONS_ORC
-                            && !mi->is_summoned()
-                            && !mi->is_shapeshifter())
-                    {
-                        mons_make_god_gift(*mi, is_good_god(you.religion) ?
-                                           GOD_SHINING_ONE : GOD_BEOGH);
-                    }
-                }
-                else
-                    mi->add_ench(ENCH_CHARM);
+                mi->add_ench(ENCH_CHARM);
                 mons_att_changed(*mi);
             }
         }
     }
-    abjuration(power/4);
+    cast_mass_abjuration(power/4);
 }
 
 static void _summon_demon_card(int power, deck_rarity_type rarity)
@@ -2767,11 +2741,8 @@ static void _summon_flying(int power, deck_rarity_type rarity)
     };
 
     // Choose what kind of monster.
-    // Be nice and don't summon invisibles with no SInv.
-    monster_type result = MONS_PROGRAM_BUG;
-    do
-        result = flytypes[random2(5) + power_level];
-    while (mons_class_flag(result, M_INVIS) && !you.can_see_invisible());
+    monster_type result = flytypes[random2(5) + power_level];
+    bool hostile_invis = false;
 
     for (int i = 0; i < power_level * 5 + 2; ++i)
     {
@@ -2782,7 +2753,13 @@ static void _summon_flying(int power, deck_rarity_type rarity)
                       friendly ? BEH_FRIENDLY : BEH_HOSTILE, &you,
                       std::min(power/50 + 1, 5), 0,
                       you.pos(), MHITYOU));
+
+        if (mons_class_flag(result, M_INVIS) && !you.can_see_invisible() && !friendly)
+            hostile_invis = true;
     }
+
+    if (hostile_invis)
+        mpr("You sense the presence of something unfriendly.");
 }
 
 static void _summon_skeleton(int power, deck_rarity_type rarity)
@@ -2880,11 +2857,11 @@ static int _card_power(deck_rarity_type rarity)
     else if (you.religion == GOD_NEMELEX_XOBEH)
     {
         result = you.piety;
-        result *= (you.skill(SK_EVOCATIONS) + 25);
-        result /= 27;
+        result *= (you.skill(SK_EVOCATIONS, 100) + 2500);
+        result /= 2700;
     }
 
-    result += you.skill(SK_EVOCATIONS) * 9;
+    result += you.skill(SK_EVOCATIONS, 9);
     if (rarity == DECK_RARITY_RARE)
         result += 150;
     else if (rarity == DECK_RARITY_LEGENDARY)

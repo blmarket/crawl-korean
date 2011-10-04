@@ -11,11 +11,14 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "abl-show.h"
 #include "evoke.h"
+#include "exercise.h"
 #include "externs.h"
 #include "godabil.h"
 #include "godconduct.h"
 #include "hints.h"
+#include "invent.h"
 #include "itemprop.h"
 #include "notes.h"
 #include "output.h"
@@ -107,6 +110,8 @@ int calc_skill_cost(int skill_cost_level)
                          240, 248, 250, 250, 250,  // 21-25
                          250, 250 };
 
+    ASSERT(skill_cost_level >= 1);
+    ASSERT(skill_cost_level <= 27);
     return cost[skill_cost_level - 1];
 }
 
@@ -118,11 +123,10 @@ void reassess_starting_skills()
     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
     {
         skill_type sk = static_cast<skill_type>(i);
-        if (you.skills[sk] == 0
-            && (you.species != SP_VAMPIRE || sk != SK_UNARMED_COMBAT))
-        {
+        if (you.skills[sk] == 0)
             continue;
-        }
+        ASSERT(!is_invalid_skill(sk));
+        ASSERT(!is_useless_skill(sk));
 
         // Grant the amount of skill points required for a human.
         you.skill_points[sk] = skill_exp_needed(you.skills[sk], sk,
@@ -139,14 +143,6 @@ void reassess_starting_skills()
                 break;
         }
 
-        // Vampires should always have Unarmed Combat skill.
-        if (you.species == SP_VAMPIRE && sk == SK_UNARMED_COMBAT
-            && you.skills[sk] < 1)
-        {
-            you.skill_points[sk] = skill_exp_needed(1, sk);
-            you.skills[sk] = 1;
-        }
-
         // Wanderers get at least 1 level in their skills.
         if (you.char_class == JOB_WANDERER && you.skills[sk] < 1)
         {
@@ -161,62 +157,13 @@ void reassess_starting_skills()
             you.skills[sk] = 1;
         }
     }
-}
 
-// When a skill is gained, we insert in the queue the exercises left in the
-// training array.
-void gain_skill(skill_type sk)
-{
-
-    if (you.religion == GOD_TROG && sk == SK_SPELLCASTING)
-        you.training[sk] = 0;
-    else
+    // Vampires should always have Unarmed Combat skill.
+    if (you.species == SP_VAMPIRE && you.skills[SK_UNARMED_COMBAT] < 1)
     {
-        // We insert the rest of the exercises in the queue.
-        while (you.training[sk] > 0)
-        {
-            you.exercises.pop_front();
-            int pos = you.training[sk]
-                      + random2(you.exercises.size() - you.training[sk]);
-            std::list<skill_type>::iterator it = you.exercises.begin();
-            while (pos--)
-                ++it;
-            you.exercises.insert(it, sk);
-            --you.training[sk];
-        }
+        you.skill_points[SK_UNARMED_COMBAT] = skill_exp_needed(1, SK_UNARMED_COMBAT);
+        you.skills[SK_UNARMED_COMBAT] = 1;
     }
-}
-
-// When a skill is lost, we clear the queue of leftover exercises and put then
-// in the training array.
-void lose_skill(skill_type sk)
-{
-    int num_exercises = 0;
-    you.training[sk] = 0;
-    you.train[sk] = 1;
-    for (std::list<skill_type>::iterator it = you.exercises.begin();
-         it != you.exercises.end(); ++it)
-    {
-        if (sk == *it)
-            ++num_exercises;
-    }
-
-    if (!num_exercises)
-        return;
-
-    you.exercises.remove(sk);
-
-    FixedVector<unsigned int, NUM_SKILLS> training = you.training;
-    for (int i = 0; i < NUM_SKILLS; ++i)
-        if (!skill_known(i))
-            training[i] = 0;
-
-    for (int i = 0; i < num_exercises; ++i)
-    {
-        you.exercises.push_back(static_cast<skill_type>(
-                                random_choose_weighted(training)));
-    }
-    you.training[sk] = num_exercises;
 }
 
 static void _change_skill_level(skill_type exsk, int n)
@@ -244,11 +191,7 @@ static void _change_skill_level(skill_type exsk, int n)
         hints_gained_new_skill(exsk);
     }
     else if (!you.skills[exsk])
-    {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have lost %s skill!"), gettext(skill_name(exsk)));
-        lose_skill(exsk);
-        need_reset = true;
-    }
+        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have lost %s skill!"), skill_name(exsk));
     else if (abs(n) == 1 && you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, gettext("Your %s skill %s to level %d!"),
@@ -287,22 +230,6 @@ static void _change_skill_level(skill_type exsk, int n)
             you.skill_order[exsk]++;
     }
 
-    if (exsk == SK_FIGHTING)
-        calc_hp();
-
-    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING)
-        calc_mp();
-
-    if (exsk == SK_DODGING || exsk == SK_ARMOUR)
-        you.redraw_evasion = true;
-
-    if (exsk == SK_ARMOUR || exsk == SK_SHIELDS
-        || exsk == SK_ICE_MAGIC || exsk == SK_EARTH_MAGIC
-        || you.duration[DUR_TRANSFORMATION] > 0)
-    {
-        you.redraw_armour_class = true;
-    }
-
     const skill_type best_spell = best_skill(SK_SPELLCASTING,
                                              SK_LAST_MAGIC);
     if (exsk == SK_SPELLCASTING && you.skills[exsk] == 1
@@ -326,18 +253,12 @@ void check_skill_level_change(skill_type sk, bool do_level_up)
     int new_level = you.skills[sk];
     while (1)
     {
-        const unsigned int prev = skill_exp_needed(new_level, sk);
-        const unsigned int next = skill_exp_needed(new_level + 1, sk);
-
-        if (you.skill_points[sk] >= next)
+        if (new_level < 27
+            && you.skill_points[sk] >= skill_exp_needed(new_level + 1, sk))
         {
-            if (++new_level >= 27)
-            {
-                new_level = 27;
-                break;
-            }
+            ++new_level;
         }
-        else if (you.skill_points[sk] < prev)
+        else if (you.skill_points[sk] < skill_exp_needed(new_level, sk))
         {
             new_level--;
             ASSERT(new_level >= 0);
@@ -364,7 +285,7 @@ static void _init_exercise_queue()
 
     // We remove unknown skills, since we don't want then in the queue.
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (!skill_known(i))
+        if (!you.skills[i])
             prac[i] = 0;
 
     for (int i = 0; i < EXERCISE_QUEUE_SIZE; ++i)
@@ -373,12 +294,215 @@ static void _init_exercise_queue()
         if (is_invalid_skill(sk))
             sk = static_cast<skill_type>(random_choose_weighted(you.training));
 
-        if (!skill_known(sk))
+        if (!you.skills[sk])
             continue;
 
         you.exercises.push_back(sk);
         --prac[sk];
     }
+}
+
+static void _erase_from_stop_train(skill_set &can_train)
+{
+    for (skill_set_iter it = can_train.begin(); it != can_train.end(); ++it)
+    {
+        skill_set_iter it2 = you.stop_train.find(*it);
+        if (it2 != you.stop_train.end())
+            you.stop_train.erase(it2);
+    }
+}
+
+/*
+ * Check the inventory to see what skills the player can train,
+ * among the ones in you.stop_train.
+ * Trainable skills are removed from the set.
+ */
+static void _check_inventory_skills()
+{
+    for (int i = 0; i < ENDOFPACK; ++i)
+    {
+        // Exit early if ther's no more skill to check.
+        if (you.stop_train.empty())
+            return;
+
+        skill_set skills;
+        if (!you.inv[i].defined() || !item_skills(you.inv[i], skills))
+            continue;
+
+        _erase_from_stop_train(skills);
+    }
+}
+
+static void _check_equipment_skills()
+{
+    skill_set_iter it = you.stop_train.find(SK_ARMOUR);
+    const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, true);
+    if (it != you.stop_train.end() && armour && property(*armour, PARM_EVASION))
+        you.stop_train.erase(it);
+
+    it = you.stop_train.find(SK_SHIELDS);
+    if (it != you.stop_train.end() && you.slot_item(EQ_SHIELD, true))
+        you.stop_train.erase(it);
+}
+
+static void _check_spell_skills()
+{
+    for (int i = 0; i < MAX_KNOWN_SPELLS; i++)
+    {
+        // Exit early if ther's no more skill to check.
+        if (you.stop_train.empty())
+            return;
+
+        if (you.spells[i] == SPELL_NO_SPELL)
+            continue;
+
+        skill_set skills;
+        spell_skills(you.spells[i], skills);
+        _erase_from_stop_train(skills);
+    }
+}
+
+static void _check_abil_skills()
+{
+    std::vector<ability_type> abilities = get_god_abilities();
+    for (unsigned int i = 0; i < abilities.size(); ++i)
+    {
+        // Exit early if ther's no more skill to check.
+        if (you.stop_train.empty())
+            return;
+
+        skill_set_iter it = you.stop_train.find(abil_skill(abilities[i]));
+        if (it != you.stop_train.end())
+            you.stop_train.erase(it);
+
+        if (abilities[i] == ABIL_TSO_DIVINE_SHIELD
+            && you.stop_train.find(SK_SHIELDS) != you.stop_train.end())
+        {
+            you.stop_train.erase(SK_SHIELDS);
+        }
+    }
+}
+
+static std::string _skill_names(skill_set &skills)
+{
+    std::string s;
+    int i = 0;
+    int size = skills.size();
+    for (skill_set_iter it = skills.begin(); it != skills.end(); ++it)
+    {
+        ++i;
+        s += skill_name(*it);
+        if (i == size)
+            s += ".";
+        else if (i == size - 1)
+            s += " and ";
+        else
+            s+= ", ";
+    }
+    return s;
+}
+
+static void _check_start_train()
+{
+    skill_set skills;
+    for (skill_set_iter it = you.start_train.begin();
+             it != you.start_train.end(); ++it)
+    {
+        if (is_invalid_skill(*it))
+            continue;
+
+        if (!you.can_train[*it] && you.train[*it] && you.train_set[*it])
+            skills.insert(*it);
+        you.can_train[*it] = true;
+    }
+
+    if (!skills.empty())
+        mpr("You resume training " + _skill_names(skills));
+
+    reset_training();
+    you.start_train.clear();
+}
+
+static void _check_stop_train()
+{
+    _check_inventory_skills();
+    _check_equipment_skills();
+    _check_spell_skills();
+    _check_abil_skills();
+
+    if (you.stop_train.empty())
+        return;
+
+    skill_set skills;
+    for (skill_set_iter it = you.stop_train.begin();
+         it != you.stop_train.end(); ++it)
+    {
+        if (is_invalid_skill(*it))
+            continue;
+
+        if (you.can_train[*it] && you.train[*it] && you.training[*it])
+            skills.insert(*it);
+        you.can_train[*it] = false;
+    }
+
+    if (!skills.empty())
+        mpr("You stop training " + _skill_names(skills));
+
+    reset_training();
+    you.stop_train.clear();
+}
+
+void update_can_train()
+{
+    if (!you.stop_train.empty())
+        _check_stop_train();
+
+    if (!you.start_train.empty())
+        _check_start_train();
+}
+
+bool training_restricted(skill_type sk)
+{
+    switch (sk)
+    {
+    case SK_FIGHTING:
+    // Requiring missiles would mean disabling the skill when you run out.
+    case SK_THROWING:
+    case SK_DODGING:
+    case SK_STEALTH:
+    case SK_STABBING:
+    case SK_TRAPS_DOORS:
+    case SK_UNARMED_COMBAT:
+    case SK_SPELLCASTING:
+        return false;
+    default:
+        return true;
+    }
+}
+
+/*
+ * Init the can_train array by examining inventory and spell list to see which
+ * skills can be trained.
+ */
+void init_can_train()
+{
+    for (int i = 0; i < NUM_SKILLS; ++i)
+    {
+        const skill_type sk = skill_type(i);
+
+        if (is_useless_skill(sk))
+            continue;
+
+        you.can_train[sk] = true;
+        if (training_restricted(sk))
+            you.stop_train.insert(sk);
+    }
+
+    _check_stop_train();
+
+    for (int i = 0; i < NUM_SKILLS; ++i)
+        if (you.can_train[i] && you.skills[i])
+            you.train_set[i] = true;
 }
 
 /*
@@ -389,15 +513,18 @@ void init_training()
 {
     int total = 0;
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.train[i] && skill_known(i))
+        if (you.skills[i])
+        {
+            you.train[i] = true;
             total += you.skill_points[i];
+        }
 
     // If no trainable skills, exit.
     if (!total)
         return;
 
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (skill_known(i))
+        if (you.skills[i])
             you.training[i] = you.skill_points[i] * 100 / total;
 
     _init_exercise_queue();
@@ -416,9 +543,9 @@ void check_selected_skills()
     for (int i = 0; i < NUM_SKILLS; ++i)
     {
         skill_type sk = static_cast<skill_type>(i);
-        if (you.train[sk] && skill_known(sk))
+        if (you.train[sk])
             return;
-        if (!skill_known(sk) || you.skills[sk] == 27)
+        if (!you.can_train[sk] || you.skills[sk] == 27)
             continue;
         if (is_invalid_skill(first_selectable))
             first_selectable = sk;
@@ -435,18 +562,15 @@ void check_selected_skills()
  * Scale the training array.
  *
  * @param scale The new scale of the array.
- * @param known Are we scaling known or unknown skills? Never do both at the
- *              same time.
  * @param exact When true, we'll make sure that the sum of the scaled skills
  *              is equal to the scale.
  */
-static void _scale_training(int scale, bool known, bool exact)
+static void _scale_training(int scale, bool exact)
 {
     int total = 0;
     // First, we calculate the sum of the values to be scaled.
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (known == skill_known(i) && you.training[i] > 0)
-            total += you.training[i];
+        total += you.training[i];
 
     std::vector<std::pair<skill_type,int> > rests;
     int scaled_total = 0;
@@ -457,7 +581,7 @@ static void _scale_training(int scale, bool known, bool exact)
 
     // Now we scale the values.
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (known == skill_known(i) && you.training[i] > 0)
+        if (you.training[i] > 0)
         {
             int result = you.training[i] * scale;
             const int rest = result % total;
@@ -487,28 +611,21 @@ static void _scale_training(int scale, bool known, bool exact)
 }
 
 /*
- * Reset the training array. Unknown skills are not touched and disabled ones
- * are skipped. In automatic mode, we use values from the exercise queue.
+ * Reset the training array. Disabled skills are skipped.
+ * In automatic mode, we use values from the exercise queue.
  * In manual mode, all enabled skills are set to the same value.
  * Result is scaled back to 100.
  */
 void reset_training()
 {
-    const int MAX_TRAINING_UNKNOWN = 50;
-    int total_unknown = 0;
-
-    // We clear the values of known skills in the training array. In auto mode
-    // they are set to 0 (and filled later with the content of the queue), in
-    // manual mode, they are all set to 1.
+    // We clear the values in the training array. In auto mode they are set
+    // to 0 (and filled later with the content of the queue), in manual mode,
+    // the trainable ones are set to 1 (or 2 for focus).
     for (int i = 0; i < NUM_SKILLS; ++i)
-    {
-        if (!skill_known(i))
-            total_unknown += you.training[i];
-        else if (you.auto_training)
+        if (you.auto_training || !you.can_train[i])
             you.training[i] = 0;
         else
             you.training[i] = you.train[i];
-    }
 
     bool empty = true;
     // In automatic mode, we fill the array with the content of the queue.
@@ -518,10 +635,8 @@ void reset_training()
              it != you.exercises.end(); ++it)
         {
             skill_type sk = *it;
-            if (you.train[sk])
+            if (you.train[sk] && you.can_train[sk])
             {
-                // Only known skills should be in the queue.
-                ASSERT(skill_known(sk));
                 you.training[sk] += you.train[sk];
                 empty = false;
             }
@@ -531,63 +646,46 @@ void reset_training()
         // a default weight of 1 (or 2 for focus skills).
         if (empty)
             for (int sk = 0; sk < NUM_SKILLS; ++sk)
-                if (you.train[sk] && skill_known(sk))
+                if (you.can_train[sk])
                     you.training[sk] = you.train[sk];
 
         // Focused skills get at least 20% training.
         for (int sk = 0; sk < NUM_SKILLS; ++sk)
-            if (you.train[sk] == 2 && you.training[sk] < 20)
+            if (you.train[sk] == 2 && you.training[sk] < 20 && you.can_train[sk])
                 you.training[sk] += 5 * (5 - you.training[sk] / 4);
     }
 
-    if (total_unknown > MAX_TRAINING_UNKNOWN)
-    {
-        _scale_training(MAX_TRAINING_UNKNOWN, false, true);
-        total_unknown = MAX_TRAINING_UNKNOWN;
-    }
-
-    _scale_training(100 - total_unknown, true, you.auto_training);
+    _scale_training(100, you.auto_training);
 }
 
 // returns total number of skill points gained
 void exercise(skill_type exsk, int deg)
 {
-    if (you.skills[exsk] >= 27 || !you.train[exsk])
+    if (you.skills[exsk] >= 27 || !you.train[exsk] || !you.can_train[exsk])
         return;
 
     dprf("Exercise %s by %d.", skill_name(exsk), deg);
 
-    if (!skill_known(exsk))
-        you.training[exsk] += deg;
-    else
-        while (deg > 0)
-        {
-            you.exercises.pop_front();
-            you.exercises.push_back(exsk);
-            deg--;
-        }
+    while (deg > 0)
+    {
+        you.exercises.pop_front();
+        you.exercises.push_back(exsk);
+        deg--;
+    }
     reset_training();
 }
 
 // Check if we should stop training this skill immediately.
 // We look at skill points because actual level up comes later.
-static bool _level_up_check(skill_type sk)
+static bool _level_up_check(skill_type sk, bool simu)
 {
-    // New skill learned.
-    const bool skill_learned  = !skill_known(sk)
-                    && you.skill_points[sk] >= skill_exp_needed(1, sk);
-
-    if (skill_learned)
-        gain_skill(sk);
-
     // Don't train past level 27.
-    // In manual mode, we stop training and automatically disable new skills.
-    if (you.skill_points[sk] >= skill_exp_needed(27, sk)
-        || skill_learned && !you.auto_training)
+    if (you.skill_points[sk] >= skill_exp_needed(27, sk))
     {
-        you.train[sk] = you.training[sk] = 0;
-        if (!skill_learned)
-            check_selected_skills();
+        you.training[sk] = 0;
+        if (!simu)
+            you.train[sk] = 0;
+        check_selected_skills();
         return true;
     }
 
@@ -596,12 +694,6 @@ static bool _level_up_check(skill_type sk)
 
 static bool _is_magic_skill(skill_type sk)
 {
-    // Learning new skills doesn't count for Trog because punishment has
-    // already been given for casting. And we don't want to punish
-    // learning spellcasting from scrolls.
-    if (you.religion == GOD_TROG && !skill_known(sk))
-        return false;
-
     return (sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC);
 }
 
@@ -686,7 +778,7 @@ void train_skills(int exp, const int cost, const bool simu)
                 gain += _train(sk, sk_exp[sk], simu);
                 exp += sk_exp[sk];
                 ASSERT(exp >= 0);
-                if (_level_up_check(sk))
+                if (_level_up_check(sk, simu))
                     sk_exp[sk] = 0;
             }
 
@@ -720,7 +812,7 @@ void train_skills(int exp, const int cost, const bool simu)
             break;
         }
 
-        _level_up_check(sk);
+        _level_up_check(sk, simu);
 
         if (gain && _is_magic_skill(sk))
             magic_gain += gain;
@@ -866,18 +958,28 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
             stop_studying_manual(true);
     }
 
-    if (!skill_known(exsk) && you.training[exsk] > 0
-        && x_chance_in_y(skill_inc, 10))
-    {
-        --you.training[exsk];
-    }
-
     you.skill_points[exsk] += skill_inc;
     you.ct_skill_points[exsk] += (1 - 1 / crosstrain_bonus(exsk))
                                  * skill_inc;
     you.exp_available -= cost;
     max_exp -= cost;
     you.total_skill_points += skill_inc;
+
+    if (exsk == SK_FIGHTING)
+        calc_hp();
+
+    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING)
+        calc_mp();
+
+    if (exsk == SK_DODGING || exsk == SK_ARMOUR)
+        you.redraw_evasion = true;
+
+    if (exsk == SK_ARMOUR || exsk == SK_SHIELDS
+        || exsk == SK_ICE_MAGIC || exsk == SK_EARTH_MAGIC
+        || you.duration[DUR_TRANSFORMATION] > 0)
+    {
+        you.redraw_armour_class = true;
+    }
 
     check_skill_cost_change();
     ASSERT(you.exp_available >= 0);

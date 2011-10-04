@@ -21,17 +21,16 @@ unsigned char get_ch();
 void cio_init();
 void cio_cleanup();
 void clear_globals_on_exit();
-NORETURN void end(int exit_code, bool print_err = false,
-         const char *format = NULL, ...);
+NORETURN void end(int exit_code, bool print_err = false, PRINTF(2, = NULL));
 NORETURN void game_ended();
 NORETURN void game_ended_with_error(const std::string &message);
 
-bool print_error_screen(const char *message, ...);
+bool print_error_screen(PRINTF(0, ));
 void redraw_screen();
 
 void canned_msg(canned_message_type which_message);
 
-bool yes_or_no(const char* fmt, ...);
+bool yes_or_no(PRINTF(0, ));
 typedef std::map<int, int> explicit_keymap;
 bool yesno(const char * str, bool safe = true, int safeanswer = 0,
             bool clear_after = true, bool interrupt_delays = true,

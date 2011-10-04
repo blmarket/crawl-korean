@@ -30,7 +30,8 @@ std::string &escape_path_spaces(std::string &s);
 std::string lowercase_string(std::string s);
 std::string &lowercase(std::string &s);
 std::string &uppercase(std::string &s);
-std::string upcase_first(std::string);
+std::string uppercase_first(std::string);
+std::string lowercase_first(std::string);
 
 bool key_is_escape(int key);
 
@@ -71,9 +72,6 @@ static inline int isaalnum(int c)
 
 bool ends_with(const std::string &s, const std::string &suffix);
 
-#ifdef UNIX
-extern "C" int stricmp(const char *str1, const char *str2);
-#endif
 int numcmp(const char *a, const char *b, int limit = 0);
 bool numcmpstr(std::string a, std::string b);
 size_t strlcpy(char *dst, const char *src, size_t n);
@@ -95,6 +93,7 @@ bool strip_bool_tag(std::string &s, const std::string &name,
                     bool defval = false);
 std::vector<std::string> strip_multiple_tag_prefix(std::string &s, const std::string &tagprefix);
 std::string strip_tag_prefix(std::string &s, const std::string &tagprefix);
+bool parse_int(const char *s, int &i);
 
 std::string article_a(const std::string &name, bool lowercase = true);
 std::string pluralise(unsigned int plu_type,
@@ -118,7 +117,7 @@ int  ends_with(const std::string &s, const char *suffixes[]);
 std::string strip_filename_unsafe_chars(const std::string &s);
 
 std::string vmake_stringf(const char *format, va_list args);
-std::string make_stringf(const char *format, ...);
+std::string make_stringf(PRINTF(0, ));
 
 std::string replace_all(std::string s,
                         const std::string &tofind,
@@ -160,20 +159,6 @@ std::vector<std::string> split_string(
     bool accept_empties = false,
     int nsplits = -1);
 
-inline std::string lowercase_first(std::string s)
-{
-    if (s.length())
-        s[0] = tolower(s[0]);
-    return (s);
-}
-
-inline std::string uppercase_first(std::string s)
-{
-    if (s.length())
-        s[0] = toupper(s[0]);
-    return (s);
-}
-
 template <typename Z>
 std::string comma_separated_line(Z start, Z end,
                                  const std::string &andc = " and ",
@@ -206,12 +191,6 @@ inline bool testbits(uint64_t flags, uint64_t test)
     return ((flags & test) == test);
 }
 
-#ifndef USE_TILE
-coord_def cgettopleft(GotoRegion region = GOTO_CRT);
-coord_def cgetpos(GotoRegion region = GOTO_CRT);
-void cgotoxy(int x, int y, GotoRegion region = GOTO_CRT);
-GotoRegion get_cursor_region();
-#endif
 coord_def cgetsize(GotoRegion region = GOTO_CRT);
 void cscroll(int n, GotoRegion region);
 

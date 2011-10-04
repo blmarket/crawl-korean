@@ -153,8 +153,29 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
         _unequip_armour_effect(item, meld);
     else if (slot >= EQ_LEFT_RING && slot < NUM_EQUIP)
         _unequip_jewellery_effect(item, msg);
+
+    if (slot == EQ_BODY_ARMOUR && !meld)
+        you.stop_train.insert(SK_ARMOUR);
+    else if (slot == EQ_SHIELD && !meld)
+        you.stop_train.insert(SK_SHIELDS);
 }
 
+void _hp_artefact()
+{
+    // Rounding must be down or Deep Dwarves would abuse certain values.
+    // We can reduce errors by a factor of 100 by using partial hp we have.
+    int old_max = you.hp_max;
+    int hp = you.hp * 100 + you.hit_points_regeneration;
+    calc_hp();
+    int new_max = you.hp_max;
+    hp = hp * new_max / old_max;
+    if (hp < 100)
+        hp = 100;
+    you.hp = std::min(hp / 100, you.hp_max);
+    you.hit_points_regeneration = hp % 100;
+    if (you.hp_max <= 0) // Borgnjor's abusers...
+        ouch(0, NON_MONSTER, KILLED_BY_DRAINING);
+}
 
 ///////////////////////////////////////////////////////////
 // Actual equip and unequip effect implementation below
@@ -217,13 +238,6 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
             }
             artefact_wpn_learn_prop(item, ARTP_EVASION);
         }
-    }
-
-    if (proprt[ARTP_PONDEROUS] && !unmeld)
-    {
-        if (msg)
-            mpr(gettext("You feel rather ponderous."));
-        che_handle_change(CB_PONDEROUS_COUNT, 1);
     }
 
     if (proprt[ARTP_EYESIGHT])
@@ -303,6 +317,9 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         xom_is_stimulated(100);
     }
 
+    if (proprt[ARTP_HP])
+        _hp_artefact();
+
     // Let's try this here instead of up there.
     if (proprt[ARTP_MAGICAL_POWER])
         calc_mp();
@@ -339,12 +356,8 @@ static void _unequip_artefact_effect(item_def &item,
         }
     }
 
-    if (proprt[ARTP_PONDEROUS] && !meld)
-    {
-        if (msg)
-            mpr(gettext("That put a bit of spring back into your step."));
-        che_handle_change(CB_PONDEROUS_COUNT, -1);
-    }
+    if (proprt[ARTP_HP])
+        _hp_artefact();
 
     if (proprt[ARTP_MAGICAL_POWER] && !known[ARTP_MAGICAL_POWER] && msg)
     {
@@ -876,12 +889,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_PONDEROUSNESS:
-            if (!unmeld)
-            {
-                mpr(gettext("You feel rather ponderous."));
-                che_handle_change(CB_PONDEROUS_COUNT, 1);
-                you.redraw_evasion = true;
-            }
+            mpr(gettext("You feel rather ponderous."));
             break;
 
         case SPARM_LEVITATION:
@@ -1024,11 +1032,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         break;
 
     case SPARM_PONDEROUSNESS:
-        if (!meld)
-        {
-            mpr("That put a bit of spring back into your step.");
-            che_handle_change(CB_PONDEROUS_COUNT, -1);
-        }
+        mpr("That put a bit of spring back into your step.");
         break;
 
     case SPARM_LEVITATION:

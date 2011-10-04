@@ -1509,11 +1509,11 @@ bool handle_mon_spell(monster* mons, bolt &beem)
                         spell_cast = SPELL_NO_SPELL;
                     }
 
-                    // Pacified monsters leaving the level won't choose
-                    // emergency spells harmful to the area.
+                    // Pacified monsters leaving the level will only
+                    // try and cast escape spells.
                     if (spell_cast != SPELL_NO_SPELL
                         && mons->pacified()
-                        && spell_harms_area(spell_cast))
+                        && !testbits(get_spell_flags(spell_cast), SPFLAG_ESCAPE))
                     {
                         spell_cast = SPELL_NO_SPELL;
                     }
@@ -2434,6 +2434,10 @@ static void _clone_monster(monster* mons, monster_type clone_type,
     if (created == -1)
         return;
 
+    // Reset client id so that no information about who the original monster
+    // is is leaked to the client
+    mons->reset_client_id();
+
     // Mara's clones are special; they have the same stats as him, and
     // are exact clones, so they are created damaged if necessary.
     monster* new_fake = &menv[created];
@@ -2650,9 +2654,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_SMALL_MAMMALS:
     case SPELL_VAMPIRE_SUMMON:
         if (spell_cast == SPELL_SUMMON_SMALL_MAMMALS)
-            sumcount2 = 1 + random2(4);
+            sumcount2 = 1 + random2(3);
         else
-            sumcount2 = 3 + random2(3) + mons->hit_dice / 5;
+            sumcount2 = 3 + random2(3);
 
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
         {
@@ -2701,7 +2705,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(4) + random2(mons->hit_dice / 7 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 5 + 1);
 
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
         {
@@ -2751,7 +2755,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         }
         else
         {
-            sumcount2 = 1 + random2(4) + random2(mons->hit_dice / 7 + 1);
+            sumcount2 = 1 + random2(mons->hit_dice / 5 + 1);
             dur = 3;
         }
 
@@ -2873,7 +2877,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(2) + random2(mons->hit_dice / 10 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 10 + 1);
 
         duration  = std::min(2 + mons->hit_dice / 10, 6);
         for (sumcount = 0; sumcount < sumcount2; sumcount++)
@@ -2889,7 +2893,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(2) + random2(mons->hit_dice / 10 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 10 + 1);
 
         duration  = std::min(2 + mons->hit_dice / 10, 6);
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
@@ -2918,7 +2922,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         return;
 
     case SPELL_CALL_IMP: // class 5 demons
-        sumcount2 = 1 + random2(3) + random2(mons->hit_dice / 5 + 1);
+        sumcount2 = 1 + random2(3);
 
         duration  = std::min(2 + mons->hit_dice / 5, 6);
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
@@ -2935,7 +2939,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(3) + random2(mons->hit_dice / 5 + 1);
+        sumcount2 = 1 + random2(5);
 
         duration  = std::min(2 + mons->hit_dice / 5, 6);
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
@@ -2953,7 +2957,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         return;
 
     case SPELL_SUMMON_UFETUBUS:
-        sumcount2 = 2 + random2(2) + random2(mons->hit_dice / 5 + 1);
+        sumcount2 = 2 + random2(2);
 
         duration  = std::min(2 + mons->hit_dice / 5, 6);
 
@@ -3026,8 +3030,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_UNDEAD:      // Summon undead around player.
         _do_high_level_summon(mons, monsterNearby, spell_cast,
                               _pick_undead_summon,
-                              2 + random2(2)
-                                + random2(mons->hit_dice / 4 + 1), god);
+                              2 + random2(mons->hit_dice / 5 + 1), god);
         return;
 
     case SPELL_BROTHERS_IN_ARMS:
@@ -3093,17 +3096,13 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(mons->hit_dice / 10 + 1);
-
         duration  = std::min(2 + mons->hit_dice / 10, 6);
-        for (sumcount = 0; sumcount < sumcount2; ++sumcount)
-        {
-            create_monster(
-                mgen_data(summon_any_demon(DEMON_GREATER),
-                          SAME_ATTITUDE(mons), mons,
-                          duration, spell_cast, mons->pos(), mons->foe,
-                          0, god));
-        }
+
+        create_monster(
+            mgen_data(summon_any_demon(DEMON_GREATER),
+                      SAME_ATTITUDE(mons), mons,
+                      duration, spell_cast,
+                      mons->pos(), mons->foe, 0, god));
         return;
 
     // Journey -- Added in Summon Lizards and Draconians
@@ -3111,7 +3110,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(3) + random2(mons->hit_dice / 5 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 5 + 1);
 
         duration  = std::min(2 + mons->hit_dice / 10, 6);
 
@@ -3469,7 +3468,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(2) + random2(mons->hit_dice / 7 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 7 + 1);
 
         duration = std::min(2 + mons->hit_dice / 10, 6);
 
@@ -3490,11 +3489,8 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         }
         return;
     case SPELL_SUMMON_BUTTERFLIES:
-        if (_mons_abjured(mons, monsterNearby))
-            return;
-
         duration = std::min(2 + mons->hit_dice / 5, 6);
-        for (int i = 0; i < 15; ++i)
+        for (int i = 0; i < 10; ++i)
         {
             create_monster(
                 mgen_data(MONS_BUTTERFLY, SAME_ATTITUDE(mons),
@@ -3517,16 +3513,22 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         return;
 
     case SPELL_SUMMON_DRAGON:
+        if (_mons_abjured(mons, monsterNearby))
+            return;
+
         cast_summon_dragon(mons, mons->hit_dice * 5, god);
         return;
     case SPELL_SUMMON_HYDRA:
+        if (_mons_abjured(mons, monsterNearby))
+            return;
+
         cast_summon_hydra(mons, mons->hit_dice * 5, god);
         return;
     case SPELL_FIRE_SUMMON:
         if (_mons_abjured(mons, monsterNearby))
             return;
 
-        sumcount2 = 1 + random2(2) + random2(mons->hit_dice / 7 + 1);
+        sumcount2 = 1 + random2(mons->hit_dice / 5 + 1);
 
         duration = std::min(2 + mons->hit_dice / 10, 6);
 

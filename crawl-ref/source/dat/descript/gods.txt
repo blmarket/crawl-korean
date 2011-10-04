@@ -111,8 +111,7 @@ Jiyva
 %%%%
 Zin powers
 
-진은 교화되지 않은 자들을 설교할 수 있는 권능을 부여한다. 또한, 충분한 신앙심을 가진 굶주린 신도는, 기도를 통하여 굶주림을 해소할 수 있다. 시간이 지나면, 신도들은 자신의 몸을 강화하고 정화시킬 수 있는 권능을 얻으며, 궁극적으로 신에게 일시적인 보호를 받을 수 있다.
-신앙이 깊어질수록, 신도는 병, 변이, 부패로부터 보호를 받을 수 있으며, 별개로 진은 종종 신도의 목숨을 구하기 위해 직접 개입할 수도 있다.
+Zin grants followers the ability to preach to the unenlightened masses, and powers to vitalise their bodies and gain divine stamina, protecting them from various afflictions. Later, followers gain the ability to imprison their foes temporarily. Followers can eventually find temporary safety in a divine refuge. As piety grows, followers will be protected from mutation, and Zin may even occasionally directly intervene to save a follower's life.
 %%%%
 The Shining One powers
 
@@ -180,7 +179,7 @@ Fedhas powers
 %%%%
 Cheibriados powers
 
-체브리아도스의 신도들은 느리게 움직이며, 자신보다 빠른 적을 살상함으로써 보상을 받는다. 반면 너무 빠르게 움직이거나 마법적으로 가속된 무기를 사용하는 것을 못마땅해한다. 체브리아도스는 느린 신진대사와, 적을 느리게 할 수 있는 권능과, 자신보다 빨리 움직이는 적에 피해를 입힐 수 있는 권능을 부여하며, 궁극적으로는 시간의 흐름에서 빠져나갈 수 있는 권능을 내린다.
+Followers of Cheibriados move more slowly as they gain favour, and are rewarded for killing creatures which are faster than they are. Moving too quickly or using magically hastened weapons is frowned upon. Cheibriados rewards the faithful with a slowed metabolism, the power to slow other creatures, the power to harm those who move more quickly than they do, and, finally, the ability to step out of the flow of time.
 %%%%
 Jiyva powers
 

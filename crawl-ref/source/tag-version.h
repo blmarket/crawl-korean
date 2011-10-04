@@ -47,6 +47,13 @@ enum tag_minor_version
     TAG_MINOR_SKILL_MENU_STATES,   // Move the saved states out of props.
     TAG_MINOR_MONS_THREAT_LEVEL,   // Save threat level in monster_info.
     TAG_MINOR_SPELL_USAGE,         // Spell usage counts in char dumps.
+    TAG_MINOR_UNIQUE_NOTES,        // Automatic annotations for uniques.
+    TAG_MINOR_NEW_MIMICS,          // Wider map mask and new mimics.
+    TAG_MINOR_POLEARMS_REACH,      // Purge reaching from polearms (built-in now).
+    TAG_MINOR_ABYSS_STATE,         // Save the Worley noise state for the Abyss.
+    TAG_MINOR_ABYSS_SPEED,         // Save the abyss speed which is variable.
+    TAG_MINOR_UNPONDERIFY,         // Give Cheibriadites back their old gear.
+    TAG_MINOR_SKILL_RESTRICTIONS,  // Add restrictions to which skills can be trained.
 
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1

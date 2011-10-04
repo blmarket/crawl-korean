@@ -117,6 +117,8 @@ public:
   FixedVector<uint8_t, NUM_SKILLS>  skills; //!< skill level
   FixedVector<int8_t, NUM_SKILLS>  train; //!< 0: disabled, 1: normal, 2: focus.
   FixedVector<unsigned int, NUM_SKILLS>  training; //<! percentage of XP used
+  FixedVector<bool, NUM_SKILLS> can_train; //!<Is training this skill allowed
+  FixedVector<bool, NUM_SKILLS> train_set; //!< Has the player set this skill
   FixedVector<unsigned int, NUM_SKILLS> skill_points;
   FixedVector<unsigned int, NUM_SKILLS> ct_skill_points; //<!track skill points
                                                     //<!gained by crosstraining
@@ -124,6 +126,8 @@ public:
 
   bool auto_training;
   std::list<skill_type> exercises;
+  std::set<skill_type> stop_train; //<! need to check if we can still train
+  std::set<skill_type> start_train; //<! we can resume training
 
   // Skill menu states
   skill_menu_state skill_menu_do;
@@ -619,7 +623,7 @@ public:
     int halo_radius2() const;
     int silence_radius2() const;
     int liquefying_radius2 () const;
-    int antihalo_radius2 () const;
+    int umbra_radius2 () const;
     bool glows_naturally() const;
     bool petrifying() const;
     bool petrified() const;
@@ -655,7 +659,7 @@ public:
     void shield_block_succeeded(actor *foe);
 
     bool wearing_light_armour(bool with_skill = false) const;
-    int  skill(skill_type skill) const;
+    int  skill(skill_type skill, int scale =1, bool real = false) const;
     int  traps_skill() const;
 
     bool do_shaft();
@@ -849,8 +853,6 @@ int player_spec_summ(void);
 
 int player_speed(void);
 int player_armour_slots();
-int player_ponderous_count();
-int player_ponderousness();
 int player_evokable_levitation();
 int player_evokable_invis();
 
@@ -874,6 +876,7 @@ void display_char_status(void);
 
 void forget_map(int chance_forgotten = 100, bool force = false);
 
+int get_exp_progress();
 void gain_exp(unsigned int exp_gained, unsigned int* actual_gain = NULL,
               unsigned int* actual_avail_gain = NULL);
 
@@ -897,7 +900,7 @@ void update_player_symbol();
 void update_vision_range();
 
 bool you_can_wear(int eq, bool special_armour = false);
-bool player_has_feet(void);
+bool player_has_feet(bool temp = true);
 bool player_wearing_slot(int eq);
 bool you_tran_can_wear(const item_def &item);
 bool you_tran_can_wear(int eq, bool check_mutation = false);

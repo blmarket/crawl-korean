@@ -337,7 +337,6 @@
 //  Game Play Defines
 // =========================================================================
 // use Abyss morphing
-#define NEW_ABYSS
 
 // number of older messages stored during play and in save files
 #define NUM_STORED_MESSAGES   1000
@@ -388,6 +387,16 @@ inline void UNUSED(const volatile T &)
 }
 
 #endif // __cplusplus
+
+
+#ifdef __GNUC__
+// show warnings about the format string
+# define PRINTF(x, dfmt) const char *format dfmt, ...) \
+                   __attribute__((format (printf, x+1, x+2))
+#else
+# define PRINTF(x, dfmt) const char *format dfmt, ...
+#endif
+
 
 // And now headers we want precompiled
 #ifdef TARGET_COMPILER_VC

@@ -764,6 +764,7 @@ static const char *targeting_help_1 =
     "<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
     "<w>Dir.</w>: move cursor in that direction\n"
     "<w>.</w> : move to cursor (also <w>Enter</w>, <w>Del</w>)\n"
+    "<w>g</w> : pick up item at cursor\n"
     "<w>v</w> : describe monster under cursor\n"
     "<w>+</w> : cycle monsters forward (also <w>=</w>)\n"
     "<w>-</w> : cycle monsters backward\n"
@@ -783,7 +784,7 @@ static const char *targeting_help_1 =
     " \n"
     "<h>Wizard targeting commands:</h>\n"
     "<w>D</w>: get debugging information about the monster\n"
-    "<w>g</w>: give item to monster\n"
+    "<w>o</w>: give item to monster\n"
     "<w>F</w>: cycle monster friendly/good neutral/neutral/hostile\n"
     "<w>Ctrl-H</w>: heal the monster to full hit points\n"
     "<w>P</w>: apply divine blessing to monster\n"
@@ -1017,7 +1018,7 @@ static std::vector<std::string> _get_desc_keys(std::string regex,
     return (all_matches);
 }
 
-static std::vector<std::string> _get_monster_keys(wchar_t showchar)
+static std::vector<std::string> _get_monster_keys(ucs_t showchar)
 {
     std::vector<std::string> mon_keys;
 
@@ -1037,7 +1038,7 @@ static std::vector<std::string> _get_monster_keys(wchar_t showchar)
         if (getLongDescription(me->name).empty())
             continue;
 
-        if (me->showchar == showchar)
+        if ((ucs_t)me->basechar == showchar)
             mon_keys.push_back(me->name);
     }
 
@@ -1067,20 +1068,20 @@ static std::vector<std::string> _get_branch_keys()
         Branch     &branch       = branches[which_branch];
 
         // Skip unimplemented branches
-        if (branch.depth < 1 || branch.shortname == NULL)
+        if(branch_is_unfinished(which_branch))
             continue;
 
         names.push_back(branch.shortname);
     }
-/*
-    // Maybe include other level areas, as well.
-    for (int i = LEVEL_LABYRINTH; i < NUM_LEVEL_AREA_TYPES; i++)
-    {
-        names.push_back(place_name(
+
+    //add handpicked places
+    names.push_back(place_name(
                             get_packed_place(BRANCH_MAIN_DUNGEON, 1,
-                                static_cast<level_area_type>(i)), true));
-    }
-*/
+                                static_cast<level_area_type>(LEVEL_ABYSS)), false));
+    names.push_back(place_name(
+                            get_packed_place(BRANCH_MAIN_DUNGEON, 1,
+                                static_cast<level_area_type>(LEVEL_PANDEMONIUM)), false));
+
     return (names);
 }
 
@@ -1116,7 +1117,7 @@ static bool _item_filter(std::string key, std::string body)
 
 static bool _skill_filter(std::string key, std::string body)
 {
-    key = lowercase_string(key);
+    lowercase(key);
     std::string name;
     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; i++)
     {
@@ -1159,7 +1160,7 @@ static bool _card_filter(std::string key, std::string body)
 
 static bool _ability_filter(std::string key, std::string body)
 {
-    key = lowercase_string(key);
+    lowercase(key);
     if (string_matches_ability_name(key))
         return (false);
 
@@ -1817,6 +1818,8 @@ static void _find_description(bool *again, std::string *error_inout)
         }
         else if (doing_features)
             me = new FeatureMenuEntry(str, feat_by_desc(str), letter);
+        else if (doing_gods)
+            me = new GodMenuEntry(key_list[i]);
         else
         {
             me = new MenuEntry(uppercase_first(key_list[i]), MEL_ITEM, 1,
@@ -2583,82 +2586,82 @@ static void _add_formatted_hints_help(column_composer &cols)
             1, gettext("<h>Item types (and common commands)\n"),
             false, true, _cmdhelp_textfilter);
 
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<cyan>)</cyan> : "
 #endif
-                         gettext("hand weapons (<w>%</w>ield)"),
+                         "hand weapons (<w>%</w>ield)",
                          CMD_WIELD_WEAPON, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<brown>(</brown> : "
 #endif
-                         gettext("missiles (<w>%</w>uiver, <w>%</w>ire, <w>%</w>/<w>%</w> cycle)"),
+                         "missiles (<w>%</w>uiver, <w>%</w>ire, <w>%</w>/<w>%</w> cycle)",
                          CMD_QUIVER_ITEM, CMD_FIRE, CMD_CYCLE_QUIVER_FORWARD,
                          CMD_CYCLE_QUIVER_BACKWARD, 0);
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<cyan>[</cyan> : "
 #endif
-                         gettext("armour (<w>%</w>ear and <w>%</w>ake off)"),
+                         "armour (<w>%</w>ear and <w>%</w>ake off)",
                          CMD_WEAR_ARMOUR, CMD_REMOVE_ARMOUR, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<brown>percent</brown> : "
 #endif
-                         gettext("corpses and food (<w>%</w>hop up and <w>%</w>at)"),
+                         "corpses and food (<w>%</w>hop up and <w>%</w>at)",
                          CMD_BUTCHER, CMD_EAT, 0);
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<w>?</w> : "
 #endif
-                         gettext("scrolls (<w>%</w>ead)"),
+                         "scrolls (<w>%</w>ead)",
                          CMD_READ, 0);
     _add_insert_commands(cols, 1,
 #ifndef USE_TILE
                          "<magenta>!</magenta> : "
 #endif
-                         gettext("potions (<w>%</w>uaff)"),
+                         "potions (<w>%</w>uaff)",
                          CMD_QUAFF, 0);
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<blue>=</blue> : "
 #endif
-                         gettext("rings (<w>%</w>ut on and <w>%</w>emove)"),
+                         "rings (<w>%</w>ut on and <w>%</w>emove)",
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<red>\"</red> : "
 #endif
-                         gettext("amulets (<w>%</w>ut on and <w>%</w>emove)"),
+                         "amulets (<w>%</w>ut on and <w>%</w>emove)",
                          CMD_WEAR_JEWELLERY, CMD_REMOVE_JEWELLERY, 0);
-    _add_insert_commands(cols, 1,
+    _add_insert_commands(cols, 1, 
 #ifndef USE_TILE
                          "<lightgrey>/</lightgrey> : "
 #endif
-                         gettext("wands (e<w>%</w>oke)"),
+                         "wands (e<w>%</w>oke)",
                          CMD_EVOKE, 0);
 
-    std::string item_types =
+    std::string item_types = 
 #ifndef USE_TILE
                   "<lightcyan>";
     item_types += stringize_glyph(get_item_symbol(SHOW_ITEM_BOOK));
     item_types +=
         "</lightcyan> : "
 #endif
-        gettext("books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)");
+        "books (<w>%</w>ead, <w>%</w>emorise, <w>%</w>ap, <w>%</w>ap)";
     _add_insert_commands(cols, 1, item_types,
                          CMD_READ, CMD_MEMORISE_SPELL, CMD_CAST_SPELL,
                          CMD_FORCE_CAST_SPELL, 0);
 
-    item_types =
+    item_types = 
 #ifndef USE_TILE
                   "<brown>";
     item_types += stringize_glyph(get_item_symbol(SHOW_ITEM_STAVE));
-    item_types +=
+    item_types += 
         "</brown> : "
 #endif
-        gettext("staves and rods (<w>%</w>ield and e<w>%</w>oke)");
+        "staves and rods (<w>%</w>ield and e<w>%</w>oke)";
     _add_insert_commands(cols, 1, item_types,
                          CMD_WIELD_WEAPON, CMD_EVOKE_WIELDED, 0);
 
@@ -2739,7 +2742,7 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>_</w>      : gain religion\n"
                        "<w>^</w>      : set piety to a value\n"
                        "<w>@</w>      : set Str Int Dex\n"
-                       "<w>Ctrl-Z</w> : gain lots of Zot Points\n"
+                       "<w>Z</w>      : gain lots of Zot Points\n"
                        "\n"
                        "<yellow>Create level features</yellow>\n"
                        "<w>l</w>      : make entrance to labyrinth\n"
@@ -2814,9 +2817,8 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>Ctrl-X</w> : Xom effect stats\n"
                        "\n"
                        "<yellow>Wizard targeting commands</yellow>\n"
-                       "<w>x?</w>     : list targeted commands\n"
-                       "\n"
-                       "<w>?</w>      : list wizard commands\n"),
+                       "(not prefixed with <w>&</w>!)\n"
+                       "<w>x?</w>     : list targeted commands\n"),
                        true, true);
 
     int key = _show_keyhelp_menu(cols.formatted_lines(), false,

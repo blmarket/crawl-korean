@@ -106,7 +106,6 @@ function volcano_portal (e)
     e.colour("O = red")
     e.rtile("X = wall_pebble_red")
     e.ftile("OS = floor_rough_red")
-    e.tags("layout_caves")
 end
 
 function volcano_feat_descs()
@@ -817,8 +816,6 @@ KFEAT:  _ = altar_makhleb / altar_trog / altar_vehumet
 :       fiery_guardians(_G)
 KMONS:  G = statue name:lasher name_adjective \
         generate_awake ; whip ego:flaming
-KMONS:  F = statue name:lasher name_adjective \
-        generate_awake ; whip ego:reaching
 KMONS:  l = lava fish / lava worm / nothing
 KFEAT:  l = l
 #       Loot: 10 items.
@@ -829,11 +826,11 @@ xc.....cc.cxxxxxxxx
 xc...cc.c.cccccxxxx
 xc...c.cc..cGccxxxx
 xc...c.lccc.cGcccxx
-xc121c.llcGc.ccFcxx
+xc121c.llcGc.ccGcxx
 xcdgdc.llccGc..ccxx
 xceCec.lllccccc.cxx
 xcfgfc.lllllc...cxx
-xcg<gc.......cFccxx
+xcg<gc.......cGccxx
 xcccccccccccccccxxx
 ENDMAP
 

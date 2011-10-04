@@ -267,6 +267,18 @@ static void _sdump_transform(dump_params &par)
         case TRAN_PIG:
             text += "You " + verb + " a filthy swine.";
             break;
+        case TRAN_APPENDAGE:
+            if (you.attribute[ATTR_APPENDAGE] == MUT_TENTACLE_SPIKE)
+            {
+                text += make_stringf("One of your tentacles %s a temporary spike.",
+                                     par.se ? "had" : "has");
+            }
+            else
+            {
+                text += make_stringf("You %s grown temporary %s.",
+                                     par.se ? "had" : "have", appendage_name());
+            }
+            break;
         case TRAN_NONE:
             break;
         }
@@ -295,7 +307,7 @@ static void _sdump_visits(dump_params &par)
         branches_total += branches_visited[i];
 
     text += make_stringf("You %svisited %d branch",
-                         have.c_str(), branches_visited.size());
+                         have.c_str(), (int)branches_visited.size());
     if (branches_visited.size() != 1)
         text += "es";
     text += make_stringf(" of the dungeon, and %s %d of its levels.\n",
@@ -392,7 +404,7 @@ static void _sdump_visits(dump_params &par)
         if (!misc_portals.empty())
         {
             text += make_stringf("You %svisited %d portal chamber",
-                                 have.c_str(), misc_portals.size());
+                                 have.c_str(), (int)misc_portals.size());
             if (misc_portals.size() > 1)
                 text += "s";
             text += ": ";
@@ -1136,6 +1148,19 @@ static void _sdump_vault_list(dump_params &par)
     }
 }
 
+static bool _sort_by_first_cast(std::pair<spell_type, FixedVector<int, 28> > a,
+                                std::pair<spell_type, FixedVector<int, 28> > b)
+{
+    for (int i = 0; i < 27; i++)
+    {
+        if (a.second[i] > b.second[i])
+            return true;
+        else if (a.second[i] < b.second[i])
+            return false;
+    }
+    return false;
+}
+
 static void _sdump_spell_usage(dump_params &par)
 {
     if (you.spell_usage.empty())
@@ -1147,32 +1172,47 @@ static void _sdump_spell_usage(dump_params &par)
     if (max_lt)
         max_lt++;
 
-    par.text += make_stringf("\n%-24s | %5s", "Spells cast", "total");
+    par.text += make_stringf("\n%-24s", "Spells cast");
     for (int lt = 0; lt < max_lt; lt++)
         par.text += make_stringf(" | %2d-%2d", lt * 3 + 1, lt * 3 + 3);
-    par.text += "\n-------------------------+-------";
+    par.text += make_stringf(" || %5s", "total");
+    par.text += "\n-------------------------";
     for (int lt = 0; lt < max_lt; lt++)
         par.text += "+-------";
-    par.text += "\n";
+    par.text += "++-------\n";
 
+    std::vector<std::pair<spell_type, FixedVector<int, 28> > > usage_vec;
     for (std::map<spell_type, FixedVector<int, 27> >::const_iterator sp =
          you.spell_usage.begin(); sp != you.spell_usage.end(); ++sp)
     {
-        par.text += chop_string(spell_title(sp->first), 24);
-
-        int total = 0;
+        FixedVector<int, 28> v;
+        v[27] = 0;
         for (int i = 0; i < 27; i++)
-            total += sp->second[i];
-        ASSERT(total > 0);
-        par.text += make_stringf(" |%6d", total);
+        {
+            v[i] = sp->second[i];
+            v[27] += v[i];
+        }
+        usage_vec.push_back(std::pair<spell_type, FixedVector<int, 28> >(sp->first, v));
+    }
+    std::sort(usage_vec.begin(), usage_vec.end(), _sort_by_first_cast);
+
+    for (std::vector<std::pair<spell_type, FixedVector<int, 28> > >::const_iterator sp =
+         usage_vec.begin(); sp != usage_vec.end(); ++sp)
+    {
+        par.text += chop_string(spell_title(sp->first), 24);
 
         for (int lt = 0; lt < max_lt; lt++)
         {
             int ltotal = 0;
             for (int i = lt * 3; i < lt * 3 + 3; i++)
                 ltotal += sp->second[i];
-            par.text += make_stringf(" |%6d", ltotal);
+            if (ltotal)
+                par.text += make_stringf(" |%6d", ltotal);
+            else
+                par.text += " |      ";
         }
+        ASSERT(sp->second[27] > 0);
+        par.text += make_stringf(" ||%6d", sp->second[27]);
 
         par.text += "\n";
     }

@@ -74,6 +74,7 @@ ssl_port = 8081
 
 connection_timeout = 600
 max_idle_time = 5 * 60 * 60
+http_connection_timeout = 30
 
 kill_timeout = 10 # Seconds until crawl is killed after HUP is sent
 
@@ -81,3 +82,6 @@ nick_regex = r"^[a-zA-Z0-9]{3,20}$"
 max_passwd_length = 20
 
 login_token_lifetime = 7 # Days
+
+uid = None  # If this is not None, the server will setuid to that id after
+gid = None  # binding its sockets.

@@ -105,6 +105,7 @@ void prevent_travel_to(const std::string &dungeon_feature_name);
 void arrange_features(std::vector<coord_def> &features);
 int level_distance(level_id first, level_id second);
 level_id find_deepest_explored(level_id curr);
+bool branch_entered(branch_type branch);
 
 bool can_travel_to(const level_id &lid);
 bool can_travel_interlevel();
@@ -620,4 +621,14 @@ int click_travel(const coord_def &gc, bool force);
 bool check_for_interesting_features();
 void clear_level_target();
 
+class level_id_iterator : public std::iterator<std::forward_iterator_tag, level_id>
+{
+public:
+    level_id_iterator();
+    operator bool() const;
+    level_id operator *() const;
+    void operator++();
+private:
+    level_id cur;
+};
 #endif // TRAVEL_H

@@ -548,7 +548,8 @@ ITEM:     (list of items, separated by comma)
           * "superb_item" by itself makes an item equivallent to the "|" glyph.
           * "any book", "any misc" etc. gives a random item of that class.
             Valid item class names are: gold, weapon, missile, armour, wand,
-            food, scroll, jewellery, potion, book, staff, orb, misc, carrion.
+            food, scroll, jewellery, potion, book, magical staff, orb, misc,
+            carrion.
             All of these are usable in map definitions, apart from "orb" and
             "carrion".
           * "race:race_name", where "race_name" is "elven", "dwarven" or
@@ -564,7 +565,8 @@ ITEM:     (list of items, separated by comma)
             item from getting an ego.  The item must be fully specified, so
             trying "any weapon ego:vorpal" or "any armour ego:positive_energy"
             will result in an error.  Trying to give an ego to something which
-            can't accept an ego will also result in an error.
+            can't accept an ego will also result in an error.  The full lists
+            are in the str_to_ego() function in mapdef.cc.
           * "unrand:item_name" will make a given unrandom by a given name,
             like "long sword unrand:singing_sword".  Omit any apostrophes
             in the name (e.g, unrand:vampires_tooth).  If the name has
@@ -585,6 +587,10 @@ ITEM:     (list of items, separated by comma)
           * "unobtainable" hints that the item is supposed to never fall into
             the player's hands.  It doesn't actually keep it from doing so,
             just tells that to acquirement and (TODO) troves.
+          * "mimic:N" gives the item one chance in N of being turned into a
+            mimic. The ":N" can also be omitted for a guaranteed mimic.
+          * "no_mimic" prevents the item from being randomly turned into a
+            mimic by the dungeon builder.
 
           WARNING: While checks are done to make sure that an armour ego
           isn't given to a weapon, a weapon ego to a missile, and so on, and
@@ -970,6 +976,21 @@ MONS:     (list of monsters)
           the messages you get unsatisfactory, add suitable entries to
           source/dat/database/monspell.txt.
 
+          Setting enchantments:
+          ---------------------
+          You may give a monster any number of enchantments.  It may
+          start hasted, blind, have permanent DMsl, etc.  The syntax is
+          "ench:<name>:<degree>:<duration>" or "perm_ench:<name>:<degree>".
+          The <degree> and <duration> fields may be omitted.  Note that
+          the enchantment will start the moment the monster is created and
+          thus most likely time out before the player has a chance to
+          notice the monster -- non-permanent ones make sense mostly only
+          if created from a lua trigger.
+
+          MONS: orc perm_ench:blind perm_ench:mad
+          MONS: sheep ench:sticky_flame
+          MONS: stone giant dur:1 ench:berserk
+
 
 FHEIGHT:  xyz = 40
 
@@ -1210,6 +1231,13 @@ KFEAT:    G = C / needle trap / antique armour shop / altar_zin
           to the trap name:
 
           KFEAT: A = known needle trap
+
+          You can also place feature mimic using the same syntax as item
+          mimics (or prevent random placement of feature mimics). For
+          example this altar has one chance in 10 of being turned into an
+          altar mimic:
+
+          KFEAT: C = C mimic:10
 
           The placeholder used by KFEAT can be shared by KITEM and KMONS;
           see below. If the placeholder is shared, all defined Kxxxx

@@ -70,41 +70,40 @@ static void _ASMODEUS_melee_effect(item_def* weapon, actor* attacker,
 
 static bool _evoke_sceptre_of_asmodeus()
 {
-    bool rc = true;
-    if (one_chance_in(21))
-        rc = false;
-    else if (one_chance_in(20))
+    bool rc = false;
+    if (one_chance_in(3))
     {
-        // Summon devils, maybe a Fiend.
-        const monster_type mon = (one_chance_in(4) ? MONS_FIEND :
-                                     summon_any_demon(DEMON_COMMON));
-        const bool good_summon = create_monster(
-                                     mgen_data::hostile_at(mon,
-                                         "the Sceptre of Asmodeus",
-                                         true, 6, 0, you.pos())) != -1;
+        const monster_type mon = static_cast<monster_type>(
+                random_choose_weighted(3, MONS_EFREET,
+                                       3, MONS_SUN_DEMON,
+                                       2, MONS_BALRUG,
+                                       2, MONS_HELLION,
+                                       1, MONS_PIT_FIEND,
+                                       1, MONS_FIEND,
+                                       0));
 
-        if (good_summon)
+        mgen_data mg(mon, BEH_CHARMED, &you,
+                     0, 0, you.pos(), MHITYOU,
+                     MG_FORCE_BEH, you.religion);
+
+        mg.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
+
+        const int mons = create_monster(mg);
+
+        if (mons != -1)
         {
-            if (mon == MONS_FIEND)
-                mpr("\"Your arrogance condemns you, mortal!\"");
-            else
-                mpr("The Sceptre summons one of its servants.");
+            rc = true;
+            mpr("The Sceptre summons one of its servants.");
+            did_god_conduct(DID_UNHOLY, 3);
+
+            if (!player_angers_monster(&menv[mons]))
+            {
+                mpr("You don't feel so good about this...");
+            }
         }
         else
             mpr("The air shimmers briefly.");
     }
-    else
-    {
-        // Cast a destructive spell.
-        const spell_type spl = static_cast<spell_type>(
-            random_choose_weighted(114, SPELL_BOLT_OF_FIRE,
-                                   57,  SPELL_LIGHTNING_BOLT,
-                                   57,  SPELL_BOLT_OF_DRAINING,
-                                   12,  SPELL_HELLFIRE,
-                                   0));
-        your_spells(spl, you.skill(SK_EVOCATIONS) * 8, false);
-    }
-
     return (rc);
 }
 
@@ -177,20 +176,24 @@ static bool _DISPATER_evoke(item_def *item, int* pract, bool* did_work,
     if (you.duration[DUR_DEATHS_DOOR] || !enough_hp(11, true)
         || !enough_mp(5, true))
     {
+        *unevokable = true;
+        return (false);
+    }
+
+    *did_work = true;
+    int power = you.skill(SK_EVOCATIONS, 8);
+
+    if (your_spells(SPELL_HELLFIRE, power, false) == SPRET_ABORT)
+    {
+        *unevokable = true;
         return (false);
     }
 
     mpr("You feel the staff feeding on your energy!");
-
     dec_hp(5 + random2avg(19, 2), false);
     dec_mp(2 + random2avg(5, 2));
     make_hungry(100, false, true);
-
-    int power = you.skill(SK_EVOCATIONS) * 8;
-    your_spells(SPELL_HELLFIRE, power, false);
-
     *pract    = (coinflip() ? 2 : 1);
-    *did_work = true;
 
     return (false);
 }
@@ -234,7 +237,13 @@ static void _OLGREB_world_reacts(item_def *item)
 static bool _OLGREB_evoke(item_def *item, int* pract, bool* did_work,
                           bool* unevokable)
 {
-    if (!enough_mp(4, true) || you.skill(SK_EVOCATIONS) < random2(6))
+    if (!enough_mp(4, true))
+    {
+        *unevokable = true;
+        return (false);
+    }
+
+    if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 600))
         return (false);
 
     dec_mp(4);
@@ -242,11 +251,11 @@ static bool _OLGREB_evoke(item_def *item, int* pract, bool* did_work,
     *pract    = 1;
     *did_work = true;
 
-    int power = 10 + you.skill(SK_EVOCATIONS) * 8;
+    int power = 10 + you.skill(SK_EVOCATIONS, 8);
 
     your_spells(SPELL_OLGREBS_TOXIC_RADIANCE, power, false);
 
-    if (x_chance_in_y(you.skill(SK_EVOCATIONS) + 1, 10))
+    if (x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 1000))
         your_spells(SPELL_VENOM_BOLT, power, false);
 
     return (false);
@@ -255,12 +264,12 @@ static bool _OLGREB_evoke(item_def *item, int* pract, bool* did_work,
 static void _OLGREB_melee_effect(item_def* weapon, actor* attacker,
                                  actor* defender, bool mondied, int dam)
 {
-    int skill = attacker->skill(SK_POISON_MAGIC);
+    int skill = attacker->skill(SK_POISON_MAGIC, 100);
     if (defender->alive()
-        && (coinflip() || x_chance_in_y(skill, 8)))
+        && (coinflip() || x_chance_in_y(skill, 800)))
     {
         defender->poison(attacker, 2, defender->has_lifeforce()
-                                      && x_chance_in_y(skill, 8));
+                                      && x_chance_in_y(skill, 800));
         if (attacker->atype() == ACT_PLAYER)
             did_god_conduct(DID_POISON, 3);
     }
@@ -444,7 +453,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
                             bool* unevokable)
 {
     if (you.magic_points == you.max_magic_points
-        || you.skill(SK_EVOCATIONS) < random2(25))
+        || !x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 2500))
     {
         return (false);
     }
@@ -457,7 +466,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
 
     mpr("Magical energy flows into your mind!");
 
-    inc_mp(3 + random2(5) + you.skill(SK_EVOCATIONS) / 3);
+    inc_mp(3 + random2(5) + you.skill_rdiv(SK_EVOCATIONS, 1, 3));
     make_hungry(50, false, true);
 
     *pract    = 1;
@@ -473,12 +482,14 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
 
 static void _VAMPIRES_TOOTH_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    if (you.is_undead != US_UNDEAD)
+    if (you.is_undead == US_ALIVE)
     {
         _equip_mpr(show_msgs,
                    "You feel a strange hunger, and smell blood in the air...");
         make_hungry(4500, false, false);
     }
+    else if (you.species == SP_VAMPIRE)
+        _equip_mpr(show_msgs, "You feel a bloodthirsty glee!");
     else
         _equip_mpr(show_msgs, "You feel strangely empty.");
 }
@@ -720,4 +731,20 @@ static void _BRILLIANCE_equip(item_def *item, bool *show_msgs, bool unmeld)
 static void _BRILLIANCE_unequip(item_def *item, bool *show_msgs)
 {
     invalidate_agrid(true);
+}
+
+///////////////////////////////////////////////////
+static void _DEVASTATOR_equip(item_def *item, bool *show_msgs, bool unmeld)
+{
+    if (unmeld)
+        return;
+    mpr("Time to introduce the shillelagh law.");
+}
+
+
+static void _DEVASTATOR_melee_effect(item_def* item, actor* attacker,
+                                     actor* defender, bool mondied, int dam)
+{
+    ASSERT(attacker == &you); // TODO
+    shillelagh(attacker, defender->pos(), dam);
 }

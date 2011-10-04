@@ -319,6 +319,8 @@ bool add_spell_to_memory(spell_type spell)
 
     take_note(Note(NOTE_LEARN_SPELL, spell));
 
+    spell_skills(spell, you.start_train);
+
 #ifdef USE_TILE_LOCAL
     tiles.layout_statcol();
     redraw_screen();
@@ -335,7 +337,9 @@ bool del_spell_from_memory_by_slot(int slot)
     if (you.last_cast_spell == you.spells[slot])
         you.last_cast_spell = SPELL_NO_SPELL;
 
-    mprf("Your memory of %s unravels.", gettext(spell_title(you.spells[slot])));
+    spell_skills(you.spells[slot], you.stop_train);
+
+    mprf(gettext("Your memory of %s unravels."), gettext(spell_title(you.spells[slot])));
     you.spells[ slot ] = SPELL_NO_SPELL;
 
     for (j = 0; j < 52; j++)
@@ -381,11 +385,11 @@ int spell_hunger(spell_type which_spell, bool rod)
 
     if (rod)
     {
-        hunger -= 10 * you.skill(SK_EVOCATIONS);
+        hunger -= you.skill(SK_EVOCATIONS, 10);
         hunger = std::max(hunger, level * 5);
     }
     else
-        hunger -= you.intel() * you.skill(SK_SPELLCASTING);
+        hunger -= you.skill(SK_SPELLCASTING, you.intel());
 
     if (hunger < 0)
         hunger = 0;
@@ -1157,15 +1161,6 @@ bool spell_is_empowered(spell_type spell)
 
     switch (spell)
     {
-    case SPELL_SWIFTNESS:
-        // looking at player_movement_speed, this should be correct ~DMB
-        if (player_movement_speed() > 6
-            && you.duration[DUR_CONTROLLED_FLIGHT] > 0
-            && you.duration[DUR_SWIFTNESS] < 1)
-        {
-            return (true);
-        }
-        break;
     case SPELL_STONESKIN:
         if (you.duration[DUR_TRANSFORMATION] > 0
             && you.form == TRAN_STATUE
@@ -1222,7 +1217,9 @@ bool spell_is_useless(spell_type spell, bool transient)
         if (player_movement_speed() <= 6)
             return (true);
         break;
+#if TAG_MAJOR_VERSION == 32
     case SPELL_LEVITATION:
+#endif
     case SPELL_FLY:
         if (you.species == SP_KENKU && you.experience_level >= 15)
             return (true);

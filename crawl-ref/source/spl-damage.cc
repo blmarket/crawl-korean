@@ -176,14 +176,6 @@ bool cast_hellfire_burst(int pow, bolt &beam)
     return (true);
 }
 
-static bool _lightning_los(const coord_def& source, const coord_def& target)
-{
-    // XXX: currently bounded by circular LOS radius;
-    // XXX: adapt opacity -- allow passing clouds.
-    return (exists_ray(source, target, opc_solid,
-                       circle_def(LOS_MAX_RADIUS, C_ROUND)));
-}
-
 // XXX no friendly check
 spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
 {
@@ -242,7 +234,7 @@ spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
             if (dist > min_dist)
                 continue;
 
-            if (!_lightning_los(source, mi->pos()))
+            if (!cell_see_cell(source, mi->pos(), LOS_SOLID))
                 continue;
 
             count++;
@@ -279,7 +271,7 @@ spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
             if ((target.x == -1
                     || dist < min_dist
                     || (dist == min_dist && one_chance_in(count + 1)))
-                && _lightning_los(source, you.pos()))
+                && cell_see_cell(source, you.pos(), LOS_SOLID))
             {
                 target = you.pos();
             }
@@ -333,59 +325,6 @@ spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
     return SPRET_SUCCESS;
 }
 
-typedef std::pair<const monster* ,int> counted_monster;
-typedef std::vector<counted_monster> counted_monster_list;
-static void _record_monster_by_name(counted_monster_list &list,
-                                    const monster* mons)
-{
-    const std::string name = mons->name(DESC_PLAIN);
-    for (counted_monster_list::iterator i = list.begin(); i != list.end(); ++i)
-    {
-        if (i->first->name(DESC_PLAIN) == name)
-        {
-            i->second++;
-            return;
-        }
-    }
-    list.push_back(counted_monster(mons, 1));
-}
-
-static int _monster_count(const counted_monster_list &list)
-{
-    int nmons = 0;
-    for (counted_monster_list::const_iterator i = list.begin();
-         i != list.end(); ++i)
-    {
-        nmons += i->second;
-    }
-    return (nmons);
-}
-
-static std::string _describe_monsters(const counted_monster_list &list)
-{
-    std::ostringstream out;
-
-    description_level_type desc = DESC_CAP_THE;
-    for (counted_monster_list::const_iterator i = list.begin();
-         i != list.end(); desc = DESC_NOCAP_THE)
-    {
-        const counted_monster &cm(*i);
-        if (i != list.begin())
-        {
-            ++i;
-            out << (i == list.end() ? " and " : ", ");
-        }
-        else
-            ++i;
-
-        const std::string name =
-            cm.second > 1 ? pluralise(PLU_SUFFIX,cm.first->name(desc))
-                          : cm.first->name(desc);
-        out << name;
-    }
-    return (out.str());
-}
-
 // Poisonous light passes right through invisible players
 // and monsters, and so, they are unaffected by this spell --
 // assumes only you can cast this spell (or would want to).
@@ -430,7 +369,7 @@ spret_type cast_toxic_radiance(bool non_player, bool fail)
                     affected = true;
 
                 if (affected)
-                    _record_monster_by_name(affected_monsters, *mi);
+                    affected_monsters.add(*mi);
             }
             else if (you.can_see_invisible())
             {
@@ -445,8 +384,8 @@ spret_type cast_toxic_radiance(bool non_player, bool fail)
     {
         const std::string message =
             make_stringf(gettext("%s %s poisoned."),
-                         _describe_monsters(affected_monsters).c_str(),
-                         _monster_count(affected_monsters) == 1? "is" : "are");
+                         affected_monsters.describe().c_str(),
+                         affected_monsters.count() == 1? "is" : "are");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
@@ -498,15 +437,15 @@ spret_type cast_refrigeration(int pow, bool non_player, bool freeze_potions,
     counted_monster_list affected_monsters;
 
     for (monster_iterator mi(&you); mi; ++mi)
-        if (cell_see_cell(you.pos(), mi->pos())) // not just you.can_see (Scry)
-            _record_monster_by_name(affected_monsters, *mi);
+        if (cell_see_cell(you.pos(), mi->pos(), LOS_SOLID)) // not just you.can_see (Scry)
+            affected_monsters.add(*mi);
 
     if (!affected_monsters.empty())
     {
         const std::string message =
             make_stringf(gettext("%s %s frozen."),
-                         _describe_monsters(affected_monsters).c_str(),
-                         _monster_count(affected_monsters) == 1? "is" : "are");
+                         affected_monsters.describe().c_str(),
+                         affected_monsters.count() == 1? "is" : "are");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
@@ -531,7 +470,7 @@ spret_type cast_refrigeration(int pow, bool non_player, bool freeze_potions,
         // about it.
 
         // ... but not ones you see only via Scrying.
-        if (!cell_see_cell(you.pos(), mi->pos()))
+        if (!cell_see_cell(you.pos(), mi->pos(), LOS_SOLID))
             continue;
         // Calculate damage and apply.
         int hurt = mons_adjust_flavoured(*mi, beam, dam_dice.roll());
@@ -559,8 +498,11 @@ void sonic_damage(bool scream)
     counted_monster_list affected_monsters;
 
     for (monster_iterator mi(&you); mi; ++mi)
-        if (cell_see_cell(you.pos(), mi->pos()) && !silenced(mi->pos()))
-            _record_monster_by_name(affected_monsters, *mi);
+        if (cell_see_cell(you.pos(), mi->pos(), LOS_SOLID)
+            && !silenced(mi->pos()))
+        {
+            affected_monsters.add(*mi);
+        }
 
     /* dpeg sez:
        * damage applied to everyone but the wielder (reasoning: the sword
@@ -572,8 +514,8 @@ void sonic_damage(bool scream)
     {
         const std::string message =
             make_stringf(gettext("%s %s hurt by the noise."),
-                         _describe_monsters(affected_monsters).c_str(),
-                         _monster_count(affected_monsters) == 1? "is" : "are");
+                         affected_monsters.describe().c_str(),
+                         affected_monsters.count() == 1? "is" : "are");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
@@ -587,8 +529,11 @@ void sonic_damage(bool scream)
     // Now damage the creatures.
     for (monster_iterator mi(you.get_los()); mi; ++mi)
     {
-        if (!cell_see_cell(you.pos(), mi->pos()) || silenced(mi->pos()))
+        if (!cell_see_cell(you.pos(), mi->pos(), LOS_SOLID)
+            || silenced(mi->pos()))
+        {
             continue;
+        }
         int hurt = (random2(2) + 1) * (random2(2) + 1) * (random2(3) + 1)
                  + (random2(3) + 1) + 1;
         if (scream)
@@ -801,8 +746,6 @@ spret_type cast_airstrike(int pow, const dist &beam, bool fail)
     noisy(4, beam.target);
 
     behaviour_event(mons, ME_ANNOY, MHITYOU);
-    if (mons_is_mimic(mons->type))
-        mimic_alert(mons);
 
     enable_attack_conducts(conducts);
 
@@ -1037,7 +980,7 @@ spret_type cast_shatter(int pow, bool fail)
         mpr(gettext("The dungeon rumbles!"), MSGCH_SOUND);
     }
 
-    int rad = 3 + (you.skill(SK_EARTH_MAGIC) / 5);
+    int rad = 3 + you.skill_rdiv(SK_EARTH_MAGIC, 1, 5);
 
     apply_area_within_radius(_shatter_items, you.pos(), pow, rad, 0);
     apply_area_within_radius(_shatter_monsters, you.pos(), pow, rad, 0);
@@ -1048,6 +991,48 @@ spret_type cast_shatter(int pow, bool fail)
         mpr(gettext("Ka-crash!"), MSGCH_SOUND);
 
     return SPRET_SUCCESS;
+}
+
+void shillelagh(actor *wielder, coord_def where, int pow)
+{
+    bolt beam;
+    beam.name = "shillelagh";
+    beam.flavour = BEAM_VISUAL;
+    beam.set_agent(wielder);
+    beam.colour = BROWN;
+    beam.glyph = dchar_glyph(DCHAR_EXPLOSION);
+    beam.range = 1;
+    beam.ex_size = 1;
+    beam.is_explosion = true;
+    beam.source = wielder->pos();
+    beam.target = where;
+    beam.hit = AUTOMATIC_HIT;
+    beam.loudness = 7;
+    beam.explode();
+
+    counted_monster_list affected_monsters;
+    for (adjacent_iterator ai(where, false); ai; ++ai)
+    {
+        monster *mon = monster_at(*ai);
+        if (!mon || !mon->alive() || mon->submerged() || mon->is_insubstantial())
+            continue;
+        affected_monsters.add(mon);
+    }
+    if (!affected_monsters.empty())
+    {
+        const std::string message =
+            make_stringf("%s shudder%s.",
+                         affected_monsters.describe().c_str(),
+                         affected_monsters.count() == 1? "s" : "");
+        if (strwidth(message) < get_number_of_cols() - 2)
+            mpr(message.c_str());
+        else
+            mpr("There is a shattering impact!");
+    }
+
+    // need to do this again to do the actual damage
+    for (adjacent_iterator ai(where, false); ai; ++ai)
+        _shatter_monsters(*ai, pow, 0, wielder);
 }
 
 static int _ignite_poison_affect_item(item_def& item, bool in_inv)
@@ -1494,7 +1479,7 @@ spret_type cast_fragmentation(int pow, const dist& spd, bool fail)
     bool hole    = true;
     const char *what = NULL;
 
-    if (!exists_ray(you.pos(), spd.target))
+    if (!cell_see_cell(you.pos(), spd.target, LOS_SOLID))
     {
         mpr(gettext("There's something in the way!"));
         return SPRET_ABORT;

@@ -22,6 +22,7 @@
 #include "effects.h"
 #include "env.h"
 #include "files.h"
+#include "food.h"
 #include "fprop.h"
 #include "godabil.h"
 #include "goditem.h"
@@ -66,12 +67,6 @@
 #endif
 
 static void _zin_saltify(monster* mon);
-
-bool zin_sustenance(bool actual)
-{
-    return (you.piety >= piety_breakpoint(0)
-            && (!actual || you.hunger_state == HS_STARVING));
-}
 
 std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
 {
@@ -727,7 +722,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         return (false);
 
     // Resistance is now based on HD. You can affect up to (30+30)/2 = 30 'power' (HD).
-    int power = (skill_bump(SK_INVOCATIONS) + you.piety * 3 / 20) / 2;
+    int power = (skill_bump(SK_INVOCATIONS, 10) + you.piety * 3 / 2) / 20;
     // Old recite was mostly deterministic, which is bad.
     int resist = mon->get_experience_level() + random2(6);
     int check = power - resist;
@@ -1041,8 +1036,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         break;
 
     case ZIN_BLIND:
-        if (mon->add_ench(mon_enchant(ENCH_BLIND, degree, &you,
-                          (degree + random2(spellpower)) * BASELINE_DELAY)))
+        if (mon->add_ench(mon_enchant(ENCH_BLIND, degree, &you, INFINITE_DURATION)))
         {
             simple_monster_message(mon, " is struck blind by the wrath of Zin!");
             affected = true;
@@ -1071,8 +1065,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         break;
 
     case ZIN_MUTE:
-        if (mon->add_ench(mon_enchant(ENCH_MUTE, degree, &you,
-                          (degree + random2(spellpower)) * BASELINE_DELAY)))
+        if (mon->add_ench(mon_enchant(ENCH_MUTE, degree, &you, INFINITE_DURATION)))
         {
             simple_monster_message(mon, " is struck mute by the wrath of Zin!");
             affected = true;
@@ -1080,8 +1073,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         break;
 
     case ZIN_MAD:
-        if (mon->add_ench(mon_enchant(ENCH_MAD, degree, &you,
-                          (degree + random2(spellpower)) * BASELINE_DELAY)))
+        if (mon->add_ench(mon_enchant(ENCH_MAD, degree, &you, INFINITE_DURATION)))
         {
             simple_monster_message(mon, " is driven mad by the wrath of Zin!");
             affected = true;
@@ -1089,8 +1081,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         break;
 
     case ZIN_DUMB:
-        if (mon->add_ench(mon_enchant(ENCH_DUMB, degree, &you,
-                          (degree + random2(spellpower)) * BASELINE_DELAY)))
+        if (mon->add_ench(mon_enchant(ENCH_DUMB, degree, &you, INFINITE_DURATION)))
         {
             simple_monster_message(mon, " is left stupefied by the wrath of Zin!");
             affected = true;
@@ -1211,95 +1202,24 @@ static void _zin_saltify(monster* mon)
     }
 }
 
-static bool _kill_duration(duration_type dur)
-{
-    const bool rc = (you.duration[dur] > 0);
-    you.duration[dur] = 0;
-    return (rc);
-}
-
 bool zin_vitalisation()
 {
-    bool success = false;
-    int type = 0;
+    simple_god_message(" grants you divine stamina.");
 
-    // Remove negative afflictions.
-    if (you.disease || you.rotting || you.confused()
-        || you.petrifying() || you.duration[DUR_POISONING])
-    {
-        do
-        {
-            switch (random2(5))
-            {
-            case 0:
-                if (you.disease)
-                {
-                    success = true;
-                    you.disease = 0;
-                }
-                break;
-            case 1:
-                if (you.rotting)
-                {
-                    success = true;
-                    you.rotting = 0;
-                }
-                break;
-            case 2:
-                success = _kill_duration(DUR_CONF);
-                break;
-            case 3:
-                success = _kill_duration(DUR_POISONING);
-                break;
-            case 4:
-                success = _kill_duration(DUR_PETRIFYING);
-                break;
-            }
-        }
-        while (!success);
-    }
-    // Restore stats.
-    else if (you.strength() < you.max_strength()
-             || you.intel() < you.max_intel()
-             || you.dex() < you.max_dex())
-    {
-        type = 1;
-        restore_stat(STAT_RANDOM, 0, true);
-        success = true;
-    }
-    else
-    {
-        // Add divine stamina.
-        if (you.attribute[ATTR_DIVINE_STAMINA] < 9)
-        {
-            success = true;
-            type = 2;
+    // Feed the player slightly.
+    if (you.hunger_state < HS_FULL)
+        lessen_hunger(250, false);
 
-            mprf("%s grants you divine stamina.",
-                 god_name(GOD_ZIN).c_str());
+    // Add divine stamina.
+    const int stamina_amt = std::max(1, you.skill_rdiv(SK_INVOCATIONS, 1, 3));
+    you.attribute[ATTR_DIVINE_STAMINA] = stamina_amt;
+    you.set_duration(DUR_DIVINE_STAMINA, 60 + roll_dice(2, 10));
 
-            const int stamina_amt = 3;
-            you.attribute[ATTR_DIVINE_STAMINA] += stamina_amt;
-            you.set_duration(DUR_DIVINE_STAMINA,
-                             40 + (you.skill(SK_INVOCATIONS)*5)/2);
+    notify_stat_change(STAT_STR, stamina_amt, true, "");
+    notify_stat_change(STAT_INT, stamina_amt, true, "");
+    notify_stat_change(STAT_DEX, stamina_amt, true, "");
 
-            notify_stat_change(STAT_STR, stamina_amt, true, "");
-            notify_stat_change(STAT_INT, stamina_amt, true, "");
-            notify_stat_change(STAT_DEX, stamina_amt, true, "");
-        }
-    }
-
-    // If vitalisation has succeeded, display an appropriate message.
-    if (success)
-    {
-        mprf("You feel %s.", (type == 0) ? "better" :
-                             (type == 1) ? "renewed"
-                                         : "powerful");
-    }
-    else
-        canned_msg(MSG_NOTHING_HAPPENS);
-
-    return (success);
+    return true;
 }
 
 void zin_remove_divine_stamina()
@@ -1358,7 +1278,7 @@ bool zin_sanctuary()
     // Pets stop attacking and converge on you.
     you.pet_target = MHITYOU;
 
-    create_sanctuary(you.pos(), 7 + you.skill(SK_INVOCATIONS) / 2);
+    create_sanctuary(you.pos(), 7 + you.skill_rdiv(SK_INVOCATIONS) / 2);
 
     return (true);
 }
@@ -1387,10 +1307,10 @@ void tso_divine_shield()
 
     // duration of complete shield bonus from 35 to 80 turns
     you.set_duration(DUR_DIVINE_SHIELD,
-                     35 + (you.skill(SK_INVOCATIONS) * 4) / 3);
+                     35 + you.skill_rdiv(SK_INVOCATIONS, 4, 3));
 
     // shield bonus up to 8
-    you.attribute[ATTR_DIVINE_SHIELD] = 3 + you.skill(SK_SHIELDS) / 5;
+    you.attribute[ATTR_DIVINE_SHIELD] = 3 + you.skill_rdiv(SK_SHIELDS, 1, 5);
 
     you.redraw_armour_class = true;
 }
@@ -1413,6 +1333,8 @@ void elyvilon_purification()
     you.duration[DUR_CONF] = 0;
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PETRIFYING] = 0;
+    restore_stat(STAT_ALL, 0, false);
+    unrot_hp(10000);
 }
 
 bool elyvilon_divine_vigour()
@@ -1424,12 +1346,12 @@ bool elyvilon_divine_vigour()
         mprf("%s grants you divine vigour.",
              god_name(GOD_ELYVILON).c_str());
 
-        const int vigour_amt = 1 + (you.skill(SK_INVOCATIONS)/3);
+        const int vigour_amt = 1 + you.skill_rdiv(SK_INVOCATIONS, 1, 3);
         const int old_hp_max = you.hp_max;
         const int old_mp_max = you.max_magic_points;
         you.attribute[ATTR_DIVINE_VIGOUR] = vigour_amt;
         you.set_duration(DUR_DIVINE_VIGOUR,
-                         40 + (you.skill(SK_INVOCATIONS)*5)/2);
+                         40 + you.skill_rdiv(SK_INVOCATIONS, 5, 2));
 
         calc_hp();
         inc_hp(you.hp_max - old_hp_max);
@@ -1657,7 +1579,7 @@ void yred_animate_remains_or_dead()
     {
         mpr("You call on the dead to rise...");
 
-        animate_dead(&you, you.skill(SK_INVOCATIONS) + 1, BEH_FRIENDLY,
+        animate_dead(&you, you.skill_rdiv(SK_INVOCATIONS) + 1, BEH_FRIENDLY,
                      MHITYOU, &you, "", GOD_YREDELEMNUL);
     }
     else
@@ -1680,7 +1602,7 @@ void yred_drain_life()
     more();
     mesclr();
 
-    const int pow = you.skill(SK_INVOCATIONS);
+    const int pow = you.skill_rdiv(SK_INVOCATIONS);
     const int hurted = 3 + random2(7) + random2(pow);
     int hp_gain = 0;
 
@@ -2573,7 +2495,7 @@ bool fedhas_plant_ring_from_fruit()
         return (false);
     }
 
-    const int hp_adjust = you.skill(SK_INVOCATIONS) * 10;
+    const int hp_adjust = you.skill(SK_INVOCATIONS, 10);
 
     // The user entered a number, remove all number overlays which
     // are higher than that number.
@@ -2699,8 +2621,7 @@ int fedhas_rain(const coord_def &target)
             // per tile is 20 * p = expected.  Say an Invocations skill
             // of 27 gives expected 5 clouds.
             int max_expected = 5;
-            int expected = div_rand_round(max_expected
-                                          * you.skill(SK_INVOCATIONS), 27);
+            int expected = you.skill_rdiv(SK_INVOCATIONS, max_expected, 27);
 
             if (x_chance_in_y(expected, 20))
             {
@@ -2995,13 +2916,14 @@ bool fedhas_evolve_flora()
     case MONS_BUSH:
     {
         std::string evolve_desc = " can now spit acid";
-        if (you.skill(SK_INVOCATIONS) >= 20)
+        int skill = you.skill(SK_INVOCATIONS);
+        if (skill >= 20)
             evolve_desc += " continuously";
-        else if (you.skill(SK_INVOCATIONS) >= 15)
+        else if (skill >= 15)
             evolve_desc += " quickly";
-        else if (you.skill(SK_INVOCATIONS) >= 10)
+        else if (skill >= 10)
             evolve_desc += " rather quickly";
-        else if (you.skill(SK_INVOCATIONS) >= 5)
+        else if (skill >= 5)
             evolve_desc += " somewhat quickly";
         evolve_desc += ".";
 
@@ -3041,7 +2963,7 @@ bool fedhas_evolve_flora()
     if (target->type == MONS_HYPERACTIVE_BALLISTOMYCETE)
         target->add_ench(ENCH_EXPLODING);
 
-    target->hit_dice += you.skill(SK_INVOCATIONS);
+    target->hit_dice += you.skill_rdiv(SK_INVOCATIONS);
 
     if (upgrade.fruit_cost)
         _decrease_amount(collected_fruit, upgrade.fruit_cost);
@@ -3106,51 +3028,6 @@ void lugonu_bend_space()
 
     const int damage = roll_dice(1, 4);
     ouch(damage, NON_MONSTER, KILLED_BY_WILD_MAGIC, "a spatial distortion");
-}
-
-bool is_ponderousifiable(const item_def& item)
-{
-    return (item.base_type == OBJ_ARMOUR
-            && you_tran_can_wear(item)
-            && !is_shield(item)
-            && !is_artefact(item)
-            && get_armour_ego_type(item) != SPARM_RUNNING
-            && get_armour_ego_type(item) != SPARM_PONDEROUSNESS);
-}
-
-bool ponderousify_armour()
-{
-    const int item_slot = prompt_invent_item("Make which item ponderous?",
-                                             MT_INVLIST, OSEL_PONDER_ARM,
-                                             true, true, false);
-
-    if (prompt_failed(item_slot))
-        return (false);
-
-    item_def& arm(you.inv[item_slot]);
-    if (!is_ponderousifiable(arm)) // player pressed '*' and made a bad choice
-    {
-        mpr("That item can't be made ponderous.");
-        return (false);
-    }
-
-    const int old_ponder = player_ponderousness();
-    cheibriados_make_item_ponderous(arm);
-
-    you.redraw_armour_class = true;
-    you.redraw_evasion = true;
-
-    simple_god_message(" says: Use this wisely!");
-
-    const int new_ponder = player_ponderousness();
-    if (new_ponder > old_ponder)
-    {
-        mprf("You feel %s ponderous.",
-             old_ponder? "even more" : "rather");
-        che_handle_change(CB_PONDEROUSNESS, new_ponder - old_ponder);
-    }
-
-    return (true);
 }
 
 void cheibriados_time_bend(int pow)

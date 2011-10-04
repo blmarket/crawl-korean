@@ -6,6 +6,7 @@
 #include "coord.h"
 #include "coordit.h"
 #include "env.h"
+#include "itemprop.h"
 #include "libutil.h"
 #include "player.h"
 #include "terrain.h"
@@ -63,7 +64,7 @@ targetter_smite::targetter_smite(const actor* act, int ran,
 
 bool targetter_smite::valid_aim(coord_def a)
 {
-    if (a != origin && !cell_see_cell(origin, a))
+    if (a != origin && !cell_see_cell(origin, a, LOS_DEFAULT))
         return notify_fail(gettext("You cannot see that place."));
     if ((origin - a).abs() > range2)
         return notify_fail(gettext("Out of range."));
@@ -128,14 +129,14 @@ bool targetter_reach::valid_aim(coord_def a)
 {
     if (origin == a)
         return notify_fail(gettext("That would be overly suicidal."));
-    if (!cell_see_cell(origin, a))
+    if (!cell_see_cell(origin, a, LOS_DEFAULT))
         return notify_fail(gettext("You cannot see that place."));
     if (!agent->see_cell_no_trans(a))
         return notify_fail(gettext("You can't get through."));
 
     int dist = (origin - a).abs();
 
-    if (dist > (range == REACH_TWO ? 8 : range == REACH_KNIGHT ? 5 : 2))
+    if (dist > reach_range(range))
         return notify_fail(gettext("You can't reach that far!"));
 
     return true;
@@ -182,8 +183,13 @@ bool targetter_cloud::valid_aim(coord_def a)
 {
     if (agent && (origin - a).abs() > range2)
         return notify_fail(gettext("Out of range."));
-    if (!map_bounds(a) || agent && origin != a && !cell_see_cell(origin, a))
+    if (!map_bounds(a)
+        || agent
+           && origin != a
+           && !cell_see_cell(origin, a, LOS_DEFAULT))
+    {
         return notify_fail(gettext("You cannot see that place."));
+    }
     if (feat_is_solid(grd(a)))
         return notify_fail(_wallmsg(a));
     if (agent)
@@ -242,4 +248,53 @@ aff_type targetter_cloud::is_affected(coord_def loc)
         return AFF_NO;
 
     return it->second;
+}
+
+targetter_splash::targetter_splash(const actor* act)
+{
+    ASSERT(act);
+    agent = act;
+    origin = aim = act->pos();
+}
+
+bool targetter_splash::valid_aim(coord_def a)
+{
+    if (agent && grid_distance(origin, a) > 1)
+        return notify_fail("Out of range.");
+    return true;
+}
+
+bool targetter_splash::anyone_there(coord_def loc)
+{
+    if (!map_bounds(loc))
+        return false;
+    if (agent && agent->atype() == ACT_PLAYER)
+        return env.map_knowledge(loc).monsterinfo();
+    return actor_at(loc);
+}
+
+aff_type targetter_splash::is_affected(coord_def loc)
+{
+    if (!valid_aim(aim) || !valid_aim(loc))
+        return AFF_NO;
+
+    if (loc == aim)
+        return AFF_YES;
+
+    // self-spit currently doesn't splash
+    if (aim == origin)
+        return AFF_NO;
+
+    // it splashes around only upon hitting someone
+    if (!anyone_there(aim))
+        return AFF_NO;
+
+    if (grid_distance(loc, aim) > 1)
+        return AFF_NO;
+
+    // you're safe from being splashed by own spit
+    if (loc == origin)
+        return AFF_NO;
+
+    return anyone_there(loc) ? AFF_YES : AFF_MAYBE;
 }

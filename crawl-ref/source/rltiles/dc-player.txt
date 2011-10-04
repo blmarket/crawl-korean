@@ -52,7 +52,6 @@ octopode2
 octopode3
 octopode4
 octopode5
-octopode6
 
 # draconians
 draconian_f DRACONIAN DRACONIAN_FIRST
@@ -207,6 +206,8 @@ centaur_barding_metal CENTAUR_BARDING_METAL
 centaur_barding_magenta CENTAUR_BARDING_MAGENTA
 centaur_barding_red CENTAUR_BARDING_RED
 %rim 0
+lightning_scales LIGHTNING_SCALES
+black_knight BLACK_KNIGHT
 %end_ctg
 
 ### Body armour
@@ -410,7 +411,6 @@ lears_chain_mail LEARS_CHAIN_MAIL
 faerie_dragon_armour FAERIE_DRAGON_ARMOUR
 %end_ctg
 
-
 ### Arms
 %parts_ctg ARM
 %sdir player/gloves
@@ -467,6 +467,7 @@ mace_of_brilliance MACE_OF_BRILLIANCE
 undeadhunter UNDEADHUNTER
 eos EOS
 snakebite SNAKEBITE
+shillelagh SHILLELAGH
 ## polearms
 trident_octopus_king TRIDENT_OCTOPUS_KING
 glaive_of_prune GLAIVE_OF_PRUNE

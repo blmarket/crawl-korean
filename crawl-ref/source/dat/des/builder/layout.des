@@ -666,6 +666,30 @@ TAGS: overwritable layout allow_dup unrand
 MAP
 ENDMAP
 
+# A long winding cavern of roughly constant width, snaking around all the
+# level.  It forks from time to time, but never for long.
+NAME: layout_twisted_cavern
+DEPTH: D:5-27
+WEIGHT: 5
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand
+{{
+    local gxm, gym = dgn.max_bounds()
+    extend_map{width = gxm, height = gym}
+    fill_area{fill = 'x', border = 'X'}
+
+    delve(3, 3, 0, -1, 1)
+    _G.subst('X = x')
+    _G.lrocktile('wall_pebble_lightgray')
+    _G.lfloortile('floor_pebble_brown')
+
+    if (crawl.one_chance_in(3)) then
+      _G.subst('x = b')
+      _G.tile('b = wall_emerald')
+      _G.lfloortile('floor_pebble_green')
+    end
+}}
+
 ## This replaces dungeon.cc:_roguey_level.
 NAME: layout_roguey
 DEPTH: 1-, !Vault
@@ -693,19 +717,35 @@ TAGS: overwritable layout allow_dup unrand
     function link_rooms(r1, r2, sideways)
         local x1, y1, x2, y2
         if sideways then
-            x1 = r1.x2
+            x1 = r1.x2 + 1
             y1 = crawl.random_range(r1.y1 + 1, r1.y2 - 1)
-            x2 = r2.x1
+            x2 = r2.x1 - 1
             y2 = crawl.random_range(r2.y1 + 1, r2.y2 - 1)
+
+            if x2 - x1 >= 2 then
+                mapgrd[x1][y1] = r1.door
+                mapgrd[x2][y2] = r2.door
+                x1 = x1 + 1
+                x2 = x2 - 1
+            end
         else
             x1 = crawl.random_range(r1.x1 + 1, r1.x2 - 1)
-            y1 = r1.y2
+            y1 = r1.y2 + 1
             x2 = crawl.random_range(r2.x1 + 1, r2.x2 - 1)
-            y2 = r2.y1
+            y2 = r2.y1 - 1
+
+            if y2 - y1 >= 2 then
+                mapgrd[x1][y1] = r1.door
+                mapgrd[x2][y2] = r2.door
+                y1 = y1 + 1
+                y2 = y2 - 1
+            end
         end
 
+        mapgrd[x1][y1] = '.'
+
         while x1 ~= x2 or y1 ~= y2 do
-            if crawl.coinflip() then
+            if crawl.coinflip() and x1 ~= x2 then
                 x1 = x1 + sign(x2 - x1)
             else
                 y1 = y1 + sign(y2 - y1)
@@ -741,6 +781,7 @@ TAGS: overwritable layout allow_dup unrand
                 x2 = base_x + 6 + crawl.random2(5),
                 y2 = base_y + 6 + crawl.random2(3),
                 fill = '.',
+                door = crawl.one_chance_in(3) and '.' or '+',
             }
 
             table.insert(rooms, room)
@@ -750,6 +791,7 @@ TAGS: overwritable layout allow_dup unrand
     for i, room in ipairs(rooms) do
         if i == special then
             room.fill = 'O'
+            room.door = '+'
         end
 
         fill_area(room)
@@ -779,6 +821,7 @@ TAGS: overwritable layout allow_dup unrand
 
     -- Prevent staircases from being placed in special or inner rooms.
     _G.nsubst('. = { / ( / [ / < / } / ) / ] / > / .')
+    _G.kmask('+ = no_secret_doors')
 
     if special ~= -1 then
         _G.subvault('O : special_room')
@@ -788,27 +831,36 @@ MAP
 ENDMAP
 
 NAME: layout_delve
-DEPTH: Spider
+DEPTH: Spider, D:13
 CHANCE: 100%
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{
     local gxm, gym = dgn.max_bounds()
-    extend_map{width = gxm, height = gym, fill = 'X'}
-    fill_area{fill = 'X'}
-    fill_area{x1=1, y1=1, x2=gxm-2, y2=gym-2, fill = 'x'}
+    extend_map{width = gxm, height = gym}
+    fill_area{fill = 'x', border = 'X'}
 
-    local ngb_min = crawl.random_range(1, 3)
-    local ngb_max = crawl.random_range(ngb_min, 8)
+    local ngb_min = 2
+    local ngb_max = crawl.random_range(3, 8)
+    if crawl.one_chance_in(10) then
+      -- sometimes use a more cramped layout
+      ngb_min = 1
+      ngb_max = crawl.random_range(5, 7)
+    end
+    if crawl.one_chance_in(20) then
+      -- or a wider one
+      ngb_min = 3
+      ngb_max = 4
+    end
     local connchance = crawl.random_element
         { [0] = 2, [5] = 1, [20] = 1, [50] = 1, [100] = 1 }
     local top = crawl.random_element
         { [1] = 1, [20] = 1, [125] = 1, [500] = 1, [999999] =1 }
-    crawl.mpr("delve(" .. ngb_min .. ", " .. ngb_max .. ", " .. connchance ..
-              ", -1, " .. top .. ")")
+    crawl.dpr("<lightmagenta>delve(" .. ngb_min .. ", " .. ngb_max .. ", " ..
+              connchance .. ", -1, " .. top .. ")</lightmagenta>")
     delve(ngb_min, ngb_max, connchance, -1, top)
     if crawl.coinflip() then
-      crawl.mpr("delve: adding water");
+      crawl.dpr("delve: adding water");
       _G.subst('. = @')
       delve(ngb_min, ngb_max, 100, 100, top)
       _G.subst('. = w')

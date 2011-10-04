@@ -1,4 +1,4 @@
-﻿#include "AppHdr.h"
+#include "AppHdr.h"
 
 #include "godprayer.h"
 
@@ -41,7 +41,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 {
     if (Options.stash_tracking == STM_EXPLICIT && is_stash(you.pos()))
     {
-        mpr("명백한 표식이 있는 물건은 제물로 바칠 수 없다.");
+        mpr("You can't sacrifice explicitly marked stashes.");
         return (false);
     }
 
@@ -50,9 +50,9 @@ static bool _confirm_pray_sacrifice(god_type god)
         if (god_likes_item(god, *si)
             && needs_handle_warning(*si, OPER_PRAY))
         {
-            std::string prompt = "정말로 ";
+            std::string prompt = "Really sacrifice stack with ";
             prompt += si->name(true, DESC_NOCAP_A);
-            prompt += "가 포함된 아이템 묶음을 제물로 바칩니까?";
+            prompt += " in it?";
 
             if (!yesno(prompt.c_str(), false, 'n'))
                 return (false);
@@ -64,19 +64,19 @@ static bool _confirm_pray_sacrifice(god_type god)
 
 std::string god_prayer_reaction()
 {
-    std::string result = god_name(you.religion).c_str();
+    std::string result = god_name(you.religion);
     if (crawl_state.player_is_dead())
-        result += "은(는) ";
+        result += " was ";
     else
-        result += "은(는) ";
+        result += " is ";
     result +=
-        (you.piety > 130) ? "당신의 숭배를 자랑스럽게 여기고 있다" :
-        (you.piety > 100) ? "당신에게 지극히 만족하고 있다" :
-        (you.piety >  70) ? "당신에게 크게 만족하고 있다" :
-        (you.piety >  40) ? "당신에게 꽤나 만족하고 있다" :
-        (you.piety >  20) ? "당신에게 만족하고 있다" :
-        (you.piety >   5) ? "당신에게 특별한 관심을 가지고 있지 않다"
-                          : "당신에게 불만이 있다";
+        (you.piety > 130) ? "exalted by your worship" :
+        (you.piety > 100) ? "extremely pleased with you" :
+        (you.piety >  70) ? "greatly pleased with you" :
+        (you.piety >  40) ? "most pleased with you" :
+        (you.piety >  20) ? "pleased with you" :
+        (you.piety >   5) ? "noncommittal"
+                          : "displeased";
     result += ".";
 
     return (result);
@@ -89,9 +89,6 @@ bool god_accepts_prayer(god_type god)
 
     switch (god)
     {
-    case GOD_ZIN:
-        return (zin_sustenance(false));
-
     case GOD_JIYVA:
         return (jiyva_can_paralyse_jellies());
 
@@ -119,14 +116,14 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
         return (false);
     }
 
-    std::string prompt = "정말로 " + wpn.name(true, DESC_NOCAP_YOUR)
+    std::string prompt = "Do you wish to have " + wpn.name(true, DESC_NOCAP_YOUR)
                        + " ";
     if (brand == SPWPN_PAIN)
-        prompt += "에 피로 물든 고통을 부여하겠는가";
+        prompt += "bloodied with pain";
     else if (brand == SPWPN_DISTORTION)
-        prompt += "에 타락과 왜곡의 속성을 부여하겠는가";
+        prompt += "corrupted";
     else
-        prompt += "에 신성한 축복의 속성을 부여하겠는가";
+        prompt += "blessed";
     prompt += "?";
 
     if (!yesno(prompt.c_str(), true, 'n'))
@@ -179,23 +176,20 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     you.num_current_gifts[god]++;
     you.num_total_gifts[god]++;
     std::string desc  = old_name + " ";
-            desc += (god == GOD_SHINING_ONE   ? "에 '샤이닝 원'의 축복이 더해졌다" :
-                     god == GOD_LUGONU        ? "에 '루고누'의 타락이 더해졌다" :
-                     god == GOD_KIKUBAAQUDGHA ? "에 '키쿠바쿠드하'의 피의 고통이 더해졌다"
-                                              : "은(는) 신의 힘에 휩싸였다");
+            desc += (god == GOD_SHINING_ONE   ? "blessed by the Shining One" :
+                     god == GOD_LUGONU        ? "corrupted by Lugonu" :
+                     god == GOD_KIKUBAAQUDGHA ? "bloodied by Kikubaaqudgha"
+                                              : "touched by the gods");
 
     take_note(Note(NOTE_ID_ITEM, 0, 0,
               wpn.name(true, DESC_NOCAP_A).c_str(), desc.c_str()));
     wpn.flags |= ISFLAG_NOTED_ID;
 
-    mpr("당신의 무기는 밝게 빛났다!", MSGCH_GOD);
+    mpr("Your weapon shines brightly!", MSGCH_GOD);
 
     flash_view(colour);
 
-	simple_god_message(god == GOD_SHINING_ONE   ? "은(는) 말했다. \"이 무기를 부디 현명하게 사용하라!\"" :
-					   god == GOD_LUGONU        ? "은(는) 말했다. \"이 무기로 모든 것을 타락시키라!\"" :
-					   god == GOD_KIKUBAAQUDGHA ? "은(는) 말했다. \"이 무기로 모두에 고통을 선사하라!\"" :
-											      "은(는) 말했다. \"이 무기를 잘 써라!\"");
+    simple_god_message(" booms: Use this gift wisely!");
 
     if (god == GOD_SHINING_ONE)
     {
@@ -231,7 +225,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 static bool _altar_prayer()
 {
     // Different message from when first joining a religion.
-    mpr("당신은 제단에 무릎꿇고, 기도를 드렸다.");
+    mpr("You prostrate yourself in front of the altar and pray.");
 
     god_acting gdact;
 
@@ -278,7 +272,7 @@ static bool _altar_prayer()
         && you.piety > 160)
     {
         simple_god_message(
-            "은(는) 당신의 무기에 피의 고통을 부여하거나, 혹은 강령술의 비서를 내려줄 것이다.");
+            " will bloody your weapon with pain or grant you the Necronomicon.");
 
         bool kiku_did_bless_weapon = false;
 
@@ -292,12 +286,12 @@ static bool _altar_prayer()
             did_bless = kiku_did_bless_weapon;
         }
         else
-            mpr("피의 고통을 부여할 무기가 없다.");
+            mpr("You have no weapon to bloody with pain.");
 
         // If not, ask if the player wants a Necronomicon.
         if (!kiku_did_bless_weapon)
         {
-            if (!yesno("마법서 '강령술의 비서'를 받습니까?", true, 'n'))
+            if (!yesno("Do you wish to receive the Necronomicon?", true, 'n'))
                 return (false);
 
             int thing_created = items(1, OBJ_BOOKS, BOOK_NECRONOMICON, true, 1,
@@ -311,7 +305,7 @@ static bool _altar_prayer()
 
             if (thing_created != NON_ITEM)
             {
-                simple_god_message("은(는) 당신에게 선물을 하사했다!");
+                simple_god_message(" grants you a gift!");
                 more();
 
                 you.num_current_gifts[you.religion]++;
@@ -333,7 +327,7 @@ void pray()
 {
     if (silenced(you.pos()))
     {
-        mpr("당신은 소리를 낼 수 없다!");
+        mpr("You are unable to make a sound!");
         return;
     }
 
@@ -357,7 +351,7 @@ void pray()
         {
             if (you.species == SP_DEMIGOD)
             {
-                mpr("유감이지만, 반신족인 당신은 이 곳에서 기도를 통해 신을 섬길 수 없다.");
+                mpr("Sorry, a being of your status cannot worship here.");
                 return;
             }
 
@@ -370,26 +364,21 @@ void pray()
     if (you.religion == GOD_NO_GOD)
     {
         const mon_holy_type holi = you.holiness();
+
         mprf(MSGCH_PRAY,
-             "당신은 잠깐, %s",
-             holi == MH_NONLIVING || holi == MH_UNDEAD ? "존재의 의미에 대해 생각했다." : "삶의 의미에 대해 생각했다.");
+             "You spend a moment contemplating the meaning of %s.",
+             holi == MH_NONLIVING || holi == MH_UNDEAD ? "existence" : "life");
 
         // Zen meditation is timeless.
         return;
     }
 
-    mprf(MSGCH_PRAY, "당신은 %s에게 기도를 %s드렸다.",
-         god_name(you.religion).c_str(),
-	 you.duration[DUR_JELLY_PRAYER] ? "이어서 " : "");
+    mprf(MSGCH_PRAY, "You %s prayer to %s.",
+         you.duration[DUR_JELLY_PRAYER] ? "renew your" : "offer a",
+         god_name(you.religion).c_str());
 
     switch(you.religion)
     {
-    case GOD_ZIN:
-        //jmf: this "good" god will feed you (a la Nethack)
-        if (do_zin_sustenance())
-            something_happened = true;
-        break;
-
     case GOD_JIYVA:
         you.duration[DUR_JELLY_PRAYER] = 200;
 
@@ -413,7 +402,7 @@ void pray()
     if (you.religion == GOD_XOM)
         mpr(getSpeakString("Xom prayer"), MSGCH_GOD);
     else if (player_under_penance())
-        simple_god_message("은(는) 속죄를 요구하고 있다!");
+        simple_god_message(" demands penance!");
     else
         mpr(god_prayer_reaction().c_str(), MSGCH_PRAY, you.religion);
 
@@ -431,11 +420,11 @@ static void _zin_donate_gold()
 {
     if (you.gold == 0)
     {
-        mpr("당신은 제물로 바칠 것이 없다.");
+        mpr("You don't have anything to sacrifice.");
         return;
     }
 
-    if (!yesno("소지금의 절반을, 제단에 기부합니까?", true, 'n'))
+    if (!yesno("Do you wish to donate half of your money?", true, 'n'))
         return;
 
     const int donation_cost = (you.gold / 2) + 1;
@@ -454,7 +443,7 @@ static void _zin_donate_gold()
 
     if (donation < 1)
     {
-        simple_god_message("은(는) 당신의 가난을 가엾어했다.");
+        simple_god_message(" finds your generosity lacking.");
         return;
     }
 
@@ -469,21 +458,22 @@ static void _zin_donate_gold()
     if (player_under_penance())
     {
         if (estimated_piety >= you.penance[GOD_ZIN])
-            mpr("'진'은 당신의 죄를 용서해주었다.");
+            mpr("You feel that you will soon be absolved of all your sins.");
         else
-            mpr("당신의 죄가, 좀 더 가벼워졌음을 느꼈다.");
+            mpr("You feel that your burden of sins will soon be lighter.");
         return;
     }
-    std::string result = "진은 당신";
 
+    std::string result = "You feel that " + god_name(GOD_ZIN)
+                       + " will soon be ";
     result +=
-        (estimated_piety > 130) ? "의 숭배를 자랑스럽게 여겼다" :
-        (estimated_piety > 100) ? "에게 지극히 만족했다" :
-        (estimated_piety >  70) ? "에게 크게 만족했다" :
-        (estimated_piety >  40) ? "에게 꽤 만족했다" :
-        (estimated_piety >  20) ? "에게 만족했다" :
-        (estimated_piety >   5) ? "에게 관심을 보이지 않았다"
-                                : "에게 화를 냈다";
+        (estimated_piety > 130) ? "exalted by your worship" :
+        (estimated_piety > 100) ? "extremely pleased with you" :
+        (estimated_piety >  70) ? "greatly pleased with you" :
+        (estimated_piety >  40) ? "most pleased with you" :
+        (estimated_piety >  20) ? "pleased with you" :
+        (estimated_piety >   5) ? "noncommittal"
+                                : "displeased";
     result += (donation >= 30 && you.piety <= 170) ? "!" : ".";
 
     mpr(result.c_str());
@@ -509,22 +499,26 @@ static void _give_sac_group_feedback(int which)
 {
     ASSERT(which >= 0 && which < 5);
     const char* names[] = {
-        "탈출", "파괴", "던전", "소환", "불가사의"
+        "Escape", "Destruction", "Dungeons", "Summoning", "Wonder"
     };
-    mprf(MSGCH_GOD, "눈앞에 있던 %s의 상징이 융합했고, 곧 사라졌다.",
+    mprf(MSGCH_GOD, "A symbol of %s coalesces before you, then vanishes.",
          names[which]);
 }
 
 static void _ashenzari_sac_scroll(const item_def& item)
 {
-    int scr = (you.species == SP_FELID) ? SCR_CURSE_JEWELLERY :
-              random_choose(SCR_CURSE_WEAPON, SCR_CURSE_ARMOUR,
+    int scr = SCR_CURSE_JEWELLERY;
+    if (you.species != SP_FELID
+        && (you.species != SP_OCTOPODE || one_chance_in(4)))
+    {
+        scr = random_choose(SCR_CURSE_WEAPON, SCR_CURSE_ARMOUR,
                             SCR_CURSE_JEWELLERY, -1);
+    }
     int it = items(0, OBJ_SCROLLS, scr, true, 0, MAKE_ITEM_NO_RACE,
                    0, 0, GOD_ASHENZARI);
     if (it == NON_ITEM)
     {
-        mpr("세상을 등진 느낌이 들었다.");
+        mpr("You feel the world is against you.");
         return;
     }
 
@@ -623,16 +617,16 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
         {
             if (unholy_weapon || evil_weapon)
             {
-                const char *desc_weapon = evil_weapon ? "사악한 " : "불경스런 ";
+                const char *desc_weapon = evil_weapon ? "evil" : "unholy";
 
                 // Print this in addition to the above!
                 if (first)
                 {
                     simple_god_message(make_stringf(
-                             "은(는) 당신이 그런 %s%s무기를 제거한 것을 기뻐했다%s.",
-                             item.quantity == 1 ? "" : "",
+                             " welcomes the destruction of %s %s weapon%s.",
+                             item.quantity == 1 ? "this" : "these",
                              desc_weapon,
-                             item.quantity == 1 ? ""     : "").c_str(),
+                             item.quantity == 1 ? ""     : "s").c_str(),
                              GOD_ELYVILON);
                 }
             }
@@ -846,7 +840,7 @@ static bool _offer_items()
         // Ignore {!D} inscribed items.
         if (!check_warning_inscriptions(item, OPER_DESTROY))
         {
-            mpr("{!D} 문장이 새겨진 아이템을 제물로 바치지 않는다.");
+            mpr("Won't sacrifice {!D} inscribed item.");
             i = next;
             continue;
         }
@@ -855,7 +849,7 @@ static bool _offer_items()
             && (item.inscription.find("=p") != std::string::npos))
         {
             const std::string msg =
-                  "정말로 " + item.name(true, DESC_NOCAP_A) + "을(를) 제물로 바칩니까?";
+                  "Really sacrifice " + item.name(true, DESC_NOCAP_A) + "?";
 
             if (!yesno(msg.c_str(), false, 'n'))
             {
@@ -890,28 +884,28 @@ static bool _offer_items()
         ASSERT(disliked_item);
 
         if (item_is_orb(*disliked_item))
-            simple_god_message("은(는) 당신이 그 오브의 힘을 지상에서 사용하길 원한다!");
+            simple_god_message(" wants the Orb's power used on the surface!");
         else if (item_is_rune(*disliked_item))
-            simple_god_message("은(는) 당신이 그 룬을 소장하고 자랑스럽게 여기길 원한다!.");
+            simple_god_message(" wants the runes to be proudly displayed.");
         else if (disliked_item->base_type == OBJ_MISCELLANY
                  && disliked_item->sub_type == MISC_HORN_OF_GERYON)
-            simple_god_message("은(는) 그 아이템을 바침으로, 당신의 길이 막히는걸 원하지 않았다.");
+            simple_god_message(" doesn't want your path blocked.");
         // Zin was handled above, and the other gods don't care about
         // sacrifices.
         else if (god_likes_fresh_corpses(you.religion))
-            simple_god_message("은(는) 신선한 시체만을 원한다!");
+            simple_god_message(" only cares about fresh corpses!");
         else if (you.religion == GOD_BEOGH)
-            simple_god_message("은(는) 오크의 시체만을 원한다!");
+            simple_god_message(" only cares about orcish remains!");
         else if (you.religion == GOD_NEMELEX_XOBEH)
             if (disliked_item->base_type == OBJ_GOLD)
-                simple_god_message("은(는) 금화를 원하지 않는다!");
+                simple_god_message(" does not care about gold!");
             else
-                simple_god_message("은(는) 카드 덱을 사용하길 원하지, 바치길 원하지 않는다!");
+                simple_god_message(" expects you to use your decks, not offer them!");
         else if (you.religion == GOD_ASHENZARI)
-            simple_god_message("은(는) 저주 해제의 마법 두루마리만 바꿔줄 수 있다.");
+            simple_god_message(" can corrupt only scrolls of remove curse.");
     }
     if (num_sacced == 0 && you.religion == GOD_ELYVILON)
-        mpr("파괴할 무기가 없다!");
+        mpr("There are no weapons here to destroy!");
 
     return (num_sacced > 0);
 }

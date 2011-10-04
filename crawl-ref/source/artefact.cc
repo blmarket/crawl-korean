@@ -1976,8 +1976,7 @@ static void _make_faerie_armour(item_def &item)
             || artefact_wpn_property(doodad, ARTP_PREVENT_SPELLCASTING)
             || artefact_wpn_property(doodad, ARTP_CAUSE_TELEPORTATION)
             || artefact_wpn_property(doodad, ARTP_PREVENT_TELEPORTATION)
-            || artefact_wpn_property(doodad, ARTP_MUTAGENIC)
-            || artefact_wpn_property(doodad, ARTP_PONDEROUS))
+            || artefact_wpn_property(doodad, ARTP_MUTAGENIC))
         {
             continue;
         }
@@ -2074,26 +2073,6 @@ void unrand_reacts()
         you.wield_change = true;
 }
 
-// Set all non-zero properties in proprt on the randart supplied.
-static void _artefact_merge_properties(item_def &item,
-                                       const artefact_properties_t &proprt)
-{
-    ASSERT(is_artefact(item));
-    ASSERT(item.props.exists(ARTEFACT_PROPS_KEY));
-
-    CrawlVector &rap_vec = item.props[ARTEFACT_PROPS_KEY].get_vector();
-    ASSERT(rap_vec.get_type()     == SV_SHORT);
-    ASSERT(rap_vec.size()         == ART_PROPERTIES);
-    ASSERT(rap_vec.get_max_size() == ART_PROPERTIES);
-
-    for (vec_size i = 0; i < ART_PROPERTIES; i++)
-    {
-        const short value = proprt[i];
-        if (value)
-            rap_vec[i].get_short() = value;
-    }
-}
-
 void artefact_set_property(item_def          &item,
                             artefact_prop_type prop,
                             int                val)
@@ -2107,30 +2086,6 @@ void artefact_set_property(item_def          &item,
     ASSERT(rap_vec.get_max_size() == ART_PROPERTIES);
 
     rap_vec[prop].get_short() = val;
-}
-
-void cheibriados_make_item_ponderous(item_def &item)
-{
-    ASSERT(item.base_type == OBJ_ARMOUR);
-    const special_armour_type brand = get_armour_ego_type(item);
-    if (!is_artefact(item))
-    {
-        item.flags |= ISFLAG_RANDART;
-        _artefact_setup_prop_vectors(item);
-        const std::string suffix =
-            _artefact_name_lookup(
-                item,
-                god_name(GOD_CHEIBRIADOS) + " ponderous");
-        set_artefact_name(item, item_base_name(item) + " " + suffix);
-    }
-    artefact_properties_t props;
-    props.init(0);
-    props[ARTP_PONDEROUS] = true;
-    props[ARTP_BRAND] = brand;
-    _artefact_merge_properties(item, props);
-
-    if (Options.autoinscribe_artefacts)
-        add_autoinscription(item, artefact_auto_inscription(item));
 }
 
 template<typename Z>

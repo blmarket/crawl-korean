@@ -1512,7 +1512,8 @@ struct complicated_sight_check
     coord_def base_position;
     bool operator()(monster* mons, actor * test)
     {
-        return (test->visible_to(mons) && cell_see_cell(base_position, test->pos()));
+        return (test->visible_to(mons)
+                && cell_see_cell(base_position, test->pos(), LOS_SOLID));
     }
 };
 
@@ -2292,7 +2293,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         {
             mons->add_ench(ENCH_WITHDRAWN);
 
-            if (mons_is_fleeing(mons))
+            if (mons_is_retreating(mons))
                 behaviour_event(mons, ME_CORNERED);
 
             simple_monster_message(mons, gettext(" withdraws into its shell!"));

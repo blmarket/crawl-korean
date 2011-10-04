@@ -99,16 +99,16 @@ unsigned short _cell_feat_show_colour(const map_cell& cell, bool coloured)
     {
         if (cell.flags & MAP_HALOED)
         {
-            if (cell.flags & MAP_SILENCED && cell.flags & MAP_ANTIHALOED)
+            if (cell.flags & MAP_SILENCED && cell.flags & MAP_UMBRAED)
                 colour = CYAN; // Default for silence.
             else if (cell.flags & MAP_SILENCED)
                 colour = LIGHTCYAN;
-            else if (cell.flags & MAP_ANTIHALOED)
+            else if (cell.flags & MAP_UMBRAED)
                 colour = fdef.colour; // Cancels out!
             else
                 colour = YELLOW;
         }
-        else if (cell.flags & MAP_ANTIHALOED)
+        else if (cell.flags & MAP_UMBRAED)
         {
            if (cell.flags & MAP_SILENCED)
                 colour = BLUE; // Silence gets darker
@@ -367,10 +367,18 @@ glyph get_cell_glyph_with_class(const map_cell& cell, const coord_def& loc,
 
     if (cls == SH_MONSTER)
     {
-        if (show.mons == MONS_SENSED)
-            g.ch = mons_char(cell.monsterinfo()->base_type);
+        const monster_info* mi = cell.monsterinfo();
+        const bool override = Options.mon_glyph_overrides.find(mi->type)
+                              != Options.mon_glyph_overrides.end();
+        if (mi->props.exists("glyph") && !override)
+            g.ch = mi->props["glyph"].get_int();
+        else if (show.mons == MONS_SENSED)
+            g.ch = mons_char(mi->base_type);
         else
             g.ch = mons_char(show.mons);
+
+        if (mi->props.exists("glyph") && override)
+            g.col = mons_class_colour(mi->type);
     }
     else
     {
@@ -384,12 +392,12 @@ glyph get_cell_glyph_with_class(const map_cell& cell, const coord_def& loc,
     return g;
 }
 
-wchar_t get_feat_symbol(dungeon_feature_type feat)
+ucs_t get_feat_symbol(dungeon_feature_type feat)
 {
     return (get_feature_def(feat).symbol);
 }
 
-wchar_t get_item_symbol(show_item_type it)
+ucs_t get_item_symbol(show_item_type it)
 {
     return (get_feature_def(show_type(it)).symbol);
 }
@@ -402,18 +410,25 @@ glyph get_item_glyph(const item_def *item)
     return (g);
 }
 
-glyph get_mons_glyph(const monster_info& mi, bool realcol)
+glyph get_mons_glyph(const monster_info& mi)
 {
     glyph g;
-    if (mi.type == MONS_SLIME_CREATURE && mi.number > 1)
+    const bool override = Options.mon_glyph_overrides.find(mi.type)
+                          != Options.mon_glyph_overrides.end();
+    if (mi.props.exists("glyph") && !override)
+        g.ch = mi.props["glyph"].get_int();
+    else if (mi.type == MONS_SLIME_CREATURE && mi.number > 1)
         g.ch = mons_char(MONS_MERGED_SLIME_CREATURE);
     else if (mi.type == MONS_SENSED)
         g.ch = mons_char(mi.base_type);
     else
         g.ch = mons_char(mi.type);
-    g.col = _get_mons_colour(mi);
-    if (realcol)
-        g.col = real_colour(g.col);
+
+    if (mi.props.exists("glyph") && override)
+        g.col = mons_class_colour(mi.type);
+    else
+        g.col = _get_mons_colour(mi);
+    g.col = real_colour(g.col);
     return (g);
 }
 

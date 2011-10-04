@@ -41,18 +41,11 @@ void SkillRegion::draw_tag()
     const int apt          = species_apt(skill, you.species);
 
     std::string progress = "";
-    // Don't display progress when unskilled or expert.
-    if (you.skills[skill] > 0 && you.skills[skill] < 27)
-    {
-        progress = make_stringf("(%d%%)  ",
-                                get_skill_percentage(skill));
-    }
 
-    /// 1. skillname 2. cur skils, 3. progress%, 4.5. +x, x
-    std::string desc = make_stringf(gettext("%-14s Skill %2d  %s Aptitude %c%d"),
+    /// 1. skillname 2. cur skill progress%, 4.5. +x, x
+    std::string desc = make_stringf(gettext("%-14s Skill %4.1f Aptitude %c%d"),
                                     skill_name(skill),
-                                    you.skills[skill],
-                                    progress.c_str(),
+                                    you.skill(skill, 10) / 10.0,
                                     apt > 0 ? '+' : ' ',
                                     apt);
 
@@ -77,8 +70,8 @@ int SkillRegion::handle_mouse(MouseEvent &event)
         }
 #endif
         m_last_clicked_item = item_idx;
-        if (you.skills[skill] == 0)
-            mpr(gettext("You cannot toggle a skill you don't have yet."));
+        if (!you.can_train[skill])
+            mpr(gettext("You cannot train this skill."));
         else if (you.skills[skill] >= 27)
             mpr(gettext("There's no point to toggling this skill anymore."));
         else
@@ -102,8 +95,7 @@ bool SkillRegion::update_tab_tip_text(std::string &tip, bool active)
 {
     const char *prefix = active ? "" : "[L-Click] ";
 
-    tip = make_stringf("%s%s",
-                       prefix, gettext("Manage skills"));
+    tip = make_stringf("%s%s", prefix, gettext("Manage skills"));
 
     return (true);
 }
@@ -237,9 +229,9 @@ void SkillRegion::update()
 
         if (skill > SK_UNARMED_COMBAT && skill < SK_SPELLCASTING)
             continue;
-
         InventoryTile desc;
-        desc.tile     = tileidx_skill(skill, you.train[skill]);
+        desc.tile     = tileidx_skill(skill, you.train[skill]
+                                             && you.can_train[skill]);
         desc.idx      = idx;
         desc.quantity = you.skills[skill];
 

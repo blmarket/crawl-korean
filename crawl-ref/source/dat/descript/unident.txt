@@ -17,7 +17,7 @@ crystal ball
 %%%%
 deck of cards
 
-무엇인지 알 수 없는, 카드들의 묶음이다.
+A deck of powerful magical cards painted in the ichor of demons. They may have any number of helpful or dangerous effects when drawn.
 %%%%
 potion
 
@@ -35,7 +35,7 @@ scroll
 
 마법의 언어가 쓰여진, 종이로 만들어진 두루마리.
 %%%%
-staff
+magical staff
 
 마력이 깃든 지팡이.
 %%%%

@@ -503,7 +503,7 @@ void handle_behaviour(monster* mon)
                                 mon->target = PLAYER_POS;  // infallible tracking in zotdef
                             else
                             {
-                                if (one_chance_in(you.skill(SK_STEALTH) / 3)
+                                if (x_chance_in_y(300, you.skill(SK_STEALTH, 100))
                                     || you.penance[GOD_ASHENZARI] && coinflip())
                                 {
                                     mon->target = you.pos();
@@ -619,7 +619,6 @@ void handle_behaviour(monster* mon)
                 && !mons_class_flag(mon->type, M_NO_FLEE))
             {
                 new_beh = BEH_FLEE;
-
             }
             break;
 
@@ -702,6 +701,22 @@ void handle_behaviour(monster* mon)
                         e[e_index].unreachable = true;
                 }
             }
+            break;
+
+        case BEH_RETREAT:
+            // If the target can be reached, there is a chance the monster will
+            // try to attack. The chance is low to prevent the player from
+            // dancing in and out of the water.
+            try_pathfind(mon);
+            if (one_chance_in(10) && !target_is_unreachable(mon)
+                || mons_can_attack(mon))
+            {
+                new_beh = BEH_SEEK;
+            }
+            else if (!proxPlayer && one_chance_in(5))
+                new_beh = BEH_WANDER;
+            else if (proxPlayer)
+                mon->target = foepos;
             break;
 
         case BEH_FLEE:
@@ -946,7 +961,15 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             if (mon->asleep() && mons_near(mon))
                 remove_auto_exclude(mon, true);
 
-            if (!mons_is_cornered(mon))
+            // If the monster can't reach its target and can't attack it
+            // either, retreat.
+            try_pathfind(mon);
+            if (mons_intel(mon) > I_INSECT && !mons_can_attack(mon)
+                && target_is_unreachable(mon))
+            {
+                mon->behaviour = BEH_RETREAT;
+            }
+            else if (!mons_is_cornered(mon))
                 mon->behaviour = BEH_SEEK;
 
             if (src == MHITYOU)
@@ -1073,7 +1096,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
 
     case ME_CORNERED:
         // Some monsters can't flee.
-        if (mon->behaviour != BEH_FLEE && !mon->has_ench(ENCH_FEAR))
+        if (!mons_is_retreating(mon) && !mon->has_ench(ENCH_FEAR))
             break;
 
         // Pacified monsters shouldn't change their behaviour.
@@ -1161,6 +1184,6 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
 
 void make_mons_stop_fleeing(monster* mon)
 {
-    if (mons_is_fleeing(mon))
+    if (mons_is_retreating(mon))
         behaviour_event(mon, ME_CORNERED);
 }

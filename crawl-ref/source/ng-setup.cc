@@ -422,26 +422,6 @@ static void _newgame_clear_item(int slot)
             you.equip[i] = -1;
 }
 
-static void _give_wand(const newgame_def& ng)
-{
-    bool is_rod;
-    int wand = start_to_wand(ng.wand, is_rod);
-    ASSERT(wand != -1);
-
-    if (is_rod)
-        make_rod(you.inv[1], STAFF_STRIKING, 8);
-    else
-    {
-        // 1 wand of random effects and one chosen lesser wand
-        const wand_type choice = static_cast<wand_type>(wand);
-        const int ncharges = 15;
-        newgame_make_item(1, EQ_NONE, OBJ_WANDS, choice,
-                          -1, 1, ncharges, 0);
-        newgame_make_item(2, EQ_NONE, OBJ_WANDS, WAND_RANDOM_EFFECTS,
-                          -1, 1, ncharges, 0);
-    }
-}
-
 static void _update_weapon(const newgame_def& ng)
 {
     ASSERT(ng.weapon != NUM_WEAPONS);
@@ -496,7 +476,6 @@ static void _update_weapon(const newgame_def& ng)
 static void _give_items_skills(const newgame_def& ng)
 {
     int weap_skill = 0;
-    int curr = 0;
 
     switch (you.char_class)
     {
@@ -505,8 +484,17 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, WPN_SHORT_SWORD);
         _update_weapon(ng);
 
-        newgame_make_item(1, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_SCALE_MAIL,
-                          ARM_ROBE);
+        if (player_genus(GENPC_DRACONIAN))
+        {
+            newgame_make_item(1, EQ_GLOVES, OBJ_ARMOUR, ARM_GLOVES, -1, 1, 0,
+                              TGLOV_DESC_GAUNTLETS);
+            newgame_make_item(3, EQ_BOOTS, OBJ_ARMOUR, ARM_BOOTS);
+        }
+        else
+        {
+            newgame_make_item(1, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_SCALE_MAIL,
+                              ARM_ROBE);
+        }
         newgame_make_item(2, EQ_SHIELD, OBJ_ARMOUR, ARM_SHIELD, ARM_BUCKLER);
 
         // Skills.
@@ -527,7 +515,8 @@ static void _give_items_skills(const newgame_def& ng)
 
         newgame_make_item(1, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_LEATHER_ARMOUR,
                            ARM_ANIMAL_SKIN);
-        newgame_make_item(2, EQ_SHIELD, OBJ_ARMOUR, ARM_BUCKLER, ARM_SHIELD);
+        if (ng.weapon != WPN_QUARTERSTAFF)
+            newgame_make_item(2, EQ_SHIELD, OBJ_ARMOUR, ARM_BUCKLER, ARM_SHIELD);
         newgame_make_item(3, EQ_HELMET, OBJ_ARMOUR, ARM_HELMET, ARM_CAP);
 
         // Small species get darts, the others nets.
@@ -556,6 +545,12 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_UNARMED_COMBAT] = 4;
         you.skills[SK_DODGING]        = 3;
         you.skills[SK_STEALTH]        = 2;
+
+        if (you.species == SP_FELID)
+        {
+            you.skills[SK_FIGHTING]       = 2;
+            you.skills[SK_UNARMED_COMBAT] = 3;
+        }
         break;
 
     case JOB_BERSERKER:
@@ -588,7 +583,8 @@ static void _give_items_skills(const newgame_def& ng)
         else
         {
             you.skills[SK_DODGING]++;
-            you.skills[SK_ARMOUR] = 1; // for the eventual dragon scale mail :)
+            if (!is_useless_skill(SK_ARMOUR))
+                you.skills[SK_ARMOUR] = 1; // for the eventual dragon scale mail :)
         }
         break;
 
@@ -781,10 +777,6 @@ static void _give_items_skills(const newgame_def& ng)
         // Gets some darts - this job is difficult to start off with.
         newgame_make_item(3, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 16, 1);
 
-        // Spriggans used to get a rod of striking, but now that anyone
-        // can get one when playing an Artificer, this is no longer
-        // necessary. (jpeg)
-
         if (player_genus(GENPC_OGREISH) || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
 
@@ -824,15 +816,6 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 12);
         newgame_make_item(2, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE);
         newgame_make_item(3, EQ_NONE, OBJ_BOOKS, BOOK_CHANGES);
-
-        // A little bit of starting ammo for evaporate... don't need too
-        // much now that the character can make their own. - bwr
-        newgame_make_item(4, EQ_NONE, OBJ_POTIONS, POT_CONFUSION, -1, 2);
-        newgame_make_item(5, EQ_NONE, OBJ_POTIONS, POT_POISON);
-
-        // Spriggans used to get a rod of striking, but now that anyone
-        // can get one when playing an Artificer, this is no longer
-        // necessary. (jpeg)
 
         you.skills[SK_FIGHTING]       = 1;
         you.skills[SK_UNARMED_COMBAT] = 3;
@@ -967,25 +950,22 @@ static void _give_items_skills(const newgame_def& ng)
         break;
 
     case JOB_ARTIFICER:
-        // Equipment. Quarterstaff, and armour or robe.
-        newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, WPN_QUARTERSTAFF);
+        // Equipment. Staff, wands, and armour or robe.
+        newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, WPN_STAFF);
 
-        // Choice of lesser wands, 15 charges plus wand of random
-        // effects: confusion, enslavement, slowing, magic dart, frost,
-        // flame; OR a rod of striking, 8 charges and no random effects.
-        _give_wand(ng);
+        newgame_make_item(1, EQ_NONE, OBJ_WANDS, WAND_FLAME,
+                           -1, 1, 15, 0);
+        newgame_make_item(2, EQ_NONE, OBJ_WANDS, WAND_ENSLAVEMENT,
+                           -1, 1, 15, 0);
+        newgame_make_item(3, EQ_NONE, OBJ_WANDS, WAND_RANDOM_EFFECTS,
+                           -1, 1, 15, 0);
 
-        curr = 2;
-
-        if (!item_is_rod(you.inv[1]))
-            curr++;
-
-        newgame_make_item(curr, EQ_BODY_ARMOUR, OBJ_ARMOUR,
+        newgame_make_item(4, EQ_BODY_ARMOUR, OBJ_ARMOUR,
                            ARM_LEATHER_ARMOUR, ARM_ROBE);
 
         // Skills
-        you.skills[SK_EVOCATIONS]  = 4;
-        you.skills[SK_TRAPS_DOORS] = 3;
+        you.skills[SK_EVOCATIONS]  = 3;
+        you.skills[SK_TRAPS_DOORS] = 2;
         you.skills[SK_DODGING]     = 2;
         you.skills[SK_FIGHTING]    = 1;
         you.skills[SK_STAVES]      = 1;
@@ -1023,6 +1003,11 @@ static void _give_items_skills(const newgame_def& ng)
         you.skills[SK_ARMOUR] = 0;
         you.skills[SK_THROWING] = 0;
         you.skills[SK_SHIELDS] = 0;
+    }
+    if (you.species == SP_OCTOPODE || you.species == SP_BASE_DRACONIAN)
+    {
+        you.skills[SK_DODGING] += you.skills[SK_ARMOUR];
+        you.skills[SK_ARMOUR] = 0;
     }
 
     if (you.religion != GOD_NO_GOD)
@@ -1189,13 +1174,26 @@ static void _give_basic_spells(job_type which_job)
     case JOB_EARTH_ELEMENTALIST:
         which_spell = SPELL_SANDBLAST;
         break;
+    case JOB_TRANSMUTER:
+        which_spell = SPELL_BEASTLY_APPENDAGE;
+        break;
+    case JOB_STALKER:
+        which_spell = SPELL_FULSOME_DISTILLATION;
+        break;
+    case JOB_WARPER:
+        which_spell = SPELL_APPORTATION;
+        break;
 
     default:
         break;
     }
 
-    if (which_spell != SPELL_NO_SPELL)
+    std::string temp;
+    if (which_spell != SPELL_NO_SPELL
+        && !spell_is_uncastable(which_spell, temp))
+    {
         add_spell_to_memory(which_spell);
+    }
 
     return;
 }
@@ -1211,10 +1209,6 @@ static void _give_basic_knowledge(job_type which_job)
     case JOB_ASSASSIN:
     case JOB_VENOM_MAGE:
         set_ident_type(OBJ_POTIONS, POT_POISON, ID_KNOWN_TYPE);
-        break;
-
-    case JOB_TRANSMUTER:
-        set_ident_type(OBJ_POTIONS, POT_WATER, ID_KNOWN_TYPE);
         break;
 
     case JOB_ARTIFICER:
@@ -1382,8 +1376,6 @@ static void _setup_generic(const newgame_def& ng)
     // This function depends on stats and mutations being finalised.
     _give_items_skills(ng);
 
-    _give_species_bonus_mp();
-
     if (you.species == SP_DEMONSPAWN)
         roll_demonspawn_mutations();
 
@@ -1408,8 +1400,9 @@ static void _setup_generic(const newgame_def& ng)
     calc_total_skill_points();
     init_skill_order();
     init_training();
-    you.exp_available = 25;
-    train_skills();
+    init_can_train();
+
+    _give_species_bonus_mp();
 
     if (crawl_state.game_is_zotdef())
         you.zot_points = 80;
@@ -1438,7 +1431,7 @@ static void _setup_generic(const newgame_def& ng)
     // because you ran out of needles for your blowgun!)
     // FIXME: It ought to be possible to override this with autoinscribe rules.
     if (you.inv[0].base_type == OBJ_WEAPONS
-	&& is_throwable(&you, you.inv[0]))
+        && is_throwable(&you, you.inv[0]))
     {
         you.inv[0].inscription = "=f";
     }

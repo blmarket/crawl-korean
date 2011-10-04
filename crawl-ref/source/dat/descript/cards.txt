@@ -6,8 +6,8 @@ dummy_cards
 # decks of transport -> escape
 the Portal card
 
-이 카드는 당신을 현재 층의 임의의 곳으로 공간이동시킨다. 카드의 위력이 높다면, 공간이동을 제어하거나 혹은 즉시 공간이동이 가능하며, 두 가지 효과가 동시에 적용될 수도 있다. 
-이 카드는 탈출, 전쟁, 네멜렉스 죠베의 징벌의 덱에 포함된다.
+This card teleports you to a random location, allowing control of the translocation at high power.
+It is usually found in decks of escape and war, or in Nemelex Xobeh's deck of punishment.
 %%%%
 the Warp card
 
@@ -119,8 +119,8 @@ the Helix card
 %%%%
 the Sage card
 
-이 카드는 남은 경험치의 일부를, 특정 기술에 전송하여 더욱 빨리 수련시킨다.
-이 카드는 변화, 불가사의의 덱에 포함된다.
+This card will funnel some of your earned experience towards training a specific skill and train it faster than it normally would.
+It is usually found in decks of changes and wonders.
 %%%%
 # deck of dungeons -> also changes
 Water card
@@ -252,8 +252,8 @@ the Wraith card
 %%%%
 the Curse card
 
-이 카드는 당신의 장비들에 저주를 걸거나, 물약을 못 쓰게 만들어버린다.
-이 카드는 네멜렉스 죠베의 징벌의 덱에만 포함된다.
+This card places curses on your possessions.
+It is usually only found in Nemelex Xobeh's deck of punishment.
 %%%%
 Xom card
 

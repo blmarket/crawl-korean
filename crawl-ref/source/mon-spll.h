@@ -570,13 +570,13 @@
       }
     },
 
-    {  MST_BLUE_DEATH,
+    {  MST_BLIZZARD_DEMON,
       {
        SPELL_LIGHTNING_BOLT,
+       SPELL_FREEZING_CLOUD,
+       SPELL_NO_SPELL,
+       SPELL_AIRSTRIKE,
        SPELL_BOLT_OF_COLD,
-       SPELL_NO_SPELL,
-       SPELL_NO_SPELL,
-       SPELL_SHADOW_CREATURES,
        SPELL_TELEPORT_OTHER
       }
     },
@@ -1423,7 +1423,7 @@
        SPELL_AGONY,
        SPELL_PAIN,
        SPELL_HASTE,
-       SPELL_SYMBOL_OF_TORMENT,
+       SPELL_NO_SPELL,
        SPELL_NO_SPELL,
        SPELL_HASTE
       }
@@ -1711,6 +1711,17 @@
        SPELL_NO_SPELL,
        SPELL_NO_SPELL,
        SPELL_NO_SPELL,
+       SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_SHADOW_DEMON,
+      {
+       SPELL_NO_SPELL,
+       SPELL_NO_SPELL,
+       SPELL_NO_SPELL,
+       SPELL_SHADOW_CREATURES,
+       SPELL_SUMMON_DEMON,
        SPELL_NO_SPELL
       }
     },

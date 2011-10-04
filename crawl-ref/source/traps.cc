@@ -337,6 +337,21 @@ void monster_caught_in_net(monster* mon, bolt &pbolt)
     if (mon->body_size(PSIZE_BODY) >= SIZE_GIANT)
         return;
 
+    if (mons_class_is_stationary(mon->type))
+    {
+        if (you.see_cell(mon->pos()))
+        {
+            if (mon->visible_to(&you))
+            {
+                mprf("The net is caught on %s!",
+                     mon->name(DESC_NOCAP_THE).c_str());
+            }
+            else
+                mpr("The net is caught on something unseen!");
+        }
+        return;
+    }
+
     if (mon->is_insubstantial())
     {
         if (you.can_see(mon))
@@ -1107,13 +1122,6 @@ trap_type get_trap_type(const coord_def& pos)
     if (trap_def* ptrap = find_trap(pos))
         return (ptrap->type);
 
-    if (feature_mimic_at(pos))
-    {
-        monster *mimic = monster_at(pos);
-        if (mimic->props.exists("trap_type"))
-            return static_cast<trap_type>(mimic->props["trap_type"].get_short());
-    }
-
     return (TRAP_UNASSIGNED);
 }
 
@@ -1185,7 +1193,7 @@ void disarm_trap(const coord_def& where)
 
     // Make the actual attempt
     you.turn_is_over = true;
-    if (random2(you.skill(SK_TRAPS_DOORS) + 2) <= random2(you.absdepth0 + 5))
+    if (random2(you.skill_rdiv(SK_TRAPS_DOORS) + 2) <= random2(you.absdepth0 + 5))
     {
         mpr(gettext("You failed to disarm the trap."));
         if (random2(you.dex()) > 5 + random2(5 + you.absdepth0))
@@ -1241,10 +1249,10 @@ void remove_net_from(monster* mon)
         invis = 3 + random2(5);
 
     bool net_destroyed = false;
-    if (random2(you.skill(SK_TRAPS_DOORS) + 2) + paralys
+    if (random2(you.skill_rdiv(SK_TRAPS_DOORS) + 2) + paralys
            <= random2(2*mon->body_size(PSIZE_BODY) + 3) + invis)
     {
-        if (one_chance_in(you.skill(SK_TRAPS_DOORS) + you.dex()/2))
+        if (x_chance_in_y(2, you.skill(SK_TRAPS_DOORS, 2) + you.dex()))
         {
             mitm[net].plus--;
             mpr(gettext("You tear at the net."));
@@ -1374,9 +1382,16 @@ void free_self_from_net()
 
     if (net == NON_ITEM)
     {
-        if (trap_def *trap = find_trap(you.pos()))
-            if (trap->type == TRAP_WEB)
-                maybe_destroy_web(&you);
+        trap_def *trap = find_trap(you.pos());
+        if (trap && trap->type == TRAP_WEB)
+        {
+            if (x_chance_in_y(40 - you.stat(STAT_STR), 66))
+            {
+                mpr("You struggle to detach yourself from the web.");
+                return;
+            }
+            maybe_destroy_web(&you);
+        }
         you.attribute[ATTR_HELD] = 0;
         you.redraw_quiver = true;
         return;
@@ -2058,7 +2073,13 @@ bool maybe_destroy_web(actor *oaf)
         return false;
 
     if (coinflip())
+    {
+        if (oaf->atype() == ACT_MONSTER)
+            simple_monster_message(oaf->as_monster(), " pulls away from the web.");
+        else
+            mpr("You disentangle yourself.");
         return false;
+    }
 
     if (oaf->atype() == ACT_MONSTER)
         simple_monster_message(oaf->as_monster(), " tears the web.");

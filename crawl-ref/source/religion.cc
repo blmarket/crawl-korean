@@ -35,6 +35,7 @@
 #include "effects.h"
 #include "env.h"
 #include "enum.h"
+#include "exercise.h"
 #include "files.h"
 #include "food.h"
 #include "godabil.h"
@@ -93,7 +94,6 @@
 // & is replaced by "is" or "are" as appropriate for the item.
 // % is replaced by "s" or "" as appropriate.
 // Text between [] only appears if the item already glows.
-// <> and </> are replaced with colors.
 // First message is if there's no piety gain; second is if piety gain is
 // one; third is if piety gain is more than one.
 static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
@@ -106,9 +106,9 @@ static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
     },
     // Zin
     {
-        "은(는) <>희미한 빛</>으로 반짝이고는 사라졌다.",
-        "은(는) <>은색</>으로 반짝이고는 사라졌다.",
-        "은(는) <>눈부신 은색</>으로 반짝이고는 사라졌다.",
+        "은(는) 희미하게 빛나더니 사라져버렸다.",
+        "은(는) 은색으로 반짝이고는 사라졌다.",
+        "은(는) 눈부신 은색으로 번쩍이며 사라졌다.",
     },
     // TSO
     {
@@ -214,6 +214,9 @@ static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
     },
 };
 
+/**
+ * This corresponds with ::god_abilities, as well as with ::god_lose_power_messages.
+ */
 const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
 {
     // no god
@@ -313,11 +316,11 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "날씨를 변화시킬 수 있다."
     },
     // Cheibriados
-    { "'체브리아도스'의 힘으로, 당신의 신진대사를 느리게 할 수 있고, 당신의 갑옷에 느림의 속성을 부여할 수 있다.",
-      "주변의 시간의 흐름을 묶어, 느리게 만들 수 있다.",
-      "",
-      "당신보다 빠른 존재들에게 느림의 징벌을 가할 수 있다.",
-      "시간의 흐름으로 부터, 잠시 빠져나올 수 있다."
+    { "체브리아도스는 당신의 신진대사를 느리게 만들었다.",
+      "체브리아도스는 시간을 붙들어 다른 이들을 느리게 만들고, 당신의 생명력을 보호한다.",
+      "체브리아도스는 당신을 추위로부터 보호한다.",
+      "당신보다 빠른 존재들에게 피해를 입히고, 당신을 화염으로부터 보호한다.",
+      "시간의 흐름으로부터 잠시 빠져나올 수 있다."
     },
     // Ashenzari
     { "",
@@ -328,6 +331,9 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     },
 };
 
+/**
+ * This corresponds with ::god_abilities, as well as with ::god_gain_power_messages.
+ */
 const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
 {
     // no god
@@ -428,9 +434,9 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     },
     // Cheibriados
     { "'체브리아도스'의 기본적 권능을 사용할 수 없다.",
-      "주변의 시간의 흐름에 영향을 줄 수 없다.",
-      "",
-      "당신보다 빠른 존재들을 벌할 수 없다.",
+      "주변의 시간의 흐름에 영향을 줄 수 없고, 생명력을 보호받지 못한다.",
+      "냉기로부터 보호받을 수 없다.",
+      "당신보다 빠른 존재들을 벌할 수 없고, 화염으로부터 보호받지 못한다.",
       "시간의 흐름으로 부터 빠져나오지 못한다."
     },
     // Ashenzari
@@ -680,7 +686,7 @@ std::string get_god_likes(god_type which_god, bool verbose)
 
     switch (which_god)
     {
-    case GOD_SHINING_ONE: case GOD_MAKHLEB:
+    case GOD_SHINING_ONE: case GOD_MAKHLEB: case GOD_LUGONU:
         likes.push_back("you or your allies kill demons");
         break;
 
@@ -788,44 +794,54 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     if (which_god == GOD_NO_GOD || which_god == GOD_XOM)
         return ("");
 
-    std::vector<std::string> dislikes;
+    std::string text;
+    std::vector<std::string> dislikes;        // Piety loss
+    std::vector<std::string> really_dislikes; // Penance
 
     if (god_hates_cannibalism(which_god))
-        dislikes.push_back("you perform cannibalism");
+        really_dislikes.push_back("you perform cannibalism");
 
     if (is_good_god(which_god))
     {
-        dislikes.push_back("you drink blood");
-        dislikes.push_back("you use necromancy");
-        dislikes.push_back("you use unholy magic or items");
-        dislikes.push_back("you attack non-hostile holy beings");
-        dislikes.push_back("you or your allies kill non-hostile holy beings");
-        dislikes.push_back("you attack neutral beings");
+        if (which_god == GOD_SHINING_ONE)
+            really_dislikes.push_back("you drink blood");
+        else
+            dislikes.push_back("you drink blood");
+
+        really_dislikes.push_back("you use necromancy");
+        really_dislikes.push_back("you use unholy magic or items");
+        really_dislikes.push_back("you attack non-hostile holy beings");
+        really_dislikes.push_back("you or your allies kill non-hostile holy beings");
+
+        if (which_god == GOD_ZIN)
+            dislikes.push_back("you attack neutral beings");
+        else
+            really_dislikes.push_back("you attack neutral beings");
     }
 
     switch (which_god)
     {
     case GOD_ZIN:     case GOD_SHINING_ONE:  case GOD_ELYVILON:
     case GOD_OKAWARU:
-        dislikes.push_back("you attack allies");
+        really_dislikes.push_back("you attack allies");
         break;
 
     case GOD_BEOGH:
-        dislikes.push_back("you attack allied orcs");
+        really_dislikes.push_back("you attack allied orcs");
         break;
 
     case GOD_JIYVA:
-        dislikes.push_back("you attack your fellow slimes");
+        really_dislikes.push_back("you attack your fellow slimes");
         break;
 
     case GOD_FEDHAS:
         dislikes.push_back("you or your allies destroy plants");
         dislikes.push_back("allied flora die");
-        dislikes.push_back("you use necromancy on corpses, chunks or skeletons");
+        really_dislikes.push_back("you use necromancy on corpses, chunks or skeletons");
         break;
 
     case GOD_SIF_MUNA:
-        dislikes.push_back("you destroy spellbooks");
+        really_dislikes.push_back("you destroy spellbooks");
         break;
 
     default:
@@ -850,60 +866,76 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     {
     case GOD_ZIN:
         dislikes.push_back("you deliberately mutate yourself");
-        dislikes.push_back("you polymorph monsters");
-        dislikes.push_back("you use unclean or chaotic magic or items");
-        dislikes.push_back("you eat the flesh of sentient beings");
+        really_dislikes.push_back("you polymorph monsters");
+        really_dislikes.push_back("you use unclean or chaotic magic or items");
+        really_dislikes.push_back("you eat the flesh of sentient beings");
         dislikes.push_back("you or your allies attack monsters in a "
                            "sanctuary");
         break;
 
     case GOD_SHINING_ONE:
-        dislikes.push_back("you poison monsters");
-        dislikes.push_back("you attack intelligent monsters in an "
-                           "unchivalric manner");
+        really_dislikes.push_back("you poison monsters");
+        really_dislikes.push_back("you attack intelligent monsters in an "
+                                  "unchivalric manner");
         break;
 
     case GOD_ELYVILON:
-        dislikes.push_back("you kill living things while asking for "
-                           "your life to be spared");
+        really_dislikes.push_back("you kill living things while asking for "
+                                  "your life to be spared");
         break;
 
     case GOD_YREDELEMNUL:
-        dislikes.push_back("you use holy magic or items");
+        really_dislikes.push_back("you use holy magic or items");
         break;
 
     case GOD_TROG:
-        dislikes.push_back("you memorise spells");
-        dislikes.push_back("you attempt to cast spells");
-        dislikes.push_back("you train magic skills");
+        really_dislikes.push_back("you memorise spells");
+        really_dislikes.push_back("you attempt to cast spells");
+        really_dislikes.push_back("you train magic skills");
         break;
 
     case GOD_BEOGH:
-        dislikes.push_back("you desecrate orcish remains");
-        dislikes.push_back("you destroy orcish idols");
+        really_dislikes.push_back("you desecrate orcish remains");
+        really_dislikes.push_back("you destroy orcish idols");
         break;
 
     case GOD_JIYVA:
-        dislikes.push_back("you kill slimes");
+        really_dislikes.push_back("you kill slimes");
         break;
 
     case GOD_CHEIBRIADOS:
-        dislikes.push_back("you hasten yourself");
-        dislikes.push_back("use unnaturally quick items");
+        really_dislikes.push_back("you hasten yourself");
+        really_dislikes.push_back("use unnaturally quick items");
         break;
 
     default:
         break;
     }
 
-    if (dislikes.empty())
+    if (dislikes.empty() && really_dislikes.empty())
         return ("");
 
-    std::string text = god_name(which_god);
-                text += " dislikes it when ";
-                text += comma_separated_line(dislikes.begin(), dislikes.end(),
+    if (!dislikes.empty())
+    {
+        text += god_name(which_god);
+        text += " dislikes it when ";
+        text += comma_separated_line(dislikes.begin(), dislikes.end(),
+                                     " or ", ", ");
+        text += ".";
+
+        if (!really_dislikes.empty())
+            text += " ";
+    }
+
+    if (!really_dislikes.empty())
+    {
+        text += god_name(which_god);
+        text += " strongly dislikes it when ";
+                text += comma_separated_line(really_dislikes.begin(),
+                                             really_dislikes.end(),
                                              " or ", ", ");
-                text += ".";
+        text += ".";
+    }
 
     return (text);
 }
@@ -960,8 +992,10 @@ void dec_penance(god_type god, int val)
                 mpr("Your vision regains its divine sight.");
                 autotoggle_autopickup(false);
             }
-            else if (god == GOD_CHEIBRIADOS && che_boost_level())
+            else if (god == GOD_CHEIBRIADOS)
             {
+                mprf(MSGCH_GOD, "%s restores the support of your attributes.",
+                        god_name(you.religion).c_str());
                 redraw_screen();
                 notify_stat_change("mollifying Cheibriados");
             }
@@ -2248,17 +2282,6 @@ bool do_god_gift(bool forced)
     return (success);
 }
 
-bool do_zin_sustenance()
-{
-    if (!zin_sustenance())
-        return false;
-    god_speaks(you.religion, "가엾이 굶주리는 자네에게, 내 신의 음식을 내려주겠노라.");
-    set_hunger(6000, true);
-    lose_piety(5 + random2avg(10, 2) + (you.gift_timeout ? 5 : 0));
-    _inc_gift_timeout(30 + random2avg(10, 2));
-    return true;
-}
-
 std::string god_name(god_type which_god, bool long_name)
 {
     if (which_god == GOD_JIYVA)
@@ -2626,6 +2649,8 @@ static void _gain_piety_point()
             // title.
             redraw_skill(you.your_name, player_title());
 
+            gain_god_ability(i);
+
             if (_abil_chg_message(god_gain_power_messages[you.religion][i],
                                   "당신은 이제 %s", i))
             {
@@ -2663,10 +2688,12 @@ static void _gain_piety_point()
         update_player_symbol();
     }
 
-    if (you.religion == GOD_CHEIBRIADOS)
+    if (you.religion == GOD_CHEIBRIADOS
+        && che_stat_boost(old_piety) < che_stat_boost())
     {
-        int diffrank = piety_rank(you.piety) - piety_rank(old_piety);
-        che_handle_change(CB_PIETY, diffrank);
+        mprf(MSGCH_GOD, "%s raises the support of your attributes as your movement slows.",
+                        god_name(you.religion).c_str());
+        notify_stat_change("Cheibriados piety gain");
     }
 
     if (you.religion == GOD_SHINING_ONE)
@@ -2780,6 +2807,7 @@ void lose_piety(int pgn)
                 // title.
                 redraw_skill(you.your_name, player_title());
 
+                lose_god_ability(i);
                 _abil_chg_message(god_lose_power_messages[you.religion][i],
                                   "당신은 이제 더이상 %s", i);
 
@@ -2798,10 +2826,12 @@ void lose_piety(int pgn)
         you.redraw_armour_class = true;
     }
 
-    if (you.religion == GOD_CHEIBRIADOS)
+    if (you.religion == GOD_CHEIBRIADOS
+        && che_stat_boost(old_piety) > che_stat_boost())
     {
-        int diffrank = piety_rank(you.piety) - piety_rank(old_piety);
-        che_handle_change(CB_PIETY, diffrank);
+        mprf(MSGCH_GOD, "%s reduces the support of your attributes as your movement quickens.",
+                        god_name(you.religion).c_str());
+        notify_stat_change("Cheibriados piety loss");
     }
 
     if (you.religion == GOD_SHINING_ONE)
@@ -2841,11 +2871,18 @@ void excommunication(god_type new_god)
 
     const bool was_haloed = you.haloed();
     const int  old_piety  = you.piety;
-    const int  old_piety_rank = piety_rank();
 
     god_acting gdact(old_god, true);
 
     take_note(Note(NOTE_LOSE_GOD, old_god));
+
+    std::vector<ability_type> abilities = get_god_abilities();
+    for (unsigned int i = 0; i < abilities.size(); ++i)
+    {
+        you.stop_train.insert(abil_skill(abilities[i]));
+        if (abilities[i] == ABIL_TSO_DIVINE_SHIELD)
+            you.stop_train.insert(SK_SHIELDS);
+    }
 
     you.duration[DUR_PIETY_POOL] = 0; // your loss
     you.piety = 0;
@@ -2854,8 +2891,6 @@ void excommunication(god_type new_god)
         ash_init_bondage(&you);
 
     you.num_current_gifts[old_god] = 0;
-
-    che_handle_change(CB_PIETY, piety_rank() - old_piety_rank);
 
     you.religion = GOD_NO_GOD;
 
@@ -3145,7 +3180,6 @@ bool god_likes_items(god_type god)
 
     switch (god)
     {
-    case GOD_ZIN:
     case GOD_BEOGH:
     case GOD_NEMELEX_XOBEH:
     case GOD_ASHENZARI:
@@ -3174,9 +3208,6 @@ bool god_likes_item(god_type god, const item_def& item)
 
     switch (god)
     {
-    case GOD_ZIN:
-        return (item.base_type == OBJ_GOLD);
-
     case GOD_ELYVILON:
         if (item_is_stationary(item)) // Held in a net?
             return false;
@@ -3382,6 +3413,14 @@ void god_pitch(god_type which_god)
     god_welcome_identify_gear();
     ash_check_bondage();
 
+    // Chei worshippers start their stat gain immediately.
+    if (you.religion == GOD_CHEIBRIADOS)
+    {
+        mprf(MSGCH_GOD, "%s begins to support your attributes as your movement slows.",
+                         god_name(you.religion).c_str());
+        notify_stat_change("Cheibriados worship");
+    }
+
     // We disable all magical skills to avoid accidentally angering Trog.
     if (you.religion == GOD_TROG)
         for (int sk = SK_SPELLCASTING; sk <= SK_LAST_MAGIC; ++sk)
@@ -3426,11 +3465,6 @@ void god_pitch(god_type which_god)
         mpr("당신은 페다스에게 기도를 드림으로, 시체들의 부패를 촉진시킬 수 있다.",
             MSGCH_GOD);
         mpr("던전의 식물들이, 당신에게 더 이상 적대감을 보이지 않는다.", MSGCH_GOD);
-    }
-    else if (you.religion == GOD_CHEIBRIADOS)
-    {
-        mpr("당신은 이제 당신의 방어구에 느림의 속성을 부여할 수 있다.",
-            MSGCH_GOD);
     }
 
     if (you.worshipped[you.religion] < 100)
@@ -3656,6 +3690,15 @@ bool god_hates_spell(spell_type spell, god_type god)
         break;
     }
     return (false);
+}
+
+bool god_loathes_spell(spell_type spell, god_type god)
+{
+    if (spell == SPELL_NECROMUTATION && is_good_god(god))
+        return true;
+    if (spell == SPELL_STATUE_FORM && god == GOD_YREDELEMNUL)
+        return true;
+    return false;
 }
 
 bool god_can_protect_from_harm(god_type god)

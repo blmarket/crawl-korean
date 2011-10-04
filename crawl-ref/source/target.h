@@ -87,6 +87,13 @@ public:
     std::vector<std::vector<coord_def> > queue;
 };
 
-typedef std::vector<std::string> (*desc_filter) (const monster_info& mi);
-
+class targetter_splash : public targetter
+{
+public:
+    targetter_splash(const actor *act);
+    bool valid_aim(coord_def a);
+    aff_type is_affected(coord_def loc);
+private:
+    bool anyone_there(coord_def loc);
+};
 #endif

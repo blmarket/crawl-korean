@@ -844,6 +844,7 @@ void handle_delay()
         {
             // Ran out of things to drop.
             _pop_delay();
+            you.time_taken = 0;
             return;
         }
     }
@@ -943,8 +944,11 @@ void handle_delay()
         }
 
         case DELAY_MULTIDROP:
-            drop_item(items_for_multidrop[0].slot,
-                      items_for_multidrop[0].quantity);
+            if (!drop_item(items_for_multidrop[0].slot,
+                           items_for_multidrop[0].quantity))
+            {
+                you.time_taken = 0;
+            }
             items_for_multidrop.erase(items_for_multidrop.begin());
             break;
 
@@ -1338,11 +1342,13 @@ static void _armour_wear_effects(const int item_slot)
         {
             remove_ice_armour();
         }
+        you.start_train.insert(SK_ARMOUR);
     }
     else if (eq_slot == EQ_SHIELD)
     {
         if (you.duration[DUR_CONDENSATION_SHIELD] > 0)
             remove_condensation_shield();
+        you.start_train.insert(SK_SHIELDS);
     }
 
     equip_item(eq_slot, item_slot);
@@ -1639,6 +1645,10 @@ inline static bool _monster_warning(activity_interrupt_type ai,
 
     // Disable message for summons.
     if (mon->is_summoned() && atype == DELAY_NOT_DELAYED)
+        return false;
+
+    // Mimics announce themselves when revealed.
+    if (mons_is_mimic(mon->type))
         return false;
 
     if (at.context == "already seen" || at.context == "uncharm")

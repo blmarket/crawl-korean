@@ -434,7 +434,7 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
 {
     int power = 0;
     if (rod)
-        power = 5 + you.skill(SK_EVOCATIONS) * 3;
+        power = 5 + you.skill(SK_EVOCATIONS, 3);
     else
     {
         int enhanced = 0;
@@ -451,17 +451,17 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
             {
                 unsigned int bit = (1 << ndx);
                 if (disciplines & bit)
-                    power += you.skill(spell_type2skill(bit)) * 2;
+                    power += you.skill(spell_type2skill(bit), 200);
             }
             power /= skillcount;
         }
 
-        power += you.skill(SK_SPELLCASTING) / 2;
+        power += you.skill(SK_SPELLCASTING, 50);
 
         // Brilliance boosts spell power a bit (equivalent to three
         // spell school levels).
         if (!fail_rate_check && you.duration[DUR_BRILLIANCE])
-            power += 6;
+            power += 600;
 
         if (apply_intel)
             power = (power * you.intel()) / 10;
@@ -485,7 +485,7 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
                 power /= 2;
         }
 
-        power = stepdown_value(power, 50, 50, 150, 200);
+        power = stepdown_value(power / 100, 50, 50, 150, 200);
     }
 
     const int cap = spell_power_cap(spell);
@@ -738,6 +738,28 @@ bool cast_a_spell(bool check_range, spell_type spell)
         return (false);
     }
 
+    // This needs more work: there are spells which are hated but allowed if
+    // they don't have a certain effect.  You may use Poison Arrow on those
+    // immune, use Mephitic Cloud to shield yourself from other clouds.
+    // There are also spells which god_hates_spell() doesn't recognize, like
+    // using Evaporate on certain potions.
+    //
+    // I'm disabling this code for now except for excommunication, please
+    // re-enable if you can fix it.
+    if (/*god_hates_spell*/god_loathes_spell(spell, you.religion))
+    {
+        // None currently dock just piety, right?
+        if (!yesno(god_loathes_spell(spell, you.religion) ?
+            "<lightred>Casting this spell will cause instant excommunication!"
+                "</lightred> Really cast?" :
+            "Casting this spell will put you into penance. Really cast?",
+            true, 'n'))
+        {
+            crawl_state.zero_turns_taken();
+            return (false);
+        }
+    }
+
     const bool staff_energy = player_energy();
     if (you.confused())
         random_uselessness();
@@ -837,6 +859,7 @@ static bool _vampire_cannot_cast(spell_type spell)
     // Satiated or less
     switch (spell)
     {
+    case SPELL_BEASTLY_APPENDAGE:
     case SPELL_BLADE_HANDS:
     case SPELL_CURE_POISON:
     case SPELL_DRAGON_FORM:
@@ -1502,7 +1525,10 @@ static spret_type _do_cast(spell_type spell, int powc,
         return mass_enchantment(ENCH_CHARM, powc, NULL, NULL, fail);
 
     case SPELL_ABJURATION:
-        return abjuration(powc, fail);
+        return cast_abjuration(powc, monster_at(target), fail);
+
+    case SPELL_MASS_ABJURATION:
+        return cast_mass_abjuration(powc, fail);
 
     case SPELL_OLGREBS_TOXIC_RADIANCE:
         return cast_toxic_radiance(false, fail);
@@ -1568,6 +1594,9 @@ static spret_type _do_cast(spell_type spell, int powc,
         return brand_weapon(SPWPN_DISTORTION, powc, fail);
 
     // Transformations.
+    case SPELL_BEASTLY_APPENDAGE:
+        return cast_transform(powc, TRAN_APPENDAGE, fail);
+
     case SPELL_BLADE_HANDS:
         return cast_transform(powc, TRAN_BLADE_HANDS, fail);
 
@@ -1605,9 +1634,9 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_SWIFTNESS:
         return cast_swiftness(powc, fail);
 
+#if TAG_MAJOR_VERSION == 32
     case SPELL_LEVITATION:
-        return cast_levitation(powc, fail);
-
+#endif
     case SPELL_FLY:
         return cast_fly(powc, fail);
 
@@ -1792,6 +1821,7 @@ std::string spell_noise_string(spell_type spell)
     case SPELL_FIREBALL:
     case SPELL_DELAYED_FIREBALL:
     case SPELL_HELLFIRE_BURST:
+    case SPELL_TORNADO:
         effect_noise = 15;
         break;
 
@@ -1806,7 +1836,6 @@ std::string spell_noise_string(spell_type spell)
     case SPELL_LIGHTNING_BOLT:
     case SPELL_CHAIN_LIGHTNING:
     case SPELL_CONJURE_BALL_LIGHTNING:
-    case SPELL_TORNADO:
         effect_noise = 25;
         break;
 
@@ -1940,4 +1969,17 @@ std::string spell_schools_string(spell_type spell)
     }
 
     return (desc);
+}
+
+void spell_skills(spell_type spell, std::set<skill_type> &skills)
+{
+    unsigned int disciplines = get_spell_disciplines(spell);
+    for (int i = 0; i <= SPTYP_LAST_EXPONENT; ++i)
+    {
+        const unsigned int bit = (1 << i);
+        if (disciplines & bit)
+            skills.insert(spell_type2skill(bit));
+    }
+    if (spell == SPELL_CONDENSATION_SHIELD)
+        skills.insert(SK_SHIELDS);
 }

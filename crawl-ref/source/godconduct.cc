@@ -286,16 +286,14 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 }
                 break;
 
-            case GOD_ELYVILON: // healer god cares more about this
+            case GOD_ELYVILON:
                 // Converted allies (marked as TSOites) can be martyrs.
                 if (victim && victim->god == GOD_SHINING_ONE)
                     break;
 
-                if (player_under_penance())
-                    penance = 1;  // if already under penance smaller bonus
-                else
-                    penance = level;
-                // fall through
+                piety_change = -(level/2 + 1);
+                retval = true;
+                break;
 
             case GOD_ZIN:
                 // Converted allies (marked as TSOites) can be martyrs.
@@ -398,6 +396,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_TROG:
             case GOD_KIKUBAAQUDGHA:
             case GOD_BEOGH:
+            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -713,6 +712,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
+            case GOD_LUGONU:
                 simple_god_message(gettext(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - (is_good_god(you.religion) ? 0 :
@@ -1047,7 +1047,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
 #endif
     }
 
-    do_god_revenge(thing_done);
+    do_god_revenge(thing_done, victim);
 
     return (retval);
 }

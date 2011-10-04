@@ -62,8 +62,6 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
     case JOB_MONK:
         switch (speci)
         {
-        case SP_FELID:
-            return (CC_BANNED);
         case SP_HIGH_ELF:
         case SP_DEEP_ELF:
         case SP_MOUNTAIN_DWARF:
@@ -366,6 +364,9 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
     case JOB_TRANSMUTER:
         switch (speci)
         {
+        case SP_MUMMY:
+        case SP_GHOUL:
+            return (CC_BANNED);
         case SP_HIGH_ELF:
         case SP_DEEP_ELF:
         case SP_MOUNTAIN_DWARF:
@@ -377,8 +378,6 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_TROLL:
         case SP_MINOTAUR:
         case SP_KENKU:
-        case SP_MUMMY:
-        case SP_GHOUL:
             return (CC_RESTRICTED);
         default:
             return (CC_UNRESTRICTED);
@@ -632,6 +631,8 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
 {
     ASSERT(is_valid_species(ng.species));
     ASSERT(is_valid_job(ng.job));
+    ASSERT(ng.species == SP_BASE_DRACONIAN
+           || species_genus(ng.species) != GENPC_DRACONIAN);
     switch (wpn)
     {
     case WPN_UNARMED:
@@ -685,11 +686,11 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         case SP_DEMONSPAWN:
         case SP_VAMPIRE:
         case SP_OCTOPODE:
+        case SP_BASE_DRACONIAN:
             return (CC_UNRESTRICTED);
 
         default:
-            return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                    : CC_RESTRICTED);
+            return (CC_RESTRICTED);
         }
 
     case WPN_SPEAR:
@@ -707,6 +708,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         case SP_DEMONSPAWN:
         case SP_MUMMY:
         case SP_OCTOPODE:
+        case SP_BASE_DRACONIAN:
             return (CC_UNRESTRICTED);
 
         case SP_SPRIGGAN:
@@ -719,8 +721,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
                 return (CC_BANNED);
 
         default:
-            return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                    : CC_RESTRICTED);
+            return CC_RESTRICTED;
         }
     case WPN_FALCHION:
         if (ng.job != JOB_FIGHTER && ng.job != JOB_GLADIATOR)
@@ -743,11 +744,11 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         case SP_MUMMY:
         case SP_VAMPIRE:
         case SP_OCTOPODE:
+        case SP_BASE_DRACONIAN:
             return (CC_UNRESTRICTED);
 
         default:
-            return (species_genus(ng.species) == GENPC_DRACONIAN ? CC_UNRESTRICTED
-                    : CC_RESTRICTED);
+            return (CC_RESTRICTED);
         }
 
     case WPN_TRIDENT:
@@ -772,6 +773,30 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
 
         // Both are polearms, right?
         return (weapon_restriction(WPN_SPEAR, ng));
+
+    case WPN_QUARTERSTAFF:
+        if (ng.job != JOB_GLADIATOR)
+            return (CC_BANNED);
+        switch (ng.species)
+        {
+        case SP_CENTAUR:
+        case SP_DEEP_ELF:
+        case SP_DEMIGOD:
+        case SP_DEMONSPAWN:
+        case SP_HIGH_ELF:
+        case SP_HUMAN:
+        case SP_KENKU:
+        case SP_KOBOLD:
+        case SP_MINOTAUR:
+        case SP_MUMMY:
+        case SP_OCTOPODE:
+        case SP_SLUDGE_ELF:
+        case SP_BASE_DRACONIAN:
+            return (CC_UNRESTRICTED);
+
+        default:
+            return (CC_RESTRICTED);
+        }
 
     case WPN_ANKUS:
         if (species_genus(ng.species) == GENPC_OGREISH)

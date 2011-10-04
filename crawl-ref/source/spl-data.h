@@ -330,7 +330,7 @@ struct spell_desc
      SPTYP_CONJURATION | SPTYP_POISON | SPTYP_AIR,
      SPFLAG_DIR_OR_TARGET | SPFLAG_AREA | SPFLAG_ALLOW_SELF,
      3,
-     200,
+     100,
      5, 5,
      0,
      NULL,
@@ -445,8 +445,21 @@ struct spell_desc
 {
     SPELL_ABJURATION, M_("Abjuration"),
      SPTYP_SUMMONING,
-     SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
+     SPFLAG_TARGET | SPFLAG_ESCAPE,
      3,
+     200,
+     LOS_RADIUS, LOS_RADIUS,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_MASS_ABJURATION, "Mass Abjuration",
+     SPTYP_SUMMONING,
+     SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
+     7,
      200,
      -1, -1,
      0,
@@ -468,11 +481,12 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 32
 {
     SPELL_LEVITATION, M_("Levitation"),
      SPTYP_CHARMS | SPTYP_AIR,
      SPFLAG_NONE,
-     2,
+     3,
      150,
      -1, -1,
      0,
@@ -480,6 +494,7 @@ struct spell_desc
      false,
      true
 },
+#endif
 
 {
     SPELL_BOLT_OF_DRAINING, M_("Bolt of Draining"),
@@ -1246,7 +1261,7 @@ struct spell_desc
     SPELL_FLY, M_("Flight"),
      SPTYP_CHARMS | SPTYP_AIR,
      SPFLAG_NONE,
-     4,
+     3,
      200,
      -1, -1,
      0,
@@ -1850,7 +1865,7 @@ struct spell_desc
      SPTYP_TRANSMUTATION | SPTYP_POISON,
      SPFLAG_NONE,
      4,
-     0,
+     100,
      -1, -1,
      0,
      NULL,
@@ -1863,7 +1878,7 @@ struct spell_desc
      SPTYP_FIRE | SPTYP_TRANSMUTATION,
      SPFLAG_DIR_OR_TARGET | SPFLAG_AREA | SPFLAG_ALLOW_SELF,
      2,   // XXX: level 2 or 3, what should it be now? -- bwr
-     200,
+     50,
      6, 6,
      0,
      NULL,
@@ -2993,6 +3008,19 @@ struct spell_desc
      NULL,
      true,
      false
+},
+
+{
+    SPELL_BEASTLY_APPENDAGE, M_("Beastly Appendage"),
+     SPTYP_TRANSMUTATION,
+     SPFLAG_HELPFUL | SPFLAG_CHAOTIC,
+     1,
+     50,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
 },
 
 {

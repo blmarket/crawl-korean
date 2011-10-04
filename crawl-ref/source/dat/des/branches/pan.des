@@ -19,6 +19,25 @@ function pan_lord_epilogue(name)
     crawl.mark_milestone('br.enter', 'entered the realm of ' .. name .. '.')
 end
 
+function pan_lord_monsters(_G, name)
+    -- needs exactly 10 monsters, weights are not supported yet
+    local monsters = {
+        Mnoleg = "small abomination / small abomination / small abomination / " ..
+                 "large abomination / neqoxec / midge / neqoxec / " ..
+                 "blizzard demon / balrug / lemure",
+        ['Lom Lobon'] = "hellwing / smoke demon / smoke demon / ynoxinul / " ..
+                 "Green Death / blizzard demon / smoke demon / hellwing / " ..
+                 "white imp / hellwing",
+        Cerebov = "efreet / small abomination / orange demon / orange demon / " ..
+                 "neqoxec / lemure / orange demon / ynoxinul / balrug / balrug",
+        ['Gloorx Vloq'] = "small skeleton / small skeleton / large skeleton / " ..
+                 "white imp / cacodemon / hellwing / smoke demon / " ..
+                 "executioner / executioner / executioner"
+    }
+
+    _G.set_random_mon_list(monsters[name])
+end
+
 colours = {
     "magenta", "blue", "cyan", "green",
     "brown", "red", "lightgrey"
@@ -80,7 +99,7 @@ colour.add_colour("disco", function(rand, x, y)
 end)
 
 function pan_demonic_rune(e, glyph, place_lord)
-    e.subst(glyph .. ' = ' .. (place_lord and glyph or '.') .. ':7 O:1 N:1')
+    e.subst(glyph .. ' = ' .. (place_lord and glyph or '.') .. ':6 O:1 N:2')
     e.kitem('O = demonic rune of Zot')
     e.kfeat('N = exit_pandemonium')
     if place_lord then
@@ -114,12 +133,13 @@ ENDMAP
 # Mnoleg
 #
 NAME:      mnoleg
-TAGS:      mnoleg
+TAGS:      mnoleg uniq_mnoleg
 ORIENT:    northeast
 LFLOORCOL: yellow
 LROCKCOL:  red
 MONS:      patrolling Mnoleg, neqoxec
 KITEM:     O = glowing rune of Zot
+: pan_lord_monsters(_G, 'Mnoleg')
 epilogue{{
   pan_lord_epilogue('Mnoleg')
 }}
@@ -158,7 +178,7 @@ xxxxxxxxxxxxxx@xxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:      mnoleg_st
-TAGS:      mnoleg
+TAGS:      mnoleg uniq_mnoleg
 ORIENT:    southwest
 LFLOORCOL: yellow
 LROCKCOL:  red
@@ -172,6 +192,7 @@ KITEM:     O = glowing rune of Zot
 NSUBST:    q = 2:u / *:.
 NSUBST:    e = 2:u / *:.
 NSUBST:    p = 3:u / *:.
+: pan_lord_monsters(_G, 'Mnoleg')
 epilogue{{
   pan_lord_epilogue('Mnoleg')
 }}
@@ -216,13 +237,14 @@ ENDMAP
 # Lom Lobon
 #
 NAME:      lom_lobon
-TAGS:      lom_lobon
+TAGS:      lom_lobon uniq_lom_lobon
 ORIENT:    north
 LFLOORCOL: lightgrey
 TAGS:      no_rotate
 LROCKCOL:  white
 MONS:      patrolling Lom Lobon, giant orange brain, rakshasa, wizard
 KITEM:     O = magical rune of Zot
+: pan_lord_monsters(_G, 'Lom Lobon')
 epilogue{{
   pan_lord_epilogue('Lom Lobon')
 }}
@@ -261,17 +283,18 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...@.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:      lom_lobon_st
-TAGS:      lom_lobon no_pool_fixup
+TAGS:      lom_lobon no_pool_fixup uniq_lom_lobon
 ORIENT:    northwest
 LFLOORCOL: lightgrey
 LROCKCOL:  white
 KITEM:     O = magical rune of zot
 MONS:      patrolling Lom Lobon
-MONS:      blue death, green death, wizard, draconian annihilator
+MONS:      blizzard demon, green death, wizard, draconian annihilator
 MONS:      sixfirhy
 SUBST:     0 = 23444445566
 NSUBST:    Q = 1:O / *:4
 NSUBST:    B = 1:. / *:b
+: pan_lord_monsters(_G, 'Lom Lobon')
 epilogue{{
   pan_lord_epilogue('Lom Lobon')
 }}
@@ -323,7 +346,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx..@..
 ENDMAP
 
 NAME:      lom_lobon_spiral_st
-TAGS:      lom_lobon no_pool_fixup patrolling
+TAGS:      lom_lobon no_pool_fixup patrolling uniq_lom_lobon
 ORIENT:    northeast
 LFLOORCOL: lightgrey
 LROCKCOL:  white
@@ -335,6 +358,7 @@ KMONS:     e = deep elf annihilator
 COLOUR:    c = white
 KFEAT:     S = deep_water
 NSUBST:    D = 1:S / *:w
+: pan_lord_monsters(_G, 'Lom Lobon')
 epilogue{{
   pan_lord_epilogue('Lom Lobon')
 }}
@@ -392,7 +416,7 @@ ENDMAP
 # reliably teleport away again.
 #
 NAME:      cerebov
-TAGS:      cerebov
+TAGS:      cerebov uniq_cerebov
 DESC:      Cerebov's castle
 ORIENT:    northeast
 LFLOORCOL: red
@@ -404,6 +428,7 @@ epilogue{{
 }}
 COLOUR:     n = blue
 TILE:       n = dngn_metal_wall_cracked
+: pan_lord_monsters(_G, 'Cerebov')
 :           dgn.set_feature_desc_short("translucent stone wall",
 :                                      "cracked metal wall")
 :           dgn.set_feature_desc_long("translucent stone wall",
@@ -445,13 +470,14 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:      cerebov_st
-TAGS:      cerebov patrolling
+TAGS:      cerebov patrolling uniq_cerebov
 ORIENT:    north
 LFLOORCOL: red
 LROCKCOL:  red
 KITEM:     O = fiery rune of zot
 MONS:      patrolling Cerebov, balrug, pit fiend
 MONS:      red devil, sun demon, imp
+: pan_lord_monsters(_G, 'Cerebov')
 epilogue{{
   pan_lord_epilogue('Cerebov')
 }}
@@ -498,12 +524,13 @@ ENDMAP
 # Gloorx Vloq
 #
 NAME:      gloorx_vloq
-TAGS:      gloorx_vloq
+TAGS:      gloorx_vloq uniq_gloorx_vloq
 ORIENT:    southwest
 LFLOORCOL: blue
 LROCKCOL:  blue
-MONS:      patrolling Gloorx Vloq, Executioner, demonic crawler, shadow demon
+MONS:      patrolling Gloorx Vloq, Executioner, demonic crawler, shadow wraith
 KITEM:     O = dark rune of Zot
+: pan_lord_monsters(_G, 'Gloorx Vloq')
 epilogue{{
   pan_lord_epilogue('Gloorx Vloq')
 }}
@@ -540,13 +567,14 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 NAME:      gloorx_vloq_st
-TAGS:      gloorx_vloq
+TAGS:      gloorx_vloq uniq_gloorx_vloq
 ORIENT:    southeast
 LFLOORCOL: blue
 LROCKCOL:  blue
 MONS:      patrolling Gloorx Vloq, Executioner, shadow wraith
-MONS:      shadow demon, unseen horror
+MONS:      soul eater, unseen horror
 KITEM:     O = dark rune of Zot
+: pan_lord_monsters(_G, 'Gloorx Vloq')
 epilogue{{
   pan_lord_epilogue('Gloorx Vloq')
 }}
@@ -933,6 +961,37 @@ ENDMAP
 
 ###################################
 
+NAME:   pan_captured_pigsty
+TAGS:   pan extra
+MONS:   hairy devil, holy swine
+KFEAT:  o = iron_grate
+{{
+local function swineherd_die(monster, killer_type, killer_index, silent, wizard)
+  local p = dgn.find_marker_positions_by_prop("pigsty_gate", 1)[1]
+  if (p == nil) then
+    crawl.mpr("Error: someone stolen the pigsty gate!")
+    return
+  end
+  dgn.grid(p.x, p.y, "floor")
+  if (you.see_cell(p.x, p.y)) then
+    crawl.mpr("The grate goes up!")
+  else
+    crawl.mpr("You hear a sound of rusty metal sliding.")
+  end
+end
+}}
+MARKER: 1 = lua:MonPropsMarker:new {monster_dies_lua_key = swineherd_die}
+MARKER: o = lua:props_marker {pigsty_gate=1}
+MAP
+xxxxx
+x222x
+x222x
+xxoxx
+@..1@
+ENDMAP
+
+###################################
+
 # Sadly, this vault works well only in text. If we could get changing tiles,
 # it would be great, but for now, these are static.
 #
@@ -981,6 +1040,31 @@ xxxx.........................---------------_..4.x
    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
+###################################
+
+# Here, the forces good have taken a foothold in the lands of evil, and are
+# ready to smite your rear.
+NAME:   pan_holy
+WEIGHT: 0
+TAGS:   pan
+ORIENT: encompass
+KMONS:  1 = angel
+KMONS:  2 = cherub
+KMONS:  3 = cherub hd:25 name:seraph n_rpl n_spe col:lightmagenta \
+            tile:mons_seraph ; blessed great sword ego:flaming . dragon armour \
+            ego:positive_energy
+KMONS:  4 = ophan
+KMONS:  5 = daeva
+KMONS:  6 = pearl dragon
+KMONS:  7 = apis
+KMONS:  8 = shedu band
+# please add more types as they get usable
+TILE:   c = wall_church
+: _G.set_random_mon_list("angel / cherub / ophan / daeva / pearl dragon / " ..
+:                        "apis / shedu / apis / shedu / angel")
+MAP
+.
+ENDMAP
 
 ##############################################################################
 # Random vault and minivault balancers for Pan.

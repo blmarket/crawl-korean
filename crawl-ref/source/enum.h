@@ -103,7 +103,9 @@ enum ability_type
     ABIL_ELYVILON_PURIFICATION,
     ABIL_ELYVILON_GREATER_HEALING_SELF,
     ABIL_ELYVILON_GREATER_HEALING_OTHERS,
+#if TAG_MAJOR_VERSION == 32
     ABIL_ELYVILON_RESTORATION,
+#endif
     ABIL_ELYVILON_DIVINE_VIGOUR,
     // Lugonu
     ABIL_LUGONU_ABYSS_EXIT = 150,
@@ -132,8 +134,7 @@ enum ability_type
     ABIL_FEDHAS_SPAWN_SPORES,
     ABIL_FEDHAS_EVOLUTION,
     // Cheibriados
-    ABIL_CHEIBRIADOS_PONDEROUSIFY = 200,
-    ABIL_CHEIBRIADOS_TIME_STEP,
+    ABIL_CHEIBRIADOS_TIME_STEP = 201,
     ABIL_CHEIBRIADOS_TIME_BEND,
     ABIL_CHEIBRIADOS_SLOUCH,
     // Ashenzari
@@ -244,6 +245,7 @@ enum attribute_type
     ATTR_PERM_LEVITATION,      // Kenku flight or boots of lev are on.
     ATTR_SEEN_INVIS_TURN,      // Last turn you saw something invisible.
     ATTR_SEEN_INVIS_SEED,      // Random seed for invis monster positions.
+    ATTR_APPENDAGE,            // eq slot of Beastly Appendage
     NUM_ATTRIBUTES
 };
 
@@ -258,6 +260,7 @@ enum transformation_type
     TRAN_LICH,
     TRAN_BAT,
     TRAN_PIG,
+    TRAN_APPENDAGE,
 };
 
 enum beam_type                  // beam[].flavour
@@ -766,6 +769,7 @@ enum command_type
     CMD_TARGET_SELECT_ENDPOINT,
     CMD_TARGET_SELECT_FORCE,
     CMD_TARGET_SELECT_FORCE_ENDPOINT,
+    CMD_TARGET_GET,
     CMD_TARGET_OBJ_CYCLE_BACK,
     CMD_TARGET_OBJ_CYCLE_FORWARD,
     CMD_TARGET_CYCLE_FORWARD,
@@ -1445,13 +1449,13 @@ enum enchant_type
     ENCH_HELPLESS,
 #endif
     ENCH_LIQUEFYING,
-    ENCH_PERM_TORNADO,
+    ENCH_TORNADO,
     ENCH_FAKE_ABJURATION,
     ENCH_DAZED,         // Dazed - less chance of acting each turn.
-    ENCH_MUTE,          // Permanently silenced.
-    ENCH_BLIND,         // Permanently blind (everything is invisible).
-    ENCH_DUMB,          // Permanently dumb (as in, 'struck dumb').
-    ENCH_MAD,           // Permanently mad.
+    ENCH_MUTE,          // Silenced.
+    ENCH_BLIND,         // Blind (everything is invisible).
+    ENCH_DUMB,          // Dumb (as in, 'struck dumb').
+    ENCH_MAD,           // Mad.
     ENCH_SILVER_CORONA, // Zin's silver light.
     ENCH_RECITE_TIMER,  // Was recited against.
     ENCH_INNER_FLAME,
@@ -1650,6 +1654,9 @@ enum item_status_flag_type  // per item flags: ie. ident status, cursed status
     ISFLAG_COSMETIC_MASK     = 0x00070000,  // mask of cosmetic descriptions
 
     ISFLAG_UNOBTAINABLE      = 0x00080000,  // vault on display
+
+    ISFLAG_MIMIC             = 0x00100000,  // mimic
+    ISFLAG_NO_MIMIC          = 0x00200000,  // Can't be turned into a mimic
 
     ISFLAG_NO_RACE           = 0x00000000,  // used for clearing these flags
     ISFLAG_ORCISH            = 0x01000000,  // low quality items
@@ -1863,6 +1870,7 @@ enum targ_mode_type
     TARG_ANY,
     TARG_ENEMY,  // hostile + neutral
     TARG_FRIEND,
+    TARG_INJURED_FRIEND, // for healing
     TARG_HOSTILE,
     TARG_HOSTILE_SUBMERGED, // Target hostiles including submerged ones
     TARG_EVOLVABLE_PLANTS,  // Targeting mode for Fedhas' evolution
@@ -2052,19 +2060,21 @@ enum monster_type                      // (int) menv[].type
     MONS_VAPOUR,
 
     // Mimics:
-    MONS_GOLD_MIMIC,
+    MONS_ITEM_MIMIC,
+#if TAG_MAJOR_VERSION == 32
     MONS_WEAPON_MIMIC,
     MONS_ARMOUR_MIMIC,
     MONS_SCROLL_MIMIC,
     MONS_POTION_MIMIC,
-    MONS_DOOR_MIMIC,
-    MONS_PORTAL_MIMIC,
-#if TAG_MAJOR_VERSION == 32
-    MONS_TRAP_MIMIC,
 #endif
+    MONS_FEATURE_MIMIC,
+#if TAG_MAJOR_VERSION == 32
+    MONS_PORTAL_MIMIC,
+    MONS_TRAP_MIMIC,
     MONS_STAIR_MIMIC,
     MONS_SHOP_MIMIC,
     MONS_FOUNTAIN_MIMIC,
+#endif
 
     // Plants:
     MONS_TOADSTOOL,
@@ -2246,7 +2256,7 @@ enum monster_type                      // (int) menv[].type
     MONS_IRON_DEVIL,
     MONS_EXECUTIONER,
     MONS_GREEN_DEATH,
-    MONS_BLUE_DEATH,
+    MONS_BLIZZARD_DEMON,
     MONS_BALRUG,
     MONS_CACODEMON,
     MONS_SUN_DEMON,
@@ -2333,6 +2343,7 @@ enum monster_type                      // (int) menv[].type
     MONS_ERESHKIGAL,
     MONS_ROYAL_JELLY,
     MONS_THE_ENCHANTRESS,
+    // the four Pan lords, order must match runes
     MONS_MNOLEG,
     MONS_LOM_LOBON,
     MONS_CEREBOV,
@@ -2467,6 +2478,7 @@ enum beh_type
     BEH_PANIC,                         //  like flee but without running away
     BEH_LURK,                          //  stay still until discovered or
                                        //  enemy close by
+    BEH_RETREAT,                       //  like flee but when cannot attack
     NUM_BEHAVIOURS,                    //  max # of legal states
     BEH_CHARMED,                       //  hostile-but-charmed; creation only
     BEH_FRIENDLY,                      //  used during creation only
@@ -2498,12 +2510,12 @@ enum mon_inv_type           // (int) menv[].inv[]
     MSLOT_ARMOUR,
     MSLOT_SHIELD,
     MSLOT_WAND,
+    MSLOT_MISCELLANY,
 
     // [ds] Last monster gear slot that the player can observe by examining
     // the monster; i.e. the last slot that goes into monster_info.
-    MSLOT_LAST_VISIBLE_SLOT = MSLOT_WAND,
+    MSLOT_LAST_VISIBLE_SLOT = MSLOT_MISCELLANY,
 
-    MSLOT_MISCELLANY,
     MSLOT_POTION,
     MSLOT_SCROLL,
     MSLOT_GOLD,
@@ -2619,6 +2631,7 @@ enum mutation_type
     MUT_CAMOUFLAGE,
     MUT_TENTACLES,      // Gloves but don't lose a slot yet.
 #endif
+    MUT_TENTACLE_SPIKE, // Octopode only.
     NUM_MUTATIONS,
 
     RANDOM_MUTATION = NUM_MUTATIONS + 1,
@@ -2781,7 +2794,12 @@ enum artefact_prop_type
     ARTP_CURSED,
     ARTP_STEALTH,
     ARTP_MAGICAL_POWER,
-    ARTP_PONDEROUS,
+      ARTP_UNUSED, // please reuse
+#if TAG_MAJOR_VERSION == 32
+    ARTP_OLD_PONDEROUS = ARTP_UNUSED,
+#endif
+    ARTP_HP,
+    ARTP_CLARITY,
     ARTP_NUM_PROPERTIES
 };
 
@@ -2902,6 +2920,14 @@ enum skill_menu_state
     SKM_VIEW_POINTS,
     SKM_DO_FOCUS,
     SKM_VIEW_NEW_LEVEL,
+    SKM_SHOW_TRAINABLE,
+};
+
+enum skill_focus_mode
+{
+    SKM_FOCUS_OFF,
+    SKM_FOCUS_ON,
+    SKM_FOCUS_TOGGLE,
 };
 
 // order is important on these (see player_speed())
@@ -2999,7 +3025,9 @@ enum spell_type
     SPELL_SUMMON_SMALL_MAMMALS,
     SPELL_ABJURATION,
     SPELL_SUMMON_SCORPIONS,
+#if TAG_MAJOR_VERSION == 32
     SPELL_LEVITATION,
+#endif
     SPELL_BOLT_OF_DRAINING,
     SPELL_LEHUDIBS_CRYSTAL_SPEAR,
     SPELL_BOLT_OF_INACCURACY,
@@ -3207,6 +3235,8 @@ enum spell_type
     SPELL_SHROUD_OF_GOLUBRIA,
     SPELL_INNER_FLAME,
     SPELL_PETRIFYING_CLOUD,
+    SPELL_MASS_ABJURATION,
+    SPELL_BEASTLY_APPENDAGE,
 
     NUM_SPELLS
 };

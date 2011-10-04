@@ -580,21 +580,22 @@ ENDMAP
 # real. (dp)
 NAME:  fake_guardian_serpent_vault
 DEPTH: D:15-26, Vault, Elf, Snake
-MONS:  mimic, patrolling guardian serpent
-ITEM:  any good_item
+MONS:  patrolling guardian serpent
 : local b = crawl.random2(10)
 : if b > 7 then
-SUBST: 1 = 1d
+ITEM:  any good_item / any mimic
 : elseif b > 1 then
-SUBST: 1 = 111d
+ITEM:  any good_item w:1 / any mimic w:3
+: else
+ITEM:  any mimic
 : end
 MAP
 ...........
 .xxxxxxxxx.
-.x1111111x.
-.x1111111x.
-.x1111111x.
-.x11.2.11x.
+.xdddddddx.
+.xdddddddx.
+.xdddddddx.
+.xdd.1.ddx.
 .xxxx+xxxx.
 ...........
 ENDMAP
@@ -1365,21 +1366,19 @@ ENDMAP
 NAME:   nrook_kobold_shadow_demons
 DEPTH:  D:14-27
 MONS:   kobold demonologist
-COLOUR: 123 = darkgrey
+COLOUR: 12 = darkgrey
 COLOUR: ' = white
-# On average, there will be 5 demons from "2", and 1 from "3".
-MONS:   w:9 shadow demon / w:1 Lorocyproca / w:10 nothing
-MONS:   w:2 shadow demon / w:40 nothing
+MONS:   w:5 shadow demon / lorocyproca / w:40 nothing
 MAP
     ...
   .'''''.
- .'33333'.
- '3322233'
-.'3222223'.
-.'3221223'.
-.'3222223'.
- '3322233'
- .'33333'.
+ .'''''''.
+ '''222'''
+.''22222''.
+.''22122''.
+.''22222''.
+ '''222'''
+ .'''''''.
   .'''''.
     ...
 ENDMAP
@@ -1391,7 +1390,7 @@ TAGS:   no_monster_gen
 DEPTH:  D:4-, Coc, Geh
 : if you.absdepth() > 24 then
 MONS:   fiend / balrug w:5
-MONS:   ice fiend / blue death w:5
+MONS:   ice fiend / blizzard demon w:5
 MONS:   sun demon / smoke demon / hellion
 MONS:   ice devil / blue devil w:5
 MONS:   red devil / imp
@@ -2442,7 +2441,7 @@ ENDMAP
 #
 NAME:   minmay_guarded_unrand_curses
 TAGS:   no_monster_gen no_item_gen
-DEPTH:  D:8-, Crypt
+DEPTH:  D:14-, Crypt
 WEIGHT: 3
 MONS:   reaper, reaper; scythe unrand:scythe_of_curses, mummy, guardian mummy
 ITEM:   scroll of curse armour / scroll of curse weapon

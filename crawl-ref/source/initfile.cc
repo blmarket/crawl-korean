@@ -130,6 +130,8 @@ weapon_type str_to_weapon(const std::string &str)
         return (WPN_SHORT_SWORD);
     else if (str == "falchion")
         return (WPN_FALCHION);
+    else if (str == "quarterstaff")
+        return (WPN_QUARTERSTAFF);
     else if (str == "mace")
         return (WPN_MACE);
     else if (str == "ankus")
@@ -142,6 +144,18 @@ weapon_type str_to_weapon(const std::string &str)
         return (WPN_HAND_AXE);
     else if (str == "unarmed" || str == "claws")
         return (WPN_UNARMED);
+    else if (str == "sling")
+        return (WPN_SLING);
+    else if (str == "bow")
+        return (WPN_BOW);
+    else if (str == "crossbow")
+        return (WPN_CROSSBOW);
+    else if (str == "rocks")
+        return (WPN_ROCKS);
+    else if (str == "javelins")
+        return (WPN_JAVELINS);
+    else if (str == "darts")
+        return (WPN_DARTS);
     else if (str == "random")
         return (WPN_RANDOM);
 
@@ -156,6 +170,8 @@ static std::string _weapon_to_str(int weapon)
         return "short sword";
     case WPN_FALCHION:
         return "falchion";
+    case WPN_QUARTERSTAFF:
+        return "quarterstaff";
     case WPN_MACE:
         return "mace";
     case WPN_ANKUS:
@@ -168,30 +184,22 @@ static std::string _weapon_to_str(int weapon)
         return "hand axe";
     case WPN_UNARMED:
         return "claws";
+    case WPN_SLING:
+        return "sling";
+    case WPN_BOW:
+        return "bow";
+    case WPN_CROSSBOW:
+        return "crossbow";
+    case WPN_ROCKS:
+        return "rocks";
+    case WPN_JAVELINS:
+        return "javelins";
+    case WPN_DARTS:
+        return "darts";
     case WPN_RANDOM:
     default:
         return "random";
     }
-}
-
-static startup_wand_type _str_to_wand(const std::string& str)
-{
-    if (str == "enslavement")
-        return (SWT_ENSLAVEMENT);
-    if (str == "confusion")
-        return (SWT_CONFUSION);
-    if (str == "magic darts" || str == "magicdarts")
-        return (SWT_MAGIC_DARTS);
-    if (str == "frost" || str == "cold" || str == "ice")
-        return (SWT_FROST);
-    if (str == "flame" || str == "fire")
-        return (SWT_FLAME);
-    if (str == "striking")
-        return (SWT_STRIKING);
-    if (str == "random")
-        return (SWT_RANDOM);
-
-    return (SWT_NO_SELECTION);
 }
 
 // Summon types can be any of mon_summon_type (enum.h), or a relevant summoning
@@ -214,28 +222,6 @@ int str_to_summon_type(const std::string &str)
         return (MON_SUMM_AID);
 
     return (spell_by_name(str));
-}
-
-static std::string _wand_to_str(int weapon)
-{
-    switch (weapon)
-    {
-    case SWT_ENSLAVEMENT:
-        return "enslavement";
-    case SWT_CONFUSION:
-        return "confusion";
-    case SWT_MAGIC_DARTS:
-        return "magic darts";
-    case SWT_FROST:
-        return "frost";
-    case SWT_FLAME:
-        return "flame";
-    case SWT_STRIKING:
-        return "striking";
-    case SWT_RANDOM:
-    default:
-        return "random";
-    }
 }
 
 static fire_type _str_to_fire_types(const std::string &str)
@@ -446,7 +432,7 @@ static tag_pref _str_to_tag_pref(const char *opt)
 {
     for (int i = 0; i < TAGPREF_MAX; i++)
     {
-        if (!stricmp(opt, tag_prefs[i]))
+        if (!strcasecmp(opt, tag_prefs[i]))
             return ((tag_pref)i);
     }
 
@@ -768,6 +754,7 @@ void game_options::reset_options()
     magic_point_warning    = 0;
     default_target         = true;
     autopickup_no_burden   = true;
+    skill_focus            = SKM_FOCUS_ON;
 
     user_note_prefix       = "";
     note_all_skill_levels  = false;
@@ -1148,13 +1135,6 @@ void game_options::add_fire_order_slot(const std::string &s)
         fire_order.push_back(flags);
 }
 
-void game_options::add_mon_glyph_override(monster_type mtype,
-                                          mon_display &mdisp)
-{
-    mdisp.type = mtype;
-    mon_glyph_overrides.push_back(mdisp);
-}
-
 void game_options::add_mon_glyph_overrides(const std::string &mons,
                                            mon_display &mdisp)
 {
@@ -1170,10 +1150,10 @@ void game_options::add_mon_glyph_overrides(const std::string &mons,
         if (!me || me->mc == MONS_PROGRAM_BUG)
             continue;
 
-        if (me->showchar == letter || me->name == mons)
+        if (me->basechar == letter || me->name == mons)
         {
             found = true;
-            add_mon_glyph_override(static_cast<monster_type>(i), mdisp);
+            mon_glyph_overrides[static_cast<monster_type>(i)] = mdisp;
         }
     }
     if (!found)
@@ -1420,8 +1400,6 @@ static void write_newgame_options(const newgame_def& prefs, FILE *f)
         fprintf(f, "background = %s\n", _job_to_str(prefs.job).c_str());
     if (prefs.weapon != WPN_UNKNOWN)
         fprintf(f, "weapon = %s\n", _weapon_to_str(prefs.weapon).c_str());
-    if (prefs.wand != SWT_NO_SELECTION)
-        fprintf(f, "wand = %s\n", _wand_to_str(prefs.wand).c_str());
     fprintf(f, "fully_random = %s\n", prefs.fully_random ? "yes" : "no");
 }
 #endif // !DISABLE_STICKY_STARTUP_OPTIONS
@@ -2364,11 +2342,6 @@ void game_options::read_option_line(const std::string &str, bool runscript)
         // Choose this weapon for backgrounds that get choice.
         game.weapon = str_to_weapon(field);
     }
-    else if (key == "wand")
-    {
-        // Choose this wand for backgrounds that get choice.
-        game.wand = _str_to_wand(field);
-    }
     BOOL_OPTION_NAMED("fully_random", game.fully_random);
     else if (key == "fire_items_start")
     {
@@ -2518,6 +2491,15 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     {
         // field is already cleaned up from trim_string()
         user_note_prefix = field;
+    }
+    else if (key == "skill_focus")
+    {
+        if (field == "toggle")
+            skill_focus = SKM_FOCUS_TOGGLE;
+        else if (_read_bool(field, true))
+            skill_focus = SKM_FOCUS_ON;
+        else
+            skill_focus = SKM_FOCUS_OFF;
     }
     else BOOL_OPTION(note_all_skill_levels);
     else BOOL_OPTION(note_skill_max);
@@ -3812,7 +3794,7 @@ bool parse_args(int argc, char **argv, bool rc_only)
 
         int o;
         for (o = 0; o < num_cmd_ops; o++)
-            if (stricmp(cmd_ops[o], arg) == 0)
+            if (strcasecmp(cmd_ops[o], arg) == 0)
                 break;
 
         // Print the list of commandline options for "--help".

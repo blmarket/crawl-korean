@@ -17,7 +17,7 @@ Arcane Marksman
 %%%%
 Artificer
 
-공구사들은 유용한 마법 도구들을 가지고 시작하며, 그 도구들을 사용하는 방법도 능숙하게 알고 있다.
+Artificers start with a few magical devices and are competent at using such tools.
 %%%%
 Assassin
 

@@ -485,8 +485,6 @@ static std::string _no_selectables_message(int item_selector)
         return "You aren't carrying any items that can be evoked.";
     case OSEL_FRUIT:
         return "You aren't carrying any fruit.";
-    case OSEL_PONDER_ARM:
-        return "You aren't carrying any armour which can be made ponderous.";
     case OSEL_CURSED_WORN:
         return "None of your equipped items are cursed.";
     case OSEL_UNCURSED_WORN_ARMOUR:
@@ -700,7 +698,7 @@ bool sort_item_identified(const InvEntry *a)
 bool sort_item_charged(const InvEntry *a)
 {
     return (a->item->base_type != OBJ_WANDS
-            || !item_is_evokable(*(a->item), true));
+            || !item_is_evokable(*(a->item), false, true));
 }
 
 static bool _compare_invmenu_items(const InvEntry *a, const InvEntry *b,
@@ -713,7 +711,7 @@ static bool _compare_invmenu_items(const InvEntry *a, const InvEntry *b,
         if (cmp)
             return (cmp < 0);
     }
-    return (false);
+    return (a->item->link < b->item->link);
 }
 
 struct menu_entry_comparator
@@ -986,7 +984,7 @@ std::string item_class_name(int type, bool terse)
         case OBJ_JEWELLERY:  return ("jewellery");
         case OBJ_POTIONS:    return ("potion");
         case OBJ_BOOKS:      return ("book");
-        case OBJ_STAVES:     return ("staff");
+        case OBJ_STAVES:     return ("magical staff");
         case OBJ_ORBS:       return ("orb");
         case OBJ_MISCELLANY: return ("misc");
         case OBJ_CORPSES:    return ("carrion");
@@ -1000,7 +998,7 @@ std::string item_class_name(int type, bool terse)
         case OBJ_WEAPONS:    return ("Hand Weapons");
         case OBJ_MISSILES:   return ("Missiles");
         case OBJ_ARMOUR:     return ("Armour");
-        case OBJ_WANDS:      return ("Magical Devices");
+        case OBJ_WANDS:      return ("Wands");
         case OBJ_FOOD:       return ("Comestibles");
         case OBJ_SCROLLS:    return ("Scrolls");
         case OBJ_JEWELLERY:  return ("Jewellery");
@@ -1120,10 +1118,7 @@ static bool _item_class_selected(const item_def &i, int selector)
         return (item_is_rechargeable(i, true));
 
     case OSEL_EVOKABLE:
-        return (item_is_evokable(i, true, true));
-
-    case OSEL_PONDER_ARM:
-        return (is_ponderousifiable(i));
+        return (item_is_evokable(i, true, true, true));
 
     case OSEL_ENCH_ARM:
         return (is_enchantable_armour(i, true, true));
@@ -1913,8 +1908,18 @@ bool item_is_wieldable(const item_def &item)
                && item.sub_type == MISC_LANTERN_OF_SHADOWS);
 }
 
-bool item_is_evokable(const item_def &item, bool known, bool all_wands,
-                      bool msg)
+/*
+ * Return wether an item can be evoked.
+ * @param item      The item to check
+ * @param reach     Do weapons of reaching count?
+ * @param known     When set it returns true for items of unknown type which
+ *                  might be evokable.
+ * @param all_wands When set, it returns true for empty wands.
+ * @param msg       Whether we need to print a message.
+ * @param equip     When disabled, ignore wield and meld requirements.
+ */
+bool item_is_evokable(const item_def &item, bool reach, bool known,
+                      bool all_wands, bool msg, bool equip)
 {
     const std::string error = item_is_melded(item)
             ? "Your " + item.name(true, DESC_QUALNAME) + " is melded into your body."
@@ -1926,7 +1931,7 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
 
         if (entry->evoke_func && item_type_known(item))
         {
-            if (item_is_equipped(item) && !item_is_melded(item))
+            if (item_is_equipped(item) && !item_is_melded(item) || !equip)
                 return (true);
 
             if (msg)
@@ -1937,8 +1942,8 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
         // Unrandart might still be evokable (e.g., reaching)
     }
 
-    const bool wielded = you.equip[EQ_WEAPON] == item.link
-                         && !item_is_melded(item);
+    const bool wielded = !equip || you.equip[EQ_WEAPON] == item.link
+                                   && !item_is_melded(item);
 
     switch (item.base_type)
     {
@@ -1955,11 +1960,10 @@ bool item_is_evokable(const item_def &item, bool known, bool all_wands,
         return (true);
 
     case OBJ_WEAPONS:
-        if (!wielded && !msg)
+        if ((!wielded || !reach) && !msg)
             return (false);
 
-        if (get_weapon_brand(item) == SPWPN_REACHING
-            && item_type_known(item))
+        if (reach && weapon_reach(item) && item_type_known(item))
         {
             if (!wielded)
             {

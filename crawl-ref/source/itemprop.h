@@ -127,6 +127,8 @@ skill_type weapon_skill(object_class_type wclass, int wtype);
 skill_type range_skill(const item_def &item);
 skill_type range_skill(object_class_type wclass, int wtype);
 
+bool item_skills(const item_def &item, std::set<skill_type> &skills);
+
 // launcher and ammo functions:
 bool is_range_weapon(const item_def &item);
 bool is_range_weapon_type(weapon_type wtype);
@@ -138,6 +140,9 @@ bool has_launcher(const item_def &ammo);
 bool is_throwable(const actor *actor, const item_def &wpn, bool force = false);
 launch_retval is_launched(const actor *actor, const item_def *launcher,
                           const item_def &missile);
+
+reach_type weapon_reach(const item_def &item);
+int reach_range(reach_type rt);
 
 // staff/rod functions:
 bool item_is_rod(const item_def &item);

@@ -321,7 +321,7 @@ static int _strength_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_boost(CB_STATS);
+    result += che_stat_boost();
 
     // ego items of strength
     result += 3 * count_worn_ego(SPARM_STRENGTH);
@@ -362,7 +362,7 @@ static int _int_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_boost(CB_STATS);
+    result += che_stat_boost();
 
     // ego items of intelligence
     result += 3 * count_worn_ego(SPARM_INTELLIGENCE);
@@ -390,7 +390,7 @@ static int _dex_modifier()
     if (you.duration[DUR_DIVINE_STAMINA])
         result += you.attribute[ATTR_DIVINE_STAMINA];
 
-    result += che_boost(CB_STATS);
+    result += che_stat_boost();
 
     // ego items of dexterity
     result += 3 * count_worn_ego(SPARM_DEXTERITY);
@@ -677,6 +677,8 @@ void update_stat_zero()
             {
                 mprf(gettext("Your %s has recovered."), gettext(stat_desc(s, SD_NAME)));
                 you.redraw_stats[s] = true;
+                if (i == STAT_STR)
+                    burden_change();
             }
         }
         else // no stat penalty at all

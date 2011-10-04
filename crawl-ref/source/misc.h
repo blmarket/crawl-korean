@@ -113,6 +113,7 @@ void reveal_secret_door(const coord_def& p);
 
 bool stop_attack_prompt(const monster* mon, bool beam_attack,
                         coord_def beam_target, bool autohit_first = false);
+bool stop_attack_prompt(targetter &hitfunc, std::string verb);
 
 bool is_orckind(const actor *act);
 
@@ -342,6 +343,14 @@ void search_astar(const coord_def & start,
     search_astar(start, valid_target, connect, visited, candidates);
 }
 
-
-
+struct counted_monster_list
+{
+    typedef std::pair<const monster* ,int> counted_monster;
+    typedef std::vector<counted_monster> counted_list;
+    counted_list list;
+    void add(const monster* mons);
+    int count();
+    bool empty() { return list.empty(); }
+    std::string describe(description_level_type desc = DESC_CAP_THE);
+};
 #endif

@@ -205,10 +205,8 @@ public:
     virtual int beam_resists(bolt &beam, int hurted, bool doEffects,
                              std::string source = "") = 0;
 
-    virtual int  skill(skill_type sk) const
-    {
-        return (0);
-    }
+    virtual int  skill(skill_type sk, int scale = 1, bool real = false) const = 0;
+    int  skill_rdiv(skill_type sk, int mult = 1, int div = 1) const;
 
     virtual int stat_hp() const = 0;
     virtual int stat_maxhp() const = 0;
@@ -286,15 +284,15 @@ public:
                          bool self_halo = true) const = 0;
     // Within any actor's halo?
     virtual bool haloed() const;
-    // Within an antihalo?
-    virtual bool antihaloed() const;
+    // Within an umbra?
+    virtual bool umbraed() const;
     // Squared halo radius.
     virtual int halo_radius2() const = 0;
     // Squared silence radius.
     virtual int silence_radius2() const = 0;
     // Squared liquefying radius
     virtual int liquefying_radius2 () const = 0;
-    virtual int antihalo_radius2 () const = 0;
+    virtual int umbra_radius2 () const = 0;
 
     virtual bool glows_naturally() const = 0;
 

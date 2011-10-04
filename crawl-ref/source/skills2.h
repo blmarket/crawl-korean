@@ -15,7 +15,8 @@ const int MAX_SKILL_ORDER = 100;
 struct skill_state
 {
     FixedVector<uint8_t, NUM_SKILLS>      skills;
-    FixedVector<uint8_t, NUM_SKILLS>      changed_skills;
+    FixedVector<int, NUM_SKILLS>          real_skills;    // Those two are
+    FixedVector<int, NUM_SKILLS>          changed_skills; // scaled by 10.
     FixedVector<int8_t, NUM_SKILLS>       train;
     FixedVector<unsigned int, NUM_SKILLS> training;
     FixedVector<unsigned int, NUM_SKILLS> skill_points;
@@ -32,6 +33,7 @@ struct skill_state
     void restore_training();
 };
 
+int get_skill_progress(skill_type sk, int scale);
 int get_skill_percentage(const skill_type x);
 const char *skill_name(skill_type which_skill);
 skill_type str_to_skill(const std::string &skill);
@@ -54,7 +56,7 @@ void init_skill_order();
 
 void calc_mp();
 void calc_hp();
-bool is_useless_skill(int skill);
+bool is_useless_skill(skill_type skill);
 
 int species_apt(skill_type skill, species_type species = you.species);
 float species_apt_factor(skill_type sk, species_type sp = you.species);
@@ -74,7 +76,7 @@ void dump_skills(std::string &text);
 int skill_transfer_amount(skill_type sk);
 int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
                           bool simu, bool boost = false);
-int skill_bump(skill_type skill);
+int skill_bump(skill_type skill, int scale = 1);
 
 static const skill_type skill_display_order[] =
 {

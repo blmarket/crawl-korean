@@ -832,7 +832,7 @@ quad damage
 %%%%
 quarterstaff
 
-단단하고 나무로된 막대.
+A sturdy wooden pole, meant for fighting.
 %%%%
 quick blade
 
@@ -1163,6 +1163,10 @@ spiked flail
 splint mail
 
 쇠미늘로 만든 갑옷이다.
+%%%%
+staff
+
+A stout walking stick.
 %%%%
 staff of air
 

@@ -50,6 +50,7 @@
 #include "dgn-shoals.h"
 #include "dlua.h"
 #include "directn.h"
+#include "dungeon.h"
 #include "effects.h"
 #include "env.h"
 #include "errors.h"
@@ -280,6 +281,7 @@ int main(int argc, char *argv[])
 
     if (Options.sc_entries != 0 || !SysEnv.scorefile.empty())
     {
+        crawl_state.type = Options.game.type;
         hiscores_print_all(Options.sc_entries, Options.sc_format);
         return 0;
     }
@@ -344,7 +346,7 @@ static void _launch_game_loop()
         }
         catch (ext_fail_exception &fe)
         {
-            end(1, false, fe.msg.c_str());
+            end(1, false, "%s", fe.msg.c_str());
         }
         catch(short_read_exception &E)
         {
@@ -365,6 +367,14 @@ static void _launch_game()
 
     // Override some options when playing in hints mode.
     init_hints_options();
+
+    if (!game_start && you.prev_save_version != Version::Long())
+    {
+        snprintf(info, INFO_SIZE, "Upgraded the game from %s to %s",
+                                  you.prev_save_version.c_str(),
+                                  Version::Long().c_str());
+        take_note(Note(NOTE_MESSAGE, 0, 0, info));
+    }
 
     if (!crawl_state.game_is_tutorial())
     {
@@ -640,7 +650,6 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
     case 'L': debug_place_map();                     break;
     case 'i': wizard_identify_pack();                break;
     case 'I': wizard_unidentify_pack();              break;
-    case 'Z':
     case 'z': wizard_cast_spec_spell();              break;
     case '(': wizard_create_feature();               break;
     case ')': wizard_mod_tide();                     break;
@@ -737,6 +746,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
             mpr("This only makes sense in a labyrinth!");
         break;
 
+    case 'Z':
     case CONTROL('Z'):
         if (crawl_state.game_is_zotdef())
         {
@@ -852,7 +862,8 @@ static void _start_running(int dir, int mode)
     coord_def next_pos = you.pos() + Compass[dir];
     for (adjacent_iterator ai(next_pos); ai; ++ai)
     {
-        if (env.grid(*ai) == DNGN_SLIMY_WALL)
+        if (env.grid(*ai) == DNGN_SLIMY_WALL
+            && (you.religion != GOD_JIYVA || you.penance[GOD_JIYVA]))
         {
             mpr(gettext("You're about to run into the slime covered wall!"),
                 MSGCH_WARN);
@@ -1197,6 +1208,9 @@ static void _input()
             world_reacts();
         }
 
+        if (!you_are_delayed())
+            update_can_train();
+
         return;
     }
 
@@ -1280,6 +1294,7 @@ static void _input()
         if (apply_berserk_penalty)
             _do_berserk_no_combat_penalty();
 
+        update_can_train();
         world_reacts();
     }
 
@@ -1564,11 +1579,8 @@ static void _experience_check()
 
     if (you.experience_level < 27)
     {
-        int xp_needed = (you.experience - exp_needed(you.experience_level)) * 100 /
-                        (exp_needed(you.experience_level + 1) - exp_needed(you.experience_level));
         /// 1. 현재 경험치%, 2. 다음 레벨
-        mprf(gettext("You are %d%% of the way to level %d."),
-              xp_needed,
+        mprf(gettext("You are %d%% of the way to level %d."), get_exp_progress(),
               you.experience_level + 1);
     }
     else
@@ -2053,9 +2065,9 @@ void process_command(command_type cmd)
         // and unfortunately they tend to be stuck together.
         clrscr();
 #ifndef USE_TILE
-        unixcurses_shutdown();
+        console_shutdown();
         kill(0, SIGTSTP);
-        unixcurses_startup();
+        console_startup();
 #endif
         redraw_screen();
         break;
@@ -2221,7 +2233,7 @@ static void _check_invisibles()
 {
     for (radius_iterator ri(you.pos(), LOS_RADIUS, C_ROUND); ri; ++ri)
     {
-        if (!cell_see_cell(you.pos(), *ri))
+        if (!cell_see_cell(you.pos(), *ri, LOS_DEFAULT))
             continue;
         const monster* mons = monster_at(*ri);
         if (mons && !mons->visible_to(&you) && !mons->submerged())
@@ -2955,7 +2967,8 @@ static void _update_mold()
 static void _player_reacts()
 {
     if (!you.cannot_act() && !player_mutation_level(MUT_BLURRY_VISION)
-        && x_chance_in_y(you.traps_skill(), 50))
+        && x_chance_in_y(you.traps_skill(), 50)
+        && (you.duration[DUR_SWIFTNESS] <= 0 || coinflip()))
     {
         for (int i = div_rand_round(you.time_taken, player_speed()); i > 0; --i)
             search_around(false); // Check nonadjacent squares too.
@@ -2986,12 +2999,7 @@ static void _player_reacts()
         // this is instantaneous
         if (teleportitis_level > 0 && one_chance_in(100 / teleportitis_level))
             you_teleport_now(true);
-#ifdef NEW_ABYSS
-#define SHIFT_PERIOD 80
-#else
-#define SHIFT_PERIOD 30
-#endif
-        else if (you.level_type == LEVEL_ABYSS && one_chance_in(SHIFT_PERIOD))
+        else if (you.level_type == LEVEL_ABYSS && one_chance_in(80))
             you_teleport_now(false, true); // to new area of the Abyss
     }
 
@@ -3019,6 +3027,10 @@ static void _player_reacts()
 
     recharge_rods(you.time_taken, false);
 
+    // Reveal adjacent mimics.
+    for (adjacent_iterator ai(you.pos()); ai; ++ai)
+        discover_mimic(*ai);
+
     // Player stealth check.
     seen_monsters_react();
 
@@ -3028,6 +3040,9 @@ static void _player_reacts()
 // Ran after monsters and clouds get to act.
 static void _player_reacts_to_monsters()
 {
+    // In case Maurice managed to steal a needed item for example.
+    update_can_train();
+
     if (you.duration[DUR_FIRE_SHIELD] > 0)
         manage_fire_shield(you.time_taken);
 
@@ -3127,11 +3142,6 @@ void world_reacts()
 
     apply_noises();
     handle_monsters(true);
-
-#ifdef NEW_ABYSS
-    if (you.level_type == LEVEL_ABYSS)
-        abyss_morph();
-#endif
 
     _check_banished();
 
@@ -3548,10 +3558,9 @@ static void _open_door(coord_def move, bool check_confused)
     }
 
     // Allow doors to be locked.
-    bool door_vetoed = env.markers.property_at(doorpos, MAT_ANY, "veto_open") == "veto";
     const std::string door_veto_message = env.markers.property_at(doorpos, MAT_ANY,
                                 "veto_reason");
-    if (door_vetoed)
+    if (door_vetoed(doorpos))
     {
         if (door_veto_message.empty())
             mpr(gettext("The door is shut tight!"));
@@ -3622,7 +3631,7 @@ static void _open_door(coord_def move, bool check_confused)
     }
 
     int skill = you.dex()
-                + (you.skill(SK_TRAPS_DOORS) + you.skill(SK_STEALTH)) / 2;
+                + (you.skill_rdiv(SK_TRAPS_DOORS) + you.skill_rdiv(SK_STEALTH)) / 2;
 
     std::string berserk_open = env.markers.property_at(doorpos, MAT_ANY,
                                         "door_berserk_verb_open");
@@ -3858,7 +3867,7 @@ static void _close_door(coord_def move)
         }
 
         int skill = you.dex()
-                    + (you.skill(SK_TRAPS_DOORS) + you.skill(SK_STEALTH)) / 2;
+                    + (you.skill_rdiv(SK_TRAPS_DOORS) + you.skill_rdiv(SK_STEALTH)) / 2;
 
         if (you.berserk())
         {
@@ -4204,7 +4213,7 @@ static void _move_player(coord_def move)
         else if (you.is_wall_clinging())
             verb = "cling";
         else if (you.species == SP_NAGA && !form_changed_physiology())
-            verb = "crawl";
+            verb = "slither";
         else
             verb = "walk";
 
@@ -4224,7 +4233,7 @@ static void _move_player(coord_def move)
         }
 
         you.time_taken *= player_movement_speed();
-        you.time_taken /= 10;
+        you.time_taken = div_rand_round(you.time_taken, 10);
 
 #ifdef EUCLIDEAN
         if (move.abs() == 2)
@@ -4578,6 +4587,7 @@ static void _compile_time_asserts()
     COMPILE_CHECK(sizeof(level_flag_type) <= sizeof(int32_t));
     // Travel cache, traversable_terrain.
     COMPILE_CHECK(NUM_FEATURES <= 256);
+    COMPILE_CHECK(NUM_GODS <= MAX_NUM_GODS);
 
     // Also some runtime stuff; I don't know if the order of branches[]
     // needs to match the enum, but it currently does.

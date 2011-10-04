@@ -371,6 +371,7 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
     case TILEP_MONS_ANGEL:
     case TILEP_MONS_CHERUB:
     case TILEP_MONS_MENNAS:
+    case TILEP_MONS_PROFANE_SERVITOR:
     case TILEP_MONS_MERFOLK:
     case TILEP_MONS_MERFOLK_WATER:
     case TILEP_MONS_MERFOLK_JAVELINEER:
@@ -390,6 +391,7 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
     case TILEP_MONS_DEEP_DWARF_ARTIFICER:
     case TILEP_MONS_DEEP_DWARF_DEATH_KNIGHT:
     case TILEP_MONS_KOBOLD:
+    case TILEP_MONS_OCTOPODE:
         *ofs_x = 0;
         *ofs_y = 0;
         break;
@@ -424,6 +426,7 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
         *ofs_y = 0;
         break;
     case TILEP_MONS_YAKTAUR_MELEE:
+    case TILEP_MONS_WIGHT:
         *ofs_x = 2;
         *ofs_y = 0;
         break;

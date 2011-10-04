@@ -27,107 +27,15 @@
 #include "spl-book.h"
 #include "state.h"
 
-int che_boost_level()
+int che_stat_boost(int piety)
 {
     if (you.religion != GOD_CHEIBRIADOS || you.penance[GOD_CHEIBRIADOS])
         return (0);
-
-    return (std::min(player_ponderousness(), 2*(piety_rank() - 1)));
-}
-
-int che_boost(che_boost_type bt, int level)
-{
-    if (level == 0)
-        return (0);
-
-    switch (bt)
-    {
-    case CB_RNEG:
-        return (level > 1 ? 1 : 0);
-    case CB_RCOLD:
-        return (level > 3 ? 1 : 0);
-    case CB_RFIRE:
-        return (level > 5 ? 1 : 0);
-    case CB_STATS:
-        return ((level * 3)/2);
-    default:
-        return (0);
-    }
-}
-
-void che_handle_change(che_change_type ct, int diff)
-{
-    if (you.religion != GOD_CHEIBRIADOS)
-        return;
-
-    const std::string typestr = (ct == CB_PIETY ? "piety" :
-                (ct == CB_PONDEROUSNESS ? "ponderousness" :
-            (ct == CB_PONDEROUS_COUNT ? "ponderous count" : "slots")));
-
-    // Values after the change.
-    const int ponder = player_ponderousness();
-    const int prank = piety_rank() - 1;
-    const int newlev = std::min(ponder, 2 * prank);
-
-    // Reconstruct values before the change.
-    int oldponder = ponder;
-    int oldprank = prank;
-    int slots = player_armour_slots();
-    if (ct == CB_PIETY)
-        oldprank -= diff;
-    else if (ct == CB_PONDEROUSNESS)
-        oldponder -= diff;
-    else if (ct == CB_PONDEROUS_COUNT)
-    {
-        if (slots != 0)
-            oldponder = ((player_ponderous_count() - diff) * 10)/slots;
-    }
-    else // ct == CB_SLOTS
-    {
-        if (slots - diff == 0)
-            oldponder = 0;
-        else
-            oldponder = (player_ponderous_count() * 10)/(slots - diff);
-    }
-    const int oldlev = std::min(oldponder, 2 * oldprank);
-    dprf("Che %s %+d: %d/%d -> %d/%d", typestr.c_str(), diff,
-         oldponder, oldprank,
-         ponder, prank);
-
-    for (int i = 0; i < NUM_BOOSTS; ++i)
-    {
-        const che_boost_type bt = static_cast<che_boost_type>(i);
-        const int boostdiff = che_boost(bt, newlev) - che_boost(bt, oldlev);
-        if (boostdiff == 0)
-            continue;
-
-        const std::string elemmsg = god_name(you.religion)
-                                    + (boostdiff > 0 ? " " : " no longer ")
-                                    + "protects you from %s.";
-        switch (bt)
-        {
-        case CB_RNEG:
-            mprf(MSGCH_GOD, elemmsg.c_str(), "negative energy");
-            break;
-        case CB_RCOLD:
-            mprf(MSGCH_GOD, elemmsg.c_str(), "cold");
-            break;
-        case CB_RFIRE:
-            mprf(MSGCH_GOD, elemmsg.c_str(), "fire");
-            break;
-        case CB_STATS:
-        {
-            mprf(MSGCH_GOD, "%s %s the support of your attributes.",
-                 god_name(you.religion).c_str(),
-                 boostdiff > 0 ? "raises" : "reduces");
-            const std::string reason = "Cheibriados " + typestr + " change";
-            notify_stat_change(reason.c_str());
-            break;
-        }
-        case NUM_BOOSTS:
-            break;
-        }
-    }
+    if (piety < 30)  // Since you've already begun to slow down.
+        return 1;
+    if (piety > 160) // Fudging this slightly to agree with ****** piety.
+        return 15;
+    return std::min((piety - 10) / 10, 14);
 }
 
 // Eat from one random off-level item stack.
@@ -775,9 +683,9 @@ std::map<skill_type, int8_t> ash_get_boosted_skills(eq_type type)
     return boost;
 }
 
-int ash_skill_boost(skill_type sk)
+int ash_skill_boost(skill_type sk, int scale)
 {
-    const int level = you.skills[sk];
+    const int level = you.skills[sk] * scale + get_skill_progress(sk, scale);
     if (!level || !you.skill_boost[sk] || piety_rank() <= 2)
         return level;
 
@@ -785,8 +693,8 @@ int ash_skill_boost(skill_type sk)
     // 2 = medium bonus -> factor = 1.25
     // 3 = high bonus   -> factor = 1.5
     const float piety_factor = (you.skill_boost[sk] + 3) / 4.0;
-    const int base = std::min(piety_rank() - 1, level);
+    const int base = std::min((piety_rank() - 1) * scale, level);
     const int bonus = std::max<int>(0, base * piety_factor - level / 4.0);
 
-    return std::min(level + bonus, 27);
+    return std::min(level + bonus, 27 * scale);
 }

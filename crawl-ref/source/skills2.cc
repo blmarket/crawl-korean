@@ -89,7 +89,7 @@ const char *skills[NUM_SKILLS][6] =
     {M_("Stabbing"),       M_("Miscreant"),     M_("Blackguard"),      M_("Backstabber"),     M_("Cutthroat"),      M_("Politician")},
     {M_("Shields"),        M_("Shield-Bearer"), M_("Hoplite"),         M_("Blocker"),         M_("Peltast"),        M_("@Adj@ Barricade")},
     {M_("Traps & Doors"),  M_("Scout"),         M_("Disarmer"),        M_("Vigilant"),        M_("Perceptive"),     M_("Dungeon Master")},
-    // STR based fighters, for DEX/martial arts titles see below.  Felids get their own cathegory, too.
+    // STR based fighters, for DEX/martial arts titles see below.  Felids get their own category, too.
     {M_("Unarmed Combat"), M_("Ruffian"),       M_("Grappler"),        M_("Brawler"),         M_("Wrestler"),       M_("@Weight@weight Champion")},
 
     {M_("Spellcasting"),   M_("Magician"),      M_("Thaumaturge"),     M_("Eclecticist"),     M_("Sorcerer"),       M_("Archmage")},
@@ -139,40 +139,24 @@ struct species_skill_aptitude
 // a discount with about 75%.
 static int _spec_skills[NUM_SPECIES][NUM_SKILLS];
 
-/* *************************************************************
+int get_skill_progress(skill_type sk, int scale)
+{
+    if (you.skills[sk] >= 27)
+        return 0;
 
-// these were unimplemented "level titles" for two classes {dlb}
+    const int needed = skill_exp_needed(you.skills[sk] + 1, sk);
+    const int prev_needed = skill_exp_needed(you.skills[sk], sk);
+    const int amt_done = you.skill_points[sk] - prev_needed;
+    int prog = (amt_done * scale) / (needed - prev_needed);
 
-JOB_PRIEST
-   "Preacher";
-   "Priest";
-   "Evangelist";
-   "Pontifex";
+    ASSERT(prog >= 0);
 
-JOB_PALADIN:
-   "Holy Warrior";
-   "Holy Crusader";
-   "Paladin";
-   "Scourge of Evil";
-
-************************************************************* */
+    return prog;
+}
 
 int get_skill_percentage(const skill_type x)
 {
-    const int needed = skill_exp_needed(you.skills[x] + 1, x);
-    const int prev_needed = skill_exp_needed(you.skills[x], x);
-
-    const int amt_done = you.skill_points[x] - prev_needed;
-    int percent_done = (amt_done*100) / (needed - prev_needed);
-
-    if (percent_done >= 100) // paranoia (1)
-        percent_done = 99;
-
-    if (percent_done < 0)    // paranoia (2)
-        percent_done = 0;
-
-    // Round down to multiple of 5.
-    return ((percent_done / 5) * 5);
+    return get_skill_progress(x, 100);
 }
 
 /// command.cc에서 skill_filter 등으로 원문을 필요로함.
@@ -494,34 +478,15 @@ void calc_mp()
     you.redraw_magic_points = true;
 }
 
-bool is_useless_skill(int skill)
+bool is_useless_skill(skill_type skill)
 {
-    if (you.species == SP_DEMIGOD && skill == SK_INVOCATIONS)
-        return true;
-    if (you.species == SP_FELID)
-        switch(skill)
-        {
-        case SK_SHORT_BLADES:
-        case SK_LONG_BLADES:
-        case SK_AXES:
-        case SK_MACES_FLAILS:
-        case SK_POLEARMS:
-        case SK_STAVES:
-        case SK_SLINGS:
-        case SK_BOWS:
-        case SK_CROSSBOWS:
-        case SK_THROWING:
-        case SK_ARMOUR:
-        case SK_SHIELDS:
-            return true;
-        }
-    return false;
+    return species_apt(skill) == -99;
 }
 
-int skill_bump(skill_type skill)
+int skill_bump(skill_type skill, int scale)
 {
-    int sk = you.skill(skill);
-    return sk < 3 ? sk * 2 : sk + 3;
+    int sk = you.skill_rdiv(skill, scale);
+    return sk < 3 * scale ? sk * 2 : sk + 3 * scale;
 }
 
 // What aptitude value corresponds to doubled skill learning
@@ -540,15 +505,10 @@ static int _base_cost(skill_type sk)
     {
     case SK_SPELLCASTING:
         return 130;
+    case SK_STEALTH:
     case SK_INVOCATIONS:
     case SK_EVOCATIONS:
         return 80;
-    // Quick fix for the fact that stealth can't be gained fast enough
-    // to keep up with the monster levels. This was a skill points bonus
-    // in _exercise2 and was changed to a reduced base_cost to keep
-    // total_skill_points progression the same for all skills.
-    case SK_STEALTH:
-        return 50;
     default:
         return 100;
     }
@@ -562,6 +522,8 @@ unsigned int skill_exp_needed(int lev)
                           8200, 9450, 10800, 12300, 13950,   // 16-20
                           15750, 17700, 19800, 22050, 24450, // 21-25
                           27000, 29750 };
+    ASSERT(lev >= 0);
+    ASSERT(lev <= 27);
     return exp[lev];
 }
 
@@ -828,7 +790,7 @@ int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
         }
     }
 
-    int new_level = boost ? you.skill(tsk) : you.skills[tsk];
+    int new_level = you.skill(tsk, 10, !boost);
     // Restore the level
     you.skills[fsk] = fsk_level;
     you.skills[tsk] = tsk_level;
@@ -880,7 +842,10 @@ void skill_state::save()
     if (!is_invalid_skill(you.manual_skill))
         manual_charges  = you.inv[you.manual_index].plus2;
     for (int i = 0; i < NUM_SKILLS; i++)
-        changed_skills[i] = you.skill((skill_type)i);
+    {
+        real_skills[i] = you.skill((skill_type)i, 10, true);
+        changed_skills[i] = you.skill((skill_type)i, 10);
+    }
 }
 
 void skill_state::restore_levels()
@@ -900,9 +865,5 @@ void skill_state::restore_training()
 {
     you.train                       = train;
     you.auto_training               = auto_training;
-    for (int i = 0; i < NUM_SKILLS; i++)
-        if (!skill_known(i))
-            you.training[i] = training[i];
-
     reset_training();
 }

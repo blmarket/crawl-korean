@@ -552,6 +552,12 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
             return;
         }
         cast_into = N_("the Abyss");
+        you.props["abyss_return_name"] = you.level_type_name;
+        you.props["abyss_return_abbrev"] = you.level_type_name_abbrev;
+        you.props["abyss_return_origin"] = you.level_type_origin;
+        you.props["abyss_return_tag"] = you.level_type_tag;
+        you.props["abyss_return_ext"] = you.level_type_ext;
+        you.props["abyss_return_desc"] = level_id::current().describe();
         break;
 
     case DNGN_EXIT_ABYSS:
@@ -665,9 +671,7 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
         take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
     }
 
-#ifdef NEW_ABYSS
     push_features_to_abyss();
-#endif
     down_stairs(gate_type, you.entry_cause);  // heh heh
 }
 
@@ -2174,6 +2178,10 @@ void handle_time()
         spawn_random_monsters();
     }
 
+    // Labyrinth and Abyss maprot.
+    if (you.level_type == LEVEL_LABYRINTH || you.level_type == LEVEL_ABYSS)
+        forget_map(0);
+
     // Every 20 turns, a variety of other effects.
     if (! (_div(base_time, 200) > _div(old_time, 200)))
         return;
@@ -2354,21 +2362,21 @@ void handle_time()
     // Exercise armour *xor* stealth skill: {dlb}
     practise(EX_WAIT);
 
-    if (you.level_type == LEVEL_LABYRINTH)
-    {
-        // Now that the labyrinth can be automapped, apply map rot as
-        // a counter-measure. (Those mazes sure are easy to forget.)
-        forget_map(you.species == SP_MINOTAUR ? 25 : 45);
+    // From time to time change a section of the labyrinth.
+    if (you.level_type == LEVEL_LABYRINTH && one_chance_in(10))
+        change_labyrinth();
 
-        // From time to time change a section of the labyrinth.
-        if (one_chance_in(10))
-            change_labyrinth();
-    }
-
-#ifdef NEW_ABYSS
     if (you.level_type == LEVEL_ABYSS)
-        forget_map(you.religion == GOD_LUGONU ? 25 : 45);
-#endif
+    {
+        // Update the abyss speed. This place is unstable and the speed can
+        // fluctuate. It's not a constant increase.
+        if (you.religion == GOD_CHEIBRIADOS && coinflip())
+            ; // Speed change less often for Chei.
+        else if (coinflip() && you.abyss_speed < 100)
+            ++you.abyss_speed;
+        else if (one_chance_in(5) && you.abyss_speed > 0)
+            --you.abyss_speed;
+    }
 
     if (you.religion == GOD_JIYVA && one_chance_in(10))
     {
@@ -2570,7 +2578,7 @@ static void _catchup_monster_moves(monster* mon, int turns)
         coord_def inc(mon->target - pos);
         inc = coord_def(sgn(inc.x), sgn(inc.y));
 
-        if (mons_is_fleeing(mon))
+        if (mons_is_retreating(mon))
             inc *= -1;
 
         // Bounds check: don't let shifting monsters try to run off the
@@ -3259,8 +3267,7 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 
     int rate = 4 + short(rod.props["rod_enchantment"]);
 
-    rate *= (10 + skill_bump(SK_EVOCATIONS));
-    rate *= aut;
+    rate *= 10 * aut + skill_bump(SK_EVOCATIONS, aut);
     rate = div_rand_round(rate, 100);
 
     if (rate > rod.plus2 - rod.plus) // Prevent overflow

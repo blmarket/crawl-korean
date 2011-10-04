@@ -752,7 +752,7 @@ MARKER:     A = feat:stone_arch
 TILE:       c = wall_brick_vines
 LROCKTILE:  wall_brick_vines
 LFLOORTILE: floor_grass
-ITEM:       any fixed theme book, any fixed level book, any staff
+ITEM:       any fixed theme book, any fixed level book, any magical staff
 {{
 
 local grow_marker = TriggerableFunction:new { func = "wizlab_eringya_grow",
@@ -940,12 +940,12 @@ KMONS:      % = clay golem / wood golem / toenail golem w:2
 KMONS:      * = stone golem / crystal golem / iron golem
 KMONS:      | = electric golem
 :           elseif mrnd == 1 then
-KMONS:      % = blue devil / iron devil / ynoxinul / neqoxec / hellion /\
+KMONS:      % = blue devil / iron devil / ynoxinul / neqoxec / ice devil /\
                 / chaos spawn / demonic crawler / hellwing / orange demon /\
-                shadow demon / tormentor
-KMONS:      * = lorocyproca / reaper / soul eater / ice devil / sun demon
-KMONS:      | = blue death / green death / pit fiend / fiend / shadow fiend /\
-                ice fiend / executioner / balrug / cacodemon
+                soul eater / sun demon
+KMONS:      * = lorocyproca / reaper / shadow demon / tormentor / hellion
+KMONS:      | = blizzard demon / green death / pit fiend / fiend /\
+                shadow fiend / ice fiend / executioner / balrug / cacodemon
 :           else
 KMONS:      % = place:D:15 zombie / guardian mummy w:2
 KMONS:      * = place:D:27 zombie / greater mummy w:5
@@ -1402,7 +1402,7 @@ ORIENT:     encompass
 TAGS:       wizlab no_item_gen no_monster_gen no_rotate allow_dup
 SUBST:      T = t.
 KMONS:      8 = orange crystal statue name:Statue_of_Wucad_Mu n_rpl n_the hd:20 hp:300
-KITEM:      8 = quarterstaff unrand:staff_of_wucad_mu, book of enchantments
+KITEM:      8 = staff unrand:staff_of_wucad_mu, book of enchantments
 COLOUR:     =c = darkgrey
 COLOUR:     t = lightred / red w:3
 TILE:       t = dngn_tree_lightred / dngn_tree_red w:4 / dngn_tree_yellow w:4
@@ -1718,12 +1718,12 @@ MARKER:     f = lua:fog_machine { \
                 pow_max = 10, delay_min = 10, delay_max = 40, \
                 size = 2, size_buildup_amnt = 5, \
                 size_buildup_time = 25, cloud_type = "flame" }
-KMONS:      2 = w:1 Lorocyproca / w:20 soul eater / w:20 reaper /\
+KMONS:      2 = w:1 Lorocyproca / hell beast / reaper /\
             w:20 ice devil / w:20 sun demon / hellion
-KMONS:      3 = blue devil / iron devil / shadow demon / neqoxec /\
+KMONS:      3 = blue devil / iron devil / soul eater / neqoxec /\
             w:5 tormentor / ynoxinul
 KMONS:      4 = kobold demonologist / deep elf demonologist
-KMONS:      5 = blue death / green death / cacodemon
+KMONS:      5 = blizzard demon / green death / cacodemon
 {{
 wizname = crawl.make_name()
 
