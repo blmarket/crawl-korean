@@ -220,13 +220,13 @@ std::string item_def::name(bool allow_translate,
         #endif
             switch (descrip)
             {
-            case DESC_CAP_THE:    buff << check_gettext(M_("The ")); break;
-            case DESC_NOCAP_THE:  buff << check_gettext(M_("the ")); break;
-            case DESC_CAP_A:      buff << (startvowel ? check_gettext(M_("An ")) : check_gettext(M_("A "))); break;
+            case DESC_CAP_THE:    buff << check_gettext("The "); break;
+            case DESC_NOCAP_THE:  buff << check_gettext("the "); break;
+            case DESC_CAP_A:      buff << (startvowel ? check_gettext("An ") : check_gettext("A ")); break;
 
-            case DESC_CAP_YOUR:   buff << check_gettext(M_("Your ")); break;
-            case DESC_NOCAP_YOUR: buff << check_gettext(M_("your ")); break;
-            case DESC_NOCAP_ITS:  buff << check_gettext(M_("its ")); break;
+            case DESC_CAP_YOUR:   buff << check_gettext("Your "); break;
+            case DESC_NOCAP_YOUR: buff << check_gettext("your "); break;
+            case DESC_NOCAP_ITS:  buff << check_gettext("its "); break;
 
             case DESC_NOCAP_A:
             case DESC_INVENTORY_EQUIP:
