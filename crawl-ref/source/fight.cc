@@ -4915,13 +4915,12 @@ static void _steal_item_from_player(monster* mon)
             mon->inv[MSLOT_GOLD] = idx;
             new_item.set_holding_monster(mon->mindex());
         }
-
-        if(stolen_amount == you.gold)
-            mprf(gettext("%s steals all your gold!"),
-                 mon->name(DESC_CAP_THE).c_str());
-        else
-            mprf(gettext("%s steals some of your gold!"),
-                 mon->name(DESC_CAP_THE).c_str());
+        mitm[mon->inv[MSLOT_GOLD]].flags |= ISFLAG_THROWN;
+        mprf(gettext("%s steals %s your gold!"),
+             mon->name(DESC_CAP_THE).c_str(),
+             stolen_amount == you.gold ? 
+                pgettext("stolen", "all") : 
+                pgettext("stolen", "some of"));
 
         you.attribute[ATTR_GOLD_FOUND] -= stolen_amount;
 

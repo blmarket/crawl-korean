@@ -308,7 +308,7 @@ static void _xom_is_stimulated(int maxinterestingness,
                     (interestingness >  25) ? message_array[1]
                                             : message_array[0]));
         //updating piety status line
-        redraw_skill(you.your_name, player_title());
+        redraw_title(you.your_name, player_title());
     }
 }
 
@@ -381,7 +381,7 @@ void xom_tick()
         const std::string msg = "당신은 이제 " + new_xom_favour;
         god_speaks(you.religion, msg.c_str());
         //updating piety status line
-        redraw_skill(you.your_name, player_title());
+        redraw_title(you.your_name, player_title());
     }
 //위의 원문
 //       const std::string msg = "You are now " + new_xom_favour;
@@ -391,7 +391,7 @@ void xom_tick()
     {
         simple_god_message(" 은 지루해졌다.");
         //updating piety status line
-        redraw_skill(you.your_name, player_title());
+        redraw_title(you.your_name, player_title());
     }
 //        simple_god_message(" is getting BORED."); 간단한 신의 메시지? 앞에 좀 이 붙을것 같네요
 
@@ -430,8 +430,7 @@ void xom_tick()
 
                 you.gift_timeout += interest;
                 //updating piety status line
-                redraw_skill(you.your_name, player_title());
-// 역시 디버그는 안변경
+                redraw_title(you.your_name, player_title());
 #if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
                 mprf(MSGCH_DIAGNOSTICS,
                      "tension %d (chance: %d) -> increase interest to %d",
@@ -3785,8 +3784,8 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
         const int interest = random2avg(badness*60, 2);
         you.gift_timeout   = std::min(interest, 255);
         //updating piety status line
-        redraw_skill(you.your_name, player_title());
-#if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)//디버그
+        redraw_title(you.your_name, player_title());
+#if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
         mprf(MSGCH_DIAGNOSTICS, "badness: %d, new interest: %d",
              badness, you.gift_timeout);
 #endif

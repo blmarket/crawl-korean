@@ -2410,10 +2410,13 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
     bool speed_brand = false;
 
     if (you.confused())
+    {
         thr.target = you.pos() + coord_def(random2(13)-6, random2(13)-6);
+        thr.isValid = true;
+    }
     else if (target)
         thr = *target;
-    else
+    else if (pbolt.target.zero())
     {
         direction_chooser_args args;
         args.mode = TARG_HOSTILE;
@@ -3096,6 +3099,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // Dropping item copy, since the launched item might be different.
         pbolt.drop_item = !did_return;
         pbolt.fire();
+
+        hit = !pbolt.hit_verb.empty();
 
         // The item can be destroyed before returning.
         if (did_return && thrown_object_destroyed(&item, pbolt.target))

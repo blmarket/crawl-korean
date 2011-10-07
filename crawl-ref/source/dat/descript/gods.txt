@@ -23,13 +23,11 @@ Buggy
 %%%%
 Zin
 
-절대 질서의 신, '진'은 내면의 힘을 중시하는 자들의 신이다. 진의 신도들은, 항상 몸과 마음을 순결하게 유지해야 하며, 어떠한 부정하거나 사악한 마법, 변이술, 그리고 지성을 가진 생명체의 시체를 먹는 일을 배격해야 한다.
-신도들은 교화되지 않는 자들을 가두거나 설교할 수 있으며, 궁극적으로는 신성한 안식처를 만들 수 있다. 진은 사심이 없는 자세와, 변함 없이 지속되는 긴 신앙을 높이 평가한다. 진의 신도들은, 징벌 없이 엘라이빌론 혹은 샤이닝 원으로 개종할 수 있다.
+Zin is a God for those focused on inner strength. Followers must remain pure of body and soul, refraining from unholy, evil, unclean or chaotic magic; the use of mutations and the consumption of intelligent beings' flesh. They may preach to or imprison the unenlightened, and can ultimately gain a divine refuge. Zin values selflessness, demanding a tithe of 1/10 of all gold gained, preferably followed by donations of more. Zin's followers can safely convert to Elyvilon and the Shining One.
 %%%%
 The Shining One
 
-성전의 신, '샤이닝 원'은 모든 악에 대한 성전에 임하는 강력한 신이다. 샤이닝 원의 신도들과, 그의 동료들은 사악하고 부정한 존재들을 무자비하게 토벌할 수 있도록, 신의 은총을 받을 수 있다. 물론 신도들은 사악하거나 부정한 주문을 외워서는 안 되며, 항상 정정당당한 전투에 임함으로써, 자신의 도덕적인 고결함을 끊임없이 증명시켜야 한다.
-샤이닝 원은 변함 없이 지속되는 긴 신앙을 높이 평가한다. 또한 샤이닝 원은, 자신의 신도가 진 혹은 엘라이빌론으로 개종하는 것에 대해 화를 내지 않을 것이다.
+The Shining One is a powerful deity on a crusade against all evil. Followers and their allies may be granted various blessings upon mercilessly slaying evil and unholy beings. Worshippers must never use unholy or evil magic, and are expected to prove their moral superiority by fighting honourably. The God demands followers to scour the world, examining all of its inhabitants for traces of evil that must be eradicated. The Shining One does not mind shifting worship to Elyvilon or Zin.
 %%%%
 Kikubaaqudgha
 
@@ -77,8 +75,7 @@ Nemelex Xobeh
 %%%%
 Elyvilon
 
-치유의 신, '엘라이빌론'은 오랜 신앙과 헌신에 준비된 순수한 영혼들을 환영한다. 엘라이빌론의 신도들은, 강력한 치유의 권능을 얻게 될 것이다. 치유하는 자, 엘라이빌론은 평화주의의 교리를 좋아하기 때문에, 신도들이 유혈 사태를 피하는데 여러 도움을 준다. 또한 전투에 사용되는 무기들을 파괴하는 행위를 높이 평가한다. 
-엘라이빌론은 자신의 신도가 진이나 샤이닝 원으로 개종하더라도, 화를 내지 않을 것이다.
+Elyvilon the Healer welcomes all good souls who are prepared to help others. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons. Elyvilon does not mind if worshippers shift to Zin or the Shining One.
 %%%%
 Lugonu
 
