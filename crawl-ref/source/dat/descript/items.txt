@@ -377,11 +377,7 @@ crossbow
 %%%%
 crystal ball of energy
 
-사용자의 마력을 회복시킬 수 있는 마법 도구이지만, 모든 마력을 잃을 수 있는 위험을 동반한다. 사용자가 지닌 최대 마력에 따라 이러한 위험은 반비례한다. 그러므로 최대의 능력을 사용자가 발휘할 때 이 도구는 유용할 것이다.
-%%%%
-crystal ball of seeing
-
-사용자의 주변을 볼 수 있게 해주는 마법 도구이다. 안정적으로 사용하기 위해서 어느 정도의 마법적 능력이 요구된다. 그렇지 않으면 예측할 수 없거나 해로운 결과가 나타날 수 있다.
+A magical device which can be used to restore one's reserves of magical energy, but the use of which carries the risk of draining all of those energies completely. This risk varies inversely with the proportion of their maximum energy which the user possesses; a user near his or her full potential will find this item most beneficial.
 %%%%
 crystal plate mail
 
@@ -1163,6 +1159,10 @@ spiked flail
 splint mail
 
 쇠미늘로 만든 갑옷이다.
+%%%%
+staff
+
+A stout walking stick.
 %%%%
 staff
 

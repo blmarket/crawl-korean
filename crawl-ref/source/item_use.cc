@@ -402,9 +402,9 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             you.turn_is_over = true;
             you.time_taken *= 3;
             you.time_taken /= 10;
-
-            return (false);
         }
+
+        return (false);
     }
 
     const unsigned int old_talents = your_talents(false).size();
@@ -605,6 +605,14 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     {
         if (verbose)
             mpr(gettext("You can't wear that!"));
+        return (false);
+    }
+
+    if (player_genus(GENPC_DRACONIAN) && slot == EQ_BODY_ARMOUR)
+    {
+        if (verbose)
+            mprf("Your wings%s won't fit in that.", you.mutation[MUT_BIG_WINGS]
+                 ? "" : ", even vestigial as they are,");
         return (false);
     }
 

@@ -25,6 +25,8 @@
 #include "decks.h"
 #include "describe.h"
 #include "files.h"
+#include "godmenu.h"
+#include "ghost.h"
 #include "ghost.h"
 #include "invent.h"
 #include "itemname.h"
@@ -153,15 +155,22 @@ static std::string _get_version_changes(void)
         }
         help = buf;
 
-        // Give up if you encounter an older version.
-        if (help.find("Stone Soup 0.5") != std::string::npos)
-            break;
+        // Look for version headings
+        if (help.find("Stone Soup ") == 0)
+        {
+            // Stop if this is for an older major version; otherwise, highlight
+            if (help.find("Stone Soup "+Version::Major()) == std::string::npos)
+                break;
+            else
+                goto highlight;
+        }
 
         if (help.find("Highlights") != std::string::npos)
         {
+        highlight:
             // Highlight the Highlights, so to speak.
             std::string text  = "<w>";
-                        text += buf;
+                        text += help;
                         text += "</w>";
                         text += "\n";
             result += text;
@@ -170,12 +179,6 @@ static std::string _get_version_changes(void)
         }
         else if (!start)
             continue;
-        else if (buf[0] == 0)
-        {
-            // Stop reading and copying text with the first empty line
-            // following the Highlights section.
-            break;
-        }
         else
         {
             result += buf;
@@ -187,8 +190,9 @@ static std::string _get_version_changes(void)
     // Did we ever get to print the Highlights?
     if (start)
     {
-        result += "\n";
-        result += gettext("For a more complete list of changes, see changelog.txt "
+        result.erase(1+result.find_last_not_of('\n'));
+        result += "\n\n";
+        result += gettext("For earlier changes, see changelog.txt "
                   "in the docs/ directory.");
     }
     else
@@ -226,42 +230,6 @@ static void _print_version(void)
     cmd_version.add_text(_get_version_information(), true);
     cmd_version.add_text(_get_version_features(), true);
     cmd_version.add_text(_get_version_changes(), true);
-
-    std::string fname = "key_changes.txt";
-    // Read in information about changes in comparison to the latest version.
-    FILE* fp = fopen_u(datafile_path(fname, false).c_str(), "r");
-
-    if (fp)
-    {
-        char buf[200];
-        bool first = true;
-        while (fgets(buf, sizeof buf, fp))
-        {
-            // Remove trailing spaces.
-            for (int i = strlen(buf) - 1; i >= 0; i++)
-            {
-                if (isspace(buf[i]))
-                    buf[i] = 0;
-                else
-                    break;
-            }
-            std::string text;
-            if (first)
-            {
-                // Highlight the first line (title).
-                text  = "<w>";
-                text += buf;
-                text += "</w>";
-                first = false;
-            }
-            else
-                text = buf;
-
-            text += "\n";
-            cmd_version.add_text(text);
-        }
-        fclose(fp);
-    }
 
     cmd_version.show();
 }
@@ -1819,7 +1787,9 @@ static void _find_description(bool *again, std::string *error_inout)
         else if (doing_features)
             me = new FeatureMenuEntry(str, feat_by_desc(str), letter);
         else if (doing_gods)
-            me = new GodMenuEntry(key_list[i]);
+            me = new GodMenuEntry(str_to_god(key_list[i]));
+        else
+        {
         else
         {
             me = new MenuEntry(uppercase_first(key_list[i]), MEL_ITEM, 1,

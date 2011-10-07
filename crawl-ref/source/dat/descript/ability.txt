@@ -285,7 +285,7 @@ Greater Healing
 %%%%
 Greater Self-Healing
 
-당신의 기도술에 따라, 신앙도를 조금 더 소모시키는 것으로, 하급 치료의 세 배에 달하는 체력을 회복한다.
+Depending on your Invocations skill, heal a moderate amount of hit points. Roughly, Greater Healing will allow you to heal three times the amount of Lesser Healing at a slightly higher total piety cost.
 %%%%
 Divine Vigour
 
@@ -363,8 +363,9 @@ Reproduction
 %%%%
 Evolution
 
-식물이나 버섯을, 좀 더 강한 종으로 변모시킨다. 버섯은 신앙도를 소모하고, 식물은 과일을 필요로 한다. 진화한 식물들은 당신의 기도술이 높을수록 더욱 강력해지며, 특히 오클롭 잡초는 좀 더 자주 산을 내뿜을 것이다.
+Turn plants and fungi adjacent to you into stronger species. Upgrading fungi requires piety, upgrading plants requires fruit. Plants upgraded gain a bonus to attack accuracy proportional to the user's invocations skill, and oklob plants are more likely to spit acid at higher invocations.
 %%%%
+# Cheibriados
 Bend Time
 
 주변에 있는 이들의 속도를 느리게 한다.
@@ -434,7 +435,7 @@ Plant a burning bush with the ability to throw fire and see invisible monsters a
 %%%%
 Make altar
 
-Create an altar to a random god at your location.
+Create an altar to a chosen god at your location.
 %%%%
 Make grenades
 

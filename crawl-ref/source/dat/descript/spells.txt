@@ -36,6 +36,10 @@ Beastly Appendage
 
 This spell makes you temporarily replace one or a pair of appendages with an animal counterpart, giving you an extra attack. It is not powerful enough to meld armour.
 %%%%
+Beastly Appendage
+
+This spell makes you temporarily replace one or a pair of appendages with an animal counterpart, giving you an extra attack. It is not powerful enough to meld armour.
+%%%%
 Blade Hands
 
 긴 낫과 같은 형태의 칼날을 시전자의 손에서 순간적으로 자라게 한다. 다만 칼날의 손 상태에서는 다른 주문을 사용하기 약간 어려워지며, 이 주문은 저주받은 무기를 강제로 시전자의 손에서 떼어낼 수 있을 만큼 강력하지는 없다.
@@ -342,6 +346,10 @@ Malign Gateway
 이계의 관문
 
 이 세계에 공간의 구멍을 만들어, 미지의 타락한 세계로 통하는 일시적인 차원 관문을 연다. 그 곳의 악랄한 거주자들이 그들의 촉수로 찌르는 모습을 본다면, 그 누구도 이것의 근처에 가까워지려고 하지 않을 것이다.
+%%%%
+Mass Abjuration
+
+This spell attempts to send all hostile summoned creatures in sight to the place whence they came, or at least shorten their stay in the caster's locality.
 %%%%
 Mass Abjuration
 

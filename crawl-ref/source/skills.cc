@@ -169,7 +169,6 @@ void reassess_starting_skills()
 static void _change_skill_level(skill_type exsk, int n)
 {
     ASSERT(n != 0);
-    skill_type old_best_skill = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
     bool need_reset = false;
 
     if (-n > you.skills[exsk])
@@ -219,6 +218,38 @@ static void _change_skill_level(skill_type exsk, int n)
         need_reset = true;
     }
 
+    const skill_type best_spell = best_skill(SK_SPELLCASTING,
+                                             SK_LAST_MAGIC);
+    if (exsk == SK_SPELLCASTING && you.skills[exsk] == 1
+        && best_spell == SK_SPELLCASTING && n > 0)
+    {
+        mpr("You're starting to get the hang of this magic thing.");
+        learned_something_new(HINT_GAINED_SPELLCASTING);
+    }
+
+    if (need_reset)
+        reset_training();
+    // TODO: also identify rings of wizardry.
+}
+
+// Called whenever a skill is trained.
+static void _change_skill_sublevel(skill_type exsk, skill_type old_best_skill)
+{
+    if (exsk == SK_FIGHTING)
+        calc_hp();
+
+    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING)
+        calc_mp();
+
+    if (exsk == SK_DODGING || exsk == SK_ARMOUR)
+        you.redraw_evasion = true;
+
+    if (exsk == SK_ARMOUR || exsk == SK_SHIELDS || exsk == SK_ICE_MAGIC
+        || exsk == SK_EARTH_MAGIC || you.duration[DUR_TRANSFORMATION] > 0)
+    {
+        you.redraw_armour_class = true;
+    }
+
     // Recalculate this skill's order for tie breaking skills
     // at its new level.   See skills2.cc::init_skill_order()
     // for more details.  -- bwr
@@ -226,26 +257,13 @@ static void _change_skill_level(skill_type exsk, int n)
     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
     {
         skill_type sk = static_cast<skill_type>(i);
-        if (sk != exsk && you.skills[sk] >= you.skills[exsk])
+        if (sk != exsk && you.skill(sk, 10, true) >= you.skill(exsk, 10, true))
             you.skill_order[exsk]++;
     }
 
-    const skill_type best_spell = best_skill(SK_SPELLCASTING,
-                                             SK_LAST_MAGIC);
-    if (exsk == SK_SPELLCASTING && you.skills[exsk] == 1
-        && best_spell == SK_SPELLCASTING && n > 0)
-    {
-        mpr(gettext("You're starting to get the hang of this magic thing."));
-        learned_something_new(HINT_GAINED_SPELLCASTING);
-    }
-
     const skill_type best = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
-    if (best != old_best_skill || old_best_skill == exsk)
-        redraw_skill(you.your_name, player_title());
-
-    if (need_reset)
-        reset_training();
-    // TODO: also identify rings of wizardry.
+        if (best != old_best_skill || old_best_skill == exsk)
+            redraw_skill(you.your_name, player_title());
 }
 
 void check_skill_level_change(skill_type sk, bool do_level_up)
@@ -274,32 +292,22 @@ void check_skill_level_change(skill_type sk, bool do_level_up)
             you.skills[sk] = new_level;
 }
 
-/*
- * Fill the exercise queue with random values in proportion to the training
- * array.
- */
-static void _init_exercise_queue()
+// Fill a queue in random order with the values of the array.
+template <typename T, int SIZE>
+static void _init_queue(std::list<skill_type> &queue, FixedVector<T, SIZE> &array)
 {
-    ASSERT(you.exercises.empty());
-    FixedVector<unsigned int, NUM_SKILLS> prac = you.training;
+    ASSERT(queue.empty());
 
-    // We remove unknown skills, since we don't want then in the queue.
-    for (int i = 0; i < NUM_SKILLS; ++i)
-        if (!you.skills[i])
-            prac[i] = 0;
-
-    for (int i = 0; i < EXERCISE_QUEUE_SIZE; ++i)
+    while (1)
     {
-        skill_type sk = static_cast<skill_type>(random_choose_weighted(prac));
+        skill_type sk = (skill_type)random_choose_weighted(array);
         if (is_invalid_skill(sk))
-            sk = static_cast<skill_type>(random_choose_weighted(you.training));
-
-        if (!you.skills[sk])
-            continue;
-
-        you.exercises.push_back(sk);
-        --prac[sk];
+            break;
+        queue.push_back(sk);
+        --array[sk];
     }
+
+    ASSERT(queue.size() == (unsigned)EXERCISE_QUEUE_SIZE);
 }
 
 static void _erase_from_stop_train(skill_set &can_train)
@@ -440,13 +448,13 @@ static void _check_stop_train()
         if (is_invalid_skill(*it))
             continue;
 
-        if (you.can_train[*it] && you.train[*it] && you.training[*it])
+        if (skill_trained(*it) && you.training[*it])
             skills.insert(*it);
         you.can_train[*it] = false;
     }
 
     if (!skills.empty())
-        mpr("You stop training " + _skill_names(skills));
+        mprf(gettext("You stop training %s"), _skill_names(skills));
 
     reset_training();
     you.stop_train.clear();
@@ -499,10 +507,75 @@ void init_can_train()
     }
 
     _check_stop_train();
+}
 
+void init_train()
+{
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.can_train[i] && you.skills[i])
-            you.train_set[i] = true;
+        if (you.can_train[i] && you.skill_points[i])
+            you.train[i] = you.train_set[i] = true;
+        else
+            you.train[i] = you.auto_training;
+}
+
+static bool _cmp_rest(const std::pair<skill_type,int>& a,
+                      const std::pair<skill_type,int>& b)
+{
+    return a.second < b.second;
+}
+
+/*
+ * Scale an array.
+ *
+ * @param array The array to be scaled.
+ * @param scale The new scale of the array.
+ * @param exact When true, make sure that the sum of the array elements
+ *              is equal to the scale.
+ */
+template <typename T, int SIZE>
+static void _scale_array(FixedVector<T, SIZE> &array, int scale, bool exact)
+{
+    int total = 0;
+    // First, we calculate the sum of the values to be scaled.
+    for (int i = 0; i < NUM_SKILLS; ++i)
+        total += array[i];
+
+    std::vector<std::pair<skill_type,int> > rests;
+    int scaled_total = 0;
+
+    // All skills disabled, nothing to do.
+    if (!total)
+        return;
+
+    // Now we scale the values.
+    for (int i = 0; i < NUM_SKILLS; ++i)
+        if (array[i] > 0)
+        {
+            int result = array[i] * scale;
+            const int rest = result % total;
+            if (rest)
+                rests.push_back(std::pair<skill_type,int>(skill_type(i), rest));
+            array[i] = result / total;
+            scaled_total += array[i];
+        }
+
+    ASSERT(scaled_total <= scale);
+
+    if (!exact || scaled_total == scale)
+        return;
+
+    // We ensure that the percentage always add up to 100 by increasing the
+    // training for skills which had the higher rest from the above scaling.
+    std::sort(rests.begin(), rests.end(), _cmp_rest);
+    std::vector<std::pair<skill_type,int> >::iterator it = rests.begin();
+    while (scaled_total < scale && it != rests.end())
+    {
+        ++array[it->first];
+        ++scaled_total;
+        ++it;
+    }
+
+    ASSERT(scaled_total == scale);
 }
 
 /*
@@ -511,29 +584,22 @@ void init_can_train()
  */
 void init_training()
 {
-    int total = 0;
+    FixedVector<unsigned int, NUM_SKILLS> skills;
+    skills.init(0);
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.skills[i])
-        {
-            you.train[i] = true;
-            total += you.skill_points[i];
-        }
+        if (skill_trained(i))
+            skills[i] = you.skill_points[i];
 
-    // If no trainable skills, exit.
-    if (!total)
-        return;
+    _scale_array(skills, EXERCISE_QUEUE_SIZE, true);
+    _init_queue(you.exercises, skills);
 
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.skills[i])
-            you.training[i] = you.skill_points[i] * 100 / total;
+        skills[i] = you.skill_points[i];
 
-    _init_exercise_queue();
-}
+    _scale_array(skills, EXERCISE_QUEUE_SIZE, true);
+    _init_queue(you.exercises_all, skills);
 
-static bool _cmp_rest(const std::pair<skill_type,int>& a,
-                      const std::pair<skill_type,int>& b)
-{
-    return a.second < b.second;
+    reset_training();
 }
 
 // Make sure at least one skill is selected.
@@ -543,7 +609,7 @@ void check_selected_skills()
     for (int i = 0; i < NUM_SKILLS; ++i)
     {
         skill_type sk = static_cast<skill_type>(i);
-        if (you.train[sk])
+        if (skill_trained(sk))
             return;
         if (!you.can_train[sk] || you.skills[sk] == 27)
             continue;
@@ -559,58 +625,6 @@ void check_selected_skills()
 }
 
 /*
- * Scale the training array.
- *
- * @param scale The new scale of the array.
- * @param exact When true, we'll make sure that the sum of the scaled skills
- *              is equal to the scale.
- */
-static void _scale_training(int scale, bool exact)
-{
-    int total = 0;
-    // First, we calculate the sum of the values to be scaled.
-    for (int i = 0; i < NUM_SKILLS; ++i)
-        total += you.training[i];
-
-    std::vector<std::pair<skill_type,int> > rests;
-    int scaled_total = 0;
-
-    // All skills disabled, nothing to do.
-    if (!total)
-        return;
-
-    // Now we scale the values.
-    for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.training[i] > 0)
-        {
-            int result = you.training[i] * scale;
-            const int rest = result % total;
-            if (rest)
-                rests.push_back(std::pair<skill_type,int>(skill_type(i), rest));
-            you.training[i] = result / total;
-            scaled_total += you.training[i];
-        }
-
-    ASSERT(scaled_total <= scale);
-
-    if (!exact || scaled_total == scale)
-        return;
-
-    // We ensure that the percentage always add up to 100 by increasing the
-    // training for skills which had the higher rest from the above scaling.
-    std::sort(rests.begin(), rests.end(), _cmp_rest);
-    std::vector<std::pair<skill_type,int> >::iterator it = rests.begin();
-    while (scaled_total < scale && it != rests.end())
-    {
-        ++you.training[it->first];
-        ++scaled_total;
-        ++it;
-    }
-
-    ASSERT(scaled_total == scale);
-}
-
-/*
  * Reset the training array. Disabled skills are skipped.
  * In automatic mode, we use values from the exercise queue.
  * In manual mode, all enabled skills are set to the same value.
@@ -622,7 +636,7 @@ void reset_training()
     // to 0 (and filled later with the content of the queue), in manual mode,
     // the trainable ones are set to 1 (or 2 for focus).
     for (int i = 0; i < NUM_SKILLS; ++i)
-        if (you.auto_training || !you.can_train[i])
+        if (you.auto_training || !skill_trained(i))
             you.training[i] = 0;
         else
             you.training[i] = you.train[i];
@@ -635,18 +649,36 @@ void reset_training()
              it != you.exercises.end(); ++it)
         {
             skill_type sk = *it;
-            if (you.train[sk] && you.can_train[sk])
+            if (skill_trained(sk))
             {
                 you.training[sk] += you.train[sk];
                 empty = false;
             }
         }
 
+        // We count the practise events in the other queue.
+        FixedVector<unsigned int, NUM_SKILLS> exer_all;
+        exer_all.init(0);
+        for (std::list<skill_type>::iterator it = you.exercises_all.begin();
+             it != you.exercises_all.end(); ++it)
+        {
+            skill_type sk = *it;
+            if (skill_trained(sk))
+            {
+                exer_all[sk] += you.train[sk];
+                empty = false;
+            }
+        }
+
+        // We keep the highest of the 2 numbers.
+        for (int sk = 0; sk < NUM_SKILLS; ++sk)
+            you.training[sk] = std::max(you.training[sk], exer_all[sk]);
+
         // The selected skills have not been exercised recently. Give them all
         // a default weight of 1 (or 2 for focus skills).
         if (empty)
             for (int sk = 0; sk < NUM_SKILLS; ++sk)
-                if (you.can_train[sk])
+                if (skill_trained(sk))
                     you.training[sk] = you.train[sk];
 
         // Focused skills get at least 20% training.
@@ -655,21 +687,25 @@ void reset_training()
                 you.training[sk] += 5 * (5 - you.training[sk] / 4);
     }
 
-    _scale_training(100, you.auto_training);
+    _scale_array(you.training, 100, you.auto_training);
 }
 
-// returns total number of skill points gained
 void exercise(skill_type exsk, int deg)
 {
-    if (you.skills[exsk] >= 27 || !you.train[exsk] || !you.can_train[exsk])
+    if (you.skills[exsk] >= 27)
         return;
 
     dprf("Exercise %s by %d.", skill_name(exsk), deg);
 
     while (deg > 0)
     {
-        you.exercises.pop_front();
-        you.exercises.push_back(exsk);
+        if (skill_trained(exsk))
+        {
+            you.exercises.pop_front();
+            you.exercises.push_back(exsk);
+        }
+        you.exercises_all.pop_front();
+        you.exercises_all.push_back(exsk);
         deg--;
     }
     reset_training();
@@ -853,6 +889,11 @@ void train_skills(int exp, const int cost, const bool simu)
         did_god_conduct(DID_SPELL_PRACTISE, magic_gain);
 }
 
+bool skill_trained(int i)
+{
+    return (you.can_train[i] && you.train[i]);
+}
+
 void train_skill(skill_type skill, int exp)
 {
     const int cost = calc_skill_cost(you.skill_cost_level);
@@ -958,6 +999,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
             stop_studying_manual(true);
     }
 
+    const skill_type old_best_skill = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
     you.skill_points[exsk] += skill_inc;
     you.ct_skill_points[exsk] += (1 - 1 / crosstrain_bonus(exsk))
                                  * skill_inc;
@@ -965,22 +1007,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
     max_exp -= cost;
     you.total_skill_points += skill_inc;
 
-    if (exsk == SK_FIGHTING)
-        calc_hp();
-
-    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING)
-        calc_mp();
-
-    if (exsk == SK_DODGING || exsk == SK_ARMOUR)
-        you.redraw_evasion = true;
-
-    if (exsk == SK_ARMOUR || exsk == SK_SHIELDS
-        || exsk == SK_ICE_MAGIC || exsk == SK_EARTH_MAGIC
-        || you.duration[DUR_TRANSFORMATION] > 0)
-    {
-        you.redraw_armour_class = true;
-    }
-
+    _change_skill_sublevel(exsk, old_best_skill);
     check_skill_cost_change();
     ASSERT(you.exp_available >= 0);
     ASSERT(max_exp >= 0);

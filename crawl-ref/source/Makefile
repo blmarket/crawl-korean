@@ -9,6 +9,7 @@
 # Typical targets:
 #    make
 #    make debug
+#    make debug-lite    # Like "make debug", but without all the spew.
 #    make install
 #    make debug install
 #    -- note, unlike most programs, you need to specify build type when
@@ -59,7 +60,8 @@ ASSERTS = yes
 # Disable GNU Make implicit rules and variables. Leaving them enabled will slow
 # down MinGW and Cygwin builds by a very VERY noticeable degree. Besides, we have
 # _explicit_ rules defined for everything. So we don't need them.
-MAKEFLAGS += -rR
+MAKEFLAGS += -rR # This only works for recursive makes, i.e. contribs ...
+.SUFFIXES:       # ... so zap the suffix list to neutralize most predifined rules, too
 
 #
 # Compiler Flags
@@ -647,6 +649,10 @@ ifneq (,$(filter debug,$(MAKECMDGOALS)))
 	NO_OPTIMIZE=YesPlease
 endif
 
+# Debug-Lite
+# No optimization, but little/no debugging spew.
+ifneq (,$(filter debug-lite,$(MAKECMDGOALS)))
+	NO_OPTIMIZE=YesPlease
 # Profile
 # Optimized, with full debugging.
 ifneq (,$(filter profile,$(MAKECMDGOALS)))
@@ -915,7 +921,7 @@ SRC_PKG_TAR   := $(PKG_SRC_DIR).tar.xz
 SRC_PKG_TAR_NODEPS := $(PKG_SRC_DIR)-nodeps.tar.xz
 SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
-.PHONY: all test install clean clean-contrib clean-rltiles distclean debug \
+.PHONY: all test install clean clean-contrib clean-rltiles distclean debug debug-lite \
         profile package-source source build-windows package-windows rest docs
 
 all: $(GAME) docs webserver
@@ -984,17 +990,16 @@ TRACK_CFLAGS = $(subst ','\'',$(CC) $(CXX) $(ALL_CFLAGS))           # (stray ' f
 ##########################################################################
 # Dependencies
 
-DEPS := $(shell ls $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d) 2> /dev/null)
+DEPS := $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d)
 
-ifneq ($(DEPS),)
 -include $(DEPS)
-endif
 
 endif
 endif
 endif
 
-depend: $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d)
+# Only serves to check if all .d files can be built
+depend: $(DEPS)
 
 # This information is included in crash reports, and is printed with
 # "crawl -version"
@@ -1161,6 +1166,7 @@ $(GAME): $(GAME_DEPENDS)
 	+$(QUIET_LINK)$(CXX) $(LDFLAGS) $(EXTRA_OBJECTS) $(OBJECTS) -o $(GAME) $(LIBS)
 
 debug: all
+debug-lite: all
 profile: all
 
 doxy-simple: doxygen-simple
@@ -1175,21 +1181,25 @@ doxygen-all:
 #
 ifndef NO_INLINE_DEPGEN
 # See info node: (gcc) Preprocessor Options
-INLINE_DEPGEN_CFLAGS = -Wp,-MMD,$(patsubst %.o,%.d,$@),-MT,$@
+INLINE_DEPGEN_CFLAGS = -Wp,-MMD,$*.d,-MT,$@
 endif
 
 ifdef NO_INLINE_DEPGEN
 $(OBJECTS): $(OBJECTS:%.o=%.d) $(YACC_OBJECTS:%.o=%.d)
-endif
 
 %.d: %.cc .cflags $(GENERATED_HEADERS)
 	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
+endif
+
+# Precompiled headers
+#
 
 # Precompiled headers
 #
 ifdef PCH
-%.h.gch: %.h
-	$(QUIET_PCH)$(CXX) $(ALL_CFLAGS) -c $< -o $@
+-include AppHdr.h.d
+%.gch: %
+	$(QUIET_PCH)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
 CC_DEP := AppHdr.h.gch
 endif
@@ -1198,8 +1208,7 @@ endif
 #
 $(OBJECTS:%.o=%.cc): $(CC_DEP) $(TILEDEFHDRS) $(CONTRIB_LIBS)
 
-$(UTIL)%.o: $(UTIL)%.cc .cflags
-	$(QUIET_CXX)$(CXX) $(YACC_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
+$(UTIL)%.o: ALL_CFLAGS=$(YACC_CFLAGS)
 
 %.o: %.m .cflags $(GENERATED_HEADERS)
 	$(QUIET_CC)$(CC) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@

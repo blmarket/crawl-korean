@@ -921,6 +921,14 @@ gnoll shaman
 
 A haggard old gnoll, wise and wicked. Its strange chants and ululations send other gnolls into a wild frenzy.
 %%%%
+gnoll sergeant
+
+A commander of a pack of gnolls. Scars on its stout body give evidence of how it earned its rank.
+%%%%
+gnoll shaman
+
+A haggard old gnoll, wise and wicked. Its strange chants and ululations send other gnolls into a wild frenzy.
+%%%%
 gnome
 
 작지만 굳센 인간형 생물로, 지하 통로를 개척하는 것이 이들의 주특기이다. 던전과 바깥 세상이 서로 맏닿았을 때, 노움들은 멸족의 위기에 처해 있고, 이 노움은 그 중 마지막 남은 노움의 후예일수도 있다.
@@ -1220,6 +1228,10 @@ This contraption, made from a coil and a rod, is buzzing with electricity and ca
 lindwurm
 
 강력한 한 쌍의 앞발이 있는 독사와 같은 모습의 작은 용이다. 두꺼운 비늘에서 기분 나쁜 녹색 광택이 난다.
+%%%%
+mad acolyte of Lugonu
+
+An insane follower of Lugonu. Years of living in the abyss have clearly taken their toll on this one's feeble mind.
 %%%%
 mad acolyte of Lugonu
 
@@ -1567,6 +1579,10 @@ A loathsome arachnid, armed to the teeth. Its body is covered in a thick carapac
 sea snake
 
 물 속을 대단히 편안하게 헤엄치는 밝은 빛깔의 뱀이다. 맹독의 이빨을 가지고 있다.
+%%%%
+seraph
+
+The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, the mightiest servants of the Good Gods. They have six wings and but one face, and are said to sometimes take form of fiery serpents.
 %%%%
 seraph
 

@@ -252,28 +252,30 @@ void wizard_heal(bool super_heal)
 void wizard_set_hunger_state()
 {
     std::string hunger_prompt =
-        "Set hunger state to s(T)arving, (N)ear starving, (H)ungry";
+        "Set hunger state to s(T)arving, (N)ear starving, (V)ery hungry, (H)ungry";
     if (you.species == SP_GHOUL)
         hunger_prompt += " or (S)atiated";
     else
-        hunger_prompt += ", (S)atiated, (F)ull or (E)ngorged";
+        hunger_prompt += ", (S)atiated, (F)ull, ve(R)y full or (E)ngorged";
     hunger_prompt += "? ";
 
     mprf(MSGCH_PROMPT, "%s", hunger_prompt.c_str());
 
     const int c = tolower(getchk());
 
-    // Values taken from food.cc.
     switch (c)
     {
-    case 't': you.hunger = 500;   break;
-    case 'n': you.hunger = 1200;  break;
-    case 'h': you.hunger = 2400;  break;
-    case 's': you.hunger = 5000;  break;
-    case 'f': you.hunger = 8000;  break;
-    case 'e': you.hunger = 12000; break;
+    case 't': you.hunger = HUNGER_STARVING;      break;
+    case 'n': you.hunger = HUNGER_NEAR_STARVING; break;
+    case 'v': you.hunger = HUNGER_VERY_HUNGRY;   break;
+    case 'h': you.hunger = HUNGER_HUNGRY;        break;
+    case 's': you.hunger = HUNGER_SATIATED;      break;
+    case 'f': you.hunger = HUNGER_FULL;          break;
+    case 'r': you.hunger = HUNGER_VERY_FULL;     break;
+    case 'e': you.hunger = HUNGER_ENGORGED;      break;
     default:  canned_msg(MSG_OK); break;
     }
+    --you.hunger;
 
     food_change();
 
@@ -658,42 +660,6 @@ bool wizard_add_mutation()
     }
 
     return (success);
-}
-#endif
-
-#ifdef WIZARD
-void wizard_get_religion(void)
-{
-    char specs[80];
-
-    msgwin_get_line("Which god (by name)? ", specs, sizeof(specs));
-
-    if (specs[0] == '\0')
-        return;
-
-    std::string spec = lowercase_string(specs);
-
-    god_type god = GOD_NO_GOD;
-
-    for (int i = 1; i < NUM_GODS; ++i)
-    {
-        const god_type gi = static_cast<god_type>(i);
-        if (lowercase_string(god_name(gi)).find(spec) != std::string::npos)
-        {
-            god = gi;
-            break;
-        }
-    }
-
-    if (god == GOD_NO_GOD)
-        mpr("That god doesn't seem to be taking followers today.");
-    else
-    {
-        dungeon_feature_type feat = altar_for_god(god);
-        dungeon_terrain_changed(you.pos(), feat, false);
-
-        pray();
-    }
 }
 #endif
 

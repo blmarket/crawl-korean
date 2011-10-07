@@ -4938,6 +4938,8 @@ static monsterentry mondata[] = {
 
 // non-living creatures
 // golems ('8')
+// non-living creatures
+// golems ('8')
 { // dummy for the genus, never spawns
     MONS_GOLEM, '8', LIGHTGREY, M_("golem"),
     M_SEE_INVIS | M_ARTIFICIAL | M_NO_POLY_TO,
@@ -5309,6 +5311,9 @@ static monsterentry mondata[] = {
 },
 
 // M_("C")yclopes and giants.
+{
+    MONS_CHUCK, 'C', WHITE, M_("Chuck"),
+    M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,
 {
     MONS_CHUCK, 'C', WHITE, M_("Chuck"),
     M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,

@@ -239,7 +239,7 @@ void give_basic_mutations(species_type speci)
     case SP_OGRE:
         you.mutation[MUT_TOUGH_SKIN]      = 1;
         you.mutation[MUT_FAST_METABOLISM] = 1;
-        you.mutation[MUT_SAPROVOROUS]     = 1;
+        you.mutation[MUT_CARNIVOROUS]     = 1;
         break;
     case SP_HALFLING:
         you.mutation[MUT_SLOW_METABOLISM]     = 1;
@@ -258,7 +258,8 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_TOUGH_SKIN]      = 3;
         you.mutation[MUT_FAST]            = 2;
         you.mutation[MUT_DEFORMED]        = 1;
-        you.mutation[MUT_FAST_METABOLISM] = 2;
+        you.mutation[MUT_FAST_METABOLISM] = 1;
+        you.mutation[MUT_HERBIVOROUS]     = 1;
         you.mutation[MUT_HOOVES]          = 3;
         break;
     case SP_NAGA:
@@ -980,9 +981,14 @@ static void _give_items_skills(const newgame_def& ng)
     if (you.species == SP_DEEP_DWARF)
         newgame_make_item(-1, EQ_NONE, OBJ_WANDS, WAND_HEALING, -1, 1, 5);
 
-    // Zotdef: everyone gets a bonus two potions of healing
+    // Zotdef: everyone gets a bonus two potions of healing, plus two
+    // free levels in Traps & Doors so they can replace old traps with
+    // better ones.
     if (crawl_state.game_is_zotdef())
+    {
         newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_HEALING, -1, 2);
+        you.skills[SK_TRAPS_DOORS] += 2;
+    }
 
     if (weap_skill)
     {
@@ -1399,8 +1405,9 @@ static void _setup_generic(const newgame_def& ng)
     reassess_starting_skills();
     calc_total_skill_points();
     init_skill_order();
-    init_training();
     init_can_train();
+    init_train();
+    init_training();
 
     _give_species_bonus_mp();
 

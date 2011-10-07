@@ -315,6 +315,7 @@ static const ability_def Ability_List[] =
     { ABIL_ZIN_CURE_ALL_MUTATIONS, M_("Cure All Mutations"),
       0, 0, 0, 0, ABFLAG_NONE },
 
+
     // The Shining One
     { ABIL_TSO_DIVINE_SHIELD, M_("Divine Shield"), 3, 0, 50, 2, ABFLAG_NONE },
     { ABIL_TSO_CLEANSING_FLAME, M_("Cleansing Flame"), 5, 0, 100, 2, ABFLAG_NONE },
@@ -458,7 +459,7 @@ static const ability_def Ability_List[] =
     { ABIL_MAKE_WATER, M_("Make water"), 0, 0, 0, 0, ABFLAG_ZOTDEF, 10 },
     { ABIL_MAKE_LIGHTNING_SPIRE, M_("Make lightning spire"), 0, 0, 0, 0, ABFLAG_ZOTDEF, 100},
     { ABIL_MAKE_BAZAAR, M_("Make bazaar"), 0, 30, 0, 0, ABFLAG_ZOTDEF|ABFLAG_PERMANENT_HP, 100 },
-    { ABIL_MAKE_ALTAR, M_("Make altar"), 0, 0, 0, 0, ABFLAG_ZOTDEF, 2 },
+    { ABIL_MAKE_ALTAR, M_("Make altar"), 0, 0, 0, 0, ABFLAG_ZOTDEF, 50 },
     { ABIL_MAKE_GRENADES, M_("Make grenades"), 0, 0, 0, 0, ABFLAG_ZOTDEF, 2 },
     { ABIL_MAKE_SAGE, M_("Sage"), 0, 0, 300, 0,  ABFLAG_ZOTDEF|ABFLAG_INSTANT, 0 },
     { ABIL_REMOVE_CURSE, M_("Remove Curse"), 0, 0, 300, 0, ABFLAG_ZOTDEF|ABFLAG_STAT_DRAIN, 0 },
@@ -899,6 +900,12 @@ static const std::string _detailed_cost_description(ability_type ability)
 
     if (abil.flags & ABFLAG_CONF_OK)
         ret << gettext("\nYou can use it even if confused.");
+
+    if (abil.flags & ABFLAG_LEVEL_DRAIN)
+        ret << "\nIt will lower your experience level by one when used.";
+
+    if (abil.flags & ABFLAG_STAT_DRAIN)
+        ret << "\nIt will temporarily drain your strength, intelligence or dexterity when used.";
 
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
         ret << "\nIt will lower your experience level by one when used.";
@@ -1872,7 +1879,7 @@ static bool _do_ability(const ability_def& abil)
     }
 
     case ABIL_MAKE_ALTAR:
-        if (!create_altar(true))
+        if (!zotdef_create_altar())
         {
             mpr(gettext("The dungeon dims for a moment."));
             return (false);

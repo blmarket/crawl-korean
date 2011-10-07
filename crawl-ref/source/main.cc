@@ -659,7 +659,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
     case '}': wizard_reveal_traps();                 break;
     case '@': wizard_set_stats();                    break;
     case '^': wizard_set_piety();                    break;
-    case '_': wizard_get_religion();                 break;
+    case '_': zotdef_create_altar(true);             break;
     case '-': wizard_get_god_gift();                 break;
     case '\'': wizard_list_items();                  break;
     case 'd': wizard_level_travel(true);             break;
@@ -2651,7 +2651,7 @@ static void _decrement_durations()
         slow_player(dur);
 
         make_hungry(BERSERK_NUTRITION, true);
-        you.hunger = std::max(HUNGER_STARVING, you.hunger);
+        you.hunger = std::max<int>(HUNGER_STARVING, you.hunger);
 
         // 1KB: No berserk healing.
         you.hp = (you.hp + 1) * 2 / 3;

@@ -3743,6 +3743,8 @@ void melee_attack::player_apply_staff_damage()
                     defender->name(DESC_CAP_THE).c_str());
 
             did_god_conduct(DID_NECROMANCY, 4);
+
+            did_god_conduct(DID_NECROMANCY, 4);
         }
         break;
 

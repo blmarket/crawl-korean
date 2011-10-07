@@ -1796,7 +1796,13 @@ static std::vector<formatted_string> _get_overview_resistances(
     const char* pregourmand;
     const char* postgourmand;
 
-    if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
+    if (player_mutation_level(MUT_GOURMAND))
+    {
+        pregourmand = "Gourmand  : ";
+        postgourmand = _itosym2(2);
+        saplevel = 2;
+    }
+    else if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
     {
         pregourmand = "대식가    : ";
         postgourmand = _itosym1(1);

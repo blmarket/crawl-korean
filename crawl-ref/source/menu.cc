@@ -1815,9 +1815,11 @@ int ToggleableMenu::pre_process(int key)
 /**
  * Performs regular rectangular AABB intersection between the given AABB
  * rectangle and a item in the menu_entries
+ * <pre>
  * start(x,y)------------
  *           |          |
  *           ------------end(x,y)
+ * </pre>
  */
 static bool _AABB_intersection(const coord_def& item_start,
                               const coord_def& item_end,
@@ -1879,7 +1881,7 @@ void PrecisionMenu::clear()
 }
 
 /**
- * Processes user input
+ * Processes user input.
  *
  * Returns:
  * true when a significant event happened, signaling that the player has made a
@@ -2061,10 +2063,10 @@ void PrecisionMenu::_clear_selections()
 /**
  * Finds the closest rectangle to given entry start on a caardinal
  * direction from it.
- * if no entries are found, NULL is returned
+ * If no entries are found, NULL is returned.
  *
- * TODO: This is exact duplicate of MenuObject::_find_item_by_direction()
- * maybe somehow generalize it and detach it from class
+ * TODO: This is exact duplicate of MenuObject::_find_item_by_direction();
+ * maybe somehow generalize it and detach it from class?
  */
 MenuObject* PrecisionMenu::_find_object_by_direction(const MenuObject* start,
                                                    Direction dir)
@@ -2325,7 +2327,7 @@ void MenuItem::move(const coord_def& delta)
     m_max_coord += delta;
 }
 
-// By default, value does nothing. Override for Items needing it
+// By default, value does nothing. Override for Items needing it.
 void MenuItem::select(bool toggle, int value)
 {
     select(toggle);
@@ -2551,11 +2553,11 @@ const std::string& TextItem::get_text() const
 }
 
 /**
- * Wraps and chops the m_text variable and saves the chopped
- * text to m_render_text.
+ * Wraps and chops the #m_text variable and saves the chopped
+ * text to #m_render_text.
  * This is done to preserve the old text in case the text item
- * changes size and could fit more text
- * Override if you use font with different sizes than CRTRegion font
+ * changes size and could fit more text.
+ * Override if you use font with different sizes than CRTRegion font.
  */
 void TextItem::_wrap_text()
 {
