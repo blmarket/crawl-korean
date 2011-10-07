@@ -468,9 +468,6 @@ static std::string _randart_descrip(const item_def &item)
     };
 
     for (unsigned i = 0; i < ARRAYSZ(propdescs); ++i)
-    };
-
-    for (unsigned i = 0; i < ARRAYSZ(propdescs); ++i)
     {
         if (known_proprt(propdescs[i].property))
         {

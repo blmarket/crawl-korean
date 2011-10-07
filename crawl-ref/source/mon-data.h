@@ -202,7 +202,7 @@ static monsterentry mondata[] = {
 // after save compat is broken.
 #define AXED_MON(id) \
 { \
-    id, 'X', LIGHTRED, M_("removed "#id), \
+    id, 'X', LIGHTRED, "removed "#id, \
     M_NO_EXP_GAIN | M_NO_POLY_TO | M_UNFINISHED, \
     MR_NO_FLAGS, \
     0, 10, MONS_PROGRAM_BUG, MONS_PROGRAM_BUG, MH_NONLIVING, -3, \
@@ -4936,8 +4936,7 @@ static monsterentry mondata[] = {
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// non-living creatures
-// golems ('8')
+
 // non-living creatures
 // golems ('8')
 { // dummy for the genus, never spawns
@@ -5310,10 +5309,7 @@ static monsterentry mondata[] = {
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_LARGE
 },
 
-// M_("C")yclopes and giants.
-{
-    MONS_CHUCK, 'C', WHITE, M_("Chuck"),
-    M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,
+// "C"yclopes and giants.
 {
     MONS_CHUCK, 'C', WHITE, M_("Chuck"),
     M_WARM_BLOOD | M_SPEAKS | M_UNIQUE,

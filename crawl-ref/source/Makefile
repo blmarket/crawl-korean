@@ -652,7 +652,10 @@ endif
 # Debug-Lite
 # No optimization, but little/no debugging spew.
 ifneq (,$(filter debug-lite,$(MAKECMDGOALS)))
+	DEBUG=YesPlease
 	NO_OPTIMIZE=YesPlease
+endif
+
 # Profile
 # Optimized, with full debugging.
 ifneq (,$(filter profile,$(MAKECMDGOALS)))
@@ -1190,9 +1193,6 @@ $(OBJECTS): $(OBJECTS:%.o=%.d) $(YACC_OBJECTS:%.o=%.d)
 %.d: %.cc .cflags $(GENERATED_HEADERS)
 	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
 endif
-
-# Precompiled headers
-#
 
 # Precompiled headers
 #

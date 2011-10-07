@@ -812,19 +812,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
             // to webs.  They know how to walk safely, but not if already
             // entangled.  So let's give a message.
             if (trap && trap->type == TRAP_WEB)
-                mpr("You wish you had such spider senses a moment ago.");
-        }
-        break;
-
-    case TRAN_SPIDER:
-        if (you.attribute[ATTR_HELD])
-        {
-            trap_def *trap = find_trap(you.pos());
-            // Some folks claims it's "a bug", and spiders should be immune
-            // to webs.  They know how to walk safely, but not if already
-            // entangled.  So let's give a message.
-            if (trap && trap->type == TRAP_WEB)
-                mpr("You wish you had such spider senses a moment ago.");
+                mpr(gettext("You wish you had such spider senses a moment ago."));
         }
         break;
 
@@ -994,20 +982,7 @@ void untransform(bool skip_wielding, bool skip_move)
             // way is one line:
             you.mutation[app] = you.innate_mutations[app];
             you.attribute[ATTR_APPENDAGE] = 0;
-            mprf(MSGCH_DURATION, "Your %s disappear%s.", appendage_name(app),
-                 (app == MUT_TENTACLE_SPIKE) ? "s" : "");
-        }
-        break;
-
-    case TRAN_APPENDAGE:
-        {
-            int app = you.attribute[ATTR_APPENDAGE];
-            ASSERT(beastly_slot(app) != EQ_NONE);
-            // would be lots of work to do it via delete_mutation, the hacky
-            // way is one line:
-            you.mutation[app] = you.innate_mutations[app];
-            you.attribute[ATTR_APPENDAGE] = 0;
-            mprf(MSGCH_DURATION, "Your %s disappear%s.", appendage_name(app),
+            mprf(MSGCH_DURATION, gettext("Your %s disappear%s."), appendage_name(app),
                  (app == MUT_TENTACLE_SPIKE) ? "s" : "");
         }
         break;

@@ -266,7 +266,6 @@ COLORS SkillMenuEntry::get_colour() const
         return YELLOW;
     else if (!you.training[m_sk])
         return DARKGREY;
-    }
     else if (crosstrain_bonus(m_sk) > 1 && is_set(SKMF_APTITUDE))
         return GREEN;
     else if (is_antitrained(m_sk) && is_set(SKMF_APTITUDE))

@@ -823,14 +823,9 @@ static void _describe_transform(status_info* inf)
         inf->long_text  = gettext("You are a statue.");
         break;
     case TRAN_APPENDAGE:
-        inf->light_text = "App";
-        inf->short_text = "appendage";
-        inf->long_text  = "You have a beastly appendage.";
-        break;
-    case TRAN_APPENDAGE:
-        inf->light_text = "App";
-        inf->short_text = "appendage";
-        inf->long_text  = "You have a beastly appendage.";
+        inf->light_text = gettext(M_("App"));
+        inf->short_text = gettext(M_("appendage"));
+        inf->long_text  = gettext("You have a beastly appendage.");
         break;
     case TRAN_NONE:
         break;

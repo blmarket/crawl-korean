@@ -454,7 +454,7 @@ static void _check_stop_train()
     }
 
     if (!skills.empty())
-        mprf(gettext("You stop training %s"), _skill_names(skills));
+        mprf(gettext("You stop training %s"), _skill_names(skills).c_str());
 
     reset_training();
     you.stop_train.clear();
