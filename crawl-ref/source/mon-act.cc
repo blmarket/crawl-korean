@@ -103,7 +103,7 @@ static void _monster_regenerate(monster* mons)
     if (crawl_state.disables[DIS_MON_REGEN])
         return;
 
-    if (mons->has_ench(ENCH_SICK) ||
+    if (mons->has_ench(ENCH_SICK) || mons->has_ench(ENCH_DEATHS_DOOR) ||
         (!mons_can_regenerate(mons) && !(mons->has_ench(ENCH_REGENERATION))))
     {
         return;
@@ -1664,15 +1664,24 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
     }
     pbolt.damage.size = diceMult * pbolt.damage.size / 100;
 
+    int frenzy_degree = -1;
+
     if (mons->has_ench(ENCH_BATTLE_FRENZY))
     {
-        const mon_enchant ench = mons->get_ench(ENCH_BATTLE_FRENZY);
+        frenzy_degree = mons->get_ench(ENCH_BATTLE_FRENZY).degree;
+    }
+    else if (mons->has_ench(ENCH_ROUSED))
+    {
+        frenzy_degree = mons->get_ench(ENCH_ROUSED).degree;
+    }
 
+    if (frenzy_degree != -1)
+    {
 #ifdef DEBUG_DIAGNOSTICS
         const dice_def orig_damage = pbolt.damage;
 #endif
 
-        pbolt.damage.size = pbolt.damage.size * (115 + ench.degree * 15) / 100;
+        pbolt.damage.size = pbolt.damage.size * (115 + frenzy_degree * 15) / 100;
 
         dprf("%s frenzy damage: %dd%d -> %dd%d",
              mons->name(DESC_PLAIN).c_str(),

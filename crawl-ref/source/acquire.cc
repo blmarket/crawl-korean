@@ -1449,7 +1449,7 @@ int acquirement_create_item(object_class_type class_wanted,
                                    * roll_dice(1, 8)));
     }
     else if (class_wanted == OBJ_MISSILES && !divine)
-        thing.quantity *= 2;
+        thing.quantity *= 5;
     else if (quant > 1)
         thing.quantity = quant;
 
@@ -1598,6 +1598,12 @@ int acquirement_create_item(object_class_type class_wanted,
             if (!is_artefact(thing))
                 thing.plus2 = std::max(static_cast<int>(thing.plus2), 0);
         }
+    }
+    else if (is_deck(thing))
+    {
+        thing.special = !one_chance_in(3) ? DECK_RARITY_LEGENDARY :
+                        !one_chance_in(5) ? DECK_RARITY_RARE :
+                                            DECK_RARITY_COMMON;
     }
 
     if (agent > GOD_NO_GOD && agent < NUM_GODS && agent == you.religion)

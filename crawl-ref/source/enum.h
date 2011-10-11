@@ -345,7 +345,8 @@ enum beam_type                  // beam[].flavour
     BEAM_POTION_RANDOM,
     BEAM_AIR,
     BEAM_PETRIFYING_CLOUD,
-    BEAM_LAST_REAL = BEAM_PETRIFYING_CLOUD,
+    BEAM_BOLT_OF_ZIN,
+    BEAM_LAST_REAL = BEAM_BOLT_OF_ZIN,
 
     // For getting the visual effect of a beam.
     BEAM_VISUAL,
@@ -1016,8 +1017,7 @@ enum level_flag_type
     LFLAG_NONE = 0,
 
     LFLAG_NO_TELE_CONTROL = (1 << 0), // Teleport control not allowed.
-    LFLAG_NOT_MAPPABLE    = (1 << 1), // Level not mappable (like Abyss).
-    LFLAG_NO_MAGIC_MAP    = (1 << 2), // Level can't be magic mapped.
+    LFLAG_NO_MAP          = (1 << 2), // Level can't be persistently mapped.
 };
 
 enum level_state_type
@@ -1461,6 +1461,9 @@ enum enchant_type
     ENCH_SILVER_CORONA, // Zin's silver light.
     ENCH_RECITE_TIMER,  // Was recited against.
     ENCH_INNER_FLAME,
+    ENCH_ROUSED,        // Monster has been roused to greatness
+    ENCH_BREATH_WEAPON, // just a simple timer for dragon breathweapon spam
+    ENCH_DEATHS_DOOR,
     // Update enchantment names in monster.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS
@@ -2030,7 +2033,7 @@ enum monster_type                      // (int) menv[].type
     MONS_GNOME,                 // single vault
     MONS_HALFLING,              // recolouring + single vault.
     MONS_FELID,                 // recolouring + single vault.  Miaow!
-    MONS_VAMPIRE_BAT,           // for recolouring
+    MONS_VAMPIRE_BAT,           // recolouring + vaults
     MONS_DEMIGOD,               // recolouring + single vault
     MONS_DEMONSPAWN,            // recolouring + single vault... but there are FRs
     MONS_GARGOYLE,
@@ -2439,7 +2442,7 @@ enum monster_type                      // (int) menv[].type
     MONS_SPRIGGAN_AIR_MAGE,
     MONS_FIRE_BAT,
     MONS_IGNACIO,
-    MONS_HOLY_SWINE,            // porkalator only
+    MONS_HOLY_SWINE,            // porkalator
     MONS_SENSED_FRIENDLY,
     MONS_GIANT,
     MONS_BASILISK,
@@ -3035,7 +3038,9 @@ enum spell_type
     SPELL_BOLT_OF_INACCURACY,
     SPELL_POISONOUS_CLOUD,
     SPELL_FIRE_STORM,
+#if TAG_MAJOR_VERSION == 32
     SPELL_DETECT_TRAPS,
+#endif
     SPELL_BLINK,
     SPELL_ISKENDERUNS_MYSTIC_BLAST,
     SPELL_SUMMON_SWARM,
@@ -3126,7 +3131,9 @@ enum spell_type
     SPELL_SUMMON_DRAGON,
     SPELL_HIBERNATION,
     SPELL_ENGLACIATION,
+#if TAG_MAJOR_VERSION == 32
     SPELL_DETECT_SECRET_DOORS,
+#endif
     SPELL_SEE_INVISIBLE,
     SPELL_PHASE_SHIFT,
     SPELL_SUMMON_BUTTERFLIES,
@@ -3206,7 +3213,7 @@ enum spell_type
     SPELL_IRON_ELEMENTALS,
     SPELL_SUMMON_SPECTRAL_ORCS,
     SPELL_RESURRECT,
-    SPELL_LIGHT_BEAM,
+    SPELL_HOLY_LIGHT,
     SPELL_HOLY_WORD,
     SPELL_SUMMON_HOLIES,
     SPELL_SUMMON_GREATER_HOLY,
@@ -3239,6 +3246,7 @@ enum spell_type
     SPELL_PETRIFYING_CLOUD,
     SPELL_MASS_ABJURATION,
     SPELL_BEASTLY_APPENDAGE,
+    SPELL_SILVER_BLAST,
 
     NUM_SPELLS
 };
@@ -3251,12 +3259,12 @@ enum slot_select_mode
 
 enum stat_type
 {
-  STAT_STR,                     //    0
-  STAT_INT,
-  STAT_DEX,
-  NUM_STATS, // added for increase_stats() {dlb}
-  STAT_ALL, // must remain after NUM_STATS -- added to handle royal jelly, etc. {dlb}
-  STAT_RANDOM,
+    STAT_STR,
+    STAT_INT,
+    STAT_DEX,
+    NUM_STATS,
+    STAT_ALL, // must remain after NUM_STATS -- added to handle royal jelly, etc. {dlb}
+    STAT_RANDOM,
 };
 
 enum targeting_type
@@ -3354,9 +3362,6 @@ enum zap_type
     ZAP_PAIN,
     ZAP_STICKY_FLAME,
     ZAP_DISPEL_UNDEAD,
-#if TAG_MAJOR_VERSION == 32
-    ZAP_BONE_SHARDS,
-#endif
     ZAP_BANISHMENT,
     ZAP_DEGENERATION,
     ZAP_STING,
@@ -3373,16 +3378,9 @@ enum zap_type
     ZAP_BREATHE_ACID,
     ZAP_BREATHE_POISON,
     ZAP_BREATHE_POWER,
-#if TAG_MAJOR_VERSION == 32
-    ZAP_ENSLAVE_UNDEAD,
-#endif
     ZAP_AGONY,
     ZAP_DISINTEGRATION,
     ZAP_BREATHE_STEAM,
-#if TAG_MAJOR_VERSION == 32
-    ZAP_CONTROL_DEMON,
-    ZAP_ORB_OF_FRAGMENTATION,
-#endif
     ZAP_THROW_ICICLE,
     ZAP_ICE_STORM,
     ZAP_CORONA,
@@ -3404,12 +3402,13 @@ enum zap_type
     ZAP_PRIMAL_WAVE,
     ZAP_IOOD,
     ZAP_SUNRAY,
-    ZAP_LIGHT_BEAM,
+    ZAP_HOLY_LIGHT,
     ZAP_HOLY_FLAMES,
     ZAP_HOLY_BREATH,
     ZAP_BREATHE_MEPHITIC,
     ZAP_IOOD_BURST,
     ZAP_INNER_FLAME,
+    ZAP_BLAST_OF_SILVER,
 
     NUM_ZAPS
 };

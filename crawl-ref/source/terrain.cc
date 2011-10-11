@@ -1493,9 +1493,20 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
         }
         else
         {
-            // should boost # of bangs per damage in the future {dlb}
-            mpr(gettext("The lava burns you!"));
-            ouch((10 + roll_dice(2, 50)) / resist, NON_MONSTER, KILLED_BY_LAVA);
+            int damage = 10 + roll_dice(2, 50) / resist;
+
+            if (damage > 100)
+                mpr(gettext("The lava roasts you!!"));
+            else if (damage > 70)
+                mpr(gettext("The lava burns you!!"));
+            else if (damage > 40)
+                mpr(gettext("The lava sears you!!"));
+            else if (damage > 20)
+                mpr(gettext("The lava scorches you!"));
+            else
+                mpr(gettext("The lava scalds you!"));
+
+            ouch(damage, NON_MONSTER, KILLED_BY_LAVA);
         }
 
         expose_player_to_element(BEAM_LAVA, 14);
@@ -1549,7 +1560,15 @@ bool fall_into_a_pool(const coord_def& entry, bool allow_shift,
         }
     }
 
-    mpr(gettext("You drown..."));
+    if (you.species == SP_MUMMY)
+    {
+        if (terrain == DNGN_LAVA)
+            mpr(gettext("You burn to ash..."));
+        else if (terrain == DNGN_DEEP_WATER)
+            mpr(gettext("You fall apart..."));
+    }
+    else
+        mpr(gettext("You drown..."));
 
     if (terrain == DNGN_LAVA)
         ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_LAVA);

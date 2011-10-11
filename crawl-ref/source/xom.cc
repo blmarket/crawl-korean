@@ -4097,33 +4097,10 @@ void xom_check_lost_item(const item_def& item)
     if (item.base_type == OBJ_ORBS)
         xom_is_stimulated(255, "좀은 추잡하게 웃었다.", true);//xom_is_stimulated(255, "Xom laughs nastily.", true);
     else if (is_special_unrandom_artefact(item))
-        xom_is_stimulated(128, "좀은 낄낄댔다", true);//xom_is_stimulated(128, "Xom snickers.", true);
-    else if (item_is_rune(item))
-    {
-        if (item_is_unique_rune(item))
-            xom_is_stimulated(255, "좀은 큰소리로 낄낄댔다.", true);//xom_is_stimulated(255, "Xom snickers loudly.", true);
-        else if (you.entry_cause == EC_SELF_EXPLICIT
-                 && !(item.flags & ISFLAG_BEEN_IN_INV))
-        {
-            // Player voluntarily entered Pan or the Abyss looking for
-            // runes, yet never found them.
-            if (item.plus == RUNE_ABYSSAL)
-            {
-                ASSERT(!you.runes[RUNE_ABYSSAL]);
-                // Ignore Abyss area shifts.
-                if (you.level_type != LEVEL_ABYSS)
-                {
-                    // Abyssal runes are a lot more trouble to find than
-                    // demonic runes, so they get twice the stimulation.
-                    xom_is_stimulated(128, "좀은 낄낄댔다.", true);//xom_is_stimulated(128, "Xom snickers.", true);
-                }
-            }
-            else if (item.plus == RUNE_DEMONIC && !you.runes[RUNE_DEMONIC])
-            {
-                xom_is_stimulated(64, "좀은 조용히 낄낄거렸다.", true);//                xom_is_stimulated(64, "Xom snickers softly.", true);
-            }
-        }
-    }
+        xom_is_stimulated(100, gettext("Xom snickers."), true);
+    // you can't be made lose unique runes anymore, it was voluntary -- not so funny
+    else if (item_is_rune(item) && item_is_unique_rune(item))
+        xom_is_stimulated(50, gettext("Xom snickers loudly."), true);
 }
 
 void xom_check_destroyed_item(const item_def& item, int cause)

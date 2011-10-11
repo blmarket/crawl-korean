@@ -2406,7 +2406,8 @@ void drop()
     }
 
     std::vector<SelItem> tmp_items;
-    tmp_items = prompt_invent_items(gettext("Drop what? (Press _ for help.)"), MT_DROP,
+    tmp_items = prompt_invent_items(gettext("Drop what? (Press _ for help; Ctrl-W "
+                                    "to toggle weight display.)"), MT_DROP,
                                      -1, _drop_menu_title, true, true, 0,
                                      &Options.drop_filter, _drop_selitem_text,
                                      &items_for_multidrop);
@@ -3004,7 +3005,7 @@ static bool _find_subtype_by_name(item_def &item,
         {
             item.plus = j;
 
-            if(name == lowercase_string(item.name(false, DESC_PLAIN)))
+            if (name == lowercase_string(item.name(false, DESC_PLAIN, false, false, false)))
             {
                 type_wanted = i;
                 i = ntypes;
@@ -3783,7 +3784,7 @@ bool get_item_by_name(item_def *item, char* specs,
 // coord_def() if not present
 coord_def orb_position()
 {
-    item_def* orb = find_floor_item(OBJ_ORBS,ORB_ZOT);
+    item_def* orb = find_floor_item(OBJ_ORBS, ORB_ZOT);
     return (orb ? orb->pos: coord_def());
 }
 

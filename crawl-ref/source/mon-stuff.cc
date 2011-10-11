@@ -4023,7 +4023,8 @@ void seen_monster(monster* mons)
 
     if (!mons->has_ench(ENCH_ABJ)
         && !mons->has_ench(ENCH_FAKE_ABJURATION)
-        && !testbits(mons->flags, MF_NO_REWARD))
+        && !testbits(mons->flags, MF_NO_REWARD)
+        && !crawl_state.game_is_arena())
     {
         did_god_conduct(DID_SEE_MONSTER, mons->hit_dice, true, mons);
     }
@@ -4564,7 +4565,11 @@ void debuff_monster(monster* mon)
         ENCH_CHARM,
         ENCH_PARALYSIS,
         ENCH_PETRIFYING,
-        ENCH_PETRIFIED
+        ENCH_PETRIFIED,
+        ENCH_REGENERATION,
+        ENCH_STICKY_FLAME,
+        ENCH_TP,
+        ENCH_INNER_FLAME
     };
 
     // Dispel all magical enchantments...

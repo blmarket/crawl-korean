@@ -71,6 +71,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_INSANE;
     case ENCH_BATTLE_FRENZY:
         return MB_FRENZIED;
+    case ENCH_ROUSED:
+        return MB_ROUSED;
     case ENCH_HASTE:
         return MB_HASTED;
     case ENCH_MIGHT:
@@ -132,6 +134,10 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_MAD;
     case ENCH_INNER_FLAME:
         return MB_INNER_FLAME;
+    case ENCH_BREATH_WEAPON:
+        return MB_BREATH_WEAPON;
+    case ENCH_DEATHS_DOOR:
+        return MB_DEATHS_DOOR;
     default:
         return NUM_MB_FLAGS;
     }
@@ -1046,6 +1052,8 @@ void monster_info::to_string(int count, std::string& desc,
     {
         if (is(MB_FRENZIED))
             out << " (frenzied)";
+        else if (is(MB_ROUSED))
+            out << " (roused)";
         else if (is(MB_BERSERK))
             out << " (berserk)";
         else if (Options.verbose_monster_pane)
@@ -1114,6 +1122,8 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("berserk");
     if (is(MB_FRENZIED))
         v.push_back("consumed by blood-lust");
+    if (is(MB_ROUSED))
+        v.push_back("roused with righteous anger");
     if (is(MB_HASTED))
         v.push_back("moving very quickly");
     if (is(MB_STRONG))
@@ -1152,6 +1162,8 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("mostly faded away");
     if (is(MB_FEAR_INSPIRING))
         v.push_back("inspiring fear");
+    if (is(MB_BREATH_WEAPON))
+        v.push_back("catching its breath");
     if (is(MB_WITHDRAWN))
     {
         v.push_back("regenerating health quickly");
@@ -1169,6 +1181,10 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("stupefied");
     if (is(MB_MAD))
         v.push_back("lost in madness");
+    if (is(MB_DEATHS_DOOR))
+       v.push_back("standing in death's doorway");
+    if (is(MB_REGENERATION))
+       v.push_back("regenerating");
     return v;
 }
 

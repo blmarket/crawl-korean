@@ -1587,10 +1587,10 @@
       {
        SPELL_BOLT_OF_DRAINING,
        SPELL_SUMMON_SPECTRAL_ORCS,
-       SPELL_NO_SPELL,
+       SPELL_REGENERATION,
        SPELL_DISPEL_UNDEAD,
        SPELL_HASTE_OTHER,
-       SPELL_TELEPORT_SELF
+       SPELL_DEATHS_DOOR
       }
     },
 
@@ -1723,6 +1723,17 @@
        SPELL_SHADOW_CREATURES,
        SPELL_SUMMON_DEMON,
        SPELL_NO_SPELL
+      }
+    },
+
+    {  MST_SILVER_STAR,
+      {
+       SPELL_HOLY_LIGHT,
+       SPELL_HOLY_LIGHT,
+       SPELL_NO_SPELL,
+       SPELL_NO_SPELL,
+       SPELL_SILVER_BLAST,
+       SPELL_SILVER_BLAST
       }
     },
 

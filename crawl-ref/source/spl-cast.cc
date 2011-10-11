@@ -981,15 +981,6 @@ static int _setup_evaporate_cast()
     return rc;
 }
 
-static bool _can_cast_detect()
-{
-    if (player_in_mappable_area())
-        return (true);
-
-    canned_msg(MSG_DISORIENTED);
-    return (false);
-}
-
 static void _maybe_cancel_repeat(spell_type spell)
 {
     switch (spell)
@@ -1214,14 +1205,6 @@ spret_type your_spells(spell_type spell, int powc,
         }
 
         const int spfail_chance = spell_fail(spell);
-        // Divination mappings backfire in Labyrinths and the Abyss.
-        if (testbits(env.level_flags, LFLAG_NO_MAGIC_MAP)
-            && testbits(flags, SPFLAG_MAPPING))
-        {
-            mpr(gettext("The warped magic of this place twists your spell in on "
-                "itself!"), MSGCH_WARN);
-            spfl = spfail_chance / 2 - 1;
-        }
 
         if (spfl < spfail_chance)
             fail = spfail_chance - spfl;
@@ -1690,33 +1673,15 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_CONTROLLED_BLINK:
         return cast_controlled_blink(powc, fail);
 
-    // Utility spells.
-    // XXX: This should probably be removed.
-    case SPELL_DETECT_SECRET_DOORS:
-        if (_can_cast_detect())
-            cast_detect_secret_doors(powc);
-        break;
-
-    // XXX: This one too.
-    case SPELL_DETECT_TRAPS:
-        if (_can_cast_detect())
-            mprf(gettext("You detect %s"), (detect_traps(powc) > 0) ? gettext("traps!")
-                                                           : pgettext("spl-cast","nothing."));
-        break;
-
     // Only a Xom spell, no failure.
     case SPELL_DETECT_ITEMS:
-        if (_can_cast_detect())
-            mprf(gettext("You detect %s"), (detect_items(powc) > 0) ? gettext("items!")
-                                                           : pgettext("spl-cast","nothing."));
+        mpr( (detect_items(powc) > 0) ? gettext("You detect items!")
+                : gettext("You detect nothing."))
         break;
 
     // Only a Xom spell, no failure.
     case SPELL_DETECT_CREATURES:
     {
-        if (!_can_cast_detect())
-            break;
-
         const int prev_detected = count_detected_mons();
         const int num_creatures = detect_creatures(powc);
 

@@ -129,8 +129,7 @@ Xom powers
 %%%%
 Vehumet powers
 
-베후멧은, 딱히 능동적인 신의 권능을 제공하지는 않지만, 자신의 신도들의 파괴적인 마법 사용을 도와주며, 이와 같은 마법을 통해 멸한 적의 마력을, 무의식적으로 흡수할 수 있는 권능을 제공한다. 
-만약 당신의 충실하게 베후멧의 의도를 따라왔다면, 베후멧은 자신의 도서관에 소장된 강력한 마법서들을 당신에게 선물해줄 수도 있다.
+Worshippers of Vehumet will quickly be able to recover their magical energy upon killing beings. As they gain favour, they will also gain various enhancements to their destructive spells - firstly, assistance in casting such spells; then increased range for conjurations; and finally a lowered cost for casting higher level destructive spells. Eventually, Vehumet will gift followers rare books of destructive magic.
 %%%%
 Okawaru powers
 

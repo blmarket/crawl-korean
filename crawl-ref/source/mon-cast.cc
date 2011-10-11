@@ -911,6 +911,25 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
         beam.is_beam  = true;
         break;
 
+    case SPELL_HOLY_LIGHT:
+        beam.name     = "beam of golden light";
+        beam.damage   = dice_def(3, 8 + power / 11);
+        beam.colour   = ETC_HOLY;
+        beam.flavour  = BEAM_HOLY;
+        beam.hit      = 17 + power / 25;
+        beam.is_beam  = true;
+        break;
+
+    case SPELL_SILVER_BLAST:
+        beam.colour   = LIGHTGRAY;
+        beam.name     = "silver bolt";
+        beam.damage   = dice_def(3, 7 + power / 10);
+        beam.hit      = 40;
+        beam.flavour  = BEAM_BOLT_OF_ZIN;
+        beam.foe_ratio = 80;
+        beam.is_explosion = true;
+        break;
+
     default:
         if (check_validity)
         {
@@ -1099,6 +1118,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_DRAGON:
     case SPELL_SUMMON_HYDRA:
     case SPELL_FIRE_SUMMON:
+    case SPELL_DEATHS_DOOR:
         return (true);
     default:
         if (check_validity)
@@ -1669,17 +1689,21 @@ bool handle_mon_spell(monster* mons, bolt &beem)
             }
         }
 
+        bool was_drac_breath = false;
+
         // If there's otherwise no ranged attack use the breath weapon.
         // The breath weapon is also occasionally used.
         if (draco_breath != SPELL_NO_SPELL
             && (spell_cast == SPELL_NO_SPELL
                  || !_is_emergency_spell(hspell_pass, spell_cast)
                     && one_chance_in(4))
-            && !player_or_mon_in_sanct(mons))
+            && !player_or_mon_in_sanct(mons)
+            && !mons->has_ench(ENCH_BREATH_WEAPON))
         {
             spell_cast = draco_breath;
             setup_mons_cast(mons, beem, spell_cast);
             finalAnswer = true;
+            was_drac_breath = true;
         }
 
         // Should the monster *still* not have a spell, well, too bad {dlb}:
@@ -1744,6 +1768,13 @@ bool handle_mon_spell(monster* mons, bolt &beem)
 
         if (mons->type == MONS_BALL_LIGHTNING)
             mons->suicide();
+
+        // Dragons now have a time-out on their breath weapons, draconians too!
+        if (mons_genus(mons->type) == MONS_DRAGON
+            || (mons_genus(mons->type) == MONS_DRACONIAN && was_drac_breath))
+        {
+            setup_breath_timeout(mons);
+        }
 
         // FINALLY! determine primary spell effects {dlb}:
         if (spell_cast == SPELL_BLINK || spell_cast == SPELL_CONTROLLED_BLINK)
@@ -2054,16 +2085,16 @@ void mons_cast_spectral_orcs(monster* mons)
     const int abj = 3;
     monster* orc;
 
-    monster_type mon = MONS_ORC;
-    if (coinflip())
-        mon = MONS_ORC_WARRIOR;
-    else if (one_chance_in(3))
-        mon = MONS_ORC_KNIGHT;
-    else if (one_chance_in(10))
-        mon = MONS_ORC_WARLORD;
-
     for (int i = random2(3) + 1; i > 0; --i)
     {
+         monster_type mon = MONS_ORC;
+         if (coinflip())
+             mon = MONS_ORC_WARRIOR;
+         else if (one_chance_in(3))
+             mon = MONS_ORC_KNIGHT;
+         else if (one_chance_in(10))
+             mon = MONS_ORC_WARLORD;
+
         // Use the original monster type as the zombified type here, to
         // get the proper stats from it.
         created = create_monster(
@@ -2143,6 +2174,22 @@ static bool _mons_vampiric_drain(monster *mons)
     }
 
     return (true);
+}
+
+void setup_breath_timeout(monster* mons)
+{
+    if (mons_genus(mons->type) != MONS_DRAGON && mons_genus(mons->type) != MONS_DRACONIAN)
+        return;
+
+    if (mons->has_ench(ENCH_BREATH_WEAPON))
+        return;
+
+    int timeout = roll_dice(1, 5);
+
+    dprf("dragon/draconian breath timeout %d", timeout);
+
+    mon_enchant breath_timeout = mon_enchant(ENCH_BREATH_WEAPON, 1, mons, timeout*10);
+    mons->add_ench(breath_timeout);
 }
 
 /**
@@ -3548,6 +3595,28 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
                           spell_cast, mons->pos(), mons->foe, 0, god));
         }
         return;
+
+    case SPELL_DEATHS_DOOR:
+        if (!mons->has_ench(ENCH_DEATHS_DOOR))
+        {
+            const int dur = BASELINE_DELAY * 2 * mons->skill(SK_NECROMANCY);
+            simple_monster_message(mons,
+                                   " stands defiantly in death's doorway!");
+            mons->hit_points = std::max(std::min(mons->hit_points,
+                                        mons->skill(SK_NECROMANCY)), 1);
+            mons->add_ench(mon_enchant(ENCH_DEATHS_DOOR, 0, mons, dur));
+        }
+        return;
+
+    case SPELL_REGENERATION:
+    {
+        simple_monster_message(mons,
+                               "'s wounds begin to heal before your eyes!");
+        const int dur = BASELINE_DELAY
+            * std::min(5 + roll_dice(2, (mons->hit_dice * 10) / 3 + 1), 100);
+        mons->add_ench(mon_enchant(ENCH_REGENERATION, 0, mons, dur));
+        return;
+    }
     }
 
     // If a monster just came into view and immediately cast a spell,
@@ -4112,6 +4181,8 @@ bool ms_low_hitpoint_cast(const monster* mon, spell_type monspell)
     case SPELL_INK_CLOUD:
         if (mon->type == MONS_KRAKEN)
             return true;
+    case SPELL_DEATHS_DOOR:
+        return !mon->has_ench(ENCH_DEATHS_DOOR);
     default:
         return !targ_adj && spell_typematch(monspell, SPTYP_SUMMONING);
     }
@@ -4186,6 +4257,9 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
         if (spell_harms_target(monspell) && is_sanctuary(mon->target))
             return (true);
     }
+
+    if (mons_genus(mon->type) == MONS_DRAGON && mon->has_ench(ENCH_BREATH_WEAPON))
+        return (true);
 
     // Eventually, we'll probably want to be able to have monsters
     // learn which of their elemental bolts were resisted and have those
@@ -4378,6 +4452,11 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
         {
             ret = true;
         }
+        break;
+
+    case SPELL_DEATHS_DOOR:
+        if (mon->has_ench(ENCH_DEATHS_DOOR))
+            ret = true;
         break;
 
     case SPELL_NO_SPELL:

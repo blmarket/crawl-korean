@@ -455,10 +455,9 @@ bool is_feat_dangerous(dungeon_feature_type grid, bool permanently)
         return false;
 }
 
-bool player_in_mappable_area(void)
+bool is_map_persistent(void)
 {
-    return (!testbits(env.level_flags, LFLAG_NOT_MAPPABLE)
-            && !testbits(get_branch_flags(), BFLAG_NOT_MAPPABLE));
+    return (!testbits(env.level_flags, LFLAG_NO_MAP));
 }
 
 bool player_in_branch(int branch)
@@ -2778,7 +2777,7 @@ void forget_map(int chance_forgotten, bool force)
         }
     }
 
-    ash_detect_portals(player_in_mappable_area());
+    ash_detect_portals(is_map_persistent());
 #ifdef USE_TILE
     tiles.update_minimap_bounds();
 #endif

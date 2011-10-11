@@ -51,10 +51,7 @@ static int _create_fsim_monster(int mtype, int hp)
 
 static skill_type _fsim_melee_skill(const item_def *item)
 {
-    skill_type sk = SK_UNARMED_COMBAT;
-    if (item)
-        sk = weapon_skill(*item);
-    return (sk);
+    return (item ? weapon_skill(*item) : SK_UNARMED_COMBAT);
 }
 
 static void _fsim_set_melee_skill(int skill, const item_def *item)
@@ -63,14 +60,13 @@ static void _fsim_set_melee_skill(int skill, const item_def *item)
     wizard_set_skill_level(SK_FIGHTING, skill * 15 / 27, true);
     wizard_set_skill_level(SK_ARMOUR, skill * 15 / 27, true);
     wizard_set_skill_level(SK_SHIELDS, skill, true);
-    for (int i = 0; i < 15; ++i)
-        wizard_set_skill_level(skill_type(SK_SPELLCASTING + i), skill, true);
+    for (int i = SK_FIRST_MAGIC_SCHOOL; i <= SK_LAST_SKILL; ++i)
+        wizard_set_skill_level(skill_type(i), skill, true);
 }
 
 static void _fsim_set_ranged_skill(int skill, const item_def *item)
 {
     wizard_set_skill_level(range_skill(*item), skill, true);
-    wizard_set_skill_level(SK_THROWING, skill * 15 / 27, true);
 }
 
 static void _fsim_item(FILE *out,
@@ -85,7 +81,7 @@ static void _fsim_item(FILE *out,
     double avspeed = ((double) time / (double)  iterations);
     fprintf(out,
             " %-5s|  %3d%%    |  %5.2f |    %5.2f  |"
-            "   %5.2f |   %3d   |   %5.2g\n",
+            "   %5.2f |   %3d   |   %5.1f\n",
             wskill,
             100 * hits / iterations,
             double(damage) / iterations,
@@ -139,6 +135,7 @@ static bool _fsim_ranged_combat(FILE *out, int wskill, int mi,
     for (int i = 0; i < iter_limit; ++i)
     {
         mon = orig;
+        mon.hit_points = mon.max_hit_points;
         mon.move_to_pos(mon.pos());
         bolt beam;
         you.time_taken = player_speed();
@@ -463,15 +460,21 @@ static bool debug_fight_sim(int mindex, int missile_slot,
     for (int i = SK_FIGHTING; i < NUM_SKILLS; ++i)
         you.skills[i] = 0;
 
-    you.experience_level = Options.fsim_xl;
-    if (you.experience_level < 1)
-        you.experience_level = 1;
-    if (you.experience_level > 27)
-        you.experience_level = 27;
+    if (Options.fsim_xl != -1)
+    {
+        you.experience_level = Options.fsim_xl;
+        if (you.experience_level < 1)
+            you.experience_level = 1;
+        if (you.experience_level > 27)
+            you.experience_level = 27;
+    }
 
-    you.base_stats[STAT_STR] = debug_cap_stat(Options.fsim_str);
-    you.base_stats[STAT_INT] = debug_cap_stat(Options.fsim_int);
-    you.base_stats[STAT_DEX] = debug_cap_stat(Options.fsim_dex);
+    if (Options.fsim_str != -1)
+        you.base_stats[STAT_STR] = debug_cap_stat(Options.fsim_str);
+    if (Options.fsim_int != -1)
+        you.base_stats[STAT_INT] = debug_cap_stat(Options.fsim_int);
+    if (Options.fsim_dex != -1)
+        you.base_stats[STAT_DEX] = debug_cap_stat(Options.fsim_dex);
 
     combat(ostat, mindex, missile_slot);
 

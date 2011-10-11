@@ -1727,26 +1727,15 @@ static void _do_rest()
 
 static void _do_clear_map()
 {
-    if (player_in_mappable_area())
-    {
-        mpr(gettext("Clearing level map."));
-        clear_map();
-        crawl_view.set_player_at(you.pos());
-    }
+    mpr(gettext("Clearing level map."));
+    clear_map();
+    crawl_view.set_player_at(you.pos());
 }
 
 static void _do_display_map()
 {
     if (Hints.hints_events[HINT_MAP_VIEW])
         Hints.hints_events[HINT_MAP_VIEW] = false;
-
-#ifndef DEBUG_DIAGNOSTICS
-    if (!player_in_mappable_area())
-    {
-        mpr(gettext("It would help if you knew where you were, first."));
-        return;
-    }
-#endif
 
 #ifdef USE_TILE
     // Since there's no actual overview map, but the functionality
@@ -3053,7 +3042,7 @@ static void _player_reacts_to_monsters()
     if (you.religion == GOD_ASHENZARI && !player_under_penance())
         detect_items(-1);
 
-    if (you.duration[DUR_TELEPATHY] && player_in_mappable_area())
+    if (you.duration[DUR_TELEPATHY])
         detect_creatures(1 + you.duration[DUR_TELEPATHY] /
                          (2 * BASELINE_DELAY), true);
 
@@ -4588,6 +4577,9 @@ static void _compile_time_asserts()
     // Travel cache, traversable_terrain.
     COMPILE_CHECK(NUM_FEATURES <= 256);
     COMPILE_CHECK(NUM_GODS <= MAX_NUM_GODS);
+    COMPILE_CHECK(TAG_CHR_FORMAT < 256);
+    COMPILE_CHECK(TAG_MAJOR_VERSION < 256);
+    COMPILE_CHECK(NUM_TAG_MINORS < 256);
 
     // Also some runtime stuff; I don't know if the order of branches[]
     // needs to match the enum, but it currently does.

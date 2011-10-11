@@ -588,19 +588,6 @@ struct spell_desc
 },
 
 {
-    SPELL_DETECT_TRAPS, M_("Detect Traps"),
-     0,
-     SPFLAG_MAPPING,
-     2,
-     50,
-     -1, -1,
-     0,
-     NULL,
-     false,
-     true
-},
-
-{
     SPELL_BLINK, M_("Blink"),
      SPTYP_TRANSLOCATION,
      SPFLAG_ESCAPE,
@@ -1731,19 +1718,6 @@ struct spell_desc
 },
 
 {
-    SPELL_DETECT_SECRET_DOORS, M_("Detect Secret Doors"),
-     0,
-     SPFLAG_NONE,
-     1,
-     200,
-     -1, -1,
-     0,
-     NULL,
-     false,
-     true
-},
-
-{
     SPELL_SEE_INVISIBLE, M_("See Invisible"),
      SPTYP_CHARMS,
      SPFLAG_HELPFUL,
@@ -2764,7 +2738,7 @@ struct spell_desc
 },
 
 {
-    SPELL_LIGHT_BEAM, M_("Light Beam"),
+    SPELL_HOLY_LIGHT, M_("Holy Light"),
      SPTYP_CONJURATION | SPTYP_HOLY,
      SPFLAG_DIR_OR_TARGET,
      6,
@@ -3021,6 +2995,19 @@ struct spell_desc
      NULL,
      false,
      true
+},
+
+{
+    SPELL_SILVER_BLAST, M_("Silver Blast"),
+     SPTYP_CONJURATION | SPTYP_HOLY,
+     SPFLAG_DIR_OR_TARGET,
+     5,
+     200,
+     6, 6,
+     0,
+     NULL,
+     true,
+     false
 },
 
 {

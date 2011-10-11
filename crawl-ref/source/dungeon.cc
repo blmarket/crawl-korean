@@ -579,13 +579,13 @@ static void _dgn_map_colour_fixup()
 bool set_level_flags(uint32_t flags, bool silent)
 {
     bool could_control = allow_control_teleport(true);
-    bool could_map     = player_in_mappable_area();
+    bool could_map     = is_map_persistent();
 
     uint32_t old_flags = env.level_flags;
     env.level_flags |= flags;
 
     bool can_control = allow_control_teleport(true);
-    bool can_map     = player_in_mappable_area();
+    bool can_map     = is_map_persistent();
 
     if (could_control && !can_control && !silent)
     {
@@ -605,13 +605,13 @@ bool set_level_flags(uint32_t flags, bool silent)
 bool unset_level_flags(uint32_t flags, bool silent)
 {
     bool could_control = allow_control_teleport(true);
-    bool could_map     = player_in_mappable_area();
+    bool could_map     = is_map_persistent();
 
     iflags_t old_flags = env.level_flags;
     env.level_flags &= ~flags;
 
     bool can_control = allow_control_teleport(true);
-    bool can_map     = player_in_mappable_area();
+    bool can_map     = is_map_persistent();
 
     if (!could_control && can_control && !silent)
     {
@@ -1227,7 +1227,7 @@ void dgn_reset_level(bool enable_random_maps)
     else if (player_in_level_area(LEVEL_LABYRINTH)
              || player_in_level_area(LEVEL_ABYSS))
     {
-        env.level_flags = LFLAG_NO_TELE_CONTROL | LFLAG_NO_MAGIC_MAP;
+        env.level_flags = LFLAG_NO_TELE_CONTROL | LFLAG_NO_MAP;
     }
     else
         env.level_flags = 0;
@@ -2167,9 +2167,6 @@ static void _build_dungeon_level(int level_number, level_area_type level_type,
         init_pandemonium();
         setup_vault_mon_list();
     }
-    // Still used to set colours.  FIXME.
-    if (level_type == LEVEL_ABYSS)
-        init_pandemonium();
 
     _build_layout_skeleton(level_number, level_type);
 

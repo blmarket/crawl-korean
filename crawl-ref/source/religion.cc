@@ -1128,6 +1128,11 @@ static void _inc_penance(int val)
     _inc_penance(you.religion, val);
 }
 
+static void _set_penance(god_type god, int val)
+{
+    you.penance[god] = val;
+}
+
 static void _inc_gift_timeout(int val)
 {
     if (200 - you.gift_timeout < val)
@@ -2922,11 +2927,11 @@ void excommunication(god_type new_god)
     switch (old_god)
     {
     case GOD_XOM:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_KIKUBAAQUDGHA:
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_YREDELEMNUL:
@@ -2937,15 +2942,15 @@ void excommunication(god_type new_god)
                                GOD_YREDELEMNUL);
             add_daction(DACT_ALLY_YRED_SLAVE);
         }
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_VEHUMET:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
 
     case GOD_MAKHLEB:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
 
     case GOD_TROG:
@@ -2954,7 +2959,7 @@ void excommunication(god_type new_god)
 
         add_daction(DACT_ALLY_TROG);
 
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_BEOGH:
@@ -2970,20 +2975,20 @@ void excommunication(god_type new_god)
         if (_need_water_walking())
             fall_into_a_pool(you.pos(), true, grd(you.pos()));
 
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_SIF_MUNA:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_NEMELEX_XOBEH:
         nemelex_shuffle_decks();
-        _inc_penance(old_god, 150); // Nemelex penance is special
+        _set_penance(old_god, 150); // Nemelex penance is special
         break;
 
     case GOD_LUGONU:
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_SHINING_ONE:
@@ -3003,7 +3008,7 @@ void excommunication(god_type new_god)
         else
             add_daction(DACT_HOLY_PETS_GO_NEUTRAL);
 
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_ZIN:
@@ -3018,7 +3023,7 @@ void excommunication(god_type new_god)
         if (!is_good_god(new_god))
             add_daction(DACT_ALLY_HOLY);
 
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
 
     case GOD_ELYVILON:
@@ -3031,7 +3036,7 @@ void excommunication(god_type new_god)
         if (!is_good_god(new_god))
             add_daction(DACT_ALLY_HOLY);
 
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_JIYVA:
@@ -3047,7 +3052,7 @@ void excommunication(god_type new_god)
         if (you.duration[DUR_SLIMIFY])
             you.duration[DUR_SLIMIFY] = 0;
 
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_FEDHAS:
@@ -3056,7 +3061,7 @@ void excommunication(god_type new_god)
             mpr("던전의 식물들은 이제 더 이상 당신의 동료가 아니다!", MSGCH_GOD, GOD_FEDHAS);
             add_daction(DACT_ALLY_PLANT);
         }
-        _inc_penance(old_god, 30);
+        _set_penance(old_god, 30);
         break;
 
     case GOD_ASHENZARI:
@@ -3065,12 +3070,12 @@ void excommunication(god_type new_god)
         you.exp_docked = exp_needed(std::min<int>(you.max_level, 27)  + 1)
                        - exp_needed(std::min<int>(you.max_level, 27));
         you.exp_docked_total = you.exp_docked;
-        _inc_penance(old_god, 50);
+        _set_penance(old_god, 50);
         break;
 
     case GOD_CHEIBRIADOS:
     default:
-        _inc_penance(old_god, 25);
+        _set_penance(old_god, 25);
         break;
     }
 
@@ -3514,7 +3519,7 @@ void god_pitch(god_type which_god)
         // permanent instead of based off of penance. - bwr
         if (you.penance[GOD_SHINING_ONE])
         {
-            _inc_penance(GOD_SHINING_ONE, 30);
+            _set_penance(GOD_SHINING_ONE, 30);
             god_speaks(GOD_SHINING_ONE,
                        "\"넌 네 악행의 대가를 치르게 될 것이다!\"");
         }
