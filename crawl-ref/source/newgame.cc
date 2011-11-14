@@ -484,8 +484,12 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
     ng->type = choice->type;
     ng->map  = choice->map;
 
-    if (ng->type == GAME_TYPE_SPRINT || ng->type == GAME_TYPE_TUTORIAL)
+    if (ng->type == GAME_TYPE_SPRINT
+     || ng->type == GAME_TYPE_ZOTDEF
+     || ng->type == GAME_TYPE_TUTORIAL)
+    {
         _choose_gamemode_map(ng, choice, defaults);
+    }
 
     _choose_char(ng, choice, defaults);
 
@@ -510,7 +514,7 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
         ng->name = choice->name;
         ng->filename = get_save_filename(choice->name);
 
-        if (save_exists(choice->filename))
+        if (save_exists(ng->filename))
         {
             cprintf(gettext("\nDo you really want to overwrite your old game? "));
             char c = getchm();
@@ -530,17 +534,6 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
     write_newgame_options_file(*choice);
 
     return (false);
-}
-
-void make_rod(item_def &item, stave_type rod_type, int ncharges)
-{
-    item.base_type = OBJ_STAVES;
-    item.sub_type  = rod_type;
-    item.quantity  = 1;
-    item.special   = you.item_description[IDESC_STAVES][rod_type];
-    item.colour    = BROWN;
-
-    init_rod_mp(item, ncharges);
 }
 
 // Set ng_choice to defaults without overwriting name and game type.
@@ -1709,10 +1702,6 @@ static std::vector<weapon_choice> _get_weapons(const newgame_def* ng)
                     wp.first = WPN_TRIDENT;
                 }
                 break;
-            case WPN_MACE:
-                if (ng->species == SP_OGRE)
-                    wp.first = WPN_ANKUS;
-                break;
             default:
                 break;
             }
@@ -2091,11 +2080,13 @@ static void _choose_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
     // Sprint, otherwise Tutorial.
     const bool is_sprint = (ng_choice->type == GAME_TYPE_SPRINT);
 
-    const mapref_vector maps = (is_sprint ? get_sprint_maps()
-                                          : get_tutorial_maps());
+    const std::string type_name = gametype_to_str(ng_choice->type);
+
+    const mapref_vector maps = find_maps_for_tag(type_name);
+
     if (maps.empty())
     {
-        end(1, true, "No %s maps found.", is_sprint ? "sprint" : "tutorial");
+        end(1, true, "No %s maps found.", type_name.c_str());
     }
 
     if (ng_choice->map.empty())

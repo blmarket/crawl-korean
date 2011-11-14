@@ -1062,6 +1062,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_DEMON:
     case SPELL_SUMMON_UGLY_THING:
     case SPELL_ANIMATE_DEAD:
+    case SPELL_TWISTED_RESURRECTION:
     case SPELL_CALL_IMP:
     case SPELL_SUMMON_SCORPIONS:
     case SPELL_SUMMON_SWARM:
@@ -1301,8 +1302,8 @@ static void _mons_set_priest_wizard_god(monster* mons, bool& priest,
 
     // Permanent wizard summons of Yred should have the same god even
     // though they aren't priests. This is so that e.g. the zombies of
-    // Yred's skeletal warriors will properly turn on you if you abandon
-    // Yred.
+    // Yred's skeletal warriors or enslaved souls will properly turn on
+    // you if you abandon Yred.
     if (mons->god == GOD_YREDELEMNUL)
         god = mons->god;
 }
@@ -1443,8 +1444,8 @@ bool handle_mon_spell(monster* mons, bolt &beem)
         // Promote the casting of useful spells for low-HP monsters.
         // (kraken should always cast their escape spell of inky).
         if (!finalAnswer
-            && mons->hit_points < mons->max_hit_points / 4
-            && (!one_chance_in(4) || mons->type == MONS_KRAKEN))
+            && mons->hit_points < mons->max_hit_points / 3
+            && (coinflip() || mons->type == MONS_KRAKEN))
         {
             // Note: There should always be at least some chance we don't
             // get here... even if the monster is on its last HP.  That
@@ -1734,11 +1735,12 @@ bool handle_mon_spell(monster* mons, bolt &beem)
         // Try to animate weapons: if none are animated, pretend we didn't cast it.
         if (spell_cast == SPELL_TUKIMAS_BALL)
         {
-            //friendly monsters cannot cast tukima's ball for now.
+            // Friendly monsters cannot cast Tukima's Ball for now.
             if (mons->friendly())
-                return false;
+                return (false);
+
             if (!cast_tukimas_ball(mons, 100, GOD_NO_GOD, true))
-                return false;
+                return (false);
         }
 
         // Try to animate dead: if nothing rises, pretend we didn't cast it.
@@ -1749,6 +1751,19 @@ bool handle_mon_spell(monster* mons, bolt &beem)
 
             if (!animate_dead(mons, 100, SAME_ATTITUDE(mons),
                               mons->foe, mons, "", god, false))
+            {
+                return (false);
+            }
+        }
+
+        // Try to raise crawling corpses: if nothing rises, pretend we didn't cast it.
+        if (spell_cast == SPELL_TWISTED_RESURRECTION)
+        {
+            if (mons->friendly() && !_animate_dead_okay())
+                return (false);
+
+            if (!twisted_resurrection(mons, 100, SAME_ATTITUDE(mons),
+                                      mons->foe, god, false))
             {
                 return (false);
             }
@@ -2051,7 +2066,7 @@ void mons_cast_haunt(monster* mons)
     }
 
     _do_high_level_summon(mons, mons_near(mons), SPELL_HAUNT,
-                          _pick_random_wraith, random_range(3, 6),
+                          _pick_random_wraith, random_range(2, 4),
                           GOD_NO_GOD, &fpos);
 }
 
@@ -2446,6 +2461,7 @@ static bool _mon_spell_bail_out_early(monster* mons, spell_type spell_cast)
     switch (spell_cast)
     {
     case SPELL_ANIMATE_DEAD:
+    case SPELL_TWISTED_RESURRECTION:
         // see special handling in mon-stuff::handle_spell() {dlb}
         if (mons->friendly() && !_animate_dead_okay())
             return (true);
@@ -2785,10 +2801,10 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SUMMON_ELEMENTAL:
     {
         if (summon_type == MONS_NO_MONSTER)
-            summon_type = static_cast<monster_type>(random_choose(
+            summon_type = random_choose(
                               MONS_EARTH_ELEMENTAL, MONS_FIRE_ELEMENTAL,
                               MONS_AIR_ELEMENTAL, MONS_WATER_ELEMENTAL,
-                              -1));
+                              -1);
 
         if (_mons_abjured(mons, monsterNearby))
             return;
@@ -2966,6 +2982,11 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_ANIMATE_DEAD:
         animate_dead(mons, 5 + random2(5), SAME_ATTITUDE(mons),
                      mons->foe, mons, "", god);
+        return;
+
+    case SPELL_TWISTED_RESURRECTION:
+        twisted_resurrection(mons, 100, SAME_ATTITUDE(mons),
+                             mons->foe, god);
         return;
 
     case SPELL_CALL_IMP: // class 5 demons
@@ -3201,12 +3222,12 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         for (int i = 0; i < sumcount2; ++i)
         {
             create_monster(
-                mgen_data(static_cast<monster_type>(random_choose_weighted(
+                mgen_data(random_choose_weighted(
                             10, MONS_WOLF,
                              3, MONS_GRIZZLY_BEAR,
                              6, MONS_BLACK_BEAR,
                              // no polar bears
-                          0)), SAME_ATTITUDE(mons),
+                          0), SAME_ATTITUDE(mons),
                           mons, duration, spell_cast, mons->pos(),
                           mons->foe, 0, god));
         }
@@ -3222,13 +3243,12 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         for (int i = 0; i < sumcount2; ++i)
         {
             create_monster(
-                mgen_data(static_cast<monster_type>(random_choose_weighted(
-                            90, MONS_CHERUB,    5,  MONS_SILVER_STAR,
-                            20, MONS_SPIRIT,    5,  MONS_OPHAN,
-                            8,  MONS_SHEDU,     20, MONS_PALADIN,
-                            2,  MONS_PHOENIX,   1,  MONS_APIS,
+                mgen_data(random_choose_weighted(
+                            100, MONS_ANGEL,     80,  MONS_CHERUB,
+                            5,   MONS_SPIRIT,    1,   MONS_SHEDU,
+                            1,   MONS_OPHAN,     1,   MONS_PALADIN,
                             // No holy dragons
-                          0)), SAME_ATTITUDE(mons),
+                          0), SAME_ATTITUDE(mons),
                           mons, duration, spell_cast, mons->pos(),
                           mons->foe, 0, god));
         }
@@ -3242,11 +3262,11 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
         duration  = std::min(2 + mons->hit_dice / 5, 6);
         create_monster(
-            mgen_data(static_cast<monster_type>(random_choose_weighted(
+            mgen_data(random_choose_weighted(
                         10, MONS_SILVER_STAR, 10, MONS_PHOENIX,
                         10, MONS_APIS,        5,  MONS_DAEVA,
                         2,  MONS_PEARL_DRAGON,
-                      0)), SAME_ATTITUDE(mons),
+                      0), SAME_ATTITUDE(mons),
                       mons, duration, spell_cast, mons->pos(),
                       mons->foe, 0, god));
 
@@ -3521,14 +3541,14 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
         for (sumcount = 0; sumcount < sumcount2; sumcount++)
         {
-            const monster_type mon = static_cast<monster_type>(
-                random_choose_weighted(100, MONS_GIANT_EYEBALL,
+            const monster_type mon = random_choose_weighted(
+                                       100, MONS_GIANT_EYEBALL,
                                         80, MONS_EYE_OF_DRAINING,
                                         60, MONS_GOLDEN_EYE,
                                         40, MONS_SHINING_EYE,
                                         20, MONS_GREAT_ORB_OF_EYES,
                                         10, MONS_EYE_OF_DEVASTATION,
-                                        0));
+                                         0);
 
             create_monster(
                 mgen_data(mon, SAME_ATTITUDE(mons), mons, duration,
@@ -3581,14 +3601,14 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
         for (sumcount = 0; sumcount < sumcount2; sumcount++)
         {
-            const monster_type mon = static_cast<monster_type>(
-                random_choose_weighted(3, MONS_EFREET,
+            const monster_type mon = random_choose_weighted(
+                                       3, MONS_EFREET,
                                        3, MONS_SUN_DEMON,
                                        2, MONS_BALRUG,
                                        2, MONS_HELLION,
                                        1, MONS_PIT_FIEND,
-                                       1, MONS_FIEND,
-                                       0));
+                                       1, MONS_BRIMSTONE_FIEND,
+                                       0);
 
             create_monster(
                 mgen_data(mon, SAME_ATTITUDE(mons), mons, duration,
@@ -4114,6 +4134,7 @@ bool ms_useful_fleeing_out_of_sight(const monster* mon, spell_type monspell)
     case SPELL_MINOR_HEALING:
     case SPELL_MAJOR_HEALING:
     case SPELL_ANIMATE_DEAD:
+    case SPELL_TWISTED_RESURRECTION:
         return (true);
 
     default:
@@ -4183,6 +4204,8 @@ bool ms_low_hitpoint_cast(const monster* mon, spell_type monspell)
             return true;
     case SPELL_DEATHS_DOOR:
         return !mon->has_ench(ENCH_DEATHS_DOOR);
+    case SPELL_INVISIBILITY:
+        return !mon->has_ench(ENCH_INVIS);
     default:
         return !targ_adj && spell_typematch(monspell, SPTYP_SUMMONING);
     }
@@ -4316,7 +4339,7 @@ bool ms_waste_of_time(const monster* mon, spell_type monspell)
         break;
 
     case SPELL_REGENERATION:
-        if (mon->has_ench(ENCH_REGENERATION))
+        if (mon->has_ench(ENCH_REGENERATION) || mon->has_ench(ENCH_DEATHS_DOOR))
             ret = true;
         break;
 

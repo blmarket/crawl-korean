@@ -215,18 +215,18 @@ std::string InvEntry::get_text(bool need_cursor) const
     //which fit in one line.
     //XXX There should be a better way to determine this, for now we simply
     //estimate it by the following heuristics {kittel}.
-    unsigned max_chars_in_line=get_number_of_cols()-2;
+    unsigned max_chars_in_line = get_number_of_cols() - 2;
 #ifdef USE_TILE
-    if ( Options.tile_menu_icons && Options.show_inventory_weights )
-      max_chars_in_line=get_number_of_cols()*4/9-2;
+    if (Options.tile_menu_icons && Options.show_inventory_weights)
+        max_chars_in_line = get_number_of_cols() * 4 / 9 - 2;
 #endif
     if (Options.show_inventory_weights)
     {
-        max_chars_in_line-=1;
-        const int w_weight =10;//length of " (999 aum)"
-        int excess=strwidth(tstr.str())+text.size() + w_weight - max_chars_in_line;
-        if ( excess > 0 )
-	    tstr<<text.substr(0,std::max<int>(0,text.size()-excess-2))<<"..";
+        max_chars_in_line -= 1;
+        const int w_weight = 10; //length of " (999 aum)"
+        int excess = strwidth(tstr.str()) + text.size() + w_weight - max_chars_in_line;
+        if (excess > 0)
+            tstr << text.substr(0, std::max<int>(0, text.size() - excess - 2)) << "..";
         else
             tstr << text;
     }
@@ -252,11 +252,12 @@ std::string InvEntry::get_text(bool need_cursor) const
             colour_tag_adjustment = colour_tag.size() * 2 + 5;
         }
 
-	//Note: If updating the " (%i aum)" format, remember to update w_weight above.
+        //Note: If updating the " (%i aum)" format, remember to update w_weight above.
         tstr << std::setw(max_chars_in_line - strwidth(tstr.str())
-			  + colour_tag_adjustment)
+                          + colour_tag_adjustment)
              << std::right
-             << make_stringf(" (%i aum)", static_cast<int>(0.5+BURDEN_TO_AUM * mass));
+             << make_stringf(" (%i aum)",
+                             static_cast<int>(0.5 + BURDEN_TO_AUM * mass));
     }
     return tstr.str();
 }
@@ -426,7 +427,7 @@ void InvMenu::set_title(const std::string &s)
             (you.burden * 100) / cap,
             inv_count());
 
-        std::string prompt = "_: help; Ctrl-W: toggle weight display";
+        std::string prompt = "(_ for help)";
         stitle = stitle + std::string(std::max(0, get_number_of_cols()
                                                   - strwidth(stitle)
                                                   - strwidth(prompt)),
@@ -926,7 +927,7 @@ bool InvMenu::process_key(int key)
 {
     if ( key == CONTROL('W') )
     {
-        Options.show_inventory_weights=!Options.show_inventory_weights;
+        Options.show_inventory_weights = !Options.show_inventory_weights;
         draw_menu();
         return (true);
     }
@@ -1074,13 +1075,14 @@ const char* item_slot_name(equipment_type type, bool terse)
 
 std::vector<SelItem> select_items(const std::vector<const item_def*> &items,
                                    const char *title, bool noselect,
-                                   menu_type mtype)
+                                   menu_type mtype, invtitle_annotator titlefn)
 {
     std::vector<SelItem> selected;
     if (!items.empty())
     {
         InvMenu menu;
         menu.set_type(mtype);
+        menu.set_title_annotator(titlefn);
         menu.set_title(title);
         if (mtype == MT_PICKUP)
             menu.set_tag("pickup");

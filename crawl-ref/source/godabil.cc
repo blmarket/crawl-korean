@@ -377,14 +377,10 @@ typedef FixedVector<int, NUM_RECITE_TYPES> recite_counts;
 // Returns 0, if no monster found.
 // Returns 1, if eligible monster found.
 // Returns -1, if monster already affected or too dumb to understand.
-static int _zin_check_recite_to_single_monster(const coord_def& where,
+static int _zin_check_recite_to_single_monster(const monster *mon,
                                                recite_counts &eligibility)
 {
-    monster* mon = monster_at(where);
-
-    // Can't recite at nothing!
-    if (mon == NULL || !you.can_see(mon))
-        return 0;
+    ASSERT(mon);
 
     // Can't recite if they were recently recited to.
     if (mon->has_ench(ENCH_RECITE_TIMER))
@@ -455,6 +451,14 @@ static int _zin_check_recite_to_single_monster(const coord_def& where,
     if (mon->has_attack_flavour(AF_STEAL_FOOD))
         eligibility[RECITE_IMPURE]++;
 
+    // Being naturally mutagenic isn't good either.
+    corpse_effect_type ce = mons_corpse_effect(mon->type);
+    if ((ce == CE_ROT || ce == CE_MUTAGEN_RANDOM || ce == CE_MUTAGEN_GOOD
+         || ce == CE_MUTAGEN_BAD || ce == CE_RANDOM) && !mon->is_chaotic())
+    {
+        eligibility[RECITE_IMPURE]++;
+    }
+
     // Death drakes and rotting devils get a bump to uncleanliness.
     if (mon->type == MONS_ROTTING_DEVIL || mon->type == MONS_DEATH_DRAKE)
         eligibility[RECITE_IMPURE]++;
@@ -489,6 +493,10 @@ static int _zin_check_recite_to_single_monster(const coord_def& where,
 
         // Any priest is a heretic...
         if (mon->is_priest())
+            eligibility[RECITE_HERETIC]++;
+
+        // Or those who believe in themselves...
+        if (mon->type == MONS_DEMIGOD)
             eligibility[RECITE_HERETIC]++;
 
         // ...but chaotic gods are worse...
@@ -569,7 +577,7 @@ bool zin_check_able_to_recite()
         return (false);
     }
 
-        return (true);
+    return (true);
 }
 
 static const char* zin_book_desc[NUM_RECITE_TYPES] =
@@ -589,8 +597,12 @@ int zin_check_recite_to_monsters(recite_type *prayertype)
 
     for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
     {
+        const monster *mon = monster_at(*ri);
+        if (!mon || !you.can_see(mon))
+            continue;
+
         recite_counts retval;
-        switch (_zin_check_recite_to_single_monster(*ri, retval))
+        switch (_zin_check_recite_to_single_monster(mon, retval))
         {
         case -1:
             found_ineligible = true;
@@ -700,13 +712,14 @@ bool zin_recite_to_single_monster(const coord_def& where,
 
     monster* mon = monster_at(where);
 
-    if (!mon)
+    // Once you're already reciting, invis is ok.
+    if (!mon || !cell_see_cell(where, you.pos(), LOS_DEFAULT))
         return (false);
 
     recite_counts eligibility;
     bool affected = false;
 
-    if (_zin_check_recite_to_single_monster(where, eligibility) < 1)
+    if (_zin_check_recite_to_single_monster(mon, eligibility) < 1)
         return (false);
 
     // First check: are they even eligible for this kind of recitation?
@@ -1268,7 +1281,7 @@ bool zin_sanctuary()
 
     flash_view(WHITE);
 
-    holy_word(100, HOLY_WORD_ZIN, you.pos(), true);
+    holy_word(100, HOLY_WORD_ZIN, you.pos(), true, &you);
 
 #ifndef USE_TILE_LOCAL
     // Allow extra time for the flash to linger.
@@ -1333,6 +1346,7 @@ void elyvilon_purification()
     you.duration[DUR_CONF] = 0;
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PETRIFYING] = 0;
+    you.duration[DUR_NAUSEA] = 0;
     restore_stat(STAT_ALL, 0, false);
     unrot_hp(10000);
 }
@@ -1652,6 +1666,11 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     // Remove the monster's soul-enslaving enchantment, as it's no
     // longer needed.
     mon->del_ench(ENCH_SOUL_RIPE, false, false);
+
+    // Remove the monster's invisibility enchantment. If we don't do
+    // this, it'll stay invisible after being remade as a spectral thing
+    // below.
+    mon->del_ench(ENCH_INVIS, false, false);
 
     // If the monster's held in a net, get it out.
     mons_clear_trapping_net(mon);
@@ -2477,11 +2496,12 @@ bool fedhas_plant_ring_from_fruit()
 
     for (int i = 0; i < max_use; ++i)
     {
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
         coord_def temp = grid2view(adjacent[i]);
         cgotoxy(temp.x, temp.y, GOTO_DNGN);
         put_colour_ch(GREEN, '1' + i);
-#else
+#endif
+#ifdef USE_TILE
         tiles.add_overlay(adjacent[i], TILE_INDICATOR + i);
 #endif
     }
@@ -2499,7 +2519,7 @@ bool fedhas_plant_ring_from_fruit()
 
     // The user entered a number, remove all number overlays which
     // are higher than that number.
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     unsigned not_used = adjacent.size() - unsigned(target_count);
     for (unsigned i = adjacent.size() - not_used;
          i < adjacent.size();
@@ -2507,7 +2527,8 @@ bool fedhas_plant_ring_from_fruit()
     {
         view_update_at(adjacent[i]);
     }
-#else
+#endif
+#ifdef USE_TILE
     // For tiles we have to clear all overlays and redraw the ones
     // we want.
     tiles.clear_overlays();
@@ -2675,7 +2696,7 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
     viewwindow(false);
     for (unsigned i = 0; i < positions.size(); ++i)
     {
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
 
         coord_def temp = grid2view(positions[i]->pos);
         cgotoxy(temp.x, temp.y, GOTO_DNGN);
@@ -2685,7 +2706,8 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
 
         unsigned character = mons_char(MONS_GIANT_SPORE);
         put_colour_ch(color, character);
-#else
+#endif
+#ifdef USE_TILE
         tiles.add_overlay(positions[i]->pos, TILE_SPORE_OVERLAY);
 #endif
     }
@@ -3057,7 +3079,7 @@ void cheibriados_time_bend(int pow)
     }
 }
 
-static int _slouch_monsters(coord_def where, int pow, int, actor* agent)
+static int _slouchable(coord_def where, int pow, int, actor* agent)
 {
     monster* mon = monster_at(where);
     if (mon == NULL || mons_is_stationary(mon) || mon->cannot_move()
@@ -3068,15 +3090,83 @@ static int _slouch_monsters(coord_def where, int pow, int, actor* agent)
     }
 
     int dmg = (mon->speed - 1000/player_movement_speed()/player_speed());
+    return (dmg > 0) ? 1 : 0;
+}
+
+static bool _act_slouchable(const actor *act)
+{
+    if (act->atype() != ACT_MONSTER)
+        return false;  // too slow-witted
+    return _slouchable(act->pos(), 0, 0, 0);
+}
+
+static int _slouch_monsters(coord_def where, int pow, int dummy, actor* agent)
+{
+    if (!_slouchable(where, pow, dummy, agent))
+        return 0;
+
+    monster* mon = monster_at(where);
+    ASSERT(mon);
+
+    int dmg = (mon->speed - 1000/player_movement_speed()/player_speed());
     dmg = (dmg > 0 ? roll_dice(dmg*4, 3)/2 : 0);
 
     mon->hurt(agent, dmg, BEAM_MMISSILE, true);
     return (1);
 }
 
-int cheibriados_slouch(int pow)
+bool cheibriados_slouch(int pow)
 {
-    return (apply_area_visible(_slouch_monsters, pow, true, &you));
+    int count = apply_area_visible(_slouchable, pow, true, &you);
+    if (!count)
+        if (!yesno("There's no one hasty visible. Invoke Slouch anyway?",
+                   true, 'n'))
+        {
+            return false;
+        }
+
+    targetter_los hitfunc(&you, LOS_DEFAULT);
+    if (stop_attack_prompt(hitfunc, "hurt", _act_slouchable))
+        return false;
+
+    mpr("You can feel time thicken for a moment.");
+    dprf("your speed is %d", player_movement_speed());
+
+    apply_area_visible(_slouch_monsters, pow, true, &you);
+    return true;
+}
+
+// A low-duration step from time, allowing monsters to get closer
+// to the player safely.
+void cheibriados_temporal_distortion()
+{
+    const coord_def old_pos = you.pos();
+
+    const int time = 3 + random2(3);
+    you.moveto(coord_def(0, 0));
+    you.duration[DUR_TIME_STEP] = time;
+
+    do
+    {
+        run_environment_effects();
+        handle_monsters();
+        manage_clouds();
+    }
+    while (--you.duration[DUR_TIME_STEP] > 0);
+    update_level(time * 10);
+
+    monster* mon;
+    if (mon = monster_at(old_pos))
+    {
+        mon->blink();
+        if (mon = monster_at(old_pos))
+            mon->teleport(true);
+    }
+
+    you.moveto(old_pos);
+    you.duration[DUR_TIME_STEP] = 0;
+
+    mpr("You warp the flow of time around you!");
 }
 
 void cheibriados_time_step(int pow) // pow is the number of turns to skip

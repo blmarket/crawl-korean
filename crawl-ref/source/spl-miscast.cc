@@ -751,7 +751,7 @@ static bool _has_hair(actor* target)
 
     return (!form_changed_physiology() && you.species != SP_GHOUL
             && you.species != SP_OCTOPODE
-            && you.species != SP_KENKU && !player_genus(GENPC_DRACONIAN));
+            && you.species != SP_TENGU && !player_genus(GENPC_DRACONIAN));
 }
 
 static std::string _hair_str(actor* target, bool &plural)
@@ -1050,7 +1050,7 @@ void MiscastEffect::_enchantment(int severity)
         switch (random2(target->atype() == ACT_PLAYER ? 4 : 2))
         {
         case 0:
-            paralyse_player(cause);
+            target->paralyse(act_source, 2 + random2(6), cause);
             break;
         case 1:
             _potion_effect(POT_CONFUSION, 10);
@@ -2809,7 +2809,7 @@ void MiscastEffect::_poison(int severity)
             break;
 
         case 2:
-            if (player_res_poison())
+            if (player_res_poison() > 0)
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
                 _lose_stat(STAT_RANDOM, 1);
@@ -2839,7 +2839,7 @@ void MiscastEffect::_poison(int severity)
             _big_cloud(CLOUD_POISON, 20, 7 + random2(7));
             break;
         case 2:
-            if (player_res_poison())
+            if (player_res_poison() > 0)
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
                 _lose_stat(STAT_RANDOM, 1 + random2avg(5, 2));

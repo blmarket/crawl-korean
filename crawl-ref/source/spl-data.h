@@ -369,7 +369,7 @@ struct spell_desc
      SPTYP_POISON,
      SPFLAG_AREA | SPFLAG_BATTLE,
      4,
-     0,
+     100,
      -1, -1,
      0,
      NULL,
@@ -459,7 +459,7 @@ struct spell_desc
     SPELL_MASS_ABJURATION, "Mass Abjuration",
      SPTYP_SUMMONING,
      SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
-     7,
+     6,
      200,
      -1, -1,
      0,
@@ -749,9 +749,9 @@ struct spell_desc
 
 {
     SPELL_CONTROL_UNDEAD, M_("Control Undead"),
-     SPTYP_HEXES | SPTYP_NECROMANCY,
+     SPTYP_NECROMANCY,
      SPFLAG_NONE,
-     5,
+     4,
      200,
      -1, -1,
      0,
@@ -945,7 +945,7 @@ struct spell_desc
     SPELL_DISPEL_UNDEAD, M_("Dispel Undead"),
      SPTYP_NECROMANCY,
      SPFLAG_DIR_OR_TARGET,
-     4,
+     5,
      100,
      5, 5,
      0,
@@ -1704,6 +1704,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 32
 {
     SPELL_ENGLACIATION, M_("Metabolic Englaciation"),
      SPTYP_HEXES | SPTYP_ICE,
@@ -1716,6 +1717,7 @@ struct spell_desc
      false,
      false
 },
+#endif
 
 {
     SPELL_SEE_INVISIBLE, M_("See Invisible"),
@@ -1868,7 +1870,7 @@ struct spell_desc
      200,
      LOS_RADIUS, LOS_RADIUS,
      0,
-     M_("Fragment what (e.g. a wall or monster)?"),
+     N_("Fragment what (e.g. wall or brittle monster)?"),
      false,
      false
 },
@@ -2008,7 +2010,7 @@ struct spell_desc
 {
     SPELL_GOLUBRIAS_PASSAGE, M_("Passage of Golubria"),
      SPTYP_TRANSLOCATION,
-     SPFLAG_GRID | SPFLAG_NEUTRAL | SPFLAG_NOT_SELF | SPFLAG_ESCAPE,
+     SPFLAG_GRID | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
      4,
      0,
      LOS_RADIUS, LOS_RADIUS,

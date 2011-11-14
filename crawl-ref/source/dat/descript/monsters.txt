@@ -18,6 +18,10 @@ __cap-T_suffix
 
 가슴 속 깊은 곳에 응어리가 지는 것이 느껴진다.
 %%%%
+__cap-U_suffix
+
+If made afraid, it may become angry!
+%%%%
 __(_suffix_examine
 
 이것은 자체적인 마력으로, 공기 중을 춤추듯 날아가도록 주술이 걸려 있다.
@@ -73,7 +77,16 @@ Dissolution
 %%%%
 Donald
 
-오브를 찾고 있는, 당신과 같은 모험가다. 
+if you.race() ~= "Merfolk" and you.race() ~= "Octopode" then
+    descript = descript .. " Unlike you, and d"
+else
+    descript = descript .. " D"
+end
+
+descript = descript .. "espite his hatred of it, he takes to water like a fowl."
+
+return descript
+}}
 %%%%
 Dowan
 
@@ -121,7 +134,7 @@ Gastronok
 %%%%
 Geryon
 
-3개의 머리를 가진, 날개달린 거대한 상위 악마로, 지옥의 관문을 지키는 수문장이다.
+A huge, three-headed arch-demon, guardian of the Vestibule of Hell. Legends say that his silver horn is used to throw open the gates of Hell themselves.
 %%%%
 Gloorx Vloq
 
@@ -187,7 +200,7 @@ Lom Lobon
 
 이상하리만큼 평온해 보이는 고대한 악마다. 이마의 중앙에서 빛나는 거대한 눈이 당신을 차갑게 응시하고 있다.
 %%%%
-Lorocyproca
+lorocyproca
 
 A tall and gaunt figure, draped in long robes which flow as if alive. It thirsts for magical energies.
 %%%%
@@ -404,7 +417,7 @@ big kobold
 %%%%
 black bear
 
-작고 검은 곰이다. 약이 오르면 매우 광폭해진다.
+A small black bear.
 %%%%
 black draconian
 
@@ -454,6 +467,10 @@ brain worm
 
 끈적거리는 자주색 벌레다. 머리가 거대하게 팽창해 있다.
 %%%%
+Brimstone Fiend
+
+A huge and powerful demon wreathed in hellfire, with great scaly wings. One of the most fearsome denizens of any of the Hells.
+%%%%
 brown ooze
 
 점성이 있는 액체다. 바닥을 흘러다니면서, 부식시킬 물질을 찾아다니고 있다.
@@ -474,7 +491,7 @@ butterfly
 
 A large, brightly coloured butterfly with beautifully patterned wings, fluttering incongruously through the darkness of the cave.
 %%%%
-Cacodemon
+cacodemon
 
 무시무시하게 추악한 분노의 악마다. 전설적인 힘을 지니고 있으며, 대항하는 자들을 산산히 조각내기 전에 먼저 각종 장애를 일으키게 만든다.
 %%%%
@@ -497,6 +514,14 @@ Behold! A throne-bearer of the Gods, whose head is beset by four faces: one of a
 clay golem
 
 움직일수 있게 된 거대한 진흙의 상이다.
+%%%%
+crawling corpse
+
+A corpse weakly animated by necromancy. It is easily destroyed, but capable of merging with others to form more potent horrors.
+%%%%
+crimson imp
+
+A small, ugly minor demon. Its fanged maw seems locked in a permanent malign grin, and its horns protrude obscenely from its scaly pate.
 %%%%
 crocodile
 
@@ -549,7 +574,7 @@ deep elf annihilator
 %%%%
 deep elf blademaster
 
-상당히 드물게, 마법을 경멸하고 검술에만 매진해오는 엘프도 있다. 이 엘프는, 그런 엘프들을 대표하는 존재이며, 유연한 동작으로 쌍검을 다룬다.
+Once in a very great while, there is a deep elf that scorns magic and devotes itself to the study of the sword. This is such a champion of the deep elves, wielding two blades with lethal grace.
 %%%%
 deep elf conjurer
 
@@ -683,6 +708,10 @@ dwarf
 
 수염이 달린, 땅딸막하지만 굳센 존재이다.
 %%%%
+dwarf mountain bat
+
+A species of bat that lives in mountain caves. How it got into the dungeon is a mystery - probably something related to the sudden demise of dwarves in those lands. But don't worry, an eradication team is on the way.
+%%%%
 earth elemental
 
 대지 정령계로부터 소환된 정령이다. 흙과 바위 덩어리의 형태로 존재하고 있다.
@@ -743,10 +772,6 @@ eye of draining
 felid
 
 A feline creature that has been granted sentience by magical means. It uses the gift of speech to demand milk, treats and catnip.
-%%%%
-fiend
-
-A huge and powerful demon wreathed in hellfire, with great scaly wings. One of the most fearsome denizens of any of the Hells.
 %%%%
 fire bat
 
@@ -983,7 +1008,7 @@ griffon
 %%%%
 grizzly bear
 
-회색 털을 가진 크고 사나운 곰이다. 약이 올랐을 경우 더욱 광폭해진다!
+A large, nasty bear with grey fur.
 %%%%
 guardian mummy
 
@@ -1085,7 +1110,7 @@ ice dragon
 
 보통의 용과 같지만, 하얗고 냉기에 싸여있다.
 %%%%
-ice fiend
+Ice Fiend
 
 A huge frigid demon covered in frost and wreathed in freezing air. It is one of the most terrible denizens of the many Hells.
 %%%%
@@ -1096,10 +1121,6 @@ ice statue
 iguana
 
 큰 턱을 가진 거대한 도마뱀이다.
-%%%%
-imp
-
-작고 못생긴 하급 악마다.
 %%%%
 insubstantial wisp
 
@@ -1149,7 +1170,7 @@ jumping spider
 
 넓은 거리를 도약하여 먹이를 찾는 기이한 능력을 가진 큰 거미다.
 %%%%
-kenku
+tengu
 
 새의 머리를 가진 존재로, 강한 경멸의 눈빛으로 당신을 바라보고있다.
 %%%%
@@ -1232,6 +1253,10 @@ lindwurm
 mad acolyte of Lugonu
 
 An insane follower of Lugonu. Years of living in the abyss have clearly taken their toll on this one's feeble mind.
+%%%%
+macabre mass
+
+A fused and twisted collection of body parts, weakly animated by necromancy. It is easily destroyed, but capable of merging with others to form more potent horrors.
 %%%%
 mad acolyte of Lugonu
 
@@ -1459,7 +1484,7 @@ player ghost
 %%%%
 polar bear
 
-반짝거리는 하얀 털가죽으로 덮여 있는 커다랗고 강인한 곰이다. 약이 올랐을 경우 매우 광폭해진다!
+A large and very strong bear covered in glistening white fur.
 %%%%
 porcupine
 
@@ -1989,7 +2014,7 @@ A winged demon covered in shiny metallic scales. It has a legion of imp minions 
 # Vault-defined monsters
 air elemental statue
 
-하늘을 나는 켄쿠족의 모습을 하고 있는, 약해 보이는 조각상이다. 별로 대단해 보이지는 않는다.
+A delicate statue of a tengu gliding through the air. It looks quite insubstantial.
 %%%%
 ancient champion
 
@@ -2029,7 +2054,7 @@ grey elf
 %%%%
 hill dwarf
 
-힐 드워프는, 기본적으로 언덕에 사는 걸 제외하면 마운틴 드워프와 거의 구별이 되지 않는다. 다만 구분이 가능한 모험가들에 따르면, 힐 드워프들은 이제 더 이상 던전 탐색에 관심을 가지지 않는다고 한다. 그럼으로, 이 공예품은 무언가 특별하다.
+Hill dwarves are a subrace of dwarves who, as their name implies, live on hills. Once able adventurers, the hill dwarves no longer have any interest in dungeon delving. This one was captured specially for this exhibit.
 %%%%
 human monk
 
@@ -2042,6 +2067,10 @@ iron troll monk
 malarious mermaid
 
 다리가 있어야 할 자리에 물고기 꼬리가 달려있고, 상반신은 어린 여성의 모습을 하고 있다. 심한 고통에 잠겨 있는듯이 보이지만, 여전히 매혹의 노래를 부를 수 있을 듯이 보인다.
+%%%%
+mountain dwarf
+
+Mountain dwarves are surface-dwelling relatives of the deep dwarves. After years of war with the taller but otherwise quite similar hill orcs, the mountain dwarves were conquered and driven from these lands. This one has been imported from foreign shores.
 %%%%
 pristine statue
 

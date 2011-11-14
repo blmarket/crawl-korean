@@ -170,11 +170,9 @@ public:
     bool find_home_near_player();
     bool find_home_anywhere();
 
-    void set_ghost(const ghost_demon &ghost, bool has_name = true);
+    void set_ghost(const ghost_demon &ghost);
     void ghost_init(bool need_pos = true);
-    void pandemon_init();
-    void dancing_weapon_init();
-    void labrat_init();
+    void ghost_demon_init();
     void uglything_init(bool only_mutate = false);
     void uglything_mutate(uint8_t force_colour = BLACK);
     void uglything_upgrade();
@@ -204,7 +202,7 @@ public:
                         bool base = false) const;
     int       body_weight(bool base = false) const;
     int       total_weight() const;
-    int       damage_brand(int which_attack = -1);
+    brand_type damage_brand(int which_attack = -1);
     int       damage_type(int which_attack = -1);
 
     item_def *slot_item(equipment_type eq, bool include_melded=false);
@@ -370,7 +368,7 @@ public:
     int armour_class() const;
     int melee_evasion(const actor *attacker, ev_ignore_type evit) const;
 
-    void poison(actor *agent, int amount = 1, bool force = false);
+    bool poison(actor *agent, int amount = 1, bool force = false);
     bool sicken(int strength, bool unused = true);
     bool bleed(const actor *agent, int amount, int degree);
     void paralyse(actor *, int str, std::string source = "");

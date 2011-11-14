@@ -159,10 +159,9 @@ std::string item_def::name(bool allow_translate,
     }
 
     if (item_is_orb(*this)
+        || item_is_horn_of_geryon(*this)
         || (ident || item_type_known(*this))
-            && (this->base_type == OBJ_MISCELLANY
-                   && this->sub_type == MISC_HORN_OF_GERYON
-                || is_artefact(*this)))
+            && is_artefact(*this))
     {
         // Artefacts always get "the" unless we just want the plain name.
         switch (descrip)
@@ -363,25 +362,6 @@ std::string item_def::name(bool allow_translate,
         if (tried)
             insparts.push_back(tried_str);
 
-        if (this->base_type == OBJ_FOOD)
-        {
-            std::string sat;
-
-            switch (maximum_satiation(*this))
-            {
-            case HS_STARVING:      sat = "starving";      break;
-            case HS_NEAR_STARVING: sat = "near starving"; break;
-            case HS_VERY_HUNGRY:   sat = "very hungry";   break;
-            case HS_HUNGRY:        sat = "hungry";        break;
-            case HS_SATIATED:      sat = "satiated";      break;
-            case HS_FULL:          sat = "full";          break;
-            case HS_VERY_FULL:     sat = "very full";     break;
-            case HS_ENGORGED:      sat = "engorged";      break;
-            }
-
-            insparts.push_back("edible when "+sat);
-        }
-
         if (with_inscription && !(this->inscription.empty()))
             insparts.push_back(this->inscription);
 
@@ -467,8 +447,6 @@ const char* missile_brand_name(special_missile_type brand, mbn_type t)
         return M_("chaos");
     case SPMSL_PENETRATION:
         return (t == MBN_TERSE ? M_("penet") : M_("penetration"));
-    case SPMSL_REAPING:
-        return (t == MBN_TERSE ? M_("reap") : M_("reaping"));
     case SPMSL_DISPERSAL:
         return (t == MBN_TERSE ? M_("disperse") : M_("dispersal"));
     case SPMSL_NORMAL:
@@ -614,7 +592,7 @@ const char* wand_type_name(int wandtype)
     case WAND_SLOWING:         return M_("slowing");
     case WAND_HASTING:         return M_("hasting");
     case WAND_MAGIC_DARTS:     return M_("magic darts");
-    case WAND_HEALING:         return M_("healing");
+    case WAND_HEAL_WOUNDS:     return M_("heal wounds");
     case WAND_PARALYSIS:       return M_("paralysis");
     case WAND_FIRE:            return M_("fire");
     case WAND_COLD:            return M_("cold");
@@ -681,7 +659,7 @@ static const char* potion_type_name(int potiontype)
 {
     switch (static_cast<potion_type>(potiontype))
     {
-    case POT_HEALING:           return M_("healing");
+    case POT_CURING:            return M_("curing");
     case POT_HEAL_WOUNDS:       return M_("heal wounds");
     case POT_SPEED:             return M_("speed");
     case POT_MIGHT:             return M_("might");
@@ -2147,7 +2125,11 @@ void set_ident_type(item_def &item, item_type_id_state_type setting,
     set_ident_type(item.base_type, item.sub_type, setting, force);
 
     if (in_inventory(item))
+    {
         shopping_list.cull_identical_items(item);
+        if (setting == ID_KNOWN_TYPE)
+            item_skills(item, you.start_train);
+    }
 
     if (setting == ID_KNOWN_TYPE && old_setting != ID_KNOWN_TYPE
         && notes_are_active() && is_interesting_item(item)
@@ -2225,8 +2207,8 @@ static MenuEntry *discoveries_item_mangle(MenuEntry *me)
     return (newme);
 }
 
-bool identified_item_names(const item_def *it1,
-                            const item_def *it2)
+static bool _identified_item_names(const item_def *it1,
+                                   const item_def *it2)
 {
     int flags = it1->base_type == OBJ_WANDS ? 0 : ISFLAG_KNOW_PLUSES;
     return it1->name(false, DESC_PLAIN, false, true, false, false, flags)
@@ -2302,7 +2284,7 @@ void check_item_knowledge(bool unknown_items)
         return;
     }
 
-    std::sort(items.begin(), items.end(), identified_item_names);
+    std::sort(items.begin(), items.end(), _identified_item_names);
     InvMenu menu;
 
     if (unknown_items)
@@ -2733,7 +2715,7 @@ bool is_emergency_item(const item_def &item)
         case WAND_HASTING:
             if (you.religion == GOD_CHEIBRIADOS)
                 return (false);
-        case WAND_HEALING:
+        case WAND_HEAL_WOUNDS:
         case WAND_TELEPORTATION:
             return (true);
         default:
@@ -2759,7 +2741,7 @@ bool is_emergency_item(const item_def &item)
         case POT_SPEED:
             if (you.religion == GOD_CHEIBRIADOS)
                 return (false);
-        case POT_HEALING:
+        case POT_CURING:
         case POT_HEAL_WOUNDS:
         case POT_RESISTANCE:
         case POT_MAGIC:
@@ -2841,7 +2823,7 @@ bool is_bad_item(const item_def &item, bool temp)
         case POT_POISON:
         case POT_STRONG_POISON:
             // Poison is not that bad if you're poison resistant.
-            return (!player_res_poison(false)
+            return (!player_res_poison(false) > 0
                     || !temp && you.species == SP_VAMPIRE);
         case POT_MUTATION:
             return (you.is_undead
@@ -3069,13 +3051,13 @@ bool is_useless_item(const item_def &item, bool temp)
         case POT_WATER:
         case POT_BLOOD:
         case POT_BLOOD_COAGULATED:
-            return (!can_ingest(item, true, true, false));
+            return (!can_ingest(item, true, false));
         case POT_POISON:
         case POT_STRONG_POISON:
             // If you're poison resistant, poison is only useless.
             // Spriggans could argue, but it's too small of a gain for
             // possible player confusion.
-            return (player_res_poison(false));
+            return (player_res_poison(false) > 0);
 
         case POT_INVISIBILITY:
             // If you're Corona'd or a TSO-ite, this is always useless.
@@ -3104,7 +3086,7 @@ bool is_useless_item(const item_def &item, bool temp)
                             || temp && you.hunger_state <= HS_SATIATED));
 
         case AMU_THE_GOURMAND:
-            return (player_likes_chunks(true)
+            return (player_likes_chunks(true) == 3
                       && player_mutation_level(MUT_SAPROVOROUS) == 3
                       && you.species != SP_GHOUL // makes clean chunks
                                                  // contaminated
@@ -3133,12 +3115,12 @@ bool is_useless_item(const item_def &item, bool temp)
             return (player_mutation_level(MUT_ACUTE_VISION));
 
         case RING_POISON_RESISTANCE:
-            return (player_res_poison(false, temp, false)
+            return (player_res_poison(false, temp, false) > 0
                     && (temp || you.species != SP_VAMPIRE));
 
         case AMU_CONTROLLED_FLIGHT:
             return (player_genus(GENPC_DRACONIAN)
-                    || (you.species == SP_KENKU && you.experience_level >= 5));
+                    || (you.species == SP_TENGU && you.experience_level >= 5));
 
         case RING_WIZARDRY:
             return (you.religion == GOD_TROG);
@@ -3390,44 +3372,6 @@ std::string get_menu_colour_prefix_tags(const item_def &item,
     }
 
     return item_name;
-}
-
-std::string get_message_colour_tags(const item_def &item,
-                                    description_level_type desc,
-                                    msg_channel_type channel)
-{
-    std::string cprf       = menu_colour_item_prefix(item);
-    std::string colour     = "";
-    std::string colour_off = "";
-    std::string item_name  = item.name(false, desc);
-    cprf += " " + item_name;
-
-    int col = -1;
-    const std::vector<message_colour_mapping>& mcm
-               = Options.message_colour_mappings;
-    typedef std::vector<message_colour_mapping>::const_iterator mcmci;
-
-    for (mcmci ci = mcm.begin(); ci != mcm.end(); ++ci)
-    {
-        if (ci->message.is_filtered(channel, cprf))
-        {
-            col = ci->colour;
-            break;
-        }
-    }
-
-    if (col != -1)
-        colour = colour_to_str(col);
-
-    if (!colour.empty())
-    {
-        // Order is important here.
-        colour_off  = "</" + colour + ">";
-        colour      = "<" + colour + ">";
-        item_name   = colour + item_name + colour_off;
-    }
-
-    return (item_name);
 }
 
 typedef std::map<std::string, item_types_pair> item_names_map;

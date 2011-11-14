@@ -68,6 +68,7 @@ static const body_facet_def _body_facets[] =
     { EQ_HELMET, MUT_ANTENNAE, 1 },
     //{ EQ_HELMET, MUT_BEAK, 1 },
     { EQ_GLOVES, MUT_CLAWS, 3 },
+    { EQ_GLOVES, MUT_TENTACLES, 3 },
     { EQ_BOOTS, MUT_HOOVES, 3 },
     { EQ_BOOTS, MUT_TALONS, 3 }
 };
@@ -77,19 +78,14 @@ equipment_type beastly_slot(int mut)
     switch (mut)
     {
     case MUT_HORNS:
-        return EQ_HELMET;
     case MUT_ANTENNAE:
-        return EQ_HELMET;
     case MUT_BEAK:
         return EQ_HELMET;
     case MUT_CLAWS:
-        return EQ_GLOVES;
     case MUT_TENTACLES:
         return EQ_GLOVES;
     case MUT_HOOVES:
-        return EQ_BOOTS;
     case MUT_TALONS:
-        return EQ_BOOTS;
     case MUT_TENTACLE_SPIKE:
         return EQ_BOOTS;
     default:
@@ -159,6 +155,12 @@ void fixup_mutations()
     {
         ASSERT(is_valid_mutation(MUT_STINGER));
         _seek_mutation(MUT_STINGER)->rarity = 8;
+    }
+
+    if (you.species == SP_OCTOPODE)
+    {
+        ASSERT(is_valid_mutation(MUT_TENTACLE_SPIKE));
+        _seek_mutation(MUT_TENTACLE_SPIKE)->rarity = 10;
     }
 }
 
@@ -253,7 +255,7 @@ formatted_string describe_mutations()
         have_any = true;
         break;
 
-    case SP_KENKU:
+    case SP_TENGU:
         if (you.experience_level > 4)
         {
 			//    result += "You can fly";
@@ -720,7 +722,6 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_SLOW_METABOLISM:
     case MUT_TELEPORT_CONTROL:
     case MUT_MAGIC_RESISTANCE:
-    case MUT_TELEPORT_AT_WILL:
     case MUT_CLARITY:
     case MUT_MUTATION_RESISTANCE:
     case MUT_ROBUST:
@@ -759,6 +760,7 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_BIG_WINGS:
     case MUT_LOW_MAGIC:
     case MUT_SLOW:
+    case MUT_EVOLUTION:
         amusement *= 2; // funny!
         break;
 
@@ -925,6 +927,7 @@ static int _handle_conflicting_mutations(mutation_type mutation,
         { MUT_REGENERATION,     MUT_SLOW_HEALING,     1},
         { MUT_ACUTE_VISION,     MUT_BLURRY_VISION,    1},
         { MUT_FAST,             MUT_SLOW,             1},
+        { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,    -1},
         };
 
     // If we have one of the pair, delete all levels of the other,
@@ -1138,7 +1141,7 @@ static const char* _stat_mut_desc(mutation_type mut, bool gain)
 
 bool mutate(mutation_type which_mutation, bool failMsg,
             bool force_mutation, bool god_gift, bool stat_gain_potion,
-            bool demonspawn)
+            bool demonspawn, bool no_rot)
 {
     if (!god_gift)
     {
@@ -1221,21 +1224,14 @@ bool mutate(mutation_type which_mutation, bool failMsg,
 
     // Undead bodies don't mutate, they fall apart. -- bwr
     // except for demonspawn (or other permamutations) in lichform -- haranp
-	//언데드의 몸은 변이가 안걸림
-	//데몬스폰은 리치폼머시깅
     if (rotting && !demonspawn)
     {
+        if (no_rot)
+            return (false);
 
-#ifdef JP
-        mpr("당신의 몸은 부패하였다!", MSGCH_MUTATION);
-#else
-        mpr("Your body decomposes!", MSGCH_MUTATION);
-#endif
-
-
+        mpr(gettext("Your body decomposes!"), MSGCH_MUTATION);
 
         if (coinflip())
-			//            lose_stat(STAT_RANDOM, 1, false, "mutating");
             lose_stat(STAT_RANDOM, 1, false, "돌연변이");
         else
         {
@@ -1283,12 +1279,9 @@ bool mutate(mutation_type which_mutation, bool failMsg,
     if (!is_valid_mutation(mutat))
         return (false);
 
-    // [Cha] don't allow teleportation or teleport at will mutations in sprint
-    if ((mutat == MUT_TELEPORT || mutat == MUT_TELEPORT_AT_WILL)
-        && crawl_state.game_is_sprint())
-    {
+    // [Cha] don't allow teleportitis in sprint
+    if (mutat == MUT_TELEPORT && crawl_state.game_is_sprint())
         return (false);
-    }
 
     if (you.species == SP_NAGA)
     {
@@ -1393,7 +1386,8 @@ bool mutate(mutation_type which_mutation, bool failMsg,
         break;
 
     case MUT_CLAWS:
-        // Gloves aren't prevented until level 3.
+    case MUT_TENTACLES:
+        // Gloves aren't prevented until level 3 of claws or tentacles.
         if (you.mutation[mutat] >= 3 && !you.melded[EQ_GLOVES])
             remove_one_equip(EQ_GLOVES, false, true);
         break;
@@ -1716,26 +1710,27 @@ static const facet_def _demon_facets[] =
       { 2, 2, 2 } },
     { 2, { MUT_TALONS, MUT_TALONS, MUT_TALONS },
       { 2, 2, 2 } },
-    // Regular facets
+    // Tier 3 facets
     { 3, { MUT_CONSERVE_SCROLLS, MUT_HEAT_RESISTANCE, MUT_HURL_HELLFIRE },
-      { 2, 2, 3 } },
+      { 3, 3, 3 } },
+    { 3, { MUT_COLD_RESISTANCE, MUT_CONSERVE_POTIONS, MUT_PASSIVE_FREEZE },
+      { 3, 3, 3 } },
     { 3, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
       { 3, 3, 3 } },
     { 3, { MUT_NEGATIVE_ENERGY_RESISTANCE, MUT_NEGATIVE_ENERGY_RESISTANCE,
           MUT_NEGATIVE_ENERGY_RESISTANCE },
-      { 2, 2, 3 } },
+      { 3, 3, 3 } },
     { 3, { MUT_STOCHASTIC_TORMENT_RESISTANCE, MUT_STOCHASTIC_TORMENT_RESISTANCE,
           MUT_STOCHASTIC_TORMENT_RESISTANCE },
       { 3, 3, 3 } },
+    // Tier 2 facets
+    { 2, { MUT_CONSERVE_SCROLLS, MUT_HEAT_RESISTANCE, MUT_IGNITE_BLOOD },
+      { 2, 2, 2 } },
+    { 2, { MUT_COLD_RESISTANCE, MUT_CONSERVE_POTIONS, MUT_ICEMAIL },
+      { 2, 2, 2 } },
     { 2, { MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH },
       { 2, 2, 2 } },
     { 2, { MUT_MAGIC_RESISTANCE, MUT_MAGIC_RESISTANCE, MUT_MAGIC_RESISTANCE },
-      { 1, 2, 2 } },
-    { 2, { MUT_PASSIVE_MAPPING, MUT_PASSIVE_MAPPING, MUT_PASSIVE_MAPPING },
-      { 1, 2, 2 } },
-    { 2, { MUT_COLD_RESISTANCE, MUT_CONSERVE_POTIONS, MUT_ICEMAIL },
-      { 2, 2, 2 } },
-    { 2, { MUT_COLD_RESISTANCE, MUT_CONSERVE_POTIONS, MUT_PASSIVE_FREEZE },
       { 2, 2, 2 } },
     { 2, { MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN },
       { 2, 2, 2 } },
@@ -1744,6 +1739,8 @@ static const facet_def _demon_facets[] =
     { 2, { MUT_SPINY, MUT_SPINY, MUT_SPINY },
       { 2, 2, 2 } },
     { 2, { MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN },
+      { 2, 2, 2 } },
+    { 2, { MUT_SAPROVOROUS, MUT_FOUL_STENCH, MUT_FOUL_STENCH },
       { 2, 2, 2 } },
     // Scale mutations
     { 1, { MUT_DISTORTION_FIELD, MUT_DISTORTION_FIELD, MUT_DISTORTION_FIELD },
@@ -1883,11 +1880,12 @@ try_again:
                     fire_elemental++;
 
                 if (m == MUT_CLAWS && i == 2
+                    || m == MUT_TENTACLES && i == 2
                     || m == MUT_HORNS && i == 0
                     || m == MUT_BEAK && i == 0
                     || m == MUT_ANTENNAE && i == 0
-                    || m == MUT_TALONS && i == 2
-                    || m == MUT_HOOVES && i == 2)
+                    || m == MUT_HOOVES && i == 2
+                    || m == MUT_TALONS && i == 2)
                 {
                     ++slots_lost;
                 }
@@ -2073,7 +2071,7 @@ int how_mutated(bool all, bool levels)
 }
 
 // Return whether current tension is balanced
-bool balance_demonic_guardian()
+static bool _balance_demonic_guardian()
 {
     const int mutlevel = player_mutation_level(MUT_DEMONIC_GUARDIAN);
 
@@ -2106,20 +2104,16 @@ bool balance_demonic_guardian()
     return (true);
 }
 
-#define random_mons(...) static_cast<monster_type>(random_choose(__VA_ARGS__))
-
 // Primary function to handle and balance demonic guardians, if the tension
 // is unfavorably high and a guardian was not recently spawned, a new guardian
 // will be made, if tension is below a threshold (determined by the mutations
 // level and a bit of randomness), guardians may be dismissed in
-// balance_demonic_guardian()
-
-//뭔고하니 위급상황에 나타나주는 악마 수호 똘마니들 인가보군요.
+// _balance_demonic_guardian()
 void check_demonic_guardian()
 {
     const int mutlevel = player_mutation_level(MUT_DEMONIC_GUARDIAN);
 
-    if (!balance_demonic_guardian() &&
+    if (!_balance_demonic_guardian() &&
         you.duration[DUR_DEMONIC_GUARDIAN] == 0)
     {
         monster_type mt;
@@ -2127,16 +2121,16 @@ void check_demonic_guardian()
         switch (mutlevel)
         {
         case 1:
-            mt = random_mons(MONS_WHITE_IMP, MONS_LEMURE, MONS_UFETUBUS,
-                             MONS_IRON_IMP, MONS_MIDGE, -1);
+            mt = random_choose(MONS_WHITE_IMP, MONS_LEMURE, MONS_UFETUBUS,
+                               MONS_IRON_IMP, MONS_MIDGE, -1);
             break;
         case 2:
-            mt = random_mons(MONS_ORANGE_DEMON, MONS_SMOKE_DEMON, MONS_IRON_DEVIL,
-                             MONS_BLUE_DEVIL, MONS_HAIRY_DEVIL, -1);
+            mt = random_choose(MONS_SIXFIRHY, MONS_SMOKE_DEMON, MONS_SOUL_EATER,
+                               MONS_SUN_DEMON, MONS_ICE_DEVIL, -1);
             break;
         case 3:
-            mt = random_mons(MONS_EXECUTIONER, MONS_BALRUG, MONS_ICE_DEVIL,
-                             MONS_SOUL_EATER, MONS_SUN_DEMON, -1);
+            mt = random_choose(MONS_EXECUTIONER, MONS_BALRUG, MONS_REAPER,
+                               MONS_CACODEMON, -1);
             break;
         default:
 	      //die("Invalid demonic guardian level : %d", mutlevel);
@@ -2162,7 +2156,7 @@ void check_demonic_guardian()
 
 void check_antennae_detect()
 {
-    int radius = player_mutation_level(MUT_ANTENNAE) * 2 - 1;
+    int radius = player_mutation_level(MUT_ANTENNAE) * 2;
     if (you.religion == GOD_ASHENZARI && !player_under_penance())
         radius = std::max(radius, you.piety / 20);
     if (radius <= 0)

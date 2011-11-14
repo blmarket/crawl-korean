@@ -38,11 +38,8 @@
 
 static armour_type _random_nonbody_armour_type()
 {
-    const armour_type at =
-        static_cast<armour_type>(
-            random_choose(ARM_SHIELD, ARM_CLOAK, ARM_HELMET,
-                          ARM_GLOVES, ARM_BOOTS, -1));
-    return (at);
+    return random_choose(ARM_SHIELD, ARM_CLOAK, ARM_HELMET, ARM_GLOVES,
+                         ARM_BOOTS, -1);
 }
 
 static const int max_has_value = 100;
@@ -94,8 +91,7 @@ static armour_type _pick_wearable_armour(const armour_type arm)
             || arm == ARM_CENTAUR_BARDING
             || arm == ARM_NAGA_BARDING)
         {
-            result = static_cast<armour_type>(random_choose(
-                                 ARM_HELMET, ARM_GLOVES, ARM_BOOTS, -1));
+            result = random_choose(ARM_HELMET, ARM_GLOVES, ARM_BOOTS, -1);
         }
         else if (arm == ARM_SHIELD)
         {
@@ -221,7 +217,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
 
     result = _pick_wearable_armour(result);
 
-    // Now we'll randomly pick a body armour up to plate mail (light
+    // Now we'll randomly pick a body armour up to plate armour (light
     // only in the case of robes or animal skins).  Unlike before, now
     // we're only giving out the finished products here, never the
     // hides. - bwr
@@ -238,20 +234,19 @@ static armour_type _acquirement_armour_subtype(bool divine)
             // 10%.)
             if (one_chance_in(20))
             {
-                result = static_cast<armour_type>(
-                    random_choose_weighted(3, ARM_TROLL_LEATHER_ARMOUR,
-                                           3, ARM_STEAM_DRAGON_ARMOUR,
-                                           1, ARM_SWAMP_DRAGON_ARMOUR,
-                                           1, ARM_DRAGON_ARMOUR,
-                                           0));
+                result = random_choose_weighted(3, ARM_TROLL_LEATHER_ARMOUR,
+                                                3, ARM_STEAM_DRAGON_ARMOUR,
+                                                1, ARM_SWAMP_DRAGON_ARMOUR,
+                                                1, ARM_FIRE_DRAGON_ARMOUR,
+                                                0);
             }
 
             // Non-god acquirement not only has a much better chance, but
             // can give high-end ones as well.
             if (!divine && one_chance_in(5))
             {
-                result = static_cast<armour_type>(random_choose(
-                        ARM_DRAGON_ARMOUR,
+                result = random_choose(
+                        ARM_FIRE_DRAGON_ARMOUR,
                         ARM_ICE_DRAGON_ARMOUR,
                         ARM_STEAM_DRAGON_ARMOUR,
                         ARM_MOTTLED_DRAGON_ARMOUR,
@@ -259,7 +254,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
                         ARM_GOLD_DRAGON_ARMOUR,
                         ARM_SWAMP_DRAGON_ARMOUR,
                         ARM_PEARL_DRAGON_ARMOUR,
-                        -1));
+                        -1);
             }
         }
         else
@@ -269,12 +264,12 @@ static armour_type _acquirement_armour_subtype(bool divine)
                 const armour_type armours[] = { ARM_ROBE, ARM_LEATHER_ARMOUR,
                                                 ARM_RING_MAIL, ARM_SCALE_MAIL,
                                                 ARM_CHAIN_MAIL, ARM_SPLINT_MAIL,
-                                                ARM_BANDED_MAIL, ARM_PLATE_MAIL };
+                                                ARM_PLATE_ARMOUR };
 
                 result = static_cast<armour_type>(RANDOM_ELEMENT(armours));
 
                 if (one_chance_in(10) && you.skills[SK_ARMOUR] >= 10)
-                    result = ARM_CRYSTAL_PLATE_MAIL;
+                    result = ARM_CRYSTAL_PLATE_ARMOUR;
 
                 if (one_chance_in(12))
                     result = ARM_ANIMAL_SKIN;
@@ -284,8 +279,8 @@ static armour_type _acquirement_armour_subtype(bool divine)
                 const armour_type armours[] =
                     { ARM_ANIMAL_SKIN, ARM_ROBE, ARM_LEATHER_ARMOUR,
                       ARM_RING_MAIL, ARM_SCALE_MAIL, ARM_CHAIN_MAIL,
-                      ARM_BANDED_MAIL, ARM_SPLINT_MAIL, ARM_PLATE_MAIL,
-                      ARM_CRYSTAL_PLATE_MAIL };
+                      ARM_SPLINT_MAIL, ARM_PLATE_ARMOUR,
+                      ARM_CRYSTAL_PLATE_ARMOUR };
 
                 const int num_arms = ARRAYSZ(armours);
 
@@ -313,8 +308,8 @@ static armour_type _acquirement_armour_subtype(bool divine)
                             + you.skills[SK_DODGING])
                     < random2(you.skills[SK_ARMOUR] * 2))
                 {
-                    result = one_chance_in(4) ? ARM_CRYSTAL_PLATE_MAIL :
-                                                ARM_PLATE_MAIL;
+                    result = one_chance_in(4) ? ARM_CRYSTAL_PLATE_ARMOUR :
+                                                ARM_PLATE_ARMOUR;
                 }
             }
         }
@@ -322,17 +317,16 @@ static armour_type _acquirement_armour_subtype(bool divine)
         // Everyone can wear things made from hides.
         if (one_chance_in(20))
         {
-            result = static_cast<armour_type>(
-                random_choose_weighted(20, ARM_TROLL_LEATHER_ARMOUR,
-                                       20, ARM_STEAM_DRAGON_ARMOUR,
-                                       15, ARM_MOTTLED_DRAGON_ARMOUR,
-                                       10, ARM_SWAMP_DRAGON_ARMOUR,
-                                       10, ARM_DRAGON_ARMOUR,
-                                       10, ARM_ICE_DRAGON_ARMOUR,
-                                        5, ARM_STORM_DRAGON_ARMOUR,
-                                        5, ARM_GOLD_DRAGON_ARMOUR,
-                                        5, ARM_PEARL_DRAGON_ARMOUR,
-                                        0));
+            result = random_choose_weighted(20, ARM_TROLL_LEATHER_ARMOUR,
+                                            20, ARM_STEAM_DRAGON_ARMOUR,
+                                            15, ARM_MOTTLED_DRAGON_ARMOUR,
+                                            10, ARM_SWAMP_DRAGON_ARMOUR,
+                                            10, ARM_FIRE_DRAGON_ARMOUR,
+                                            10, ARM_ICE_DRAGON_ARMOUR,
+                                             5, ARM_STORM_DRAGON_ARMOUR,
+                                             5, ARM_GOLD_DRAGON_ARMOUR,
+                                             5, ARM_PEARL_DRAGON_ARMOUR,
+                                             0);
         }
     }
 
@@ -661,30 +655,20 @@ static int _acquirement_jewellery_subtype()
 
 static int _acquirement_staff_subtype(const has_vector& already_has)
 {
-    int result = random2(STAFF_FIRST_ROD);
-
-    // Elemental preferences -- bwr
-    if (result == STAFF_FIRE || result == STAFF_COLD)
+    // First look at skills to determine whether the player gets a rod.
+    int spell_skills = player_spell_skills();
+    if (random2(spell_skills) < you.skills[SK_EVOCATIONS] + 3
+            && !one_chance_in(5))
     {
-        if (you.skills[SK_FIRE_MAGIC] > you.skills[SK_ICE_MAGIC])
-            result = STAFF_FIRE;
-        if (you.skills[SK_FIRE_MAGIC] < you.skills[SK_ICE_MAGIC])
-            result = STAFF_COLD;
-    }
-    else if (result == STAFF_AIR || result == STAFF_EARTH)
-    {
-        if (you.skills[SK_AIR_MAGIC] > you.skills[SK_EARTH_MAGIC])
-            result = STAFF_AIR;
-        if (you.skills[SK_AIR_MAGIC] < you.skills[SK_EARTH_MAGIC])
-            result = STAFF_EARTH;
+        return get_random_rod_type();
     }
 
-    skill_type best_spell_skill = best_skill(SK_SPELLCASTING, SK_LAST_SKILL);
+    // Now try to pick an enhancer staff matching the player's best skill.
+    skill_type best_spell_skill = best_skill(SK_SPELLCASTING, SK_EVOCATIONS);
+    bool found_enhancer = false;
+    int result = random2(NUM_STAVES);
 
-#define TRY_GIVE(x) { if (!already_has[x]) result = x; }
-    // If we're going to give out an enhancer staff,
-    // we should at least bias things towards the
-    // best spell skill. -- bwr
+#define TRY_GIVE(x) { if (you.type_ids[OBJ_STAVES][x] != ID_KNOWN_TYPE) {result = x; found_enhancer = true;} }
     switch (best_spell_skill)
     {
     case SK_FIRE_MAGIC:   TRY_GIVE(STAFF_FIRE);        break;
@@ -697,38 +681,28 @@ static int _acquirement_staff_subtype(const has_vector& already_has)
     case SK_CHARMS:       TRY_GIVE(STAFF_ENCHANTMENT); break;
     case SK_HEXES:        TRY_GIVE(STAFF_ENCHANTMENT); break;
     case SK_SUMMONINGS:   TRY_GIVE(STAFF_SUMMONING);   break;
-#undef TRY_GIVE
-
-    case SK_EVOCATIONS:
-        if (!one_chance_in(4))
-            result = get_random_rod_type();
-        break;
-
-    default: // Invocations and leftover spell schools.
-        switch (random2(5))
-        {
-        case 0: result = STAFF_WIZARDRY;   break;
-        case 1: result = STAFF_POWER;      break;
-        case 2: result = STAFF_ENERGY;     break;
-        case 3: result = STAFF_CHANNELING; break;
-        case 4: break;          // keep the original random staff
-        }
-        break;
+    default:                                           break;
     }
+    if (one_chance_in(found_enhancer ? 2 : 3))
+        return result;
 
-    int spell_skills = player_spell_skills();
-
-    // Increased chance of getting a rod for new or
-    // non-spellcasters.  -- bwr
-    if (one_chance_in(20)
-        || (spell_skills <= 1               // short on spells
-            && result < STAFF_FIRST_ROD
-            && !one_chance_in(4)))
+    // Otherwise pick a non-enhancer staff.
+    switch (random2(6))
     {
-        result = get_random_rod_type();
+    case 0: case 1: result = STAFF_WIZARDRY;   break;
+    case 2: case 3: result = STAFF_ENERGY;     break;
+    case 4: result = STAFF_POWER;              break;
+    case 5: result = STAFF_CHANNELING;         break;
     }
-
-    return (result);
+    switch (random2(6))
+    {
+    case 0: case 1: TRY_GIVE(STAFF_WIZARDRY);   break;
+    case 2: case 3: TRY_GIVE(STAFF_ENERGY);     break;
+    case 4: TRY_GIVE(STAFF_POWER);              break;
+    case 5: TRY_GIVE(STAFF_CHANNELING);         break;
+#undef TRY_GIVE
+    }
+    return result;
 }
 
 static int _acquirement_misc_subtype()
@@ -787,7 +761,7 @@ static int _acquirement_wand_subtype()
         switch (type)
         {
         case WAND_HASTING:          // each 17.9%, group unknown each 26.3%
-        case WAND_HEALING:
+        case WAND_HEAL_WOUNDS:
             w = 25; break;
         case WAND_TELEPORTATION:    // each 10.7%, group unknown each 17.6%
         case WAND_INVISIBILITY:
@@ -1358,6 +1332,10 @@ int acquirement_create_item(object_class_type class_wanted,
                 }
             }
         }
+
+        // bias racial make towards the player
+        if (!is_artefact(doodad))
+            maybe_set_item_race(doodad, get_species_race(you.species), 3);
 
         if (doodad.base_type == OBJ_WEAPONS
                && !can_wield(&doodad, false, true)

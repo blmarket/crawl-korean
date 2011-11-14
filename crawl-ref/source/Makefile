@@ -40,10 +40,16 @@
 #    V             -- set to anything to enable verbose build
 #
 #    USE_ICC       -- set to use Intel's compiler
+#    LTO           -- set for better optimization but slower compilation,
+#                     requires gcc4.6+
 #    ASSERTS       -- set to enable assertion checks (implied in debug mode)
 #    USE_GETTEXT   -- set to use gettext library for i18n
 #    NOWIZARD      -- set to disable wizard mode.  Use if you have untrusted
 #                     remote players without DGL.
+#
+#    WEBTILES      -- set to anything to compile for Webtiles
+#    WEBDIR        -- place to hold the Webtiles client data. Can be either
+#                     relative to prefix or absolute.
 #
 #
 # Requirements:
@@ -99,11 +105,17 @@ CFOPTIMIZE := -O2
 
 endif # USE_ICC
 
+ifdef LTO
+CFOPTIMIZE += -flto=jobserver -fwhole-program
+endif
+
 CFOTHERS := -pipe $(EXTERNAL_FLAGS)
 CFWARN := -Wall
 CFWARN_L := -Wundef
 
 DEFINES := $(EXTERNAL_DEFINES)
+
+LDFLAGS := $(EXTERNAL_LDFLAGS)
 
 #
 # The GCC and GXX variables are set later.
@@ -320,7 +332,7 @@ ifdef WIN32
 EXTRA_OBJECTS += icon.o
 endif
 
-ifndef TILES_ANY
+ifndef TILES
 ifdef NEED_LIBW32C
 OBJECTS += libw32c.o
 else
@@ -331,7 +343,7 @@ endif
 # To get stack trace symbols.
 # Note that MinGW doesn't support -rdynamic.
 ifndef NO_RDYNAMIC
-LDFLAGS := -rdynamic
+LDFLAGS += -rdynamic
 endif
 
 ifdef USE_MERGE_BASE
@@ -766,6 +778,21 @@ else
 endif
 datadir_fp := $(abspath $(strip $(DESTDIR))$(strip $(DATADIR)))
 
+ifneq ($(strip $(WEBDIR)),)
+  ifeq ($(filter /%,$(WEBDIR)),)
+    #relative WEBDIR
+    ifneq ($(prefix),)
+	override WEBDIR := $(strip $(prefix))/$(strip $(WEBDIR))
+    endif
+  endif
+  CFOTHERS_L += -DWEB_DIR_PATH=\"$(abspath $(WEBDIR))/\"
+else
+  ifneq ($(prefix),)
+	WEBDIR := $(strip $(prefix))/$(strip $(WEBDIR))
+  endif
+endif
+webdir_fp := $(abspath $(strip $(DESTDIR))$(strip $(WEBDIR)))
+
 ifndef NO_NCURSES
 
 ifndef CROSSHOST
@@ -851,7 +878,6 @@ ifndef V
 endif
 endif
 
-ifdef TILES_ANY
 TILEIMAGEFILES := floor wall feat main player gui icons
 TILEDEFS = $(TILEIMAGEFILES) dngn unrand
 TILEDEFPRES = $(TILEDEFS:%=$(RLTILES)/tiledef-%)
@@ -863,6 +889,7 @@ TILEFILES = $(TILEIMAGEFILES:%=%.png)
 ORIGTILEFILES = $(TILEFILES:%=$(RLTILES)/%)
 DESTTILEFILES = $(TILEFILES:%=dat/tiles/%)
 
+ifdef TILES_ANY
 OBJECTS += $(TILEDEFOBJS)
 
 ifndef NO_OPTIMIZE
@@ -923,9 +950,10 @@ DOC_BASE        := ../docs
 DOC_TEMPLATES   := $(DOC_BASE)/template
 GENERATED_DOCS  := $(DOC_BASE)/aptitudes.txt $(DOC_BASE)/FAQ.html $(DOC_BASE)/crawl_manual.txt
 GENERATED_HEADERS := art-enum.h #the rest are private
-GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mon-mst.h $(RLTILES)/dc-unrand.txt build.h compflag.h
+GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mon-mst.h \
+                   $(RLTILES)/dc-unrand.txt build.h compflag.h dat/dlua/tags.lua
 
-GAME_DEPENDS  := $(DESTTILEFILES) $(OBJECTS) $(EXTRA_OBJECTS) $(CONTRIB_LIBS)
+GAME_DEPENDS  := $(OBJECTS) $(EXTRA_OBJECTS) $(CONTRIB_LIBS) dat/dlua/tags.lua
 SRC_PKG_BASE  := stone_soup
 SRC_VERSION   := $(shell git describe --tags $(MERGE_BASE) 2>/dev/null || cat util/release_ver)
 
@@ -937,9 +965,14 @@ SRC_PKG_TAR_NODEPS := $(PKG_SRC_DIR)-nodeps.tar.xz
 SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
 .PHONY: all test install clean clean-contrib clean-rltiles distclean debug debug-lite \
-        profile package-source source build-windows package-windows rest docs
+        profile package-source source build-windows package-windows rest docs greet \
+        api
 
-all: $(GAME) docs webserver
+all: greet $(GAME) docs webserver
+
+greet:
+	@printf "  * If you experience any problems building Crawl, please take a second look\\n"\
+	"  * at INSTALL.txt: the solution to your problem just might be in there!\\n"
 
 docs: $(GENERATED_DOCS)
 
@@ -953,19 +986,22 @@ test:
 webserver/static/%.png: dat/tiles/%.png
 	$(QUIET_COPY)$(COPY) $< webserver/static/
 
-webserver/static/game/%.png: dat/tiles/%.png
-	$(QUIET_COPY)$(COPY) $< webserver/static/game/
+webserver/game_data/static/%.png: dat/tiles/%.png
+	$(QUIET_COPY)$(COPY) $< webserver/game_data/static/
 
 TILEINFOJS = $(TILEIMAGEFILES) dngn
+TITLEIMGS = denzi_dragon denzi_kitchen_duty denzi_summoner \
+            denzi_undead_warrior omndra_zot_demon
 
-STATICFILES = $(TILEIMAGEFILES:%=webserver/static/game/%.png) \
+STATICFILES = $(TILEIMAGEFILES:%=webserver/game_data/static/%.png) \
               webserver/static/stone_soup_icon-32x32.png \
-              $(TILEINFOJS:%=webserver/static/game/tileinfo-%.js)
+              $(TITLEIMGS:%=webserver/static/title_%.png) \
+              $(TILEINFOJS:%=webserver/game_data/static/tileinfo-%.js)
 
-$(TILEINFOJS:%=$(RLTILES)/tileinfo-%.js): rltile-build
+$(TILEINFOJS:%=$(RLTILES)/tileinfo-%.js): build-rltiles
 
-webserver/static/game/%.js: $(RLTILES)/%.js
-	$(QUIET_COPY)$(COPY) $< webserver/static/game/
+webserver/game_data/static/%.js: $(RLTILES)/%.js
+	$(QUIET_COPY)$(COPY) $< webserver/game_data/static/
 
 clean-webserver:
 	$(RM) $(STATICFILES)
@@ -1042,6 +1078,12 @@ rest:
 
 $(DOC_BASE)/crawl_manual.txt: $(DOC_BASE)/crawl_manual.reST util/unrest.pl
 	$(QUIET_GEN)util/unrest.pl <$< >$@
+
+CLUA_MODULE_SOURCES = $(filter l_%,$(OBJECTS:%.o=%.cc))
+api: $(CLUA_MODULE_SOURCES)
+	mkdir -p luadoc
+	luadoc --doclet util.html_doclet --taglet util.taglet -d luadoc $^
+
 
 ##########################################################################
 # The level compiler
@@ -1130,6 +1172,10 @@ ifndef MONOSPACED_FONT
 	$(COPY) dat/tiles/VeraMono.ttf $(datadir_fp)/dat/tiles/
 endif
 endif
+ifdef WEBTILES
+	mkdir -p $(webdir_fp)
+	$(COPY_R) webserver/game_data/* $(webdir_fp)/
+endif
 ifneq ($(savedir_fp),)
 	mkdir -p $(savedir_fp)/saves
 	mkdir -p $(savedir_fp)/morgue
@@ -1164,7 +1210,7 @@ clean: clean-rltiles clean-webserver
 	+$(MAKE) -C $(UTIL) clean
 	$(RM) $(GAME) $(GAME).exe $(GENERATED_FILES) $(EXTRA_OBJECTS) libw32c.o\
 	    libunix.o $(OBJECTS) $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d) *.ixx  \
-	    .contrib-libs .cflags AppHdr.h.gch
+	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d
 	$(RM) -r build-win
 	$(RM) -r build
 
@@ -1204,13 +1250,16 @@ $(OBJECTS): $(OBJECTS:%.o=%.d) $(YACC_OBJECTS:%.o=%.d)
 
 %.d: %.cc .cflags $(GENERATED_HEADERS)
 	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
+else
+%.d: %.cc .cflags $(GENERATED_HEADERS)
+	@$(RM) $@
 endif
 
 # Precompiled headers
 #
 ifdef PCH
 -include AppHdr.h.d
-%.gch: % .cflags
+%.gch: % .cflags $(CONTRIB_LIBS)
 	$(QUIET_PCH)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
 CC_DEP := AppHdr.h.gch
@@ -1218,7 +1267,7 @@ endif
 
 # Plain old compilation
 #
-$(OBJECTS:%.o=%.cc): $(CC_DEP) $(TILEDEFHDRS) $(CONTRIB_LIBS)
+$(OBJECTS:%.o=%.cc): $(CC_DEP) $(CONTRIB_LIBS)
 
 $(UTIL)%.o: ALL_CFLAGS=$(YACC_CFLAGS)
 
@@ -1256,6 +1305,9 @@ art-enum.h: art-data.h
 mon-mst.h: mon-spll.h util/gen-mst.pl
 	$(QUIET_GEN)util/gen-mst.pl
 
+dat/dlua/tags.lua: tag-version.h util/gen-luatags.pl
+	$(QUIET_GEN)util/gen-luatags.pl
+
 $(RLTILES)/dc-unrand.txt: art-data.h
 
 artefact.o: art-data.h art-enum.h
@@ -1266,13 +1318,13 @@ mon-util.d: mon-mst.h
 # RLTiles
 #
 
-.PHONY: rltile-build
-rltile-build: .contrib-libs $(RLTILES)/dc-unrand.txt
+.PHONY: build-rltiles
+build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
 	+$(MAKE) -C $(RLTILES) all ARCH=$(ARCH)
 
-$(TILEDEFSRCS): rltile-build
-$(TILEDEFHDRS): rltile-build
-$(ORIGTILEFILES): rltile-build
+$(TILEDEFSRCS): build-rltiles
+$(TILEDEFHDRS): build-rltiles
+$(ORIGTILEFILES): build-rltiles
 
 dat/tiles/%.png: $(RLTILES)/%.png
 	$(QUIET_PNGCRUSH)$(PNGCRUSH) $< $@
@@ -1283,6 +1335,11 @@ endif
 clean-rltiles:
 	$(RM) $(DESTTILEFILES)
 	+$(MAKE) -C $(RLTILES) distclean
+
+ifdef TILES_ANY
+$(GAME): $(DESTTILEFILES)
+$(OBJECTS:%.o=%.cc): $(TILEDEFHDRS)
+endif
 
 #############################################################################
 # Packaging a source tarball for release

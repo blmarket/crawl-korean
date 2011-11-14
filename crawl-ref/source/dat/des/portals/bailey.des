@@ -128,9 +128,8 @@ function orc_warrior_with_polearm(e)
           scale mail race:orcish    | scale mail |\
           ring mail race:orcish     | ring mail |\
           splint mail race:orcish   | splint mail |\
-          banded mail race:orcish   | banded mail |\
-          plate mail race:orcish    | plate mail |\
-          crystal plate mail w:1")
+          plate armour race:orcish  | plate armour |\
+          crystal plate armour w:1")
 end
 
 function orc_knight_with_polearm(e)
@@ -141,9 +140,9 @@ function orc_knight_with_polearm(e)
           bardiche w:1 | bardiche w:1 race:orcish .\
           ring mail race:orcish     | ring mail |\
           splint mail race:orcish   | splint mail |\
-          banded mail race:orcish   | banded mail |\
-          plate mail race:orcish    | plate mail |\
-          crystal plate mail w:1")
+          chain mail race:orcish    | chain mail |\
+          plate armour race:orcish  | plate armour |\
+          crystal plate armour w:1")
 end
 
 -- defined but not used, since the depth for the current entry vaults is 7-16
@@ -153,9 +152,9 @@ function orc_warlord_with_polearm(e)
           glaive       | glaive race:orcish |\
           bardiche w:1 | bardiche w:1 race:orcish . \
           splint mail race:orcish   | splint mail |\
-          banded mail race:orcish   | banded mail |\
-          plate mail race:orcish    | plate mail |\
-          crystal plate mail w:1")
+          chain mail race:orcish    | chain mail |\
+          plate armour race:orcish  | plate armour |\
+          crystal plate armour w:1")
 end
 
 }}
@@ -468,7 +467,7 @@ MONS:   generate_awake kobold ; hand axe ego:returning /\
 MONS:   gnoll ; halberd | halberd ego:electrocution
 MONS:   orc warrior / orc knight
 NSUBST: e = 1:e / *:d
-ITEM:   potion of healing / potion of heal wounds / potion of magic / nothing /\
+ITEM:   potion of curing / potion of heal wounds / potion of magic / nothing /\
         potion of might w:5 / potion of speed w:2 / potion of berserk rage w:3
 ITEM:   potion of experience w:30 / potion of cure mutation w:30 /\
         potion of gain intelligence q:2 / potion of gain strength q:2 /\
@@ -579,8 +578,8 @@ TAGS:    bailey_axe no_rotate no_item_gen no_monster_gen
 LFLAGS:  no_tele_control
 #
 ITEM:    any good_item
-ITEM:    potion of levitation
-ITEM:    ring of levitation
+ITEM:    potion of levitation ident:type
+ITEM:    ring of levitation ident:type
 SUBST:   e : eeef
 NSUBST:  f = 1:f / *:.
 SUBST:   e = e..
@@ -652,7 +651,7 @@ TAGS:   bailey_axe no_item_gen no_monster_gen
 # The secret door does not work well, it will always be open. I also believe
 # that loot is a bit much, but other baileys suffer from that as well... added
 # the warlord in an attempt to make it more even. --dpeg
-ITEM:   potion of healing / potion of heal wounds / potion of resistance w:5 / \
+ITEM:   potion of curing / potion of heal wounds / potion of resistance w:5 / \
         potion of might w:5 / potion of brilliance w:5 / potion of agility w:5 / \
         potion of magic w:5 / potion of speed w:5 / \
         scroll of teleportation / scroll of blinking / scroll of identify / \
@@ -746,9 +745,9 @@ NSUBST: E = 1:= / *:c
 : orc_knight_with_polearm(_G)
 SUBST:  2 = 223.
 SUBST:  1 = 1 2:1 .
-ITEM:   good_item crystal plate mail / good_item plate mail race:orcish /\
+ITEM:   good_item crystal plate armour / good_item plate armour race:orcish /\
         good_item gold dragon armour w:5 / good_item ice dragon armour w:5 /\
-        good_item dragon armour w:5 / good_item steam dragon armour w:5
+        good_item fire dragon armour w:5 / good_item steam dragon armour w:5
 # XXX: Which armour pieces can be orcish?
 ITEM:   good_item cloak race:orcish / good_item pair of gloves race:orcish /\
         good_item helmet race:orcish / good_item pair of boots race:orcish /\
@@ -958,7 +957,7 @@ WEIGHT: 10
 ORIENT: encompass
 TAGS:   bailey_polearm no_item_gen no_monster_gen
 LFLAGS: no_tele_control
-KITEM:  ! = potion of healing / potion of heal wounds / potion of might w:5 /\
+KITEM:  ! = potion of curing / potion of heal wounds / potion of might w:5 /\
             potion of speed w:3 / potion of berserk rage w:2 /\
             potion of invisibility w:3 / potion of experience w:1 /\
             potion of gain strength w:1 / potion of resistance w:1

@@ -1,6 +1,7 @@
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "itemprop-enum.h"
 #include "los_def.h"
 
 enum ev_ignore_type
@@ -81,9 +82,9 @@ public:
     virtual int       body_weight(bool base = false) const;
     virtual int       total_weight() const = 0;
 
-    virtual int       damage_brand(int which_attack = -1) = 0;
-    virtual int       damage_type(int which_attack = -1) = 0;
-    virtual item_def *weapon(int which_attack = -1) = 0;
+    virtual brand_type damage_brand(int which_attack = -1) = 0;
+    virtual int        damage_type(int which_attack = -1) = 0;
+    virtual item_def  *weapon(int which_attack = -1) = 0;
     // Yay for broken overloading.
     const item_def *primary_weapon() const
     {
@@ -187,7 +188,7 @@ public:
     virtual void teleport(bool right_now = false,
                           bool abyss_shift = false,
                           bool wizard_tele = false) = 0;
-    virtual void poison(actor *attacker, int amount = 1, bool force = false) = 0;
+    virtual bool poison(actor *attacker, int amount = 1, bool force = false) = 0;
     virtual bool sicken(int amount, bool allow_hint = true) = 0;
     virtual void paralyse(actor *attacker, int strength,
                           std::string source = "") = 0;

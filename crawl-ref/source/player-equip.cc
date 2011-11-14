@@ -44,7 +44,10 @@ void equip_item(equipment_type slot, int item_slot, bool msg)
     ASSERT(you.equip[slot] == -1);
     ASSERT(!you.melded[slot]);
 
+    // Maybe this prevent a carried item from allowing training.
+    maybe_change_train(you.inv[item_slot], false);
     you.equip[slot] = item_slot;
+    item_skills(you.inv[item_slot], you.start_train);
 
     _equip_effect(slot, item_slot, false, msg);
     ash_check_bondage();
@@ -63,7 +66,11 @@ bool unequip_item(equipment_type slot, bool msg)
         return (false);
     else
     {
+        item_skills(you.inv[item_slot], you.stop_train);
         you.equip[slot] = -1;
+        // Maybe this allows training for a carried item.
+        maybe_change_train(you.inv[item_slot], true);
+
         if (!you.melded[slot])
             _unequip_effect(slot, item_slot, false, msg);
         else
@@ -427,7 +434,7 @@ static void _equip_use_warning(const item_def& item)
     else if (is_chaotic_item(item) && you.religion == GOD_ZIN)
         mpr(gettext("You really shouldn't be using a chaotic item like this."));
     else if (is_hasty_item(item) && you.religion == GOD_CHEIBRIADOS)
-        mpr(gettext("You really shouldn't be using a fast item like this."));
+        mpr(gettext("You really shouldn't be using a hasty item like this."));
     else if (is_poisoned_item(item) && you.religion == GOD_SHINING_ONE)
         mpr(gettext("You really shouldn't be using a poisoned item like this."));
 }
@@ -476,8 +483,6 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
             you.attribute[ATTR_SHADOWS] = 1;
             update_vision_range();
         }
-        else if (item.sub_type == MISC_HORN_OF_GERYON)
-            set_ident_flags(item, ISFLAG_IDENT_MASK);
         break;
     }
 
@@ -1001,7 +1006,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         break;
 
     case SPARM_POISON_RESISTANCE:
-        if (!player_res_poison())
+        if (player_res_poison() <= 0)
             mpr(gettext("You feel less healthy."));
         break;
 
@@ -1038,7 +1043,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
     case SPARM_LEVITATION:
         if (you.attribute[ATTR_PERM_LEVITATION] == 0)
             break;
-        else if (you.species != SP_KENKU || you.experience_level < 15)
+        else if (you.species != SP_TENGU || you.experience_level < 15)
         {
             if (!player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_LEVITATION))
                 you.attribute[ATTR_PERM_LEVITATION] = 0;
@@ -1080,13 +1085,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         else if (player_equip(EQ_AMULET, AMU_GUARDIAN_SPIRIT, true))
         {
             item_def& amu(you.inv[you.equip[EQ_AMULET]]);
-            if (!item_type_known(amu))
-            {
-                set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
-                mprf(gettext("You are wearing: %s"),
-                     amu.name(true, DESC_INVENTORY_EQUIP).c_str());
-            }
+            wear_id_type(amu);
         }
         break;
 
@@ -1140,9 +1139,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     switch (item.sub_type)
     {
-    case RING_FIRE:
     case RING_HUNGER:
-    case RING_ICE:
     case RING_LIFE_PROTECTION:
     case RING_POISON_RESISTANCE:
     case RING_PROTECTION_FROM_COLD:
@@ -1152,6 +1149,16 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case RING_SUSTENANCE:
     case RING_SLAYING:
     case RING_TELEPORT_CONTROL:
+        break;
+
+    case RING_FIRE:
+        mpr("You feel more attuned to fire.");
+        ident = ID_KNOWN_TYPE;
+        break;
+
+    case RING_ICE:
+        mpr("You feel more attuned to ice.");
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_WIZARDRY:

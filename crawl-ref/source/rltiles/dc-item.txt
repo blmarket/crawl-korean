@@ -333,24 +333,26 @@ orcish_chain_mail2
 
 splint_mail1 ARM_SPLINT_MAIL
 splint_mail2
-banded_mail1 ARM_BANDED_MAIL
+banded_mail1
 banded_mail2
 
-plate_mail1 ARM_PLATE_MAIL
-plate_mail2
-orcish_platemail ARM_PLATE_MAIL_ORC
-orcish_platemail2
+plate1 ARM_PLATE_ARMOUR
+plate2
+orcish_plate ARM_PLATE_ARMOUR_ORC
+orcish_plate2
 
-crystal_plate_mail ARM_CRYSTAL_PLATE_MAIL
-crystal_plate_mail2
+crystal_plate ARM_CRYSTAL_PLATE_ARMOUR
+crystal_plate2
+crystal_plate3
+crystal_plate4
 
 animal_skin1 ARM_ANIMAL_SKIN
 animal_skin2
 
 troll_hide ARM_TROLL_HIDE
 troll_leather_armour ARM_TROLL_LEATHER_ARMOUR
-green_dragon_scales ARM_DRAGON_HIDE
-green_dragon_scale_mail ARM_DRAGON_ARMOUR
+green_dragon_scales ARM_FIRE_DRAGON_HIDE
+green_dragon_scale_mail ARM_FIRE_DRAGON_ARMOUR
 ice_dragon_hide ARM_ICE_DRAGON_HIDE
 ice_dragon_armour ARM_ICE_DRAGON_ARMOUR
 silver_dragon_scales ARM_STEAM_DRAGON_HIDE
@@ -472,7 +474,7 @@ i-frost WAND_FROST
 i-slowing WAND_SLOWING
 i-hasting WAND_HASTING
 i-magic_darts WAND_MAGIC_DARTS
-i-healing WAND_HEALING
+i-heal_wounds WAND_HEAL_WOUNDS
 i-paralysis WAND_PARALYSIS
 i-fire WAND_FIRE
 i-cold WAND_COLD
@@ -704,7 +706,7 @@ white
 %sdir item/potion
 %back i-label
 %rim 0
-i-heal POT_HEALING POT_ID_FIRST
+i-curing POT_CURING POT_ID_FIRST
 i-heal-wounds POT_HEAL_WOUNDS
 i-speed POT_SPEED
 i-might POT_MIGHT

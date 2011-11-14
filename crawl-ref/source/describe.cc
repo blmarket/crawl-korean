@@ -22,6 +22,7 @@
 #include "artefact.h"
 #include "cio.h"
 #include "clua.h"
+#include "coord.h"
 #include "debug.h"
 #include "decks.h"
 #include "delay.h"
@@ -388,8 +389,11 @@ std::string artefact_auto_inscription(const item_def& item)
 
     const std::vector<std::string> propnames = _randart_propnames(item);
 
-    return (comma_separated_line(propnames.begin(), propnames.end(),
-                                 " ", " "));
+    std::string insc = comma_separated_line(propnames.begin(), propnames.end(),
+                                 " ", " ");
+    if (!insc.empty() && insc[insc.length() - 1] == ',')
+        insc.erase(insc.length() - 1);
+    return insc;
 }
 
 void add_autoinscription(item_def &item, std::string ainscrip)
@@ -513,9 +517,13 @@ static std::string _randart_descrip(const item_def &item)
     if (known_proprt(ARTP_METABOLISM))
     {
         if (proprt[ ARTP_METABOLISM ] >= 3)
-            description += gettext("\nIt greatly speeds your metabolism.");
-        else if (proprt[ ARTP_METABOLISM ])
-            description += gettext("\nIt speeds your metabolism. ");
+            description += "\nIt greatly speeds your metabolism.";
+        else if (proprt[ ARTP_METABOLISM ] >= 1)
+            description += "\nIt speeds your metabolism. ";
+        if (proprt[ ARTP_METABOLISM ] <= -3)
+            description += "\nIt greatly slows your metabolism.";
+        else if (proprt[ ARTP_METABOLISM ] <= -1)
+            description += "\nIt slows your metabolism. ";
     }
 
     if (known_proprt(ARTP_STEALTH))
@@ -549,36 +557,38 @@ static const char *trap_names[] =
 {
     "dart", "arrow", "spear", "axe",
     "teleport", "alarm", "blade",
-    "bolt", "net", "zot", "needle",
+    "bolt", "net", "Zot", "needle",
     "shaft", "passage", "pressure plate", "web",
 };
 
-const char *trap_name(trap_type trap)
+std::string trap_name(trap_type trap)
 {
-    ASSERT(NUM_TRAPS == sizeof(trap_names) / sizeof(*trap_names));
+    COMPILE_CHECK(ARRAYSZ(trap_names) == NUM_TRAPS);
 
     if (trap >= TRAP_DART && trap < NUM_TRAPS)
-        return trap_names[trap];
-    return (NULL);
+        return (trap_names[trap]);
+    return ("");
 }
 
 int str_to_trap(const std::string &s)
 {
-    ASSERT(NUM_TRAPS == sizeof(trap_names) / sizeof(*trap_names));
+    // "Zot trap" is capitalised in trap_names[], but the other trap
+    // names aren't.
+    const std::string tspec = lowercase_string(s);
 
     // allow a couple of synonyms
-    if (s == "random" || s == "any")
+    if (tspec == "random" || tspec == "any")
         return (TRAP_RANDOM);
-    else if (s == "suitable")
+    else if (tspec == "suitable")
         return (TRAP_INDEPTH);
-    else if (s == "nonteleport" || s == "noteleport"
-             || s == "nontele" || s == "notele")
+    else if (tspec == "nonteleport" || tspec == "noteleport"
+             || tspec == "nontele" || tspec == "notele")
     {
         return (TRAP_NONTELEPORT);
     }
 
     for (int i = 0; i < NUM_TRAPS; ++i)
-        if (trap_names[i] == s)
+        if (tspec == lowercase_string(trap_names[i]))
             return (i);
 
     return (-1);
@@ -786,7 +796,7 @@ static std::string _corrosion_resistance_string(const item_def &item)
     else if (ench >= 4 && item_ident(item, ISFLAG_KNOW_PLUSES))
         return make_stringf(gettext(format), gettext("extremely resistant"));
     else if (item.base_type == OBJ_ARMOUR
-             && item.sub_type == ARM_CRYSTAL_PLATE_MAIL)
+             && item.sub_type == ARM_CRYSTAL_PLATE_ARMOUR)
     {
         return gettext("\nBeing made of crystal renders it very resistant to acidic "
                "corrosion.");
@@ -821,6 +831,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         append_weapon_stats(description, item);
 
     int spec_ench = get_weapon_brand(item);
+    int damtype = get_vorpal_type(item);
 
     if (!is_artefact(item) && !verbose)
         spec_ench = SPWPN_NORMAL;
@@ -836,7 +847,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
             description += gettext("It emits flame when wielded, causing extra "
                 "injury to most foes and up to double damage against "
                 "particularly susceptible opponents.");
-            if (get_vorpal_type(item) & (DVORP_SLICING | DVORP_CHOPPING))
+            if (damtype == DVORP_SLICING || damtype == DVORP_CHOPPING)
             {
                 description += gettext(" Big, fiery blades are also staple armaments "
                     "of hydra-hunters.");
@@ -956,18 +967,9 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
                 "its path until it reaches maximum range.");
             break;
         case SPWPN_REAPING:
-            if (is_range_weapon(item))
-            {
-                description += gettext("If ammo fired by it kills a monster, "
-                    "causing it to leave a corpse, the corpse will be "
-                    "animated as a zombie friendly to the killer.");
-            }
-            else
-            {
-                description += gettext("If a monster killed with it leaves a "
-                    "corpse in good enough shape, the corpse will be "
-                    "animated as a zombie friendly to the killer.");
-            }
+            description += gettext("If a monster killed with it leaves a "
+                "corpse in good enough shape, the corpse will be "
+                "animated as a zombie friendly to the killer.");
             break;
         case SPWPN_ANTIMAGIC:
             description += gettext("It disrupts the flow of magical energy around "
@@ -1053,7 +1055,7 @@ static std::string _describe_weapon(const item_def &item, bool verbose)
         if (item_ident(item, ISFLAG_KNOW_PLUSES)
             && item.plus >= MAX_WPN_ENCHANT && item.plus2 >= MAX_WPN_ENCHANT)
         {
-            description += gettext("\nIt is maximally enchanted.");
+            description += gettext("\nIt cannot be enchanted further.");
         }
         else
         {
@@ -1187,18 +1189,12 @@ static std::string _describe_ammo(const item_def &item)
             description += gettext("It has been contaminated by something likely to cause disease.");
             break;
         case SPMSL_RAGE:
-            description += gettext("It is tipped with a substance that causes a mindless, berserk rage.");
+            description += gettext("It is tipped with a substance that causes a mindless, "
+                "berserk rage, making people attack friend and foe alike.");
             break;
        case SPMSL_RETURNING:
             description += gettext("A skilled user can throw it in such a way "
                 "that it will return to its owner.");
-            break;
-        case SPMSL_REAPING:
-            description += make_stringf(
-                gettext("If it kills a monster, causing it to leave "
-                "a corpse, the corpse will be animated as a zombie "
-                "friendly to the one who %s it."),
-                threw_or_fired.c_str());
             break;
         case SPMSL_PENETRATION:
             description += gettext("It will pass through any targets it hits, "
@@ -1275,7 +1271,7 @@ static std::string _describe_ammo(const item_def &item)
         append_missile_info(description);
 
     if (item_ident(item, ISFLAG_KNOW_PLUSES) && item.plus >= MAX_WPN_ENCHANT)
-        description += gettext("\nIt is maximally enchanted.");
+        description += gettext("\nIt cannot be enchanted further.");
     else
     {
         std::string value = _get_value(MAX_WPN_ENCHANT, false);
@@ -1438,7 +1434,10 @@ static std::string _describe_armour(const item_def &item, bool verbose)
             description += gettext("\nIt is well-crafted and durable.");
         else if (race == ISFLAG_ELVEN)
         {
-            description += gettext("\nIt is well-crafted and unobstructive");
+            if (get_item_slot(item) == EQ_BODY_ARMOUR)
+                description += gettext("\nIt is well-crafted and unobstructive");
+            else
+                description += gettext("\nIt is well-crafted and lightweight");
             if (item.sub_type == ARM_CLOAK || item.sub_type == ARM_BOOTS)
                 description += gettext(", and helps its wearer avoid being noticed");
             description += ".";
@@ -1463,7 +1462,7 @@ static std::string _describe_armour(const item_def &item, bool verbose)
             description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."), value.c_str());
         }
         else
-            description += gettext("\nIt is maximally enchanted.");
+            description += gettext("\nIt cannot be enchanted further.");
     }
 
     description += _corrosion_resistance_string(item);
@@ -1768,9 +1767,6 @@ bool is_dumpable_artefact(const item_def &item, bool verbose)
 //
 // get_item_description
 //
-// Note that the string will include dollar signs which should
-// be interpreted as carriage returns.
-//
 //---------------------------------------------------------------
 std::string get_item_description(const item_def &item, bool verbose,
                                  bool dump, bool noquote)
@@ -2044,10 +2040,12 @@ std::string get_item_description(const item_def &item, bool verbose,
                 break;
             }
 
-            if (god_hates_cannibalism(you.religion)
-                   && is_player_same_species(item.plus)
-                || you.religion == GOD_ZIN
+            if ((god_hates_cannibalism(you.religion)
+                   && is_player_same_species(item.plus))
+                || (you.religion == GOD_ZIN
                    && mons_class_intel(item.plus) >= I_NORMAL)
+                || (is_good_god(you.religion)
+                   && mons_class_holiness(item.plus) == MH_HOLY))
             {
                 std::string _god_name = god_name(you.religion);
                 description << make_stringf(gettext("\n\n%s disapproves of eating such meat."),
@@ -2222,6 +2220,13 @@ std::string get_item_description(const item_def &item, bool verbose,
             "\n\n%s disapproves of the use of such an item."),
             gettext(god_name(you.religion).c_str()));
     }
+
+    if (origin_describable(item))
+        description << "\n" << origin_desc(item) << ".";
+
+    if (verbose)
+        description << "\n\n" << "Stash search prefixes: "
+                    << userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item);
 
     return description.str();
 }
@@ -2597,7 +2602,7 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
             actions.push_back(CMD_WEAR_ARMOUR);
         break;
     case OBJ_FOOD:
-        if (can_ingest(item, true, true, false))
+        if (can_ingest(item, true, false))
             actions.push_back(CMD_EAT);
         break;
     case OBJ_SCROLLS:
@@ -3489,27 +3494,29 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         break;
 
     case MONS_SERPENT_OF_HELL:
-        // XXX: ick
-        switch (mi.colour)
+        if (!mi.props.exists("serpent_of_hell_flavour"))
         {
-        case RED:
+            inf.body << "Well now, isn't this buggy?\n";
+            break;
+        }
+        switch (mi.props["serpent_of_hell_flavour"].get_int())
+        {
+        default:
+            // SoH spawned outside the hells counts as one of Gehenna.
             inf.body << gettext("A huge red glowing dragon, burning with hellfire.\n");
             break;
 
-        case WHITE:
+        case BRANCH_COCYTUS:
             inf.body << gettext("A huge gleaming white dragon, covered in shards of ice.\n");
             break;
 
-        case CYAN:
+        case BRANCH_DIS:
             inf.body << gettext("A huge metallic dragon, glowing with power.\n");
             break;
 
-        case MAGENTA:
+        case BRANCH_TARTARUS:
             inf.body << gettext("A huge and dark dragon, wreathed in terrifying shadows.\n");
             break;
-
-        default:
-            inf.body << gettext("Well now, isn't this buggy?\n");
         }
         break;
 
@@ -3579,9 +3586,9 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         inf.quote += "\n";
 
 #ifdef DEBUG_DIAGNOSTICS
-    if (mi.pos.origin())
+    if (mi.pos.origin() || !monster_at(player2grid(mi.pos)))
         return; // not a real monster
-    monster& mons = *mi.mon();
+    monster& mons = *monster_at(player2grid(mi.pos));
 
     inf.body << "\nMonster health: "
              << mons.hit_points << "/" << mons.max_hit_points << "\n";
@@ -4455,7 +4462,11 @@ void describe_god(god_type which_god, bool give_title)
         //mv: The following code shows abilities given by your god (if any).
 
         textcolor(LIGHTGREY);
-        cprintf(gettext("\n\nGranted powers:                                                          (Cost)\n"));
+        const char *header = gettext("Granted powers:");
+        const char *cost   = gettext("(Cost)");
+        cprintf("\n\n%s%*s%s\n", header,
+                get_number_of_cols() - 1 - strwidth(header) - strwidth(cost),
+                "", cost);
         textcolor(colour);
 
         // mv: Some gods can protect you from harm.
@@ -4584,6 +4595,17 @@ void describe_god(god_type which_god, bool give_title)
                               apostrophise(god_name(which_god)).c_str());
             _print_final_god_abil_desc(which_god, buf,
                                        ABIL_NON_ABILITY);
+        }
+        else if (which_god == GOD_CHEIBRIADOS)
+        {
+            if (you.piety >= piety_breakpoint(0))
+            {
+                have_any = true;
+                _print_final_god_abil_desc(which_god,
+                                           god_name(which_god)
+                                           + " slows and strengthens your metabolism.",
+                                           ABIL_NON_ABILITY);
+            }
         }
 
         // mv: No abilities (except divine protection) under penance

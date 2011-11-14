@@ -855,7 +855,7 @@ void explore_pickup_event(int did_pickup, int tried_pickup)
     // pick up, so the only thing to do is to stop.
     if (tried_pickup && you.running == RMODE_EXPLORE_GREEDY)
     {
-        if (explore_stopped_pos == you.pos() && !Options.pickup_dropped)
+        if (explore_stopped_pos == you.pos())
         {
             const std::string prompt =
                 make_stringf(
@@ -3923,7 +3923,9 @@ std::vector<level_id> TravelCache::known_levels() const
 
 bool can_travel_to(const level_id &id)
 {
-    return (id.level_type == LEVEL_DUNGEON && can_travel_interlevel());
+    return (id.level_type == LEVEL_DUNGEON && can_travel_interlevel()
+            // FIXME: check depth too once level_type is gone
+         || id.level_type == you.level_type);
 }
 
 bool can_travel_interlevel()

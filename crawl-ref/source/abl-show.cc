@@ -230,7 +230,7 @@ ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
     { ABIL_FEDHAS_EVOLUTION, ABIL_FEDHAS_SUNLIGHT, ABIL_FEDHAS_PLANT_RING,
       ABIL_FEDHAS_SPAWN_SPORES, ABIL_FEDHAS_RAIN},
     // Cheibriados
-    { ABIL_NON_ABILITY, ABIL_CHEIBRIADOS_TIME_BEND, ABIL_NON_ABILITY,
+    { ABIL_CHEIBRIADOS_TIME_BEND, ABIL_NON_ABILITY, ABIL_CHEIBRIADOS_DISTORTION,
       ABIL_CHEIBRIADOS_SLOUCH, ABIL_CHEIBRIADOS_TIME_STEP },
     // Ashenzari
     { ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
@@ -250,7 +250,6 @@ static const ability_def Ability_List[] =
     { ABIL_NON_ABILITY, M_("No ability"), 0, 0, 0, 0, ABFLAG_NONE },
     { ABIL_SPIT_POISON, M_("Spit Poison"), 0, 0, 40, 0, ABFLAG_BREATH },
 
-    { ABIL_TELEPORTATION, M_("Teleportation"), 0, 100, 200, 0, ABFLAG_NONE },
     { ABIL_BLINK, M_("Blink"), 0, 50, 50, 0, ABFLAG_NONE },
 
     { ABIL_BREATHE_FIRE, M_("Breathe Fire"), 0, 0, 125, 0, ABFLAG_BREATH },
@@ -272,8 +271,6 @@ static const ability_def Ability_List[] =
     { ABIL_FLY, M_("Fly"), 3, 0, 100, 0, ABFLAG_NONE },
     { ABIL_STOP_FLYING, M_("Stop Flying"), 0, 0, 0, 0, ABFLAG_NONE },
     { ABIL_HELLFIRE, M_("Hellfire"), 0, 250, 200, 0, ABFLAG_NONE },
-    { ABIL_THROW_FLAME, M_("Throw Flame"), 0, 20, 50, 0, ABFLAG_NONE },
-    { ABIL_THROW_FROST, M_("Throw Frost"), 0, 20, 50, 0, ABFLAG_NONE },
 
     // FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
     // as exhaustion's only (and designed), effect is preventing Berserk. - bwr
@@ -344,13 +341,13 @@ static const ability_def Ability_List[] =
 
     // Makhleb
     { ABIL_MAKHLEB_MINOR_DESTRUCTION, M_("Minor Destruction"),
-      1, 0, 20, 0, ABFLAG_NONE },
+      0, scaling_cost::fixed(1), 20, 0, ABFLAG_NONE },
     { ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB, M_("Lesser Servant of Makhleb"),
-      2, 0, 50, 1, ABFLAG_NONE },
+      0, scaling_cost::fixed(4), 50, 1, ABFLAG_NONE },
     { ABIL_MAKHLEB_MAJOR_DESTRUCTION, M_("Major Destruction"),
-      4, 0, 100, 1, ABFLAG_NONE },
+      0, scaling_cost::fixed(6), 100, generic_cost::range(0, 1), ABFLAG_NONE },
     { ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB, M_("Greater Servant of Makhleb"),
-      6, 0, 100, 5, ABFLAG_NONE },
+      0, scaling_cost::fixed(10), 100, 5, ABFLAG_NONE },
 
     // Sif Muna
     { ABIL_SIF_MUNA_CHANNEL_ENERGY, M_("Channel Energy"),
@@ -420,6 +417,7 @@ static const ability_def Ability_List[] =
 
     // Cheibriados
     { ABIL_CHEIBRIADOS_TIME_BEND, M_("Bend Time"), 3, 0, 50, 1, ABFLAG_NONE },
+    { ABIL_CHEIBRIADOS_DISTORTION, M_("Temporal Distortion"), 4, 0, 100, 3, ABFLAG_INSTANT },
     { ABIL_CHEIBRIADOS_SLOUCH, M_("Slouch"), 5, 0, 100, 8, ABFLAG_NONE },
     { ABIL_CHEIBRIADOS_TIME_STEP, M_("Step From Time"),
       10, 0, 200, 10, ABFLAG_NONE },
@@ -937,8 +935,6 @@ static talent _get_talent(ability_type ability, bool check_confused)
     ASSERT(ability != ABIL_NON_ABILITY);
 
     talent result;
-    // Only replace placeholder abilities here, so that the replaced
-    // abilities keep the same slots if they change.
     result.which = _fixup_ability(ability);
 
     const ability_def &abil = _get_ability_def(result.which);
@@ -953,6 +949,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
         {
             // Initialize these so compilers don't complain.
             result.is_invocation = 0;
+            result.is_zotdef = 0;
             result.hotkey = 0;
             result.fail = 0;
 
@@ -1049,7 +1046,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
             failure -= 20;
         break;
 
-    case ABIL_FLY:              // this is for kenku {dlb}
+    case ABIL_FLY:              // this is for tengu {dlb}
         failure = 45 - (3 * you.experience_level);
         break;
 
@@ -1072,14 +1069,10 @@ static talent _get_talent(ability_type ability, bool check_confused)
         // end species abilities (some mutagenic)
 
         // begin demonic powers {dlb}
-    case ABIL_THROW_FLAME:
-    case ABIL_THROW_FROST:
-        failure = 10 - you.experience_level;
-        break;
-
     case ABIL_HELLFIRE:
         failure = 50 - you.experience_level;
         break;
+        // end demonic powers {dlb}
 
     case ABIL_BLINK:
         // Allowing perfection makes the third level matter much more
@@ -1087,12 +1080,6 @@ static talent _get_talent(ability_type ability, bool check_confused)
         failure = 48 - (12 * player_mutation_level(MUT_BLINK))
                   - you.experience_level / 2;
         break;
-
-    case ABIL_TELEPORTATION:
-        failure = ((player_mutation_level(MUT_TELEPORT_AT_WILL) > 1) ? 30 : 50)
-                    - you.experience_level;
-        break;
-        // end demonic powers {dlb}
 
         // begin transformation abilities {dlb}
     case ABIL_END_TRANSFORMATION:
@@ -1150,6 +1137,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
     case ABIL_ASHENZARI_TRANSFER_KNOWLEDGE:
     case ABIL_ASHENZARI_END_TRANSFER:
     case ABIL_ASHENZARI_SCRYING:
+    case ABIL_JIYVA_CURE_BAD_MUTATION:
         invoc = true;
         perfect = true;
         failure = 0;
@@ -1176,11 +1164,6 @@ static talent _get_talent(ability_type ability, bool check_confused)
     case ABIL_YRED_ANIMATE_DEAD:
         invoc = true;
         failure = 40 - (you.piety / 20) - you.skill(SK_INVOCATIONS, 4);
-        break;
-
-    // Placeholder for Animate Remains or Animate Dead.
-    case ABIL_YRED_ANIMATE_REMAINS_OR_DEAD:
-        invoc = true;
         break;
 
     case ABIL_ZIN_VITALISATION:
@@ -1216,6 +1199,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
 
     case ABIL_ZIN_IMPRISON:
     case ABIL_LUGONU_BANISH:
+    case ABIL_CHEIBRIADOS_DISTORTION:
         invoc = true;
         failure = 60 - (you.piety / 20) - you.skill(SK_INVOCATIONS, 5);
         break;
@@ -1247,7 +1231,6 @@ static talent _get_talent(ability_type ability, bool check_confused)
     case ABIL_YRED_ENSLAVE_SOUL:
     case ABIL_ELYVILON_DIVINE_VIGOUR:
     case ABIL_LUGONU_ABYSS_ENTER:
-    case ABIL_JIYVA_CURE_BAD_MUTATION:
     case ABIL_CHEIBRIADOS_TIME_STEP:
         invoc = true;
         failure = 80 - (you.piety / 25) - you.skill(SK_INVOCATIONS, 4);
@@ -1358,10 +1341,10 @@ bool activate_ability()
     {
         // Give messages if the character cannot use innate talents right now.
         // * Vampires can't turn into bats when full of blood.
-        // * Permanent flying (Kenku) cannot be turned off.
+        // * Permanent flying (Tengu) cannot be turned off.
         if (you.species == SP_VAMPIRE && you.experience_level >= 3)
             mpr(gettext("Sorry, you're too full to transform right now."));
-        else if (you.species == SP_KENKU && you.experience_level >= 5
+        else if (you.species == SP_TENGU && you.experience_level >= 5
                  || player_mutation_level(MUT_BIG_WINGS))
         {
             if (you.flight_mode() == FL_LEVITATE)
@@ -1495,7 +1478,8 @@ static bool _check_ability_possible(const ability_def& abil,
             && you.strength() == you.max_strength()
             && you.intel() == you.max_intel()
             && you.dex() == you.max_dex()
-            && !player_rotted())
+            && !player_rotted()
+            && !you.duration[DUR_NAUSEA])
         {
             mpr(gettext("Nothing ails you!"));
             return (false);
@@ -1747,8 +1731,6 @@ static int _calc_breath_ability_range(ability_type ability)
     return (-2);
 }
 
-#define random_mons(...) static_cast<monster_type>(random_choose(__VA_ARGS__))
-
 static bool _do_ability(const ability_def& abil)
 {
     int power;
@@ -1975,11 +1957,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_EVOKE_TELEPORTATION:    // ring of teleportation
-    case ABIL_TELEPORTATION:          // teleport mut
-        if (player_mutation_level(MUT_TELEPORT_AT_WILL) == 3)
-            you_teleport_now(true, true); // instant and to new area of Abyss
-        else
-            you_teleport();
+        you_teleport();
         break;
 
     case ABIL_BREATHE_STICKY_FLAME:
@@ -1994,7 +1972,7 @@ static bool _do_ability(const ability_def& abil)
             return (false);
         }
 
-        if (stop_attack_prompt(hitfunc, "spit"))
+        if (stop_attack_prompt(hitfunc, "spit at"))
             return false;
 
         zapping(ZAP_BREATHE_STICKY_FLAME, (you.form == TRAN_DRAGON) ?
@@ -2137,7 +2115,7 @@ static bool _do_ability(const ability_def& abil)
         go_berserk(true);
         break;
 
-    // Fly (kenku) - eventually becomes permanent (see main.cc).
+    // Fly (tengu) - eventually becomes permanent (see main.cc).
     case ABIL_FLY:
         if (you.experience_level < 15)
             cast_fly(you.experience_level * 4);
@@ -2159,20 +2137,6 @@ static bool _do_ability(const ability_def& abil)
         if (your_spells(SPELL_HELLFIRE_BURST,
                         you.experience_level * 5, false) == SPRET_ABORT)
             return (false);
-        break;
-
-    case ABIL_THROW_FLAME:
-    case ABIL_THROW_FROST:
-        // Taking ranges from the equivalent spells.
-        beam.range = (abil.ability == ABIL_THROW_FLAME ? 7 : 8);
-        if (!spell_direction(abild, beam))
-            return (false);
-
-        if (!zapping((abil.ability == ABIL_THROW_FLAME ? ZAP_FLAME : ZAP_FROST),
-                     you.experience_level * 3, beam, true))
-        {
-            return (false);
-        }
         break;
 
     case ABIL_EVOKE_TURN_INVISIBLE:     // ring, randarts, darkness items
@@ -2203,7 +2167,7 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_EVOKE_STOP_LEVITATING:
         ASSERT(!you.attribute[ATTR_LEV_UNCANCELLABLE]);
         you.duration[DUR_LEVITATION] = 0;
-        // cancels all sources at once: boots + kenku
+        // cancels all sources at once: boots + tengu
         you.attribute[ATTR_PERM_LEVITATION] = 0;
         land_player();
         break;
@@ -2399,7 +2363,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_MAKHLEB_LESSER_SERVANT_OF_MAKHLEB:
-        summon_demon_type(random_mons(MONS_HELLWING, MONS_NEQOXEC,
+        summon_demon_type(random_choose(MONS_HELLWING, MONS_NEQOXEC,
                           MONS_ORANGE_DEMON, MONS_SMOKE_DEMON, MONS_YNOXINUL, -1),
                           20 + you.skill(SK_INVOCATIONS, 3), GOD_MAKHLEB);
         break;
@@ -2434,7 +2398,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_MAKHLEB_GREATER_SERVANT_OF_MAKHLEB:
-        summon_demon_type(random_mons(MONS_EXECUTIONER, MONS_GREEN_DEATH,
+        summon_demon_type(random_choose(MONS_EXECUTIONER, MONS_GREEN_DEATH,
                           MONS_BLIZZARD_DEMON, MONS_BALRUG, MONS_CACODEMON, -1),
                           20 + you.skill(SK_INVOCATIONS, 3), GOD_MAKHLEB);
         break;
@@ -2504,7 +2468,7 @@ static bool _do_ability(const ability_def& abil)
     {
         const bool self = (abil.ability == ABIL_ELYVILON_GREATER_HEALING_SELF);
 
-        if (cast_healing(10 + (you.skill(SK_INVOCATIONS, 1, 3)), true,
+        if (cast_healing(10 + (you.skill_rdiv(SK_INVOCATIONS, 1, 3)), true,
                          self ? you.pos() : coord_def(0, 0), !self,
                          self ? TARG_NUM_MODES : TARG_INJURED_FRIEND) < 0)
         {
@@ -2708,10 +2672,16 @@ static bool _do_ability(const ability_def& abil)
         cheibriados_time_bend(16 + you.skill(SK_INVOCATIONS, 8));
         break;
 
+    case ABIL_CHEIBRIADOS_DISTORTION:
+        cheibriados_temporal_distortion();
+        break;
+
     case ABIL_CHEIBRIADOS_SLOUCH:
-        mpr(gettext("You can feel time thicken."));
-        dprf(gettext("your speed is %d"), player_movement_speed());
-        cheibriados_slouch(0);
+        if (!cheibriados_slouch(0))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
         break;
 
     case ABIL_ASHENZARI_SCRYING:
@@ -3111,13 +3081,13 @@ std::vector<talent> your_talents(bool check_confused)
     if (you.species == SP_VAMPIRE && you.experience_level >= 6)
         _add_talent(talents, ABIL_BOTTLE_BLOOD, false);
 
-    if (you.species == SP_KENKU
+    if (you.species == SP_TENGU
         && !you.attribute[ATTR_PERM_LEVITATION]
         && you.experience_level >= 5
         && (you.experience_level >= 15 || !you.airborne())
         && (!form_changed_physiology() || you.form == TRAN_LICH))
     {
-        // Kenku can fly, but only from the ground
+        // Tengu can fly, but only from the ground
         // (until level 15, when it becomes permanent until revoked).
         // jmf: "upgrade" for draconians -- expensive flight
         _add_talent(talents, ABIL_FLY, check_confused);
@@ -3131,7 +3101,7 @@ std::vector<talent> your_talents(bool check_confused)
 
     if (you.attribute[ATTR_PERM_LEVITATION]
         && (!form_changed_physiology() || you.form == TRAN_LICH)
-        && you.species == SP_KENKU && you.experience_level >= 5)
+        && you.species == SP_TENGU && you.experience_level >= 5)
     {
         _add_talent(talents, ABIL_STOP_FLYING, check_confused);
     }
@@ -3140,20 +3110,11 @@ std::vector<talent> your_talents(bool check_confused)
     if (player_mutation_level(MUT_HURL_HELLFIRE))
         _add_talent(talents, ABIL_HELLFIRE, check_confused);
 
-    if (player_mutation_level(MUT_THROW_FLAMES))
-        _add_talent(talents, ABIL_THROW_FLAME, check_confused);
-
-    if (player_mutation_level(MUT_THROW_FROST))
-        _add_talent(talents, ABIL_THROW_FROST, check_confused);
-
     if (you.duration[DUR_TRANSFORMATION] && !you.transform_uncancellable)
         _add_talent(talents, ABIL_END_TRANSFORMATION, check_confused);
 
     if (player_mutation_level(MUT_BLINK))
         _add_talent(talents, ABIL_BLINK, check_confused);
-
-    if (player_mutation_level(MUT_TELEPORT_AT_WILL))
-        _add_talent(talents, ABIL_TELEPORTATION, check_confused);
 
     // Religious abilities.
     if (you.religion == GOD_TROG && !silenced(you.pos()))
@@ -3210,7 +3171,7 @@ std::vector<talent> your_talents(bool check_confused)
 
     if (player_evokable_levitation())
     {
-        // Has no effect on permanently flying Kenku.
+        // Has no effect on permanently flying Tengu.
         if (!you.permanent_flight())
         {
             // You can still evoke perm levitation if you have temporary one.
@@ -3294,7 +3255,7 @@ static void _set_god_ability_helper(ability_type abil, char letter)
 
 // Return GOD_NO_GOD if it isn't a god ability, otherwise return
 // the index of the god.
-static int _is_god_ability(int abil)
+static int _is_god_ability(ability_type abil)
 {
     if (abil == ABIL_NON_ABILITY)
         return (GOD_NO_GOD);
@@ -3410,7 +3371,7 @@ std::vector<ability_type> get_god_abilities()
         if (you.piety < piety_breakpoint(i))
             continue;
 
-        ability_type abil = god_abilities[you.religion][i];
+        ability_type abil = _fixup_ability(god_abilities[you.religion][i]);
         if (abil == ABIL_NON_ABILITY
             || crawl_state.game_is_zotdef()
                && (abil == ABIL_LUGONU_ABYSS_EXIT
@@ -3436,6 +3397,7 @@ std::vector<ability_type> get_god_abilities()
 
     return abilities;
 }
+
 void gain_god_ability(int i)
 {
     you.start_train.insert(abil_skill(god_abilities[you.religion][i]));

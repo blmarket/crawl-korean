@@ -51,9 +51,9 @@ Human
 
 지극히 평범한 인간으로, 모든 것에 평균적인 능력을 가지고 있다.
 %%%%
-Kenku
+Tengu
 
-호전적인 성격의 새의 머리와 인간의 몸을 가진 종족으로, 무기와 공격 마법에 능숙하다. 체력은 취약한 편이지만, 후에 배우게 되는 비행 능력으로 극복한다.
+Bird-people who love to fight, both with weapons and spells. They are quite fragile, but they learn to fly later on.
 %%%%
 Kobold
 

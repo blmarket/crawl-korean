@@ -51,7 +51,7 @@ class _layout
 #pragma GCC diagnostic ignored "-Wstrict-overflow"
     void _assert_validity() const
     {
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
         // Check that all the panes fit in the view.
         ASSERT((viewp+viewsz - termp).x <= termsz.x);
         ASSERT((viewp+viewsz - termp).y <= termsz.y);
@@ -119,18 +119,10 @@ class _inline_layout : public _layout
         if ((viewsz.y % 2) != 1)
             --viewsz.y;
 
-        if (Options.classic_hud)
-        {
-            mlistsz.y = 0;
-            _increment(msgsz.y,  leftover_y(), MSG_MAX_HEIGHT);
-        }
-        else
-        {
-            if (mlistsz.y < MLIST_MIN_HEIGHT)
-                _increment(mlistsz.y, leftover_rightcol_y(), MLIST_MIN_HEIGHT);
-            _increment(msgsz.y,  leftover_y(), MSG_MAX_HEIGHT);
-            _increment(mlistsz.y, leftover_rightcol_y(), INT_MAX);
-        }
+        if (mlistsz.y < MLIST_MIN_HEIGHT)
+            _increment(mlistsz.y, leftover_rightcol_y(), MLIST_MIN_HEIGHT);
+        _increment(msgsz.y,  leftover_y(), MSG_MAX_HEIGHT);
+        _increment(mlistsz.y, leftover_rightcol_y(), INT_MAX);
 
         // Finish off by doing the positions.
         if (Options.messages_at_top)
@@ -378,7 +370,7 @@ void crawl_view_geometry::init_geometry()
     const _inline_layout lay_inline(termsz, hudsz);
     const _mlist_col_layout lay_mlist(termsz, hudsz);
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     if ((termsz.x < MIN_COLS || termsz.y < MIN_LINES || !lay_inline.valid)
         && !crawl_state.need_save)
     {
@@ -390,7 +382,6 @@ void crawl_view_geometry::init_geometry()
 
     const _layout* winner = &lay_inline;
     if (Options.mlist_allow_alternate_layout
-        && !Options.classic_hud
         && lay_mlist.valid)
     {
         winner = &lay_mlist;
@@ -405,7 +396,7 @@ void crawl_view_geometry::init_geometry()
     mlistp  = winner->mlistp;
     mlistsz = winner->mlistsz;
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     // libgui may redefine these based on its own settings.
     gui_init_view_params(*this);
 #endif

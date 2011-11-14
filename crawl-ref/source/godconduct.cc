@@ -124,13 +124,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_NECROMANCY:
         case DID_UNHOLY:
         case DID_ATTACK_HOLY:
-        case DID_VIOLATE_HOLY_CORPSE:
+        case DID_DESECRATE_HOLY_REMAINS:
             switch (you.religion)
             {
             case GOD_ZIN:
             case GOD_SHINING_ONE:
             case GOD_ELYVILON:
-                if (!known && thing_done != DID_ATTACK_HOLY && thing_done != DID_VIOLATE_HOLY_CORPSE)
+                if (!known && thing_done != DID_ATTACK_HOLY && thing_done != DID_DESECRATE_HOLY_REMAINS)
                 {
                     simple_god_message(gettext(" forgives your inadvertent unholy act, "
                                        "just this once."));
@@ -270,6 +270,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
 
         case DID_FRIEND_DIED:
         case DID_SOULED_FRIEND_DIED:
+            if (victim && you.religion != GOD_FEDHAS
+                && (victim->holiness() == MH_NONLIVING
+                 || victim->holiness() == MH_PLANT))
+            {
+                // For everyone but Fedhas, plants are items not creatures,
+                // and animated items are, well, items as well.
+                break;
+            }
+
             switch (you.religion)
             {
             case GOD_FEDHAS:
@@ -1048,7 +1057,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 "Servant Kill Chaotic", "Attack In Sanctuary",
                 "Kill Artificial", "Undead Slave Kill Artificial",
                 "Servant Kill Artificial", "Destroy Spellbook",
-                "Exploration", "Desecrated Holy Remains", "Seen Monster",
+                "Exploration", "Desecrate Holy Remains", "Seen Monster",
             };
 
             COMPILE_CHECK(ARRAYSZ(conducts) == NUM_CONDUCTS);

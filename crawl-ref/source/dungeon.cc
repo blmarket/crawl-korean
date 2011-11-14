@@ -2585,26 +2585,17 @@ static const map_def *_dgn_random_map_for_place(bool minivault)
         && lid.branch == BRANCH_MAIN_DUNGEON
         && lid.depth == 1)
     {
-        if (crawl_state.game_is_sprint())
+        if (crawl_state.game_is_sprint()
+            || crawl_state.game_is_zotdef()
+            || crawl_state.game_is_tutorial())
         {
-            vault = find_map_by_name(get_sprint_map());
+            vault = find_map_by_name(crawl_state.map);
             if (vault == NULL)
             {
-                end(1, false, "Couldn't find selected Sprint map '%s'.",
-                    get_sprint_map().c_str());
+                end(1, false, "Couldn't find selected map '%s'.",
+                    crawl_state.map.c_str());
             }
         }
-        else if (crawl_state.game_is_tutorial())
-        {
-            vault = find_map_by_name(get_tutorial_map());
-            if (vault == NULL)
-            {
-                end(1, false, "Couldn't find selected Tutorial map '%s'.",
-                    get_tutorial_map().c_str());
-            }
-        }
-        else if (crawl_state.game_is_zotdef())
-            vault = random_map_for_tag("zotdef");
         else
             vault = random_map_for_tag("entry");
     }
@@ -3121,8 +3112,6 @@ static void _place_traps(int level_number)
     }
     else if (player_in_branch(BRANCH_CRYPT))
         place_webs(random2(20));
-    else if (player_in_branch(BRANCH_MAIN_DUNGEON) && you.absdepth0 == 12)
-        place_webs(300);
 }
 
 static void _dgn_place_feature_at_random_floor_square(dungeon_feature_type feat,
@@ -4516,7 +4505,7 @@ int dgn_place_monster(mons_spec &mspec,
         item_def *wpn = mons.mslot_item(MSLOT_WEAPON);
         ASSERT(wpn);
         mons.ghost->init_dancing_weapon(*wpn, 180);
-        mons.dancing_weapon_init();
+        mons.ghost_demon_init();
     }
 
     for (unsigned int i = 0; i < mspec.ench.size(); i++)
@@ -4714,14 +4703,14 @@ static void _vault_grid_glyph(vault_placement &place, const coord_def& where,
         }
         else if (vgrid == '|')
         {
-            which_class = static_cast<object_class_type>(random_choose_weighted(
+            which_class = random_choose_weighted(
                             2, OBJ_WEAPONS,
                             1, OBJ_ARMOUR,
                             1, OBJ_JEWELLERY,
                             1, OBJ_BOOKS,
                             1, OBJ_STAVES,
                             1, OBJ_MISCELLANY,
-                            0));
+                            0);
             which_depth = MAKE_GOOD_ITEM;
         }
         else if (vgrid == '*')
@@ -5831,10 +5820,11 @@ coord_def dgn_find_nearby_stair(dungeon_feature_type stair_to_find,
                 result = *ri;
         }
     }
+    if (found)
+        return result;
 
     // FAIL
-    ASSERT(found);
-    return result;
+    die("Can't find any floor to put the player on.");
 }
 
 void dgn_set_lt_callback(std::string level_type_tag,
@@ -6289,6 +6279,8 @@ void vault_placement::apply_grid()
 {
     if (!size.zero())
     {
+        bool clear = !map.has_tag("can_overwrite");
+
         // NOTE: assumes *no* previous item (I think) or monster (definitely)
         // placement.
         for (rectangle_iterator ri(pos, pos + size - 1); ri; ++ri)
@@ -6302,6 +6294,16 @@ void vault_placement::apply_grid()
                 continue;
 
             const dungeon_feature_type oldgrid = grd(*ri);
+
+            if (clear)
+            {
+                env.grid_colours(*ri) = 0;
+                env.pgrid(*ri) = 0;
+                // what about heightmap?
+#ifdef USE_TILE
+                tile_clear_flavour(*ri);
+#endif
+            }
 
             keyed_mapspec *mapsp = map.mapspec_at(dp);
             _vault_grid(*this, feat, *ri, mapsp);

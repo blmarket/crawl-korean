@@ -316,7 +316,9 @@ Leda's Liquefaction
 %%%%
 Lee's Rapid Deconstruction
 
-벽을 폭발시키면서, 치명적인 파편들을 발생시킨다. 이 주문은 벽과 비슷한 물질로 만들어진 대상에게 직접 사용할 수도 있다.
+This spell fragments a wall or a suitably brittle visible monster into an explosion of deadly shrapnel. It can be used on monsters made of ice, bone, or any wall-like substance, as well as those turned to stone by petrification.
+
+Targets made from rock, stone, ice or bone will cause a small or medium-sized explosion. Metal targets will cause a small but particularly damaging explosion, and targets made from crystal will cause a large and extremely damaging explosion.
 %%%%
 Lehudib's Crystal Spear
 
@@ -363,10 +365,6 @@ Mephitic Cloud
 
 극히 불쾌한 악취의 구름을 생성한다.
 %%%%
-Metabolic Englaciation
-
-시전자의 시야 내에 있는 모든 대상의 대사를 낮추어, 동면상태에 빠지도록 유도한다. 특히 냉혈동물에게는 부가적인 효과가 있다.
-%%%%
 Necromutation
 
 죽음의 힘으로 시전자를 음에너지에 친숙한, 반쯤 육체적인 영으로 탈바꿈시키는 주문이다. 시전자는 냉기, 독, 마법, 음에너지에 저항력을 얻게 된다.
@@ -400,7 +398,7 @@ Paralyse
 Passage of Golubria
 골루브리아의 통로
 
-한 번에 한 방향으로 통하는 관문을 열어, 통로에 들어온 자들을 순간적으로 반대편의 통로로 이동할 수 있게 한다.
+This spell opens two gateways (one always near the caster), which allow instantaneous transport to random other open gateways to any creature entering them. There is no limit to the number of gateways that can be open at one time, but a gateway will close when entered or after a moderate amount of time.
 %%%%
 Passwall
 
@@ -502,7 +500,7 @@ Smiting
 %%%%
 Spider Form
 
-시전자를 잠시동안 독거미와 같은 생물로 변화시킨다. 이 변신 상태에서는 주문의 사용이 조금 어려워진다. 거미의 몸 상태에서, 당신은 벽에 매달리는 것이 가능하다.
+This spell temporarily transforms the caster into a swift, venomous (but poison-susceptible), spider-like creature. Spellcasting is slightly more difficult in this form. While in this form, you can cling to walls.
 %%%%
 Static Discharge
 
@@ -628,7 +626,7 @@ Tukima's Ball
 %%%%
 Twisted Resurrection
 
-죽은 살덩어리들을 모아, 마력을 부여하여 소생시키는 주문이다. 이 주문을 위해서는 여러 시체들을 이어 붙여 조합해야 하며, 시체를 많이 모을수록 성공할 확률도 높아진다. 
+This spell causes nearby corpses to begin crawling together, merging into horrible agglomerations of flesh. More and larger corpses result in more powerful creations.
 %%%%
 Vampiric Draining
 

@@ -424,12 +424,12 @@ ENDMAP
 
 NAME:     dhfh_alchemist
 TAGS:     extra
-DEPTH:    Dwarf:1
+DEPTH:    Dwarf, Lair
 SUBVAULT: Z : fruiting_plant
 SUBVAULT: Y : fruiting_plant
 SUBVAULT: X : fruiting_plant
 SUBVAULT: W : fruiting_plant
-KITEM:    p = potion of healing / potion of heal wounds / \
+KITEM:    p = potion of curing / potion of heal wounds / \
               potion of restore abilities w:1 / potion of poison w:3 / \
               potion of strong poison w:1 / potion of confusion w:1 / nothing
 KMONS:    1 = deep dwarf artificer
@@ -488,7 +488,7 @@ PLACE:    Dwarf:1
 NSUBST:   s = 1:= / *:c
 MARKER:   = = lua:restrict_door()
 SUBST:    ? = w * |:3
-KITEM:    w : wand of healing
+KITEM:    w : wand of heal wounds
 SUBVAULT: O : dhfh_hall_top
 SUBVAULT: Z : dhfh_hall_left
 SUBVAULT: Y : dhfh_hall_left

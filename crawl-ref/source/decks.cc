@@ -121,9 +121,8 @@ const deck_archetype deck_of_destruction[] = {
     { CARD_VENOM,   {5, 5, 5} },
     { CARD_HAMMER,  {5, 5, 5} },
     { CARD_SPARK,   {5, 5, 5} },
-    { CARD_PAIN,    {5, 5, 5} },
+    { CARD_PAIN,    {5, 5, 3} },
     { CARD_ORB,     {5, 5, 5} },
-    { CARD_TORMENT, {0, 2, 4} },
     END_OF_DECK
 };
 
@@ -199,6 +198,7 @@ const deck_archetype deck_of_punishment[] = {
     { CARD_PORTAL,     {5, 5, 5} },
     { CARD_MINEFIELD,  {5, 5, 5} },
     { CARD_SWINE,      {5, 5, 5} },
+    { CARD_TORMENT,    {5, 5, 5} },
     END_OF_DECK
 };
 
@@ -1497,12 +1497,12 @@ static void _velocity_card(int power, deck_rarity_type rarity)
 {
     const int power_level = get_power_level(power, rarity);
     if (power_level >= 2)
-        potion_effect(POT_SPEED, random2(power / 4));
-    else if (power_level == 1)
     {
-        cast_fly(random2(power / 4));
+        potion_effect(POT_SPEED, random2(power / 4));
         cast_swiftness(random2(power / 4));
     }
+    else if (power_level == 1)
+        potion_effect(POT_SPEED, random2(power / 4));
     else
         cast_swiftness(random2(power / 4));
 }
@@ -1672,28 +1672,6 @@ static void _stairs_card(int power, deck_rarity_type rarity)
     stair_draw_count++;
 }
 
-static int _drain_monsters(coord_def where, int pow, int, actor *)
-{
-    if (where == you.pos())
-        drain_exp();
-    else
-    {
-        monster* mon = monster_at(where);
-        if (mon == NULL)
-            return (0);
-
-        if (!mon->drain_exp(&you, false, pow / 50))
-            simple_monster_message(mon, gettext(" is unaffected."));
-    }
-
-    return (1);
-}
-
-static void _mass_drain(int pow)
-{
-    apply_area_visible(_drain_monsters, pow, true);
-}
-
 // Return true if it was a "genuine" draw, i.e., there was a monster
 // to target. This is still exploitable by finding popcorn monsters.
 static bool _damaging_card(card_type card, int power, deck_rarity_type rarity)
@@ -1734,7 +1712,7 @@ static bool _damaging_card(card_type card, int power, deck_rarity_type rarity)
         if (power_level == 2)
         {
             mprf(gettext("You have drawn %s."), card_name(card));
-            _mass_drain(power);
+            torment(&you, TORMENT_CARDS, you.pos());
             return (true);
         }
         else
@@ -1982,7 +1960,7 @@ static void _potion_card(int power, deck_rarity_type rarity)
     potion_type pot_effects[] = {
         POT_AGILITY, POT_AGILITY, POT_BRILLIANCE,
         POT_BRILLIANCE, POT_MIGHT, POT_MIGHT,
-        POT_HEALING, POT_HEALING, POT_CONFUSION,
+        POT_CURING, POT_CURING, POT_CONFUSION,
         POT_SLOWING, POT_PARALYSIS
     };
 
@@ -2678,8 +2656,7 @@ static void _summon_dancing_weapon(int power, deck_rarity_type rarity)
         ASSERT(menv[mon].weapon() != NULL);
         item_def& wpn(*menv[mon].weapon());
 
-        // FIXME: Mega-hack (breaks encapsulation too).
-        wpn.flags &= ~ISFLAG_RACIAL_MASK;
+        set_equip_race(wpn, ISFLAG_NO_RACE);
 
         if (power_level == 0)
         {
@@ -2724,7 +2701,7 @@ static void _summon_dancing_weapon(int power, deck_rarity_type rarity)
         newstats.init_dancing_weapon(wpn, power / 4);
 
         menv[mon].set_ghost(newstats);
-        menv[mon].dancing_weapon_init();
+        menv[mon].ghost_demon_init();
     }
     else
         mpr(gettext("You see a puff of smoke."));

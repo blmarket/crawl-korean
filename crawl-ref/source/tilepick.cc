@@ -629,9 +629,16 @@ static tileidx_t _tileidx_monster_zombified(const monster* mon)
     switch (get_mon_shape(mon))
     {
     case MON_SHAPE_HUMANOID:
+        if (_is_zombie(z_type) && mons_genus(subtype) == MONS_TROLL)
+            return TILEP_MONS_ZOMBIE_TROLL;
     case MON_SHAPE_HUMANOID_WINGED:
+        if (_is_zombie(z_type) && mons_genus(subtype) == MONS_HARPY)
+            return TILEP_MONS_ZOMBIE_HARPY;
     case MON_SHAPE_HUMANOID_TAILED:
     case MON_SHAPE_HUMANOID_WINGED_TAILED:
+        if (_is_zombie(z_type) && mons_genus(subtype) == MONS_DRACONIAN)
+            return TILEP_MONS_ZOMBIE_DRACONIAN;
+
         if (z_type == MONS_SKELETON_SMALL)
             return TILEP_MONS_SKELETON_SMALL;
         else if (z_type == MONS_SKELETON_LARGE)
@@ -653,6 +660,14 @@ static tileidx_t _tileidx_monster_zombified(const monster* mon)
         z_tile = TILEP_MONS_ZOMBIE_NAGA;
         break;
     case MON_SHAPE_QUADRUPED_WINGED:
+        if (_is_zombie(z_type) && mons_genus(subtype) != MONS_DRAGON)
+        {
+            if (mons_genus(subtype) == MONS_GRIFFON)
+                return TILEP_MONS_ZOMBIE_GRIFFON;
+            else
+                return TILEP_MONS_ZOMBIE_QUADRUPED_WINGED;
+        }
+        // else fall-through for skeletons & dragons
     case MON_SHAPE_QUADRUPED:
         if (mons_genus(subtype) == MONS_DRAGON
             || mons_genus(subtype) == MONS_WYVERN)
@@ -783,6 +798,16 @@ static tileidx_t _mon_random(tileidx_t tile)
     return (tile + random2(count));
 }
 
+// actually, a triangle wave, but it's up to the actual tiles
+static tileidx_t _mon_sinus(tileidx_t tile)
+{
+    int count = tile_player_count(tile);
+    ASSERT(count > 0);
+    ASSERT(count > 1); // technically, staying put would work
+    int n = you.frame_no % (2 * count - 2);
+    return (n < count) ? (tile + n) : (tile + 2 * count - 2 - n);
+}
+
 // This function allows for getting a monster from "just" the type.
 // To avoid needless duplication of a cases in tileidx_monster, some
 // extra parameters that have reasonable defaults for monsters where
@@ -895,6 +920,10 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_HOBGOBLIN;
     case MONS_GNOLL:
         return TILEP_MONS_GNOLL;
+    case MONS_GNOLL_SHAMAN:
+        return TILEP_MONS_GNOLL_SHAMAN;
+    case MONS_GNOLL_SERGEANT:
+        return TILEP_MONS_GNOLL_SERGEANT;
     case MONS_BOGGART:
         return TILEP_MONS_BOGGART;
 
@@ -1136,6 +1165,10 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_UNSEEN_HORROR;
     case MONS_ABOMINATION_SMALL:
         return TILEP_MONS_ABOMINATION_SMALL;
+    case MONS_CRAWLING_CORPSE:
+        return TILEP_MONS_CRAWLING_CORPSE;
+    case MONS_MACABRE_MASS:
+        return TILEP_MONS_MACABRE_MASS;
 
     // abyssal monsters (not assigned/implemented yet)
     case MONS_LURKING_HORROR:
@@ -1300,8 +1333,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_MINOTAUR;
     case MONS_SHEDU:
         return TILEP_MONS_SHEDU;
-    case MONS_KENKU:
-        return TILEP_MONS_KENKU;
+    case MONS_TENGU:
+        return TILEP_MONS_TENGU;
 
     // ice beast ('I')
     case MONS_ICE_BEAST:
@@ -1558,8 +1591,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return 0;
 
     // '5' demons
-    case MONS_IMP:
-        return TILEP_MONS_IMP;
+    case MONS_CRIMSON_IMP:
+        return TILEP_MONS_CRIMSON_IMP;
     case MONS_QUASIT:
         return TILEP_MONS_QUASIT;
     case MONS_WHITE_IMP:
@@ -1624,8 +1657,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_LOROCYPROCA;
 
     // '1' demons
-    case MONS_FIEND:
-        return TILEP_MONS_FIEND;
+    case MONS_BRIMSTONE_FIEND:
+        return TILEP_MONS_BRIMSTONE_FIEND;
     case MONS_ICE_FIEND:
         return TILEP_MONS_ICE_FIEND;
     case MONS_SHADOW_FIEND:
@@ -2469,6 +2502,8 @@ static tileidx_t _tileidx_monster_no_props(const monster* mon)
         tileidx_t t = mon->props["monster_tile"].get_short();
         if (t == TILEP_MONS_STATUE_GUARDIAN)
             return _mon_random(t);
+        else if (t == TILEP_MONS_HELL_WIZARD)
+            return _mon_sinus(t);
         else
             return t;
     }
@@ -3002,19 +3037,20 @@ static tileidx_t _tileidx_armour_base(const item_def &item)
             return TILE_ARM_CHAIN_MAIL_ORC;
         return TILE_ARM_CHAIN_MAIL;
 
+#if TAG_MAJOR_VERSION == 32
+    case ARM_BANDED_MAIL:
+#endif
     case ARM_SPLINT_MAIL:
         return TILE_ARM_SPLINT_MAIL;
 
-    case ARM_BANDED_MAIL:
-        return TILE_ARM_BANDED_MAIL;
 
-    case ARM_PLATE_MAIL:
+    case ARM_PLATE_ARMOUR:
         if (race == ISFLAG_ORCISH)
-            return TILE_ARM_PLATE_MAIL_ORC;
-        return TILE_ARM_PLATE_MAIL;
+            return TILE_ARM_PLATE_ARMOUR_ORC;
+        return TILE_ARM_PLATE_ARMOUR;
 
-    case ARM_CRYSTAL_PLATE_MAIL:
-        return TILE_ARM_CRYSTAL_PLATE_MAIL;
+    case ARM_CRYSTAL_PLATE_ARMOUR:
+        return TILE_ARM_CRYSTAL_PLATE_ARMOUR;
 
     case ARM_SHIELD:
         return TILE_ARM_SHIELD;
@@ -3070,11 +3106,11 @@ static tileidx_t _tileidx_armour_base(const item_def &item)
     case ARM_TROLL_LEATHER_ARMOUR:
         return TILE_ARM_TROLL_LEATHER_ARMOUR;
 
-    case ARM_DRAGON_HIDE:
-        return TILE_ARM_DRAGON_HIDE;
+    case ARM_FIRE_DRAGON_HIDE:
+        return TILE_ARM_FIRE_DRAGON_HIDE;
 
-    case ARM_DRAGON_ARMOUR:
-        return TILE_ARM_DRAGON_ARMOUR;
+    case ARM_FIRE_DRAGON_ARMOUR:
+        return TILE_ARM_FIRE_DRAGON_ARMOUR;
 
     case ARM_ICE_DRAGON_HIDE:
         return TILE_ARM_ICE_DRAGON_HIDE;
@@ -3296,6 +3332,8 @@ static tileidx_t _tileidx_corpse(const item_def &item)
     case MONS_HOBGOBLIN:
         return TILE_CORPSE_HOBGOBLIN;
     case MONS_GNOLL:
+    case MONS_GNOLL_SHAMAN:
+    case MONS_GNOLL_SERGEANT:
         return TILE_CORPSE_GNOLL;
 
     // hounds and hogs ('h')
@@ -3589,8 +3627,8 @@ static tileidx_t _tileidx_corpse(const item_def &item)
         return TILE_CORPSE_HARPY;
     case MONS_MINOTAUR:
         return TILE_CORPSE_MINOTAUR;
-    case MONS_KENKU:
-        return TILE_CORPSE_KENKU;
+    case MONS_TENGU:
+        return TILE_CORPSE_TENGU;
     case MONS_SPHINX:
         return TILE_CORPSE_SPHINX;
     case MONS_SHEDU:
@@ -4345,7 +4383,9 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_OZOCUBUS_REFRIGERATION:   return TILEG_OZOCUBUS_REFRIGERATION;
     case SPELL_BOLT_OF_COLD:             return TILEG_BOLT_OF_COLD;
     case SPELL_FREEZING_CLOUD:           return TILEG_FREEZING_CLOUD;
+#if TAG_MAJOR_VERSION == 32
     case SPELL_ENGLACIATION:             return TILEG_METABOLIC_ENGLACIATION;
+#endif
     case SPELL_SIMULACRUM:               return TILEG_SIMULACRUM;
     case SPELL_ICE_STORM:                return TILEG_ICE_STORM;
 

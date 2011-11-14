@@ -161,7 +161,7 @@ std::string trap_def::name(description_level_type desc) const
     if (type >= NUM_TRAPS)
         return ("buggy");
 
-    const char* basename = trap_name(type);
+    std::string basename = trap_name(type);
     if (desc == DESC_CAP_A || desc == DESC_NOCAP_A)
     {
         std::string prefix = (desc == DESC_CAP_A ? "A" : "a");
@@ -251,7 +251,7 @@ bool trap_def::is_safe(actor* act) const
     // No prompt (teleport traps are ineffective if
     // wearing an amulet of stasis)
     if (type == TRAP_TELEPORT
-        && (player_equip(EQ_AMULET, AMU_STASIS, true)
+        && (player_equip(EQ_AMULET, AMU_STASIS, false)
             || scan_artefacts(ARTP_PREVENT_TELEPORTATION, false)))
     {
         return true;
@@ -485,28 +485,23 @@ std::vector<coord_def> find_golubria_on_level()
         if (trap && trap->type == TRAP_GOLUBRIA)
             ret.push_back(*ri);
     }
-    ASSERT(ret.size() <= 2);
     return ret;
 }
 
 static bool _find_other_passage_side(coord_def& to)
 {
     std::vector<coord_def> passages = find_golubria_on_level();
-    if (passages.size() < 2)
+    std::vector<coord_def> clear_passages;
+    for (unsigned int i = 0; i < passages.size(); i++)
+    {
+        if (passages[i] != to && !actor_at(passages[i]))
+            clear_passages.push_back(passages[i]);
+    }
+    const int choices = clear_passages.size();
+    if (choices < 1)
         return false;
-
-    if (to == passages[0])
-    {
-        to = passages[1];
-        return true;
-    }
-    else if (to == passages[1])
-    {
-        to = passages[0];
-        return true;
-    }
-    else
-        die("Golubria's passage not found");
+    to = clear_passages[random2(choices)];
+    return true;
 }
 
 // Returns a direction string from you.pos to the
@@ -514,7 +509,7 @@ static bool _find_other_passage_side(coord_def& to)
 // Returns an empty string if no direction could be
 // determined (if fuzz if false, this is only if
 // you.pos==pos).
-std::string direction_string(coord_def pos, bool fuzz)
+static std::string _direction_string(coord_def pos, bool fuzz)
 {
     int dx = you.pos().x - pos.x;
     if (fuzz)
@@ -667,7 +662,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                 msg = gettext("An alarm trap emits a blaring wail!");
             else
             {
-                std::string dir=direction_string(pos, !in_sight);
+                std::string dir = _direction_string(pos, !in_sight);
                 msg = make_stringf(gettext("You hear a %sblaring wail %s"),
                                    ((in_sight) ? "" : pgettext("trap_def::trigger", "distant ")),
                                    (!dir.empty() ? make_stringf(pgettext("trap_def::trigger", "to the %s."), dir.c_str()).c_str()
@@ -873,7 +868,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             {
                 if (m->is_insubstantial())
                     simple_monster_message(m, " passes through a web.");
-                else if (mons_genus(m->type))
+                else if (mons_genus(m->type) == MONS_JELLY)
                     simple_monster_message(m, " oozes through a web.");
                 // too spammy for spiders, and expected
             }
@@ -1123,17 +1118,6 @@ trap_type get_trap_type(const coord_def& pos)
         return (ptrap->type);
 
     return (TRAP_UNASSIGNED);
-}
-
-// Returns the unqualified name ("blade", "dart") of the trap at the
-// given position. Does not check if the trap has been discovered, and
-// will faithfully report the names of unknown traps.
-//
-// If there is no trap at the given position, returns an empty string.
-const char *trap_name_at(const coord_def& c)
-{
-    const trap_type trap = get_trap_type(c);
-    return trap != TRAP_UNASSIGNED? trap_name(trap) : "";
 }
 
 static bool _disarm_is_deadly(trap_def& trap)
@@ -1577,7 +1561,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
                                 "force_hit") == "true");
 
         bool poison = (type == TRAP_NEEDLE
-                       && !act.res_poison()
+                       && act.res_poison() <= 0
                        && (x_chance_in_y(50 - (3*act.armour_class()) / 2, 100)
                             || force_poison));
 

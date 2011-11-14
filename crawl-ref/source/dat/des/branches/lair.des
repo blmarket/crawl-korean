@@ -778,8 +778,8 @@ FTILE:  G = floor_grass
 COLOUR: B = brown
 FTILE:  B = floor_dirt
 SUBST:  BG = .
-NSUBST: ' = 1:d *:.
-NSUBST: . = 1:1 *=.....1
+NSUBST: ' = 1:d / *:.
+NSUBST: . = 1:1 / *=.....1
 MONS:   plant name:musa name_adjective
 ITEM:   banana q:6 w:2 / banana q:7 w:4 / banana q:10 / banana q:12 / \
         banana q:14 w:4 / banana q:16 w:2
@@ -936,6 +936,19 @@ xxx442.444444.4xxx
 xx444..344443..4xx
 xx44..........3.xx
 ..3..3....3.......
+ENDMAP
+
+##############################################################################
+# Do you explore carefully enough?
+#
+NAME:  explore_dammit
+DEPTH: Lair
+MONS:  plant / fungus w:3 / bush w:1
+MAP
+xxx
+x|xx
+xx1x
+ .xx
 ENDMAP
 
 ##############################################################################
@@ -1314,7 +1327,7 @@ MONS:   red devil / rotting devil / hairy devil / hellwing w:50
 MONS:   orange demon
 MONS:   sun demon
 MONS:   hydra / fire drake / dire elephant
-MONS:   wizard col:red hd:13 name:crazed n_adj
+MONS:   wizard col:red hd:13 name:crazed n_adj tile:mons_hell_wizard
 KITEM:  / = acquire any
 MARKER: = = lua:restrict_door {}
 MAP

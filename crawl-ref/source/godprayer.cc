@@ -138,15 +138,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 
     const bool is_cursed = wpn.cursed();
 
-    enchant_weapon(ENCHANT_TO_HIT, true, wpn);
-
-    if (coinflip())
-        enchant_weapon(ENCHANT_TO_HIT, true, wpn);
-
-    enchant_weapon(ENCHANT_TO_DAM, true, wpn);
-
-    if (coinflip())
-        enchant_weapon(ENCHANT_TO_DAM, true, wpn);
+    enchant_weapon(wpn, 1 + random2(2), 1 + random2(2), 0);
 
     if (is_cursed)
         do_uncurse_item(wpn, false);
@@ -203,9 +195,11 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 
     if (god == GOD_KIKUBAAQUDGHA)
     {
-        you.gift_timeout = 0; // no protection during pain branding weapon
+        you.gift_timeout = 1; // no protection during pain branding weapon
 
         torment(&you, TORMENT_KIKUBAAQUDGHA, you.pos());
+
+        you.gift_timeout = 0; // protection after pain branding weapon
 
         // Bloodify surrounding squares (75% chance).
         for (radius_iterator ri(you.pos(), 2, true, true); ri; ++ri)
@@ -593,23 +587,10 @@ static void _ashenzari_sac_scroll(const item_def& item)
 static bool _destroyed_valuable_weapon(int value, int type)
 {
     // Artefacts, including most randarts.
-    if (random2(value) >= random2(250))
+    if (type != OBJ_MISSILES && random2(value) >= random2(250))
         return (true);
 
-    // Medium valuable items are more likely to net piety at low piety,
-    // more so for missiles, since they're worth less as single items.
-    if (random2(value) >= random2((type == OBJ_MISSILES) ? 10 : 100)
-        && one_chance_in(1 + you.piety / 50))
-    {
-        return (true);
-    }
-
-    // If not for the above, missiles shouldn't yield piety.
-    if (type == OBJ_MISSILES)
-        return (false);
-
-    // Weapons, on the other hand, are always acceptable to boost low
-    // piety.
+    // All weapons and missiles are acceptable at low piety.
     if (you.piety < piety_breakpoint(0) || player_under_penance())
         return (true);
 
@@ -751,7 +732,7 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
         gain_piety(piety_change, piety_denom);
 
         // Preserving the old behaviour of giving the big message for
-        // artifacts and artifacts only.
+        // artefacts and artefacts only.
         relative_piety_gain = x_chance_in_y(piety_change, piety_denom) ?
                                 is_artefact(item) ?
                                   PIETY_LOTS : PIETY_SOME : PIETY_NONE;
@@ -948,8 +929,7 @@ static bool _offer_items()
             simple_god_message(" wants the Orb's power used on the surface!");
         else if (item_is_rune(*disliked_item))
             simple_god_message(" wants the runes to be proudly displayed.");
-        else if (disliked_item->base_type == OBJ_MISCELLANY
-                 && disliked_item->sub_type == MISC_HORN_OF_GERYON)
+        else if (item_is_horn_of_geryon(*disliked_item))
             simple_god_message(" doesn't want your path blocked.");
         // Zin was handled above, and the other gods don't care about
         // sacrifices.

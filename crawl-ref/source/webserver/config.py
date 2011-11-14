@@ -18,42 +18,54 @@ password_db = "./webserver/passwd.db3"
 static_path = "./webserver/static"
 template_path = "./webserver/templates/"
 
+server_socket_path = None # Uses global temp dir
+
+server_id = ""
+
 games = OrderedDict([
     ("dcss-web-trunk", dict(
         name = "DCSS trunk",
         crawl_binary = "./crawl",
         rcfile_path = "./rcs/",
         macro_path = "./rcs/",
-        morgue_path = "./rcs",
-        running_game_path = "./rcs/running",
-        client_prefix = "game")),
+        morgue_path = "./rcs/%n",
+        inprogress_path = "./rcs/running",
+        ttyrec_path = "./rcs/ttyrecs",
+        socket_path = "./rcs",
+        client_path = "./webserver/game_data/")),
     ("sprint-web-trunk", dict(
         name = "Sprint trunk",
         crawl_binary = "./crawl",
         rcfile_path = "./rcs/",
         macro_path = "./rcs/",
-        morgue_path = "./rcs",
-        running_game_path = "./rcs/running",
-        options = ["-sprint"],
-        client_prefix = "game")),
+        morgue_path = "./rcs/%n",
+        inprogress_path = "./rcs/running",
+        ttyrec_path = "./rcs/ttyrecs",
+        socket_path = "./rcs",
+        client_path = "./webserver/game_data/",
+        options = ["-sprint"])),
     ("zd-web-trunk", dict(
         name = "Zot Defense trunk",
         crawl_binary = "./crawl",
         rcfile_path = "./rcs/",
         macro_path = "./rcs/",
-        morgue_path = "./rcs",
-        running_game_path = "./rcs/running",
-        options = ["-zotdef"],
-        client_prefix = "game")),
+        morgue_path = "./rcs/%n",
+        inprogress_path = "./rcs/running",
+        ttyrec_path = "./rcs/ttyrecs",
+        socket_path = "./rcs",
+        client_path = "./webserver/game_data/",
+        options = ["-zotdef"])),
     ("tut-web-trunk", dict(
         name = "Tutorial trunk",
         crawl_binary = "./crawl",
         rcfile_path = "./rcs/",
         macro_path = "./rcs/",
-        morgue_path = "./rcs",
-        running_game_path = "./rcs/running",
-        options = ["-tutorial"],
-        client_prefix = "game")),
+        morgue_path = "./rcs/%n",
+        inprogress_path = "./rcs/running",
+        ttyrec_path = "./rcs/ttyrecs",
+        socket_path = "./rcs",
+        client_path = "./webserver/game_data/",
+        options = ["-tutorial"])),
 ])
 
 dgl_status_file = "./rcs/status"
@@ -85,3 +97,10 @@ login_token_lifetime = 7 # Days
 
 uid = None  # If this is not None, the server will setuid to that id after
 gid = None  # binding its sockets.
+
+umask = None # Ex. 0077
+
+chroot = None
+
+pidfile = None
+daemon = False

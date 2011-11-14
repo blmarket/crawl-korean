@@ -71,59 +71,10 @@
 #include "transform.h"
 #include "view.h"
 
-static bool _surge_identify_boosters(spell_type spell)
-{
-    const unsigned int typeflags = get_spell_disciplines(spell);
-    if ((typeflags & SPTYP_FIRE) || (typeflags & SPTYP_ICE))
-    {
-        int num_unknown = 0;
-        for (int i = EQ_LEFT_RING; i < NUM_EQUIP; ++i)
-        {
-            if (i == EQ_AMULET)
-                continue;
-
-            if (player_wearing_slot(i)
-                && !item_type_known(you.inv[you.equip[i]]))
-            {
-                ++num_unknown;
-            }
-        }
-
-        // We can also identify cases with two unknown rings, both
-        // of fire (or both of ice)...let's skip it.
-        if (num_unknown == 1)
-        {
-            for (int i = EQ_LEFT_RING; i < NUM_EQUIP; ++i)
-            {
-                if (i == EQ_AMULET)
-                    continue;
-
-                if (player_wearing_slot(i))
-                {
-                    item_def& ring = you.inv[you.equip[i]];
-                    if (!item_ident(ring, ISFLAG_KNOW_PROPERTIES)
-                        && (ring.sub_type == RING_FIRE
-                            || ring.sub_type == RING_ICE))
-                    {
-                        set_ident_type(ring.base_type, ring.sub_type,
-                                        ID_KNOWN_TYPE);
-                        set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
-                        mprf(gettext("You are wearing: %s"),
-                             ring.name(true, DESC_INVENTORY_EQUIP).c_str());
-                    }
-                }
-            }
-            return (true);
-        }
-    }
-    return (false);
-}
-
 static void _surge_power(spell_type spell)
 {
     int enhanced = 0;
 
-    _surge_identify_boosters(spell);
     enhanced += spell_enhancement(get_spell_disciplines(spell));
 
     if (enhanced)               // one way or the other {dlb}
@@ -420,6 +371,8 @@ int spell_fail(spell_type spell)
         }
     }
 
+    chance2 += 10 * player_mutation_level(MUT_WILD_MAGIC);
+
     // Apply the effects of Vehumet and items of wizardry.
     chance2 = _apply_spellcasting_success_boosts(spell, chance2);
 
@@ -483,6 +436,13 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
         {
             for (int i = enhanced; i < 0; i++)
                 power /= 2;
+        }
+
+        // Wild magic boosts spell power but decreases success rate.
+        if (!fail_rate_check)
+        {
+            power *= 10 + 5 * player_mutation_level(MUT_WILD_MAGIC);
+            power /= 10;
         }
 
         power = stepdown_value(power / 100, 50, 50, 150, 200);
@@ -1026,12 +986,6 @@ static bool _spellcasting_aborted(spell_type spell,
         return (true);
     }
 
-    if (spell == SPELL_GOLUBRIAS_PASSAGE && !can_cast_golubrias_passage())
-    {
-        mpr(gettext("Only one passage may be opened at a time."));
-        return (true);
-    }
-
     if (spell == SPELL_MALIGN_GATEWAY && !can_cast_malign_gateway())
     {
         mpr(gettext("The dungeon can only cope with one malign gateway at a time!"));
@@ -1501,8 +1455,11 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_MASS_CONFUSION:
         return mass_enchantment(ENCH_CONFUSION, powc, NULL, NULL, fail);
 
+#if TAG_MAJOR_VERSION == 32
     case SPELL_ENGLACIATION:
-        return cast_mass_sleep(powc, fail);
+        mpr("Sorry, this spell is gone!");
+        return SPRET_ABORT;
+#endif
 
     case SPELL_CONTROL_UNDEAD:
         return mass_enchantment(ENCH_CHARM, powc, NULL, NULL, fail);
@@ -1514,7 +1471,7 @@ static spret_type _do_cast(spell_type spell, int powc,
         return cast_mass_abjuration(powc, fail);
 
     case SPELL_OLGREBS_TOXIC_RADIANCE:
-        return cast_toxic_radiance(false, fail);
+        return cast_toxic_radiance(powc, false, fail);
 
     // XXX: I don't think any call to healing goes through here. --rla
     case SPELL_MINOR_HEALING:
@@ -1833,21 +1790,6 @@ std::string spell_noise_string(spell_type spell)
         return gettext(desc);
 }
 
-int spell_power_colour(spell_type spell)
-{
-    const int powercap = spell_power_cap(spell);
-    if (powercap == 0)
-        return DARKGREY;
-    const int power = calc_spell_power(spell, true);
-    if (power >= powercap)
-        return WHITE;
-    if (power * 3 < powercap)
-        return RED;
-    if (power * 3 < powercap * 2)
-        return YELLOW;
-    return GREEN;
-}
-
 static int _power_to_barcount(int power)
 {
     if (power == -1)
@@ -1857,7 +1799,7 @@ static int _power_to_barcount(int power)
     return (breakpoint_rank(power, breakpoints, ARRAYSZ(breakpoints)) + 1);
 }
 
-int spell_power_bars(spell_type spell, bool rod)
+static int _spell_power_bars(spell_type spell, bool rod)
 {
     const int cap = spell_power_cap(spell);
     if (cap == 0)
@@ -1884,7 +1826,7 @@ std::string spell_power_string(spell_type spell, bool rod)
         return _wizard_spell_power_numeric_string(spell, rod);
 #endif
 
-    const int numbars = spell_power_bars(spell, rod);
+    const int numbars = _spell_power_bars(spell, rod);
     const int capbars = _power_to_barcount(spell_power_cap(spell));
     ASSERT(numbars <= capbars);
     if (numbars < 0)

@@ -269,7 +269,8 @@ int main(int argc, char *argv[])
     init_char_table(CSET_ASCII);
     init_monsters();
 
-    // Init name cache so that we can parse stash_filter by item name.
+    // Init name cache. Currently unused, but item_glyph will need these
+    // once implemented.
     init_properties();
     init_item_name_cache();
 
@@ -321,10 +322,12 @@ static void _reset_game()
     note_list.clear();
     msg::deinitialise_mpr_streams();
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     // [ds] Don't show the title screen again, just go back to
     // the menu.
     crawl_state.title_screen = false;
+#endif
+#ifdef USE_TILE
     tiles.clear_text_tags(TAG_NAMED_MONSTER);
 #endif
 }
@@ -1020,9 +1023,9 @@ bool apply_berserk_penalty = false;
 
 static void _center_cursor()
 {
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     const coord_def cwhere = crawl_view.grid2screen(you.pos());
-    cgotoxy(cwhere.x, cwhere.y);
+    cgotoxy(cwhere.x, cwhere.y, GOTO_DNGN);
 #endif
 }
 
@@ -1239,7 +1242,7 @@ static void _input()
         crawl_state.waiting_for_command = true;
         c_input_reset(true);
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
         cursor_control con(false);
 #endif
         const command_type cmd = _get_next_cmd();
@@ -1737,7 +1740,7 @@ static void _do_display_map()
     if (Hints.hints_events[HINT_MAP_VIEW])
         Hints.hints_events[HINT_MAP_VIEW] = false;
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     // Since there's no actual overview map, but the functionality
     // exists, give a message to explain what's going on.
     mpr(gettext("Move the cursor to view the level map, or type <w>?</w> for "
@@ -1748,7 +1751,7 @@ static void _do_display_map()
     level_pos pos;
     const bool travel = show_map(pos, true, true, true);
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     mpr(gettext("Returning to the game..."));
 #endif
     if (travel)
@@ -2053,7 +2056,7 @@ void process_command(command_type cmd)
         // because we want to have CTRL-Y available...
         // and unfortunately they tend to be stuck together.
         clrscr();
-#ifndef USE_TILE
+#if !defined(USE_TILE_LOCAL) && !defined(TARGET_OS_WINDOWS)
         console_shutdown();
         kill(0, SIGTSTP);
         console_startup();
@@ -2119,6 +2122,19 @@ static void _prep_input()
             mpr(gettext("You have a vision of multiple gates."), MSGCH_GOD);
 
         you.seen_portals = 0;
+    }
+    if (you.seen_invis)
+    {
+        if (!you.can_see_invisible(false, true))
+        {
+            item_def *ring = get_only_unided_ring();
+            if (ring && !is_artefact(*ring)
+                && ring->sub_type == RING_SEE_INVISIBLE)
+            {
+                wear_id_type(*ring);
+            }
+        }
+        you.seen_invis = false;
     }
 }
 
@@ -2210,7 +2226,7 @@ static void _decrement_petrification(int delay)
             dur = 0;
             // If we'd kill the player when active flight stops, this will
             // need to pass the killer.  Unlike monsters, almost all cFly is
-            // magical (sans kenku) so there's no flapping of wings, though.
+            // magical (sans tengu) so there's no flapping of wings, though.
             you.fully_petrify(NULL);
         }
         else if (dur < 15 && old_dur >= 15)
@@ -2312,6 +2328,9 @@ static void _decrement_durations()
     }
 
     _decrement_a_duration(DUR_JELLY_PRAYER, delay, gettext("Your prayer is over."));
+
+    if (_decrement_a_duration(DUR_NAUSEA, delay))
+        end_nausea();
 
     if (you.duration[DUR_DIVINE_SHIELD] > 0)
     {
@@ -2640,7 +2659,7 @@ static void _decrement_durations()
         slow_player(dur);
 
         make_hungry(BERSERK_NUTRITION, true);
-        you.hunger = std::max<int>(HUNGER_STARVING, you.hunger);
+        you.hunger = std::max(HUNGER_STARVING, you.hunger);
 
         // 1KB: No berserk healing.
         you.hp = (you.hp + 1) * 2 / 3;

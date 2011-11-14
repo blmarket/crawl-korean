@@ -64,19 +64,21 @@ static armour_def Armour_prop[NUM_ARMOURS] =
     { ARM_LEATHER_ARMOUR,       M_("leather armour"),         3, -1,  150,
         true,  EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
 
-    { ARM_RING_MAIL,            M_("ring mail"),              4, -2,  250,
+    { ARM_RING_MAIL,            M_("ring mail"),              5, -2,  250,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_SCALE_MAIL,           M_("scale mail"),             5, -3,  350,
+    { ARM_SCALE_MAIL,           M_("scale mail"),             6, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_CHAIN_MAIL,           M_("chain mail"),             6, -4,  400,
+    { ARM_CHAIN_MAIL,           M_("chain mail"),             7, -4,  400,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_BANDED_MAIL,          M_("banded mail"),            7, -5,  500,
+#if TAG_MAJOR_VERSION == 32
+    { ARM_BANDED_MAIL,          M_("banded mail"),            8, -5,  500,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
+#endif
     { ARM_SPLINT_MAIL,          M_("splint mail"),            8, -5,  550,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
-    { ARM_PLATE_MAIL,           M_("plate mail"),            10, -6,  650,
+    { ARM_PLATE_ARMOUR,         M_("plate armour"),          10, -6,  650,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
-    { ARM_CRYSTAL_PLATE_MAIL,   M_("crystal plate mail"),    14, -8, 1200,
+    { ARM_CRYSTAL_PLATE_ARMOUR, M_("crystal plate armour"),  14, -8, 1200,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
 
     { ARM_TROLL_HIDE,           M_("troll hide"),             2, -1,  220,
@@ -85,20 +87,19 @@ static armour_def Armour_prop[NUM_ARMOURS] =
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_STEAM_DRAGON_HIDE,    M_("steam dragon hide"),      2,  0,  120,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STEAM_DRAGON_ARMOUR,  M_("steam dragon armour"),    4,  0,  120,
+    { ARM_STEAM_DRAGON_ARMOUR,  M_("steam dragon armour"),    5,  0,  120,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_MOTTLED_DRAGON_HIDE,  M_("mottled dragon hide"),    3, -1,  150,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_MOTTLED_DRAGON_ARMOUR,M_("mottled dragon armour"),  5, -1,  150,
+    { ARM_MOTTLED_DRAGON_ARMOUR,M_("mottled dragon armour"),  6, -1,  150,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-
     { ARM_SWAMP_DRAGON_HIDE,    M_("swamp dragon hide"),      3, -2,  200,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_SWAMP_DRAGON_ARMOUR,  M_("swamp dragon armour"),    7, -2,  200,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_DRAGON_HIDE,          M_("dragon hide"),            3, -3,  350,
+    { ARM_FIRE_DRAGON_HIDE,     M_("fire dragon hide"),       3, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_DRAGON_ARMOUR,        M_("dragon armour"),          8, -3,  350,
+    { ARM_FIRE_DRAGON_ARMOUR,   M_("fire dragon armour"),     8, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_ICE_DRAGON_HIDE,      M_("ice dragon hide"),        4, -3,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
@@ -106,15 +107,15 @@ static armour_def Armour_prop[NUM_ARMOURS] =
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_PEARL_DRAGON_HIDE,    M_("pearl dragon hide"),      3, -3,  400,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_PEARL_DRAGON_ARMOUR,  M_("pearl dragon armour"),    10, -3, 400,
+    { ARM_PEARL_DRAGON_ARMOUR,  M_("pearl dragon armour"),   10, -3,  400,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_STORM_DRAGON_HIDE,    M_("storm dragon hide"),      4, -3,  600,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STORM_DRAGON_ARMOUR,  M_("storm dragon armour"),    10, -5,  600,
+    { ARM_STORM_DRAGON_ARMOUR,  M_("storm dragon armour"),   10, -5,  600,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
     { ARM_GOLD_DRAGON_HIDE,     M_("gold dragon hide"),       4, -5, 1100,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_GOLD_DRAGON_ARMOUR,   M_("gold dragon armour"),   11, -9, 1100,
+    { ARM_GOLD_DRAGON_ARMOUR,   M_("gold dragon armour"),    12, -9, 1100,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
 
     { ARM_CLOAK,                M_("cloak"),                  1,  0,   40,
@@ -194,7 +195,7 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
         DAMV_CRUSHING, 10 },
     { WPN_ANKUS,             M_("ankus"),               9,  2, 14, 120,  8,
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
-        DAMV_PIERCING | DAM_BLUDGEON, 10 },
+        DAMV_PIERCING | DAM_BLUDGEON,  1 },
     { WPN_MORNINGSTAR,       M_("morningstar"),        10, -1, 15, 140,  8,
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
         DAMV_PIERCING | DAM_BLUDGEON, 10 },
@@ -484,12 +485,14 @@ void init_properties()
 //
 bool item_known_cursed(const item_def &item)
 {
-    return ((item.flags & ISFLAG_KNOW_CURSE) && (item.flags & ISFLAG_CURSED));
+    return (full_ident_mask(item) & ISFLAG_KNOW_CURSE
+            && item_ident(item, ISFLAG_KNOW_CURSE) && item.cursed());
 }
 
 bool item_known_uncursed(const item_def &item)
 {
-    return ((item.flags & ISFLAG_KNOW_CURSE) && !(item.flags & ISFLAG_CURSED));
+    return (!(full_ident_mask(item) & ISFLAG_KNOW_CURSE)
+            || (item_ident(item, ISFLAG_KNOW_CURSE) && !item.cursed()));
 }
 
 void do_curse_item(item_def &item, bool quiet)
@@ -518,7 +521,8 @@ void do_curse_item(item_def &item, bool quiet)
 
     // Neither can pearl dragon hides
     if (item.base_type == OBJ_ARMOUR
-        && (item.sub_type == ARM_PEARL_DRAGON_HIDE || item.sub_type == ARM_PEARL_DRAGON_ARMOUR))
+        && (item.sub_type == ARM_PEARL_DRAGON_HIDE
+            || item.sub_type == ARM_PEARL_DRAGON_ARMOUR))
     {
         if (!quiet)
         {
@@ -537,6 +541,9 @@ void do_curse_item(item_def &item, bool quiet)
         item.flags |= ISFLAG_KNOW_CURSE;
         item.flags |= ISFLAG_SEEN_CURSED;
     }
+
+    // This might prevent a carried item from allowing training.
+    maybe_change_train(item, false);
 
     item.flags |= ISFLAG_CURSED;
 
@@ -609,6 +616,9 @@ void do_uncurse_item(item_def &item, bool inscribe, bool no_ash,
     item.flags &= (~ISFLAG_CURSED);
     item.flags &= (~ISFLAG_SEEN_CURSED);
 
+    // This might allow training for a carried item.
+    maybe_change_train(item, true);
+
     if (check_bondage)
         ash_check_bondage();
 }
@@ -675,7 +685,10 @@ void set_ident_flags(item_def &item, iflags_t flags)
         request_autoinscribe();
 
         if (in_inventory(item))
+        {
             shopping_list.cull_identical_items(item);
+            item_skills(item, you.start_train);
+        }
     }
 
     if (fully_identified(item))
@@ -845,8 +858,10 @@ void set_equip_race(item_def &item, iflags_t flags)
             break;
         case OBJ_ARMOUR:
             if (item.sub_type == ARM_SPLINT_MAIL
+#if TAG_MAJOR_VERSION == 32
                 || item.sub_type == ARM_BANDED_MAIL
-                || item.sub_type == ARM_PLATE_MAIL
+#endif
+                || item.sub_type == ARM_PLATE_ARMOUR
                 || is_hard_helmet(item))
             {
                 return;
@@ -937,6 +952,14 @@ void set_equip_desc(item_def &item, iflags_t flags)
     item.flags |= flags;
 }
 
+iflags_t get_species_race(species_type sp)
+{
+    return you.species == SP_DEEP_DWARF ? ISFLAG_DWARVEN :
+           player_genus(GENPC_ELVEN)    ? ISFLAG_ELVEN :
+           you.species == SP_HILL_ORC   ? ISFLAG_ORCISH
+                                        : 0;
+}
+
 //
 // These functions handle the description and subtypes for helmets/caps.
 //
@@ -1010,7 +1033,7 @@ bool set_item_ego_type(item_def &item, int item_type, int ego_type)
     return (false);
 }
 
-int get_weapon_brand(const item_def &item)
+brand_type get_weapon_brand(const item_def &item)
 {
     // Weapon ego types are "brands", so we do the randart lookup here.
 
@@ -1019,9 +1042,9 @@ int get_weapon_brand(const item_def &item)
         return (SPWPN_NORMAL);
 
     if (is_artefact(item))
-        return (artefact_wpn_property(item, ARTP_BRAND));
+        return static_cast<brand_type>(artefact_wpn_property(item, ARTP_BRAND));
 
-    return (item.special);
+    return static_cast<brand_type>(item.special);
 }
 
 bool missile_brand_obvious(special_missile_type brand)
@@ -1071,8 +1094,8 @@ bool hide2armour(item_def &item)
     default:
         return (false);
 
-    case ARM_DRAGON_HIDE:
-        item.sub_type = ARM_DRAGON_ARMOUR;
+    case ARM_FIRE_DRAGON_HIDE:
+        item.sub_type = ARM_FIRE_DRAGON_ARMOUR;
         break;
 
     case ARM_TROLL_HIDE:
@@ -1137,7 +1160,7 @@ bool armour_is_hide(const item_def &item, bool inc_made)
     switch (item.sub_type)
     {
     case ARM_TROLL_LEATHER_ARMOUR:
-    case ARM_DRAGON_ARMOUR:
+    case ARM_FIRE_DRAGON_ARMOUR:
     case ARM_ICE_DRAGON_ARMOUR:
     case ARM_STEAM_DRAGON_ARMOUR:
     case ARM_MOTTLED_DRAGON_ARMOUR:
@@ -1148,7 +1171,7 @@ bool armour_is_hide(const item_def &item, bool inc_made)
         return (inc_made);
 
     case ARM_TROLL_HIDE:
-    case ARM_DRAGON_HIDE:
+    case ARM_FIRE_DRAGON_HIDE:
     case ARM_ICE_DRAGON_HIDE:
     case ARM_STEAM_DRAGON_HIDE:
     case ARM_MOTTLED_DRAGON_HIDE:
@@ -1267,7 +1290,7 @@ int wand_charge_value(int type)
     case WAND_INVISIBILITY:
     case WAND_FIREBALL:
     case WAND_TELEPORTATION:
-    case WAND_HEALING:
+    case WAND_HEAL_WOUNDS:
     case WAND_HASTING:
         return 3;
 
@@ -1300,7 +1323,7 @@ bool is_offensive_wand(const item_def& item)
 
     // Monsters will use them on themselves.
     case WAND_HASTING:
-    case WAND_HEALING:
+    case WAND_HEAL_WOUNDS:
     case WAND_INVISIBILITY:
         return false;
 
@@ -1321,38 +1344,6 @@ bool is_offensive_wand(const item_def& item)
         return true;
     }
     return false;
-}
-
-bool is_enchantable_weapon(const item_def &wpn, bool uncurse, bool first)
-{
-    if (wpn.base_type != OBJ_WEAPONS
-        && wpn.base_type != OBJ_STAVES
-        && wpn.base_type != OBJ_MISSILES)
-    {
-        return (false);
-    }
-
-    if (uncurse && wpn.cursed() && you.religion != GOD_ASHENZARI)
-        return true;
-
-    // Artefacts or highly enchanted weapons cannot be enchanted,
-    // only uncursed.
-    if (wpn.base_type == OBJ_WEAPONS)
-    {
-        if (is_artefact(wpn)
-            || first && wpn.plus >= MAX_WPN_ENCHANT
-            || !first && wpn.plus2 >= MAX_WPN_ENCHANT)
-        {
-            return (false);
-        }
-    }
-    // Highly enchanted missiles, which have only one stat, cannot be
-    // enchanted or uncursed, since missiles cannot be artefacts or
-    // cursed.
-    else if (wpn.plus >= MAX_WPN_ENCHANT)
-        return (false);
-
-    return (true);
 }
 
 // Returns whether a piece of armour can be enchanted further.
@@ -1888,34 +1879,105 @@ skill_type range_skill(object_class_type wclass, int wtype)
     return (range_skill(wpn));
 }
 
-static bool _item_trains_evocations(const item_def& item)
+// Check whether an item can be easily and quickly equipped. This needs to
+// know which slot we're considering for cases like where we're already
+// wielding a cursed non-weapon.
+static bool _item_is_swappable(const item_def &item, equipment_type slot, bool swap_in)
 {
-    if (item_is_evokable(item, false, false, false, false, false))
+    if (get_item_slot(item) != slot)
         return true;
 
-    if (is_artefact(item) && (artefact_wpn_property(item, ARTP_INVISIBLE)
-                              || artefact_wpn_property(item, ARTP_LEVITATE)
-                              || artefact_wpn_property(item, ARTP_BLINK)
-                              || artefact_wpn_property(item, ARTP_BERSERK)))
+    if (item.base_type == OBJ_ARMOUR || !item_known_uncursed(item))
+        return false;
+
+    if (item.base_type == OBJ_JEWELLERY)
+    {
+        if (item.sub_type == AMU_FAITH && you.religion != GOD_NO_GOD)
+            return false;
+        return !((item.sub_type == AMU_THE_GOURMAND && !swap_in)
+                || item.sub_type == AMU_GUARDIAN_SPIRIT
+                || (item.sub_type == RING_MAGICAL_POWER && !swap_in));
+    }
+
+    if (item.base_type == OBJ_STAVES && item.sub_type == STAFF_POWER && !swap_in)
+        return false;
+
+    const brand_type brand = get_weapon_brand(item);
+    return (brand != SPWPN_DISTORTION
+           && (brand != SPWPN_VAMPIRICISM || you.is_undead != US_ALIVE)
+           && (brand != SPWPN_HOLY_WRATH || you.is_undead == US_ALIVE));
+}
+
+static bool _item_is_swappable(const item_def &item, bool swap_in)
+{
+    return _item_is_swappable(item, get_item_slot(item), swap_in);
+}
+
+// Check whether the equipment slot of an item is occupied by an item which
+// cannot be quickly removed.
+static bool _slot_blocked(const item_def &item)
+{
+    const equipment_type eq = get_item_slot(item);
+    if (eq == EQ_NONE)
+        return false;
+
+    if (eq == EQ_RINGS)
+    {
+        if (you.equip[EQ_GLOVES] >= 0 && you.inv[you.equip[EQ_GLOVES]].cursed())
+            return true;
+
+        equipment_type eq_from = EQ_LEFT_RING;
+        equipment_type eq_to = EQ_RIGHT_RING;
+        if (you.species == SP_OCTOPODE)
+        {
+            eq_from = EQ_RING_ONE;
+            eq_to = EQ_RING_EIGHT;
+        }
+
+        for (int i = eq_from; i <= eq_to; ++i)
+            if (you.equip[i] == -1 || _item_is_swappable(you.inv[you.equip[i]], false))
+                return false;
+
+        // No free slot found.
+        return true;
+    }
+
+    if (eq == EQ_WEAPON && you.equip[EQ_SHIELD] >= 0
+        && you.inv[you.equip[EQ_SHIELD]].cursed()
+        && is_shield_incompatible(item, &you.inv[you.equip[EQ_SHIELD]]))
     {
         return true;
     }
 
-    if (item.base_type == OBJ_JEWELLERY)
-        switch (item.sub_type)
-        {
-        case RING_INVISIBILITY:
-        case RING_TELEPORTATION:
-        case RING_LEVITATION:
-        case AMU_RAGE:
-            return true;
-        }
-
-    return false;
+    return (you.equip[eq] != -1 && !_item_is_swappable(you.inv[you.equip[eq]], eq, false));
 }
 
 bool item_skills(const item_def &item, std::set<skill_type> &skills)
 {
+    const bool equipped = item_is_equipped(item);
+
+    // Evokables that don't need to be equipped.
+    if (item_is_evokable(item, false, false, false, false, true))
+        skills.insert(SK_EVOCATIONS);
+
+    // Item doesn't have to be equipped, but if it isn't, it needs to be easy
+    // and quick to equip. This means:
+    // - known to be uncursed
+    // - quick to equip (no armour)
+    // - no effect that suffer from swapping (distortion, vampirism, faith,...)
+    // - slot easily accessible (item in slot needs to meet the same conditions)
+    if (!equipped && (!_item_is_swappable(item, true) || _slot_blocked(item)))
+        return !skills.empty();
+
+    // Evokables that need to be equipped to be evoked. They can train
+    // evocations just by being carried, but they need to pass the equippable
+    // check first.
+    if (gives_ability(item)
+        || item_is_evokable(item, false, false, false, false, false))
+    {
+        skills.insert(SK_EVOCATIONS);
+    }
+
     skill_type sk = weapon_skill(item);
     if (sk != SK_FIGHTING)
         skills.insert(sk);
@@ -1923,9 +1985,6 @@ bool item_skills(const item_def &item, std::set<skill_type> &skills)
     sk = range_skill(item);
     if (sk != SK_THROWING)
         skills.insert(sk);
-
-    if (_item_trains_evocations(item))
-        skills.insert(SK_EVOCATIONS);
 
     if (item_is_rod(item) && item_type_known(item))
     {
@@ -1936,6 +1995,25 @@ bool item_skills(const item_def &item, std::set<skill_type> &skills)
     }
 
     return !skills.empty();
+}
+
+void maybe_change_train(const item_def& item, bool start)
+{
+    const equipment_type eq = get_item_slot(item);
+    if (eq == EQ_NONE)
+        return;
+
+    for (int i = 0; i < ENDOFPACK; ++i)
+        if (item.link != i && you.inv[i].defined())
+        {
+            equipment_type islot = get_item_slot(you.inv[i]);
+            if (islot == eq
+                || (eq == EQ_GLOVES && islot == EQ_RINGS)
+                || (eq == EQ_SHIELD && islot == EQ_WEAPON))
+            {
+                item_skills(you.inv[i], start ? you.start_train : you.stop_train);
+            }
+        }
 }
 
 // Calculate the bonus to melee EV for using "wpn", with "skill" and "dex"
@@ -2206,6 +2284,12 @@ bool item_is_orb(const item_def &item)
     return (item.base_type == OBJ_ORBS && item.sub_type == ORB_ZOT);
 }
 
+bool item_is_horn_of_geryon(const item_def &item)
+{
+    return (item.base_type == OBJ_MISCELLANY
+            && item.sub_type == MISC_HORN_OF_GERYON);
+}
+
 bool item_is_corpse(const item_def &item)
 {
     return (item.base_type == OBJ_CORPSES && item.sub_type == CORPSE_BODY);
@@ -2383,8 +2467,8 @@ int get_armour_res_fire(const item_def &arm, bool check_artp)
     // intrinsic armour abilities
     switch (arm.sub_type)
     {
-    case ARM_DRAGON_ARMOUR:
-    case ARM_DRAGON_HIDE:
+    case ARM_FIRE_DRAGON_ARMOUR:
+    case ARM_FIRE_DRAGON_HIDE:
         res += 2;
         break;
     case ARM_GOLD_DRAGON_ARMOUR:
@@ -2427,8 +2511,8 @@ int get_armour_res_cold(const item_def &arm, bool check_artp)
     case ARM_GOLD_DRAGON_HIDE:
         res += 1;
         break;
-    case ARM_DRAGON_ARMOUR:
-    case ARM_DRAGON_HIDE:
+    case ARM_FIRE_DRAGON_ARMOUR:
+    case ARM_FIRE_DRAGON_HIDE:
         res -= 1;
         break;
     default:
@@ -2579,6 +2663,18 @@ int property(const item_def &item, int prop_type)
         break;
 
     case OBJ_WEAPONS:
+        if (is_unrandom_artefact(item))
+        {
+            if (prop_type == PWPN_DAMAGE)
+                return (Weapon_prop[ Weapon_index[item.sub_type] ].dam
+                        + artefact_wpn_property(item, ARTP_BASE_DAM));
+            else if (prop_type == PWPN_HIT)
+                return (Weapon_prop[ Weapon_index[item.sub_type] ].hit
+                        + artefact_wpn_property(item, ARTP_BASE_ACC));
+            else if (prop_type == PWPN_SPEED)
+                return (Weapon_prop[ Weapon_index[item.sub_type] ].speed
+                        + artefact_wpn_property(item, ARTP_BASE_DELAY));
+        }
         if (prop_type == PWPN_DAMAGE)
             return (Weapon_prop[ Weapon_index[item.sub_type] ].dam);
         else if (prop_type == PWPN_HIT)
@@ -2623,19 +2719,12 @@ bool gives_ability(const item_def &item)
     case OBJ_WEAPONS:
         break;
     case OBJ_JEWELLERY:
-        if (!jewellery_is_amulet(item))
+        if (item.sub_type == RING_TELEPORTATION
+            || item.sub_type == RING_LEVITATION
+            || item.sub_type == RING_INVISIBILITY
+            || item.sub_type == AMU_RAGE)
         {
-            if (item.sub_type == RING_TELEPORTATION
-                || item.sub_type == RING_LEVITATION
-                || item.sub_type == RING_INVISIBILITY)
-            {
-                return (true);
-            }
-        }
-        else
-        {
-            if (item.sub_type == AMU_RAGE)
-                return (true);
+            return (true);
         }
         break;
     case OBJ_ARMOUR:
@@ -3029,4 +3118,14 @@ void seen_item(const item_def &item)
         ((item_def*)&item)->flags |= ISFLAG_KNOW_CURSE;
     if (item.base_type == OBJ_GOLD && !item.plus)
         ((item_def*)&item)->plus = (you.religion == GOD_ZIN) ? 2 : 1;
+
+    if (item_type_has_ids(item.base_type) && !is_artefact(item)
+        && item_ident(item, ISFLAG_KNOW_TYPE)
+        && you.type_ids[item.base_type][item.sub_type] != ID_KNOWN_TYPE)
+    {
+        // Can't cull shop items here -- when called from view, we shouldn't
+        // access the UI.  Old ziggurat prompts are a very minor case of what
+        // could go wrong.
+        set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
+    }
 }

@@ -69,7 +69,7 @@ LUAFN(debug_enter_dungeon)
     you.where_are_you = BRANCH_MAIN_DUNGEON;
     you.level_type = LEVEL_DUNGEON;
 
-    load(DNGN_STONE_STAIRS_DOWN_I, LOAD_START_GAME, level_id());
+    load_level(DNGN_STONE_STAIRS_DOWN_I, LOAD_START_GAME, level_id());
     return (0);
 }
 
@@ -192,6 +192,20 @@ LUAFN(debug_dismiss_adjacent)
         {
             mon->flags |= MF_HARD_RESET;
             monster_die(mon, KILL_DISMISSED, NON_MONSTER);
+        }
+    }
+
+    return (0);
+}
+
+LUAFN(debug_dismiss_monsters)
+{
+    for (monster_iterator mi; mi; ++mi)
+    {
+        if (mi)
+        {
+            mi->flags |= MF_HARD_RESET;
+            monster_die(*mi, KILL_DISMISSED, NON_MONSTER);
         }
     }
 
@@ -354,6 +368,7 @@ const struct luaL_reg debug_dlib[] =
 { "bouncy_beam", debug_bouncy_beam },
 { "cull_monsters", debug_cull_monsters},
 { "dismiss_adjacent", debug_dismiss_adjacent},
+{ "dismiss_monsters", debug_dismiss_monsters},
 { "god_wrath", debug_god_wrath},
 { "handle_monster_move", debug_handle_monster_move },
 { "save_uniques", debug_save_uniques },

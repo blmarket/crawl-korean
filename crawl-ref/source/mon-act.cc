@@ -1247,7 +1247,7 @@ static bool _handle_wand(monster* mons, bolt &beem)
         }
         return (false);
 
-    case WAND_HEALING:
+    case WAND_HEAL_WOUNDS:
         if (mons->hit_points <= mons->max_hit_points / 2)
         {
             beem.target = mons->pos();
@@ -2773,13 +2773,34 @@ static bool _monster_eat_food(monster* mons, bool nearby)
         const bool is_food = (si->base_type == OBJ_FOOD);
         const bool is_corpse = (si->base_type == OBJ_CORPSES
                                    && si->sub_type == CORPSE_BODY);
+        const bool free_to_eat = mons->wont_attack()
+                || grid_distance(mons->pos(), you.pos()) > 1;
 
         if (!is_food && !is_corpse)
             continue;
 
-        if ((mons->wont_attack()
-                || grid_distance(mons->pos(), you.pos()) > 1)
-            && coinflip())
+        if (mons->type == MONS_KILLER_BEE_LARVA)
+        {
+            if (si->sub_type != FOOD_HONEYCOMB
+                && si->sub_type != FOOD_ROYAL_JELLY)
+                return false;
+
+            if (!nearby)
+                mprf(MSGCH_SOUND, "You hear a distant popping sound.");
+            else
+                mprf("%s devours %s.", mons->name(DESC_CAP_THE).c_str(),
+                    quant_name(*si, 1, DESC_NOCAP_THE).c_str());
+            dec_mitm_item_quantity(si.link(), 1);
+            if (!nearby)
+                mprf(MSGCH_SOUND, "You hear a distant popping sound.");
+            else
+                mprf("%s devours %s.", mons->name(DESC_CAP_THE).c_str(),
+                    quant_name(*si, 1, DESC_NOCAP_THE).c_str());
+            monster_polymorph(mons, MONS_KILLER_BEE);
+            return true;
+        }
+
+        if (free_to_eat && coinflip())
         {
             if (is_food)
             {
@@ -2825,7 +2846,7 @@ static bool _handle_pickup(monster* mons)
 
     // Hack - Harpies fly over water, but we don't have a general
     // system for monster igrd yet.  Flying intelligent monsters
-    // (kenku!) would also count here.
+    // (tengu!) would also count here.
     dungeon_feature_type feat = grd(mons->pos());
 
     if ((feat == DNGN_LAVA || feat == DNGN_DEEP_WATER) && !mons->flight_mode())
@@ -3974,7 +3995,7 @@ static spell_type _map_wand_to_mspell(int wand_type)
     case WAND_SLOWING:         return SPELL_SLOW;
     case WAND_HASTING:         return SPELL_HASTE;
     case WAND_MAGIC_DARTS:     return SPELL_MAGIC_DART;
-    case WAND_HEALING:         return SPELL_MINOR_HEALING;
+    case WAND_HEAL_WOUNDS:     return SPELL_MINOR_HEALING;
     case WAND_PARALYSIS:       return SPELL_PARALYSE;
     case WAND_FIRE:            return SPELL_BOLT_OF_FIRE;
     case WAND_COLD:            return SPELL_BOLT_OF_COLD;

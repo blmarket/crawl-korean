@@ -70,7 +70,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
 
     switch (pot_eff)
     {
-    case POT_HEALING:
+    case POT_CURING:
         if (you.duration[DUR_DEATHS_DOOR])
         {
             mpr(gettext("You feel queasy."));
@@ -92,6 +92,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
         you.disease = 0;
         you.duration[DUR_CONF] = 0;
         you.duration[DUR_MISLED] = 0;
+        you.duration[DUR_NAUSEA] = 0;
         break;
 
     case POT_HEAL_WOUNDS:
@@ -133,7 +134,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known)
             const int value = 200;
             const int herbivorous = player_mutation_level(MUT_HERBIVOROUS);
 
-            if (herbivorous < 3 && player_likes_chunks(true))
+            if (herbivorous < 3 && player_likes_chunks())
             {
                 // Likes it.
                 mpr(gettext("This tastes like blood."));

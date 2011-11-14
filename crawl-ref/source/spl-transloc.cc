@@ -339,20 +339,21 @@ void you_teleport(void)
 }
 
 // Should return true if we don't want anyone to teleport here.
-static bool _cell_vetoes_teleport (const coord_def cell, bool  check_monsters = true)
+static bool _cell_vetoes_teleport (const coord_def cell, bool check_monsters = true,
+                                   bool wizard_tele = false)
 {
     // Monsters always veto teleport.
     if ((monster_at(cell) || mimic_at(cell)) && check_monsters)
         return (true);
 
     // As do all clouds; this may change.
-    if (env.cgrid(cell) != EMPTY_CLOUD)
+    if (env.cgrid(cell) != EMPTY_CLOUD && !wizard_tele)
         return (true);
 
     if (cell_is_solid(cell))
         return (true);
 
-    return is_feat_dangerous(grd(cell), true);
+    return is_feat_dangerous(grd(cell), true) && !wizard_tele;
 }
 
 static void _handle_teleport_update (bool large_change, bool check_ring_TC,
@@ -535,8 +536,14 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
                 large_change = true;
 
             // Merfolk should be able to control-tele into deep water.
-            if (_cell_vetoes_teleport(pos))
+            if (_cell_vetoes_teleport(pos, true, wizard_tele))
             {
+                if (wizard_tele)
+                {
+                    mpr("Even you can't go there right now. Sorry!", MSGCH_WARN);
+                    return false;
+                }
+
                 dprf("Target square (%d, %d) vetoed, now random teleport.", pos.x, pos.y);
                 is_controlled = false;
                 large_change  = false;
@@ -974,17 +981,14 @@ int cast_semi_controlled_blink(int pow)
     return (result);
 }
 
-bool can_cast_golubrias_passage()
-{
-    return find_golubria_on_level().size() < 2;
-}
-
 spret_type cast_golubrias_passage(const coord_def& where, bool fail)
 {
     // randomize position a bit to make it not as useful to use on monsters
     // chasing you, as well as to not give away hidden trap positions
     int tries = 0;
+    int tries2 = 0;
     coord_def randomized_where = where;
+    coord_def randomized_here = you.pos();
     do
     {
         tries++;
@@ -999,38 +1003,54 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
              randomized_where == you.pos()) &&
             tries < 100);
 
-    if (tries >= 100)
+    do
+    {
+        tries2++;
+        randomized_here = you.pos();
+        randomized_here.x += random_range(-2, 2);
+        randomized_here.y += random_range(-2, 2);
+    } while((!in_bounds(randomized_here) ||
+             grd(randomized_here) != DNGN_FLOOR ||
+             monster_at(randomized_here) ||
+             !you.see_cell(randomized_here) ||
+             you.trans_wall_blocking(randomized_here) ||
+             randomized_here == you.pos() ||
+             randomized_here == randomized_where) &&
+            tries2 < 100);
+
+    if (tries >= 100 || tries2 >= 100)
     {
         if (you.trans_wall_blocking(randomized_where))
             mpr(gettext("You cannot create a passage on the other side of the transparent wall."));
         else
             // XXX: bleh, dumb message
-            mpr(gettext("Creating a passage of Golubria requires sufficient empty space."));
+            mpr(gettext("Creating passages of Golubria requires sufficient empty space."));
         return SPRET_ABORT;
     }
 
     if (!allow_control_teleport(true) ||
-        testbits(env.pgrid(randomized_where), FPROP_NO_CTELE_INTO))
+        testbits(env.pgrid(randomized_where), FPROP_NO_CTELE_INTO) ||
+        testbits(env.pgrid(randomized_here), FPROP_NO_CTELE_INTO))
     {
-        fail_check();
-        // lose a turn
         mpr(gettext("A powerful magic interferes with the creation of the passage."));
-        place_cloud(CLOUD_TLOC_ENERGY, randomized_where, 3 + random2(3), &you);
-        return SPRET_SUCCESS;
+        return SPRET_ABORT;
     }
 
     fail_check();
     place_specific_trap(randomized_where, TRAP_GOLUBRIA);
+    place_specific_trap(randomized_here, TRAP_GOLUBRIA);
     env.level_state |= LSTATE_GOLUBRIA;
 
     trap_def *trap = find_trap(randomized_where);
-    if (!trap)
+    trap_def *trap2 = find_trap(randomized_here);
+    if (!trap || !trap2)
     {
         mpr(gettext("Something buggy happened."));
         return SPRET_ABORT;
     }
 
     trap->reveal();
+    trap2->reveal();
 
     return SPRET_SUCCESS;
 }

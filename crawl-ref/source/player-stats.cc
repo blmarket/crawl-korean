@@ -11,6 +11,7 @@
 #include "korean.h"
 #include "libutil.h"
 #include "macro.h"
+#include "misc.h"
 #include "mon-util.h"
 #include "monster.h"
 #include "ouch.h"
@@ -93,19 +94,16 @@ void attribute_increase()
         case 's':
         case 'S':
             modify_stat(STAT_STR, 1, false, "level gain");
-            you.last_chosen = STAT_STR;
             return;
 
         case 'i':
         case 'I':
             modify_stat(STAT_INT, 1, false, "level gain");
-            you.last_chosen = STAT_INT;
             return;
 
         case 'd':
         case 'D':
             modify_stat(STAT_DEX, 1, false, "level gain");
-            you.last_chosen = STAT_DEX;
             return;
         }
     }
@@ -116,16 +114,17 @@ void jiyva_stat_action()
 {
     int cur_stat[3];
     int stat_total = 0;
-    int evp = player_raw_body_armour_evasion_penalty();
     int target_stat[3];
     for (int x = 0; x < 3; ++x)
     {
         cur_stat[x] = you.max_stat(static_cast<stat_type>(x));
         stat_total += cur_stat[x];
     }
-    // Always try for a little more strength, since Jiyva chars need their
-    // carrying capacity.
-    target_stat[0] = std::max(11, 2 + 3 * evp);
+    // Try to avoid burdening people or making their armour difficult to use.
+    int current_capacity = carrying_capacity(BS_UNENCUMBERED);
+    int carrying_strength = cur_stat[0] + (you.burden - current_capacity + 249)/250;
+    int evp = player_raw_body_armour_evasion_penalty();
+    target_stat[0] = std::max(std::max(9, 2 + 3 * evp), 2 + carrying_strength);
     target_stat[1] = 9;
     target_stat[2] = 9;
     int remaining = stat_total - 18 - target_stat[0];
@@ -454,9 +453,7 @@ bool lose_stat(stat_type which_stat, int8_t stat_loss, bool force,
             if (ring && !is_artefact(*ring)
                 && ring->sub_type == RING_SUSTAIN_ABILITIES)
             {
-                set_ident_type(*ring, ID_KNOWN_TYPE);
-                mprf(gettext("You are wearing: %s"),
-                     ring->name(true, DESC_INVENTORY_EQUIP).c_str());
+                wear_id_type(*ring);
             }
         }
     }
@@ -713,7 +710,7 @@ void update_stat_zero()
     default:
         if (you.duration[DUR_PARALYSIS])
             break;
-        mprf(MSGCH_WARN, gettext("Your lost attributes cause you to faint."));
+        mpr(gettext("Your lost attributes cause you to faint."), MSGCH_WARN);
         you.increase_duration(DUR_PARALYSIS, 1 + roll_dice(num_para, 3));
         break;
     }

@@ -382,6 +382,7 @@
   "deformed"
 },
 
+#if TAG_MAJOR_VERSION == 32
 { MUT_TELEPORT_AT_WILL,           0,  3, false, false,
   M_("teleport at will"),
 
@@ -399,6 +400,7 @@
 
   "teleport at will"
 },
+#endif
 
 { MUT_SPIT_POISON,                8,  3, false, false,
   M_("spit poison"),
@@ -441,7 +443,7 @@
 
   {N_("You can translocate small distances at will."),
    N_("You are good at translocating small distances at will."),
-   N_("You can translocate small distances instantaneously.")},
+   N_("You can easily translocate small distances at will.")},
 
   {N_("You feel jittery."),
    N_("You feel more jittery."),
@@ -590,6 +592,24 @@
   "mutation resistance"
 },
 
+{ MUT_EVOLUTION,                  4,  2, false, false,
+  "evolution",
+
+  {"You evolve.",
+   "You rapidly evolve.",
+   ""},
+
+  {"You feel nature experimenting on you. Don't worry, failures die fast.",
+   "Your genes go into a fast flux.",
+   ""},
+
+  {"Your wild genetic ride slows down.",
+   "You feel genetically stable.",
+   ""},
+
+  "evolution"
+},
+
 { MUT_FRAIL,                     10,  3,  true,  true,
   NULL,
 
@@ -629,7 +649,7 @@
 { MUT_UNBREATHING,                0,  1, false, false,
   M_("unbreathing"),
 
-  {N_("You do not need to breathe."), "", ""},
+  {N_("You can survive without breathing."), "", ""},
   {N_("You feel breathless."), "", ""},
   {"", "", ""},
 
@@ -672,6 +692,7 @@
   "hurl hellfire"
 },
 
+#if TAG_MAJOR_VERSION == 32
 { MUT_THROW_FLAMES,               0,  1, false, false,
   M_("throw flames of Gehenna"),
 
@@ -691,6 +712,7 @@
 
   "throw frost"
 },
+#endif
 
 // body-slot facets
 { MUT_HORNS,                      7,  3, false,  true,
@@ -829,6 +851,24 @@
    "tentacles"
 },
 
+{ MUT_TENTACLE_SPIKE,            0,  3, false,  true,
+  "spike",
+
+  {"One of your tentacles bears a spike.",
+   "One of your tentacles bears a nasty spike.",
+   "One of your tentacles bears a large vicious spike."},
+
+  {"One of your lower tentacles grows a sharp spike.",
+   "Your tentacle spike grows bigger.",
+   "Your tentacle spike grows even bigger."},
+
+  {"Your tentacle spike disappears.",
+   "Your tentacle spike becomes smaller.",
+   "Your tentacle spike recedes somewhat."},
+
+  "tentacle spike"
+},
+
 // Naga only
 { MUT_BREATHE_POISON,             0,  1, false, false,
   M_("breathe poison"),
@@ -877,7 +917,11 @@
   {N_("You can tolerate rotten meat."),
    N_("You can eat rotten meat."),
    N_("You thrive on rotten meat.")},
-  {"", "", ""},
+
+  {N_("You hunger for rotting flesh."),
+   N_("You hunger for rotting flesh."),
+   N_("You hunger for rotting flesh.")},
+
   {"", "", ""},
 
   "saprovorous"
@@ -945,6 +989,24 @@
    N_("You feel more energetic.")},
 
   "low mp"
+},
+
+{ MUT_WILD_MAGIC,                 6,   3,  false, false,
+    "wild magic",
+
+    {"Your spells are a little harder to cast, but a little more powerful.",
+     "Your spells are harder to cast, but more powerful.",
+     "Your spells are much harder to cast, but much more powerful."},
+
+    {"You feel less in control of your magic.",
+     "You feel less in control of your magic.",
+     "You feel your magical power running wild!"},
+
+    {"You regain control of your magic.",
+     "You feel more in control of your magic.",
+     "You feel more in control of your magic."},
+
+    "wild magic"
 },
 
 { MUT_STOCHASTIC_TORMENT_RESISTANCE, 0,  3, false, false,
@@ -1205,15 +1267,15 @@
 { MUT_ICY_BLUE_SCALES,                  2,  3, false, true,
   NULL,
 
-  {N_("You are partially covered in colourless scales (AC +1)."),
+  {N_("You are partially covered in icy blue scales (AC +1)."),
    N_("You are mostly covered in icy blue scales (AC +2, EV -1)."),
    N_("You are completely covered in icy blue scales (AC +3, EV -1, rC+).")},
 
-  {N_("Colourless scales grow over part of your body."),
-   N_("Your colourless scales turn blue and spread over more of your body."),
+  {N_("Icy blue scales grow over part of your body."),
+   N_("Icy blue scales spread over more of your body."),
    N_("Icy blue scales cover your body completely.")},
 
-  {N_("Your colourless scales disappear."),
+  {N_("Your icy blue scales disappear."),
    N_("Your icy blue scales recede somewhat."),
    N_("Your icy blue scales recede somewhat.")},
 
@@ -1259,15 +1321,15 @@
 { MUT_MOLTEN_SCALES,                    2,  3, false, true,
   NULL,
 
-  {N_("You are partially covered in colourless scales (AC +1)."),
+  {N_("You are partially covered in molten scales (AC +1)."),
    N_("You are mostly covered in molten scales (AC +2, EV -1)."),
    N_("You are completely covered in molten scales (AC +3, EV -1, rF+).")},
 
-  {N_("Colourless scales grow over part of your body."),
-   N_("Your colourless scales turn molten and spread over more of your body."),
+  {N_("Molten scales grow over part of your body."),
+   N_("Molten scales spread over more of your body."),
    N_("Molten scales cover your body completely.")},
 
-  {N_("Your colourless scales disappear."),
+  {N_("Your molten scales disappear."),
    N_("Your molten scales recede somewhat."),
    N_("Your molten scales recede somewhat.")},
 
@@ -1313,15 +1375,15 @@
 { MUT_SLIMY_GREEN_SCALES,            2,  3, false, true,
   NULL,
 
-  {N_("You are partially covered in colourless scales (AC +1)."),
+  {N_("You are partially covered in slimy green scales (AC +1)."),
    N_("You are mostly covered in slimy green scales (AC +2, EV -1)."),
    N_("You are completely covered in slimy green scales (AC +3, EV -2, rPois).")},
 
-  {N_("Colourless scales grow over part of your body."),
-   N_("Your colourless scales turn green and spread over more of your body."),
+  {N_("Slimy green scales grow over part of your body."),
+   N_("Slimy green scales spread over more of your body."),
    N_("Slimy green scales cover your body completely.")},
 
-  {N_("Your colourless scales disappear."),
+  {N_("Your slimy green scales disappear."),
    N_("Your slimy green scales recede somewhat."),
    N_("Your slimy green scales recede somewhat.")},
 
@@ -1331,15 +1393,15 @@
 { MUT_THIN_METALLIC_SCALES,            2,  3, false, true,
   NULL,
 
-  {N_("You are partially covered in colourless scales (AC +1)."),
+  {N_("You are partially covered in thin metallic scales (AC +1)."),
    N_("You are mostly covered in thin metallic scales (AC +2)."),
    N_("You are completely covered in thin metallic scales (AC +3, rElec).")},
 
-  {N_("Colourless scales grow over part of your body."),
-   N_("Your colourless scales are metallic and spread over more of your body."),
+  {N_("Thin metallic scales grow over part of your body."),
+   N_("Thin metallic scales spread over more of your body."),
    N_("Thin metallic scales cover your body completely.")},
 
-  {N_("Your colourless scales disappear."),
+  {N_("Your thin metallic scales disappear."),
    N_("Your thin metallic scales recede somewhat."),
    N_("Your thin metallic scales recede somewhat.")},
 
@@ -1367,15 +1429,15 @@
 { MUT_YELLOW_SCALES,                    2,  3, false,  true,
   NULL,
 
-  {N_("You are partially covered in colourless scales (AC +1)."),
+  {N_("You are partially covered in yellow scales (AC +1)."),
    N_("You are mostly covered in yellow scales (AC +2, rAcid+)."),
    N_("You are completely covered in yellow scales (AC +3, rAcid++).")},
 
-  {N_("Colourless scales grow over part of your body."),
-   N_("Your colourless scales turn yellow and spread over more of your body."),
+  {N_("Yellow scales grow over part of your body."),
+   N_("Yellow scales spread over more of your body."),
    N_("Yellow scales cover you completely.")},
 
-  {N_("Your colourless scales disappear."),
+  {N_("Your yellow scales disappear."),
    N_("Your yellow scales recede somewhat."),
    N_("Your yellow scales recede somewhat.")},
 
@@ -1400,22 +1462,30 @@
    "camouflage"
 },
 
-{ MUT_TENTACLE_SPIKE,            10,  3, false,  true,
-  "spike",
+{ MUT_IGNITE_BLOOD,              0,  1, false, false,
+  "ignite blood",
 
-  {"One of your tentacles bears a spike.",
-   "One of your tentacles bears a nasty spike.",
-   "One of your tentacles bears a large vicious spike."},
+  {"Your demonic aura causes spilled blood to erupt in flames.", "", ""},
+  {"Your blood runs red-hot!", "", ""},
+  {"", "", ""},
 
-  {"One of your lower tentacles grows a sharp spike.",
-   "Your tentacle spike grows bigger.",
-   "Your tentacle spike grows even bigger."},
+  "ignite blood"
+},
 
-  {"Your tentacle spike recedes somewhat.",
-   "Your tentacle spike becomes smaller.",
-   "Your tentacle spike disappears."},
+{ MUT_FOUL_STENCH,              0,  2, false, false,
+  "foul stench",
 
-  "tentacle spike"
+  {"You emit a foul stench, and are resistant to rotting and decay.",
+   "You radiate miasma, and are resistant to rotting and decay.",
+   ""},
+
+  {"You begin to emit a foul stench of rot and decay.",
+   "You begin to radiate miasma.",
+   ""},
+
+  {"", "", ""},
+
+  "foul stench"
 },
 
 #endif

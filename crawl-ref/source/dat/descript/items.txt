@@ -21,7 +21,7 @@ amulet of controlled flight
 %%%%
 amulet of guardian spirit
 
-이 부적은 착용자를 마력을 대신 소모하여, 외부로부터의 피해를 막아준다. 마력이 고갈되면, 수호 정령은 마력 에너지가 재생되기 전까지 피해를 막아 줄 수 없을 것이다.
+This amulet makes its wearer less susceptible to external damage, draining magical power instead. Should the reserves of magic be depleted, the spirit will fail to provide its protection until more power is available.
 %%%%
 amulet of inaccuracy
 
@@ -78,10 +78,6 @@ arrow
 banana
 
 아마도 불공정 거래의 결과로 부도덕한 다국적 기업에서 생산되고 수입되었을지도 모르는 맛있는 노란색 과일이다.
-%%%%
-banded mail
-
-철로 된 띠로 만들어진 복장이다.
 %%%%
 bardiche
 
@@ -379,7 +375,7 @@ crystal ball of energy
 
 A magical device which can be used to restore one's reserves of magical energy, but the use of which carries the risk of draining all of those energies completely. This risk varies inversely with the proportion of their maximum energy which the user possesses; a user near his or her full potential will find this item most beneficial.
 %%%%
-crystal plate mail
+crystal plate armour
 
 엄청나게 무겁지만 매우 효과적인 수정 결정의 갑옷이다.
 %%%%
@@ -405,9 +401,9 @@ deck of defence
 %%%%
 deck of destruction
 
-사용자의 적들을 파괴하고 죽음으로 내모는 마법의 카드들로 구성된 덱이다. (혹은 운이 안좋다면 자신에게도)
-다음과 같은 카드들로 구성되어 있다: 
-부식, 불꽃, 서리, 독액, 번쩍임, 망치, 고통, 고문
+A deck of magical cards, most of which hurl death and destruction at one's foes (or, if unlucky, at oneself).
+
+It may contain the following cards: Vitriol, Flame, Frost, Venom, the Spark, the Hammer, Pain, the Orb.
 %%%%
 deck of dungeons
 
@@ -423,9 +419,9 @@ deck of escape
 %%%%
 deck of punishment
 
-사용자를 황폐하게 하는 마법의 카드들로 구성된 덱이다.
-다음과 같은 카드들로 구성되어 있다: 
-진노, 망령, 저주, 좀, 굶주림, 거친 마법, 관문, 무덤, 지옥살이, 지뢰밭
+A deck of magical cards which wreak havoc on the user.
+
+It may contain the following cards: Wrath, the Wraith, the Curse, Xom, Famine, Wild Magic, the Portal, the Tomb, Damnation, the Minefield, Torment.
 %%%%
 deck of summonings
 
@@ -463,19 +459,11 @@ dire flail
 %%%%
 disc of storms
 
-파괴적인 전격의 폭풍을 방출하는 매우 강력한 도구이다. 대기 마법에 익숙한 자라면 특히 효과가 있지만, 사용자가 전도체가 아니라면 사용할 수 없다.
+This extremely powerful item can unleash a destructive storm of electricity. Its effectiveness greatly improves in the hands of one skilled in using magical devices, but cannot be used by one who is not a conductor.
 %%%%
 double sword
 
 날카로운 두 개의 날을 가진 마법 무기이다.
-%%%%
-dragon armour
-
-불을 내뿜는 용의 비늘으로 만들어진 마법 갑옷이다. 이 갑옷은 착용자를 화염으로부터 탁월하게 보호해주지만 냉기에 대해선 취약하게 만든다.
-%%%%
-dragon hide
-
-갑옷의 형태로 바뀔 수 있는 용의 비늘이다. 가죽의 상태이더라도 착용자를 화염으로부터 탁월하게 보호해주지만, 냉기에 대해선 취약하게 만든다.
 %%%%
 eggplant
 
@@ -500,6 +488,14 @@ executioner's axe
 falchion
 
 날카로운 넓은 날이 달린 검이다.
+%%%%
+fire dragon armour
+
+A magical armour, made from the scales of a fire-breathing dragon. It provides great protection from the effects of fire, but renders its wearer more susceptible to the effects of cold.
+%%%%
+fire dragon hide
+
+The scaly skin of a common true dragon. It can be fashioned into proper armour, but even in its raw form it provides great protection from the effects of fire but renders its wearer susceptible to cold.
 %%%%
 flail
 
@@ -701,9 +697,14 @@ piece of ambrosia
 
 유령 나방에게서 나오는 수상한 물질의 일부분. 섭취하면 배고픔을 해소할 뿐 아니라 마법 에너지도 얻는다. 다만 그 대가로 잠시 혼란에 빠진다.
 %%%%
-plate mail
+# Historical note: fully articulated plates came only in the last days of
+# plate armour popularity.  Before then, it had gaps on and under joints,
+# often filled with mail.
+plate armour
 
-미늘과 커다란 판금으로 만들어진 갑옷.
+A full suit of solid metal plate: cuirass, pauldrons, vambraces, waist plate and greaves. Chainmail covers gaps, allowing movement.
+
+It provides excellent protection, yet donning it takes forever.
 %%%%
 potion of agility
 
@@ -733,6 +734,10 @@ potion of cure mutation
 
 이 물약은 마신 자의 돌연변이 중 몇 개 혹은 모든 돌연변이를 없앤다.
 %%%%
+potion of curing
+
+A blessed fluid which heals some wounds, clears the mind and cures diseases. If it is used when one is at or near full health, it can also slightly repair permanent injuries.
+%%%%
 potion of decay
 
 바로 눈앞에서 몸을 부패시키는 사악한 부패의 저주가 걸려있는 액체.
@@ -761,10 +766,6 @@ potion of heal wounds
 
 순식간에 상처를 치료하는 마법의 치료물약.
 체력이 다 찼거나 그와 근접한 상태에서 사용하면 영구적인 상처도 치료할 수 있다.
-%%%%
-potion of healing
-
-약간의 상처를 치료하고, 정신을 정화하며, 병을 치유하는 축복받은 액체. 체력이 다 찼거나 그와 근접한 상태에서 사용하면 영구적인 상처도 조금 치료할 수 있다.
 %%%%
 potion of invisibility
 
@@ -1158,11 +1159,7 @@ spiked flail
 %%%%
 splint mail
 
-쇠미늘로 만든 갑옷이다.
-%%%%
-staff
-
-A stout walking stick.
+A suit made of rectangular plates of metal, connected with rings. Such platemail provides good protection, while nowhere as good as solid metal armour, it allows much greater freedom of movement.
 %%%%
 staff
 
@@ -1206,7 +1203,7 @@ staff of fire
 %%%%
 staff of poison
 
-이 지팡이는 사용자를 독으로부터 보호하며, 독 마법의 위력을 높여준다. 사용자가 발동술과 독의 마법에 모두 숙달되어 있다면 타격에 독을 부여한다.
+This staff increases the power of poisoning spells cast by its wielder, and protects him or her from the effects of poison. If the wielder is skilled in both evocations and poison magic, they can poison creatures struck by it - even if the victims were normally resistant.
 %%%%
 staff of power
 
@@ -1332,7 +1329,7 @@ wand of hasting
 
 대상의 행동을 가속시키는 마법을 부여하는 마법봉.
 %%%%
-wand of healing
+wand of heal wounds
 
 대상의 상처를 치료하는 마법봉.
 %%%%

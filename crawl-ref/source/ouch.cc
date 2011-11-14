@@ -179,27 +179,35 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
         break;
 
     case BEAM_POISON:
-        resist = player_res_poison();
+        if (doEffects)
+        {
+            resist = poison_player(coinflip() ? 2 : 1, source, kaux) ? 0 : 1;
 
-        if (resist <= 0 && doEffects)
-            poison_player(coinflip() ? 2 : 1, source, kaux);
-
-        hurted = resist_adjust_damage(&you, flavour, resist,
-                                      hurted, true);
-        if (resist > 0 && doEffects)
-            canned_msg(MSG_YOU_RESIST);
+            hurted = resist_adjust_damage(&you, flavour, resist,
+                                          hurted, true);
+            if (resist > 0)
+                canned_msg(MSG_YOU_RESIST);
+        }
+        else
+        {
+            hurted = resist_adjust_damage(&you, flavour, player_res_poison(),
+                                          hurted, true);
+        }
         break;
 
     case BEAM_POISON_ARROW:
         // [dshaligram] NOT importing uber-poison arrow from 4.1. Giving no
         // bonus to poison resistant players seems strange and unnecessarily
         // arbitrary.
+
         resist = player_res_poison();
 
-        if (!resist && doEffects)
-            poison_player(4 + random2(3), source, kaux, true);
-        else if (!you.is_undead && doEffects)
-            poison_player(2 + random2(3), source, kaux, true);
+        if (doEffects)
+        {
+            int poison_amount = 2 + random2(3);
+            poison_amount += (resist ? 0 : 2);
+            poison_player(poison_amount, source, kaux, true);
+        }
 
         hurted = resist_adjust_damage(&you, flavour, resist, hurted);
         if (hurted < original && doEffects)
@@ -440,7 +448,7 @@ static void _item_corrode(int slot)
     switch (item.base_type)
     {
     case OBJ_ARMOUR:
-        if ((item.sub_type == ARM_CRYSTAL_PLATE_MAIL
+        if ((item.sub_type == ARM_CRYSTAL_PLATE_ARMOUR
              || get_equip_race(item) == ISFLAG_DWARVEN)
             && !one_chance_in(5))
         {
@@ -808,7 +816,7 @@ void lose_level()
             you.hp, you.hp_max, you.magic_points, you.max_magic_points);
     take_note(Note(NOTE_XP_LEVEL_CHANGE, you.experience_level, 0, buf));
 
-    redraw_title(you.your_name, player_title());
+    you.redraw_title = true;
     you.redraw_experience = true;
 
     xom_is_stimulated(200);
@@ -1151,9 +1159,9 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
     if (dam != INSTANT_DEATH)
         if (you.petrified())
-            dam /= 3;
+            dam /= 2;
         else if (you.petrifying())
-            dam = dam * 1000 / 1732;
+            dam = dam * 10 / 15;
 
     ait_hp_loss hpl(dam, death_type);
     interrupt_activity(AI_HP_LOSS, &hpl);
@@ -1175,16 +1183,20 @@ void ouch(int dam, int death_source, kill_method_type death_type,
     {
         if (player_spirit_shield() && death_type != KILLED_BY_POISON)
         {
-            if (dam <= you.magic_points)
-            {
-                dec_mp(dam);
+            // round off fairly (important for taking 1 damage at a time)
+            int mp = div_rand_round(dam * you.magic_points,
+                                    you.hp + you.magic_points);
+            // but don't kill the player with round-off errors
+            mp = std::max(mp, dam + 1 - you.hp);
+            mp = std::min(mp, you.magic_points);
+
+            dam -= mp;
+            dec_mp(mp);
+            if (dam <= 0)
                 return;
-            }
-            dam -= you.magic_points;
-            dec_mp(you.magic_points);
         }
 
-        if (dam >= you.hp && god_protects_from_harm())
+        if (dam >= you.hp && you.hp_max > 0 && god_protects_from_harm())
         {
             simple_god_message(gettext(" protects you from harm!"));
             return;
@@ -1355,7 +1367,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
     crawl_state.need_save       = false;
     crawl_state.updating_scores = true;
 
-#if TAG_MAJOR_VERSION == 32
+#if TAG_MAJOR_VERSION <= 33
     note_montiers();
 #endif
 

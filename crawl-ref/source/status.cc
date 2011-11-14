@@ -187,7 +187,7 @@ static int _bad_ench_colour(int lvl, int orange, int red)
     return (YELLOW);
 }
 
-int dur_colour(int exp_colour, bool expiring)
+static int _dur_colour(int exp_colour, bool expiring)
 {
     if (expiring)
     {
@@ -230,6 +230,7 @@ static void _describe_hunger(status_info* inf);
 static void _describe_regen(status_info* inf);
 static void _describe_rotting(status_info* inf);
 static void _describe_sickness(status_info* inf);
+static void _describe_nausea(status_info* inf);
 static void _describe_speed(status_info* inf);
 static void _describe_poison(status_info* inf);
 static void _describe_transform(status_info* inf);
@@ -260,7 +261,7 @@ void fill_status_info(int status, status_info* inf)
             inf->long_text    = gettext(ddef->long_text.c_str());
             if (ddef->expire)
             {
-                inf->light_colour = dur_colour(inf->light_colour,
+                inf->light_colour = _dur_colour(inf->light_colour,
                                                  dur_expiring(dur));
                 _mark_expiring(inf, dur_expiring(dur));
             }
@@ -345,6 +346,10 @@ void fill_status_info(int status, status_info* inf)
         _describe_sickness(inf);
         break;
 
+    case DUR_NAUSEA:
+        _describe_nausea(inf);
+        break;
+
     case STATUS_SPEED:
         _describe_speed(inf);
         break;
@@ -377,9 +382,9 @@ void fill_status_info(int status, status_info* inf)
 
     case DUR_INVIS:
         if (you.attribute[ATTR_INVIS_UNCANCELLABLE])
-            inf->light_colour = dur_colour(BLUE, dur_expiring(DUR_INVIS));
+            inf->light_colour = _dur_colour(BLUE, dur_expiring(DUR_INVIS));
         else
-            inf->light_colour = dur_colour(MAGENTA, dur_expiring(DUR_INVIS));
+            inf->light_colour = _dur_colour(MAGENTA, dur_expiring(DUR_INVIS));
         inf->light_text   = gettext(M_("Invis"));
         inf->short_text   = gettext(M_("invisible"));
         if (you.backlit())
@@ -590,7 +595,7 @@ static void _describe_regen(status_info* inf)
 
     if (regen)
     {
-        inf->light_colour = dur_colour(BLUE, dur_expiring(DUR_REGENERATION));
+        inf->light_colour = _dur_colour(BLUE, dur_expiring(DUR_REGENERATION));
         inf->light_text   = gettext(M_("Regen"));
         if (you.attribute[ATTR_DIVINE_REGENERATION])
             inf->light_text += gettext(M_(" MR"));
@@ -659,7 +664,7 @@ static void _describe_speed(status_info* inf)
     }
     else if (you.duration[DUR_HASTE])
     {
-        inf->light_colour = dur_colour(BLUE, dur_expiring(DUR_HASTE));
+        inf->light_colour = _dur_colour(BLUE, dur_expiring(DUR_HASTE));
         inf->light_text   = gettext(M_("Fast"));
         inf->short_text = gettext(M_("hasted"));
         inf->long_text = gettext("Your actions are hasted.");
@@ -697,7 +702,7 @@ static void _describe_airborne(status_info* inf)
         inf->short_text   = gettext(M_("levitating"));
         inf->long_text    = gettext("You are hovering above the floor.");
     }
-    inf->light_colour = dur_colour(inf->light_colour, expiring);
+    inf->light_colour = _dur_colour(inf->light_colour, expiring);
     _mark_expiring(inf, expiring);
 }
 
@@ -744,6 +749,19 @@ static void _describe_sickness(status_info* inf)
     }
 }
 
+static void _describe_nausea(status_info* inf)
+{
+    if (!you.duration[DUR_NAUSEA])
+        return;
+
+    inf->light_colour = BROWN;
+    inf->light_text   = "Nausea";
+    inf->short_text   = "nauseated";
+    inf->long_text    = (you.hunger_state <= HS_STARVING) ?
+                "You would have trouble eating anything." :
+                "You cannot eat right now.";
+}
+
 static void _describe_burden(status_info* inf)
 {
     switch (you.burden_state)
@@ -761,7 +779,7 @@ static void _describe_burden(status_info* inf)
         inf->long_text    = gettext("You are burdened.");
         break;
     case BS_UNENCUMBERED:
-        if (you.species == SP_KENKU && you.flight_mode() == FL_FLY)
+        if (you.species == SP_TENGU && you.flight_mode() == FL_FLY)
         {
             if (you.travelling_light())
                 inf->long_text = gettext("Your small burden allows quick flight.");
@@ -831,7 +849,7 @@ static void _describe_transform(status_info* inf)
         break;
     }
 
-    inf->light_colour = dur_colour(GREEN, expire);
+    inf->light_colour = _dur_colour(GREEN, expire);
     _mark_expiring(inf, expire);
 }
 

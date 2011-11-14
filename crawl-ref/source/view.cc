@@ -726,7 +726,7 @@ void view_update_at(const coord_def &pos)
 
     show_update_at(pos);
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     if (!env.map_knowledge(pos).visible())
         return;
     glyph g = get_cell_glyph(pos);
@@ -752,7 +752,7 @@ void view_update_at(const coord_def &pos)
 #endif
 }
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
 void flash_monster_colour(const monster* mon, uint8_t fmc_colour,
                           int fmc_delay)
 {
@@ -858,13 +858,17 @@ static int player_view_update_at(const coord_def &gc)
         cloud_type   ctype = cl.type;
 
         bool did_exclude = false;
-        if (cl.whose  == KC_OTHER
-            && cl.killer == KILL_MISC
-            && is_damaging_cloud(cl.type, false))
+        if (!cl.temporary() && is_damaging_cloud(cl.type, false))
         {
+            int size;
+
             // Steam clouds are less dangerous than the other ones,
             // so don't exclude the neighbour cells.
-            const int size = (ctype == CLOUD_STEAM ? 0 : 1);
+            if (ctype == CLOUD_STEAM && cl.exclusion_radius() == 1)
+                size = 0;
+            else
+                size = cl.exclusion_radius();
+
             bool was_exclusion = is_exclude_root(gc);
             set_exclude(gc, size, false, false, true);
             if (!did_exclude && !was_exclusion)
@@ -1002,8 +1006,11 @@ static bool _show_terrain = false;
 //
 // If show_updates is set, env.show and dependent structures
 // are updated. Should be set if anything in view has changed.
+//
+// If tiles_only is set, only the tile view will be updated. This
+// is only relevant for Webtiles.
 //---------------------------------------------------------------
-void viewwindow(bool show_updates)
+void viewwindow(bool show_updates, bool tiles_only)
 {
     if (you.duration[DUR_TIME_STEP])
         return;
@@ -1025,10 +1032,7 @@ void viewwindow(bool show_updates)
     if (show_updates || _show_terrain)
     {
         if (!is_map_persistent())
-        {
-            env.map_knowledge.init(map_cell());
             ash_detect_portals(false);
-        }
 
 #ifdef USE_TILE
         tile_draw_floor();
@@ -1075,10 +1079,18 @@ void viewwindow(bool show_updates)
     // and this simply works without requiring a stack.
     you.flash_colour = BLACK;
     you.last_view_update = you.num_turns;
-#ifndef USE_TILE
-    puttext(crawl_view.viewp.x, crawl_view.viewp.y, crawl_view.vbuf);
-    update_monster_pane();
-#else
+#ifndef USE_TILE_LOCAL
+#ifdef USE_TILE_WEB
+    tiles_crt_control crt(false);
+#endif
+
+    if (!tiles_only)
+    {
+        puttext(crawl_view.viewp.x, crawl_view.viewp.y, crawl_view.vbuf);
+        update_monster_pane();
+    }
+#endif
+#ifdef USE_TILE
     tiles.set_need_redraw(you.running ? Options.tile_runrest_rate : 0);
     tiles.load_dungeon(crawl_view.vbuf, crawl_view.vgrdc);
     tiles.update_tabs();
@@ -1121,7 +1133,7 @@ void draw_cell(screen_cell_t *cell, const coord_def &gc,
     {
         if (you.see_cell(gc))
         {
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
             cell->colour = real_colour(flash_colour);
 #else
             monster_type mons = env.map_knowledge(gc).monster();

@@ -213,7 +213,7 @@ static void _wizard_go_to_level(const level_pos &pos)
     you.where_are_you = static_cast<branch_type>(pos.id.branch);
     you.absdepth0    = abs_depth;
 
-    const bool newlevel = load(stair_taken, LOAD_ENTER_LEVEL, old_level);
+    const bool newlevel = load_level(stair_taken, LOAD_ENTER_LEVEL, old_level);
 #ifdef USE_TILE
     tile_new_level(newlevel);
 #else
@@ -503,13 +503,13 @@ void debug_make_trap()
     for (int t = TRAP_DART; t < NUM_TRAPS; ++t)
     {
         const trap_type tr = static_cast<trap_type>(t);
-        const char* tname  = trap_name(tr);
+        std::string tname  = lowercase_string(trap_name(tr));
         if (spec.find(tname) != spec.npos)
         {
             trap = tr;
             break;
         }
-        else if (strstr(tname, spec.c_str()))
+        else if (tname.find(spec) != tname.npos)
         {
             matches.push_back(tr);
             match_names.push_back(tname);
@@ -520,7 +520,7 @@ void debug_make_trap()
     {
         if (matches.empty())
         {
-            mprf("I know no traps named \"%s\"", spec.c_str());
+            mprf("I know no traps named \"%s\".", spec.c_str());
             return;
         }
         // Only one match, use that
@@ -538,7 +538,10 @@ void debug_make_trap()
     }
 
     if (place_specific_trap(you.pos(), trap))
-        mprf("Created a %s trap, marked it undiscovered", trap_name(trap));
+    {
+        mprf("Created a %s trap, marked it undiscovered.",
+             trap_name(trap).c_str());
+    }
     else
         mpr("Could not create trap - too many traps on level.");
 
@@ -824,7 +827,7 @@ void wizard_recreate_level()
     if (lev.level_type == LEVEL_DUNGEON)
         you.get_place_info().levels_seen--;
     Generated_Levels.erase(lev);
-    const bool newlevel = load(stair_taken, LOAD_START_GAME, lev);
+    const bool newlevel = load_level(stair_taken, LOAD_START_GAME, lev);
 #ifdef USE_TILE
     tile_new_level(newlevel);
 #else

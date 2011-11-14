@@ -427,7 +427,7 @@ int monster::total_weight() const
     return (body_weight() + burden);
 }
 
-int monster::damage_brand(int which_attack)
+brand_type monster::damage_brand(int which_attack)
 {
     const item_def *mweap = weapon(which_attack);
 
@@ -1279,8 +1279,6 @@ static bool _nonredundant_launcher_ammo_brands(item_def *launcher,
         return (bow_brand != SPWPN_FROST);
     case SPMSL_CHAOS:
         return (bow_brand != SPWPN_CHAOS);
-    case SPMSL_REAPING:
-        return (bow_brand != SPWPN_REAPING);
     case SPMSL_PENETRATION:
         return (bow_brand != SPWPN_PENETRATION);
     default:
@@ -1491,9 +1489,13 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
             if (is_range_weapon(*weap))
                 continue;
 
-            // Don't swap to a non-signature weapon.
-            if (!_is_signature_weapon(this, item) && !dual_wielding)
+            // Don't swap from a signature weapon to a non-signature one.
+            if (!_is_signature_weapon(this, item)
+                && _is_signature_weapon(this, *weap)
+                && !dual_wielding)
+            {
                 return (false);
+            }
 
             // If we get here, the weapon is a melee weapon.
             // If the new weapon is better than the current one and not cursed,
@@ -1735,6 +1737,12 @@ bool monster::pickup_armour(item_def &item, int near, bool force)
         break;
     default:
         eq = get_armour_slot(item);
+
+        if (eq == EQ_BODY_ARMOUR && mons_genus(type) == MONS_DRACONIAN)
+            return false;
+
+        if (eq != EQ_HELMET && (type == MONS_OCTOPODE || type == MONS_GASTRONOK))
+            return false;
     }
 
     // Bardings are only wearable by the appropriate monster.
@@ -2574,7 +2582,7 @@ std::string monster::arm_name(bool plural, bool *can_plural) const
         adj = "scaled";
         break;
 
-    case MONS_KENKU:
+    case MONS_TENGU:
         adj = "feathered";
         break;
 
@@ -3015,6 +3023,9 @@ bool monster::heal(int amount, bool max_too)
     if (mons_is_statue(type))
         return (false);
 
+    if (has_ench(ENCH_DEATHS_DOOR))
+        return (false);
+
     if (amount < 1)
         return (false);
     else if (!max_too && hit_points == max_hit_points)
@@ -3359,6 +3370,8 @@ int monster::res_poison(bool temp) const
     UNUSED(temp);
 
     int u = get_mons_resists(this).poison;
+    if (u > 0)
+        return u;
 
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
@@ -3374,8 +3387,10 @@ int monster::res_poison(bool temp) const
             u += get_armour_res_poison(mitm[shld], false);
     }
 
-    // Monsters can legitimately get multiple levels of poison resistance.
-
+    // Monsters can have multiple innate levels of poison resistance, but
+    // like players, equipment doesn't stack.
+    if (u > 0)
+        return 1;
     return (u);
 }
 
@@ -3565,16 +3580,16 @@ int monster::mons_species() const
     return ::mons_species(type);
 }
 
-void monster::poison(actor *agent, int amount, bool force)
+bool monster::poison(actor *agent, int amount, bool force)
 {
     if (amount <= 0)
-        return;
+        return (false);
 
     // Scale poison down for monsters.
     if (!(amount /= 2))
         amount = 1;
 
-    poison_monster(this, agent, amount, force);
+    return poison_monster(this, agent, amount, force);
 }
 
 int monster::skill(skill_type sk, int scale, bool real) const
@@ -3696,9 +3711,9 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
             if (this->has_ench(ENCH_DEATHS_DOOR))
                return (0);
             else if (petrified())
-                amount /= 3;
+                amount /= 2;
             else if (petrifying())
-                amount = amount * 1000 / 1732;
+                amount = amount * 2 / 3;
 
         if (amount == INSTANT_DEATH)
             amount = hit_points;
@@ -3741,6 +3756,7 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
                              coord_def(0, 0), amount);
 
         blame_damage(agent, amount);
+        behaviour_event(this, ME_HURT);
     }
 
     if (cleanup_dead && (hit_points <= 0 || hit_dice <= 0) && type != -1)
@@ -3790,39 +3806,12 @@ void monster::slow_down(actor *atk, int strength)
     enchant_monster_with_flavour(this, atk, BEAM_SLOW, strength);
 }
 
-void monster::set_ghost(const ghost_demon &g, bool has_name)
+void monster::set_ghost(const ghost_demon &g)
 {
     ghost.reset(new ghost_demon(g));
 
-    if (has_name)
+    if (!ghost->name.empty())
         mname = ghost->name;
-}
-
-void monster::pandemon_init()
-{
-    hit_dice        = ghost->xl;
-    max_hit_points  = std::min<int>(ghost->max_hp, MAX_MONSTER_HP);
-    hit_points      = max_hit_points;
-    ac              = ghost->ac;
-    ev              = ghost->ev;
-    flags           = MF_INTERESTING;
-    // Don't make greased-lightning Pandemonium demons in the dungeon
-    // max speed = 17). Demons in Pandemonium can be up to speed 20,
-    // possibly with haste. Non-caster demons are likely to be fast.
-    if (you.level_type == LEVEL_DUNGEON)
-        speed = (!ghost->spellcaster ? 11 + roll_dice(2, 3) :
-                 one_chance_in(3) ? 10 :
-                 7 + roll_dice(2, 5));
-    else
-        speed = (!ghost->spellcaster ? 12 + roll_dice(2, 4) :
-                 one_chance_in(3) ? 10 :
-                 8 + roll_dice(2, 6));
-
-    speed_increment = 70;
-
-    colour = ghost->colour;
-
-    load_ghost_spells();
 }
 
 void monster::set_new_monster_id()
@@ -3832,24 +3821,17 @@ void monster::set_new_monster_id()
 
 void monster::ghost_init(bool need_pos)
 {
+    ghost_demon_init();
+
     set_new_monster_id();
     type            = MONS_PLAYER_GHOST;
     god             = ghost->religion;
-    hit_dice        = ghost->xl;
-    max_hit_points  = std::min<int>(ghost->max_hp, MAX_MONSTER_HP);
-    hit_points      = max_hit_points;
-    ac              = ghost->ac;
-    ev              = ghost->ev;
-    speed           = ghost->speed;
-    speed_increment = 70;
     attitude        = ATT_HOSTILE;
     behaviour       = BEH_WANDER;
     flags           = MF_INTERESTING;
     foe             = MHITNOT;
     foe_memory      = 0;
-    colour          = ghost->colour;
     number          = MONS_NO_MONSTER;
-    load_ghost_spells();
 
     inv.init(NON_ITEM);
     enchantments.clear();
@@ -3881,22 +3863,10 @@ void monster::uglything_init(bool only_mutate)
     colour          = ghost->colour;
 }
 
-void monster::dancing_weapon_init()
+void monster::ghost_demon_init()
 {
     hit_dice        = ghost->xl;
-    max_hit_points  = ghost->max_hp;
-    hit_points      = max_hit_points;
-    ac              = ghost->ac;
-    ev              = ghost->ev;
-    speed           = ghost->speed;
-    speed_increment = 70;
-    colour          = ghost->colour;
-}
-
-void monster::labrat_init ()
-{
-    hit_dice        = ghost->xl;
-    max_hit_points  = ghost->max_hp;
+    max_hit_points  = std::min<short int>(ghost->max_hp, MAX_MONSTER_HP);
     hit_points      = max_hit_points;
     ac              = ghost->ac;
     ev              = ghost->ev;
@@ -4429,7 +4399,9 @@ static bool _mons_is_skeletal(int mc)
             || mc == MONS_SKELETON_LARGE
             || mc == MONS_BONE_DRAGON
             || mc == MONS_SKELETAL_WARRIOR
-            || mc == MONS_FLYING_SKULL);
+            || mc == MONS_FLYING_SKULL
+            || mc == MONS_CURSE_SKULL
+            || mc == MONS_MURRAY);
 }
 
 bool monster::is_skeletal() const
@@ -4742,7 +4714,7 @@ bool monster::can_drink_potion(potion_type ptype) const
 
     switch (ptype)
     {
-        case POT_HEALING:
+        case POT_CURING:
         case POT_HEAL_WOUNDS:
             return (holiness() != MH_NONLIVING
                     && holiness() != MH_PLANT);
@@ -4767,14 +4739,16 @@ bool monster::should_drink_potion(potion_type ptype) const
 {
     switch (ptype)
     {
-    case POT_HEALING:
-        return (hit_points <= max_hit_points / 2)
+    case POT_CURING:
+        return (!has_ench(ENCH_DEATHS_DOOR)
+                && hit_points <= max_hit_points / 2
                 || has_ench(ENCH_POISON)
                 || has_ench(ENCH_SICK)
                 || has_ench(ENCH_CONFUSION)
-                || has_ench(ENCH_ROT);
+                || has_ench(ENCH_ROT));
     case POT_HEAL_WOUNDS:
-        return (hit_points <= max_hit_points / 2);
+        return (!has_ench(ENCH_DEATHS_DOOR)
+                && hit_points <= max_hit_points / 2);
     case POT_BLOOD:
     case POT_BLOOD_COAGULATED:
         return (hit_points <= max_hit_points / 2);
@@ -4807,16 +4781,16 @@ item_type_id_state_type monster::drink_potion_effect(potion_type pot_eff)
 
     switch (pot_eff)
     {
-    case POT_HEALING:
+    case POT_CURING:
     {
-        heal(5 + random2(7));
-        simple_monster_message(this, gettext(" is healed!"));
+        if (heal(5 + random2(7)))
+            simple_monster_message(this, gettext(" is healed!"));
 
         const enchant_type cured_enchants[] = {
             ENCH_POISON, ENCH_SICK, ENCH_CONFUSION, ENCH_ROT
         };
 
-        // We can differentiate healing and heal wounds (and blood,
+        // We can differentiate curing and heal wounds (and blood,
         // for vampires) by seeing if any status ailments are cured.
         for (unsigned int i = 0; i < ARRAYSZ(cured_enchants); ++i)
             if (del_ench(cured_enchants[i]))
@@ -4825,8 +4799,8 @@ item_type_id_state_type monster::drink_potion_effect(potion_type pot_eff)
     break;
 
     case POT_HEAL_WOUNDS:
-        heal(10 + random2avg(28, 3));
-        simple_monster_message(this, gettext(" is healed!"));
+        if (heal(10 + random2avg(28, 3)))
+            simple_monster_message(this, gettext(" is healed!"));
         break;
 
     case POT_BLOOD:
@@ -5076,13 +5050,12 @@ bool monster::can_cling_to_walls() const
 
 bool monster::is_web_immune() const
 {
-    // Spiders (and other clingers)
+    // Spiders
     // Ghosts and other incorporeals
     // Oozes
     // All 'I' (ice / sky beast)
-    return (can_cling_to_walls()
-         || is_insubstantial()
-         || mons_genus(type) == MONS_JELLY);
+    return (mons_genus(type) == MONS_SPIDER || is_insubstantial()
+            || mons_genus(type) == MONS_JELLY);
 }
 
 // Undead and demonic monsters have nightvision, as do all followers

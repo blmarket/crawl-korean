@@ -70,6 +70,8 @@ struct game_state
 
     std::string sprint_map; // Sprint map set on command line, if any.
 
+    std::string map;        // Map selected in the newgame menu
+
     void (*terminal_resize_handler)();
     void (*terminal_resize_check)();
 
@@ -89,7 +91,7 @@ struct game_state
 
     bool level_annotation_shown;
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     // Are we currently targeting using the mlist?
     // This is global because the monster pane uses this when
     // drawing.

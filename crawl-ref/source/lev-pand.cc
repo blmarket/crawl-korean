@@ -17,8 +17,6 @@
 #include "mon-pick.h"
 #include "random.h"
 
-#define random_mons(...) static_cast<monster_type>(random_choose(__VA_ARGS__))
-
 void init_pandemonium(void)
 {
     // colour of monster 9 is colour of floor, 8 is colour of rock
@@ -44,7 +42,7 @@ void init_pandemonium(void)
 
         if (one_chance_in(10))
         {
-            env.mons_alloc[pc] = random_mons(
+            env.mons_alloc[pc] = random_choose(
                                     MONS_HELLION,
                                     MONS_ROTTING_DEVIL,
                                     MONS_TORMENTOR,
@@ -62,14 +60,14 @@ void init_pandemonium(void)
             env.mons_alloc[pc] = MONS_RED_DEVIL;
 
         if (one_chance_in(30))
-            env.mons_alloc[pc] = MONS_IMP;
+            env.mons_alloc[pc] = MONS_CRIMSON_IMP;
 
         if (one_chance_in(30))
             env.mons_alloc[pc] = MONS_SIXFIRHY;
 
         if (one_chance_in(20))
         {
-            env.mons_alloc[pc] = random_mons(
+            env.mons_alloc[pc] = random_choose(
                                     MONS_DEMONIC_CRAWLER,
                                     MONS_SUN_DEMON,
                                     MONS_SHADOW_IMP,
@@ -83,7 +81,7 @@ void init_pandemonium(void)
          || pc == 8 && one_chance_in(5)
          || pc == 9 && one_chance_in(3))
         {
-            env.mons_alloc[pc] = random_mons(
+            env.mons_alloc[pc] = random_choose(
                     MONS_EXECUTIONER,
                     MONS_GREEN_DEATH,
                     MONS_BLIZZARD_DEMON,
@@ -94,7 +92,7 @@ void init_pandemonium(void)
     }
 
     if (one_chance_in(10))
-        env.mons_alloc[7 + random2(3)] = MONS_FIEND;
+        env.mons_alloc[7 + random2(3)] = MONS_BRIMSTONE_FIEND;
 
     if (one_chance_in(10))
         env.mons_alloc[7 + random2(3)] = MONS_ICE_FIEND;

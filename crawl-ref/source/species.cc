@@ -21,15 +21,15 @@ static species_type species_order[] = {
     // comparatively human-like looks
     SP_HUMAN,          SP_HIGH_ELF,
     SP_DEEP_ELF,       SP_SLUDGE_ELF,
-    SP_MOUNTAIN_DWARF, SP_DEEP_DWARF,
-    SP_HILL_ORC,       SP_MERFOLK,
+    SP_DEEP_DWARF,     SP_HILL_ORC,
+    SP_MERFOLK,
     // small species
     SP_HALFLING,       SP_KOBOLD,
     SP_SPRIGGAN,
     // significantly different body type from human
     SP_NAGA,           SP_CENTAUR,
     SP_OGRE,           SP_TROLL,
-    SP_MINOTAUR,       SP_KENKU,
+    SP_MINOTAUR,       SP_TENGU,
     SP_BASE_DRACONIAN,
     // celestial species
     SP_DEMIGOD,        SP_DEMONSPAWN,
@@ -37,8 +37,7 @@ static species_type species_order[] = {
     SP_MUMMY,          SP_GHOUL,
     SP_VAMPIRE,
     // not humanoid at all
-    SP_FELID,
-    SP_OCTOPODE,
+    SP_FELID,          SP_OCTOPODE,
 };
 
 species_type random_draconian_player_species()
@@ -60,7 +59,7 @@ static const char * Species_Abbrev_List[NUM_SPECIES] =
       "HO", "Ko", "Mu", "Na", "Og", "Tr",
       // the draconians
       "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr",
-      "Ce", "Dg", "Sp", "Mi", "Ds", "Gh", "Ke", "Mf", "Vp", "DD",
+      "Ce", "Dg", "Sp", "Mi", "Ds", "Gh", "Te", "Mf", "Vp", "DD",
       "Fe", "Op",
       // placeholders
       "El", "HD", "OM", "GE", "Gn" };
@@ -160,21 +159,6 @@ std::string species_name(species_type speci, bool genus, bool adj)
             }
         }
         break;
-    case GENPC_DWARVEN:
-        if (adj)  // doesn't care about species/genus
-            res = M_("Dwarven");
-        else if (genus)
-            res = M_("Dwarf");
-        else
-        {
-            switch (speci)
-            {
-            case SP_MOUNTAIN_DWARF: res = M_("Mountain Dwarf");            break;
-            case SP_DEEP_DWARF:     res = M_("Deep Dwarf");                break;
-            default:                res = M_("Dwarf");                     break;
-            }
-        }
-        break;
     case GENPC_NONE:
     default:
         switch (speci)
@@ -187,10 +171,24 @@ std::string species_name(species_type speci, bool genus, bool adj)
         case SP_CENTAUR:    res = M_("Centaur");                           break;
         case SP_SPRIGGAN:   res = M_("Spriggan");                          break;
         case SP_MINOTAUR:   res = M_("Minotaur");                          break;
-        case SP_KENKU:      res = M_("Kenku");                             break;
+        case SP_TENGU:      res = M_("Tengu");                             break;
 
         case SP_HILL_ORC:
             res = (adj ? M_("Orcish") : genus ? M_("Orc") : M_("Hill Orc"));
+            break;
+        case SP_DEEP_DWARF:
+            res = (adj ? "Dwarven" : genus ? "Dwarf" : "Deep Dwarf");
+            break;
+#if TAG_MAJOR_VERSION == 32
+        case SP_MOUNTAIN_DWARF:
+            res = (adj ? "Dwarven" : genus ? "Dwarf" : "Mountain Dwarf");
+            break;
+#endif
+        case SP_FELID:
+            res = (adj ? "Feline" : genus ? "Cat" : "Felid");
+            break;
+        case SP_OCTOPODE:
+            res = (adj ? "Octopoid" : genus ? "Octopus" : "Octopode");
             break;
 
         case SP_OGRE:       res = (adj ? M_("Ogreish")    : M_("Ogre"));       break;
@@ -200,8 +198,6 @@ std::string species_name(species_type speci, bool genus, bool adj)
         case SP_GHOUL:      res = (adj ? M_("Ghoulish")   : M_("Ghoul"));      break;
         case SP_MERFOLK:    res = (adj ? M_("Merfolkian") : M_("Merfolk"));    break;
         case SP_VAMPIRE:    res = (adj ? M_("Vampiric")   : M_("Vampire"));    break;
-        case SP_FELID:      res = (adj ? M_("Feline")     : M_("Felid"));      break;
-        case SP_OCTOPODE:   res = (adj ? M_("Octopoid")   : M_("Octopode"));   break;
         default:            res = (adj ? M_("Yakish")     : M_("Yak"));        break;
         }
     }
@@ -251,13 +247,6 @@ genus_type species_genus(species_type species)
     case SP_SLUDGE_ELF:
         return (GENPC_ELVEN);
 
-    case SP_MOUNTAIN_DWARF:
-    case SP_DEEP_DWARF:
-        return (GENPC_DWARVEN);
-
-    case SP_OGRE:
-        return (GENPC_OGREISH);
-
     default:
         return (GENPC_NONE);
     }
@@ -300,8 +289,10 @@ monster_type player_species_to_mons_species(species_type species)
     case SP_DEEP_ELF:
     case SP_SLUDGE_ELF:
         return (MONS_ELF);
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:
         return (MONS_DWARF);
+#endif
     case SP_HALFLING:
         return (MONS_HALFLING);
     case SP_HILL_ORC:
@@ -348,8 +339,8 @@ monster_type player_species_to_mons_species(species_type species)
         return (MONS_DEMONSPAWN);
     case SP_GHOUL:
         return (MONS_GHOUL);
-    case SP_KENKU:
-        return (MONS_KENKU);
+    case SP_TENGU:
+        return (MONS_TENGU);
     case SP_MERFOLK:
         return (MONS_MERFOLK);
     case SP_VAMPIRE:
@@ -398,9 +389,12 @@ int species_exp_modifier(species_type species)
     case SP_OCTOPODE:
         return 12;
     case SP_SPRIGGAN:
-    case SP_KENKU:
+    case SP_TENGU:
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:
+#endif
     case SP_DEEP_DWARF:
+    case SP_MINOTAUR:
         return 13;
     case SP_BASE_DRACONIAN:
     case SP_RED_DRACONIAN:
@@ -414,7 +408,6 @@ int species_exp_modifier(species_type species)
     case SP_PALE_DRACONIAN:
     case SP_DEEP_ELF:
     case SP_CENTAUR:
-    case SP_MINOTAUR:
     case SP_MUMMY:
     case SP_FELID:
         return 14;
@@ -439,7 +432,7 @@ int species_hp_modifier(species_type species)
     case SP_SPRIGGAN:
         return -3;
     case SP_DEEP_ELF:
-    case SP_KENKU:
+    case SP_TENGU:
     case SP_KOBOLD:
         return -2;
     case SP_HIGH_ELF:
@@ -461,7 +454,9 @@ int species_hp_modifier(species_type species)
     case SP_PURPLE_DRACONIAN:
     case SP_MOTTLED_DRACONIAN:
     case SP_PALE_DRACONIAN:
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:
+#endif
     case SP_GHOUL:
     case SP_HILL_ORC:
     case SP_MINOTAUR:
@@ -482,14 +477,16 @@ int species_mp_modifier(species_type species)
     case SP_TROLL:
     case SP_MINOTAUR:
         return -2;
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:
-    case SP_HILL_ORC:
+#endif
     case SP_CENTAUR:
     case SP_GHOUL:
         return -1;
     default:
         return 0;
     case SP_SLUDGE_ELF:
+    case SP_TENGU:
         return 1;
     case SP_FELID:
     case SP_HIGH_ELF:

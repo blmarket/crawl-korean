@@ -33,6 +33,7 @@
 static void _init_player(void)
 {
     you.init();
+    dlua.callfn("dgn_clear_data", "");
 }
 
 // Recall that demonspawn & demigods get more later on. {dlb}
@@ -57,19 +58,21 @@ static void _species_stat_init(species_type which_species)
     case SP_DEEP_ELF:           sb =  3; ib = 10; db =  8;      break;  // 21
     case SP_SLUDGE_ELF:         sb =  6; ib =  7; db =  7;      break;  // 20
 
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:     sb =  9; ib =  4; db =  5;      break;  // 18
+#endif
     case SP_DEEP_DWARF:         sb =  9; ib =  6; db =  6;      break;  // 21
 
     case SP_TROLL:              sb = 13; ib =  2; db =  3;      break;  // 18
     case SP_OGRE:               sb = 10; ib =  5; db =  3;      break;  // 18
 
     case SP_MINOTAUR:           sb = 10; ib =  3; db =  3;      break;  // 16
-    case SP_HILL_ORC:           sb =  9; ib =  3; db =  4;      break;  // 16
+    case SP_HILL_ORC:           sb =  8; ib =  6; db =  4;      break;  // 18
     case SP_CENTAUR:            sb =  8; ib =  5; db =  2;      break;  // 15
     case SP_NAGA:               sb =  8; ib =  6; db =  4;      break;  // 18
 
     case SP_MERFOLK:            sb =  6; ib =  5; db =  7;      break;  // 18
-    case SP_KENKU:              sb =  6; ib =  6; db =  7;      break;  // 19
+    case SP_TENGU:              sb =  6; ib =  6; db =  7;      break;  // 19
 
     case SP_KOBOLD:             sb =  5; ib =  4; db =  8;      break;  // 17
     case SP_HALFLING:           sb =  3; ib =  6; db =  9;      break;  // 18
@@ -198,10 +201,6 @@ static void _jobs_stat_init(job_type which_job)
     you.base_stats[STAT_INT] += i;
     you.base_stats[STAT_DEX] += d;
 
-    // Used for Jiyva's stat swapping if the player has not reached
-    // experience level 3.
-    you.last_chosen = (stat_type) random2(NUM_STATS);
-
     you.hp_max_perm = hp - 2;
     you.mp_max_perm = mp - 1;
 }
@@ -227,6 +226,17 @@ void unfocus_stats()
     }
 }
 
+// Some consumables to make the starts of Sprint and Zotdef a little easier.
+static void _give_bonus_items()
+{
+    newgame_give_item(OBJ_POTIONS, POT_CURING);
+    newgame_give_item(OBJ_POTIONS, POT_HEAL_WOUNDS);
+    newgame_give_item(OBJ_POTIONS, POT_SPEED);
+    newgame_give_item(OBJ_POTIONS, POT_MAGIC, 2);
+    newgame_give_item(OBJ_POTIONS, POT_BERSERK_RAGE);
+    newgame_give_item(OBJ_SCROLLS, SCR_BLINKING);
+}
+
 void give_basic_mutations(species_type speci)
 {
     // We should switch over to a size-based system
@@ -239,7 +249,7 @@ void give_basic_mutations(species_type speci)
     case SP_OGRE:
         you.mutation[MUT_TOUGH_SKIN]      = 1;
         you.mutation[MUT_FAST_METABOLISM] = 1;
-        you.mutation[MUT_CARNIVOROUS]     = 1;
+        you.mutation[MUT_SAPROVOROUS]     = 1;
         break;
     case SP_HALFLING:
         you.mutation[MUT_SLOW_METABOLISM]     = 1;
@@ -289,7 +299,7 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_SLOW_HEALING]               = 1;
         you.mutation[MUT_UNBREATHING]                = 1;
         break;
-    case SP_KENKU:
+    case SP_TENGU:
         you.mutation[MUT_BEAK]   = 1;
         you.mutation[MUT_TALONS] = 3;
         break;
@@ -563,10 +573,13 @@ static void _give_items_skills(const newgame_def& ng)
             you.equip[EQ_WEAPON] = -1; // Trolls/Ghouls/Felids fight unarmed.
         else
         {
-            // Species skilled with maces/flails get one, the others axes.
             weapon_type startwep = WPN_HAND_AXE;
             if (species_apt(SK_MACES_FLAILS) > species_apt(SK_AXES))
-                startwep = (player_genus(GENPC_OGREISH)) ? WPN_ANKUS : WPN_MACE;
+                startwep = WPN_MACE;
+            else if (species_apt(SK_POLEARMS) > species_apt(SK_AXES))
+                startwep = WPN_SPEAR;
+            else if (species_apt(SK_SHORT_BLADES) > species_apt(SK_AXES))
+                startwep = WPN_SHORT_SWORD;
 
             newgame_make_item(0, EQ_WEAPON, OBJ_WEAPONS, startwep);
         }
@@ -682,7 +695,7 @@ static void _give_items_skills(const newgame_def& ng)
         you.equip[EQ_WEAPON] = -1;
 
         newgame_make_item(0, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE, -1, 1, 1);
-        newgame_make_item(1, EQ_NONE, OBJ_POTIONS, POT_HEALING);
+        newgame_make_item(1, EQ_NONE, OBJ_POTIONS, POT_CURING);
         newgame_make_item(2, EQ_NONE, OBJ_POTIONS, POT_HEAL_WOUNDS);
 
         you.skills[SK_FIGHTING]       = 2;
@@ -778,7 +791,7 @@ static void _give_items_skills(const newgame_def& ng)
         // Gets some darts - this job is difficult to start off with.
         newgame_make_item(3, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 16, 1);
 
-        if (player_genus(GENPC_OGREISH) || you.species == SP_TROLL)
+        if (you.species == SP_OGRE || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
 
         weap_skill = 1;
@@ -891,7 +904,7 @@ static void _give_items_skills(const newgame_def& ng)
 
         newgame_make_item(4, EQ_NONE, OBJ_POTIONS, POT_CONFUSION, -1, 2);
 
-        if (player_genus(GENPC_OGREISH) || you.species == SP_TROLL)
+        if (you.species == SP_OGRE || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
 
         weap_skill = 1;
@@ -977,16 +990,16 @@ static void _give_items_skills(const newgame_def& ng)
         break;
     }
 
-    // Deep Dwarves get a wand of healing (5).
+    // Deep Dwarves get a wand of heal wounds (5).
     if (you.species == SP_DEEP_DWARF)
-        newgame_make_item(-1, EQ_NONE, OBJ_WANDS, WAND_HEALING, -1, 1, 5);
+        newgame_make_item(-1, EQ_NONE, OBJ_WANDS, WAND_HEAL_WOUNDS, -1, 1, 5);
 
-    // Zotdef: everyone gets a bonus two potions of healing, plus two
+    // Zotdef: everyone gets a bonus two potions of curing, plus two
     // free levels in Traps & Doors so they can replace old traps with
     // better ones.
     if (crawl_state.game_is_zotdef())
     {
-        newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_HEALING, -1, 2);
+        newgame_make_item(-1, EQ_NONE, OBJ_POTIONS, POT_CURING, -1, 2);
         you.skills[SK_TRAPS_DOORS] += 2;
     }
 
@@ -1063,7 +1076,7 @@ static void _give_starting_food()
     {
         item.base_type = OBJ_FOOD;
         if (you.species == SP_HILL_ORC || you.species == SP_KOBOLD
-            || player_genus(GENPC_OGREISH) || you.species == SP_TROLL
+            || you.species == SP_OGRE || you.species == SP_TROLL
             || you.species == SP_FELID)
         {
             item.sub_type = FOOD_MEAT_RATION;
@@ -1102,7 +1115,7 @@ static void _setup_tutorial_miscs()
     you.skills[SK_SHIELDS] = 0;
 
     // Some spellcasting for the magic tutorial.
-    if (get_tutorial_map().find("tutorial_lesson4") != std::string::npos)
+    if (crawl_state.map.find("tutorial_lesson4") != std::string::npos)
         you.skills[SK_SPELLCASTING] = 1;
 
     // Set Str low enough for the burdened tutorial.
@@ -1132,7 +1145,7 @@ static void _racialise_starting_equipment()
                 // Now add appropriate species type mod.
                 if (player_genus(GENPC_ELVEN))
                     set_equip_race(you.inv[i], ISFLAG_ELVEN);
-                else if (player_genus(GENPC_DWARVEN))
+                else if (you.species == SP_DEEP_DWARF)
                     set_equip_race(you.inv[i], ISFLAG_DWARVEN);
                 else if (you.species == SP_HILL_ORC)
                     set_equip_race(you.inv[i], ISFLAG_ORCISH);
@@ -1226,54 +1239,6 @@ static void _give_basic_knowledge(job_type which_job)
     }
 }
 
-// For items that get a random colour, give them a more thematic one.
-static void _apply_job_colour(item_def &item)
-{
-    if (!Options.classic_item_colours)
-        return;
-
-    if (item.base_type != OBJ_ARMOUR)
-        return;
-
-    switch (item.sub_type)
-    {
-    case ARM_CLOAK:
-    case ARM_ROBE:
-    case ARM_NAGA_BARDING:
-    case ARM_CENTAUR_BARDING:
-    case ARM_CAP:
-    case ARM_WIZARD_HAT:
-        break;
-    default:
-        return;
-    }
-
-    switch (you.char_class)
-    {
-    case JOB_NECROMANCER:
-    case JOB_ASSASSIN:
-        item.colour = DARKGREY;
-        break;
-    case JOB_FIRE_ELEMENTALIST:
-        item.colour = RED;
-        break;
-    case JOB_ICE_ELEMENTALIST:
-        item.colour = BLUE;
-        break;
-    case JOB_AIR_ELEMENTALIST:
-        item.colour = LIGHTBLUE;
-        break;
-    case JOB_EARTH_ELEMENTALIST:
-        item.colour = BROWN;
-        break;
-    case JOB_VENOM_MAGE:
-        item.colour = MAGENTA;
-        break;
-    default:
-        break;
-    }
-}
-
 static void _setup_normal_game();
 static void _setup_tutorial(const newgame_def& ng);
 static void _setup_sprint(const newgame_def& ng);
@@ -1285,6 +1250,7 @@ static void _setup_generic(const newgame_def& ng);
 void setup_game(const newgame_def& ng)
 {
     crawl_state.type = ng.type;
+    crawl_state.map  = ng.map;
 
     switch (crawl_state.type)
     {
@@ -1325,7 +1291,6 @@ static void _setup_normal_game()
  */
 static void _setup_tutorial(const newgame_def& ng)
 {
-    set_tutorial_map(ng.map);
     make_hungry(0, true);
 }
 
@@ -1334,7 +1299,6 @@ static void _setup_tutorial(const newgame_def& ng)
  */
 static void _setup_sprint(const newgame_def& ng)
 {
-    set_sprint_map(ng.map);
 }
 
 /**
@@ -1387,8 +1351,8 @@ static void _setup_generic(const newgame_def& ng)
 
     _give_starting_food();
 
-    if (crawl_state.game_is_sprint())
-        sprint_give_items();
+    if (crawl_state.game_is_sprint() || crawl_state.game_is_zotdef())
+        _give_bonus_items();
 
     // Give tutorial skills etc
     if (crawl_state.game_is_tutorial())
@@ -1401,18 +1365,6 @@ static void _setup_generic(const newgame_def& ng)
 
     _racialise_starting_equipment();
     initialise_item_descriptions();
-
-    reassess_starting_skills();
-    calc_total_skill_points();
-    init_skill_order();
-    init_can_train();
-    init_train();
-    init_training();
-
-    _give_species_bonus_mp();
-
-    if (crawl_state.game_is_zotdef())
-        you.zot_points = 80;
 
     for (int i = 0; i < ENDOFPACK; ++i)
         if (you.inv[i].defined())
@@ -1429,8 +1381,25 @@ static void _setup_generic(const newgame_def& ng)
             you.inv[i].link = i;
             you.inv[i].slot = index_to_letter(you.inv[i].link);
             item_colour(you.inv[i]);  // set correct special and colour
-            _apply_job_colour(you.inv[i]);
         }
+
+    reassess_starting_skills();
+    calc_total_skill_points();
+    init_skill_order();
+    init_can_train();
+    init_train();
+    init_training();
+
+    _give_species_bonus_mp();
+
+    if (crawl_state.game_is_zotdef())
+    {
+        you.zot_points = 80;
+
+        // There's little sense in training these skills in ZotDef
+        you.train[SK_STEALTH] = 0;
+        you.train[SK_TRAPS_DOORS] = 0;
+    }
 
     // If the item in slot 'a' is a throwable weapon like a dagger,
     // inscribe it with {=f} to prevent it being autoquivered.

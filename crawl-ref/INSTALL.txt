@@ -147,8 +147,7 @@ usually in /usr/include/ncursesw.)
 
 Building:
 
-* cd to the source directory (you can safely ignore the dolinks.sh and
-  domake.sh scripts).
+* cd to the source directory.
 
 * Most users can simply type 'make' without any extra flags, and get a
   working build as a result.  If just typing 'make' works for you, then you
@@ -254,6 +253,10 @@ run on 9x).
   installed, your version of msys may suffer from a bug that has been fixed
   since.  Please either update msys, or delete /mingw/bin/sdl-config so it
   won't interfere with the copy shipped with Crawl.
+
+* For you stubborn types who insist on using separate msys and git installs,
+  make sure git.exe is in your PATH when trying to build from git! Otherwise,
+  util/gen_ver.pl will most likely fail to generate build.h.
 
 Building on Windows (cygwin)
 ----------------------------

@@ -274,7 +274,7 @@ void wizard_create_spec_object()
     }
 }
 
-const char* _prop_name[ARTP_NUM_PROPERTIES] = {
+const char* _prop_name[] = {
     "Brand",
     "AC",
     "EV",
@@ -304,16 +304,18 @@ const char* _prop_name[ARTP_NUM_PROPERTIES] = {
     "Curse",
     "Stlth",
     "MP",
-    "Slow",
+    "Delay",
     "HP",
     "Clar",
+    "BAcc",
+    "BDam",
 };
 
 #define ARTP_VAL_BOOL 0
 #define ARTP_VAL_POS  1
 #define ARTP_VAL_ANY  2
 
-int8_t _prop_type[ARTP_NUM_PROPERTIES] = {
+int8_t _prop_type[] = {
     ARTP_VAL_POS,  //BRAND
     ARTP_VAL_ANY,  //AC
     ARTP_VAL_ANY,  //EVASION
@@ -343,13 +345,18 @@ int8_t _prop_type[ARTP_NUM_PROPERTIES] = {
     ARTP_VAL_POS,  //CURSED
     ARTP_VAL_ANY,  //STEALTH
     ARTP_VAL_ANY,  //MAGICAL_POWER
-    ARTP_VAL_BOOL, //*UNUSED*
+    ARTP_VAL_ANY,  //BASE_DELAY
     ARTP_VAL_ANY,  //HP
     ARTP_VAL_BOOL, //CLARITY
+    ARTP_VAL_ANY,  //BASE_ACC
+    ARTP_VAL_ANY,  //BASE_DAM
 };
 
 static void _tweak_randart(item_def &item)
 {
+    COMPILE_CHECK(ARRAYSZ(_prop_name) == ARTP_NUM_PROPERTIES);
+    COMPILE_CHECK(ARRAYSZ(_prop_type) == ARTP_NUM_PROPERTIES);
+
     if (item_is_equipped(item))
     {
         mpr("You can't tweak the randart properties of an equipped item.",
@@ -1362,9 +1369,11 @@ static void _debug_rap_stats(FILE *ostat)
         -1, //ARTP_CURSED
          0, //ARTP_STEALTH
          0, //ARTP_MAGICAL_POWER
-         0, // *UNUSED*,
-         0, //ARTP_HP,
+         0, //ARTP_BASE_DELAY
+         0, //ARTP_HP
          1, //ARTP_CLARITY
+         0, //ARTP_BASE_ACC
+         0, //ARTP_BASE_DAM
          -1
     };
 
@@ -1505,9 +1514,11 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_CURSED",
         "ARTP_STEALTH",
         "ARTP_MAGICAL_POWER",
-        "ARTP_*UNUSED*",
+        "ARTP_BASE_DELAY",
         "ARTP_HP",
         "ARTP_CLARITY",
+        "ARTP_BASE_ACC",
+        "ARTP_BASE_DAM",
     };
 
     fprintf(ostat, "                            All    Good   Bad\n");

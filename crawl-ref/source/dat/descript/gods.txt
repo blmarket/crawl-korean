@@ -138,7 +138,7 @@ Okawaru powers
 %%%%
 Makhleb powers
 
-마크레브는 커다란 피해를 입힐 수 있는 각종 파괴술과, 강력한 악마를 불러 당신을 돕게 만들 수 있는 권능을 신도들에게 내린다. 적을 죽임으로써 신도들은 더 많은 권능을 얻게 될 것이다.
+Makhleb offers followers various means to inflict immense damage, and to call in help from powerful demons, although these powers come with a price in blood. However, Makhleb will grant followers renewed health in return for killing beings of all kinds.
 %%%%
 Sif Muna powers
 
@@ -175,7 +175,7 @@ Fedhas powers
 %%%%
 Cheibriados powers
 
-Followers of Cheibriados move more slowly as they gain favour, and are rewarded for killing creatures which are faster than they are. Moving too quickly or using magically hastened weapons is frowned upon. Cheibriados rewards the faithful with a slowed metabolism, the power to slow other creatures, the power to harm those who move more quickly than they do, and, finally, the ability to step out of the flow of time.
+Followers of Cheibriados move more slowly as they gain favour, and are rewarded for killing creatures who are faster than they are. Moving too quickly or using magically hastened weapons is frowned upon. Cheibriados rewards the faithful with a slowed metabolism, the power to slow other creatures, the power to distort the flow of time, the power to harm those who move more quickly than they do, and, finally, the ability to step out of the flow of time entirely.
 %%%%
 Jiyva powers
 

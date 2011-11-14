@@ -33,6 +33,7 @@ struct skill_state
     void restore_training();
 };
 
+int get_skill_progress(skill_type sk, int level, int points, int scale);
 int get_skill_progress(skill_type sk, int scale);
 int get_skill_percentage(const skill_type x);
 const char *skill_name(skill_type which_skill);
@@ -64,7 +65,6 @@ unsigned int skill_exp_needed(int lev);
 unsigned int skill_exp_needed(int lev, skill_type sk,
                               species_type sp = you.species);
 
-bool compare_skills(skill_type sk1, skill_type sk2);
 float crosstrain_bonus(skill_type sk);
 bool crosstrain_other(skill_type sk, bool show_zero);
 bool is_antitrained(skill_type sk);
@@ -77,6 +77,7 @@ int skill_transfer_amount(skill_type sk);
 int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
                           bool simu, bool boost = false);
 int skill_bump(skill_type skill, int scale = 1);
+void fixup_skills();
 
 static const skill_type skill_display_order[] =
 {

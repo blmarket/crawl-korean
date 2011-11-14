@@ -72,7 +72,7 @@ static void _fsim_set_ranged_skill(int skill, const item_def *item)
 static void _fsim_item(FILE *out,
                        bool melee,
                        const item_def *weap,
-                       const char *wskill,
+                       skill_type sk,
                        unsigned int damage,
                        int iterations, int hits,
                        int maxdam, unsigned int time)
@@ -80,9 +80,10 @@ static void _fsim_item(FILE *out,
     double hitdam = hits? double(damage) / hits : 0.0;
     double avspeed = ((double) time / (double)  iterations);
     fprintf(out,
-            " %-5s|  %3d%%    |  %5.2f |    %5.2f  |"
+            " %2d   |  %3.1f  |  %3d%%    |  %5.2f |    %5.2f  |"
             "   %5.2f |   %3d   |   %5.1f\n",
-            wskill,
+            you.skills[sk],
+            (you.skill(sk, 10) - you.skill(sk, 10, true)) / 10.0,
             100 * hits / iterations,
             double(damage) / iterations,
             hitdam,
@@ -94,13 +95,15 @@ static void _fsim_item(FILE *out,
 static void _fsim_defence_item(FILE *out, int cum, int hits, int max,
                                int speed, int iters)
 {
-    // AC | EV | Arm | Dod | Acc | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time
-    fprintf(out, "%2d   %2d    %2d   %2d   %3d%%   %5.2f      %5.2f      %5.2f      %3d"
+    skill_type sk = you.skills[SK_DODGING] ? SK_DODGING : SK_ARMOUR;
+    // AC | EV | Arm | Dod | Bonus | Acc | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time
+    fprintf(out, "%2d   %2d    %2d   %2d     %3.1f   %3d%%   %5.2f      %5.2f      %5.2f      %3d"
             "       %2d\n",
             you.armour_class(),
             player_evasion(),
             you.skills[SK_DODGING],
             you.skills[SK_ARMOUR],
+            (you.skill(sk, 10) - you.skill(sk, 10, true)) / 10.0,
             100 * hits / iters,
             double(cum) / iters,
             hits? double(cum) / hits : 0.0,
@@ -156,7 +159,7 @@ static bool _fsim_ranged_combat(FILE *out, int wskill, int mi,
         if (damage > maxdam)
             maxdam = damage;
     }
-    _fsim_item(out, false, item, make_stringf("%2d", wskill).c_str(),
+    _fsim_item(out, false, item, _fsim_melee_skill(item),
                cumulative_damage, iter_limit, hits, maxdam, time_taken);
 
     return (true);
@@ -164,8 +167,8 @@ static bool _fsim_ranged_combat(FILE *out, int wskill, int mi,
 
 static bool _fsim_mon_melee(FILE *out, int dodge, int armour, int mi)
 {
-    you.skills[SK_DODGING] = dodge;
-    you.skills[SK_ARMOUR]  = armour;
+    wizard_set_skill_level(SK_DODGING, dodge, true);
+    wizard_set_skill_level(SK_ARMOUR, armour, true);
 
     const int yhp  = you.hp;
     const int ymhp = you.hp_max;
@@ -225,7 +228,7 @@ static bool _fsim_melee_combat(FILE *out, int wskill, int mi,
         if (damage > maxdam)
             maxdam = damage;
     }
-    _fsim_item(out, true, item, make_stringf("%2d", wskill).c_str(),
+    _fsim_item(out, true, item, _fsim_melee_skill(item),
                cumulative_damage, iter_limit, hits, maxdam, time_taken);
 
     return (true);
@@ -341,7 +344,7 @@ static void _fsim_title(FILE *o, int mon, int ms)
     fprintf(o, "Weapon    : %s\n", _fsim_weapon(ms).c_str());
     fprintf(o, "Skill     : %s\n", _fsim_wskill(ms).c_str());
     fprintf(o, "\n");
-    fprintf(o, "Skill | Accuracy | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time\n");
+    fprintf(o, "Skill | Bonus | Accuracy | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time\n");
 }
 
 static void _fsim_defence_title(FILE *o, int mon)
@@ -361,7 +364,7 @@ static void _fsim_defence_title(FILE *o, int mon)
     fprintf(o, "\n");
     _fsim_mon_stats(o, menv[mon]);
     fprintf(o, "\n");
-    fprintf(o, "AC | EV | Dod | Arm | Acc | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time\n");
+    fprintf(o, "AC | EV | Dod | Arm | Bonus | Acc | Av.Dam | Av.HitDam | Eff.Dam | Max.Dam | Av.Time\n");
 }
 
 static bool _fsim_mon_hit_you(FILE *ostat, int mindex, int)

@@ -238,15 +238,15 @@ static void _hydra_wave(int power)
 static void _fire_wave(int power)
 {
     wave_name("FIRE WAVE");
-    monster_type firemons[] = {MONS_FIRE_ELEMENTAL, MONS_FIRE_DRAKE, MONS_IMP,
+    monster_type firemons[] = {MONS_FIRE_ELEMENTAL, MONS_FIRE_DRAKE, MONS_CRIMSON_IMP,
         MONS_DRAGON, MONS_FIRE_VORTEX ,MONS_FIRE_GIANT, MONS_HELLION,
         MONS_MOLTEN_GARGOYLE, MONS_SALAMANDER, MONS_SUN_DEMON,
         MONS_RED_DRACONIAN, MONS_MOTTLED_DRACONIAN, MONS_DRACONIAN_SCORCHER,
         MONS_FLAMING_CORPSE, MONS_MOTTLED_DRAGON, MONS_EFREET,
-        MONS_HELL_KNIGHT, MONS_FIEND, MONS_BALRUG, MONS_HELL_HOUND,
+        MONS_HELL_KNIGHT, MONS_BRIMSTONE_FIEND, MONS_BALRUG, MONS_HELL_HOUND,
         MONS_HELL_HOG, END};
     monster_type boss[] = {MONS_AZRAEL, MONS_XTAHUA, MONS_SERPENT_OF_HELL,
-                    MONS_MARGERY, MONS_FIEND, MONS_BALRUG, MONS_FIRE_GIANT, END};
+                    MONS_MARGERY, MONS_BRIMSTONE_FIEND, MONS_BALRUG, MONS_FIRE_GIANT, END};
     _zotdef_fill_from_list(firemons, 0, power);
     _zotdef_choose_boss(boss, power);
     _zotdef_danger_msg("You hear roaring flames in the distance!");
@@ -270,7 +270,8 @@ static void _gnoll_wave(int power)
 {
     wave_name("GNOLL WAVE");
     monster_type gnolls[] = {MONS_GNOLL, MONS_GNOLL, MONS_GNOLL,
-                MONS_GNOLL, MONS_GNOLL, MONS_GNOLL, MONS_TROLL, END};
+                MONS_GNOLL, MONS_GNOLL_SHAMAN, MONS_GNOLL_SERGEANT,
+                MONS_TROLL, END};
     monster_type boss[] = {MONS_GRUM, MONS_TROLL, END};
     _zotdef_fill_from_list(gnolls, 0, power); // full
     _zotdef_choose_boss(boss, power);
@@ -458,7 +459,7 @@ static void _pan_wave(int power)
     monster_type boss[] = {MONS_MNOLEG, MONS_LOM_LOBON, MONS_CEREBOV,
                 MONS_GLOORX_VLOQ, MONS_GERYON, MONS_DISPATER,
                 MONS_ASMODEUS, MONS_ERESHKIGAL, MONS_PANDEMONIUM_LORD, END};
-    monster_type weakboss[] = {MONS_PANDEMONIUM_LORD, MONS_FIEND,
+    monster_type weakboss[] = {MONS_PANDEMONIUM_LORD, MONS_BRIMSTONE_FIEND,
                 MONS_PIT_FIEND, MONS_ICE_FIEND, MONS_BLIZZARD_DEMON, END};
 
     for (int i = 0; i <= NSLOTS; i++)
@@ -584,6 +585,8 @@ static monster_type _get_zotdef_monster(level_id &place, int power)
             continue;        // No uniques here!
         if (mons_class_is_stationary(mon_type))
             continue;        // Must be able to move!
+        if (mons_is_mimic(mon_type))
+            continue;
 
         int strength = _mon_strength(mon_type);
 
@@ -854,7 +857,7 @@ static rune_type _get_rune(int runenumber)
 // Dowan is automatically placed together with Duvessa.
 static monster_type _choose_unique_by_depth(int step)
 {
-    int ret;
+    monster_type ret;
     switch (step)
     {
     case 0: // depth <= 3
@@ -900,7 +903,7 @@ static monster_type _choose_unique_by_depth(int step)
                             MONS_MARGERY, MONS_BORIS, MONS_SAINT_ROKA, -1);
     }
 
-    return static_cast<monster_type>(ret);
+    return ret;
 }
 
 static monster_type _pick_unique(int level)
@@ -975,6 +978,10 @@ bool zotdef_create_altar(bool wizmode)
     for (int i = 1; i < NUM_GODS; ++i)
     {
         const god_type gi = static_cast<god_type>(i);
+
+        if (!wizmode && is_unavailable_god(gi))
+            continue;
+
         if (lowercase_string(god_name(gi)).find(spec) != std::string::npos)
         {
             god = gi;
@@ -982,7 +989,8 @@ bool zotdef_create_altar(bool wizmode)
         }
     }
 
-    if (god == GOD_NO_GOD) {
+    if (god == GOD_NO_GOD)
+    {
         mpr("That god doesn't seem to be taking followers today.");
         return false;
     }

@@ -1324,7 +1324,7 @@ KMONS:  7 = fire vortex
 #
 : if you.in_branch("elf") then
 KMONS:  Z = col:flash deep elf sorcerer \
-        name:deep_elf_elementalist n_rpl n_des \
+        name:deep_elf_elementalist n_rpl n_des tile:mons_deep_elf_elementalist \
         spells:iron_shot;summon_air_elementals;sticky_flame_range;\
         summon_water_elementals;haste;blink actual_spells \
         ; robe ego:fire_resistance race:elven | \
@@ -1332,7 +1332,7 @@ KMONS:  Z = col:flash deep elf sorcerer \
         robe ego:resistance race:elven . dagger ego:freezing race:elven | \
         dagger ego:flaming race:elven | dagger ego:electrocution race:elven
 : else
-KMONS:  Z = col:flash wizard hd:15 name_descriptor \
+KMONS:  Z = col:flash wizard hd:15 name_descriptor tile:mons_master_elementalist \
         name:master_elementalist name_replace \
         spells:iron_shot;summon_air_elementals;sticky_flame_range;\
         summon_water_elementals;haste;blink actual_spells \
@@ -1341,6 +1341,9 @@ KMONS:  Z = col:flash wizard hd:15 name_descriptor \
         . dagger ego:freezing | dagger ego:flaming | \
         dagger ego:electrocution
 : end
+
+MARKER:     Z = lua:MonPropsMarker:new {description="The primal forces of " \
+            .. "the universe dance at this demented wizard's fingertips.\n"}
 KITEM:  B = randbook disc:air / randbook disc:fire / randbook disc:ice / \
             randbook disc:earth
 KITEM:  | = staff of fire / staff of cold / staff of earth / staff of air / \
@@ -1712,7 +1715,7 @@ ORIENT: float
 COLOUR: b-+89*| = white
 FTILE:  b-+89*| = FLOOR_MARBLE
 TILE:   b = WALL_MARBLE
-SUBST:  0 = 3:9 / 7:0 / 20:0.. / *:.
+NSUBST:  0 = 3:9 / 7:0 / 20:0.. / *:.
 # can rarely be a statue gallery, otherwise use stone pillars
 : if crawl.one_chance_in(4) then
 SUBST:  c = G, v = .
@@ -1735,7 +1738,7 @@ x.c...0b--|||--b0...c.x
 x..v..0b9-***-9b0..v..x
 x.c...0b--***--b0...c.x
 x..v..0b-b---b-b0..v..x
-x.c...0b---^---b0...c.x
+x.c...0b-------b0...c.x
 x..v..0bbbb+bbbb0..v..x
 x.c...00000000000...c.x
 x..v......T.T......v..x

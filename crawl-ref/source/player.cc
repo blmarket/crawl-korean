@@ -667,14 +667,18 @@ bool you_can_wear(int eq, bool special_armour)
         return (true);
 
     case EQ_GLOVES:
-        if (you.species == SP_TROLL
-            || you.species == SP_SPRIGGAN
-            || player_genus(GENPC_OGREISH))
+        if (player_mutation_level(MUT_CLAWS) == 3
+            || player_mutation_level(MUT_TENTACLES) == 3)
         {
             return (false);
         }
-        if (player_mutation_level(MUT_CLAWS) == 3)
+        // These species cannot wear gloves.
+        if (you.species == SP_TROLL
+            || you.species == SP_SPRIGGAN
+            || you.species == SP_OGRE)
+        {
             return (false);
+        }
         return (true);
 
     case EQ_BOOTS:
@@ -689,7 +693,7 @@ bool you_can_wear(int eq, bool special_armour)
         // These species cannot wear boots.
         if (you.species == SP_TROLL
             || you.species == SP_SPRIGGAN
-            || player_genus(GENPC_OGREISH))
+            || you.species == SP_OGRE)
         {
             return (false);
         }
@@ -698,14 +702,14 @@ bool you_can_wear(int eq, bool special_armour)
     case EQ_BODY_ARMOUR:
         if (player_genus(GENPC_DRACONIAN))
             return (false);
+
     case EQ_SHIELD:
         // Most races can wear robes or a buckler/shield.
         if (special_armour)
             return (true);
         if (you.species == SP_TROLL
             || you.species == SP_SPRIGGAN
-            || player_genus(GENPC_OGREISH)
-            || player_genus(GENPC_DRACONIAN))
+            || you.species == SP_OGRE)
         {
             return (false);
         }
@@ -715,7 +719,9 @@ bool you_can_wear(int eq, bool special_armour)
         // No caps or hats with Horns 3 or Antennae 3.
         if (player_mutation_level(MUT_HORNS) == 3
             || player_mutation_level(MUT_ANTENNAE) == 3)
-            return(false);
+        {
+            return (false);
+        }
         // Anyone else can wear caps.
         if (special_armour)
             return (true);
@@ -727,7 +733,7 @@ bool you_can_wear(int eq, bool special_armour)
         }
         if (you.species == SP_TROLL
             || you.species == SP_SPRIGGAN
-            || player_genus(GENPC_OGREISH)
+            || you.species == SP_OGRE
             || player_genus(GENPC_DRACONIAN))
         {
             return (false);
@@ -809,8 +815,12 @@ bool you_tran_can_wear(int eq, bool check_mutation)
     // Not a transformation, but also temporary -> check first.
     if (check_mutation)
     {
-        if (eq == EQ_GLOVES && you.has_claws(false) == 3)
+        if (eq == EQ_GLOVES
+            && (you.has_claws(false) == 3
+                || you.has_tentacles(false) == 3))
+        {
             return (false);
+        }
 
         if (eq == EQ_HELMET && player_mutation_level(MUT_HORNS) == 3)
             return (false);
@@ -821,7 +831,7 @@ bool you_tran_can_wear(int eq, bool check_mutation)
         if (eq == EQ_BOOTS
             && (you.fishtail
                 || player_mutation_level(MUT_HOOVES) == 3
-                || player_mutation_level(MUT_TALONS) == 3))
+                || you.has_talons(false) == 3))
         {
             return (false);
         }
@@ -861,7 +871,9 @@ bool you_tran_can_wear(int eq, bool check_mutation)
     {
         if (eq == EQ_WEAPON || eq == EQ_SHIELD
             || eq == EQ_CLOAK || eq == EQ_HELMET)
+        {
             return (true);
+        }
         return (false);
     }
 
@@ -1363,7 +1375,6 @@ int player_hunger_rate(void)
     }
 
     hunger += 4 * player_equip(EQ_RINGS, RING_HUNGER);
-    hunger -= 2 * player_equip(EQ_RINGS, RING_SUSTENANCE);
 
     // troll leather armour
     if (you.species != SP_TROLL && you.hp < you.hp_max)
@@ -1377,6 +1388,10 @@ int player_hunger_rate(void)
 
     // burden
     hunger += you.burden_state;
+
+    // sustenance affects things at the end, because it is multiplicative
+    for (int s = player_equip(EQ_RINGS, RING_SUSTENANCE); s > 0; s--)
+        hunger = (3*hunger)/5;
 
     if (hunger < 1)
         hunger = 1;
@@ -1417,11 +1432,14 @@ int player_spell_levels(void)
     return (sl);
 }
 
-bool player_likes_chunks(bool permanently)
+int player_likes_chunks(bool permanently)
 {
-    return (player_mutation_level(MUT_GOURMAND) > 0
-            || player_mutation_level(MUT_CARNIVOROUS) > 0
-            || (!permanently && wearing_amulet(AMU_THE_GOURMAND)));
+    if (player_mutation_level(MUT_GOURMAND) > 0
+        || (!permanently && wearing_amulet(AMU_THE_GOURMAND)))
+    {
+        return 3;
+    }
+    return player_mutation_level(MUT_CARNIVOROUS);
 }
 
 // If temp is set to false, temporary sources or resistance won't be counted.
@@ -1442,10 +1460,10 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
         rf += player_equip(EQ_STAFF, STAFF_FIRE, calc_unid);
 
         // body armour:
-        rf += 2 * player_equip(EQ_BODY_ARMOUR, ARM_DRAGON_ARMOUR);
+        rf += 2 * player_equip(EQ_BODY_ARMOUR, ARM_FIRE_DRAGON_ARMOUR);
         rf += player_equip(EQ_BODY_ARMOUR, ARM_GOLD_DRAGON_ARMOUR);
         rf -= player_equip(EQ_BODY_ARMOUR, ARM_ICE_DRAGON_ARMOUR);
-        rf += 2 * player_equip(EQ_BODY_ARMOUR, ARM_DRAGON_HIDE);
+        rf += 2 * player_equip(EQ_BODY_ARMOUR, ARM_FIRE_DRAGON_HIDE);
         rf += player_equip(EQ_BODY_ARMOUR, ARM_GOLD_DRAGON_HIDE);
         rf -= player_equip(EQ_BODY_ARMOUR, ARM_ICE_DRAGON_HIDE);
 
@@ -1456,12 +1474,9 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
         // randart weapons:
         rf += scan_artefacts(ARTP_FIRE, calc_unid);
 
-        // Che bonus
-        if (you.religion == GOD_CHEIBRIADOS && you.piety >= piety_breakpoint(3)
-            && !player_under_penance())
-        {
+        // dragonskin cloak: 0.5 to draconic resistances
+        if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             rf++;
-        }
     }
 
     // species:
@@ -1521,6 +1536,10 @@ int player_res_steam(bool calc_unid, bool temp, bool items)
 
     if (items && player_equip(EQ_BODY_ARMOUR, ARM_STEAM_DRAGON_HIDE))
         res += 2;
+
+    // dragonskin cloak: 0.5 to draconic resistances
+    if (items && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
+        res++;
 
     return (res + player_res_fire(calc_unid, temp, items) / 2);
 }
@@ -1584,10 +1603,10 @@ int player_res_cold(bool calc_unid, bool temp, bool items)
         // body armour:
         rc += 2 * player_equip(EQ_BODY_ARMOUR, ARM_ICE_DRAGON_ARMOUR);
         rc += player_equip(EQ_BODY_ARMOUR, ARM_GOLD_DRAGON_ARMOUR);
-        rc -= player_equip(EQ_BODY_ARMOUR, ARM_DRAGON_ARMOUR);
+        rc -= player_equip(EQ_BODY_ARMOUR, ARM_FIRE_DRAGON_ARMOUR);
         rc += 2 * player_equip(EQ_BODY_ARMOUR, ARM_ICE_DRAGON_HIDE);
         rc += player_equip(EQ_BODY_ARMOUR, ARM_GOLD_DRAGON_HIDE);
-        rc -= player_equip(EQ_BODY_ARMOUR, ARM_DRAGON_HIDE);
+        rc -= player_equip(EQ_BODY_ARMOUR, ARM_FIRE_DRAGON_HIDE);
 
         // ego armours
         rc += player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_COLD_RESISTANCE);
@@ -1596,12 +1615,9 @@ int player_res_cold(bool calc_unid, bool temp, bool items)
         // randart weapons:
         rc += scan_artefacts(ARTP_COLD, calc_unid);
 
-        // Che bonus
-        if (you.religion == GOD_CHEIBRIADOS && you.piety >= piety_breakpoint(2)
-            && !player_under_penance())
-        {
+        // dragonskin cloak: 0.5 to draconic resistances
+        if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             rc++;
-        }
     }
 
     // mutations:
@@ -1690,6 +1706,11 @@ int player_res_electricity(bool calc_unid, bool temp, bool items)
 
         // randart weapons:
         re += scan_artefacts(ARTP_ELECTRICITY, calc_unid);
+
+        // dragonskin cloak: 0.5 to draconic resistances
+        if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
+            re++;
+
     }
 
     // mutations:
@@ -1733,10 +1754,15 @@ int player_res_torment(bool, bool temp)
                  > random2(100))));
 }
 
-// Funny that no races are susceptible to poisons. {dlb}
 // If temp is set to false, temporary sources or resistance won't be counted.
 int player_res_poison(bool calc_unid, bool temp, bool items)
 {
+    if (you.is_undead == US_SEMI_UNDEAD ? you.hunger_state == HS_STARVING
+            : you.is_undead && (temp || you.form != TRAN_LICH))
+    {
+        return 3;
+    }
+
     int rp = 0;
 
     if (items)
@@ -1758,6 +1784,11 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
 
         // randart weapons:
         rp += scan_artefacts(ARTP_POISON, calc_unid);
+
+        // dragonskin cloak: 0.5 to draconic resistances
+        if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
+            rp++;
+
     }
 
     // mutations:
@@ -1777,7 +1808,6 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
         // transformations:
         switch (you.form)
         {
-        case TRAN_LICH:
         case TRAN_ICE_BEAST:
         case TRAN_STATUE:
         case TRAN_DRAGON:
@@ -1791,10 +1821,35 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
             rp++;
     }
 
-    if (rp > 1)
-        rp = 1;
+    // Give vulnerability for Spider Form, and only let one level of rP to make
+    // up for it (never be poison resistant in Spider Form).
+    rp = (rp > 0 ? 1 : 0);
+
+    if (temp)
+    {
+        if (you.form == TRAN_SPIDER)
+            rp--;
+    }
 
     return (rp);
+}
+
+int _maybe_reduce_poison(int amount)
+{
+    int rp = player_res_poison(true, true, true);
+
+    if (rp <= 0)
+        return amount;
+
+    int reduction = binomial_generator(amount, 90);
+    int new_amount = amount - reduction;
+
+    if (amount != new_amount)
+        dprf("Poison reduced (%d -> %d)", amount, new_amount);
+    else
+        dprf("Poison not reduced (%d)", amount);
+
+    return new_amount;
 }
 
 int player_res_sticky_flame(bool calc_unid, bool temp, bool items)
@@ -1807,6 +1862,10 @@ int player_res_sticky_flame(bool calc_unid, bool temp, bool items)
     if (items && player_equip(EQ_BODY_ARMOUR, ARM_MOTTLED_DRAGON_ARMOUR))
         rsf++;
     if (items && player_equip(EQ_BODY_ARMOUR, ARM_MOTTLED_DRAGON_HIDE))
+        rsf++;
+
+    // dragonskin cloak: 0.5 to draconic resistances
+    if (items && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
         rsf++;
 
     if (rsf > 1)
@@ -2019,12 +2078,10 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
         // randart wpns
         pl += scan_artefacts(ARTP_NEGATIVE_ENERGY, calc_unid);
 
-        // Che bonus
-        if (you.religion == GOD_CHEIBRIADOS && you.piety >= piety_breakpoint(1)
-            && !player_under_penance())
-        {
+        // dragonskin cloak: 0.5 to draconic resistances
+        // this one is dubious (no pearl draconians)
+        if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             pl++;
-        }
 
         pl += player_equip(EQ_STAFF, STAFF_DEATH, calc_unid);
     }
@@ -2164,13 +2221,7 @@ static int _player_armour_racial_bonus(const item_def& item)
 
     int racial_bonus = 0;
     const iflags_t armour_race = get_equip_race(item);
-
-    // get the armour race value that corresponds to the character's race:
-    const iflags_t racial_type
-                            = ((player_genus(GENPC_DWARVEN)) ? ISFLAG_DWARVEN :
-                               (player_genus(GENPC_ELVEN))   ? ISFLAG_ELVEN :
-                               (you.species == SP_HILL_ORC)  ? ISFLAG_ORCISH
-                                                             : 0);
+    const iflags_t racial_type = get_species_race(you.species);
 
     // Dwarven armour is universally good -- bwr
     if (armour_race == ISFLAG_DWARVEN)
@@ -2342,7 +2393,7 @@ static int _player_para_evasion_bonuses(ev_ignore_type evit)
 }
 
 // Player EV bonuses for various effects and transformations. This
-// does not include kenku/merfolk EV bonuses for flight/swimming.
+// does not include tengu/merfolk EV bonuses for flight/swimming.
 int player_evasion_bonuses(ev_ignore_type evit)
 {
     int evbonus = _player_para_evasion_bonuses(evit);
@@ -2372,7 +2423,7 @@ int player_evasion_bonuses(ev_ignore_type evit)
     return (evbonus);
 }
 
-// Player EV scaling for being flying kenku or swimming merfolk.
+// Player EV scaling for being flying tengu or swimming merfolk.
 int player_scale_evasion(int prescaled_ev, const int scale)
 {
     if (you.duration[DUR_PETRIFYING])
@@ -2392,8 +2443,8 @@ int player_scale_evasion(int prescaled_ev, const int scale)
         }
         break;
 
-    case SP_KENKU:
-        // Flying Kenku get an evasion bonus.
+    case SP_TENGU:
+        // Flying Tengu get an evasion bonus.
         if (you.flight_mode() == FL_FLY)
         {
             const int ev_bonus =
@@ -2482,14 +2533,8 @@ int player_body_armour_racial_spellcasting_bonus(const int scale)
         return (0);
 
     const iflags_t armour_race = get_equip_race(*body_armour);
+    const iflags_t player_race = get_species_race(you.species);
 
-    // Get the armour race value that corresponds to the character's
-    // race:
-    const iflags_t player_race
-                            = ((player_genus(GENPC_DWARVEN)) ? ISFLAG_DWARVEN :
-                               (player_genus(GENPC_ELVEN))   ? ISFLAG_ELVEN :
-                               (you.species == SP_HILL_ORC)  ? ISFLAG_ORCISH
-                                                             : 0);
     int armour_racial_spellcasting_bonus = 0;
     if (armour_race & ISFLAG_ELVEN)
         armour_racial_spellcasting_bonus += 25;
@@ -2630,6 +2675,8 @@ int player_warding(bool calc_unid)
 {
     int ward = 0;
 
+    // Note: when adding a new source of warding, please add it to
+    // mons_attack_warded_off() as well.
     ward += player_equip(EQ_AMULET, AMU_WARDING, calc_unid);
 
     ward += player_equip(EQ_STAFF, STAFF_SUMMONING, calc_unid);
@@ -2844,6 +2891,8 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
     else
         you.experience += exp_gained;
 
+    you.attribute[ATTR_EVOL_XP] += exp_gained;
+
     if (you.duration[DUR_SAGE])
     {
         // Bonus skill training from Sage.
@@ -3043,10 +3092,12 @@ void level_change(bool skip_attribute_increase)
                 }
                 break;
 
+#if TAG_MAJOR_VERSION == 32
             case SP_MOUNTAIN_DWARF:
                 if (!(you.experience_level % 4))
                     modify_stat(STAT_STR, 1, false, "level gain");
                 break;
+#endif
 
             case SP_DEEP_DWARF:
                 if (you.experience_level == 14)
@@ -3292,7 +3343,7 @@ void level_change(bool skip_attribute_increase)
                     modify_stat(STAT_STR, 1, false, "level gain");
                 break;
 
-            case SP_KENKU:
+            case SP_TENGU:
                 if (!(you.experience_level % 4))
                     modify_stat(STAT_RANDOM, 1, false, "level gain");
 
@@ -3400,7 +3451,7 @@ void level_change(bool skip_attribute_increase)
 #endif
         }
 
-#if TAG_MAJOR_VERSION == 32
+#if TAG_MAJOR_VERSION <= 33
         note_montiers();
 #endif
 
@@ -3442,7 +3493,7 @@ void level_change(bool skip_attribute_increase)
             _felid_extra_life();
     }
 
-    redraw_title(you.your_name, player_title());
+    you.redraw_title = true;
 
     // Hints mode arbitrarily ends at xp 7.
     if (crawl_state.game_is_hints() && you.experience_level >= 7)
@@ -3721,6 +3772,7 @@ int get_expiration_threshold(duration_type dur)
         return (15 * BASELINE_DELAY);
 
     case DUR_CONFUSING_TOUCH:
+    case DUR_NAUSEA:
         return (20 * BASELINE_DELAY);
 
     default:
@@ -3992,6 +4044,7 @@ void display_char_status()
         STATUS_NET,
         DUR_POISONING,
         STATUS_SICK,
+        DUR_NAUSEA,
         STATUS_ROT,
         STATUS_CONTAMINATION,
         DUR_CONFUSING_TOUCH,
@@ -4064,7 +4117,7 @@ bool extrinsic_amulet_effect(jewellery_type amulet)
     case AMU_CONTROLLED_FLIGHT:
         return (you.duration[DUR_CONTROLLED_FLIGHT]
                 || player_genus(GENPC_DRACONIAN)
-                || (you.species == SP_KENKU && you.experience_level >= 5)
+                || (you.species == SP_TENGU && you.experience_level >= 5)
                 || you.form == TRAN_DRAGON
                 || you.form == TRAN_BAT);
     case AMU_CLARITY:
@@ -4742,13 +4795,7 @@ bool confuse_player(int amount, bool resistable)
         if (player_equip(EQ_AMULET, AMU_CLARITY, true))
         {
             item_def* const amu = you.slot_item(EQ_AMULET, false);
-            if (!item_ident(*amu, ISFLAG_KNOW_TYPE))
-            {
-                set_ident_type(amu->base_type, amu->sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(*amu, ISFLAG_KNOW_TYPE);
-                mprf(gettext("You are wearing: %s"),
-                     amu->name(true, DESC_INVENTORY_EQUIP).c_str());
-            }
+            wear_id_type(*amu);
         }
         return (false);
     }
@@ -4782,10 +4829,11 @@ bool curare_hits_player(int death_source, int amount, const bolt &beam)
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (player_res_poison() > 0)
+    if (player_res_poison() >= 3)
         return (false);
 
-    poison_player(amount, beam.get_source_name(), beam.name);
+    if (!poison_player(amount, beam.get_source_name(), beam.name))
+        return (false);
 
     int hurted = 0;
 
@@ -4795,6 +4843,7 @@ bool curare_hits_player(int death_source, int amount, const bolt &beam)
 
         if (hurted)
         {
+            you.increase_duration(DUR_BREATH_WEAPON, hurted, 20 + random2(20));
             mpr(gettext("You have difficulty breathing."));
             ouch(hurted, death_source, KILLED_BY_CURARE,
                  "curare-induced apnoea");
@@ -4820,7 +4869,13 @@ bool poison_player(int amount, std::string source, std::string source_aux,
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (!force && player_res_poison() > 0 || amount <= 0)
+    if (player_res_poison() >= 3)
+    {
+        dprf("Cannot poison, you are immune!");
+        return (false);
+    }
+
+    if (!force && !(amount = _maybe_reduce_poison(amount)))
         return (false);
 
     if (!force && you.duration[DUR_DIVINE_STAMINA] > 0)
@@ -4831,6 +4886,9 @@ bool poison_player(int amount, std::string source, std::string source_aux,
 
     const int old_value = you.duration[DUR_POISONING];
     you.duration[DUR_POISONING] += amount;
+
+    if (player_res_poison() < 0)
+        amount *= 2;
 
     if (you.duration[DUR_POISONING] > 40)
         you.duration[DUR_POISONING] = 40;
@@ -4846,7 +4904,7 @@ bool poison_player(int amount, std::string source, std::string source_aux,
     you.props["poisoner"] = source;
     you.props["poison_aux"] = source_aux;
 
-    return (true);
+    return amount;
 }
 
 void dec_poison_player()
@@ -4857,6 +4915,11 @@ void dec_poison_player()
     if (GOD_CHEIBRIADOS == you.religion
         && you.piety >= piety_breakpoint(0)
         && coinflip())
+    {
+        return;
+    }
+
+    if (player_res_poison() >= 3)
         return;
 
     if (you.duration[DUR_POISONING] > 0)
@@ -5190,13 +5253,8 @@ void float_player(bool fly)
         // it's important to do this only if the amulet is not identified yet,
         // or you'd get spammed
         item_def& amu(you.inv[you.equip[EQ_AMULET]]);
-        if (!is_artefact(amu) && !item_type_known(amu))
-        {
-            set_ident_type(amu.base_type, amu.sub_type, ID_KNOWN_TYPE);
-            set_ident_flags(amu, ISFLAG_KNOW_PROPERTIES);
-            mprf(gettext("You are wearing: %s"),
-                 amu.name(true, DESC_INVENTORY_EQUIP).c_str());
-        }
+        if (!is_artefact(amu))
+            wear_id_type(amu);
     }
 
     burden_change();
@@ -5328,7 +5386,6 @@ void player::init()
     base_stats.init(0);
     stat_zero.init(0);
     stat_zero_cause.init("");
-    last_chosen        = STAT_RANDOM;
 
     hunger          = 6000;
     hunger_state    = HS_SATIATED;
@@ -5516,7 +5573,7 @@ void player::init()
 
     last_keypress_time = time(0);
 
-#if TAG_MAJOR_VERSION == 32
+#if TAG_MAJOR_VERSION <= 33
     for (unsigned int i = 0; i < ARRAYSZ(montiers); i++)
         montiers[i] = 0;
 #endif
@@ -5556,6 +5613,7 @@ void player::init()
     on_current_level    = true;
     walking             = 0;
     seen_portals        = 0;
+    seen_invis          = false;
     frame_no            = 0;
 
     save                = 0;
@@ -5834,8 +5892,11 @@ int player::skill(skill_type sk, int scale, bool real) const
         level = std::min(level + 5 * scale, 27 * scale);
     if (you.penance[GOD_ASHENZARI])
         level = std::max(level - std::min(4 * scale, level / 2), 0);
-    else if (you.religion == GOD_ASHENZARI)
+    else if (you.religion == GOD_ASHENZARI && you.skill_boost[sk]
+             && piety_rank() > 2)
+    {
         level = ash_skill_boost(sk, scale);
+    }
 
     return level;
 }
@@ -6201,6 +6262,9 @@ int player::res_rotting(bool temp) const
     if (temp && (petrified() || form == TRAN_STATUE))
         return 3;
 
+    if (you.mutation[MUT_FOUL_STENCH])
+        return 1;
+
     switch (is_undead)
     {
         default:
@@ -6279,7 +6343,9 @@ int player_res_magic(bool calc_unid, bool temp)
     case SP_HIGH_ELF:
     case SP_SLUDGE_ELF:
     case SP_DEEP_ELF:
+#if TAG_MAJOR_VERSION == 32
     case SP_MOUNTAIN_DWARF:
+#endif
     case SP_VAMPIRE:
     case SP_DEMIGOD:
     case SP_OGRE:
@@ -6367,13 +6433,13 @@ bool player::permanent_levitation() const
 bool player::permanent_flight() const
 {
     return you.attribute[ATTR_PERM_LEVITATION]
-           && species == SP_KENKU && experience_level >= 15;
+           && species == SP_TENGU && experience_level >= 15;
 }
 
 bool player::light_flight() const
 {
-    // Only Kenku get perks for flying light.
-    return (species == SP_KENKU
+    // Only Tengu get perks for flying light.
+    return (species == SP_TENGU
             && flight_mode() == FL_FLY && travelling_light());
 }
 
@@ -6405,9 +6471,9 @@ int player::mons_species() const
     }
 }
 
-void player::poison(actor *agent, int amount, bool force)
+bool player::poison(actor *agent, int amount, bool force)
 {
-    ::poison_player(amount, agent? agent->name(DESC_NOCAP_A, true) : "");
+    return ::poison_player(amount, agent? agent->name(DESC_NOCAP_A, true) : "");
 }
 
 void player::expose_to_element(beam_type element, int st)
@@ -6589,7 +6655,7 @@ void player::petrify(actor *who)
     you.duration[DUR_PETRIFYING] = 3 * BASELINE_DELAY;
 
     you.redraw_evasion = true;
-    mprf(MSGCH_WARN, gettext("You are slowing down."));
+    mpr(gettext("You are slowing down."), MSGCH_WARN);
 }
 
 bool player::fully_petrify(actor *foe, bool quiet)
@@ -6889,8 +6955,7 @@ bool player::visible_to(const actor *looker) const
         return (can_see_invisible() || !invisible());
 
     const monster* mon = looker->as_monster();
-    return (!mon->has_ench(ENCH_BLIND)
-            && !invisible()
+    return (!mon->has_ench(ENCH_BLIND) && !invisible()
             || in_water()
             || mon->can_see_invisible()
             || mons_sense_invis(mon)
@@ -7042,7 +7107,7 @@ bool player::cannot_act() const
 
 bool player::can_throw_large_rocks() const
 {
-    return (player_genus(GENPC_OGREISH) || species == SP_TROLL);
+    return (species == SP_OGRE || species == SP_TROLL);
 }
 
 bool player::can_smell() const

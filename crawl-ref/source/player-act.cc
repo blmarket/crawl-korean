@@ -211,9 +211,9 @@ int player::damage_type(int)
     return (DVORP_CRUSHING);
 }
 
-int player::damage_brand(int)
+brand_type player::damage_brand(int)
 {
-    int ret = SPWPN_NORMAL;
+    brand_type ret = SPWPN_NORMAL;
     const int wpn = equip[EQ_WEAPON];
 
     if (wpn != -1 && !you.melded[EQ_WEAPON])
@@ -487,7 +487,7 @@ std::string player::arm_name(bool plural, bool *can_plural) const
 
     if (player_genus(GENPC_DRACONIAN) || species == SP_NAGA)
         adj = "scaled";
-    else if (species == SP_KENKU)
+    else if (species == SP_TENGU)
         adj = "feathered";
     else if (species == SP_MUMMY)
         adj = "bandage-wrapped";
@@ -659,18 +659,15 @@ bool player::can_go_berserk(bool intentional, bool potion) const
             if (!player_mental_clarity(false) && wearing_amulet(AMU_CLARITY)
                 && (amu = &you.inv[you.equip[EQ_AMULET]]) && !item_type_known(*amu))
             {
-                set_ident_type(amu->base_type, amu->sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(*amu, ISFLAG_KNOW_PROPERTIES);
-                mprf("You are wearing: %s",
-                     amu->name(true, DESC_INVENTORY_EQUIP).c_str());
+                wear_id_type(*amu);
             }
         }
 
         return (false);
     }
 
-    ASSERT(HUNGER_STARVING + BERSERK_NUTRITION < HUNGER_VERY_HUNGRY);
-    if (you.hunger_state <= HS_VERY_HUNGRY)
+    ASSERT(HUNGER_STARVING + BERSERK_NUTRITION < 2066);
+    if (you.hunger <= 2066)
     {
         if (verbose)
             mpr(gettext("You're too hungry to go berserk."));

@@ -60,7 +60,6 @@ public:
   FixedVector<int8_t, NUM_STATS> base_stats;
   FixedVector<int, NUM_STATS> stat_zero;
   FixedVector<std::string, NUM_STATS> stat_zero_cause;
-  stat_type last_chosen;
 
   int hunger;
   int disease;
@@ -161,7 +160,7 @@ public:
   // rather than the object itself, so that we can get away with
   // just a forward declare of the KillMaster class, rather than
   // having to #include kills.h and thus make every single .cc file
-  // dependant on kills.h.  Having a pointer means that we have
+  // dependent on kills.h.  Having a pointer means that we have
   // to do our own implementations of copying the player object,
   // since the default implementations will lead to the kills member
   // pointing to freed memory, or worse yet lead to the same piece of
@@ -277,7 +276,7 @@ public:
   // (e.g. name of item, for scrolls of RC, ID, EA)
   CrawlHashTable type_id_props;
 
-#if TAG_MAJOR_VERSION == 32
+#if TAG_MAJOR_VERSION <= 33
   int montiers[5]; // four monster tiers, plus corpse count
 #endif
 
@@ -324,6 +323,7 @@ public:
   bool redraw_quiver;         // redraw quiver
   uint64_t redraw_status_flags;
 
+  bool redraw_title;
   bool redraw_hit_points;
   bool redraw_magic_points;
   FixedVector<bool, NUM_STATS> redraw_stats;
@@ -367,6 +367,8 @@ public:
   // View code clears and needs new data in places where we can't announce the
   // portal right away; delay the announcements then.
   int seen_portals;
+  // Same with invisible monsters, for ring auto-id.
+  bool seen_invis;
 
   // Number of viewport refreshes.
   unsigned int frame_no;
@@ -500,7 +502,7 @@ public:
     size_type body_size(size_part_type psize = PSIZE_TORSO, bool base = false) const;
     int       body_weight(bool base = false) const;
     int       total_weight() const;
-    int       damage_brand(int which_attack = -1);
+    brand_type damage_brand(int which_attack = -1);
     int       damage_type(int which_attack = -1);
 
     int       has_claws(bool allow_tran = true) const;
@@ -563,7 +565,7 @@ public:
 
     int hunger_level() const { return hunger_state; }
     void make_hungry(int nutrition, bool silent = true);
-    void poison(actor *agent, int amount = 1, bool force = false);
+    bool poison(actor *agent, int amount = 1, bool force = false);
     bool sicken(int amount, bool allow_hint = true);
     void paralyse(actor *, int str, std::string source = "");
     void petrify(actor *);
@@ -816,7 +818,7 @@ bool player_item_conserve(bool calc_unid = true);
 int player_mental_clarity(bool calc_unid = true, bool items = true);
 int player_spirit_shield(bool calc_unid = true);
 
-bool player_likes_chunks(bool permanently = false);
+int player_likes_chunks(bool permanently = false);
 bool player_likes_water(bool permanently = false);
 
 int player_mutation_level(mutation_type mut);

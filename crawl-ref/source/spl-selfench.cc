@@ -204,20 +204,6 @@ spret_type cast_swiftness(int power, bool fail)
 
     return SPRET_SUCCESS;
 }
-// 레비테이션 마법
-spret_type cast_levitation(int power, bool fail)
-{
-    if (liquefied(you.pos()) && you.ground_level())
-    {
-        mpr("이런 작은 마법은 중력으로부터 당신을 당길 수 없다!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
-        return SPRET_ABORT;
-    }
-
-    fail_check();
-    you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
-    levitate_player(power);
-    return SPRET_SUCCESS;
-}
 
 spret_type cast_fly(int power, bool fail)
 {

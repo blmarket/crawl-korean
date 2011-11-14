@@ -55,6 +55,7 @@
 #include "mapmark.h"
 #include "message.h"
 #include "mgen_data.h"
+#include "mon-death.h"
 #include "mon-place.h"
 #include "mon-pathfind.h"
 #include "mon-info.h"
@@ -112,7 +113,7 @@ static void _create_monster_hide(const item_def corpse)
     // These values cannot be set by a reasonable formula: {dlb}
     switch (mons_class)
     {
-    case MONS_DRAGON:         item.sub_type = ARM_DRAGON_HIDE;         break;
+    case MONS_DRAGON:         item.sub_type = ARM_FIRE_DRAGON_HIDE;    break;
     case MONS_TROLL:          item.sub_type = ARM_TROLL_HIDE;          break;
     case MONS_ICE_DRAGON:     item.sub_type = ARM_ICE_DRAGON_HIDE;     break;
     case MONS_STEAM_DRAGON:   item.sub_type = ARM_STEAM_DRAGON_HIDE;   break;
@@ -137,7 +138,7 @@ static void _create_monster_hide(const item_def corpse)
 
 int get_max_corpse_chunks(int mons_class)
 {
-    return (mons_weight(mons_class) / 300);
+    return (mons_weight(mons_class) / 150);
 }
 
 void turn_corpse_into_skeleton(item_def &item)
@@ -692,6 +693,8 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         return (rot_count > 0);
     }
 
+    mprf("You can't carry %s right now.", coag_count > 1 ? "them" : "it");
+
     // No space in inventory, check floor.
     int o = igrd(you.pos());
     while (o != NON_ITEM)
@@ -1065,6 +1068,12 @@ static void _maybe_bloodify_square(const coord_def& where, int amount,
     if (!spatter && !may_bleed)
         return;
 
+    bool ignite_blood = player_mutation_level(MUT_IGNITE_BLOOD)
+                        && you.see_cell(where);
+
+    if (ignite_blood)
+        amount *= 3;
+
     if (x_chance_in_y(amount, 20))
     {
         dprf("might bleed now; square: (%d, %d); amount = %d",
@@ -1078,6 +1087,13 @@ static void _maybe_bloodify_square(const coord_def& where, int amount,
 
             if (smell_alert && in_bounds(where))
                 blood_smell(12, where);
+
+            if (ignite_blood
+                && !cell_is_solid(where)
+                && env.cgrid(where) == EMPTY_CLOUD)
+            {
+                place_cloud(CLOUD_FIRE, where, 5 + random2(6), &you);
+            }
         }
 
         if (spatter)
@@ -1495,8 +1511,6 @@ bool mons_can_hurt_player(const monster* mon, const bool want_move)
 static bool _mons_is_always_safe(const monster *mon)
 {
     return (mon->wont_attack()
-            || mons_class_flag(mon->type, M_NO_EXP_GAIN)
-               && !mons_is_tentacle_end(mon->type)
             || mon->withdrawn()
             || mon->type == MONS_BALLISTOMYCETE && mon->number == 0);
 }
@@ -1504,6 +1518,11 @@ static bool _mons_is_always_safe(const monster *mon)
 bool mons_is_safe(const monster* mon, const bool want_move,
                   const bool consider_user_options, bool check_dist)
 {
+    // Short-circuit plants, some vaults have tons of those.
+    // Except for inactive ballistos, players may still want these.
+    if (mons_is_firewood(mon) && mon->type != MONS_BALLISTOMYCETE)
+        return true;
+
     int  dist    = grid_distance(you.pos(), mon->pos());
 
     bool is_safe = (_mons_is_always_safe(mon)
@@ -2138,6 +2157,7 @@ void run_environment_effects()
     abyss_morph(you.time_taken);
     timeout_tombs(you.time_taken);
     timeout_malign_gateways(you.time_taken);
+    timeout_phoenix_markers(you.time_taken);
 }
 
 coord_def pick_adjacent_free_square(const coord_def& p)
@@ -2220,12 +2240,10 @@ bool bad_attack(const monster *mon, std::string& adj, std::string& suffix)
     {
         adj += gettext("helpless ");
     }
-    if (mon->wont_attack())
-        adj += gettext("non-hostile ");
     if (mon->neutral() && is_good_god(you.religion))
         adj += gettext("neutral ");
-    if (mon->is_holy() && is_good_god(you.religion))
-        adj += gettext("holy ");
+    else if (mon->wont_attack())
+        adj += gettext("non-hostile ");
 
     if (you.religion == GOD_JIYVA && mons_is_slime(mon))
         retval = true;
@@ -2277,7 +2295,8 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     return !yesno(info, false, 'n');
 }
 
-bool stop_attack_prompt(targetter &hitfunc, std::string verb)
+bool stop_attack_prompt(targetter &hitfunc, std::string verb,
+                        bool (*affects)(const actor *victim))
 {
     if (you.confused())
         return false;
@@ -2289,8 +2308,12 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb)
         if (hitfunc.is_affected(*di) <= AFF_NO)
             continue;
         const monster* mon = monster_at(*di);
+        if (!mon || !you.can_see(mon))
+            continue;
+        if (affects && !affects(mon))
+            continue;
         std::string adjn, suffixn;
-        if (mon && you.can_see(mon) && bad_attack(mon, adjn, suffixn))
+        if (bad_attack(mon, adjn, suffixn))
         {
             if (victims.empty()) // record the adjectives for the first listed
                 adj = adjn, suffix = suffixn;
@@ -2308,9 +2331,6 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb)
     if (adj.find("your"))
         adj = "the " + adj;
     mon_name = adj + mon_name;
-
-    if (verb != "attack")
-        verb += " at";
 
     snprintf(info, INFO_SIZE, "Really %s %s%s?",
              verb.c_str(), mon_name.c_str(), suffix.c_str());
@@ -2448,6 +2468,16 @@ void swap_with_monster(monster* mon_to_swap)
     }
 }
 
+void wear_id_type(item_def &item)
+{
+    if (item_ident(item, ISFLAG_KNOW_PROPERTIES))
+        return;
+    set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
+    set_ident_flags(item, ISFLAG_KNOW_PROPERTIES);
+    mprf(gettext("You are wearing: %s"),
+         item.name(true, DESC_INVENTORY_EQUIP).c_str());
+}
+
 // AutoID an equipped ring of teleport.
 // Code copied from fire/ice in spl-cast.cc
 void maybe_id_ring_TC()
@@ -2482,14 +2512,8 @@ void maybe_id_ring_TC()
         if (player_wearing_slot(i))
         {
             item_def& ring = you.inv[you.equip[i]];
-            if (!item_ident(ring, ISFLAG_KNOW_PROPERTIES)
-                && ring.sub_type == RING_TELEPORT_CONTROL)
-            {
-                set_ident_type(ring.base_type, ring.sub_type, ID_KNOWN_TYPE);
-                set_ident_flags(ring, ISFLAG_KNOW_PROPERTIES);
-                mprf(gettext("You are wearing: %s"),
-                     ring.name(true, DESC_INVENTORY_EQUIP).c_str());
-            }
+            if (ring.sub_type == RING_TELEPORT_CONTROL)
+                wear_id_type(ring);
         }
     }
 }

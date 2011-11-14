@@ -83,7 +83,7 @@ static int _exciting_colour()
 }
 
 
-static int _newwave_weapon_colour(const item_def &item)
+static int _weapon_colour(const item_def &item)
 {
     int item_colour = BLACK;
     // fixed artefacts get predefined colours
@@ -148,48 +148,7 @@ static int _newwave_weapon_colour(const item_def &item)
     return (item_colour);
 }
 
-static int _classic_weapon_colour(const item_def &item)
-{
-    int item_colour = BLACK;
-
-    if (is_range_weapon(item))
-        item_colour = BROWN;
-    else
-    {
-        switch (item.sub_type)
-        {
-        case WPN_CLUB:
-        case WPN_GIANT_CLUB:
-        case WPN_GIANT_SPIKED_CLUB:
-        case WPN_ANKUS:
-        case WPN_WHIP:
-        case WPN_QUARTERSTAFF:
-            item_colour = BROWN;
-            break;
-        case WPN_QUICK_BLADE:
-            item_colour = LIGHTBLUE;
-            break;
-        case WPN_EXECUTIONERS_AXE:
-            item_colour = RED;
-            break;
-        default:
-            item_colour = LIGHTCYAN;
-            if (get_equip_race(item) == ISFLAG_DWARVEN)
-                item_colour = CYAN;
-            break;
-        }
-    }
-
-    return (item_colour);
-}
-
-static int _weapon_colour(const item_def &item)
-{
-    return (Options.classic_item_colours ? _classic_weapon_colour(item)
-                                         : _newwave_weapon_colour(item));
-}
-
-static int _newwave_missile_colour(const item_def &item)
+static int _missile_colour(const item_def &item)
 {
     int item_colour = BLACK;
     switch (item.sub_type)
@@ -218,50 +177,12 @@ static int _newwave_missile_colour(const item_def &item)
         item_colour = DARKGREY;
         break;
     default:
-        // huh?
-        item_colour = LIGHTCYAN;
-        if (get_equip_race(item) == ISFLAG_DWARVEN)
-            item_colour = CYAN;
-        break;
+        die("invalid missile type");
     }
     return (item_colour);
 }
 
-static int _classic_missile_colour(const item_def &item)
-{
-    int item_colour = BLACK;
-    switch (item.sub_type)
-    {
-    case MI_STONE:
-    case MI_LARGE_ROCK:
-    case MI_ARROW:
-        item_colour = BROWN;
-        break;
-    case MI_SLING_BULLET:
-        item_colour = BLUE;
-        break;
-    case MI_NEEDLE:
-        item_colour = WHITE;
-        break;
-    case MI_THROWING_NET:
-        item_colour = DARKGREY;
-        break;
-    default:
-        item_colour = LIGHTCYAN;
-        if (get_equip_race(item) == ISFLAG_DWARVEN)
-            item_colour = CYAN;
-        break;
-    }
-    return (item_colour);
-}
-
-static int _missile_colour(const item_def &item)
-{
-    return (Options.classic_item_colours ? _classic_missile_colour(item)
-                                         : _newwave_missile_colour(item));
-}
-
-static int _newwave_armour_colour(const item_def &item)
+static int _armour_colour(const item_def &item)
 {
     int item_colour = BLACK;
     std::string itname = item.name(false, DESC_PLAIN);
@@ -301,7 +222,7 @@ static int _newwave_armour_colour(const item_def &item)
       case ARM_ANIMAL_SKIN:
         item_colour = LIGHTGREY;
         break;
-      case ARM_CRYSTAL_PLATE_MAIL:
+      case ARM_CRYSTAL_PLATE_ARMOUR:
         item_colour = WHITE;
         break;
       case ARM_SHIELD:
@@ -315,48 +236,6 @@ static int _newwave_armour_colour(const item_def &item)
     }
 
     return (item_colour);
-}
-
-static int _classic_armour_colour(const item_def &item)
-{
-    int item_colour = BLACK;
-    switch (item.sub_type)
-    {
-    case ARM_CLOAK:
-    case ARM_ROBE:
-    case ARM_NAGA_BARDING:
-    case ARM_CENTAUR_BARDING:
-    case ARM_CAP:
-    case ARM_WIZARD_HAT:
-        item_colour = random_colour();
-        break;
-    case ARM_HELMET:
-        item_colour = LIGHTCYAN;
-        break;
-    case ARM_BOOTS: // maybe more interesting boot colours?
-    case ARM_GLOVES:
-    case ARM_LEATHER_ARMOUR:
-        item_colour = BROWN;
-        break;
-    case ARM_CRYSTAL_PLATE_MAIL:
-        item_colour = LIGHTGREY;
-        break;
-    case ARM_ANIMAL_SKIN:
-        item_colour = BROWN;
-        break;
-    default:
-        item_colour = LIGHTCYAN;
-        if (get_equip_race(item) == ISFLAG_DWARVEN)
-            item_colour = CYAN;
-        break;
-    }
-    return (item_colour);
-}
-
-static int _armour_colour(const item_def &item)
-{
-    return (Options.classic_item_colours ? _classic_armour_colour(item)
-                                         : _newwave_armour_colour(item));
 }
 
 void item_colour(item_def &item)
@@ -374,12 +253,6 @@ void item_colour(item_def &item)
             item.colour = random_uncommon_colour();
         else
             item.colour = _weapon_colour(item);
-
-        if (is_random_artefact(item) && one_chance_in(5)
-            && Options.classic_item_colours)
-        {
-            item.colour = random_colour();
-        }
         break;
 
     case OBJ_MISSILES:
@@ -392,8 +265,8 @@ void item_colour(item_def &item)
 
         switch (item.sub_type)
         {
-        case ARM_DRAGON_HIDE:
-        case ARM_DRAGON_ARMOUR:
+        case ARM_FIRE_DRAGON_HIDE:
+        case ARM_FIRE_DRAGON_ARMOUR:
             item.colour = mons_class_colour(MONS_DRAGON);
             break;
         case ARM_TROLL_HIDE:
@@ -878,7 +751,7 @@ static weapon_type _determine_weapon_subtype(int item_level)
         WPN_SLING,
         WPN_SPEAR, WPN_HAND_AXE, WPN_MACE,
         WPN_DAGGER, WPN_DAGGER, WPN_CLUB,
-        WPN_HAMMER, WPN_WHIP, WPN_SHORT_SWORD
+        WPN_WHIP, WPN_SHORT_SWORD
     };
 
     const weapon_type good_common_subtypes[] = {
@@ -1618,7 +1491,6 @@ bool is_weapon_brand_ok(int type, int brand, bool strict)
     case SPWPN_SPEED:
     case SPWPN_VORPAL:
     case SPWPN_CHAOS:
-    case SPWPN_REAPING:
     case SPWPN_HOLY_WRATH:
     case SPWPN_ELECTROCUTION:
         break;
@@ -1636,6 +1508,7 @@ bool is_weapon_brand_ok(int type, int brand, bool strict)
     case SPWPN_RETURNING:
     case SPWPN_CONFUSE:
     case SPWPN_ANTIMAGIC:
+    case SPWPN_REAPING:
         if (is_range_weapon(item))
             return (false);
         break;
@@ -1726,12 +1599,13 @@ brand_ok:
     if (no_brand)
         set_item_ego_type(item, OBJ_WEAPONS, SPWPN_NORMAL);
 
-    // If it's forced to be a good item, upgrade the worst weapons.
+    // If it's forced to be a good item, reroll the worst weapons.
     if (force_good
         && force_type == OBJ_RANDOM
-        && (item.sub_type == WPN_CLUB || item.sub_type == WPN_SLING))
+        && (item.sub_type == WPN_CLUB || item.sub_type == WPN_SLING
+            || item.sub_type == WPN_STAFF))
     {
-        item.sub_type = WPN_LONG_SWORD;
+        item.sub_type = _determine_weapon_subtype(item_level);
     }
 
     item.plus  = 0;
@@ -1852,44 +1726,52 @@ static special_missile_type _determine_missile_brand(const item_def& item,
             break;
         }
 
-        rc = static_cast<special_missile_type>(
-                         random_choose_weighted(20, SPMSL_SLEEP, 20, SPMSL_SLOW,
-                                                20, SPMSL_SICKNESS, 20, SPMSL_CONFUSION,
-                                                10, SPMSL_PARALYSIS, 10, SPMSL_RAGE,
-                                                nw, SPMSL_POISONED, 0));
+        rc = random_choose_weighted(20, SPMSL_SLEEP,
+                                    20, SPMSL_SLOW,
+                                    20, SPMSL_SICKNESS,
+                                    20, SPMSL_CONFUSION,
+                                    10, SPMSL_PARALYSIS,
+                                    10, SPMSL_RAGE,
+                                    nw, SPMSL_POISONED,
+                                    0);
         break;
     case MI_DART:
-        rc = static_cast<special_missile_type>(
-                         random_choose_weighted(30, SPMSL_FLAME, 30, SPMSL_FROST,
-                                                20, SPMSL_POISONED,
-                                                12, SPMSL_SILVER, 12, SPMSL_STEEL,
-                                                12, SPMSL_DISPERSAL, 20, SPMSL_EXPLODING,
-                                                nw, SPMSL_NORMAL,
-                                                0));
+        rc = random_choose_weighted(30, SPMSL_FLAME,
+                                    30, SPMSL_FROST,
+                                    20, SPMSL_POISONED,
+                                    12, SPMSL_SILVER,
+                                    12, SPMSL_STEEL,
+                                    12, SPMSL_DISPERSAL,
+                                    20, SPMSL_EXPLODING,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     case MI_ARROW:
-        rc = static_cast<special_missile_type>(
-                        random_choose_weighted(30, SPMSL_FLAME, 30, SPMSL_FROST,
-                                               20, SPMSL_POISONED,
-                                               15, SPMSL_DISPERSAL,
-                                               nw, SPMSL_NORMAL,
-                                               0));
+        rc = random_choose_weighted(30, SPMSL_FLAME,
+                                    30, SPMSL_FROST,
+                                    20, SPMSL_POISONED,
+                                    15, SPMSL_DISPERSAL,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     case MI_BOLT:
-        rc = static_cast<special_missile_type>(
-                        random_choose_weighted(30, SPMSL_FLAME, 30, SPMSL_FROST,
-                                               20, SPMSL_POISONED, 15, SPMSL_PENETRATION,
-                                               15, SPMSL_SILVER,
-                                               10, SPMSL_STEEL, nw, SPMSL_NORMAL,
-                                               0));
+        rc = random_choose_weighted(30, SPMSL_FLAME,
+                                    30, SPMSL_FROST,
+                                    20, SPMSL_POISONED,
+                                    15, SPMSL_PENETRATION,
+                                    15, SPMSL_SILVER,
+                                    10, SPMSL_STEEL,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     case MI_JAVELIN:
-        rc = static_cast<special_missile_type>(
-                        random_choose_weighted(30, SPMSL_RETURNING, 32, SPMSL_PENETRATION,
-                                               32, SPMSL_POISONED,
-                                               21, SPMSL_STEEL, 20, SPMSL_SILVER,
-                                               nw, SPMSL_NORMAL,
-                                               0));
+        rc = random_choose_weighted(30, SPMSL_RETURNING,
+                                    32, SPMSL_PENETRATION,
+                                    32, SPMSL_POISONED,
+                                    21, SPMSL_STEEL,
+                                    20, SPMSL_SILVER,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     case MI_STONE:
         // deliberate fall through
@@ -1898,18 +1780,20 @@ static special_missile_type _determine_missile_brand(const item_def& item,
         rc = SPMSL_NORMAL;
         break;
     case MI_SLING_BULLET:
-        rc = static_cast<special_missile_type>(
-                        random_choose_weighted(30, SPMSL_FLAME, 30, SPMSL_FROST,
-                                               20, SPMSL_POISONED,
-                                               15, SPMSL_STEEL, 15, SPMSL_SILVER,
-                                               20, SPMSL_EXPLODING, nw, SPMSL_NORMAL,
-                                               0));
+        rc = random_choose_weighted(30, SPMSL_FLAME,
+                                    30, SPMSL_FROST,
+                                    20, SPMSL_POISONED,
+                                    15, SPMSL_STEEL,
+                                    15, SPMSL_SILVER,
+                                    20, SPMSL_EXPLODING,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     case MI_THROWING_NET:
-        rc = static_cast<special_missile_type>(
-                        random_choose_weighted(30, SPMSL_STEEL, 30, SPMSL_SILVER,
-                                               nw, SPMSL_NORMAL,
-                                               0));
+        rc = random_choose_weighted(30, SPMSL_STEEL,
+                                    30, SPMSL_SILVER,
+                                    nw, SPMSL_NORMAL,
+                                    0);
         break;
     }
 
@@ -1987,7 +1871,6 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
                 || type == MI_JAVELIN || type == MI_THROWING_NET);
     case SPMSL_PENETRATION:
         return (type == MI_JAVELIN || type == MI_BOLT);
-    case SPMSL_REAPING: // deliberate fall through
     case SPMSL_DISPERSAL:
         return (type == MI_ARROW || type == MI_DART);
     case SPMSL_EXPLODING:
@@ -2218,8 +2101,10 @@ static item_status_flag_type _determine_armour_race(const item_def& item,
         case ARM_SCALE_MAIL:
         case ARM_CHAIN_MAIL:
         case ARM_SPLINT_MAIL:
+#if TAG_MAJOR_VERSION == 32
         case ARM_BANDED_MAIL:
-        case ARM_PLATE_MAIL:
+#endif
+        case ARM_PLATE_ARMOUR:
             if (item.sub_type <= ARM_CHAIN_MAIL && one_chance_in(6))
                 rc = ISFLAG_ELVEN;
             if (item.sub_type >= ARM_RING_MAIL && one_chance_in(5))
@@ -2247,27 +2132,23 @@ static special_armour_type _determine_armour_ego(const item_def& item,
     case ARM_SHIELD:
     case ARM_LARGE_SHIELD:
     case ARM_BUCKLER:
-        rc = static_cast<special_armour_type>(
-            random_choose_weighted(40, SPARM_RESISTANCE,
+        rc = random_choose_weighted(40, SPARM_RESISTANCE,
                                    120, SPARM_FIRE_RESISTANCE,
                                    120, SPARM_COLD_RESISTANCE,
                                    120, SPARM_POISON_RESISTANCE,
                                    120, SPARM_POSITIVE_ENERGY,
                                    240, SPARM_REFLECTION,
                                    480, SPARM_PROTECTION,
-                                   0));
+                                     0);
         break;
 
     case ARM_CLOAK:
-    {
-        const special_armour_type cloak_egos[] = {
-            SPARM_POISON_RESISTANCE, SPARM_DARKNESS,
-            SPARM_MAGIC_RESISTANCE, SPARM_PRESERVATION
-        };
-
-        rc = RANDOM_ELEMENT(cloak_egos);
+        rc = random_choose(SPARM_POISON_RESISTANCE,
+                           SPARM_DARKNESS,
+                           SPARM_MAGIC_RESISTANCE,
+                           SPARM_PRESERVATION,
+                           -1);
         break;
-    }
 
     case ARM_WIZARD_HAT:
         if (coinflip())
@@ -2288,15 +2169,8 @@ static special_armour_type _determine_armour_ego(const item_def& item,
         break;
 
     case ARM_GLOVES:
-    {
-        const special_armour_type gloves_egos[] = {
-            SPARM_DEXTERITY, SPARM_STRENGTH,
-            SPARM_ARCHERY
-        };
-
-        rc = RANDOM_ELEMENT(gloves_egos);
+        rc = random_choose(SPARM_DEXTERITY, SPARM_STRENGTH, SPARM_ARCHERY, -1);
         break;
-    }
 
     case ARM_BOOTS:
     case ARM_NAGA_BARDING:
@@ -2313,14 +2187,13 @@ static special_armour_type _determine_armour_ego(const item_def& item,
     }
 
     case ARM_ROBE:
-        rc = static_cast<special_armour_type>(
-                 random_choose_weighted(1, SPARM_RESISTANCE,
-                                        2, SPARM_COLD_RESISTANCE,
-                                        2, SPARM_FIRE_RESISTANCE,
-                                        2, SPARM_POSITIVE_ENERGY,
-                                        4, SPARM_MAGIC_RESISTANCE,
-                                        4, SPARM_ARCHMAGI,
-                                        0));
+        rc = random_choose_weighted(1, SPARM_RESISTANCE,
+                                    2, SPARM_COLD_RESISTANCE,
+                                    2, SPARM_FIRE_RESISTANCE,
+                                    2, SPARM_POSITIVE_ENERGY,
+                                    4, SPARM_MAGIC_RESISTANCE,
+                                    4, SPARM_ARCHMAGI,
+                                    0);
 
         // Only ever generate robes of archmagi for random pieces of armour,
         // for whatever reason.
@@ -2334,7 +2207,7 @@ static special_armour_type _determine_armour_ego(const item_def& item,
     default:
         if (armour_is_hide(item, true)
             || item.sub_type == ARM_ANIMAL_SKIN
-            || item.sub_type == ARM_CRYSTAL_PLATE_MAIL)
+            || item.sub_type == ARM_CRYSTAL_PLATE_ARMOUR)
         {
             rc = SPARM_NORMAL;
             break;
@@ -2351,7 +2224,7 @@ static special_armour_type _determine_armour_ego(const item_def& item,
         if (one_chance_in(5))
             rc = SPARM_POISON_RESISTANCE;
 
-        if (item.sub_type == ARM_PLATE_MAIL && one_chance_in(15))
+        if (item.sub_type == ARM_PLATE_ARMOUR && one_chance_in(15))
             rc = SPARM_PONDEROUSNESS;
         break;
     }
@@ -2406,7 +2279,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     case SPARM_FIRE_RESISTANCE:
     case SPARM_COLD_RESISTANCE:
     case SPARM_RESISTANCE:
-        if (type == ARM_DRAGON_ARMOUR
+        if (type == ARM_FIRE_DRAGON_ARMOUR
             || type == ARM_ICE_DRAGON_ARMOUR
             || type == ARM_GOLD_DRAGON_ARMOUR)
         {
@@ -2515,7 +2388,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
         // Make a good item...
         item.plus += random2(3);
 
-        if (item.sub_type <= ARM_PLATE_MAIL
+        if (item.sub_type <= ARM_PLATE_ARMOUR
             && x_chance_in_y(21 + item_level, 300))
         {
             item.plus += random2(3);
@@ -2526,7 +2399,7 @@ static void _generate_armour_item(item_def& item, bool allow_uniques,
             && (force_good
                 || forced_ego
                 || get_equip_race(item) != ISFLAG_ORCISH
-                || item.sub_type <= ARM_PLATE_MAIL && coinflip()))
+                || item.sub_type <= ARM_PLATE_ARMOUR && coinflip()))
         {
             // ...an ego item, in fact.
             set_item_ego_type(item, OBJ_ARMOUR,
@@ -2587,10 +2460,10 @@ static int _random_wand_subtype()
     // Wands used to be uniform (5.26% each)
     //
     // Now:
-    // invis, hasting, healing  (1.11% each)
-    // fireball, teleportaion   (3.74% each)
-    // others                   (6.37% each)
-    if (rc == WAND_INVISIBILITY || rc == WAND_HASTING || rc == WAND_HEALING
+    // invis, hasting, heal wounds (1.11% each)
+    // fireball, teleportaion      (3.74% each)
+    // others                      (6.37% each)
+    if (rc == WAND_INVISIBILITY || rc == WAND_HASTING || rc == WAND_HEAL_WOUNDS
         || (rc == WAND_FIREBALL || rc == WAND_TELEPORTATION) && coinflip())
     {
         rc = random2(NUM_WANDS);
@@ -2604,7 +2477,7 @@ static int _wand_max_initial_charges(int subtype)
 {
     switch (subtype)
     {
-    case WAND_HEALING: case WAND_HASTING: case WAND_INVISIBILITY:
+    case WAND_HEAL_WOUNDS: case WAND_HASTING: case WAND_INVISIBILITY:
         return 8;
 
     case WAND_FLAME: case WAND_FROST: case WAND_MAGIC_DARTS:
@@ -2743,7 +2616,7 @@ static void _generate_potion_item(item_def& item, int force_type,
         {
             // total weight is 10000
             // fizzing potions are not generated {due jan2011}
-            stype = random_choose_weighted(2330, POT_HEALING,
+            stype = random_choose_weighted(2330, POT_CURING,
                                             1150, POT_HEAL_WOUNDS,
                                              740, POT_RESTORE_ABILITIES,
                                              530, POT_POISON,
@@ -3074,10 +2947,18 @@ static void _generate_jewellery_item(item_def& item, bool allow_uniques,
     if (item.sub_type == RING_SLAYING) // requires plus2 too
     {
         if (item.cursed() && !one_chance_in(20))
-            item.plus2 = -1 - random2avg(6, 2);
+        {
+            item.plus2 = (coinflip() ? -2 : -3);
+            if (one_chance_in(3))
+                item.plus2 -= random2(4);
+        }
         else
         {
-            item.plus2 = 1 + (one_chance_in(3) ? random2(3) : random2avg(6, 2));
+            if (item.plus > 0)
+                item.plus = 2 + (one_chance_in(3) ? random2(4)
+                                                  : 1 + random2avg(5, 2));
+            item.plus2 = 2 + (one_chance_in(3) ? random2(4)
+                                               : 1 + random2avg(5, 2));
 
             if (x_chance_in_y(9, 25))        // 36% of such rings {dlb}
             {
@@ -3144,11 +3025,10 @@ static void _generate_misc_item(item_def& item, int force_type, int force_ego)
 
 deck_rarity_type random_deck_rarity()
 {
-    return static_cast<deck_rarity_type>
-        (random_choose_weighted(8, DECK_RARITY_LEGENDARY,
-                                20, DECK_RARITY_RARE,
-                                72, DECK_RARITY_COMMON,
-                                0));
+    return random_choose_weighted(8, DECK_RARITY_LEGENDARY,
+                                 20, DECK_RARITY_RARE,
+                                 72, DECK_RARITY_COMMON,
+                                  0);
 }
 
 
@@ -3205,8 +3085,8 @@ int items(bool allow_uniques,
     else
     {
         ASSERT(force_type == OBJ_RANDOM);
-        item.base_type = static_cast<object_class_type>(
-            random_choose_weighted(5, OBJ_STAVES,
+        item.base_type = random_choose_weighted(
+                                     5, OBJ_STAVES,
                                     15, OBJ_BOOKS,
                                     25, OBJ_JEWELLERY,
                                     35, OBJ_WANDS,
@@ -3217,7 +3097,7 @@ int items(bool allow_uniques,
                                    150, OBJ_MISSILES,
                                    200, OBJ_SCROLLS,
                                    200, OBJ_GOLD,
-                                     0));
+                                     0);
 
         // misc items placement wholly dependent upon current depth {dlb}:
         if (item_level > 7 && x_chance_in_y(21 + item_level, 3500))
@@ -3563,7 +3443,7 @@ armour_type get_random_armour_type(int item_level)
         const armour_type medarmours[] = { ARM_ROBE, ARM_LEATHER_ARMOUR,
                                            ARM_RING_MAIL, ARM_SCALE_MAIL,
                                            ARM_CHAIN_MAIL, ARM_SPLINT_MAIL,
-                                           ARM_BANDED_MAIL, ARM_PLATE_MAIL };
+                                           ARM_PLATE_ARMOUR };
 
         armtype = RANDOM_ELEMENT(medarmours);
     }
@@ -3571,10 +3451,10 @@ armour_type get_random_armour_type(int item_level)
     if (one_chance_in(20) && x_chance_in_y(11 + item_level, 400))
     {
         // High-level armours, including troll and some dragon armours.
-        const armour_type hiarmours[] = { ARM_CRYSTAL_PLATE_MAIL,
+        const armour_type hiarmours[] = { ARM_CRYSTAL_PLATE_ARMOUR,
                                           ARM_TROLL_HIDE,
                                           ARM_TROLL_LEATHER_ARMOUR,
-                                          ARM_DRAGON_HIDE, ARM_DRAGON_ARMOUR,
+                                          ARM_FIRE_DRAGON_HIDE, ARM_FIRE_DRAGON_ARMOUR,
                                           ARM_ICE_DRAGON_HIDE,
                                           ARM_ICE_DRAGON_ARMOUR };
 
@@ -3602,7 +3482,7 @@ armour_type get_random_armour_type(int item_level)
         armtype = RANDOM_ELEMENT(morehiarmours);
 
         if (armtype == ARM_ANIMAL_SKIN && one_chance_in(20))
-            armtype = ARM_CRYSTAL_PLATE_MAIL;
+            armtype = ARM_CRYSTAL_PLATE_ARMOUR;
     }
 
     // Secondary armours.
@@ -3674,6 +3554,33 @@ void item_set_appearance(item_def &item)
 
     default:
         break;
+    }
+}
+
+void maybe_set_item_race(item_def &item, int allowed, int num_rolls)
+{
+    if (!allowed)
+        return;
+
+    while (num_rolls-- > 0)
+    {
+        iflags_t irace = 0;
+        switch (item.base_type)
+        {
+        case OBJ_WEAPONS:
+            irace = _determine_weapon_race(item, MAKE_ITEM_RANDOM_RACE);
+            break;
+        case OBJ_ARMOUR:
+            irace = _determine_armour_race(item, MAKE_ITEM_RANDOM_RACE);
+            break;
+        default:
+            return;
+        }
+        if (!(allowed & irace))
+            continue;
+        dprf("Extra race roll passed!");
+        set_equip_race(item, irace);
+        return;
     }
 }
 

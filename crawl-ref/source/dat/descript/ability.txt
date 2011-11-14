@@ -11,10 +11,6 @@ Spit Poison
 
 지정한 몬스터에게 독침을 내뱉는다.
 %%%%
-Teleportation
-
-같은 층의 임의의 장소로 순간이동한다. 
-%%%%
 Blink ability
 
 짧은 거리 내의 임의의 장소로 순간적으로 이동한다.
@@ -71,14 +67,6 @@ Fly
 Hellfire
 
 대상이 된 몬스터와 주변의 몬스터, 지형을 지옥불로 태워버린다.
-%%%%
-Throw Flame ability
-
-대상이 된 몬스터에게 화염 덩어리를 투척한다.
-%%%%
-Throw Frost ability
-
-대상이 된 몬스터에게 냉기 덩어리를 투척한다.
 %%%%
 Release Delayed Fireball
 
@@ -310,7 +298,7 @@ Corrupt
 %%%%
 Enter the Abyss
 
-루고누의 왕국으로 진입한다. 물론 어느정도의 대가도 지불해야 한다.
+Transfer yourself to Lugonu's realm instantly... at the cost of permanently reducing your maximum health and magic. The effort of even using the ability will leave your health and magic depleted.
 %%%%
 # Nemelex Xobeh (네멜렉스 죠베)
 Draw One
@@ -368,7 +356,11 @@ Turn plants and fungi adjacent to you into stronger species. Upgrading fungi req
 # Cheibriados
 Bend Time
 
-주변에 있는 이들의 속도를 느리게 한다.
+Attempt to slow down everyone adjacent to you. High Invocations skill makes it harder to resist.
+%%%%
+Temporal Distortion
+
+Warp the flow of time around you, causing monsters to skip forwards in time relative to you.
 %%%%
 Slouch
 

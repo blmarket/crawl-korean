@@ -727,7 +727,7 @@ static bool _cmdhelp_textfilter(const std::string &tag)
 }
 
 static const char *targeting_help_1 =
-    N_("<h>Examine surroundings ('<w>x</w><h>' in main):\n"
+    "<h>Examine surroundings ('<w>x</w><h>' in main):\n"
     "<w>Esc</w> : cancel (also <w>Space</w>, <w>x</w>)\n"
     "<w>Dir.</w>: move cursor in that direction\n"
     "<w>.</w> : move to cursor (also <w>Enter</w>, <w>Del</w>)\n"
@@ -741,15 +741,18 @@ static const char *targeting_help_1 =
     "<w>_</w> : cycle through altars\n"
     "<w><<</w>/<w>></w> : cycle through up/down stairs\n"
     "<w>Tab</w> : cycle through shops and portals\n"
+    "<w>r</w> : move cursor to you\n"
     "<w>e</w> : create/remove travel exclusion\n"
     "<w>Ctrl-F</w> : monster targeting modes\n"
 #ifndef USE_TILE
     "<w>Ctrl-L</w> : targeting via monster list\n"
 #endif
     "<w>Ctrl-P</w> : repeat prompt\n"
+;
 #ifdef WIZARD
-    " \n"
+static const char *targeting_help_wiz =
     "<h>Wizard targeting commands:</h>\n"
+    "<w>Ctrl-C</w> : cycle through beam paths\n"
     "<w>D</w>: get debugging information about the monster\n"
     "<w>o</w>: give item to monster\n"
     "<w>F</w>: cycle monster friendly/good neutral/neutral/hostile\n"
@@ -765,8 +768,8 @@ static const char *targeting_help_1 =
     "<w>,</w>: bring down the monster to 1 hp\n"
     "<w>Ctrl-B</w>: banish monster\n"
     "<w>Ctrl-K</w>: kill monster\n"
+;
 #endif
-);
 
 static const char *targeting_help_2 =
     N_("<h>Targeting (zap wands, cast spells, etc.):\n"
@@ -869,7 +872,7 @@ static bool _compare_mon_names(MenuEntry *entry_a, MenuEntry* entry_b)
     return (lowercase(a_name) < lowercase(b_name));
 }
 
-// Compare monsters by location-independant level, or by hitdice if
+// Compare monsters by location-independent level, or by hitdice if
 // levels are equal, or by name if both level and hitdice are equal.
 static bool _compare_mon_toughness(MenuEntry *entry_a, MenuEntry* entry_b)
 {
@@ -2099,8 +2102,12 @@ void show_targeting_help()
     // Page size is number of lines - one line for --more-- prompt.
     cols.set_pagesize(get_number_of_lines() - 1);
 
-    cols.add_formatted(0, gettext(targeting_help_1), true, true);
-    cols.add_formatted(1, gettext(targeting_help_2), true, true);
+    cols.add_formatted(0, targeting_help_1, true, true);
+#ifdef WIZARD
+    if (you.wizard)
+        cols.add_formatted(0, targeting_help_wiz, true, true);
+#endif
+    cols.add_formatted(1, targeting_help_2, true, true);
     _show_keyhelp_menu(cols.formatted_lines(), false, Options.easy_exit_menu);
 }
 void show_interlevel_travel_branch_help()

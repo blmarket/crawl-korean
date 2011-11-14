@@ -26,6 +26,7 @@
 #include "colour.h"
 #include "coord.h"
 #include "coordit.h"
+#include "database.h"
 #include "delay.h"
 #include "dgn-shoals.h"
 #include "dgnevent.h"
@@ -671,6 +672,7 @@ void banished(dungeon_feature_type gate_type, const std::string &who)
         take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
     }
 
+    stop_delay(true);
     push_features_to_abyss();
     down_stairs(gate_type, you.entry_cause);  // heh heh
 }
@@ -1293,43 +1295,20 @@ static void _hell_effects()
         return;
     }
 
-    int temp_rand = random2(17);
+    std::string msg = getMiscString("hell_effect");
+    if (msg.empty())
+        msg = "Something hellishly buggy happens.";
+    msg_channel_type chan = MSGCH_PLAIN;
+    strip_channel_prefix(msg, chan);
+    mpr(msg.c_str(), chan);
+    if (chan == MSGCH_SOUND)
+        noisy(15, you.pos());
+
     spschool_flag_type which_miscast = SPTYP_RANDOM;
     bool summon_instead = false;
     monster_type which_beastie = MONS_NO_MONSTER;
 
-    mpr((temp_rand ==  0) ? gettext("\"You will not leave this place.\"") :
-        (temp_rand ==  1) ? gettext("\"Die, mortal!\"") :
-        (temp_rand ==  2) ? gettext("\"We do not forgive those who trespass against us!\"") :
-        (temp_rand ==  3) ? gettext("\"Trespassers are not welcome here!\"") :
-        (temp_rand ==  4) ? gettext("\"You do not belong in this place!\"") :
-        (temp_rand ==  5) ? gettext("\"Leave now, before it is too late!\"") :
-        (temp_rand ==  6) ? gettext("\"We have you now!\"") :
-        // plain messages
-        (temp_rand ==  7) ? (you.can_smell()) ? gettext("You smell brimstone.")
-                                                 : gettext("Brimstone rains from above.") :
-        (temp_rand ==  8) ? gettext("You feel lost and a long, long way from home...") :
-        (temp_rand ==  9) ? gettext("You shiver with fear.") :
-        // warning
-        (temp_rand == 10) ? gettext("You feel a terrible foreboding...") :
-        (temp_rand == 11) ? gettext("Something frightening happens.") :
-        (temp_rand == 12) ? gettext("You sense an ancient evil watching you...") :
-        (temp_rand == 13) ? gettext("You suddenly feel all small and vulnerable.") :
-        (temp_rand == 14) ? gettext("You sense a hostile presence.") :
-        // sounds
-        (temp_rand == 15) ? gettext("A gut-wrenching scream fills the air!") :
-        (temp_rand == 16) ? gettext("You hear words spoken in a strange and terrible language...")
-                          : gettext("You hear diabolical laughter!"),
-        (temp_rand <  7 ? MSGCH_TALK :
-         temp_rand < 10 ? MSGCH_PLAIN :
-         temp_rand < 15 ? MSGCH_WARN
-                        : MSGCH_SOUND));
-
-    if (temp_rand >= 15)
-        noisy(15, you.pos());
-
-    temp_rand = random2(27);
-
+    int temp_rand = random2(27);
     if (temp_rand > 17)     // 9 in 27 odds {dlb}
     {
         temp_rand = random2(8);
@@ -1363,7 +1342,7 @@ static void _hell_effects()
 
         case BRANCH_GEHENNA:
             if (summon_instead)
-                which_beastie = MONS_FIEND;
+                which_beastie = MONS_BRIMSTONE_FIEND;
             else
                 which_miscast = SPTYP_FIRE;
             break;
@@ -1385,7 +1364,7 @@ static void _hell_effects()
         default:
             // This is to silence gcc compiler warnings. {dlb}
             if (summon_instead)
-                which_beastie = MONS_FIEND;
+                which_beastie = MONS_BRIMSTONE_FIEND;
             else
                 which_miscast = SPTYP_NECROMANCY;
             break;
@@ -2431,6 +2410,22 @@ void handle_time()
 
     if (you.religion == GOD_JIYVA && one_chance_in(25))
         jiyva_eat_offlevel_items();
+
+    if (int lev = player_mutation_level(MUT_EVOLUTION))
+        if (one_chance_in(100 / lev)
+            && you.attribute[ATTR_EVOL_XP] * (1 + random2(10))
+               > (int)exp_needed(you.experience_level + 1))
+        {
+            you.attribute[ATTR_EVOL_XP] = 0;
+            mutate(coinflip() ? RANDOM_GOOD_MUTATION : RANDOM_MUTATION,
+                   false, false, false, false, false, true);
+            // it would kill itself anyway, but let's speed that up
+            if (one_chance_in(10)
+                && (wearing_amulet(AMU_RESIST_MUTATION) || one_chance_in(10)))
+            {
+                delete_mutation(MUT_EVOLUTION, false);
+            }
+        }
 
     if (player_in_branch(BRANCH_SPIDER_NEST) && coinflip())
         place_webs(random2(20 / (6 - player_branch_depth())), true);

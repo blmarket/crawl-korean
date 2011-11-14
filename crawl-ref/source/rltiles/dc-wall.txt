@@ -1,6 +1,6 @@
 %name wall
 %prefix TILE
-%startvalue TILE_FLOOR_MAX tiledef-floor.h
+%startvalue TILE_FLOOR_MAX floor
 
 %sdir dc-dngn/wall
 
@@ -216,21 +216,25 @@ zot_blue3
 
 %variation WALL_ZOT green
 %hue 240 120
+%lum 240 -5
 %repeat WALL_ZOT WALL_ZOT_GREEN
 %resetcol
 
 %variation WALL_ZOT cyan
 %hue 240 180
+%lum 240 -5
 %repeat WALL_ZOT WALL_ZOT_CYAN WALL_ICE
 %resetcol
 
 %variation WALL_ZOT red
 %hue 240 0
+%lum 240 -5
 %repeat WALL_ZOT WALL_ZOT_RED
 %resetcol
 
 %variation WALL_ZOT magenta
 %hue 240 300
+%lum 240 -5
 %repeat WALL_ZOT WALL_ZOT_MAGENTA
 %resetcol
 
@@ -252,31 +256,31 @@ zot_blue3
 %resetcol
 
 %variation WALL_ZOT lightblue
-%lum 240 40
+%lum 240 10
 %repeat WALL_ZOT WALL_ZOT_LIGHTBLUE
 %resetcol
 
 %variation WALL_ZOT lightgreen
 %hue 240 120
-%lum 240 15
+%lum 240 10
 %repeat WALL_ZOT WALL_ZOT_LIGHTGREEN
 %resetcol
 
 %variation WALL_ZOT lightcyan
 %hue 240 180
-%lum 240 15
+%lum 240 10
 %repeat WALL_ZOT WALL_ZOT_LIGHTCYAN
 %resetcol
 
 %variation WALL_ZOT lightred
 %hue 240 0
-%lum 240 40
+%lum 240 10
 %repeat WALL_ZOT WALL_ZOT_LIGHTRED
 %resetcol
 
 %variation WALL_ZOT lightmagenta
 %hue 240 300
-%lum 240 40
+%lum 240 10
 %repeat WALL_ZOT WALL_ZOT_LIGHTMAGENTA
 %resetcol
 
@@ -578,6 +582,24 @@ crypt-metal2
 crypt-metal3
 crypt-metal4
 
+cobalt_rock1 WALL_COBALT_ROCK
+cobalt_rock2
+cobalt_rock3
+cobalt_rock4
+
+cobalt_stone01 WALL_COBALT_STONE
+cobalt_stone02
+cobalt_stone03
+cobalt_stone04
+cobalt_stone05
+cobalt_stone06
+cobalt_stone07
+cobalt_stone08
+cobalt_stone09
+cobalt_stone10
+cobalt_stone11
+cobalt_stone12
+
 stone2_gray0 DNGN_STONE_WALL DNGN_STONE_WALL_LIGHTGRAY
 stone2_gray1
 stone2_gray2
@@ -750,6 +772,28 @@ dngn_metal_wall_brown DNGN_METAL_WALL_BLUE
 
 dngn_metal_wall_cracked DNGN_METAL_WALL_CRACKED
 
+iron0-0 DNGN_METAL_IRON
+iron2-0
+iron3-0
+iron4-0
+iron5-0
+iron1-1
+iron2-1
+iron3-1
+iron0-2
+iron1-2
+iron2-2
+iron3-2
+iron4-2
+iron5-2
+iron1-3
+iron2-3
+iron3-3
+iron4-3
+iron0-4
+iron1-4
+iron2-4
+
 dc-dngn/grate DNGN_GRATE
 
 %hue 150 120
@@ -841,6 +885,54 @@ emerald5
 emerald6
 emerald7
 emerald8
+
+%weight 20
+bars_red01 WALL_BARS WALL_BARS_RED
+bars_red02
+bars_red03
+bars_red04
+%weight 10
+bars_red05
+bars_red06
+bars_red07
+bars_red08
+
+%variation WALL_BARS blue
+%hue 0 240
+%repeat WALL_BARS WALL_BARS_BLUE
+%resetcol
+
+%variation WALL_BARS green
+%hue 0 90
+%repeat WALL_BARS WALL_BARS_GREEN
+%resetcol
+
+%variation WALL_BARS cyan
+%hue 0 180
+%repeat WALL_BARS WALL_BARS_CYAN
+%resetcol
+
+%variation WALL_BARS magenta
+%hue 0 300
+%repeat WALL_BARS WALL_BARS_MAGENTA
+%resetcol
+
+%variation WALL_BARS brown
+%hue 0 30
+%repeat WALL_BARS WALL_BARS_BROWN
+%resetcol
+
+%variation WALL_BARS lightgray
+%desat 0
+%lum 0 -10
+%repeat WALL_BARS WALL_BARS_LIGHTGRAY
+%resetcol
+
+%variation WALL_BARS darkgray
+%desat 0
+%lum 0 -30
+%repeat WALL_BARS WALL_BARS_DARKGRAY
+%resetcol
 
 shadow_w DNGN_WALL_SHADOW_W
 shadow_nw DNGN_WALL_SHADOW_NW

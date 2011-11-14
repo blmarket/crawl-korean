@@ -35,6 +35,18 @@
 #include "viewchar.h"
 #include "shout.h"
 
+static void _burn_tree(coord_def pos)
+{
+    bolt beam;
+    beam.origin_spell = SPELL_CONJURE_FLAME;
+    beam.range = 1;
+    beam.flavour = BEAM_FIRE;
+    beam.name = "fireball"; // yay doing this by name
+    beam.source = beam.target = pos;
+    beam.set_agent(&you);
+    beam.fire();
+}
+
 spret_type conjure_flame(int pow, const coord_def& where, bool fail)
 {
     // FIXME: This would be better handled by a flag to enforce max range.
@@ -67,8 +79,9 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
             break;
         case DNGN_TREE:
         case DNGN_SWAMP_TREE:
-            mpr(gettext("The flames aren't hot enough to burn down trees!"));
-            break;
+            fail_check();
+            _burn_tree(where);
+            return SPRET_SUCCESS;
         default:
             mpr(gettext("You can't ignite solid rock!"));
             break;
@@ -187,12 +200,24 @@ spret_type cast_big_c(int pow, cloud_type cty, const actor *caster, bolt &beam,
     return SPRET_SUCCESS;
 }
 
+static int _make_a_normal_cloud(coord_def where, int pow, int spread_rate,
+                                cloud_type ctype, const actor *agent, int colour,
+                                std::string name, std::string tile, int excl_rad)
+{
+    place_cloud(ctype, where,
+                (3 + random2(pow / 4) + random2(pow / 4) + random2(pow / 4)),
+                agent, spread_rate, colour, name, tile, excl_rad);
+
+    return 1;
+}
+
 void big_cloud(cloud_type cl_type, const actor *agent,
                const coord_def& where, int pow, int size, int spread_rate,
                int colour, std::string name, std::string tile)
 {
-    apply_area_cloud(make_a_normal_cloud, where, pow, size,
-                     cl_type, agent, spread_rate, colour, name, tile);
+    apply_area_cloud(_make_a_normal_cloud, where, pow, size,
+                     cl_type, agent, spread_rate, colour, name, tile,
+                     -1);
 }
 
 spret_type cast_ring_of_flames(int power, bool fail)
@@ -279,17 +304,6 @@ void corpse_rot(actor* caster)
         mpr(gettext("You smell decay."));
 
     // Should make zombies decay into skeletons?
-}
-
-int make_a_normal_cloud(coord_def where, int pow, int spread_rate,
-                        cloud_type ctype, const actor *agent, int colour,
-                        std::string name, std::string tile)
-{
-    place_cloud(ctype, where,
-                (3 + random2(pow / 4) + random2(pow / 4) + random2(pow / 4)),
-                agent, spread_rate, colour, name, tile);
-
-    return 1;
 }
 
 // Returns a vector of cloud types created by this potion type.

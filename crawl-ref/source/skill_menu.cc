@@ -257,7 +257,7 @@ COLORS SkillMenuEntry::get_colour() const
     else if (m_skm->get_state(SKM_LEVEL) == SKM_LEVEL_ENHANCED
              && you.skill(m_sk, 10, true) != you.skill(m_sk, 10, false))
     {
-        if (you.skill(m_sk, 10, true) < you.skill(m_sk, 10, false))
+        if (you.skill(m_sk, 10, true) > you.skill(m_sk, 10, false))
             return you.train[m_sk] ? LIGHTRED : RED;
         else
             return you.train[m_sk] ? LIGHTBLUE : BLUE;
@@ -778,7 +778,7 @@ bool SkillMenu::exit()
             break;
         }
 
-        if (you.skills[i] < 27)
+        if (you.skills[i] < 27 && !is_useless_skill((skill_type)i))
             maxed_out = false;
     }
 
@@ -820,7 +820,7 @@ skill_menu_state SkillMenu::get_state(skill_menu_switch sw)
         {
         case SKM_MODE:  return SKM_MODE_MANUAL;
         case SKM_DO:    return SKM_DO_FOCUS;
-        case SKM_SHOW:  return SKM_SHOW_KNOWN;
+        case SKM_SHOW:  return SKM_SHOW_DEFAULT;
         case SKM_LEVEL: return SKM_LEVEL_NORMAL;
         case SKM_VIEW:  return SKM_VIEW_NEW_LEVEL;
         default:        return SKM_NONE;

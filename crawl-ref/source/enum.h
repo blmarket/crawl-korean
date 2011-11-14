@@ -23,7 +23,9 @@ enum ability_type
     ABIL_BREATHE_STEAM,
     ABIL_BREATHE_MEPHITIC,
     ABIL_SPIT_ACID,
+#if TAG_MAJOR_VERSION == 32
     ABIL_TELEPORTATION,
+#endif
     ABIL_BLINK,
 
     // Others
@@ -32,10 +34,12 @@ enum ability_type
 
     // Species-specific abilities.
     // Demonspawn-only
+#if TAG_MAJOR_VERSION == 32
     ABIL_THROW_FLAME,
     ABIL_THROW_FROST,
+#endif
     ABIL_HELLFIRE,
-    // Kenku, Draconians
+    // Tengu, Draconians
     ABIL_FLY,
     ABIL_FLY_II,
     ABIL_STOP_FLYING,
@@ -137,6 +141,7 @@ enum ability_type
     ABIL_CHEIBRIADOS_TIME_STEP = 201,
     ABIL_CHEIBRIADOS_TIME_BEND,
     ABIL_CHEIBRIADOS_SLOUCH,
+    ABIL_CHEIBRIADOS_DISTORTION,
     // Ashenzari
     ABIL_ASHENZARI_SCRYING = 210,
     ABIL_ASHENZARI_TRANSFER_KNOWLEDGE,
@@ -242,11 +247,12 @@ enum attribute_type
     ATTR_FRUIT_FOUND,          // Mask of fruit types found.
     ATTR_LEV_UNCANCELLABLE,    // Potion or spell of levitation is in effect.
     ATTR_INVIS_UNCANCELLABLE,  // Potion/spell/wand of invis is in effect.
-    ATTR_PERM_LEVITATION,      // Kenku flight or boots of lev are on.
+    ATTR_PERM_LEVITATION,      // Tengu flight or boots of lev are on.
     ATTR_SEEN_INVIS_TURN,      // Last turn you saw something invisible.
     ATTR_SEEN_INVIS_SEED,      // Random seed for invis monster positions.
     ATTR_APPENDAGE,            // eq slot of Beastly Appendage
     ATTR_TITHE_BASE,           // Remainder of untithed gold.
+    ATTR_EVOL_XP,              // XP gained since last evolved mutation
     NUM_ATTRIBUTES
 };
 
@@ -307,7 +313,7 @@ enum beam_type                  // beam[].flavour
     BEAM_DIGGING,
     BEAM_TELEPORT,
     BEAM_POLYMORPH,
-    BEAM_CHARM,
+    BEAM_ENSLAVE,
     BEAM_BANISH,
     BEAM_DEGENERATE,
     BEAM_ENSLAVE_SOUL,
@@ -910,10 +916,17 @@ enum conduct_type
     DID_ARTIFICIAL_KILLED_BY_SERVANT,     // Yredelemnul
     DID_DESTROY_SPELLBOOK,                // Sif Muna
     DID_EXPLORATION,                      // Ashenzari, wrath timers
-    DID_VIOLATE_HOLY_CORPSE,              // Zin/Ely/TSO butchering holy
+    DID_DESECRATE_HOLY_REMAINS,           // Zin/Ely/TSO
     DID_SEE_MONSTER,                      // TSO
 
     NUM_CONDUCTS
+};
+
+enum confirm_butcher_type
+{
+    CONFIRM_NEVER,
+    CONFIRM_ALWAYS,
+    CONFIRM_AUTO,
 };
 
 enum confirm_prompt_type
@@ -943,7 +956,7 @@ enum delay_type
     DELAY_MEMORISE,
     DELAY_BUTCHER,
     DELAY_BOTTLE_BLOOD,
-    DELAY_WEAPON_SWAP,                 // for easy_butcher
+    DELAY_WEAPON_SWAP,
     DELAY_PASSWALL,
     DELAY_DROP_ITEM,
     DELAY_MULTIDROP,
@@ -1378,6 +1391,7 @@ enum duration_type
     DUR_PETRIFYING,
     DUR_SHROUD_OF_GOLUBRIA,
     DUR_TORNADO_COOLDOWN,
+    DUR_NAUSEA,
     NUM_DURATIONS
 };
 
@@ -2139,7 +2153,7 @@ enum monster_type                      // (int) menv[].type
     MONS_SPRIGGAN_BERSERKER,
     MONS_SPRIGGAN_DEFENDER,
     MONS_FIREFLY,
-    MONS_KENKU,
+    MONS_TENGU,
     MONS_MINOTAUR,
     MONS_NAGA,
     MONS_NAGA_WARRIOR,
@@ -2232,7 +2246,7 @@ enum monster_type                      // (int) menv[].type
     MONS_TRAINING_DUMMY,
 
     // Demons:
-    MONS_IMP,
+    MONS_CRIMSON_IMP,
     MONS_QUASIT,
     MONS_WHITE_IMP,
     MONS_LEMURE,
@@ -2267,7 +2281,7 @@ enum monster_type                      // (int) menv[].type
     MONS_SUN_DEMON,
     MONS_SHADOW_DEMON,
     MONS_PIT_FIEND,
-    MONS_FIEND,
+    MONS_BRIMSTONE_FIEND,
     MONS_ICE_FIEND,
     MONS_SHADOW_FIEND,
     MONS_PANDEMONIUM_LORD,
@@ -2451,6 +2465,10 @@ enum monster_type                      // (int) menv[].type
     MONS_CATOBLEPAS,
     MONS_GOLEM,
     MONS_PROFANE_SERVITOR,
+    MONS_GNOLL_SHAMAN,
+    MONS_GNOLL_SERGEANT,
+    MONS_CRAWLING_CORPSE,
+    MONS_MACABRE_MASS,
 
     NUM_MONSTERS,                      // used for polymorph
 
@@ -2540,7 +2558,8 @@ enum mutation_type
     MUT_STINGER,
     MUT_TALONS,         // feet
 #if TAG_MAJOR_VERSION != 32
-    MUT_TENTACLES,      // Gloves but don't lose a slot yet.
+    MUT_TENTACLES,      // hands
+    MUT_TENTACLE_SPIKE, // Octopode only.
 #endif
 
     // scales
@@ -2584,9 +2603,15 @@ enum mutation_type
     MUT_FAST_METABOLISM,
     MUT_FLEXIBLE_WEAK,
     MUT_FRAIL,
+#if TAG_MAJOR_VERSION != 32
+    MUT_FOUL_STENCH,
+#endif
     MUT_GOURMAND,
     MUT_HIGH_MAGIC,
     MUT_ICEMAIL,
+#if TAG_MAJOR_VERSION != 32
+    MUT_IGNITE_BLOOD,
+#endif
     MUT_LOW_MAGIC,
     MUT_MAGIC_RESISTANCE,
     MUT_MUTATION_RESISTANCE,
@@ -2605,6 +2630,9 @@ enum mutation_type
     MUT_SCREAM,
     MUT_SHAGGY_FUR,
     MUT_SHOCK_RESISTANCE,
+#if TAG_MAJOR_VERSION != 32
+    MUT_SLOW,
+#endif
     MUT_SLOW_HEALING,
     MUT_SLOW_METABOLISM,
     MUT_SPINY,
@@ -2613,14 +2641,22 @@ enum mutation_type
     MUT_STRONG,
     MUT_STRONG_STIFF,
     MUT_TELEPORT,
+#if TAG_MAJOR_VERSION == 32
     MUT_TELEPORT_AT_WILL,
+#endif
     MUT_TELEPORT_CONTROL,
+#if TAG_MAJOR_VERSION == 32
     MUT_THROW_FLAMES,
     MUT_THROW_FROST,
+#endif
     MUT_TORMENT_RESISTANCE,
     MUT_TOUGH_SKIN,
     MUT_WEAK,
+#if TAG_MAJOR_VERSION != 32
+    MUT_WILD_MAGIC,
+#else
     MUT_SLOW,
+#endif
     MUT_UNBREATHING,
 
     // Jiyva-specific mutations
@@ -2634,9 +2670,13 @@ enum mutation_type
 #if TAG_MAJOR_VERSION == 32
     MUT_POWERED_BY_PAIN,
     MUT_CAMOUFLAGE,
-    MUT_TENTACLES,      // Gloves but don't lose a slot yet.
-#endif
+    MUT_TENTACLES,      // hands
     MUT_TENTACLE_SPIKE, // Octopode only.
+    MUT_WILD_MAGIC,
+    MUT_IGNITE_BLOOD,
+    MUT_FOUL_STENCH,
+#endif
+    MUT_EVOLUTION,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION = NUM_MUTATIONS + 1,
@@ -2725,7 +2765,7 @@ enum size_part_type
 
 enum potion_type
 {
-    POT_HEALING,
+    POT_CURING,
     POT_HEAL_WOUNDS,
     POT_SPEED,
     POT_MIGHT,
@@ -2799,12 +2839,14 @@ enum artefact_prop_type
     ARTP_CURSED,
     ARTP_STEALTH,
     ARTP_MAGICAL_POWER,
-      ARTP_UNUSED, // please reuse
+    ARTP_BASE_DELAY,
 #if TAG_MAJOR_VERSION == 32
-    ARTP_OLD_PONDEROUS = ARTP_UNUSED,
+    ARTP_OLD_PONDEROUS = ARTP_BASE_DELAY,
 #endif
     ARTP_HP,
     ARTP_CLARITY,
+    ARTP_BASE_ACC,
+    ARTP_BASE_DAM,
     ARTP_NUM_PROPERTIES
 };
 
@@ -2949,7 +2991,9 @@ enum species_type
     SP_HIGH_ELF,
     SP_DEEP_ELF,
     SP_SLUDGE_ELF,
+#if TAG_MAJOR_VERSION == 32
     SP_MOUNTAIN_DWARF,
+#endif
     SP_HALFLING,
     SP_HILL_ORC,
     SP_KOBOLD,
@@ -2973,17 +3017,21 @@ enum species_type
     SP_MINOTAUR,
     SP_DEMONSPAWN,
     SP_GHOUL,
-    SP_KENKU,
+    SP_TENGU,
     SP_MERFOLK,
     SP_VAMPIRE,
     SP_DEEP_DWARF,
     SP_FELID,
     SP_OCTOPODE,
+// The high scores viewer still needs enums for removed species.
     SP_ELF,                            // (placeholder)
     SP_HILL_DWARF,                     // (placeholder)
     SP_OGRE_MAGE,                      // (placeholder)
     SP_GREY_ELF,                       // (placeholder)
     SP_GNOME,                          // (placeholder)
+#if TAG_MAJOR_VERSION != 32
+    SP_MOUNTAIN_DWARF,                 // (placeholder)
+#endif
     NUM_SPECIES,                       // always after the last species
 
     SP_UNKNOWN  = 100,
@@ -3130,8 +3178,8 @@ enum spell_type
     SPELL_CALL_CANINE_FAMILIAR,
     SPELL_SUMMON_DRAGON,
     SPELL_HIBERNATION,
-    SPELL_ENGLACIATION,
 #if TAG_MAJOR_VERSION == 32
+    SPELL_ENGLACIATION,
     SPELL_DETECT_SECRET_DOORS,
 #endif
     SPELL_SEE_INVISIBLE,
@@ -3341,7 +3389,7 @@ enum zap_type
     ZAP_SLOWING,
     ZAP_HASTING,
     ZAP_MAGIC_DARTS,
-    ZAP_HEALING,
+    ZAP_HEAL_WOUNDS,
     ZAP_PARALYSIS,
     ZAP_FIRE,
     ZAP_COLD,

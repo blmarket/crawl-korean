@@ -704,11 +704,11 @@ std::string map_lines::parse_glyph_replacements(std::string s,
         if (is.length() > 2 && is[1] == ':')
         {
             const int glych = is[0];
-            int weight = atoi(is.substr(2).c_str());
-            if (weight < 1)
-                weight = 10;
-
-            gly.push_back(glyph_weighted_replacement_t(glych, weight));
+            int weight;
+            if (!parse_int(is.substr(2).c_str(), weight) || weight < 1)
+                return "Invalid weight specifier in \"" + s + "\"";
+            else
+                gly.push_back(glyph_weighted_replacement_t(glych, weight));
         }
         else
         {
@@ -737,9 +737,8 @@ std::string parse_weighted_str(const std::string &spec, T &list)
             std::string::size_type cpos = val.find(':');
             if (cpos != std::string::npos)
             {
-                weight = atoi(val.substr(cpos + 1).c_str());
-                if (weight <= 0)
-                    weight = 10;
+                if (!parse_int(val.substr(cpos + 1).c_str(), weight) || weight <= 0)
+                    return "Invalid weight specifier in \"" + spec + "\"";
                 val.erase(cpos);
                 trim_string(val);
             }
@@ -907,7 +906,11 @@ std::string map_lines::parse_nsubst_spec(const std::string &s,
     std::string err = mapdef_split_key_item(s, &key, &sep, &arg, -1);
     if (!err.empty())
         return err;
-    const int count = key == "*"? -1 : atoi(key.c_str());
+    int count = 0;
+    if (key == "*")
+        count = -1;
+    else
+        parse_int(key.c_str(), count);
     if (!count)
         return make_stringf("Illegal spec: %s", s.c_str());
 
@@ -2247,7 +2250,8 @@ std::string map_def::desc_or_name() const
 void map_def::write_full(writer& outf) const
 {
     cache_offset = outf.tell();
-    marshallShort(outf, MAP_CACHE_VERSION);   // Level indicator.
+    marshallUByte(outf, TAG_MAJOR_VERSION);
+    marshallUByte(outf, TAG_MINOR_VERSION);
     marshallString4(outf, name);
     prelude.write(outf);
     mapchunk.write(outf);
@@ -2267,9 +2271,10 @@ void map_def::read_full(reader& inf, bool check_cache_version)
     // reloading the index), but it's easier to save the game at this
     // point and let the player reload.
 
-    const short fp_version = unmarshallShort(inf);
+    const uint8_t major = unmarshallUByte(inf);
+    const uint8_t minor = unmarshallUByte(inf);
 
-    if (check_cache_version && fp_version != MAP_CACHE_VERSION)
+    if (major != TAG_MAJOR_VERSION || minor > TAG_MINOR_VERSION)
         throw map_load_exception(name);
 
     std::string fp_name;
@@ -2618,7 +2623,8 @@ std::string map_def::validate_temple_map()
         if (temple_tag.empty())
             return ("Malformed temple_overflow_ tag");
 
-        int num = atoi(temple_tag.c_str());
+        int num = 0;
+        parse_int(temple_tag.c_str(), num);
 
         if (num == 0)
         {
@@ -3571,7 +3577,7 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(std::string spec)
             if (pos != std::string::npos && mon_str[pos] == ' ')
             {
                 const std::string mcount = mon_str.substr(0, pos);
-                const int count = atoi(mcount.c_str());
+                const int count = atoi(mcount.c_str()); // safe atoi()
                 if (count >= 1 && count <= 99)
                     mspec.quantity = count;
 

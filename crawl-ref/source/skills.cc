@@ -59,7 +59,7 @@ int skill_cost_needed(int level)
         // as XL (a bit lower in the beginning).
         // Changed to exp apt 130 to slightly increase mid and late game prices.
         species_type sp = you.species;
-        you.species = SP_KENKU;
+        you.species = SP_TENGU;
 
         // The average starting skill total is actually lower, but monks get
         // about 1200, and they would start around skill cost level 4 if we
@@ -157,13 +157,6 @@ void reassess_starting_skills()
             you.skills[sk] = 1;
         }
     }
-
-    // Vampires should always have Unarmed Combat skill.
-    if (you.species == SP_VAMPIRE && you.skills[SK_UNARMED_COMBAT] < 1)
-    {
-        you.skill_points[SK_UNARMED_COMBAT] = skill_exp_needed(1, SK_UNARMED_COMBAT);
-        you.skills[SK_UNARMED_COMBAT] = 1;
-    }
 }
 
 static void _change_skill_level(skill_type exsk, int n)
@@ -184,13 +177,6 @@ static void _change_skill_level(skill_type exsk, int n)
     {
         mprf(MSGCH_INTRINSIC_GAIN, gettext("You have mastered %s!"), gettext(skill_name(exsk)));
     }
-    else if (you.skills[exsk] == 1 && n > 0)
-    {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have gained %s skill!"), gettext(skill_name(exsk)));
-        hints_gained_new_skill(exsk);
-    }
-    else if (!you.skills[exsk])
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have lost %s skill!"), skill_name(exsk));
     else if (abs(n) == 1 && you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, gettext("Your %s skill %s to level %d!"),
@@ -209,6 +195,9 @@ static void _change_skill_level(skill_type exsk, int n)
              abs(n), you.skills[exsk]);
     }
 
+    if (you.skills[exsk] == n && n > 0)
+        hints_gained_new_skill(exsk);
+
     if (n > 0 && you.num_turns)
         learned_something_new(HINT_SKILL_RAISE);
 
@@ -220,7 +209,7 @@ static void _change_skill_level(skill_type exsk, int n)
 
     const skill_type best_spell = best_skill(SK_SPELLCASTING,
                                              SK_LAST_MAGIC);
-    if (exsk == SK_SPELLCASTING && you.skills[exsk] == 1
+    if (exsk == SK_SPELLCASTING && you.skills[exsk] == n
         && best_spell == SK_SPELLCASTING && n > 0)
     {
         mpr("You're starting to get the hang of this magic thing.");
@@ -263,7 +252,7 @@ void redraw_skill(skill_type exsk, skill_type old_best_skill)
 
     const skill_type best = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
         if (best != old_best_skill || old_best_skill == exsk)
-            redraw_title(you.your_name, player_title());
+            you.redraw_title = true;
 }
 
 void check_skill_level_change(skill_type sk, bool do_level_up)
@@ -375,7 +364,7 @@ static void _check_abil_skills()
     std::vector<ability_type> abilities = get_god_abilities();
     for (unsigned int i = 0; i < abilities.size(); ++i)
     {
-        // Exit early if ther's no more skill to check.
+        // Exit early if there's no more skill to check.
         if (you.stop_train.empty())
             return;
 
@@ -611,7 +600,7 @@ void check_selected_skills()
         skill_type sk = static_cast<skill_type>(i);
         if (skill_trained(sk))
             return;
-        if (!you.can_train[sk] || you.skills[sk] == 27)
+        if (!you.can_train[sk] || you.skill_points[sk] >= skill_exp_needed(27, sk))
             continue;
         if (is_invalid_skill(first_selectable))
             first_selectable = sk;
@@ -697,15 +686,16 @@ void exercise(skill_type exsk, int deg)
 
     dprf("Exercise %s by %d.", skill_name(exsk), deg);
 
+    // push first in case queues are empty, like during -test
     while (deg > 0)
     {
         if (skill_trained(exsk))
         {
-            you.exercises.pop_front();
             you.exercises.push_back(exsk);
+            you.exercises.pop_front();
         }
-        you.exercises_all.pop_front();
         you.exercises_all.push_back(exsk);
+        you.exercises_all.pop_front();
         deg--;
     }
     reset_training();
@@ -715,8 +705,11 @@ void exercise(skill_type exsk, int deg)
 // We look at skill points because actual level up comes later.
 static bool _level_up_check(skill_type sk, bool simu)
 {
-    // Don't train past level 27.
-    if (you.skill_points[sk] >= skill_exp_needed(27, sk))
+        // Don't overtrain spellcasting past level 1 with Trog and
+        // don't train past level 27.
+        if (sk == SK_SPELLCASTING && !you.skills[sk] && you.religion == GOD_TROG
+        && you.skill_points[sk] >= skill_exp_needed(1, sk)
+                || you.skill_points[sk] >= skill_exp_needed(27, sk))
     {
         you.training[sk] = 0;
         if (!simu)
@@ -730,6 +723,10 @@ static bool _level_up_check(skill_type sk, bool simu)
 
 static bool _is_magic_skill(skill_type sk)
 {
+    // Learning spellcasting with scrolls doesn't count for Trog.
+    if (you.religion == GOD_TROG && sk == SK_SPELLCASTING && !you.skills[sk])
+        return false;
+
     return (sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC);
 }
 
@@ -911,7 +908,7 @@ static int _stat_mult(skill_type exsk, int skill_inc)
 
     if ((exsk >= SK_FIGHTING && exsk <= SK_STAVES) || exsk == SK_ARMOUR)
     {
-        // These skills are Easier for the strong.
+        // These skills are easier for the strong.
         stat = you.strength();
     }
     else if (exsk >= SK_SLINGS && exsk <= SK_UNARMED_COMBAT)
@@ -969,7 +966,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
         skill_inc *= crosstrain_bonus(exsk);
 
     // Starting to learn skills is easier if the appropriate stat is high.
-        // We check skill points in case skill level hasn't been updated yet
+    // We check skill points in case skill level hasn't been updated yet.
     if (you.skill_points[exsk] < skill_exp_needed(1, exsk))
         skill_inc = _stat_mult(exsk, skill_inc);
 

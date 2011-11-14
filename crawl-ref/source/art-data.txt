@@ -733,16 +733,17 @@ NAME:     Captain's cutlass
 APPEAR:   black cutlass
 OBJ:      OBJ_WEAPONS/WPN_SABRE
 PLUS:     +6/+7
+BASE_ACC: -1
+BASE_DAM: +2
 COLOUR:   DARKGREY
 TILE:     urand_cutlass
 TILE_EQ:  cutlass
 BRAND:    SPWPN_SPEED
-DAM:      2
 DESC_END: This infamous weapon was used by a vile pirate captain to
-          slaughter countless innocents.  Finally, he met his destiny
+          slaughter countless innocents. Finally, he met his destiny
           when a kraken swallowed his ship with all the crew aboard.
           The cutlass was thought to be forever lost, but now you have
-          a proof to the contrary in your very hands.
+          proof to the contrary in your very hands.
 
 NAME:     storm bow
 APPEAR:   night blue bow
@@ -910,8 +911,8 @@ PLUS:    +3
 COLOUR:  BROWN
 TILE:    urand_war
 TILE_EQ: glove_black
-ACC:     3
-DAM:     3
+ACC:     5
+DAM:     5
 
 NAME:    shield of Resistance
 APPEAR:  bronze shield
@@ -940,7 +941,7 @@ DESC:    A dull grey robe.
 ENUM:    MAXWELL
 NAME:    Maxwell's patent armour
 APPEAR:  weird-looking armour
-OBJ:     OBJ_ARMOUR/ARM_PLATE_MAIL
+OBJ:     OBJ_ARMOUR/ARM_PLATE_ARMOUR
 PLUS:    +15
 COLOUR:  LIGHTGREEN
 TILE:    urand_maxwell
@@ -958,8 +959,8 @@ COLOUR:  ETC_SHIMMER_BLUE
 TILE:    urand_dragonmask
 TILE_EQ: art_dragonhelm
 MAGIC:   40
-ACC:     2
-DAM:     2
+ACC:     3
+DAM:     3
 BOOL:    seeinv
 DESC:    A blue mask.
 
@@ -1008,7 +1009,7 @@ TILE:    urand_fencer
 TILE_EQ: glove_white
 EV:      3
 DEX:     3
-ACC:     5
+ACC:     8
 DESC:    A pair of gloves made of white silk.
 
 NAME:     cloak of Starlight
@@ -1068,7 +1069,7 @@ OBJ:     OBJ_JEWELLERY/RING_INVISIBILITY
 COLOUR:  ETC_DARK
 TILE:    urand_shadows
 EV:      4
-ACC:     -3
+ACC:     -4
 STEALTH: 40
 BOOL:    life, seeinv
 
@@ -1099,7 +1100,7 @@ STR:     2
 INT:     -2
 MAGIC:   30
 ANGRY:   1
-DAM:     3
+DAM:     5
 CURSED:  3
 STEALTH: -20
 
@@ -1190,11 +1191,11 @@ COLOUR:   ETC_ELECTRICITY
 BRAND:    SPARM_RUNNING
 BOOL:     elec
 DESC:     This naga barding is made of some very metallic dragon hide, to
-          the point of initially confusing you at the first glance into
-          thinking it is actually made of metal.
+          the point of confusing you at first glance into thinking that it's
+          actually made of metal.
 DESC_ID:  These scales have been fashioned into armour for a naga's lower
           body. Faintly crackling with electricity, they have been enchanted
-          to allow its wearer to slither at almost a human's pace.
+          to allow their wearer to slither at almost a human's pace.
 
 ENUM:     BLACK_KNIGHT_HORSE
 NAME:     Black Knight's horse barding
@@ -1208,13 +1209,13 @@ BRAND:    SPARM_PONDEROUSNESS
 METAB:    -2
 BOOL:     life
 DESC:     You feel sorry for the horse that has to wear this mass of metal.
-DESC_ID:  This gear used to be worn by personal horse of the Black Knight
+DESC_ID:  This gear used to be worn by the personal horse of the Black Knight
           during his reign of terror. Pitch-black, it appears to be made not
           only of some strange black steel, but also of entire plates of
-          black diamond as well! Naturally, such a weight of metal and stone
-          cannot be good for the mount's speed. However, it offers not only
-          mundane protection against blows: the adamant bears an enchantment
-          that makes creature wearing it partially undead.
+          black diamond! Naturally, such a weight of metal and stone cannot
+          be good for the mount's speed. However, it offers not only mundane
+          protection against blows; the adamant bears an enchantment that
+          makes its wearer partially undead.
 
 NAME:     ring of Vitality
 APPEAR:   amethyst ring with an ankh
@@ -1231,7 +1232,9 @@ TILE:     urand_katana
 TILE_EQ:  katana_slant
 COLOUR:   LIGHTRED
 PLUS:     +8/+8
-DAM:      +5
+BASE_ACC: +2
+BASE_DAM: +4
+BASE_DELAY: -2
 BOOL:     clarity
 BRAND:    SPWPN_VORPAL
 DESC_ID:  This exotic sword is a weapon for truly enlightened users.
@@ -1246,6 +1249,19 @@ BOOL:     special
 # hrm, nothing fitting, shouldn't be elemental but should be marked
 COLOUR:   WHITE
 DESC:     You guess this stick is loaded with something else than just lead.
+
+# Worn by Tiamat.
+ENUM:     DRAGONSKIN
+NAME:     dragonskin cloak
+APPEAR:   opalescent scaly cloak
+OBJ:      OBJ_ARMOUR/ARM_CLOAK
+TILE:     urand_dragonskin
+TILE_EQ:  dragonskin
+PLUS:     +4
+COLOUR:   ETC_HEAL
+BOOL:     nogen
+DESC:     This opalescent cloak gleams with all dragon colours.
+
 
 # This entry must always be last.
 ENUM:   DUMMY2

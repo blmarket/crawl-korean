@@ -449,8 +449,8 @@ static void _good_potion_or_scroll(int & slot)
     slot++;
 }
 
-// Make n random attempts at identifying healing or teleportation.
-static void _healing_or_teleport(int n)
+// Make n random attempts at identifying curing or teleportation.
+static void _curing_or_teleport(int n)
 {
     int temp_rand = 2;
 
@@ -466,7 +466,7 @@ static void _healing_or_teleport(int n)
             set_ident_type(OBJ_SCROLLS, SCR_TELEPORTATION, ID_KNOWN_TYPE);
             break;
         case 1:
-            set_ident_type(OBJ_POTIONS, POT_HEALING, ID_KNOWN_TYPE);
+            set_ident_type(OBJ_POTIONS, POT_CURING, ID_KNOWN_TYPE);
             break;
         }
     }
@@ -586,9 +586,9 @@ static void _wanderer_good_equipment(skill_type & skill, int & slot)
     case SK_UNARMED_COMBAT:
     case SK_INVOCATIONS:
     {
-        // Random consumables: 2x attempts to ID healing/teleportation
+        // Random consumables: 2x attempts to ID curing/teleportation
         // 1 good potion/scroll.
-        _healing_or_teleport(2);
+        _curing_or_teleport(2);
         _good_potion_or_scroll(slot);
         break;
     }
@@ -631,7 +631,7 @@ static void _give_wanderer_spell(skill_type skill)
         break;
 
     case SK_TRANSMUTATIONS:
-        spell = SPELL_SANDBLAST;
+        spell = SPELL_BEASTLY_APPENDAGE;
         break;
 
     case SK_FIRE_MAGIC:
@@ -714,7 +714,7 @@ static void _wanderer_decent_equipment(skill_type & skill,
     }
 
     // Don't give a gift from the same skill twice; just default to
-    // a healing potion/teleportation scroll.
+    // a curing potion/teleportation scroll.
     if (gift_skills.find(skill) != gift_skills.end())
         skill = SK_TRAPS_DOORS;
 
@@ -769,7 +769,7 @@ static void _wanderer_decent_equipment(skill_type & skill,
     case SK_UNARMED_COMBAT:
     case SK_INVOCATIONS:
     case SK_EVOCATIONS:
-        _healing_or_teleport(1);
+        _curing_or_teleport(1);
         break;
     }
 }

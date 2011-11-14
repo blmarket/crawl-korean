@@ -29,6 +29,10 @@ endif
 CFLAGS := -O2 $(SDL_CFLAGS) $(PNG_INCLUDE)
 LDFLAGS += $(SDL_LDFLAGS) $(PNG_LIB)
 
+ifdef DEBUG
+CFLAGS += -DDEBUG -ggdb
+endif
+
 ifneq (,$(findstring MINGW,$(uname_S)))
 LDFLAGS += -lgdi32 -lwinmm
 endif
@@ -73,6 +77,12 @@ endif
 endif
 
 BASE_OBJECTS := tile_colour.o tile.o tile_page.o tile_list_processor.o main.o
+
+# MSVCRT's tmpfile() is broken, so use our own version instead.
+ifneq (,$(findstring MINGW,$(uname_S)))
+BASE_OBJECTS += tmpfile.o
+endif
+
 OBJECTS := $(BASE_OBJECTS:%=$(TOOLDIR)/%)
 
 all: $(TILEGEN) $(HEADERS) $(SOURCE) $(IMAGES) $(JAVASCRIPT)
@@ -80,18 +90,31 @@ all: $(TILEGEN) $(HEADERS) $(SOURCE) $(IMAGES) $(JAVASCRIPT)
 %.png tiledef-%.h tiledef-%.cc tileinfo-%.js: dc-%.txt | $(TILEGEN)
 	$(QUIET_GEN)$(TILEGEN) $<
 
-DEPS := $(shell ls $(OBJECTS:%.o=%.d) $(INPUTS:%=%.d) 2> /dev/null)
+# CFLAGS difference check
+TRACK_CFLAGS = $(subst ','\'',$(HOSTCXX) $(CFLAGS))           # (stray ' for highlights)
 
-ifneq ($(DEPS),)
+.cflags: .force-cflags
+	@FLAGS='$(TRACK_CFLAGS)'; \
+    if test x"$$FLAGS" != x"`cat .cflags 2>/dev/null`" ; then \
+        echo "    * rebuilding crawl: new build flags or prefix"; \
+        echo "$$FLAGS" > .cflags; \
+    fi
+
+.PHONY: .force-cflags
+
+##########################################################################
+# Dependencies 
+
+DEPS := $(OBJECTS:%.o=%.d) $(INPUTS:%=%.d)
+
 -include $(DEPS)
-endif
 
 clean:
 	$(DELETE) $(HEADERS) $(OBJECTS) $(TILEGEN) $(SOURCE) $(IMAGES) $(HTML) $(DEPS) $(JAVASCRIPT)
 
 distclean: clean
 
-%.o: %.cc
+%.o: %.cc .cflags
 	$(QUIET_HOSTCXX)$(HOSTCXX) $(CFLAGS) -Wp,-MD,$*.d,-MT,$@ -c $< -o $@
 
 $(TILEGEN): $(OBJECTS)

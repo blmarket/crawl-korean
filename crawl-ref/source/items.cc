@@ -697,7 +697,7 @@ bool item_is_branded(const item_def& item)
 }
 
 // 2 - artefact, 1 - glowing/runed, 0 - mundane
-int item_name_specialness(const item_def& item)
+static int _item_name_specialness(const item_def& item)
 {
     if (item.base_type != OBJ_WEAPONS && item.base_type != OBJ_ARMOUR
         && item.base_type != OBJ_MISSILES && item.base_type != OBJ_JEWELLERY)
@@ -781,7 +781,7 @@ void item_check(bool verbose)
             glyph g = get_item_glyph(items[i]);
             get_item_glyph(items[i]);
             item_chars.push_back(g.ch * 0x100 +
-                                 (10 - item_name_specialness(*(items[i]))));
+                                 (10 - _item_name_specialness(*(items[i]))));
         }
         std::sort(item_chars.begin(), item_chars.end());
 
@@ -847,6 +847,46 @@ void item_check(bool verbose)
     }
 }
 
+static int _menu_selection_weight(const Menu* menu)
+{
+    std::vector<MenuEntry*> se = menu->selected_entries();
+    int weight(0);
+    for (int i = 0, size = se.size(); i < size; ++i)
+    {
+        const item_def *item = static_cast<item_def*>(se[i]->data);
+        if (se[i]->selected_qty > 0)
+            weight += item_mass(*item) * se[i]->selected_qty;
+    }
+    return weight;
+}
+
+static std::string _menu_burden_invstatus(const Menu *menu, bool is_pickup = false)
+{
+    int sel_weight = _menu_selection_weight(menu);
+    int new_burd = you.burden + (is_pickup ? sel_weight : -sel_weight);
+    std::string sw = sel_weight ? make_stringf(">%.0f", new_burd * BURDEN_TO_AUM) : "";
+    //TODO: Should somehow colour burdened/overloaded in LIGHTRED/RED
+    //      respectively {kittel}
+    std::string newstate = new_burd > carrying_capacity(BS_ENCUMBERED) ?
+                               "overloaded)" :
+                           new_burd > carrying_capacity(BS_UNENCUMBERED) ?
+                               "burdened)" : "unencumbered)";
+
+    std::string burden = "(Burden: ";
+    burden += Options.show_inventory_weights ?
+                  make_stringf("%.0f%s/%.0f aum)",
+                      you.burden * BURDEN_TO_AUM,
+                      sw.c_str(),
+                      carrying_capacity(BS_UNENCUMBERED) * BURDEN_TO_AUM)
+                : newstate;
+    return (burden);
+}
+
+static std::string _pickup_menu_title(const Menu *menu, const std::string &oldt)
+{
+    return _menu_burden_invstatus(menu, true) + " " + oldt;
+}
+
 void pickup_menu(int item_link)
 {
     int n_did_pickup   = 0;
@@ -855,11 +895,11 @@ void pickup_menu(int item_link)
     std::vector<const item_def*> items;
     item_list_on_square(items, item_link, false);
 
-    std::string prompt = gettext("Select items to pick up or press _ for help");
+    std::string prompt = gettext("Pick up what? (_ for help)");
     if (items.size() == 1 && items[0]->quantity > 1)
         prompt = gettext("Select pick up quantity by entering a number, then select the item");
     std::vector<SelItem> selected =
-        select_items(items, prompt.c_str());
+        select_items(items, prompt.c_str(), false, MT_PICKUP, _pickup_menu_title);
     redraw_screen();
 
     std::string pickup_warning;
@@ -1048,17 +1088,12 @@ void origin_set(const coord_def& where)
     }
 }
 
-void origin_set_monstercorpse(item_def &item, const coord_def& where)
-{
-    item.orig_monnum = _first_corpse_monnum(where);
-}
-
 static void _origin_freeze(item_def &item, const coord_def& where)
 {
     if (!origin_known(item))
     {
         if (!item.orig_monnum && where.x != -1 && where.y != -1)
-            origin_set_monstercorpse(item, where);
+            item.orig_monnum = _first_corpse_monnum(where);
 
         item.orig_place = get_packed_place();
         _origin_set_portal_vault(item);
@@ -1066,7 +1101,7 @@ static void _origin_freeze(item_def &item, const coord_def& where)
     }
 }
 
-std::string origin_monster_name(const item_def &item)
+static std::string _origin_monster_name(const item_def &item)
 {
     const int monnum = item.orig_monnum - 1;
     if (monnum == MONS_PLAYER_GHOST)
@@ -1195,7 +1230,7 @@ std::string origin_desc(const item_def &item)
         {
             desc += make_stringf(gettext("You took %s off %s "),
 		    gettext(_article_it(item).c_str()),
-                    origin_monster_name(item).c_str());
+                    _origin_monster_name(item).c_str());
         }
     }
     else
@@ -1370,6 +1405,9 @@ void pickup(bool partial_quantity)
             }
 
             o = next;
+
+            if (o == NON_ITEM && keyin != 'y' && keyin != 'a')
+                canned_msg(MSG_OK);
         }
 
         if (!pickup_warning.empty())
@@ -2210,8 +2248,11 @@ bool drop_item(int item_dropped, int quant_drop)
     if (item_dropped == you.equip[EQ_WEAPON]
         && quant_drop >= you.inv[item_dropped].quantity)
     {
+        int old_time = you.time_taken;
         if (!wield_weapon(true, SLOT_BARE_HANDS))
             return (false);
+        // Dropping a wielded item isn't any faster.
+        you.time_taken = old_time;
     }
 
     const dungeon_feature_type my_grid = grd(you.pos());
@@ -2248,6 +2289,7 @@ bool drop_item(int item_dropped, int quant_drop)
 
     dec_inv_item_quantity(item_dropped, quant_drop);
     you.turn_is_over = true;
+    you.time_taken = div_rand_round(you.time_taken * 8, 10);
 
     you.last_pickup.erase(item_dropped);
 
@@ -2275,35 +2317,11 @@ void drop_last()
     }
 }
 
-static std::string _drop_menu_invstatus(const Menu *menu)
-{
-    const int cap = carrying_capacity(BS_UNENCUMBERED);
-
-    std::string s_newweight;
-    std::vector<MenuEntry*> se = menu->selected_entries();
-    if (!se.empty())
-    {
-        int newweight = you.burden;
-        for (int i = 0, size = se.size(); i < size; ++i)
-        {
-            const item_def *item = static_cast<item_def *>(se[i]->data);
-            newweight -= item_mass(*item) * se[i]->selected_qty;
-        }
-
-        s_newweight = make_stringf(">%.0f", newweight * BURDEN_TO_AUM);
-    }
-
-    return (make_stringf("(Inv: %.0f%s/%.0f aum)",
-             you.burden * BURDEN_TO_AUM,
-             s_newweight.c_str(),
-             cap * BURDEN_TO_AUM));
-}
-
 static std::string _drop_menu_title(const Menu *menu, const std::string &oldt)
 {
-    std::string res = _drop_menu_invstatus(menu) + " " + oldt;
-    if (menu->is_set(MF_MULTISELECT))
-        res = "[Multidrop] " + res;
+    std::string res = _menu_burden_invstatus(menu) + " " + oldt;
+    if (menu->is_set(MF_SINGLESELECT))
+        res = "[Single drop] " + res;
 
     return (res);
 }
@@ -2406,8 +2424,7 @@ void drop()
     }
 
     std::vector<SelItem> tmp_items;
-    tmp_items = prompt_invent_items(gettext("Drop what? (Press _ for help; Ctrl-W "
-                                    "to toggle weight display.)"), MT_DROP,
+    tmp_items = prompt_invent_items(gettext("Drop what? (_ for help)"), MT_DROP,
                                      -1, _drop_menu_title, true, true, 0,
                                      &Options.drop_filter, _drop_selitem_text,
                                      &items_for_multidrop);
@@ -2590,7 +2607,7 @@ bool item_needs_autopickup(const item_def &item)
     if ((item.flags & ISFLAG_THROWN) && Options.pickup_thrown)
         return (true);
 
-    if ((item.flags & ISFLAG_DROPPED) && !Options.pickup_dropped)
+    if (item.flags & ISFLAG_DROPPED)
         return (false);
 
     if (item.props.exists("needs_autopickup"))
@@ -3161,7 +3178,7 @@ zap_type item_def::zap() const
     case WAND_SLOWING:         result = ZAP_SLOWING;         break;
     case WAND_HASTING:         result = ZAP_HASTING;         break;
     case WAND_MAGIC_DARTS:     result = ZAP_MAGIC_DARTS;     break;
-    case WAND_HEALING:         result = ZAP_HEALING;         break;
+    case WAND_HEAL_WOUNDS:     result = ZAP_HEAL_WOUNDS;     break;
     case WAND_PARALYSIS:       result = ZAP_PARALYSIS;       break;
     case WAND_FIRE:            result = ZAP_FIRE;            break;
     case WAND_COLD:            result = ZAP_COLD;            break;

@@ -47,8 +47,8 @@ TAGS:   zot_entry
 KFEAT:  O = enter_zot
 COLOUR: c = lightmagenta
 COLOUR: .+ = magenta
-TILE:   c = WALL_ZOT_MAGENTA
-FTILE:  .O+ = FLOOR_HALL
+TILE:   c = wall_zot_magenta
+FTILE:  .O+ = floor_hall
 MONS:   killer klown
 MAP
 xxxxxxxxx
@@ -67,7 +67,7 @@ TAGS:   no_monster_gen zot_entry
 SUBST:  = = nnn=
 SUBST:  c: c:70 v:20 b:10
 SUBST:  v: vcxlmb, n: nnnnvbcx
-FTILE:  })]O-4G: FLOOR_MARBLE
+FTILE:  })]O-4G: floor_marble
 SUBST:  - = ^ .:90
 KFEAT:  O = enter_zot
 SUBST:  4 = 122223
@@ -111,11 +111,11 @@ KFEAT:  ^ = alarm trap / blade trap / axe trap / bolt trap
 KFEAT:  O = enter_zot
 KFEAT:  n = stone_arch
 KFEAT:  m = iron_grate
-FTILE:  "OnDx = FLOOR_MARBLE
+FTILE:  "OnDx = floor_marble
 COLOUR: " = magenta
-TILE:   x = WALL_ZOT_MAGENTA
+TILE:   x = wall_zot_magenta
 COLOUR: x = magenta
-FTILE:  .+cm^1234$ = FLOOR_HALL
+FTILE:  .+cm^1234$ = floor_hall
 SUBST:  D = +, "' = .
 MONS:   patrolling nonbase draconian
 MONS:   dragon / ice dragon / storm dragon / shadow dragon / bone dragon / golden dragon
@@ -152,8 +152,8 @@ ENDMAP
 NAME:   evilmike_zot_entry_gauntlet
 TAGS:   no_monster_gen zot_entry
 SUBST:  b: v.., v: c.
-TILE:   X = WALL_ZOT_MAGENTA
-FTILE:  -OD = FLOOR_HALL
+TILE:   X = wall_zot_magenta
+FTILE:  -OD = floor_hall
 COLOUR: X-D = magenta
 KPROP:  O- = no_tele_into
 SUBST:  - = ., D = +
@@ -221,10 +221,10 @@ KFEAT:  O = enter_zot
 SUBST:  G: GXm., m: mmlw
 SUBST:  x: xcvX
 NSUBST: 2 = 2:2 / *:-
-TILE:   X = WALL_ZOT_MAGENTA
+TILE:   X = wall_zot_magenta
 COLOUR: X = magenta
 COLOUR: . = white
-FTILE:  -23O = FLOOR_HALL
+FTILE:  -23O = floor_hall
 SUBST:  - = .
 MONS:   draconian zealot / draconian caller
 MONS:   dragon / ice dragon / storm dragon / shadow dragon / bone dragon / golden dragon
@@ -261,13 +261,14 @@ ENDMAP
 NAME:   evilmike_zot_entry_hall
 TAGS:   no_monster_gen patrolling zot_entry
 KFEAT:  O = enter_zot
-TILE:   X = WALL_ZOT_MAGENTA
+TILE:   X = wall_zot_magenta
 COLOUR: X+- = magenta
-FTILE:  -O+ = FLOOR_HALL
+FTILE:  -O+ = floor_hall
 KPROP:  O- = no_tele_into
 SUBST:  - = .
 SUBST:  v: ....cnXblw, z:..cnXblw
 NSUBST: d = 5:3 / 2:2 / *:.
+SUBST:  D = +
 MONS:   nonbase draconian
 MONS:   dragon / ice dragon / storm dragon / shadow dragon / bone dragon / golden dragon
 MONS:   base draconian
@@ -277,9 +278,9 @@ MAP
 cccccccccccccccccccc.........cc
 ccccccdccdccdccdccc..2XXXXX...c
 ccc..............dc..XX---XX..c
-+...vv.zz.vv.zz..cc..X-----X..c
-+...vv.zz.vv.zz..+...X--O--+..c
-+...vv.zz.vv.zz..cc..X-----X..c
+D...vv.zz.vv.zz..cc..X-----X..c
+D...vv.zz.vv.zz..+...X--O--+..c
+D...vv.zz.vv.zz..cc..X-----X..c
 ccc..............dc..XX---XX..c
 ccccccdccdccdccdccc..2XXXXX...c
 cccccccccccccccccccc.........cc
@@ -290,9 +291,9 @@ ENDMAP
 NAME:   evilmike_zot_entry_basic
 TAGS:   no_monster_gen zot_entry
 KFEAT:  O = enter_zot
-TILE:   x = WALL_ZOT_MAGENTA
+TILE:   x = wall_zot_magenta
 COLOUR: x+- = magenta
-FTILE:  O-+ = FLOOR_HALL
+FTILE:  O-+ = floor_hall
 KPROP:  O- = no_tele_into
 SUBST:  - = .
 NSUBST: d = 5:3 / 2:2 / 1:1
@@ -315,9 +316,9 @@ NAME:   evilmike_zot_entry_diamond
 TAGS:   no_monster_gen zot_entry
 KFEAT:  O = enter_zot
 KFEAT:  A = stone_arch
-TILE:   X = WALL_ZOT_MAGENTA
+TILE:   X = wall_zot_magenta
 COLOUR: X+- = magenta
-FTILE:  -O+A = FLOOR_HALL
+FTILE:  -O+A = floor_hall
 KPROP:  -OxA = no_tele_into
 SUBST:  - = .
 NSUBST: 2 = 2:2 / *:.
@@ -503,14 +504,15 @@ ENDMAP
 
 ###################################################################
 # Draconian Sentry Boxes
-# There is an 8/27 chance all three downstairs will be here.
+# There is an 70% chance all three downstairs will be here.
 #
 NAME:   lemuel_draconian_sentries
 DEPTH:  Zot:1-4
 ORIENT: float
-TAGS:   uniq_sentry no_rotate
+TAGS:   no_rotate
 MONS:   red draconian scorcher / green draconian zealot / yellow draconian caller
-SUBST:  }=}}> , )=))> , ]=]]> , 1=123, w:w. , m:mn
+SUBST:  } = }:80 >, ) = ):80 > , ] = ]:80 >
+SUBST:  1=123, w:w., w=Ww, m:mn
 MAP
 ............................
 ..mmm..................mmm..
@@ -532,9 +534,10 @@ ENDMAP
 NAME:   lemuel_draconian_sentries_small
 DEPTH:  Zot:1-4
 ORIENT: float
-TAGS:   uniq_sentry no_rotate
+TAGS:   no_rotate
 MONS:   red draconian scorcher / green draconian zealot / yellow draconian caller
-SUBST:  }=}}> , )=))> , ]=]]>, 1=123 , w:w. , m:mn
+SUBST:  } = }:80 >, ) = ):80 > , ] = ]:80 > 
+SUBST:  1=123, w:w., w=Ww, m:mn
 MAP
 ................
 ................
@@ -553,8 +556,7 @@ ENDMAP
 
 ###########################
 # Acid trip
-# chance for having all downstairs in the vault is 12.5%
-#
+# 70% chance of having all stairs.
 NAME:   lemuel_acid_trip
 DEPTH:  Zot:1-4
 ORIENT: float
@@ -562,7 +564,7 @@ MONS:   oklob plant, acid blob, jelly, yellow draconian
 MONS:   any nonbase yellow draconian
 SUBST:  1 = 1:2 .
 SUBST:  . = .:20 3:3 2:1
-SUBST:  }=}>, )=)>, ]=]>
+SUBST:  } = }:80 >, ) = ):80 >, ] = ]:80 >
 MAP
        xx++xx
      xxx....xxx
@@ -619,8 +621,8 @@ llll...x.x44444x.x...llll
    llllxxxx+++xxxxllll
     llll333...333llll
      lllll.....lllll
-       lllllllllll
-          ll>ll
+       lllll.lllll
+          ll@ll
 ENDMAP
 
 ######################################
@@ -701,7 +703,7 @@ ENDMAP
 # Minmay's Elemental castle
 # 50% electricity, 25% fire, 25% ice
 NAME:    minmay_elemental_castle
-ORIENT:  float
+ORIENT:  southwest
 DEPTH:   Zot:1-4
 TAGS:    no_rotate
 : if crawl.coinflip() then
@@ -727,44 +729,48 @@ SUBST:   1 = 112.
 SUBST:   2 = 221.
 SHUFFLE: defg
 MAP
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-WwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwW
-WwcccccccwwwwwwwwwwwwwwwwwwwwcccccccwW
-Wwcd*%.1cwwwwwwwwwwwwwwwwwwwwc1.%*gcwW
-Wwc*%...cwwwwwwwwwwwwwwwwwwwwc...%*cwW
-Wwc%....ccccccccc++++ccccccccc....%cwW
-Wwc................................cwW
-Wwc1........2............2........1cwW
-Wwcccc..........................ccccwW
-Wwwwwc...cccccccccccccccccccc...cwwwwW
-Wwwwwc...cccccccccccccccccccc...cwwwwW
-Wwwwwc...cccccccccccccccccccc...cwwwwW
-Wwwwwc.2.ccc*|*cccccccc*|*ccc.2.cwwwwW
-Wwwwwc...ccc...cccccccc...ccc...cwwwwW
-Wwwwwc...ccc...cccccccc...ccc...cwwwwW
-Wwwwwc...ccc.F.cccccccc.F.ccc...cwwwwW
-Wwwwwc...ccc...cccccccc...ccc...cwwwwW
-Wwwwwc...ccc...cccccccc...ccc...cwwwwW
-Wwwwwc..........................cwwwwW
-Wwwwwc..........................cwwwwW
-Wwwwwc...ccc..............ccc...cwwwwW
-Wwwwwc...ccc....2....2....ccc...cwwwwW
-Wwwwwc...ccc..............ccc...cwwwwW
-Wwwwwc...ccc..............ccc...cwwwwW
-Wwwwwc...ccc..............ccc...cwwwwW
-Wwwwwc.2.ccc1............1ccc.2.cwwwwW
-Wwwwwc...ccccccccc..ccccccccc...cwwwwW
-Wwwwwc...ccccccccc..ccccccccc...cwwwwW
-Wwwwwc...ccccccccc..ccccccccc...cwwwwW
-Wwcccc..........................ccccwW
-Wwc1........2............2........1cwW
-Wwc................................cwW
-Wwc%....cccccccccccccccccccccc....%cwW
-Wwc*%...cwwwwwwwwwwwwwwwwwwwwc...%*cwW
-Wwce*%.1cwwwwwwwwwwwwwwwwwwwwc1.%*fcwW
-WwcccccccwwwwwwwwwwwwwwwwwwwwcccccccwW
-WwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwW
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+xx...................@@...................
+xx.WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.
+xx.WwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwW.
+xx.WwcccccccwwwwwwwwwwwwwwwwwwwwcccccccwW.
+xx.Wwcd*%.1cwwwwwwwwwwwwwwwwwwwwc1.%*gcwW.
+xx.Wwc*%...cwwwwwwwwwwwwwwwwwwwwc...%*cwW.
+xx.Wwc%....ccccccccc++++ccccccccc....%cwW.
+xx.Wwc................................cwW.
+xx.Wwc1........2............2........1cwW.
+xx.Wwcccc..........................ccccwW.
+xx.Wwwwwc...cccccccccccccccccccc...cwwwwW.
+xx.Wwwwwc...cccccccccccccccccccc...cwwwwW.
+xx.Wwwwwc...cccccccccccccccccccc...cwwwwW.
+xx.Wwwwwc.2.ccc*|*cccccccc*|*ccc.2.cwwwwW.
+xx.Wwwwwc...ccc...cccccccc...ccc...cwwwwW.
+xx.Wwwwwc...ccc...cccccccc...ccc...cwwwwW.
+xx.Wwwwwc...ccc.F.cccccccc.F.ccc...cwwwwW.
+xx.Wwwwwc...ccc...cccccccc...ccc...cwwwwW.
+xx.Wwwwwc...ccc...cccccccc...ccc...cwwwwW.
+xx.Wwwwwc..........................cwwwwW.
+xx.Wwwwwc..........................cwwwwW.
+xx.Wwwwwc...ccc..............ccc...cwwwwW.
+xx.Wwwwwc...ccc....2....2....ccc...cwwwwW.
+xx.Wwwwwc...ccc..............ccc...cwwwwW.
+xx.Wwwwwc...ccc..............ccc...cwwwwW.
+xx.Wwwwwc...ccc..............ccc...cwwwwW.
+xx.Wwwwwc.2.ccc1............1ccc.2.cwwwwW.
+xx.Wwwwwc...ccccccccc..ccccccccc...cwwwwW.
+xx.Wwwwwc...ccccccccc..ccccccccc...cwwwwW.
+xx.Wwwwwc...ccccccccc..ccccccccc...cwwwwW.
+xx.Wwcccc..........................ccccwW.
+xx.Wwc1........2............2........1cwW.
+xx.Wwc................................cwW.
+xx.Wwc%....cccccccccccccccccccccc....%cwW.
+xx.Wwc*%...cwwwwwwwwwwwwwwwwwwwwc...%*cwW.
+xx.Wwce*%.1cwwwwwwwwwwwwwwwwwwwwc1.%*fcwW.
+xx.WwcccccccwwwwwwwwwwwwwwwwwwwwcccccccwW.
+xx.WwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwW.
+xx.WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.
+xx........................................
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ENDMAP
 
 
@@ -784,8 +790,8 @@ TAGS:       no_dump
 LFLAGS:     no_tele_control
 LFLOORCOL:  magenta
 LROCKCOL:   lightmagenta
-LFLOORTILE: floor_tomb
-LROCKTILE:  wall_zot_magenta
+LFLOORTILE: floor_rough_magenta
+LROCKTILE:  wall_zot_lightmagenta
 
 #traps
 SUBST:    C = X:900 c:100 =
@@ -811,6 +817,7 @@ SUBST:    M = 4 5 8:30 9
 
 SUBVAULT: Y : orb_chamber
 COLOUR:   c = magenta
+TILE:     c = dngn_stone_wall_magenta
 
 MAP
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -970,6 +977,7 @@ KMASK:  Z1! = no_item_gen
 SUBST:  ! = ^ .:40
 SUBST:  . = .:500 ^
 COLOUR: cn = magenta
+TILE:   n = dngn_transparent_wall_magenta
 KMONS:  1 = patrolling Orb Guardian
 MAP
    ccccccccc
@@ -1006,6 +1014,7 @@ KMASK:  Z1! = no_item_gen
 SUBST:  ! = ^ .:40
 SUBST:  . = .:500 ^
 COLOUR: cn = magenta
+TILE:   n = dngn_transparent_wall_magenta
 KMONS:  1 = patrolling Orb Guardian
 MAP
    ccccccccc
@@ -1083,7 +1092,7 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  lightgrey
 LROCKCOL:   white
-LFLOORTILE: floor_tomb
+LFLOORTILE: floor_rough_lightgray
 LROCKTILE:  wall_zot_white
 MAP
 .
@@ -1095,7 +1104,7 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  white
 LROCKCOL:   blue
-LFLOORTILE: floor_tomb
+LFLOORTILE: floor_rough_white
 LROCKTILE:  wall_zot_blue
 MAP
 .
@@ -1107,8 +1116,8 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  blue
 LROCKCOL:   lightblue
-LFLOORTILE: floor_tomb
-LROCKTILE:  wall_zot_cyan
+LFLOORTILE: floor_rough_blue
+LROCKTILE:  wall_zot_lightblue
 MAP
 .
 ENDMAP
@@ -1119,8 +1128,8 @@ TAGS:       transparent no_dump
 ORIENT:     float
 LFLOORCOL:  lightblue
 LROCKCOL:   magenta
-LFLOORTILE: floor_tomb
-LROCKTILE:  wall_zot_blue
+LFLOORTILE: floor_rough_lightblue
+LROCKTILE:  wall_zot_magenta
 MAP
 .
 ENDMAP

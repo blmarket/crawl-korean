@@ -357,7 +357,7 @@ end
 }}
 
 NAME:    tutorial_lesson3
-TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial_start
+TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial
 DESC:    "Lesson 3: Items and Inventory"
 BFLAGS:  islanded
 ORIENT:  encompass
@@ -430,7 +430,7 @@ COLOUR:  ABCDdefg = lightblue
 COLOUR:  .1234h = brown
 FTILE:   .{})^1234h = floor_swamp, t = floor_grass
 FTILE:   ABCDdefg = tutorial_pad
-ITEM:    potion of healing q:2
+ITEM:    potion of curing q:2
 ITEM:    meat ration q:50
 ITEM:    ring of levitation
 ITEM:    cloak unrand:ratskin_cloak
@@ -500,7 +500,7 @@ FTILE:   ABCdefgh = tutorial_pad
 KFEAT:   ' = .
 COLOUR:  ' = red
 KFEAT:   S = general shop use_all ; \
-         potion of healing | potion of heal wounds |  potion of heal wounds q:2 | potion of might | \
+         potion of curing | potion of heal wounds |  potion of heal wounds q:2 | potion of might | \
          wand of paralysis | ring mail | buckler ego:none | ring of slaying | scroll of enchant weapon II
 ITEM:    gold q:40
 ITEM:    wand of flame charges:9
@@ -512,7 +512,7 @@ ITEM:    scroll of enchant armour q:3
 ITEM:    scroll of recharging q:3
 SHUFFLE: ijk
 MONS:    gnoll ; spear ego:none | mace ego:none
-MONS:    imp
+MONS:    crimson imp
 MONS:    gnoll ; flail ego:none | spiked flail ego:none | halberd ego:none . \
          leather armour ego:fire_resistance | ring mail ego:fire_resistance
 MONS:    orc ; scimitar ego:none | battleaxe ego:none | halberd ego:none . \

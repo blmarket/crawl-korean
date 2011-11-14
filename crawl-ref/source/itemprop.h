@@ -37,6 +37,7 @@ void set_equip_race(item_def &item, iflags_t flags);
 void set_equip_desc(item_def &item, iflags_t flags);
 iflags_t get_equip_race(const item_def &item);
 iflags_t get_equip_desc(const item_def &item);
+iflags_t get_species_race(species_type sp);
 
 // helmet functions:
 void  set_helmet_desc(item_def &item, short flags);
@@ -51,7 +52,7 @@ void  set_gloves_random_desc(item_def &item);
 
 // ego items:
 bool set_item_ego_type(item_def &item, int item_type, int ego_type);
-int  get_weapon_brand(const item_def &item);
+brand_type get_weapon_brand(const item_def &item);
 special_armour_type get_armour_ego_type(const item_def &item);
 bool missile_brand_obvious(special_missile_type brand);
 special_missile_type get_ammo_brand(const item_def &item);
@@ -77,8 +78,6 @@ bool item_is_rechargeable(const item_def &it, bool hide_charged = false,
 int wand_charge_value(int type);
 int wand_max_charges(int type);
 bool is_offensive_wand(const item_def& item);
-bool is_enchantable_weapon(const item_def &wpn, bool uncurse,
-                           bool first = true);
 bool is_enchantable_armour(const item_def &arm, bool uncurse,
                            bool unknown = false);
 
@@ -128,6 +127,7 @@ skill_type range_skill(const item_def &item);
 skill_type range_skill(object_class_type wclass, int wtype);
 
 bool item_skills(const item_def &item, std::set<skill_type> &skills);
+void maybe_change_train(const item_def &item, bool start);
 
 // launcher and ammo functions:
 bool is_range_weapon(const item_def &item);
@@ -152,6 +152,7 @@ bool item_is_staff(const item_def &item);
 bool item_is_rune(const item_def &item, rune_type which_rune = NUM_RUNE_TYPES);
 bool item_is_unique_rune(const item_def &item);
 bool item_is_orb(const item_def &orb);
+bool item_is_horn_of_geryon(const item_def &item);
 
 bool item_is_corpse(const item_def &item);
 bool item_is_spellbook(const item_def &item);

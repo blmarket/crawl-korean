@@ -104,12 +104,10 @@
     //
     // #define DGAMELAUNCH
 
-#ifndef TARGET_COMPILER_MINGW
     #define USE_UNIX_SIGNALS
-#endif
 
     #define FILE_SEPARATOR '/'
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     #define USE_CURSES
 #endif
 
@@ -153,6 +151,10 @@
     #include "libunix.h"
 
 #elif defined(TARGET_OS_WINDOWS)
+    #if defined(TARGET_COMPILER_MINGW)
+        #define USE_UNIX_SIGNALS
+    #endif
+
     #if !defined(USE_TILE)
         #include "libw32c.h"
     #endif

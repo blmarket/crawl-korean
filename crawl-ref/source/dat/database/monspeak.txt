@@ -5962,14 +5962,13 @@ hell lord
 
 @_hell_lord_taunt_@
 %%%%
-imp
+crimson imp
 
 w:1
 @_imp_taunt_@
 
 w:2
 @_hostile_imp_@
-
 %%%%
 iron imp
 
@@ -5978,7 +5977,6 @@ w:1
 
 w:2
 @_hostile_imp_@
-
 %%%%
 shadow imp
 
@@ -5987,7 +5985,6 @@ w:1
 
 w:2
 @_hostile_imp_@
-
 %%%%
 white imp
 
@@ -6599,7 +6596,7 @@ w:5
 @The_monster@ @shouts@, "Smite the @orc_heathen@s!"
 
 # messages submitted by Lemuel
-@The_monster@ @says_or_shouts@, "I'm proud to serve, I'm ready to die."
+@The_monster@ @says_or_shouts@, "I'm proud to serve; I'm ready to die."
 
 @The_monster@ says, "May Beogh smile on you, @player_name@."
 

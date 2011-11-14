@@ -96,6 +96,7 @@
 // Text between [] only appears if the item already glows.
 // First message is if there's no piety gain; second is if piety gain is
 // one; third is if piety gain is more than one.
+// FIXME : Total
 static const char *_Sacrifice_Messages[NUM_GODS][NUM_PIETY_GAIN] =
 {
     // No god
@@ -260,11 +261,11 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "",
       "당신의 공격 속도를 일시적으로 크게 향상시킬 수 있다." },
     // Makhleb
-    { "'마크레브'의 이름으로 한 살생으로 힘을 얻을 수 있다.",
-      "'마크레브'의 파괴의 힘을 다룰 수 있다.",
-      "'마크레브'의 하급 종복을 소환할 수 있다.",
-      "'마크레브'의 강력한 파괴의 힘 다룰 수 있다.",
-      "'마크레브'의 고위 종복을 소환할 수 있다." },
+    { "gain health from killing",
+      "harness Makhleb's destructive might",
+      "summon a lesser servant of Makhleb",
+      "hurl Makhleb's greater destruction",
+      "summon a greater servant of Makhleb" },
     // Sif Muna
     { "주변에서 마력을 수집할 수 있다.",
       "새로운 주문을 기억하기 위해 기억을 말소시킬 수 있다",
@@ -316,11 +317,11 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "날씨를 변화시킬 수 있다."
     },
     // Cheibriados
-    { "체브리아도스는 당신의 신진대사를 느리게 만들었다.",
-      "체브리아도스는 시간을 붙들어 다른 이들을 느리게 만들고, 당신의 생명력을 보호한다.",
-      "체브리아도스는 당신을 추위로부터 보호한다.",
-      "당신보다 빠른 존재들에게 피해를 입히고, 당신을 화염으로부터 보호한다.",
-      "시간의 흐름으로부터 잠시 빠져나올 수 있다."
+    { "bend time to slow others",
+      "",
+      "warp the flow of time around you",
+      "inflict damage to those overly hasty",
+      "step out of the time flow"
     },
     // Ashenzari
     { "",
@@ -377,11 +378,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "",
       "공격 속도를 일시적으로 크게 향상시킬 수 없다." },
     // Makhleb
-    { "'마크레브'의 이름으로 한 살생으로 힘을 얻을 수 없다.",
-      "'마크레브'의 파괴의 힘을 다룰 수 없다.",
-      "'마크레브'의 하급 종복을 소환할 수 없다.",
-      "'마크레브'의 강력한 파괴의 힘 다룰 수 없다.",
-      "'마크레브'의 고위 종복을 소환할 수 없다." },
+    { "gain health from killing",
+      "harness Makhleb's destructive might",
+      "summon a lesser servant of Makhleb",
+      "hurl Makhleb's greater destruction",
+      "summon a greater servant of Makhleb" },
     // Sif Muna
     { "주변에서 마력을 수집할 수 없다.",
       "주문을 망각할 수 없다",
@@ -433,11 +434,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "날씨를 변화시킬 수 없다."
     },
     // Cheibriados
-    { "'체브리아도스'의 기본적 권능을 사용할 수 없다.",
-      "주변의 시간의 흐름에 영향을 줄 수 없고, 생명력을 보호받지 못한다.",
-      "냉기로부터 보호받을 수 없다.",
-      "당신보다 빠른 존재들을 벌할 수 없고, 화염으로부터 보호받지 못한다.",
-      "시간의 흐름으로 부터 빠져나오지 못한다."
+    { "bend time to slow others",
+      "",
+      "warp the flow of time around you",
+      "inflict damage to those overly hasty",
+      "step out of the time flow"
     },
     // Ashenzari
     { "",
@@ -485,8 +486,17 @@ bool is_unavailable_god(god_type god)
     if (god == GOD_JIYVA && jiyva_is_dead())
         return (true);
 
-    // Don't allow Fedhas in ZotDef, as his abilities don't fit.
+    // Don't allow Fedhas in ZotDef, as his invocations are duplicated, and
+    // passives thoroughly overpowered.  Protection for plants, speed-up of
+    // oklobs, etc...
+    // Basically, ZotDef is Fedhas.
     if (god == GOD_FEDHAS && crawl_state.game_is_zotdef())
+        return (true);
+
+    // No Ashenzari, too -- nothing to explore, can't use his abilities,
+    // piety for runes won't give you reskilling on time.  We could give some
+    // piety for every wave, but there's little point.
+    if (god == GOD_ASHENZARI && crawl_state.game_is_zotdef())
         return (true);
 
     return (false);
@@ -585,7 +595,7 @@ std::string get_god_likes(god_type which_god, bool verbose)
 
     case GOD_SHINING_ONE:
         snprintf(info, INFO_SIZE, "you meet creatures to determine whether "
-                                  "they need to be eraticated");
+                                  "they need to be eradicated");
         likes.push_back(info);
         break;
 
@@ -811,6 +821,8 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
 
     if (is_good_god(which_god))
     {
+        really_dislikes.push_back("you desecrate holy remains");
+
         if (which_god == GOD_SHINING_ONE)
             really_dislikes.push_back("you drink blood");
         else
@@ -979,7 +991,7 @@ void dec_penance(god_type god, int val)
         {
             // In case the best skill is Invocations, redraw the god
             // title.
-            redraw_title(you.your_name, player_title());
+            you.redraw_title = true;
         }
 
         if (you.religion == god)
@@ -1113,7 +1125,7 @@ static void _inc_penance(god_type god, int val)
         {
             // In case the best skill is Invocations, redraw the god
             // title.
-            redraw_title(you.your_name, player_title());
+            you.redraw_title = true;
         }
     }
     else
@@ -1147,7 +1159,7 @@ static monster_type _yred_servants[] =
     MONS_MUMMY, MONS_WIGHT, MONS_FLYING_SKULL, MONS_WRAITH,
     MONS_ROTTING_HULK, MONS_FREEZING_WRAITH, MONS_PHANTASMAL_WARRIOR,
     MONS_FLAMING_CORPSE, MONS_FLAYED_GHOST, MONS_SKELETAL_WARRIOR,
-    MONS_GHOUL, MONS_DEATH_COB, MONS_BONE_DRAGON, MONS_PROFANE_SERVITOR,
+    MONS_DEATH_COB, MONS_GHOUL, MONS_BONE_DRAGON, MONS_PROFANE_SERVITOR,
 };
 
 #define MIN_YRED_SERVANT_THRESHOLD 3
@@ -1164,7 +1176,11 @@ int yred_random_servants(unsigned int threshold, bool force_hostile)
                      threshold);
     }
 
-    monster_type mon_type = _yred_servants[random2(threshold)];
+    const unsigned int servant = random2(threshold);
+    if ((servant + 2) * 2 < threshold && !force_hostile)
+        return (-1);
+
+    monster_type mon_type = _yred_servants[servant];
     int how_many = (mon_type == MONS_FLYING_SKULL) ? 2 + random2(4)
                                                    : 1;
 
@@ -1365,14 +1381,11 @@ static bool _give_nemelex_gift(bool forced = false)
             int rare_weight   = 5  + (55 * you.piety / MAX_PIETY);
             int legend_weight = 0  + (35 * you.piety / MAX_PIETY);
 
-            deck_rarity_type rarity = static_cast<deck_rarity_type>(
-                random_choose_weighted(common_weight,
-                                       DECK_RARITY_COMMON,
-                                       rare_weight,
-                                       DECK_RARITY_RARE,
-                                       legend_weight,
-                                       DECK_RARITY_LEGENDARY,
-                                       0));
+            deck_rarity_type rarity = random_choose_weighted(
+                common_weight, DECK_RARITY_COMMON,
+                rare_weight,   DECK_RARITY_RARE,
+                legend_weight, DECK_RARITY_LEGENDARY,
+                0);
 
             item_def &deck(mitm[thing_created]);
 
@@ -1498,11 +1511,9 @@ static bool _blessing_wpn(monster* mon)
     item_def& wpn(mitm[slot]);
 
     // And enchant or uncurse it.
-    if (!enchant_weapon((coinflip()) ? ENCHANT_TO_HIT
-                                     : ENCHANT_TO_DAM, true, wpn))
-    {
+    int which = random2(2);
+    if (!enchant_weapon(wpn, which, 1 - which, NULL))
         return (false);
-    }
 
     item_set_appearance(wpn);
     return (true);
@@ -2044,9 +2055,9 @@ static bool _jiyva_mutate()
 
     if (rand < 10)
         return (delete_mutation(RANDOM_SLIME_MUTATION, true, false, true));
-    else if (rand < 35)
+    else if (rand < 30)
         return (delete_mutation(RANDOM_NON_SLIME_MUTATION, true, false, true));
-    else if (rand < 60)
+    else if (rand < 55)
         return (mutate(RANDOM_MUTATION, true, false, true));
     else if (rand < 75)
         return (mutate(RANDOM_SLIME_MUTATION, true, false, true));
@@ -2141,15 +2152,18 @@ bool do_god_gift(bool forced)
                     && one_chance_in(4)))
             {
                 unsigned int threshold = MIN_YRED_SERVANT_THRESHOLD
-                                         + you.num_current_gifts[you.religion];
+                                         + you.num_current_gifts[you.religion] / 2;
                 threshold = std::max(threshold,
                     static_cast<unsigned int>(MIN_YRED_SERVANT_THRESHOLD));
                 threshold = std::min(threshold,
                     static_cast<unsigned int>(MAX_YRED_SERVANT_THRESHOLD));
-                yred_random_servants(threshold);
-                _delayed_monster_done("은(는) 당신에게 언데드 수하를 내려주었다!",
-                                      "", _delayed_gift_callback);
-                success = true;
+
+                if (yred_random_servants(threshold) != -1)
+                {
+                    _delayed_monster_done(gettext(" grants you @an@ undead servant@s@!"),
+                                          "", _delayed_gift_callback);
+                    success = true;
+                }
             }
             break;
 
@@ -2660,7 +2674,7 @@ static void _gain_piety_point()
 
             // In case the best skill is Invocations, redraw the god
             // title.
-            redraw_title(you.your_name, player_title());
+            you.redraw_title = true;
 
             gain_god_ability(i);
 
@@ -2718,7 +2732,7 @@ static void _gain_piety_point()
     if (you.piety > 160 && old_piety <= 160)
     {
         // In case the best skill is Invocations, redraw the god title.
-        redraw_title(you.your_name, player_title());
+        you.redraw_title = true;
 
         if (!you.num_total_gifts[you.religion])
         {
@@ -2795,7 +2809,7 @@ void lose_piety(int pgn)
         {
             // In case the best skill is Invocations, redraw the god
             // title.
-            redraw_title(you.your_name, player_title());
+            you.redraw_title = true;
 
             if (you.religion == GOD_ZIN)
                 simple_god_message(
@@ -2818,7 +2832,7 @@ void lose_piety(int pgn)
             {
                 // In case the best skill is Invocations, redraw the god
                 // title.
-                redraw_title(you.your_name, player_title());
+                you.redraw_title = true;
 
                 lose_god_ability(i);
                 _abil_chg_message(god_lose_power_messages[you.religion][i],
@@ -2859,7 +2873,7 @@ void lose_piety(int pgn)
 // If fedhas worshipers kill a protected monster they lose piety,
 // if they attack a friendly one they get penance,
 // if a friendly one dies they lose piety.
-bool fedhas_protects_species(int mc)
+static bool _fedhas_protects_species(int mc)
 {
     return (mons_class_is_plant(mc)
             && mc != MONS_GIANT_SPORE);
@@ -2867,13 +2881,32 @@ bool fedhas_protects_species(int mc)
 
 bool fedhas_protects(const monster* target)
 {
-    return target && fedhas_protects_species(target->mons_species());
+    return target && _fedhas_protects_species(target->mons_species());
 }
 
 // Fedhas neutralises most plants and fungi
 bool fedhas_neutralises(const monster* target)
 {
     return (target && mons_is_plant(target));
+}
+
+static std::string _god_hates_your_god_reaction(god_type god, god_type your_god)
+{
+    if (god_hates_your_god(god, your_god))
+    {
+        // Non-good gods always hate your current god.
+        if (!is_good_god(god))
+            return ("");
+
+        // Zin hates chaotic gods.
+        if (god == GOD_ZIN && is_chaotic_god(your_god))
+            return (" for chaos");
+
+        if (is_evil_god(your_god))
+            return (" for evil");
+    }
+
+    return ("");
 }
 
 void excommunication(god_type new_god)
@@ -2907,7 +2940,7 @@ void excommunication(god_type new_god)
 
     you.religion = GOD_NO_GOD;
 
-    redraw_title(you.your_name, player_title());
+    you.redraw_title = true;
 
     // Renouncing may have changed the conducts on our wielded or
     // quivered weapons, so refresh the display.
@@ -2921,7 +2954,10 @@ void excommunication(god_type new_god)
 
     if (god_hates_your_god(old_god, new_god))
     {
-        simple_god_message("은(는) 당신이 신앙을 파기한 것을 기분 좋게 생각하지 않는다!", old_god);
+        simple_god_message(
+            make_stringf(gettext(" does not appreciate desertion%s!"),
+                         _god_hates_your_god_reaction(old_god, new_god).c_str()).c_str(),
+            old_god);
     }
 
     switch (old_god)
@@ -3180,7 +3216,7 @@ bool god_hates_attacking_friend(god_type god, int species)
         case GOD_JIYVA:
             return (mons_class_is_slime(species));
         case GOD_FEDHAS:
-            return fedhas_protects_species(species);
+            return _fedhas_protects_species(species);
         default:
             return (false);
     }
@@ -3274,7 +3310,7 @@ bool player_can_join_god(god_type which_god)
     return (true);
 }
 
-bool transformed_player_can_join_god(god_type which_god)
+static bool _transformed_player_can_join_god(god_type which_god)
 {
     if ((is_good_god(which_god) || which_god == GOD_FEDHAS)
         && you.form == TRAN_LICH)
@@ -3296,7 +3332,7 @@ bool transformed_player_can_join_god(god_type which_god)
 
 // Identify any interesting equipment when the player signs up with a
 // new Service Pro^W^Wdeity.
-void god_welcome_identify_gear()
+static void _god_welcome_identify_gear()
 {
     // Check for amulets of faith.
     item_def *amulet = you.slot_item(EQ_AMULET, false);
@@ -3347,8 +3383,8 @@ void god_pitch(god_type which_god)
         if (which_god == GOD_SIF_MUNA)
             simple_god_message("은(는) 당신과 같은 비지식인으로부터의 숭배는 받아들이지 않는다!",
                                which_god);
-        else if (!transformed_player_can_join_god(which_god))
-            simple_god_message("은(는) 말했다. \"어찌 그러한 몰골로 나를 숭배하려 하는가! 썩 물러가라!\"",
+        else if (!_transformed_player_can_join_god(which_god))
+            simple_god_message(gettext(" says: How dare you come in such a loathsome form!"),
                                which_god);
         else
             simple_god_message("은(는) 당신 같은 존재로부터의 숭배는 받아들이지 않는다!",
@@ -3423,7 +3459,7 @@ void god_pitch(god_type which_god)
         gain_piety(35, 1, true, false);
     }
 
-    god_welcome_identify_gear();
+    _god_welcome_identify_gear();
     ash_check_bondage();
 
     // Chei worshippers start their stat gain immediately.
@@ -3510,8 +3546,8 @@ void god_pitch(god_type which_god)
             mpr("Unknown good god.", MSGCH_ERROR);
         }
         // Give a piety bonus when switching between good gods.
-        if (old_piety > 15)
-            gain_piety(std::min(30, old_piety - 15), 1, true, false);
+        if (old_piety > 30)
+            gain_piety(old_piety - 30, 2, true, false);
     }
     else if (is_evil_god(you.religion))
     {
@@ -3569,7 +3605,7 @@ void god_pitch(god_type which_god)
     you.wield_change = true;
     you.redraw_quiver = true;
 
-    redraw_title(you.your_name, player_title());
+    you.redraw_title = true;
 
     learned_something_new(HINT_CONVERT);
 }
@@ -3602,25 +3638,6 @@ bool god_hates_your_god(god_type god, god_type your_god)
         return (true);
 
     return (is_evil_god(your_god));
-}
-
-std::string god_hates_your_god_reaction(god_type god, god_type your_god)
-{
-    if (god_hates_your_god(god, your_god))
-    {
-        // Non-good gods always hate your current god.
-        if (!is_good_god(god))
-            return ("");
-
-        // Zin hates chaotic gods.
-        if (god == GOD_ZIN && is_chaotic_god(your_god))
-            return (" for chaos");
-
-        if (is_evil_god(your_god))
-            return (" for evil");
-    }
-
-    return ("");
 }
 
 bool god_hates_cannibalism(god_type god)

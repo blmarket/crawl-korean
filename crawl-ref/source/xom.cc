@@ -101,17 +101,16 @@ static const spell_type _xom_nontension_spells[] =
 // Spells to be cast at tension > 0, i.e. usually in battle situations.
 static const spell_type _xom_tension_spells[] =
 {
-    SPELL_BLINK, SPELL_CONFUSING_TOUCH, SPELL_CAUSE_FEAR, SPELL_ENGLACIATION,
-    SPELL_DISPERSAL, SPELL_STONESKIN, SPELL_RING_OF_FLAMES,
-    SPELL_OLGREBS_TOXIC_RADIANCE, SPELL_FIRE_BRAND, SPELL_FREEZING_AURA,
-    SPELL_POISON_WEAPON, SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS,
-    SPELL_WARP_BRAND, SPELL_TUKIMAS_DANCE, SPELL_RECALL,
-    SPELL_SUMMON_BUTTERFLIES, SPELL_SUMMON_SMALL_MAMMALS,
-    SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM, SPELL_FLY,
-    SPELL_BEASTLY_APPENDAGE, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
-    SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_ANIMATE_DEAD,
-    SPELL_SHADOW_CREATURES, SPELL_SUMMON_HORRIBLE_THINGS,
-    SPELL_CALL_CANINE_FAMILIAR, SPELL_SUMMON_ICE_BEAST, SPELL_SUMMON_UGLY_THING,
+    SPELL_BLINK, SPELL_CONFUSING_TOUCH, SPELL_CAUSE_FEAR, SPELL_DISPERSAL,
+    SPELL_STONESKIN, SPELL_RING_OF_FLAMES, SPELL_OLGREBS_TOXIC_RADIANCE,
+    SPELL_FIRE_BRAND, SPELL_FREEZING_AURA, SPELL_POISON_WEAPON,
+    SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS, SPELL_WARP_BRAND,
+    SPELL_TUKIMAS_DANCE, SPELL_RECALL, SPELL_SUMMON_BUTTERFLIES,
+    SPELL_SUMMON_SMALL_MAMMALS, SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM,
+    SPELL_FLY, SPELL_BEASTLY_APPENDAGE, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
+    SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_SHADOW_CREATURES,
+    SPELL_SUMMON_HORRIBLE_THINGS, SPELL_CALL_CANINE_FAMILIAR,
+    SPELL_SUMMON_ICE_BEAST, SPELL_SUMMON_UGLY_THING,
     SPELL_CONJURE_BALL_LIGHTNING, SPELL_SUMMON_HYDRA, SPELL_SUMMON_DRAGON,
     SPELL_DEATH_CHANNEL, SPELL_NECROMUTATION
 };
@@ -308,7 +307,7 @@ static void _xom_is_stimulated(int maxinterestingness,
                     (interestingness >  25) ? message_array[1]
                                             : message_array[0]));
         //updating piety status line
-        redraw_title(you.your_name, player_title());
+        you.redraw_title = true;
     }
 }
 
@@ -381,7 +380,7 @@ void xom_tick()
         const std::string msg = "당신은 이제 " + new_xom_favour;
         god_speaks(you.religion, msg.c_str());
         //updating piety status line
-        redraw_title(you.your_name, player_title());
+        you.redraw_title = true;
     }
 //위의 원문
 //       const std::string msg = "You are now " + new_xom_favour;
@@ -391,7 +390,7 @@ void xom_tick()
     {
         simple_god_message(" 은 지루해졌다.");
         //updating piety status line
-        redraw_title(you.your_name, player_title());
+        you.redraw_title = true;
     }
 //        simple_god_message(" is getting BORED."); 간단한 신의 메시지? 앞에 좀 이 붙을것 같네요
 
@@ -430,7 +429,7 @@ void xom_tick()
 
                 you.gift_timeout += interest;
                 //updating piety status line
-                redraw_title(you.your_name, player_title());
+                you.redraw_title = true;
 #if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
                 mprf(MSGCH_DIAGNOSTICS,
                      "tension %d (chance: %d) -> increase interest to %d",
@@ -1231,14 +1230,13 @@ static int _xom_do_potion(bool debug = false)
     if (debug)
         return (XOM_GOOD_POTION);
 
-    potion_type pot = POT_HEALING;
+    potion_type pot = POT_CURING;
     while (true)
     {
-        pot = static_cast<potion_type>(
-                random_choose(POT_HEALING, POT_HEAL_WOUNDS, POT_MAGIC,
-                              POT_SPEED, POT_MIGHT, POT_AGILITY, POT_BRILLIANCE,
-                              POT_INVISIBILITY, POT_BERSERK_RAGE,
-                              POT_EXPERIENCE, -1));
+        pot = random_choose(POT_CURING, POT_HEAL_WOUNDS, POT_MAGIC,
+                            POT_SPEED, POT_MIGHT, POT_AGILITY, POT_BRILLIANCE,
+                            POT_INVISIBILITY, POT_BERSERK_RAGE,
+                            POT_EXPERIENCE, -1);
 
         if (pot == POT_EXPERIENCE && !one_chance_in(6))
             pot = POT_BERSERK_RAGE;
@@ -1248,7 +1246,7 @@ static int _xom_do_potion(bool debug = false)
         // Extending an existing effect is okay, though.
         switch (pot)
         {
-        case POT_HEALING:
+        case POT_CURING:
             if (you.rotting || you.disease || you.duration[DUR_CONF]
                 || you.duration[DUR_POISONING])
             {
@@ -1283,17 +1281,17 @@ static int _xom_do_potion(bool debug = false)
     std::string potion_msg = "포션 효과 "; //원래  띄어쓰기가 뒤에 한칸 있습니다.
     switch (pot)
     {
-    case POT_HEALING:       potion_msg += "(치료의)"; break;        //healing
-    case POT_HEAL_WOUNDS:   potion_msg += "(회복의)"; break;   //heal wounds
-    case POT_MAGIC:         potion_msg += "(마법의)"; break;     //magic
-    case POT_SPEED:         potion_msg += "(신속의)"; break;    //speed
-    case POT_MIGHT:         potion_msg += "(힘의)"; break;    //힘세고 강한!might
-    case POT_AGILITY:       potion_msg += "(민첩의)"; break;     //agility
-    case POT_BRILLIANCE:    potion_msg += "(지능의)"; break;   //brilliance
-    case POT_INVISIBILITY:  potion_msg += "(투명의)"; break;   //은신 invisibility
-    case POT_BERSERK_RAGE:  potion_msg += "(광폭화의)"; break;   //berserk
-    case POT_EXPERIENCE:    potion_msg += "(경험의)"; break;  //experience
-    default:                potion_msg += "(모르는)"; break;  //other 지만 모르는 으로 했습니다.
+    case POT_CURING:        potion_msg += gettext(M_("(curing)")); break;
+    case POT_HEAL_WOUNDS:   potion_msg += gettext(M_("(heal wounds)")); break;
+    case POT_MAGIC:         potion_msg += gettext(M_("(magic)")); break;
+    case POT_SPEED:         potion_msg += gettext(M_("(speed)")); break;
+    case POT_MIGHT:         potion_msg += gettext(M_("(might)")); break;
+    case POT_AGILITY:       potion_msg += gettext(M_("(agility)")); break;
+    case POT_BRILLIANCE:    potion_msg += gettext(M_("(brilliance)")); break;
+    case POT_INVISIBILITY:  potion_msg += gettext(M_("(invisibility)")); break;
+    case POT_BERSERK_RAGE:  potion_msg += gettext(M_("(berserk)")); break;
+    case POT_EXPERIENCE:    potion_msg += gettext(M_("(experience)")); break;
+    default:                potion_msg += gettext(M_("(other)")); break;
     }
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, potion_msg.c_str()), true);
 
@@ -1913,7 +1911,7 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
             doodad.quantity = 1;
 
             // Output some text since otherwise snakes will disappear silently.
-            mprf("%s에서 %s로 재구성되었다.", mi->name(DESC_CAP_THE).c_str(),  // 리폼? 재구성으로 의역 "%s reforms as %s"
+            mprf(gettext("%s reforms as %s."), mi->name(DESC_CAP_THE).c_str(),
                  doodad.name(true, DESC_NOCAP_A).c_str());
 
             // Dismiss monster silently.
@@ -2695,10 +2693,10 @@ static void _xom_zero_miscast()
 
         if (you.airborne())
         {
-            // Kenku fly a lot, so don't put airborne messages into the
+            // Tengu fly a lot, so don't put airborne messages into the
             // priority vector for them.
             std::vector<std::string>* vec;
-            if (you.species == SP_KENKU)
+            if (you.species == SP_TENGU)
                 vec = &messages;
             else
                 vec = &priority;
@@ -2759,8 +2757,9 @@ static void _xom_zero_miscast()
                 str += " 최초의";//str += " primary";
             else
             {
-                str += random_choose_string(" 앞", " 중간", " 뒤");//str += random_choose_string(" front", " middle", " rear");
-                str += " 두번째의";//str += " secondary";
+                // FIXME
+                str += random_choose(" front", " middle", " rear");
+                str += " secondary";
             }
         str += " eye.";//str += " eye.";
         messages.push_back(str);
@@ -2858,7 +2857,7 @@ static void _xom_zero_miscast()
             str += "에 의해 뒤엉켰다.";//            str += ".";
         }
         else if (item->sub_type >= ARM_RING_MAIL
-                 && item->sub_type <= ARM_PLATE_MAIL)
+                 && item->sub_type <= ARM_PLATE_ARMOUR)
         {
             str  = "당신의 ";//str  = "Your ";
             str += name;
@@ -3784,7 +3783,7 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
         const int interest = random2avg(badness*60, 2);
         you.gift_timeout   = std::min(interest, 255);
         //updating piety status line
-        redraw_title(you.your_name, player_title());
+        you.redraw_title = true;
 #if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
         mprf(MSGCH_DIAGNOSTICS, "badness: %d, new interest: %d",
              badness, you.gift_timeout);

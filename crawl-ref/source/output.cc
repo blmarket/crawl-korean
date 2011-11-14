@@ -17,6 +17,7 @@
 
 #include "abl-show.h"
 #include "areas.h"
+#include "artefact.h"
 #include "branch.h"
 #include "cio.h"
 #include "colour.h"
@@ -107,7 +108,7 @@ class colour_bar
         textcolor(BLACK);
         for (int cx = 0; cx < width; cx++)
         {
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
             // Maybe this should use textbackground too?
             textcolor(BLACK + m_empty * 16);
 
@@ -162,7 +163,7 @@ class colour_bar
 
 colour_bar HP_Bar(LIGHTGREEN, GREEN, RED, DARKGREY);
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
 colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY);
 #else
 colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY);
@@ -262,8 +263,7 @@ static void _print_stats_mp(int x, int y)
     for (int i = 11-col; i > 0; i--)
         cprintf(" ");
 
-    if (!Options.classic_hud)
-        MP_Bar.draw(19, y, you.magic_points, you.max_magic_points);
+    MP_Bar.draw(19, y, you.magic_points, you.max_magic_points);
 }
 
 static void _print_stats_hp(int x, int y)
@@ -307,8 +307,7 @@ static void _print_stats_hp(int x, int y)
     for (int i = 18-col; i > 0; i--)
         cprintf(" ");
 
-    if (!Options.classic_hud)
-        HP_Bar.draw(19, y, you.hp, you.hp_max);
+    HP_Bar.draw(19, y, you.hp, you.hp_max);
 }
 
 static short _get_stat_colour(stat_type stat)
@@ -599,6 +598,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         DUR_MISLED,
         DUR_POISONING,
         STATUS_SICK,
+        DUR_NAUSEA,
         STATUS_ROT,
         STATUS_NET,
         STATUS_CONTAMINATION,
@@ -684,10 +684,11 @@ static void _print_status_lights(int y)
     }
 }
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
 static bool _need_stats_printed()
 {
-    return you.redraw_hit_points
+    return you.redraw_title
+           || you.redraw_hit_points
            || you.redraw_magic_points
            || you.redraw_armour_class
            || you.redraw_evasion
@@ -699,6 +700,86 @@ static bool _need_stats_printed()
            || you.redraw_quiver;
 }
 #endif
+
+static void _redraw_title(const std::string &your_name, const std::string &job_name)
+{
+    std::string title = your_name + " the " + job_name;
+
+    unsigned int in_len = strwidth(title);
+    const unsigned int WIDTH = crawl_view.hudsz.x;
+    if (in_len > WIDTH)
+    {
+        in_len -= 3;  // What we're getting back from removing "the".
+
+        const unsigned int name_len = strwidth(your_name);
+        std::string trimmed_name = your_name;
+
+        // Squeeze name if required, the "- 8" is to not squeeze too much.
+        if (in_len > WIDTH && (name_len - 8) > (in_len - WIDTH))
+        {
+            trimmed_name = chop_string(trimmed_name,
+                                       name_len - (in_len - WIDTH) - 1);
+        }
+
+        title = trimmed_name + ", " + job_name;
+    }
+
+    // Line 1: Foo the Bar    *WIZARD*
+    cgotoxy(1, 1, GOTO_STAT);
+    textcolor(YELLOW);
+    cprintf("%s", chop_string(title, WIDTH).c_str());
+    if (you.wizard)
+    {
+        textcolor(LIGHTBLUE);
+        cgotoxy(1 + crawl_view.hudsz.x-9, 1, GOTO_STAT);
+        cprintf(" *WIZARD*");
+    }
+#ifdef DGL_SIMPLE_MESSAGING
+    update_message_status();
+#endif
+
+    // Line 2:
+    // Minotaur [of God] [Piety]
+    textcolor(YELLOW);
+    cgotoxy(1, 2, GOTO_STAT);
+    std::string species = species_name(you.species);
+    nowrap_eol_cprintf("%s", species.c_str());
+    if (you.religion != GOD_NO_GOD)
+    {
+        std::string god = " of ";
+        god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
+                                         : god_name(you.religion);
+        nowrap_eol_cprintf("%s", god.c_str());
+
+        std::string piety = _god_powers(true);
+        if (player_under_penance())
+            textcolor(RED);
+        if ((unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1)
+            <= WIDTH)
+        {
+            nowrap_eol_cprintf(" %s", piety.c_str());
+        }
+        else if ((unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1)
+                  == (WIDTH + 1))
+        {
+            //mottled draconian of TSO doesn't fit by one symbol,
+            //so we remove leading space.
+            nowrap_eol_cprintf("%s", piety.c_str());
+        }
+    }
+    else if (you.char_class == JOB_MONK && you.species != SP_DEMIGOD
+             && !had_gods())
+    {
+        std::string godpiety = "**....";
+        textcolor(DARKGREY);
+        if ((unsigned int)(strwidth(species) + strwidth(godpiety) + 1) <= WIDTH)
+            nowrap_eol_cprintf(" %s", godpiety.c_str());
+    }
+
+    clear_to_end_of_line();
+
+    textcolor(LIGHTGREY);
+}
 
 void print_stats(void)
 {
@@ -714,9 +795,15 @@ void print_stats(void)
     if (MP_Bar.wants_redraw())
         you.redraw_magic_points = true;
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     bool has_changed = _need_stats_printed();
 #endif
+
+    if (you.redraw_title)
+    {
+        you.redraw_title = false;
+        _redraw_title(you.your_name, player_title());
+    }
 
     if (you.redraw_hit_points)   { you.redraw_hit_points = false;   _print_stats_hp (1, 3); }
     if (you.redraw_magic_points) { you.redraw_magic_points = false; _print_stats_mp (1, 4); }
@@ -806,7 +893,7 @@ void print_stats(void)
     }
     textcolor(LIGHTGREY);
 
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     if (has_changed)
         update_screen();
 #else
@@ -861,92 +948,10 @@ void print_stats_level()
     clear_to_end_of_line();
 }
 
-void redraw_title(const std::string &your_name, const std::string &job_name)
-{
-    std::string title = gettext(job_name.c_str());
-    title += " " + your_name;
-    //std::string title = your_name + " the " + job_name; (deceit, 110822)
-    unsigned int in_len = strwidth(title);
-    const unsigned int WIDTH = crawl_view.hudsz.x;
-    if (in_len > WIDTH)
-    {
-        in_len -= 3;  // What we're getting back from removing "the".
-
-        const unsigned int name_len = strwidth(your_name);
-        std::string trimmed_name = your_name;
-
-        // Squeeze name if required, the "- 8" is to not squeeze too much.
-        if (in_len > WIDTH && (name_len - 8) > (in_len - WIDTH))
-        {
-            trimmed_name = chop_string(trimmed_name,
-                                       name_len - (in_len - WIDTH) - 1);
-        }
-
-        title = trimmed_name + ", " + job_name;
-    }
-
-    // Line 1: Foo the Bar    *WIZARD*
-    cgotoxy(1, 1, GOTO_STAT);
-    textcolor(YELLOW);
-    cprintf("%s", chop_string(title, WIDTH).c_str());
-    if (you.wizard)
-    {
-        textcolor(LIGHTBLUE);
-        cgotoxy(1 + crawl_view.hudsz.x-9, 1, GOTO_STAT);
-        cprintf(" *WIZARD*");
-    }
-#ifdef DGL_SIMPLE_MESSAGING
-    update_message_status();
-#endif
-
-    // Line 2:
-    // Minotaur [of God] [Piety]
-    textcolor(YELLOW);
-    cgotoxy(1, 2, GOTO_STAT);
-    std::string species = species_name(you.species);
-    nowrap_eol_cprintf("%s", gettext(species.c_str()));
-    if (you.religion != GOD_NO_GOD)
-    {
-        std::string god = ", ";
-        god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
-                                         : god_name(you.religion);
-        nowrap_eol_cprintf("%s", god.c_str());
-
-        std::string piety = _god_powers(true);
-        if (player_under_penance())
-            textcolor(RED);
-        if ((unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1)
-            <= WIDTH)
-        {
-            nowrap_eol_cprintf(" %s", piety.c_str());
-        }
-        else if ((unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1)
-                  == (WIDTH + 1))
-        {
-            //mottled draconian of TSO doesn't fit by one symbol,
-            //so we remove leading space.
-            nowrap_eol_cprintf("%s", piety.c_str());
-        }
-    }
-    else if (you.char_class == JOB_MONK && you.species != SP_DEMIGOD
-             && !had_gods())
-    {
-        std::string godpiety = "**....";
-        textcolor(DARKGREY);
-        if ((unsigned int)(strwidth(species) + strwidth(godpiety) + 1) <= WIDTH)
-            nowrap_eol_cprintf(" %s", godpiety.c_str());
-    }
-
-    clear_to_end_of_line();
-
-    textcolor(LIGHTGREY);
-}
-
 void draw_border(void)
 {
     textcolor(HUD_CAPTION_COLOUR);
     clrscr();
-    redraw_title(you.your_name, player_title());
 
     textcolor(Options.status_caption_colour);
 
@@ -972,11 +977,6 @@ void draw_border(void)
 // ----------------------------------------------------------------------
 // Monster pane
 // ----------------------------------------------------------------------
-
-static bool _mons_hostile(const monster* mon)
-{
-    return (!mon->friendly() && !mon->neutral());
-}
 
 static std::string _get_monster_name(const monster_info& mi,
                                      int count, bool fullname)
@@ -1015,31 +1015,6 @@ static std::string _get_monster_name(const monster_info& mi,
 
     desc += monpane_desc;
     return (desc);
-}
-
-// Returns true if the first monster is more aggressive (in terms of
-// hostile/neutral/friendly) than the second, or, if both monsters share the
-// same attitude, if the first monster has a lower type.
-// If monster type and attitude are the same, return false.
-bool compare_monsters_attitude(const monster* m1, const monster* m2)
-{
-    if (_mons_hostile(m1) && !_mons_hostile(m2))
-        return (true);
-
-    if (m1->neutral())
-    {
-        if (m2->friendly())
-            return (true);
-        if (_mons_hostile(m2))
-            return (false);
-    }
-
-    if (m1->friendly() && !m2->friendly())
-        return (false);
-
-    // If we get here then monsters have the same attitude.
-    // FIXME: replace with difficulty comparison
-    return (m1->type < m2->type);
 }
 
 // If past is true, the messages should be printed in the past tense
@@ -1086,7 +1061,7 @@ std::string mpr_monster_list(bool past)
     return (msg);
 }
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
 static void _print_next_monster_desc(const std::vector<monster_info>& mons,
                                      int& start, bool zombified = false,
                                      int idx = -1)
@@ -1118,7 +1093,7 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
         for (unsigned int i_mon = start; i_mon < end; i_mon++)
         {
             monster_info mi = mons[i_mon];
-            glyph g = get_mons_glyph(mi.mon());
+            glyph g = get_mons_glyph(mi);
             textcolor(g.col);
             cprintf("%s", stringize_glyph(g.ch).c_str());
             ++printed;
@@ -1191,7 +1166,7 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
 }
 #endif
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
 // #define BOTTOM_JUSTIFY_MONSTER_LIST
 // Returns -1 if the monster list is empty, 0 if there are so many monsters
 // they have to be consolidated, and 1 otherwise.
@@ -1758,6 +1733,12 @@ static std::vector<formatted_string> _get_overview_resistances(
     // 3 columns, splits at columns 21, 39
     column_composer cols(3, 21, 39);
 
+    // Don't show unreliable resistances granted by the cloak.  We could mark
+    // them somehow, but for now this will do.
+    bool dragonskin = player_equip_unrand(UNRAND_DRAGONSKIN);
+    unwind_var<bool> dragon_hack(you.melded[EQ_CLOAK], you.melded[EQ_CLOAK]
+                                                       || dragonskin);
+
     const int rfire = player_res_fire(calc_unid);
     const int rcold = player_res_cold(calc_unid);
     const int rlife = player_prot_life(calc_unid);
@@ -1796,13 +1777,7 @@ static std::vector<formatted_string> _get_overview_resistances(
     const char* pregourmand;
     const char* postgourmand;
 
-    if (player_mutation_level(MUT_GOURMAND))
-    {
-        pregourmand = "Gourmand  : ";
-        postgourmand = _itosym2(2);
-        saplevel = 2;
-    }
-    else if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
+    if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
     {
         pregourmand = "대식가    : ";
         postgourmand = _itosym1(1);
@@ -1887,9 +1862,10 @@ static char _get_overview_screen_results()
     formatted_scroller overview;
     overview.set_flags(MF_SINGLESELECT | MF_ALWAYS_SHOW_MORE | MF_NOWRAP);
     overview.set_more(formatted_string::parse_string(
-#ifdef USE_TILE
-                        "<cyan>[ +/L-click : 아래 페이지.   - : 위 페이지."
-						"           Esc/R-click: 종료.]"));
+// FIXME later
+#ifdef USE_TILE_LOCAL
+                        "<cyan>[ +/L-click : Page down.   - : Page up."
+                        "           Esc/R-click exits.]"));
 #else
                         "<cyan>[ + : Page down.   - : Page up."
                         "                           Esc exits.]"));
@@ -2055,6 +2031,7 @@ static std::string _status_mut_abilities(int sw)
         DUR_FIRE_SHIELD,
         DUR_POISONING,
         STATUS_SICK,
+        DUR_NAUSEA,
         STATUS_CONTAMINATION,
         STATUS_ROT,
         DUR_CONFUSING_TOUCH,
@@ -2134,7 +2111,7 @@ static std::string _status_mut_abilities(int sw)
               mutations.push_back("독구름 뱉기");
           break;
 
-      case SP_KENKU:
+      case SP_TENGU:
           if (you.experience_level > 4)
           {
               std::string help = "비행 가능";
@@ -2210,7 +2187,7 @@ static std::string _status_mut_abilities(int sw)
     }                           //end switch - innate abilities
 
     // a bit more stuff
-    if (player_genus(GENPC_OGREISH) || you.species == SP_TROLL
+    if (you.species == SP_OGRE || you.species == SP_TROLL
         || player_genus(GENPC_DRACONIAN) || you.species == SP_SPRIGGAN)
     {
         mutations.push_back("방어구가 맞지 않음");

@@ -46,7 +46,7 @@ bool form_can_wield(transformation_type form)
 bool form_can_fly(transformation_type form)
 {
     if ((form == TRAN_NONE || form == TRAN_LICH || form == TRAN_APPENDAGE)
-        && you.species == SP_KENKU
+        && you.species == SP_TENGU
         && (you.experience_level >= 15 || you.airborne()))
     {
         return (true);
@@ -88,7 +88,8 @@ bool form_can_butcher_barehanded(transformation_type form)
 // Used to mark transformations which override species/mutation intrinsics.
 bool form_changed_physiology(transformation_type form)
 {
-    return (form != TRAN_NONE && form != TRAN_BLADE_HANDS && form != TRAN_APPENDAGE);
+    return (form != TRAN_NONE && form != TRAN_APPENDAGE
+            && form != TRAN_BLADE_HANDS);
 }
 
 bool form_can_wear_item(const item_def& item, transformation_type form)
@@ -665,7 +666,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         tran_name = "statue";
         str       = 2;
         dex       = -2;
-        if (player_genus(GENPC_DWARVEN) && one_chance_in(10))
+        if (you.species == SP_DEEP_DWARF && one_chance_in(10))
             msg = gettext("You inwardly fear your resemblance to a lawn ornament.");
         else
             msg = make_stringf(msg.c_str(), gettext("a living statue of rough stone."));

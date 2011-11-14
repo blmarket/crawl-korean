@@ -1212,7 +1212,6 @@ unsigned int item_value(item_def item, bool ident)
 
             case SPMSL_CURARE:
             case SPMSL_PENETRATION:
-            case SPMSL_REAPING:
             case SPMSL_SILVER:
             case SPMSL_STEEL:
             case SPMSL_DISPERSAL:
@@ -1288,7 +1287,7 @@ unsigned int item_value(item_def item, bool ident)
             valued += 900;
             break;
 
-        case ARM_DRAGON_ARMOUR:
+        case ARM_FIRE_DRAGON_ARMOUR:
         case ARM_ICE_DRAGON_ARMOUR:
             valued += 750;
             break;
@@ -1297,8 +1296,8 @@ unsigned int item_value(item_def item, bool ident)
             valued += 650;
             break;
 
-        case ARM_DRAGON_HIDE:
-        case ARM_CRYSTAL_PLATE_MAIL:
+        case ARM_FIRE_DRAGON_HIDE:
+        case ARM_CRYSTAL_PLATE_ARMOUR:
         case ARM_TROLL_LEATHER_ARMOUR:
         case ARM_ICE_DRAGON_HIDE:
             valued += 500;
@@ -1314,7 +1313,7 @@ unsigned int item_value(item_def item, bool ident)
             valued += 300;
             break;
 
-        case ARM_PLATE_MAIL:
+        case ARM_PLATE_ARMOUR:
             valued += 230;
             break;
 
@@ -1322,7 +1321,9 @@ unsigned int item_value(item_def item, bool ident)
             valued += 200;
             break;
 
+#if TAG_MAJOR_VERSION == 32
         case ARM_BANDED_MAIL:
+#endif
         case ARM_CENTAUR_BARDING:
         case ARM_NAGA_BARDING:
             valued += 150;
@@ -1505,7 +1506,7 @@ unsigned int item_value(item_def item, bool ident)
             switch (item.sub_type)
             {
             case WAND_HASTING:
-            case WAND_HEALING:
+            case WAND_HEAL_WOUNDS:
                 valued += 240;
                 good = true;
                 break;
@@ -1604,7 +1605,7 @@ unsigned int item_value(item_def item, bool ident)
                 valued += 25;
                 break;
 
-            case POT_HEALING:
+            case POT_CURING:
             case POT_DECAY:
             case POT_DEGENERATION:
             case POT_STRONG_POISON:
@@ -1781,7 +1782,7 @@ unsigned int item_value(item_def item, bool ident)
                 switch (item.sub_type)
                 {
                 case RING_SLAYING:
-                    coefficient = 100;
+                    coefficient = 60;
                     break;
                 case RING_PROTECTION:
                 case RING_EVASION:
@@ -2149,7 +2150,7 @@ std::string shop_type_name (shop_type type)
     }
 }
 
-std::string shop_type_suffix (shop_type type, const coord_def &where)
+static std::string _shop_type_suffix(shop_type type, const coord_def &where)
 {
     if (type == SHOP_GENERAL
         || type == SHOP_GENERAL_ANTIQUE
@@ -2205,7 +2206,7 @@ std::string shop_name(const coord_def& where)
     }
     else
     {
-        std::string sh_suffix = shop_type_suffix(type, where);
+        std::string sh_suffix = _shop_type_suffix(type, where);
         if (!sh_suffix.empty())
             sh_name += " " + sh_suffix;
     }
