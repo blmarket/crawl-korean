@@ -1676,7 +1676,7 @@ static spret_type _do_cast(spell_type spell, int powc,
     // Only a Xom spell, no failure.
     case SPELL_DETECT_ITEMS:
         mpr( (detect_items(powc) > 0) ? gettext("You detect items!")
-                : gettext("You detect nothing."))
+                : gettext("You detect nothing."));
         break;
 
     // Only a Xom spell, no failure.
