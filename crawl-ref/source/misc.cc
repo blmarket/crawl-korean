@@ -2230,7 +2230,7 @@ bool bad_attack(const monster *mon, std::string& adj, std::string& suffix)
         if (you.religion == GOD_OKAWARU)
             adj = gettext("your ally the ");
         else
-            adj = gettext("your ");
+            adj = gettext(M_("your "));
         return true;
     }
 
