@@ -821,24 +821,12 @@ static bool _get_mem_list(spell_list &mem_spells,
         mpr(gettext("You already know all available spells."), MSGCH_PROMPT);
     else if (num_race == total || (num_known + num_race) == total)
     {
-        if(you.form == TRAN_LICH)
-        {
-            mprf(MSGCH_PROMPT,
-                    gettext("You cannot memorise any of the available spells because you "
-                        "are in Lich form."));
-        }
-        else
-        {
-#ifdef KR
-            mprf(MSGCH_PROMPT,
-                    gettext("You cannot memorise any of the available spells because you "
-                        "are %s."), gettext(species_name(you.species).c_str()));
-#else
-            mprf(MSGCH_PROMPT,
-                    gettext("You cannot memorise any of the available spells because you "
-                        "are a %s."), lowercase_string(species).c_str());
-#endif
-        }
+        const bool lichform = (you.form == TRAN_LICH);
+        const std::string species = "a " + species_name(you.species);
+        mprf(MSGCH_PROMPT,
+             gettext("You cannot memorise any of the available spells because you "
+             "are %s."), lichform ? "in Lich form"
+                                 : lowercase_string(species).c_str());
     }
     else if (num_low_levels > 0 || num_low_xl > 0)
     {
