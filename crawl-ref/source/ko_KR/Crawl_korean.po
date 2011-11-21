@@ -3849,7 +3849,7 @@ msgstr "%s의 마력이 공중으로 사라졌다."
 #: fight.cc:2569 fight.cc:2562 fight.cc:2562 fight.cc:2570
 #, c-format
 msgid "%s %s in agony."
-msgstr "%s는 고통으로 온 몸을 비틀었다."
+msgstr "%s은(는) 고통으로 온 몸을 비틀었다."
 
 #: fight.cc:2640 fight.cc:2633 fight.cc:2633
 msgid "You give off a flash of multicoloured light!"
@@ -4589,10 +4589,10 @@ msgid "shout"
 msgstr "외치기"
 
 msgid "meow"
-msgstr "'야옹'하고 울기"
+msgstr "야옹"
 
 msgid "yowl"
-msgstr "'갸울'하고 울기"
+msgstr "갸울"
 
 msgid "squeal"
 msgstr "꿀꿀"
