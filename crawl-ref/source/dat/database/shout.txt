@@ -152,27 +152,28 @@ SOUND:@The_monster@이(가) 까악거리며 울었다.
 %%%%
 __CAW unseen
 
-SOUND:You hear a loud caw.
+SOUND:당신은 시끄럽게 까악거리는 소리를 들었다.
 %%%%
 __CHERUB seen
 
-SOUND:@The_monster@'s eagle head screeches!
+SOUND:@The_monster@의 독수리 머리가 울부짖었다!
 
-SOUND:@The_monster@'s lion head roars!
+SOUND:@The_monster@의 사자 머리가 고함을 내질렀다!
 
-SOUND:@The_monster@'s ox head lows!
+SOUND:@The_monster@의 소 머리가 음메 했다(...)
 
-SOUND:@The_monster@'s human head shouts!
+SOUND:@The_monster@의 인간 머리가 외쳤다!
 %%%%
 __CHERUB unseen
 
-SOUND:You hear a shout.
+SOUND:외침 소리가 들린다.
 
-SOUND:You hear a screech.
+SOUND:새의 울부짖는 소리가 들린다.(screech의 적절한 번역 찾으시는분 제보바람)
 
-SOUND:You hear a roar.
+SOUND:야수의 울부짖는 소리가 들린다.
 
-SOUND:You hear a low.
+SOUND:음메 소리가 들린다...
+
 SOUND:당신은 까악거리며 우는 소리를 들었다.
 ############################################
 # End of default shouts
