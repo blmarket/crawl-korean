@@ -882,10 +882,19 @@ static void _update_unique_annotation(level_id level)
 static std::string unique_name(monster* mons)
 {
     std::string name = mons->name(DESC_PLAIN, true);
-    if (mons->type == MONS_LERNAEAN_HYDRA)
-        name = "Lernaean hydra";
     if (mons->type == MONS_PLAYER_GHOST)
         name += ", " + short_ghost_description(mons, true);
+    else {
+        if (strstr(name.c_str(), "royal jelly")
+            || strstr(name.c_str(), "Royal Jelly"))
+            name = "Royal Jelly";
+        if (strstr(name.c_str(), "Lernaean hydra"))
+            name = "Lernaean hydra";
+        if (strstr(name.c_str(), "Serpent of Hell"))
+            name = "Serpent of Hell";
+        if (strstr(name.c_str(), "Blork"))
+            name = "Blork the orc";
+    }
     return name;
 }
 
@@ -894,7 +903,10 @@ void set_unique_annotation(monster* mons, const level_id level)
     // Abyss persists its denizens.
     if (level.level_type != LEVEL_DUNGEON && level.level_type != LEVEL_ABYSS)
         return;
-    if (!mons_is_unique(mons->type) && mons->type != MONS_PLAYER_GHOST)
+    if (!mons_is_unique(mons->type)
+        && !(mons->props.exists("original_was_unique")
+            && mons->props["original_was_unique"].get_bool())
+        && mons->type != MONS_PLAYER_GHOST)
         return;
 
     remove_unique_annotation(mons);
