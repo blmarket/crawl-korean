@@ -231,7 +231,7 @@ Fire Brand
 %%%%
 Fire Storm
 
-맹렬하게 타오르는, 강력한 불의 폭풍우를 일으킨다.
+This spell calls forth a mighty storm of roaring flame directly onto the target, dealing partially irresistible fire damage in a large area and leaving behind short-lived fire vortices.
 %%%%
 Fireball
 
@@ -287,7 +287,7 @@ Ice Form
 %%%%
 Ice Storm
 
-거친 눈보라와 진눈깨비, 얼어붙는 냉기의 기체를 동반한 얼음의 폭풍우를 생성한다.
+This spell hurls a raging blizzard of ice, sleet and freezing gasses at the target, dealing partially irresistible cold damage in a large area.
 %%%%
 Ignite Poison
 
@@ -365,13 +365,17 @@ Mephitic Cloud
 
 극히 불쾌한 악취의 구름을 생성한다.
 %%%%
+Metabolic Englaciation
+
+This spell tries to lower the metabolic rate of every creature in the caster's vicinity, slowing all those who are not resistant to cold. It bypasses magic resistance, although tougher monsters will not be slowed for as long as others.
+%%%%
 Necromutation
 
 죽음의 힘으로 시전자를 음에너지에 친숙한, 반쯤 육체적인 영으로 탈바꿈시키는 주문이다. 시전자는 냉기, 독, 마법, 음에너지에 저항력을 얻게 된다.
 %%%%
 Olgreb's Toxic Radiance
 
-시전자의 시야 내에 있는, 시전자를 포함한 모든 존재를 끈적이는 초록색 빛으로 뒤덮어, 독에 걸리게 한다.
+This spell bathes the caster's surroundings in a sickly green light, inflicting poison on everything nearby (including the caster). It can be blocked by translucent walls, however, and invisible creatures are completely unaffected.
 %%%%
 Orb of Destruction
 

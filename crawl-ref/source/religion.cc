@@ -2015,7 +2015,7 @@ blessing_done:
     else
     {
         if (you.can_see(follower))
-            whom = follower->name(DESC_NOCAP_THE);
+            whom = follower->name(DESC_THE);
         else
             whom = "a follower";
     }
@@ -2025,7 +2025,7 @@ blessing_done:
                      whom.c_str(), result.c_str()).c_str(),
         god);
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     flash_monster_colour(follower, god_colour(god), 200);
 #endif
 
@@ -2325,36 +2325,33 @@ std::string god_name(god_type which_god, bool long_name)
 
     switch (which_god)
     {
-    case GOD_NO_GOD: return "No God";
-    case GOD_RANDOM: return "random";
-    case GOD_NAMELESS: return "nameless";
-    case GOD_VIABLE: return "viable";
+    case GOD_NO_GOD:        return "No God";
+    case GOD_RANDOM:        return "random";
+    case GOD_NAMELESS:      return "nameless";
+    case GOD_VIABLE:        return "viable";
     case GOD_ZIN:           return "Zin";
     case GOD_SHINING_ONE:   return "The Shining One";
     case GOD_KIKUBAAQUDGHA: return "Kikubaaqudgha";
-    case GOD_YREDELEMNUL:
-        return "Yredelemnul";
-    case GOD_VEHUMET: return "Vehumet";
-    case GOD_OKAWARU: return "Okawaru";
-    case GOD_MAKHLEB: return "Makhleb";
-    case GOD_SIF_MUNA:
-        return "Sif Muna";
-    case GOD_TROG: return "Trog";
+    case GOD_YREDELEMNUL:   return "Yredelemnul";
+    case GOD_VEHUMET:       return "Vehumet";
+    case GOD_OKAWARU:       return "Okawaru";
+    case GOD_MAKHLEB:       return "Makhleb";
+    case GOD_SIF_MUNA:      return "Sif Muna";
+    case GOD_TROG:          return "Trog";
     case GOD_NEMELEX_XOBEH: return "Nemelex Xobeh";
-    case GOD_ELYVILON: return "Elyvilon";
-    case GOD_LUGONU:   return "Lugonu";
-    case GOD_BEOGH:    return "Beogh";
+    case GOD_ELYVILON:      return "Elyvilon";
+    case GOD_LUGONU:        return "Lugonu";
+    case GOD_BEOGH:         return "Beogh";
     case GOD_JIYVA:
     {
         return (long_name ? god_name_jiyva(true) + " the Shapeless"
                           : god_name_jiyva(false));
     }
     case GOD_FEDHAS:        return "Fedhas";
-    case GOD_CHEIBRIADOS: return "Cheibriados";
-    case GOD_XOM: return "Xom";
-    case GOD_ASHENZARI:
-        return "Ashenzari";
-    case NUM_GODS: return "Buggy";
+    case GOD_CHEIBRIADOS:   return "Cheibriados";
+    case GOD_XOM:           return "Xom";
+    case GOD_ASHENZARI:     return "Ashenzari";
+    case NUM_GODS:          return "Buggy";
     }
     return ("");
 }
@@ -2697,7 +2694,7 @@ static void _gain_piety_point()
                     you.duration[DUR_CONF] = 0;
                 }
 
-                ash_id_inventory();
+                god_id_inventory();
             }
 
             // When you gain a piety level, you get another chance to
@@ -2711,7 +2708,7 @@ static void _gain_piety_point()
     {
         // Every piety level change also affects AC from orcish gear.
         you.redraw_armour_class = true;
-        // Or the player's symbol.
+        // The player's symbol depends on Beogh piety.
         update_player_symbol();
     }
 
@@ -2950,7 +2947,16 @@ void excommunication(god_type new_god)
     mpr("당신은 지금까지의 신앙을 잃었다!");
     more();
 
+    if (old_god == GOD_BEOGH)
+    {
+        // The player's symbol depends on Beogh worship.
+        update_player_symbol();
+    }
+
     mark_milestone("god.renounce", "abandoned " + god_name(old_god) + ".");
+#ifdef DGL_WHEREIS
+    whereis_record();
+#endif
 
     if (god_hates_your_god(old_god, new_god))
     {
@@ -3176,7 +3182,8 @@ void print_sacrifice_message(god_type god, const item_def &item,
         simple_god_message("은(는), 당신이 '엘라이빌론'에게 바친 축복받은 아이템을 되가져갔다.",GOD_SHINING_ONE);
         return;
     }
-    const std::string itname = item.name(true, your ? DESC_CAP_YOUR : DESC_CAP_THE);
+
+    const std::string itname = item.name(true, your ? DESC_YOUR : DESC_THE);
     mpr(_sacrifice_message(_Sacrifice_Messages[god][piety_gain], itname,
                            itname.find("glowing") != std::string::npos,
                            item.quantity > 1,
@@ -3347,7 +3354,7 @@ static void _god_welcome_identify_gear()
 
     if (you.religion == GOD_ASHENZARI)
     {
-        // Seemingly redundant with ash_id_inventory(), but we don't want to
+        // Seemingly redundant with god_id_inventory(), but we don't want to
         // announce items where the only new information is their cursedness.
         for (int i = 0; i < ENDOFPACK; i++)
             if (you.inv[i].defined())
@@ -3358,9 +3365,13 @@ static void _god_welcome_identify_gear()
         set_ident_type(OBJ_SCROLLS, SCR_CURSE_WEAPON, ID_KNOWN_TYPE);
         set_ident_type(OBJ_SCROLLS, SCR_CURSE_ARMOUR, ID_KNOWN_TYPE);
         set_ident_type(OBJ_SCROLLS, SCR_CURSE_JEWELLERY, ID_KNOWN_TYPE);
-        ash_id_inventory();
+        god_id_inventory();
         ash_detect_portals(true);
     }
+
+    // detect evil weapons
+    if (you.religion == GOD_ELYVILON)
+        god_id_inventory();
 }
 
 void god_pitch(god_type which_god)
@@ -3398,6 +3409,10 @@ void god_pitch(god_type which_god)
         divine_retribution(GOD_LUGONU, true);
         return;
     }
+
+#ifdef USE_TILE_WEB
+    tiles_crt_control show_as_menu(CRT_MENU, "god_pitch");
+#endif
 
     describe_god(which_god, false);
 
@@ -3457,6 +3472,12 @@ void god_pitch(god_type which_god)
     {
         // Tutorial needs minor destruction usable.
         gain_piety(35, 1, true, false);
+    }
+
+    if (you.religion == GOD_BEOGH)
+    {
+        // The player's symbol depends on Beogh worship.
+        update_player_symbol();
     }
 
     _god_welcome_identify_gear();

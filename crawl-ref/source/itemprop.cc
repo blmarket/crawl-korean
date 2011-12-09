@@ -572,7 +572,7 @@ void do_curse_item(item_def &item, bool quiet)
             }
 
             ash_check_bondage();
-            ash_id_inventory();
+            god_id_inventory();
         }
 
         xom_is_stimulated(amusement);
@@ -657,7 +657,7 @@ static bool _is_affordable(const item_def &item)
     if (in_shop(item))
         return (int)item_value(item) < you.gold;
 
-    // Explicitely marked by a vault.
+    // Explicitly marked by a vault.
     if (item.flags & ISFLAG_UNOBTAINABLE)
         return false;
 
@@ -708,7 +708,7 @@ void set_ident_flags(item_def &item, iflags_t flags)
             && is_interesting_item(item))
         {
             // Make a note of it.
-            take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
+            take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
                            origin_desc(item).c_str()));
 
             // Sometimes (e.g. shops) you can ID an item before you get it;
@@ -1617,6 +1617,12 @@ bool is_whip_type(int wpn_type)
     return (wpn_type == WPN_WHIP
             || wpn_type == WPN_DEMON_WHIP
             || wpn_type == WPN_SACRED_SCOURGE);
+}
+
+bool is_giant_club_type(int wpn_type)
+{
+    return (wpn_type == WPN_GIANT_CLUB
+            || wpn_type == WPN_GIANT_SPIKED_CLUB);
 }
 
 bool is_demonic(const item_def &item)

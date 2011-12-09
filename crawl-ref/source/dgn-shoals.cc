@@ -793,7 +793,7 @@ static void _clear_net_trapping_status(coord_def c)
     {
         monster* mvictim = victim->as_monster();
         if (you.can_see(mvictim))
-            mprf(gettext("The net is swept off %s."), gettext(mvictim->name(DESC_NOCAP_THE).c_str()));
+            mprf(gettext("The net is swept off %s."), gettext(mvictim->name(DESC_THE).c_str()));
         mons_clear_trapping_net(mvictim);
     }
     else
@@ -1147,7 +1147,7 @@ void shoals_release_tide(monster* mons)
         {
             /// 아마 이거 번역해도 's가 계속 따라붙는 문제가 생길 것.
             mprf(MSGCH_SOUND, gettext("The tide is released from %s call."),
-                 apostrophise(mons->name(DESC_NOCAP_YOUR, true)).c_str());
+                 apostrophise(mons->name(DESC_YOUR, true)).c_str());
             if (you.see_cell(mons->pos()))
                 flash_view_delay(ETC_WATER, 150);
         }

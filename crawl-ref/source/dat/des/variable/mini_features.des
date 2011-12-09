@@ -1955,6 +1955,31 @@ x++xxxx
 xxxxxxx
 ENDMAP
 
+NAME:   evilmike_butchery
+TAGS:   no_item_gen
+SUBST:  . = ..", X = xxB
+KPROP:  "B = bloody
+SUBST:  " = ., B = x
+NSUBST: . = 5:d / 10=d. / 2:e / 1:e. / *=.^
+: if you.absdepth() > 12 then
+KFEAT:  ^ = blade trap
+: else
+KITEM:  ^ = hand axe
+: end
+ITEM:   beef jerky / w:5 minotaur chunk
+: dgn.delayed_decay(_G, 'e', 'minotaur corpse')
+SUBST:  ' = .
+MAP
+xxxxxxxxx
+xXXXXXXXx
+xX.....Xx
+xX.....Xx
++'.....Xx
+xX.....Xx
+xX.....Xx
+xXXXXXXXx
+xxxxxxxxx
+ENDMAP
 
 ##########################################################################
 #
@@ -2312,7 +2337,7 @@ NAME:  kilobyte_tornado_obelisk
 TAGS:  no_monster_gen
 DEPTH: D:15-27, Elf
 ITEM:  acquire any
-MONS:  statue generate_awake n_rpl name:diamond_obelisk hp:10000 \
+MONS:  statue generate_awake n_rpl n_des name:diamond_obelisk hp:10000 \
        col:white tile:mons_diamond_obelisk perm_ench:tornado
 KPROP: .d1 = no_tele_into
 MAP

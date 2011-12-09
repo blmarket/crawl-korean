@@ -101,13 +101,14 @@ static const spell_type _xom_nontension_spells[] =
 // Spells to be cast at tension > 0, i.e. usually in battle situations.
 static const spell_type _xom_tension_spells[] =
 {
-    SPELL_BLINK, SPELL_CONFUSING_TOUCH, SPELL_CAUSE_FEAR, SPELL_DISPERSAL,
-    SPELL_STONESKIN, SPELL_RING_OF_FLAMES, SPELL_OLGREBS_TOXIC_RADIANCE,
-    SPELL_FIRE_BRAND, SPELL_FREEZING_AURA, SPELL_POISON_WEAPON,
-    SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS, SPELL_WARP_BRAND,
-    SPELL_TUKIMAS_DANCE, SPELL_RECALL, SPELL_SUMMON_BUTTERFLIES,
-    SPELL_SUMMON_SMALL_MAMMALS, SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM,
-    SPELL_FLY, SPELL_BEASTLY_APPENDAGE, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
+    SPELL_BLINK, SPELL_CONFUSING_TOUCH, SPELL_CAUSE_FEAR, SPELL_ENGLACIATION,
+    SPELL_DISPERSAL, SPELL_STONESKIN, SPELL_RING_OF_FLAMES,
+    SPELL_OLGREBS_TOXIC_RADIANCE, SPELL_FIRE_BRAND, SPELL_FREEZING_AURA,
+    SPELL_POISON_WEAPON, SPELL_LETHAL_INFUSION, SPELL_EXCRUCIATING_WOUNDS,
+    SPELL_WARP_BRAND, SPELL_TUKIMAS_DANCE, SPELL_RECALL,
+    SPELL_SUMMON_BUTTERFLIES, SPELL_SUMMON_SMALL_MAMMALS,
+    SPELL_SUMMON_SCORPIONS, SPELL_SUMMON_SWARM, SPELL_FLY,
+    SPELL_BEASTLY_APPENDAGE, SPELL_SPIDER_FORM, SPELL_STATUE_FORM,
     SPELL_ICE_FORM, SPELL_DRAGON_FORM, SPELL_SHADOW_CREATURES,
     SPELL_SUMMON_HORRIBLE_THINGS, SPELL_CALL_CANINE_FAMILIAR,
     SPELL_SUMMON_ICE_BEAST, SPELL_SUMMON_UGLY_THING,
@@ -1142,8 +1143,8 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
     {
         seen = true;
 
-        description_level_type desc = mon->friendly() ? DESC_CAP_YOUR :
-                                                        DESC_CAP_THE;
+        description_level_type desc = mon->friendly() ? DESC_YOUR :
+                                                        DESC_THE;
         std::string msg = apostrophise(mon->name(desc));
 
         msg += " ";
@@ -1234,8 +1235,8 @@ static int _xom_do_potion(bool debug = false)
     while (true)
     {
         pot = random_choose(POT_CURING, POT_HEAL_WOUNDS, POT_MAGIC,
-                            POT_SPEED, POT_MIGHT, POT_AGILITY, POT_BRILLIANCE,
-                            POT_INVISIBILITY, POT_BERSERK_RAGE,
+                              POT_SPEED, POT_MIGHT, POT_AGILITY, POT_BRILLIANCE,
+                              POT_INVISIBILITY, POT_BERSERK_RAGE,
                             POT_EXPERIENCE, -1);
 
         if (pot == POT_EXPERIENCE && !one_chance_in(6))
@@ -1735,9 +1736,10 @@ static int _xom_swap_weapons(bool debug = false)
     // monster is dead.
     mitm[index].flags |= ISFLAG_THROWN;
 
-    mprf("%s는 %s를 장비했다!",
-         mon->name(DESC_CAP_THE).c_str(),
-         myweapon.name(true, DESC_NOCAP_YOUR).c_str());
+	/// 1. 몬스터 이름, 2. 장비 이름
+    mprf(gettext("%s wields %s!"),
+         mon->name(DESC_THE).c_str(),
+         myweapon.name(true, DESC_YOUR).c_str());
     mon->equip(myweapon, MSLOT_WEAPON, 0);
 
     // Item is gone from player's inventory.
@@ -1771,8 +1773,9 @@ static int _xom_swap_weapons(bool debug = false)
     you.m_quiver->on_inv_quantity_changed(freeslot, myitem.quantity);
     burden_change();
 
-    mprf("당신은 %s를 %s에 착용했다!",
-         mon->name(DESC_NOCAP_ITS).c_str(),
+	/// 1. mon's 2. item name
+    mprf(gettext("You wield %s %s!"),
+         mon->name(DESC_ITS).c_str(),
          you.inv[freeslot].name(true, DESC_PLAIN).c_str());
 
     equip_item(EQ_WEAPON, freeslot);
@@ -1849,12 +1852,17 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
 static int _xom_random_stickable(const int HD)
 {
     int c;
-    static const int arr[13] = {WPN_CLUB, WPN_STAFF, WPN_QUARTERSTAFF, WPN_BOW,
-                                WPN_SPEAR, WPN_BLOWGUN, WPN_GLAIVE, WPN_HALBERD,
-                                WPN_ANKUS, WPN_SCYTHE, WPN_LONGBOW,
-                                WPN_GIANT_CLUB, WPN_GIANT_SPIKED_CLUB};
+    // XXX: Unify this with the list in spl-summoning:_snakable_weapon().
+    // It has everything but tridents, demon tridents and bardiches, and
+    // puts the giant club types at the end as special cases.
+    static const int arr[13] = {
+        WPN_CLUB,    WPN_ANKUS,      WPN_SPEAR,        WPN_HALBERD,
+        WPN_SCYTHE,  WPN_GLAIVE,     WPN_STAFF,        WPN_QUARTERSTAFF,
+        WPN_BLOWGUN, WPN_BOW,        WPN_LONGBOW,      WPN_GIANT_CLUB,
+        WPN_GIANT_SPIKED_CLUB
+    };
 
-    // Maximum snake hd is 11 (anaconda) so random2(hd) gives us 0-10
+    // Maximum snake hd is 11 (anaconda) so random2(hd) gives us 0-10, and
     // weapon_rarity also gives us 1-10.
     do
         c = random2(HD);
@@ -1895,8 +1903,10 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
                     x_chance_in_y(3,5) ? OBJ_MISSILES
                                        : OBJ_WEAPONS;
 
-            const int sub_type  = (base_type == OBJ_MISSILES ? MI_ARROW
-                                        : _xom_random_stickable(mi->hit_dice));
+            const int sub_type =
+                    (base_type == OBJ_MISSILES ?
+                        (x_chance_in_y(3,5) ? MI_ARROW : MI_JAVELIN)
+                            : _xom_random_stickable(mi->hit_dice));
 
             int thing_created = items(0, base_type, sub_type, true,
                                       mi->hit_dice / 3 - 1, MAKE_ITEM_NO_RACE,
@@ -1911,35 +1921,13 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
             doodad.quantity = 1;
 
             // Output some text since otherwise snakes will disappear silently.
-            mprf(gettext("%s reforms as %s."), mi->name(DESC_CAP_THE).c_str(),
-                 doodad.name(true, DESC_NOCAP_A).c_str());
+            mprf(gettext("%s reforms as %s"), mi->name(DESC_THE).c_str(),
+                 doodad.name(true, DESC_A).c_str());
 
             // Dismiss monster silently.
             move_item_to_grid(&thing_created, mi->pos());
             monster_die(*mi, KILL_DISMISSED, NON_MONSTER, true, false);
         }
-#if 0
-        // Polymorph naga into wood golem, undecided as to whether it will
-        // remain or not.
-        else if (mons_genus(mi->type) == MONS_NAGA)
-        {
-            if (!action)
-            {
-                if (debug)
-                    return (XOM_GOOD_SNAKES);
-
-                take_note(Note(NOTE_XOM_EFFECT, you.piety, -1,
-                               "막대기를 뱀으로"), true);
-                god_speaks(GOD_XOM, _get_xom_speech("막대기를 뱀으로").c_str());
-                action = true;
-            }
-
-            // MONS_WOOD_GOLEM is not normally a suitable polymorph form
-            // so we have to force it using the last 'true' in the parameter
-            // list
-            monster_polymorph(*mi, MONS_WOOD_GOLEM, PPT_SAME, false, true);
-        }
-#endif
     }
 
     if (action)
@@ -2009,8 +1997,9 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
     mon->unequip(*(mon->mslot_item(MSLOT_WEAPON)), MSLOT_WEAPON, 0, true);
     mon->inv[MSLOT_WEAPON] = NON_ITEM;
 
-    mprf("%s의 %s가 공중에서 춤을 춘다!", //"%s %s dances into the air!" 누구누구의 무엇이 니까 니 가 로 변경
-         apostrophise(mon->name(DESC_CAP_THE)).c_str(),
+	/// 1. Mon's 2. item name 
+    mprf(gettext("%s %s dances into the air!"),
+         apostrophise(mon->name(DESC_THE)).c_str(),
          mitm[wpn].name(true, DESC_PLAIN).c_str());
 
     destroy_item(menv[mons].inv[MSLOT_WEAPON]);
@@ -2341,11 +2330,13 @@ static int _xom_change_scenery(bool debug = false)
         case DNGN_DETECTED_SECRET_DOOR:
         case DNGN_SECRET_DOOR:
             grd(pos) = DNGN_OPEN_DOOR;
+            set_terrain_changed(pos);
             if (you.see_cell(pos))
                 doors_open++;
             break;
         case DNGN_OPEN_DOOR:
             grd(pos) = DNGN_CLOSED_DOOR;
+            set_terrain_changed(pos);
             if (you.see_cell(pos))
                 doors_close++;
             break;
@@ -2357,6 +2348,7 @@ static int _xom_change_scenery(bool debug = false)
                 continue;
 
             grd(pos) = (dungeon_feature_type) (grd(pos) - fountain_diff);
+            set_terrain_changed(pos);
             if (you.see_cell(pos))
                 fountains_flow++;
             break;
@@ -2366,6 +2358,7 @@ static int _xom_change_scenery(bool debug = false)
                 continue;
 
             grd(pos) = DNGN_FOUNTAIN_BLOOD;
+            set_terrain_changed(pos);
             if (you.see_cell(pos))
                 fountains_blood++;
             break;
@@ -2689,7 +2682,7 @@ static void _xom_zero_miscast()
         && feat != DNGN_OPEN_DOOR && feat != DNGN_ABANDONED_SHOP)
     {
         const std::string feat_name =
-            feature_description(you.pos(), false, DESC_CAP_THE, false);
+            feature_description(you.pos(), false, DESC_THE, false);
 
         if (you.airborne())
         {
@@ -2729,11 +2722,11 @@ static void _xom_zero_miscast()
 
         std::string name;
         if (item.quantity == 1)
-            name = item.name(false, DESC_CAP_YOUR, false, false, false);
+            name = item.name(true, DESC_YOUR, false, false, false);
         else
         {
-            name  = "하나의 ";//name  = "One of ";
-            name += item.name(false, DESC_NOCAP_YOUR, false, false, false);
+            name  = gettext("One of ");
+            name += item.name(true, DESC_YOUR, false, false, false);
         }
         messages.push_back(name + " 당신의 가방에서 떨어지자,"//messages.push_back(name + " falls out of your pack, then "
                            "??로 뛰어 들어왔다!");//"immediately jumps back in!");
@@ -2876,13 +2869,13 @@ static void _xom_zero_miscast()
 
         item = &you.inv[idx];
 
-        std::string name = item->name(false, DESC_CAP_YOUR, false, false, false);
-        std::string verb = coinflip() ? "빛나는" : "진동하는";//std::string verb = coinflip() ? "glow" : "vibrate";
+        std::string name = item->name(false, DESC_YOUR, false, false, false);
+        std::string verb = coinflip() ? "빛나는" : "진동하는";
 
         if (item->quantity == 1)
             verb += "것 들";//verb += "s";
 
-        messages.push_back(name + " 잠시 " + verb + ".");//messages.push_back(name + " briefly " + verb + ".");
+        messages.push_back(name + " 잠시 " + verb + ".");
     }
 
     if (!priority.empty() && coinflip())
@@ -3297,7 +3290,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
     ASSERT(stair_pos != ray.pos());
 
     std::string stair_str =
-        feature_description(stair_pos, false, DESC_CAP_THE, false);
+        feature_description(stair_pos, false, DESC_THE, false);
 
     mprf("%s 는 %s 당신을 떨어뜨렸다!", stair_str.c_str(),
 		      away ? "away from" : "towards");

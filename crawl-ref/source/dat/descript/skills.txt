@@ -13,7 +13,7 @@ Buggy
 %%%%
 Fighting
 
-근접 전투에 좀 더 능숙하게 하는 것 외에도, 전투 기술은 당신의 최대 체력을 늘려준다. 전투 기술은 첫 1단계까지는 식물이나 버섯을 때려서 수련할 수 있지만, 그 후로는 제대로 된 적수와의 대련으로만 수련할 수 있다.
+Apart from making you more proficient in hand-to-hand combat, Fighting also increases your maximum hit points.
 %%%%
 Short Blades
 단검을 더욱 효과적으로 사용할 수 있도록 해 준다. 특정한 무기 종류에 숙련되면 그 종류의 모든 무기를 잘 사용하여 더 많은 피해를 입힐 수 있다. 일반적으로 하나 혹은 두 가지 무기 종류에 집중하여 수련하는 것을 권장한다. 단검류는 다른 무기에 비해 게임 후반으로 갈 수록 적은 피해를 입힌다는 평가가 있지만, 암습에는 최적의 도구이다.
@@ -76,14 +76,15 @@ Throwing
 %%%%
 Armour
 
-갑옷 기술은 무거운 갑옷을 입었을 때의 방어력을 높여주며, 무거운 갑옷이 이동, 마법 시전 등을 덜 방해하도록 만든다.%%%%
+Armour skill increases the AC gained by wearing heavy armour, and it also helps lessen the hindrance of heavy armour on moving, spellcasting and other actions.
+%%%%
 Dodging
 
-회피 기술은 근접, 원거리, 마법 공격을 피할 확률에 확실히 영향을 준다. 아쉽게도 상태이상 부여마법은 피할 수 없다. 대신 그것들을 저항하기 위해선 경험을 쌓거나 아이템에서 얻을 수 있는 적대적인 부여 마법에 대한 저항력이 필요하다.
+Unsurprisingly, the Dodging skill will affect your chance of dodging an attack, be it melee, ranged or magical. You cannot dodge enchantments, sadly. Rather, to resist them, you'll need a high resistance to hostile enchantments, something that grows with your experience and can also be influenced by certain items.
 %%%%
 Stealth
 
-은밀 기술을 수련하면 적이 당신을 잘 알아채지 못하게 할 수 있다. 이 기술은 당신을 아직 알아채지 못한 적 근처를 돌아다녀서 수련할 수 있다. 적들은 당신이 접근하면 수상쩍어하며 주의깊게 된다는 것을 주의하라.
+By training Stealth, you can make it less likely that monsters will notice you. This skill is trained by moving in the vicinity of unaware monsters. Note that monsters become more suspicious and observant as you descend.
 %%%%
 Stabbing
 
@@ -91,7 +92,7 @@ Stabbing
 %%%%
 Shields
 
-방패에 능숙해지면 근접 혹은 원거리 공격을 착용한 방패 혹은 마법의 방패로 막을 수 있게 된다.
+A high Shields skill helps you block melee and ranged attacks with your equipped (or a magical) shield.
 %%%%
 Traps & Doors
 
@@ -99,17 +100,17 @@ Traps & Doors
 %%%%
 Unarmed Combat
 
-맨손 전투를 수련한 캐릭터는 종종 자신의 신체를 이용하여 추가 공격을 할 수 있다. 물론, 이 기술은 맨손 전투를 더 효과적으로 수행할 수 있게 하기도 한다.
+A character trained in Unarmed Combat will occasionally do an additional melee attack, provided they have the means to do so. Of course, this skill also trains your proficiency in barehanded combat.
 %%%%
 Spellcasting
 
-이 기본적인 주문 시전 기술이 있어야 주문을 배우고 사용할 수 있다. 또한 주문 시전 기술이 한 단계 오를 때 가끔 더 많은 마력과 새 주문을 위한 "주문 슬롯"을 제공하기도 한다. 주문 시전시 찾아오는 공복감은 오직 주문 시전 기술과 당신의 지능만으로 줄일 수 있다.
+Training Spellcasting makes it easier to learn and cast spells, along with increasing your magical reserves. Gaining a level in Spellcasting gives you more "spell slots" to spend on new spells. Spellcasting skill and your intelligence are the only factors countering spell hunger.
 %%%%
 Conjurations
 
 특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다. 많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이 주문의 위력과 성공 확률을 결정한다.
 
-요술은 각종 피해를 주는 전투용 마법이다.
+Conjurations are battle oriented spells, which work by conjuring up a chunk of short-lived matter and propelling it towards the victim.
 %%%%
 Hexes
 
@@ -175,7 +176,7 @@ Poison Magic
 
 특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다. 많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이 주문의 위력과 성공 확률을 결정한다.
 
-독의 마술은 초반에는 매우 유용하지만, 후반으로 갈 수록 많은 적들이 독 저항을 가지고 있다. 하지만 일부 독 주문은 게임 전반에 걸쳐서 유용하다.
+Poison magic is at its most useful early on, as many monsters are resistant to poison in the later game. There are poison spells of high utility throughout the game, though.
 %%%%
 Invocations
 

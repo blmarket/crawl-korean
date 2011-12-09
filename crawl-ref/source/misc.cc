@@ -129,11 +129,20 @@ static void _create_monster_hide(const item_def corpse)
         break;
     }
 
-    monster_type montype = static_cast<monster_type>(corpse.orig_monnum - 1);
+    const monster_type montype =
+        static_cast<monster_type>(corpse.orig_monnum - 1);
     if (!invalid_monster_type(montype) && mons_is_unique(montype))
         item.inscription = mons_type_name(montype, DESC_PLAIN);
 
-    move_item_to_grid(&o, you.pos());
+    const coord_def pos = item_pos(corpse);
+    if (!pos.origin())
+        move_item_to_grid(&o, pos);
+}
+
+void maybe_drop_monster_hide(const item_def corpse)
+{
+    if (monster_descriptor(corpse.plus, MDSC_LEAVES_HIDE) && !one_chance_in(3))
+        _create_monster_hide(corpse);
 }
 
 int get_max_corpse_chunks(int mons_class)
@@ -155,16 +164,31 @@ void turn_corpse_into_skeleton(item_def &item)
     item.colour   = LIGHTGREY;
 }
 
+void maybe_bleed_monster_corpse(const item_def corpse)
+{
+    // Only fresh corpses bleed enough to colour the ground.
+    if (!food_is_rotten(corpse))
+    {
+        const coord_def pos = item_pos(corpse);
+        if (!pos.origin())
+        {
+            const monster_type montype = static_cast<monster_type>(corpse.plus);
+            const int max_chunks = get_max_corpse_chunks(corpse.plus);
+            bleed_onto_floor(pos, montype, max_chunks, true);
+        }
+    }
+}
+
 void turn_corpse_into_chunks(item_def &item, bool bloodspatter,
                              bool make_hide)
 {
     ASSERT(item.base_type == OBJ_CORPSES && item.sub_type == CORPSE_BODY);
-    const monster_type montype = static_cast<monster_type>(item.plus);
+    const item_def corpse = item;
     const int max_chunks = get_max_corpse_chunks(item.plus);
 
     // Only fresh corpses bleed enough to colour the ground.
-    if (bloodspatter && !food_is_rotten(item))
-        bleed_onto_floor(you.pos(), montype, max_chunks, true);
+    if (bloodspatter)
+        maybe_bleed_monster_corpse(corpse);
 
     item.base_type = OBJ_FOOD;
     item.sub_type  = FOOD_CHUNK;
@@ -177,25 +201,55 @@ void turn_corpse_into_chunks(item_def &item, bool bloodspatter,
         item.flags &= ~(ISFLAG_THROWN | ISFLAG_DROPPED);
 
     // Happens after the corpse has been butchered.
-    if (make_hide && monster_descriptor(item.plus, MDSC_LEAVES_HIDE)
-        && !one_chance_in(3))
-    {
-        _create_monster_hide(item);
-    }
+    if (make_hide)
+        maybe_drop_monster_hide(corpse);
 }
 
-void turn_corpse_into_skeleton_and_chunks(item_def &item)
+static void _turn_corpse_into_skeleton_and_chunks(item_def &item, bool prefer_chunks)
 {
-    item_def chunks = item;
+    item_def copy = item;
 
-    if (mons_skeleton(item.plus))
-        turn_corpse_into_skeleton(item);
-
-    int o = get_mitm_slot();
-    if (o != NON_ITEM)
+    // Complicated logic, but unless we use the original, both could fail if
+    // mitm[] is overstuffed.
+    if (prefer_chunks)
     {
-        turn_corpse_into_chunks(chunks);
-        copy_item_to_grid(chunks, you.pos());
+        turn_corpse_into_chunks(item);
+        turn_corpse_into_skeleton(copy);
+    }
+    else
+    {
+        turn_corpse_into_chunks(copy);
+        turn_corpse_into_skeleton(item);
+    }
+
+    copy_item_to_grid(copy, item_pos(item));
+}
+
+void butcher_corpse(item_def &item, maybe_bool skeleton, bool chunks)
+{
+    if (!mons_skeleton(item.plus))
+        skeleton = B_FALSE;
+    if (skeleton == B_TRUE || skeleton == B_MAYBE && one_chance_in(3))
+    {
+        if (chunks)
+            _turn_corpse_into_skeleton_and_chunks(item, skeleton != B_TRUE);
+        else
+        {
+            maybe_bleed_monster_corpse(item);
+            maybe_drop_monster_hide(item);
+            turn_corpse_into_skeleton(item);
+        }
+    }
+    else
+    {
+        if (chunks)
+            turn_corpse_into_chunks(item);
+        else
+        {
+            maybe_bleed_monster_corpse(item);
+            maybe_drop_monster_hide(item);
+            destroy_item(item.index());
+        }
     }
 }
 
@@ -537,7 +591,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         {
             set_ident_type(OBJ_POTIONS, POT_BLOOD_COAGULATED, ID_KNOWN_TYPE);
             if (blood.quantity >= 1)
-                mpr(blood.name(true, DESC_INVENTORY).c_str());
+                mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
         }
 
         if (blood.quantity < 1)
@@ -598,7 +652,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
             {
                 _compare_blood_quantity(blood, timer.size());
                 if (!knew_blood)
-                    mpr(blood.name(true, DESC_INVENTORY).c_str());
+                    mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
             }
 
             // Update timer -> push(pop).
@@ -613,7 +667,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
             you.inv[m].quantity += coag_count;
             ASSERT(timer2.size() == you.inv[m].quantity);
             if (!knew_coag)
-                mpr(you.inv[m].name(true, DESC_INVENTORY).c_str());
+                mpr_nocap(you.inv[m].name(true, DESC_INVENTORY).c_str());
 
             // re-sort timer
             _int_sort(timer2);
@@ -643,7 +697,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         _compare_blood_quantity(blood, timer.size());
 
         if (!knew_coag)
-            mpr(blood.name(true, DESC_INVENTORY).c_str());
+            mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
 
         return (rot_count > 0);
     }
@@ -686,9 +740,9 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         _compare_blood_quantity(blood, timer.size());
 
         if (!knew_blood)
-            mpr(blood.name(true, DESC_INVENTORY).c_str());
+            mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
         if (!knew_coag)
-            mpr(item.name(true, DESC_INVENTORY).c_str());
+            mpr_nocap(item.name(true, DESC_INVENTORY).c_str());
 
         return (rot_count > 0);
     }
@@ -726,7 +780,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
             dec_inv_item_quantity(blood.link, rot_count + coag_count);
             _compare_blood_quantity(blood, timer.size());
             if (!knew_blood)
-                mpr(blood.name(true, DESC_INVENTORY).c_str());
+                mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
 
             return (true);
         }
@@ -777,7 +831,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     {
         _compare_blood_quantity(blood, timer.size());
         if (!knew_blood)
-            mpr(blood.name(true, DESC_INVENTORY).c_str());
+            mpr_nocap(blood.name(true, DESC_INVENTORY).c_str());
     }
     return (true);
 }
@@ -932,7 +986,7 @@ void turn_corpse_into_blood_potions(item_def &item)
     ASSERT(item.base_type == OBJ_CORPSES);
     ASSERT(!food_is_rotten(item));
 
-    item_def corpse = item;
+    const item_def corpse = item;
     const int mons_class = corpse.plus;
 
     ASSERT(can_bottle_blood_from_corpse(mons_class));
@@ -950,8 +1004,7 @@ void turn_corpse_into_blood_potions(item_def &item)
     init_stack_blood_potions(item, (item.special - 100) * 20 + 500);
 
     // Happens after the blood has been bottled.
-    if (monster_descriptor(mons_class, MDSC_LEAVES_HIDE) && !one_chance_in(3))
-        _create_monster_hide(corpse);
+    maybe_drop_monster_hide(corpse);
 }
 
 void turn_corpse_into_skeleton_and_blood_potions(item_def &item)
@@ -1261,7 +1314,7 @@ void search_around(bool only_adjacent)
                 {
                     ptrap->reveal();
                     mprf(gettext("You found %s trap!"),
-                         ptrap->name(DESC_NOCAP_A).c_str());
+                         ptrap->name(DESC_A).c_str());
                     learned_something_new(HINT_SEEN_TRAP, *ri);
                     practise(EX_TRAP_FOUND);
                 }
@@ -1490,10 +1543,6 @@ bool mons_can_hurt_player(const monster* mon, const bool want_move)
     if (_mons_has_path_to_player(mon, want_move))
         return (true);
 
-    // The monster need only see you to hurt you.
-    if (mons_has_los_attack(mon))
-        return (true);
-
     // Even if the monster can not actually reach the player it might
     // still use some ranged form of attack.
     if (you.see_cell_no_trans(mon->pos())
@@ -1511,6 +1560,7 @@ bool mons_can_hurt_player(const monster* mon, const bool want_move)
 static bool _mons_is_always_safe(const monster *mon)
 {
     return (mon->wont_attack()
+            || mon->type == MONS_BUTTERFLY
             || mon->withdrawn()
             || mon->type == MONS_BALLISTOMYCETE && mon->number == 0);
 }
@@ -1655,7 +1705,7 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
         const monster& m = *visible[0];
         const std::string monname = mons_is_mimic(m.type)
                                   ? gettext(M_("A mimic"))
-                                  : m.name(DESC_CAP_A);
+                                  : m.name(DESC_A);
         msg = make_stringf(gettext("%s is nearby!"), monname.c_str());
     }
     else if (visible.size() > 1)
@@ -1808,12 +1858,14 @@ static void _drop_tomb(const coord_def& pos, bool premature)
                  premature ? gettext(" prematurely") : "");
         else if (seen_change && zin)
         {
-            if(mon)
-                mprf(gettext("Zin releases %s from its prison."), 
-                    mon->name(DESC_NOCAP_THE).c_str());
-            else
-                mpr(gettext("Zin dismisses the silver walls, but there is "
-                            "nothing inside them."));
+            mprf(gettext("Zin %s %s %s."),
+                 (mon) ? pgettext("zin", "releases")
+                       : pgettext("zin", "dismisses"),
+                 (mon) ? mon->name(DESC_THE).c_str()
+                       : pgettext("zin", "the silver walls,"),
+                 (mon) ? make_stringf(gettext("from %s prison"),
+                             mon->pronoun(PRONOUN_POSSESSIVE).c_str()).c_str()
+                       : gettext("but there is nothing inside them"));
         }
         else
         {
@@ -2018,6 +2070,9 @@ void bring_to_safety()
 void revive()
 {
     adjust_level(-1);
+    // Allow a spare after two levels (we just lost one); the exact value
+    // doesn't matter here.
+    you.attribute[ATTR_LIFE_GAINED] = 0;
 
     you.disease = 0;
     you.magic_contamination = 0;
@@ -2043,7 +2098,7 @@ void revive()
     if (you.duration[DUR_SCRYING])
         you.xray_vision = false;
 
-    for(int dur = 0; dur < NUM_DURATIONS; dur++)
+    for (int dur = 0; dur < NUM_DURATIONS; dur++)
         if (dur != DUR_GOURMAND && dur != DUR_PIETY_POOL)
             you.duration[dur] = 0;
 
@@ -2414,8 +2469,7 @@ void swap_with_monster(monster* mon_to_swap)
     // If it was submerged, it surfaces first.
     mon.del_ench(ENCH_SUBMERGED);
 
-    mprf(gettext("You swap places with %s."), 
-         mon.name(DESC_NOCAP_THE).c_str());
+    mprf(gettext("You swap places with %s."), mon.name(DESC_THE).c_str());
 
     // Pick the monster up.
     mgrd(newpos) = NON_MONSTER;
@@ -2544,7 +2598,7 @@ void entered_malign_portal(actor* act)
 {
     if (you.can_see(act))
         mprf(gettext("The portal repels %s, its terrible forces doing untold damage!"), 
-             (act->atype() == ACT_PLAYER) ? gettext(M_("you")) : act->name(DESC_NOCAP_THE).c_str());
+			 (act->atype() == ACT_PLAYER) ? gettext(M_("you")) : act->name(DESC_THE).c_str());
 
     act->blink(false);
     if (act->atype() == ACT_PLAYER)
@@ -2626,10 +2680,30 @@ std::string counted_monster_list::describe(description_level_type desc)
 
         out += cm.second > 1 ? pluralise(PLU_DEFAULT, cm.first->name(desc))
                              : cm.first->name(desc);
-
-        // yay capitalization hacks, may we merge Cryp71c's branch already please?
-        if (desc == DESC_CAP_THE)
-            desc = DESC_NOCAP_THE;
     }
     return out;
+}
+
+
+
+bool move_stairs(coord_def orig, coord_def dest)
+{
+    const dungeon_feature_type stair_feat = grd(orig);
+
+    if (feat_stair_direction(stair_feat) == CMD_NO_CMD)
+        return (false);
+
+    // The player can't use shops to escape, so don't bother.
+    if (stair_feat == DNGN_ENTER_SHOP)
+        return (false);
+
+    // Don't move around notable terrain the player is aware of if it's
+    // out of sight.
+    if (is_notable_terrain(stair_feat)
+        && env.map_knowledge(orig).known() && !you.see_cell(orig))
+    {
+        return (false);
+    }
+
+    return slide_feature_over(orig, dest);
 }

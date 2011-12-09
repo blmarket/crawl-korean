@@ -40,7 +40,7 @@ static void _extra_hp(int amount_extra);
 bool form_can_wield(transformation_type form)
 {
     return (form == TRAN_NONE || form == TRAN_STATUE || form == TRAN_LICH
-         || form == TRAN_APPENDAGE);
+            || form == TRAN_APPENDAGE);
 }
 
 bool form_can_fly(transformation_type form)
@@ -137,6 +137,20 @@ bool form_can_wear_item(const item_def& item, transformation_type form)
     }
 }
 
+bool form_keeps_mutations(transformation_type form)
+{
+    switch (form) {
+    case TRAN_NONE:
+    case TRAN_BLADE_HANDS:
+    case TRAN_STATUE:
+    case TRAN_LICH:
+    case TRAN_APPENDAGE:
+        return true;
+    default:
+        return false;
+    }
+}
+
 static std::set<equipment_type>
 _init_equipment_removal(transformation_type form)
 {
@@ -180,7 +194,7 @@ static void _remove_equipment(const std::set<equipment_type>& removed,
         }
 
         /// 1. 아이템 이름, 2. fall 혹은 meld의 번역문, 3. s가 붙거나 안붙거나 4. away! or into your body의 번역문
-        mprf(pgettext("_remove_equipment", "%s %s%s %s"), equip->name(true, DESC_CAP_YOUR).c_str(),
+        mprf(pgettext("_remove_equipment", "%s %s%s %s"), equip->name(true, DESC_YOUR).c_str(),
              unequip ? pgettext("_remove_equipment", "fall") : pgettext("_remove_equipment", "meld"),
              equip->quantity > 1 ? "" : "s",
              unequip ? pgettext("_remove_equipment", "away!") : pgettext("_remove_equipment", "into your body."));
@@ -253,7 +267,7 @@ static void _unmeld_equipment_type(equipment_type e)
         if (you.slot_item(EQ_SHIELD)
             && is_shield_incompatible(item, you.slot_item(EQ_SHIELD)))
         {
-            mpr(item.name(true, DESC_CAP_YOUR) + " is pushed off your body!");
+            mpr(item.name(true, DESC_YOUR) + " is pushed off your body!");
             unequip_item(e);
         }
         else
@@ -277,7 +291,7 @@ static void _unmeld_equipment_type(equipment_type e)
         if (force_remove)
         {
             mprf(gettext("%s is pushed off your body!"),
-                 item.name(true, DESC_CAP_YOUR).c_str());
+                 item.name(true, DESC_YOUR).c_str());
             unequip_item(e);
         }
         else
@@ -350,7 +364,7 @@ static bool _abort_or_fizzle(bool just_check)
 
 monster_type transform_mons()
 {
-    switch(you.form)
+    switch (you.form)
     {
     case TRAN_SPIDER:
         return MONS_SPIDER;
@@ -386,7 +400,7 @@ std::string blade_parts(bool terse)
 
 monster_type dragon_form_dragon_type()
 {
-    switch(you.species)
+    switch (you.species)
     {
         case SP_WHITE_DRACONIAN:
              return MONS_ICE_DRAGON;
@@ -413,7 +427,7 @@ monster_type dragon_form_dragon_type()
 // with a denominator of 10
 int form_hp_mod()
 {
-    switch(you.form)
+    switch (you.form)
     {
     case TRAN_STATUE:
         return 13;
@@ -718,7 +732,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         if (!just_check)
         {
             you.attribute[ATTR_APPENDAGE] = app;
-            switch(app)
+            switch (app)
             {
             case MUT_HORNS:
                 msg = "You grow a pair of large bovine horns.";
@@ -1029,7 +1043,7 @@ void untransform(bool skip_wielding, bool skip_move)
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         mprf(MSGCH_DURATION, gettext("%s cracks your icy armour."),
-             armour->name(true, DESC_CAP_YOUR).c_str());
+             armour->name(true, DESC_YOUR).c_str());
     }
 
     if (hp_downscale != 10 && you.hp != you.hp_max)

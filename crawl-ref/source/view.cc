@@ -77,16 +77,16 @@ crawl_view_geometry crawl_view;
 bool handle_seen_interrupt(monster* mons, std::vector<std::string>* msgs_buf)
 {
     activity_interrupt_data aid(mons);
-    if (!mons->seen_context.empty())
+    if (mons->seen_context)
         aid.context = mons->seen_context;
     // XXX: Hack to make the 'seen' monster spec flag work.
     else if (testbits(mons->flags, MF_WAS_IN_VIEW)
              || testbits(mons->flags, MF_SEEN))
     {
-        aid.context = "already seen";
+        aid.context = SC_ALREADY_SEEN;
     }
     else
-        aid.context = "newly seen";
+        aid.context = SC_NEWLY_SEEN;
 
     if (!mons_is_safe(mons)
         && !mons_class_flag(mons->type, M_NO_EXP_GAIN)
@@ -172,10 +172,7 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
         std::string name;
         description_level_type desc;
         if (it->second == 1)
-        {
-            desc = (it == types.begin() ? DESC_CAP_A
-                                                : DESC_NOCAP_A);
-        }
+            desc = DESC_A;
         else
             desc = DESC_PLAIN;
 
@@ -284,7 +281,7 @@ void update_monsters_in_view()
 
             // If the monster hasn't been seen by the time that the player
             // gets control back then seen_context is out of date.
-            mi->seen_context.clear();
+            mi->seen_context = SC_NONE;
         }
     }
 
@@ -328,13 +325,13 @@ void update_monsters_in_view()
                 warning = true;
 
             if (size == 1)
-                warning_msg += mon->pronoun(PRONOUN_CAP);
+                warning_msg += mon->pronoun(PRONOUN_SUBJECTIVE);
             else if (mon->type == MONS_DANCING_WEAPON)
                 warning_msg += pgettext("Ashenzari", "There");
             else if (types[mon->type] == 1)
-                warning_msg += mon->full_name(DESC_CAP_THE);
+                warning_msg += mon->full_name(DESC_THE);
             else
-                warning_msg += mon->full_name(DESC_CAP_A);
+                warning_msg += mon->full_name(DESC_A);
 
             warning_msg += pgettext("Ashenzari", " is");
             warning_msg += get_monster_equipment_desc(mon, DESC_IDENTIFIED,
@@ -784,15 +781,16 @@ bool view_update()
     return (false);
 }
 
-void flash_view(uint8_t colour)
+void flash_view(uint8_t colour, targetter *where)
 {
     you.flash_colour = colour;
+    you.flash_where = where;
     viewwindow(false);
 }
 
-void flash_view_delay(uint8_t colour, int flash_delay)
+void flash_view_delay(uint8_t colour, int flash_delay, targetter *where)
 {
-    flash_view(colour);
+    flash_view(colour, where);
     // Scale delay to match change in arena_delay.
     if (crawl_state.game_is_arena())
     {
@@ -1070,7 +1068,10 @@ void viewwindow(bool show_updates, bool tiles_only)
         // in grid coords
         const coord_def gc = view2grid(*ri);
 
-        draw_cell(cell, gc, anim_updates, flash_colour);
+        if (you.flash_where && you.flash_where->is_affected(gc) <= 0)
+            draw_cell(cell, gc, anim_updates, 0);
+        else
+            draw_cell(cell, gc, anim_updates, flash_colour);
 
         cell++;
     }
@@ -1078,6 +1079,7 @@ void viewwindow(bool show_updates, bool tiles_only)
     // Leaving it this way because short flashes can occur in long ones,
     // and this simply works without requiring a stack.
     you.flash_colour = BLACK;
+    you.flash_where = 0;
     you.last_view_update = you.num_turns;
 #ifndef USE_TILE_LOCAL
 #ifdef USE_TILE_WEB

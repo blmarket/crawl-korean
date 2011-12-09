@@ -486,8 +486,6 @@ static int _acquirement_weapon_subtype(bool divine)
     for (int i = SK_SHORT_BLADES; i <= SK_CROSSBOWS; i++)
     {
         skill_type sk = static_cast<skill_type>(i);
-        if (is_invalid_skill(sk))
-            continue;
 
         // Adding a small constant allows for the occasional
         // weapon in an untrained skill.
@@ -656,7 +654,10 @@ static int _acquirement_jewellery_subtype()
 static int _acquirement_staff_subtype(const has_vector& already_has)
 {
     // First look at skills to determine whether the player gets a rod.
-    int spell_skills = player_spell_skills();
+    int spell_skills = 0;
+    for (int i = SK_SPELLCASTING; i <= SK_LAST_MAGIC; i++)
+        spell_skills += you.skills[i];
+
     if (random2(spell_skills) < you.skills[SK_EVOCATIONS] + 3
             && !one_chance_in(5))
     {
@@ -992,9 +993,6 @@ static bool _do_book_acquirement(item_def &book, int agent)
         for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; i++)
         {
             skill_type sk = static_cast<skill_type>(i);
-            if (is_invalid_skill(sk))
-                continue;
-
             int weight = you.skills[sk];
 
             // Anyone can get Spellcasting 1. Doesn't prove anything.
@@ -1101,11 +1099,6 @@ static bool _do_book_acquirement(item_def &book, int agent)
         for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; i++)
         {
             skill_type sk = static_cast<skill_type>(i);
-            if (is_invalid_skill(sk))
-            {
-                weights[sk] = 0;
-                continue;
-            }
 
             int skl = you.skills[sk];
 
@@ -1161,7 +1154,7 @@ static int _failed_acquirement(bool quiet)
 
 static int _weapon_brand_quality(int brand, bool range)
 {
-    switch(brand)
+    switch (brand)
     {
     case SPWPN_SPEED:
         return range ? 3 : 5;
@@ -1552,8 +1545,7 @@ int acquirement_create_item(object_class_type class_wanted,
 
         // These can never get egos, and mundane versions are quite common, so
         // guarantee artifact status.  Rarity is a bit low to compensate.
-        if (thing.sub_type == WPN_GIANT_CLUB
-            || thing.sub_type == WPN_GIANT_SPIKED_CLUB)
+        if (is_giant_club_type(thing.sub_type))
         {
             if (!one_chance_in(25))
                 make_item_randart(thing, true);

@@ -36,6 +36,7 @@
 #include "state.h"
 #include "travel.h"
 #include "hiscores.h"
+#include "view.h"
 #include "zotdef.h"
 
 #if defined(USE_TILE_LOCAL) && (defined(TARGET_OS_WINDOWS) || defined(TARGET_COMPILER_MINGW))
@@ -201,8 +202,6 @@ static void _dump_player(FILE *file)
     for (size_t i = 0; i < NUM_SKILLS; ++i)
     {
         const skill_type sk = skill_type(i);
-        if (is_invalid_skill(sk))
-            continue;
         int needed_min = 0, needed_max = 0;
         if (sk >= 0 && you.skills[sk] <= 27)
             needed_min = skill_exp_needed(you.skills[sk], sk);
@@ -688,6 +687,10 @@ void do_crash_dump()
 #ifdef DEBUG_MONS_SCAN
     debug_mons_scan();
 #endif
+
+    // Now a screenshot
+    fprintf(file, "\nScreenshot:\n");
+    fprintf(file, "%s\n", screenshot().c_str());
 
     // If anything has screwed up the Lua runtime stacks then trying to
     // print those stacks will likely crash, so do this after the others.

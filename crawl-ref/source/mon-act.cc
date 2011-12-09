@@ -85,10 +85,6 @@ static int _compass_idx(const coord_def& mov)
     return (-1);
 }
 
-// A probably needless optimization: convert the C string "just seen" to
-// a C++ string just once, instead of twice every time a monster moves.
-static const std::string _just_seen("just seen");
-
 static bool immobile_monster[MAX_MONSTERS];
 
 static inline bool _mons_natural_regen_roll(monster* mons)
@@ -200,8 +196,8 @@ static bool _swap_monsters(monster* mover, monster* moved)
 
     if (you.can_see(mover) && you.can_see(moved))
     {
-        mprf(gettext("%s and %s swap places."), mover->name(DESC_CAP_THE).c_str(),
-             moved->name(DESC_NOCAP_THE).c_str());
+        mprf(gettext("%s and %s swap places."), mover->name(DESC_THE).c_str(),
+             moved->name(DESC_THE).c_str());
     }
 
     return (true);
@@ -665,11 +661,11 @@ static void _handle_movement(monster* mons)
         return;
 
     // Did we just come into view?
-    if (mons->seen_context != _just_seen)
-        return;
+    // TODO: This doesn't seem to work right. Fix, or remove?
 
-    // If the player can't see us, it doesn't matter.
-    if (!(mons->flags & MF_WAS_IN_VIEW))
+    if (mons->seen_context != SC_JUST_SEEN)
+        return;
+    if (testbits(mons->flags, MF_WAS_IN_VIEW))
         return;
 
     const coord_def old_pos  = mons->pos();
@@ -804,7 +800,10 @@ static bool _handle_reaching(monster* mons)
         && in_bounds(foepos))
     {
         ret = true;
-        monster_attack_actor(mons, foe, false);
+
+        ASSERT(foe == &you || foe->atype() == ACT_MONSTER);
+
+        fight_melee(mons, foe);
 
         if (mons->alive())
         {
@@ -898,7 +897,7 @@ static bool _handle_scroll(monster* mons)
             {
                 if (you.can_see(&menv[mon]))
                 {
-                    mprf(gettext("%s appears!"), menv[mon].name(DESC_CAP_A).c_str());
+                    mprf(gettext("%s appears!"), menv[mon].name(DESC_A).c_str());
                     ident = ID_KNOWN_TYPE;
                 }
                 player_angers_monster(&menv[mon]);
@@ -1605,24 +1604,23 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
         }
     }
 
+	/// FIXME TODO: Translate later
     // Now, if a monster is, for some reason, throwing something really
     // stupid, it will have baseHit of 0 and damage of 0.  Ah well.
-    std::string msg = mons->name(DESC_CAP_THE);
-    std::string obj_name;
+    std::string msg = mons->name(DESC_THE);
+    msg += ((projected == LRET_LAUNCHED) ? " shoots " : " throws ");
 
     if (!pbolt.name.empty() && projected == LRET_LAUNCHED)
-        obj_name = article_a(pbolt.name);
+        msg += article_a(pbolt.name);
     else
     {
         // build shoot message
-        obj_name = item.name(true, DESC_NOCAP_A, false, false, false);
+        msg += item.name(true, DESC_A, false, false, false);
 
         // build beam name
         pbolt.name = item.name(false, DESC_PLAIN, false, false, false);
     }
-    msg += make_stringf((projected == LRET_LAUNCHED) ? gettext(" shoots %s.") :
-                                                       gettext(" throws %s."),
-                        obj_name.c_str()); 
+    msg += ".";
 
     if (mons->observable())
         mpr(msg.c_str());
@@ -1640,13 +1638,13 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
     {
         pbolt.aux_source = make_stringf("Shot with a%s %s by %s",
                  (is_vowel(pbolt.name[0]) ? "n" : ""), pbolt.name.c_str(),
-                 mons->name(DESC_NOCAP_A).c_str());
+                 mons->name(DESC_A).c_str());
     }
     else
     {
         pbolt.aux_source = make_stringf("Hit by a%s %s thrown by %s",
                  (is_vowel(pbolt.name[0]) ? "n" : ""), pbolt.name.c_str(),
-                 mons->name(DESC_NOCAP_A).c_str());
+                 mons->name(DESC_A).c_str());
     }
 
     // And restore it here.
@@ -1734,7 +1732,7 @@ static bool _mons_throw(monster* mons, struct bolt &pbolt, int msl)
         {
             msg::stream << gettext("The weapon returns ")
                         << (you.can_see(mons)?
-                              (pgettext("_mons_throw","to ") + mons->name(DESC_NOCAP_THE))
+                              (pgettext("_mons_throw","to ") + mons->name(DESC_THE))
                             : gettext("from whence it came"))
                         << "!" << std::endl;
         }
@@ -2247,10 +2245,10 @@ void handle_monster_move(monster* mons)
                     && newcell != mons->pos()
                     && !is_sanctuary(mons->pos()))
                 {
-                    if (monsters_fight(mons, enemy))
+                    if (fight_melee(mons, enemy))
                     {
                         mmov.reset();
-                        DEBUG_ENERGY_USE("monsters_fight()");
+                        DEBUG_ENERGY_USE("fight_melee()");
                         continue;
                     }
                     else
@@ -2353,14 +2351,14 @@ void handle_monster_move(monster* mons)
                     mons->foe = MHITYOU;
                     mons->target = you.pos();
 
-                    monster_attack(mons);
+                    fight_melee(mons, &you);
 
                     if (mons_is_batty(mons))
                     {
                         mons->behaviour = BEH_WANDER;
                         set_random_target(mons);
                     }
-                    DEBUG_ENERGY_USE("monster_attack()");
+                    DEBUG_ENERGY_USE("fight_melee()");
                     mmov.reset();
                     continue;
                 }
@@ -2399,7 +2397,7 @@ void handle_monster_move(monster* mons)
                 // Figure out if they fight.
                 else if ((!mons_is_firewood(targ)
                           || mons->type == MONS_KRAKEN_TENTACLE)
-                              && monsters_fight(mons, targ))
+                              && fight_melee(mons, targ))
                 {
                     if (mons_is_batty(mons))
                     {
@@ -2409,7 +2407,7 @@ void handle_monster_move(monster* mons)
                     }
 
                     mmov.reset();
-                    DEBUG_ENERGY_USE("monsters_fight()");
+                    DEBUG_ENERGY_USE("fight_melee()");
                     continue;
                 }
             }
@@ -2717,24 +2715,12 @@ static bool _monster_eat_single_corpse(monster* mons, item_def& item,
 
     if (nearby)
     {
-        mprf(gettext("%s eats %s."), mons->name(DESC_CAP_THE).c_str(),
-             item.name(true, DESC_NOCAP_THE).c_str());
+        mprf(gettext("%s eats %s."), mons->name(DESC_THE).c_str(),
+             item.name(true, DESC_THE).c_str());
     }
 
-    // Assume that eating a corpse requires butchering it.  Use logic
-    // from misc.cc:turn_corpse_into_chunks() and the butchery-related
-    // delays in delay.cc:stop_delay().
-
-    const int max_chunks = get_max_corpse_chunks(mt);
-
-    // Only fresh corpses bleed enough to colour the ground.
-    if (!food_is_rotten(item))
-        bleed_onto_floor(mons->pos(), mt, max_chunks, true);
-
-    if (mons_skeleton(mt) && one_chance_in(3))
-        turn_corpse_into_skeleton(item);
-    else
-        destroy_item(item.index());
+    // Butcher the corpse without leaving chunks.
+    butcher_corpse(item, B_MAYBE, false);
 
     return (true);
 }
@@ -2783,19 +2769,21 @@ static bool _monster_eat_food(monster* mons, bool nearby)
         {
             if (si->sub_type != FOOD_HONEYCOMB
                 && si->sub_type != FOOD_ROYAL_JELLY)
+            {
                 return false;
+            }
 
             if (!nearby)
-                mprf(MSGCH_SOUND, "You hear a distant popping sound.");
+                mpr("You hear a distant popping sound.", MSGCH_SOUND);
             else
-                mprf("%s devours %s.", mons->name(DESC_CAP_THE).c_str(),
-                    quant_name(*si, 1, DESC_NOCAP_THE).c_str());
+                mprf("%s devours %s.", mons->name(DESC_THE).c_str(),
+                    quant_name(*si, 1, DESC_THE).c_str());
             dec_mitm_item_quantity(si.link(), 1);
             if (!nearby)
-                mprf(MSGCH_SOUND, "You hear a distant popping sound.");
+                mpr("You hear a distant popping sound.", MSGCH_SOUND);
             else
-                mprf("%s devours %s.", mons->name(DESC_CAP_THE).c_str(),
-                    quant_name(*si, 1, DESC_NOCAP_THE).c_str());
+                mprf("%s devours %s.", mons->name(DESC_THE).c_str(),
+                    quant_name(*si, 1, DESC_THE).c_str());
             monster_polymorph(mons, MONS_KILLER_BEE);
             return true;
         }
@@ -2806,8 +2794,8 @@ static bool _monster_eat_food(monster* mons, bool nearby)
             {
                 if (nearby)
                 {
-                    mprf(gettext("%s eats %s."), mons->name(DESC_CAP_THE).c_str(),
-                         quant_name(*si, 1, DESC_NOCAP_THE).c_str());
+                    mprf(gettext("%s eats %s."), mons->name(DESC_THE).c_str(),
+                         quant_name(*si, 1, DESC_THE).c_str());
                 }
 
                 dec_mitm_item_quantity(si.link(), 1);
@@ -3053,7 +3041,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         {
             mprf(gettext("%s was actually a secret door!"),
                  feature_description(grid, NUM_TRAPS, "",
-                                     DESC_CAP_THE, false).c_str());
+                                     DESC_THE, false).c_str());
             learned_something_new(HINT_FOUND_SECRET_DOOR, pos);
         }
 
@@ -3062,7 +3050,8 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         open_str += noun;
         open_str += pgettext("_mons_open_door",".");
 
-        mons->seen_context = open_str;
+        // Should this be conditionalized on you.can_see(mons?)
+        mons->seen_context = (all_door.size() <= 2) ? SC_DOOR : SC_GATE;
 
         if (!you.can_see(mons))
         {
@@ -3071,7 +3060,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         }
         else if (!you_are_delayed())
         {
-            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_CAP_A).c_str(),
+            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_A).c_str(),
                  open_str.c_str());
         }
     }
@@ -3516,8 +3505,8 @@ static bool _monster_swaps_places(monster* mon, const coord_def& delta)
         m2->apply_location_effects(n);
 
     // The seen context no longer applies if the monster is moving normally.
-    mon->seen_context.clear();
-    m2->seen_context.clear();
+    mon->seen_context = SC_NONE;
+    m2->seen_context = SC_NONE;
 
     return (false);
 }
@@ -3531,14 +3520,14 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
 
     if (f == you.pos())
     {
-        monster_attack(mons);
+        fight_melee(mons, &you);
         return (true);
     }
 
     // This includes the case where the monster attacks itself.
     if (monster* def = monster_at(f))
     {
-        monsters_fight(mons, def);
+        fight_melee(mons, def);
         return (true);
     }
 
@@ -3571,7 +3560,7 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     // The monster gave a "comes into view" message and then immediately
     // moved back out of view, leaing the player nothing to see, so give
     // this message to avoid confusion.
-    if (mons->seen_context == _just_seen && !you.see_cell(f))
+    if (mons->seen_context == SC_JUST_SEEN && !you.see_cell(f))
         simple_monster_message(mons, gettext(" moves out of view."));
     else if (crawl_state.game_is_hints() && (mons->flags & MF_WAS_IN_VIEW)
              && !you.see_cell(f))
@@ -3580,7 +3569,7 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     }
 
     // The seen context no longer applies if the monster is moving normally.
-    mons->seen_context.clear();
+    mons->seen_context = SC_NONE;
 
     // This appears to be the real one, ie where the movement occurs:
 #ifdef EUCLIDEAN
@@ -3592,7 +3581,8 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     if (grd(mons->pos()) == DNGN_DEEP_WATER && grd(f) != DNGN_DEEP_WATER
         && !monster_habitable_grid(mons, DNGN_DEEP_WATER))
     {
-        mons->seen_context = "emerges from the water";
+        // er, what?  Seems impossible.
+        mons->seen_context = SC_NONSWIMMER_SURFACES_FROM_DEEP;
     }
     mgrd(mons->pos()) = NON_MONSTER;
 
@@ -3679,7 +3669,7 @@ static bool _monster_move(monster* mons)
                 if (one_chance_in(10))
                 {
                     mprf(MSGCH_TALK_VISUAL, gettext("%s rages."),
-                         mons->name(DESC_CAP_THE).c_str());
+                         mons->name(DESC_THE).c_str());
                 }
                 noisy(noise_level, mons->pos(), mons->mindex());
             }
@@ -3845,7 +3835,7 @@ static bool _monster_move(monster* mons)
                     const bool actor_visible = you.can_see(mons);
                     mprf(gettext("%s knocks down a tree!"),
                          actor_visible?
-                         mons->name(DESC_CAP_THE).c_str() : gettext(M_("Something")));
+                         mons->name(DESC_THE).c_str() : gettext(M_("Something")));
                     noisy(25, target);
                 }
                 else
@@ -3870,7 +3860,7 @@ static bool _monster_move(monster* mons)
         // Check for attacking player.
         if (mons->pos() + mmov == you.pos())
         {
-            ret = monster_attack(mons);
+            ret = fight_melee(mons, &you);
             mmov.reset();
         }
 
@@ -3893,7 +3883,7 @@ static bool _monster_move(monster* mons)
                 mmov.reset();
 
                 dprf("%s is skipping movement in order to follow.",
-                     mons->name(DESC_CAP_THE).c_str());
+                     mons->name(DESC_THE).c_str());
             }
         }
 
@@ -3906,7 +3896,7 @@ static bool _monster_move(monster* mons)
                 ret = _monster_swaps_places(mons, mmov);
             else
             {
-                monsters_fight(mons, targ);
+                fight_melee(mons, targ);
                 ret = true;
             }
 
@@ -3940,7 +3930,7 @@ static bool _monster_move(monster* mons)
         monster* targ = monster_at(mons->pos() + mmov);
         if (!mmov.origin() && targ && _may_cutdown(mons, targ))
         {
-            monsters_fight(mons, targ);
+            fight_melee(mons, targ);
             ret = true;
         }
 

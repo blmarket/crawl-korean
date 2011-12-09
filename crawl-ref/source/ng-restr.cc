@@ -143,7 +143,6 @@ char_choice_restriction job_allowed(species_type speci, job_type job)
         case SP_DEEP_ELF:
         case SP_SLUDGE_ELF:
         case SP_DEEP_DWARF:
-        case SP_HILL_ORC:
         case SP_HALFLING:
         case SP_KOBOLD:
         case SP_OGRE:
@@ -787,7 +786,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_CROSSBOW:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_DEEP_ELF:
         case SP_HIGH_ELF:
@@ -806,7 +805,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_BOW:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_DEEP_DWARF:
         case SP_KOBOLD:
@@ -823,7 +822,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_SLING:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_DEEP_ELF:
         case SP_HIGH_ELF:
@@ -841,7 +840,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_ROCKS:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_OGRE:
         case SP_TROLL:
@@ -851,7 +850,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_JAVELINS:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_DEEP_DWARF:
             return CC_RESTRICTED;
@@ -863,7 +862,7 @@ char_choice_restriction weapon_restriction(weapon_type wpn,
         }
 
     case WPN_DARTS:
-        switch(ng.species)
+        switch (ng.species)
         {
         case SP_DEEP_DWARF:
             return CC_RESTRICTED;

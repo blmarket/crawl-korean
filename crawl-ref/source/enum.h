@@ -181,6 +181,7 @@ enum ability_type
     ABIL_MAKE_OKLOB_PLANT,
     ABIL_MAKE_BURNING_BUSH,
     ABIL_REMOVE_CURSE,
+    NUM_ABILITIES
 };
 
 enum activity_interrupt_type
@@ -253,6 +254,7 @@ enum attribute_type
     ATTR_APPENDAGE,            // eq slot of Beastly Appendage
     ATTR_TITHE_BASE,           // Remainder of untithed gold.
     ATTR_EVOL_XP,              // XP gained since last evolved mutation
+    ATTR_LIFE_GAINED,          // XL when a felid gained a life.
     NUM_ATTRIBUTES
 };
 
@@ -268,6 +270,8 @@ enum transformation_type
     TRAN_BAT,
     TRAN_PIG,
     TRAN_APPENDAGE,
+    // no NUM_TRANSFORMS due to too many switch statements
+    LAST_FORM = TRAN_APPENDAGE
 };
 
 enum beam_type                  // beam[].flavour
@@ -464,10 +468,10 @@ enum branch_type                // you.where_are_you
 };
 
 enum burden_state_type          // you.burden_state
-{
-    BS_UNENCUMBERED,            //    0
-    BS_ENCUMBERED = 2,          //    2
-    BS_OVERLOADED = 5,          //    5
+{   // these values increase hunger and divide stealth
+    BS_UNENCUMBERED = 0,
+    BS_ENCUMBERED   = 2,
+    BS_OVERLOADED   = 5,
 };
 
 enum canned_message_type
@@ -984,14 +988,11 @@ enum delay_type
 
 enum description_level_type
 {
-    DESC_CAP_THE,
-    DESC_NOCAP_THE,
-    DESC_CAP_A,
-    DESC_NOCAP_A,
-    DESC_CAP_YOUR,
-    DESC_NOCAP_YOUR,
+    DESC_THE,
+    DESC_A,
+    DESC_YOUR,
     DESC_PLAIN,
-    DESC_NOCAP_ITS,
+    DESC_ITS,
     DESC_INVENTORY_EQUIP,
     DESC_INVENTORY,
 
@@ -1265,6 +1266,7 @@ enum dungeon_feature_type
     DNGN_ENTER_PORTAL_VAULT = 160,
     DNGN_EXIT_PORTAL_VAULT,
     DNGN_MALIGN_GATEWAY,
+    DNGN_EXPIRED_PORTAL,
 
     // Order of altars must match order of gods (god_type)
     DNGN_ALTAR_FIRST_GOD = 180,        // 180
@@ -1608,8 +1610,8 @@ enum god_type
     NUM_GODS,                          // always after last god
 
     GOD_RANDOM = 100,
-    GOD_NAMELESS = 101,                // for monsters with non-player gods
-    GOD_VIABLE = 102,
+    GOD_NAMELESS,                      // for monsters with non-player gods
+    GOD_VIABLE,
 };
 
 enum holy_word_source_type
@@ -1698,6 +1700,7 @@ enum item_type_id_state_type
     ID_TRIED_TYPE,
     ID_TRIED_ITEM_TYPE,
     ID_KNOWN_TYPE,
+    NUM_ID_STATE_TYPES
 };
 
 enum job_type
@@ -1739,8 +1742,8 @@ enum job_type
     NUM_JOBS,                          // always after the last job
 
     JOB_UNKNOWN = 100,
-    JOB_RANDOM  = 101,
-    JOB_VIABLE  = 102,
+    JOB_RANDOM,
+    JOB_VIABLE,
 };
 
 enum KeymapContext
@@ -2469,6 +2472,7 @@ enum monster_type                      // (int) menv[].type
     MONS_GNOLL_SERGEANT,
     MONS_CRAWLING_CORPSE,
     MONS_MACABRE_MASS,
+    MONS_SERAPH,
 
     NUM_MONSTERS,                      // used for polymorph
 
@@ -2679,7 +2683,7 @@ enum mutation_type
     MUT_EVOLUTION,
     NUM_MUTATIONS,
 
-    RANDOM_MUTATION = NUM_MUTATIONS + 1,
+    RANDOM_MUTATION,
     RANDOM_XOM_MUTATION,
     RANDOM_GOOD_MUTATION,
     RANDOM_BAD_MUTATION,
@@ -2800,12 +2804,10 @@ enum potion_type
 
 enum pronoun_type
 {
-    PRONOUN_CAP,
-    PRONOUN_NOCAP,
-    PRONOUN_CAP_POSSESSIVE,
-    PRONOUN_NOCAP_POSSESSIVE,
-    PRONOUN_REFLEXIVE,                  // reflexive is always lowercase
-    PRONOUN_OBJECTIVE,                  // objective is always lowercase
+    PRONOUN_SUBJECTIVE,
+    PRONOUN_POSSESSIVE,
+    PRONOUN_REFLEXIVE,
+    PRONOUN_OBJECTIVE,
 };
 
 enum artefact_prop_type
@@ -3178,8 +3180,8 @@ enum spell_type
     SPELL_CALL_CANINE_FAMILIAR,
     SPELL_SUMMON_DRAGON,
     SPELL_HIBERNATION,
-#if TAG_MAJOR_VERSION == 32
     SPELL_ENGLACIATION,
+#if TAG_MAJOR_VERSION == 32
     SPELL_DETECT_SECRET_DOORS,
 #endif
     SPELL_SEE_INVISIBLE,
@@ -3527,6 +3529,24 @@ enum disable_type
     DIS_HUNGER,
     DIS_DEATH,
     NUM_DISABLEMENTS
+};
+
+// these are an unholy mess
+enum seen_context_type
+{
+    SC_NONE,
+    SC_JUST_SEEN,       // \TODO: find out and describe what's the difference
+    SC_NEWLY_SEEN,      // /between these two
+    SC_ALREADY_SEEN,
+    SC_TELEPORT_IN,
+    SC_SURFACES,                      // land-capable
+    SC_SURFACES_BRIEFLY,              // land-capable, submerged back
+    SC_FISH_SURFACES_SHOUT,           // water/lava-only, shouting
+    SC_FISH_SURFACES,                 // water/lava-only
+    SC_NONSWIMMER_SURFACES_FROM_DEEP, // impossible?!?
+    SC_UNCHARM,
+    SC_DOOR,
+    SC_GATE,
 };
 
 #ifdef USE_TILE

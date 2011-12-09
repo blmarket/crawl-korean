@@ -220,10 +220,13 @@ formatted_string describe_mutations()
     switch (you.species)
     {
     case SP_MERFOLK:
+        result += gettext("You revert to your normal form in water.\n");
+        result += gettext("You are very nimble and swift while swimming.\n");
+        have_any = true;
+        break;
 
-		//머포크의 물속 진입시 변이 능력인듯합니다.
-//      result += "You revert to your normal form in water.\n";
-        result += "당신은 물속에서 본연의 모습으로 변한다.\n";
+    case SP_MINOTAUR:
+        result += gettext("You reflexively headbutt those who attack you in melee.\n");
         have_any = true;
         break;
 
@@ -1185,8 +1188,10 @@ bool mutate(mutation_type which_mutation, bool failMsg,
             }
         }
 
-        // Zin's protection. 진의 보호?
-        if (you.religion == GOD_ZIN && x_chance_in_y(you.piety, MAX_PIETY)
+        // Zin's protection.
+        if (you.religion == GOD_ZIN
+            && (x_chance_in_y(you.piety, MAX_PIETY)
+                || x_chance_in_y(you.piety, MAX_PIETY + 22))
             && !stat_gain_potion)
         {
 			//simple_god_message(" protects your body from mutation!");
@@ -1649,6 +1654,16 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         ostr << gettext(mdef.have[0]) << player_icemail_armour_class() << ").";
         result = ostr.str();
     }
+    else if (mut == MUT_DEFORMED && is_useless_skill(SK_ARMOUR))
+    {
+        switch (level)
+        {
+        case 1: result = ""; break;
+        case 2: result = "very "; break;
+        case 3: result = "horribly "; break;
+        }
+        result = "Your body is " + result + "strangely shaped.";
+    }
     else if (result.empty() && level > 0)
         result = gettext(mdef.have[level - 1]);
 
@@ -2093,7 +2108,7 @@ static bool _balance_demonic_guardian()
             && !one_chance_in(3)
             && !mons->has_ench(ENCH_LIFE_TIMER))
         {
-            mpr(mons->name(DESC_CAP_THE) + " "
+            mpr(mons->name(DESC_THE) + " "
                 + summoned_poof_msg(*mons) + "!", MSGCH_PLAIN);
             monster_die(*mons, KILL_NONE, NON_MONSTER);
         }
@@ -2122,7 +2137,7 @@ void check_demonic_guardian()
         {
         case 1:
             mt = random_choose(MONS_WHITE_IMP, MONS_LEMURE, MONS_UFETUBUS,
-                               MONS_IRON_IMP, MONS_MIDGE, -1);
+                             MONS_IRON_IMP, MONS_MIDGE, -1);
             break;
         case 2:
             mt = random_choose(MONS_SIXFIRHY, MONS_SMOKE_DEMON, MONS_SOUL_EATER,

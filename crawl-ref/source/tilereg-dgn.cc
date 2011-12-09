@@ -3,6 +3,7 @@
 #ifdef USE_TILE_LOCAL
 
 #include "tilereg-dgn.h"
+#include "process_desc.h"
 
 #include "cio.h"
 #include "cloud.h"
@@ -398,7 +399,7 @@ static const bool _is_appropriate_spell(spell_type spell,
     // Most spells are blocked by transparent walls.
     if (targeted && !you.see_cell_no_trans(target->pos()))
     {
-        switch(spell)
+        switch (spell)
         {
         case SPELL_HELLFIRE_BURST:
         case SPELL_SMITING:
@@ -553,7 +554,7 @@ static bool _spell_in_range(spell_type spell, actor* target)
 
     int range = calc_spell_range(spell);
 
-    switch(spell)
+    switch (spell)
     {
     case SPELL_EVAPORATE:
     case SPELL_MEPHITIC_CLOUD:
@@ -613,7 +614,7 @@ static bool _cast_spell_on_target(actor* target)
     if (!_spell_in_range(spell, target))
     {
         mprf(gettext("%s is out of range for that spell."),
-             target->name(DESC_CAP_THE).c_str());
+             target->name(DESC_THE).c_str());
         return (true);
     }
 
@@ -1081,7 +1082,7 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
                         _add_tip(tip, gettext("[L-Click] Move"));
                     else if (mon)
                     {
-                        tip = mon->name(DESC_CAP_A);
+                        tip = mon->name(DESC_A);
                         _add_tip(tip, gettext("[L-Click] Attack"));
                     }
                 }

@@ -249,7 +249,7 @@ brand_type player::damage_brand(int)
         }
     }
 
-    return (ret);
+    return (static_cast<brand_type>(ret));
 }
 
 // Returns the item in the given equipment slot, NULL if the slot is empty.
@@ -350,28 +350,19 @@ void player::make_hungry(int hunger_increase, bool silent)
         ::lessen_hunger(-hunger_increase, silent);
 }
 
-static const char * _pronoun_you(description_level_type desc)
+std::string player::name(description_level_type dt, bool) const
 {
-    switch (desc)
+    switch (dt)
     {
     case DESC_NONE:
         return "";
-    case DESC_CAP_A: case DESC_CAP_THE:
-        return M_("You");
-    case DESC_NOCAP_A: case DESC_NOCAP_THE:
+    case DESC_A: case DESC_THE:
     default:
-        return M_("you");
-    case DESC_CAP_YOUR:
-        return M_("Your");
-    case DESC_NOCAP_YOUR:
-    case DESC_NOCAP_ITS:
-        return M_("your");
+        return gettext(M_("you"));
+    case DESC_YOUR:
+    case DESC_ITS:
+        return gettext(M_("your"));
     }
-}
-
-std::string player::name(description_level_type dt, bool) const
-{
-    return (gettext(_pronoun_you(dt)));
 }
 
 std::string player::pronoun(pronoun_type pro, bool) const
@@ -379,10 +370,8 @@ std::string player::pronoun(pronoun_type pro, bool) const
     switch (pro)
     {
     default:
-    case PRONOUN_CAP:               return M_("You");
-    case PRONOUN_NOCAP:             return M_("you");
-    case PRONOUN_CAP_POSSESSIVE:    return M_("Your");
-    case PRONOUN_NOCAP_POSSESSIVE:  return M_("your");
+    case PRONOUN_SUBJECTIVE:        return M_("you");
+    case PRONOUN_POSSESSIVE:        return M_("your");
     case PRONOUN_REFLEXIVE:         return M_("yourself");
     case PRONOUN_OBJECTIVE:         return M_("you");
     }
@@ -625,9 +614,9 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         return (false);
     }
 
-    if (is_undead
-        && (is_undead != US_SEMI_UNDEAD || hunger_state <= HS_SATIATED))
+    if (!you.can_bleed(false))
     {
+        // XXX: This message assumes that you're undead.
         if (verbose)
             mpr(gettext("You cannot raise a blood rage in your lifeless body."));
 
@@ -645,7 +634,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
         {
             const item_def *amulet = you.slot_item(EQ_AMULET, false);
             mprf("You cannot go berserk with %s on.",
-                 amulet? amulet->name(true, DESC_NOCAP_YOUR).c_str() : "your amulet");
+                 amulet? amulet->name(true, DESC_YOUR).c_str() : "your amulet");
         }
         return (false);
     }

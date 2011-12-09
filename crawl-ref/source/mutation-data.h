@@ -367,11 +367,11 @@
 { MUT_DEFORMED,                   8,  3,  true,  true,
   M_("deformed body"),
 
-  {N_("Armour fits poorly on your unusually shaped body."),
+  {N_("Armour fits poorly on your strangely shaped body."),
    N_("Armour fits poorly on your deformed body."),
    N_("Armour fits poorly on your badly deformed body.")},
 
-  {N_("Your body twists unusually."),
+  {N_("Your body twists strangely."),
    N_("Your body twists and deforms."),
    N_("Your body twists and deforms.")},
 
@@ -1165,7 +1165,7 @@
     N_("Your body becomes viscous.")},
 
    {N_("Your body returns to its normal consistency."),
-    N_("Your body becomes less viscous."),
+    N_("Your body becomes less malleable."),
     N_("Your body becomes less viscous.")},
 
     "gelatinous body"
@@ -1376,8 +1376,8 @@
   NULL,
 
   {N_("You are partially covered in slimy green scales (AC +1)."),
-   N_("You are mostly covered in slimy green scales (AC +2, EV -1)."),
-   N_("You are completely covered in slimy green scales (AC +3, EV -2, rPois).")},
+   N_("You are mostly covered in slimy green scales (AC +2)."),
+   N_("You are completely covered in slimy green scales (AC +3, rPois).")},
 
   {N_("Slimy green scales grow over part of your body."),
    N_("Slimy green scales spread over more of your body."),

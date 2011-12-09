@@ -316,7 +316,7 @@ void Stash::update()
         item_def *pitem = &mitm[you.visible_igrd(p)];
         hints_first_item(*pitem);
 
-        ash_id_item(*pitem);
+        god_id_item(*pitem);
         const item_def& item = *pitem;
 
         if (!_grid_has_perceived_multiple_items(p))
@@ -398,7 +398,7 @@ static short _min_rot(const item_def &item)
 // stash-tracking pre/suffixes.
 std::string Stash::stash_item_name(const item_def &item)
 {
-    std::string name = item.name(false, DESC_NOCAP_A);
+    std::string name = item.name(false, DESC_A);
 
     if (!_is_rottable(item))
         return name;
@@ -650,7 +650,7 @@ void Stash::_update_corpses(int rot_time)
 void Stash::_update_identification()
 {
     for (int i = items.size() - 1; i >= 0; i--)
-        ash_id_item(items[i]);
+        god_id_item(items[i]);
 }
 
 void Stash::add_item(const item_def &item, bool add_to_front)

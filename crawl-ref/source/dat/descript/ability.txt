@@ -307,7 +307,7 @@ Draw One
 %%%%
 Peek at Two
 
-가진 카드 중 두 장을 뽑아서 본 후 다시 섞는다. 두 장의 카드를 보고 어떤 카드 혹은 덱인지 알아낼 수도 있다.
+Discard one card from any deck in your inventory to draw two cards from the deck, look at them, and shuffle them back into the deck. The deck will be inscribed as containing those two cards, and, if they are different, this will identify the deck.
 %%%%
 Triple Draw
 
@@ -317,7 +317,7 @@ Draw three cards from any deck in your inventory, look at them, and decide which
 %%%%
 Mark Four
 
-가진 카드 중 네 장을 뽑아, 덱의 맨 위로 올라오면 알 수 있도록 표시해둔다. 이것으로 덱이 어떤 카드를 포함하는지 알 수 있게 된다.
+Discard between one and three cards from any deck in your inventory to draw four cards from the deck, mark and remember them, so that you can tell when they are on top, and shuffle them back into the deck. The deck will be inscribed as containing those cards, and doing so will identify the deck.
 %%%%
 Stack Five
 

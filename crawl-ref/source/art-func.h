@@ -70,42 +70,39 @@ static void _ASMODEUS_melee_effect(item_def* weapon, actor* attacker,
 
 static bool _evoke_sceptre_of_asmodeus()
 {
-    bool rc = false;
-    if (one_chance_in(3))
+    if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
+        return (false);
+
+    const monster_type mon = random_choose_weighted(
+                                   3, MONS_EFREET,
+                                   3, MONS_SUN_DEMON,
+                                   2, MONS_BALRUG,
+                                   2, MONS_HELLION,
+                                   1, MONS_PIT_FIEND,
+                                   1, MONS_BRIMSTONE_FIEND,
+                                   0);
+
+    mgen_data mg(mon, BEH_CHARMED, &you,
+                 0, 0, you.pos(), MHITYOU,
+                 MG_FORCE_BEH, you.religion);
+
+    const int mons = create_monster(mg);
+
+    if (mons != -1)
     {
-        const monster_type mon = random_choose_weighted(
-                                       3, MONS_EFREET,
-                                       3, MONS_SUN_DEMON,
-                                       2, MONS_BALRUG,
-                                       2, MONS_HELLION,
-                                       1, MONS_PIT_FIEND,
-                                       1, MONS_BRIMSTONE_FIEND,
-                                       0);
+        mpr("The Sceptre summons one of its servants.");
+        did_god_conduct(DID_UNHOLY, 3);
 
-        mgen_data mg(mon, BEH_CHARMED, &you,
-                     0, 0, you.pos(), MHITYOU,
-                     MG_FORCE_BEH, you.religion);
+        monster* m = &menv[mons];
+        m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
 
-        const int mons = create_monster(mg);
-
-        if (mons != -1)
-        {
-            rc = true;
-            mpr("The Sceptre summons one of its servants.");
-            did_god_conduct(DID_UNHOLY, 3);
-
-            monster* m = &menv[mons];
-            m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
-
-            if (!player_angers_monster(m))
-            {
-                mpr("You don't feel so good about this...");
-            }
-        }
-        else
-            mpr("The air shimmers briefly.");
+        if (!player_angers_monster(m))
+            mpr("You don't feel so good about this...");
     }
-    return (rc);
+    else
+        mpr("The air shimmers briefly.");
+
+    return (true);
 }
 
 
@@ -309,8 +306,8 @@ static void _SINGING_SWORD_equip(item_def *item, bool *show_msgs, bool unmeld)
 
     if (!item_type_known(*item))
     {
-        mprf(MSGCH_TALK, "%s says, \"Hi!  I'm the Singing Sword!\"",
-             item->name(true, DESC_CAP_THE).c_str());
+        mprf(MSGCH_TALK, gettext("%s says, \"Hi!  I'm the Singing Sword!\""),
+             item->name(true, DESC_THE).c_str());
     }
     else
         mpr("The Singing Sword hums in delight!", MSGCH_TALK);
@@ -616,7 +613,8 @@ static void _DEMON_AXE_world_reacts(item_def *item)
     {
         monster *mon = monster_at(*di);
         if (mon && you.can_see(mon)
-            && you.possible_beholder(mon))
+            && you.possible_beholder(mon)
+            && !mons_is_firewood(mon))
         {
             closest = mon;
             goto found;
@@ -628,7 +626,7 @@ found:
     if (!you.beheld_by(closest))
     {
          mprf("Visions of slaying %s flood into your mind.",
-              closest->name(DESC_NOCAP_THE).c_str());
+              closest->name(DESC_THE).c_str());
 
          // The monsters (if any) currently mesmerising the player do not include
          // this monster. To avoid trapping the player, all other beholders
@@ -707,7 +705,7 @@ static void _UNDEADHUNTER_melee_effect(item_def* item, actor* attacker,
     if (defender->holiness() == MH_UNDEAD && !one_chance_in(3) && !mondied)
     {
         mprf("%s %s blasted by disruptive energy!",
-              defender->name(DESC_CAP_THE).c_str(),
+              defender->name(DESC_THE).c_str(),
               defender->atype() == ACT_PLAYER ? "are" : "is");
         defender->hurt(attacker, random2avg((1 + (dam * 3)), 3));
     }

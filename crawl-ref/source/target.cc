@@ -64,8 +64,13 @@ targetter_smite::targetter_smite(const actor* act, int ran,
 
 bool targetter_smite::valid_aim(coord_def a)
 {
-    if (a != origin && !cell_see_cell(origin, a, LOS_DEFAULT))
+    if (a != origin && !cell_see_cell(origin, a, LOS_NO_TRANS))
+    {
+        // Scrying/glass/tree/grate.
+        if (agent && agent->see_cell(a))
+            return notify_fail(gettext("There's something in the way."));
         return notify_fail(gettext("You cannot see that place."));
+    }
     if ((origin - a).abs() > range2)
         return notify_fail(gettext("Out of range."));
     if (!affects_walls && feat_is_solid(grd(a)))
@@ -186,8 +191,11 @@ bool targetter_cloud::valid_aim(coord_def a)
     if (!map_bounds(a)
         || agent
            && origin != a
-           && !cell_see_cell(origin, a, LOS_DEFAULT))
+           && !cell_see_cell(origin, a, LOS_NO_TRANS))
     {
+        // Scrying/glass/tree/grate.
+        if (agent && agent->see_cell(a))
+            return notify_fail(gettext("There's something in the way."));
         return notify_fail(gettext("You cannot see that place."));
     }
     if (feat_is_solid(grd(a)))
@@ -221,7 +229,7 @@ bool targetter_cloud::set_aim(coord_def a)
         for (unsigned int i = 0; i < to_place; i++)
         {
             coord_def c = queue[d1][i];
-            for(adjacent_iterator ai(c); ai; ++ai)
+            for (adjacent_iterator ai(c); ai; ++ai)
                 if (_cloudable(*ai) && seen.find(*ai) == seen.end())
                 {
                     unsigned int d2 = d1 + ((*ai - c).abs() == 1 ? 5 : 7);

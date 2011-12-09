@@ -273,12 +273,12 @@ void fill_status_info(int status, status_info* inf)
     switch (status)
     {
     case DUR_CONTROL_TELEPORT:
-        if(!allow_control_teleport(true))
+        if (!allow_control_teleport(true))
             inf->light_colour = DARKGREY;
         break;
 
     case DUR_SWIFTNESS:
-        if(you.in_water())
+        if (you.in_water())
             inf->light_colour = DARKGREY;
         break;
 
@@ -717,16 +717,21 @@ static void _describe_rotting(status_info* inf)
     if (you.rotting || you.species == SP_GHOUL)
     {
         inf->short_text = gettext(M_("rotting"));
-        if (you.rotting > 15)
+        inf->long_text = gettext("Your flesh is rotting.");
+        int rot = you.rotting;
+        if (you.species == SP_GHOUL)
+            rot += 1 + (1 << std::max(0, HS_SATIATED - you.hunger_state));
+        if (rot > 15)
             inf->long_text = gettext("Your flesh is rotting before your eyes.");
-        else if (you.rotting > 8)
-            inf->long_text = gettext("Your flesh is rotting away quickly");
-        else if (you.rotting > 4)
-            inf->long_text = gettext("Your flesh is rotting badly");
+        else if (rot > 8)
+            inf->long_text = gettext("Your flesh is rotting away quickly.");
+        else if (rot > 4)
+            inf->long_text = gettext("Your flesh is rotting badly.");
         else if (you.species == SP_GHOUL)
-            inf->long_text = gettext("Your flesh is rotting faster than usual");
-        else
-            inf->long_text = gettext("Your flesh is rotting.");
+            if (rot > 2)
+				inf->long_text = gettext("Your flesh is rotting faster than usual.");
+            else
+				inf->long_text = gettext("Your flesh is rotting at the usual pace.");
     }
 }
 
@@ -757,7 +762,7 @@ static void _describe_nausea(status_info* inf)
     inf->light_colour = BROWN;
     inf->light_text   = "Nausea";
     inf->short_text   = "nauseated";
-    inf->long_text    = (you.hunger_state <= HS_STARVING) ?
+    inf->long_text    = (you.hunger_state <= HS_NEAR_STARVING) ?
                 "You would have trouble eating anything." :
                 "You cannot eat right now.";
 }

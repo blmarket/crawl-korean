@@ -558,7 +558,7 @@ static std::string _print_altars_for_gods(const std::vector<god_type>& gods,
             colour = "magenta";
         else if (you.religion == god)
             colour = "yellow";
-        else if (god_likes_your_god(god))
+        else if (god_likes_your_god(god) && has_altar_been_seen)
             colour = "brown";
 
         if (!print_unseen && !strcmp(colour, "darkgrey"))
@@ -836,6 +836,9 @@ static void _seen_other_thing(dungeon_feature_type which_thing,
 
     default:
         const portal_type portal = _feature_to_portal(which_thing);
+        // hell upstairs are never interesting
+        if (portal == PORTAL_HELL && player_in_hell())
+            break;
         if (portal != PORTAL_NONE)
             portals_present[where] = portal;
         break;

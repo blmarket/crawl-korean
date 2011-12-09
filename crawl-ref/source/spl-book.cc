@@ -14,6 +14,7 @@
 #include <iomanip>
 
 #include "artefact.h"
+#include "effects.h"
 #include "externs.h"
 #include "species.h"
 #include "cio.h"
@@ -84,15 +85,6 @@ spell_type which_spell_in_book(int sbook_type, int spl)
     return spellbook_template_array[sbook_type][spl];
 }
 
-int player_spell_skills()
-{
-    int sum = 0;
-    for (int i = SK_SPELLCASTING; i <= SK_LAST_MAGIC; i++)
-        sum += you.skills[i];
-
-    return (sum);
-}
-
 // If fs is not NULL, updates will be to the formatted_string instead of
 // the display.
 int spellbook_contents(item_def &book, read_book_action_type action,
@@ -104,14 +96,12 @@ int spellbook_contents(item_def &book, read_book_action_type action,
 
     const int spell_levels = player_spell_levels();
 
-    bool spell_skills = player_spell_skills();
-
     set_ident_flags(book, ISFLAG_KNOW_TYPE);
 
     formatted_string out;
     out.textcolor(LIGHTGREY);
 
-    out.cprintf("%s", book.name(true, DESC_CAP_THE).c_str());
+    out.cprintf("%s", book.name(true, DESC_THE).c_str());
 
     out.cprintf(gettext("\n\n Spells                             Type                      Level\n"));
 
@@ -142,7 +132,6 @@ int spellbook_contents(item_def &book, read_book_action_type action,
             else if (you_cannot_memorise(stype)
                 || you.experience_level < level_diff
                 || spell_levels < levels_req
-                || !spell_skills
                 || book.base_type == OBJ_BOOKS
                    && !player_can_memorise_from_spellbook(book))
             {
@@ -578,7 +567,7 @@ bool you_cannot_memorise(spell_type spell, bool &undead)
         undead = true;
 
     if (you.species == SP_DEEP_DWARF && spell == SPELL_REGENERATION)
-        rc = true;
+        rc = true, undead = false;
 
     if (you.species == SP_FELID
         && (spell == SPELL_PORTAL_PROJECTILE
@@ -593,7 +582,7 @@ bool you_cannot_memorise(spell_type spell, bool &undead)
          // could be useful if it didn't require wielding
          || spell == SPELL_TUKIMAS_DANCE))
     {
-        rc = true;
+        rc = true, undead = false;
     }
 
     return (rc);
@@ -1105,16 +1094,6 @@ bool can_learn_spell(bool silent)
         return (false);
     }
 
-    if (!player_spell_skills())
-    {
-        if (!silent)
-        {
-            mpr(gettext("You can't use spell magic! I'm afraid it's scrolls only "
-                "for now."));
-        }
-        return (false);
-    }
-
     if (you.confused())
     {
         if (!silent)
@@ -1254,7 +1233,7 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         prompt += make_stringf(gettext("is %s, a dangerous spellbook which will "
                                "strike back at you if your memorisation "
                                "attempt fails. Attempt to memorise anyway?"),
-                               fakebook.name(true, DESC_NOCAP_THE).c_str());
+                               fakebook.name(true, DESC_THE).c_str());
 
         // Deactivate choice from tile inventory.
         mouse_control mc(MOUSE_MODE_MORE);
@@ -1358,7 +1337,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
     prompt += make_stringf(gettext("Forgetting %s from %s will destroy the book! "
                            "Are you sure?"),
                            gettext(spell_title(spell)),
-                           book->name(true, DESC_NOCAP_THE).c_str());
+                           book->name(true, DESC_THE).c_str());
 
     // Deactivate choice from tile inventory.
     mouse_control mc(MOUSE_MODE_MORE);
@@ -1488,8 +1467,10 @@ int staff_spell(int staff)
     }
 
     // All checks passed, we can cast the spell.
-    if (your_spells(spell, power, false, false)
-            == SPRET_ABORT)
+    if (you.confused())
+        random_uselessness();
+    else if (your_spells(spell, power, false, false)
+                == SPRET_ABORT)
     {
         crawl_state.zero_turns_taken();
         return (-1);
@@ -2538,7 +2519,7 @@ bool book_has_title(const item_def &book)
 
 bool is_dangerous_spellbook(const int book_type)
 {
-    switch(book_type)
+    switch (book_type)
     {
     case BOOK_NECRONOMICON:
     case BOOK_GRAND_GRIMOIRE:

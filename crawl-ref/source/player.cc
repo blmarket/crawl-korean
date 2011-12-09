@@ -19,6 +19,9 @@
 #include "areas.h"
 #include "artefact.h"
 #include "branch.h"
+#ifdef DGL_WHEREIS
+ #include "chardump.h"
+#endif
 #include "cloud.h"
 #include "clua.h"
 #include "coord.h"
@@ -111,7 +114,7 @@ static void _moveto_maybe_repel_stairs()
         {
             std::string stair_str =
                 feature_description(new_grid, NUM_TRAPS, "",
-                                    DESC_CAP_THE, false);
+                                    DESC_THE, false);
             std::string prep = feat_preposition(new_grid, true, &you);
 
             mprf(gettext("%s slides away as you move %s it!"), stair_str.c_str(),
@@ -182,7 +185,7 @@ static bool _check_moveto_trap(const coord_def& p, const std::string &move_verb)
 
             mprf(MSGCH_WARN,
                  gettext("You found %s trap!"),
-                 trap->name(DESC_NOCAP_A).c_str());
+                 trap->name(DESC_A).c_str());
 
             if (!you.running.is_any_travel())
                 more();
@@ -635,7 +638,7 @@ void update_vision_range()
     set_los_radius(you.current_vision);
 }
 
-// Checks whether the player's current species can use
+// Checks whether the player's current species can
 // use (usually wear) a given piece of equipment.
 // Note that EQ_BODY_ARMOUR and EQ_HELMET only check
 // the ill-fitting variant (i.e., not caps and robes).
@@ -912,7 +915,7 @@ bool berserk_check_wielded_weapon()
     {
         std::string prompt = make_stringf(gettext(
                 "Do you really want to go berserk while "
-                "wielding %s?"), weapon.name(true, DESC_NOCAP_YOUR).c_str());
+                "wielding %s?"), weapon.name(true, DESC_YOUR).c_str());
 
         if (!yesno(prompt.c_str(), true, 'n'))
         {
@@ -1477,15 +1480,18 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
         // dragonskin cloak: 0.5 to draconic resistances
         if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             rf++;
-    }
+        }
 
     // species:
     if (you.species == SP_MUMMY)
         rf--;
 
     // mutations:
-    rf += player_mutation_level(MUT_HEAT_RESISTANCE);
-    rf += player_mutation_level(MUT_MOLTEN_SCALES) == 3 ? 1 : 0;
+    if (!temp || form_keeps_mutations())
+    {
+        rf += player_mutation_level(MUT_HEAT_RESISTANCE);
+        rf += player_mutation_level(MUT_MOLTEN_SCALES) == 3 ? 1 : 0;
+    }
 
     // spells:
     if (temp)
@@ -1618,12 +1624,16 @@ int player_res_cold(bool calc_unid, bool temp, bool items)
         // dragonskin cloak: 0.5 to draconic resistances
         if (player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             rc++;
-    }
+        }
 
     // mutations:
-    rc += player_mutation_level(MUT_COLD_RESISTANCE);
-    rc += player_mutation_level(MUT_ICY_BLUE_SCALES) == 3 ? 1 : 0;
-    rc += player_mutation_level(MUT_SHAGGY_FUR) == 3 ? 1 : 0;
+    if (!temp || form_keeps_mutations())
+    {
+        rc += player_mutation_level(MUT_COLD_RESISTANCE);
+        rc += player_mutation_level(MUT_ICY_BLUE_SCALES) == 3 ? 1 : 0;
+        if (you.form != TRAN_STATUE)
+            rc += player_mutation_level(MUT_SHAGGY_FUR) == 3 ? 1 : 0;
+    }
 
     if (rc < -3)
         rc = -3;
@@ -1661,7 +1671,8 @@ int player_res_acid(bool calc_unid, bool items)
     }
 
     // mutations:
-    res += std::max(0, player_mutation_level(MUT_YELLOW_SCALES) - 1);
+    if (form_keeps_mutations())
+        res += std::max(0, player_mutation_level(MUT_YELLOW_SCALES) - 1);
 
     if (res > 3)
         res = 3;
@@ -1714,8 +1725,11 @@ int player_res_electricity(bool calc_unid, bool temp, bool items)
     }
 
     // mutations:
-    re += player_mutation_level(MUT_THIN_METALLIC_SCALES) == 3 ? 1 : 0;
-    re += player_mutation_level(MUT_SHOCK_RESISTANCE);
+    if (!temp || form_keeps_mutations())
+    {
+        re += player_mutation_level(MUT_THIN_METALLIC_SCALES) == 3 ? 1 : 0;
+        re += player_mutation_level(MUT_SHOCK_RESISTANCE);
+    }
 
     if (temp)
     {
@@ -1792,8 +1806,11 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
     }
 
     // mutations:
-    rp += player_mutation_level(MUT_POISON_RESISTANCE);
-    rp += player_mutation_level(MUT_SLIMY_GREEN_SCALES) == 3 ? 1 : 0;
+    if (!temp || form_keeps_mutations())
+    {
+        rp += player_mutation_level(MUT_POISON_RESISTANCE);
+        rp += player_mutation_level(MUT_SLIMY_GREEN_SCALES) == 3 ? 1 : 0;
+    }
 
     // Only thirsty vampires are naturally poison resistant.
     if (you.species == SP_VAMPIRE && you.hunger_state < HS_SATIATED)
@@ -2087,7 +2104,8 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
     }
 
     // undead/demonic power
-    pl += player_mutation_level(MUT_NEGATIVE_ENERGY_RESISTANCE);
+    if (!temp || form_keeps_mutations())
+        pl += player_mutation_level(MUT_NEGATIVE_ENERGY_RESISTANCE);
 
     pl = std::min(3, pl);
 
@@ -2298,62 +2316,6 @@ int player_evasion_size_factor()
     return 2 * (SIZE_MEDIUM - size);
 }
 
-// The EV penalty to the player for wearing their current shield.
-int player_adjusted_shield_evasion_penalty(int scale)
-{
-    const item_def *shield = you.slot_item(EQ_SHIELD, false);
-    if (!shield)
-        return (0);
-
-    const int base_shield_penalty = -property(*shield, PARM_EVASION);
-    return std::max(0,
-                    (base_shield_penalty * scale
-                     - you.skill(SK_SHIELDS, scale)
-                     / std::max(1, 5 + player_evasion_size_factor())));
-}
-
-int player_raw_body_armour_evasion_penalty()
-{
-    const item_def *body_armour = you.slot_item(EQ_BODY_ARMOUR, false);
-    if (!body_armour)
-        return (0);
-
-    const int base_ev_penalty = -property(*body_armour, PARM_EVASION);
-    return base_ev_penalty;
-}
-
-int player_size_adjusted_body_armour_evasion_penalty(int scale)
-{
-    const int base_ev_penalty = player_raw_body_armour_evasion_penalty();
-    if (!base_ev_penalty)
-        return (0);
-
-    const int size = you.body_size(PSIZE_BODY);
-
-    const int size_bonus_factor = (size - SIZE_MEDIUM) * scale / 4;
-
-    const int size_adjusted_penalty =
-        std::max(0,
-                 scale * base_ev_penalty
-                 - size_bonus_factor * base_ev_penalty);
-
-    return (size_adjusted_penalty);
-}
-
-// The EV penalty to the player for their worn body armour.
-int player_adjusted_body_armour_evasion_penalty(int scale)
-{
-    const int base_ev_penalty = player_raw_body_armour_evasion_penalty();
-    if (!base_ev_penalty)
-        return (0);
-
-    return ((base_ev_penalty
-             + std::max(0, 3 * base_ev_penalty - you.strength()))
-            * (450 - you.skill(SK_ARMOUR, 10))
-            * scale
-            / 450);
-}
-
 // The total EV penalty to the player for all their worn armour items
 // with a base EV penalty (i.e. EV penalty as a base armour property,
 // not as a randart property).
@@ -2375,7 +2337,7 @@ static int _player_adjusted_evasion_penalty(const int scale)
     }
 
     return (piece_armour_evasion_penalty * scale +
-            player_adjusted_body_armour_evasion_penalty(scale));
+            you.adjusted_body_armour_penalty(scale));
 }
 
 // EV bonuses that work even when helpless.
@@ -2409,12 +2371,15 @@ int player_evasion_bonuses(ev_ignore_type evit)
     evbonus += scan_artefacts(ARTP_EVASION);
 
     // mutations
-    if (player_mutation_level(MUT_ICY_BLUE_SCALES) > 1)
-        evbonus--;
-    if (player_mutation_level(MUT_MOLTEN_SCALES) > 1)
-        evbonus--;
-    evbonus -= std::max(0, player_mutation_level(MUT_SLIMY_GREEN_SCALES) - 1);
-    evbonus += std::max(0, player_mutation_level(MUT_GELATINOUS_BODY) - 1);
+    if (form_keeps_mutations())
+    {
+        if (player_mutation_level(MUT_ICY_BLUE_SCALES) > 1)
+            evbonus--;
+        if (player_mutation_level(MUT_MOLTEN_SCALES) > 1)
+            evbonus--;
+        if (you.form != TRAN_STATUE)
+            evbonus += std::max(0, player_mutation_level(MUT_GELATINOUS_BODY) - 1);
+    }
 
     // transformation penalties/bonuses not covered by size alone:
     if (you.form == TRAN_STATUE)
@@ -2495,7 +2460,7 @@ int player_evasion(ev_ignore_type evit)
     // adjusted_evasion_penalty, however.
     const int armour_dodge_penalty =
         std::max(0,
-                 (30 * player_size_adjusted_body_armour_evasion_penalty(scale)
+                 (30 * you.adjusted_body_armour_penalty(scale, true)
                   - 30 * scale)
                  / std::max(1, (int) you.strength()));
 
@@ -2503,8 +2468,7 @@ int player_evasion(ev_ignore_type evit)
     const int armour_adjusted_dodge_bonus =
         std::max(0, dodge_bonus - armour_dodge_penalty);
 
-    const int adjusted_shield_penalty =
-        player_adjusted_shield_evasion_penalty(scale);
+    const int adjusted_shield_penalty = you.adjusted_shield_penalty(scale);
 
     const int prestepdown_evasion =
         size_base_ev
@@ -2555,12 +2519,12 @@ int player_armour_shield_spell_penalty()
     const int scale = 100;
 
     const int body_armour_penalty =
-        std::max(25 * player_adjusted_body_armour_evasion_penalty(scale)
+        std::max(25 * you.adjusted_body_armour_penalty(scale)
                     - player_body_armour_racial_spellcasting_bonus(scale),
                  0);
 
     const int total_penalty = body_armour_penalty
-                 + 25 * player_adjusted_shield_evasion_penalty(scale)
+                 + 25 * you.adjusted_shield_penalty(scale)
                  - 20 * scale;
 
     return (std::max(total_penalty, 0) / scale);
@@ -2651,7 +2615,13 @@ int player_shield_class(void)
         shield += you.skill(SK_SHIELDS, 38) + std::min(you.skill(SK_SHIELDS, 38), 3 * 38);
 
     // mutations
-    shield += player_mutation_level(MUT_LARGE_BONE_PLATES) > 0 ? 100 + player_mutation_level(MUT_LARGE_BONE_PLATES) * 100 : 0;      // +2, +3, +4
+    if (form_keeps_mutations())
+    {
+        // +2, +3, +4
+        shield += (player_mutation_level(MUT_LARGE_BONE_PLATES) > 0
+                   ? 100 + player_mutation_level(MUT_LARGE_BONE_PLATES) * 100
+                   : 0);
+    }
 
     return (shield + stat + 50) / 100;
 }
@@ -2840,8 +2810,7 @@ int get_exp_progress()
     return ((you.experience - current) * 100 / (next - current));
 }
 
-void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
-              unsigned int* actual_avail_gain)
+void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
 {
     if (crawl_state.game_is_arena())
         return;
@@ -2859,8 +2828,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
     if (you.penance[GOD_ASHENZARI])
         ash_reduce_penance(exp_gained);
 
-    const unsigned int  old_exp   = you.experience;
-    const int           old_avail = you.exp_available;
+    const unsigned int old_exp = you.experience;
 
     dprf("gain_exp: %d", exp_gained);
 
@@ -2895,6 +2863,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
 
     if (you.duration[DUR_SAGE])
     {
+        const int old_avail = you.exp_available;
         // Bonus skill training from Sage.
         you.exp_available =
             (exp_gained * you.sage_bonus_degree) / 100 + exp_gained / 2;
@@ -2915,9 +2884,6 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain,
 
     if (actual_gain != NULL)
         *actual_gain = you.experience - old_exp;
-
-    if (actual_avail_gain != NULL)
-        *actual_avail_gain = you.exp_available - old_avail;
 }
 
 static void _draconian_scale_colour_message()
@@ -2983,22 +2949,24 @@ static void _draconian_scale_colour_message()
     }
 }
 
+bool will_gain_life(int lev)
+{
+    if (lev < you.attribute[ATTR_LIFE_GAINED] - 2)
+        return false;
+
+    return (you.lives + you.deaths < (lev - 1) / 3);
+}
+
 static void _felid_extra_life()
 {
-    int xl = you.max_level;
-    int liv = 0;
-    while (xl > 3 + liv / 2)
-    {
-        xl -= 3 + liv / 2;
-        liv++;
-    }
-
-    if (you.lives + you.deaths < liv && you.lives < 2)
+    if (will_gain_life(you.max_level)
+        && you.lives < 2)
     {
         you.lives++;
         mpr(gettext("Extra life!"), MSGCH_INTRINSIC_GAIN);
+        you.attribute[ATTR_LIFE_GAINED] = you.max_level;
+        // Should play the 1UP sound from SMB...
     }
-    // Should play the 1UP sound from SMB...
 }
 
 void level_change(bool skip_attribute_increase)
@@ -3200,6 +3168,7 @@ void level_change(bool skip_attribute_increase)
                 if (you.experience_level >= 7)
                 {
                     you.species = random_draconian_player_species();
+                    // The player symbol depends on species.
                     update_player_symbol();
 #ifdef USE_TILE
                     init_player_doll();
@@ -3495,6 +3464,10 @@ void level_change(bool skip_attribute_increase)
 
     you.redraw_title = true;
 
+#ifdef DGL_WHEREIS
+    whereis_record();
+#endif
+
     // Hints mode arbitrarily ends at xp 7.
     if (crawl_state.game_is_hints() && you.experience_level >= 7)
         hints_finished();
@@ -3597,7 +3570,7 @@ int check_stealth(void)
         }
     }
 
-    switch(you.form)
+    switch (you.form)
     {
     case TRAN_SPIDER:
         race_mod = 21;
@@ -3689,7 +3662,7 @@ int check_stealth(void)
             stealth += 20;
     }
 
-    else if (player_mutation_level(MUT_HOOVES) > 0)
+    else if (form_keeps_mutations() && player_mutation_level(MUT_HOOVES) > 0)
         stealth -= 5 + 5 * player_mutation_level(MUT_HOOVES);
 
     else if (you.species == SP_FELID && !you.form)
@@ -3707,14 +3680,30 @@ int check_stealth(void)
         stealth -= 50 + current_level_ambient_noise();
 
     // Mutations.
-    stealth += 25 * player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
     stealth += 40 * player_mutation_level(MUT_NIGHTSTALKER);
-    stealth += 40 * player_mutation_level(MUT_CAMOUFLAGE);
-    if (player_mutation_level(MUT_TRANSLUCENT_SKIN) > 1)
-        stealth += 20 * (player_mutation_level(MUT_TRANSLUCENT_SKIN) - 1);
+    if (form_keeps_mutations())
+    {
+        stealth += 25 * player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
+        stealth += 40 * player_mutation_level(MUT_CAMOUFLAGE);
+        if (player_mutation_level(MUT_TRANSLUCENT_SKIN) > 1)
+            stealth += 20 * (player_mutation_level(MUT_TRANSLUCENT_SKIN) - 1);
+    }
 
     // it's easier to be stealthy when there's a lot of background noise
     stealth += 2 * current_level_ambient_noise();
+
+    // If you've been tagged with Corona or are Glowing, the glow
+    // makes you extremely unstealthy.
+    // The darker it is, the bigger the penalty.
+    if (you.backlit())
+        stealth = (2 * you.current_vision * stealth) / (5 * LOS_RADIUS);
+    // On the other hand, shrouding has the reverse effect:
+    if (you.umbra())
+        stealth = (2 * LOS_RADIUS * stealth) / you.current_vision;
+    // The shifting glow from the Orb, while too unstable to negate invis
+    // or affect to-hit, affects stealth even more than regular glow.
+    if (orb_haloed(you.pos()))
+        stealth /= 3;
 
     stealth = std::max(0, stealth);
 
@@ -3892,7 +3881,10 @@ static void _display_movement_speed()
 static void _display_tohit()
 {
 #ifdef DEBUG_DIAGNOSTICS
-    const int to_hit = calc_your_to_hit(false) * 2;
+    melee_attack attk(&you, NULL);
+
+    const int to_hit = attk.calc_to_hit(false);
+
     dprf("To-hit: %d", to_hit);
 #endif
 /*
@@ -3933,21 +3925,19 @@ static const char * _attack_delay_desc(int attack_delay)
 
 static void _display_attack_delay()
 {
-    const random_var delay = calc_your_attack_delay();
+    melee_attack attk(&you, NULL);
+    const int delay = attk.calc_attack_delay(false, false);
 
     // Scale to fit the displayed weapon base delay, i.e.,
     // normal speed is 100 (as in 100%).
-    // We could also compute the variance if desired.
     int avg;
     const item_def* weapon = you.weapon();
     if (weapon && is_range_weapon(*weapon))
         avg = launcher_final_speed(*weapon, you.shield());
     else
-        avg = static_cast<int>(round(10 * delay.expected()));
+        avg = 10 * delay;
 
-    // Haste wasn't counted here, but let's show finesse.
-    // Can't be done in the above function because of interactions with
-    // haste and caps.
+    // Haste shouldn't be counted, but let's show finesse.
     if (you.duration[DUR_FINESSE])
         avg = std::max(20, avg / 2);
 
@@ -3955,16 +3945,6 @@ static void _display_attack_delay()
     /// eg. extremely slow, very slow, ..., blindingly fast
     std::string msg = std::string(gettext("Your attack speed is ")) +
         gettext(_attack_delay_desc(avg)) + ".";
-
-#ifdef DEBUG_DIAGNOSTICS
-    if (you.wizard)
-    {
-        const int max = 10 * delay.max();
-
-        msg += colour_string(make_stringf(" %d%% (max %d%%)", avg, max),
-                             channel_to_colour(MSGCH_DIAGNOSTICS));
-    }
-#endif
 
     mpr(msg);
 }
@@ -5595,6 +5575,7 @@ void player::init()
     redraw_experience   = false;
     redraw_armour_class = false;
     redraw_evasion      = false;
+    redraw_title        = false;
 
     flash_colour        = BLACK;
 
@@ -5708,6 +5689,11 @@ player::~player()
 bool player::is_levitating() const
 {
     return duration[DUR_LEVITATION] || you.attribute[ATTR_PERM_LEVITATION];
+}
+
+bool player::is_banished() const
+{
+    return (!alive() && banished);
 }
 
 bool player::in_water() const
@@ -5879,6 +5865,79 @@ void player::shield_block_succeeded(actor *foe)
     practise(EX_SHIELD_BLOCK);
 }
 
+int player::missile_deflection() const
+{
+    if (you.duration[DUR_DEFLECT_MISSILES])
+        return 2;
+    if (you.duration[DUR_REPEL_MISSILES]
+        || player_mutation_level(MUT_DISTORTION_FIELD) == 3)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int player::unadjusted_body_armour_penalty() const
+{
+    const item_def *body_armour = slot_item(EQ_BODY_ARMOUR, false);
+    if (!body_armour)
+        return (0);
+
+    const int base_ev_penalty = -property(*body_armour, PARM_EVASION);
+    return base_ev_penalty;
+}
+
+// The EV penalty to the player for their worn body armour.
+int player::adjusted_body_armour_penalty(int scale, bool use_size) const
+{
+    const int base_ev_penalty = unadjusted_body_armour_penalty();
+    if (!base_ev_penalty)
+        return (0);
+
+    if (use_size)
+    {
+        const int size = you.body_size(PSIZE_BODY);
+
+        const int size_bonus_factor = (size - SIZE_MEDIUM) * scale / 4;
+
+        return std::max(0, scale * base_ev_penalty
+                           - size_bonus_factor * base_ev_penalty);
+    }
+
+    return ((base_ev_penalty
+             + std::max(0, 3 * base_ev_penalty - strength()))
+            * (450 - skill(SK_ARMOUR, 10))
+            * scale
+            / 450);
+}
+
+// The EV penalty to the player for wearing their current shield.
+int player::adjusted_shield_penalty(int scale) const
+{
+    const item_def *shield_l = you.slot_item(EQ_SHIELD, false);
+    if (!shield_l)
+        return (0);
+
+    const int base_shield_penalty = -property(*shield_l, PARM_EVASION);
+    return std::max(0,
+                    (base_shield_penalty * scale
+                     - you.skill(SK_SHIELDS, scale)
+                     / std::max(1, 5 + player_evasion_size_factor())));
+}
+
+int player::armour_tohit_penalty(bool random_factor) const
+{
+    return maybe_roll_dice(1, adjusted_body_armour_penalty(), random_factor);
+}
+
+int player::shield_tohit_penalty(bool random_factor) const
+{
+    const item_def* wp = slot_item(EQ_WEAPON);
+    int factor = (wp && hands_reqd(*wp, body_size()) == HANDS_HALF) ? 2 : 1;
+
+    return maybe_roll_dice(factor, adjusted_shield_penalty(), random_factor);
+}
+
 int player::skill(skill_type sk, int scale, bool real) const
 {
     // wizard racechange, or upgraded old save
@@ -6042,18 +6101,24 @@ int player::armour_class() const
     }
 
     // Scale mutations, etc.
-    AC += player_mutation_level(MUT_TOUGH_SKIN) ? player_mutation_level(MUT_TOUGH_SKIN) * 100 : 0;                          // +1, +2, +3
-    AC += player_mutation_level(MUT_SHAGGY_FUR) ? player_mutation_level(MUT_SHAGGY_FUR) * 100 : 0;                          // +1, +2, +3
-    AC += player_mutation_level(MUT_IRIDESCENT_SCALES) ? 200 + player_mutation_level(MUT_IRIDESCENT_SCALES) * 200 : 0;      // +4, +6, +8
-    AC += player_mutation_level(MUT_LARGE_BONE_PLATES) ? 100 + player_mutation_level(MUT_LARGE_BONE_PLATES) * 100 : 0;      // +2, +3, +4
-    AC += player_mutation_level(MUT_ROUGH_BLACK_SCALES) ? 100 + player_mutation_level(MUT_ROUGH_BLACK_SCALES) * 300 : 0;    // +4, +7, +10
-    AC += player_mutation_level(MUT_RUGGED_BROWN_SCALES) ? 200 : 0;                                                         // +2, +2, +2
-    AC += player_mutation_level(MUT_ICY_BLUE_SCALES) ? player_mutation_level(MUT_ICY_BLUE_SCALES) * 100 : 0;                // +1, +2, +3
-    AC += player_mutation_level(MUT_MOLTEN_SCALES) ? player_mutation_level(MUT_MOLTEN_SCALES) * 100 : 0;                    // +1, +2, +3
-    AC += player_mutation_level(MUT_SLIMY_GREEN_SCALES) ? player_mutation_level(MUT_SLIMY_GREEN_SCALES) * 100 : 0;          // +1, +2, +3
-    AC += player_mutation_level(MUT_THIN_METALLIC_SCALES) ? player_mutation_level(MUT_THIN_METALLIC_SCALES) * 100 : 0;      // +1, +2, +3
-    AC += player_mutation_level(MUT_YELLOW_SCALES) ? player_mutation_level(MUT_YELLOW_SCALES) * 100 : 0;                    // +1, +2, +3
-    AC += player_mutation_level(MUT_GELATINOUS_BODY) ? (player_mutation_level(MUT_GELATINOUS_BODY) == 3 ? 200 : 100) : 0;   // +1, +1, +2
+    if (form_keeps_mutations())
+    {
+        if (you.form != TRAN_STATUE)
+        {
+            AC += player_mutation_level(MUT_TOUGH_SKIN) ? player_mutation_level(MUT_TOUGH_SKIN) * 100 : 0;                        // +1, +2, +3
+            AC += player_mutation_level(MUT_SHAGGY_FUR) ? player_mutation_level(MUT_SHAGGY_FUR) * 100 : 0;                        // +1, +2, +3
+            AC += player_mutation_level(MUT_GELATINOUS_BODY) ? (player_mutation_level(MUT_GELATINOUS_BODY) == 3 ? 200 : 100) : 0; // +1, +1, +2
+        }
+        AC += player_mutation_level(MUT_IRIDESCENT_SCALES) ? 200 + player_mutation_level(MUT_IRIDESCENT_SCALES) * 200 : 0;        // +4, +6, +8
+        AC += player_mutation_level(MUT_LARGE_BONE_PLATES) ? 100 + player_mutation_level(MUT_LARGE_BONE_PLATES) * 100 : 0;        // +2, +3, +4
+        AC += player_mutation_level(MUT_ROUGH_BLACK_SCALES) ? 100 + player_mutation_level(MUT_ROUGH_BLACK_SCALES) * 300 : 0;      // +4, +7, +10
+        AC += player_mutation_level(MUT_RUGGED_BROWN_SCALES) ? 200 : 0;                                                           // +2, +2, +2
+        AC += player_mutation_level(MUT_ICY_BLUE_SCALES) ? player_mutation_level(MUT_ICY_BLUE_SCALES) * 100 : 0;                  // +1, +2, +3
+        AC += player_mutation_level(MUT_MOLTEN_SCALES) ? player_mutation_level(MUT_MOLTEN_SCALES) * 100 : 0;                      // +1, +2, +3
+        AC += player_mutation_level(MUT_SLIMY_GREEN_SCALES) ? player_mutation_level(MUT_SLIMY_GREEN_SCALES) * 100 : 0;            // +1, +2, +3
+        AC += player_mutation_level(MUT_THIN_METALLIC_SCALES) ? player_mutation_level(MUT_THIN_METALLIC_SCALES) * 100 : 0;        // +1, +2, +3
+        AC += player_mutation_level(MUT_YELLOW_SCALES) ? player_mutation_level(MUT_YELLOW_SCALES) * 100 : 0;                      // +1, +2, +3
+    }
     return (AC / 100);
 }
  /**
@@ -6070,7 +6135,7 @@ int player::armour_class() const
   **/
 int player::gdr_perc() const
 {
-    switch(you.form)
+    switch (you.form)
     {
     case TRAN_DRAGON:
         return 34; // base AC 8
@@ -6096,6 +6161,7 @@ int player::melee_evasion(const actor *act, ev_ignore_type evit) const
                 || (evit & EV_IGNORE_HELPLESS)) ? 0 : 10)
             - (you_are_delayed()
                && !(evit & EV_IGNORE_HELPLESS)
+               && current_delay_action() != DELAY_RECITE
                && !delay_is_run(current_delay_action())? 5 : 0));
 }
 
@@ -6175,8 +6241,8 @@ bool player::is_unbreathing() const
 
     if (petrified())
         return (true);
-
-    return (player_mutation_level(MUT_UNBREATHING));
+ 
+    return (form_keeps_mutations() && player_mutation_level(MUT_UNBREATHING));
 }
 
 // This is a stub. Makes checking for silver damage a little cleaner.
@@ -6267,7 +6333,7 @@ int player::res_rotting(bool temp) const
 
     switch (is_undead)
     {
-        default:
+    default:
     case US_ALIVE:
         return 0;
 
@@ -6275,7 +6341,9 @@ int player::res_rotting(bool temp) const
         return 1; // rottable by Zin, not by necromancy
 
     case US_SEMI_UNDEAD:
-        return temp ? 1 : 0;
+        if (temp && you.hunger_state < HS_SATIATED)
+            return 1;
+        return 0; // no permanent resistance
 
     case US_UNDEAD:
         if (!temp && you.form == TRAN_LICH)
@@ -6397,6 +6465,13 @@ int player_res_magic(bool calc_unid, bool temp)
     return (rm);
 }
 
+bool player::fights_well_unarmed(int heavy_armour_penalty)
+{
+    return (you.burden_state == BS_UNENCUMBERED
+            && x_chance_in_y(you.skill(SK_UNARMED_COMBAT, 10), 200)
+            && x_chance_in_y(2, 1 + heavy_armour_penalty));
+}
+
 bool player::confusable() const
 {
     return (player_mental_clarity() == 0);
@@ -6473,7 +6548,7 @@ int player::mons_species() const
 
 bool player::poison(actor *agent, int amount, bool force)
 {
-    return ::poison_player(amount, agent? agent->name(DESC_NOCAP_A, true) : "");
+    return ::poison_player(amount, agent? agent->name(DESC_A, true) : "");
 }
 
 void player::expose_to_element(beam_type element, int st)
@@ -6608,7 +6683,7 @@ void player::paralyse(actor *who, int str, std::string source)
     int &paralysis(duration[DUR_PARALYSIS]);
 
     if (source.empty() && who)
-        source = who->name(DESC_NOCAP_A);
+        source = who->name(DESC_A);
 
     if (!paralysis && !source.empty())
     {
@@ -6680,14 +6755,9 @@ int player::has_claws(bool allow_tran) const
         if (form == TRAN_DRAGON)
             return (3);
 
-        // transformations other than these will override claws
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override claws
+        if (!form_keeps_mutations() || form == TRAN_BLADE_HANDS)
             return (0);
-        }
     }
 
     if (const int c = species_has_claws(you.species))
@@ -6705,15 +6775,9 @@ int player::has_talons(bool allow_tran) const
 {
     if (allow_tran)
     {
-        // transformations other than these will override talons
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_BLADE_HANDS
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override talons
+        if (!form_keeps_mutations())
             return (0);
-        }
     }
 
     // XXX: Do merfolk in water belong under allow_tran?
@@ -6736,15 +6800,9 @@ int player::has_fangs(bool allow_tran) const
         if (form == TRAN_DRAGON)
             return (3);
 
-        // transformations other than these will override fangs
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_BLADE_HANDS
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override fangs
+        if (!form_keeps_mutations())
             return (0);
-        }
     }
 
     return (player_mutation_level(MUT_FANGS));
@@ -6767,15 +6825,9 @@ int player::has_tail(bool allow_tran) const
         if (form == TRAN_DRAGON)
             return (1);
 
-        // transformations other than these will override a tail
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_BLADE_HANDS
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override a tail
+        if (!form_keeps_mutations())
             return (0);
-        }
     }
 
     // XXX: Do merfolk in water belong under allow_tran?
@@ -6822,15 +6874,9 @@ int player::has_pseudopods(bool allow_tran) const
 {
     if (allow_tran)
     {
-        // transformations other than these will override pseudopods
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_BLADE_HANDS
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override pseudopods
+        if (!form_keeps_mutations())
             return (0);
-        }
     }
 
     return (player_mutation_level(MUT_PSEUDOPODS));
@@ -6845,14 +6891,9 @@ int player::has_tentacles(bool allow_tran) const
 {
     if (allow_tran)
     {
-        if (form != TRAN_NONE
-            && form != TRAN_APPENDAGE
-            && form != TRAN_BLADE_HANDS
-            && form != TRAN_STATUE
-            && form != TRAN_LICH)
-        {
+        // most transformations will override tentacles
+        if (!form_keeps_mutations())
             return (0);
-        }
     }
 
     return (player_mutation_level(MUT_TENTACLES));
@@ -7033,20 +7074,24 @@ bool player::can_safely_mutate() const
                && hunger_state == HS_ENGORGED);
 }
 
-bool player::can_bleed() const
+bool player::can_bleed(bool allow_tran) const
 {
-    if (is_undead && (species != SP_VAMPIRE
-                          || hunger_state <= HS_SATIATED))
+    if (allow_tran)
+    {
+        // These transformations don't bleed. Lichform is handled as undead.
+        if (you.form == TRAN_STATUE || you.form == TRAN_ICE_BEAST
+            || you.form == TRAN_SPIDER)
+        {
+            return (false);
+        }
+    }
+
+    if ((is_undead && is_undead != US_SEMI_UNDEAD)
+        || (is_undead == US_SEMI_UNDEAD && hunger_state <= HS_SATIATED))
     {
         return (false);
     }
 
-    // The corresponding monsters don't bleed either.
-    if (you.form == TRAN_STATUE || you.form == TRAN_ICE_BEAST
-        || you.form == TRAN_LICH || you.form == TRAN_SPIDER)
-    {
-        return (false);
-    }
     return (true);
 }
 

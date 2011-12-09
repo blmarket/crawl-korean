@@ -75,7 +75,7 @@ Nemelex Xobeh
 %%%%
 Elyvilon
 
-Elyvilon the Healer welcomes all good souls who are prepared to help others. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons. Elyvilon does not mind if worshippers shift to Zin or the Shining One.
+Elyvilon the Healer welcomes all good souls who are prepared to help others. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons, though more pious worshippers must find and destroy unholy or evil weapons to gain piety in this way. Elyvilon does not mind if worshippers shift to Zin or the Shining One.
 %%%%
 Lugonu
 
@@ -103,8 +103,7 @@ Ashenzari
 %%%%
 Jiyva
 
-슬라임의 신, '지바'는 혼돈의 고대신이다. 신도들은 슬라임들의 증식을 돕고, 슬라임들에게 여러 물건들을 먹여야 하며, 슬라임을 해해서는 안된다. 
-지바는 종종 신도가 던전 어딘가에 버려둔 아이템을 먹어치우며, 특별히 총애받는 신도는 자신의 신처럼 형체 없는 모습이 되어가며, 그 능력과 돌연변이가 지바의 영향을 받아 변화하게 된다.
+Jiyva is the chaotic ancient deity of the slimes. Followers are expected to support the spread and satiation of their fellow slimes by allowing them to consume items, and are forbidden from harming any slimes. Jiyva will even occasionally consume items left elsewhere in the Dungeon by followers. Especially favoured followers will become as shapeless as their god, as their attributes and mutations shift around under Jiyva's influence.
 %%%%
 Zin powers
 
@@ -179,8 +178,7 @@ Followers of Cheibriados move more slowly as they gain favour, and are rewarded 
 %%%%
 Jiyva powers
 
-지바의 신도들은 젤리를 부르고, 적을 슬라임으로 바꾸며, 궁극적으로는 나쁜 돌연변이를 제거할 수 있다. 신앙심이 깊어질수록 지바는 더 많은 빈도로 던전에 젤리를 내보내며, 신자의 능력을 레벨업 때 가장 최근에 선택한 능력치 위주로 재구성해 주며, 돌연변이를 선물로 내린다. 슬라임은 지바의 신도를 해치지 않으며, 지바는 신도에게도 똑같이 행동할 것을 요구한다. 
-궁극적으로, 기도함으로써 볼 수 있는 모든 슬라임이 동료가 되어 잠시동안 움직이지 않을 것이다.
+Jiyva's followers can request jellies, turn monsters to slime, and eventually remove their harmful mutations. As their piety grows, Jiyva will, with increasing frequency, drop jellies into the dungeon; rearrange followers' attributes based on their skills, armour, and burden; and grant mutation gifts. Slimes will never harm a follower of Jiyva, and Jiyva demands the same conduct in return. Eventually, all visible slimes will join in on prayers, preventing them from moving for awhile.
 %%%%
 Ashenzari powers
 

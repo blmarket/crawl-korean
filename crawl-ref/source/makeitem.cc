@@ -2240,7 +2240,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
     // Currently being too restrictive results in asserts, being too
     // permissive will generate such items on "any armour ego:XXX".
     // The latter is definitely so much safer -- 1KB
-    switch((special_armour_type)brand)
+    switch ((special_armour_type)brand)
     {
     case SPARM_FORBID_EGO:
     case SPARM_NORMAL:
@@ -2491,7 +2491,7 @@ static int _wand_max_initial_charges(int subtype)
 
 bool is_high_tier_wand(int type)
 {
-    switch(type)
+    switch (type)
     {
     case WAND_PARALYSIS:
     case WAND_FIRE:
@@ -2683,7 +2683,7 @@ static void _generate_scroll_item(item_def& item, int force_type,
             item.sub_type = random_choose_weighted(
                 1800, SCR_IDENTIFY,
                 1115, SCR_REMOVE_CURSE,
-                 511, SCR_DETECT_CURSE,
+                 381, SCR_DETECT_CURSE,
                  331, SCR_FEAR,
                  331, SCR_MAGIC_MAPPING,
                  331, SCR_FOG,
@@ -2706,14 +2706,12 @@ static void _generate_scroll_item(item_def& item, int force_type,
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ACQUIREMENT),
                  140, (depth_mod < 4 ? SCR_TELEPORTATION : SCR_ENCHANT_WEAPON_III),
                  140, (depth_mod < 4 ? SCR_DETECT_CURSE  : SCR_SUMMONING),
+                 140, (depth_mod < 4 ? SCR_DETECT_CURSE  : SCR_SILENCE),
 
                  // High-level scrolls.
                  140, (depth_mod < 7 ? SCR_TELEPORTATION : SCR_VORPALISE_WEAPON),
                  140, (depth_mod < 7 ? SCR_DETECT_CURSE  : SCR_TORMENT),
                  140, (depth_mod < 7 ? SCR_DETECT_CURSE  : SCR_HOLY_WORD),
-
-                 // Balanced by rarity.
-                 10, SCR_SILENCE,
 
                 // [ds] Zero-weights should always be at the end,
                 // since random_choose_weighted stops at the first
@@ -3255,7 +3253,7 @@ int items(bool allow_uniques,
 void reroll_brand(item_def &item, int item_level)
 {
     ASSERT(!is_artefact(item));
-    switch(item.base_type)
+    switch (item.base_type)
     {
     case OBJ_WEAPONS:
         item.special = _determine_weapon_brand(item, item_level);
@@ -3587,7 +3585,7 @@ void maybe_set_item_race(item_def &item, int allowed, int num_rolls)
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_TESTS)
 static int _test_item_level()
 {
-    switch(random2(10))
+    switch (random2(10))
     {
     case 0:
         return MAKE_GOOD_ITEM;

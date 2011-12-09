@@ -31,21 +31,30 @@ function (exports, $, key_conversion, chat, comm) {
     {
         if (typeof msg === "string")
         {
-            if (msg.match(/^{/))
-            {
-                // JSON message
-                comm.handle_message(msg);
-            }
-            else
-            {
-                // Javascript code
-                eval(msg);
-            }
+            // Javascript code
+            eval(msg);
         }
         else
         {
             comm.handle_message(msg);
         }
+    }
+
+    function enqueue_message(msgtext)
+    {
+        if (msgtext.match(/^{/))
+        {
+            // JSON message
+            var msgobj = eval("(" + msgtext + ")");
+            if (!comm.handle_message_immediately(msgobj))
+                message_queue.push(msgobj);
+        }
+        else
+        {
+            // Javascript code
+            message_queue.push(msgtext);
+        }
+        handle_message_backlog();
     }
 
     function handle_message_backlog()
@@ -120,6 +129,15 @@ function (exports, $, key_conversion, chat, comm) {
         lobby(layer == "lobby");
     }
 
+    function register_layer(name)
+    {
+        if (layers.indexOf(name) == -1)
+            layers.push(name);
+    }
+
+    exports.set_layer = set_layer;
+    exports.register_layer = register_layer;
+
     function do_layout()
     {
         $("#loader").height($(window).height());
@@ -144,6 +162,10 @@ function (exports, $, key_conversion, chat, comm) {
                                  so we handle it in keydown */
             (e.which == 9))   /* Tab gives a keypress in Opera even when it is
                                  suppressed in keydown */
+            return;
+
+        // Give the game a chance to handle the key
+        if (!retrigger_event(e, "game_keypress"))
             return;
 
         e.preventDefault();
@@ -177,6 +199,22 @@ function (exports, $, key_conversion, chat, comm) {
         socket.send(s);
     }
 
+    function retrigger_event(ev, new_type)
+    {
+        var new_ev = $.extend({}, ev);
+        new_ev.type = new_type;
+        $(new_ev.target).trigger(new_ev);
+        if (new_ev.isDefaultPrevented())
+            ev.preventDefault();
+        if (new_ev.isPropagationStopped())
+        {
+            ev.stopImmediatePropagation();
+            return false;
+        }
+        else
+            return true;
+    }
+
     function handle_keydown(e)
     {
         if (current_layer == "lobby")
@@ -184,11 +222,15 @@ function (exports, $, key_conversion, chat, comm) {
             if (e.which == 27)
             {
                 e.preventDefault();
-                $(".floating_dialog").hide();
+                hide_dialog();
             }
             return;
         }
         if ($(document.activeElement).hasClass("text")) return;
+
+        // Give the game a chance to handle the key
+        if (!retrigger_event(e, "game_keydown"))
+            return;
 
         if (e.ctrlKey && !e.shiftKey && !e.altKey)
         {
@@ -215,7 +257,7 @@ function (exports, $, key_conversion, chat, comm) {
         }
         else if (!e.ctrlKey && !e.shiftKey && e.altKey)
         {
-            if (e.which == 18) return;
+            if (e.which < 32) return;
 
             e.preventDefault();
             send_bytes([27, e.which]);
@@ -340,13 +382,32 @@ function (exports, $, key_conversion, chat, comm) {
     function show_dialog(id)
     {
         $(".floating_dialog").hide();
-        $(id).fadeIn(100, function () {
-            $(id).focus();
+        var elem = $(id);
+        elem.fadeIn(100, function () {
+            elem.focus();
         });
-        var w = $(id).width();
-        var ww = $(window).width();
-        $(id).offset({ left: ww / 2 - w / 2, top: 50 });
+        center_element(elem);
+        $("#overlay").show();
     }
+    function center_element(elem)
+    {
+        var left = $(window).width() / 2 - elem.outerWidth() / 2;
+        if (left < 0) left = 0;
+        var top = $(window).height() / 2 - elem.outerHeight() / 2;
+        if (top < 0) top = 0;
+        if (top > 50) top = 50;
+        var offset = elem.offset();
+        if (offset.left != left || offset.top != top)
+            elem.offset({ left: left, top: top });
+    }
+    function hide_dialog()
+    {
+        $(".floating_dialog").blur().hide();
+        $("#overlay").hide();
+    }
+    exports.show_dialog = show_dialog;
+    exports.hide_dialog = hide_dialog;
+    exports.center_element = center_element;
 
     function start_register()
     {
@@ -356,7 +417,7 @@ function (exports, $, key_conversion, chat, comm) {
 
     function cancel_register()
     {
-        $("#register").hide();
+        hide_dialog();
     }
 
     function register()
@@ -418,13 +479,14 @@ function (exports, $, key_conversion, chat, comm) {
             game_id: editing_rc,
             contents: $("#rc_file_contents").val()
         });
-        $("#rc_edit").hide();
+        hide_dialog();
         return false;
     }
 
     function pong(data)
     {
         send_message("pong");
+        return true;
     }
 
     function connection_closed(data)
@@ -434,6 +496,7 @@ function (exports, $, key_conversion, chat, comm) {
         $("#chat").hide();
         $("#crt").html(msg + "<br><br>");
         showing_close_message = true;
+        return true;
     }
 
     function play_now(id)
@@ -453,15 +516,14 @@ function (exports, $, key_conversion, chat, comm) {
         set_layer("loader");
     }
 
-    var lobby_update_timeout = undefined;
-    var lobby_update_rate = 30000;
-
     function go_lobby()
     {
         document.title = "WebTiles - Dungeon Crawl Stone Soup";
         location.hash = "#lobby";
 
         set_layer("lobby");
+
+        hide_dialog();
 
         $("#game").html('<div id="crt" style="display: none;"></div>');
 
@@ -470,67 +532,180 @@ function (exports, $, key_conversion, chat, comm) {
         chat.clear();
 
         watching = false;
-
-        lobby_update();
     }
 
     function lobby(enable)
     {
-        if (enable && lobby_update_timeout == undefined)
-        {
-            lobby_update_timeout = setInterval(lobby_update, lobby_update_rate);
-        }
-        else if (!enable && lobby_update_timeout != undefined)
-        {
-            clearInterval(lobby_update_timeout);
-        }
-
         $("#chat").toggle(!enable);
     }
-    function lobby_update()
+
+    var new_list = null;
+
+    function lobby_entry(data)
     {
-        send_message("update_lobby");
+        var single = false;
+        if (new_list == null)
+        {
+            single = true;
+            new_list = $("#player_list").clone();
+        }
+
+        var id = "game-" + data.id;
+        var entry = new_list.find("#" + id);
+        if (entry.length == 0)
+        {
+            entry = $("#game_entry_template").clone();
+            entry.attr("id", id);
+            new_list.append(entry);
+        }
+
+        function set(key, value)
+        {
+            entry.find("." + key).html(value);
+        }
+
+        var username_entry = $(make_watch_link(data));
+        username_entry.text(data.username);
+        set("username", username_entry);
+        set("game_id", data.game_id);
+        set("xl", data.xl);
+        set("char", data.char);
+        set("place", data.place);
+        set("god", data.god || "");
+        set("title", data.title);
+        set("idle_time", format_idle_time(data.idle_time));
+        entry.find(".idle_time").data("time", data.idle_time);
+        entry.find(".idle_time").data("sort", "" + data.idle_time);
+        set("spectator_count", data.spectator_count);
+        if (entry.find(".milestone").text() !== data.milestone)
+        {
+            if (single)
+                roll_in_new_milestone(entry, data.milestone);
+            else
+                set("milestone", data.milestone);
+        }
+
+        if (single)
+            lobby_complete();
     }
-    function lobby_data(data)
+
+    var lobby_idle_timer = setInterval(update_lobby_idle_times, 1000);
+    function update_lobby_idle_times()
+    {
+        $("#player_list .idle_time").each(function () {
+            var $this = $(this);
+            var time = $this.data("time");
+            if (time)
+            {
+                time++;
+                $this.html(format_idle_time(time));
+                $this.data("time", time);
+                $this.data("sort", "" + time);
+            }
+        });
+    }
+
+    function lobby_remove(data)
+    {
+        $("#game-" + data.id).remove();
+        if ($("#player_list tbody tr").length == 0)
+            $("#lobby_body").hide();
+    }
+
+    function lobby_clear()
+    {
+        new_list = $("#player_list").clone();
+        new_list.find("tbody").html("");
+    }
+    function lobby_complete()
     {
         var old_list = $("#player_list");
-        var l = old_list.clone();
-        l.find("tbody").html(data.content);
-        if (data.content.trim() != "")
+        var sortlist;
+        if (new_list.find("tbody tr").length > 0)
         {
-            var sortlist;
+            $("#lobby_body").show();
             if (old_list[0].config)
                 sortlist = old_list[0].config.sortList;
             else
                 sortlist = [[0, 0]];
-            l.tablesorter({
+            new_list.tablesorter({
                 sortList: sortlist,
-                headers: {
-                    3: {
-                        sorter: "timespan"
-                    }
-                }
+                textExtraction: extract_text_or_data
             });
         }
-        old_list.replaceWith(l);
+        else
+            $("#lobby_body").hide();
+        old_list.replaceWith(new_list);
+        new_list = null;
+    }
+
+    function make_watch_link(data)
+    {
+        return "<a href='#watch-" + data.username + "'></a>";
+    }
+
+    function format_idle_time(seconds)
+    {
+        var elem = $("<span></span>");
+        if (seconds == 0)
+        {
+            elem.text("");
+        }
+        else if (seconds < 120)
+        {
+            elem.text(seconds + " s");
+        }
+        else if (seconds < (60 * 60))
+        {
+            elem.text(Math.round(seconds / 60) + " min");
+        }
+        else
+        {
+            elem.text(Math.round(seconds / (60 * 60)) + " h");
+        }
+        return elem;
+    }
+
+    function extract_text_or_data(elem)
+    {
+        var $elem = $(elem);
+        if ($elem.data("sort"))
+            return $elem.data("sort");
+        else
+            return $elem.text();
+    }
+
+    function roll_in_new_milestone(row, milestone)
+    {
+        var td = row.find(".milestone_col");
+        if (td.length == 0) return;
+
+        var new_milestone = td.find(".new_milestone");
+        new_milestone.text(milestone);
+
+        var milestones = td.find(".new_milestone, .milestone");
+        milestones.animate({ top: "-1.1em" }, function () {
+            milestones.text(milestone);
+            milestones.css({ top: 0 });
+        });
     }
 
 
     function force_terminate_no()
     {
         send_message("force_terminate", { answer: false });
-        $("#force_terminate").hide().blur();
+        hide_dialog();
     }
     function force_terminate_yes()
     {
         send_message("force_terminate", { answer: true });
-        $("#force_terminate").hide().blur();
+        hide_dialog();
     }
     function stale_processes_keydown(ev)
     {
         ev.preventDefault();
         send_message("stop_stale_process_purge");
-        $("#stale_processes_message").hide().blur();
+        hide_dialog();
     }
     function force_terminate_keydown(ev)
     {
@@ -647,20 +822,25 @@ function (exports, $, key_conversion, chat, comm) {
     window.set_layer = set_layer;
     window.assert = function () {};
 
+    comm.register_immediate_handlers({
+        "ping": pong,
+        "close": connection_closed,
+    });
+
     comm.register_handlers({
         "multi": handle_multi_message,
 
         "set_game_links": set_game_links,
         "html": set_html,
-        "lobby": lobby_data,
 
-        "ping": pong,
+        "lobby_clear": lobby_clear,
+        "lobby_entry": lobby_entry,
+        "lobby_remove": lobby_remove,
+        "lobby_complete": lobby_complete,
 
         "go_lobby": go_lobby,
         "game_started": crawl_started,
         "game_ended": crawl_ended,
-
-        "close": connection_closed,
 
         "login_success": logged_in,
         "login_fail": login_failed,
@@ -703,8 +883,6 @@ function (exports, $, key_conversion, chat, comm) {
 
         $("#rc_edit_form").bind("submit", send_rc);
 
-        $("#lobby_update_link").bind("click", lobby_update);
-
         $("#force_terminate_no").click(force_terminate_no);
         $("#force_terminate_yes").click(force_terminate_yes);
         $("#stale_processes_message").keydown(stale_processes_keydown);
@@ -745,8 +923,7 @@ function (exports, $, key_conversion, chat, comm) {
                 {
                     console.log("Message size: " + msg.data.length);
                 }
-                message_queue.push(msg.data);
-                handle_message_backlog();
+                enqueue_message(msg.data);
             };
 
             socket.onerror = function ()
@@ -775,17 +952,6 @@ function (exports, $, key_conversion, chat, comm) {
                     showing_close_message = true;
                 }
             };
-
-            $.tablesorter.addParser({
-                id: 'timespan',
-                is: function(s) {
-                    return false;
-                },
-                format: function(s) {
-                    return s.substring(0, s.length - 1);
-                },
-                type: 'numeric'
-            });
         }
         else
         {

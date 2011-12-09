@@ -158,6 +158,10 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
         return;
 
     case BRANCH_DWARVEN_HALL:
+        flv.wall  = TILE_WALL_HALL;
+        flv.floor = TILE_FLOOR_LIMESTONE;
+        return;
+
     case BRANCH_ELVEN_HALLS:
     case BRANCH_HALL_OF_BLADES:
         flv.wall  = TILE_WALL_HALL;
@@ -196,7 +200,7 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
 
     case BRANCH_COCYTUS:
         flv.wall  = TILE_WALL_ICE;
-        flv.floor = TILE_FLOOR_ICE;
+        flv.floor = TILE_FLOOR_FROZEN;
         return;
 
     case BRANCH_ORCISH_MINES:
@@ -206,7 +210,6 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
 
     case BRANCH_LAIR:
     case BRANCH_FOREST:
-    case BRANCH_SPIDER_NEST:
         flv.wall  = TILE_WALL_LAIR;
         flv.floor = TILE_FLOOR_LAIR;
         return;
@@ -218,7 +221,7 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
 
     case BRANCH_SNAKE_PIT:
         flv.wall  = TILE_WALL_SNAKE;
-        flv.floor = TILE_FLOOR_SNAKE;
+        flv.floor = TILE_FLOOR_SNAKE_A + random2(3) * 4;
         return;
 
     case BRANCH_SWAMP:
@@ -229,6 +232,11 @@ void tile_default_flv(level_area_type lev, branch_type br, tile_flavour &flv)
     case BRANCH_SHOALS:
         flv.wall  = TILE_WALL_YELLOW_ROCK;
         flv.floor = TILE_FLOOR_SAND_STONE;
+        return;
+
+    case BRANCH_SPIDER_NEST:
+        flv.wall  = TILE_WALL_LAIR;
+        flv.floor = TILE_FLOOR_SPIDER;
         return;
 
     case BRANCH_HALL_OF_ZOT:
@@ -991,6 +999,11 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
             orig = TILE_DNGN_METAL_IRON;
         else if (orig == TILE_DNGN_CRYSTAL)
             orig = TILE_WALL_EMERALD;
+    }
+    else if (player_in_branch(BRANCH_COCYTUS))
+    {
+        if (orig == TILE_DNGN_STONE_WALL)
+            orig = TILE_WALL_ICY_STONE;
     }
     else if (player_in_branch(BRANCH_TARTARUS))
     {

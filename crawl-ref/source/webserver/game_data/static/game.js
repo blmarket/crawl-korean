@@ -1,6 +1,8 @@
+
 define(["jquery", "comm", "client", "./dungeon_renderer", "./display", "./minimap",
-        "./text"],
-function ($, comm, client, dungeon_renderer, display, minimap) {
+        "./settings",
+        "./text", "./menu"],
+function ($, comm, client, dungeon_renderer, display, minimap, settings) {
     var layout_parameters;
 
     function init()
@@ -22,13 +24,13 @@ function ($, comm, client, dungeon_renderer, display, minimap) {
         return false;
     }
 
-    function layout(params)
+    function layout(params, force)
     {
         var window_width = params.window_width = $(window).width();
         var window_height = params.window_height = $(window).height();
         log(params);
 
-        if (!layout_params_differ(layout_parameters, params))
+        if (!force && !layout_params_differ(layout_parameters, params))
             return false;
 
         layout_parameters = params;
@@ -36,50 +38,35 @@ function ($, comm, client, dungeon_renderer, display, minimap) {
         var layer = current_layer;
         set_layer("normal");
 
-        // Determine width/height of stats area
+        // Determine width of stats area
         var old_html = $("#stats").html();
         var s = "";
         for (var i = 0; i < layout_parameters.stat_width; i++)
             s = s + "&nbsp;";
-        for (var i = 0; i < layout_parameters.min_stat_height; i++)
-            s = s + "<br>";
         $("#stats").html(s);
-        var stat_width_pixels = $("#stats").outerWidth();
-        var stat_height_pixels = $("#stats").outerHeight();
+        var stat_width_px = $("#stats").outerWidth();
         $("#stats").html(old_html);
 
         // Determine height of messages area
         old_html = $("#messages").html();
         s = "";
-        for (var i = 0; i < layout_parameters.msg_min_height; i++)
+        for (var i = 0; i < layout_parameters.msg_height; i++)
             s = s + "<br>";
         $("#messages").html(s);
-        var msg_height_pixels = $("#messages").outerHeight();
+        var msg_height_px = $("#messages").outerHeight();
         $("#messages").html(old_html);
 
-        var remaining_width = window_width - stat_width_pixels;
-        var remaining_height = window_height - msg_height_pixels;
-
-        // Determine the maximum size for the CRT layer
-        set_layer("crt");
-        old_html = $("#crt").html();
-        var test_size = 20;
-        s = "";
-        for (var i = 0; i < test_size; i++)
-            s = "&nbsp;" + s + "<br>";
-        $("#crt").html(s);
-        var char_w = $("#crt").width() / test_size;
-        var char_h = $("#crt").height() / test_size;
-        $("#crt").html(old_html);
+        var remaining_width = window_width - stat_width_px;
+        var remaining_height = window_height - msg_height_px;
 
         // Position controls
         set_layer("normal");
         dungeon_renderer.fit_to(remaining_width, remaining_height,
                                 layout_parameters.show_diameter);
 
-        minimap.fit_to(stat_width_pixels, layout_parameters);
+        minimap.fit_to(stat_width_px, layout_parameters);
 
-        $("#monster_list").width(stat_width_pixels);
+        $("#monster_list").width(stat_width_px);
 
         // Go back to the old layer, re-hide the minimap if necessary
         set_layer(layer);
@@ -101,6 +88,30 @@ function ($, comm, client, dungeon_renderer, display, minimap) {
         game_version = data;
         document.title = data.text;
     }
+
+    var glyph_mode_settings = {
+        glyph_mode: false,
+        glyph_mode_font_size: 24,
+        glyph_mode_font: "monospace"
+    };
+
+    settings.set_defaults(glyph_mode_settings);
+    $.extend(dungeon_renderer, glyph_mode_settings);
+
+    $(document).off("settings_changed.game");
+    $(document).on("settings_changed.game", function (ev, map) {
+        var relayout = false;
+        for (key in glyph_mode_settings)
+        {
+            if (key in map)
+            {
+                dungeon_renderer[key] = settings.get(key);
+                relayout = true;
+            }
+        }
+        if (relayout && layout_parameters)
+            layout(layout_parameters, true);
+    });
 
     $(document).ready(function () {
         $(window).resize(function () {

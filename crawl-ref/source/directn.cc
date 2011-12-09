@@ -193,10 +193,10 @@ bool dist::isMe() const
                 || (target.origin() && delta.origin())));
 }
 
-void dist::confusion_fuzz()
+void dist::confusion_fuzz(int range)
 {
-    target   = you.pos() + coord_def(random_range(-6, 6),
-                                     random_range(-6, 6));
+    target   = you.pos() + coord_def(random_range(-range, range),
+                                     random_range(-range, range));
     choseRay = false;
 }
 
@@ -667,8 +667,9 @@ void full_describe_view()
                      + stringize_glyph(g.ch)
                      + "</" + col_string + ">) ";
 #endif
+
             std::string str = get_monster_equipment_desc(mi->mon(), DESC_FULL,
-                                                         DESC_CAP_A, true);
+                                                         DESC_A, true);
 
             if (mi->is(MB_MESMERIZING))
                 str += gettext(", keeping you mesmerised");
@@ -958,12 +959,11 @@ bool direction_chooser::move_is_ok() const
 {
     if (!moves.isCancel && moves.isTarget)
     {
-        if (!cell_see_cell(you.pos(), target(), LOS_DEFAULT))
+        if (!cell_see_cell(you.pos(), target(), LOS_NO_TRANS))
         {
             if (you.see_cell(target()))
             {
-                ASSERT(you.xray_vision);
-                mpr(gettext("Your divination affects just sight, not spellcasting."),
+                mpr(gettext("There's something in the way."),
                     MSGCH_EXAMINE_FILTER);
             }
             else
@@ -1548,7 +1548,7 @@ void direction_chooser::print_target_object_description() const
     // FIXME: remove the duplication with print_items_description().
     mprf(MSGCH_PROMPT, "%s: %s",
          target_prefix ? target_prefix : "Aim",
-         get_menu_colour_prefix_tags(*item, DESC_CAP_A).c_str());
+         get_menu_colour_prefix_tags(*item, DESC_A).c_str());
 }
 
 void direction_chooser::print_items_description() const
@@ -1562,7 +1562,7 @@ void direction_chooser::print_items_description() const
 
     // Print the first item.
     mprf(MSGCH_FLOOR_ITEMS, "%s.",
-         get_menu_colour_prefix_tags(*item, DESC_CAP_A).c_str());
+         get_menu_colour_prefix_tags(*item, DESC_A).c_str());
 
     if (multiple_items_at(target()))
         mprf(MSGCH_FLOOR_ITEMS, "There is something else lying underneath.");
@@ -1746,8 +1746,9 @@ void direction_chooser::handle_wizard_command(command_type key_command,
     case CMD_TARGET_WIZARD_GIVE_ITEM:  wizard_give_monster_item(m); break;
     case CMD_TARGET_WIZARD_POLYMORPH:  wizard_polymorph_monster(m); break;
 
-    // FIXME: implement
-    case CMD_TARGET_WIZARD_GAIN_LEVEL: break;
+    case CMD_TARGET_WIZARD_GAIN_LEVEL:
+        wizard_gain_monster_level(m);
+        break;
 
     case CMD_TARGET_WIZARD_BLESS_MONSTER:
         wizard_apply_monster_blessing(m);
@@ -2833,27 +2834,24 @@ void describe_floor()
 {
     dungeon_feature_type grid = env.map_knowledge(you.pos()).feat();
 
-    std::string feat;
-
-    feat = feature_description(you.pos(), true,
-                               DESC_NOCAP_A, false);
-    if (feat.empty())
-        return;
-
-    std::string msg;
+    const char *msg = "There is %s here.";
     switch (grid)
     {
     case DNGN_FLOOR:
         return;
 
     case DNGN_ENTER_SHOP:
-        msg = make_stringf(gettext("There is an entrance to %s here."), feat.c_str());
+        msg = "There is an entrance to %s here.";
         break;
 
     default:
-        msg = make_stringf(gettext("There is %s here."), feat.c_str());
         break;
     }
+
+    std::string feat = feature_description(you.pos(), true,
+                               DESC_A, false);
+    if (feat.empty())
+        return;
 
     msg_channel_type channel = MSGCH_EXAMINE;
 
@@ -2861,7 +2859,7 @@ void describe_floor()
     if (feat_is_water(grid) && player_likes_water())
         channel = MSGCH_EXAMINE_FILTER;
 
-    mpr(msg.c_str(), channel);
+    mprf(channel, msg, feat.c_str());
     if (grid == DNGN_ENTER_LABYRINTH && you.is_undead != US_UNDEAD)
         mpr(gettext("Beware, for starvation awaits!"), MSGCH_EXAMINE);
 }
@@ -2878,24 +2876,22 @@ std::string thing_do_grammar(description_level_type dtype,
     }
     if (dtype == DESC_PLAIN || (!force_article && isupper(desc[0])))
     {
+        /* Since we're removing caps, this shouldn't be needed,
+           but we'll keep it in case, for now.
         if (dtype == DESC_PLAIN
-            || dtype == DESC_NOCAP_THE
-            || dtype == DESC_NOCAP_A)
+            || dtype == DESC_THE
+            || dtype == DESC_A)
         {
             desc[0] = tolower(desc[0]);
-        }
+        }*/
         return (desc);
     }
 
     switch (dtype)
     {
-    case DESC_CAP_THE:
-        return "The " + desc;
-    case DESC_NOCAP_THE:
+    case DESC_THE:
         return "the " + desc;
-    case DESC_CAP_A:
-        return article_a(desc, false);
-    case DESC_NOCAP_A:
+    case DESC_A:
         return article_a(desc, true);
     case DESC_NONE:
         return ("");
@@ -2976,7 +2972,7 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_OPEN_SEA:
         return (gettext(M_("open sea")));
     case DNGN_LAVA_SEA:
-        return (gettext(M_("Endless lava")));
+        return (gettext(M_("endless lava")));
     case DNGN_CLOSED_DOOR:
         return (gettext(M_("closed door")));
     case DNGN_DETECTED_SECRET_DOOR:
@@ -3006,14 +3002,14 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_GRANITE_STATUE:
         return (gettext(M_("granite statue")));
     case DNGN_LAVA:
-        return (gettext(M_("Some lava")));
+        return (gettext(M_("some lava")));
     case DNGN_DEEP_WATER:
-        return (gettext(M_("Some deep water")));
+        return (gettext(M_("some deep water")));
     case DNGN_SHALLOW_WATER:
-        return (gettext(M_("Some shallow water")));
+        return (gettext(M_("some shallow water")));
     case DNGN_UNDISCOVERED_TRAP:
     case DNGN_FLOOR:
-        return (gettext(M_("Floor")));
+        return (gettext(M_("floor")));
     case DNGN_OPEN_DOOR:
         return (gettext(M_("open door")));
     case DNGN_ESCAPE_HATCH_DOWN:
@@ -3113,6 +3109,9 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return (gettext(M_("gate leading back out of here")));
     case DNGN_MALIGN_GATEWAY:
         return (gettext(M_("portal to somewhere")));
+    case DNGN_EXPIRED_PORTAL:
+        // should be set whenever used
+        return (gettext(M_("collapsed entrance")));
     case DNGN_RETURN_FROM_DWARVEN_HALL:
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_HIVE:
@@ -3348,16 +3347,6 @@ std::string feature_description(const coord_def& where, bool covering,
         return thing_do_grammar(dtype, add_stop, false, desc);
     }
 
-    if (grid == DNGN_OPEN_SEA)
-    {
-        switch (dtype)
-        {
-        case DESC_CAP_A:   dtype = DESC_CAP_THE;   break;
-        case DESC_NOCAP_A: dtype = DESC_NOCAP_THE; break;
-        default: break;
-        }
-    }
-
     switch (grid)
     {
     case DNGN_TRAP_MECHANICAL:
@@ -3368,7 +3357,7 @@ std::string feature_description(const coord_def& where, bool covering,
                                     covering_description, dtype,
                                     add_stop, base_desc));
     case DNGN_ABANDONED_SHOP:
-        return thing_do_grammar(dtype, add_stop, false, "An abandoned shop");
+        return thing_do_grammar(dtype, add_stop, false, "an abandoned shop");
 
     case DNGN_ENTER_SHOP:
         return shop_name(where, add_stop);
@@ -3393,12 +3382,12 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
 
     if (weap && (!ident || item_type_known(*weap)))
     {
-        name1 = weap->name(true, DESC_NOCAP_A, false, false, true,
+        name1 = weap->name(true, DESC_A, false, false, true,
                            false, ISFLAG_KNOW_CURSE);
     }
     if (alt && (!ident || item_type_known(*alt)) && mi.two_weapons)
     {
-        name2 = alt->name(true, DESC_NOCAP_A, false, false, true,
+        name2 = alt->name(true, DESC_A, false, false, true,
                           false, ISFLAG_KNOW_CURSE);
     }
 
@@ -3409,7 +3398,7 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
     {
         item_def dup = *weap;
         ++dup.quantity;
-        name1 = dup.name(true, DESC_NOCAP_A, false, false, true, true,
+        name1 = dup.name(true, DESC_A, false, false, true, true,
                          ISFLAG_KNOW_CURSE);
         name2.clear();
     }
@@ -3450,7 +3439,7 @@ static std::string _mon_enchantments_string(const monster_info& mi)
 
     if (!enchant_descriptors.empty())
     {
-        return std::string(mi.pronoun(PRONOUN_CAP))
+        return std::string(mi.pronoun(PRONOUN_SUBJECTIVE))
             + " is "
             + comma_separated_line(enchant_descriptors.begin(),
                                    enchant_descriptors.end())
@@ -3521,7 +3510,7 @@ static std::vector<std::string> _get_monster_desc_vector(const monster_info& mi)
     {
         descs.push_back("fire blocked by "
                         + feature_description(mi.fire_blocker, NUM_TRAPS, "",
-                                              DESC_NOCAP_A, false));
+                                              DESC_A, false));
     }
 
     return descs;
@@ -3532,7 +3521,7 @@ static std::vector<std::string> _get_monster_desc_vector(const monster_info& mi)
 static std::string _get_monster_desc(const monster_info& mi)
 {
     std::string text    = "";
-    std::string pronoun = mi.pronoun(PRONOUN_CAP);
+    std::string pronoun = mi.pronoun(PRONOUN_SUBJECTIVE);
 
     if (mi.is(MB_CLINGING))
         text += pronoun + " is clinging to the wall.\n";
@@ -3581,7 +3570,7 @@ static std::string _get_monster_desc(const monster_info& mi)
 
     if (mi.is(MB_POSSESSABLE))
     {
-        text += std::string(mi.pronoun(PRONOUN_CAP_POSSESSIVE))
+        text += std::string(mi.pronoun(PRONOUN_POSSESSIVE))
                 + " soul is ripe for the taking.\n";
     }
     else if (mi.is(MB_ENSLAVED))
@@ -3598,7 +3587,7 @@ static std::string _get_monster_desc(const monster_info& mi)
         text += std::string("Your line of fire to ") + mi.pronoun(PRONOUN_OBJECTIVE)
               + " is blocked by "
               + feature_description(mi.fire_blocker, NUM_TRAPS, "",
-                                    DESC_NOCAP_A)
+                                    DESC_A)
               + "\n";
     }
 
@@ -3698,7 +3687,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         weap = _describe_monster_weapon(mi, level == DESC_IDENTIFIED);
     }
     else if (level == DESC_IDENTIFIED)
-        return " " + mi.full_name(DESC_NOCAP_A);
+        return " " + mi.full_name(DESC_A);
 
     if (!weap.empty())
     {
@@ -3751,7 +3740,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" wearing ");
-            desc += mon_arm->name(true, DESC_NOCAP_A);
+            desc += mon_arm->name(true, DESC_A);
         }
 
         if (mon_shd)
@@ -3762,7 +3751,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" wearing ");
-            desc += mon_shd->name(true, DESC_NOCAP_A);
+            desc += mon_shd->name(true, DESC_A);
         }
 
         if (mon_qvr)
@@ -3773,7 +3762,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" quivering ");
-            desc += mon_qvr->name(true, DESC_NOCAP_A);
+            desc += mon_qvr->name(true, DESC_A);
         }
 
         if (mon_carry)
@@ -3785,7 +3774,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
 
             if (mon_alt)
             {
-                desc += mon_alt->name(true, DESC_NOCAP_A);
+                desc += mon_alt->name(true, DESC_A);
                 if (mon_has_wand)
                     desc += gettext(" and ");
             }
@@ -3793,7 +3782,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
             if (mon_has_wand)
             {
                 if (mi.props["wand_known"])
-                    desc += mon_wnd->name(true, DESC_NOCAP_A);
+                    desc += mon_wnd->name(true, DESC_A);
                 else
                     desc += gettext("a wand");
             }
@@ -3840,7 +3829,7 @@ static bool _print_item_desc(const coord_def where)
         return false;
 
     std::string name = get_menu_colour_prefix_tags(mitm[targ_item],
-                                                   DESC_NOCAP_A);
+                                                   DESC_A);
     mprf(MSGCH_FLOOR_ITEMS, gettext("You see %s here."), name.c_str());
 
     if (mitm[ targ_item ].link != NON_ITEM)
@@ -3940,7 +3929,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
         if (!in_range)
         {
             mprf(MSGCH_EXAMINE_FILTER, gettext("%s is out of range."),
-                 mon->pronoun(PRONOUN_CAP).c_str());
+                 mon->pronoun(PRONOUN_SUBJECTIVE).c_str());
         }
 #ifndef DEBUG_DIAGNOSTICS
         monster_described = true;

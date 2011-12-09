@@ -99,8 +99,7 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
             mpr(gettext("A conflicting enchantment prevents the spell from "
                 "coming into effect."));
         }
-        else if (you.species == SP_VAMPIRE && you.hunger_state <= HS_SATIATED
-                 || you.is_undead == US_UNDEAD)
+        else if (!you.can_bleed(false))
         {
             mpr(gettext("You don't have enough blood to draw power from your "
                 "own body."));
@@ -109,11 +108,11 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
              mpr(gettext("Your attempt to draw power from your own body fails."));
         else
         {
-            // For vampires.
             int food = 0;
 
             while (you.magic_points < you.max_magic_points && you.hp > 1
-                   && (you.species != SP_VAMPIRE || you.hunger - food >= 7000))
+                   && (you.is_undead != US_SEMI_UNDEAD
+                       || you.hunger - food >= 7000))
             {
                 fail_check();
                 success = true;
@@ -121,7 +120,7 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
                 inc_mp(1);
                 dec_hp(1, false);
 
-                if (you.species == SP_VAMPIRE)
+                if (you.is_undead == US_SEMI_UNDEAD)
                     food += 15;
 
                 for (int loopy = 0; loopy < (you.hp > 1 ? 3 : 0); ++loopy)
@@ -351,7 +350,7 @@ spret_type cast_intoxicate(int pow, bool fail)
         mpr(gettext("Your head spins!"));
     }
 
-    apply_area_visible(_intoxicate_monsters, pow, true);
+    apply_area_visible(_intoxicate_monsters, pow);
     return SPRET_SUCCESS;
 }
 
@@ -398,7 +397,7 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
                 if (item_is_corpse(*si))
                 {
                     const std::string corpsedesc =
-                        get_menu_colour_prefix_tags(*si, DESC_NOCAP_THE);
+                        get_menu_colour_prefix_tags(*si, DESC_THE);
                     const std::string prompt =
                         make_stringf(gettext("Distill a potion from %s?"),
                                      corpsedesc.c_str());
@@ -501,7 +500,7 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
     set_ident_type(*corpse, ID_KNOWN_TYPE);
 
     mprf(gettext("You extract %s from the corpse."),
-         corpse->name(true, DESC_NOCAP_A).c_str());
+         corpse->name(true, DESC_A).c_str());
 
     // Try to move the potion to the player (for convenience).
     if (move_item_to_player(corpse->index(), 1) != 1)

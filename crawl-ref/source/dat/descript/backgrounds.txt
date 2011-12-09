@@ -97,7 +97,7 @@ Summoner
 %%%%
 Transmuter
 
-변이술사들은 자신의 형태를 바꾸는데 특화된 자들이다. 그들은 변이 마법에 재료로 사용할 화살과 물약들을 가지고 시작한다.
+Transmuters shift their form to fight in a beast's shape. They can turn sticks into snakes as well.
 %%%%
 Venom Mage
 

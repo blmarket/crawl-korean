@@ -276,10 +276,10 @@ void swap_inv_slots(int from_slot, int to_slot, bool verbose)
 
     if (verbose)
     {
-        mpr(you.inv[to_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
+        mpr_nocap(you.inv[to_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
 
         if (you.inv[from_slot].defined())
-            mpr(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
+            mpr_nocap(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
     }
 
     if (to_slot == you.equip[EQ_WEAPON] || from_slot == you.equip[EQ_WEAPON])
@@ -315,7 +315,7 @@ static void _adjust_item(void)
     if (prompt_failed(from_slot))
         return;
 
-    mpr(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
+    mpr_nocap(you.inv[from_slot].name(true, DESC_INVENTORY_EQUIP).c_str());
 
     to_slot = prompt_invent_item(gettext("Adjust to which letter? "),
                                  MT_INVLIST,
@@ -371,7 +371,7 @@ static void _adjust_spell(void)
     }
 
     // Print targeted spell.
-    mprf("%c - %s", keyin, gettext(spell_title(spell)));
+    mprf_nocap("%c - %s", keyin, gettext(spell_title(spell)));
 
     // Select target slot.
     keyin = 0;
@@ -397,13 +397,13 @@ static void _adjust_spell(void)
     you.spell_letter_table[index_1] = tmp;
 
     // print out spell in new slot
-    mprf("%c - %s", input_2, gettext(spell_title(get_spell_by_letter(input_2))));
+    mprf_nocap("%c - %s", input_2, gettext(spell_title(get_spell_by_letter(input_2))));
 
     // print out other spell if one was involved (now at input_1)
     spell = get_spell_by_letter(input_1);
 
     if (spell != SPELL_NO_SPELL)
-        mprf("%c - %s", input_1, gettext(spell_title(spell)));
+        mprf_nocap("%c - %s", input_1, gettext(spell_title(spell)));
 }
 
 static void _adjust_ability(void)
@@ -417,11 +417,12 @@ static void _adjust_ability(void)
     }
 
     int selected = -1;
-    while (selected < 0)
-    {
-        msg::streams(MSGCH_PROMPT) << gettext("Adjust which ability? (? or * to list) ")
-                                   << std::endl;
+    mpr(gettext("Adjust which ability? "), MSGCH_PROMPT);
 
+    if (Options.auto_list)
+        selected = choose_ability_menu(talents);
+    else
+    {
         const int keyin = get_ch();
 
         if (keyin == '?' || keyin == '*')
@@ -443,24 +444,22 @@ static void _adjust_ability(void)
                     break;
                 }
             }
-
-            // If we can't, cancel out.
-            if (selected < 0)
-            {
-                mpr(gettext("No such ability."));
-                return;
-            }
         }
     }
 
-    msg::stream << static_cast<char>(talents[selected].hotkey)
-                << " - "
-                << gettext(ability_name(talents[selected].which))
-                << std::endl;
+    // If we couldn't find anything, cancel out.
+    if (selected < 0)
+    {
+        mpr(gettext("No such ability."));
+        return;
+    }
+
+    mprf_nocap("%c - %s", static_cast<char>(talents[selected].hotkey),
+               gettext(ability_name(talents[selected].which)));
 
     const int index1 = letter_to_index(talents[selected].hotkey);
 
-    msg::streams(MSGCH_PROMPT) << gettext("Adjust to which letter? ") << std::endl;
+    mpr(gettext("Adjust to which letter?"), MSGCH_PROMPT);
 
     const int keyin = get_ch();
 
@@ -483,23 +482,18 @@ static void _adjust_ability(void)
     {
         if (talents[i].hotkey == keyin)
         {
-            /// 키가 바뀌었음을 알려주는 메시지.
-            /// Swapping with: a - evoke skill 따위의 내용이 됨.
-            msg::stream << gettext("Swapping with: ")
-                        << static_cast<char>(keyin) << " - "
-                        << gettext(ability_name(talents[i].which))
-                        << std::endl;
+            mprf(gettext("Swapping with: %c - %s"), static_cast<char>(keyin),
+                 gettext(ability_name(talents[i].which)));
             printed_message = true;
             break;
         }
     }
 
     if (!printed_message)
-        /// Moving to: key - skill name 따위의 내용이 됨.
-        msg::stream << gettext("Moving to: ")
-                    << static_cast<char>(keyin) << " - "
-                    << gettext(ability_name(talents[selected].which))
-                    << std::endl;
+    {
+        mprf(gettext("Moving to: %c - %s"), static_cast<char>(keyin),
+             gettext(ability_name(talents[selected].which)));
+    }
 
     // Swap references in the letter table.
     ability_type tmp = you.ability_letter_table[index2];
@@ -699,8 +693,8 @@ void list_weapons(void)
         else
         {
             wstring += "  - ";
-            wstring += item->name(true, DESC_NOCAP_A);
-            wstring += gettext(" (empty)");
+            wstring += item->name(true, DESC_A);
+            wstring += " (empty)";
         }
     }
     else
@@ -1038,7 +1032,7 @@ static std::vector<std::string> _get_branch_keys()
         Branch     &branch       = branches[which_branch];
 
         // Skip unimplemented branches
-        if(branch_is_unfinished(which_branch))
+        if (branch_is_unfinished(which_branch))
             continue;
 
         names.push_back(branch.shortname);
@@ -1157,7 +1151,7 @@ static void _recap_feat_keys(std::vector<std::string> &keys)
             keys[i] = "A shop";
         else
         {
-            keys[i] = feature_description(type, NUM_TRAPS, "", DESC_CAP_A,
+            keys[i] = feature_description(type, NUM_TRAPS, "", DESC_A,
                                           false);
         }
     }
@@ -1297,16 +1291,14 @@ static bool _append_books(std::string &desc, item_def &item, std::string key)
     return (true);
 }
 
-// Does not wait for keypress; the caller must do that if necessary.
-// Returns true if we need to wait for keypress.
-static bool _do_description(std::string key, std::string type,
+// Returns the result of the keypress.
+static int _do_description(std::string key, std::string type,
                             std::string footer = "")
 {
     describe_info inf;
     inf.quote = getQuoteString(key);
 
     std::string desc = getLongDescription(key);
-
     int width = std::min(80, get_number_of_cols());
 
     god_type which_god = str_to_god(key);
@@ -1344,8 +1336,7 @@ static bool _do_description(std::string key, std::string type,
             && !mons_class_is_zombified(mon_num) && !mons_is_mimic(mon_num))
         {
             monster_info mi(mon_num);
-            describe_monsters(mi, true, footer);
-            return (false);
+            return describe_monsters(mi, true, footer);
         }
         else
         {
@@ -1416,8 +1407,12 @@ static bool _do_description(std::string key, std::string type,
     inf.footer = footer;
     inf.title  = key;
 
+#ifdef USE_TILE_WEB
+    tiles_crt_control show_as_menu(CRT_MENU, "description");
+#endif
+
     print_description(inf);
-    return (true);
+    return getchm();
 }
 
 // Reads all questions from database/FAQ.txt, outputs them in the form of
@@ -1498,8 +1493,7 @@ static void _find_description(bool *again, std::string *error_inout)
 {
     *again = true;
 
-    clrscr();
-    viewwindow();
+    redraw_screen();
 
     if (!error_inout->empty())
         mpr(error_inout->c_str(), MSGCH_PROMPT);
@@ -1687,8 +1681,7 @@ static void _find_description(bool *again, std::string *error_inout)
     }
     else if (key_list.size() == 1)
     {
-        if (_do_description(key_list[0], type))
-            getchm();
+        _do_description(key_list[0], type);
         return;
     }
 
@@ -1698,11 +1691,7 @@ static void _find_description(bool *again, std::string *error_inout)
         footer += regex;
         footer += "'. To see non-exact matches, press space.";
 
-        _do_description(regex, type, footer);
-        // FIXME: This results in an *additional* getchm(). We might have
-        // to check for this eventuality way over in describe.cc and
-        // _print_toggle_message. (jpeg)
-        if (getchm() != ' ')
+        if (_do_description(regex, type, footer) != ' ')
             return;
     }
 
@@ -1842,8 +1831,7 @@ static void _find_description(bool *again, std::string *error_inout)
             else
                 key = *((std::string*) sel[0]->data);
 
-            if (_do_description(key, type))
-                getchm();
+            _do_description(key, type);
         }
     }
 }
@@ -1961,9 +1949,9 @@ static int _show_keyhelp_menu(const std::vector<formatted_string> &lines,
     // FIXME: Allow for hiding Page down when at the end of the listing, ditto
     // for page up at start of listing.
     cmd_help.set_more(formatted_string::parse_string(
-#ifdef USE_TILE
-                            gettext("<cyan>[ +/L-click : Page down.   - : Page up."
-                            "           Esc/R-click exits.]")));
+#ifdef USE_TILE_LOCAL
+                            "<cyan>[ +/L-click : Page down.   - : Page up."
+                            "           Esc/R-click exits.]"));
 #else
                             gettext("<cyan>[ + : Page down.   - : Page up."
                             "                           Esc exits.]")));

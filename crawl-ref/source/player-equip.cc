@@ -52,7 +52,7 @@ void equip_item(equipment_type slot, int item_slot, bool msg)
     _equip_effect(slot, item_slot, false, msg);
     ash_check_bondage();
     if (you.equip[slot] != -1 && you.inv[you.equip[slot]].cursed())
-        ash_id_inventory();
+        god_id_inventory();
 }
 
 // Clear an equipment slot (possibly melded).
@@ -114,7 +114,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld);
 static void _equip_armour_effect(item_def& arm, bool unmeld);
 static void _unequip_armour_effect(item_def& item, bool meld);
 static void _equip_jewellery_effect(item_def &item, bool unmeld);
-static void _unequip_jewellery_effect(item_def &item, bool mesg);
+static void _unequip_jewellery_effect(item_def &item, bool mesg, bool meld);
 static void _equip_use_warning(const item_def& item);
 
 static void _equip_effect(equipment_type slot, int item_slot, bool unmeld,
@@ -159,7 +159,7 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
     else if (slot >= EQ_CLOAK && slot <= EQ_BODY_ARMOUR)
         _unequip_armour_effect(item, meld);
     else if (slot >= EQ_LEFT_RING && slot < NUM_EQUIP)
-        _unequip_jewellery_effect(item, msg);
+        _unequip_jewellery_effect(item, msg, meld);
 
     if (slot == EQ_BODY_ARMOUR && !meld)
         you.stop_train.insert(SK_ARMOUR);
@@ -334,7 +334,7 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
 }
 
 static void _unequip_artefact_effect(item_def &item,
-                                     bool *show_msgs = NULL, bool meld = false)
+                                     bool *show_msgs, bool meld)
 {
     ASSERT(is_artefact(item));
 
@@ -536,7 +536,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     add_autoinscription(item, artefact_auto_inscription(item));
 
                 // Make a note of it.
-                take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
+                take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
                                origin_desc(item).c_str()));
             }
             else
@@ -730,7 +730,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
     // Call this first, so that the unrandart func can set showMsgs to
     // false if it does its own message handling.
     if (is_artefact(item))
-        _unequip_artefact_effect(item, &showMsgs);
+        _unequip_artefact_effect(item, &showMsgs, meld);
 
     if (item.base_type == OBJ_MISCELLANY
         && item.sub_type == MISC_LANTERN_OF_SHADOWS)
@@ -744,7 +744,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
 
         if (brand != SPWPN_NORMAL)
         {
-            const std::string msg = item.name(true, DESC_CAP_YOUR);
+            const std::string msg = item.name(true, DESC_YOUR);
 
             switch (brand)
             {
@@ -929,7 +929,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             break;
 
         case SPARM_SPIRIT_SHIELD:
-            if (player_spirit_shield() < 2)
+            if (!unmeld && player_spirit_shield() < 2)
             {
                 set_mp(0);
                 mpr(gettext("You feel spirits watching over you."));
@@ -1114,7 +1114,7 @@ static void _remove_amulet_of_faith(item_def &item)
         {
             mprf(MSGCH_GOD,
                  gettext("%s leaches power out of you as you remove it."),
-                 item.name(true, DESC_CAP_YOUR).c_str());
+                 item.name(true, DESC_YOUR).c_str());
             dprf("%s: piety leach: %d",
                  item.name(false, DESC_PLAIN).c_str(), piety_loss);
             lose_piety(piety_loss);
@@ -1162,8 +1162,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_WIZARDRY:
-        if (player_spell_skills())
-            ident = ID_KNOWN_TYPE;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_SEE_INVISIBLE:
@@ -1289,10 +1288,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr(gettext("You feel a slight, muted jump rush through you."));
         else
             mpr(gettext("You feel slightly jumpy."));
-        if (artefact)
-            fake_rap = ARTP_CAUSE_TELEPORTATION;
-        else
-            ident = ID_KNOWN_TYPE;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case AMU_RAGE:
@@ -1335,7 +1331,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case AMU_GUARDIAN_SPIRIT:
-        if (player_spirit_shield() < 2)
+        if (player_spirit_shield() < 2 && !unmeld)
         {
             set_mp(0);
             mpr(gettext("You feel your power drawn to a protective spirit."));
@@ -1445,10 +1441,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     // Cursed or not, we know that since we've put the ring on.
     set_ident_flags(item, ISFLAG_KNOW_CURSE);
 
-    mpr(item.name(true, DESC_INVENTORY_EQUIP).c_str());
+    mpr_nocap(item.name(true, DESC_INVENTORY_EQUIP).c_str());
 }
 
-static void _unequip_jewellery_effect(item_def &item, bool mesg)
+static void _unequip_jewellery_effect(item_def &item, bool mesg, bool meld)
 {
     // The ring/amulet must already be removed from you.equip at this point.
 
@@ -1527,7 +1523,8 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg)
         break;
 
     case AMU_FAITH:
-        _remove_amulet_of_faith(item);
+        if (!meld)
+            _remove_amulet_of_faith(item);
         break;
 
     case AMU_GUARDIAN_SPIRIT:
@@ -1537,7 +1534,7 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg)
     }
 
     if (is_artefact(item))
-        _unequip_artefact_effect(item, &mesg);
+        _unequip_artefact_effect(item, &mesg, meld);
 
     // Must occur after ring is removed. -- bwr
     calc_mp();

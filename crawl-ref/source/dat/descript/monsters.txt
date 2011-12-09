@@ -1611,7 +1611,7 @@ The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, th
 %%%%
 seraph
 
-The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, the mightiest servants of the Good Gods. They have six wings and but one face, and are said to sometimes take form of fiery serpents.
+The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, the mightiest servants of the Good Gods. They have six wings and but one face, and are said to sometimes take the forms of fiery serpents.
 %%%%
 shadow
 
@@ -1778,6 +1778,10 @@ spriggan assassin
 A deft and surreptitious spriggan that stabs in secret.
 
 These masters of stealth have mastered the art of delivering a quick blade right under your fifth rib as well.
+%%%%
+spriggan baker
+
+A spriggan that has mastered the culinary arts.
 %%%%
 spriggan berserker
 

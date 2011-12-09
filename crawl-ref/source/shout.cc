@@ -273,14 +273,10 @@ void handle_monster_shouts(monster* mons, bool force)
 
             if (you.can_see(mons))
             {
-                if (mons->type == MONS_AIR_ELEMENTAL)
-                    mons->seen_context = "thin air";
-                else if (mons->type == MONS_TRAPDOOR_SPIDER)
-                    mons->seen_context = "leaps out";
-                else if (!monster_habitable_grid(mons, DNGN_FLOOR))
-                    mons->seen_context = "bursts forth shouting";
+                if (!monster_habitable_grid(mons, DNGN_FLOOR))
+                    mons->seen_context = SC_FISH_SURFACES_SHOUT;
                 else
-                    mons->seen_context = "surfaces";
+                    mons->seen_context = SC_SURFACES;
 
                 // Give interrupt message before shout message.
                 handle_seen_interrupt(mons);
@@ -360,21 +356,6 @@ bool check_awaken(monster* mons)
             mons_perc += 10;
         }
     }
-
-    // If you've been tagged with Corona or are Glowing, the glow
-    // makes you extremely unstealthy.
-    // The darker it is, the bigger the penalty.
-    if (you.backlit() && you.visible_to(mons))
-        mons_perc += 50 * LOS_RADIUS / you.current_vision;
-
-    // On the other hand, shrouding has the reverse effect:
-    if (you.umbra() && you.visible_to(mons))
-        mons_perc -= 30 * LOS_RADIUS / you.current_vision;
-
-    // The shifting glow from the Orb, while too unstable to negate invis
-    // or affect to-hit, affects stealth even more than regular glow.
-    if (orb_haloed(you.pos()))
-        mons_perc += 80;
 
     if (mons_perc < 0)
         mons_perc = 0;
@@ -613,7 +594,7 @@ void check_player_sense(sense_type sense, int range, const coord_def& where)
 
     if (player_distance <= range)
     {
-        switch(sense)
+        switch (sense)
         {
         case SENSE_SMELL_BLOOD:
              dprf("Player smells blood, pos: (%d, %d), dist = %d)",
@@ -649,7 +630,7 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
     circle_def c(where, range, C_CIRCLE);
     for (monster_iterator mi(&c); mi; ++mi)
     {
-        switch(sense)
+        switch (sense)
         {
         case SENSE_SMELL_BLOOD:
             if (!mons_class_flag(mi->type, M_BLOOD_SCENT))

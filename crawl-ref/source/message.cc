@@ -859,7 +859,7 @@ int channel_to_colour(msg_channel_type channel, int param)
     return colour_msg(channel_to_msgcol(channel, param));
 }
 
-static void do_message_print(msg_channel_type channel, int param,
+static void do_message_print(msg_channel_type channel, int param, bool cap,
                              const char *format, va_list argp)
 {
     va_list ap;
@@ -867,24 +867,47 @@ static void do_message_print(msg_channel_type channel, int param,
     char buff[200];
     size_t len = vsnprintf(buff, sizeof(buff), format, argp);
     if (len < sizeof(buff))
-    {
-        mpr(buff, channel, param);
-    }
+        mpr(buff, channel, param, false, cap);
     else
     {
         char *heapbuf = (char*)malloc(len + 1);
         vsnprintf(heapbuf, len + 1, format, ap);
-        mpr(heapbuf, channel, param);
+        mpr(heapbuf, channel, param, false, cap);
         free(heapbuf);
     }
     va_end(ap);
+}
+
+void mprf_nocap(msg_channel_type channel, int param, const char *format, ...)
+{
+    va_list argp;
+    va_start(argp, format);
+    do_message_print(channel, param, false, format, argp);
+    va_end(argp);
+}
+
+void mprf_nocap(msg_channel_type channel, const char *format, ...)
+{
+    va_list argp;
+    va_start(argp, format);
+    do_message_print(channel, channel == MSGCH_GOD ? you.religion : 0,
+                     false, format, argp);
+    va_end(argp);
+}
+
+void mprf_nocap(const char *format, ...)
+{
+    va_list  argp;
+    va_start(argp, format);
+    do_message_print(MSGCH_PLAIN, 0, false, format, argp);
+    va_end(argp);
 }
 
 void mprf(msg_channel_type channel, int param, const char *format, ...)
 {
     va_list argp;
     va_start(argp, format);
-    do_message_print(channel, param, format, argp);
+    do_message_print(channel, param, true, format, argp);
     va_end(argp);
 }
 
@@ -893,7 +916,7 @@ void mprf(msg_channel_type channel, const char *format, ...)
     va_list argp;
     va_start(argp, format);
     do_message_print(channel, channel == MSGCH_GOD ? you.religion : 0,
-                     format, argp);
+                     true, format, argp);
     va_end(argp);
 }
 
@@ -901,7 +924,7 @@ void mprf(const char *format, ...)
 {
     va_list  argp;
     va_start(argp, format);
-    do_message_print(MSGCH_PLAIN, 0, format, argp);
+    do_message_print(MSGCH_PLAIN, 0, true, format, argp);
     va_end(argp);
 }
 
@@ -910,7 +933,7 @@ void dprf(const char *format, ...)
 {
     va_list  argp;
     va_start(argp, format);
-    do_message_print(MSGCH_DIAGNOSTICS, 0, format, argp);
+    do_message_print(MSGCH_DIAGNOSTICS, 0, false, format, argp);
     va_end(argp);
 }
 #endif
@@ -976,14 +999,20 @@ bool strip_channel_prefix(std::string &text, msg_channel_type &channel, bool sil
 
     if (param == "WARN")
         channel = MSGCH_WARN, sound = true;
+    else if (param == "VISUAL WARN")
+        channel = MSGCH_WARN;
     else if (param == "SOUND")
         channel = MSGCH_SOUND, sound = true;
     else if (param == "VISUAL")
         channel = MSGCH_TALK_VISUAL;
     else if (param == "SPELL")
         channel = MSGCH_MONSTER_SPELL, sound = true;
+    else if (param == "VISUAL SPELL")
+        channel = MSGCH_MONSTER_SPELL;
     else if (param == "ENCHANT")
         channel = MSGCH_MONSTER_ENCHANT, sound = true;
+    else if (param == "VISUAL ENCHANT")
+        channel = MSGCH_MONSTER_ENCHANT;
     else
     {
         param = replace_all(param, " ", "_");
@@ -1020,7 +1049,7 @@ void msgwin_clear_temporary()
 
 static long _last_msg_turn = -1; // Turn of last message.
 
-void mpr(std::string text, msg_channel_type channel, int param, bool nojoin)
+void mpr(std::string text, msg_channel_type channel, int param, bool nojoin, bool cap)
 {
     if (_msg_dump_file != NULL)
         fprintf(_msg_dump_file, "%s\n", text.c_str());
@@ -1050,6 +1079,10 @@ void mpr(std::string text, msg_channel_type channel, int param, bool nojoin)
     if (channel == MSGCH_GOD && param == 0)
         param = you.religion;
 
+    // Ugly hack.
+    if (channel == MSGCH_DIAGNOSTICS || channel == MSGCH_ERROR)
+        cap = false;
+
     msg_colour_type colour = prepare_message(text, channel, param);
 
     if (colour == MSGCOL_MUTED)
@@ -1063,6 +1096,13 @@ void mpr(std::string text, msg_channel_type channel, int param, bool nojoin)
         // No sound, so we simulate the reverb with all caps.
         formatted_string fs = formatted_string::parse_string(text);
         fs.all_caps();
+        text = fs.to_colour_string();
+    }
+    else if (cap)
+    {
+        // Hate, hate, hate tagged strings.
+        formatted_string fs = formatted_string::parse_string(text);
+        fs.capitalize();
         text = fs.to_colour_string();
     }
 

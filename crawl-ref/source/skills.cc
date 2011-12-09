@@ -125,7 +125,6 @@ void reassess_starting_skills()
         skill_type sk = static_cast<skill_type>(i);
         if (you.skills[sk] == 0)
             continue;
-        ASSERT(!is_invalid_skill(sk));
         ASSERT(!is_useless_skill(sk));
 
         // Grant the amount of skill points required for a human.
@@ -218,6 +217,11 @@ static void _change_skill_level(skill_type exsk, int n)
 
     if (need_reset)
         reset_training();
+
+    // calc_hp() has to be called here because it currently doesn't work
+    // right if you.skills[] hasn't been updated yet.
+    if (exsk == SK_FIGHTING)
+        calc_hp();
     // TODO: also identify rings of wizardry.
 }
 
@@ -251,8 +255,12 @@ void redraw_skill(skill_type exsk, skill_type old_best_skill)
     }
 
     const skill_type best = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
-        if (best != old_best_skill || old_best_skill == exsk)
-            you.redraw_title = true;
+    if (best != old_best_skill || old_best_skill == exsk)
+    {
+        you.redraw_title = true;
+        // The player symbol depends on best skill title.
+        update_player_symbol();
+    }
 }
 
 void check_skill_level_change(skill_type sk, bool do_level_up)
@@ -483,6 +491,11 @@ bool training_restricted(skill_type sk)
  */
 void init_can_train()
 {
+    // Clear everything out, in case this isn't the first game.
+    you.start_train.clear();
+    you.stop_train.clear();
+    you.can_train.init(false);
+
     for (int i = 0; i < NUM_SKILLS; ++i)
     {
         const skill_type sk = skill_type(i);

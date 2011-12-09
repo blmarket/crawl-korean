@@ -70,6 +70,17 @@ COMPILE_CHECK(MAX_TERM_COLOUR - 1
 COMPILE_CHECK(MAX_TERM_COLOUR - 1
               == TILE_BOOK_COL_LAST - TILE_BOOK_COL_FIRST + 1);
 
+TextureID get_dngn_tex(tileidx_t idx)
+{
+    assert(idx < TILE_FEAT_MAX);
+    if (idx < TILE_FLOOR_MAX)
+        return (TEX_FLOOR);
+    else if (idx < TILE_WALL_MAX)
+        return (TEX_WALL);
+    else
+        return (TEX_FEAT);
+}
+
 static tileidx_t _tileidx_monster_base(int type,
                                        bool in_water = false,
                                        int colour = 0,
@@ -220,7 +231,7 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
     case DNGN_ABANDONED_SHOP:
         return TILE_DNGN_ABANDONED_SHOP;
     case DNGN_ENTER_LABYRINTH:
-        return TILE_DNGN_ENTER_LABYRINTH;
+        return TILE_DNGN_PORTAL_LABYRINTH;
     case DNGN_STONE_STAIRS_DOWN_I:
     case DNGN_STONE_STAIRS_DOWN_II:
     case DNGN_STONE_STAIRS_DOWN_III:
@@ -304,6 +315,8 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
     case DNGN_ENTER_PORTAL_VAULT:
     case DNGN_EXIT_PORTAL_VAULT:
         return TILE_DNGN_PORTAL;
+    case DNGN_EXPIRED_PORTAL:
+        return TILE_DNGN_PORTAL_EXPIRED;
     case DNGN_MALIGN_GATEWAY:
         return TILE_DNGN_STARRY_PORTAL;
 
@@ -1221,6 +1234,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_ANGEL;
     case MONS_CHERUB:
         return TILEP_MONS_CHERUB;
+    case MONS_SERAPH:
+        return TILEP_MONS_SERAPH;
     case MONS_DAEVA:
         return TILEP_MONS_DAEVA;
     case MONS_PROFANE_SERVITOR:
@@ -4383,9 +4398,7 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_OZOCUBUS_REFRIGERATION:   return TILEG_OZOCUBUS_REFRIGERATION;
     case SPELL_BOLT_OF_COLD:             return TILEG_BOLT_OF_COLD;
     case SPELL_FREEZING_CLOUD:           return TILEG_FREEZING_CLOUD;
-#if TAG_MAJOR_VERSION == 32
     case SPELL_ENGLACIATION:             return TILEG_METABOLIC_ENGLACIATION;
-#endif
     case SPELL_SIMULACRUM:               return TILEG_SIMULACRUM;
     case SPELL_ICE_STORM:                return TILEG_ICE_STORM;
 
@@ -4714,8 +4727,6 @@ tileidx_t tileidx_known_brand(const item_def &item)
             return TILE_BRAND_CHAOS;
         case SPMSL_PENETRATION:
             return TILE_BRAND_PENETRATION;
-        case SPMSL_REAPING:
-            return TILE_BRAND_REAPING;
         case SPMSL_DISPERSAL:
             return TILE_BRAND_DISPERSAL;
         case SPMSL_EXPLODING:

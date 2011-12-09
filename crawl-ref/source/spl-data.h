@@ -756,7 +756,8 @@ struct spell_desc
      -1, -1,
      0,
      NULL,
-     true
+     true,
+     false
 },
 
 {
@@ -1704,20 +1705,18 @@ struct spell_desc
      false
 },
 
-#if TAG_MAJOR_VERSION == 32
 {
     SPELL_ENGLACIATION, M_("Metabolic Englaciation"),
      SPTYP_HEXES | SPTYP_ICE,
      SPFLAG_AREA,
-     7,
+     6,
      200,
      -1, -1,
-     -7,//putting a monster to sleep should be silent
+     0,
      NULL,
      false,
      false
 },
-#endif
 
 {
     SPELL_SEE_INVISIBLE, M_("See Invisible"),

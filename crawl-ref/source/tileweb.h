@@ -14,6 +14,15 @@
 #include <map>
 #include <sys/un.h>
 
+class Menu;
+
+enum WebtilesCRTMode
+{
+    CRT_DISABLED,
+    CRT_NORMAL,
+    CRT_MENU
+};
+
 class TilesFramework
 {
 public:
@@ -59,9 +68,16 @@ public:
     void put_ucs_string(ucs_t *str);
     void clear_to_end_of_line();
 
+    void push_menu(Menu* m);
+    void push_crt_menu(std::string tag);
+    void pop_menu();
+    void close_all_menus();
+
     void write_message(const char *format, ...);
     void finish_message();
-    void send_message(const char *format, ...);
+    void send_message(const char *format = "", ...);
+
+    bool has_receivers() { return !m_dest_addrs.empty(); }
 
     /* Webtiles can receive input both via stdin, and on the
        socket. Also, while waiting for input, it should be
@@ -87,16 +103,29 @@ public:
        data is sent until pop_prefix is called. The suffix
        passed to pop_prefix will only be sent if the prefix
        was sent. */
-    void push_prefix(std::string prefix);
-    void pop_prefix(std::string suffix);
+    void push_prefix(const std::string& prefix);
+    void pop_prefix(const std::string& suffix);
     bool prefix_popped();
+
+    // Helper functions for writing JSON
+    void write_message_escaped(const std::string& s);
+    void json_open_object(const std::string& name = "");
+    void json_close_object();
+    void json_open_array(const std::string& name = "");
+    void json_close_array();
+    void json_write_comma();
+    void json_write_name(const std::string& name);
+    void json_write_int(int value);
+    void json_write_int(const std::string& name, int value);
+    void json_write_string(const std::string& value);
+    void json_write_string(const std::string& name, const std::string& value);
 
     std::string m_sock_name;
     bool m_await_connection;
 
-    void set_crt_enabled(bool value);
-    bool is_crt_enabled();
+    WebtilesCRTMode m_crt_mode;
 
+    void clear_crt_menu() { m_text_menu.clear(); }
 protected:
     int m_sock;
     int m_max_msg_size;
@@ -108,6 +137,15 @@ protected:
     wint_t _receive_control_message();
 
     std::vector<std::string> m_prefixes;
+    int json_object_level;
+    bool need_comma;
+
+    struct MenuInfo
+    {
+        std::string tag;
+        Menu* menu;
+    };
+    std::vector<MenuInfo> m_menu_stack;
 
     enum LayerID
     {
@@ -117,7 +155,6 @@ protected:
         LAYER_MAX,
     };
     LayerID m_active_layer;
-    bool m_crt_enabled;
 
     unsigned int m_last_tick_redraw;
     bool m_need_redraw;
@@ -147,6 +184,7 @@ protected:
     bool m_has_overlays;
 
     WebTextArea m_text_crt;
+    WebTextArea m_text_menu;
     WebTextArea m_text_stat;
     WebTextArea m_text_message;
 
@@ -180,18 +218,34 @@ class tiles_crt_control
 {
 public:
     tiles_crt_control(bool crt_enabled)
-        : m_was_enabled(tiles.is_crt_enabled())
+        : m_old_mode(tiles.m_crt_mode)
     {
-        tiles.set_crt_enabled(crt_enabled);
+        tiles.m_crt_mode = crt_enabled ? CRT_NORMAL : CRT_DISABLED;
+    }
+
+    tiles_crt_control(WebtilesCRTMode mode,
+                      std::string tag = "")
+        : m_old_mode(tiles.m_crt_mode)
+    {
+        tiles.m_crt_mode = mode;
+        if (mode == CRT_MENU)
+        {
+            tiles.push_crt_menu(tag);
+        }
     }
 
     ~tiles_crt_control()
     {
-        tiles.set_crt_enabled(m_was_enabled);
+        if (tiles.m_crt_mode == CRT_MENU)
+        {
+            tiles.pop_menu();
+            tiles.clear_crt_menu();
+        }
+        tiles.m_crt_mode = m_old_mode;
     }
 
 private:
-    bool m_was_enabled;
+    WebtilesCRTMode m_old_mode;
 };
 
 #endif

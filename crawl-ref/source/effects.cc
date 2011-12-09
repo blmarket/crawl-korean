@@ -81,10 +81,10 @@
 #include "viewchar.h"
 #include "xom.h"
 
-int holy_word_player(int pow, int caster, actor *attacker)
+void holy_word_player(int pow, int caster, actor *attacker)
 {
     if (!you.undead_or_demonic())
-        return (0);
+        return;
 
     int hploss;
 
@@ -95,7 +95,7 @@ int holy_word_player(int pow, int caster, actor *attacker)
         hploss = roll_dice(3, 15) + (random2(pow) / 3);
 
     if (!hploss)
-        return (0);
+        return;
 
     mpr(gettext("You are blasted by holy energy!"));
 
@@ -126,27 +126,22 @@ int holy_word_player(int pow, int caster, actor *attacker)
 
     ouch(hploss, caster, type, aux);
 
-    return (1);
+    return;
 }
 
-int holy_word_monsters(coord_def where, int pow, int caster,
-                       actor *attacker)
+void holy_word_monsters(coord_def where, int pow, int caster,
+                        actor *attacker)
 {
     pow = std::min(300, pow);
 
-    int retval = 0;
-
     // Is the player in this cell?
     if (where == you.pos())
-        retval = holy_word_player(pow, caster, attacker);
+        holy_word_player(pow, caster, attacker);
 
     // Is a monster in this cell?
     monster* mons = monster_at(where);
-    if (mons == NULL)
-        return (retval);
-
-    if (!mons->alive() || !mons->undead_or_demonic())
-        return (retval);
+    if (!mons || !mons->alive() || !mons->undead_or_demonic())
+        return;
 
     int hploss;
 
@@ -162,54 +157,42 @@ int holy_word_monsters(coord_def where, int pow, int caster,
     if (hploss && caster == HOLY_WORD_ZIN)
         simple_monster_message(mons, gettext(" is blasted by Zin's holy word!"));
 
-    mons->hurt(attacker, hploss, BEAM_MISSILE, false);
+    mons->hurt(attacker, hploss, BEAM_MISSILE);
 
-    if (hploss)
+    if (!hploss || !mons->alive())
+        return;
+    // Holy word won't annoy, slow, or frighten its user.
+    if (attacker != mons)
     {
-        retval = 1;
+        // Currently, holy word annoys the monsters it affects
+        // because it can kill them, and because hostile
+        // monsters don't use it.
+        if (attacker != NULL)
+            behaviour_event(mons, ME_ANNOY, attacker->mindex());
 
-        if (mons->alive())
-        {
-            // Holy word won't annoy, slow, or frighten its user.
-            if (attacker != mons)
-            {
-                // Currently, holy word annoys the monsters it affects
-                // because it can kill them, and because hostile
-                // monsters don't use it.
-                if (attacker != NULL)
-                    behaviour_event(mons, ME_ANNOY, attacker->mindex());
+        if (mons->speed_increment >= 25)
+            mons->speed_increment -= 20;
 
-                if (mons->speed_increment >= 25)
-                    mons->speed_increment -= 20;
-
-                mons->add_ench(ENCH_FEAR);
-            }
-        }
-        else
-            mons->hurt(attacker, INSTANT_DEATH);
+        mons->add_ench(ENCH_FEAR);
     }
-
-    return (retval);
 }
 
-int holy_word(int pow, int caster, const coord_def& where, bool silent,
-              actor *attacker)
+void holy_word(int pow, int caster, const coord_def& where, bool silent,
+               actor *attacker)
 {
     if (!silent && attacker)
     {
         /// 1. 주어, 2. speak/speaks
         mprf(gettext("%s %s a Word of immense power!"),
-             attacker->name(DESC_CAP_THE).c_str(),
+             attacker->name(DESC_THE).c_str(),
              attacker->conj_verb("speak").c_str());
     }
 
     // We could use actor.get_los(), but maybe it's NULL.
     los_def los(where);
     los.update();
-    int r = 0;
     for (radius_iterator ri(&los); ri; ++ri)
-        r += holy_word_monsters(*ri, pow, caster, attacker);
-    return (r);
+        holy_word_monsters(*ri, pow, caster, attacker);
 }
 
 int torment_player(actor *attacker, int taux)
@@ -852,7 +835,7 @@ void random_uselessness(int scroll_slot)
         {
             /// 1. 무기 이름, 2. 괴...한 색깔 이름.
             mprf(gettext("%s glows %s for a moment."),
-                 you.weapon()->name(true, DESC_CAP_YOUR).c_str(),
+                 you.weapon()->name(true, DESC_YOUR).c_str(),
                  weird_glowing_colour().c_str());
         }
         else
@@ -956,7 +939,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
             mprf( charged 
                 ? gettext("%s glows for a moment%s.") 
                 : gettext("%s flickers for a moment%s."),
-                 wand.name(true, DESC_CAP_YOUR).c_str(),
+                 wand.name(true, DESC_YOUR).c_str(),
                  desc.c_str());
 
             // Reinitialise zap counts.
@@ -1001,7 +984,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                 mpr(pre_msg->c_str());
 
             /// 1. 완드 이름.
-            mprf(gettext("%s glows for a moment."), wand.name(true, DESC_CAP_YOUR).c_str());
+            mprf(gettext("%s glows for a moment."), wand.name(true, DESC_YOUR).c_str());
         }
 
         you.wield_change = true;
@@ -1246,7 +1229,7 @@ void yell(bool force)
     if (mons_targd != MHITNOT && mons_targd != MHITYOU)
         mpr(gettext("Attack!"));
 
-    noisy(10, you.pos());
+    noisy(noise_level, you.pos());
 }
 
 inline static dungeon_feature_type _vitrified_feature(dungeon_feature_type feat)
@@ -2417,14 +2400,18 @@ void handle_time()
                > (int)exp_needed(you.experience_level + 1))
         {
             you.attribute[ATTR_EVOL_XP] = 0;
-            mutate(coinflip() ? RANDOM_GOOD_MUTATION : RANDOM_MUTATION,
-                   false, false, false, false, false, true);
+            mpr("You feel a genetic drift.");
+            bool evol = mutate(coinflip() ? RANDOM_GOOD_MUTATION : RANDOM_MUTATION,
+                               false, false, false, false, false, true);
             // it would kill itself anyway, but let's speed that up
             if (one_chance_in(10)
-                && (wearing_amulet(AMU_RESIST_MUTATION) || one_chance_in(10)))
+                && (!wearing_amulet(AMU_RESIST_MUTATION) || one_chance_in(10)))
             {
-                delete_mutation(MUT_EVOLUTION, false);
+                evol |= delete_mutation(MUT_EVOLUTION, false);
             }
+            // interrupt the player only if something actually happened
+            if (evol)
+                more();
         }
 
     if (player_in_branch(BRANCH_SPIDER_NEST) && coinflip())
@@ -3342,7 +3329,7 @@ void slime_wall_damage(actor* act, int delay)
          if (dam > 0 && you.can_see(mon))
          {
              mprf((walls > 1) ? gettext("The walls burn %s!") : gettext("The wall burns %s!"),
-                  mon->name(DESC_NOCAP_THE).c_str());
+                  mon->name(DESC_THE).c_str());
          }
          mon->hurt(NULL, dam, BEAM_ACID);
     }

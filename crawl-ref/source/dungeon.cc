@@ -413,7 +413,7 @@ static bool _build_level_vetoable(int level_number, level_area_type level_type,
 static void _builder_assertions()
 {
 #ifdef ASSERTS
-    for(rectangle_iterator ri(0); ri; ++ri)
+    for (rectangle_iterator ri(0); ri; ++ri)
         if (!in_bounds(*ri))
             if (!is_valid_border_feat(grd(*ri)))
             {
@@ -2673,7 +2673,7 @@ static int _min_transitive_label(map_component & component)
         label = current->label;
 
         current = current->min_equivalent;
-    } while(current);
+    } while (current);
 
     return label;
 }
@@ -3435,7 +3435,7 @@ static int _place_monster_vector(std::vector<monster_type> montypes,
     {
         mg.cls = montypes[random2(montypes.size())];
 
-        if (player_in_branch(BRANCH_COCYTUS) &&
+        if (player_in_hell() &&
             mons_class_can_be_zombified(mg.cls))
         {
             static const monster_type lut[3][2] =
@@ -3516,7 +3516,7 @@ static void _place_aquatic_monsters(int level_number, level_area_type level_type
 
             if (player_in_branch(BRANCH_SWAMP) && !one_chance_in(3))
                 swimming_things[i] = MONS_SWAMP_WORM;
-            else if (player_in_branch(BRANCH_COCYTUS))
+            else if (player_in_hell())
             {
                 // Eels are useless when zombified
                 if (swimming_things[i] == MONS_ELECTRIC_EEL)
@@ -4761,7 +4761,7 @@ static void _vault_grid_glyph(vault_placement &place, const coord_def& where,
             {
                 mprf(MSGCH_ERROR, "ERROR: %s already generated somewhere "
                      "else; please file a bug report.",
-                     mons_type_name(mt, DESC_CAP_THE).c_str());
+                     mons_type_name(mt, DESC_THE).c_str());
                 // Force it to be generated anyway.
                 you.unique_creatures[mt] = false;
             }
@@ -5235,8 +5235,8 @@ void place_spec_shop(int level_number,
                 && mitm[orb].base_type != OBJ_GOLD
                 && (env.shop[i].type != SHOP_GENERAL_ANTIQUE
                     || (mitm[orb].base_type != OBJ_MISSILES
-                        && mitm[orb].base_type != OBJ_FOOD
-                        && spec->items.empty())))
+                        && mitm[orb].base_type != OBJ_FOOD)
+                    || !spec->items.empty()))
             {
                 break;
             }

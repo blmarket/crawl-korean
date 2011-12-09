@@ -415,7 +415,6 @@ static void _tweak_randart(item_def &item)
         return;
 
     unsigned int prop = choice_to_prop[choice];
-    ASSERT(prop >= 0);
     ASSERT(prop < ARRAYSZ(_prop_type));
 
     int val;
@@ -476,7 +475,7 @@ void wizard_tweak_object(void)
 
         while (true)
         {
-            mpr(you.inv[item].name(false, DESC_INVENTORY_EQUIP).c_str());
+            mpr_nocap(you.inv[item].name(false, DESC_INVENTORY_EQUIP).c_str());
 
             if (is_art)
             {
@@ -559,7 +558,7 @@ void wizard_tweak_object(void)
 
         // cursedness might have changed
         ash_check_bondage();
-        ash_id_inventory();
+        god_id_inventory();
     }
 }
 
@@ -622,7 +621,7 @@ void wizard_create_all_artefacts()
         item.quantity = 1;
         set_ident_flags(item, ISFLAG_IDENT_MASK);
 
-        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_NOCAP_A)
+        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_A)
                                         << " (" << debug_art_val_str(item)
                                         << ")" << std::endl;
         move_item_to_grid(&islot, you.pos());
@@ -642,7 +641,7 @@ void wizard_create_all_artefacts()
         set_ident_flags(item, ISFLAG_IDENT_MASK);
         move_item_to_grid(&islot, you.pos());
 
-        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_NOCAP_A)
+        msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_A)
                                         << std::endl;
     }
 }
@@ -731,7 +730,7 @@ void wizard_make_object_randart()
     if (eq != EQ_NONE)
         equip_item(eq, invslot);
 
-    mpr(item.name(false, DESC_INVENTORY_EQUIP).c_str());
+    mpr_nocap(item.name(false, DESC_INVENTORY_EQUIP).c_str());
 }
 
 // Returns whether an item of this type can be cursed.

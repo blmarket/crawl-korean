@@ -868,8 +868,8 @@ bool _actor_apply_cloud_side_effects(actor *act,
             if (you.can_see(act))
             {
                 mprf(gettext("%s %s in the rain."),
-                     act->name(DESC_CAP_THE).c_str(),
-                     translate_verb(act, silenced(act->pos())?
+                     act->name(DESC_THE).c_str(),
+                     act->conj_verb(silenced(act->pos())?
                                     V_("steam") : V_("sizzle")).c_str());
             }
         }
@@ -953,7 +953,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
         if (player)
         {
             const actor* agent = find_agent(cloud.source, cloud.whose);
-            poison_player(1, agent ? agent->name(DESC_NOCAP_A) : "",
+            poison_player(1, agent ? agent->name(DESC_A) : "",
                           cloud.cloud_name());
         }
         else
@@ -968,7 +968,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             const actor* agent = find_agent(cloud.source, cloud.whose);
             if (agent)
-                miasma_player(agent->name(DESC_NOCAP_A), cloud.cloud_name());
+                miasma_player(agent->name(DESC_A), cloud.cloud_name());
             else
                 miasma_player(cloud.cloud_name());
         }
@@ -1002,7 +1002,8 @@ bool _actor_apply_cloud_side_effects(actor *act,
     case CLOUD_CHAOS:
         if (coinflip())
         {
-            chaos_affect_actor(act);
+            // TODO: Not have this in melee_attack
+            melee_attack::chaos_affect_actor(act);
             return true;
         }
         break;
@@ -1129,7 +1130,7 @@ int actor_apply_cloud(actor *act)
     {
 #ifdef DEBUG_DIAGNOSTICS
         mprf(MSGCH_DIAGNOSTICS, "%s %s %d damage from cloud: %s.",
-             act->name(DESC_CAP_THE).c_str(),
+             act->name(DESC_THE).c_str(),
              act->conj_verb("take").c_str(),
              final_damage,
              cloud.cloud_name().c_str());
@@ -1360,14 +1361,14 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
             if (act->is_player())
             {
                 mprf(gettext("%s %s standing in the rain."),
-                     act->name(DESC_CAP_THE).c_str(),
-                     translate_verb(act, V_("are")).c_str());
+                     act->name(DESC_THE).c_str(),
+                     act->conj_verb(V_("are")).c_str());
             }
         }
         else
         {
             mprf(gettext("%s %s in %s."),
-                 act->name(DESC_CAP_THE).c_str(),
+                 act->name(DESC_THE).c_str(),
                  beneficial ? translate_verb(act, V_("bask")).c_str()
                  : pgettext("cloud_struct::announce_actor_engulfed", "are engulfed"),
                  cloud_name().c_str());

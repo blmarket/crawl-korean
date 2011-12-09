@@ -444,12 +444,12 @@ void artefact_desc_properties(const item_def &item,
             ++proprt[ARTP_POISON];
             break;
         case ARM_FIRE_DRAGON_ARMOUR:
-            ++proprt[ARTP_FIRE];
+            proprt[ARTP_FIRE] += 2;
             --proprt[ARTP_COLD];
             break;
         case ARM_ICE_DRAGON_ARMOUR:
             --proprt[ARTP_FIRE];
-            ++proprt[ARTP_COLD];
+            proprt[ARTP_COLD] += 2;
             break;
         case ARM_PEARL_DRAGON_ARMOUR:
             ++proprt[ARTP_NEGATIVE_ENERGY];
@@ -484,10 +484,6 @@ void artefact_desc_properties(const item_def &item,
     {
     case RING_INVISIBILITY:
         fake_rap = ARTP_INVISIBLE;
-        break;
-
-    case RING_TELEPORTATION:
-        fake_rap = ARTP_CAUSE_TELEPORTATION;
         break;
 
     case RING_MAGICAL_POWER:
@@ -1478,7 +1474,7 @@ std::string make_artefact_name(const item_def &item, bool appearance)
     if (is_unrandom_artefact(item))
     {
         const unrandart_entry *unrand = _seekunrandart(item);
-        if (item_type_known(item))
+        if (!appearance)
             return unrand->name;
         if (!(unrand->flags & UNRAND_FLAG_RANDAPP))
             return unrand->unid_name;
@@ -1589,7 +1585,7 @@ std::string get_artefact_name(const item_def &item, bool force_known)
     // print artefact appearance
     if (item.props.exists(ARTEFACT_APPEAR_KEY))
         return item.props[ARTEFACT_APPEAR_KEY].get_string();
-    return make_artefact_name(item, false);
+    return make_artefact_name(item, true);
 }
 
 void set_artefact_name(item_def &item, const std::string &name)

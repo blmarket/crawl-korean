@@ -211,7 +211,7 @@ static void _check_odd_card(uint8_t flags)
 static bool _card_forbidden(card_type card)
 {
     if (crawl_state.game_is_zotdef())
-        switch(card)
+        switch (card)
         {
         case CARD_TOMB:
         case CARD_WARPWRIGHT:
@@ -403,7 +403,9 @@ static const deck_archetype* _random_sub_deck(uint8_t deck_type)
 static card_type _choose_from_archetype(const deck_archetype* pdeck,
                                         deck_rarity_type rarity)
 {
-    // We assume here that common == 0, rare == 1, legendary == 2.
+    // Random rarity should have been replaced by one of the others by now.
+    ASSERT(rarity >= DECK_RARITY_COMMON);
+    ASSERT(rarity <= DECK_RARITY_LEGENDARY);
 
     // FIXME: We should use one of the various choose_random_weighted
     // functions here, probably with an iterator, instead of
@@ -416,8 +418,8 @@ static card_type _choose_from_archetype(const deck_archetype* pdeck,
         const card_with_weights& cww = pdeck[i];
         if (_card_forbidden(cww.card))
             continue;
-        totalweight += cww.weight[rarity];
-        if (x_chance_in_y(cww.weight[rarity], totalweight))
+        totalweight += cww.weight[rarity - DECK_RARITY_COMMON];
+        if (x_chance_in_y(cww.weight[rarity - DECK_RARITY_COMMON], totalweight))
             result = cww.card;
     }
     return result;
@@ -592,11 +594,8 @@ static bool _check_buggy_deck(item_def& deck)
             num_cards--;
             num_buggy++;
         }
-        else
-        {
-            if (_flags & CFLAG_MARKED)
-                num_marked++;
-        }
+        else if (_flags & CFLAG_MARKED)
+            num_marked++;
     }
 
     if (num_buggy > 0)
@@ -779,7 +778,7 @@ static void _deck_ident(item_def& deck)
     if (in_inventory(deck) && !item_ident(deck, ISFLAG_KNOW_TYPE))
     {
         set_ident_flags(deck, ISFLAG_KNOW_TYPE);
-        mprf(gettext("This is %s."), deck.name(true, DESC_NOCAP_A).c_str());
+        mprf(gettext("This is %s."), deck.name(true, DESC_A).c_str());
         you.wield_change = true;
     }
 }
@@ -1042,6 +1041,10 @@ bool deck_stack()
              num_cards);
     }
     more();
+
+#ifdef USE_TILE_WEB
+    tiles_crt_control show_as_menu(CRT_MENU, "deck_stack");
+#endif
 
     std::vector<card_type> draws;
     std::vector<uint8_t>   flags;
@@ -1932,7 +1935,7 @@ static void _blade_card(int power, deck_rarity_type rarity)
         {
             /// 1. item name, 2. 's' if quantity is 1
             mprf(gettext("%s vibrate%s crazily for a second."),
-                 wpn->name(true, DESC_CAP_YOUR).c_str(),
+                 wpn->name(true, DESC_YOUR).c_str(),
                  wpn->quantity == 1 ? "s" : "");
         }
         else
@@ -2005,13 +2008,10 @@ static void _focus_card(int power, deck_rarity_type rarity)
         god_type which_god = crawl_state.which_god_acting();
         if (crawl_state.is_god_retribution())
             cause = "the wrath of " + god_name(which_god);
+        else if (which_god == GOD_XOM)
+            cause = "the capriciousness of Xom";
         else
-        {
-            if (which_god == GOD_XOM)
-                cause = "the capriciousness of Xom";
-            else
-                cause = "the 'helpfulness' of " + god_name(which_god);
-        }
+            cause = "the 'helpfulness' of " + god_name(which_god);
     }
 
     modify_stat(best_stat, 1, true, cause.c_str(), true);
@@ -2034,13 +2034,10 @@ static void _shuffle_card(int power, deck_rarity_type rarity)
         god_type which_god = crawl_state.which_god_acting();
         if (crawl_state.is_god_retribution())
             cause = "the wrath of " + god_name(which_god);
+        else if (which_god == GOD_XOM)
+            cause = "the capriciousness of Xom";
         else
-        {
-            if (which_god == GOD_XOM)
-                cause = "the capriciousness of Xom";
-            else
-                cause = "the 'helpfulness' of " + god_name(which_god);
-        }
+            cause = "the 'helpfulness' of " + god_name(which_god);
     }
 
     for (int i = 0; i < NUM_STATS; ++i)
@@ -2378,9 +2375,7 @@ static void _trowel_card(int power, deck_rarity_type rarity)
         // Generate a portal to something.
         const map_def *map = random_map_for_tag("trowel_portal");
         if (!map)
-        {
             mpr(gettext("A buggy portal flickers into view, then vanishes."));
-        }
         else
         {
             {
@@ -2607,9 +2602,7 @@ static void _summon_any_monster(int power, deck_rarity_type rarity)
 
         monster_type cur_try;
         do
-        {
             cur_try = random_monster_at_grid(you.pos() + delta);
-        }
         while (mons_is_unique(cur_try));
 
         if (mon_chosen == NUM_MONSTERS
@@ -2828,9 +2821,7 @@ static int _card_power(deck_rarity_type rarity)
     int result = 0;
 
     if (you.penance[GOD_NEMELEX_XOBEH])
-    {
         result -= you.penance[GOD_NEMELEX_XOBEH];
-    }
     else if (you.religion == GOD_NEMELEX_XOBEH)
     {
         result = you.piety;

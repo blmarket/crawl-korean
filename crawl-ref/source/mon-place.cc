@@ -87,9 +87,6 @@ static monster_type _resolve_monster_type(monster_type mon_type,
 static monster_type _band_member(band_type band, int power);
 static band_type _choose_band(int mon_type, int power, int &band_size,
                               bool& natural_leader);
-// static int _place_monster_aux(int mon_type, beh_type behaviour, int target,
-//                               int px, int py, int power, int extra,
-//                               bool first_band_member, int dur = 0);
 
 static int _place_monster_aux(const mgen_data &mg, bool first_band_member,
                               bool force_pos = false, bool dont_place = false);
@@ -1202,7 +1199,7 @@ int place_monster(mgen_data mg, bool force_pos, bool dont_place)
         std::string msg;
 
         if (menv[id].visible_to(&you))
-            msg = menv[id].name(DESC_CAP_A);
+            msg = menv[id].name(DESC_A);
         else if (shoved)
             msg = gettext(M_("Something"));
 
@@ -1780,7 +1777,7 @@ static int _place_monster_aux(const mgen_data &mg,
         {
             monster* sum = mg.summoner->as_monster();
             mons_add_blame(mon, (blame_prefix
-                                 + sum->full_name(DESC_NOCAP_A, true)));
+                                 + sum->full_name(DESC_A, true)));
             if (sum->props.exists("blame"))
             {
                 CrawlVector& oldblame = sum->props["blame"].get_vector();
@@ -1845,6 +1842,8 @@ static int _place_monster_aux(const mgen_data &mg,
         arena_placed_monster(mon);
     else if (!Generating_Level && you.can_see(mon))
     {
+        if (mg.flags & MG_DONT_COME)
+            mon->seen_context = SC_JUST_SEEN;
         // FIXME: This causes "comes into view" messages at the
         //        wrong time, since code checks for placement
         //        success before printing messages.
@@ -2690,14 +2689,14 @@ static monster_type _band_member(band_type band, int power)
         if (one_chance_in(7))
         {
             mon_type = random_choose_weighted(50, MONS_LICH,
-                                              10, MONS_ANCIENT_LICH,
+                                       10, MONS_ANCIENT_LICH,
                                                0);
         }
         else if (one_chance_in(6))
         {
             mon_type = random_choose_weighted(50, MONS_ABOMINATION_SMALL,
-                                              40, MONS_ABOMINATION_LARGE,
-                                              10, MONS_TENTACLED_MONSTROSITY,
+                                       40, MONS_ABOMINATION_LARGE,
+                                       10, MONS_TENTACLED_MONSTROSITY,
                                                0);
         }
         else
@@ -2847,9 +2846,9 @@ static monster_type _band_member(band_type band, int power)
     }
     case BAND_ILSUIW:
         mon_type = random_choose_weighted(30, MONS_MERMAID,
-                                          15, MONS_MERFOLK,
-                                          10, MONS_MERFOLK_JAVELINEER,
-                                          10, MONS_MERFOLK_IMPALER,
+                                   15, MONS_MERFOLK,
+                                   10, MONS_MERFOLK_JAVELINEER,
+                                   10, MONS_MERFOLK_IMPALER,
                                            0);
         break;
 
@@ -2879,7 +2878,7 @@ static monster_type _band_member(band_type band, int power)
 
     case BAND_MERFOLK_AQUAMANCER:
         mon_type = random_choose_weighted(8, MONS_MERFOLK,
-                                         10, MONS_ICE_BEAST,
+                                   10, MONS_ICE_BEAST,
                                           0);
         break;
 
@@ -2947,7 +2946,7 @@ void mark_interesting_monst(monster* mons, beh_type behaviour)
     // Don't waste time on moname() if user isn't using this option
     else if (!Options.note_monsters.empty())
     {
-        const std::string iname = mons_type_name(mons->type, DESC_NOCAP_A);
+        const std::string iname = mons_type_name(mons->type, DESC_A);
         for (unsigned i = 0; i < Options.note_monsters.size(); ++i)
         {
             if (Options.note_monsters[i].matches(iname))
@@ -3065,7 +3064,7 @@ int mons_place(mgen_data mg)
     if (mid == -1)
         return (-1);
 
-    dprf("Created a %s.", menv[mid].base_name(DESC_PLAIN, true).c_str());
+    dprf("Created %s.", menv[mid].base_name(DESC_A, true).c_str());
 
     monster* creation = &menv[mid];
 
@@ -3300,7 +3299,7 @@ bool player_angers_monster(monster* mon)
                 aura = pgettext("players_angers_monster", "anti-magical");
 
             mprf(gettext("%s is enraged by your %s aura!"),
-                 mon->name(DESC_CAP_THE).c_str(), aura.c_str());
+                 mon->name(DESC_THE).c_str(), aura.c_str());
         }
 
         return (true);
@@ -3391,15 +3390,6 @@ bool empty_surrounds(const coord_def& where, dungeon_feature_type spc_wanted,
     // XXX: A lot of hacks that could be avoided by passing the
     //      monster generation data through.
 
-    // Assume all player summoning originates from player x,y.
-    // XXX: no longer true with Haunt.
-    bool playerSummon = (where == you.pos());
-    bool monsterSummon = !playerSummon && actor_at(where);
-
-    // Require LOS and no transparent walls, except for
-    // summoning monsters.
-    los_type los = monsterSummon ? LOS_DEFAULT : LOS_NO_TRANS;
-
     int good_count = 0;
 
     for (radius_iterator ri(where, radius, C_ROUND, NULL, !allow_centre);
@@ -3410,7 +3400,7 @@ bool empty_surrounds(const coord_def& where, dungeon_feature_type spc_wanted,
         if (actor_at(*ri))
             continue;
 
-        if (!cell_see_cell(where, *ri, los))
+        if (!cell_see_cell(where, *ri, LOS_NO_TRANS))
             continue;
 
         success =

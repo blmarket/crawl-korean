@@ -222,7 +222,13 @@ static void _handle_wizard_command(void);
 //
 
 #ifdef USE_SDL
-#include <SDL_main.h>
+# include <SDL_main.h>
+# ifdef __GNUC__
+// SDL plays nasty tricks with main() (actually, _SDL_main()), which for
+// Windows builds somehow fail with -fwhole-program.  Thus, exempt SDL_main()
+// from this treatment.
+__attribute__((externally_visible))
+# endif
 #endif
 
 int main(int argc, char *argv[])
@@ -543,7 +549,7 @@ static void _god_greeting_message(bool game_start)
 
     std::string result = getSpeakString(msg);
 
-    if(!result.empty())
+    if (!result.empty())
         god_speaks(you.religion, result.c_str());
 }
 
@@ -621,6 +627,8 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
     case CONTROL('T'): debug_terp_dlua(); break;
     case CONTROL('V'): wizard_toggle_xray_vision(); break;
     case CONTROL('X'): debug_xom_effects(); break;
+
+    case CONTROL('C'): die("Intentional crash");
 
     case 'O': debug_test_explore();                  break;
     case 'S': wizard_set_skill_level();              break;
@@ -802,6 +810,7 @@ static void _handle_wizard_command(void)
         take_note(Note(NOTE_MESSAGE, 0, 0, "Entered wizard mode."));
 
         you.wizard = true;
+        save_game(false);
         redraw_screen();
 
         if (crawl_state.cmd_repeat_start)
@@ -1314,7 +1323,7 @@ static bool _stairs_check_mesmerised()
     {
         const monster* beholder = you.get_any_beholder();
         mprf(gettext("You cannot move away from %s!"),
-             beholder->name(DESC_NOCAP_THE, true).c_str());
+             beholder->name(DESC_THE, true).c_str());
         return (true);
     }
 
@@ -1330,7 +1339,7 @@ static bool _marker_vetoes_stair()
 // portal, false if the user said no at the prompt.
 static bool _prompt_dangerous_portal(dungeon_feature_type ftype)
 {
-    switch(ftype)
+    switch (ftype)
     {
     case DNGN_ENTER_PANDEMONIUM:
     case DNGN_ENTER_ABYSS:
@@ -1579,17 +1588,38 @@ static void _experience_check()
          you.experience_level,
          species_name(you.species).c_str(),
          you.class_name.c_str());
+    int perc = get_exp_progress();
 
     if (you.experience_level < 27)
     {
         /// 1. 현재 경험치%, 2. 다음 레벨
-        mprf(gettext("You are %d%% of the way to level %d."), get_exp_progress(),
+        mprf(gettext("You are %d%% of the way to level %d."), perc,
               you.experience_level + 1);
     }
     else
     {
         mpr(gettext("I'm sorry, level 27 is as high as you can go."));
         mpr(gettext("With the way you've been playing, I'm surprised you got this far."));
+    }
+
+    if (you.species == SP_FELID)
+    {
+        int xl = you.experience_level;
+        // calculate the "real" level
+        while (you.experience >= exp_needed(xl + 1))
+            xl++;
+        int nl = you.max_level;
+        // and the next level you'll get a life
+        do nl++; while (!will_gain_life(nl));
+
+        // old value was capped at XL27
+        perc = (you.experience - exp_needed(xl)) * 100
+             / (exp_needed(xl + 1) - exp_needed(xl));
+        perc = (nl - xl) * 100 - perc;
+        mprf(you.lives < 2 ?
+             "You'll get an extra life in %d.%02d levels worth of XP." :
+             "If you died right now, you'd get an extra life in %d.%02d levels worth of XP.",
+             perc / 100, perc % 100);
     }
 
     handle_real_time();
@@ -1981,9 +2011,14 @@ void process_command(command_type cmd)
     case CMD_RESISTS_SCREEN:           print_overview_screen();        break;
 
     case CMD_DISPLAY_RELIGION:
+    {
+#ifdef USE_TILE_WEB
+        tiles_crt_control show_as_menu(CRT_MENU, "describe_god");
+#endif
         describe_god(you.religion, true);
         redraw_screen();
         break;
+    }
 
     case CMD_READ_MESSAGES:
 #ifdef DGL_SIMPLE_MESSAGING
@@ -2369,7 +2404,7 @@ static void _decrement_durations()
             const int temp_effect = get_weapon_brand(weapon);
 
             set_item_ego_type(weapon, OBJ_WEAPONS, SPWPN_NORMAL);
-            std::string msg = weapon.name(true, DESC_CAP_YOUR);
+            std::string msg = weapon.name(true, DESC_YOUR);
 
             switch (temp_effect)
             {
@@ -2885,7 +2920,7 @@ static void _regenerate_hp_and_mp(int delay)
 
     if (you.hp < you.hp_max && !you.disease && !you.duration[DUR_DEATHS_DOOR])
     {
-        int base_val = player_regen();
+        const int base_val = player_regen();
         tmp += div_rand_round(base_val * delay, BASELINE_DELAY);
     }
 
@@ -2895,12 +2930,12 @@ static void _regenerate_hp_and_mp(int delay)
         tmp -= 100;
     }
 
+    ASSERT(tmp >= 0 && tmp < 100);
+    you.hit_points_regeneration = tmp;
+
     // XXX: Don't let DD use guardian spirit for free HP. (due, dpeg)
     if (player_spirit_shield() && you.species == SP_DEEP_DWARF)
         return;
-
-    ASSERT(tmp >= 0 && tmp < 100);
-    you.hit_points_regeneration = tmp;
 
     // XXX: Doing the same as the above, although overflow isn't an
     // issue with magic point regeneration, yet. -- bwr
@@ -2908,7 +2943,7 @@ static void _regenerate_hp_and_mp(int delay)
 
     if (you.magic_points < you.max_magic_points)
     {
-        int base_val = 7 + you.max_magic_points / 2;
+        const int base_val = 7 + you.max_magic_points / 2;
         tmp += div_rand_round(base_val * delay, BASELINE_DELAY);
     }
 
@@ -3373,7 +3408,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         {
             const std::string prompt =
                 make_stringf(gettext("Do you want to try to take the net off %s?"),
-                             mon->name(DESC_NOCAP_THE).c_str());
+                             mon->name(DESC_THE).c_str());
 
             if (yesno(prompt.c_str(), true, 'n'))
             {
@@ -3383,7 +3418,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         }
 
         you.turn_is_over = true;
-        you_attack(mon->mindex(), true);
+        fight_melee(&you, mon);
 
         if (you.berserk_penalty != NO_BERSERK_PENALTY)
             you.berserk_penalty = 0;
@@ -4174,7 +4209,7 @@ static void _move_player(coord_def move)
             // the player to figure out which adjacent wall an invis
             // monster is in "for free".
             you.turn_is_over = true;
-            you_attack(targ_monst->mindex(), true);
+            fight_melee(&you, targ_monst);
 
             // We don't want to create a penalty if there isn't
             // supposed to be one.
@@ -4295,13 +4330,13 @@ static void _move_player(coord_def move)
     else if (beholder && !attacking)
     {
         mprf(gettext("You cannot move away from %s!"),
-            beholder->name(DESC_NOCAP_THE, true).c_str());
+            beholder->name(DESC_THE, true).c_str());
         return;
     }
     else if (fmonger && !attacking)
     {
         mprf(gettext("You cannot move closer to %s!"),
-            fmonger->name(DESC_NOCAP_THE, true).c_str());
+            fmonger->name(DESC_THE, true).c_str());
         return;
     }
 
@@ -4566,12 +4601,6 @@ static void _update_replay_state()
 
 static void _compile_time_asserts()
 {
-    // Check that the numbering comments in enum.h haven't been
-    // disturbed accidentally.
-    COMPILE_CHECK(SK_UNARMED_COMBAT == 17);
-    COMPILE_CHECK(SK_EVOCATIONS == 32);
-    COMPILE_CHECK(SP_VAMPIRE == 30);
-
     //jmf: NEW ASSERTS: we ought to do a *lot* of these
     COMPILE_CHECK(NUM_SPECIES < SP_UNKNOWN);
     COMPILE_CHECK(NUM_JOBS < JOB_UNKNOWN);

@@ -399,7 +399,7 @@ void push_features_to_abyss()
     {
         dungeon_feature_type feature = grd(*ri);
 
-        if(!in_bounds(*ri))
+        if (!in_bounds(*ri))
             feature = DNGN_UNSEEN;
 
         if (feat_is_stair(feature))
@@ -1038,7 +1038,7 @@ static void _abyss_apply_terrain(const map_mask &abyss_genlevel_mask,
         if (you.pos() == p || !abyss_genlevel_mask(p))
             continue;
 
-        // Dont' decay vaults.
+        // Don't decay vaults.
         if (map_masked(p, MMT_VAULT))
             continue;
 

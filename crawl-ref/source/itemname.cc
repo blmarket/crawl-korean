@@ -112,7 +112,7 @@ std::string item_def::name(bool allow_translate,
                 buff << " - ";
         }
         else
-            descrip = DESC_CAP_A;
+            descrip = DESC_A;
     }
 
     if (base_type == OBJ_BOOKS && (ident || item_type_known(*this))
@@ -135,27 +135,11 @@ std::string item_def::name(bool allow_translate,
 #endif
                & MF_NAME_SPECIES)
              && !(corpse_flags & MF_NAME_DEFINITE))
-             && !(corpse_flags & MF_NAME_SUFFIX)
+        && !(corpse_flags & MF_NAME_SUFFIX)
         && !starts_with(get_corpse_name(*this), "shaped "))
     {
-        switch (descrip)
-        {
-        case DESC_CAP_A:
-        case DESC_CAP_YOUR:
-            descrip = DESC_CAP_THE;
-            break;
-
-        case DESC_NOCAP_A:
-        case DESC_NOCAP_YOUR:
-        case DESC_NOCAP_ITS:
-        case DESC_INVENTORY_EQUIP:
-        case DESC_INVENTORY:
-            descrip = DESC_NOCAP_THE;
-            break;
-
-        default:
-            break;
-        }
+        if (descrip != DESC_DBNAME)
+            descrip = DESC_THE;
     }
 
     if (item_is_orb(*this)
@@ -166,21 +150,10 @@ std::string item_def::name(bool allow_translate,
         // Artefacts always get "the" unless we just want the plain name.
         switch (descrip)
         {
-        case DESC_CAP_A:
-        case DESC_CAP_YOUR:
-        case DESC_CAP_THE:
-            buff << check_gettext("The ");
-            break;
-        case DESC_NOCAP_A:
-        case DESC_NOCAP_YOUR:
-        case DESC_NOCAP_THE:
-        case DESC_NOCAP_ITS:
-        case DESC_INVENTORY_EQUIP:
-        case DESC_INVENTORY:
-            buff << check_gettext("the ");
-            break;
         default:
+            buff << "the ";
         case DESC_PLAIN:
+        case DESC_DBNAME:
             break;
         }
     }
@@ -188,13 +161,10 @@ std::string item_def::name(bool allow_translate,
     {
         switch (descrip)
         {
-        case DESC_CAP_THE:    buff << check_gettext("The "); break;
-        case DESC_NOCAP_THE:  buff << check_gettext("the "); break;
-        case DESC_CAP_YOUR:   buff << check_gettext("Your "); break;
-        case DESC_NOCAP_YOUR: buff << check_gettext("your "); break;
-        case DESC_NOCAP_ITS:  buff << check_gettext("its "); break;
-        case DESC_CAP_A:
-        case DESC_NOCAP_A:
+        case DESC_THE:        buff << check_gettext("the "); break;
+        case DESC_YOUR:       buff << check_gettext("your "); break;
+        case DESC_ITS:        buff << check_gettext("its "); break;
+        case DESC_A:
         case DESC_INVENTORY_EQUIP:
         case DESC_INVENTORY:
         case DESC_PLAIN:
@@ -217,25 +187,19 @@ std::string item_def::name(bool allow_translate,
         if(translate_flag == false) 
         {
         #endif
-            switch (descrip)
-            {
-            case DESC_CAP_THE:    buff << check_gettext("The "); break;
-            case DESC_NOCAP_THE:  buff << check_gettext("the "); break;
-            case DESC_CAP_A:      buff << (startvowel ? check_gettext("An ") : check_gettext("A ")); break;
-
-            case DESC_CAP_YOUR:   buff << check_gettext("Your "); break;
-            case DESC_NOCAP_YOUR: buff << check_gettext("your "); break;
-            case DESC_NOCAP_ITS:  buff << check_gettext("its "); break;
-
-            case DESC_NOCAP_A:
+        switch(descrip)
+        {
+            case DESC_THE:        buff << check_gettext("the "); break;
+            case DESC_YOUR:       buff << check_gettext("your "); break;
+            case DESC_ITS:        buff << check_gettext("its "); break;
+            case DESC_A:
             case DESC_INVENTORY_EQUIP:
             case DESC_INVENTORY:
-                                  buff << (startvowel ? check_gettext(M_("an ")) : check_gettext(M_("a "))); break;
-
+                                  buff << (startvowel ? check_gettext("an ") : check_gettext("a ")); break;
             case DESC_PLAIN:
             default:
                 break;
-            }
+        }
         #ifdef KR
         }
         #endif
@@ -1952,7 +1916,8 @@ std::string item_def::name_aux(description_level_type desc,
             buff << "corpse bug";
 
         if (!_name.empty() && !shaped && name_type != MF_NAME_ADJECTIVE
-            && !(name_flags & MF_NAME_SPECIES) && name_type != MF_NAME_SUFFIX)
+            && !(name_flags & MF_NAME_SPECIES) && name_type != MF_NAME_SUFFIX
+            && !dbname)
         {
             buff << " of " << _name;
         }
@@ -1983,7 +1948,7 @@ std::string item_def::name_aux(description_level_type desc,
                 buff << " [ice]";
                 break;
             case STAFF_DESTRUCTION_III:
-                buff << " [lightning,iron,fireball]";
+                buff << " [lightning,fireball,iron]";
                 break;
             case STAFF_DESTRUCTION_IV:
                 buff << " [inacc,magma,cold]";
@@ -2136,7 +2101,7 @@ void set_ident_type(item_def &item, item_type_id_state_type setting,
         && !(item.flags & (ISFLAG_NOTED_ID | ISFLAG_NOTED_GET)))
     {
         // Make a note of it.
-        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
+        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
                        origin_desc(item).c_str()));
 
         // Sometimes (e.g. shops) you can ID an item before you get it;
@@ -2833,6 +2798,10 @@ bool is_bad_item(const item_def &item, bool temp)
             return (false);
         }
     case OBJ_JEWELLERY:
+        // Potentially useful.  TODO: check the properties.
+        if (is_artefact(item))
+            return (false);
+
         switch (item.sub_type)
         {
         case AMU_INACCURACY:
@@ -2862,12 +2831,12 @@ bool is_bad_item(const item_def &item, bool temp)
 // worthwhile.
 bool is_dangerous_item(const item_def &item, bool temp)
 {
+    if (!item_type_known(item))
+        return (false);
+
     switch (item.base_type)
     {
     case OBJ_SCROLLS:
-        if (!item_type_known(item))
-            return (false);
-
         switch (item.sub_type)
         {
         case SCR_IMMOLATION:
@@ -2883,9 +2852,6 @@ bool is_dangerous_item(const item_def &item, bool temp)
         }
 
     case OBJ_POTIONS:
-        if (!item_type_known(item))
-            return (false);
-
         switch (item.sub_type)
         {
         case POT_MUTATION:
@@ -3071,7 +3037,7 @@ bool is_useless_item(const item_def &item, bool temp)
         if (!item_type_known(item))
             return (false);
 
-        // Potentially useful.
+        // Potentially useful.  TODO: check the properties.
         if (is_artefact(item))
             return (false);
 

@@ -1015,8 +1015,8 @@ bool zin_recite_to_single_monster(const coord_def& where,
                 else
                 {
                     mprf("%s bleeds profusely from %s eyes and ears.",
-                         mon->name(DESC_CAP_THE).c_str(),
-                         mons_pronoun(mon->type, PRONOUN_NOCAP_POSSESSIVE));
+                         mon->name(DESC_THE).c_str(),
+                         mon->pronoun(PRONOUN_POSSESSIVE).c_str());
                 }
                 break;
             case RECITE_CHAOTIC:
@@ -1348,7 +1348,7 @@ void elyvilon_purification()
     you.duration[DUR_PETRIFYING] = 0;
     you.duration[DUR_NAUSEA] = 0;
     restore_stat(STAT_ALL, 0, false);
-    unrot_hp(10000);
+    unrot_hp(9999);
 }
 
 bool elyvilon_divine_vigour()
@@ -1629,7 +1629,7 @@ void yred_drain_life()
             continue;
 
         mprf("You draw life from %s.",
-             mi->name(DESC_NOCAP_THE).c_str());
+             mi->name(DESC_THE).c_str());
 
         behaviour_event(*mi, ME_WHACK, MHITYOU, you.pos());
 
@@ -1660,8 +1660,8 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     add_daction(DACT_OLD_ENSLAVED_SOULS_POOF);
 
     const std::string whose =
-        you.can_see(mon) ? apostrophise(mon->name(DESC_CAP_THE))
-                         : mon->pronoun(PRONOUN_CAP_POSSESSIVE);
+        you.can_see(mon) ? apostrophise(mon->name(DESC_THE))
+                         : mon->pronoun(PRONOUN_POSSESSIVE);
 
     // Remove the monster's soul-enslaving enchantment, as it's no
     // longer needed.
@@ -1911,21 +1911,20 @@ int fedhas_fungal_bloom()
     for (radius_iterator i(you.pos(), LOS_RADIUS); i; ++i)
     {
         monster* target = monster_at(*i);
-        if (target && target->is_summoned())
-            continue;
-
         if (!is_harmless_cloud(cloud_type_at(*i)))
             continue;
 
         if (target && target->mons_species() != MONS_TOADSTOOL)
         {
+            bool piety = !target->is_summoned();
             switch (mons_genus(target->mons_species()))
             {
             case MONS_ZOMBIE_SMALL:
                 // Maybe turn a zombie into a skeleton.
                 if (mons_skeleton(mons_zombie_base(target)))
                 {
-                    processed_count++;
+                    if (piety)
+                        processed_count++;
 
                     monster_type skele_type = MONS_SKELETON_LARGE;
                     if (mons_zombie_size(mons_zombie_base(target)) == Z_SMALL)
@@ -1956,7 +1955,10 @@ int fedhas_fungal_bloom()
                 // If a corpse didn't drop, create a toadstool.
                 // If one did drop, we will create toadstools from it as usual
                 // later on.
-                if (corpse < 0)
+                // Give neither piety nor toadstools for summoned creatures.
+                // Assumes that summoned creatures do not drop corpses (hence
+                // will not give piety in the next loop).
+                if (corpse < 0 && piety)
                 {
                     const int mushroom = create_monster(
                                 mgen_data(MONS_TOADSTOOL,
@@ -1980,6 +1982,10 @@ int fedhas_fungal_bloom()
 
                     continue;
                 }
+
+                // Verify that summoned creatures do not drop a corpse.
+                ASSERT(corpse < 0 || piety);
+
                 break;
             }
 
@@ -3011,7 +3017,7 @@ static int _lugonu_warp_monster(monster* mon, int pow)
     if (res_margin > 0)
     {
         mprf("%s%s",
-             mon->name(DESC_CAP_THE).c_str(),
+             mon->name(DESC_THE).c_str(),
              mons_resist_string(mon, res_margin).c_str());
         return (1);
     }
@@ -3046,7 +3052,7 @@ void lugonu_bend_space()
     if (area_warp)
         _lugonu_warp_area(pow);
 
-    random_blink(false, true);
+    random_blink(false, true, true);
 
     const int damage = roll_dice(1, 4);
     ouch(damage, NON_MONSTER, KILLED_BY_WILD_MAGIC, "a spatial distortion");
@@ -3065,14 +3071,14 @@ void cheibriados_time_bend(int pow)
             if (res_margin > 0)
             {
                 mprf("%s%s",
-                     mon->name(DESC_CAP_THE).c_str(),
+                     mon->name(DESC_THE).c_str(),
                      mons_resist_string(mon, res_margin).c_str());
                 continue;
             }
 
             simple_god_message(
                 make_stringf(" rebukes %s.",
-                             mon->name(DESC_NOCAP_THE).c_str()).c_str(),
+                             mon->name(DESC_THE).c_str()).c_str(),
                              GOD_CHEIBRIADOS);
             do_slow_monster(mon, &you);
         }
@@ -3117,7 +3123,7 @@ static int _slouch_monsters(coord_def where, int pow, int dummy, actor* agent)
 
 bool cheibriados_slouch(int pow)
 {
-    int count = apply_area_visible(_slouchable, pow, true, &you);
+    int count = apply_area_visible(_slouchable, pow, &you);
     if (!count)
         if (!yesno("There's no one hasty visible. Invoke Slouch anyway?",
                    true, 'n'))
@@ -3132,7 +3138,7 @@ bool cheibriados_slouch(int pow)
     mpr("You can feel time thicken for a moment.");
     dprf("your speed is %d", player_movement_speed());
 
-    apply_area_visible(_slouch_monsters, pow, true, &you);
+    apply_area_visible(_slouch_monsters, pow, &you);
     return true;
 }
 
@@ -3153,7 +3159,6 @@ void cheibriados_temporal_distortion()
         manage_clouds();
     }
     while (--you.duration[DUR_TIME_STEP] > 0);
-    update_level(time * 10);
 
     monster* mon;
     if (mon = monster_at(old_pos))
@@ -3215,7 +3220,7 @@ bool ashenzari_transfer_knowledge()
         if (!ashenzari_end_transfer())
             return false;
 
-    while(true)
+    while (true)
     {
         skill_menu(SKMF_RESKILL_FROM);
         if (is_invalid_skill(you.transfer_from_skill))

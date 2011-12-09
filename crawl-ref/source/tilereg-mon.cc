@@ -4,6 +4,7 @@
 #include <algorithm>
 
 #include "tilereg-mon.h"
+#include "process_desc.h"
 
 #include "cio.h"
 #include "directn.h"
@@ -211,7 +212,7 @@ void MonsterRegion::draw_tag()
     if (!mon)
         return;
 
-    std::string desc = mon->name(DESC_CAP_A);
+    std::string desc = mon->name(DESC_A);
     draw_desc(desc.c_str());
 }
 

@@ -375,7 +375,7 @@ An open door
 %%%%
 An orcish idol
 
-오크의 신 '베오그'의 동상이다.
+An idol of the orc god Beogh. Destroying it is likely to incur Beogh's wrath.
 %%%%
 An unnaturally hard rock wall
 

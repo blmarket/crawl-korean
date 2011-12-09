@@ -609,7 +609,7 @@ static monsterentry mondata[] = {
 {
     MONS_DRACONIAN_SCORCHER, 'd', LIGHTRED, M_("draconian scorcher"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_COLD_BLOOD | M_SPEAKS,
-    MR_RES_HELLFIRE,
+    MR_NO_FLAGS,
     900, 10, MONS_DRACONIAN, MONS_DRACONIAN, MH_NATURAL, -4,
     { {AT_HIT, AF_PLAIN, 15}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 16, 4, 2, 0 },
@@ -744,7 +744,7 @@ static monsterentry mondata[] = {
 {
     MONS_DEEP_ELF_HIGH_PRIEST, 'e', LIGHTGREEN, M_("deep elf high priest"),
     M_SPELLCASTER | M_SPEAKS | M_PRIEST | M_WARM_BLOOD | M_SEE_INVIS,
-    MR_RES_HELLFIRE,
+    MR_NO_FLAGS,
     450, 10, MONS_ELF, MONS_ELF, MH_NATURAL, -6,
     { {AT_HIT, AF_PLAIN, 14}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 11, 3, 3, 0 },
@@ -1556,7 +1556,7 @@ static monsterentry mondata[] = {
     MONS_ORC_SORCERER, 'o', LIGHTMAGENTA, M_("orc sorcerer"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_ACTUAL_SPELLS
         | M_WARM_BLOOD,
-    MR_RES_FIRE,
+    MR_NO_FLAGS,
     600, 12, MONS_ORC, MONS_ORC, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 7}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 9, 2, 3, 0 },
@@ -1568,7 +1568,7 @@ static monsterentry mondata[] = {
 {
     MONS_ORC_HIGH_PRIEST, 'o', LIGHTGREEN, M_("orc high priest"),
     M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_PRIEST | M_WARM_BLOOD,
-    MR_RES_HELLFIRE,
+    MR_NO_FLAGS,
     600, 10, MONS_ORC, MONS_ORC, MH_NATURAL, -4,
     { {AT_HIT, AF_PLAIN, 7}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 11, 3, 4, 0 },
@@ -1687,7 +1687,7 @@ static monsterentry mondata[] = {
     MONS_SPIRIT, 'p', YELLOW, M_("spirit"),
     M_SPELLCASTER | M_INSUBSTANTIAL | M_FLEEING,
     MR_RES_POISON,
-    0, 5, MONS_SPIRIT, MONS_SPIRIT, MH_HOLY, -4,
+    0, 5, MONS_GHOST, MONS_SPIRIT, MH_HOLY, -4,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 7, 5, 5, 0 },
     3, 19, MST_SPIRIT, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
@@ -1800,7 +1800,7 @@ static monsterentry mondata[] = {
     600, 14, MONS_DWARF, MONS_DEEP_DWARF, MH_UNDEAD, -8,
     { {AT_HIT, AF_PLAIN, 17}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 11, 5, 4, 0 },
-    2, 10, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SHOUT,
+    2, 10, MST_UNBORN_DEEP_DWARF, CE_NOCORPSE, Z_NOZOMBIE, S_SHOUT,
     I_HIGH, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
@@ -2522,6 +2522,19 @@ static monsterentry mondata[] = {
 },
 
 {
+    MONS_SERAPH, 'A', LIGHTMAGENTA, M_("seraph"),
+    M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_GLOWS_LIGHT,
+    MR_RES_POISON | MR_RES_ELEC | mrd(MR_RES_FIRE, 3),
+    0, 10, MONS_ANGEL, MONS_SERAPH, MH_HOLY, -8,
+    { {AT_HIT, AF_PLAIN, 25}, {AT_HIT, AF_PLAIN, 10}, AT_NO_ATK,
+       AT_NO_ATK },
+    { 25, 6, 5, 0 },
+    10, 20, MST_ANGEL, CE_NOCORPSE, Z_NOZOMBIE, S_SHOUT,
+    I_HIGH, HT_LAND, FL_FLY, 10, DEFAULT_ENERGY,
+    MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
+},
+
+{
     MONS_DAEVA, 'A', YELLOW, M_("daeva"),
     M_FIGHTER | M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_GLOWS_LIGHT,
     MR_RES_POISON,
@@ -3161,7 +3174,7 @@ static monsterentry mondata[] = {
     MONS_SHEDU, 'H', WHITE, M_("shedu"),
     M_WARM_BLOOD | M_ALWAYS_CORPSE | M_SPELLCASTER,
     MR_RES_POISON,
-    480, 12, MONS_PHOENIX, MONS_SHEDU, MH_HOLY, -3,
+    480, 12, MONS_SHEDU, MONS_SHEDU, MH_HOLY, -3,
     { {AT_KICK, AF_HOLY, 19}, {AT_KICK, AF_HOLY, 23}, AT_NO_ATK, AT_NO_ATK },
     { 13, 6, 5, 0 },
     2, 10, MST_SHEDU, CE_CLEAN, Z_BIG, S_SCREECH,

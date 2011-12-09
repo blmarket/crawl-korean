@@ -66,7 +66,7 @@ public:
 
     std::auto_ptr<ghost_demon> ghost;  // Ghost information.
 
-    std::string seen_context;          // Non-standard context for
+    seen_context_type seen_context;    // Non-standard context for
                                        // AI_SEE_MONSTER
 
     int damage_friendly;               // Damage taken, x2 you, x1 pets, x0 else.
@@ -105,6 +105,7 @@ public:
     void apply_location_effects(const coord_def &oldpos,
                                 killer_type killer = KILL_NONE,
                                 int killernum = -1);
+    bool self_destructs();
 
     void moveto(const coord_def& c, bool clear_net = true);
     bool move_to_pos(const coord_def &newpos, bool clear_net = true);
@@ -142,9 +143,10 @@ public:
     bool lose_ench_duration(const mon_enchant &e, int levels);
     bool lose_ench_levels(const mon_enchant &e, int lev);
     void lose_energy(energy_use_type et, int div = 1, int mult = 1);
+    void gain_energy(energy_use_type et, int div = 1, int mult = 1);
 
     void scale_hp(int num, int den);
-    bool gain_exp(int exp);
+    bool gain_exp(int exp, int max_levels_to_gain = 2);
 
     void react_to_damage(const actor *oppressor, int damage, beam_type flavour);
 
@@ -190,20 +192,20 @@ public:
     bool      swimming() const;
     bool      wants_submerge() const;
 
-    bool      submerged() const;
-    bool      can_drown() const;
-    bool      floundering_at(const coord_def p) const;
-    bool      floundering() const;
-    bool      extra_balanced_at(const coord_def p) const;
-    bool      extra_balanced() const;
-    bool      can_pass_through_feat(dungeon_feature_type grid) const;
-    bool      is_habitable_feat(dungeon_feature_type actual_grid) const;
-    size_type body_size(size_part_type psize = PSIZE_TORSO,
-                        bool base = false) const;
-    int       body_weight(bool base = false) const;
-    int       total_weight() const;
-    brand_type damage_brand(int which_attack = -1);
-    int       damage_type(int which_attack = -1);
+    bool        submerged() const;
+    bool        can_drown() const;
+    bool        floundering_at(const coord_def p) const;
+    bool        floundering() const;
+    bool        extra_balanced_at(const coord_def p) const;
+    bool        extra_balanced() const;
+    bool        can_pass_through_feat(dungeon_feature_type grid) const;
+    bool        is_habitable_feat(dungeon_feature_type actual_grid) const;
+    size_type   body_size(size_part_type psize = PSIZE_TORSO,
+                          bool base = false) const;
+    int         body_weight(bool base = false) const;
+    int         total_weight() const;
+    brand_type  damage_brand(int which_attack = -1);
+    int         damage_type(int which_attack = -1);
 
     item_def *slot_item(equipment_type eq, bool include_melded=false);
     item_def *mslot_item(mon_inv_type sl) const;
@@ -237,10 +239,13 @@ public:
     bool      pickup_weapon(item_def &item, int near, bool force);
     bool      pickup_armour(item_def &item, int near, bool force);
     bool      pickup_misc(item_def &item, int near);
+    bool      pickup_food(item_def &item, int near);
     bool      pickup_missile(item_def &item, int near, bool force);
+    bool      drop_item(int eslot, int near);
     void      equip(item_def &item, int slot, int near = -1);
     bool      unequip(item_def &item, int slot, int near = -1,
                       bool force = false);
+    void      steal_item_from_player();
 
     bool      can_use_missile(const item_def &item) const;
 
@@ -276,7 +281,7 @@ public:
     bool has_lifeforce() const;
     bool can_mutate() const;
     bool can_safely_mutate() const;
-    bool can_bleed() const;
+    bool can_bleed(bool allow_tran = true) const;
     bool mutate();
     void banish(const std::string &who = "");
     void expose_to_element(beam_type element, int strength = 0);
@@ -315,6 +320,7 @@ public:
     flight_type flight_mode() const;
     bool is_levitating() const;
     bool can_cling_to_walls() const;
+    bool is_banished() const;
     bool is_web_immune() const;
     bool invisible() const;
     bool can_see_invisible() const;
@@ -398,10 +404,18 @@ public:
     int stat_maxhp() const { return max_hit_points; }
     int stealth () const;
 
-    int shield_bonus() const;
-    int shield_block_penalty() const;
-    void shield_block_succeeded(actor *foe);
-    int shield_bypass_ability(int tohit) const;
+    int     shield_bonus() const;
+    int     shield_block_penalty() const;
+    void    shield_block_succeeded(actor *foe);
+    int     shield_bypass_ability(int tohit) const;
+    int     missile_deflection() const;
+
+    // Combat-related class methods
+    int     unadjusted_body_armour_penalty() const { return 0; }
+    int     adjusted_body_armour_penalty(int, bool) const { return 0; }
+    int     adjusted_shield_penalty(int) const { return 0; }
+    int     armour_tohit_penalty(bool) const { return 0; }
+    int     shield_tohit_penalty(bool) const { return 0; }
 
     actor_type atype() const { return ACT_MONSTER; }
     monster* as_monster() { return this; }
@@ -438,7 +452,6 @@ private:
 
     bool decay_enchantment(const mon_enchant &me, bool decay_degree = true);
 
-    bool drop_item(int eslot, int near);
     bool wants_weapon(const item_def &item) const;
     bool wants_armour(const item_def &item) const;
     void lose_pickup_energy();

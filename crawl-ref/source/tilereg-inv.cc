@@ -3,6 +3,7 @@
 #ifdef USE_TILE_LOCAL
 
 #include "tilereg-inv.h"
+#include "process_desc.h"
 
 #include "cio.h"
 #include "describe.h"
@@ -282,7 +283,7 @@ bool InventoryRegion::update_tip_text(std::string& tip)
             tip += " - ";
         }
 
-        tip += item.name(true, DESC_NOCAP_A);
+        tip += item.name(true, DESC_A);
 
         if (!display_actions)
             return (true);

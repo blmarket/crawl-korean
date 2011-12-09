@@ -328,16 +328,18 @@ monster_info::monster_info(const monster* m, int milev)
 
     mname = m->mname;
 
-    if ((m->flags & MF_NAME_MASK) == MF_NAME_SUFFIX)
+    const uint64_t name_flags = m->flags & MF_NAME_MASK;
+
+    if (name_flags == MF_NAME_SUFFIX)
         mb.set(MB_NAME_SUFFIX);
-    else if ((m->flags & MF_NAME_MASK) == MF_NAME_ADJECTIVE)
+    else if (name_flags == MF_NAME_ADJECTIVE)
         mb.set(MB_NAME_ADJECTIVE);
-    else if ((m->flags & MF_NAME_MASK) == MF_NAME_REPLACE)
+    else if (name_flags == MF_NAME_REPLACE)
         mb.set(MB_NAME_REPLACE);
 
     const bool need_name_desc =
-        (m->flags & MF_NAME_SUFFIX)
-            || (m->flags & MF_NAME_ADJECTIVE)
+        name_flags == MF_NAME_SUFFIX
+            || name_flags == MF_NAME_ADJECTIVE
             || (m->flags & MF_NAME_DEFINITE);
 
     if (!mname.empty()
@@ -684,22 +686,15 @@ std::string monster_info::_core_name() const
 
 std::string monster_info::_apply_adjusted_description(description_level_type desc, const std::string& s) const
 {
-    if (desc == DESC_NOCAP_ITS)
-        desc = DESC_NOCAP_THE;
-    if (is(MB_NAME_THE))
-    {
-        if (desc == DESC_CAP_A)
-            desc = DESC_CAP_THE;
-        if (desc == DESC_NOCAP_A)
-            desc = DESC_NOCAP_THE;
-    }
-    if (attitude == ATT_FRIENDLY)
-    {
-        if (desc == DESC_CAP_THE)
-            desc = DESC_CAP_YOUR;
-        if (desc == DESC_NOCAP_THE)
-            desc = DESC_NOCAP_YOUR;
-    }
+    if (desc == DESC_ITS)
+        desc = DESC_THE;
+
+    if (is(MB_NAME_THE) && desc == DESC_A)
+        desc = DESC_THE;
+
+    if (attitude == ATT_FRIENDLY && desc == DESC_THE)
+        desc = DESC_YOUR;
+
     return apply_description(desc, s);
 }
 
@@ -786,7 +781,7 @@ std::string monster_info::common_name(description_level_type desc) const
     else
         s = ss.str();
 
-    if (desc == DESC_NOCAP_ITS)
+    if (desc == DESC_ITS)
         s = apostrophise(s);
 
     return (s);
@@ -833,7 +828,7 @@ std::string monster_info::proper_name(description_level_type desc) const
 {
     if (has_proper_name())
     {
-        if (desc == DESC_NOCAP_ITS)
+        if (desc == DESC_ITS)
             return apostrophise(mname);
         else
             return gettext(mname.c_str());
@@ -850,7 +845,7 @@ std::string monster_info::full_name(description_level_type desc, bool use_comma)
     if (has_proper_name())
     {
         std::string s = mname + (use_comma ? ", the " : " the ") + common_name();
-        if (desc == DESC_NOCAP_ITS)
+        if (desc == DESC_ITS)
             s = apostrophise(s);
         return s;
     }
@@ -1161,13 +1156,13 @@ std::vector<std::string> monster_info::attributes() const
     if (is(MB_BREATH_WEAPON))
     {
         v.push_back(std::string("catching ")
-                    + pronoun(PRONOUN_NOCAP_POSSESSIVE) + " breath");
+                    + pronoun(PRONOUN_POSSESSIVE) + " breath");
     }
     if (is(MB_WITHDRAWN))
     {
         v.push_back("regenerating health quickly");
         v.push_back(std::string("protected by ")
-                    + pronoun(PRONOUN_NOCAP_POSSESSIVE) + " shell");
+                    + pronoun(PRONOUN_POSSESSIVE) + " shell");
     }
     if (is(MB_ATTACHED))
         v.push_back("attached and sucking blood");
@@ -1194,7 +1189,7 @@ std::string monster_info::wounds_description_sentence() const
     if (wounds.empty())
         return "";
     else
-        return std::string(pronoun(PRONOUN_CAP)) + " is " + wounds + ".";
+        return std::string(pronoun(PRONOUN_SUBJECTIVE)) + " is " + wounds + ".";
 }
 
 std::string monster_info::wounds_description(bool use_colour) const

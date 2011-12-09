@@ -168,12 +168,14 @@ The secrets of the gateways died with him when his fellow thieves, disgusted at 
             overview = "Trove",
             dst = "trove",
             dstorigin = "in a treasure trove",
-            floor = "floor",
+            floor = "expired_portal",
+            feat_tile = "dngn_portal_trove_gone",
         }
     end
     e.lua_marker("O", stair)
     e.kfeat("O = enter_portal_vault")
     e.colour("O = blue")
+    e.tile("O = dngn_portal_trove")
 end
 
 -- Use the following line in destination maps after all SUBSTs
@@ -718,6 +720,7 @@ MONS:   vampire
 ITEM:   any useful good_item w:10 / any
 ITEM:   any useful jewellery good_item / any useful good_item
 ITEM:   acquire weapon / acquire armour / any useful good_item
+KFEAT:  m = iron_grate
 : trove.setup_features(_G)
 epilogue{{
 trove.milestone(_G)

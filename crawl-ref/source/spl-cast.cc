@@ -90,11 +90,11 @@ static void _surge_power(spell_type spell)
     }
 }
 
-static std::string _spell_base_description(spell_type spell)
+static std::string _spell_base_description(spell_type spell, bool viewing)
 {
     std::ostringstream desc;
 
-    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, true);
+    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, !viewing);
 
     desc << "<" << colour_to_str(highlight) << ">" << std::left;
 
@@ -116,11 +116,11 @@ static std::string _spell_base_description(spell_type spell)
     return desc.str();
 }
 
-static std::string _spell_extra_description(spell_type spell)
+static std::string _spell_extra_description(spell_type spell, bool viewing)
 {
     std::ostringstream desc;
 
-    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, true);
+    int highlight =  spell_highlight_by_utility(spell, COL_UNKNOWN, !viewing);
 
     desc << "<" << colour_to_str(highlight) << ">" << std::left;
 
@@ -241,8 +241,8 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
                           || allow_preselect && you.last_cast_spell == spell);
 
         ToggleableMenuEntry* me =
-            new ToggleableMenuEntry(_spell_base_description(spell),
-                                    _spell_extra_description(spell),
+            new ToggleableMenuEntry(_spell_base_description(spell, viewing),
+                                    _spell_extra_description(spell, viewing),
                                     MEL_ITEM, 1, letter, preselect);
 
 #ifdef USE_TILE_LOCAL
@@ -312,7 +312,6 @@ static int _apply_spellcasting_success_boosts(spell_type spell, int chance)
 int spell_fail(spell_type spell)
 {
     int chance = 60;
-    int chance2 = 0;
 
     // Don't cap power for failure rate purposes.
     chance -= 6 * calc_spell_power(spell, false, true, false);
@@ -339,7 +338,7 @@ int spell_fail(spell_type spell)
     default: chance += 750; break;
     }
 
-    chance2 = chance;
+    int chance2 = chance;
 
     const int chance_breaks[][2] = {
         {45, 45}, {42, 43}, {38, 41}, {35, 40}, {32, 38}, {28, 36},
@@ -936,7 +935,7 @@ static int _setup_evaporate_cast()
     else
     {
         mprf(MSGCH_PROMPT, gettext("Where do you want to aim %s?"),
-             you.inv[rc].name(true, DESC_NOCAP_YOUR).c_str());
+             you.inv[rc].name(true, DESC_YOUR).c_str());
     }
     return rc;
 }
@@ -1004,7 +1003,7 @@ static bool _spellcasting_aborted(spell_type spell,
 
 static targetter* _spell_targetter(spell_type spell, int pow, int range)
 {
-    switch(spell)
+    switch (spell)
     {
     case SPELL_FIRE_STORM:
         return new targetter_smite(&you, range, 2, pow > 76 ? 3 : 2);
@@ -1035,7 +1034,7 @@ spret_type your_spells(spell_type spell, int powc,
     beam.origin_spell = spell;
 
     // [dshaligram] Any action that depends on the spellcasting attempt to have
-    // succeeded must be performed after the switch().
+    // succeeded must be performed after the switch.
     if (_spellcasting_aborted(spell, check_range, wiz_cast))
         return (SPRET_ABORT);
 
@@ -1447,25 +1446,22 @@ static spret_type _do_cast(spell_type spell, int powc,
         return cast_confusing_touch(powc, fail);
 
     case SPELL_CAUSE_FEAR:
-        return mass_enchantment(ENCH_FEAR, powc, NULL, NULL, fail);
+        return mass_enchantment(ENCH_FEAR, powc, fail);
 
     case SPELL_INTOXICATE:
         return cast_intoxicate(powc, fail);
 
     case SPELL_MASS_CONFUSION:
-        return mass_enchantment(ENCH_CONFUSION, powc, NULL, NULL, fail);
+        return mass_enchantment(ENCH_CONFUSION, powc, fail);
 
-#if TAG_MAJOR_VERSION == 32
     case SPELL_ENGLACIATION:
-        mpr("Sorry, this spell is gone!");
-        return SPRET_ABORT;
-#endif
+        return cast_englaciation(powc, fail);
 
     case SPELL_CONTROL_UNDEAD:
-        return mass_enchantment(ENCH_CHARM, powc, NULL, NULL, fail);
+        return mass_enchantment(ENCH_CHARM, powc, fail);
 
     case SPELL_ABJURATION:
-        return cast_abjuration(powc, monster_at(target), fail);
+        return cast_abjuration(powc, beam.target, fail);
 
     case SPELL_MASS_ABJURATION:
         return cast_mass_abjuration(powc, fail);

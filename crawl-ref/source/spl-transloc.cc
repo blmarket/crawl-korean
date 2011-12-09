@@ -147,7 +147,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             if (!wizard_blink && beholder)
             {
                 mprf(gettext("You cannot blink away from %s!"),
-                    beholder->name(DESC_NOCAP_THE, true).c_str());
+                    beholder->name(DESC_THE, true).c_str());
                 continue;
             }
 
@@ -155,7 +155,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             if (!wizard_blink && fearmonger)
             {
                 mprf(gettext("You cannot blink closer to %s!"),
-                    fearmonger->name(DESC_NOCAP_THE, true).c_str());
+                    fearmonger->name(DESC_THE, true).c_str());
                 continue;
             }
 
@@ -185,7 +185,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
                     break;
 
                 mesclr();
-                mpr(gettext("You can't blink through translucent walls."));
+                mpr(gettext("There's something in the way!"));
             }
             else
             {
@@ -238,13 +238,13 @@ spret_type cast_blink(bool allow_partial_control, bool fail)
     return SPRET_SUCCESS;
 }
 
-void random_blink(bool allow_partial_control, bool override_abyss)
+void random_blink(bool allow_partial_control, bool override_abyss, bool override_stasis)
 {
     ASSERT(!crawl_state.game_is_arena());
 
     coord_def target;
 
-    if (item_blocks_teleport(true, true))
+    if (item_blocks_teleport(true, true) && !override_stasis)
         canned_msg(MSG_STRANGE_STASIS);
     else if (you.level_type == LEVEL_ABYSS
              && !override_abyss
@@ -408,9 +408,10 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
     if (wizard_tele)
         is_controlled = true;
 
+    // Stasis can't block the Abyss from shifting.
     if (!wizard_tele
-        && ((!new_abyss_area && crawl_state.game_is_sprint())
-            || item_blocks_teleport(true, true)))
+        && (crawl_state.game_is_sprint() || item_blocks_teleport(true, true))
+            && !new_abyss_area)
     {
         canned_msg(MSG_STRANGE_STASIS);
         return (false);
@@ -492,7 +493,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             if (beholder && !wizard_tele)
             {
                 mprf(gettext("You cannot teleport away from %s!"),
-                     beholder->name(DESC_NOCAP_THE, true).c_str());
+                     beholder->name(DESC_THE, true).c_str());
                 mpr(gettext("Choose another destination (press '.' or delete to select)."));
                 more();
                 continue;
@@ -502,7 +503,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             if (fearmonger && !wizard_tele)
             {
                 mprf(gettext("You cannot teleport closer to %s!"),
-                     fearmonger->name(DESC_NOCAP_THE, true).c_str());
+                     fearmonger->name(DESC_THE, true).c_str());
                 mpr(gettext("Choose another destination (press '.' or delete to select)."));
                 more();
                 continue;
@@ -730,7 +731,7 @@ spret_type cast_portal_projectile(int pow, bool fail)
     // Can't use portal through walls. (That'd be just too cheap!)
     if (you.trans_wall_blocking(target.target))
     {
-        mpr(gettext("A translucent wall is in the way."));
+        mpr(gettext("There's something in the way!"));
         return SPRET_ABORT;
     }
 
@@ -750,7 +751,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 
     if (you.trans_wall_blocking(where))
     {
-        mpr(gettext("Something is in the way."));
+        mpr(gettext("There's something in the way!"));
         return SPRET_ABORT;
     }
 
@@ -778,15 +779,6 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     if (crawl_state.game_is_zotdef() && item_is_orb(item))
     {
         mpr(gettext("You cannot apport the sacred Orb!"));
-        return SPRET_ABORT;
-    }
-
-    // Protect the player from destroying the item.
-    if (feat_virtually_destroys_item(grd(you.pos()), item)
-        && !yesno(gettext("Really apport while over this terrain?"),
-                  false, 'n'))
-    {
-        canned_msg(MSG_OK);
         return SPRET_ABORT;
     }
 
@@ -866,24 +858,29 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 
     dprf("Apport dist=%d, max_dist=%d", dist, max_dist);
 
-    coord_def new_spot = beam.path_taken[beam.path_taken.size() - max_dist];
-
-    if (max_dist <= dist)
-    {
-        dprf("Apport: new spot is %d/%d", new_spot.x, new_spot.y);
-
-        if (feat_virtually_destroys_item(grd(new_spot), item))
-        {
-            mpr(gettext("Not with that terrain in the way!"));
-            return SPRET_SUCCESS;
-        }
-    }
-    // Item mimics land in front of you (and they will be revealed).
-    else if (item.flags & ISFLAG_MIMIC)
-        new_spot =  beam.path_taken[0];
-    // If power is high enough it'll just come straight to you.
-    else
+    int location_on_path = std::max(-1, dist - max_dist);
+    // Don't move mimics under you.
+    if ((item.flags & ISFLAG_MIMIC) && location_on_path == -1)
+        location_on_path = 0;
+    coord_def new_spot;
+    if (location_on_path == -1)
         new_spot = you.pos();
+    else
+        new_spot = beam.path_taken[location_on_path];
+    // Try to find safe terrain for the item.
+    while (location_on_path < dist)
+    {
+        if (!feat_virtually_destroys_item(grd(new_spot), item))
+            break;
+        location_on_path++;
+        new_spot = beam.path_taken[location_on_path];
+    }
+    if (location_on_path == dist)
+    {
+        mpr(gettext("Not with that terrain in the way!"));
+        return SPRET_SUCCESS;
+    }
+    dprf("Apport: new spot is %d/%d", new_spot.x, new_spot.y);
 
     // Actually move the item.
     mprf(gettext("Yoink! You pull the item%s towards yourself."),
@@ -902,12 +899,6 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     }
     else
         move_top_item(where, new_spot);
-
-    if (item_is_orb(item))
-    {
-        env.orb_pos = new_spot;
-        invalidate_agrid();
-    }
 
     // Mark the item as found now.
     origin_set(new_spot);
@@ -995,7 +986,7 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
         randomized_where = where;
         randomized_where.x += random_range(-2, 2);
         randomized_where.y += random_range(-2, 2);
-    } while((!in_bounds(randomized_where) ||
+    } while ((!in_bounds(randomized_where) ||
              grd(randomized_where) != DNGN_FLOOR ||
              monster_at(randomized_where) ||
              !you.see_cell(randomized_where) ||
@@ -1009,7 +1000,7 @@ spret_type cast_golubrias_passage(const coord_def& where, bool fail)
         randomized_here = you.pos();
         randomized_here.x += random_range(-2, 2);
         randomized_here.y += random_range(-2, 2);
-    } while((!in_bounds(randomized_here) ||
+    } while ((!in_bounds(randomized_here) ||
              grd(randomized_here) != DNGN_FLOOR ||
              monster_at(randomized_here) ||
              !you.see_cell(randomized_here) ||

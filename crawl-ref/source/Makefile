@@ -205,6 +205,9 @@ ifneq (,$(findstring MINGW,$(uname_S)))
 		BUILD_SDLIMAGE = YesPlease
 		BUILD_LIBPNG = YesPlease
 	endif
+	ifeq ($(shell gcc -v -static-libstdc++ 2>&1 | grep 'unrecognized option'),)
+		EXTRA_LIBS += -static-libgcc -static-libstdc++
+	endif
 endif
 ifeq ($(uname_S),Darwin)
 	STRIP := strip -x
@@ -308,9 +311,11 @@ endif
 #
 # Check for an Apple-released compiler.
 #
+ifndef NO_APPLE_GCC
 ifeq ($(uname_S),Darwin)
 ifneq ($(shell gcc -v 2>&1 | grep Apple),)
 APPLE_GCC = YesPlease
+endif
 endif
 endif
 
@@ -404,20 +409,35 @@ ifdef APPLE_GCC
 
 MARCH := $(uname_M)
 
+
+ifndef NO_AUTO_SDK
+
+# Find the oldest SDK available, in attempt to make this build as
+# backward-compatible as we possibly can.
+SDK_VER := $(shell ls /Developer/SDKs | sort -n | head -1 | perl -pe 's/^MacOSX//g;s/.sdk$$//g')
+
+ifeq ($(SDK_VER),10.4u)
+SDK_VER := 10.4
+endif
+
+ifndef SDK_VER
+$(error You do not seem to have any Mac OS X SDKs installed! This build is doomed to fail)
+endif
+
+endif
+
+ifndef SDK_VER
 ifeq ($(MARCH),ppc)
-	SDK_VER := 10.4
+SDK_VER := 10.4
 endif
 ifeq ($(MARCH),i386)
-	SDK_VER := 10.4
+SDK_VER := 10.4
 endif
 ifeq ($(MARCH),x86_64)
-ifeq ($(uname_R),11.0.0)
-	SDK_VER := 10.7
-else
 ifdef TILES
-	SDK_VER := 10.6
+SDK_VER := 10.6
 else
-	SDK_VER := 10.5
+SDK_VER := 10.5
 endif
 endif
 endif
@@ -428,8 +448,11 @@ ifeq ($(SDK_VER),10.4)
 GCC_VER := 4.0
 SDKROOT := /Developer/SDKs/MacOSX$(SDK_VER)u.sdk
 else
-GCC_VER := 4.2
 SDKROOT := /Developer/SDKs/MacOSX$(SDK_VER).sdk
+endif
+
+ifneq ($(shell test -d $(SDKROOT) || echo NOPE),)
+$(error The Mac OS X $(SDK_VER) SDK seems missing)
 endif
 
 ifdef BUILD_UNIVERSAL
@@ -478,8 +501,8 @@ ifeq ($(shell which $(LMACH)gcc$(GCC_VER_SUFFIX) > /dev/null 2> /dev/null && ech
 LMACH :=
 endif
 
-GCC := $(LMACH)gcc$(GCC_VER_SUFFIX)
-GXX := $(LMACH)g++$(GCC_VER_SUFFIX)
+GCC := $(LMACH)$(GCC_VER_PREFIX)gcc$(GCC_VER_SUFFIX)
+GXX := $(LMACH)$(GCC_VER_PREFIX)g++$(GCC_VER_SUFFIX)
 
 else
 
@@ -638,7 +661,7 @@ endif # TILES
 # On clang, unknown -Wfoo is merely a warning, thus -Werror.
 CFWARN_L += $(shell w=-Wno-array-bounds;echo|$(GCC) -E - -Werror $$w >/dev/null 2>&1 && echo $$w)
 
-CFWARN_L += -Wno-parentheses -Wwrite-strings -Wshadow
+CFWARN_L += -Wno-parentheses -Wno-unused-parameter -Wwrite-strings -Wshadow
 CFOTHERS_L = $(EXTERNAL_FLAGS_L) $(EXTRA_FLAGS) $(DEFINES) $(SDL_CFLAGS)
 
 ifndef NO_LUA_BINDINGS

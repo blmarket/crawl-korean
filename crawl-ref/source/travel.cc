@@ -789,7 +789,7 @@ static void _explore_find_target_square()
             if (!env.map_knowledge(target + delta).seen() && target != you.pos()
                 && target != whereto)
             {
-                // Auto-explore is only zigzagging if the prefered
+                // Auto-explore is only zigzagging if the preferred
                 // target (whereto) and the anti-zigzag target are
                 // close together.
                 if (grid_distance(target, whereto) <= 5
@@ -1785,7 +1785,7 @@ void find_travel_pos(const coord_def& youpos,
                 new_dest = dest;
             }
 #ifdef DEBUG_SAFE_EXPLORE
-            mprf("youpos: (%d, %d), dest: (%d, %d), unseen: (%d, %d), "
+            mprf(MSGCH_DIAGNOSTICS, "youpos: (%d, %d), dest: (%d, %d), unseen: (%d, %d), "
                  "new_dest: (%d, %d)",
                  youpos.x, youpos.y, dest.x, dest.y, unseen.x, unseen.y,
                  new_dest.x, new_dest.y);
@@ -3100,6 +3100,11 @@ level_id level_id::parse_level_id(const std::string &s) throw (std::string)
     else if (brname == "Port" ||
              portal_names.find(brname) != portal_names.end())
         return (level_id(LEVEL_PORTAL_VAULT));
+    // Ziggurat levels are "Port", "ziggurat" or "Zig:23", with no extra
+    // information available.  All we can do is return "Port" and hope this
+    // is enough.
+    if (brname == "Zig" || brname == "ziggurat")
+        return (level_id(LEVEL_PORTAL_VAULT));
 
     const branch_type br = str_to_branch(brname);
     if (br == NUM_BRANCHES)
@@ -4253,14 +4258,14 @@ void explore_discoveries::add_item(const item_def &i)
         {
             items[j].thing.quantity = orig_quantity + i.quantity;
             items[j].name =
-                items[j].thing.name(false, DESC_NOCAP_A, false, false, true,
+                items[j].thing.name(false, DESC_A, false, false, true,
                                     !is_stackable_item(i));
             return;
         }
         items[j].thing.quantity = orig_quantity;
     }
 
-    std::string itemname = get_menu_colour_prefix_tags(i, DESC_NOCAP_A);
+    std::string itemname = get_menu_colour_prefix_tags(i, DESC_A);
     monster* mon = monster_at(i.pos);
     if (mon && mon->type == MONS_BUSH)
         itemname += " (under bush)";

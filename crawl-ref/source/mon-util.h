@@ -20,13 +20,13 @@ struct bolt;
 
 struct mon_attack_def
 {
-    mon_attack_type     type;
-    mon_attack_flavour  flavour;
-    int                 damage;
+    attack_type     type;
+    attack_flavour  flavour;
+    int             damage;
 
     static mon_attack_def attk(int dam,
-                               mon_attack_type typ = AT_HIT,
-                               mon_attack_flavour flav = AF_PLAIN)
+                               attack_type typ = AT_HIT,
+                               attack_flavour flav = AF_PLAIN)
     {
         mon_attack_def def = { typ, flav, dam };
         return (def);
@@ -207,7 +207,7 @@ bool mons_is_unique(int mc);
 bool mons_is_pghost(int mc);
 
 int mons_avg_hp(int mc);
-int exper_value(const monster* mon);
+int exper_value(const monster* mon, bool real = true);
 
 int hit_points(int hit_dice, int min_hp, int rand_hp);
 

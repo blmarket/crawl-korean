@@ -612,6 +612,8 @@ static void _note_item_destruction(const item_def &item)
         mprf(MSGCH_WARN, gettext("A great rumbling fills the air... "
              "the Orb of Zot has been destroyed!"));
         mark_milestone("orb.destroy", "destroyed the Orb of Zot");
+        env.orb_pos.reset();
+        invalidate_agrid(false);
     }
 }
 
@@ -765,7 +767,7 @@ void item_check(bool verbose)
     if (items.size() == 1)
     {
         item_def it(*items[0]);
-        std::string name = get_menu_colour_prefix_tags(it, DESC_NOCAP_A);
+        std::string name = get_menu_colour_prefix_tags(it, DESC_A);
         strm << make_stringf(gettext("You see here %s."), name.c_str()) << std::endl;
         _maybe_give_corpse_hint(it);
         return;
@@ -819,8 +821,8 @@ void item_check(bool verbose)
         for (unsigned int i = 0; i < items.size(); ++i)
         {
             item_def it(*items[i]);
-            std::string name = get_menu_colour_prefix_tags(it, DESC_NOCAP_A);
-            strm << name << std::endl;
+            std::string name = get_menu_colour_prefix_tags(it, DESC_A);
+            mpr_nocap(name);
             _maybe_give_corpse_hint(it);
         }
     }
@@ -1042,7 +1044,7 @@ static int _first_corpse_monnum(const coord_def& where)
 static std::string _milestone_rune(const item_def &item)
 {
     /// milesone에 적을 목적인듯.
-    return make_stringf(gettext("found %s."), item.name(true, DESC_NOCAP_A).c_str());
+    return make_stringf(gettext("found %s."), item.name(true, DESC_A).c_str());
 }
 
 static void _milestone_check(const item_def &item)
@@ -1060,7 +1062,7 @@ static void _check_note_item(item_def &item)
 
     if (item_is_rune(item) || item_is_orb(item) || is_artefact(item))
     {
-        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_NOCAP_A).c_str(),
+        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
                        origin_desc(item).c_str()));
         item.flags |= ISFLAG_NOTED_GET;
 
@@ -1108,7 +1110,7 @@ static std::string _origin_monster_name(const item_def &item)
         return ("a player ghost");
     else if (monnum == MONS_PANDEMONIUM_LORD)
         return ("a pandemonium lord");
-    return mons_type_name(monnum, DESC_NOCAP_A);
+    return mons_type_name(monnum, DESC_A);
 }
 
 static std::string _origin_place_desc(const item_def &item)
@@ -1257,7 +1259,7 @@ bool pickup_single_item(int link, int qty)
     {
         const std::string prompt
                 = make_stringf(gettext("Pick up how many of %s (; or enter for all)? "),
-                               item->name(true, DESC_NOCAP_THE,
+                               item->name(true, DESC_THE,
                                     false, false, false).c_str());
 
         qty = prompt_for_quantity(prompt.c_str());
@@ -1367,7 +1369,7 @@ void pickup(bool partial_quantity)
 
                 mprf(MSGCH_PROMPT, prompt.c_str(),
                      get_menu_colour_prefix_tags(mitm[o],
-                                                 DESC_NOCAP_A).c_str());
+                                                 DESC_A).c_str());
 
                 mouse_control mc(MOUSE_MODE_MORE);
                 keyin = getchk();
@@ -1798,8 +1800,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
                 if (!quiet)
                 {
-                    mpr(get_menu_colour_prefix_tags(you.inv[m],
-                                                    DESC_INVENTORY).c_str());
+                    mpr_nocap(get_menu_colour_prefix_tags(you.inv[m],
+                                                          DESC_INVENTORY).c_str());
                 }
                 you.turn_is_over = true;
 
@@ -1833,7 +1835,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         env.orb_pos = you.pos(); // can be wrong in wizmode
         orb_pickup_noise(you.pos(), 30);
 
-        mpr("The lords of Pandemonium are not amused; beware!", MSGCH_WARN);
+        mpr("The lords of Pandemonium are not amused. Beware!", MSGCH_WARN);
         if (you.religion == GOD_CHEIBRIADOS)
         {
             mprf(MSGCH_GOD, "%s tells them not to hurry.",
@@ -1866,7 +1868,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
     if (!item.slot)
         item.slot = index_to_letter(item.link);
 
-    ash_id_item(item);
+    god_id_item(item);
 
     note_inscribe_item(item);
 
@@ -1889,8 +1891,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
     if (!quiet)
     {
-        mpr(get_menu_colour_prefix_tags(you.inv[freeslot],
-                                        DESC_INVENTORY).c_str());
+        mpr_nocap(get_menu_colour_prefix_tags(you.inv[freeslot],
+                                              DESC_INVENTORY).c_str());
     }
     if (crawl_state.game_is_hints())
     {
@@ -1952,8 +1954,8 @@ bool move_item_to_grid(int *const obj, const coord_def& p, bool silent)
         return (true);
     }
 
-    if (you.religion == GOD_ASHENZARI && you.see_cell(p))
-        ash_id_item(item);
+    if (you.see_cell(p))
+        god_id_item(item);
 
     // If it's a stackable type...
     if (is_stackable_item(item))
@@ -2005,8 +2007,13 @@ bool move_item_to_grid(int *const obj, const coord_def& p, bool silent)
     item.link = igrd(p);
     igrd(p) = ob;
 
-    if (item.base_type == OBJ_ORBS && you.level_type == LEVEL_DUNGEON)
-        set_branch_flags(BFLAG_HAS_ORB);
+    if (item_is_orb(item))
+    {
+        if (you.level_type == LEVEL_DUNGEON)
+            set_branch_flags(BFLAG_HAS_ORB);
+        env.orb_pos = p;
+        invalidate_agrid(true);
+    }
 
     return (true);
 }
@@ -2117,6 +2124,18 @@ bool copy_item_to_grid(const item_def &item, const coord_def& p,
     return (true);
 }
 
+coord_def item_pos(const item_def &item)
+{
+    coord_def pos = item.pos;
+    if (pos.equals(-2, -2))
+        if (const monster *mon = item.holding_monster())
+            pos = mon->pos();
+        else
+            die("item held by an invalid monster");
+    else if (pos.equals(-1, -1))
+        pos = you.pos();
+    return pos;
+}
 
 //---------------------------------------------------------------
 //
@@ -2211,7 +2230,7 @@ bool drop_item(int item_dropped, int quant_drop)
         && you.inv[item_dropped].base_type == OBJ_WEAPONS
         && you.inv[item_dropped].cursed())
     {
-        mpr(gettext("That object is stuck to you!"));
+        mprf(gettext("%s is stuck to you!"), you.inv[item_dropped].name(true, DESC_THE).c_str());
         return (false);
     }
 
@@ -2265,7 +2284,7 @@ bool drop_item(int item_dropped, int quant_drop)
     }
 
     mprf(gettext("You drop %s."),
-         quant_name(you.inv[item_dropped], quant_drop, DESC_NOCAP_A).c_str());
+         quant_name(you.inv[item_dropped], quant_drop, DESC_A).c_str());
 
     bool quiet = silenced(you.pos());
 
@@ -2506,7 +2525,7 @@ static void _autoinscribe_item(item_def& item)
             // Don't autoinscribe dropped items on ground with
             // "=g".  If the item matches a rule which adds "=g",
             // "=g" got added to it before it was dropped, and
-            // then the user explictly removed it because they
+            // then the user explicitly removed it because they
             // don't want to autopickup it again.
             std::string str = Options.autoinscriptions[i].second;
             if ((item.flags & ISFLAG_DROPPED) && !in_inventory(item))
@@ -2772,7 +2791,7 @@ static bool _interesting_explore_pickup(const item_def& item)
     if (!item_type_known(item) & (item.flags & ISFLAG_COSMETIC_MASK))
         return (true);
 
-    switch(item.base_type)
+    switch (item.base_type)
     {
     case OBJ_WEAPONS:
     case OBJ_MISSILES:
@@ -2786,7 +2805,7 @@ static bool _interesting_explore_pickup(const item_def& item)
         break;
     }
 
-    switch(item.base_type)
+    switch (item.base_type)
     {
     case OBJ_WEAPONS:
     case OBJ_ARMOUR:
@@ -3288,8 +3307,7 @@ bool item_def::is_mundane() const
     {
     case OBJ_WEAPONS:
         if (sub_type == WPN_CLUB
-            || sub_type == WPN_GIANT_CLUB
-            || sub_type == WPN_GIANT_SPIKED_CLUB)
+            || is_giant_club_type(sub_type))
         {
             return (true);
         }
