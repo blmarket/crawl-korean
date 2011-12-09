@@ -725,7 +725,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         mutation_type app = _beastly_appendage();
         if (app == NUM_MUTATIONS)
         {
-            mpr("You have no appropriate body parts free.");
+            mpr(gettext("You have no appropriate body parts free."));
             return false;
         }
 
@@ -735,16 +735,16 @@ bool transform(int pow, transformation_type which_trans, bool force,
             switch (app)
             {
             case MUT_HORNS:
-                msg = "You grow a pair of large bovine horns.";
+                msg = gettext("You grow a pair of large bovine horns.");
                 break;
             case MUT_TENTACLE_SPIKE:
-                msg = "One of your tentacles grows a vicious spike.";
+                msg = gettext("One of your tentacles grows a vicious spike.");
                 break;
             case MUT_TENTACLES:
-                msg = "Your arms morph into several tentacles.";
+                msg = gettext("Your arms morph into several tentacles.");
                 break;
             case MUT_TALONS:
-                msg = "Your feet morph into talons.";
+                msg = gettext("Your feet morph into talons.");
                 break;
             default:
                 die("Unknown beastly appendage.");
@@ -793,14 +793,14 @@ bool transform(int pow, transformation_type which_trans, bool force,
     if (str)
     {
         notify_stat_change(STAT_STR, str, true,
-                    make_stringf("gaining the %s transformation",
+                    make_stringf(gettext("gaining the %s transformation"),
                                  tran_name).c_str());
     }
 
     if (dex)
     {
         notify_stat_change(STAT_DEX, dex, true,
-                    make_stringf("gaining the %s transformation",
+                    make_stringf(gettext("gaining the %s transformation"),
                                  tran_name).c_str());
     }
 
@@ -843,7 +843,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
             int net = get_trapping_net(you.pos());
             if (net != NON_ITEM)
             {
-                mpr("The net rips apart!");
+                mpr(gettext("The net rips apart!"));
                 destroy_item(net);
             }
 
