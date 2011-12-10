@@ -312,13 +312,13 @@ bool melee_attack::handle_phase_blocked()
         {
             if (you.can_see(defender))
             {
-                mprf("The %s protects %s from harm.",
+                mprf(gettext("The %s protects %s from harm."),
                      feat_name.c_str(),
                      defender->name(DESC_THE).c_str());
             }
             else
             {
-                mprf("You hit the %s.", feat_name.c_str());
+                mprf(gettext("You hit the %s."), feat_name.c_str());
             }
         }
         else
@@ -326,11 +326,11 @@ bool melee_attack::handle_phase_blocked()
             if (!mons_near(defender->as_monster()))
             {
                 simple_monster_message(attacker->as_monster(),
-                                       " hits something.");
+                                       gettext(" hits something."));
             }
             else if (you.can_see(attacker))
             {
-                mprf("%s tries to hit %s, but is blocked by the %s.",
+                mprf(gettext("%s tries to hit %s, but is blocked by the %s."),
                      attacker->name(DESC_THE).c_str(),
                      defender->name(DESC_THE).c_str(),
                      feat_name.c_str());
@@ -356,8 +356,9 @@ bool melee_attack::handle_phase_dodged()
     {
         if (needs_message && !defender_invisible)
         {
-            mprf("%s momentarily %s out as %s "
-                 "attack passes through %s%s",
+            /// 1. 대상, 2. phase(동사) 3. 공격자의 4. 대상의 목적격 5. 마침표나느낌표
+            mprf(gettext("%s momentarily %s out as %s "
+                 "attack passes through %s%s"),
                  defender->name(DESC_THE).c_str(),
                  defender->conj_verb("phase").c_str(),
                  atk_name(DESC_ITS).c_str(),
@@ -375,7 +376,7 @@ bool melee_attack::handle_phase_dodged()
                 player_warn_miss();
             else
             {
-                mprf("%s%s misses %s%s",
+                mprf(gettext("%s%s misses %s%s"),
                      atk_name(DESC_THE).c_str(),
                      evasion_margin_adverb().c_str(),
                      defender_name().c_str(),
@@ -480,7 +481,7 @@ bool melee_attack::handle_phase_hit()
                       : attacker->conj_verb(mons_attack_verb());
 
         // TODO: Clean this up if possible, checking atype for do / does is ugly
-        mprf("%s %s %s but %s no damage.",
+        mprf(gettext("%s %s %s but %s no damage."),
              attacker->name(DESC_THE).c_str(),
              attack_verb.c_str(),
              defender->name(DESC_THE).c_str(),
@@ -539,7 +540,7 @@ bool melee_attack::handle_phase_damaged()
         {
             if (needs_message)
             {
-                mprf("Your shroud bends %s attack away%s",
+                mprf(gettext("Your shroud bends %s attack away%s"),
                      atk_name(DESC_ITS).c_str(),
                      attack_strength_punctuation().c_str());
             }
@@ -685,7 +686,7 @@ bool melee_attack::handle_phase_damaged()
     }
 
     if (shroud_broken)
-        mpr("Your shroud falls apart!", MSGCH_WARN);
+        mpr(gettext("Your shroud falls apart!"), MSGCH_WARN);
 
     return (true);
 }
@@ -784,7 +785,7 @@ bool melee_attack::attack()
             && ev_margin >= 0
             && one_chance_in(20))
         {
-            simple_god_message(" blocks your attack.", GOD_ELYVILON);
+            simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
             dec_penance(GOD_ELYVILON, 1);
 
             return (false);
@@ -1048,7 +1049,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
     switch (atk)
     {
     case UNAT_KICK:
-        aux_attack = aux_verb = "kick";
+        aux_attack = aux_verb = V_("kick");
         aux_damage = 5;
 
         if (player_mutation_level(MUT_HOOVES))
@@ -1058,7 +1059,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         }
         else if (you.has_usable_talons())
         {
-            aux_verb = "claw";
+            aux_verb = V_("claw");
 
             // Max talon damage: 8.
             aux_damage += player_mutation_level(MUT_TALONS);
@@ -1066,7 +1067,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         else if (player_mutation_level(MUT_TENTACLE_SPIKE))
         {
             aux_attack = "tentacle spike";
-            aux_verb = "pierce";
+            aux_verb = V_("pierce");
 
             // Max spike damage: 8.
             aux_damage += player_mutation_level(MUT_TENTACLE_SPIKE);
@@ -1080,13 +1081,13 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         if (player_mutation_level(MUT_BEAK)
             && (!player_mutation_level(MUT_HORNS) || coinflip()))
         {
-            aux_attack = aux_verb = "peck";
+            aux_attack = aux_verb = V_("peck");
             aux_damage++;
             noise_factor = 75;
         }
         else
         {
-            aux_attack = aux_verb = "headbutt";
+            aux_attack = aux_verb = V_("headbutt");
             // Minotaurs used to get +5 damage here, now they get
             // +6 because of the horns.
             aux_damage += player_mutation_level(MUT_HORNS) * 3;
@@ -1105,7 +1106,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_TAILSLAP:
-        aux_attack = aux_verb = "tail-slap";
+        aux_attack = aux_verb = V_("tail-slap");
 
         aux_damage = 6 * you.has_usable_tail();
 
@@ -1120,30 +1121,30 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PUNCH:
-        aux_attack = aux_verb = "punch";
+        aux_attack = aux_verb = V_("punch");
         aux_damage = 5 + you.skill_rdiv(SK_UNARMED_COMBAT, 1, 3);
 
         if (you.form == TRAN_BLADE_HANDS)
         {
-            aux_verb = "slash";
+            aux_verb = V_("slash");
             aux_damage += 6;
             noise_factor = 75;
         }
         else if (you.has_usable_claws())
         {
-            aux_verb = "claw";
+            aux_verb = V_("claw");
             aux_damage += roll_dice(you.has_usable_claws(), 3);
         }
         else if (you.has_usable_tentacles())
         {
-            aux_attack = aux_verb = "tentacle-slap";
+            aux_attack = aux_verb = V_("tentacle-slap");
             noise_factor = 125;
         }
 
         break;
 
     case UNAT_BITE:
-        aux_attack = aux_verb = "bite";
+        aux_attack = aux_verb = V_("bite");
         aux_damage += you.has_usable_fangs() * 2;
         aux_damage += div_rand_round(std::max(you.strength()-10, 0), 5);
         noise_factor = 75;
@@ -1168,7 +1169,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PSEUDOPODS:
-        aux_attack = aux_verb = "bludgeon";
+        aux_attack = aux_verb = V_("bludgeon");
         aux_damage += 4 * you.has_usable_pseudopods();
         noise_factor = 125;
         break;
@@ -1176,7 +1177,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         // Tentacles both gives you a main attack (replacing punch)
         // and this secondary, high damage attack.
     case UNAT_TENTACLES:
-        aux_attack = aux_verb = "squeeze";
+        aux_attack = aux_verb = V_("squeeze");
         aux_damage = 4 * you.has_usable_tentacles();
         noise_factor = 100; // quieter than slapping
         break;
