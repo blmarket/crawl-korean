@@ -2410,7 +2410,7 @@ static std::string _status_mut_abilities(int sw)
     std::vector<std::string> runes;
     for (int i = 0; i < NUM_RUNE_TYPES; i++)
         if (you.runes[i])
-            runes.push_back(rune_type_name(i));
+            runes.push_back(gettext(rune_type_name(i)));
     if (!runes.empty())
     {
         text += make_stringf("\n<w>%s:</w> %d/%d 룬%s: %s",

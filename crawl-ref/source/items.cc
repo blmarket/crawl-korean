@@ -1683,7 +1683,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         if (!quiet)
         {
             mprf(gettext("You pick up the %s rune and feel its power."),
-                 rune_type_name(mitm[obj].plus));
+                 gettext(rune_type_name(mitm[obj].plus)));
             int nrunes = runes_in_pack();
             if (nrunes >= you.obtainable_runes)
                 mpr(gettext("You have collected all the runes! Now go and win!"));
@@ -3265,7 +3265,7 @@ static void _rune_from_specs(const char* _specs, item_def &item)
         std::string line;
         for (int i = 0; i < NUM_RUNE_TYPES; i++)
         {
-            line += make_stringf("[%c] %-10s ", i + 'a', rune_type_name(i));
+            line += make_stringf("[%c] %-10s ", i + 'a', gettext(rune_type_name(i)));
             if (i % 5 == 4 || i == NUM_RUNE_TYPES - 1)
             {
                 mpr(line, MSGCH_PROMPT);
