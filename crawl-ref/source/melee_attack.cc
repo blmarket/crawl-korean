@@ -192,7 +192,7 @@ bool melee_attack::handle_phase_attempted()
             {
                 std::string prompt = make_stringf(gettext("Really attack with "
                     "%s while in water? "),
-                    weapon ? weapon->name(true, DESC_YOUR)
+                    weapon ? weapon->name(true, DESC_YOUR).c_str()
                         : gettext(M_("your electric unarmed attack")));
 
                 if (yesno(prompt.c_str(), true, 'n'))
