@@ -3858,7 +3858,7 @@ static bool _print_final_god_abil_desc(int god, const std::string &final_msg,
     // "Various" instead of the cost of the first ability.
     const std::string cost =
         "(" +
-              ((abil == ABIL_ELYVILON_LESSER_HEALING_OTHERS
+              ((abil == ABIL_ELYVILON_LESSER_HEALING_SELF
                 || abil == ABIL_ELYVILON_GREATER_HEALING_OTHERS
                 || abil == ABIL_YRED_RECALL_UNDEAD_SLAVES) ?
                     pgettext("goddesc","Various") : make_cost_description(abil))
@@ -3882,6 +3882,14 @@ static bool _print_final_god_abil_desc(int god, const std::string &final_msg,
 
 static bool _print_god_abil_desc(int god, int numpower)
 {
+    // Combine the two lesser healing powers together.
+    if (god == GOD_ELYVILON && numpower == 0)
+    {
+        _print_final_god_abil_desc(god,
+                                   "You can provide lesser healing for yourself and others.",
+                                   ABIL_ELYVILON_LESSER_HEALING_SELF);
+        return (true);
+    }
     const char* pmsg = god_gain_power_messages[god][numpower];
 
     // If no message then no power.
@@ -4284,10 +4292,6 @@ static void _detailed_god_description(god_type which_god)
                      "piety.");
             break;
 
-        case GOD_ZIN:
-            broken = gettext("Zin will feed starving followers upon <w>p</w>rayer.");
-            break;
-
         case GOD_ELYVILON:
             broken = gettext("Using your healing abilities on hostile monsters may "
                      "pacify them, turning them neutral. Pacification works "
@@ -4627,6 +4631,17 @@ void describe_god(god_type which_god, bool give_title)
                                            god_name(which_god)
                                            + " slows and strengthens your metabolism.",
                                            ABIL_NON_ABILITY);
+            }
+        }
+        else if (which_god == GOD_ELYVILON)
+        {
+            // Only print this here if we don't have lesser self-healing.
+            if (you.piety < piety_breakpoint(0) || player_under_penance())
+            {
+                have_any = true;
+                _print_final_god_abil_desc(which_god,
+                                           "You can provide lesser healing for others.",
+                                           ABIL_ELYVILON_LESSER_HEALING_OTHERS);
             }
         }
 

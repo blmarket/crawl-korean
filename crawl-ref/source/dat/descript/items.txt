@@ -541,6 +541,10 @@ great sword
 
 무거운 날과 긴 손잡이를 가진 아주 길다란 검이다.
 %%%%
+halberd
+
+A long pole with a spiked axe head on one end.
+%%%%
 hammer
 
 주로 못을 박는데 사용되는 도구이지만, 전투에 적합하도록 개량되었다.

@@ -2878,7 +2878,7 @@ static bool _fedhas_protects_species(int mc)
 
 bool fedhas_protects(const monster* target)
 {
-    return target && _fedhas_protects_species(target->mons_species());
+    return (target && _fedhas_protects_species(target->mons_species()));
 }
 
 // Fedhas neutralises most plants and fungi
@@ -2919,7 +2919,7 @@ void excommunication(god_type new_god)
 
     take_note(Note(NOTE_LOSE_GOD, old_god));
 
-    std::vector<ability_type> abilities = get_god_abilities();
+    std::vector<ability_type> abilities = get_god_abilities(true);
     for (unsigned int i = 0; i < abilities.size(); ++i)
     {
         you.stop_train.insert(abil_skill(abilities[i]));
@@ -3109,6 +3109,7 @@ void excommunication(god_type new_god)
     case GOD_ASHENZARI:
         if (you.transfer_skill_points > 0)
             ashenzari_end_transfer(false, true);
+        you.duration[DUR_SCRYING] = 0;
         you.exp_docked = exp_needed(std::min<int>(you.max_level, 27)  + 1)
                        - exp_needed(std::min<int>(you.max_level, 27));
         you.exp_docked_total = you.exp_docked;
@@ -3223,7 +3224,7 @@ bool god_hates_attacking_friend(god_type god, int species)
         case GOD_JIYVA:
             return (mons_class_is_slime(species));
         case GOD_FEDHAS:
-            return _fedhas_protects_species(species);
+            return (_fedhas_protects_species(species));
         default:
             return (false);
     }
@@ -3497,6 +3498,10 @@ void god_pitch(god_type which_god)
             if (you.skills[sk])
                 you.train[sk] = 0;
 
+    // Elyvilon gives you invocations immediately.
+    if (you.religion == GOD_ELYVILON)
+        you.start_train.insert(SK_INVOCATIONS);
+
     // When you start worshipping a good god, you make all non-hostile
     // unholy and evil beings hostile; when you start worshipping Zin,
     // you make all non-hostile unclean and chaotic beings hostile; and
@@ -3524,7 +3529,9 @@ void god_pitch(god_type which_god)
 
     if (you.religion == GOD_ELYVILON)
     {
-        mpr("당신은 이제 엘라이빌론에게 기도를 드림으로, 바닥에 있는 무기들을 회수할 수 있다.", MSGCH_GOD);
+        mpr(gettext("You can now call upon Elyvilon to destroy weapons lying on the "
+            "ground."), MSGCH_GOD);
+        mpr(gettext("You can now provide lesser healing for others."), MSGCH_GOD);
     }
     else if (you.religion == GOD_TROG)
     {

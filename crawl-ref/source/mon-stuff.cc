@@ -296,7 +296,7 @@ monster_type fill_out_corpse(const monster* mons,
         }
     }
 
-    if (mons && !mons->mname.empty())
+    if (mons && !mons->mname.empty() && !(mons->flags & MF_NAME_NOCORPSE))
     {
         corpse.props[CORPSE_NAME_KEY] = mons->mname;
         corpse.props[CORPSE_NAME_TYPE_KEY].get_int64() = mons->flags;
@@ -1342,7 +1342,7 @@ static int _destroy_tentacles(monster* head)
     return tent;
 }
 
-static std::string _killer_type_name(killer_type killer) // lua???Ì¶?, ?ÌºÎº?À» ?Ø¼??Ï¸? ?ÈµÉµ??Õ´Ï´?.
+static std::string _killer_type_name(killer_type killer) 
 {
     switch (killer)
     {
@@ -2683,7 +2683,7 @@ void change_monster_type(monster* mons, monster_type targetc)
             // Remove the replacement name from the new monster
             flags = flags & ~(MF_NAME_MASK | MF_NAME_DESCRIPTOR
                               | MF_NAME_DEFINITE | MF_NAME_SPECIES
-                              | MF_NAME_ZOMBIE);
+                              | MF_NAME_ZOMBIE | MF_NAME_NOCORPSE);
         }
         else
             name = mons->mname;
@@ -4368,7 +4368,7 @@ void mons_clear_trapping_net(monster* mon)
     mon->del_ench(ENCH_HELD, true);
 }
 
-std::string summoned_poof_msg(const monster* mons, bool plural) // (deceit, 110815) ?Ì°?Àº mutation.cc?????? ????À» ??Á¶?Ï´Â°? ?Ö³×¿?. ?? ?Ï³?
+std::string summoned_poof_msg(const monster* mons, bool plural) 
 {
     int  summon_type = 0;
     bool valid_mon   = false;

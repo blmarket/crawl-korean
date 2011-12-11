@@ -3774,6 +3774,11 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(std::string spec)
             {
                 mspec.extra_monster_flags |= MF_NAME_ZOMBIE;
             }
+            if (strip_tag(mon_str, "name_nocorpse")
+                || strip_tag(mon_str, "n_noc"))
+            {
+                mspec.extra_monster_flags |= MF_NAME_NOCORPSE;
+            }
         }
 
         std::string serpent_of_hell_flavour = strip_tag_prefix(mon_str, "serpent_of_hell_flavour:");
@@ -5190,8 +5195,8 @@ void item_list::parse_raw_name(std::string name, item_spec &spec)
         return ;
     }
 
-    item_def parsed = find_item_type(OBJ_UNASSIGNED, name);
-    if (parsed.sub_type != OBJ_RANDOM)
+    item_kind parsed = item_kind_by_name(name);
+    if (parsed.base_type != OBJ_UNASSIGNED)
     {
         spec.base_type = parsed.base_type;
         spec.sub_type  = parsed.sub_type;

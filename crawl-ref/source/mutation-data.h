@@ -992,19 +992,19 @@
 },
 
 { MUT_WILD_MAGIC,                 6,   3,  false, false,
-    "wild magic",
+    M_("wild magic"),
 
-    {"Your spells are a little harder to cast, but a little more powerful.",
-     "Your spells are harder to cast, but more powerful.",
-     "Your spells are much harder to cast, but much more powerful."},
+    {N_("Your spells are a little harder to cast, but a little more powerful."),
+     N_("Your spells are harder to cast, but more powerful."),
+     N_("Your spells are much harder to cast, but much more powerful.")},
 
-    {"You feel less in control of your magic.",
-     "You feel less in control of your magic.",
-     "You feel your magical power running wild!"},
+    {N_("You feel less in control of your magic."),
+     N_("You feel less in control of your magic."),
+     N_("You feel your magical power running wild!")},
 
-    {"You regain control of your magic.",
-     "You feel more in control of your magic.",
-     "You feel more in control of your magic."},
+    {N_("You regain control of your magic."),
+     N_("You feel more in control of your magic."),
+     N_("You feel more in control of your magic.")},
 
     "wild magic"
 },
@@ -1465,8 +1465,8 @@
 { MUT_IGNITE_BLOOD,              0,  1, false, false,
   "ignite blood",
 
-  {"Your demonic aura causes spilled blood to erupt in flames.", "", ""},
-  {"Your blood runs red-hot!", "", ""},
+  {N_("Your demonic aura causes spilled blood to erupt in flames."), "", ""},
+  {N_("Your blood runs red-hot!"), "", ""},
   {"", "", ""},
 
   "ignite blood"
@@ -1475,12 +1475,12 @@
 { MUT_FOUL_STENCH,              0,  2, false, false,
   "foul stench",
 
-  {"You emit a foul stench, and are resistant to rotting and decay.",
-   "You radiate miasma, and are resistant to rotting and decay.",
+  {N_("You emit a foul stench, and are resistant to rotting and decay."),
+   N_("You radiate miasma, and are resistant to rotting and decay."),
    ""},
 
-  {"You begin to emit a foul stench of rot and decay.",
-   "You begin to radiate miasma.",
+  {N_("You begin to emit a foul stench of rot and decay."),
+   N_("You begin to radiate miasma."),
    ""},
 
   {"", "", ""},

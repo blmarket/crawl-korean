@@ -1083,6 +1083,7 @@ void down_stairs(dungeon_feature_type force_stair,
         if (!feat_is_staircase(stair_find))
             fall_where = gettext("through the gate");
 
+        // 1. 'down the stairs' or 'through the gate'
         mprf(gettext("In your confused state, you trip and fall %s."), fall_where);
         // Note that this only does damage; it doesn't cancel the level
         // transition.
