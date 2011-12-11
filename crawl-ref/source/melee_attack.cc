@@ -158,6 +158,14 @@ melee_attack::melee_attack(actor *attk, actor *defn,
     attacker_shield_penalty = attacker->adjusted_shield_penalty(1);
 }
 
+static bool _conduction_affected(const coord_def &pos)
+{
+    const actor *act = actor_at(pos);
+
+    // Don't check rElec to avoid leaking information about armour etc.
+    return feat_is_water(grd(pos)) && act && act->ground_level();
+}
+
 bool melee_attack::handle_phase_attempted()
 {
     // Skip invalid and dummy attacks.
@@ -171,15 +179,45 @@ bool melee_attack::handle_phase_attempted()
 
     if (attacker->atype() == ACT_PLAYER && defender->atype() == ACT_MONSTER)
     {
-        if (weapon && is_unrandom_artefact(*weapon)
-            && weapon->special == UNRAND_DEVASTATOR)
+        if ((damage_brand == SPWPN_ELECTROCUTION
+                && _conduction_affected(defender->pos()))
+            || (weapon && is_unrandom_artefact(*weapon)
+                && weapon->special == UNRAND_DEVASTATOR))
         {
-            targetter_smite hitfunc(attacker, 1, 1, 1);
-            hitfunc.set_aim(defender->pos());
-            if (stop_attack_prompt(hitfunc, "attack"))
+            if (damage_brand == SPWPN_ELECTROCUTION
+                && adjacent(attacker->pos(), defender->pos())
+                && _conduction_affected(attacker->pos())
+                && !attacker->res_elec()
+                && !you.received_weapon_warning)
             {
-                cancel_attack = true;
-                return (false);
+                std::string prompt = make_stringf(gettext("Really attack with "
+                    "%s while in water? "),
+                    weapon ? weapon->name(true, DESC_YOUR)
+                        : gettext(M_("your electric unarmed attack")));
+
+                if (yesno(prompt.c_str(), true, 'n'))
+                    you.received_weapon_warning = true;
+                else
+                    return (false);
+            }
+            else
+            {
+                std::string junk1, junk2;
+                const char *verb = (bad_attack(defender->as_monster(),
+                                               junk1, junk2)
+                                    ? "attack" : "attack near");
+                bool (*aff_func)(const coord_def &) = 0;
+                if (damage_brand == SPWPN_ELECTROCUTION)
+                    aff_func = _conduction_affected;
+
+                targetter_smite hitfunc(attacker, 1, 1, 1, false, aff_func);
+                hitfunc.set_aim(defender->pos());
+
+                if (stop_attack_prompt(hitfunc, verb))
+                {
+                    cancel_attack = true;
+                    return (false);
+                }
             }
         }
         else if (stop_attack_prompt(defender->as_monster(), false,
@@ -266,12 +304,6 @@ bool melee_attack::handle_phase_attempted()
     }
 
     attack_occurred = true;
-
-    // Based on pre-unification code, this looks to be the appropriate place
-    // to check unrand effects, but this will result in behavior where unrand
-    // effects will occur regardless of whether the attacker hits or misses
-    if (check_unrand_effects())
-        return (false);
 
     /* TODO Permanently remove this? Commented out for temporary removal
      *
@@ -457,8 +489,14 @@ bool melee_attack::handle_phase_hit()
     // messages, etc.
     damage_done = calc_damage();
 
-    // Check if some hit-effect killed the monster
-    if (attacker->atype() == ACT_PLAYER && player_monattk_hit_effects())
+    bool stop_hit = false;
+    // Check if some hit-effect killed the monster.  We muse
+    if (attacker->atype() == ACT_PLAYER)
+        stop_hit = player_monattk_hit_effects();
+  
+    // check_unrand_effects is safe to call with a dead defender, so always
+    // call it, even if the hit effects said to stop.
+    if (check_unrand_effects() || stop_hit)
         return (false);
 
     if (damage_done > 0)
@@ -2863,8 +2901,9 @@ bool melee_attack::apply_damage_brand()
             const coord_def& pos = defender->pos();
 
             // We know the defender is neither airborne nor electricity
-            // resistant, from above, but is it on water?
-            if (feat_is_water(grd(pos)))
+            // resistant, from above, but we still have to make sure it
+            // is in water (and not clinging above it).
+            if (_conduction_affected(pos))
             {
                 add_final_effect(FINEFF_LIGHTNING_DISCHARGE, attacker, defender,
                                  pos);

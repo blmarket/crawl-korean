@@ -678,6 +678,55 @@ MAP
 '??.
 ENDMAP
 
+NAME:   nicolae_underground_beach
+DEPTH:  D:2-
+TAGS:   no_trap_gen no_pool_fixup
+SUBST:  N = MO, M = bW, O = wW
+: if you.absdepth() > 6 then
+SUBST:  b = SBB
+KPROP:  B = bloody
+SUBST:  B = S
+NSUBST: S = 3:v / *:S
+: dgn.delayed_decay(_G, 'v', 'human corpse')
+NSUBST: w = 4:j / *:w
+KMONS:  j = shark
+KFEAT:  j = w
+: else
+SUBST:  b = S
+TAGS:   no_monster_gen
+: end
+SUBST:  E = .S
+COLOUR: Sv : brown
+FTILE:  vSwWj = floor_sand_stone
+SUBST:  S = .
+MAP
+      xxxxx
+    xxxMNOxxx
+   xxbbMNOwwxx
+xxxxbbbMNOwwwx
+.EEEbbbMNOwwwx
+@EEEbbbMNOwwwx
+.EEEbbbMNOwwwx
+xxxxbbbMNOwwwx
+   xxbbMNOwwxx
+    xxxMNOxxx
+      xxxxx
+ENDMAP
+
+# The dragon can be ood, but it can only get out if you let it chase you. A
+# window provides ample warning.
+NAME:   evilmike_quicksilver_bait
+TAGS:   no_monster_gen
+DEPTH:  D:16-
+KITEM:  1 = gold, gold, gold, superb_item, acquire any
+KMONS:  1 = patrolling quicksilver dragon
+MAP
+ ccccccccccccc
+@llllllllllllc
+ cnccccccccclc
+ c1llllllllllc
+ ccccccccccccc
+ENDMAP
 
 ###############################################################################
 #
@@ -910,7 +959,7 @@ KMONS:   7 =  kobold ; dagger . dart
 : else
 KMONS:   7 =  big kobold ; dagger . throwing net q:2
 : end
-KMONS:   1 = kobold name:hungry name_adjective name_species ; nothing
+KMONS:   1 = kobold name:hungry name_adjective name_nocorpse ; nothing
 SUBST:   . = e f .:150
 : dgn.delayed_decay(_G, 'e', 'rat skeleton')
 : dgn.delayed_decay(_G, 'f', 'giant gecko skeleton')
@@ -968,6 +1017,7 @@ ENDMAP
 # This vault was built by evilmike, but the idea is mikee's. Who is really the
 # evil one here?
 NAME:   mikee_hates_you
+TAGS:   no_monster_gen
 DEPTH:  D:13-27
 KPROP:  l = no_cloud_gen
 KMONS:  1 = generate_awake siren ; trident ego:distortion w:5 | trident ego:venom
@@ -986,11 +1036,12 @@ MARKER: + = lua:restrict_door()
 MARKER: = = lua:restrict_door()
 SUBST:  ! = .
 MAP
-xxxxxxxxxx
-xxxxx=xxxx
-+!!!!l1=>x
-xxxxxxxxxx
-xxxxxxxxxx
+ccccccccccc
+cccccc=cccc
+@+!!!!l1=>c
+cccccccnccc
+cccccccnccc
+       @
 ENDMAP
 
 #################################################################
@@ -2699,7 +2750,7 @@ ENDMAP
 
 # This wizard likes to experiment!
 NAME:    laboratory_2
-MONS:    wizard col:lightred name:mad n_adj n_spe spells:polymorph_other;\
+MONS:    wizard col:lightred name:mad n_adj n_noc spells:polymorph_other;\
          paralyse;blink;bolt_of_fire;bolt_of_fire;teleport_self
 DEPTH:   D:10-26, Vault
 MONS:    laboratory rat

@@ -373,7 +373,7 @@ A lich who, having existed for countless centuries, has grown almost unimaginabl
 %%%%
 angel
 
-'샤이닝 원'의 성스러운 전사들로, 이 세상에 없는 듯이 아름다운 , 우뚝 솟은 날개를 가졌으며 화려한 백색 광채에 둘러싸여 있다. 무거운 갑옷을 입고 있음에도 불구하고, 꼭 무중력 상태에서 비행하는것처럼 조용하게 날아다닌다.
+A divine warrior of the Shining One, it is a towering winged figure of unnatural beauty surrounded by an aura of brilliant white light. It appears to be weightless and quite agile while flying, despite wearing heavy armour.
 %%%%
 ant larva
 
