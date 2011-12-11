@@ -1,4 +1,4 @@
-######################################################
+﻿######################################################
 # Randart Names
 # -------------
 # randbook.txt: keywords for randart BOOKS
@@ -54,53 +54,53 @@ book appearance
 %%%%
 book_noun
 
-Tome
+Tome고서
 
-Grimoire
+Grimoire마법서
 
-Almanac
+Almanac연감
 
-Volume
+Volume서적
 
-Compendium
+Compendium개요서
 
-Handbook
+Handbook핸드북
 
-Incunabulum
+Incunabulum초판본
 
-Papyrus
+Papyrus파피루스
 
-Catalogue
+Catalogue카탈로그
 %%%%
 book_noun_on
 
-Guide
+Guide가이드
 
-Collected Works
+Collected Works전집
 
-Disquisition
+Disquisition논문
 
-Reference Book
+Reference Book참고서
 %%%%
 book_name
 
 w:9
-@book_noun@ of
+@book_noun@
 
 w:4
-@book_noun_on@ on
+에 대한 @book_noun_on@
 %%%%
 # @book_noun@ of ...
 random_book_title
 
 w:15
-the @book_plant_animal@
+@book_plant_animal@
 
 w:20
 @number_or_qualifier@ @thing_names@
 
 w:4
-the @profession_name@
+@profession_name@
 
 w:13
 @philosophy_or_science@
@@ -176,213 +176,221 @@ w:3
 %%%%
 book_adjective
 
-glistering
+말끔한
 
-sparkling
+반짝이는
 
-levitating
+부유하는
 
-droning
+웅웅거리는
 
-conspicuous
+눈에띄는
 
-inconspicuous
+눈에안띄는
 
-colourful
+컬러풀한
 
-graven
+조각으로 장식된
 
-engraved
+새김 장식된
 
-antique
+오래된
 
-yellowed
+누렇게 변한
 
-rare
+희귀한
 
-black
+검은
 
-blackened
+검게 변한
 
-torn
+찢겨진
 %%%%
 the_book_magic
 
 w:9
 # capitalise later as needed
-the Arcane Arts
+신비학서
 
 w:1
-the Hermit's Heritage
+은둔자의 유산
 
 w:90
 @book_magic@
 %%%%
 book_magic
 
-Magic
+Magic마법
 
-Theurgy
+Theurgy기적
 
-Thaumaturgy
-
-w:5
-Casting
+Thaumaturgy마술
 
 w:5
-Spellcasting
-
-Wizardry
-
-Sorcery
-
-Witchcraft
-
-Witchery
-
-Spellcraft
-
-Spellweaving
+Casting영창
 
 w:5
-Secret Knowledge
+Spellcasting주문
+
+Wizardry마법학
+
+Sorcery마도
+
+Witchcraft주술학
+
+Witchery주술
+
+Spellcraft마술 문법
+
+Spellweaving주문제조 설명
 
 w:5
-Rites and Rhymes
+Secret Knowledge비밀 지식
 
 w:5
-Hermeneutics
+Rites and Rhymes자음과 모음
+
+w:5
+Hermeneutics해석학
 %%%%
 beginners
 
-Beginners
+Beginners초심자
 
 w:5
-Neophytes
+Neophytes동자승
 
 w:5
-Novices
+Novices초보자
 
 w:3
-Rookies
+Rookies신인
 
 w:2
-Absolute Beginners
+Absolute Beginners늅늅이
 
 w:1
-Dummies
+Dummies멍청이
 %%%%
 # level 1
 starting level book
 
-@the_book_magic@ for @beginners@
+#@the_book_magic@ for @beginners@
+@beginners@을(를) 위한 @the_book_magic@
 
 w:2
 @the_book_magic@ 101
 
-A Beginning Course on @the_book_magic@
+#A Beginning Course on @the_book_magic@
+@the_book_magic@ 입문
 
-@the_book_magic@, Part One
+#@the_book_magic@, Part One
+@the_book_magic@, 1장
 
-An Introduction to @the_book_magic@
+#An Introduction to @the_book_magic@
+@the_book_magic@ 개론
 
 w:2
-An Initiation to @the_book_magic@
+@the_book_magic@ 시작하기
+#An Initiation to @the_book_magic@
 
-First Steps in @the_book_magic@
+#First Steps in @the_book_magic@
+따라해 보아요 @the_book_magic@
+
+@the_book_magic@ 첫걸음
 %%%%
 # level 2-4
 easy level book
 
-A Primer on @the_book_magic@
+@the_book_magic@ 핵심
 
-@the_book_magic@ in Simple Steps
+예제로 배우는 @the_book_magic@
 
-An Early Guide to @the_book_magic@
+@the_book_magic@ 기초 가이드
 
-The Foundations of @book_magic@
+@book_magic@ 기초
 
-Easy @book_magic@
+쉬운 @book_magic@
 
-@the_book_magic@, Part @level@
+@the_book_magic@, @level@장
 
-@the_book_magic@ Continued
+@the_book_magic@ 활용편
 
 w:1
-@book_magic@, and How To Use It
+@book_magic@, 어떻게 쓸 것인가
 %%%%
 # level 4-6
 moderate level book
 
-Advanced Steps in @the_book_magic@
+@the_book_magic@ 고급편
 
-The Advanced Guide to @the_book_magic@
+@the_book_magic@ 숙련자 가이드
 
-Further Steps in @the_book_magic@
+한발짝 나아간 @the_book_magic@
 
-@the_book_magic@, Part @level@
+@the_book_magic@, @level@장
 
-Advanced @book_magic@
+고급 @book_magic@
 
-Sophisticated @book_magic@
+정교한 @book_magic@
 
-Further Progress in @book_magic@
+@book_magic@ 최신 기법
 
-The Second Course in @book_magic@
+30년동안 배우는 @book_magic@
 
 w:1
-Improving Your @book_magic@
+@book_magic@ 실력향상
 
 %%%%
 # powerful casters, used for high level books
 powerful_caster
 
-Archmage
+아크메이지
 
 w:3
-Deep Elf Lorekeeper
+딮 엘프 도서관장
 
 w:3
-Blind Seer
+눈먼 점성술사
 
 w:3
-Prophet
+예언자
 
 w:1
-Greatest Mummy
+대 미이라
 %%%%
 the_powerful_caster
 
-the @powerful_caster@
+@powerful_caster@
 
 w:3
-Boris
+보리스
 
 w:1
-Sif Muna
+시프 무나
 %%%%
 last_or_lost
 
-Last
+마지막
 
-Lost
+잃어버린
 %%%%
 # level 7-9, books in the form of "XYZ's <bookname>"
 # Prefixed articles will be filtered out.
 difficult level book owner
 
-A Thorough Guide to @the_book_magic@
+@the_book_magic@ 전집
 
-The @last_or_lost@ Secrets of @the_book_magic@
+@the_book_magic@의 @last_or_lost@ 비밀
 
-The Arcane Secrets of @book_magic@
+@book_magic@의 신비로운 비밀
 
-The Intricacies of @the_book_magic@
+@the_book_magic@의 복잡성 탐구
 
-The @book_noun@ of Greatest Risks and Utility
+최고의 위험성과 유용성에 관한 @book_noun@
 
 w:1
-Mastering @book_magic@
+@book_magic@ 마스터하기
 %%%%
 # level 7-9, books without being named after their owner/author
 difficult level book
@@ -390,10 +398,10 @@ difficult level book
 w:50
 @difficult level book owner@
 
-The @last_or_lost@ @book_noun@ of @the_powerful_caster@
+@the_powerful_caster@의 @last_or_lost@ @book_noun@
 
 w:1
-The Testament of @the_powerful_caster@
+@the_powerful_caster@의 증거
 %%%%
 # synonyms for predominant spell schools
 # variants starting with the definite article will get "the" prepended
