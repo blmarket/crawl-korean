@@ -654,7 +654,6 @@ static void _index_book(item_def& book, spells_to_books &book_hash,
 
     if (spells_in_book == 0)
     {
-        /// 에러상황이므로 번역안함.
         mprf(MSGCH_ERROR, "Spellbook \"%s\" contains no spells! Please "
              "file a bug report.", book.name(false, DESC_PLAIN).c_str());
         book_errors = true;
@@ -1151,11 +1150,7 @@ std::string desc_cannot_memorise_reason(bool undead)
     if(lichform == false)
     {
         desc = make_stringf(gettext("You cannot memorise or cast this spell because you are a %s."),
-#ifdef KR
-                    gettext(species_name(you.species).c_str()));
-#else
-                    lowercase_string(species_name(you.species));
-#endif
+                    lowercase_string(gettext(species_name(you.species).c_str())).c_str());
     }
     else
     {
@@ -1818,8 +1813,8 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
     std::string bookname;
     if (god == GOD_XOM && coinflip())
     {
-        bookname = getRandNameString("book_noun") + " of "
-                   + getRandNameString("Xom_book_title");
+        bookname = getRandNameString("Xom_book_title") + "의 "
+                   + getRandNameString("book_noun");
         bookname = replace_name_parts(bookname, book);
     }
     else
@@ -1879,7 +1874,7 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
     if (bookname.empty())
         bookname = getRandNameString("book");
 
-    name += bookname;
+    name = make_stringf(pgettext("bookname_level", "%s%s"), name.c_str(), bookname.c_str());
 
     set_artefact_name(book, name);
 
@@ -2430,7 +2425,11 @@ bool make_book_theme_randart(item_def &book,
     }
 
     if (!bookname.empty())
-        name += getRandNameString("book_noun") + " of " + bookname;
+    {
+        name += make_stringf(pgettext("bookname", "%s of %s"),
+                             getRandNameString("book_noun").c_str(),
+                             bookname.c_str());
+    }
     else
     {
         // Give a name that reflects the primary and secondary
@@ -2452,20 +2451,21 @@ bool make_book_theme_randart(item_def &book,
             // No adjective found, use the normal method of combining two nouns.
             type_name = getRandNameString(spelltype_long_name(disc1));
             if (type_name.empty())
-                name += spelltype_long_name(disc1);
-            else
-                name += type_name;
+                type_name = spelltype_long_name(disc1);
 
             if (disc1 != disc2)
             {
-                name += " and ";
-                type_name = getRandNameString(spelltype_long_name(disc2));
+                type_name += pgettext("bookname", " and ");
+                std::string subtype_name = getRandNameString(spelltype_long_name(disc2));
 
-                if (type_name.empty())
-                    name += spelltype_long_name(disc2);
-                else
-                    name += type_name;
+                if (subtype_name.empty())
+                    subtype_name = spelltype_long_name(disc2);
+
+                type_name += subtype_name;
             }
+
+            // 1. book name 2. discipline name(s)
+            name = make_stringf(pgettext("bookname_with_disc", "%s%s"), name.c_str(), type_name.c_str());
         }
         else
         {
@@ -2480,11 +2480,12 @@ bool make_book_theme_randart(item_def &book,
                 if (type_name.find("the ", 0) != std::string::npos)
                 {
                     type_name = replace_all(type_name, "the ", "");
-                    bookname = "the " + bookname;
+                    bookname = make_stringf(gettext("the %s"), bookname.c_str());
                 }
                 bookname += type_name;
             }
-            name += bookname;
+
+            name = make_stringf(pgettext("bookname", "%s%s"), name.c_str(), bookname.c_str());
         }
     }
 

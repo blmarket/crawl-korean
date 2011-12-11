@@ -54,33 +54,33 @@ book appearance
 %%%%
 book_noun
 
-Tome고서
+고서
 
-Grimoire마법서
+마법서
 
-Almanac연감
+연감
 
-Volume서적
+서적
 
-Compendium개요서
+개요서
 
-Handbook핸드북
+핸드북
 
-Incunabulum초판본
+초판본
 
-Papyrus파피루스
+파피루스
 
-Catalogue카탈로그
+카탈로그
 %%%%
 book_noun_on
 
-Guide가이드
+가이드
 
-Collected Works전집
+전집
 
-Disquisition논문
+논문
 
-Reference Book참고서
+참고서
 %%%%
 book_name
 
@@ -88,7 +88,7 @@ w:9
 @book_noun@
 
 w:4
-에 대한 @book_noun_on@
+@book_noun_on@
 %%%%
 # @book_noun@ of ...
 random_book_title
@@ -220,57 +220,57 @@ w:90
 %%%%
 book_magic
 
-Magic마법
+마법
 
-Theurgy기적
+기적
 
-Thaumaturgy마술
-
-w:5
-Casting영창
+마술
 
 w:5
-Spellcasting주문
-
-Wizardry마법학
-
-Sorcery마도
-
-Witchcraft주술학
-
-Witchery주술
-
-Spellcraft마술 문법
-
-Spellweaving주문제조 설명
+영창
 
 w:5
-Secret Knowledge비밀 지식
+주문
+
+마법학
+
+마도
+
+주술학
+
+주술
+
+마술 문법
+
+주문제조법
 
 w:5
-Rites and Rhymes자음과 모음
+비밀 지식
 
 w:5
-Hermeneutics해석학
+자음과 모음
+
+w:5
+해석학
 %%%%
 beginners
 
-Beginners초심자
+초심자
 
 w:5
-Neophytes동자승
+동자승
 
 w:5
-Novices초보자
+초보자
 
 w:3
-Rookies신인
+신인
 
 w:2
-Absolute Beginners늅늅이
+늅늅이
 
 w:1
-Dummies멍청이
+멍청이
 %%%%
 # level 1
 starting level book
