@@ -2400,7 +2400,7 @@ void handle_time()
                > (int)exp_needed(you.experience_level + 1))
         {
             you.attribute[ATTR_EVOL_XP] = 0;
-            mpr("You feel a genetic drift.");
+            mpr(gettext("You feel a genetic drift."));
             bool evol = mutate(coinflip() ? RANDOM_GOOD_MUTATION : RANDOM_MUTATION,
                                false, false, false, false, false, true);
             // it would kill itself anyway, but let's speed that up
