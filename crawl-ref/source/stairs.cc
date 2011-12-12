@@ -963,7 +963,7 @@ void down_stairs(dungeon_feature_type force_stair,
         ASSERT(runes.size() >= 3);
 
         std::random_shuffle(runes.begin(), runes.end());
-        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[0]));
+        mprf(gettext("You insert the %s rune into the lock."), gettext(rune_type_name(runes[0])));
 #ifdef USE_TILE
         tiles.add_overlay(you.pos(), tileidx_zap(GREEN));
         update_screen();
@@ -973,13 +973,13 @@ void down_stairs(dungeon_feature_type force_stair,
         mpr(gettext("The lock glows an eerie green colour!"));
         more();
 
-        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[1]));
+        mprf(gettext("You insert the %s rune into the lock."), gettext(rune_type_name(runes[1])));
         big_cloud(CLOUD_BLUE_SMOKE, &you, you.pos(), 20, 7 + random2(7));
         viewwindow();
         mpr(gettext("Heavy smoke blows from the lock!"));
         more();
 
-        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[2]));
+        mprf(gettext("You insert the %s rune into the lock."), gettext(rune_type_name(runes[2])));
 
         if (silenced(you.pos()))
             mpr(gettext("The gate opens wide!"));
