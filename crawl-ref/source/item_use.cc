@@ -2850,10 +2850,11 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
             }
 
             // Give an appropriate 'tohit':
-            // * hand axes and clubs are -5
-            // * daggers are +1
+            // * clubs and hand axes are -5
             // * spears are -1
-            // * rocks are 0
+            // * large rocks, stones and throwing nets are 0
+            // * daggers and javelins are +1
+            // * darts are +2
             if (wepClass == OBJ_WEAPONS)
             {
                 switch (wepType)
@@ -5301,6 +5302,7 @@ void read_scroll(int slot)
             mpr(pre_succ_msg);
         id_the_scroll = _vorpalise_weapon(alreadyknown);
         if (!id_the_scroll)
+        {
             if (alreadyknown)
             {
                 mpr("This will not work.");
@@ -5312,6 +5314,9 @@ void read_scroll(int slot)
                 mpr(gettext("You feel like taking on a jabberwock."));
                 id_the_scroll = true;
             }
+            else
+                canned_msg(MSG_NOTHING_HAPPENS);
+        }
         break;
 
     case SCR_IDENTIFY:

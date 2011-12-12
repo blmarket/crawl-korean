@@ -493,7 +493,7 @@ bool melee_attack::handle_phase_hit()
     // Check if some hit-effect killed the monster.  We muse
     if (attacker->atype() == ACT_PLAYER)
         stop_hit = player_monattk_hit_effects();
-  
+
     // check_unrand_effects is safe to call with a dead defender, so always
     // call it, even if the hit effects said to stop.
     if (check_unrand_effects() || stop_hit)
@@ -2853,6 +2853,15 @@ bool melee_attack::apply_damage_brand()
     special_damage = 0;
     obvious_effect = false;
     brand = damage_brand == SPWPN_CHAOS ? random_chaos_brand() : damage_brand;
+
+    if (brand != SPWPN_FLAMING && brand != SPWPN_FREEZING
+        && brand != SPWPN_ELECTROCUTION && brand != SPWPN_VAMPIRICISM
+        && !defender->alive())
+    {
+        // Most brands have no extra effects on just killed enemies, and the
+        // effect would be often inappropriate.
+        return false;
+    }
 
     switch (brand)
     {

@@ -1706,8 +1706,8 @@ static int _xom_swap_weapons(bool debug = false)
     // ...and get its weapon.
     int monwpn = mon->inv[MSLOT_WEAPON];
     int mywpn  = you.equip[EQ_WEAPON];
-    ASSERT (monwpn != NON_ITEM);
-    ASSERT (mywpn  != -1);
+    ASSERT(monwpn != NON_ITEM);
+    ASSERT(mywpn  != -1);
 
     unwield_item();
 
@@ -3227,7 +3227,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
     }
 
     ray_def ray;
-    if (!find_ray(begin, towards, ray))
+    if (!find_ray(begin, towards, ray, opc_solid_see))
     {
         mpr("플레이어와 층 사이의 빛을 찾을 수 없습니다.", MSGCH_ERROR);//Couldn't find ray between player and stairs "플레이어와 층 사이의 빛을 찾을 수 없습니다." 로 하려다 변경
         return (stairs_moved);

@@ -705,7 +705,7 @@ static bool _eat_check(bool check_hunger = true, bool silent = false)
     {
         if (!silent)
         {
-            mpr("You can't stomach food right now!");
+            mpr(gettext("You can't stomach food right now!"));
             crawl_state.zero_turns_taken();
         }
         return (false);
@@ -747,12 +747,12 @@ void end_nausea()
     const char *add = "";
     // spoilable food, need to interrupt before it can go bad
     if (_has_edible_chunks() or count_corpses_in_pack(false))
-        add = ", and you want to eat";
+        add = gettext(", and you want to eat");
     else if (you.hunger_state <= HS_HUNGRY)
-        add = ", and you need some food";
+        add = gettext(", and you need some food");
     else if (can_ingest(OBJ_FOOD, FOOD_CHUNK, true)) // carnivore/gourmand
-        add = ", so let's find someone to eat";
-    mprf(MSGCH_DURATION, "Your stomach is not as upset anymore%s.", add);
+        add = gettext(", so let's find someone to eat");
+    mprf(MSGCH_DURATION, gettext("Your stomach is not as upset anymore%s."), add);
 }
 
 // [ds] Returns true if something was eaten.
