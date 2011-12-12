@@ -1037,7 +1037,7 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         break;
 
     case SPARM_PONDEROUSNESS:
-        mpr("That put a bit of spring back into your step.");
+        mpr(gettext("That put a bit of spring back into your step."));
         break;
 
     case SPARM_LEVITATION:

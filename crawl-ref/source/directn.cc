@@ -2834,14 +2834,14 @@ void describe_floor()
 {
     dungeon_feature_type grid = env.map_knowledge(you.pos()).feat();
 
-    const char *msg = "There is %s here.";
+    const char *msg = N_("There is %s here.");
     switch (grid)
     {
     case DNGN_FLOOR:
         return;
 
     case DNGN_ENTER_SHOP:
-        msg = "There is an entrance to %s here.";
+        msg = N_("There is an entrance to %s here.");
         break;
 
     default:
@@ -2859,7 +2859,7 @@ void describe_floor()
     if (feat_is_water(grid) && player_likes_water())
         channel = MSGCH_EXAMINE_FILTER;
 
-    mprf(channel, msg, feat.c_str());
+    mprf(channel, gettext(msg), feat.c_str());
     if (grid == DNGN_ENTER_LABYRINTH && you.is_undead != US_UNDEAD)
         mpr(gettext("Beware, for starvation awaits!"), MSGCH_EXAMINE);
 }
@@ -2907,7 +2907,7 @@ std::string feature_description(dungeon_feature_type grid,
                                 bool add_stop, bool base_desc)
 {
     std::string desc = raw_feature_description(grid, trap, base_desc);
-    desc += cover_desc;
+    desc = make_stringf(pgettext("feature_description", "%s%s"), desc.c_str(), cover_desc.c_str());
 
     return thing_do_grammar(dtype, add_stop, feat_is_trap(grid), desc);
 }
@@ -3287,7 +3287,7 @@ std::string feature_description(const coord_def& where, bool covering,
 
     if (!marker_desc.empty())
     {
-        marker_desc += covering_description;
+        marker_desc = make_stringf(pgettext("feature_description", "%s%s"), marker_desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, marker_desc);
     }
@@ -3342,7 +3342,7 @@ std::string feature_description(const coord_def& where, bool covering,
 
         desc += door_desc_suffix;
 
-        desc += covering_description;
+        desc = make_stringf(pgettext("feature_description", "%s%s"), desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, desc);
     }
