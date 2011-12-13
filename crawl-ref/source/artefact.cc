@@ -1475,9 +1475,9 @@ std::string make_artefact_name(const item_def &item, bool appearance)
     {
         const unrandart_entry *unrand = _seekunrandart(item);
         if (!appearance)
-            return unrand->name;
+            return gettext(unrand->name);
         if (!(unrand->flags & UNRAND_FLAG_RANDAPP))
-            return unrand->unid_name;
+            return gettext(unrand->unid_name);
     }
 
     std::string lookup;
@@ -2046,12 +2046,12 @@ bool make_item_unrandart(item_def &item, int unrand_index)
 
     // get true artefact name
     ASSERT(!item.props.exists(ARTEFACT_NAME_KEY));
-    item.props[ARTEFACT_NAME_KEY].get_string() = unrand->name;
+    item.props[ARTEFACT_NAME_KEY].get_string() = gettext(unrand->name);
 
     // get artefact appearance
     ASSERT(!item.props.exists(ARTEFACT_APPEAR_KEY));
     if (!(unrand->flags & UNRAND_FLAG_RANDAPP))
-        item.props[ARTEFACT_APPEAR_KEY].get_string() = unrand->unid_name;
+        item.props[ARTEFACT_APPEAR_KEY].get_string() = gettext(unrand->unid_name);
     else
     {
         item.props[ARTEFACT_APPEAR_KEY].get_string() = make_artefact_name(item, true);
@@ -2077,9 +2077,9 @@ const char *unrandart_descrip(int which_descrip, const item_def &item)
     // for randarts.
     const unrandart_entry *unrand = _seekunrandart(item);
 
-    return ((which_descrip == 0) ? unrand->desc :
-            (which_descrip == 1) ? unrand->desc_id :
-            (which_descrip == 2) ? unrand->desc_end
+    return ((which_descrip == 0) ? chk_gettext(unrand->desc) :
+            (which_descrip == 1) ? chk_gettext(unrand->desc_id) :
+            (which_descrip == 2) ? chk_gettext(unrand->desc_end)
                                  : "Unknown.");
 }
 

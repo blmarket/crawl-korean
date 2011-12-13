@@ -25,9 +25,11 @@
 #ifdef USE_GETTEXT
 #include <libintl.h>
 #define pgettext(msgctxt, msgid) gettext(msgctxt "\004" msgid)
+#define chk_gettext(msgid) (msgid[0] == 0 ? msgid : gettext(msgid))
 #else
 #define pgettext(msgctxt, msgid) msgid
 #define gettext
+#define chk_gettext
 #endif
 
 #define N_
