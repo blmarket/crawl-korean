@@ -2900,7 +2900,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     if (source_tier == -1)
     {
         return simple_monster_message(mons,
-            "'s appearance momentarily alters.");
+            gettext("'s appearance momentarily alters."));
     }
     relax = 1;
 
@@ -2924,7 +2924,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
                 relax++;
 
             if (relax > 50)
-                return (simple_monster_message(mons, " shudders."));
+                return (simple_monster_message(mons, gettext(" shudders.")));
         }
         while (tries-- && (!_valid_morph(mons, targetc)
                            || source_tier != target_tier && !x_chance_in_y(relax, 200)
@@ -2933,7 +2933,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     }
 
     if (!_valid_morph(mons, targetc))
-        return (simple_monster_message(mons, " looks momentarily different."));
+        return (simple_monster_message(mons, gettext(" looks momentarily different.")));
 
     bool could_see = you.can_see(mons);
     bool need_note = (could_see && MONST_INTERESTING(mons));
@@ -2949,11 +2949,11 @@ bool monster_polymorph(monster* mons, monster_type targetc,
     bool player_messaged = true;
     if (could_see)
     {
-        std::string verb = "";
+        const char *verb = "";
         std::string obj = "";
 
         if (!can_see)
-            obj = "something you cannot see";
+            obj = gettext("something you cannot see");
         else
         {
             obj = mons_type_name(targetc, DESC_A);
@@ -2963,25 +2963,23 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
         if (oldc == MONS_OGRE && targetc == MONS_TWO_HEADED_OGRE)
         {
-            verb = "grows a second head";
+            verb = gettext("%s grows a second head!");
             obj = "";
         }
         else if (mons->is_shapeshifter())
-            verb = "changes into ";
+            verb = gettext("%s changes into %s!");
         else if (targetc == MONS_PULSATING_LUMP)
-            verb = "degenerates into ";
+            verb = gettext("%s degenerates into %s!");
         else if (_jiyva_slime_target(targetc))
-            verb = "quivers uncontrollably and liquefies into ";
-        else if (oldc == MONS_KILLER_BEE_LARVA && targetc == MONS_KILLER_BEE)
-            verb = "metamorphoses into ";
+            verb = gettext("%s quivers uncontrollably and liquefies into %s!");
         else
-            verb = "evaporates and reforms as ";
+            verb = gettext("%s evaporates and reforms as %s!");
 
-        mprf("%s %s%s!", old_name_the.c_str(), verb.c_str(), obj.c_str());
+        mprf(verb, old_name_the.c_str(), obj.c_str());
     }
     else if (can_see)
     {
-        mprf("%s appears out of thin air!", mons->name(DESC_A).c_str());
+        mprf(gettext("%s appears out of thin air!"), mons->name(DESC_A).c_str());
         autotoggle_autopickup(false);
     }
     else
