@@ -69,6 +69,12 @@ ASSERTS = yes
 MAKEFLAGS += -rR # This only works for recursive makes, i.e. contribs ...
 .SUFFIXES:       # ... so zap the suffix list to neutralize most predifined rules, too
 
+.PHONY: all test install clean clean-contrib clean-rltiles distclean debug debug-lite \
+        profile package-source source build-windows package-windows rest docs greet \
+        api
+
+all: greet $(GAME) docs webserver
+
 #
 # Compiler Flags
 #
@@ -563,11 +569,12 @@ else
 endif
 
 RLTILES = rltiles
+INCLUDES_L += -I$(RLTILES)
+$(OBJECTS:%.o=%.cc): $(TILEDEFHDRS)
 
 ifdef WEBTILES
 DEFINES_L += -DUSE_TILE
 DEFINES_L += -DUSE_TILE_WEB
-INCLUDES_L += -I$(RLTILES)
 endif
 
 #
@@ -577,7 +584,6 @@ ifdef TILES
 
 DEFINES_L += -DUSE_TILE
 DEFINES_L += -DUSE_TILE_LOCAL
-INCLUDES_L += -I$(RLTILES)
 
 ifdef BUILD_SDL
 INCLUDES_L += -Icontrib/install/$(ARCH)/include/SDL
@@ -912,9 +918,9 @@ TILEFILES = $(TILEIMAGEFILES:%=%.png)
 ORIGTILEFILES = $(TILEFILES:%=$(RLTILES)/%)
 DESTTILEFILES = $(TILEFILES:%=dat/tiles/%)
 
-ifdef TILES_ANY
 OBJECTS += $(TILEDEFOBJS)
 
+ifdef TILES_ANY
 ifndef NO_OPTIMIZE
   ifneq (,$(shell which advpng))
     USE_ADVPNG = y
@@ -986,12 +992,6 @@ PKG_SRC_DIR   := $(SRC_PKG_BASE)-$(SRC_VERSION)
 SRC_PKG_TAR   := $(PKG_SRC_DIR).tar.xz
 SRC_PKG_TAR_NODEPS := $(PKG_SRC_DIR)-nodeps.tar.xz
 SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
-
-.PHONY: all test install clean clean-contrib clean-rltiles distclean debug debug-lite \
-        profile package-source source build-windows package-windows rest docs greet \
-        api
-
-all: greet $(GAME) docs webserver
 
 greet:
 	@printf "  * If you experience any problems building Crawl, please take a second look\\n"\
@@ -1343,7 +1343,7 @@ mon-util.d: mon-mst.h
 
 .PHONY: build-rltiles
 build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
-	+$(MAKE) -C $(RLTILES) all ARCH=$(ARCH)
+	+$(MAKE) -C $(RLTILES) all ARCH=$(ARCH) TILES=$(TILES)$(WEBTILES)
 
 $(TILEDEFSRCS): build-rltiles
 $(TILEDEFHDRS): build-rltiles
@@ -1361,7 +1361,6 @@ clean-rltiles:
 
 ifdef TILES_ANY
 $(GAME): $(DESTTILEFILES)
-$(OBJECTS:%.o=%.cc): $(TILEDEFHDRS)
 endif
 
 #############################################################################

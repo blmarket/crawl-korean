@@ -463,7 +463,8 @@ static void _leaving_level_now(dungeon_feature_type stair_used)
 
     _clear_golubria_traps();
 
-    if (grd(you.pos()) == DNGN_EXIT_ABYSS) {
+    if (grd(you.pos()) == DNGN_EXIT_ABYSS)
+    {
         you.level_type_name =
             static_cast<std::string>(you.props["abyss_return_name"]);
         you.level_type_name_abbrev =
@@ -963,8 +964,8 @@ void down_stairs(dungeon_feature_type force_stair,
         ASSERT(runes.size() >= 3);
 
         std::random_shuffle(runes.begin(), runes.end());
-        mprf(gettext("You insert the %s rune into the lock."), gettext(rune_type_name(runes[0])));
-#ifdef USE_TILE
+        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[0]));
+#ifdef USE_TILE_LOCAL
         tiles.add_overlay(you.pos(), tileidx_zap(GREEN));
         update_screen();
 #else

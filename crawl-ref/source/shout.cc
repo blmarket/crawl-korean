@@ -384,11 +384,6 @@ void item_noise(const item_def &item, std::string msg, int loudness)
         msg = replace_all(msg, "@Your_weapon@", "@The_weapon@");
         msg = replace_all(msg, "@your_weapon@", "@the_weapon@");
     }
-    else
-    {
-        msg = replace_all(msg, "@Your_weapon@", "Your @weapon@");
-        msg = replace_all(msg, "@your_weapon@", "your @weapon@");
-    }
 
     // Set appropriate channel (will usually be TALK).
     msg_channel_type channel = MSGCH_TALK;
@@ -430,10 +425,13 @@ void item_noise(const item_def &item, std::string msg, int loudness)
         msg = "You hear a strange noise.";
     }
 
-    // replace weapon references
+    // Replace weapon references.  Can't use DESC_THE because that includes
+    // pluses etc. and we want just the basename.
     msg = replace_all(msg, "@The_weapon@", "The @weapon@");
     msg = replace_all(msg, "@the_weapon@", "the @weapon@");
-    msg = replace_all(msg, "@weapon@", item.name(false, DESC_BASENAME));
+    msg = replace_all(msg, "@Your_weapon@", "Your @weapon@");
+    msg = replace_all(msg, "@your_weapon@", "your @weapon@");
+    msg = replace_all(msg, "@weapon@", item.name(true, DESC_BASENAME));
 
     // replace references to player name and god
     msg = replace_all(msg, "@player_name@", you.your_name);

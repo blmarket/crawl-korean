@@ -3041,12 +3041,11 @@ bool mons_can_attack(const monster* mon)
     return adjacent(mon->pos(), foe->pos());
 }
 
-// Use of variant:
-// 0 : She is tap dancing.
-// 1 : It seems she is tap dancing. (lower case pronoun)
-// 2 : Her sword explodes!          (upper case possessive)
-// 3 : It sticks to her sword!      (lower case possessive)
-// ... as needed
+// Use of variant (case is irrelevant here):
+// PRONOUN_SUBJECTIVE : _She_ is tap dancing.
+// PRONOUN_POSSESSIVE : _Her_ sword explodes!
+// PRONOUN_REFLEXIVE  : The wizard mumbles to _herself_.
+// PRONOUN_OBJECTIVE  : You miss _her_.
 
 const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
                          bool visible)
@@ -3054,6 +3053,8 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
     gender_type gender = GENDER_NEUTER;
 
     if (mons_genus(mon_type) == MONS_MERMAID
+        || mon_type == MONS_QUEEN_ANT
+        || mon_type == MONS_QUEEN_BEE
         || mon_type == MONS_HARPY
         || mon_type == MONS_SPHINX)
     {
@@ -3115,11 +3116,11 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
             return ((gender == GENDER_NEUTER) ? gettext(M_("its")) :
                     (gender == GENDER_MALE)   ? gettext(M_("his")) : gettext(M_("her")));
 
-        case PRONOUN_REFLEXIVE:  // Awkward at start of sentence, always lower.
+        case PRONOUN_REFLEXIVE:
             return ((gender == GENDER_NEUTER) ? gettext(M_("itself"))  :
                     (gender == GENDER_MALE)   ? gettext(M_("himself")) : gettext(M_("herself")));
 
-        case PRONOUN_OBJECTIVE:  // Awkward at start of sentence, always lower.
+        case PRONOUN_OBJECTIVE:
             return ((gender == GENDER_NEUTER) ? gettext(M_("it"))  :
                     (gender == GENDER_MALE)   ? gettext(M_("him")) : gettext(M_("her")));
      }
@@ -3660,9 +3661,9 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     msg = replace_all(msg, "@A_monster@",   mons->name(DESC_A));
     msg = replace_all(msg, "@The_monster@", mons->name(cap));
 
-    msg = replace_all(msg, "@Pronoun@",
+    msg = replace_all(msg, "@Subjective@",
                       mons->pronoun(PRONOUN_SUBJECTIVE));
-    msg = replace_all(msg, "@pronoun@",
+    msg = replace_all(msg, "@subjective@",
                       mons->pronoun(PRONOUN_SUBJECTIVE));
     msg = replace_all(msg, "@Possessive@",
                       mons->pronoun(PRONOUN_POSSESSIVE));

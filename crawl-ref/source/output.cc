@@ -51,7 +51,7 @@
 #include "showsymb.h"
 #include "spl-transloc.h"
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
 #include "directn.h"
 #endif
 
@@ -2162,8 +2162,13 @@ static std::string _status_mut_abilities(int sw)
           break;
 
       case SP_YELLOW_DRACONIAN:
-          mutations.push_back("산성 침 뱉기");
-          mutations.push_back("산성 저항");
+          mutations.push_back(gettext("spit acid"));
+
+          if (form_keeps_mutations() || you.form == TRAN_DRAGON)
+              mutations.push_back(gettext("acid resistance"));
+          else
+              mutations.push_back(gettext("<darkgrey>(acid resistance)</darkgrey>"));
+
           break;
 
       case SP_GREY_DRACONIAN:
@@ -2215,9 +2220,10 @@ static std::string _status_mut_abilities(int sw)
     std::string current;
     for (unsigned i = 0; i < NUM_MUTATIONS; ++i)
     {
-        int level = player_mutation_level((mutation_type) i);
-        if (!level)
+        if (!you.mutation[i])
             continue;
+
+        int level = player_mutation_level((mutation_type) i);
 
         const bool lowered = (level < you.mutation[i]);
         const mutation_def& mdef = get_mutation_def((mutation_type) i);
@@ -2236,7 +2242,7 @@ static std::string _status_mut_abilities(int sw)
                 current += ostr.str();
             }
         }
-        else
+        else if (level)
         {
             switch (i)
             {
@@ -2352,13 +2358,17 @@ static std::string _status_mut_abilities(int sw)
 
         if (!current.empty())
         {
+            if (level == 0)
+                current = "(" + current + ")";
             if (lowered)
                 current = "<darkgrey>" + current + "</darkgrey>";
             mutations.push_back(current);
         }
     }
 
-    if (AC_change)
+    // Statue form does not get AC benefits from scales etc.  It does
+    // get changes to EV and SH.
+    if (AC_change && you.form != TRAN_STATUE)
     {
         snprintf(info, INFO_SIZE, "AC %s%d", (AC_change > 0 ? "+" : ""), AC_change);
         mutations.push_back(info);

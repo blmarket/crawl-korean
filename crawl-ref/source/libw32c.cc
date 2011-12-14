@@ -5,7 +5,7 @@
 
 #include "AppHdr.h"
 
-#if defined(TARGET_OS_WINDOWS) && !defined(USE_TILE)
+#if defined(TARGET_OS_WINDOWS) && !defined(USE_TILE_LOCAL)
 
 // WINDOWS INCLUDES GO HERE
 /*
@@ -847,6 +847,9 @@ bool kbhit()
 
 void delay(unsigned int ms)
 {
+    if (crawl_state.disables[DIS_DELAY])
+        return;
+
     Sleep((DWORD)ms);
 }
 
@@ -883,4 +886,4 @@ int get_number_of_cols()
     return (screensize.X);
 }
 
-#endif /* #if defined(TARGET_OS_WINDOWS) && !defined(USE_TILE) */
+#endif /* #if defined(TARGET_OS_WINDOWS) && !defined(USE_TILE_LOCAL) */

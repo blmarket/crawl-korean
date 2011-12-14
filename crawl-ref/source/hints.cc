@@ -67,7 +67,7 @@ static bool         _water_is_disturbed(int x, int y);
 
 static int _get_hints_cols()
 {
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     return crawl_view.msgsz.x;
 #else
     int ncols = get_number_of_cols();
@@ -283,13 +283,11 @@ void hints_zap_secret_doors()
 // Prints the hints mode welcome screen.
 void hints_starting_screen()
 {
-#ifndef USE_TILE
     cgotoxy(1, 1);
-#endif
     clrscr();
 
     int width = _get_hints_cols();
-#ifdef USE_TILE
+#ifdef USE_TILE_LOCAL
     // Use a more sensible screen width.
     if (width < 80 && width < crawl_view.msgsz.x + crawl_view.hudsz.x)
         width = crawl_view.msgsz.x + crawl_view.hudsz.x;
@@ -334,12 +332,10 @@ void hints_starting_screen()
     linebreak_string(text, width);
     display_tagged_block(text);
 
-#ifndef USE_TILE
-    getch_ck();
-#else
-    mouse_control mc(MOUSE_MODE_MORE);
-    getchm();
-#endif
+    {
+        mouse_control mc(MOUSE_MODE_MORE);
+        getchm();
+    }
     redraw_screen();
 }
 

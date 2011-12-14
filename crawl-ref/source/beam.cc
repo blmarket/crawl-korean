@@ -170,7 +170,8 @@ static void _zap_animation(int colour, const monster* mon = NULL,
     {
 #ifdef USE_TILE
         tiles.add_overlay(p, tileidx_zap(colour));
-#else
+#endif
+#ifndef USE_TILE_LOCAL
         view_update();
         cgotoxy(drawp.x, drawp.y, GOTO_DNGN);
         put_colour_ch(colour, dchar_glyph(DCHAR_FIRED_ZAP));
@@ -764,7 +765,8 @@ void bolt::draw(const coord_def& p)
 
     if (tile_beam != -1)
         tiles.add_overlay(p, tile_beam);
-#else
+#endif
+#ifndef USE_TILE_LOCAL
     cgotoxy(drawpos.x, drawpos.y, GOTO_DNGN);
     put_colour_ch(colour == BLACK ? random_colour()
                                   : element_colour(colour),
@@ -5379,7 +5381,8 @@ void bolt::explosion_draw_cell(const coord_def& p)
 #ifdef USE_TILE
         if (in_los_bounds_v(drawpos))
             tiles.add_overlay(p, tileidx_bolt(*this));
-#else
+#endif
+#ifndef USE_TILE_LOCAL
         // bounds check
         if (in_los_bounds_v(drawpos))
         {

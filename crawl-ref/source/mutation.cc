@@ -124,6 +124,30 @@ bool is_valid_mutation(mutation_type mut)
             && _seek_mutation(mut));
 }
 
+static const mutation_type _all_scales[] = {
+    MUT_DISTORTION_FIELD,           MUT_ICY_BLUE_SCALES,
+    MUT_IRIDESCENT_SCALES,          MUT_LARGE_BONE_PLATES,
+    MUT_MOLTEN_SCALES,              MUT_ROUGH_BLACK_SCALES,
+    MUT_RUGGED_BROWN_SCALES,        MUT_SLIMY_GREEN_SCALES,
+    MUT_THIN_METALLIC_SCALES,       MUT_THIN_SKELETAL_STRUCTURE,
+    MUT_YELLOW_SCALES,
+};
+
+static bool _is_covering(mutation_type mut)
+{
+    for (unsigned i = 0; i < ARRAYSZ(_all_scales); ++i)
+        if (_all_scales[i] == mut)
+            return (true);
+
+    return (false);
+}
+
+static bool _true_scales(mutation_type mut)
+{
+    return (mut != MUT_THIN_SKELETAL_STRUCTURE && mut != MUT_DISTORTION_FIELD
+            && _is_covering(mut));
+}
+
 bool is_body_facet(mutation_type mut)
 {
     for (unsigned i = 0; i < ARRAYSZ(_body_facets); i++)
@@ -164,37 +188,72 @@ void fixup_mutations()
     }
 }
 
-bool mutation_is_fully_active(mutation_type mut)
+mutation_activity_type mutation_activity_level(mutation_type mut)
 {
+    // First make sure the player's form permits the mutation.
+    if (mut == MUT_BREATHE_POISON)
+    {
+        if (form_changed_physiology() && you.form != TRAN_SPIDER)
+            return (MUTACT_INACTIVE);
+    }
+    else if (!form_keeps_mutations())
+    {
+        if (get_mutation_def(mut).form_based)
+            return (MUTACT_INACTIVE);
+    }
+
+    if (you.form == TRAN_STATUE)
+    {
+        if (mut == MUT_GELATINOUS_BODY || mut == MUT_TOUGH_SKIN
+            || mut == MUT_SHAGGY_FUR || mut == MUT_FAST || mut == MUT_SLOW
+            || mut == MUT_IRIDESCENT_SCALES)
+        {
+            return (MUTACT_INACTIVE);
+        }
+        else if (_true_scales(mut))
+            return (MUTACT_PARTIAL);
+    }
+
     // For all except the semi-undead, mutations always apply.
-    if (you.is_undead != US_SEMI_UNDEAD)
-        return (true);
+    if (you.is_undead == US_SEMI_UNDEAD)
+    {
+        // Innate mutations are always active
+        if (you.innate_mutations[mut])
+            return (MUTACT_FULL);
 
-    // Innate mutations are always active
-    if (you.innate_mutations[mut])
-        return (true);
+        // ... as are all mutations for semi-undead who are fully alive
+        if (you.hunger_state == HS_ENGORGED)
+            return (MUTACT_FULL);
 
-    // ... as are all mutations for semi-undead who are fully alive
-    if (you.hunger_state == HS_ENGORGED)
-        return (true);
+        // ... as are physical mutations.
+        if (get_mutation_def(mut).physical)
+            return (MUTACT_FULL);
 
-    // ... as are physical mutations.
-    if (get_mutation_def(mut).physical)
-        return (true);
-
-    return (false);
+        // Other mutations are partially active at satiated and above.
+        if (you.hunger_state >= HS_SATIATED)
+            return (MUTACT_HUNGER);
+        else
+            return (MUTACT_INACTIVE);
+    }
+    else
+        return (MUTACT_FULL);
 }
 
-static bool _mutation_is_fully_inactive(mutation_type mut)
+static std::string _annotate_form_based(std::string desc, bool suppressed)
 {
-    const mutation_def& mdef = get_mutation_def(mut);
-    return (you.is_undead == US_SEMI_UNDEAD && you.hunger_state < HS_SATIATED
-            && !you.innate_mutations[mut] && !mdef.physical);
+    if (suppressed)
+        return "<darkgrey>((" + desc + "))<yellow>*</yellow></darkgrey>\n";
+    else
+        return desc + "<yellow>*</yellow>\n";
 }
 
-//변이 관련. 던크 한글판[밸런스기준] 을 참조한 부분이 있습니다.
+static std::string _dragon_abil(std::string desc)
+{
+    const bool supp = form_changed_physiology() && you.form != TRAN_DRAGON;
+    return _annotate_form_based(desc, supp);
+}
 
-formatted_string describe_mutations()
+std::string describe_mutations()
 {
     std::string result;
     bool have_any = false;
@@ -216,37 +275,43 @@ formatted_string describe_mutations()
     result += "</white>\n\n";
 
     // Innate abilities which don't fit as mutations.
+    // TODO: clean these up with respect to transformations.  Currently
+    // we handle only Naga/Draconian AC and Yellow Draconian rAcid.
     result += "<lightblue>";
     switch (you.species)
     {
     case SP_MERFOLK:
-        result += gettext("You revert to your normal form in water.\n");
-        result += gettext("You are very nimble and swift while swimming.\n");
+        result += _annotate_form_based(
+            gettext("You revert to your normal form in water."),
+            form_changed_physiology());
+        result += _annotate_form_based(
+            gettext("You are very nimble and swift while swimming."),
+            form_changed_physiology());
         have_any = true;
         break;
 
     case SP_MINOTAUR:
-        result += gettext("You reflexively headbutt those who attack you in melee.\n");
+        result += _annotate_form_based(
+            gettext("You reflexively headbutt those who attack you in melee."),
+            !form_keeps_mutations());
         have_any = true;
         break;
 
     case SP_NAGA:
+        result += gettext("You cannot wear boots.\n");
 
-		//나가의 기본 변이 상태
-		//result += "You cannot wear boots.\n";
-        result += "당신은 신발을 신을 수 없다.\n";
         // Breathe poison replaces spit poison.
-        if (!you.mutation[MUT_BREATHE_POISON])
-			//독뱉기 변이를 가진 경우
-			//result += "You can spit poison.\n";
-            result += "당신은 독을 뱉을 수 있다.\n";
+        if (!player_mutation_level(MUT_BREATHE_POISON))
+            result += gettext("You can spit poison.\n");
+
         if (you.experience_level > 2)
         {
             std::ostringstream num;
             num << you.experience_level/3;
-			//이건 아마 피부 강화 인듯
-			//  result += "Your serpentine skin is tough (AC +" + num.str() + ").\n";
-            result += "당신은 강인한 피부를 가지고 있다 (AC +" + num.str() + ").\n";
+            const std::string acstr = gettext("Your serpentine skin is tough (AC +")
+                                      + num.str() + ").";
+
+            result += _annotate_form_based(acstr, player_is_shapechanged());
         }
         have_any = true;
         break;
@@ -261,13 +326,12 @@ formatted_string describe_mutations()
     case SP_TENGU:
         if (you.experience_level > 4)
         {
-			//    result += "You can fly";
-            result += "당신은 날 수 있다";
+            std::string msg = gettext("You can fly.");
             if (you.experience_level > 14)
-				//레벨 14 이후가 되면 무한날기 가 가능해짐을 뜻하는듯. 계속해서 지만 어디에 추가되는질 몰라서;
-				//      result += " continuously";
-				result += ". 끊임없이.";
-            result += ".\n";
+                msg = gettext("You can fly continuously.");
+
+            result += _annotate_form_based(msg, (form_changed_physiology()
+                                                 && you.form != TRAN_LICH));
             have_any = true;
         }
         break;
@@ -301,9 +365,7 @@ formatted_string describe_mutations()
 
 		//각종 색색 드라코들
     case SP_GREEN_DRACONIAN:
-
-		//        result += "You can breathe blasts of noxious fumes.\n";
-        result += "당신은 유독가스를 뿜을 수 있다.\n";
+        result += _dragon_abil(gettext("You can breathe blasts of noxious fumes."));
         have_any = true;
 
 //끔찍한 녹색?          scale_type = "lurid green";
@@ -319,76 +381,51 @@ formatted_string describe_mutations()
         break;
 
     case SP_RED_DRACONIAN:
-		//        result += "You can breathe blasts of fire.\n";
-        result += "당신은 불의 숨결을 뿜을 수 있다.\n";
+        result += _dragon_abil(gettext("You can breathe blasts of fire."));
         have_any = true;
 		//scale_type = "fiery red";
         scale_type = "불타는 듯한 빨강";
         break;
 
     case SP_WHITE_DRACONIAN:
-
-		//result += "You can breathe waves of freezing cold.\n";
-        //result += "You can buffet flying creatures when you breathe cold.\n";
-		//
-        result += "당신은 냉기의 숨결을 뿜을 수 있다.\n";
-        result += "당신은 날아다니는 생명체에게 당신의 냉기의 숨결로 공격할 수 있다.\n";
-		//scale_type = "icy white";		
-		scale_type = "얼음에 뒤덮힌 하양";
+        result += _dragon_abil(gettext("You can breathe waves of freezing cold."));
+        result += _dragon_abil(gettext("You can buffet flying creatures when you breathe cold."));
+        scale_type = gettext(M_("icy white"));
         have_any = true;
         break;
 
     case SP_BLACK_DRACONIAN:
-		//        result += "You can breathe wild blasts of lightning.\n";
-        result += "당신은 거친 전기 폭발의 숨결을 뿜을 수 있다.\n";
-		//      scale_type = "glossy black";
-        scale_type = "윤이나는 검정";
+        result += _dragon_abil(gettext("You can breathe wild blasts of lightning."));
+        scale_type = gettext(M_("glossy black"));
         have_any = true;
         break;
 
     case SP_YELLOW_DRACONIAN:
-		//옐로드라코
-        //result += "You can spit globs of acid.\n";
-        //result += "You can corrode armour when you spit acid.\n";
-        //result += "You are resistant to acid.\n";
-        result += "당신은 산을 뱉을 수 있다..\n";
-        result += "당신은 산을 뱉어서 갑옷을 부식시킬 수 있다.\n";
-        result += "당신은 산에 대한 저항을 가지고 있다.\n";
-		//        scale_type = "golden yellow";
-        scale_type = "황금빛 노랑";
+        result += _dragon_abil(gettext("You can spit globs of acid."));
+        result += _dragon_abil(gettext("You can corrode armour when you spit acid."));
+        result += _annotate_form_based(gettext("You are resistant to acid."),
+                      !form_keeps_mutations() && you.form != TRAN_DRAGON);
+        scale_type = gettext(M_("golden yellow"));
         have_any = true;
         break;
 
     case SP_PURPLE_DRACONIAN:
-
-		//
-		//result += "You can breathe bolts of energy.\n";
-        //result += "You can dispel enchantments when you breathe energy.\n";
-        //scale_type = "rich purple";
-        result += "당신은 에너지볼트를 뱉을 수 있다.\n";
-        result += "당신은 당신의 에너지볼트로 걸려있는 마법을 해제할 수 있다.\n";
-        scale_type = "짙은 보라";
+        result += _dragon_abil(gettext("You can breathe bolts of energy."));
+        result += _dragon_abil(gettext("You can dispel enchantments when you breathe energy."));
+        scale_type = gettext("rich purple");
         have_any = true;
         break;
 
     case SP_MOTTLED_DRACONIAN:
-
-        //result += "You can spit globs of burning liquid.\n";
-        //result += "You can ignite nearby creatures when you spit burning liquid.\n";
-        //scale_type = "weird mottled";
-        result += "당신은 불타는 액체를 뱉을 수 있다.\n";
-        result += "당신은 불타는 액체로 근처의 생명체에 불을 붙일 수 있다..\n";
-        scale_type = "기묘한 얼룩";
+        result += _dragon_abil(gettext("You can spit globs of burning liquid."));
+        result += _dragon_abil(gettext("You can ignite nearby creatures when you spit burning liquid."));
+        scale_type = gettext("weird mottled");
         have_any = true;
         break;
 
     case SP_PALE_DRACONIAN:
-
-        //result += "You can breathe blasts of scalding steam.\n";
-        //scale_type = "pale cyan-grey";
-
-        result += "당신은 뜨거운 증기를 뿜을 수 있다.\n";
-        scale_type = "옅은 남회색";
+        result += _dragon_abil(gettext("You can breathe blasts of scalding steam."));
+        scale_type = gettext("pale cyan-grey");
         have_any = true;
         break;
 
@@ -441,14 +478,10 @@ formatted_string describe_mutations()
 
 		//고양이
     case SP_FELID:
-//        result += "You cannot wear armour.\n";
-  //      result += "You are incapable of any advanced item manipulation.\n";
-    //    result += "Your paws have sharp claws.\n";
-
-
-        result += "당신은 갑옷을 입을 수 없다.\n";
-        result += "당신은 어떠한 도구도 조작할 수 없다.\n";
-        result += "당신의 발들은 날카로운 발톱을 가지고 있다.\n";
+        result += gettext("You cannot wear armour.\n");
+        result += gettext("You are incapable of any advanced item manipulation.\n");
+        result += _annotate_form_based(gettext("Your paws have sharp claws."),
+            form_keeps_mutations() && you.form != TRAN_BLADE_HANDS);
         have_any = true;
         break;
 
@@ -500,8 +533,12 @@ formatted_string describe_mutations()
     {
         // Draconians are large for the purposes of armour, but only medium for
         // weapons and carrying capacity.
-        result += make_stringf(gettext("Your %s scales are hard (AC +%d).\n"),
+        const std::string msg = make_stringf(gettext("Your %s scales are hard (AC +%d)."),
                                scale_type.c_str(), 4 + you.experience_level / 3);
+
+        result += _annotate_form_based(msg,
+                      player_is_shapechanged() && you.form != TRAN_DRAGON);
+
         result += gettext("Your body does not fit into most forms of armour.\n");
         have_any = true;
     }
@@ -551,31 +588,26 @@ formatted_string describe_mutations()
 
     if (!have_any)
 
-		//여긴 변이가 아무것도 안걸린 상태입니다.
-        result +=  "당신은 상당히 재미없다.[변이가 걸려있는게 없습니다.]\n";
-		//result +=  "You are rather mundane.\n";
-
-
-	// 여긴 뭔지 모르겠네요 토글인가?뱀파관련?
-    if (you.species == SP_VAMPIRE)
-    {
-        result += "\n\n";
-        result += "\n\n";
-        result +=
-#ifndef USE_TILE_LOCAL
-            "Press '<w>!</w>'"
-#else
-            "<w>Right-click</w>"
-#endif 
-            //" to toggle between mutations and properties depending on your\n"
-            //"hunger status.\n";
-			
-			" 당신의 변이 상태는 당신의\n"
-            "배고픈 상태에 따라 달라진다.\n";
-    }
-
-    return (formatted_string::parse_string(result));
+    return result;
 }
+
+static const std::string _mutations_footer = ("\n\n\n\n"
+    "()  : Partially suppressed.\n"
+    "<darkgrey>(())</darkgrey>: Completely suppressed.\n"
+    "<yellow>*</yellow>   : Suppressed by changes of form.\n");
+
+static const std::string _vampire_Ascreen_footer = gettext(
+#ifndef USE_TILE_LOCAL
+    "Press '<w>!</w>'"
+#else
+    "<w>Right-click</w>"
+#endif
+    " to toggle between mutations and properties depending on your\n"
+    "hunger status.\n");
+
+static const std::string _vampire_mutations_footer = (
+    gettext("<lightred>+</lightred>   : Suppressed by thirst.\n\n")
+    + _vampire_Ascreen_footer);
 
 
 // 디스플레이면 고쳐도 되는거 인거 같은데 음..
@@ -667,17 +699,7 @@ static void _display_vampire_attributes()
     }
 
     result += "\n";
-    result +=
-#ifndef USE_TILE_LOCAL
-        "Press '<w>!</w>'"
-#else
-        "<w>Right-click</w>"
-#endif
-		//" to toggle between mutations and properties depending on your\n"
-        //"hunger status.\n";
-			" 당신의 변이 상태는 당신의\n"
-            "배고픈 상태에 따라 달라진다.\n";
-
+    result += _vampire_Ascreen_footer;
 
     const formatted_string vp_props = formatted_string::parse_string(result);
     vp_props.display();
@@ -693,10 +715,12 @@ void display_mutations()
     clrscr();
     cgotoxy(1,1);
 
-    const formatted_string mutation_fs = describe_mutations();
+    const std::string mutation_s = describe_mutations() + _mutations_footer;
 
     if (you.species == SP_VAMPIRE)
     {
+        const formatted_string mutation_fs = formatted_string::parse_string(
+            mutation_s + _vampire_mutations_footer);
         mutation_fs.display();
         mouse_control mc(MOUSE_MODE_MORE);
         const int keyin = getchm();
@@ -705,7 +729,9 @@ void display_mutations()
     }
     else
     {
-        Menu mutation_menu(mutation_fs);
+        formatted_scroller mutation_menu;
+        mutation_menu.add_text(mutation_s);
+
         mutation_menu.show();
     }
 }
@@ -978,24 +1004,6 @@ static int _handle_conflicting_mutations(mutation_type mutation,
     return (0);
 }
 
-static const mutation_type _all_scales[] = {
-    MUT_DISTORTION_FIELD,           MUT_ICY_BLUE_SCALES,
-    MUT_IRIDESCENT_SCALES,          MUT_LARGE_BONE_PLATES,
-    MUT_MOLTEN_SCALES,              MUT_ROUGH_BLACK_SCALES,
-    MUT_RUGGED_BROWN_SCALES,        MUT_SLIMY_GREEN_SCALES,
-    MUT_THIN_METALLIC_SCALES,       MUT_THIN_SKELETAL_STRUCTURE,
-    MUT_YELLOW_SCALES,
-};
-
-static bool _is_covering(mutation_type mut)
-{
-    for (unsigned i = 0; i < ARRAYSZ(_all_scales); ++i)
-        if (_all_scales[i] == mut)
-            return (true);
-
-    return (false);
-}
-
 static int _body_covered()
 {
     // Check how much of your body is covered by scales, etc.
@@ -1047,7 +1055,7 @@ bool physiology_mutation_conflict(mutation_type mutat)
     if (mutat == MUT_TENTACLE_SPIKE && you.species != SP_OCTOPODE)
         return (true);
 
-    if ((mutat == MUT_HOOVES || mutat == MUT_TALONS) && !player_has_feet())
+    if ((mutat == MUT_HOOVES || mutat == MUT_TALONS) && !player_has_feet(false))
         return (true);
 
     // Only Nagas can get this upgrade.
@@ -1101,7 +1109,7 @@ bool physiology_mutation_conflict(mutation_type mutat)
             {
                 if (eq_type == _body_facets[i].eq
                     && mutat != _body_facets[i].mut
-                    && player_mutation_level(_body_facets[i].mut))
+                    && player_mutation_level(_body_facets[i].mut, false))
                 {
                     return (true);
                 }
@@ -1619,9 +1627,14 @@ bool delete_all_mutations()
 // If colour is true, also add the colour annotation.
 std::string mutation_name(mutation_type mut, int level, bool colour)
 {
-    const bool fully_active = mutation_is_fully_active(mut);
-    const bool fully_inactive =
-        (!fully_active && _mutation_is_fully_inactive(mut));
+    // Ignore the player's forms, etc.
+    const bool ignore_player = (level != -1);
+
+    const mutation_activity_type active = mutation_activity_level(mut);
+    const bool lowered = you.mutation[mut] > player_mutation_level(mut);
+    const bool partially_active = (active == MUTACT_PARTIAL
+        || active == MUTACT_HUNGER && lowered);
+    const bool fully_inactive = (active == MUTACT_INACTIVE);
 
     // level == -1 means default action of current level
     if (level == -1)
@@ -1633,10 +1646,7 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
     }
 
     std::string result;
-    bool innate = false;
-
-    if (mut == MUT_BREATHE_POISON && you.species == SP_NAGA)
-        innate = true;
+    bool innate_upgrade = (mut == MUT_BREATHE_POISON && you.species == SP_NAGA);
 
     const mutation_def& mdef = get_mutation_def(mut);
 
@@ -1667,18 +1677,37 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
     else if (result.empty() && level > 0)
         result = gettext(mdef.have[level - 1]);
 
-    if (fully_inactive || player_mutation_level(mut) < you.mutation[mut])
+    if (!ignore_player)
     {
-        result = "(" + result;
-        result += ")";
+        if (fully_inactive)
+            result = "((" + result + "))";
+        else if (partially_active)
+            result = "(" + result + ")";
+
+        if (mdef.form_based)
+            result += colour ? "<yellow>*</yellow>" : "*";
+
+        if (you.species == SP_VAMPIRE && !mdef.physical
+            && !you.innate_mutations[mut])
+        {
+            result += colour ? "<lightred>+</lightred>" : "+";
+        }
     }
 
     if (colour)
     {
         const char* colourname = (mdef.bad ? "red" : "lightgrey");
         const bool permanent   = (you.innate_mutations[mut] > 0);
-        if (innate)
-            colourname = (level > 0 ? "cyan" : "lightblue");
+
+        if (innate_upgrade)
+        {
+            if (fully_inactive)
+                colourname = "darkgrey";
+            else if (partially_active)
+                colourname = "blue";
+            else
+                colourname = "cyan";
+        }
         else if (permanent)
         {
             const bool demonspawn = (you.species == SP_DEMONSPAWN);
@@ -1686,7 +1715,7 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
 
             if (fully_inactive)
                 colourname = "darkgrey";
-            else if (!fully_active)
+            else if (partially_active)
                 colourname = demonspawn ? "yellow"   : "blue";
             else if (extra)
                 colourname = demonspawn ? "lightmagenta" : "cyan";
@@ -1695,6 +1724,8 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         }
         else if (fully_inactive)
             colourname = "darkgrey";
+        else if (partially_active)
+            colourname = "brown";
         else if (you.form == TRAN_APPENDAGE && you.attribute[ATTR_APPENDAGE] == mut)
             colourname = "lightgreen";
         else if (_is_slime_mutation(mut))

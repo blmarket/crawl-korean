@@ -1144,7 +1144,7 @@ void shillelagh(actor *wielder, coord_def where, int pow)
 
     // need to do this again to do the actual damage
     for (adjacent_iterator ai(where, false); ai; ++ai)
-        _shatter_monsters(*ai, pow, wielder);
+        _shatter_monsters(*ai, pow * 3 / 2, wielder);
 
     if ((you.pos() - wielder->pos()).abs() <= 2 && in_bounds(you.pos()))
         _shatter_player(pow, wielder);
@@ -1391,7 +1391,7 @@ static int _ignite_poison_player(coord_def where, int pow, int, actor *actor)
     if (player_mutation_level(MUT_SPIT_POISON)
         || player_mutation_level(MUT_STINGER)
         || you.form == TRAN_SPIDER // poison attack
-        || (!player_is_shapechanged()
+        || (!form_changed_physiology()
             && (you.species == SP_GREEN_DRACONIAN       // poison breath
                 || you.species == SP_KOBOLD             // poisonous corpse
                 || you.species == SP_NAGA)))            // spit poison
@@ -1447,7 +1447,7 @@ spret_type cast_ignite_poison(int pow, bool fail)
 // the actor is &you.
     apply_area_visible(_ignite_poison_player, pow, &you);
 
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
     delay(100); // show a brief flash
 #endif
     flash_view(0);

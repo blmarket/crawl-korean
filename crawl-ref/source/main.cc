@@ -136,6 +136,8 @@
 #ifdef USE_TILE
  #include "tiledef-dngn.h"
  #include "tilepick.h"
+#endif
+#ifdef USE_TILE_LOCAL
  #include "tilereg.h"
 #endif
 
@@ -4313,7 +4315,7 @@ static void _move_player(coord_def move)
     else if (!targ_pass && !attacking)
     {
         if (grd(targ) == DNGN_OPEN_SEA)
-            mpr(gettext("You can't go out to sea!"));
+            mpr(gettext("The ferocious winds and tides of the open sea thwart your progress."));
 
         if (grd(targ) == DNGN_LAVA_SEA)
             mpr(gettext("The endless sea of lava is not a nice place."));

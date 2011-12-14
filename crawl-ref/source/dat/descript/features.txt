@@ -385,11 +385,11 @@ An unnaturally hard stone wall
 
 일단 그냥 돌벽보다는 확실히 단단한 돌벽이다.. 사실상 흠집도 낼 수 없을 것이다.
 %%%%
-Endless lava
+The endless lava
 
 불과 유황이 끊임없이 뿜어져나오는 용암의 바다다. 사실 두껍고 시꺼먼 연기 때문에 그렇지 보이는 만큼 폭이 넓지는 않지만. 다만 비행이나 부유를 통해 넘어갈 수 있는 작은 용암 구덩이와는 달리, 이 '인페르노'에 가까운 용암 위로 넘어가려고 시도했다가는, 당신의 비행이 끝나는 걸 느낄 새도 없이 한 줌의 재로 돌아가 버릴 것이다.
 %%%%
-Floor
+A floor
 
 던전 바닥이다.
 %%%%
@@ -405,3 +405,6 @@ Some shallow water
 
 얕은 물로, 이 물 위에서는 지상 생물들의 움직임이나 전투가 힘들어진다. 직접적으로 치명적인 위협이 되는 건 아니지만 때때로 위험할 수도 있다.
 %%%%
+The open sea
+
+Nothing but endless wind and waves, and not a lighthouse in sight. You'd be lost beyond all hope in short order - better not risk it.

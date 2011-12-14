@@ -1168,7 +1168,6 @@ static void _cherub_hymn(monster* chief)
     }
 }
 
-
 static bool _make_monster_angry(const monster* mon, monster* targ)
 {
     if (mon->friendly() != targ->friendly())
@@ -1202,9 +1201,10 @@ static bool _make_monster_angry(const monster* mon, monster* targ)
     {
         if (mon->type == MONS_QUEEN_BEE && targ->type == MONS_KILLER_BEE)
         {
-            mprf(gettext("%s calls on %s to defend her!"),
+            mprf(gettext("%s calls on %s to defend %s!"),
                 mon->name(DESC_THE).c_str(),
-                targ->name(DESC_THE).c_str());
+                targ->name(DESC_THE).c_str(),
+                mon->pronoun(PRONOUN_OBJECTIVE).c_str());
         }
         else
             mprf(gettext("%s goads %s on!"), mon->name(DESC_THE).c_str(),

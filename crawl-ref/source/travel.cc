@@ -3076,7 +3076,8 @@ std::string level_id::describe(bool long_name, bool with_number) const
 {
     std::string description = place_name(this->packed_place(),
                                          long_name, with_number);
-    if (level_type == LEVEL_PORTAL_VAULT) {
+    if (level_type == LEVEL_PORTAL_VAULT)
+    {
         std::string::size_type cpos = description.find(':');
         const std::string brname = (cpos != std::string::npos ?
                                     description.substr(0, cpos) : description);
@@ -4035,7 +4036,7 @@ bool runrest::run_should_stop() const
 
     if (is_excluded(targ))
     {
-#ifndef USE_TILE
+#ifndef USE_TILE_LOCAL
         // XXX: Remove this once exclusions are visible.
         mprf(MSGCH_WARN, "Stopped running for exclusion.");
 #endif
@@ -4333,14 +4334,20 @@ template <class citer> bool explore_discoveries::has_duplicates(
 }
 
 template <class C> void explore_discoveries::say_any(
-    const C &coll, const char *stub) const
+    const C &coll, const char *category) const
 {
     if (coll.empty())
         return;
 
+    const int size = coll.size();
+
+    std::string plural = pluralise(category);
+    if (size != 1)
+        category = plural.c_str();
+
     if (has_duplicates(coll.begin(), coll.end()))
     {
-        mprf(stub, number_in_words(coll.size()).c_str());
+        mprf("Found %s %s.", number_in_words(size).c_str(), category);
         return;
     }
 
@@ -4348,7 +4355,7 @@ template <class C> void explore_discoveries::say_any(
         comma_separated_line(coll.begin(), coll.end()).c_str());
 
     if (strwidth(message) >= get_number_of_cols())
-        mprf(stub, number_in_words(coll.size()).c_str());
+        mprf("Found %s %s.", number_in_words(size).c_str(), category);
     else
         mprf("%s", message.c_str());
 }
@@ -4391,11 +4398,11 @@ bool explore_discoveries::prompt_stop() const
     if (!es_flags)
         return (marker_stop);
 
-    say_any(items, gettext("Found %s items."));
-    say_any(shops, gettext("Found %s shops."));
-    say_any(apply_quantities(altars), gettext("Found %s altars."));
-    say_any(apply_quantities(portals), gettext("Found %s gates."));
-    say_any(apply_quantities(stairs), gettext("Found %s stairs."));
+    say_any(items, "item");
+    say_any(shops, "shop");
+    say_any(apply_quantities(altars), "altar");
+    say_any(apply_quantities(portals), "portal");
+    say_any(apply_quantities(stairs), "stair");
 
     return ((Options.explore_stop_prompt & es_flags) != es_flags
             || marker_stop
