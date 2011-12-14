@@ -56,6 +56,8 @@
 #include "shout.h"
 #include "xom.h"
 
+#include "korean.h"
+
 #include <algorithm>
 #include <queue>
 
@@ -2324,6 +2326,10 @@ std::string monster::pronoun(pronoun_type pro, bool force_visible) const
 
 std::string monster::conj_verb(const std::string &verb) const
 {
+#ifdef KR
+    return pgettext_expr("verb", verb.c_str());
+#endif
+
     if (!verb.empty() && verb[0] == '!')
         return (verb.substr(1));
 

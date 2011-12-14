@@ -2384,11 +2384,11 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb,
     if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
         mon_name.erase(0, 4);
     if (adj.find("your"))
-        adj = "the " + adj;
+        adj = make_stringf(gettext("the %s"), adj.c_str());
     mon_name = adj + mon_name;
 
-    snprintf(info, INFO_SIZE, "Really %s %s%s?",
-             verb.c_str(), mon_name.c_str(), suffix.c_str());
+    snprintf(info, INFO_SIZE, gettext("Really %s %s%s?"),
+             pgettext_expr("verb", verb.c_str()), mon_name.c_str(), suffix.c_str());
 
     return !yesno(info, false, 'n');
 }

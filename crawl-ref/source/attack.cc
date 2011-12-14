@@ -185,10 +185,10 @@ std::string attack::get_exclams(int dmg)
  */
 std::string attack::evasion_margin_adverb()
 {
-    return (ev_margin <= -20) ? " completely" :
+    return (ev_margin <= -20) ? gettext(" completely") :
            (ev_margin <= -12) ? "" :
-           (ev_margin <= -6)  ? " closely"
-                              : " barely";
+           (ev_margin <= -6)  ? gettext(" closely")
+                              : gettext(" barely");
 }
 
 /* Returns the attacker's name
@@ -267,7 +267,7 @@ void attack::calc_elemental_brand_damage(beam_type flavour,
     if (needs_message && special_damage > 0 && verb)
     {
         special_damage_message = make_stringf(
-            "%s %s %s%s",
+            gettext("%s %s %s%s"),
             atk_name(DESC_THE).c_str(),
             attacker->conj_verb(verb).c_str(),
             defender_name().c_str(),
