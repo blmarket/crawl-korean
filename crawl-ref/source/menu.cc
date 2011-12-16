@@ -133,62 +133,6 @@ Menu::Menu(int _flags, const std::string& tagname, bool text_only)
     set_flags(flags);
 }
 
-Menu::Menu(const formatted_string &fs)
- : f_selitem(NULL), f_drawitem(NULL), f_keyfilter(NULL),
-   action_cycle(CYCLE_NONE), menu_action(ACT_EXAMINE), title(NULL),
-   title2(NULL),
-
-   // This is a text-viewer menu, init flags to be easy on the user.
-   flags(MF_NOSELECT | MF_EASY_EXIT),
-
-   tag(), first_entry(0), y_offset(0), pagesize(0),
-   max_pagesize(0), more("-more-", true), items(), sel(),
-   select_filter(), highlighter(new MenuHighlighter), num(-1),
-   lastch(0), alive(false), last_selected(-1)
-{
-    mdisplay = new MenuDisplayText(this);
-    mdisplay->set_num_columns(1);
-
-    int colour = LIGHTGREY;
-    int last_text_colour = LIGHTGREY;
-    std::string line;
-    for (formatted_string::oplist::const_iterator i = fs.ops.begin();
-         i != fs.ops.end(); ++i)
-    {
-        const formatted_string::fs_op &op(*i);
-        switch (op.type)
-        {
-        case FSOP_COLOUR:
-            colour = op.x;
-            break;
-        case FSOP_TEXT:
-        {
-            line += op.text;
-
-            const std::string::size_type nonblankp =
-                op.text.find_first_not_of(" \t\r\n");
-            const bool nonblank = nonblankp != std::string::npos;
-            const std::string::size_type eolp = op.text.find("\n");
-            const bool starts_with_eol =
-                nonblank && eolp != std::string::npos
-                && eolp < nonblankp;
-
-            if (nonblank && !starts_with_eol)
-                last_text_colour = colour;
-
-            check_add_formatted_line(last_text_colour, colour, line, true);
-
-            if (nonblank && starts_with_eol)
-                last_text_colour = colour;
-            break;
-        }
-        default:
-            break;
-        }
-    }
-    check_add_formatted_line(last_text_colour, colour, line, false);
-}
-
 void Menu::check_add_formatted_line(int firstcol, int nextcol,
                                     std::string &line, bool check_eol)
 {
@@ -855,7 +799,7 @@ void Menu::select_items(int key, int qty)
     cgotoxy(x, y);
 }
 
-MonsterMenuEntry::MonsterMenuEntry(const std::string &str, const monster* mon,
+MonsterMenuEntry::MonsterMenuEntry(const std::string &str, const monster_info* mon,
                                    int hotkey) :
     MenuEntry(str, MEL_ITEM, 1, hotkey)
 {
@@ -914,14 +858,14 @@ bool MonsterMenuEntry::get_tiles(std::vector<tile_def>& tileset) const
     if (!Options.tile_menu_icons)
         return (false);
 
-    monster* m = (monster*)(data);
+    monster_info* m = (monster_info*)(data);
     if (!m)
         return (false);
 
     MenuEntry::get_tiles(tileset);
 
     const bool    fake = m->props.exists("fake");
-    const coord_def c  = m->pos();
+    const coord_def c  = m->pos;
           tileidx_t ch = TILE_FLOOR_NORMAL;
 
     if (!fake)
@@ -947,15 +891,15 @@ bool MonsterMenuEntry::get_tiles(std::vector<tile_def>& tileset) const
             item.quantity  = 1;
         }
         else
-            item = mitm[m->inv[MSLOT_WEAPON]];
+            item = *m->inv[MSLOT_WEAPON];
 
         tileset.push_back(tile_def(tileidx_item(item), TEX_DEFAULT));
         tileset.push_back(tile_def(TILEI_ANIMATED_WEAPON, TEX_ICONS));
     }
     else if (mons_is_draconian(m->type))
     {
-        tileset.push_back(tile_def(tileidx_draco_base(m), TEX_PLAYER));
-        tileidx_t job = tileidx_draco_job(m);
+        tileset.push_back(tile_def(tileidx_draco_base(*m), TEX_PLAYER));
+        tileidx_t job = tileidx_draco_job(*m);
         if (job)
             tileset.push_back(tile_def(job, TEX_PLAYER));
     }
@@ -969,14 +913,14 @@ bool MonsterMenuEntry::get_tiles(std::vector<tile_def>& tileset) const
         }
         else
         {
-            idx = tileidx_monster(m) & TILE_FLAG_MASK;
+            idx = tileidx_monster(*m) & TILE_FLAG_MASK;
             tileset.push_back(tile_def(idx, TEX_DEFAULT));
         }
         tileset.push_back(tile_def(TILEI_MIMIC, TEX_ICONS));
     }
     else
     {
-        tileidx_t idx = tileidx_monster(m) & TILE_FLAG_MASK;
+        tileidx_t idx = tileidx_monster(*m) & TILE_FLAG_MASK;
         tileset.push_back(tile_def(idx, TEX_PLAYER));
     }
 
@@ -996,47 +940,44 @@ bool MonsterMenuEntry::get_tiles(std::vector<tile_def>& tileset) const
             tileset.push_back(tile_def(TILEI_MASK_DEEP_WATER_MURKY, TEX_ICONS));
     }
 
-    if (mons_can_display_wounds(m))
-    {
-        std::string damage_desc;
-        mon_dam_level_type damage_level = mons_get_damage_level(m);
+    std::string damage_desc;
+    mon_dam_level_type damage_level = m->dam;
 
-        switch (damage_level)
-        {
-        case MDAM_DEAD:
-        case MDAM_ALMOST_DEAD:
-            tileset.push_back(tile_def(TILEI_MDAM_ALMOST_DEAD, TEX_ICONS));
-            break;
-        case MDAM_SEVERELY_DAMAGED:
-            tileset.push_back(tile_def(TILEI_MDAM_SEVERELY_DAMAGED, TEX_ICONS));
-            break;
-        case MDAM_HEAVILY_DAMAGED:
-            tileset.push_back(tile_def(TILEI_MDAM_HEAVILY_DAMAGED, TEX_ICONS));
-            break;
-        case MDAM_MODERATELY_DAMAGED:
-            tileset.push_back(tile_def(TILEI_MDAM_MODERATELY_DAMAGED, TEX_ICONS));
-            break;
-        case MDAM_LIGHTLY_DAMAGED:
-            tileset.push_back(tile_def(TILEI_MDAM_LIGHTLY_DAMAGED, TEX_ICONS));
-            break;
-        case MDAM_OKAY:
-        default:
-            // no flag for okay.
-            break;
-        }
+    switch (damage_level)
+    {
+    case MDAM_DEAD:
+    case MDAM_ALMOST_DEAD:
+        tileset.push_back(tile_def(TILEI_MDAM_ALMOST_DEAD, TEX_ICONS));
+        break;
+    case MDAM_SEVERELY_DAMAGED:
+        tileset.push_back(tile_def(TILEI_MDAM_SEVERELY_DAMAGED, TEX_ICONS));
+        break;
+    case MDAM_HEAVILY_DAMAGED:
+        tileset.push_back(tile_def(TILEI_MDAM_HEAVILY_DAMAGED, TEX_ICONS));
+        break;
+    case MDAM_MODERATELY_DAMAGED:
+        tileset.push_back(tile_def(TILEI_MDAM_MODERATELY_DAMAGED, TEX_ICONS));
+        break;
+    case MDAM_LIGHTLY_DAMAGED:
+        tileset.push_back(tile_def(TILEI_MDAM_LIGHTLY_DAMAGED, TEX_ICONS));
+        break;
+    case MDAM_OKAY:
+    default:
+        // no flag for okay.
+        break;
     }
 
-    if (m->friendly())
+    if (m->attitude == ATT_FRIENDLY)
         tileset.push_back(tile_def(TILEI_HEART, TEX_ICONS));
-    else if (m->good_neutral())
+    else if (m->attitude == ATT_GOOD_NEUTRAL)
         tileset.push_back(tile_def(TILEI_GOOD_NEUTRAL, TEX_ICONS));
     else if (m->neutral())
         tileset.push_back(tile_def(TILEI_NEUTRAL, TEX_ICONS));
-    else if (mons_is_fleeing(m))
+    else if (m->is(MB_FLEEING))
         tileset.push_back(tile_def(TILEI_FLEEING, TEX_ICONS));
-    else if (mons_looks_stabbable(m))
+    else if (m->is(MB_STABBABLE))
         tileset.push_back(tile_def(TILEI_STAB_BRAND, TEX_ICONS));
-    else if (mons_looks_distracted(m))
+    else if (m->is(MB_DISTRACTED))
         tileset.push_back(tile_def(TILEI_MAY_STAB_BRAND, TEX_ICONS));
 
     return (true);

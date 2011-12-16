@@ -7,8 +7,6 @@
 #ifndef MONUTIL_H
 #define MONUTIL_H
 
-#include "mon-util.h"
-
 #include "externs.h"
 #include "enum.h"
 #include "mon-enum.h"
@@ -293,6 +291,7 @@ int mons_colour(const monster* mon);
 monster_type royal_jelly_ejectable_monster();
 monster_type random_draconian_monster_species();
 
+bool init_abomination(monster* mon, int hd);
 void define_monster(monster* mons);
 
 void mons_pacify(monster* mon, mon_attitude_type att = ATT_GOOD_NEUTRAL);
@@ -365,7 +364,7 @@ bool mons_is_firewood(const monster* mon);
 bool mons_has_body(const monster* mon);
 bool mons_has_flesh(const monster* mon);
 
-bool herd_monster(const monster * mon);
+bool herd_monster(const monster* mon);
 
 int cheibriados_monster_player_speed_delta(const monster* mon);
 bool cheibriados_thinks_mons_is_fast(const monster* mon);

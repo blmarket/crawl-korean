@@ -232,7 +232,9 @@ wiz-item.o \
 wiz-mon.o \
 wiz-you.o \
 xom.o \
-zotdef.o
+zotdef.o \
+tilepick.o \
+tileview.o
 
 ifdef TILES
 OBJECTS += \
@@ -243,7 +245,6 @@ tiledgnbuf.o \
 tiledoll.o \
 tilefont.o \
 tilemcache.o \
-tilepick.o \
 tilepick-p.o \
 tilereg.o \
 tilereg-cmd.o \
@@ -265,7 +266,6 @@ tilereg-text.o \
 tilereg-title.o \
 tilesdl.o \
 tiletex.o \
-tileview.o \
 tilecell.o
 endif
 
@@ -273,10 +273,8 @@ ifdef WEBTILES
 OBJECTS += \
 tiledoll.o \
 tilemcache.o \
-tilepick.o \
 tilepick-p.o \
 tileweb.o \
-tileview.o \
 tilecell.o \
 tileweb-text.o \
 json.o

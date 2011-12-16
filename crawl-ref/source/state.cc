@@ -215,10 +215,11 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
 #ifndef DEBUG_DIAGNOSTICS
         if (at.context == SC_NEWLY_SEEN)
         {
+            monster_info mi(mon);
             set_auto_exclude(mon);
 
             std::string text = make_stringf(gettext("%s comes into view."),
-                get_monster_equipment_desc(mon, DESC_WEAPON).c_str());
+                get_monster_equipment_desc(mi, DESC_WEAPON).c_str());
             mpr(text, MSGCH_WARN);
         }
 

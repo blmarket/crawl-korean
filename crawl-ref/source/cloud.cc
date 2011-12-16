@@ -32,10 +32,9 @@
 #include "random.h"
 #include "state.h"
 #include "terrain.h"
-#ifdef USE_TILE
 #include "tiledef-gui.h"
 #include "tiledef-main.h"
-#endif
+
 #include "korean.h"
 
 static int _actor_cloud_damage(actor *act, const cloud_struct &cloud,
@@ -192,7 +191,6 @@ static void _new_cloud(int cloud, cloud_type type, const coord_def& p,
     c.colour      = colour;
     c.name        = name;
     c.excl_rad    = excl_rad;
-#ifdef USE_TILE
     if (!tile.empty())
     {
         tileidx_t index;
@@ -202,7 +200,6 @@ static void _new_cloud(int cloud, cloud_type type, const coord_def& p,
             tile = "";
         }
     }
-#endif
     c.tile        = tile;
     env.cgrid(p)  = cloud;
     env.cloud_no++;

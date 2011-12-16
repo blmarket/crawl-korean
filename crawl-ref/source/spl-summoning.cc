@@ -2207,40 +2207,6 @@ bool monster_simulacrum(monster *caster, bool actual)
     return false;
 }
 
-// Make the proper stat adjustments to turn a demonic abomination into
-// an undead abomination.
-bool undead_abomination_convert(monster* mon, int hd)
-{
-    if (mon->type == MONS_CRAWLING_CORPSE
-        || mon->type == MONS_MACABRE_MASS)
-    {
-        mon->hit_points = mon->max_hit_points = mon->hit_dice = hd;
-        return (true);
-    }
-    else if (mon->type != MONS_ABOMINATION_LARGE
-             && mon->type != MONS_ABOMINATION_SMALL)
-    {
-        return (false);
-    }
-
-    const int max_hd = mon->type == MONS_ABOMINATION_LARGE ? 30 : 15;
-    const int max_ac = mon->type == MONS_ABOMINATION_LARGE ? 20 : 10;
-
-    // Mark this abomination as undead.
-    mon->flags |= MF_FAKE_UNDEAD;
-
-    mon->colour = ((hd > 2 * max_hd / 3) ? LIGHTRED : RED);
-
-    mon->hit_dice = std::min(max_hd, hd);
-
-    mon->max_hit_points = std::max(1, hit_points(mon->hit_dice, 2, 5));
-    mon->hit_points     = mon->max_hit_points;
-
-    mon->ac = std::min(max_ac, 2 * hd / 3);
-
-    return (true);
-}
-
 // Return a definite/indefinite article for (number) things.
 static const char *_count_article(int number, bool definite)
 {
@@ -2339,9 +2305,8 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
         if (mons != -1)
         {
             // Set hit dice, AC, and HP.
-            undead_abomination_convert(&menv[mons], hd);
+            init_abomination(&menv[mons], hd);
 
-            // Override Lugonu/Makhleb, since these are not really demonic.
             menv[mons].god = god;
 
             if (num_corpses > 1)

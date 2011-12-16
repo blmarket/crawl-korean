@@ -59,14 +59,14 @@
 #include "env.h"
 #include "syscalls.h"
 #include "tags.h"
+#include "tiledef-dngn.h"
+#include "tiledef-player.h"
+#include "tileview.h"
 #include "tutorial.h"
 #ifdef USE_TILE
  #include "options.h"
- #include "tiledef-dngn.h"
- #include "tiledef-player.h"
  #include "tilemcache.h"
  #include "tilepick.h"
- #include "tileview.h"
  #include "showsymb.h"
 #endif
 #include "travel.h"
@@ -288,6 +288,7 @@ static void tag_read_level_items(reader &th);
 static void tag_read_level_monsters(reader &th);
 static void tag_read_level_tiles(reader &th);
 static void tag_missing_level_tiles();
+static void tag_init_tile_bk();
 
 static void tag_construct_ghost(writer &th);
 static void tag_read_ghost(reader &th);
@@ -2842,7 +2843,9 @@ void unmarshallItem(reader &th, item_def &item)
 #define MAP_SERIALIZE_ITEM 0x10
 #define MAP_SERIALIZE_CLOUD 0x20
 #define MAP_SERIALIZE_MONSTER 0x40
-#define MAP_SERIALIZE_CLOUD_COLOUR 0x80
+#if TAG_MAJOR_VERSION == 32
+ #define MAP_SERIALIZE_CLOUD_COLOUR 0x80
+#endif
 
 void marshallMapCell(writer &th, const map_cell &cell)
 {
@@ -2863,9 +2866,6 @@ void marshallMapCell(writer &th, const map_cell &cell)
 
     if (cell.cloud() != CLOUD_NONE)
         flags |= MAP_SERIALIZE_CLOUD;
-
-    if (cell.cloud_colour())
-        flags |= MAP_SERIALIZE_CLOUD_COLOUR;
 
     if (cell.item())
         flags |= MAP_SERIALIZE_ITEM;
@@ -2898,10 +2898,13 @@ void marshallMapCell(writer &th, const map_cell &cell)
         marshallByte(th, cell.trap());
 
     if (flags & MAP_SERIALIZE_CLOUD)
-        marshallUnsigned(th, cell.cloud());
-
-    if (flags & MAP_SERIALIZE_CLOUD_COLOUR)
-        marshallUnsigned(th, cell.cloud_colour());
+    {
+        cloud_info* ci = cell.cloudinfo();
+        marshallUnsigned(th, ci->type);
+        marshallUnsigned(th, ci->colour);
+        marshallUnsigned(th, ci->duration);
+        marshallShort(th, ci->tile);
+    }
 
     if (flags & MAP_SERIALIZE_ITEM)
         marshallItem(th, *cell.item());
@@ -2954,15 +2957,30 @@ void unmarshallMapCell(reader &th, map_cell& cell)
 
     cell.set_feature(feature, feat_colour, trap);
 
-    cloud_type cloud = CLOUD_NONE;
-    unsigned cloud_colour = 0;
-    if (flags & MAP_SERIALIZE_CLOUD)
-        cloud = (cloud_type)unmarshallUnsigned(th);
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() < TAG_MINOR_LESS_TILE_DATA)
+    {
+        cloud_info ci;
+        if (flags & MAP_SERIALIZE_CLOUD)
+            ci.type = (cloud_type)unmarshallUnsigned(th);
 
-    if (flags & MAP_SERIALIZE_CLOUD_COLOUR)
-        cloud_colour = unmarshallUnsigned(th);
+        if (flags & MAP_SERIALIZE_CLOUD_COLOUR)
+            ci.colour = unmarshallUnsigned(th);
 
-    cell.set_cloud(cloud, cloud_colour);
+        if (flags & MAP_SERIALIZE_CLOUD)
+            cell.set_cloud(ci);
+    }
+    else
+#endif
+        if (flags & MAP_SERIALIZE_CLOUD)
+        {
+            cloud_info ci;
+            ci.type = (cloud_type)unmarshallUnsigned(th);
+            unmarshallUnsigned(th, ci.colour);
+            unmarshallUnsigned(th, ci.duration);
+            ci.tile = unmarshallShort(th);
+            cell.set_cloud(ci);
+        }
 
     if (flags & MAP_SERIALIZE_ITEM)
     {
@@ -3103,11 +3121,12 @@ void marshallMonster(writer &th, const monster& m)
 
 void marshallMonsterInfo(writer &th, const monster_info& mi)
 {
-    marshallCoord(th, mi.pos);
     marshallFixedBitArray<NUM_MB_FLAGS>(th, mi.mb);
     marshallString(th, mi.mname);
     marshallUnsigned(th, mi.type);
     marshallUnsigned(th, mi.base_type);
+    if (mons_genus(mi.type) == MONS_DRACONIAN)
+        marshallUnsigned(th, mi.draco_type);
     marshallUnsigned(th, mi.number);
     marshallUnsigned(th, mi.colour);
     marshallUnsigned(th, mi.attitude);
@@ -3116,15 +3135,43 @@ void marshallMonsterInfo(writer &th, const monster_info& mi)
     marshallUnsigned(th, mi.fire_blocker);
     marshallString(th, mi.description);
     marshallString(th, mi.quote);
+    marshallUnsigned(th, mi.holi);
+    marshallUnsigned(th, mi.mintel);
+    marshallResists(th, mi.mresists);
+    marshallUnsigned(th, mi.mitemuse);
+    marshallByte(th, mi.mbase_speed);
     marshallUnsigned(th, mi.fly);
+    for (unsigned int i = 0; i <= MSLOT_LAST_VISIBLE_SLOT; ++i)
+    {
+        if (mi.inv[i].get())
+        {
+            marshallBoolean(th, true);
+            marshallItem(th, *mi.inv[i].get());
+        }
+        else
+            marshallBoolean(th, false);
+    }
+    if (mons_is_pghost(mi.type))
+    {
+        marshallUnsigned(th, mi.u.ghost.species);
+        marshallUnsigned(th, mi.u.ghost.job);
+        marshallUnsigned(th, mi.u.ghost.religion);
+        marshallUnsigned(th, mi.u.ghost.best_skill);
+        marshallShort(th, mi.u.ghost.best_skill_rank);
+        marshallShort(th, mi.u.ghost.xl_rank);
+        marshallShort(th, mi.u.ghost.damage);
+        marshallShort(th, mi.u.ghost.ac);
+    }
 
     mi.props.write(th);
 }
 
 void unmarshallMonsterInfo(reader &th, monster_info& mi)
 {
-    mi.pos = unmarshallCoord(th);
 #if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() < TAG_MINOR_LESS_TILE_DATA)
+        mi.pos = unmarshallCoord(th);
+
     if (th.getMinorVersion() < TAG_MINOR_64_MB)
     {
         mi.mb.reset();
@@ -3140,6 +3187,11 @@ void unmarshallMonsterInfo(reader &th, monster_info& mi)
     unmarshallUnsigned(th, mi.type);
     ASSERT(!invalid_monster_type(mi.type));
     unmarshallUnsigned(th, mi.base_type);
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_LESS_TILE_DATA)
+#endif
+        if (mons_genus(mi.type) == MONS_DRACONIAN)
+            unmarshallUnsigned(th, mi.draco_type);
     unmarshallUnsigned(th, mi.number);
     unmarshallUnsigned(th, mi.colour);
     unmarshallUnsigned(th, mi.attitude);
@@ -3151,11 +3203,50 @@ void unmarshallMonsterInfo(reader &th, monster_info& mi)
     unmarshallUnsigned(th, mi.fire_blocker);
     mi.description = unmarshallString(th);
     mi.quote = unmarshallString(th);
+
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_LESS_TILE_DATA)
+    {
+#endif
+        unmarshallUnsigned(th, mi.holi);
+        unmarshallUnsigned(th, mi.mintel);
+        unmarshallResists(th, mi.mresists);
+        unmarshallUnsigned(th, mi.mitemuse);
+        mi.mbase_speed = unmarshallByte(th);
+#if TAG_MAJOR_VERSION == 32
+    }
+#endif
+
     unmarshallUnsigned(th, mi.fly);
+
 #if TAG_MAJOR_VERSION == 32
     if (th.getMinorVersion() < TAG_MINOR_NEW_MIMICS)
         unmarshallUnsigned(th);
+
+    if (th.getMinorVersion() >= TAG_MINOR_LESS_TILE_DATA)
 #endif
+    {
+        for (unsigned int i = 0; i <= MSLOT_LAST_VISIBLE_SLOT; ++i)
+        {
+            if (unmarshallBoolean(th))
+            {
+                mi.inv[i].reset(new item_def());
+                unmarshallItem(th, *mi.inv[i].get());
+            }
+        }
+
+        if (mons_is_pghost(mi.type))
+        {
+            unmarshallUnsigned(th, mi.u.ghost.species);
+            unmarshallUnsigned(th, mi.u.ghost.job);
+            unmarshallUnsigned(th, mi.u.ghost.religion);
+            unmarshallUnsigned(th, mi.u.ghost.best_skill);
+            mi.u.ghost.best_skill_rank = unmarshallShort(th);
+            mi.u.ghost.xl_rank = unmarshallShort(th);
+            mi.u.ghost.damage = unmarshallShort(th);
+            mi.u.ghost.ac = unmarshallShort(th);
+        }
+    }
 
     mi.props.clear();
 #if TAG_MAJOR_VERSION == 32
@@ -3207,82 +3298,15 @@ static void tag_construct_level_monsters(writer &th)
 
 void tag_construct_level_tiles(writer &th)
 {
-#ifndef USE_TILE
-    marshallBoolean(th, false);
-#else
-    unsigned int rle_count = 0; // for run-length encoding
-    unsigned int tile      = 0;
-    unsigned int last_tile = 0;
-
+#if TAG_MAJOR_VERSION == 32
     marshallBoolean(th, true); // Tiles data included.
+#endif
 
     // Map grids.
     // how many X?
     marshallShort(th, GXM);
     // how many Y?
     marshallShort(th, GYM);
-
-    tile = env.tile_bk_bg[0][0];
-    //  bg first
-    for (int count_x = 0; count_x < GXM; count_x++)
-        for (int count_y = 0; count_y < GYM; count_y++)
-        {
-            last_tile = tile;
-            tile = env.tile_bk_bg[count_x][count_y];
-
-            if (tile == last_tile)
-            {
-                rle_count++;
-                if (rle_count == 0x100)
-                {
-                    marshallInt(th, last_tile);
-                    marshallUByte(th, 0xFF);
-                    rle_count = 1;
-                }
-            }
-            else
-            {
-                marshallInt(th, last_tile);
-                // Note: the unsigned char tile count gets streamed
-                // as a signed char here.  It gets read back into
-                // an unsigned char in the read function.
-                marshallUByte(th, rle_count);
-                rle_count = 1;
-            }
-        }
-
-    marshallInt(th, tile);
-    marshallUByte(th, rle_count);
-
-    // fg
-    tile = env.tile_bk_fg[0][0];
-    rle_count = 0;
-    for (int count_x = 0; count_x < GXM; count_x++)
-        for (int count_y = 0; count_y < GYM; count_y++)
-        {
-            last_tile = tile;
-            tile = env.tile_bk_fg[count_x][count_y];
-
-            if (tile == last_tile)
-            {
-                rle_count++;
-                if (rle_count == 0x100)
-                {
-                    marshallInt(th, last_tile);
-                    marshallUByte(th, (char)0xFF);
-                    rle_count = 1;
-                }
-            }
-            else
-            {
-                marshallInt(th, last_tile);
-                marshallUByte(th, rle_count);
-                rle_count = 1;
-            }
-        }
-
-    marshallInt(th, tile);
-    marshallUByte(th, rle_count);
 
     marshallShort(th, env.tile_names.size());
     for (unsigned int i = 0; i < env.tile_names.size(); ++i)
@@ -3314,11 +3338,7 @@ void tag_construct_level_tiles(writer &th)
             marshallShort(th, env.tile_flv[count_x][count_y].special);
         }
 
-    mcache.construct(th);
-    marshallInt(th, TILEP_PLAYER_MAX);
-
     marshallInt(th, TILE_WALL_MAX);
-#endif
 }
 
 static void tag_read_level(reader &th)
@@ -3348,6 +3368,12 @@ static void tag_read_level(reader &th)
             ASSERT(grd[i][j] < NUM_FEATURES);
 
             unmarshallMapCell(th, env.map_knowledge[i][j]);
+            // Fixup positions
+            if (env.map_knowledge[i][j].monsterinfo())
+                env.map_knowledge[i][j].monsterinfo()->pos = coord_def(i, j);
+            if (env.map_knowledge[i][j].cloudinfo())
+                env.map_knowledge[i][j].cloudinfo()->pos = coord_def(i, j);
+
             env.map_knowledge[i][j].flags &=~ MAP_VISIBLE_FLAG;
             env.pgrid[i][j] = unmarshallInt(th);
 
@@ -3615,7 +3641,6 @@ void unmarshallMonster(reader &th, monster& m)
     m.props.clear();
     m.props.read(th);
 
-#ifdef USE_TILE
     if (m.props.exists("monster_tile_name"))
     {
         std::string tile = m.props["monster_tile_name"].get_string();
@@ -3631,7 +3656,6 @@ void unmarshallMonster(reader &th, monster& m)
         else // Update monster tile.
             m.props["monster_tile"] = short(index);
     }
-#endif
 
     m.check_speed();
 }
@@ -3714,62 +3738,55 @@ static void _debug_count_tiles()
 
 void tag_read_level_tiles(reader &th)
 {
+#if TAG_MAJOR_VERSION == 32
     if (!unmarshallBoolean(th))
     {
-#ifdef USE_TILE
         dprf("Tile data missing -- recreating from scratch.");
-#endif
         tag_missing_level_tiles();
+        tag_init_tile_bk();
         _debug_count_tiles();
         return;
     }
-
-#ifdef USE_TILE
-    // Initialise env settings.
-    for (int i = 0; i < GXM; i++)
-        for (int j = 0; j < GYM; j++)
-        {
-            env.tile_bk_bg[i][j] = 0;
-            env.tile_bk_fg[i][j] = 0;
-        }
+#endif
 
     unsigned int rle_count = 0;
-    unsigned int tile = 0;
 
     // Map grids.
     // how many X?
     const int gx = unmarshallShort(th);
     // how many Y?
     const int gy = unmarshallShort(th);
-    ASSERT(gx == GXM);
-    ASSERT(gy == GYM);
 
-    // BG first
-    for (int i = 0; i < gx; i++)
-        for (int j = 0; j < gy; j++)
-        {
-            if (rle_count == 0)
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() < TAG_MINOR_LESS_TILE_DATA)
+    {
+        // Throw away tile_bk data
+        // BG first
+        for (int i = 0; i < gx; i++)
+            for (int j = 0; j < gy; j++)
             {
-                tile      = unmarshallInt(th);
-                rle_count = unmarshallUByte(th);
+                if (rle_count == 0)
+                {
+                    unmarshallInt(th);
+                    rle_count = unmarshallUByte(th);
+                }
+                rle_count--;
             }
-            env.tile_bk_bg[i][j] = tile;
-            rle_count--;
-        }
 
-    // FG
-    rle_count = 0;
-    for (int i = 0; i < gx; i++)
-        for (int j = 0; j < gy; j++)
-        {
-            if (rle_count == 0)
+        // FG
+        rle_count = 0;
+        for (int i = 0; i < gx; i++)
+            for (int j = 0; j < gy; j++)
             {
-                tile      = unmarshallInt(th);
-                rle_count = unmarshallUByte(th);
+                if (rle_count == 0)
+                {
+                    unmarshallInt(th);
+                    rle_count = unmarshallUByte(th);
+                }
+                rle_count--;
             }
-            env.tile_bk_fg[i][j] = tile;
-            rle_count--;
-        }
+    }
+#endif
 
     env.tile_names.clear();
     unsigned int num_tilenames = unmarshallShort(th);
@@ -3805,31 +3822,21 @@ void tag_read_level_tiles(reader &th)
         }
     _debug_count_tiles();
 
-    mcache.read(th);
 #if TAG_MAJOR_VERSION == 32
-    if (th.getMinorVersion() < TAG_MINOR_MONSTER_TILES)
-        mcache.clear_all();
-    else
-#endif
-    if (unmarshallInt(th) != TILEP_PLAYER_MAX)
+# ifdef USE_TILE
+    if (th.getMinorVersion() < TAG_MINOR_LESS_TILE_DATA)
     {
-        dprf("MON/PLAYER tilecount has changed -- dropping tilemcache.");
-        mcache.clear_all();
+        mcache.read(th);
+        if (th.getMinorVersion() >= TAG_MINOR_MONSTER_TILES)
+            unmarshallInt(th); // TILEP_PLAYER_MAX
     }
-
-    if (mcache.empty())
-        env.tile_bk_fg.init(0);
-
-    if (unmarshallInt(th) != TILE_WALL_MAX)
-    {
-        dprf("DNGN tilecount has changed -- recreating tile data.");
-        tag_missing_level_tiles();
-    }
-
-#else // not Tiles
+    mcache.clear_all();
+# else
     // Snarf all remaining data, throwing it out.
-    // This can happen only when loading in console a save from tiles.
-    // It's a data loss bug that needs to be fixed. (FIXME)
+    // Console builds don't know of old mcache formats, it'd be too much work
+    // to properly skip it.  Instead, we snarf the remaining data and throw it
+    // out.  The only thing after mcache is TILE_WALL_MAX, and it's guaranteed
+    // it won't match anyway.
     try
     {
         while (1)
@@ -3838,10 +3845,22 @@ void tag_read_level_tiles(reader &th)
     catch (short_read_exception &E)
     {
     }
+    dprf("An ancient save, can't check DNGN tilecount; recreating tile data.");
+    tag_missing_level_tiles();
+    return;
+# endif
 #endif
+
+    if (unmarshallInt(th) != TILE_WALL_MAX)
+    {
+        dprf("DNGN tilecount has changed -- recreating tile data.");
+        tag_missing_level_tiles();
+    }
+
+    // Draw remembered map
+    tag_init_tile_bk();
 }
 
-#ifdef USE_TILE
 static tileidx_t _get_tile_from_vector(const unsigned int idx)
 {
     if (idx <= 0 || idx > env.tile_names.size())
@@ -3912,27 +3931,28 @@ static void _reinit_flavour_tiles()
             if (!env.tile_flv(*ri).feat)
                 env.tile_flv(*ri).feat_idx = 0;
         }
-        tileidx_t fg, bg;
-        tileidx_from_map_cell(&fg, &bg, env.map_knowledge(*ri));
-
-        env.tile_bk_bg(*ri) = bg;
-        env.tile_bk_fg(*ri) = fg;
    }
 }
-#endif
 
 static void tag_missing_level_tiles()
 {
-#ifdef USE_TILE
     tile_init_default_flavour();
     tile_clear_flavour();
-    mcache.clear_all();
     _reinit_flavour_tiles();
 
     tile_new_level(true, false);
-#endif
 }
 
+static void tag_init_tile_bk()
+{
+#ifdef USE_TILE
+    for (rectangle_iterator ri(coord_def(0, 0), coord_def(GXM-1, GYM-1));
+         ri; ++ri)
+    {
+        tile_draw_map_cell(*ri);
+    }
+#endif
+}
 // ------------------------------- ghost tags ---------------------------- //
 
 static void marshallResists(writer &th, const mon_resist_def &res)

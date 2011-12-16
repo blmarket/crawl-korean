@@ -329,7 +329,7 @@ end
 %%%%
 Wiglaf
 
-우스꽝스러운 모자를 쓴 살찐 드워프다.
+A fat dwarf wearing a stupid-looking hat. He's here to prove his worth to Okawaru by avenging his kin, the Mountain Dwarves, who were driven away from their lands by orcs and others, some of whom look just like you.
 {{
 if you.can_smell() then
     return "\n알코올 냄새를 지독하게 풍기고 있다."
@@ -1208,7 +1208,7 @@ A rat that has been subjected to a wizard's terrible experiments. Who knows what
 %%%%
 large abomination
 
-보는 것 조차도 무서운 모습을 하고 있다. 마법적인 공정으로 창조 또는 소환되었다.
+A large and hideous conglomeration of mangled body parts, demonically possessed and altered in ways that challenge your sanity.
 %%%%
 large simulacrum
 
@@ -1699,7 +1699,7 @@ slime creature
 %%%%
 small abomination
 
-보는것조차도 무서운 모습을 하고있다. 마법적인 공정으로 창조되거나 소환되었다. 
+A hideous mass of body parts, part animated dead flesh, part demon.
 %%%%
 small snake
 

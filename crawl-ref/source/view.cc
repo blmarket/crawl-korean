@@ -179,7 +179,7 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
         name = gettext(mons_type_name(it->first, desc).c_str());
         if (it->second > 1)
         {
-            name = make_stringf("%d%s", it->second, // (deceit, 110903) °ø¹é »èÁ¦.
+            name = make_stringf("%d%s", it->second, // (deceit, 110903) °ø¹e ≫eA|.
                                 pluralise(PLU_MON_SUFFIX,name).c_str());
         }
 
@@ -319,6 +319,8 @@ void update_monsters_in_view()
             if (!mon->props.exists("ash_id"))
                 continue;
 
+            monster_info mi(mon);
+
             if (warning)
                 warning_msg += " ";
             else
@@ -334,7 +336,7 @@ void update_monsters_in_view()
                 warning_msg += mon->full_name(DESC_A);
 
             warning_msg += pgettext("Ashenzari", " is");
-            warning_msg += get_monster_equipment_desc(mon, DESC_IDENTIFIED,
+            warning_msg += get_monster_equipment_desc(mi, DESC_IDENTIFIED,
                                                       DESC_NONE);
             warning_msg += ".";
         }

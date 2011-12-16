@@ -15,6 +15,7 @@
 #include "format.h"
 #include "defines.h"
 #include "libutil.h"
+#include "mon-info.h"
 
 #ifdef USE_TILE
  #include "tiledoll.h"
@@ -183,7 +184,7 @@ public:
 class MonsterMenuEntry : public MenuEntry
 {
 public:
-    MonsterMenuEntry(const std::string &str, const monster* mon, int hotkey);
+    MonsterMenuEntry(const std::string &str, const monster_info* mon, int hotkey);
 
 #ifdef USE_TILE
     virtual bool get_tiles(std::vector<tile_def>& tileset) const;
@@ -297,17 +298,6 @@ public:
     Menu(int flags = MF_MULTISELECT, const std::string& tagname = "",
          bool text_only = true);
 
-    // Initialises a Menu from a formatted_string as follows:
-    //
-    // 1) Splits the formatted_string on EOL.
-    // 2) Picks the most recently used non-whitespace colour as the colour
-    //    for the next line (so it can't do multiple colours on one line).
-    // 3) Ignores all cursor movement ops in the formatted_string.
-    //
-    // These are limitations that should be fixed eventually.
-    //
-    Menu(const formatted_string &fs);
-
     virtual ~Menu();
 
     // Remove all items from the Menu, leave title intact.
@@ -342,7 +332,7 @@ public:
         select_filter = filter;
     }
 
-    unsigned char getkey() const { return lastch; }
+    int getkey() const { return lastch; }
 
     void reset();
     std::vector<MenuEntry *> show(bool reuse_selections = false);
@@ -394,7 +384,7 @@ protected:
 
     int num;
 
-    unsigned char lastch;
+    int lastch;
 
     bool alive;
 

@@ -73,8 +73,6 @@ MAKEFLAGS += -rR # This only works for recursive makes, i.e. contribs ...
         profile package-source source build-windows package-windows rest docs greet \
         api
 
-all: greet $(GAME) docs webserver
-
 #
 # Compiler Flags
 #
@@ -258,6 +256,9 @@ ifdef BUILD_ALL
 	BUILD_LIBPNG = YesPlease
 	BUILD_ZLIB = YesPlease
 endif
+
+# Should be the first rule, but must come after $(GAME) is set.
+all: greet $(GAME) docs webserver
 
 LIBPCRE := contrib/install/$(ARCH)/lib/libpcre.a
 LIBSDL := contrib/install/$(ARCH)/lib/libSDL.a
@@ -570,7 +571,9 @@ endif
 
 RLTILES = rltiles
 INCLUDES_L += -I$(RLTILES)
-$(OBJECTS:%.o=%.cc): $(TILEDEFHDRS)
+
+# The "|" designates "order-only" dependancies. See: (make) Prerequisite Types
+$(OBJECTS:%.o=%.cc): | $(TILEDEFHDRS)
 
 ifdef WEBTILES
 DEFINES_L += -DUSE_TILE
@@ -1014,7 +1017,7 @@ webserver/game_data/static/%.png: dat/tiles/%.png
 
 TILEINFOJS = $(TILEIMAGEFILES) dngn
 TITLEIMGS = denzi_dragon denzi_kitchen_duty denzi_summoner \
-            denzi_undead_warrior omndra_zot_demon
+            denzi_undead_warrior omndra_zot_demon omndra_fire_mage
 
 STATICFILES = $(TILEIMAGEFILES:%=webserver/game_data/static/%.png) \
               webserver/static/stone_soup_icon-32x32.png \
@@ -1290,14 +1293,23 @@ endif
 
 # Plain old compilation
 #
+
 $(OBJECTS:%.o=%.cc): $(CC_DEP) $(CONTRIB_LIBS)
 
 $(UTIL)%.o: ALL_CFLAGS=$(YACC_CFLAGS)
 
-%.o: %.m .cflags $(GENERATED_HEADERS)
+# The "|" designates "order-only" dependancies. See: (make) Prerequisite Types.
+#
+# This ensures that we update these headers before building anything
+# that might depend on them without our knowing it yet, but lets the
+# .d files take care of *whether* or not to rebuild.
+#
+# This is kind of important when building without ccache.
+
+%.o: %.m .cflags | $(GENERATED_HEADERS)
 	$(QUIET_CC)$(CC) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
-%.o: %.cc .cflags $(GENERATED_HEADERS)
+%.o: %.cc .cflags | $(GENERATED_HEADERS)
 	$(QUIET_CXX)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
 icon.o: util/crawl.rc util/crawl.ico .cflags
@@ -1345,9 +1357,7 @@ mon-util.d: mon-mst.h
 build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
 	+$(MAKE) -C $(RLTILES) all ARCH=$(ARCH) TILES=$(TILES)$(WEBTILES)
 
-$(TILEDEFSRCS): build-rltiles
-$(TILEDEFHDRS): build-rltiles
-$(ORIGTILEFILES): build-rltiles
+$(TILEDEFSRCS) $(TILEDEFHDRS) $(ORIGTILEFILES): build-rltiles
 
 dat/tiles/%.png: $(RLTILES)/%.png
 	$(QUIET_PNGCRUSH)$(PNGCRUSH) $< $@
