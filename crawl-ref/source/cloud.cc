@@ -1366,7 +1366,7 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
         {
             mprf(gettext("%s %s in %s."),
                  act->name(DESC_THE).c_str(),
-                 beneficial ? translate_verb(act, V_("bask")).c_str()
+                 beneficial ? act->conj_verb(P_("verb", "bask")).c_str()
                  : pgettext("cloud_struct::announce_actor_engulfed", "are engulfed"),
                  cloud_name().c_str());
         }

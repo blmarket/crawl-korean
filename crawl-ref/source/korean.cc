@@ -3,15 +3,6 @@
 #include "korean.h"
 #include "actor.h"
 
-/// 동사 부분의 번역을 담당하는 함수.
-std::string translate_verb(const actor *actor, const std::string &verb)
-{
-#ifndef KR
-    return actor ? actor->conj_verb(verb).c_str() : verb;
-#endif
-    return gettext((verb + "-verb").c_str());
-}
-
 /// 상수 문자열이 아닌 argument로 pgettext를 호출하기 위해 실행하는 함수
 const char * pgettext_expr(const char *msgctxt, const char *msgid)
 {
