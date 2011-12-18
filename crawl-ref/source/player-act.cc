@@ -28,6 +28,8 @@
 #include "traps.h"
 #include "viewgeom.h"
 
+#include "korean.h"
+
 int player::mindex() const
 {
     return (MHITYOU);
@@ -379,6 +381,9 @@ std::string player::pronoun(pronoun_type pro, bool) const
 
 std::string player::conj_verb(const std::string &verb) const
 {
+#ifdef KR
+    return pgettext_expr("verb", verb.c_str());
+#endif
     return (verb);
 }
 

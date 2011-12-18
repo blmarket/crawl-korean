@@ -1845,7 +1845,6 @@ void melee_attack::set_attack_verb()
         }
         else
         {
-
             const char* pierce_desc[][2] = {{P_("verb", "crush"),   N_("like a grape")},
                                             {P_("verb", "beat"),    N_("like a drum")},
                                             {P_("verb", "hammer"),  N_("like a gong")},
