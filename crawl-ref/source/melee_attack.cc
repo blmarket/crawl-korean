@@ -1514,15 +1514,15 @@ std::string melee_attack::player_why_missed()
             (armour? armour->name(true, DESC_BASENAME) : std::string(gettext("armour")));
 
         if (armour_miss && !shield_miss)
-            return make_stringf(gettext("Your %s prevents you from hitting %%s"), armour_name.c_str());
+            return make_stringf(gettext("Your %s prevents you from hitting "), armour_name.c_str());
         else if (shield_miss && !armour_miss)
             return gettext("Your shield prevents you from hitting ");
         else
             return (make_stringf(gettext("Your shield and %s"
-                    " prevent you from hitting %%s"), armour_name.c_str()));
+                    " prevent you from hitting "), armour_name.c_str()));
     }
 
-    return (make_stringf(gettext("You%s miss %%s"), evasion_margin_adverb().c_str()));
+    return (make_stringf(gettext("You%s miss "), evasion_margin_adverb().c_str()));
 }
 
 void melee_attack::player_warn_miss()
@@ -1532,8 +1532,35 @@ void melee_attack::player_warn_miss()
     if (!defender->asleep())
         behaviour_event(defender->as_monster(), ME_WHACK, MHITYOU);
 
-    mprf(player_why_missed().c_str(),
-         defender->name(DESC_THE).c_str());
+    const std::string defname = defender->name(DESC_THE);
+    const int ev = defender->melee_evasion(attacker);
+    const int combined_penalty =
+        attacker_armour_tohit_penalty + attacker_shield_tohit_penalty;
+    if (to_hit < ev && to_hit + combined_penalty >= ev)
+    {
+        const bool armour_miss =
+            (attacker_armour_tohit_penalty
+             && to_hit + attacker_armour_tohit_penalty >= ev);
+        const bool shield_miss =
+            (attacker_shield_tohit_penalty
+             && to_hit + attacker_shield_tohit_penalty >= ev);
+
+        const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
+        const std::string armour_name =
+            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext("armour")));
+
+        if (armour_miss && !shield_miss)
+            return mprf(gettext("Your %s prevents you from hitting %s"), 
+                                armour_name.c_str(), defname.c_str());
+        else if (shield_miss && !armour_miss)
+            return mprf(gettext("Your shield prevents you from hitting %s"),
+                                defname.c_str());
+        else
+            return (mprf(gettext("Your shield and %s"
+                    " prevent you from hitting %s"), armour_name.c_str(), defname.c_str()));
+    }
+
+    return (mprf(gettext("You%s miss %s"), evasion_margin_adverb().c_str(), defname.c_str()));
 }
 
 int melee_attack::player_stat_modify_damage(int damage)
