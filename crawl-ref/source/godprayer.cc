@@ -41,7 +41,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 {
     if (Options.stash_tracking == STM_EXPLICIT && is_stash(you.pos()))
     {
-        mpr("You can't sacrifice explicitly marked stashes.");
+        mpr(gettext("You can't sacrifice explicitly marked stashes."));
         return (false);
     }
 
@@ -50,9 +50,8 @@ static bool _confirm_pray_sacrifice(god_type god)
         if (god_likes_item(god, *si)
             && needs_handle_warning(*si, OPER_PRAY))
         {
-            std::string prompt = "Really sacrifice stack with ";
-            prompt += si->name(true, DESC_A);
-            prompt += " in it?";
+            std::string prompt = make_stringf(gettext("Really sacrifice stack with %s in it?"),
+                                              si->name(true, DESC_A).c_str());
 
             if (!yesno(prompt.c_str(), false, 'n'))
                 return (false);
@@ -64,22 +63,15 @@ static bool _confirm_pray_sacrifice(god_type god)
 
 std::string god_prayer_reaction()
 {
-    std::string result = god_name(you.religion);
-    if (crawl_state.player_is_dead())
-        result += " was ";
-    else
-        result += " is ";
-    result +=
-        (you.piety > 130) ? "exalted by your worship" :
-        (you.piety > 100) ? "extremely pleased with you" :
-        (you.piety >  70) ? "greatly pleased with you" :
-        (you.piety >  40) ? "most pleased with you" :
-        (you.piety >  20) ? "pleased with you" :
-        (you.piety >   5) ? "noncommittal"
-                          : "displeased";
-    result += ".";
-
-    return (result);
+    return make_stringf(crawl_state.player_is_dead() ?
+        _("%s was %s.") : _("%s is %s."), god_name(you.religion).c_str(),
+        (you.piety > 130) ? _("exalted by your worship") :
+        (you.piety > 100) ? _("extremely pleased with you") :
+        (you.piety >  70) ? _("greatly pleased with you") :
+        (you.piety >  40) ? _("most pleased with you") :
+        (you.piety >  20) ? _("pleased with you") :
+        (you.piety >   5) ? _("noncommittal")
+                          : _("displeased"));
 }
 
 bool god_accepts_prayer(god_type god)

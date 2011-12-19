@@ -32,6 +32,7 @@
 #define chk_gettext
 #endif
 
+#define _(string) gettext(string)
 #define N_
 #define M_
 #define V_

@@ -3935,12 +3935,12 @@ static std::string _describe_favour(god_type which_god)
         return describe_xom_favour(true);
 
     const std::string godname = god_name(which_god);
-    return (you.piety > 130) ? "A prized avatar of " + godname + ".":
-           (you.piety > 100) ? "A shining star in the eyes of " + godname + "." :
-           (you.piety >  70) ? "A rising star in the eyes of " + godname + "." :
-           (you.piety >  40) ? godname + " is most pleased with you." :
-           (you.piety >  20) ? godname + " has noted your presence." :
-           (you.piety >   5) ? godname + " is noncommittal."
+    return (you.piety > 130) ? make_stringf(gettext("A prized avatar of %s."), godname.c_str()) :
+           (you.piety > 100) ? make_stringf(gettext("A shining star in the eyes of %s."), godname.c_str()) :
+           (you.piety >  70) ? make_stringf(gettext("A rising star in the eyes of %s."), godname.c_str()) :
+           (you.piety >  40) ? make_stringf(gettext("%s is most pleased with you."), godname.c_str()) :
+           (you.piety >  20) ? make_stringf(gettext("%s has noted your presence."), godname.c_str()) :
+           (you.piety >   5) ? make_stringf(gettext("%s is noncommittal."), godname.c_str())
                              : "You are beneath notice.";
 }
 
