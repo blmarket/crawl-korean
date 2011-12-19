@@ -4158,7 +4158,7 @@ bool monster::bleed(const actor* agent, int amount, int degree)
 {
     if (!has_ench(ENCH_BLEED) && you.can_see(this))
     {
-        mprf("%s begins to bleed from %s wounds!", name(DESC_THE).c_str(),
+        mprf(gettext("%s begins to bleed from %s wounds!"), name(DESC_THE).c_str(),
              pronoun(PRONOUN_POSSESSIVE).c_str());
     }
 
