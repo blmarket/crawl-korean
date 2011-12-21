@@ -314,6 +314,7 @@ static void _print_good_god_holy_being_speech(bool neutral,
     if (!msg.empty())
     {
         msg = do_mon_str_replacements(msg, mon);
+        strip_channel_prefix(msg, channel);
         mpr(msg.c_str(), channel);
     }
 }
@@ -378,6 +379,7 @@ static void _print_converted_orc_speech(const std::string key,
     if (!msg.empty())
     {
         msg = do_mon_str_replacements(msg, mon);
+        strip_channel_prefix(msg, channel);
         mpr(msg.c_str(), channel);
     }
 }

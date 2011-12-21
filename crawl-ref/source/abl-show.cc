@@ -1175,9 +1175,13 @@ static talent _get_talent(ability_type ability, bool check_confused)
         failure = 160 - you.piety;      // starts at 60%
         break;
 
-    case ABIL_YRED_INJURY_MIRROR:
+    case ABIL_YRED_ANIMATE_REMAINS_OR_DEAD: // Placeholder.
+        invoc = true;
+        break;
+
     case ABIL_YRED_ANIMATE_REMAINS:
     case ABIL_YRED_ANIMATE_DEAD:
+    case ABIL_YRED_INJURY_MIRROR:
         invoc = true;
         failure = 40 - (you.piety / 20) - you.skill(SK_INVOCATIONS, 4);
         break;
@@ -3399,7 +3403,8 @@ std::vector<ability_type> get_god_abilities(bool include_unusable)
         if (you.piety < piety_breakpoint(i))
             continue;
 
-        ability_type abil = _fixup_ability(god_abilities[you.religion][i]);
+        const ability_type abil =
+            _fixup_ability(god_abilities[you.religion][i]);
         if (abil == ABIL_NON_ABILITY
             || crawl_state.game_is_zotdef()
                && (abil == ABIL_LUGONU_ABYSS_EXIT

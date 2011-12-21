@@ -3179,7 +3179,7 @@ bool melee_attack::apply_damage_brand()
 //  * Each weapon type has a noise rating, like it does an accuracy
 //    rating and base delay.
 //
-//  * For player, stealth skill and/or weapon skillr reducing noise.
+//  * For player, stealth skill and/or weapon skill reducing noise.
 //
 //  * Randart property to make randart weapons louder or softer when
 //    they hit.
@@ -3465,7 +3465,9 @@ void melee_attack::player_apply_staff_damage()
  */
 int melee_attack::calc_to_hit(bool random)
 {
-    const int hd_mult = mons_class_flag(attacker->type, M_FIGHTER) ? 25 : 15;
+    const bool fighter = attacker->atype() == ACT_MONSTER
+                         && attacker->as_monster()->is_fighter();
+    const int hd_mult = fighter ? 25 : 15;
     int mhit = attacker->atype() == ACT_PLAYER ?
                 15 + (calc_stat_to_hit_base() / 2)
               : 18 + attacker->get_experience_level() * hd_mult / 10;
@@ -3505,6 +3507,10 @@ int melee_attack::calc_to_hit(bool random)
         }
         else
         {                       // ...you must be unarmed
+            // Members of clawed species have presumably been using the claws,
+            // making them more practiced and thus more accurate in unarmed
+            // combat.  They keep this benefit even the claws are covered (or
+            // missing because of a change in form).
             mhit += species_has_claws(you.species) ? 4 : 2;
 
             mhit += maybe_random_div(you.skill(SK_UNARMED_COMBAT, 100), 100,

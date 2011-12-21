@@ -323,15 +323,10 @@ static mon_resist_def _serpent_of_hell_resists(int flavour)
     {
     case BRANCH_GEHENNA:
         res.hellfire = 1;
-        res.fire = 3;
         break;
 
     case BRANCH_COCYTUS:
         res.cold = 3;
-        break;
-
-    case BRANCH_TARTARUS:
-        res.rotting = 1;
         break;
     }
 
@@ -357,12 +352,6 @@ mon_resist_def get_mons_resists(const monster* mon)
 
     resists |= get_mons_class_resists(mon->type);
 
-    // Undead get one level of poison resistance.  Don't just add it; if
-    // they're undead due to the MF_FAKE_UNDEAD flag, they might have at
-    // least one level already, in which case they shouldn't get more.
-    if (mon->holiness() == MH_UNDEAD)
-        resists.poison = std::max(static_cast<int>(resists.poison), 1);
-
     if (mons_genus(mon->type) == MONS_DRACONIAN
             && mon->type != MONS_DRACONIAN
         || mon->type == MONS_TIAMAT)
@@ -374,6 +363,11 @@ mon_resist_def get_mons_resists(const monster* mon)
 
     if (mon->type == MONS_SERPENT_OF_HELL)
         resists |= _serpent_of_hell_resists(mon);
+
+    // Undead get an additional level of poison resistance, in case
+    // they're undead due to the MF_FAKE_UNDEAD flag.
+    if (mon->holiness() == MH_UNDEAD)
+        resists.poison += 1;
 
     return (resists);
 }
@@ -1366,14 +1360,7 @@ mon_attack_def mons_attack_spec(const monster* mon, int attk_number)
 {
     int mc = mon->type;
 
-    if (mc == MONS_KRAKEN_TENTACLE
-        && !invalid_monster_index(mon->number))
-    {
-        // Use the zombie, etc info from the kraken if it's alive.
-        const monster* body_kraken = &menv[mon->number];
-        if (body_kraken->alive())
-            mon = body_kraken;
-    }
+    _get_kraken_head(mon);
 
     const bool zombified = mons_is_zombified(mon);
 

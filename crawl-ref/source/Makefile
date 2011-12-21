@@ -1064,16 +1064,16 @@ TRACK_CFLAGS = $(subst ','\'',$(CC) $(CXX) $(ALL_CFLAGS))           # (stray ' f
 
 .PHONY: .force-cflags
 
+endif
+endif
+endif
+
 ##########################################################################
 # Dependencies
 
 DEPS := $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d)
 
 -include $(DEPS)
-
-endif
-endif
-endif
 
 # Only serves to check if all .d files can be built
 depend: $(DEPS)
@@ -1333,17 +1333,14 @@ $(foreach t,$(CONTRIB_LIBS),$(if $(wildcard $t),,$(shell rm -f .contrib-libs)))
 
 #############################################################################
 # Build unrandart data
-art-data.h: art-data.txt util/art-data.pl art-func.h
+art-data.h art-enum.h $(RLTILES)/dc-unrand.txt: art-data.txt util/art-data.pl art-func.h
 	$(QUIET_GEN)util/art-data.pl
-art-enum.h: art-data.h
 
 mon-mst.h: mon-spll.h util/gen-mst.pl
 	$(QUIET_GEN)util/gen-mst.pl
 
 dat/dlua/tags.lua: tag-version.h util/gen-luatags.pl
 	$(QUIET_GEN)util/gen-luatags.pl
-
-$(RLTILES)/dc-unrand.txt: art-data.h
 
 artefact.o: art-data.h art-enum.h
 mon-util.o: mon-mst.h

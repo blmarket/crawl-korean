@@ -3442,9 +3442,7 @@ int monster::res_rotting(bool temp) const
 {
     UNUSED(temp);
 
-    int res = get_mons_resists(this).rotting;
-    if (res)
-        return (1);
+    int res = 0;
     switch (holiness())
     {
     case MH_NATURAL:
@@ -3471,7 +3469,10 @@ int monster::res_rotting(bool temp) const
     }
     if (is_insubstantial())
         res = 3;
-    return (res);
+    if (get_mons_resists(this).rotting)
+        res += 1;
+
+    return (std::min(3, res));
 }
 
 int monster::res_holy_energy(const actor *attacker) const
@@ -4092,6 +4093,16 @@ bool monster::can_use_spells() const
 bool monster::is_priest() const
 {
     return (flags & MF_PRIEST);
+}
+
+bool monster::is_fighter() const
+{
+    return (flags & MF_FIGHTER);
+}
+
+bool monster::is_archer() const
+{
+    return (flags & MF_ARCHER);
 }
 
 bool monster::is_actual_spellcaster() const
