@@ -15,6 +15,7 @@ struct mon_attack_def;
 enum unarmed_attack_type
 {
     UNAT_NO_ATTACK,                    //    0
+    UNAT_CONSTRICT,  // put constriction first so octopodes will use it
     UNAT_KICK,
     UNAT_HEADBUTT,
     UNAT_TAILSLAP,
@@ -22,7 +23,7 @@ enum unarmed_attack_type
     UNAT_BITE,
     UNAT_PSEUDOPODS,
     UNAT_TENTACLES,
-    UNAT_FIRST_ATTACK = UNAT_KICK,
+    UNAT_FIRST_ATTACK = UNAT_CONSTRICT,
     UNAT_LAST_ATTACK = UNAT_TENTACLES
 };
 
@@ -70,6 +71,8 @@ private:
     bool handle_phase_damaged();
     bool handle_phase_killed();
     bool handle_phase_end();
+    // Replaces some of the above phases.
+    bool handle_constriction();
 
     /* Combat Calculations */
     int test_hit(int to_hit, int ev);
@@ -167,6 +170,7 @@ private:
     void player_warn_miss();
     void player_weapon_upsets_god();
     void _monster_die(monster* mons, killer_type killer, int killer_index);
+    void _defender_die();
 
     // Output methods
     void stab_message();

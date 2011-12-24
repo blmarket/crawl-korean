@@ -2684,6 +2684,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         }
 
         practise(EX_WILL_LAUNCH, launcher_skill);
+        count_action(CACT_FIRE, launcher.sub_type);
 
         // Removed 2 random2(2)s from each of the learning curves, but
         // left slings because they're hard enough to develop without
@@ -2965,6 +2966,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 dice_mult = dice_mult * 130 / 100;
 
             practise(EX_WILL_THROW_MSL, wepType);
+            count_action(CACT_THROW, wepType);
         }
         else
         {
@@ -4136,6 +4138,7 @@ void zap_wand(int slot)
     }
 
     practise(EX_DID_ZAP_WAND);
+    count_action(CACT_EVOKE, EVOC_WAND);
     alert_nearby_monsters();
 
     if (!alreadyknown && !alreadytried && risky)
@@ -4290,6 +4293,7 @@ void drink(int slot)
     }
 
     dec_inv_item_quantity(slot, 1);
+    count_action(CACT_USE, OBJ_POTIONS);
     you.turn_is_over = true;
 
     if (you.species != SP_VAMPIRE)
@@ -5435,7 +5439,10 @@ void read_scroll(int slot)
     std::string scroll_name = scroll.name(true, DESC_QUALNAME).c_str();
 
     if (!cancel_scroll)
+    {
         dec_inv_item_quantity(item_slot, 1);
+        count_action(CACT_USE, OBJ_SCROLLS);
+    }
 
     if (id_the_scroll && !alreadyknown && which_scroll != SCR_ACQUIREMENT)
     {

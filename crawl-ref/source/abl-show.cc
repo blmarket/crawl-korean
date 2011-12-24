@@ -1725,6 +1725,10 @@ static bool _activate_talent(const talent& tal)
     {
         practise(EX_USED_ABIL, abil.ability);
         _pay_ability_costs(abil, zpcost);
+        if (tal.is_invocation)
+            count_action(CACT_INVOKE, abil.ability);
+        else if (abil_skill(abil.ability) == SK_EVOCATIONS)
+            count_action(CACT_EVOKE, EVOC_ABIL);
     }
 
     return (success);

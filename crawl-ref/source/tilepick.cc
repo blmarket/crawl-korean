@@ -737,6 +737,9 @@ static tileidx_t _tileidx_monster_zombified(const monster_info& mon)
     case MON_SHAPE_ARACHNID:
         z_tile = TILEP_MONS_ZOMBIE_SPIDER;
         break;
+    case MON_SHAPE_MISC:
+        if (mons_genus(subtype) == MONS_OCTOPODE)
+            return TILEP_MONS_ZOMBIE_OCTOPODE;
     default:
         z_tile = TILEP_ERROR;
     }
@@ -1417,10 +1420,10 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_RAKSHASA_FAKE;
 
     // snakes ('S')
-    case MONS_SMALL_SNAKE:
-        return TILEP_MONS_SMALL_SNAKE;
-    case MONS_SNAKE:
-        return TILEP_MONS_SNAKE;
+    case MONS_BALL_PYTHON:
+        return TILEP_MONS_BALL_PYTHON;
+    case MONS_ADDER:
+        return TILEP_MONS_ADDER;
     case MONS_WATER_MOCCASIN:
         return TILEP_MONS_WATER_MOCCASIN;
     case MONS_BLACK_MAMBA:
@@ -1429,6 +1432,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_ANACONDA;
     case MONS_SEA_SNAKE:
         return TILEP_MONS_SEA_SNAKE;
+    case MONS_SUBTRACTOR_SNAKE:
+        return _mon_mod(TILEP_MONS_SUBTRACTOR_SNAKE, tile_num_prop);
 
     // trolls ('T')
     case MONS_TROLL:
@@ -3558,10 +3563,10 @@ static tileidx_t _tileidx_corpse(const item_def &item)
         return TILE_CORPSE_TWO_HEADED_OGRE;
 
     // snakes ('S')
-    case MONS_SMALL_SNAKE:
-        return TILE_CORPSE_SMALL_SNAKE;
-    case MONS_SNAKE:
-        return TILE_CORPSE_SNAKE;
+    case MONS_BALL_PYTHON:
+        return TILE_CORPSE_BALL_PYTHON;
+    case MONS_ADDER:
+        return TILE_CORPSE_ADDER;
     case MONS_ANACONDA:
         return TILE_CORPSE_ANACONDA;
     case MONS_WATER_MOCCASIN:

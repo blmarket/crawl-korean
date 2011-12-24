@@ -3965,6 +3965,9 @@ static void _display_attack_delay()
     mpr(msg);
 }
 
+// forward declaration
+std::string _constriction_description();
+
 void display_char_status()
 {
     if (you.is_undead == US_SEMI_UNDEAD && you.hunger_state == HS_ENGORGED)
@@ -4053,6 +4056,7 @@ void display_char_status()
         DUR_SHROUD_OF_GOLUBRIA,
         STATUS_BACKLIT,
         STATUS_UMBRA,
+        STATUS_CONSTRICTED,
     };
 
     status_info inf;
@@ -4062,6 +4066,9 @@ void display_char_status()
         if (!inf.long_text.empty())
             mpr(inf.long_text);
     }
+    std::string cinfo = _constriction_description();
+    if (!cinfo.empty())
+        mprf(cinfo.c_str());
 
     _display_movement_speed();
     _display_tohit();
@@ -5574,8 +5581,7 @@ void player::init()
         montiers[i] = 0;
 #endif
 
-    spell_usage.clear();
-
+    action_count.clear();
 
     // Volatile (same-turn) state:
     turn_is_over     = false;
@@ -5615,6 +5621,15 @@ void player::init()
 
     save                = 0;
     prev_save_version.clear();
+
+    constricted_by = NON_ENTITY;
+    escape_attempts = 0;
+    dur_been_constricted = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        constricting[i] = NON_ENTITY;
+        dur_has_constricted[i] = 0;
+    }
 
     // Protected fields:
     for (int i = 0; i < NUM_BRANCHES; i++)
@@ -6176,6 +6191,7 @@ int player::gdr_perc() const
 int player::melee_evasion(const actor *act, ev_ignore_type evit) const
 {
     return (player_evasion(evit)
+            - (const_cast<player *>(this)->is_constricted() ? 3 : 0)
             - ((!act || act->visible_to(this)
                 || (evit & EV_IGNORE_HELPLESS)) ? 0 : 10)
             - (you_are_delayed()
@@ -6855,6 +6871,30 @@ bool player::has_usable_offhand() const
             || weapon_skill(*wp) == SK_STAVES);
 }
 
+bool player::has_usable_tentacle()
+{
+    if (species != SP_OCTOPODE)
+        return(false);
+
+    int free_tentacles = 8;
+    for (int i = 0; i < 8; i++)
+        if (constricting[i] != NON_ENTITY)
+            free_tentacles--;
+
+    const item_def* wp = slot_item(EQ_WEAPON);
+    if (wp)
+    {
+        if (hands_reqd(*wp, body_size()) == HANDS_TWO)
+            free_tentacles -= 2;
+        else if (wp->base_type != OBJ_STAVES &&
+                 weapon_skill(*wp) != SK_STAVES)
+            free_tentacles--;
+    }
+
+    return (free_tentacles > 0);
+
+}
+
 int player::has_pseudopods(bool allow_tran) const
 {
     return (player_mutation_level(MUT_PSEUDOPODS, allow_tran));
@@ -7331,6 +7371,133 @@ void player::goto_place(const level_id &lid)
     }
 }
 
+void player::accum_been_constricted()
+{
+    if (!is_constricted())
+        dur_been_constricted += you.time_taken;
+}
+
+void player::accum_has_constricted()
+{
+    for (int i = 0; i < 8; i++)
+        if (constricting[i] != NON_ENTITY)
+            dur_has_constricted[i] += you.time_taken;
+}
+
+bool player::is_constricted_larger()
+{
+    size_type psize;
+    size_type msize;
+
+    if (!is_constricted())
+        return false;
+    psize = body_size();
+    msize = env.mons[constricted_by].body_size();
+    return (msize > psize);
+
+}
+
+bool player::is_constricted()
+{
+    return (constricted_by != NON_ENTITY);
+}
+
+bool player::attempt_escape()
+{
+    size_type thesize;
+    int attfactor;
+    int randfact;
+    monster *themonst;
+
+    if (!is_constricted())
+        return true;
+
+    escape_attempts++;
+    // player breaks free if size*attempts > 5 + d(12) + d(HD)
+    // this is inefficient on purpose, simplify after debug
+    thesize = transform_size(form);
+    attfactor = thesize * escape_attempts;
+
+    randfact = roll_dice(1,5) + 5;
+    themonst = &env.mons[constricted_by];
+    randfact += roll_dice(1,themonst->hit_dice);
+
+    if (attfactor > randfact)
+    {
+        // message that you escaped
+
+        std::string emsg = "You escape ";
+        emsg += env.mons[you.constricted_by].name(DESC_THE,true);
+        emsg += "'s grasp.";
+        mpr(emsg);
+        // update monster's has constricted info
+        for (int i = 0; i < 8; i++)
+            if (themonst->constricting[i] == MHITYOU)
+                themonst->constricting[i] = NON_ENTITY;
+
+        // update your constricted by info
+        constricted_by = NON_ENTITY;
+        escape_attempts = 0;
+
+        return true;
+    }
+    else
+        return false;
+}
+
+void player::clear_all_constrictions()
+{
+    int myindex = MHITYOU;
+    monster *mons;
+
+    if (constricted_by != NON_ENTITY)
+    {
+        mons = &env.mons[constricted_by];
+        if (mons->alive())
+            mons->clear_specific_constrictions(myindex);
+    }
+
+    constricted_by = NON_ENTITY;
+    dur_been_constricted = 0;
+    escape_attempts = 0;
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (constricting[i] != NON_ENTITY)
+        {
+            mons = &env.mons[constricting[i]];
+            if (mons->alive())
+            {
+                std::string rmsg = "You release your hold on ";
+                rmsg += mons->name(DESC_THE,true) + ".";
+                mpr(rmsg);
+                mons->clear_specific_constrictions(myindex);
+            }
+        }
+        constricting[i] = NON_ENTITY;
+        dur_has_constricted[i] = 0;
+    }
+}
+
+void player::clear_specific_constrictions(int mind)
+{
+    if (constricted_by == mind)
+    {
+        constricted_by = NON_ENTITY;
+        dur_been_constricted = 0;
+        escape_attempts = 0;
+    }
+
+    for (int i = 0; i < 8; i++)
+    {
+        if (constricting[i] == mind)
+        {
+            constricting[i] = NON_ENTITY;
+            dur_has_constricted[i] = 0;
+        }
+    }
+}
+
 /*
  * Check if the player is about to die from levitation/form expiration.
  *
@@ -7362,4 +7529,57 @@ bool need_expiration_warning(coord_def p)
 {
     return need_expiration_warning(DUR_LEVITATION, p)
            || need_expiration_warning(DUR_TRANSFORMATION, p);
+}
+
+std::string _constriction_description()
+{
+    std::string cinfo = "";
+    std::string constrictor_name;
+    std::string constricting_name[8];
+
+    // init names of constrictor and constrictees
+    constrictor_name = "";
+    for (int idx=0; idx < 8; idx++)
+        constricting_name[idx] = "";
+
+    // name of what this monster is constricted by, if any
+    if (you.is_constricted())
+    {
+        constrictor_name = env.mons[you.constricted_by].
+                               name(DESC_A);
+    }
+    // names of what this monster is constricting, if any
+    for (int idx=0; idx<8; idx++)
+    {
+        if (you.constricting[idx] != NON_ENTITY)
+            constricting_name[idx] = env.mons[you.constricting[idx]].
+                                     name(DESC_A);
+    }
+
+    if (constrictor_name != "")
+        cinfo += "You are being constricted by " + constrictor_name + ".";
+
+    std::vector<std::string> constricting;
+    for (int i = 0; i < 8; i++)
+        if (constricting_name[i] != "")
+        {
+            constricting.push_back(constricting_name[i]);
+        }
+
+    if (!constricting.empty())
+    {
+        cinfo += "\nYou are constricting ";
+        cinfo += comma_separated_line(constricting.begin(), constricting.end());
+        cinfo += ".";
+    }
+
+    return cinfo;
+}
+
+void count_action(caction_type type, int subtype)
+{
+    std::pair<caction_type, int> pair(type, subtype);
+    if (you.action_count.find(pair) == you.action_count.end())
+        you.action_count[pair].init(0);
+    you.action_count[pair][you.experience_level - 1]++;
 }

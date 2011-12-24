@@ -1017,7 +1017,8 @@ webserver/game_data/static/%.png: dat/tiles/%.png
 
 TILEINFOJS = $(TILEIMAGEFILES) dngn
 TITLEIMGS = denzi_dragon denzi_kitchen_duty denzi_summoner \
-            denzi_undead_warrior omndra_zot_demon omndra_fire_mage
+            denzi_undead_warrior omndra_zot_demon omndra_fire_mage \
+            shadyamish_octm
 
 STATICFILES = $(TILEIMAGEFILES:%=webserver/game_data/static/%.png) \
               webserver/static/stone_soup_icon-32x32.png \
@@ -1184,6 +1185,8 @@ endif
 	$(COPY) ../docs/develop/*.txt $(datadir_fp)/docs/develop/
 	$(COPY) ../docs/develop/levels/*.txt $(datadir_fp)/docs/develop/levels/
 	$(COPY) ../docs/license/*.txt $(datadir_fp)/docs/license/
+	$(COPY) ../CREDITS.txt $(datadir_fp)/docs/
+	util/columnise-credits.pl $(datadir_fp)/docs/CREDITS.txt
 	$(COPY) ../settings/* $(datadir_fp)/settings/
 ifeq ($(GAME),crawl.exe)
 	sed -i 's/$$/\r/' `find $(datadir_fp) -iname '*.txt' -o -iname '*.des'`
@@ -1333,14 +1336,17 @@ $(foreach t,$(CONTRIB_LIBS),$(if $(wildcard $t),,$(shell rm -f .contrib-libs)))
 
 #############################################################################
 # Build unrandart data
-art-data.h art-enum.h $(RLTILES)/dc-unrand.txt: art-data.txt util/art-data.pl art-func.h
+art-data.h: art-data.txt util/art-data.pl art-func.h
 	$(QUIET_GEN)util/art-data.pl
+art-enum.h: art-data.h
 
 mon-mst.h: mon-spll.h util/gen-mst.pl
 	$(QUIET_GEN)util/gen-mst.pl
 
 dat/dlua/tags.lua: tag-version.h util/gen-luatags.pl
 	$(QUIET_GEN)util/gen-luatags.pl
+
+$(RLTILES)/dc-unrand.txt: art-data.h
 
 artefact.o: art-data.h art-enum.h
 mon-util.o: mon-mst.h
@@ -1374,12 +1380,9 @@ endif
 # Packaging a source tarball for release
 #
 
-credits: util/columnise-credits.pl
-	util/columnise-credits.pl ../CREDITS.txt
-
 # To package, you *must* have lex and yacc to generate the intermediates.
 BSRC = build/crawl-ref/source/
-source: removeold prebuildyacc credits
+source: removeold prebuildyacc
 	@git branch >/dev/null 2>/dev/null || (echo You can package source only from git. && false)
 	rm -rf build
 	mkdir build
@@ -1394,7 +1397,8 @@ source: removeold prebuildyacc credits
 	  done
 	find build -name .gitignore -execdir rm -f '{}' +
 	git describe --tags $(MERGE_BASE) > $(BSRC)util/release_ver
-	cd build && mv crawl-ref $(PKG_SRC_DIR)
+	util/columnise-credits.pl build/crawl-ref/CREDITS.txt
+	mv build/crawl-ref build/$(PKG_SRC_DIR)
 
 package-tarball-deps: source
 	cd build && tar cfJ ../../../$(SRC_PKG_TAR) $(PKG_SRC_DIR)
@@ -1437,6 +1441,7 @@ endif
 	mv build-win/crawl.exe build-win/crawl-tiles.exe
 	+$(MAKE) TILES=  DESTDIR=build-win SAVEDIR='~/crawl' install
 	mv build-win/crawl.exe build-win/crawl-console.exe
+	mv build-win/docs/CREDITS.txt build-win/
 	echo $(SRC_VERSION) >build-win/version.txt
 
 #############################################################################

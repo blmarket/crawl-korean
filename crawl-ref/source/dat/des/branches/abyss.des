@@ -169,7 +169,7 @@ ENDMAP
 
 NAME:   hangedman_abyss_mock_shop
 TAGS:   abyss no_monster_gen
-KFEAT:  0 = stone_arch
+KFEAT:  0 = abandoned_shop
 MONS:   patrolling water elemental, statue name:archer tile:mons_statue_archer \
         n_adj; longbow ego:chaos . arrow q:40
 KFEAT:  1 = permadry_fountain
@@ -436,21 +436,19 @@ xxxxxXXXX
 xxxxxXXXX
 ENDMAP
 
-# The altar may be inappropriate here. I'm not sure.
 NAME:  evilmike_abyss_rune_tso_outpost
 TAGS:  abyss_rune allow_dup no_monster_gen
 KITEM: O = abyssal rune of Zot
 KFEAT: _ = altar_the_shining_one
-KFEAT: m = iron_grate
-MONS:  angel, daeva, ophan
+MONS:  angel, cherub, ophan
 MAP
 .......................
 ........ccc...cccccc...
-.cccccGcc3ccGcc....cc..
-.+...ccc...ccc.mmmm+cc.
-.+.T1.+.._..+..m2...Oc.
-.+...ccc...ccc.mmmm+cc.
-.cccccGcc3ccGcc....cc..
+.cccccGcc3ccGcc...2cc..
+.+...ccc...ccc....cccc.
+.+.T1.+.._..+.....+.Oc.
+.+...ccc...ccc....cccc.
+.cccccGcc3ccGcc...2cc..
 ........ccc...cccccc...
 .......................
 ENDMAP

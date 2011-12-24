@@ -347,6 +347,10 @@ acid blob
 
 치명적인 산성 액체를 온 몸에서 떨어트리는, 창백한 녹색의 살덩어리다.
 %%%%
+adder
+
+The common dungeon snake.
+%%%%
 agate snail
 
 A huge and disgusting gastropod with a celadon shell, inside which it will hide when frightened.
@@ -394,6 +398,10 @@ A juvenile alligator. While it does not have crushing jaws, nor the strength to 
 ball lightning
 
 자연의 미스테리라고 할 수 있는 이 전기 구체의 모습은, 그 주위를 튕기며 움직이는데, 보통의 번개와는 많은 차이가 있다.
+%%%%
+ball python
+
+A small snake that can augment its bite by constricting small creatures.
 %%%%
 ballistomycete
 
@@ -1701,10 +1709,6 @@ small abomination
 
 A hideous mass of body parts, part animated dead flesh, part demon.
 %%%%
-small snake
-
-던전에 서식하는 작은 뱀이다.
-%%%%
 small simulacrum
 
 몬스터의 얼음 복제품으로, 강령술로 조종되고 있다.
@@ -1720,10 +1724,6 @@ small zombie
 smoke demon
 
 An infernal demon that manifests itself as a writhing cloud of smoke. Having considerable pyrokinetic powers, it can very effectively attack its enemies from afar.
-%%%%
-snake
-
-던젼에 사는 평범한 뱀이다.
 %%%%
 snapping turtle
 
@@ -1818,6 +1818,10 @@ stone golem
 storm dragon
 
 크고 매우 강력한 용이다. 거대한 날개의 움직임에 따라 스파크가 일고 있다.
+%%%%
+subtractor snake
+
+A weird deadly snake capable of diminishing your strengths, and dividing you into multiple small pieces.
 %%%%
 sun demon
 

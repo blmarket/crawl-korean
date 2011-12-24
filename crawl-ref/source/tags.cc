@@ -1295,23 +1295,39 @@ static void tag_construct_you(writer &th)
         marshallInt(th, you.montiers[k]);
 #endif
 
+#if TAG_MAJOR_VERSION == 32
+    marshallShort(th, 0); // was: length of you.spell_usage
+#endif
+
+    // Action counts.
     j = 0;
-    for (std::map<spell_type, FixedVector<int, 27> >::const_iterator sp =
-         you.spell_usage.begin(); sp != you.spell_usage.end(); ++sp)
+    for (std::map<std::pair<caction_type, int>, FixedVector<int, 27> >::const_iterator ac =
+         you.action_count.begin(); ac != you.action_count.end(); ++ac)
     {
         j++;
     }
     marshallShort(th, j);
-    for (std::map<spell_type, FixedVector<int, 27> >::const_iterator sp =
-         you.spell_usage.begin(); sp != you.spell_usage.end(); ++sp)
+    for (std::map<std::pair<caction_type, int>, FixedVector<int, 27> >::const_iterator ac =
+         you.action_count.begin(); ac != you.action_count.end(); ++ac)
     {
-        marshallShort(th, sp->first);
+        marshallShort(th, ac->first.first);
+        marshallInt(th, ac->first.second);
         for (int k = 0; k < 27; k++)
-            marshallInt(th, sp->second[k]);
+            marshallInt(th, ac->second[k]);
     }
+
 
     marshallCoord(th, abyssal_state.major_coord);
     marshallFloat(th, abyssal_state.depth);
+
+    marshallShort(th, you.constricted_by);
+    marshallInt(th, you.escape_attempts);
+    marshallInt(th, you.dur_been_constricted);
+    for (unsigned int k = 0; k < 8; k++)
+    {
+        marshallShort(th, you.constricting[k]);
+        marshallInt(th, you.dur_has_constricted[k]);
+    }
 
     if (!dlua.callfn("dgn_save_data", "u", &th))
         mprf(MSGCH_ERROR, "Failed to save Lua data: %s", dlua.error.c_str());
@@ -2314,14 +2330,29 @@ static void tag_read_you(reader &th)
 #if TAG_MAJOR_VERSION == 32
     if (th.getMinorVersion() >= TAG_MINOR_SPELL_USAGE)
     {
-#endif
-    // Counts of spells cast, per level.
+    // was: size of you.spell_usage
     count = unmarshallShort(th);
     for (i = 0; i < count; i++)
     {
-        spell_type spell = (spell_type)unmarshallShort(th);
+        (void) unmarshallShort(th);
         for (j = 0; j < 27; j++)
-            you.spell_usage[spell][j] = unmarshallInt(th);
+            (void) unmarshallInt(th);
+    }
+    }
+#endif
+
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_ACTION_COUNTS)
+    {
+#endif
+    // Counts of actions made, by type.
+    count = unmarshallShort(th);
+    for (i = 0; i < count; i++)
+    {
+        caction_type caction = (caction_type)unmarshallShort(th);
+        int subtype = unmarshallInt(th);
+        for (j = 0; j < 27; j++)
+            you.action_count[std::pair<caction_type, int>(caction, subtype)][j] = unmarshallInt(th);
     }
 #if TAG_MAJOR_VERSION == 32
     }
@@ -2330,6 +2361,20 @@ static void tag_read_you(reader &th)
 #endif
     abyssal_state.major_coord = unmarshallCoord(th);
     abyssal_state.depth = unmarshallFloat(th);
+#if TAG_MAJOR_VERSION == 32
+    }
+
+    if (th.getMinorVersion() >= TAG_MINOR_CONSTRICTION)
+    {
+#endif
+    you.constricted_by = unmarshallShort(th);
+    you.escape_attempts = unmarshallInt(th);
+    you.dur_been_constricted = unmarshallInt(th);
+    for (unsigned int k = 0; k < 8; k++)
+    {
+        you.constricting[k] = unmarshallShort(th);
+        you.dur_has_constricted[k] = unmarshallInt(th);
+    }
 #if TAG_MAJOR_VERSION == 32
     }
 #endif
@@ -3116,6 +3161,15 @@ void marshallMonster(writer &th, const monster& m)
         marshallGhost(th, *m.ghost);
     }
 
+    marshallShort(th, m.constricted_by);
+    marshallInt(th, m.escape_attempts);
+    marshallInt(th, m.dur_been_constricted);
+    for (unsigned int k = 0; k < 8; k++)
+    {
+        marshallShort(th, m.constricting[k]);
+        marshallInt(th, m.dur_has_constricted[k]);
+    }
+
     m.props.write(th);
 }
 
@@ -3637,6 +3691,22 @@ void unmarshallMonster(reader &th, monster& m)
 
     if (mons_is_ghost_demon(m.type))
         m.set_ghost(unmarshallGhost(th));
+
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_CONSTRICTION)
+    {
+#endif
+    m.constricted_by = unmarshallShort(th);
+    m.escape_attempts = unmarshallInt(th);
+    m.dur_been_constricted = unmarshallInt(th);
+    for (unsigned int k = 0; k < 8; k++)
+    {
+        m.constricting[k] = unmarshallShort(th);
+        m.dur_has_constricted[k] = unmarshallInt(th);
+    }
+#if TAG_MAJOR_VERSION == 32
+    }
+#endif
 
     m.props.clear();
     m.props.read(th);

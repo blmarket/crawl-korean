@@ -1242,19 +1242,22 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
     const int temp_rand1 = random2(3);
     const int temp_rand2 = random2(4);
 
-    mprf(gettext("This spell is %s %s to %s."),
-         ((chance >= 80) ? gettext(M_("very")) :
-          (chance >= 60) ? gettext(M_("quite")) :
-          (chance >= 45) ? gettext(M_("rather")) :
-          (chance >= 30) ? gettext(M_("somewhat"))
-                         : gettext(M_("not that"))),
-         ((temp_rand1 == 0) ? gettext(M_("difficult")) :
-          (temp_rand1 == 1) ? gettext(M_("tricky"))
-                            : gettext(M_("challenging"))),
-         ((temp_rand2 == 0) ? gettext(M_("memorise")) :
-          (temp_rand2 == 1) ? gettext(M_("commit to memory")) :
-          (temp_rand2 == 2) ? gettext(M_("learn"))
-                            : gettext(M_("absorb"))));
+    mprf(_("This spell is %s %s to %s."),
+         ((chance >= 100) ? _(M_("too")) :
+           (chance >= 80) ? _(M_("very")) :
+           (chance >= 60) ? _(M_("quite")) :
+           (chance >= 45) ? _(M_("rather")) :
+           (chance >= 30) ? _(M_("somewhat"))
+                          : _(M_("not that"))),
+         ((temp_rand1 == 0) ? _(M_("difficult")) :
+          (temp_rand1 == 1) ? _(M_("tricky"))
+                            : _(M_("challenging"))),
+         ((temp_rand2 == 0) ? _(M_("memorise")) :
+          (temp_rand2 == 1) ? _(M_("commit to memory")) :
+          (temp_rand2 == 2) ? _(M_("learn"))
+                            : _(M_("absorb"))));
+    if (chance >= 100)
+        return (false);
 
     snprintf(info, INFO_SIZE,
              gettext("Memorise %s, consuming %d spell level%s and leaving %d?"),
@@ -1278,7 +1281,7 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
         return (false);
     }
 
-    if (random2(40) + random2(40) + random2(40) < chance)
+    if (random2avg(100, 3) < chance && !one_chance_in(10))
     {
         mpr(gettext("You fail to memorise the spell."));
         learned_something_new(HINT_MEMORISE_FAILURE);
