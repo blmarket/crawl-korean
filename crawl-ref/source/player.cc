@@ -4068,7 +4068,7 @@ void display_char_status()
     }
     std::string cinfo = _constriction_description();
     if (!cinfo.empty())
-        mprf(cinfo.c_str());
+        mpr(cinfo.c_str());
 
     _display_movement_speed();
     _display_tohit();
