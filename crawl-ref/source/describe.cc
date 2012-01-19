@@ -244,6 +244,8 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "MR",     ARTP_MAGIC,                 2 },
 
         // Quantitative attributes
+        { "HP",     ARTP_HP,                    0 },
+        { "MP",     ARTP_MAGICAL_POWER,         0 },
         { "AC",     ARTP_AC,                    0 },
         { "EV",     ARTP_EVASION,               0 },
         { "Str",    ARTP_STRENGTH,              0 },
@@ -253,8 +255,6 @@ static std::vector<std::string> _randart_propnames(const item_def& item,
         { "Dam",    ARTP_DAMAGE,                0 },
 
         // Qualitative attributes
-        { "HP",     ARTP_HP,                    0 },
-        { "MP",     ARTP_MAGICAL_POWER,         0 },
         { "SInv",   ARTP_EYESIGHT,              2 },
         { "Stlth",  ARTP_STEALTH,               2 }, // handled specially
         { "Curse",  ARTP_CURSED,                2 },
@@ -1924,11 +1924,8 @@ std::string get_item_description(const item_def &item, bool verbose,
         break;
 
     case OBJ_BOOKS:
-        if (item.sub_type == BOOK_MANUAL && in_inventory(item)
-            && item.link == you.manual_index)
-        {
+        if (item_is_active_manual(item))
             description << "\nYou are currently studying this manual.";
-        }
 
         if (!player_can_memorise_from_spellbook(item))
         {
@@ -2951,14 +2948,15 @@ static void _append_spell_stats(const spell_type spell,
     else
     {
         const std::string schools = spell_schools_string(spell);
+        char* failure = failure_rate_to_string(spell_fail(spell));
         snprintf(info, INFO_SIZE,
-		 /// 1. 스펠 레벨(숫자), 2. 학파가 여러개면 s가, 아니면 아무것도 안들어옴.
-		 /// 3. 마법 학파, 4. 성공 확률
-                 gettext("\nLevel: %d        School%s:  %s    (%s)"),
+                 /// 1. 레벨, 2. 학파가 여러개면 s, 3. 학파, 4. 실패 확률
+                 gettext("\nLevel: %d        School%s: %s        Fail: %s"),
                  spell_difficulty(spell),
                  schools.find("/") != std::string::npos ? "s" : "",
                  schools.c_str(),
-                 gettext(failure_rate_to_string(spell_fail(spell))));
+                 failure);
+        free(failure);
     }
     description += info;
     description += gettext("\n\nPower : ");
@@ -3065,12 +3063,15 @@ void get_spell_desc(const spell_type spell, describe_info &inf)
 //---------------------------------------------------------------
 void describe_spell(spell_type spelled, const item_def* item)
 {
+#ifdef USE_TILE_WEB
+    tiles_crt_control show_as_menu(CRT_MENU, "describe_spell");
+#endif
+
     std::string desc;
     int mem_or_forget = _get_spell_description(spelled, desc, item);
     print_description(desc);
 
     mouse_control mc(MOUSE_MODE_MORE);
-
     char ch;
     if ((ch = getchm()) == 0)
         ch = getchm();
@@ -4066,8 +4067,9 @@ static std::string _religion_help(god_type god)
 // The various titles granted by the god of your choice.  Note that Xom
 // doesn't use piety the same way as the other gods, so these are just
 // placeholders.
-const char *divine_title[NUM_GODS][8] =
-{   // (deceit, 110901) 이곳 역시 직접수정하는게 편할듯
+static const char *divine_title[NUM_GODS][8] =
+{
+    // No god.
     {"버그맨",             "열혈 버그",             "버그 친구",                 "버그 전문가",
      "버그 괴물",          "버그를 불러오는 자",    "거대한 버그",               "버그의 제왕"},
 

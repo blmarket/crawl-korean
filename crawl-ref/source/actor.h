@@ -241,7 +241,7 @@ public:
     virtual int armour_tohit_penalty(bool random_factor) const = 0;
     virtual int shield_tohit_penalty(bool random_factor) const = 0;
 
-    virtual int mons_species() const = 0;
+    virtual int mons_species(bool zombie_base = false) const = 0;
 
     virtual mon_holy_type holiness() const = 0;
     virtual bool undead_or_demonic() const = 0;
@@ -347,20 +347,21 @@ public:
 
     // Constriction stuff
     unsigned short constricted_by;
-    unsigned short constricting[8]; // max 8 for octopode
+    unsigned short constricting[MAX_CONSTRICT];
     int escape_attempts;
     int dur_been_constricted;
-    int dur_has_constricted[8];     // max 8 for octopode
+    int dur_has_constricted[MAX_CONSTRICT];
 
     // handles non-attack turn constrictions, does not need to be saved
     bool has_constricted_this_turn;
-    virtual void clear_specific_constrictions(int mindex) = 0;
-    virtual bool is_constricted();
-    virtual bool is_constricting();
-    virtual bool has_usable_tentacle()
-    {
-        return false;
-    }
+    void stop_constricting(int mindex, bool intentional = false);
+    void stop_constricting_all(bool intentional = false);
+    void stop_being_constricted();
+
+    void clear_far_constrictions();
+    bool is_constricted() const;
+    bool is_constricting() const;
+    virtual bool has_usable_tentacle() const = 0;
 
 protected:
     // These are here for memory management reasons...
@@ -369,5 +370,6 @@ protected:
 };
 
 bool actor_slime_wall_immune(const actor *actor);
+actor *mindex_to_actor(short mindex);
 
 #endif

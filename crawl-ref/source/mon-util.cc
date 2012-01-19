@@ -38,7 +38,6 @@
 #include "mon-death.h"
 #include "mon-iter.h"
 #include "mon-place.h"
-#include "coord.h"
 #include "mon-stuff.h"
 #include "notes.h"
 #include "options.h"
@@ -58,7 +57,7 @@
 
 static FixedVector < int, NUM_MONSTERS > mon_entry;
 
-mon_display monster_symbols[NUM_MONSTERS];
+static mon_display monster_symbols[NUM_MONSTERS];
 
 static bool initialised_randmons = false;
 static std::vector<monster_type> monsters_by_habitat[NUM_HABITATS];
@@ -838,15 +837,14 @@ void discover_mimic(const coord_def& pos)
         mg.props["glyph"] = static_cast<int>(get_item_glyph(item).ch);
     }
 
-    const int midx = place_monster(mg, true, true);
-    if (midx == -1)
+    monster *mimic = place_monster(mg, true, true);
+    if (!mimic)
     {
         mpr("Too many monsters on level, can't place mimic.", MSGCH_ERROR);
         if (item)
             destroy_item(*item, true);
         return;
     }
-    monster* mimic = &menv[midx];
 
     if (item && !mimic->pickup_misc(*item, 0))
         die("Mimic failed to pickup its item.");
@@ -861,7 +859,7 @@ void discover_mimic(const coord_def& pos)
 
     // Friendly monsters don't appreciate being pushed away.
     if (mon && mon->friendly())
-        behaviour_event(mon, ME_WHACK, midx);
+        behaviour_event(mon, ME_WHACK, mimic->mindex());
 
     // Announce the mimic.
     if (mons_near(mimic))
@@ -1283,6 +1281,13 @@ bool name_zombie(monster* mon, int mc, const std::string &mon_name)
         mon->mname = "Lernaean";
         mon->flags |= MF_NAME_ADJECTIVE;
     }
+    // Also for the Enchantress: treat Enchantress as an adjective to
+    // avoid mentions of "the Enchantress the spriggan zombie".
+    else if (mc == MONS_THE_ENCHANTRESS)
+    {
+        mon->mname = "Enchantress";
+        mon->flags |= MF_NAME_ADJECTIVE;
+    }
     // Also for the Serpent of Hell: treat Serpent of Hell as an
     // adjective to avoid mentions of "the Serpent of Hell the dragon
     // zombie".
@@ -1399,6 +1404,7 @@ mon_attack_def mons_attack_spec(const monster* mon, int attk_number)
 
         attk.flavour = RANDOM_ELEMENT(flavours);
     }
+#if TAG_MAJOR_VERSION == 32
     else if (attk.flavour == AF_SUBTRACTOR)
     {
         attack_flavour flavours[] =
@@ -1407,6 +1413,7 @@ mon_attack_def mons_attack_spec(const monster* mon, int attk_number)
 
         attk.flavour = RANDOM_ELEMENT(flavours);
     }
+#endif
 
     if (attk.flavour == AF_POISON_STAT)
     {
@@ -2186,6 +2193,7 @@ void define_monster(monster* mons)
 
     // Reset monster enchantments.
     mons->enchantments.clear();
+    mons->ench_cache.reset();
     mons->ench_countdown = 0;
 
     // NOTE: For player ghosts and (very) ugly things this just ensures
@@ -4186,9 +4194,10 @@ monster *monster_by_mid(mid_t m)
 {
     if (m == MID_ANON_FRIEND)
         return &menv[ANON_FRIENDLY_MONSTER];
-    for (int i = 0; i < MAX_MONSTERS; i++)
-        if (menv[i].mid == m && menv[i].alive())
-            return &menv[i];
+
+    std::map<mid_t, unsigned short>::const_iterator mc = env.mid_cache.find(m);
+    if (mc != env.mid_cache.end())
+        return &menv[mc->second];
     return 0;
 }
 

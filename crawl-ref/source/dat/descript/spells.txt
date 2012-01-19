@@ -206,7 +206,7 @@ Dispersal
 %%%%
 Dragon Form
 
-잠시동안 거대하고, 불의 입김을 뿜을 수 있는 용으로 변신한다.
+This spell temporarily transforms the caster into a great, fire-breathing dragon. Draconian casters will instead retain their innate colour and breath weapon once transformed.
 %%%%
 Enslavement
 

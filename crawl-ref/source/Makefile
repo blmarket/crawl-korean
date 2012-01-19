@@ -73,6 +73,8 @@ MAKEFLAGS += -rR # This only works for recursive makes, i.e. contribs ...
         profile package-source source build-windows package-windows rest docs greet \
         api
 
+include Makefile.obj
+
 #
 # Compiler Flags
 #
@@ -114,7 +116,7 @@ CFOPTIMIZE += -flto=jobserver -fwhole-program
 endif
 
 CFOTHERS := -pipe $(EXTERNAL_FLAGS)
-CFWARN := -Wall -Wformat-security -Werror=format-security
+CFWARN := -Wall -Wformat-security
 CFWARN_L := -Wundef
 
 DEFINES := $(EXTERNAL_DEFINES)
@@ -296,23 +298,13 @@ SQLITE_LIB := -lsqlite3
 # Set up the TILES variant
 #
 ifdef TILES
-
-# For now, everything but the iPad uses the standard
-# SDL/OpenGL/Freetype combination.
-ifndef IPAD
-	SDL = YesPlease
-	GL = YesPlease
-	FT = YesPlease
-endif
-
 TILES_ANY = YesPlease
-
+OBJECTS += $(TILES_OBJECTS) $(GLTILES_OBJECTS)
 endif
 
 ifdef WEBTILES
-
 TILES_ANY = YesPlease
-
+OBJECTS += $(TILES_OBJECTS) $(WEBTILES_OBJECTS)
 endif
 
 #
@@ -326,22 +318,11 @@ endif
 endif
 endif
 
-#
-# Set up object file dependencies for $(GAME) target.
-#
-include Makefile.obj
-
-# Just a quick hack to make it clean up
-# tiles-specific object files too.
-ifneq (,$(findstring clean,$(MAKECMDGOALS)))
-TILES := YesPlease
-endif
-
-# Works for Mac OS X and Linux.
-OBJECTS += crash-u.o
 
 ifdef WIN32
 EXTRA_OBJECTS += icon.o
+else
+EXTRA_LIBS += -pthread
 endif
 
 ifndef TILES
@@ -572,9 +553,6 @@ endif
 RLTILES = rltiles
 INCLUDES_L += -I$(RLTILES)
 
-# The "|" designates "order-only" dependancies. See: (make) Prerequisite Types
-$(OBJECTS:%.o=%.cc): | $(TILEDEFHDRS)
-
 ifdef WEBTILES
 DEFINES_L += -DUSE_TILE
 DEFINES_L += -DUSE_TILE_WEB
@@ -595,20 +573,10 @@ ifdef BUILD_FREETYPE
 INCLUDES_L += -Icontrib/install/$(ARCH)/include/freetype2
 endif
 
-ifdef SDL
-DEFINES_L += -DUSE_SDL
-endif
-
-ifdef GL
-DEFINES_L += -DUSE_GL
-endif
+DEFINES_L += -DUSE_SDL -DUSE_GL -DUSE_FT
 
 ifdef GLES
 DEFINES_L += -DUSE_GLES
-endif
-
-ifdef FT
-DEFINES_L += -DUSE_FT
 endif
 
 # Okay, we have to assume we're on something else that
@@ -639,7 +607,7 @@ SDL_INCLUDE := $(shell $(PKGCONFIG) sdl --cflags-only-I)
 SDL_CFLAGS  := $(shell $(PKGCONFIG) sdl --cflags-only-other)
 SDL_LDFLAGS := $(shell $(PKGCONFIG) sdl --libs-only-L) $(shell $(PKGCONFIG) sdl --libs-only-l)
 
-LIBS += -pthread -lSDL_image $(SDL_LDFLAGS) $(FREETYPE_LDFLAGS)
+LIBS += -lSDL_image $(SDL_LDFLAGS) $(FREETYPE_LDFLAGS)
 
 endif # pkg-config
 
@@ -1018,7 +986,7 @@ webserver/game_data/static/%.png: dat/tiles/%.png
 TILEINFOJS = $(TILEIMAGEFILES) dngn
 TITLEIMGS = denzi_dragon denzi_kitchen_duty denzi_summoner \
             denzi_undead_warrior omndra_zot_demon omndra_fire_mage \
-            shadyamish_octm
+            shadyamish_octm denzi_evil_mage denzi_invasion
 
 STATICFILES = $(TILEIMAGEFILES:%=webserver/game_data/static/%.png) \
               webserver/static/stone_soup_icon-32x32.png \
@@ -1031,7 +999,7 @@ webserver/game_data/static/%.js: $(RLTILES)/%.js
 	$(QUIET_COPY)$(COPY) $< webserver/game_data/static/
 
 clean-webserver:
-	$(RM) $(STATICFILES)
+	$(RM) $(STATICFILES) webserver/*.pyc
 
 ifdef WEBTILES
 webserver: $(STATICFILES)
@@ -1040,9 +1008,10 @@ webserver:
 endif
 
 
-ifeq (,$(findstring clean,$(MAKECMDGOALS)))
-ifeq (,$(findstring test,$(MAKECMDGOALS)))
-ifeq (,$(filter %-windows,$(MAKECMDGOALS)))
+# There might not have been any goals passed on the commandline, so...
+GOALS = $(or $(MAKECMDGOALS),$(.DEFAULT_GOAL))
+# Unless these are the only goals...
+ifneq ($(GOALS),$(filter clean test %-windows,$(GOALS)))
 
 #
 # CFLAGS difference check
@@ -1055,29 +1024,44 @@ ifeq (,$(filter %-windows,$(MAKECMDGOALS)))
 #
 
 TRACK_CFLAGS = $(subst ','\'',$(CC) $(CXX) $(ALL_CFLAGS))           # (stray ' for highlights)
+OLD_CFLAGS = $(shell cat .cflags 2>/dev/null)
+ifneq ($(TRACK_CFLAGS),$(OLD_CFLAGS))
+  NEED_REBUILD = y
+endif
 
 .cflags: .force-cflags
-	@FLAGS='$(TRACK_CFLAGS)'; \
-    if test x"$$FLAGS" != x"`cat .cflags 2>/dev/null`" ; then \
-        echo "    * rebuilding crawl: new build flags or prefix"; \
-        echo "$$FLAGS" > .cflags; \
-    fi
+ifdef NEED_REBUILD
+	@echo "    * rebuilding crawl: new build flags or prefix"
+	@echo '$(TRACK_CFLAGS)' > .cflags
+endif
 
 .PHONY: .force-cflags
 
-endif
-endif
 endif
 
 ##########################################################################
 # Dependencies
 
-DEPS := $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d)
+DEPS := $(ALL_OBJECTS:.o=.d)
 
--include $(DEPS)
+# Any stale .d files are worse than useless, as they can break builds by
+# telling make a header or file no longer present is needed.  This is very
+# likely to happen if the compilation mode changes (normal vs debug, tiles
+# vs console vs webtiles) or if the compiler itself changes (gcc vs
+# gcc-snapshot vs clang, or x86_64-linux-gnu-gcc vs x86_64-w64-mingw32-g++).
+#
+# In such cases, the dependency forces a rebuild of that file.
+ifndef NEED_REBUILD
+  VALID_DEPS := $(shell for x_d in $(DEPS); do \
+                          x="$${x_d%%.d}"; x_cc="$${x}.cc"; \
+                          if [ "$$x_cc" -ot "$$x_d" \
+                               -a "$$x_d" -nt .cflags ]; \
+                          then echo "$$x_d"; \
+                          fi; \
+                        done)
+endif
+-include $(VALID_DEPS)
 
-# Only serves to check if all .d files can be built
-depend: $(DEPS)
 
 # This information is included in crash reports, and is printed with
 # "crawl -version"
@@ -1238,7 +1222,7 @@ endif
 clean: clean-rltiles clean-webserver
 	+$(MAKE) -C $(UTIL) clean
 	$(RM) $(GAME) $(GAME).exe $(GENERATED_FILES) $(EXTRA_OBJECTS) libw32c.o\
-	    libunix.o $(OBJECTS) $(OBJECTS:.o=.d) $(YACC_OBJECTS:.o=.d) *.ixx  \
+	    libunix.o $(ALL_OBJECTS) $(ALL_OBJECTS:.o=.d) *.ixx  \
 	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d
 	$(RM) -r build-win
 	$(RM) -r build
@@ -1274,15 +1258,7 @@ ifndef NO_INLINE_DEPGEN
 INLINE_DEPGEN_CFLAGS = -Wp,-MMD,$*.d,-MT,$@
 endif
 
-ifdef NO_INLINE_DEPGEN
-$(OBJECTS): $(OBJECTS:%.o=%.d) $(YACC_OBJECTS:%.o=%.d)
-
-%.d: %.cc .cflags $(GENERATED_HEADERS)
-	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
-else
-%.d: %.cc .cflags $(GENERATED_HEADERS)
-	@$(RM) $@
-endif
+$(DEPS): %.d: %.cc
 
 # Precompiled headers
 #
@@ -1312,7 +1288,10 @@ $(UTIL)%.o: ALL_CFLAGS=$(YACC_CFLAGS)
 %.o: %.m .cflags | $(GENERATED_HEADERS)
 	$(QUIET_CC)$(CC) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
-%.o: %.cc .cflags | $(GENERATED_HEADERS)
+%.o: %.cc %.d .cflags | $(GENERATED_HEADERS) $(TILEDEFHDRS)
+ifdef NO_INLINE_DEPGEN
+	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
+endif
 	$(QUIET_CXX)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
 
 icon.o: util/crawl.rc util/crawl.ico .cflags

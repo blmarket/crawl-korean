@@ -117,6 +117,7 @@ public:
 
   FixedVector<uint8_t, NUM_SKILLS>  skills; //!< skill level
   FixedVector<int8_t, NUM_SKILLS>  train; //!< 0: disabled, 1: normal, 2: focus.
+  FixedVector<int8_t, NUM_SKILLS>  train_alt; //<! config of the other mode.
   FixedVector<unsigned int, NUM_SKILLS>  training; //<! percentage of XP used
   FixedVector<bool, NUM_SKILLS> can_train; //!<Is training this skill allowed
   FixedVector<bool, NUM_SKILLS> train_set; //!< Has the player set this skill
@@ -232,6 +233,7 @@ public:
   FixedVector<uint32_t, NUM_WEAPONS> seen_weapon;
   FixedVector<uint32_t, NUM_ARMOURS> seen_armour;
   FixedBitArray<NUM_MISCELLANY>      seen_misc;
+  uint8_t                            octopus_king_rings;
 
   uint8_t normal_vision;        // how far the species gets to see
   uint8_t current_vision;       // current sight radius (cells)
@@ -586,7 +588,7 @@ public:
 
     int warding() const;
 
-    int mons_species() const;
+    int mons_species(bool zombie_base = false) const;
 
     mon_holy_type holiness() const;
     bool undead_or_demonic() const;
@@ -716,11 +718,7 @@ public:
     void accum_been_constricted();
     void accum_has_constricted();
     bool attempt_escape();
-    bool is_constricted_larger();
-    bool is_constricted();
-    bool has_usable_tentacle();
-    void clear_all_constrictions();
-    void clear_specific_constrictions(int mindex);
+    bool has_usable_tentacle() const;
 
 protected:
     void _removed_beholder();
@@ -752,7 +750,6 @@ struct player_save_info
 
 #ifdef USE_TILE
     dolls_data doll;
-    bool held_in_net;
 #endif
 
     bool save_loadable;

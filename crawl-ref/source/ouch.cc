@@ -27,7 +27,6 @@
 #include "artefact.h"
 #include "beam.h"
 #include "chardump.h"
-#include "coord.h"
 #include "delay.h"
 #include "dgnevent.h"
 #include "effects.h"
@@ -1045,7 +1044,7 @@ static void _maybe_spawn_jellies(int dam, const char* aux,
                 mgen_data mg(mon, BEH_FRIENDLY, &you, 2, 0, you.pos(),
                              foe, 0, GOD_JIYVA);
 
-                if (create_monster(mg) != -1)
+                if (create_monster(mg))
                     count_created++;
             }
 
@@ -1513,7 +1512,7 @@ void _end_game(scorefile_entry &se)
             hints_death_screen();
     }
 
-    if (!dump_char(_morgue_name(se.get_death_time()), false, true, &se))
+    if (!dump_char(_morgue_name(se.get_death_time()), true, &se))
     {
         mpr(gettext("Char dump unsuccessful! Sorry about that."));
         if (!crawl_state.seen_hups)
@@ -1531,7 +1530,7 @@ void _end_game(scorefile_entry &se)
     if (!crawl_state.seen_hups)
         more();
 
-    browse_inventory(true);
+    browse_inventory();
     textcolor(LIGHTGREY);
 
     // Prompt for saving macros.
@@ -1577,4 +1576,19 @@ int actor_to_death_source(const actor* agent)
         return (agent->as_monster()->mindex());
     else
         return (NON_MONSTER);
+}
+
+int timescale_damage(const actor *act, int damage)
+{
+    if (damage < 0)
+        damage = 0;
+    // Can we have a uniform player/monster speed system yet?
+    if (act->is_player())
+        return div_rand_round(damage * you.time_taken, BASELINE_DELAY);
+    else
+    {
+        const monster *mons = act->as_monster();
+        const int speed = mons->speed > 0? mons->speed : BASELINE_DELAY;
+        return div_rand_round(damage * BASELINE_DELAY, speed);
+    }
 }

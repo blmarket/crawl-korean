@@ -253,9 +253,9 @@ int main(int argc, char *argv[])
     real_crawl_state = new game_state();
     real_env = new crawl_environment();
 #endif
-    _compile_time_asserts();  // Actually, not just compile time.
-
     init_crash_handler();
+
+    _compile_time_asserts();  // Actually, not just compile time.
 
     // Hardcoded initial keybindings.
     init_keybindings();
@@ -1485,7 +1485,8 @@ static void _go_upstairs()
         end_mislead(true);
 
     you.clear_clinging();
-    you.clear_all_constrictions();
+    you.stop_constricting_all(true);
+    you.stop_being_constricted();
 
     tag_followers(); // Only those beside us right now can follow.
     start_delay(DELAY_ASCENDING_STAIRS,
@@ -1579,7 +1580,8 @@ static void _go_downstairs()
         end_mislead(true);
 
     you.clear_clinging();
-    you.clear_all_constrictions();
+    you.stop_constricting_all(true);
+    you.stop_being_constricted();
 
     if (shaft)
     {
@@ -2044,7 +2046,7 @@ void process_command(command_type cmd)
         break;
 
     case CMD_CHARACTER_DUMP:
-        if (!dump_char(you.your_name, false))
+        if (!dump_char(you.your_name))
             mpr("Char dump unsuccessful! Sorry about that.");
         break;
 
@@ -2380,9 +2382,6 @@ static void _decrement_durations()
 
     _decrement_a_duration(DUR_JELLY_PRAYER, delay, gettext("Your prayer is over."));
 
-    if (_decrement_a_duration(DUR_NAUSEA, delay))
-        end_nausea();
-
     if (you.duration[DUR_DIVINE_SHIELD] > 0)
     {
         if (you.duration[DUR_DIVINE_SHIELD] > 1)
@@ -2634,7 +2633,8 @@ static void _decrement_durations()
     if (you.duration[DUR_LIQUEFYING] && !you.stand_on_solid_ground())
         you.duration[DUR_LIQUEFYING] = 1;
 
-    if (_decrement_a_duration(DUR_LIQUEFYING, delay, gettext("The ground is no longer liquid beneath you.")))
+    if (_decrement_a_duration(DUR_LIQUEFYING, delay,
+                              gettext("The ground is no longer liquid beneath you.")))
     {
         invalidate_agrid();
     }
@@ -2795,7 +2795,6 @@ static void _decrement_durations()
                  && !you.duration[DUR_DEATHS_DOOR])
         {
             mpr(gettext("You feel your flesh rotting away."), MSGCH_WARN);
-            ouch(1, NON_MONSTER, KILLED_BY_ROTTING);
             rot_hp(1);
             you.rotting--;
         }
@@ -2821,7 +2820,6 @@ static void _decrement_durations()
         {
             dprf("rot rate: 1/%d", resilience);
             mpr(gettext("You feel your flesh rotting away."), MSGCH_WARN);
-            ouch(1, NON_MONSTER, KILLED_BY_ROTTING);
             rot_hp(1);
             if (you.rotting > 0)
                 you.rotting--;
@@ -2830,7 +2828,8 @@ static void _decrement_durations()
 
     dec_disease_player(delay);
 
-    dec_poison_player();
+    if (you.duration[DUR_POISONING])
+        dec_poison_player();
 
     if (you.duration[DUR_DEATHS_DOOR])
     {
@@ -3023,7 +3022,6 @@ static void _update_mold()
     }
 }
 
-static void _do_noattack_constrictions();
 static void _player_reacts()
 {
     if (!you.cannot_act() && !player_mutation_level(MUT_BLURRY_VISION)
@@ -3060,7 +3058,11 @@ static void _player_reacts()
         if (teleportitis_level > 0 && one_chance_in(100 / teleportitis_level))
             you_teleport_now(true);
         else if (you.level_type == LEVEL_ABYSS && one_chance_in(80))
+        {
+            mpr("You are suddenly pulled into a different region of the Abyss!",
+                MSGCH_BANISHMENT);
             you_teleport_now(false, true); // to new area of the Abyss
+        }
     }
 
     actor_apply_cloud(&you);
@@ -3074,7 +3076,7 @@ static void _player_reacts()
     _decrement_durations();
     // handle no attack constrictions
     if (!you.has_constricted_this_turn)
-        _do_noattack_constrictions();
+        handle_noattack_constrictions(&you);
 
     // increment constriction durations
     you.accum_been_constricted();
@@ -4317,6 +4319,10 @@ static void _move_player(coord_def move)
             you.time_taken *= 1.4;
 #endif
 
+        // clear constriction data
+        you.stop_constricting_all(true);
+        you.stop_being_constricted();
+
         move_player_to_grid(targ, true, false);
 
         you.walking = move.abs();
@@ -4387,69 +4393,6 @@ static void _move_player(coord_def move)
     {
         did_god_conduct(DID_HASTY, 1, true);
     }
-    // moved and not an attack, clear constriction data
-    if (!attacking)
-        you.clear_all_constrictions();
-}
-
-static void _do_noattack_constrictions()
-{
-    actor *attacker = &you;
-    actor *defender;
-
-    for (int i = 0; i < 8; i++)
-        if (you.constricting[i] != NON_ENTITY)
-        {
-            int basedam, durdam, acdam, infdam, damage;
-            std::string exclams;
-
-            defender = &env.mons[you.constricting[i]];
-            damage = (you.strength() - roll_dice(1,3)) / 3;
-            basedam = damage;
-            damage += roll_dice(1, (you.dur_has_constricted[i]/10)+1);
-            durdam = damage;
-            damage -= random2(1 + (defender->armour_class() / 2));
-            acdam = damage;
-
-            damage = defender->hurt(attacker, damage, BEAM_MISSILE, false);
-            infdam = damage;
-            if (damage < HIT_WEAK)
-                exclams = ".";
-            else if (damage < HIT_MED)
-                exclams = "!";
-            else if (damage < HIT_STRONG)
-                exclams = "!!";
-            else
-                exclams = "!!!";
-
-            if (damage > 0)
-            {
-                mprf("You %s %s%s%s",
-                     "constrict",
-                     defender->name(DESC_THE).c_str(),
-#ifdef DEBUG_DIAGNOSTICS
-                     make_stringf(" for %d", damage).c_str(),
-#else
-                     "",
-#endif
-                     exclams.c_str());
-            }
-            else
-            {
-                mprf("You %s %s%s.",
-                     "constrict",
-                     defender->name(DESC_THE).c_str(),
-                     you.can_see(defender) ? ", but do no damage" : "");
-            }
-
-            dprf("non-melee cons at: %s df: %s base %d dur %d ac %d inf %d",
-                 attacker->name(DESC_PLAIN, true).c_str(),
-                 defender->name(DESC_PLAIN, true).c_str(),
-                 basedam, durdam, acdam, infdam);
-            if (defender->as_monster()->hit_points < 1)
-                monster_die(defender->as_monster(), KILL_YOU, NON_MONSTER);
-
-        }
 }
 
 static int _get_num_and_char_keyfun(int &ch)

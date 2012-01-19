@@ -769,6 +769,11 @@ Executioner
 
 무섭도록 강력하고, 재빠른 악마다. 소용돌이치는 낫 형태의 칼날들로, 형체를 분간하기 힘들다.
 %%%%
+experimental stone golem
+
+This golem has been imbued with fire as part of some insane experiment. It looks as though it's going to explode at any moment.
+
+%%%%
 eye of devastation
 
 거대한 눈알이다. 백열빛으로 찬란한 에너지의 구체로 둘러싸여 있다.

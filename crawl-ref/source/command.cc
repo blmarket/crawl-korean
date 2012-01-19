@@ -840,7 +840,7 @@ struct help_file
     bool auto_hotkey;
 };
 
-help_file help_files[] = {
+static help_file help_files[] = {
     { "crawl_manual.txt",  '*', true },
     { "../README.txt",     '!', false },
     { "aptitudes.txt",     '%', false },
@@ -1475,8 +1475,13 @@ static bool _handle_FAQ()
             }
             answer = "Q: " + getFAQ_Question(key) + "\n" + answer;
             linebreak_string(answer, width - 1);
-            print_description(answer);
-            getchm();
+            {
+#ifdef USE_TILE_WEB
+                tiles_crt_control show_as_menu(CRT_MENU, "faq_entry");
+#endif
+                print_description(answer);
+                getchm();
+            }
         }
     }
 

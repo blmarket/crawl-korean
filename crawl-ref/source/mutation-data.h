@@ -365,20 +365,12 @@
   "acute vision"
 },
 
-{ MUT_DEFORMED,                   8,  3,  true,  true, true,
+{ MUT_DEFORMED,                   8,  1,  true,  true, true,
   M_("deformed body"),
 
-  {N_("Armour fits poorly on your strangely shaped body."),
-   N_("Armour fits poorly on your deformed body."),
-   N_("Armour fits poorly on your badly deformed body.")},
-
-  {N_("Your body twists strangely."),
-   N_("Your body twists and deforms."),
-   N_("Your body twists and deforms.")},
-
-  {N_("Your body's shape seems more normal."),
-   N_("Your body's shape seems slightly more normal."),
-   N_("Your body's shape seems slightly more normal.")},
+  {N_("Armour fits poorly on your strangely shaped body."), "", ""},
+  {N_("Your body twists and deforms."), "", ""},
+  {N_("Your body's shape seems more normal."), "", ""},
 
   "deformed"
 },
@@ -1153,6 +1145,22 @@
   "powered by pain"
 },
 
+{ MUT_AUGMENTATION,            0,  3, false, false, false,
+  "augmentation",
+
+  {"Your magical and physical power is slightly enhanced as your life falls.",
+   "Your magical and physical power is enhanced as your life falls.",
+   "Your magical and physical power is greatly enhanced as your life falls."},
+
+  {"You feel power flowing into your body.",
+   "You feel power rushing into your body.",
+   "You feel saturated with power."},
+
+  {"", "", ""},
+
+  "augmentation"
+},
+
 // Jiyva only mutations
 { MUT_GELATINOUS_BODY,            0,  3, false, true, true,
   NULL,
@@ -1448,7 +1456,7 @@
 { MUT_CAMOUFLAGE,           1,   3, false, true, true,
   M_("camouflage"),
 
-  {N_("Your skin changes color to match your surroundings (Stlth)."),
+  {N_("Your skin changes colour to match your surroundings (Stlth)."),
    N_("Your skin blends seamlessly with your surroundings (Stlth)."),
    N_("Your skin perfectly mimics your surroundings (Stlth).")},
 

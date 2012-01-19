@@ -142,33 +142,12 @@
 
 */
 
-const mon_energy_usage DEFAULT_ENERGY;
+#define MOVE_ENERGY(x)     { x,  x, 10, 10, 10, 10, 10, 100}
+#define ACTION_ENERGY(x)   {10, 10,  x,  x,  x,  x,  x, x * 10}
+#define ATTACK_ENERGY(x)   {10, 10,  x, 10, 10, 10, 10, 100}
+#define MISSILE_ENERGY(x)  {10, 10, 10,  x, 10, 10, 10, 100}
+#define SWIM_ENERGY(x)     {10,  x, 10, 10, 10, 10, 10, 100}
 
-static inline mon_energy_usage MOVE_ENERGY(int me)
-{
-    return mon_energy_usage::move_cost(me, me);
-}
-
-// Energy required for all non-movement action.
-static inline mon_energy_usage ACTION_ENERGY(int ae)
-{
-    return mon_energy_usage(10, 10, ae, ae, ae, ae, ae, ae * 10);
-}
-
-static inline mon_energy_usage ATTACK_ENERGY(int ae)
-{
-    return mon_energy_usage::attack_cost(ae);
-}
-
-static inline mon_energy_usage MISSILE_ENERGY(int ae)
-{
-    return mon_energy_usage::missile_cost(ae);
-}
-
-static inline mon_energy_usage SWIM_ENERGY(int ae)
-{
-    return mon_energy_usage::swim_cost(ae);
-}
 
 static monsterentry mondata[] = {
 
@@ -1390,7 +1369,7 @@ static monsterentry mondata[] = {
     { 12, 5, 4, 0 },
     // Impalers prefer light armour, and are dodging experts.
     0, 18, MST_NO_SPELLS, CE_CONTAMINATED, Z_NOZOMBIE, S_SHOUT,
-    I_NORMAL, HT_AMPHIBIOUS, FL_NONE, 10, ATTACK_ENERGY(6) | SWIM_ENERGY(6),
+    I_NORMAL, HT_AMPHIBIOUS, FL_NONE, 10, {10, 6, 6, 10, 10, 10, 10, 100},
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
@@ -2073,7 +2052,7 @@ static monsterentry mondata[] = {
        AT_NO_ATK },
     { 12, 3, 6, 0 },
     5, 9, MST_ALLIGATOR, CE_CLEAN, Z_BIG, S_SILENT,
-    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, ACTION_ENERGY(8) | SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 10, {10, 6, 8, 8, 8, 8, 8, 80},
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
@@ -2087,7 +2066,7 @@ static monsterentry mondata[] = {
     // XXX: Will be Z_SMALL, but is Z_BIG until code for zombie spawns
     // is no longer based on zombie size.
     16, 5, MST_NO_SPELLS, CE_CLEAN, Z_BIG, S_HISS,
-    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 9, ACTION_ENERGY(8) | SWIM_ENERGY(6),
+    I_REPTILE, HT_AMPHIBIOUS, FL_NONE, 9, {10, 6, 8, 8, 8, 8, 8, 80},
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
@@ -2296,6 +2275,7 @@ static monsterentry mondata[] = {
 },
 
 {
+    // See comment under MONS_ABOMINATION_SMALL regarding holiness.
     MONS_CRAWLING_CORPSE, 'x', BROWN, "crawling corpse",
     M_NO_EXP_GAIN | M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
@@ -2308,6 +2288,7 @@ static monsterentry mondata[] = {
 },
 
 {
+    // See comment under MONS_ABOMINATION_SMALL regarding holiness.
     MONS_MACABRE_MASS, 'x', BROWN, "macabre mass",
     M_NO_EXP_GAIN | M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
@@ -3739,17 +3720,19 @@ static monsterentry mondata[] = {
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
+#if TAG_MAJOR_VERSION == 32
 {
-    MONS_SUBTRACTOR_SNAKE, 'S', BLACK, "subtractor snake",
-    M_COLD_BLOOD,
+    MONS_SUBTRACTOR_SNAKE, 'S', ETC_SUBTRACTOR, "subtractor snake",
+    M_COLD_BLOOD | M_NO_POLY_TO,
     MR_NO_FLAGS,
-    750, 10, MONS_ADDER, MONS_SUBTRACTOR_SNAKE, MH_NATURAL, -3,
+    0, 10, MONS_ADDER, MONS_SUBTRACTOR_SNAKE, MH_NATURAL, -3,
     { {AT_BITE, AF_SUBTRACTOR, 25}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 18, 3, 5, 0 },
-    6, 16, MST_NO_SPELLS, CE_CLEAN, Z_BIG, S_HISS,
+    6, 16, MST_NO_SPELLS, CE_CLEAN, Z_NOZOMBIE, S_HISS,
     I_REPTILE, HT_LAND, FL_NONE, 18, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
+#endif
 
 // trolls ('T')
 {
@@ -4250,10 +4233,10 @@ static monsterentry mondata[] = {
     M_NO_SKELETON | M_COLD_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     700, 10, MONS_OCTOPODE, MONS_OCTOPODE, MH_NATURAL, -1,
-    { {AT_TENTACLE_SLAP, AF_PLAIN, 15}, {AT_BITE, AF_PLAIN, 10},
-      {AT_CONSTRICT, AF_CRUSH, 30}, AT_NO_ATK },
+    { {AT_TENTACLE_SLAP, AF_PLAIN, 20}, {AT_CONSTRICT, AF_CRUSH, 30},
+      AT_NO_ATK, AT_NO_ATK },
     { 6, 4, 6, 0 },
-    0, 5, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SHOUT,
+    1, 5, MST_NO_SPELLS, CE_CLEAN, Z_SMALL, S_SHOUT,
     I_NORMAL, HT_AMPHIBIOUS, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },

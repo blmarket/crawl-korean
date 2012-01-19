@@ -481,6 +481,7 @@ enum caction_type    // Primary categorization of counted actions.
     CACT_THROW,      // missile_type
     CACT_CAST,       // spell_type
     CACT_INVOKE,     // ability_type
+    CACT_ABIL,       // ability_type
     CACT_EVOKE,      // evoc_type
     CACT_USE,        // object_class_type
     NUM_CACTIONS,
@@ -1020,7 +1021,6 @@ enum description_level_type
 
 enum evoc_type
 {
-    EVOC_ABIL,
     EVOC_WAND,
     EVOC_ROD,
     EVOC_DECK,
@@ -1807,6 +1807,8 @@ enum killer_type                       // monster_die(), thing_thrown
     KILL_BANISHED,                     // monsters what got banished
     KILL_UNSUMMONED,                   // summoned monsters whose timers ran out
     KILL_TIMEOUT,                      // non-summoned monsters whose times ran out
+    KILL_PACIFIED,                     // only used by milestones and notes
+    KILL_ENSLAVED,                     // only used by milestones and notes
 };
 
 enum flight_type
@@ -2494,7 +2496,9 @@ enum monster_type                      // (int) menv[].type
     MONS_CRAWLING_CORPSE,
     MONS_MACABRE_MASS,
     MONS_SERAPH,
+#if TAG_MAJOR_VERSION == 32
     MONS_SUBTRACTOR_SNAKE,
+#endif
 
     NUM_MONSTERS,                      // used for polymorph
 
@@ -2703,6 +2707,7 @@ enum mutation_type
     MUT_FOUL_STENCH,
 #endif
     MUT_EVOLUTION,
+    MUT_AUGMENTATION,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION,
@@ -3641,6 +3646,7 @@ enum tile_flags
     TILE_FLAG_STICKY_FLAME = 0x00200000,
     TILE_FLAG_BERSERK    = 0x00400000,
     TILE_FLAG_INNER_FLAME= 0x40000000,
+    TILE_FLAG_CONSTRICTED= 0x80000000,
 
     // MDAM has 5 possibilities, so uses 3 bits.
     TILE_FLAG_MDAM_MASK  = 0x03800000,

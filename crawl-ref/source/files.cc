@@ -324,9 +324,13 @@ bool is_newer(const std::string &a, const std::string &b)
     return (file_modtime(a) > file_modtime(b));
 }
 
-static int _create_directory(const char *dir)
+static bool _create_directory(const char *dir)
 {
-    return mkdir_u(dir, 0755);
+    if (!mkdir_u(dir, 0755))
+        return true;
+    if (errno == EEXIST) // might be not a directory
+        return dir_exists(dir);
+    return false;
 }
 
 static bool _create_dirs(const std::string &dir)
@@ -349,7 +353,7 @@ static bool _create_dirs(const std::string &dir)
         if (i == 0 && dir.size() && dir[0] == FILE_SEPARATOR)
             path = FILE_SEPARATOR + path;
 
-        if (!dir_exists(path) && _create_directory(path.c_str()))
+        if (!_create_directory(path.c_str()))
             return (false);
 
         path += FILE_SEPARATOR;
@@ -609,12 +613,6 @@ static void _fill_player_doll(player_save_info &p, package *save)
             tilep_scan_parts(fbuf, equip_doll, p.species, p.experience_level);
             tilep_race_default(p.species, p.experience_level, &equip_doll);
             success = true;
-
-            while (_readln(fdoll, fbuf))
-            {
-                if (strcmp(fbuf, "net") == 0)
-                    p.held_in_net = true;
-            }
         }
     }
 
@@ -961,12 +959,12 @@ static bool _grab_follower_at(const coord_def &pos)
     if (pos == you.pos())
         return (false);
 
-    monster* fmenv = monster_at(pos);
-    if (!fmenv || !fmenv->alive())
+    monster* fol = monster_at(pos);
+    if (!fol || !fol->alive())
         return (false);
 
     // The monster has to already be tagged in order to follow.
-    if (!testbits(fmenv->flags, MF_TAKING_STAIRS))
+    if (!testbits(fol->flags, MF_TAKING_STAIRS))
         return (false);
 
     // If a monster that can't use stairs was marked as a follower,
@@ -974,19 +972,19 @@ static bool _grab_follower_at(const coord_def &pos)
     // behind it that might want to push through.
     // This means we don't actually send it on transit, but we do
     // return true, so adjacent real followers are handled correctly. (jpeg)
-    if (!mons_can_use_stairs(fmenv))
+    if (!mons_can_use_stairs(fol))
         return (true);
 
     level_id dest = level_id::current();
     if (you.char_direction == GDT_GAME_START)
         dest.depth = 1;
 
-    dprf("%s is following to %s.", fmenv->name(DESC_THE, true).c_str(),
+    dprf("%s is following to %s.", fol->name(DESC_THE, true).c_str(),
          dest.describe().c_str());
-    bool could_see = you.can_see(fmenv);
-    fmenv->set_transit(dest);
-    fmenv->destroy_inventory();
-    monster_cleanup(fmenv);
+    bool could_see = you.can_see(fol);
+    fol->set_transit(dest);
+    fol->destroy_inventory();
+    monster_cleanup(fol);
     if (could_see)
         view_update_at(pos);
     return (true);
@@ -1003,25 +1001,25 @@ static void _grab_followers()
     // Handle nearby ghosts.
     for (adjacent_iterator ai(you.pos()); ai; ++ai)
     {
-        monster* fmenv = monster_at(*ai);
-        if (fmenv == NULL)
+        monster* fol = monster_at(*ai);
+        if (fol == NULL)
             continue;
 
-        if (mons_is_duvessa(fmenv) && fmenv->alive())
-            duvessa = fmenv;
+        if (mons_is_duvessa(fol) && fol->alive())
+            duvessa = fol;
 
-        if (mons_is_dowan(fmenv) && fmenv->alive())
-            dowan = fmenv;
+        if (mons_is_dowan(fol) && fol->alive())
+            dowan = fol;
 
-        if (fmenv->wont_attack() && !mons_can_use_stairs(fmenv))
+        if (fol->wont_attack() && !mons_can_use_stairs(fol))
             non_stair_using_allies++;
 
-        if (fmenv->type == MONS_PLAYER_GHOST
-            && fmenv->hit_points < fmenv->max_hit_points / 2)
+        if (fol->type == MONS_PLAYER_GHOST
+            && fol->hit_points < fol->max_hit_points / 2)
         {
-            if (fmenv->visible_to(&you))
+            if (fol->visible_to(&you))
                 mpr("The ghost fades into the shadows.");
-            monster_teleport(fmenv, true);
+            monster_teleport(fol, true);
         }
     }
 

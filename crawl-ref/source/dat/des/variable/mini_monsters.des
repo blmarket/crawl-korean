@@ -272,6 +272,7 @@ NAME:   minmay_brainsmasher
 DEPTH:  D:8-26
 WEIGHT: 3
 MONS:   brain worm
+KFEAT:  n = iron_grate
 MAP
   .....
  .......
@@ -1250,6 +1251,88 @@ MAP
 ...............
 ENDMAP
 
+NAME:   evilmike_dwarf_trog_shrine
+DEPTH:  D:14-23, Vault, Elf
+MONS:   deep dwarf berserker
+: if you.absdepth() < 19 then
+NSUBST: 1 = 2:2 / *:1
+: end
+SUBST:  2 = 1'
+KMONS:  _ = deep dwarf berserker
+KFEAT:  _ = altar_trog
+SUBST:  C : c', B : +', D : +', E : +c
+SUBST:  = = ccc=
+FTILE:  *|_1+'c = floor_hall
+FTILE:  # = floor_rough_lightred
+MARKER:  # = lua:fog_machine { cloud_type = "flame", \
+                pow_min = 10, pow_max = 10, delay = 10, \
+                size = 1, walk_dist = 0, start_clouds = 1 }
+SUBST:  '# = .
+MAP
+.................
+.ccccccccccccccc.
+.ccccc#ccc#ccccc.
+.c*1''''_''''1|c.
+.c'''''''''''''c.
+.c''''''C''''''c.
+.ccccccBcBcccccc.
+....ccc'C'ccc....
+   ..cc'''cc..
+    ..='2'=..
+   ..cc'''cc..
+ ...ccc'c'ccc...
+ .cccccDcDccccc.
+ .c'''''c'''''c.
+ .c'''c'''c'''c.
+ .c'1'c'''c'1'c.
+ .cccccE+Eccccc.
+ .ccc#c...c#ccc.
+ ...............
+   .....@.....
+ENDMAP
+
+NAME:   evilmike_dwarf_pyromaniacs
+DEPTH:  D:13-22, Vault, Elf
+MONS:   deep dwarf artificer ; w:5 wand of flame | wand of fire
+MONS:   stone golem name:experimental n_adj perm_ench:inner_flame
+KMONS:  3 = fire elemental
+KITEM:  3 = gold, gold, gold, gold, star_item
+SUBST:  4 = 2.
+MAP
+     xxxxxx
+    xx....x
+   xx....1x
+   x....2%x
+   x...xxxxxxx
+   x...xxxx.xx
+xxxxx+xxxx..1xxxxxx
+x......xx....2xbbbx
++....1.+......4=3bx
+x......xx....2xbbbx
+xxxxx+xxxx..1xxxxxx
+   x...xxxx.xx
+   x...xxxxxxx
+   x....2%x
+   xx....1x
+    xx....x
+     xxxxxx
+ENDMAP
+
+NAME: lookout_dungeons_type
+DEPTH: D:4-14
+TAGS: extra no_pool_fixup layout_rooms layout_city
+MONS: w:1 generate_awake centaur / w:4 nothing
+MAP
+....@....
+.........
+.........
+...www...
+...w1w...
+...x+x...
+   x.x
+   x=x
+    @
+ENDMAP
 
 ################################################################################
 #

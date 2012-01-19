@@ -203,7 +203,7 @@ void reader::fail_if_not_eof(const std::string &name)
         _file ? (fgetc(_file) != EOF) :
         _read_offset >= _pbuf->size())
     {
-        fail(("Incomplete read of \"" + name + "\" - aborting.").c_str());
+        fail("Incomplete read of \"%s\" - aborting.", name.c_str());
     }
 }
 
@@ -1153,6 +1153,7 @@ static void tag_construct_you(writer &th)
     {
         marshallUByte(th, you.skills[j]);
         marshallByte(th, you.train[j]);
+        marshallByte(th, you.train_alt[j]);
         marshallInt(th, you.training[j]);
 #if TAG_MAJOR_VERSION == 32
         marshallBoolean(th, you.can_train[j]);
@@ -1319,15 +1320,18 @@ static void tag_construct_you(writer &th)
 
     marshallCoord(th, abyssal_state.major_coord);
     marshallFloat(th, abyssal_state.depth);
+    marshallFloat(th, abyssal_state.phase);
 
     marshallShort(th, you.constricted_by);
     marshallInt(th, you.escape_attempts);
     marshallInt(th, you.dur_been_constricted);
-    for (unsigned int k = 0; k < 8; k++)
+    for (unsigned int k = 0; k < MAX_CONSTRICT; k++)
     {
         marshallShort(th, you.constricting[k]);
         marshallInt(th, you.dur_has_constricted[k]);
     }
+
+    marshallUByte(th, you.octopus_king_rings);
 
     if (!dlua.callfn("dgn_save_data", "u", &th))
         mprf(MSGCH_ERROR, "Failed to save Lua data: %s", dlua.error.c_str());
@@ -2070,6 +2074,10 @@ static void tag_read_you(reader &th)
         {
 #endif
             you.train[j]    = unmarshallByte(th);
+#if TAG_MAJOR_VERSION == 32
+            if (th.getMinorVersion() >= TAG_MINOR_SKILL_MODE_STATE)
+#endif
+                you.train_alt[j]    = unmarshallByte(th);
             you.training[j] = unmarshallInt(th);
 #if TAG_MAJOR_VERSION == 32
         }
@@ -2098,6 +2106,18 @@ static void tag_read_you(reader &th)
     {
 #endif
         you.auto_training = unmarshallBoolean(th);
+
+#if TAG_MAJOR_VERSION == 32
+    for (i = 0; i < NUM_SKILLS; i++)
+        if (th.getMinorVersion() < TAG_MINOR_SKILL_MODE_STATE)
+        {
+            if (you.can_train[i] && you.skill_points[i])
+                you.train_alt[i] = you.train[i];
+            else
+                you.train_alt[i] = !you.auto_training;
+        }
+#endif
+
         count = unmarshallByte(th);
         for (i = 0; i < count; i++)
             you.exercises.push_back((skill_type)unmarshallInt(th));
@@ -2180,6 +2200,8 @@ static void tag_read_you(reader &th)
         you.mutation[j] = you.innate_mutations[j] = 0;
 
 #if TAG_MAJOR_VERSION == 32
+    if (you.mutation[MUT_DEFORMED] > 1)
+        you.mutation[MUT_DEFORMED] = 1;
     if (th.getMinorVersion() < TAG_MINOR_SPECIES_HP_NO_MUT)
     {
         you.mutation[MUT_FRAIL] -= you.innate_mutations[MUT_FRAIL];
@@ -2255,8 +2277,11 @@ static void tag_read_you(reader &th)
 
     you.hell_exit      = unmarshallByte(th);
     you.hell_branch = static_cast<branch_type>(unmarshallByte(th));
-    ASSERT(you.hell_branch <= NUM_BRANCHES);
-    ASSERT(you.hell_branch != NUM_BRANCHES || !player_in_hell());
+#if TAG_MAJOR_VERSION == 32
+    if (you.hell_branch == NUM_BRANCHES)
+        you.hell_branch = BRANCH_MAIN_DUNGEON;
+#endif
+    ASSERT(you.hell_branch < NUM_BRANCHES);
 
 #if TAG_MAJOR_VERSION == 32
     if (th.getMinorVersion() >= TAG_MINOR_ASH_PENANCE)
@@ -2351,6 +2376,24 @@ static void tag_read_you(reader &th)
     {
         caction_type caction = (caction_type)unmarshallShort(th);
         int subtype = unmarshallInt(th);
+#if TAG_MAJOR_VERSION == 32
+        if (th.getMinorVersion() < TAG_MINOR_ABILITY_COUNTS)
+        {
+            if (caction >= CACT_ABIL)
+                caction = (caction_type)((int)caction + 1);
+            if (caction == CACT_EVOKE)
+            {
+                if (!subtype)
+                {
+                    for (j = 0; j < 27; j++)
+                        (void) unmarshallInt(th);
+                    continue;
+                }
+                else
+                    subtype--;
+            }
+        }
+#endif
         for (j = 0; j < 27; j++)
             you.action_count[std::pair<caction_type, int>(caction, subtype)][j] = unmarshallInt(th);
     }
@@ -2363,6 +2406,10 @@ static void tag_read_you(reader &th)
     abyssal_state.depth = unmarshallFloat(th);
 #if TAG_MAJOR_VERSION == 32
     }
+    if (th.getMinorVersion() >= TAG_MINOR_ABYSS_PHASE)
+#endif
+    abyssal_state.phase = unmarshallFloat(th);
+#if TAG_MAJOR_VERSION == 32
 
     if (th.getMinorVersion() >= TAG_MINOR_CONSTRICTION)
     {
@@ -2370,14 +2417,20 @@ static void tag_read_you(reader &th)
     you.constricted_by = unmarshallShort(th);
     you.escape_attempts = unmarshallInt(th);
     you.dur_been_constricted = unmarshallInt(th);
-    for (unsigned int k = 0; k < 8; k++)
+    for (unsigned int k = 0; k < MAX_CONSTRICT; k++)
     {
         you.constricting[k] = unmarshallShort(th);
         you.dur_has_constricted[k] = unmarshallInt(th);
     }
 #if TAG_MAJOR_VERSION == 32
     }
+
+    if (th.getMinorVersion() < TAG_MINOR_OCTO_RING)
+        you.octopus_king_rings = 0;
+    else
 #endif
+    you.octopus_king_rings = unmarshallUByte(th);
+
 
     if (!dlua.callfn("dgn_load_data", "u", &th))
         mprf(MSGCH_ERROR, "Failed to load Lua persist table: %s",
@@ -3164,7 +3217,7 @@ void marshallMonster(writer &th, const monster& m)
     marshallShort(th, m.constricted_by);
     marshallInt(th, m.escape_attempts);
     marshallInt(th, m.dur_been_constricted);
-    for (unsigned int k = 0; k < 8; k++)
+    for (unsigned int k = 0; k < MAX_CONSTRICT; k++)
     {
         marshallShort(th, m.constricting[k]);
         marshallInt(th, m.dur_has_constricted[k]);
@@ -3307,6 +3360,10 @@ void unmarshallMonsterInfo(reader &th, monster_info& mi)
     if (th.getMinorVersion() >= TAG_MINOR_MINFO_PROP)
 #endif
         mi.props.read(th);
+#if TAG_MAJOR_VERSION == 32
+    if (mi.props.exists("mislead_as") && mi.props["mislead_as"].get_type() != SV_MONST)
+        mi.props.erase("mislead_as");
+#endif
 }
 
 static void tag_construct_level_monsters(writer &th)
@@ -3699,7 +3756,7 @@ void unmarshallMonster(reader &th, monster& m)
     m.constricted_by = unmarshallShort(th);
     m.escape_attempts = unmarshallInt(th);
     m.dur_been_constricted = unmarshallInt(th);
-    for (unsigned int k = 0; k < 8; k++)
+    for (unsigned int k = 0; k < MAX_CONSTRICT; k++)
     {
         m.constricting[k] = unmarshallShort(th);
         m.dur_has_constricted[k] = unmarshallInt(th);
@@ -3726,6 +3783,10 @@ void unmarshallMonster(reader &th, monster& m)
         else // Update monster tile.
             m.props["monster_tile"] = short(index);
     }
+#if TAG_MAJOR_VERSION == 32
+    if (m.props.exists("mislead_as") && m.props["mislead_as"].get_type() != SV_MONST)
+        m.props.erase("mislead_as");
+#endif
 
     m.check_speed();
 }
@@ -3737,6 +3798,7 @@ static void tag_read_level_monsters(reader &th)
 
     for (i = 0; i < MAX_MONSTERS; i++)
         menv[i].reset();
+    env.mid_cache.clear();
 
     // how many mons_alloc?
     count = unmarshallByte(th);
@@ -3760,6 +3822,7 @@ static void tag_read_level_monsters(reader &th)
         // place monster
         if (m.alive())
         {
+            env.mid_cache[m.mid] = i;
 #if defined(DEBUG) || defined(DEBUG_MONS_SCAN)
             if (invalid_monster_type(m.type))
             {
@@ -3893,32 +3956,24 @@ void tag_read_level_tiles(reader &th)
     _debug_count_tiles();
 
 #if TAG_MAJOR_VERSION == 32
-# ifdef USE_TILE
     if (th.getMinorVersion() < TAG_MINOR_LESS_TILE_DATA)
     {
-        mcache.read(th);
-        if (th.getMinorVersion() >= TAG_MINOR_MONSTER_TILES)
-            unmarshallInt(th); // TILEP_PLAYER_MAX
+        // Snarf all remaining data, throwing it out.
+        // There's no need to read the mcache just to discard it, the only thing
+        // after mcache is TILE_WALL_MAX which is guaranteed to not match anyway.
+        try
+        {
+            while (1)
+                unmarshallByte(th);
+        }
+        catch (short_read_exception &E)
+        {
+        }
+        dprf("An ancient save, can't check DNGN tilecount; recreating tile data.");
+        tag_missing_level_tiles();
+        tag_init_tile_bk();
+        return;
     }
-    mcache.clear_all();
-# else
-    // Snarf all remaining data, throwing it out.
-    // Console builds don't know of old mcache formats, it'd be too much work
-    // to properly skip it.  Instead, we snarf the remaining data and throw it
-    // out.  The only thing after mcache is TILE_WALL_MAX, and it's guaranteed
-    // it won't match anyway.
-    try
-    {
-        while (1)
-            unmarshallByte(th);
-    }
-    catch (short_read_exception &E)
-    {
-    }
-    dprf("An ancient save, can't check DNGN tilecount; recreating tile data.");
-    tag_missing_level_tiles();
-    return;
-# endif
 #endif
 
     if (unmarshallInt(th) != TILE_WALL_MAX)

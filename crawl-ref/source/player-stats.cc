@@ -207,7 +207,7 @@ static kill_method_type _statloss_killtype(stat_type stat)
     }
 }
 
-const char* descs[NUM_STATS][NUM_STAT_DESCS] = {
+static const char* descs[NUM_STATS][NUM_STAT_DESCS] = {
     { M_("strength"), P_("stat", "weakened"), P_("stat", "weaker"), P_("stat", "stronger") },
     { M_("intelligence"), P_("stat", "dopey"), P_("stat", "stupid"), P_("stat", "clever") },
     { M_("dexterity"), P_("stat", "clumsy"), P_("stat", "clumsy"), P_("stat", "agile") }

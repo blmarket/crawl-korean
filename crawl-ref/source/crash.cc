@@ -62,10 +62,12 @@ template <typename TO, typename FROM> TO nasty_cast(FROM f)
 
 #include "externs.h"
 #include "files.h"
+#include "initfile.h"
 #include "options.h"
 #include "state.h"
 #include "stuff.h"
-#include "initfile.h"
+#include "syscalls.h"
+#include "threads.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Code for printing out debugging info on a crash.
@@ -73,9 +75,23 @@ template <typename TO, typename FROM> TO nasty_cast(FROM f)
 #ifdef USE_UNIX_SIGNALS
 static int _crash_signal    = 0;
 static int _recursion_depth = 0;
+static mutex_t crash_mutex;
 
 static void _crash_signal_handler(int sig_num)
 {
+    // We rely on mutexes ignoring locks held by the same thread.
+    // On some platforms, this must be explicitely enabled (which we do).
+
+    // This mutex is never unlocked again -- the first thread to crash will
+    // do a dump then terminate the process while everyone else waits here
+    // forever.
+
+    // XXX: This is a bit dangerous: if we catch a signal while any
+    // non-asynch-signal-safe function is executing, and then call
+    // pthread_mutex_lock() (which is also not asynch-signal-safe),
+    // the behaviour is undefined.
+    mutex_lock(crash_mutex);
+
     if (crawl_state.game_crashed)
     {
         if (_recursion_depth > 0)
@@ -117,9 +133,8 @@ static void _crash_signal_handler(int sig_num)
     // internally.
     // There's no reliable way to ensure such things won't happen.  A pragmatic
     // solution is to abort the crash dump.
-#ifdef UNIX
     alarm(5);
-#endif
+
     // In case the crash dumper is unable to open a file and has to dump
     // to stderr.
 #ifndef USE_TILE_LOCAL
@@ -143,6 +158,8 @@ static void _crash_signal_handler(int sig_num)
 
 void init_crash_handler()
 {
+    mutex_init(crash_mutex);
+
 #if defined(USE_UNIX_SIGNALS)
 
     for (int i = 1; i <= 64; i++)
@@ -316,3 +333,11 @@ void write_stack_trace(FILE* file, int ignore_count)
     fprintf(file, "%s", msg);
 }
 #endif
+
+void disable_other_crashes()
+{
+    // If one thread calls end() without going through a crash (a handled
+    // fatal error), no one else should be allowed to crash.  We're already
+    // going down so blocking the other thread is ok.
+    mutex_lock(crash_mutex);
+}

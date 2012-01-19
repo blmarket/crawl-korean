@@ -139,7 +139,11 @@ public:
     // Has ENCH_SHAPESHIFTER or ENCH_GLOWING_SHAPESHIFTER.
     bool is_shapeshifter() const;
 
+#ifdef DEBUG_DIAGNOSTICS
+    bool has_ench(enchant_type ench) const; // same but validated
+#else
     bool has_ench(enchant_type ench) const { return ench_cache[ench]; }
+#endif
     bool has_ench(enchant_type ench, enchant_type ench2) const;
     mon_enchant get_ench(enchant_type ench,
                          enchant_type ench2 = ENCH_NONE) const;
@@ -292,7 +296,7 @@ public:
     void banish(const std::string &who = "");
     void expose_to_element(beam_type element, int strength = 0);
 
-    int mons_species() const;
+    int mons_species(bool zombie_base = false) const;
 
     mon_holy_type holiness() const;
     bool undead_or_demonic() const;
@@ -445,12 +449,8 @@ public:
     void calc_speed();
     void accum_been_constricted();
     void accum_has_constricted();
-    bool is_constricted_larger();
-    bool is_constricted();
     bool attempt_escape();
-    void clear_all_constrictions();
-    void clear_specific_constrictions(int mindex);
-    bool has_usable_tentacle();
+    bool has_usable_tentacle() const;
 
 private:
     void init_with(const monster& mons);

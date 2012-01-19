@@ -513,28 +513,15 @@ void do_curse_item(item_def &item, bool quiet)
     {
         if (!quiet)
         {
-            mprf("Your %s glows black briefly, but repels the curse.",
+            mprf(gettext("Your %s glows black briefly, but repels the curse."),
                  item.name(true, DESC_PLAIN).c_str());
-        }
-        return;
-    }
-
-    // Neither can pearl dragon hides
-    if (item.base_type == OBJ_ARMOUR
-        && (item.sub_type == ARM_PEARL_DRAGON_HIDE
-            || item.sub_type == ARM_PEARL_DRAGON_ARMOUR))
-    {
-        if (!quiet)
-        {
-            mprf("Your %s glows black briefly, but repels the curse.",
-                item.name(true, DESC_PLAIN).c_str());
         }
         return;
     }
 
     if (!quiet)
     {
-        mprf("Your %s glows black for a moment.",
+        mprf(gettext("Your %s glows black for a moment."),
              item.name(true, DESC_PLAIN).c_str());
 
         // If we get the message, we know the item is cursed now.
@@ -1904,9 +1891,6 @@ static bool _item_is_swappable(const item_def &item, equipment_type slot, bool s
                 || item.sub_type == AMU_GUARDIAN_SPIRIT
                 || (item.sub_type == RING_MAGICAL_POWER && !swap_in));
     }
-
-    if (item.base_type == OBJ_STAVES && item.sub_type == STAFF_POWER && !swap_in)
-        return false;
 
     const brand_type brand = get_weapon_brand(item);
     return (brand != SPWPN_DISTORTION

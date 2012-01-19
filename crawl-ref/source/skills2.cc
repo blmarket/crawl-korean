@@ -69,7 +69,7 @@ typedef skill_title_key_t stk;
 // intended for cases where things might be really awkward without it. -- bwr
 
 // NOTE: If a skill name is changed, remember to also adapt the database entry.
-const char *skills[NUM_SKILLS][6] =
+static const char *skills[NUM_SKILLS][6] =
 {
   //  Skill name        levels 1-7       levels 8-14        levels 15-20       levels 21-26      level 27
     {M_("Fighting"),       M_("Skirmisher"),    M_("Fighter"),         M_("Warrior"),         M_("Slayer"),         M_("Conqueror")},
@@ -113,9 +113,9 @@ const char *skills[NUM_SKILLS][6] =
     {M_("Evocations"),     M_("Charlatan"),     M_("Prestidigitator"), M_("Fetichist"),       M_("Evocator"),       M_("Talismancer")},
 };
 
-const char *martial_arts_titles[6] =
+static const char *martial_arts_titles[6] =
     {M_("Unarmed Combat"), M_("Insei"), M_("Martial Artist"), M_("Black Belt"), M_("Sensei"), M_("Grand Master")};
-const char *claw_and_tooth_titles[6] =
+static const char *claw_and_tooth_titles[6] =
     {M_("Unarmed Combat"), M_("Scratcher"), M_("Gouger"), M_("Ripper"), M_("Eviscerator"), M_("Sabretooth")};
 
 struct species_skill_aptitude

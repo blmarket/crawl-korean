@@ -40,13 +40,14 @@ void MemoriseRegion::draw_tag()
         return;
 
     const spell_type spell = (spell_type) idx;
-    /// 1. spell_title 2. failure_rate 3. level required 4. cur levels 5. s or not
-    std::string desc = make_stringf(gettext("%s    (%s)    %d/%d spell slot%s"),
-                                    gettext(spell_title(spell)),
-                                    gettext(failure_rate_to_string(spell_fail(spell))),
+    char* failure = failure_rate_to_string(spell_fail(spell));
+    std::string desc = make_stringf(_("%s    (%s)    %d/%d spell slot%s"),
+                                    spell_title(spell),
+                                    _(failure),
                                     spell_levels_required(spell),
                                     player_spell_levels(),
                                     spell_levels_required(spell) > 1 ? "s" : "");
+    free(failure);
     draw_desc(desc.c_str());
 }
 

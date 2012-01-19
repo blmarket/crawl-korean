@@ -3067,6 +3067,12 @@ bool item_is_melded(const item_def& item)
     return (eq != EQ_NONE && you.melded[eq]);
 }
 
+bool item_is_active_manual(const item_def &item)
+{
+    return (item.base_type == OBJ_BOOKS && item.sub_type == BOOK_MANUAL
+            && in_inventory(item) && item.link == you.manual_index);
+}
+
 ////////////////////////////////////////////////////////////////////////
 // item_def functions.
 
@@ -3645,8 +3651,7 @@ bool get_item_by_name(item_def *item, char* specs,
         else if (type_wanted == BOOK_RANDART_LEVEL)
         {
             int level = random_range(1, 9);
-            int max_spells = 5 + level/3;
-            make_book_level_randart(*item, level, max_spells);
+            make_book_level_randart(*item, level);
         }
         break;
 
@@ -3781,11 +3786,19 @@ item_info get_item_info(const item_def& item)
         ii.pos = coord_def(-1, -1);
     }
     else
-        ii.pos = grid2player(item.pos);
+        ii.pos = item.pos;
 
     // keep god number
     if (item.orig_monnum < 0)
         ii.orig_monnum = item.orig_monnum;
+
+    if (is_unrandom_artefact(item) && !is_randapp_artefact(item))
+    {
+        // Unrandart index
+        // Since the appearance of unrandarts is fixed anyway, this
+        // is not an information leak.
+        ii.special = item.special;
+    }
 
     switch (item.base_type)
     {
@@ -3935,6 +3948,8 @@ item_info get_item_info(const item_def& item)
 
     if (item_type_known(item))
     {
+        ii.flags |= ISFLAG_KNOW_TYPE;
+
         if (item.props.exists(ARTEFACT_NAME_KEY))
             ii.props[ARTEFACT_NAME_KEY] = item.props[ARTEFACT_NAME_KEY];
     }

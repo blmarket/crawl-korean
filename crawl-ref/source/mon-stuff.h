@@ -78,6 +78,9 @@ bool monster_polymorph(monster* mons, monster_type targetc,
                        poly_power_type power = PPT_SAME,
                        bool force_beh = false);
 
+int monster_die(monster* mons, actor *killer, bool silent = false,
+                bool wizard = false, bool fake = false);
+
 int monster_die(monster* mons, killer_type killer,
                 int killer_index, bool silent = false, bool wizard = false,
                 bool fake = false);
@@ -185,8 +188,6 @@ bool monster_random_space(monster_type mon, coord_def& target,
 bool shove_monster(monster* mons);
 void monster_teleport(monster* mons, bool instan, bool silent = false);
 void mons_clear_trapping_net(monster* mon);
-void monster_teleport_to_player(int mindex, coord_def playerpos);
-void player_teleport_to_monster(monster *mons, coord_def playerpos);
 
 std::string summoned_poof_msg(const monster* mons, bool plural = false);
 std::string summoned_poof_msg(const int midx, const item_def &item);
@@ -208,6 +209,7 @@ void debuff_monster(monster* mons);
 int exp_rate(int killer);
 int count_monsters(monster_type mtyp, bool friendlyOnly);
 int count_allies();
+void record_monster_defeat(monster* mons, killer_type killer);
 #if TAG_MAJOR_VERSION <= 33
 void note_montiers();
 #endif

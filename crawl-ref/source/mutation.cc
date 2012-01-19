@@ -24,7 +24,6 @@
 #include "delay.h"
 #include "defines.h"
 #include "dactions.h"
-#include "coord.h"
 #include "effects.h"
 #include "env.h"
 #include "format.h"
@@ -53,7 +52,7 @@
 
 static int _body_covered();
 
-mutation_def mut_data[] = {
+static mutation_def mut_data[] = {
 
 #include "mutation-data.h"
 
@@ -369,6 +368,9 @@ std::string describe_mutations()
         // Breathe poison replaces spit poison.
         if (!player_mutation_level(MUT_BREATHE_POISON))
             result += gettext("You can spit poison.\n");
+        result += _annotate_form_based(
+            gettext("You can use your snake-like lower body to constrict enemies."),
+            !form_keeps_mutations());
 
         if (you.experience_level > 2)
         {
@@ -552,14 +554,12 @@ std::string describe_mutations()
 
 		//무너무너
     case SP_OCTOPODE:
-
-		//result += "You cannot wear most types of armour.\n";
-        //result += "You can wear up to eight rings at the same time.\n";
-        //result += "You are amphibious.\n";
-		
-        result += "당신은 대부분의 갑옷을 입을 수 없다.\n";
-        result += "당신은 동시에 8개의 반지를 착용할 수 있다.\n";
-        result += "당신은 수륙양용이다.\n";
+        result += gettext("You cannot wear most types of armour.\n");
+        result += gettext("You can wear up to eight rings at the same time.\n");
+        result += gettext("You are amphibious.\n");
+        result += _annotate_form_based(
+            gettext("You can use your tentacles to constrict many enemies at once."),
+            !form_keeps_mutations());
         have_any = true;
         break;
 
@@ -1735,15 +1735,7 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         result = ostr.str();
     }
     else if (mut == MUT_DEFORMED && is_useless_skill(SK_ARMOUR))
-    {
-        switch (level)
-        {
-        case 1: result = ""; break;
-        case 2: result = "very "; break;
-        case 3: result = "horribly "; break;
-        }
-        result = "Your body is " + result + "strangely shaped.";
-    }
+        result = "Your body is misshapen.";
     else if (result.empty() && level > 0)
         result = gettext(mdef.have[level - 1]);
 
@@ -1848,6 +1840,8 @@ static const facet_def _demon_facets[] =
       { 3, 3, 3 } },
     { 3, { MUT_STOCHASTIC_TORMENT_RESISTANCE, MUT_STOCHASTIC_TORMENT_RESISTANCE,
           MUT_STOCHASTIC_TORMENT_RESISTANCE },
+      { 3, 3, 3 } },
+    { 3, { MUT_AUGMENTATION, MUT_AUGMENTATION, MUT_AUGMENTATION },
       { 3, 3, 3 } },
     // Tier 2 facets
     { 2, { MUT_CONSERVE_SCROLLS, MUT_HEAT_RESISTANCE, MUT_IGNITE_BLOOD },
@@ -2263,17 +2257,17 @@ void check_demonic_guardian()
             die("병약한 악마 수호자의 레벨 : %d", mutlevel);
         }
 
-        const int guardian = create_monster(mgen_data(mt, BEH_FRIENDLY, &you,
-                                                      2, 0, you.pos(),
-                                                      MHITYOU, MG_FORCE_BEH));
+        monster *guardian = create_monster(mgen_data(mt, BEH_FRIENDLY, &you,
+                                                     2, 0, you.pos(),
+                                                     MHITYOU, MG_FORCE_BEH));
 
-        if (guardian == -1)
+        if (!guardian)
             return;
 
-        menv[guardian].flags |= MF_NO_REWARD;
-        menv[guardian].flags |= MF_DEMONIC_GUARDIAN;
+        guardian->flags |= MF_NO_REWARD;
+        guardian->flags |= MF_DEMONIC_GUARDIAN;
 
-        menv[guardian].add_ench(ENCH_LIFE_TIMER);
+        guardian->add_ench(ENCH_LIFE_TIMER);
 
         // no more guardians for mutlevel+1 to mutlevel+20 turns
         you.duration[DUR_DEMONIC_GUARDIAN] = 10*(mutlevel + random2(20));
@@ -2363,4 +2357,18 @@ int handle_pbd_corpses(bool do_rot)
     }
 
     return (corpse_count);
+}
+
+int augmentation_amount()
+{
+    int amount = 0;
+    const int level = player_mutation_level(MUT_AUGMENTATION) + 1;
+
+    for (int i = 1; i < level; ++i)
+    {
+        if (you.hp <= (i * you.hp_max) / level)
+            amount++;
+    }
+
+    return amount;
 }

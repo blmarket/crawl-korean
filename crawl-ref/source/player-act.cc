@@ -70,6 +70,8 @@ void player::moveto(const coord_def &c, bool clear_net)
     crawl_view.set_player_at(c);
     set_position(c);
 
+    clear_far_constrictions();
+
     if (player_has_orb())
     {
         env.orb_pos = c;
@@ -130,7 +132,8 @@ bool player::extra_balanced() const
     return (grid == DNGN_SHALLOW_WATER
              && (species == SP_NAGA                      // tails, not feet
                  || body_size(PSIZE_BODY) >= SIZE_LARGE)
-                    && !form_changed_physiology());
+                    && (form == TRAN_LICH || form == TRAN_STATUE
+                        || !form_changed_physiology()));
 }
 
 int player::get_experience_level() const

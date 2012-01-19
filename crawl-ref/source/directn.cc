@@ -871,7 +871,7 @@ void full_describe_view()
 
 #ifndef USE_TILE_LOCAL
 // XXX: Hack - can't pass mlist entries into _find_mlist().
-bool mlist_full_info;
+static bool mlist_full_info;
 std::vector<monster_info> mlist;
 static void _fill_monster_list(bool full_info)
 {
@@ -982,17 +982,11 @@ bool direction_chooser::move_is_ok() const
             // cancel_at_self == not allowed to target yourself
             // (SPFLAG_NOT_SELF)
 
-            if (cancel_at_self)
-            {
-                mpr(gettext("Sorry, you can't target yourself."), MSGCH_EXAMINE_FILTER);
-                return (false);
-            }
-
             if (!may_target_self && (mode == TARG_ENEMY
                                      || mode == TARG_HOSTILE
                                      || mode == TARG_HOSTILE_SUBMERGED))
             {
-                if (Options.allow_self_target == CONFIRM_CANCEL)
+                if (cancel_at_self || Options.allow_self_target == CONFIRM_CANCEL)
                 {
                     mpr(gettext("That would be overly suicidal."), MSGCH_EXAMINE_FILTER);
                     return (false);
@@ -1001,6 +995,12 @@ bool direction_chooser::move_is_ok() const
                 {
                     return yesno(gettext("Really target yourself?"), false, 'n');
                 }
+            }
+
+            if (cancel_at_self)
+            {
+                mpr("Sorry, you can't target yourself.", MSGCH_EXAMINE_FILTER);
+                return (false);
             }
         }
     }

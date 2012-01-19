@@ -24,7 +24,6 @@
 #include "cio.h"
 #include "cloud.h"
 #include "colour.h"
-#include "coord.h"
 #include "coordit.h"
 #include "delay.h"
 #include "dungeon.h"
@@ -1354,7 +1353,7 @@ void bolt::do_fire()
     if (item && !is_tracer && flavour == BEAM_MISSILE)
     {
         const coord_def diff = target - source;
-        tile_beam = tileidx_item_throw(*item, diff.x, diff.y);
+        tile_beam = tileidx_item_throw(get_item_info(*item), diff.x, diff.y);
     }
 #endif
 
@@ -2509,20 +2508,20 @@ void bolt::affect_ground()
             beh_type beh = attitude_creation_behavior(this->attitude);
 
             if (crawl_state.game_is_arena())
-            {
                 beh = coinflip() ? BEH_FRIENDLY : BEH_HOSTILE;
-            }
 
-            int rc = create_monster(mgen_data(MONS_BALLISTOMYCETE,
-                                              beh,
-                                              NULL,
-                                              0,
-                                              0,
-                                              pos(),
-                                              MHITNOT,
-                                              MG_FORCE_PLACE));
+            const god_type god = this->agent() ? this->agent()->deity()
+                                               : GOD_NO_GOD;
 
-            if (rc != -1)
+            if (create_monster(mgen_data(MONS_BALLISTOMYCETE,
+                                         beh,
+                                         NULL,
+                                         0,
+                                         0,
+                                         pos(),
+                                         MHITNOT,
+                                         MG_FORCE_PLACE,
+                                         god)))
             {
                 remove_mold(pos());
                 if (you.see_cell(pos()))
@@ -3254,7 +3253,10 @@ void bolt::affect_player_enchantment()
             mpr(gettext("This is polymorph other only!"));
         }
         else
+        {
             canned_msg(MSG_NOTHING_HAPPENS);
+            msg_generated = true; // to avoid duplicate "nothing happens"
+        }
         break;
 
     case BEAM_SLOW:
@@ -4068,15 +4070,17 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     if (dmg > 0 || !mon->wont_attack() || !YOU_KILL(thrower))
     {
         bool was_asleep = mon->asleep();
-        behaviour_event(mon, ME_ANNOY, beam_source_as_target());
+        special_missile_type m_brand = SPMSL_FORBID_BRAND;
+        if (item && item->base_type == OBJ_MISSILES)
+            m_brand = get_ammo_brand(*item);
+
+        // Don't immediately turn insane monsters hostile.
+        if (m_brand != SPMSL_RAGE)
+            behaviour_event(mon, ME_ANNOY, beam_source_as_target());
 
         // Don't allow needles of sleeping to awaken monsters.
-        if (item && item->base_type == OBJ_MISSILES
-            && get_ammo_brand(*item) == SPMSL_SLEEP
-            && was_asleep && !mon->asleep())
-        {
+        if (m_brand == SPMSL_SLEEP && was_asleep && !mon->asleep())
             mon->put_to_sleep(agent(), 0);
-        }
     }
 
     // Sticky flame.

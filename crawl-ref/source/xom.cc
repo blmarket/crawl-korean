@@ -14,7 +14,6 @@
 #include "artefact.h"
 #include "beam.h"
 #include "branch.h"
-#include "coord.h"
 #include "coordit.h"
 #include "database.h"
 #ifdef WIZARD
@@ -544,7 +543,7 @@ static bool _teleportation_check(const spell_type spell = SPELL_TELEPORT_SELF)
     {
     case SPELL_BLINK:
     case SPELL_TELEPORT_SELF:
-        return (!item_blocks_teleport(false, false));
+        return !item_blocks_teleport(false, false);
     default:
         return (true);
     }
@@ -1370,7 +1369,7 @@ static int _xom_send_allies(int sever, bool debug = false)
                                              0);
 
     std::vector<bool> is_demonic(numdemons, false);
-    std::vector<int> summons(numdemons);
+    std::vector<monster*> summons(numdemons);
 
     int num_actually_summoned = 0;
 
@@ -1387,7 +1386,7 @@ static int _xom_send_allies(int sever, bool debug = false)
 
         summons[i] = create_monster(mg);
 
-        if (summons[i] != -1)
+        if (summons[i])
         {
             num_actually_summoned++;
             is_demonic[i] = (mons_class_holiness(mon_type) == MH_DEMONIC);
@@ -1430,10 +1429,8 @@ static int _xom_send_allies(int sever, bool debug = false)
 
         for (int i = 0; i < numdemons; ++i)
         {
-            if (summons[i] == -1)
+            if (!summons[i])
                 continue;
-
-            monster* mon = &menv[summons[i]];
 
             if (hostiletype != 0)
             {
@@ -1442,13 +1439,13 @@ static int _xom_send_allies(int sever, bool debug = false)
                     || (is_demonic[i] && hostiletype == 1)
                     || (!is_demonic[i] && hostiletype == 2))
                 {
-                    mon->attitude = ATT_HOSTILE;
+                    summons[i]->attitude = ATT_HOSTILE;
                     // XXX need to reset summon quota here?
-                    behaviour_event(mon, ME_ALERT, MHITYOU);
+                    behaviour_event(summons[i], ME_ALERT, MHITYOU);
                 }
             }
 
-            player_angers_monster(mon);
+            player_angers_monster(summons[i]);
         }
 
         // Take a note.
@@ -1492,22 +1489,20 @@ static int _xom_send_one_ally(int sever, bool debug = false)
 
     mg.non_actor_summoner = "좀"; // "Xom"
 
-    const int summons = create_monster(mg);
-
-    if (summons != -1)
+    if (monster *summons = create_monster(mg))
     {
         if (different)
             god_speaks(GOD_XOM, _get_xom_speech("하나의 거룩한 소환").c_str());  //한마리 만 소환하는 것인듯? single holy summon
         else
             god_speaks(GOD_XOM, _get_xom_speech("하나의 소환").c_str()); //single summon
 
-        player_angers_monster(&menv[summons]);
+        player_angers_monster(summons);
 
         // Take a note.
         static char summ_buf[80];
-        snprintf(summ_buf, sizeof(summ_buf), "%s %s을 소환", // 소환을 한기만 하니까 적대적인 여부만 뽑나봅니다. 이름이랑."summons %s %s"
-                 beha == BEH_FRIENDLY ? "아군인" : "적대적인",//"friendly" : "hostile" 친근한 이지만 그냥 적대적인것과 아군 으로 의역
-                 menv[summons].name(DESC_PLAIN).c_str());
+        snprintf(summ_buf, sizeof(summ_buf), _("summons %s %s"),
+                 beha == BEH_FRIENDLY ? _(M_("friendly")) : _(M_("hostile")),
+                 summons->name(DESC_PLAIN).c_str());
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, summ_buf), true);
 
         return (XOM_GOOD_SINGLE_ALLY);
@@ -1988,9 +1983,9 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
 
     mg.non_actor_summoner = "좀"; //
 
-    const int mons = create_monster(mg);
+    monster *dancing = create_monster(mg);
 
-    if (mons == -1)
+    if (!dancing)
         return (XOM_DID_NOTHING);
 
     // Make the monster unwield its weapon.
@@ -2002,11 +1997,11 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
          apostrophise(mon->name(DESC_THE)).c_str(),
          mitm[wpn].name(true, DESC_PLAIN).c_str());
 
-    destroy_item(menv[mons].inv[MSLOT_WEAPON]);
+    destroy_item(dancing->inv[MSLOT_WEAPON]);
 
-    menv[mons].inv[MSLOT_WEAPON] = wpn;
-    mitm[wpn].set_holding_monster(mons);
-    menv[mons].colour = mitm[wpn].colour;
+    dancing->inv[MSLOT_WEAPON] = wpn;
+    mitm[wpn].set_holding_monster(dancing->mindex());
+    dancing->colour = mitm[wpn].colour;
 
     return (XOM_GOOD_ANIMATE_MON_WPN);
 }
@@ -2081,9 +2076,7 @@ static int _xom_send_major_ally(int sever, bool debug = false)
 
     mg.non_actor_summoner = "좀";
 
-    const int summons = create_monster(mg);
-
-    if (summons != -1)
+    if (monster *summons = create_monster(mg))
     {
         if (is_demonic)
         {
@@ -2096,13 +2089,13 @@ static int _xom_send_major_ally(int sever, bool debug = false)
                        _get_xom_speech("하나의 굉장히 거룩한 것을 소환하였다.").c_str()); //"single major holy summon")
         }
 
-        player_angers_monster(&menv[summons]);
+        player_angers_monster(summons);
 
         // Take a note.
         static char summ_buf[80];
-        snprintf(summ_buf, sizeof(summ_buf), "%s %s를 영구소환해서 보냈다.", // 음? 영구적인 칭구소환인듯  "sends permanent %s %s"
-                 beha == BEH_FRIENDLY ? "아군의" : "적대적인",//friendly" : "hostile"
-                 menv[summons].name(DESC_PLAIN).c_str());
+        snprintf(summ_buf, sizeof(summ_buf), _("sends permanent %s %s"),
+                 beha == BEH_FRIENDLY ? _(M_("friendly")) : _(M_("hostile")),
+                 summons->name(DESC_PLAIN).c_str());
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, summ_buf), true);
 
         return (XOM_GOOD_MAJOR_ALLY);
@@ -3532,7 +3525,7 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
                     mgen_data::hostile_at(
                         _xom_random_demon(sever), "좀",
                         true, 4, MON_SUMM_WRATH, you.pos(), 0,
-                        GOD_XOM)) != -1)
+                        GOD_XOM)))
             {
                 num_summoned++;
             }

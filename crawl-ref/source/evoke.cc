@@ -51,24 +51,7 @@ void shadow_lantern_effect()
         create_monster(mgen_data(MONS_SHADOW, BEH_FRIENDLY, &you, 2, 0,
                                  you.pos(), MHITYOU));
 
-        item_def *lantern = you.weapon();
-
-        // This should only get called when we are wielding a lantern of
-        // shadows.
-        ASSERT(lantern && lantern->base_type == OBJ_MISCELLANY
-               && lantern->sub_type == MISC_LANTERN_OF_SHADOWS);
-
-        bool known = fully_identified(*lantern);
-        did_god_conduct(DID_NECROMANCY, 1, known);
-
-        // ID the lantern and refresh the weapon display.
-        if (!known)
-        {
-            set_ident_type(*lantern, ID_KNOWN_TYPE);
-            set_ident_flags(*lantern, ISFLAG_IDENT_MASK);
-
-            you.wield_change = true;
-        }
+        did_god_conduct(DID_NECROMANCY, 1);
     }
 }
 
@@ -83,6 +66,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     args.mode = TARG_HOSTILE;
     args.range = 2;
     args.top_prompt = "Attack whom?";
+    args.cancel_at_self = true;
     targetter_reach hitfunc(&you, REACH_TWO);
     args.hitfunc = &hitfunc;
 
@@ -282,18 +266,18 @@ static bool _efreet_flask(int slot)
 
     mpr(gettext("You open the flask..."));
 
-    const int mons =
+    monster *mons =
         create_monster(
             mgen_data(MONS_EFREET,
                       friendly ? BEH_FRIENDLY : BEH_HOSTILE,
                       &you, 0, 0, you.pos(),
                       MHITYOU, MG_FORCE_BEH));
 
-    if (mons != -1)
+    if (mons)
     {
         mpr(gettext("...and a huge efreet comes out."));
 
-        if (player_angers_monster(&menv[mons]))
+        if (player_angers_monster(mons))
             friendly = false;
 
         if (silenced(you.pos()))
@@ -474,7 +458,7 @@ void tome_of_power(int slot)
         if (create_monster(
                 mgen_data::hostile_at(MONS_ABOMINATION_SMALL,
                     gettext("a tome of Destruction"),
-                    true, 6, 0, you.pos())) != -1)
+                    true, 6, 0, you.pos())))
         {
             mpr(gettext("A horrible Thing appears!"));
             mpr(gettext("It doesn't look too friendly."));
@@ -605,7 +589,7 @@ static bool _box_of_beasts(item_def &box)
                           friendly ? BEH_FRIENDLY : BEH_HOSTILE, &you,
                           2 + random2(4), 0,
                           you.pos(),
-                          MHITYOU)) != -1)
+                          MHITYOU)))
         {
             success = true;
 

@@ -34,6 +34,7 @@
 #include "errors.h"
 #include "exercise.h"
 #include "fight.h"
+#include "food.h"
 #include "godabil.h"
 #include "godconduct.h"
 #include "godpassive.h"
@@ -436,7 +437,7 @@ void move_player_to_grid(const coord_def& p, bool stepped, bool allow_shift)
            || fedhas_passthrough(monster_at(p)));
 
     // Move the player to new location.
-    you.moveto(p);
+    you.moveto(p, true);
     viewwindow();
 
     moveto_location_effects(old_grid, stepped, allow_shift, old_pos);
@@ -3192,13 +3193,14 @@ void level_change(bool skip_attribute_increase)
 #ifdef USE_TILE
                     init_player_doll();
 #endif
-                    redraw_screen();
                     _draconian_scale_colour_message();
 
                     // We check if any skill has changed level because of
                     // changed aptitude
                     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
                         check_skill_level_change(static_cast<skill_type>(i));
+
+                    redraw_screen();
                 }
             case SP_RED_DRACONIAN:
             case SP_WHITE_DRACONIAN:
@@ -3966,7 +3968,7 @@ static void _display_attack_delay()
 }
 
 // forward declaration
-std::string _constriction_description();
+static std::string _constriction_description();
 
 void display_char_status()
 {
@@ -4003,6 +4005,7 @@ void display_char_status()
         DUR_PETRIFYING,
         DUR_TRANSFORMATION,
         STATUS_BURDEN,
+        STATUS_MANUAL,
         DUR_SAGE,
         DUR_BARGAIN,
         DUR_BREATH_WEAPON,
@@ -4057,6 +4060,7 @@ void display_char_status()
         STATUS_BACKLIT,
         STATUS_UMBRA,
         STATUS_CONSTRICTED,
+        STATUS_AUGMENTED,
     };
 
     status_info inf;
@@ -4253,6 +4257,7 @@ int slaying_bonus(weapon_property_type which_affected, bool ranged)
     }
 
     ret += std::min(you.duration[DUR_SLAYING] / (13 * BASELINE_DELAY), 6);
+    ret += 3 * augmentation_amount();
 
     return (ret);
 }
@@ -4491,6 +4496,9 @@ void rot_hp(int hp_loss)
 {
     you.hp_max_temp -= hp_loss;
     calc_hp();
+
+    // Kill the player if they reached 0 maxhp.
+    ouch(0, NON_MONSTER, KILLED_BY_ROTTING);
 
     if (you.species != SP_GHOUL)
         xom_is_stimulated(hp_loss * 25);
@@ -4925,37 +4933,36 @@ void dec_poison_player()
     if (player_res_poison() >= 3)
         return;
 
-    if (you.duration[DUR_POISONING] > 0)
+    if (x_chance_in_y(you.duration[DUR_POISONING], 5))
     {
-        if (x_chance_in_y(you.duration[DUR_POISONING], 5))
+        int hurted = 1;
+        msg_channel_type channel = MSGCH_PLAIN;
+        const char *adj = "";
+
+        if (you.duration[DUR_POISONING] > 10
+            && random2(you.duration[DUR_POISONING]) >= 8)
         {
-            int hurted = 1;
-            msg_channel_type channel = MSGCH_PLAIN;
-            const char *adj = "";
-
-            if (you.duration[DUR_POISONING] > 10
-                && random2(you.duration[DUR_POISONING]) >= 8)
-            {
-                hurted = random2(10) + 5;
-                channel = MSGCH_DANGER;
-                adj = gettext(M_("extremely "));
-            }
-            else if (you.duration[DUR_POISONING] > 5 && coinflip())
-            {
-                hurted = coinflip() ? 3 : 2;
-                channel = MSGCH_WARN;
-                adj = gettext(M_("very "));
-            }
-
-            int oldhp = you.hp;
-            ouch(hurted, NON_MONSTER, KILLED_BY_POISON);
-            if (you.hp < oldhp)
-                /// 1. "extremely " 혹은 "very "가 번역된 단어. 혹은 ""
-                mprf(channel, gettext("You feel %ssick."), adj);
-
-            if ((you.hp == 1 && one_chance_in(3)) || one_chance_in(8))
-                reduce_poison_player(1);
+            hurted = random2(10) + 5;
+            channel = MSGCH_DANGER;
+            adj = P_("adj", "extremely ");
         }
+        else if (you.duration[DUR_POISONING] > 5 && coinflip())
+        {
+            hurted = coinflip() ? 3 : 2;
+            channel = MSGCH_WARN;
+            adj = P_("adj", "very ");
+        }
+
+        int oldhp = you.hp;
+        ouch(hurted, NON_MONSTER, KILLED_BY_POISON);
+        if (you.hp < oldhp)
+            mprf(channel, _("You feel %ssick."), pgettext_expr("adj", adj));
+
+        if ((you.hp == 1 && one_chance_in(3)) || one_chance_in(8))
+            reduce_poison_player(1);
+
+        if (!you.duration[DUR_POISONING] && you.hp * 12 < you.hp_max)
+            xom_is_stimulated(you.hp == 1 ? 50 : 20);
     }
 }
 
@@ -5205,7 +5212,7 @@ void dec_haste_player(int delay)
 
 void dec_disease_player(int delay)
 {
-    if (you.disease > 0)
+    if (you.disease || you.duration[DUR_NAUSEA])
     {
         int rr = 50;
 
@@ -5220,12 +5227,20 @@ void dec_disease_player(int delay)
         if (you.species == SP_KOBOLD)
             rr += 100;
 
-        you.disease -= div_rand_round(rr * delay, 50);
-        if (you.disease < 0)
-            you.disease = 0;
+        rr = div_rand_round(rr * delay, 50);
 
-        if (you.disease == 0)
-            mpr(gettext("You feel your health improve."), MSGCH_RECOVERY);
+        if (you.disease)
+        {
+            you.disease -= rr;
+            if (you.disease < 0)
+                you.disease = 0;
+
+            if (you.disease == 0)
+                mpr(_("You feel your health improve."), MSGCH_RECOVERY);
+        }
+
+        if (you.duration[DUR_NAUSEA] && (you.duration[DUR_NAUSEA] -= rr) <= 0)
+            end_nausea();
     }
 }
 
@@ -5446,6 +5461,7 @@ void player::init()
     auto_training = !(Options.default_manual_training);
     skills.init(0);
     train.init(false);
+    train_alt.init(false);
     training.init(0);
     can_train.init(false);
     train_set.init(false);
@@ -5520,10 +5536,12 @@ void player::init()
     seen_armour.init(0);
     seen_misc.reset();
 
+    octopus_king_rings = 0;
+
     normal_vision    = LOS_RADIUS;
     current_vision   = LOS_RADIUS;
 
-    hell_branch      = NUM_BRANCHES;
+    hell_branch      = BRANCH_MAIN_DUNGEON;
     hell_exit        = 0;
 
     real_time        = 0;
@@ -5625,7 +5643,7 @@ void player::init()
     constricted_by = NON_ENTITY;
     escape_attempts = 0;
     dur_been_constricted = 0;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_CONSTRICT; i++)
     {
         constricting[i] = NON_ENTITY;
         dur_has_constricted[i] = 0;
@@ -5662,10 +5680,6 @@ player_save_info& player_save_info::operator=(const player& rhs)
 
     // [ds] Perhaps we should move game type to player?
     saved_game_type  = crawl_state.type;
-
-#ifdef USE_TILE
-    held_in_net      = false;
-#endif
 
     return (*this);
 }
@@ -5745,6 +5759,10 @@ bool player::can_swim(bool permanently) const
 
 int player::visible_igrd(const coord_def &where) const
 {
+    // shop hack, etc.
+    if (where.x == 0)
+        return (NON_ITEM);
+
     if (grd(where) == DNGN_LAVA
         || (grd(where) == DNGN_DEEP_WATER
             && species != SP_MERFOLK && species != SP_GREY_DRACONIAN
@@ -6067,14 +6085,14 @@ int player::armour_class() const
         // Note: Even though necromutation is a high level spell, it does
         // allow the character full armour (so the bonus is low). -- bwr
         if (form == TRAN_LICH)
-            AC += 300 + skill(SK_NECROMANCY, 100) / 6;    // max 7
+            AC += 600;
 
         if (player_genus(GENPC_DRACONIAN))
         {
            AC += 400 + 100 * (you.experience_level / 3);  // max 13
 
            if (form == TRAN_DRAGON)
-               AC += 700;
+               AC += 1000;
         }
         else
         {
@@ -6101,7 +6119,7 @@ int player::armour_class() const
             break;
 
         case TRAN_SPIDER: // low level (small bonus), also gets EV
-            AC += 200 + skill(SK_POISON_MAGIC, 100) / 6; // max 6
+            AC += 200;
             break;
 
         case TRAN_ICE_BEAST:
@@ -6112,7 +6130,7 @@ int player::armour_class() const
             break;
 
         case TRAN_DRAGON: // Draconians handled above
-            AC += 700 + skill(SK_FIRE_MAGIC, 100) / 3;   // max 16
+            AC += 1600;
             break;
 
         case TRAN_STATUE: // main ability is armour (high bonus)
@@ -6537,21 +6555,9 @@ bool player::nightvision() const
            (religion == GOD_YREDELEMNUL && piety > piety_breakpoint(2)));
 }
 
-int player::mons_species() const
+int player::mons_species(bool zombie_base) const
 {
-    if (player_genus(GENPC_DRACONIAN))
-        return (MONS_DRACONIAN);
-
-    switch (species)
-    {
-    case SP_HILL_ORC:
-        return (MONS_ORC);
-    case SP_HIGH_ELF: case SP_DEEP_ELF: case SP_SLUDGE_ELF:
-        return (MONS_ELF);
-
-    default:
-        return (MONS_HUMAN);
-    }
+    return player_species_to_mons_species(you.species);
 }
 
 bool player::poison(actor *agent, int amount, bool force)
@@ -6871,13 +6877,13 @@ bool player::has_usable_offhand() const
             || weapon_skill(*wp) == SK_STAVES);
 }
 
-bool player::has_usable_tentacle()
+bool player::has_usable_tentacle() const
 {
     if (species != SP_OCTOPODE)
-        return(false);
+        return (false);
 
-    int free_tentacles = 8;
-    for (int i = 0; i < 8; i++)
+    int free_tentacles = std::min(8, MAX_CONSTRICT);
+    for (int i = 0; i < MAX_CONSTRICT; i++)
         if (constricting[i] != NON_ENTITY)
             free_tentacles--;
 
@@ -6892,7 +6898,6 @@ bool player::has_usable_tentacle()
     }
 
     return (free_tentacles > 0);
-
 }
 
 int player::has_pseudopods(bool allow_tran) const
@@ -7144,6 +7149,7 @@ void player::shiftto(const coord_def &c)
 {
     crawl_view.shift_player_to(c);
     set_position(c);
+    clear_far_constrictions();
 }
 
 void player::reset_prev_move()
@@ -7379,27 +7385,9 @@ void player::accum_been_constricted()
 
 void player::accum_has_constricted()
 {
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_CONSTRICT; i++)
         if (constricting[i] != NON_ENTITY)
             dur_has_constricted[i] += you.time_taken;
-}
-
-bool player::is_constricted_larger()
-{
-    size_type psize;
-    size_type msize;
-
-    if (!is_constricted())
-        return false;
-    psize = body_size();
-    msize = env.mons[constricted_by].body_size();
-    return (msize > psize);
-
-}
-
-bool player::is_constricted()
-{
-    return (constricted_by != NON_ENTITY);
 }
 
 bool player::attempt_escape()
@@ -7415,7 +7403,7 @@ bool player::attempt_escape()
     escape_attempts++;
     // player breaks free if size*attempts > 5 + d(12) + d(HD)
     // this is inefficient on purpose, simplify after debug
-    thesize = transform_size(form);
+    thesize = body_size(PSIZE_BODY);
     attfactor = thesize * escape_attempts;
 
     randfact = roll_dice(1,5) + 5;
@@ -7430,8 +7418,9 @@ bool player::attempt_escape()
         emsg += env.mons[you.constricted_by].name(DESC_THE,true);
         emsg += "'s grasp.";
         mpr(emsg);
+
         // update monster's has constricted info
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < MAX_CONSTRICT; i++)
             if (themonst->constricting[i] == MHITYOU)
                 themonst->constricting[i] = NON_ENTITY;
 
@@ -7443,59 +7432,6 @@ bool player::attempt_escape()
     }
     else
         return false;
-}
-
-void player::clear_all_constrictions()
-{
-    int myindex = MHITYOU;
-    monster *mons;
-
-    if (constricted_by != NON_ENTITY)
-    {
-        mons = &env.mons[constricted_by];
-        if (mons->alive())
-            mons->clear_specific_constrictions(myindex);
-    }
-
-    constricted_by = NON_ENTITY;
-    dur_been_constricted = 0;
-    escape_attempts = 0;
-
-    for (int i = 0; i < 8; i++)
-    {
-        if (constricting[i] != NON_ENTITY)
-        {
-            mons = &env.mons[constricting[i]];
-            if (mons->alive())
-            {
-                std::string rmsg = "You release your hold on ";
-                rmsg += mons->name(DESC_THE,true) + ".";
-                mpr(rmsg);
-                mons->clear_specific_constrictions(myindex);
-            }
-        }
-        constricting[i] = NON_ENTITY;
-        dur_has_constricted[i] = 0;
-    }
-}
-
-void player::clear_specific_constrictions(int mind)
-{
-    if (constricted_by == mind)
-    {
-        constricted_by = NON_ENTITY;
-        dur_been_constricted = 0;
-        escape_attempts = 0;
-    }
-
-    for (int i = 0; i < 8; i++)
-    {
-        if (constricting[i] == mind)
-        {
-            constricting[i] = NON_ENTITY;
-            dur_has_constricted[i] = 0;
-        }
-    }
 }
 
 /*
@@ -7531,15 +7467,15 @@ bool need_expiration_warning(coord_def p)
            || need_expiration_warning(DUR_TRANSFORMATION, p);
 }
 
-std::string _constriction_description()
+static std::string _constriction_description()
 {
     std::string cinfo = "";
     std::string constrictor_name;
-    std::string constricting_name[8];
+    std::string constricting_name[MAX_CONSTRICT];
 
     // init names of constrictor and constrictees
     constrictor_name = "";
-    for (int idx=0; idx < 8; idx++)
+    for (int idx = 0; idx < MAX_CONSTRICT; idx++)
         constricting_name[idx] = "";
 
     // name of what this monster is constricted by, if any
@@ -7548,8 +7484,9 @@ std::string _constriction_description()
         constrictor_name = env.mons[you.constricted_by].
                                name(DESC_A);
     }
+
     // names of what this monster is constricting, if any
-    for (int idx=0; idx<8; idx++)
+    for (int idx = 0; idx < MAX_CONSTRICT; idx++)
     {
         if (you.constricting[idx] != NON_ENTITY)
             constricting_name[idx] = env.mons[you.constricting[idx]].
@@ -7560,11 +7497,9 @@ std::string _constriction_description()
         cinfo += "You are being constricted by " + constrictor_name + ".";
 
     std::vector<std::string> constricting;
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < MAX_CONSTRICT; i++)
         if (constricting_name[i] != "")
-        {
             constricting.push_back(constricting_name[i]);
-        }
 
     if (!constricting.empty())
     {

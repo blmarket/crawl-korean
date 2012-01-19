@@ -25,7 +25,6 @@
 #include "env.h"           // For storm bow env.cgrid
 #include "food.h"          // For evokes
 #include "godconduct.h"    // did_god_conduct
-#include "coord.h"
 #include "misc.h"
 #include "mgen_data.h"     // For Sceptre of Asmodeus evoke
 #include "mon-info.h"
@@ -85,15 +84,15 @@ static bool _evoke_sceptre_of_asmodeus()
     mgen_data mg(mon, BEH_CHARMED, &you,
                  0, 0, you.pos(), MHITYOU,
                  MG_FORCE_BEH, you.religion);
+    mg.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
 
-    const int mons = create_monster(mg);
+    monster *m = create_monster(mg);
 
-    if (mons != -1)
+    if (m)
     {
         mpr("The Sceptre summons one of its servants.");
         did_god_conduct(DID_UNHOLY, 3);
 
-        monster* m = &menv[mons];
         m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
 
         if (!player_angers_monster(m))

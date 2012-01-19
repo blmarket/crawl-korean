@@ -374,6 +374,12 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
     }
 }
 
+bool is_door_tile(tileidx_t tile)
+{
+    return tile >= TILE_DNGN_DETECTED_SECRET_DOOR &&
+        tile < TILE_DNGN_ORCISH_IDOL;
+}
+
 tileidx_t tileidx_feature(const coord_def &gc)
 {
     dungeon_feature_type feat = env.map_knowledge(gc).feat();
@@ -395,17 +401,15 @@ tileidx_t tileidx_feature(const coord_def &gc)
     case DNGN_SECRET_DOOR:
     case DNGN_DETECTED_SECRET_DOOR:
     {
+        if (override && !is_door_tile(override))
+            return override;
+
         coord_def door;
         dungeon_feature_type door_feat;
+
         // FIXME: This accesses grd directly, instead of map_knowledge
         find_secret_door_info(gc, &door_feat, &door);
-
-        // If surrounding tiles from a secret door are using tile
-        // overrides, then use that tile for the secret door.
-        if (env.tile_flv(door).feat)
-            return (env.tile_flv(door).feat);
-        else
-            return (_tileidx_feature_base(door_feat));
+        return (_tileidx_feature_base(door_feat));
     }
     case DNGN_CLOSED_DOOR:
     {
@@ -1432,8 +1436,10 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_ANACONDA;
     case MONS_SEA_SNAKE:
         return TILEP_MONS_SEA_SNAKE;
+#if TAG_MAJOR_VERSION == 32
     case MONS_SUBTRACTOR_SNAKE:
-        return _mon_mod(TILEP_MONS_SUBTRACTOR_SNAKE, tile_num_prop);
+        return _mon_mod(TILEP_MONS_SUBTRACTOR_SNAKE, you.frame_no);
+#endif
 
     // trolls ('T')
     case MONS_TROLL:
@@ -2518,6 +2524,8 @@ tileidx_t tileidx_monster(const monster_info& mons)
         ch |= TILE_FLAG_STICKY_FLAME;
     if (mons.is(MB_INNER_FLAME))
         ch |= TILE_FLAG_INNER_FLAME;
+    if (!mons.constrictor_name.empty())
+        ch |= TILE_FLAG_CONSTRICTED;
     if (mons.is(MB_BERSERK))
         ch |= TILE_FLAG_BERSERK;
 
@@ -3786,8 +3794,7 @@ tileidx_t tileidx_item(const item_def &item)
             return _tileidx_armour(item);
 
     case OBJ_WANDS:
-        if (you.type_ids[OBJ_WANDS][type] == ID_KNOWN_TYPE
-            ||  (item.flags & ISFLAG_KNOW_TYPE))
+        if (item.flags & ISFLAG_KNOW_TYPE)
         {
             return TILE_WAND_ID_FIRST + type;
         }
@@ -3798,8 +3805,7 @@ tileidx_t tileidx_item(const item_def &item)
         return _tileidx_food(item);
 
     case OBJ_SCROLLS:
-        if (you.type_ids[OBJ_SCROLLS][type] == ID_KNOWN_TYPE
-            ||  (item.flags & ISFLAG_KNOW_TYPE))
+        if (item.flags & ISFLAG_KNOW_TYPE)
         {
             return TILE_SCR_ID_FIRST + type;
         }
@@ -3815,8 +3821,7 @@ tileidx_t tileidx_item(const item_def &item)
         {
             if (is_artefact(item))
                 return TILE_RING_RANDOM_OFFSET + colour - 1;
-            else if (you.type_ids[OBJ_JEWELLERY][type] == ID_KNOWN_TYPE
-                     || (item.flags & ISFLAG_KNOW_TYPE))
+            else if (item.flags & ISFLAG_KNOW_TYPE)
             {
                 return TILE_RING_ID_FIRST + type - RING_FIRST_RING;
             }
@@ -3827,8 +3832,7 @@ tileidx_t tileidx_item(const item_def &item)
         {
             if (is_artefact(item))
                 return TILE_AMU_RANDOM_OFFSET + colour - 1;
-            else if (you.type_ids[OBJ_JEWELLERY][type] == ID_KNOWN_TYPE
-                     || (item.flags & ISFLAG_KNOW_TYPE))
+            else if (item.flags & ISFLAG_KNOW_TYPE)
             {
                 return TILE_AMU_ID_FIRST + type - AMU_FIRST_AMULET;
             }
@@ -3837,9 +3841,7 @@ tileidx_t tileidx_item(const item_def &item)
         }
 
     case OBJ_POTIONS:
-
-        if (you.type_ids[OBJ_POTIONS][type] == ID_KNOWN_TYPE
-            ||  (item.flags & ISFLAG_KNOW_TYPE))
+        if (item.flags & ISFLAG_KNOW_TYPE)
         {
             return TILE_POT_ID_FIRST + type;
         }
@@ -3870,8 +3872,7 @@ tileidx_t tileidx_item(const item_def &item)
     case OBJ_STAVES:
         if (item_is_rod(item))
         {
-            if (you.type_ids[OBJ_STAVES][type] == ID_KNOWN_TYPE
-                || (item.flags & ISFLAG_KNOW_TYPE))
+            if (item.flags & ISFLAG_KNOW_TYPE)
             {
                 return TILE_ROD_ID_FIRST + type - STAFF_SMITING;
             }
@@ -3881,8 +3882,7 @@ tileidx_t tileidx_item(const item_def &item)
         }
         else
         {
-            if (you.type_ids[OBJ_STAVES][type] == ID_KNOWN_TYPE
-                || (item.flags & ISFLAG_KNOW_TYPE))
+            if (item.flags & ISFLAG_KNOW_TYPE)
             {
                 return TILE_STAFF_ID_FIRST + type;
             }
@@ -4320,6 +4320,7 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_CALL_CANINE_FAMILIAR:     return TILEG_CALL_CANINE_FAMILIAR;
     case SPELL_CALL_IMP:                 return TILEG_CALL_IMP;
     case SPELL_ABJURATION:               return TILEG_ABJURATION;
+    case SPELL_MASS_ABJURATION:          return TILEG_MASS_ABJURATION;
     case SPELL_SUMMON_SCORPIONS:         return TILEG_SUMMON_SCORPIONS;
     case SPELL_SUMMON_ELEMENTAL:         return TILEG_SUMMON_ELEMENTAL;
     case SPELL_SUMMON_DEMON:             return TILEG_SUMMON_DEMON;
@@ -4359,9 +4360,11 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_DEATH_CHANNEL:            return TILEG_DEATH_CHANNEL;
 
     // Transmutation
+    case SPELL_BEASTLY_APPENDAGE:        return TILEG_BEASTLY_APPENDAGE;
     case SPELL_STICKS_TO_SNAKES:         return TILEG_STICKS_TO_SNAKES;
     case SPELL_SPIDER_FORM:              return TILEG_SPIDER_FORM;
     case SPELL_ICE_FORM:                 return TILEG_ICE_FORM;
+    case SPELL_HOMUNCULUS:               return TILEG_HOMUNCULUS;
     case SPELL_BLADE_HANDS:              return TILEG_BLADE_HANDS;
     case SPELL_POLYMORPH_OTHER:          return TILEG_POLYMORPH_OTHER;
     case SPELL_STATUE_FORM:              return TILEG_STATUE_FORM;
@@ -4787,21 +4790,17 @@ std::string tile_debug_string(tileidx_t fg, tileidx_t bg, char prefix)
 
     return (tile_string);
 }
+#endif
 
 void tile_init_props(monster* mon)
 {
-    // Not necessary.
+    // Only those use tile_num.
+    if (mon->type != MONS_TOADSTOOL && mon->type != MONS_SLAVE)
+        return;
+
+    // Already overridden or set.
     if (mon->props.exists("monster_tile") || mon->props.exists("tile_num"))
         return;
 
-    // Special-case for monsters masquerading as items.
-    if (mon->type == MONS_DANCING_WEAPON || mons_is_mimic(mon->type))
-        return;
-
-    // Only add the property for tiles that have several variants.
-    const int base_tile = _tileidx_monster_base(mon->type);
-    if (tile_player_count(base_tile) > 1)
-        mon->props["tile_num"] = short(random2(256));
+    mon->props["tile_num"] = short(random2(256));
 }
-
-#endif

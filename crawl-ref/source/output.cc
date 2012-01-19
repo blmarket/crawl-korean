@@ -161,12 +161,12 @@ class colour_bar
     int m_request_redraw_after; // force a redraw at this turn count
 };
 
-colour_bar HP_Bar(LIGHTGREEN, GREEN, RED, DARKGREY);
+static colour_bar HP_Bar(LIGHTGREEN, GREEN, RED, DARKGREY);
 
 #ifdef USE_TILE_LOCAL
-colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY);
+static colour_bar MP_Bar(BLUE, BLUE, LIGHTBLUE, DARKGREY);
 #else
-colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY);
+static colour_bar MP_Bar(LIGHTBLUE, BLUE, MAGENTA, DARKGREY);
 #endif
 
 // ----------------------------------------------------------------------
@@ -628,6 +628,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         STATUS_UMBRA,
         STATUS_CONSTRICTED,
         DUR_DIVINE_STAMINA,
+        STATUS_AUGMENTED,
     };
 
     status_info inf;
@@ -1987,6 +1988,20 @@ std::string magic_res_adjective(int mr)
                        : "면역이다");
 }
 
+static std::string _annotate_form_based(std::string desc, bool suppressed)
+{
+    if (suppressed)
+        return ("<darkgrey>(" + desc + ")</darkgrey>");
+    else
+        return (desc);
+}
+
+static std::string _dragon_abil(std::string desc)
+{
+    const bool supp = form_changed_physiology() && you.form != TRAN_DRAGON;
+    return _annotate_form_based(desc, supp);
+}
+
 // Creates rows of short descriptions for current
 // status, mutations and abilities.
 static std::string _status_mut_abilities(int sw)
@@ -2031,6 +2046,7 @@ static std::string _status_mut_abilities(int sw)
         STATUS_AIRBORNE,
         DUR_BARGAIN,
         DUR_SLAYING,
+        STATUS_MANUAL,
         DUR_SAGE,
         DUR_MAGIC_SHIELD,
         DUR_FIRE_SHIELD,
@@ -2058,6 +2074,7 @@ static std::string _status_mut_abilities(int sw)
         STATUS_BACKLIT,
         STATUS_UMBRA,
         STATUS_CONSTRICTED,
+        STATUS_AUGMENTED,
     };
 
     status_info inf;
@@ -2106,7 +2123,15 @@ static std::string _status_mut_abilities(int sw)
     switch (you.species)   //mv: following code shows innate abilities - if any
     {
       case SP_MERFOLK:
-          mutations.push_back("물 속에서의 모습 변화");
+          mutations.push_back(_annotate_form_based(_("change form in water"),
+                                                   form_changed_physiology()));
+          mutations.push_back(_annotate_form_based(_("swift swim"),
+                                                   form_changed_physiology()));
+          break;
+
+      case SP_MINOTAUR:
+          mutations.push_back(_annotate_form_based(_("retaliatory headbutt"),
+                                                   !form_keeps_mutations()));
           break;
 
       case SP_NAGA:
@@ -2114,7 +2139,13 @@ static std::string _status_mut_abilities(int sw)
           if (!player_mutation_level(MUT_BREATHE_POISON))
               mutations.push_back("독 뱉기");
           else
-              mutations.push_back("독구름 뱉기");
+              mutations.push_back(_("breathe poison"));
+          mutations.push_back(_annotate_form_based(_("constrict 1"),
+                                                   !form_keeps_mutations()));
+          break;
+
+      case SP_GHOUL:
+          mutations.push_back("rotting body");
           break;
 
       case SP_TENGU:
@@ -2122,8 +2153,9 @@ static std::string _status_mut_abilities(int sw)
           {
               std::string help = "비행 가능";
               if (you.experience_level > 14)
-                  help = "능숙한 " + help;
-              mutations.push_back(help);
+                  help = make_stringf(_("%s continuously"), help.c_str());
+              mutations.push_back(_annotate_form_based(help,
+                                                       player_is_shapechanged()));
           }
           break;
 
@@ -2137,14 +2169,21 @@ static std::string _status_mut_abilities(int sw)
                   help = "강한 " + help;
               mutations.push_back(help);
           }
+          mutations.push_back("restore body");
           break;
 
       case SP_KOBOLD:
           mutations.push_back("질병 저항");
           break;
 
+      case SP_VAMPIRE:
+          if (you.experience_level >= 6)
+              mutations.push_back("bottle blood");
+          break;
+
       case SP_DEEP_DWARF:
-          mutations.push_back("피해 경감");
+          mutations.push_back(_("damage resistance"));
+          mutations.push_back(_("recharge devices"));
           break;
 
       case SP_FELID:
@@ -2152,25 +2191,22 @@ static std::string _status_mut_abilities(int sw)
           break;
 
       case SP_RED_DRACONIAN:
-          mutations.push_back("불의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe fire")));
           break;
 
       case SP_WHITE_DRACONIAN:
-          mutations.push_back("냉기의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe frost")));
           break;
 
       case SP_GREEN_DRACONIAN:
-          mutations.push_back("독구름의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe noxious fumes")));
           break;
 
       case SP_YELLOW_DRACONIAN:
-          mutations.push_back(gettext("spit acid"));
-
-          if (form_keeps_mutations() || you.form == TRAN_DRAGON)
-              mutations.push_back(gettext("acid resistance"));
-          else
-              mutations.push_back(gettext("<darkgrey>(acid resistance)</darkgrey>"));
-
+          mutations.push_back(_dragon_abil(_("spit acid")));
+          mutations.push_back(_annotate_form_based(_("acid resistance"),
+                                                   !form_keeps_mutations()
+                                                    && you.form != TRAN_DRAGON));
           break;
 
       case SP_GREY_DRACONIAN:
@@ -2178,19 +2214,19 @@ static std::string _status_mut_abilities(int sw)
           break;
 
       case SP_BLACK_DRACONIAN:
-          mutations.push_back("번개의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe lightning")));
           break;
 
       case SP_PURPLE_DRACONIAN:
-          mutations.push_back("마력의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe power")));
           break;
 
       case SP_MOTTLED_DRACONIAN:
-          mutations.push_back("액체 화염의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe sticky flames")));
           break;
 
       case SP_PALE_DRACONIAN:
-          mutations.push_back("증기의 숨결");
+          mutations.push_back(_dragon_abil(_("breathe steam")));
           break;
 
       default:
@@ -2212,8 +2248,11 @@ static std::string _status_mut_abilities(int sw)
 
     if (you.species == SP_OCTOPODE)
     {
-        mutations.push_back("대부분의 방어구가 맞지 않음");
-        mutations.push_back("수륙양용");
+        mutations.push_back(_("almost no armour"));
+        mutations.push_back(_("amphibious"));
+        mutations.push_back(_annotate_form_based(
+            make_stringf(_("constrict %d"), std::min(MAX_CONSTRICT, 8)),
+            !form_keeps_mutations()));
     }
 
     if (beogh_water_walk())
