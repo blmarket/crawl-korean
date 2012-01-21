@@ -17,10 +17,10 @@
 #include "tilefont.h"
 #include "unicode.h"
 #include "options.h"
-#include <fstream>
+#include "korean.h"
 
-#define FONT_PER_ROW 128
-#define MAX_CHARS 16384
+#define FONT_PER_ROW 64
+#define MAX_CHARS 4096
 #define MAX_WCWIDTH 2 // font renders double-width characters. (like korean chars)
 
 FontWrapper* FontWrapper::create()
@@ -96,7 +96,7 @@ bool FTFontWrapper::load_font(const char *font_name, unsigned int font_size,
         m_glyphs[c].advance = 0;
         m_glyphs[c].renderable = false;
 
-        FT_Int glyph_index = c<256?FT_Get_Char_Index(face, c):FT_Get_Char_Index(face,c-256+44032);
+        FT_Int glyph_index = c<256?FT_Get_Char_Index(face, c):FT_Get_Char_Index(face, korcodes[c-256]);
         if (!glyph_index)
             continue;
 
@@ -173,7 +173,7 @@ bool FTFontWrapper::load_font(const char *font_name, unsigned int font_size,
 
     for (unsigned int c = 1; c < MAX_CHARS; c++)
     {
-        FT_Int glyph_index = c<256?FT_Get_Char_Index(face, c):FT_Get_Char_Index(face,c-256+44032);
+        FT_Int glyph_index = c<256?FT_Get_Char_Index(face, c):FT_Get_Char_Index(face, korcodes[c-256]);
         if (!glyph_index)
         {
             // If no mapping for this character, leave blank.
@@ -261,7 +261,7 @@ ucs_t _fallback_char(ucs_t c)
     // Weed out characters we can't draw.
     if(c >= 44032 && c <= 55203)
     {
-        return c - 44032 + 256;
+        return korean_getindex(c);
     }
     if(c > 255) // TODO: try to transliterate 
         c = 0xBF; // reversed question mark
