@@ -2902,6 +2902,15 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
     you.exp_available += exp_gained;
 
     train_skills();
+    while (you.exp_available >= calc_skill_cost(you.skill_cost_level)
+           && check_selected_skills())
+    {
+        train_skills();
+    }
+
+    if (you.exp_available >= calc_skill_cost(you.skill_cost_level))
+        you.exp_available = calc_skill_cost(you.skill_cost_level);
+
     level_change();
 
     if (actual_gain != NULL)
@@ -4156,7 +4165,7 @@ bool wearing_amulet(jewellery_type amulet, bool calc_unid, bool ignore_extrinsic
     return (amu.sub_type == amulet && (calc_unid || item_type_known(amu)));
 }
 
-unsigned int exp_needed(int lev)
+unsigned int exp_needed(int lev, int exp_apt)
 {
     unsigned int level = 0;
 
@@ -4235,7 +4244,10 @@ unsigned int exp_needed(int lev)
         break;
     }
 
-    return ((level - 1) * species_exp_modifier(you.species) / 10);
+    if (!exp_apt)
+        exp_apt = species_exp_modifier(you.species);
+
+    return ((level - 1) * exp_apt / 10);
 }
 
 // returns bonuses from rings of slaying, etc.
@@ -5414,6 +5426,7 @@ void player::init()
     hit_points_regeneration   = 0;
     magic_points_regeneration = 0;
     experience       = 0;
+    total_experience = 0;
     experience_level = 1;
     gold             = 0;
     zigs_completed   = 0;
@@ -5466,7 +5479,6 @@ void player::init()
     train_alt.init(false);
     training.init(0);
     can_train.init(false);
-    train_set.init(false);
     skill_points.init(0);
     ct_skill_points.init(0);
     skill_order.init(MAX_SKILL_ORDER);
@@ -5488,8 +5500,7 @@ void player::init()
     manual_index = -1;
 
     skill_cost_level = 1;
-    total_skill_points = 0;
-    exp_available = 0; // new games get 25
+    exp_available = 0;
     zot_points = 0;
 
     item_description.init(255);
@@ -6493,6 +6504,14 @@ int player_res_magic(bool calc_unid, bool temp)
     return (rm);
 }
 
+bool player::no_tele(bool calc_unid, bool permit_id)
+{
+    if (crawl_state.game_is_sprint())
+        return true;
+
+    return item_blocks_teleport(calc_unid, permit_id);
+}
+
 bool player::fights_well_unarmed(int heavy_armour_penalty)
 {
     return (you.burden_state == BS_UNENCUMBERED
@@ -6557,7 +6576,7 @@ bool player::nightvision() const
            (religion == GOD_YREDELEMNUL && piety > piety_breakpoint(2)));
 }
 
-int player::mons_species(bool zombie_base) const
+monster_type player::mons_species(bool zombie_base) const
 {
     return player_species_to_mons_species(you.species);
 }

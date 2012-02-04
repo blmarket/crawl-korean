@@ -725,8 +725,8 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
         break;
 
     case '=':
-        mprf("Cost level: %d  Skill points: %d  Next cost level: %d Skill cost: %d",
-              you.skill_cost_level, you.total_skill_points,
+        mprf("Cost level: %d  Total experience: %d  Next cost level: %d Skill cost: %d",
+              you.skill_cost_level, you.total_experience,
               skill_cost_needed(you.skill_cost_level + 1),
               calc_skill_cost(you.skill_cost_level));
         break;
@@ -3097,7 +3097,7 @@ static void _player_reacts()
     recharge_rods(you.time_taken, false);
 
     // Reveal adjacent mimics.
-    for (adjacent_iterator ai(you.pos()); ai; ++ai)
+    for (adjacent_iterator ai(you.pos(), false); ai; ++ai)
         discover_mimic(*ai);
 
     // Player stealth check.
@@ -3110,7 +3110,8 @@ static void _player_reacts()
 static void _player_reacts_to_monsters()
 {
     // In case Maurice managed to steal a needed item for example.
-    update_can_train();
+    if (!you_are_delayed())
+        update_can_train();
 
     if (you.duration[DUR_FIRE_SHIELD] > 0)
         manage_fire_shield(you.time_taken);

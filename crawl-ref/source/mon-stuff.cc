@@ -824,6 +824,7 @@ static bool _yred_enslave_soul(monster* mons, killer_type killer)
         && killer != KILL_DISMISSED
         && killer != KILL_BANISHED)
     {
+        record_monster_defeat(mons, killer);
         record_monster_defeat(mons, KILL_ENSLAVED);
         yred_make_enslaved_soul(mons, player_under_penance());
         return (true);
@@ -1751,7 +1752,18 @@ int monster_die(monster* mons, killer_type killer,
 
     const bool created_friendly = testbits(mons->flags, MF_NO_REWARD);
           bool anon = (killer_index == ANON_FRIENDLY_MONSTER);
-    const mon_holy_type targ_holy = mons->holiness();
+    mon_holy_type targ_holy = mons->holiness();
+
+    // Dual holiness, Trog and Kiku like dead demons but not undead.
+    if ((mons->type == MONS_ABOMINATION_SMALL
+         || mons->type == MONS_ABOMINATION_LARGE
+         || mons->type == MONS_CRAWLING_CORPSE
+         || mons->type == MONS_MACABRE_MASS)
+        && (you.religion == GOD_TROG
+         || you.religion == GOD_KIKUBAAQUDGHA))
+    {
+        targ_holy = MH_DEMONIC;
+    }
 
     switch (killer)
     {
@@ -1820,17 +1832,6 @@ int monster_die(monster* mons, killer_type killer,
                 {
                     did_god_conduct(DID_KILL_UNDEAD,
                                     mons->hit_dice, true, mons);
-                    // Dual holiness, Trog and Kiku like dead demons.
-                    if ((mons->type == MONS_ABOMINATION_SMALL
-                         || mons->type == MONS_ABOMINATION_LARGE
-                         || mons->type == MONS_CRAWLING_CORPSE
-                         || mons->type == MONS_MACABRE_MASS)
-                        && (you.religion == GOD_TROG
-                         || you.religion == GOD_KIKUBAAQUDGHA))
-                    {
-                        did_god_conduct(DID_KILL_DEMON,
-                                        mons->hit_dice, true, mons);
-                    }
                 }
                 else if (targ_holy == MH_DEMONIC)
                 {
@@ -4268,8 +4269,8 @@ bool is_item_jelly_edible(const item_def &item)
     return (true);
 }
 
-static bool _monster_space_valid(const monster* mons, coord_def target,
-                                 bool forbid_sanctuary)
+bool monster_space_valid(const monster* mons, coord_def target,
+                         bool forbid_sanctuary)
 {
     if (!in_bounds(target))
         return false;
@@ -4297,27 +4298,11 @@ bool monster_random_space(const monster* mons, coord_def& target,
     while (tries++ < 1000)
     {
         target = random_in_bounds();
-        if (_monster_space_valid(mons, target, forbid_sanctuary))
+        if (monster_space_valid(mons, target, forbid_sanctuary))
             return true;
     }
 
     return (false);
-}
-
-// Move the monster to the nearest valid space.
-bool shove_monster(monster* mons)
-{
-    const coord_def pos = mons->pos();
-    for (distance_iterator di(pos); di; ++di)
-        if (_monster_space_valid(mons, *di, false))
-        {
-            mons->moveto(*di);
-            mgrd(pos) = NON_MONSTER;
-            mgrd(*di) = mons->mindex();
-            return true;
-        }
-
-    return false;
 }
 
 bool monster_random_space(monster_type mon, coord_def& target,
@@ -4368,7 +4353,7 @@ void monster_teleport(monster* mons, bool instan, bool silent)
             if (grid_distance(target, pair) >= 10)
                 continue;
 
-            if (!_monster_space_valid(mons, target, !mons->wont_attack()))
+            if (!monster_space_valid(mons, target, !mons->wont_attack()))
                 continue;
 
             newpos = target;

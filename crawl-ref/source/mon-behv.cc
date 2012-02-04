@@ -234,7 +234,7 @@ void handle_behaviour(monster* mon)
         return;
     }
 
-    // Make sure monsters are not targeting the player in arena mode.
+    // Make sure monsters are not targetting the player in arena mode.
     ASSERT(!(crawl_state.game_is_arena() && mon->foe == MHITYOU));
 
     if (mons_wall_shielded(mon) && cell_is_solid(mon->pos()))
@@ -368,7 +368,7 @@ void handle_behaviour(monster* mon)
 
     // Unfriendly monsters fighting other monsters will usually
     // target the player, if they're healthy.
-    // Zotdef: 2/3 chance of retargeting changed to 1/4
+    // Zotdef: 2/3 chance of retargetting changed to 1/4
     if (!isFriendly && !isNeutral
         && mon->foe != MHITYOU && mon->foe != MHITNOT
         && proxPlayer && !mon->berserk() && isHealthy
@@ -1137,6 +1137,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             && mon->holiness() != MH_NONLIVING
             && !mons_class_flag(mon->type, M_NO_FLEE)
             && !mons_is_cornered(mon)
+            && !mon->berserk()
             && x_chance_in_y(fleeThreshold - mon->hit_points, fleeThreshold))
         {
             mon->behaviour = BEH_FLEE;

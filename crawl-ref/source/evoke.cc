@@ -90,7 +90,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     const int x_distance  = abs(delta.x);
     const int y_distance  = abs(delta.y);
     monster* mons = monster_at(beam.target);
-    // don't allow targeting of submerged trapdoor spiders
+    // don't allow targetting of submerged trapdoor spiders
     if (mons && mons->submerged() && feat_is_floor(grd(beam.target)))
         mons = NULL;
 
@@ -299,13 +299,7 @@ static bool _efreet_flask(int slot)
     return (true);
 }
 
-static bool _is_crystal_ball(const item_def &item)
-{
-    return (item.base_type == OBJ_MISCELLANY
-            && (item.sub_type == MISC_CRYSTAL_BALL_OF_ENERGY));
-}
-
-static bool _check_crystal_ball(int subtype, bool known)
+static bool _check_crystal_ball()
 {
     if (you.intel() <= 1)
     {
@@ -319,9 +313,7 @@ static bool _check_crystal_ball(int subtype, bool known)
         return (false);
     }
 
-    if (subtype == MISC_CRYSTAL_BALL_OF_ENERGY
-        && known
-        && you.magic_points == you.max_magic_points)
+    if (you.magic_points == you.max_magic_points)
     {
         mpr(gettext("With no energy to recover, the crystal ball of energy is "
             "presently useless to you."));
@@ -695,7 +687,6 @@ bool evoke_item(int slot)
     int pract = 0; // By how much Evocations is practised.
     bool did_work   = false;  // Used for default "nothing happens" message.
     bool unevokable = false;
-    bool ident      = false;
 
     const unrandart_entry *entry = is_unrandom_artefact(item)
         ? get_unrand_entry(item.special) : NULL;
@@ -735,6 +726,12 @@ bool evoke_item(int slot)
     case OBJ_STAVES:
         ASSERT(wielded);
 
+        if (you.confused())
+        {
+            mpr("You're too confused.");
+            return false;
+        }
+
         if (item_is_rod(item))
         {
             pract = staff_spell(slot);
@@ -747,28 +744,28 @@ bool evoke_item(int slot)
         }
         else if (item.sub_type == STAFF_CHANNELING)
         {
-            if (item_type_known(item)
-                && !you.is_undead && you.hunger_state == HS_STARVING)
+            if (!you.is_undead && you.hunger_state == HS_STARVING)
             {
                 canned_msg(MSG_TOO_HUNGRY);
                 return (false);
             }
-            else if (you.magic_points < you.max_magic_points
-                     && x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 1100, 4000))
+            else if (you.magic_points >= you.max_magic_points)
+            {
+                mpr("Your reserves of magic are already full.");
+                return (false);
+            }
+            else if (x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 1100, 4000))
             {
                 mpr(gettext("You channel some magical energy."));
                 inc_mp(1 + random2(3));
                 make_hungry(50, false, true);
                 pract = 1;
                 did_work = true;
-                ident = true;
                 count_action(CACT_EVOKE, EVOC_MISC);
             }
         }
         else
-        {
             unevokable = true;
-        }
         break;
 
     case OBJ_MISCELLANY:
@@ -783,13 +780,6 @@ bool evoke_item(int slot)
             break;
         }
 
-        if (_is_crystal_ball(item)
-            && !_check_crystal_ball(item.sub_type, item_type_known(item)))
-        {
-            unevokable = true;
-            break;
-        }
-
         switch (item.sub_type)
         {
         case MISC_BOTTLED_EFREET:
@@ -800,7 +790,7 @@ bool evoke_item(int slot)
 #if TAG_MAJOR_VERSION == 32
         case MISC_CRYSTAL_BALL_OF_SEEING:
             mpr("Nothing happens.");
-            pract = 0, ident = true;
+            pract = 0;
             break;
 #endif
 
@@ -811,7 +801,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_AIR_ELEMENTAL, 4, 3);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -822,7 +811,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_FIRE_ELEMENTAL, 4, 3);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -833,7 +821,6 @@ bool evoke_item(int slot)
             {
                 cast_summon_elemental(100, GOD_NO_GOD, MONS_EARTH_ELEMENTAL, 4, 5);
                 pract = (one_chance_in(5) ? 1 : 0);
-                ident = true;
             }
             break;
 
@@ -844,24 +831,26 @@ bool evoke_item(int slot)
 
         case MISC_BOX_OF_BEASTS:
             if (_box_of_beasts(item))
-                pract = 1, ident = true;
+                pract = 1;
             break;
 
         case MISC_CRYSTAL_BALL_OF_ENERGY:
-            if (_ball_of_energy())
-                pract = 1, ident = true;
+            if (!_check_crystal_ball())
+                unevokable = true;
+            else if (_ball_of_energy())
+                pract = 1;
             break;
 
 #if TAG_MAJOR_VERSION == 32
         case MISC_CRYSTAL_BALL_OF_FIXATION:
             mpr(gettext("Nothing happens."));
-            pract = 0, ident = true;
+            pract = 0;
             break;
 #endif
 
         case MISC_DISC_OF_STORMS:
             if (disc_of_storms())
-                pract = (coinflip() ? 2 : 1), ident = true;
+                pract = (coinflip() ? 2 : 1);
             break;
 
         case MISC_QUAD_DAMAGE:
@@ -889,17 +878,6 @@ bool evoke_item(int slot)
         canned_msg(MSG_NOTHING_HAPPENS);
     else if (pract > 0)
         practise(EX_DID_EVOKE_ITEM, pract);
-
-    if (ident && !item_type_known(item))
-    {
-        set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
-        set_ident_flags(item, ISFLAG_KNOW_TYPE);
-
-        mprf(gettext("You are wielding %s."),
-             item.name(true, DESC_A).c_str());
-
-        you.wield_change = true;
-    }
 
     if (!unevokable)
         you.turn_is_over = true;

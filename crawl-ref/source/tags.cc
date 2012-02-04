@@ -1113,6 +1113,7 @@ static void tag_construct_you(writer &th)
 
     marshallShort(th, you.hit_points_regeneration * 100);
     marshallInt(th, you.experience);
+    marshallInt(th, you.total_experience);
     marshallInt(th, you.gold);
 
     marshallInt(th, you.exp_available);
@@ -1155,10 +1156,7 @@ static void tag_construct_you(writer &th)
         marshallByte(th, you.train[j]);
         marshallByte(th, you.train_alt[j]);
         marshallInt(th, you.training[j]);
-#if TAG_MAJOR_VERSION == 32
         marshallBoolean(th, you.can_train[j]);
-#endif
-        marshallBoolean(th, you.train_set[j]);
         marshallInt(th, you.skill_points[j]);
         marshallInt(th, you.ct_skill_points[j]);
         marshallByte(th, you.skill_order[j]);   // skills ordering
@@ -1873,6 +1871,15 @@ static void tag_read_you(reader &th)
 
     you.hit_points_regeneration   = unmarshallShort(th) / 100;
     you.experience                = unmarshallInt(th);
+#if TAG_MAJOR_VERSION == 32
+    if (th.getMinorVersion() >= TAG_MINOR_TOTAL_EXPERIENCE)
+#endif
+        you.total_experience = unmarshallInt(th);
+#if TAG_MAJOR_VERSION == 32
+    else
+        you.total_experience = you.experience; // you get a skill cost discount
+               // if you're upgrading a game in which you've been drained a lot
+#endif
     you.gold                      = unmarshallInt(th);
     you.exp_available             = unmarshallInt(th);
 #if TAG_MAJOR_VERSION == 32
@@ -2084,12 +2091,9 @@ static void tag_read_you(reader &th)
         if (th.getMinorVersion() >= TAG_MINOR_SKILL_RESTRICTIONS)
         {
             you.can_train[j] = unmarshallBoolean(th);
-#endif
-            you.train_set[j] = unmarshallBoolean(th);
-#if TAG_MAJOR_VERSION == 32
+            if (th.getMinorVersion() < TAG_MINOR_REMOVE_SKILL_SET)
+                unmarshallBoolean(th);
         }
-        else if (you.skills[j])
-            you.train_set[j] = true;
 #endif
         you.skill_points[j]    = unmarshallInt(th);
         you.ct_skill_points[j] = unmarshallInt(th);
@@ -2162,8 +2166,9 @@ static void tag_read_you(reader &th)
     you.transfer_skill_points = unmarshallInt(th);
     you.transfer_total_skill_points = unmarshallInt(th);
 
-    // Set up you.total_skill_points and you.skill_cost_level.
-    calc_total_skill_points();
+    // Set up you.skill_cost_level.
+    you.skill_cost_level = 0;
+    check_skill_cost_change();
 
     // how many durations?
     count = unmarshallUByte(th);

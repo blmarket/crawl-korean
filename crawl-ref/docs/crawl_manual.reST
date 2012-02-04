@@ -41,11 +41,15 @@ located in Europe):
 akrasiac.org
   :http: ``http://crawl.akrasiac.org``
   :telnet: ``crawl.develz.org``
-  :ssh: ``joshua@crawl.akrasiac.org (password joshua)``
+  :ssh: ``joshua@crawl.akrasiac.org (ssh key or password joshua)``
 
 develz.org
-  :http: ``http//crawl.develz.org``
+  :http: ``http://crawl.develz.org``
   :telnet: ``crawl.develz.org:345``
+  :ssh: ``crawl@crawl.develz.org (ssh key required)``
+  :tiles: ``https://tiles.crawl.develz.org/``
+
+ssh key can be obtained at https://crawl.akrasiac.org/cao_key
 
 Connecting to these servers opens up several interesting options. You can:
   * watch other players, and even communicate with them
@@ -448,7 +452,7 @@ To access Crawl's help menu, press '?'. To get the list of all commands, press
 Appendix `4. List of Keys and Commands`_ of this text. Various other help texts are
 available as well, including this manual. You can also read the logbook from
 there by pressing ':'. Note that several commands have their own help screens,
-among them are targeting ('f'), level map ('X'), travel ('G' or 'Ctrl-G') and
+among them are targetting ('f'), level map ('X'), travel ('G' or 'Ctrl-G') and
 searching ('Ctrl-F'); again, press '?' when asked for input.
 
 If you don't like the standard keyset (either because some keys do not work
@@ -524,10 +528,10 @@ encounters to their liking.
 There are several other less dangerous methods you can use to kill monsters.
 Hunters and similarly oriented characters will prefer ranged combat to mindless
 bashing. When wielding some launcher, the 'f' and 'F' commands will fire
-appropriate missiles. See the section on Targeting in the Items Chapter for more
+appropriate missiles. See the section on Targetting in the Items Chapter for more
 on this. Likewise, many magicians will prefer to use spells from a safe
 distance. They can use the 'z' command to cast spells previously memorised.
-Again, see the Targeting section.
+Again, see the Targetting section.
 
 Some monsters can be friendly; friendly monsters will follow you around and
 fight on your behalf (but they gain some of the normal experience points for any
@@ -726,7 +730,7 @@ inserting it into the quiver use 'F' instead. Note that non-weapon, non-missile
 items will never be quivered.
 
 The interface for shooting or throwing things is also used for evoking wands and
-casting certain spells, and is described in detail in section I (Targeting).
+casting certain spells, and is described in detail in section I (Targetting).
 
 [ Armour
 ========================================
@@ -825,7 +829,7 @@ function when its charges run out. You must identify a wand to find out how many
 uses it has left. This can be done with a scroll of identify; characters with a
 good Evocations skill may also deduce the number of charges simply upon evoking
 the wand. Wands are aimed in the same way as missile weapons, and you can
-release the power of a wand by evoking it with 'V'. See section I for targeting.
+release the power of a wand by evoking it with 'V'. See section I for targetting.
 There are also a number of wands that may be useful to aim at yourself, but it
 is usually prudent to know what you are evoking before you do so.
 
@@ -1038,7 +1042,7 @@ Be careful of magic-using enemies! Some of them can use magic just as well as
 you, if not better, and often use it intelligently.
 
 ****************************************
-I. Targeting
+I. Targetting
 ****************************************
 
 When throwing something, evoking certain wands, or casting spells, you are asked
@@ -1063,7 +1067,7 @@ Otherwise, you use the following commands:
     missiles won't end up in deep water.
   - You can press Escape if you changed your mind - no turns are deducted.
 
-There are some shortcuts while targeting:
+There are some shortcuts while targetting:
 
   - Typing Shift-direction on your keypad fires straight away in that direction.
   - Pressing 'p' or 'f' fires at the previous target (if it is still alive and
@@ -1078,12 +1082,12 @@ of '.', Enter, etc. - except if you want to heal or haste someone else. If you
 target yourself while firing something harmful (which can be sensible at times),
 you will be asked for confirmation.
 
-Finally, there are some more targeting related commands:
+Finally, there are some more targetting related commands:
 
   - '(' and ')' allow to change the ammunition. This is useful when you have
     several types of appropriate ammunition, say poisoned needles and curare
     needles. Your last usage will be remembered. Note that you can use '(' for
-    changing the quiver ammunition even outside of targeting.
+    changing the quiver ammunition even outside of targetting.
   - The ':' key allows you to hide the path of your spell/wand/missile.
   - Ctrl-F changes which monsters are cycled when using '+', '=' or '-':
     hostiles, friends, plants or all monsters.
@@ -1135,7 +1139,7 @@ of a freak they've become and the 'a' command to activate any mutations which
 can be controlled. Many mutations are actually beneficial to the characters, but
 there are plenty of nasty ones as well. Many mutations have three levels, each
 of which counts as a single mutation. Some changes to the primary attributes
-Strength, Intelligence and Dexterity (apart from those by leveling) are also
+Strength, Intelligence and Dexterity (apart from those by levelling) are also
 handled as mutations - in particular, these are not permanent.
 
 You can also become mutated by overusing certain powerful enchantments,
@@ -1248,13 +1252,13 @@ distribution has them in the dat/lua/ directory. Have a look at the single
 scripts for short descriptions.
 
 Generally, Crawl should run swiftly on all machines (it compiles out of the box
-for Linux, Windows, OS X and, to some lesser extent, DOS and Unix). If, for some
+for Linux, Windows, and, to some lesser extent, OS X and other Unices). If, for some
 reason, you find Crawl runs unacceptably slowly on your machine, there are a few
 measures which may improve the situation:
 
-  - avoid greedy autoexplore
   - set travel_delay = -1 to avoid screen redraws during travel (this might be
-    useful if playing on a remote server)
+    especially useful if playing on a remote server)
+  - try playing in console mode rather than tiles
 
 ****************************************
 N. Philosophy (pas de faq)
@@ -1596,6 +1600,8 @@ Minotaurs
 
   Minotaurs are extremely good at all forms of physical combat, but are awful at
   using any type of magic. They can wear all armour except for some headgear.
+  When in close combat, Minotaurs tend to reflexively headbutt those who dare
+  attack them.
 
 Tengu
   The Tengu are an ancient and feared species of bird-people with a legendary
@@ -1689,16 +1695,16 @@ Felids
   The tale of a Felid who had nine lives isn't far from truth, as well.
 
 Octopodes
-  These land-capable relatives of common octopuses can walk about as fast as humans
+  These land-capable relatives of common octopuses can move about as fast as humans
   and yet retain the ability to swim underwater, although their dual adaptation
   is not as good as that of the shapechanging merfolk.
 
-  Octopodes have eight tentacle-shaped legs, and need four of them to walk. While a
+  Octopodes have eight tentacle-shaped legs, and need four of them to move. While a
   tentacle lacks fingers, two tentacles are a rough equivalent of a human's arm where
   item manipulation is concerned - including wielding two-handed weapons with four.
   They can use no armour other than loose hats, but can handle shields just fine.
-
-  Another peculiarity is the ability to wear eight rings, one on each tentacle.
+  Another peculiarity they have is the ability to wear eight rings, one on each
+  tentacle.
 
   Their natural camouflage makes them excel at stealth, and they have good knowledge
   of poisons as well.
@@ -1795,10 +1801,10 @@ variety of colours. This happens at an early stage in their career, and the
 colour is determined by chromosomes, not by behaviour.
 
 Some types of Draconians have breath weapons or special resistances. Draconians
-advance very slowly in levels, but are reasonably good at all skills but armour
-(most types of which they cannot wear) and missile weapons. Still, each colour
-has its own strengths and some have complementary weaknesses, which sometimes
-requires a bit of flexibility on the part of the player.
+cannot wear body armour, advance very slowly in levels, but are reasonably good
+at all skills other than missile weapons. Still, each colour has its own
+strengths and some have complementary weaknesses, which sometimes requires a
+bit of flexibility on the part of the player.
 
 Red Draconians
   feel at home in fiery surroundings. They are bad with ice magic but very
@@ -2206,7 +2212,7 @@ confusing, since there are also several modes; here is the full list. Some
 commands are particularly useful in combination with certain interface options;
 such options are mentioned in the list. For a description of them, please look
 into options_guide.txt. For a more terse list of all commands, use '??' in-game.
-Most modes (targeting, level map, interlevel travel) also have help menus via
+Most modes (targetting, level map, interlevel travel) also have help menus via
 '?' on their own.
 
 Movement
@@ -2742,16 +2748,16 @@ _
 Tab
   Cycle shops and portals.
 
-Targeting
+Targetting
 ========================================
 
-Targeting mode is similar to examining surroundings. It is activated whenever
+Targetting mode is similar to examining surroundings. It is activated whenever
 you fire projectiles, evoke a wand or cast spells which use targets. All of the
 commands described for examination of surroundings work, with the exception of
 Space (which fires).
 
 Esc or x
-  Stop targeting.
+  Stop targetting.
 
 ?
   Special help screen.
@@ -2780,13 +2786,13 @@ Ctrl-F
   target_zero_exp).
 
 (, )
-  These two commands allow you to change ammunition while targeting. The choice
+  These two commands allow you to change ammunition while targetting. The choice
   is subject to the fire_order option. Usually, you change missiles according to
   your launcher; i.e. when wielding a bow, ( and ) will cycle through all stacks
   of arrows in your inventory.
 
 Shift-direction
-  Fire straight in that direction. You can go back to the old targeting mode
+  Fire straight in that direction. You can go back to the old targetting mode
   (allowing straight firing by pressing just the direction key) using the option
   target_unshifted_dirs. Note that target_unshifted_dirs is mutually exclusive
   with default_target.
@@ -2825,17 +2831,14 @@ Very Full
 Engorged
   You can't eat any more for now.
 
-Sick
-  You are sick, usually from bad food. Hit points don't regenerate until cured
-  (wait it out or quaff a potion of healing). Occasionally a primary attribute
-  might drop.
+Nausea
+  Some of the food you ate didn't agree with you. You cannot eat anything in
+  this state, although when Starving or Near Starving you may be able to force
+  something in, at a great penalty. Wait it out or quaff a potion of healing.
 
 Pois
   You are poisoned and continually lose hit points. There are several levels of
   poisoning. Cure with potions of healing or by waiting it out.
-
-Pray
-  You are praying. This can have different effects depending on your religion.
 
 Encumbered
   Your load is heavy enough to slow you down. You also need more food when
@@ -2856,6 +2859,9 @@ Swift
 
 Slow
   All actions are slowed. Note: ending berserking will slow you.
+
+Exh
+  You are too exhausted to go berserk or cast Death's Door.
 
 Special enchantments
 ========================================
@@ -2895,10 +2901,17 @@ Regen
   You regenerate hit points at an unnaturally fast rate. This is only shown for
   temporary regeneration.
 
-Glow
+Contam
   You glow from mutagenic radiation. This can mutate you over time, usually with
-  a bad outcome. The colour indicates the severity: the first level (grey) is
-  only a warning, and no mutation will occur from it.
+  a bad outcome. The colour indicates the severity: the first level (darkgrey) is
+  only a warning, and no mutation or loss of stealth will occur from it.
+
+Glow
+  You emit light; this ruins your stealth and makes you easier to hit.
+
+Umbra
+  You are shrouded in unholy darkness. This helps with stealth and evading attacks
+  from everyone except for the undead and worshippers of Yredelemnul.
 
 RMsl
   You repel missiles, i.e. there's a good chance to evade them.
@@ -2906,6 +2919,11 @@ RMsl
 DMsl
   You deflect missiles, i.e. there's a great chance to evade them. Still, this
   protection is not bulletproof.
+
+Sick
+  You have been sickened by some hostile effect. Hit points don't regenerate
+  until cured (wait it out or quaff a potion of healing). Occasionally a primary
+  attribute might drop.
 
 Rot
   This is a very harmful, necromantic ailment. You will lose maximum hit points

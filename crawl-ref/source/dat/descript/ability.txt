@@ -317,11 +317,11 @@ Draw three cards from any deck in your inventory, look at them, and decide which
 %%%%
 Mark Four
 
-Discard between one and three cards from any deck in your inventory to draw four cards from the deck, mark and remember them, so that you can tell when they are on top, and shuffle them back into the deck. The deck will be inscribed as containing those cards, and doing so will identify the deck.
+Discard between one and three cards from any unmarked deck in your inventory to draw four cards from the deck, mark and remember them, so that you can tell when they are on top, and shuffle them back into the deck. The deck will be inscribed as containing those cards, and doing so will identify the deck.
 %%%%
 Stack Five
 
-가진 카드 중 다섯장을 뽑아, 그 덱의 나머지 카드는 버리고, 다섯장의 카드를 원하는 순서대로 정렬한다. 요점은, 당신이 원한 순서대로 이 카드들을 사용할 수 있다는 것이다.
+Draw five cards from any unmarked deck in your inventory, losing the rest of the deck. Look at the cards and sort them into any order you'd like. Subsequently, you can draw these cards in the order you chose.
 %%%%
 # Beogh (베오그)
 Smiting

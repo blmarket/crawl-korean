@@ -1786,8 +1786,7 @@ std::string get_item_description(const item_def &item, bool verbose,
     std::ostringstream description;
 
     if (!dump)
-        description << uppercase_first(item.name(true, DESC_INVENTORY_EQUIP)) 
-                    << ".";
+        description << item.name(true, DESC_INVENTORY_EQUIP) << ".";
 
 #ifdef DEBUG_DIAGNOSTICS
     if (!dump)
@@ -2329,10 +2328,9 @@ static int _print_toggle_message(const describe_info &inf, int& key)
         const int bottom_line = std::min(30, get_number_of_lines());
         cgotoxy(1, bottom_line);
         formatted_string::parse_string(gettext(
-#ifndef USE_TILE_LOCAL
             "Press '<w>!</w>'"
-#else
-            "<w>Right-click</w>"
+#ifdef USE_TILE_LOCAL
+            " or <w>Right-click</w>"
 #endif
             " to toggle between the overview and the extended description.")).display();
 
@@ -3933,7 +3931,7 @@ static std::string _describe_favour(god_type which_god)
     }
 
     if (which_god == GOD_XOM)
-        return describe_xom_favour(true);
+        return uppercase_first(describe_xom_favour());
 
     const std::string godname = god_name(which_god);
     return (you.piety > 130) ? make_stringf(gettext("A prized avatar of %s."), godname.c_str()) :
@@ -4379,10 +4377,9 @@ static void _detailed_god_description(god_type which_god)
 
     cgotoxy(1, bottom_line);
     formatted_string::parse_string(
-#ifndef USE_TILE_LOCAL
         "Press '<w>!</w>'"
-#else
-        "<w>Right-click</w>"
+#ifdef USE_TILE_LOCAL
+        " or <w>Right-click</w>"
 #endif
         " to toggle between the overview and the more detailed "
         "description.").display();
@@ -4680,10 +4677,9 @@ void describe_god(god_type which_god, bool give_title)
     cgotoxy(1, bottom_line);
     textcolor(LIGHTGREY);
     formatted_string::parse_string(
-#ifndef USE_TILE_LOCAL
         "Press '<w>!</w>'"
-#else
-        "<w>Right-click</w>"
+#ifdef USE_TILE_LOCAL
+        " or <w>Right-click</w>"
 #endif
         " to toggle between the overview and the more detailed "
         "description.").display();

@@ -1137,7 +1137,7 @@ bool bolt::hit_wall()
         && !feat_is_solid(grd(target)))
     {
         // Okay, with all those tests passed, this is probably an instance
-        // of the player manually targeting something whose line of fire
+        // of the player manually targetting something whose line of fire
         // is blocked, even though its line of sight isn't blocked.  Give
         // a warning about this fact.
         std::string prompt =  gettext("Your line of fire to ");
@@ -2805,7 +2805,7 @@ void bolt::internal_ouch(int dam)
             if (aimed_at_feet && effect_known)
                 ouch(dam, NON_MONSTER, KILLED_BY_SELF_AIMED, name.c_str());
             else
-                ouch(dam, NON_MONSTER, KILLED_BY_TARGETING);
+                ouch(dam, NON_MONSTER, KILLED_BY_TARGETTING);
         }
     }
     else if (MON_KILL(thrower))
@@ -4702,18 +4702,24 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
     switch (flavour)
     {
     case BEAM_TELEPORT:
+        if (mon->no_tele())
+            return (MON_UNAFFECTED);
         if (mon->observable())
             obvious_effect = true;
         monster_teleport(mon, false);
         return (MON_AFFECTED);
 
     case BEAM_BLINK:
+        if (mon->no_tele())
+            return (MON_UNAFFECTED);
         if (mon->observable())
             obvious_effect = true;
         monster_blink(mon);
         return (MON_AFFECTED);
 
     case BEAM_BLINK_CLOSE:
+        if (mon->no_tele())
+            return (MON_UNAFFECTED);
         if (mon->observable())
             obvious_effect = true;
         blink_other_close(mon, source);
@@ -4922,6 +4928,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         if (player_will_anger_monster(mon))
         {
             simple_monster_message(mon, gettext(" is repulsed!"));
+            obvious_effect = true;
             return (MON_OTHER);
         }
 

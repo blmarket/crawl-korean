@@ -320,7 +320,7 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     { "bend time to slow others",
       "",
       "warp the flow of time around you",
-      "inflict damage to those overly hasty",
+      "inflict damage on those overly hasty",
       "step out of the time flow"
     },
     // Ashenzari
@@ -437,7 +437,7 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
     { "bend time to slow others",
       "",
       "warp the flow of time around you",
-      "inflict damage to those overly hasty",
+      "inflict damage on those overly hasty",
       "step out of the time flow"
     },
     // Ashenzari

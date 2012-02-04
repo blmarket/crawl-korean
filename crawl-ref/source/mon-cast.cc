@@ -622,12 +622,15 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
         beam.is_beam    = true;
         break;
 
+    case SPELL_STICKY_FLAME:
+        beam.hit = AUTOMATIC_HIT;
     case SPELL_STICKY_FLAME_SPLASH:
     case SPELL_STICKY_FLAME_RANGE:
+        if (real_spell != SPELL_STICKY_FLAME)
+            beam.hit      = 18 + power / 15;
         beam.colour   = RED;
         beam.name     = "sticky flame";
         beam.damage   = dice_def(3, 3 + power / 50);
-        beam.hit      = 18 + power / 15;
         beam.flavour  = BEAM_FIRE;
         break;
 
@@ -1200,7 +1203,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         {
             pbolt.target = targ->pos();
 #ifdef DEBUG_DIAGNOSTICS
-            mprf("Porkalator: targeting %s instead",
+            mprf("Porkalator: targetting %s instead",
                  targ->name(DESC_PLAIN).c_str());
 #endif
         }
@@ -2612,7 +2615,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     // Targeted spells need a valid target.
     // Wizard-mode cast monster spells may target the boundary (shift-dir).
-    ASSERT(!(flags & SPFLAG_TARGETING_MASK) || map_bounds(pbolt.target));
+    ASSERT(!(flags & SPFLAG_TARGETTING_MASK) || map_bounds(pbolt.target));
 #endif
 
     if (do_noise)
@@ -3857,7 +3860,7 @@ static void _noise_fill_target(std::string& targ_prep, std::string& target,
     else if (pbolt.target == mons->pos())
         target = mons->pronoun(PRONOUN_REFLEXIVE);
     // Monsters should only use targeted spells while foe == MHITNOT
-    // if they're targeting themselves.
+    // if they're targetting themselves.
     else if (mons->foe == MHITNOT && !mons_is_confused(mons, true))
         target = "NONEXISTENT FOE";
     else if (!invalid_monster_index(mons->foe)
@@ -4060,7 +4063,7 @@ void mons_cast_noise(monster* mons, const bolt &pbolt,
 
     int noise = _noise_level(mons, actual_spell, silent, innate);
 
-    const bool targeted = (flags & SPFLAG_TARGETING_MASK)
+    const bool targeted = (flags & SPFLAG_TARGETTING_MASK)
                            && (pbolt.target != mons->pos()
                                || pbolt.visible());
 

@@ -658,10 +658,9 @@ std::string describe_mutations()
 }
 
 static const std::string _vampire_Ascreen_footer = gettext(
-#ifndef USE_TILE_LOCAL
     "Press '<w>!</w>'"
-#else
-    "<w>Right-click</w>"
+#ifdef USE_TILE_LOCAL
+    " or <w>Right-click</w>"
 #endif
     " to toggle between mutations and properties depending on your\n"
     "hunger status.\n");
@@ -1125,6 +1124,10 @@ bool physiology_mutation_conflict(mutation_type mutat)
     if (mutat == MUT_TENTACLE_SPIKE && you.species != SP_OCTOPODE)
         return (true);
 
+    // No bones.
+    if (mutat == MUT_THIN_SKELETAL_STRUCTURE && you.species == SP_OCTOPODE)
+        return (true);
+
     if ((mutat == MUT_HOOVES || mutat == MUT_TALONS) && !player_has_feet(false))
         return (true);
 
@@ -1427,6 +1430,21 @@ bool mutate(mutation_type which_mutation, bool failMsg,
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
         mprf(MSGCH_MUTATION, gettext("You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, true)));
         gain_msg = false;
+        break;
+
+    case MUT_LARGE_BONE_PLATES:
+        {
+            const char *arms;
+            if (you.mutation[MUT_TENTACLES] >= 3)
+                arms = "tentacles";
+            else if (you.species == SP_FELID)
+                arms = "legs";
+            else
+                break;
+            mpr(replace_all(mdef.gain[you.mutation[mutat]-1], "arms",
+                            arms).c_str(), MSGCH_MUTATION);
+            gain_msg = false;
+        }
         break;
 
     default:

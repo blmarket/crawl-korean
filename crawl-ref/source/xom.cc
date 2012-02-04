@@ -183,9 +183,8 @@ static const char *describe_xom_mood()
            (you.piety >  20) ? "좀의 특별한 장난감."
                              : "좀의 아주 특별한 장난감.";
 }
-//        favour = "a very buggy toy of Xom."; 시대가 ??난 의 뜻이기 떄문에 재미없다고 의역
-//        favour = "a BORING thing.";
-const std::string describe_xom_favour(bool upper)
+
+const std::string describe_xom_favour()
 {
     std::string favour;
     if (you.religion != GOD_XOM)
@@ -194,9 +193,6 @@ const std::string describe_xom_favour(bool upper)
         favour = "지루한 것.";
     else
         favour = describe_xom_mood();
-
-    if (upper)
-        favour = uppercase_first(favour);
 
     return (favour);
 }
@@ -1916,8 +1912,8 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
             doodad.quantity = 1;
 
             // Output some text since otherwise snakes will disappear silently.
-            mprf(gettext("%s reforms as %s"), mi->name(DESC_THE).c_str(),
-                 doodad.name(true, DESC_A).c_str());
+            mprf(_("%s reforms as %s."), mi->name(DESC_THE).c_str(),
+                 doodad.name(DESC_A).c_str());
 
             // Dismiss monster silently.
             move_item_to_grid(&thing_created, mi->pos());
@@ -4178,7 +4174,7 @@ static int _death_is_worth_saving(const kill_method_type killed_by,
 
     // Don't protect the player from these.
     case KILLED_BY_SELF_AIMED:
-    case KILLED_BY_TARGETING:
+    case KILLED_BY_TARGETTING:
         return (false);
 
     // Only if not caused by equipment.

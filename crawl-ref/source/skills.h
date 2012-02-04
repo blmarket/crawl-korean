@@ -12,14 +12,13 @@
 typedef std::set<skill_type> skill_set;
 typedef std::set<skill_type>::iterator skill_set_iter;
 
-int skill_cost_needed(int level);
-void calc_total_skill_points(void);
+unsigned int skill_cost_needed(int level);
 int calc_skill_cost(int skill_cost_level);
 void check_skill_cost_change();
 
 bool training_restricted(skill_type sk);
 void reassess_starting_skills();
-void check_selected_skills();
+bool check_selected_skills();
 void init_train();
 void init_can_train();
 void init_training();

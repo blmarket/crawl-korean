@@ -780,14 +780,8 @@ void discover_mimic(const coord_def& pos)
     tileidx_t tile = tileidx_feature(pos);
 
     // If a monster is standing on top of the mimic, move it out of the way.
-    monster* mon = monster_at(pos);
-    if (mon && shove_monster(mon))
-    {
-        simple_monster_message(mon,
-            make_stringf(" is pushed out of the %s.", name.c_str()).c_str());
-        dprf("Moved to (%d, %d).", mon->pos().x, mon->pos().y);
-    }
-    else if (mon)
+    actor* act = actor_at(pos);
+    if (act && !act->shove(name.c_str()))
     {
         // Not a single habitable place left on the level.  Possible in a Zig
         // or if a paranoid player covers a small Trove with summons.
@@ -858,8 +852,8 @@ void discover_mimic(const coord_def& pos)
     behaviour_event(mimic, ME_ALERT, MHITYOU);
 
     // Friendly monsters don't appreciate being pushed away.
-    if (mon && mon->friendly())
-        behaviour_event(mon, ME_WHACK, mimic->mindex());
+    if (act && !act->is_player() && act->as_monster()->friendly())
+        behaviour_event(act->as_monster(), ME_WHACK, mimic->mindex());
 
     // Announce the mimic.
     if (mons_near(mimic))
@@ -2826,7 +2820,7 @@ bool mons_should_fire(struct bolt &beam)
     if (_beneficial_beam_flavour(beam.flavour))
         return (_mons_should_fire_beneficial(beam));
 
-    // Friendly monsters shouldn't be targeting you: this will happen
+    // Friendly monsters shouldn't be targetting you: this will happen
     // often because the default behaviour for charmed monsters is to
     // have you as a target.  While foe_ratio will handle this, we
     // don't want a situation where a friendly dragon breathes through

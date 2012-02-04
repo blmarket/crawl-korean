@@ -208,6 +208,7 @@ bool can_wield(item_def *weapon, bool say_reason,
     if (!ignore_temporary_disability
         && you.hunger_state < HS_FULL
         && get_weapon_brand(*weapon) == SPWPN_VAMPIRICISM
+        && !crawl_state.game_is_zotdef()
         && !you.is_undead)
     {
         if (say_reason)
@@ -821,7 +822,7 @@ bool do_wear_armour(int item, bool quiet)
     {
         if (!quiet)
         {
-            const char* how_many = you.has_tentacles(false) == 3 ? "five"
+            const char* how_many = you.has_tentacles(false) == 3 ? "six"
                                                                  : "three";
             mprf(gettext("You'd need %s %s to do that!"), how_many,
                  you.hand_name(true).c_str());
@@ -1016,7 +1017,7 @@ int get_next_fire_item(int current, int direction)
     return fire_order[next];
 }
 
-class fire_target_behaviour : public targeting_behaviour
+class fire_target_behaviour : public targetting_behaviour
 {
 public:
     fire_target_behaviour()
@@ -1028,7 +1029,7 @@ public:
         set_prompt();
     }
 
-    // targeting_behaviour API
+    // targetting_behaviour API
     virtual command_type get_command(int key = -1);
     virtual bool should_redraw() const { return need_redraw; }
     virtual void clear_redraw()        { need_redraw = false; }
@@ -1157,7 +1158,7 @@ void fire_target_behaviour::pick_fire_item_from_inventory()
 
 void fire_target_behaviour::display_help()
 {
-    show_targeting_help();
+    show_targetting_help();
     redraw_screen();
     need_redraw = true;
     set_prompt();
@@ -1177,7 +1178,7 @@ command_type fire_target_behaviour::get_command(int key)
     case CMD_TARGET_CANCEL: chosen_ammo = false; break;
     }
 
-    return targeting_behaviour::get_command(key);
+    return targetting_behaviour::get_command(key);
 }
 
 std::vector<std::string> fire_target_behaviour::get_monster_desc(const monster_info& mi)
@@ -1621,9 +1622,10 @@ static bool _dispersal_hit_victim(bolt& beam, actor* victim, int dmg)
     if (beam.is_tracer)
         return (true);
 
-    if (victim->atype() == ACT_PLAYER && item_blocks_teleport(true, true))
+    if (victim->no_tele(true, true))
     {
-        canned_msg(MSG_STRANGE_STASIS);
+        if (victim->is_player())
+            canned_msg(MSG_STRANGE_STASIS);
         return (false);
     }
 
@@ -3908,7 +3910,7 @@ void zap_wand(int slot)
     dist zap_wand;
     int item_slot;
 
-    // Unless the character knows the type of the wand, the targeting
+    // Unless the character knows the type of the wand, the targetting
     // system will default to enemies. -- [ds]
     targ_mode_type targ_mode = TARG_HOSTILE;
 
@@ -5002,6 +5004,12 @@ void read_scroll(int slot)
         return;
     }
 
+    if (you.confused())
+    {
+        mpr("You're too confused.");
+        return;
+    }
+
     if (inv_count() < 1)
     {
         canned_msg(MSG_NOTHING_CARRIED);
@@ -5156,13 +5164,6 @@ void read_scroll(int slot)
     }
 
     const bool dangerous = player_in_a_dangerous_place();
-
-    if (you.confused())
-    {
-        random_uselessness(item_slot);
-        dec_inv_item_quantity(item_slot, 1);
-        return;
-    }
 
     // It is the exception, not the rule, that the scroll will not
     // be identified. {dlb}

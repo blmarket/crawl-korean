@@ -556,6 +556,12 @@ static bool _can_cast()
         return false;
     }
 
+    if (you.confused())
+    {
+        mpr("You're too confused to cast spells.");
+        return false;
+    }
+
     if (silenced(you.pos()))
     {
         mpr(gettext("You cannot cast spells when silenced!"));
@@ -723,27 +729,22 @@ bool cast_a_spell(bool check_range, spell_type spell)
     }
 
     const bool staff_energy = player_energy();
-    if (you.confused())
-        random_uselessness();
-    else
+    you.last_cast_spell = spell;
+    const spret_type cast_result = your_spells(spell, 0, true, check_range);
+    if (cast_result == SPRET_ABORT)
     {
-        you.last_cast_spell = spell;
-        const spret_type cast_result = your_spells(spell, 0, true, check_range);
-        if (cast_result == SPRET_ABORT)
-        {
-            crawl_state.zero_turns_taken();
-            return (false);
-        }
-
-        if (cast_result == SPRET_SUCCESS)
-        {
-            practise(EX_DID_CAST, spell);
-            did_god_conduct(DID_SPELL_CASTING, 1 + random2(5));
-            count_action(CACT_CAST, spell);
-        }
-        else
-            practise(EX_DID_MISCAST, spell);
+        crawl_state.zero_turns_taken();
+        return (false);
     }
+
+    if (cast_result == SPRET_SUCCESS)
+    {
+        practise(EX_DID_CAST, spell);
+        did_god_conduct(DID_SPELL_CASTING, 1 + random2(5));
+        count_action(CACT_CAST, spell);
+    }
+    else
+        practise(EX_DID_MISCAST, spell);
 
     dec_mp(spell_mana(spell));
 
@@ -1049,10 +1050,10 @@ spret_type your_spells(spell_type spell, int powc,
         powc = calc_spell_power(spell, true);
 
     // XXX: This handles only some of the cases where spells need
-    // targeting.  There are others that do their own that will be
+    // targetting.  There are others that do their own that will be
     // missed by this (and thus will not properly ESC without cost
     // because of it).  Hopefully, those will eventually be fixed. - bwr
-    if ((flags & SPFLAG_TARGETING_MASK) && spell != SPELL_PORTAL_PROJECTILE)
+    if ((flags & SPFLAG_TARGETTING_MASK) && spell != SPELL_PORTAL_PROJECTILE)
     {
         targ_mode_type targ =
               (testbits(flags, SPFLAG_HELPFUL) ? TARG_FRIEND : TARG_HOSTILE);
@@ -1063,7 +1064,7 @@ spret_type your_spells(spell_type spell, int powc,
         if (spell == SPELL_DISPEL_UNDEAD)
             targ = TARG_HOSTILE_UNDEAD;
 
-        targeting_type dir  =
+        targetting_type dir  =
             (testbits(flags, SPFLAG_TARG_OBJ) ? DIR_TARGET_OBJECT :
              testbits(flags, SPFLAG_TARGET)   ? DIR_TARGET        :
              testbits(flags, SPFLAG_GRID)     ? DIR_TARGET        :

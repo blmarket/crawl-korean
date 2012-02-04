@@ -25,7 +25,7 @@ This amulet makes its wearer less susceptible to external damage, draining magic
 %%%%
 amulet of inaccuracy
 
-이 부적은 착용자를 근접 전투를 하거나, 몬스터를을 멀리서 조준하거나 마법을 사용할 때 더 잘 빗나가게 한다.
+This amulet makes its wearer less accurate in hand combat and when targetting monsters via ranged attacks or spells.
 %%%%
 amulet of rage
 
