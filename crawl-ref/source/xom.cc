@@ -1913,7 +1913,7 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
 
             // Output some text since otherwise snakes will disappear silently.
             mprf(_("%s reforms as %s."), mi->name(DESC_THE).c_str(),
-                 doodad.name(DESC_A).c_str());
+                 doodad.name(true, DESC_A).c_str());
 
             // Dismiss monster silently.
             move_item_to_grid(&thing_created, mi->pos());
