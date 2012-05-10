@@ -234,9 +234,7 @@ void handle_monster_shouts(monster* mons, bool force)
                                   << std::endl;
     }
     else if (s_type == S_SILENT && (msg.empty() || msg == "__NONE"))
-    {
         ; // No "visual shout" defined for silent monster, do nothing.
-    }
     else if (msg.empty()) // Still nothing found?
     {
         msg::streams(MSGCH_DIAGNOSTICS)
@@ -649,7 +647,7 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
                         dprf("disturbing %s (%d, %d)",
                              mi->name(DESC_PLAIN).c_str(),
                              mi->pos().x, mi->pos().y);
-                        behaviour_event(*mi, ME_DISTURB, MHITNOT, where);
+                        behaviour_event(*mi, ME_DISTURB, 0, where);
                     }
                     break;
                 }
@@ -657,7 +655,7 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
             dprf("alerting %s (%d, %d)",
                             mi->name(DESC_PLAIN).c_str(),
                             mi->pos().x, mi->pos().y);
-            behaviour_event(*mi, ME_ALERT, MHITNOT, where);
+            behaviour_event(*mi, ME_ALERT, 0, where);
 
             if (mi->type == MONS_SHARK)
             {
@@ -698,14 +696,14 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
                     dprf("disturbing %s (%d, %d)",
                          mi->name(DESC_PLAIN).c_str(),
                          mi->pos().x, mi->pos().y);
-                    behaviour_event(*mi, ME_DISTURB, MHITNOT, where);
+                    behaviour_event(*mi, ME_DISTURB, 0, where);
                 }
                 else
                 {
                     dprf("alerting %s (%d, %d)",
                          mi->name(DESC_PLAIN).c_str(),
                          mi->pos().x, mi->pos().y);
-                    behaviour_event(*mi, ME_ALERT, MHITNOT, where);
+                    behaviour_event(*mi, ME_ALERT, 0, where);
                 }
             }
             break;
@@ -737,7 +735,7 @@ void blood_smell(int strength, const coord_def& where)
 // noise machinery
 
 // Currently noise attenuation depends solely on the feature in question.
-// Walls are assumed to completely kill noise.
+// Permarock walls are assumed to completely kill noise.
 static int _noise_attenuation_millis(const coord_def &pos)
 {
     const dungeon_feature_type feat = grd(pos);
@@ -754,14 +752,17 @@ static int _noise_attenuation_millis(const coord_def &pos)
     default:
         if (feat_is_statue_or_idol(feat))
             return BASE_NOISE_ATTENUATION_MILLIS * 2;
-        if (feat_is_wall(feat))
+        if (feat_is_permarock(feat))
             return NOISE_ATTENUATION_COMPLETE;
+        if (feat_is_wall(feat))
+            return BASE_NOISE_ATTENUATION_MILLIS * 12;
         return BASE_NOISE_ATTENUATION_MILLIS;
     }
 }
 
 noise_cell::noise_cell()
-    : neighbour_delta(0, 0), noise_id(-1), noise_intensity_millis(0)
+    : neighbour_delta(0, 0), noise_id(-1), noise_intensity_millis(0),
+      noise_travel_distance(0)
 {
 }
 
@@ -833,7 +834,9 @@ void noise_grid::propagate_noise()
     if (noises.empty())
         return;
 
+#ifdef DEBUG_NOISE_PROPAGATION
     dprf("noise_grid: %u noises to apply", (unsigned int)noises.size());
+#endif
     std::vector<coord_def> noise_perimeter[2];
     int circ_index = 0;
 
@@ -1200,17 +1203,15 @@ static void _actor_apply_noise(actor *act,
         // If the noise came from the character, any nearby monster
         // will be jumping on top of them.
         if (grid_distance(apparent_source, you.pos()) <= 3)
-            behaviour_event(mons, ME_ALERT, MHITYOU, apparent_source);
+            behaviour_event(mons, ME_ALERT, &you, apparent_source);
         else if ((noise.noise_flags & NF_MERMAID)
                  && mons_secondary_habitat(mons) == HT_WATER
                  && !mons->friendly())
         {
             // Mermaids/sirens call (hostile) aquatic monsters.
-            behaviour_event(mons, ME_ALERT, MHITNOT, apparent_source);
+            behaviour_event(mons, ME_ALERT, 0, apparent_source);
         }
         else
-        {
-            behaviour_event(mons, ME_DISTURB, MHITNOT, apparent_source);
-        }
+            behaviour_event(mons, ME_DISTURB, 0, apparent_source);
     }
 }

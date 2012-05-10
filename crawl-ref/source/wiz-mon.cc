@@ -203,8 +203,8 @@ void wizard_create_spec_monster_name()
         return;
     }
 
-    int type = mspec.type;
-    if (mons_class_is_zombified(mspec.type))
+    monster_type type = static_cast<monster_type>(mspec.type);
+    if (mons_class_is_zombified(type))
         type = mspec.monbase;
 
     coord_def place = find_newmons_square(type, you.pos());
@@ -249,10 +249,10 @@ void wizard_create_spec_monster_name()
 
     // Wizmode users should be able to conjure up uniques even if they
     // were already created. Yay, you can meet 3 Sigmunds at once! :p
-    if (mons_is_unique(mspec.type) && you.unique_creatures[mspec.type])
-        you.unique_creatures[mspec.type] = false;
+    if (mons_is_unique(type) && you.unique_creatures[type])
+        you.unique_creatures[type] = false;
 
-    if (!dgn_place_monster(mspec, you.absdepth0, place, true, false))
+    if (!dgn_place_monster(mspec, -1, place, true, false))
     {
         mpr("Unable to place monster.", MSGCH_DIAGNOSTICS);
         return;
@@ -367,9 +367,7 @@ static bool _sort_monster_list(int a, int b)
     const unsigned glyph1 = mons_char(m1->type);
     const unsigned glyph2 = mons_char(m2->type);
     if (glyph1 != glyph2)
-    {
         return (glyph1 < glyph2);
-    }
 
     return (m1->type < m2->type);
 }
@@ -1036,7 +1034,7 @@ static void _move_player(const coord_def& where)
         grd(where) = DNGN_FLOOR;
     move_player_to_grid(where, false, true);
     // If necessary, update the Abyss.
-    if (you.level_type == LEVEL_ABYSS)
+    if (player_in_branch(BRANCH_ABYSS))
         maybe_shift_abyss_around_player();
 }
 
@@ -1360,12 +1358,6 @@ void debug_miscast(int target_index)
             mprf("Spell '%s' has no disciplines.", spell_title(spell));
             return;
         }
-    }
-
-    if (is_holy_spell(spell))
-    {
-        mpr("Can't miscast holy spells.");
-        return;
     }
 
     if (spell != SPELL_NO_SPELL)

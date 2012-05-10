@@ -232,7 +232,7 @@ int book_rarity(uint8_t which_book)
     case BOOK_MALEDICT:
         return 2;
 
-    case BOOK_CONJURATIONS_II:
+    case BOOK_CONJURATIONS:
     case BOOK_NECROMANCY:
     case BOOK_CALLINGS:
     case BOOK_WIZARDRY:
@@ -297,13 +297,6 @@ int book_rarity(uint8_t which_book)
 
     case BOOK_DESTRUCTION:
         return 30;
-
-#if TAG_MAJOR_VERSION == 32
-    case BOOK_MINOR_MAGIC_II:
-    case BOOK_MINOR_MAGIC_III:
-    case BOOK_CONJURATIONS_I:
-#endif
-       return 100;
 
     default:
         return 1;
@@ -418,22 +411,7 @@ void mark_had_book(const item_def &book)
     }
 
     if (book.sub_type == BOOK_RANDART_LEVEL)
-    {
-        const int level = book.plus;
-#if TAG_MAJOR_VERSION == 32
-        god_type god;
-        if (level > 0 && level <= 9)
-        {
-            if (origin_is_acquirement(book)
-                || origin_is_god_gift(book, &god) && god == GOD_SIF_MUNA)
-            {
-                you.attribute[ATTR_RND_LVL_BOOKS] |= (1 << level);
-            }
-        }
-#else
-        ASSERT(level > 0 && level <= 9);
-#endif
-    }
+        ASSERT(book.plus > 0 && book.plus <= 9); // book's level
 
     if (!book.props.exists(SPELL_LIST_KEY))
         mark_had_book(book.book_number());
@@ -1203,7 +1181,7 @@ bool learn_spell(spell_type specspell, int book, bool is_safest_book)
 
     int chance = spell_fail(specspell);
 
-    if (chance > 0 && is_dangerous_spellbook(book))
+    if (chance > 0 && book != NUM_BOOKS && is_dangerous_spellbook(book))
     {
         std::string prompt;
 
@@ -1344,6 +1322,7 @@ bool forget_spell_from_book(spell_type spell, const item_def* book)
 
     if (del_spell_from_memory(spell))
     {
+        item_was_destroyed(*book);
         destroy_spellbook(*book);
         dec_inv_item_quantity(book->link, 1);
         you.turn_is_over = true;
@@ -1435,9 +1414,7 @@ int staff_spell(int staff)
 
     int food = spell_hunger(spell, true);
 
-    // For now player_energy() is always 0, because you've got to
-    // be wielding the rod...
-    if (you.is_undead == US_UNDEAD || player_energy() > 0)
+    if (you.is_undead == US_UNDEAD)
         food = 0;
     else
         food = calc_hunger(food);
@@ -1884,7 +1861,7 @@ static bool _get_weighted_discs(bool completely_random, god_type god,
     std::vector<int> ok_discs;
     std::vector<skill_type> skills;
     std::vector<int> spellcount;
-    for (int i = 0; i < SPTYP_LAST_EXPONENT; i++)
+    for (int i = 0; i <= SPTYP_LAST_EXPONENT; i++)
     {
         int disc = 1 << i;
         if (disc & SPTYP_DIVINATION)
@@ -1921,9 +1898,9 @@ static bool _get_weighted_discs(bool completely_random, god_type god,
         return (false);
     }
 
-    int skill_weights[SPTYP_LAST_EXPONENT];
+    int skill_weights[SPTYP_LAST_EXPONENT + 1];
 
-    memset(skill_weights, 0, SPTYP_LAST_EXPONENT * sizeof(int));
+    memset(skill_weights, 0, (SPTYP_LAST_EXPONENT + 1) * sizeof(int));
 
     if (!completely_random)
     {
@@ -2006,7 +1983,7 @@ static void _get_weighted_spells(bool completely_random, god_type god,
 
             int total_skill = 0;
             int num_skills  = 0;
-            for (int j = 0; j < SPTYP_LAST_EXPONENT; j++)
+            for (int j = 0; j <= SPTYP_LAST_EXPONENT; j++)
             {
                 int disc = 1 << j;
 

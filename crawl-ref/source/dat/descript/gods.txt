@@ -23,11 +23,17 @@ Buggy
 %%%%
 Zin
 
-Zin is a God for those focused on inner strength. Followers must remain pure of body and soul, refraining from unholy, evil, unclean or chaotic magic; the use of mutations and the consumption of intelligent beings' flesh. They may preach to or imprison the unenlightened, and can ultimately gain a divine refuge. Zin values selflessness, demanding a tithe of 1/10 of all gold gained, preferably followed by donations of more. Zin's followers can safely convert to Elyvilon and the Shining One.
+Zin is a God for those focused on inner strength.
+Followers must remain pure of body and soul, refraining from unholy, evil, unclean or chaotic magic;
+the use of mutations and the consumption of intelligent beings' flesh.
+They may preach to or imprison the unenlightened, and can ultimately gain a divine refuge.
+Zin values selflessness, demanding a tithe (one tenth) of all gold gained,
+preferably followed by donations of more.
+Zin's followers can convert to Elyvilon or the Shining One while keeping some of their piety.
 %%%%
-The Shining One
+the Shining One
 
-The Shining One is a powerful deity on a crusade against all evil. Followers and their allies may be granted various blessings upon mercilessly slaying evil and unholy beings. Worshippers must never use unholy or evil magic, and are expected to prove their moral superiority by fighting honourably. The God demands followers to scour the world, examining all of its inhabitants for traces of evil that must be eradicated. The Shining One does not mind shifting worship to Elyvilon or Zin.
+The Shining One is a powerful deity on a crusade against all evil. Followers and their allies may be granted various blessings upon mercilessly slaying evil and unholy beings. Worshippers must never use unholy or evil magic, and are expected to prove their moral superiority by fighting honourably. The God demands followers to scour the world, examining all of its inhabitants for traces of evil that must be eradicated. The Shining One's followers can convert to Elyvilon or Zin while keeping some of their piety.
 %%%%
 Kikubaaqudgha
 
@@ -75,7 +81,7 @@ Nemelex Xobeh
 %%%%
 Elyvilon
 
-Elyvilon the Healer welcomes all good souls who are prepared to help others. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons, though more pious worshippers must find and destroy unholy or evil weapons to gain piety in this way. Elyvilon does not mind if worshippers shift to Zin or the Shining One.
+Elyvilon the Healer welcomes all good souls who are prepared to help others. Those individuals can expect to gain powerful healing abilities. The Healer prefers a creed of pacifism, and helps worshippers avoid bloodshed. Elyvilon appreciates the destruction of weapons, though more pious worshippers must find and destroy unholy or evil weapons to gain piety in this way. Elyvilon's followers can convert to the Shining One or Zin while keeping some of their piety.
 %%%%
 Lugonu
 
@@ -109,7 +115,7 @@ Zin powers
 
 Zin grants followers the ability to preach to the unenlightened masses, and powers to vitalise their bodies and gain divine stamina, protecting them from various afflictions as well as giving sustenance to the hungry. Later, followers gain the ability to imprison their foes temporarily. Followers can eventually find temporary safety in a divine refuge. As piety grows, followers will be protected from mutation, and Zin may even occasionally directly intervene to save a follower's life.
 %%%%
-The Shining One powers
+the Shining One powers
 
 샤이닝 원의 신도들은, 적들을 비출 후광에 휩싸이게 된다. 샤이닝 원의 신도들은, 악한 존재들을 멸할 수 있는 권능들을 얻는다. 또한 샤이닝 원은, 소환되거나 매혹된 동료들이, 성전에 도움이 됨을 증명하는 한, 더욱 오래 남아있을 수 있도록 해 준다. 신도들은 전투에서 자신을 지켜 줄 신성한 방패를 사용할 수 있다. 이후, 신도들은 사악한 존재들을 멸할 정화의 불꽃을 불러올 수 있다. 궁극적으로 신도들은 샤이닝 원에게, 그들을 도와줄 신성한 존재를 보내줄 것을 요청할 수 있다.
 샤이닝 원은 신도들의 목숨을 지키기 위해 종종 직접 개입하며, 신앙심이 깊어짐에 따라 신도들의 생명을 더욱 잘 지켜 줄 것이다.

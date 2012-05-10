@@ -86,7 +86,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             mpr(pre_msg->c_str());
         canned_msg(MSG_STRANGE_STASIS);
     }
-    else if (you.level_type == LEVEL_ABYSS
+    else if (player_in_branch(BRANCH_ABYSS)
              && _abyss_blocks_teleport(high_level_controlled_blink)
              && !wizard_blink)
     {
@@ -105,18 +105,20 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
-        mpr(gettext("The orb interferes with your control of the blink!"), MSGCH_ORB);
+        mpr(_("The orb interferes with your control of the blink!"), MSGCH_ORB);
+        // abort still wastes the turn
         if (high_level_controlled_blink && coinflip())
-            return (cast_semi_controlled_blink(pow));
+            return (cast_semi_controlled_blink(pow, false) ? 1 : 0);
         random_blink(false);
     }
     else if (!allow_control_teleport(true) && !wizard_blink)
     {
         if (pre_msg)
             mpr(pre_msg->c_str());
-        mpr(gettext("A powerful magic interferes with your control of the blink."));
+        mpr(_("A powerful magic interferes with your control of the blink."));
+        // FIXME: cancel shouldn't waste a turn here -- need to rework Abyss handling
         if (high_level_controlled_blink)
-            return (cast_semi_controlled_blink(pow));
+            return (cast_semi_controlled_blink(pow, false/*true*/) ? 1 : -1);
         random_blink(false);
     }
     else
@@ -208,7 +210,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             mpr(gettext("Oops! Maybe something was there already."));
             random_blink(false);
         }
-        else if (you.level_type == LEVEL_ABYSS && !wizard_blink)
+        else if (player_in_branch(BRANCH_ABYSS) && !wizard_blink)
         {
             abyss_teleport(false);
             if (you.pet_target != MHITYOU)
@@ -217,7 +219,9 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
         else
         {
             // Leave a purple cloud.
-            place_cloud(CLOUD_TLOC_ENERGY, you.pos(), 1 + random2(3), &you);
+            if (!wizard_blink)
+                place_cloud(CLOUD_TLOC_ENERGY, you.pos(), 1 + random2(3), &you);
+
             move_player_to_grid(beam.target, false, true);
 
             // Controlling teleport contaminates the player. -- bwr
@@ -247,7 +251,7 @@ void random_blink(bool allow_partial_control, bool override_abyss, bool override
 
     if (item_blocks_teleport(true, true) && !override_stasis)
         canned_msg(MSG_STRANGE_STASIS);
-    else if (you.level_type == LEVEL_ABYSS
+    else if (player_in_branch(BRANCH_ABYSS)
              && !override_abyss
              && _abyss_blocks_teleport(false))
     {
@@ -265,8 +269,9 @@ void random_blink(bool allow_partial_control, bool override_abyss, bool override
     else if (player_control_teleport() && !you.confused() && allow_partial_control
              && allow_control_teleport())
     {
-        mpr(gettext("You may select the general direction of your translocation."));
-        cast_semi_controlled_blink(100);
+        mpr(_("You may select the general direction of your translocation."));
+        // FIXME: handle aborts here, don't waste the turn
+        cast_semi_controlled_blink(100, false);
         maybe_id_ring_TC();
     }
     else
@@ -285,7 +290,6 @@ void random_blink(bool allow_partial_control, bool override_abyss, bool override
 bool allow_control_teleport(bool quiet)
 {
     bool retval = !(testbits(env.level_flags, LFLAG_NO_TELE_CONTROL)
-                    || testbits(get_branch_flags(), BFLAG_NO_TELE_CONTROL)
                     || orb_haloed(you.pos()));
 
     // Tell the player why if they have teleport control.
@@ -324,7 +328,7 @@ void you_teleport(void)
 
         int teleport_delay = 3 + random2(3);
 
-        if (you.level_type == LEVEL_ABYSS && !one_chance_in(5))
+        if (player_in_branch(BRANCH_ABYSS) && !one_chance_in(5))
         {
             mpr(gettext("You have a feeling this translocation may take a while to kick in..."));
             teleport_delay += 5 + random2(10);
@@ -428,7 +432,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
     viewwindow();
     StashTrack.update_stash(you.pos());
 
-    if (you.level_type == LEVEL_ABYSS && !wizard_tele)
+    if (player_in_branch(BRANCH_ABYSS) && !wizard_tele)
     {
         abyss_teleport(new_abyss_area);
         if (you.pet_target != MHITYOU)
@@ -559,7 +563,8 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             else
             {
                 // Leave a purple cloud.
-                place_cloud(CLOUD_TLOC_ENERGY, old_pos, 1 + random2(3), &you);
+                if (!wizard_tele)
+                    place_cloud(CLOUD_TLOC_ENERGY, old_pos, 1 + random2(3), &you);
 
                 move_player_to_grid(pos, false, true);
 
@@ -578,7 +583,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
         // (Check done for the straight line, no pathfinding involved.)
         bool need_distance_check = false;
         coord_def centre;
-        if (you.level_type == LEVEL_LABYRINTH)
+        if (player_in_branch(BRANCH_LABYRINTH))
         {
             bool success = false;
             for (int xpos = 0; xpos < GXM; xpos++)
@@ -707,10 +712,10 @@ void you_teleport_now(bool allow_control, bool new_abyss_area, bool wizard_tele)
     // *less* dangerous than the old dangerous area.
     // Teleporting in a labyrinth is also funny, more so for non-minotaurs.
     if (randtele
-        && (you.level_type == LEVEL_LABYRINTH
-            || you.level_type != LEVEL_ABYSS && player_in_a_dangerous_place()))
+        && (player_in_branch(BRANCH_LABYRINTH)
+            || !player_in_branch(BRANCH_ABYSS) && player_in_a_dangerous_place()))
     {
-        if (you.level_type == LEVEL_LABYRINTH && you.species == SP_MINOTAUR)
+        if (player_in_branch(BRANCH_LABYRINTH) && you.species == SP_MINOTAUR)
             xom_is_stimulated(100);
         else
             xom_is_stimulated(200);
@@ -751,7 +756,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 {
     const coord_def where = beam.target;
 
-    if (you.trans_wall_blocking(where))
+    if (!cell_see_cell(you.pos(), where, LOS_SOLID))
     {
         mpr(gettext("There's something in the way!"));
         return SPRET_ABORT;
@@ -803,7 +808,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         else
             mpr(gettext("The mass is resisting your pull."));
 
-            return SPRET_SUCCESS;
+        return SPRET_SUCCESS;
     }
 
     // We need to modify the item *before* we move it, because
@@ -816,14 +821,17 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
         // There's also a 1-in-6 flat chance of apport failing.
         if (one_chance_in(6))
         {
-            orb_pickup_noise(where, 30, gettext("The orb shrieks and becomes a dead weight against your magic!"),
-                             gettext("The orb lets out a furious burst of light and becomes a dead weight against your magic!"));
+            orb_pickup_noise(where, 30,
+                _("The orb shrieks and becomes a dead weight against your magic!"),
+                _("The orb lets out a furious burst of light and becomes "
+                    "a dead weight against your magic!"));
             return SPRET_SUCCESS;
         }
         else // Otherwise it's just a noisy little shiny thing
         {
-            orb_pickup_noise(where, 30, gettext("The orb shrieks as your magic touches it!"),
-                             gettext("The orb lets out a furious burst of light as your magic touches it!"));
+            orb_pickup_noise(where, 30,
+                _("The orb shrieks as your magic touches it!"),
+                _("The orb lets out a furious burst of light as your magic touches it!"));
         }
     }
 
@@ -908,18 +916,15 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     return SPRET_SUCCESS;
 }
 
-static int _quadrant_blink(coord_def where, int pow, int, actor *)
+static bool _quadrant_blink(coord_def dir, int pow)
 {
-    if (where == you.pos())
-        return (1);
-
     if (pow > 100)
         pow = 100;
 
     const int dist = random2(6) + 2;  // 2-7
 
     // This is where you would *like* to go.
-    const coord_def base = you.pos() + (where - you.pos()) * dist;
+    const coord_def base = you.pos() + dir * dist;
 
     // This can take a while if pow is high and there's lots of translucent
     // walls nearby.
@@ -933,7 +938,8 @@ static int _quadrant_blink(coord_def where, int pow, int, actor *)
         if (!random_near_space(base, target)
             && !random_near_space(base, target, true))
         {
-            return 0;
+            // Uh oh, WHY should this fail the blink?
+            return false;
         }
 
         // ... which is close enough, but also far enough from us.
@@ -951,7 +957,7 @@ static int _quadrant_blink(coord_def where, int pow, int, actor *)
     {
         // We've already succeeded at blinking, so the Abyss shouldn't block it.
         random_blink(false, true);
-        return (1);
+        return true;
     }
 
     coord_def origin = you.pos();
@@ -960,18 +966,42 @@ static int _quadrant_blink(coord_def where, int pow, int, actor *)
     // Leave a purple cloud.
     place_cloud(CLOUD_TLOC_ENERGY, origin, 1 + random2(3), &you);
 
-    return (1);
+    return true;
 }
 
-int cast_semi_controlled_blink(int pow)
+spret_type cast_semi_controlled_blink(int pow, bool cheap_cancel, bool fail)
 {
-    int result = apply_one_neighbouring_square(_quadrant_blink, pow);
+    dist bmove;
+    direction_chooser_args args;
+    args.restricts = DIR_DIR;
+    args.mode = TARG_ANY;
 
-    // Controlled blink causes glowing.
-    if (result)
+    while (1)
+    {
+        mpr("Which direction? [ESC to cancel]", MSGCH_PROMPT);
+        direction(bmove, args);
+
+        if (bmove.isValid && !bmove.delta.origin())
+            break;
+
+        if (cheap_cancel
+            || yesno("Are you sure you want to cancel this blink?", false ,'n'))
+        {
+            canned_msg(MSG_OK);
+            return SPRET_ABORT;
+        }
+    }
+
+    fail_check();
+
+    // Note: this can silently fail, eating the blink -- WHY?
+    if (_quadrant_blink(bmove.delta, pow))
+    {
+        // Controlled blink causes glowing.
         contaminate_player(1, true);
+    }
 
-    return (result);
+    return SPRET_SUCCESS;
 }
 
 spret_type cast_golubrias_passage(const coord_def& where, bool fail)

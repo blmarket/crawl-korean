@@ -26,7 +26,7 @@
 
 static uint8_t _random_potion_description()
 {
-    int desc, nature, colour;
+    int desc, colour;
 
     do
     {
@@ -35,15 +35,12 @@ static uint8_t _random_potion_description()
         if (coinflip())
             desc %= PDC_NCOLOURS;
 
-        nature = PQUAL(desc);
         colour = PCOLOUR(desc);
 
         // nature and colour correspond to primary and secondary in
-        // itemname.cc.  This check ensures clear potions don't get odd
-        // qualifiers.
+        // itemname.cc.
     }
-    while (colour == PDC_CLEAR && nature > PDQ_VISCOUS
-           || desc == PDESCS(PDC_CLEAR));
+    while (colour == PDC_CLEAR); // only water can be clear
 
     return desc;
 }
@@ -51,9 +48,19 @@ static uint8_t _random_potion_description()
 void initialise_branches_for_game_type()
 {
     if (crawl_state.game_is_sprint())
-        branches[BRANCH_MAIN_DUNGEON].depth = 1;
-    else
-        branches[BRANCH_MAIN_DUNGEON].depth = BRANCH_DUNGEON_DEPTH;
+    {
+        brdepth.init(-1);
+        brdepth[BRANCH_MAIN_DUNGEON] = 1;
+        brdepth[BRANCH_ABYSS] = 1;
+        return;
+    }
+
+    for (int i = 0; i < NUM_BRANCHES; i++)
+        brdepth[i] = branches[i].numlevels;
+
+    // In trunk builds, test variable-length branches.
+    if (numcmp(Version::Long().c_str(), "0.11-b") == -1)
+        brdepth[BRANCH_ELVEN_HALLS] = random_range(3, 4);
 }
 
 // Determine starting depths of branches.
@@ -61,19 +68,34 @@ void initialise_branch_depths()
 {
     for (int branch = BRANCH_ECUMENICAL_TEMPLE; branch < NUM_BRANCHES; ++branch)
     {
-        Branch *b = &branches[branch];
+        const Branch *b = &branches[branch];
         if (crawl_state.game_is_sprint() || branch_is_unfinished(b->id))
-            b->startdepth = -1;
-        else if (branch <= BRANCH_VESTIBULE_OF_HELL || branch > BRANCH_LAST_HELL)
-            b->startdepth = random_range(b->mindepth, b->maxdepth);
+            startdepth[branch] = -1;
+        else
+            startdepth[branch] = random_range(b->mindepth, b->maxdepth);
     }
 
-    // Disable one of the Swamp/Shoals/Snake Pit.
-    const branch_type disabled_branch =
-            random_choose(BRANCH_SWAMP, BRANCH_SHOALS, BRANCH_SNAKE_PIT, -1);
+#if 0
+    // You will get one of Shoals/Swamp and one of Spider/Snake.
+    // This way you get one "water" branch and one "poison" branch.
+    const branch_type disabled_branch[] =
+    {
+        random_choose(BRANCH_SWAMP, BRANCH_SHOALS, -1),
+        random_choose(BRANCH_SNAKE_PIT, BRANCH_SPIDER_NEST, -1),
+    };
+#else
+    // For the time being, let's make Spider guaranteed.
+    branch_type disabled_branch[2];
+    disabled_branch[0] = random_choose(BRANCH_SWAMP, BRANCH_SHOALS, BRANCH_SNAKE_PIT, -1);
+    do disabled_branch[1] = random_choose(BRANCH_SWAMP, BRANCH_SHOALS, BRANCH_SNAKE_PIT, -1);
+    while (disabled_branch[0] == disabled_branch[1]);
+#endif
 
-    dprf("Disabling branch: %s", branches[disabled_branch].shortname);
-    branches[disabled_branch].startdepth = -1;
+    for (unsigned int i = 0; i < ARRAYSZ(disabled_branch); ++i)
+    {
+        dprf("Disabling branch: %s", branches[disabled_branch[i]].shortname);
+        startdepth[disabled_branch[i]] = -1;
+    }
 
     initialise_branches_for_game_type();
 }
@@ -246,6 +268,7 @@ void initialise_item_descriptions()
     you.item_description.init(255);
 
     you.item_description[IDESC_POTIONS][POT_WATER] = PDESCS(PDC_CLEAR);
+    set_ident_type(OBJ_POTIONS, POT_WATER, ID_KNOWN_TYPE);
     you.item_description[IDESC_POTIONS][POT_PORRIDGE]
         = _get_random_porridge_desc();
     you.item_description[IDESC_POTIONS][POT_BLOOD]

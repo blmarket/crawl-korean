@@ -25,8 +25,6 @@ std::string apply_description(description_level_type desc,
 
 description_level_type description_type_by_name(const char *desc);
 
-std::string &escape_path_spaces(std::string &s);
-
 std::string lowercase_string(std::string s);
 std::string &lowercase(std::string &s);
 std::string &uppercase(std::string &s);
@@ -80,7 +78,8 @@ int strwidth(const char *s);
 int strwidth(const std::string &s);
 std::string chop_string(const char *s, int width, bool spaces = true);
 std::string chop_string(const std::string &s, int width, bool spaces = true);
-std::string wordwrap_line(std::string &s, int cols, bool tags = false);
+std::string wordwrap_line(std::string &s, int cols, bool tags = false,
+                          bool indent = false);
 
 bool version_is_stable(const char *ver);
 
@@ -176,6 +175,16 @@ std::string comma_separated_line(Z start, Z end,
         text += *i;
     }
     return (text);
+}
+
+std::string unwrap_desc(std::string desc);
+
+template <typename Z>
+void erase_any(std::vector<Z> &vec, unsigned long which)
+{
+    if (which != vec.size() - 1)
+        vec[which] = vec[vec.size() - 1];
+    vec.pop_back();
 }
 
 inline int sqr(int x)

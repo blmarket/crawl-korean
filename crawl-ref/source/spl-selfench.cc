@@ -21,6 +21,7 @@
 #include "religion.h"
 #include "spl-cast.h"
 #include "spl-other.h"
+#include "spl-transloc.h"
 #include "spl-util.h"
 #include "stuff.h"
 #include "transform.h"
@@ -219,6 +220,7 @@ spret_type cast_fly(int power, bool fail)
 
     you.increase_duration(DUR_LEVITATION, dur_change, 100);
     you.increase_duration(DUR_CONTROLLED_FLIGHT, dur_change, 100);
+    you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
 
     burden_change();
 
@@ -240,8 +242,12 @@ spret_type cast_insulation(int power, bool fail)
 spret_type cast_teleport_control(int power, bool fail)
 {
     fail_check();
-    you.increase_duration(DUR_CONTROL_TELEPORT, 10 + random2(power), 50,
-                          "당신은 이제 공간이동을 제어할 수 있다.");//"You feel in control.");
+    if (allow_control_teleport(true))
+        mpr(_("You feel in control."));
+    else
+        mpr(_("You feel your control is inadequate."));
+
+    you.increase_duration(DUR_CONTROL_TELEPORT, 10 + random2(power), 50);
     return SPRET_SUCCESS;
 }
 

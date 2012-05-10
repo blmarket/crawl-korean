@@ -611,104 +611,10 @@ void list_jewellery(void)
     }
 }
 
-void list_weapons(void)
+void toggle_viewport_monster_hp()
 {
-    const int weapon_id = you.equip[EQ_WEAPON];
-
-    // Output the current weapon
-    //
-    // Yes, this is already on the screen... I'm outputing it
-    // for completeness and to avoid confusion.
-    std::string wstring = gettext("Current   : ");
-    int         colour;
-
-    if (weapon_id != -1)
-    {
-        wstring += you.inv[weapon_id].name(true, DESC_INVENTORY_EQUIP);
-        colour = menu_colour(wstring,
-                             menu_colour_item_prefix(you.inv[weapon_id]),
-                             "equip");
-    }
-    else
-    {
-        if (you.form == TRAN_BLADE_HANDS)
-            /// 칼날의 손
-            wstring += gettext("    blade ") + blade_parts(true);
-        else if (!you_tran_can_wear(EQ_WEAPON))
-            wstring += gettext("    (currently unavailable)");
-        else
-            wstring += gettext("    empty ") + blade_parts(true);
-        colour = menu_colour(wstring, "", "equip");
-    }
-
-    mpr(wstring.c_str(), MSGCH_EQUIPMENT, colour);
-
-    // Print out the swap slots.
-    for (int i = 0; i <= 1; ++i)
-    {
-        // We'll avoid repeating the current weapon for these slots,
-        // in order to keep things clean.
-        if (weapon_id == i)
-            continue;
-
-        if (i == 0)
-            wstring = gettext("Primary   : ");
-        else
-            wstring = gettext("Secondary : ");
-
-        colour = MSGCOL_BLACK;
-        if (you.inv[i].defined()
-            && (you.inv[i].base_type == OBJ_WEAPONS
-                || you.inv[i].base_type == OBJ_STAVES
-                || you.inv[i].base_type == OBJ_MISCELLANY))
-        {
-            wstring += you.inv[i].name(true, DESC_INVENTORY_EQUIP);
-            colour = menu_colour(wstring,
-                                 menu_colour_item_prefix(you.inv[i]),
-                                 "equip");
-        }
-        else
-            wstring += gettext("    none");
-
-        if (colour == MSGCOL_BLACK)
-            colour = menu_colour(wstring, "", "equip");
-
-        mpr(wstring.c_str(), MSGCH_EQUIPMENT, colour);
-    }
-
-    // Now we print out the current default fire weapon.
-    wstring = gettext("Firing    : ");
-
-    int slot = you.m_quiver->get_fire_item();
-
-    colour = MSGCOL_BLACK;
-    if (slot == -1)
-    {
-        const item_def* item;
-        you.m_quiver->get_desired_item(&item, &slot);
-        if (!item->defined())
-        {
-            wstring += gettext("    nothing");
-        }
-        else
-        {
-            wstring += "  - ";
-            wstring += item->name(true, DESC_A);
-            wstring += " (empty)";
-        }
-    }
-    else
-    {
-        wstring += you.inv[slot].name(true, DESC_INVENTORY_EQUIP);
-        colour = menu_colour(wstring,
-                             menu_colour_item_prefix(you.inv[slot]),
-                             "equip");
-    }
-
-    if (colour == MSGCOL_BLACK)
-        colour = menu_colour(wstring, "", "equip");
-
-    mpr(wstring.c_str(), MSGCH_EQUIPMENT, colour);
+    crawl_state.viewport_monster_hp = !crawl_state.viewport_monster_hp;
+    viewwindow();
 }
 
 static bool _cmdhelp_textfilter(const std::string &tag)
@@ -986,7 +892,7 @@ static std::vector<std::string> _get_monster_keys(ucs_t showchar)
 {
     std::vector<std::string> mon_keys;
 
-    for (int i = 0; i < NUM_MONSTERS; i++)
+    for (monster_type i = MONS_0; i < NUM_MONSTERS; ++i)
     {
         if (i == MONS_PROGRAM_BUG)
             continue;
@@ -1029,7 +935,7 @@ static std::vector<std::string> _get_branch_keys()
     for (int i = BRANCH_MAIN_DUNGEON; i < NUM_BRANCHES; i++)
     {
         branch_type which_branch = static_cast<branch_type>(i);
-        Branch     &branch       = branches[which_branch];
+        const Branch &branch     = branches[which_branch];
 
         // Skip unimplemented branches
         if (branch_is_unfinished(which_branch))
@@ -1037,15 +943,6 @@ static std::vector<std::string> _get_branch_keys()
 
         names.push_back(branch.shortname);
     }
-
-    //add handpicked places
-    names.push_back(place_name(
-                            get_packed_place(BRANCH_MAIN_DUNGEON, 1,
-                                static_cast<level_area_type>(LEVEL_ABYSS)), false));
-    names.push_back(place_name(
-                            get_packed_place(BRANCH_MAIN_DUNGEON, 1,
-                                static_cast<level_area_type>(LEVEL_PANDEMONIUM)), false));
-
     return (names);
 }
 
@@ -1063,13 +960,7 @@ static bool _spell_filter(std::string key, std::string body)
         return (true);
 
     if (get_spell_flags(spell) & (SPFLAG_MONSTER | SPFLAG_TESTING))
-    {
-#ifdef WIZARD
         return (!you.wizard);
-#else
-        return (true);
-#endif
-    }
 
     return (false);
 }
@@ -1174,13 +1065,10 @@ static void _append_non_item(std::string &desc, std::string key)
     }
     else if (flags & SPFLAG_MONSTER)
     {
-        desc += gettext("\nThis is a monster-only spell, only available via the "
+        // We can get here only in wizmode, the spell isn't listed otherwise.
+        // And only if it has a description -- no monster ones do.
+        desc += _("\nThis is a monster-only spell, only available via the "
                 "&Z wizard command.");
-    }
-    else if (flags & SPFLAG_CARD)
-    {
-        desc += gettext("\nThis is a card-effect spell, unavailable in ordinary "
-                "spellbooks.");
     }
     else
     {
@@ -1188,17 +1076,10 @@ static void _append_non_item(std::string &desc, std::string key)
                 "file a bug report.");
     }
 
-#ifdef WIZARD
-    if (!you.wizard)
-#else
-    if (true)
-#endif
+    if (!you.wizard && (flags & (SPFLAG_TESTING | SPFLAG_MONSTER)))
     {
-        if (flags & (SPFLAG_TESTING | SPFLAG_MONSTER))
-        {
-            desc += gettext("\n\nYou aren't in wizard mode, so you shouldn't be "
-                    "seeing this entry. Please file a bug report.");
-        }
+        desc += _("\n\nYou aren't in wizard mode, so you shouldn't be "
+                "seeing this entry. Please file a bug report.");
     }
 }
 
@@ -1812,7 +1693,7 @@ static void _find_description(bool *again, std::string *error_inout)
         else
         {
             ASSERT(sel.size() == 1);
-            ASSERT(sel[0]->hotkeys.size() == 1);
+            ASSERT(sel[0]->hotkeys.size() >= 1);
 
             std::string key;
 
@@ -2351,18 +2232,17 @@ static void _add_formatted_keyhelp(column_composer &cols)
             gettext("<h>Player Character Information:\n"),
             true, true, _cmdhelp_textfilter);
 
-    _add_command(cols, 1, CMD_DISPLAY_CHARACTER_STATUS, gettext("display character status"), 2);
-    _add_command(cols, 1, CMD_DISPLAY_SKILLS, gettext("show skill screen"), 2);
-    _add_command(cols, 1, CMD_RESISTS_SCREEN, gettext("show resistances"), 2);
-    _add_command(cols, 1, CMD_DISPLAY_RELIGION, gettext("show religion screen"), 2);
-    _add_command(cols, 1, CMD_DISPLAY_MUTATIONS, gettext("show Abilities/mutations"), 2);
-    _add_command(cols, 1, CMD_DISPLAY_KNOWN_OBJECTS, gettext("show item knowledge"), 2);
-    _add_command(cols, 1, CMD_DISPLAY_RUNES, gettext("show runes collected"), 2);
-    _add_command(cols, 1, CMD_LIST_ARMOUR, gettext("display worn armour"), 2);
-    _add_command(cols, 1, CMD_LIST_WEAPONS, gettext("display current weapons"), 2);
-    _add_command(cols, 1, CMD_LIST_JEWELLERY, gettext("display worn jewellery"), 2);
-    _add_command(cols, 1, CMD_LIST_GOLD, gettext("display gold in possession"), 2);
-    _add_command(cols, 1, CMD_EXPERIENCE_CHECK, gettext("display experience info"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_CHARACTER_STATUS, _("display character status"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_SKILLS, _("show skill screen"), 2);
+    _add_command(cols, 1, CMD_RESISTS_SCREEN, _("show resistances"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_RELIGION, _("show religion screen"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_MUTATIONS, _("show Abilities/mutations"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_KNOWN_OBJECTS, _("show item knowledge"), 2);
+    _add_command(cols, 1, CMD_DISPLAY_RUNES, _("show runes collected"), 2);
+    _add_command(cols, 1, CMD_LIST_ARMOUR, _("display worn armour"), 2);
+    _add_command(cols, 1, CMD_LIST_JEWELLERY, _("display worn jewellery"), 2);
+    _add_command(cols, 1, CMD_LIST_GOLD, _("display gold in possession"), 2);
+    _add_command(cols, 1, CMD_EXPERIENCE_CHECK, _("display experience info"), 2);
 
     cols.add_formatted(
             1,
@@ -2379,14 +2259,19 @@ static void _add_formatted_keyhelp(column_composer &cols)
     cols.add_formatted(1, gettext("         pickup part of a single stack\n"),
                        false, true, _cmdhelp_textfilter);
 
-
-    _add_command(cols, 1, CMD_LOOK_AROUND, gettext("eXamine surroundings/targets"));
-    _add_insert_commands(cols, 1, 7, gettext("eXamine level map (<w>%?</w> for help)"),
+    _add_command(cols, 1, CMD_LOOK_AROUND, _("eXamine surroundings/targets"));
+    _add_insert_commands(cols, 1, 7, _("eXamine level map (<w>%?</w> for help)"),
                          CMD_DISPLAY_MAP, CMD_DISPLAY_MAP, 0);
-    _add_command(cols, 1, CMD_FULL_VIEW, gettext("list monsters, items, features in view"));
-    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, gettext("show dungeon Overview"));
-    _add_command(cols, 1, CMD_TOGGLE_AUTOPICKUP, gettext("toggle auto-pickup"));
-    _add_command(cols, 1, CMD_TOGGLE_FRIENDLY_PICKUP, gettext("change ally pickup behaviour"));
+    _add_command(cols, 1, CMD_FULL_VIEW, _("list monsters, items, features"));
+    cols.add_formatted(1, _("         in view\n"),
+                       false, true, _cmdhelp_textfilter);
+    _add_command(cols, 1, CMD_SHOW_TERRAIN, _("toggle terrain-only view"));
+#ifndef USE_TILE
+    _add_command(cols, 1, CMD_TOGGLE_VIEWPORT_MONSTER_HP, _("colour monsters in view by HP"));
+#endif
+    _add_command(cols, 1, CMD_DISPLAY_OVERMAP, _("show dungeon Overview"));
+    _add_command(cols, 1, CMD_TOGGLE_AUTOPICKUP, _("toggle auto-pickup"));
+    _add_command(cols, 1, CMD_TOGGLE_FRIENDLY_PICKUP, _("change ally pickup behaviour"));
 
     cols.add_formatted(
             1,
@@ -2699,13 +2584,12 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>_</w>      : gain religion\n"
                        "<w>^</w>      : set piety to a value\n"
                        "<w>@</w>      : set Str Int Dex\n"
+                       "<w>#</w>      : load character from a dump file\n"
                        "<w>Z</w>      : gain lots of Zot Points\n"
                        "\n"
                        "<yellow>Create level features</yellow>\n"
-                       "<w>l</w>      : make entrance to labyrinth\n"
                        "<w>L</w>      : place a vault by name\n"
-                       "<w>p</w>      : make entrance to pandemonium\n"
-                       "<w>P</w>      : make a portal\n"
+                       "<w>p</w>      : make a portal\n"
                        "<w>T</w>      : make a trap\n"
                        "<w><<</w>/<w>></w>    : create up/down staircase\n"
                        "<w>(</w>      : turn cell into feature\n"
@@ -2728,7 +2612,8 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>}</w>      : detect all traps on level\n"
                        "<w>)</w>      : change Shoals' tide speed\n"
                        "<w>Ctrl-E</w> : dump level builder information\n"
-                       "<w>Ctrl-R</w> : regenerate current level\n"),
+                       "<w>Ctrl-R</w> : regenerate current level\n"
+                       "<w>P</w>      : create a level based on a vault\n"),
                        true, true);
 
     cols.add_formatted(1,
@@ -2741,8 +2626,10 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>Ctrl-H</w> : set hunger state\n"
                        "<w>X</w>      : make Xom do something now\n"
                        "<w>z</w>      : cast spell by number/name\n"
+                       "<w>Ctrl-M</w> : memorise spell\n"
                        "<w>W</w>      : god wrath\n"
                        "<w>w</w>      : god mollification\n"
+                       "<w>Ctrl-P</w> : polymorph into a form\n"
                        "<w>Ctrl-V</w> : toggle xray vision\n"
                        "\n"
                        "<yellow>Monster related commands</yellow>\n"
@@ -2765,9 +2652,9 @@ int list_wizard_commands(bool do_redraw_screen)
                        "<w>J</w>      : Jiyva off-level sacrifice\n"
                        "\n"
                        "<yellow>Debugging commands</yellow>\n"
-                       "<w>f</w>      : player combat damage stats\n"
-                       "<w>F</w>      : combat stats with fsim_kit\n"
-                       "<w>Ctrl-F</w> : combat stats (monster vs PC)\n"
+                       "<w>f</w>      : quick fight simulation\n"
+                       "<w>F</w>      : single scale fsim\n"
+                       "<w>Ctrl-F</w> : double scale fsim\n"
                        "<w>Ctrl-I</w> : item generation stats\n"
                        "<w>O</w>      : measure exploration time\n"
                        "<w>Ctrl-t</w> : enter in-game Lua interpreter\n"

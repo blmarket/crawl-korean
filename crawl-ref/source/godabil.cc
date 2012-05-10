@@ -84,7 +84,8 @@ std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
     // We change it to turn 1, turn 2, turn 3.
 
     // 'trits' && 'len':
-    // To have deterministic passages we need to store a random seed. Ours consists of an array of trinary bits.
+    // To have deterministic passages we need to store a random seed.
+    // Ours consists of an array of trinary bits.
 
     // Yes, really.
 
@@ -213,22 +214,31 @@ std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
     switch (chapter)
     {
         case 1:
-            turn[1] = make_stringf("It was the word of Zin that there would not be %s...", sin[1].c_str());
-            turn[2] = make_stringf("...and did the people not suffer until they had %s...", smite[1].c_str());
+            turn[1] = make_stringf("It was the word of Zin that there would not be %s...",
+                                   sin[1].c_str());
+            turn[2] = make_stringf("...and did the people not suffer until they had %s...",
+                                   smite[1].c_str());
             turn[3] = make_stringf("...the %s, after which all was well?", sinner.c_str());
             break;
         case 2:
-            turn[1] = make_stringf("The voice of Zin, pure and clear, did say that the %s...", sinner.c_str());
-            turn[2] = make_stringf("...were not %s! And hearing this, the people rose up...", virtue[0].c_str());
-            turn[3] = make_stringf("...and embraced %s, for they feared Zin's wrath.", virtue[1].c_str());
+            turn[1] = make_stringf("The voice of Zin, pure and clear, did say that the %s...",
+                                   sinner.c_str());
+            turn[2] = make_stringf("...were not %s! And hearing this, the people rose up...",
+                                   virtue[0].c_str());
+            turn[3] = make_stringf("...and embraced %s, for they feared Zin's wrath.",
+                                   virtue[1].c_str());
             break;
         case 3:
-            turn[1] = make_stringf("Zin spoke of the doctrine of %s, and...", virtue[1].c_str());
-            turn[2] = make_stringf("...saw the %s filled with fear, for they were...", sinner.c_str());
-            turn[3] = make_stringf("...%s and knew Zin's wrath would come for them.", sin[0].c_str());
+            turn[1] = make_stringf("Zin spoke of the doctrine of %s, and...",
+                                   virtue[1].c_str());
+            turn[2] = make_stringf("...saw the %s filled with fear, for they were...",
+                                   sinner.c_str());
+            turn[3] = make_stringf("...%s and knew Zin's wrath would come for them.",
+                                   sin[0].c_str());
             break;
         case 4:
-            turn[1] = make_stringf("And so Zin bade the %s to come before...", sinner.c_str());
+            turn[1] = make_stringf("And so Zin bade the %s to come before...",
+                                   sinner.c_str());
             turn[2] = make_stringf("...the altar, that judgement might be passed...");
             turn[3] = make_stringf("...upon those who were not %s.", virtue[0].c_str());
             break;
@@ -238,63 +248,82 @@ std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
             turn[3] = make_stringf("...of %s, Zin taketh.", sin[1].c_str());
             break;
         case 6:
-            turn[1] = make_stringf("Zin saw the %s of the %s, and...", sin[1].c_str(), sinner.c_str());
+            turn[1] = make_stringf("Zin saw the %s of the %s, and...",
+                                   sin[1].c_str(), sinner.c_str());
             turn[2] = make_stringf("...was displeased, for did the law not say that...");
-            turn[3] = make_stringf("...those who did not become %s would be %s?", virtue[0].c_str(), smite[1].c_str());
+            turn[3] = make_stringf("...those who did not become %s would be %s?",
+                                   virtue[0].c_str(), smite[1].c_str());
             break;
         case 7:
-            turn[1] = make_stringf("Zin said that %s shall be the law of the land, and...", virtue[1].c_str());
-            turn[2] = make_stringf("...those who turn to %s will be %s. This was fair...", sin[1].c_str(), smite[1].c_str());
+            turn[1] = make_stringf("Zin said that %s shall be the law of the land, and...",
+                                   virtue[1].c_str());
+            turn[2] = make_stringf("...those who turn to %s will be %s. This was fair...",
+                                   sin[1].c_str(), smite[1].c_str());
             turn[3] = make_stringf("...and just, and not a voice dissented.");
             break;
         case 8:
             turn[1] = make_stringf("Damned, damned be the %s and...", sinner.c_str());
-            turn[2] = make_stringf("...all else who abandon %s! Let them...", virtue[1].c_str());
-            turn[3] = make_stringf("...be %s by the jurisprudence of Zin!", smite[1].c_str());
+            turn[2] = make_stringf("...all else who abandon %s! Let them...",
+                                   virtue[1].c_str());
+            turn[3] = make_stringf("...be %s by the jurisprudence of Zin!",
+                                   smite[1].c_str());
             break;
         case 9:
             turn[1] = make_stringf("And Zin said to all in attendance, 'Which of ye...");
-            turn[2] = make_stringf("...number among the %s? Come before me, that...", sinner.c_str());
-            turn[3] = make_stringf("...I may %s you now for your %s!'", smite[0].c_str(), sin[1].c_str());
+            turn[2] = make_stringf("...number among the %s? Come before me, that...",
+                                   sinner.c_str());
+            turn[3] = make_stringf("...I may %s you now for your %s!'",
+                                   smite[0].c_str(), sin[1].c_str());
             break;
         case 10:
             turn[1] = make_stringf("Yea, I say unto thee, bring forth...");
             turn[2] = make_stringf("...the %s that they may know...", sinner.c_str());
-            turn[3] = make_stringf("...the wrath of Zin, and thus be %s!", smite[1].c_str());
+            turn[3] = make_stringf("...the wrath of Zin, and thus be %s!",
+                                   smite[1].c_str());
             break;
         case 11:
             turn[1] = make_stringf("In a great set of silver scales are weighed the...");
-            turn[2] = make_stringf("...souls of the %s, and with their %s...", sinner.c_str(), sin[0].c_str());
+            turn[2] = make_stringf("...souls of the %s, and with their %s...",
+                                   sinner.c_str(), sin[0].c_str());
             turn[3] = make_stringf("...ways, the balance hath tipped against them!");
             break;
         case 12:
-            turn[1] = make_stringf("It is just that the %s shall be %s...", sinner.c_str(), smite[1].c_str());
-            turn[2] = make_stringf("...in due time, for %s is what Zin has declared...", virtue[1].c_str());
+            turn[1] = make_stringf("It is just that the %s shall be %s...",
+                                   sinner.c_str(), smite[1].c_str());
+            turn[2] = make_stringf("...in due time, for %s is what Zin has declared...",
+                                   virtue[1].c_str());
             turn[3] = make_stringf("...the law of the land, and Zin's word is law!");
             break;
         case 13:
-            turn[1] = make_stringf("Thus the people made the covenant of %s with...", virtue[1].c_str());
+            turn[1] = make_stringf("Thus the people made the covenant of %s with...",
+                                   virtue[1].c_str());
             turn[2] = make_stringf("...Zin, and all was good, for they knew that the...");
             turn[3] = make_stringf("...%s would trouble them no longer.", sinner.c_str());
             break;
         case 14:
-            turn[1] = make_stringf("What of the %s? %s for their...", sinner.c_str(), uppercase_first(smite[1]).c_str());
-            turn[2] = make_stringf("...%s they shall be! Zin will %s them again...", sin[1].c_str(), smite[0].c_str());
+            turn[1] = make_stringf("What of the %s? %s for their...",
+                                   sinner.c_str(), uppercase_first(smite[1]).c_str());
+            turn[2] = make_stringf("...%s they shall be! Zin will %s them again...",
+                                   sin[1].c_str(), smite[0].c_str());
             turn[3] = make_stringf("...and again, and again!");
             break;
         case 15:
             turn[1] = make_stringf("And lo, the wrath of Zin did find...");
-            turn[2] = make_stringf("...them wherever they hid, and the %s...", sinner.c_str());
-            turn[3] = make_stringf("...were %s for their %s!", smite[1].c_str(), sin[1].c_str());
+            turn[2] = make_stringf("...them wherever they hid, and the %s...",
+                                   sinner.c_str());
+            turn[3] = make_stringf("...were %s for their %s!",
+                                   smite[1].c_str(), sin[1].c_str());
             break;
         case 16:
-            turn[1] = make_stringf("Zin looked out upon the remains of the %s...", sinner.c_str());
+            turn[1] = make_stringf("Zin looked out upon the remains of the %s...",
+                                   sinner.c_str());
             turn[2] = make_stringf("...and declared it good that they had been...");
             turn[3] = make_stringf("...%s. And thus justice was done.", smite[1].c_str());
             break;
         case 17:
             turn[1] = make_stringf("The law of Zin demands thee...");
-            turn[2] = make_stringf("...be %s, and that the punishment for %s...", virtue[0].c_str(), sin[1].c_str());
+            turn[2] = make_stringf("...be %s, and that the punishment for %s...",
+                                   virtue[0].c_str(), sin[1].c_str());
             turn[3] = make_stringf("...shall be swift and harsh!");
             break;
         case 18:
@@ -303,48 +332,66 @@ std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
             turn[3] = make_stringf("...they become as damned as the %s.", sinner.c_str());
             break;
         case 19:
-            turn[1] = make_stringf("Only the %s shall be judged worthy, and...", virtue[0].c_str());
-            turn[2] = make_stringf("...all the %s will be found wanting. Such is...", sinner.c_str());
+            turn[1] = make_stringf("Only the %s shall be judged worthy, and...",
+                                   virtue[0].c_str());
+            turn[2] = make_stringf("...all the %s will be found wanting. Such is...",
+                                   sinner.c_str());
             turn[3] = make_stringf("...the word of Zin, and such is the law!");
             break;
         case 20:
-            turn[1] = make_stringf("To those who would swear an oath of %s on my altar...", virtue[1].c_str());
-            turn[2] = make_stringf("...I bring ye salvation. To the rest, ye %s...", sinner.c_str());
-            turn[3] = make_stringf("...and the %s, the name of Zin shall be thy damnation.", sin[0].c_str());
+            turn[1] = make_stringf("To those who would swear an oath of %s on my altar...",
+                                   virtue[1].c_str());
+            turn[2] = make_stringf("...I bring ye salvation. To the rest, ye %s...",
+                                   sinner.c_str());
+            turn[3] = make_stringf("...and the %s, the name of Zin shall be thy damnation.",
+                                   sin[0].c_str());
             break;
         case 21:
             turn[1] = make_stringf("And Zin decreed that the people would be...");
-            turn[2] = make_stringf("...protected from %s in all its forms, and...", sin[1].c_str());
-            turn[3] = make_stringf("...preserved in their %s for all the days to come.", virtue[1].c_str());
+            turn[2] = make_stringf("...protected from %s in all its forms, and...",
+                                   sin[1].c_str());
+            turn[3] = make_stringf("...preserved in their %s for all the days to come.",
+                                   virtue[1].c_str());
             break;
         case 22:
             turn[1] = make_stringf("For those who would enter Zin's holy bosom...");
-            turn[2] = make_stringf("...and live in %s, Zin provideth. Such is...", virtue[1].c_str());
+            turn[2] = make_stringf("...and live in %s, Zin provideth. Such is...",
+                                   virtue[1].c_str());
             turn[3] = make_stringf("...the covenant, and such is the way of things.");
             break;
         case 23:
-            turn[1] = make_stringf("Zin hath not damned the %s, but it is they...", sinner.c_str());
-            turn[2] = make_stringf("...that have damned themselves for their %s, for...", sin[1].c_str());
-            turn[3] = make_stringf("...did Zin not decree that to be %s was wrong?", sin[0].c_str());
+            turn[1] = make_stringf("Zin hath not damned the %s, but it is they...",
+                                   sinner.c_str());
+            turn[2] = make_stringf("...that have damned themselves for their %s, for...",
+                                   sin[1].c_str());
+            turn[3] = make_stringf("...did Zin not decree that to be %s was wrong?",
+                                   sin[0].c_str());
             break;
         case 24:
             turn[1] = make_stringf("And Zin, furious at their %s, held...", sin[1].c_str());
             turn[2] = make_stringf("...aloft a silver sceptre! The %s...", sinner.c_str());
-            turn[3] = make_stringf("...were %s, and thus the way of things was maintained.", smite[1].c_str());
+            turn[3] = make_stringf("...were %s, and thus the way of things was maintained.",
+                                   smite[1].c_str());
             break;
         case 25:
             turn[1] = make_stringf("When the law of the land faltered, Zin rose...");
-            turn[2] = make_stringf("...from the silver throne, and the %s were...", sinner.c_str());
-            turn[3] = make_stringf("...%s. And it was thus that the law was made good.", smite[1].c_str());
+            turn[2] = make_stringf("...from the silver throne, and the %s were...",
+                                   sinner.c_str());
+            turn[3] = make_stringf("...%s. And it was thus that the law was made good.",
+                                   smite[1].c_str());
             break;
         case 26:
             turn[1] = make_stringf("Zin descended from on high in a silver chariot...");
-            turn[2] = make_stringf("...to %s the %s for their...", smite[0].c_str(), sinner.c_str());
-            turn[3] = make_stringf("...%s, and thus judgement was rendered.", sin[1].c_str());
+            turn[2] = make_stringf("...to %s the %s for their...",
+                                   smite[0].c_str(), sinner.c_str());
+            turn[3] = make_stringf("...%s, and thus judgement was rendered.",
+                                   sin[1].c_str());
             break;
         case 27:
-            turn[1] = make_stringf("The %s stood before Zin, and in that instant...", sinner.c_str());
-            turn[2] = make_stringf("...they knew they would be found guilty of %s...", sin[1].c_str());
+            turn[1] = make_stringf("The %s stood before Zin, and in that instant...",
+                                   sinner.c_str());
+            turn[2] = make_stringf("...they knew they would be found guilty of %s...",
+                                   sin[1].c_str());
             turn[3] = make_stringf("...for that is the word of Zin, and Zin's word is law.");
             break;
     }
@@ -752,9 +799,9 @@ bool zin_recite_to_single_monster(const coord_def& where,
         return (false);
 
     // To what degree are they eligible for this prayertype?
-    int degree = eligibility[prayertype];
-    bool minor = degree <= ((prayertype == RECITE_HERETIC) ? 2 : 1);
-    int spellpower = power * 2 + degree * 20;
+    const int degree = eligibility[prayertype];
+    const bool minor = degree <= (prayertype == RECITE_HERETIC ? 2 : 1);
+    const int spellpower = power * 2 + degree * 20;
     zin_eff effect = ZIN_NOTHING;
 
     switch (prayertype)
@@ -983,7 +1030,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
                 simple_monster_message(mon, " tries to escape the wrath of Zin.");
             else
                 simple_monster_message(mon, " flees in terror at the wrath of Zin!");
-            behaviour_event(mon, ME_SCARE, MHITNOT, you.pos());
+            behaviour_event(mon, ME_SCARE, 0, you.pos());
             affected = true;
         }
         break;
@@ -1120,7 +1167,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
                                     : "'s chaotic flesh runs like molten wax.");
 
                     print_wounds(mon);
-                    behaviour_event(mon, ME_WHACK, MHITYOU);
+                    behaviour_event(mon, ME_WHACK, &you);
                     affected = true;
                 }
                 else
@@ -1258,7 +1305,7 @@ bool zin_remove_all_mutations()
     take_note(Note(NOTE_GOD_GIFT, you.religion));
 
     simple_god_message(" draws all chaos from your body!");
-    delete_all_mutations();
+    delete_all_mutations("Zin's power");
 
     return (true);
 }
@@ -1431,6 +1478,7 @@ bool trog_burn_spellbooks()
 
     int totalpiety = 0;
     int totalblocked = 0;
+    std::vector<coord_def> mimics;
 
     for (radius_iterator ri(you.pos(), LOS_RADIUS, true, true, true); ri; ++ri)
     {
@@ -1448,6 +1496,13 @@ bool trog_burn_spellbooks()
                 || cloud != EMPTY_CLOUD && env.cloud[cloud].type != CLOUD_FIRE)
             {
                 totalblocked++;
+                continue;
+            }
+
+            if (si->flags & ISFLAG_MIMIC)
+            {
+                totalblocked++;
+                mimics.push_back(*ri);
                 continue;
             }
 
@@ -1469,6 +1524,7 @@ bool trog_burn_spellbooks()
 
             dprf("Burned spellbook rarity: %d", rarity);
             destroy_spellbook(*si);
+            item_was_destroyed(*si);
             destroy_item(si.link());
             count++;
         }
@@ -1504,6 +1560,11 @@ bool trog_burn_spellbooks()
         mprf("The spellbook%s fail%s to ignite!",
              totalblocked == 1 ? ""  : "s",
              totalblocked == 1 ? "s" : "");
+        for (std::vector<coord_def>::iterator it = mimics.begin();
+             it != mimics.end(); ++it)
+        {
+            discover_mimic(*it, false);
+        }
         return (false);
     }
     else
@@ -1562,7 +1623,7 @@ bool jiyva_remove_bad_mutation()
     }
 
     // Ensure that only bad mutations are removed.
-    if (!delete_mutation(RANDOM_BAD_MUTATION, true, false, true, true))
+    if (!delete_mutation(RANDOM_BAD_MUTATION, "Jiyva's power", true, false, true, true))
     {
         canned_msg(MSG_NOTHING_HAPPENS);
         return (false);
@@ -1589,14 +1650,14 @@ void yred_animate_remains_or_dead()
 {
     if (yred_can_animate_dead())
     {
-        mpr("You call on the dead to rise...");
+        canned_msg(MSG_CALL_DEAD);
 
         animate_dead(&you, you.skill_rdiv(SK_INVOCATIONS) + 1, BEH_FRIENDLY,
                      MHITYOU, &you, "", GOD_YREDELEMNUL);
     }
     else
     {
-        mpr("You attempt to give life to the dead...");
+        canned_msg(MSG_ANIMATE_REMAINS);
 
         if (animate_remains(you.pos(), CORPSE_BODY, BEH_FRIENDLY,
                             MHITYOU, &you, "", GOD_YREDELEMNUL) < 0)
@@ -1629,7 +1690,7 @@ void yred_drain_life()
         mprf("You draw life from %s.",
              mi->name(DESC_THE).c_str());
 
-        behaviour_event(*mi, ME_WHACK, MHITYOU, you.pos());
+        behaviour_event(*mi, ME_WHACK, &you, you.pos());
 
         mi->hurt(&you, hurted);
 
@@ -1707,7 +1768,7 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     mons_make_god_gift(mon, GOD_YREDELEMNUL);
 
     mon->attitude = !force_hostile ? ATT_FRIENDLY : ATT_HOSTILE;
-    behaviour_event(mon, ME_ALERT, !force_hostile ? MHITNOT : MHITYOU);
+    behaviour_event(mon, ME_ALERT, force_hostile ? &you : 0);
 
     mon->stop_constricting_all(false);
     mon->stop_being_constricted();
@@ -1876,7 +1937,7 @@ bool fedhas_shoot_through(const bolt & beam, const monster* victim)
 
     bool origin_worships_fedhas;
     mon_attitude_type origin_attitude;
-    if (originator->atype() == ACT_PLAYER)
+    if (originator->is_player())
     {
         origin_worships_fedhas = you.religion == GOD_FEDHAS;
         origin_attitude = ATT_FRIENDLY;
@@ -1927,7 +1988,7 @@ int fedhas_fungal_bloom()
 
                     downgrade_zombie_to_skeleton(target);
 
-                    behaviour_event(target, ME_ALERT, MHITYOU);
+                    behaviour_event(target, ME_ALERT, &you);
 
                     if (piety)
                         processed_count++;
@@ -2003,10 +2064,13 @@ int fedhas_fungal_bloom()
                                        BEH_GOOD_NEUTRAL, true);
 
                 // Either turn this corpse into a skeleton or destroy it.
-                if (mons_skeleton(j->plus))
+                if (mons_skeleton(j->mon_type))
                     turn_corpse_into_skeleton(*j);
                 else
+                {
+                    item_was_destroyed(*j);
                     destroy_item(j->index());
+                }
 
                 seen_mushrooms += seen_per;
 
@@ -2180,14 +2244,13 @@ bool fedhas_sunlight()
             else
             {
                 backlight_monsters(target, 1, 0);
-                behaviour_event(mons, ME_ALERT, MHITYOU);
+                behaviour_event(mons, ME_ALERT, &you);
             }
 
             processed_count++;
         }
         else if (one_chance_in(100)
-                 && ftype >= DNGN_FLOOR_MIN
-                 && ftype <= DNGN_FLOOR_MAX
+                 && ftype == DNGN_FLOOR
                  && orig_type == DNGN_SHALLOW_WATER)
         {
             // Create a plant.
@@ -2590,8 +2653,7 @@ int fedhas_rain(const coord_def &target)
             // x/192.
             if (x_chance_in_y(5, 192)
                 && !actor_at(*rad)
-                && ftype >= DNGN_FLOOR_MIN
-                && ftype <= DNGN_FLOOR_MAX)
+                && ftype == DNGN_FLOOR)
             {
                 if (create_monster(mgen_data(
                                       coinflip() ? MONS_PLANT : MONS_FUNGUS,
@@ -2614,7 +2676,7 @@ int fedhas_rain(const coord_def &target)
         }
 
         // Turn regular floor squares only into shallow water.
-        if (ftype >= DNGN_FLOOR_MIN && ftype <= DNGN_FLOOR_MAX)
+        if (ftype == DNGN_FLOOR)
         {
             dungeon_terrain_changed(*rad, DNGN_SHALLOW_WATER);
 
@@ -2740,10 +2802,13 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
             }
         }
 
-        if (mons_skeleton(positions[i]->plus))
+        if (mons_skeleton(positions[i]->mon_type))
             turn_corpse_into_skeleton(*positions[i]);
         else
+        {
+            item_was_destroyed(*positions[i]);
             destroy_item(positions[i]->index());
+        }
     }
 
     viewwindow(false);
@@ -2782,14 +2847,15 @@ static bool _possible_evolution(const monster* input,
         possible_monster.fruit_cost = 1;
         break;
 
-    case MONS_FUNGUS:
-        possible_monster.new_type = MONS_WANDERING_MUSHROOM;
-        possible_monster.piety_cost = 1;
+    case MONS_OKLOB_SAPLING:
+        possible_monster.new_type = MONS_OKLOB_PLANT;
+        possible_monster.piety_cost = 4;
         break;
 
+    case MONS_FUNGUS:
     case MONS_TOADSTOOL:
         possible_monster.new_type = MONS_WANDERING_MUSHROOM;
-        possible_monster.piety_cost = 2;
+        possible_monster.piety_cost = (input->type == MONS_TOADSTOOL ? 2 : 1);
         break;
 
     case MONS_BALLISTOMYCETE:
@@ -2949,6 +3015,10 @@ bool fedhas_evolve_flora()
         break;
     }
 
+    case MONS_OKLOB_SAPLING:
+        simple_monster_message(target, " appears stronger.");
+        break;
+
     case MONS_FUNGUS:
     case MONS_TOADSTOOL:
         simple_monster_message(target,
@@ -3001,7 +3071,7 @@ static int _lugonu_warp_monster(monster* mon, int pow)
         return (0);
 
     if (!mon->friendly())
-        behaviour_event(mon, ME_ANNOY, MHITYOU);
+        behaviour_event(mon, ME_ANNOY, &you);
 
     int res_margin = mon->check_res_magic(pow * 2);
     if (res_margin > 0)
@@ -3091,7 +3161,7 @@ static int _slouchable(coord_def where, int pow, int, actor* agent)
 
 static bool _act_slouchable(const actor *act)
 {
-    if (act->atype() != ACT_MONSTER)
+    if (act->is_player())
         return false;  // too slow-witted
     return _slouchable(act->pos(), 0, 0, 0);
 }

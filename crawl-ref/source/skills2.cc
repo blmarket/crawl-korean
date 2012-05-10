@@ -146,7 +146,9 @@ int get_skill_progress(skill_type sk, int level, int points, int scale)
 
     const int needed = skill_exp_needed(level + 1, sk);
     const int prev_needed = skill_exp_needed(level, sk);
-    const int amt_done = points - prev_needed;
+    // A scale as small as 92 would overflow with 31 bits if skill_rdiv()
+    // is involved: needed can be 91985, skill_rdiv() multiplies by 256.
+    const int64_t amt_done = points - prev_needed;
     int prog = (amt_done * scale) / (needed - prev_needed);
 
     ASSERT(prog >= 0);
@@ -345,12 +347,12 @@ std::string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             break;
 
         case SK_SPELLCASTING:
-            if (you.species == SP_OGRE)
+            if (species == SP_OGRE)
                 result = "Ogre Mage";
             break;
 
         case SK_NECROMANCY:
-            if (you.species == SP_SPRIGGAN && skill_rank == 5)
+            if (species == SP_SPRIGGAN && skill_rank == 5)
                 result = "La Petite Mort";
             break;
 
@@ -793,7 +795,6 @@ int transfer_skill_points(skill_type fsk, skill_type tsk, int skp_max,
         // Perform the real level up
         check_skill_level_change(fsk);
         check_skill_level_change(tsk);
-        check_skill_cost_change();
         if ((int)you.transfer_skill_points < total_skp_lost)
             you.transfer_skill_points = 0;
         else

@@ -66,9 +66,9 @@
  * for each attack. Combat effects should not go here, if at all possible. This
  * is merely a wrapper function which is used to start combat.
  */
-bool fight_melee(actor *attacker, actor *defender)
+bool fight_melee(actor *attacker, actor *defender, bool *did_hit, bool simu)
 {
-    if (defender->atype() == ACT_PLAYER)
+    if (defender->is_player())
     {
         ASSERT(!crawl_state.game_is_arena());
         // Friendly and good neutral monsters won't attack unless confused.
@@ -80,11 +80,15 @@ bool fight_melee(actor *attacker, actor *defender)
         if (attacker->as_monster()->withdrawn())
             return (false);
 
+        // Boulders can't melee while they're rolling past you
+        if (attacker->as_monster()->rolling())
+            return (false);
+
         // In case the monster hasn't noticed you, bumping into it will
         // change that.
-        behaviour_event(attacker->as_monster(), ME_ALERT, MHITYOU);
+        behaviour_event(attacker->as_monster(), ME_ALERT, defender);
     }
-    else if (attacker->atype() == ACT_PLAYER)
+    else if (attacker->is_player())
     {
         ASSERT(!crawl_state.game_is_arena());
         // Can't damage orbs or boulders this way.
@@ -95,6 +99,9 @@ bool fight_melee(actor *attacker, actor *defender)
         }
 
         melee_attack attk(&you, defender);
+
+        if (simu)
+            attk.simu = true;
 
         // We're trying to hit a monster, break out of travel/explore now.
         if (!travel_kill_monster(defender->type))
@@ -116,6 +123,9 @@ bool fight_melee(actor *attacker, actor *defender)
                 you.turn_is_over = false;
             return (false);
         }
+
+        if (did_hit)
+            *did_hit = attk.did_hit;
 
         return (true);
     }
@@ -181,27 +191,18 @@ bool fight_melee(actor *attacker, actor *defender)
         melee_attack melee_attk(attacker, defender, attack_number,
                           effective_attack_number);
 
+        if (simu)
+            melee_attk.simu = true;
+
         // If the attack fails out, keep effective_attack_number up to
         // date so that we don't cause excess energy loss in monsters
         if (!melee_attk.attack())
             effective_attack_number = melee_attk.effective_attack_number;
+        else if (did_hit and not *did_hit)
+            *did_hit = melee_attk.did_hit;
     }
 
     return (true);
-}
-
-// This function returns the "extra" stats the player gets because of
-// choice of weapon... it's used only for giving warnings when a player
-// wields a less than ideal weapon.
-int effective_stat_bonus(int wepType)
-{
-    int str_weight;
-    if (wepType == -1)
-        str_weight = player_weapon_str_weight();
-    else
-        str_weight = weapon_str_weight(OBJ_WEAPONS, wepType);
-
-    return ((you.strength() - you.dex()) * (str_weight - 5) / 10);
 }
 
 unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
@@ -217,7 +218,7 @@ unchivalric_attack_type is_unchivalric_attack(const actor *attacker,
         return (unchivalric);
 
     // Distracted (but not batty); this only applies to players.
-    if (attacker && attacker->atype() == ACT_PLAYER
+    if (attacker && attacker->is_player()
         && def && def->foe != MHITYOU && !mons_is_batty(def))
     {
         unchivalric = UCAT_DISTRACTED;
@@ -317,7 +318,7 @@ int resist_adjust_damage(actor *defender, beam_type flavour,
     if (!res)
         return (rawdamage);
 
-    const bool mons = (defender->atype() == ACT_MONSTER);
+    const bool mons = (defender->is_monster());
 
     const int resistible_fraction = get_resistible_fraction(flavour);
 

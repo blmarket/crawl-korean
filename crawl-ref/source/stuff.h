@@ -8,12 +8,22 @@
 #define STUFF_H
 
 #include <map>
+#include "player.h"
 
 std::string make_time_string(time_t abs_time, bool terse = false);
 std::string make_file_time(time_t when);
 
 void set_redraw_status(uint64_t flags);
 
+enum rounding_type
+{
+    ROUND_DOWN,
+    ROUND_CLOSE,
+    ROUND_RANDOM
+};
+
+double stepdown(double value, double step);
+int stepdown(int value, int step, rounding_type = ROUND_CLOSE, int max = 0);
 int stepdown_value(int base_value, int stepping, int first_step,
                    int last_step, int ceiling_value);
 unsigned char get_ch();
@@ -25,10 +35,10 @@ NORETURN void end(int exit_code, bool print_err = false, PRINTF(2, = NULL));
 NORETURN void game_ended();
 NORETURN void game_ended_with_error(const std::string &message);
 
-bool print_error_screen(PRINTF(0, ));
 void redraw_screen();
 
 void canned_msg(canned_message_type which_message);
+const char* held_status(actor *act = &you);
 
 bool yes_or_no(PRINTF(0, ));
 typedef std::map<int, int> explicit_keymap;
@@ -56,5 +66,6 @@ class game_ended_condition : public std::exception
 
 int prompt_for_quantity(const char *prompt);
 int prompt_for_int(const char *prompt, bool nonneg);
+double prompt_for_float(const char* prompt);
 
 #endif

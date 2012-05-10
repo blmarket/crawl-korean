@@ -41,6 +41,7 @@
 #include "shopping.h"
 #include "showsymb.h"
 #include "sprint.h"
+#include "stash.h"
 #include "state.h"
 #include "terrain.h"
 #include "tiledef-dngn.h"
@@ -296,8 +297,7 @@ static bool _abyss_place_rune(const map_mask &abyss_genlevel_mask,
     {
         dprf("Placing abyssal rune at (%d,%d)", chosen_spot.x, chosen_spot.y);
         int thing_created = items(1, OBJ_MISCELLANY,
-                                  MISC_RUNE_OF_ZOT, true,
-                                  DEPTH_ABYSS, 0);
+                                  MISC_RUNE_OF_ZOT, true, 0, 0);
         if (thing_created != NON_ITEM)
         {
             mitm[thing_created].plus = RUNE_ABYSSAL;
@@ -326,7 +326,7 @@ static int _abyss_create_items(const map_mask &abyss_genlevel_mask,
 {
     // During game start, number and level of items mustn't be higher than
     // that on level 1. Abyss in sprint games has no items.
-    int num_items = 150, items_level = DEPTH_ABYSS;
+    int num_items = 150, items_level = 52;
     int items_placed = 0;
 
     if (crawl_state.game_is_sprint())
@@ -385,7 +385,11 @@ static int _abyss_create_items(const map_mask &abyss_genlevel_mask,
                                       true, items_level, 250);
             move_item_to_grid(&thing_created, place);
             if (thing_created != NON_ITEM)
+            {
                 items_placed++;
+                if (one_chance_in(ITEM_MIMIC_CHANCE))
+                    mitm[thing_created].flags |= ISFLAG_MIMIC;
+            }
         }
     }
 
@@ -437,9 +441,7 @@ static int _abyss_exit_chance()
 {
     int exit_chance = 7500;
     if (crawl_state.game_is_sprint())
-    {
         exit_chance = sprint_modify_abyss_exit_chance(exit_chance);
-    }
     return exit_chance;
 }
 
@@ -491,9 +493,8 @@ static dungeon_feature_type _abyss_pick_altar()
     god_type god;
 
     do
-        god = random_god(true);
-    while (is_good_god(god)
-           || is_unavailable_god(god));
+        god = random_god();
+    while (is_good_god(god));
 
     return (altar_for_god(god));
 }
@@ -563,7 +564,7 @@ public:
 static void _abyss_lose_monster(monster& mons)
 {
     if (mons.needs_abyss_transit())
-        mons.set_transit(level_id(LEVEL_ABYSS));
+        mons.set_transit(level_id(BRANCH_ABYSS));
 
     mons.destroy_inventory();
     monster_cleanup(&mons);
@@ -690,6 +691,7 @@ static void _abyss_wipe_square_at(coord_def p, bool saveMonsters=false)
     remove_markers_and_listeners_at(p);
 
     env.map_knowledge(p).clear();
+    StashTrack.update_stash(p);
 }
 
 // Removes monsters, clouds, dungeon features, and items from the
@@ -916,16 +918,20 @@ static void _abyss_shift_level_contents_around_player(
 static void _abyss_generate_monsters(int nmonsters)
 {
     mgen_data mons;
-    mons.level_type = LEVEL_ABYSS;
     mons.proximity  = PROX_AWAY_FROM_PLAYER;
 
     for (int mcount = 0; mcount < nmonsters; mcount++)
-        mons_place(mons);
+    {
+        mons.cls = pick_random_monster_for_place(BRANCH_ABYSS, MONS_NO_MONSTER,
+                                                 false, false, false);
+        if (!invalid_monster_type(mons.cls))
+            mons_place(mons);
+    }
 }
 
 void maybe_shift_abyss_around_player()
 {
-    ASSERT(you.level_type == LEVEL_ABYSS);
+    ASSERT(player_in_branch(BRANCH_ABYSS));
     if (map_bounds_with_margin(you.pos(),
                                MAPGEN_BORDER + ABYSS_AREA_SHIFT_RADIUS + 1))
     {
@@ -961,7 +967,7 @@ void save_abyss_uniques()
         if (mi->needs_abyss_transit()
             && !testbits(mi->flags, MF_TAKING_STAIRS))
         {
-            mi->set_transit(level_id(LEVEL_ABYSS));
+            mi->set_transit(level_id(BRANCH_ABYSS));
         }
 }
 
@@ -1041,7 +1047,7 @@ static dungeon_feature_type _abyss_grid(double x, double y, double depth,
         isWall = sub_noise.id[0] % 2;
 
     if (sub_noise.id[0] % 3 == 0)
-        isWall = isWall ^ true;
+        isWall = !isWall;
 
     if (isWall)
     {
@@ -1188,8 +1194,6 @@ static void _generate_area(const map_mask &abyss_genlevel_mask)
          env.turns_on_level, placed_abyssal_rune? "yes" : "no");
 #endif
 
-    // Nuke map knowledge.
-    env.map_knowledge.init(map_cell());
     _abyss_apply_terrain(abyss_genlevel_mask);
 
     bool use_vaults = (you.char_direction == GDT_GAME_START ? false : true);
@@ -1242,7 +1246,7 @@ static void _initialize_abyss_state()
     abyssal_state.depth = 0.0;
 }
 
-static uint8_t _roll_abyss_floor_colour()
+static colour_t _roll_abyss_floor_colour()
 {
     return random_choose_weighted(
          108, BLUE,
@@ -1264,7 +1268,7 @@ static uint8_t _roll_abyss_floor_colour()
     0);
 }
 
-static uint8_t _roll_abyss_rock_colour()
+static colour_t _roll_abyss_rock_colour()
 {
     return random_choose_weighted(
          130, BLUE,
@@ -1315,34 +1319,13 @@ static void _abyss_generate_new_area()
     place_transiting_items();
 }
 
-// Ensure that there is a path between the abyss centre and an exit location,
-// by morphing the abyss until there is.
-void _abyss_make_path(const coord_def &to)
+// Check if there is a path between the abyss centre and an exit location.
+static bool _abyss_has_path(const coord_def &to)
 {
-    const int ntries = 30;  // Rarely do we need more than one.
-    for (int i = 1; i <= ntries; ++i)
-    {
-        ASSERT(grd(to) == DNGN_EXIT_ABYSS);
+    ASSERT(grd(to) == DNGN_EXIT_ABYSS);
 
-        monster_pathfind pf;
-        if (pf.init_pathfind(ABYSS_CENTRE, to))
-        {
-            if (i > 1)
-                dprf("_abyss_make_path needed %d attempts", i);
-            return;
-        }
-
-        // Try to morph.
-        const double old_depth = abyssal_state.depth;
-        abyssal_state.depth += 0.1;
-        map_mask abyss_genlevel_mask;
-        _abyss_invert_mask(&abyss_genlevel_mask);
-
-        // Assumes that abyss morphing won't remove the exit.
-        _abyss_apply_terrain(abyss_genlevel_mask, true, old_depth);
-    }
-    die("Could not create path to exit at (%d, %d) after %d attempts.",
-        to.x, to.y, ntries);
+    monster_pathfind pf;
+    return pf.init_pathfind(ABYSS_CENTRE, to);
 }
 
 // Generate the initial (proto) Abyss level. The proto Abyss is where
@@ -1353,6 +1336,7 @@ void generate_abyss()
     env.level_build_method += " abyss";
     env.level_layout_types.insert("abyss");
 
+retry:
     _initialize_abyss_state();
 
     dprf("generate_abyss(); turn_on_level: %d", env.turns_on_level);
@@ -1360,8 +1344,7 @@ void generate_abyss()
     // Generate the initial abyss without vaults. Vaults are horrifying.
     _abyss_generate_new_area();
     _write_abyssal_features();
-    map_mask abyss_genlevel_mask;
-    _abyss_invert_mask(&abyss_genlevel_mask);
+    map_mask abyss_genlevel_mask(1);
     _abyss_apply_terrain(abyss_genlevel_mask);
 
     // If we're starting out in the Abyss, make sure the starting grid is
@@ -1376,8 +1359,8 @@ void generate_abyss()
                                                    50, true);
         // Now make sure there is a path from the abyss centre to the exit.
         // If for some reason an exit could not be placed, don't bother.
-        if (eloc != INVALID_COORD)
-            _abyss_make_path(eloc);
+        if (eloc == INVALID_COORD || !_abyss_has_path(eloc))
+            goto retry;
     }
     else
     {
@@ -1395,7 +1378,7 @@ void generate_abyss()
 
 void abyss_morph(double duration)
 {
-    if (you.level_type != LEVEL_ABYSS)
+    if (!player_in_branch(BRANCH_ABYSS))
         return;
 
     // Between .02 and .07 per ten ticks, half that for Chei worshippers.
@@ -1418,8 +1401,7 @@ void abyss_morph(double duration)
     if (abyssal_state.phase > M_PI)
         abyssal_state.phase -= M_PI;
 
-    map_mask abyss_genlevel_mask;
-    _abyss_invert_mask(&abyss_genlevel_mask);
+    map_mask abyss_genlevel_mask(1);
     dgn_erase_unused_vault_placements();
     _abyss_apply_terrain(abyss_genlevel_mask, true, old_depth);
     _place_displaced_monsters();
@@ -1516,12 +1498,13 @@ static bool _spawn_corrupted_servant_near(const coord_def &pos)
         }
 
         // Got a place, summon the beast.
-        monster_type mons = pick_random_monster(level_id(LEVEL_ABYSS));
+        monster_type mons = pick_random_monster(level_id(BRANCH_ABYSS));
         if (invalid_monster_type(mons))
             return (false);
 
         mgen_data mg(mons, beh, 0, 5, 0, p);
         mg.non_actor_summoner = "Lugonu's corruption";
+        mg.place = BRANCH_ABYSS;
 
         return create_monster(mg);
     }
@@ -1723,7 +1706,7 @@ static void _corrupt_level_features(const corrupt_env &cenv)
 
 static bool _is_level_corrupted()
 {
-    if (player_in_level_area(LEVEL_ABYSS))
+    if (player_in_branch(BRANCH_ABYSS))
         return (true);
 
     return (!!env.markers.find(MAT_CORRUPTION_NEXUS));
@@ -1742,7 +1725,7 @@ bool is_level_incorruptible()
 
 static void _corrupt_choose_colours(corrupt_env *cenv)
 {
-    int colour = BLACK;
+    colour_t colour = BLACK;
     do
         colour = random_uncommon_colour();
     while (colour == env.rock_colour || colour == LIGHTGREY || colour == WHITE);

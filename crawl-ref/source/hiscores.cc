@@ -30,10 +30,12 @@
 #include <unistd.h>
 #endif
 
+#include "hiscores.h"
+
 #include "branch.h"
+#include "chardump.h"
 #include "files.h"
 #include "dungeon.h"
-#include "hiscores.h"
 #include "initfile.h"
 #include "itemname.h"
 #include "itemprop.h"
@@ -41,6 +43,7 @@
 #include "kills.h"
 #include "libutil.h"
 #include "message.h"
+#include "menu.h"
 #include "misc.h"
 #include "mon-util.h"
 #include "jobs.h"
@@ -55,6 +58,13 @@
 #include "status.h"
 #include "env.h"
 #include "tags.h"
+
+#ifdef USE_TILE
+ #include "tilepick.h"
+#endif
+#ifdef USE_TILE_LOCAL
+ #include "tilereg-crt.h"
+#endif
 
 #include "skills2.h"
 #define SCORE_VERSION "0.1"
@@ -72,8 +82,11 @@ static void  _hs_close(FILE *handle, const char *mode,
 static bool  _hs_read(FILE *scores, scorefile_entry &dest);
 static void  _hs_write(FILE *scores, scorefile_entry &entry);
 static time_t _parse_time(const std::string &st);
+static std::string _xlog_escape(const std::string &s);
+static std::string _xlog_unescape(const std::string &s);
+static std::vector<std::string> _xlog_split_fields(const std::string &s);
 
-std::string score_file_name()
+static std::string _score_file_name()
 {
     std::string ret;
     if (!SysEnv.scorefile.empty())
@@ -86,7 +99,7 @@ std::string score_file_name()
     return (ret);
 }
 
-std::string log_file_name()
+static std::string _log_file_name()
 {
     return (Options.shared_dir + "logfile" + crawl_state.game_type_qualifier());
 }
@@ -103,7 +116,7 @@ void hiscores_new_entry(const scorefile_entry &ne)
     //
     // Opening as a+ instead of r+ to force an exclusive lock (see
     // hs_open) and to create the file if it's not there already.
-    scores = _hs_open("a+", score_file_name());
+    scores = _hs_open("a+", _score_file_name());
     if (scores == NULL)
         end(1, true, "failed to open score file for writing");
 
@@ -149,7 +162,7 @@ void hiscores_new_entry(const scorefile_entry &ne)
     if (!inserted)
     {
         newest_entry = -1; // This might not be the first game
-        _hs_close(scores, "a+", score_file_name());
+        _hs_close(scores, "a+", _score_file_name());
         return;
     }
 
@@ -172,7 +185,7 @@ void hiscores_new_entry(const scorefile_entry &ne)
     }
 
     // close scorefile.
-    _hs_close(scores, "a+", score_file_name());
+    _hs_close(scores, "a+", _score_file_name());
 }
 
 void logfile_new_entry(const scorefile_entry &ne)
@@ -183,17 +196,17 @@ void logfile_new_entry(const scorefile_entry &ne)
     scorefile_entry le = ne;
 
     // open logfile (appending) -- NULL *is* fatal here.
-    logfile = _hs_open("a", log_file_name());
+    logfile = _hs_open("a", _log_file_name());
     if (logfile == NULL)
     {
-        perror("Entry not added - failure opening logfile for appending.");
+        mpr("ERROR: failure writing to the logfile.", MSGCH_ERROR);
         return;
     }
 
     _hs_write(logfile, le);
 
     // close logfile.
-    _hs_close(logfile, "a", log_file_name());
+    _hs_close(logfile, "a", _log_file_name());
 }
 
 template <class t_printf>
@@ -222,7 +235,7 @@ void hiscores_print_all(int display_count, int format)
 {
     unwind_bool scorefile_display(crawl_state.updating_scores, true);
 
-    FILE *scores = _hs_open("r", score_file_name());
+    FILE *scores = _hs_open("r", _score_file_name());
     if (scores == NULL)
     {
         // will only happen from command line
@@ -242,7 +255,7 @@ void hiscores_print_all(int display_count, int format)
             _hiscores_print_entry(se, entry, format, printf);
     }
 
-    _hs_close(scores, "r", score_file_name());
+    _hs_close(scores, "r", _score_file_name());
 }
 
 // Displays high scores using curses. For output to the console, use
@@ -258,7 +271,7 @@ void hiscores_print_list(int display_count, int format)
         return;
 
     // open highscore file (reading)
-    scores = _hs_open("r", score_file_name());
+    scores = _hs_open("r", _score_file_name());
     if (scores == NULL)
         return;
 
@@ -272,7 +285,7 @@ void hiscores_print_list(int display_count, int format)
     total_entries = i;
 
     // close off
-    _hs_close(scores, "r", score_file_name());
+    _hs_close(scores, "r", _score_file_name());
 
     textcolor(LIGHTGREY);
 
@@ -298,6 +311,198 @@ void hiscores_print_list(int display_count, int format)
             textcolor(LIGHTGREY);
     }
 }
+
+static void _add_hiscore_row(MenuScroller* scroller, scorefile_entry& se, int id)
+{
+    TextItem* tmp = NULL;
+    tmp = new TextItem();
+
+    coord_def min_coord(1,1);
+    coord_def max_coord(1,2);
+
+    tmp->set_fg_colour(WHITE);
+    tmp->set_highlight_colour(WHITE);
+
+    tmp->set_text(hiscores_format_single(se));
+    tmp->set_description_text(hiscores_format_single_long(se, true));
+    tmp->set_id(id);
+    tmp->set_bounds(coord_def(1,1), coord_def(1,2));
+
+    scroller->attach_item(tmp);
+    tmp->set_visible(true);
+}
+
+static void _construct_hiscore_table(MenuScroller* scroller)
+{
+    FILE *scores = _hs_open("r", _score_file_name());
+    int i;
+
+    if (scores == NULL)
+        return;
+
+    // read highscore file
+    for (i = 0; i < SCORE_FILE_ENTRIES; i++)
+    {
+        hs_list[i].reset(new scorefile_entry);
+        if (_hs_read(scores, *hs_list[i]) == false)
+            break;
+    }
+
+    _hs_close(scores, "r", _score_file_name());
+
+    for (int j=0; j<i; j++)
+        _add_hiscore_row(scroller, *hs_list[j], j);
+
+}
+
+static void _show_morgue(scorefile_entry& se)
+{
+    formatted_scroller morgue_file;
+    int flags = MF_NOSELECT | MF_ALWAYS_SHOW_MORE | MF_NOWRAP;
+    if (Options.easy_exit_menu)
+        flags |= MF_EASY_EXIT;
+
+    morgue_file.set_flags(flags, false);
+    morgue_file.set_tag("morgue");
+
+    morgue_file.set_more(formatted_string::parse_string(
+#ifdef USE_TILE_LOCAL
+                            "<cyan>[ +/L-click : Page down.   - : Page up."
+                            "           Esc/R-click exits.]"));
+#else
+                            "<cyan>[ + : Page down.   - : Page up."
+                            "                           Esc exits.]"));
+#endif
+    std::string morgue_path = morgue_directory() + morgue_name(se.get_name(), se.get_death_time()) + ".txt";
+    FILE* morgue = lk_open("r", morgue_path);
+
+    if (!morgue)
+        return;
+
+    char buf[200];
+    std::string morgue_text = "";
+
+    while (fgets(buf, sizeof buf, morgue) != NULL)
+    {
+        std::string line = std::string(buf);
+        line.erase(line.find_last_of('\n'));
+        morgue_text += "<w>" + line + "</w>" + '\n';
+    }
+
+    lk_close(morgue, "r", morgue_path);
+
+    clrscr();
+
+
+    column_composer cols(2, 40);
+    cols.add_formatted(
+            0,
+            morgue_text,
+            true, true);
+
+    std::vector<formatted_string> blines = cols.formatted_lines();
+
+    unsigned i;
+    for (i = 0; i < blines.size(); ++i)
+        morgue_file.add_item_formatted_string(blines[i]);
+
+    textcolor(WHITE);
+    morgue_file.show();
+}
+
+void show_hiscore_table()
+{
+    const int max_line   = get_number_of_lines() - 1;
+    const int max_col    = get_number_of_cols() - 1;
+
+    const int scores_col_start = 4;
+    const int descriptor_col_start = 4;
+    const int scores_row_start = 10;
+    const int scores_col_end = max_col;
+    const int scores_row_end = max_line - 1;
+
+    bool smart_cursor_enabled = is_smart_cursor_enabled();
+
+    clrscr();
+
+    PrecisionMenu menu;
+    menu.set_select_type(PrecisionMenu::PRECISION_SINGLESELECT);
+
+    MenuScroller* score_entries = new MenuScroller();
+
+    score_entries->init(coord_def(scores_col_start, scores_row_start),
+            coord_def(scores_col_end, scores_row_end), "score entries");
+
+    _construct_hiscore_table(score_entries);
+
+    MenuDescriptor* descriptor = new MenuDescriptor(&menu);
+    descriptor->init(coord_def(descriptor_col_start, 1),
+            coord_def(get_number_of_cols(), scores_row_start - 1),
+            "descriptor");
+
+#ifdef USE_TILE_LOCAL
+    BoxMenuHighlighter* highlighter = new BoxMenuHighlighter(&menu);
+#else
+    BlackWhiteHighlighter* highlighter = new BlackWhiteHighlighter(&menu);
+#endif
+    highlighter->init(coord_def(-1,-1), coord_def(-1,-1), "highlighter");
+
+    MenuFreeform* freeform = new MenuFreeform();
+    freeform->init(coord_def(1, 1), coord_def(max_col, max_line), "freeform");
+    // This freeform will only contain unfocusable texts
+    freeform->allow_focus(false);
+    freeform->set_visible(true);
+
+    NoSelectTextItem* tmp = new NoSelectTextItem();
+    std::string text = "[  Up/Down or PgUp/PgDn to scroll.         Esc to exit.  ]";
+    tmp->set_text(text);
+    tmp->set_bounds(coord_def(1, max_line - 1), coord_def(max_col - 1, max_line));
+    tmp->set_fg_colour(CYAN);
+    freeform->attach_item(tmp);
+    tmp->set_visible(true);
+
+#ifdef USE_TILE_LOCAL
+    tiles.get_crt()->attach_menu(&menu);
+#endif
+
+    score_entries->set_visible(true);
+    descriptor->set_visible(true);
+    highlighter->set_visible(true);
+
+    menu.attach_object(freeform);
+    menu.attach_object(score_entries);
+    menu.attach_object(descriptor);
+    menu.attach_object(highlighter);
+
+    menu.set_active_object(score_entries);
+    score_entries->activate_first_item();
+
+    enable_smart_cursor(false);
+    while (true)
+    {
+        menu.draw_menu();
+        textcolor(WHITE);
+        const int keyn = getch_ck();
+
+        if (key_is_escape(keyn))
+        {
+            // Go back to the menu and return the smart cursor to its previous state
+            enable_smart_cursor(smart_cursor_enabled);
+            return;
+        }
+
+        if (menu.process_key(keyn))
+        {
+            menu.clear_selections();
+            _show_morgue(*hs_list[menu.get_active_item()->get_id()]);
+            clrscr();
+#ifdef USE_TILE_LOCAL
+            tiles.get_crt()->attach_menu(&menu);
+#endif
+        }
+    }
+}
+
 
 // Trying to supply an appropriate verb for the attack type. -- bwr
 static const char *_range_type_verb(const char *const aux)
@@ -358,7 +563,7 @@ std::string hiscores_format_single_long(const scorefile_entry &se,
 // BEGIN private functions
 // --------------------------------------------------------------------------
 
-FILE *_hs_open(const char *mode, const std::string &scores)
+static FILE *_hs_open(const char *mode, const std::string &scores)
 {
     // allow reading from standard input
     if (scores == "-")
@@ -430,7 +635,7 @@ static const char *kill_method_names[] =
     "falling_through_gate", "disintegration", "headbutt",
 };
 
-const char *kill_method_name(kill_method_type kmt)
+static const char *_kill_method_name(kill_method_type kmt)
 {
     COMPILE_CHECK(NUM_KILLBY == ARRAYSZ(kill_method_names));
 
@@ -440,7 +645,7 @@ const char *kill_method_name(kill_method_type kmt)
     return kill_method_names[kmt];
 }
 
-kill_method_type str_to_kill_method(const std::string &s)
+static kill_method_type _str_to_kill_method(const std::string &s)
 {
     COMPILE_CHECK(NUM_KILLBY == ARRAYSZ(kill_method_names));
 
@@ -504,7 +709,6 @@ void scorefile_entry::init_from(const scorefile_entry &se)
     killerpath        = se.killerpath;
     dlvl              = se.dlvl;
     absdepth          = se.absdepth;
-    level_type        = se.level_type;
     branch            = se.branch;
     map               = se.map;
     mapdesc           = se.mapdesc;
@@ -670,7 +874,7 @@ void scorefile_entry::init_with_fields()
     best_skill     = str_to_skill(fields->str_field("sk"));
     best_skill_lvl = fields->int_field("sklev");
 
-    death_type        = str_to_kill_method(fields->str_field("ktyp"));
+    death_type        = _str_to_kill_method(fields->str_field("ktyp"));
     death_source_name = fields->str_field("killer");
     auxkilldata       = fields->str_field("kaux");
     indirectkiller    = fields->str_field("ikiller");
@@ -681,7 +885,6 @@ void scorefile_entry::init_with_fields()
     branch     = str_to_branch(fields->str_field("br"), BRANCH_MAIN_DUNGEON);
     dlvl       = fields->int_field("lvl");
     absdepth   = fields->int_field("absdepth");
-    level_type = str_to_level_area_type(fields->str_field("ltyp"));
 
     map        = fields->str_field("map");
     mapdesc    = fields->str_field("mapdesc");
@@ -755,20 +958,15 @@ void scorefile_entry::set_base_xlog_fields() const
                       skill_title(best_skill, best_skill_lvl,
                                   race, str, dex, god).c_str());
 
-    // "place" is a human readable place name, and it is write-only,
-    // so we can write place names like "Bazaar" that Crawl cannot
-    // translate back. This does have the unfortunate side-effect that
-    // Crawl will not preserve the "place" field in the highscores file.
     fields->add_field("place", "%s",
-                      place_name(get_packed_place(branch, dlvl, level_type),
+                      place_name(get_packed_place(branch, dlvl),
                                  false, true).c_str());
 
-    // Note: "br", "lvl" and "ltyp" are saved in canonical names that
-    // can be read back by future versions of Crawl.
+    // Note: "br", "lvl" (and former "ltyp") are redundant with "place"
+    // but may still be used by DGL logs.
     fields->add_field("br",   "%s", _short_branch_name(branch));
     fields->add_field("lvl",  "%d", dlvl);
     fields->add_field("absdepth", "%d", absdepth);
-    fields->add_field("ltyp", "%s", level_area_type_name(level_type));
 
     fields->add_field("hp",   "%d", final_hp);
     fields->add_field("mhp",  "%d", final_max_hp);
@@ -824,7 +1022,7 @@ void scorefile_entry::set_score_fields() const
     set_base_xlog_fields();
 
     fields->add_field("sc", "%d", points);
-    fields->add_field("ktyp", "%s", ::kill_method_name(kill_method_type(death_type)));
+    fields->add_field("ktyp", "%s", _kill_method_name(kill_method_type(death_type)));
 
     const std::string killer = death_source_desc();
     fields->add_field("killer", "%s", killer.c_str());
@@ -987,16 +1185,14 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             indirectkiller = blame[blame.size() - 1].get_string();
 
             if (indirectkiller.find(" by ") != std::string::npos)
-            {
                 indirectkiller.erase(0, indirectkiller.find(" by ") + 4);
-            }
 
             killerpath = "";
 
             for (CrawlVector::const_iterator it = blame.begin();
                  it != blame.end(); ++it)
             {
-                killerpath = killerpath + ":" + xlog_escape(it->get_string());
+                killerpath = killerpath + ":" + _xlog_escape(it->get_string());
             }
 
             killerpath.erase(killerpath.begin());
@@ -1063,7 +1259,6 @@ void scorefile_entry::reset()
     killerpath.clear();
     dlvl                 = 0;
     absdepth             = 1;
-    level_type           = LEVEL_DUNGEON;
     branch               = BRANCH_MAIN_DUNGEON;
     map.clear();
     mapdesc.clear();
@@ -1271,12 +1466,10 @@ void scorefile_entry::init(time_t dt)
         penance = you.penance[you.religion];
     }
 
-    // main dungeon: level is simply level
-    dlvl       = player_branch_depth();
     branch     = you.where_are_you;  // no adjustments necessary.
-    level_type = you.level_type;     // pandemonium, labyrinth, dungeon..
+    dlvl       = you.depth;
 
-    absdepth   = you.absdepth0 + 1;  // 1-based absolute depth.
+    absdepth   = env.absdepth0 + 1;  // 1-based absolute depth.
 
     if (const vault_placement *vp = dgn_vault_at(you.pos()))
     {
@@ -1574,7 +1767,7 @@ std::string scorefile_entry::death_place(death_desc_verbosity verbosity) const
     if (verbosity == DDV_ONELINE || verbosity == DDV_TERSE)
     {
         const std::string pname =
-            place_name(get_packed_place(branch, dlvl, level_type), false, true);
+            place_name(get_packed_place(branch, dlvl), false, true);
         return make_stringf(" (%s)", pname.c_str());
     }
 
@@ -1583,7 +1776,7 @@ std::string scorefile_entry::death_place(death_desc_verbosity verbosity) const
 
     // where did we die?
     std::string placename =
-        place_name(get_packed_place(branch, dlvl, level_type), true, true);
+        place_name(get_packed_place(branch, dlvl), true, true);
 
     // add appropriate prefix
     if (placename.find("Level") == 0)
@@ -1950,7 +2143,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
             if (death_source_name.empty())
                 desc += "spore";
             else
-                desc += get_monster_data(death_source)->name;
+                desc += death_source_name;
         }
         else
         {
@@ -2037,7 +2230,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
     case KILLED_BY_STUPIDITY:
     case KILLED_BY_WEAKNESS:
     case KILLED_BY_CLUMSINESS:
-        if (terse)
+        if (terse || oneline)
         {
             desc += " (";
             desc += auxkilldata;
@@ -2159,7 +2352,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
             if (!killerpath.empty())
             {
                 std::vector<std::string> summoners
-                    = xlog_split_fields(killerpath);
+                    = _xlog_split_fields(killerpath);
 
                 for (std::vector<std::string>::iterator it = summoners.begin();
                      it != summoners.end(); ++it)
@@ -2176,9 +2369,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
                 }
 
                 if (semiverbose)
-                {
                     desc += std::string(summoners.size(), ')');
-                }
             }
 
             if (!semiverbose)
@@ -2245,6 +2436,18 @@ xlog_fields::xlog_fields(const std::string &line) : fields(), fieldmap()
     init(line);
 }
 
+// xlogfile escape: s/:/::/g
+static std::string _xlog_escape(const std::string &s)
+{
+    return replace_all(s, ":", "::");
+}
+
+// xlogfile unescape: s/::/:/g
+static std::string _xlog_unescape(const std::string &s)
+{
+    return replace_all(s, "::", ":");
+}
+
 static std::string::size_type
 _xlog_next_separator(const std::string &s,
                             std::string::size_type start)
@@ -2256,7 +2459,7 @@ _xlog_next_separator(const std::string &s,
     return (p);
 }
 
-std::vector<std::string> xlog_split_fields(const std::string &s)
+static std::vector<std::string> _xlog_split_fields(const std::string &s)
 {
     std::string::size_type start = 0, end = 0;
     std::vector<std::string> fs;
@@ -2275,7 +2478,7 @@ std::vector<std::string> xlog_split_fields(const std::string &s)
 
 void xlog_fields::init(const std::string &line)
 {
-    std::vector<std::string> rawfields = xlog_split_fields(line);
+    std::vector<std::string> rawfields = _xlog_split_fields(line);
     for (int i = 0, size = rawfields.size(); i < size; ++i)
     {
         const std::string field = rawfields[i];
@@ -2286,22 +2489,10 @@ void xlog_fields::init(const std::string &line)
         fields.push_back(
             std::pair<std::string, std::string>(
                 field.substr(0, st),
-                xlog_unescape(field.substr(st + 1))));
+                _xlog_unescape(field.substr(st + 1))));
     }
 
     map_fields();
-}
-
-// xlogfile escape: s/:/::/g
-std::string xlog_escape(const std::string &s)
-{
-    return replace_all(s, ":", "::");
-}
-
-// xlogfile unescape: s/::/:/g
-std::string xlog_unescape(const std::string &s)
-{
-    return replace_all(s, "::", ":");
 }
 
 void xlog_fields::add_field(const std::string &key,
@@ -2364,7 +2555,7 @@ std::string xlog_fields::xlog_line() const
 
         line += f.first;
         line += "=";
-        line += xlog_escape(f.second);
+        line += _xlog_escape(f.second);
     }
 
     return (line);

@@ -134,7 +134,7 @@ void seen_monsters_react()
 #endif
            )
         {
-            behaviour_event(*mi, ME_ALERT, MHITYOU, you.pos(), false);
+            behaviour_event(*mi, ME_ALERT, &you, you.pos(), false);
             handle_monster_shouts(*mi);
         }
 
@@ -351,7 +351,7 @@ void update_monsters_in_view()
     // Abyss, Xom is stimulated in proportion to the number of
     // hostile monsters.  Thus if the entourage doesn't grow, then
     // Xom becomes bored.
-    if (you.level_type == LEVEL_ABYSS
+    if (player_in_branch(BRANCH_ABYSS)
         && you.attribute[ATTR_ABYSS_ENTOURAGE] < num_hostile)
     {
         you.attribute[ATTR_ABYSS_ENTOURAGE] = num_hostile;
@@ -376,12 +376,10 @@ static const FixedArray<uint8_t, GXM, GYM>& _tile_difficulties(bool random)
     static int cache_seed = -1;
 
     int seed = random ? -1 :
-        (static_cast<int>(you.where_are_you) << 8) + you.absdepth0 - 1731813538;
+        (static_cast<int>(you.where_are_you) << 8) + you.depth - 1731813538;
 
     if (seed == cache_seed && !random)
-    {
         return cache;
-    }
 
     if (!random)
     {
@@ -396,9 +394,7 @@ static const FixedArray<uint8_t, GXM, GYM>& _tile_difficulties(bool random)
             cache[x][y] = random2(100);
 
     if (!random)
-    {
         pop_rng_state();
-    }
 
     return cache;
 }
@@ -415,9 +411,7 @@ static std::auto_ptr<FixedArray<bool, GXM, GYM> > _tile_detectability()
             (*map)(coord_def(x,y)) = false;
 
             if (feat_is_stair(grd[x][y]))
-            {
                 flood_from.push_back(coord_def(x, y));
-            }
         }
 
     flood_from.push_back(you.pos());
@@ -442,9 +436,7 @@ static std::auto_ptr<FixedArray<bool, GXM, GYM> > _tile_detectability()
         }
 
         if (grd(p) < DNGN_MINSEE && !feat_is_closed_door(grd(p)))
-        {
             continue;
-        }
 
         for (int dy = -1; dy <= 1; ++dy)
             for (int dx = -1; dx <= 1; ++dx)
@@ -733,7 +725,7 @@ void view_update_at(const coord_def &pos)
     int flash_colour = you.flash_colour == BLACK
         ? viewmap_flash_colour()
         : you.flash_colour;
-    int mons = env.map_knowledge(pos).monster();
+    monster_type mons = env.map_knowledge(pos).monster();
     int cell_colour =
         flash_colour &&
         (mons == MONS_NO_MONSTER || mons_class_is_firewood(mons) ||
@@ -742,8 +734,12 @@ void view_update_at(const coord_def &pos)
             : g.col;
 
     const coord_def vp = grid2view(pos);
-    cgotoxy(vp.x, vp.y, GOTO_DNGN);
-    put_colour_ch(cell_colour, g.ch);
+    // Don't draw off-screen.
+    if (crawl_view.in_viewport_v(vp))
+    {
+        cgotoxy(vp.x, vp.y, GOTO_DNGN);
+        put_colour_ch(cell_colour, g.ch);
+    }
 
     // Force colour back to normal, else clrscr() will flood screen
     // with this colour on DOS.
@@ -752,12 +748,12 @@ void view_update_at(const coord_def &pos)
 }
 
 #ifndef USE_TILE_LOCAL
-void flash_monster_colour(const monster* mon, uint8_t fmc_colour,
+void flash_monster_colour(const monster* mon, colour_t fmc_colour,
                           int fmc_delay)
 {
     if (you.can_see(mon))
     {
-        uint8_t old_flash_colour = you.flash_colour;
+        colour_t old_flash_colour = you.flash_colour;
         coord_def c(mon->pos());
 
         you.flash_colour = fmc_colour;
@@ -783,14 +779,14 @@ bool view_update()
     return (false);
 }
 
-void flash_view(uint8_t colour, targetter *where)
+void flash_view(colour_t colour, targetter *where)
 {
     you.flash_colour = colour;
     you.flash_where = where;
     viewwindow(false);
 }
 
-void flash_view_delay(uint8_t colour, int flash_delay, targetter *where)
+void flash_view_delay(colour_t colour, int flash_delay, targetter *where)
 {
     flash_view(colour, where);
     // Scale delay to match change in arena_delay.
@@ -968,6 +964,8 @@ static void _draw_player(screen_cell_t *cell,
     }
     if (Options.use_fake_player_cursor)
         cell->colour |= COLFLAG_REVERSE;
+
+    cell->colour = real_colour(cell->colour);
 
 #ifdef USE_TILE
     cell->tile.fg = env.tile_fg(ep) = tileidx_player();

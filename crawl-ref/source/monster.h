@@ -186,7 +186,7 @@ public:
     void ghost_init(bool need_pos = true);
     void ghost_demon_init();
     void uglything_init(bool only_mutate = false);
-    void uglything_mutate(uint8_t force_colour = BLACK);
+    void uglything_mutate(colour_t force_colour = BLACK);
     void uglything_upgrade();
     void destroy_inventory();
     void load_ghost_spells();
@@ -217,6 +217,7 @@ public:
     int         total_weight() const;
     brand_type  damage_brand(int which_attack = -1);
     int         damage_type(int which_attack = -1);
+    int         has_claws(bool allow_tran = true) const;
 
     item_def *slot_item(equipment_type eq, bool include_melded=false);
     item_def *mslot_item(mon_inv_type sl) const;
@@ -293,8 +294,8 @@ public:
     bool can_mutate() const;
     bool can_safely_mutate() const;
     bool can_bleed(bool allow_tran = true) const;
-    bool mutate();
-    void banish(const std::string &who = "");
+    bool mutate(const std::string &reason);
+    void banish(actor *agent, const std::string &who = "");
     void expose_to_element(beam_type element, int strength = 0);
 
     monster_type mons_species(bool zombie_base = false) const;
@@ -345,6 +346,7 @@ public:
     bool is_icy() const;
     bool is_fiery() const;
     bool is_skeletal() const;
+    bool is_spiny() const;
     bool paralysed() const;
     bool cannot_move() const;
     bool cannot_act() const;
@@ -358,6 +360,7 @@ public:
     int silence_radius2() const;
     int liquefying_radius2 () const;
     int umbra_radius2 () const;
+    int suppression_radius2 () const;
     bool glows_naturally() const;
     bool petrified() const;
     bool petrifying() const;
@@ -369,10 +372,11 @@ public:
     bool wont_attack() const;
     bool pacified() const;
     bool withdrawn() const {return has_ench(ENCH_WITHDRAWN);};
+    int warding() const;
 
+    bool rolling() const { return has_ench(ENCH_ROLLING); } ;
     bool has_spells() const;
     bool has_spell(spell_type spell) const;
-    bool has_holy_spell() const;
     bool has_unholy_spell() const;
     bool has_evil_spell() const;
     bool has_unclean_spell() const;

@@ -80,7 +80,9 @@
 #include "viewchar.h"
 #include "xom.h"
 
-void holy_word_player(int pow, int caster, actor *attacker)
+static void _update_corpses(int elapsedTime);
+
+static void _holy_word_player(int pow, int caster, actor *attacker)
 {
     if (!you.undead_or_demonic())
         return;
@@ -88,7 +90,7 @@ void holy_word_player(int pow, int caster, actor *attacker)
     int hploss;
 
     // Holy word won't kill its user.
-    if (attacker == &you)
+    if (attacker && attacker->is_player())
         hploss = std::max(0, you.hp / 2 - 1);
     else
         hploss = roll_dice(3, 15) + (random2(pow) / 3);
@@ -135,7 +137,7 @@ void holy_word_monsters(coord_def where, int pow, int caster,
 
     // Is the player in this cell?
     if (where == you.pos())
-        holy_word_player(pow, caster, attacker);
+        _holy_word_player(pow, caster, attacker);
 
     // Is a monster in this cell?
     monster* mons = monster_at(where);
@@ -167,7 +169,7 @@ void holy_word_monsters(coord_def where, int pow, int caster,
         // because it can kill them, and because hostile
         // monsters don't use it.
         if (attacker != NULL)
-            behaviour_event(mons, ME_ANNOY, attacker->mindex());
+            behaviour_event(mons, ME_ANNOY, attacker);
 
         if (mons->speed_increment >= 25)
             mons->speed_increment -= 20;
@@ -318,8 +320,7 @@ int torment_monsters(coord_def where, actor *attacker, int taux)
         // because it can't kill them, and because hostile monsters use
         // it.  It does alert them, though.
         // XXX: attacker isn't passed through "int torment()".
-        behaviour_event(mons, ME_ALERT,
-                        attacker ? attacker->mindex() : MHITNOT);
+        behaviour_event(mons, ME_ALERT, attacker);
     }
 
     mons->hurt(attacker, hploss, BEAM_TORMENT_DAMAGE);
@@ -336,7 +337,11 @@ int torment(actor *attacker, int taux, const coord_def& where)
     los.update();
     int r = 0;
     for (radius_iterator ri(&los); ri; ++ri)
+    {
+        if (attacker && !attacker->see_cell_no_trans(*ri))
+            continue;
         r += torment_monsters(*ri, attacker, taux);
+    }
     return (r);
 }
 
@@ -384,13 +389,17 @@ void immolation(int pow, int caster, coord_def where, bool known,
         beam.thrower     = KILL_MISC;
         beam.beam_source = NON_MONSTER;
     }
-    else if (attacker == &you)
+    else if (attacker && attacker->is_player())
     {
         beam.thrower     = KILL_YOU;
         beam.beam_source = NON_MONSTER;
     }
     else
     {
+        // If there was no attacker, caster should have been IMMOLATION_GENERIC
+        // which we handled above.
+        ASSERT(attacker);
+
         beam.thrower     = KILL_MON;
         beam.beam_source = attacker->mindex();
     }
@@ -440,7 +449,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     beam.damage_funcs.push_back(_conduct_electricity_damage);
     beam.affect_func   = _conduct_electricity_affects_actor;
 
-    if (attacker == &you)
+    if (attacker && attacker->is_player())
     {
         beam.thrower     = KILL_YOU;
         beam.beam_source = NON_MONSTER;
@@ -488,13 +497,17 @@ void cleansing_flame(int pow, int caster, coord_def where,
         beam.thrower     = KILL_MISC;
         beam.beam_source = NON_MONSTER;
     }
-    else if (attacker == &you)
+    else if (attacker && attacker->is_player())
     {
         beam.thrower     = KILL_YOU;
         beam.beam_source = NON_MONSTER;
     }
     else
     {
+        // If there was no attacker, caster should have been
+        // CLEANSING_FLAME_{GENERIC,TSO} which we handled above.
+        ASSERT(attacker);
+
         beam.thrower     = KILL_MON;
         beam.beam_source = attacker->mindex();
     }
@@ -507,160 +520,28 @@ static std::string _who_banished(const std::string &who)
     return (who.empty() ? who : " (" + who + ")");
 }
 
-void banished(dungeon_feature_type gate_type, const std::string &who)
+void banished(const std::string &who)
 {
     ASSERT(!crawl_state.game_is_arena());
     if (crawl_state.game_is_zotdef())
         return;
 
-    if (gate_type == DNGN_ENTER_ABYSS)
+    mark_milestone("abyss.enter",
+                   "is cast into the Abyss!" + _who_banished(who));
+
+    if (player_in_branch(BRANCH_ABYSS))
     {
-        mark_milestone("abyss.enter",
-                       gettext("is cast into the Abyss!") + _who_banished(who));
-    }
-    else if (gate_type == DNGN_EXIT_ABYSS)
-    {
-        mark_milestone("abyss.exit",
-                       gettext("escaped from the Abyss!") + _who_banished(who));
-    }
-
-    std::string cast_into;
-
-    switch (gate_type)
-    {
-    case DNGN_ENTER_ABYSS:
-        if (you.level_type == LEVEL_ABYSS)
-        {
-            mpr(gettext("You feel trapped."));
-            return;
-        }
-        cast_into = N_("the Abyss");
-
-        // Too problematic with level_type hackery.
-        if (you.level_type == LEVEL_PORTAL_VAULT)
-            break;
-        you.props["abyss_return_name"] = you.level_type_name;
-        you.props["abyss_return_abbrev"] = you.level_type_name_abbrev;
-        you.props["abyss_return_origin"] = you.level_type_origin;
-        you.props["abyss_return_tag"] = you.level_type_tag;
-        you.props["abyss_return_ext"] = you.level_type_ext;
-        you.props["abyss_return_desc"] = level_id::current().describe();
-        break;
-
-    case DNGN_EXIT_ABYSS:
-        if (you.level_type != LEVEL_ABYSS)
-        {
-            mpr(gettext("You feel dizzy for a moment."));
-            return;
-        }
-        break;
-
-    case DNGN_ENTER_PANDEMONIUM:
-        if (you.level_type == LEVEL_PANDEMONIUM)
-        {
-            mpr(gettext("You feel trapped."));
-            return;
-        }
-        cast_into = N_("Pandemonium");
-        break;
-
-    case DNGN_TRANSIT_PANDEMONIUM:
-        if (you.level_type != LEVEL_PANDEMONIUM)
-        {
-            banished(DNGN_ENTER_PANDEMONIUM, who);
-            return;
-        }
-        break;
-
-    case DNGN_EXIT_PANDEMONIUM:
-        if (you.level_type != LEVEL_PANDEMONIUM)
-        {
-            mpr(gettext("You feel dizzy for a moment."));
-            return;
-        }
-        break;
-
-    case DNGN_ENTER_LABYRINTH:
-        if (you.level_type == LEVEL_LABYRINTH)
-        {
-            mpr(gettext("You feel trapped."));
-            return;
-        }
-        cast_into = N_("a Labyrinth");
-        break;
-
-    case DNGN_ENTER_HELL:
-    case DNGN_ENTER_DIS:
-    case DNGN_ENTER_GEHENNA:
-    case DNGN_ENTER_COCYTUS:
-    case DNGN_ENTER_TARTARUS:
-        if (player_in_hell() || player_in_branch(BRANCH_VESTIBULE_OF_HELL))
-        {
-            mpr(gettext("You feel dizzy for a moment."));
-            return;
-        }
-        cast_into = N_("Hell");
-        break;
-
-    default:
-        die("Invalid banished() gateway %d", static_cast<int>(gate_type));
+        // Can't happen outside wizmode.
+        mpr("You feel trapped.");
+        return;
     }
 
-    // Now figure out how we got here.
-    if (crawl_state.is_god_acting())
-    {
-        // down_stairs() will take care of setting things.
-        you.entry_cause = EC_UNKNOWN;
-    }
-    else if (who.find("self") != std::string::npos || who == you.your_name
-             || who == "you" || who == "You")
-    {
-        you.entry_cause = EC_SELF_EXPLICIT;
-    }
-    else if (who.find("distortion") != std::string::npos)
-    {
-        if (who.find("wield") != std::string::npos)
-        {
-            if (who.find("unknowing") != std::string::npos)
-                you.entry_cause = EC_SELF_ACCIDENT;
-            else
-                you.entry_cause = EC_SELF_RISKY;
-        }
-        else if (who.find("affixation") != std::string::npos)
-            you.entry_cause = EC_SELF_ACCIDENT;
-        else if (who.find("branding")  != std::string::npos)
-            you.entry_cause = EC_SELF_RISKY;
-        else
-            you.entry_cause = EC_MONSTER;
-    }
-    else if (who == "drawing a card")
-        you.entry_cause = EC_SELF_RISKY;
-    else if (who.find("you miscast") != std::string::npos)
-        you.entry_cause = EC_MISCAST;
-    else if (who == "wizard command")
-        you.entry_cause = EC_SELF_EXPLICIT;
-    else if (who.find("effects of Hell") != std::string::npos)
-        you.entry_cause = EC_ENVIRONMENT;
-    else if (who.find("Zot") != std::string::npos)
-        you.entry_cause = EC_TRAP;
-    else if (who.find("trap") != std::string::npos)
-        you.entry_cause = EC_TRAP;
-    else
-        you.entry_cause = EC_MONSTER;
-
-    if (!crawl_state.is_god_acting())
-        you.entry_cause_god = GOD_NO_GOD;
-
-    if (!cast_into.empty() && you.entry_cause != EC_SELF_EXPLICIT)
-    {
-        const std::string what = make_stringf(gettext("Cast into %s%s"),
-            gettext(cast_into.c_str()), _who_banished(who).c_str());
-        take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
-    }
+    const std::string what = "Cast into the Abyss" + _who_banished(who);
+    take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
 
     stop_delay(true);
     push_features_to_abyss();
-    down_stairs(gate_type, you.entry_cause);  // heh heh
+    down_stairs(DNGN_ENTER_ABYSS);  // heh heh
 }
 
 bool forget_spell(void)
@@ -702,7 +583,7 @@ void direct_effect(monster* source, spell_type spell,
     if (def)
     {
         // annoy the target
-        behaviour_event(def, ME_ANNOY, source->mindex());
+        behaviour_event(def, ME_ANNOY, source);
     }
 
     int damage_taken = 0;
@@ -945,9 +826,15 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                  wand.name(true, DESC_YOUR).c_str(),
                  desc.c_str());
 
+            if (!charged && !item_ident(wand, ISFLAG_KNOW_PLUSES))
+            {
+                mprf("It has %d charges and is fully charged.", new_charges);
+                set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
+            }
+
             // Reinitialise zap counts.
             wand.plus  = new_charges;
-            wand.plus2 = (charged ? ZAPCOUNT_RECHARGED : ZAPCOUNT_MAX_CHARGED);
+            wand.plus2 = ZAPCOUNT_RECHARGED;
         }
         else // It's a rod.
         {
@@ -1972,6 +1859,7 @@ static void _rot_inventory_food(int time_delta)
                 if (!item.props.exists(ROTTING_WARNED_KEY))
                     num_chunks_gone++;
 
+                item_was_destroyed(item);
                 destroy_item(item);
                 burden_changed_by_rot = true;
 
@@ -1980,7 +1868,7 @@ static void _rot_inventory_food(int time_delta)
 
             // The item is of type carrion.
             if (item.sub_type == CORPSE_SKELETON
-                || !mons_skeleton(item.plus))
+                || !mons_skeleton(item.mon_type))
             {
                 if (you.equip[EQ_WEAPON] == i)
                     unwield_item();
@@ -1990,6 +1878,7 @@ static void _rot_inventory_food(int time_delta)
                 else
                     num_corpses_gone++;
 
+                item_was_destroyed(item);
                 destroy_item(item);
                 burden_changed_by_rot = true;
                 continue;
@@ -2144,8 +2033,8 @@ void handle_time()
     }
 
     // Labyrinth and Abyss maprot.
-    if (you.level_type == LEVEL_LABYRINTH || you.level_type == LEVEL_ABYSS)
-        forget_map(0);
+    if (player_in_branch(BRANCH_LABYRINTH) || player_in_branch(BRANCH_ABYSS))
+        forget_map(true);
 
     // Every 20 turns, a variety of other effects.
     if (! (_div(base_time, 200) > _div(old_time, 200)))
@@ -2155,7 +2044,7 @@ void handle_time()
 
     // Update all of the corpses, food chunks, and potions of blood on
     // the floor.
-    update_corpses(time_delta);
+    _update_corpses(time_delta);
 
     if (crawl_state.game_is_arena())
         return;
@@ -2230,7 +2119,8 @@ void handle_time()
         added_contamination++;
 
     bool mutagenic_randart = false;
-    if (const int artefact_glow = scan_artefacts(ARTP_MUTAGENIC))
+    const int artefact_glow = player_effect_mutagenic();
+    if (artefact_glow)
     {
         // Reduced randart glow. Note that one randart will contribute
         // 2 - 5 units of glow to artefact_glow. A randart with a mutagen
@@ -2302,9 +2192,9 @@ void handle_time()
 
             // We want to warp the player, not do good stuff!
             if (one_chance_in(5))
-                mutate(RANDOM_MUTATION);
+                mutate(RANDOM_MUTATION, "mutagenic glow");
             else
-                give_bad_mutation(true, coinflip());
+                give_bad_mutation("mutagenic glow", true, coinflip());
 
             // we're meaner now, what with explosions and whatnot, but
             // we dial down the contamination a little faster if its actually
@@ -2328,10 +2218,10 @@ void handle_time()
     practise(EX_WAIT);
 
     // From time to time change a section of the labyrinth.
-    if (you.level_type == LEVEL_LABYRINTH && one_chance_in(10))
+    if (player_in_branch(BRANCH_LABYRINTH) && one_chance_in(10))
         change_labyrinth();
 
-    if (you.level_type == LEVEL_ABYSS)
+    if (player_in_branch(BRANCH_ABYSS))
     {
         // Update the abyss speed. This place is unstable and the speed can
         // fluctuate. It's not a constant increase.
@@ -2405,12 +2295,14 @@ void handle_time()
             you.attribute[ATTR_EVOL_XP] = 0;
             mpr(gettext("You feel a genetic drift."));
             bool evol = mutate(coinflip() ? RANDOM_GOOD_MUTATION : RANDOM_MUTATION,
+                               "evolution",
                                false, false, false, false, false, true);
             // it would kill itself anyway, but let's speed that up
             if (one_chance_in(10)
-                && (!wearing_amulet(AMU_RESIST_MUTATION) || one_chance_in(10)))
+                && (!player_res_mutation()
+                    || one_chance_in(10)))
             {
-                evol |= delete_mutation(MUT_EVOLUTION, false);
+                evol |= delete_mutation(MUT_EVOLUTION, "end of evolution", false);
             }
             // interrupt the player only if something actually happened
             if (evol)
@@ -2418,7 +2310,7 @@ void handle_time()
         }
 
     if (player_in_branch(BRANCH_SPIDER_NEST) && coinflip())
-        place_webs(random2(20 / (6 - player_branch_depth())), true);
+        place_webs(random2(20 / (6 - you.depth)), true);
 }
 
 // Move monsters around to fake them walking around while player was
@@ -2622,7 +2514,7 @@ void update_level(int elapsedTime)
     dprf("turns: %d", turns);
 #endif
 
-    update_corpses(elapsedTime);
+    _update_corpses(elapsedTime);
     shoals_apply_tides(turns, true, turns < 5);
     timeout_tombs(turns);
     recharge_rods(turns, true);
@@ -3181,7 +3073,7 @@ static void _maybe_spawn_mushroom(item_def & corpse, int rot_time)
 // Update all of the corpses and food chunks on the floor.
 //
 //---------------------------------------------------------------
-void update_corpses(int elapsedTime)
+static void _update_corpses(int elapsedTime)
 {
     if (elapsedTime <= 0)
         return;
@@ -3211,8 +3103,9 @@ void update_corpses(int elapsedTime)
             else
             {
                 if (it.sub_type == CORPSE_SKELETON
-                    || !mons_skeleton(it.plus))
+                    || !mons_skeleton(it.mon_type))
                 {
+                    item_was_destroyed(it);
                     destroy_item(c);
                 }
                 else
@@ -3245,6 +3138,11 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 {
     if (!item_is_rod(rod) || rod.plus >= rod.plus2)
         return;
+
+    // Skill calculations with a massive scale would overflow, cap it.
+    // The worst case, a -3 rod, takes 17000 aut to fully charge.
+    // -4 rods don't recharge at all.
+    aut = std::min(aut, MAX_ROD_CHARGE * ROD_CHARGE_MULT * 10);
 
     int rate = 4 + short(rod.props["rod_enchantment"]);
 
@@ -3289,9 +3187,9 @@ void recharge_rods(int aut, bool level_only)
 
 void slime_wall_damage(actor* act, int delay)
 {
-    const int depth = player_in_branch(BRANCH_SLIME_PITS)
-                      ? player_branch_depth()
-                      : 1;
+    ASSERT(act);
+
+    const int depth = player_in_branch(BRANCH_SLIME_PITS) ? you.depth : 1;
 
     int walls = 0;
     for (adjacent_iterator ai(act->pos()); ai; ++ai)
@@ -3304,10 +3202,8 @@ void slime_wall_damage(actor* act, int delay)
     // Up to 1d6 damage per wall per slot.
     const int strength = div_rand_round(depth * walls * delay, BASELINE_DELAY);
 
-    if (act->atype() == ACT_PLAYER)
+    if (act->is_player())
     {
-        ASSERT(act == &you);
-
         if (you.religion != GOD_JIYVA || you.penance[GOD_JIYVA])
         {
             splash_with_acid(strength, false,

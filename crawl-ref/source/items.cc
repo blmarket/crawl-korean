@@ -590,8 +590,8 @@ void destroy_item(int dest, bool never_created)
 
 static void _handle_gone_item(const item_def &item)
 {
-    if (you.level_type == LEVEL_ABYSS
-        && place_type(item.orig_place) == LEVEL_ABYSS
+    if (player_in_branch(BRANCH_ABYSS)
+        && place_branch(item.orig_place) == BRANCH_ABYSS
         && !(item.flags & ISFLAG_BEEN_IN_INV))
     {
         if (is_unrandom_artefact(item))
@@ -605,22 +605,11 @@ void item_was_lost(const item_def &item)
     xom_check_lost_item(item);
 }
 
-static void _note_item_destruction(const item_def &item)
-{
-    if (item_is_orb(item))
-    {
-        mprf(MSGCH_WARN, gettext("A great rumbling fills the air... "
-             "the Orb of Zot has been destroyed!"));
-        mark_milestone("orb.destroy", "destroyed the Orb of Zot");
-        env.orb_pos.reset();
-        invalidate_agrid(false);
-    }
-}
-
 void item_was_destroyed(const item_def &item, int cause)
 {
+    if (item.props.exists("destroy_xp"))
+        gain_exp(item.props["destroy_xp"].get_int());
     _handle_gone_item(item);
-    _note_item_destruction(item);
     xom_check_destroyed_item(item, cause);
 }
 
@@ -986,14 +975,6 @@ void origin_set_startequip(item_def &item)
     }
 }
 
-static void _origin_set_portal_vault(item_def &item)
-{
-    if (you.level_type != LEVEL_PORTAL_VAULT)
-        return;
-
-    item.props[PORTAL_VAULT_ORIGIN_KEY] = you.level_type_origin;
-}
-
 void origin_set_monster(item_def &item, const monster* mons)
 {
     if (!origin_known(item))
@@ -1001,7 +982,6 @@ void origin_set_monster(item_def &item, const monster* mons)
         if (!item.orig_monnum)
             item.orig_monnum = mons->type + 1;
         item.orig_place = get_packed_place();
-        _origin_set_portal_vault(item);
     }
 }
 
@@ -1009,7 +989,6 @@ void origin_purchased(item_def &item)
 {
     // We don't need to check origin_known if it's a shop purchase
     item.orig_place  = get_packed_place();
-    _origin_set_portal_vault(item);
     item.orig_monnum = -IT_SRC_SHOP;
 }
 
@@ -1017,7 +996,6 @@ void origin_acquired(item_def &item, int agent)
 {
     // We don't need to check origin_known if it's a divine gift
     item.orig_place  = get_packed_place();
-    _origin_set_portal_vault(item);
     item.orig_monnum = -agent;
 }
 
@@ -1086,7 +1064,6 @@ void origin_set(const coord_def& where)
         if (!si->orig_monnum)
             si->orig_monnum = static_cast<short>(monnum);
         si->orig_place  = pplace;
-        _origin_set_portal_vault(*si);
     }
 }
 
@@ -1098,14 +1075,13 @@ static void _origin_freeze(item_def &item, const coord_def& where)
             item.orig_monnum = _first_corpse_monnum(where);
 
         item.orig_place = get_packed_place();
-        _origin_set_portal_vault(item);
         _check_note_item(item);
     }
 }
 
 static std::string _origin_monster_name(const item_def &item)
 {
-    const int monnum = item.orig_monnum - 1;
+    const monster_type monnum = static_cast<monster_type>(item.orig_monnum - 1);
     if (monnum == MONS_PLAYER_GHOST)
         return ("a player ghost");
     else if (monnum == MONS_PANDEMONIUM_LORD)
@@ -1115,11 +1091,8 @@ static std::string _origin_monster_name(const item_def &item)
 
 static std::string _origin_place_desc(const item_def &item)
 {
-    if (place_type(item.orig_place) == LEVEL_PORTAL_VAULT
-        && item.props.exists(PORTAL_VAULT_ORIGIN_KEY))
-    {
+    if (item.props.exists(PORTAL_VAULT_ORIGIN_KEY))
         return item.props[PORTAL_VAULT_ORIGIN_KEY].get_string();
-    }
 
     return prep_branch_level_name(item.orig_place);
 }
@@ -1328,13 +1301,9 @@ void pickup(bool partial_quantity)
     you.last_pickup.clear();
 
     if (o == NON_ITEM)
-    {
-        mpr(gettext("There are no items here."));
-    }
+        mpr(_("There are no items here."));
     else if (you.form == TRAN_ICE_BEAST && grd(you.pos()) == DNGN_DEEP_WATER)
-    {
-        mpr(gettext("You can't reach the bottom while floating on water."));
-    }
+        mpr(_("You can't reach the bottom while floating on water."));
     else if (mitm[o].link == NON_ITEM)      // just one item?
     {
         // Deliberately allowing the player to pick up
@@ -1436,7 +1405,7 @@ bool is_stackable_item(const item_def &item)
     return (false);
 }
 
-iflags_t ident_flags(const item_def &item)
+static iflags_t _ident_flags(const item_def &item)
 {
     const iflags_t identmask = full_ident_mask(item);
     iflags_t flags = item.flags & identmask;
@@ -1474,7 +1443,7 @@ bool items_similar(const item_def &item1, const item_def &item2, bool ignore_ide
     }
 
     // Check the ID flags.
-    if (!ignore_ident && ident_flags(item1) != ident_flags(item2))
+    if (!ignore_ident && _ident_flags(item1) != _ident_flags(item2))
         return (false);
 
     // Check the non-ID flags, but ignore dropped, thrown, cosmetic,
@@ -1503,8 +1472,11 @@ bool items_stack(const item_def &item1, const item_def &item2,
 {
     // Both items must be stackable.
     if (!force_merge
-        && (!is_stackable_item(item1) || !is_stackable_item(item2)))
+        && (!is_stackable_item(item1) || !is_stackable_item(item2))
+        || static_cast<int>(item1.quantity) + item2.quantity > 32767)
     {
+        COMPILE_CHECK(sizeof(item1.quantity) == 2); // can be relaxed otherwise
+
         return (false);
     }
 
@@ -1720,7 +1692,12 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
     if (quant_got > mitm[obj].quantity || quant_got <= 0)
         quant_got = mitm[obj].quantity;
 
-    const int imass = unit_mass * quant_got;
+    int imass = unit_mass * quant_got;
+    if (!ignore_burden && (you.burden + imass > carrying_capacity()))
+    {
+        if (drop_spoiled_chunks(you.burden + imass - carrying_capacity()))
+            imass = unit_mass * quant_got;
+    }
 
     bool partial_pickup = false;
 
@@ -1770,24 +1747,19 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
                 if (floor_god_gift && !inv_god_gift
                     || inv_god_gift && !floor_god_gift)
                 {
-                    you.inv[m].inscription
-                        = replace_all(you.inv[m].inscription,
-                                      "god gift, ", "");
-                    you.inv[m].inscription
-                        = replace_all(you.inv[m].inscription,
-                                      "god gift", "");
+                    trim_god_gift_inscrip(you.inv[m]);
                 }
 
                 // If only one of the stacks is identified,
                 // identify the other to a similar extent.
-                if (ident_flags(mitm[obj]) != ident_flags(you.inv[m]))
+                if (_ident_flags(mitm[obj]) != _ident_flags(you.inv[m]))
                 {
                     if (!quiet)
                         mpr(gettext("These items seem quite similar."));
                     mitm[obj].flags |=
-                        ident_flags(you.inv[m]) & you.inv[m].flags;
+                        _ident_flags(you.inv[m]) & you.inv[m].flags;
                     you.inv[m].flags |=
-                        ident_flags(mitm[obj]) & mitm[obj].flags;
+                        _ident_flags(mitm[obj]) & mitm[obj].flags;
                 }
 
                 merge_item_stacks(mitm[obj], you.inv[m], quant_got);
@@ -1813,6 +1785,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
     // Can't combine, check for slot space.
     if (inv_count() >= ENDOFPACK)
+        drop_spoiled_chunks(1, true);
+    if (inv_count() >= ENDOFPACK)
         return (-1);
 
     if (!quiet && partial_pickup)
@@ -1836,11 +1810,10 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         orb_pickup_noise(you.pos(), 30);
 
         mpr("The lords of Pandemonium are not amused. Beware!", MSGCH_WARN);
+
         if (you.religion == GOD_CHEIBRIADOS)
-        {
-            mprf(MSGCH_GOD, "%s tells them not to hurry.",
-                            god_name(you.religion).c_str());
-        }
+            simple_god_message(" tells them not to hurry.");
+
         mpr("Now all you have to do is get back out of the dungeon!", MSGCH_ORB);
 
         you.char_direction = GDT_ASCENDING;
@@ -1900,9 +1873,6 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         if (is_artefact(item) || get_equip_desc(item) != ISFLAG_NO_DESC)
             learned_something_new(HINT_SEEN_RANDART);
     }
-
-    if (item.base_type == OBJ_ORBS && you.level_type == LEVEL_DUNGEON)
-        unset_branch_flags(BFLAG_HAS_ORB);
 
     _got_item(item, item.quantity);
 
@@ -2008,12 +1978,7 @@ bool move_item_to_grid(int *const obj, const coord_def& p, bool silent)
     igrd(p) = ob;
 
     if (item_is_orb(item))
-    {
-        if (you.level_type == LEVEL_DUNGEON)
-            set_branch_flags(BFLAG_HAS_ORB);
         env.orb_pos = p;
-        invalidate_agrid(true);
-    }
 
     return (true);
 }
@@ -2226,6 +2191,12 @@ bool drop_item(int item_dropped, int quant_drop)
         return (false);
     }
 
+    if (you.inv[item_dropped].base_type == OBJ_ORBS)
+    {
+        mpr("You don't feel like leaving the orb behind!");
+        return (false);
+    }
+
     if (item_dropped == you.equip[EQ_WEAPON]
         && you.inv[item_dropped].base_type == OBJ_WEAPONS
         && you.inv[item_dropped].cursed())
@@ -2239,9 +2210,7 @@ bool drop_item(int item_dropped, int quant_drop)
         if (item_dropped == you.equip[i] && you.equip[i] != -1)
         {
             if (!Options.easy_unequip)
-            {
-                mpr(gettext("You will have to take that off first."));
-            }
+                mpr(_("You will have to take that off first."));
             else if (check_warning_inscriptions(you.inv[item_dropped],
                                                 OPER_TAKEOFF))
             {
@@ -2893,11 +2862,20 @@ static void _do_autopickup()
         if (item_needs_autopickup(mitm[o]))
         {
             int num_to_take = mitm[o].quantity;
-            if (Options.autopickup_no_burden && item_mass(mitm[o]) != 0)
+            int unit_mass = item_mass(mitm[o]);
+            if (Options.autopickup_no_burden && unit_mass != 0)
             {
-                int num_can_take =
-                    (carrying_capacity(you.burden_state) - you.burden) /
-                        item_mass(mitm[o]);
+                int capacity = carrying_capacity(you.burden_state);
+                int num_can_take = (capacity - you.burden) / unit_mass;
+
+                if (num_can_take < num_to_take
+                    && drop_spoiled_chunks(you.burden
+                           + num_to_take * unit_mass - capacity))
+                {
+                    // Yay, some new space, retry.
+                    // Compare to the old burden capacity, not the new one.
+                    num_can_take = (capacity - you.burden) / unit_mass;
+                }
 
                 if (num_can_take < num_to_take)
                 {
@@ -2988,7 +2966,8 @@ item_def *find_floor_item(object_class_type cls, int sub_type)
         for (int x = 0; x < GXM; ++x)
             for (stack_iterator si(coord_def(x,y)); si; ++si)
                 if (si->defined()
-                    && si->base_type == cls && si->sub_type == sub_type)
+                    && si->base_type == cls && si->sub_type == sub_type
+                    && !(si->flags & ISFLAG_MIMIC))
                 {
                     return (& (*si));
                 }
@@ -3015,24 +2994,15 @@ int get_max_subtype(object_class_type base_type)
         NUM_ARMOURS,
         NUM_WANDS,
         NUM_FOODS,
-#if TAG_MAJOR_VERSION == 32
-        0,              // unknown I
-#endif
         NUM_SCROLLS,
         NUM_JEWELLERY,
         NUM_POTIONS,
-#if TAG_MAJOR_VERSION == 32
-        0,              // unknown II
-#endif
         NUM_BOOKS,
         NUM_STAVES,
         1,              // Orbs         -- only one
         NUM_MISCELLANY,
         -1,              // corpses     -- handled specially
         1,              // gold         -- handled specially
-#if TAG_MAJOR_VERSION == 32
-        0,              // "gemstones"  -- no items of type
-#endif
     };
     COMPILE_CHECK(sizeof(max_subtype)/sizeof(int) == NUM_OBJECT_CLASSES);
 
@@ -3899,8 +3869,10 @@ item_info get_item_info(const item_def& item)
         if (ii.sub_type == MISC_RUNE_OF_ZOT)
             ii.plus = item.plus; // which rune
 
-        if (ii.sub_type == MISC_DECK_OF_ESCAPE)
+        if (is_deck(item))
         {
+            ii.special = item.special;
+
             const int num_cards = cards_in_deck(item);
             CrawlVector info_cards;
             CrawlVector info_card_flags;
@@ -3922,7 +3894,10 @@ item_info get_item_info(const item_def& item)
                     found_unmarked = true;
                 }
             }
-            // TODO: this leaks both whether the seen cards are still there and their order: the representation needs to be fixed
+            // TODO: this leaks both whether the seen cards are still there
+            // and their order: the representation needs to be fixed
+
+            // The above comment seems obsolete now that Mark Four is gone.
             for (int i = 0; i < num_cards; ++i)
             {
                 uint8_t flags;
@@ -3953,10 +3928,12 @@ item_info get_item_info(const item_def& item)
         if (item.props.exists(ARTEFACT_NAME_KEY))
             ii.props[ARTEFACT_NAME_KEY] = item.props[ARTEFACT_NAME_KEY];
     }
+    else if (item_type_tried(item))
+        ii.flags |= ISFLAG_TRIED;
 
     const char* copy_props[] = {ARTEFACT_APPEAR_KEY, KNOWN_PROPS_KEY,
                                 CORPSE_NAME_KEY, CORPSE_NAME_TYPE_KEY,
-                                "jewellery_tried", "drawn_cards"};
+                                "drawn_cards"};
     for (unsigned i = 0; i < (sizeof(copy_props) / sizeof(copy_props[0])); ++i)
     {
         if (item.props.exists(copy_props[i]))
@@ -3968,10 +3945,13 @@ item_info get_item_info(const item_def& item)
         CrawlVector props = item.props[ARTEFACT_PROPS_KEY].get_vector();
         const CrawlVector &known = item.props[KNOWN_PROPS_KEY].get_vector();
 
-        for (unsigned i = 0; i < props.size(); ++i)
+        if (!item_ident(item, ISFLAG_KNOW_PROPERTIES))
         {
-            if (i >= known.size() || !known[i].get_bool())
-                props[i] = (short)0;
+            for (unsigned i = 0; i < props.size(); ++i)
+            {
+                if (i >= known.size() || !known[i].get_bool())
+                    props[i] = (short)0;
+            }
         }
 
         ii.props[ARTEFACT_PROPS_KEY] = props;
@@ -3993,19 +3973,7 @@ int runes_in_pack()
 
 bool player_has_orb()
 {
-    if (you.char_direction != GDT_ASCENDING)
-        return false;
-
-    for (int i = 0; i < ENDOFPACK; i++)
-    {
-        if (you.inv[i].defined()
-            && you.inv[i].base_type == OBJ_ORBS
-            && you.inv[i].sub_type == ORB_ZOT)
-        {
-            return (true);
-        }
-    }
-    return false;
+    return you.char_direction == GDT_ASCENDING;
 }
 
 static const object_class_type _mimic_item_classes[] =

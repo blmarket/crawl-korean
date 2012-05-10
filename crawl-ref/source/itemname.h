@@ -128,17 +128,15 @@ item_kind item_kind_by_name(std::string name);
 
 std::vector<std::string> item_name_list_for_glyph(unsigned glyph);
 
-const char* wand_type_name(int wandtype);
 const char* rune_type_name(int p);
 
 bool        is_named_corpse(const item_def &corpse);
 std::string get_corpse_name(const item_def &corpse,
                             uint64_t *name_type = NULL);
-std::string base_type_string (object_class_type type, bool known = true);
-std::string base_type_string (const item_def &item, bool known = true);
+std::string base_type_string(object_class_type type, bool known = true);
+std::string base_type_string(const item_def &item, bool known = true);
 
-std::string sub_type_string (object_class_type type, int sub_type, bool known = true, int plus = 0);
-std::string sub_type_string (const item_def &item, bool known = true);
+std::string sub_type_string(const item_def &item, bool known = true);
 
-std::string ego_type_string (const item_def &item);
+std::string ego_type_string(const item_def &item);
 #endif

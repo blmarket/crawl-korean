@@ -59,8 +59,8 @@ void jiyva_eat_offlevel_items()
 
         // Choose level based on main dungeon depth so that levels short branches
         // aren't picked more often.
-        ASSERT(branches[branch].depth <= branches[BRANCH_MAIN_DUNGEON].depth);
-        const int level  = random2(branches[BRANCH_MAIN_DUNGEON].depth) + 1;
+        ASSERT(brdepth[branch] <= brdepth[BRANCH_MAIN_DUNGEON]);
+        const int level  = random2(brdepth[BRANCH_MAIN_DUNGEON]) + 1;
 
         const level_id lid(static_cast<branch_type>(branch), level);
 
@@ -96,6 +96,7 @@ void jiyva_eat_offlevel_items()
                 // gain from jiyva_slurp_bonus()
                 mpr("You hear a distant slurping noise.");
                 sacrifice_item_stack(*si, &js);
+                item_was_destroyed(*si);
                 destroy_item(si.link());
                 jiyva_slurp_message(js);
             }
@@ -421,9 +422,7 @@ bool god_id_item(item_def& item, bool silent)
         }
 
         if (_jewel_auto_id(item))
-        {
             ided |= ISFLAG_EQ_JEWELLERY_MASK;
-        }
 
         if (item.base_type == OBJ_ARMOUR
             && you.piety >= piety_breakpoint(0)
@@ -488,8 +487,7 @@ bool god_id_item(item_def& item, bool silent)
         if (ided & ISFLAG_KNOW_TYPE)
             set_ident_type(item, ID_KNOWN_TYPE);
         set_ident_flags(item, ided);
-        if (Options.autoinscribe_artefacts && is_artefact(item))
-            add_autoinscription(item, artefact_auto_inscription(item));
+        add_autoinscription(item);
 
         if (item.props.exists("needs_autopickup") && is_useless_item(item))
             item.props.erase("needs_autopickup");
@@ -564,7 +562,8 @@ static bool is_ash_portal(dungeon_feature_type feat)
     {
     case DNGN_ENTER_HELL:
     case DNGN_ENTER_LABYRINTH:
-    case DNGN_ENTER_ABYSS: // for completeness/Pan
+    case DNGN_ENTER_ABYSS: // for completeness
+    case DNGN_EXIT_THROUGH_ABYSS:
     case DNGN_EXIT_ABYSS:
     case DNGN_ENTER_PANDEMONIUM:
     case DNGN_EXIT_PANDEMONIUM:

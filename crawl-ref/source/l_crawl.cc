@@ -295,9 +295,7 @@ static void crawl_sendkeys_proc(lua_State *ls, int argi)
         }
     }
     else if (lua_isnumber(ls, argi))
-    {
         macro_sendkeys_end_add_expanded(luaL_checkint(ls, argi));
-    }
 }
 
 /*
@@ -441,9 +439,7 @@ static int crawl_bindkey(lua_State *ls)
 {
     const char *s = NULL;
     if (lua_isstring(ls, 1))
-    {
         s = lua_tostring(ls, 1);
-    }
 
     if (!s || !lua_isfunction(ls, 2) || lua_gettop(ls) != 2)
         return (0);
@@ -643,6 +639,8 @@ LUARET1(crawl_roll_dice, number,
         : roll_dice(luaL_checkint(ls, 1), luaL_checkint(ls, 2)))
 LUARET1(crawl_x_chance_in_y, boolean, x_chance_in_y(luaL_checkint(ls, 1),
                                                     luaL_checkint(ls, 2)))
+LUARET1(crawl_div_rand_round, number, div_rand_round(luaL_checkint(ls, 1),
+                                                     luaL_checkint(ls, 2)))
 
 static int crawl_is_tiles(lua_State *ls)
 {
@@ -848,6 +846,7 @@ static const struct luaL_reg crawl_clib[] =
     { "x_chance_in_y",  crawl_x_chance_in_y },
     { "random_range",   crawl_random_range },
     { "random_element", crawl_random_element },
+    { "div_rand_round", crawl_div_rand_round },
     { "redraw_screen",  crawl_redraw_screen },
     { "c_input_line",   crawl_c_input_line},
     { "getch",          crawl_getch },

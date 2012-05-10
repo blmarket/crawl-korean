@@ -3,7 +3,6 @@
 
 #include "itemprop-enum.h"
 #include "los_def.h"
-#include "itemprop-enum.h"
 
 enum ev_ignore_type
 {
@@ -13,6 +12,12 @@ enum ev_ignore_type
 };
 
 struct bolt;
+
+/* Axe this block soon */
+// (needed for asserts in is_player())
+class player;
+extern player you;
+/***********************/
 
 class actor
 {
@@ -24,10 +29,17 @@ public:
     virtual int       mindex() const = 0;
     virtual actor_type atype() const = 0;
 
-    virtual bool is_player() const
+    bool is_player() const
     {
-        return atype() == ACT_PLAYER;
+        ASSERT(this);
+        if (atype() == ACT_PLAYER)
+        {
+            ASSERT(this == (actor*)&you); // there can be only one
+            return true;
+        }
+        return false;
     }
+    bool is_monster() const { return !is_player(); }
     virtual monster* as_monster() = 0;
     virtual player* as_player() = 0;
     virtual const monster* as_monster() const = 0;
@@ -94,6 +106,7 @@ public:
     {
         return const_cast<actor*>(this)->weapon(0);
     }
+    virtual int has_claws(bool allow_tran = true) const = 0;
     virtual item_def *shield() = 0;
     virtual item_def *slot_item(equipment_type eq,
                                 bool include_melded=false) = 0;
@@ -119,7 +132,6 @@ public:
                              bool ignore_brand = false,
                              bool ignore_transform = false) const = 0;
 
-    virtual int hunger_level() const { return HS_ENGORGED; }
     virtual void make_hungry(int nutrition, bool silent = true)
     {
     }
@@ -184,7 +196,7 @@ public:
     virtual bool can_mutate() const = 0;
     virtual bool can_safely_mutate() const = 0;
     virtual bool can_bleed(bool allow_tran = true) const = 0;
-    virtual bool mutate() = 0;
+    virtual bool mutate(const std::string &reason) = 0;
     virtual bool drain_exp(actor *agent, bool quiet = false, int pow = 3) = 0;
     virtual bool rot(actor *agent, int amount, int immediate = 0,
                      bool quiet = false) = 0;
@@ -192,7 +204,7 @@ public:
                       beam_type flavour = BEAM_MISSILE,
                       bool cleanup_dead = true) = 0;
     virtual bool heal(int amount, bool max_too = false) = 0;
-    virtual void banish(const std::string &who = "") = 0;
+    virtual void banish(actor *agent, const std::string &who = "") = 0;
     virtual void blink(bool allow_partial_control = true) = 0;
     virtual void teleport(bool right_now = false,
                           bool abyss_shift = false,
@@ -307,6 +319,8 @@ public:
     virtual bool haloed() const;
     // Within an umbra?
     virtual bool umbraed() const;
+    // Magically suppressed?
+    virtual bool suppressed() const;
     // Squared halo radius.
     virtual int halo_radius2() const = 0;
     // Squared silence radius.
@@ -314,6 +328,7 @@ public:
     // Squared liquefying radius
     virtual int liquefying_radius2 () const = 0;
     virtual int umbra_radius2 () const = 0;
+    virtual int suppression_radius2 () const = 0;
 
     virtual bool glows_naturally() const = 0;
 
@@ -333,10 +348,8 @@ public:
             || petrifying();
     }
 
-    virtual int warding() const
-    {
-        return (0);
-    }
+    virtual bool wont_attack() const = 0;
+    virtual int warding() const = 0;
 
     virtual bool has_spell(spell_type spell) const = 0;
 

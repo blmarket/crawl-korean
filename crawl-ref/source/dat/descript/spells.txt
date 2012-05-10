@@ -192,10 +192,6 @@ Dig
 
 특별히 강화되어 있지 않은 주변의 돌벽 등을 분해시켜, 통로를 만든다.
 %%%%
-Disintegrate
-
-좁은 공간을 산산히 분해시켜버린다. 특히 대상에게 강력한 대미지를 주는 용도로 사용하는것도 가능하다.
-%%%%
 Dispel Undead
 
 언데드가 소생된 마력의 근원을 차단하여, 언데드에게 강력한 대미지를 입힌다.
@@ -291,7 +287,7 @@ This spell hurls a raging blizzard of ice, sleet and freezing gasses at the targ
 %%%%
 Ignite Poison
 
-시전자의 시야 내의 모든 독을 액상 화염으로 바꾼다. 이 주문은 특히 독을 가진 생물체나, 독 물약을 들고 있는 몬스터에게 효과적이다. 시전자 혹은 시전자의 아이템은 효과를 받지 않는다.
+This spell attempts to convert all nearby poison into liquid flame, burning poisoned creatures from within. It is very effective against innately poisonous creatures. The caster is not affected.
 %%%%
 Inner Flame
 
@@ -307,7 +303,7 @@ Invisibility
 %%%%
 Iskenderun's Mystic Blast
 
-파괴의 에너지를 모은, 격동하는 구체를 만들어 던진다.
+This spell throws a crackling sphere of destructive energy. The sphere will sometimes explode on impact, and the chance of it doing so is higher if the sphere has traveled less distance.
 %%%%
 Leda's Liquefaction
 레다의 용해술
@@ -623,10 +619,6 @@ Tornado
 Tukima's Dance
 
 시전자의 손에 들린 무기를 공중으로 떠올라 춤추게 하며, 적들을 공격하도록 만든다. 이 주문은 의지를 가진 아티팩트에는 적용되지 않으며, 발동 기술이 필요한 능력들은 사용되지 않는다.
-%%%%
-Tukima's Ball
-
-이 주문은 시전자 주변에 놓여 있는 모든 무기들을 공중에 떠올라 함께 춤추게 만든다.
 %%%%
 Twisted Resurrection
 

@@ -24,11 +24,14 @@
 #include "religion.h"
 #include "skills.h"
 #include "skills2.h"
+#include "spl-book.h"
 #include "spl-cast.h"
 #include "spl-util.h"
 #include "stuff.h"
 #include "terrain.h"
+#include "transform.h"
 #include "view.h"
+#include "unicode.h"
 #include "xom.h"
 
 #ifdef WIZARD
@@ -111,36 +114,36 @@ void wizard_change_species(void)
     {
     case SP_RED_DRACONIAN:
         if (you.experience_level >= 7)
-            perma_mutate(MUT_HEAT_RESISTANCE, 1);
+            perma_mutate(MUT_HEAT_RESISTANCE, 1, "wizard race change");
         break;
 
     case SP_WHITE_DRACONIAN:
         if (you.experience_level >= 7)
-            perma_mutate(MUT_COLD_RESISTANCE, 1);
+            perma_mutate(MUT_COLD_RESISTANCE, 1, "wizard race change");
         break;
 
     case SP_GREEN_DRACONIAN:
         if (you.experience_level >= 7)
-            perma_mutate(MUT_POISON_RESISTANCE, 1);
+            perma_mutate(MUT_POISON_RESISTANCE, 1, "wizard race change");
         if (you.experience_level >= 14)
-            perma_mutate(MUT_STINGER, 1);
+            perma_mutate(MUT_STINGER, 1, "wizard race change");
         break;
 
     case SP_YELLOW_DRACONIAN:
         if (you.experience_level >= 14)
-            perma_mutate(MUT_ACIDIC_BITE, 1);
+            perma_mutate(MUT_ACIDIC_BITE, 1, "wizard race change");
         break;
 
     case SP_GREY_DRACONIAN:
         if (you.experience_level >= 7)
-            perma_mutate(MUT_UNBREATHING, 1);
+            perma_mutate(MUT_UNBREATHING, 1, "wizard race change");
         break;
 
     case SP_BLACK_DRACONIAN:
         if (you.experience_level >= 7)
-            perma_mutate(MUT_SHOCK_RESISTANCE, 1);
+            perma_mutate(MUT_SHOCK_RESISTANCE, 1, "wizard race change");
         if (you.experience_level >= 14)
-            perma_mutate(MUT_BIG_WINGS, 1);
+            perma_mutate(MUT_BIG_WINGS, 1, "wizard race change");
         break;
 
     case SP_DEMONSPAWN:
@@ -161,18 +164,18 @@ void wizard_change_species(void)
 
     case SP_DEEP_DWARF:
         if (you.experience_level >= 9)
-            perma_mutate(MUT_PASSIVE_MAPPING, 1);
+            perma_mutate(MUT_PASSIVE_MAPPING, 1, "wizard race change");
         if (you.experience_level >= 14)
-            perma_mutate(MUT_NEGATIVE_ENERGY_RESISTANCE, 1);
+            perma_mutate(MUT_NEGATIVE_ENERGY_RESISTANCE, 1, "wizard race change");
         if (you.experience_level >= 18)
-            perma_mutate(MUT_PASSIVE_MAPPING, 1);
+            perma_mutate(MUT_PASSIVE_MAPPING, 1, "wizard race change");
         break;
 
     case SP_FELID:
         if (you.experience_level >= 6)
-            perma_mutate(MUT_SHAGGY_FUR, 1);
+            perma_mutate(MUT_SHAGGY_FUR, 1, "wizard race change");
         if (you.experience_level >= 12)
-            perma_mutate(MUT_SHAGGY_FUR, 1);
+            perma_mutate(MUT_SHAGGY_FUR, 1, "wizard race change");
         break;
 
     default:
@@ -181,6 +184,11 @@ void wizard_change_species(void)
 
     // Sanitize skills.
     fixup_skills();
+
+    // Could delete only inappropriate ones, but meh.
+    you.sage_skills.clear();
+    you.sage_xp.clear();
+    you.sage_bonus.clear();
 
     calc_hp();
     calc_mp();
@@ -223,11 +231,38 @@ void wizard_cast_spec_spell(void)
         }
     }
 
-    if (your_spells(static_cast<spell_type>(spell), 0, false)
-                == SPRET_ABORT)
-    {
+    if (your_spells(static_cast<spell_type>(spell), 0, false) == SPRET_ABORT)
         crawl_state.cancel_cmd_repeat();
+}
+
+void wizard_memorise_spec_spell(void)
+{
+    char specs[80], *end;
+    int spell;
+
+    mpr("Memorise which spell? ", MSGCH_PROMPT);
+    if (cancelable_get_line_autohist(specs, sizeof(specs))
+        || specs[0] == '\0')
+    {
+        canned_msg(MSG_OK);
+        crawl_state.cancel_cmd_repeat();
+        return;
     }
+
+    spell = strtol(specs, &end, 10);
+
+    if (spell < 0 || end == specs)
+    {
+        if ((spell = spell_by_name(specs, true)) == SPELL_NO_SPELL)
+        {
+            mpr("Cannot find that spell.");
+            crawl_state.cancel_cmd_repeat();
+            return;
+        }
+    }
+
+    if (!learn_spell(static_cast<spell_type>(spell)))
+        crawl_state.cancel_cmd_repeat();
 }
 #endif
 
@@ -389,8 +424,7 @@ void wizard_exercise_skill(void)
 #endif
 
 #ifdef WIZARD
-// When raw is set, skip the various checks and redraw (used by fsim)
-void wizard_set_skill_level(skill_type skill, int amount, bool raw)
+void wizard_set_skill_level(skill_type skill)
 {
     if (skill == SK_NONE)
         skill = debug_prompt_for_skill("Which skill (by name)? ");
@@ -401,11 +435,8 @@ void wizard_set_skill_level(skill_type skill, int amount, bool raw)
         return;
     }
 
-    if (amount < 0)
-    {
-        mpr(skill_name(skill));
-        amount = prompt_for_int("To what level? ", true);
-    }
+    mpr(skill_name(skill));
+    double amount = prompt_for_float("To what level? ");
 
     if (amount < 0)
     {
@@ -414,27 +445,19 @@ void wizard_set_skill_level(skill_type skill, int amount, bool raw)
     }
 
     const int old_amount = you.skills[skill];
-    const int points = skill_exp_needed(std::min(amount, 27), skill);
 
-    you.skill_points[skill] = points + 1;
-    you.ct_skill_points[skill] = 0;
-    you.skills[skill] = amount;
-
-    if (raw)
-        return;
+    set_skill_level(skill, amount);
 
     if (amount == 27)
     {
         you.train[skill] = 0;
+        reset_training();
         check_selected_skills();
     }
 
-    reset_training();
-    // We're not updating skill cost here since XP hasn't changed.
-
     redraw_skill(skill);
 
-    mprf("%s %s to skill level %d.", (old_amount < amount ? "Increased" :
+    mprf("%s %s to skill level %.1f.", (old_amount < amount ? "Increased" :
                                       old_amount > amount ? "Lowered"
                                                           : "Reset"),
          skill_name(skill), amount);
@@ -451,7 +474,7 @@ void wizard_set_skill_level(skill_type skill, int amount, bool raw)
 #ifdef WIZARD
 void wizard_set_all_skills(void)
 {
-    int amount = prompt_for_int("Set all skills to what level? ", true);
+    double amount = prompt_for_float("Set all skills to what level? ");
 
     if (amount < 0)             // cancel returns -1 -- bwr
         canned_msg(MSG_OK);
@@ -466,11 +489,13 @@ void wizard_set_all_skills(void)
             if (is_invalid_skill(sk) || is_useless_skill(sk))
                 continue;
 
-            const int points = skill_exp_needed(amount, sk);
+            set_skill_level(sk, amount);
 
-            you.skill_points[sk] = points + 1;
-            you.ct_skill_points[sk] = 0;
-            you.skills[sk] = amount;
+            if (amount == 27)
+            {
+                you.train[sk] = 0;
+                you.training[sk] = 0;
+            }
         }
 
         you.redraw_title = true;
@@ -558,7 +583,7 @@ bool wizard_add_mutation()
     {
         int old_resist = player_mutation_level(MUT_MUTATION_RESISTANCE);
 
-        success = mutate(mutat, true, force, god_gift);
+        success = mutate(mutat, "wizard power", true, force, god_gift);
 
         if (old_resist < player_mutation_level(MUT_MUTATION_RESISTANCE)
             && !force)
@@ -634,13 +659,13 @@ bool wizard_add_mutation()
         else if (levels > 0)
         {
             for (int i = 0; i < levels; ++i)
-                if (mutate(mutat, true, force, god_gift))
+                if (mutate(mutat, "wizard power", true, force, god_gift))
                     success = true;
         }
         else
         {
             for (int i = 0; i < -levels; ++i)
-                if (delete_mutation(mutat, true, force, god_gift))
+                if (delete_mutation(mutat, "wizard power", true, force, god_gift))
                     success = true;
         }
     }
@@ -701,9 +726,6 @@ static const char* dur_names[] =
     "divine shield",
     "regeneration",
     "swiftness",
-#if TAG_MAJOR_VERSION == 32
-    "stonemail",
-#endif
     "controlled flight",
     "teleport",
     "control teleport",
@@ -722,14 +744,11 @@ static const char* dur_names[] =
     "gourmand",
     "bargain",
     "insulation",
-    "resist poison",
-    "resist fire",
-    "resist cold",
+    "resistance",
     "slaying",
     "stealth",
     "magic shield",
     "sleep",
-    "sage",
     "telepathy",
     "petrified",
     "lowered mr",
@@ -755,6 +774,7 @@ static const char* dur_names[] =
     "shrouded",
     "tornado cooldown",
     "nausea",
+    "ambrosia",
 };
 
 void wizard_edit_durations(void)
@@ -870,22 +890,22 @@ void wizard_edit_durations(void)
     you.duration[choice] = num;
 }
 
-static void debug_uptick_xl(int newxl)
+static void debug_uptick_xl(int newxl, bool train)
 {
-    you.total_experience -= you.experience;
+    if (train)
+    {
+        you.exp_available += exp_needed(newxl) - you.experience;
+        train_skills();
+    }
     you.experience = exp_needed(newxl);
-    you.total_experience += you.experience;
     level_change(true);
-    check_skill_cost_change();
 }
 
 static void debug_downtick_xl(int newxl)
 {
     you.hp = you.hp_max;
     you.hp_max_perm += 1000; // boost maxhp so we don't die if heavily rotted
-    you.total_experience -= you.experience;
     you.experience = exp_needed(newxl);
-    you.total_experience += you.experience;
     level_change();
     you.skill_cost_level = 0;
     check_skill_cost_change();
@@ -920,11 +940,16 @@ void wizard_set_xl()
         return;
     }
 
+    set_xl(newxl, yesno("Train skills?", true, 'n'));
+}
+
+void set_xl(const int newxl, const bool train)
+{
     no_messages mx;
     if (newxl < you.experience_level)
         debug_downtick_xl(newxl);
     else
-        debug_uptick_xl(newxl);
+        debug_uptick_xl(newxl, train);
 }
 
 void wizard_get_god_gift (void)
@@ -965,4 +990,135 @@ void wizard_god_mollify()
         if (you.penance[i])
             dec_penance((god_type) i, you.penance[i]);
     }
+}
+
+void wizard_transform()
+{
+    transformation_type form;
+
+    while (true)
+    {
+        std::string line;
+        for (int i = 0; i <= LAST_FORM; i++)
+        {
+            line += make_stringf("[%c] %-10s ", i + 'a',
+                                 transform_name((transformation_type)i));
+            if (i % 5 == 4 || i == LAST_FORM)
+            {
+                mpr(line, MSGCH_PROMPT);
+                line.clear();
+            }
+        }
+        mpr("Which form (ESC to exit)? ", MSGCH_PROMPT);
+
+        int keyin = tolower(get_ch());
+
+        if (key_is_escape(keyin) || keyin == ' '
+            || keyin == '\r' || keyin == '\n')
+        {
+            canned_msg(MSG_OK);
+            return;
+        }
+
+        if (keyin < 'a' || keyin > 'a' + LAST_FORM)
+            continue;
+
+        form = (transformation_type)(keyin - 'a');
+
+        break;
+    }
+
+    if (!transform(200, form) && you.form != form)
+        if (yesno("Transformation failed, force it?", true, 'n'))
+            if (!transform(200, form, true))
+                mpr("The force is weak with this one.");
+}
+
+static void _wizard_modify_character(std::string inputdata)
+// for now this just sets skill levels and str dex int
+// (this should be enough to debug with)
+{
+    std::vector<std::string>  tokens = split_string(" ", inputdata);
+    int size = tokens.size();
+    if (size > 3 && tokens[1] == "Level") // + Level 4.0 Fighting
+    {
+        skill_type skill = skill_from_name(lowercase_string(tokens[3]).c_str());
+        double amount = atof(tokens[2].c_str());
+        set_skill_level(skill, amount);
+        if (tokens[0] == "+")
+            you.train[skill] = 1;
+        else if (tokens[0] == "*")
+            you.train[skill] = 2;
+        else
+            you.train[skill] = 0;
+
+        redraw_skill(skill);
+
+        return;
+    }
+
+    if (size > 5 && tokens[0] == "HP") // HP 23/23 AC 3 Str 21 XL: 1 Next: 0%
+    {
+        for (int k = 1; k < size; k++)
+        {
+            if (tokens[k] == "Str")
+            {
+                you.base_stats[STAT_STR] = debug_cap_stat(atoi(tokens[k+1].c_str()));
+                you.redraw_stats.init(true);
+                you.redraw_evasion = true;
+                return;
+            }
+        }
+    }
+
+    if (size > 5 && tokens[0] == "MP")
+    {
+        for (int k = 1; k < size; k++)
+        {
+            if (tokens[k] == "Int")
+            {
+                you.base_stats[STAT_INT] = debug_cap_stat(atoi(tokens[k+1].c_str()));
+                you.redraw_stats.init(true);
+                you.redraw_evasion = true;
+                return;
+            }
+        }
+    }
+    if (size > 5 && tokens[0] == "Gold")
+    {
+        for (int k = 1; k < size; k++)
+        {
+            if (tokens[k] == "Dex")
+            {
+                you.base_stats[STAT_DEX] = debug_cap_stat(atoi(tokens[k+1].c_str()));
+                you.redraw_stats.init(true);
+                you.redraw_evasion = true;
+                return;
+            }
+        }
+    }
+
+    return;
+}
+
+void wizard_load_dump_file()
+{
+    char filename[80];
+    msgwin_get_line_autohist("Which dump file? ", filename, sizeof(filename));
+    if (filename[0] == '\0')
+    {
+        canned_msg(MSG_OK);
+        return;
+    }
+
+    you.init_skills();
+
+    FileLineInput f(filename);
+    while (!f.eof())
+        _wizard_modify_character(f.get_line());
+
+    init_skill_order();
+    init_can_train();
+    init_train();
+    init_training();
 }

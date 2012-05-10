@@ -33,7 +33,7 @@
 default-depth: D
 
 # These must feature one of the temple_overflow_* TAGs (see header).
-# Altars are sorted alphabetically by god, with The Shining One coming
+# Altars are sorted alphabetically by god, with the Shining One coming
 # after Zin. At the end, there are altar vaults which can be used for
 # more than just one god.
 
@@ -235,8 +235,7 @@ NAME:   elyvilon_altar_3
 TAGS:   uniq_altar_elyvilon temple_overflow_elyvilon no_pool_fixup
 DEPTH:  D:2-20
 KFEAT:  C = altar_elyvilon
-KMASK:  w = no_monster_gen
-KMASK:  W = no_monster_gen
+KMASK:  wW = no_monster_gen
 MONS:   butterfly
 MAP
         ttttttttttttt
@@ -522,8 +521,8 @@ DEPTH:   3-11
 TAGS:    no_monster_gen patrolling temple_overflow_makhleb
 TAGS:    layout_rooms layout_city layout_open layout_cross mini_float
 KFEAT:   _ = altar_makhleb
-# Either one slow type 3 or s or 4 demon (iron devil or demonic crawler or
-#     smoke demon) or three slow type 5 demons (iron imp).
+# Either one slow type 3 or 4 demon (iron devil or smoke demon) or
+# three slow type 5 demons (iron imp).
 # The smoke demon can only come up in D:9-11.
 SHUFFLE: 1234
 NSUBST:  1 = 1:1 / *:.
@@ -532,7 +531,7 @@ NSUBST:  3 = 2:3 / *:.
 : if you.absdepth() < 9 then
 SUBST:   3 = 12
 : end
-MONS:    iron devil, demonic crawler, smoke demon, iron imp
+MONS:    iron devil, smoke demon, iron imp
 MAP
 xxxxxxxxxxxxxxx
 x.............x
@@ -551,7 +550,7 @@ ENDMAP
 
 NAME:  bloody_makhleb
 TAGS:  uniq_altar_makhleb temple_overflow_makhleb
-DEPTH: D:2-12, Orc, Vault
+DEPTH: D:2-12, Orc, Vaults
 KPROP: . = bloody / nothing
 KFEAT: _ = altar_makhleb
 KITEM: _ = robe, whip
@@ -587,7 +586,7 @@ ENDMAP
 # Perhaps could have different parameters for the two types of clouds,
 # and different patterns.
 NAME:   nemelex_altar_shiori
-DEPTH:  !Lair, !Orc
+DEPTH:  *, !Lair, !Orc
 TAGS:   temple_overflow_nemelex_xobeh uniq_altar_nemelex_xobeh
 TAGS:   no_pool_fixup no_monster_gen no_item_gen
 TAGS:   generate_awake patrolling no_rotate
@@ -725,7 +724,7 @@ ENDMAP
 ### Sif Muna overflow altars ##################################################
 
 NAME:   lemuel_blue_sif_altar
-DEPTH:  D:2-18, Elf, Vault
+DEPTH:  D:2-18, Elf, Vaults
 TAGS:   no_monster_gen temple_overflow_sif_muna uniq_altar_sif_muna
 COLOUR: . = blue
 FTILE:  . = floor_hall, C = floor_hall, @ = floor_hall, + = floor_hall
@@ -775,7 +774,7 @@ ENDMAP
 
 NAME:  bloody_trog
 TAGS:  uniq_altar_trog temple_overflow_trog
-DEPTH: D:2-12, Orc, Vault
+DEPTH: D:2-12, Orc, Vaults
 KPROP: . = bloody / nothing
 KFEAT: _ = altar_trog
 KITEM: _ = animal skin, dagger
@@ -919,7 +918,7 @@ ENDMAP
 ### Xom overflow altars #######################################################
 
 NAME:   tgw_xom
-DEPTH:  !D:1
+DEPTH:  *, !D:1
 TAGS:   no_item_gen no_monster gen temple_overflow_xom uniq_altar_xom
 KFEAT:  _ = altar_xom
 MONS:   orc; club ego:chaos / orc; dagger ego:chaos / orc; spear ego:chaos
@@ -959,7 +958,7 @@ MAP
 ENDMAP
 
 NAME:    xom_obstacle_run
-DEPTH:   !D:1
+DEPTH:   *, !D:1
 TAGS:    temple_overflow_xom uniq_altar_xom
 KFEAT:   _ = altar_xom
 SHUFFLE: ABCDEFG
@@ -1068,37 +1067,6 @@ XX,o.o,XX
  XXX@XXX
 ENDMAP
 
-# This one doesn't work.  The idea is to have the player pick one of the
-# doors, two have goats one has a jelly (as in the "Monty Hall" problem).
-# Yet currently there is nothing to stop people from opening all the doors,
-# and in fact, autoexplore will do that for you unless you place extra
-# exclusions on remaining doors.
-# This vault had "warnings" written on front (but not back) doors, this
-# confused unspoiled players without giving anything.
-NAME:    xom_monty_hall
-TAGS:    no_item_gen no_monster_gen temple_overflow_xom uniq_altar_xom
-DEPTH:   D:2-7
-WEIGHT:  1
-SHUFFLE: DE,FG
-NSUBST:  M = 1:2 / *:1
-SUBST:   E = x, F = x
-SUBST:   D = ., G = .
-SUBST:   x = ccbbvxX
-KFEAT:   _ = altar_xom
-MONS:    jelly
-MONS:    sheep hd:2 / quokka w:1
-SUBST:   / = +
-MAP
- xnxnxnx
-xn.....nx
-n..._...n
-x.......x
-x+xx+xx+x
-xMDEMFGMx
-x/xx/xx/x
-ENDMAP
-
-
 ### Yredelemnul overflow altars ###############################################
 
 NAME:   yredelemnul_altar_generic
@@ -1168,9 +1136,10 @@ COLOUR: c = white
 TILE:   c = wall_church
 FTILE: _.G1m+ = floor_limestone
 MONS:   angel god:zin name:glowing n_adj / \
-        angel god:zin name:glowing n_adj ; any weapon level:20 ego:holy_wrath / \
-        angel god:zin name:glowing n_adj ; long sword ego:holy_wrath / \
-        angel god:zin name:glowing n_adj ; mace ego:holy_wrath
+        angel god:zin name:glowing n_adj ; any weapon level:20 ego:holy_wrath ident:type / \
+        angel god:zin name:glowing n_adj ; long sword ego:holy_wrath ident:type / \
+        angel god:zin name:glowing n_adj ; mace ego:holy_wrath ident:type
+MARKER: 1 = lua:MonPropsMarker:new {speech_key="zin_priest"}
 DEPTH:  2-27
 MAP
 xxxxxxxxx

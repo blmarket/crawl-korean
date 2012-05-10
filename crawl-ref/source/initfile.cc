@@ -65,10 +65,10 @@ const std::string game_options::interrupt_prefix = "interrupt_";
 system_environment SysEnv;
 game_options Options;
 
-const static char *obj_syms = ")([/%.?=!.+\\0}X$";
-const static int   obj_syms_len = 16;
+const static char obj_syms[] = ")([/%?=!+\\0}X$";
+const static int  obj_syms_len = sizeof(obj_syms);
 
-template<class A, class B> void append_vector(A &dest, const B &src)
+template<class A, class B> static void append_vector(A &dest, const B &src)
 {
     dest.insert(dest.end(), src.begin(), src.end());
 }
@@ -348,11 +348,6 @@ static job_type _str_to_job(const std::string &str)
     if (job == JOB_UNKNOWN)
         job = get_job_by_name(str.c_str());
 
-#if TAG_MAJOR_VERSION == 32
-    if (job == JOB_PALADIN || job == JOB_REAVER)
-        job = JOB_UNKNOWN;
-#endif
-
     if (job == JOB_UNKNOWN)
         fprintf(stderr, "Unknown background choice: %s\n", str.c_str());
 
@@ -427,6 +422,13 @@ static unsigned curses_attribute(const std::string &field)
             make_stringf("Bad colour -- %s\n", field.c_str()));
     }
     return CHATTR_NORMAL;
+}
+
+void game_options::str_to_enemy_hp_colour(const std::string &colours)
+{
+    std::vector<std::string> colour_list = split_string(" ", colours, true, true);
+    for (int i = 0, csize = colour_list.size(); i < csize; i++)
+        enemy_hp_colour.push_back(str_to_colour(colour_list[i]));
 }
 
 #ifdef USE_TILE
@@ -589,7 +591,14 @@ void game_options::set_activity_interrupt(const std::string &activity_name,
     eints[AI_FORCE_INTERRUPT] = true;
 }
 
-std::string user_home_dir()
+#if defined(DGAMELAUNCH)
+static std::string _resolve_dir(const char* path, const char* suffix)
+{
+    return catpath(path, "");
+}
+#else
+
+static std::string _user_home_dir()
 {
 #ifdef TARGET_OS_WINDOWS
     wchar_t home[MAX_PATH];
@@ -606,22 +615,19 @@ std::string user_home_dir()
 #endif
 }
 
-std::string user_home_subpath(const std::string subpath)
+static std::string _user_home_subpath(const std::string subpath)
 {
-    return catpath(user_home_dir(), subpath);
+    return catpath(_user_home_dir(), subpath);
 }
 
 static std::string _resolve_dir(const char* path, const char* suffix)
 {
-#if defined(DGAMELAUNCH)
-    return catpath(path, "");
-#else
     if (path[0] != '~')
         return catpath(std::string(path), suffix);
     else
-        return user_home_subpath(catpath(path + 1, suffix));
-#endif
+        return _user_home_subpath(catpath(path + 1, suffix));
 }
+#endif
 
 void game_options::reset_options()
 {
@@ -643,7 +649,7 @@ void game_options::reset_options()
     if (macro_dir.empty())
     {
 #ifdef UNIX
-        macro_dir = user_home_subpath(".crawl");
+        macro_dir = _user_home_subpath(".crawl");
 #else
         macro_dir = "settings/";
 #endif
@@ -652,7 +658,7 @@ void game_options::reset_options()
 
 #if defined(TARGET_OS_MACOSX)
     const std::string tmp_path_base =
-        user_home_subpath("Library/Application Support/" CRAWL);
+        _user_home_subpath("Library/Application Support/" CRAWL);
     save_dir   = tmp_path_base + "/saves/";
     morgue_dir = tmp_path_base + "/morgue/";
     if (SysEnv.macro_dir.empty())
@@ -740,6 +746,7 @@ void game_options::reset_options()
     chunks_autopickup      = true;
     prompt_for_swap        = true;
     list_rotten            = true;
+    auto_drop_chunks       = ADC_NEVER;
     prefer_safe_chunks     = true;
     easy_eat_chunks        = false;
     easy_eat_gourmand      = false;
@@ -818,8 +825,8 @@ void game_options::reset_options()
 
     stash_tracking         = STM_ALL;
 
-    explore_stop           = (ES_ITEM | ES_STAIR | ES_PORTAL | ES_SHOP
-                              | ES_ALTAR | ES_GREEDY_PICKUP_SMART
+    explore_stop           = (ES_ITEM | ES_STAIR | ES_PORTAL | ES_BRANCH
+                              | ES_SHOP | ES_ALTAR | ES_GREEDY_PICKUP_SMART
                               | ES_GREEDY_VISITED_ITEM_STACK);
 
     // The prompt conditions will be combined into explore_stop after
@@ -862,13 +869,10 @@ void game_options::reset_options()
 
     item_stack_summary_minimum = 5;
 
-    pizza.clear();
-
 #ifdef WIZARD
     fsim_rounds = 4000L;
-    fsim_mons   = "worm";
-    fsim_str = fsim_int = fsim_dex = -1;
-    fsim_xl  = -1;
+    fsim_mons   = "";
+    fsim_scale.clear();
     fsim_kit.clear();
 #endif
 
@@ -1009,6 +1013,17 @@ void game_options::reset_options()
     mp_colour.push_back(std::pair<int, int>(25, RED));
     stat_colour.clear();
     stat_colour.push_back(std::pair<int, int>(3, RED));
+    enemy_hp_colour.clear();
+    // I think these defaults are pretty ugly but apparently OS X has problems
+    // with lighter colours
+    enemy_hp_colour.push_back(GREEN);
+    enemy_hp_colour.push_back(GREEN);
+    enemy_hp_colour.push_back(BROWN);
+    enemy_hp_colour.push_back(BROWN);
+    enemy_hp_colour.push_back(MAGENTA);
+    enemy_hp_colour.push_back(RED);
+    enemy_hp_colour.push_back(LIGHTGREY);
+    visual_monster_hp = false;
 
     force_autopickup.clear();
     note_monsters.clear();
@@ -1135,7 +1150,7 @@ void game_options::add_mon_glyph_overrides(const std::string &mons,
         letter = mons[0] == '_' ? ' ' : mons[0];
 
     bool found = false;
-    for (int i = 0; i < NUM_MONSTERS; ++i)
+    for (monster_type i = MONS_0; i < NUM_MONSTERS; ++i)
     {
         const monsterentry *me = get_monster_data(i);
         if (!me || me->mc == MONS_PROGRAM_BUG)
@@ -1144,7 +1159,7 @@ void game_options::add_mon_glyph_overrides(const std::string &mons,
         if (me->basechar == letter || me->name == mons)
         {
             found = true;
-            mon_glyph_overrides[static_cast<monster_type>(i)] = mdisp;
+            mon_glyph_overrides[i] = mdisp;
         }
     }
     if (!found)
@@ -1452,6 +1467,8 @@ void read_options(const std::string &s, bool runscript, bool clear_aliases)
 
 game_options::game_options()
 {
+    lang = LANG_EN; // FIXME: obtain from gettext
+    lang_name = 0;
     reset_options();
 }
 
@@ -1687,6 +1704,10 @@ int game_options::read_explore_stop_conditions(const std::string &field) const
             conditions |= ES_SHOP;
         else if (c == "stair" || c == "stairs")
             conditions |= ES_STAIR;
+        else if (c == "branch" || c == "branches")
+            conditions |= ES_BRANCH;
+        else if (c == "portal" || c == "portals")
+            conditions |= ES_PORTAL;
         else if (c == "altar" || c == "altars")
             conditions |= ES_ALTAR;
         else if (c == "greedy_item" || c == "greedy_items")
@@ -1908,9 +1929,7 @@ static void _bindkey(std::string field)
         return;
     }
     else if (key_str.length() == 1)
-    {
         key = key_str[0];
-    }
     else if (key_str.length() == 2)
     {
         if (key_str[0] != '^')
@@ -2083,13 +2102,9 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     }
 
     if (key == "include")
-    {
         include(field, true, runscript);
-    }
     else if (key == "opt" || key == "option")
-    {
         split_parse(field, ",", &game_options::set_option_fragment);
-    }
     else if (key == "autopickup")
     {
         // clear out autopickup
@@ -2159,6 +2174,38 @@ void game_options::read_option_line(const std::string &str, bool runscript)
             char_set = CSET_DEFAULT;
         else
             fprintf(stderr, "Bad character set: %s\n", field.c_str());
+    }
+    else if (key == "language")
+    {
+        // FIXME: should talk to gettext/etc instead
+        if (field == "en" || field == "english")
+            lang = LANG_EN, lang_name = 0; // disable the db
+        else if (field == "pl" || field == "polish" || field == "polski")
+            lang = LANG_PL, lang_name = "pl";
+        else if (field == "de" || field == "german" || field == "deutch")
+            lang = LANG_DE, lang_name = "de";
+        else if (field == "fr" || field == "french" || field == "français")
+            lang = LANG_FR, lang_name = "fr";
+        else if (field == "es" || field == "spanish" || field == "español")
+            lang = LANG_ES, lang_name = "es";
+        else if (field == "el" || field == "greek" || field == "ελληνικά")
+            lang = LANG_EL, lang_name = "el";
+        // Fake languages do not reset lang_name, allowing a translated
+        // database in an actual language.  This is probably pointless for
+        // most fake langs, though.
+        else if (field == "dwarven" || field == "dwarf")
+            lang = LANG_DWARVEN;
+        else if (field == "jäger" || field == "jägerkin" || field == "jager" || field == "jagerkin")
+            lang = LANG_JAGERKIN;
+        else if (field == "kraut" || field == "jerry" || field == "fritz")
+            lang = LANG_KRAUT;
+        else if (field == "wide" || field == "doublewidth" || field == "fullwidth")
+            lang = LANG_WIDE;
+        else
+        {
+            report_error(make_stringf("No translations for language: %s\n",
+                                      field.c_str()));
+        }
     }
     else if (key == "default_autopickup")
     {
@@ -2235,6 +2282,17 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     else BOOL_OPTION(easy_eat_gourmand);
     else BOOL_OPTION(easy_eat_contaminated);
     else BOOL_OPTION(auto_eat_chunks);
+    else if (key == "auto_drop_chunks")
+    {
+        if (field == "never")
+            auto_drop_chunks = ADC_NEVER;
+        else if (field == "rotten")
+            auto_drop_chunks = ADC_ROTTEN;
+        else if (field == "yes" || field == "true")
+            auto_drop_chunks = ADC_YES;
+        else
+            report_error("Invalid auto_drop_chunks: \"" + field + "\"");
+    }
     else if (key == "lua_file" && runscript)
     {
 #ifdef CLUA_BINDINGS
@@ -2361,11 +2419,6 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     }
     else if (key == "fire_order")
         set_fire_order(field, plus_equal);
-    else if (key == "pizza")
-    {
-        // field is already cleaned up from trim_string()
-        pizza = field;
-    }
 #if !defined(DGAMELAUNCH) || defined(DGL_REMEMBER_NAME)
     else BOOL_OPTION(remember_name);
 #endif
@@ -2706,6 +2759,13 @@ void game_options::read_option_line(const std::string &str, bool runscript)
             stat_colour.push_back(std::pair<int, int>(stat_limit, scolour));
         }
     }
+
+    else if (key == "enemy_hp_colour" || key == "enemy_hp_color")
+    {
+        enemy_hp_colour.clear();
+        str_to_enemy_hp_colour(field);
+    }
+
     else if (key == "note_skill_levels")
     {
         std::vector<std::string> thesplit = split_string(",", field);
@@ -2739,6 +2799,10 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     }
     else BOOL_OPTION(pickup_thrown);
 #ifdef WIZARD
+    else if (key == "fsim_mode")
+        fsim_mode = field;
+    else if (key == "fsim_scale")
+        append_vector(fsim_scale, split_string(",", field));
     else if (key == "fsim_kit")
         append_vector(fsim_kit, split_string(",", field));
     else if (key == "fsim_rounds")
@@ -2751,14 +2815,6 @@ void game_options::read_option_line(const std::string &str, bool runscript)
     }
     else if (key == "fsim_mons")
         fsim_mons = field;
-    else if (key == "fsim_str")
-        fsim_str = atoi(field.c_str());
-    else if (key == "fsim_int")
-        fsim_int = atoi(field.c_str());
-    else if (key == "fsim_dex")
-        fsim_dex = atoi(field.c_str());
-    else if (key == "fsim_xl")
-        fsim_xl = atoi(field.c_str());
 #endif // WIZARD
     else if (key == "sort_menus")
     {
@@ -4130,9 +4186,7 @@ int game_options::o_int(const char *name, int def) const
     int val = def;
     opt_map::const_iterator i = named_options.find(name);
     if (i != named_options.end())
-    {
         val = atoi(i->second.c_str());
-    }
     return (val);
 }
 

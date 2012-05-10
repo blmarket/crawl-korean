@@ -56,11 +56,6 @@ void define_zombie(monster* mon, monster_type ztype, monster_type cs);
 
 bool downgrade_zombie_to_skeleton(monster* mon);
 
-// Converts a monster_type involving RANDOM_MONSTER and similar into an
-// explicit monster type usable on the current level.
-monster_type resolve_monster_type(monster_type mon_type,
-                                  dungeon_feature_type feat);
-
 // Picks a monster eligible for random generation at the given place,
 // optionally picking monsters that can be zombified into the target zombie,
 // and optionally increasing monster level by the provided OOD factors.
@@ -113,7 +108,7 @@ bool monster_habitable_grid(
     int flies = -1,
     bool paralysed = false);
 bool monster_can_submerge(const monster* mon, dungeon_feature_type grid);
-coord_def find_newmons_square(int mons_class, const coord_def &p);
+coord_def find_newmons_square(monster_type mons_class, const coord_def &p);
 coord_def find_newmons_square_contiguous(monster_type mons_class,
                                          const coord_def &start,
                                          int maxdistance = 3);
@@ -127,8 +122,8 @@ void setup_vault_mon_list();
 
 monster* get_free_monster();
 
-bool can_place_on_trap(int mon_type, trap_type trap);
-bool mons_airborne(int mcls, int flies, bool paralysed);
+bool can_place_on_trap(monster_type mon_type, trap_type trap);
+bool mons_airborne(monster_type mcls, int flies, bool paralysed);
 void mons_add_blame(monster* mon, const std::string &blame_string);
 
 // Active monster band may influence gear generation on band followers.

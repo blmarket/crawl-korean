@@ -12,7 +12,7 @@ struct bolt;
 class monster;
 struct item_def;
 
-void banished(dungeon_feature_type gate_type, const std::string &who = "");
+void banished(const std::string &who = "");
 
 bool forget_spell(void);
 
@@ -52,7 +52,6 @@ void yell(bool force = false);
 void holy_word(int pow, int caster, const coord_def& where, bool silent = false,
                actor *attacker = NULL);
 
-void holy_word_player(int pow, int caster, actor *attacker = NULL);
 void holy_word_monsters(coord_def where, int pow, int caster,
                         actor *attacker = NULL);
 
@@ -71,7 +70,6 @@ void cleansing_flame(int pow, int caster, coord_def where,
 void change_labyrinth(bool msg = false);
 
 bool vitrify_area(int radius);
-void update_corpses(int elapsedTime);
 void update_level(int elapsedTime);
 void handle_time();
 void recharge_rods(int aut, bool floor_only);

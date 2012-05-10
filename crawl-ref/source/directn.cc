@@ -221,9 +221,7 @@ bool direction_chooser::choose_compass()
 
 #ifdef USE_TILE
         if (key_command == CMD_TARGET_MOUSE_MOVE)
-        {
             continue;
-        }
         else if (key_command == CMD_TARGET_MOUSE_SELECT)
         {
             const coord_def &gc = tiles.get_cursor();
@@ -254,9 +252,7 @@ bool direction_chooser::choose_compass()
 
         const int i = _targetting_cmd_to_compass(key_command);
         if (i != -1)
-        {
             moves.delta = Compass[i];
-        }
         else if (key_command == CMD_TARGET_CANCEL)
         {
             moves.isCancel = true;
@@ -340,9 +336,7 @@ std::string direction_chooser::build_targetting_hint_string() const
     const monster* p_target = get_current_target();
 
     if (f_target && f_target == p_target)
-    {
         hint_string = ", f/p - " + f_target->name(DESC_PLAIN);
-    }
     else
     {
         if (f_target)
@@ -563,26 +557,17 @@ void full_describe_view()
         if (oid == NON_ITEM)
             continue;
 
-        if (StashTracker::is_level_untrackable())
-        {
-            // On levels with no stashtracker, you can still see the top
-            // item.
-            list_items.push_back(mitm[oid]);
-        }
-        else
-        {
-            const std::vector<item_def> items = item_list_in_stash(*ri);
+        const std::vector<item_def> items = item_list_in_stash(*ri);
 
 #ifdef DEBUG_DIAGNOSTICS
-            if (items.empty())
-            {
-                mprf(MSGCH_ERROR, "No items found in stash, but top item is %s",
-                     mitm[oid].name(false, DESC_PLAIN).c_str());
-                more();
-            }
-#endif
-            list_items.insert(list_items.end(), items.begin(), items.end());
+        if (items.empty())
+        {
+            mprf(MSGCH_ERROR, "No items found in stash, but top item is %s",
+                 mitm[oid].name(false, DESC_PLAIN).c_str());
+            more();
         }
+#endif
+        list_items.insert(list_items.end(), items.begin(), items.end());
     }
 
     // Get monsters via the monster_info, sorted by difficulty.
@@ -992,9 +977,7 @@ bool direction_chooser::move_is_ok() const
                     return (false);
                 }
                 else if (Options.allow_self_target == CONFIRM_PROMPT)
-                {
                     return yesno(gettext("Really target yourself?"), false, 'n');
-                }
             }
 
             if (cancel_at_self)
@@ -1053,9 +1036,7 @@ static void _update_mlist(bool enable)
     crawl_state.mlist_targetting = enable;
     const int full_info = update_monster_pane();
     if (enable && full_info != -1)
-    {
         _fill_monster_list(full_info);
-    }
     else
         crawl_state.mlist_targetting = false;
 }
@@ -1776,7 +1757,7 @@ void direction_chooser::handle_wizard_command(command_type key_command,
         break;
 
     case CMD_TARGET_WIZARD_BANISH_MONSTER:
-        m->banish();
+        m->banish(&you);
         break;
 
     case CMD_TARGET_WIZARD_KILL_MONSTER:
@@ -2862,9 +2843,9 @@ void describe_floor()
 
     msg_channel_type channel = MSGCH_EXAMINE;
 
-    // Water is not terribly important if you don't mind it.
-    if (feat_is_water(grid) && player_likes_water())
-        channel = MSGCH_EXAMINE_FILTER;
+    // Messages for water/lava are too spammy use a status light instead.
+    if (feat_is_water(grid) || feat_is_lava(grid))
+        return;
 
     mprf(channel, gettext(msg), feat.c_str());
     if (grid == DNGN_ENTER_LABYRINTH && you.is_undead != US_UNDEAD)
@@ -2953,6 +2934,8 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
             return (gettext(M_("blade trap")));
         case TRAP_NET:
             return (gettext(M_("net trap")));
+        case TRAP_GAS:
+            return (gettext(M_("gas trap")));
         case TRAP_ALARM:
             return (gettext(M_("alarm trap")));
         case TRAP_SHAFT:
@@ -2979,7 +2962,7 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return (gettext(M_("stone wall")));
     case DNGN_ROCK_WALL:
     case DNGN_SECRET_DOOR:
-        if (you.level_type == LEVEL_PANDEMONIUM)
+        if (player_in_branch(BRANCH_PANDEMONIUM))
             return (gettext(M_("wall of the weird stuff which makes up Pandemonium")));
         else
             return (gettext(M_("rock wall")));
@@ -3041,16 +3024,15 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
     case DNGN_STONE_STAIRS_UP_I:
     case DNGN_STONE_STAIRS_UP_II:
     case DNGN_STONE_STAIRS_UP_III:
-        if (player_in_branch(BRANCH_MAIN_DUNGEON)
-            && player_branch_depth() == 1)
-        {
-            return (gettext(M_("staircase leading out of the dungeon")));
-        }
         return (gettext(M_("stone staircase leading up")));
+    case DNGN_EXIT_DUNGEON:
+        return (gettext(M_("staircase leading out of the dungeon")));
     case DNGN_ENTER_HELL:
         return (gettext(M_("gateway to Hell")));
     case DNGN_EXIT_HELL:
         return (gettext(M_("gateway back into the Dungeon")));
+    case DNGN_TELEPORTER:
+        return (gettext(M_("teleporter")));
     case DNGN_TRAP_MECHANICAL:
         return (gettext(M_("mechanical trap")));
     case DNGN_TRAP_MAGICAL:
@@ -3077,6 +3059,8 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return (gettext(M_("one-way gate to the infinite horrors of the Abyss")));
     case DNGN_EXIT_ABYSS:
         return (gettext(M_("gateway leading out of the Abyss")));
+    case DNGN_EXIT_THROUGH_ABYSS:
+        return (gettext(M_("exit through the horrors of the Abyss")));
     case DNGN_STONE_ARCH:
         return (gettext(M_("empty arch of ancient stone")));
     case DNGN_ENTER_PANDEMONIUM:
@@ -3089,8 +3073,6 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return (gettext(M_("staircase to the Dwarven Hall")));
     case DNGN_ENTER_ORCISH_MINES:
         return (gettext(M_("staircase to the Orcish Mines")));
-    case DNGN_ENTER_HIVE:
-        return (gettext(M_("staircase to the Hive")));
     case DNGN_ENTER_LAIR:
         return (gettext(M_("staircase to the Lair")));
     case DNGN_ENTER_SLIME_PITS:
@@ -3132,7 +3114,6 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         return (gettext(M_("collapsed entrance")));
     case DNGN_RETURN_FROM_DWARVEN_HALL:
     case DNGN_RETURN_FROM_ORCISH_MINES:
-    case DNGN_RETURN_FROM_HIVE:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_VAULTS:
     case DNGN_RETURN_FROM_TEMPLE:
@@ -3513,6 +3494,9 @@ static std::vector<std::string> _get_monster_desc_vector(const monster_info& mi)
     if (mi.is(MB_UMBRAED))
         descs.push_back("umbra");
 
+    if (mi.is(MB_SUPPRESSED))
+        descs.push_back("suppressed");
+
     if (mi.is(MB_POSSESSABLE))
         descs.push_back("possessable"); // FIXME: better adjective
     else if (mi.is(MB_ENSLAVED))
@@ -3579,6 +3563,9 @@ static std::string _get_monster_desc(const monster_info& mi)
 
     if (mi.is(MB_UMBRAED))
         text += pronoun + " is wreathed by an unholy umbra.\n";
+
+    if (mi.is(MB_SUPPRESSED))
+        text += pronoun + " exudes an aura of magical suppression.\n";
 
     if (mi.intel() <= I_PLANT)
         text += pronoun + " is mindless.\n";
@@ -3703,9 +3690,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
     // and armour are cloned with him.
 
     if (mi.type != MONS_DANCING_WEAPON)
-    {
         weap = _describe_monster_weapon(mi, level == DESC_IDENTIFIED);
-    }
     else if (level == DESC_IDENTIFIED)
         return " " + mi.full_name(DESC_A);
 
@@ -3823,6 +3808,8 @@ static bool _print_cloud_desc(const coord_def where)
         areas.push_back(gettext("is lit by a halo"));
     if (umbraed(where) && !haloed(where))
         areas.push_back(gettext("is wreathed by an umbra"));
+    if (suppressed(where))
+        areas.push_back(gettext("thrums with a field of magical suppression"));
     if (liquefied(where))
         areas.push_back(gettext("is liquefied"));
     if (orb_haloed(where))

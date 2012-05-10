@@ -4,7 +4,7 @@
 // second number  = maximum levels
 // first  boolean = is mutation mostly bad?
 // second boolean = is mutation physical, i.e. external only?
-// third  boolean = is mutation kept when shapechanged?
+// third  boolean = is mutation suppressed when shapechanged?
 // first  strings = what to show in 'A'
 // second strings = message given when gaining the mutation
 // third  strings = message given when losing the mutation
@@ -375,26 +375,6 @@
   "deformed"
 },
 
-#if TAG_MAJOR_VERSION == 32
-{ MUT_TELEPORT_AT_WILL,           0,  3, false, false, false,
-  M_("teleport at will"),
-
-  {N_("You can teleport at will."),
-   N_("You are good at teleporting at will."),
-   N_("You can teleport instantly at will.")},
-
-  {N_("You feel jumpy."),
-   N_("You feel more jumpy."),
-   N_("You feel even more jumpy.")},
-
-  {N_("You feel a little less jumpy."),
-   N_("You feel less jumpy."),
-   N_("You feel less jumpy.")},
-
-  "teleport at will"
-},
-#endif
-
 { MUT_SPIT_POISON,                8,  3, false, false, false,
   M_("spit poison"),
 
@@ -685,28 +665,6 @@
   "hurl hellfire"
 },
 
-#if TAG_MAJOR_VERSION == 32
-{ MUT_THROW_FLAMES,               0,  1, false, false, false,
-  M_("throw flames of Gehenna"),
-
-  {N_("You can throw forth the flames of Gehenna."), "", ""},
-  {N_("You smell the fires of Gehenna."), "", ""},
-  {"", "", ""},
-
-  "throw flames"
-},
-
-{ MUT_THROW_FROST,                0,  1, false, false, false,
-  M_("throw frost of Cocytus"),
-
-  {N_("You can throw forth the frost of Cocytus."), "", ""},
-  {N_("You feel the icy cold of Cocytus chill your soul."), "", ""},
-  {"", "", ""},
-
-  "throw frost"
-},
-#endif
-
 // body-slot facets
 { MUT_HORNS,                      7,  3, false,  true, true,
   M_("horns"),
@@ -824,24 +782,6 @@
    N_("Your talons look more like feet.")},
 
   "talons"
-},
-
-{ MUT_TENTACLES,                 0,  3, false, true, true,
-  M_("tentacles"),
-
-  {N_("You have a mass of small tentacles instead of fingers."),
-   N_("You have a mass of tentacles instead of hands."),
-   N_("You have a mass of large tentacles instead of arms.")},
-
-  {N_("Your fingers turn into small tentacles."),
-   N_("Your hands turn into tentacles."),
-   N_("Your arms turn into large tentacles.")},
-
-  {N_("Your fingers look less like tentacles."),
-   N_("Your hands look less like tentacles."),
-   N_("Your arms look less like tentacles.")},
-
-   "tentacles"
 },
 
 // Octopode only
@@ -1003,17 +943,11 @@
     "wild magic"
 },
 
-{ MUT_STOCHASTIC_TORMENT_RESISTANCE, 0,  3, false, false, false,
-  NULL,
+{ MUT_STOCHASTIC_TORMENT_RESISTANCE, 0,  1, false, false, false,
+  M_("50% torment resistance"),
 
-  {N_("You are somewhat able to resist unholy torments (1 in 5 success)."),
-   N_("You are decently able to resist unholy torments (2 in 5 success)."),
-   N_("You are rather able to resist unholy torments (3 in 5 success).")},
-
-  {N_("You feel a slight anaesthesia."),
-   N_("You feel a slight anaesthesia."),
-   N_("You feel a strange anaesthesia.")},
-
+  {M_("You are somewhat able to resist unholy torments (1 in 2 success)."),"",""},
+  {M_("You feel a strange anaesthesia."),"",""},
   {"","",""},
 
   "stochastic torment resistance"
@@ -1440,8 +1374,8 @@
   NULL,
 
   {N_("You are partially covered in yellow scales (AC +1)."),
-   N_("You are mostly covered in yellow scales (AC +2, rAcid+)."),
-   N_("You are completely covered in yellow scales (AC +3, rAcid++).")},
+   N_("You are mostly covered in yellow scales (AC +2)."),
+   N_("You are completely covered in yellow scales (AC +3, rCorr).")},
 
   {N_("Yellow scales grow over part of your body."),
    N_("Yellow scales spread over more of your body."),

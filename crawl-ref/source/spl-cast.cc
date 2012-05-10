@@ -71,11 +71,13 @@
 #include "transform.h"
 #include "view.h"
 
+static int _spell_enhancement(unsigned int typeflags);
+
 static void _surge_power(spell_type spell)
 {
     int enhanced = 0;
 
-    enhanced += spell_enhancement(get_spell_disciplines(spell));
+    enhanced += _spell_enhancement(get_spell_disciplines(spell));
 
     if (enhanced)               // one way or the other {dlb}
     {
@@ -371,7 +373,7 @@ int spell_fail(spell_type spell)
         }
     }
 
-    chance2 += 10 * player_mutation_level(MUT_WILD_MAGIC);
+    chance2 += 7 * player_mutation_level(MUT_WILD_MAGIC);
 
     // Apply the effects of Vehumet and items of wizardry.
     chance2 = _apply_spellcasting_success_boosts(spell, chance2);
@@ -393,9 +395,6 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
         int enhanced = 0;
 
         unsigned int disciplines = get_spell_disciplines(spell);
-
-        //jmf: evil evil evil -- exclude HOLY bit
-        disciplines &= (~SPTYP_HOLY);
 
         int skillcount = count_bits(disciplines);
         if (skillcount)
@@ -422,7 +421,7 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
         // [dshaligram] Enhancers don't affect fail rates any more, only spell
         // power. Note that this does not affect Vehumet's boost in castability.
         if (!fail_rate_check)
-            enhanced = spell_enhancement(disciplines);
+            enhanced = _spell_enhancement(disciplines);
 
         if (enhanced > 0)
         {
@@ -455,8 +454,7 @@ int calc_spell_power(spell_type spell, bool apply_intel, bool fail_rate_check,
     return (power);
 }
 
-
-int spell_enhancement(unsigned int typeflags)
+static int _spell_enhancement(unsigned int typeflags)
 {
     int enhanced = 0;
 
@@ -496,7 +494,7 @@ int spell_enhancement(unsigned int typeflags)
     if (you.attribute[ATTR_SHADOWS])
         enhanced -= 2;
 
-    if (player_equip_ego_type(EQ_BODY_ARMOUR, SPARM_ARCHMAGI))
+    if (player_effect_archmagi())
         enhanced++;
 
     enhanced += augmentation_amount();
@@ -538,7 +536,7 @@ static bool _can_cast()
     }
 
     // Randart weapons.
-    if (scan_artefacts(ARTP_PREVENT_SPELLCASTING))
+    if (player_effect_nocast())
     {
         mpr(gettext("Something interferes with your magic!"));
         return false;
@@ -654,9 +652,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
             return (false);
         }
         else if (keyin == '.' || keyin == CK_ENTER)
-        {
             spell = you.last_cast_spell;
-        }
         else if (!isaalpha(keyin))
         {
             mpr(gettext("You don't know that spell."));
@@ -728,7 +724,6 @@ bool cast_a_spell(bool check_range, spell_type spell)
         }
     }
 
-    const bool staff_energy = player_energy();
     you.last_cast_spell = spell;
     const spret_type cast_result = your_spells(spell, 0, true, check_range);
     if (cast_result == SPRET_ABORT)
@@ -748,7 +743,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
     dec_mp(spell_mana(spell));
 
-    if (!staff_energy && you.is_undead != US_UNDEAD)
+    if (you.is_undead != US_UNDEAD)
     {
         const int spellh = calc_hunger(spell_hunger(spell));
         if (spellh > 0)
@@ -768,9 +763,6 @@ static void _spellcasting_side_effects(spell_type spell, int pow, god_type god)
 {
     // If you are casting while a god is acting, then don't do conducts.
     // (Presumably Xom is forcing you to cast a spell.)
-    if (is_holy_spell(spell) && !crawl_state.is_god_acting())
-        did_god_conduct(DID_HOLY, 10 + spell_difficulty(spell));
-
     if (is_unholy_spell(spell) && !crawl_state.is_god_acting())
         did_god_conduct(DID_UNHOLY, 10 + spell_difficulty(spell));
 
@@ -844,12 +836,6 @@ bool is_prevented_teleport(spell_type spell)
 
 bool spell_is_uncastable(spell_type spell, std::string &msg)
 {
-    if (you.undead_or_demonic() && is_holy_spell(spell))
-    {
-        msg = gettext("You can't use this type of magic!");
-        return (true);
-    }
-
     // Normally undead can't memorise these spells, so this check is
     // to catch those in Lich form.  As such, we allow the Lich form
     // to be extended here. - bwr
@@ -926,9 +912,7 @@ static int _setup_evaporate_cast()
     int rc = prompt_invent_item(gettext("Throw which potion?"), MT_INVLIST, OBJ_POTIONS);
 
     if (prompt_failed(rc))
-    {
         rc = -1;
-    }
     else if (you.inv[rc].base_type != OBJ_POTIONS)
     {
         mpr(gettext("This spell works only on potions!"));
@@ -1343,12 +1327,6 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_LEDAS_LIQUEFACTION:
         return cast_liquefaction(powc, fail);
 
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_SYMBOL_OF_TORMENT:
-        mpr(gettext("Sorry, this spell is gone!"));
-        return SPRET_ABORT;
-#endif
-
     case SPELL_OZOCUBUS_REFRIGERATION:
         return cast_refrigeration(powc, false, true, fail);
 
@@ -1397,9 +1375,6 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_TUKIMAS_DANCE:
         // Temporarily turns a wielded weapon into a dancing weapon.
         return cast_tukimas_dance(powc, god, false, fail);
-
-    case SPELL_TUKIMAS_BALL:
-        return cast_tukimas_ball(&you, powc, god, fail);
 
     case SPELL_CONJURE_BALL_LIGHTNING:
         return cast_conjure_ball_lightning(powc, god, fail);
@@ -1473,12 +1448,12 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     // XXX: I don't think any call to healing goes through here. --rla
     case SPELL_MINOR_HEALING:
-        if (cast_healing(5) < 0)
+        if (cast_healing(5, 5) < 0)
             return (SPRET_ABORT);
         break;
 
     case SPELL_MAJOR_HEALING:
-        if (cast_healing(25) < 0)
+        if (cast_healing(25, 25) < 0)
             return (SPRET_ABORT);
         break;
 
@@ -1486,12 +1461,6 @@ static spret_type _do_cast(spell_type spell, int powc,
     // Resistances.
     case SPELL_INSULATION:
         return cast_insulation(powc, fail);
-
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_RESIST_POISON:
-        mpr(gettext("Sorry, this spell is gone!"));
-        return SPRET_ABORT;
-#endif
 
     case SPELL_SEE_INVISIBLE:
         return cast_see_invisible(powc, fail);
@@ -1512,12 +1481,6 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     case SPELL_FREEZING_AURA:
         return brand_weapon(SPWPN_FREEZING, powc, fail);
-
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_MAXWELLS_SILVER_HAMMER:
-        mpr("Sorry, this spell is gone!");
-        return SPRET_ABORT;
-#endif
 
     case SPELL_POISON_WEAPON:
         return brand_weapon(SPWPN_VENOM, powc, fail);
@@ -1553,12 +1516,6 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_NECROMUTATION:
         return cast_transform(powc, TRAN_LICH, fail);
 
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_ALTER_SELF:
-        mpr(gettext("You feel quite happy just as you are, actually."));
-        return SPRET_ABORT;
-#endif
-
     // General enhancement.
     case SPELL_REGENERATION:
         return cast_regen(powc, false, fail);
@@ -1572,20 +1529,11 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_SWIFTNESS:
         return cast_swiftness(powc, fail);
 
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_LEVITATION:
-#endif
     case SPELL_FLY:
         return cast_fly(powc, fail);
 
     case SPELL_STONESKIN:
         return cast_stoneskin(powc, fail);
-
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_STONEMAIL:
-        mpr(gettext("Sorry, this spell is gone!"));
-        return SPRET_ABORT;
-#endif
 
     case SPELL_CONDENSATION_SHIELD:
         return cast_condensation_shield(powc, fail);
@@ -1600,12 +1548,6 @@ static spret_type _do_cast(spell_type spell, int powc,
         return cast_silence(powc, fail);
 
     // other
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_EXTENSION:
-        mpr(gettext("Sorry, this spell is gone!"));
-        return SPRET_ABORT;
-#endif
-
     case SPELL_BORGNJORS_REVIVIFICATION:
         return cast_revivification(powc, fail);
 
@@ -1627,34 +1569,6 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     case SPELL_CONTROLLED_BLINK:
         return cast_controlled_blink(powc, fail);
-
-    // Only a Xom spell, no failure.
-    case SPELL_DETECT_ITEMS:
-        mpr( (detect_items(powc) > 0) ? gettext("You detect items!")
-                : gettext("You detect nothing."));
-        break;
-
-    // Only a Xom spell, no failure.
-    case SPELL_DETECT_CREATURES:
-    {
-        const int prev_detected = count_detected_mons();
-        const int num_creatures = detect_creatures(powc);
-
-        if (!num_creatures)
-            mpr(gettext("You detect nothing."));
-        else if (num_creatures == prev_detected)
-        {
-            // This is not strictly true. You could have cast
-            // Detect Creatures with a big enough fuzz that the detected
-            // glyph is still on the map when the original one has been
-            // killed. Then another one is spawned, so the number is
-            // the same as before. There's no way we can check this however.
-            mpr(gettext("You detect no further creatures."));
-        }
-        else
-            mpr(gettext("You detect creatures!"));
-        break;
-    }
 
     case SPELL_PROJECTED_NOISE:
         return project_noise(fail);
@@ -1708,7 +1622,7 @@ static int _tetrahedral_number(int n)
 // Should probably use more constants, though I doubt the spell
 // success algorithms will really change *that* much.
 // Called only by failure_rate_to_int and get_miscast_chance.
-double get_true_fail_rate(int raw_fail)
+static double _get_true_fail_rate(int raw_fail)
 {
     //Need random2(101) + random2(101) + random2(100) to be less than 3*raw_fail.
     //Fun with tetrahedral numbers!
@@ -1716,35 +1630,35 @@ double get_true_fail_rate(int raw_fail)
     int target = raw_fail * 3;
 
     if (target <= 100)
-    {
         return (double) _tetrahedral_number(target)/1020100;
-    }
     if (target <= 200)
     {
         //PIE: the negative term takes the maximum of 100 (or 99) into
         //consideration.  Note that only one term can exceed it in this case,
         //which is why this works.
-        return (double) (_tetrahedral_number(target) - 2*_tetrahedral_number(target-101) - _tetrahedral_number(target-100))/1020100;
+        return (double) (_tetrahedral_number(target)
+                         - 2*_tetrahedral_number(target - 101)
+                         - _tetrahedral_number(target - 100)) / 1020100;
     }
     //The random2avg distribution is symmetric, so the last interval is
     //essentially the same as the first interval.
-    return (double) (1020100 - _tetrahedral_number(300 - target))/1020100;
+    return (double) (1020100 - _tetrahedral_number(300 - target)) / 1020100;
 
 }
 
 //Computes the chance of getting a miscast effect of a given severity (or
 //higher).
 //Called only by failure_rate_colour.
-double get_miscast_chance(int raw_fail, int level, int severity)
+static double _get_miscast_chance(int raw_fail, int level, int severity)
 {
     if (severity <= 0)
-        return get_true_fail_rate(raw_fail);
+        return _get_true_fail_rate(raw_fail);
     double C = 70000.0/(150*level*(10+level));
     double chance = 0.0;
     int k = severity + 1;
     while ((C*k) <= raw_fail)
     {
-        chance += get_true_fail_rate((int)(raw_fail+1-(C*k)))*severity/(k*(k-1));
+        chance += _get_true_fail_rate((int)(raw_fail+1-(C*k)))*severity/(k*(k-1));
         k++;
     }
     return chance;
@@ -1754,7 +1668,7 @@ double get_miscast_chance(int raw_fail, int level, int severity)
 // based on the chance of getting a severity >= 2 miscast.
 int failure_rate_colour(spell_type spell)
 {
-    double chance = get_miscast_chance(spell_fail(spell), spell_difficulty(spell), 2);
+    double chance = _get_miscast_chance(spell_fail(spell), spell_difficulty(spell), 2);
     return ((chance < 0.001) ? LIGHTGREY :
             (chance < 0.005) ? YELLOW    :
             (chance < 0.025) ? LIGHTRED  :
@@ -1769,7 +1683,7 @@ int failure_rate_to_int(int fail)
     else if (fail == 100)
         return 100;
     else
-        return std::max(1, (int) (100 * get_true_fail_rate(fail)));
+        return std::max(1, (int) (100 * _get_true_fail_rate(fail)));
 }
 
 //Note that this char[] is allocated on the heap, so anything calling
@@ -1781,7 +1695,7 @@ char* failure_rate_to_string(int fail)
     return buffer;
 }
 
-const char* spell_hunger_string(spell_type spell, bool rod)
+std::string spell_hunger_string(spell_type spell, bool rod)
 {
     return hunger_cost_string(spell_hunger(spell, rod));
 }

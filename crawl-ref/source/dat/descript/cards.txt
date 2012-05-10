@@ -86,6 +86,11 @@ the Shadow card
 이 카드는 당신을 그림자와 동화시켜 눈에 쉽게 띄지 않게 만든다.
 이 카드는 변화, 방어, 전쟁의 덱에 포함된다.
 %%%%
+the Mercenary card
+
+This card summons mercenaries to fight by your side... for a price.
+It is usually found in decks of changes, defence and war.
+%%%%
 # deck of wonders -> also changes
 the Potion card
 
@@ -120,6 +125,11 @@ the Helix card
 the Sage card
 
 This card will funnel some of your earned experience towards training a specific skill and train it faster than it normally would.
+It is usually found in decks of changes and wonders.
+%%%%
+the Alchemist card
+
+This card transmutes some of your gold into health and magical energy.
 It is usually found in decks of changes and wonders.
 %%%%
 # deck of dungeons -> also changes
@@ -269,11 +279,6 @@ the Swine card
 
 이 카드는 당신을 농부를 위한 분홍색 꿀꿀이로 만들 것이다.
 이 카드는 네멜렉스 죠베의 징벌의 덱에만 포함된다.
-%%%%
-the Alchemist card
-
-이 카드는 당신의 금화들을 당신의 생명력과 마력으로 변환시킨다.
-이 카드는 변화, 불가사의의 덱에 포함된다.
 %%%%
 # deck of oddities (random card, along with a few others)
 the Bargain card

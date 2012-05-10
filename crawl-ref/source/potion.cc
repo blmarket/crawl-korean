@@ -214,17 +214,17 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
     }
 
     case POT_GAIN_STRENGTH:
-        if (mutate(MUT_STRONG, true, false, false, true))
+        if (mutate(MUT_STRONG, "potion of gain strength", true, false, false, true))
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
     case POT_GAIN_DEXTERITY:
-        if (mutate(MUT_AGILE, true, false, false, true))
+        if (mutate(MUT_AGILE, "potion of gain dexterity", true, false, false, true))
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
     case POT_GAIN_INTELLIGENCE:
-        if (mutate(MUT_CLEVER, true, false, false, true))
+        if (mutate(MUT_CLEVER, "potion of gain intelligence", true, false, false, true))
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
@@ -241,7 +241,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
 
     case POT_POISON:
     case POT_STRONG_POISON:
-        if (player_res_poison())
+        if (player_res_poison() > 0)
         {
             mprf(gettext("You feel %s nauseous."),
                  (pot_eff == POT_POISON) ? pgettext("potion", "slightly") : pgettext("potion", "quite"));
@@ -382,8 +382,8 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         break;
 
     case POT_MAGIC:
-        inc_mp((10 + random2avg(28, 3)));
-        mpr(gettext("Magic courses through your body."));
+        inc_mp(10 + random2avg(28, 3));
+        mpr(_("Magic courses through your body."));
         break;
 
     case POT_RESTORE_ABILITIES:
@@ -419,24 +419,21 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         mpr(gettext("It has a very clean taste."));
         for (int i = 0; i < 7; i++)
             if (random2(9) >= i)
-                delete_mutation(RANDOM_MUTATION, false);
+                delete_mutation(RANDOM_MUTATION, "potion of cure mutation", false);
         break;
 
     case POT_MUTATION:
         mpr(gettext("You feel extremely strange."));
         for (int i = 0; i < 3; i++)
-            mutate(RANDOM_MUTATION, false);
+            mutate(RANDOM_MUTATION, "potion of mutation", false);
 
         learned_something_new(HINT_YOU_MUTATED);
         did_god_conduct(DID_DELIBERATE_MUTATING, 10, was_known);
         break;
 
     case POT_RESISTANCE:
-        mpr(gettext("You feel protected."), MSGCH_DURATION);
-        you.increase_duration(DUR_RESIST_FIRE,   (random2(pow) + 35) / factor);
-        you.increase_duration(DUR_RESIST_COLD,   (random2(pow) + 35) / factor);
-        you.increase_duration(DUR_RESIST_POISON, (random2(pow) + 35) / factor);
-        you.increase_duration(DUR_INSULATION,    (random2(pow) + 35) / factor);
+        mpr(_("You feel protected."), MSGCH_DURATION);
+        you.increase_duration(DUR_RESISTANCE, (random2(pow) + 35) / factor);
 
         // Just one point of contamination. These potions are really rare,
         // and contamination is nastier.

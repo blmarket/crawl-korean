@@ -161,13 +161,11 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
     else if (slot >= EQ_LEFT_RING && slot < NUM_EQUIP)
         _unequip_jewellery_effect(item, msg, meld);
 
-    if (slot == EQ_BODY_ARMOUR && !meld)
-        you.stop_train.insert(SK_ARMOUR);
-    else if (slot == EQ_SHIELD && !meld)
+    if (slot == EQ_SHIELD && !meld)
         you.stop_train.insert(SK_SHIELDS);
 }
 
-void _hp_artefact()
+static void _hp_artefact()
 {
     // Rounding must be down or Deep Dwarves would abuse certain values.
     // We can reduce errors by a factor of 100 by using partial hp we have.
@@ -314,8 +312,8 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     if (proprt[ARTP_NOISES])
         you.attribute[ATTR_NOISES] = 1;
 
-    if (!alreadyknown && Options.autoinscribe_artefacts)
-        add_autoinscription(item, artefact_auto_inscription(item));
+    if (!alreadyknown)
+        add_autoinscription(item);
 
     if (!alreadyknown && dangerous)
     {
@@ -383,10 +381,7 @@ static void _unequip_artefact_effect(item_def &item,
     if (proprt[ARTP_NOISES] != 0)
         you.attribute[ATTR_NOISES] = 0;
 
-    if (proprt[ARTP_LEVITATE] != 0
-        && you.duration[DUR_LEVITATION]
-        && !you.attribute[ATTR_LEV_UNCANCELLABLE]
-        && !you.permanent_levitation()
+    if (proprt[ARTP_LEVITATE] != 0 && you.cancellable_levitation()
         && !player_evokable_levitation())
     {
         you.duration[DUR_LEVITATION] = 0;
@@ -532,8 +527,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
             {
                 item.flags |= ISFLAG_NOTED_ID;
 
-                if (Options.autoinscribe_artefacts)
-                    add_autoinscription(item, artefact_auto_inscription(item));
+                add_autoinscription(item);
 
                 // Make a note of it.
                 take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
@@ -931,8 +925,8 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
         case SPARM_SPIRIT_SHIELD:
             if (!unmeld && player_spirit_shield() < 2)
             {
-                set_mp(0);
-                mpr(gettext("You feel spirits watching over you."));
+                dec_mp(you.magic_points);
+                mpr(_("You feel spirits watching over you."));
                 if (you.species == SP_DEEP_DWARF)
                     mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
@@ -1041,14 +1035,22 @@ static void _unequip_armour_effect(item_def& item, bool meld)
         break;
 
     case SPARM_LEVITATION:
-        if (you.attribute[ATTR_PERM_LEVITATION] == 0)
-            break;
-        else if (you.species != SP_TENGU || you.experience_level < 15)
+        if (you.attribute[ATTR_PERM_LEVITATION]
+            && !player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_LEVITATION)
+            && (you.species != SP_TENGU || you.experience_level < 15))
         {
-            if (!player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_LEVITATION))
                 you.attribute[ATTR_PERM_LEVITATION] = 0;
+                if (player_evokable_levitation())
+                    levitate_player(you.skill(SK_EVOCATIONS, 2) + 30, true);
         }
-        land_player();
+
+        //since a permlev item can keep templev evocations going
+        // we should check templev here too
+        if (you.cancellable_levitation() && !player_evokable_levitation())
+        {
+            you.duration[DUR_LEVITATION] = 0;
+            land_player();
+        }
         break;
 
     case SPARM_MAGIC_RESISTANCE:
@@ -1336,7 +1338,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case AMU_GUARDIAN_SPIRIT:
         if (player_spirit_shield() < 2 && !unmeld)
         {
-            set_mp(0);
+            dec_mp(you.magic_points);
             mpr(gettext("You feel your power drawn to a protective spirit."));
             if (you.species == SP_DEEP_DWARF)
                 mpr(gettext("Now linked to your health, your magic stops regenerating."));
@@ -1409,11 +1411,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if (fake_rap != ARTP_NUM_PROPERTIES)
             artefact_wpn_learn_prop(item, fake_rap);
 
-        if (!item.props.exists("jewellery_tried")
-            || !item.props["jewellery_tried"].get_bool())
-        {
-            item.props["jewellery_tried"].get_bool() = true;
-        }
+        item.flags |= ISFLAG_TRIED;
     }
     else
     {
@@ -1499,9 +1497,7 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg, bool meld)
         break;
 
     case RING_LEVITATION:
-        if (you.duration[DUR_LEVITATION] && !you.permanent_levitation()
-            && !you.attribute[ATTR_LEV_UNCANCELLABLE]
-            && !player_evokable_levitation())
+        if (you.cancellable_levitation() && !player_evokable_levitation())
         {
             you.duration[DUR_LEVITATION] = 0;
             land_player();

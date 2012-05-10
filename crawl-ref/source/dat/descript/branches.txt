@@ -1,15 +1,23 @@
-﻿%%%%
+%%%%
 dummy_branches
 
 dummy_branches
 %%%%
 Dungeon
 
-아직도 이 기묘한 던전이, 어떻게 생겨났는지는 아무도 모른다. 몇몇 사람들은 이곳이 지루해진 신들의 놀이터라고 말하고, 몇몇은 빛을 기피해 지상세계를 떠난 자들이 만든 것이라고도 한다. 이 곳이 어떻게 생겼는가 이전에, 이곳은 부귀 영화를 누릴만한 수많은 보물들이 가득하고, 역시 그에 걸맞는 위험성들이 보물을 노리는 침입자들을 기다리고 있다. 아주 적은 사람들만이 이 던전에서 살아서 돌아왔고, 그 중에서도 오직 몇몇만이 그들의 이야기를 말해줄 수 있을만큼 제정신을 유지했다. 던전은 층 27층으로 구성되어 있다. 다만 사실을 말하자면, 이건 시작에 불과하다.
+It is still a mystery how this bizarre place was created. Some claim that it
+is the playground of bored gods, whereas others maintain that it was shaped
+by all kinds of species who fled the overworld and shunned the light.
+No matter what the origin of this cave is, it is filled with riches unheard
+of as well as with ample dangers to any intruder. Few have escaped alive,
+and even fewer have kept some sliver of sanity to tell the tale.
+
+The dungeon is 27 levels deep, but, honestly, this is only the beginning.
 %%%%
 Temple
 
-만신전, 평화가 존재하는 곳으로, 광기에 가득한 던전으로부터 벗어나 잠시 휴식을 취할 수 있는 곳이다. 이곳은 메인 던전 4층~7층 사이에 위치하고 있다.
+A Temple of Gods, a place of peace and refuge from the insanity of the
+dungeon. It is located between the levels 4 and 7 of the main dungeon.
 %%%%
 Orcish Mines
 
@@ -17,47 +25,91 @@ Orcish Mines
 %%%%
 Elven Halls
 
-거의 모든 엘프들은 이 어두침침하고 복잡한 지하로 이주하지 않았지만, 딥 엘프들은 이 곳으로 이주했었다. 그들의 방의 끝에는, 그들이 쌓아놓은 보물들이 가득하지만, 그 누구든 이들의 방을 침범하는 자들은, 그들, 딥 엘프들의 전설적인 기량의 마법을 조심해야 할 것이다.
-엘프의 방은 총 5층으로 구성되어 있다.
+Whereas most elven folk would never move into a dark subterranean complex
+like this, the deep elves did. Their halls are filled with riches, but any
+passers-by should be aware of the legendary magical prowess of this species.
+
+The Elven Halls are three levels deep.
+%%%%
+Dwarven Hall
+
+These halls of finely worked stone are the dwelling of the Deep Dwarves.
+Their fine metalworking skills allowed them to forge enough weapons against
+the likes of you.
+
+It is but a single level.
 %%%%
 Lair
 
-수많은 여행자들이 이 짐승들의 서식지가 그들의 여행에 있어 신나는 분위기로의 전환이 될 것이라고 여긴다. 물론, 그곳에는 짐승을 찌르고 베어 굽는 일 보다, 짐승들에게 찢겨지고 잡아먹히는 일이 더 많이 일어나지만.
-짐승 소굴은 총 8층으로 구성되어 있으며, 3개의 다른 구역으로 이동할 수 있는 계단이 존재한다.
+Most adventurers find the Lair of Beasts to be an exciting change of
+climate. And indeed, there is something to be said about getting gored,
+mauled and eaten rather than sliced, burnt or stabbed.
+
+The Lair is eight levels deep and contains the stairs to three more branches.
 %%%%
 Swamp
 
-질척질척한 불모지로, 걸쭉한 진흙들과 배설물, 파리들, 그리고 침흘리는 육식동물들이 이 늪지대를 구성한다. 늪지대는 총 5층으로 구성되어 있고,  늪지대의 끝에서 '부패의 룬'을 찾을 수 있다. 
-던전 내에는 늪지대, 해안, 뱀 소굴 세 곳 중 2개의 지역만이 존재한다. 늪지가 존재한다면, 짐승 소굴의 2~5층 사이에 위치한다.
+A swampy wasteland, complete with ooze, muck, flies and large slavering carnivorous monsters.
+
+The Swamp is five levels deep and contains the decaying rune.
+A dungeon features only two of the Snake Pit, Swamp, Shoals and Spider Nest branches.
+If the Swamp is present, the entrance is located between Lair:2 and Lair:5.
 %%%%
 Shoals
 
-멀리서 지속적인 파도 소리와, 짜디짠 물안개의 향이 느껴지는 해안에 도착하자, 당신은 넓은 바다에, 군데군데 섬이 존재하는 이국적이면서도 희한한, 이 지하에 존재하는 해변에 깊은 인상을 받을 것이다. 간간히, 그리고 갑자기 들려오는  대기를 찢을 듯한
-소름끼치는 비명이 들려오고, 그것이 다시 파도 거품속에 삼켜진다. 당신은 주변을 둘러보며 의문을 가진다: 누가 포식자이고, 누가 사냥감인가.
-해안은 총 5층으로 구성되어 있고, '조개의 룬'을 해안 어디선가 찾을 수 있다. 던전 내에는 늪지대, 해안, 뱀 소굴 세 곳 중 2개의 지역만이 존재한다. 늪지가 존재한다면, 짐승 소굴의 2~5층 사이에 위치한다.
-%%%%
-Slime Pits
+From afar you hear the steady sounds of waves and smell the salty spray.
+Upon reaching the Shoals, you are impressed by exotic underground beaches,
+making up a few islands in a vast sea. All of a sudden, a bloodcurdling
+scream fills the air, followed by a gurgle. Anxiously, you look around and
+wonder: Who is the predator? And who is the prey?
 
-형태토 없는 산성 덩어리, 젤리들과 슬라임들의 왕국. 지성있는 자들의 발자취는 녹아버린지 오래다. 하지만, 여전히 깊은 곳에 거대한 문명의 보물들이 묻혀 있다는 소문이 있다. 문도 창도 없어 산이 스며들 곳도 없는 비밀의 방에 숨겨진채....
-슬라임 소굴은 총 6층으로 구성되어 있고, '슬라임의 룬'을 찾을 수 있다. 입구는 짐승 소굴의 6~8층 사이에 위치한다.
+The Shoals are five levels deep and contain the barnacled rune.
+A dungeon features only two of the Snake Pit, Swamp, Shoals and Spider Nest branches.
+If the Shoals are present, the entrance is located between Lair:3 and Lair:6.
 %%%%
 Snake Pit
 
-뱀들의 고향이며, 나가의 서식지이다. 뱀 소굴은 총 5층으로 구성되어 있고, '뱀의 룬'을 찾을 수 있다. 던전 내에는 늪지대, 해안, 뱀 소굴 세 곳 중 2개의 지역만이 존재한다. 늪지가 존재한다면, 짐승 소굴의 2~5층 사이에 위치한다.
-%%%%
-Hive
+Home of the serpent, lair of the naga.
 
-수많은 벌들이 윙윙거리는 소리를 들을 수 있는 벌집은, 총 2층으로 구성되어 있다. 벌집의 입구는 메인 던전 11층에서 16층 사이에 존재한다.
+The Snake Pit is five levels deep and contains the serpentine rune.
+A dungeon features only two of the Snake Pit, Swamp, Shoals and Spider Nest branches.
+If the Snake Pit is present, the entrance is located between Lair:3 and Lair:6.
+%%%%
+Spider Nest
+
+And you thought you'll just wield a shoe and be done? If you don't have
+arachnophobia yet, you will soon.
+
+The Spider Nest is five levels deep and contains the gossamer rune.
+A dungeon features only two of the Snake Pit, Swamp, Shoals and Spider Nest branches.
+If the Spider Nest is present, the entrance is located between Lair:3 and Lair:6.
+%%%%
+Slime Pits
+
+The amorphous realm of acids, jellies and slimes. Any trace of intelligent
+beings has long been dissolved. Still, there are rumours of great treasures
+deep down, hidden safely away in secret chambers without door or window for
+acid to leak in.
+
+The Slime Pits are six levels deep and contain the slimy rune.
+The entry is between Lair:6 and Lair:8.
 %%%%
 Vaults
 
-강력한, 어떤 미치광이에 의해 만들어진 이 보물창고는, 수많은 보물들의 기원으로 일컬어진다. 입구에 나 있는 핏자국들은, 이 보물창고에 상당한 폭력이 존재한다는 것을 나타낸다.
-보물창고는 총 8층으로 이루어져 있고, '은의 룬'이 존재한다. 보물창고의 입구는 메인 던전의 14~19층 사이에 존재한다.
+Possibly constructed by some powerful madman, the Vaults are said to be home
+to great treasures. The blood spots all around the entrance indicate that
+there is a certain amount of violence, too.
+
+The Vaults are eight levels deep and contain the silver rune.
+The entrance can be found between levels 14 and 19 of the main dungeon.
 %%%%
 Hall of Blades
 
-예전 어느 날, 모든 단검들과 도끼, 도끼창과 같은 무기들이 모두 모여 한 밤중에 왈츠를 추며, 생명체들이 없는, 공허한 전장을 꿈꾸었다고 한다. 이와 같은 시대는 지났지만, 아직 그 무기들은 이 곳에 남아 있다.
-칼날의 방은 단층으로 구성되어 있다. 입구는 보물창고 4~6층 사이에 존재한다.
+Once upon a time, all the daggers and axes and polearms would gather at the
+time of night and dance the waltz, dreaming of battlefields void of man and
+beast. That time is no more, yet the weapons are still there.
+
+The Hall of Blades is a single level and can be found between Vault:4 and Vault:6.
 %%%%
 Crypt
 
@@ -65,58 +117,175 @@ Crypt
 %%%%
 Tomb
 
-고대의 무덤. 매우 강력한 강령술에 의해 움직이는 미라들로 이루어진, 저주받은 장소이다. 무덤은 총 3층으로 구성되어 있고, '황금의 룬'을 찾을 수 있다. 무덤의 입구는 납골당 2~3층 사이에 위치한다.
+The Tomb of the Ancients, a place of damnation, of horrors animated by the vilest necromancy.
+
+The Tomb is three levels deep and contains the golden rune.
+Its entry is either on Crypt:2 or Crypt:3.
 %%%%
 Hell
 
-4개의 지옥 - 디스, 게헨나, 코큐투스, 타르타로스 -으로 이루어지는 통로로, '게리욘'이 이 지옥의 입구를 수호하고 있다. 실력을 인정받은 영웅이, 게리욘의 뿔을 불면, 지옥의 다른 지역으로 가는 문이 열린다. 
+The hallway to the four hells is guarded by Geryon. Heroes who prove their
+worth in the vestibule and blow Geryon's horn may explore the different
+regions of Hell: Dis, Gehenna, Cocytus and Tartarus.
+
+Portals to the Vestibule of Hell are found abundantly in the deeper parts of the main dungeon.
 %%%%
 Dis
 
-철의 도시 디스로, 철의 시련을 극복할 자를 기다리고 있다. 디스는 총 7층으로 이루어져 있고, '철의 룬'이 존재한다. 지옥의 입구에서 디스로 이어지는 문을 찾을 수 있다.
+The Iron City of Dis. Who will stand the test of iron?
+
+Dis is seven levels deep and contains the iron rune.
+It can be accessed via the Vestibule of Hell.
 %%%%
 Gehenna
 
-수많은 영웅들이 불꽃과 함께 재로 산화한 게헨나는, 지금도, 앞으로도 계속 불타오르고 있다. 게헨나는 총 7층으로 이루어져 있고, '흑요석의 룬'이 존재한다. 지옥의 입구에서 게헨나로 이어지는 문을 찾을 수 있다.
+The fires of Gehenna burnt many a confident hero, and they will burn evermore.
+
+Gehenna is seven levels deep and contains the obsidian rune.
+It can be accessed via the Vestibule of Hell.
 %%%%
 Cocytus
 
-서리로 뒤덮인 음산한 황무지이다. 코큐투스는 총 7층으로 이루어져 있고, '얼음의 룬'이 존재한다. 지옥의 입구에서 코큐투스로 이어지는 문을 찾을 수 있다.
+A grim and frost-bitten wasteland.
+
+Cocytus is seven levels deep and contains the icy rune.
+It can be accessed via the Vestibule of Hell.
 %%%%
 Tartarus
 
-부패하는 저승세계. 각종 언데드와 악령, 악마들이 보물을 찾는 모험자들의 생명력을 흡수해가는 장소이다. 타르타로스는 총 7층으로 이루어져 있고, '뼈의 룬'이 존재한다. 지옥의 입구에서 타르타로스로 이어지는 문을 찾을 수 있다.
-%%%%
-Pan
+A decaying netherworld. Over time, the undead, demons and devils of this
+place drain all life out of treasure-craving visitors.
 
-판데모니움은 괴로움과 고통이 무한히 이어지는 장소이다. 이 곳은 4개의 특별한 룬들과, '악마의 룬'이 존재하고, 수많은 보물들이 기다리고 있다. 하지만, 많은 보물들은 강력한 악마들과, 사악한 악마들의 군주로부터 지켜지고 있고, 많은 영웅들이 확신과 과대 망상을 구별하지 못하고 판데모니움에서 예상치 못한 지옥의 고통과 지옥불로 인해 죽어갔다.
-판데모니움은 끝이 없다. 판데모니움으로 통하는 포탈은 메인 던전의 깊은 곳에서 자주 발견할 수 있지만, 다시 돌아오는것은 더욱 힘들다는것을 알아두자.
-%%%%
-Abyss
-
-어비스는, 계속해서 왜곡되고 뒤틀려가는, 정말로 기묘한 장소이다. 여러 종류의 적들이 존재하고, 대부분이 침입자들로 연회를 노리는 악마들이다. 여러 사악한 마법사들의 쓰레기통이라고도 불리는데, 당신과 같은 많은 예비 영웅들을 추방 마법을 통해 이 곳으로 떨어트리는 일들이 빈번하기 때문이다.
-소문에 의하면, 이 혼돈의 장소를 구성하는 구조가 존재하는데, 심연의 신 '루고누'가 이 장소와 어비스 내에 살고 있는 존재들을 이용해, 무언가 계획을 꾸미고 있다고 한다.
-
+Tartarus is seven levels deep and contains the bone rune.
+It can be accessed via the Vestibule of Hell.
 %%%%
 Zot
 
-던전의 한 지역. 안전하게 봉인되어있는 곳으로, 광기와 분노를 품은 곳으로 빈번히 일컬어지는 곳이다. 겁을 가장 많이 상실한 여행자들만이 이 곳의 봉인을 부수고, 더욱 깊은 곳으로 들어가려는 마음을 품고 있다. 
-그들이 그 누구도, 눈길조차 주지 못한 전설의 아티팩트를 탈취한다는, 어쩌면 헛된 희망을 가지고. 
+A region of the dungeon complex, safely locked away and referred to usually
+by madness, frenzy, lunacy. Only the most demented adventurers would dare to
+break the seal and press deeper - in the vain hope for a fabled artefact no
+one has ever laid eyes on before.
 
-조트의 렐름은 총 5층으로 구성되어 있으며, 3개 이상의 룬을 소지하고 있어야 입장할 수 있다.
+The Realm of Zot is five levels deep and can only be entered when carrying at least three runes.
 %%%%
 Forest
 
-나무들이 공격을 하는 장소이다.
+Tha trees be attackin'!
 %%%%
-Spider Nest
+Abyss
 
-당신은 신발만 신고 여길 들어왔으면 끝이라고 생각하는가? 당신이 아직 거미공포증이 아니라면말야, 곧 그렇게 될지도 모른다.
+The Abyss is a truly bizarre place, ever-changing and twisted.
+It is filled with all sorts of monsters, mostly of demonic nature,
+whose common aim is to feast on intruders.
+It is also the garbage dump for many sorcerers, who delight in sending
+would-be champions like you to these proving grounds of madness.
+Reportedly, there is some structure to the chaos, as Lugonu seems to concoct
+schemes around this place and its denizens.
+
+The abyssal rune can be found there.
+The Abyss can be purposefully reached through portals in the deeper levels of the main dungeon.
 %%%%
-Dwarven Hall
+Pandemonium
 
-이 방들은 매우 정교한 석조로 구성되어 있는, 딥 드워프들의 거주지이다. 그들의 금속 가공 솜씨는 그들에게 당신과 같은 모험가들을 상대할 만한, 충분히 강력한 무기들을 만들어냈다.
-단층으로 구성되어 있다.
+Pandemonium is an infinite realm of pain and suffering. While you can find a
+good deal of loot there, all these treasures are guarded by demons and even
+crueller demon lords. Many a hero, confusing confidence with megalomania,
+has died unsuspectingly in the barrage of torment and hellfire.
+
+Pandemonium is endless. Portals there are found abundantly in the deeper
+parts of the main dungeon. Note that getting back might be more difficult.
+
+You can find no less than five runes in the Pandemonium:
+ • fiery in the well-heated realm of Cerebov
+ • glowing in the radioactive domain on Mnoleg
+ • magical is guarded by arcane powers of Lom Lobon and his minions
+ • dark lies in the shadowy dwelling of Gloorx Vloq
+ • demonic runes exist in multiple copies, owned by less famous lords
+%%%%
+Ziggurat
+
+A series of arenas, each containing greater wealth and even greater danger
+than the last. Whatever entity created this monstrosity charges a steep
+price for entry. Beware, for a ziggurat is not a place for the faint of
+heart: even the bravest and most skilled adventurers have met their ends in
+one. While a portal to safety will be present on every level, once left, a
+ziggurat cannot be reentered.
+%%%%
+Labyrinth
+
+The Labyrinth is a vast and complex maze designed by subtle and malicious
+minds for reasons long lost to history. Old stories say that the labyrinth
+was constructed as a prison for a fearsome minotaur. More recent stories say
+this beast dwells there still, guarding the labyrinth's sole exit — as well
+as a hoard of treasure taken from the bodies of the foolish adventurers who
+got lost inside and starved to death. Take care inside the shifting,
+twisting passages of this labyrinth, or your own possessions may end up in
+the minotaur's treasure pile.
+%%%%
+Bazaar
+
+Aside from the vendors who've set up their stores at various places in the
+dungeon, there are others trying to make a living by traveling from place
+to place. Bazaars feature a number of different shops and often have
+better stock than the sedentary ones, sometimes even at a bargain.
+
+Also, be warned that their nomadic lifestyle has taught these sellers to
+appropriate any items an adventurer might leave behind, and then leave
+quickly, probably to sell them elsewhere.
+%%%%
+Trove
+
+Once upon a time, an enterprising thief and wizard, terrified of being
+caught committing an act of burglary, created a system of portals leading
+into the secret treasure troves and chambers of the rich. Too scared to loot
+them himself, he instead charged an extortionate fee for entry to anyone who
+wanted to rifle through them. A clever artificer, he designed his portals to
+direct the entrant to the trove most suited to their needs.
+
+The items inside this trove are likely to be useful, but beware: the wizard
+is long dead, and even while alive he never offered a money-back guarantee.
+%%%%
+Sewer
+
+Every settlement brings forth the unpleasant sewers and drains, ignored by
+most but hideaways for others. Old tales speak of dangerous creatures,
+bathing in disgusting-smelling green water, preying on each other without
+mercy. The tales also allude to valuable items left by daring and
+unfortunate visitors, left to grow mildew in the damp caverns.
+%%%%
+Ossuary
+
+A small tomb, containing the remains of some distant relatives of the
+pharaohs. It is undoubtedly home to many traps, and its denizens are
+unlikely to take kindly to looting.
+%%%%
+Bailey
+
+The castle of some lord. It is undoubtedly protected by physical barriers
+and well-trained soldiers.
+%%%%
+Ice Cave
+
+A desolate, echo-filled cavern shaped from solid ice. The intricate carvings
+and statues which once lined its walls have been warped and obscured by
+centuries of slow melting and refreezing.
+%%%%
+Volcano
+
+Built from enormous blocks of obsidian, this sweltering chamber may once
+have served as a temple to some strange deity, or perhaps the dwelling of a
+mighty fire giant. The air shimmers with oppressive heat, and the dull roar
+of the volcano's heart never ceases.
+%%%%
+Wizlab
+
+The laboratory of some wizard, the portal to which has been carelessly left
+open. Beware, for wizards love to guard their possessions with traps and
+monsters of their own making!
+%%%%
+Hive
+
+You hear a manifold buzzing.
 %%%%
 branches_end
 

@@ -175,38 +175,6 @@ std::string make_stringf(const char *s, ...)
     return ret;
 }
 
-std::string &escape_path_spaces(std::string &s)
-{
-    std::string result;
-    result.clear();
-#ifdef UNIX
-    for (const char* ch = s.c_str(); *ch != '\0'; ++ch)
-    {
-        if (*ch == ' ')
-        {
-            result += '\\';
-        }
-        result += *ch;
-    }
-#elif defined(TARGET_OS_WINDOWS)
-    if (s.find(" ") != std::string::npos
-        && s.find("\"") == std::string::npos)
-    {
-        result = "\"" + s + "\"";
-    }
-    else
-    {
-        return s;
-    }
-#else
-    // Not implemented for this platform.  Assume that escaping isn't
-    // necessary.
-    return s;
-#endif
-    s = result;
-    return s;
-}
-
 bool key_is_escape(int key)
 {
     switch (key)
@@ -362,9 +330,7 @@ std::string strip_tag_prefix(std::string &s, const std::string &tagprefix)
     std::string::size_type pos = s.find(tagprefix);
 
     while (pos && pos != std::string::npos && !isspace(s[pos - 1]))
-    {
         pos = s.find(tagprefix, pos + 1);
-    }
 
     if (pos == std::string::npos)
         return ("");
@@ -494,21 +460,13 @@ std::string pluralise(unsigned int plu_type, const std::string &name,
         return name.substr(0, name.length() - 2) + "ices";
     }
     else if (ends_with(name, "mosquito") || ends_with(name, "ss"))
-    {
         return name + "es";
-    }
     else if (ends_with(name, "cyclops"))
-    {
         return name.substr(0, name.length() - 1) + "es";
-    }
     else if (name == "catoblepas")
-    {
         return "catoblepae";
-    }
     else if (ends_with(name, "s"))
-    {
         return name;
-    }
     else if (ends_with(name, "y"))
     {
         if (name == "y")
@@ -792,8 +750,26 @@ std::vector<std::string> split_string(const std::string &sep,
     return segments;
 }
 
+static const std::string _get_indent(const std::string &s)
+{
+    if (starts_with(s, "\"")    // ASCII quotes
+        || starts_with(s, "“")  // English quotes
+        || starts_with(s, "„")  // Polish/German/... quotes
+        || starts_with(s, "«")) // French quotes
+    {
+        return " ";
+    }
+    if (starts_with(s, "「"))  // Chinese/Japanese quotes
+        return "  ";
+
+    size_t nspaces = s.find_first_not_of(' ');
+    if (nspaces == std::string::npos)
+        return "";
+    return s.substr(0, nspaces);
+}
+
 // The provided string is consumed!
-std::string wordwrap_line(std::string &s, int width, bool tags)
+std::string wordwrap_line(std::string &s, int width, bool tags, bool indent)
 {
     const char *cp0 = s.c_str();
     const char *cp = cp0, *space = 0;
@@ -856,12 +832,18 @@ std::string wordwrap_line(std::string &s, int width, bool tags)
         cp = space;
     const std::string ret = s.substr(0, cp - cp0);
 
+    const std::string indentation = (indent && c != '\n') ? _get_indent(s) : "";
+
     // eat all trailing spaces and up to one newline
     while (*cp == ' ')
         cp++;
     if (*cp == '\n')
         cp++;
     s.erase(0, cp - cp0);
+
+    // if we had to break a line, reinsert the indendation
+    if (indent && c != '\n')
+        s = indentation + s;
 
     return ret;
 }
@@ -967,8 +949,14 @@ void cgotoxy(int x, int y, GotoRegion region)
     const coord_def tl = _cgettopleft(region);
     const coord_def sz = cgetsize(region);
 
-    ASSERT_SAVE(x >= 1 && x <= sz.x);
-    ASSERT_SAVE(y >= 1 && y <= sz.y);
+#ifdef ASSERTS
+    if (x < 1 || y < 1 || x > sz.x || y > sz.y)
+    {
+        save_game(false); // should be safe
+        die("screen write out of bounds: (%d,%d) into (%d,%d)", x, y,
+            sz.x, sz.y);
+    }
+#endif
 
     gotoxy_sys(tl.x + x - 1, tl.y + y - 1);
 
@@ -1032,11 +1020,32 @@ size_t strlcpy(char *dst, const char *src, size_t n)
     return s - src - 1;
 }
 
+std::string unwrap_desc(std::string desc)
+{
+    // Don't append a newline to an empty description.
+    if (desc == "")
+        return "";
+
+    trim_string_right(desc);
+
+    // An empty line separates paragraphs.
+    desc = replace_all(desc, "\n\n", "\\n\\n");
+    // Indented lines are pre-formatted.
+    desc = replace_all(desc, "\n ", "\\n ");
+
+    // Newlines are still whitespace.
+    desc = replace_all(desc, "\n", " ");
+    // Can force a newline with a literal "\n".
+    desc = replace_all(desc, "\\n", "\n");
+
+    return desc + "\n";
+}
+
 #ifdef TARGET_OS_WINDOWS
 // FIXME: This function should detect if aero is running, but the DwmIsCompositionEnabled
 // function isn't included in msys, so I don't know how to do that. Instead, I just check
 // if we are running vista or higher. -rla
-bool _is_aero()
+static bool _is_aero()
 {
     OSVERSIONINFOEX osvi;
     osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -1116,7 +1125,9 @@ static BOOL WINAPI console_handler(DWORD sig)
 
 void init_signals()
 {
-    // If there's no console,
+    // If there's no console, this will return an error, which we ignore.
+    // For GUI programs there's no controlling terminal, but there's no hurt in
+    // blindly trying -- this way, we support Cygwin.
     SetConsoleCtrlHandler(console_handler, true);
 }
 

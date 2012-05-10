@@ -128,13 +128,8 @@ std::string item_def::name(bool allow_translate,
     monster_flag_type corpse_flags;
 
     if ((base_type == OBJ_CORPSES && is_named_corpse(*this)
-         && !(((corpse_flags =
-#if TAG_MAJOR_VERSION == 32
-                 (int64_t)props[CORPSE_NAME_TYPE_KEY]
-#else
-                 props[CORPSE_NAME_TYPE_KEY].get_int64()
-#endif
-               ) & MF_NAME_SPECIES)
+         && !(((corpse_flags = props[CORPSE_NAME_TYPE_KEY].get_int64())
+               & MF_NAME_SPECIES)
               && !(corpse_flags & MF_NAME_DEFINITE))
          && !(corpse_flags & MF_NAME_SUFFIX)
          && !starts_with(get_corpse_name(*this), "shaped "))
@@ -234,36 +229,27 @@ std::string item_def::name(bool allow_translate,
                     break;
                 case EQ_LEFT_RING:
                 case EQ_RIGHT_RING:
+                case EQ_RING_ONE:
+                case EQ_RING_TWO:
                     buff << " (";
-                    buff << (eq == EQ_LEFT_RING ? "left" : "right");
+                    buff << ((eq == EQ_LEFT_RING || eq == EQ_RING_ONE)
+                             ? "left" : "right");
                     buff << " ";
                     buff << you.hand_name(false);
                     buff << ")";
                     break;
                 case EQ_AMULET:
-                    if (you.species == SP_OCTOPODE)
+                    if (you.species == SP_OCTOPODE && form_keeps_mutations())
                         buff << " (around mantle)";
                     else
                         buff << " (around neck)";
                     break;
-                case EQ_RING_ONE:
-                case EQ_RING_TWO:
                 case EQ_RING_THREE:
                 case EQ_RING_FOUR:
-                    if (you.form == TRAN_SPIDER)
-                    {
-                        buff << " (on front leg)";
-                        break;
-                    }
                 case EQ_RING_FIVE:
                 case EQ_RING_SIX:
                 case EQ_RING_SEVEN:
                 case EQ_RING_EIGHT:
-                    if (you.form == TRAN_SPIDER)
-                    {
-                        buff << " (on hind leg)";
-                        break;
-                    }
                     buff << " (on tentacle)";
                     break;
                 default:
@@ -375,7 +361,7 @@ enum mbn_type
     MBN_BRAND, // plain brand name
 };
 
-const char* missile_brand_name(special_missile_type brand, mbn_type t)
+static const char* _missile_brand_name(special_missile_type brand, mbn_type t)
 {
     switch (brand)
     {
@@ -547,7 +533,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
     }
 }
 
-const char* wand_type_name(int wandtype)
+static const char* _wand_type_name(int wandtype)
 {
     switch (static_cast<wand_type>(wandtype))
     {
@@ -661,16 +647,13 @@ static const char* scroll_type_name(int scrolltype)
 {
     switch (static_cast<scroll_type>(scrolltype))
     {
-#if TAG_MAJOR_VERSION == 32
-    case SCR_PAPER:              return M_("old paper");
-#endif
     case SCR_IDENTIFY:           return M_("identify");
     case SCR_TELEPORTATION:      return M_("teleportation");
     case SCR_FEAR:               return M_("fear");
     case SCR_NOISE:              return M_("noise");
     case SCR_REMOVE_CURSE:       return M_("remove curse");
     case SCR_DETECT_CURSE:       return M_("detect curse");
-    case SCR_SUMMONING:          return M_("summoning");
+    case SCR_UNHOLY_CREATION:    return M_("unholy creation");
     case SCR_ENCHANT_WEAPON_I:   return M_("enchant weapon I");
     case SCR_ENCHANT_ARMOUR:     return M_("enchant armour");
     case SCR_TORMENT:            return M_("torment");
@@ -889,10 +872,6 @@ static const char* misc_type_name(int type, bool known)
     case MISC_DECK_OF_DEFENCE:     return M_("deck of defence");
 
     case MISC_CRYSTAL_BALL_OF_ENERGY:   return M_("crystal ball of energy");
-#if TAG_MAJOR_VERSION == 32
-    case MISC_CRYSTAL_BALL_OF_FIXATION:
-    case MISC_CRYSTAL_BALL_OF_SEEING:   return "old crystal ball";
-#endif
     case MISC_BOX_OF_BEASTS:            return M_("box of beasts");
     case MISC_EMPTY_EBONY_CASKET:       return M_("empty ebony casket");
     case MISC_AIR_ELEMENTAL_FAN:        return M_("air elemental fan");
@@ -950,18 +929,8 @@ static const char* _book_type_name(int booktype)
 {
     switch (static_cast<book_type>(booktype))
     {
-    case BOOK_MINOR_MAGIC:
-#if TAG_MAJOR_VERSION == 32
-    case BOOK_MINOR_MAGIC_II:
-    case BOOK_MINOR_MAGIC_III:
-#endif
-        return M_("Minor Magic");
-#if TAG_MAJOR_VERSION == 32
-    case BOOK_CONJURATIONS_I:
-        return "Old Conjurations";
-#endif
-    case BOOK_CONJURATIONS_II:
-        return M_("Conjurations");
+    case BOOK_MINOR_MAGIC:            return M_("Minor Magic");
+    case BOOK_CONJURATIONS:           return M_("Conjurations");
     case BOOK_FLAMES:                 return M_("Flames");
     case BOOK_FROST:                  return M_("Frost");
     case BOOK_SUMMONINGS:             return M_("Summonings");
@@ -1115,21 +1084,18 @@ std::string base_type_string (object_class_type type, bool known)
     }
 }
 
-std::string sub_type_string (const item_def &item, bool known)
+std::string sub_type_string(const item_def &item, bool known)
 {
-    return sub_type_string(item.base_type, item.sub_type, known, item.plus);
-}
+    const object_class_type type = item.base_type;
+    const int sub_type = item.sub_type;
 
-std::string sub_type_string(object_class_type type, int sub_type,
-                            bool known, int plus)
-{
     switch (type)
     {
     case OBJ_WEAPONS:  // deliberate fall through, as XXX_prop is a local
     case OBJ_MISSILES: // variable to itemprop.cc.
     case OBJ_ARMOUR:
         return item_base_name(type, sub_type);
-    case OBJ_WANDS: return wand_type_name(sub_type);
+    case OBJ_WANDS: return _wand_type_name(sub_type);
     case OBJ_FOOD: return food_type_name(sub_type);
     case OBJ_SCROLLS: return scroll_type_name(sub_type);
     case OBJ_JEWELLERY: return jewellery_type_name(sub_type);
@@ -1139,7 +1105,7 @@ std::string sub_type_string(object_class_type type, int sub_type,
         if (sub_type == BOOK_MANUAL)
         {
             std::string bookname = "manual of ";
-            bookname += skill_name(static_cast<skill_type>(plus));
+            bookname += skill_name(static_cast<skill_type>(item.plus));
             return bookname;
         }
         else if (sub_type == BOOK_NECRONOMICON)
@@ -1186,7 +1152,7 @@ std::string ego_type_string (const item_def &item)
         else
             return "";
     case OBJ_MISSILES:
-        return missile_brand_name(get_ammo_brand(item), MBN_BRAND);
+        return _missile_brand_name(get_ammo_brand(item), MBN_BRAND);
     default:
         return "";
     }
@@ -1369,7 +1335,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_brand && !terse && _missile_brand_is_prefix(brand))
-            buff << check_gettext(missile_brand_name(brand, MBN_NAME)) << ' ';
+            buff << check_gettext(_missile_brand_name(brand, MBN_NAME)) << ' ';
 
         if (know_pluses)
         {
@@ -1385,9 +1351,9 @@ std::string item_def::name_aux(description_level_type desc,
         if (know_brand && brand != SPMSL_NORMAL)
         {
             if (terse)
-                buff << " (" <<  missile_brand_name(brand, MBN_TERSE) << ")";
+                buff << " (" <<  _missile_brand_name(brand, MBN_TERSE) << ")";
             else if (_missile_brand_is_postfix(brand))
-                buff << " of " << missile_brand_name(brand, MBN_NAME);
+                buff << " of " << _missile_brand_name(brand, MBN_NAME);
         }
 
         // Show "runed" in the quiver (== terse) so you know if
@@ -1543,9 +1509,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_type)
-        {
             buff << make_stringf(check_gettext("wand of %s"), check_gettext(wand_type_name(item_typ)));
-        }
         else
         {
             buff << make_stringf(check_gettext("%s%s wand"), 
@@ -1559,8 +1523,6 @@ std::string item_def::name_aux(description_level_type desc,
         {
             if (item_plus2 == ZAPCOUNT_EMPTY)
                 buff << check_gettext(" {empty}");
-            else if (item_plus2 == ZAPCOUNT_MAX_CHARGED)
-                buff << check_gettext(" {fully recharged}");
             else if (item_plus2 == ZAPCOUNT_RECHARGED)
                 buff << check_gettext(" {recharged}");
             else if (item_plus2 > 0)
@@ -1642,7 +1604,7 @@ std::string item_def::name_aux(description_level_type desc,
             {
                 buff << make_stringf(check_gettext("%schunk of %s flesh"), 
                     (food_is_rotten(*this) && it_plus != MONS_ROTTING_HULK) ? check_gettext(M_("rotting ")) : "",
-                    check_gettext(mons_type_name(it_plus, DESC_PLAIN).c_str()));
+                    check_gettext(mons_type_name(static_cast<monster_type>(it_plus), DESC_PLAIN).c_str()));
             }
             else
                 buff << check_gettext("chunk of flesh");
@@ -1659,10 +1621,9 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_type)
-        {
-            /// 1. 스크롤의 type이 번역되어 들어옴. eg> 공포, 소음, 보석 저주, 무기 저주, 무기 강화 I
-            buff << make_stringf(check_gettext("scroll of %s"), check_gettext(scroll_type_name(item_typ)));
-        }
+            buff << make_stringf(
+                /// 1. 스크롤의 type이 번역되어 들어옴. eg> 공포, 소음, 보석 저주, 무기 저주, 무기 강화 I
+                check_gettext("scroll of %s"), check_gettext(scroll_type_name(item_typ)));
         else
         {
             const uint32_t sseed =
@@ -1903,7 +1864,9 @@ std::string item_def::name_aux(description_level_type desc,
             buff << _name << " ";
         else if (!dbname && !starts_with(_name, "the "))
         {
-            buff << check_gettext(mons_type_name(it_plus, DESC_PLAIN).c_str()) << ' ';
+            const monster_type mc = static_cast<monster_type>(it_plus);
+            if (!(mons_is_unique(mc) && mons_species(mc) == mc))
+                buff << check_gettext(mons_type_name(mc, DESC_PLAIN)) << ' ';
 
             if (!_name.empty() && shaped)
                 buff << _name << ' ';
@@ -1956,22 +1919,6 @@ std::string item_def::name_aux(description_level_type desc,
                 break;
             }
             break;
-#if TAG_MAJOR_VERSION == 32
-        case OBJ_BOOKS:
-            switch (item_typ)
-            {
-            case BOOK_MINOR_MAGIC_II:
-                buff << " [frost]";
-                break;
-            case BOOK_MINOR_MAGIC_III:
-                buff << " [summ]";
-                break;
-            case BOOK_CONJURATIONS_I:
-                buff << " [fire+earth]";
-                break;
-            }
-            break;
-#endif
 
         default:
             break;
@@ -2065,16 +2012,12 @@ bool item_type_tried(const item_def& item)
     if (item_type_known(item))
         return (false);
 
-    if (is_artefact(item) && item.base_type == OBJ_JEWELLERY)
-    {
-        if (item.base_type == OBJ_JEWELLERY
-            && item.props.exists("jewellery_tried")
-            && item.props["jewellery_tried"].get_bool())
-        {
-            return (true);
-        }
-        return (false);
-    }
+    if (item.flags & ISFLAG_TRIED)
+        return true;
+
+    // artefacts are distinct from their base types
+    if (is_artefact(item))
+        return false;
 
     if (!item_type_has_ids(item.base_type))
         return false;
@@ -2193,17 +2136,14 @@ void check_item_knowledge(bool unknown_items)
             continue;
         for (int j = 0; j < get_max_subtype(i); j++)
         {
-#if TAG_MAJOR_VERSION == 32
-            if (i == OBJ_SCROLLS && j == SCR_PAPER)
-                continue;
-#endif
             if (i == OBJ_JEWELLERY && j >= NUM_RINGS && j < AMU_FIRST_AMULET)
                 continue;
 
             // Potions of fizzing liquid are not something that
             // need to be identified, because they never randomly
             // generate! [due]
-            if (i == OBJ_POTIONS && j == POT_FIZZING)
+            // Water is never interesting either. [1KB]
+            if (i == OBJ_POTIONS && (j == POT_FIZZING || j == POT_WATER))
                 continue;
 
             if (unknown_items ? you.type_ids[i][j] != ID_KNOWN_TYPE
@@ -2303,13 +2243,15 @@ void display_runes()
 
     if (items.empty())
     {
-        mpr("You haven't found any rune yet.");
+        mpr("You haven't found any runes yet.");
         return;
     }
 
     InvMenu menu;
 
-    menu.set_title("Runes of Zot");
+    menu.set_title(make_stringf("Runes of Zot: %d/%d",
+                                (int)items.size(),
+                                you.obtainable_runes));
     menu.set_flags(MF_NOSELECT);
     menu.set_type(MT_RUNES);
     menu.load_items(items, discoveries_item_mangle);
@@ -2763,10 +2705,12 @@ bool is_bad_item(const item_def &item, bool temp)
         switch (item.sub_type)
         {
         case SCR_CURSE_ARMOUR:
-        case SCR_CURSE_JEWELLERY:
         case SCR_CURSE_WEAPON:
+            if (you.species == SP_FELID)
+                return false;
+        case SCR_CURSE_JEWELLERY:
             return (you.religion != GOD_ASHENZARI);
-        case SCR_SUMMONING:
+        case SCR_UNHOLY_CREATION:
             // Summoning will always produce hostile monsters if you
             // worship a good god. (Use temp to allow autopickup to
             // prevent monsters from reading it.)
@@ -2979,8 +2923,7 @@ bool is_useless_item(const item_def &item, bool temp)
     case OBJ_POTIONS:
     {
         // No potion is useless if it can be used for Evaporate.
-        if ((you.char_class == JOB_TRANSMUTER || you.char_class == JOB_STALKER)
-             && !you.num_turns
+        if (you.char_class == JOB_STALKER && !you.num_turns
             || you.has_spell(SPELL_EVAPORATE))
         {
             return (false);
@@ -3471,11 +3414,7 @@ std::string get_corpse_name(const item_def &corpse, uint64_t *name_type)
         return ("");
 
     if (name_type != NULL)
-#if TAG_MAJOR_VERSION == 32
-        *name_type = (int64_t)corpse.props[CORPSE_NAME_TYPE_KEY];
-#else
         *name_type = corpse.props[CORPSE_NAME_TYPE_KEY].get_int64();
-#endif
 
     return (corpse.props[CORPSE_NAME_KEY].get_string());
 }

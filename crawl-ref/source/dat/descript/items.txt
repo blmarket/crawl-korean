@@ -29,7 +29,7 @@ This amulet makes its wearer less accurate in hand combat and when targetting mo
 %%%%
 amulet of rage
 
-이 부적은 착용자를 좀 더 성공적으로 광포화의 상태에 들어갈 수 있게 한다. 또한, 광포화 상태가 끝났을 때 착용자를 부작용으로부터 일부분 보호한다.
+이 부적은 착용자가 광포화의 상태에 들어갈 수 있게 한다.
 %%%%
 amulet of resist corrosion
 
@@ -54,10 +54,6 @@ amulet of faith
 amulet of stasis
 
 마비, 빨라짐, 느려짐, 공간 이동과 같은 물리적, 마법 효과를 막기 위해서 꼼꼼하게 제작된 마법의 구 모양의 부적이다. 이 부적은 전이 마법을 효과적으로 막아주고, 추방과 같은 공간 이동 마법을 막아줄 것이다.
-%%%%
-ankus
-
-코끼리 조련사들이 그들의 코끼리를 조련하기 위한 것이다. 대체로 짧고, 튼튼한 손잡이를 가진 벽난로 부지깽이와 비슷하고, 뭉툭한 대못과 고리는 코끼리의 가려운 곳을 긁어 그들을 만족하게 해주기 위한 것이다. 기묘하게도, 오우거들은 큰 코끼리를 잘 다루는 것으로 유명하다. 
 %%%%
 animal skin
 
@@ -218,10 +214,6 @@ book of frost
 book of geomancy
 
 마법의 주문들이 담긴 마법서다. 왠지 대지의 따스함이 느껴진다.
-%%%%
-book of healing
-
-마법의 주문들이 담긴 마법서다.
 %%%%
 book of hinderance
 
@@ -389,15 +381,15 @@ dart
 %%%%
 deck of changes
 
-사용자나 주변의 환경을 변화시키는 마법의 카드들로 구성된 덱이다.
-다음과 같은 카드들로 구성되어 있다: 
-엘릭서, 투쟁, 탈바꿈, 투구, 칼날, 그림자, 물약, 집중, 뒤섞임, 경험, 거친 마법, 나선조직, 현자,  홍수, 유리, 지도, 탐지, 삽질, 모종삽, 지뢰밭
+A deck of magical cards which induce changes in the user or his environment.
+
+It may contain the following cards: the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary, the Potion, Focus, Shuffle, Experience, Wild Magic, the Helix, the Sage, Water, Vitrification, the Map, Dowsing, the Spade, Trowel, the Minefield.
 %%%%
 deck of defence
 
-여러가지 종류의 피해로부터 사용자를 보호하는 마법의 카드들로 구성된 덱이다.
-다음과 같은 카드들로 구성되어 있다: 
-무덤, 밴시, 지옥살이, 고독, 전이기술자, 도주, 엘릭서, 투쟁, 탈바꿈, 투구, 칼날, 그림자
+A deck of magical cards, most of which defend the user from harm in various ways.
+
+It may contain the following cards: the Tomb, the Banshee, Damnation, Solitude, Warpwright, Flight, the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary.
 %%%%
 deck of destruction
 
@@ -407,9 +399,9 @@ It may contain the following cards: Vitriol, Flame, Frost, Venom, the Spark, the
 %%%%
 deck of dungeons
 
-던전의 형태를 바꾸는 마법의 카드들로 구성된 덱이다. 대부분의 카드 덱과는 다르게 이 덱에 있는 카드들은 더 재미있는 것을 추구하는 네멜렉스에 의해 무시되는 경향이 있다.
-다음과 같은 카드들로 구성되어 있다: 
-홍수, 유리, 지도, 탐지, 삽질, 모종삽, 지뢰밭
+A deck of magical cards which deal with shaping the dungeon.
+
+It may contain the following cards: Water, Vitrification, the Map, Dowsing, the Spade, Trowel, the Minefield.
 %%%%
 deck of escape
 
@@ -431,9 +423,9 @@ deck of summonings
 %%%%
 deck of war
 
-전투중이나 전에 유용하게 사용되는 마법의 카드들로 구성된 덱이다.
-다음과 같은 카드들로 구성되어 있다: 
-포탈, 전이, 바꿔치기, 신속, 무덤, 밴쉬, 지옥살이, 고독, 전이기술자, 도주, 엘릭서, 투쟁, 탈바꿈, 투구, 칼날, 그림자, 박멸, 짐승떼, 오망성, 무도, 등불, 뼈, 혐오, 부식, 불꽃, 서리, 독액, 공전, 고통, 고문
+A deck of magical cards which are useful before and during battle.
+
+It may contain the following cards: the Portal, the Warp, Swap, Velocity, the Tomb, the Banshee, Damnation, Solitude, Warpwright, Flight, the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary, the Crusade, the Herd, the Pentagram, the Dance, Foxfire, the Bones, Repulsiveness, Vitriol, Flame, Frost, Venom, the Spark, the Hammer, Pain, Torment.
 %%%%
 deck of wonders
 
@@ -633,21 +625,23 @@ meat ration
 
 한끼 식사분의 말리거나 훈제시켜 보존된 고기.
 %%%%
-monster manual
-
-마법 주문에 대한 책이다.
-%%%%
 morningstar
 
 가시로 둘러 싸인 메이스.
 %%%%
 mottled dragon armour
 
-얼룩무늬 용의 비늘로 만들어진 마법의 갑옷. 몇몇 더 커다란 용들의 갑옷처럼 특별한 마법적인 보호를 제공하지는 않지만, 가죽 갑옷과 같이 경량이며 움직이기 편하다.
+A magical armour made from the scales of a mottled dragon. Although it does
+not provide its wearer with much in the way of special magical protection,
+unlike the armour made from the scales of some larger dragons, it is as
+light and relatively uncumbersome as leather armour. It is also remarkably
+smooth, letting sticky flames flow down like water.
 %%%%
 mottled dragon hide
 
-얼룩무늬 용의 기묘한 비늘이 덮인 가죽. 마법적인 도구를 통해 갑옷으로 가공될 수 있다.
+The weirdly-patterned scaly skin of a mottled dragon. It may be turned into
+proper armour by magical means. Its smooth surface does not let sticky
+flames attach.
 %%%%
 naga barding
 
@@ -1072,16 +1066,13 @@ scroll of immolation
 %%%%
 scroll of magic mapping
 
-이 두루마리는 사용자 근처의 지형을 보여준다.
-다만 이 두루마리는 비밀문을 발견할 만큼 강력하지는 않다. 함정과 문 기술을 익히도록 할 것.
+This scroll reveals the surroundings of one who reads it.
+
+It is not strong enough to see the interior of rooms sealed with secret doors; one needs Traps and Doors skill for that.
 %%%%
 scroll of noise
 
 가끔 장난꾸러기 도제가 마법사의 가방에 넣어두는 이 장난용 두루마리는 커다란 소음을 발행시킨다. 그 외의 알려진 쓸모는 없다.
-%%%%
-scroll of paper
-
-이 두루마리는 목차를 제외하면 백지다.
 %%%%
 scroll of random uselessness
 랜덤 효과의 마법 두루마리
@@ -1090,15 +1081,19 @@ scroll of random uselessness
 %%%%
 scroll of recharging
 
-이 두루마리는 선택한 마법봉이나 마법막대의 마력을 충전할 수 있게 한다.
+This scroll restores the charges of any magical wand or rod chosen by its
+reader. When used on a rod, it also increases the size of the rod's power
+storage, increases the rate at which it regenerates power, and even improves
+its melee combat qualities.
 %%%%
 scroll of remove curse
 
 지금 착용중인 모든 물품의 저주를 해제하는 두루마리다.
 %%%%
-scroll of summoning
+scroll of unholy creation
 
-어비스로 통하는 문을 열어 무시무시한 괴수를 불러오는 두루마리다.
+This scroll draws unformed lumps of flesh from the Abyss to create a
+terrible beast.
 %%%%
 scroll of teleportation
 
@@ -1106,12 +1101,17 @@ scroll of teleportation
 %%%%
 scroll of torment
 
-어둠의 힘을 불러내어 당신을 포함한 주변의 모든 존재에게 강렬한 고통을 선사한다.
+This scroll calls on the powers of darkness to inflict great pain on any
+nearby creature - including you! This halves the resilience of all living
+creatures, although is never directly fatal.
 %%%%
 scroll of vorpalise weapon
 
-이 두루마리는 착용중인 무기에 적에게 강력한 피해를 입히는 마법을 부여한다. 이미 영구적인 마법이 부여된 무기에는 사용하지 않는 것이 좋다. 특정한 주문에 의해 일시적인 마법이 부여된 무기에 사용하면 부여된 마법을 영구적인 것으로 할 수 있다.
-트로그, 루고누, 키쿠바쿠드하, 빛나는 자 등의 특별한 마법 부여는 이 방법으로 정착시킬 수 없다. 좀이라면...글쎄. 예측할 수 없겠지.
+This scroll enchants the wielded weapon so as to make it far more effective at inflicting harm on its wielder's enemies. Using it on a weapon already affected by some kind of permanent branding is not advised. On the other hand, the scroll can make permanent the temporary branding of weapons obtained from some spells.
+
+Brands that are closely tied to one of the gods (Trog, Lugonu,
+Kikubaaquadgha, the Shining One) cannot be affixed this way.
+Xom, on the other hand, wouldn't let such an opportunity for fun go to waste.
 %%%%
 scroll of vulnerability
 
@@ -1119,7 +1119,18 @@ scroll of vulnerability
 %%%%
 scroll of silence
 
-이 두루마리는 사용자 근처의 모든 소리를 없애, 사용자를 포함한 근처의 모든 대상이 두루마리를 읽거나 주문을 사용하거나 기도하거나 외칠 수 없게 한다. 이 정적은 매우 부자연스럽기에 당신은 이 방법으로 숨거나 할 수 없다. 정적의 범위는 시야의 절반정도의 범위에서 시작하여 효과 시간이 끝날 때 쯤엔 오직 사용자만이 영향을 받는 범위까지 점점 줄어든다.
+This scroll eliminates all sound near the reader. This makes reading
+scrolls, casting spells, praying or yelling in the reader's vicinity
+impossible. (It applies to the reader, too, of course.)
+
+This silence will not hide your presence, since its oppressive, unnatural
+effect will almost certainly alert any living creature that something is
+very wrong. Silence starts out with a radius covering half the normal
+vision range, which will then shrink, eventually covering only the reader,
+before the effect times out.
+
+Note that demons do not need sound to cast spells; certain necromantic
+fixtures have this property as well.
 %%%%
 scythe
 
@@ -1175,7 +1186,8 @@ staff of air
 %%%%
 staff of channeling
 
-이 지팡이의 사용자는 자신을 위해 주위의 마력을 수집할 수 있다.
+This staff allows its wielder to channel ambient magical energy for his or
+her own purposes.
 %%%%
 staff of cold
 
@@ -1199,7 +1211,7 @@ staff of enchantment
 %%%%
 staff of energy
 
-이 지팡이는 주문 사용시 몰려오는 허기를 없애준다.
+This staff greatly reduces the hunger cost of the wielder's magical spells.
 %%%%
 staff of fire
 
@@ -1223,7 +1235,7 @@ staff of wizardry
 %%%%
 steam dragon armour
 
-증기 용의 껍질로 만든 마법 갑옷이다. 더 거대한 용의 비늘로 만든 갑옷같이 마법적인 보호를 제공하지는 않지만, 마치 천옷처럼 가볍고 유연하다.
+A magical armour, made from the scales of a steam-breathing dragon. Although it does not provide its wearer with much in the way of special magical protection, unlike the armour made from the scales of some larger dragons, it is extremely light and as supple as cloth.
 %%%%
 steam dragon hide
 
@@ -1283,11 +1295,15 @@ trishula
 %%%%
 troll hide
 
-딱딱하고 울퉁불퉁한 트롤의 가죽이다. 입으려면 입을 수도 있다.
+The stiff and knobbly hide of a troll, with magical regenerative properties.
+I suppose you could wear it if you really wanted to, although you probably
+want to enchant it into proper armour first.
 %%%%
 troll leather armour
 
-딱딱하고 울퉁불퉁한 보통의 트롤 가죽으로 만든 마법 갑옷이다. 이미 트롤이 아닌 이상, 착용자의 상처를 천천히 재생시킨다.
+A magical armour, made from the stiff and knobbly skin of a common troll.
+It magically regenerates its wearer's flesh at a fairly slow rate (unless
+already a troll).
 %%%%
 wand of cold
 
@@ -1307,7 +1323,9 @@ wand of disintegration
 %%%%
 wand of draining
 
-음에너지의 화살을 발사하여 생명체의 생명 에너지를 고갈시키는 마법봉이다. 언데드에겐 아무런 쓸모도 없지만.
+A magical device which throws a bolt of negative energy which drains the
+life essences of living creatures, but is useless against the undead,
+demons, artificial creatures and even living plants.
 %%%%
 wand of enslavement
 

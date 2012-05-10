@@ -30,6 +30,7 @@ enum monster_info_flags
     MB_PARALYSED,
     MB_SICK,
     MB_CAUGHT,
+    MB_WEBBED,
     MB_FRENZIED,
     MB_PETRIFYING,
     MB_PETRIFIED,
@@ -62,9 +63,6 @@ enum monster_info_flags
     MB_FEAR_INSPIRING,
     MB_WITHDRAWN,
     MB_ATTACHED,
-#if TAG_MAJOR_VERSION == 32
-    MB_HELPLESS,
-#endif
     MB_DAZED,
     MB_MUTE,
     MB_BLIND,
@@ -81,6 +79,8 @@ enum monster_info_flags
     MB_FIREWOOD,
     MB_TWO_WEAPONS,
     MB_NO_REGEN,
+    MB_SUPPRESSED,
+    MB_ROLLING,
     NUM_MB_FLAGS
 };
 
@@ -152,7 +152,7 @@ struct monster_info : public monster_info_base
         return *this;
     }
 
-    void to_string(int count, std::string& desc, int& desc_color, bool fullname = true) const;
+    void to_string(int count, std::string& desc, int& desc_colour, bool fullname = true) const;
 
     /* only real equipment is visible, miscellany is for mimic items */
     std::auto_ptr<item_def> inv[MSLOT_LAST_VISIBLE_SLOT + 1];
@@ -201,7 +201,7 @@ struct monster_info : public monster_info_base
 
     const char *pronoun(pronoun_type variant) const
     {
-        return (mons_pronoun(static_cast<monster_type>(type), variant, true));
+        return (mons_pronoun(type, variant, true));
     }
 
     std::string wounds_description_sentence() const;

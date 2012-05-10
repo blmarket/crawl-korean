@@ -15,7 +15,6 @@ void init_properties(void);
 
 // cursed:
 bool item_known_cursed(const item_def &item);
-bool item_known_uncursed(const item_def &item);
 void do_curse_item(item_def &item, bool quiet = true);
 void do_uncurse_item(item_def &item, bool inscribe = true, bool no_ash = false,
                      bool check_bondage = true);
@@ -40,7 +39,6 @@ iflags_t get_equip_desc(const item_def &item);
 iflags_t get_species_race(species_type sp);
 
 // helmet functions:
-void  set_helmet_desc(item_def &item, short flags);
 void  set_helmet_random_desc(item_def &item);
 short get_helmet_desc(const item_def &item);
 
@@ -69,7 +67,6 @@ bool jewellery_is_amulet(int sub_type);
 
 bool  hide2armour(item_def &item);
 
-bool  base_armour_is_light(const item_def &item);
 int   fit_armour_size(const item_def &item, size_type size);
 bool  check_armour_size(const item_def &item, size_type size);
 
@@ -92,13 +89,7 @@ void ident_reflector(item_def *item);
 int weapon_rarity(int w_type);
 
 int   cmp_weapon_size(const item_def &item, size_type size);
-int   fit_weapon_wieldable_size(const item_def &item, size_type size);
 bool  check_weapon_wieldable_size(const item_def &item, size_type size);
-
-int   fit_item_throwable_size(const item_def &item, size_type size);
-
-int weapon_ev_bonus(const item_def &wpn, int skill, size_type body, int dex,
-                     bool hide_hidden = false);
 
 hands_reqd_type hands_reqd(const item_def &item, size_type size);
 hands_reqd_type hands_reqd(object_class_type base_type, int sub_type,
@@ -115,11 +106,9 @@ bool convert2bad(item_def &item);
 
 int get_vorpal_type(const item_def &item);
 int get_damage_type(const item_def &item);
-bool does_damage_type(const item_def &item, int dam_type);
 int single_damage_type(const item_def &item);
 
 int weapon_str_weight(const item_def &wpn);
-int weapon_dex_weight(const item_def &wpn);
 
 skill_type weapon_skill(const item_def &item);
 skill_type weapon_skill(object_class_type wclass, int wtype);
@@ -132,7 +121,6 @@ void maybe_change_train(const item_def &item, bool start);
 
 // launcher and ammo functions:
 bool is_range_weapon(const item_def &item);
-bool is_range_weapon_type(weapon_type wtype);
 missile_type fires_ammo_type(const item_def &item);
 missile_type fires_ammo_type(weapon_type wtype);
 const char *ammo_name(missile_type ammo);
@@ -164,15 +152,12 @@ int  ring_has_pluses(const item_def &item);
 bool ring_has_stackable_effect(const item_def &item);
 
 // food functions:
-bool food_is_meat(const item_def &item);
-bool food_is_veg(const item_def &item);
 bool is_blood_potion(const item_def &item);
 bool is_fizzing_potion (const item_def &item);
 int food_value(const item_def &item);
 int food_turns(const item_def &item);
 bool can_cut_meat(const item_def &item);
 bool food_is_rotten(const item_def &item);
-int corpse_freshness(const item_def &item);
 bool is_fruit(const item_def & item);
 uint32_t item_fruit_mask(const item_def &item);
 
@@ -190,10 +175,8 @@ int property(const item_def &item, int prop_type);
 bool gives_ability(const item_def &item);
 bool gives_resistance(const item_def &item);
 int item_mass(const item_def &item);
-size_type item_size(const item_def &item);
 equipment_type get_item_slot(object_class_type type, int sub_type);
 equipment_type get_item_slot(const item_def& item);
-bool in_shop(const item_def &item);
 
 std::string item_base_name(const item_def &item);
 std::string item_base_name (object_class_type type, int sub_type);

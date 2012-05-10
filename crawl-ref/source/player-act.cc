@@ -130,11 +130,12 @@ bool player::floundering() const
 bool player::extra_balanced() const
 {
     const dungeon_feature_type grid = grd(pos());
-    return (grid == DNGN_SHALLOW_WATER
-             && (species == SP_NAGA                      // tails, not feet
-                 || body_size(PSIZE_BODY) >= SIZE_LARGE)
-                    && (form == TRAN_LICH || form == TRAN_STATUE
-                        || !form_changed_physiology()));
+    return (species == SP_GREY_DRACONIAN
+               || grid == DNGN_SHALLOW_WATER
+                   && (species == SP_NAGA // tails, not feet
+                       || body_size(PSIZE_BODY) >= SIZE_LARGE)
+                   && (form == TRAN_LICH || form == TRAN_STATUE
+                       || !form_changed_physiology()));
 }
 
 int player::get_experience_level() const
@@ -259,7 +260,7 @@ brand_type player::damage_brand(int)
 }
 
 // Returns the item in the given equipment slot, NULL if the slot is empty.
-// eq must be in [EQ_WEAPON, EQ_AMULET], or bad things will happen.
+// eq must be in [EQ_WEAPON, EQ_RING_EIGHT], or bad things will happen.
 item_def *player::slot_item(equipment_type eq, bool include_melded)
 {
     ASSERT(eq >= EQ_WEAPON && eq < NUM_EQUIP);
@@ -323,6 +324,10 @@ bool player::could_wield(const item_def &item, bool ignore_brand,
 
     // Anybody can wield missiles to enchant, item_mass permitting
     if (item.base_type == OBJ_MISSILES)
+        return (true);
+
+    // Or any other object, although there's no point here.
+    if (item.base_type != OBJ_WEAPONS && item.base_type != OBJ_STAVES)
         return (true);
 
     // Small species wielding large weapons...
@@ -555,7 +560,7 @@ void player::attacking(actor *other)
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (other && other->atype() == ACT_MONSTER)
+    if (other && other->is_monster())
     {
         const monster* mon = other->as_monster();
         if (!mon->friendly() && !mon->neutral())
@@ -637,7 +642,7 @@ bool player::can_go_berserk(bool intentional, bool potion) const
     // trigger when the player attempts to activate berserk,
     // auto-iding at that point, but also killing the berserk and
     // wasting a turn.
-    if (wearing_amulet(AMU_STASIS, false))
+    if (player_effect_stasis(false))
     {
         if (verbose)
         {

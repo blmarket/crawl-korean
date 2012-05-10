@@ -1278,6 +1278,50 @@ aaaw..ww
 ENDMAP
 
 ###############################################################################
+# Two stream minivaults
+NAME:   guppyfry_lair_drakes
+DEPTH:  Lair:3-7
+TAGS:   mini_float uniq_mini_stream
+MONS:   fire drake / swamp drake / mottled dragon
+MONS:   steam dragon
+MONS:   plant
+SUBST:  - = wwWW..%
+SHUFFLE: .t
+MAP
+.3WW-3.....
+.ttWW-ttt..
+.3ttW-tt.t.
+.ttWWtt...t
+tt1Wttt2.tt
+.ttWW-t3.t.
+..ttWW--1t.
+.tt1-WWttt.
+..tt--Wtt3.
+.tt3.tWWttW
+.ttt.ttWWW-
+....3.3-W-.
+ENDMAP
+
+NAME:   guppyfry_mini_stream
+DEPTH:  Lair
+TAGS:   mini_float uniq_mini_stream
+SUBST:  - = wW.%
+MAP
+..WW.......
+.ttWW.ttt..
+..ttW.tt.t.
+.ttWWtt...t
+tt0Wttt0.tt
+.ttWW.t..t.
+..ttWW-.0t.
+.tt0-WWttt.
+..tt.-Wtt..
+.tt..tWWtt.
+.ttt.ttWWtt
+........W..
+ENDMAP
+
+###############################################################################
 # Lair endings
 ###############################################################################
 
@@ -1307,12 +1351,8 @@ function elephant_statue()
 end
 }}
 MARKER: o = lua:portal_desc { desc="elephant-shaped statue", \
-            desc_long=("This worn granite statue depicts" .. \
-                       " elephants standing guard."), \
             slaved_to="elephant" }
-MARKER: G = lua:portal_desc { desc="elephant-shaped statue", \
-            desc_long=("This worn granite statue depicts" .. \
-                       " elephants standing guard.") }
+MARKER: G = lua:portal_desc { desc="elephant-shaped statue" }
 MARKER: G = lua:props_marker { veto_fragmentation="veto", \
                                veto_disintegrate="veto", \
                                veto_shatter="veto" }
@@ -1363,7 +1403,7 @@ KFEAT:  _ = altar_makhleb
 KPROP:  Q = bloody
 KFEAT:  L = endless_lava
 MONS:   smoke demon
-MONS:   red devil / rotting devil / hairy devil / hellwing w:50
+MONS:   red devil / rotting devil w:20 / hellwing w:50
 MONS:   orange demon
 MONS:   sun demon
 MONS:   hydra / fire drake / dire elephant

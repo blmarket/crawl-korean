@@ -65,7 +65,7 @@ Features
  ^ - random trap.
  ~ - random trap suitable for the branch and depth the map is being used.
 
- A - Vestibule gateway (opened by Horn).
+ A - Stone arch.
  B - Altar. These are assigned specific types (e.g. of Zin etc) in dungeon.cc,
      in order.
  C - Random Altar.
@@ -522,6 +522,8 @@ ITEM:     (list of items, separated by comma)
              if the item is not stackable.
           * "charges:N" sets the number of charges for wands. Does no checks
             against the maximum number of charges.
+          * "plus:N" and "plus2:N" set the item pluses for weapons, armour,
+            jewellery (such as rings of intelligence or slaying), and missiles.
           * "no_uniq" prevents the item from being turned into an artefact.
           * "good_item" makes the builder try to make the item a good one
             (acquirement quality). This is independent of the level's depth,

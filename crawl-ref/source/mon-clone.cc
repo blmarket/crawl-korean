@@ -77,15 +77,10 @@ static bool _player_is_illusion_cloneable()
 
 bool actor_is_illusion_cloneable(actor *target)
 {
-    if (target->atype() == ACT_PLAYER)
-    {
-        ASSERT(target == &you);
+    if (target->is_player())
         return _player_is_illusion_cloneable();
-    }
     else
-    {
         return _mons_is_illusion_cloneable(target->as_monster());
-    }
 }
 
 static void _mons_summon_monster_illusion(monster* caster,
@@ -121,7 +116,7 @@ static void _mons_summon_monster_illusion(monster* caster,
         clone->del_ench(ENCH_CORONA);
         clone->del_ench(ENCH_SILVER_CORONA);
 
-        behaviour_event(clone, ME_ALERT, MHITNOT, caster->pos());
+        behaviour_event(clone, ME_ALERT, 0, caster->pos());
 
         if (cloning_visible)
         {
@@ -193,9 +188,8 @@ static void _mons_load_player_enchantments(monster* creator, monster* target)
 void mons_summon_illusion_from(monster* mons, actor *foe,
                                spell_type spell_cast)
 {
-    if (foe->atype() == ACT_PLAYER)
+    if (foe->is_player())
     {
-        ASSERT(foe == &you);
         if (monster *clone = create_monster(
                 mgen_data(MONS_PLAYER_ILLUSION, SAME_ATTITUDE(mons), mons,
                           6, spell_cast, mons->pos(), mons->foe, 0)))

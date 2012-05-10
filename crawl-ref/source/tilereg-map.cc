@@ -306,8 +306,8 @@ bool MapRegion::update_tip_text(std::string& tip)
     if (mouse_control::current_mode() != MOUSE_MODE_COMMAND)
         return (false);
 
-    tip = gettext("[L-Click] Travel / [R-Click] View");
-    if (you.level_type != LEVEL_LABYRINTH
+    tip = _("[L-Click] Travel / [R-Click] View");
+    if (!player_in_branch(BRANCH_LABYRINTH)
         && (you.hunger_state > HS_STARVING || you_min_hunger())
         && i_feel_safe())
     {

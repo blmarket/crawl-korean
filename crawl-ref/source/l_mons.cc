@@ -200,15 +200,13 @@ static const char *_monuse_to_str(mon_itemuse_type utyp)
 MDEF(muse)
 {
     if (const monsterentry *me = mons->find_monsterentry())
-    {
         PLUARET(string, _monuse_to_str(me->gmon_use));
-    }
     return (0);
 }
 
 static const char *_moneat_names[] =
 {
-    "nothing", "items", "corpses", "food"
+    "nothing", "items", "corpses", "honey", "food",
 };
 
 static const char *_moneat_to_str(mon_itemeat_type etyp)
@@ -220,9 +218,7 @@ static const char *_moneat_to_str(mon_itemeat_type etyp)
 MDEF(meat)
 {
     if (const monsterentry *me = mons->find_monsterentry())
-    {
         PLUARET(string, _moneat_to_str(me->gmon_eat));
-    }
     return (0);
 }
 

@@ -157,14 +157,14 @@ drop_filter = useless_item
 # travel_avoid_terrain = shallow water
 #
 # explore_greedy   = false
-# explore_stop     = items,greedy_pickup_smart,stairs,shops,altars,gates
-# explore_stop    += greedy_visited_item_stack
+# explore_stop     = items,stairs,shops,altars,portals,branches
+# explore_stop    += greedy_pickup_smart,greedy_visited_item_stack
 # explore_improved = true
 # explore_wall_bias = 0
 # travel_key_stop = false
 #
 # explore_stop_pickup_ignore = curare
-auto_exclude = oklob,statue,curse skull,roxanne,hyperactive,lightning spire
+auto_exclude = oklob,statue,curse skull,roxanne,hyperactive,lightning spire,mimic
 
 # tc_reachable      = blue
 # tc_dangerous      = cyan
@@ -241,6 +241,7 @@ sort_menus = inv: true : equipped, freshness, charged
 # show_inventory_weights     = true
 # item_stack_summary_minimum = 5
 # list_rotten                = false
+# auto_drop_chunks           = (never | rotten | yes)
 # msg_condense_repeats   = false
 # msg_condense_short     = false
 # show_no_ctele          = false
@@ -316,6 +317,11 @@ force_more_message = Careful!
 force_more_message = interdimensional caravan
 force_more_message = distant snort
 
+# Abyss exits and rune
+force_more_message = Found a gateway leading out of the Abyss
+force_more_message = Found .* abyssal rune of Zot
+
+
 ##### 4-k       Firing Commands #######################
 #
 # fire_items_start = a
@@ -389,15 +395,19 @@ note_monsters = orb of fire, ancient lich, Sigmund
 # char_set         = ascii
 # use_fake_player_cursor = false
 #
+# language = polski
+#
 # colour.lightgray = black
 # colour.lightcyan = cyan
 # colour.yellow    = brown
 #
-# pizza            = Sausage
 # show_player_species = true
 
 # See options_guide.txt for the options
 # cset, feature, mon_glyph
+
+## Highlight the edge of unexplored terrain.
+# feature = explore horizon {',,green}
 
 ##### 6-b   Windows console #######################
 #

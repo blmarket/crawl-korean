@@ -644,12 +644,7 @@ KFEAT: A = antique armour shop / antique weapon shop
 KFEAT: B = book shop / jewellery shop / wand shop
 KFEAT: C = distillery shop / food shop / scroll shop
 NSUBST: * = 1:A / 1:B / 1:C
-MARKER: X = lua:portal_desc { desc="open sea?", \
-            desc_long="Though it exists in stark defiance of every conventional"\
-                .." rule of physics and geometry you know to be true, there"\
-                .." can be no denying that here, in this tiny room, is a vast"\
-                .." and terrible sea of impossible size.\n\nEither that or it's"\
-                .." a blue wall."}
+MARKER: X = lua:portal_desc { desc="open sea?" }
 COLOUR: X = blue
 COLOUR: # = yellow
 KFEAT: # = closed_door
@@ -694,12 +689,7 @@ KFEAT: A = antique armour shop / antique weapon shop
 KFEAT: B = book shop / jewellery shop / wand shop
 KFEAT: C = distillery shop / food shop / scroll shop
 NSUBST: * = 1:A / 1:B / 1:C
-MARKER: X = lua:portal_desc { desc="open sea?", \
-            desc_long="Though it exists in stark defiance of every conventional"\
-                .." rule of physics and geometry you know to be true, there"\
-                .." can be no denying that here, in this tiny room, is a vast"\
-                .." and terrible sea of impossible size.\n\nEither that or it's"\
-                .." a blue wall."}
+MARKER: X = lua:portal_desc { desc="open sea?" }
 COLOUR: X = blue
 COLOUR: # = yellow
 KFEAT: # = closed_door
@@ -832,7 +822,7 @@ KMONS: b = patrolling Duvessa hp:150 ; great sword ego:freezing \
 KMONS: a = patrolling Jozef hd:15 hp:100 \
  spells:poison_arrow;teleport_other;.;minor_healing;slow \
  ; dire flail ego:distortion
-KMONS: b = patrolling Joseph hd:5 hp:150 ; ankus ego:freezing \
+KMONS: b = patrolling Joseph hd:5 hp:150 ; quarterstaff ego:freezing \
  . blowgun . needle ego:curare q:7
 : else
 # changed Francis to Wiglaf for now
@@ -927,7 +917,7 @@ MONS: stone giant / shadow dragon / quicksilver dragon / golden dragon /\
 MONS: skeletal warrior
 KMONS: 8 = silver statue
 KMONS: f = butterfly
-KMONS: U = Norris ; ankus ego:vorpal . large shield ego:reflection / \
+KMONS: U = Norris ; spiked flail ego:vorpal . large shield ego:reflection / \
            Frederick ; trident ego:freezing . large shield ego:reflection
 KMONS: C = generate_awake Chuck
 KMONS: k = yaktaur captain ; crossbow ego:chaos . bolt
@@ -1273,7 +1263,7 @@ NAME: sprint_mu_dis_giant
 TAGS: sprint_mu_dis no_rotate no_hmirror no_vmirror no_dup
 MONS: patrolling iron elemental
 MONS: patrolling the iron giant ; giant club unrand:skullcrusher
-MONS: iron dragon, iron devil, patrolling pit fiend, metal gargoyle, iron golem
+MONS: iron dragon, iron devil, patrolling hell sentinel, metal gargoyle, iron golem
 KMONS: & = dispater
 KITEM: * = superb_item, superb_item, superb_item
 KITEM: ? = star_item, star_item, scroll of enchant armour q:4

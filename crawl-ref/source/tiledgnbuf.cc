@@ -70,9 +70,7 @@ void DungeonCellBuffer::add(const packed_cell &cell, int x, int y)
             m_buf_doll.add(TILEP_MONS_UNKNOWN, x, y, 0, in_water, false);
     }
     else if (fg_idx == TILEP_PLAYER)
-    {
         pack_player(x, y, in_water);
-    }
     else if (fg_idx >= TILE_MAIN_MAX)
     {
         m_buf_doll.add(fg_idx, x, y, TILEP_PART_MAX, in_water, false);
@@ -190,8 +188,8 @@ void DungeonCellBuffer::add_blood_overlay(int x, int y, const packed_cell &cell,
         tileidx_t basetile;
         if (is_wall)
         {
-            basetile = TILE_WALL_BLOOD_S + tile_dngn_count(TILE_WALL_BLOOD_S)
-                                           * cell.blood_rotation;
+            basetile = cell.old_blood ? TILE_WALL_OLD_BLOOD : TILE_WALL_BLOOD_S;
+            basetile += tile_dngn_count(basetile) * cell.blood_rotation;
         }
         else
             basetile = TILE_BLOOD;
@@ -268,6 +266,8 @@ void DungeonCellBuffer::pack_background(int x, int y, const packed_cell &cell)
                 m_buf_feat.add(TILE_SANCTUARY, x, y);
             if (cell.is_silenced)
                 m_buf_feat.add(TILE_SILENCED, x, y);
+            if (cell.is_suppressed)
+                m_buf_feat.add(TILE_SUPPRESSED, x, y);
             if (cell.halo == HALO_RANGE)
                 m_buf_feat.add(TILE_HALO_RANGE, x, y);
             if (cell.halo == HALO_UMBRA)
@@ -419,9 +419,7 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
 
     // Tutorial cursor takes precedence over other cursors.
     if (bg & TILE_FLAG_TUT_CURSOR)
-    {
         m_buf_icons.add(TILEI_TUTORIAL_CURSOR, x, y);
-    }
     else if (bg & TILE_FLAG_CURSOR)
     {
         int type = ((bg & TILE_FLAG_CURSOR) == TILE_FLAG_CURSOR1) ?

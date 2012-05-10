@@ -26,9 +26,8 @@ void merfolk_start_swimming(bool step = false);
 void merfolk_stop_swimming();
 void trackers_init_new_level(bool transit);
 void maybe_drop_monster_hide(const item_def corpse);
-int get_max_corpse_chunks(int mons_class);
+int get_max_corpse_chunks(monster_type mons_class);
 void turn_corpse_into_skeleton(item_def &item);
-void maybe_bleed_monster_corpse(const item_def corpse);
 void turn_corpse_into_chunks(item_def &item, bool bloodspatter = true,
                              bool make_hide = true);
 void butcher_corpse(item_def &item, maybe_bool skeleton = B_MAYBE,
@@ -42,14 +41,15 @@ void remove_newest_blood_potion(item_def &stack, int quant = -1);
 void merge_blood_potion_stacks(item_def &source, item_def &dest, int quant);
 
 bool check_blood_corpses_on_ground();
-bool can_bottle_blood_from_corpse(int mons_class);
-int num_blood_potions_from_corpse(int mons_class, int chunk_type = -1);
-void turn_corpse_into_blood_potions (item_def &item);
+bool can_bottle_blood_from_corpse(monster_type mons_class);
+int num_blood_potions_from_corpse(monster_type mons_class, int chunk_type = -1);
+void turn_corpse_into_blood_potions(item_def &item);
 void turn_corpse_into_skeleton_and_blood_potions(item_def &item);
 
 void bleed_onto_floor(const coord_def& where, monster_type mon, int damage,
                       bool spatter = false, bool smell_alert = true,
-                      const coord_def& from = INVALID_COORD);
+                      const coord_def& from = INVALID_COORD,
+                      const bool old_blood = false);
 void blood_spray(const coord_def& where, monster_type mon, int level);
 void generate_random_blood_spatter_on_level(
     const map_mask *susceptible_area = NULL);
@@ -88,8 +88,7 @@ bool there_are_monsters_nearby(bool dangerous_only = false,
 
 void timeout_tombs(int duration);
 
-int count_malign_gateways ();
-std::vector<map_malign_gateway_marker*> get_malign_gateways ();
+int count_malign_gateways();
 void timeout_malign_gateways(int duration);
 
 void setup_environment_effects();
@@ -127,6 +126,8 @@ void swap_with_monster(monster* mon_to_swap);
 
 void wear_id_type(item_def &item);
 void maybe_id_ring_TC();
+void maybe_id_ring_hunger();
+void maybe_id_resist(beam_type flavour);
 
 int apply_chunked_AC(int dam, int ac);
 
@@ -217,9 +218,7 @@ struct simple_connect
     simple_connect()
     {
         for (unsigned i=0; i<8; i++)
-        {
             compass_idx[i] = i;
-        }
     }
 
     void operator()(const position_node & node,
@@ -296,9 +295,7 @@ void search_astar(position_node & start,
             res = visited.insert(expansion[i]);
 
             if (!res.second)
-            {
                 continue;
-            }
 
             if (valid_target(res.first->pos))
             {
@@ -308,9 +305,7 @@ void search_astar(position_node & start,
             }
 
             if (res.first->path_distance < DISCONNECT_DIST)
-            {
                 fringe.push(res.first);
-            }
         }
         if (done)
             break;

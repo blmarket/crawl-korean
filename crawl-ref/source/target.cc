@@ -159,7 +159,7 @@ aff_type targetter_reach::is_affected(coord_def loc)
         return AFF_YES;
 
     if (((loc - origin) * 2 - (aim - origin)).abs() <= 1
-        && grd(loc) > DNGN_MAX_NONREACH)
+        && feat_is_reachable_past(grd(loc)))
     {
         return AFF_TRACER;
     }
@@ -279,7 +279,7 @@ bool targetter_splash::anyone_there(coord_def loc)
 {
     if (!map_bounds(loc))
         return false;
-    if (agent && agent->atype() == ACT_PLAYER)
+    if (agent && agent->is_player())
         return env.map_knowledge(loc).monsterinfo();
     return actor_at(loc);
 }

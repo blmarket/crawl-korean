@@ -259,6 +259,10 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
         invalidate_agrid(true);
         break;
 
+    case ENCH_ROLLING:
+        calc_speed();
+        break;
+
     default:
         break;
     }
@@ -319,7 +323,7 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
     coord_def target_square;
     int       okay_squares = 0;
 
-    for (adjacent_iterator ai(you.pos()); ai; ++ai)
+    for (adjacent_iterator ai(mon->pos()); ai; ++ai)
         if (!actor_at(*ai)
             && monster_can_submerge(mon, grd(*ai))
             && one_chance_in(++okay_squares))
@@ -337,9 +341,9 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
 
     // The terrain changed and the monster can't remain submerged.
     // Try to move to an adjacent square where it would be happy.
-    for (adjacent_iterator ai(you.pos()); ai; ++ai)
+    for (adjacent_iterator ai(mon->pos()); ai; ++ai)
     {
-        if (!monster_at(*ai)
+        if (!actor_at(*ai)
             && monster_habitable_grid(mon, grd(*ai))
             && !find_trap(*ai))
         {
@@ -603,8 +607,14 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 
         if (you.pos() == pos())
         {
-            mprf(MSGCH_ERROR, _("%s is on the same square as you!"),
-                 name(DESC_A).c_str());
+            // If, despite our best efforts, it unsubmerged on the same
+            // square as the player, teleport it away.
+            monster_teleport(this, true, false);
+            if (you.pos() == pos())
+            {
+                mprf(MSGCH_ERROR, _("%s is on the same square as you!"),
+                     name(DESC_A).c_str());
+            }
         }
 
         if (you.can_see(this))
@@ -687,6 +697,12 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_INNER_FLAME:
         if (!quiet && alive())
             simple_monster_message(this, _("'s inner flame fades away."));
+        break;
+
+    case ENCH_ROLLING:
+        calc_speed();
+        if (!quiet && alive())
+            simple_monster_message(this, " stops rolling.");
         break;
 
     //The following should never happen, but just in case...
@@ -844,6 +860,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_INSANE:
         case ENCH_BERSERK:
         case ENCH_INNER_FLAME:
+        case ENCH_ROLLING:
             del_ench(i->first);
             break;
 
@@ -1038,6 +1055,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_MAD:
     case ENCH_BREATH_WEAPON:
     case ENCH_DEATHS_DOOR:
+    // case ENCH_ROLLING:
         decay_enchantment(me);
         break;
 
@@ -1242,7 +1260,10 @@ void monster::apply_enchantment(const mon_enchant &me)
         if (!monster_can_submerge(this, grid))
             del_ench(ENCH_SUBMERGED); // forced to surface
         else if (mons_landlubbers_in_reach(this))
+        {
             del_ench(ENCH_SUBMERGED);
+            make_mons_stop_fleeing(this);
+        }
         break;
     }
     case ENCH_POISON:
@@ -1320,7 +1341,7 @@ void monster::apply_enchantment(const mon_enchant &me)
                                                   me.agent()));
                         mon->add_ench(mon_enchant(ENCH_FEAR, dur + random2(20),
                                                   me.agent()));
-                        behaviour_event(mon, ME_SCARE, me.who);
+                        behaviour_event(mon, ME_SCARE, me.agent());
                         xom_is_stimulated(100);
                     }
                 }
@@ -1450,9 +1471,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             // env.mons means we can appear to be alive, but in fact be
             // an entirely different monster.
             if (alive() && type == mtype)
-            {
                 add_ench(ENCH_EXPLODING);
-            }
         }
 
     }
@@ -1465,21 +1484,17 @@ void monster::apply_enchantment(const mon_enchant &me)
             coord_def base_position = this->props["base_position"].get_coord();
             // Do a thing.
             if (you.see_cell(base_position))
-            {
                 mprf(_("The portal closes; %s is severed."), name(DESC_THE).c_str());
-            }
 
             if (env.grid(base_position) == DNGN_MALIGN_GATEWAY)
-            {
                 env.grid(base_position) = DNGN_FLOOR;
-            }
 
             env.pgrid(base_position) |= FPROP_BLOODY;
             add_ench(ENCH_SEVERED);
 
             // Severed tentacles immediately become "hostile" to everyone (or insane)
             this->attitude = ATT_NEUTRAL;
-            behaviour_event(this, ME_ALERT, MHITNOT);
+            behaviour_event(this, ME_ALERT);
         }
     }
     break;
@@ -1503,7 +1518,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             }
 
             this->attitude = ATT_HOSTILE;
-            behaviour_event(this, ME_ALERT, MHITYOU);
+            behaviour_event(this, ME_ALERT, &you);
         }
     }
     break;
@@ -1734,12 +1749,9 @@ static const char *enchant_names[] =
     "tethered", "severed", "antimagic", "fading_away", "preparing_resurrect", "regen",
     "magic_res", "mirror_dam", "stoneskin", "fear inspiring", "temporarily pacified",
     "withdrawn", "attached", "guardian_timer", "levitation",
-#if TAG_MAJOR_VERSION == 32
-    "helpless",
-#endif
     "liquefying", "tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "inner_flame", "roused", "breath timer", "deaths_door", "buggy",
+    "inner_flame", "roused", "breath timer", "deaths_door", "rolling", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
@@ -1968,6 +1980,14 @@ int mon_enchant::calc_duration(const monster* mons,
 
     case ENCH_FAKE_ABJURATION:
     case ENCH_ABJ:
+        // The duration is:
+        // deg = 1     90 aut
+        // deg = 2    180 aut
+        // deg = 3    270 aut
+        // deg = 4    360 aut
+        // deg = 5    810 aut
+        // deg = 6   1710 aut
+        // with a large fuzz
         if (deg >= 6)
             cturn = 1000 / _mod_speed(10, mons->speed);
         if (deg >= 5)
@@ -1989,6 +2009,9 @@ int mon_enchant::calc_duration(const monster* mons,
         return (random_range(75, 125) * 10);
     case ENCH_BERSERK:
         return (16 + random2avg(13, 2)) * 10;
+    case ENCH_ROLLING:
+        cturn = 10000 / _mod_speed(25, mons->speed);
+        break;
     default:
         break;
     }
@@ -1996,6 +2019,8 @@ int mon_enchant::calc_duration(const monster* mons,
     cturn = std::max(2, cturn);
 
     int raw_duration = (cturn * speed_to_duration(mons->speed));
+    // Note: this fuzzing is _not_ symmetric, resulting in 90% of input
+    // on the average.
     raw_duration = std::max(15, fuzz_value(raw_duration, 60, 40));
 
     dprf("cturn: %d, raw_duration: %d", cturn, raw_duration);

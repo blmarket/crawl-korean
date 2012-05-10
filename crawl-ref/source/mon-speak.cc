@@ -296,7 +296,7 @@ static std::string _get_speak_string(const std::vector<std::string> &prefixes,
     int duration = 1;
     if (mons->hit_points <= 0)
         key += " killed";
-    else if ((mons->flags & MF_BANISHED) && you.level_type != LEVEL_ABYSS)
+    else if ((mons->flags & MF_BANISHED) && !player_in_branch(BRANCH_ABYSS))
         key += " banished";
     else if (mons->is_summoned(&duration) && duration <= 0)
         key += " unsummoned";
@@ -397,7 +397,7 @@ bool mons_speaks(monster* mons)
     // Monsters always talk on death, even if invisible/silenced/etc.
     int duration = 1;
     const bool force_speak = !mons->alive()
-        || (mons->flags & MF_BANISHED) && you.level_type != LEVEL_ABYSS
+        || (mons->flags & MF_BANISHED) && !player_in_branch(BRANCH_ABYSS)
         || (mons->is_summoned(&duration) && duration <= 0)
         || crawl_state.prev_cmd == CMD_LOOK_AROUND; // Wizard testing
 
@@ -427,6 +427,10 @@ bool mons_speaks(monster* mons)
 
         // Berserk monsters just want your hide.
         if (mons->berserk())
+            return (false);
+
+        // Rolling beetles shouldn't twitch antennae
+        if (mons->rolling())
             return (false);
 
         // Monsters in a battle frenzy are likewise occupied.
@@ -474,7 +478,7 @@ bool mons_speaks(monster* mons)
                                     &you : mons->get_foe();
     const monster* m_foe = foe ? foe->as_monster() : NULL;
 
-    if (!foe || foe->atype() == ACT_PLAYER || mons->wont_attack())
+    if (!foe || foe->is_player() || mons->wont_attack())
     {
         // Animals only look at the current player form, smart monsters at the
         // actual player genus.
@@ -541,7 +545,7 @@ bool mons_speaks(monster* mons)
     const bool no_foe      = (foe == NULL);
     const bool no_player   = crawl_state.game_is_arena()
                              || (!mons->wont_attack()
-                                 && (!foe || foe->atype() != ACT_PLAYER));
+                                 && (!foe || !foe->is_player()));
     const bool mon_foe     = (m_foe != NULL);
     const bool no_god      = no_foe || (mon_foe && foe->deity() == GOD_NO_GOD);
     const bool named_foe   = !no_foe && (!mon_foe || (m_foe->is_named()

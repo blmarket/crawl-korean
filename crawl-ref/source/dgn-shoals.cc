@@ -684,14 +684,13 @@ void dgn_shoals_generate_flora()
     }
 }
 
-void dgn_build_shoals_level(int level_number)
+void dgn_build_shoals_level()
 {
-    env.level_build_method += make_stringf(" shoals+ [%d]", level_number);
+    env.level_build_method += make_stringf(" shoals+ [%d]", you.depth);
     env.level_layout_types.insert("shoals");
 
-    const int shoals_depth = level_id::current().depth - 1;
-    if (you.level_type != LEVEL_LABYRINTH && you.level_type != LEVEL_PORTAL_VAULT)
-        dgn_replace_area(0, 0, GXM-1, GYM-1, DNGN_ROCK_WALL, DNGN_OPEN_SEA);
+    const int shoals_depth = you.depth - 1;
+    dgn_replace_area(0, 0, GXM-1, GYM-1, DNGN_ROCK_WALL, DNGN_OPEN_SEA);
     _shoals_init_heights();
     _shoals_init_islands(shoals_depth);
     _shoals_cliffs();
@@ -788,7 +787,7 @@ static void _clear_net_trapping_status(coord_def c)
     if (!victim)
         return;
 
-    if (victim->atype() == ACT_MONSTER)
+    if (victim->is_monster())
     {
         monster* mvictim = victim->as_monster();
         if (you.can_see(mvictim))
@@ -842,7 +841,7 @@ static bool _shoals_tide_sweep_actors_clear(coord_def c)
     if (!victim || !victim->ground_level() || victim->swimming())
         return true;
 
-    if (victim->atype() == ACT_MONSTER)
+    if (victim->is_monster())
     {
         const monster* mvictim = victim->as_monster();
         // Plants and statues cannot be moved away; the tide cannot
@@ -1064,9 +1063,7 @@ static void _shoals_init_tide()
         props[PROPS_SHOALS_TIDE_UPDATE_TIME].get_int() = 0;
     }
     if (!env.properties.exists(PROPS_SHOALS_TIDE_KEY))
-    {
         env.properties[PROPS_SHOALS_TIDE_KEY].get_short() = 0;
-    }
 }
 
 static monster* _shoals_find_tide_caller()

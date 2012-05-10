@@ -182,10 +182,10 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
         {
             resist = poison_player(coinflip() ? 2 : 1, source, kaux) ? 0 : 1;
 
-        hurted = resist_adjust_damage(&you, flavour, resist,
-                                      hurted, true);
+            hurted = resist_adjust_damage(&you, flavour, resist,
+                                          hurted, true);
             if (resist > 0)
-            canned_msg(MSG_YOU_RESIST);
+                canned_msg(MSG_YOU_RESIST);
         }
         else
         {
@@ -317,9 +317,12 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
 
             if (one_chance_in(3)
                 // delete_mutation() handles MUT_MUTATION_RESISTANCE but not the amulet
-                && (!wearing_amulet(AMU_RESIST_MUTATION) || one_chance_in(10)))
+                && (!player_res_mutation()
+                    || one_chance_in(10)))
             {
-                delete_mutation(RANDOM_GOOD_MUTATION);
+                // silver stars only, if this ever changes we may want to give
+                // aux as well
+                delete_mutation(RANDOM_GOOD_MUTATION, source);
             }
         }
         break;
@@ -349,9 +352,13 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             hurted += hurted / 2;
         break;
     }
+
     default:
         break;
     }                           // end switch
+
+    if (doEffects && hurted != original)
+        maybe_id_resist(flavour);
 
     return (hurted);
 }
@@ -432,7 +439,7 @@ static void _item_corrode(int slot)
         return;
 
     // Anti-corrosion items protect against 90% of corrosion.
-    if (wearing_amulet(AMU_RESIST_CORROSION) && !one_chance_in(10))
+    if (player_res_corr() && !one_chance_in(10))
     {
         dprf("Amulet protects.");
         return;
@@ -530,6 +537,7 @@ static int _get_target_class(beam_type flavour)
         break;
 
     case BEAM_COLD:
+    case BEAM_ICE:
     case BEAM_FRAG:
         target_class = OBJ_POTIONS;
         break;
@@ -619,7 +627,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             // Loop through all items in the stack.
             for (int j = 0; j < you.inv[i].quantity; ++j)
             {
-                if (x_chance_in_y(strength, 100))
+                if (bernoulli(strength, 0.01))
                 {
                     num_dest++;
 
@@ -652,24 +660,23 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                          item_name.c_str(),
                          (num_dest == 1) ? "s" : "",
                          (num_dest == 1) ? "s" : "");
-                     break;
+                    break;
 
                 case OBJ_FOOD:
-                    // Message handled elsewhere.
-                    if (flavour == BEAM_DEVOUR_FOOD)
-                        break; // (deceit, 110815) Number of foods you've losted, itemname, is/are.
-                    mprf(gettext("%s %s %s covered with spores!"), 
+                    mprf(_("%s %s %s %s!"),
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
-                         (num_dest == 1) ? "is" : "are"); 
-                     break;
+                         (num_dest == 1) ? "is" : "are",
+                         (flavour == BEAM_DEVOUR_FOOD) ?
+                             _("devoured") : _("covered with spores"));
+                    break;
 
                 default: // (deceit, 110815) same as 'covered with spores'.
                     mprf(gettext("%s %s %s destroyed!"),
                          part_stack_string(num_dest, quantity).c_str(),
                          item_name.c_str(),
-                         (num_dest == 1) ? "is" : "are");  
-                     break;
+                         (num_dest == 1) ? "is" : "are");
+                    break;
                 }
 
                 total_dest += num_dest;
@@ -1099,6 +1106,8 @@ static void _place_player_corpse(bool explode)
 #if defined(WIZARD) || defined(DEBUG)
 static void _wizard_restore_life()
 {
+    if (you.hp_max <= 0)
+        unrot_hp(9999);
     if (you.hp <= 0)
         set_hp(you.hp_max);
     for (int i = 0; i < NUM_STATS; ++i)
@@ -1221,9 +1230,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
             // for note taking
             std::string damage_desc;
             if (!see_source)
-            {
-                damage_desc = make_stringf(gettext("something (%d)"), dam); // milestone???
-            }
+                damage_desc = make_stringf(_("something (%d)"), dam);
             else
             {
                 damage_desc = scorefile_entry(dam, death_source,
@@ -1362,30 +1369,25 @@ void ouch(int dam, int death_source, kill_method_type death_type,
     // Prevent bogus notes.
     activate_notes(false);
 
-#ifdef SCORE_WIZARD_CHARACTERS
-    // Add this highscore to the score file.
-    hiscores_new_entry(se);
-    logfile_new_entry(se);
-#else
-
-    // Only add non-wizards to the score file.
-    // Never generate bones files of wizard or tutorial characters -- bwr
+#ifndef SCORE_WIZARD_CHARACTERS
     if (!you.wizard)
+#endif
     {
+        // Add this highscore to the score file.
         hiscores_new_entry(se);
         logfile_new_entry(se);
-
-        if (!non_death && !crawl_state.game_is_tutorial())
-            save_ghost();
     }
-#endif
+
+    // Never generate bones files of wizard or tutorial characters -- bwr
+    if (!non_death && !crawl_state.game_is_tutorial() && !you.wizard)
+        save_ghost();
 
     _end_game(se);
 }
 
-static std::string _morgue_name(time_t when_crawl_got_even)
+std::string morgue_name(std::string char_name, time_t when_crawl_got_even)
 {
-    std::string name = "morgue-" + you.your_name;
+    std::string name = "morgue-" + char_name;
 
     std::string time = make_file_time(when_crawl_got_even);
     if (!time.empty())
@@ -1432,12 +1434,7 @@ void _end_game(scorefile_entry &se)
             continue;
         set_ident_flags(you.inv[i], ISFLAG_IDENT_MASK);
         set_ident_type(you.inv[i], ID_KNOWN_TYPE);
-        if (Options.autoinscribe_artefacts && is_artefact(you.inv[i]))
-        {
-            std::string inscr = artefact_auto_inscription(you.inv[i]);
-            if (inscr != "")
-                add_autoinscription(you.inv[i], inscr);
-        }
+        add_autoinscription(you.inv[i]);
     }
 
     _delete_files();
@@ -1501,7 +1498,7 @@ void _end_game(scorefile_entry &se)
             hints_death_screen();
     }
 
-    if (!dump_char(_morgue_name(se.get_death_time()), true, &se))
+    if (!dump_char(morgue_name(you.your_name, se.get_death_time()), true, &se))
     {
         mpr(gettext("Char dump unsuccessful! Sorry about that."));
         if (!crawl_state.seen_hups)
@@ -1559,9 +1556,9 @@ void _end_game(scorefile_entry &se)
 
 int actor_to_death_source(const actor* agent)
 {
-    if (agent->atype() == ACT_PLAYER)
+    if (agent->is_player())
         return (NON_MONSTER);
-    else if (agent->atype() == ACT_MONSTER)
+    else if (agent->is_monster())
         return (agent->as_monster()->mindex());
     else
         return (NON_MONSTER);

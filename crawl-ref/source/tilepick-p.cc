@@ -88,15 +88,11 @@ tileidx_t tilep_equ_weapon(const item_def &item)
     case WPN_EVENINGSTAR:       return TILEP_HAND1_EVENINGSTAR;
     case WPN_GIANT_CLUB:        return TILEP_HAND1_GIANT_CLUB_PLAIN;
     case WPN_GIANT_SPIKED_CLUB: return TILEP_HAND1_GIANT_CLUB_SPIKE_SLANT;
-    case WPN_ANKUS:             return TILEP_HAND1_ANKUS;
     case WPN_WHIP:              return TILEP_HAND1_WHIP;
     case WPN_DEMON_WHIP:        return TILEP_HAND1_BLACK_WHIP;
     case WPN_SACRED_SCOURGE:    return TILEP_HAND1_SACRED_SCOURGE;
 
     // Edge
-#if TAG_MAJOR_VERSION == 32
-    case WPN_KNIFE:                return TILEP_HAND1_DAGGER_SLANT;
-#endif
     case WPN_DAGGER:               return TILEP_HAND1_DAGGER_SLANT;
     case WPN_SHORT_SWORD:          return TILEP_HAND1_SHORT_SWORD_SLANT;
     case WPN_LONG_SWORD:           return TILEP_HAND1_LONG_SWORD_SLANT;
@@ -106,10 +102,6 @@ tileidx_t tilep_equ_weapon(const item_def &item)
     case WPN_SABRE:                return TILEP_HAND1_SABRE;
     case WPN_DEMON_BLADE:          return TILEP_HAND1_DEMON_BLADE;
     case WPN_QUICK_BLADE:          return TILEP_HAND1_DAGGER;
-#if TAG_MAJOR_VERSION == 32
-    case WPN_KATANA:               return TILEP_HAND1_KATANA_SLANT;
-    case WPN_BLESSED_KATANA:       return TILEP_HAND1_KATANA_SLANT;
-#endif
     case WPN_DOUBLE_SWORD:         return TILEP_HAND1_DOUBLE_SWORD;
     case WPN_TRIPLE_SWORD:         return TILEP_HAND1_TRIPLE_SWORD;
     case WPN_EUDEMON_BLADE:        return TILEP_HAND1_BLESSED_BLADE;
@@ -197,9 +189,6 @@ tileidx_t tilep_equ_armour(const item_def &item)
     case ARM_CHAIN_MAIL:         return TILEP_BODY_CHAINMAIL;
     case ARM_SCALE_MAIL:         return TILEP_BODY_SCALEMAIL;
     case ARM_SPLINT_MAIL:        return TILEP_BODY_SPLINT;
-#if TAG_MAJOR_VERSION == 32
-    case ARM_BANDED_MAIL:        return TILEP_BODY_SPLINT;
-#endif
     case ARM_PLATE_ARMOUR:       return TILEP_BODY_PLATE_BLACK;
     case ARM_CRYSTAL_PLATE_ARMOUR:return TILEP_BODY_CRYSTAL_PLATE;
 
@@ -386,7 +375,23 @@ tileidx_t tileidx_player()
             }
             break;
         }
-        case TRAN_DRAGON:    ch = TILEP_TRAN_DRAGON;    break;
+        case TRAN_DRAGON:
+        {
+            switch (you.species)
+            {
+            case SP_BLACK_DRACONIAN:   ch = TILEP_TRAN_DRAGON_BLACK;   break;
+            case SP_YELLOW_DRACONIAN:  ch = TILEP_TRAN_DRAGON_YELLOW;  break;
+            case SP_GREY_DRACONIAN:    ch = TILEP_TRAN_DRAGON_GREY;    break;
+            case SP_GREEN_DRACONIAN:   ch = TILEP_TRAN_DRAGON_GREEN;   break;
+            case SP_MOTTLED_DRACONIAN: ch = TILEP_TRAN_DRAGON_MOTTLED; break;
+            case SP_PALE_DRACONIAN:    ch = TILEP_TRAN_DRAGON_PALE;    break;
+            case SP_PURPLE_DRACONIAN:  ch = TILEP_TRAN_DRAGON_PURPLE;  break;
+            case SP_WHITE_DRACONIAN:   ch = TILEP_TRAN_DRAGON_WHITE;   break;
+            case SP_RED_DRACONIAN:     ch = TILEP_TRAN_DRAGON_RED;     break;
+            default:                   ch = TILEP_TRAN_DRAGON;         break;
+            }
+            break;
+        }
         case TRAN_LICH:
         {
             switch (you.species)
@@ -673,17 +678,6 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_CLOAK] = TILEP_CLOAK_BLUE;
             break;
 
-#if TAG_MAJOR_VERSION == 32
-        case JOB_PALADIN:
-            parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_WHITE;
-            parts[TILEP_PART_LEG]   = TILEP_LEG_PANTS_BROWN;
-            parts[TILEP_PART_HELM]  = TILEP_HELM_HELM_IRON;
-            parts[TILEP_PART_ARM]   = TILEP_ARM_GLOVE_GRAY;
-            parts[TILEP_PART_BOOTS] = TILEP_BOOTS_MIDDLE_GRAY;
-            parts[TILEP_PART_CLOAK] = TILEP_CLOAK_BLUE;
-            break;
-#endif
-
         case JOB_CHAOS_KNIGHT:
             parts[TILEP_PART_BODY]  = TILEP_BODY_MESH_BLACK;
             parts[TILEP_PART_LEG]   = TILEP_LEG_PANTS_SHORT_DARKBROWN;
@@ -708,15 +702,6 @@ void tilep_job_default(int job, dolls_data *doll)
             parts[TILEP_PART_BODY]  = TILEP_BODY_ANIMAL_SKIN;
             parts[TILEP_PART_LEG]   = TILEP_LEG_BELT_REDBROWN;
             break;
-
-#if TAG_MAJOR_VERSION == 32
-        case JOB_REAVER:
-            parts[TILEP_PART_BODY]  = TILEP_BODY_ROBE_BLACK_GOLD;
-            parts[TILEP_PART_LEG]   = TILEP_LEG_PANTS_BROWN;
-            parts[TILEP_PART_HAND2] = TILEP_HAND2_BOOK_RED_DIM;
-            parts[TILEP_PART_BOOTS] = TILEP_BOOTS_SHORT_BROWN;
-            break;
-#endif
 
         case JOB_STALKER:
             parts[TILEP_PART_HELM]  = TILEP_HELM_HOOD_GREEN;
@@ -950,13 +935,11 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
 }
 
 // Parts index to string
-void tilep_part_to_str(int number, char *buf)
+static void _tilep_part_to_str(int number, char *buf)
 {
     //special
     if (number == TILEP_SHOW_EQUIP)
-    {
         buf[0] = buf[1] = buf[2] = '*';
-    }
     else
     {
         //normal 2 digits
@@ -968,7 +951,7 @@ void tilep_part_to_str(int number, char *buf)
 }
 
 // Parts string to index
-int tilep_str_to_part(char *str)
+static int _tilep_str_to_part(char *str)
 {
     //special
     if (str[0] == '*')
@@ -1024,7 +1007,7 @@ void tilep_scan_parts(char *fbuf, dolls_data &doll, int species, int level)
         ibuf[ccount] = '\0';
         gcount++;
 
-        const tileidx_t idx = tilep_str_to_part(ibuf);
+        const tileidx_t idx = _tilep_str_to_part(ibuf);
         if (idx == TILEP_SHOW_EQUIP)
             doll.parts[p] = TILEP_SHOW_EQUIP;
         else if (p == TILEP_PART_BASE)
@@ -1074,7 +1057,7 @@ void tilep_print_parts(char *fbuf, const dolls_data &doll)
                     idx = 0;
             }
         }
-        tilep_part_to_str(idx, ptr);
+        _tilep_part_to_str(idx, ptr);
 
         ptr += 3;
 

@@ -254,9 +254,7 @@ std::vector<MenuEntry *> Menu::show(bool reuse_selections)
     cursor_control cs(false);
 
     if (reuse_selections)
-    {
         get_selected(&sel);
-    }
     else
     {
         deselect_all(false);
@@ -663,9 +661,7 @@ bool Menu::draw_title_suffix(const formatted_string &fs, bool titlefirst)
 std::string Menu::get_select_count_string(int count) const
 {
     if (f_selitem)
-    {
         return f_selitem(&sel);
-    }
     else
     {
         char buf[100] = "";
@@ -725,8 +721,7 @@ bool Menu::is_hotkey(int i, int key)
     int end = first_entry + pagesize;
     if (end > static_cast<int>(items.size())) end = items.size();
 
-    bool ishotkey = (is_set(MF_SINGLESELECT) ? items[i]->is_primary_hotkey(key)
-                                             : items[i]->is_hotkey(key));
+    bool ishotkey = items[i]->is_hotkey(key);
 
     return !is_set(MF_SELECT_BY_PAGE) ? ishotkey
                                       : ishotkey && i >= first_entry && i < end;
@@ -756,9 +751,9 @@ void Menu::select_items(int key, int qty)
         // are usually separated by at least a page, so we should
         // only select the item on the current page. This is why we
         // use two loops, and check to see if we've matched an item
-        // by its primary hotkey (which is assumed to always be
-        // hotkeys[0]), in which case, we stop selecting further
-        // items.
+        // by its primary hotkey (hotkeys[0] for multiple-selection
+        // menus, any hotkey for single-selection menus), in which
+        // case, we stop selecting further items.
         const bool check_preselected = (key == CK_ENTER);
         for (int i = first_entry; i < final; ++i)
         {
@@ -771,7 +766,7 @@ void Menu::select_items(int key, int qty)
             else if (is_hotkey(i, key))
             {
                 select_index(i, qty);
-                if (items[i]->hotkeys[0] == key)
+                if (items[i]->hotkeys[0] == key || is_set(MF_SINGLESELECT))
                 {
                     selected = true;
                     break;
@@ -792,11 +787,8 @@ void Menu::select_items(int key, int qty)
                 else if (is_hotkey(i, key))
                 {
                     select_index(i, qty);
-                    if (items[i]->hotkeys[0] == key)
-                    {
-                        selected = true;
-                        break;
-                    }
+                    selected = true;
+                    break;
                 }
             }
         }
@@ -1386,16 +1378,12 @@ void Menu::webtiles_write_menu(bool replace) const
     tiles.json_write_int("chunk_start", start - webtiles_section_start());
 
     if (first_entry != 0 && !is_set(MF_START_AT_END))
-    {
         tiles.json_write_int("jump_to", first_entry - webtiles_section_start());
-    }
 
     tiles.json_open_array("items");
 
     for (int i = start; i < end; ++i)
-    {
         webtiles_write_item(i, items[i]);
-    }
 
     tiles.json_close_array();
 
@@ -1434,9 +1422,7 @@ void Menu::webtiles_handle_item_request(int start, int end)
     tiles.json_open_array("items");
 
     for (int i = start; i <= end; ++i)
-    {
         webtiles_write_item(i, items[i]);
-    }
 
     tiles.json_close_array();
 
@@ -1492,25 +1478,27 @@ void Menu::webtiles_write_title() const
     if (!title) return;
     const bool first = (action_cycle == CYCLE_NONE
                         || menu_action == ACT_EXECUTE);
-    if (!first)
-        ASSERT(title2);
-
     const MenuEntry* me = (first ? title : title2);
 
     tiles.json_write_name("title");
     webtiles_write_item(-1, me);
 
     if (is_set(MF_MULTISELECT))
-    {
         tiles.json_write_string("suffix", get_select_count_string(sel.size()));
-    }
 }
 
 void Menu::webtiles_write_item(int index, const MenuEntry* me) const
 {
     tiles.json_open_object();
 
-    tiles.json_write_string("text", me->get_text());
+    if (me)
+        tiles.json_write_string("text", me->get_text());
+    else
+    {
+        tiles.json_write_string("text", "");
+        tiles.json_close_object();
+        return;
+    }
 
     if (me->quantity)
         tiles.json_write_int("q", me->quantity);
@@ -2082,9 +2070,8 @@ void PrecisionMenu::clear()
 {
     // release all the data reserved
     if (m_attached_objects.empty())
-    {
         return;
-    }
+
     std::vector<MenuObject*>::iterator it;
     for (it = m_attached_objects.begin() ; it != m_attached_objects.end(); ++it)
     {
@@ -2132,9 +2119,7 @@ bool PrecisionMenu::process_key(int key)
     // Handle CK_MOUSE_CLICK separately
     // This signifies a menu ending action
     if (key == CK_MOUSE_CLICK)
-    {
         return true;
-    }
 
     bool focus_find = false;
     PrecisionMenu::Direction focus_direction;
@@ -2145,9 +2130,7 @@ bool PrecisionMenu::process_key(int key)
         break;
     case MenuObject::INPUT_SELECTED:
         if (m_select_type == PRECISION_SINGLESELECT)
-        {
             return true;
-        }
         else
         {
             // TODO: Handle multiselect somehow
@@ -2158,7 +2141,7 @@ bool PrecisionMenu::process_key(int key)
     case MenuObject::INPUT_END_MENU_SUCCESS:
         return true;
     case MenuObject::INPUT_END_MENU_ABORT:
-        _clear_selections();
+        clear_selections();
         return true;
     case MenuObject::INPUT_ACTIVE_CHANGED:
         break;
@@ -2191,13 +2174,9 @@ bool PrecisionMenu::process_key(int key)
             m_active_object->set_active_item((MenuItem*)NULL);
             m_active_object = find_object;
             if (focus_direction == PrecisionMenu::UP)
-            {
                 m_active_object->activate_last_item();
-            }
             else
-            {
                 m_active_object->activate_first_item();
-            }
         }
     }
     // Handle selection of other objects items hotkeys
@@ -2209,14 +2188,10 @@ bool PrecisionMenu::process_key(int key)
         {
             // was it a toggle?
             if (!tmp->selected())
-            {
                 continue;
-            }
             // it was a selection
             if (m_select_type == PrecisionMenu::PRECISION_SINGLESELECT)
-            {
                 return true;
-            }
         }
     }
     return false;
@@ -2240,9 +2215,7 @@ int PrecisionMenu::handle_mouse(const MouseEvent &me)
         case MenuObject::INPUT_SELECTED:
             m_active_object = *it;
             if (m_select_type == PRECISION_SINGLESELECT)
-            {
                 return CK_MOUSE_CLICK;
-            }
             break;
         case MenuObject::INPUT_ACTIVE_CHANGED:
             // Set the active object to be this one
@@ -2252,7 +2225,7 @@ int PrecisionMenu::handle_mouse(const MouseEvent &me)
             // something got clicked that needs to signal the menu to end
             return CK_MOUSE_CLICK;
         case MenuObject::INPUT_END_MENU_ABORT:
-            _clear_selections();
+            clear_selections();
             return CK_MOUSE_CLICK;
         case MenuObject::INPUT_FOCUS_LOST:
             if (*it == m_active_object)
@@ -2268,17 +2241,15 @@ int PrecisionMenu::handle_mouse(const MouseEvent &me)
 }
 #endif
 
-void PrecisionMenu::_clear_selections()
+void PrecisionMenu::clear_selections()
 {
     std::vector<MenuObject*>::iterator it;
     for (it = m_attached_objects.begin(); it != m_attached_objects.end(); ++it)
-    {
         (*it)->clear_selections();
-    }
 }
 
 /**
- * Finds the closest rectangle to given entry start on a caardinal
+ * Finds the closest rectangle to given entry start on a cardinal
  * direction from it.
  * If no entries are found, NULL is returned.
  *
@@ -2289,9 +2260,7 @@ MenuObject* PrecisionMenu::_find_object_by_direction(const MenuObject* start,
                                                    Direction dir)
 {
     if (start == NULL)
-    {
         return NULL;
-    }
 
     coord_def aabb_start(0,0);
     coord_def aabb_end(0,0);
@@ -2354,34 +2323,24 @@ MenuObject* PrecisionMenu::_find_object_by_direction(const MenuObject* start,
         // intersects
         // check if it's closer than current
         if (closest == NULL)
-        {
             closest = *it;
-        }
 
         switch (dir)
         {
         case UP:
             if ((*it)->get_min_coord().y > closest->get_min_coord().y)
-            {
                 closest = *it;
-            }
             break;
         case DOWN:
             if ((*it)->get_min_coord().y < closest->get_min_coord().y)
-            {
                 closest = *it;
-            }
             break;
         case LEFT:
             if ((*it)->get_min_coord().x > closest->get_min_coord().x)
-            {
                 closest = *it;
-            }
         case RIGHT:
             if ((*it)->get_min_coord().x < closest->get_min_coord().x)
-            {
                 closest = *it;
-            }
         }
     }
     // TODO handle special cases here, like pressing down on the last entry
@@ -2434,18 +2393,14 @@ MenuObject* PrecisionMenu::get_object_by_name(const std::string &search)
     ret_val = std::find_if(m_attached_objects.begin(), m_attached_objects.end(),
         std::bind2nd(_string_lookup(), search));
     if (ret_val != m_attached_objects.end())
-    {
         return *ret_val;
-    }
     return NULL;
 }
 
 MenuItem* PrecisionMenu::get_active_item()
 {
     if (m_active_object != NULL)
-    {
         return m_active_object->get_active_item();
-    }
     return NULL;
 }
 
@@ -3084,9 +3039,7 @@ MenuItem* MenuObject::_find_item_by_mouse_coords(const coord_def& pos)
 {
     // Is the mouse even in bounds?
     if (!_is_mouse_in_bounds(pos))
-    {
         return NULL;
-    }
 
     // Traverse
     std::vector<MenuItem*>::iterator it;
@@ -3148,9 +3101,7 @@ std::vector<MenuItem*> MenuObject::get_selected_items()
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
     {
         if ((*it)->selected())
-        {
             ret_val.push_back((*it));
-        }
     }
     return ret_val;
 }
@@ -3159,9 +3110,7 @@ void MenuObject::clear_selections()
 {
     std::vector<MenuItem*>::iterator it;
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
-    {
         (*it)->select(false);
-    }
 }
 
 void MenuObject::allow_focus(bool toggle)
@@ -3201,9 +3150,7 @@ MenuFreeform::~MenuFreeform()
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
     {
         if (*it != NULL)
-        {
             delete *it;
-        }
     }
     m_entries.clear();
 }
@@ -3263,19 +3210,13 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
     {
     case CK_ENTER:
         if (m_active_item == NULL)
-        {
             return MenuObject::INPUT_NO_ACTION;
-        }
 
         select_item(m_active_item);
         if (m_active_item->selected())
-        {
             return MenuObject::INPUT_SELECTED;
-        }
         else
-        {
             return MenuObject::INPUT_DESELECTED;
-        }
         break;
     case CK_UP:
         find_entry = _find_item_by_direction(m_active_item, UP);
@@ -3285,9 +3226,7 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_UP;
-        }
         break;
     case CK_DOWN:
         find_entry = _find_item_by_direction(m_active_item, DOWN);
@@ -3297,9 +3236,7 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_DOWN;
-        }
         break;
     case CK_LEFT:
         find_entry = _find_item_by_direction(m_active_item, LEFT);
@@ -3309,9 +3246,7 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_LEFT;
-        }
         break;
     case CK_RIGHT:
         find_entry = _find_item_by_direction(m_active_item, RIGHT);
@@ -3321,22 +3256,16 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_RIGHT;
-        }
         break;
     default:
         find_entry = select_item_by_hotkey(key);
         if (find_entry != NULL)
         {
             if (find_entry->selected())
-            {
                 return MenuObject::INPUT_SELECTED;
-            }
             else
-            {
                 return MenuObject::INPUT_DESELECTED;
-            }
         }
         break;
     }
@@ -3347,9 +3276,7 @@ MenuObject::InputReturnValue MenuFreeform::process_input(int key)
 MenuObject::InputReturnValue MenuFreeform::handle_mouse(const MouseEvent& me)
 {
     if (!m_allow_focus || !m_visible)
-    {
         return INPUT_NO_ACTION;
-    }
 
     if (!_is_mouse_in_bounds(coord_def(me.px, me.py)))
     {
@@ -3359,9 +3286,7 @@ MenuObject::InputReturnValue MenuFreeform::handle_mouse(const MouseEvent& me)
             return INPUT_FOCUS_LOST;
         }
         else
-        {
             return INPUT_NO_ACTION;
-        }
     }
 
     MenuItem* find_item = NULL;
@@ -3395,13 +3320,9 @@ MenuObject::InputReturnValue MenuFreeform::handle_mouse(const MouseEvent& me)
         {
             select_item(find_item);
             if (find_item->selected())
-            {
                 return MenuObject::INPUT_SELECTED;
-            }
             else
-            {
                 return MenuObject::INPUT_DESELECTED;
-            }
         }
     }
     if (me.event == MouseEvent::PRESS && me.button == MouseEvent::LEFT)
@@ -3425,9 +3346,7 @@ void MenuFreeform::render()
 
     std::vector<MenuItem*>::iterator it;
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
-    {
         (*it)->render();
-    }
 }
 
 /**
@@ -3601,9 +3520,7 @@ MenuItem* MenuFreeform::_find_item_by_direction(const MenuItem* start,
                                                 MenuObject::Direction dir)
 {
     if (start == NULL)
-    {
         return NULL;
-    }
 
     coord_def aabb_start(0,0);
     coord_def aabb_end(0,0);
@@ -3682,34 +3599,24 @@ MenuItem* MenuFreeform::_find_item_by_direction(const MenuItem* start,
         // intersects
         // check if it's closer than current
         if (closest == NULL)
-        {
             closest = *it;
-        }
 
         switch (dir)
         {
         case UP:
             if ((*it)->get_min_coord().y > closest->get_min_coord().y)
-            {
                 closest = *it;
-            }
             break;
         case DOWN:
             if ((*it)->get_min_coord().y < closest->get_min_coord().y)
-            {
                 closest = *it;
-            }
             break;
         case LEFT:
             if ((*it)->get_min_coord().x > closest->get_min_coord().x)
-            {
                 closest = *it;
-            }
         case RIGHT:
             if ((*it)->get_min_coord().x < closest->get_min_coord().x)
-            {
                 closest = *it;
-            }
         }
     }
     // TODO handle special cases here, like pressing down on the last entry
@@ -3728,9 +3635,7 @@ MenuScroller::~MenuScroller()
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
     {
         if (*it != NULL)
-        {
             delete *it;
-        }
     }
     m_entries.clear();
 }
@@ -3766,19 +3671,13 @@ MenuObject::InputReturnValue MenuScroller::process_input(int key)
     {
     case CK_ENTER:
         if (m_currently_active < 0)
-        {
             return MenuObject::INPUT_NO_ACTION;
-        }
 
         select_item(m_currently_active);
         if (get_active_item()->selected())
-        {
             return MenuObject::INPUT_SELECTED;
-        }
         else
-        {
             return MenuObject::INPUT_DESELECTED;
-        }
         break;
     case CK_UP:
     case CONTROL('K'):
@@ -3790,9 +3689,7 @@ MenuObject::InputReturnValue MenuScroller::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_UP;
-        }
         break;
     case CK_DOWN:
     case CONTROL('J'):
@@ -3804,26 +3701,59 @@ MenuObject::InputReturnValue MenuScroller::process_input(int key)
             return MenuObject::INPUT_ACTIVE_CHANGED;
         }
         else
-        {
             return MenuObject::INPUT_FOCUS_RELEASE_DOWN;
-        }
         break;
     case CK_LEFT:
         return MenuObject::INPUT_FOCUS_RELEASE_LEFT;
     case CK_RIGHT:
         return MenuObject::INPUT_FOCUS_RELEASE_RIGHT;
+    case CK_PGUP:
+        if (m_currently_active != m_topmost_visible)
+        {
+            set_active_item(m_topmost_visible);
+            return MenuObject::INPUT_ACTIVE_CHANGED;
+        }
+        else
+        {
+            if (m_currently_active == 0)
+                return MenuObject::INPUT_FOCUS_RELEASE_UP;
+            else
+            {
+                int new_active = m_currently_active - m_items_shown;
+                if (new_active < 0)
+                    new_active = 0;
+                set_active_item(new_active);
+                return MenuObject::INPUT_ACTIVE_CHANGED;
+            }
+        }
+    case CK_PGDN:
+    {
+        int last_item_visible = m_topmost_visible + m_items_shown - 1;
+        int last_menu_item = m_entries.size() - 1;
+        if (last_item_visible > m_currently_active)
+        {
+            set_active_item(last_item_visible);
+            return MenuObject::INPUT_ACTIVE_CHANGED;
+        }
+        else if (m_currently_active == last_menu_item)
+            return MenuObject::INPUT_FOCUS_RELEASE_DOWN;
+        else
+        {
+            int new_active = m_currently_active + m_items_shown - 1;
+            if (new_active > last_menu_item)
+                new_active = last_menu_item;
+            set_active_item(new_active);
+            return MenuObject::INPUT_ACTIVE_CHANGED;
+        }
+    }
     default:
         find_entry = select_item_by_hotkey(key);
         if (find_entry != NULL)
         {
             if (find_entry->selected())
-            {
                 return MenuObject::INPUT_SELECTED;
-            }
             else
-            {
                 return MenuObject::INPUT_DESELECTED;
-            }
         }
         break;
     }
@@ -3834,9 +3764,7 @@ MenuObject::InputReturnValue MenuScroller::process_input(int key)
 MenuObject::InputReturnValue MenuScroller::handle_mouse(const MouseEvent &me)
 {
     if (!m_allow_focus || !m_visible)
-    {
         return INPUT_NO_ACTION;
-    }
 
     if (!_is_mouse_in_bounds(coord_def(me.px, me.py)))
     {
@@ -3846,9 +3774,7 @@ MenuObject::InputReturnValue MenuScroller::handle_mouse(const MouseEvent &me)
             return INPUT_FOCUS_LOST;
         }
         else
-        {
             return INPUT_NO_ACTION;
-        }
     }
 
     MenuItem* find_item = NULL;
@@ -3877,9 +3803,7 @@ MenuObject::InputReturnValue MenuScroller::handle_mouse(const MouseEvent &me)
                     return INPUT_ACTIVE_CHANGED;
                 }
                 else
-                {
                     return INPUT_NO_ACTION;
-                }
             }
             else
             {
@@ -3899,13 +3823,9 @@ MenuObject::InputReturnValue MenuScroller::handle_mouse(const MouseEvent &me)
         {
             select_item(find_item);
             if (find_item->selected())
-            {
                 return MenuObject::INPUT_SELECTED;
-            }
             else
-            {
                 return MenuObject::INPUT_DESELECTED;
-            }
         }
     }
     if (me.event == MouseEvent::PRESS && me.button == MouseEvent::LEFT)
@@ -3929,9 +3849,7 @@ void MenuScroller::render()
 
     std::vector<MenuItem*>::iterator it;
     for (it = m_entries.begin(); it != m_entries.end(); ++it)
-    {
         (*it)->render();
-    }
 }
 
 MenuItem* MenuScroller::get_active_item()
@@ -3972,22 +3890,16 @@ void MenuScroller::_set_active_item_by_index(int index)
 {
     // prevent useless _place_items
     if (index == m_currently_active)
-    {
         return;
-    }
 
     if (index >= 0 && index < static_cast<int> (m_entries.size()))
     {
         m_currently_active = index;
         if (m_currently_active < m_topmost_visible)
-        {
             m_topmost_visible = m_currently_active;
-        }
     }
     else
-    {
         m_currently_active = -1;
-    }
     m_dirty = true;
 }
 
@@ -4060,9 +3972,7 @@ bool MenuScroller::select_item(MenuItem* item)
     for (int i = 0; i < static_cast<int> (m_entries.size()); ++i)
     {
         if (item == m_entries.at(i))
-        {
             return select_item(i);
-        }
     }
     return false;
 }
@@ -4111,14 +4021,10 @@ void MenuScroller::_place_items()
         if (space_used > space_available)
         {
             if (m_currently_active < 0)
-            {
                 break; // all space allocated
-            }
             if (one_past_last > m_currently_active)
-            {
                 /// we included our active one, ok!
                 break;
-            }
             else
             {
                 // active one didn't fit, chop the first one and run the loop
@@ -4165,15 +4071,11 @@ MenuItem* MenuScroller::_find_item_by_direction(int start_index,
     {
     case UP:
         if ((start_index - 1) >= 0)
-        {
             find_item = m_entries.at(start_index - 1);
-        }
         break;
     case DOWN:
         if ((start_index + 1) < static_cast<int> (m_entries.size()))
-        {
             find_item = m_entries.at(start_index + 1);
-        }
         break;
     default:
         break;
@@ -4254,13 +4156,9 @@ void MenuDescriptor::_place_items()
 
 
         if (tmp == NULL)
-        {
              m_desc_item.set_text("");
-        }
         else
-        {
             m_desc_item.set_text(m_active_item->get_description_text());
-        }
     }
 }
 
@@ -4359,9 +4257,7 @@ BlackWhiteHighlighter::~BlackWhiteHighlighter()
 void BlackWhiteHighlighter::render()
 {
     if (!m_visible)
-    {
         return;
-    }
 
     _place_items();
 
@@ -4378,9 +4274,7 @@ void BlackWhiteHighlighter::_place_items()
 {
     MenuItem* tmp = m_parent->get_active_item();
     if (tmp == m_active_item)
-    {
         return;
-    }
 
 #ifdef USE_TILE_LOCAL
     m_shape_buf.clear();

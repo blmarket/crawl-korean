@@ -8,6 +8,7 @@
 #include "skills.h"
 
 #include <algorithm>
+#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -141,9 +142,7 @@ static void _change_skill_level(skill_type exsk, int n)
         take_note(Note(NOTE_LOSE_SKILL, exsk, you.skills[exsk]));
 
     if (you.skills[exsk] == 27)
-    {
-        mprf(MSGCH_INTRINSIC_GAIN, gettext("You have mastered %s!"), gettext(skill_name(exsk)));
-    }
+        mprf(MSGCH_INTRINSIC_GAIN, _("You have mastered %s!"), _(skill_name(exsk)));
     else if (abs(n) == 1 && you.num_turns)
     {
         mprf(MSGCH_INTRINSIC_GAIN, gettext("Your %s skill %s to level %d!"),
@@ -193,7 +192,7 @@ void redraw_skill(skill_type exsk, skill_type old_best_skill)
     if (exsk == SK_FIGHTING)
         calc_hp();
 
-    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING)
+    if (exsk == SK_INVOCATIONS || exsk == SK_SPELLCASTING || exsk == SK_EVOCATIONS)
         calc_mp();
 
     if (exsk == SK_DODGING || exsk == SK_ARMOUR)
@@ -302,12 +301,7 @@ static void _check_inventory_skills()
 
 static void _check_equipment_skills()
 {
-    skill_set_iter it = you.stop_train.find(SK_ARMOUR);
-    const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, true);
-    if (it != you.stop_train.end() && armour && property(*armour, PARM_EVASION))
-        you.stop_train.erase(it);
-
-    it = you.stop_train.find(SK_SHIELDS);
+    skill_set_iter it = you.stop_train.find(SK_SHIELDS);
     if (it != you.stop_train.end() && you.slot_item(EQ_SHIELD, true))
         you.stop_train.erase(it);
 }
@@ -375,7 +369,7 @@ static void _check_start_train()
     for (skill_set_iter it = you.start_train.begin();
              it != you.start_train.end(); ++it)
     {
-        if (is_invalid_skill(*it))
+        if (is_invalid_skill(*it) || is_useless_skill(*it))
             continue;
 
         if (!you.can_train[*it] && you.train[*it])
@@ -423,8 +417,6 @@ static void _check_stop_train()
     if (!skills.empty())
         mprf(gettext("You stop training %s"), _skill_names(skills).c_str());
 
-    if (you.num_turns)
-        check_selected_skills();
     reset_training();
     you.stop_train.clear();
 }
@@ -436,6 +428,8 @@ void update_can_train()
 
     if (!you.start_train.empty())
         _check_start_train();
+
+    check_selected_skills();
 }
 
 bool training_restricted(skill_type sk)
@@ -445,6 +439,7 @@ bool training_restricted(skill_type sk)
     case SK_FIGHTING:
     // Requiring missiles would mean disabling the skill when you run out.
     case SK_THROWING:
+    case SK_ARMOUR:
     case SK_DODGING:
     case SK_STEALTH:
     case SK_STABBING:
@@ -558,7 +553,7 @@ static void _scale_array(FixedVector<T, SIZE> &array, int scale, bool exact)
 
 /*
  * Init the training array by scaling down the skill_points array to 100.
- * Used at game setup, and when upgrading saves.
+ * Used at game setup, when upgrading saves and when loading dump files.
  */
 void init_training()
 {
@@ -566,13 +561,13 @@ void init_training()
     skills.init(0);
     for (int i = 0; i < NUM_SKILLS; ++i)
         if (skill_trained(i))
-            skills[i] = you.skill_points[i];
+            skills[i] = pow(you.skill_points[i], 2);
 
     _scale_array(skills, EXERCISE_QUEUE_SIZE, true);
     _init_queue(you.exercises, skills);
 
     for (int i = 0; i < NUM_SKILLS; ++i)
-        skills[i] = you.skill_points[i];
+        skills[i] = pow(you.skill_points[i], 2);
 
     _scale_array(skills, EXERCISE_QUEUE_SIZE, true);
     _init_queue(you.exercises_all, skills);
@@ -936,7 +931,12 @@ void check_skill_cost_change()
     while (you.skill_cost_level < 27
            && you.total_experience >= skill_cost_needed(you.skill_cost_level + 1))
     {
-        you.skill_cost_level++;
+        ++you.skill_cost_level;
+    }
+    while (you.skill_cost_level > 0
+           && you.total_experience < skill_cost_needed(you.skill_cost_level))
+    {
+        --you.skill_cost_level;
     }
 }
 
@@ -1008,4 +1008,74 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
     you.redraw_experience = true;
 
     return (skill_inc);
+}
+
+void set_skill_level(skill_type skill, double amount)
+{
+    double level;
+    double fractional = modf(amount, &level);
+
+    you.ct_skill_points[skill] = 0;
+    you.skills[skill] = level;
+
+    if (level >= 27)
+    {
+        level = 27;
+        fractional = 0;
+    }
+
+    unsigned int target = skill_exp_needed(level, skill);
+    if (fractional)
+    {
+        target += (skill_exp_needed(level + 1, skill)
+                  - skill_exp_needed(level, skill)) * fractional + 1;
+    }
+
+    if (target == you.skill_points[skill])
+        return;
+
+    // We're updating you.skill_points[skill] and calculating the new
+    // you.total_experience to update skill cost.
+
+    const bool reduced = target < you.skill_points[skill];
+
+#ifdef DEBUG_TRAINING_COST
+    dprf("target: %d.", target);
+#endif
+    while (you.skill_points[skill] != target)
+    {
+        int next_level = reduced ? skill_cost_needed(you.skill_cost_level)
+                                 : skill_cost_needed(you.skill_cost_level + 1);
+        int max_xp = abs(next_level - you.total_experience);
+
+        // When reducing, we don't want to stop right at the limit, unless
+        // we're at skill cost level 0.
+        if (reduced and you.skill_cost_level)
+            ++max_xp;
+
+        int cost = calc_skill_cost(you.skill_cost_level);
+        // Maximum number of skill points to transfer in one go.
+        // It's max_xp*10/cost rounded up.
+        int max_skp = (max_xp * 10 + cost - 1) / cost;
+        max_skp = std::max(max_skp, 1);
+        int delta_skp = std::min<int>(abs(target - you.skill_points[skill]),
+                                      max_skp);
+        int delta_xp = (delta_skp * cost + 9) / 10;
+
+        if (reduced)
+        {
+            delta_skp = -std::min<int>(delta_skp, you.skill_points[skill]);
+            delta_xp = -std::min<int>(delta_xp, you.total_experience);
+        }
+
+#ifdef DEBUG_TRAINING_COST
+        dprf("cost level: %d, total experience: %d, next level: %d, "
+             "skill points: %d, delta_skp: %d, delta_xp: %d.",
+             you.skill_cost_level, you.total_experience, next_level,
+             you.skill_points[skill], delta_skp, delta_xp);
+#endif
+        you.skill_points[skill] += delta_skp;
+        you.total_experience += delta_xp;
+        check_skill_cost_change();
+    }
 }

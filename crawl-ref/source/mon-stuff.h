@@ -149,7 +149,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet = false);
 
 
 void print_wounds(const monster* mons);
-bool monster_descriptor(int which_class, mon_desc_type which_descriptor);
+bool monster_descriptor(monster_type which_class, mon_desc_type which_descriptor);
 
 // Return your target, if it still exists and is visible to you.
 monster *get_current_target();
@@ -183,10 +183,6 @@ bool is_item_jelly_edible(const item_def &item);
 
 bool monster_space_valid(const monster* mons, coord_def target,
                          bool forbid_sanctuary);
-bool monster_random_space(const monster* mons, coord_def& target,
-                          bool forbid_sanctuary = false);
-bool monster_random_space(monster_type mon, coord_def& target,
-                          bool forbid_sanctuary = false);
 void monster_teleport(monster* mons, bool instan, bool silent = false);
 void mons_clear_trapping_net(monster* mon);
 

@@ -23,11 +23,14 @@
 #include "colour.h"
 #include "coord.h"
 #include "describe.h"
+#include "env.h"
+#include "files.h"
 #include "format.h"
 #include "godabil.h"
 #include "initfile.h"
 #include "itemname.h"
 #include "item_use.h"
+#include "lang-fake.h"
 #include "menu.h"
 #include "message.h"
 #include "misc.h"
@@ -372,6 +375,7 @@ static void _print_stats_ac(int x, int y)
     if (you.incapacitated() && player_wearing_slot(EQ_SHIELD))
         textcolor(RED);
     else if (you.duration[DUR_CONDENSATION_SHIELD]
+             || you.duration[DUR_MAGIC_SHIELD]
              || you.duration[DUR_DIVINE_SHIELD])
     {
         textcolor(LIGHTBLUE);
@@ -412,13 +416,12 @@ static void _print_stats_wp(int y)
         col = LIGHTGREY;
         text = "무장하지 않음"; // Default
 
-        if (you.has_usable_claws(true))
-            text = "손톱";
-        if (you.has_usable_tentacles(true))
-            text = "촉수";
-
         if (you.species == SP_FELID)
-            text = "이빨과 손톱";
+            text = _("Teeth and claws");
+        else if (you.has_usable_claws(true))
+            text = _("Claws");
+        else if (you.has_usable_tentacles(true))
+            text = _("Tentacles");
 
         switch (you.form)
         {
@@ -576,9 +579,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         DUR_REPEL_MISSILES,
         STATUS_REGENERATION,
         DUR_BERSERK,
-        DUR_RESIST_POISON,
-        DUR_RESIST_COLD,
-        DUR_RESIST_FIRE,
+        DUR_RESISTANCE,
         DUR_INSULATION,
         DUR_SEE_INVISIBLE,
         STATUS_AIRBORNE,
@@ -587,7 +588,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         DUR_SILENCE,
         DUR_CONFUSING_TOUCH,
         DUR_BARGAIN,
-        DUR_SAGE,
+        STATUS_SAGE,
         DUR_FIRE_SHIELD,
         DUR_SLIMIFY,
         DUR_SURE_BLADE,
@@ -629,6 +630,8 @@ static void _get_status_lights(std::vector<status_light>& out)
         STATUS_CONSTRICTED,
         DUR_DIVINE_STAMINA,
         STATUS_AUGMENTED,
+        STATUS_SUPPRESSED,
+        STATUS_TERRAIN,
     };
 
     status_info inf;
@@ -658,7 +661,13 @@ static void _print_status_lights(int y)
     const size_t line_end = crawl_view.hudsz.y+1;
 
     cgotoxy(1, line_cur, GOTO_STAT);
-    ASSERT_SAVE(wherex() == crawl_view.hudp.x);
+#ifdef ASSERTS
+    if (wherex() != crawl_view.hudp.x)
+    {
+        save_game(false); // should be safe
+        die("misaligned HUD (is %d, should be %d)", wherex(), crawl_view.hudp.x);
+    }
+#endif
 
     size_t i_light = 0;
     while (true)
@@ -805,7 +814,7 @@ void print_stats(void)
     if (you.redraw_title)
     {
         you.redraw_title = false;
-        _redraw_title(you.your_name, player_title());
+        _redraw_title(you.your_name, filtered_lang(player_title()));
     }
 
     if (you.redraw_hit_points)   { you.redraw_hit_points = false;   _print_stats_hp (1, 3); }
@@ -822,13 +831,7 @@ void print_stats(void)
     {
         cgotoxy(1,8, GOTO_STAT);
         textcolor(Options.status_caption_colour);
-#ifdef DEBUG_DIAGNOSTICS
-        cprintf("XP: ");
-        textcolor(HUD_VALUE_COLOUR);
-        cprintf("%d/%d (%d) ",
-                you.experience_level, you.skill_cost_level, you.exp_available);
-#else
-        cprintf("레벨:");
+        cprintf("레벨: ");
         textcolor(HUD_VALUE_COLOUR);
         cprintf("%2d ", you.experience_level);
         if (you.experience_level < 27)
@@ -838,7 +841,6 @@ void print_stats(void)
             textcolor(HUD_VALUE_COLOUR);
             cprintf("%2d%% ", get_exp_progress());
         }
-#endif
         if (crawl_state.game_is_zotdef())
         {
             cgotoxy(1, 9, GOTO_STAT);
@@ -907,33 +909,16 @@ void print_stats(void)
 static std::string _level_description_string_hud()
 {
     const PlaceInfo& place = you.get_place_info();
-    std::string short_name = place.short_name();
+    std::string short_name = branches[place.branch].shortname;
 
-    if (place.level_type == LEVEL_DUNGEON
-        && branches[place.branch].depth > 1)
-    {
-        short_name += make_stringf(":%d", player_branch_depth());
-    }
-    // Indefinite articles
-    else if (place.level_type == LEVEL_PORTAL_VAULT
-             || place.level_type == LEVEL_LABYRINTH)
-    {
-        if (!you.level_type_name.empty())
-        {
-            // If the level name is faking a dungeon depth
-            // (i.e., "Ziggurat:3") then don't add an article
-            if (you.level_type_name.find(":") != std::string::npos)
-                short_name = you.level_type_name;
-            else
-                short_name = article_a(uppercase_first(you.level_type_name),
-                                       false);
-        }
-        else
-            short_name.insert(0, "A ");
-    }
+    if (brdepth[place.branch] > 1)
+        short_name += make_stringf(":%d", you.depth);
     // Definite articles
-    else if (place.level_type == LEVEL_ABYSS)
+    else if (place.branch == BRANCH_ABYSS)
         short_name.insert(0, "The ");
+    // Indefinite articles
+    else if (place.branch != BRANCH_PANDEMONIUM && !is_connected_branch(place.branch))
+        short_name = article_a(short_name);
     return short_name;
 }
 
@@ -945,7 +930,7 @@ void print_stats_level()
 
     textcolor(HUD_VALUE_COLOUR);
 #ifdef DEBUG_DIAGNOSTICS
-    cprintf("(%d) ", you.absdepth0 + 1);
+    cprintf("(%d) ", env.absdepth0 + 1);
 #endif
     cprintf("%s", _level_description_string_hud().c_str());
     clear_to_end_of_line();
@@ -1109,37 +1094,13 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
 
         const int count = (end - start);
 
-        if (count == 1)
+        if (count == 1)  // Print an icon representing damage level.
         {
-            // Print an "icon" representing damage level.
-            monster_info mi = mons[start];
-
-            int dam_color;
-            switch (mi.dam)
-            {
-            // NOTE: In os x, light versions of foreground colors are OK,
-            //       but not background colors.  So stick wth standards.
-            case MDAM_DEAD:
-            case MDAM_ALMOST_DEAD:
-            case MDAM_SEVERELY_DAMAGED:   dam_color = RED;       break;
-            case MDAM_HEAVILY_DAMAGED:    dam_color = MAGENTA;   break;
-            case MDAM_MODERATELY_DAMAGED: dam_color = BROWN;     break;
-            case MDAM_LIGHTLY_DAMAGED:    dam_color = GREEN;     break;
-            case MDAM_OKAY:               dam_color = GREEN;     break;
-            default:                      dam_color = CYAN;      break;
-            }
-
-            if (!mons_class_can_display_wounds(mi.type))
-                dam_color = BLACK;
-
             cprintf(" ");
-            textbackground(dam_color);
-            textcolor(dam_color);
-            // FIXME: On Windows, printing a blank space here
-            // doesn't give us the correct colours. So use and
-            // underscore instead. Is this a bug with our interface
-            // or with Windows?
-            cprintf("_");
+
+            monster_info mi = mons[start];
+            textcolor(real_colour(dam_colour(mi) | COLFLAG_ITEM_HEAP));
+            cprintf(" ");
             textbackground(BLACK);
             textcolor(LIGHTGREY);
             cprintf(" ");
@@ -1154,10 +1115,10 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
 
         if (printed < crawl_view.mlistsz.x)
         {
-            int desc_color;
+            int desc_colour;
             std::string desc;
-            mons[start].to_string(count, desc, desc_color, zombified);
-            textcolor(desc_color);
+            mons[start].to_string(count, desc, desc_colour, zombified);
+            textcolor(desc_colour);
             desc.resize(crawl_view.mlistsz.x-printed, ' ');
             cprintf("%s", desc.c_str());
         }
@@ -1733,8 +1694,8 @@ static std::vector<formatted_string> _get_overview_resistances(
 {
     char buf[1000];
 
-    // 3 columns, splits at columns 21, 39
-    column_composer cols(3, 21, 39);
+    // 3 columns, splits at columns 21, 38
+    column_composer cols(3, 21, 38);
 
     // Don't show unreliable resistances granted by the cloak.  We could mark
     // them somehow, but for now this will do.
@@ -1746,30 +1707,27 @@ static std::vector<formatted_string> _get_overview_resistances(
     const int rfire = player_res_fire(calc_unid);
     const int rcold = player_res_cold(calc_unid);
     const int rlife = player_prot_life(calc_unid);
-    const int racid = player_res_acid(calc_unid);
     const int rpois = player_res_poison(calc_unid);
     const int relec = player_res_electricity(calc_unid);
     const int rsust = player_sust_abil(calc_unid);
-    const int rmuta = (wearing_amulet(AMU_RESIST_MUTATION, calc_unid)
+    const int rmuta = (player_res_mutation()
                        || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                        || you.religion == GOD_ZIN && you.piety >= 150);
     const int rrott = (you.res_rotting()
                        || you.religion == GOD_ZIN && you.piety >= 150);
 
     snprintf(buf, sizeof buf,
-             "%s화염 저항 : %s\n"
-             "%s냉기 저항 : %s\n"
-             "%s약화 저항 : %s\n"
-             "%s산성 저항 : %s\n"
-             "%s독소 저항 : %s\n"
-             "%s전기 저항 : %s\n"
-             "%s능력 유지 : %s\n"
-             "%s변이 저항 : %s\n"
-             "%s부패 저항 : %s\n",
+             _("%sRes.Fire  : %s\n"
+             "%sRes.Cold  : %s\n"
+             "%sLife Prot.: %s\n"
+             "%sRes.Poison: %s\n"
+             "%sRes.Elec. : %s\n"
+             "%sSust.Abil.: %s\n"
+             "%sRes.Mut.  : %s\n"
+             "%sRes.Rott. : %s\n"),
              _determine_colour_string(rfire, 3), _itosym3(rfire),
              _determine_colour_string(rcold, 3), _itosym3(rcold),
              _determine_colour_string(rlife, 3), _itosym3(rlife),
-             _determine_colour_string(racid, 3), _itosym3(racid),
              _determine_colour_string(rpois, 1), _itosym1(rpois),
              _determine_colour_string(relec, 1), _itosym1(relec),
              _determine_colour_string(rsust, 2), _itosym2(rsust),
@@ -1781,7 +1739,7 @@ static std::vector<formatted_string> _get_overview_resistances(
     const char* pregourmand;
     const char* postgourmand;
 
-    if (wearing_amulet(AMU_THE_GOURMAND, calc_unid))
+    if (player_effect_gourmand())
     {
         pregourmand = "대식가    : ";
         postgourmand = _itosym1(1);
@@ -1812,24 +1770,24 @@ static std::vector<formatted_string> _get_overview_resistances(
              "%s수호 정령  : %s\n"
              ,
              _determine_colour_string(rinvi, 1), _itosym1(rinvi),
-             _determine_colour_string(rward, 2), _itosym2(rward),
+             _determine_colour_string(rward, 1), _itosym1(rward),
              _determine_colour_string(rcons, 1), _itosym1(rcons),
              _determine_colour_string(rcorr, 1), _itosym1(rcorr),
              _determine_colour_string(rclar, 1), _itosym1(rclar),
              _determine_colour_string(rspir, 1), _itosym1(rspir));
     cols.add_formatted(1, buf, false);
 
-    const int stasis = wearing_amulet(AMU_STASIS, calc_unid);
-    const int notele = scan_artefacts(ARTP_PREVENT_TELEPORTATION, calc_unid)
-                       || crawl_state.game_is_zotdef() && orb_haloed(you.pos());
+    const int stasis = player_effect_stasis(calc_unid);
+    const int notele = player_effect_notele(calc_unid)
+                       || crawl_state.game_is_zotdef()
+                          && orb_haloed(you.pos());
     const int rrtel = !!player_teleport(calc_unid);
     if (notele && !stasis)
     {
         snprintf(buf, sizeof buf, "%s전이방해   : %s",
                  _determine_colour_string(-1, 1), _itosym1(1));
     }
-    else
-    if (rrtel && !stasis)
+    else if (rrtel && !stasis)
     {
         snprintf(buf, sizeof buf, "%s랜덤이동   : %s",
                  _determine_colour_string(-1, 1), _itosym1(1));
@@ -1844,7 +1802,7 @@ static std::vector<formatted_string> _get_overview_resistances(
     int rctel = player_control_teleport(calc_unid);
     rctel = allow_control_teleport(true) ? rctel : -1;
     const int rlevi = you.airborne();
-    const int rcfli = wearing_amulet(AMU_CONTROLLED_FLIGHT, calc_unid);
+    const int rcfli = player_effect_cfly(calc_unid);
     snprintf(buf, sizeof buf,
              "%s좌표이동   : %s\n"
              "%s공중부양   : %s\n"
@@ -2047,7 +2005,7 @@ static std::string _status_mut_abilities(int sw)
         DUR_BARGAIN,
         DUR_SLAYING,
         STATUS_MANUAL,
-        DUR_SAGE,
+        STATUS_SAGE,
         DUR_MAGIC_SHIELD,
         DUR_FIRE_SHIELD,
         DUR_POISONING,
@@ -2075,6 +2033,7 @@ static std::string _status_mut_abilities(int sw)
         STATUS_UMBRA,
         STATUS_CONSTRICTED,
         STATUS_AUGMENTED,
+        STATUS_SUPPRESSED,
     };
 
     status_info inf;
@@ -2154,8 +2113,7 @@ static std::string _status_mut_abilities(int sw)
               std::string help = "비행 가능";
               if (you.experience_level > 14)
                   help = make_stringf(_("%s continuously"), help.c_str());
-              mutations.push_back(_annotate_form_based(help,
-                                                       player_is_shapechanged()));
+              mutations.push_back(help);
           }
           break;
 
@@ -2251,6 +2209,9 @@ static std::string _status_mut_abilities(int sw)
         mutations.push_back(_("almost no armour"));
         mutations.push_back(_("amphibious"));
         mutations.push_back(_annotate_form_based(
+            _("8 rings"),
+            !form_keeps_mutations() && you.form != TRAN_SPIDER));
+        mutations.push_back(_annotate_form_based(
             make_stringf(_("constrict %d"), std::min(MAX_CONSTRICT, 8)),
             !form_keeps_mutations()));
     }
@@ -2333,10 +2294,6 @@ static std::string _status_mut_abilities(int sw)
                 break;
             case MUT_HIGH_MAGIC:
                 snprintf(info, INFO_SIZE, "+%d%% mp", level*10);
-                current = info;
-                break;
-            case MUT_STOCHASTIC_TORMENT_RESISTANCE:
-                snprintf(info, INFO_SIZE, "%d%% 고통 저항", level*20);
                 current = info;
                 break;
             case MUT_ICEMAIL:

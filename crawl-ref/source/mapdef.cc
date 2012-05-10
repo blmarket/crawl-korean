@@ -101,7 +101,7 @@ void map_register_flag(const std::string &flag)
     Map_Flag_Names.insert(flag);
 }
 
-bool map_tag_is_selectable(const std::string &tag)
+static bool _map_tag_is_selectable(const std::string &tag)
 {
     return (Map_Flag_Names.find(tag) == Map_Flag_Names.end()
             && tag.find("luniq_") != 0
@@ -170,8 +170,7 @@ int store_tilename_get_index(const std::string tilename)
 //
 
 level_range::level_range(branch_type br, int s, int d)
-    : level_type(LEVEL_DUNGEON), branch(br), shallowest(),
-      deepest(), deny(false)
+    : branch(br), shallowest(), deepest(), deny(false)
 {
     set(s, d);
 }
@@ -184,20 +183,18 @@ level_range::level_range(const raw_range &r)
 
 void level_range::write(writer& outf) const
 {
-    marshallShort(outf, level_type);
     marshallShort(outf, branch);
     marshallShort(outf, shallowest);
     marshallShort(outf, deepest);
-    marshallByte(outf, deny);
+    marshallBoolean(outf, deny);
 }
 
 void level_range::read(reader& inf)
 {
-    level_type = static_cast<level_area_type>(unmarshallShort(inf));
     branch     = static_cast<branch_type>(unmarshallShort(inf));
     shallowest = unmarshallShort(inf);
     deepest    = unmarshallShort(inf);
-    deny       = unmarshallByte(inf);
+    deny       = unmarshallBoolean(inf);
 }
 
 std::string level_range::str_depth_range() const
@@ -205,7 +202,10 @@ std::string level_range::str_depth_range() const
     if (shallowest == -1)
         return (":??");
 
-    if (deepest >= branches[branch].depth)
+    if (shallowest == BRANCH_END)
+        return (":$");
+
+    if (deepest == BRANCH_END)
         return (shallowest == 1? "" : make_stringf("%d-", shallowest));
 
     if (shallowest == deepest)
@@ -238,22 +238,13 @@ void level_range::set(const std::string &br, int s, int d)
 {
     if (br == "any" || br == "Any")
         branch = NUM_BRANCHES;
-    else if ((branch = str_to_branch(br)) == NUM_BRANCHES
-             && (level_type = str_to_level_area_type(br)) == LEVEL_DUNGEON)
+    else if ((branch = str_to_branch(br)) == NUM_BRANCHES)
         throw make_stringf("Unknown branch: '%s'", br.c_str());
 
     shallowest = s;
     deepest    = d;
 
-    if (branch != NUM_BRANCHES)
-    {
-        if (shallowest == -1)
-            shallowest = branches[branch].depth;
-        if (deepest == -1)
-            deepest = branches[branch].depth;
-    }
-
-    if (deepest < shallowest)
+    if (deepest < shallowest || deepest <= 0)
         throw make_stringf("Level-range %s:%d-%d is malformed",
                            br.c_str(), s, d);
 }
@@ -262,6 +253,12 @@ level_range level_range::parse(std::string s) throw (std::string)
 {
     level_range lr;
     trim_string(s);
+
+    if (s == "*")
+    {
+        lr.set("any", 0, BRANCH_END);
+        return lr;
+    }
 
     if (s[0] == '!')
     {
@@ -293,7 +290,7 @@ void level_range::parse_partial(level_range &lr, const std::string &s)
         parse_depth_range(s, &lr.shallowest, &lr.deepest);
     }
     else
-        lr.set(s, 1, 100);
+        lr.set(s, 1, BRANCH_END);
 }
 
 void level_range::parse_depth_range(const std::string &s, int *l, int *h)
@@ -302,13 +299,14 @@ void level_range::parse_depth_range(const std::string &s, int *l, int *h)
     if (s == "*")
     {
         *l = 1;
-        *h = 100;
+        *h = BRANCH_END;
         return;
     }
 
     if (s == "$")
     {
-        *l = *h = -1;
+        *l = BRANCH_END;
+        *h = BRANCH_END;
         return;
     }
 
@@ -324,8 +322,8 @@ void level_range::parse_depth_range(const std::string &s, int *l, int *h)
         *l = strict_aton<int>(s.substr(0, hy).c_str());
 
         std::string tail = s.substr(hy + 1);
-        if (tail.empty())
-            *h = 100;
+        if (tail.empty() || tail == "$")
+            *h = BRANCH_END;
         else
             *h = strict_aton<int>(tail.c_str());
 
@@ -338,30 +336,29 @@ void level_range::set(int s, int d)
 {
     shallowest = s;
     deepest    = d;
-    if (deepest == -1 || deepest < shallowest)
+
+    if (deepest == -1)
         deepest = shallowest;
+
+    if (deepest < shallowest)
+        throw make_stringf("Bad depth range: %d-%d", shallowest, deepest);
 }
 
 void level_range::reset()
 {
     deepest = shallowest = -1;
-    level_type = LEVEL_DUNGEON;
+    branch  = NUM_BRANCHES;
 }
 
 bool level_range::matches(const level_id &lid) const
 {
-    // Level types must always match.
-    if (lid.level_type != level_type)
-        return (false);
-
-    if (lid.level_type != LEVEL_DUNGEON)
-        return (true);
-
     if (branch == NUM_BRANCHES)
         return (matches(absdungeon_depth(lid.branch, lid.depth)));
     else
         return (branch == lid.branch
-                && lid.depth >= shallowest && lid.depth <= deepest);
+                && (lid.depth >= shallowest
+                    || shallowest == BRANCH_END && lid.depth == brdepth[branch])
+                && lid.depth <= deepest);
 }
 
 bool level_range::matches(int x) const
@@ -373,21 +370,15 @@ bool level_range::matches(int x) const
 
 bool level_range::operator == (const level_range &lr) const
 {
-    return (deny == lr.deny && level_type == lr.level_type
-            && (level_type != LEVEL_DUNGEON
-                || (shallowest == lr.shallowest
-                    && deepest == lr.deepest
-                    && branch == lr.branch)));
+    return (deny == lr.deny
+            && (shallowest == lr.shallowest
+                && deepest == lr.deepest
+                && branch == lr.branch));
 }
 
 bool level_range::valid() const
 {
     return (shallowest > 0 && deepest >= shallowest);
-}
-
-int level_range::span() const
-{
-    return (deepest - shallowest);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -715,7 +706,7 @@ std::string map_lines::parse_glyph_replacements(std::string s,
 }
 
 template<class T>
-std::string parse_weighted_str(const std::string &spec, T &list)
+static std::string _parse_weighted_str(const std::string &spec, T &list)
 {
     std::vector<std::string> speclist = split_string("/", spec);
     for (int i = 0, vsize = speclist.size(); i < vsize; ++i)
@@ -773,7 +764,7 @@ std::string map_lines::add_colour(const std::string &sub)
         return (err);
 
     map_colour_list colours;
-    err = parse_weighted_str<map_colour_list>(substitute, colours);
+    err = _parse_weighted_str<map_colour_list>(substitute, colours);
     if (!err.empty())
         return (err);
 
@@ -825,7 +816,7 @@ std::string map_lines::add_fproperty(const std::string &sub)
         return (err);
 
     map_fprop_list fprops;
-    err = parse_weighted_str<map_fprop_list>(substitute, fprops);
+    err = _parse_weighted_str<map_fprop_list>(substitute, fprops);
     if (!err.empty())
         return (err);
 
@@ -850,7 +841,7 @@ std::string map_lines::add_fheight(const std::string &sub)
         return (err);
 
     map_featheight_list fheights;
-    err = parse_weighted_str(substitute, fheights);
+    err = _parse_weighted_str(substitute, fheights);
     if (!err.empty())
         return (err);
 
@@ -1328,9 +1319,7 @@ void map_lines::merge_subvault(const coord_def &mtl, const coord_def &mbr,
 
             // Merge overlays
             if (vlines.overlay.get())
-            {
                 (*overlay)(x, y) = (*vlines.overlay)(vx, vy);
-            }
             else
             {
                 // Erase any existing overlay, as the vault's doesn't exist.
@@ -1897,7 +1886,7 @@ std::string map_lines::add_tile(const std::string &sub, bool is_floor, bool is_f
         return (err);
 
     map_tile_list list;
-    err = parse_weighted_str<map_tile_list>(substitute, list);
+    err = _parse_weighted_str<map_tile_list>(substitute, list);
     if (!err.empty())
         return (err);
 
@@ -2387,8 +2376,8 @@ void map_def::write_index(writer& outf) const
     _weight.write(outf, marshallInt);
     marshallInt(outf, cache_offset);
     marshallString4(outf, tags);
-    place.save(outf);
-    write_depth_ranges(outf);
+    place.write(outf);
+    depths.write(outf);
     prelude.write(outf);
 }
 
@@ -2411,20 +2400,10 @@ void map_def::read_index(reader& inf)
     _weight = range_weight_t::read(inf, unmarshallInt);
     cache_offset = unmarshallInt(inf);
     unmarshallString4(inf, tags);
-    place.load(inf);
-    read_depth_ranges(inf);
+    place.read(inf);
+    depths.read(inf);
     prelude.read(inf);
     index_only = true;
-}
-
-void map_def::write_depth_ranges(writer& outf) const
-{
-    depths.write(outf);
-}
-
-void map_def::read_depth_ranges(reader& inf)
-{
-    depths.read(inf);
 }
 
 void map_def::set_file(const std::string &s)
@@ -2665,7 +2644,7 @@ std::string map_def::validate_temple_map()
 
 std::string map_def::validate_map_placeable()
 {
-    if (has_depth() || place.is_valid())
+    if (has_depth() || !place.empty())
         return ("");
 
     // Ok, the map wants to be placed by tag. In this case it should have
@@ -2674,7 +2653,7 @@ std::string map_def::validate_map_placeable()
     bool has_selectable_tag = false;
     for (int i = 0, tsize = tag_pieces.size(); i < tsize; ++i)
     {
-        if (map_tag_is_selectable(tag_pieces[i]))
+        if (_map_tag_is_selectable(tag_pieces[i]))
         {
             has_selectable_tag = true;
             break;
@@ -2703,8 +2682,7 @@ std::string map_def::validate_map_def(const depth_ranges &default_depths)
     if (!has_depth() && !lc_default_depths.empty())
         depths.add_depths(lc_default_depths);
 
-    if ((place.branch == BRANCH_ECUMENICAL_TEMPLE
-         && place.level_type == LEVEL_DUNGEON)
+    if (place.is_usable_in(level_id(BRANCH_ECUMENICAL_TEMPLE))
         || has_tag_prefix("temple_overflow_"))
     {
         err = validate_temple_map();
@@ -3132,7 +3110,7 @@ std::string map_def::subvault_from_tagstring(const std::string &sub)
         return ("SUBVAULT does not support '='.  Use ':' instead.");
 
     map_string_list vlist;
-    err = parse_weighted_str<map_string_list>(substitute, vlist);
+    err = _parse_weighted_str<map_string_list>(substitute, vlist);
     if (!err.empty())
         return (err);
 
@@ -3766,13 +3744,16 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(std::string spec)
             }
         }
 
-        std::string serpent_of_hell_flavour = strip_tag_prefix(mon_str, "serpent_of_hell_flavour:");
+        std::string serpent_of_hell_flavour =
+            strip_tag_prefix(mon_str, "serpent_of_hell_flavour:");
         if (serpent_of_hell_flavour.empty())
             serpent_of_hell_flavour = strip_tag_prefix(mon_str, "soh_flavour:");
         if (!serpent_of_hell_flavour.empty())
         {
-            serpent_of_hell_flavour = uppercase_first(lowercase(serpent_of_hell_flavour)).substr(0, 3);
-            mspec.props["serpent_of_hell_flavour"].get_int() = str_to_branch(serpent_of_hell_flavour, BRANCH_GEHENNA);
+            serpent_of_hell_flavour =
+                uppercase_first(lowercase(serpent_of_hell_flavour)).substr(0, 3);
+            mspec.props["serpent_of_hell_flavour"].get_int() =
+                str_to_branch(serpent_of_hell_flavour, BRANCH_GEHENNA);
         }
 
         std::string ench_str;
@@ -3805,7 +3786,7 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(std::string spec)
             {
                 // Is this a modified monster?
                 if (nspec.monbase != MONS_PROGRAM_BUG
-                    && mons_class_is_zombified(nspec.type))
+                    && mons_class_is_zombified(static_cast<monster_type>(nspec.type)))
                 {
                     mspec.monbase = static_cast<monster_type>(nspec.type);
                 }
@@ -4084,7 +4065,7 @@ mons_spec mons_list::drac_monspec(std::string name) const
 
     // We should have a non-base draconian here.
     if (spec.type == MONS_PROGRAM_BUG
-        || mons_genus(spec.type) != MONS_DRACONIAN
+        || mons_genus(static_cast<monster_type>(spec.type)) != MONS_DRACONIAN
         || spec.type == MONS_DRACONIAN
         || (spec.type >= MONS_BLACK_DRACONIAN
             && spec.type <= MONS_PALE_DRACONIAN))
@@ -4404,7 +4385,7 @@ static int str_to_ego(item_spec &spec, std::string ego_str)
         "archmagi",
         "preservation",
         "reflection",
-        "spirit shield",
+        "spirit_shield",
         "archery",
         NULL
     };
@@ -4447,9 +4428,6 @@ static int str_to_ego(item_spec &spec, std::string ego_str)
         "returning",
         "chaos",
         "penetration",
-#if TAG_MAJOR_VERSION == 32
-        "reaping",
-#endif
         "dispersal",
         "exploding",
         "steel",
@@ -4742,7 +4720,7 @@ item_spec item_list::parse_single_spec(std::string s)
     if (special != TAG_UNFOUND)
         result.item_special = special;
 
-    // When placing corpses, use place:Elf:7 to choose monsters
+    // When placing corpses, use place:Elf:5 to choose monsters
     // appropriate for that level, as an example.
     const std::string place = strip_tag_prefix(s, "place:");
     if (!place.empty())
@@ -4872,6 +4850,13 @@ item_spec item_list::parse_single_spec(std::string s)
     const short charges = strip_number_tag(s, "charges:");
     if (charges >= 0)
         result.props["charges"].get_int() = charges;
+
+    const int plus = strip_number_tag(s, "plus:");
+    if (plus != TAG_UNFOUND)
+        result.props["plus"].get_int() = plus;
+    const int plus2 = strip_number_tag(s, "plus2:");
+    if (plus2 != TAG_UNFOUND)
+        result.props["plus2"].get_int() = plus2;
 
     if (strip_tag(s, "no_uniq"))
         result.allow_uniques = 0;
@@ -5518,9 +5503,7 @@ feature_spec keyed_mapspec::parse_shop(std::string s, int weight)
         err = make_stringf("bad shop type: '%s'", s.c_str());
 
     if (parts.size() > 2)
-    {
         err = make_stringf("too many semi-colons for '%s' spec", orig.c_str());
-    }
 
     item_list items;
     if (parts.size() == 2)
@@ -5642,14 +5625,6 @@ std::string keyed_mapspec::set_mask(const std::string &s, bool garbage)
         return (err);
     }
 
-    // If not also a KFEAT...
-    if (feat.feats.empty())
-    {
-        feature_spec fsp(-1, 10);
-        fsp.glyph = key_glyph;
-        feat.feats.push_back(fsp);
-    }
-
     return (err);
 }
 
@@ -5686,6 +5661,11 @@ item_list &keyed_mapspec::get_items()
 map_flags &keyed_mapspec::get_mask()
 {
     return (map_mask);
+}
+
+bool keyed_mapspec::replaces_glyph()
+{
+    return !(mons.empty() && item.empty() && feat.feats.empty());
 }
 
 //////////////////////////////////////////////////////////////////////////

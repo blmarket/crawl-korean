@@ -1,4 +1,31 @@
-Stone Soup 0.10 (????????)
+Stone Soup 0.10.2 (20120411)
+----------------------------
+* A bunch of crash fixes.
+* A number of description updates, to match 0.10 changes.
+* Allies cannot smite enemies through glass anymore.
+* Reaching cannot be used while caught in a net/web.
+* Fix a number of oddities with the shopping list.
+* Fix multiple compiles often repeating work -- especially jarring for
+  "make; make install".
+* Unknown items in shop use a neutral tile colour, fixing an information
+  leak (you can't learn the appearances this way anymore).
+* Fix allies not using IOOD at all.
+* A lot of other minor fixes.
+
+Stone Soup 0.10.1 (20120315)
+----------------------------
+* Fix "non tried" question mark in tiles being sometimes missing.
+* Fix grey draconians sometimes drowning.
+* Fix Lua junk appearing in some monster speech.
+* Fix the Slime:6 vault opening soon after banishing the Royal Jelly.
+* Fix pressing <<<<<< getting you scot free from constriction.
+* Fix slaying not working when using magical staves.
+* A bunch of crash fixes.
+* ... including the "hunter" hints mode being totally inoperative.
+* Assorted Webtiles fixes.
+* And a bunch of other minor ones here and there.
+
+Stone Soup 0.10 (20120216)
 --------------------------
 
 0.10 Highlights
@@ -12,7 +39,8 @@ Stone Soup 0.10 (????????)
 Branches, portal vaults, levels
 -------------------------------
 * Remove Hive. Guarantee some limited food supply in the dungeon.
-* Reworked Abyss transformations.
+* Completely reworked Abyss: it now morphs continuously over time, is mappable,
+  and extends infinitely in all directions.
 * Most abyssal runes are in special vaults.
 * Escaping the Abyss returns to place of banishment.
 * Ziggurats have much more colourful holy levels.
@@ -21,11 +49,12 @@ Branches, portal vaults, levels
 * More Volcano portal vaults.
 * Web "traps", can briefly entangle those caught.
 * A "twisting cavern" map layout.
-* Custom shops.
 * Many vaults, including large altar vaults, Abyss vaults, Pan Lord maps,
   and several branch endings.
 * A number of branches have a completely new set of tiles: Snake Pit,
   Labyrinth, Vestibule of Hell, Crypt, Dis, Tartarus, Cocytus, Pandemonium.
+* The chance of getting a unique Pandemonium level increases for each level of
+  Pan you visit.
 
 Gods
 ----
@@ -36,6 +65,7 @@ Gods
 * Cheibriados can slow down Abyss morphing and Orb run monster spawns.
 * New Cheibriados ability: Temporal Distortion, moves nearby monsters forwards
   in time a few turns.
+* Cheibriados doesn't grant resistances anymore.
 * Makhleb's powers use Health instead of Magic.
 * Makhleb gives more Health for killing but no Magic anymore.
 * Makhleb's Greater Destruction costs less piety.
@@ -54,7 +84,7 @@ Gods
 
 Species
 -------
-* Octopodes.
+* Octopodes: sentient octopuses that can wear eight rings.
 * Draconians cannot wear body armour anymore, can wear gloves and boots.
 * Centaurs can survive longer on vegetarian food.
 * Felids gain lives every three levels.
@@ -67,6 +97,7 @@ Species
 Character
 ---------
 * Wild Magic mutation: reduced spell success, increased power.
+* Evolution mutation: extra mutations as time passes.
 * Always gain partial nutrition from brown chunks.
 * Bad food causes nausea instead of sickness.
 * Non-full carnivores cannot eat up to "engorged" without gourmand.
@@ -131,18 +162,20 @@ Interface
 * Throwable starting weapons are autoinscribed with "=f".
 * Leaving an unique Pan level without the rune asks for confirmation.
 * Uniques and player ghosts annotate the level on the overview screen.
-* A character dump option: spell_usage, counts spells you have cast.
+* New character dump options: spell_usage, which counts spells you have cast,
+  and action_counts, which also counts non-spell actions.
 * Ctrl-W toggles weight display in inventory and dropping menu.
 * Better ?/G and ?/B menus.
 * Spell success adjectives are replaced with failure rate percentages. Failure
   rates are coloured based on potential miscast severity.
+* Many new monster descriptions and quotes.
 
 Monsters
 --------
 * Ignacio no longer uses Torment, and he'll appear repeatedly until killed.
 * New monster: profane servitor - an angel corrupted by Yredelemnul (undead).
 * New monster: blizzard demon - a cold/air rank 2 demon.
-* New holy monsters: silver star, cherub, phoenix, paladin.
+* New holy monsters: silver star, cherub, phoenix, paladin, seraph.
 * Removed: giant toads, vipers, blue deaths.
 * Renamed: Fiend -> Brimstone Fiend, Imp -> Crimson Imp.
 * Reorganized demon ranks, moving easier 1s to 2s.
@@ -152,8 +185,7 @@ Monsters
   around.
 * Unique Pandemonium lords can hunt you on the Orb run if you've stolen
   their runes. Violate the 5th Commandment, not the 7th!
-* More emergency spell usage.
-* Gnoll shamans and sergeants are actual monsters.
+* Monsters cast emergency spells more often.
 * Breath timeout for dragons, draconians, drakes.
 * Most monster summoning spells toned down slightly.
 * Monsters flee at lower health thresholds, and less predictably.
@@ -220,6 +252,15 @@ Technical
 ---------
 * Tarballs use xz rather than bz2 compression.
 * Wizard mode is compiled in by default unless you specify NOWIZARD=y.
+* Custom shops can be used in vaults.
+* Multithreading, currently only to speed up database loading.
+
+
+Stone Soup 0.9.2 (20120124)
+---------------------------
+* A number of crash fixes.
+* Fix new games overwriting existing saves in one case.
+* Fix Temple overflow gods not being randomized.
 
 
 Stone Soup 0.9.1 (20110904)
@@ -432,6 +473,20 @@ Options
 -------
 * Allow hiding the -cTele indicator with show_no_ctele.
 * Allow automatically assigning specific spells to letters with spell_slot.
+
+
+Stone Soup 0.8.1 (20110612)
+---------------------------
+* Fixes a number of crashes.
+* Fixes stair colouring on the map being wrong.
+* Jiyva's wrath won't summon giant spores, abusably by Fedhas.
+* Fixes running not noticing new items.
+* Ashenzari worshippers no longer can change armour under cursed cloaks.
+* Glyphs not present in the locale won't cause display corruption in some
+  cases (mostly LC_CTYPE=C).
+* Fixes massive slowdown for resting felids.
+* Removes (or reduce) chances for save corruption on MacOS X.
+* Fixed Kikubaaqudgha's torment invocation not granting xp.
 
 
 Stone Soup 0.8 (20110426)

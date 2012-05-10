@@ -112,10 +112,16 @@ static void _set_firing_pos(monster* mon, coord_def target)
     int best_distance = INT_MAX;
     int best_distance_to_ideal_range = INT_MAX;
     coord_def best_pos(0, 0);
-    for (radius_iterator ri(mon->get_los(), true); ri; ++ri)
+
+    const los_base *los = mon->get_los();
+    for (distance_iterator di(mon->pos(), true, true, LOS_RADIUS);
+         di; ++di)
     {
-        const coord_def p(*ri);
+        const coord_def p(*di);
         const int range = p.distance_from(target);
+
+        if (!los->see_cell(*di))
+            continue;
 
         if (!in_bounds(p) || range > max_range
             || !cell_see_cell(p, target, LOS_NO_TRANS)
@@ -423,6 +429,10 @@ void handle_behaviour(monster* mon)
             break;
 
         case BEH_LURK:
+            // Lurking mimics stay put when player is away.
+            if (mons_is_mimic(mon->type) && !proxPlayer)
+                break;
+            //Else Fall through
         case BEH_SEEK:
             // No foe?  Then wander or seek the player.
             if (mon->foe == MHITNOT)
@@ -571,11 +581,17 @@ void handle_behaviour(monster* mon)
             {
                 // The foe is the player.
 
-                // If monster is currently getting into firing position and
-                // see the player and can attack him, clear firing_pos.
-                if (!mon->firing_pos.zero()
+                if (mons_class_flag(mon->type, M_MAINTAIN_RANGE)
+                    && !mon->berserk())
+                {
+                    // Get to firing range even if we are close.
+                    _set_firing_pos(mon, you.pos());
+                }
+                else if (!mon->firing_pos.zero()
                     && mon->see_cell_no_trans(mon->target))
                 {
+                    // If monster is currently getting into firing position and
+                    // sees the player and can attack him, clear firing_pos.
                     mon->firing_pos.reset();
                 }
 
@@ -608,6 +624,13 @@ void handle_behaviour(monster* mon)
             {
                 // We have a foe but it's not the player.
                 mon->target = menv[mon->foe].pos();
+
+                if (mons_class_flag(mon->type, M_MAINTAIN_RANGE)
+                    && !mon->berserk())
+                {
+                    _set_firing_pos(mon, mon->target);
+                }
+
             }
 
             break;
@@ -857,14 +880,13 @@ static void _set_nearest_monster_foe(monster* mon)
 // 2. Call handle_behaviour to re-evaluate AI state and target x, y
 //
 //-----------------------------------------------------------------
-void behaviour_event(monster* mon, mon_event_type event, int src,
+void behaviour_event(monster* mon, mon_event_type event, const actor *src,
                      coord_def src_pos, bool allow_shout)
 {
     if (!mon->alive())
         return;
 
-    ASSERT(src >= 0 && src <= MHITYOU);
-    ASSERT(!crawl_state.game_is_arena() || src != MHITYOU);
+    ASSERT(!crawl_state.game_is_arena() || src != &you);
     ASSERT(in_bounds(src_pos) || src_pos.origin());
     if (mons_is_projectile(mon->type))
         return; // projectiles have no AI
@@ -881,11 +903,10 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
     bool breakCharm       = false;
     bool was_sleeping     = mon->asleep();
     std::string msg;
+    int src_idx           = src ? src->mindex() : MHITNOT; // AXE ME
 
-    if (src == MHITYOU)
-        sourceWontAttack = true;
-    else if (src != MHITNOT)
-        sourceWontAttack = menv[src].wont_attack();
+    if (src)
+        sourceWontAttack = src->wont_attack();
 
     if (is_sanctuary(mon->pos()) && mons_is_fleeing_sanctuary(mon))
     {
@@ -949,7 +970,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
                 return;
             }
 
-            mon->foe = src;
+            mon->foe = src_idx;
 
             if (mon->asleep() && mons_near(mon))
                 remove_auto_exclude(mon, true);
@@ -967,7 +988,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             else if (mon->asleep())
                 mon->behaviour = BEH_SEEK;
 
-            if (src == MHITYOU)
+            if (src == &you)
             {
                 mon->attitude = ATT_HOSTILE;
                 breakCharm    = true;
@@ -1024,10 +1045,10 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
         }
 
         if (mon->foe == MHITNOT)
-            mon->foe = src;
+            mon->foe = src_idx;
 
         if (!src_pos.origin()
-            && (mon->foe == MHITNOT || mon->foe == src
+            && (mon->foe == MHITNOT || src && mon->foe == src->mindex()
                 || mons_is_wandering(mon)))
         {
             if (mon->is_patrolling())
@@ -1036,7 +1057,7 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
             mon->target = src_pos;
 
             // XXX: Should this be done in _handle_behaviour()?
-            if (src == MHITYOU && src_pos == you.pos()
+            if (src == &you && src_pos == you.pos()
                 && !you.see_cell(mon->pos()))
             {
                 try_pathfind(mon);
@@ -1066,9 +1087,9 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
         // Assume monsters know where to run from, even if player is
         // invisible.
         mon->behaviour = BEH_FLEE;
-        mon->foe       = src;
+        mon->foe       = src_idx;
         mon->target    = src_pos;
-        if (src == MHITYOU)
+        if (src == &you)
         {
             // Friendly monsters don't become hostile if you read a
             // scroll of fear, but enslaved ones will.
@@ -1148,16 +1169,15 @@ void behaviour_event(monster* mon, mon_event_type event, int src,
         break;
     }
 
-    if (setTarget)
+    if (setTarget && src)
     {
-        if (src == MHITYOU)
+        mon->target = src_pos;
+        if (src->is_player())
         {
-            mon->target = you.pos();
+            // Why only attacks by the player change attitude? -- 1KB
             mon->attitude = ATT_HOSTILE;
             mons_att_changed(mon);
         }
-        else if (src != MHITNOT)
-            mon->target = src_pos;
     }
 
     // Now, break charms if appropriate.

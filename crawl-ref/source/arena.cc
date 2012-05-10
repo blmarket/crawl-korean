@@ -30,6 +30,7 @@
 #include "mgen_data.h"
 #include "mon-stuff.h"
 #include "ng-init.h"
+#include "ng-setup.h"
 #include "options.h"
 #include "spl-miscast.h"
 #include "spl-util.h"
@@ -113,7 +114,7 @@ namespace arena
 
     int  summon_throttle     = INT_MAX;
 
-    std::vector<int> uniques_list;
+    std::vector<monster_type> uniques_list;
     std::vector<int> a_spawners;
     std::vector<int> b_spawners;
     int8_t           to_respawn[MAX_MONSTERS];
@@ -128,7 +129,7 @@ namespace arena
     coord_def place_a, place_b;
 
     bool cycle_random     = false;
-    int  cycle_random_pos = -1;
+    monster_type cycle_random_pos = NUM_MONSTERS;
 
     FILE *file = NULL;
     int message_pos = 0;
@@ -197,7 +198,7 @@ namespace arena
                 if (!in_bounds(loc))
                     break;
 
-                const monster* mon = dgn_place_monster(spec, you.absdepth0,
+                const monster* mon = dgn_place_monster(spec, -1,
                                                        loc, false, true, false);
                 if (!mon)
                 {
@@ -234,9 +235,8 @@ namespace arena
 
         if (place.is_valid())
         {
-            you.level_type    = place.level_type;
             you.where_are_you = place.branch;
-            you.absdepth0     = place.absdepth();
+            you.depth         = place.depth;
         }
 
         dgn_reset_level();
@@ -362,17 +362,6 @@ namespace arena
                 throw make_stringf("Bad place '%s': %s",
                                    arena_place.c_str(),
                                    err.c_str());
-            }
-
-            if (place.level_type == LEVEL_LABYRINTH)
-            {
-                throw (std::string("Can't set arena place to the "
-                                   "labyrinth."));
-            }
-            else if (place.level_type == LEVEL_PORTAL_VAULT)
-            {
-                throw (std::string("Can't set arena place to a portal "
-                                   "vault."));
             }
         }
 
@@ -619,7 +608,7 @@ namespace arena
     void fixup_foes()
     {
         for (monster_iterator mons; mons; ++mons)
-            behaviour_event(*mons, ME_DISTURB, MHITNOT, mons->pos());
+            behaviour_event(*mons, ME_DISTURB, 0, mons->pos());
     }
 
     void dump_messages()
@@ -627,11 +616,9 @@ namespace arena
         if (!Options.arena_dump_msgs || file == NULL)
             return;
 
-        std::vector<int> channels;
-        std::vector<std::string> messages =
-            get_recent_messages(message_pos,
-                                !Options.arena_dump_msgs_all,
-                                &channels);
+        std::vector<std::string> messages;
+        std::vector<msg_channel_type> channels;
+        get_recent_messages(messages, channels);
 
         for (unsigned int i = 0; i < messages.size(); i++)
         {
@@ -641,6 +628,12 @@ namespace arena
             std::string prefix;
             switch (chan)
             {
+                case MSGCH_DIAGNOSTICS:
+                    prefix = "DIAG: ";
+                    if (Options.arena_dump_msgs_all)
+                        break;
+                    continue;
+
                 // Ignore messages generated while the user examines
                 // the arnea.
                 case MSGCH_PROMPT:
@@ -660,7 +653,6 @@ namespace arena
 
                 case MSGCH_ERROR: prefix = "ERROR: "; break;
                 case MSGCH_WARN: prefix = "WARN: "; break;
-                case MSGCH_DIAGNOSTICS: prefix = "DIAG: "; break;
                 case MSGCH_SOUND: prefix = "SOUND: "; break;
 
                 case MSGCH_TALK_VISUAL:
@@ -767,8 +759,7 @@ namespace arena
             if (fac.friendly)
                 spec.attitude = ATT_FRIENDLY;
 
-            monster *mon = dgn_place_monster(spec, you.absdepth0, pos,
-                                             false, true);
+            monster *mon = dgn_place_monster(spec, -1, pos, false, true);
 
             if (!mon && fac.active_members == 0 && monster_at(pos))
             {
@@ -797,8 +788,7 @@ namespace arena
                     monster_teleport(other, true);
                 }
 
-                mon = dgn_place_monster(spec, you.absdepth0, pos, false,
-                                        true);
+                mon = dgn_place_monster(spec, -1, pos, false, true);
             }
 
             if (mon)
@@ -970,16 +960,13 @@ namespace arena
 
         expand_mlist(5);
 
-        for (int i = 0; i < NUM_MONSTERS; i++)
+        for (monster_type i = MONS_0; i < NUM_MONSTERS; ++i)
         {
             if (i == MONS_PLAYER_GHOST)
                 continue;
 
-            if (mons_is_unique(i)
-                && !arena_veto_random_monster(static_cast<monster_type>(i)))
-            {
+            if (mons_is_unique(i) && !arena_veto_random_monster(i))
                 uniques_list.push_back(i);
-            }
         }
     }
 
@@ -1058,12 +1045,12 @@ monster_type arena_pick_random_monster(const level_id &place, int power,
 {
     if (arena::random_uniques)
     {
-        const std::vector<int> &uniques = arena::uniques_list;
+        const std::vector<monster_type> &uniques = arena::uniques_list;
 
-        const int type = uniques[random2(uniques.size())];
+        const monster_type type = uniques[random2(uniques.size())];
         you.unique_creatures[type] = false;
 
-        return static_cast<monster_type>(type);
+        return type;
     }
 
     if (!arena::cycle_random)
@@ -1071,20 +1058,17 @@ monster_type arena_pick_random_monster(const level_id &place, int power,
 
     for (int tries = 0; tries <= NUM_MONSTERS; tries++)
     {
-        arena::cycle_random_pos++;
+        ++arena::cycle_random_pos;
         if (arena::cycle_random_pos >= NUM_MONSTERS)
-            arena::cycle_random_pos = 0;
+            arena::cycle_random_pos = MONS_0;
 
-        const monster_type type =
-            static_cast<monster_type>(arena::cycle_random_pos);
-
-        if (mons_rarity(type, place) == 0)
+        if (mons_rarity(arena::cycle_random_pos, place) == 0)
             continue;
 
-        if (arena_veto_random_monster(type))
+        if (arena_veto_random_monster(arena::cycle_random_pos))
             continue;
 
-        return (type);
+        return (arena::cycle_random_pos);
     }
 
     game_ended_with_error(
@@ -1439,6 +1423,7 @@ int arena_cull_items()
 
 static void _init_arena()
 {
+    initialise_branch_depths();
     run_map_global_preludes();
     run_map_local_preludes();
     initialise_item_descriptions();
@@ -1451,7 +1436,7 @@ NORETURN void run_arena(const std::string& teams)
     ASSERT(!crawl_state.arena_suspended);
 
 #ifdef WIZARD
-    // The playe has wizard powers for the duration of the arena.
+    // The player has wizard powers for the duration of the arena.
     unwind_bool wiz(you.wizard, true);
 #endif
 

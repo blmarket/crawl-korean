@@ -17,6 +17,7 @@
 #include "options.h"
 
 #include "areas.h"
+#include "branch.h"
 #include "colour.h"
 #include "coordit.h"
 #include "database.h"
@@ -26,7 +27,6 @@
 #include "items.h"
 #include "libutil.h"
 #include "makeitem.h"
-#include "place.h"
 #include "player.h"
 #include "random.h"
 #include "religion.h"
@@ -95,7 +95,7 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
         break;
 
     case GOD_CHEIBRIADOS:
-        // Slow god: no quick blades, no berserking, no resist slowing.
+        // Slow god: no quick blades, no berserking.
         if (item.base_type == OBJ_WEAPONS && item.sub_type == WPN_QUICK_BLADE)
             type_bad = true;
 
@@ -217,11 +217,9 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
         break;
 
     case GOD_ASHENZARI:
-        // Cursed god: no holy wrath (since that brand repels curses) or
-        // pearl dragon armour (since that armour type repels curses).
+        // Cursed god: no holy wrath (since that brand repels curses).
         if (brand == SPWPN_HOLY_WRATH)
             return (false);
-
         break;
 
     default:
@@ -268,39 +266,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
 
     if (name.find("@branch_name@", 0) != std::string::npos)
     {
-        std::string place;
-        if (one_chance_in(5))
-        {
-            switch (random2(8))
-            {
-            case 0:
-            case 1:
-            default:
-               place = "the Abyss";
-               break;
-            case 2:
-            case 3:
-               place = "Pandemonium";
-               break;
-            case 4:
-            case 5:
-               place = "the Realm of Zot";
-               break;
-            case 6:
-               place = "the Labyrinth";
-               break;
-            case 7:
-               place = "the Portal Chambers";
-               break;
-            }
-        }
-        else
-        {
-            const branch_type branch =
-                     static_cast<branch_type>(random2(BRANCH_TARTARUS));
-            place = place_name(get_packed_place(branch, 1, LEVEL_DUNGEON),
-                                true, false);
-        }
+        std::string place = branches[random2(NUM_BRANCHES)].longname;
         if (!place.empty())
             name = replace_all(name, "@branch_name@", place);
     }
@@ -318,7 +284,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
         else
         {
             do
-                which_god = random_god(true);
+                which_god = random_god(false); // Fedhas in ZotDef only
             while (!_god_fits_artefact(which_god, item, true));
         }
 
@@ -381,6 +347,18 @@ bool is_randapp_artefact(const item_def &item)
     return (item.flags & ISFLAG_UNRANDART
             && !(item.flags & ISFLAG_KNOW_TYPE)
             && (_seekunrandart(item)->flags & UNRAND_FLAG_RANDAPP));
+}
+
+void autoid_unrand(item_def &item)
+{
+    if (!(item.flags & ISFLAG_UNRANDART) || item.flags & ISFLAG_KNOW_TYPE)
+        return;
+    const uint16_t uflags = _seekunrandart(item)->flags;
+    if (uflags & UNRAND_FLAG_RANDAPP || uflags & UNRAND_FLAG_UNIDED)
+        return;
+
+    set_ident_flags(item, ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID);
+    add_autoinscription(item);
 }
 
 unique_item_status_type get_unique_item_status(const item_def& item)
@@ -716,7 +694,7 @@ static int _need_bonus_stat_props(const artefact_properties_t &proprt)
     return (1 + random2(2));
 }
 
-void static _get_randart_properties(const item_def &item,
+static void _get_randart_properties(const item_def &item,
                                     artefact_properties_t &proprt)
 {
     const object_class_type aclass = item.base_type;
@@ -753,42 +731,24 @@ void static _get_randart_properties(const item_def &item,
 
         if (is_range_weapon(item))
         {
-            proprt[ARTP_BRAND] = SPWPN_NORMAL;
+            proprt[ARTP_BRAND] = random_choose_weighted(
+                2, SPWPN_SPEED,
+                4, SPWPN_VENOM,
+                4, SPWPN_VORPAL,
+                4, SPWPN_FLAME,
+                4, SPWPN_FROST,
+                0);
 
-            if (one_chance_in(3))
+            if (atype == WPN_BLOWGUN)
+                proprt[ARTP_BRAND] = coinflip() ? SPWPN_SPEED : SPWPN_EVASION;
+            else if (atype == WPN_CROSSBOW)
             {
-                int tmp = random2(20);
-
-                proprt[ARTP_BRAND] = (tmp >= 18) ? SPWPN_SPEED :
-                                     (tmp >= 14) ? SPWPN_PENETRATION :
-                                     (tmp >= 12) ? SPWPN_REAPING :
-                                     (tmp >=  8) ? SPWPN_VENOM
-                                                 : SPWPN_VORPAL + random2(3);
-
-                if (atype == WPN_BLOWGUN
-                    && proprt[ARTP_BRAND] != SPWPN_SPEED)
-                {
-                    proprt[ARTP_BRAND] = SPWPN_NORMAL;
-                }
-
-                // Removed slings from getting the venom attribute: they can
-                // be branded with it now using Poison Weapon, and perma-branded
-                // via vorpalise weapon.
-
-                if (atype == WPN_CROSSBOW && one_chance_in(5))
+                // Penetration and electrocution are only allowed on
+                // crossbows.  This may change in future.
+                if (one_chance_in(5))
                     proprt[ARTP_BRAND] = SPWPN_ELECTROCUTION;
-
-                // XXX: Penetration is only allowed on crossbows. This may change
-                // in future.
-                if (atype != WPN_CROSSBOW && proprt[ARTP_BRAND] == SPWPN_PENETRATION)
-                    proprt[ARTP_BRAND] = SPWPN_NORMAL;
-
-                // XXX: Only allow reaping brand on bows. This may change.
-                if (atype != WPN_BOW && atype != WPN_LONGBOW
-                    && proprt[ARTP_BRAND] == SPWPN_REAPING)
-                {
-                    proprt[ARTP_BRAND] = SPWPN_NORMAL;
-                }
+                else if (one_chance_in(5))
+                    proprt[ARTP_BRAND] = SPWPN_PENETRATION;
             }
         }
 
@@ -982,15 +942,11 @@ void static _get_randart_properties(const item_def &item,
         power_level++;
     }
 
-    // prot_life - no necromantic brands on weapons allowed
+    // prot_life
     if (!done_powers
         && one_chance_in(4 + power_level)
         && (aclass != OBJ_JEWELLERY || atype != RING_LIFE_PROTECTION)
-        && (aclass != OBJ_ARMOUR || atype != ARM_PEARL_DRAGON_ARMOUR)
-        && proprt[ARTP_BRAND] != SPWPN_DRAINING
-        && proprt[ARTP_BRAND] != SPWPN_VAMPIRICISM
-        && proprt[ARTP_BRAND] != SPWPN_PAIN
-        && proprt[ARTP_BRAND] != SPWPN_REAPING)
+        && (aclass != OBJ_ARMOUR || atype != ARM_PEARL_DRAGON_ARMOUR))
     {
         proprt[ARTP_NEGATIVE_ENERGY] = 1;
         power_level++;
@@ -1398,8 +1354,7 @@ void artefact_wpn_learn_prop(item_def &item, artefact_prop_type prop)
         return;
 
     known_vec[prop] = static_cast<bool>(true);
-    if (Options.autoinscribe_artefacts)
-        add_autoinscription(item, artefact_auto_inscription(item));
+    add_autoinscription(item);
 }
 
 static std::string _get_artefact_type(const item_def &item,
@@ -2097,19 +2052,15 @@ bool make_item_unrandart(item_def &item, int unrand_index)
     else if (unrand_index == UNRAND_OCTOPUS_KING_RING)
         _make_octoring(item);
 
+    if (!(unrand->flags & UNRAND_FLAG_RANDAPP)
+        && !(unrand->flags & UNRAND_FLAG_UNIDED)
+        && !strcmp(unrand->name, unrand->unid_name))
+    {
+        set_ident_flags(item, ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID);
+        add_autoinscription(item);
+    }
+
     return (true);
-}
-
-const char *unrandart_descrip(int which_descrip, const item_def &item)
-{
-    // Eventually it would be great to have randomly generated descriptions
-    // for randarts.
-    const unrandart_entry *unrand = _seekunrandart(item);
-
-    return ((which_descrip == 0) ? chk_gettext(unrand->desc) :
-            (which_descrip == 1) ? chk_gettext(unrand->desc_id) :
-            (which_descrip == 2) ? chk_gettext(unrand->desc_end)
-                                 : "Unknown.");
 }
 
 void unrand_reacts()

@@ -13,8 +13,8 @@
 #include <string.h>
 
 #include "externs.h"
-#include "options.h"
 #include "artefact.h"
+#include "branch.h"
 #include "cio.h"
 #include "describe.h"
 #include "decks.h"
@@ -29,6 +29,7 @@
 #include "macro.h"
 #include "menu.h"
 #include "notes.h"
+#include "options.h"
 #include "place.h"
 #include "player.h"
 #include "spl-book.h"
@@ -118,6 +119,12 @@ static std::string _purchase_keys(const std::string &s)
     return (list);
 }
 
+static bool _can_shoplist(level_id lev = level_id::current())
+{
+    // TODO: temporary shoplists
+    return is_connected_branch(lev.branch);
+}
+
 static void _list_shop_keys(const std::string &purchasable, bool viewing,
                             int total_stock, int num_selected,
                             int num_in_list)
@@ -128,7 +135,7 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
     formatted_string fs;
 
     std::string shop_list = "";
-    if (!viewing && you.level_type == LEVEL_DUNGEON)
+    if (!viewing && _can_shoplist())
     {
         shop_list = "[<w>$</w>] ";
         if (num_selected > 0)
@@ -363,6 +370,11 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
           bool bought_something = false;
           bool viewing          = false;
           bool first_iter       = true;
+
+    // Store last_pickup in case we need to restore it.
+    // Then clear it to fill with items picked up.
+    std::map<int,int> tmp_l_p = you.last_pickup;
+    you.last_pickup.clear();
 
     while (true)
     {
@@ -609,7 +621,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         else if (key == '$')
         {
             if (viewing || (num_selected == 0 && num_in_list == 0)
-                || you.level_type != LEVEL_DUNGEON)
+                || !_can_shoplist())
             {
                 _shop_print("Huh?", 1);
                 _shop_more();
@@ -748,6 +760,9 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             }
         }
     }
+
+    if (you.last_pickup.empty())
+        you.last_pickup = tmp_l_p;
 
     return (bought_something);
 }
@@ -956,7 +971,6 @@ unsigned int item_value(item_def item, bool ident)
             valued += 35;
             break;
 
-        case WPN_ANKUS:
         case WPN_WAR_AXE:
         case WPN_MORNINGSTAR:
         case WPN_SABRE:
@@ -1025,10 +1039,6 @@ unsigned int item_value(item_def item, bool ident)
             valued += 150;
             break;
 
-#if TAG_MAJOR_VERSION == 32
-        case WPN_KATANA:
-        case WPN_BLESSED_KATANA:
-#endif
         case WPN_DEMON_BLADE:
         case WPN_TRIPLE_SWORD:
         case WPN_EUDEMON_BLADE:
@@ -1325,9 +1335,6 @@ unsigned int item_value(item_def item, bool ident)
             valued += 200;
             break;
 
-#if TAG_MAJOR_VERSION == 32
-        case ARM_BANDED_MAIL:
-#endif
         case ARM_CENTAUR_BARDING:
         case ARM_NAGA_BARDING:
             valued += 150;
@@ -1487,9 +1494,7 @@ unsigned int item_value(item_def item, bool ident)
                 valued += 50;
         }
         else if (item_type_known(item) && get_equip_desc(item) != 0)
-        {
             valued += 20;
-        }
 
         if (item_known_cursed(item))
         {
@@ -1709,7 +1714,7 @@ unsigned int item_value(item_def item, bool ident)
                 valued += 200;
                 break;
 
-            case SCR_SUMMONING:
+            case SCR_UNHOLY_CREATION:
                 valued += 95;
                 break;
 
@@ -1990,9 +1995,9 @@ unsigned int item_value(item_def item, bool ident)
     if (valued < 1)
         valued = 1;
 
-    valued *= item.quantity;
+    valued = stepdown_value(valued, 1000, 1000, 10000, 10000);
 
-    return (valued);
+    return (item.quantity * valued);
 }
 
 bool is_worthless_consumable(const item_def &item)
@@ -2085,20 +2090,15 @@ void shop()
         mpr("You can access your shopping list by pressing '$'.");
 }
 
-void destroy_shop(shop_struct *shop)
+void destroy_shop_at(coord_def p)
 {
-    if (shop)
+    if (shop_struct *shop = get_shop(p))
     {
         unnotice_feature(level_pos(level_id::current(), shop->pos));
 
         shop->pos  = coord_def(0, 0);
         shop->type = SHOP_UNASSIGNED;
     }
-}
-
-void destroy_shop_at(coord_def p)
-{
-    destroy_shop(get_shop(p));
 }
 
 shop_struct *get_shop(const coord_def& where)
@@ -2187,9 +2187,7 @@ std::string shop_name(const coord_def& where)
     std::string sh_name = "";
 
     if (!cshop->shop_name.empty())
-    {
         sh_name += apostrophise(cshop->shop_name) + " ";
-    }
     else
     {
         uint32_t seed = static_cast<uint32_t>(cshop->keeper_name[0])
@@ -2205,9 +2203,7 @@ std::string shop_name(const coord_def& where)
         sh_name += shop_type_name(type);
 
     if (!cshop->shop_suffix_name.empty())
-    {
         sh_name += " " + cshop->shop_suffix_name;
-    }
     else
     {
         std::string sh_suffix = _shop_type_suffix(type, where);
@@ -2224,14 +2220,6 @@ bool is_shop_item(const item_def &item)
 }
 
 ////////////////////////////////////////////////////////////////////////
-
-// Setup shopping list after restoring savefile.
-static void _callback(bool saving)
-{
-    if (!saving)
-        shopping_list.refresh();
-}
-static SavefileCallback _register_callback(_callback);
 
 // TODO:
 //   * Let shopping list be modified from with the stash lister.
@@ -2250,11 +2238,7 @@ ShoppingList::ShoppingList()
 }
 
 #define SETUP_POS()                 \
-    if (list == NULL) \
-    { \
-        mpr("SavefileCallback global constructor weirdness!", MSGCH_ERROR); \
-        return (false); \
-    } \
+    ASSERT(list); \
     level_pos pos;                  \
     if (_pos != NULL)               \
         pos = *_pos;                \
@@ -2275,7 +2259,7 @@ bool ShoppingList::add_thing(const item_def &item, int cost,
 
     SETUP_POS();
 
-    if (pos.id.level_type != LEVEL_DUNGEON)
+    if (!_can_shoplist(pos.id.branch))
     {
         mpr("The shopping list can only contain things in the dungeon.",
              MSGCH_ERROR);
@@ -2306,7 +2290,7 @@ bool ShoppingList::add_thing(std::string desc, std::string buy_verb, int cost,
 
     SETUP_POS();
 
-    if (pos.id.level_type != LEVEL_DUNGEON)
+    if (!_can_shoplist(pos.id.branch))
     {
         mpr("The shopping list can only contain things in the dungeon.",
              MSGCH_ERROR);
@@ -2410,7 +2394,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
 
     // Can't put items in Bazaar shops in the shopping list, so
     // don't bother transferring shopping list items to Bazaar shops.
-    if (cost != -1 && you.level_type != LEVEL_DUNGEON)
+    if (cost != -1 && !_can_shoplist())
         return (0);
 
     switch (item.base_type)
@@ -2452,7 +2436,8 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
 
     bool add_item = false;
 
-    std::vector<level_pos> to_del;
+    typedef std::pair<item_def, level_pos> list_pair;
+    std::vector<list_pair> to_del;
 
     // NOTE: Don't modify the shopping list while iterating over it.
     for (unsigned int i = 0; i < list->size(); i++)
@@ -2473,7 +2458,34 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
         if (!item_type_known(list_item) || is_artefact(list_item))
             continue;
 
-        const level_pos list_pos = thing_pos(thing);
+        // Don't prompt to remove rings with strictly better pluses
+        // than the new one.  Also, don't prompt to remove rings with
+        // known pluses when the new ring's pluses are unknown.
+        if (item.base_type == OBJ_JEWELLERY)
+        {
+            const int nplus = ring_has_pluses(item);
+            const int delta_p = item.plus - list_item.plus;
+            const int delta_p2 = nplus >= 2 ? item.plus2 - list_item.plus2 : 0;
+            if (nplus
+                && item_ident(list_item, ISFLAG_KNOW_PLUSES)
+                && (!item_ident(item, ISFLAG_KNOW_PLUSES)
+                     || delta_p <= 0 && delta_p2 <= 0
+                        && (delta_p < 0 || delta_p2 < 0)))
+            {
+                continue;
+            }
+        }
+
+        // Don't prompt to remove known manuals when the new one is unknown
+        // or for a different skill.
+        if (item.base_type == OBJ_BOOKS && item.sub_type == BOOK_MANUAL
+            && item_type_known(list_item)
+            && (!item_type_known(item) || item.plus != list_item.plus))
+        {
+            continue;
+        }
+
+        list_pair listed(list_item, thing_pos(thing));
 
         // cost = -1, we just found a shop item which is cheaper than
         // one on the shopping list.
@@ -2497,7 +2509,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
             if (_shop_yesno(prompt.c_str(), 'y'))
             {
                 add_item = true;
-                to_del.push_back(list_pos);
+                to_del.push_back(listed);
             }
             continue;
         }
@@ -2515,7 +2527,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
                              describe_thing(thing, DESC_A).c_str());
 
             if (_shop_yesno(prompt.c_str(), 'y'))
-                to_del.push_back(list_pos);
+                to_del.push_back(listed);
         }
         else
         {
@@ -2524,12 +2536,12 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
                              describe_thing(thing, DESC_A).c_str());
 
             _shop_mpr(str.c_str());
-            to_del.push_back(list_pos);
+            to_del.push_back(listed);
         }
     }
 
     for (unsigned int i = 0; i < to_del.size(); i++)
-        del_thing(item, &to_del[i]);
+        del_thing(to_del[i].first, &to_del[i].second);
 
     if (add_item && !on_list)
         add_thing(item, cost);
@@ -2539,11 +2551,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
 
 int ShoppingList::size() const
 {
-    if (list == NULL)
-    {
-        mpr("SavefileCallback global constructor weirdness!", MSGCH_ERROR);
-        return (0);
-    }
+    ASSERT(list);
 
     return (list->size());
 }
@@ -2593,11 +2601,7 @@ void ShoppingList::forget_pos(const level_pos &pos)
 
 void ShoppingList::gold_changed(int old_amount, int new_amount)
 {
-    if (list == NULL)
-    {
-        mpr("SavefileCallback global constructor weirdness!", MSGCH_ERROR);
-        return;
-    }
+    ASSERT(list);
 
     if (new_amount > old_amount && new_amount >= min_unbuyable_cost)
     {

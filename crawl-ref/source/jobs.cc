@@ -8,33 +8,21 @@
 static const char * Job_Abbrev_List[ NUM_JOBS ] =
     { "Fi", "Wz", "Pr",
       "Gl", "Ne",
-#if TAG_MAJOR_VERSION == 32
-      "Pa",
-#endif
       "As", "Be", "Hu",
       "Cj", "En", "FE", "IE", "Su", "AE", "EE", "Sk",
       "VM",
       "CK", "Tm", "He",
-#if TAG_MAJOR_VERSION == 32
-      "Re",
-#endif
       "St", "Mo", "Wr", "Wn", "Ar", "AM",
       "DK", "AK" };
 
 static const char * Job_Name_List[ NUM_JOBS ] =
     { M_("Fighter"), M_("Wizard"), M_("Priest"),
       M_("Gladiator"), M_("Necromancer"),
-#if TAG_MAJOR_VERSION == 32
-      M_("Paladin"),
-#endif
       M_("Assassin"), M_("Berserker"), M_("Hunter"), M_("Conjurer"), M_("Enchanter"),
       M_("Fire Elementalist"), M_("Ice Elementalist"), M_("Summoner"), M_("Air Elementalist"),
       M_("Earth Elementalist"), M_("Skald"),
       M_("Venom Mage"),
       M_("Chaos Knight"), M_("Transmuter"), M_("Healer"),
-#if TAG_MAJOR_VERSION == 32
-      M_("Reaver"),
-#endif
       M_("Stalker"),
       M_("Monk"), M_("Warper"), M_("Wanderer"), M_("Artificer"), M_("Arcane Marksman"),
       M_("Death Knight"), M_("Abyssal Knight") };

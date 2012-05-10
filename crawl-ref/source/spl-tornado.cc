@@ -220,7 +220,7 @@ void tornado_damage(actor *caster, int dur)
 
     int pow;
     // Not stored so unwielding that staff will reduce damage.
-    if (caster->atype() == ACT_PLAYER)
+    if (caster->is_player())
         pow = calc_spell_power(SPELL_TORNADO, true);
     else
         pow = caster->as_monster()->hit_dice * 4;
@@ -280,8 +280,8 @@ void tornado_damage(actor *caster, int dur)
                 grd(*dam_i) = DNGN_FLOOR;
                 set_terrain_changed(*dam_i);
                 if (you.see_cell(*dam_i))
-                    mpr(gettext("A tree falls to the hurricane!"));
-                if (caster == &you)
+                    mpr(_("A tree falls to the hurricane!"));
+                if (caster->is_player())
                     did_god_conduct(DID_KILL_PLANT, 1);
             }
 
@@ -296,7 +296,7 @@ void tornado_damage(actor *caster, int dur)
                     leda = true; // and with fish, too
                     continue;
                 }
-                if (victim == &you && monster_at(*dam_i))
+                if (victim->is_player() && monster_at(*dam_i))
                 {
                     // A far-fetched case: you're using Fedhas' passthrough
                     // or standing on a submerged air elemental, there are
@@ -308,11 +308,11 @@ void tornado_damage(actor *caster, int dur)
                 }
 
                 leda = liquefied(victim->pos()) && victim->ground_level()
-                    || victim->atype() == ACT_MONSTER
+                    || victim->is_monster()
                        && _mons_is_unmovable(victim->as_monster());
                 if (!victim->res_wind())
                 {
-                    if (victim->atype() == ACT_MONSTER)
+                    if (victim->is_monster())
                     {
                         monster *mon = victim->as_monster();
                         if (!leda)
@@ -326,7 +326,7 @@ void tornado_damage(actor *caster, int dur)
                             else
                                 mon->add_ench(ench);
                         }
-                        behaviour_event(mon, ME_ANNOY, caster->mindex());
+                        behaviour_event(mon, ME_ANNOY, caster);
                     }
                     else if (!leda)
                     {
@@ -345,7 +345,7 @@ void tornado_damage(actor *caster, int dur)
                     if (dur < 0)
                         dmg = 0;
                     dprf("damage done: %d", dmg);
-                    if (victim->atype() == ACT_PLAYER)
+                    if (victim->is_player())
                         ouch(dmg, caster->mindex(), KILLED_BY_BEAM,
                              "tornado");
                     else
@@ -391,10 +391,7 @@ void tornado_damage(actor *caster, int dur)
     // have spawned something new (like Royal Jelly spawns).
     for (int i = move_avail.size() - 1; i >= 0; i--)
         if (actor_at(move_avail[i]))
-        {
-            move_avail[i] = move_avail[move_avail.size() - 1];
-            move_avail.pop_back();
-        }
+            erase_any(move_avail, i);
 
     // Calculate destinations.
     for (unsigned int i = 0; i < move_act.size(); i++)
@@ -406,8 +403,7 @@ void tornado_damage(actor *caster, int dur)
             if (move_avail[j] == dest)
             {
                 // Only one monster per destination.
-                move_avail[j] = move_avail[move_avail.size() - 1];
-                move_avail.pop_back();
+                erase_any(move_avail, j);
                 break;
             }
         move_dest[move_act[i]->mid] = dest;
@@ -423,7 +419,7 @@ void tornado_damage(actor *caster, int dur)
             ASSERT(move_act[i]->pos() == newpos);
         }
 
-    if (caster == &you)
+    if (caster->is_player())
         fire_final_effects();
 }
 

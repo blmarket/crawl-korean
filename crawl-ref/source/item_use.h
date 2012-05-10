@@ -93,12 +93,10 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where);
 
 void prompt_inscribe_item();
 int launcher_final_speed(const item_def &launcher,
-                         const item_def *shield);
+                         const item_def *shield, bool scaled = true);
 
 void warn_shield_penalties();
 void warn_armour_penalties();
-
-bool wearing_slot(int inv_slot);
 
 bool item_blocks_teleport(bool calc_unid, bool permit_id);
 bool stasis_blocks_effect(bool calc_unid, bool identify,

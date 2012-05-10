@@ -72,6 +72,9 @@ enum extra_monster_index_type
     MISC_MISCAST,
 };
 
+// number of monster attack specs
+#define MAX_NUM_ATTACKS 4
+
 // size of Pan monster sets. Also used for wave data in ZotDef.
 #define MAX_MONS_ALLOC 20
 
@@ -208,10 +211,16 @@ const int MAX_KNOWN_SPELLS = 21;
 
 const int INVALID_ABSDEPTH = -1000;
 
-const int DEPTH_ABYSS = 51;
-const int DEPTH_PAN   = 52;
-
-const int BRANCH_DUNGEON_DEPTH = 27;
+//#define DEBUG_MIMIC
+#ifdef DEBUG_MIMIC
+// Missing stairs are replaced in fixup_branch_stairs, but replacing
+// too many breaks interlevel connectivity, so we don't use a chance of 1.
+  #define FEATURE_MIMIC_CHANCE 2
+  #define ITEM_MIMIC_CHANCE    1
+#else
+  #define FEATURE_MIMIC_CHANCE 100
+  #define ITEM_MIMIC_CHANCE    1000
+#endif
 
 const int ANTITRAIN_PENALTY = 2;
 
@@ -263,6 +272,10 @@ enum COLORS
     WHITE,
     MAX_TERM_COLOUR
 };
+
+// Many, MANY places currently hard-code this to 8 bits, but we need to
+// expand it. Please use colour_t in new code.
+typedef uint8_t colour_t;
 
 // Colour options... these are used as bit flags along with the colour
 // value in the low byte.

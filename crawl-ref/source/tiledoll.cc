@@ -47,9 +47,7 @@ dolls_data::~dolls_data()
 bool dolls_data::operator==(const dolls_data& other) const
 {
     for (unsigned int i = 0; i < TILEP_PART_MAX; i++)
-    {
         if (parts[i] != other.parts[i]) return false;
-    }
     return true;
 }
 
@@ -82,7 +80,8 @@ bool save_doll_data(int mode, int num, const dolls_data* dolls)
         // Print some explanatory comments. May contain no spaces!
         fprintf(fp, "#Legend:\n");
         fprintf(fp, "#***:equipment/123:index/000:none\n");
-        fprintf(fp, "#Shadow/Base/Cloak/Boots/Legs/Body/Gloves/Weapon/Shield/Hair/Beard/Helmet/Halo/Enchant/DrcHead/DrcWing\n");
+        fprintf(fp, "#Shadow/Base/Cloak/Boots/Legs/Body/Gloves/Weapon/Shield/"
+                    "Hair/Beard/Helmet/Halo/Enchant/DrcHead/DrcWing\n");
         fprintf(fp, "#Sh:Bse:Clk:Bts:Leg:Bdy:Glv:Wpn:Shd:Hai:Brd:Hlm:Hal:Enc:Drc:Wng\n");
         char fbuf[80];
         for (unsigned int i = 0; i < NUM_MAX_DOLLS; ++i)
@@ -279,18 +278,9 @@ void fill_doll_equipment(dolls_data &result)
     {
         const int item = you.melded[EQ_WEAPON] ? -1 : you.equip[EQ_WEAPON];
         if (you.form == TRAN_BLADE_HANDS)
-        {
             result.parts[TILEP_PART_HAND1] = TILEP_HAND1_BLADEHAND;
-        }
-        else if (item == -1 && you.has_tentacles(false)
-                 && you.species != SP_OCTOPODE)
-        {
-            result.parts[TILEP_PART_HAND1] = TILEP_HAND1_TENTACLE;
-        }
         else if (item == -1)
-        {
             result.parts[TILEP_PART_HAND1] = 0;
-        }
         else
         {
             result.parts[TILEP_PART_HAND1] = tilep_equ_weapon(you.inv[item]);
@@ -301,18 +291,9 @@ void fill_doll_equipment(dolls_data &result)
     {
         const int item = you.equip[EQ_SHIELD];
         if (you.form == TRAN_BLADE_HANDS)
-        {
             result.parts[TILEP_PART_HAND2] = TILEP_HAND2_BLADEHAND;
-        }
-        else if (item == -1 && you.has_tentacles(false)
-                 && you.species != SP_OCTOPODE)
-        {
-            result.parts[TILEP_PART_HAND2] = TILEP_HAND2_TENTACLE;
-        }
         else if (item == -1)
-        {
             result.parts[TILEP_PART_HAND2] = 0;
-        }
         else
         {
             result.parts[TILEP_PART_HAND2] = tilep_equ_shield(you.inv[item]);
@@ -341,9 +322,7 @@ void fill_doll_equipment(dolls_data &result)
     {
         const int item = you.equip[EQ_HELMET];
         if (item != -1)
-        {
             result.parts[TILEP_PART_HELM] = tilep_equ_helm(you.inv[item]);
-        }
         else if (player_mutation_level(MUT_HORNS) > 0)
         {
             switch (player_mutation_level(MUT_HORNS))
@@ -437,7 +416,8 @@ void save_doll_file(writer &dollf)
 }
 
 #ifdef USE_TILE_LOCAL
-void pack_doll_buf(SubmergedTileBuffer& buf, const dolls_data &doll, int x, int y, bool submerged, bool ghost)
+void pack_doll_buf(SubmergedTileBuffer& buf, const dolls_data &doll,
+                   int x, int y, bool submerged, bool ghost)
 {
     // Ordered from back to front.
     int p_order[TILEP_PART_MAX] =

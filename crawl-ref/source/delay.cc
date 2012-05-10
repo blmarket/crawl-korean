@@ -306,8 +306,8 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
         item_def &item = (delay.parm1 ? you.inv[delay.parm2]
                                       : mitm[delay.parm2]);
 
-        const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
-        const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
+        const bool was_orc = (mons_genus(item.mon_type) == MONS_ORC);
+        const bool was_holy = (mons_class_holiness(item.mon_type) == MH_HOLY);
 
         // Don't skeletonize a corpse if it's no longer there!
         if (delay.parm1
@@ -317,12 +317,11 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
         {
             mpr(gettext("All blood oozes out of the corpse!"));
 
-            bleed_onto_floor(you.pos(), static_cast<monster_type>(item.plus),
-                             delay.duration, false);
+            bleed_onto_floor(you.pos(), item.mon_type, delay.duration, false);
 
             const item_def corpse = item;
 
-            if (mons_skeleton(item.plus) && one_chance_in(3))
+            if (mons_skeleton(item.mon_type) && one_chance_in(3))
                 turn_corpse_into_skeleton(item);
             else
             {
@@ -347,15 +346,20 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
 
     case DELAY_ARMOUR_ON:
     case DELAY_ARMOUR_OFF:
-        // These two have the default action of not being interruptible,
-        // although they will often consist of chained intermediary steps
-        // (remove cloak, remove armour, wear new armour, replace cloak),
-        // all of which can be stopped when complete.  This is a fairly
-        // reasonable behaviour, although perhaps the character should have
-        // the option of reversing the current action if it would take less
-        // time to get out of the plate armour that's half on than it would
-        // take to continue.  Probably too much trouble, and we'd have to
-        // have a prompt... this works just fine. -- bwr
+        if (delay.duration > 1 && !delay.parm3)
+        {
+            if (!yesno(delay.type == DELAY_ARMOUR_ON ?
+                       "Keep equipping yourself?" :
+                       "Keep disrobing?", false, 0, false))
+            {
+                mprf("You stop %s your armour.",
+                     delay.type == DELAY_ARMOUR_ON ? "putting on"
+                                                   : "removing");
+                _pop_delay();
+            }
+            else
+                you.delay_queue.front().parm3 = 1;
+        }
         break;
 
     case DELAY_ASCENDING_STAIRS:  // short... and probably what people want
@@ -473,9 +477,7 @@ void handle_interrupted_swap(bool swap_if_safe, bool force_unsafe)
             return;
     }
     else if (!prompt || !yesno(prompt_str, true, 'n', true, false))
-    {
         return;
-    }
 
     if (weap == -1 || check_warning_inscriptions(you.inv[weap], OPER_WIELD))
     {
@@ -1023,7 +1025,8 @@ static void _finish_delay(const delay_queue_item &delay)
     }
 
     case DELAY_EAT:
-        mprf(gettext("You finish eating."));
+        if (delay.parm3 > 0) // If duration was just one turn, don't print.
+            mprf(_("You finish eating."));
         // For chunks, warn the player if they're not getting much
         // nutrition. Also, print the other eating messages only now.
         if (delay.parm1)
@@ -1041,8 +1044,8 @@ static void _finish_delay(const delay_queue_item &delay)
         item_def &item = (delay.parm1 ? you.inv[delay.parm2]
                                       : mitm[delay.parm2]);
 
-        const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
-        const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
+        const bool was_orc = (mons_genus(item.mon_type) == MONS_ORC);
+        const bool was_holy = (mons_class_holiness(item.mon_type) == MH_HOLY);
 
         vampire_nutrition_per_turn(item, 1);
 
@@ -1052,7 +1055,7 @@ static void _finish_delay(const delay_queue_item &delay)
         {
             const item_def corpse = item;
 
-            if (mons_skeleton(item.plus) && one_chance_in(3))
+            if (mons_skeleton(item.mon_type) && one_chance_in(3))
             {
                 turn_corpse_into_skeleton(item);
                 item_check(false);
@@ -1145,7 +1148,7 @@ static void _finish_delay(const delay_queue_item &delay)
 
                 // Wake the monster if it's asleep.
                 if (m)
-                    behaviour_event(m, ME_ALERT, MHITYOU);
+                    behaviour_event(m, ME_ALERT, &you);
             }
             else
                 move_player_to_grid(pass, false, true);
@@ -1181,10 +1184,10 @@ static void _finish_delay(const delay_queue_item &delay)
             {
                 mpr(gettext("You finish bottling this corpse's blood."));
 
-                const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
-                const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
+                const bool was_orc = (mons_genus(item.mon_type) == MONS_ORC);
+                const bool was_holy = (mons_class_holiness(item.mon_type) == MH_HOLY);
 
-                if (mons_skeleton(item.plus) && one_chance_in(3))
+                if (mons_skeleton(item.mon_type) && one_chance_in(3))
                     turn_corpse_into_skeleton_and_blood_potions(item);
                 else
                     turn_corpse_into_blood_potions(item);
@@ -1204,26 +1207,26 @@ static void _finish_delay(const delay_queue_item &delay)
                      mitm[delay.parm1].name(true, DESC_THE).c_str());
 
                 if (god_hates_cannibalism(you.religion)
-                    && is_player_same_species(item.plus))
+                    && is_player_same_species(item.mon_type))
                 {
                     simple_god_message(gettext(" expects more respect for your"
                                        " departed relatives."));
                 }
                 else if (is_good_god(you.religion)
-                    && mons_class_holiness(item.plus) == MH_HOLY)
+                    && mons_class_holiness(item.mon_type) == MH_HOLY)
                 {
                     simple_god_message(gettext(" expects more respect for holy"
                                        " creatures!"));
                 }
                 else if (you.religion == GOD_ZIN
-                         && mons_class_intel(item.plus) >= I_NORMAL)
+                         && mons_class_intel(item.mon_type) >= I_NORMAL)
                 {
                     simple_god_message(gettext(" expects more respect for this"
                                        " departed soul."));
                 }
 
-                const bool was_orc = (mons_genus(item.plus) == MONS_ORC);
-                const bool was_holy = (mons_class_holiness(item.plus) == MH_HOLY);
+                const bool was_orc = (mons_genus(item.mon_type) == MONS_ORC);
+                const bool was_holy = (mons_class_holiness(item.mon_type) == MH_HOLY);
 
                 butcher_corpse(item);
 
@@ -1327,11 +1330,8 @@ static void _armour_wear_effects(const int item_slot)
     const equipment_type eq_slot = get_armour_slot(arm);
 
     if (!was_known)
-    {
-        if (Options.autoinscribe_artefacts && is_artefact(arm))
-            add_autoinscription(arm, artefact_auto_inscription(arm));
-    }
-    mprf(gettext("You finish putting on %s."), arm.name(true, DESC_YOUR).c_str());
+            add_autoinscription(arm);
+    mprf(_("You finish putting on %s."), arm.name(DESC_YOUR).c_str());
 
     if (eq_slot == EQ_BODY_ARMOUR)
     {
@@ -1340,8 +1340,6 @@ static void _armour_wear_effects(const int item_slot)
         {
             remove_ice_armour();
         }
-        if (property(arm, PARM_EVASION))
-            you.start_train.insert(SK_ARMOUR);
     }
     else if (eq_slot == EQ_SHIELD)
     {
@@ -1410,6 +1408,13 @@ static void _handle_run_delays(const delay_queue_item &delay)
         stop_running();
     else
     {
+        if (Options.auto_eat_chunks)
+        {
+            const interrupt_block block_interrupts;
+            if (prompt_eat_chunks(true) == 1)
+                return;
+        }
+
         switch (delay.type)
         {
         case DELAY_REST:
@@ -1644,10 +1649,6 @@ inline static bool _monster_warning(activity_interrupt_type ai,
 
     // Disable message for summons.
     if (mon->is_summoned() && atype == DELAY_NOT_DELAYED)
-        return false;
-
-    // Mimics announce themselves when revealed.
-    if (mons_is_mimic(mon->type))
         return false;
 
     if (at.context == SC_ALREADY_SEEN || at.context == SC_UNCHARM)

@@ -30,6 +30,7 @@
 #include "state.h"
 #include "tagstring.h"
 #include "terrain.h"
+#include "traps.h"
 
 #include <algorithm>
 #include <sstream>
@@ -90,7 +91,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
     case ENCH_STICKY_FLAME:
         return MB_BURNING;
     case ENCH_HELD:
-        return MB_CAUGHT;
+        return (get_trapping_net(mons.pos(), true) == NON_ITEM
+                ? MB_WEBBED : MB_CAUGHT);
     case ENCH_PETRIFIED:
         return MB_PETRIFIED;
     case ENCH_PETRIFYING:
@@ -142,6 +144,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_BREATH_WEAPON;
     case ENCH_DEATHS_DOOR:
         return MB_DEATHS_DOOR;
+    case ENCH_ROLLING:
+        return MB_ROLLING;
     default:
         return NUM_MB_FLAGS;
     }
@@ -542,6 +546,8 @@ monster_info::monster_info(const monster* m, int milev)
         mb.set(MB_HALOED);
     if (!m->haloed() && m->umbraed())
         mb.set(MB_UMBRAED);
+    if (m->suppressed())
+        mb.set(MB_SUPPRESSED);
     if (mons_looks_stabbable(m))
         mb.set(MB_STABBABLE);
     if (mons_looks_distracted(m))
@@ -568,9 +574,7 @@ monster_info::monster_info(const monster* m, int milev)
         }
         // Applies to both friendlies and hostiles
         else if (mons_is_fleeing(m))
-        {
             mb.set(MB_FLEEING);
-        }
         else if (mons_is_wandering(m) && !mons_is_batty(m))
         {
             if (mons_is_stationary(m))
@@ -831,7 +835,8 @@ std::string monster_info::_core_name() const
     return s;
 }
 
-std::string monster_info::_apply_adjusted_description(description_level_type desc, const std::string& s) const
+std::string monster_info::_apply_adjusted_description(description_level_type desc,
+                                                      const std::string& s) const
 {
     if (desc == DESC_ITS)
         desc = DESC_THE;
@@ -863,8 +868,7 @@ std::string monster_info::common_name(description_level_type desc) const
     if (type == MONS_BALLISTOMYCETE)
         ss << (number ? gettext("active ") : "");
 
-    if ((mons_genus(type) == MONS_HYDRA
-            || mons_genus(base_type) == MONS_HYDRA)
+    if ((mons_genus(type) == MONS_HYDRA || mons_genus(base_type) == MONS_HYDRA)
         && number > 0)
     {
         if (number < 11)
@@ -886,7 +890,10 @@ std::string monster_info::common_name(description_level_type desc) const
 
     /// _core
     std::string core = _core_name();
-    ss << core;
+    bool nocore = (mons_class_is_zombified(type) && mons_is_unique(base_type)
+                   && base_type == mons_species(base_type));
+    if (!nocore)
+        ss << core;
 
     // Add suffixes.
     switch (type)
@@ -894,20 +901,20 @@ std::string monster_info::common_name(description_level_type desc) const
     case MONS_ZOMBIE_SMALL:
     case MONS_ZOMBIE_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << gettext(" zombie");
+            ss << (nocore ? "" : " ") << _("zombie");
         break;
     case MONS_SKELETON_SMALL:
     case MONS_SKELETON_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << gettext(" skeleton");
+            ss << (nocore ? "" : " ") << _("skeleton");
         break;
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << gettext(" simulacrum");
+            ss << (nocore ? "" : " ") << _("simulacrum");
         break;
     case MONS_PILLAR_OF_SALT:
-        ss << gettext(" shaped pillar of salt");
+        ss << (nocore ? "" : " ") << _("shaped pillar of salt");
         break;
     default:
         break;
@@ -951,19 +958,28 @@ const item_def* monster_info::get_mimic_item() const
 std::string monster_info::mimic_name() const
 {
     std::string s;
+    if (type == MONS_INEPT_ITEM_MIMIC || type == MONS_INEPT_FEATURE_MIMIC)
+        s = "inept ";
+    if (type == MONS_RAVENOUS_ITEM_MIMIC || type == MONS_RAVENOUS_FEATURE_MIMIC)
+        s = "ravenous ";
+    if (type == MONS_VORPAL_ITEM_MIMIC || type == MONS_VORPAL_FEATURE_MIMIC)
+        s = "vorpal";
+
     if (props.exists("feat_type"))
-        s = feat_type_name(get_mimic_feature());
+        s += feat_type_name(get_mimic_feature());
     else if (item_def* item = inv[MSLOT_MISCELLANY].get())
     {
         if (item->base_type == OBJ_GOLD)
-            s = "pile of gold";
+            s += "pile of gold";
         else if (item->base_type == OBJ_MISCELLANY
                  && item->sub_type == MISC_RUNE_OF_ZOT)
         {
-            s = "rune";
+            s += "rune";
         }
+        else if (item->base_type == OBJ_ORBS)
+            s += "orb";
         else
-            s = item->name(false, DESC_BASENAME);
+            s += item->name(false, DESC_BASENAME);
     }
 
     if (!s.empty())
@@ -1114,6 +1130,8 @@ static std::string _verbose_info0(const monster_info& mi)
         return ("paralysed");
     if (mi.is(MB_CAUGHT))
         return ("caught");
+    if (mi.is(MB_WEBBED))
+        return ("webbed");
     if (mi.is(MB_PETRIFIED))
         return ("petrified");
     if (mi.is(MB_PETRIFYING))
@@ -1168,19 +1186,13 @@ std::string monster_info::pluralised_name(bool fullname) const
     // arena.  This prevens "4 Gra", etc. {due}
     // Unless it's Mara, who summons illusions of himself.
     if (mons_is_unique(type) && type != MONS_MARA)
-    {
         return common_name();
-    }
     // Specialcase mimics, so they don't get described as piles of gold
     // when that would be inappropriate. (HACK)
     else if (mons_is_mimic(type))
-    {
         return "mimics";
-    }
     else if (mons_genus(type) == MONS_DRACONIAN)
-    {
         return pluralise(PLU_DEFAULT, mons_type_name(MONS_DRACONIAN, DESC_PLAIN));
-    }
     else if (type == MONS_UGLY_THING || type == MONS_VERY_UGLY_THING
              || type == MONS_DANCING_WEAPON || type == MONS_LABORATORY_RAT
              || !fullname)
@@ -1194,7 +1206,7 @@ std::string monster_info::pluralised_name(bool fullname) const
 }
 
 void monster_info::to_string(int count, std::string& desc,
-                                  int& desc_color, bool fullname) const
+                                  int& desc_colour, bool fullname) const
 {
     std::ostringstream out;
 
@@ -1219,32 +1231,32 @@ void monster_info::to_string(int count, std::string& desc,
     {
     case ATT_FRIENDLY:
         //out << " (friendly)";
-        desc_color = GREEN;
+        desc_colour = GREEN;
         break;
     case ATT_GOOD_NEUTRAL:
     case ATT_NEUTRAL:
         //out << " (neutral)";
-        desc_color = BROWN;
+        desc_colour = BROWN;
         break;
     case ATT_STRICT_NEUTRAL:
          out << " (fellow slime)";
-         desc_color = BROWN;
+         desc_colour = BROWN;
          break;
     case ATT_HOSTILE:
         // out << " (hostile)";
         switch (threat)
         {
-        case MTHRT_TRIVIAL: desc_color = DARKGREY;  break;
-        case MTHRT_EASY:    desc_color = LIGHTGREY; break;
-        case MTHRT_TOUGH:   desc_color = YELLOW;    break;
-        case MTHRT_NASTY:   desc_color = LIGHTRED;  break;
+        case MTHRT_TRIVIAL: desc_colour = DARKGREY;  break;
+        case MTHRT_EASY:    desc_colour = LIGHTGREY; break;
+        case MTHRT_TOUGH:   desc_colour = YELLOW;    break;
+        case MTHRT_NASTY:   desc_colour = LIGHTRED;  break;
         default:;
         }
         break;
     }
 
     if (count == 1 && is(MB_EVIL_ATTACK))
-        desc_color = Options.evil_colour;
+        desc_colour = Options.evil_colour;
 
     desc = out.str();
 }
@@ -1284,6 +1296,8 @@ std::vector<std::string> monster_info::attributes() const
         v.push_back("covered in liquid flames");
     if (is(MB_CAUGHT))
         v.push_back("entangled in a net");
+    if (is(MB_WEBBED))
+        v.push_back("entangled in a web");
     if (is(MB_PETRIFIED))
         v.push_back("petrified");
     if (is(MB_PETRIFYING))
@@ -1332,9 +1346,11 @@ std::vector<std::string> monster_info::attributes() const
     if (is(MB_MAD))
         v.push_back("lost in madness");
     if (is(MB_DEATHS_DOOR))
-       v.push_back("standing in death's doorway");
+        v.push_back("standing in death's doorway");
     if (is(MB_REGENERATION))
-       v.push_back("regenerating");
+        v.push_back("regenerating");
+    if (is(MB_ROLLING))
+        v.push_back("rolling");
     return v;
 }
 
@@ -1486,8 +1502,10 @@ size_type monster_info::body_size() const
             ret = SIZE_TINY;
         else if (mass < 100)
             ret = SIZE_LITTLE;
-        else
+        else if (mass < 200)
             ret = SIZE_SMALL;
+        else
+            ret = SIZE_MEDIUM;
     }
 
     return (ret);

@@ -391,6 +391,9 @@ int spell_hunger(spell_type which_spell, bool rod)
     else
         hunger -= you.skill(SK_SPELLCASTING, you.intel());
 
+    // Staff of energy
+    hunger /= (1 + player_energy());
+
     if (hunger < 0)
         hunger = 0;
 
@@ -529,8 +532,7 @@ bool disciplines_conflict(unsigned int disc1, unsigned int disc2)
     const unsigned int combined = disc1 | disc2;
 
     return ((combined & SPTYP_EARTH) && (combined & SPTYP_AIR)
-            || (combined & SPTYP_FIRE)  && (combined & SPTYP_ICE)
-            || (combined & SPTYP_HOLY)  && (combined & SPTYP_NECROMANCY));
+            || (combined & SPTYP_FIRE)  && (combined & SPTYP_ICE));
 }
 
 const char *spell_title(spell_type spell)
@@ -702,9 +704,7 @@ int apply_random_around_square(cell_func cf, const coord_def& where,
         // of the time it replaces an element in an unchosen
         // slot -- but we don't care about them).
         if (count <= max_targs)
-        {
             targs[count - 1] = *ai;
-        }
         else if (x_chance_in_y(max_targs, count))
         {
             const int pick = random2(max_targs);
@@ -727,26 +727,6 @@ int apply_random_around_square(cell_func cf, const coord_def& where,
     }
 
     return (rv);
-}
-
-// Apply func to one square of player's choice beside the player.
-int apply_one_neighbouring_square(cell_func cf, int power, actor *agent)
-{
-    dist bmove;
-    direction_chooser_args args;
-    args.restricts = DIR_DIR;
-    args.mode = TARG_ANY;
-
-    mpr("Which direction? [ESC to cancel]", MSGCH_PROMPT);
-    direction(bmove, args);
-
-    if (!bmove.isValid)
-    {
-        canned_msg(MSG_OK);
-        return (-1);
-    }
-
-    return cf(you.pos() + bmove.delta, power, 1, agent);
 }
 
 void apply_area_cloud(cloud_func func, const coord_def& where,
@@ -844,8 +824,6 @@ const char* spelltype_short_name(int which_spelltype)
         return ("Trmt");
     case SPTYP_NECROMANCY:
         return ("Necr");
-    case SPTYP_HOLY:
-        return ("Holy");
     case SPTYP_SUMMONING:
         return ("Summ");
     case SPTYP_DIVINATION:
@@ -885,8 +863,6 @@ const char* spelltype_long_name(int which_spelltype)
         return M_("Transmutation");
     case SPTYP_NECROMANCY:
         return M_("Necromancy");
-    case SPTYP_HOLY:
-        return M_("Holy");
     case SPTYP_SUMMONING:
         return M_("Summoning");
     case SPTYP_DIVINATION:
@@ -927,7 +903,6 @@ skill_type spell_type2skill(unsigned int spelltype)
     case SPTYP_AIR:            return (SK_AIR_MAGIC);
 
     default:
-    case SPTYP_HOLY:
     case SPTYP_DIVINATION:
         dprf("spell_type2skill: called with spelltype %u", spelltype);
         return (SK_NONE);
@@ -1191,9 +1166,6 @@ bool spell_is_useless(spell_type spell, bool transient)
         if (player_movement_speed() <= 6)
             return (true);
         break;
-#if TAG_MAJOR_VERSION == 32
-    case SPELL_LEVITATION:
-#endif
     case SPELL_FLY:
         if (you.species == SP_TENGU && you.experience_level >= 15)
             return (true);

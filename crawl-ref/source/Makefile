@@ -27,10 +27,11 @@
 #                     dumps).  Can be relative to "prefix", absolute or placed
 #                     in the user's home dir (~).  Remember to protect the ~
 #                     from your shell!
-#                     Warning, shared directories are no longer supported.
+#                     Warning, as of 0.8, directories shared between
+#                     multiple system users are no longer supported.
 #    SHAREDDIR     -- place to hold writeable data common to multiple
-#                     players (scores, the logfile, ghosts).  Will be placed
-#                     inside the SAVEDIR if not specified.
+#                     versions of Crawl (scores, the logfile, ghosts).  Will
+#                     be placed inside the SAVEDIR if not specified.
 #       Layout examples:
 #         prefix=~/crawl DATADIR=data/ SAVEDIR=saves/
 #                  -- everything under ~/crawl
@@ -42,10 +43,15 @@
 #    USE_ICC       -- set to use Intel's compiler
 #    LTO           -- set for better optimization but slower compilation,
 #                     requires gcc4.6+
-#    ASSERTS       -- set to enable assertion checks (implied in debug mode)
+#    NOASSERTS     -- set to disable assertion checks (ignored in debug mode)
 #    USE_GETTEXT   -- set to use gettext library for i18n
 #    NOWIZARD      -- set to disable wizard mode.  Use if you have untrusted
 #                     remote players without DGL.
+#
+#    PROPORTIONAL_FONT -- set to a .ttf file you want to use for a proportional
+#                         font; if not set, a copy of Bitstream Vera Sans
+#                         shipped with Crawl will be used
+#    MONOSPACED_FONT   -- monospaced font; Bitstream Vera Mono Sans
 #
 #    WEBTILES      -- set to anything to compile for Webtiles
 #    WEBDIR        -- place to hold the Webtiles client data. Can be either
@@ -60,8 +66,6 @@
 #    them somewhere in the near future.
 
 GAME = crawl
-
-ASSERTS = yes
 
 # Disable GNU Make implicit rules and variables. Leaving them enabled will slow
 # down MinGW and Cygwin builds by a very VERY noticeable degree. Besides, we have
@@ -145,6 +149,7 @@ DOXYGEN = doxygen
 DOXYGEN_SIMPLE_CONF = crawl_simple.doxy
 DOXYGEN_ALL_CONF = crawl_all.doxy
 DOXYGEN_HTML_GEN = html/
+TXT2INI = util/txt2ini.pl
 
 export AR
 export RANLIB
@@ -373,7 +378,7 @@ endif
 # If you're installing Crawl for multiple users, you *must* set this to a
 # valid path before building Crawl. This is not necessary if you are building
 # Crawl for a single user.
-# If you're installing to /usr or /usr/local, we have sane defaults.
+# If you're installing to /usr, /usr/local or /opt, we have sane defaults.
 
 # SAVEDIR := saves/
 # DATADIR := data/
@@ -708,7 +713,7 @@ export CCACHE_CPP2 = yes
 endif
 endif
 
-ifdef ASSERTS
+ifndef NOASSERTS
 DEFINES += -DASSERTS
 endif
 
@@ -951,11 +956,13 @@ DOC_TEMPLATES   := $(DOC_BASE)/template
 GENERATED_DOCS  := $(DOC_BASE)/aptitudes.txt $(DOC_BASE)/FAQ.html $(DOC_BASE)/crawl_manual.txt
 GENERATED_HEADERS := art-enum.h #the rest are private
 GENERATED_FILES := $(GENERATED_HEADERS) art-data.h mon-mst.h \
-                   $(RLTILES)/dc-unrand.txt build.h compflag.h dat/dlua/tags.lua
+                   $(RLTILES)/dc-unrand.txt build.h compflag.h dat/dlua/tags.lua \
+                   $(INI_OBJECTS)
 
 GAME_DEPENDS  := $(OBJECTS) $(EXTRA_OBJECTS) $(CONTRIB_LIBS) dat/dlua/tags.lua
 SRC_PKG_BASE  := stone_soup
 SRC_VERSION   := $(shell git describe --tags $(MERGE_BASE) 2>/dev/null || cat util/release_ver)
+MAJOR_VERSION = $(shell echo "$(SRC_VERSION)"|sed -r 's/-.*//;s/^([^.]+\.[^.]+).*/\1/')
 
 export SRC_VERSION
 
@@ -1163,8 +1170,8 @@ endif
 	    do echo "dgn.load_des_file('$$x')"; \
 	    done >>$(datadir_fp)/dat/dlua/loadmaps.lua
 	$(COPY)   dat/lua/*.lua $(datadir_fp)/dat/lua/
-	$(COPY)   dat/database/*.txt $(datadir_fp)/dat/database/
-	$(COPY)   dat/descript/*.txt $(datadir_fp)/dat/descript/
+	$(COPY_R) dat/database/* $(datadir_fp)/dat/database/
+	$(COPY_R) dat/descript/* $(datadir_fp)/dat/descript/
 	$(COPY) ../docs/*.txt $(datadir_fp)/docs/
 	$(COPY) ../docs/develop/*.txt $(datadir_fp)/docs/develop/
 	$(COPY) ../docs/develop/levels/*.txt $(datadir_fp)/docs/develop/levels/
@@ -1255,7 +1262,7 @@ doxygen-all:
 #
 ifndef NO_INLINE_DEPGEN
 # See info node: (gcc) Preprocessor Options
-INLINE_DEPGEN_CFLAGS = -Wp,-MMD,$*.d,-MT,$@
+INLINE_DEPGEN_CFLAGS = -MMD
 endif
 
 $(DEPS): %.d: %.cc
@@ -1293,6 +1300,9 @@ ifdef NO_INLINE_DEPGEN
 	$(QUIET_DEPEND)$(or $(DEPCXX),$(CXX)) -MM $(ALL_CFLAGS) -MT $*.o $< > $*.d
 endif
 	$(QUIET_CXX)$(CXX) $(ALL_CFLAGS) $(INLINE_DEPGEN_CFLAGS) -c $< -o $@
+ifndef NO_INLINE_DEPGEN
+	@if [ -f $(@:%.o=%.d) ]; then touch -r $@ $(@:%.o=%.d); fi
+endif
 
 icon.o: util/crawl.rc util/crawl.ico .cflags
 	$(QUIET_WINDRES)$(WINDRES) util/crawl.rc icon.o
@@ -1331,6 +1341,16 @@ artefact.o: art-data.h art-enum.h
 mon-util.o: mon-mst.h
 mon-util.d: mon-mst.h
 
+#############################################################################
+# Translation files
+#
+build-ini: $(INI_OBJECTS)
+
+%.ini: %.txt
+	$(TXT2INI) $*.txt
+
+clean-ini:
+	$(RM) $(INI_OBJECTS)
 #############################################################################
 # RLTiles
 #
@@ -1422,6 +1442,19 @@ endif
 	mv build-win/crawl.exe build-win/crawl-console.exe
 	mv build-win/docs/CREDITS.txt build-win/
 	echo $(SRC_VERSION) >build-win/version.txt
+
+package-windows-zips:
+ifneq ($(GAME),crawl.exe)
+	@echo "This is only for Windows; please specify CROSSHOST.";false
+endif
+	+$(MAKE) clean
+	+$(MAKE) TILES=y DESTDIR=build-win/stone_soup-tiles-$(MAJOR_VERSION) install
+	cd build-win && zip -9r ../stone_soup-$(SRC_VERSION)-tiles-win32.zip *
+	rm -rf build-win
+	+$(MAKE) DESTDIR=build-win/stone_soup-$(MAJOR_VERSION) install
+	cd build-win && zip -9r ../stone_soup-$(SRC_VERSION)-win32.zip *
+	rm -rf build-win
+	if which advzip >/dev/null;then advzip -z4 stone_soup-$(SRC_VERSION)*-win32.zip;fi
 
 #############################################################################
 # Building Mac app bundles

@@ -32,7 +32,7 @@ skill_type abil_skill(ability_type abil)
     case ABIL_NEMELEX_DRAW_ONE:
     case ABIL_NEMELEX_PEEK_TWO:
     case ABIL_NEMELEX_TRIPLE_DRAW:
-    case ABIL_NEMELEX_MARK_FOUR:
+    case ABIL_NEMELEX_DEAL_FOUR:
     case ABIL_NEMELEX_STACK_FIVE:
         return (SK_EVOCATIONS);
 
@@ -108,7 +108,7 @@ static int _abil_degree(ability_type abil)
         return (2 + random2(2));
     case ABIL_NEMELEX_TRIPLE_DRAW:
         return (3 + random2(3));
-    case ABIL_NEMELEX_MARK_FOUR:
+    case ABIL_NEMELEX_DEAL_FOUR:
         return (4 + random2(4));
     case ABIL_NEMELEX_STACK_FIVE:
         return (5 + random2(5));
@@ -194,9 +194,6 @@ static void _exercise_spell(spell_type spell, bool success)
 
     unsigned int disciplines = get_spell_disciplines(spell);
 
-    //jmf: evil evil evil -- exclude HOLY bit
-    disciplines &= (~SPTYP_HOLY);
-
     int skillcount = count_bits(disciplines);
 
     if (!success)
@@ -257,10 +254,6 @@ static bool _check_train_armour(int amount)
 {
     if (const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false))
     {
-        // Don't train armour if we have no EVP.
-        if (!property(*armour, PARM_EVASION))
-            return (false);
-
         // XXX: animal skin; should be a better way to get at that.
         const int mass_base = 100;
         const int mass = std::max(item_mass(*armour) - mass_base, 0);

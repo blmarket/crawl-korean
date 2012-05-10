@@ -23,6 +23,7 @@
 #include "fprop.h"
 #include "godconduct.h"
 #include "los.h"
+#include "misc.h"
 #include "mon-behv.h"
 #include "monster.h"
 #include "mapmark.h"
@@ -583,9 +584,9 @@ void place_cloud(cloud_type cl_type, const coord_def& ctarget, int cl_range,
     kill_category whose = KC_OTHER;
     killer_type killer  = KILL_MISC;
     mid_t source        = 0;
-    if (agent && agent->atype() == ACT_PLAYER)
+    if (agent && agent->is_player())
         whose = KC_YOU, killer = KILL_YOU_MISSILE, source = MID_PLAYER;
-    else if (agent && agent->atype() == ACT_MONSTER)
+    else if (agent && agent->is_monster())
     {
         if (agent->as_monster()->friendly())
             whose = KC_FRIENDLY;
@@ -654,10 +655,6 @@ void place_cloud(cloud_type cl_type, const coord_def& ctarget, int cl_range,
 
 static bool _is_opaque_cloud(cloud_type ctype)
 {
-#if TAG_MAJOR_VERSION == 32
-    if (ctype == CLOUD_PETRIFY)
-        return true;
-#endif
     return (ctype >= CLOUD_OPAQUE_FIRST && ctype <= CLOUD_OPAQUE_LAST);
 }
 
@@ -993,11 +990,11 @@ bool _actor_apply_cloud_side_effects(actor *act,
             {
                 mpr(gettext("Strange energies course through your body."));
                 if (one_chance_in(3))
-                    return you.mutate();
+                    return you.mutate("mutagenic cloud");
                 else
-                    return give_bad_mutation();
+                    return give_bad_mutation("mutagenic cloud");
             }
-            else if (mons->mutate())
+            else if (mons->mutate("mutagenic cloud"))
             {
                 if (you.religion == GOD_ZIN && cloud.whose == KC_YOU)
                     did_god_conduct(DID_DELIBERATE_MUTATING, 5 + random2(3));
@@ -1108,7 +1105,10 @@ int actor_apply_cloud(actor *act)
         cloud.announce_actor_engulfed(act);
     }
     if (player && cloud_max_base_damage > 0 && resist > 0)
+    {
         canned_msg(MSG_YOU_RESIST);
+        maybe_id_resist(cloud_flavour);
+    }
 
     if (player && cloud_flavour != BEAM_NONE)
         expose_player_to_element(cloud_flavour, 7);
@@ -1117,7 +1117,7 @@ int actor_apply_cloud(actor *act)
         _actor_apply_cloud_side_effects(act, cloud, final_damage);
 
     if (!player && (side_effects || final_damage > 0))
-        behaviour_event(mons, ME_DISTURB, MHITNOT, act->pos());
+        behaviour_event(mons, ME_DISTURB, 0, act->pos());
 
     if (final_damage)
     {
@@ -1193,6 +1193,7 @@ bool is_harmless_cloud(cloud_type type)
     case CLOUD_NONE:
     case CLOUD_TLOC_ENERGY:
     case CLOUD_MAGIC_TRAIL:
+    case CLOUD_DUST_TRAIL:
     case CLOUD_GLOOM:
     case CLOUD_INK:
     case CLOUD_DEBUGGING:
@@ -1215,16 +1216,6 @@ bool in_what_cloud(cloud_type type)
     return (false);
 }
 
-cloud_type in_what_cloud()
-{
-    int cl = env.cgrid(you.pos());
-
-    if (env.cgrid(you.pos()) == EMPTY_CLOUD)
-        return (CLOUD_NONE);
-
-    return (env.cloud[cl].type);
-}
-
 std::string cloud_name_at_index(int cloudno)
 {
     if (!env.cloud[cloudno].name.empty())
@@ -1238,24 +1229,29 @@ std::string cloud_name_at_index(int cloudno)
 // _terse_cloud_names may be referenced by fog machines.
 static const char *_terse_cloud_names[] =
 {
-    M_("?"),
+    "?",
     M_("flame"), M_("noxious fumes"), M_("freezing vapour"), M_("poison gas"),
     M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
     M_("purple smoke"), M_("translocational energy"), M_("fire"),
-    M_("steam"), M_("gloom"), M_("ink"), M_("blessed fire"), M_("foul pestilence"), M_("thin mist"),
+    M_("steam"), M_("gloom"), M_("ink"),
+    M_("calcifying dust"),
+    M_("blessed fire"), M_("foul pestilence"), M_("thin mist"),
     M_("seething chaos"), M_("rain"), M_("mutagenic fog"), M_("magical condensation"),
-    M_("raging winds"), M_("calcifying dust"),
+    M_("raging winds"),
+    M_("sparse dust"),
 };
 
 static const char *_verbose_cloud_names[] =
 {
-    M_("?"),
+    "?",
     M_("roaring flames"), M_("noxious fumes"), M_("freezing vapours"), M_("poison gas"),
     M_("black smoke"), M_("grey smoke"), M_("blue smoke"),
     M_("purple smoke"), M_("translocational energy"), M_("roaring flames"),
-    M_("a cloud of scalding steam"), M_("thick gloom"), M_("ink"), M_("blessed fire"),
-    M_("dark miasma"), M_("thin mist"), M_("seething chaos"), M_("the rain"),
-    M_("mutagenic fog"), M_("magical condensation"), M_("raging winds"), M_("calcifying dust"),
+    M_("a cloud of scalding steam"), M_("thick gloom"), M_("ink"),
+    M_("calcifying dust"),
+    M_("blessed fire"), M_("dark miasma"), M_("thin mist"), M_("seething chaos"), M_("the rain"),
+    M_("mutagenic fog"), M_("magical condensation"), M_("raging winds"),
+    M_("sparse dust"),
 };
 
 std::string cloud_type_name(cloud_type type, bool terse)
@@ -1443,6 +1439,10 @@ int get_cloud_colour(int cloudno)
 
     case CLOUD_MAGIC_TRAIL:
         which_colour = ETC_MAGIC;
+        break;
+
+    case CLOUD_DUST_TRAIL:
+        which_colour = ETC_EARTH;
         break;
 
     case CLOUD_HOLY_FLAMES:

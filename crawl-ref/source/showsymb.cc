@@ -95,7 +95,7 @@ unsigned short _cell_feat_show_colour(const map_cell& cell, bool coloured)
         colour = ETC_LIQUEFIED;
     }
 
-    if (feat >= DNGN_FLOOR_MIN && feat <= DNGN_FLOOR_MAX)
+    if (feat == DNGN_FLOOR)
     {
         if (cell.flags & MAP_HALOED)
         {
@@ -119,12 +119,17 @@ unsigned short _cell_feat_show_colour(const map_cell& cell, bool coloured)
             colour = CYAN; // Silence but no holy/unholy
         else if (cell.flags & MAP_ORB_HALOED)
             colour = ETC_ORB_GLOW;
+        else if (cell.flags & MAP_SUPPRESSED)
+            colour = LIGHTGREEN;
     }
     return (colour);
 }
 
 static int _get_mons_colour(const monster_info& mi)
 {
+    if (crawl_state.viewport_monster_hp) // show hp directly on the monster
+        return (dam_colour(mi) | COLFLAG_ITEM_HEAP);
+
     int col = mi.colour;
 
     if (mi.type == MONS_SLIME_CREATURE && mi.number > 1)
@@ -140,13 +145,9 @@ static int _get_mons_colour(const monster_info& mi)
         col = ETC_FIRE;
 
     if (mi.attitude == ATT_FRIENDLY)
-    {
         col |= COLFLAG_FRIENDLY_MONSTER;
-    }
     else if (mi.attitude != ATT_HOSTILE)
-    {
         col |= COLFLAG_NEUTRAL_MONSTER;
-    }
     else if (Options.stab_brand != CHATTR_NORMAL
              && mi.is(MB_STABBABLE))
     {
@@ -382,6 +383,8 @@ static glyph _get_cell_glyph_with_class(const map_cell& cell,
 glyph get_cell_glyph(const coord_def& loc, bool only_stationary_monsters,
                      int colour_mode)
 {
+    // note: this does NOT determine output of the player glyph;
+    // that's handled by itself in _draw_player() in view.cc
     const map_cell& cell = env.map_knowledge(loc);
     const show_class cell_show_class =
         get_cell_show_class(cell, only_stationary_monsters);

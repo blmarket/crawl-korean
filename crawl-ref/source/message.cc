@@ -317,10 +317,21 @@ class message_window
     //       and then just writing the actual non-empty lines.
     void place_cursor() const
     {
+        // XXX: the screen may have resized since the last time we
+        //  called lines.resize().  We can't actually resize lines
+        //  here because this is a const method.  Consider only the
+        //  last height() lines if this has happened.
+        const int diff = std::max(int(lines.size()) - height(), 0);
+
         int i;
-        for (i = lines.size() - 1; i >= 0 && lines[i].width() == 0; --i);
-        if (i >= 0 && (int) lines[i].width() < crawl_view.msgsz.x)
-            cgotoxy(lines[i].width() + 1, i + 1, GOTO_MSG);
+        for (i = lines.size() - 1; i >= diff && lines[i].width() == 0; --i);
+        if (i >= diff && (int) lines[i].width() < crawl_view.msgsz.x)
+            cgotoxy(lines[i].width() + 1, i - diff + 1, GOTO_MSG);
+        else if (i < diff)
+        {
+            // If there were no lines, put the cursor at the upper left.
+            cgotoxy(1, 1, GOTO_MSG);
+        }
     }
 
     // Whether to show msgwin-full more prompts.
@@ -464,8 +475,15 @@ public:
         // XXX: this should not be necessary as formatted_string should
         //      already do it
         textcolor(LIGHTGREY);
-        for (size_t i = 0; i < lines.size(); ++i)
-            out_line(lines[i], i);
+
+        // XXX: the screen may have resized since the last time we
+        //  called lines.resize().  We can't actually resize lines
+        //  here because this is a const method.  Display the last
+        //  height() lines if this has happened.
+        const int diff = std::max(int(lines.size()) - height(), 0);
+
+        for (size_t i = diff; i < lines.size(); ++i)
+            out_line(lines[i], i - diff);
         place_cursor();
 #ifdef USE_TILE
         tiles.set_need_redraw();
@@ -1086,7 +1104,11 @@ void mpr(std::string text, msg_channel_type channel, int param, bool nojoin, boo
     msg_colour_type colour = prepare_message(text, channel, param);
 
     if (colour == MSGCOL_MUTED)
+    {
+        if (channel == MSGCH_PROMPT)
+            msgwin.show();
         return;
+    }
 
     bool domore = check_more(text, channel);
     bool join = !domore && !nojoin && check_join(text, channel);
@@ -1096,20 +1118,13 @@ void mpr(std::string text, msg_channel_type channel, int param, bool nojoin, boo
     std::string col = colour_to_str(colour_msg(colour));
     text = "<" + col + ">" + text + "</" + col + ">"; // XXX
 
+    formatted_string fs = formatted_string::parse_string(text);
     if (you.duration[DUR_QUAD_DAMAGE])
-    {
-        // No sound, so we simulate the reverb with all caps.
-        formatted_string fs = formatted_string::parse_string(text);
-        fs.all_caps();
-        text = fs.to_colour_string();
-    }
+        fs.all_caps(); // No sound, so we simulate the reverb with all caps.
     else if (cap)
-    {
-        // Hate, hate, hate tagged strings.
-        formatted_string fs = formatted_string::parse_string(text);
         fs.capitalize();
-        text = fs.to_colour_string();
-    }
+    fs.filter_lang();
+    text = fs.to_colour_string();
 
     message_item msg = message_item(text, channel, param, join);
     messages.add(msg);
@@ -1434,6 +1449,23 @@ std::string get_last_messages(int mcount)
     if (!text.empty())
         text += "\n";
     return text;
+}
+
+void get_recent_messages(std::vector<std::string> &mess,
+                         std::vector<msg_channel_type> &chan)
+{
+    flush_prev_message();
+
+    const store_t& msgs = messages.get_store();
+    int mcount = NUM_STORED_MESSAGES;
+    for (int i = -1; mcount > 0; --i, --mcount)
+    {
+        const message_item msg = msgs[i];
+        if (!msg)
+            break;
+        mess.push_back(msg.pure_text());
+        chan.push_back(msg.channel);
+    }
 }
 
 // We just write out the whole message store including empty/unused

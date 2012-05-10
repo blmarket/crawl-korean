@@ -651,13 +651,15 @@ map_marker *map_malign_gateway_marker::read(reader &in, map_marker_type)
 
 map_marker *map_malign_gateway_marker::clone() const
 {
-    map_malign_gateway_marker *mark = new map_malign_gateway_marker(pos, duration, is_player, summoner_string, behaviour, god, power);
+    map_malign_gateway_marker *mark = new map_malign_gateway_marker(pos,
+        duration, is_player, summoner_string, behaviour, god, power);
     return (mark);
 }
 
 std::string map_malign_gateway_marker::debug_describe() const
 {
-    return make_stringf("Malign gateway (%d, %s)", duration, is_player ? "player" : "monster");
+    return make_stringf("Malign gateway (%d, %s)", duration,
+                        is_player ? "player" : "monster");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -689,12 +691,7 @@ void map_phoenix_marker::read(reader &in)
     duration = unmarshallShort(in);
     mon_num = unmarshallShort(in);
     behaviour = static_cast<beh_type>(unmarshallUByte(in));
-#if TAG_MAJOR_VERSION == 32
-    if (in.getMinorVersion() < TAG_MINOR_PHOENIX_ATTITUDE)
-        attitude = ATT_HOSTILE;
-    else
-#endif
-        attitude = static_cast<mon_attitude_type>(unmarshallUByte(in));
+    attitude = static_cast<mon_attitude_type>(unmarshallUByte(in));
     god       = static_cast<god_type>(unmarshallByte(in));
     corpse_pos = unmarshallCoord(in);
 }
@@ -1047,9 +1044,7 @@ void map_markers::read(reader &inf)
         // used by tools
         unmarshallInt(inf);
         if (map_marker *mark = map_marker::read_marker(inf))
-        {
             add(mark);
-        }
     }
 }
 

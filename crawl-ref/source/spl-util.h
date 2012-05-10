@@ -26,10 +26,9 @@ enum spschool_flag_type
   SPTYP_POISON         = 1<<10,
   SPTYP_EARTH          = 1<<11,
   SPTYP_AIR            = 1<<12,
-  SPTYP_HOLY           = 1<<13,
-  SPTYP_LAST_EXPONENT  = 13,    //jmf: ``NUM_SPELL_TYPES'' kinda useless
-  NUM_SPELL_TYPES      = 15,
-  SPTYP_RANDOM         = 1<<14,
+  SPTYP_LAST_EXPONENT  = 12,
+  SPTYP_LAST_SCHOOL    = 1<<SPTYP_LAST_EXPONENT,
+  SPTYP_RANDOM         = 1<<(SPTYP_LAST_EXPONENT + 1),
 };
 
 struct bolt;
@@ -107,8 +106,6 @@ int apply_monsters_around_square(monster_func mf, const coord_def& where,
 int apply_random_around_square(cell_func cf, const coord_def& where,
                                bool hole_in_middle, int power, int max_targs,
                                actor *agent = NULL);
-
-int apply_one_neighbouring_square(cell_func cf, int power, actor *agent = NULL);
 
 void apply_area_cloud(cloud_func func, const coord_def& where,
                       int pow, int number, cloud_type ctype,

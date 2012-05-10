@@ -107,7 +107,7 @@ static void _labyrinth_place_items(const coord_def &end)
 
         const int treasure_item =
             items(1, glopop, OBJ_RANDOM, true,
-                   one_chance_in(3)? you.absdepth0 * 3 : MAKE_GOOD_ITEM,
+                   one_chance_in(3)? env.absdepth0 * 3 : MAKE_GOOD_ITEM,
                    MAKE_ITEM_RANDOM_RACE);
 
         if (treasure_item != NON_ITEM)
@@ -234,7 +234,7 @@ static void _change_walls_from_centre(const dgn_region &region,
     _change_walls_from_centre(region, c, rectangular, MMT_VAULT, wall, ldist);
 }
 
-static void _place_extra_lab_minivaults(int level_number)
+static void _place_extra_lab_minivaults()
 {
     std::set<const map_def*> vaults_used;
     while (true)
@@ -367,7 +367,8 @@ static void _labyrinth_add_blood_trail(const dgn_region &region)
         if (you.wizard)
             env.pgrid(start) |= FPROP_HIGHLIGHT;
 #endif
-        bleed_onto_floor(start, MONS_HUMAN, 150, true, false);
+        bleed_onto_floor(start, MONS_HUMAN, 150, true, false, INVALID_COORD,
+                         true);
 
         for (unsigned int step = 0; step < path.size(); step++)
         {
@@ -492,7 +493,7 @@ static void _labyrinth_add_glass_walls(const dgn_region &region)
     }
 }
 
-void dgn_build_labyrinth_level(int level_number)
+void dgn_build_labyrinth_level()
 {
     env.level_build_method += " labyrinth";
     env.level_layout_types.insert("labyrinth");
@@ -533,7 +534,7 @@ void dgn_build_labyrinth_level(int level_number)
     if (vault)
         end = place.pos + place.size / 2;
 
-    _place_extra_lab_minivaults(level_number);
+    _place_extra_lab_minivaults();
 
     _change_walls_from_centre(lab, end, false,
                               DNGN_ROCK_WALL,

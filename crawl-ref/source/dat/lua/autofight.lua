@@ -13,6 +13,7 @@ local ATT_HOSTILE = 0
 local ATT_NEUTRAL = 1
 
 AUTOFIGHT_STOP = 30
+AUTOFIGHT_THROW = false
 
 local function delta_to_vi(dx, dy)
   local d2v = {
@@ -54,6 +55,10 @@ end
 local function have_ranged()
   local wp = items.equipped_at("weapon")
   return wp and wp.is_ranged and not wp.is_melded
+end
+
+local function have_throwing()
+  return AUTOFIGHT_THROW and items.fired_item() ~= nil
 end
 
 local function try_move(dx, dy)
@@ -114,28 +119,34 @@ local function get_monster_info(dx,dy)
   info = {}
   info.distance = (abs(dx) > abs(dy)) and -abs(dx) or -abs(dy)
   if have_ranged() then
-    info.can_hit = you.see_cell_no_trans(dx, dy) and 3 or 0
+    info.attack_type = you.see_cell_no_trans(dx, dy) and 3 or 0
   elseif not have_reaching() then
-    info.can_hit = (-info.distance < 2) and 2 or 0
+    info.attack_type = (-info.distance < 2) and 2 or 0
   else
     if -info.distance > 2 then
-      info.can_hit = 0
+      info.attack_type = 0
     elseif -info.distance < 2 then
-      info.can_hit = 2
+      info.attack_type = 2
     else
-      info.can_hit = 1
+      info.attack_type = view.can_reach(dx, dy) and 1 or 0
     end
   end
+  if info.attack_type == 0 and have_throwing() and you.see_cell_no_trans(dx, dy) then
+    -- Melee is better than throwing.
+    info.attack_type = 3
+  end
+  info.can_attack = (info.attack_type > 0) and 1 or 0
   info.safe = m:is_safe() and -1 or 0
+  info.constricting_you = m:is_constricting_you() and 1 or 0
   -- Only prioritize good stabs: sleep and paralysis.
-  info.very_stabbable = m:is_very_stabbable() and 1 or 0
+  info.very_stabbable = (m:stabbability() >= 1) and 1 or 0
   info.injury = m:damage_level()
   info.threat = m:threat()
   return info
 end
 
 local function compare_monster_info(m1, m2)
-  flag_order = {"safe", "distance", "very_stabbable", "injury", "threat"}
+  flag_order = {"can_attack", "safe", "distance", "constricting_you", "very_stabbable", "injury", "threat"}
   for i,flag in ipairs(flag_order) do
     if m1[flag] > m2[flag] then
       return true
@@ -152,7 +163,8 @@ local function is_candidate_for_attack(x,y)
   if not m or m:attitude() ~= ATT_HOSTILE then
     return false
   end
-  if string.find(m:desc(), "butterfly") then
+  if string.find(m:desc(), "butterfly")
+      or string.find(m:desc(), "orb of destruction") then
     return false
   end
   if m:is_firewood() then
@@ -204,6 +216,10 @@ local function set_stop_level(key, value)
   AUTOFIGHT_STOP = tonumber(value)
 end
 
+local function set_af_throw(key, value)
+  AUTOFIGHT_THROW = string.lower(value) ~= "false"
+end
+
 local function hp_is_low()
   local hp, mhp = you.hp()
   return (100*hp <= AUTOFIGHT_STOP*mhp)
@@ -211,19 +227,20 @@ end
 
 function attack(allow_movement)
   local x, y, info = get_target()
+  local caught = you.caught()
   if you.confused() then
     crawl.mpr("You are too confused!")
-  elseif you.caught() then
-    crawl.mpr("You are held in a net!")
+  elseif caught then
+    crawl.mpr("You are " .. caught .. "!")
   elseif hp_is_low() then
     crawl.mpr("You are too injured to fight blindly!")
   elseif info == nil then
     crawl.mpr("No target in view!")
-  elseif info.can_hit == 3 then
+  elseif info.attack_type == 3 then
     attack_fire(x,y)
-  elseif info.can_hit == 2 then
+  elseif info.attack_type == 2 then
     attack_melee(x,y)
-  elseif info.can_hit == 1 then
+  elseif info.attack_type == 1 then
     attack_reach(x,y)
   elseif allow_movement then
     move_towards(x,y)
@@ -240,4 +257,10 @@ function hit_adjacent()
   attack(false)
 end
 
+function toggle_autothrow()
+  AUTOFIGHT_THROW = not AUTOFIGHT_THROW
+  crawl.mpr(AUTOFIGHT_THROW and "Enabling autothrow." or "Disabling autothrow.")
+end
+
 chk_lua_option.autofight_stop = set_stop_level
+chk_lua_option.autofight_throw = set_af_throw

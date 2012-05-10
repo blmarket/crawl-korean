@@ -24,7 +24,7 @@
 #include "hints.h"
 
 game_state::game_state()
-    : game_crashed(false), game_wants_emergency_save(false),
+    : game_crashed(false),
       mouse_enabled(false), waiting_for_command(false),
       terminal_resized(false), last_winch(0), io_inited(false),
       need_save(false),
@@ -37,7 +37,7 @@ game_state::game_state()
       doing_prev_cmd_again(false), prev_cmd(CMD_NO_CMD),
       repeat_cmd(CMD_NO_CMD),cmd_repeat_started_unsafe(false),
       lua_calls_no_turn(0), stat_gain_prompt(false),
-      level_annotation_shown(false),
+      level_annotation_shown(false), viewport_monster_hp(false),
 #ifndef USE_TILE_LOCAL
       mlist_targetting(false),
 #else

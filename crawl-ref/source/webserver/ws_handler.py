@@ -93,7 +93,7 @@ def handle_new_milestone(line):
     data = parse_where_data(line)
     if "name" not in data: return
     game = find_running_game(data.get("name"), data.get("start"))
-    game.log_milestone(data)
+    if game: game.log_milestone(data)
 
 class CrawlWebSocket(tornado.websocket.WebSocketHandler):
     def __init__(self, app, req, **kwargs):
@@ -128,6 +128,8 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
             "get_rc": self.get_rc,
             "set_rc": self.set_rc,
             }
+
+    client_closed = property(lambda self: (not self.ws_connection) or self.ws_connection.client_terminated)
 
     def _process_log_msg(self, msg, kwargs):
         return "#%-5s %s" % (self.id, msg), kwargs
@@ -201,7 +203,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                 self.logger.info("Stopping crawl after idle time limit.")
                 self.process.stop()
 
-        if not self.client_terminated:
+        if not self.client_closed:
             self.reset_timeout()
 
     def start_crawl(self, game_id):
@@ -253,7 +255,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                     socket.send_message("lobby_remove", id=self.process.id)
         self.process = None
 
-        if self.client_terminated:
+        if self.client_closed:
             sockets.remove(self)
         else:
             if shutting_down:
@@ -287,7 +289,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
             self.send_message("go_lobby")
 
     def shutdown(self):
-        if not self.client_terminated:
+        if not self.client_closed:
             msg = self.render_string("shutdown.html", game=self)
             self.send_message("close", reason = msg)
             self.close()
@@ -423,7 +425,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                     handler(**obj)
                 elif self.process:
                     self.process.handle_input(message)
-                else:
+                elif not self.watched_game:
                     self.logger.warning("Didn't know how to handle msg: %s",
                                         obj["msg"])
             except:
@@ -438,7 +440,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
     def write_message(self, msg):
         try:
             msg = to_unicode(msg)
-            if not self.client_terminated:
+            if not self.client_closed:
                 super(CrawlWebSocket, self).write_message(msg)
         except:
             self.logger.warning("Exception trying to send message.", exc_info = True)
@@ -447,7 +449,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
     def send_message(self, msg, **data):
         """Sends a JSON message to the client."""
         data["msg"] = msg
-        if not self.client_terminated:
+        if not self.client_closed:
             self.write_message(json_encode(data))
 
     def on_close(self):

@@ -11,10 +11,6 @@ book
 
 마법 주문이 담겨 있는 마법서들이다. 강력한 마법서들은 취급에 매우 주의해야 한다.
 %%%%
-crystal ball
-
-투명한 수정으로 만들어진 구체.
-%%%%
 deck of cards
 
 A deck of powerful magical cards painted in the ichor of demons. They may have any number of helpful or dangerous effects when drawn.

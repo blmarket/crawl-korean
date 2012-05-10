@@ -74,29 +74,6 @@ std::string god_prayer_reaction()
                           : _("displeased"));
 }
 
-bool god_accepts_prayer(god_type god)
-{
-    if (god_likes_fresh_corpses(god))
-        return (true);
-
-    switch (god)
-    {
-    case GOD_JIYVA:
-        return (jiyva_can_paralyse_jellies());
-
-    case GOD_ELYVILON:
-    case GOD_BEOGH:
-    case GOD_NEMELEX_XOBEH:
-    case GOD_ASHENZARI:
-        return (true);
-
-    default:
-        break;
-    }
-
-    return (false);
-}
-
 static bool _bless_weapon(god_type god, brand_type brand, int colour)
 {
     item_def& wpn = *you.weapon();
@@ -424,8 +401,8 @@ int zin_tithe(item_def& item, int quant, bool quiet)
         if (item.plus == 1) // seen before worshipping Zin
         {
             tithe = 0;
-            mprf(MSGCH_GOD, "%s is a bit unhappy you did not bring this "
-                            "gold earlier.", god_name(GOD_ZIN).c_str());
+            simple_god_message(" is a bit unhappy you did not bring this "
+                               "gold earlier.");
         }
         // A single scroll can give you more than D:1-18, Lair and Orc
         // together, limit the gains.  You're still required to pay from
@@ -451,7 +428,7 @@ int zin_tithe(item_def& item, int quant, bool quiet)
             }
             // Avg gold pile value: 10 + depth/2.
             tithe *= 47;
-            denom *= 20 + you.absdepth0;
+            denom *= 20 + env.absdepth0;
         }
         gain_piety(tithe * 3, denom);
     }
@@ -640,7 +617,10 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
     const int shop_value = item_value(item, true) / item.quantity;
     // Since the god is taking the items as a sacrifice, they must have at
     // least minimal value, otherwise they wouldn't be taken.
-    const int value = (is_worthless_consumable(item) ? 1 : shop_value);
+    const int value = (item.base_type == OBJ_CORPSES ?
+                          50 * stepdown_value(std::max(1,
+                          get_max_corpse_chunks(item.mon_type)), 4, 4, 12, 12) :
+                      (is_worthless_consumable(item) ? 1 : shop_value));
 
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_SACRIFICE)
         mprf(MSGCH_DIAGNOSTICS, "Sacrifice item value: %d", value);
@@ -716,19 +696,10 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
         }
         // Nemelex piety gain is fairly fast... at least when you
         // have low piety.
-        int piety_change, piety_denom;
-        if (item.base_type == OBJ_CORPSES)
-        {
-            piety_change = 1;
-            piety_denom = 2 + you.piety/50;
-        }
-        else
-        {
-            piety_change = value/2 + 1;
-            if (is_artefact(item))
-                piety_change *= 2;
-            piety_denom = 30 + you.piety/2;
-        }
+        int piety_change = value/2 + 1;
+        if (is_artefact(item))
+            piety_change *= 2;
+        int piety_denom = 30 + you.piety/2;
 
         gain_piety(piety_change, piety_denom);
 
@@ -744,14 +715,6 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
             // Count chunks and blood potions towards decks of
             // Summoning.
             you.sacrifice_value[OBJ_CORPSES] += value;
-        }
-        else if (item.base_type == OBJ_CORPSES)
-        {
-#if defined(DEBUG_GIFTS) || defined(DEBUG_CARDS) || defined(DEBUG_SACRIFICE)
-            mprf(MSGCH_DIAGNOSTICS, "Corpse mass is %d",
-                 item_mass(item));
-#endif
-            you.sacrifice_value[item.base_type] += item_mass(item);
         }
         else
             you.sacrifice_value[item.base_type] += value;

@@ -41,8 +41,6 @@ bool summon_holy_warrior(int pow, god_type god = GOD_NO_GOD, int spell = 0,
                          bool force_hostile = false, bool permanent = false,
                          bool quiet = false);
 
-spret_type cast_tukimas_ball(actor *caster, int pow, god_type god = GOD_NO_GOD,
-                             bool force_hostile = false, bool fail = false);
 spret_type cast_tukimas_dance(int pow, god_type god = GOD_NO_GOD,
                               bool force_hostile = false, bool fail = false);
 spret_type cast_conjure_ball_lightning(int pow, god_type god, bool fail);
@@ -61,8 +59,7 @@ spret_type cast_summon_horrible_things(int pow, god_type god, bool fail);
 bool can_cast_malign_gateway();
 spret_type cast_malign_gateway(actor* caster, int pow,
                                god_type god = GOD_NO_GOD, bool fail = false);
-coord_def find_gateway_location (actor* caster, bool (
-        *environment_checker)(dungeon_feature_type) = feat_is_malign_gateway_suitable);
+coord_def find_gateway_location(actor* caster);
 
 int animate_remains(const coord_def &a, corpse_type class_allowed,
                     beh_type beha, unsigned short hitting,

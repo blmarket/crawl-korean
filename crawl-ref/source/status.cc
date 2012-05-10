@@ -13,6 +13,7 @@
 #include "transform.h"
 #include "spl-transloc.h"
 #include "korean.h"
+#include "stuff.h"
 
 // Status defaults for durations that are handled straight-forwardly.
 struct duration_def
@@ -76,15 +77,9 @@ static duration_def duration_data[] =
     { DUR_JELLY_PRAYER, false,
       WHITE, P_("status","Pray"), P_("status","praying"), N_("You are praying.") },
     { DUR_REPEL_MISSILES, true,
-      BLUE, P_("status","RMsl"), P_("status","repel missiles"), N_("You are protected from missiles.") },
-    { DUR_RESIST_POISON, true,
-      LIGHTBLUE, P_("status","rPois"), "", N_("You resist poison.") },
-    { DUR_RESIST_COLD, true,
-      LIGHTBLUE, P_("status","rCold"), "", N_("You resist cold.") },
-    { DUR_RESIST_FIRE, true,
-      LIGHTBLUE, P_("status","rFire"), "", N_("You resist fire.") },
-    { DUR_SAGE, true,
-      BLUE, P_("status","Sage"), "", "" },
+      BLUE, P_("status", "RMsl"), P_("status", "repel missiles"), N_("You are protected from missiles.") },
+    { DUR_RESISTANCE, true,
+      LIGHTBLUE, P_("status", "Resist"), "", N_("You resist elements.") },
     { DUR_SEE_INVISIBLE, true,
       BLUE, P_("status","SInv"), "", N_("You can see invisible.") },
     { DUR_SLAYING, false,
@@ -92,11 +87,7 @@ static duration_def duration_data[] =
     { DUR_SLIMIFY, true,
       GREEN, P_("status","Slime"), P_("status","slimy"), "" },
     { DUR_SLEEP, false,
-      0, "", P_("status","sleeping"), N_("You are sleeping.") },
-#if TAG_MAJOR_VERSION == 32
-    { DUR_STONEMAIL, true,
-      0, "", P_("status","stone mail"), N_("You are covered in scales of stone.")},
-#endif
+      0, "", P_("status", "sleeping"), N_("You are sleeping.") },
     { DUR_STONESKIN, false,
       0, "", P_("status","stone skin"), N_("Your skin is tough as stone.") },
     { DUR_SWIFTNESS, true,
@@ -190,9 +181,7 @@ static int _bad_ench_colour(int lvl, int orange, int red)
 static int _dur_colour(int exp_colour, bool expiring)
 {
     if (expiring)
-    {
         return (exp_colour);
-    }
     else
     {
         switch (exp_colour)
@@ -232,9 +221,11 @@ static void _describe_rotting(status_info* inf);
 static void _describe_sickness(status_info* inf);
 static void _describe_nausea(status_info* inf);
 static void _describe_speed(status_info* inf);
+static void _describe_sage(status_info* inf);
 static void _describe_poison(status_info* inf);
 static void _describe_transform(status_info* inf);
 static void _describe_stat_zero(status_info* inf, stat_type st);
+static void _describe_terrain(status_info* inf);
 
 void fill_status_info(int status, status_info* inf)
 {
@@ -319,13 +310,23 @@ void fill_status_info(int status, status_info* inf)
         }
         break;
 
+    case STATUS_SUPPRESSED:
+        if (you.suppressed())
+        {
+            inf->light_colour = LIGHTGREEN;
+            inf->light_text   = "Suppress";
+            inf->short_text   = "magically suppressed";
+            inf->long_text    = "You are enveloped in a field of magical suppression.";
+        }
+        break;
+
     case STATUS_NET:
         if (you.attribute[ATTR_HELD])
         {
             inf->light_colour = RED;
-            inf->light_text   = gettext(M_("Held"));
-            inf->short_text   = gettext(M_("held"));
-            inf->long_text    = gettext("You are held in a net.");
+            inf->light_text   = _(M_("Held"));
+            inf->short_text   = _(M_("held"));
+            inf->long_text    = make_stringf(_("You are %s."), held_status());
         }
         break;
 
@@ -352,6 +353,10 @@ void fill_status_info(int status, status_info* inf)
 
     case STATUS_SPEED:
         _describe_speed(inf);
+        break;
+
+    case STATUS_SAGE:
+        _describe_sage(inf);
         break;
 
     case STATUS_AUGMENTED:
@@ -433,15 +438,6 @@ void fill_status_info(int status, status_info* inf)
         }
         break;
 
-    case DUR_SAGE:
-    {
-        std::string sk = skill_name(you.sage_bonus_skill);
-        inf->short_text = _("studious about ") + sk;
-        inf->long_text = _("You are ") + inf->short_text + ".";
-        _mark_expiring(inf, dur_expiring(DUR_SAGE));
-        break;
-    }
-
     case STATUS_MANUAL:
         if (!is_invalid_skill(you.manual_skill))
         {
@@ -516,6 +512,10 @@ void fill_status_info(int status, status_info* inf)
             inf->light_text   = "Constr";
             inf->short_text   = "constricted";
         }
+        break;
+
+    case STATUS_TERRAIN:
+        _describe_terrain(inf);
         break;
 
     default:
@@ -636,9 +636,7 @@ static void _describe_regen(status_info* inf)
     }
 
     if ((you.disease && !regen) || no_heal)
-    {
-       inf->short_text = gettext(M_("non-regenerating"));
-    }
+       inf->short_text = _(M_("non-regenerating"));
     else if (regen)
     {
         if (you.disease)
@@ -711,6 +709,23 @@ static void _describe_speed(status_info* inf)
     }
 }
 
+static void _describe_sage(status_info* inf)
+{
+    if (you.sage_skills.empty())
+        return;
+
+    std::vector<const char*> sages;
+    for (unsigned long i = 0; i < you.sage_skills.size(); ++i)
+        sages.push_back(skill_name(you.sage_skills[i]));
+
+    inf->light_colour = LIGHTBLUE;
+    inf->light_text   = "Sage";
+    inf->short_text   = "sage [" + comma_separated_line(sages.begin(),
+                        sages.end(), ", ") + "]";
+    inf->long_text    = "You feel studious about " + comma_separated_line(
+                        sages.begin(), sages.end()) + ".";
+}
+
 static void _describe_airborne(status_info* inf)
 {
     if (!you.airborne())
@@ -720,12 +735,12 @@ static void _describe_airborne(status_info* inf)
     const bool expiring = (!perm && dur_expiring(DUR_LEVITATION));
     const bool uncancel = you.attribute[ATTR_LEV_UNCANCELLABLE];
 
-    if (wearing_amulet(AMU_CONTROLLED_FLIGHT))
+    if (player_effect_cfly())
     {
-        inf->light_colour = you.light_flight() ? BLUE : MAGENTA;
-        inf->light_text   = gettext(M_("Fly"));
-        inf->short_text   = gettext(M_("flying"));
-        inf->long_text    = gettext("You are flying.");
+        inf->light_colour = you.light_flight() ? BLUE : perm ? WHITE : MAGENTA;
+        inf->light_text   = _(M_("Fly"));
+        inf->short_text   = _(M_("flying"));
+        inf->long_text    = _("You are flying.");
     }
     else
     {
@@ -902,5 +917,26 @@ static void _describe_stat_zero(status_info* inf, stat_type st)
         inf->long_text    = make_stringf(you.stat(st) ?
                 gettext("You are recovering from loss of %s.") : gettext("You have no %s!"),
                 gettext(stat_desc(st, SD_NAME)));
+    }
+}
+
+static void _describe_terrain(status_info* inf)
+{
+    switch (grd(you.pos()))
+    {
+    case DNGN_SHALLOW_WATER:
+        inf->light_colour = LIGHTBLUE;
+        inf->light_text = "Water";
+        break;
+    case DNGN_DEEP_WATER:
+        inf->light_colour = BLUE;
+        inf->light_text = "Water";
+        break;
+    case DNGN_LAVA:
+        inf->light_colour = RED;
+        inf->light_text = "Lava";
+        break;
+    default:
+        ;
     }
 }

@@ -14,7 +14,6 @@
 #include "coord.h"
 #include "coordit.h"
 #include "crash.h"
-#include "dbg-crsh.h"
 #include "dbg-scan.h"
 #include "dbg-util.h"
 #include "directn.h"
@@ -52,7 +51,7 @@
 #define NOLSTRING         /* lstr* string management routines */
 #define NODBCS            /* Double-byte character set routines */
 #define NOKEYBOARDINFO    /* Keyboard driver routines */
-#define NOCOLOR           /* COLOR_* color values */
+#define NOCOLOR           /* COLOR_* colour values */
 #define NODRAWTEXT        /* DrawText() and related definitions */
 #define NOSCALABLEFONT    /* Truetype scalable font support */
 #define NOMETAFILE        /* Metafile support */
@@ -100,10 +99,8 @@ static void _dump_level_info(FILE* file)
 
     fprintf(file, "Place info:\n");
 
-    fprintf(file, "absdepth0 = %d, branch = %d, level_type = %d, "
-                  "type_name = %s\n\n",
-            you.absdepth0, (int) you.where_are_you, (int) you.level_type,
-            you.level_type_name.c_str());
+    fprintf(file, "branch = %d, depth = %d\n\n",
+            (int)you.where_are_you, you.depth);
 
     std::string place = level_id::current().describe();
     std::string orig_place;
@@ -216,7 +213,7 @@ static void _dump_player(FILE *file)
         if (sk >= 0 && you.skills[sk] < 27)
             needed_max = skill_exp_needed(you.skills[sk] + 1, sk);
 
-        fprintf(file, "%-16s|     %c     |   %d   |    %2d    |   %2d  | %6d | %d/%d\n",
+        fprintf(file, "%-16s|     %c     |   %d   |   %3d    |   %2d  | %6d | %d/%d\n",
                 skill_name(sk),
                 you.can_train[sk] ? 'X' : ' ',
                 you.train[sk],
@@ -778,12 +775,9 @@ static NORETURN void _BreakStrToDebugger(const char *mesg, bool assert)
 // AssertFailed
 //
 //---------------------------------------------------------------
-NORETURN void AssertFailed(const char *expr, const char *file, int line, bool save_game)
+NORETURN void AssertFailed(const char *expr, const char *file, int line)
 {
     char mesg[512];
-
-    if (save_game)
-        crawl_state.game_wants_emergency_save = true;
 
     const char *fileName = file + strlen(file); // strip off path
 

@@ -59,6 +59,12 @@ extern bool apply_berserk_penalty;
 
 static bool _reaching_weapon_attack(const item_def& wpn)
 {
+    if (you.caught())
+    {
+        mprf("You cannot attack while %s.", held_status());
+        return false;
+    }
+
     dist beam;
 
     direction_chooser_args args;
@@ -82,16 +88,14 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     }
 
     if (you.confused())
-    {
         beam.confusion_fuzz(2);
-    }
 
     const coord_def delta = beam.target - you.pos();
     const int x_distance  = abs(delta.x);
     const int y_distance  = abs(delta.y);
     monster* mons = monster_at(beam.target);
-    // don't allow targetting of submerged trapdoor spiders
-    if (mons && mons->submerged() && feat_is_floor(grd(beam.target)))
+    // don't allow targetting of submerged monsters (includes trapdoor spiders)
+    if (mons && mons->submerged())
         mons = NULL;
 
     const int x_first_middle = you.pos().x + (delta.x)/2;
@@ -106,8 +110,8 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         mpr(gettext("Your weapon cannot reach that far!"));
         return (false); // Shouldn't happen with confused swings
     }
-    else if (grd(first_middle) <= DNGN_MAX_NONREACH
-             && grd(second_middle) <= DNGN_MAX_NONREACH)
+    else if (!feat_is_reachable_past(grd(first_middle))
+             && !feat_is_reachable_past(grd(second_middle)))
     {
         // Might also be a granite statue/orcish idol which you
         // can reach _past_.
@@ -131,13 +135,12 @@ static bool _reaching_weapon_attack(const item_def& wpn)
 
     // Choose one of the two middle squares (which might be the same).
     const coord_def middle =
-                     (grd(first_middle) <= DNGN_MAX_NONREACH ? second_middle :
-                     (grd(second_middle) <= DNGN_MAX_NONREACH ? first_middle :
-                     (coinflip() ? first_middle : second_middle)));
+        (!feat_is_reachable_past(grd(first_middle)) ? second_middle :
+         (!feat_is_reachable_past(grd(second_middle)) ? first_middle :
+          (coinflip() ? first_middle : second_middle)));
 
-    // BCR - Added a check for monsters in the way.  Only checks cardinal
-    //       directions.  Knight moves are ignored.  Assume the weapon
-    //       slips between the squares.
+    // Check for a monster in the way. If there is one, it blocks the reaching
+    // attack 50% of the time, and the attack tries to hit it if it is hostile.
 
     // If we're attacking more than a space away...
     if (x_distance > 1 || y_distance > 1)
@@ -616,12 +619,10 @@ static bool _ball_of_energy(void)
     else if (use < 5 && enough_mp(1, true))
     {
         mpr(gettext("You feel your power drain away!"));
-        set_mp(0);
+        dec_mp(you.magic_points);
     }
     else if (use < 10)
-    {
         confuse_player(10 + random2(10));
-    }
     else
     {
         int proportional = (you.magic_points * 100) / you.max_magic_points;
@@ -630,7 +631,7 @@ static bool _ball_of_energy(void)
             || one_chance_in(25))
         {
             mpr(gettext("You feel your power drain away!"));
-            set_mp(0);
+            dec_mp(you.magic_points);
         }
         else
         {
@@ -651,12 +652,6 @@ bool evoke_item(int slot)
                        || !weapon_reach(*you.weapon())))
     {
         canned_msg(MSG_TOO_BERSERK);
-        return (false);
-    }
-
-    if (!player_can_handle_equipment())
-    {
-        canned_msg(MSG_PRESENT_FORM);
         return (false);
     }
 
@@ -696,7 +691,8 @@ bool evoke_item(int slot)
         ASSERT(item_is_equipped(item));
         if (entry->evoke_func(&item, &pract, &did_work, &unevokable))
         {
-            count_action(CACT_EVOKE, EVOC_MISC);
+            if (!unevokable)
+                count_action(CACT_EVOKE, EVOC_MISC);
             return (did_work);
         }
     }
@@ -787,13 +783,6 @@ bool evoke_item(int slot)
                 pract = 2;
             break;
 
-#if TAG_MAJOR_VERSION == 32
-        case MISC_CRYSTAL_BALL_OF_SEEING:
-            mpr("Nothing happens.");
-            pract = 0;
-            break;
-#endif
-
         case MISC_AIR_ELEMENTAL_FAN:
             if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
                 canned_msg(MSG_NOTHING_HAPPENS);
@@ -819,7 +808,7 @@ bool evoke_item(int slot)
                 canned_msg(MSG_NOTHING_HAPPENS);
             else
             {
-                cast_summon_elemental(100, GOD_NO_GOD, MONS_EARTH_ELEMENTAL, 4, 5);
+                cast_summon_elemental(100, GOD_NO_GOD, MONS_EARTH_ELEMENTAL, 4, 3);
                 pract = (one_chance_in(5) ? 1 : 0);
             }
             break;
@@ -840,13 +829,6 @@ bool evoke_item(int slot)
             else if (_ball_of_energy())
                 pract = 1;
             break;
-
-#if TAG_MAJOR_VERSION == 32
-        case MISC_CRYSTAL_BALL_OF_FIXATION:
-            mpr(gettext("Nothing happens."));
-            pract = 0;
-            break;
-#endif
 
         case MISC_DISC_OF_STORMS:
             if (disc_of_storms())

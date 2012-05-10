@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <cmath>
 
 #include "externs.h"
 
@@ -64,6 +65,7 @@
 #include "spl-summoning.h"
 #include "spl-miscast.h"
 #include "spl-util.h"
+#include "stairs.h"
 #include "state.h"
 #include "areas.h"
 #include "transform.h"
@@ -174,7 +176,7 @@ static monster_type _monster_for_ability (const ability_def& abil);
  *
  * @note Declaring this const messes up externs later, so don't do it!
  */
-ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
+ability_type god_abilities[NUM_GODS][MAX_GOD_ABILITIES] =
 {
     // no god
     { ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
@@ -212,7 +214,7 @@ ability_type god_abilities[MAX_NUM_GODS][MAX_GOD_ABILITIES] =
       ABIL_TROG_BROTHERS_IN_ARMS, ABIL_NON_ABILITY },
     // Nemelex
     { ABIL_NEMELEX_DRAW_ONE, ABIL_NEMELEX_PEEK_TWO, ABIL_NEMELEX_TRIPLE_DRAW,
-      ABIL_NEMELEX_MARK_FOUR, ABIL_NEMELEX_STACK_FIVE },
+      ABIL_NEMELEX_DEAL_FOUR, ABIL_NEMELEX_STACK_FIVE },
     // Elyvilon
     { ABIL_ELYVILON_LESSER_HEALING_SELF, ABIL_ELYVILON_PURIFICATION,
       ABIL_ELYVILON_GREATER_HEALING_OTHERS, ABIL_NON_ABILITY,
@@ -398,7 +400,7 @@ static const ability_def Ability_List[] =
     { ABIL_NEMELEX_DRAW_ONE, M_("Draw One"), 2, 0, 0, 0, 0, ABFLAG_NONE},
     { ABIL_NEMELEX_PEEK_TWO, M_("Peek at Two"), 3, 0, 0, 1, 0, ABFLAG_INSTANT},
     { ABIL_NEMELEX_TRIPLE_DRAW, M_("Triple Draw"), 2, 0, 100, 2, 0, ABFLAG_NONE},
-    { ABIL_NEMELEX_MARK_FOUR, M_("Mark Four"), 4, 0, 125, 5, 0, ABFLAG_NONE},
+    { ABIL_NEMELEX_DEAL_FOUR, M_("Deal Four"), 8, 0, 200, 10, 0, ABFLAG_NONE},
     { ABIL_NEMELEX_STACK_FIVE, M_("Stack Five"), 5, 0, 250, 10, 0, ABFLAG_NONE},
 
     // Beogh
@@ -444,9 +446,9 @@ static const ability_def Ability_List[] =
     { ABIL_MAKE_OKLOB_SAPLING, M_("Make oklob sapling"), 0, 0, 0, 0, 60, ABFLAG_ZOTDEF},
     { ABIL_MAKE_BURNING_BUSH, M_("Make burning bush"), 0, 0, 0, 0, 200, ABFLAG_ZOTDEF},
     { ABIL_MAKE_OKLOB_PLANT, M_("Make oklob plant"), 0, 0, 0, 0, 250, ABFLAG_ZOTDEF},
-    { ABIL_MAKE_ICE_STATUE, M_("Make ice statue"), 0, 0, 50, 0, 2000, ABFLAG_ZOTDEF},
-    { ABIL_MAKE_OCS, M_("Make crystal statue"), 0, 0, 200, 0, 2000, ABFLAG_ZOTDEF},
-    { ABIL_MAKE_SILVER_STATUE, M_("Make silver statue"), 0, 0, 400, 0, 3000, ABFLAG_ZOTDEF},
+    { ABIL_MAKE_ICE_STATUE, M_("Make ice statue"), 0, 0, 0, 0, 2000, ABFLAG_ZOTDEF},
+    { ABIL_MAKE_OCS, M_("Make crystal statue"), 0, 0, 0, 0, 2000, ABFLAG_ZOTDEF},
+    { ABIL_MAKE_SILVER_STATUE, M_("Make silver statue"), 0, 0, 0, 0, 3000, ABFLAG_ZOTDEF},
     { ABIL_MAKE_CURSE_SKULL, M_("Make curse skull"),
       0, 0, 600, 0, 10000, ABFLAG_ZOTDEF|ABFLAG_NECRO_MISCAST_MINOR},
     { ABIL_MAKE_TELEPORT, M_("Zot-teleport"), 0, 0, 0, 0, 2, ABFLAG_ZOTDEF},
@@ -471,9 +473,9 @@ static const ability_def Ability_List[] =
       0, 30, 0, 0, 100, ABFLAG_ZOTDEF|ABFLAG_PERMANENT_HP},
     { ABIL_MAKE_ALTAR, M_("Make altar"), 0, 0, 0, 0, 50, ABFLAG_ZOTDEF},
     { ABIL_MAKE_GRENADES, M_("Make grenades"), 0, 0, 0, 0, 2, ABFLAG_ZOTDEF},
-    { ABIL_MAKE_SAGE, M_("Sage"), 0, 0, 300, 0, 0, ABFLAG_ZOTDEF|ABFLAG_INSTANT},
+    { ABIL_MAKE_SAGE, M_("Sage"), 0, 0, 0, 0, 0, ABFLAG_ZOTDEF|ABFLAG_STAT_DRAIN},
     { ABIL_REMOVE_CURSE, M_("Remove Curse"),
-      0, 0, 300, 0, 0, ABFLAG_ZOTDEF|ABFLAG_STAT_DRAIN},
+      0, 0, 0, 0, 0, ABFLAG_ZOTDEF|ABFLAG_STAT_DRAIN},
 
     { ABIL_RENOUNCE_RELIGION, M_("Renounce Religion"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 };
@@ -1252,7 +1254,7 @@ static talent _get_talent(ability_type ability, bool check_confused)
         failure = 80 - (you.piety / 25) - you.skill(SK_EVOCATIONS, 4);
         break;
 
-    case ABIL_NEMELEX_MARK_FOUR:
+    case ABIL_NEMELEX_DEAL_FOUR:
         invoc = true;
         failure = 70 - (you.piety * 2 / 45) - you.skill(SK_EVOCATIONS, 9) / 2;
         break;
@@ -1505,7 +1507,7 @@ static bool _check_ability_possible(const ability_def& abil,
         return (true);
 
     case ABIL_LUGONU_ABYSS_EXIT:
-        if (you.level_type != LEVEL_ABYSS)
+        if (!player_in_branch(BRANCH_ABYSS))
         {
             mpr(gettext("You aren't in the Abyss!"));
             return (false);
@@ -1516,7 +1518,7 @@ static bool _check_ability_possible(const ability_def& abil,
         return (!is_level_incorruptible());
 
     case ABIL_LUGONU_ABYSS_ENTER:
-        if (you.level_type == LEVEL_ABYSS)
+        if (player_in_branch(BRANCH_ABYSS))
         {
             mpr(gettext("You're already here!"));
             return (false);
@@ -1786,8 +1788,11 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_MAKE_SILVER_STATUE:
     case ABIL_MAKE_CURSE_SKULL:
     case ABIL_MAKE_LIGHTNING_SPIRE:
-        if (!create_zotdef_ally(_monster_for_ability(abil), _zd_mons_description_for_ability(abil).c_str()))
+        if (!create_zotdef_ally(_monster_for_ability(abil),
+            _zd_mons_description_for_ability(abil).c_str()))
+        {
             return (false);
+        }
         break;
     // End ZotDef Allies
 
@@ -1797,6 +1802,7 @@ static bool _do_ability(const ability_def& abil)
 
     // ZotDef traps
     case ABIL_MAKE_TELEPORT_TRAP:
+        // BUG: it's the trap's position, not yours, that should matter.
         if ((you.pos() - env.orb_pos).abs() < 100)
         {
             mpr(gettext("Radiation from the Orb interferes with the trap's magic!"));
@@ -1856,9 +1862,7 @@ static bool _do_ability(const ability_def& abil)
         // Generate a portal to something.
         const map_def *mapidx = random_map_for_tag("zotdef_bazaar", false);
         if (mapidx && dgn_safe_place_map(mapidx, true, true, you.pos()))
-        {
-            mpr(gettext("A mystic portal forms."));
-        }
+            mpr(_("A mystic portal forms."));
         else
         {
             mpr(gettext("A buggy portal flickers into view, then vanishes."));
@@ -1895,11 +1899,12 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_REMOVE_CURSE:
         remove_curse();
-        lose_stat(STAT_RANDOM, (1 + random2avg(4, 2)), false, "zot ability");
+        lose_stat(STAT_RANDOM, 1, false, "zot ability");
         break;
 
     case ABIL_MAKE_SAGE:
         sage_card(20, DECK_RARITY_RARE);
+        lose_stat(STAT_RANDOM, 1 + random2(3), false, "zot ability");
         break;
 
     case ABIL_MUMMY_RESTORATION:
@@ -2187,8 +2192,8 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_END_TRANSFORMATION:
-        mpr(gettext("You feel almost normal."));
-        you.set_duration(DUR_TRANSFORMATION, 2);
+        you.time_taken = div_rand_round(you.time_taken * 3, 2);
+        untransform();
         break;
 
     // INVOCATIONS:
@@ -2456,9 +2461,9 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_ELYVILON_LESSER_HEALING_OTHERS:
     {
         const bool self = (abil.ability == ABIL_ELYVILON_LESSER_HEALING_SELF);
-
-        if (cast_healing(3 + (you.skill_rdiv(SK_INVOCATIONS, 1, 6)), true,
-                         self ? you.pos() : coord_def(0, 0), !self,
+        if (cast_healing(3 + (you.skill_rdiv(SK_INVOCATIONS, 1, 6)),
+                         3 + (int) ceil(you.skill(SK_INVOCATIONS, 1) / 6.0),
+                         true, self ? you.pos() : coord_def(0, 0), !self,
                          self ? TARG_NUM_MODES : TARG_INJURED_FRIEND) < 0)
         {
             return (false);
@@ -2476,8 +2481,9 @@ static bool _do_ability(const ability_def& abil)
     {
         const bool self = (abil.ability == ABIL_ELYVILON_GREATER_HEALING_SELF);
 
-        if (cast_healing(10 + (you.skill_rdiv(SK_INVOCATIONS, 1, 3)), true,
-                         self ? you.pos() : coord_def(0, 0), !self,
+        if (cast_healing(10 + (you.skill_rdiv(SK_INVOCATIONS, 1, 3)),
+                         10 + (int) ceil(you.skill(SK_INVOCATIONS, 1) / 3.0),
+                         true, self ? you.pos() : coord_def(0, 0), !self,
                          self ? TARG_NUM_MODES : TARG_INJURED_FRIEND) < 0)
         {
             return (false);
@@ -2491,7 +2497,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_LUGONU_ABYSS_EXIT:
-        banished(DNGN_EXIT_ABYSS);
+        down_stairs(DNGN_EXIT_ABYSS);
         break;
 
     case ABIL_LUGONU_BEND_SPACE:
@@ -2534,18 +2540,18 @@ static bool _do_ability(const ability_def& abil)
             you.hp_max = 1;
 
         // Deflate HP.
-        set_hp(1 + random2(you.hp));
+        dec_hp(random2(you.hp), false);
 
         // Lose 1d2 permanent MP.
         rot_mp(coinflip() ? 2 : 1);
 
         // Deflate MP.
         if (you.magic_points)
-            set_mp(random2(you.magic_points));
+            dec_mp(random2(you.magic_points));
 
         bool note_status = notes_are_active();
         activate_notes(false);  // This banishment shouldn't be noted.
-        banished(DNGN_ENTER_ABYSS);
+        banished();
         activate_notes(note_status);
         break;
     }
@@ -2564,8 +2570,8 @@ static bool _do_ability(const ability_def& abil)
             return (false);
         break;
 
-    case ABIL_NEMELEX_MARK_FOUR:
-        if (!deck_mark())
+    case ABIL_NEMELEX_DEAL_FOUR:
+        if (!deck_deal())
             return (false);
         break;
 
@@ -3095,8 +3101,7 @@ std::vector<talent> your_talents(bool check_confused)
     if (you.species == SP_TENGU
         && !you.attribute[ATTR_PERM_LEVITATION]
         && you.experience_level >= 5
-        && (you.experience_level >= 15 || !you.airborne())
-        && (!form_changed_physiology() || you.form == TRAN_LICH))
+        && (you.experience_level >= 15 || !you.airborne()))
     {
         // Tengu can fly, but only from the ground
         // (until level 15, when it becomes permanent until revoked).
@@ -3112,7 +3117,6 @@ std::vector<talent> your_talents(bool check_confused)
     }
 
     if (you.attribute[ATTR_PERM_LEVITATION]
-        && (!form_changed_physiology() || you.form == TRAN_LICH)
         && you.species == SP_TENGU && you.experience_level >= 5)
     {
         _add_talent(talents, ABIL_STOP_FLYING, check_confused);
@@ -3260,7 +3264,7 @@ static int _is_god_ability(ability_type abil)
     if (abil == ABIL_NON_ABILITY)
         return (GOD_NO_GOD);
 
-    for (int i = 0; i < MAX_NUM_GODS; ++i)
+    for (int i = 0; i < NUM_GODS; ++i)
         for (int j = 0; j < MAX_GOD_ABILITIES; ++j)
         {
             if (god_abilities[i][j] == abil)
