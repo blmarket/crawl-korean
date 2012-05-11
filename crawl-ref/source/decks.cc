@@ -29,6 +29,7 @@
 #include "item_use.h"
 #include "itemprop.h"
 #include "items.h"
+#include "korean.h"
 #include "macro.h"
 #include "makeitem.h"
 #include "maps.h"
@@ -457,7 +458,7 @@ static card_type _draw_top_card(item_def& deck, bool message,
 
     if (message)
     {
-        const char *verb = translate_verb(NULL, (_flags & CFLAG_DEALT) ? V_("deal") : V_("draw"));
+        const char *verb = translate_verb(NULL, (_flags & CFLAG_DEALT) ? V_("deal") : V_("draw")).c_str();
 
         if (_flags & CFLAG_MARKED)
             mprf(_("You %s %s."), verb, card_name(card));

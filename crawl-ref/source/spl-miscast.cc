@@ -1080,8 +1080,8 @@ void MiscastEffect::_translocation(int severity)
             break;
         case 1:
             you_msg      = _("The air around you crackles with energy!");
-            mon_msg_seen = _("The air around @the_monster@ crackles with ")
-                           _("energy!");
+            mon_msg_seen = _("The air around @the_monster@ crackles with "
+                           "energy!");
             mon_msg_unseen = _("The air around something crackles with energy!");
             break;
         case 2:
@@ -1100,7 +1100,6 @@ void MiscastEffect::_translocation(int severity)
             you_msg      = "Strange energies run through your body.";
             mon_msg_seen = make_stringf("@The_monster@ glows %s for a moment.", _(weird_glowing_colour().c_str()));
             mon_msg_unseen = make_stringf("A spot of thin air glows %s for a moment.", _(weird_glowing_colour().c_str()));
-                             + weird_glowing_colour() + " for a moment.";
             break;
         case 6:
             you_msg      = gettext("Your skin tingles.");
@@ -1208,10 +1207,10 @@ void MiscastEffect::_translocation(int severity)
         switch (random2(target->is_player() ? 4 : 3))
         {
         case 0:
-            you_msg        = _("You are caught in an extremely strong localised ")
-                             _("spatial distortion!");
-            mon_msg_seen   = _("@The_monster@ is caught in an extremely strong ")
-                             _("localised spatial distortion!");
+            you_msg        = _("You are caught in an extremely strong localised "
+                             "spatial distortion!");
+            mon_msg_seen   = _("@The_monster@ is caught in an extremely strong "
+                             "localised spatial distortion!");
             mon_msg_unseen = _("A rift temporarily opens in the fabric of space!");
             _ouch(15 + random2avg(29, 2));
             break;

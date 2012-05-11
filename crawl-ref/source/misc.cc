@@ -2592,8 +2592,8 @@ static void _maybe_id_jewel(jewellery_type ring_type = NUM_JEWELLERY,
                 && !known)
             {
                 artefact_wpn_learn_prop(item, artp);
-                mprf("You are wearing: %s",
-                     item.name(DESC_INVENTORY_EQUIP).c_str());
+                mprf(_("You are wearing: %s"),
+                     item.name(true, DESC_INVENTORY_EQUIP).c_str());
             }
         }
     }

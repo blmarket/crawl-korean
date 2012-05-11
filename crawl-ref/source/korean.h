@@ -9,5 +9,6 @@ class actor;
 
 const char * pgettext_expr(const char *msgctxt, const char *msgid);
 ucs_t korean_getindex(ucs_t c);
+std::string translate_verb(const actor *actor, const std::string &verb);
 
 #endif

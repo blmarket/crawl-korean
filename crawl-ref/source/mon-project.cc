@@ -780,8 +780,8 @@ move_again:
 
             if (victim->atype() == ACT_PLAYER)
             {
-                mprf("Your %s reflects %s!",
-                     shield->name(DESC_PLAIN).c_str(),
+                mprf(_("Your %s reflects %s!"),
+                     shield->name(true, DESC_PLAIN).c_str(),
                      mon.name(DESC_THE, true).c_str());
                 ident_reflector(shield);
             }
@@ -789,16 +789,16 @@ move_again:
             {
                 if (victim->observable())
                 {
-                    mprf("%s reflects %s with %s %s!",
+                    mprf(_("%s reflects %s with %s %s!"),
                          victim->name(DESC_THE, true).c_str(),
                          mon.name(DESC_THE, true).c_str(),
                          mon.pronoun(PRONOUN_POSSESSIVE).c_str(),
-                         shield->name(DESC_PLAIN).c_str());
+                         shield->name(true, DESC_PLAIN).c_str());
                     ident_reflector(shield);
                 }
                 else
                 {
-                    mprf("%s bounces off thin air!",
+                    mprf(_("%s bounces off thin air!"),
                         mon.name(DESC_THE, true).c_str());
                 }
             }

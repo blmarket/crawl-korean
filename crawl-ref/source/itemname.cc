@@ -1509,7 +1509,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_type)
-            buff << make_stringf(check_gettext("wand of %s"), check_gettext(wand_type_name(item_typ)));
+            buff << make_stringf(check_gettext("wand of %s"), check_gettext(_wand_type_name(item_typ)));
         else
         {
             buff << make_stringf(check_gettext("%s%s wand"), 
@@ -1866,7 +1866,7 @@ std::string item_def::name_aux(description_level_type desc,
         {
             const monster_type mc = static_cast<monster_type>(it_plus);
             if (!(mons_is_unique(mc) && mons_species(mc) == mc))
-                buff << check_gettext(mons_type_name(mc, DESC_PLAIN)) << ' ';
+                buff << check_gettext(mons_type_name(mc, DESC_PLAIN).c_str()) << ' ';
 
             if (!_name.empty() && shaped)
                 buff << _name << ' ';

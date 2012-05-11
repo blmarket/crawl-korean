@@ -1331,7 +1331,7 @@ static void _armour_wear_effects(const int item_slot)
 
     if (!was_known)
             add_autoinscription(arm);
-    mprf(_("You finish putting on %s."), arm.name(DESC_YOUR).c_str());
+    mprf(_("You finish putting on %s."), arm.name(true, DESC_YOUR).c_str());
 
     if (eq_slot == EQ_BODY_ARMOUR)
     {

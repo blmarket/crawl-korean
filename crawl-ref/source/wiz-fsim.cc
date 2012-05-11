@@ -78,15 +78,15 @@ static std::string _equipped_weapon_name()
 
     if (iweap)
     {
-        std::string item_buf = iweap->name(DESC_PLAIN, true);
+        std::string item_buf = iweap->name(false, DESC_PLAIN, true);
         // If it's a ranged weapon, add the description of the missile
         if (is_range_weapon(*iweap) && missile < ENDOFPACK && missile >= 0)
-                item_buf += " with " + you.inv[missile].name(DESC_PLAIN);
+                item_buf += " with " + you.inv[missile].name(false, DESC_PLAIN);
         return "Wielding: " + item_buf;
     }
 
     if (missile != -1)
-        return "Quivering: " + you.inv[missile].name(DESC_PLAIN);
+        return "Quivering: " + you.inv[missile].name(false, DESC_PLAIN);
 
     return "Unarmed";
 }
