@@ -21,11 +21,11 @@ amulet of controlled flight
 %%%%
 amulet of guardian spirit
 
-This amulet makes its wearer less susceptible to external damage, draining magical power instead. Should the reserves of magic be depleted, the spirit will fail to provide its protection until more power is available.
+이 부적은 착용자가 외부 공격으로부터 덜 취약하게 해주지만, 마법적 힘이 줄어든다. 마법적 힘이 없다면, 다시 충전될 때 까지 보호받지 못한다.
 %%%%
 amulet of inaccuracy
 
-This amulet makes its wearer less accurate in hand combat and when targetting monsters via ranged attacks or spells.
+이 부적은 착용자의 맨손전투, 마법, 원거리 공격 정확도를 낮춘다.
 %%%%
 amulet of rage
 
@@ -365,7 +365,7 @@ crossbow
 %%%%
 crystal ball of energy
 
-A magical device which can be used to restore one's reserves of magical energy, but the use of which carries the risk of draining all of those energies completely. This risk varies inversely with the proportion of their maximum energy which the user possesses; a user near his or her full potential will find this item most beneficial.
+마법력을 재생할 수 있는 도구이다. 하지만 마법 에너지를 잃을 수 있는 위험이 있다. 최대 마법 에너지의 일부분이 사라질 수 있다.; 사용자의 마법 에너지그 최대에 근접했을 때, 이 아이템의 효율이 가장 좋을 것이다.
 %%%%
 crystal plate armour
 
@@ -381,27 +381,27 @@ dart
 %%%%
 deck of changes
 
-A deck of magical cards which induce changes in the user or his environment.
+사용자나 사용자의 환경을 변화시킬 수 있는 마법의 카드로 구성된 덱이다.
 
-It may contain the following cards: the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary, the Potion, Focus, Shuffle, Experience, Wild Magic, the Helix, the Sage, Water, Vitrification, the Map, Dowsing, the Spade, Trowel, the Minefield.
+다음과 같은 카드들로 구성되어 있다: 엘릭서, 전투욕구, 탈바꿈, 헬름, 칼날, 그림자, 용병, 포션, 집중, 섞기, 경험, 와일드매직, 나선, 현자, 물, 유리화, 지도, 수맥찾기, 삽, 모종삽, 지뢰밭.
 %%%%
 deck of defence
 
-A deck of magical cards, most of which defend the user from harm in various ways.
+사용자가 위험에서 자신을 지킬 수 있게 해주는 마법의 카드로 구성된 덱이다.
 
-It may contain the following cards: the Tomb, the Banshee, Damnation, Solitude, Warpwright, Flight, the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary.
+다음과 같은 카드들로 구성되어 있다: 무덤, 밴시, 저주, 고독, 순간이동장인, 비행, 엘릭서, 전투욕구, 탈바꿈, 헬름, 칼날, 그림자, the 용병.
 %%%%
 deck of destruction
 
-A deck of magical cards, most of which hurl death and destruction at one's foes (or, if unlucky, at oneself).
+적에게 죽음과 파괴를 선사할 수 있는 마법의 카드를 구성된 덱이다. 운이 없다면 당신에게 선사될지도.
 
-It may contain the following cards: Vitriol, Flame, Frost, Venom, the Spark, the Hammer, Pain, the Orb.
+다음과 같은 카드들로 구성되어 있다: 황산, 화염, 냉기, 맹독, 전격, 망치, 고통, 구체.
 %%%%
 deck of dungeons
 
-A deck of magical cards which deal with shaping the dungeon.
+던전의 모양을 바꾸는 마법 카드로 구성된 덱이다.
 
-It may contain the following cards: Water, Vitrification, the Map, Dowsing, the Spade, Trowel, the Minefield.
+다음과 같은 카드들로 구성되어 있다: 물, 유리화, 지도, 수맥찾기, 삽, 모종삽, 지뢰밭.
 %%%%
 deck of escape
 
@@ -411,9 +411,9 @@ deck of escape
 %%%%
 deck of punishment
 
-A deck of magical cards which wreak havoc on the user.
+사용자에게 막대한 피해를 줄 수있는 마법카드로 구성된 덱이다.
 
-It may contain the following cards: Wrath, the Wraith, the Curse, Xom, Famine, Wild Magic, the Portal, the Tomb, Damnation, the Minefield, Torment.
+다음과 같은 카드들로 구성되어 있다: 분노, 망령, 저주, 좀, 기아, 와일드매직, 포탈, 무덤, 저주, 지뢰밭, 고뇌.
 %%%%
 deck of summonings
 
@@ -423,9 +423,9 @@ deck of summonings
 %%%%
 deck of war
 
-A deck of magical cards which are useful before and during battle.
+전투를 할 때 유용하게 쓰이는 마법의 카드들로 구성된 덱이다.
 
-It may contain the following cards: the Portal, the Warp, Swap, Velocity, the Tomb, the Banshee, Damnation, Solitude, Warpwright, Flight, the Elixir, Battlelust, Metamorphosis, the Helm, the Blade, the Shadow, the Mercenary, the Crusade, the Herd, the Pentagram, the Dance, Foxfire, the Bones, Repulsiveness, Vitriol, Flame, Frost, Venom, the Spark, the Hammer, Pain, Torment.
+다음과 같은 카드들로 구성되어 있다: 포탈, 워프, 바꾸기, 속도, 무덤, 밴시, 저주, 고독, 순간이동장인, 비행, 엘릭서, 전투욕구, 탈바꿈, 헬름, 칼날, 그림자, 용병, 십자군, 떼거지, 오망성, 춤, 여우불, 뼈, 역겨움, 황산, 화염, 냉기, 독, 전격, 망치, 고통, 고뇌.
 %%%%
 deck of wonders
 
@@ -451,7 +451,7 @@ dire flail
 %%%%
 disc of storms
 
-This extremely powerful item can unleash a destructive storm of electricity. Its effectiveness greatly improves in the hands of one skilled in using magical devices, but cannot be used by one who is not a conductor.
+이 극도로 강한 아이템은 파괴적인 전격 폭풍을 일으킨다. 숙련된 마법 장비가 있으면 위력은 더욱 강해지지만, but cannot be used by one who is not a conductor.
 %%%%
 double sword
 
@@ -483,11 +483,11 @@ falchion
 %%%%
 fire dragon armour
 
-A magical armour, made from the scales of a fire-breathing dragon. It provides great protection from the effects of fire, but renders its wearer more susceptible to the effects of cold.
+불을 내뿜는 드래곤의 비늘로 만든 마법 방어구다. 화염에 대해서 대단한 방어력을 가졌지만, 추위 데미지에는 취약하다.
 %%%%
 fire dragon hide
 
-The scaly skin of a common true dragon. It can be fashioned into proper armour, but even in its raw form it provides great protection from the effects of fire but renders its wearer susceptible to cold.
+흔한 드래곤의 가시덮인 가죽. 이 아이템은 일반 방어구로 가공될 수 있지만, 가공하지 않아도 불에 대해서 대단한 방어력을 제공한다. 하지만 냉기에 약해질 수 있다.
 %%%%
 flail
 
@@ -535,7 +535,7 @@ great sword
 %%%%
 halberd
 
-A long pole with a spiked axe head on one end.
+스파이크 달린 도끼가 끝에 달려있는 창.
 %%%%
 hammer
 
@@ -631,17 +631,11 @@ morningstar
 %%%%
 mottled dragon armour
 
-A magical armour made from the scales of a mottled dragon. Although it does
-not provide its wearer with much in the way of special magical protection,
-unlike the armour made from the scales of some larger dragons, it is as
-light and relatively uncumbersome as leather armour. It is also remarkably
-smooth, letting sticky flames flow down like water.
+얼룩덜룩한 용의 비늘로 만든 마법 방어구. 다른 용의 비늘로 만든 방어구처럼 특별한 마법적 보호는 제공하지 않지만, 가죽처럼 편하고 다루기 쉽고 가볍다. 그리고 매우 부드러워서 , sticky flame은 그냥 흘러내린다.
 %%%%
 mottled dragon hide
 
-The weirdly-patterned scaly skin of a mottled dragon. It may be turned into
-proper armour by magical means. Its smooth surface does not let sticky
-flames attach.
+이상한 무늬를 가진 얼룩덜룩한 드래곤의 가죽. 이것은 magical means를 가진 일반 방어구로 만들 수 있다. 이것의 부드러운 표면은 sticky flame이 붙지 않게 한다.
 %%%%
 naga barding
 
@@ -700,9 +694,9 @@ piece of ambrosia
 # often filled with mail.
 plate armour
 
-A full suit of solid metal plate: cuirass, pauldrons, vambraces, waist plate and greaves. Chainmail covers gaps, allowing movement.
+단단한 금속으로 이루어진 플레이트아머: 흉갑, 견갑, 완갑, 허리갑옷,그리브즈. 체인메일이 빈틈을 채워주며 움직일 수 있게 한다.
 
-It provides excellent protection, yet donning it takes forever.
+계속 입는다면 완벽한 방어력을 자랑한다.
 %%%%
 potion of agility
 
@@ -734,7 +728,7 @@ potion of cure mutation
 %%%%
 potion of curing
 
-A blessed fluid which heals some wounds, clears the mind and cures diseases. If it is used when one is at or near full health, it can also slightly repair permanent injuries.
+병과 각종 상태이상, 상처를 치료해주는 축복받은 유체. 생명력이 꽉차있거나 거의 찬 상황에서도 병 등을 치료하기 위해서 사용할 수 있다.
 %%%%
 potion of decay
 
@@ -827,7 +821,7 @@ quad damage
 %%%%
 quarterstaff
 
-A sturdy wooden pole, meant for fighting.
+견고한 육척봉.
 %%%%
 quick blade
 
@@ -1066,9 +1060,9 @@ scroll of immolation
 %%%%
 scroll of magic mapping
 
-This scroll reveals the surroundings of one who reads it.
+이 두루마리를 읽는 자는 자신의 주위를 알 수 있게 된다.
 
-It is not strong enough to see the interior of rooms sealed with secret doors; one needs Traps and Doors skill for that.
+하지만 함정이나 숨겨진 문 같은 것은 알 수 없다. 함정과 문 스킬이 필요하다.
 %%%%
 scroll of noise
 
@@ -1081,10 +1075,7 @@ scroll of random uselessness
 %%%%
 scroll of recharging
 
-This scroll restores the charges of any magical wand or rod chosen by its
-reader. When used on a rod, it also increases the size of the rod's power
-storage, increases the rate at which it regenerates power, and even improves
-its melee combat qualities.
+이 두루마리를 읽는 자의 마법봉을 충전시킨다. Rod에 썼을 경우, 파워를 증가시키고, 힘 재생능력을 증가시키며, 근접전투 능력도 향상시킨다.
 %%%%
 scroll of remove curse
 
@@ -1092,8 +1083,7 @@ scroll of remove curse
 %%%%
 scroll of unholy creation
 
-This scroll draws unformed lumps of flesh from the Abyss to create a
-terrible beast.
+이 두루마리는 어비스에서 온 끔찍한 괴물을 만든다.
 %%%%
 scroll of teleportation
 
@@ -1101,9 +1091,7 @@ scroll of teleportation
 %%%%
 scroll of torment
 
-This scroll calls on the powers of darkness to inflict great pain on any
-nearby creature - including you! This halves the resilience of all living
-creatures, although is never directly fatal.
+이 두루마리는 읽으면 당신을 포함한 주위의 크리쳐에게 어둠의 힘으로 격통을 가한다. 주위의 크리쳐의 회복력을 반으로 깎는다. 그럼에도 불구하고 직접적으로 치명적이진 않다.
 %%%%
 scroll of vorpalise weapon
 
@@ -1119,9 +1107,7 @@ scroll of vulnerability
 %%%%
 scroll of silence
 
-This scroll eliminates all sound near the reader. This makes reading
-scrolls, casting spells, praying or yelling in the reader's vicinity
-impossible. (It applies to the reader, too, of course.)
+이 두루마리는 사용자 주변의 소리를 모두 없앤다. 이것은 스크롤을 읽거나, 주문을 사용하거나, 고함지르거나, 기도하는 행동을 사용자와 사용자의 부근에서 사용할 수 없게 한다.
 
 This silence will not hide your presence, since its oppressive, unnatural
 effect will almost certainly alert any living creature that something is
@@ -1174,7 +1160,7 @@ spiked flail
 %%%%
 splint mail
 
-A suit made of rectangular plates of metal, connected with rings. Such platemail provides good protection, while nowhere as good as solid metal armour, it allows much greater freedom of movement.
+링으로 연결된 금속 판으로 만들어진 사각형 옷. 플레이트메일이 강한 방어력을 보여주지만 자유롭지 않은 대신, 이 방어구는 매우 자유롭다.
 %%%%
 staff
 
@@ -1186,9 +1172,7 @@ staff of air
 %%%%
 staff of channeling
 
-This staff allows its wielder to channel ambient magical energy for his or
-her own purposes.
-%%%%
+이 지팡이는 사용자가 주위의 마법 에너지를 사용자의 의도대로 사용할 수 있게 한다.
 staff of cold
 
 이 지팡이는 사용자를 냉기로부터 보호하며, 얼음 마법의 위력을 높여준다. 사용자가 발동술에 숙달되어 있다면 타격에 동결 마법을 부여하며, 얼음 마법에 숙달되어 있다면 강력한 피해를 입힐 수도 있다.
@@ -1211,7 +1195,7 @@ staff of enchantment
 %%%%
 staff of energy
 
-This staff greatly reduces the hunger cost of the wielder's magical spells.
+이 지팡이는 마법 시전시 감소되는 만복도를 매우 줄여준다.
 %%%%
 staff of fire
 
@@ -1219,7 +1203,7 @@ staff of fire
 %%%%
 staff of poison
 
-This staff increases the power of poisoning spells cast by its wielder, and protects him or her from the effects of poison. If the wielder is skilled in both evocations and poison magic, they can poison creatures struck by it - even if the victims were normally resistant.
+이 지팡이는 사용자를 독으로부터 보호하며, 독 마법의 위력을 높여준다. 사용자가 발동술과 독 마법에 숙달해있다면, 크리쳐가 보통 저항이 있더라도 타격하는 것으로 크리쳐에게 독을 줄 수 있다. 
 %%%%
 staff of power
 
@@ -1235,7 +1219,7 @@ staff of wizardry
 %%%%
 steam dragon armour
 
-A magical armour, made from the scales of a steam-breathing dragon. Although it does not provide its wearer with much in the way of special magical protection, unlike the armour made from the scales of some larger dragons, it is extremely light and as supple as cloth.
+증기 브레스를 뿜는 드래곤의 비늘로 만든 마법 방어구. 다른 큰 드래곤의 비늘로 만든 방어구처럼 많은 마법방어를 제공하지는 않지만 매우 가볍고 천처럼 부드럽다.
 %%%%
 steam dragon hide
 
@@ -1295,15 +1279,12 @@ trishula
 %%%%
 troll hide
 
-The stiff and knobbly hide of a troll, with magical regenerative properties.
-I suppose you could wear it if you really wanted to, although you probably
-want to enchant it into proper armour first.
+마법 재생 속성을 가진 트롤의 뻣뻣하고 울퉁불퉁한 큰 가죽이다. 정말 입고싶다면 입을 수는 있지만 인챈트 하는것은 추천하지 않는다.
 %%%%
 troll leather armour
 
-A magical armour, made from the stiff and knobbly skin of a common troll.
-It magically regenerates its wearer's flesh at a fairly slow rate (unless
-already a troll).
+보통 트롤의 뻣뻣하고 울퉁불퉁한 가죽으로 만든 마법 보호구이다. 
+이것은 착용자가 트롤이 아니라면 착용자의 살을 꽤 느린 속도로 재생시킨다.
 %%%%
 wand of cold
 
@@ -1323,9 +1304,7 @@ wand of disintegration
 %%%%
 wand of draining
 
-A magical device which throws a bolt of negative energy which drains the
-life essences of living creatures, but is useless against the undead,
-demons, artificial creatures and even living plants.
+생명체의 체력을 뺏어오는 음에너지 볼트를 발사하는 마법봉. 언데드, 데몬, artificial creatures, 식물에는 통하지 않는다.
 %%%%
 wand of enslavement
 
