@@ -946,8 +946,8 @@
 { MUT_STOCHASTIC_TORMENT_RESISTANCE, 0,  1, false, false, false,
   M_("50% torment resistance"),
 
-  {M_("You are somewhat able to resist unholy torments (1 in 2 success)."),"",""},
-  {M_("You feel a strange anaesthesia."),"",""},
+  {N_("You are somewhat able to resist unholy torments (1 in 2 success)."),"",""},
+  {N_("You feel a strange anaesthesia."),"",""},
   {"","",""},
 
   "stochastic torment resistance"

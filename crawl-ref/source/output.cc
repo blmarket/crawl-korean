@@ -2098,7 +2098,7 @@ static std::string _status_mut_abilities(int sw)
           if (!player_mutation_level(MUT_BREATHE_POISON))
               mutations.push_back("독 뱉기");
           else
-              mutations.push_back(_("breathe poison"));
+              mutations.push_back(_(M_("breathe poison")));
           mutations.push_back(_annotate_form_based(_("constrict 1"),
                                                    !form_keeps_mutations()));
           break;

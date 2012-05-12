@@ -1,1 +1,1 @@
-make -j 3 TILES=y USE_GETTEXT=y
+make -j 3 TILES=y USE_GETTEXT=y V=y

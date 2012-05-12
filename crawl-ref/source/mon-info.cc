@@ -901,20 +901,20 @@ std::string monster_info::common_name(description_level_type desc) const
     case MONS_ZOMBIE_SMALL:
     case MONS_ZOMBIE_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << (nocore ? "" : " ") << _("zombie");
+            ss << (nocore ? "" : " ") << _(M_("zombie"));
         break;
     case MONS_SKELETON_SMALL:
     case MONS_SKELETON_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << (nocore ? "" : " ") << _("skeleton");
+            ss << (nocore ? "" : " ") << _(M_("skeleton"));
         break;
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
         if (!is(MB_NAME_ZOMBIE))
-            ss << (nocore ? "" : " ") << _("simulacrum");
+            ss << (nocore ? "" : " ") << _(M_("simulacrum"));
         break;
     case MONS_PILLAR_OF_SALT:
-        ss << (nocore ? "" : " ") << _("shaped pillar of salt");
+        ss << (nocore ? "" : " ") << _(M_("shaped pillar of salt"));
         break;
     default:
         break;

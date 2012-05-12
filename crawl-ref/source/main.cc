@@ -238,7 +238,9 @@ int main(int argc, char *argv[])
     setlocale(LC_ALL, "");
 
 #ifdef USE_GETTEXT    
-    setlocale(LC_ALL, "ko_KR");
+# ifdef KR
+    setlocale(LC_ALL, "ko");
+# endif
 
     bindtextdomain("Crawl", ".");
     bind_textdomain_codeset("Crawl", "utf-8");

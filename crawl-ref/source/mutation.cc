@@ -616,7 +616,7 @@ std::string describe_mutations()
 
         const std::string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
             scale_type.c_str(),
-            (you.species == SP_GREY_DRACONIAN ? _("very ") : ""),
+            (you.species == SP_GREY_DRACONIAN ? _(M_("very ")) : ""),
             num.str().c_str());
 
         result += _annotate_form_based(msg,
