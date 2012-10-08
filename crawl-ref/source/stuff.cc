@@ -35,6 +35,7 @@
 #include "options.h"
 #include "output.h"
 #include "player.h"
+#include "state.h"
 #include "traps.h"
 #include "view.h"
 #include "viewchar.h"
@@ -70,7 +71,7 @@ std::string make_file_time(time_t when)
                  loc->tm_min,
                  loc->tm_sec);
     }
-    return ("");
+    return "";
 }
 
 void set_redraw_status(uint64_t flags)
@@ -78,10 +79,10 @@ void set_redraw_status(uint64_t flags)
     you.redraw_status_flags |= flags;
 }
 
-unsigned char get_ch()
+int get_ch()
 {
     mouse_control mc(MOUSE_MODE_MORE);
-    unsigned char gotched = getchm();
+    int gotched = getchm();
 
     if (gotched == 0)
         gotched = getchm();
@@ -350,7 +351,7 @@ int stepdown(int value, int step, rounding_type rounding, int max)
     return ret + (rounding == ROUND_CLOSE ? 0.5 : 0);
 }
 
-// Deprecated defintion. Call directly stepdown instead.
+// Deprecated definition. Call directly stepdown instead.
 int stepdown_value(int base_value, int stepping, int first_step,
                    int last_step, int ceiling_value)
 {
@@ -489,6 +490,9 @@ void canned_msg(canned_message_type which_message)
     case MSG_DECK_EXHAUSTED:
         mpr("The deck of cards disappears in a puff of smoke.");
         break;
+    case MSG_EVOCATION_SUPPRESSED:
+        mpr("You may not evoke while suppressed!");
+        break;
     }
 }
 
@@ -515,11 +519,11 @@ bool yes_or_no(const char* fmt, ...)
     mprf(MSGCH_PROMPT, "%s? (Confirm with \"yes\".) ", buf);
 
     if (cancelable_get_line(buf, sizeof buf))
-        return (false);
+        return false;
     if (strcasecmp(buf, "yes") != 0)
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 // jmf: general helper (should be used all over in code)
@@ -575,9 +579,9 @@ bool yesno(const char *str, bool safe, int safeanswer, bool clear_after,
             mesclr();
 
         if (tmp == 'N')
-            return (false);
+            return false;
         else if (tmp == 'Y')
-            return (true);
+            return true;
         else if (!noprompt)
         {
             bool upper = (!safe && crawl_state.game_is_hints_tutorial());
@@ -642,7 +646,7 @@ static std::string _list_allowed_keys(char yes1, char yes2,
                 result += (lowered ? "/(n)o/(q)uit" : "/(N)o/(Q)uit");
                 result += "]";
 
-    return (result);
+    return result;
 }
 
 // Like yesno(), but returns 0 for no, 1 for yes, and -1 for quit.
@@ -720,11 +724,9 @@ char index_to_letter(int the_index)
 int letter_to_index(int the_letter)
 {
     if (the_letter >= 'a' && the_letter <= 'z')
-        // returns range [0-25] {dlb}
-        return (the_letter - 'a');
+        return (the_letter - 'a'); // returns range [0-25] {dlb}
     else if (the_letter >= 'A' && the_letter <= 'Z')
-        // returns range [26-51] {dlb}
-        return (the_letter - 'A' + 26);
+        return (the_letter - 'A' + 26); // returns range [26-51] {dlb}
 
     die("slot not a letter: %s (%d)", the_letter ?
         stringize_glyph(the_letter).c_str() : "null", the_letter);
@@ -746,12 +748,12 @@ bool tobool(maybe_bool mb, bool def)
     switch (mb)
     {
     case B_TRUE:
-        return (true);
+        return true;
     case B_FALSE:
-        return (false);
+        return false;
     case B_MAYBE:
     default:
-        return (def);
+        return def;
     }
 }
 
@@ -799,7 +801,7 @@ int prompt_for_int(const char *prompt, bool nonneg)
     if (ret < 0 && nonneg || ret == 0 && end == specs)
         ret = (nonneg ? -1 : 0);
 
-    return (ret);
+    return ret;
 }
 
 double prompt_for_float(const char* prompt)
@@ -817,6 +819,6 @@ double prompt_for_float(const char* prompt)
     if (ret == 0 && end == specs)
         ret = -1;
 
-    return (ret);
+    return ret;
 
 }

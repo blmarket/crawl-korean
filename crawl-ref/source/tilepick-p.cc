@@ -21,19 +21,23 @@ static tileidx_t _modrng(int mod, tileidx_t first, tileidx_t last)
     return (first + mod % (last - first + 1));
 }
 
+static tileidx_t _mon_mod(tileidx_t tile, int offset)
+{
+    int count = tile_player_count(tile);
+    return (tile + offset % count);
+}
+
 tileidx_t tilep_equ_weapon(const item_def &item)
 {
     if (item.base_type == OBJ_STAVES)
     {
-        // Can't just use item.special here as STAFF_POWER abuses
-        // item.special for storing the MP in case of quick re-wield.
         int orig_special = you.item_description[IDESC_STAVES][item.sub_type];
         int desc = (orig_special / NDSC_STAVE_PRI) % NDSC_STAVE_SEC;
-        if (item_is_rod(item))
-            return TILEP_HAND1_ROD_BROWN + desc;
-        else
-            return TILEP_HAND1_STAFF_LARGE + desc;
+        return TILEP_HAND1_STAFF_LARGE + desc;
     }
+
+    if (item.base_type == OBJ_RODS)
+        return _mon_mod(TILEP_HAND1_ROD_BROWN, item.rnd);
 
     if (item.base_type == OBJ_MISCELLANY)
     {
@@ -127,7 +131,9 @@ tileidx_t tilep_equ_weapon(const item_def &item)
     case WPN_GLAIVE:        return TILEP_HAND1_GLAIVE;
     case WPN_STAFF:         return TILEP_HAND1_STAFF;
     case WPN_QUARTERSTAFF:  return TILEP_HAND1_QUARTERSTAFF1;
-    case WPN_LAJATANG:      return TILEP_HAND1_DIRE_LAJATANG;
+    case WPN_LAJATANG:
+        return tileidx_enchant_equ(item, TILEP_HAND1_LAJATANG, true);
+
     case WPN_SCYTHE:        return TILEP_HAND1_SCYTHE;
     case WPN_HAMMER:        return TILEP_HAND1_HAMMER;
     case WPN_TRIDENT:       return TILEP_HAND1_TRIDENT2;
@@ -190,7 +196,8 @@ tileidx_t tilep_equ_armour(const item_def &item)
     case ARM_SCALE_MAIL:         return TILEP_BODY_SCALEMAIL;
     case ARM_SPLINT_MAIL:        return TILEP_BODY_SPLINT;
     case ARM_PLATE_ARMOUR:       return TILEP_BODY_PLATE_BLACK;
-    case ARM_CRYSTAL_PLATE_ARMOUR:return TILEP_BODY_CRYSTAL_PLATE;
+    case ARM_CRYSTAL_PLATE_ARMOUR:
+        return tileidx_enchant_equ(item, TILEP_BODY_CRYSTAL_PLATE, true);
 
     case ARM_FIRE_DRAGON_HIDE:    return TILEP_BODY_DRAGONSC_GREEN;
     case ARM_ICE_DRAGON_HIDE:     return TILEP_BODY_DRAGONSC_CYAN;
@@ -437,31 +444,31 @@ static int _draconian_colour(int race, int level)
     {
         switch (race)
         {
-        case MONS_DRACONIAN:        return (0);
-        case MONS_BLACK_DRACONIAN:  return (1);
-        case MONS_YELLOW_DRACONIAN: return (2);
-        case MONS_GREY_DRACONIAN:   return (3);
-        case MONS_GREEN_DRACONIAN:  return (4);
-        case MONS_MOTTLED_DRACONIAN:return (5);
-        case MONS_PALE_DRACONIAN:   return (6);
-        case MONS_PURPLE_DRACONIAN: return (7);
-        case MONS_RED_DRACONIAN:    return (8);
-        case MONS_WHITE_DRACONIAN:  return (9);
+        case MONS_DRACONIAN:        return 0;
+        case MONS_BLACK_DRACONIAN:  return 1;
+        case MONS_YELLOW_DRACONIAN: return 2;
+        case MONS_GREY_DRACONIAN:   return 3;
+        case MONS_GREEN_DRACONIAN:  return 4;
+        case MONS_MOTTLED_DRACONIAN:return 5;
+        case MONS_PALE_DRACONIAN:   return 6;
+        case MONS_PURPLE_DRACONIAN: return 7;
+        case MONS_RED_DRACONIAN:    return 8;
+        case MONS_WHITE_DRACONIAN:  return 9;
         }
     }
     switch (race)
     {
-    case SP_BLACK_DRACONIAN:   return (1);
-    case SP_YELLOW_DRACONIAN:  return (2);
-    case SP_GREY_DRACONIAN:    return (3);
-    case SP_GREEN_DRACONIAN:   return (4);
-    case SP_MOTTLED_DRACONIAN: return (5);
-    case SP_PALE_DRACONIAN:    return (6);
-    case SP_PURPLE_DRACONIAN:  return (7);
-    case SP_RED_DRACONIAN:     return (8);
-    case SP_WHITE_DRACONIAN:   return (9);
+    case SP_BLACK_DRACONIAN:   return 1;
+    case SP_YELLOW_DRACONIAN:  return 2;
+    case SP_GREY_DRACONIAN:    return 3;
+    case SP_GREEN_DRACONIAN:   return 4;
+    case SP_MOTTLED_DRACONIAN: return 5;
+    case SP_PALE_DRACONIAN:    return 6;
+    case SP_PURPLE_DRACONIAN:  return 7;
+    case SP_RED_DRACONIAN:     return 8;
+    case SP_WHITE_DRACONIAN:   return 9;
     }
-    return (0);
+    return 0;
 }
 
 tileidx_t tilep_species_to_base_tile(int sp, int level)
@@ -912,7 +919,8 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
         flag[TILEP_PART_ARM]   = TILEP_FLAG_HIDE;
         flag[TILEP_PART_HAND1] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_HAND2] = TILEP_FLAG_HIDE;
-        flag[TILEP_PART_HELM]  = TILEP_FLAG_HIDE;
+        if (!is_player_tile(doll.parts[TILEP_PART_HELM], TILEP_HELM_HORNS_CAT))
+            flag[TILEP_PART_HELM] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_HAIR]  = TILEP_FLAG_HIDE;
         flag[TILEP_PART_BEARD] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_SHADOW]= TILEP_FLAG_HIDE;
@@ -925,12 +933,27 @@ void tilep_calc_flags(const dolls_data &doll, int flag[])
         flag[TILEP_PART_BOOTS] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_LEG]   = TILEP_FLAG_HIDE;
         flag[TILEP_PART_BODY]  = TILEP_FLAG_HIDE;
-        flag[TILEP_PART_ARM]   = TILEP_FLAG_HIDE;
+        if (doll.parts[TILEP_PART_ARM] != TILEP_ARM_OCTOPODE_SPIKE)
+            flag[TILEP_PART_ARM] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_HAIR]  = TILEP_FLAG_HIDE;
         flag[TILEP_PART_BEARD] = TILEP_FLAG_HIDE;
         flag[TILEP_PART_SHADOW]= TILEP_FLAG_HIDE;
         flag[TILEP_PART_DRCWING]=TILEP_FLAG_HIDE;
         flag[TILEP_PART_DRCHEAD]=TILEP_FLAG_HIDE;
+    }
+
+    if (doll.parts[TILEP_PART_ARM] == TILEP_ARM_OCTOPODE_SPIKE
+        && !is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_OCTOPODE))
+    {
+        flag[TILEP_PART_ARM] = TILEP_FLAG_HIDE;
+    }
+    if (is_player_tile(doll.parts[TILEP_PART_HELM], TILEP_HELM_HORNS_CAT)
+        && (!is_player_tile(doll.parts[TILEP_PART_BASE], TILEP_BASE_FELID)
+            // Every felid tile has its own horns.
+            || doll.parts[TILEP_PART_BASE] - TILEP_BASE_FELID
+               != doll.parts[TILEP_PART_HELM] - TILEP_HELM_HORNS_CAT))
+    {
+        flag[TILEP_PART_ARM] = TILEP_FLAG_HIDE;
     }
 }
 

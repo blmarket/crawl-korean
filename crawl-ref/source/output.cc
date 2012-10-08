@@ -29,24 +29,22 @@
 #include "godabil.h"
 #include "initfile.h"
 #include "itemname.h"
-#include "item_use.h"
 #include "lang-fake.h"
 #include "menu.h"
 #include "message.h"
 #include "misc.h"
-#include "mon-stuff.h"
 #include "mon-info.h"
 #include "mon-util.h"
 #include "mutation.h"
 #include "jobs.h"
 #include "ouch.h"
 #include "player.h"
-#include "place.h"
 #include "religion.h"
 #include "skills2.h"
 #include "status.h"
 #include "stuff.h"
 #include "tagstring.h"
+#include "throw.h"
 #include "transform.h"
 #include "travel.h"
 #include "viewchar.h"
@@ -316,7 +314,7 @@ static void _print_stats_hp(int x, int y)
 static short _get_stat_colour(stat_type stat)
 {
     if (you.stat_zero[stat] > 0)
-        return (LIGHTRED);
+        return LIGHTRED;
 
     // Check the stat_colour option for warning thresholds.
     for (unsigned int i = 0; i < Options.stat_colour.size(); ++i)
@@ -330,14 +328,14 @@ static short _get_stat_colour(stat_type stat)
         || stat == STAT_INT && you.duration[DUR_BRILLIANCE]
         || stat == STAT_DEX && you.duration[DUR_AGILITY])
     {
-        return (LIGHTBLUE);  // no end of effect warning
+        return LIGHTBLUE;  // no end of effect warning
     }
 
     // Stat is degenerated.
     if (you.stat_loss[stat] > 0)
-        return (YELLOW);
+        return YELLOW;
 
-    return (HUD_VALUE_COLOUR);
+    return HUD_VALUE_COLOUR;
 }
 
 static void _print_stat(stat_type stat, int x, int y)
@@ -632,6 +630,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         STATUS_AUGMENTED,
         STATUS_SUPPRESSED,
         STATUS_TERRAIN,
+        STATUS_SILENCE,
     };
 
     status_info inf;
@@ -956,8 +955,9 @@ void draw_border(void)
     if (Options.show_gold_turns)
     {
         int yhack = crawl_state.game_is_zotdef();
-        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf("소지금:");
-        cgotoxy(19, 9 + yhack, GOTO_STAT); cprintf("턴:");
+        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf(_("Gold:"));
+        cgotoxy(19, 9 + yhack, GOTO_STAT);
+        cprintf(Options.show_game_turns ? _("Time:") : _("Turn:"));
     }
     // Line 8 is exp pool, Level
 }
@@ -1002,7 +1002,7 @@ static std::string _get_monster_name(const monster_info& mi,
 #endif
 
     desc += monpane_desc;
-    return (desc);
+    return desc;
 }
 
 // If past is true, the messages should be printed in the past tense
@@ -1016,11 +1016,10 @@ std::string mpr_monster_list(bool past)
     std::string msg = "";
     if (mons.empty())
     {
-        //msg  = "There ";
-        //msg += (past ? "were" : "are");
-        //msg += " no monsters in sight!";
-        msg += make_stringf("시야 내에 몬스터가 %s!",(past ? "없었다" : "없다"));
-        return (msg);
+        msg  = past ? _("There were no monsters in sight!") :
+                _("There are no monsters in sight!");
+
+        return msg;
     }
 
     std::vector<std::string> describe;
@@ -1046,7 +1045,7 @@ std::string mpr_monster_list(bool past)
         msg += comma_separated_line(describe.begin(), describe.end());
 	msg += (past ? "을(를) 볼 수 있었다." : "을(를) 보았다."); //msg += ".";
 
-    return (msg);
+    return msg;
 }
 
 #ifndef USE_TILE_LOCAL
@@ -1099,7 +1098,7 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
             cprintf(" ");
 
             monster_info mi = mons[start];
-            textcolor(real_colour(dam_colour(mi) | COLFLAG_ITEM_HEAP));
+            textcolor(real_colour(dam_colour(mi) | COLFLAG_REVERSE));
             cprintf(" ");
             textbackground(BLACK);
             textcolor(LIGHTGREY);
@@ -1137,13 +1136,13 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
 int update_monster_pane()
 {
     if (!map_bounds(you.pos()) && !crawl_state.game_is_arena())
-        return (-1);
+        return -1;
 
     const int max_print = crawl_view.mlistsz.y;
     textbackground(BLACK);
 
     if (max_print <= 0)
-        return (-1);
+        return -1;
 
     std::vector<monster_info> mons;
     get_monster_info(mons);
@@ -1199,15 +1198,15 @@ int update_monster_pane()
     }
 
     if (mons.empty())
-        return (-1);
+        return -1;
 
-    return (full_info);
+    return full_info;
 }
 #else
 // FIXME: Implement this for Tiles!
 int update_monster_pane()
 {
-    return (false);
+    return false;
 }
 #endif
 
@@ -1490,8 +1489,7 @@ static std::string _god_powers(bool simple)
     else if (you.religion != GOD_NO_GOD)
     {
         if (player_under_penance())
-            return (simple ? "*"
-                           : colour_string("*" + godpowers, RED));
+            return (simple ? "*" : colour_string("*" + godpowers, RED));
         else
         {
             // piety rankings
@@ -1504,10 +1502,10 @@ static std::string _god_powers(bool simple)
             std::string asterisks = std::string(prank, '*')
                                     + std::string(6 - prank, '.');
             if (simple)
-                return (asterisks);
+                return asterisks;
             godpowers = chop_string(godpowers, 20, false)
                       + " [" + asterisks + "]";
-            return (colour_string(godpowers, god_colour(you.religion)));
+            return colour_string(godpowers, god_colour(you.religion));
         }
     }
     return "";
@@ -1697,24 +1695,16 @@ static std::vector<formatted_string> _get_overview_resistances(
     // 3 columns, splits at columns 21, 38
     column_composer cols(3, 21, 38);
 
-    // Don't show unreliable resistances granted by the cloak.  We could mark
-    // them somehow, but for now this will do.
-    bool dragonskin = player_equip_unrand(UNRAND_DRAGONSKIN);
-    bool cloak_was_melded = you.melded[EQ_CLOAK];
-    if (dragonskin)
-        you.melded[EQ_CLOAK] = true; // hack!
-
     const int rfire = player_res_fire(calc_unid);
     const int rcold = player_res_cold(calc_unid);
     const int rlife = player_prot_life(calc_unid);
     const int rpois = player_res_poison(calc_unid);
     const int relec = player_res_electricity(calc_unid);
     const int rsust = player_sust_abil(calc_unid);
-    const int rmuta = (player_res_mutation()
+    const int rmuta = (player_res_mutation_from_item(calc_unid)
                        || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                        || you.religion == GOD_ZIN && you.piety >= 150);
-    const int rrott = (you.res_rotting()
-                       || you.religion == GOD_ZIN && you.piety >= 150);
+    const int rrott = you.res_rotting();
 
     snprintf(buf, sizeof buf,
              _("%sRes.Fire  : %s\n"
@@ -1739,7 +1729,10 @@ static std::vector<formatted_string> _get_overview_resistances(
     const char* pregourmand;
     const char* postgourmand;
 
-    if (player_effect_gourmand())
+    if (you.species != SP_MUMMY
+        && you.species != SP_VAMPIRE
+        && player_mutation_level(MUT_HERBIVOROUS) < 3
+        && player_effect_gourmand())
     {
         pregourmand = "대식가    : ";
         postgourmand = _itosym1(1);
@@ -1811,8 +1804,6 @@ static std::vector<formatted_string> _get_overview_resistances(
              _determine_colour_string(rlevi, 1), _itosym1(rlevi),
              _determine_colour_string(rcfli, 1), _itosym1(rcfli));
     cols.add_formatted(1, buf, false);
-
-    you.melded[EQ_CLOAK] = cloak_was_melded;
 
     _print_overview_screen_equip(cols, equip_chars);
 
@@ -1951,7 +1942,7 @@ static std::string _annotate_form_based(std::string desc, bool suppressed)
     if (suppressed)
         return ("<darkgrey>(" + desc + ")</darkgrey>");
     else
-        return (desc);
+        return desc;
 }
 
 static std::string _dragon_abil(std::string desc)
@@ -2212,7 +2203,7 @@ static std::string _status_mut_abilities(int sw)
             _("8 rings"),
             !form_keeps_mutations() && you.form != TRAN_SPIDER));
         mutations.push_back(_annotate_form_based(
-            make_stringf(_("constrict %d"), std::min(MAX_CONSTRICT, 8)),
+            make_stringf(_("constrict %d"), you.has_tentacles(false)),
             !form_keeps_mutations()));
     }
 

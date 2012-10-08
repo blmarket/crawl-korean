@@ -9,6 +9,8 @@
   #include <SDL_image.h>
 #endif
 
+FILE *logfile = 0;
+
 tile::tile() : m_width(0), m_height(0), m_pixels(NULL), m_shrink(true)
 {
 }
@@ -395,12 +397,11 @@ bool tile::load(const std::string &new_filename)
         assert(pal->colors);
         bool ck_enabled = img->flags & SDL_SRCCOLORKEY;
 
-        int src  = 0;
         int dest = 0;
         for (int y = 0; y < img->h; y++)
             for (int x = 0; x < img->w; x++)
             {
-                unsigned int index = ((unsigned char*)img->pixels)[src++];
+                unsigned int index = ((unsigned char*)img->pixels)[y*img->pitch + x];
                 m_pixels[dest].r = pal->colors[index].r;
                 m_pixels[dest].g = pal->colors[index].g;
                 m_pixels[dest].b = pal->colors[index].b;
@@ -465,10 +466,18 @@ bool tile::load(const std::string &new_filename)
     SDL_FreeSurface(img);
 
     replace_colour(tile_colour::background, tile_colour::transparent);
+
+    if (logfile)
+        fprintf(logfile, "%s\n", new_filename.c_str());
 #else
+    FILE* fp = fopen(new_filename.c_str(), "r");
+    if (!fp)
+        return false;
+    fclose(fp);
+
     m_width  = 0;
     m_height = 0;
-    m_pixels = new tile_colour[0];
+    m_pixels = new tile_colour[1];
 #endif
 
     return (true);

@@ -3,7 +3,6 @@
 #include "jobs.h"
 
 #include "libutil.h"
-#include "options.h"
 
 static const char * Job_Abbrev_List[ NUM_JOBS ] =
     { "Fi", "Wz", "Pr",
@@ -34,7 +33,7 @@ const char *get_job_abbrev(int which_job)
     COMPILE_CHECK(ARRAYSZ(Job_Abbrev_List) == NUM_JOBS);
     ASSERT(which_job >= 0 && which_job < NUM_JOBS);
 
-    return (Job_Abbrev_List[which_job]);
+    return Job_Abbrev_List[which_job];
 }
 
 job_type get_job_by_abbrev(const char *abbrev)
@@ -60,7 +59,7 @@ const char *get_job_name(int which_job)
     COMPILE_CHECK(ARRAYSZ(Job_Name_List) == NUM_JOBS);
     ASSERT(which_job >= 0 && which_job < NUM_JOBS);
 
-    return (Job_Name_List[which_job]);
+    return Job_Name_List[which_job];
 }
 
 job_type get_job_by_name(const char *name)
@@ -83,7 +82,7 @@ job_type get_job_by_name(const char *name)
         }
     }
 
-    return (cl);
+    return cl;
 }
 
 bool is_valid_job(job_type job)

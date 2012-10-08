@@ -14,6 +14,7 @@
 #include "env.h"
 #include "goditem.h"
 #include "itemprop.h"
+#include "libutil.h"
 #include "message.h"
 #include "mon-behv.h"
 #include "mon-iter.h"
@@ -170,7 +171,7 @@ bool make_god_gifts_disappear()
         }
     }
 
-    return (count);
+    return count;
 }
 
 // When under penance, Yredelemnulites can lose all nearby undead slaves.
@@ -217,12 +218,11 @@ bool yred_slaves_abandon_you()
             /// 신이 회수해감.
             simple_god_message(gettext(" reclaims your granted undead slaves!"));
         else
-            /// 신이 회수해감.
-            simple_god_message(gettext(" reclaims some of your granted undead slaves!"));
-        return (true);
+            simple_god_message(_(" reclaims some of your granted undead slaves!"));
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // When under penance, Beoghites can lose all nearby orcish followers,
@@ -293,10 +293,10 @@ bool beogh_followers_abandon_you()
 
         chan << std::endl;
 
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 static void _print_good_god_holy_being_speech(bool neutral,

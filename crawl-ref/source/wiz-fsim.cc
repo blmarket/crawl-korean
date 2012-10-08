@@ -12,6 +12,7 @@
 #include "beam.h"
 #include "coordit.h"
 #include "dbg-util.h"
+#include "directn.h"
 #include "env.h"
 #include "fight.h"
 #include "itemprop.h"
@@ -32,6 +33,7 @@
 #include "skills2.h"
 #include "species.h"
 #include "stuff.h"
+#include "throw.h"
 #include "wiz-you.h"
 
 #ifdef WIZARD
@@ -105,7 +107,7 @@ static std::string _time_string()
                  ltime->tm_min,
                  ltime->tm_sec);
     }
-    return ("");
+    return "";
 }
 
 static void _write_version(FILE * o)
@@ -234,6 +236,11 @@ static monster* _init_fsim()
                 return NULL;
             }
             mtype = get_monster_by_name(specs);
+
+            // Wizmode users should be able to conjure up uniques even if they
+            // were already created.
+            if (mons_is_unique(mtype) && you.unique_creatures[mtype])
+                you.unique_creatures[mtype] = false;
         }
 
         mon = create_monster(
@@ -250,9 +257,11 @@ static monster* _init_fsim()
     // this probably works best in the arena, or at least somewhere
     // where there's no water or anything weird to interfere
     if (!adjacent(mon->pos(), you.pos()))
+    {
         for (adjacent_iterator ai(you.pos()); ai; ++ai)
             if (mon->move_to_pos(*ai))
                 break;
+    }
 
     if (!adjacent(mon->pos(), you.pos()))
     {
@@ -296,7 +305,7 @@ static fight_data _get_fight_data(monster &mon, int iter_limit, bool defend)
 
     // disable death and delay, but make sure that these values
     // get reset when the function call ends
-    unwind_var<FixedBitArray<NUM_DISABLEMENTS> > disabilities(crawl_state.disables);
+    unwind_var<FixedBitVector<NUM_DISABLEMENTS> > disabilities(crawl_state.disables);
     crawl_state.disables.set(DIS_DEATH);
     crawl_state.disables.set(DIS_DELAY);
 
@@ -595,7 +604,7 @@ void wizard_fight_sim(bool double_scale)
 
     // disable death and delay, but make sure that these values
     // get reset when the function call ends
-    unwind_var<FixedBitArray<NUM_DISABLEMENTS> > disabilities(crawl_state.disables);
+    unwind_var<FixedBitVector<NUM_DISABLEMENTS> > disabilities(crawl_state.disables);
     crawl_state.disables.set(DIS_DEATH);
     crawl_state.disables.set(DIS_DELAY);
 

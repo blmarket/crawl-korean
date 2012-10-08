@@ -19,12 +19,9 @@
 #include "artefact.h"
 #include "describe.h"
 #include "externs.h"
-#include "fight.h"
 #include "godabil.h"
-#include "itemprop.h"
 #include "player.h"
 #include "species.h"
-#include "skill_menu.h"
 #include "skills.h"
 
 typedef std::string (*string_fn)();
@@ -178,7 +175,7 @@ skill_type str_to_skill(const std::string &skill)
         if (skills[i][0] && skill == skills[i][0])
             return (static_cast<skill_type>(i));
 
-    return (SK_FIGHTING);
+    return SK_FIGHTING;
 }
 
 static std::string _stk_adj_cap()
@@ -194,7 +191,7 @@ static std::string _stk_genus_cap()
 static std::string _stk_genus_nocap()
 {
     std::string s = _stk_genus_cap();
-    return (lowercase(s));
+    return lowercase(s);
 }
 
 static std::string _stk_genus_short_cap()
@@ -205,10 +202,10 @@ static std::string _stk_genus_short_cap()
 
 static std::string _stk_walker()
 {
-    return (Skill_Species == SP_NAGA    ? "Slider" :
-            Skill_Species == SP_TENGU   ? "Glider" :
+    return (Skill_Species == SP_NAGA     ? "Slider" :
+            Skill_Species == SP_TENGU    ? "Glider" :
             Skill_Species == SP_OCTOPODE ? "Wriggler"
-                                        : "Walker");
+                                         : "Walker");
 }
 
 static std::string _stk_weight()
@@ -295,7 +292,7 @@ std::string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
 {
     // paranoia
     if (is_invalid_skill(best_skill))
-        return ("Adventurer");
+        return "Adventurer";
 
     if (species == -1)
         species = you.species;
@@ -382,7 +379,7 @@ std::string skill_title(skill_type best_skill, uint8_t skill_lev,
 std::string player_title()
 {
     const skill_type best = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
-    return (skill_title(best, you.skills[ best ]));
+    return skill_title(best, you.skills[ best ]);
 }
 
 skill_type best_skill(skill_type min_skill, skill_type max_skill,
@@ -479,6 +476,11 @@ bool is_useless_skill(skill_type skill)
     return species_apt(skill) == -99;
 }
 
+bool is_harmful_skill(skill_type skill)
+{
+    return is_magic_skill(skill) && you.religion == GOD_TROG;
+}
+
 int skill_bump(skill_type skill, int scale)
 {
     int sk = you.skill_rdiv(skill, scale);
@@ -510,7 +512,7 @@ static int _base_cost(skill_type sk)
     }
 }
 
-unsigned int skill_exp_needed(int lev)
+unsigned int skill_exp_needed(int lev, skill_type sk, species_type sp)
 {
     const int exp[28] = { 0, 50, 150, 300, 500, 750,         // 0-5
                           1050, 1400, 1800, 2250, 2800,      // 6-10
@@ -520,13 +522,8 @@ unsigned int skill_exp_needed(int lev)
                           27000, 29750 };
     ASSERT(lev >= 0);
     ASSERT(lev <= 27);
-    return exp[lev];
-}
 
-unsigned int skill_exp_needed(int lev, skill_type sk, species_type sp)
-{
-    return skill_exp_needed(lev) * species_apt_factor(sk, sp)
-           * _base_cost(sk) / 100;
+    return exp[lev] * species_apt_factor(sk, sp) * _base_cost(sk) / 100;
 }
 
 int species_apt(skill_type skill, species_type species)
@@ -589,6 +586,9 @@ static std::vector<skill_type> _get_crosstrain_skills(skill_type sk)
     }
 }
 
+// This threshold is in tenths of a skill point.
+#define CROSSTRAIN_THRESHOLD 1
+
 float crosstrain_bonus(skill_type sk)
 {
     int bonus = 1;
@@ -596,8 +596,11 @@ float crosstrain_bonus(skill_type sk)
     std::vector<skill_type> crosstrain_skills = _get_crosstrain_skills(sk);
 
     for (unsigned int i = 0; i < crosstrain_skills.size(); ++i)
-        if (you.skills[crosstrain_skills[i]] > you.skills[sk])
+        if (you.skill(crosstrain_skills[i], 10, true)
+            >= you.skill(sk, 10, true) + CROSSTRAIN_THRESHOLD)
+        {
             bonus *= 2;
+        }
 
     return bonus;
 }
@@ -607,8 +610,9 @@ bool crosstrain_other(skill_type sk, bool show_zero)
     std::vector<skill_type> crosstrain_skills = _get_crosstrain_skills(sk);
 
     for (unsigned int i = 0; i < crosstrain_skills.size(); ++i)
-        if (you.skills[crosstrain_skills[i]] < you.skills[sk]
-            && (you.skills[crosstrain_skills[i]] > 0 || show_zero))
+        if (you.skill(crosstrain_skills[i], 10, true)
+            <= you.skill(sk, 10, true) - CROSSTRAIN_THRESHOLD
+           && (you.skills[crosstrain_skills[i]] > 0 || show_zero))
         {
             return true;
         }

@@ -566,8 +566,8 @@ static const species_skill_aptitude species_skill_aptitudes[] =
     APT(SP_GREY_DRACONIAN,  SK_TRANSMUTATIONS,  0),
     APT(SP_GREY_DRACONIAN,  SK_FIRE_MAGIC,      0),
     APT(SP_GREY_DRACONIAN,  SK_ICE_MAGIC,       0),
-    APT(SP_GREY_DRACONIAN,  SK_AIR_MAGIC,       0),
-    APT(SP_GREY_DRACONIAN,  SK_EARTH_MAGIC,     0),
+    APT(SP_GREY_DRACONIAN,  SK_AIR_MAGIC,      -2),
+    APT(SP_GREY_DRACONIAN,  SK_EARTH_MAGIC,     2),
     APT(SP_GREY_DRACONIAN,  SK_POISON_MAGIC,    0),
     APT(SP_GREY_DRACONIAN,  SK_INVOCATIONS,     0),
     APT(SP_GREY_DRACONIAN,  SK_EVOCATIONS,      0),
@@ -1098,7 +1098,7 @@ static const species_skill_aptitude species_skill_aptitudes[] =
     APT(SP_DEEP_DWARF,      SK_EVOCATIONS,      3),
 
     // SP_FELID
-    APT(SP_FELID,           SK_FIGHTING,       -1),
+    APT(SP_FELID,           SK_FIGHTING,        0),
     APT(SP_FELID,           SK_SHORT_BLADES,  -99),
     APT(SP_FELID,           SK_LONG_BLADES,   -99),
     APT(SP_FELID,           SK_AXES,          -99),
@@ -1115,12 +1115,12 @@ static const species_skill_aptitude species_skill_aptitudes[] =
     APT(SP_FELID,           SK_STABBING,        3),
     APT(SP_FELID,           SK_SHIELDS,       -99),
     APT(SP_FELID,           SK_TRAPS_DOORS,     2),
-    APT(SP_FELID,           SK_UNARMED_COMBAT, -1),
+    APT(SP_FELID,           SK_UNARMED_COMBAT,  0),
     APT(SP_FELID,           SK_SPELLCASTING,    0),
     APT(SP_FELID,           SK_CONJURATIONS,   -1),
     APT(SP_FELID,           SK_HEXES,           4),
     APT(SP_FELID,           SK_CHARMS,          2),
-    APT(SP_FELID,           SK_SUMMONINGS,      1),
+    APT(SP_FELID,           SK_SUMMONINGS,      0),
     APT(SP_FELID,           SK_NECROMANCY,      0),
     APT(SP_FELID,           SK_TRANSLOCATIONS,  4),
     APT(SP_FELID,           SK_TRANSMUTATIONS,  1),
@@ -1130,7 +1130,7 @@ static const species_skill_aptitude species_skill_aptitudes[] =
     APT(SP_FELID,           SK_EARTH_MAGIC,    -2),
     APT(SP_FELID,           SK_POISON_MAGIC,   -1),
     APT(SP_FELID,           SK_INVOCATIONS,    -1),
-    APT(SP_FELID,           SK_EVOCATIONS,     -2),
+    APT(SP_FELID,           SK_EVOCATIONS,      1),
 
     // SP_OCTOPODE
     APT(SP_OCTOPODE,        SK_FIGHTING,        0),

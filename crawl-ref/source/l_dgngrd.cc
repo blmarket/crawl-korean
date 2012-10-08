@@ -47,7 +47,7 @@ dungeon_feature_type check_lua_feature(lua_State *ls, int idx)
     const dungeon_feature_type f = _get_lua_feature(ls, idx);
     if (!f)
         luaL_argerror(ls, idx, "Invalid dungeon feature");
-    return (f);
+    return f;
 }
 
 #define FEAT(f, pos) \
@@ -65,7 +65,7 @@ static int dgn_feature_desc(lua_State *ls)
     const std::string s =
     feature_description(feat, NUM_TRAPS, "", dtype, need_stop);
     lua_pushstring(ls, s.c_str());
-    return (1);
+    return 1;
 }
 
 static int dgn_feature_desc_at(lua_State *ls)
@@ -76,34 +76,18 @@ static int dgn_feature_desc_at(lua_State *ls)
     description_type_by_name(lua_tostring(ls, 3));
     const bool need_stop = lua_isboolean(ls, 4)? lua_toboolean(ls, 4) : false;
     const std::string s =
-    feature_description(coord_def(luaL_checkint(ls, 1),
+    feature_description_at(coord_def(luaL_checkint(ls, 1),
                                   luaL_checkint(ls, 2)),
                         false, dtype, need_stop);
     lua_pushstring(ls, s.c_str());
-    return (1);
-}
-
-static int dgn_set_feature_desc_short(lua_State *ls)
-{
-    const std::string base_name = luaL_checkstring(ls, 1);
-    const std::string desc      = luaL_checkstring(ls, 2);
-
-    if (base_name.empty())
-    {
-        luaL_argerror(ls, 1, "Base name can't be empty");
-        return (0);
-    }
-
-    set_feature_desc_short(base_name, desc);
-
-    return (0);
+    return 1;
 }
 
 static int dgn_max_bounds(lua_State *ls)
 {
     lua_pushnumber(ls, GXM);
     lua_pushnumber(ls, GYM);
-    return (2);
+    return 2;
 }
 
 static int dgn_in_bounds(lua_State *ls)
@@ -112,7 +96,7 @@ static int dgn_in_bounds(lua_State *ls)
     int y = luaL_checkint(ls, 2);
 
     lua_pushboolean(ls, in_bounds(x, y));
-    return (1);
+    return 1;
 }
 
 static int dgn_grid(lua_State *ls)
@@ -133,7 +117,7 @@ LUAFN(dgn_distance)
     COORDS(p1, 1, 2);
     COORDS(p2, 3, 4);
     lua_pushnumber(ls, distance(p1, p2));
-    return (1);
+    return 1;
 }
 
 LUAFN(dgn_seen_replace_feat)
@@ -142,7 +126,7 @@ LUAFN(dgn_seen_replace_feat)
     dungeon_feature_type f2 = _get_lua_feature(ls, 2);
 
     lua_pushboolean(ls, seen_replace_feat(f1, f2));
-    return (1);
+    return 1;
 }
 
 const struct luaL_reg dgn_grid_dlib[] =
@@ -151,7 +135,6 @@ const struct luaL_reg dgn_grid_dlib[] =
 { "feature_name", dgn_feature_name },
 { "feature_desc", dgn_feature_desc },
 { "feature_desc_at", dgn_feature_desc_at },
-{ "set_feature_desc_short", dgn_set_feature_desc_short },
 { "seen_replace_feat", dgn_seen_replace_feat },
 
 { "grid", dgn_grid },

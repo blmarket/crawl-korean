@@ -3,598 +3,766 @@ dummy_spells
 
 dummy_spells
 %%%%
-Abjuration
+Abjuration spell
 
-This spell attempts to send the targeted hostile summoned creature to the place whence it came, or at least shorten its stay in the caster's locality.
+This spell attempts to send the targeted hostile summoned creature to the place
+whence it came, or at least shorten its stay in the caster's locality.
 %%%%
-Agony
+Agony spell
 
-살아있는 적의 생명력을 절반으로 깎는다. 다시 말해, 이 주문으로는 적을 직접 죽음에 이르게 할 수는 없다는 이야기이다.
+This spell cuts the resilience of a target creature in half, although it will
+never cause death directly.
 %%%%
-Airstrike
+Airstrike spell
 
-타겟 주위의 공기의 흐름을 비틀어서, 격렬한 회오리를 만든다. 이 주문은 특히 공중에서 부유 또는 비행하는 적에게 효과적이다.
+This spell causes the air around a creature to twist itself into a whirling
+vortex of meteorological fury. This spell is especially effective against
+flying enemies.
 %%%%
-Alistair's Intoxication
+Alistair's Intoxication spell
 
-뇌의 일부 물질을 알코올로 변환하여, 시야 내 지성이 있는 모든 인간형 생물체를 혼란시킨다. 다만 독 저항이 있는 생명체들은 영향을 받지 않으며, 이 주문을 시전한 자도 이 주문의 영향을 받게 된다. 보통 이 마법은, 마법사들의 연회에서 분위기를 띄우기 위해 자주 사용된 주문이다.
+This spell works by converting a small portion of brain matter into alcohol,
+confusing all intelligent humanoids within the caster's view (although
+poison-resistant creatures will suffer no negative effects). It is strongly
+focused on the caster, however, and so poison resistance will not protect them.
+It is frequently used as an icebreaker at wizard parties.
 %%%%
-Animate Dead
+Animate Dead spell
 
-시야 내의 모든 시체들을 좀비로 불러 일으켜 주문을 시전한 자를 따르게 한다. 이 주문을 통해, 시전자는 무영혼의 망자들로 일으켜진 강력한 군대를 만들 수 있다는 뜻이다. 다만, 이렇게 일어난 좀비들은 그들이 일어났던 층을 떠날 수는 없다.
+This spell causes the dead to rise up and serve the caster; every corpse within
+sight of the caster is affected. By means of this spell, powerful casters could
+press into service an army of the mindless undead. Note that zombies are
+incapable of leaving the level they were created on.
 %%%%
-Animate Skeleton
+Animate Skeleton spell
 
-생명력을 잃은 뼈들을 해골로 소생시킨다. 아직 뼈가 살점에 붙어 있는 경우라도 소생이 가능하다. 이렇게 만들어진 해골들은, 그들이 만들어진 층을 떠나지는 못한다.
+This spell raises an inert skeleton to a state of unlife, even if that skeleton
+is still encased in flesh! Note that skeletons are incapable of leaving the
+level they were created on.
 %%%%
-Apportation
+Apportation spell
 
-바닥에 쌓인 아이템 중 가장 위에 놓여 있는 아이템이나 비슷한 종류의 아이템들을 시전자에게 가깝게 이동시킨다. 다만 아이템이 너무 무거울 경우에는, 이 주문이 실패할 확률이 높아진다. 몇몇 아이템들은, 이 주문으로 도저히 움직이기 힘들 정도로 무거운 경우도 있다. 또 한 가지 주의할 점은, 화살과 같이 묶음 형태의 아이템에게 사용했을 때는, 마력이 부족했을 경우, 일부 아이템이 허공으로 사라져 버리는 위험 부담이 존재한다는 것이다.
-'조트의 오브'와 같이, 매우 강력한 마력을 가진 아이템은 이 주문에 대해 적극적으로 저항이 가능하다.
-%%%%
-Beastly Appendage
+This spell allows the caster to pull the top item or group of similar items
+from a distant pile to the floor near the caster. The mass of the target
+item(s) will make the task more difficult, with some items too massive to ever
+be moved by this spell.
 
-This spell makes you temporarily replace one or a pair of appendages with an animal counterpart, giving you an extra attack. It is not powerful enough to meld armour.
+Extremely powerful magical items, such as the Orb of Zot, may actively resist
+the pull of this spell.
 %%%%
-Beastly Appendage
+Beastly Appendage spell
 
-This spell makes you temporarily replace one or a pair of appendages with an animal counterpart, giving you an extra attack. It is not powerful enough to meld armour.
+This spell makes you temporarily replace one or a pair of appendages with an
+animal counterpart, giving you an extra attack. It is not powerful enough to
+meld armour.
 %%%%
-Blade Hands
+Blade Hands spell
 
-긴 낫과 같은 형태의 칼날을 시전자의 손에서 순간적으로 자라게 한다. 다만 칼날의 손 상태에서는 다른 주문을 사용하기 약간 어려워지며, 이 주문은 저주받은 무기를 강제로 시전자의 손에서 떼어낼 수 있을 만큼 강력하지는 없다.
+This spell causes long, scythe-shaped blades to grow from the caster's hands.
+It makes spellcasting somewhat difficult.
 %%%%
-Blink
+Blink spell
 
 시전자를 짧은 거리 내의 무작위의 장소로 순간적으로 이동시킨다.
 %%%%
-Bolt of Cold
+Bolt of Cold spell
 
 강력한 냉기를 뿜는 얼음 화살을 발사한다.
 %%%%
-Bolt of Draining
+Bolt of Draining spell
 
-치명적인 음에너지의 화살을 발사한다. 음에너지의 화살에 명중당한 생명체는 생명력을 흡수당한다.
+This spell hurls a deadly bolt of negative energy, which drains the life from
+any living creature it strikes.
 %%%%
-Bolt of Fire
+Bolt of Fire spell
 
 강력한 화염의 화살을 발사한다.
 %%%%
-Bolt of Inaccuracy
+Bolt of Inaccuracy spell
 
-그 어떤 존재에게도 강력한 대미지를 줄 수 있는, 작열하는 에너지를 지닌 화살을 발사한다. 
-유감스럽게도, 이 화살은 조준하기가 대단히 어렵고, 사실상 거의 아무것도 맞추지 못한다. 불쌍하네 참.
+This spell inflicts enormous damage upon any creature struck by the bolt of
+incandescent energy conjured into existence. Unfortunately, it is very
+difficult to aim and very rarely hits anything. Pity, that.
 %%%%
-Iron Shot
+Iron Shot spell
 
 크고 무거운 금속의 화살을 적에게 발사한다.
 %%%%
-Bolt of Magma
+Bolt of Magma spell
 
-끓어오르는 용암의 화살을 적에게 발사한다.
+This spell hurls a sizzling bolt of molten rock, capable of dealing some
+physical damage even to highly fire-resistant enemies.
 %%%%
-Borgnjor's Revivification
+Borgnjor's Revivification spell
 
-시전자의 모든 상처을 즉시 치료해주지만, 그 댓가로 시전자의 피해에 대한 회복력을 영구히 감소시킨다. 시전자의 마력에 비례해서, 이 마법에 드는 댓가는 줄어든다.
-또한 이 마법은 죽음의 아가리를 강제로 닫는 것이 가능할만큼 강력하지만, 그 반동에 의해 주문자를 잠시동안 무력화시킨다.
+This spell instantly heals any and all wounds suffered by the caster, but also
+permanently lessens his or her resilience to injury — to a degree dependent on
+(and inversely related to) magical skill.
+
+The spell is powerful enough to literally pull someone out of Death's Door,
+although the shock will render the caster incapable of action for a while.
 %%%%
-Call Canine Familiar
+Call Canine Familiar spell
 
 개과의 짐승을 소환하여, 시전자를 따르게 만든다.
 %%%%
-Call Imp
+Call Imp spell
 
 지옥 구덩이로부터 하급 악마를 소환한다.
 %%%%
-Cause Fear
+Cause Fear spell
 
 이 주문은 시전자 주변의 대상에게 공포심을 조장시킨다.
 %%%%
-Chain Lightning
+Chain Lightning spell
 
-스스로 사라질때까지 대상과 대상 사이를 오가며 피해를 입히는, 거대한 번개를 사출시킨다.
+This spell releases a massive electrical discharge that arcs from target to
+target until it grounds out. It may ground out harmlessly if there are no
+targets sufficiently close to the caster, however.
 %%%%
-Cigotuvi's Degeneration
+Cigotuvi's Degeneration spell
 
 하나의 생명체를, 맥동하는 뭉친 살덩어리로 만들어버린다.
 %%%%
-Condensation Shield
+Condensation Shield spell
 
-시전자를 둘러싼 대기를 압축하여 응결시켜, 원반을 만들어 시전자를 보하한다. 이 원반은 보통의 방패처럼 사용되며, 원반의 단단함은 시전자의 얼음의 마법 스킬 레벨에 따라 결정된다. 이 원반은 시전자의 의지로 조종되기 때문에, 양손 무기의 사용을 방해하지 않는다.
+This spell causes a disc of dense vapour to condense out of the air surrounding
+the caster. It acts like a normal shield, but its density (and therefore
+stopping power) depends upon the caster's skill with Ice Magic. The disc is
+controlled by the caster's mind and thus will not conflict with the wielding of
+a two-handed weapon.
 %%%%
-Confuse
+Confuse spell
 
 이 주문은, 대상의 심리에 당황함과 혼란을 유발시킨다.
 %%%%
-Confusing Touch
+Confusing Touch spell
 
-시전자의 손에 마력을 더한다. 이 마력은 시전자가 적을 맨손으로 공격했을 때 사출되어, 대상의 마음에 혼란을 유발시킨다.
+This spell enchants the caster's dominant hand with magical energy. This energy
+is released when the caster touches a monster with their bare hand, and may
+induce a state of confusion in the monster.
 %%%%
-Conjure Ball Lightning
+Conjure Ball Lightning spell
 
-시전자가 번개의 구체를 만들수 있게 한다. 이 주문은 위험이 없다고 할 수 없는데, 번개의 구체는 제어하기 매우 힘들다는 것이다.
+This spell allows the conjurer to create ball lightning. Using the spell is not
+without risk — ball lightning can be difficult to control.
 %%%%
-Conjure Flame
+Conjure Flame spell
 
 맹렬히 불타는 화염의 기둥을 생성한다.
 %%%%
-Control Teleport
+Control Teleport spell
 
-주문 사용시 제어가 가능한 공간이동을 할 수 있다. 전이를 제어하는 것은 사용자를 마법 에너지에 오염시킬 수 있으므로 주의해야 한다.
+This spell allows the caster to control translocations. Be wary that controlled
+teleports will cause the subject to become contaminated with magical energy.
 %%%%
-Control Undead
+Control Undead spell
 
 어떤 형태의 언데드든 시전자를 따르게 만든다.
 %%%%
-Controlled Blink
+Controlled Blink spell
 
-주문 사용시, 짧은 범위 내의 정확한 순간이동이 가능하다. 전이를 제어하는 것은 사용자를 마법 에너지에 오염시킬수 있으므로 주의해아 한다.
+This spell allows short-range translocation, with precise control. Be wary that
+controlled teleports will cause the subject to become contaminated with magical
+energy.
 %%%%
-Corona
+Corona spell
 
-대상에게 광륜을 씌워서, 주변과 그 대상을 더욱 잘 드러나게 만든다. 광륜의 빛은 어둡고 텁텁한 던전의 공기를 몰아내며, 효과를 받은 대상은 눈에 띄게 타격하기 쉬워진다.
+This spell causes a halo of glowing light to surround and effectively outline a
+creature. This glow offsets the dark, musty atmosphere of the dungeon, and
+thereby makes the affected creature appreciably easier to hit.
 %%%%
-Corpse Rot
+Corpse Rot spell
 
-시전자의 주위에 있는 모든 시체들의 부패를 빠르게 가속시켜, 끔찍하고 지독한 독기를 발생시킨다. 이 독기는 주변 생명체들의 생명력을 약화시킨다.
+This spell rapidly accelerates the decomposition of any corpses lying around
+the caster, emitting in the process a foul miasmic vapour, which eats away at
+the life force of any creature it envelops.
 %%%%
-Cure Poison
+Cure Poison spell
 
 이 주문을 통해, 시전자의 신경계에 작용하는 독소들을 제거할 수 있다.
 %%%%
-Darkness
+Darkness spell
 
-이 주문은 던전의 빛을 흐릿하게 만들어, 시야를 줄인다. 꽤 넓은 범위에 효과가 적용되며, 특정한 간극을 가지고 있지 않으므로, 어느 누구라도 시전자가 가까이 접근하는 것을 거의 눈치채지 못하게 된다.
+This spell dims the light of the dungeon, reducing the range of vision. The
+area affected is quite large and it doesn't have sharp edges, thus the effect
+is unlikely to alert anyone not very close to the caster.
 %%%%
-Death Channel
+Death Channel spell
 
-시전자 혹은 시전자의 동료에게 사망한 생명체를, 시전자를 따르는 언데드 노예 또는 유령으로 소생시킨다.
+This spell raises living creatures slain by the caster and his or her allies
+into a state of unliving slavery as spectral things.
 %%%%
-Death's Door
+Death's Door spell
 
-매우 강력한 주문이지만, 그 만큼 위험 요소들을 안고 있는 주문으로, 이 주문은 살아있는 시전자를 짧은 시간동안 거의 무적으로 만들어 주지만, 동시에 시전자를 아주 위험할 정도로 죽음과 가깝게 만든다. 몸 자체가 자기 자신이 죽었다고 생각될 정도로. 이 주문이 시전되는 동안은 모든 치료효과가 무시된다. 시전자는, 주문이 끝나갈 때 쯤, 한 번의 위험 경고를 받게 된다. 강령술에 더욱 숙련된 만큼, 주문 사용시 자신의 생명력을 더 많이 남길 수 있다. 
-언데드들은 이 주문을 사용할 수 없다.
+This spell is extremely powerful, but carries a degree of risk. It renders
+living casters nigh invulnerable to harm for a brief period, but can bring them
+dangerously close to death. So close in fact, that the body believes itself to
+be dead — healing effects will do nothing.
+
+The caster will receive one warning shortly before the spell expires. Being
+more skilled at Necromancy leaves the caster more resilient. Undead cannot use
+this spell.
 %%%%
-Debugging Ray
+Debugging Ray spell
 
 이 말도 안되는 광선은 궁극적인 대미지를 입히며 (1500 hp), 게다가 백발 백중이다.
 %%%%
-Deflect Missiles
+Deflect Missiles spell
 
-시전자를 모든 발사체로부터 보호한다. 다만 '번개의 화살'과 같은 강력한 투사체 공격에는 상대적으로 효과가 덜하다.
+This spell protects the caster from all kinds of projectile attacks, by slowing
+them and somewhat diverting their path. Successfully deflecting an incoming
+projectile still requires a reflexive action (your ability to do so is measured
+by the Evasion stat), but unlike lesser spells like Repel Missiles, Deflect
+Missiles typically makes this so easy that even a drunk plate-clad orc can do
+it.
 %%%%
-Delayed Fireball
+Delayed Fireball spell
 
-주문에 성공하면, 시전자는 화염구를 언제든지 사용할 수 있도록 축적해 놓을 수 있다. 축적한 화염구는 주문 사용이 아닌, 특수 능력 사용 키로 발동시킬 수 있다.
-이 주문을 익히고 있다면, 화염구 주문을, 주문 레벨 소비 없이 익힐 수 있다.
+Successfully casting this spell gives the caster the ability to instantaneously
+release a fireball at a later time. Knowing this spell allows the learner to
+memorise Fireball for no additional spell levels.
 %%%%
-Demonic Horde
+Demonic Horde spell
 
-시전자의 적과 싸우는 작은 악마들의 무리를 소환한다. 다만, 가끔 중립 혹은 적대적으로 소환될 때도 있다.
+This spell calls forth a small swarm of small demons to do battle with the
+caster's foes (and sometimes with each other!).
 %%%%
-Detect Creatures
-
-일정 범위 내의 모든 몬스터를 감지한다.
-%%%%
-Detect Items
-
-일정 범위 내에 있는, 바닥에 떨어져 있는 모든 아이템을 감지한다.
-%%%%
-Detect Secret Doors
-
-이 주문은 특히 게으른 던전 여행자들에게 인기가 많다. 그도 그런 것이, 이 마법은 시간을 많이 소모하는 주변 탐색을 줄여주기 때문이다.
-%%%%
-Detect Traps
-
-일정 범위 내에 있는, 함정들을 드러낸다.
-%%%%
-Dig
+Dig spell
 
 특별히 강화되어 있지 않은 주변의 돌벽 등을 분해시켜, 통로를 만든다.
 %%%%
-Dispel Undead
+Dispel Undead spell
 
-언데드가 소생된 마력의 근원을 차단하여, 언데드에게 강력한 대미지를 입힌다.
+This spell uses the very forces that bind an undead creature together to
+inflict a great deal of damage on it.
 %%%%
-Dispersal
+Dispersal spell
 
 시전자 주위의 모든 몬스터들을 다른 곳으로 순간이동 시켜버린다.
 %%%%
-Dragon Form
+Dragon Form spell
 
-This spell temporarily transforms the caster into a great, fire-breathing dragon. Draconian casters will instead retain their innate colour and breath weapon once transformed.
+This spell temporarily transforms the caster into a great, fire-breathing
+dragon. Draconian casters will instead retain their innate colour and breath
+weapon once transformed.
 %%%%
-Enslavement
+Enslavement spell
 
-적대적인 대상을 잠시동안 아군으로 만든다.
+This spell causes an otherwise hostile creature to fight on your side for a
+while.
 %%%%
-Ensorcelled Hibernation
+Ensorcelled Hibernation spell
 
-대상의 신진대사를 늦추어, 저체온 동면을 유발시킨다. 냉혈 동물에게는 부작용을 일으킬 수 있다.
+This spell tries to lower its target's metabolic rate, inducing hypothermic
+hibernation.
 %%%%
-Evaporate
+Evaporate spell
 
-물약병을 가열시켜, 투척시 폭발하게 만든다. 폭발할 때 나온 증기가 거대한 구름으로 변하고, 구름의 효과는 물약의 종류에 따라 달라진다. 물론, 주문의 특성상 가열되어 불안정해진 물약은 바로 던져야 한다.
+This spell heats a potion to the point that it explodes when thrown. The
+resultant steam is then transmuted into a large cloud, the type of which varies
+from potion to potion. Of course, the volatile potion must be thrown
+immediately for the spell to work.
 %%%%
-Excruciating Wounds
-고통의 상처
+Excruciating Wounds spell
 
-시전자의 무기에 잠시동안 고통의 정수를 깃들인다. 이 주문은 무기에 다른 마력이 부가되어 있을 경우 효과를 보지 못한다. 무기에 깃들 수 있는 다른 마법 효과들과는 다르게, 고통의 낙인은 '마법 무기 제작 두루마리'로 걸 수 없는 마법효과이다.
+This spell temporarily infuses the weapon held by the caster with the essence
+of pain itself. It will not affect weapons which are otherwise subject to
+special enchantments. Note that unlike other brands, pain can not be made
+permanent by reading a scroll of vorpalise weapon.
 %%%%
-Fire Brand
+Fire Brand spell
 
-시전자의 무기 혹은 발사체를 불타오르게 만든다. 이 주문은 무기에 다른 마력이 부가되어 있을 경우 효과를 보지 못한다.
+This spell sets a weapon or launcher held by the caster ablaze. It will not
+affect weapons otherwise subject to special enchantments.
 %%%%
-Fire Storm
+Fire Storm spell
 
-This spell calls forth a mighty storm of roaring flame directly onto the target, dealing partially irresistible fire damage in a large area and leaving behind short-lived fire vortices.
+This spell calls forth a mighty storm of roaring flame directly onto the
+target, dealing partially irresistible fire damage in a large area and leaving
+behind short-lived fire vortices.
 %%%%
-Fireball
+Fireball spell
 
-폭발하는 화염의 구를 날려보낸다. '축적된 화염구' 주문을 알고 있는 사용자라면, 추가적인 주문 레벨 소비 없이 이 주문을 익힐 수 있다.
+This spell hurls an exploding bolt of fire. This spell does not cost additional
+spell levels if the learner already knows Delayed Fireball.
 %%%%
-Flame Tongue
+Flame Tongue spell
 
 작은 불길을 만들어낸다.
 %%%%
-Flight
+Flight spell
 
 시전자에게, 공중을 날아다닐 수 있는 능력을 부여한다.
 %%%%
-Freeze
+Freeze spell
 
-몬스터를 얼린다. 또한 이 주문은 냉혈 동물의 일시적인 신진대사 감소를 불러올 수 있다.
+This spell freezes a creature. This may temporarily slow the metabolism of a
+cold-blooded creature.
 %%%%
-Freezing Aura
+Freezing Aura spell
 
-시전자의 무기 혹은 발사체를 얼어붙는 냉기로 감싼다. 이 주문은 무기에 다른 마력이 부가되어 있을 경우 효과를 보지 못한다.
+This spell surrounds a weapon or launcher held by the caster with an aura of
+freezing cold. It will not affect weapons which are otherwise subject to
+special enchantments.
 %%%%
-Freezing Cloud
+Freezing Cloud spell
 
 치명적일 정도로 차가운, 거대한 증기 구름을 생성한다.
 %%%%
-Fulsome Distillation
+Fulsome Distillation spell
 
-시체로부터 불쾌하고 유독한 정수를 추출하여, 물약을 제조한다. 물론 이렇게 만들어진 물약들은 마시지 않는 것이 좋을 것이다.
+This spell extracts the vile and poisonous essences from a corpse. You probably
+don't want to drink the results. The type of potion produced corresponds
+roughly to the effects of eating said corpse.
 %%%%
-Major Healing
+Major Healing spell
 
 시전자의 몸을 크게 회복시킨다.
 %%%%
-Haste
+Haste spell
 
-대상의 움직임을 가속시킨다. 자기 자신을 가속시키는 것은, 마법 오염을 축적시키므로 주의해야 한다.
+This spell speeds the actions of a creature. Hasting yourself will increase
+your magical contamination.
 %%%%
-Haunt
+Haunt spell
 
-망령과 유령들을, 대상에게 강령시킨다. 이렇게 언데드들을 부르는 것은, 시전자의 체력에 약간 나쁜 영향을 줄 수 있다.
+This spell calls wraiths and ghosts to haunt the caster's target. Calling on
+the undead exacts a toll on the caster's health, however.
 %%%%
-Hellfire
+Throw Icicle spell
 
-이 주문은 '디스페이터의 지팡이'를 통해서만 사용할 수 있다만, 어떻게 이것을 읽고 있는 것인가?
+This spell throws forth a shard of ice. It is particularly effective against
+those creatures not immune to the effects of freezing. But as most of its
+destructive potential comes from strong impact and cutting edges, even
+cold-resistant creatures are notably affected.
 %%%%
-Throw Icicle
+Ice Form spell
 
-뾰족한 얼음파편을 투척한다. 이 주문은 동결 효과에 완전히 면역이 없는 적에게 특히 가장 좋은 효과를 내지만, 이 주문의 위력은 고드름의 뾰족한 모서리로 인한 충격에서도 나오기 때문에, 냉기에 대해 저항이 있는 적에게도 큰 효과를 볼 수 있다.
+This spell temporarily transforms the caster's body into a frozen ice-creature,
+light enough to float on water.
 %%%%
-Ice Form
+Ice Storm spell
 
-일시적으로 시전자의 몸을, 얼어붙은 얼음 생명체로 변화시킨다. 물에 뜰 수 있을 만큼 가볍다.
+This spell hurls a raging blizzard of ice, sleet and freezing gasses at the
+target, dealing partially irresistible cold damage in a large area.
 %%%%
-Ice Storm
+Ignite Poison spell
 
-This spell hurls a raging blizzard of ice, sleet and freezing gasses at the target, dealing partially irresistible cold damage in a large area.
+This spell attempts to convert all nearby poison into liquid flame, burning
+poisoned creatures from within. It is very effective against innately poisonous
+creatures. The caster is not affected.
 %%%%
-Ignite Poison
+Inner Flame spell
 
-This spell attempts to convert all nearby poison into liquid flame, burning poisoned creatures from within. It is very effective against innately poisonous creatures. The caster is not affected.
+This spell fills an enemy with an intense fire, to be explosively released upon
+death. The size of the explosion caused is dependent on the size of the target.
 %%%%
-Inner Flame
-
-대상의 내부를 강한 화염으로 태우고, 죽을 때 폭발하도록 만든다. 폭발의 반경은 대상의 크기에 따라 달라진다.
-%%%%
-Insulation
+Insulation spell
 
 이 주문은 시전자를 전기 충격으로 부터 보호한다.
 %%%%
-Invisibility
+Invisibility spell
 
-대상을 투명화하여 외부로부터 감춘다. 투명 상태에서는 마법 오염이 쌓이게 되며, 자연히 점점 빛나게 되어 대상을 다시 드러나게 만든다.
+This spell hides a creature from the sight of others. While invisible you will
+gain magical contamination, which may eventually cause enough glow to make you
+visible again.
 %%%%
-Iskenderun's Mystic Blast
+Iskenderun's Mystic Blast spell
 
-This spell throws a crackling sphere of destructive energy. The sphere will sometimes explode on impact, and the chance of it doing so is higher if the sphere has traveled less distance.
+This spell throws a crackling sphere of destructive energy. The sphere will
+sometimes explode on impact, and the chance of it doing so is higher if the
+sphere has traveled less distance.
 %%%%
-Leda's Liquefaction
-레다의 용해술
+Leda's Liquefaction spell
 
-시전자 주변의 땅을 액화시켜서, 위를 걷기 어렵게 만든다. 즉, 액화된 땅 내에서는 움직임이 매우 느려진다.
+This spell liquefies the ground around the caster, making it difficult to move
+through. Any attempt to move through the liquefied ground will be a very slow
+one.
 %%%%
-Lee's Rapid Deconstruction
+Lee's Rapid Deconstruction spell
 
-This spell fragments a wall or a suitably brittle visible monster into an explosion of deadly shrapnel. It can be used on monsters made of ice, bone, or any wall-like substance, as well as those turned to stone by petrification.
+This spell fragments a wall or a suitably brittle visible monster into an
+explosion of deadly shrapnel. It can be used on monsters made of ice, bone, or
+any wall-like substance, as well as those turned to stone by petrification.
 
-Targets made from rock, stone, ice or bone will cause a small or medium-sized explosion. Metal targets will cause a small but particularly damaging explosion, and targets made from crystal will cause a large and extremely damaging explosion.
+Targets made from rock, stone, ice or bone will cause a small or medium-sized
+explosion. Metal targets will cause a small but particularly damaging
+explosion, and targets made from crystal will cause a large and extremely
+damaging explosion.
 %%%%
-Lehudib's Crystal Spear
+Lehudib's Crystal Spear spell
 
 날카롭고 치명적인 수정의 창을 발사한다.
 %%%%
-Minor Healing
+Minor Healing spell
 
 시전자의 체력을 약간 회복시킨다.
 %%%%
-Lethal Infusion
+Lethal Infusion spell
 
-시전자가 들고 있는 무기를 사악한 에너지로 감싼다. 다른 강화 마법이 걸려있는 무기에는 효과가 없다.
+This spell infuses a weapon held by the caster with unholy energies. It will
+not affect weapons which are otherwise subject to special enchantments.
 %%%%
-Levitation
+Levitation spell
 
 이 주문은 시전자가 공기 중을 떠다닐 수 있게 해준다.
 %%%%
-Lightning Bolt
+Lightning Bolt spell
 
-강력한 번개의 화살을 발사한다. 불이나 얼음의 마법과 비교해서 위력은 낮은 편이지만, 이것이 지나가는 모든 적을 관통한다는 장점이 있다.
+This spell hurls a mighty bolt of lightning. Although this spell inflicts less
+damage than similar fire and ice spells, it can at once rip through whole rows
+of creatures.
 %%%%
-Magic Dart
+Magic Dart spell
 
 자그마한 마력 에너지의 화살을 발사하는 주문이다. 절대 빗나가지 않는다.
 %%%%
-Malign Gateway
-이계의 관문
+Malign Gateway spell
 
-이 세계에 공간의 구멍을 만들어, 미지의 타락한 세계로 통하는 일시적인 차원 관문을 연다. 그 곳의 악랄한 거주자들이 그들의 촉수로 찌르는 모습을 본다면, 그 누구도 이것의 근처에 가까워지려고 하지 않을 것이다.
+This spell tears a gash in reality, creating a self-sustained but thankfully
+temporary portal to an unknown, tainted otherworld. Which dastardly denizens of
+this place might choose to poke their tentacled appendages through, nobody
+knows, but certainly nobody would want to be nearby when it happens.
 %%%%
-Mass Abjuration
+Mass Abjuration spell
 
-This spell attempts to send all hostile summoned creatures in sight to the place whence they came, or at least shorten their stay in the caster's locality.
+This spell attempts to send all hostile summoned creatures in sight to the
+place whence they came, or at least shorten their stay in the caster's
+locality.
 %%%%
-Mass Abjuration
-
-This spell attempts to send all hostile summoned creatures in sight to the place whence they came, or at least shorten their stay in the caster's locality.
-%%%%
-Mass Confusion
+Mass Confusion spell
 
 시전자를 바라보고 있는 모든 존재에게 혼란을 유발시킨다.
 %%%%
-Mephitic Cloud
+Mephitic Cloud spell
 
 극히 불쾌한 악취의 구름을 생성한다.
 %%%%
-Metabolic Englaciation
+Metabolic Englaciation spell
 
-This spell tries to lower the metabolic rate of every creature in the caster's vicinity, slowing all those who are not resistant to cold. It bypasses magic resistance, although tougher monsters will not be slowed for as long as others.
+This spell tries to lower the metabolic rate of every creature in the caster's
+vicinity, slowing all those who are not resistant to cold. It bypasses magic
+resistance, although tougher monsters will not be slowed for as long as others.
 %%%%
-Necromutation
+Necromutation spell
 
-죽음의 힘으로 시전자를 음에너지에 친숙한, 반쯤 육체적인 영으로 탈바꿈시키는 주문이다. 시전자는 냉기, 독, 마법, 음에너지에 저항력을 얻게 된다.
-%%%%
-Olgreb's Toxic Radiance
+This spell first transforms the caster into a lich — a powerful skeletal
+figure. The caster gains some powers of death, and becomes more resistant to
+cold and hostile enchantments and completely immune to poison, rotting, and
+negative energy, and requires no food at all for the duration of the spell.
 
-This spell bathes the caster's surroundings in a sickly green light, inflicting poison on everything nearby (including the caster). It can be blocked by translucent walls, however, and invisible creatures are completely unaffected.
-%%%%
-Orb of Destruction
+The caster also gains some of the more dubious benefits of having an undead
+body, such as a vulnerability to holy weapons and an inability to consume
+potions.
 
-순수한 파괴마법으로 이루어진 구체를 생성한다. 다른 투사체들과 비교하면, 이 구체는 비교적 느린 속도로 날아간다. 이 거대한 구체는 지정한 대상을 따라가지만, 아주 민첩한 적이라면 이 구체를 피할 수도 있다. 구체는 안정화될 시간이 필요하기 때문에, 갓 만들어진 구체는 원래의 구체가 최대로 낼 수 있는 마력에 비해 큰 대미지를 주지 못한다.
-이 주문이 적혀 있는 마법서는, 잘못 기재되어있는 마법 주문을 베껴 쓴 바람에 구체가 일정한 거리를 날아갔을 경우 불안정해지는 문제가 있다고 한다. 다만 몇몇 존재들은 이러한 마법적인 결함이 없는 마법서를 접했을 수도 있으니 주의할 것.
+Contrary to what one would expect, this spell works on octopodes, although what
+foul necromantic tissue serves as an analogue for bones remains a mystery.
 %%%%
-Ozocubu's Armour
+Olgreb's Toxic Radiance spell
 
-시전자의 몸을 얼음 방어막으로 덮는다. 얼음 막의 방어력은 시전자의 얼음의 주문 숙련도에 비례한다. 이 주문을 사용하는 것으로 시전자의 장비가 냉기의 영향을 받지는 않지만, 다른 냉기 공격에 대해서는 영향을 받을 수 있다. 
-회피 페널티 2 이상의 갑옷을 입고 있을 경우, 이 주문은 효과를 보지 못한다. 시전자가 '얼음의 몸'을 시전하고 있는 상태라면 더욱 강력한 효과를 기대할 수 있다.
+This spell bathes the caster's surroundings in a sickly green light, inflicting
+poison on everything nearby (including the caster). It can be blocked by
+translucent walls, however, and invisible creatures are completely unaffected.
 %%%%
-Ozocubu's Refrigeration
+Orb of Destruction spell
 
-시전자와 시전자 주변의 냉기에 저항하지 못하는 모든 존재에게서 온기를 빼앗아, 동결 피해를 준다.
-%%%%
-Pain
+This spell conjures an orb made of pure destructive magic. Compared to most
+other projectiles, these orbs travel at a relatively slow pace. The orbs home
+onto their targets, yet because of their huge inertia, especially agile
+opponents may be able to outmanoeuvre them. The orbs need some time to
+stabilize, and a nascent orb won't do the full damage it is capable of.
 
-생명체 하나에게 끔찍한 고통을 안겨준다. 시전자 역시 반발력으로 인해 약간의 피해를 입는다.
+It is said that most copies of this spell suffer from a scribal error that
+makes the orbs unstable beyond a short range. Certain individuals may have
+access to spellbooks without this flaw, so beware!
 %%%%
-Paralyse
+Ozocubu's Armour spell
+
+This spell envelops the caster's body in a protective layer of ice, the power
+of which depends on his or her skill with ice magic. The caster and the
+caster's equipment will not suffer cold from this layer, yet can be affected by
+other sources of cold normally. The spell will not function for casters already
+wearing heavy armour (any body armour with an evasion penalty of 2 or more).
+The effects of this spell are boosted if the caster is in ice form.
+%%%%
+Ozocubu's Refrigeration spell
+
+This spell drains the heat from the caster and his or her surroundings, causing
+harm to all creatures not resistant to cold.
+%%%%
+Pain spell
+
+This spell inflicts an extremely painful injury upon one living creature. The
+caster suffers minor damage from the backlash.
+%%%%
+Paralyse spell
 
 대상의 움직임을 잠시 멈춘다.
 %%%%
-Passage of Golubria
-골루브리아의 통로
+Passage of Golubria spell
 
-This spell opens two gateways (one always near the caster), which allow instantaneous transport to random other open gateways to any creature entering them. There is no limit to the number of gateways that can be open at one time, but a gateway will close when entered or after a moderate amount of time.
+This spell opens two gateways (one always near the caster), which allow
+instantaneous transport to random other open gateways to any creature entering
+them. There is no limit to the number of gateways that can be open at one time,
+but a gateway will close when entered or after a moderate amount of time.
 %%%%
-Passwall
+Passwall spell
 
-시전자의 몸을, 단단한 벽을 통과할 수 있는 무언가로 바꾼다. 시전자과 벽과 동화되는 시간동안, 약간의 시간이 필요하며 그 동안 무방비 상태가 되므로 주의할 것.
+This spell tunes the caster's body such that it can instantly pass through
+solid rock. This can be dangerous, since it takes time for the caster to attune
+to the rock, during which time they will be helpless.
 %%%%
-Petrify
-석화
+Petrify spell
 
-적을 돌로 만들어 굳히는 주문이다. 성공했을 경우, 대상은 일시적으로 돌이 될 때 까지 느려지게 된다. 이 상황에서 적은 타격으로부터 대미지를 적게 받는다.
+This spell attempts to petrify a monster. If successful, the monster is slowed
+down for a while until it is temporarily turned into stone. In this state, a
+monster will take less damage upon being hit.
 %%%%
-Phase Shift
+Phase Shift spell
 
-시전자의 위상을 물질계에서 일시적으로 벗어나게 만들어, 종종 자신에게 가해진 공격을 완벽히 흘려 보낼수 있도록 하는 주문이다.
+This spell allows the caster to phase in and out of the material plane,
+allowing them to occasionally avoid blows entirely.
 %%%%
-Poison Arrow
+Poison Arrow spell
 
-대단히 끔찍하고 유독한 독소로 덮인 마법의 화살을 발사한다. 어떤 생명체든간에, 이 독에는 완전히 저항할 수가 없으며, 언데드 또한 이 주문의 위력으로 인해 높은 물리적 피해를 받는다.
+This spell hurls a magical arrow coated with the most vile and noxious toxin.
+No living thing is completely immune to its effects, and even the undead will
+take damage from the physical component of the spell.
 %%%%
-Poison Weapon
+Poison Weapon spell
 
-시전자의 무기나 발사체에 일시적으로 독을 바른다. 다른 마력이 부가되어 있는 무기에는 효과를 볼 수 없다.
+This spell temporarily coats any weapon or launcher with poison. It will only
+work on weapons without an existing enchantment.
 %%%%
-Poisonous Cloud
+Poisonous Cloud spell
 
 치명적인 가스 구름을 생성한다.
 %%%%
-Polymorph Other
+Polymorph Other spell
 
-대상을 뭔가 다른 모습으로 변형시킨다. 특히 변형괴물류에게 효과적이다.
+This spell randomly alters the form of another creature. It is especially
+effective against shape-changing creatures.
 %%%%
-Portal Projectile
+Portal Projectile spell
 
-투사체를 직접 대상에게 순간 이동시켜, 명중률을 비약적으로 향상시킨다. 다만 더 많은 피해를 입히지는 못한다.
+This spell teleports a fired or thrown missile directly to its target, greatly
+increasing its accuracy (but not damage).
 %%%%
-Projected Noise
+Recall spell
 
-시전자가 지정한 곳에 소음을 발생시킨다.
+This spell is greatly prized by summoners and necromancers, as it allows the
+caster to recall any friendly creatures nearby to a position adjacent to the
+caster.
 %%%%
-Recall
+Regeneration spell
 
-특히 소환술사와 강령술사들에게 각광받는 주문으로, 던전 어딘가에 있는 시전자를 따르는 몬스터들을 시전자의 곁으로 순간적으로 불러들인다.
+This spell reanimates parts of the caster's wounds. This unholy act
+dramatically but temporarily increases the caster's recuperative abilities,
+while also increasing the rate of food consumption.
 %%%%
-Regeneration
+Repel Missiles spell
 
-시전자의 상처를 빠르게 재생시킨다. 이 부정한 주문은 짧은 시간 동안 시전자의 재생력을 비약적으로 향상시키지만, 그만큼 빨리 배고파지도록 만든다.
+This spell reduces the chance of projectile attacks striking the caster, by
+making them significantly easier to dodge.
 %%%%
-Repel Missiles
+Ring of Flames spell
 
-원거리 공격이 시전자에게 명중할 확률을 낮춘다. 번개의 화살이나 용의 숨결과 같은 강력한 공격들도 이 주문으로 막을 수 있지만, 약한 원거리 공격만큼 잘 막지는 못한다.
+This spell surrounds the caster with a mobile ring of searing flame, and keeps
+other fire clouds away from the caster. This spell attunes the caster to the
+forces of fire, increasing their fire magic and giving protection from fire.
+However, it also makes them much more susceptible to the forces of ice.
 %%%%
-Resist Poison
+Sandblast spell
 
-시전자에게 모든 독에 대한 일시적인 저항력을 부여한다.
+This spell creates a short blast of high-velocity particles. It works best when
+the caster provides some source (by wielding a stone), but will do what it can
+with whatever ambient grit is available.
 %%%%
-Ring of Flames
+See Invisible spell
 
-시전자 주변을, 불타는 화염의 고리로 감싼다. 시전자가 이동할 경우 화염의 고리도 함께 이동하게 된다. 또한 시전자를 불의 힘과 가깝게 만들어, 불의 마법 능력을 높이고 화염에 대한 저항력을 부여하지만, 냉기에 대해서는 취약하게 만든다.
+This spell enables the caster to perceive things that are shielded from
+ordinary sight.
 %%%%
-Sandblast
+Shadow Creatures spell
 
-짧은 거리 내에, 격렬한 파편의 폭풍을 만든다. 손에 돌을 드는 등 추가적인 재료가 있다면 더 좋은 효과를 발휘하지만, 주변의 먼지 등을 이용해서도 발동할 수 있다.
+This spell weaves a creature from shadows and threads of Abyssal matter. The
+creature thus brought into existence will recreate some type of creature found
+in the caster's immediate vicinity. The spell even creates appropriate
+equipment for the creature, which are given a lasting substance by their firm
+contact with reality.
 %%%%
-See Invisible
+Shatter spell
 
-이 주문은 일반적으로 볼 수 없는 존재를 볼 수 있게 한다.
+This spell causes a burst of concussive force around the caster, which will
+damage most creatures, although those composed of stone, metal or crystal, or
+otherwise brittle, will particularly suffer. The magic has been known to
+adversely affect walls.
 %%%%
-Shadow Creatures
-
-이 주문은 어둠과 어비스의 물질로 무언가를 엮어낸다. 이 존재는 현재 시전자가 있는 곳 근처에서 찾을 수 있는 다른 존재로 변화한다. 그 존재에 걸맞는 장비도 생성하긴 하지만, 이 주문의 지속시간 동안만 유지된다.
-%%%%
-Shatter
-
-이 주문은 시전자 주변에, 대부분의 존재에게 피해를 입힐 수 있는 파동의 폭발을 일으킨다. 돌이나 금속, 수정 혹은 다른 깨지기 쉬운 물체로 이루어진 존재에게는 더 큰 피해를 입힌다. 이 주문은 특히 벽에도 간간히 영향을 준다.
-%%%%
-Shock
+Shock spell
 
 마구 튀어다니는 전기의 화살을 발사한다.
 %%%%
-Shroud of Golubria
+Shroud of Golubria spell
 
-이 주문은 왜곡된 공간의 장막으로, 시전자 주변을 덮는다. 이 장막은 공간을 고정시켜, 시전자에게 가해지는 공격의 대기를 공격 주변으로 일시적으로 왜곡시켜 흘려버림으로써 막아낸다. 원거리 공격은 이 장막의 힘이 작용하기에는 지나치게 빠르며, 또한 이 장막은 매우 불안정하므로 갑자기 소멸할 수도 있다.
+This spell bends space along a shroud covering your body, protecting you from
+some blows by redirecting their force to the air around you. Ranged attacks
+move too quickly to be diverted in this way. The shroud is highly unstable and
+may fall apart unexpectedly under stress.
 %%%%
-Silence
+Silence spell
 
-시전자 주변의 모든 소리를 제거한다. 이 주문을 통해 시전자를 포함, 시전자 주변의 모든 존재는 두루마리를 읽거나, 주문을 외우거나, 기도를 하거나 소리를 지를 수 없게 된다. 정적 상태는 매우 부자연스럽기 때문에, 주변의 모든 생물들이 무언가 이상한 낌새를 눈치챌 것이고, 즉 정적 주문으로는 시전자를 감추어지는 효과를 기대할 수는 없다.
-정적 주문은 시전자의 마력에 비례해 범위가 결정되며, 주문의 효과가 사라질 때 쯤이면 시전자 자신만이 영향을 받는 범위까지 줄어든다. 악마 등 일부 존재는 소리를 내지 않고도 주문을 사용할 수 있으며, 타고난 마법정 능력은 여전히 사용할 수 있다.
-%%%%
-Simulacrum
+This spell eliminates all sound near the caster. This makes reading scrolls,
+casting spells, praying or yelling in the caster's vicinity impossible.
+(Applies to caster too, of course.) This spell will not hide your presence,
+since its oppressive, unnatural effect will almost certainly alert any living
+creature that something is very wrong.
 
-이 주문은 손에 들고 있는 고깃조각의 생전의 형태를 얼음으로 복제한다. 이 마법은 불안정하므로 이 얼음 환상들은 깨지거나 물로 녹여지지지 않는 않는다면  차가운 기체로 변하여 녹아 사라진다. 얼음 환상은 대상이 만들어진 층을 떠날 수 없다.
+Silence starts out with a radius depending on power, which will then shrink,
+eventually covering only the caster, before the effect times out. Some
+creatures, such as demons, cast magic without speaking and so will be
+unaffected, and those with innate magical abilities will also still be able to
+use them.
 %%%%
-Slow
+Simulacrum spell
+
+This spell uses a piece of flesh in hand to create a replica of the original
+being out of ice. This magic is unstable so eventually the replica will
+sublimate into a freezing cloud, if it isn't hacked or melted into a small
+puddle of water first. Note that simulacra are incapable of leaving the level
+they were created on.
+%%%%
+Slow spell
 
 선택한 대상의 움직임을 느리게 만든다.
 %%%%
-Smiting
+Spider Form spell
 
-시전자가 선택한 대상 하나에게, 천벌의 일격을 내린다.
+This spell temporarily transforms the caster into a swift, venomous (but
+poison-susceptible), spider-like creature. Spellcasting is slightly more
+difficult in this form. While in this form, you can cling to walls.
 %%%%
-Spider Form
+Static Discharge spell
 
-This spell temporarily transforms the caster into a swift, venomous (but poison-susceptible), spider-like creature. Spellcasting is slightly more difficult in this form. While in this form, you can cling to walls.
+This spell releases electric charges against those next to the caster. These
+may arc to adjacent monsters (or even the caster) before they eventually ground
+out.
 %%%%
-Static Discharge
+Statue Form spell
 
-이 주문은 시전자 주변에 전류를 흐르게 한다. 시전자를 포함한 주변의 대상은 땅에서 발을 뗄 때까지 전류가 흐르게 될 것이다.
+This spell temporarily transforms the caster into a slow-moving (but extremely
+robust) stone statue, capable of dealing monstrous blows with weapons or bare
+fists. The caster's stone body is insulated from electricity and gains
+resistance to poison, rotting and negative energy.
 %%%%
-Statue Form
+Sticks to Snakes spell
 
-시전자를 느리지만 매우 튼튼한 석상으로 잠시 변화시킨다. 이 상태에서는 맨손으로 강력한 피해를 입힐 수 있다.
+This spell uses wooden items in the caster's grasp as raw material for a
+powerful transmutation. Note that magical artefacts will not be affected.
 %%%%
-Sticks to Snakes
+Sticky Flame spell
 
-시전자의 손에 들려 있는 나무 아이템을 뱀으로 변이시킨다. 마력이 담긴 물체는 이 주문에 영향을 받지 않는다.
+This spell conjures a sticky glob of liquid fire, which will adhere to and burn
+any creature it strikes.
 %%%%
-Sticky Flame
-
-끈적이는 액체의 화염을 만들어, 상대에게 달라붙게 하여 지속적인 피해를 입힌다.
-%%%%
-Sting
+Sting spell
 
 독이 발라진 마법 다트를 발사한다.
 %%%%
-Stone Arrow
+Stone Arrow spell
 
 날카로운 암석 덩어리를 발사한다.
 %%%%
-Stoneskin
+Stoneskin spell
 
-이 주문은 시전자의 땅의 마술 기술에 비례하여 시전자의 피부를 단단하게 만든다. 보통의 피부와 동일하게 기능하며 언데드나 변신 상태일 때엔 사용할 수 없다. 다만 한 가지 예외인 석상의 몸 상태일 때는 이 주문의 효과가 증가한다.
+This spell hardens one's skin to a degree determined by one's skill in Earth
+Magic. It only works on relatively normal flesh, and will aid neither the
+undead nor the bodily transformed. However, there is one exception: the effects
+of this spell will be boosted for casters in Statue Form.
 %%%%
-Striking
+Striking spell
 
 작은 역장의 투사체를 발사한다.
 %%%%
-Sublimation of Blood
+Sublimation of Blood spell
 
-살점이나 피, 혹은 다른 신체 부위를 마력으로 전환한다. 시전자는 자신의 몸 또는 잘라낸 고기의 살점을 통해 주문을 사용할 수 있다. 시전자 자신의 몸을 이용하는것은 위험하지만, 이 주문으로 시전자가 죽음에 이르지는 않는다.
+This spell converts flesh, blood and other bodily fluids into magical energy.
+Casters may focus this spell on their own bodies (which can be dangerous but
+never directly lethal) or can wield freshly butchered flesh in order to draw
+power into themselves.
 %%%%
-Summon Butterflies
+Summon Butterflies spell
 
 현란한 나비 떼를 소환한다. 매우 아름답다!
 %%%%
-Summon Demon
+Summon Demon spell
 
-판데모니움과 연결된 문을 열어 그곳의 거주자 한 명을 불러와 시전자를 따르도록 만드는 주문이다.  물론 그 악마의 충성을 전혀 보장할 수는 없지만.
+This spell opens a gate to the realm of Pandemonium and draws forth one of its
+inhabitants to serve the caster for a time (although the demon's servitude is
+by no means guaranteed).
 %%%%
-Summon Dragon
+Summon Dragon spell
 
 강력한 용을 소환하여 부리는 주문이다.
 %%%%
-Summon Elemental
+Summon Elemental spell
 
-정령계에서 시전자를 따르게 될 정령을 불러오는 주문이다. 이 주문엔 재료가 많이 필요한데, 땅 정령이나 바람의 정령은 큰 문제가 되지 않지만 불이나 물의 정령은 소환하기 힘들수도 있다. 정령들은 보통 호의적인데, 해당 속성의 마법에 숙달된 자에게는 더욱 그렇다.
+This spell calls forth a spirit from the elemental planes to aid the caster. A
+large quantity of the desired element must be available; this is rarely a
+problem for earth and air, but may be for fire or water. The elemental will
+usually be friendly to casters — especially those skilled in the appropriate
+form of elemental magic.
 %%%%
-Summon Greater Demon
+Summon Greater Demon spell
 
-판데모니움의 대악마 하나를 불러와 시전자를 따르게 만드는 주문이다. 악마가 이 세상에 머무르는 시간보다 악마를 복종시킬 수 있는 시간이 짧을 수 있으므로 주의하여야 한다!
+This spell calls forth one of the greater demons of Pandemonium to serve the
+caster. Beware, for the spell binding it to service may not outlast that which
+binds it to this world!
 %%%%
-Summon Horrible Things
+Summon Horrible Things spell
 
-어비스로 통하는 문을 열어 하나 이상의 끔찍하고 혐오스러운 존재들을 불러온다. 이들은 댓가로써 종종 당신의 지능을 요구한다.
+This spell opens a gate to the Abyss and calls through one or more hideous
+abominations from that dreadful place. The powers who answer this invocation
+require of casters a portion of their intellect in exchange for this service.
 %%%%
-Summon Hydra
+Summon Hydra spell
 
-시전자를 따르는 히드라를 소환한다.
+This spell summons a many-headed hydra to fight alongside the caster for a
+short time.
 %%%%
-Summon Ice Beast
+Summon Ice Beast spell
 
 시전자를 따르는 얼음 짐승을 불러온다.
 %%%%
-Summon Scorpions
+Summon Scorpions spell
 
-하나 이상의 전갈을 소환하는 주문이다. 그 중 몇몇은 시전자를 따르지 않을 수도 있다.
+This spell summons one or more scorpions (some of which may not be bound to the
+caster's service).
 %%%%
-Summon Small Mammals
+Summon Small Mammals spell
 
 시전자를 따를 하나 한두마리의 작은 동물을 소환한다.
 %%%%
-Summon Swarm
+Summon Swarm spell
 
 역병을 가진 벌레떼를 불러온다.
 %%%%
-Summon Ugly Thing
+Summon Ugly Thing spell
 
 This spell summons a mutated otherworldly creature to the caster's aid.
 %%%%
-Sure Blade
+Sure Blade spell
 
-시전자와 시전자가 착용중인 단검 사이에 마법적인 유대를 부여하여, 단검을 더욱 사용하기 쉽도록 만든다.
+This spell forms a mystical bond between the caster and a wielded short blade,
+making the blade much easier to use.
 %%%%
-Swiftness
+Swiftness spell
 
-This spell imbues its caster with the ability to achieve great movement speeds. But this speed comes at a price: the caster is less stealthy and more likely to blunder into traps while the spell is in effect.
+This spell imbues its caster with the ability to achieve great movement speeds.
+But this speed comes at a price: the caster is less stealthy and more likely to
+blunder into traps while the spell is in effect.
 %%%%
-Teleport Other
+Teleport Other spell
 
 시전자 외의 대상을 무작위의 장소로 공간이동시킨다.
 %%%%
@@ -602,37 +770,53 @@ Teleport Self
 
 시전자를 층 내의 무작위 장소로 공간이동시킨다.
 %%%%
-Throw Flame
+Throw Flame spell
 
 불꽃으로 이루어진 자그마한 화살을 던진다.
 %%%%
-Throw Frost
+Throw Frost spell
 
 자그마한 서리 조각을 던진다.
 %%%%
-Tornado
+Tornado spell
 
-시전자 주변의 공기를 소용돌이치게 만들어, 휘말리는 대상에게 절륜한 피해를 입힌다. 이 회오리의 중심만이 안전하며, 회오리의 중심은 시전자를 따라다닌다. 땅에 굳게 뿌리내린 대상이 아닌 모든 것은 떠다니게 된다.
-이 주문의 효력은 밀폐된 공간에서 매우 약화된다.
-부가효과로써 이 주문을 용암을 건너는 데 사용할 수는 있지만, 이 주문의 지속시간은 짧으므로 주의하라.
-%%%%
-Tukima's Dance
+This spell turns the air around the caster in a mighty vortex, doing tremendous
+damage to everyone caught in it. Only the eye of the storm is a safe place, and
+it follows the caster. Everything not firmly nailed down will be lifted and
+tossed around.
 
-시전자의 손에 들린 무기를 공중으로 떠올라 춤추게 하며, 적들을 공격하도록 만든다. 이 주문은 의지를 가진 아티팩트에는 적용되지 않으며, 발동 기술이 필요한 능력들은 사용되지 않는다.
-%%%%
-Twisted Resurrection
+The spell's effectiveness is greatly diminished in closed areas.
 
-This spell causes nearby corpses to begin crawling together, merging into horrible agglomerations of flesh. More and larger corpses result in more powerful creations.
+As a side effect, this spell may be used to cross lava, but beware of its short
+duration.
 %%%%
-Vampiric Draining
+Tukima's Dance spell
 
-살아있는 생명체로부터 생명력을 강탈하여 시전자에게 공급하는 주문이다. 시전자가 지니는 최대 생명력 이상으로 빨아들일 수 없으며, 언데드나 악마 종류에게 사용한다면 오히려 시전자가 역효과를 보게 된다.
+This spell causes a weapon held in the caster's hand to dance into the air and
+strike the caster's enemies. It will not function on certain wilful artefacts;
+any abilities that require evocation skill won't be used either.
 %%%%
-Venom Bolt
+Twisted Resurrection spell
+
+This spell causes nearby corpses to begin crawling together, merging into
+horrible agglomerations of flesh. More and larger corpses result in more
+powerful creations.
+%%%%
+Vampiric Draining spell
+
+This spell steals the life of a living creature and grants it to the caster.
+Life will not be drained in excess of what the caster can capably absorb.
+
+However, attempting to drain an undead or demonic creature will backfire on the
+caster.
+%%%%
+Venom Bolt spell
 
 독의 화살을 발사하는 주문이다.
 %%%%
-Warp Weapon
+Warp Weapon spell
 
-시전자의 무기에 왜곡장을 일시적으로 부여한다. 다른 마법부여 주문과는 다르게, 왜곡 주문은 마법 무기 제작의 두루마리로 무기에 부여할 수 없다.
+This spell temporarily binds a localized warp field to the invoker's weapon.
+Note that unlike other brands, distortion can not be made permanent by reading
+a scroll of vorpalise weapon.
 %%%%

@@ -128,12 +128,20 @@ disco_choices = {
 
 colour.add_colour("disco", function(rand, x, y)
     local vault = dgn.vault_at(x, y)
-    local ul = vault:pos()
-    local ulx, uly = ul:xy()
-    x, y = x - ulx, y - uly
+    local ballx = 0
+    local bally = 0
+    if vault then
+        local ul = vault:pos()
+        local ulx, uly = ul:xy()
+        x, y = x - ulx, y - uly
 
-    local map = vault:map()
-    local ballx, bally = dgn.gly_point(map, "D")
+        local map = vault:map()
+        local bx, by = dgn.gly_point(map, "D")
+        if bx ~= nil then
+            ballx = bx
+            bally = by
+        end
+    end
 
     local cycle = disco_choices[math.floor((you.turns() % (16 * #disco_choices)) / 16) + 1]
     return cycle(x, y, ballx, bally, you.turns() % 16, rand)
@@ -157,10 +165,10 @@ end
 
 # 25% chance to appear on D:21-27, and guaranteed on D:24.
 NAME: pan_entry
-TAGS: extra allow_dup can_overwrite
+TAGS: extra allow_dup can_overwrite replace_portal
 DEPTH: D:21-27
 CHANCE: 100% (D:24), 25%
-: if you.where == 'D:24' then
+: if you.where() == 'D:24' then
 KFEAT: O = enter_pandemonium no_mimic
 : else
 KFEAT: O = enter_pandemonium
@@ -174,7 +182,7 @@ ENDMAP
 # Random unguarded exits
 ##############################################################################
 NAME:   pan_exit
-TAGS:   extra allow_dup
+TAGS:   extra allow_dup transparent
 DEPTH:  Pan
 CHANCE: 5%
 KFEAT:  O = exit_pandemonium
@@ -183,7 +191,7 @@ O
 ENDMAP
 
 NAME:   pan_to_abyss
-TAGS:   extra allow_dup
+TAGS:   extra allow_dup transparent
 DEPTH:  Pan
 CHANCE: 25%
 KFEAT:  O = exit_through_abyss
@@ -552,8 +560,7 @@ epilogue{{
 COLOUR:     n = blue
 TILE:       n = dngn_metal_wall_cracked
 TILE:       v = dngn_metal_wall_brown
-:           dgn.set_feature_desc_short("translucent stone wall",
-:                                      "cracked metal wall")
+:           set_feature_name("clear_stone_wall", "cracked metal wall")
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -705,6 +712,7 @@ TAGS:      gloorx_vloq uniq_gloorx_vloq
 ORIENT:    southwest
 : pan_lord_setup(_G, 'Gloorx Vloq')
 TILE:      c = dngn_stone_wall_darkgray
+SHUFFLE:   1O
 MONS:      patrolling Gloorx Vloq, Executioner, demonic crawler, shadow wraith
 epilogue{{
   pan_lord_epilogue('Gloorx Vloq')
@@ -1572,12 +1580,12 @@ ENDMAP
 # A couple of small vaults featuring blood fountains.
 
 NAME:   pan_blood_fountain
-TAGS:   pan
-SUBST:  ' : '"
-COLOUR: ' = red / none
-COLOUR: " = red / none w:5 / lightred w:2
-COLOUR: . = red / none w:40
-# not sure which FTILE to use here
+TAGS:   extra allow_dup transparent
+DEPTH:  Pan
+CHANCE: 10%
+SUBST:  ' = '..
+SUBST:  . = " / .:80
+KPROP:  '" = bloody
 SUBST:  '=. , "=.
 MAP
  ...
@@ -1588,13 +1596,13 @@ MAP
 ENDMAP
 
 NAME:   pan_blood_fountain_2
-TAGS:   pan
-SUBST:  ' : '"
+TAGS:   extra allow_dup transparent
+DEPTH:  Pan
+CHANCE: 5%
 SUBST:  Y = YYV
-COLOUR: ' = red / none
-COLOUR: " = red / none w:5 / lightred w:2
-COLOUR: . = red / none w:80
-# not sure which FTILE to use here
+SUBST:  ' = '..
+SUBST:  . = " / .:80
+KPROP:  '" = bloody
 SUBST:  '=. , "=.
 MAP
  @.....
@@ -1604,6 +1612,14 @@ MAP
  ..'Y'..
   .'''.
    ...
+ENDMAP
+
+NAME:   pan_blood_fountain_small
+TAGS:   extra allow_dup transparent
+DEPTH:  Pan
+CHANCE: 15%
+MAP
+Y
 ENDMAP
 
 ###################################
@@ -1632,6 +1648,9 @@ local function swineherd_die(monster, killer_type, killer_index, silent, wizard)
   local p = dgn.find_marker_positions_by_prop("pigsty_gate", 1)[1]
   if (p == nil) then
     crawl.mpr("Error: someone stolen the pigsty gate!")
+    return
+  end
+  if dgn.grid(p.x, p.y) ~= dgn.fnum("iron_grate") then
     return
   end
   dgn.grid(p.x, p.y, "floor")
@@ -1665,7 +1684,7 @@ COLOUR: D = random
 COLOUR: .x = disco
 COLOUR: 0123456789 = disco
 KFEAT:  D = granite_statue
-MARKER: D = lua:portal_desc { desc="weirdly glowing ball" }
+: set_feature_name("granite_statue", "weirdly glowing ball")
 MARKER: D = lua:props_marker { veto_fragmentation="veto", \
                                veto_disintegrate="veto", \
                                veto_shatter="veto" }
@@ -1676,7 +1695,7 @@ MONS:   red devil ; demon blade good_item ego:distortion
 RTILE:  x = wall_zot_blue / wall_zot_green / wall_zot_cyan / wall_zot_red /\
             wall_zot_magenta / wall_zot_yellow
 # alas, floor tiles are not distinguished from walls enough, commenting out:
-# FTILE: . = floor_moss / floor_dirt / floor_hive / floor_rough_red /\
+# FTILE: . = floor_moss / floor_dirt / floor_orc / floor_rough_red /\
 #            floor_snake / floor_swamp
 KFEAT:  _ = floor
 FTILE:  _ = floor_hall
@@ -1722,7 +1741,6 @@ NAME:   evilmike_holy_pan
 TAGS:   pan no_pool_fixup
 ORIENT: encompass
 NSUBST: . = > / .
-NSUBST: . = 2:6 / *:.
 ITEM:   w:5 any / potion of curing
 ITEM:   any / potion of heal wounds
 ITEM:   acquire any
@@ -1758,12 +1776,10 @@ FTILE:  "E0 = floor_grass
 COLOUR: "0 = green
 FTILE:  -ZBghi&v = floor_vault
 SUBST:  D& = +, '"- = ., H = G, C = c
-: dgn.set_feature_desc_short("granite statue",
-:                            "golden statue")
-: dgn.set_feature_desc_short("metal wall",
-:                            "silver wall")
-: _G.set_random_mon_list("angel / cherub / ophan / daeva / phoenix / " ..
-:                        "apis / paladin / apis / ophan / angel")
+: set_feature_name("granite_statue", "golden statue")
+: set_feature_name("metal_wall", "silver wall")
+: set_random_mon_list("angel / cherub / ophan / daeva / phoenix / " ..
+:                     "apis / paladin / apis / shedu band / angel")
 # Do not place if you are with a holy god. It's just free loot in that case.
 veto {{
     if you.god() == "the Shining One" or you.god() == "Zin" or you.god() == "Elyvilon" then

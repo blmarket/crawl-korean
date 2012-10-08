@@ -40,8 +40,6 @@ static const monster_level_up mon_grow[] =
 
     monster_level_up(MONS_ANT_LARVA, MONS_WORKER_ANT),
 
-    monster_level_up(MONS_KILLER_BEE_LARVA, MONS_KILLER_BEE),
-
     monster_level_up(MONS_CENTAUR, MONS_CENTAUR_WARRIOR),
     monster_level_up(MONS_YAKTAUR, MONS_YAKTAUR_CAPTAIN),
 
@@ -105,11 +103,11 @@ static const monster_level_up *_monster_level_up_target(monster_type type,
             if (static_cast<int>(me->hpdice[0]) == hit_dice
                 && x_chance_in_y(mlup.chance, 1000))
             {
-                return (&mlup);
+                return &mlup;
             }
         }
     }
-    return (NULL);
+    return NULL;
 }
 
 void monster::upgrade_type(monster_type after, bool adjust_hd,
@@ -164,15 +162,15 @@ bool monster::level_up_change()
     if (const monster_level_up *lup = _monster_level_up_target(type, hit_dice))
     {
         upgrade_type(lup->after, false, lup->adjust_hp);
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 bool monster::level_up()
 {
     if (hit_dice >= MAX_MONS_HD)
-        return (false);
+        return false;
 
     ++hit_dice;
 
@@ -196,7 +194,7 @@ bool monster::level_up()
 
     level_up_change();
 
-    return (true);
+    return true;
 }
 
 void monster::init_experience()
@@ -210,23 +208,23 @@ void monster::init_experience()
 bool monster::gain_exp(int exp, int max_levels_to_gain)
 {
     if (!alive())
-        return (false);
+        return false;
 
     init_experience();
     if (hit_dice >= MAX_MONS_HD)
-        return (false);
+        return false;
 
     // Only natural monsters can level-up.
     if (holiness() != MH_NATURAL)
-        return (false);
+        return false;
 
     // Only monsters that you can gain XP from can level-up.
     if (mons_class_flag(type, M_NO_EXP_GAIN))
-        return (false);
+        return false;
 
     // Avoid wrap-around.
     if (experience + exp < experience)
-        return (false);
+        return false;
 
     experience += exp;
 

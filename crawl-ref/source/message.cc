@@ -13,7 +13,6 @@
 #include "format.h"
 #include "initfile.h"
 #include "libutil.h"
-#include "macro.h"
 #include "menu.h"
 #include "mon-stuff.h"
 #include "notes.h"
@@ -62,7 +61,7 @@ struct message_item
     int                 param;          // param for channel (god, enchantment)
     std::string         text;           // text of message (tagged string...)
     int                 repeats;
-    long                turn;
+    int                 turn;
     bool                join;           // may this message be joined with
                                         // others?
 
@@ -274,7 +273,7 @@ static glyph _prefix_glyph(prefix_type p)
         g.col = LIGHTGRAY;
         break;
     }
-    return (g);
+    return g;
 }
 
 static bool _pre_more();
@@ -296,7 +295,7 @@ class message_window
 
     int use_last_line() const
     {
-        return (first_col_more());
+        return first_col_more();
     }
 
     int width() const
@@ -373,7 +372,7 @@ class message_window
         else
         {
             clear();
-            return (height());
+            return height();
         }
     }
 
@@ -637,7 +636,7 @@ public:
 
     bool have_prev()
     {
-        return (prev_msg);
+        return prev_msg;
     }
 
     void store_msg(const message_item& msg)
@@ -730,7 +729,7 @@ msg_colour_type msg_colour(int col)
 static int colour_msg(msg_colour_type col)
 {
     if (col == MSGCOL_MUTED)
-        return (DARKGREY);
+        return DARKGREY;
     else
         return static_cast<int>(col);
 }
@@ -739,7 +738,7 @@ static int colour_msg(msg_colour_type col)
 static msg_colour_type channel_to_msgcol(msg_channel_type channel, int param)
 {
     if (you.asleep())
-        return (MSGCOL_DARKGREY);
+        return MSGCOL_DARKGREY;
 
     msg_colour_type ret;
 
@@ -869,7 +868,7 @@ static msg_colour_type channel_to_msgcol(msg_channel_type channel, int param)
         break;
     }
 
-    return (ret);
+    return ret;
 }
 
 int channel_to_colour(msg_channel_type channel, int param)
@@ -952,6 +951,17 @@ void dprf(const char *format, ...)
     va_list  argp;
     va_start(argp, format);
     do_message_print(MSGCH_DIAGNOSTICS, 0, false, format, argp);
+    va_end(argp);
+}
+
+void dprf(diag_type param, const char *format, ...)
+{
+    if (Options.quiet_debug_messages[param])
+        return;
+
+    va_list  argp;
+    va_start(argp, format);
+    do_message_print(MSGCH_DIAGNOSTICS, param, false, format, argp);
     va_end(argp);
 }
 #endif
@@ -1065,7 +1075,7 @@ void msgwin_clear_temporary()
     msgwin.roll_back();
 }
 
-static long _last_msg_turn = -1; // Turn of last message.
+static int _last_msg_turn = -1; // Turn of last message.
 
 void mpr(std::string text, msg_channel_type channel, int param, bool nojoin, bool cap)
 {
@@ -1123,7 +1133,8 @@ void mpr(std::string text, msg_channel_type channel, int param, bool nojoin, boo
         fs.all_caps(); // No sound, so we simulate the reverb with all caps.
     else if (cap)
         fs.capitalize();
-    fs.filter_lang();
+    if (channel != MSGCH_ERROR && channel != MSGCH_DIAGNOSTICS)
+        fs.filter_lang();
     text = fs.to_colour_string();
 
     message_item msg = message_item(text, channel, param, join);
@@ -1279,9 +1290,9 @@ static bool channel_message_history(msg_channel_type channel)
     case MSGCH_PROMPT:
     case MSGCH_EQUIPMENT:
     case MSGCH_EXAMINE_FILTER:
-       return (false);
+       return false;
     default:
-       return (true);
+       return true;
     }
 }
 

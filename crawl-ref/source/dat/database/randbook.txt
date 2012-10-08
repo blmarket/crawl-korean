@@ -50,7 +50,7 @@ Book of Bugginess
 %%%%
 book appearance
 
-@book_adjective@
+@_book_adjective_@
 %%%%
 book_noun
 
@@ -72,7 +72,7 @@ book_noun
 
 카탈로그
 %%%%
-book_noun_on
+_book_noun_on_
 
 가이드
 
@@ -82,99 +82,102 @@ book_noun_on
 
 참고서
 %%%%
+# C++: discipline books, including Kiku's gifts
 book_name
 
 w:9
 @book_noun@
 
 w:4
-@book_noun_on@
+@_book_noun_on_@
 %%%%
 # @book_noun@ of ...
+# C++: "totally random" books
 random_book_title
 
 w:15
-@book_plant_animal@
+@_book_plant_animal_@
 
 w:20
-@number_or_qualifier@ @thing_names@
+@_number_or_qualifier_@ @_thing_names_@
 
 w:4
-@profession_name@
+@_profession_name@
 
 w:13
-@philosophy_or_science@
+@_philosophy_or_science_@
 
 w:8
-@wacky_armour_name@
+@_wacky_armour_name_@
 
 w:2
-@destiny_name@
+@_destiny_name_@
 
 w:6
-@place_name@
+@_place_name_@
 
 w:1
-@magic_name@
+@_magic_name_@
 
 w:4
-@substance_name@
+@_substance_name_@
 
 w:2
-@power_name@
+@_power_name_@
 
 w:2
-@mental_illness_weapon@
+@_mental_illness_weapon_@
 %%%%
-book_plant_animal
+_book_plant_animal_
 
 w:1
-@jewellery_animal@
+@_jewellery_animal_@
 
 w:1
-@critter_name@
+@_critter_name_@
 
 w:1
-@plant_name@
+@_plant_name_@
 
 w:6
-@weapon_animal@
+@_weapon_animal_@
 
-@armour_animal@
+@_armour_animal_@
 %%%%
+# C++: Xom (duh!)
 Xom_book_title
 
 w:30
 @random_book_title@
 
 # increased chances (obviously!)
-@chaos_name@
+@_chaos_name_@
 
 w:1
-@game_name@
+@_game_name_@
 
 w:2
 @player_death@
 
 w:8
-@wacky_armour_name@
+@_wacky_armour_name_@
 
 w:1
-@politics_name_armour@
+@_politics_name_armour_@
 
 w:5
-@power_name@
+@_power_name_@
 
 w:3
-@discomfort_and_inaction@
+@_discomfort_and_inaction_@
 
 w:3
-@discomfort_weapon@
+@_discomfort_weapon_@
 
 w:3
-@mental_illness_weapon@
+@_mental_illness_weapon_@
 %%%%
-book_adjective
+_book_adjective_
 
 말끔한
 
@@ -206,7 +209,7 @@ book_adjective
 
 찢겨진
 %%%%
-the_book_magic
+_the_book_magic_
 
 w:9
 # capitalise later as needed
@@ -216,9 +219,9 @@ w:1
 은둔자의 유산
 
 w:90
-@book_magic@
+@_book_magic_@
 %%%%
-book_magic
+_book_magic_
 
 마법
 
@@ -253,7 +256,7 @@ w:5
 w:5
 해석학
 %%%%
-beginners
+_beginners_
 
 초심자
 
@@ -275,75 +278,74 @@ w:1
 # level 1
 starting level book
 
-#@the_book_magic@ for @beginners@
-@beginners@을(를) 위한 @the_book_magic@
+@_beginners_@을(를) 위한 @_the_book_magic_@
 
 w:2
-@the_book_magic@ 101
+@_the_book_magic_@ 101
 
 #A Beginning Course on @the_book_magic@
-@the_book_magic@ 입문
+@_the_book_magic_@ 입문
 
 #@the_book_magic@, Part One
-@the_book_magic@, 1장
+@_the_book_magic_@, 1장
 
 #An Introduction to @the_book_magic@
-@the_book_magic@ 개론
+@_the_book_magic_@ 개론
 
 w:2
-@the_book_magic@ 시작하기
+@_the_book_magic_@ 시작하기
 #An Initiation to @the_book_magic@
 
 #First Steps in @the_book_magic@
-따라해 보아요 @the_book_magic@
+따라해 보아요 @_the_book_magic_@
 
-@the_book_magic@ 첫걸음
+@_the_book_magic_@ 첫걸음
 %%%%
 # level 2-4
 easy level book
 
-@the_book_magic@ 핵심
+@_the_book_magic_@ 핵심
 
-예제로 배우는 @the_book_magic@
+예제로 배우는 @_the_book_magic_@
 
-@the_book_magic@ 기초 가이드
+@_the_book_magic_@ 기초 가이드
 
-@book_magic@ 기초
+@_book_magic_@ 기초
 
-쉬운 @book_magic@
+쉬운 @_book_magic_@
 
-@the_book_magic@, @level@장
+@_the_book_magic@, @level_@장
 
-@the_book_magic@ 활용편
+@_the_book_magic_@ 활용편
 
 w:1
-@book_magic@, 어떻게 쓸 것인가
+@_book_magic_@, 어떻게 쓸 것인가
 %%%%
 # level 4-6
 moderate level book
 
-@the_book_magic@ 고급편
+@_the_book_magic_@ 고급편
 
-@the_book_magic@ 숙련자 가이드
+@_the_book_magic_@ 숙련자 가이드
 
-한발짝 나아간 @the_book_magic@
+한발짝 나아간 @_the_book_magic_@
 
-@the_book_magic@, @level@장
+@_the_book_magic@, @level_@장
 
-고급 @book_magic@
+고급 @_book_magic_@
 
-정교한 @book_magic@
+정교한 @_book_magic_@
 
-@book_magic@ 최신 기법
+@_book_magic_@ 최신 기법
 
-30년동안 배우는 @book_magic@
+30년동안 배우는 @_book_magic_@
 
 w:1
-@book_magic@ 실력향상
+@_book_magic_@ 실력향상
 
 %%%%
 # powerful casters, used for high level books
-powerful_caster
+_powerful_caster_
 
 아크메이지
 
@@ -359,9 +361,9 @@ w:3
 w:1
 대 미이라
 %%%%
-the_powerful_caster
+_the_powerful_caster_
 
-@powerful_caster@
+@_powerful_caster_@
 
 w:3
 보리스
@@ -369,7 +371,7 @@ w:3
 w:1
 시프 무나
 %%%%
-last_or_lost
+_last_or_lost_
 
 마지막
 
@@ -377,31 +379,31 @@ last_or_lost
 %%%%
 # level 7-9, books in the form of "XYZ's <bookname>"
 # Prefixed articles will be filtered out.
-difficult level book owner
+_difficult level book owner_
 
-@the_book_magic@ 전집
+@_the_book_magic_@ 전집
 
-@the_book_magic@의 @last_or_lost@ 비밀
+@_the_book_magic@의 @last_or_lost_@ 비밀
 
-@book_magic@의 신비로운 비밀
+@_book_magic_@의 신비로운 비밀
 
-@the_book_magic@의 복잡성 탐구
+@_the_book_magic_@의 복잡성 탐구
 
 최고의 위험성과 유용성에 관한 @book_noun@
 
 w:1
-@book_magic@ 마스터하기
+@_book_magic_@ 마스터하기
 %%%%
 # level 7-9, books without being named after their owner/author
 difficult level book
 
 w:50
-@difficult level book owner@
+@_difficult level book owner_@
 
-@the_powerful_caster@의 @last_or_lost@ @book_noun@
+@_the_powerful_caster@의 @last_or_lost@ @book_noun_@
 
 w:1
-@the_powerful_caster@의 증거
+@_the_powerful_caster_@의 증거
 %%%%
 # synonyms for predominant spell schools
 # variants starting with the definite article will get "the" prepended
@@ -523,7 +525,7 @@ Changing
 Moulding
 %%%%
 # for necromantic books
-Evil_adjective
+_Evil_adjective_
 
 Evil
 
@@ -536,7 +538,7 @@ Sinister
 Unholy
 %%%%
 # also for necromantic books
-Evil_noun
+_Evil_noun_
 
 Rites
 
@@ -559,7 +561,7 @@ Darkness
 Stolen Souls
 
 w:60
-@Evil_adjective@ @Evil_noun@
+@_Evil_adjective_@ @_Evil_noun_@
 %%%%
 Summoning
 

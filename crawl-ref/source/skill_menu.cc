@@ -9,6 +9,7 @@
 
 #include "cio.h"
 #include "command.h"
+#include "describe.h"
 #include "fontwrapper-ft.h"
 #include "hints.h"
 #include "menu.h"
@@ -17,6 +18,7 @@
 #include "religion.h"
 #include "skills.h"
 #include "skills2.h"
+#include "state.h"
 #include "stuff.h"
 #include "tilepick.h"
 #include "tilereg-crt.h"
@@ -801,7 +803,8 @@ bool SkillMenu::exit()
         }
 
         if (you.skills[i] < 27 && you.can_train[i]
-            && !is_useless_skill((skill_type) i))
+            && !is_useless_skill((skill_type) i)
+            && !is_harmful_skill((skill_type) i))
         {
             maxed_out = false;
         }
@@ -1424,14 +1427,20 @@ void skill_menu(int flag, int exp)
                     continue;
             // Fallthrough. In experience mode, you can exit with enter.
             case CK_ESCAPE:
+                // Escape cancels help if it is being displayed.
                 if (skm.is_set(SKMF_HELP))
                 {
                     skm.cancel_help();
                     continue;
                 }
             // Fallthrough
-            default:
+            case ' ':
+                // Space and escape exit in any mode.
                 if (skm.exit())
+                    return;
+            default:
+                // Don't exit from !experience on random keys.
+                if (!skm.is_set(SKMF_EXPERIENCE) && skm.exit())
                     return;
             }
         }

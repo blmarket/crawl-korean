@@ -29,7 +29,6 @@ bool item_ident(const item_def &item, iflags_t flags);
 void set_ident_flags(item_def &item, iflags_t flags);
 void unset_ident_flags(item_def &item, iflags_t flags);
 bool fully_identified(const item_def &item);
-iflags_t full_ident_mask(const item_def& item);
 
 // racial item and item descriptions:
 void set_equip_race(item_def &item, iflags_t flags);
@@ -52,7 +51,6 @@ void  set_gloves_random_desc(item_def &item);
 bool set_item_ego_type(item_def &item, int item_type, int ego_type);
 brand_type get_weapon_brand(const item_def &item);
 special_armour_type get_armour_ego_type(const item_def &item);
-bool missile_brand_obvious(special_missile_type brand);
 special_missile_type get_ammo_brand(const item_def &item);
 
 // armour functions:
@@ -122,7 +120,6 @@ void maybe_change_train(const item_def &item, bool start);
 // launcher and ammo functions:
 bool is_range_weapon(const item_def &item);
 missile_type fires_ammo_type(const item_def &item);
-missile_type fires_ammo_type(weapon_type wtype);
 const char *ammo_name(missile_type ammo);
 const char *ammo_name(const item_def &bow);
 bool has_launcher(const item_def &ammo);
@@ -131,11 +128,6 @@ launch_retval is_launched(const actor *actor, const item_def *launcher,
                           const item_def &missile);
 
 reach_type weapon_reach(const item_def &item);
-int reach_range(reach_type rt);
-
-// staff/rod functions:
-bool item_is_rod(const item_def &item);
-bool item_is_staff(const item_def &item);
 
 // Macguffins
 bool item_is_rune(const item_def &item, rune_type which_rune = NUM_RUNE_TYPES);
@@ -153,7 +145,7 @@ bool ring_has_stackable_effect(const item_def &item);
 
 // food functions:
 bool is_blood_potion(const item_def &item);
-bool is_fizzing_potion (const item_def &item);
+bool is_fizzing_potion(const item_def &item);
 int food_value(const item_def &item);
 int food_turns(const item_def &item);
 bool can_cut_meat(const item_def &item);
@@ -171,6 +163,14 @@ int get_armour_res_magic(const item_def &arm, bool check_artp);
 int get_armour_res_sticky_flame(const item_def &arm);
 bool get_armour_see_invisible(const item_def &arm, bool check_artp);
 
+int get_jewellery_res_fire(const item_def &ring, bool check_artp);
+int get_jewellery_res_cold(const item_def &ring, bool check_artp);
+int get_jewellery_res_poison(const item_def &ring, bool check_artp);
+int get_jewellery_res_elec(const item_def &ring, bool check_artp);
+int get_jewellery_life_protection(const item_def &ring, bool check_artp);
+int get_jewellery_res_magic(const item_def &ring, bool check_artp);
+bool get_jewellery_see_invisible(const item_def &ring, bool check_artp);
+
 int property(const item_def &item, int prop_type);
 bool gives_ability(const item_def &item);
 bool gives_resistance(const item_def &item);
@@ -179,10 +179,16 @@ equipment_type get_item_slot(object_class_type type, int sub_type);
 equipment_type get_item_slot(const item_def& item);
 
 std::string item_base_name(const item_def &item);
-std::string item_base_name (object_class_type type, int sub_type);
-std::string food_type_name (const item_def &item);
-std::string food_type_name (int sub_type);
+std::string item_base_name(object_class_type type, int sub_type);
+std::string food_type_name(int sub_type);
 const char* weapon_base_name(uint8_t subtype);
 
 void seen_item(const item_def &item);
+
+static inline bool is_weapon(const item_def &item)
+{
+    return item.base_type == OBJ_WEAPONS
+           || item.base_type == OBJ_STAVES
+           || item.base_type == OBJ_RODS;
+}
 #endif

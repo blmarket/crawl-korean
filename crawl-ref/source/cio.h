@@ -7,9 +7,6 @@
 #define CIO_H
 
 #include "enum.h"
-#include "externs.h"
-#include "defines.h"
-#include "directn.h"
 
 #include <cctype>
 #include <string>
@@ -36,7 +33,7 @@ private:
 };
 
 void cursorxy(int x, int y);
-inline void cursorxy(const coord_def& p) { cursorxy(p.x, p.y); }
+static inline void cursorxy(const coord_def& p) { cursorxy(p.x, p.y); }
 
 // Read one key, flag it as a mouse event if appropriate, but apply no
 // other conversions. Defined in lib$OS.cc, not in cio.cc.
@@ -103,7 +100,7 @@ struct c_mouse_event
     // Returns true for valid events.
     operator bool () const
     {
-        return (bstate);
+        return bstate;
     }
 
     bool left_clicked() const

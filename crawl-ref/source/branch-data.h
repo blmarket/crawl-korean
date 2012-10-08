@@ -21,7 +21,7 @@ const Branch branches[NUM_BRANCHES] = {
       "Dungeon", "the Dungeon", "D",
       NULL,
       true, LIGHTGREY, BROWN,
-      mons_standard_rare, mons_standard_level,
+      mons_dungeon_rare, mons_dungeon_level,
       'D', false, 0 },
 
     { BRANCH_ECUMENICAL_TEMPLE, BRANCH_MAIN_DUNGEON, 4, 7, 1, 5,
@@ -42,7 +42,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_mineorc_rare, mons_mineorc_level,
       'O', false, 4 },
 
-    { BRANCH_ELVEN_HALLS, BRANCH_ORCISH_MINES, 3, 4, 3, 11,
+    { BRANCH_ELVEN_HALLS, BRANCH_ORCISH_MINES, 3, 4, 3, 15,
       0, 0,
       DNGN_ENTER_ELVEN_HALLS, DNGN_RETURN_FROM_ELVEN_HALLS,
       "Elven Halls", "the Elven Halls", "Elf",
@@ -51,12 +51,12 @@ const Branch branches[NUM_BRANCHES] = {
       mons_hallelf_rare, mons_hallelf_level,
       'E', true, 0 },
 
-    { BRANCH_DWARVEN_HALL, BRANCH_ELVEN_HALLS, 2, 2, 1, 13,
+    { BRANCH_DWARVEN_HALL, BRANCH_ELVEN_HALLS, 2, 2, 1, 17,
       0, 0,
       DNGN_ENTER_DWARVEN_HALL, DNGN_RETURN_FROM_DWARVEN_HALL,
       "Dwarven Hall", "the Dwarven Hall", "Dwarf",
       NULL,
-      true, YELLOW, BROWN,
+      true, BROWN, BROWN,
       mons_dwarf_rare, mons_dwarf_level,
       'K', false, 0 },
 
@@ -69,8 +69,8 @@ const Branch branches[NUM_BRANCHES] = {
       mons_lair_rare, mons_lair_level,
       'L', false, 4 },
 
-    { BRANCH_SWAMP, BRANCH_LAIR, 2, 5, 5, 13,
-      BFLAG_ISLANDED, 0,
+    { BRANCH_SWAMP, BRANCH_LAIR, 3, 6, 5, 15,
+      0, 0,
       DNGN_ENTER_SWAMP, DNGN_RETURN_FROM_SWAMP,
       "Swamp", "the Swamp", "Swamp",
       NULL,
@@ -78,7 +78,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_swamp_rare, mons_swamp_level,
       'S', true, 0 },
 
-    { BRANCH_SHOALS, BRANCH_LAIR, 3, 6, 5, 14,
+    { BRANCH_SHOALS, BRANCH_LAIR, 3, 6, 5, 15,
       BFLAG_ISLANDED, 0,
       DNGN_ENTER_SHOALS, DNGN_RETURN_FROM_SHOALS,
       "Shoals", "the Shoals", "Shoals",
@@ -87,7 +87,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_shoals_rare, mons_shoals_level,
       'A', true, 3 },
 
-    { BRANCH_SNAKE_PIT, BRANCH_LAIR, 3, 6, 5, 14,
+    { BRANCH_SNAKE_PIT, BRANCH_LAIR, 3, 6, 5, 15,
       0, 0,
       DNGN_ENTER_SNAKE_PIT, DNGN_RETURN_FROM_SNAKE_PIT,
       "Snake Pit", "the Snake Pit", "Snake",
@@ -96,7 +96,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_pitsnake_rare, mons_pitsnake_level,
       'P', true, 0 },
 
-    { BRANCH_SPIDER_NEST, BRANCH_LAIR, 3, 6, 5, 14,
+    { BRANCH_SPIDER_NEST, BRANCH_LAIR, 3, 6, 5, 15,
       0, 0,
       DNGN_ENTER_SPIDER_NEST, DNGN_RETURN_FROM_SPIDER_NEST,
       "Spider Nest", "the Spider Nest", "Spider",
@@ -234,7 +234,7 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_ZIGGURAT, NUM_BRANCHES, -1, -1, 27, 27,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Ziggurat", "a Ziggurat", "Zig",
+      "Ziggurat", "a ziggurat", "Zig",
       "You land on top of a ziggurat so tall you cannot make out the ground.",
       false, BLACK, BLACK,
       mons_null_rare, mons_null_level, // overridden later
@@ -243,7 +243,7 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_LABYRINTH, NUM_BRANCHES, -1, -1, 1, 15,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, LFLAG_NO_TELE_CONTROL | LFLAG_NO_MAP,
       DNGN_ENTER_LABYRINTH, DNGN_ESCAPE_HATCH_UP,
-      "Labyrinth", "a Labyrinth", "Lab",
+      "Labyrinth", "a labyrinth", "Lab",
       NULL,
       false, BLACK, BLACK,
       mons_null_rare, mons_null_level,
@@ -270,7 +270,7 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_SEWER, NUM_BRANCHES, -1, -1, 1, 4,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Sewer", "the sewers", "Sewer",
+      "Sewer", "a sewer", "Sewer",
       NULL,
       false, LIGHTGREY, DARKGREY,
       mons_sewer_rare, mons_sewer_level,
@@ -279,7 +279,7 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_OSSUARY, NUM_BRANCHES, -1, -1, 1, 6,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Ossuary", "a tomb", "Ossuary",
+      "Ossuary", "an ossuary", "Ossuary",
       NULL,
       false, WHITE, YELLOW,
       mons_ossuary_rare, mons_ossuary_level,
@@ -288,7 +288,7 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_BAILEY, NUM_BRANCHES, -1, -1, 1, 11,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Bailey", "the bailey", "Bailey",
+      "Bailey", "a bailey", "Bailey",
       NULL,
       false, WHITE, LIGHTGREY,
       mons_bailey_rare, mons_bailey_level,
@@ -315,20 +315,22 @@ const Branch branches[NUM_BRANCHES] = {
     { BRANCH_WIZLAB, NUM_BRANCHES, -1, -1, 1, 24,
       BFLAG_NO_XLEV_TRAVEL | BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Wizlab", "a Wizard's Laboratory", "WizLab",
+      "Wizlab", "a wizard's laboratory", "WizLab",
       NULL,
       false, LIGHTGREY, BROWN, // set per-map
       mons_null_rare, mons_null_level,
       '8', false, 0 },
 
+#if TAG_MAJOR_VERSION == 33
     { BRANCH_HIVE, NUM_BRANCHES, -1, -1, 1, 13,
       BFLAG_NO_XLEV_TRAVEL, 0,
       DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Hive", "the Hive", "Hive",
+      "Hive", "a hive", "Hive",
       "You hear a buzzing sound coming from all directions.",
       false, YELLOW, BROWN,
-      mons_hive_rare, mons_hive_level,
+      mons_null_rare, mons_null_level,
       'H', true, 5 },
+#endif
 };
 
 #endif

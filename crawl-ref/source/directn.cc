@@ -28,7 +28,6 @@
 #include "debug.h"
 #include "describe.h"
 #include "dungeon.h"
-#include "map_knowledge.h"
 #include "fprop.h"
 #include "godabil.h"
 #include "invent.h"
@@ -45,7 +44,6 @@
 #include "mon-stuff.h"
 #include "mon-info.h"
 #include "output.h"
-#include "place.h"
 #include "player.h"
 #include "shopping.h"
 #include "show.h"
@@ -56,7 +54,6 @@
 #include "stash.h"
 #ifdef USE_TILE
  #include "tileview.h"
- #include "tilereg.h"
 #endif
 #include "terrain.h"
 #include "traps.h"
@@ -67,12 +64,6 @@
 #include "viewgeom.h"
 #include "wiz-mon.h"
 #include "spl-goditem.h"
-
-const std::string SHORT_DESC_KEY = "short_desc_key";
-
-typedef std::map<std::string, std::string> desc_map;
-
-static desc_map base_desc_to_short;
 
 enum LOSSelect
 {
@@ -100,7 +91,7 @@ enum LOSSelect
 #ifdef WIZARD
 static void _wizard_make_friendly(monster* m);
 #endif
-static void _describe_feature(const coord_def& where, bool oos);
+static void _describe_oos_feature(const coord_def& where);
 static void _describe_cell(const coord_def& where, bool in_range = true);
 static bool _print_cloud_desc(const coord_def where);
 static bool _print_item_desc(const coord_def where);
@@ -305,7 +296,7 @@ static command_type shift_direction(command_type cmd)
     case CMD_TARGET_DOWN_RIGHT: return CMD_TARGET_DIR_DOWN_RIGHT;
     case CMD_TARGET_UP_RIGHT:   return CMD_TARGET_DIR_UP_RIGHT;
     case CMD_TARGET_UP_LEFT:    return CMD_TARGET_DIR_UP_LEFT;
-    default: return (cmd);
+    default: return cmd;
     }
 }
 
@@ -459,7 +450,7 @@ static bool _mon_exposed_in_cloud(const monster* mon)
 static bool _mon_exposed(const monster* mon)
 {
     if (!mon || !you.see_cell(mon->pos()) || mon->visible_to(&you))
-        return (false);
+        return false;
 
     return (_mon_exposed_in_water(mon) || _mon_exposed_in_cloud(mon));
 }
@@ -649,7 +640,7 @@ void full_describe_view()
             glyph g = get_mons_glyph(*mi);
             const std::string col_string = colour_to_str(g.col);
             prefix = "(<" + col_string + ">"
-                     + stringize_glyph(g.ch)
+                     + (g.ch == '<' ? "<<" : stringize_glyph(g.ch))
                      + "</" + col_string + ">) ";
 #endif
 
@@ -693,7 +684,7 @@ void full_describe_view()
     {
         std::vector<InvEntry*> all_items;
         for (unsigned int i = 0; i < list_items.size(); ++i)
-            all_items.push_back(new InvEntry(list_items[i]));
+            all_items.push_back(new InvEntry(list_items[i], true));
 
         const menu_sort_condition *cond = desc_menu.find_menu_sort_condition();
         desc_menu.sort_menu(all_items, cond);
@@ -731,7 +722,7 @@ void full_describe_view()
 
             desc += "</" + colour_str +">) ";
 #endif
-            desc += feature_description(c);
+            desc += feature_description_at(c);
             if (is_unknown_stair(c))
                 desc += " (not visited)";
             FeatureMenuEntry *me = new FeatureMenuEntry(desc, c, hotkey);
@@ -920,7 +911,7 @@ char mlist_index_to_letter(int index)
     if (index >= 'l')
         index++;
 
-    return (index);
+    return index;
 }
 #endif
 
@@ -956,7 +947,7 @@ bool direction_chooser::move_is_ok() const
             else
                 mpr(gettext("Sorry, you can't target what you can't see."),
                     MSGCH_EXAMINE_FILTER);
-            return (false);
+            return false;
         }
 
         if (looking_at_you())
@@ -973,8 +964,8 @@ bool direction_chooser::move_is_ok() const
             {
                 if (cancel_at_self || Options.allow_self_target == CONFIRM_CANCEL)
                 {
-                    mpr(gettext("That would be overly suicidal."), MSGCH_EXAMINE_FILTER);
-                    return (false);
+                    mpr(_("That would be overly suicidal."), MSGCH_EXAMINE_FILTER);
+                    return false;
                 }
                 else if (Options.allow_self_target == CONFIRM_PROMPT)
                     return yesno(gettext("Really target yourself?"), false, 'n');
@@ -983,7 +974,7 @@ bool direction_chooser::move_is_ok() const
             if (cancel_at_self)
             {
                 mpr("Sorry, you can't target yourself.", MSGCH_EXAMINE_FILTER);
-                return (false);
+                return false;
             }
         }
     }
@@ -992,7 +983,7 @@ bool direction_chooser::move_is_ok() const
     if (!moves.isValid && !moves.isCancel)
         return yesno(gettext("Are you sure you want to fizzle?"), false, 'n');
 
-    return (true);
+    return true;
 }
 
 // Assuming the target is in view, is line-of-fire
@@ -1001,11 +992,11 @@ static bool _blocked_ray(const coord_def &where,
                          dungeon_feature_type* feat = NULL)
 {
     if (exists_ray(you.pos(), where, opc_solid_see))
-        return (false);
+        return false;
     if (feat == NULL)
-        return (true);
+        return true;
     *feat = ray_blocker(you.pos(), where);
-    return (true);
+    return true;
 }
 
 static std::string _targ_mode_name(targ_mode_type mode)
@@ -1013,20 +1004,20 @@ static std::string _targ_mode_name(targ_mode_type mode)
     switch (mode)
     {
     case TARG_ANY:
-        return ("any");
+        return "any";
     case TARG_ENEMY:
-        return ("enemies");
+        return "enemies";
     case TARG_FRIEND:
-        return ("friends");
+        return "friends";
     case TARG_INJURED_FRIEND:
-        return ("injured friends");
+        return "injured friends";
     case TARG_HOSTILE:
     case TARG_HOSTILE_SUBMERGED:
-        return ("hostiles");
+        return "hostiles";
     case TARG_EVOLVABLE_PLANTS:
-        return ("plants");
+        return "plants";
     default:
-        return ("buggy");
+        return "buggy";
     }
 }
 
@@ -1163,15 +1154,13 @@ void direction_chooser::draw_beam_if_needed()
     // Use the new API if implemented.
     if (hitfunc)
     {
-        if (!hitfunc->valid_aim(target()))
+        if (!hitfunc->set_aim(target()))
         {
 #ifdef USE_TILE
             viewwindow(true, true);
 #endif
             return;
         }
-
-        hitfunc->set_aim(target());
         for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
             if (aff_type aff = hitfunc->is_affected(*ri))
             {
@@ -1329,7 +1318,7 @@ bool direction_chooser::pickup_item()
     item_info *ii = 0;
     if (in_bounds(target()))
         ii = env.map_knowledge(target()).item();
-    if (!ii || !ii->is_valid())
+    if (!ii || !ii->is_valid(true))
     {
         mpr("You can't see any item there.", MSGCH_EXAMINE_FILTER);
         return false;
@@ -1347,6 +1336,9 @@ bool direction_chooser::pickup_item()
         if (!item->is_valid()
             || ii->base_type != item->base_type
             || ii->sub_type != item->sub_type
+               // TODO: check for different unidentified items of the same base type
+               && (!item_type_has_unidentified(item->base_type)
+                   || ii->sub_type == get_max_subtype(item->base_type))
             || ii->colour != item->colour)
         {
             item = 0;
@@ -1563,7 +1555,7 @@ void direction_chooser::print_floor_description(bool boring_too) const
     _debug_describe_feature_at(target());
 #else
     mprf(MSGCH_EXAMINE_FILTER, "%s",
-         feature_description(target(), true).c_str());
+         feature_description_at(target(), true).c_str());
 #endif
 }
 
@@ -2011,10 +2003,10 @@ bool direction_chooser::do_main_loop()
     if (loop_done)
     {
         if (just_looking)
-            return (true);
+            return true;
 
         if (move_is_ok())
-            return (true);
+            return true;
         else
             need_text_redraw = true;
     }
@@ -2117,7 +2109,7 @@ std::string get_terse_square_desc(const coord_def &gc)
     {
         if (env.map_knowledge(gc).seen())
         {
-            desc = "[" + feature_description(gc, false, DESC_PLAIN, false)
+            desc = "[" + feature_description_at(gc, false, DESC_PLAIN, false)
                        + "]";
         }
         else
@@ -2131,7 +2123,7 @@ std::string get_terse_square_desc(const coord_def &gc)
             desc = mitm[you.visible_igrd(gc)].name(false, DESC_PLAIN);
     }
     else
-        desc = feature_description(gc, false, DESC_PLAIN, false);
+        desc = feature_description_at(gc, false, DESC_PLAIN, false);
 
     return desc;
 }
@@ -2279,7 +2271,7 @@ static void _describe_oos_square(const coord_def& where)
     }
 
     describe_stash(where);
-    _describe_feature(where, true);
+    _describe_oos_feature(where);
 #ifdef DEBUG_DIAGNOSTICS
     _debug_describe_feature_at(where);
 #endif
@@ -2294,12 +2286,12 @@ static bool _mons_is_valid_target(const monster* mon, int mode, int range)
         && (mon->type != MONS_BALLISTOMYCETE || mon->number == 0)
         && mon->type != MONS_KRAKEN_TENTACLE)
     {
-        return (false);
+        return false;
     }
 
     // Don't target submerged monsters.
     if (mode != TARG_HOSTILE_SUBMERGED && mon->submerged())
-        return (false);
+        return false;
 
     // Don't usually target unseen monsters...
     if (!mon->visible_to(&you))
@@ -2311,7 +2303,7 @@ static bool _mons_is_valid_target(const monster* mon, int mode, int range)
                 && i_feel_safe(false, false, true, true, range));
     }
 
-    return (true);
+    return true;
 }
 
 #ifndef USE_TILE_LOCAL
@@ -2319,14 +2311,14 @@ static bool _find_mlist(const coord_def& where, int idx, bool need_path,
                         int range, targetter *hitfunc)
 {
     if (static_cast<int>(mlist.size()) <= idx)
-        return (false);
+        return false;
 
     if (!_is_target_in_range(where, range, hitfunc) || !you.see_cell(where))
-        return (false);
+        return false;
 
     const monster_info* mon = env.map_knowledge(where).monsterinfo();
     if (mon == NULL)
-        return (false);
+        return false;
 
     int real_idx = 0;
     for (unsigned int i = 0; i+1 < mlist.size(); ++i)
@@ -2347,15 +2339,15 @@ static bool _find_mlist(const coord_def& where, int idx, bool need_path,
     const monster* real_mon = monster_at(where);
     ASSERT(real_mon);
     if (!_mons_is_valid_target(real_mon, TARG_ANY, range))
-        return (false);
+        return false;
 
     if (need_path && _blocked_ray(where))
-        return (false);
+        return false;
 
     const monster_info* monl = &mlist[real_idx];
 
     if (mon->attitude != monl->attitude)
-        return (false);
+        return false;
 
     if (mon->type != monl->type)
         return (mons_is_mimic(mon->type) && mons_is_mimic(monl->type));
@@ -2373,7 +2365,7 @@ static bool _find_mlist(const coord_def& where, int idx, bool need_path,
         return (mon->mname == monl->mname);
 
     // Else the two monsters are identical.
-    return (true);
+    return true;
 }
 #endif
 
@@ -2382,18 +2374,18 @@ static bool _find_fprop_unoccupied(const coord_def & where, int mode,
 {
     // Don't target out of range.
     if (!_is_target_in_range(where, range, hitfunc))
-        return (false);
+        return false;
 
     monster* mon = monster_at(where);
     if (mon || !you.see_cell(where))
-        return (false);
+        return false;
 
     // Monster in LOS but only via glass walls, so no direct path.
     if (need_path && !you.see_cell_no_trans(where))
-        return (false);
+        return false;
 
     if (need_path && _blocked_ray(where))
-        return (false);
+        return false;
 
     return (env.pgrid(where) & mode);
 }
@@ -2408,60 +2400,60 @@ static bool _find_monster(const coord_def& where, int mode, bool need_path,
         maybe_bool x = clua.callmbooleanfn("ch_target_monster", "dd",
                                            dp.x, dp.y);
         if (x != B_MAYBE)
-            return (tobool(x));
+            return tobool(x);
     }
 #endif
 
     // Target the player for friendly and general spells.
     if ((mode == TARG_FRIEND || mode == TARG_ANY) && where == you.pos())
-        return (true);
+        return true;
 
     // Don't target out of range.
     if (!_is_target_in_range(where, range, hitfunc))
-        return (false);
+        return false;
 
     const monster* mon = monster_at(where);
 
     // No monster or outside LOS.
     if (mon == NULL || !cell_see_cell(you.pos(), where, LOS_DEFAULT))
-        return (false);
+        return false;
 
     // Monster in LOS but only via glass walls, so no direct path.
     if (need_path && !you.see_cell_no_trans(where))
-        return (false);
+        return false;
 
     if (!_mons_is_valid_target(mon, mode, range))
-        return (false);
+        return false;
 
     if (need_path && _blocked_ray(mon->pos()))
-        return (false);
+        return false;
 
     // Now compare target modes.
     if (mode == TARG_ANY)
-        return (true);
+        return true;
 
     if (mode == TARG_HOSTILE || mode == TARG_HOSTILE_SUBMERGED)
         return (mons_attitude(mon) == ATT_HOSTILE);
 
     if (mode == TARG_FRIEND)
-        return (mon->friendly());
+        return mon->friendly();
 
     if (mode == TARG_INJURED_FRIEND)
         return (mon->friendly() && mons_get_damage_level(mon) > MDAM_OKAY
                 || !mon->wont_attack() && !mon->neutral() && is_pacifiable(mon) >= 0);
 
     if (mode == TARG_EVOLVABLE_PLANTS)
-        return (mons_is_evolvable(mon));
+        return mons_is_evolvable(mon);
 
     if (mode == TARG_HOSTILE_UNDEAD)
-        return  !mon->friendly() && mon->holiness() == MH_UNDEAD;
+        return !mon->friendly() && mon->holiness() == MH_UNDEAD;
 
     ASSERT(mode == TARG_ENEMY);
     if (mon->friendly())
-        return (false);
+        return false;
 
     // Don't target zero xp monsters.
-    return (!mons_class_flag(mon->type, M_NO_EXP_GAIN));
+    return !mons_class_flag(mon->type, M_NO_EXP_GAIN);
 }
 
 static bool _find_feature(const coord_def& where, int mode,
@@ -2469,7 +2461,7 @@ static bool _find_feature(const coord_def& where, int mode,
 {
     // The stair need not be in LOS if the square is mapped.
     if (!you.see_cell(where) && !env.map_knowledge(where).seen())
-        return (false);
+        return false;
 
     return is_feature(mode, where);
 }
@@ -2479,10 +2471,10 @@ static bool _find_object(const coord_def& where, int mode,
 {
     // Don't target out of range.
     if (!_is_target_in_range(where, range, hitfunc))
-        return (false);
+        return false;
 
     if (need_path && (!you.see_cell(where) || _blocked_ray(where)))
-        return (false);
+        return false;
 
     return (env.map_knowledge(where).item()
             || (you.see_cell(where) && top_item_at(where)));
@@ -2504,7 +2496,7 @@ static int _next_los(int dir, int los, bool wrap)
     if (wrap)
     {
         if (!flipvh && !fliphv)
-            return (los);
+            return los;
 
         // We have to invert flipvh and fliphv if we're wrapping. Here's
         // why:
@@ -2521,17 +2513,17 @@ static int _next_los(int dir, int los, bool wrap)
     else
     {
         if (!flipvh && !fliphv)
-            return (LOS_NONE);
+            return LOS_NONE;
 
         if (flipvh && vis != (dir == 1))
-            return (LOS_NONE);
+            return LOS_NONE;
 
         if (fliphv && vis == (dir == 1))
-            return (LOS_NONE);
+            return LOS_NONE;
     }
 
     los = (los & ~LOS_VISMASK) | (vis? LOS_HIDDEN : LOS_VISIBLE);
-    return (los);
+    return los;
 }
 
 //---------------------------------------------------------------
@@ -2562,7 +2554,7 @@ static bool _find_square(coord_def &mfp, int direction,
     int i, j;
 
     if (los == LOS_NONE)
-        return (false);
+        return false;
 
     if (los == LOS_FLIPVH || los == LOS_FLIPHV)
     {
@@ -2612,7 +2604,7 @@ static bool _find_square(coord_def &mfp, int direction,
         {
             mfp = vyou;
             if (find_targ(you.pos(), mode, need_path, range, hitfunc))
-                return (true);
+                return true;
             return (_find_square(mfp, direction,
                                  find_targ, need_path, mode, range, hitfunc,
                                  false, _next_los(direction, los, wrap)));
@@ -2745,14 +2737,14 @@ static bool _find_square(coord_def &mfp, int direction,
         if (find_targ(targ, mode, need_path, range, hitfunc))
         {
             mfp.set(temp_xps, temp_yps);
-            return (true);
+            return true;
         }
     }
 
     mfp = (direction > 0 ? coord_def(ctrx, ctry) : coord_def(minx, maxy));
-    return (_find_square(mfp, direction, find_targ, need_path,
-                         mode, range, hitfunc, false,
-                         _next_los(direction, los, wrap)));
+    return _find_square(mfp, direction, find_targ, need_path,
+                        mode, range, hitfunc, false,
+                        _next_los(direction, los, wrap));
 }
 
 // XXX Unbelievably hacky. And to think that my goal was to clean up the code.
@@ -2772,29 +2764,21 @@ static bool _find_square_wrapper(coord_def& mfp, int direction,
     return r;
 }
 
-static void _describe_feature(const coord_def& where, bool oos)
+static void _describe_oos_feature(const coord_def& where)
 {
-    if (oos && !env.map_knowledge(where).seen())
+    if (!env.map_knowledge(where).seen())
         return;
 
-    dungeon_feature_type grid = grd(where);
-    if (grid == DNGN_SECRET_DOOR)
-        grid = grid_secret_door_appearance(where);
-
     std::string desc;
-    desc = feature_description(grid);
+
+    dungeon_feature_type feat = env.map_knowledge(where).feat();
+    if (feat == DNGN_SECRET_DOOR)
+        desc = feature_description(grid_secret_door_appearance(where));
+    else
+        desc = feature_description_at(where);
 
     if (!desc.empty())
-    {
-        if (oos)
-            desc = "[" + desc + "]";
-
-        msg_channel_type channel = MSGCH_EXAMINE;
-        if (oos || grid == DNGN_FLOOR)
-            channel = MSGCH_EXAMINE_FILTER;
-
-        mpr(desc.c_str(), channel);
-    }
+        mprf(MSGCH_EXAMINE_FILTER, "[%s]", desc.c_str());
 }
 
 // Returns a vector of features matching the given pattern.
@@ -2815,7 +2799,7 @@ std::vector<dungeon_feature_type> features_by_desc(const base_pattern &pattern)
                 features.push_back(dungeon_feature_type(i));
         }
     }
-    return (features);
+    return features;
 }
 
 void describe_floor()
@@ -2823,6 +2807,7 @@ void describe_floor()
     dungeon_feature_type grid = env.map_knowledge(you.pos()).feat();
 
     const char *msg = N_("There is %s here.");
+    std::string feat;
     switch (grid)
     {
     case DNGN_FLOOR:
@@ -2836,7 +2821,7 @@ void describe_floor()
         break;
     }
 
-    std::string feat = feature_description(you.pos(), true,
+    feat = feature_description_at(you.pos(), true,
                                DESC_A, false);
     if (feat.empty())
         return;
@@ -2883,7 +2868,7 @@ std::string thing_do_grammar(description_level_type dtype,
         {
             desc[0] = tolower(desc[0]);
         }*/
-        return (desc);
+        return desc;
     }
 
     switch (dtype)
@@ -2893,22 +2878,10 @@ std::string thing_do_grammar(description_level_type dtype,
     case DESC_A:
         return article_a(desc, true);
     case DESC_NONE:
-        return ("");
+        return "";
     default:
-        return (desc);
+        return desc;
     }
-}
-
-std::string feature_description(dungeon_feature_type grid,
-                                trap_type trap,
-                                const std::string & cover_desc,
-                                description_level_type dtype,
-                                bool add_stop, bool base_desc)
-{
-    std::string desc = raw_feature_description(grid, trap, base_desc);
-    desc = make_stringf(pgettext("feature_description", "%s%s"), desc.c_str(), cover_desc.c_str());
-
-    return thing_do_grammar(dtype, add_stop, feat_is_trap(grid), desc);
 }
 
 static std::string _base_feature_desc(dungeon_feature_type grid,
@@ -2919,340 +2892,307 @@ static std::string _base_feature_desc(dungeon_feature_type grid,
         switch (trap)
         {
         case TRAP_DART:
-            return (gettext(M_("dart trap")));
+            return _(M_("dart trap"));
         case TRAP_ARROW:
-            return (gettext(M_("arrow trap")));
+            return _(M_("arrow trap"));
         case TRAP_NEEDLE:
-            return (gettext(M_("needle trap")));
+            return _(M_("needle trap"));
         case TRAP_BOLT:
-            return (gettext(M_("bolt trap")));
+            return _(M_("bolt trap"));
         case TRAP_SPEAR:
-            return (gettext(M_("spear trap")));
-        case TRAP_AXE:
-            return (gettext(M_("axe trap")));
+            return _(M_("spear trap"));
         case TRAP_BLADE:
-            return (gettext(M_("blade trap")));
+            return _(M_("blade trap"));
         case TRAP_NET:
-            return (gettext(M_("net trap")));
+            return _(M_("net trap"));
         case TRAP_GAS:
-            return (gettext(M_("gas trap")));
+            return _(M_("gas trap"));
         case TRAP_ALARM:
-            return (gettext(M_("alarm trap")));
+            return _(M_("alarm trap"));
         case TRAP_SHAFT:
-            return (gettext(M_("shaft")));
+            return _(M_("shaft"));
         case TRAP_TELEPORT:
-            return (gettext(M_("teleportation trap")));
+            return _(M_("teleportation trap"));
         case TRAP_ZOT:
-            return (gettext(M_("Zot trap")));
+            return _(M_("Zot trap"));
         case TRAP_GOLUBRIA:
-            return (gettext(M_("passage of Golubria")));
+            return _(M_("passage of Golubria"));
         case TRAP_PLATE:
-            return (gettext(M_("pressure plate")));
+            return _(M_("pressure plate"));
         case TRAP_WEB:
-            return (gettext(M_("web")));
+            return _(M_("web"));
         default:
-            error_message_to_player();
-            return (gettext(M_("undefined trap")));
+            die("Error: invalid trap type %d", trap);
+            return "undefined trap";
         }
     }
 
     switch (grid)
     {
     case DNGN_STONE_WALL:
-        return (gettext(M_("stone wall")));
+        return _(M_("stone wall"));
     case DNGN_ROCK_WALL:
     case DNGN_SECRET_DOOR:
         if (player_in_branch(BRANCH_PANDEMONIUM))
-            return (gettext(M_("wall of the weird stuff which makes up Pandemonium")));
+            return _(M_("wall of the weird stuff which makes up Pandemonium"));
         else
-            return (gettext(M_("rock wall")));
+            return _(M_("rock wall"));
     case DNGN_SLIMY_WALL:
-        return (gettext(M_("slime covered rock wall")));
+        return _(M_("slime covered rock wall"));
     case DNGN_PERMAROCK_WALL:
-        return (gettext(M_("unnaturally hard rock wall")));
+        return _(M_("unnaturally hard rock wall"));
     case DNGN_OPEN_SEA:
-        return (gettext(M_("the open sea")));
+        return _(M_("the open sea"));
     case DNGN_LAVA_SEA:
-        return (gettext(M_("the endless lava")));
+        return _(M_("the endless lava"));
     case DNGN_CLOSED_DOOR:
-        return (gettext(M_("closed door")));
+        return _(M_("closed door"));
     case DNGN_DETECTED_SECRET_DOOR:
-        return (gettext(M_("detected secret door")));
+        return _(M_("detected secret door"));
     case DNGN_METAL_WALL:
-        return (gettext(M_("metal wall")));
+        return _(M_("metal wall"));
     case DNGN_GREEN_CRYSTAL_WALL:
-        return (gettext(M_("wall of green crystal")));
+        return _(M_("wall of green crystal"));
     case DNGN_CLEAR_ROCK_WALL:
-        return (gettext(M_("translucent rock wall")));
+        return _(M_("translucent rock wall"));
     case DNGN_CLEAR_STONE_WALL:
-        return (gettext(M_("translucent stone wall")));
+        return _(M_("translucent stone wall"));
     case DNGN_CLEAR_PERMAROCK_WALL:
-        return (gettext(M_("translucent unnaturally hard rock wall")));
+        return _(M_("translucent unnaturally hard rock wall"));
     case DNGN_GRATE:
-        return (gettext(M_("iron grate")));
+        return _(M_("iron grate"));
     case DNGN_TREE:
-    case DNGN_SWAMP_TREE: // perhaps M_("mangrove") or such?
-        return (gettext(M_("tree")));
+        return _(M_("tree"));
+    case DNGN_MANGROVE:
+        return _(M_("mangrove"));
     case DNGN_ORCISH_IDOL:
         if (you.species == SP_HILL_ORC)
-           return (gettext(M_("idol of Beogh")));
+           return _(M_("idol of Beogh"));
         else
-           return (gettext(M_("orcish idol")));
-    case DNGN_WAX_WALL:
-        return (gettext(M_("wall of solid wax")));
+           return _(M_("orcish idol"));
     case DNGN_GRANITE_STATUE:
-        return (gettext(M_("granite statue")));
+        return _(M_("granite statue"));
     case DNGN_LAVA:
-        return (gettext(M_("some lava")));
+        return _(M_("some lava"));
     case DNGN_DEEP_WATER:
-        return (gettext(M_("some deep water")));
+        return _(M_("some deep water"));
     case DNGN_SHALLOW_WATER:
-        return (gettext(M_("some shallow water")));
+        return _(M_("some shallow water"));
     case DNGN_UNDISCOVERED_TRAP:
     case DNGN_FLOOR:
-        return (gettext(M_("floor")));
+        return _(M_("floor"));
     case DNGN_OPEN_DOOR:
-        return (gettext(M_("open door")));
+        return _(M_("open door"));
     case DNGN_ESCAPE_HATCH_DOWN:
-        return (gettext(M_("escape hatch in the floor")));
+        return _(M_("escape hatch in the floor"));
     case DNGN_ESCAPE_HATCH_UP:
-        return (gettext(M_("escape hatch in the ceiling")));
+        return _(M_("escape hatch in the ceiling"));
     case DNGN_STONE_STAIRS_DOWN_I:
     case DNGN_STONE_STAIRS_DOWN_II:
     case DNGN_STONE_STAIRS_DOWN_III:
-        return (gettext(M_("stone staircase leading down")));
+        return _(M_("stone staircase leading down"));
     case DNGN_STONE_STAIRS_UP_I:
     case DNGN_STONE_STAIRS_UP_II:
     case DNGN_STONE_STAIRS_UP_III:
-        return (gettext(M_("stone staircase leading up")));
+        return _(M_("stone staircase leading up"));
     case DNGN_EXIT_DUNGEON:
-        return (gettext(M_("staircase leading out of the dungeon")));
+        return _(M_("staircase leading out of the dungeon"));
     case DNGN_ENTER_HELL:
-        return (gettext(M_("gateway to Hell")));
+        return _(M_("gateway to Hell"));
     case DNGN_EXIT_HELL:
-        return (gettext(M_("gateway back into the Dungeon")));
+        return _(M_("gateway back into the Dungeon"));
     case DNGN_TELEPORTER:
-        return (gettext(M_("teleporter")));
+        return _(M_("teleporter"));
     case DNGN_TRAP_MECHANICAL:
-        return (gettext(M_("mechanical trap")));
+        return _(M_("mechanical trap"));
     case DNGN_TRAP_MAGICAL:
-        return (gettext(M_("magical trap")));
+        return _(M_("magical trap"));
     case DNGN_TRAP_NATURAL:
-        return (gettext(M_("natural trap")));
+        return _(M_("natural trap"));
     case DNGN_TRAP_WEB:
-        return (gettext(M_("web")));
+        return _(M_("web"));
     case DNGN_ENTER_SHOP:
-        return (gettext(M_("shop")));
+        return _(M_("shop"));
     case DNGN_ABANDONED_SHOP:
-        return (gettext(M_("abandoned shop")));
+        return _(M_("abandoned shop"));
     case DNGN_ENTER_LABYRINTH:
-        return (gettext(M_("labyrinth entrance")));
+        return _(M_("labyrinth entrance"));
     case DNGN_ENTER_DIS:
-        return (gettext(M_("gateway to the Iron City of Dis")));
+        return _(M_("gateway to the Iron City of Dis"));
     case DNGN_ENTER_GEHENNA:
-        return (gettext(M_("gateway to the ashen valley of Gehenna")));
+        return _(M_("gateway to the ashen valley of Gehenna"));
     case DNGN_ENTER_COCYTUS:
-        return (gettext(M_("gateway to the freezing wastes of Cocytus")));
+        return _(M_("gateway to the freezing wastes of Cocytus"));
     case DNGN_ENTER_TARTARUS:
-        return (gettext(M_("gateway to the decaying netherworld of Tartarus")));
+        return _(M_("gateway to the decaying netherworld of Tartarus"));
     case DNGN_ENTER_ABYSS:
-        return (gettext(M_("one-way gate to the infinite horrors of the Abyss")));
+        return _(M_("one-way gate to the infinite horrors of the Abyss"));
     case DNGN_EXIT_ABYSS:
-        return (gettext(M_("gateway leading out of the Abyss")));
+        return _(M_("gateway leading out of the Abyss"));
     case DNGN_EXIT_THROUGH_ABYSS:
-        return (gettext(M_("exit through the horrors of the Abyss")));
+        return _(M_("exit through the horrors of the Abyss"));
     case DNGN_STONE_ARCH:
-        return (gettext(M_("empty arch of ancient stone")));
+        return _(M_("empty arch of ancient stone"));
     case DNGN_ENTER_PANDEMONIUM:
-        return (gettext(M_("one-way gate leading to the halls of Pandemonium")));
+        return _(M_("one-way gate leading to the halls of Pandemonium"));
     case DNGN_EXIT_PANDEMONIUM:
-        return (gettext(M_("gate leading out of Pandemonium")));
+        return _(M_("gate leading out of Pandemonium"));
     case DNGN_TRANSIT_PANDEMONIUM:
-        return (gettext(M_("gate leading to another region of Pandemonium")));
+        return _(M_("gate leading to another region of Pandemonium"));
     case DNGN_ENTER_DWARVEN_HALL:
-        return (gettext(M_("staircase to the Dwarven Hall")));
+        return _(M_("staircase to the Dwarven Hall"));
     case DNGN_ENTER_ORCISH_MINES:
-        return (gettext(M_("staircase to the Orcish Mines")));
+        return _(M_("staircase to the Orcish Mines"));
     case DNGN_ENTER_LAIR:
-        return (gettext(M_("staircase to the Lair")));
+        return _(M_("staircase to the Lair"));
     case DNGN_ENTER_SLIME_PITS:
-        return (gettext(M_("staircase to the Slime Pits")));
+        return _(M_("staircase to the Slime Pits"));
     case DNGN_ENTER_VAULTS:
-        return (gettext(M_("staircase to the Vaults")));
+        return _(M_("staircase to the Vaults"));
     case DNGN_ENTER_CRYPT:
-        return (gettext(M_("staircase to the Crypt")));
+        return _(M_("staircase to the Crypt"));
     case DNGN_ENTER_HALL_OF_BLADES:
-        return (gettext(M_("staircase to the Hall of Blades")));
+        return _(M_("staircase to the Hall of Blades"));
     case DNGN_ENTER_ZOT:
-        return (gettext(M_("gate to the Realm of Zot")));
+        return _(M_("gate to the Realm of Zot"));
     case DNGN_ENTER_TEMPLE:
-        return (gettext(M_("staircase to the Ecumenical Temple")));
+        return _(M_("staircase to the Ecumenical Temple"));
     case DNGN_ENTER_SNAKE_PIT:
-        return (gettext(M_("staircase to the Snake Pit")));
+        return _(M_("staircase to the Snake Pit"));
     case DNGN_ENTER_ELVEN_HALLS:
-        return (gettext(M_("staircase to the Elven Halls")));
+        return _(M_("staircase to the Elven Halls"));
     case DNGN_ENTER_TOMB:
-        return (gettext(M_("staircase to the Tomb")));
+        return _(M_("staircase to the Tomb"));
     case DNGN_ENTER_SWAMP:
-        return (gettext(M_("staircase to the Swamp")));
+        return _(M_("staircase to the Swamp"));
     case DNGN_ENTER_SHOALS:
-        return (gettext(M_("staircase to the Shoals")));
+        return _(M_("staircase to the Shoals"));
     case DNGN_ENTER_SPIDER_NEST:
-        return (gettext(M_("hole to the Spider Nest")));
+        return _(M_("hole to the Spider Nest"));
     case DNGN_ENTER_FOREST:
-        return (gettext(M_("staircase to the Enchanted Forest")));
+        return _(M_("staircase to the Enchanted Forest"));
     case DNGN_ENTER_PORTAL_VAULT:
         // The bazaar description should be set in the bazaar marker; this
         // is the description for a portal of unknown type.
-        return (gettext(M_("gate leading to a distant place")));
+        return _(M_("gate leading to a distant place"));
     case DNGN_EXIT_PORTAL_VAULT:
-        return (gettext(M_("gate leading back out of here")));
+        return _(M_("gate leading back out of here"));
     case DNGN_MALIGN_GATEWAY:
-        return (gettext(M_("portal to somewhere")));
+        return _(M_("portal to somewhere"));
     case DNGN_EXPIRED_PORTAL:
         // should be set whenever used
-        return (gettext(M_("collapsed entrance")));
+        return _(M_("collapsed entrance"));
     case DNGN_RETURN_FROM_DWARVEN_HALL:
     case DNGN_RETURN_FROM_ORCISH_MINES:
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_VAULTS:
     case DNGN_RETURN_FROM_TEMPLE:
     case DNGN_RETURN_FROM_FOREST:
-        return (gettext(M_("staircase back to the Dungeon")));
+        return _(M_("staircase back to the Dungeon"));
     case DNGN_RETURN_FROM_SLIME_PITS:
     case DNGN_RETURN_FROM_SNAKE_PIT:
     case DNGN_RETURN_FROM_SWAMP:
     case DNGN_RETURN_FROM_SHOALS:
-        return (gettext(M_("staircase back to the Lair")));
+        return _(M_("staircase back to the Lair"));
     case DNGN_RETURN_FROM_SPIDER_NEST:
-        return (gettext(M_("crawl-hole back to the Lair")));
+        return _(M_("crawl-hole back to the Lair"));
     case DNGN_RETURN_FROM_CRYPT:
     case DNGN_RETURN_FROM_HALL_OF_BLADES:
-        return (gettext(M_("staircase back to the Vaults")));
+        return _(M_("staircase back to the Vaults"));
     case DNGN_RETURN_FROM_ELVEN_HALLS:
-        return (gettext(M_("staircase back to the Mines")));
+        return _(M_("staircase back to the Mines"));
     case DNGN_RETURN_FROM_TOMB:
-        return (gettext(M_("staircase back to the Crypt")));
+        return _(M_("staircase back to the Crypt"));
     case DNGN_RETURN_FROM_ZOT:
-        return (gettext(M_("gate leading back out of this place")));
+        return _(M_("gate leading back out of this place"));
 
     // altars
     case DNGN_ALTAR_ZIN:
-        return (gettext(M_("glowing silver altar of Zin")));
+        return _(M_("glowing silver altar of Zin"));
     case DNGN_ALTAR_SHINING_ONE:
-        return (gettext(M_("glowing golden altar of the Shining One")));
+        return _(M_("glowing golden altar of the Shining One"));
     case DNGN_ALTAR_KIKUBAAQUDGHA:
-        return (gettext(M_("ancient bone altar of Kikubaaqudgha")));
+        return _(M_("ancient bone altar of Kikubaaqudgha"));
     case DNGN_ALTAR_YREDELEMNUL:
-        return (gettext(M_("basalt altar of Yredelemnul")));
+        return _(M_("basalt altar of Yredelemnul"));
     case DNGN_ALTAR_XOM:
-        return (gettext(M_("shimmering altar of Xom")));
+        return _(M_("shimmering altar of Xom"));
     case DNGN_ALTAR_VEHUMET:
-        return (gettext(M_("radiant altar of Vehumet")));
+        return _(M_("radiant altar of Vehumet"));
     case DNGN_ALTAR_OKAWARU:
-        return (gettext(M_("iron altar of Okawaru")));
+        return _(M_("iron altar of Okawaru"));
     case DNGN_ALTAR_MAKHLEB:
-        return (gettext(M_("burning altar of Makhleb")));
+        return _(M_("burning altar of Makhleb"));
     case DNGN_ALTAR_SIF_MUNA:
-        return (gettext(M_("deep blue altar of Sif Muna")));
+        return _(M_("deep blue altar of Sif Muna"));
     case DNGN_ALTAR_TROG:
-        return (gettext(M_("bloodstained altar of Trog")));
+        return _(M_("bloodstained altar of Trog"));
     case DNGN_ALTAR_NEMELEX_XOBEH:
-        return (gettext(M_("sparkling altar of Nemelex Xobeh")));
+        return _(M_("sparkling altar of Nemelex Xobeh"));
     case DNGN_ALTAR_ELYVILON:
-        return (gettext(M_("white marble altar of Elyvilon")));
+        return _(M_("white marble altar of Elyvilon"));
     case DNGN_ALTAR_LUGONU:
-        return (gettext(M_("corrupted altar of Lugonu")));
+        return _(M_("corrupted altar of Lugonu"));
     case DNGN_ALTAR_BEOGH:
-        return (gettext(M_("roughly hewn altar of Beogh")));
+        return _(M_("roughly hewn altar of Beogh"));
     case DNGN_ALTAR_JIYVA:
-        return (gettext(M_("viscous altar of Jiyva")));
+        return _(M_("viscous altar of Jiyva"));
     case DNGN_ALTAR_FEDHAS:
-        return (gettext(M_("blossoming altar of Fedhas")));
+        return _(M_("blossoming altar of Fedhas"));
     case DNGN_ALTAR_CHEIBRIADOS:
-        return (gettext(M_("snail-covered altar of Cheibriados")));
+        return _(M_("snail-covered altar of Cheibriados"));
     case DNGN_ALTAR_ASHENZARI:
-        return (gettext(M_("shattered altar of Ashenzari")));
+        return _(M_("shattered altar of Ashenzari"));
 
     case DNGN_FOUNTAIN_BLUE:
-        return (gettext(M_("fountain of clear blue water")));
+        return _(M_("fountain of clear blue water"));
     case DNGN_FOUNTAIN_SPARKLING:
-        return (gettext(M_("fountain of sparkling water")));
+        return _(M_("fountain of sparkling water"));
     case DNGN_FOUNTAIN_BLOOD:
-        return (gettext(M_("fountain of blood")));
+        return _(M_("fountain of blood"));
     case DNGN_DRY_FOUNTAIN_BLUE:
     case DNGN_DRY_FOUNTAIN_SPARKLING:
     case DNGN_DRY_FOUNTAIN_BLOOD:
     case DNGN_PERMADRY_FOUNTAIN:
-        return (gettext(M_("dry fountain")));
+        return _(M_("dry fountain"));
     case DNGN_EXPLORE_HORIZON:
-        return (gettext(M_("explore horizon")));
+        return _(M_("explore horizon"));
+    case DNGN_UNKNOWN_ALTAR:
+        return _(M_("detected altar"));
+    case DNGN_UNKNOWN_PORTAL:
+        return _(M_("detected shop or portal"));
     default:
-        return ("");
+        return "";
     }
 }
 
-std::string raw_feature_description(dungeon_feature_type grid,
-                                    trap_type trap, bool base_desc)
+std::string feature_description(dungeon_feature_type grid,
+                                trap_type trap,
+                                const std::string & cover_desc,
+                                description_level_type dtype,
+                                bool add_stop, bool base_desc)
 {
-    std::string base_str = _base_feature_desc(grid, trap);
+    std::string desc = _base_feature_desc(grid, trap);
+    desc += cover_desc;
 
-    if (base_desc)
-        return (base_str);
-
-    desc_map::iterator i = base_desc_to_short.find(base_str);
-
-    if (i != base_desc_to_short.end())
-        return (i->second);
-
-    return (base_str);
+    return thing_do_grammar(dtype, add_stop, feat_is_trap(grid), desc);
 }
 
-void set_feature_desc_short(dungeon_feature_type grid,
-                            const std::string &desc)
+std::string raw_feature_description(const coord_def &where)
 {
-    set_feature_desc_short(_base_feature_desc(grid, NUM_TRAPS), desc);
-}
+    dungeon_feature_type feat = grd(where);
 
-void set_feature_desc_short(const std::string &base_name,
-                            const std::string &_desc)
-{
-    ASSERT(!base_name.empty());
-
-    CrawlHashTable &props = env.properties;
-
-    if (!props.exists(SHORT_DESC_KEY))
-        props[SHORT_DESC_KEY].new_table();
-
-    CrawlHashTable &desc_table = props[SHORT_DESC_KEY].get_table();
-
-    if (_desc.empty())
+    int mapi = env.level_map_ids(where);
+    if (mapi != INVALID_MAP_INDEX)
     {
-        base_desc_to_short.erase(base_name);
-        desc_table.erase(base_name);
+        const vault_placement *v = env.level_vaults[mapi];
+        std::map<dungeon_feature_type, std::string>::const_iterator it =
+            v->map.feat_renames.find(feat);
+        if (it != v->map.feat_renames.end())
+            return it->second;
     }
-    else
-    {
-        std::string desc = replace_all(_desc, "$BASE", base_name);
-        base_desc_to_short[base_name] = desc;
-        desc_table[base_name]         = desc;
-    }
-}
 
-void setup_feature_descs_short()
-{
-    base_desc_to_short.clear();
-
-    const CrawlHashTable &props = env.properties;
-
-    if (!props.exists(SHORT_DESC_KEY))
-        return;
-
-    const CrawlHashTable &desc_table = props[SHORT_DESC_KEY].get_table();
-
-    CrawlHashTable::const_iterator i;
-    for (i = desc_table.begin(); i != desc_table.end(); ++i)
-        base_desc_to_short[i->first] = i->second.get_string();
+    return _base_feature_desc(feat, get_trap_type(where));
 }
 
 #ifndef DEBUG_DIAGNOSTICS
@@ -3265,7 +3205,7 @@ static bool _interesting_feature(dungeon_feature_type feat)
 }
 #endif
 
-std::string feature_description(const coord_def& where, bool covering,
+std::string feature_description_at(const coord_def& where, bool covering,
                                 description_level_type dtype, bool add_stop,
                                 bool base_desc)
 {
@@ -3327,9 +3267,12 @@ std::string feature_description(const coord_def& where, bool covering,
 
         if (door_desc_veto.empty() || door_desc_veto != "veto")
         {
-            desc += (grid == DNGN_OPEN_DOOR) ? "open " : "closed ";
             if (grid == DNGN_DETECTED_SECRET_DOOR)
                 desc += "detected secret ";
+            else if (grid == DNGN_OPEN_DOOR)
+                desc += "open ";
+            else
+                desc += "closed ";
         }
 
         desc += door_desc_prefix;
@@ -3352,9 +3295,9 @@ std::string feature_description(const coord_def& where, bool covering,
     case DNGN_TRAP_MAGICAL:
     case DNGN_TRAP_NATURAL:
     case DNGN_TRAP_WEB:
-        return (feature_description(grid, get_trap_type(where),
-                                    covering_description, dtype,
-                                    add_stop, base_desc));
+        return feature_description(grid, get_trap_type(where),
+                                   covering_description, dtype,
+                                   add_stop, base_desc);
     case DNGN_ABANDONED_SHOP:
         return thing_do_grammar(dtype, add_stop, false, "an abandoned shop");
 
@@ -3363,12 +3306,12 @@ std::string feature_description(const coord_def& where, bool covering,
 
     case DNGN_ENTER_PORTAL_VAULT:
         // Should have been handled at the top of the function.
-        return (thing_do_grammar(
-                    dtype, add_stop, false,
-                    "UNAMED PORTAL VAULT ENTRY"));
+        return thing_do_grammar(
+                   dtype, add_stop, false,
+                   "UNAMED PORTAL VAULT ENTRY");
     default:
-        return (feature_description(grid, NUM_TRAPS, covering_description,
-                                    dtype, add_stop, base_desc));
+        return thing_do_grammar(dtype, add_stop, feat_is_trap(grid),
+                   raw_feature_description(where) + covering_description);
     }
 }
 
@@ -3403,7 +3346,7 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
     }
 
     if (name1.empty())
-        return (desc);
+        return desc;
 
     desc += make_stringf(gettext(" wielding %s"),
                          name1.c_str());
@@ -3414,7 +3357,7 @@ static std::string _describe_monster_weapon(const monster_info& mi, bool ident)
         desc += name2;
     }
 
-    return (desc);
+    return desc;
 }
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -3426,9 +3369,9 @@ static std::string _stair_destination_description(const coord_def &pos)
         if (si)
             return (" " + si->describe());
         else if (feat_is_stair(grd(pos)))
-            return (" (unknown stair)");
+            return " (unknown stair)";
     }
-    return ("");
+    return "";
 }
 #endif
 
@@ -3510,7 +3453,7 @@ static std::vector<std::string> _get_monster_desc_vector(const monster_info& mi)
 
     if (mi.fire_blocker)
     {
-        descs.push_back("fire blocked by "
+        descs.push_back("fire blocked by " // FIXME, renamed features
                         + feature_description(mi.fire_blocker, NUM_TRAPS, "",
                                               DESC_A, false));
     }
@@ -3590,7 +3533,7 @@ static std::string _get_monster_desc(const monster_info& mi)
     if (mi.fire_blocker)
     {
         text += std::string("Your line of fire to ") + mi.pronoun(PRONOUN_OBJECTIVE)
-              + " is blocked by "
+              + " is blocked by " // FIXME: renamed features
               + feature_description(mi.fire_blocker, NUM_TRAPS, "",
                                     DESC_A)
               + "\n";
@@ -3709,6 +3652,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         item_def* mon_qvr = mi.inv[MSLOT_MISSILE].get();
         item_def* mon_alt = mi.inv[MSLOT_ALT_WEAPON].get();
         item_def* mon_wnd = mi.inv[MSLOT_WAND].get();
+        item_def* mon_rng = mi.inv[MSLOT_JEWELLERY].get();
 
 #define no_warn(x) (!item_type_known(*x) || !item_is_branded(*x))
         // For Ashenzari warnings, we only care about ided and branded stuff.
@@ -3720,6 +3664,8 @@ std::string get_monster_equipment_desc(const monster_info& mi,
                 mon_shd = 0;
             if (mon_qvr && no_warn(mon_qvr))
                 mon_qvr = 0;
+            if (mon_rng && no_warn(mon_rng))
+                mon_rng = 0;
             if (mon_alt && (!item_type_known(*mon_alt)
                             || mon_alt->base_type == OBJ_WANDS
                                && !is_offensive_wand(*mon_alt)))
@@ -3740,7 +3686,10 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         if (mon_arm)
         {
             if (found_sth)
-                desc += (!mon_shd && !mon_qvr && !mon_carry) ? gettext(" and") : ",";
+            {
+                desc += (!mon_shd && !mon_rng && !mon_qvr && !mon_carry)
+                        ? _(" and") : ",";
+            }
             else
                 found_sth = true;
 
@@ -3751,12 +3700,23 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         if (mon_shd)
         {
             if (found_sth)
-                desc += (!mon_qvr && !mon_carry) ? gettext(" and") : ",";
+                desc += (!mon_rng && !mon_qvr && !mon_carry) ? _(" and") : ",";
             else
                 found_sth = true;
 
             desc += gettext(" wearing ");
             desc += mon_shd->name(true, DESC_A);
+        }
+
+        if (mon_rng)
+        {
+            if (found_sth)
+                desc += (!mon_qvr && !mon_carry) ? " and" : ",";
+            else
+                found_sth = true;
+
+            desc += " wearing ";
+            desc += mon_rng->name(DESC_A);
         }
 
         if (mon_qvr)
@@ -3851,7 +3811,7 @@ static bool _print_item_desc(const coord_def where)
 #ifdef DEBUG_DIAGNOSTICS
 static void _debug_describe_feature_at(const coord_def &where)
 {
-    const std::string feature_desc = feature_description(where, true);
+    const std::string feature_desc = feature_description_at(where, true);
     std::string marker;
     if (map_marker *mark = env.markers.find(where, MAT_ANY))
     {
@@ -3968,7 +3928,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
     bool cloud_described = _print_cloud_desc(where);
     bool item_described = _print_item_desc(where);
 
-    std::string feature_desc = feature_description(where, true);
+    std::string feature_desc = feature_description_at(where, true);
     const bool bloody = is_bloodcovered(where);
     if (crawl_state.game_is_hints() && hints_pos_interesting(where.x, where.y))
     {
@@ -4039,7 +3999,7 @@ command_type targetting_behaviour::get_command(int key)
 
     command_type cmd = key_to_command(key, KMC_TARGETTING);
     if (cmd >= CMD_MIN_TARGET && cmd < CMD_TARGET_CYCLE_TARGET_MODE)
-        return (cmd);
+        return cmd;
 
 #ifndef USE_TILE_LOCAL
     // Overrides the movement keys while mlist_targetting is active.
@@ -4051,7 +4011,7 @@ command_type targetting_behaviour::get_command(int key)
     if (cmd == CMD_TARGET_SELECT && key == ' ' && just_looking)
         cmd = CMD_TARGET_CANCEL;
 
-    return (cmd);
+    return cmd;
 }
 
 std::vector<std::string> targetting_behaviour::get_monster_desc(const monster_info& mi)

@@ -1,6 +1,6 @@
 # A bot to exercise player-vs-monsters combat and Abyss generation.
 #
-# Usage: rm -f saves/Abyss_walker.cs && ./crawl --rc test/stress/abyss.rc
+# Usage: ./crawl --no-save --rc test/stress/abyss.rc
 #
 # Wizmode is needed.
 
@@ -12,8 +12,6 @@ restart_after_game = false
 show_gold_turns = true
 show_more = false
 autofight_stop = 0
-
-lua_file = lua/autofight.lua
 
 Lua{
 bot_start = true
@@ -56,6 +54,8 @@ function ready()
     --# re-enable monsters
     crawl.sendkeys("&" .. string.char(20) ..
                    "debug.disable('mon_act', false)" .. eol .. esc)
+    --# exit the Abyss then go back, so it's not the special starting Abyss
+    crawl.sendkeys("&~D1" .. eol .. "&B")
   end
   if you.turns() ~= last_turn then
     command = 1

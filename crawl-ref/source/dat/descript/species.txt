@@ -9,7 +9,8 @@ Centaur
 %%%%
 Deep Dwarf
 
-깊은 지하에서 빛 없이 살아온 딥 드워프들은, 그들의 자연적인 재생 능력을 잃어버렸다. 그러나 그들은 더욱 강인하며, 자신들을 치유할 수 있는 도구를 가지고 있다.
+They live deep underground and cannot regenerate health naturally, but they are
+resilient and have tools to heal.
 %%%%
 Deep Elf
 
@@ -17,27 +18,33 @@ Deep Elf
 %%%%
 Demigod
 
-그들은 절대로 신을 섬기지 않는다. 다만, 신성한 능력과, 강인한 체력으로 그것을 극복한다.
+They will never follow a god, but Demigods make up for this with divine
+attributes and health.
 %%%%
 Demonspawn
 
-반은 인간, 반은 악마인 데몬스폰들은, 성장을 하면서, 차차 강력한 악마적 능력을 얻게 된다.
+Demonspawn are half human, half demon. They acquire strong demonic mutations as
+they grow.
 %%%%
 Draconian
 
-드라코니언들은 다재다능한 혼성체들이다. 이들은 레벨 7에 완전한 성체가 되며, 각자만의 색을 얻는다.
+Draconians are versatile hybrids. They mature when reaching level 7 and develop
+a colour.
 %%%%
 Felid
 
-이 고양이들은 지각력을 가지고 있지만, 기본 이상의 아이템 조작이나 무기, 방어구들을 사용할수는 없다. 하지만 그 점마저 극복이 가능한 무언가 특별한 능력이 있을지도?
+These cats possess sentience, but are incapable of advanced item manipulation
+or the use of armour or weapons.
 %%%%
 Ghoul
 
-망자인 구울들은, 영원이 썩도록 저주받은 자들이다. 그들은 언제나, 썩은 고기를 먹기 위해 돌아다니며, 날카로운 손톱으로 적들을 갈기갈기 찢는다.
+An undead, damned to rot eternally. They are always looking for rotten food to
+eat, hacking away with their claws.
 %%%%
 Halfling
 
-작지만 강인하며, 특히 투석기를 잘 쓰는 종족이다. 그들은 약간의 돌연변이에 대한 저항을 가지고 있다.
+Small but hardy, they excel with slings. They have an increased resistance to
+mutagenic effects.
 %%%%
 High Elf
 
@@ -45,7 +52,8 @@ High Elf
 %%%%
 Hill Orc
 
-근접 전투에 특화된 힐 오크들은, 공격적인 마법 능력도 취급할 수 있다. 자신들에 대해 커다란 긍지를 가지고 있는 힐 오크들은, 다른 대부분의 종족과 사이가 매우 좋지 않다.
+Orcs are skilled in close combat, and often dabble in offensive magic. Hated by
+most, orcs are very proud and many of them feel superior.
 %%%%
 Human
 
@@ -53,11 +61,13 @@ Human
 %%%%
 Tengu
 
-Bird-people who love to fight, both with weapons and spells. They are quite fragile, but they learn to fly later on.
+Bird-people who love to fight, both with weapons and spells. They are quite
+fragile, but they learn to fly later on.
 %%%%
 Kobold
 
-작고 짖굳으며, 힘이 강하지도 않지만 코볼트들은 다재다능하다. 특히 코볼트들은 어떤 고기든 잘 먹고 소화가 가능하다.
+Small, mischievous and a little fragile, but multi-talented. They can and will
+eat any meat.
 %%%%
 Merfolk
 
@@ -65,41 +75,46 @@ Merfolk
 %%%%
 Minotaur
 
-근육질 인간의 몸에 소의 머리를 가진 미노타우르스들은 모든 공격의 근접과 원거리 공격에 능숙하다.
-%%%%
-Mountain Dwarf
-
-그다지 똑똑하지는 않지만, 강인한 체력과 힘을 가진 마운틴 드워프들은, 특히 무거운 무기와 중갑옷을 즐겨 사용한다.
+A large muscular human with the head of a bull. They excel at all forms of
+close and ranged combat.
 %%%%
 Mummy
 
-붕대와 방부제로 둘러쌓인 저주받은 망자들인 미라들은, 고대의 저주받은 마력에 의해 지상으로 나와 움직이게 되었다.
+An undead figure covered in bandages and embalming fluids, compelled to walk by
+an ancient curse.
 %%%%
 Naga
 
-가슴 위로는 인간이지만, 아래로는 비늘지고 근육질의 뱀과 같은 몸통이 붙어 있는 혼성체이다. 
+A hybrid; human from the chest up, with a scaly, muscular torso trailing off
+like that of a snake.
 %%%%
 Octopode
 
-땅과 물을 넘나드는 두족류 종족이다. 그들은 8개의 촉수에 각각 반지를 착용할 수 있지만, 거의 모든 다른 방어구는 착용할 수 없다.
+A species of amphibious cephalopods. They can wear eight rings, but almost no
+armour fits them.
 %%%%%%%%
 Ogre
 
-거대하고 강인하며, 야만적인 오우거들은, 의외로 기본적인 마법 능력들까지는 능숙하게 사용할 수 있다.
+Large and strong, they're mostly seen as brutes. Ogres are very comfortable
+with the basics of magic, however.
 %%%%
 Sludge Elf
 
-타락한 엘프 종족인 슬럿지 엘프들은, 정정당당함보다 간사한 싸움을 좋아하며, 특히 흑마술에 능하다.
+A depraved type of elf, who prefers cunning to fair fighting, and dark magic to
+other wizardry.
 %%%%
 Spriggan
 
-허약하지만, 매우 작고 빠른 스프리건들은, 특히 암살 능력과 주문 사용에 능숙하다.
+Very small, very frail and very fast. Spriggans make highly competent stabbers
+and spellcasters.
 %%%%
 Troll
 
-커다란 야만 종족이다. 그들은 무엇이든지 손톱으로 찢어발길 준비가 되어 있고, 두번 생각하지 않는다. 그들은 언제나 배고프다.
+Large brutes, ready to maim anything with their claws, never thinking twice.
+They're always hungry.
 %%%%
 Vampire
 
-생과 사를 넘나드는 그들은, 기력과 뛰어난 자객과 마법사들이다.
+Shifting between the states of life and undeath, they're accomplished stabbers
+and casters.
 %%%%

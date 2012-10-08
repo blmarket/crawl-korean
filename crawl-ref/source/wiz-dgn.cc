@@ -71,7 +71,7 @@ static dungeon_feature_type _find_appropriate_stairs(bool down)
                 mpr("This branch has no exit stairs defined.");
                 return DNGN_UNSEEN;
             }
-            return (stairs);
+            return stairs;
         }
         // Branch non-edge cases
         else if (depth >= 1)
@@ -309,7 +309,9 @@ bool wizard_create_feature(const coord_def& pos)
     if (feat == DNGN_ENTER_PORTAL_VAULT)
         return wizard_create_portal(pos);
 
+    env.tile_flv(pos).feat = 0;
     env.tile_flv(pos).special = 0;
+    env.grid_colours(pos) = 0;
     const dungeon_feature_type old_feat = grd(pos);
     dungeon_terrain_changed(pos, feat, false);
     // Update gate tiles, if existing.
@@ -331,10 +333,7 @@ void wizard_list_branches()
     for (int i = 0; i < NUM_BRANCHES; ++i)
     {
         if (branches[i].parent_branch == NUM_BRANCHES)
-        {
-            mprf(MSGCH_DIAGNOSTICS, "Branch %d (%s) has a base depth of %d",
-                 i, branches[i].longname, startdepth[i]);
-        }
+            continue;
         else if (startdepth[i] != -1)
         {
             mprf(MSGCH_DIAGNOSTICS, "Branch %d (%s) is on level %d of %s",
@@ -418,9 +417,9 @@ static int find_trap_slot()
 {
     for (int i = 0; i < MAX_TRAPS; ++i)
         if (env.trap[i].type == TRAP_UNASSIGNED)
-            return (i);
+            return i;
 
-    return (-1);
+    return -1;
 }
 
 void debug_make_trap()
@@ -634,7 +633,7 @@ static void debug_load_map_by_name(std::string name, bool primary)
         unwind_var<string_set> umt(you.uniq_map_tags, string_set());
         unwind_var<string_set> lum(env.level_uniq_maps, string_set());
         unwind_var<string_set> lumt(env.level_uniq_map_tags, string_set());
-        if (dgn_place_map(toplace, true, false, where))
+        if (dgn_place_map(toplace, false, false, where))
         {
             mprf("Successfully placed %s.", toplace->name.c_str());
             // Fix up doors from vaults and any changes to the default walls

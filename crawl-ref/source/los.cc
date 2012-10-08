@@ -89,7 +89,7 @@ static std::vector<coord_def> ray_coords;
 // words, blockrays(p)[i] is set iff an opaque cell p blocks
 // the cellray with index i.
 static std::vector<coord_def> cellray_ends;
-typedef FixedArray<bit_array*, LOS_MAX_RANGE+1, LOS_MAX_RANGE+1> blockrays_t;
+typedef FixedArray<bit_vector*, LOS_MAX_RANGE+1, LOS_MAX_RANGE+1> blockrays_t;
 static blockrays_t blockrays;
 
 // We also store the minimal cellrays by target position
@@ -101,8 +101,8 @@ static FixedArray<std::vector<cellray>, LOS_MAX_RANGE+1, LOS_MAX_RANGE+1> min_ce
 // Temporary arrays used in losight() to track which rays
 // are blocked or have seen a smoke cloud.
 // Allocated when doing the precomputations.
-static bit_array *dead_rays     = NULL;
-static bit_array *smoke_rays    = NULL;
+static bit_vector *dead_rays     = NULL;
+static bit_vector *smoke_rays    = NULL;
 
 class quadrant_iterator : public rectangle_iterator
 {
@@ -129,7 +129,7 @@ static void _handle_los_change();
 
 void set_los_radius(int r)
 {
-    ASSERT(r <= LOS_MAX_RADIUS);
+    ASSERT(r <= LOS_RADIUS);
     _los_radius_sq = r * r + 1;
     invalidate_los();
     _handle_los_change();
@@ -259,9 +259,9 @@ static bool _is_better(const cellray& a, const cellray& b)
     // calc_params() has been called.
     ASSERT(a.imbalance >= 0 && b.imbalance >= 0);
     if (a.imbalance < b.imbalance)
-        return (true);
+        return true;
     else if (a.imbalance > b.imbalance)
-        return (false);
+        return false;
     else
         return (a.first_diag && !b.first_diag);
 }
@@ -405,7 +405,7 @@ static void _create_blockrays()
     const int n_cellrays = ray_coords.size();
     blockrays_t all_blockrays;
     for (quadrant_iterator qi; qi; ++qi)
-        all_blockrays(*qi) = new bit_array(n_cellrays);
+        all_blockrays(*qi) = new bit_vector(n_cellrays);
 
     for (unsigned int r = 0; r < fullrays.size(); ++r)
     {
@@ -432,7 +432,7 @@ static void _create_blockrays()
     // Compress blockrays accordingly.
     for (quadrant_iterator qi; qi; ++qi)
     {
-        blockrays(*qi) = new bit_array(n_min_rays);
+        blockrays(*qi) = new bit_vector(n_min_rays);
         for (int i = 0; i < n_min_rays; ++i)
             blockrays(*qi)->set(i, all_blockrays(*qi)
                                    ->get(min_indices[i]));
@@ -442,8 +442,8 @@ static void _create_blockrays()
     for (quadrant_iterator qi; qi; ++qi)
         delete all_blockrays(*qi);
 
-    dead_rays  = new bit_array(n_min_rays);
-    smoke_rays = new bit_array(n_min_rays);
+    dead_rays  = new bit_vector(n_min_rays);
+    smoke_rays = new bit_vector(n_min_rays);
 
     dprf("Cellrays: %d Fullrays: %u Minimal cellrays: %u",
           n_cellrays, (unsigned int)fullrays.size(), n_min_rays);
@@ -595,12 +595,12 @@ static bool _find_ray_se(const coord_def& target, ray_def& ray,
             blocked += opc(c[j]);
     }
     if (blocked >= OPC_OPAQUE)
-        return (false);
+        return false;
 
     ray = c.ray;
     ray.cycle_idx = index;
 
-    return (true);
+    return true;
 }
 
 // Coordinate transformation so we can find_ray quadrant-by-quadrant.
@@ -650,7 +650,7 @@ bool find_ray(const coord_def& source, const coord_def& target,
     opacity_trans opc_trans = opacity_trans(opc, source, signx, signy);
 
     if (!_find_ray_se(abs, ray, opc_trans, bds, cycle))
-        return (false);
+        return false;
 
     if (signx < 0)
         ray.r.start.x = 1.0 - ray.r.start.x;
@@ -662,14 +662,14 @@ bool find_ray(const coord_def& source, const coord_def& target,
     ray.r.start.x += source.x;
     ray.r.start.y += source.y;
 
-    return (true);
+    return true;
 }
 
 bool exists_ray(const coord_def& source, const coord_def& target,
                 const opacity_func& opc, const circle_def &bds)
 {
     ray_def ray;
-    return (find_ray(source, target, ray, opc, bds));
+    return find_ray(source, target, ray, opc, bds);
 }
 
 // Assuming that target is in view of source, but line of
@@ -681,7 +681,7 @@ dungeon_feature_type ray_blocker(const coord_def& source,
     if (!find_ray(source, target, ray, opc_default))
     {
         ASSERT(you.xray_vision);
-        return (NUM_FEATURES);
+        return NUM_FEATURES;
     }
 
     ray.advance();
@@ -694,7 +694,7 @@ dungeon_feature_type ray_blocker(const coord_def& source,
         ray.advance();
     }
     ASSERT(false);
-    return (NUM_FEATURES);
+    return NUM_FEATURES;
 }
 
 // Returns a straight ray from source to target.
@@ -726,7 +726,7 @@ int num_feats_between(const coord_def& source, const coord_def& target,
     ASSERT(map_bounds(source) && map_bounds(target));
 
     if (source == target)
-        return (0); // XXX: might want to count the cell.
+        return 0; // XXX: might want to count the cell.
 
     // We don't need to find the shortest beam, any beam will suffice.
     fallback_ray(source, target, ray);
@@ -752,7 +752,7 @@ int num_feats_between(const coord_def& source, const coord_def& target,
             count++;
 
             if (just_check) // Only needs to be > 0.
-                return (count);
+                return count;
         }
 
         if (reached_target)
@@ -761,7 +761,7 @@ int num_feats_between(const coord_def& source, const coord_def& target,
         ray.advance();
     }
 
-    return (count);
+    return count;
 }
 
 // Is p2 visible from p1, disregarding half-opaque objects?
@@ -849,23 +849,6 @@ static void _losight_quadrant(los_grid& sh, const los_param& dat, int sx, int sy
     }
 }
 
-void losight(los_grid& sh, const los_param& dat)
-{
-    sh.init(false);
-
-    // Do precomputations if necessary.
-    raycast();
-
-    const int quadrant_x[4] = {  1, -1, -1,  1 };
-    const int quadrant_y[4] = {  1,  1, -1, -1 };
-    for (int q = 0; q < 4; ++q)
-        _losight_quadrant(sh, dat, quadrant_x[q], quadrant_y[q]);
-
-    // Center is always visible.
-    const coord_def o = coord_def(0,0);
-    sh(o) = true;
-}
-
 struct los_param_funcs : public los_param
 {
     coord_def center;
@@ -885,14 +868,28 @@ struct los_param_funcs : public los_param
 
     opacity_type opacity(const coord_def& p) const
     {
-        return (opc(p + center));
+        return opc(p + center);
     }
 };
 
 void losight(los_grid& sh, const coord_def& center,
              const opacity_func& opc, const circle_def& bounds)
 {
-    losight(sh, los_param_funcs(center, opc, bounds));
+    const los_param& dat = los_param_funcs(center, opc, bounds);
+
+    sh.init(false);
+
+    // Do precomputations if necessary.
+    raycast();
+
+    const int quadrant_x[4] = {  1, -1, -1,  1 };
+    const int quadrant_y[4] = {  1,  1, -1, -1 };
+    for (int q = 0; q < 4; ++q)
+        _losight_quadrant(sh, dat, quadrant_x[q], quadrant_y[q]);
+
+    // Center is always visible.
+    const coord_def o = coord_def(0,0);
+    sh(o) = true;
 }
 
 opacity_type mons_opacity(const monster* mon, los_type how)
@@ -906,9 +903,11 @@ opacity_type mons_opacity(const monster* mon, los_type how)
         dungeon_feature_type feat = get_mimic_feat(mon);
         if (how == LOS_SOLID)
             return feat_is_solid(feat) ? OPC_OPAQUE : OPC_CLEAR;
-        if (how == LOS_NO_TRANS)
-            if (feat_is_wall(feat) || feat_is_tree(feat))
-                return OPC_OPAQUE;
+        if (how == LOS_NO_TRANS
+            && (feat_is_wall(feat) || feat_is_tree(feat)))
+        {
+            return OPC_OPAQUE;
+        }
         if (feat_is_opaque(get_mimic_feat(mon)))
             return OPC_OPAQUE;
     }
@@ -953,13 +952,6 @@ void los_monster_died(const monster* mon)
 
 // Might want to pass new/old terrain.
 void los_terrain_changed(const coord_def& p)
-{
-    invalidate_los_around(p);
-    _handle_los_change();
-}
-
-// Might want to pass new/old cloud type.
-void los_cloud_changed(const coord_def& p)
 {
     invalidate_los_around(p);
     _handle_los_change();

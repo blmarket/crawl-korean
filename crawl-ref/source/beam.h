@@ -23,6 +23,17 @@ enum mon_resist_type
     MON_OTHER,                  // monster unaffected, but for other reasons
 };
 
+enum ac_type
+{
+    AC_NONE,
+    // These types block small amounts of damage, hardly affecting big hits.
+    AC_NORMAL,
+    AC_HALF,
+    AC_TRIPLE,
+    // This one stays fair over arbitrary splits.
+    AC_PROPORTIONAL,
+};
+
 class dist;
 
 typedef FixedArray<int, 19, 19> explosion_map;
@@ -106,6 +117,7 @@ struct bolt
     bool        was_missile;           // For determining if this was SPMSL_FLAME / FROST etc
                                        // this is required in order to change mulch rate on these types
     bool        animate;               // Do we draw animations?
+    ac_type     ac_rule;               // How does defender's AC affect damage.
 
     // Various callbacks.
     std::vector<range_used_func>  range_funcs;
@@ -129,6 +141,7 @@ struct bolt
     // INTERNAL use - should not usually be set outside of beam.cc
     int         extra_range_used;
     bool        is_tracer;       // is this a tracer?
+    bool        is_targetting;   // . . . in particular, a targetting tracer?
     bool        aimed_at_feet;   // this was aimed at self!
     bool        msg_generated;   // an appropriate msg was already mpr'd
     bool        noise_generated; // a noise has already been generated at this pos
@@ -198,6 +211,8 @@ public:
 
     bool can_affect_actor(const actor *act) const;
 
+    maybe_bool affects_wall(dungeon_feature_type wall) const;
+
 private:
     void do_fire();
     coord_def pos() const;
@@ -205,9 +220,9 @@ private:
 
     // Lots of properties of the beam.
     bool is_blockable() const;
-    bool is_superhot() const;
     bool is_fiery() const;
-    maybe_bool affects_wall(dungeon_feature_type wall) const;
+    bool is_superhot() const;
+    bool can_affect_wall(dungeon_feature_type feat) const;
     bool can_affect_wall_actor(const actor *act) const;
     bool actor_wall_shielded(const actor *act) const;
     bool is_bouncy(dungeon_feature_type feat) const;
@@ -232,10 +247,10 @@ private:
     void step();
     bool hit_wall();
 
-    bool damage_ignores_armour() const;
     bool apply_hit_funcs(actor* victim, int dmg);
     bool apply_dmg_funcs(actor* victim, int &dmg,
                          std::vector<std::string> &messages);
+    int apply_AC(const actor* victim, int hurted, int &mind);
 
     // Functions which handle actually affecting things. They all
     // operate on the beam's current position (i.e., whatever pos()
@@ -317,6 +332,8 @@ bool napalm_monster(monster* mons, const actor* who, int levels = 1,
                     bool verbose = true);
 void fire_tracer(const monster* mons, struct bolt &pbolt,
                   bool explode_only = false);
+bool imb_can_splash(coord_def origin, coord_def center,
+                    std::vector<coord_def> path_taken, coord_def target);
 spret_type zapping(zap_type ztype, int power, bolt &pbolt,
                    bool needs_tracer = false, const char* msg = NULL,
                    bool fail = false);
@@ -326,5 +343,6 @@ void init_zap_index();
 void clear_zap_info_on_exit();
 
 int zap_power_cap(zap_type ztype);
+void zappy(zap_type z_type, int power, bolt &pbolt);
 
 #endif

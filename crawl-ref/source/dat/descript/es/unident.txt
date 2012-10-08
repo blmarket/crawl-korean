@@ -1,19 +1,18 @@
 %%%%
 amulet
 
-Un artículo de joyería.
+Un talismán para llevar puesto al cuello, cargado con poderes arcanos de origen
+desconocido.
 %%%%
 book
 
-Un libro con hechizos mágicos. Ten cuidado, ya que los grimorios más poderosos no están hechos para juguetear con ellos.
+Un libro con hechizos mágicos. Ten cuidado, ya que los grimorios más poderosos
+deben ser manipulados con cuidado.
 %%%%
 deck of cards
 
-Un mazo de poderosas cartas mágicas dibujadas con icor de demonios. Echar estas cartas puede tener efectos muy variados, tanto útiles, como perjudiciales.
-%%%%
-magical staff
-
-Una vara cargada con propiedades mágicas.
+Un mazo de poderosas cartas mágicas dibujadas con icor de demonios. Echar estas
+cartas puede tener efectos muy variados, tanto útiles, como perjudiciales.
 %%%%
 potion
 
@@ -21,15 +20,19 @@ Una pequeña botella llena de líquido.
 %%%%
 ring
 
-Un artículo de joyería.
+Un talismán cargado con fuerzas arcanas de origen desconocido, pensado para
+llevarlo puesto como anillo en un dedo.
 %%%%
 rod
 
-Una vara cargada con propiedades mágicas.
+Una barra mágica que puede ser sostenida con una mano y evocada para lanzar uno
+de los hechizos que contiene, usando para ello unas reservas propias de magia
+que se regeneran de forma autónoma.  Es los suficientemente robusta como para
+ser simplemente usada como arma de contusión.
 %%%%
-scroll
+magical staff
 
-Un rollo de papel cubierto de escritos mágicos.
+Una vara con propiedades mágicas.
 %%%%
 wand
 

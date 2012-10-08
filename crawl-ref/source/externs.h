@@ -95,7 +95,7 @@ template <typename Z> inline Z sgn(Z x)
     return (x < 0 ? -1 : (x > 0 ? 1 : 0));
 }
 
-inline int dist_range(int x) { return x*x + 1; };
+static inline int dist_range(int x) { return x*x + 1; };
 
 struct coord_def
 {
@@ -141,42 +141,42 @@ struct coord_def
     {
         x += other.x;
         y += other.y;
-        return (*this);
+        return *this;
     }
 
     const coord_def &operator += (int offset)
     {
         x += offset;
         y += offset;
-        return (*this);
+        return *this;
     }
 
     const coord_def &operator -= (const coord_def &other)
     {
         x -= other.x;
         y -= other.y;
-        return (*this);
+        return *this;
     }
 
     const coord_def &operator -= (int offset)
     {
         x -= offset;
         y -= offset;
-        return (*this);
+        return *this;
     }
 
     const coord_def &operator /= (int div)
     {
         x /= div;
         y /= div;
-        return (*this);
+        return *this;
     }
 
     const coord_def &operator *= (int mul)
     {
         x *= mul;
         y *= mul;
-        return (*this);
+        return *this;
     }
 
     coord_def operator + (const coord_def &other) const
@@ -232,7 +232,7 @@ struct coord_def
 
     int rdist() const
     {
-        return (std::max(std::abs(x), std::abs(y)));
+        return std::max(std::abs(x), std::abs(y));
     }
 
     bool origin() const
@@ -266,6 +266,7 @@ struct run_check_dir
 };
 
 typedef uint32_t mid_t;
+#define PRImidt PRIu32
 #define MID_PLAYER      ((mid_t)0xffffffff)
 // the numbers are meaningless, there's just plenty of space for gods, env,
 // and whatever else we want to have, while keeping all monster ids smaller.
@@ -401,7 +402,7 @@ public:
     {
         branch     = id.branch;
         depth      = id.depth;
-        return (*this);
+        return *this;
     }
 
     bool operator == (const level_id &id) const
@@ -565,7 +566,7 @@ public:
     bool held_by_monster() const;
 
     bool defined() const;
-    bool is_valid() const;
+    bool is_valid(bool info = false) const;
 
     // Returns true if this item should be preserved as far as possible.
     bool is_critical() const;
@@ -696,7 +697,7 @@ struct message_filter
     {
     }
 
-    message_filter(const std::string &s) : channel(-1), pattern(s) { }
+    message_filter(const std::string &s) : channel(-1), pattern(s, true) { }
 
     bool is_filtered(int ch, const std::string &s) const
     {

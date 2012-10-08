@@ -37,10 +37,10 @@ int MessageRegion::handle_mouse(MouseEvent &event)
 bool MessageRegion::update_tip_text(std::string& tip)
 {
     if (mouse_control::current_mode() != MOUSE_MODE_COMMAND)
-        return (false);
+        return false;
 
-    tip = gettext("[L-Click] Browse message history");
-    return (true);
+    tip = _("[L-Click] Browse message history");
+    return true;
 }
 
 void MessageRegion::set_overlay(bool is_overlay)

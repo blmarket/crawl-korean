@@ -56,7 +56,7 @@ int identify(int power, int item_slot, std::string *pre_msg)
                                            OSEL_UNIDENT, true, true, false);
         }
         if (prompt_failed(item_slot))
-            return (identified);
+            return identified;
 
         item_def& item(you.inv[item_slot]);
 
@@ -117,7 +117,7 @@ int identify(int power, int item_slot, std::string *pre_msg)
         item_slot = -1;
     }
     while (id_used > identified);
-    return (identified);
+    return identified;
 }
 
 static bool _mons_hostile(const monster* mon)
@@ -133,14 +133,14 @@ static bool _mons_hostile(const monster* mon)
 int is_pacifiable(const monster* mon)
 {
     if (you.religion != GOD_ELYVILON)
-        return (-1);
+        return -1;
 
     // I was thinking of jellies when I wrote this, but maybe we shouldn't
     // exclude zombies and such... (jpeg)
     if (mons_intel(mon) <= I_PLANT // no self-awareness
         || mons_is_tentacle(mon->type)) // body part
     {
-        return (-1);
+        return -1;
     }
 
     const mon_holy_type holiness = mon->holiness();
@@ -150,14 +150,14 @@ int is_pacifiable(const monster* mon)
         && holiness != MH_DEMONIC
         && holiness != MH_NATURAL)
     {
-        return (-1);
+        return -1;
     }
 
     if (mons_is_stationary(mon)) // not able to leave the level
-        return (-1);
+        return -1;
 
     if (mon->asleep()) // not aware of what is happening
-        return (-2);
+        return -2;
 
     return 0;
 }
@@ -178,7 +178,7 @@ static int _can_pacify_monster(const monster* mon, const int healed,
        return pacifiable;
 
    if (healed < 1)
-        return (0);
+        return 0;
 
     const int factor = (mons_intel(mon) <= I_ANIMAL)       ? 3 : // animals
                        (is_player_same_species(mon->type)) ? 2   // same species
@@ -197,7 +197,7 @@ static int _can_pacify_monster(const monster* mon, const int healed,
     if (mon->max_hit_points > factor * ((you.skill(SK_INVOCATIONS, max_healed)
                                          + max_healed) / divisor))
     {
-        return (-4);
+        return -4;
     }
 
     int random_factor = random2((you.skill(SK_INVOCATIONS, healed) + healed)
@@ -208,11 +208,11 @@ static int _can_pacify_monster(const monster* mon, const int healed,
          you.skill(SK_INVOCATIONS), healed, random_factor);
 
     if (mon->max_hit_points < factor * random_factor)
-        return (1);
+        return 1;
     if (mon->max_hit_points < factor * random_factor * 1.15)
-        return (-3);
+        return -3;
 
-    return (0);
+    return 0;
 }
 
 static std::vector<std::string> _desc_mindless(const monster_info& mi)
@@ -249,19 +249,19 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     }
 
     if (!spd.isValid)
-        return (-1);
+        return -1;
 
     if (spd.target == you.pos())
     {
         if (not_self)
         {
             mpr("You can only heal others!");
-            return (-1);
+            return -1;
         }
 
         mpr("You are healed.");
         inc_hp(healed);
-        return (1);
+        return 1;
     }
 
     monster* mons = monster_at(spd.target);
@@ -270,7 +270,7 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
         canned_msg(MSG_NOTHING_THERE);
         // This isn't a cancel, to avoid leaking invisible monster
         // locations.
-        return (0);
+        return 0;
     }
 
     const int can_pacify  = _can_pacify_monster(mons, healed, max_healed);
@@ -285,19 +285,19 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
         {
             mprf("The light of Elyvilon fails to reach %s.",
                  mons->name(DESC_THE).c_str());
-            return (0);
+            return 0;
         }
         else if (can_pacify == -3)
         {
             mprf("The light of Elyvilon almost touches upon %s.",
                  mons->name(DESC_THE).c_str());
-            return (0);
+            return 0;
         }
         else if (can_pacify == -4)
         {
             mprf("%s is completely unfazed by your meager offer of peace.",
                  mons->name(DESC_THE).c_str());
-            return (0);
+            return 0;
         }
         else
         {
@@ -308,7 +308,7 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
             }
             else
                 mpr("You cannot pacify this monster!");
-            return (-1);
+            return -1;
         }
     }
 
@@ -363,10 +363,10 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     if (!did_something)
     {
         canned_msg(MSG_NOTHING_HAPPENS);
-        return (0);
+        return 0;
     }
 
-    return (1);
+    return 1;
 }
 
 // Returns: 1 -- success, 0 -- failure, -1 -- cancel
@@ -457,7 +457,7 @@ int detect_traps(int pow)
 
     // Trap detection moved to traps.cc. -am
     const int range = 8 + random2(8) + pow;
-    return (reveal_traps(range));
+    return reveal_traps(range);
 }
 
 // pow -1 for passive
@@ -496,7 +496,7 @@ int detect_items(int pow)
         }
     }
 
-    return (items_found);
+    return items_found;
 }
 
 static void _fuzz_detect_creatures(int pow, int *fuzz_radius, int *fuzz_chance)
@@ -559,7 +559,7 @@ static bool _mark_detected_creature(coord_def where, monster* mon,
 
     env.map_knowledge(where).set_detected_monster(mons_detected_base(mon->type));
 
-    return (found_good);
+    return found_good;
 }
 
 int detect_creatures(int pow, bool telepathic)
@@ -589,7 +589,7 @@ int detect_creatures(int pow, bool telepathic)
         }
     }
 
-    return (creatures_found);
+    return creatures_found;
 }
 
 static bool _selectively_remove_curse(std::string *pre_msg)
@@ -613,9 +613,7 @@ static bool _selectively_remove_curse(std::string *pre_msg)
 
         if (!item.cursed()
             || !item_is_equipped(item)
-            || &item == you.weapon()
-               && item.base_type != OBJ_WEAPONS
-               && item.base_type != OBJ_STAVES)
+            || &item == you.weapon() && !is_weapon(item))
         {
             mpr("Choose a cursed equipped item, or Esc to abort.");
             if (Options.auto_list)
@@ -647,9 +645,7 @@ bool remove_curse(bool alreadyknown, std::string *pre_msg)
     bool success = false;
 
     // Only cursed *weapons* in hand count as cursed. - bwr
-    if (you.weapon()
-        && (you.weapon()->base_type == OBJ_WEAPONS
-            || you.weapon()->base_type == OBJ_STAVES)
+    if (you.weapon() && is_weapon(*you.weapon())
         && you.weapon()->cursed())
     {
         // Also sets wield_change.
@@ -685,7 +681,7 @@ bool remove_curse(bool alreadyknown, std::string *pre_msg)
         canned_msg(MSG_NOTHING_HAPPENS);
     }
 
-    return (success);
+    return success;
 }
 
 static bool _selectively_curse_item(bool armour, std::string *pre_msg)
@@ -768,64 +764,6 @@ bool curse_item(bool armour, bool alreadyknown, std::string *pre_msg)
     return true;
 }
 
-bool detect_curse(int scroll, bool suppress_msg)
-{
-    int item_count = 0;
-    int found_item = NON_ITEM;
-
-    for (int i = 0; i < ENDOFPACK; i++)
-    {
-        item_def& item = you.inv[i];
-
-        if (!item.defined())
-            continue;
-
-        if (item_count <= 1)
-        {
-            item_count += item.quantity;
-            if (i == scroll)
-                item_count--;
-            if (item_count > 0)
-                found_item = i;
-        }
-
-        if (item.base_type == OBJ_WEAPONS
-            || item.base_type == OBJ_STAVES
-            || item.base_type == OBJ_ARMOUR
-            || item.base_type == OBJ_JEWELLERY)
-        {
-            set_ident_flags(item, ISFLAG_KNOW_CURSE);
-        }
-    }
-
-    // Not carrying any items -> don't id the scroll.
-    if (!item_count)
-        return (false);
-
-    ASSERT(found_item != NON_ITEM);
-
-    if (!suppress_msg)
-    {
-        if (item_count == 1)
-        {
-            // If you're carrying just one item, mention it explicitly.
-            item_def item = you.inv[found_item];
-
-            // If the carried item is just the stack of scrolls,
-            // decrease quantity by one to make up for the scroll just read.
-            if (found_item == scroll)
-                item.quantity--;
-
-            mprf("%s softly glows as it is inspected for curses.",
-                 item.name(true, DESC_YOUR).c_str());
-        }
-        else
-            mpr("Your items softly glow as they are inspected for curses.");
-    }
-
-    return (true);
-}
-
 static bool _do_imprison(int pow, const coord_def& where, bool zin)
 {
     // power guidelines:
@@ -881,7 +819,7 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             mprf(none_vis ? "You briefly glimpse something next to %s."
                           : "You need more space to imprison %s.",
                  targname.c_str());
-            return (false);
+            return false;
         }
 
     }
@@ -925,7 +863,7 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
                 env.grid_colours(*ai) = LIGHTGREY;
 
                 map_wiz_props_marker *marker = new map_wiz_props_marker(*ai);
-                marker->set_property("feature_description", "A gleaming silver wall");
+                marker->set_property("feature_description", "a gleaming silver wall");
                 marker->set_property("tomb", "Zin");
                 env.markers.add(marker);
             }
@@ -969,7 +907,7 @@ bool entomb(int pow)
     if (crawl_state.game_is_zotdef())
     {
         mpr("The dungeon rumbles ominously, and rocks fall from the ceiling!");
-        return (false);
+        return false;
     }
     if (_do_imprison(pow, you.pos(), false))
     {
@@ -979,10 +917,10 @@ bool entomb(int pow)
                                             you.mindex(),
                                             you.mindex()));
         env.markers.clear_need_activate(); // doesn't need activation
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 bool cast_imprison(int pow, monster* mons, int source)
@@ -995,10 +933,10 @@ bool cast_imprison(int pow, monster* mons, int source)
                                             source,
                                             mons->mindex()));
         env.markers.clear_need_activate(); // doesn't need activation
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 bool cast_smiting(int pow, monster* mons)
@@ -1008,7 +946,7 @@ bool cast_smiting(int pow, monster* mons)
         canned_msg(MSG_NOTHING_THERE);
         // Counts as a real cast, due to victory-dancing and
         // invisible/submerged monsters.
-        return (true);
+        return true;
     }
 
     god_conduct_trigger conducts[3];
@@ -1037,5 +975,5 @@ bool cast_smiting(int pow, monster* mons)
             print_wounds(mons);
     }
 
-    return (success);
+    return success;
 }

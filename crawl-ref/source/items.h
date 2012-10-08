@@ -28,6 +28,7 @@ enum item_source_type
 };
 
 int get_max_subtype(object_class_type base_type);
+bool item_type_has_unidentified(object_class_type base_type);
 
 bool dec_inv_item_quantity(int obj, int amount, bool suppress_burden = false);
 bool dec_mitm_item_quantity(int obj, int amount);
@@ -42,11 +43,11 @@ void note_inscribe_item(item_def &item);
 int  move_item_to_player(int obj, int quant_got, bool quiet = false,
                          bool ignore_burden = false);
 void mark_items_non_pickup_at(const coord_def &pos);
+void mark_items_non_visit_at(const coord_def &pos);
 bool is_stackable_item(const item_def &item);
-bool items_similar(const item_def &item1, const item_def &item2,
-                    bool ignore_ident = false);
+bool items_similar(const item_def &item1, const item_def &item2);
 bool items_stack(const item_def &item1, const item_def &item2,
-                  bool force_merge = false, bool ignore_ident = false);
+                  bool force_merge = false);
 void merge_item_stacks(item_def &source, item_def &dest,
                        int quant = -1);
 

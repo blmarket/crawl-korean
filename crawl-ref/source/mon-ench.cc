@@ -66,9 +66,9 @@ bool monster::has_ench(enchant_type ench, enchant_type ench2) const
 
     for (int i = ench; i <= ench2; ++i)
         if (has_ench(static_cast<enchant_type>(i)))
-            return (true);
+            return true;
 
-    return (false);
+    return false;
 }
 
 mon_enchant monster::get_ench(enchant_type ench1,
@@ -83,7 +83,7 @@ mon_enchant monster::get_ench(enchant_type ench1,
             enchantments.find(static_cast<enchant_type>(e));
 
         if (i != enchantments.end())
-            return (i->second);
+            return i->second;
     }
 
     return mon_enchant();
@@ -103,12 +103,12 @@ bool monster::add_ench(const mon_enchant &ench)
 {
     // silliness
     if (ench.ench == ENCH_NONE)
-        return (false);
+        return false;
 
     if (ench.ench == ENCH_FEAR
         && (holiness() == MH_NONLIVING || berserk()))
     {
-        return (false);
+        return false;
     }
 
     if (ench.ench == ENCH_LEVITATION && has_ench(ENCH_LIQUEFYING))
@@ -140,7 +140,7 @@ bool monster::add_ench(const mon_enchant &ench)
     if (new_enchantment)
         add_enchantment_effect(ench);
 
-    return (true);
+    return true;
 }
 
 void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
@@ -180,6 +180,17 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
             ac += ac_bonus;
             // the monster may get drained or level up, we need to store the bonus
             props["stoneskin_ac"].get_byte() = ac_bonus;
+        }
+        break;
+
+    case ENCH_OZOCUBUS_ARMOUR:
+        {
+            // player gets 4+ice/3
+            const int ac_bonus = 4 + hit_dice / 3;
+
+            ac += ac_bonus;
+            // the monster may get drained or level up, we need to store the bonus
+            props["ozocubus_ac"].get_byte() = ac_bonus;
         }
         break;
 
@@ -245,8 +256,8 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
         }
         mons_att_changed(this);
         // clear any constrictions on/by you
-        stop_constricting(MHITYOU, true);
-        you.stop_constricting(mindex(), true);
+        stop_constricting(MID_PLAYER, true);
+        you.stop_constricting(mid, true);
 
         // TODO -- and friends
 
@@ -271,7 +282,7 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
 static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
 {
     if (me.ench != ENCH_SUBMERGED)
-        return (true);
+        return true;
 
     // Lurking monsters only unsubmerge when their foe is in sight if the foe
     // is right next to them.
@@ -281,7 +292,7 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
         if (foe != NULL && mon->can_see(foe)
             && !adjacent(mon->pos(), foe->pos()))
         {
-            return (false);
+            return false;
         }
     }
 
@@ -291,7 +302,7 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
         mgrd(mon->pos()) = midx;
 
     if (mon->pos() != you.pos() && midx == mgrd(mon->pos()))
-        return (true);
+        return true;
 
     if (midx != mgrd(mon->pos()))
     {
@@ -309,7 +320,7 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
                  mon->name(DESC_PLAIN, true).c_str());
 
             if (mon->pos() != you.pos())
-                return (true);
+                return true;
         }
         else
             mprf(MSGCH_ERROR, "%s tried to unsubmerge while on same square as "
@@ -332,12 +343,12 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
         }
 
     if (okay_squares > 0)
-        return (mon->move_to_pos(target_square));
+        return mon->move_to_pos(target_square);
 
     // No available adjacent squares from which the monster could also
     // have unsubmerged.  Can it just stay submerged where it is?
     if (monster_can_submerge(mon, grd(mon->pos())))
-        return (false);
+        return false;
 
     // The terrain changed and the monster can't remain submerged.
     // Try to move to an adjacent square where it would be happy.
@@ -353,28 +364,28 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
     }
 
     if (okay_squares > 0)
-        return (mon->move_to_pos(target_square));
+        return mon->move_to_pos(target_square);
 
-    return (true);
+    return true;
 }
 
 bool monster::del_ench(enchant_type ench, bool quiet, bool effect)
 {
     mon_enchant_list::iterator i = enchantments.find(ench);
     if (i == enchantments.end())
-        return (false);
+        return false;
 
     const mon_enchant me = i->second;
     const enchant_type et = i->first;
 
     if (!_prepare_del_ench(this, me))
-        return (false);
+        return false;
 
     enchantments.erase(et);
     ench_cache.set(et, false);
     if (effect)
         remove_enchantment_effect(me, quiet);
-    return (true);
+    return true;
 }
 
 void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
@@ -432,6 +443,16 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_STONESKIN:
         if (props.exists("stoneskin_ac"))
             ac -= props["stoneskin_ac"].get_byte();
+        break;
+
+    case ENCH_OZOCUBUS_ARMOUR:
+        if (props.exists("ozocubus_ac"))
+            ac -= props["ozocubus_ac"].get_byte();
+        if (!quiet && you.can_see(this))
+        {
+            mprf("%s icy armour evaporates.",
+                 apostrophise(name(DESC_THE)).c_str());
+        }
         break;
 
     case ENCH_PARALYSIS:
@@ -560,7 +581,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_ROT:
         if (!quiet)
         {
-            if (this->type == MONS_BOG_MUMMY)
+            if (type == MONS_BOG_BODY)
                 simple_monster_message(this, _("'s decay slows."));
             else
                 simple_monster_message(this, _(" is no longer rotting."));
@@ -754,40 +775,40 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 bool monster::lose_ench_levels(const mon_enchant &e, int lev)
 {
     if (!lev)
-        return (false);
+        return false;
 
     if (e.degree <= lev)
     {
         del_ench(e.ench);
-        return (true);
+        return true;
     }
     else
     {
         mon_enchant newe(e);
         newe.degree -= lev;
         update_ench(newe);
-        return (false);
+        return false;
     }
 }
 
 bool monster::lose_ench_duration(const mon_enchant &e, int dur)
 {
     if (!dur)
-        return (false);
+        return false;
 
     if (e.duration >= INFINITE_DURATION)
         return false;
     if (e.duration <= dur)
     {
         del_ench(e.ench);
-        return (true);
+        return true;
     }
     else
     {
         mon_enchant newe(e);
         newe.duration -= dur;
         update_ench(newe);
-        return (false);
+        return false;
     }
 }
 
@@ -849,6 +870,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_MIRROR_DAMAGE: case ENCH_STONESKIN: case ENCH_LIQUEFYING:
         case ENCH_SILVER_CORONA: case ENCH_DAZED: case ENCH_FAKE_ABJURATION:
         case ENCH_ROUSED: case ENCH_BREATH_WEAPON: case ENCH_DEATHS_DOOR:
+        case ENCH_OZOCUBUS_ARMOUR:
             lose_ench_levels(i->second, levels);
             break;
 
@@ -877,7 +899,8 @@ void monster::timeout_enchantments(int levels)
         case ENCH_CONFUSION:
             if (!mons_class_flag(type, M_CONFUSED))
                 del_ench(i->first);
-            monster_blink(this, true);
+            if (!mons_is_stationary(this))
+                monster_blink(this, true);
             break;
 
         case ENCH_HELD:
@@ -934,7 +957,7 @@ std::string monster::describe_enchantments() const
             oss << ", ";
         oss << std::string(i->second);
     }
-    return (oss.str());
+    return oss.str();
 }
 
 bool monster::decay_enchantment(const mon_enchant &me, bool decay_degree)
@@ -947,17 +970,17 @@ bool monster::decay_enchantment(const mon_enchant &me, bool decay_degree)
                                              10;
     const int actdur = speed_to_duration(spd);
     if (lose_ench_duration(me, actdur))
-        return (true);
+        return true;
 
     if (!decay_degree)
-        return (false);
+        return false;
 
     // Decay degree so that higher degrees decay faster than lower
     // degrees, and a degree of 1 does not decay (it expires when the
     // duration runs out).
     const int level = me.degree;
     if (level <= 1)
-        return (false);
+        return false;
 
     const int decay_factor = level * (level + 1) / 2;
     if (me.duration < me.maxduration * (decay_factor - 1) / decay_factor)
@@ -969,12 +992,12 @@ bool monster::decay_enchantment(const mon_enchant &me, bool decay_degree)
         if (newme.degree <= 0)
         {
             del_ench(me.ench);
-            return (true);
+            return true;
         }
         else
             update_ench(newme);
     }
-    return (false);
+    return false;
 }
 
 void monster::apply_enchantment(const mon_enchant &me)
@@ -1045,7 +1068,6 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_LIFE_TIMER:
     case ENCH_LEVITATION:
     case ENCH_DAZED:
-    case ENCH_LIQUEFYING:
     case ENCH_FAKE_ABJURATION:
     case ENCH_RECITE_TIMER:
     case ENCH_INNER_FLAME:
@@ -1055,6 +1077,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_MAD:
     case ENCH_BREATH_WEAPON:
     case ENCH_DEATHS_DOOR:
+    case ENCH_OZOCUBUS_ARMOUR:
     // case ENCH_ROLLING:
         decay_enchantment(me);
         break;
@@ -1065,6 +1088,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         break;
 
     case ENCH_SILENCE:
+    case ENCH_LIQUEFYING:
         decay_enchantment(me);
         invalidate_agrid();
         break;
@@ -1308,11 +1332,13 @@ void monster::apply_enchantment(const mon_enchant &me)
     // Assumption: monster::res_fire has already been checked.
     case ENCH_STICKY_FLAME:
     {
-        if (feat_is_watery(grd(pos())) && ground_level())
+        if (feat_is_watery(grd(pos())) && (ground_level()
+              || mons_intel(this) >= I_NORMAL && flight_mode() != FL_LEVITATE))
         {
             if (mons_near(this) && visible_to(&you))
             {
-                mprf(_("The flames covering %s go out."),
+                mprf(ground_level() ? _("The flames covering %s go out.")
+                     : _("%s dips into the water, and the flames go out."),
                      name(DESC_THE, false).c_str());
             }
             del_ench(ENCH_STICKY_FLAME);
@@ -1335,12 +1361,13 @@ void monster::apply_enchantment(const mon_enchant &me)
                         && !mon->has_ench(ENCH_STICKY_FLAME)
                         && coinflip())
                     {
-                        mprf(_("%s catches fire!"), mon->name(DESC_A).c_str());
                         const int dur = me.degree/2 + 1 + random2(me.degree);
                         mon->add_ench(mon_enchant(ENCH_STICKY_FLAME, dur,
                                                   me.agent()));
                         mon->add_ench(mon_enchant(ENCH_FEAR, dur + random2(20),
                                                   me.agent()));
+                        if (visible_to(&you))
+                            mprf(_("%s catches fire!"), mon->name(DESC_A).c_str());
                         behaviour_event(mon, ME_SCARE, me.agent());
                         xom_is_stimulated(100);
                     }
@@ -1364,8 +1391,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         // If you are no longer dying, you must be dead.
         if (decay_enchantment(me))
         {
-            if (you.see_cell(position))
-
+            if (you.can_see(this))
             {
                 if (type == MONS_PILLAR_OF_SALT)
                 {
@@ -1481,7 +1507,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     {
         if (decay_enchantment(me))
         {
-            coord_def base_position = this->props["base_position"].get_coord();
+            coord_def base_position = props["base_position"].get_coord();
             // Do a thing.
             if (you.see_cell(base_position))
                 mprf(_("The portal closes; %s is severed."), name(DESC_THE).c_str());
@@ -1493,7 +1519,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             add_ench(ENCH_SEVERED);
 
             // Severed tentacles immediately become "hostile" to everyone (or insane)
-            this->attitude = ATT_NEUTRAL;
+            attitude = ATT_NEUTRAL;
             behaviour_event(this, ME_ALERT);
         }
     }
@@ -1503,10 +1529,10 @@ void monster::apply_enchantment(const mon_enchant &me)
     {
         if (decay_enchantment(me))
         {
-            if (this->has_ench(ENCH_SEVERED))
+            if (has_ench(ENCH_SEVERED))
                 break;
 
-            if (!this->friendly())
+            if (!friendly())
                 break;
 
             if (!silenced(you.pos()))
@@ -1517,7 +1543,7 @@ void monster::apply_enchantment(const mon_enchant &me)
                     mpr(_("You hear a distant and violent thrashing sound."));
             }
 
-            this->attitude = ATT_HOSTILE;
+            attitude = ATT_HOSTILE;
             behaviour_event(this, ME_ALERT, &you);
         }
     }
@@ -1563,7 +1589,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         break;
 
     case ENCH_TP:
-        if (decay_enchantment(me, true))
+        if (decay_enchantment(me, true) && !no_tele(true, false))
             monster_teleport(this, true);
         break;
 
@@ -1608,7 +1634,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     //This is like Corona, but if silver harms them, it sticky flame levels of damage.
     case ENCH_SILVER_CORONA:
 
-        if (this->is_chaotic())
+        if (is_chaotic())
         {
             bolt beam;
             beam.flavour = BEAM_LIGHT;
@@ -1664,7 +1690,7 @@ bool monster::is_summoned(int* duration, int* summon_type) const
         if (summon_type != NULL)
             *summon_type = 0;
 
-        return (false);
+        return false;
     }
     if (duration != NULL)
         *duration = abj.duration;
@@ -1675,13 +1701,13 @@ bool monster::is_summoned(int* duration, int* summon_type) const
         if (summon_type != NULL)
             *summon_type = 0;
 
-        return (true);
+        return true;
     }
     if (summon_type != NULL)
         *summon_type = summ.degree;
 
     if (mons_is_conjured(type))
-        return (false);
+        return false;
 
     switch (summ.degree)
     {
@@ -1702,10 +1728,15 @@ bool monster::is_summoned(int* duration, int* summon_type) const
 
     // Some object which was animated, and thus not really summoned.
     case MON_SUMM_ANIMATE:
-        return (false);
+        return false;
     }
 
-    return (true);
+    return true;
+}
+
+bool monster::is_perm_summoned() const
+{
+    return testbits(flags, MF_HARD_RESET | MF_NO_REWARD);
 }
 
 void monster::apply_enchantments()
@@ -1751,7 +1782,8 @@ static const char *enchant_names[] =
     "withdrawn", "attached", "guardian_timer", "levitation",
     "liquefying", "tornado", "fake_abjuration",
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
-    "inner_flame", "roused", "breath timer", "deaths_door", "rolling", "buggy",
+    "inner_flame", "roused", "breath timer", "deaths_door", "rolling",
+    "ozocubus_armour", "buggy",
 };
 
 static const char *_mons_enchantment_name(enchant_type ench)
@@ -1836,14 +1868,14 @@ mon_enchant &mon_enchant::operator += (const mon_enchant &other)
             duration = INFINITE_DURATION;
         merge_killer(other.who, other.source);
     }
-    return (*this);
+    return *this;
 }
 
 mon_enchant mon_enchant::operator + (const mon_enchant &other) const
 {
     mon_enchant tmp(*this);
     tmp += other;
-    return (tmp);
+    return tmp;
 }
 
 killer_type mon_enchant::killer() const
@@ -1865,7 +1897,7 @@ actor* mon_enchant::agent() const
 
 int mon_enchant::modded_speed(const monster* mons, int hdplus) const
 {
-    return (_mod_speed(mons->hit_dice + hdplus, mons->speed));
+    return _mod_speed(mons->hit_dice + hdplus, mons->speed);
 }
 
 int mon_enchant::calc_duration(const monster* mons,
@@ -1892,6 +1924,7 @@ int mon_enchant::calc_duration(const monster* mons,
     case ENCH_INVIS:
     case ENCH_FEAR_INSPIRING:
     case ENCH_STONESKIN:
+    case ENCH_OZOCUBUS_ARMOUR:
         cturn = 1000 / _mod_speed(25, mons->speed);
         break;
     case ENCH_LIQUEFYING:
@@ -1968,11 +2001,11 @@ int mon_enchant::calc_duration(const monster* mons,
 
     case ENCH_PORTAL_PACIFIED:
         // Must be set by spell.
-        return (0);
+        return 0;
 
     case ENCH_BREATH_WEAPON:
         // Must be set by creature.
-        return (0);
+        return 0;
 
     case ENCH_PORTAL_TIMER:
         cturn = 30 * 10 / _mod_speed(10, mons->speed);
@@ -2025,7 +2058,7 @@ int mon_enchant::calc_duration(const monster* mons,
 
     dprf("cturn: %d, raw_duration: %d", cturn, raw_duration);
 
-    return (raw_duration);
+    return raw_duration;
 }
 
 // Calculate the effective duration (in terms of normal player time - 10

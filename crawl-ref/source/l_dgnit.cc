@@ -29,14 +29,14 @@ static item_list _lua_get_ilist(lua_State *ls, int ndx)
         if (!err.empty())
             luaL_error(ls, err.c_str());
 
-        return (ilist);
+        return ilist;
     }
     else
     {
         item_list **ilist =
             clua_get_userdata<item_list*>(ls, ITEMLIST_METATABLE, ndx);
         if (ilist)
-            return (**ilist);
+            return **ilist;
 
         luaL_argerror(ls, ndx, "Expected item list object or string");
         return item_list();
@@ -60,21 +60,21 @@ static int dgn_item_from_index(lua_State *ls)
     else
         lua_pushnil(ls);
 
-    return (1);
+    return 1;
 }
 
 static int dgn_items_at(lua_State *ls)
 {
     COORDS(c, 1, 2);
     lua_push_floor_items(ls, env.igrid(c));
-    return (1);
+    return 1;
 }
 
 static int _dgn_item_spec(lua_State *ls)
 {
     const item_list ilist = _lua_get_ilist(ls, 1);
     dlua_push_object_type<item_list>(ls, ITEMLIST_METATABLE, ilist);
-    return (1);
+    return 1;
 }
 
 static int dgn_create_item(lua_State *ls)
@@ -87,14 +87,14 @@ static int dgn_create_item(lua_State *ls)
 
     dgn_place_multiple_items(ilist, c, level);
     link_items();
-    return (0);
+    return 0;
 }
 
 static int dgn_item_property_remove(lua_State *ls)
 {
     if (item_def *item = clua_get_item(ls, 1))
         item->props.erase(luaL_checkstring(ls, 2));
-    return (0);
+    return 0;
 }
 
 static int dgn_item_property_set(lua_State *ls)
@@ -104,8 +104,10 @@ static int dgn_item_property_set(lua_State *ls)
         const std::string key = luaL_checkstring(ls, 2);
         const std::string type = luaL_checkstring(ls, 3);
         if (type.empty() || type.length() > 1)
+        {
             luaL_error(ls, "Expected type: [BbSifsC], got: '%s'",
                        type.c_str());
+        }
 
         switch (type[0])
         {
@@ -136,7 +138,7 @@ static int dgn_item_property_set(lua_State *ls)
             break;
         }
     }
-    return (0);
+    return 0;
 }
 
 static int dgn_item_property(lua_State *ls)
@@ -146,13 +148,15 @@ static int dgn_item_property(lua_State *ls)
         const std::string key = luaL_checkstring(ls, 2);
         const std::string type = luaL_checkstring(ls, 3);
         if (type.empty() || type.length() > 1)
+        {
             luaL_error(ls, "Expected type: [BbSifsC], got: '%s'",
                        type.c_str());
+        }
 
         if (!item->props.exists(key))
         {
             lua_pushnil(ls);
-            return (1);
+            return 1;
         }
 
         switch (type[0])
@@ -180,14 +184,14 @@ static int dgn_item_property(lua_State *ls)
             const coord_def p(item->props[key].get_coord());
             lua_pushnumber(ls, p.x);
             lua_pushnumber(ls, p.y);
-            return (2);
+            return 2;
         }
         default:
             luaL_error(ls, "Unknown type: '%s'", type.c_str());
             break;
         }
     }
-    return (1);
+    return 1;
 }
 
 // Returns two arrays: one of floor items, one of shop items.
@@ -242,7 +246,7 @@ static int dgn_stash_items(lua_State *ls)
         lua_rawseti(ls, -2, ++index);
     }
 
-    return (2);
+    return 2;
 }
 
 const struct luaL_reg dgn_item_dlib[] =

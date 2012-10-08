@@ -5,31 +5,38 @@ dummy_back
 %%%%
 Abyssal Knight
 
-심연의 신 '루고누'를 신봉하는 심연의 기사는, 혼돈과 타락을 퍼트리기 위해, 어비스로부터 던전으로 온 자들이다.
+Abyssal Knights worship Lugonu, and are sent from the Abyss into the Dungeon to
+spread corruption and chaos.
 %%%%
 Air Elementalist
 
-전격 마법을 주로 구사하는 대기술사들은, 특히 생존하는데 유용한 마법들을 점차적으로 익힐 수 있다.
+Air Elementalists have learned the Shock spell. Later on, their book of Air
+provides them with flexibility to survive.
 %%%%
 Arcane Marksman
 
-마법 궁수는, 투척술에 능하며, 투척물들을 강화시킬 마법서도 소유하고 있다.
+Arcane Marksmen carry ranged weapons, and use magic to make their foes more
+vulnerable to attacks from afar.
 %%%%
 Artificer
 
-Artificers start with a few magical devices and are competent at using such tools.
+Artificers start with a few magical devices and are competent at using such
+tools.
 %%%%
 Assassin
 
-암살자는 오직 은신과, 적의 뒤통수를 치는 것에 특화되어 있다. 이들은 단검과 망토뿐만 아니라, 블로우 건과 치명적인 큐레어 독이 발린 바늘을 가지고 시작한다.
+Assassins are all about stealth, ready to stab unaware opponents. Not just
+dagger and cloak, they carry nasty curare needles for their blowgun.
 %%%%
 Berserker
 
-광전사는 마법을 경멸하는, 분노의 신 '트로그'의 신자이다. 광폭화를 시전한 광전사는 누구도 막을 수 없을 만큼 강력하지만, 이런 강력함으로 인한 자만으로 인해 종종 위험에 빠지기도 한다.
+Berserkers believe in Trog, the magic-hating god of frenzy. Not much can stop a
+raging berserker early on, apart from hubris.
 %%%%
 Chaos Knight
 
-혼돈의 기사는, 변덕스러운 혼돈의 신 '좀'의 종복들이다. 이는, 변덕적인 좀의 장난감이기도 하다는 이야기.
+Chaos Knights are playthings of the unpredictable Xom, and are subject to the
+god's constantly changing moods.
 %%%%
 Conjurer
 
@@ -37,71 +44,87 @@ Conjurer
 %%%%
 Death Knight
 
-죽음의 기사들은, 네크로맨시의 신 '이레데넴눌'의 이름으로 언데드들을 부릴 수 있는 근접 전사들이다.
+Death Knights are melee fighters who command the undead in the name of
+Yredelemnul the Dark.
 %%%%
 Earth Elementalist
 
-대지술사들은 모래바람을 이용한 마법들을 익히고 있으며, 마법 주문을 강화시킬 신비한 돌들도 가지고 있다. '대지의 마법서'를 통해, 더 강력한 대지마법들을 익힐 수도 있다.
+Earth Elementalists know the Sandblast spell, and carry stones to increase the
+spell's power. More earthen spells are in their book of Geomancy.
 %%%%
 Enchanter
 
-주술사들은 자신을 보조하거나, 혹은 상대를 방해하기 위한 주술들을 사용한다. 또한, 유용하면서도 다양한 효과를 지닌 다양한 다트들도 가지고 시작한다.
+Enchanters use spells to boost themselves in battle, or incapacitate others.
+They also start with good darts.
 %%%%
 Fighter
 
-전사들은 갑옷과 방패, 그리고 선택가능한 무기를 가지고 시작한다. 그들은 그 어떤 다른 직업보다도 강인한 체력을 가지고 있다.
+Fighters come with armour and shield, as well as a weapon of their choice. They
+have more health than any other background.
 %%%%
 Fire Elementalist
 
-화염술사들은 '불꽃의 마법서'를 소지하고 있으며, '불꽃의 혀끝'마법을 익히고 있다. 불꽃의 마법서의 마법들은, 모두 강력한 위력에 집중해 있는 마법들이다.
+Fire Elementalists start with the book of Flames and know the Flame Tongue
+spell. The other spells in their book focus on destruction as well.
 %%%%
 Gladiator
 
-검투사들은 가벼운 갑옷과 방패를 착용하였으며, 자유롭게 무기를 선택하여, 그들의 검투 경기를 준비한다.
+Gladiators are ready for the arena with light armour, shield, nets and a weapon
+of their choice.
 %%%%
 Healer
 
-치유사들은 치유의 신 '엘라이빌론'의 가르침을 따르며, 자신과 다른 상처입은 자들을 치료한다. 치료는 짐승과 미개한 존재들을 평화롭게 할 수 있으며, 그로부터 경험치도 얻을 수 있다.
+Healers are followers of Elyvilon, ready to heal themselves and others. Such
+healing will possibly pacify beasts and brutes, yielding experience.
 %%%%
 Hunter
 
-사냥꾼들은, 귀찮은 마법들의 도움 없이도 멀리서 적들을 공격할 수 있다. 사냥꾼들의 사냥 도구는 종족에 따라 달라진다.
+Hunters are able to attack at range, without relying on pesky magic.
 %%%%
 Ice Elementalist
 
-냉기술사들은 '냉기의 마법서'를 소지하고, 냉기 마법들을 익히고 있다. '냉기의 마법서'로 부터는 공격마법뿐이 아닌, 여러 가지 다양한 용도의 마법들을 배울 수 있다.
+Ice Elementalists start with the book of Frost and the Freeze spell. The book's
+other spells are quite versatile.
 %%%%
 Monk
 
-수도승들은, 로브 한 벌과, 자신의 육체. 즉 두 주먹만으로 던전 안의 위험들과 맞설 준비가 되어 있는 자들이다.
+Monks are ready to take on everything in the dungeon wearing just a robe and
+using their body.
 %%%%
 Necromancer
 
-강령술에 특화된 마법사들이다. 죽음의 마술이 담긴 마법서를 가지고 시작하며, 적에게 끔직한 고통을 안기는 '고통'마법을 익히고 있다.
+Necromancers are wizards specializing in the practice of death magic. They
+start out with the Pain spell.
 %%%%
 Priest
 
-사제들은 '진'의 신봉자들이다. 그들은 진의 가르침을, 던전 내의 존재들에게 선사한다. 예외적으로 힐 오크들은, 오크의 신 '베오그'를 따를 수 있다.
+Priests are followers of Zin, spreading the god's word to the Dungeon's
+inhabitants. Hill Orcs instead follow the orc god Beogh.
 %%%%
 Skald
 
-성전사는, '전투 성가의 서'의 노래들로, 전투를 보조하는 마법형 근접 전사들이다.
+Skalds are melee fighters who can boost themselves in battle with spells from
+the book of War Chants.
 %%%%
 Stalker
 
-추적자들은 은신과 변이마법들로, 적에게 접근하여 적을 제압한다.
+Stalkers use stealth and transformative magic to approach and subdue their
+victims.
 %%%%
 Summoner
 
-소환마법이 특기인 소환사들은 '소집의 마법서'를 소지하고 있으며, 시작할 때는 작은 동물들을 소환하여 부릴 수 있다.
+Summoners start with the book of Callings and are able to Summon Small Mammals
+from the start.
 %%%%
 Transmuter
 
-Transmuters shift their form to fight in a beast's shape. They can turn sticks into snakes as well.
+Transmuters shift their form to fight in a beast's shape. They can turn sticks
+into snakes as well.
 %%%%
 Venom Mage
 
-독술사들은 '초보 독살자들의 핸드북'마법과 독침 마법을 가지고 시작한다. 이 마법들은 특히 초반에 유용하다.
+Venom Mages start with the Young Poisoner's Handbook and the Sting spell. They
+have an easy time early on.
 %%%%
 Wanderer
 
@@ -109,9 +132,11 @@ Wanderer
 %%%%
 Warper
 
-전이술사들은, 전이 마법들이 들어있는 '공간 왜곡의 마법서'를 가지고 시작하며, 선택한 무기와 순간이동의 마법 두루마리를 가지고 시작한다.
+Warpers start with a weapon of their choice and a Blinking scroll. They can
+learn spells from the book of Spatial Translocations.
 %%%%
 Wizard
 
-마법사들은, 다양한 종류의 마법들이 들어있는 마법서를 가지고 시작한다. 그들은 그 어느 직업보다도 많은 마력을 가지고 있다.
+Wizards start with a book of Minor Magic, containing a wide range of spells.
+They have higher magical reserves than any other background.
 %%%%

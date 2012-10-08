@@ -13,13 +13,13 @@
 
 #include "env.h"
 #include "invent.h"
-#include "item_use.h"
 #include "itemprop.h"
 #include "items.h"
 #include "options.h"
 #include "player.h"
 #include "stuff.h"
 #include "tags.h"
+#include "throw.h"
 
 #include <algorithm>
 
@@ -361,7 +361,10 @@ void player_quiver::_maybe_fill_empty_slot()
     if (unquiver_weapon && order.empty())
     {
         // Setting the quantity to zero will force the quiver to be empty,
-        // should nothing else be found.
+        // should nothing else be found.  We also set the base type to
+        // OBJ_UNASSIGNED so this is not an invalid object with a real type,
+        // as that would trigger an assertion on saving.
+        m_last_used_of_type[slot].base_type = OBJ_UNASSIGNED;
         m_last_used_of_type[slot].quantity = 0;
     }
     else
@@ -488,7 +491,15 @@ void player_quiver::load(reader& inf)
     ASSERT(count <= ARRAYSZ(m_last_used_of_type));
 
     for (unsigned int i = 0; i < count; i++)
+    {
         unmarshallItem(inf, m_last_used_of_type[i]);
+#if TAG_MAJOR_VERSION == 33
+        // We haven't always been so careful about making sure this was
+        // either OBJ_UNASSIGNED or valid.
+        if (m_last_used_of_type[i].quantity == 0)
+            m_last_used_of_type[i].base_type = OBJ_UNASSIGNED;
+#endif
+    }
 }
 
 // ----------------------------------------------------------------------
@@ -542,26 +553,26 @@ static bool _item_matches(const item_def &item, fire_type types,
         if (item.inscription.find(manual ? "+F" : "+f", 0)
             != std::string::npos)
         {
-            return (true);
+            return true;
         }
 
     if (item.base_type == OBJ_MISSILES)
     {
         if ((types & FIRE_DART) && item.sub_type == MI_DART)
-            return (true);
+            return true;
         if ((types & FIRE_STONE) && item.sub_type == MI_STONE)
-            return (true);
+            return true;
         if ((types & FIRE_JAVELIN) && item.sub_type == MI_JAVELIN)
-            return (true);
+            return true;
         if ((types & FIRE_ROCK) && item.sub_type == MI_LARGE_ROCK)
-            return (true);
+            return true;
         if ((types & FIRE_NET) && item.sub_type == MI_THROWING_NET)
-            return (true);
+            return true;
 
         if (types & FIRE_LAUNCHER)
         {
             if (launcher && item.launched_by(*launcher))
-                return (true);
+                return true;
         }
     }
     else if (item.base_type == OBJ_WEAPONS && is_throwable(&you, item))
@@ -570,18 +581,18 @@ static bool _item_matches(const item_def &item, fire_type types,
             && item.special == SPWPN_RETURNING
             && item_ident(item, ISFLAG_KNOW_TYPE))
         {
-            return (true);
+            return true;
         }
         if ((types & FIRE_DAGGER) && item.sub_type == WPN_DAGGER)
-            return (true);
+            return true;
         if ((types & FIRE_SPEAR) && item.sub_type == WPN_SPEAR)
-            return (true);
+            return true;
         if ((types & FIRE_HAND_AXE) && item.sub_type == WPN_HAND_AXE)
-            return (true);
+            return true;
         if ((types & FIRE_CLUB) && item.sub_type == WPN_CLUB)
-            return (true);
+            return true;
     }
-    return (false);
+    return false;
 }
 
 // Returns inv slot that contains an item that looks like item,
@@ -592,7 +603,7 @@ static int _get_pack_slot(const item_def& item)
         return -1;
 
     if (in_inventory(item) && _items_similar(item, you.inv[item.link], false))
-        return (item.link);
+        return item.link;
 
     // First try to find the exact same item.
     for (int i = 0; i < ENDOFPACK; i++)

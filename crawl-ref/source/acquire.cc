@@ -20,6 +20,7 @@
 #include "dungeon.h"
 #include "externs.h"
 #include "food.h"
+#include "goditem.h"
 #include "itemname.h"
 #include "itemprop.h"
 #include "items.h"
@@ -158,7 +159,7 @@ static armour_type _pick_wearable_armour(const armour_type arm)
           result = NUM_ARMOURS;
     }
 
-    return (result);
+    return result;
 }
 
 static armour_type _acquirement_armour_subtype(bool divine)
@@ -328,7 +329,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
         }
     }
 
-    return (result);
+    return result;
 }
 
 // If armour acquirement turned up a non-ego non-artefact armour item,
@@ -391,7 +392,7 @@ static bool _try_give_plain_armour(item_def &arm)
 
     // All available secondary slots already filled.
     if (picked == NUM_ARMOURS)
-        return (false);
+        return false;
 
     arm.clear();
     arm.quantity = 1;
@@ -407,7 +408,7 @@ static bool _try_give_plain_armour(item_def &arm)
     item_colour(arm);
 
     ASSERT(arm.is_valid());
-    return (true);
+    return true;
 }
 
 // Write results into arguments.
@@ -558,7 +559,7 @@ static int _acquirement_weapon_subtype(bool divine)
         if (x_chance_in_y(acqweight, count += acqweight))
             result = i;
     }
-    return (result);
+    return result;
 }
 
 static bool _have_item_with_types(object_class_type basetype, int subtype)
@@ -569,10 +570,10 @@ static bool _have_item_with_types(object_class_type basetype, int subtype)
         if (item.defined()
             && item.base_type == basetype && item.sub_type == subtype)
         {
-            return (true);
+            return true;
         }
     }
-    return (false);
+    return false;
 }
 
 static missile_type _acquirement_missile_subtype()
@@ -622,7 +623,7 @@ static missile_type _acquirement_missile_subtype()
     default:
         break;
     }
-    return (result);
+    return result;
 }
 
 static int _acquirement_jewellery_subtype()
@@ -642,23 +643,23 @@ static int _acquirement_jewellery_subtype()
             break;
     }
 
-    return (result);
+    return result;
 }
 
-static int _acquirement_staff_subtype(const has_vector& already_has)
+static bool _want_rod()
 {
     // First look at skills to determine whether the player gets a rod.
     int spell_skills = 0;
     for (int i = SK_SPELLCASTING; i <= SK_LAST_MAGIC; i++)
         spell_skills += you.skills[i];
 
-    if (random2(spell_skills) < you.skills[SK_EVOCATIONS] + 3
-            && !one_chance_in(5))
-    {
-        return get_random_rod_type();
-    }
+    return random2(spell_skills) < you.skills[SK_EVOCATIONS] + 3
+           && !one_chance_in(5);
+}
 
-    // Now try to pick an enhancer staff matching the player's best skill.
+static int _acquirement_staff_subtype(const has_vector& already_has)
+{
+    // Try to pick an enhancer staff matching the player's best skill.
     skill_type best_spell_skill = best_skill(SK_SPELLCASTING, SK_EVOCATIONS);
     bool found_enhancer = false;
     int result = random2(NUM_STAVES);
@@ -737,7 +738,7 @@ static int _acquirement_misc_subtype()
         result = MISC_CRYSTAL_BALL_OF_ENERGY;
     }
 
-    return (result);
+    return result;
 }
 
 static int _acquirement_wand_subtype()
@@ -789,10 +790,10 @@ static int _acquirement_wand_subtype()
             picked = type;
     }
 
-    return (picked);
+    return picked;
 }
 
-static int _find_acquirement_subtype(object_class_type class_wanted,
+static int _find_acquirement_subtype(object_class_type &class_wanted,
                                      int &quantity, bool divine,
                                      int agent = -1)
 {
@@ -820,6 +821,10 @@ static int _find_acquirement_subtype(object_class_type class_wanted,
 
     while (1)
     {
+        // Staves and rods have a common acquirement class.
+        if (class_wanted == OBJ_STAVES || class_wanted == OBJ_RODS)
+            class_wanted = _want_rod() ? OBJ_RODS : OBJ_STAVES;
+
         switch (class_wanted)
         {
         case OBJ_FOOD:
@@ -834,6 +839,7 @@ static int _find_acquirement_subtype(object_class_type class_wanted,
         case OBJ_WANDS:      type_wanted = _acquirement_wand_subtype(); break;
         case OBJ_STAVES:     type_wanted = _acquirement_staff_subtype(already_has);
             break;
+        case OBJ_RODS:       type_wanted = random2(NUM_RODS); break;
         case OBJ_JEWELLERY:  type_wanted = _acquirement_jewellery_subtype();
             break;
         default: break;         // gold, books
@@ -845,8 +851,11 @@ static int _find_acquirement_subtype(object_class_type class_wanted,
         dummy.plus = 1; // empty wands would be useless
         dummy.flags |= ISFLAG_IDENT_MASK;
 
-        if (is_useless_item(dummy, false) && useless_count++ < 200)
+        if ((is_useless_item(dummy, false) || god_hates_item(dummy))
+            && useless_count++ < 200)
+        {
             continue;
+        }
 
         if (!try_again)
             break;
@@ -858,7 +867,7 @@ static int _find_acquirement_subtype(object_class_type class_wanted,
             break;
     }
 
-    return (type_wanted);
+    return type_wanted;
 }
 
 // The weight of a spell takes into account its disciplines' skill levels
@@ -910,7 +919,7 @@ static int _book_weight(book_type book)
         total_weight += _spell_weight(stype);
     }
 
-    return (total_weight);
+    return total_weight;
 }
 
 static bool _is_magic_skill(int skill)
@@ -937,7 +946,7 @@ static bool _skill_useless_with_god(int skill)
     case GOD_NO_GOD:
         return (skill == SK_INVOCATIONS);
     default:
-        return (false);
+        return false;
     }
 }
 
@@ -1058,7 +1067,7 @@ static bool _do_book_acquirement(item_def &book, int agent)
         if (!make_book_theme_randart(book, 0, 0, 5 + coinflip(), 20,
                                      SPELL_NO_SPELL, owner))
         {
-            return (false);
+            return false;
         }
         break;
 
@@ -1066,7 +1075,7 @@ static bool _do_book_acquirement(item_def &book, int agent)
     {
         book.sub_type  = BOOK_RANDART_LEVEL;
         if (!make_book_level_randart(book, level, -1, owner))
-            return (false);
+            return false;
         break;
     }
 
@@ -1074,7 +1083,7 @@ static bool _do_book_acquirement(item_def &book, int agent)
     {
         // The Tome of Destruction is rare enough we won't change this.
         if (book.sub_type == BOOK_DESTRUCTION)
-            return (true);
+            return true;
 
         int weights[NUM_SKILLS];
         int total_weights = 0;
@@ -1125,14 +1134,14 @@ static bool _do_book_acquirement(item_def &book, int agent)
         break;
     } // manuals
     } // switch book choice
-    return (true);
+    return true;
 }
 
 static int _failed_acquirement(bool quiet)
 {
     if (!quiet)
-        mpr(gettext("The demon of the infinite void smiles upon you."));
-    return (NON_ITEM);
+        mpr(_("The demon of the infinite void smiles upon you."));
+    return NON_ITEM;
 }
 
 static int _weapon_brand_quality(int brand, bool range)
@@ -1586,7 +1595,7 @@ int acquirement_create_item(object_class_type class_wanted,
         ASSERT(mitm[thing_created].is_valid());
         mitm[thing_created].props["acquired"].get_int() = agent;
     }
-    return (thing_created);
+    return thing_created;
 }
 
 bool acquirement(object_class_type class_wanted, int agent,
@@ -1633,7 +1642,7 @@ bool acquirement(object_class_type class_wanted, int agent,
             if (agent == AQ_WIZMODE)
             {
                 canned_msg(MSG_OK);
-                return (false);
+                return false;
             }
 
             // If we've gotten a HUP signal then the player will be unable
@@ -1642,7 +1651,7 @@ bool acquirement(object_class_type class_wanted, int agent,
             {
                 mpr(gettext("Acquirement interrupted by HUP signal."), MSGCH_ERROR);
                 you.turn_is_over = false;
-                return (false);
+                return false;
             }
             break;
         }
@@ -1658,5 +1667,5 @@ bool acquirement(object_class_type class_wanted, int agent,
     *item_index = acquirement_create_item(class_wanted, agent, quiet,
                                           you.pos(), debug);
 
-    return (true);
+    return true;
 }

@@ -8,15 +8,14 @@ Guarantees:
 * A crash at any moment may not cause corruption -- the save will return to
   the exact state it had at the last commit().
 
-Caveats/issues:
+Notes:
 * Unless DO_FSYNC is defined, crashes that put down the operating system
   may break the consistency guarantee.
-* A commit() will break readers who read a chunk that was deleted or
-  overwritten.  Not that it's a sane thing to do...  Writers don't have
-  any such limitations, an uncompleted write will be not committed yet
-  but won't be corrupted.
-* Readers ignore uncompleted writes; completed but not committed ones will
-  be available immediately -- yet a crash will lose them.
+* Incomplete writes don't have any effects, but don't break commits or reads
+  (which both use the last complete write).
+* Readers always get the last complete (but not necessarily committed) write
+  (ie, READ_UNCOMMITTED) at the time they started; it is safe to continue
+  reading even if the chunk has been changed since.
 */
 
 #include "AppHdr.h"
@@ -126,6 +125,29 @@ package::package(const char* file, bool writeable, bool empty)
     }
 }
 
+package::package()
+  : rw(true), n_users(0), dirty(false), aborted(false)
+{
+    dprintf("package: initializing tmp file\n");
+    filename = "[tmp]";
+
+    char file[7] = "XXXXXX";
+    fd = mkstemp(file);
+    if (fd == -1)
+        sysfail("can't create temporary save file");
+
+    ::unlink(file); // FIXME: won't work on Windows
+
+    if (!lock_file(fd, true))
+    {
+        close(fd);
+        sysfail("failed to lock newly created save (%s)", file);
+    }
+
+    dirty = true;
+    file_len = sizeof(file_header);
+}
+
 void package::load()
 {
     file_header head;
@@ -141,8 +163,10 @@ void package::load()
         corrupted("save file (%s) corrupted -- header truncated", filename.c_str());
 
     if (htole(head.magic) != PACKAGE_MAGIC)
+    {
         corrupted("save file (%s) corrupted -- not a DCSS save file",
              filename.c_str());
+    }
     off_t len = lseek(fd, 0, SEEK_END);
     if (len == -1)
         sysfail("save file (%s) is not seekable", filename.c_str());
@@ -227,6 +251,7 @@ void package::commit()
         sysfail("flush error while saving");
 #endif
 
+    new_chunks.clear();
     collect_blocks();
     dirty = false;
 
@@ -330,6 +355,7 @@ void package::finish_chunk(const std::string name, len_t at)
 {
     free_chunk(name);
     directory[name] = at;
+    new_chunks.insert(at);
     dirty = true;
 }
 
@@ -340,7 +366,10 @@ void package::free_chunk(const std::string name)
         return;
 
     dprintf("freeing chunk(%s)\n", name.c_str());
-    unlinked_blocks.push(ci->second);
+    if (new_chunks.count(ci->second))
+        free_block_chain(ci->second);
+    else // can't free committed blocks yet
+        unlinked_blocks.push_back(ci->second);
 
     dirty = true;
 }
@@ -378,20 +407,35 @@ len_t package::write_directory()
 
 void package::collect_blocks()
 {
-    while (!unlinked_blocks.empty())
+    for (ssize_t i = unlinked_blocks.size() - 1; i >= 0; --i)
     {
-        len_t at = unlinked_blocks.top();
-        unlinked_blocks.pop();
-        dprintf("freeing an unlinked chain at %d\n", at);
-        while (at)
-        {
-            bm_t::iterator bl = block_map.find(at);
-            ASSERT(bl != block_map.end());
-            dprintf("+- at %d size=%d+header\n", at, bl->second.first);
-            free_block(at, bl->second.first + sizeof(block_header));
-            at = bl->second.second;
-            block_map.erase(bl);
-        }
+        len_t at = unlinked_blocks[i];
+        // Blocks may be re-added onto the list if they're in use.
+        if (i != (ssize_t)unlinked_blocks.size() - 1)
+            unlinked_blocks[i] = unlinked_blocks[unlinked_blocks.size() - 1];
+        unlinked_blocks.pop_back();
+        free_block_chain(at);
+    }
+}
+
+void package::free_block_chain(len_t at)
+{
+    if (reader_count.count(at))
+    {
+        dprintf("deleting an in-use chain at %d\n", at);
+        unlinked_blocks.push_back(at);
+        return;
+    }
+
+    dprintf("freeing an unlinked chain at %d\n", at);
+    while (at)
+    {
+        bm_t::iterator bl = block_map.find(at);
+        ASSERT(bl != block_map.end());
+        dprintf("+- at %d size=%d+header\n", at, bl->second.first);
+        free_block(at, bl->second.first + sizeof(block_header));
+        at = bl->second.second;
+        block_map.erase(bl);
     }
 }
 
@@ -736,6 +780,7 @@ void chunk_writer::finish_block(len_t next)
 
 void chunk_writer::write(const void *data, len_t len)
 {
+    ASSERT(data);
     ASSERT(!pkg->aborted);
 
 #ifdef USE_ZLIB
@@ -762,7 +807,8 @@ void chunk_reader::init(len_t start)
 {
     ASSERT(!pkg->aborted);
     pkg->n_users++;
-    next_block = start;
+    pkg->reader_count[start]++;
+    first_block = next_block = start;
     block_left = 0;
 
 #ifdef USE_ZLIB
@@ -803,6 +849,9 @@ chunk_reader::~chunk_reader()
     if (inflateEnd(&zs) != Z_OK)
         fail("save file decompression failed during clean-up: %s", zs.msg);
 #endif
+    ASSERT(pkg->reader_count[first_block] > 0);
+    if (!--pkg->reader_count[first_block])
+        pkg->reader_count.erase(first_block);
     ASSERT(pkg->n_users > 0);
     pkg->n_users--;
 }
@@ -852,6 +901,7 @@ len_t chunk_reader::raw_read(void *data, len_t len)
 
 len_t chunk_reader::read(void *data, len_t len)
 {
+    ASSERT(data);
     if (pkg->aborted)
         return 0;
 

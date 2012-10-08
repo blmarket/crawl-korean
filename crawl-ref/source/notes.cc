@@ -12,8 +12,6 @@
 #include "notes.h"
 
 #include "branch.h"
-#include "cio.h"
-#include "describe.h"
 #include "files.h"
 #include "kills.h"
 #include "hiscores.h"
@@ -24,6 +22,7 @@
 #include "religion.h"
 #include "skills2.h"
 #include "spl-util.h"
+#include "state.h"
 #include "tags.h"
 
 #define NOTES_VERSION_NUMBER 1002
@@ -45,15 +44,6 @@ static int _real_god_power(int religion, int idx)
     return count;
 }
 
-static bool _is_noteworthy_skill_level(int level)
-{
-    for (unsigned int i = 0; i < Options.note_skill_levels.size(); ++i)
-        if (level == Options.note_skill_levels[i])
-            return (true);
-
-    return (false);
-}
-
 static bool _is_highest_skill(int skill)
 {
     for (int i = 0; i < NUM_SKILLS; ++i)
@@ -61,9 +51,9 @@ static bool _is_highest_skill(int skill)
         if (i == skill)
             continue;
         if (you.skills[i] >= you.skills[skill])
-            return (false);
+            return false;
     }
-    return (true);
+    return true;
 }
 
 static bool _is_noteworthy_hp(int hp, int maxhp)
@@ -84,19 +74,23 @@ static bool _is_noteworthy_dlevel(unsigned short place)
     const uint8_t branch = (place >> 8) & 0xFF;
     const int lev = (place & 0xFF);
 
-    // Special levels (Abyss, etc.) are always interesting.
+    // The Abyss is noted a different way (since we care mostly about the cause).
+    if (branch == BRANCH_ABYSS)
+        return false;
+
+    // Other portal levels are always interesting.
     if (!is_connected_branch(static_cast<branch_type>(branch)))
-        return (true);
+        return true;
 
     if (lev == _dungeon_branch_depth(branch)
         || branch == BRANCH_MAIN_DUNGEON && (lev % 5) == 0
         || branch == BRANCH_MAIN_DUNGEON && lev == 14
         || branch != BRANCH_MAIN_DUNGEON && lev == 1)
     {
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // Is a note worth taking?
@@ -106,6 +100,7 @@ static bool _is_noteworthy(const Note& note)
 {
     // Always noteworthy.
     if (note.type == NOTE_XP_LEVEL_CHANGE
+        || note.type == NOTE_LEARN_SPELL
         || note.type == NOTE_GET_GOD
         || note.type == NOTE_GOD_GIFT
         || note.type == NOTE_GET_MUTATION
@@ -130,7 +125,7 @@ static bool _is_noteworthy(const Note& note)
         || note.type == NOTE_ALLY_DEATH
         || note.type == NOTE_FEAT_MIMIC)
     {
-        return (true);
+        return true;
     }
 
     // Never noteworthy, hooked up for fun or future use.
@@ -138,25 +133,25 @@ static bool _is_noteworthy(const Note& note)
         || note.type == NOTE_MAXHP_CHANGE
         || note.type == NOTE_MAXMP_CHANGE)
     {
-        return (false);
+        return false;
     }
 
     // Xom effects are only noteworthy if the option is true.
     if (note.type == NOTE_XOM_EFFECT)
-        return (Options.note_xom_effects);
+        return Options.note_xom_effects;
 
     // God powers might be noteworthy if it's an actual power.
     if (note.type == NOTE_GOD_POWER
         && _real_god_power(note.first, note.second) == -1)
     {
-        return (false);
+        return false;
     }
 
     // HP noteworthiness is handled in its own function.
     if (note.type == NOTE_HP_CHANGE
         && !_is_noteworthy_hp(note.first, note.second))
     {
-        return (false);
+        return false;
     }
 
     // Skills are noteworthy if in the skill value list or if
@@ -164,28 +159,16 @@ static bool _is_noteworthy(const Note& note)
     if (note.type == NOTE_GAIN_SKILL || note.type == NOTE_LOSE_SKILL)
     {
         if (Options.note_all_skill_levels
-            || _is_noteworthy_skill_level(note.second)
+            || note.second <= 27 && Options.note_skill_levels[note.second]
             || Options.note_skill_max && _is_highest_skill(note.first))
         {
-            return (true);
+            return true;
         }
-        return (false);
+        return false;
     }
 
     if (note.type == NOTE_DUNGEON_LEVEL_CHANGE)
-    {
-        if (!_is_noteworthy_dlevel(note.packed_place))
-            return (false);
-
-        level_id place = level_id::from_packed_place(note.packed_place);
-        // Non-persistent places are always interesting.
-        if (!is_connected_branch(place))
-            return (true);
-    }
-
-    // Learning a spell is always noteworthy if note_all_spells is set.
-    if (note.type == NOTE_LEARN_SPELL && Options.note_all_spells)
-        return (true);
+        return _is_noteworthy_dlevel(note.packed_place);
 
     for (unsigned i = 0; i < note_list.size(); ++i)
     {
@@ -195,22 +178,9 @@ static bool _is_noteworthy(const Note& note)
         const Note& rnote(note_list[i]);
         switch (note.type)
         {
-        case NOTE_DUNGEON_LEVEL_CHANGE:
-            if (rnote.packed_place == note.packed_place)
-                return (false);
-            break;
-
-        case NOTE_LEARN_SPELL:
-            if (spell_difficulty(static_cast<spell_type>(rnote.first))
-                >= spell_difficulty(static_cast<spell_type>(note.first)))
-            {
-                return (false);
-            }
-            break;
-
         case NOTE_GOD_POWER:
             if (rnote.first == note.first && rnote.second == note.second)
-                return (false);
+                return false;
             break;
 
         case NOTE_HP_CHANGE:
@@ -219,7 +189,7 @@ static bool _is_noteworthy(const Note& note)
             if (note.turn - rnote.turn < 5
                 && note.first * 2 >= rnote.first)
             {
-                return (false);
+                return false;
             }
             break;
 
@@ -227,10 +197,10 @@ static bool _is_noteworthy(const Note& note)
             mpr("Buggy note passed: unknown note type");
             // Return now, rather than give a "Buggy note passed" message
             // for each note of the matching type in the note list.
-            return (true);
+            return true;
         }
     }
-    return (true);
+    return true;
 }
 
 static const char* _number_to_ordinal(int number)
@@ -447,7 +417,8 @@ void Note::check_milestone() const
         const int br = place_branch(packed_place),
                  dep = place_depth(packed_place);
 
-        if (br != -1)
+        // Wizlabs report their milestones on their own.
+        if (br != -1 && br != BRANCH_WIZLAB)
         {
             ASSERT(br >= 0 && br < NUM_BRANCHES);
             std::string branch = place_name(packed_place, true, false).c_str();
@@ -502,7 +473,7 @@ static bool notes_active = false;
 
 bool notes_are_active()
 {
-    return (notes_active);
+    return notes_active;
 }
 
 void take_note(const Note& note, bool force)
@@ -533,7 +504,7 @@ void load_notes(reader& inf)
         return;
 
     const int num_notes = unmarshallInt(inf);
-    for (long i = 0; i < num_notes; ++i)
+    for (int i = 0; i < num_notes; ++i)
     {
         Note new_note;
         new_note.load(inf);

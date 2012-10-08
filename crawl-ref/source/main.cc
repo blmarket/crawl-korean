@@ -9,6 +9,9 @@
 #include <algorithm>
 
 #include <errno.h>
+#ifndef TARGET_OS_WINDOWS
+# include <langinfo.h>
+#endif
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,6 +61,7 @@
 #include "fprop.h"
 #include "fight.h"
 #include "files.h"
+#include "fineff.h"
 #include "food.h"
 #include "godabil.h"
 #include "godpassive.h"
@@ -90,6 +94,7 @@
 #include "ouch.h"
 #include "output.h"
 #include "player.h"
+#include "player-equip.h"
 #include "player-stats.h"
 #include "quiver.h"
 #include "random.h"
@@ -115,6 +120,7 @@
 #include "startup.h"
 #include "tags.h"
 #include "terrain.h"
+#include "throw.h"
 #include "transform.h"
 #include "traps.h"
 #include "travel.h"
@@ -136,9 +142,6 @@
 #ifdef USE_TILE
  #include "tiledef-dngn.h"
  #include "tilepick.h"
-#endif
-#ifdef USE_TILE_LOCAL
- #include "tilereg.h"
 #endif
 
 #ifdef DGL_SIMPLE_MESSAGING
@@ -246,7 +249,13 @@ int main(int argc, char *argv[])
     bind_textdomain_codeset("Crawl", "utf-8");
     textdomain("Crawl");
 #endif    
-
+#ifdef USE_TILE_WEB
+    if (strcasecmp(nl_langinfo(CODESET), "UTF-8"))
+    {
+        fprintf(stderr, "Webtiles require an UTF-8 locale.\n");
+        exit(1);
+    }
+#endif
 #ifdef DEBUG_GLOBALS
     real_Options = new game_options();
     real_you = new player();
@@ -383,6 +392,13 @@ static void _launch_game()
 
     if (!game_start && you.prev_save_version != Version::Long())
     {
+#if TAG_MAJOR_VERSION == 33
+        if (numcmp(you.prev_save_version.c_str(), "0.11-a0-1711") == -1)
+        {
+            dprf("Will allow level_stack underflows.");
+            you.props["ticket_to_D:1"] = true;
+        }
+#endif
         snprintf(info, INFO_SIZE, "Upgraded the game from %s to %s",
                                   you.prev_save_version.c_str(),
                                   Version::Long().c_str());
@@ -446,6 +462,11 @@ static void _launch_game()
 
 static void _show_commandline_options_help()
 {
+#if defined(TARGET_OS_WINDOWS) && defined(USE_TILE_LOCAL)
+    std::string help;
+# define puts(x) (help += x, help += '\n')
+#endif
+
     puts("Command line options:");
     puts("  -help                 prints this list of options");
     puts("  -name <string>        character name");
@@ -496,6 +517,10 @@ static void _show_commandline_options_help()
     puts("");
     puts("Miscellaneous options:");
     puts("  -dump-maps       write map Lua to stderr when parsing .des files");
+
+#if defined(TARGET_OS_WINDOWS) && defined(USE_TILE_LOCAL)
+    text_popup(help, L"Dungeon Crawl command line help");
+#endif
 }
 
 static void _wanderer_startup_message()
@@ -915,8 +940,8 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     case CMD_RESISTS_SCREEN:
     case CMD_READ_MESSAGES:
     case CMD_SEARCH_STASHES:
-        mpr(gettext("You can't repeat informational commands."));
-        return (false);
+        mpr(_("You can't repeat informational commands."));
+        return false;
 
     // Multi-turn commands
     case CMD_PICKUP:
@@ -932,8 +957,8 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     case CMD_MEMORISE_SPELL:
     case CMD_EXPLORE:
     case CMD_INTERLEVEL_TRAVEL:
-        mpr(gettext("You can't repeat multi-turn commands."));
-        return (false);
+        mpr(_("You can't repeat multi-turn commands."));
+        return false;
 
     // Miscellaneous non-repeatable commands.
     case CMD_TOGGLE_AUTOPICKUP:
@@ -957,21 +982,21 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
 #ifdef USE_TILE
     case CMD_EDIT_PLAYER_TILE:
 #endif
-        mpr(gettext("You can't repeat that command."));
-        return (false);
+        mpr(_("You can't repeat that command."));
+        return false;
 
     case CMD_DISPLAY_MAP:
-        mpr(gettext("You can't repeat map commands."));
-        return (false);
+        mpr(_("You can't repeat map commands."));
+        return false;
 
     case CMD_MOUSE_MOVE:
     case CMD_MOUSE_CLICK:
-        mpr(gettext("You can't repeat mouse clicks or movements."));
-        return (false);
+        mpr(_("You can't repeat mouse clicks or movements."));
+        return false;
 
     case CMD_REPEAT_CMD:
-        mpr(gettext("You can't repeat the repeat command!"));
-        return (false);
+        mpr(_("You can't repeat the repeat command!"));
+        return false;
 
     case CMD_RUN_LEFT:
     case CMD_RUN_DOWN:
@@ -981,15 +1006,15 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     case CMD_RUN_DOWN_LEFT:
     case CMD_RUN_UP_RIGHT:
     case CMD_RUN_DOWN_RIGHT:
-        mpr(gettext("Why would you want to repeat a run command?"));
-        return (false);
+        mpr(_("Why would you want to repeat a run command?"));
+        return false;
 
     case CMD_PREV_CMD_AGAIN:
         ASSERT(!is_again);
         if (crawl_state.prev_cmd == CMD_NO_CMD)
         {
-            mpr(gettext("No previous command to repeat."));
-            return (false);
+            mpr(_("No previous command to repeat."));
+            return false;
         }
 
         return _cmd_is_repeatable(crawl_state.prev_cmd, true);
@@ -997,7 +1022,7 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     case CMD_MOVE_NOWHERE:
     case CMD_REST:
     case CMD_SEARCH:
-        return (i_feel_safe(true));
+        return i_feel_safe(true);
 
     case CMD_MOVE_LEFT:
     case CMD_MOVE_DOWN:
@@ -1013,18 +1038,18 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
                          "are nearby?"), false, 'n');
         }
 
-        return (true);
+        return true;
 
     case CMD_NO_CMD:
     case CMD_NO_CMD_DEFAULT:
-        mpr(gettext("Unknown command, not repeating."));
-        return (false);
+        mpr(_("Unknown command, not repeating."));
+        return false;
 
     default:
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // Used to determine whether to apply the berserk penalty at end of round.
@@ -1138,8 +1163,6 @@ static void _input()
     disable_check player_disabled(you.incapacitated());
     religion_turn_start();
     god_conduct_turn_start();
-    you.update_beholders();
-    you.update_fearmongers();
     you.walking = 0;
 
     // Currently only set if Xom accidentally kills the player.
@@ -1331,10 +1354,10 @@ static bool _stairs_check_mesmerised()
         const monster* beholder = you.get_any_beholder();
         mprf(gettext("You cannot move away from %s!"),
              beholder->name(DESC_THE, true).c_str());
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 static bool _marker_vetoes_stair()
@@ -1359,7 +1382,7 @@ static bool _prompt_dangerous_portal(dungeon_feature_type ftype)
                      "self."), false, 'n');
 
     default:
-        return (true);
+        return true;
     }
 }
 
@@ -1449,11 +1472,7 @@ static void _go_upstairs()
     if (!_prompt_unique_pan_rune(ygrd))
         return;
 
-    const bool leaving_dungeon =
-        level_id::current() == level_id(BRANCH_MAIN_DUNGEON, 1)
-        && !feat_is_gate(ygrd);
-
-    if (leaving_dungeon)
+    if (ygrd == DNGN_EXIT_DUNGEON)
     {
         bool stay = true;
         std::string prompt = make_stringf(gettext("Are you sure you want to leave the "
@@ -1611,8 +1630,8 @@ static void _experience_check()
              / (exp_needed(xl + 1) - exp_needed(xl));
         perc = (nl - xl) * 100 - perc;
         mprf(you.lives < 2 ?
-             "You'll get an extra life in %d.%02d levels worth of XP." :
-             "If you died right now, you'd get an extra life in %d.%02d levels worth of XP.",
+             "You'll get an extra life in %d.%02d levels' worth of XP." :
+             "If you died right now, you'd get an extra life in %d.%02d levels' worth of XP.",
              perc / 100, perc % 100);
     }
 
@@ -1623,8 +1642,10 @@ static void _experience_check()
                 << std::endl;
 #ifdef DEBUG_DIAGNOSTICS
     if (wearing_amulet(AMU_THE_GOURMAND))
+    {
         mprf(MSGCH_DIAGNOSTICS, "Gourmand charge: %d",
              you.duration[DUR_GOURMAND]);
+    }
 
     mprf(MSGCH_DIAGNOSTICS, "Turns spent on this level: %d",
          env.turns_on_level);
@@ -1754,9 +1775,17 @@ static void _do_rest()
 
 static void _do_clear_map()
 {
-    mpr(gettext("Clearing level map."));
-    clear_map();
-    crawl_view.set_player_at(you.pos());
+    if (Options.show_travel_trail && env.travel_trail.size())
+    {
+        mpr(_("Clearing travel trail."));
+        clear_travel_trail();
+    }
+    else
+    {
+        mpr(_("Clearing level map."));
+        clear_map();
+        crawl_view.set_player_at(you.pos());
+    }
 }
 
 static void _do_display_map()
@@ -1821,7 +1850,6 @@ static void _do_list_gold()
 void process_command(command_type cmd)
 {
     apply_berserk_penalty = true;
-    you.has_constricted_this_turn = false;
     switch (cmd)
     {
 #ifdef USE_TILE
@@ -2108,7 +2136,7 @@ void process_command(command_type cmd)
 
     case CMD_QUIT:
         if (crawl_state.disables[DIS_CONFIRMATIONS]
-            || yes_or_no(_("Are you sure you want to quit without saving")))
+            || yes_or_no(_("Are you sure you want to abandon this character and quit the game")))
         {
             ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_QUITTING);
         }
@@ -2186,7 +2214,7 @@ static bool _decrement_a_duration(duration_type dur, int delay,
                                   msg_channel_type chan = MSGCH_DURATION)
 {
     if (you.duration[dur] < 1)
-        return (false);
+        return false;
 
     const int midpoint = get_expiration_threshold(dur);
 
@@ -2342,8 +2370,7 @@ static void _decrement_durations()
     if (you.duration[DUR_LIQUEFYING])
         invalidate_agrid();
 
-    if (_decrement_a_duration(DUR_SILENCE, delay, gettext("Your hearing returns.")))
-        you.attribute[ATTR_WAS_SILENCED] = 0;
+    _decrement_a_duration(DUR_SILENCE, delay, _("Your hearing returns."));
 
     _decrement_a_duration(DUR_REPEL_MISSILES, delay,
                           gettext("You feel less protected from missiles."),
@@ -2633,7 +2660,7 @@ static void _decrement_durations()
 
     if (you.duration[DUR_BERSERK]
         && (_decrement_a_duration(DUR_BERSERK, delay)
-            || you.hunger <= HUNGER_STARVING + BERSERK_NUTRITION))
+            || you.hunger + 100 <= HUNGER_STARVING + BERSERK_NUTRITION))
     {
         mpr(gettext("You are no longer berserk."));
         you.duration[DUR_BERSERK] = 0;
@@ -2684,7 +2711,7 @@ static void _decrement_durations()
         slow_player(dur);
 
         make_hungry(BERSERK_NUTRITION, true);
-        you.hunger = std::max(HUNGER_STARVING, you.hunger);
+        you.hunger = std::max(HUNGER_STARVING - 100, you.hunger);
 
         // 1KB: No berserk healing.
         you.hp = (you.hp + 1) * 2 / 3;
@@ -2695,9 +2722,8 @@ static void _decrement_durations()
         you.redraw_quiver = true; // Can throw again.
     }
 
-    if (_decrement_a_duration(DUR_CORONA, delay))
-        if (!you.backlit())
-            mpr(gettext("You are no longer glowing."), MSGCH_DURATION);
+    if (_decrement_a_duration(DUR_CORONA, delay) && !you.backlit())
+        mpr(_("You are no longer glowing."), MSGCH_DURATION);
 
     // Leak piety from the piety pool into actual piety.
     // Note that changes of religious status without corresponding actions
@@ -2718,8 +2744,11 @@ static void _decrement_durations()
 #endif
     }
 
-    _decrement_a_duration(DUR_TORNADO_COOLDOWN, delay,
-                          gettext("The winds around you calm down."));
+    if (_decrement_a_duration(DUR_TORNADO_COOLDOWN, delay,
+                              _("The winds around you calm down.")))
+    {
+        remove_tornado_clouds(MID_PLAYER);
+    }
     // Should expire before levitation.
     if (you.duration[DUR_TORNADO])
     {
@@ -2855,9 +2884,12 @@ static void _decrement_durations()
     }
 
     _decrement_a_duration(DUR_SHROUD_OF_GOLUBRIA, delay,
-                          gettext("Your shroud unravels."),
+                          _("Your shroud unravels."),
                           0,
-                          gettext("Your shroud begins to fray at the edges."));
+                          _("Your shroud begins to fray at the edges."));
+
+    if (!env.sunlight.empty())
+        process_sunlights();
 }
 
 static void _check_banished()
@@ -2922,7 +2954,8 @@ static void _regenerate_hp_and_mp(int delay)
     ASSERT(tmp >= 0 && tmp < 100);
     you.hit_points_regeneration = tmp;
 
-    // XXX: Don't let DD use guardian spirit for free HP. (due, dpeg)
+    // XXX: Don't let DD use guardian spirit for free HP, since their
+    // damage shaving is enough. (due, dpeg)
     if (player_spirit_shield() && you.species == SP_DEEP_DWARF)
         return;
 
@@ -3052,13 +3085,13 @@ static void _player_reacts()
     if (grd(you.pos()) == DNGN_LAVA)
         expose_player_to_element(BEAM_LAVA);
 
+    you.update_beholders();
+    you.update_fearmongers();
+
     _decrement_durations();
-    // handle no attack constrictions
-    if (!you.has_constricted_this_turn)
-        handle_noattack_constrictions(&you);
+    you.handle_constriction();
 
     // increment constriction durations
-    you.accum_been_constricted();
     you.accum_has_constricted();
 
     int capped_time = you.time_taken;
@@ -3146,6 +3179,29 @@ static void _player_reacts_to_monsters()
     if (_decrement_a_duration(DUR_SLEEP, you.time_taken))
         you.awake();
 
+    // Entering/leaving a suppression aura needs to redraw player stats
+    // and generally recalculate some things that aren't generally recalc'd
+    // with every step. This is how we detect crossing the threshold.
+    if (you.props.exists("exists_if_suppressed") != you.suppressed())
+    {
+        // HP and MP generally aren't recalculated each step, so we do it now
+        calc_hp_artefact();  // different from calc_hp()
+        calc_mp();
+
+        // Redraw everything that suppression might affect
+        you.redraw_hit_points = true;
+        you.redraw_magic_points = true;
+        you.redraw_armour_class = true;
+        you.redraw_evasion = true;
+        you.redraw_stats[STAT_STR] = true;
+        you.redraw_stats[STAT_DEX] = true;
+        you.redraw_stats[STAT_INT] = true;
+
+        if (you.suppressed())
+            you.props["exists_if_suppressed"] = true;
+        else
+           you.props.erase("exists_if_suppressed");
+    }
 }
 
 static void _update_golubria_traps()
@@ -3175,6 +3231,8 @@ void world_reacts()
 {
     // All markers should be activated at this point.
     ASSERT(!env.markers.need_activate());
+
+    fire_final_effects();
 
     if (crawl_state.viewport_monster_hp)
     {
@@ -3247,18 +3305,18 @@ void world_reacts()
 
     // Zotdef spawns only in the main dungeon
     if (crawl_state.game_is_zotdef()
-        && player_in_branch(BRANCH_MAIN_DUNGEON)
+        && player_in_branch(root_branch)
         && you.num_turns > 100)
     {
         zotdef_bosses_check();
-        for (int i = 0; i < SPAWN_SIZE; i++)
+        for (int i = 0; i < ZOTDEF_SPAWN_SIZE; i++)
         {
             // Reduce critter frequency for first wave
-            if (you.num_turns<CYCLE_LENGTH && one_chance_in(3))
+            if (you.num_turns<ZOTDEF_CYCLE_LENGTH && one_chance_in(3))
                 continue;
 
-            if ((you.num_turns % CYCLE_LENGTH > CYCLE_INTERVAL)
-                && x_chance_in_y((you.num_turns % CYCLE_LENGTH), CYCLE_LENGTH*3))
+            if ((you.num_turns % ZOTDEF_CYCLE_LENGTH > ZOTDEF_CYCLE_INTERVAL)
+                && x_chance_in_y((you.num_turns % ZOTDEF_CYCLE_LENGTH), ZOTDEF_CYCLE_LENGTH*3))
             {
                 zotdef_spawn(false);
             }
@@ -3282,14 +3340,11 @@ void world_reacts()
 
     if (you.num_turns != -1)
     {
-        // Zotdef: Time only passes in the main dungeon
-        if (you.num_turns < INT_MAX)
+        // Zotdef: Time only passes in the hall of zot
+        if ((!crawl_state.game_is_zotdef() || player_in_branch(root_branch))
+            && you.num_turns < INT_MAX)
         {
-            if (!crawl_state.game_is_zotdef()
-                || player_in_branch(BRANCH_MAIN_DUNGEON))
-            {
-                you.num_turns++;
-            }
+            you.num_turns++;
         }
 
         if (env.turns_on_level < INT_MAX)
@@ -3336,7 +3391,7 @@ static command_type _get_next_cmd()
     if (is_userfunction(keyin))
     {
         run_macro(get_userfunction(keyin).c_str());
-        return (CMD_NEXT_CMD);
+        return CMD_NEXT_CMD;
     }
 
     return _keycode_to_command(keyin);
@@ -3373,7 +3428,7 @@ static keycode_type _get_next_keycode()
     if (!is_synthetic_key(keyin))
         mesclr();
 
-    return (keyin);
+    return keyin;
 }
 
 // Check squares adjacent to player for given feature and return how
@@ -3440,7 +3495,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
             if (yesno(prompt.c_str(), true, 'n'))
             {
                 remove_net_from(mon);
-                return (true);
+                return true;
             }
         }
 
@@ -3450,7 +3505,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         if (you.berserk_penalty != NO_BERSERK_PENALTY)
             you.berserk_penalty = 0;
 
-        return (true);
+        return true;
     }
 
     if (find_trap(target) && grd(target) != DNGN_UNDISCOVERED_TRAP)
@@ -3459,25 +3514,25 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         {
             if (!form_can_wield())
             {
-                mpr(gettext("You can't disarm traps in your present form."));
-                return (true);
+                mpr(_("You can't disarm traps in your present form."));
+                return true;
             }
 
             if (!player_can_reach_floor())
-                return (true);
+                return true;
 
             const int cloud = env.cgrid(target);
             if (cloud != EMPTY_CLOUD
                 && is_damaging_cloud(env.cloud[ cloud ].type, true))
             {
-                mpr(gettext("You can't get to that trap right now."));
-                return (true);
+                mpr(_("You can't get to that trap right now."));
+                return true;
             }
         }
 
         // If you're confused, you may attempt it and stumble into the trap.
         disarm_trap(target);
-        return (true);
+        return true;
     }
 
     const dungeon_feature_type feat = grd(target);
@@ -3487,7 +3542,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         {
         case DNGN_OPEN_DOOR:
             _close_door(move); // for convenience
-            return (true);
+            return true;
         default:
         {
             bool do_msg = true;
@@ -3508,13 +3563,13 @@ static bool _untrap_target(const coord_def move, bool check_confused)
                 mpr(gettext("You swing at nothing."));
             make_hungry(3, true);
             you.turn_is_over = true;
-            return (true);
+            return true;
         }
         }
     }
 
     // Else it's a closed door and needs further handling.
-    return (false);
+    return false;
 }
 
 // Opens doors and may also handle untrapping/attacking, etc.
@@ -3792,11 +3847,8 @@ static void _open_door(coord_def move, bool check_confused)
             if (!seen_secret && grd(dc) == DNGN_SECRET_DOOR)
             {
                 seen_secret = true;
-                dungeon_feature_type secret
-                    = grid_secret_door_appearance(dc);
-                mprf(gettext("That %s was a secret door!"),
-                     feature_description(secret, NUM_TRAPS, "",
-                                         DESC_PLAIN, false).c_str());
+                mprf(_("That %s was a secret door!"),
+                     feature_description_at(dc, "", DESC_PLAIN, false).c_str());
             }
         }
         grd(dc) = DNGN_OPEN_DOOR;
@@ -4156,7 +4208,8 @@ static void _move_player(coord_def move)
             }
             prompt += "?";
 
-            if (!yesno(prompt.c_str(), false, 'n'))
+            if (!crawl_state.disables[DIS_CONFIRMATIONS]
+                && !yesno(prompt.c_str(), false, 'n'))
             {
                 canned_msg(MSG_OK);
                 return;
@@ -4329,6 +4382,11 @@ static void _move_player(coord_def move)
                 random_range(3, 10), &you, 0, ETC_RANDOM);
         }
 
+        if (delay_is_run(current_delay_action()) && env.travel_trail.empty())
+            env.travel_trail.push_back(you.pos());
+        else if (!delay_is_run(current_delay_action()))
+            clear_travel_trail();
+
         you.time_taken *= player_movement_speed();
         you.time_taken = div_rand_round(you.time_taken, 10);
 
@@ -4342,6 +4400,9 @@ static void _move_player(coord_def move)
         you.stop_being_constricted();
 
         move_player_to_grid(targ, true, false);
+
+        if (delay_is_run(current_delay_action()))
+            env.travel_trail.push_back(you.pos());
 
         you.walking = move.abs();
         you.prev_move = move;
@@ -4449,7 +4510,7 @@ static command_type _find_command(const keyseq& keys)
     if (is_userfunction(keyin))
         cmd = CMD_NEXT_CMD;
     flush_input_buffer(FLUSH_REPEAT_SETUP_DONE);
-    return (cmd);
+    return cmd;
 }
 
 static void _check_cmd_repeat(int last_turn)
@@ -4687,6 +4748,7 @@ static void _compile_time_asserts()
     COMPILE_CHECK(NUM_TAG_MINORS < 256);
     COMPILE_CHECK(NUM_MONSTERS < 32768); // stored in a 16 bit field,
                                          // with untested signedness
+    COMPILE_CHECK(MAX_BRANCH_DEPTH < 256); // 8 bits
 
     // Also some runtime stuff; I don't know if the order of branches[]
     // needs to match the enum, but it currently does.

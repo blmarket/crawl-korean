@@ -56,16 +56,16 @@ KillMaster::~KillMaster()
 const char *KillMaster::category_name(kill_category kc) const
 {
     if (kc >= KC_YOU && kc < KC_NCATEGORIES)
-        return (kill_category_names[kc]);
-    return (NULL);
+        return kill_category_names[kc];
+    return NULL;
 }
 
 bool KillMaster::empty() const
 {
     for (int i = 0; i < KC_NCATEGORIES; ++i)
         if (!categorized_kills[i].empty())
-            return (false);
-    return (true);
+            return false;
+    return true;
 }
 
 void KillMaster::save(writer& outf) const
@@ -117,13 +117,13 @@ int KillMaster::total_kills() const
         int count = categorized_kills[i].get_kills(kills);
         grandtotal += count;
     }
-    return (grandtotal);
+    return grandtotal;
 }
 
 std::string KillMaster::kill_info() const
 {
     if (empty())
-        return ("");
+        return "";
 
     std::string killtext;
 
@@ -168,9 +168,11 @@ std::string KillMaster::kill_info() const
     }
 
 #ifdef CLUA_BINDINGS
+    bool custom = false;
     unwind_var<int> lthrottle(clua.throttle_unit_lines, 500000);
     // Call the kill dump Lua function with null a, to tell it we're done.
-    if (!clua.callfn("c_kill_list", "ss", NULL, grandt.c_str()))
+    if (!clua.callfn("c_kill_list", "ss>b", NULL, grandt.c_str(), &custom)
+        || !custom)
 #endif
     {
         // We can sum up ourselves, if Lua doesn't want to.
@@ -208,7 +210,8 @@ void KillMaster::add_kill_info(std::string &killtext,
     lua_pushboolean(clua, separator);
 
     unwind_var<int> lthrottle(clua.throttle_unit_lines, 500000);
-    if (!clua.callfn("c_kill_list", 3, 0))
+    if (!clua.callfn("c_kill_list", 3, 1)
+        || !lua_isboolean(clua, -1) || !lua_toboolean(clua, -1))
 #endif
     {
 #ifdef CLUA_BINDINGS
@@ -240,6 +243,9 @@ void KillMaster::add_kill_info(std::string &killtext,
             killtext += numbuf;
         }
     }
+#ifdef CLUA_BINDINGS
+    lua_pop(clua, 1);
+#endif
 }
 
 int KillMaster::num_kills(const monster* mon, kill_category cat) const
@@ -332,7 +338,7 @@ int Kills::get_kills(std::vector<kill_exp> &all_kills) const
     count += ghosts.size();
 
     std::sort(all_kills.begin(), all_kills.end());
-    return (count);
+    return count;
 }
 
 void Kills::save(writer& outf) const
@@ -853,8 +859,10 @@ static int kill_lualc_holiness(lua_State *ls)
         case MH_PLANT:      verdict = "plant"; break;
         }
         if (ke->modifier != kill_monster_desc::M_NORMAL
-                && ke->modifier != kill_monster_desc::M_SHAPESHIFTER)
+            && ke->modifier != kill_monster_desc::M_SHAPESHIFTER)
+        {
             verdict = "undead";
+        }
         lua_pushstring(ls, verdict);
         return 1;
     }
@@ -986,8 +994,10 @@ static int kill_lualc_summary(lua_State *ls)
     char buf[120];
     *buf = 0;
     if (count)
+    {
         snprintf(buf, sizeof buf, "%u creature%s vanquished.",
                 count, count > 1? "s" : "");
+    }
     lua_pushstring(ls, buf);
     return 1;
 }

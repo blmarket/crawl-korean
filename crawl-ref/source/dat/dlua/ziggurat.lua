@@ -257,8 +257,8 @@ mset(with_props("place:Slime:$", { jelly_protect = true }),
      with_props("place:Geh:$", { weight = 5 }),
      with_props("place:Dis:$", { weight = 5 }),
      with_props("place:Tar:$", { weight = 5 }),
-     with_props("daeva / angel / cherub / pearl dragon / ophan / " ..
-                "apis / paladin / phoenix / w:5 silver star", { weight = 2 }),
+     with_props("daeva / angel / cherub / pearl dragon / shedu band / ophan / " ..
+                "apis / paladin / w:5 phoenix / w:5 silver star", { weight = 2 }),
      with_props("hill giant / cyclops / stone giant / fire giant / " ..
                 "frost giant / ettin / titan", { weight = 2 }),
      with_props("fire elemental / fire drake / hell hound / efreet / " ..
@@ -500,7 +500,7 @@ local function ziggurat_create_loot_vault(entry, exit)
   end
 
   local function place_loot_chamber()
-    local res = dgn.place_map(map, false, true)
+    local res = dgn.place_map(map, true, true)
     if res then
       has_loot_chamber = true
     end
@@ -583,7 +583,7 @@ local function ziggurat_place_pillars(c)
   local function place_pillar()
     if centered then
       if good_place(c) then
-        return dgn.place_map(map, false, true, c.x, c.y)
+        return dgn.place_map(map, true, true, c.x, c.y)
       end
     else
       for i = 1, 100 do

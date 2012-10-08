@@ -4,7 +4,6 @@
 
 #include "coord.h"
 #include "coordit.h"
-#include "fixedarray.h"
 #include "libutil.h"
 #include "los_def.h"
 
@@ -23,15 +22,15 @@ static losfield_t* _lookup_globallos(const coord_def& p, const coord_def& q)
     COMPILE_CHECK(LOS_KNOWN * 2 <= sizeof(losfield_t) * 8);
 
     if (!map_bounds(p) || !map_bounds(q))
-        return (NULL);
+        return NULL;
     coord_def diff = q - p;
-    if (diff.abs() > LOS_MAX_RADIUS_SQ)
-        return (NULL);
+    if (diff.abs() > LOS_RADIUS_SQ)
+        return NULL;
     // p < q iff p.x < q.x || p.x == q.x && p.y < q.y
     if (diff < coord_def(0, 0))
-        return (&globallos[q.x][q.y][-diff.x + o_half_x][-diff.y + o_half_y]);
+        return &globallos[q.x][q.y][-diff.x + o_half_x][-diff.y + o_half_y];
     else
-        return (&globallos[p.x][p.y][ diff.x + o_half_x][ diff.y + o_half_y]);
+        return &globallos[p.x][p.y][ diff.x + o_half_x][ diff.y + o_half_y];
 }
 
 static void _save_los(los_def* los, los_type l)
@@ -109,12 +108,12 @@ static void _update_globallos_at(const coord_def& p, los_type l)
 bool cell_see_cell(const coord_def& p, const coord_def& q, los_type l)
 {
     if (l == LOS_ARENA)
-        return (true);
+        return true;
 
     losfield_t* flags = _lookup_globallos(p, q);
 
     if (!flags)
-        return (false); // outside range
+        return false; // outside range
 
     if (!(*flags & (l << LOS_KNOWN)))
         _update_globallos_at(p, l);

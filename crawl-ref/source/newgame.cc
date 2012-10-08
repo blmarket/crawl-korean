@@ -25,10 +25,8 @@
 #include "options.h"
 #include "random.h"
 #include "species.h"
-#include "sprint.h"
 #include "state.h"
 #include "stuff.h"
-#include "tutorial.h"
 #include "korean.h"
 
 #ifdef USE_TILE_LOCAL
@@ -132,25 +130,20 @@ static std::string _welcome(const newgame_def* ng)
     {
         if (!text.empty())
             text += " ";
-        text += gettext(get_job_name(ng->job));
+        text += _(get_job_name(ng->job));
     }
-    // 여기까지 종족 + 직업명.
-
-    // 이름이 있다면,
     if (!ng->name.empty())
     {
-        /// 이를테면 Neonssi the Minotaur Berserker가 계산되겠지만,
-        /// 번역하면 미노타 광전사 Neonssi 가 되게 하는게 목표.
-        text = make_stringf(gettext("%s the %s"), ng->name.c_str(), text.c_str());
+        if (!text.empty())
+            text = " the " + text;
+        text = ng->name + text;
     }
-    else if (!text.empty()) // 이름이 없는 경우
-    {
-        text = make_stringf(gettext("unnamed %s"), text.c_str());
-    }
-
-    if(text.empty()) return gettext("Welcome.");
-
-    return make_stringf(gettext("Welcome, %s."), text.c_str());
+    else if (!text.empty())
+        text = "unnamed " + text;
+    if (!text.empty())
+        text = ", " + text;
+    text = "Welcome" + text + ".";
+    return text;
 }
 
 static void _print_character_info(const newgame_def* ng)
@@ -164,33 +157,33 @@ static void _print_character_info(const newgame_def* ng)
 static bool _is_species_valid_choice(species_type species)
 {
     if (species < 0 || species > NUM_SPECIES)
-        return (false);
+        return false;
 
     if (species >= SP_ELF) // These are all invalid.
-        return (false);
+        return false;
 
 #if 0
     if (species == SP_MY_NEW_TRUNK_ONLY_EXPERIMENT
         && Version::ReleaseType() != VER_ALPHA)
     {
-        return (false);
+        return false;
     }
 #endif
 
     // Non-base draconians cannot be selected either.
     if (species >= SP_RED_DRACONIAN && species < SP_BASE_DRACONIAN)
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 // Determines if a job is valid.
 static bool _is_job_valid_choice(job_type job)
 {
     if (job < 0 || job > NUM_JOBS)
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 #ifdef ASSERTS
@@ -212,7 +205,7 @@ undead_state_type get_undead_state(const species_type sp)
         return US_SEMI_UNDEAD;
     default:
         ASSERT(!_species_is_undead(sp));
-        return (US_ALIVE);
+        return US_ALIVE;
     }
 }
 
@@ -514,7 +507,7 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
             cprintf(gettext("\nDo you really want to overwrite your old game? "));
             char c = getchm();
             if (c != 'Y' && c != 'y')
-                return (true);
+                return true;
         }
     }
 #endif
@@ -528,7 +521,7 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
 
     write_newgame_options_file(*choice);
 
-    return (false);
+    return false;
 }
 
 // Set ng_choice to defaults without overwriting name and game type.
@@ -635,7 +628,7 @@ static void _construct_species_menu(const newgame_def* ng,
 
         tmp->add_hotkey(index_to_letter(i));
         tmp->set_id(species);
-        tmp->set_description_text(getGameStartDescription(species_name(species)));
+        tmp->set_description_text(unwrap_desc(getGameStartDescription(species_name(species))));
         menu->attach_item(tmp);
         tmp->set_visible(true);
         if (defaults.species == species)
@@ -984,7 +977,7 @@ void job_group::attach(const newgame_def* ng, const newgame_def& defaults,
 
         tmp->add_hotkey(letter++);
         tmp->set_id(job);
-        tmp->set_description_text(getGameStartDescription(get_job_name(job)));
+        tmp->set_description_text(unwrap_desc(getGameStartDescription(get_job_name(job))));
 
         menu->attach_item(tmp);
         tmp->set_visible(true);
@@ -1030,7 +1023,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
         },
         {
             P_("Jobgroup", "Mage"),
-            coord_def(56, 0), 23,
+            coord_def(56, 0), 22,
             {JOB_WIZARD, JOB_CONJURER, JOB_SUMMONER, JOB_NECROMANCER,
              JOB_FIRE_ELEMENTALIST, JOB_ICE_ELEMENTALIST,
              JOB_AIR_ELEMENTALIST, JOB_EARTH_ELEMENTALIST, JOB_VENOM_MAGE}
@@ -1218,7 +1211,7 @@ static void _prompt_job(newgame_def* ng, newgame_def* ng_choice,
     _construct_backgrounds_menu(ng, defaults, freeform);
     MenuDescriptor* descriptor = new MenuDescriptor(&menu);
     descriptor->init(coord_def(X_MARGIN, CHAR_DESC_START_Y),
-                     coord_def(get_number_of_cols(), CHAR_DESC_START_Y + 2),
+                     coord_def(get_number_of_cols(), CHAR_DESC_START_Y + 3),
                      "descriptor");
     menu.attach_object(descriptor);
 
@@ -1340,11 +1333,11 @@ static weapon_type _fixup_weapon(weapon_type wp,
                                  const std::vector<weapon_choice>& weapons)
 {
     if (wp == WPN_UNKNOWN || wp == WPN_RANDOM || wp == WPN_VIABLE)
-        return (wp);
+        return wp;
     for (unsigned int i = 0; i < weapons.size(); ++i)
         if (wp == weapons[i].first)
-            return (wp);
-    return (WPN_UNKNOWN);
+            return wp;
+    return WPN_UNKNOWN;
 }
 
 static void _construct_weapon_menu(const weapon_type& defweapon,
@@ -1744,7 +1737,7 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
 {
     // No weapon use at all.  The actual item will be removed later.
     if (ng->species == SP_FELID)
-        return (true);
+        return true;
 
     switch (ng->job)
     {
@@ -1759,7 +1752,7 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
     case JOB_ARCANE_MARKSMAN:
         break;
     default:
-        return (true);
+        return true;
     }
 
     std::vector<weapon_choice> weapons = _get_weapons(ng);
@@ -1768,15 +1761,17 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
     if (weapons.size() == 1)
     {
         ng->weapon = ng_choice->weapon = weapons[0].first;
-        return (true);
+        return true;
     }
 
-    if (ng_choice->weapon == WPN_UNKNOWN)
-        if (!_prompt_weapon(ng, ng_choice, defaults, weapons))
-            return (false);
+    if (ng_choice->weapon == WPN_UNKNOWN
+        && !_prompt_weapon(ng, ng_choice, defaults, weapons))
+    {
+        return false;
+    }
 
     _resolve_weapon(ng, ng_choice, weapons);
-    return (true);
+    return true;
 }
 
 static void _construct_gamemode_map_menu(const mapref_vector& maps,

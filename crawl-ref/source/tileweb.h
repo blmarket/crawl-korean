@@ -72,7 +72,6 @@ public:
     // Webtiles-specific
     void textcolor(int col);
     void textbackground(int col);
-    void put_string(char *str);
     void put_ucs_string(ucs_t *str);
     void clear_to_end_of_line();
 
@@ -81,9 +80,11 @@ public:
     void pop_menu();
     void close_all_menus();
 
-    void write_message(const char *format, ...);
+    void write_message();
+    void write_message(PRINTF(1, ));
     void finish_message();
-    void send_message(const char *format = "", ...);
+    void send_message();
+    void send_message(PRINTF(1, ));
 
     bool has_receivers() { return !m_dest_addrs.empty(); }
     bool is_controlled_from_web() { return m_controlled_from_web; }
@@ -180,9 +181,12 @@ protected:
     coord_def m_next_view_br;
 
     std::bitset<GXM * GYM> m_dirty_cells;
-    void mark_dirty(const coord_def& gc) { m_dirty_cells[gc.y * GXM + gc.x] = true; }
-    void mark_clean(const coord_def& gc) { m_dirty_cells[gc.y * GXM + gc.x] = false; }
-    bool is_dirty(const coord_def& gc) { return m_dirty_cells[gc.y * GXM + gc.x]; }
+    std::bitset<GXM * GYM> m_cells_needing_redraw;
+    void mark_for_redraw(const coord_def& gc);
+    void mark_dirty(const coord_def& gc);
+    void mark_clean(const coord_def& gc);
+    bool is_dirty(const coord_def& gc);
+    bool cell_needs_redraw(const coord_def& gc);
 
     int m_current_flash_colour;
     int m_next_flash_colour;

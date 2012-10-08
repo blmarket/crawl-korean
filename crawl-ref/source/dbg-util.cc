@@ -10,11 +10,11 @@
 #include "artefact.h"
 #include "cio.h"
 #include "coord.h"
+#include "directn.h"
 #include "dungeon.h"
 #include "env.h"
 #include "libutil.h"
 #include "message.h"
-#include "mon-stuff.h"
 #include "mon-util.h"
 #include "religion.h"
 #include "shopping.h"
@@ -29,11 +29,11 @@ monster_type debug_prompt_for_monster(void)
     if (!cancelable_get_line_autohist(specs, sizeof specs))
     {
         if (specs[0] == '\0')
-            return (MONS_NO_MONSTER);
+            return MONS_NO_MONSTER;
 
-        return (get_monster_by_name(specs));
+        return get_monster_by_name(specs);
     }
-    return (MONS_NO_MONSTER);
+    return MONS_NO_MONSTER;
 }
 
 static void _dump_vault_table(const CrawlHashTable &table)
@@ -97,13 +97,6 @@ void debug_dump_levgen()
     mpr("");
 }
 
-void error_message_to_player(void)
-{
-    mpr("Oh dear. There appears to be a bug in the program.");
-    mpr("I suggest you leave this level then save as soon as possible.");
-
-}
-
 std::string debug_coord_str(const coord_def &pos)
 {
     return make_stringf("(%d, %d)%s", pos.x, pos.y,
@@ -120,50 +113,44 @@ std::string debug_mon_str(const monster* mon)
     out += make_stringf("%s [midx = %d]", debug_coord_str(mon->pos()).c_str(),
                         midx);
 
-    return (out);
+    return out;
+}
+
+static void _debug_mid_name(mid_t mid)
+{
+    if (mid == MID_PLAYER)
+    {
+        fprintf(stderr, "player %s",
+                debug_coord_str(you.pos()).c_str());
+    }
+    else
+    {
+        monster * const mons = monster_by_mid(mid);
+        if (mons)
+            fprintf(stderr, "%s", debug_mon_str(mons).c_str());
+        else
+            fprintf(stderr, "bad monster[%"PRImidt"]", mid);
+    }
 }
 
 void debug_dump_constriction(const actor *act)
 {
-    for (int i_c = 0; i_c < MAX_CONSTRICT; ++i_c)
+    if (act->constricting)
     {
-        short constricted = act->constricting[i_c];
-
-        if (constricted != NON_ENTITY)
+        actor::constricting_t::const_iterator i;
+        for (i = act->constricting->begin(); i != act->constricting->end(); ++i)
         {
-            fprintf(stderr, "Constricting[%d] ", i_c);
-            if (constricted == MHITYOU)
-            {
-                fprintf(stderr, "player %s ",
-                        debug_coord_str(you.pos()).c_str());
-            }
-            else if (invalid_monster_index(constricted))
-                fprintf(stderr, "invalid[%hd] ", constricted);
-            else
-            {
-                fprintf(stderr, "%s ",
-                        debug_mon_str(&env.mons[constricted]).c_str());
-            }
-
-            fprintf(stderr, "for %d turns\n", act->dur_has_constricted[i_c]);
+            fprintf(stderr, "Constricting ");
+            _debug_mid_name(i->first);
+            fprintf(stderr, " for %d ticks\n", i->second);
         }
     }
 
-    if (act->constricted_by != NON_ENTITY)
+    if (act->constricted_by)
     {
         fprintf(stderr, "Constricted by ");
-        if (act->constricted_by == MHITYOU)
-            fprintf(stderr, "player %s ", debug_coord_str(you.pos()).c_str());
-        else if (invalid_monster_index(act->constricted_by))
-            fprintf(stderr, "invalid[%hd] ", act->constricted_by);
-        else
-        {
-            fprintf(stderr, "%s ",
-                    debug_mon_str(&env.mons[act->constricted_by]).c_str());
-        }
-
-        fprintf(stderr, "for %d turns (%d escape attempts)\n",
-                act->dur_been_constricted, act->escape_attempts);
+        _debug_mid_name(act->constricted_by);
+        fprintf(stderr, "\n");
     }
 }
 
@@ -184,7 +171,7 @@ void debug_dump_mon(const monster* mon, bool recurse)
     if (in_bounds(mon->pos()))
     {
         std::string feat =
-            raw_feature_description(grd(mon->pos()), NUM_TRAPS, true);
+            raw_feature_description(mon->pos());
         fprintf(stderr, "On/in/over feature: %s\n\n", feat.c_str());
     }
 
@@ -363,7 +350,7 @@ skill_type debug_prompt_for_skill(const char *prompt)
     char specs[80];
     msgwin_get_line_autohist(prompt, specs, sizeof(specs));
     if (specs[0] == '\0')
-        return (SK_NONE);
+        return SK_NONE;
 
     return skill_from_name(lowercase_string(specs).c_str());
 }
@@ -388,7 +375,7 @@ skill_type skill_from_name(const char *name)
         }
     }
 
-    return (skill);
+    return skill;
 }
 
 std::string debug_art_val_str(const item_def& item)

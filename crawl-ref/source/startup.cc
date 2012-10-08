@@ -7,6 +7,7 @@
 
 #include "abyss.h"
 #include "arena.h"
+#include "branch.h"
 #include "cio.h"
 #include "command.h"
 #include "ctest.h"
@@ -94,8 +95,7 @@ static void _initialize()
     // Empty messaging string.
     info[0] = 0;
 
-    for (int i = 0; i < MAX_MONSTERS; ++i)
-        menv[i].reset();
+    reset_all_monsters();
 
     igrd.init(NON_ITEM);
     mgrd.init(NON_MONSTER);
@@ -116,7 +116,7 @@ static void _initialize()
         && crawl_state.title_screen)
     {
         tiles.draw_title();
-        tiles.update_title_msg("Loading Databases...");
+        tiles.update_title_msg("Loading databases...");
     }
 #endif
 
@@ -124,7 +124,7 @@ static void _initialize()
     databaseSystemInit();
 #ifdef USE_TILE_LOCAL
     if (crawl_state.title_screen)
-        tiles.update_title_msg("Loading Spells and Features...");
+        tiles.update_title_msg("Loading spells and features...");
 #endif
 
     init_feat_desc_cache();
@@ -205,7 +205,8 @@ static void _post_init(bool newc)
 
     calc_hp();
     calc_mp();
-    food_change(true);
+    if (you.form != TRAN_LICH)
+        food_change(true);
     shopping_list.refresh();
 
     run_map_local_preludes();
@@ -213,6 +214,8 @@ static void _post_init(bool newc)
     // Abyssal Knights start out in the Abyss.
     if (newc && you.char_direction == GDT_GAME_START)
         you.where_are_you = BRANCH_ABYSS;
+    else if (newc)
+        you.where_are_you = root_branch;
 
     // XXX: Any invalid level_id should do.
     level_id old_level;
@@ -230,6 +233,9 @@ static void _post_init(bool newc)
     // Debug compiles display a lot of "hidden" information, so we auto-wiz.
     you.wizard = true;
 #endif
+    // Save-less games are pointless except for tests.
+    if (Options.no_save)
+        you.wizard = true;
 
     init_properties();
     burden_change();
@@ -364,7 +370,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = gettext("Hints mode for Dungeon Crawl");
+    text = _("Hints Mode for Dungeon Crawl");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -508,8 +514,8 @@ static int _find_save(const std::vector<player_save_info>& chars,
 {
     for (int i = 0; i < static_cast<int>(chars.size()); ++i)
         if (chars[i].name == name)
-            return (i);
-    return (-1);
+            return i;
+    return -1;
 }
 
 static bool _game_defined(const newgame_def& ng)
@@ -952,5 +958,5 @@ bool startup_step()
 
     _post_init(newchar);
 
-    return (newchar);
+    return newchar;
 }

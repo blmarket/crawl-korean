@@ -34,12 +34,9 @@ void PlaceInfo::assert_validity() const
     ASSERT(num_visits == 0 && levels_seen == 0
            || num_visits > 0 && levels_seen > 0);
 
-    if (branch >= 0) // global data is -1
-        if (brdepth[branch] > 1
-            || brdepth[branch] != -1 &&  is_connected_branch(branch))
-        {
-            ASSERT((int)levels_seen <= brdepth[branch]);
-        }
+    // global data is -1
+    if (branch >= 0 && brdepth[branch] != -1 && is_connected_branch(branch))
+        ASSERT((int)levels_seen <= brdepth[branch]);
 
     ASSERT(turns_total == (turns_explore + turns_travel + turns_interlevel
                            + turns_resting + turns_other));
@@ -78,7 +75,7 @@ const PlaceInfo &PlaceInfo::operator += (const PlaceInfo &other)
     elapsed_resting    += other.elapsed_resting;
     elapsed_other      += other.elapsed_other;
 
-    return (*this);
+    return *this;
 }
 
 const PlaceInfo &PlaceInfo::operator -= (const PlaceInfo &other)
@@ -105,7 +102,7 @@ const PlaceInfo &PlaceInfo::operator -= (const PlaceInfo &other)
     elapsed_resting    -= other.elapsed_resting;
     elapsed_other      -= other.elapsed_other;
 
-    return (*this);
+    return *this;
 }
 
 PlaceInfo PlaceInfo::operator + (const PlaceInfo &other) const

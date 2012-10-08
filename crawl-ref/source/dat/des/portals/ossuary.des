@@ -468,7 +468,7 @@ NSUBST:  B = 1:= / *:n
 NSUBST:  C = 1:= / *:n
 NSUBST:  D = 1:= / *:n
 NSUBST:  E = 1:= / *:n
-KFEAT:   ~ = needle trap / arrow trap / spear trap / bolt trap / axe trap
+KFEAT:   ~ = needle trap / arrow trap / spear trap
 SUBST:   ~ = ~.
 NSUBST:  X = 1:< / *:.
 : ossuary_setup_features(_G)
@@ -551,7 +551,7 @@ SUBST:   CDJ = 1112
 MONS:    generate_awake zombie place:D:6 /\
          w:5 generate_awake mummy
 MONS:    plant col:darkgrey name:withered n_adj tile:mons_withered_plant /\
-         bog mummy hd:3 /\
+         bog body hd:3 spells:throw_frost;slow;corpse_rot name:decayed n_adj n_noc /\
          w:5 plant col:lightgrey name:withered n_adj tile:mons_withered_plant /\
          w:5 nothing
 ITEM:    any potion / any scroll / any jewellery w:1
@@ -655,10 +655,9 @@ MONS:    mummy
 MONS:    generate_awake centaur zombie / generate_awake hobgoblin zombie / \
          generate_awake big kobold zombie / nothing w:20
 MONS:    centaur zombie / hobgoblin zombie / big kobold zombie / nothing w:20
-KFEAT:   ~ = dart trap w:20 / axe trap w:2 / net trap / needle trap / \
-             alarm trap / floor w:40
+KFEAT:   ~ = dart trap w:20 / net trap / needle trap / alarm trap / floor w:40
 KFEAT:   T = alarm trap w:20 / net trap / floor w:70
-KFEAT:   ^ = net trap w:15 / needle trap w:4 / axe trap w:1 / floor w:20
+KFEAT:   ^ = net trap w:15 / needle trap w:4 / spear trap w:1 / floor w:20
 COLOUR:  ^ = red
 KFEAT:   W = dart trap / floor w:20
 : ossuary_setup_features(_G)
@@ -798,7 +797,7 @@ KMONS:   4 = Menkaure, mummy
 # Loot: 1-16 items
 ITEM:    any scroll / any potion / w:5 nothing
 KFEAT:   ^ = arrow trap / dart trap / alarm trap
-KFEAT:   m = bolt trap
+KFEAT:   m = spear trap
 KFEAT:   ~ = alarm trap
 NSUBST:  ' = 2:m / 25:1 / 25:2 / 30:^ / .
 SUBST:   X : XYc
@@ -860,7 +859,7 @@ ITEM:   any potion / any scroll / nothing w:1
 #
 # There are not always traps in corridors but they are guaranteed near the loot:
 KFEAT:  ' = arrow trap w:3 / dart trap w:5 / alarm trap w:7 / floor w:85
-KFEAT:  " = bolt trap w:1 / net trap w:3 / arrow trap w:5 / dart trap w:10
+KFEAT:  " = spear trap w:1 / net trap w:3 / arrow trap w:5 / dart trap w:10
 #
 : ossuary_setup_features(_G)
 MAP

@@ -5,7 +5,6 @@
 
 #include "delay.h"
 #include "dlua.h"
-#include "initfile.h"
 #include "libutil.h"
 #include "mon-act.h"
 #include "mon-behv.h"
@@ -41,7 +40,7 @@ void push_monster(lua_State *ls, monster* mons)
     {                                                                   \
     lua_pushlightuserdata(ls, mons);                                    \
     lua_pushcclosure(ls, l_mons_##closure, 1);                          \
-    return (1);                                                         \
+    return 1;                                                         \
     }
 
 MDEF(name)
@@ -84,7 +83,7 @@ MDEF(entry_name)
     else
         lua_pushnil(ls);
 
-    return (1);
+    return 1;
 }
 
 MDEF(x)
@@ -119,7 +118,7 @@ LUAFN(l_mons_add_energy)
     ASSERT_DLUA;
     monster* mons = clua_get_lightuserdata<monster>(ls, lua_upvalueindex(1));
     mons->speed_increment += luaL_checkint(ls, 1);
-    return (0);
+    return 0;
 }
 MDEFN(add_energy, add_energy)
 
@@ -164,7 +163,7 @@ MDEF(shapeshifter)
         lua_pushstring(ls, "shapeshifter");
     else
         lua_pushnil(ls);
-    return (1);
+    return 1;
 }
 
 MDEF(dancing_weapon)
@@ -176,14 +175,14 @@ MDEF(dancing_weapon)
     else
         lua_pushnil(ls);
 
-    return (1);
+    return 1;
 }
 
 MDEF(wont_attack)
 {
     ASSERT_DLUA;
     lua_pushboolean(ls, mons->wont_attack());
-    return (1);
+    return 1;
 }
 
 static const char *_monuse_names[] =
@@ -201,12 +200,12 @@ MDEF(muse)
 {
     if (const monsterentry *me = mons->find_monsterentry())
         PLUARET(string, _monuse_to_str(me->gmon_use));
-    return (0);
+    return 0;
 }
 
 static const char *_moneat_names[] =
 {
-    "nothing", "items", "corpses", "honey", "food",
+    "nothing", "items", "corpses", "food",
 };
 
 static const char *_moneat_to_str(mon_itemeat_type etyp)
@@ -219,7 +218,7 @@ MDEF(meat)
 {
     if (const monsterentry *me = mons->find_monsterentry())
         PLUARET(string, _moneat_to_str(me->gmon_eat));
-    return (0);
+    return 0;
 }
 
 static int l_mons_do_dismiss(lua_State *ls)
@@ -234,7 +233,7 @@ static int l_mons_do_dismiss(lua_State *ls)
         mons->flags |= MF_HARD_RESET;
         monster_die(mons, KILL_DISMISSED, NON_MONSTER);
     }
-    return (0);
+    return 0;
 }
 MDEFN(dismiss, do_dismiss)
 
@@ -283,7 +282,7 @@ static int l_mons_do_run_ai(lua_State *ls)
     monster* mons = clua_get_lightuserdata<monster>(ls, lua_upvalueindex(1));
     if (mons->alive())
         handle_monster_move(mons);
-    return (0);
+    return 0;
 }
 MDEFN(run_ai, do_run_ai)
 
@@ -293,7 +292,7 @@ static int l_mons_do_handle_behaviour(lua_State *ls)
     monster* mons = clua_get_lightuserdata<monster>(ls, lua_upvalueindex(1));
     if (mons->alive())
         handle_behaviour(mons);
-    return (0);
+    return 0;
 }
 MDEFN(handle_behaviour, do_handle_behaviour)
 
@@ -307,7 +306,7 @@ static int l_mons_do_random_teleport(lua_State *ls)
     if (mons->alive())
         mons->teleport(true);
 
-    return (0);
+    return 0;
 }
 
 MDEFN(random_teleport, do_random_teleport)
@@ -351,7 +350,7 @@ static int l_mons_do_set_prop(lua_State *ls)
         luaL_argerror(ls, 2, err.c_str());
     }
 
-    return (0);
+    return 0;
 }
 
 MDEFN(set_prop, do_set_prop)
@@ -374,7 +373,7 @@ static int l_mons_do_get_prop(lua_State *ls)
             luaL_argerror(ls, 2, err.c_str());
         }
 
-        return (0);
+        return 0;
     }
 
     CrawlStoreValue prop = mons->props[prop_name];
@@ -400,7 +399,7 @@ static int l_mons_do_get_prop(lua_State *ls)
         break;
     }
 
-    return (num_pushed);
+    return num_pushed;
 }
 
 MDEFN(get_prop, do_get_prop)
@@ -416,7 +415,7 @@ static int l_mons_do_has_prop(lua_State *ls)
     const char *prop_name = luaL_checkstring(ls, 1);
 
     lua_pushboolean(ls, mons->props.exists(prop_name));
-    return (1);
+    return 1;
 }
 
 MDEFN(has_prop, do_has_prop)
@@ -530,13 +529,13 @@ static int monster_get(lua_State *ls)
 
     const char *attr = luaL_checkstring(ls, 2);
     if (!attr)
-        return (0);
+        return 0;
 
-    for (unsigned i = 0; i < sizeof(mons_attrs) / sizeof(mons_attrs[0]); ++i)
+    for (unsigned i = 0; i < ARRAYSZ(mons_attrs); ++i)
         if (!strcmp(attr, mons_attrs[i].attribute))
-            return (mons_attrs[i].accessor(ls, mons, attr));
+            return mons_attrs[i].accessor(ls, mons, attr);
 
-    return (0);
+    return 0;
 }
 
 static const char *_monster_behaviour_names[] = {
@@ -553,9 +552,9 @@ static const char *_monster_behaviour_names[] = {
 static const char* _behaviour_name(beh_type beh)
 {
     if (0 <= beh && beh < NUM_BEHAVIOURS)
-        return (_monster_behaviour_names[beh]);
+        return _monster_behaviour_names[beh];
     else
-        return ("invalid");
+        return "invalid";
 }
 
 static beh_type behaviour_by_name(const std::string &name)
@@ -577,11 +576,11 @@ static int monster_set(lua_State *ls)
 
     MonsterWrap *mw = clua_get_userdata< MonsterWrap >(ls, MONS_METATABLE);
     if (!mw || !mw->mons)
-        return (0);
+        return 0;
 
     const char *attr = luaL_checkstring(ls, 2);
     if (!attr)
-        return (0);
+        return 0;
 
     if (!strcmp(attr, "beh"))
     {
@@ -598,18 +597,18 @@ static int monster_set(lua_State *ls)
     else if (!strcmp(attr, "targety"))
         mw->mons->target.y = luaL_checkint(ls, 3);
 
-    return (0);
+    return 0;
 }
 
 static int mons_behaviour(lua_State *ls)
 {
     if (lua_gettop(ls) < 1)
-        return (0);
+        return 0;
 
     if (lua_isnumber(ls, 1))
     {
         lua_pushvalue(ls, 1);
-        return (1);
+        return 1;
     }
     else if (lua_isstring(ls, 1))
     {
@@ -617,10 +616,10 @@ static int mons_behaviour(lua_State *ls)
         if (beh != NUM_BEHAVIOURS)
         {
             lua_pushnumber(ls, beh);
-            return (1);
+            return 1;
         }
     }
-    return (0);
+    return 0;
 }
 
 static const struct luaL_reg mons_lib[] =

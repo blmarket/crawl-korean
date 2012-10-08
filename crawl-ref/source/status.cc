@@ -155,7 +155,7 @@ static const duration_def* _lookup_duration(duration_type dur)
 {
     ASSERT(dur >= 0 && dur < NUM_DURATIONS);
     if (duration_index[dur] == -1)
-        return (NULL);
+        return NULL;
     else
         return (&duration_data[duration_index[dur]]);
 }
@@ -171,31 +171,31 @@ static void _reset_status_info(status_info* inf)
 static int _bad_ench_colour(int lvl, int orange, int red)
 {
     if (lvl > red)
-        return (RED);
+        return RED;
     else if (lvl > orange)
-        return (LIGHTRED);
+        return LIGHTRED;
 
-    return (YELLOW);
+    return YELLOW;
 }
 
 static int _dur_colour(int exp_colour, bool expiring)
 {
     if (expiring)
-        return (exp_colour);
+        return exp_colour;
     else
     {
         switch (exp_colour)
         {
         case GREEN:
-            return (LIGHTGREEN);
+            return LIGHTGREEN;
         case BLUE:
-            return (LIGHTBLUE);
+            return LIGHTBLUE;
         case MAGENTA:
-            return (LIGHTMAGENTA);
+            return LIGHTMAGENTA;
         case LIGHTGREY:
-            return (WHITE);
+            return WHITE;
         default:
-            return (exp_colour);
+            return exp_colour;
         }
     }
 }
@@ -205,7 +205,7 @@ static void _mark_expiring(status_info* inf, bool expiring)
     if (expiring)
     {
         if (!inf->short_text.empty())
-            inf->short_text += " (expires)";
+            inf->short_text += " (expiring)";
         if (!inf->long_text.empty())
             inf->long_text = "Expiring: " + inf->long_text;
     }
@@ -509,13 +509,24 @@ void fill_status_info(int status, status_info* inf)
         if (you.is_constricted())
         {
             inf->light_colour = YELLOW;
-            inf->light_text   = "Constr";
-            inf->short_text   = "constricted";
+            inf->light_text   = you.held == HELD_MONSTER ? "Held" : "Constr";
+            inf->short_text   = you.held == HELD_MONSTER ? "held" : "constricted";
         }
         break;
 
     case STATUS_TERRAIN:
         _describe_terrain(inf);
+        break;
+
+    // Silenced by an external source.
+    case STATUS_SILENCE:
+        if (silenced(you.pos()) && !you.duration[DUR_SILENCE])
+        {
+            inf->light_colour = LIGHTMAGENTA;
+            inf->light_text   = "Sil";
+            inf->short_text   = "silenced";
+            inf->long_text    = "You are silenced.";
+        }
         break;
 
     default:
@@ -665,8 +676,9 @@ static void _describe_regen(status_info* inf)
 static void _describe_poison(status_info* inf)
 {
     int pois = you.duration[DUR_POISONING];
-    inf->light_colour = _bad_ench_colour(pois, 5, 10);
-    inf->light_text   = gettext(M_("Pois"));
+    inf->light_colour = (player_res_poison(false) >= 3
+                         ? DARKGREY : _bad_ench_colour(pois, 5, 10));
+    inf->light_text   = _(M_("Pois"));
     const std::string adj =
          (pois > 10) ? pgettext("Pois", "extremely") :
          (pois > 5)  ? pgettext("Pois", "very") :
@@ -806,7 +818,7 @@ static void _describe_nausea(status_info* inf)
     if (!you.duration[DUR_NAUSEA])
         return;
 
-    inf->light_colour = BROWN;
+    inf->light_colour = you.is_undead == US_UNDEAD ? DARKGREY : BROWN;
     inf->light_text   = "Nausea";
     inf->short_text   = "nauseated";
     inf->long_text    = (you.hunger_state <= HS_NEAR_STARVING) ?

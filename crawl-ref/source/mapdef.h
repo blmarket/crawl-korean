@@ -896,7 +896,6 @@ private:
     feature_spec parse_trap(std::string s, int weight);
 };
 
-class map_def;
 class dlua_set_map
 {
 public:
@@ -906,7 +905,6 @@ private:
     std::auto_ptr<lua_datum> old_map;
 };
 
-class map_def;
 dungeon_feature_type map_feature_at(map_def *map,
                                     const coord_def &c,
                                     int rawfeat);
@@ -1102,11 +1100,6 @@ public:
     range_chance_t   _chance;
     range_weight_t   _weight;
 
-    int              weight_depth_mult;
-    int              weight_depth_div;
-
-    std::vector<std::string> welcome_messages;
-
     map_lines       map;
     mons_list       mons;
     item_list       items;
@@ -1131,6 +1124,9 @@ public:
     std::string     rock_tile, floor_tile;
 
     dungeon_feature_type border_fill_type;
+
+    std::map<dungeon_feature_type, std::string> feat_renames;
+
 private:
     // This map has been loaded from an index, and not fully realised.
     bool            index_only;
@@ -1196,7 +1192,7 @@ public:
     std::string validate_map_def(const depth_ranges &);
     std::string validate_temple_map();
     // Returns true if this map is in the middle of validation.
-    bool is_validating() const { return (validating_map_flag); }
+    bool is_validating() const { return validating_map_flag; }
 
     void add_prelude_line(int line,  const std::string &s);
     void add_main_line(int line, const std::string &s);
@@ -1268,7 +1264,7 @@ public:
         // feature slots, but that's fine by us.
         dungeon_feature_type operator () (const coord_def &c) const
         {
-            return (map_feature_at(&map, c, -1));
+            return map_feature_at(&map, c, -1);
         }
     };
 

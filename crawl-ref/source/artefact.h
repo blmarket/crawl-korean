@@ -46,6 +46,7 @@ struct unrandart_entry
 {
     const char *name;        // true name of unrandart
     const char *unid_name;   // un-id'd name of unrandart
+    const char *type_name;   // custom item type
 
     object_class_type base_type;
     uint8_t           sub_type;
@@ -84,11 +85,8 @@ void autoid_unrand(item_def &item);
 
 void artefact_fixup_props(item_def &item);
 
-unique_item_status_type get_unique_item_status(const item_def& item);
 unique_item_status_type get_unique_item_status(int unrand_index);
 void set_unique_item_status(const item_def& item,
-                            unique_item_status_type status);
-void set_unique_item_status(int unrand_index,
                             unique_item_status_type status);
 
 std::string get_artefact_name(const item_def &item, bool force_known = false);

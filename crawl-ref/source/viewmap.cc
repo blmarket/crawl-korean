@@ -32,6 +32,7 @@
 #include "player.h"
 #include "showsymb.h"
 #include "stash.h"
+#include "state.h"
 #include "stuff.h"
 #include "terrain.h"
 #include "tileview.h"
@@ -40,7 +41,6 @@
 #include "viewgeom.h"
 
 #ifdef USE_TILE
-#include "tilereg.h"
 #endif
 
 #ifndef USE_TILE_LOCAL
@@ -48,7 +48,7 @@ static unsigned _get_travel_colour(const coord_def& p)
 {
 #ifdef WIZARD
     if (you.wizard && testbits(env.pgrid(p), FPROP_HIGHLIGHT))
-        return (LIGHTGREEN);
+        return LIGHTGREEN;
 #endif
 
     if (is_waypoint(p))
@@ -69,10 +69,10 @@ static bool _travel_colour_override(const coord_def& p)
 {
   if (is_waypoint(p) || is_stair_exclusion(p)
      || travel_point_distance[p.x][p.y] == PD_EXCLUDED)
-        return (true);
+        return true;
 #ifdef WIZARD
     if (you.wizard && testbits(env.pgrid(p), FPROP_HIGHLIGHT))
-        return (true);
+        return true;
 #endif
 
     // [ds] Elaborate dance to get map colouring right if
@@ -141,7 +141,7 @@ static ucs_t _get_magicmap_char(dungeon_feature_type feat)
 bool is_feature(ucs_t feature, const coord_def& where)
 {
     if (!env.map_knowledge(where).known() && !you.see_cell(where))
-        return (false);
+        return false;
 
     dungeon_feature_type grid = grid_appearance(where);
 
@@ -175,9 +175,9 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_ALTAR_FEDHAS:
         case DNGN_ALTAR_CHEIBRIADOS:
         case DNGN_ALTAR_ASHENZARI:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     case '\t':
     case '\\':
@@ -201,9 +201,9 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_TRANSIT_PANDEMONIUM:
         case DNGN_ENTER_ZOT:
         case DNGN_RETURN_FROM_ZOT:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     case '<':
         switch (grid)
@@ -212,6 +212,7 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_STONE_STAIRS_UP_I:
         case DNGN_STONE_STAIRS_UP_II:
         case DNGN_STONE_STAIRS_UP_III:
+        case DNGN_EXIT_DUNGEON:
         case DNGN_RETURN_FROM_DWARVEN_HALL:
         case DNGN_RETURN_FROM_ORCISH_MINES:
         case DNGN_RETURN_FROM_LAIR:
@@ -228,9 +229,9 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_RETURN_FROM_SPIDER_NEST:
         case DNGN_RETURN_FROM_FOREST:
         case DNGN_EXIT_PORTAL_VAULT:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     case '>':
         switch (grid)
@@ -254,9 +255,9 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_ENTER_SHOALS:
         case DNGN_ENTER_SPIDER_NEST:
         case DNGN_ENTER_FOREST:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     case '^':
         switch (grid)
@@ -265,9 +266,9 @@ bool is_feature(ucs_t feature, const coord_def& where)
         case DNGN_TRAP_MAGICAL:
         case DNGN_TRAP_NATURAL:
         case DNGN_TRAP_WEB:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     default:
         return get_cell_glyph(where).ch == feature;
@@ -277,10 +278,10 @@ bool is_feature(ucs_t feature, const coord_def& where)
 static bool _is_feature_fudged(ucs_t feature, const coord_def& where)
 {
     if (!env.map_knowledge(where).known())
-        return (false);
+        return false;
 
     if (is_feature(feature, where))
-        return (true);
+        return true;
 
     if (feature == '<')
     {
@@ -291,9 +292,9 @@ static bool _is_feature_fudged(ucs_t feature, const coord_def& where)
         case DNGN_EXIT_ABYSS:
         case DNGN_EXIT_PANDEMONIUM:
         case DNGN_RETURN_FROM_ZOT:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     }
     else if (feature == '>')
@@ -306,13 +307,13 @@ static bool _is_feature_fudged(ucs_t feature, const coord_def& where)
         case DNGN_ENTER_TARTARUS:
         case DNGN_TRANSIT_PANDEMONIUM:
         case DNGN_ENTER_ZOT:
-            return (true);
+            return true;
         default:
-            return (false);
+            return false;
         }
     }
 
-    return (false);
+    return false;
 }
 
 static int _find_feature(ucs_t feature, int curs_x, int curs_y,
@@ -488,6 +489,9 @@ static void _draw_level_map(int start_x, int start_y, bool travel_mode,
                         cell->glyph = ch;
                     }
                 }
+
+                if (Options.show_travel_trail && travel_trail_index(c) >= 0)
+                    cell->colour |= COLFLAG_REVERSE;
             }
 
             cell++;
@@ -511,9 +515,6 @@ static void _reset_travel_colours(std::vector<coord_def> &features,
         tp.set_feature_vector(&features);
         tp.get_features();
     }
-
-    // Sort features into the order the player is likely to prefer.
-    arrange_features(features);
 }
 
 // Sort glyphs within a group, for the feature list.
@@ -674,20 +675,20 @@ public:
 static level_pos _stair_dest(const coord_def& p, command_type dir)
 {
     if (!in_bounds(p))
-        return (level_pos());
+        return level_pos();
 
     if (feat_stair_direction(env.map_knowledge(p).feat()) != dir)
-        return (level_pos());
+        return level_pos();
 
     LevelInfo *linf = travel_cache.find_level_info(level_id::current());
     if (!linf)
-        return (level_pos());
+        return level_pos();
 
     const stair_info *sinf = linf->get_stair(p);
     if (!sinf)
-        return (level_pos());
+        return level_pos();
 
-    return (sinf->destination);
+    return sinf->destination;
 }
 
 // show_map() now centers the known map along x or y.  This prevents
@@ -1281,7 +1282,7 @@ bool show_map(level_pos &lpos,
 #endif
 
     redraw_screen();
-    return (chose);
+    return chose;
 }
 
 bool emphasise(const coord_def& where)

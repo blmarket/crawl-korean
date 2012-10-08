@@ -22,10 +22,10 @@
 #include "env.h"
 #include "enum.h"
 #include "files.h"
-#include "initfile.h"
 #include "libutil.h"
 #include "message.h"
 #include "mapdef.h"
+#include "mapmark.h"
 #include "mon-util.h"
 #include "mon-place.h"
 #include "coord.h"
@@ -34,17 +34,16 @@
 #include "syscalls.h"
 #include "tags.h"
 #include "terrain.h"
-#include "tutorial.h"
 
-static map_section_type write_vault(map_def &mdef,
-                                    vault_placement &,
-                                    bool check_place);
-static map_section_type apply_vault_definition(
+static map_section_type _write_vault(map_def &mdef,
+                                     vault_placement &,
+                                     bool check_place);
+static map_section_type _apply_vault_definition(
     map_def &def,
     vault_placement &,
     bool check_place);
 
-static bool resolve_map(map_def &def);
+static bool _resolve_map(map_def &def);
 
 static bool _map_safe_vault_place(const map_def &map,
                                   const coord_def &c,
@@ -99,12 +98,12 @@ map_section_type vault_main(vault_placement &place, const map_def *vault,
     // level, except for branch entry vaults where dungeon.cc just
     // rejects the vault and places a vanilla entry.
 
-    return (write_vault(const_cast<map_def&>(*vault), place, check_place));
+    return (_write_vault(const_cast<map_def&>(*vault), place, check_place));
 }
 
-static map_section_type write_vault(map_def &mdef,
-                                    vault_placement &place,
-                                    bool check_place)
+static map_section_type _write_vault(map_def &mdef,
+                                     vault_placement &place,
+                                     bool check_place)
 {
     mdef.load();
 
@@ -122,18 +121,18 @@ static map_section_type write_vault(map_def &mdef,
         if (place.map.test_lua_veto())
             break;
 
-        if (!resolve_map(place.map))
+        if (!_resolve_map(place.map))
             continue;
 
         // Must set size here, or minivaults will not be placed correctly.
         place.size = place.map.size();
-        place.orient = apply_vault_definition(place.map,
-                                              place, check_place);
+        place.orient = _apply_vault_definition(place.map,
+                                               place, check_place);
 
         if (place.orient != MAP_NONE)
-            return (place.orient);
+            return place.orient;
     }
-    return (MAP_NONE);
+    return MAP_NONE;
 }
 
 static void _dgn_flush_map_environments()
@@ -147,7 +146,7 @@ static void _dgn_flush_map_environment_for(const std::string &mapname)
     dlua.callfn("dgn_flush_map_environment_for", "s", mapname.c_str());
 }
 
-static bool resolve_map_lua(map_def &map)
+static bool _resolve_map_lua(map_def &map)
 {
     _dgn_flush_map_environment_for(map.name);
     map.reinit();
@@ -160,7 +159,7 @@ static bool resolve_map_lua(map_def &map)
             mapgen_report_error(map, err);
 #endif
         mprf(MSGCH_ERROR, "Lua error: %s", err.c_str());
-        return (false);
+        return false;
     }
 
     map.fixup();
@@ -168,25 +167,25 @@ static bool resolve_map_lua(map_def &map)
     if (!err.empty())
     {
         mprf(MSGCH_ERROR, "Error: %s", err.c_str());
-        return (false);
+        return false;
     }
 
     if (!map.test_lua_validate(false))
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 // Mirror the map if appropriate, resolve substitutable symbols (?),
-static bool resolve_map(map_def &map)
+static bool _resolve_map(map_def &map)
 {
-    if (!resolve_map_lua(map))
-        return (false);
+    if (!_resolve_map_lua(map))
+        return false;
 
     // Don't bother flipping or rotating 1x1 subvaults.
     // This just cuts down on level generation message spam.
     if (map.map.width() == map.map.height() && map.map.width() == 1)
-        return (true);
+        return true;
 
     // Mirroring is possible for any map that does not explicitly forbid it.
     // Note that mirroring also flips the orientation.
@@ -200,7 +199,7 @@ static bool resolve_map(map_def &map)
     if (coinflip())
         map.rotate(coinflip());
 
-    return (true);
+    return true;
 }
 
 bool resolve_subvault(map_def &map)
@@ -210,9 +209,9 @@ bool resolve_subvault(map_def &map)
         return false;
 
     if (map.test_lua_veto())
-        return (false);
+        return false;
 
-    if (!resolve_map_lua(map))
+    if (!_resolve_map_lua(map))
         return false;
 
     int width = map.subvault_width();
@@ -247,13 +246,13 @@ bool resolve_subvault(map_def &map)
 
         // The map may have refused to have been rotated, so verify dimensions.
         bool valid = (map.map.width() <= width && map.map.height() <= height);
-        return (valid);
+        return valid;
     }
 
     // Don't bother flipping or rotating 1x1 subvaults.
     // This just cuts down on level generation message spam.
     if (exact_fit && width == height && width == 1)
-        return (true);
+        return true;
 
     // Count original mismatches.  If mirroring the map causes more cells to
     // not be written, then don't mirror.  This allows oddly shaped subvaults
@@ -299,7 +298,7 @@ bool resolve_subvault(map_def &map)
     ASSERT(map.subvault_mismatch_count(svplace) == min_mismatch);
 
     // We already know this is an exact fit, so this is a success.
-    return (true);
+    return true;
 }
 
 // Given a rectangular region, slides it to fit into the map. size must be
@@ -331,18 +330,18 @@ static bool _may_overwrite_feature(const coord_def p,
     // If there's a mask specifying where vaults can be placed, don't
     // allow stepping outside it.
     if (Vault_Placement_Mask && !(*Vault_Placement_Mask)(p))
-        return (false);
+        return false;
 
     // If in the abyss, the placement mask is the only check necessary
     // for terrain.
     if (Vault_Placement_Mask && player_in_branch(BRANCH_ABYSS))
-        return (true);
+        return true;
 
     const dungeon_feature_type grid = grd(p);
 
     // Deep water grids may be overwritten if water_ok == true.
     if (grid == DNGN_DEEP_WATER)
-        return (water_ok);
+        return water_ok;
 
     // Handle all other non-LOS blocking grids here.
     if (!feat_is_opaque(grid)
@@ -352,14 +351,23 @@ static bool _may_overwrite_feature(const coord_def p,
         && grid != DNGN_SECRET_DOOR
         && !feat_is_closed_door(grid))
     {
-        return (false);
+        return false;
     }
 
     if (feat_is_wall(grid) || feat_is_tree(grid))
-        return (wall_ok);
+        return wall_ok;
 
     // Otherwise, feel free to clobber this feature.
-    return (true);
+    return true;
+}
+
+static bool _is_portal_place(const coord_def &c)
+{
+    map_marker* marker = env.markers.find(c, MAT_LUA_MARKER);
+    if (!marker)
+        return false;
+
+    return (marker->property("portal") != "");
 }
 
 static bool _map_safe_vault_place(const map_def &map,
@@ -367,7 +375,7 @@ static bool _map_safe_vault_place(const map_def &map,
                                   const coord_def &size)
 {
     if (size.zero())
-        return (true);
+        return true;
 
     const bool water_ok =
         map.has_tag("water_ok") || player_in_branch(BRANCH_SWAMP);
@@ -388,28 +396,43 @@ static bool _map_safe_vault_place(const map_def &map,
             for (adjacent_iterator ai(cp); ai; ++ai)
             {
                 if (map_bounds(*ai) && (env.level_map_mask(*ai) & MMT_VAULT))
-                    return (false);
+                    return false;
             }
         }
 
         // Don't overwrite features other than floor, rock wall, doors,
         // nor water, if !water_ok.
-        if (!_may_overwrite_feature(cp, water_ok))
-            return (false);
+        if (!_may_overwrite_feature(cp, water_ok)
+            && (!map.has_tag("replace_portal")
+                || !_is_portal_place(cp)))
+        {
+            return false;
+        }
 
         // Don't overwrite monsters or items, either!
         if (monster_at(cp) || igrd(cp) != NON_ITEM)
-            return (false);
+            return false;
+
+        // If in Slime, don't let stairs end up next to minivaults,
+        // so that they don't possibly end up next to unsafe walls.
+        if (player_in_branch(BRANCH_SLIME_PITS))
+        {
+            for (adjacent_iterator ai(cp); ai; ++ai)
+            {
+                if (map_bounds(*ai) && feat_is_stair(grd(*ai)))
+                    return false;
+            }
+        }
     }
 
-    return (true);
+    return true;
 }
 
 static bool _connected_minivault_place(const coord_def &c,
                                        const vault_placement &place)
 {
     if (place.size.zero())
-        return (true);
+        return true;
 
     // Must not be completely isolated.
     const bool water_ok = place.map.has_tag("water_ok");
@@ -422,17 +445,39 @@ static bool _connected_minivault_place(const coord_def &c,
         if (lines[ci.y - c.y][ci.x - c.x] == ' ')
             continue;
 
-        if (_may_overwrite_feature(ci, water_ok, false))
-            return (true);
+        if (_may_overwrite_feature(ci, water_ok, false)
+            || (place.map.has_tag("replace_portal")
+                && _is_portal_place(ci)))
+            return true;
     }
 
-    return (false);
+    return false;
 }
 
 static coord_def _find_minivault_place(
     const vault_placement &place,
     bool check_place)
 {
+    if (place.map.has_tag("replace_portal"))
+    {
+        std::vector<map_marker*> markers =
+            env.markers.get_all(MAT_LUA_MARKER);
+        std::vector<coord_def> candidates;
+        for (std::vector<map_marker*>::iterator it = markers.begin();
+             it != markers.end(); it++)
+        {
+            if ((*it)->property("portal") != "")
+            {
+                coord_def v1((*it)->pos);
+                if ((!check_place || map_place_valid(place.map, v1, place.size))
+                    && _connected_minivault_place(v1, place))
+                    candidates.push_back(v1);
+            }
+        }
+        if (candidates.size() > 0)
+            return candidates[random2(candidates.size())];
+    }
+
     // [ds] The margin around the edges of the map where the minivault
     // won't be placed. Purely arbitrary as far as I can see.
     const int margin = MAPGEN_BORDER * 2;
@@ -462,14 +507,14 @@ static coord_def _find_minivault_place(
 #endif
             continue;
         }
-        return (v1);
+        return v1;
     }
-    return (coord_def(-1, -1));
+    return coord_def(-1, -1);
 }
 
-static bool apply_vault_grid(map_def &def,
-                             vault_placement &place,
-                             bool check_place)
+static bool _apply_vault_grid(map_def &def,
+                              vault_placement &place,
+                              bool check_place)
 {
     const map_lines &ml = def.map;
     const int orient = def.orient;
@@ -524,29 +569,29 @@ static bool apply_vault_grid(map_def &def,
     }
 
     if (!map_bounds(start))
-        return (false);
+        return false;
 
     if (check_place && !map_place_valid(def, start, size))
     {
         dprf("Bad vault place: (%d,%d) dim (%d,%d)",
              start.x, start.y, size.x, size.y);
-        return (false);
+        return false;
     }
 
 
     place.pos  = start;
     place.size = size;
 
-    return (true);
+    return true;
 }
 
-static map_section_type apply_vault_definition(
+static map_section_type _apply_vault_definition(
     map_def &def,
     vault_placement &place,
     bool check_place)
 {
-    if (!apply_vault_grid(def, place, check_place))
-        return (MAP_NONE);
+    if (!_apply_vault_grid(def, place, check_place))
+        return MAP_NONE;
 
     const map_section_type orient = def.orient;
     return (orient == MAP_NONE? MAP_NORTH : orient);
@@ -555,7 +600,7 @@ static map_section_type apply_vault_definition(
 ///////////////////////////////////////////////////////////////////////////
 // Map lookups
 
-static bool map_matches_layout_type(const map_def &map)
+static bool _map_matches_layout_type(const map_def &map)
 {
     if (env.level_layout_types.empty() || !map.has_tag_prefix("layout_"))
         return true;
@@ -584,7 +629,7 @@ const map_def *find_map_by_name(const std::string &name)
         if (vdefs[i].name == name)
             return (&vdefs[i]);
 
-    return (NULL);
+    return NULL;
 }
 
 // Discards Lua code loaded by all maps to reduce memory use. If any stripped
@@ -602,7 +647,7 @@ std::vector<std::string> find_map_matches(const std::string &name)
     for (unsigned i = 0, size = vdefs.size(); i < size; ++i)
         if (vdefs[i].name.find(name) != std::string::npos)
             matches.push_back(vdefs[i].name);
-    return (matches);
+    return matches;
 }
 
 mapref_vector find_maps_for_tag(const std::string tag,
@@ -624,7 +669,7 @@ mapref_vector find_maps_for_tag(const std::string tag,
             maps.push_back(&mapdef);
         }
     }
-    return (maps);
+    return maps;
 }
 
 struct map_selector
@@ -671,7 +716,7 @@ public:
         map_selector msel = map_selector(map_selector::TAG, _place, _tag,
                                          false, _check_depth);
         msel.ignore_chance = !_check_chance;
-        return (msel);
+        return msel;
     }
 
 private:
@@ -714,7 +759,7 @@ bool map_selector::depth_selectable(const map_def &mapdef) const
             && (!mapdef.has_tag_prefix("temple_")
                 || mapdef.has_tag_prefix("uniq_altar_"))
             && _map_matches_species(mapdef)
-            && (!check_layout || map_matches_layout_type(mapdef)));
+            && (!check_layout || _map_matches_layout_type(mapdef)));
 }
 
 bool map_selector::accept(const map_def &mapdef) const
@@ -726,11 +771,11 @@ bool map_selector::accept(const map_def &mapdef) const
             && (!crawl_state.game_is_tutorial()
                 || !mapdef.has_tag(crawl_state.map)))
         {
-            return (false);
+            return false;
         }
         return (mapdef.is_minivault() == mini
                 && mapdef.place.is_usable_in(place)
-                && map_matches_layout_type(mapdef)
+                && _map_matches_layout_type(mapdef)
                 && !mapdef.map_already_used());
 
     case DEPTH:
@@ -758,11 +803,11 @@ bool map_selector::accept(const map_def &mapdef) const
                     || !mapdef.has_depth()
                     || mapdef.is_usable_in(place))
                 && _map_matches_species(mapdef)
-                && map_matches_layout_type(mapdef)
+                && _map_matches_layout_type(mapdef)
                 && !mapdef.map_already_used());
 
     default:
-        return (false);
+        return false;
     }
 }
 
@@ -801,10 +846,10 @@ static std::string _vault_chance_tag(const map_def &map)
         for (int i = 0, size = tags.size(); i < size; ++i)
         {
             if (tags[i].find("chance_") == 0)
-                return (tags[i]);
+                return tags[i];
         }
     }
-    return ("");
+    return "";
 }
 
 typedef std::vector<unsigned> vault_indices;
@@ -820,7 +865,7 @@ static vault_indices _eligible_maps_for_selector(const map_selector &sel)
                 eligible.push_back(i);
     }
 
-    return (eligible);
+    return eligible;
 }
 
 static const map_def *_random_map_by_selector(const map_selector &sel);
@@ -842,10 +887,10 @@ static bool _vault_chance_new(const map_def &map,
         {
             if (!tag.empty())
                 chance_tags.insert(tag);
-            return (true);
+            return true;
         }
     }
-    return (false);
+    return false;
 }
 
 class vault_chance_roll_iterator
@@ -866,14 +911,14 @@ public:
     {
         ++current;
         find_valid();
-        return (*this);
+        return *this;
     }
 
     vault_chance_roll_iterator operator ++ (int)
     {
         vault_chance_roll_iterator copy(*this);
         operator ++ ();
-        return (copy);
+        return copy;
     }
 
 private:
@@ -904,7 +949,7 @@ static const map_def *_resolve_chance_vault(const map_selector &sel,
                                                  sel.place);
         return _random_map_by_selector(msel);
     }
-    return (map);
+    return map;
 }
 
 static mapref_vector
@@ -935,7 +980,7 @@ _random_chance_maps_in_list(const map_selector &sel,
             sel.announce(chosen);
         }
 
-    return (chosen_chances);
+    return chosen_chances;
 }
 
 static const map_def *
@@ -1001,7 +1046,7 @@ _random_map_in_list(const map_selector &sel,
     }
 
     sel.announce(chosen_map);
-    return (chosen_map);
+    return chosen_map;
 }
 
 static const map_def *_random_map_by_selector(const map_selector &sel)
@@ -1039,7 +1084,7 @@ const map_def *random_map_for_tag(const std::string &tag,
 
 int map_count()
 {
-    return (vdefs.size());
+    return vdefs.size();
 }
 
 int map_count_for_tag(const std::string &tag,
@@ -1088,7 +1133,7 @@ static std::string _des_cache_dir(const std::string &relpath = "")
     return catpath(savedir_versioned_path("des"), relpath);
 }
 
-static void check_des_index_dir()
+static void _check_des_index_dir()
 {
     if (checked_des_index_dir)
         return;
@@ -1112,7 +1157,7 @@ static bool verify_file_version(const std::string &file, time_t mtime)
 {
     FILE *fp = fopen_u(file.c_str(), "rb");
     if (!fp)
-        return (false);
+        return false;
     try
     {
         reader inf(fp);
@@ -1127,21 +1172,21 @@ static bool verify_file_version(const std::string &file, time_t mtime)
     catch (short_read_exception &E)
     {
         fclose(fp);
-        return (false);
+        return false;
     }
 }
 
-static bool verify_map_index(const std::string &base, time_t mtime)
+static bool _verify_map_index(const std::string &base, time_t mtime)
 {
     return verify_file_version(base + ".idx", mtime);
 }
 
-static bool verify_map_full(const std::string &base, time_t mtime)
+static bool _verify_map_full(const std::string &base, time_t mtime)
 {
     return verify_file_version(base + ".dsc", mtime);
 }
 
-static bool load_map_index(const std::string& cache, const std::string &base,
+static bool _load_map_index(const std::string& cache, const std::string &base,
                            time_t mtime)
 {
     // If there's a global prelude, load that first.
@@ -1188,12 +1233,12 @@ static bool load_map_index(const std::string& cache, const std::string &base,
     }
     fclose(fp);
 
-    return (true);
+    return true;
 }
 
-static bool load_map_cache(const std::string &filename, const std::string &cachename)
+static bool _load_map_cache(const std::string &filename, const std::string &cachename)
 {
-    check_des_index_dir();
+    _check_des_index_dir();
     const std::string descache_base = get_descache_path(cachename, "");
 
     file_lock deslock(descache_base + ".lk", "rb", false);
@@ -1203,16 +1248,16 @@ static bool load_map_cache(const std::string &filename, const std::string &cache
     std::string file_dsc = descache_base + ".dsc";
 
     // What's the point in checking these twice (here and in load_ma_index)?
-    if (!verify_map_index(descache_base, mtime)
-        || !verify_map_full(descache_base, mtime))
+    if (!_verify_map_index(descache_base, mtime)
+        || !_verify_map_full(descache_base, mtime))
     {
-        return (false);
+        return false;
     }
 
-    return load_map_index(cachename, descache_base, mtime);
+    return _load_map_index(cachename, descache_base, mtime);
 }
 
-static void write_map_prelude(const std::string &filebase, time_t mtime)
+static void _write_map_prelude(const std::string &filebase, time_t mtime)
 {
     const std::string luafile = filebase + ".lux";
     if (lc_global_prelude.empty())
@@ -1230,8 +1275,8 @@ static void write_map_prelude(const std::string &filebase, time_t mtime)
     fclose(fp);
 }
 
-static void write_map_full(const std::string &filebase, size_t vs, size_t ve,
-                           time_t mtime)
+static void _write_map_full(const std::string &filebase, size_t vs, size_t ve,
+                            time_t mtime)
 {
     const std::string cfile = filebase + ".dsc";
     FILE *fp = fopen_u(cfile.c_str(), "wb");
@@ -1247,8 +1292,8 @@ static void write_map_full(const std::string &filebase, size_t vs, size_t ve,
     fclose(fp);
 }
 
-static void write_map_index(const std::string &filebase, size_t vs, size_t ve,
-                            time_t mtime)
+static void _write_map_index(const std::string &filebase, size_t vs, size_t ve,
+                             time_t mtime)
 {
     const std::string cfile = filebase + ".idx";
     FILE *fp = fopen_u(cfile.c_str(), "wb");
@@ -1270,21 +1315,21 @@ static void write_map_index(const std::string &filebase, size_t vs, size_t ve,
     fclose(fp);
 }
 
-static void write_map_cache(const std::string &filename, size_t vs, size_t ve,
-                            time_t mtime)
+static void _write_map_cache(const std::string &filename, size_t vs, size_t ve,
+                             time_t mtime)
 {
-    check_des_index_dir();
+    _check_des_index_dir();
 
     const std::string descache_base = get_descache_path(filename, "");
 
     file_lock deslock(descache_base + ".lk", "wb");
 
-    write_map_prelude(descache_base, mtime);
-    write_map_full(descache_base, vs, ve, mtime);
-    write_map_index(descache_base, vs, ve, mtime);
+    _write_map_prelude(descache_base, mtime);
+    _write_map_full(descache_base, vs, ve, mtime);
+    _write_map_index(descache_base, vs, ve, mtime);
 }
 
-static void parse_maps(const std::string &s)
+static void _parse_maps(const std::string &s)
 {
     std::string cache_name = get_cache_name(s);
     if (map_files_read.find(cache_name) != map_files_read.end())
@@ -1292,7 +1337,7 @@ static void parse_maps(const std::string &s)
 
     map_files_read.insert(cache_name);
 
-    if (load_map_cache(s, cache_name))
+    if (_load_map_cache(s, cache_name))
         return;
 
     FILE *dat = fopen_u(s.c_str(), "r");
@@ -1316,12 +1361,12 @@ static void parse_maps(const std::string &s)
 
     global_preludes.push_back(lc_global_prelude);
 
-    write_map_cache(cache_name, file_start, vdefs.size(), mtime);
+    _write_map_cache(cache_name, file_start, vdefs.size(), mtime);
 }
 
 void read_map(const std::string &file)
 {
-    parse_maps(lc_desfile = datafile_path(file));
+    _parse_maps(lc_desfile = datafile_path(file));
     _dgn_flush_map_environments();
     // Force GC to prevent heap from swelling unnecessarily.
     dlua.gc();
@@ -1420,7 +1465,7 @@ static weighted_map_names mg_find_random_vaults(
     weighted_map_names wms;
 
     if (!place.is_valid())
-        return (wms);
+        return wms;
 
     typedef std::map<std::string, int> map_count_t;
 
@@ -1447,21 +1492,21 @@ static weighted_map_names mg_find_random_vaults(
         wms.push_back(*i);
     }
 
-    return (wms);
+    return wms;
 }
 
-static bool weighted_map_more_likely(
+static bool _weighted_map_more_likely(
     const weighted_map_name &a,
     const weighted_map_name &b)
 {
     return (a.second > b.second);
 }
 
-static void mg_report_random_vaults(
+static void _mg_report_random_vaults(
     FILE *outf, const level_id &place, bool wantmini)
 {
     weighted_map_names wms = mg_find_random_vaults(place, wantmini);
-    std::sort(wms.begin(), wms.end(), weighted_map_more_likely);
+    std::sort(wms.begin(), wms.end(), _weighted_map_more_likely);
     int weightsum = 0;
     for (int i = 0, size = wms.size(); i < size; ++i)
         weightsum += wms[i].second;
@@ -1490,9 +1535,9 @@ static void mg_report_random_vaults(
 void mg_report_random_maps(FILE *outf, const level_id &place)
 {
     fprintf(outf, "---------------- Mini\n");
-    mg_report_random_vaults(outf, place, true);
+    _mg_report_random_vaults(outf, place, true);
     fprintf(outf, "------------- Regular\n");
-    mg_report_random_vaults(outf, place, false);
+    _mg_report_random_vaults(outf, place, false);
 }
 
 #endif

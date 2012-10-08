@@ -17,10 +17,12 @@ enum lang_t
     LANG_FR,
     LANG_ES,
     LANG_EL,
+    LANG_FI,
     // fake languages
     LANG_DWARVEN,
     LANG_JAGERKIN,
     LANG_KRAUT,
+    LANG_CYRILLIC,
     LANG_WIDE,
 };
 
@@ -59,14 +61,18 @@ enum ability_type
     // Deep Dwarves
     ABIL_RECHARGING,
 
+    ABIL_MAX_INTRINSIC = ABIL_RECHARGING,
+
     // Evoking items.
     ABIL_EVOKE_BERSERK = 40,
+    ABIL_MIN_EVOKE = ABIL_EVOKE_BERSERK,
     ABIL_EVOKE_TELEPORTATION,
     ABIL_EVOKE_BLINK,
     ABIL_EVOKE_TURN_INVISIBLE,
     ABIL_EVOKE_TURN_VISIBLE,
     ABIL_EVOKE_LEVITATE,
     ABIL_EVOKE_STOP_LEVITATING,
+    ABIL_MAX_EVOKE = ABIL_EVOKE_STOP_LEVITATING,
 
     // Divine abilities
     // Zin
@@ -157,6 +163,7 @@ enum ability_type
 
     // Zot Defence abilities
     ABIL_MAKE_FUNGUS = 230,
+    ABIL_MIN_ZOTDEF = ABIL_MAKE_FUNGUS,
     ABIL_MAKE_PLANT,
     ABIL_MAKE_OKLOB_SAPLING,
     ABIL_MAKE_DART_TRAP,
@@ -168,7 +175,6 @@ enum ability_type
     ABIL_MAKE_ARROW_TRAP,
     ABIL_MAKE_BOLT_TRAP,
     ABIL_MAKE_SPEAR_TRAP,
-    ABIL_MAKE_AXE_TRAP,
     ABIL_MAKE_NEEDLE_TRAP,
     ABIL_MAKE_NET_TRAP,
     ABIL_MAKE_TELEPORT_TRAP,
@@ -186,6 +192,7 @@ enum ability_type
     ABIL_MAKE_OKLOB_PLANT,
     ABIL_MAKE_BURNING_BUSH,
     ABIL_REMOVE_CURSE,
+    ABIL_MAX_ZOTDEF = ABIL_REMOVE_CURSE,
     NUM_ABILITIES
 };
 
@@ -226,8 +233,10 @@ enum attribute_type
     ATTR_DIVINE_REGENERATION,
     ATTR_DIVINE_DEATH_CHANNEL,
     ATTR_CARD_COUNTDOWN,
-    ATTR_WAS_SILENCED,          //jmf: added for silenced messages
-    ATTR_GOD_GIFT_COUNT,        //jmf: added to help manage god gift giving
+#if TAG_MAJOR_VERSION == 33
+    ATTR_UNUSED_1,
+#endif
+    ATTR_BANISHMENT_IMMUNITY,   // banishment immunity until
     ATTR_DELAYED_FIREBALL,      // bwr: reserve fireballs
     ATTR_HELD,                  // caught in a net
     ATTR_ABYSS_ENTOURAGE,       // maximum number of hostile monsters in
@@ -335,7 +344,7 @@ enum beam_type                  // beam[].flavour
     BEAM_LAST_ENCHANTMENT = BEAM_INNER_FLAME,
 
     // new beams for evaporate
-    BEAM_POTION_STINKING_CLOUD,
+    BEAM_POTION_MEPHITIC,
     BEAM_POTION_POISON,
     BEAM_POTION_MIASMA,
     BEAM_POTION_STEAM,
@@ -470,7 +479,9 @@ enum branch_type                // you.where_are_you
     BRANCH_ICE_CAVE,
     BRANCH_VOLCANO,
     BRANCH_WIZLAB,
+#if TAG_MAJOR_VERSION == 33
     BRANCH_HIVE,
+#endif
     NUM_BRANCHES
 };
 
@@ -525,6 +536,7 @@ enum canned_message_type
     MSG_CALL_DEAD,
     MSG_ANIMATE_REMAINS,
     MSG_DECK_EXHAUSTED,
+    MSG_EVOCATION_SUPPRESSED,
 };
 
 enum char_set_type
@@ -549,7 +561,7 @@ enum cloud_type
 {
     CLOUD_NONE,
     CLOUD_FIRE,
-    CLOUD_STINK,
+    CLOUD_MEPHITIC,
     CLOUD_COLD,
     CLOUD_POISON,
     CLOUD_BLACK_SMOKE,
@@ -1168,9 +1180,13 @@ enum dungeon_feature_type
     DNGN_CLOSED_DOOR,
     DNGN_DETECTED_SECRET_DOOR,
     DNGN_SECRET_DOOR,
-    DNGN_WAX_WALL,
-        DNGN_MINWALL = DNGN_WAX_WALL,
+#if TAG_MAJOR_VERSION == 33
+    DNGN_OLD_WAX_WALL,
+#else
+    DNGN_MANGROVE,
+#endif
     DNGN_METAL_WALL,
+        DNGN_MINWALL = DNGN_METAL_WALL,
     DNGN_GREEN_CRYSTAL_WALL,
     DNGN_ROCK_WALL,
     DNGN_SLIMY_WALL,
@@ -1185,9 +1201,13 @@ enum dungeon_feature_type
         DNGN_MAXWALL = DNGN_CLEAR_PERMAROCK_WALL,
     DNGN_GRATE,
     DNGN_TREE,
-    DNGN_SWAMP_TREE,
+#if TAG_MAJOR_VERSION == 33
+    DNGN_MANGROVE,
         // Highest grid value which can't be reached through.
-        DNGN_MAX_NONREACH = DNGN_SWAMP_TREE,
+        DNGN_MAX_NONREACH = DNGN_MANGROVE,
+#else
+        DNGN_MAX_NONREACH = DNGN_TREE,
+#endif
 
     DNGN_OPEN_SEA,                     // Shoals equivalent for permarock
     DNGN_LAVA_SEA,                     // Gehenna equivalent for permarock
@@ -1328,6 +1348,9 @@ enum dungeon_feature_type
 
     // Not meant to ever appear in grd().
     DNGN_EXPLORE_HORIZON, // dummy for redefinition
+
+    DNGN_UNKNOWN_ALTAR,
+    DNGN_UNKNOWN_PORTAL,
 
     NUM_FEATURES
 };
@@ -1499,6 +1522,7 @@ enum enchant_type
     ENCH_BREATH_WEAPON, // just a simple timer for dragon breathweapon spam
     ENCH_DEATHS_DOOR,
     ENCH_ROLLING,       // Boulder Beetle in ball form
+    ENCH_OZOCUBUS_ARMOUR,
     // Update enchantment names in monster.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS
@@ -1633,6 +1657,15 @@ enum god_type
     GOD_VIABLE,
 };
 
+enum held_type
+{
+    HELD_NONE = 0,
+    HELD_NET,         // currently unused
+    HELD_WEB,         // currently unused
+    HELD_MONSTER,     // but no damage
+    HELD_CONSTRICTED, // damaging
+};
+
 enum holy_word_source_type
 {
     HOLY_WORD_GENERIC     = -1,
@@ -1658,7 +1691,7 @@ enum immolation_source_type
 {
     IMMOLATION_GENERIC = -1,
     IMMOLATION_SCROLL  = -2,
-    IMMOLATION_SPELL   = -3, // effect when fixing fire brand
+    IMMOLATION_AFFIX   = -3, // effect when fixing fire brand
     IMMOLATION_TOME    = -4, // exploding Tome of Destruction
 };
 
@@ -1997,7 +2030,9 @@ enum monster_type                      // menv[].type
     MONS_WORKER_ANT,
     MONS_SOLDIER_ANT,
     MONS_QUEEN_ANT,
+#if TAG_MAJOR_VERSION == 33
     MONS_KILLER_BEE_LARVA,
+#endif
     MONS_KILLER_BEE,
     MONS_QUEEN_BEE,
     MONS_VAMPIRE_MOSQUITO,
@@ -2065,11 +2100,11 @@ enum monster_type                      // menv[].type
     MONS_INEPT_ITEM_MIMIC,
     MONS_ITEM_MIMIC,
     MONS_RAVENOUS_ITEM_MIMIC,
-    MONS_VORPAL_ITEM_MIMIC,
+    MONS_MONSTROUS_ITEM_MIMIC,
     MONS_INEPT_FEATURE_MIMIC,
     MONS_FEATURE_MIMIC,
     MONS_RAVENOUS_FEATURE_MIMIC,
-    MONS_VORPAL_FEATURE_MIMIC,
+    MONS_MONSTROUS_FEATURE_MIMIC, // unused
 
     // Plants:
     MONS_TOADSTOOL,
@@ -2234,7 +2269,9 @@ enum monster_type                      // menv[].type
     MONS_LEMURE,
     MONS_UFETUBUS,
     MONS_IRON_IMP,
+#if TAG_MAJOR_VERSION == 33
     MONS_MIDGE,
+#endif
     MONS_SHADOW_IMP,
     MONS_RED_DEVIL,
     MONS_ROTTING_DEVIL,
@@ -2290,7 +2327,7 @@ enum monster_type                      // menv[].type
     MONS_GHOUL,
     MONS_FLAMING_CORPSE,
     MONS_MUMMY,
-    MONS_BOG_MUMMY,
+    MONS_BOG_BODY,
     MONS_GUARDIAN_MUMMY,
     MONS_GREATER_MUMMY,
     MONS_MUMMY_PRIEST,
@@ -2369,7 +2406,9 @@ enum monster_type                      // menv[].type
     MONS_ERICA,
     MONS_JOSEPHINE,
     MONS_HAROLD,
+#if TAG_MAJOR_VERSION == 33
     MONS_JOZEF,
+#endif
     MONS_AGNES,
     MONS_MAUD,
     MONS_LOUISE,
@@ -2439,8 +2478,19 @@ enum monster_type                      // menv[].type
     MONS_TEST_SPAWNER,
 
     // Add new monsters here:
+    MONS_SERPENT_OF_HELL_COCYTUS,
+    MONS_SERPENT_OF_HELL_DIS,
+    MONS_SERPENT_OF_HELL_TARTARUS,
 
-    NUM_MONSTERS,                      // used for polymorph
+    MONS_HELLBINDER,
+    MONS_CLOUD_MAGE,
+
+    MONS_BEAR,                  // genus
+    MONS_ELEMENTAL,             // genus
+
+    MONS_FANNAR,
+
+    NUM_MONSTERS,               // used for polymorph
 
     // MONS_NO_MONSTER can get put in savefiles, so it shouldn't change
     // when NUM_MONSTERS increases.
@@ -2503,6 +2553,7 @@ enum mon_inv_type           // (int) menv[].inv[]
     MSLOT_ARMOUR,
     MSLOT_SHIELD,
     MSLOT_WAND,
+    MSLOT_JEWELLERY,
     MSLOT_MISCELLANY,
 
     // [ds] Last monster gear slot that the player can observe by examining
@@ -2641,6 +2692,7 @@ enum object_class_type                 // mitm[].base_type
     OBJ_MISCELLANY,
     OBJ_CORPSES,
     OBJ_GOLD,
+    OBJ_RODS,
     NUM_OBJECT_CLASSES,
     OBJ_UNASSIGNED = 100,
     OBJ_RANDOM,      // used for blanket random sub_type .. see dungeon::items()
@@ -2787,7 +2839,7 @@ enum sense_type
     SENSE_WEB_VIBRATION,
 };
 
-enum shop_type // (uint8_t) env.sh_type[], item_in_shop(), in_a_shop()
+enum shop_type
 {
     SHOP_WEAPON,
     SHOP_ARMOUR,
@@ -3049,7 +3101,9 @@ enum spell_type
     SPELL_CURE_POISON,
     SPELL_CONTROL_TELEPORT,
     SPELL_POISON_WEAPON,
+#if TAG_MAJOR_VERSION == 33
     SPELL_PROJECTED_NOISE,
+#endif
     SPELL_DEBUGGING_RAY,
     SPELL_RECALL,
     SPELL_AGONY,
@@ -3156,7 +3210,9 @@ enum spell_type
     SPELL_HOLY_LIGHT,
     SPELL_HOLY_WORD,
     SPELL_SUMMON_HOLIES,
+#if TAG_MAJOR_VERSION == 33
     SPELL_SUMMON_GREATER_HOLY,
+#endif
     SPELL_HEAL_OTHER,
     SPELL_SACRIFICE,
     SPELL_HOLY_FLAMES,
@@ -3187,6 +3243,7 @@ enum spell_type
     SPELL_BEASTLY_APPENDAGE,
     SPELL_SILVER_BLAST,
     SPELL_ENSNARE,
+    SPELL_THUNDERBOLT,
 
     NUM_SPELLS
 };
@@ -3231,7 +3288,9 @@ enum trap_type                         // env.trap_type[]
     TRAP_DART,
     TRAP_ARROW,
     TRAP_SPEAR,
-    TRAP_AXE,
+#if TAG_MAJOR_VERSION == 33
+    TRAP_AXED,
+#endif
     TRAP_TELEPORT,
     TRAP_ALARM,
     TRAP_BLADE,
@@ -3374,9 +3433,9 @@ enum maybe_bool
 
 enum reach_type
 {
-    REACH_NONE,
-    REACH_KNIGHT,
-    REACH_TWO,
+    REACH_NONE   = 2,
+    REACH_KNIGHT = 5,
+    REACH_TWO    = 8,
 };
 
 enum daction_type
@@ -3403,6 +3462,7 @@ enum daction_type
     DACT_REMOVE_JIYVA_ALTARS,
     DACT_PIKEL_SLAVES,
     DACT_ROT_CORPSES,
+    DACT_TOMB_CTELE,
     NUM_DACTIONS,
 };
 
@@ -3410,6 +3470,10 @@ enum final_effect_flavour
 {
     FINEFF_LIGHTNING_DISCHARGE,
     FINEFF_MIRROR_DAMAGE,
+    FINEFF_TRAMPLE_FOLLOW,
+    FINEFF_BLINK,
+    FINEFF_DISTORTION_TELEPORT,
+    FINEFF_ROYAL_JELLY_SPAWN,
 };
 
 enum disable_type
@@ -3425,13 +3489,12 @@ enum disable_type
     NUM_DISABLEMENTS
 };
 
-// these are an unholy mess
 enum seen_context_type
 {
     SC_NONE,
-    SC_JUST_SEEN,       // \TODO: find out and describe what's the difference
-    SC_NEWLY_SEEN,      // /between these two
-    SC_ALREADY_SEEN,
+    SC_JUST_SEEN,       // has already been announced this turn
+    SC_NEWLY_SEEN,      // regular walking into view
+    SC_ALREADY_SEEN,    // wasn't a threat before, is now
     SC_TELEPORT_IN,
     SC_SURFACES,                      // land-capable
     SC_SURFACES_BRIEFLY,              // land-capable, submerged back
@@ -3439,8 +3502,8 @@ enum seen_context_type
     SC_FISH_SURFACES,                 // water/lava-only
     SC_NONSWIMMER_SURFACES_FROM_DEEP, // impossible?!?
     SC_UNCHARM,
-    SC_DOOR,
-    SC_GATE,
+    SC_DOOR,            // they opened a door
+    SC_GATE,            // ... or a big door
 };
 
 enum los_type
@@ -3488,79 +3551,94 @@ enum tag_pref
 };
 enum tile_flags
 {
-    // Foreground flags
+    //// Foreground flags
 
     // 3 mutually exclusive flags for attitude.
-    TILE_FLAG_ATT_MASK   = 0x00001800,
-    TILE_FLAG_PET        = 0x00000800,
-    TILE_FLAG_GD_NEUTRAL = 0x00001000,
-    TILE_FLAG_NEUTRAL    = 0x00001800,
+    TILE_FLAG_ATT_MASK   = 0x00030000ULL,
+    TILE_FLAG_PET        = 0x00010000ULL,
+    TILE_FLAG_GD_NEUTRAL = 0x00020000ULL,
+    TILE_FLAG_NEUTRAL    = 0x00030000ULL,
 
-    TILE_FLAG_S_UNDER    = 0x00002000,
-    TILE_FLAG_FLYING     = 0x00004000,
+    TILE_FLAG_S_UNDER    = 0x00040000ULL,
+    TILE_FLAG_FLYING     = 0x00080000ULL,
 
     // 3 mutually exclusive flags for behaviour.
-    TILE_FLAG_BEH_MASK   = 0x00018000,
-    TILE_FLAG_STAB       = 0x00008000,
-    TILE_FLAG_MAY_STAB   = 0x00010000,
-    TILE_FLAG_FLEEING    = 0x00018000,
+    TILE_FLAG_BEH_MASK   = 0x00300000ULL,
+    TILE_FLAG_STAB       = 0x00100000ULL,
+    TILE_FLAG_MAY_STAB   = 0x00200000ULL,
+    TILE_FLAG_FLEEING    = 0x00300000ULL,
 
-    TILE_FLAG_NET        = 0x00020000,
-    TILE_FLAG_POISON     = 0x00040000,
-    TILE_FLAG_ANIM_WEP   = 0x00080000,
-    TILE_FLAG_MIMIC      = 0x00100000,
-    TILE_FLAG_STICKY_FLAME = 0x00200000,
-    TILE_FLAG_BERSERK    = 0x00400000,
-    TILE_FLAG_INNER_FLAME= 0x40000000,
-    TILE_FLAG_CONSTRICTED= 0x80000000,
+    TILE_FLAG_NET        = 0x00400000ULL,
+    TILE_FLAG_POISON     = 0x00800000ULL,
+    TILE_FLAG_ANIM_WEP   = 0x01000000ULL,
+    TILE_FLAG_GLOWING    = 0x02000000ULL,
+    TILE_FLAG_STICKY_FLAME = 0x04000000ULL,
+    TILE_FLAG_BERSERK    = 0x08000000ULL,
+    TILE_FLAG_INNER_FLAME= 0x10000000ULL,
+    TILE_FLAG_CONSTRICTED= 0x20000000ULL,
+    TILE_FLAG_SLOWED     = 0x8000000000ULL,
+    //TILE_FLAG_UNUSED     = 0x10000000000ULL,
 
     // MDAM has 5 possibilities, so uses 3 bits.
-    TILE_FLAG_MDAM_MASK  = 0x03800000,
-    TILE_FLAG_MDAM_LIGHT = 0x00800000,
-    TILE_FLAG_MDAM_MOD   = 0x01000000,
-    TILE_FLAG_MDAM_HEAVY = 0x01800000,
-    TILE_FLAG_MDAM_SEV   = 0x02000000,
-    TILE_FLAG_MDAM_ADEAD = 0x02800000,
+    TILE_FLAG_MDAM_MASK  = 0x1C0000000ULL,
+    TILE_FLAG_MDAM_LIGHT = 0x040000000ULL,
+    TILE_FLAG_MDAM_MOD   = 0x080000000ULL,
+    TILE_FLAG_MDAM_HEAVY = 0x0C0000000ULL,
+    TILE_FLAG_MDAM_SEV   = 0x100000000ULL,
+    TILE_FLAG_MDAM_ADEAD = 0x1C0000000ULL,
 
     // Demon difficulty has 5 possibilities, so uses 3 bits.
-    TILE_FLAG_DEMON      = 0x34000000,
-    TILE_FLAG_DEMON_5    = 0x04000000,
-    TILE_FLAG_DEMON_4    = 0x10000000,
-    TILE_FLAG_DEMON_3    = 0x14000000,
-    TILE_FLAG_DEMON_2    = 0x20000000,
-    TILE_FLAG_DEMON_1    = 0x24000000,
+    TILE_FLAG_DEMON      = 0xE00000000ULL,
+    TILE_FLAG_DEMON_5    = 0x200000000ULL,
+    TILE_FLAG_DEMON_4    = 0x400000000ULL,
+    TILE_FLAG_DEMON_3    = 0x600000000ULL,
+    TILE_FLAG_DEMON_2    = 0x800000000ULL,
+    TILE_FLAG_DEMON_1    = 0xE00000000ULL,
 
-    // Background flags
-    TILE_FLAG_RAY        = 0x00000800,
-    TILE_FLAG_MM_UNSEEN  = 0x00001000,
-    TILE_FLAG_UNSEEN     = 0x00002000,
-    TILE_FLAG_CURSOR1    = 0x00004000,
-    TILE_FLAG_CURSOR2    = 0x00008000,
-    TILE_FLAG_CURSOR3    = 0x0000C000,
-    TILE_FLAG_CURSOR     = 0x0000C000,
-    TILE_FLAG_TUT_CURSOR = 0x00010000,
-    TILE_FLAG_TRAV_EXCL  = 0x00020000,
-    TILE_FLAG_EXCL_CTR   = 0x00040000,
-    TILE_FLAG_RAY_OOR    = 0x00080000,
-    TILE_FLAG_OOR        = 0x00100000,
-    TILE_FLAG_WATER      = 0x00200000,
-    TILE_FLAG_NEW_STAIR  = 0x00400000,
-    TILE_FLAG_WAS_SECRET = 0x00800000,
+    // 3 mutually exclusive flags for mimics.
+    TILE_FLAG_MIMIC_INEPT = 0x2000000000ULL,
+    TILE_FLAG_MIMIC       = 0x4000000000ULL,
+    TILE_FLAG_MIMIC_RAVEN = 0x6000000000ULL,
+    TILE_FLAG_MIMIC_MASK  = 0x6000000000ULL,
+
+
+    //// Background flags
+
+    TILE_FLAG_RAY        = 0x00010000ULL,
+    TILE_FLAG_MM_UNSEEN  = 0x00020000ULL,
+    TILE_FLAG_UNSEEN     = 0x00040000ULL,
+
+    // 3 mutually exclusive flags for cursors.
+    TILE_FLAG_CURSOR1    = 0x00180000ULL,
+    TILE_FLAG_CURSOR2    = 0x00080000ULL,
+    TILE_FLAG_CURSOR3    = 0x00100000ULL,
+    TILE_FLAG_CURSOR     = 0x00180000ULL,
+
+    TILE_FLAG_TUT_CURSOR = 0x00200000ULL,
+    TILE_FLAG_TRAV_EXCL  = 0x00400000ULL,
+    TILE_FLAG_EXCL_CTR   = 0x00800000ULL,
+    TILE_FLAG_RAY_OOR    = 0x01000000ULL,
+    TILE_FLAG_OOR        = 0x02000000ULL,
+    TILE_FLAG_WATER      = 0x04000000ULL,
+    TILE_FLAG_NEW_STAIR  = 0x08000000ULL,
+    TILE_FLAG_WAS_SECRET = 0x10000000ULL,
 
     // Kraken tentacle overlays.
-    TILE_FLAG_KRAKEN_NW  = 0x01000000,
-    TILE_FLAG_KRAKEN_NE  = 0x02000000,
-    TILE_FLAG_KRAKEN_SE  = 0x04000000,
-    TILE_FLAG_KRAKEN_SW  = 0x08000000,
+    TILE_FLAG_KRAKEN_NW  = 0x020000000ULL,
+    TILE_FLAG_KRAKEN_NE  = 0x040000000ULL,
+    TILE_FLAG_KRAKEN_SE  = 0x080000000ULL,
+    TILE_FLAG_KRAKEN_SW  = 0x100000000ULL,
 
     // Eldritch tentacle overlays.
-    TILE_FLAG_ELDRITCH_NW = 0x10000000,
-    TILE_FLAG_ELDRITCH_NE = 0x20000000,
-    TILE_FLAG_ELDRITCH_SE = 0x40000000,
-    TILE_FLAG_ELDRITCH_SW = 0x80000000,
+    TILE_FLAG_ELDRITCH_NW = 0x0200000000ULL,
+    TILE_FLAG_ELDRITCH_NE = 0x0400000000ULL,
+    TILE_FLAG_ELDRITCH_SE = 0x0800000000ULL,
+    TILE_FLAG_ELDRITCH_SW = 0x1000000000ULL,
 
-    // General
-    TILE_FLAG_MASK       = 0x000007FF,
+    //// General
+
+    // Mask for the tile index itself.
+    TILE_FLAG_MASK       = 0x0000FFFFULL,
 };
 
 enum tile_inventory_flags

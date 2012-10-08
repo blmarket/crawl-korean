@@ -16,7 +16,7 @@ const feature_def &get_feature_def(show_type object)
     // any instead, or the base feature if there are no items.
     if (object.cls == SH_MONSTER)
         object.cls = (object.item != SHOW_ITEM_NONE)? SH_ITEM : SH_FEATURE;
-    return (Features[object]);
+    return Features[object];
 }
 
 const feature_def &get_feature_def(dungeon_feature_type feat)
@@ -25,7 +25,7 @@ const feature_def &get_feature_def(dungeon_feature_type feat)
     show_type object;
     object.cls = SH_FEATURE;
     object.feat = feat;
-    return (Features[object]);
+    return Features[object];
 }
 
 static void _apply_feature_overrides()
@@ -108,10 +108,10 @@ static void _init_feat(feature_def &f, dungeon_feature_type feat)
             f.minimap      = MF_WALL;
             break;
 
-        case DNGN_SWAMP_TREE:
+        case DNGN_MANGROVE:
             f.dchar        = DCHAR_TREE;
             f.magic_symbol = Options.char_table[ DCHAR_WALL_MAGIC ];
-            f.colour       = ETC_SWAMP_TREE;
+            f.colour       = ETC_MANGROVE;
             f.minimap      = MF_WALL;
             break;
 
@@ -166,13 +166,6 @@ static void _init_feat(feature_def &f, dungeon_feature_type feat)
             f.dchar   = DCHAR_STATUE;
             f.colour  = BROWN; // same as clay golem, I hope that's okay
             f.minimap = MF_WALL;
-            break;
-
-        case DNGN_WAX_WALL:
-            f.dchar        = DCHAR_WALL;
-            f.colour       = YELLOW;
-            f.magic_symbol = Options.char_table[ DCHAR_WALL_MAGIC ];
-            f.minimap      = MF_WALL;
             break;
 
         case DNGN_GRANITE_STATUE:
@@ -697,6 +690,18 @@ static void _init_feat(feature_def &f, dungeon_feature_type feat)
             f.dchar   = DCHAR_FOUNTAIN;
             f.minimap = MF_FEATURE;
             break;
+
+        case DNGN_UNKNOWN_ALTAR:
+            f.colour  = LIGHTGREY;
+            f.dchar   = DCHAR_ALTAR;
+            f.minimap = MF_FEATURE;
+            break;
+
+        case DNGN_UNKNOWN_PORTAL:
+            f.colour  = LIGHTGREY;
+            f.dchar   = DCHAR_ARCH;
+            f.minimap = MF_FEATURE;
+            break;
     }
 
     if (feat == DNGN_ENTER_ORCISH_MINES || feat == DNGN_ENTER_SLIME_PITS
@@ -846,13 +851,13 @@ dungeon_feature_type magic_map_base_feat(dungeon_feature_type feat)
     case DCHAR_WAVY:
         return DNGN_SHALLOW_WATER;
     case DCHAR_ARCH:
-        return DNGN_ABANDONED_SHOP;
+        return DNGN_UNKNOWN_PORTAL;
     case DCHAR_FOUNTAIN:
         return DNGN_FOUNTAIN_BLUE;
     case DCHAR_WALL:
         return DNGN_ROCK_WALL;
     case DCHAR_ALTAR:
-        return DNGN_ALTAR_FIRST_GOD;
+        return DNGN_UNKNOWN_ALTAR;
     default:
         // We could do more, e.g. map the different upstairs together.
         return feat;

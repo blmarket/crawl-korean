@@ -48,7 +48,7 @@ public:
     unsigned short foe;
     int8_t ench_countdown;
     mon_enchant_list enchantments;
-    FixedBitArray<NUM_ENCHANTMENTS> ench_cache;
+    FixedBitVector<NUM_ENCHANTMENTS> ench_cache;
     uint64_t flags;                    // bitfield of boolean flags
 
     unsigned int experience;
@@ -100,6 +100,7 @@ public:
     void mark_summoned(int longevity, bool mark_items_summoned,
                        int summon_type = 0, bool abj = true);
     bool is_summoned(int* duration = NULL, int* summon_type = NULL) const;
+    bool is_perm_summoned() const;
     bool has_action_energy() const;
     void check_redraw(const coord_def &oldpos, bool clear_tiles = true) const;
     void apply_location_effects(const coord_def &oldpos,
@@ -170,6 +171,10 @@ public:
     bool can_drink_potion(potion_type ptype) const;
     bool should_drink_potion(potion_type ptype) const;
     item_type_id_state_type drink_potion_effect(potion_type pot_eff);
+
+    bool can_evoke_jewellery(jewellery_type jtype) const;
+    bool should_evoke_jewellery(jewellery_type jtype) const;
+    item_type_id_state_type evoke_jewellery_effect(jewellery_type jtype);
 
     void timeout_enchantments(int levels);
 
@@ -250,6 +255,7 @@ public:
     bool      pickup_throwable_weapon(item_def &item, int near);
     bool      pickup_weapon(item_def &item, int near, bool force);
     bool      pickup_armour(item_def &item, int near, bool force);
+    bool      pickup_jewellery(item_def &item, int near, bool force);
     bool      pickup_misc(item_def &item, int near);
     bool      pickup_food(item_def &item, int near);
     bool      pickup_missile(item_def &item, int near, bool force);
@@ -329,7 +335,7 @@ public:
     int res_petrify(bool temp = true) const;
     int res_constrict() const;
     int res_magic() const;
-    bool no_tele(bool calc_unid = true, bool permit_id = true);
+    bool no_tele(bool calc_unid = true, bool permit_id = true) const;
 
     flight_type flight_mode() const;
     bool is_levitating() const;
@@ -384,6 +390,7 @@ public:
 
     bool has_attack_flavour(int flavour) const;
     bool has_damage_type(int dam_type);
+    int constriction_damage() const;
 
     bool can_throw_large_rocks() const;
     bool can_speak();
@@ -454,10 +461,11 @@ public:
     void bind_melee_flags();
     void bind_spell_flags();
     void calc_speed();
-    void accum_been_constricted();
-    void accum_has_constricted();
-    bool attempt_escape();
+    bool attempt_escape(int attempts = 1);
     bool has_usable_tentacle() const;
+
+    bool check_clarity(bool silent) const;
+    bool check_stasis(bool silent, bool calc_unid = true) const;
 
 private:
     void init_with(const monster& mons);
@@ -468,13 +476,16 @@ private:
     bool pickup(item_def &item, int slot, int near, bool force_merge = false);
     void equip_weapon(item_def &item, int near, bool msg = true);
     void equip_armour(item_def &item, int near);
+    void equip_jewellery(item_def &item, int near);
     void unequip_weapon(item_def &item, int near, bool msg = true);
     void unequip_armour(item_def &item, int near);
+    void unequip_jewellery(item_def &item, int near);
 
     bool decay_enchantment(const mon_enchant &me, bool decay_degree = true);
 
     bool wants_weapon(const item_def &item) const;
     bool wants_armour(const item_def &item) const;
+    bool wants_jewellery(const item_def &item) const;
     void lose_pickup_energy();
     bool check_set_valid_home(const coord_def &place,
                               coord_def &chosen,

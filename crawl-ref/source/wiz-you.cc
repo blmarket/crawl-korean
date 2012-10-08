@@ -18,15 +18,14 @@
 #include "mutation.h"
 #include "newgame.h"
 #include "ng-setup.h"
-#include "output.h"
 #include "player.h"
-#include "random.h"
 #include "religion.h"
 #include "skills.h"
 #include "skills2.h"
 #include "spl-book.h"
 #include "spl-cast.h"
 #include "spl-util.h"
+#include "state.h"
 #include "stuff.h"
 #include "terrain.h"
 #include "transform.h"
@@ -306,12 +305,12 @@ void wizard_set_hunger_state()
     // Values taken from food.cc.
     switch (c)
     {
-    case 't': you.hunger = 500;   break;
+    case 't': you.hunger = HUNGER_STARVING / 2;   break;
     case 'n': you.hunger = 1200;  break;
     case 'h': you.hunger = 2400;  break;
     case 's': you.hunger = 5000;  break;
     case 'f': you.hunger = 8000;  break;
-    case 'e': you.hunger = 12000; break;
+    case 'e': you.hunger = HUNGER_MAXIMUM; break;
     default:  canned_msg(MSG_OK); break;
     }
 
@@ -538,7 +537,7 @@ bool wizard_add_mutation()
     if (answer == -1)
     {
         canned_msg(MSG_OK);
-        return (false);
+        return false;
     }
     const bool force = (answer == 1);
 
@@ -546,14 +545,14 @@ bool wizard_add_mutation()
     {
         mpr("Can't mutate when immune to mutations without forcing it.");
         crawl_state.cancel_cmd_repeat();
-        return (false);
+        return false;
     }
 
     answer = yesnoquit("Treat mutation as god gift?", true, 'n');
     if (answer == -1)
     {
         canned_msg(MSG_OK);
-        return (false);
+        return false;
     }
     const bool god_gift = (answer == 1);
 
@@ -562,7 +561,7 @@ bool wizard_add_mutation()
                     specs, sizeof(specs));
 
     if (specs[0] == '\0')
-        return (false);
+        return false;
 
     std::string spec = lowercase_string(specs);
 
@@ -591,7 +590,7 @@ bool wizard_add_mutation()
             crawl_state.cancel_cmd_repeat("Your mutation resistance has "
                                           "increased.");
         }
-        return (success);
+        return success;
     }
 
     std::vector<mutation_type> partial_matches;
@@ -639,7 +638,7 @@ bool wizard_add_mutation()
                                      MSGCH_DIAGNOSTICS);
         }
 
-        return (false);
+        return false;
     }
     else
     {
@@ -670,7 +669,7 @@ bool wizard_add_mutation()
         }
     }
 
-    return (success);
+    return success;
 }
 #endif
 
@@ -952,7 +951,7 @@ void set_xl(const int newxl, const bool train)
         debug_uptick_xl(newxl, train);
 }
 
-void wizard_get_god_gift (void)
+void wizard_get_god_gift(void)
 {
     if (you.religion == GOD_NO_GOD)
     {

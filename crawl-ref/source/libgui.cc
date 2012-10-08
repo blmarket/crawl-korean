@@ -17,7 +17,6 @@
 #include "externs.h"
 #include "tilereg-text.h"
 #include "message.h"
-#include "stash.h"
 #include "state.h"
 #include "terrain.h"
 #include "tiledef-main.h"
@@ -109,9 +108,9 @@ void set_cursor_enabled(bool enabled)
 bool is_cursor_enabled()
 {
     if (TextRegion::cursor_flag)
-        return (true);
+        return true;
 
-    return (false);
+    return false;
 }
 
 bool is_smart_cursor_enabled()
@@ -150,7 +149,7 @@ int num_to_lines(int num)
 
 int getch_ck()
 {
-    return (tiles.getch_ck());
+    return tiles.getch_ck();
 }
 
 int getchk()
@@ -171,12 +170,12 @@ void cgotoxy(int x, int y, GotoRegion region)
 coord_def cgetpos(GotoRegion region)
 {
     ASSERT(region == get_cursor_region());
-    return (coord_def(wherex(), wherey()));
+    return coord_def(wherex(), wherey());
 }
 
 GotoRegion get_cursor_region()
 {
-    return (tiles.get_cursor_region());
+    return tiles.get_cursor_region();
 }
 
 void delay(unsigned int ms)

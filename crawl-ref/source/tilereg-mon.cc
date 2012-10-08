@@ -7,7 +7,6 @@
 #include "process_desc.h"
 
 #include "cio.h"
-#include "coord.h"
 #include "directn.h"
 #include "env.h"
 #include "libutil.h"
@@ -56,81 +55,81 @@ int MonsterRegion::handle_mouse(MouseEvent &event)
     if (!mouse_pos(event.px, event.py, cx, cy))
     {
         place_cursor(NO_CURSOR);
-        return (0);
+        return 0;
     }
 
     const coord_def cursor(cx, cy);
     place_cursor(cursor);
 
     if (mouse_control::current_mode() != MOUSE_MODE_COMMAND)
-        return (0);
+        return 0;
 
 
     unsigned int item_idx = cursor_index();
     const monster_info* mon = get_monster(item_idx);
     if (!mon)
-        return (0);
+        return 0;
 
     const coord_def &gc = mon->pos;
     tiles.place_cursor(CURSOR_MOUSE, gc);
 
     if (event.event != MouseEvent::PRESS)
-        return (0);
+        return 0;
 
     if (event.button == MouseEvent::LEFT)
     {
         m_last_clicked_item = item_idx;
-        return (tile_click_cell(gc, event.mod));
+        return tile_click_cell(gc, event.mod);
     }
     else if (event.button == MouseEvent::RIGHT)
     {
         full_describe_square(gc);
         redraw_screen();
-        return (CK_MOUSE_CMD);
+        return CK_MOUSE_CMD;
     }
 
-    return (0);
+    return 0;
 }
 
 bool MonsterRegion::update_tip_text(std::string &tip)
 {
     if (m_cursor == NO_CURSOR)
-        return (false);
+        return false;
 
     unsigned int item_idx = cursor_index();
     const monster_info* mon = get_monster(item_idx);
     if (!mon)
-        return (false);
+        return false;
 
-    return (tile_dungeon_tip(mon->pos, tip));
+    return tile_dungeon_tip(mon->pos, tip);
 }
 
 bool MonsterRegion::update_tab_tip_text(std::string &tip, bool active)
 {
-    return (false);
+    return false;
 }
 
 bool MonsterRegion::update_alt_text(std::string &alt)
 {
     if (m_cursor == NO_CURSOR)
-        return (false);
+        return false;
 
     unsigned int item_idx = cursor_index();
     if (m_last_clicked_item >= 0
         && item_idx == (unsigned int) m_last_clicked_item)
     {
-        return (false);
+        return false;
     }
 
     const monster_info* mon = get_monster(item_idx);
     if (!mon)
-        return (false);
+        return false;
 
     const coord_def &gc = mon->pos;
 
     describe_info inf;
     if (!you.see_cell(gc))
-        return (false);
+        return false;
 
     get_square_desc(gc, inf, true, false);
 
@@ -139,17 +138,17 @@ bool MonsterRegion::update_alt_text(std::string &alt)
 
     proc.get_string(alt);
 
-    return (true);
+    return true;
 }
 
 const monster_info* MonsterRegion::get_monster(unsigned int idx) const
 {
     if (idx >= m_items.size())
-        return (NULL);
+        return NULL;
 
     const InventoryTile &item = m_items[idx];
     if (item.idx >= static_cast<int>(m_mon_info.size()))
-        return (NULL);
+        return NULL;
 
     return &(m_mon_info[item.idx]);
 }

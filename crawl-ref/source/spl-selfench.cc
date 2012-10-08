@@ -13,14 +13,10 @@
 #include "env.h"
 #include "godconduct.h"
 #include "hints.h"
-#include "itemprop.h"
 #include "libutil.h"
 #include "message.h"
 #include "misc.h"
-#include "potion.h"
-#include "religion.h"
 #include "spl-cast.h"
-#include "spl-other.h"
 #include "spl-transloc.h"
 #include "spl-util.h"
 #include "stuff.h"
@@ -256,7 +252,7 @@ int cast_selective_amnesia(std::string *pre_msg)
     if (you.spell_no == 0)
     {
         canned_msg(MSG_NO_SPELLS);
-        return (0);
+        return 0;
     }
 
     int keyin = 0;
@@ -272,7 +268,7 @@ int cast_selective_amnesia(std::string *pre_msg)
         if (key_is_escape(keyin))
         {
             canned_msg(MSG_OK);
-            return (-1);
+            return -1;
         }
 
         if (keyin == '?' || keyin == '*')
@@ -309,7 +305,7 @@ int cast_selective_amnesia(std::string *pre_msg)
             //"it unravels.");by크롤러.
     }
 
-    return (1);
+    return 1;
 }
 
 spret_type cast_see_invisible(int pow, bool fail)
@@ -333,10 +329,7 @@ spret_type cast_see_invisible(int pow, bool fail)
 spret_type cast_silence(int pow, bool fail)
 {
     fail_check();
-    if (!you.attribute[ATTR_WAS_SILENCED])
-        mpr("깊은 정적이 당신을 감쌌다.");//mpr("A profound silence engulfs you.");
-
-    you.attribute[ATTR_WAS_SILENCED] = 1;
+    mpr(_("A profound silence engulfs you."));
 
     you.increase_duration(DUR_SILENCE, 10 + pow/4 + random2avg(pow/2, 2), 100);
     invalidate_agrid(true);
@@ -355,14 +348,14 @@ spret_type cast_liquefaction(int pow, bool fail)
         if (!you.ground_level())
             mpr("당신은 땅에 닿지 않은 상태로 이 마법을 영창할 수 없다.");//mpr("You can't cast this spell without touching the ground.");
         else
-            mpr("이 마법을 영창하기 위해서 빈 공간의 땅이 필요하다.");//mpr("You need to be on clear, solid ground to cast this spell."); by 뚜병진
-        return (SPRET_ABORT);
+            mpr(_("You need to be on clear, solid ground to cast this spell."));
+        return SPRET_ABORT;
     }
 
     if (you.duration[DUR_LIQUEFYING] || liquefied(you.pos()))
     {
-        mpr("이 땅은 이미 액화되었다. 당신은 기다려야 할 것이다.");//        mpr("The ground here is already liquefied! You'll have to wait.");
-        return (SPRET_ABORT);
+        mpr(_("The ground here is already liquefied! You'll have to wait."));
+        return SPRET_ABORT;
     }
 
     fail_check();

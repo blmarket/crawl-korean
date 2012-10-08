@@ -6,12 +6,13 @@ dummy_monsters
 # Glyph-specific suffixes
 # Only for non-uniques nagas.
 __cap-N_suffix
+
 {{
-if you.race() == "Naga" then
-    return "이것은 상당히 매력적으로 보인다."
-else
-    return "이것은 낯설고 구역질난다."
-end
+    if you.race() == "Naga" then
+        return "이것은 상당히 매력적으로 보인다."
+    else
+        return "이것은 낯설고 구역질난다."
+    end
 }}
 %%%%
 __cap-T_suffix
@@ -24,31 +25,39 @@ If made afraid, it may become angry!
 %%%%
 __(_suffix_examine
 
-이것은 자체적인 마력으로, 공기 중을 춤추듯 날아가도록 주술이 걸려 있다.
+It has been enchanted to dance through the air and attack under its own power.
 %%%%
 # Uniques
 Aizul
 
-어떤 거대하면서도 전설적인 보물 창고의 수호신 뱀이었었으나, 그가 자는 사이 보물창고가 도둑들에게 털려버리는 망신을 당한 후, 스스로 수호자임을 그만 두었다. 그는 이 던전에서 도둑이라고 판단되는 자들에게 가차없는 복수를 할 것이다. 그는 갗가지 주문을 외우는 일을 성취해했으나, 다른 수호신 뱀들처럼 근접 전투에서까지 강력함을 보이는 모습은 약간 잃어버렸다.
+Once the primary guardian serpent of a legendary treasure hoard, he was
+disgraced after thieves looted it while he slept. He now slithers about the
+dungeon, seeking vengeance against all would-be looters. He is an accomplished
+spellcaster, but no more deadly in melee combat than others of his kind.
 %%%%%
 Agnes
 
-여성 치고는 키가 큰 미모의 전사로, 이국적인 무기를 장비했으며 우아한 동작이 눈길을 사로잡는다. 허영심이 가득해 보이지만, 그 만큼 재빠르게 움직이는 그녀는 그녀 주변을 꾸밀 아름다운 보물들을 찾기 위하여, 이 던전에 들어왔다.
+A tall (for her kind) and beautiful warrior, as vain as she is quick. You can't
+help but notice both her exotic weapon and graceful movements. She searches the
+dungeon for aesthetically pleasing objects to surround herself with.
 %%%%
 Antaeus
 
-한때 큰 명성을 날렸었으나,  그로 인한 오만함으로 인해, 끝내 타락해 버린 강인한 거인족이다. 이제는 강력한 악마가 되어, '코큐투스'의 얼어붙은 황무지를 다스리고 있다. 그의 강대한 육체는 일단 보기에는 타격을 주기 쉬워 보이지만, 애석하게도 웬만한 공격에는 상처하나 입지 않을것처럼 보인다.
+Once a mighty and renowned Titan, his arrogance was his undoing. Now he is
+corrupt and tainted, a powerful demon who lords over the frozen wastes of
+Cocytus. His gigantic body seems as though it would be easily struck by your
+attacks; unfortunately, it also seems like it would remain unscathed by all but
+the strongest of them.
 %%%%
 Arachne
 
-Once the best human weaver, Arachne was cursed by being transformed into
-her present form: half-human, half-spider. No longer ageing, she has the
-youth and beauty of a human female, along with the legs and abdomen of a
-monstrous giant spider.
+Once the best human weaver, Arachne was cursed by being transformed into her
+present form: half-human, half-spider. No longer ageing, she has the youth and
+beauty of a human female, along with the legs and abdomen of a monstrous giant
+spider.
 
-Thousands years old, she has learned magic and quite a few other tricks.
-Expect to be ensnared by webs and magic while her pets digest and then
-drink you dry.
+Thousands years old, she has learned magic and quite a few other tricks. Expect
+to be ensnared by webs and magic while her pets digest and then drink you dry.
 %%%%
 Asmodeus
 
@@ -56,27 +65,36 @@ Asmodeus
 %%%%
 Azrael
 
-강력하고 호전적인 불의 정령이다. 
+A powerful, belligerent efreet. (Is there any other kind?)
 %%%%
-Blork the Orc
+Blork the orc
 
-뒤룩뒤룩 살이 찐 추악한 오크다. 무지개색깔의 촌스러운 가터벨트를 어디선가 줏어서 착용하고있다. 물론 저걸 빼앗아 착용할 이유는 없어 보이지만.
+A particularly fat and ugly orc. He seems to have scavenged a pair of
+rainbow-coloured suspenders from somewhere. They're not helping.
 %%%%
 Boris
 
-고대의 리치로, 주변의 공기가 사악한 에너지로 파열음을 내고 있다. 
+An ancient and powerful lich. Like all true liches, Boris is immortal, and will
+regenerate its desiccated skeletal remains even if completely disintegrated.
+However, while this complicated process can often take months or even years,
+Boris has mastered it to the point of being able to reintegrate himself in a
+matter of minutes.
 %%%%
 Cerebov
 
-흉폭한 악마 군주인 세레보브는, 빛나는 황금 갑옷을 입고, 거대하면서도 이지저리 뒤틀린 검을 든 거대한 모습으로 당신 앞에 나타났다.
+A violent and wrathful demon, Cerebov appears as a giant human covered in
+shining golden armour and wielding a huge twisted sword.
 %%%%
 Chuck
 
-척은 바위들을 아끼는 바위 거인으로, 다른 거인보다 더욱 크고 우월하다. 지난 몇 년 동안, 그는 희귀하거나 마법이 걸린 바위들을 모으기 시작했다고 한다.
+Chuck the stone giant loves rocks, the bigger the better! Over the years, he
+has managed to amass quite the collection, including some rare, enchanted ones.
 %%%%
 Crazy Yiuf
 
-여윈 모습의, 긴 은색 수염이 달린 늙은 놀로, 육척봉을 들고 망토를 착용하고 있다. 꼭 신화에 나오는 모습 같이 생겼는데, 자세히 살펴보니 귀에 수염을 갈고리로 연결해 놓았다.
+A withered old gnoll with a long silver beard, wielding a quarterstaff and
+wearing a cloak. He looks like a figure from mythology! Wait, is his beard held
+on to his ears with hooks?
 %%%%
 Dispater
 
@@ -84,36 +102,54 @@ Dispater
 %%%%
 Dissolution
 
-슬라임 소굴은 원래는 번영했던 문명이었으며, 디스솔루션은 그들이 믿는 신들의 예언자였다. 언젠가, 도시에 슬라임들이 들이 닥쳐 끝내 멸망하였을때, 슬라임의 신을 유일하게 믿고 있었던 디스솔루션이 그 문명의 유일한 생존자였다. 디스솔루션은 비록 강산성의 덩어리가 되었지만,  아직도 예전의 지능을 유지하고 있고, 이렇게 변해버린 자신의 모습에 대한 증오만을 간직하고 있다.
+The Pits of Slime used to be a thriving civilization, and Dissolution was the
+prophet of their god. When the city was overtaken by its current residents,
+only Dissolution survived, for he alone turned faithfully to the Slime God.
+Dissolution became a tremendous mass of acidic ooze, yet retained his
+intelligence. He is filled with hatred for anything that can hold a form.
 %%%%
 Donald
 
-if you.race() ~= "Merfolk" and you.race() ~= "Octopode" then
-    descript = descript .. " Unlike you, and d"
-else
-    descript = descript .. " D"
-end
+{{
+    local descript = "An adventurer just like you, trying to find the Orb."
 
-descript = descript .. "espite his hatred of it, he takes to water like a fowl."
+    if you.race() ~= "Merfolk" and you.race() ~= "Octopode" then
+        descript = descript .. " Unlike you, and d"
+    else
+        descript = descript .. " D"
+    end
 
-return descript
+    descript = descript .. "espite his hatred of it, he takes to water " ..
+                           "like a fowl."
+
+    return descript
 }}
 %%%%
 Dowan
 
-마법을 주로 사용하지만, 그 외에도 여러가지 재능이 있는, 아름답지만 오만한 엘프다.  그의 쌍둥이 여동생인 '드뷔사'의 단점을 서로 보완하여, 콤비를 이루고 있다.
+A beautiful but vain elf with an aptitude for magic and little else. His skills
+are the perfect complement of his twin sister Duvessa's fighting prowess.
 %%%%
 Duvessa
 
-평범해 보이는 외모의 엘프 여전사로, 여러 전투 기술에 능숙한 편이다. 오빠인 '도완'의 마법적 능력과 더불어, 서로의 미흡한 점을 어느 정도 보완하고 있다. 오빠를 따라 오만한 성격도 똑 닮았지만 말이다.
+A plain-looking elven fighter who is technically brilliant in many forms of
+combat, but over-confident because of it. She is complemented by the magical
+skills of her twin brother, Dowan.
 %%%%
 Edmund
 
-지그문트의 동생중 한 명으로, 지그문트에 대한 질투심으로 가득해 보인다. 그는 지그문트와 같은 마법을 구사하지는 못하지만, 자기 자신의 우월함을 입증하기 위해, 운수 없는 모험가들을 그의 소중한 플레일로 살해하고 도주하는 것이 그의 특기이다.
+A jealous sibling of Sigmund (indeed, the youngest of nine brothers). He has
+none of Sigmund's skills in magic, but makes up for it with his skills in
+fighting and a canny head for money. He is eager to prove his superiority by
+killing hapless adventurers with his expensive flail and quick wit.
 %%%%
 the Enchantress
 
-아름다운 스프리건 여성으로, 이 곳에 거주하는 스프리건들의 통치자이다. 용 가죽으로 만든, 형형색색으로 희미하게 빛나는 오팔색의 옷을 입고 있는 그녀 주위에서 일어나는 공기의 격렬한 흐름이, 다양하면서도 강력한 주술들을 시전할 수 있다는 것을 여실히 나타내주고 있다.
+A beautiful spriggan woman, the ruler of spriggans who live here. She wears an
+opalescent outfit made of dragon skin that shimmers with all colours.
+
+The air around her shows hints of many powerful enchantment spells she cast on
+herself.
 %%%%
 Ereshkigal
 
@@ -129,23 +165,50 @@ Erolcha
 %%%%
 Eustachio
 
-넓게 뻗은 수염을 가진 견습 소환술사이다. 자신의 명예에 대한 여러 우스운 생각들로 가득해 보인다.
+An apprentice summoner with a flowing moustache. He has funny ideas about
+honour.
 %%%%
 Frances
 
-판데모니움의 군주와의 전투에서 승리해본적이 있다는 굳센 여전사로, 그 동안의 전투로 인해 얼굴에 깊은 흉터가 나 있다. 자신의 흉터를 수치스럽게 생각하지 않고,  전투에서 얻은 영광스러운 표식으로 여기고 있는 것 같다.
+A stout warrior who once bested a powerful lord of Pandemonium in combat,
+gaining control over the demon's realm and thanes. The battle left her with a
+deep facial scar, one that she carries as a badge of honour rather than a
+symbol of shame.
 %%%%
 Frederick
 
-금테의 외눈 안경을 쓰고 있는 호리호리한 마검사로, 자신에게 적합한 맞상대를 찾아다니고 있다. 당신이 그에게 적합한 맞상대일지는 모르겠지만.
+A svelte fighter-mage who wears a gold-rimmed monocle and seeks a suitable and
+worthy opponent. You likely do not fit the bill.
+%%%%
+Fannar
+
+A cold-hearted elven sorcerer, draped in robes of high office. He whispers
+grimly to himself as he stalks the dungeon, trailing ice crystals through the
+air behind him.
+
+In ages long past, Fannar's wisdom and precocious talent with frost magic won
+him the coveted position of magistrate, placing him in charge of enforcing the
+law throughout the Elven Halls. By all accounts, he was once well known for
+being benevolent, just, and passionate in keeping the elves free from
+corruption and crime, even as those around him began to dabble in necromancy
+and demonic magic.
+
+Over the long centuries of his tenure, Fannar's devotion to justice has warped
+into paranoia and despotism. Even his closest supporters now whisper that his
+magical power has begun to border on the self-destructive. Fannar still tries
+to keep the elves from falling to evil, unwilling or unable to notice that he
+failed long ago.
 %%%%
 Gastronok
 
-게걸스럽지만 놀랍도록 높은 지능을 가진 민달팽이로, 지나가는 길에 있는 모든 것을 먹어치우면서 움직이고 있다. 특이하게도 뾰족한 모자를 머리 끝에 아슬아슬하게 걸쳐 쓰고 있는데, 그의 주인이었던 어떤 강력한 마법사를 흡수해 먹어치우고, 높은 지능과 함께 머리에 쓰고 있는 뾰족한 모자를 얻은 것이라고 한다.
+A voracious and surprisingly intelligent slug, devoted to eating everything and
+everyone he comes across, with a pointed hat perched rakishly atop his head. He
+acquired the hat the same way he acquired his intelligence and his knowledge of
+spells: by consuming their former owner, a powerful wizard.
 %%%%
 Geryon
 
-A huge, three-headed arch-demon, guardian of the Vestibule of Hell. Legends say that his silver horn is used to throw open the gates of Hell themselves.
+A huge, three-headed, winged arch-demon, guardian of the gates of Hell.
 %%%%
 Gloorx Vloq
 
@@ -153,7 +216,8 @@ Gloorx Vloq
 %%%%
 Grinder
 
-지옥의 밑바닥에서 고문 기술자로 일했던, 크게 강해 보이지는 않는 그림자 임프이다.  불만이 많아 보이는 그라인더는 정신이 나간듯한 말들을 입에서 뱉어내고 있다.
+An inefficient shadow imp previously employed as a torturer in one of the lower
+circles of Hell. He has a tendency to complain and make inane statements.
 %%%%
 Grum
 
@@ -161,27 +225,43 @@ Grum
 %%%%
 Harold
 
-다급해 보이는 중년의 현상금 사냥꾼으로, 당신도 그의 사냥 대상에서 예외는 아니다.
+A middle-aged bounty hunter, anxious to retire from bounty-hunting after one
+final job. He hopes to settle down somewhere and live a quiet life with his
+family, using the money from his final bounty: you.
 %%%%
 Ignacio
 
-신의 힘이 개입하지 않는 이상, 일반적인 존재는 악마로 타락하지 않았을 때, 죽지 않는 영원한 삶 즐겨 누리고 싶었던 이그나시오는, 그의 모든 것들 당해 마크레브를 섬겼고, 결국 마크레브가 그에게 미소짓도록 만들었다. 영원한 삶을 얻은 그의 악마화된 육체에는, 수많은 날카롭고 거대한 칼날들이 돋아났으며, 당신에게 그 칼날의 끝을 시험해보길 원하고 있다.
+While a mortal cannot turn into a demon aside from divine intervention, this is
+what happened to Ignacio after Makhleb saw his love for his job and smiled upon
+him. He is now slated to continue the joy of his life for all eternity.
+
+Although his new form includes a number of large razor-sharp blades growing
+from his demonic appendages, he kept his favourite axe and is eager to let you
+test its edge.
 %%%%
 Ijyb
 
-작고 뒤틀린 고블린이다. 뭔지 모를 푸른색 넝마를 걸치고 있다.
+A small and twisted goblin, wearing some ugly blue rags. He claims dominion
+over this level of the dungeon; the punishment for trespassing is death.
 %%%%
 Ilsuiw
 
-교활한 머포크 마녀다. 자신의 미모를 이용한 주문을 사용하여, 모험가들을 자신도 모르게 죽음으로 끌어들이는 것이 그녀의 특기이다.
+A cunning merfolk water-witch, who uses her beauty and spellcraft to draw
+unwitting adventurers to their deaths.
 %%%%
 Jessica
 
-사악한 여자 견습 마법사다. 어둠의 마법을 수련하기에 방해받지 않는 조용하고 한적한 장소를 찾으러 이 던전에 들어왔다.
+An evil apprentice sorceress. She entered the dungeon hoping to find a quiet,
+secluded place where she could study the darker arts without being disturbed.
 %%%%
 Jory
 
-한때는 평범한 농부였으나, 스스로 강력한 언데드의 모습으로 변하였다. 그 후 수없는 세월이 지나는 동안, 그는 전투와 마법 기술을 연마했으며 거대한 재산과 많은 보물들을 모아왔고 이제는 돌로 만들어진, 고요한 '침묵의 탑'에 거주하고 있다. 그는 보잘것없는 모험가들이 자신의 일을 망치는 것을 허락하지 않기 때문에, 그와 조우했다면 주의해야 할 것이다.
+Once a simple village peasant, Jory found himself transformed in undeath into a
+powerful creature. Through the countless centuries unlived since then, he has
+honed his skills in combat and magic, amassed great wealth and many
+possessions, and now resides in a stonily quiet Tower of Silence. He's not
+about to let any puny adventurers ruin his hard work, so those who encounter
+him should beware!
 %%%%
 Joseph
 
@@ -189,11 +269,11 @@ Joseph
 %%%%
 Josephine
 
-드루이드의 옷을 입은, 추악하게 늙은 인물이다.
-%%%%
-Jozef
-
-키가 큰 현상금 사냥꾼이다.
+A hideous crone, her face covered in warts, moles and the occasional patch of
+hair, Josephine's appearance may fool one into thinking she is some weak old
+woman, but she is truly a formidable necromancer. The use of black magic has
+taken a physical toll on and prematurely aged Josephine, turning the once
+beautiful lady into an ugly hag.
 %%%%
 Khufu
 
@@ -205,45 +285,71 @@ Kirke
 %%%%
 the Lernaean hydra
 
-거대한 고대의 독사와 같은 물짐승으로, 아주 많은 머리를 가지고 있으며, 각각의 머리에 달려있는 눈에서는 독액이 흘러나오고 있다. 이 고대의 히드라는 지하세계로 가는 입구를 지키는 수호신일지도 모른다는 이야기가 있다.
+An ancient, outsized serpent-like water beast that possesses numerous heads.
+The poets mention more heads than vase-painters can paint, poisonous venom
+coming out of its eyes, and that this hydra is a guardian of an entrance to the
+Underworld. What of this is true, you do not know.
 %%%%
 Lom Lobon
 
-이상하리만큼 평온해 보이는 고대한 악마다. 이마의 중앙에서 빛나는 거대한 눈이 당신을 차갑게 응시하고 있다.
+An ancient and strangely serene demon. It regards you coldly from the huge
+glowing eye in the centre of its forehead.
 %%%%
 lorocyproca
 
-A tall and gaunt figure, draped in long robes which flow as if alive. It thirsts for magical energies.
+A tall and gaunt figure, draped in long robes which flow as if alive. It
+thirsts for magical energies.
 %%%%
 Louise
 
-보통과는 달리 중갑으로 무장한 마법사다.
+A mighty sorceress, clad from head to toe in heavy armour. Once an adventurer
+looking for the fabled Orb of Zot, she was cast into the Abyss and got
+hopelessly lost there. Toyed with by some greater power, she was stuck on the
+hostile plane for nearly a decade. When she finally emerged from the Abyss,
+Louise had become powerful indeed, but had also gone fully insane. She now
+wanders the halls of the dungeon, seeking other adventurers to share her fate.
 %%%%
 Mara
 
-마라는 큰 키를 가진 강력한 악마로, 환영들의 군주이자 강력한 몽상가이다. 복잡하고 정교한 환영을 만드는데 정통이 나 있으며, 이것은 가장 강력한 마법사들까지도 속일 수 있다.
+This tall and powerful demon is Mara, Lord of Illusions, mighty among dreamers.
+He is capable of creating intricately detailed illusions, able to mislead even
+the minds of the mightiest and most brilliant spell-casters.
 %%%%
 Margery
 
-A lithe spellcaster. She's scantily clad, yet the little she wears seems to
-be finest-quality dragon armour, granting quite good protection. And
-distracting humanoid males has its value in combat, as well.
+A lithe spellcaster. She's scantily clad, yet the little she wears seems to be
+finest-quality dragon armour, granting quite good protection. And distracting
+humanoid males has its value in combat, as well.
 %%%%
 Maud
 
-먼 곳의 왕국에서 온 의문스러운 전사로, 전설의 검 '엔타렉스'를 되찾으라는 명을 받고 있다.
+A mysterious warrior princess from a far-off kingdom, on a quest to retrieve
+the legendary sword 'Entarex'. Countless have been the admirers who, thinking
+about Maud, forgot everything else.
 %%%%
 Maurice
 
-음흉한 도둑이다.
+A sly, conniving thief. In his profession, Maurice is considered a legend — at
+least according to himself. He is skilled, nonetheless, and among all the
+thieves and rogues lured by the Orb, Maurice is undoubtedly the most crafty.
 %%%%
 Mennas
 
-본래 인간 사제였던 멘나스는, '진'의 말들을 설교하러 다니러 이곳 저곳을 여행하고 다녔었다. 심지어 오크들이 거주하는 지역을 찾아가, 오크들에게 질서와 자비에 대해 전파를 하였었다. 멘나스와 함께 했던 오크들에 따르면, 오크들은 그들의 유일신이었던 '베오그'를 모욕하는 멘나스와 함께 하는것에 불만을 품었었고,  결국 그의 혀를 끊어내어 침묵만이 남도록 만들었다. 이 타락한 천사가 그 사제 멘나스인지 아닌지는 여전히 의문이지만... 여전히 난해한 의문들을 내면에 담아두고 있는 것 처럼 보인다.
+There was once a human priest named Mennas. He travelled far and wide preaching
+of Zin to any who would listen, going even so far as to travel into Orcish
+lands, preaching to orcs about laws and mercy. By all accounts the orcs were
+not happy with Mennas. They demanded he swear Beogh was the one true god, and
+when Mennas remained silent they cut out his tongue.
+
+Whether or not this angel is that same Mennas is something of a mystery, as he
+seems to have difficulty speaking.
 %%%%
 Menkaure
 
-강력했던 고대 왕국의, 온화하면서도 고결했던 통치자였으나, 젊은 나이에 세상을 떠서 미라가 되었다. 그의 믿음직한 사제들은 시간이 지난 후, 그의 사체에 거대하고 강력한 마법을 불어넣어주었고, 그에게 영원한 삶을 살도록 하였다..... 지금은 그는 완전히 잊혀졌고, 썩어가는 붕대와 말라 비틀어지는 뼈밖에 남지 않았지만.
+A fair and noble ruler of an ancient and mighty kingdom, mummified after an
+early death. His faithful priests subsequently infused him with great and
+powerful magic, seeking to grant him eternal life. Now he is forgotten and
+reduced to mouldering bandages and dry, brittle bones.
 %%%%
 Mnoleg
 
@@ -255,7 +361,9 @@ Murray
 %%%%
 Nellie
 
-본래는 서커스단에서 활동을 했던, 높은 지능을 가진 코끼리다. 어느 날 밤, 묶여 있던 사슬을 풀고 나와, 판데모니움으로 사라졌고, 그 후 누구도 다시 보지 못했다고 한다.
+A highly intelligent elephant who travelled as part of a circus. One dark
+night, she slipped out of her chain and disappeared into Pandemonium, never to
+be seen again.
 %%%%
 Nergalle
 
@@ -267,23 +375,35 @@ Nessos
 %%%%
 Nikola
 
-원래는 전격을 연구하는, 꽤 능력있는 연금술사였다. 자신만의 전기 골렘을 완벽하게 만드려고 시도하던 도중, 끔찍한 사고를 당했고, 지금은 온 몸이 깜박거리며, 실체와 비실체 사이를 왔다갔다 하고 있다.
+A brilliant scientist obsessed with electricity. In his attempts to perfect his
+electric golem, he was involved in a terrible accident, and now phases in and
+out of reality.
 %%%%
 Norris
 
-건장한 육체미와 부드러운 목소리를 가진, 느긋한 '피스 인 데스' 광신도다. 그는 자기 자신이나 당신, 둘 중 누가 죽는 자가 될 것인지는 별 신경을 쓰지 않는 듯 하다. "둘 다"가 그가 가장 지향하는 선택일지도 모르지만.
+A relaxed peace-in-death cultist with a healthy tan and a soothing voice. He
+doesn't really care if it is you or him who dies — “both” would probably be the
+best option.
 %%%%
 Pikel
 
-코볼트들이 보통 노예로써 살아왔던 시절, 이기적인 욕망과 거대한 위상은 피켈에게 하여금, 자신이 노예를 부리고 싶다는 목표를 가지게 만들었다. 그는 소심하고 용기없는 인간들을, 자신의 갈라진 채찍으로 복종시켜, 오크 광산으로 팔아 넘기러 가는 길이다.
+While kobolds are normally slaves, Pikel's rough life, selfish ambition and
+large stature have caused him to rise up and become a slaver himself. He is on
+his way to the Orcish Mines to sell his wares, a selection of timid humans that
+cower with every crack of his whip.
 %%%%
 Polyphemus
 
-사이클롭스 양치기로, 자신의 재산을 지키는데 급급해하고 있다.
+A cyclops shepherd, he is very protective of his charges, whom he watches with
+an undying fervor through his single massive eye.
 %%%%
 Prince Ribbit
 
-저주받기 전까지는 잘생긴 왕자님이었다. 개구리로 변해버린 지금은 원래 모습으로 돌아오기 위한 모험을 하고 있다.
+A handsome prince before he was cursed, he now adventures for a cure. Moving
+through the halls with great speed, he often disappears only to pop out of thin
+air somewhere else, usually to an adventurer's misfortune and dismay. On the
+top of his head, he wears a crown tilted jauntily to one side. How it still
+stays in place even after his transformation is a mystery.
 %%%%
 Psyche
 
@@ -295,7 +415,8 @@ Purgy
 %%%%
 Roxanne
 
-재앙적인 주문의 실패 이후 모습을 감추었던 어떤 유명한 대지술사의 모습을 한, 아름다운 사파이어 석상이다. 책 한 권을 꽉 움켜잡고 있다.
+A beautiful sapphire statue of a famous earth mage who disappeared after a
+catastrophic spell failure. It is clutching a book.
 %%%%
 Rupert
 
@@ -307,49 +428,101 @@ Saint Roka
 %%%%
 Sigmund
 
-사악한 노인이다. 광기에 빛나는 눈을 한고, 위험해보이는 낫을 들고 있다. 특히 던전에 들어온지 얼마 안 된 경험이 적은 모험가들에게는  공포의 대상이다.
+The bane of all young adventurers, Sigmund combines delusions of greatness with
+nasty tactics.
 %%%%
 Snorg
 
-털이 숭숭 난, 성질 나쁘고 비열한 트롤이다. 
+A particularly corpulent troll with a short temper and a sizable gut.
+Uninterested in the Orb, Snorg delights in the endless parade of adventurers -
+that is, easy meals — it attracts.
 %%%%
 Sonja
 
-우아한 코볼트 암살자다. 우아한 필루엣과 대담한 도약은 확실히 칭찬할 만 하다. 물론 그의 칼침은 조심하야겠지만.
+A graceful kobold assassin. Admire her graceful pirouettes, thrill at her
+daring leaps! But watch out for her knives! The space around the edge of her
+weapon seems to waver slightly for a split second... or does it?
+
+Her bleak canine body, hidden kindly underneath the flowing green attire, is in
+contrast with a pair of determined eyes, surveying her surroundings from
+beneath the shadow cast by the upper edge of her beryl-coloured cape. The
+nostrils on the exposed tip of her snout throb with excitement.
 %%%%
 Terence
 
-오직 살육 외에는 관심이 없어 보이는 비열한 인간 전사다.
+A violent murderer who kills for both pleasure and profit, Terence has been
+forced into hiding after a botched job, and can't really afford to risk letting
+anyone who has seen him leave the dungeon alive — there is a price on his head,
+after all.
 %%%%
 Tiamat
 
-강인한 날개를 가진 극히 강력한 용이다. 볼 때 마다 온 몸의 비늘이 각각 다른 색으로 빛나고 있다.
+A powerful dragon with mighty wings. Her scales seem to shimmer and change
+colour as you watch.
 %%%%
 Urug
 
-볼품 없는 오크다.
+A coarse and lanky orc. Urug lost his eye in a fight with a harpy, and has
+sworn to slay every last one of them. Unfortunately, the vision in his
+remaining eye is not very good, and he has mistaken you for one.
 {{
-if you.can_smell() then
-    return "\n지독 한 냄새를 풍기고 있다."
-else
-    return ""
-end
+    if you.can_smell() then
+        return "He smells terrible."
+    end
 }}
 %%%%
 Wiglaf
 
-A fat dwarf wearing a stupid-looking hat. In Okawaru's name, he's here to avenge his mountain dwarf kin, who were driven from their lands by hill orcs and others. From the way he looks at you, he also seems to hold you responsible.
-{{
-if you.can_smell() then
-    return "\n알코올 냄새를 지독하게 풍기고 있다."
-else
-    return ""
-end
-}}
+A fat dwarf wearing a stupid-looking hat. {{
+    if you.can_smell() then
+        return "He reeks of alcohol. "
+    end
+}}There is something odd to his unsteady walk, as if this unprobable rotund
+person was accustomed to motion more swift than that of a drunken dwarf. His
+right hand is badly burned; judging from the extent of the injury, it must've
+been something big that caused it.
+
+He sports an undersized linen shirt, which seems overly long for his stout
+silhouette. “Wiglaf” is embroidered on the backside. It seems as though the
+letters have been patched over and changed.
 %%%%
 Xtahua
 
-고대의 강력한 용이다.
+An ancient and mighty dragon, his scorched body covered with crags of hardened
+lava, towers above the dungeon floor, leaving a pungent smell of sulphur in hos
+rumbling wake. Humongous sets of claws protrude from the ends of his arms, and
+their edges, jagged through years of use, look strong enough to tear a man
+apart without a thought. The warmth emanating from his sole presence makes the
+air uncomfortably hot, bending the dungeon features slightly, not unlike the
+sun on a summer day.
+
+Xtahua grew bitter after he found himself trapped in a dungeon after a weary
+battle with an adventurer hundreds of years ago. Most of his reasons to live
+have been reduced only to that of setting aflame whatever roams these halls
+with a burning passion.
+%%%%
+the Serpent of Hell gehenna
+
+A huge red glowing dragon, burning with hellfire. It seems to be possessed by
+the very essence of Gehenna and its eternal fire.
+%%%%
+the Serpent of Hell cocytus
+
+You can barely move through the hellish cold that's freezing your soul. It
+emanates from this massive white dragon. Your eyes hurt from the temperature,
+and from the gleam of shards of ice covering the demonic beast.
+%%%%
+the Serpent of Hell dis
+
+A towering beast with an army's worth of swords for teeth. Each scale is a
+shield with a razored edge. It watches you through a pair of featureless chrome
+spheres.
+%%%%
+the Serpent of Hell tartarus
+
+A pair of lurid magenta eyes hang in the darkness before you. You can just
+barely trace the outline of a vast, sinuous dragon. Its malice for you is
+palpable.
 %%%%
 # Non-unique monsters
 acid blob
@@ -358,59 +531,72 @@ A lump of sickly pustulent flesh, dripping with lethal acid.
 %%%%
 adder
 
-The common dungeon snake. A species of troglodytic reptile commonly found in subterranean spaces.
+The common dungeon snake. A species of troglodytic reptile commonly found in
+subterranean spaces.
 %%%%
 agate snail
 
-A huge and disgusting gastropod with a celadon shell, inside which it will hide when frightened.
+A huge and disgusting gastropod with a celadon shell, inside which it will hide
+when frightened.
 %%%%
 air elemental
 
-공기 정령계로부터 소환된 정령이다. 흩어짐과 모임을 계속하는 공기 회오리의 형태로 존재하고 있다.
-%%%%
-air elemental statue
-
-A statue of a tengu gliding through the air, sculpted delicately out of bluish-grey diorite. The fine detail and intricate craftsmanship give the statue an almost fragile look.
+A spirit drawn from the elemental plane of air. It exists in this world as a
+swirling vortex of air, often dissipating and reforming.
 %%%%
 alligator
 
-A sneaky crocodilian that hides in water and waits patiently for its prey to get too close, at which point it puts on a great burst of speed and crushes its victim with massive jaws.
+A sneaky crocodilian that hides in water and waits patiently for its prey to
+get too close, at which point it puts on a great burst of speed and crushes its
+victim with massive jaws.
 %%%%
 alligator snapping turtle
 
-A particularly large and nasty snapping turtle. Like its smaller relative, it too can reach out and bite from afar, and will retreat inside its shell when threatened.
+A particularly large and nasty snapping turtle. Like its smaller relative, it
+too can reach out and bite from afar, and will retreat inside its shell when
+threatened.
 %%%%
 anaconda
 
-A very large snake that moves with startling rapidity on both land and in the water. It kills not by poison but by constricting its prey.
+A very large snake that moves with startling rapidity on both land and in the
+water. It kills not by poison but by constricting its prey.
 %%%%
 ancient lich
 
-A lich who, having existed for countless centuries, has grown almost unimaginably powerful through the study of dark magic.
+A lich who, having existed for countless centuries, has grown almost
+unimaginably powerful through the study of dark magic.
 %%%%
 angel
 
-A divine warrior of the Shining One, it is a towering winged figure of unnatural beauty surrounded by an aura of brilliant white light. It appears to be weightless and quite agile while flying, despite wearing heavy armour.
+A divine warrior of the Shining One, it is a towering winged figure of
+unnatural beauty surrounded by an aura of brilliant white light. It appears to
+be weightless and quite agile while flying, despite wearing heavy armour.
 %%%%
 ant larva
 
-A juvenile ant in the larval stage of metamorphosis. It is weak and almost completely defenseless, and therefore under constant protection.
+A juvenile ant in the larval stage of metamorphosis. It is weak and almost
+completely defenseless, and therefore under constant protection.
 %%%%
 apis
 
-A placid, sacred bull of Elyvilon. Beware, evildoers, as it will surely turn on you!
+A placid, sacred bull of Elyvilon. Beware, evildoers, as it will surely turn on
+you!
 %%%%
 azure jelly
 
-밝은 푸른색 빛의, 극도로 차가운 세포질 덩어리다. 냉기의 조각들이 이것의 주위에 아른거리고 있다.
+An extremely cold blob of bright blue cytoplasm, forming bits of frost in the
+air around it.
 %%%%
 baby alligator
 
-A juvenile alligator. While it does not have crushing jaws, nor the strength to put on massive bursts of speed, it is more limber than the adult form, and its milk-tooth is still very sharp.
+A juvenile alligator. While it does not have crushing jaws, nor the strength to
+put on massive bursts of speed, it is more limber than the adult form, and its
+milk-tooth is still very sharp.
 %%%%
 ball lightning
 
-A huge, swift sphere of coruscating electrical energy. It will explode at the slightest disturbance.
+A huge, swift sphere of coruscating electrical energy. It will explode at the
+slightest disturbance.
 %%%%
 ball python
 
@@ -418,7 +604,16 @@ A small snake that can augment its bite by constricting small creatures.
 %%%%
 ballistomycete
 
-A lumpy reddish fungus covered in knobbly rhizome growths, growing well in the dank underground dungeon. It will occasionally produce giant spore balls, which in turn will give rise to more ballistomycetes.
+A lumpy reddish fungus covered in knobbly rhizome growths, growing well in the
+dank underground dungeon. {{
+    if you.god() == "Fedhas" then
+        return "Fedhas has suppressed its production of giant spores to " ..
+               "protect you from explosions."
+    else
+        return "It will occasionally produce giant spore balls, which in " ..
+               "turn will give rise to more ballistomycetes."
+    end
+}}
 %%%%
 balrug
 
@@ -438,7 +633,8 @@ A kobold that is bigger and tougher than the ordinary kobold, and often armed.
 %%%%
 black bear
 
-A small black bear. Like all ursines, the black bear will become enraged if badly hurt or frightened.
+A small black bear. Like all ursines, the black bear will become enraged if
+badly hurt or frightened.
 %%%%
 black draconian
 
@@ -450,11 +646,14 @@ A large and astonishingly fast tropical snake whose bite bears a deadly venom.
 %%%%
 blessed toe
 
-A sacred relic from the body of a pious saint. It floats through the air and shines with a divine light.
+A sacred relic from the body of a pious saint. It floats through the air and
+shines with a divine light.
 %%%%
 blink frog
 
-A species of giant frog that possesses the ability to blink at will. It can blink itself close to its intended prey, or blink away to escape harm. It is commonly found in packs.
+A species of giant frog that possesses the ability to blink at will. It can
+blink itself close to its intended prey, or blink away to escape harm. It is
+commonly found in packs.
 %%%%
 blizzard demon
 
@@ -462,47 +661,63 @@ A greater demon, wreathed in snow and lightning.
 %%%%
 blue devil
 
-A peculiar, horned humanoid figure originating from some frigid hell. It is repulsed by fire and flames.
+A peculiar, horned humanoid figure originating from some frigid hell. It is
+repulsed by fire and flames.
 %%%%
 boggart
 
-A malevolent and dangerous little sprite. Although physically unprepossessing, boggarts can rapidly summon large numbers of creatures, including more boggarts, to do their perverse bidding. These troublesome pests can also cloud one's mind and render themselves unseen.
+A malevolent and dangerous little sprite. Although physically unprepossessing,
+boggarts can rapidly summon large numbers of creatures, including more
+boggarts, to do their perverse bidding. These troublesome pests can also cloud
+one's mind and render themselves unseen.
 %%%%
 bone dragon
 
-A huge undead abomination, pieced together from the broken bones of many dragons by powerful necromantic magic. This creature is unique among dragons in that it lacks a typical dragon's fearsome breath.
+A huge undead abomination, pieced together from the broken bones of many
+dragons by powerful necromantic magic. This creature is unique among dragons in
+that it lacks a typical dragon's fearsome breath.
 %%%%
-bog mummy
+bog body
 
-유사 속에서 보존되어온 언데드이다. 알 수 없는 마법에 의해 되살려져 있지만, 그 마법이 이 미라가 부패하는것까지 막지는 못하고 있다. 이 미라는 마음에 들지 않는 대상에게 사악한 저주를 방출한다.
+An undead figure preserved by the brackish waters of a bog. Though it has been
+reanimated by some unknown magic, this magic is not enough to prevent its
+decaying.
 %%%%
 boring beetle
 
-An umber beetle with large, powerful mandibles which enable it to bore through solid rock.
+An umber beetle with large, powerful mandibles which enable it to bore through
+solid rock.
 %%%%
 boulder beetle
 
-A huge grey beetle with an almost impenetrable rocky carapace, capable of rolling at its foes at high speed.
+A huge grey beetle with an almost impenetrable rocky carapace, capable of
+rolling at its foes at high speed.
 %%%%
 brain worm
 
-A slimy mauve worm with a greatly distended head, this creature feeds on the intellects of sentient beings.
+A slimy mauve worm with a greatly distended head, this creature feeds on the
+intellects of sentient beings.
 %%%%
 Brimstone Fiend
 
-A huge and powerful demon wreathed in hellfire, with great scaly wings. One of the most fearsome denizens of any of the Hells.
+A huge and powerful demon wreathed in hellfire, with great scaly wings. One of
+the most fearsome denizens of any of the Hells.
 %%%%
 brown ooze
 
-A viscous liquid being that flows along the floor in search of matter to dissolve and consume.
+A viscous liquid being that flows along the floor in search of matter to
+dissolve and consume.
 %%%%
 bush
 
-A woody plant. It looks dry enough to be easily set on fire, and its foliage is not very dense, permitting missiles to pass through it. However, it is firmly rooted, and requires much effort to destroy.
+A woody plant. It looks dry enough to be easily set on fire, and its foliage is
+not very dense, permitting missiles to pass through it. However, it is firmly
+rooted, and requires much effort to destroy.
 %%%%
 burning bush
 
-주홍색의 화염에, 가지들이 검게 불타고 있다. 주위의 바닥과 벽이 검게 그을리고 있다.
+A mass of blackened twigs wreathed in orange flames. The walls and floor
+surrounding it are covered in scorch marks.
 %%%%
 bumblebee
 
@@ -510,27 +725,44 @@ A huge and solitary bee.
 %%%%
 butterfly
 
-A large, brightly coloured butterfly with beautifully patterned wings, fluttering incongruously through the darkness of the cave.
+A large, brightly coloured butterfly with beautifully patterned wings,
+fluttering incongruously through the darkness of the cave.
 %%%%
 cacodemon
 
-무시무시하게 추악한 분노의 악마다. 전설적인 힘을 지니고 있으며, 대항하는 자들을 산산히 조각내기 전에 먼저 각종 장애를 일으키게 만든다.
+A hideously ugly demon of rage and legendary power, it disables its foes before
+blasting them to pieces.
+%%%%
+catoblepas
+
+A sluggish black buffalo, its hide encrusted with dull scales. It carries its
+hog-like head just above the ground, protected by a stiff mane of bristles,
+joined to its body by a neck as long and loose as an emptied intestine. Man and
+beast alike would be wise to steer clear of this creature, as its fearsome
+breath is known to turn flesh into stone.
 %%%%
 centaur
 
-A hybrid with the torso of a human atop the body of a large horse, centaurs are famous for their skills in archery.
+A hybrid with the torso of a human atop the body of a large horse, centaurs are
+famous for their skills in archery.
 %%%%
 centaur warrior
 
-A muscular centaur, a veteran of numerous battles, armed with well-made weapons and able to use them skillfully.
+A muscular centaur, a veteran of numerous battles, armed with well-made weapons
+and able to use them skillfully.
 %%%%
 chaos spawn
 
-A being of pure chaos, its form is constantly shifting, growing and then losing eyes, mouths, claws and tentacles. It corrupts everything it touches.
+A being of pure chaos, its form is constantly shifting, growing and then losing
+eyes, mouths, claws and tentacles. It corrupts everything it touches.
 %%%%
 cherub
 
-Behold! A throne-bearer of the Gods, whose head is beset by four faces: one of a man, one of an ox, one of a lion, one of an eagle. It is one of the three angelic beings who stand before the Good Gods, singing eternal hymns of praise to their Glory and Goodness. Indeed, these hymns have the power to rouse greatness in hearts pure and true.
+Behold! A throne-bearer of the Gods, whose head is beset by four faces: one of
+a man, one of an ox, one of a lion, one of an eagle. It is one of the three
+angelic beings who stand before the Good Gods, singing eternal hymns of praise
+to their Glory and Goodness. Indeed, these hymns have the power to rouse
+greatness in hearts pure and true.
 %%%%
 clay golem
 
@@ -538,17 +770,19 @@ A huge clay statue that has been animated by occult means.
 %%%%
 crawling corpse
 
-A corpse weakly animated by necromancy. It is easily destroyed, but capable of merging with others to form more potent horrors.
+A corpse weakly animated by necromancy. It is easily destroyed, but capable of
+merging with others to form more potent horrors.
 %%%%
 crazed wizard
 
 This guy seems to be obsessed with Hell and dealing with demons that live
-there. That can't end in any way but one... watch out for now, or that end
-will be yours first.
+there. That can't end in any way but one... watch out for now, or that end will
+be yours first.
 %%%%
 crimson imp
 
-A small, ugly minor demon. Its fanged maw seems locked in a permanent malign grin, and its horns protrude obscenely from its scaly pate.
+A small, ugly minor demon. Its fanged maw seems locked in a permanent malign
+grin, and its horns protrude obscenely from its scaly pate.
 %%%%
 crocodile
 
@@ -556,23 +790,29 @@ An aggressive crocodilian with great crunching jaws full of sharp teeth.
 %%%%
 crystal golem
 
-A huge animated figure made of heavily ensorcelled crystal. It is immune to most forms of magic.
+A huge animated figure made of heavily ensorcelled crystal. It is immune to
+most forms of magic.
 %%%%
 curse skull
 
-공중을 천천히 떠나니며 선회하는, 검은 해골 바가지이다. 검게 그을린 표면에 새겨진 알 수 없는 문양들이, 거의 모든 종류의 공격에 저항력이 있다는 것을 보여준다.
+A charred skull floating in the air and rotating slowly. Mystic symbols carved
+into its blackened surface indicate its resistance to almost any form of
+attack.
 %%%%
 curse toe
 
-공중에 매달린 채로, 음에너지의 기운을 사방에 방출하고 있는 육체에서 분리된 발가락이다.
+A disembodied toe, hanging in the air and radiating an intense field of
+negative energy.
 %%%%
 cyclops
 
-외눈박이의 거인족이다. 눈이 하나밖에 없음에도 불구하고, 무서울 정도로 정확하게 바위를 던진다.
+A giant with one eye in the centre of its forehead. Despite their lack of
+binocular vision, cyclopes throw boulders with fearsome accuracy.
 %%%%
 daeva
 
-A divine agent of the Shining One, a daeva is a towering winged figure radiating an aura of brilliant golden light.
+A divine agent of the Shining One, a daeva is a towering winged figure
+radiating an aura of brilliant golden light.
 %%%%
 # Only used in lookup mode, not when examining an actual monster.
 dancing weapon
@@ -581,11 +821,13 @@ dancing weapon
 %%%%
 death cob
 
-무서운 옥수수 언데드다. 
+A dreadful undead cob of maize. Look, this one was probably a mistake. We're
+sorry.
 %%%%
 death drake
 
-A dark and baleful minor dragon, the death drake breathes a lethally potent miasma from its pestilential maw.
+A dark and baleful minor dragon, the death drake breathes a lethally potent
+miasma from its pestilential maw.
 %%%%
 death ooze
 
@@ -593,15 +835,19 @@ A putrid undead mass of decaying flesh that spurts pestilent slime.
 %%%%
 death yak
 
-보통의 야크보다 더욱 크고 건장한, 야크의 유사종이다. 작고 붉은 눈은 먹이에 대한 굶주림으로 번뜩이고 있다.
+A larger and beefier relative of the common dungeon yak. Its little red eyes
+gleam with hunger for living flesh.
 %%%%
 deep elf annihilator
 
-A deep elf who exults in conjured mayhem and destruction. It is widely hated and feared, both for the power and for the precision of its destructive magics.
+A deep elf who exults in conjured mayhem and destruction. It is widely hated
+and feared, both for the power and for the precision of its destructive magics.
 %%%%
 deep elf blademaster
 
-A champion of the deep elves, who scorns magic and is devoted to the study of the sword. A blademaster wields two weapons with astonishing dexterity and speed.
+A champion of the deep elves, who scorns magic and is devoted to the study of
+the sword. A blademaster wields two weapons with astonishing dexterity and
+speed.
 %%%%
 deep elf conjurer
 
@@ -609,11 +855,13 @@ A deep elf well-versed in a variety of destructive magics.
 %%%%
 deep elf death mage
 
-A deep elf surrounded by a shimmering aura of negative energy, as a result of its practice of necromancy and life-sapping magic.
+A deep elf surrounded by a shimmering aura of negative energy, as a result of
+its practice of necromancy and life-sapping magic.
 %%%%
 deep elf demonologist
 
-A deep elf who is marked heavily by long years of contact with unnatural demonic forces and the creatures of the Abyss.
+A deep elf who is marked heavily by long years of contact with unnatural
+demonic forces and the creatures of the Abyss.
 %%%%
 deep elf elementalist
 
@@ -625,7 +873,8 @@ A strong deep elf soldier who wields weapons and battle magic.
 %%%%
 deep elf high priest
 
-An exalted servant of the ancient dark god of the deep elves, basking in hellish death magic.
+An exalted servant of the ancient dark god of the deep elves, basking in
+hellish death magic.
 %%%%
 deep elf knight
 
@@ -633,15 +882,18 @@ A battle-hardened deep elf fighter.
 %%%%
 deep elf mage
 
-A deep elf learned in the ways of murderous magic. Deep elf mages are capable of a wide array of harmful spells.
+A deep elf learned in the ways of murderous magic. Deep elf mages are capable
+of a wide array of harmful spells.
 %%%%
 deep elf master archer
 
-A deep elf archer that has devoted a lifetime to the mastery of archery, dismissing magic as a frivolous distraction.
+A deep elf archer that has devoted a lifetime to the mastery of archery,
+dismissing magic as a frivolous distraction.
 %%%%
 deep elf priest
 
-This deep elf is a servant of the ancient dark god of the deep elves, and has been granted command of torturous energies by its enigmatic lord.
+This deep elf is a servant of the ancient dark god of the deep elves, and has
+been granted command of torturous energies by its enigmatic lord.
 %%%%
 deep elf soldier
 
@@ -649,15 +901,24 @@ A common soldier of the deep elves, who knows spells useful in combat.
 %%%%
 deep elf sorcerer
 
-A mighty spellcaster who draws power from the very Hells, and possesses lethal arcane abilities of destruction, summoning and banishment.
+A mighty spellcaster who draws power from the very Hells, and possesses lethal
+arcane abilities of destruction, summoning and banishment.
 %%%%
 deep elf summoner
 
 This deep elf is skilled in the summoning of small demons and creatures.
 %%%%
+deep elf watchman
+
+A battle-scarred deep elf soldier. It eyes you warily, as though determined to
+keep you from gaining entry to the place it guards, and it looks well prepared
+to do so with strong weapons and magic.
+%%%%
 deep dwarf
 
-Pale and unnaturally tough-skinned, deep dwarves dwell far below ground and almost never emerge into the sunlit upper world. They are more inclined towards the occult arts than their mountainous cousins.
+Pale and unnaturally tough-skinned, deep dwarves dwell far below ground and
+almost never emerge into the sunlit upper world. They are more inclined towards
+the occult arts than their mountainous cousins.
 %%%%
 deep dwarf artificer
 
@@ -669,11 +930,13 @@ A ferocious and blood-thirsty deep dwarf that revels in the frenzy of combat.
 %%%%
 deep dwarf death knight
 
-A deep dwarf warrior-priest of Yredelemnul that chants unholy homages to the dark god and calls forth the dead.
+A deep dwarf warrior-priest of Yredelemnul that chants unholy homages to the
+dark god and calls forth the dead.
 %%%%
 deep dwarf necromancer
 
-An evil deep dwarf that has sold its mortal soul in exchange for mastery of the occult arts of death and pain.
+An evil deep dwarf that has sold its mortal soul in exchange for mastery of the
+occult arts of death and pain.
 %%%%
 deep dwarf scion
 
@@ -681,47 +944,67 @@ deep dwarf scion
 %%%%
 deep troll
 
-A stooped troll with dark skin, the cave-dwelling deep troll often travels in packs.
+A stooped troll with dark skin, the cave-dwelling deep troll often travels in
+packs.
 %%%%
 demigod
 
-마력의 오오라에 둘러쌓인, 마치 인간을 닮은 이 녀석은, 자기자신의 신의 혈통을 배신한 종자이다.
+The aura of power around this human-like figure immediately betrays its divine
+ancestry. And with the good gods (at least officially) decrying fornication,
+betting on the good nature of this individual may be unwise...
 %%%%
 demonic crawler
 
-A hellish insectoid creature with a long and bloated body, supported by dozens of short jointed legs and topped with an almost human head.
+A hellish insectoid creature with a long and bloated body, supported by dozens
+of short jointed legs and topped with an almost human head.
 %%%%
 demonspawn
 
-The offspring of a human and his or her demon lover, a young demonspawn, before its hellish heritage fully asserts itself, closely resembles a human being, but with a certain devilish cast to its features.
+The offspring of a human and his or her demon lover, a young demonspawn, before
+its hellish heritage fully asserts itself, closely resembles a human being, but
+with a certain devilish cast to its features.
 %%%%
 diamond obelisk
 
-This obelisk seems to be, for all practical purposes, indestructible. You'd better find a way around... it might even provide one.
+This obelisk seems to be, for all practical purposes, indestructible. You'd
+better find a way around... it might even provide one.
 %%%%
 dire elephant
 
-A huge pachyderm, wilder and fiercer than normal elephants, with a very thick hide, powerful legs, and a memory to die for.
+A huge pachyderm, wilder and fiercer than normal elephants, with a very thick
+hide, powerful legs, and a memory to die for.
 %%%%
 draconian
 
-A bipedal reptilian creature slightly larger than a human. Draconians have fearsome dragonish heads, rudimentary wings, tails, and a covering of tough scales. In their mature form, their scales take on a distinct colouring, and they acquire a destructive breath whose nature is signified by their colour. Whether draconians arose naturally, or are the product of twisted experimentation by mad wizards on the crossbreeding of dragons and humans, is a matter of much doubt.
+A bipedal reptilian creature slightly larger than a human. Draconians have
+fearsome dragonish heads, rudimentary wings, tails, and a covering of tough
+scales. In their mature form, their scales take on a distinct colouring, and
+they acquire a destructive breath whose nature is signified by their colour.
+Whether draconians arose naturally, or are the product of twisted
+experimentation by mad wizards on the crossbreeding of dragons and humans, is a
+matter of much doubt.
 %%%%
 draconian annihilator
 
-The draconian annihilator can, in addition to its deadly breath, use powerful conjurations to destroy anyone who dares to stand in its way.
+The draconian annihilator can, in addition to its deadly breath, use powerful
+conjurations to destroy anyone who dares to stand in its way.
 %%%%
 draconian caller
 
-While formidable in combat, this draconian specializes in summoning hordes of drakes.
+While formidable in combat, this draconian specializes in summoning hordes of
+drakes.
 %%%%
 draconian knight
 
-두꺼운 비늘로 보호되어 있으며, 무기와 갑옷의 사용의 능숙한 이 드라코니언들은 위험한 적수이다. 강력한 마법에 이와 같은 전투능력은 금상첨화일 것이다.
+Protected by both its thick scales and its skill in use of weapons and armour,
+this draconian is a dangerous opponent. It complements its abilities in combat
+with powerful magic.
 %%%%
 draconian monk
 
-A draconian who has eschewed the study of weaponry and magic in order to train in the art of unarmed combat. Its scaly fists, well-thewed leg, and mighty tail rain blows upon its opponents.
+A draconian who has eschewed the study of weaponry and magic in order to train
+in the art of unarmed combat. Its scaly fists, well-thewed leg, and mighty tail
+rain blows upon its opponents.
 %%%%
 draconian scorcher
 
@@ -729,31 +1012,36 @@ A cunning draconian who has mastered the inner secrets of the element of fire.
 %%%%
 draconian shifter
 
-A draconian master of the warp, who can translocate both itself and anyone else to any place, either on this world or outside of it.
+A draconian master of the warp, who can translocate both itself and anyone else
+to any place, either on this world or outside of it.
 %%%%
 draconian zealot
 
-This draconian derives its hellish powers and demonic allies from the worship of dark gods unknown to men, dwarves, elves or orcs.
+This draconian derives its hellish powers and demonic allies from the worship
+of dark gods unknown to men, dwarves, elves or orcs.
 %%%%
 dragon
 
-A great reptilian beast with powerful claws on its limbs, covered in thick green scales and with two huge bat-like wings. Little trails of smoke spill from its toothy maw.
+A great reptilian beast with powerful claws on its limbs, covered in thick
+green scales and with two huge bat-like wings. Little trails of smoke spill
+from its toothy maw.
 %%%%
 dwarf
 
-A member of a short, sturdy mountain-dwelling folk. More robust than their deep dwarf cousins, yet less skilled in magical lore, dwarves excel in armed hand to hand combat.
+A member of a short, sturdy mountain-dwelling folk. More robust than their deep
+dwarf cousins, yet less skilled in magical lore, dwarves excel in armed hand to
+hand combat.
 %%%%
 dwarf mountain bat
 
-A species of bat that lives in mountain caves. How it got into the dungeon is a mystery - probably something related to the sudden demise of dwarves in those lands. But don't worry, an eradication team is on the way.
+A species of bat that lives in mountain caves. How it got into the dungeon is a
+mystery — probably something related to the sudden demise of dwarves in those
+lands. But don't worry, an eradication team is on the way.
 %%%%
 earth elemental
 
-대지 정령계로부터 소환된 정령이다. 흙과 바위 덩어리의 형태로 존재하고 있다.
-%%%%
-earth elemental statue
-
-A plain statue of a dwarven miner wielding a pickaxe, carved from dark gray diorite. The thorough, precise workmanship imparts a sense of solidity.
+A spirit drawn from the elemental plane of earth, which exists in this world by
+inhabiting a lump of earth and rocks.
 %%%%
 efreet
 
@@ -761,27 +1049,33 @@ efreet
 %%%%
 eidolon
 
-고대의 뼈로 이루어진 유령으로, 안개 구름으로 싸여있다. 쇠약함의 에너지로, 희고 뜨겁게 온 몸이 빛나고 있다.
+An ancient skeletal apparition, sheathed in a cloud of mist. Its form glows
+white-hot with debilitating energy.
 %%%%
 eldritch tentacle
 
-An immense, squamous appendage of some unseen creature, dripping with ichor and tipped with a single, terrible-looking claw.
+An immense, squamous appendage of some unseen creature, dripping with ichor and
+tipped with a single, terrible-looking claw.
 %%%%
 eldritch tentacle segment
 
-A part of an immense, squamous appendage. It thrashes and pulsates like no other living thing.
+A part of an immense, squamous appendage. It thrashes and pulsates like no
+other living thing.
 %%%%
 electric golem
 
-An animated figure made completely of electricity, created in some demented wizard's experiment.
+An animated figure made completely of electricity, created in some demented
+wizard's experiment.
 %%%%
 electric eel
 
-Despite its name, the electric eel is actually a variety of fish. This breed, however, generates far more voltage than its seagoing siblings.
+Despite its name, the electric eel is actually a variety of fish. This breed,
+however, generates far more voltage than its seagoing siblings.
 %%%%
 elephant
 
-커다랗고, 두꺼운 가죽을 가진 후피 동물이다. 커다란 상아를 이용해, 적을 으스러트려 몸부림치게 만든다.
+A large, thick-hided pachyderm. It crushes its foes and then thrashes them with
+its trunk.
 %%%%
 elephant slug
 
@@ -789,20 +1083,19 @@ A grey gastropod of impressive size, with folds upon folds of wrinkled skin.
 %%%%
 elf
 
-An elf, a member of an ancient fey race. Elves are slightly built when compared to humans, and have an innate magical acumen, though less than their deep elf cousins.
+An elf, a member of an ancient fey race. Elves are slightly built when compared
+to humans, and have an innate magical acumen, though less than their deep elf
+cousins.
 %%%%
 ettin
 
-A two-headed giant, stronger than most giants, able to land devastating blows left and right with its two huge weapons. Though powerful, the ettin is clumsy.
+A two-headed giant, stronger than most giants, able to land devastating blows
+left and right with its two huge weapons. Though powerful, the ettin is clumsy.
 %%%%
 Executioner
 
-무섭도록 강력하고, 재빠른 악마다. 소용돌이치는 낫 형태의 칼날들로, 형체를 분간하기 힘들다.
-%%%%
-experimental stone golem
-
-This golem has been imbued with fire as part of some insane experiment. It looks as though it's going to explode at any moment.
-
+A horribly powerful and swift demon, its shape obscured by a cloud of swirling
+scythe-like blades.
 %%%%
 eye of devastation
 
@@ -812,9 +1105,14 @@ eye of draining
 
 A hovering horror that waxes strong on mana.
 %%%%
+feature mimic
+
+A vicious beast masquerading as an ordinary dungeon feature.
+%%%%
 felid
 
-A feline creature that has been granted sentience by magical means. It uses the gift of speech to demand milk, treats and catnip.
+A feline creature that has been granted sentience by magical means. It uses the
+gift of speech to demand milk, treats and catnip.
 %%%%
 fire bat
 
@@ -822,15 +1120,19 @@ fire bat
 %%%%
 fire crab
 
-값비싼 보석으로 된 껍데기를 가진 게들로, 이 게들이 지닌 껍질의 희귀함은, 이들의 거대한 화염을 내보내는 거의 초자연적인 능력으로부터 나온다고 할 수 있다.
+These crabs are prized for their brilliantly jewelled shells. The rarity of
+these shells is only enhanced by the vicious, fiery nature of the animal, and
+their almost supernatural ability to expel massive quantities of flames.
 %%%%
 fire elemental
 
-불 정령계로부터 소환된 정령이다. 빛나는 맹렬한 불기둥의 형태로 존재하고 있다.
+A spirit drawn from the elemental plane of fire, which exists in this world as
+a brilliant column of raging flames.
 %%%%
 fire giant
 
-A ruddy giant with bright hair and flashing eyes. It wields a huge sword, and glows with an arcane heat.
+A ruddy giant with bright hair and flashing eyes. It wields a huge sword, and
+glows with an arcane heat.
 %%%%
 fire vortex
 
@@ -843,23 +1145,35 @@ A small but dangerous dragon, puffing clouds of smoke.
 %%%%
 flaming corpse
 
-A black, thoroughly charred cadaver covered in unquenchable fire, likely the remains of some unfortunate adventurer. It now rushes madly through the dungeon, seeking to share its fate with others.
+A black, thoroughly charred cadaver covered in unquenchable fire, likely the
+remains of some unfortunate adventurer. It now rushes madly through the
+dungeon, seeking to share its fate with others.
 %%%%
 flayed ghost
 
-A hideous floating undead creature, the anguished spirit of a tortured victim, with torn skin hanging from an emaciated body.
+A hideous floating undead creature, the anguished spirit of a tortured victim,
+with torn skin hanging from an emaciated body.
 %%%%
 flying skull
 
-An undead skull kept aloft and flitting swiftly about by unholy magic. It periodically emits loud, blood-curdling shrieks.
+An undead skull kept aloft and flitting swiftly about by unholy magic. It
+periodically emits loud, blood-curdling shrieks.
+%%%%
+freed slave
+
+A human who has just been released from magical enslavement. It tries to stand
+proudly before you, despite its lingering fear and unkempt appearance.
 %%%%
 freezing wraith
 
-An incorporeal skeletal form surrounded by a cloud of freezing air, likely the remains of some unfortunate adventurer. It now floats slowly through the dungeon, seeking to share its fate with others.
+An incorporeal skeletal form surrounded by a cloud of freezing air, likely the
+remains of some unfortunate adventurer. It now floats slowly through the
+dungeon, seeking to share its fate with others.
 %%%%
 frost giant
 
-A bluish giant with frosty hair and glinting eyes. It wields a huge battleaxe, and chills the air around it with the breath of winter.
+A bluish giant with frosty hair and glinting eyes. It wields a huge battleaxe,
+and chills the air around it with the breath of winter.
 %%%%
 fruity bat
 
@@ -871,11 +1185,15 @@ fungus
 %%%%
 gargoyle
 
-A granite statue of a hideous winged and clawed monster, somehow come horribly to life.
+A granite statue of a hideous winged and clawed monster, somehow brought
+horribly to life.
 %%%%
 ghost moth
 
-A vile interdimensional predator that feeds on the life force of living beings. The few who have seen one and lived recall that it resembles an enormous, spiny moth. Its bizarre lifecycle involves the production of ambrosia, much valued by gods and wizards.
+A vile interdimensional predator that feeds on the life force of living beings.
+The few who have seen one and lived recall that it resembles an enormous, spiny
+moth. Its bizarre lifecycle involves the production of ambrosia, much valued by
+gods and wizards.
 %%%%
 ghost-faced bat
 
@@ -883,19 +1201,26 @@ ghost-faced bat
 %%%%
 ghoul
 
-A truly horrible undead creature, a ghoul is a decayed cadaver, reanimated and accursed with a terrible hunger. It desires nothing but to feed on the flesh of the living, and will fell its victims with its vicious claws or with one of the diseases it is host to.
+A truly horrible undead creature, a ghoul is a decayed cadaver, reanimated and
+accursed with a terrible hunger. It desires nothing but to feed on the flesh of
+the living, and will fell its victims with its vicious claws or with one of the
+diseases it is host to.
 %%%%
 giant amoeba
 
-A massive pulsating organism that uses thick pseudopods of protoplasm to ooze through the dungeons in search of food.
+A massive pulsating organism that uses thick pseudopods of protoplasm to ooze
+through the dungeons in search of food.
 %%%%
 worker ant
 
-A wingless black insect with sharp mandibles capable of injecting a deadly poison. It is a worker, and thus tasked with gathering food - any living being it encounters is a potential meal.
+A wingless black insect with sharp mandibles capable of injecting a deadly
+poison. It is a worker, and thus tasked with gathering food — any living being
+it encounters is a potential meal.
 %%%%
 bat
 
-A large grey bat that, despite being herbivorous, is quite aggressive. It is myopic and uses echolocation to navigate.
+A large grey bat that, despite being herbivorous, is quite aggressive. It is
+myopic and uses echolocation to navigate.
 %%%%
 megabat
 
@@ -903,37 +1228,47 @@ megabat
 %%%%
 goliath beetle
 
-씹어 부수는 힘이 강한 아래턱을 가진 거하고 검은 투구벌레다. 매우 단단한 키틴질의 외골격도 있다.
+A huge black beetle with great crunching mandibles and very hard chitinous
+armour.
 %%%%
 giant centipede
 
-A chilopod of quite an unusual size, the giant centipede mostly comes out to hunt when it is dark. Physically weak, it relies on its nasty poison to dispatch its victims.
+A chilopod of quite an unusual size, the giant centipede mostly comes out to
+hunt when it is dark. Physically weak, it relies on its nasty poison to
+dispatch its victims.
 %%%%
 giant cockroach
 
-A big brown insect that makes a nasty hissing noise. Contrary to popular myth, they are in fact quite susceptible to mutagenic energies.
+A big brown insect that makes a nasty hissing noise. Contrary to popular myth,
+they are in fact quite susceptible to mutagenic energies.
 %%%%
 giant eyeball
 
-A giant floating eyeball, with a mesmerising gaze. Some say giant eyeballs are servitors of Jiyva.
+A giant floating eyeball, with a mesmerising gaze. Some say giant eyeballs are
+servitors of Jiyva.
 %%%%
 giant firefly
 
-Unlike its mundane counterparts that are merely half an inch big, this
-enormous flying bug is large enough to be ridden by some spriggans. Its
-glow, though, is faint enough to be hardly visible.
+Unlike its mundane counterparts that are merely half an inch big, this enormous
+flying bug is large enough to be ridden by some spriggans. Its glow, though, is
+faint enough to be hardly visible.
 %%%%
 giant frog
 
-A large and unusually aggressive amphibian that can cover distance rapidly by hopping.
+A large and unusually aggressive amphibian that can cover distance rapidly by
+hopping.
 %%%%
 giant gecko
 
-A lizard with pads on its toes allowing it to cling to walls and ceilings, and huge, sharp teeth. It is many times larger than a normal gecko, yet its size belies its agility.
+A lizard with pads on its toes allowing it to cling to walls and ceilings, and
+huge, sharp teeth. It is many times larger than a normal gecko, yet its size
+belies its agility.
 %%%%
 giant goldfish
 
-A relative of the carp. Goldfish that escape into the dungeon often grow to prodigious sizes by feeding on the corpses of creatures unfortunate enough to fall into the water with them.
+A relative of the carp. Goldfish that escape into the dungeon often grow to
+prodigious sizes by feeding on the corpses of creatures unfortunate enough to
+fall into the water with them.
 %%%%
 giant leech
 
@@ -945,15 +1280,20 @@ A large acarine creature with poisoned mouth-parts and a thirst for blood.
 %%%%
 giant newt
 
-A tenacious little amphibian, several times the size of a normal newt, but still not very threatening.
+A tenacious little amphibian, several times the size of a normal newt, but
+still not very threatening.
 %%%%
 giant orange brain
 
-거대한 주름진 뇌다. 바닥에서 조금 떠 있으며, 가끔씩 맥박이 뛰는 것이 보인다.
+A huge wrinkled brain, floating just off the floor and glowing with mutagenic
+energies. Every now and then it seems to pulsate.
 %%%%
 emperor scorpion
 
-Though the ordinary dungeon scorpion may be both large and dangerous, this sinister relative is even more so. The wicked-looking barb on its tail drips with a deadly venom.
+The emperor scorpion is the largest arachnid known to exist. The massive barb
+on its tail drips with a deadly venom, and its pincers are big enough to shear
+you in half. Though the ordinary dungeon scorpion may be both large and
+dangerous, this freakish relative puts it to shame.
 %%%%
 giant slug
 
@@ -961,7 +1301,8 @@ A huge and disgusting gastropod, squirming slowly across the dungeon floor.
 %%%%
 giant spore
 
-A deceptively fast, floating ball filled with gas and spores, prone to burst at the slightest disturbance.
+A deceptively fast, floating ball filled with gas and spores, prone to burst at
+the slightest disturbance.
 %%%%
 giga bat
 
@@ -971,57 +1312,56 @@ gila monster
 
 밝은 색의 줄무늬와 얼룩이 있는 큰 도마뱀이다.
 %%%%
-glowing angel
-
-A towering winged figure with an aura of brilliant white light, the face of this divine agent of Zin is, unlike those of other angels, marked by a scowl, as if its zeal against any real or perceived vice overshadows its goodness.
-%%%%
 glowing shapeshifter
 
-변신의 제어를 할 수 없게 된 변신능력자다. 변신이 계속되고 있다.
+A shapeshifter which has lost control over its transformations, and is
+constantly changing form.
 %%%%
 gnoll
 
-고블린과 오크의 먼 친척으로, 더 키가 크고 더 좋은 장비를 하고 있다.
+A taller and better-equipped relative of goblins and orcs, somewhat doglike in
+appearance.
 %%%%
 gnoll sergeant
 
-A commander of a pack of gnolls. Scars on its stout body give evidence of how it earned its rank.
+A commander of a pack of gnolls. Scars on its stout body give evidence of how
+it earned its rank.
 %%%%
 gnoll shaman
 
-A haggard old gnoll, wise and wicked. Its strange chants and ululations send other gnolls into a wild frenzy.
-%%%%
-gnoll sergeant
-
-A commander of a pack of gnolls. Scars on its stout body give evidence of how it earned its rank.
-%%%%
-gnoll shaman
-
-A haggard old gnoll, wise and wicked. Its strange chants and ululations send other gnolls into a wild frenzy.
+A haggard old gnoll, wise and wicked. Its strange chants and ululations send
+other gnolls into a wild frenzy.
 %%%%
 gnome
 
-작지만 굳센 인간형 생물로, 지하 통로를 개척하는 것이 이들의 주특기이다. 던전과 바깥 세상이 서로 맏닿았을 때, 노움들은 멸족의 위기에 처해 있고, 이 노움은 그 중 마지막 남은 노움의 후예일수도 있다.
+A small, stout humanoid said to be good at finding its way through underground
+passages. Once commonly found in dungeons across the world, gnomes are now on
+the verge of extinction. This one may be the last of its kind.
 %%%%
 goblin
 
-작고, 못생기고, 적의를 가진 인간형 생물이다. 쭈글쭈글하고 넓으면서도 평평한 코와, 누르깨한 피부, 찢어진 입과 땅콩 같은 눈을 가지고 있다.
+A short, ugly and unfriendly humanoid: squat, broad, flat-nosed,
+sallow-skinned, with a wide mouth and pistachio-shaped eyes.
 %%%%
 golden dragon
 
-A great winged dragon covered in shining golden scales. Legends say that their blood runs both hot and cold, and is venomous to boot.
+A great winged dragon covered in shining golden scales. Legends say that their
+blood runs both hot and cold, and is venomous to boot.
 %%%%
 golden eye
 
-A tiny and shimmering floating eye, swift as the wind and glistening like gold. It has a peculiarly hypnotic look.
+A tiny and shimmering floating eye, swift as the wind and glistening like gold.
+It has a peculiarly hypnotic look.
 %%%%
 great orb of eyes
 
-A levitating ball, covered in malignant eyes and humming with eldritch energies.
+A levitating ball, covered in malignant eyes and humming with eldritch
+energies.
 %%%%
 greater mummy
 
-An ancient pharaoh, embalmed and cursed to undeath, now capable of great and terrifying feats of magic.
+An ancient pharaoh, embalmed and cursed to undeath, now capable of great and
+terrifying feats of magic.
 %%%%
 greater naga
 
@@ -1037,7 +1377,8 @@ green draconian
 %%%%
 green rat
 
-A rodent with hair of a most peculiar green colour, and an infectious bite. It tends to form great swarms of its kin.
+A rodent with hair of a most peculiar green colour, and an infectious bite. It
+tends to form great swarms of its kin.
 %%%%
 grey draconian
 
@@ -1049,11 +1390,13 @@ A sickening rodent that has a tendency to move in packs.
 %%%%
 griffon
 
-독수리의 머리와 날개가 달리고, 사자의 몸을 가진 거대한 몬스터다.
+A large creature with the hindquarters of a lion and the wings, head and talons
+of a great eagle.
 %%%%
 grizzly bear
 
-A large grey-furred bear. Like all ursines, the grizzly bear will become enraged if badly hurt or frightened.
+A large grey-furred bear. Like all ursines, the grizzly bear will become
+enraged if badly hurt or frightened.
 %%%%
 guardian mummy
 
@@ -1061,29 +1404,39 @@ guardian mummy
 %%%%
 guardian serpent
 
-이와 같은 뱀들은, 파충류 사회에서도 꽤나 뚜렷하면서 희귀한 종이다. 색깔도 뱀과 같고, 뱀과 비슷하게 움직이지만, 나가 수준의 지능을 가지고 있는 이들은, 손이 없다는 약점이 있지만, 자신의 역할에 대한 극히 뛰어난 감각을 가지고 있다는 점을 이용하여, 이와 같이 수호자로 만들수 있는 것으로 잘 알려져 있다.
+Serpents are distinct and rare members of scaly society. They are light and
+swift like snakes, yet also intelligent like nagas. Their lack of hands,
+together with an extreme sense of duty, makes them renowned guardians. It is
+said that a guardian serpent would rather die in battle than leave anything to
+an intruder.
 %%%%
 halfling
 
-A humanoid of diminutive stature, member of a race given to domesticity and the simple pleasures of the flesh. Halflings excel at moving silently.
+A humanoid of diminutive stature, member of a race given to domesticity and the
+simple pleasures of the flesh. Halflings excel at moving silently.
 
 It definitely deserves an axe to the head.
 %%%%
 harpy
 
-하피들은 해안가 주변을 배회하기 때문에, 보통 뱃사람들에 의해 기억된다. 모든 지성있는 생물들에게 녀석들이 공포의 대상이 된 원인은 이들의 발톱이 아닌 이들의 음식에 대한 걸신 들린듯한 욕망으로, 이들에게 음식을 강탈당한 많은 사람들이, 바다 가운데에서 굶주림으로 죽어갔다.
+Harpies have roamed the coasts as long as seafarers can remember. They strike
+fear in the hearts of all sentient beings, but not for their claws. It is their
+way to devour the food of the unwary, causing many a man to starve to death.
 %%%%
 hell hound
 
-불타는 눈을 하고 입에서 연기를 뿜어내는 크고 검은 개다.
+A huge black dog, with glowing red eyes and smoke pouring from its fanged
+mouth.
 %%%%
 hell knight
 
-A heavily armoured warrior, in league with the powers of Hell, and usually accompanied by other unsavoury beings of its ilk.
+A heavily armoured warrior, in league with the powers of Hell, and usually
+accompanied by other unsavoury beings of its ilk.
 %%%%
 hell hog
 
-An extremely large and aggressive swine, bred in Hell, whose fiery breath is capable of setting unwary adventurers alight.
+An extremely large and aggressive swine, bred in Hell, whose fiery breath is
+capable of setting unwary adventurers alight.
 %%%%
 hell beast
 
@@ -1091,11 +1444,13 @@ An abominable crossbreed of beast and man that makes horrible barking noises.
 %%%%
 Hell Sentinel
 
-A towering monolith constructed and possessed by demonic forces. A thousand eyes leer through slits in its jagged, spiked armour.
+A towering monolith constructed and possessed by demonic forces. A thousand
+eyes leer through slits in its jagged, spiked armour.
 %%%%
 hellephant
 
-혐오스러운 후피동물이다. 악마의 후예로, 지옥의 불로 불타오르고 있다.
+An abhorrent pachyderm, descendant of demons, burning from within with the
+fires of Hell.
 %%%%
 hellion
 
@@ -1107,45 +1462,64 @@ hellwing
 %%%%
 hill giant
 
-거인족 중에서는 키가 작은 편이지만, 이 거인의 크기는 충분히 위협적이다.
+Although one of the smaller giant varieties, this hill giant is still big
+enough to be dangerous.
 %%%%
 hippogriff
 
-독수리의 머리와 날개가 달리고, 말의 몸을 가진 거대한 몬스터다.
+A large creature with the hindquarters of a horse and the wings, head and
+talons of a great eagle.
 %%%%
 hobgoblin
 
-더 크고 더 못생긴, 고블린의 친척뻘로, 성질도 더욱 고약하다. 많은 풋내기 모험가들이 이 홉고블린을 과소평가하고 지나치려 했다가, 목숨을 잃곤 했다.
+A larger and even uglier goblin, with an even worse temper to match. Many
+foolish young adventurers have underestimated the danger of crossing a
+hobgoblin and paid for it with their lives.
 %%%%
 hog
 
-A large even-toed ungulate. Like human beings, it is omnivorous, intelligent, and nearly hairless.
+A large even-toed ungulate. Like human beings, it is omnivorous, intelligent,
+and nearly hairless.
 %%%%
 holy swine
 
-A rare celestial version of a usually filthy animal. They are said to be not natural creatures, but angelic beings who succumbed to hostile magic.
+A rare celestial version of a usually filthy animal. They are said to be not
+natural creatures, but angelic beings who succumbed to hostile magic.
 %%%%
 hound
 
-유연하고 민첩한, 무서운 사냥개다. 털은 부스스해졌고, 야위고 굶주린 것처럼 보아 이들의 주인은 오래 전에 어디론가 사라진 것 같다.
+A fearsome hunting dog, lithe and alert. Its master must be long gone, for it
+looks dishevelled, and has a lean and hungry look.
 %%%%
 # Stolen from http://rustyandco.com/frequently-asked-questions/monster-guide/
 human
 
-An uppity sort of surface-dwelling, hairless ape. Dwarves think of them as fragile, elves think of them as clumsy, and monsters think of them as tasty.
+An uppity sort of surface-dwelling, hairless ape. Dwarves think of them as
+fragile, elves think of them as clumsy, and monsters think of them as tasty.
 %%%%
 hungry ghost
 
-The undead form of someone who died of starvation, this creature drains sustenance from the bodies of its victims, hoping to inflict its own miserable fate on others.
+The undead form of someone who died of starvation, this creature drains
+sustenance from the bodies of its victims, hoping to inflict its own miserable
+fate on others.
 %%%%
 hydra
 
-A great and nightmarish lacertilian beast. It has many heads, and the potential to grow many more!
+A great and nightmarish lacertilian beast. It has many heads, and the potential
+to grow many more!
 
-Hitting it with any cutting weapon bigger than a dagger or a quick blade
-risks lopping a head off, which, considering hydra's unique biology, is not
-what you want unless the blade is hot enough to cauterize the wound. Even
-a troll's claws may be enough to rip hydra heads.
+Hitting it with any cutting weapon bigger than a dagger or a quick blade risks
+lopping a head off, which, considering hydra's unique biology, is not what you
+want unless the blade is hot enough to cauterize the wound. Even a troll's
+claws may be enough to rip hydra heads.
+%%%%
+hyperactive ballistomycete
+
+This ballistomycete is in a state of all-out reproduction. It is constantly
+ravaged by explosions of spores, damaging everything around, and it is
+ultimately going to die to its own spores.
+
+Be sure to keep your distance!
 %%%%
 ice bat
 
@@ -1153,7 +1527,8 @@ ice bat
 %%%%
 ice beast
 
-눈과 얼음 결정으로 이루어졌고, 걸을 때마다 지면에 차가운 물 웅덩이를 만들고 있는 무서운 몬스터다.
+A terrible creature, formed of snow and crystalline ice. Its feet leave puddles
+of icy water on the floor.
 %%%%
 ice devil
 
@@ -1165,41 +1540,57 @@ A white, frost-coated dragon. Snowflakes trickle from its nostrils.
 %%%%
 Ice Fiend
 
-A huge frigid demon covered in frost and wreathed in freezing air. It is one of the most terrible denizens of the many Hells.
+A huge frigid demon covered in frost and wreathed in freezing air. It is one of
+the most terrible denizens of the many Hells.
 %%%%
 ice statue
 
-An imposing idol of some nameless arctic god, carved in glistening deep blue ice. Freezing vapours swirl about it, and a chill pervades the air.
+An imposing idol of some nameless arctic god, carved in glistening deep blue
+ice. Freezing vapours swirl about it, and a chill pervades the air.
 %%%%
 iguana
 
 A green lizard with strong jaws and sharp teeth, prized for its flesh.
 %%%%
+inept feature mimic
+
+A predator masquerading as an ordinary dungeon feature. This one is less
+dangerous than most mimics, but can still devour the likes of you.
+%%%%
+inept item mimic
+
+An apparently abandoned item, actually a small beast in disguise.
+%%%%
 insubstantial wisp
 
-A thin wisp of floating gas, flickering, disappearing and reforming in a disconcertingly random fashion.
+A thin wisp of floating gas, flickering, disappearing and reforming in a
+disconcertingly random fashion.
 %%%%
 iron devil
 
-무서운 금속 피부를 가진 인간형의 존재다. 마법적인 능력이 없고 움직임도 느리지만, 야성적인 완력으로 약점을 극복한다.
+A hideous humanoid figure with metal skin. While it lacks magical attacks and
+is slow of foot, it makes up for these failings with brute strength.
 %%%%
 iron dragon
 
 A very heavy, slow and apparently flightless dragon. It is named for its
-scales, which are so tough they might be iron. Small flakes of metal trail
-from its nostrils.
+scales, which are so tough they might be iron. Small flakes of metal trail from
+its nostrils.
 %%%%
 iron elemental
 
-대지의 정령계에서 온 희귀하고 강력한 정령으로, 거대한 강철 덩어리에서부터 이 세계로 불려 나왔다.
+A rare and powerful spirit from the elemental plane of earth, it exists in this
+world by inhabiting a hulking mass of iron.
 %%%%
-The iron giant
+the iron giant
 
-거대하고 육중하고, 둔한 거인이다. 녹슨 조직이 두 주먹을 감싸고 있으며, 지금까지 보아 온 거인족 중 가장 거대한 종이다.
+Huge, lumbering, and particularly dull, this rusting monolith packs quite the
+punch. It is quite possibly the largest giant you have ever seen.
 %%%%
 iron golem
 
-A large, ponderous and very solid statue of metal, given the power of locomotion through some esoteric means.
+A large, ponderous and very solid statue of metal, given the power of
+locomotion through some esoteric means.
 %%%%
 iron imp
 
@@ -1210,64 +1601,81 @@ iron troll
 A great troll, mighty of limb and plated with thick scales that resemble
 lightly rusted iron, especially in their hardness.
 %%%%
+item mimic
+
+An apparently abandoned item, actually a vicious little beast in disguise.
+%%%%
 jackal
 
-A small canine scavenger. Packs of these creatures roam the underworld, searching for carrion to devour.
+A small canine scavenger. Packs of these creatures roam the underworld,
+searching for carrion to devour.
 %%%%
 jelly
 
-맥박이 뛰는 산성의 원형질 덩어리다. 거의 모든것을 소화하며, 그 때마다 조금씩 증식한다.
+A pulsating mass of acidic protoplasm. It can and will eat almost anything, and
+grows a little each time...
 %%%%
 jellyfish
 
-A pulsating glob of transparent flesh, waiting just below the surface of the water to sting its prey with its many tentacles. The tentacles do little harm on their own, but the poisonous toxins they inject can cause significant damage to muscle tissue.
+A pulsating glob of transparent flesh, waiting just below the surface of the
+water to sting its prey with its many tentacles. The tentacles do little harm
+on their own, but the poisonous toxins they inject can cause significant damage
+to muscle tissue.
 %%%%
 jumping spider
 
-A large venomous spider, which weaves webs between its front legs and leaps at its prey, ensnaring it. Those who see it in action and live to tell the tale say the speed with which it leaps is almost supernatural.
+A large venomous spider, which weaves webs between its front legs and leaps at
+its prey, ensnaring it. Those who see it in action and live to tell the tale
+say the speed with which it leaps is almost supernatural.
 %%%%
 tengu
 
-A humanoid figure with the head and talons of a bird. Its ferociously combative nature belies its fragile appearance.
+A humanoid figure with the head and talons of a bird. Its ferociously combative
+nature belies its fragile appearance.
 %%%%
 killer bee
 
 반복해서 찌를 수 있는 침을 가진, 거대한 벌이다.
 %%%%
-killer bee larva
-
-A small, powerless larva of a killer bee. While almost completely harmless on its own, there are almost certainly adult killer bees nearby, ready to defend the hive's young against any intruder.
-%%%%
 Killer Klown
 
-활기와 웃음이 가득한 재미있는 모습을 한 존재다. 당신을 만나서 매우 기뻐하는 것 같지만, 그 외모에서 희미한 악의가 느껴지는 것은 왜일까? 붉은 화장이나 그 모습만으로는 즐겁게 느껴지지 않는 걸까? 함께 놀아보면 반드시 당신에게도 즐거움이란 것을 알게 해줄 것이다.
+A comical figure full of life and laughter. It looks very happy to see you...
+but is there a slightly malicious cast to its features? Is that red face paint
+or something altogether less pleasant?
 %%%%
 kobold
 
-Kobolds are small, greyish creatures with the looks and temperaments of feral dogs. No one knows for sure where kobolds come from, but ancient demon-gods, evil spirits, and meddling wizards have all been suggested as culprits.
+Kobolds are small, greyish creatures with the looks and temperaments of feral
+dogs. No one knows for sure where kobolds come from, but ancient demon-gods,
+evil spirits, and meddling wizards have all been suggested as culprits.
 %%%%
 kobold demonologist
 
-A kobold who is in league with demonic powers and can call forth beings from the depths of Hell.
+A kobold who is in league with demonic powers and can call forth beings from
+the depths of Hell.
 %%%%
 komodo dragon
 
-An enormous monitor lizard more than capable of preying on large animals. Bits of fetid and rotting flesh from its last few meals are often found stuck in its teeth, and its bite therefore can cause infections.
+An enormous monitor lizard more than capable of preying on large animals. Bits
+of fetid and rotting flesh from its last few meals are often found stuck in its
+teeth, and its bite therefore can cause infections.
 %%%%
 kraken
 
-A gargantuan sea monster, capable of devouring entire ships. It embraces
-them with its tentacles and draws them into the depths. Fortunately,
-the tentacles are too big to embrace a small creature like you. Wait,
-did I say "fortunately"?
+A gargantuan sea monster, capable of devouring entire ships. It embraces them
+with its tentacles and draws them into the depths. Fortunately, the tentacles
+are too big to embrace a small creature like you. Wait, did I say
+"fortunately"?
 %%%%
 laboratory rat
 
-A rat that has been subjected to a wizard's terrible experiments. Who knows what it is capable of?
+A rat that has been subjected to a wizard's terrible experiments. Who knows
+what it is capable of?
 %%%%
 large abomination
 
-A large and hideous conglomeration of mangled body parts, demonically possessed and altered in ways that challenge your sanity.
+A large and hideous conglomeration of mangled body parts, demonically possessed
+and altered in ways that challenge your sanity.
 %%%%
 large simulacrum
 
@@ -1283,11 +1691,14 @@ large zombie
 %%%%
 lava fish
 
-A bright red fish that swims through hot lava as easily as other fish swim through water. The intense heat of the lava that passes through its gills will sear anything that gets too close to its mouth.
+A bright red fish that swims through hot lava as easily as other fish swim
+through water. The intense heat of the lava that passes through its gills will
+sear anything that gets too close to its mouth.
 %%%%
 lava snake
 
-A burning red snake which dwells in pools of lava. It will spit gobs of molten rock at passers-by.
+A burning red snake which dwells in pools of lava. It will spit gobs of molten
+rock at passers-by.
 %%%%
 lava worm
 
@@ -1295,35 +1706,47 @@ lava worm
 %%%%
 lemure
 
-A vaguely humanoid blob of putrid white flesh. It gargles horribly as pus flows from its orifices.
+A vaguely humanoid blob of putrid white flesh. It gargles horribly as pus flows
+from its orifices.
 %%%%
 lich
 
-A powerful wizard who has learned to cheat death itself, a lich is a skeletal, desiccated corpse kept intact by a mighty exercise of dark magic. This undead creature is quite powerful and is best avoided by all but the most skilled.
+A powerful wizard who has learned to cheat death itself, a lich is a skeletal,
+desiccated corpse kept intact by a mighty exercise of dark magic. This undead
+creature is quite powerful and is best avoided by all but the most skilled.
 %%%%
 lightning spire
 
-This contraption, made from a coil and a rod, is buzzing with electricity and can shoot it far, zapping anyone who comes into range.
+This contraption, made from a coil and a rod, is buzzing with electricity and
+can shoot it far, zapping anyone who comes into range.
 %%%%
 lindwurm
 
-강력한 한 쌍의 앞발이 있는 독사와 같은 모습의 작은 용이다. 두꺼운 비늘에서 기분 나쁜 녹색 광택이 난다.
-%%%%
-mad acolyte of Lugonu
-
-An insane follower of Lugonu. Years of living in the abyss have clearly taken their toll on this one's feeble mind.
+A small serpentine dragon with a pair of strong forelimbs. Its thick scales
+give off an eerie green glow.
 %%%%
 macabre mass
 
-A fused and twisted collection of body parts, weakly animated by necromancy. It is easily destroyed, but capable of merging with others to form more potent horrors.
+A fused and twisted collection of body parts, weakly animated by necromancy. It
+is easily destroyed, but capable of merging with others to form more potent
+horrors.
 %%%%
 mad acolyte of Lugonu
 
-An insane follower of Lugonu. Years of living in the abyss have clearly taken their toll on this one's feeble mind.
+An insane follower of Lugonu. Years of living in the abyss have clearly taken
+their toll on this one's feeble mind.
+%%%%
+mad wizard
+
+Raving about how enhanced rats are going to take over the world is not a sign
+of sanity. You'd better step back. Plus, it's squirrels who are going to win, I
+tell you!
 %%%%
 manticore
 
-매우 추악한 잡종이다. 인간의 머리와 사자의 몸, 그리고 박쥐의 날개를 닮은 날개를 가지고 있다. 꼬리엔 가시가 박혀있으며, 사냥감을 향해 발사된다.
+A hideous cross-breed, bearing the features of a human and a lion, with great
+bat-like wings. Its tail bristles with spikes that can be loosed at potential
+prey.
 %%%%
 master elementalist
 
@@ -1331,23 +1754,27 @@ The primal forces of the universe dance at this demented wizard's fingertips.
 %%%%
 merfolk
 
-A hybrid with the torso of a man and the tail of a fish, a merfolk dwells both in water and on land, and fiercely defends its domain.
+A hybrid with the torso of a man and the tail of a fish, a merfolk dwells both
+in water and on land, and fiercely defends its domain.
 %%%%
 merfolk impaler
 
-강인한 근육을 가진 머포크 전사로, 커다란 삼지창을 지니고 있다.
+A powerfully muscled merfolk warrior, bearing a deadly weapon.
 %%%%
 merfolk aquamancer
 
-물갈퀴가 달린, 흔치 않은 손을 가진 호리호리한 머포크이다. 바다에서 물보라가 치는 모습과 어울려, 모습이 반짝이며 변화하는 듯 보인다.
+A slender merfolk mystic with unusually webby hands. Its form shifts and
+glistens as if seen through ocean spray.
 %%%%
 merfolk javelineer
 
-날카로운 시력으로 커다란 투창을 던져대는, 무시무시한 머포크 투사이다.
+A fearsome merfolk champion with a piercing gaze and a large bundle of
+javelins.
 %%%%
 mermaid
 
-어린 여성의 모습을 하고 있으며, 다리 대신 물고기 꼬리가 달려 있다. 인어들은 노래를 하고, 노래를 듣는 자들을 매혹시키는 것을 좋아한다.
+A young woman with a fish tail in place of legs. Mermaids love to sing and
+charm their audience.
 %%%%
 metal gargoyle
 
@@ -1357,33 +1784,39 @@ microbat
 
 이름처럼 작은 박쥐이다.
 %%%%
-midge
-
-A bothersome little demon that cackles maddeningly as it phases in and out of existence.
-%%%%
-mimic
-
-얼핏 보기에는 버려진 아이템 처럼 보이지만, 위험한 소형 짐승이 위장을 한 것이다.
-%%%%
 minotaur
 
-크고 근육질인 인간형 몬스터로, 소의 머리를 하고 있다. 격리되어있는 미궁을 본거지로 삼는다.
+A large muscular human with the head of a bull. It makes its home in secluded
+labyrinths.
 %%%%
 molten gargoyle
 
-A hideous molten stone statue come to life, with fearsome claws and flames licking out from its toothy maw.
+A hideous molten stone statue come to life, with fearsome claws and flames
+licking out from its toothy maw.
+%%%%
+# Orb of Zot special
+monstrous item mimic
+
+This mimic chose nothing else to masquerade as but the fabled Orb of Zot. Since
+it was able to successfully assume its appearance and stay here, saying it
+might be deadly is an understatement.
 %%%%
 moth
 
-Although this moth is unusually large and aggressive, it is quite mundane compared to most moths found in the dungeon.
+Although this moth is unusually large and aggressive, it is quite mundane
+compared to most moths found in the dungeon.
 %%%%
 moth of suppression
 
-An ill, greasy-looking moth, fluttering wanly in the stale air. The atmosphere in its vicinity seems to shimmer with a dull, dusty haze. Regarded as a nuisance, these creatures were driven from the surface centuries ago due to their naturally inhibitive effect on magical spells and items in their vicinity.
+An ill, greasy-looking moth, fluttering wanly in the stale air. The atmosphere
+in its vicinity seems to shimmer with a dull, dusty haze. Regarded as a
+nuisance, these creatures were driven from the surface centuries ago due to
+their naturally inhibitive effect on magical items in their vicinity.
 %%%%
 moth of wrath
 
-A rare species of moth, eradicated from the surface centuries ago due to its ability to drive those who look upon it insane with rage.
+A rare species of moth, eradicated from the surface centuries ago due to its
+ability to drive those who look upon it insane with rage.
 %%%%
 mottled draconian
 
@@ -1391,23 +1824,28 @@ mottled draconian
 %%%%
 mottled dragon
 
-A small purple dragon with curiously mottled scales, its mouth dripping with a strange liquid flame.
+A small purple dragon with curiously mottled scales, its mouth dripping with a
+strange liquid flame.
 %%%%
 mummy
 
-방부처리가 된, 붕대로 둘둘 말린 언데드다. 고대의 저주로 움직이게 되었으며, 그들의 영역을 침범하는 자들에게 유해한 오라를 방출한다.
+An undead figure covered in bandages and embalming fluids, compelled to walk by
+an ancient curse. It radiates a malign aura to those who intrude on its domain.
 %%%%
 mummy priest
 
-An ancient servant of a long forgotten god, embalmed and cursed to walk in undeath for all eternity.
+An ancient servant of a long forgotten god, embalmed and cursed to walk in
+undeath for all eternity.
 %%%%
 naga
 
-A hybrid that is human from the waist up; below is a scaly, muscular snakelike tail. Its mouth drips with venomous saliva.
+A hybrid that is human from the waist up; below is a scaly, muscular snakelike
+tail. Its mouth drips with venomous saliva.
 %%%%
 naga mage
 
-A naga that has trained in the use of magic, trailed by an eldritch nimbus. It is especially skilled in spells dealing with poison and venom.
+A naga that has trained in the use of magic, trailed by an eldritch nimbus. It
+is especially skilled in spells dealing with poison and venom.
 %%%%
 naga warrior
 
@@ -1415,27 +1853,40 @@ A fearsome naga warrior clad in sturdy armour and wielding a mighty weapon.
 %%%%
 necromancer
 
-An evil wizard who is devoted to the practice of death magic, the mastery of unholy energies, and the raising of corpses into a parody of life.
+An evil wizard who is devoted to the practice of death magic, the mastery of
+unholy energies, and the raising of corpses into a parody of life.
 %%%%
 necrophage
 
-가장 사악하고 불결한 언데드로, 이들은 썩어가는 시체로부터 만들어진다. 그들은 역병과 부패를 퍼트리기 위해 존재하며, 다른 썩어가는 시체로부터 힘을 얻는다.
+A vile undead creation of the most unholy necromancy, these creatures are made
+from the decaying corpses of humanoid creatures. They exist to spread disease
+and decay, and gain power from the decaying corpses of other beings.
 %%%%
 neqoxec
 
-이상한 형태를 한 악마로, 돌연변이의 에너지가 주위에 진동하고 있다. 희생양들의 반쯤 소화된 뇌들이, 벌어진 배꼽에서 삐져나와있다.
+A weirdly shaped demon, pulsing and shifting with mutagenic energies, its belly
+distended with the devoured brains of its victims.
+%%%%
+octopode
+
+A more intelligent cousin of the mighty kraken, capable of using tools and
+spells. They are fully amphibious, but most of their species choose to stay
+beneath the waves and serve their King.
 %%%%
 ogre
 
-A large, ugly, and fat creature, distantly related to orcs and goblins. It is tremendously strong.
+A large, ugly, and fat creature, distantly related to orcs and goblins. It is
+tremendously strong.
 %%%%
 ogre mage
 
-A rare breed of ogre, skilled in the use of magic. It usually becomes a chieftain among its kin.
+A rare breed of ogre, skilled in the use of magic. It usually becomes a
+chieftain among its kin.
 %%%%
 oklob plant
 
-A very dangerous plant which fends off predators by spraying corrosive vitriol at them. Even experienced adventurers give oklob plants a wide berth.
+A very dangerous plant which fends off predators by spraying corrosive vitriol
+at them. Even experienced adventurers give oklob plants a wide berth.
 %%%%
 oklob sapling
 
@@ -1443,59 +1894,83 @@ oklob sapling
 %%%%
 ooze
 
-A glob of grey sludge that has somehow developed a rudimentary awareness and limited motility.
+A glob of grey sludge that has somehow developed a rudimentary awareness and
+limited motility.
 %%%%
 ophan
 
-A creature from the heavenly realms. It consists of a wheel within a wheel, and both of these are covered in eyes; strange flames of holy fire flicker all over it.
+A creature from the heavenly realms. It consists of a wheel within a wheel, and
+both of these are covered in eyes; strange flames of holy fire flicker all over
+it.
 %%%%
 orange crystal statue
 
-An intricately carved idol of some nameless godling, hewn of translucent
-orange crystal. Its lifeless eyes seem to glitter uncannily with a wicked
+An intricately carved idol of some nameless godling, hewn of translucent orange
+crystal. Its lifeless eyes seem to glitter uncannily with a wicked
 intelligence.
 
 This statue is very brittle; it will disintegrate at once.
 %%%%
 orange demon
 
-An amber-coloured demon with a tail not unlike that of a scorpion. It contains a venom most potent, one that attacks not only the body but the mind as well.
+An amber-coloured demon with a tail not unlike that of a scorpion. It contains
+a venom most potent, one that attacks not only the body but the mind as well.
 %%%%
 orange rat
 
-A unusually large rat with weird knobbly orange skin, glowing with unholy energies.
+A unusually large rat with weird knobbly orange skin, glowing with unholy
+energies.
 %%%%
 Orb Guardian
 
-A huge, glowing, four-limbed purple creature with heightened senses, created by the Orb to watch over itself. It guards the Orb with enormous punctiliousness and violence.
+A huge, glowing, four-limbed purple creature with heightened senses, created by
+the Orb to watch over itself. It guards the Orb with enormous punctiliousness
+and violence.
+%%%%
+orb of destruction
+
+This globe of pure magic is a conjured projectile that homes onto a designated
+target, albeit with massive inertia. A smart and agile person may move out of
+its path, causing it to damage its surroundings or even go around in circles.
+Be sure to step at least two paces to the side, though, for it is not swayed by
+minute movements, including those from the Dodging skill.
 %%%%
 orb of fire
 
-A globe of raw primordial fire, capable of impressive pyrotechnics, and of twisting the very flesh of creatures who come into its ken.
+A globe of raw primordial fire, capable of impressive pyrotechnics, and of
+twisting the very flesh of creatures who come into its ken.
 %%%%
 orb spider
 
-An eerily glowing spider with strands of pure energy emerging from its spinnerets. It seems to want to keep its distance.
+An eerily glowing spider with strands of pure energy emerging from its
+spinnerets. It seems to want to keep its distance.
 %%%%
 orc
 
-An ugly subterranean race, orcs combine the worst features of humans, pigs and several other unpleasant creatures. They tend to run in packs or mobs, and delight in outbursts of insane violence.
+An ugly subterranean race, orcs combine the worst features of humans, pigs and
+several other unpleasant creatures. They tend to run in packs or mobs, and
+delight in outbursts of insane violence.
 %%%%
 orc high priest
 
-An exalted servant of the orc god Beogh and a master of many black rites, to whose aid Beogh will even send beings from the netherworld.
+An exalted servant of the orc god Beogh and a master of many black rites, to
+whose aid Beogh will even send beings from the netherworld.
 %%%%
 orc knight
 
-A heavily armoured orc, covered in scars from many past battles. Orc knights command their brethren in battle, rousing them to greater, more violent efforts with bloodcurdling shouts.
+A heavily armoured orc, covered in scars from many past battles. Orc knights
+command their brethren in battle, rousing them to greater, more violent efforts
+with bloodcurdling shouts.
 %%%%
 orc priest
 
-A servant of Beogh, the ancient and cruel god of the orcs. Beogh rewards the prayers of devoted servants by striking down their enemies.
+A servant of Beogh, the ancient and cruel god of the orcs. Beogh rewards the
+prayers of devoted servants by striking down their enemies.
 %%%%
 orc sorcerer
 
-An exceptionally competent orcish wizard, in league with hellish and chthonic forces and motivated by the purest imaginable strain of malevolence.
+An exceptionally competent orcish wizard, in league with hellish and chthonic
+forces and motivated by the purest imaginable strain of malevolence.
 %%%%
 orc warlord
 
@@ -1503,11 +1978,13 @@ A supreme commander of an orc host, skilled at both melee and ranged combat.
 %%%%
 orc warrior
 
-An experienced, armoured and well-armed orc soldier, able to command a small mob of its fellows.
+An experienced, armoured and well-armed orc soldier, able to command a small
+mob of its fellows.
 %%%%
 orc wizard
 
-While orcs generally prefer physical combat, some of their kind gain proficiency in the occult arts - though still for martial purposes.
+While orcs generally prefer physical combat, some of their kind gain
+proficiency in the occult arts — though still for martial purposes.
 %%%%
 pale draconian
 
@@ -1519,31 +1996,33 @@ A pious armoured warrior fighting in the service of the Shining One.
 %%%%
 pandemonium lord
 
-A formidable demon lord inhabiting the endless halls of Pandemonium. Each one is different, with its own set of strengths and weaknesses.
+A formidable demon lord inhabiting the endless halls of Pandemonium. Each one
+is different, with its own set of strengths and weaknesses.
 %%%%
 pearl dragon
 
-A dragon consecrated to the holy divine powers. Its breath is blessed fire, and its claws burn with the sear of holy wrath.
+A dragon consecrated to the holy divine powers. Its breath is blessed fire, and
+its claws burn with the sear of holy wrath.
 %%%%
 phantasmal warrior
 
-A hideous translucent green spirit of a warrior fallen in battle and recalled to this plane by unholy magic.
+A hideous translucent green spirit of a warrior fallen in battle and recalled
+to this plane by unholy magic.
 %%%%
 phantom
 
-A nearly-transparent undead spirit, suspected by some sages to be a degenerate form of ghost, with no memories of its former life. It rarely stays in one place for long.
+A nearly-transparent undead spirit, suspected by some sages to be a degenerate
+form of ghost, with no memories of its former life. It rarely stays in one
+place for long.
 %%%%
 phase bat
 
-A strange, glowing bat that seems to flutter through more dimensions than the average bat.
+A strange, glowing bat that seems to flutter through more dimensions than the
+average bat.
 %%%%
 phoenix
 
 신화와 전설에 등장하는 새로, 죽을 때도 불타오르고, 그 남은 재에서 다시 부활한다고 한다.
-%%%%
-pile of gold coins
-
-언뜻 보기에는 별 위험이 없어 보이는 금화 뭉치로 보이지만, 사실 맹독을 지닌, 변형괴물 포식자가 숨어 있다. 
 %%%%
 pillar of salt
 
@@ -1551,15 +2030,21 @@ pillar of salt
 %%%%
 plant
 
-대부분의 식물은 던전의 좋지 않은 환경에서는 잘 자라지 않지만, 어떤 종은 햇빛이 없는 지하에 적응해, 잘 자라기도 한다.
+Few plants can grow in the unpleasant dungeon environment, but some have
+managed to adapt and even thrive underground in the absence of the sun.
 %%%%
 player ghost
 
-The apparition of an unfortunate adventurer, retaining many of the skills and abilities the adventurer had in life. It is condemned to haunt this particular level of the dungeons, lashing out violently at the next adventurer to cross its path.
+The apparition of an unfortunate adventurer, retaining many of the skills and
+abilities the adventurer had in life. It is condemned to haunt this particular
+level of the dungeons, lashing out violently at the next adventurer to cross
+its path.
 %%%%
 polar bear
 
-A large and very strong bear covered in glistening white fur, habituated to cold conditions. Like all ursines, the polar bear will become enraged if badly hurt or frightened.
+A large and very strong bear covered in glistening white fur, habituated to
+cold conditions. Like all ursines, the polar bear will become enraged if badly
+hurt or frightened.
 %%%%
 porcupine
 
@@ -1567,15 +2052,21 @@ A vicious rodent with a coat of sharp quills and a painful bite.
 %%%%
 profane servitor
 
-This blasphemous being used to be an angel of the Shining One. Now it stands as unliving proof that not even the holiest of beings are beyond Yredelemnul's grasp.
+This blasphemous being used to be an angel of the Shining One. Now it stands as
+unliving proof that not even the holiest of beings are beyond Yredelemnul's
+grasp.
 %%%%
 program bug
 
-A ravenous and incredibly buggy monster. Please report its existence to the DevTeam.
+A ravenous and incredibly buggy monster. Please report its existence to the
+DevTeam.
 %%%%
 pulsating lump
 
-A revolting blob of all kinds of living matter - muscle, gut, nerves, viscera, marrow - piled haphazardly into a single writhing mass. This distorted flesh is mutagenic on contact, but without any kind of structural arrangement to its parts, it lacks the coordination needed to move quickly.
+A revolting blob of all kinds of living matter — muscle, gut, nerves, viscera,
+marrow — piled haphazardly into a single writhing mass. This distorted flesh is
+mutagenic on contact, but without any kind of structural arrangement to its
+parts, it lacks the coordination needed to move quickly.
 %%%%
 purple draconian
 
@@ -1583,19 +2074,26 @@ purple draconian
 %%%%
 quasit 
 
-A cowardly little demon with a long, viciously pointed tail. Its sharp claws are coated with a venom that stiffens muscles.
+A cowardly little demon with a long, viciously pointed tail. Its sharp claws
+are coated with a venom that stiffens muscles.
 %%%%
 queen ant
 
-A bloated ant, covered in thick chitinous armour and possessing a strong poison. It is the sovereign of the colony and, when not disturbed, is constantly laying eggs. Once capable of flight, it has long since shed its wings; only rudimentary stubs remain.
+A bloated ant, covered in thick chitinous armour and possessing a strong
+poison. It is the sovereign of the colony and, when not disturbed, is
+constantly laying eggs. Once capable of flight, it has long since shed its
+wings; only rudimentary stubs remain.
 %%%%
 queen bee
 
-A ruler of a swarm of bees, even larger and more dangerous than her many offspring.
+A ruler of a swarm of bees, even larger and more dangerous than her many
+offspring.
 %%%%
 quicksilver dragon
 
-A long and sinuous dragon, seemingly more neck and tail than anything else. Its skin shines like molten mercury, magical energies arc from its pointed snout, and it moves with terrifying swiftness.
+A long and sinuous dragon, seemingly more neck and tail than anything else. Its
+skin shines like molten mercury, magical energies arc from its pointed snout,
+and it moves with terrifying swiftness.
 %%%%
 quokka
 
@@ -1603,7 +2101,9 @@ A pesky little marsupial that is a bit like a rat, but not quite.
 %%%%
 rakshasa
 
-악마의 일종으로 힘과 지식을 추구해 물질계에 온 존재들이다. 락샤샤들은 환영을 다룸에 있어 전문가이며, 동시에 지능적이며 잔혹하다.
+A demon in the form of a tiger who comes to the material world in search of
+power and knowledge. Rakshasas are experts in the art of illusion, and are
+simultaneously intelligent and cruel.
 %%%%
 rat
 
@@ -1611,7 +2111,21 @@ A dirty rodent that has grown large and aggressive in the dungeon environment.
 %%%%
 raven
 
-An opportunistic scavenger bird that is quite proactive in the production of carrion. It has a particularly unhealthy fascination with eyeballs and things resembling eyeballs, such as pickled onions, walnuts and olives.
+An opportunistic scavenger bird that is quite proactive in the production of
+carrion. It has a particularly unhealthy fascination with eyeballs and things
+resembling eyeballs, such as pickled onions, walnuts and olives.
+%%%%
+ravenous feature mimic
+
+A deadly venomous tentacled predator with an ability to shapeshift and
+masquerade as an ordinary-looking dungeon feature, in order to catch foolish
+passers-by and crush them in its deadly grasp.
+%%%%
+ravenous item mimic
+
+A deadly venomous tentacled predator with an ability to shapeshift into a small
+item. While not of a formidable size, it is not a living creature and its
+tentacles are harder than steel.
 %%%%
 reaper
 
@@ -1619,7 +2133,8 @@ reaper
 %%%%
 red devil
 
-이 붉은색의 악마는 인간보다 조금 작은 키로, 몸은 근육질에 가시와 뿔로 덮여있다. 어깨에는 두 개의 작은 날개가 솟아있다.
+A muscular demon covered in spikes and horns. Two short wings sprout from its
+shoulders.
 %%%%
 red draconian
 
@@ -1627,15 +2142,19 @@ red draconian
 %%%%
 red wasp
 
-거대한 붉은 말벌이다. 위험해보이는 독침가시를 쏘는 것으로, 이 가시에는 마비를 유발하는 독이 발라져 있다.
+A huge red wasp with a viciously barbed stinger. Potent paralytic poison drips
+from its tip.
 %%%%
 redback
 
-부풀어 오른 복부에 붉은 반점이 있는, 사나운 검은 거미다. 치명적인 독이 턱으로부터 방울져 떨어지고 있다.
+A vicious black spider with a splash of red on its swollen abdomen. Its
+mandibles drip with lethal poison.
 %%%%
 rock troll
 
-An enormous and very nasty-looking troll, seemingly born of the very living rock of the dungeon. Its stony hide seems to heal almost instantaneously from most wounds.
+An enormous and very nasty-looking troll, seemingly born of the very living
+rock of the dungeon. Its stony hide seems to heal almost instantaneously from
+most wounds.
 %%%%
 rock worm
 
@@ -1647,22 +2166,25 @@ rotten bat
 %%%%
 rotting devil
 
-A hideous, miserable creature covered in oozing sores, afflicted by some horrible disease. Bits and pieces fall from its body as it shambles toward its next victim.
+A hideous, miserable creature covered in oozing sores, afflicted by some
+horrible disease. Bits and pieces fall from its body as it shambles toward its
+next victim.
+
 {{
-if you.can_smell() then
-    if you.saprovorous() == 3 then
-        return "\nIt smells delicious."
-    else
-        return "\nIt stinks."
+    if you.can_smell() then
+        if you.saprovorous() == 3 then
+            return "It smells delicious."
+        else
+            return "It stinks."
+        end
     end
-else
-    return ""
-end
 }}
 %%%%%
 rotting hulk
 
-A shambling reanimated corpse. Trapped by evil spellweaving in a grotesque parody of life, this infected decaying body lurches about, seeking retribution on the living.
+A shambling reanimated corpse. Trapped by evil spellweaving in a grotesque
+parody of life, this infected decaying body lurches about, seeking retribution
+on the living.
 %%%%
 the royal jelly
 
@@ -1670,39 +2192,48 @@ the royal jelly
 %%%%
 salamander
 
-Not the common harmless amphibian, but the far more dangerous mythological beast with which that amphibian shares its name. A red, flaming half-human half-snake creature, whose affinity for fire is legendary.
+Not the common harmless amphibian, but the far more dangerous mythological
+beast with which that amphibian shares its name. A red, flaming half-human
+half-snake creature, whose affinity for fire is legendary.
 %%%%
 scorpion
 
-A loathsome arachnid, armed to the teeth. Its body is covered in a thick carapace, its tail is tipped by a venomous sting, and its forelimbs are equipped with a pair of sharp grasping claws.
+A loathsome arachnid, armed to the teeth. Its body is covered in a thick
+carapace, its tail is tipped by a venomous sting, and its forelimbs are
+equipped with a pair of sharp grasping claws.
 %%%%
 sea snake
 
-물 속을 대단히 편안하게 헤엄치는 밝은 빛깔의 뱀이다. 맹독의 이빨을 가지고 있다.
+A brightly coloured snake, very comfortable in the water. It has a highly
+potent venomous bite.
 %%%%
 seraph
 
-The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, the mightiest servants of the Good Gods. They have six wings and but one face, and are said to sometimes take form of fiery serpents.
-%%%%
-seraph
-
-The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts, the mightiest servants of the Good Gods. They have six wings and but one face, and are said to sometimes take the forms of fiery serpents.
+The Seraphim, or the Burning Ones, are the highest rank of the angelic hosts,
+the mightiest servants of the Good Gods. They have six wings and but one face,
+and are said to sometimes take the forms of fiery serpents.
 %%%%
 shadow
 
-A wisp of unliving shadow, drifting on the edge of vision. It consumes the puissance of living beings.
+A wisp of unliving shadow, drifting on the edge of vision. It consumes the
+puissance of living beings.
 %%%%
 shadow demon
 
-A mysterious demonic figure, constantly blurring into multiple shadows of itself. It weaves creatures into existence from the very shadows surrounding it.
+A mysterious demonic figure, constantly blurring into multiple shadows of
+itself. It weaves creatures into existence from the very shadows surrounding
+it.
 %%%%
 shadow dragon
 
-A great shadowy dragon, radiating evil and death. Its very mouth and breath stink of the grave.
+A great shadowy dragon, radiating evil and death. Its very mouth and breath
+stink of the grave.
 %%%%
 Shadow Fiend
 
-A horrible being that appears as a great mass of writhing shadows which occasionally reveals a huge, horned skeleton. It is one of the most terrible denizens of the many Hells.
+A horrible being that appears as a great mass of writhing shadows which
+occasionally reveals a huge, horned skeleton. It is one of the most terrible
+denizens of the many Hells.
 %%%%
 shadow imp
 
@@ -1710,31 +2241,41 @@ shadow imp
 %%%%
 shadow wraith
 
-A mist-wreathed skeletal shadow hanging in mid-air that leeches away the lifeforce of living beings.
+A mist-wreathed skeletal shadow hanging in mid-air that leeches away the
+lifeforce of living beings.
 %%%%
 shapeshifter
 
-자신의 몸을 마음대로 바꿀 수 있는 몬스터다. 이 몬스터가 본래의 모습으로 목격되는 일은 거의 없다.
+A disturbing creature with the power to change its form. It is very rarely
+observed alive in its natural state.
 %%%%
 shark
 
-A sharp-toothed predatory denizen of the waters, the shark evolved over millions of years into an almost perfect killing machine.
+A sharp-toothed predatory denizen of the waters, the shark evolved over
+millions of years into an almost perfect killing machine.
 %%%%
 shedu
 
-These boviform divine beings are always found in pairs, often protecting some sacred shrine, and can heal and even resurrect each other, doubling their effectiveness as guardians.
+These boviform divine beings are always found in pairs, often protecting some
+sacred shrine, and can heal and even resurrect each other, doubling their
+effectiveness as guardians.
 %%%%
 sheep
 
-A dim-witted, fluffy ovine, better known for its woolly hide than its ferociousness. Dungeon sheep are nevertheless far more murderous than their surface brethren. This one looks quite flammable.
+A dim-witted, fluffy ovine, better known for its woolly hide than its
+ferociousness. Dungeon sheep are nevertheless far more murderous than their
+surface brethren. This one looks quite flammable.
 %%%%
 shining eye
 
-A huge and strangely deformed floating eyeball, pulsating with flesh-twisting energy. Beauty is certainly nowhere to be found in this beholder.
+A huge and strangely deformed floating eyeball, pulsating with flesh-twisting
+energy. Beauty is certainly nowhere to be found in this beholder.
 %%%%
 silent spectre
 
-The bane of wizards, these terrible spirits bring an unearthly silence to the area around them, making it impossible to recite the magical incantations involved with casting spells or reading scrolls.
+The bane of wizards, these terrible spirits bring an unearthly silence to the
+area around them, making it impossible to recite the magical incantations
+involved with casting spells or reading scrolls.
 %%%%
 silver star
 
@@ -1742,40 +2283,50 @@ silver star
 %%%%
 silver statue
 
-A beautiful statue of an unknown malignant creature, glistening with a
-silvery hue. Its eyes glow with an otherworldly radiance.
+A beautiful statue of an unknown malignant creature, glistening with a silvery
+hue. Its eyes glow with an otherworldly radiance.
 
 This statue is very brittle; it will disintegrate at once.
 %%%%
 siren
 
-어린 여성의 모습을 하고 있으며, 다리 대신 물고기 꼬리가 달려 있다. 세이렌들은, 자신의 노래를 듣는 자들에게 강력한 마법을 시전할 수 있기도 하다.
+A young woman with a fish tail in place of legs. Sirens are capable of casting
+a powerful spell over their audience.
 %%%%
 sixfirhy
 
-A small vile creature that moves in bursts, stopping then darting with lightning speed. It seems to throw sparks all around.
+A small vile creature that moves in bursts, stopping then darting with
+lightning speed. It seems to throw sparks all around.
 
-It can heal from electrical damage, although being hit by more than it can handle will have rather violent results.
+It can heal from electrical damage, although being hit by more than it can
+handle will have rather violent results.
 %%%%
 skeletal bat
 
-죽은 박쥐들처럼 가만히 있지 못하고 살아 움직이는 해골 박쥐다.
+A bat skeleton without the decency to lie unmoving like dead bats are supposed
+to.
 %%%%
 skeletal warrior
 
-사악하고 중무장된 인간형 해골이다.  불경스런 힘에 의해 움직이고 있다.
+The vicious and heavily armed skeleton of a humanoid creature, animated by
+unholy power.
 %%%%
 sky beast
 
-A strange aerial creature formed of clouds and tortured flesh that sparkles with electricity and, every so often, slips entirely from view.
+A strange aerial creature formed of clouds and tortured flesh that sparkles
+with electricity and, every so often, slips entirely from view.
 %%%%
 slave
 
-A once proud human who has been magically enslaved, and is now a timid, simpering creature, ready to perform any deed at its master's command. However, its magical enslavement lasts only as long as its master does, and it would surely appreciate being freed.
+A once proud human who has been magically enslaved, and is now a timid,
+simpering creature, ready to perform any deed at its master's command. However,
+its magical enslavement lasts only as long as its master does, and it would
+surely appreciate being freed.
 %%%%
 slime creature
 
-점액질의 슬라임이다. 지면을 미끄러지며 가고 있다. 가끔 주변의 다른 슬라임과 합쳐가면서....
+An icky glob of slime, which slithers along the ground, occasionally merging
+with other nearby globs...
 %%%%
 small abomination
 
@@ -1795,19 +2346,26 @@ small zombie
 %%%%
 smoke demon
 
-An infernal demon that manifests itself as a writhing cloud of smoke. Having considerable pyrokinetic powers, it can very effectively attack its enemies from afar.
+An infernal demon that manifests itself as a writhing cloud of smoke. Having
+considerable pyrokinetic powers, it can very effectively attack its enemies
+from afar.
 %%%%
 snapping turtle
 
-A belligerent testudine with an armoured carapace. Its neck is surprisingly extensible and can reach out and bite from afar. When threatened, it will retreat inside its shell.
+A belligerent testudine with an armoured carapace. Its neck is surprisingly
+extensible and can reach out and bite from afar. When threatened, it will
+retreat inside its shell.
 %%%%
 soldier ant
 
-A tough ant with a disproportionately large head with strong mandibles and a vicious sting capable of injecting a painful venom. It is a soldier, and thus tasked with protecting the colony from invaders.
+A tough ant with a disproportionately large head with strong mandibles and a
+vicious sting capable of injecting a painful venom. It is a soldier, and thus
+tasked with protecting the colony from invaders.
 %%%%
 soul eater
 
-This demon looks like a malignantly shifting shadow gliding through the air. It radiates an intense aura of negative force.
+This demon looks like a malignantly shifting shadow gliding through the air. It
+radiates an intense aura of negative force.
 %%%%
 spatial vortex
 
@@ -1819,27 +2377,34 @@ spectral thing
 %%%%
 sphinx
 
-A large creature with a woman's head, a lion's body and the wings of a huge bird, able to cloud the minds of men and wield fell magics.
+A large creature with a woman's head, a lion's body and the wings of a huge
+bird, able to cloud the minds of men and wield fell magics.
 %%%%
 spider
 
-An ordinary orb-weaving spider with a distinctive white cross on its back. While not as grotesquely huge as other arachnids to be found in this environment, it is still as big as a small cat.
+An ordinary orb-weaving spider with a distinctive white cross on its back.
+While not as grotesquely huge as other arachnids to be found in this
+environment, it is still as big as a small cat.
 %%%%
 spiny frog
 
-These frogs are the size of a wolf, and are covered in small spines and spurs, dripping with venom. Toad licking anyone?
+These frogs are the size of a wolf, and are covered in small spines and spurs,
+dripping with venom. Toad licking anyone?
 %%%%
 spiny worm
 
-크고 검은색의 벌레다. 많은 마디가 있는 몸은 가시가 솟은 키틴질의  외골격으로 싸여있다.  날카로운 이빨이 있는 입으로부터 산성의 독이 떨어지고 있다.
+A great black worm, its many-segmented body covered in spiky plates of
+chitinous armour. Acidic venom drips from its toothy maw.
 %%%%
 spirit
 
-The soul of a holy creature, reft from its body. It is a slow and timid creature, but as something divine it is sure to be under celestial protection.
+The soul of a holy creature, reft from its body. It is a slow and timid
+creature, but as something divine it is sure to be under celestial protection.
 %%%%
 spriggan
 
-작은 인간형 생물로, 크기만 제외하면 인간이나 엘프를 닮았다. 이들은 매우 재빠르게 움직이며, 교활한 장난을 치는 것을 즐긴다.
+A small humanoid, resembling a human or elf except for the size. They move at a
+great speed, and love playing dirty tricks on people.
 %%%%
 spriggan air mage
 
@@ -1849,7 +2414,8 @@ spriggan assassin
 
 A deft and surreptitious spriggan that stabs in secret.
 
-These masters of stealth have mastered the art of delivering a quick blade right under your fifth rib as well.
+These masters of stealth have mastered the art of delivering a quick blade
+right under your fifth rib as well.
 %%%%
 spriggan baker
 
@@ -1861,36 +2427,45 @@ A relatively mighty spriggan that plunges recklessly into combat.
 %%%%
 spriggan defender
 
-An elite, well-equipped spriggan warrior, renowned for its prowess with advanced weaponry and unbelievable agility.
+An elite, well-equipped spriggan warrior, renowned for its prowess with
+advanced weaponry and unbelievable agility.
 %%%%
 spriggan druid
 
-A spriggan whose connection with the birds and the beasts is exceptionally strong. Revelling in nature, these protectors of forests are the doom of anyone who so much as snaps a twig.
+A spriggan whose connection with the birds and the beasts is exceptionally
+strong. Revelling in nature, these protectors of forests are the doom of anyone
+who so much as snaps a twig.
 %%%%
 spriggan rider
 
-Mounted on giant fireflies, these riders make sure no one who dares to
-intrude on the spriggan forests and cairns will be able to just walk away.
+Mounted on giant fireflies, these riders make sure no one who dares to intrude
+on the spriggan forests and cairns will be able to just walk away.
 %%%%
-spriggan warper
+statue
 
-혼란해진 일반 세계의 지리를 원래대로 돌리는 이 몇몇 스프리건들은, 공간을 프레첼처럼 꼬는 것을 즐긴다.
+At first glance, this piece of sculpted granite appears inert. The red glow
+from its eyes, however, suggests it is no mere stone. Although it is rooted to
+its base, you are certain that it can still move parts of itself.
 %%%%
 steam dragon
 
-A relatively small grey dragon, with a resilient-looking scaly hide and steam pouring from its mouth.
+A relatively small grey dragon, with a resilient-looking scaly hide and steam
+pouring from its mouth.
 %%%%
 stone giant
 
-A gigantic humanoid with grey skin almost as hard as rock. It carries several boulders, and is perfectly capable of flinging them a great distance.
+A gigantic humanoid with grey skin almost as hard as rock. It carries several
+boulders, and is perfectly capable of flinging them a great distance.
 %%%%
 stone golem
 
-A huge magically-animated statue made of incredibly hard basalt.
+A huge, magically animated statue made of incredibly hard basalt.
 %%%%
 storm dragon
 
-A huge and very powerful dragon, with hide of thick matte scales, almost like blue rubber, and enormous scaly wings, along which sparks are continually crackling.
+A huge and very powerful dragon, with hide of thick matte scales, almost like
+blue rubber, and enormous scaly wings, along which sparks are continually
+crackling.
 %%%%
 sun demon
 
@@ -1898,11 +2473,18 @@ sun demon
 %%%%
 swamp dragon
 
-A large slimy dragon, its gnarly hide covered in swamp muck. Noxious gasses dribble from its snout.
+A large slimy dragon, its gnarly hide covered in swamp muck. Noxious gasses
+dribble from its snout.
 %%%%
 swamp drake
 
-작고 끈적거리는 용이다. 늪의 진흙으로 덮여있다.
+A small and slimy dragon, covered in swamp muck.
+
+{{
+    if you.can_smell() then
+        return "It smells terrible."
+    end
+}}
 %%%%%
 swamp worm
 
@@ -1910,35 +2492,47 @@ swamp worm
 %%%%
 tarantella
 
-작지만 대단히 공포스러운 거미이다. 이들이 지닌 독은, 어떠한 내성을 지닌 적이라도, 광란의 춤을 추도록 유도한다.
+A small but greatly-feared spider whose venom causes even resistant victims to
+break into a frenzied dance.
 %%%%
 tentacle
 
-크라켄의 강력한 촉수이다. 촉수를 공격함으로써, 크라켄의 본체에도 피해를 줄 수있다.
+This mighty tentacle is a part of a kraken. Any damage dealt to it hurts the
+whole creature.
 %%%%
 tentacle segment
 
-크라켄의 강력한 촉수의 한 부분이다. 촉수를 공격함으로써, 크라켄의 본체에도 피해를 줄 수있다.
+Part of the mighty tentacle of a kraken. Any damage dealt to it hurts the whole
+creature.
 %%%%
 tentacled monstrosity
 
 촉수의 집합체다. 악취나는 점액질로 덮여있다.
 %%%%
+terrified wizard
+
+This guy has been caught by magic-haters, and is going to be sacrificed on the
+altar of Trog.
+%%%%
 titan
 
-This huge, bolt-hurling, lightning-limned humanoid is unusually large and powerful, even among giants.
+This huge, bolt-hurling, lightning-limned humanoid is unusually large and
+powerful, even among giants.
 %%%%
 toenail golem
 
-움직이게 된 거대한 상이으로, 오로지 손톱깎이로 자른 발톱만으로 이루어져 있다. 상당히 시간이 남아도는 사람이 만든 것 같다.
+A huge animated statue made entirely from toenail clippings. Some people just
+have too much time on their hands.
 %%%%
 toadstool
 
-짧게 생기고 지는 균류로, 부패하는 환경에서 보통 찾아볼 수 있다.
+A short-lived species of fungus typically found on or around decaying organic
+matter.
 %%%%
 tormentor
 
-A malign devil covered in all manner of claws, spines, and cruel hooks. It is able to inflict torturous agony on those foolish enough to gaze upon it.
+A malign devil covered in all manner of claws, spines, and cruel hooks. It is
+able to inflict torturous agony on those foolish enough to gaze upon it.
 %%%%
 training dummy
 
@@ -1946,11 +2540,14 @@ A mannequin used for battle practice.
 %%%%
 trapdoor spider
 
-A fast-moving arachnid that both surprises its prey and evades its enemies by concealing itself in crannies in the dungeon floor.
+A fast-moving arachnid that both surprises its prey and evades its enemies by
+concealing itself in crannies in the dungeon floor.
 %%%%
 troll
 
-The common troll is a huge and physically powerful humanoid creature. Short on intelligence but long on brawn, its thick knobbly hide heals rapidly from most wounds.
+The common troll is a huge and physically powerful humanoid creature. Short on
+intelligence but long on brawn, its thick knobbly hide heals rapidly from most
+wounds.
 %%%%
 twister
 
@@ -1958,7 +2555,8 @@ A whirling vortex of turbulent air.
 %%%%
 two-headed ogre
 
-머리가 둘 달린 거대한 오거다. 큰 양쪽 손 모두에 무기를 쥘 수 있다. 
+A huge ogre with two heads on top of a bloated ogre body. It is capable of
+holding a weapon in each giant hand.
 %%%%
 ufetubus
 
@@ -1966,23 +2564,30 @@ ufetubus
 %%%%
 ugly thing
 
-추악한 존재다. 우웩. 소문에 따르면, 이 흉물스러운 변형괴물은 몇몇 마법사들의, 생물체 연성 실험의 부산물이라고도 한다.
+An ugly thing. According to legend, this mutated creature is the otherworldly
+spawn of a wizard's breeding experiment. Yuck.
 %%%%
 unborn deep dwarf
 
-A deep dwarf that has honed its empathy with the powers of earth and death at the cost of its natural life force, transcending mortality in a peculiar dwarven fashion.
+A deep dwarf that has honed its empathy with the powers of earth and death at
+the cost of its natural life force, transcending mortality in a peculiar
+dwarven fashion.
 %%%%
 unseen horror
 
-A creature rarely seen by anyone, and those few who have seen one would rather that they hadn't.
+A creature rarely seen by anyone, and those few who have seen one would rather
+that they hadn't.
 %%%%
 vampire
 
-A human cursed with vampirism, drifting in a state between life and undeath, perpetually hungry for the blood of the living. It has power over beasts and the minds of lesser men, and can appear in the form of a bat.
+A human cursed with vampirism, drifting in a state between life and undeath,
+perpetually hungry for the blood of the living. It has power over beasts and
+the minds of lesser men, and can appear in the form of a bat.
 %%%%
 vampire bat
 
-A large black bat with vicious fangs that feeds on blood. This is the preferred form for vampires in disguise.
+A large black bat with vicious fangs that feeds on blood. This is the preferred
+form for vampires in disguise.
 %%%%
 vampire knight
 
@@ -1990,15 +2595,21 @@ A powerful vampire noble who complements its combat prowess with dark magic.
 %%%%
 vampire mage
 
-A sorcerer who, by accident or design, has been afflicted with the curse of the vampire. Regardless, through undeath, this wizard has finally mastered the art of dark magic.
+A sorcerer who, by accident or design, has been afflicted with the curse of the
+vampire. Regardless, through undeath, this wizard has finally mastered the art
+of dark magic.
 %%%%
 vampire mosquito
 
-A mosquito that has fed upon tainted blood and been transformed into a revolting and pestilent undead insect, seeking to drain its victims to the last drop.
+A mosquito that has fed upon tainted blood and been transformed into a
+revolting and pestilent undead insect, seeking to drain its victims to the last
+drop.
 %%%%
 vapour
 
-A cloud of weird vapour, only visible to those with supernaturally enhanced eyesight. As it floats aimlessly through the dungeon, it builds up an electric charge, which it will occasionally discharge in your direction.
+A cloud of weird vapour, only visible to those with supernaturally enhanced
+eyesight. As it floats aimlessly through the dungeon, it builds up an electric
+charge, which it will occasionally discharge in your direction.
 %%%%
 vault guard
 
@@ -2006,27 +2617,34 @@ vault guard
 %%%%
 very ugly thing
 
-A very ugly thing. According to legend, this hideously mutated creature is the otherworldly spawn of a wizard's breeding experiment. Double yuck!
+A very ugly thing. According to legend, this hideously mutated creature is the
+otherworldly spawn of a wizard's breeding experiment. Double yuck!
 %%%%
 wandering mushroom
 
-A large, fleshy mushroom that wanders slowly around the dungeon. It is both innately curious and incredibly shy, pursuing the objects of its curiosity only when out of sight. Noxious spores drift around its cap.
+A large, fleshy mushroom that wanders slowly around the dungeon. It is both
+innately curious and incredibly shy, pursuing the objects of its curiosity only
+when out of sight. Noxious spores drift around its cap.
 %%%%
 war dog
 
-A huge and vicious dog, trained to kill. Its neck is protected by a massive spiked collar.
+A huge and vicious dog, trained to kill. Its neck is protected by a massive
+spiked collar.
 %%%%
 warg
 
-A particularly large and evil-looking wolf, usually found in the company of orcs.
+A particularly large and evil-looking wolf, usually found in the company of
+orcs.
 %%%%
 water elemental
 
-물 정령계로부터 소환된 정령이로, 온 몸이 물로 이루어져 있다.
+A spirit drawn from the elemental plane of water. It exists on this world as
+part of a body of water.
 %%%%
 water moccasin
 
-독을 가진 커다란 갈색 뱀이다. 물가 근처에서 살며, 물 위를 능숙히 헤엄친다.
+A largish venomous brown snake. It usually lives near water, and is an able
+swimmer.
 %%%%
 white draconian
 
@@ -2038,7 +2656,8 @@ white imp
 %%%%
 wight
 
-An ancient warrior, kept in a state of perpetual undeath by its desire to die with honour in battle.
+An ancient warrior, kept in a state of perpetual undeath by its desire to die
+with honour in battle.
 %%%%
 wizard
 
@@ -2050,7 +2669,8 @@ A strong wild canine, with sharp teeth and a healthy appetite.
 %%%%
 wolf spider
 
-A hairy fast-moving hunting spider with vicious mandibles, roaming the dungeon in search of prey, which it kills with its deadly venom.
+A hairy fast-moving hunting spider with vicious mandibles, roaming the dungeon
+in search of prey, which it kills with its deadly venom.
 %%%%
 wood golem
 
@@ -2062,23 +2682,30 @@ A giant annelid, glistening with slime, with unusually large teeth.
 %%%%
 wraith
 
-This undead spirit appears as a cloud of black mist surrounding an insubstantial skeletal form. Its eyes burn bright with unholy malevolence and hunger for life essence, on which it feeds.
+This undead spirit appears as a cloud of black mist surrounding an
+insubstantial skeletal form. Its eyes burn bright with unholy malevolence and
+hunger for life essence, on which it feeds.
 %%%%
 wyvern
 
-날카로운 돌기가 달린 꼬리가 있는, 용을 닮은 몬스터다.  비록 진짜 용보다 작고, 위압감도 뒤떨어지지만,  무시할 수 없는 적이다. 
+A dragon-like creature with a long, sharply pointed tail. Although smaller and
+less formidable than true dragons, wyverns are nonetheless a foe to be reckoned
+with.
 %%%%
 yak
 
-평범한 던젼 야크다. 복실복실한 털로 덮여 있고, 한 쌍의 험악한 뿔이 달려 있다.
+The common dungeon yak, covered in shaggy yak hair and bearing a nasty pair of
+yak horns.
 %%%%
 yaktaur
 
-A hybrid with the torso of a robust man atop the body of a yak. Although they excel in ranged combat, they are also formidable foes in close quarters.
+A hybrid with the torso of a robust man atop the body of a yak. Although they
+excel in ranged combat, they are also formidable foes in close quarters.
 %%%%
 yaktaur captain
 
-An exceptionally strong and brutish yaktaur, it is able to order its weaker brethren around to do its bidding.
+An exceptionally strong and brutish yaktaur, it is able to order its weaker
+brethren around to do its bidding.
 %%%%
 yellow draconian
 
@@ -2086,94 +2713,451 @@ yellow draconian
 %%%%
 yellow wasp
 
-A giant wasp covered with thick plates of yellow chitinous armour. Its deadly venom can render most beings unable to move.
+A giant wasp covered with thick plates of yellow chitinous armour. Its deadly
+venom can render most beings unable to move.
 %%%%
 ynoxinul
 
-A winged demon covered in shiny metallic scales. It has a legion of imp minions under its command.
+A winged demon covered in shiny metallic scales. It has a legion of imp minions
+under its command.
+%%%%
+# Specials
+test spawner
+
+(If you see this outside wizmode or the arena, this is a bug.)
+
+Whatever it is, it is capable of spawning countless monsters by casting Shadow
+Creatures, and is virtually undestructible itself.
+
+To destroy it, lower the central elevator pillar, then pump rockets into the
+hole in its exposed brain when the pillar rises to an appropriate height. You
+can add another rocket while jumping down.
+
+Oh wait, wrong game.
+%%%%
+sensed monster
+
+Thanks to your antennae, you know there is some creature there, although you
+know nothing about its identity.
+%%%%
+trivial sensed monster
+
+By the power of Ashenzari, you know there is some creature there, and that it
+shouldn't give you the slightest concern.
+%%%%
+easy sensed monster
+
+By the power of Ashenzari, you know there is some creature there, and that you
+should be able to defeat it without much risk.
+%%%%
+tough sensed monster
+
+By the power of Ashenzari, you know there is some creature there, and that it
+is somewhat dangerous.
+%%%%
+nasty sensed monster
+
+By the power of Ashenzari, you know there is some creature there, and that you
+should be afraid. Very afraid.
+%%%%
+friendly sensed monster
+
+By the power of Ashenzari, you know there is some creature there, and that it
+is one of your allies.
 %%%%
 # Vault-defined monsters
-air elemental statue
+Cloud Mage
 
-A delicate statue of a tengu gliding through the air. It looks quite insubstantial.
+This strange wizard has attained mastery over clouds, and his mystic gestures
+are as deft as they are foreboding.
+%%%%
+Hellbinder
+
+A mighty spellcaster, wreathed in arcane energies, and muttering the most
+profane incantations you might ever have heard.
+%%%%
+Statue of Wucad Mu
+
+This statue, made of a fine glassy orange crystal, depicts a mystic known as
+Wucad Mu, who mastered the matters of the mind. Beware of the statue's powers,
+as you have no chance in mental combat against it.
+
+This statue is very brittle; it will disintegrate at once.
+%%%%
+air elementalist statue
+
+A delicate statue of a tengu gliding through the air. It looks quite
+insubstantial.
 %%%%
 ancient champion
 
-An unfathomably ancient skeleton. It has hundreds of golden sigils etched onto its bones, and pulses with terrible, unholy power.
+An unfathomably ancient skeleton. It has hundreds of golden sigils etched onto
+its bones, and pulses with terrible, unholy power.
 %%%%
 antique lich
 
 수많은 시간 동안 살아오면서 수련을 거듭해 온 리치이다.
 %%%%
+apple tree
+
+This tree bears fruit that can feed a hungry tiger. And that's not an error —
+you will serve as the middle step in the food chain.
+%%%%
+apricot tree
+
+<apple tree>
+%%%%
+archer statue
+
+The likeness of a beatiful elven archer, sculpted in finest marble. It holds a
+bow aloft, and appears to be magically animated, letting it use the bow to
+riddle you with arrows.
+
+Being a statue, it doesn't appear to have a means of salvaging shot arrows or
+fletching new ones, but you guess the statue's creators gave it enough of a
+supply to kill you before someone comes to replenish the quiver.
+%%%%
+bittermelon vine
+
+An ordinary looking plant, growing some barely edible fruits. They provide
+nutrition, but certainly not good taste.
+%%%%
+black sheep
+
+On first glance, this sheep has merely a different pigmentation, but you are
+not so easily swayed by looks. With your luck, there's a sheep in a wolf's hide
+hiding inside, _then_ covered by another layer of sheep skin to better deceive
+you.
+
+Or, maybe, it's just a sheep after all.
+%%%%
+charred statue
+
+It looks like this statue has been imbued with fire magic, letting it use
+fire-based conjurations against you. Fortunately, it looks pretty ineptly made,
+and its charring shows that it has trouble controlling its magic as well.
+%%%%
 Cigotuvi's Monster
 
-무시무시하고 거대한 괴물들의 각 신체부위를 이어 붙인 듯한 형상을 하고 있는, 끔찍한 형태의 석상이다.
+This terrifying creation looks to have been constructed from the body parts of
+every monstrous creature imaginable.
 %%%%
-earth elemental statue
+citrus tree
+
+<apple tree>
+%%%%
+chilling statue
+
+This grotesque statue, carved from brilliant blue ice, gives a fell chill to
+its surroundings. It's as though it's actively absorbing the heat from its
+environment.
+%%%%
+# In the first umpteen pages of googling, the only use of "Iskenderun" for a
+# living being is the first Turkish Van cat brought to Britain. With
+# Crawl's felids being sentient, it'd be hard to not make a connection with
+# the wizard.
+conjurer statue
+
+This statue seems to harness the mightiest pure conjurations ever devised by
+Iskenderun. It is not made in her likeness, as legends describe her as a female
+felid, but, if I were you, I'd pay more heed to the orbs of magic flying your
+way than the statue's appearance.
+%%%%
+crystal guardian
+
+This crystal golem is so ensorcelled that it is immune to nearly any magic
+itself, and it can also shoot powerful beams of fire and cold at any
+tresspassers.
+%%%%
+decayed bog body
+
+An undead figure preserved by the brackish waters of a bog. This one seems to
+have decayed quite a bit, and looks weak.
+%%%%
+deformed humanoid
+
+This poor creature looks hideously deformed.
+%%%%
+demonic plant
+
+Just as demons are shaped in a mockery of living beings, this... thing... here
+is a mockery of a plant. The colours don't match, and normal plants don't have
+mysterious appendages and tentacles writhing around. Fortunately, this one
+appears to be harmless, but with demons, you can never be sure.
+%%%%
+earth elementalist statue
 
 곡괭이를 들고 있는 평범한 드워프의 상이다. 무척 무거워 보인다.
 %%%%
-fire elemental statue
+fire elementalist statue
 
-An ornately worked statue of an orc holding a torch aloft, hewn from black basalt. The air around it seems to shimmer.
+An ornately worked statue of an orc holding a torch aloft, hewn from black
+basalt. The air around it seems to shimmer.
 %%%%
 firespitter statue
 
-A statue of a large humanoid head, roughly cut from greyish gabbro. Its mouth is blackened with scorch-marks, and there is a faint ember glow in its empty eyes.
+A statue of a large humanoid head, roughly cut from greyish gabbro. Its mouth
+is blackened with scorch-marks, and there is a faint ember glow in its empty
+eyes.
 %%%%
 flesh golem
 
 이리저리 기형화된 살점들의 덩어리가 뭉쳐, 움직이게 된 골렘이다.
 %%%%
+frost-covered statue
+
+An ineptly made statue of a mage. Its magic keeps leaking, letting you know
+what kind of spells you can expect: cold-based ones.
+%%%%
 glowing angel
 
-'진'의 성스러운 비서로, 찬란한 흰색 빛으로 빛나는 오오라를 내는, 거대한 날개를 지니고 있다. 이 천사들은 자신들의 선행을 방해하는 자들을 용서하지 않는다.
+A divine agent of Zin, it is a towering winged figure with an aura of brilliant
+white light. This angel's face, though, is marked by a scowl, as if its zeal
+against any real or perceived vice overshadows its goodness.
+%%%%
+gourd plant
+
+This sturdy vine bears nutritious but nearly tasteless fruits.
+%%%%
+grape vine
+
+Without a gardener to provide it with something to prop itself over, and not
+being lucky enough to have its seed fall near something it can climb, this
+grape vine is still remarkably hard to step over.
 %%%%
 grey elf
 
-그레이 엘프들은 보통 하이 엘프들의 변종으로 분류되며, 하이 엘프와 구분되는 방법은, 하이 엘프들보다는 화려함과 귀품이 좀 떨어져 보인다는 것이다.
+Once considered a unique species of its own, grey elves are now more properly
+classified as a sub-species of high elf. Little exists to distinguish them from
+their high elf cousins, aside from their supposed glamour (which is probably
+more myth than fact).
 %%%%
 hill dwarf
 
-Hill dwarves are a subrace of dwarves who, as their name implies, live on hills. Once able adventurers, the hill dwarves no longer have any interest in dungeon delving. This one was captured specially for this exhibit.
+Hill dwarves are a subrace of dwarves who, as their name implies, live on
+hills. Once able adventurers, the hill dwarves no longer have any interest in
+dungeon delving. This one was captured specially for this exhibit.
 %%%%
 human monk
 
-수도승 모양으로 만들려고 한 것 같지만, 지극히 어설프게 만들어졌다. 아무리 보아도, 별 생각 없이 만든 것 이상도 이하도 아니다.
+It seems a flimsy representation of a monk; nothing more than a half-formed
+memory.
+%%%%
+hungry kobold
+
+This kobold seems to be angry about having his meal interrupted.
 %%%%
 iron troll monk
 
-수도승 모양으로 만들려고 한 것 같지만, 지극히 어설프게 만들어졌다. 아무리 보아도, 별 생각 없이 만든 것 이상도 이하도 아니다.
+It seems a flimsy representation of a monk; nothing more than a half-formed
+memory.
+%%%%
+lasher statue
+
+This statue depicts a savage-looking slave driver with a vicious barbed whip.
+It appears to be capable of moving the whip arm. Prepare for a flogging...
+%%%%
+lich demonologist
+
+<lich>
 %%%%
 malarious mermaid
 
-다리가 있어야 할 자리에 물고기 꼬리가 달려있고, 상반신은 어린 여성의 모습을 하고 있다. 심한 고통에 잠겨 있는듯이 보이지만, 여전히 매혹의 노래를 부를 수 있을 듯이 보인다.
+A young woman with a fish tail in place of legs. She looks quite sick, but
+still capable of bespelling her audience.
 %%%%
 mountain dwarf
 
-Mountain dwarves are surface-dwelling relatives of the deep dwarves. After years of war with the taller but otherwise quite similar hill orcs, the mountain dwarves were conquered and driven from these lands. This one has been imported from foreign shores.
+Mountain dwarves are surface-dwelling relatives of the deep dwarves. After
+years of war with the taller but otherwise quite similar hill orcs, the
+mountain dwarves were conquered and driven from these lands. This one has been
+imported from foreign shores.
+%%%%
+mummy warrior
+
+<guardian mummy>
+%%%%
+musa plant
+
+This bushy plant can grow bananas. Or are they banananas? Or bananananas? Some
+yellow curved thingies, at least.
+%%%%
+# Sprint only, too unhinged for regular games...
+oklob plant annihilator
+
+It would seem inconceivable that a mere plant could attain sentience and the
+use of magic, but that's what you see here. What sorcery is it?
+%%%%
+oklob plant conjurer
+
+<oklob plant annihilator>
+%%%%
+oklob plant demonologist
+
+<oklob plant annihilator>
+%%%%
+oklob plant meteorologist
+
+<oklob plant annihilator>
+%%%%
+oklob plant shifter
+
+<oklob plant annihilator>
+%%%%
+oklob plant summoner
+
+<oklob plant annihilator>
+%%%%
+oklob sapling priest
+
+This immature oklob plant seems to be mumbling some orisons... er, what?!?
+%%%%
+oklob sapling wizard
+
+<oklob plant annihilator>
+%%%%
+orc demonologist
+
+<orc sorcerer>
+%%%%
+petrified plant
+
+Something has turned these ordinary plants into stone. Better not tarry here.
+If whatever petrified these plants gets you as well, we'll be stuck with a
+statue as ugly as you standing here for ages.
 %%%%
 pristine statue
 
-An immaculately sculpted porphyry statue of an archer poised to release an arrow, with a full quiver at the hip. The individually sculpted arrows look almost as if they could be removed one by one and used in a real bow.
+An immaculately sculpted porphyry statue of an archer poised to release an
+arrow, with a full quiver at the hip. The individually sculpted arrows look
+almost as if they could be removed one by one and used in a real bow.
+%%%%
+pyrus tree
+
+<apple tree>
 %%%%
 rock troll monk
 
-수도승 모양으로 만들려고 한 것 같지만, 지극히 어설프게 만들어졌다. 아무리 보아도, 별 생각 없이 만든 것 이상도 이하도 아니다.
+It seems a flimsy representation of a monk; nothing more than a half-formed
+memory.
+%%%%
+sacrificial human
+
+From the look of things, she was supposed to be sacrificed in some
+demon-summoning ritual.
 %%%%
 sickly siren
 
-다리가 있어야 할 자리에 물고기 꼬리가 달려있고, 상반신은 어린 여성의 모습을 하고 있다. 심한 고통에 잠겨 있는듯이 보이지만, 여전히 매혹의 노래를 부를 수 있을 듯이 보인다.
+A young woman with a fish tail in place of legs. She looks quite sick, but
+still capable of bespelling her audience.
+%%%%
+skeletal archer
+
+Since when is having flesh a requirement to be a master archer? These skeletal
+fellows can turn you into a bloody hedgehog with ease. Meatlings like you are
+only good for a supply of sinew for bowstrings anyway.
+%%%%
+snail statue
+
+This idol to the god Cheibriados has the odd property of turning the ground in
+its presence into difficult-to-slog-through mud.
+%%%%
+soapberry tree
+
+<apple tree>
+%%%%
+spooky statue
+
+You sense a ghostly presence around this statue, and it's not the slightest bit
+friendly.
+%%%%
+spriggan necromancer
+
+Raising the dead, and then running behind them... these tricks start getting
+annoying.
+%%%%
+spriggan shepherd
+
+Being unable to digest meat, spriggans here need quite a lot of milk to
+maintain a healthy diet. This guy guards the animals from predators and vandals
+like you, brandishing a crooked cane that looks like a fine tool for teaching
+you some respect.
 %%%%
 strange machine
 
 번들거리는 은색의 기계다.
 %%%%
-water elemental statue
+strawberry plant
 
-A smooth, charming statue of a beautiful mermaid bathing in a fountain, sculpted from creamy, faintly pinkish travertine. It glistens softly in the light, as if sprinkled in actual water.
+The same radiation that made cockroaches and spiders the size of small dogs
+didn't spare this humble strawberry plant, either. Fortunately, even with its
+size, it appears to be harmless.
+%%%%
+water elementalist statue
+
+A smooth, charming statue of a beautiful mermaid bathing in a fountain,
+sculpted from creamy, faintly pinkish travertine. It glistens softly in the
+light, as if sprinkled in actual water.
+%%%%
+young halfling
+
+This lad has been caught by kobolds, and was meant to be roasted and eaten
+before you unceremoniously interrupted. Don't you have any manners? Didn't
+mommy tell you to not disrupt people from having a meal?
+%%%%
+young spriggan druid
+
+A junior member of the order of spriggans sworn to protect nature. While less
+dangerous than the elders, this one is perfectly capable of dealing with
+trespassers like you.
+
+{{
+    if you.god() == "Fedhas" then
+        return "Those foul druids care mostly for animals, instead of " ..
+               "taking proper care of plants as Fedhas commands.";
+    end
+}}
+%%%%
+vampire noble
+
+<vampire>
+%%%%
+vampire warrior
+
+This vampire, formidable in combat, uses magic only for self-boosts, preferring
+hand to hand combat to deal with pesky interlopers.
+%%%%
+vine covered stone golem
+
+While made of ordinary old weathered stone, covered with moss and vines, this
+golem still needs to be respected. It is still hard as stone, after all, and
+its weight spells massive damage if it connects a blow.
+%%%%
+warrior statue
+
+This statue depicts a gruff warrior, wielding a mean two-handed weapon. Since
+it appears to be capable of moving its arms, keeping your distance seems to be
+the only way to keep your vital organs undamaged.
+%%%%
+withered plant
+
+This plant lost the war against life-draining influences, and yet its physical
+form is intact. Its dead body stays here uneaten, as the small creatures that
+would naturally decompose it prefer to stay away. And it looks like this plant
+died many {{ if you.branch() == "Crypt" or you.branch() == "Tomb" then return
+"centuries"; else return "years"; end }} ago.
+%%%%
+wizard statue
+
+In this land of magic, it'd be foolish to assume that a statue of a wizard is
+always an inert piece of rock. This statue's hands and staff have very little
+dust compared to the base, suggesting it is capable of making magical gestures.
+The trap is too obvious, but dealing with it might not be.
 %%%%
 zot statue
 
-An utterly bizarre statue, hewn from a single piece of dark gabbro scintillating with tiny crystals. It is impossible to tell whether the statue is intended to represent some creature or personage, or is completely abstract. One thing is certain: it is profoundly disturbing.
+An utterly bizarre statue, hewn from a single piece of dark gabbro
+scintillating with tiny crystals. It is impossible to tell whether the statue
+is intended to represent some creature or personage, or is completely abstract.
+One thing is certain: it is profoundly disturbing.
 %%%%

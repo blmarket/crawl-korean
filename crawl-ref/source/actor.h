@@ -34,7 +34,9 @@ public:
         ASSERT(this);
         if (atype() == ACT_PLAYER)
         {
+#ifndef DEBUG_GLOBALS
             ASSERT(this == (actor*)&you); // there can be only one
+#endif
             return true;
         }
         return false;
@@ -50,8 +52,11 @@ public:
 
     virtual bool      alive() const = 0;
 
+    // Should return false for perma-summoned things.
     virtual bool is_summoned(int* duration = NULL,
                              int* summon_type = NULL) const = 0;
+
+    virtual bool is_perm_summoned() const = 0;
 
     // [ds] Low-level moveto() - moves the actor without updating relevant
     // grids, such as mgrd.
@@ -159,7 +164,7 @@ public:
 
     virtual bool fights_well_unarmed(int heavy_armour_penalty)
     {
-         return (true);
+         return true;
     }
     // Returns true if the actor has no way to attack (plants, statues).
     // (statues have only indirect attacks).
@@ -284,7 +289,7 @@ public:
     virtual int res_constrict() const = 0;
     virtual int res_magic() const = 0;
     virtual int check_res_magic(int power);
-    virtual bool no_tele(bool calc_unid = true, bool permit_id = true) = 0;
+    virtual bool no_tele(bool calc_unid = true, bool permit_id = true) const = 0;
 
     virtual flight_type flight_mode() const = 0;
     virtual bool is_levitating() const = 0;
@@ -304,7 +309,7 @@ public:
     virtual bool cannot_act() const = 0;
     virtual bool confused() const = 0;
     virtual bool caught() const = 0;
-    virtual bool asleep() const { return (false); }
+    virtual bool asleep() const { return false; }
 
     // check_haloed: include halo
     // self_halo: include own halo (actually if self_halo = false
@@ -349,6 +354,7 @@ public:
     }
 
     virtual bool wont_attack() const = 0;
+    virtual mon_attitude_type temp_attitude() const = 0;
     virtual int warding() const = 0;
 
     virtual bool has_spell(spell_type spell) const = 0;
@@ -361,31 +367,46 @@ public:
 
     CrawlHashTable props;
 
-    // Constriction stuff
-    unsigned short constricted_by;
-    unsigned short constricting[MAX_CONSTRICT];
+    // Constriction stuff:
+
+    // What is holding us?  Not necessarily a monster.
+    held_type held;
+    mid_t constricted_by;
     int escape_attempts;
-    int dur_been_constricted;
-    int dur_has_constricted[MAX_CONSTRICT];
 
-    // handles non-attack turn constrictions, does not need to be saved
-    bool has_constricted_this_turn;
-    void stop_constricting(int mindex, bool intentional = false);
-    void stop_constricting_all(bool intentional = false);
-    void stop_being_constricted();
+    // Map from mid to duration.
+    typedef std::map<mid_t, int> constricting_t;
+    // Freed and set to NULL when empty.
+    constricting_t *constricting;
 
+    void start_constricting(actor &whom, int duration = 0);
+
+    void stop_constricting(mid_t whom, bool intentional = false,
+                           bool quiet = false);
+    void stop_constricting_all(bool intentional = false, bool quiet = false);
+    void stop_being_constricted(bool quiet = false);
+
+    bool can_constrict(actor* defender);
     void clear_far_constrictions();
+    void accum_has_constricted();
+    void handle_constriction();
     bool is_constricted() const;
     bool is_constricting() const;
+    int num_constricting() const;
     virtual bool has_usable_tentacle() const = 0;
+    virtual int constriction_damage() const = 0;
+
 
 protected:
+    void clear_constricted();
+    void end_constriction(constricting_t::iterator i, bool intentional,
+                          bool quiet);
+
     // These are here for memory management reasons...
     los_glob los;
     los_glob los_no_trans;
 };
 
 bool actor_slime_wall_immune(const actor *actor);
-actor *mindex_to_actor(short mindex);
 
 #endif

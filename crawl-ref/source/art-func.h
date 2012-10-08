@@ -70,7 +70,7 @@ static void _ASMODEUS_melee_effect(item_def* weapon, actor* attacker,
 static bool _evoke_sceptre_of_asmodeus()
 {
     if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100), 3000))
-        return (false);
+        return false;
 
     const monster_type mon = random_choose_weighted(
                                    3, MONS_EFREET,
@@ -100,7 +100,7 @@ static bool _evoke_sceptre_of_asmodeus()
     else
         mpr("The air shimmers briefly.");
 
-    return (true);
+    return true;
 }
 
 
@@ -114,7 +114,7 @@ static bool _ASMODEUS_evoke(item_def *item, int* pract, bool* did_work,
         *pract    = 1;
     }
 
-    return (false);
+    return false;
 }
 
 ////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ static bool _DISPATER_evoke(item_def *item, int* pract, bool* did_work,
     if (your_spells(SPELL_HELLFIRE, power, false) == SPRET_ABORT)
     {
         *unevokable = true;
-        return (false);
+        return false;
     }
 
     mpr("You feel the staff feeding on your energy!");
@@ -197,7 +197,7 @@ static bool _DISPATER_evoke(item_def *item, int* pract, bool* did_work,
     make_hungry(100, false, true);
     *pract    = (coinflip() ? 2 : 1);
 
-    return (false);
+    return false;
 }
 
 ////////////////////////////////////////////////////
@@ -242,11 +242,11 @@ static bool _OLGREB_evoke(item_def *item, int* pract, bool* did_work,
     if (!enough_mp(4, false))
     {
         *unevokable = true;
-        return (true);
+        return true;
     }
 
     if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 600))
-        return (false);
+        return false;
 
     dec_mp(4);
     make_hungry(50, false, true);
@@ -260,7 +260,7 @@ static bool _OLGREB_evoke(item_def *item, int* pract, bool* did_work,
     if (x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 1000))
         your_spells(SPELL_VENOM_BOLT, power, false);
 
-    return (false);
+    return false;
 }
 
 static void _OLGREB_melee_effect(item_def* weapon, actor* attacker,
@@ -308,11 +308,10 @@ static void _SINGING_SWORD_equip(item_def *item, bool *show_msgs, bool unmeld)
     if (!*show_msgs)
         return;
 
-    if (!item_type_known(*item))
+    if (!item->props.exists("ss_welcome"))
     {
-        mprf(MSGCH_TALK, _("%s says, \"Hi!  I'm the Singing Sword!\""),
-             item->name(true, DESC_THE).c_str());
-        autoid_unrand(*item); // pluses too
+        mprf(MSGCH_TALK, _("The sword says, \"Hi! I'm the Singing Sword!\""));
+        item->props["ss_welcome"].get_bool() = true;
     }
     else
         mpr("The Singing Sword hums in delight!", MSGCH_TALK);
@@ -424,7 +423,7 @@ static void _TROG_unequip(item_def *item, bool *show_msgs)
 static void _TROG_melee_effect(item_def* weapon, actor* attacker,
                                actor* defender, bool mondied, int dam)
 {
-    if (coinflip())
+    if (coinflip() && !attacker->suppressed())
         attacker->go_berserk(false);
 }
 
@@ -463,12 +462,12 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
     }
 
     if (!x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 100, 2500))
-        return (false);
+        return false;
 
     if (one_chance_in(4))
     {
         _wucad_miscast(&you, random2(9), random2(70));
-        return (false);
+        return false;
     }
 
     mpr("Magical energy flows into your mind!");
@@ -479,7 +478,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
     *pract    = 1;
     *did_work = true;
 
-    return (false);
+    return false;
 }
 
 ///////////////////////////////////////////////////
@@ -623,7 +622,7 @@ static void _DEMON_AXE_world_reacts(item_def *item)
         monster *mon = monster_at(*di);
         if (mon && you.can_see(mon)
             && you.possible_beholder(mon)
-            && !mons_is_firewood(mon))
+            && !mons_class_flag(mon->type, M_NO_EXP_GAIN))
         {
             closest = mon;
             goto found;

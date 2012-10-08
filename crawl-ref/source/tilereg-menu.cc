@@ -303,7 +303,7 @@ void MenuRegion::clear()
 }
 
 void MenuRegion::set_entry(int idx, const std::string &str, int colour,
-                           const MenuEntry *me)
+                           const MenuEntry *me, bool mark_selected)
 {
     if (idx >= (int)m_entries.size())
     {
@@ -324,7 +324,7 @@ void MenuRegion::set_entry(int idx, const std::string &str, int colour,
     e.text += formatted_string::parse_string(str);
 
     e.heading  = (me->level == MEL_TITLE || me->level == MEL_SUBTITLE);
-    e.selected = me->selected();
+    e.selected = mark_selected ? me->selected() : false;
     e.key      = !me->hotkeys.empty() ? me->hotkeys[0] : 0;
     e.sx = e.sy = e.ex = e.ey = 0;
     e.tiles.clear();
@@ -361,8 +361,8 @@ int MenuRegion::maxpagesize() const
     // Non-inventory menus only have one column and need
     // *really* big screens to cover more than 52 lines.
     if (pagesize > 52)
-        return (52);
-    return (pagesize);
+        return 52;
+    return pagesize;
 }
 
 void MenuRegion::set_offset(int lines)

@@ -30,11 +30,9 @@
 #include "mon-speak.h"
 #include "mon-stuff.h"
 #include "mon-util.h"
-#include "options.h"
 #include "random.h"
 #include "religion.h"
 #include "spl-miscast.h"
-#include "spl-summoning.h"
 #include "spl-util.h"
 #include "state.h"
 #include "stuff.h"
@@ -274,10 +272,10 @@ bool ugly_thing_mutate(monster* ugly, bool proximity)
 
         ugly->uglything_mutate(mon_colour);
 
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // Inflict any enchantments the parent slime has on its offspring,
@@ -529,7 +527,7 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
     // Now kill the other monster
     monster_die(crawlie, KILL_DISMISSED, NON_MONSTER, true);
 
-    return (true);
+    return true;
 }
 
 
@@ -586,7 +584,7 @@ static bool _do_merge_slimes(monster* initial_slime, monster* merge_to)
     // Have to 'kill' the slime doing the merging.
     monster_die(initial_slime, KILL_DISMISSED, NON_MONSTER, true);
 
-    return (true);
+    return true;
 }
 
 // Slime creatures can split but not merge under these conditions.
@@ -615,7 +613,7 @@ static bool _disabled_merge(monster* thing)
 static bool _slime_merge(monster* thing)
 {
     if (!thing || _disabled_merge(thing) || _unoccupied_slime(thing))
-        return (false);
+        return false;
 
     int max_slime_merge = 5;
     int compass_idx[8] = {0, 1, 2, 3, 4, 5, 6, 7};
@@ -667,10 +665,10 @@ static bool _slime_merge(monster* thing)
     // We found a merge target and didn't find an open square that
     // would reduce distance to target, so we can actually merge.
     if (merge_target)
-        return (_do_merge_slimes(thing, merge_target));
+        return _do_merge_slimes(thing, merge_target);
 
     // No adjacent slime creatures we could merge with.
-    return (false);
+    return false;
 }
 
 static bool _crawlie_is_mergeable(monster *mons)
@@ -694,7 +692,7 @@ static bool _crawlie_is_mergeable(monster *mons)
 static bool _crawling_corpse_merge(monster *crawlie)
 {
     if (!crawlie || _disabled_merge(crawlie))
-        return (false);
+        return false;
 
     int compass_idx[8] = {0, 1, 2, 3, 4, 5, 6, 7};
     std::random_shuffle(compass_idx, compass_idx + 8);
@@ -713,10 +711,10 @@ static bool _crawling_corpse_merge(monster *crawlie)
     }
 
     if (merge_target)
-        return (_do_merge_crawlies(crawlie, merge_target));
+        return _do_merge_crawlies(crawlie, merge_target);
 
     // No adjacent crawlies.
-    return (false);
+    return false;
 }
 
 
@@ -778,7 +776,7 @@ static monster *_slime_split(monster* thing, bool force_split)
             // This can fail if placing a new monster fails.  That
             // probably means we have too many monsters on the level,
             // so just return in that case.
-            return (_do_split(thing, target));
+            return _do_split(thing, target);
         }
     }
 
@@ -794,13 +792,13 @@ static bool _slime_split_merge(monster* thing)
         || thing->is_shapeshifter()
         || thing->type != MONS_SLIME_CREATURE)
     {
-        return (false);
+        return false;
     }
 
     if (_slime_split(thing, false))
-        return (true);
+        return true;
 
-    return (_slime_merge(thing));
+    return _slime_merge(thing);
 }
 
 // Splits and polymorphs merged slime creatures.
@@ -821,7 +819,7 @@ bool slime_creature_mutate(monster* slime)
         }
     }
 
-    return (monster_polymorph(slime, RANDOM_MONSTER));
+    return monster_polymorph(slime, RANDOM_MONSTER);
 }
 
 // Returns true if you resist the siren's call.
@@ -883,7 +881,7 @@ static bool _siren_movement_effect(const monster* mons)
                         mprf(gettext("Something prevents you from swapping places "
                              "with %s."),
                              mon->name(DESC_THE).c_str());
-                        return (do_resist);
+                        return do_resist;
                     }
 
                     int swap_mon = mgrd(newpos);
@@ -905,7 +903,7 @@ static bool _siren_movement_effect(const monster* mons)
         }
     }
 
-    return (do_resist);
+    return do_resist;
 }
 
 static bool _silver_statue_effects(monster* mons)
@@ -919,7 +917,7 @@ static bool _silver_statue_effects(monster* mons)
         && crawl_state.game_is_zotdef())
     {
         if (!one_chance_in(3))
-            return (false);
+            return false;
         abjuration_duration = 1;
     }
 
@@ -935,9 +933,9 @@ static bool _silver_statue_effects(monster* mons)
                                              : DEMON_LESSER)),
                 SAME_ATTITUDE(mons), mons, abjuration_duration, 0,
                 foe->pos(), mons->foe));
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 static bool _orange_statue_effects(monster* mons)
@@ -954,7 +952,7 @@ static bool _orange_statue_effects(monster* mons)
             && crawl_state.game_is_zotdef())
         {
             if (foe->check_res_magic(120) > 0)
-                return (false);
+                return false;
             pow  /= 2;
             fail /= 2;
         }
@@ -973,10 +971,10 @@ static bool _orange_statue_effects(monster* mons)
         MiscastEffect(foe, mons->mindex(), SPTYP_DIVINATION,
                       pow, fail,
                       "an orange crystal statue");
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 static void _orc_battle_cry(monster* chief)
@@ -1168,7 +1166,7 @@ static void _cherub_hymn(monster* chief)
 static bool _make_monster_angry(const monster* mon, monster* targ)
 {
     if (mon->friendly() != targ->friendly())
-        return (false);
+        return false;
 
     // targ is guaranteed to have a foe (needs_berserk checks this).
     // Now targ needs to be closer to *its* foe than mon is (otherwise
@@ -1181,7 +1179,7 @@ static bool _make_monster_angry(const monster* mon, monster* targ)
     {
         const monster* vmons = &menv[targ->foe];
         if (!vmons->alive())
-            return (false);
+            return false;
         victim = vmons->pos();
     }
     else
@@ -1192,25 +1190,28 @@ static bool _make_monster_angry(const monster* mon, monster* targ)
 
     // If mon may be blocking targ from its victim, don't try.
     if (victim.distance_from(targ->pos()) > victim.distance_from(mon->pos()))
-        return (false);
+        return false;
 
     if (you.can_see(mon))
     {
+        const std::string targ_name = (targ->visible_to(&you))
+                                      ? targ->name(DESC_THE)
+                                      : "something";
         if (mon->type == MONS_QUEEN_BEE && targ->type == MONS_KILLER_BEE)
         {
             mprf(gettext("%s calls on %s to defend %s!"),
                 mon->name(DESC_THE).c_str(),
-                targ->name(DESC_THE).c_str(),
+                targ_name.c_str(),
                 mon->pronoun(PRONOUN_OBJECTIVE).c_str());
         }
         else
-            mprf(gettext("%s goads %s on!"), mon->name(DESC_THE).c_str(),
-                 targ->name(DESC_THE).c_str());
+            mprf(_("%s goads %s on!"), mon->name(DESC_THE).c_str(),
+                 targ_name.c_str());
     }
 
     targ->go_berserk(false);
 
-    return (true);
+    return true;
 }
 
 static bool _moth_incite_monsters(const monster* mon)
@@ -1233,7 +1234,7 @@ static bool _moth_incite_monsters(const monster* mon)
             continue;
 
         if (_make_monster_angry(mon, *mi) && !one_chance_in(3 * ++goaded))
-            return (true);
+            return true;
     }
 
     return goaded != 0;
@@ -1260,7 +1261,7 @@ static bool _queen_incite_worker(const monster* queen)
             continue;
 
         if (_make_monster_angry(queen, *mi) && !one_chance_in(3 * ++goaded))
-            return (true);
+            return true;
     }
 
     return goaded != 0;
@@ -1600,8 +1601,8 @@ struct target_monster
     {
         monster* temp = monster_at(pos);
         if (!temp || temp->mindex() != target_mindex)
-            return (false);
-        return (true);
+            return false;
+        return true;
 
     }
 };
@@ -1615,9 +1616,9 @@ struct multi_target
         for (unsigned i = 0; i < targets->size(); ++i)
         {
             if (pos == targets->at(i))
-                return (true);
+                return true;
         }
-        return (false);
+        return false;
     }
 
 
@@ -1678,7 +1679,7 @@ static bool _tentacle_pathfind(monster* tentacle,
     }
 
 
-    return (path_found);
+    return path_found;
 }
 
 static bool _try_tentacle_connect(const coord_def & new_pos,
@@ -1696,7 +1697,7 @@ static bool _try_tentacle_connect(const coord_def & new_pos,
             menv[tentacle_idx].props["inwards"].get_int() = -1;
         else
             menv[tentacle_idx].props["inwards"].get_int() = base_idx;
-        return (true);
+        return true;
     }
 
     int start_level = 0;
@@ -1729,11 +1730,11 @@ static bool _try_tentacle_connect(const coord_def & new_pos,
                  visited, candidates);
 
     if (candidates.empty())
-        return (false);
+        return false;
 
     _establish_connection(tentacle_idx, base_idx,candidates[0], connect_type);
 
-    return (true);
+    return true;
 }
 
 static void _collect_tentacles(int headnum,
@@ -1784,7 +1785,7 @@ struct complicated_sight_check
 
 static bool _basic_sight_check(monster* mons, actor * test)
 {
-    return (mons->can_see(test));
+    return mons->can_see(test);
 }
 
 template<typename T>
@@ -2252,7 +2253,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
          && mons->type != MONS_SLIME_CREATURE
          && !_crawlie_is_mergeable(mons))
     {
-        return (false);
+        return false;
     }
 
     const msg_channel_type spl = (mons->friendly() ? MSGCH_FRIEND_SPELL
@@ -2276,14 +2277,14 @@ bool mon_special_ability(monster* mons, bolt & beem)
         // situation.
         used = _slime_split_merge(mons);
         if (!mons->alive())
-            return (true);
+            return true;
         break;
 
     case MONS_CRAWLING_CORPSE:
     case MONS_MACABRE_MASS:
         used = _crawling_corpse_merge(mons);
         if (!mons->alive())
-            return (true);
+            return true;
         break;
 
     case MONS_ORC_KNIGHT:
@@ -2427,8 +2428,11 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
         bool spit = one_chance_in(3);
         if (mons->type == MONS_OKLOB_PLANT)
+        {
+            // reduced chance in zotdef
             spit = x_chance_in_y(mons->hit_dice,
-                crawl_state.game_is_zotdef() ? 40 : 30); // reduced chance in zotdef
+                crawl_state.game_is_zotdef() ? 40 : 30);
+        }
         if (mons->type == MONS_OKLOB_SAPLING)
             spit = one_chance_in(4);
 
@@ -2486,7 +2490,9 @@ bool mon_special_ability(monster* mons, bolt & beem)
     case MONS_QUEEN_BEE:
         if (one_chance_in(4)
             || mons->hit_points < mons->max_hit_points / 3 && one_chance_in(2))
+        {
             used = _queen_incite_worker(mons);
+        }
         break;
 
     case MONS_SNORG:
@@ -2517,6 +2523,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
     case MONS_MARA:
     case MONS_MARA_FAKE:
     case MONS_GOLDEN_EYE:
+        if (mons->no_tele(true, false))
+            break;
         if (one_chance_in(7) || mons->caught() && one_chance_in(3))
             used = monster_blink(mons);
         break;
@@ -2536,7 +2544,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         }
         break;
 
-    case MONS_BOG_MUMMY:
+    case MONS_BOG_BODY:
         if (one_chance_in(8))
         {
             // A hacky way of making these rot regularly.
@@ -2579,13 +2587,15 @@ bool mon_special_ability(monster* mons, bolt & beem)
                 if (coinflip())
                 {
                 //  behaviour_event(mons, ME_CORNERED);
-                    boulder_flee(mons, &beem);
+                    simple_monster_message(mons, " curls into a ball and rolls away!");
+                    boulder_start(mons, &beem);
                 }
             }
             // Normal check - don't roll at adjacent targets
             else if (one_chance_in(3) &&
                      !adjacent(mons->pos(), beem.target))
             {
+                simple_monster_message(mons, " curls into a ball and starts rolling!");
                 boulder_start(mons, &beem);
             }
         }
@@ -2826,7 +2836,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
     if (used && (mons_genus(mons->type) == MONS_DRAGON || mons_genus(mons->type) == MONS_DRACONIAN))
         setup_breath_timeout(mons);
 
-    return (used);
+    return used;
 }
 
 // Combines code for eyeball-type monsters, etc. to reduce clutter.
@@ -2910,7 +2920,7 @@ void mon_nearby_ability(monster* mons)
                 {
                     const monster* foe_mons = foe->as_monster();
                     simple_monster_message(foe_mons,
-                           mons_resist_string(foe_mons, res_margin).c_str());
+                           mons_resist_string(foe_mons, res_margin));
                 }
                 break;
             }
@@ -3108,9 +3118,9 @@ void activate_ballistomycetes(monster* mons, const coord_def & origin,
         {
             if (player_kill)
             {
-                mpr(gettext("Having destroyed the fungal colony, you feel a bit more "
+                mpr(_("Having destroyed the fungal colony, you feel a bit more "
                     "experienced."));
-                gain_exp(500);
+                gain_exp(200);
             }
 
             // Get rid of the mold, so it'll be more useful when new fungi

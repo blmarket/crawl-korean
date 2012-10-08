@@ -30,13 +30,13 @@ bool player::blink_to(const coord_def& dest, bool quiet)
     ASSERT(is_player());
 
     if (dest == pos())
-        return (false);
+        return false;
 
     if (item_blocks_teleport(true, true))
     {
         if (!quiet)
             canned_msg(MSG_STRANGE_STASIS);
-        return (false);
+        return false;
     }
 
     if (!quiet)
@@ -49,25 +49,47 @@ bool player::blink_to(const coord_def& dest, bool quiet)
 
     place_cloud(CLOUD_TLOC_ENERGY, origin, 1 + random2(3), this);
 
-    return (true);
+    return true;
 }
 
 bool monster::blink_to(const coord_def& dest, bool quiet)
 {
     if (dest == pos())
-        return (false);
+        return false;
 
+    bool was_constricted = false;
     const bool jump = type == MONS_JUMPING_SPIDER;
+    const std::string verb = (jump ? "leap" : "blink");
+
+    if (is_constricted())
+    {
+        was_constricted = true;
+
+        if (!attempt_escape(2))
+        {
+            if (!quiet)
+            {
+                std::string message = " struggles to " + verb
+                                    + " free from constriction.";
+                simple_monster_message(this, message.c_str());
+            }
+            return false;
+        }
+    }
 
     if (!quiet)
-        simple_monster_message(this, jump ? gettext(" leaps!") : gettext(" blinks!"));
+    {
+        std::string message = " " + conj_verb(verb)
+                            + (was_constricted ? " free!" : "!");
+        simple_monster_message(this, message.c_str());
+    }
 
     if (!(flags & MF_WAS_IN_VIEW))
         seen_context = SC_TELEPORT_IN;
 
     const coord_def oldplace = pos();
     if (!move_to_pos(dest, true))
-        return (false);
+        return false;
 
     // Leave a purple cloud.
     if (!jump)
@@ -78,7 +100,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     mons_relocated(this);
 
-    return (true);
+    return true;
 }
 
 
@@ -143,7 +165,7 @@ bool blink_away(monster* mon)
     if (dest.origin())
         return false;
     bool success = mon->blink_to(dest);
-    ASSERT(success);
+    ASSERT(success || mon->is_constricted());
     return success;
 }
 
@@ -157,7 +179,7 @@ void blink_range(monster* mon)
     if (dest.origin())
         return;
     bool success = mon->blink_to(dest);
-    ASSERT(success);
+    ASSERT(success || mon->is_constricted());
 #ifndef DEBUG
     UNUSED(success);
 #endif
@@ -173,7 +195,7 @@ void blink_close(monster* mon)
     if (dest.origin())
         return;
     bool success = mon->blink_to(dest);
-    ASSERT(success);
+    ASSERT(success || mon->is_constricted());
 #ifndef DEBUG
     UNUSED(success);
 #endif
@@ -205,6 +227,14 @@ bool random_near_space(const coord_def& origin, coord_def& target,
                                               DNGN_MAX_NONREACH);
     }
 
+    dungeon_feature_type limit;
+    if (!is_feat_dangerous(DNGN_LAVA, true))
+        limit = DNGN_LAVA;
+    else if (!is_feat_dangerous(DNGN_DEEP_WATER, true))
+        limit = DNGN_DEEP_WATER;
+    else
+        limit = DNGN_SHALLOW_WATER;
+
     for (int tries = 0; tries < 150; tries++)
     {
         coord_def p = coord_def(random2(RNS_WIDTH), random2(RNS_WIDTH));
@@ -218,14 +248,6 @@ bool random_near_space(const coord_def& origin, coord_def& target,
         // Origin is not 'near'.
         if (target == origin)
             continue;
-
-        dungeon_feature_type limit;
-        if (!is_feat_dangerous(DNGN_LAVA, true))
-            limit = DNGN_LAVA;
-        else if (!is_feat_dangerous(DNGN_DEEP_WATER, true))
-            limit = DNGN_DEEP_WATER;
-        else
-            limit = DNGN_SHALLOW_WATER;
 
         if (!in_bounds(target)
             || restrict_los && !you.see_cell(target)
@@ -250,7 +272,7 @@ bool random_near_space(const coord_def& origin, coord_def& target,
         }
 
         if (!trans_wall_block && !origin_is_player)
-            return (true);
+            return true;
 
         // If the monster is on a visible square which is on the other
         // side of one or more translucent walls from the player, then it
@@ -263,13 +285,13 @@ bool random_near_space(const coord_def& origin, coord_def& target,
         // walls monsters can blink to places which are not in either
         // the monster's nor the player's LOS.
         if (!origin_is_player && !you.see_cell(target))
-            return (true);
+            return true;
 
         // Player can't randomly pass through translucent walls.
         if (origin_is_player)
         {
             if (you.see_cell_no_trans(target))
-                return (true);
+                return true;
 
             continue;
         }
@@ -279,7 +301,7 @@ bool random_near_space(const coord_def& origin, coord_def& target,
                                              DNGN_MAX_NONREACH,
                                              true, true);
         if (walls_passed == 0)
-            return (true);
+            return true;
 
         // Player can't randomly pass through translucent walls.
         if (origin_is_player)
@@ -294,8 +316,8 @@ bool random_near_space(const coord_def& origin, coord_def& target,
         }
 
         if (walls_between >= min_walls_between)
-            return (true);
+            return true;
     }
 
-    return (false);
+    return false;
 }

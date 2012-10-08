@@ -22,7 +22,6 @@
 #include "religion.h"
 #include "shopping.h"
 #include "skills2.h"
-#include "spl-book.h"
 #include "spl-cast.h"
 #include "spl-miscast.h"
 #include "state.h"
@@ -36,6 +35,23 @@ static void _equip_effect(equipment_type slot, int item_slot, bool unmeld,
                           bool msg);
 static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
                             bool msg);
+
+void calc_hp_artefact()
+{
+    // Rounding must be down or Deep Dwarves would abuse certain values.
+    // We can reduce errors by a factor of 100 by using partial hp we have.
+    int old_max = you.hp_max;
+    int hp = you.hp * 100 + you.hit_points_regeneration;
+    calc_hp();
+    int new_max = you.hp_max;
+    hp = hp * new_max / old_max;
+    if (hp < 100)
+        hp = 100;
+    you.hp = std::min(hp / 100, you.hp_max);
+    you.hit_points_regeneration = hp % 100;
+    if (you.hp_max <= 0) // Borgnjor's abusers...
+        ouch(0, NON_MONSTER, KILLED_BY_DRAINING);
+}
 
 // Fill an empty equipment slot.
 void equip_item(equipment_type slot, int item_slot, bool msg)
@@ -52,7 +68,7 @@ void equip_item(equipment_type slot, int item_slot, bool msg)
     _equip_effect(slot, item_slot, false, msg);
     ash_check_bondage();
     if (you.equip[slot] != -1 && you.inv[you.equip[slot]].cursed())
-        god_id_inventory();
+        auto_id_inventory();
 }
 
 // Clear an equipment slot (possibly melded).
@@ -63,7 +79,7 @@ bool unequip_item(equipment_type slot, bool msg)
 
     const int item_slot = you.equip[slot];
     if (item_slot == -1)
-        return (false);
+        return false;
     else
     {
         item_skills(you.inv[item_slot], you.stop_train);
@@ -76,7 +92,7 @@ bool unequip_item(equipment_type slot, bool msg)
         else
             you.melded[slot] = false;
         ash_check_bondage();
-        return (true);
+        return true;
     }
 }
 
@@ -90,9 +106,9 @@ bool meld_slot(equipment_type slot, bool msg)
     {
         you.melded[slot] = true;
         _unequip_effect(slot, you.equip[slot], true, msg);
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 bool unmeld_slot(equipment_type slot, bool msg)
@@ -104,9 +120,9 @@ bool unmeld_slot(equipment_type slot, bool msg)
     {
         you.melded[slot] = false;
         _equip_effect(slot, you.equip[slot], true, msg);
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld);
@@ -163,23 +179,6 @@ static void _unequip_effect(equipment_type slot, int item_slot, bool meld,
 
     if (slot == EQ_SHIELD && !meld)
         you.stop_train.insert(SK_SHIELDS);
-}
-
-static void _hp_artefact()
-{
-    // Rounding must be down or Deep Dwarves would abuse certain values.
-    // We can reduce errors by a factor of 100 by using partial hp we have.
-    int old_max = you.hp_max;
-    int hp = you.hp * 100 + you.hit_points_regeneration;
-    calc_hp();
-    int new_max = you.hp_max;
-    hp = hp * new_max / old_max;
-    if (hp < 100)
-        hp = 100;
-    you.hp = std::min(hp / 100, you.hp_max);
-    you.hit_points_regeneration = hp % 100;
-    if (you.hp_max <= 0) // Borgnjor's abusers...
-        ouch(0, NON_MONSTER, KILLED_BY_DRAINING);
 }
 
 ///////////////////////////////////////////////////////////
@@ -323,7 +322,7 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
     }
 
     if (proprt[ARTP_HP])
-        _hp_artefact();
+        calc_hp_artefact();
 
     // Let's try this here instead of up there.
     if (proprt[ARTP_MAGICAL_POWER])
@@ -362,7 +361,7 @@ static void _unequip_artefact_effect(item_def &item,
     }
 
     if (proprt[ARTP_HP])
-        _hp_artefact();
+        calc_hp_artefact();
 
     if (proprt[ARTP_MAGICAL_POWER] && !known[ARTP_MAGICAL_POWER] && msg)
     {
@@ -495,13 +494,22 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
 
             if ((you.max_magic_points + 13) *
                 (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
-                mpr(gettext("You feel your mana capacity is already quite full."));
+            {
+                mpr(_("You feel your mana capacity is already quite full."));
+            }
             else
                 canned_msg(MSG_MANA_INCREASE);
 
             calc_mp();
         }
 
+        _wield_cursed(item, known_cursed, unmeld);
+        break;
+    }
+
+    case OBJ_RODS:
+    {
+        set_ident_flags(item, ISFLAG_IDENT_MASK);
         _wield_cursed(item, known_cursed, unmeld);
         break;
     }
@@ -704,6 +712,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
         }
 
         _wield_cursed(item, known_cursed || known_recurser, unmeld);
+        maybe_id_weapon(item);
         break;
     }
     default:
@@ -804,7 +813,7 @@ static void _unequip_weapon_effect(item_def& item, bool showMsgs, bool meld)
                     // branded weapon since you can wait it out. This also
                     // fixes problems with unwield prompts (mantis #793).
                     MiscastEffect(&you, WIELD_MISCAST, SPTYP_TRANSLOCATION,
-                                  9, 90, "distortion unwield");
+                                  9, 90, "a distortion unwield");
                 }
                 break;
 
@@ -1261,7 +1270,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case RING_MAGICAL_POWER:
         if ((you.max_magic_points + 9) *
             (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
-            mpr(gettext("You feel your mana capacity is already quite full."));
+        {
+            mpr(_("You feel your mana capacity is already quite full."));
+        }
         else
             canned_msg(MSG_MANA_INCREASE);
 
@@ -1320,6 +1331,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         you.duration[DUR_GOURMAND] = 0;
 
         if (you.species != SP_MUMMY
+            && you.species != SP_VAMPIRE
             && player_mutation_level(MUT_HERBIVOROUS) < 3)
         {
             mpr(gettext("You feel a craving for the dungeon's cuisine."));
@@ -1542,13 +1554,13 @@ static void _unequip_jewellery_effect(item_def &item, bool mesg, bool meld)
 bool unwield_item(bool showMsgs)
 {
     if (!you.weapon())
-        return (false);
+        return false;
 
     if (you.berserk())
     {
         if (showMsgs)
             canned_msg(MSG_TOO_BERSERK);
-        return (false);
+        return false;
     }
 
     item_def& item = *you.weapon();
@@ -1556,7 +1568,7 @@ bool unwield_item(bool showMsgs)
     const bool is_weapon = get_item_slot(item) == EQ_WEAPON;
 
     if (is_weapon && !safe_to_remove(item))
-        return (false);
+        return false;
 
     unequip_item(EQ_WEAPON, showMsgs);
 
@@ -1564,5 +1576,5 @@ bool unwield_item(bool showMsgs)
     you.redraw_quiver    = true;
     you.attribute[ATTR_WEAPON_SWAP_INTERRUPTED] = 0;
 
-    return (true);
+    return true;
 }

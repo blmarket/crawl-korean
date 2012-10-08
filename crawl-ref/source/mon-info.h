@@ -81,13 +81,16 @@ enum monster_info_flags
     MB_NO_REGEN,
     MB_SUPPRESSED,
     MB_ROLLING,
+    MB_RANGED_ATTACK,
+    MB_NO_NAME_TAG,
+    MB_OZOCUBUS_ARMOUR,
     NUM_MB_FLAGS
 };
 
 struct monster_info_base
 {
     coord_def pos;
-    FixedBitArray<NUM_MB_FLAGS> mb;
+    FixedBitVector<NUM_MB_FLAGS> mb;
     std::string mname;
     monster_type type;
     monster_type base_type;
@@ -103,13 +106,13 @@ struct monster_info_base
     std::string quote;
     mon_holy_type holi;
     mon_intel_type mintel;
-    mon_resist_def mresists;
+    resists_t mresists;
     mon_itemuse_type mitemuse;
     int mbase_speed;
     flight_type fly;
     CrawlHashTable props;
     std::string constrictor_name;
-    std::string constricting_name[MAX_CONSTRICT];
+    std::vector<std::string> constricting_name;
 
     uint32_t client_id;
 };
@@ -201,7 +204,7 @@ struct monster_info : public monster_info_base
 
     const char *pronoun(pronoun_type variant) const
     {
-        return (mons_pronoun(type, variant, true));
+        return mons_pronoun(type, variant, true);
     }
 
     std::string wounds_description_sentence() const;
@@ -211,22 +214,22 @@ struct monster_info : public monster_info_base
 
     monster_type draco_subspecies() const
     {
-        return (draco_type);
+        return draco_type;
     }
 
     mon_intel_type intel() const
     {
-        return (mintel);
+        return mintel;
     }
 
-    mon_resist_def resists() const
+    resists_t resists() const
     {
-        return (mresists);
+        return mresists;
     }
 
     mon_itemuse_type itemuse() const
     {
-        return (mitemuse);
+        return mitemuse;
     }
 
     int randarts(artefact_prop_type ra_prop) const;
@@ -234,11 +237,12 @@ struct monster_info : public monster_info_base
 
     int base_speed() const
     {
-        return (mbase_speed);
+        return mbase_speed;
     }
 
     bool wields_two_weapons() const;
     bool can_regenerate() const;
+    reach_type reach_range() const;
 
     size_type body_size() const;
 

@@ -11,12 +11,11 @@
 #include "chardump.h"
 #include "dungeon.h"
 #include "env.h"
-#include "map_knowledge.h"
 #include "initfile.h"
 #include "libutil.h"
 #include "maps.h"
 #include "message.h"
-#include "place.h"
+#include "ng-init.h"
 #include "player.h"
 #include "view.h"
 
@@ -54,7 +53,9 @@ static bool _mg_is_disconnected_level()
     // Don't care about non-Dungeon levels.
     if (!player_in_connected_branch()
         || (branches[you.where_are_you].branch_flags & BFLAG_ISLANDED))
-        return (false);
+    {
+        return false;
+    }
 
     return dgn_count_disconnected_zones(true);
 }
@@ -79,7 +80,7 @@ static bool mg_do_build_level(int niters)
         if (kbhit() && key_is_escape(getchk()))
         {
             mprf(MSGCH_WARN, "User requested cancel");
-            return (false);
+            return false;
         }
 
         ++mg_levels_tried;
@@ -133,10 +134,10 @@ static bool mg_do_build_level(int niters)
 
             dump_map(fp);
 
-            return (false);
+            return false;
         }
     }
-    return (true);
+    return true;
 }
 
 static std::vector<level_id> mg_dungeon_places()
@@ -152,7 +153,7 @@ static std::vector<level_id> mg_dungeon_places()
         for (int depth = 1; depth <= brdepth[br]; ++depth)
             places.push_back(level_id(branch, depth));
     }
-    return (places);
+    return places;
 }
 
 static bool mg_build_dungeon()
@@ -165,9 +166,9 @@ static bool mg_build_dungeon()
         you.where_are_you = lid.branch;
         you.depth = lid.depth;
         if (!mg_do_build_level(1))
-            return (false);
+            return false;
     }
-    return (true);
+    return true;
 }
 
 static void mg_build_levels(int niters)
@@ -361,7 +362,9 @@ static void _write_mapgen_stats()
     std::multimap<int, std::string> usedmaps;
     for (std::map<std::string, int>::const_iterator i =
              mapgen_try_count.begin(); i != mapgen_try_count.end(); ++i)
+    {
         usedmaps.insert(std::pair<int, std::string>(i->second, i->first));
+    }
 
     for (std::multimap<int, std::string>::reverse_iterator i =
              usedmaps.rbegin(); i != usedmaps.rend(); ++i)
@@ -406,6 +409,13 @@ static void _write_mapgen_stats()
 
 void generate_map_stats()
 {
+    // Warn assertions about possible oddities like the artefact list being
+    // cleared.
+    you.wizard = true;
+    // Let "acquire foo" have skill aptitudes to work with.
+    you.species = SP_HUMAN;
+
+    initialise_branch_depths();
     // We have to run map preludes ourselves.
     run_map_global_preludes();
     run_map_local_preludes();

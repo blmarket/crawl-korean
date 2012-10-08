@@ -55,7 +55,6 @@ spell_type spell_by_name(std::string name, bool partial_match = false);
 spschool_flag_type school_by_name(std::string name);
 
 int get_spell_slot_by_letter(char letter);
-int get_spell_slot(spell_type spell);
 int get_spell_letter(spell_type spell);
 spell_type get_spell_by_letter(char letter);
 
@@ -67,10 +66,8 @@ int spell_hunger(spell_type which_spell, bool rod = false);
 int spell_mana(spell_type which_spell);
 int spell_difficulty(spell_type which_spell);
 int spell_power_cap(spell_type spell);
-int spell_range(spell_type spell, int pow, bool real_cast,
-                bool player_spell=true);
+int spell_range(spell_type spell, int pow, bool player_spell = true);
 int spell_noise(spell_type spell);
-int spell_noise(unsigned int disciplines, int level);
 
 const char *get_spell_target_prompt(spell_type which_spell);
 
@@ -127,7 +124,7 @@ bool spell_direction(dist &spelld, bolt &pbolt,
                       targetter *hitfunc = NULL,
                       desc_filter get_desc_func = NULL);
 
-skill_type spell_type2skill (unsigned int which_spelltype);
+skill_type spell_type2skill(unsigned int which_spelltype);
 
 spell_type zap_type_to_spell(zap_type zap);
 
@@ -139,6 +136,6 @@ int spell_highlight_by_utility(spell_type spell,
                                 int default_color = COL_UNKNOWN,
                                 bool transient = false,
                                 bool rod_spell = false);
-bool spell_no_hostile_in_range(spell_type spell, int minRange);
+bool spell_no_hostile_in_range(spell_type spell);
 
 #endif

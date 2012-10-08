@@ -1,4 +1,4 @@
-from tornado.escape import json_encode, json_decode, xhtml_escape, to_unicode
+from tornado.escape import json_encode, json_decode, to_unicode
 import tornado.websocket
 import tornado.ioloop
 import tornado.template
@@ -35,6 +35,11 @@ def update_all_lobbys(game):
     for socket in list(sockets):
         if socket.is_in_lobby():
             socket.send_message("lobby_entry", **lobby_entry)
+def remove_in_lobbys(process):
+    for socket in list(sockets):
+        if socket.is_in_lobby():
+            socket.send_message("lobby_remove", id=process.id)
+
 
 def write_dgl_status_file():
     f = None
@@ -75,19 +80,24 @@ def find_user_sockets(username):
             yield socket
 
 def find_running_game(charname, start):
-    for socket in list(sockets):
-        if (socket.is_running() and
-            socket.process.where.get("name") == charname and
-            socket.process.where.get("start") == start):
-            return socket.process
+    from process_handler import processes
+    for process in processes.values():
+        if (process.where.get("name") == charname and
+            process.where.get("start") == start):
+            return process
     return None
 
-milestone_file_tailer = None
+milestone_file_tailers = []
 def start_reading_milestones():
     if config.milestone_file is None: return
 
-    global milestone_file_tailer
-    milestone_file_tailer = FileTailer(config.milestone_file, handle_new_milestone)
+    if isinstance(config.milestone_file, basestring):
+        files = [config.milestone_file]
+    else:
+        files = config.milestone_file
+
+    for f in files:
+        milestone_file_tailers.append(FileTailer(f, handle_new_milestone))
 
 def handle_new_milestone(line):
     data = parse_where_data(line)
@@ -140,6 +150,9 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
     def __eq__(self, other):
         return self.id == other.id
 
+    def allow_draft76(self):
+        return True
+
     def open(self):
         self.logger.info("Socket opened from ip %s (fd%s).",
                          self.request.remote_ip,
@@ -171,9 +184,9 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
 
     def send_lobby(self):
         self.send_message("lobby_clear")
-        for socket in sockets:
-            if socket.is_running():
-                self.send_message("lobby_entry", **socket.process.lobby_entry())
+        from process_handler import processes
+        for process in processes.values():
+            self.send_message("lobby_entry", **process.lobby_entry())
         self.send_message("lobby_complete")
 
     def send_game_links(self):
@@ -250,9 +263,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
 
     def _on_crawl_end(self):
         if config.dgl_mode:
-            for socket in list(sockets):
-                if socket.is_in_lobby():
-                    socket.send_message("lobby_remove", id=self.process.id)
+            remove_in_lobbys(self.process)
         self.process = None
 
         if self.client_closed:
@@ -354,8 +365,9 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
         self.received_pong = True
 
     def watch(self, username):
-        procs = [socket.process for socket in find_user_sockets(username)
-                 if socket.is_running()]
+        from process_handler import processes
+        procs = [process for process in processes.values()
+                 if process.username.lower() == username.lower()]
         if len(procs) >= 1:
             process = procs[0]
             self.logger.info("Started watching %s.", process.username)
@@ -371,8 +383,6 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                               content = 'You need to log in to send messages!')
             return
 
-        chat_msg = ("<span class='chat_sender'>%s</span>: <span class='chat_msg'>%s</span>" %
-                    (self.username, xhtml_escape(text)))
         receiver = None
         if self.process:
             receiver = self.process
@@ -380,7 +390,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
             receiver = self.watched_game
 
         if receiver:
-            receiver.send_to_all("chat", content = chat_msg)
+            receiver.handle_chat_message(self.username, text)
 
     def register(self, username, password, email):
         error = register_user(username, password, email)

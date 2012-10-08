@@ -37,17 +37,17 @@ namespace Version
 #if defined(__GNUC__) && defined(__VERSION__)
         return make_stringf("GCC %s", __VERSION__);
 #elif defined(__GNUC__)
-        return ("GCC (unknown version)");
+        return "GCC (unknown version)";
 #elif defined(TARGET_COMPILER_MINGW)
-        return ("MINGW");
+        return "MINGW";
 #elif defined(TARGET_COMPILER_CYGWIN)
-        return ("CYGWIN");
+        return "CYGWIN";
 #elif defined(TARGET_COMPILER_VC)
-        return ("Visual C++");
+        return "Visual C++";
 #elif defined(TARGET_COMPILER_ICC)
-        return ("Intel C++");
+        return "Intel C++";
 #else
-        return ("Unknown compiler");
+        return "Unknown compiler";
 #endif
     }
 
@@ -80,8 +80,8 @@ std::string compilation_info()
     out += make_stringf("Build platform: %s\n", Version::BuildArch().c_str());
     out += make_stringf("Platform: %s\n", Version::Arch().c_str());
 
-    out += make_stringf("CLFAGS: %s\n", Version::CFLAGS().c_str());
+    out += make_stringf("CFLAGS: %s\n", Version::CFLAGS().c_str());
     out += make_stringf("LDFLAGS: %s\n", Version::LDFLAGS().c_str());
 
-    return (out);
+    return out;
 }

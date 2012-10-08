@@ -508,7 +508,6 @@ ENDMAP
 NAME:    dpeg_chamrin_entry_tetris
 TAGS:    entry
 ORIENT:  float
-SHUFFLE: bbba
 MAP
           x.@.x
          xx...xx
@@ -932,7 +931,7 @@ ENDMAP
 NAME:    dpeg_entry_rooms_a
 TAGS:    entry no_monster_gen
 ORIENT:  float
-SHUFFLE: {[(, cvba
+SHUFFLE: {[(, cvb
 MAP
 xxxxxxxxx@.xxxxxx
 xvvvvvvvx..xbbbbx
@@ -1380,7 +1379,7 @@ SHUFFLE: 123t
 SUBST:   W : wW
 SUBST:   R : RWW, R = W.
 SUBST:   T : t
-MONS:    plant, fungus, bush
+MONS:    plant, toadstool, bush
 MAP
 xxxxxx@xxxxxx
 xWWWWTRTWWWWx
@@ -1402,7 +1401,7 @@ ORIENT:  float
 SHUFFLE: 123t
 SUBST:   W : wW
 SUBST:   T : W.
-MONS:    plant, fungus, bush
+MONS:    plant, toadstool, bush
 MAP
   xxx xxx
  xxWx@xWxx
@@ -1421,14 +1420,14 @@ TAGS:    entry no_monster_gen no_pool_fixup
 ORIENT:  float
 SHUFFLE: 123t
 SUBST:   W : wW
-MONS:    plant, fungus, bush
+MONS:    plant, toadstool, bush
 MAP
   W       W
  W1W     W2W
 W1T1WWWWW2T2W
- W1...(...2W
-  W...{...W
- W3...[...tW
+.W1...(...2W.
+@.W...{...W.@
+.W3...[...tW.
 W3T3WWWWWtTtW
  W3W     WtW
   W       W
@@ -1538,4 +1537,88 @@ xw13.....+
 x{....w12x
 x[(w3132wx
 xxxxxxxxxx
+ENDMAP
+
+##############################################################################
+# Saegor's simple entries
+
+NAME:   saegor_entry_simple_A
+TAGS:   entry
+ORIENT: float
+MAP
+ccc
+c{c
+.@.
+ENDMAP
+
+NAME:   saegor_entry_simple_B
+TAGS:   entry
+ORIENT: float
+MAP
+ttttt
+ttttt
+xt{tx
+xG.Gx
+xx+xx
+ENDMAP
+
+NAME:   saegor_entry_simple_C
+TAGS:   entry no_monster_gen
+ORIENT: float
+SHUFFLE: {([
+NSUBST: Z = 1:= / *:+
+MAP
+xxxxxxx
+x[.{.(x
+xx...xx
+x.vvv.x
+xGZ=ZGx
+xxv@vxx
+ENDMAP
+
+NAME:   saegor_entry_simple_D
+TAGS:   entry no_monster_gen
+ORIENT: float
+SHUFFLE: {([
+MAP
+xxxcccxxx
+xccc{cccx
+xc(c.c[cx
+xt.....tx
+xwt...twx
+xwwt.twwx
+xwwt.twwx
+xxwt.twxx
+xxxx+xxxx
+ENDMAP
+
+NAME:   saegor_entry_simple_E
+TAGS:   entry no_monster_gen
+ORIENT: float
+MAP
+xxxxxxxxxx
+x.......xx
+x.xxxxGx.x
+xx....xx.x
+xxx.{.xx.x
+x(+...xx.x
+x[xx.xx.xx
+xxxxx=+xxx
+ENDMAP
+
+NAME:   saegor_entry_simple_F
+TAGS:   entry
+ORIENT: float
+MAP
+  xxx
+  x.@
+  x.xxxxxxx
+  x.x.....x
+  x....xx@x
+x@x..{..x
+x.xx....x
+x.....x.x
+xxxxxxx.x
+      @.x
+      xxx
 ENDMAP

@@ -68,8 +68,6 @@ static inline int isaalnum(int c)
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
 }
 
-bool ends_with(const std::string &s, const std::string &suffix);
-
 int numcmp(const char *a, const char *b, int limit = 0);
 bool numcmpstr(std::string a, std::string b);
 size_t strlcpy(char *dst, const char *src, size_t n);
@@ -131,12 +129,12 @@ std::string &trim_string(std::string &str);
 std::string &trim_string_right(std::string &str);
 std::string trimmed_string(std::string s);
 
-inline bool starts_with(const std::string &s, const std::string &prefix)
+static inline bool starts_with(const std::string &s, const std::string &prefix)
 {
     return (s.rfind(prefix, 0) != std::string::npos);
 }
 
-inline bool ends_with(const std::string &s, const std::string &suffix)
+static inline bool ends_with(const std::string &s, const std::string &suffix)
 {
     if (s.length() < suffix.length())
         return false;
@@ -174,7 +172,7 @@ std::string comma_separated_line(Z start, Z end,
 
         text += *i;
     }
-    return (text);
+    return text;
 }
 
 std::string unwrap_desc(std::string desc);
@@ -187,7 +185,15 @@ void erase_any(std::vector<Z> &vec, unsigned long which)
     vec.pop_back();
 }
 
-inline int sqr(int x)
+template <typename Z>
+static inline void swapv(Z &a, Z &b)
+{
+    Z tmp = a;
+    a = b;
+    b = tmp;
+}
+
+static inline int sqr(int x)
 {
     return x * x;
 }
@@ -195,13 +201,15 @@ inline int sqr(int x)
 unsigned int isqrt(unsigned int x);
 int isqrt_ceil(int x);
 
-inline bool testbits(uint64_t flags, uint64_t test)
+static inline bool testbits(uint64_t flags, uint64_t test)
 {
     return ((flags & test) == test);
 }
 
 coord_def cgetsize(GotoRegion region = GOTO_CRT);
 void cscroll(int n, GotoRegion region);
+
+std::string untag_tiles_console(std::string s);
 
 #ifdef TARGET_OS_WINDOWS
 enum taskbar_pos
@@ -217,6 +225,7 @@ enum taskbar_pos
 
 int get_taskbar_size();
 taskbar_pos get_taskbar_pos();
+void text_popup(const std::string& text, const wchar_t *caption);
 #endif
 
 class mouse_control

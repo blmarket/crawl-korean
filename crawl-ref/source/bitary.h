@@ -11,20 +11,20 @@
 
 #include "debug.h"
 
-class bit_array
+class bit_vector
 {
 public:
-    bit_array(unsigned long size = 0);
-    ~bit_array();
+    bit_vector(unsigned long size = 0);
+    ~bit_vector();
 
     void reset();
 
     bool get(unsigned long index) const;
     void set(unsigned long index, bool value = true);
 
-    bit_array& operator |= (const bit_array& other);
-    bit_array& operator &= (const bit_array& other);
-    bit_array  operator & (const bit_array& other) const;
+    bit_vector& operator |= (const bit_vector& other);
+    bit_vector& operator &= (const bit_vector& other);
+    bit_vector  operator & (const bit_vector& other) const;
 
 protected:
     unsigned long size;
@@ -34,18 +34,18 @@ protected:
 
 #define LONGSIZE (sizeof(unsigned long)*8)
 
-template <unsigned int SIZE> class FixedBitArray
+template <unsigned int SIZE> class FixedBitVector
 {
 protected:
     unsigned long data[(SIZE + LONGSIZE - 1) / LONGSIZE];
 public:
     void reset()
     {
-        for (unsigned int i = 0; i < sizeof(data) / sizeof(unsigned long); i++)
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
             data[i] = 0;
     }
 
-    FixedBitArray()
+    FixedBitVector()
     {
         reset();
     }
@@ -55,7 +55,7 @@ public:
 #ifdef ASSERTS
         // printed as signed, as in FixedVector
         if (i >= SIZE)
-            die("bit array range error: %d / %u", (int)i, SIZE);
+            die("bit vector range error: %d / %u", (int)i, SIZE);
 #endif
         return data[i / LONGSIZE] & 1UL << i % LONGSIZE;
     }
@@ -69,7 +69,7 @@ public:
     {
 #ifdef ASSERTS
         if (i >= SIZE)
-            die("bit array range error: %d / %u", (int)i, SIZE);
+            die("bit vector range error: %d / %u", (int)i, SIZE);
 #endif
         if (value)
             data[i / LONGSIZE] |= 1UL << i % LONGSIZE;
@@ -77,16 +77,91 @@ public:
             data[i / LONGSIZE] &= ~(1UL << i % LONGSIZE);
     }
 
-    inline FixedBitArray<SIZE>& operator|=(const FixedBitArray<SIZE>&x)
+    inline FixedBitVector<SIZE>& operator|=(const FixedBitVector<SIZE>&x)
     {
-        for (unsigned int i = 0; i < sizeof(data) / sizeof(unsigned long); i++)
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
             data[i] |= x.data[i];
         return *this;
     }
 
-    inline FixedBitArray<SIZE>& operator&=(const FixedBitArray<SIZE>&x)
+    inline FixedBitVector<SIZE>& operator&=(const FixedBitVector<SIZE>&x)
     {
-        for (unsigned int i = 0; i < sizeof(data) / sizeof(unsigned long); i++)
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
+            data[i] &= x.data[i];
+        return *this;
+    }
+};
+
+template <unsigned int SIZEX, unsigned int SIZEY> class FixedBitArray
+{
+protected:
+    unsigned long data[(SIZEX*SIZEY + LONGSIZE - 1) / LONGSIZE];
+public:
+    void reset()
+    {
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
+            data[i] = 0;
+    }
+
+    FixedBitArray()
+    {
+        reset();
+    }
+
+    inline bool get(int x, int y) const
+    {
+#ifdef ASSERTS
+        // printed as signed, as in FixedArray
+        if (x < 0 || y < 0 || x >= (int)SIZEX || y >= (int)SIZEY)
+            die("bit array range error: %d,%d / %u,%u", x, y, SIZEX, SIZEY);
+#endif
+        unsigned int i = y * SIZEX + x;
+        return data[i / LONGSIZE] & 1UL << i % LONGSIZE;
+    }
+
+    template<class Indexer> inline bool get(const Indexer &i) const
+    {
+        return get(i.x, i.y);
+    }
+
+    inline bool operator () (int x, int y) const
+    {
+        return get(x, y);
+    }
+
+    template<class Indexer> inline bool operator () (const Indexer &i) const
+    {
+        return get(i.x, i.y);
+    }
+
+    inline void set(int x, int y, bool value = true)
+    {
+#ifdef ASSERTS
+        if (x < 0 || y < 0 || x >= (int)SIZEX || y >= (int)SIZEY)
+            die("bit array range error: %d,%d / %u,%u", x, y, SIZEX, SIZEY);
+#endif
+        unsigned int i = y * SIZEX + x;
+        if (value)
+            data[i / LONGSIZE] |= 1UL << i % LONGSIZE;
+        else
+            data[i / LONGSIZE] &= ~(1UL << i % LONGSIZE);
+    }
+
+    template<class Indexer> inline void set(const Indexer &i, bool value = true)
+    {
+        return set(i.x, i.y, value);
+    }
+
+    inline FixedBitArray<SIZEX, SIZEY>& operator|=(const FixedBitArray<SIZEX, SIZEY>&x)
+    {
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
+            data[i] |= x.data[i];
+        return *this;
+    }
+
+    inline FixedBitArray<SIZEX, SIZEY>& operator&=(const FixedBitArray<SIZEX, SIZEY>&x)
+    {
+        for (unsigned int i = 0; i < ARRAYSZ(data); i++)
             data[i] &= x.data[i];
         return *this;
     }

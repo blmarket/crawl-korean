@@ -10,7 +10,6 @@
 #include "database.h"
 #include "effects.h"
 #include "env.h"
-#include "food.h"
 #include "fprop.h"
 #include "godabil.h"
 #include "goditem.h"
@@ -41,8 +40,8 @@ static bool _confirm_pray_sacrifice(god_type god)
 {
     if (Options.stash_tracking == STM_EXPLICIT && is_stash(you.pos()))
     {
-        mpr(gettext("You can't sacrifice explicitly marked stashes."));
-        return (false);
+        mpr(_("You can't sacrifice explicitly marked stashes."));
+        return false;
     }
 
     for (stack_iterator si(you.pos(), true); si; ++si)
@@ -54,11 +53,11 @@ static bool _confirm_pray_sacrifice(god_type god)
                                               si->name(true, DESC_A).c_str());
 
             if (!yesno(prompt.c_str(), false, 'n'))
-                return (false);
+                return false;
         }
     }
 
-    return (true);
+    return true;
 }
 
 std::string god_prayer_reaction()
@@ -82,7 +81,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
         || (is_range_weapon(wpn) && brand != SPWPN_HOLY_WRATH)
         || is_artefact(wpn))
     {
-        return (false);
+        return false;
     }
 
     /// 뒤에 무기 이름이 붙음. 근데 그 뒤로 계속 뭔가 붙으니 어순도 이대로 유지해야함.
@@ -97,7 +96,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     prompt += "?";
 
     if (!yesno(prompt.c_str(), true, 'n'))
-        return (false);
+        return false;
 
     you.duration[DUR_WEAPON_BRAND] = 0;     // just in case
 
@@ -135,8 +134,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     }
 
     you.wield_change = true;
-    you.num_current_gifts[god]++;
-    you.num_total_gifts[god]++;
+    you.one_time_ability_used[god] = true;
     std::string desc  = old_name + " ";
             desc += (god == GOD_SHINING_ONE   ? "blessed by the Shining One" :
                      god == GOD_LUGONU        ? "corrupted by Lugonu" :
@@ -182,7 +180,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     delay(1000);
 #endif
 
-    return (true);
+    return true;
 }
 
 // Prayer at your god's altar.
@@ -202,7 +200,7 @@ static bool _altar_prayer()
     // TSO blesses weapons with holy wrath, and long blades and demon
     // whips specially.
     if (you.religion == GOD_SHINING_ONE
-        && !you.num_total_gifts[GOD_SHINING_ONE]
+        && !you.one_time_ability_used[GOD_SHINING_ONE]
         && !player_under_penance()
         && you.piety > 160)
     {
@@ -219,7 +217,7 @@ static bool _altar_prayer()
 
     // Lugonu blesses weapons with distortion.
     if (you.religion == GOD_LUGONU
-        && !you.num_total_gifts[GOD_LUGONU]
+        && !you.one_time_ability_used[GOD_LUGONU]
         && !player_under_penance()
         && you.piety > 160)
     {
@@ -231,7 +229,7 @@ static bool _altar_prayer()
 
     // Kikubaaqudgha blesses weapons with pain, or gives you a Necronomicon.
     if (you.religion == GOD_KIKUBAAQUDGHA
-        && !you.num_total_gifts[GOD_KIKUBAAQUDGHA]
+        && !you.one_time_ability_used[GOD_KIKUBAAQUDGHA]
         && !player_under_penance()
         && you.piety > 160)
     {
@@ -256,14 +254,14 @@ static bool _altar_prayer()
         if (!kiku_did_bless_weapon)
         {
             if (!yesno("Do you wish to receive the Necronomicon?", true, 'n'))
-                return (false);
+                return false;
 
             int thing_created = items(1, OBJ_BOOKS, BOOK_NECRONOMICON, true, 1,
                                       MAKE_ITEM_RANDOM_RACE,
                                       0, 0, you.religion);
 
             if (thing_created == NON_ITEM)
-                return (false);
+                return false;
 
             move_item_to_grid(&thing_created, you.pos());
 
@@ -272,8 +270,7 @@ static bool _altar_prayer()
                 simple_god_message(" grants you a gift!");
                 more();
 
-                you.num_current_gifts[you.religion]++;
-                you.num_total_gifts[you.religion]++;
+                you.one_time_ability_used[you.religion] = true;
                 did_bless = true;
                 take_note(Note(NOTE_GOD_GIFT, you.religion));
                 mitm[thing_created].inscription = "god gift";
@@ -281,10 +278,10 @@ static bool _altar_prayer()
         }
 
         // Return early so we don't offer our Necronomicon to Kiku.
-        return (did_bless);
+        return did_bless;
     }
 
-    return (did_bless);
+    return did_bless;
 }
 
 void pray()
@@ -556,28 +553,22 @@ static void _ashenzari_sac_scroll(const item_def& item)
 // Unholy and evil weapons are handled specially.
 static bool _destroyed_valuable_weapon(int value, int type)
 {
-    // Once you've reached *** once, don't accept weapon sacrifices ever
-    // again just because of value.
-    if (you.piety_max[GOD_ELYVILON] >= piety_breakpoint(2))
-        return (false);
-
     // value/500 chance of piety normally
     if (value > random2(500))
-        return (true);
+        return true;
 
     // But all non-missiles are acceptable if you've never reached *.
     if (you.piety_max[GOD_ELYVILON] < piety_breakpoint(0)
         && type != OBJ_MISSILES)
     {
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 static piety_gain_t _sac_corpse(const item_def& item)
 {
-#ifdef NEW_OKAWARU_PIETY
     if (you.religion == GOD_OKAWARU)
     {
         monster dummy;
@@ -594,7 +585,6 @@ static piety_gain_t _sac_corpse(const item_def& item)
         gain = div_rand_round(gain, 700);
         return (gain <= 0) ? PIETY_NONE : (gain < 4) ? PIETY_SOME : PIETY_LOTS;
     }
-#endif
 
     gain_piety(13, 19);
 
@@ -740,7 +730,7 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
         break;
     }
 
-    return (relative_piety_gain);
+    return relative_piety_gain;
 }
 
 piety_gain_t sacrifice_item_stack(const item_def& item, int *js)
@@ -759,41 +749,42 @@ piety_gain_t sacrifice_item_stack(const item_def& item, int *js)
                 relative_gain = PIETY_LOTS;
         }
     }
-    return (relative_gain);
+    return relative_gain;
 }
 
-static bool _check_nemelex_sacrificing_item_type(const item_def& item)
+bool check_nemelex_sacrificing_item_type(const item_def& item)
 {
     switch (item.base_type)
     {
     case OBJ_ARMOUR:
-        return (you.nemelex_sacrificing[NEM_GIFT_ESCAPE]);
+        return you.nemelex_sacrificing[NEM_GIFT_ESCAPE];
 
     case OBJ_WEAPONS:
     case OBJ_STAVES:
+    case OBJ_RODS:
     case OBJ_MISSILES:
-        return (you.nemelex_sacrificing[NEM_GIFT_DESTRUCTION]);
+        return you.nemelex_sacrificing[NEM_GIFT_DESTRUCTION];
 
     case OBJ_CORPSES:
-        return (you.nemelex_sacrificing[NEM_GIFT_SUMMONING]);
+        return you.nemelex_sacrificing[NEM_GIFT_SUMMONING];
 
     case OBJ_POTIONS:
         if (is_blood_potion(item))
-            return (you.nemelex_sacrificing[NEM_GIFT_SUMMONING]);
-        return (you.nemelex_sacrificing[NEM_GIFT_WONDERS]);
+            return you.nemelex_sacrificing[NEM_GIFT_SUMMONING];
+        return you.nemelex_sacrificing[NEM_GIFT_WONDERS];
 
     case OBJ_FOOD:
         if (item.sub_type == FOOD_CHUNK)
-            return (you.nemelex_sacrificing[NEM_GIFT_SUMMONING]);
+            return you.nemelex_sacrificing[NEM_GIFT_SUMMONING];
     // else fall through
     case OBJ_WANDS:
     case OBJ_SCROLLS:
-        return (you.nemelex_sacrificing[NEM_GIFT_WONDERS]);
+        return you.nemelex_sacrificing[NEM_GIFT_WONDERS];
 
     case OBJ_JEWELLERY:
     case OBJ_BOOKS:
     case OBJ_MISCELLANY:
-        return (you.nemelex_sacrificing[NEM_GIFT_DUNGEONS]);
+        return you.nemelex_sacrificing[NEM_GIFT_DUNGEONS];
 
     default:
         return false;
@@ -802,7 +793,7 @@ static bool _check_nemelex_sacrificing_item_type(const item_def& item)
 
 static bool _offer_items()
 {
-    if (you.religion == GOD_NO_GOD || !god_likes_items(you.religion))
+    if (!god_likes_items(you.religion))
         return false;
 
     if (!_confirm_pray_sacrifice(you.religion))
@@ -837,7 +828,7 @@ static bool _offer_items()
 
         // Skip items you don't want to sacrifice right now.
         if (you.religion == GOD_NEMELEX_XOBEH
-            && !_check_nemelex_sacrificing_item_type(item))
+            && !check_nemelex_sacrificing_item_type(item))
         {
             i = next;
             continue;
@@ -911,7 +902,10 @@ static bool _offer_items()
             simple_god_message(" can corrupt only scrolls of remove curse.");
     }
     if (num_sacced == 0 && you.religion == GOD_ELYVILON)
-        mpr("There are no weapons here to destroy!");
+    {
+        mprf("There are no %sweapons here to destroy!",
+             you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : "evil ");
+    }
 
     return (num_sacced > 0);
 }

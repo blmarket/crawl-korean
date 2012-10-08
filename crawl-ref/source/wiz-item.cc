@@ -21,10 +21,10 @@
 #include "godpassive.h"
 #include "itemprop.h"
 #include "items.h"
-#include "item_use.h"
 #include "invent.h"
 #include "makeitem.h"
 #include "mapdef.h"
+#include "misc.h"
 #include "mon-iter.h"
 #include "mon-stuff.h"
 #include "mon-util.h"
@@ -91,55 +91,29 @@ void wizard_create_spec_object_by_name()
 void wizard_create_spec_object()
 {
     char           specs[80];
-    char           keyin;
+    ucs_t          keyin;
     monster_type   mon;
 
     object_class_type class_wanted   = OBJ_UNASSIGNED;
 
     int            thing_created;
 
-    while (class_wanted == OBJ_UNASSIGNED)
+    while (class_wanted == OBJ_UNASSIGNED || class_wanted == NUM_OBJECT_CLASSES)
     {
         mpr(") - weapons     ( - missiles  [ - armour  / - wands    ?  - scrolls",
             MSGCH_PROMPT);
-        mpr("= - jewellery   ! - potions   : - books   | - staves   0  - The Orb",
+        mpr("= - jewellery   ! - potions   : - books   | - staves   \\  - rods",
             MSGCH_PROMPT);
-        mpr("} - miscellany  X - corpses   % - food    $ - gold    ESC - exit",
+        mpr("} - miscellany  X - corpses   % - food    $ - gold     0  - the Orb",
             MSGCH_PROMPT);
+        mpr("ESC - exit", MSGCH_PROMPT);
 
         msgwin_prompt("What class of item? ");
 
-        keyin = toupper(get_ch());
+        keyin = towupper(get_ch());
 
-        if (keyin == ')')
-            class_wanted = OBJ_WEAPONS;
-        else if (keyin == '(')
-            class_wanted = OBJ_MISSILES;
-        else if (keyin == '[' || keyin == ']')
-            class_wanted = OBJ_ARMOUR;
-        else if (keyin == '/' || keyin == '\\')
-            class_wanted = OBJ_WANDS;
-        else if (keyin == '?')
-            class_wanted = OBJ_SCROLLS;
-        else if (keyin == '=' || keyin == '"')
-            class_wanted = OBJ_JEWELLERY;
-        else if (keyin == '!')
-            class_wanted = OBJ_POTIONS;
-        else if (keyin == ':' || keyin == '+')
-            class_wanted = OBJ_BOOKS;
-        else if (keyin == '|')
-            class_wanted = OBJ_STAVES;
-        else if (keyin == '0' || keyin == 'O')
-            class_wanted = OBJ_ORBS;
-        else if (keyin == '}' || keyin == '{')
-            class_wanted = OBJ_MISCELLANY;
-        else if (keyin == 'X' || keyin == '&')
-            class_wanted = OBJ_CORPSES;
-        else if (keyin == '%')
-            class_wanted = OBJ_FOOD;
-        else if (keyin == '$')
-            class_wanted = OBJ_GOLD;
-        else if (key_is_escape(keyin) || keyin == ' '
+        class_wanted = item_class_by_sym(keyin);
+        if (key_is_escape(keyin) || keyin == ' '
                 || keyin == '\r' || keyin == '\n')
         {
             msgwin_reply("");
@@ -401,7 +375,7 @@ static void _tweak_randart(item_def &item)
 
     mpr("Change which field? ", MSGCH_PROMPT);
 
-    char     keyin = tolower(get_ch());
+    int keyin = tolower(get_ch());
     unsigned int  choice;
 
     if (isaalpha(keyin))
@@ -455,7 +429,7 @@ static void _tweak_randart(item_def &item)
 void wizard_tweak_object(void)
 {
     char specs[50];
-    char keyin;
+    int keyin;
 
     int item = prompt_invent_item("Tweak which item? ", MT_INVLIST, -1);
     if (item == PROMPT_ABORT)
@@ -558,7 +532,7 @@ void wizard_tweak_object(void)
 
         // cursedness might have changed
         ash_check_bondage();
-        god_id_inventory();
+        auto_id_inventory();
     }
 }
 
@@ -571,7 +545,7 @@ static bool _item_type_can_be_artefact(int type)
 
 static bool _make_book_randart(item_def &book)
 {
-    char type;
+    int type;
 
     do
     {
@@ -749,7 +723,7 @@ void wizard_make_object_randart()
 static bool _item_type_can_be_cursed(int type)
 {
     return (type == OBJ_WEAPONS || type == OBJ_ARMOUR || type == OBJ_JEWELLERY
-            || type == OBJ_STAVES);
+            || type == OBJ_STAVES || type == OBJ_RODS);
 }
 
 void wizard_uncurse_item()

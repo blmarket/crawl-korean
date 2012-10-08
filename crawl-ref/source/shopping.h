@@ -25,7 +25,6 @@ shop_struct *get_shop(const coord_def& where);
 
 void destroy_shop_at(coord_def p);
 
-std::string shop_type_name (shop_type type);
 std::string shop_name(const coord_def& where);
 std::string shop_name(const coord_def& where, bool add_stop);
 
@@ -53,6 +52,8 @@ public:
 
     bool del_thing(const item_def &item, const level_pos* pos = NULL);
     bool del_thing(std::string desc, const level_pos* pos = NULL);
+
+    void del_things_from(const level_id &lid);
 
     unsigned int cull_identical_items(const item_def& item, int cost = -1);
 

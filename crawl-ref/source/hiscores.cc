@@ -96,7 +96,7 @@ static std::string _score_file_name()
 
     ret += crawl_state.game_type_qualifier();
 
-    return (ret);
+    return ret;
 }
 
 static std::string _log_file_name()
@@ -373,7 +373,10 @@ static void _show_morgue(scorefile_entry& se)
                             "<cyan>[ + : Page down.   - : Page up."
                             "                           Esc exits.]"));
 #endif
-    std::string morgue_path = morgue_directory() + morgue_name(se.get_name(), se.get_death_time()) + ".txt";
+    std::string morgue_base = morgue_name(se.get_name(), se.get_death_time());
+    std::string morgue_path = morgue_directory()
+                              + strip_filename_unsafe_chars(morgue_base)
+                              + ".txt";
     FILE* morgue = lk_open("r", morgue_path);
 
     if (!morgue)
@@ -385,7 +388,9 @@ static void _show_morgue(scorefile_entry& se)
     while (fgets(buf, sizeof buf, morgue) != NULL)
     {
         std::string line = std::string(buf);
-        line.erase(line.find_last_of('\n'));
+        size_t newline_pos = line.find_last_of('\n');
+        if (newline_pos != std::string::npos)
+            line.erase(newline_pos);
         morgue_text += "<w>" + line + "</w>" + '\n';
     }
 
@@ -475,6 +480,7 @@ void show_hiscore_table()
     menu.attach_object(highlighter);
 
     menu.set_active_object(score_entries);
+    score_entries->set_active_item((MenuItem*) NULL);
     score_entries->activate_first_item();
 
     enable_smart_cursor(false);
@@ -508,15 +514,15 @@ void show_hiscore_table()
 static const char *_range_type_verb(const char *const aux)
 {
     if (strncmp(aux, "Shot ", 5) == 0)                // launched
-        return ("shot");
+        return "shot";
     else if (aux[0] == 0                                // unknown
              || strncmp(aux, "Hit ", 4) == 0          // thrown
              || strncmp(aux, "volley ", 7) == 0)      // manticore spikes
     {
-        return ("hit from afar");
+        return "hit from afar";
     }
 
-    return ("blasted");                                 // spells, wands
+    return "blasted";                                 // spells, wands
 }
 
 std::string hiscores_format_single(const scorefile_entry &se)
@@ -549,7 +555,7 @@ static void _hiscore_date_string(time_t time, char buff[INFO_SIZE])
 
 static std::string _hiscore_newline_string()
 {
-    return ("\n             ");
+    return "\n             ";
 }
 
 std::string hiscores_format_single_long(const scorefile_entry &se,
@@ -582,15 +588,15 @@ static bool _hs_read(FILE *scores, scorefile_entry &dest)
 {
     char inbuf[1300];
     if (!scores || feof(scores))
-        return (false);
+        return false;
 
     memset(inbuf, 0, sizeof inbuf);
     dest.reset();
 
     if (!fgets(inbuf, sizeof inbuf, scores))
-        return (false);
+        return false;
 
-    return (dest.parse(inbuf));
+    return dest.parse(inbuf);
 }
 
 static int _val_char(char digit)
@@ -603,7 +609,7 @@ static time_t _parse_time(const std::string &st)
     struct tm  date;
 
     if (st.length() < 15)
-        return (static_cast<time_t>(0));
+        return static_cast<time_t>(0);
 
     date.tm_year  =   _val_char(st[0]) * 1000 + _val_char(st[1]) * 100
                     + _val_char(st[2]) *   10 + _val_char(st[3]) - 1900;
@@ -615,7 +621,7 @@ static time_t _parse_time(const std::string &st)
     date.tm_sec   = _val_char(st[12]) * 10 + _val_char(st[13]);
     date.tm_isdst = (st[14] == 'D');
 
-    return (mktime(&date));
+    return mktime(&date);
 }
 
 static void _hs_write(FILE *scores, scorefile_entry &se)
@@ -632,7 +638,7 @@ static const char *kill_method_names[] =
     "tso_smiting", "petrification", "something",
     "falling_down_stairs", "acid", "curare",
     "beogh_smiting", "divine_wrath", "bounce", "reflect", "self_aimed",
-    "falling_through_gate", "disintegration", "headbutt",
+    "falling_through_gate", "disintegration", "headbutt", "rolling",
 };
 
 static const char *_kill_method_name(kill_method_type kmt)
@@ -640,7 +646,7 @@ static const char *_kill_method_name(kill_method_type kmt)
     COMPILE_CHECK(NUM_KILLBY == ARRAYSZ(kill_method_names));
 
     if (kmt == NUM_KILLBY)
-        return ("");
+        return "";
 
     return kill_method_names[kmt];
 }
@@ -655,7 +661,7 @@ static kill_method_type _str_to_kill_method(const std::string &s)
             return static_cast<kill_method_type>(i);
     }
 
-    return (NUM_KILLBY);
+    return NUM_KILLBY;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -686,7 +692,7 @@ scorefile_entry::scorefile_entry(const scorefile_entry &se)
 scorefile_entry &scorefile_entry::operator = (const scorefile_entry &se)
 {
     init_from(se);
-    return (*this);
+    return *this;
 }
 
 void scorefile_entry::init_from(const scorefile_entry &se)
@@ -747,7 +753,7 @@ void scorefile_entry::init_from(const scorefile_entry &se)
 xlog_fields scorefile_entry::get_fields() const
 {
     if (!fields.get())
-        return (xlog_fields());
+        return xlog_fields();
     else
         return (*fields.get());
 }
@@ -771,11 +777,11 @@ bool scorefile_entry::parse(const std::string &line)
     if (line[0] == ':')
     {
         dprf("Corrupted xlog-line: %s", line.c_str());
-        return (false);
+        return false;
     }
 
     raw_line = line;
-    return (parse_scoreline(line));
+    return parse_scoreline(line);
 }
 
 std::string scorefile_entry::raw_string() const
@@ -786,7 +792,7 @@ std::string scorefile_entry::raw_string() const
     set_score_fields();
 
     if (!fields.get())
-        return ("");
+        return "";
 
     return fields->xlog_line() + "\n";
 }
@@ -796,20 +802,23 @@ bool scorefile_entry::parse_scoreline(const std::string &line)
     fields.reset(new xlog_fields(line));
     init_with_fields();
 
-    return (true);
+    return true;
 }
 
 static const char* _short_branch_name(int branch)
 {
     if (branch >= 0 && branch < NUM_BRANCHES)
         return branches[branch].abbrevname;
-    return ("");
+    return "";
 }
 
 enum old_job_type
 {
     OLD_JOB_THIEF        = -1,
     OLD_JOB_DEATH_KNIGHT = -2,
+    OLD_JOB_PALADIN      = -3,
+    OLD_JOB_REAVER       = -4,
+    NUM_OLD_JOBS
 };
 
 static const char* _job_name(int job)
@@ -823,6 +832,10 @@ static const char* _job_name(int job)
         return "Thief";
     case OLD_JOB_DEATH_KNIGHT:
         return "Death Knight";
+    case OLD_JOB_PALADIN:
+        return "Paladin";
+    case OLD_JOB_REAVER:
+        return "Reaver";
     default:
         return "unknown";
     }
@@ -839,6 +852,10 @@ static const char* _job_abbrev(int job)
         return "Th";
     case OLD_JOB_DEATH_KNIGHT:
         return "DK";
+    case OLD_JOB_PALADIN:
+        return "Pa";
+    case OLD_JOB_REAVER:
+        return "Re";
     default:
         return "??";
     }
@@ -849,21 +866,20 @@ static int _job_by_name(const std::string& name)
     int job = get_job_by_name(name.c_str());
 
     if (job != JOB_UNKNOWN)
-        return (job);
+        return job;
 
-    if (name == "Thief")
-        return (OLD_JOB_THIEF);
-    else if (name == "Death Knight")
-        return (OLD_JOB_DEATH_KNIGHT);
+    for (job = -1; job > NUM_OLD_JOBS - 2; job--)
+        if (name == _job_name(job))
+            return job;
 
-    return (JOB_UNKNOWN);
+    return JOB_UNKNOWN;
 }
 
 void scorefile_entry::init_with_fields()
 {
     version = fields->str_field("v");
     tiles   = fields->int_field("tiles");
-    points  = fields->long_field("sc");
+    points  = fields->int_field("sc");
 
     name    = fields->str_field("name");
     race    = str_to_species(fields->str_field("race"));
@@ -908,13 +924,13 @@ void scorefile_entry::init_with_fields()
 
     birth_time = _parse_time(fields->str_field("start"));
     death_time = _parse_time(fields->str_field("end"));
-    real_time  = fields->long_field("dur");
-    num_turns  = fields->long_field("turn");
+    real_time  = fields->int_field("dur");
+    num_turns  = fields->int_field("turn");
 
     num_diff_runes = fields->int_field("urune");
     num_runes      = fields->int_field("nrune");
 
-    kills = fields->long_field("kills");
+    kills = fields->int_field("kills");
     maxed_skills = fields->str_field("maxskills");
     fifteen_skills = fields->str_field("fifteenskills");
     status_effects = fields->str_field("status");
@@ -977,8 +993,10 @@ void scorefile_entry::set_base_xlog_fields() const
 
     // Don't write No God to save some space.
     if (god != -1)
+    {
         fields->add_field("god", "%s", god == GOD_NO_GOD? "" :
                           god_name(god).c_str());
+    }
 
     if (wiz_mode)
         fields->add_field("wiz", "%d", wiz_mode);
@@ -1073,7 +1091,7 @@ std::string scorefile_entry::make_oneline(const std::string &ml) const
             trim_string(s);
         }
     }
-    return (comma_separated_line(lines.begin(), lines.end(), " ", " "));
+    return comma_separated_line(lines.begin(), lines.end(), " ", " ");
 }
 
 std::string scorefile_entry::long_kill_message() const
@@ -1082,7 +1100,7 @@ std::string scorefile_entry::long_kill_message() const
     msg = make_oneline(msg);
     msg[0] = tolower(msg[0]);
     trim_string(msg);
-    return (msg);
+    return msg;
 }
 
 std::string scorefile_entry::short_kill_message() const
@@ -1091,7 +1109,7 @@ std::string scorefile_entry::short_kill_message() const
     msg = make_oneline(msg);
     msg[0] = tolower(msg[0]);
     trim_string(msg);
-    return (msg);
+    return msg;
 }
 
 void scorefile_entry::init_death_cause(int dam, int dsrc,
@@ -1129,7 +1147,8 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             || death_type == KILLED_BY_SPORE
             || death_type == KILLED_BY_CLOUD
             || death_type == KILLED_BY_ROTTING
-            || death_type == KILLED_BY_REFLECTION)
+            || death_type == KILLED_BY_REFLECTION
+            || death_type == KILLED_BY_ROLLING)
         && !invalid_monster_index(death_source)
         && menv[death_source].type != -1)
     {
@@ -1307,7 +1326,7 @@ static int _award_modified_experience()
     if (xp <= 750000)
     {
         result += (xp * 4) / 10;
-        return (result);
+        return result;
     }
 
     result += (750000 * 4) / 10;
@@ -1316,7 +1335,7 @@ static int _award_modified_experience()
     if (xp <= 2000000)
     {
         result += (xp * 2) / 10;
-        return (result);
+        return result;
     }
 
     result += (2000000 * 2) / 10;
@@ -1324,7 +1343,7 @@ static int _award_modified_experience()
 
     result += (xp / 10);
 
-    return (result);
+    return result;
 }
 
 void scorefile_entry::init(time_t dt)
@@ -1430,7 +1449,7 @@ void scorefile_entry::init(time_t dt)
         DUR_DIVINE_VIGOUR, DUR_DIVINE_STAMINA, DUR_BERSERK, STATUS_AIRBORNE,
         DUR_POISONING, STATUS_NET, STATUS_SPEED, DUR_AFRAID, DUR_MIRROR_DAMAGE,
         DUR_SCRYING, STATUS_FIREBALL, DUR_SHROUD_OF_GOLUBRIA,
-        STATUS_CONSTRICTED, STATUS_AUGMENTED,
+        STATUS_CONSTRICTED, STATUS_AUGMENTED, STATUS_SILENCE,
     };
 
     status_info inf;
@@ -1504,7 +1523,7 @@ std::string scorefile_entry::hiscore_line(death_desc_verbosity verbosity) const
     line += death_place(verbosity);
     line += game_time(verbosity);
 
-    return (line);
+    return line;
 }
 
 std::string scorefile_entry::game_time(death_desc_verbosity verbosity) const
@@ -1522,7 +1541,7 @@ std::string scorefile_entry::game_time(death_desc_verbosity verbosity) const
         line += _hiscore_newline_string();
     }
 
-    return (line);
+    return line;
 }
 
 const char *scorefile_entry::damage_verb() const
@@ -1537,7 +1556,7 @@ const char *scorefile_entry::damage_verb() const
 
 std::string scorefile_entry::death_source_desc() const
 {
-    return (death_source_name);
+    return death_source_name;
 }
 
 std::string scorefile_entry::damage_string(bool terse) const
@@ -1545,16 +1564,16 @@ std::string scorefile_entry::damage_string(bool terse) const
     char scratch[50];
     snprintf(scratch, sizeof scratch, "(%d%s)", damage,
                        terse? "" : " damage");
-    return (scratch);
+    return scratch;
 }
 
 std::string scorefile_entry::strip_article_a(const std::string &s) const
 {
     if (s.find("a ") == 0)
-        return (s.substr(2));
+        return s.substr(2);
     else if (s.find("an ") == 0)
-        return (s.substr(3));
-    return (s);
+        return s.substr(3);
+    return s;
 }
 
 std::string scorefile_entry::terse_missile_name() const
@@ -1566,7 +1585,7 @@ std::string scorefile_entry::terse_missile_name() const
     const std::string &aux = auxkilldata;
     std::string missile;
 
-    for (unsigned i = 0; i < sizeof(pre_post) / sizeof(*pre_post); ++i)
+    for (unsigned i = 0; i < ARRAYSZ(pre_post); ++i)
     {
         if (aux.find(pre_post[i][0]) != 0)
             continue;
@@ -1583,7 +1602,7 @@ std::string scorefile_entry::terse_missile_name() const
         if (missile.find("n ") == 0)
             missile = missile.substr(2);
     }
-    return (missile);
+    return missile;
 }
 
 std::string scorefile_entry::terse_missile_cause() const
@@ -1595,7 +1614,7 @@ std::string scorefile_entry::terse_missile_cause() const
     // We're looking for Shot with a%s %s by %s/ Hit by a%s %s thrown by %s
     std::string::size_type by = aux.rfind(monster_prefix);
     if (by == std::string::npos)
-        return ("???");
+        return "???";
 
     std::string mcause = aux.substr(by + monster_prefix.length());
     mcause = strip_article_a(mcause);
@@ -1605,7 +1624,7 @@ std::string scorefile_entry::terse_missile_cause() const
     if (!missile.empty())
         mcause += "/" + missile;
 
-    return (mcause);
+    return mcause;
 }
 
 std::string scorefile_entry::terse_beam_cause() const
@@ -1613,7 +1632,7 @@ std::string scorefile_entry::terse_beam_cause() const
     std::string cause = auxkilldata;
     if (cause.find("by ") == 0 || cause.find("By ") == 0)
         cause = cause.substr(3);
-    return (cause);
+    return cause;
 }
 
 std::string scorefile_entry::terse_wild_magic() const
@@ -1646,11 +1665,11 @@ static std::string _append_sentence_delimiter(const std::string &sentence,
                                               const std::string &delimiter)
 {
     if (sentence.empty())
-        return (sentence);
+        return sentence;
 
     const char lastch = sentence[sentence.length() - 1];
     if (lastch == '!' || lastch == '.')
-        return (sentence);
+        return sentence;
 
     return (sentence + delimiter);
 }
@@ -1751,7 +1770,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
         }
     }
 
-    return (desc);
+    return desc;
 }
 
 std::string scorefile_entry::death_place(death_desc_verbosity verbosity) const
@@ -1760,7 +1779,7 @@ std::string scorefile_entry::death_place(death_desc_verbosity verbosity) const
     std::string place;
 
     if (death_type == KILLED_BY_LEAVING || death_type == KILLED_BY_WINNING)
-        return ("");
+        return "";
 
     char scratch[ INFO_SIZE ];
 
@@ -1800,7 +1819,7 @@ std::string scorefile_entry::death_place(death_desc_verbosity verbosity) const
     place = _append_sentence_delimiter(place, ".");
     place += _hiscore_newline_string();
 
-    return (place);
+    return place;
 }
 
 static bool _species_is_undead(int sp)
@@ -1854,6 +1873,14 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         needs_damage = true;
         break;
 
+    case KILLED_BY_ROLLING:
+        if (terse)
+            desc += "rolling " + death_source_desc();
+        else
+            desc += "Rolled over by " + death_source_desc();
+        needs_damage = true;
+        break;
+
     case KILLED_BY_POISON:
         if (death_source_name.empty() || terse)
         {
@@ -1874,7 +1901,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         else
         {
             desc += "Succumbed to " + ((death_source_name == "you")
-                      ? "your own" : apostrophise(death_source_name)) + " "
+                      ? "their own" : apostrophise(death_source_name)) + " "
                     + (auxkilldata.empty()? "poison" : auxkilldata);
         }
         break;
@@ -1892,7 +1919,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         {
             snprintf(scratch, sizeof(scratch), "Engulfed by %s%s %s",
                 death_source_name.empty() ? "a" :
-                  death_source_name == "you" ? "own" :
+                  death_source_name == "you" ? "their own" :
                   apostrophise(death_source_name).c_str(),
                 death_source_name.empty() ? " cloud of" : "",
                 auxkilldata.c_str());
@@ -2082,7 +2109,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         break;
 
     case KILLED_BY_TARGETTING:
-        desc += terse? "shot self" : "Killed themselves with bad targetting";
+        desc += terse? "shot self" : "Killed themself with bad targetting";
         needs_damage = true;
         break;
 
@@ -2114,7 +2141,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
             desc += "bounced beam";
         else
         {
-            desc += "Killed themselves with a bounced ";
+            desc += "Killed themself with a bounced ";
             if (auxkilldata.empty())
                 desc += "beam";
             else
@@ -2128,11 +2155,11 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
             desc += "suicidal targetting";
         else
         {
-            desc += "Shot themselves with a ";
+            desc += "Shot themself with ";
             if (auxkilldata.empty())
-                desc += "beam";
+                desc += "a beam";
             else
-                desc += auxkilldata;
+                desc += article_a(auxkilldata, true);
         }
         needs_damage = true;
         break;
@@ -2172,7 +2199,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
 
     case KILLED_BY_SOMETHING:
         if (!auxkilldata.empty())
-            desc += auxkilldata;
+            desc += (terse ? "" : "Killed by ") + auxkilldata;
         else
             desc += terse? "died" : "Died";
         needs_damage = true;
@@ -2201,7 +2228,8 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         if (terse)
             desc += "divine wrath";
         else
-            desc += auxkilldata.empty() ? "Divine wrath" : auxkilldata;
+            desc += "Killed by " +
+                    (auxkilldata.empty() ? "divine wrath" : auxkilldata);
         needs_damage = true;
         break;
 
@@ -2211,7 +2239,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         else
         {
             if (death_source_name == "you")
-                desc += "Blew themselves up";
+                desc += "Blew themself up";
             else
                 desc += "Blown up by " + death_source_desc();
             needs_beam_cause_line = true;
@@ -2421,7 +2449,7 @@ std::string scorefile_entry::death_description(death_desc_verbosity verbosity)
         desc = strip_article_a(desc);
     }
 
-    return (desc);
+    return desc;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2456,7 +2484,7 @@ _xlog_next_separator(const std::string &s,
     if (p != std::string::npos && p < s.length() - 1 && s[p + 1] == ':')
         return _xlog_next_separator(s, p + 2);
 
-    return (p);
+    return p;
 }
 
 static std::vector<std::string> _xlog_split_fields(const std::string &s)
@@ -2473,7 +2501,7 @@ static std::vector<std::string> _xlog_split_fields(const std::string &s)
     if (start < s.length())
         fs.push_back(s.substr(start));
 
-    return (fs);
+    return fs;
 }
 
 void xlog_fields::init(const std::string &line)
@@ -2512,7 +2540,7 @@ std::string xlog_fields::str_field(const std::string &s) const
 {
     xl_map::const_iterator i = fieldmap.find(s);
     if (i == fieldmap.end())
-        return ("");
+        return "";
 
     return i->second;
 }
@@ -2521,12 +2549,6 @@ int xlog_fields::int_field(const std::string &s) const
 {
     std::string field = str_field(s);
     return atoi(field.c_str());
-}
-
-long xlog_fields::long_field(const std::string &s) const
-{
-    std::string field = str_field(s);
-    return atol(field.c_str());
 }
 
 void xlog_fields::map_fields() const
@@ -2558,7 +2580,7 @@ std::string xlog_fields::xlog_line() const
         line += _xlog_escape(f.second);
     }
 
-    return (line);
+    return line;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2598,19 +2620,23 @@ void mark_milestone(const std::string &type,
 
     const std::string milestone_file =
         (Options.save_dir + "milestones" + crawl_state.game_type_qualifier());
+    const scorefile_entry se(0, 0, KILL_MISC, NULL);
+    se.set_base_xlog_fields();
+    xlog_fields xl = se.get_fields();
+    if (report_origin_level)
+    {
+        // The branch entrance location
+        xl.add_field("oplace", "%s",
+                     current_level_parent().describe().c_str());
+    }
+    xl.add_field("time", "%s",
+                 make_date_string(se.get_death_time()).c_str());
+    xl.add_field("type", "%s", type.c_str());
+    xl.add_field("milestone", "%s", milestone.c_str());
+    const std::string xlog_line = xl.xlog_line();
     if (FILE *fp = lk_open("a", milestone_file))
     {
-        const scorefile_entry se(0, 0, KILL_MISC, NULL);
-        se.set_base_xlog_fields();
-        xlog_fields xl = se.get_fields();
-        if (report_origin_level)
-            xl.add_field("oplace", "%s",
-                         current_level_parent().describe().c_str());
-        xl.add_field("time", "%s",
-                     make_date_string(se.get_death_time()).c_str());
-        xl.add_field("type", "%s", type.c_str());
-        xl.add_field("milestone", "%s", milestone.c_str());
-        fprintf(fp, "%s\n", xl.xlog_line().c_str());
+        fprintf(fp, "%s\n", xlog_line.c_str());
         lk_close(fp, "a", milestone_file);
     }
 #endif // DGL_MILESTONES
@@ -2623,6 +2649,6 @@ std::string xlog_status_line()
     se.set_base_xlog_fields();
     xlog_fields xl = se.get_fields();
     xl.add_field("time", "%s", make_date_string(time(NULL)).c_str());
-    return (xl.xlog_line());
+    return xl.xlog_line();
 }
 #endif // DGL_WHEREIS

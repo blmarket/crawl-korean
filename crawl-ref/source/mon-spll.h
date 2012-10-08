@@ -902,10 +902,10 @@
 
     {  MST_SERPENT_OF_HELL_COCYTUS,
       {
-       SPELL_FREEZING_CLOUD,
+       SPELL_OZOCUBUS_REFRIGERATION,
        SPELL_COLD_BREATH,
        SPELL_NO_SPELL,
-       SPELL_FREEZING_CLOUD,
+       SPELL_OZOCUBUS_REFRIGERATION,
        SPELL_COLD_BREATH,
        SPELL_NO_SPELL
       }
@@ -1226,6 +1226,17 @@
        SPELL_THROW_FLAME,
        SPELL_HASTE_OTHER,
        SPELL_MINOR_HEALING,
+      }
+    },
+
+    {  MST_FANNAR,
+      {
+       SPELL_BOLT_OF_COLD,
+       SPELL_OZOCUBUS_REFRIGERATION,
+       SPELL_OZOCUBUS_ARMOUR,
+       SPELL_SUMMON_ICE_BEAST,
+       SPELL_OZOCUBUS_REFRIGERATION,
+       SPELL_BLINK,
       }
     },
 
@@ -1649,12 +1660,12 @@
       }
     },
 
-    {  MST_BOG_MUMMY,
+    {  MST_BOG_BODY,
       {
-       SPELL_THROW_FROST,
+       SPELL_BOLT_OF_COLD,
        SPELL_SLOW,
        SPELL_NO_SPELL,
-       SPELL_CORPSE_ROT,
+       SPELL_BOLT_OF_COLD,
        SPELL_CORPSE_ROT,
        SPELL_NO_SPELL
       }
@@ -1756,6 +1767,28 @@
        SPELL_ENSNARE,
        SPELL_VENOM_BOLT,
        SPELL_ENSNARE
+      }
+    },
+
+    {  MST_HELLBINDER,
+      {
+       SPELL_CALL_IMP,
+       SPELL_SUMMON_DEMON,
+       SPELL_HASTE,
+       SPELL_HELLFIRE,
+       SPELL_BLINK_AWAY,
+       SPELL_THROW_FLAME
+      }
+    },
+
+    {  MST_CLOUD_MAGE,
+      {
+       SPELL_MEPHITIC_CLOUD,
+       SPELL_FREEZING_CLOUD,
+       SPELL_POISONOUS_CLOUD,
+       SPELL_AIRSTRIKE,
+       SPELL_BLINK_RANGE,
+       SPELL_BLINK_RANGE
       }
     },
 

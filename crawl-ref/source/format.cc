@@ -28,10 +28,10 @@ formatted_string::formatted_string(const std::string &s, int init_colour)
 int formatted_string::get_colour(const std::string &tag)
 {
     if (tag == "h")
-        return (YELLOW);
+        return YELLOW;
 
     if (tag == "w")
-        return (WHITE);
+        return WHITE;
 
     const int colour = str_to_colour(tag);
     return (colour != -1? colour : LIGHTGREY);
@@ -226,7 +226,7 @@ formatted_string::operator std::string() const
         if (ops[i] == FSOP_TEXT)
             s += ops[i].text;
     }
-    return (s);
+    return s;
 }
 
 static void _replace_all_in_string(std::string& s, const std::string& search,
@@ -277,7 +277,7 @@ const formatted_string &
 formatted_string::operator += (const formatted_string &other)
 {
     ops.insert(ops.end(), other.ops.begin(), other.ops.end());
-    return (*this);
+    return *this;
 }
 
 int formatted_string::width() const
@@ -287,10 +287,10 @@ int formatted_string::width() const
     for (unsigned i = 0, size = ops.size(); i < size; ++i)
         if (ops[i] == FSOP_TEXT)
             len += strwidth(ops[i].text);
-    return (len);
+    return len;
 }
 
-inline void cap(int &i, int max)
+static inline void cap(int &i, int max)
 {
     if (i < 0 && -i <= max)
         i += max;
@@ -387,9 +387,9 @@ int formatted_string::find_last_colour() const
     {
         for (int i = ops.size() - 1; i >= 0; --i)
             if (ops[i].type == FSOP_COLOUR)
-                return (ops[i].x);
+                return ops[i].x;
     }
-    return (LIGHTGREY);
+    return LIGHTGREY;
 }
 
 formatted_string formatted_string::chop(int length) const
@@ -458,7 +458,7 @@ void formatted_string::clear()
 
 bool formatted_string::empty()
 {
-    return (ops.empty());
+    return ops.empty();
 }
 
 void formatted_string::cprintf(const char *s, ...)
@@ -562,7 +562,7 @@ static int _tagged_string_printable_length(const std::string& s)
         else                     // normal, printable character
             ++len;
     }
-    return (len);
+    return len;
 }
 
 

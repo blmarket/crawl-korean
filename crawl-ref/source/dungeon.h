@@ -22,7 +22,6 @@
 #define LAYOUT_TYPE_KEY  "layout_type_key"
 #define LEVEL_VAULTS_KEY "level_vaults_key"
 #define LEVEL_EXTRAS_KEY "level_extras_key"
-#define LEVEL_ID_KEY     "level_id_key"
 
 // See _build_overflow_temples() in dungeon.cc for details on overflow
 // temples.
@@ -30,7 +29,8 @@
 #define OVERFLOW_TEMPLES_KEY "overflow_temples_key"
 #define TEMPLE_MAP_KEY       "temple_map_key"
 
-enum portal_type
+#if TAG_MAJOR_VERSION == 33
+enum oldportal_type
 {
     PORTAL_NONE = 0,
     PORTAL_LABYRINTH,
@@ -39,6 +39,7 @@ enum portal_type
     PORTAL_PANDEMONIUM,
     NUM_PORTALS
 };
+#endif
 
 const int MAKE_GIFT_ITEM = 350; // worse than the next one
 const int MAKE_GOOD_ITEM = 351;
@@ -218,26 +219,22 @@ void dgn_set_colours_from_monsters();
 void dgn_set_grid_colour_at(const coord_def &c, int colour);
 
 bool dgn_place_map(const map_def *map,
-                   bool clobber,
+                   bool check_collision,
                    bool make_no_exits,
                    const coord_def &pos = INVALID_COORD);
 
 const map_def *dgn_safe_place_map(const map_def *map,
-                                  bool clobber,
+                                  bool check_collision,
                                   bool make_no_exits,
                                   const coord_def &pos = INVALID_COORD);
 
 void level_clear_vault_memory();
-void level_welcome_messages();
-void run_map_epilogues ();
+void run_map_epilogues();
 
 struct trap_spec;
 bool place_specific_trap(const coord_def& where, trap_type trap_spec, int charges = 0);
-bool place_specific_trap(const coord_def& where, trap_spec* spec, int charges = 0);
 
 struct shop_spec;
-void place_spec_shop(const coord_def& where,
-                     shop_spec* spec, bool representative = false);
 void place_spec_shop(const coord_def& where,
                      int force_s_type, bool representative = false);
 bool seen_replace_feat(dungeon_feature_type replace,
@@ -300,7 +297,7 @@ vault_placement *dgn_vault_at(coord_def gp);
 void dgn_seen_vault_at(coord_def gp);
 
 int count_neighbours(int x, int y, dungeon_feature_type feat);
-inline int count_neighbours(const coord_def& p, dungeon_feature_type feat)
+static inline int count_neighbours(const coord_def& p, dungeon_feature_type feat)
 {
     return count_neighbours(p.x, p.y, feat);
 }
@@ -313,4 +310,6 @@ bool join_the_dots(const coord_def &from, const coord_def &to, unsigned mmask);
 int count_feature_in_box(int x0, int y0, int x1, int y1,
                          dungeon_feature_type feat);
 bool door_vetoed(const coord_def pos);
+
+void fixup_misplaced_items(void);
 #endif

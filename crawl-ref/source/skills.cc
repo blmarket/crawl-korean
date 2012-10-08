@@ -16,14 +16,13 @@
 #include "evoke.h"
 #include "exercise.h"
 #include "externs.h"
-#include "godabil.h"
 #include "godconduct.h"
 #include "hints.h"
 #include "invent.h"
 #include "itemprop.h"
 #include "message.h"
+#include "misc.h"
 #include "notes.h"
-#include "output.h"
 #include "player.h"
 #include "random.h"
 #include "random-weight.h"
@@ -46,6 +45,7 @@
 #define MAX_SPENDING_LIMIT       250
 
 static int _train(skill_type exsk, int &max_exp, bool simu = false);
+static void _train_skills(int exp, const int cost, const bool simu);
 
 // The progress of skill_cost_level depends only on total experience points,
 // it's independent of species. We try to keep close to the old system
@@ -183,7 +183,6 @@ static void _change_skill_level(skill_type exsk, int n)
     // right if you.skills[] hasn't been updated yet.
     if (exsk == SK_FIGHTING)
         calc_hp();
-    // TODO: also identify rings of wizardry.
 }
 
 // Called whenever a skill is trained.
@@ -222,6 +221,10 @@ void redraw_skill(skill_type exsk, skill_type old_best_skill)
         // The player symbol depends on best skill title.
         update_player_symbol();
     }
+
+    // Identify weapon pluses.
+    if (exsk <= SK_THROWING)
+        auto_id_inventory();
 }
 
 void check_skill_level_change(skill_type sk, bool do_level_up)
@@ -415,7 +418,10 @@ static void _check_stop_train()
     }
 
     if (!skills.empty())
-        mprf(gettext("You stop training %s"), _skill_names(skills).c_str());
+    {
+        mprf(_("You stop training %s"), _skill_names(skills).c_str());
+        check_selected_skills();
+    }
 
     reset_training();
     you.stop_train.clear();
@@ -423,13 +429,11 @@ static void _check_stop_train()
 
 void update_can_train()
 {
-    if (!you.stop_train.empty())
-        _check_stop_train();
-
     if (!you.start_train.empty())
         _check_start_train();
 
-    check_selected_skills();
+    if (!you.stop_train.empty())
+        _check_stop_train();
 }
 
 bool training_restricted(skill_type sk)
@@ -491,8 +495,8 @@ void init_train()
         }
 }
 
-static bool _cmp_rest(const std::pair<skill_type,int>& a,
-                      const std::pair<skill_type,int>& b)
+static bool _cmp_rest(const std::pair<skill_type, int64_t>& a,
+                      const std::pair<skill_type, int64_t>& b)
 {
     return a.second < b.second;
 }
@@ -508,12 +512,12 @@ static bool _cmp_rest(const std::pair<skill_type,int>& a,
 template <typename T, int SIZE>
 static void _scale_array(FixedVector<T, SIZE> &array, int scale, bool exact)
 {
-    int total = 0;
+    int64_t total = 0;
     // First, we calculate the sum of the values to be scaled.
     for (int i = 0; i < NUM_SKILLS; ++i)
         total += array[i];
 
-    std::vector<std::pair<skill_type,int> > rests;
+    std::vector<std::pair<skill_type, int64_t> > rests;
     int scaled_total = 0;
 
     // All skills disabled, nothing to do.
@@ -524,11 +528,11 @@ static void _scale_array(FixedVector<T, SIZE> &array, int scale, bool exact)
     for (int i = 0; i < NUM_SKILLS; ++i)
         if (array[i] > 0)
         {
-            int result = array[i] * scale;
-            const int rest = result % total;
+            int64_t result = (int64_t)array[i] * (int64_t)scale;
+            const int64_t rest = result % total;
             if (rest)
-                rests.push_back(std::pair<skill_type,int>(skill_type(i), rest));
-            array[i] = result / total;
+                rests.push_back(std::pair<skill_type, int64_t>(skill_type(i), rest));
+            array[i] = (int)(result / total);
             scaled_total += array[i];
         }
 
@@ -540,7 +544,7 @@ static void _scale_array(FixedVector<T, SIZE> &array, int scale, bool exact)
     // We ensure that the percentage always add up to 100 by increasing the
     // training for skills which had the higher rest from the above scaling.
     std::sort(rests.begin(), rests.end(), _cmp_rest);
-    std::vector<std::pair<skill_type,int> >::iterator it = rests.begin();
+    std::vector<std::pair<skill_type, int64_t> >::iterator it = rests.begin();
     while (scaled_total < scale && it != rests.end())
     {
         ++array[it->first];
@@ -586,8 +590,11 @@ bool check_selected_skills()
         skill_type sk = static_cast<skill_type>(i);
         if (skill_trained(sk))
             return false;
-        if (is_useless_skill(sk) || you.skill_points[sk] >= skill_exp_needed(27, sk))
+        if (is_useless_skill(sk) || is_harmful_skill(sk)
+            || you.skill_points[sk] >= skill_exp_needed(27, sk))
+        {
             continue;
+        }
         if (!you.can_train[sk])
         {
             could_train = true;
@@ -668,9 +675,11 @@ void reset_training()
         // The selected skills have not been exercised recently. Give them all
         // a default weight of 1 (or 2 for focus skills).
         if (empty)
+        {
             for (int sk = 0; sk < NUM_SKILLS; ++sk)
                 if (skill_trained(sk))
                     you.training[sk] = you.train[sk];
+        }
 
         // Focused skills get at least 20% training.
         for (int sk = 0; sk < NUM_SKILLS; ++sk)
@@ -707,11 +716,8 @@ void exercise(skill_type exsk, int deg)
 // We look at skill points because actual level up comes later.
 static bool _level_up_check(skill_type sk, bool simu)
 {
-        // Don't overtrain spellcasting past level 1 with Trog and
-        // don't train past level 27.
-        if (sk == SK_SPELLCASTING && !you.skills[sk] && you.religion == GOD_TROG
-        && you.skill_points[sk] >= skill_exp_needed(1, sk)
-                || you.skill_points[sk] >= skill_exp_needed(27, sk))
+    // Don't train past level 27.
+    if (you.skill_points[sk] >= skill_exp_needed(27, sk))
     {
         you.training[sk] = 0;
         if (!simu)
@@ -722,12 +728,8 @@ static bool _level_up_check(skill_type sk, bool simu)
     return false;
 }
 
-static bool _is_magic_skill(skill_type sk)
+bool is_magic_skill(skill_type sk)
 {
-    // Learning spellcasting with scrolls doesn't count for Trog.
-    if (you.religion == GOD_TROG && sk == SK_SPELLCASTING && !you.skills[sk])
-        return false;
-
     return (sk > SK_LAST_MUNDANE && sk <= SK_LAST_MAGIC);
 }
 
@@ -739,14 +741,14 @@ void train_skills(bool simu)
         cost = calc_skill_cost(you.skill_cost_level);
         exp = you.exp_available;
         if (you.skill_cost_level == 27)
-            train_skills(exp, cost, simu);
+            _train_skills(exp, cost, simu);
         else
         {
             // Amount of experience points needed to reach the next skill cost level
             const int next_level = skill_cost_needed(you.skill_cost_level + 1)
                                    - you.total_experience;
             ASSERT(next_level > 0);
-            train_skills(std::min(exp, next_level + cost - 1), cost, simu);
+            _train_skills(std::min(exp, next_level + cost - 1), cost, simu);
         }
     }
     while (you.exp_available >= cost && exp != you.exp_available);
@@ -759,7 +761,7 @@ void train_skills(bool simu)
 }
 
 //#define DEBUG_TRAINING_COST
-void train_skills(int exp, const int cost, const bool simu)
+static void _train_skills(int exp, const int cost, const bool simu)
 {
     bool skip_first_phase = false;
     int magic_gain = 0;
@@ -815,7 +817,7 @@ void train_skills(int exp, const int cost, const bool simu)
                     sk_exp[sk] = 0;
             }
 
-            if (gain && _is_magic_skill(sk))
+            if (gain && is_magic_skill(sk))
                 magic_gain += gain;
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -847,7 +849,7 @@ void train_skills(int exp, const int cost, const bool simu)
 
         _level_up_check(sk, simu);
 
-        if (gain && _is_magic_skill(sk))
+        if (gain && is_magic_skill(sk))
             magic_gain += gain;
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -980,7 +982,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
     }
 
     if (skill_inc <= 0)
-        return (0);
+        return 0;
 
     // Bonus from manual
     if (exsk == you.manual_skill)
@@ -1007,7 +1009,7 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
     ASSERT(max_exp >= 0);
     you.redraw_experience = true;
 
-    return (skill_inc);
+    return skill_inc;
 }
 
 void set_skill_level(skill_type skill, double amount)

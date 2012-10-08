@@ -83,12 +83,14 @@ public:
   FixedVector<bool, NUM_EQUIP> melded;
   unsigned short unrand_reacts;
 
+  FixedArray<int, NUM_OBJECT_CLASSES, MAX_SUBTYPES> force_autopickup;
+
   // PC's symbol (usually @) and colour.
   monster_type symbol;
   transformation_type form;
 
   FixedVector< item_def, ENDOFPACK > inv;
-  FixedBitArray<NUM_RUNE_TYPES> runes;
+  FixedBitVector<NUM_RUNE_TYPES> runes;
   int obtainable_runes; // can be != 15 in Sprint
 
   int burden;
@@ -157,7 +159,7 @@ public:
 
   int exp_docked, exp_docked_total; // Ashenzari's wrath
 
-  FixedArray<uint8_t, 6, 50> item_description;
+  FixedArray<uint8_t, 6, MAX_SUBTYPES> item_description;
   FixedVector<unique_item_status_type, MAX_UNRANDARTS> unique_items;
   FixedVector<bool, NUM_MONSTERS> unique_creatures;
 
@@ -187,6 +189,7 @@ public:
   FixedVector<uint8_t, NUM_GODS>  worshipped;
   FixedVector<short,   NUM_GODS>  num_current_gifts;
   FixedVector<short,   NUM_GODS>  num_total_gifts;
+  FixedVector<bool,    NUM_GODS>  one_time_ability_used;
   FixedVector<uint8_t, NUM_GODS>  piety_max;
 
   // Nemelex sacrifice toggles
@@ -210,7 +213,7 @@ public:
   FixedVector<bool, NUM_SPELLS>      seen_spell;
   FixedVector<uint32_t, NUM_WEAPONS> seen_weapon;
   FixedVector<uint32_t, NUM_ARMOURS> seen_armour;
-  FixedBitArray<NUM_MISCELLANY>      seen_misc;
+  FixedBitVector<NUM_MISCELLANY>      seen_misc;
   uint8_t                            octopus_king_rings;
 
   uint8_t normal_vision;        // how far the species gets to see
@@ -485,6 +488,7 @@ public:
     god_type  deity() const;
     bool      alive() const;
     bool      is_summoned(int* duration = NULL, int* summon_type = NULL) const;
+    bool      is_perm_summoned() const { return false; };
 
     bool        swimming() const;
     bool        submerged() const;
@@ -498,6 +502,7 @@ public:
     int         total_weight() const;
     brand_type  damage_brand(int which_attack = -1);
     int         damage_type(int which_attack = -1);
+    int         constriction_damage() const;
 
     int       has_claws(bool allow_tran = true) const;
     bool      has_usable_claws(bool allow_tran = true) const;
@@ -539,7 +544,8 @@ public:
 
     void attacking(actor *other);
     bool can_go_berserk() const;
-    bool can_go_berserk(bool intentional, bool potion = false) const;
+    bool can_go_berserk(bool intentional, bool potion = false,
+                        bool quiet = false) const;
     void go_berserk(bool intentional, bool potion = false);
     bool berserk() const;
     bool has_lifeforce() const;
@@ -574,6 +580,7 @@ public:
              bool cleanup_dead = true);
 
     bool wont_attack() const { return true; };
+    mon_attitude_type temp_attitude() const { return ATT_FRIENDLY; };
     int warding() const;
 
     monster_type mons_species(bool zombie_base = false) const;
@@ -605,7 +612,7 @@ public:
     int res_petrify(bool temp = true) const;
     int res_constrict() const { return 0; };
     int res_magic() const;
-    bool no_tele(bool calc_unid = true, bool permit_id = true);
+    bool no_tele(bool calc_unid = true, bool permit_id = true) const;
     bool confusable() const;
     bool slowable() const;
 
@@ -704,9 +711,8 @@ public:
     void set_duration(duration_type dur, int turns, int cap = 0,
                       const char *msg = NULL);
 
-    void accum_been_constricted();
-    void accum_has_constricted();
-    bool attempt_escape();
+    bool attempt_escape(int attempts = 1);
+    int usable_tentacles() const;
     bool has_usable_tentacle() const;
 
 protected:
@@ -772,6 +778,7 @@ static inline bool player_in_branch(int branch)
 bool berserk_check_wielded_weapon(void);
 int player_equip(equipment_type slot, int sub_type, bool calc_unid = true);
 int player_equip_ego_type(int slot, int sub_type, bool calc_unid = true);
+bool player_equip_unrand_effect(int unrand_index);
 bool player_equip_unrand(int unrand_index);
 bool player_can_hit_monster(const monster* mon);
 bool player_can_hear(const coord_def& p, int hear_distance = 999);
@@ -826,7 +833,7 @@ int player_mental_clarity(bool calc_unid = true, bool items = true);
 int player_spirit_shield(bool calc_unid = true);
 int player_effect_inaccuracy();
 int player_effect_mutagenic();
-int player_res_mutation();
+int player_res_mutation_from_item(bool calc_unid = true);
 int player_effect_gourmand();
 int player_effect_stasis(bool calc_unid = true);
 int player_effect_notele(bool calc_unid = true);
@@ -983,7 +990,8 @@ void dec_color_smoke_trail();
 bool player_weapon_wielded();
 
 // Determines if the given grid is dangerous for the player to enter.
-bool is_feat_dangerous(dungeon_feature_type feat, bool permanently = false);
+bool is_feat_dangerous(dungeon_feature_type feat, bool permanently = false,
+                       bool ignore_items = false);
 
 void run_macro(const char *macroname = NULL);
 

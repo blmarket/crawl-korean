@@ -185,7 +185,7 @@ SUBST:   3 = 3., 4 = 4., 5 = 5.
 MONS:    mummy, guardian mummy, mummy priest, sphinx, greater mummy
 MONS:    silver statue / orange crystal statue / ice statue
 #
-: dgn.set_feature_desc_short("granite statue", "sarcophagus")
+: set_feature_name("granite_statue", "sarcophagus")
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -383,9 +383,6 @@ SUBST:   $ = *:2 |:1 $:17
 #
 MONS:    mummy, guardian mummy, mummy priest, greater mummy
 #
-MARKER:  O = lua:item_pickup_change_flags { \
-            branch_flags="!no_tele_control", item="auto" \
-         }
 KMASK:   O = no_item_gen
 KITEM:   O = golden rune of Zot
 MAP

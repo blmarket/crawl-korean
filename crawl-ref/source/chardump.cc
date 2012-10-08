@@ -201,6 +201,7 @@ static void _sdump_header(dump_params &par)
     if (::tiles.is_controlled_from_web())
         par.text += " (webtiles)";
     else
+        par.text += " (console)";
 #else
     par.text += " (console)";
 #endif
@@ -592,7 +593,7 @@ std::string munge_description(std::string inStr)
                 + "\n";
     }
 
-    return (outStr);
+    return outStr;
 }
 
 static void _sdump_messages(dump_params &par)
@@ -689,12 +690,12 @@ static bool _dump_item_origin(const item_def &item)
 #define fs(x) (flags & (x))
     const int flags = Options.dump_item_origins;
     if (flags == IODS_EVERYTHING)
-        return (true);
+        return true;
 
     if (fs(IODS_ARTEFACTS)
         && is_artefact(item) && item_ident(item, ISFLAG_KNOW_PROPERTIES))
     {
-        return (true);
+        return true;
     }
     if (fs(IODS_EGO_ARMOUR) && item.base_type == OBJ_ARMOUR
         && item_type_known(item))
@@ -710,32 +711,26 @@ static bool _dump_item_origin(const item_def &item)
     }
 
     if (fs(IODS_JEWELLERY) && item.base_type == OBJ_JEWELLERY)
-        return (true);
+        return true;
 
     if (fs(IODS_RUNES) && item.base_type == OBJ_MISCELLANY
         && item.sub_type == MISC_RUNE_OF_ZOT)
     {
-        return (true);
+        return true;
     }
 
-    if (fs(IODS_RODS) && item.base_type == OBJ_STAVES
-        && item_is_rod(item))
-    {
-        return (true);
-    }
+    if (fs(IODS_RODS) && item.base_type == OBJ_RODS)
+        return true;
 
-    if (fs(IODS_STAVES) && item.base_type == OBJ_STAVES
-        && !item_is_rod(item))
-    {
-        return (true);
-    }
+    if (fs(IODS_STAVES) && item.base_type == OBJ_STAVES)
+        return true;
 
     if (fs(IODS_BOOKS) && item.base_type == OBJ_BOOKS)
-        return (true);
+        return true;
 
     const int refpr = Options.dump_item_origin_price;
     if (refpr == -1)
-        return (false);
+        return false;
     return ((int)item_value(item, false) >= refpr);
 #undef fs
 }
@@ -793,6 +788,7 @@ static void _sdump_inventory(dump_params &par)
                 case OBJ_POTIONS:    text += "Potions";         break;
                 case OBJ_BOOKS:      text += "Books";           break;
                 case OBJ_STAVES:     text += "Magical staves";  break;
+                case OBJ_RODS:       text += "Rods";            break;
                 case OBJ_ORBS:       text += "Orbs of Power";   break;
                 case OBJ_MISCELLANY: text += "Miscellaneous";   break;
                 case OBJ_CORPSES:    text += "Carrion";         break;
@@ -869,7 +865,7 @@ static std::string spell_type_shortname(int spell_class, bool slash)
 
     ret += spelltype_short_name(spell_class);
 
-    return (ret);
+    return ret;
 }
 
 //---------------------------------------------------------------
@@ -1085,8 +1081,11 @@ static void _sdump_monster_list(dump_params &par)
 {
     std::string monlist = mpr_monster_list(par.se);
     trim_string(monlist);
-    par.text += monlist;
-    par.text += "\n\n";
+    while (!monlist.empty())
+    {
+        par.text += wordwrap_line(monlist, 80) + "\n";
+    }
+    par.text += "\n";
 }
 
 static void _sdump_vault_list(dump_params &par)
@@ -1206,6 +1205,14 @@ static std::string _describe_action_subtype(caction_type type, int subtype)
     {
     case CACT_MELEE:
     case CACT_FIRE:
+        if (subtype >= UNRAND_START)
+        {
+            // Paranoia: an artefact may lose its specialness.
+            const char *tn = get_unrand_entry(subtype)->type_name;
+            if (tn)
+                return uppercase_first(tn);
+            subtype = get_unrand_entry(subtype)->sub_type;
+        }
         return ((subtype == -1) ? "Unarmed"
                 : uppercase_first(item_base_name(OBJ_WEAPONS, subtype)));
     case CACT_THROW:
@@ -1311,7 +1318,7 @@ static void _sdump_mutations(dump_params &par)
     if (how_mutated(true, false))
     {
         text += "\n";
-        text += (formatted_string::parse_string(describe_mutations()));
+        text += (formatted_string::parse_string(describe_mutations(false)));
         text += "\n\n";
     }
 }
@@ -1320,18 +1327,40 @@ static void _sdump_mutations(dump_params &par)
 //      Public Functions
 // ========================================================================
 
+static const char* hunger_names[] =
+{
+    "starving",
+    "near starving",
+    "very hungry",
+    "hungry",
+    "not hungry",
+    "full",
+    "very full",
+    "completely stuffed",
+};
+
+static const char* thirst_names[] =
+{
+    "bloodless",
+    "near bloodless",
+    "very thirsty",
+    "thirsty",
+    "not thirsty",
+    "full",
+    "very full",
+    "almost alive",
+};
+
 const char *hunger_level(void)
 {
-    const bool vamp = (you.species == SP_VAMPIRE);
+    COMPILE_CHECK(ARRAYSZ(hunger_names) == HS_ENGORGED + 1);
+    COMPILE_CHECK(ARRAYSZ(thirst_names) == HS_ENGORGED + 1);
 
-    return ((you.hunger <= 1000) ? (vamp ? "bloodless" : "starving") :
-            (you.hunger <= 1533) ? (vamp ? "near bloodless" : "near starving") :
-            (you.hunger <= 2066) ? (vamp ? "very thirsty" : "very hungry") :
-            (you.hunger <= 2600) ? (vamp ? "thirsty" : "hungry") :
-            (you.hunger <  7000) ? (vamp ? "not thirsty" : "not hungry") :
-            (you.hunger <  9000) ? "full" :
-            (you.hunger < 11000) ? "very full"
-                                 : (vamp ? "almost alive" : "completely stuffed"));
+    ASSERT(you.hunger_state <= HS_ENGORGED);
+
+    if (you.species == SP_VAMPIRE)
+        return thirst_names[you.hunger_state];
+    return hunger_names[you.hunger_state];
 }
 
 std::string morgue_directory()
@@ -1343,7 +1372,7 @@ std::string morgue_directory()
     if (!dir.empty() && dir[dir.length() - 1] != FILE_SEPARATOR)
         dir += FILE_SEPARATOR;
 
-    return (dir);
+    return dir;
 }
 
 void dump_map(FILE *fp, bool debug, bool dist)
@@ -1452,7 +1481,7 @@ static bool _write_dump(const std::string &fname, dump_params &par,
     else
         mprf(MSGCH_ERROR, "Error opening file '%s'", file_name.c_str());
 
-    return (succeeded);
+    return succeeded;
 }
 
 void display_notes()
@@ -1557,7 +1586,7 @@ bool dgl_unknown_timestamp_file(const std::string &filename)
         fclose(inh);
         return (file_version != DGL_TIMESTAMP_VERSION);
     }
-    return (false);
+    return false;
 }
 
 // Returns a filehandle to use to write turn timestamps, NULL if
@@ -1625,8 +1654,8 @@ void dgl_record_timestamp(unsigned long file_offset, time_t time)
 // Record timestamps every so many turns:
 const int TIMESTAMP_TURN_INTERVAL = 100;
 // Stop recording timestamps after this turncount.
-const long TIMESTAMP_TURN_MAX = 500000L;
-void dgl_record_timestamp(long turn)
+const int TIMESTAMP_TURN_MAX = 500000;
+void dgl_record_timestamp(int turn)
 {
     if (turn && turn < TIMESTAMP_TURN_MAX && !(turn % TIMESTAMP_TURN_INTERVAL))
     {

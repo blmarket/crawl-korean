@@ -233,6 +233,23 @@ static std::string utf8_validate(const char *s)
     return d;
 }
 
+#ifdef USE_TILE_WEB
+std::string wcstoutf8(const std::wstring &s)
+{
+    std::string out;
+
+    for (size_t j = 0; j < s.length(); j++)
+    {
+        char buf[4];
+        int r = wctoutf8(buf, s[j]);
+        for (int i = 0; i < r; i++)
+            out.push_back(buf[i]);
+    }
+
+    return out;
+}
+#endif
+
 static bool _check_trail(FILE *f, const char* bytes, int len)
 {
     while (len--)
@@ -411,8 +428,7 @@ std::string FileLineInput::get_line()
         return out;
     }
 
-    ASSERT(!"our memory got trampled!");
-    return "говно";
+    die("memory got trampled");
 }
 
 UTF8FileLineInput::UTF8FileLineInput(const char *name)

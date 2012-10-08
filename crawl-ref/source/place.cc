@@ -47,8 +47,9 @@ bool single_level_branch(branch_type branch)
 std::string place_name(unsigned short place, bool long_name,
                         bool include_number)
 {
-    uint8_t branch = (place >> 8) & 0xFF;
+    branch_type branch = static_cast<branch_type>((place >> 8) & 0xFF);
     int lev = place & 0xFF;
+    ASSERT(branch < NUM_BRANCHES);
 
     std::string result = (long_name ?
               branches[branch].longname : branches[branch].abbrevname);
@@ -116,7 +117,7 @@ std::vector<level_id> all_dungeon_ids()
         for (int depth = 1; depth <= brdepth[i]; depth++)
             out.push_back(level_id(branch.id, depth));
     }
-    return (out);
+    return out;
 }
 
 bool is_level_on_stack(level_id lev)

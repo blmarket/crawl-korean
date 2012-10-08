@@ -9,7 +9,6 @@
 
 #include "areas.h"
 #include "artefact.h"
-#include "attitude-change.h"
 #include "beam.h"
 #include "cloud.h"
 #include "colour.h"
@@ -25,7 +24,6 @@
 #include "fprop.h"
 #include "godabil.h"
 #include "goditem.h"
-#include "godpassive.h"
 #include "invent.h"
 #include "itemprop.h"
 #include "items.h"
@@ -41,7 +39,7 @@
 #include "mon-util.h"
 #include "mutation.h"
 #include "notes.h"
-#include "options.h"
+#include "place.h"
 #include "player-stats.h"
 #include "random.h"
 #include "religion.h"
@@ -415,7 +413,7 @@ std::string zin_recite_text(int* trits, size_t len, int prayertype, int step)
     else
         recite = turn[step];
 
-    return (recite);
+    return recite;
 }
 
 typedef FixedVector<int, NUM_RECITE_TYPES> recite_counts;
@@ -499,11 +497,8 @@ static int _zin_check_recite_to_single_monster(const monster *mon,
 
     // Being naturally mutagenic isn't good either.
     corpse_effect_type ce = mons_corpse_effect(mon->type);
-    if ((ce == CE_ROT || ce == CE_MUTAGEN_RANDOM || ce == CE_MUTAGEN_GOOD
-         || ce == CE_MUTAGEN_BAD || ce == CE_RANDOM) && !mon->is_chaotic())
-    {
+    if ((ce == CE_ROT || ce == CE_MUTAGEN) && !mon->is_chaotic())
         eligibility[RECITE_IMPURE]++;
-    }
 
     // Death drakes and rotting devils get a bump to uncleanliness.
     if (mon->type == MONS_ROTTING_DEVIL || mon->type == MONS_DEATH_DRAKE)
@@ -615,15 +610,16 @@ static int _zin_check_recite_to_single_monster(const monster *mon,
 // Returns 0, if no monsters found.
 // Returns 1, if eligible audience found.
 // Returns -1, if entire audience already affected or too dumb to understand.
-bool zin_check_able_to_recite()
+bool zin_check_able_to_recite(bool quiet)
 {
     if (you.duration[DUR_BREATH_WEAPON])
     {
-        mpr("You're too short of breath to recite.");
-        return (false);
+        if (!quiet)
+            mpr("You're too short of breath to recite.");
+        return false;
     }
 
-    return (true);
+    return true;
 }
 
 static const char* zin_book_desc[NUM_RECITE_TYPES] =
@@ -664,16 +660,16 @@ int zin_check_recite_to_monsters(recite_type *prayertype)
     if (!found_eligible && !found_ineligible)
     {
         dprf("No audience found!");
-        return (0);
+        return 0;
     }
     else if (!found_eligible && found_ineligible)
     {
         dprf("No sensible audience found!");
-        return (-1);
+        return -1;
     }
 
     if (!prayertype)
-        return (1);
+        return 1;
 
     int eligible_types = 0;
     for (int i = 0; i < NUM_RECITE_TYPES; i++)
@@ -689,7 +685,7 @@ int zin_check_recite_to_monsters(recite_type *prayertype)
 
         // If we got this far, we're actually reciting:
         you.increase_duration(DUR_BREATH_WEAPON, 3 + random2(10) + random2(30));
-        return (1);
+        return 1;
     }
 
     // But often, you'll have multiple options...
@@ -720,11 +716,11 @@ int zin_check_recite_to_monsters(recite_type *prayertype)
             break;
         }
         else
-            return (0);
+            return 0;
     }
     // If we got this far, we're actually reciting and are out of breath from it:
     you.increase_duration(DUR_BREATH_WEAPON, 3 + random2(10) + random2(30));
-    return (1);
+    return 1;
 }
 
 enum zin_eff
@@ -754,31 +750,31 @@ bool zin_recite_to_single_monster(const coord_def& where,
 {
     // That's a pretty good sanity check, I guess.
     if (you.religion != GOD_ZIN)
-        return (false);
+        return false;
 
     monster* mon = monster_at(where);
 
     // Once you're already reciting, invis is ok.
     if (!mon || !cell_see_cell(where, you.pos(), LOS_DEFAULT))
-        return (false);
+        return false;
 
     recite_counts eligibility;
     bool affected = false;
 
     if (_zin_check_recite_to_single_monster(mon, eligibility) < 1)
-        return (false);
+        return false;
 
     // First check: are they even eligible for this kind of recitation?
     // (Monsters that have been hurt by recitation aren't eligible.)
     if (eligibility[prayertype] < 1)
-        return (false);
+        return false;
 
     // Second check: because this affects the whole screen over several turns,
     // its effects are staggered. There's a 50% chance per monster, per turn,
     // that nothing will happen - so the cumulative odds of nothing happening
     // are one in eight, since you recite three times.
     if (coinflip())
-        return (false);
+        return false;
 
     // Resistance is now based on HD. You can affect up to (30+30)/2 = 30 'power' (HD).
     int power = (skill_bump(SK_INVOCATIONS, 10) + you.piety * 3 / 2) / 20;
@@ -796,7 +792,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     }
 
     if (check <= 0)
-        return (false);
+        return false;
 
     // To what degree are they eligible for this prayertype?
     const int degree = eligibility[prayertype];
@@ -1009,6 +1005,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
 
     case ZIN_CONFUSE:
         if (mons_class_is_confusable(mon->type)
+            && !mon->check_clarity(false)
             && mon->add_ench(mon_enchant(ENCH_CONFUSION, degree, &you,
                              (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
@@ -1221,7 +1218,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         handle_monster_shouts(mon, true);
     }
 
-    return (true);
+    return true;
 }
 
 static void _zin_saltify(monster* mon)
@@ -1297,17 +1294,16 @@ bool zin_remove_all_mutations()
     if (!how_mutated())
     {
         mpr("You have no mutations to be cured!");
-        return (false);
+        return false;
     }
 
-    you.num_current_gifts[GOD_ZIN]++;
-    you.num_total_gifts[GOD_ZIN]++;
+    you.one_time_ability_used[GOD_ZIN] = true;
     take_note(Note(NOTE_GOD_GIFT, you.religion));
 
     simple_god_message(" draws all chaos from your body!");
     delete_all_mutations("Zin's power");
 
-    return (true);
+    return true;
 }
 
 bool zin_sanctuary()
@@ -1315,7 +1311,7 @@ bool zin_sanctuary()
     // Casting is disallowed while previous sanctuary in effect.
     // (Checked in abl-show.cc.)
     if (env.sanctuary_time)
-        return (false);
+        return false;
 
     // Yes, shamelessly stolen from NetHack...
     if (!silenced(you.pos())) // How did you manage that?
@@ -1337,7 +1333,7 @@ bool zin_sanctuary()
 
     create_sanctuary(you.pos(), 7 + you.skill_rdiv(SK_INVOCATIONS) / 2);
 
-    return (true);
+    return true;
 }
 
 // shield bonus = attribute for duration turns, then decreasing by 1
@@ -1412,16 +1408,16 @@ bool elyvilon_divine_vigour()
                          40 + you.skill_rdiv(SK_INVOCATIONS, 5, 2));
 
         calc_hp();
-        inc_hp(you.hp_max - old_hp_max);
+        inc_hp((you.hp_max * you.hp + old_hp_max - 1)/old_hp_max - you.hp);
         calc_mp();
-        inc_mp(you.max_magic_points - old_mp_max);
+        inc_mp((you.max_magic_points * you.magic_points + old_mp_max - 1)/old_mp_max - you.magic_points);
 
         success = true;
     }
     else
         canned_msg(MSG_NOTHING_HAPPENS);
 
-    return (success);
+    return success;
 }
 
 void elyvilon_remove_divine_vigour()
@@ -1436,7 +1432,7 @@ void elyvilon_remove_divine_vigour()
 bool vehumet_supports_spell(spell_type spell)
 {
     if (spell_typematch(spell, SPTYP_CONJURATION | SPTYP_SUMMONING))
-        return (true);
+        return true;
 
     // Conjurations work by conjuring up a chunk of short-lived matter and
     // propelling it towards the victim.  This is the most popular way, but
@@ -1453,17 +1449,17 @@ bool vehumet_supports_spell(spell_type spell)
         || spell == SPELL_OLGREBS_TOXIC_RADIANCE
         || spell == SPELL_INNER_FLAME)
     {
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // Returns false if the invocation fails (no spellbooks in sight, etc.).
 bool trog_burn_spellbooks()
 {
     if (you.religion != GOD_TROG)
-        return (false);
+        return false;
 
     god_acting gdact;
 
@@ -1472,7 +1468,7 @@ bool trog_burn_spellbooks()
         if (item_is_spellbook(*si))
         {
             mpr("Burning your own feet might not be such a smart idea!");
-            return (false);
+            return false;
         }
     }
 
@@ -1565,15 +1561,15 @@ bool trog_burn_spellbooks()
         {
             discover_mimic(*it, false);
         }
-        return (false);
+        return false;
     }
     else
     {
         mpr("You cannot see a spellbook to ignite!");
-        return (false);
+        return false;
     }
 
-    return (true);
+    return true;
 }
 
 bool beogh_water_walk()
@@ -1619,18 +1615,18 @@ bool jiyva_remove_bad_mutation()
     if (!how_mutated())
     {
         mpr("You have no bad mutations to be cured!");
-        return (false);
+        return false;
     }
 
     // Ensure that only bad mutations are removed.
     if (!delete_mutation(RANDOM_BAD_MUTATION, "Jiyva's power", true, false, true, true))
     {
         canned_msg(MSG_NOTHING_HAPPENS);
-        return (false);
+        return false;
     }
 
     mpr("You feel cleansed.");
-    return (true);
+    return true;
 }
 
 bool yred_injury_mirror()
@@ -1870,13 +1866,13 @@ bool kiku_receive_corpses(int pow, coord_def where)
                                                    : " delivers you a corpse!");
         }
         maybe_update_stashes();
-        return (true);
+        return true;
     }
     else
     {
         if (you.religion == GOD_KIKUBAAQUDGHA)
             simple_god_message(" can find no cadavers for you!");
-        return (false);
+        return false;
     }
 }
 
@@ -1933,7 +1929,7 @@ bool fedhas_shoot_through(const bolt & beam, const monster* victim)
 {
     actor * originator = beam.agent();
     if (!victim || !originator)
-        return (false);
+        return false;
 
     bool origin_worships_fedhas;
     mon_attitude_type origin_attitude;
@@ -1946,7 +1942,7 @@ bool fedhas_shoot_through(const bolt & beam, const monster* victim)
     {
         monster* temp = originator->as_monster();
         if (!temp)
-            return (false);
+            return false;
         origin_worships_fedhas = temp->god == GOD_FEDHAS;
         origin_attitude = temp->attitude;
     }
@@ -2102,13 +2098,13 @@ int fedhas_fungal_bloom()
         gain_piety(piety_gain, 10);
     }
 
-    return (processed_count);
+    return processed_count;
 }
 
 static bool _create_plant(coord_def & target, int hp_adjust = 0)
 {
     if (actor_at(target) || !mons_class_can_pass(MONS_PLANT, grd(target)))
-        return (0);
+        return 0;
 
     if (monster *plant = create_monster(mgen_data
                                      (MONS_PLANT,
@@ -2141,12 +2137,10 @@ static bool _create_plant(coord_def & target, int hp_adjust = 0)
     return false;
 }
 
+#define SUNLIGHT_DURATION 80
+
 bool fedhas_sunlight()
 {
-    const int c_size = 5;
-    const int x_offset[] = {-1, 0, 0, 0, 1};
-    const int y_offset[] = { 0,-1, 0, 1, 0};
-
     dist spelld;
 
     bolt temp_bolt;
@@ -2162,37 +2156,110 @@ bool fedhas_sunlight()
     direction(spelld, args);
 
     if (!spelld.isValid)
-        return (false);
+        return false;
 
     const coord_def base = spelld.target;
 
-    int evap_count  = 0;
-    int plant_count = 0;
-    int processed_count = 0;
+    int revealed_count = 0;
 
-    // This is dealt with outside of the main loop.
-    int cloud_count = 0;
-
-    // FIXME: Uncomfortable level of code duplication here but the explosion
-    // code in bolt subjects the input radius to r*(r+1) for the threshold and
-    // since r is an integer we can never get just the 4-connected neighbours.
-    // Anyway the bolt code doesn't seem to be well set up to handle the
-    // 'occasional plant' gimmick.
-    for (int i = 0; i < c_size; ++i)
+    for (adjacent_iterator ai(base, false); ai; ++ai)
     {
-        coord_def target = base;
-        target.x += x_offset[i];
-        target.y += y_offset[i];
-
-        if (!in_bounds(target) || feat_is_solid(grd(target)))
+        if (!in_bounds(*ai) || feat_is_solid(grd(*ai)))
             continue;
 
-        temp_bolt.explosion_draw_cell(target);
+        for (size_t i = 0; i < env.sunlight.size(); ++i)
+            if (env.sunlight[i].first == *ai)
+            {
+                erase_any(env.sunlight, i);
+                break;
+            }
+        env.sunlight.push_back(std::pair<coord_def, int>(*ai,
+            you.elapsed_time + (distance(*ai, base) <= 1 ? SUNLIGHT_DURATION
+                                : SUNLIGHT_DURATION / 2)));
 
-        actor *victim = actor_at(target);
+        temp_bolt.explosion_draw_cell(*ai);
+
+        monster *victim = monster_at(*ai);
+        if (victim && you.see_cell(*ai) && !victim->visible_to(&you))
+        {
+            // Like entering/exiting angel halos, flipping autopickup would
+            // be probably too much hassle.
+            revealed_count++;
+        }
+
+        if (victim)
+            behaviour_event(victim, ME_ALERT, &you);
+    }
+
+    {
+        // Remove gloom.
+        unwind_var<int> no_time(you.time_taken, 0);
+        process_sunlights(false);
+    }
+
+#ifndef USE_TILE_LOCAL
+    // Move the cursor out of the way (it looks weird).
+    coord_def temp = grid2view(base);
+    cgotoxy(temp.x, temp.y, GOTO_DNGN);
+#endif
+    delay(200);
+
+    if (revealed_count)
+    {
+        mprf("In the bright light, you notice %s.", revealed_count == 1 ?
+             "an invisible shape" : "some invisible shapes");
+    }
+
+    return true;
+}
+
+void process_sunlights(bool future)
+{
+    int time_cap = future ? INT_MAX - SUNLIGHT_DURATION : you.elapsed_time;
+
+    int evap_count = 0;
+    int cloud_count = 0;
+
+    for (int i = env.sunlight.size() - 1; i >= 0; --i)
+    {
+        coord_def c = env.sunlight[i].first;
+        int until = env.sunlight[i].second;
+
+        if (until <= time_cap)
+            erase_any(env.sunlight, i);
+
+        // Remove gloom, even far away from the spot.
+        for (radius_iterator ai(c, 6); ai; ++ai)
+        {
+            if (env.cgrid(*ai) != EMPTY_CLOUD)
+            {
+                const int cloudidx = env.cgrid(*ai);
+                if (env.cloud[cloudidx].type == CLOUD_GLOOM)
+                {
+                    cloud_count++;
+                    delete_cloud(cloudidx);
+                }
+            }
+        }
+
+        until = std::min(until, time_cap);
+        int from = you.elapsed_time - you.time_taken;
+
+        // Deterministic roll, to guarantee evaporation when shined long enough.
+        struct { short place; coord_def coord; int64_t game_start; } to_hash;
+        to_hash.place = get_packed_place();
+        to_hash.coord = c;
+        to_hash.game_start = you.birth_time;
+        int h = hash(&to_hash, sizeof(to_hash)) % SUNLIGHT_DURATION;
+
+        if ((from + h) / SUNLIGHT_DURATION == (until + h) / SUNLIGHT_DURATION)
+            continue;
+
+        // Anything further on goes only on a successful evaporation roll, at
+        // most once peer coord per invocation.
 
         // If this is a water square we will evaporate it.
-        dungeon_feature_type ftype = grd(target);
+        dungeon_feature_type ftype = grd(c);
         dungeon_feature_type orig_type = ftype;
 
         switch (ftype)
@@ -2211,9 +2278,9 @@ bool fedhas_sunlight()
 
         if (orig_type != ftype)
         {
-            dungeon_terrain_changed(target, ftype);
+            dungeon_terrain_changed(c, ftype);
 
-            if (you.see_cell(target))
+            if (you.see_cell(c))
                 evap_count++;
 
             // This is a little awkward but if we evaporated all the way to
@@ -2222,7 +2289,7 @@ bool fedhas_sunlight()
             // credit if the monster dies. The enchantment is inflicted via
             // the dungeon_terrain_changed call chain and that doesn't keep
             // track of what caused the terrain change. -cao
-            monster* mons = monster_at(target);
+            monster* mons = monster_at(c);
             if (mons && ftype == DNGN_FLOOR
                 && mons->has_ench(ENCH_AQUATIC_LAND))
             {
@@ -2231,73 +2298,7 @@ bool fedhas_sunlight()
                 temp.source = MID_PLAYER;
                 mons->add_ench(temp);
             }
-
-            processed_count++;
         }
-
-        monster* mons = monster_at(target);
-
-        if (victim)
-        {
-            if (!mons)
-                you.backlight();
-            else
-            {
-                backlight_monsters(target, 1, 0);
-                behaviour_event(mons, ME_ALERT, &you);
-            }
-
-            processed_count++;
-        }
-        else if (one_chance_in(100)
-                 && ftype == DNGN_FLOOR
-                 && orig_type == DNGN_SHALLOW_WATER)
-        {
-            // Create a plant.
-            if (create_monster(mgen_data(MONS_PLANT,
-                                         BEH_HOSTILE,
-                                         &you,
-                                         0,
-                                         0,
-                                         target,
-                                         MHITNOT,
-                                         MG_FORCE_PLACE,
-                                         GOD_FEDHAS))
-                && you.see_cell(target))
-            {
-                plant_count++;
-            }
-
-            processed_count++;
-        }
-    }
-
-    // We damage clouds for a large radius, though.
-    for (radius_iterator ai(base, 7); ai; ++ai)
-    {
-        if (env.cgrid(*ai) != EMPTY_CLOUD)
-        {
-            const int cloudidx = env.cgrid(*ai);
-            if (env.cloud[cloudidx].type == CLOUD_GLOOM)
-            {
-                cloud_count++;
-                delete_cloud(cloudidx);
-            }
-        }
-    }
-
-#ifndef USE_TILE_LOCAL
-    // Move the cursor out of the way (it looks weird).
-    coord_def temp = grid2view(base);
-    cgotoxy(temp.x, temp.y, GOTO_DNGN);
-#endif
-    delay(200);
-
-    if (plant_count)
-    {
-        mprf("%s grow%s in the sunlight.",
-             (plant_count > 1 ? "Some plants": "A plant"),
-             (plant_count > 1 ? "": "s"));
     }
 
     if (evap_count)
@@ -2306,7 +2307,7 @@ bool fedhas_sunlight()
     if (cloud_count)
         mpr("Sunlight penetrates the thick gloom.");
 
-    return (true);
+    invalidate_agrid(true);
 }
 
 template<typename T>
@@ -2424,7 +2425,7 @@ bool prioritise_adjacent(const coord_def &target, std::vector<coord_def> & candi
     if (mons_positions.empty())
     {
         std::random_shuffle(candidates.begin(), candidates.end());
-        return (true);
+        return true;
     }
 
     std::vector<int> distances;
@@ -2445,7 +2446,7 @@ bool prioritise_adjacent(const coord_def &target, std::vector<coord_def> & candi
     for (unsigned i = 0; i < candidates.size(); ++i)
         candidates[i] = possible_moves[i].first;
 
-    return (true);
+    return true;
 }
 
 static bool _prompt_amount(int max, int& selected, const std::string& prompt)
@@ -2456,30 +2457,30 @@ static bool _prompt_amount(int max, int& selected, const std::string& prompt)
         msg::streams(MSGCH_PROMPT) << prompt << " (" << max << " max) "
                                    << std::endl;
 
-        const unsigned char keyin = get_ch();
+        const int keyin = get_ch();
 
         // Cancel
         if (key_is_escape(keyin) || keyin == ' ' || keyin == '0')
         {
             canned_msg(MSG_OK);
-            return (false);
+            return false;
         }
 
         // Default is max
         if (keyin == '\n'  || keyin == '\r')
-            return (true);
+            return true;
 
         // Otherwise they should enter a digit
         if (isadigit(keyin))
         {
             selected = keyin - '0';
             if (selected > 0 && selected <= max)
-                return (true);
+                return true;
         }
         // else they entered some garbage?
     }
 
-    return (max);
+    return max;
 }
 
 static int _collect_fruit(std::vector<std::pair<int,int> >& available_fruit)
@@ -2496,7 +2497,7 @@ static int _collect_fruit(std::vector<std::pair<int,int> >& available_fruit)
     }
     std::sort(available_fruit.begin(), available_fruit.end());
 
-    return (total);
+    return total;
 }
 
 static void _decrease_amount(std::vector<std::pair<int, int> >& available,
@@ -2548,7 +2549,7 @@ bool fedhas_plant_ring_from_fruit()
         else
             mpr("No fruit available.");
 
-        return (false);
+        return false;
     }
 
     prioritise_adjacent(you.pos(), adjacent);
@@ -2575,7 +2576,7 @@ bool fedhas_plant_ring_from_fruit()
                         "How many plants will you create?"))
     {
         // User canceled at the prompt.
-        return (false);
+        return false;
     }
 
     const int hp_adjust = you.skill(SK_INVOCATIONS, 10);
@@ -2619,7 +2620,7 @@ bool fedhas_plant_ring_from_fruit()
 
     _decrease_amount(collected_fruit, created_count);
 
-    return (created_count);
+    return created_count;
 }
 
 // Create a circle of water around the target, with a radius of
@@ -2722,7 +2723,7 @@ int fedhas_rain(const coord_def &target)
              (spawned_count > 1 ? "" : "s"));
     }
 
-    return (processed_count);
+    return processed_count;
 }
 
 // Destroy corpses in the player's LOS (first corpse on a stack only)
@@ -2753,7 +2754,7 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
     }
 
     if (count == 0)
-        return (count);
+        return count;
 
     viewwindow(false);
     for (unsigned i = 0; i < positions.size(); ++i)
@@ -2778,7 +2779,7 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
                                  true, 'y') <= 0)
     {
         viewwindow(false);
-        return (-1);
+        return -1;
     }
 
     for (unsigned i = 0; i < positions.size(); ++i)
@@ -2813,7 +2814,7 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
 
     viewwindow(false);
 
-    return (count);
+    return count;
 }
 
 struct monster_conversion
@@ -2855,7 +2856,7 @@ static bool _possible_evolution(const monster* input,
     case MONS_FUNGUS:
     case MONS_TOADSTOOL:
         possible_monster.new_type = MONS_WANDERING_MUSHROOM;
-        possible_monster.piety_cost = (input->type == MONS_TOADSTOOL ? 2 : 1);
+        possible_monster.piety_cost = 3;
         break;
 
     case MONS_BALLISTOMYCETE:
@@ -2864,16 +2865,16 @@ static bool _possible_evolution(const monster* input,
         break;
 
     default:
-        return (false);
+        return false;
     }
 
-    return (true);
+    return true;
 }
 
 bool mons_is_evolvable(const monster* mon)
 {
     monster_conversion temp;
-    return (_possible_evolution(mon, temp));
+    return _possible_evolution(mon, temp);
 }
 
 static bool _place_ballisto(const coord_def & pos)
@@ -2892,14 +2893,14 @@ static bool _place_ballisto(const coord_def & pos)
         mpr("The mold grows into a ballistomycete.");
         mpr("Your piety has decreased.");
         lose_piety(1);
-        return (true);
+        return true;
     }
 
     // Monster placement failing should be quite unusual, but it could happen.
     // Not entirely sure what to say about it, but a more informative message
     // might be good. -cao
     canned_msg(MSG_NOTHING_HAPPENS);
-    return (false);
+    return false;
 }
 
 bool fedhas_evolve_flora()
@@ -2924,7 +2925,7 @@ bool fedhas_evolve_flora()
     if (!in_range)
     {
         mpr("No evolvable flora in sight.");
-        return (false);
+        return false;
     }
 
     dist spelld;
@@ -2944,7 +2945,7 @@ bool fedhas_evolve_flora()
     {
         // Check for user cancel.
         canned_msg(MSG_OK);
-        return (false);
+        return false;
     }
 
     monster* const target = monster_at(spelld.target);
@@ -2959,21 +2960,23 @@ bool fedhas_evolve_flora()
                 mpr("The tree has already reached the pinnacle of evolution.");
             else
                 mpr("You must target a plant or fungus.");
-            return (false);
+            return false;
         }
-        return (_place_ballisto(spelld.target));
+        return _place_ballisto(spelld.target);
 
     }
 
     if (!_possible_evolution(target, upgrade))
     {
-        if (mons_is_plant(target))
+        if (target->type == MONS_GIANT_SPORE)
+            mpr("You can evolve only complete plants, not seeds.");
+        else  if (mons_is_plant(target))
             simple_monster_message(target, " has already reached "
                                    "the pinnacle of evolution.");
         else
             mpr("Only plants or fungi may be evolved.");
 
-        return (false);
+        return false;
     }
 
     std::vector<std::pair<int, int> > collected_fruit;
@@ -2984,14 +2987,14 @@ bool fedhas_evolve_flora()
         if (total_fruit < upgrade.fruit_cost)
         {
             mpr("Not enough fruit available.");
-            return (false);
+            return false;
         }
     }
 
     if (upgrade.piety_cost && upgrade.piety_cost > you.piety)
     {
         mpr("Not enough piety available.");
-        return (false);
+        return false;
     }
 
     switch (target->type)
@@ -3062,13 +3065,13 @@ bool fedhas_evolve_flora()
         mpr("Your piety has decreased.");
     }
 
-    return (true);
+    return true;
 }
 
 static int _lugonu_warp_monster(monster* mon, int pow)
 {
     if (mon == NULL)
-        return (0);
+        return 0;
 
     if (!mon->friendly())
         behaviour_event(mon, ME_ANNOY, &you);
@@ -3078,8 +3081,8 @@ static int _lugonu_warp_monster(monster* mon, int pow)
     {
         mprf("%s%s",
              mon->name(DESC_THE).c_str(),
-             mons_resist_string(mon, res_margin).c_str());
-        return (1);
+             mons_resist_string(mon, res_margin));
+        return 1;
     }
 
     const int damage = 1 + random2(pow / 6);
@@ -3089,12 +3092,13 @@ static int _lugonu_warp_monster(monster* mon, int pow)
     {
         mon->hurt(&you, damage);
         if (!mon->alive())
-            return (1);
+            return 1;
     }
 
-    mon->blink();
+    if (!mon->no_tele(true, false))
+        mon->blink();
 
-    return (1);
+    return 1;
 }
 
 static void _lugonu_warp_area(int pow)
@@ -3132,7 +3136,7 @@ void cheibriados_time_bend(int pow)
             {
                 mprf("%s%s",
                      mon->name(DESC_THE).c_str(),
-                     mons_resist_string(mon, res_margin).c_str());
+                     mons_resist_string(mon, res_margin));
                 continue;
             }
 
@@ -3152,7 +3156,7 @@ static int _slouchable(coord_def where, int pow, int, actor* agent)
         || mons_is_projectile(mon->type)
         || mon->asleep() && !mons_is_confused(mon))
     {
-        return (0);
+        return 0;
     }
 
     int dmg = (mon->speed - 1000/player_movement_speed()/player_speed());
@@ -3178,7 +3182,7 @@ static int _slouch_monsters(coord_def where, int pow, int dummy, actor* agent)
     dmg = (dmg > 0 ? roll_dice(dmg*4, 3)/2 : 0);
 
     mon->hurt(agent, dmg, BEAM_MMISSILE, true);
-    return (1);
+    return 1;
 }
 
 bool cheibriados_slouch(int pow)
@@ -3276,9 +3280,8 @@ void cheibriados_time_step(int pow) // pow is the number of turns to skip
 
 bool ashenzari_transfer_knowledge()
 {
-    if (you.transfer_skill_points > 0)
-        if (!ashenzari_end_transfer())
-            return false;
+    if (you.transfer_skill_points > 0 && !ashenzari_end_transfer())
+        return false;
 
     while (true)
     {

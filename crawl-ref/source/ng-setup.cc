@@ -24,7 +24,6 @@
 #include "skills2.h"
 #include "spl-book.h"
 #include "spl-util.h"
-#include "sprint.h"
 #include "state.h"
 #include "tutorial.h"
 
@@ -262,7 +261,7 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_ACUTE_VISION]    = 1;
         you.mutation[MUT_FAST]            = 3;
         you.mutation[MUT_HERBIVOROUS]     = 3;
-        you.mutation[MUT_SLOW_METABOLISM] = 3;
+        you.mutation[MUT_SLOW_METABOLISM] = 2;
         break;
     case SP_CENTAUR:
         you.mutation[MUT_TOUGH_SKIN]      = 3;
@@ -326,7 +325,7 @@ void give_basic_mutations(species_type speci)
         you.mutation[MUT_ACUTE_VISION]    = 1;
         you.mutation[MUT_FAST]            = 1;
         you.mutation[MUT_CARNIVOROUS]     = 3;
-        you.mutation[MUT_SLOW_METABOLISM] = 2;
+        you.mutation[MUT_SLOW_METABOLISM] = 1;
         break;
     case SP_OCTOPODE:
         you.mutation[MUT_CAMOUFLAGE]      = 1;
@@ -440,34 +439,34 @@ static void _update_weapon(const newgame_def& ng)
     switch (ng.weapon)
     {
     case WPN_ROCKS:
-        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_LARGE_ROCK, -1, 5, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_LARGE_ROCK, -1, 4 + plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
         break;
     case WPN_JAVELINS:
-        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_JAVELIN, -1, 6, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_JAVELIN, -1, 5 + plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
         break;
     case WPN_DARTS:
-        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 30, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 20 + 10 * plus);
         newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 2);
         break;
     case WPN_BOW:
-        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_BOW);
-        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 25, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_BOW, -1, 1, plus, plus);
+        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_ARROW, -1, 20);
 
         // Wield the bow instead.
         you.equip[EQ_WEAPON] = 1;
         break;
     case WPN_CROSSBOW:
-        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_CROSSBOW);
-        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1, 25, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_CROSSBOW, -1, 1, plus, plus);
+        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_BOLT, -1, 20);
 
         // Wield the crossbow instead.
         you.equip[EQ_WEAPON] = 1;
         break;
     case WPN_SLING:
-        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_SLING);
-        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_SLING_BULLET, -1, 25, plus);
+        newgame_make_item(1, EQ_NONE, OBJ_WEAPONS, WPN_SLING, -1, 1, plus, plus);
+        newgame_make_item(2, EQ_NONE, OBJ_MISSILES, MI_SLING_BULLET, -1, 20);
 
         // Wield the sling instead.
         you.equip[EQ_WEAPON] = 1;
@@ -528,9 +527,9 @@ static void _give_items_skills(const newgame_def& ng)
 
         // Small species get darts, the others nets.
         if (you.body_size(PSIZE_BODY) < SIZE_MEDIUM)
-            newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 20);
+            newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 15);
         else
-            newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 4);
+            newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_THROWING_NET, -1, 3);
 
         // Skills.
         you.skills[SK_FIGHTING] = 2;
@@ -725,7 +724,7 @@ static void _give_items_skills(const newgame_def& ng)
 
         // One free escape.
         newgame_make_item(3, EQ_NONE, OBJ_SCROLLS, SCR_BLINKING);
-        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 20, 1);
+        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 15);
 
         newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 10);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_DISPERSAL);
@@ -785,7 +784,7 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(2, EQ_NONE, OBJ_BOOKS, BOOK_MALEDICT);
 
         // Gets some darts - this job is difficult to start off with.
-        newgame_make_item(3, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 16, 1);
+        newgame_make_item(3, EQ_NONE, OBJ_MISSILES, MI_DART, -1, 12);
 
         if (you.species == SP_OGRE || you.species == SP_TROLL)
             you.inv[0].sub_type = WPN_CLUB;
@@ -919,9 +918,9 @@ static void _give_items_skills(const newgame_def& ng)
         newgame_make_item(2, EQ_BODY_ARMOUR, OBJ_ARMOUR, ARM_ROBE);
         newgame_make_item(3, EQ_CLOAK, OBJ_ARMOUR, ARM_CLOAK);
 
-        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 10);
+        newgame_make_item(4, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 8);
         set_item_ego_type(you.inv[4], OBJ_MISSILES, SPMSL_POISONED);
-        newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 3);
+        newgame_make_item(5, EQ_NONE, OBJ_MISSILES, MI_NEEDLE, -1, 2);
         set_item_ego_type(you.inv[5], OBJ_MISSILES, SPMSL_CURARE);
 
         if (you.species == SP_OGRE || you.species == SP_TROLL)
@@ -1428,6 +1427,9 @@ static void _setup_generic(const newgame_def& ng)
         you.nemelex_sacrificing = true;
 
     // Create the save file.
-    you.save = new package(get_savedir_filename(you.your_name).c_str(),
-                           true, true);
+    if (Options.no_save)
+        you.save = new package();
+    else
+        you.save = new package(get_savedir_filename(you.your_name).c_str(),
+                               true, true);
 }

@@ -80,15 +80,19 @@ class InvEntry : public MenuEntry
 private:
     static bool show_prices;
     static bool show_glyph;
-    static bool show_cursor;
 
     mutable std::string basename;
     mutable std::string qualname;
 
+protected:
+    static bool show_cursor;
+    // Should we show the floor tile, etc?
+    bool show_background;
+
 public:
     const item_def *item;
 
-    InvEntry(const item_def &i);
+    InvEntry(const item_def &i, bool show_bg = false);
     std::string get_text(const bool need_cursor = false) const;
     void set_show_glyph(bool doshow);
     static void set_show_cursor(bool doshow);
@@ -142,8 +146,9 @@ public:
     // Loads items into the menu. If "procfn" is provided, it'll be called
     // for each MenuEntry added.
     // NOTE: Does not set menu title, ever! You *must* set the title explicitly
-    void load_items(const std::vector<const item_def*> &items,
-                    MenuEntry *(*procfn)(MenuEntry *me) = NULL);
+    menu_letter load_items(const std::vector<const item_def*> &items,
+                           MenuEntry *(*procfn)(MenuEntry *me) = NULL,
+                           menu_letter ckey = 'a');
 
     // Loads items from the player's inventory into the menu, and sets the
     // title to the stock title. If "procfn" is provided, it'll be called for
@@ -166,13 +171,17 @@ protected:
     bool process_key(int key);
     void do_preselect(InvEntry *ie);
     virtual bool is_selectable(int index) const;
+    virtual bool allow_easy_exit() const;
 
 protected:
     menu_type type;
     const std::vector<SelItem> *pre_select;
 
     invtitle_annotator title_annotate;
+    std::string temp_title;
 };
+
+void get_class_hotkeys(const int type, std::vector<char> &glyphs);
 
 bool any_items_to_select(int type_expect, bool msg = false, int excluded_slot = -1);
 

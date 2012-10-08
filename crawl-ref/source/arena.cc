@@ -13,7 +13,6 @@
 #include "dungeon.h"
 #include "env.h"
 #include "externs.h"
-#include "initfile.h"
 #include "items.h"
 #include "itemname.h" // for make_name()
 #include "l_defs.h"
@@ -30,7 +29,6 @@
 #include "mgen_data.h"
 #include "mon-stuff.h"
 #include "ng-init.h"
-#include "ng-setup.h"
 #include "options.h"
 #include "spl-miscast.h"
 #include "spl-util.h"
@@ -265,10 +263,12 @@ namespace arena
 #endif
 
         ASSERT(map);
-        bool success = dgn_place_map(map, true, true);
+        bool success = dgn_place_map(map, false, true);
         if (!success)
+        {
             throw make_stringf("Failed to create arena named \"%s\"",
                                arena_type.c_str());
+        }
         link_items();
 
         if (!env.rock_colour)
@@ -286,9 +286,9 @@ namespace arena
     std::string find_monster_spec()
     {
         if (!teams.empty())
-            return (teams);
+            return teams;
         else
-            return ("random v random");
+            return "random v random";
     }
 
     void parse_faction(faction &fact, std::string spec)
@@ -326,8 +326,10 @@ namespace arena
         summon_throttle = strip_number_tag(spec, "summon_throttle:");
 
         if (real_summons && respawn)
+        {
             throw (std::string("Can't set real_summons and respawn at "
                                "same time."));
+        }
 
         if (summon_throttle <= 0)
             summon_throttle = INT_MAX;
@@ -339,7 +341,9 @@ namespace arena
         const int ntrials = strip_number_tag(spec, "t:");
         if (ntrials != TAG_UNFOUND && ntrials >= 1 && ntrials <= 99
             && !total_trials)
+        {
             total_trials = ntrials;
+        }
 
         arena_type = strip_tag_prefix(spec, "arena:");
 
@@ -376,8 +380,10 @@ namespace arena
             factions = split_string(" vs ", spec);
 
         if (factions.size() != 2)
+        {
             throw make_stringf("Expected arena monster spec \"xxx v yyy\", "
                                "but got \"%s\"", spec.c_str());
+        }
 
         try
         {
@@ -526,12 +532,16 @@ namespace arena
         int orig_b = faction_b.active_members;
 
         if (orig_a < 0)
+        {
             mpr("Book-keeping says faction_a has negative active members.",
                 MSGCH_ERROR);
+        }
 
         if (orig_b < 0)
+        {
             mpr("Book-keeping says faction_b has negative active members.",
                 MSGCH_ERROR);
+        }
 
         faction_a.active_members = 0;
         faction_b.active_members = 0;
@@ -576,7 +586,7 @@ namespace arena
                 faction_a.won = false;
                 faction_b.won = false;
             }
-            return (true);
+            return true;
         }
 
         // Sync up our book-keeping with the actual state, and report
@@ -1054,7 +1064,7 @@ monster_type arena_pick_random_monster(const level_id &place, int power,
     }
 
     if (!arena::cycle_random)
-        return (RANDOM_MONSTER);
+        return RANDOM_MONSTER;
 
     for (int tries = 0; tries <= NUM_MONSTERS; tries++)
     {
@@ -1068,25 +1078,25 @@ monster_type arena_pick_random_monster(const level_id &place, int power,
         if (arena_veto_random_monster(arena::cycle_random_pos))
             continue;
 
-        return (arena::cycle_random_pos);
+        return arena::cycle_random_pos;
     }
 
     game_ended_with_error(
         make_stringf("No random monsters for place '%s'",
                      arena::place.describe().c_str()));
-    return (NUM_MONSTERS);
+    return NUM_MONSTERS;
 }
 
 bool arena_veto_random_monster(monster_type type)
 {
     if (!arena::allow_immobile && mons_class_is_stationary(type))
-        return (true);
+        return true;
     if (!arena::allow_zero_xp && mons_class_flag(type, M_NO_EXP_GAIN))
-        return (true);
+        return true;
     if (!(mons_char(type) & !127) && arena::banned_glyphs[mons_char(type)])
-        return (true);
+        return true;
 
-    return (false);
+    return false;
 }
 
 bool arena_veto_place_monster(const mgen_data &mg, bool first_band_member,
@@ -1100,12 +1110,12 @@ bool arena_veto_place_monster(const mgen_data &mg, bool first_band_member,
         if (mg.behaviour == BEH_FRIENDLY
             && arena::faction_a.active_members > arena::summon_throttle)
         {
-            return (true);
+            return true;
         }
         else if (mg.behaviour == BEH_HOSTILE
                  && arena::faction_b.active_members > arena::summon_throttle)
         {
-            return (true);
+            return true;
         }
 
     }
@@ -1391,7 +1401,7 @@ int arena_cull_items()
     {
         dprf("On turn #%d culled %d items dropped by monsters, done.",
              arena::turns, cull_count);
-        return (first_avail);
+        return first_avail;
     }
 
     dprf("On turn #%d culled %d items dropped by monsters, culling some more.",
@@ -1411,12 +1421,12 @@ int arena_cull_items()
     {
         dprf("Culled %d (probably) ammo items, done.",
              cull_count - count1);
-        return (first_avail);
+        return first_avail;
     }
 
     dprf("Culled %d items total, short of target %d.",
          cull_count, cull_target);
-    return (first_avail);
+    return first_avail;
 } // arena_cull_items
 
 /////////////////////////////////////////////////////////////////////////////

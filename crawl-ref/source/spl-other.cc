@@ -72,7 +72,8 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
             if (mons_class_holiness(you.inv[wielded].mon_type) == MH_HOLY)
                 did_god_conduct(DID_DESECRATE_HOLY_REMAINS, 2);
         }
-        else if (is_blood_potion(you.inv[wielded]))
+        else if (is_blood_potion(you.inv[wielded])
+                 && item_type_known(you.inv[wielded]))
         {
             fail_check();
             success = true;
@@ -237,7 +238,7 @@ bool recall(int type_recalled)
     if (!success)
         mpr(gettext("Nothing appears to have answered your call."));
 
-    return (success);
+    return success;
 }
 
 // Cast_phase_shift: raises evasion (by 8 currently) via Translocations.
@@ -265,9 +266,9 @@ static bool _feat_is_passwallable(dungeon_feature_type feat)
     case DNGN_SLIMY_WALL:
     case DNGN_CLEAR_ROCK_WALL:
     case DNGN_SECRET_DOOR:
-        return (true);
+        return true;
     default:
-        return (false);
+        return false;
     }
 }
 
@@ -280,7 +281,8 @@ spret_type cast_passwall(const coord_def& delta, int pow, bool fail)
     coord_def dest;
     for (dest = you.pos() + delta;
          in_bounds(dest) && _feat_is_passwallable(grd(dest));
-         dest += delta) ;
+         dest += delta)
+    {}
 
     int walls = (dest - you.pos()).rdist() - 1;
     if (walls == 0)
@@ -331,6 +333,8 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
 
     if (x_chance_in_y(40 + pow/3, 100))
     {
+        if (mons->check_clarity(false))
+            return 1;
         mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
         simple_monster_message(mons, " looks rather confused.");
         return 1;
@@ -439,13 +443,10 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
         pot_type = POT_POISON;
         break;
 
-    case CE_MUTAGEN_RANDOM:
-    case CE_MUTAGEN_GOOD:   // unused
-    case CE_RANDOM:         // unused
+    case CE_MUTAGEN:
         pot_type = POT_MUTATION;
         break;
 
-    case CE_MUTAGEN_BAD:    // unused
     case CE_ROTTEN:         // actually this only occurs via mangling
     case CE_ROT:            // necrophage
         pot_type = POT_DECAY;
@@ -504,9 +505,17 @@ spret_type cast_fulsome_distillation(int pow, bool check_range, bool fail)
     mprf(gettext("You extract %s from the corpse."),
          corpse->name(true, DESC_A).c_str());
 
-    // Try to move the potion to the player (for convenience).
+    // Try to move the potion to the player (for convenience);
+    // they probably won't autopickup bad potions.
+    // Treats potion as though it was being picked up manually (0005916).
+    std::map<int,int> tmp_l_p = you.last_pickup;
+    you.last_pickup.clear();
+
     if (move_item_to_player(corpse->index(), 1) != 1)
         mpr(gettext("Unfortunately, you can't carry it right now!"));
+
+    if (you.last_pickup.empty())
+        you.last_pickup = tmp_l_p;
 
     if (was_orc)
         did_god_conduct(DID_DESECRATE_ORCISH_REMAINS, 2);

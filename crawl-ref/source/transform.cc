@@ -73,7 +73,7 @@ bool form_can_fly(transformation_type form)
     if (you.species == SP_TENGU
         && (you.experience_level >= 15 || you.airborne()))
     {
-        return (true);
+        return true;
     }
     return (form == TRAN_DRAGON || form == TRAN_BAT);
 }
@@ -82,13 +82,13 @@ bool form_can_swim(transformation_type form)
 {
     // Ice floats.
     if (form == TRAN_ICE_BEAST)
-        return (true);
+        return true;
 
     if (you.species == SP_MERFOLK && !form_changed_physiology(form))
-        return (true);
+        return true;
 
     if (you.species == SP_OCTOPODE)
-        return (true);
+        return true;
 
     size_type size = you.transform_size(form, PSIZE_BODY);
     if (size == SIZE_CHARACTER)
@@ -205,7 +205,7 @@ _init_equipment_removal(transformation_type form)
         else if (!form_can_wear_item(*pitem, form))
             result.insert(eq);
     }
-    return (result);
+    return result;
 }
 
 static void _remove_equipment(const std::set<equipment_type>& removed,
@@ -225,7 +225,7 @@ static void _remove_equipment(const std::set<equipment_type>& removed,
         {
             if (you.form == TRAN_NONE || form_can_wield(you.form))
                 unequip = true;
-            if (equip->base_type != OBJ_WEAPONS && equip->base_type != OBJ_STAVES)
+            if (!is_weapon(*equip))
                 unequip = true;
         }
 
@@ -269,7 +269,7 @@ static bool _mutations_prevent_wearing(const item_def& item)
             || player_mutation_level(MUT_ANTENNAE)
             || player_mutation_level(MUT_BEAK)))
     {
-        return (true);
+        return true;
     }
 
     // Barding is excepted here.
@@ -277,19 +277,19 @@ static bool _mutations_prevent_wearing(const item_def& item)
         && (player_mutation_level(MUT_HOOVES) >= 3
             || player_mutation_level(MUT_TALONS) >= 3))
     {
-        return (true);
+        return true;
     }
 
     if (eqslot == EQ_GLOVES && player_mutation_level(MUT_CLAWS) >= 3)
-        return (true);
+        return true;
 
     if (eqslot == EQ_HELMET && (player_mutation_level(MUT_HORNS) == 3
         || player_mutation_level(MUT_ANTENNAE) == 3))
     {
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 static void _unmeld_equipment_type(equipment_type e)
@@ -363,12 +363,6 @@ void remove_one_equip(equipment_type eq, bool meld, bool mutation)
     _remove_equipment(r, meld, mutation);
 }
 
-// FIXME: Switch to 4.1 transforms handling.
-size_type transform_size(int psize)
-{
-    return you.transform_size(you.form, psize);
-}
-
 size_type player::transform_size(transformation_type tform, int psize) const
 {
     switch (tform)
@@ -393,9 +387,9 @@ static bool _abort_or_fizzle(bool just_check)
     {
         canned_msg(MSG_SPELL_FIZZLES);
         move_player_to_grid(you.pos(), false, true);
-        return (true); // pay the necessary costs
+        return true; // pay the necessary costs
     }
-    return (false); // SPRET_ABORT
+    return false; // SPRET_ABORT
 }
 
 monster_type transform_mons()
@@ -513,19 +507,19 @@ bool feat_dangerous_for_form(transformation_type which_trans,
 {
     // Everything is okay if we can fly.
     if (form_can_fly(which_trans) || _levitating_in_new_form(which_trans))
-        return (false);
+        return false;
 
     // We can only cling for safety if we're already doing so.
     if (which_trans == TRAN_SPIDER && you.is_wall_clinging())
-        return (false);
+        return false;
 
     if (feat == DNGN_LAVA)
-        return (true);
+        return true;
 
     if (feat == DNGN_DEEP_WATER)
         return (!form_likes_water(which_trans) && !beogh_water_walk());
 
-    return (false);
+    return false;
 }
 
 static mutation_type appendages[] =
@@ -590,14 +584,14 @@ static bool _transformation_is_safe(transformation_type which_trans,
                                     dungeon_feature_type feat, bool quiet)
 {
     if (!feat_dangerous_for_form(which_trans, feat))
-        return (true);
+        return true;
 
     if (!quiet)
     {
         mprf(gettext("You would %s in your new form."),
              feat == DNGN_DEEP_WATER ? pgettext("_transformation_is_safe", "drown") : pgettext("_transformation_is_safe", "burn"));
     }
-    return (false);
+    return false;
 }
 
 static int _transform_duration(transformation_type which_trans, int pow)
@@ -640,8 +634,8 @@ bool transform(int pow, transformation_type which_trans, bool force,
     if (!just_check && you.religion == GOD_ZIN
         && x_chance_in_y(you.piety, MAX_PIETY) && which_trans != TRAN_NONE)
     {
-        simple_god_message(gettext(" protects your body from unnatural transformation!"));
-        return (false);
+        simple_god_message(_(" protects your body from unnatural transformation!"));
+        return false;
     }
 
     if (!force && crawl_state.is_god_acting())
@@ -652,11 +646,11 @@ bool transform(int pow, transformation_type which_trans, bool force,
         // Jiyva's wrath-induced transformation is blocking the attempt.
         // May need to be updated if transform_uncancellable is used for
         // other uses.
-        return (false);
+        return false;
     }
 
     if (!_transformation_is_safe(which_trans, env.grid(you.pos()), force))
-        return (false);
+        return false;
 
     // This must occur before the untransform() and the is_undead check.
     if (previous_trans == which_trans)
@@ -665,7 +659,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         if (you.duration[DUR_TRANSFORMATION] < dur * BASELINE_DELAY)
         {
             if (just_check)
-                return (true);
+                return true;
 
             if (which_trans == TRAN_PIG)
                 mpr(gettext("You feel you'll be a pig longer."));
@@ -673,13 +667,13 @@ bool transform(int pow, transformation_type which_trans, bool force,
                 mpr(gettext("You extend your transformation's duration."));
             you.duration[DUR_TRANSFORMATION] = dur * BASELINE_DELAY;
 
-            return (true);
+            return true;
         }
         else
         {
             if (!force && which_trans != TRAN_PIG && which_trans != TRAN_NONE)
                 mpr(_("You fail to extend your transformation any further."));
-            return (false);
+            return false;
         }
     }
 
@@ -709,8 +703,8 @@ bool transform(int pow, transformation_type which_trans, bool force,
             || which_trans != TRAN_BAT && you.hunger_state <= HS_SATIATED))
     {
         if (!force)
-            mpr(gettext("Your unliving flesh cannot be transformed in this way."));
-        return (_abort_or_fizzle(just_check));
+            mpr(_("Your unliving flesh cannot be transformed in this way."));
+        return _abort_or_fizzle(just_check);
     }
 
     if (which_trans == TRAN_LICH && you.duration[DUR_DEATHS_DOOR])
@@ -720,7 +714,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
             mpr(gettext("The transformation conflicts with an enchantment "
                 "already in effect."));
         }
-        return (_abort_or_fizzle(just_check));
+        return _abort_or_fizzle(just_check);
     }
 
     std::set<equipment_type> rem_stuff = _init_equipment_removal(which_trans);
@@ -839,7 +833,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
 
     // If we're just pretending return now.
     if (just_check)
-        return (true);
+        return true;
 
     // Switching between forms takes a bit longer.
     if (!force && previous_trans != TRAN_NONE && previous_trans != which_trans)
@@ -971,7 +965,9 @@ bool transform(int pow, transformation_type which_trans, bool force,
     // Stop being constricted if we are now too large.
     if (you.is_constricted())
     {
-        actor* const constrictor = mindex_to_actor(you.constricted_by);
+        actor* const constrictor = actor_by_mid(you.constricted_by);
+        ASSERT(constrictor);
+
         if (you.body_size(PSIZE_BODY) > constrictor->body_size(PSIZE_BODY))
             you.stop_being_constricted();
     }
@@ -996,7 +992,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         move_player_to_grid(you.pos(), false, true);
     }
 
-    return (true);
+    return true;
 }
 
 void untransform(bool skip_wielding, bool skip_move)
@@ -1159,7 +1155,7 @@ void untransform(bool skip_wielding, bool skip_move)
     // Stop being constricted if we are now too large.
     if (you.is_constricted())
     {
-        actor* const constrictor = mindex_to_actor(you.constricted_by);
+        actor* const constrictor = actor_by_mid(you.constricted_by);
         if (you.body_size(PSIZE_BODY) > constrictor->body_size(PSIZE_BODY))
             you.stop_being_constricted();
     }

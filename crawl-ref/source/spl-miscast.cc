@@ -518,7 +518,7 @@ bool MiscastEffect::_ouch(int dam, beam_type flavour)
         dam = check_your_resists(dam, flavour, cause);
 
         if (avoid_lethal(dam))
-            return (false);
+            return false;
 
         do_msg(true);
 
@@ -544,7 +544,7 @@ bool MiscastEffect::_ouch(int dam, beam_type flavour)
         ouch(dam, kill_source, method, cause.c_str(), see_source);
     }
 
-    return (true);
+    return true;
 }
 
 bool MiscastEffect::_explosion()
@@ -556,29 +556,29 @@ bool MiscastEffect::_explosion()
     int max_dam = beam.damage.num * beam.damage.size;
     max_dam = check_your_resists(max_dam, beam.flavour, cause);
     if (avoid_lethal(max_dam))
-        return (false);
+        return false;
 
     do_msg(true);
     beam.explode();
 
-    return (true);
+    return true;
 }
 
 bool MiscastEffect::_big_cloud(cloud_type cl_type, int cloud_pow, int size,
                                int spread_rate)
 {
     if (avoid_lethal(2 * max_cloud_damage(cl_type, cloud_pow)))
-        return (false);
+        return false;
 
     do_msg(true);
     big_cloud(cl_type, guilty, target->pos(), cloud_pow, size, spread_rate);
 
-    return (true);
+    return true;
 }
 
 bool MiscastEffect::_lose_stat(stat_type which_stat, int8_t stat_loss)
 {
-    return (lose_stat(which_stat, stat_loss, false, cause));
+    return lose_stat(which_stat, stat_loss, false, cause);
 }
 
 void MiscastEffect::_potion_effect(potion_type pot_eff, int pot_pow)
@@ -616,10 +616,10 @@ void MiscastEffect::_potion_effect(potion_type pot_eff, int pot_pow)
 bool MiscastEffect::_send_to_abyss()
 {
     if (player_in_branch(BRANCH_ABYSS) || source == HELL_EFFECT_MISCAST)
-        return (_malign_gateway()); // attempt to degrade to malign gateway
+        return _malign_gateway(); // attempt to degrade to malign gateway
 
     target->banish(act_source, cause);
-    return (true);
+    return true;
 }
 
 // XXX: Mostly duplicated from cast_malign_gateway.
@@ -648,13 +648,13 @@ bool MiscastEffect::_malign_gateway()
         do_msg();
     }
 
-    return (success);
+    return success;
 }
 
 bool MiscastEffect::avoid_lethal(int dam)
 {
     if (lethality_margin <= 0 || (you.hp - dam) > lethality_margin)
-        return (false);
+        return false;
 
     if (recursion_depth == MAX_RECURSE)
     {
@@ -662,7 +662,7 @@ bool MiscastEffect::avoid_lethal(int dam)
         mpr("Couldn't avoid lethal miscast: too much recursion.",
             MSGCH_ERROR);
 #endif
-        return (false);
+        return false;
     }
 
     if (did_msg)
@@ -671,7 +671,7 @@ bool MiscastEffect::avoid_lethal(int dam)
         mpr("Couldn't avoid lethal miscast: already printed message for this "
             "miscast.", MSGCH_ERROR);
 #endif
-        return (false);
+        return false;
     }
 
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_MISCAST)
@@ -680,7 +680,7 @@ bool MiscastEffect::avoid_lethal(int dam)
 
     do_miscast();
 
-    return (true);
+    return true;
 }
 
 bool MiscastEffect::_create_monster(monster_type what, int abj_deg,
@@ -737,7 +737,7 @@ bool MiscastEffect::_create_monster(monster_type what, int abj_deg,
             data.summon_type = MON_SUMM_MISCAST;
     }
 
-    return (create_monster(data));
+    return create_monster(data);
 }
 
 // hair or hair-equivalent (like bandages)
@@ -745,7 +745,7 @@ static bool _has_hair(actor* target)
 {
     // Don't bother for monsters.
     if (target->is_monster())
-        return (false);
+        return false;
 
     return (!form_changed_physiology() && you.species != SP_GHOUL
             && you.species != SP_OCTOPODE
@@ -1136,10 +1136,10 @@ void MiscastEffect::_translocation(int severity)
             break;
         case 3:
         case 4:
-            you_msg        = gettext("Space bends around you!");
-            mon_msg_seen   = gettext("Space bends around @the_monster@!");
-            mon_msg_unseen = gettext("A piece of empty space twists and distorts.");
-            if (_ouch(4 + random2avg(7, 2)) && target->alive())
+            you_msg        = _("Space bends around you!");
+            mon_msg_seen   = _("Space bends around @the_monster@!");
+            mon_msg_unseen = _("A piece of empty space twists and distorts.");
+            if (_ouch(4 + random2avg(7, 2)) && target->alive() && !target->no_tele())
                 target->blink(false);
             break;
         case 5:
@@ -1172,10 +1172,14 @@ void MiscastEffect::_translocation(int severity)
             _ouch(5 + random2avg(9, 2));
             if (target->alive())
             {
-                if (one_chance_in(3))
-                    target->teleport(true);
-                else
-                    target->blink(false);
+                // Same message as a harmless miscast, thus no permit_id.
+                if (!target->no_tele(true, false))
+                {
+                    if (one_chance_in(3))
+                        target->teleport(true);
+                    else
+                        target->blink(false);
+                }
                 if (target->alive())
                     _potion_effect(POT_CONFUSION, 40);
             }
@@ -1220,7 +1224,8 @@ void MiscastEffect::_translocation(int severity)
             mon_msg_unseen = _("A rift temporarily opens in the fabric of space!");
             if (_ouch(9 + random2avg(17, 2)) && target->alive())
             {
-                target->teleport(true);
+                if (!target->no_tele())
+                    target->teleport(true);
                 if (target->alive())
                     _potion_effect(POT_CONFUSION, 60);
             }
@@ -2202,7 +2207,7 @@ void MiscastEffect::_ice(int severity)
          || feat_is_staircase(feat) || feat_is_water(feat));
 
     const std::string feat_name = (feat == DNGN_FLOOR ? "the " : "") +
-        feature_description(target->pos(), false, DESC_THE);
+        feature_description_at(target->pos(), false, DESC_THE);
 
     int num;
     switch (severity)
@@ -2627,7 +2632,7 @@ void MiscastEffect::_air(int severity)
                              "@hands@!");
             mon_msg_unseen = gettext("Noxious gasses appear from out of thin air!");
 
-            _big_cloud(CLOUD_STINK, 20, 9 + random2(4));
+            _big_cloud(CLOUD_MEPHITIC, 20, 9 + random2(4));
             break;
         case 2:
             you_msg        = gettext("You are under the weather.");
@@ -2762,11 +2767,11 @@ void MiscastEffect::_poison(int severity)
             break;
 
         case 1:
-            you_msg        = gettext("Noxious gasses pour from your @hands@!");
-            mon_msg_seen   = gettext("Noxious gasses pour from @the_monster@'s "
+            you_msg        = _("Noxious gasses pour from your @hands@!");
+            mon_msg_seen   = _("Noxious gasses pour from @the_monster@'s "
                              "@hands@!");
-            mon_msg_unseen = gettext("Noxious gasses pour forth from the thin air!");
-            place_cloud(CLOUD_STINK, target->pos(), 2 + random2(4), guilty);
+            mon_msg_unseen = _("Noxious gasses pour forth from the thin air!");
+            place_cloud(CLOUD_MEPHITIC, target->pos(), 2 + random2(4), guilty);
             break;
         }
         break;
@@ -2791,7 +2796,7 @@ void MiscastEffect::_poison(int severity)
                              "@hands@!");
             mon_msg_unseen = gettext("Noxious gasses pour forth from the thin air!");
 
-            _big_cloud(CLOUD_STINK, 20, 8 + random2(5));
+            _big_cloud(CLOUD_MEPHITIC, 20, 8 + random2(5));
             break;
 
         case 2:

@@ -79,12 +79,16 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     direction(beam, args);
 
     if (!beam.isValid)
-        return (false);
+    {
+        if (beam.isCancel)
+            canned_msg(MSG_OK);
+        return false;
+    }
 
     if (beam.isMe())
     {
         canned_msg(MSG_UNTHINKING_ACT);
-        return (false);
+        return false;
     }
 
     if (you.confused())
@@ -107,8 +111,8 @@ static bool _reaching_weapon_attack(const item_def& wpn)
 
     if (x_distance > 2 || y_distance > 2)
     {
-        mpr(gettext("Your weapon cannot reach that far!"));
-        return (false); // Shouldn't happen with confused swings
+        mpr(_("Your weapon cannot reach that far!"));
+        return false; // Shouldn't happen with confused swings
     }
     else if (!feat_is_reachable_past(grd(first_middle))
              && !feat_is_reachable_past(grd(second_middle)))
@@ -117,13 +121,13 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         // can reach _past_.
         if (you.confused())
         {
-            mpr(gettext("You swing wildly and hit a wall."));
-            return (true);
+            mpr(_("You swing wildly and hit a wall."));
+            return true;
         }
         else
         {
-            mpr(gettext("There's a wall in the way."));
-            return (false);
+            mpr(_("There's a wall in the way."));
+            return false;
         }
     }
 
@@ -180,16 +184,24 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         // Must return true, otherwise you get a free discovery
         // of invisible monsters.
         if (you.confused())
-            mprf(gettext("You swing wildly%s"), beam.isMe() ?
-                                       gettext(" and almost hit yourself!") : ".");
+        {
+            mprf(_("You swing wildly%s"), beam.isMe() ?
+                                       _(" and almost hit yourself!") : ".");
+        }
         else
-            mpr(gettext("You attack empty space."));
-        return (true);
+            mpr(_("You attack empty space."));
+        return true;
     }
     else
-        fight_melee(&you, mons);
+    {
+        if (!fight_melee(&you, mons))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
+    }
 
-    return (true);
+    return true;
 }
 
 static bool _evoke_horn_of_geryon(item_def &item)
@@ -260,7 +272,7 @@ static bool _evoke_horn_of_geryon(item_def &item)
             mgen_data::hostile_at(MONS_HELL_BEAST, "the horn of Geryon",
                 true, 4, 0, you.pos()));
     }
-    return (rc);
+    return rc;
 }
 
 static bool _efreet_flask(int slot)
@@ -299,28 +311,28 @@ static bool _efreet_flask(int slot)
 
     dec_inv_item_quantity(slot, 1);
 
-    return (true);
+    return true;
 }
 
 static bool _check_crystal_ball()
 {
     if (you.intel() <= 1)
     {
-        mpr(gettext("You lack the intelligence to focus on the shapes in the ball."));
-        return (false);
+        mpr(_("You lack the intelligence to focus on the shapes in the ball."));
+        return false;
     }
 
     if (you.confused())
     {
-        mpr(gettext("You are unable to concentrate on the shapes in the ball."));
-        return (false);
+        mpr(_("You are unable to concentrate on the shapes in the ball."));
+        return false;
     }
 
     if (you.magic_points == you.max_magic_points)
     {
-        mpr(gettext("With no energy to recover, the crystal ball of energy is "
+        mpr(_("With no energy to recover, the crystal ball of energy is "
             "presently useless to you."));
-        return (false);
+        return false;
     }
 
     if (you.skill(SK_EVOCATIONS) < 2)
@@ -329,7 +341,7 @@ static bool _check_crystal_ball()
         return false;
     }
 
-    return (true);
+    return true;
 }
 
 bool disc_of_storms(bool drac_breath)
@@ -388,7 +400,7 @@ bool disc_of_storms(bool drac_breath)
             }
         }
     }
-    return (rc);
+    return rc;
 }
 
 void tome_of_power(int slot)
@@ -517,7 +529,7 @@ void skill_manual(int slot)
         set_ident_flags(manual, ISFLAG_KNOW_TYPE);
     const skill_type skill = static_cast<skill_type>(manual.plus);
 
-    if (is_useless_skill(skill))
+    if (is_useless_skill(skill) || you.skills[skill] >= 27)
     {
         if (!known)
             mprf("This is a manual of %s.", skill_name(skill));
@@ -603,7 +615,7 @@ static bool _box_of_beasts(item_def &box)
         }
     }
 
-    return (success);
+    return success;
 }
 
 static bool _ball_of_energy(void)
@@ -642,17 +654,18 @@ static bool _ball_of_energy(void)
         }
     }
 
-    return (ret);
+    return ret;
 }
 
 bool evoke_item(int slot)
 {
+
     if (you.berserk() && (slot == -1
                        || slot != you.equip[EQ_WEAPON]
-                       || !weapon_reach(*you.weapon())))
+                       || weapon_reach(*you.weapon()) <= 2))
     {
         canned_msg(MSG_TOO_BERSERK);
-        return (false);
+        return false;
     }
 
     if (slot == -1)
@@ -663,10 +676,10 @@ bool evoke_item(int slot)
                                    NULL, OPER_EVOKE);
 
         if (prompt_failed(slot))
-            return (false);
+            return false;
     }
     else if (!check_warning_inscriptions(you.inv[slot], OPER_EVOKE))
-        return (false);
+        return false;
 
     ASSERT(slot >= 0);
 
@@ -677,7 +690,13 @@ bool evoke_item(int slot)
     item_def& item = you.inv[slot];
     // Also handles messages.
     if (!item_is_evokable(item, true, false, false, true))
-        return (false);
+        return false;
+
+    if (you.suppressed() && weapon_reach(item) <= 2)
+    {
+        canned_msg(MSG_EVOCATION_SUPPRESSED);
+        return false;
+    }
 
     int pract = 0; // By how much Evocations is practised.
     bool did_work   = false;  // Used for default "nothing happens" message.
@@ -689,23 +708,24 @@ bool evoke_item(int slot)
     if (entry && entry->evoke_func)
     {
         ASSERT(item_is_equipped(item));
+
         if (entry->evoke_func(&item, &pract, &did_work, &unevokable))
         {
             if (!unevokable)
                 count_action(CACT_EVOKE, EVOC_MISC);
-            return (did_work);
+            return did_work;
         }
     }
     else switch (item.base_type)
     {
     case OBJ_WANDS:
         zap_wand(slot);
-        return (true);
+        return true;
 
     case OBJ_WEAPONS:
         ASSERT(wielded);
 
-        if (weapon_reach(item))
+        if (weapon_reach(item) > 2)
         {
             if (_reaching_weapon_attack(item))
             {
@@ -713,13 +733,13 @@ bool evoke_item(int slot)
                 did_work = true;
             }
             else
-                return (false);
+                return false;
         }
         else
             unevokable = true;
         break;
 
-    case OBJ_STAVES:
+    case OBJ_RODS:
         ASSERT(wielded);
 
         if (you.confused())
@@ -728,40 +748,48 @@ bool evoke_item(int slot)
             return false;
         }
 
-        if (item_is_rod(item))
-        {
-            pract = staff_spell(slot);
-            // [ds] Early exit, no turns are lost.
-            if (pract == -1)
-                return (false);
+        pract = rod_spell(slot);
+        // [ds] Early exit, no turns are lost.
+        if (pract == -1)
+            return false;
 
-            did_work = true;  // staff_spell() will handle messages
-            count_action(CACT_EVOKE, EVOC_ROD);
-        }
-        else if (item.sub_type == STAFF_CHANNELING)
+        did_work = true;  // rod_spell() will handle messages
+        count_action(CACT_EVOKE, EVOC_ROD);
+        break;
+
+    case OBJ_STAVES:
+        ASSERT(wielded);
+        if (item.sub_type != STAFF_CHANNELING)
         {
-            if (!you.is_undead && you.hunger_state == HS_STARVING)
-            {
-                canned_msg(MSG_TOO_HUNGRY);
-                return (false);
-            }
-            else if (you.magic_points >= you.max_magic_points)
-            {
-                mpr("Your reserves of magic are already full.");
-                return (false);
-            }
-            else if (x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 1100, 4000))
-            {
-                mpr(gettext("You channel some magical energy."));
-                inc_mp(1 + random2(3));
-                make_hungry(50, false, true);
-                pract = 1;
-                did_work = true;
-                count_action(CACT_EVOKE, EVOC_MISC);
-            }
-        }
-        else
             unevokable = true;
+            break;
+        }
+
+        if (you.confused())
+        {
+            mpr("You're too confused.");
+            return false;
+        }
+
+        if (!you.is_undead && you.hunger_state == HS_STARVING)
+        {
+            canned_msg(MSG_TOO_HUNGRY);
+            return false;
+        }
+        else if (you.magic_points >= you.max_magic_points)
+        {
+            mpr(_("Your reserves of magic are already full."));
+            return false;
+        }
+        else if (x_chance_in_y(you.skill(SK_EVOCATIONS, 100) + 1100, 4000))
+        {
+            mpr(_("You channel some magical energy."));
+            inc_mp(1 + random2(3));
+            make_hungry(50, false, true);
+            pract = 1;
+            did_work = true;
+            count_action(CACT_EVOKE, EVOC_MISC);
+        }
         break;
 
     case OBJ_MISCELLANY:
@@ -770,6 +798,7 @@ bool evoke_item(int slot)
         if (is_deck(item))
         {
             ASSERT(wielded);
+
             evoke_deck(item);
             pract = 1;
             count_action(CACT_EVOKE, EVOC_DECK);
@@ -866,5 +895,5 @@ bool evoke_item(int slot)
     else
         crawl_state.zero_turns_taken();
 
-    return (did_work);
+    return did_work;
 }

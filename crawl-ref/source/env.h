@@ -50,6 +50,8 @@ struct crawl_environment
     FixedArray< map_cell, GXM, GYM >         map_shadow;
     std::set<coord_def> visible;
 
+    std::vector<coord_def>                   travel_trail;
+
     // indexed by grid coords
 #ifdef USE_TILE
     FixedArray<tile_fg_store, GXM, GYM> tile_bk_fg;
@@ -105,6 +107,7 @@ struct crawl_environment
     int forest_awoken_until;
     int density;
     int absdepth0;
+    std::vector<std::pair<coord_def, int> > sunlight;
 
     // Volatile level flags, not saved.
     uint32_t level_state;

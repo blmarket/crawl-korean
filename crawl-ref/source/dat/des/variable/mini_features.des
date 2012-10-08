@@ -1608,6 +1608,91 @@ xx..m..mm.....mm..m..xx
        xxxxxxxxx
 ENDMAP
 
+NAME:   wad_floor_pattern_1
+TAGS:   mini_float extra
+WEIGHT: 2
+FTILE:  ' = floor_volcanic
+COLOUR: ' = red
+FTILE:  ; = floor_pebble
+COLOUR: ; = darkgrey
+FTILE:  " = floor_pebble_brown
+COLOUR: " = brown
+MAP
+';;;;;;;;;";;;;;;;;;'
+;'''''''''"''''''''';
+;''"""""""""""""""'';
+;'"';;;;;;";;;;;;'"';
+;'";';;;;;";;;;;';"';
+;'";;'''''"''''';;"';
+;'";;''"""""""'';;"';
+;'";;'"';;";;'"';;"';
+;'";;'";';";';"';;"';
+;'";;'";;'"';;"';;"';
+""""""""""'""""""""""
+;'";;'";;'"';;"';;"';
+;'";;'";';";';"';;"';
+;'";;'"';;";;'"';;"';
+;'";;''"""""""'';;"';
+;'";;'''''"''''';;"';
+;'";';;;;;";;;;;';"';
+;'"';;;;;;";;;;;;'"';
+;''"""""""""""""""'';
+;'''''''''"''''''''';
+';;;;;;;;;";;;;;;;;;'
+ENDMAP
+
+NAME:   wad_floor_pattern_2
+TAGS:   mini_float extra
+WEIGHT: 2
+FTILE:  ' = floor_black_cobalt
+COLOUR: ' = green
+FTILE:  ; = floor_pebble
+COLOUR: ; = darkgrey
+FTILE:  " = floor_iron
+COLOUR: " = cyan
+MAP
+'.;.;.;.;;";;.;.;.;.'
+.'.'''''''"'''''''.'.
+;.'"""""'"""'"""""'.;
+.'"';;;';".";';;;'"'.
+;'";';';.;";.;';';"';
+.'";;'''''"''''';;"'.
+;'";'''"""."""''';"';
+.'"';'"';""";'"';'"'.
+;'';.'";';";';"'.;'';
+;'"";'"";'"';""';""';
+"".""".""".""".""".""
+;'"";'"";'"';""';""';
+;'';.'";';";';"'.;'';
+.'"';'"';""";'"';'"'.
+;'";'''"""."""''';"';
+.'";;'''''"''''';;"'.
+;'";';';.;";.;';';"';
+.'"';;;';".";';;;'"'.
+;.'"""""'"""'"""""'.;
+.'.'''''''"'''''''.'.
+'.;.;.;.;;";;.;.;.;.'
+ENDMAP
+
+NAME: wad_floor_pattern_trapped
+TAGS: mini_float extra
+WEIGHT: 4
+FTILE:  GT = floor_iron
+FTILE:  ;" = floor_pebble
+COLOUR: ; = darkgrey
+COLOUR: "~ = brown
+MAP
+xxx.".xxx
+xx;""";xx
+x;G;~;G;x
+.";""";".
+""~"T"~""
+.";""";".
+x;G;~;G;x
+xx;""";xx
+xxx.".xxx
+ENDMAP
+
 #####################################################################
 #
 # <<2>> Inaccessible items
@@ -1850,7 +1935,7 @@ ENDMAP
 NAME:  minmay_trapped_gold
 TAGS:  extra luniq_mini no_monster_gen
 DEPTH: D:16-, Crypt
-KFEAT: a = axe trap / bolt trap
+KFEAT: a = spear trap / bolt trap
 KFEAT: b = blade trap
 KFEAT: c = zot trap
 MAP
@@ -1975,17 +2060,8 @@ x...x
 xxxxx
 ENDMAP
 
-NAME:  firewood_loft
-DEPTH: D:1-26
-KITEM: " = staff, staff, quarterstaff
-KITEM: ' = staff, staff / any magical staff w:3
-MAP
-xxxxx
-x"']x
-xxxxx
-ENDMAP
-
 NAME: nrook_loot_triangle
+TAGS: extra luniq_mini
 DEPTH: D, Elf, Vaults, Snake, Dis
 MAP
     v
@@ -2049,7 +2125,7 @@ ENDMAP
 NAME:   dk_vineyard_1
 DEPTH:  D:2-12
 WEIGHT: 4
-TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini
+TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini extra
 ITEM:   grape q:1 / grape q:3 / grape q:5 / sultana q:2 / sultana q:4
 NSUBST: . = 6:d
 KFEAT:  w = shallow_water
@@ -2071,7 +2147,7 @@ ENDMAP
 NAME:   dk_vineyard_2
 DEPTH:  D:2-12
 WEIGHT: 4
-TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini
+TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini extra
 ITEM:   grape q:1 / grape q:3 / grape q:5 / sultana q:2 / sultana q:4
 NSUBST: . = 4:d
 KFEAT:  w = shallow_water
@@ -2088,7 +2164,7 @@ ENDMAP
 NAME:   dk_vineyard_3
 DEPTH:  D:2-12
 WEIGHT: 4
-TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini
+TAGS:   no_item_gen no_monster_gen uniq_vineyard luniq_mini extra
 ITEM:   grape q:1 / grape q:3 / grape q:5 / sultana q:2 / sultana q:4
 NSUBST: . = 4:d
 NSUBST: : = 5:. / *:'
@@ -2104,6 +2180,28 @@ MAP
 :.ww..
 .ww...
 :...::
+ENDMAP
+
+# Wand duel gone wrong.
+NAME:   nicolae_wand_duel
+DEPTH:  D:6-
+KITEM:  d = wand of disintegration charges:0 ident:all
+TAGS:   no_hmirror no_vmirror no_monster_gen no_item_gen mini_float extra
+SUBST:  a = a A:4, b = b B:4
+KPROP:  ABd = bloody
+SUBST:  A = a, B = b
+NSUBST: a = 5:c / *:. , b = 5:c / *:.
+: dgn.delayed_decay(_G, 'c', 'human chunk q:1')
+MAP
+.................
+...aaa.....bbb...
+..aaaaa...bbbbb..
+.aaaaaaa.bbbbbbb.
+.aaadaaa.bbbdbbb.
+.aaaaaaa.bbbbbbb.
+..aaaaa...bbbbb..
+...aaa.....bbb...
+.................
 ENDMAP
 
 ##########################################################################
@@ -2567,7 +2665,7 @@ ENDMAP
 NAME:    minivault_11
 DEPTH:   D, Elf, Vaults, Crypt, Lair
 TAGS:    extra luniq_mini abyss ruin_abyss ruin_lair
-SHUFFLE: bcva
+SHUFFLE: bcv
 MAP
 ............
 .+xxxxxxxx+.

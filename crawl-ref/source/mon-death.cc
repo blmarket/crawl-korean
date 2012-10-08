@@ -14,6 +14,7 @@
 #include "dactions.h"
 #include "env.h"
 #include "items.h"
+#include "libutil.h"
 #include "message.h"
 #include "mgen_data.h"
 #include "mon-behv.h"
@@ -196,11 +197,15 @@ void hogs_to_humans()
     else if (any > 1)
     {
         if (any == human)
-            mpr(gettext("No longer under Kirke's spell, all hogs revert to their "
+        {
+            mpr(_("No longer under Kirke's spell, all hogs revert to their "
                 "human forms!"));
+        }
         else
-            mpr(gettext("No longer under Kirke's spell, all hogs revert to their "
+        {
+            mpr(_("No longer under Kirke's spell, all hogs revert to their "
                 "original forms!"));
+        }
     }
 
     // Revert the player as well.
@@ -319,8 +324,8 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
     // Will generate strings such as 'Duvessa_Duvessa_dies' or, alternately
     // 'Dowan_Dowan_dies', but as neither will match, these can safely be
     // ignored.
-    std::string key = "_" + mons->name(DESC_THE, true) + "_"
-                          + twin->name(DESC_THE) + "_dies_";
+    std::string key = mons->name(DESC_THE, true) + "_"
+                    + twin->name(DESC_THE) + "_dies_";
 
     if (mons_near(mons) && !mons->observable())
         key += "invisible_";
@@ -336,6 +341,9 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
         mons->props["speech_prefix"] = "twin_ikilled";
     }
 
+    // Drop the final '_'.
+    key.erase(key.length() - 1);
+
     std::string death_message = getSpeakString(key);
 
     // Check if they can speak or not: they may have been polymorphed.
@@ -347,11 +355,15 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
     if (found_duvessa)
     {
         if (mons_near(mons))
+        {
             // Provides its own flavour message.
             mons->go_berserk(true);
+        }
         else
+        {
             // She'll go berserk the next time she sees you
             mons->props["duvessa_berserk"] = bool(true);
+        }
     }
     else if (found_dowan)
     {
@@ -701,9 +713,9 @@ monster* get_shedu_pair(const monster* mons)
 {
     monster* pair = monster_by_mid(mons->number);
     if (pair)
-        return (pair);
+        return pair;
 
-    return (NULL);
+    return NULL;
 }
 
 /**
@@ -717,9 +729,9 @@ monster* get_shedu_pair(const monster* mons)
 bool shedu_pair_alive(const monster* mons)
 {
     if (get_shedu_pair(mons) == NULL)
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 /**

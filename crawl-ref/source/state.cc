@@ -20,7 +20,6 @@
 #include "religion.h"
 #include "showsymb.h"
 #include "state.h"
-#include "target.h"
 #include "hints.h"
 
 game_state::game_state()
@@ -178,10 +177,10 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
                            const activity_interrupt_data &at)
 {
     if (crawl_state.cmd_repeat_start)
-        return (false);
+        return false;
 
     if (crawl_state.repeat_cmd == CMD_WIZARD)
-        return (false);
+        return false;
 
     switch (ai)
     {
@@ -192,7 +191,7 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
     case AI_HP_LOSS:
     case AI_MONSTER_ATTACKS:
         crawl_state.cancel_cmd_repeat("Command repetition interrupted.");
-        return (true);
+        return true;
 
     default:
         break;
@@ -202,12 +201,12 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
     {
         const monster* mon = static_cast<const monster* >(at.data);
         if (!you.can_see(mon))
-            return (false);
+            return false;
 
         if (crawl_state.cmd_repeat_started_unsafe
             && at.context != SC_NEWLY_SEEN)
         {
-            return (false);
+            return false;
         }
 
         crawl_state.cancel_cmd_repeat();
@@ -236,7 +235,7 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         formatted_mpr(fs, MSGCH_WARN);
 #endif
 
-        return (true);
+        return true;
     }
 
     // If command repetition is being used to imitate the rest command,
@@ -251,11 +250,11 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         else
             crawl_state.cancel_cmd_repeat("Command repetition interrupted.");
 
-        return (true);
+        return true;
     }
 
     if (crawl_state.cmd_repeat_started_unsafe)
-        return (false);
+        return false;
 
     if (ai == AI_HIT_MONSTER)
     {
@@ -267,14 +266,14 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         if (mons_class_flag(mon->type, M_NO_EXP_GAIN)
             && mon->visible_to(&you))
         {
-            return (false);
+            return false;
         }
 
         crawl_state.cancel_cmd_repeat("Command repetition interrupted.");
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 void game_state::reset_cmd_repeat()
@@ -323,7 +322,7 @@ bool game_state::is_god_retribution() const
 {
     ASSERT(is_god_acting());
 
-    return (god_act.retribution);
+    return god_act.retribution;
 }
 
 god_type game_state::which_god_acting() const
@@ -402,7 +401,7 @@ bool game_state::is_mon_acting() const
 
 monster* game_state::which_mon_acting() const
 {
-    return (mon_act);
+    return mon_act;
 }
 
 void game_state::inc_mon_acting(monster* mon)
@@ -466,8 +465,8 @@ void game_state::dump()
                   "arena_suspended: %d\n",
             seen_hups, map_stat_gen, type, arena_suspended);
     if (last_winch)
-        fprintf(stderr, "Last resize was %ld seconds ago.\n",
-                (long int)(time(0) - last_winch));
+        fprintf(stderr, "Last resize was %"PRId64" seconds ago.\n",
+                (int64_t)(time(0) - last_winch));
 
     fprintf(stderr, "\n");
 

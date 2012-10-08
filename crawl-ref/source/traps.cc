@@ -35,7 +35,6 @@
 #include "mon-stuff.h"
 #include "mon-transit.h"
 #include "ouch.h"
-#include "place.h"
 #include "player.h"
 #include "skills.h"
 #include "spl-miscast.h"
@@ -63,12 +62,12 @@ bool trap_def::type_has_ammo() const
     switch (type)
     {
     case TRAP_DART:   case TRAP_ARROW:  case TRAP_BOLT:
-    case TRAP_NEEDLE: case TRAP_SPEAR:  case TRAP_AXE:
-        return (true);
+    case TRAP_NEEDLE: case TRAP_SPEAR:
+        return true;
     default:
         break;
     }
-    return (false);
+    return false;
 }
 
 void trap_def::disarm()
@@ -122,11 +121,10 @@ void trap_def::prepare_ammo(int charges)
         ammo_qty = 3 + random2avg(9, 3);
         break;
     case TRAP_SPEAR:
-    case TRAP_AXE:
         ammo_qty = 2 + random2avg(6, 3);
         break;
     case TRAP_ALARM:
-        ammo_qty = 1 + random2(3);
+        ammo_qty = 2 + random2(4);
         // Zotdef: alarm traps have practically unlimited ammo
         if (crawl_state.game_is_zotdef())
             ammo_qty = 3276; // *10, stored as short
@@ -137,9 +135,9 @@ void trap_def::prepare_ammo(int charges)
         break;
     case TRAP_TELEPORT:
         if (crawl_state.game_is_zotdef())
-            this->ammo_qty = 2 + random2(2);
+            ammo_qty = 2 + random2(2);
         else
-            this->ammo_qty = 0;
+            ammo_qty = 0;
         break;
     default:
         ammo_qty = 0;
@@ -158,7 +156,7 @@ void trap_def::reveal()
 std::string trap_def::name(description_level_type desc) const
 {
     if (type >= NUM_TRAPS)
-        return ("buggy");
+        return "buggy";
 
     std::string basename = trap_name(type);
     if (desc == DESC_A)
@@ -172,7 +170,7 @@ std::string trap_def::name(description_level_type desc) const
     else if (desc == DESC_THE)
         return (std::string("the ") + basename);
     else                        // everything else
-        return (basename);
+        return basename;
 }
 
 bool trap_def::is_known(const actor* act) const
@@ -180,7 +178,7 @@ bool trap_def::is_known(const actor* act) const
     const bool player_knows = (grd(pos) != DNGN_UNDISCOVERED_TRAP);
 
     if (act == NULL || act->is_player())
-        return (player_knows);
+        return player_knows;
     else if (act->is_monster())
     {
         const monster* mons = act->as_monster();
@@ -285,10 +283,10 @@ int get_trapping_net(const coord_def& where, bool trapped)
             && si->sub_type == MI_THROWING_NET
             && (!trapped || item_is_stationary(*si)))
         {
-            return (si->index());
+            return si->index();
         }
     }
-    return (NON_ITEM);
+    return NON_ITEM;
 }
 
 // If there are more than one net on this square
@@ -390,12 +388,12 @@ void monster_caught_in_net(monster* mon, bolt &pbolt)
 bool player_caught_in_net()
 {
     if (you.body_size(PSIZE_BODY) >= SIZE_GIANT)
-        return (false);
+        return false;
 
     if (you.flight_mode() == FL_FLY && (!you.confused() || one_chance_in(3)))
     {
-        mpr(gettext("You dart out from under the net!"));
-        return (false);
+        mpr(_("You dart out from under the net!"));
+        return false;
     }
 
     if (!you.attribute[ATTR_HELD])
@@ -414,9 +412,9 @@ bool player_caught_in_net()
 
         stop_delay(true); // even stair delays
         redraw_screen(); // Account for changes in display.
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 void check_net_will_hold_monster(monster* mons)
@@ -469,7 +467,7 @@ static bool _player_caught_in_web()
     you.attribute[ATTR_HELD] = 10;
     // No longer stop_running() and stop_delay().
     redraw_screen(); // Account for changes in display.
-    return (true);
+    return true;
 }
 
 std::vector<coord_def> find_golubria_on_level()
@@ -629,7 +627,8 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             }
             disarm();
         }
-        triggerer.teleport(true);
+        if (!triggerer.no_tele(true, you_know || you_trigger))
+            triggerer.teleport(true);
         break;
 
     case TRAP_ALARM:
@@ -650,10 +649,8 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             if (!you_know)
                 hide();
         }
-        else if (!(m && m->friendly()))
+        else
         {
-            // Alarm traps aren't set off by hostile monsters, because
-            // that would be way too nasty for the player.
             std::string msg;
             if (you_trigger)
                 msg = gettext("An alarm trap emits a blaring wail!");
@@ -1037,28 +1034,23 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
 
 int trap_def::max_damage(const actor& act)
 {
-    int level = env.absdepth0;
-
-    // Trap damage to monsters is not a function of level, because
-    // they are fairly stupid and tend to have fewer hp than
-    // players -- this choice prevents traps from easily killing
-    // large monsters fairly deep within the dungeon.
-    if (act.is_monster())
-        level = 0;
+    // Trap damage to monsters is a lot smaller, because they are fairly
+    // stupid and tend to have fewer hp than players -- this choice prevents
+    // traps from easily killing large monsters.
+    bool mon = act.is_monster();
 
     switch (type)
     {
-        case TRAP_NEEDLE: return  0;
-        case TRAP_DART:   return  4 + level/2;
-        case TRAP_ARROW:  return  7 + level;
-        case TRAP_SPEAR:  return 10 + level;
-        case TRAP_BOLT:   return 13 + level;
-        case TRAP_AXE:    return 15 + level;
-        case TRAP_BLADE:  return (act.is_monster() ? 48 : 10) + 28;
-        default:          return  0;
+        case TRAP_NEEDLE: return 0;
+        case TRAP_DART:   return mon ?  4 :  6;
+        case TRAP_ARROW:  return mon ?  7 : 15;
+        case TRAP_SPEAR:  return mon ? 10 : 26;
+        case TRAP_BOLT:   return mon ? 18 : 40;
+        case TRAP_BLADE:  return mon ? 38 : 76;
+        default:          return 0;
     }
 
-    return (0);
+    return 0;
 }
 
 int trap_def::shot_damage(actor& act)
@@ -1068,6 +1060,38 @@ int trap_def::shot_damage(actor& act)
     if (!dam)
         return 0;
     return random2(dam) + 1;
+}
+
+int trap_def::difficulty()
+{
+    switch (type)
+    {
+    // To-hit and disarming:
+    case TRAP_DART:
+        return 3;
+    case TRAP_ARROW:
+        return 7;
+    case TRAP_SPEAR:
+        return 10;
+    case TRAP_BOLT:
+        return 15;
+    case TRAP_NET:
+        return 5;
+    case TRAP_NEEDLE:
+        return 8;
+    // Disarming only:
+    case TRAP_BLADE:
+        return 20;
+    case TRAP_PLATE:
+        return 15;
+    case TRAP_WEB:
+        return 12;
+    case TRAP_GAS:
+        return 15;
+    // Irrelevant:
+    default:
+        return 0;
+    }
 }
 
 int reveal_traps(const int range)
@@ -1090,7 +1114,7 @@ int reveal_traps(const int range)
         }
     }
 
-    return (traps_found);
+    return traps_found;
 }
 
 void destroy_trap(const coord_def& pos)
@@ -1102,7 +1126,7 @@ void destroy_trap(const coord_def& pos)
 trap_def* find_trap(const coord_def& pos)
 {
     if (!feat_is_trap(grd(pos), true))
-        return (NULL);
+        return NULL;
 
     unsigned short t = env.tgrid(pos);
 
@@ -1115,9 +1139,9 @@ trap_def* find_trap(const coord_def& pos)
 trap_type get_trap_type(const coord_def& pos)
 {
     if (trap_def* ptrap = find_trap(pos))
-        return (ptrap->type);
+        return ptrap->type;
 
-    return (TRAP_UNASSIGNED);
+    return TRAP_UNASSIGNED;
 }
 
 static bool _disarm_is_deadly(trap_def& trap)
@@ -1162,9 +1186,8 @@ void disarm_trap(const coord_def& where)
     if (_disarm_is_deadly(trap))
     {
         std::string prompt = make_stringf(
-                               gettext("Really try disarming that %s?"),
-                               feature_description(trap.category(),
-                                                   get_trap_type(where),
+                               _("Really try disarming that %s?"),
+                               feature_description_at(where,
                                                    "", DESC_BASENAME,
                                                    false).c_str());
 
@@ -1177,11 +1200,11 @@ void disarm_trap(const coord_def& where)
 
     // Make the actual attempt
     you.turn_is_over = true;
-    if (random2(you.skill_rdiv(SK_TRAPS_DOORS) + 2) <= random2(env.absdepth0 + 5))
+    if (random2(you.skill_rdiv(SK_TRAPS_DOORS) + 2) <= random2(trap.difficulty() + 5))
     {
         mpr(_("You failed to disarm the trap."));
-        if (random2(you.dex()) > 5 + random2(5 + env.absdepth0))
-            practise(EX_TRAP_DISARM_FAIL, env.absdepth0);
+        if (random2(you.dex()) > 5 + random2(5 + trap.difficulty()))
+            practise(EX_TRAP_DISARM_FAIL, trap.difficulty());
         else
         {
             if ((trap.type == TRAP_NET || trap.type==TRAP_WEB)
@@ -1203,7 +1226,7 @@ void disarm_trap(const coord_def& where)
     {
         mpr(gettext("You have disarmed the trap."));
         trap.disarm();
-        practise(EX_TRAP_DISARM, env.absdepth0);
+        practise(EX_TRAP_DISARM, trap.difficulty());
     }
 }
 
@@ -1352,9 +1375,9 @@ static int damage_or_escape_net(int hold)
 
     // If undecided, choose damaging approach (it's quicker).
     if (damage >= escape)
-        return (-damage); // negate value
+        return -damage; // negate value
 
-    return (escape);
+    return escape;
 }
 
 // Calls the above function to decide on how to get free.
@@ -1514,7 +1537,6 @@ item_def trap_def::generate_trap_item()
     case TRAP_ARROW:  base = OBJ_MISSILES; sub = MI_ARROW;        break;
     case TRAP_BOLT:   base = OBJ_MISSILES; sub = MI_BOLT;         break;
     case TRAP_SPEAR:  base = OBJ_WEAPONS;  sub = WPN_SPEAR;       break;
-    case TRAP_AXE:    base = OBJ_WEAPONS;  sub = WPN_HAND_AXE;    break;
     case TRAP_NEEDLE: base = OBJ_MISSILES; sub = MI_NEEDLE;       break;
     case TRAP_NET:    base = OBJ_MISSILES; sub = MI_THROWING_NET; break;
     default:          return item;
@@ -1559,9 +1581,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (!force_hit && (one_chance_in(5) || was_known && !one_chance_in(4)))
         {
-            mprf("You avoid triggering %s trap.",
-                  this->name(DESC_A).c_str());
-
+            mprf("You avoid triggering %s trap.", name(DESC_A).c_str());
             return;         // no ammo generated either
         }
     }
@@ -1579,7 +1599,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
 
     item_def shot = generate_trap_item();
 
-    int trap_hit = (20 + (env.absdepth0*2)) * random2(200) / 100;
+    int trap_hit = (20 + (difficulty()*2)) * random2(200) / 100;
     if (int defl = act.missile_deflection())
         trap_hit = random2(trap_hit / defl);
 
@@ -1676,27 +1696,26 @@ dungeon_feature_type trap_category(trap_type type)
     switch (type)
     {
     case TRAP_WEB:
-        return (DNGN_TRAP_WEB);
+        return DNGN_TRAP_WEB;
     case TRAP_SHAFT:
-        return (DNGN_TRAP_NATURAL);
+        return DNGN_TRAP_NATURAL;
 
     case TRAP_TELEPORT:
     case TRAP_ALARM:
     case TRAP_ZOT:
     case TRAP_GOLUBRIA:
-        return (DNGN_TRAP_MAGICAL);
+        return DNGN_TRAP_MAGICAL;
 
     case TRAP_DART:
     case TRAP_ARROW:
     case TRAP_SPEAR:
-    case TRAP_AXE:
     case TRAP_BLADE:
     case TRAP_BOLT:
     case TRAP_NEEDLE:
     case TRAP_NET:
     case TRAP_GAS:
     case TRAP_PLATE:
-        return (DNGN_TRAP_MECHANICAL);
+        return DNGN_TRAP_MECHANICAL;
 
     default:
         die("placeholder trap type %d used", type);
@@ -1709,16 +1728,16 @@ bool is_valid_shaft_level(const level_id &place)
         || crawl_state.game_is_sprint()
         || crawl_state.game_is_zotdef())
     {
-        return (false);
+        return false;
     }
 
     if (!is_connected_branch(place))
-        return (false);
+        return false;
 
     // Shafts are now allowed on the first two levels, as they have a
     // good chance of being detected. You'll also fall less deep.
     /* if (place == BRANCH_MAIN_DUNGEON && you.depth < 3)
-        return (false); */
+        return false; */
 
     // Don't generate shafts in branches where teleport control
     // is prevented.  Prevents player from going down levels without
@@ -1726,7 +1745,7 @@ bool is_valid_shaft_level(const level_id &place)
     // on lower levels with the innability to use teleport control to
     // get back up.
     if (testbits(env.level_flags, LFLAG_NO_TELE_CONTROL))
-        return (false);
+        return false;
 
     const Branch &branch = branches[place.branch];
 
@@ -1858,17 +1877,14 @@ void handle_items_on_shaft(const coord_def& pos, bool open_shaft)
     }
 }
 
-int num_traps_for_place(const level_id &place)
+int num_traps_for_place()
 {
-    switch (place.branch)
+    switch (you.where_are_you)
     {
     case BRANCH_ECUMENICAL_TEMPLE:
         return 0;
-    case BRANCH_LABYRINTH:
-        die("invalid place for traps");
-        break;
     default:
-        if (!is_connected_branch(place.branch))
+        if (!player_in_connected_branch())
             return 0;
     case BRANCH_PANDEMONIUM:
         return random2avg(9, 2);
@@ -1882,17 +1898,17 @@ static trap_type _random_trap_slime(int level_number)
     if (random2(1 + level_number) > 14 && one_chance_in(3))
         type = TRAP_ZOT;
 
-    if (one_chance_in(5) && is_valid_shaft_level(level_id::current()))
+    if (one_chance_in(5) && is_valid_shaft_level())
         type = TRAP_SHAFT;
     if (one_chance_in(5) && !crawl_state.game_is_sprint())
         type = TRAP_TELEPORT;
     if (one_chance_in(10))
         type = TRAP_ALARM;
 
-    return (type);
+    return type;
 }
 
-static trap_type _random_trap_default(int level_number, const level_id &place)
+static trap_type _random_trap_default(int level_number)
 {
     trap_type type = TRAP_DART;
 
@@ -1900,11 +1916,7 @@ static trap_type _random_trap_default(int level_number, const level_id &place)
         type = TRAP_NEEDLE;
     if (random2(1 + level_number) > 3)
         type = TRAP_SPEAR;
-    if (random2(1 + level_number) > 5)
-        type = TRAP_AXE;
 
-    // Note we're boosting arrow trap numbers by moving it
-    // down the list, and making spear and axe traps rarer.
     if (type == TRAP_DART ? random2(1 + level_number) > 2
                           : one_chance_in(7))
     {
@@ -1920,29 +1932,29 @@ static trap_type _random_trap_default(int level_number, const level_id &place)
         type = TRAP_BLADE;
 
     if (random2(1 + level_number) > 14 && one_chance_in(3)
-        || (place == BRANCH_HALL_OF_ZOT && coinflip()))
+        || (player_in_branch(BRANCH_HALL_OF_ZOT) && coinflip()))
     {
         type = TRAP_ZOT;
     }
 
-    if (one_chance_in(20) && is_valid_shaft_level(place))
+    if (one_chance_in(20) && is_valid_shaft_level())
         type = TRAP_SHAFT;
     if (one_chance_in(20) && !crawl_state.game_is_sprint())
         type = TRAP_TELEPORT;
     if (one_chance_in(40))
         type = TRAP_ALARM;
 
-    return (type);
+    return type;
 }
 
-trap_type random_trap_for_place(const level_id &place)
+trap_type random_trap_for_place()
 {
-    int level_number = place.absdepth();
+    int level_number = env.absdepth0;
 
-    if (place == BRANCH_SLIME_PITS)
+    if (player_in_branch(BRANCH_SLIME_PITS))
         return _random_trap_slime(level_number);
 
-    return _random_trap_default(level_number, place);
+    return _random_trap_default(level_number);
 }
 
 int count_traps(trap_type ttyp)

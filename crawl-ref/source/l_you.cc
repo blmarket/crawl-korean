@@ -18,7 +18,6 @@
 #include "libutil.h"
 #include "newgame.h"
 #include "ng-setup.h"
-#include "mapmark.h"
 #include "misc.h"
 #include "mon-util.h"
 #include "mutation.h"
@@ -94,15 +93,13 @@ LUARET1(you_god_likes_fresh_corpses, boolean,
         god_likes_fresh_corpses(you.religion))
 LUARET2(you_hp, number, you.hp, you.hp_max)
 LUARET2(you_mp, number, you.magic_points, you.max_magic_points)
-LUARET1(you_hunger, string, hunger_level())
+LUARET1(you_hunger, number, you.hunger_state)
+LUARET1(you_hunger_name, string, hunger_level())
 LUARET2(you_strength, number, you.strength(), you.max_strength())
 LUARET2(you_intelligence, number, you.intel(), you.max_intel())
 LUARET2(you_dexterity, number, you.dex(), you.max_dex())
 LUARET1(you_xl, number, you.experience_level)
 LUARET1(you_xl_progress, number, get_exp_progress())
-LUARET1(you_skill, number,
-        lua_isstring(ls, 1) ? you.skills[str_to_skill(lua_tostring(ls, 1))]
-                            : 0)
 LUARET1(you_skill_progress, number,
         lua_isstring(ls, 1)
             ? get_skill_percentage(str_to_skill(lua_tostring(ls, 1)))
@@ -182,13 +179,13 @@ static int l_you_genus(lua_State *ls)
     if (plural)
         genus = pluralise(PLU_DEFAULT, genus);
     lua_pushstring(ls, genus.c_str());
-    return (1);
+    return 1;
 }
 
 static int you_floor_items(lua_State *ls)
 {
     lua_push_floor_items(ls, env.igrid(you.pos()));
-    return (1);
+    return 1;
 }
 
 static int l_you_spells(lua_State *ls)
@@ -204,7 +201,7 @@ static int l_you_spells(lua_State *ls)
         lua_pushstring(ls, spell_title(spell));
         lua_rawseti(ls, -2, ++index);
     }
-    return (1);
+    return 1;
 }
 
 static int l_you_spell_letters(lua_State *ls)
@@ -225,7 +222,7 @@ static int l_you_spell_letters(lua_State *ls)
         lua_pushstring(ls, buf);
         lua_rawseti(ls, -2, ++index);
     }
-    return (1);
+    return 1;
 }
 
 static int l_you_abils(lua_State *ls)
@@ -238,7 +235,7 @@ static int l_you_abils(lua_State *ls)
         lua_pushstring(ls, abils[i]);
         lua_rawseti(ls, -2, i + 1);
     }
-    return (1);
+    return 1;
 }
 
 static int l_you_abil_letters(lua_State *ls)
@@ -255,7 +252,7 @@ static int l_you_abil_letters(lua_State *ls)
         lua_pushstring(ls, buf);
         lua_rawseti(ls, -2, i + 1);
     }
-    return (1);
+    return 1;
 }
 
 static int you_can_consume_corpses(lua_State *ls)
@@ -264,7 +261,7 @@ static int you_can_consume_corpses(lua_State *ls)
                     can_ingest(OBJ_FOOD, FOOD_CHUNK, true, false)
                     || can_ingest(OBJ_CORPSES, CORPSE_BODY, true, false)
                   );
-    return (1);
+    return 1;
 }
 
 LUAFN(you_caught)
@@ -274,7 +271,7 @@ LUAFN(you_caught)
     else
         lua_pushnil(ls);
 
-    return (1);
+    return 1;
 }
 
 LUAFN(you_mutation)
@@ -292,7 +289,7 @@ LUAFN(you_mutation)
     }
 
     std::string err = make_stringf("No such mutation: '%s'.", mutname.c_str());
-    return (luaL_argerror(ls, 1, err.c_str()));
+    return luaL_argerror(ls, 1, err.c_str());
 }
 
 LUAFN(you_is_level_on_stack)
@@ -309,6 +306,13 @@ LUAFN(you_is_level_on_stack)
     }
 
     PLUARET(boolean, is_level_on_stack(lev));
+}
+
+LUAFN(you_skill)
+{
+    skill_type sk = str_to_skill(luaL_checkstring(ls, 1));
+
+    PLUARET(number, you.skill(sk, 10) * 0.1);
 }
 
 LUAFN(you_train_skill)
@@ -344,6 +348,7 @@ static const struct luaL_reg you_clib[] =
     { "hp"          , you_hp },
     { "mp"          , you_mp },
     { "hunger"      , you_hunger },
+    { "hunger_name" , you_hunger_name },
     { "strength"    , you_strength },
     { "intelligence", you_intelligence },
     { "dexterity"   , you_dexterity },
@@ -445,7 +450,7 @@ LUAFN(you_stop_running)
 {
     stop_running();
 
-    return (0);
+    return 0;
 }
 
 LUAFN(you_moveto)
@@ -453,7 +458,7 @@ LUAFN(you_moveto)
     const coord_def place(luaL_checkint(ls, 1), luaL_checkint(ls, 2));
     ASSERT(map_bounds(place));
     you.moveto(place);
-    return (0);
+    return 0;
 }
 
 LUAFN(you_teleport_to)
@@ -465,13 +470,13 @@ LUAFN(you_teleport_to)
 
     lua_pushboolean(ls, you_teleport_to(place, move_monsters));
 
-    return (1);
+    return 1;
 }
 
 LUAFN(you_random_teleport)
 {
     you_teleport_now(false, false);
-    return (0);
+    return 0;
 }
 
 static int _you_uniques(lua_State *ls)
@@ -482,7 +487,7 @@ static int _you_uniques(lua_State *ls)
         unique_found = you.unique_creatures[get_monster_by_name(lua_tostring(ls, 1))];
 
     lua_pushboolean(ls, unique_found);
-    return (1);
+    return 1;
 }
 
 LUARET1(you_num_runes, number, runes_in_pack())
@@ -503,7 +508,7 @@ static int _you_have_rune(lua_State *ls)
     if (which_rune >= 0 && which_rune < NUM_RUNE_TYPES)
         have_rune = you.runes[which_rune];
     lua_pushboolean(ls, have_rune);
-    return (1);
+    return 1;
 }
 
 static int _you_gold(lua_State *ls)
@@ -553,7 +558,7 @@ LUAFN(you_in_branch)
                     "'%s' matches both branch '%s' and '%s'",
                     name, branches[br].abbrevname,
                     branches[i].abbrevname);
-                return (luaL_argerror(ls, 1, err.c_str()));
+                return luaL_argerror(ls, 1, err.c_str());
             }
             br = i;
         }
@@ -562,7 +567,7 @@ LUAFN(you_in_branch)
     if (br == NUM_BRANCHES)
     {
         std::string err = make_stringf("'%s' matches no branches.", name);
-        return (luaL_argerror(ls, 1, err.c_str()));
+        return luaL_argerror(ls, 1, err.c_str());
     }
 
     bool in_branch = (br == you.where_are_you);

@@ -78,7 +78,7 @@ colour_t random_uncommon_colour()
         result = random_colour();
     while (result == LIGHTCYAN || result == CYAN || result == BROWN);
 
-    return (result);
+    return result;
 }
 
 bool is_low_colour(colour_t colour)
@@ -96,7 +96,7 @@ colour_t make_low_colour(colour_t colour)
     if (is_high_colour(colour))
         return (colour - 8);
 
-    return (colour);
+    return colour;
 }
 
 colour_t make_high_colour(colour_t colour)
@@ -104,7 +104,7 @@ colour_t make_high_colour(colour_t colour)
     if (is_low_colour(colour))
         return (colour + 8);
 
-    return (colour);
+    return colour;
 }
 
 // returns if a colour is one of the special element colours (ie not regular)
@@ -203,7 +203,7 @@ static int _etc_tree(int, const coord_def& loc)
     return (h>>30) ? GREEN : LIGHTGREEN;
 }
 
-static int _etc_swamp_tree(int, const coord_def& loc)
+static int _etc_mangrove(int, const coord_def& loc)
 {
     uint32_t h = loc.x;
     h+=h<<10; h^=h>>6;
@@ -552,7 +552,7 @@ void init_element_colours()
                             ETC_TREE, "tree", _etc_tree
                        ));
     add_element_colour(new element_colour_calc(
-                            ETC_SWAMP_TREE, "swamp_tree", _etc_swamp_tree
+                            ETC_MANGROVE, "mangrove", _etc_mangrove
                        ));
     add_element_colour(new element_colour_calc(
                             ETC_TORNADO, "tornado", _etc_tornado
@@ -587,7 +587,7 @@ int element_colour(int element, bool no_random, const coord_def& loc)
 {
     // pass regular colours through for safety.
     if (!_is_element_colour(element))
-        return (element);
+        return element;
 
     // Strip COLFLAGs just in case.
     element &= 0x007f;
@@ -615,7 +615,7 @@ static std::string tile_cols[24] =
 unsigned int str_to_tile_colour(std::string colour)
 {
     if (colour.empty())
-        return (0);
+        return 0;
 
     lowercase(colour);
 
@@ -629,9 +629,9 @@ unsigned int str_to_tile_colour(std::string colour)
     for (unsigned int i = 0; i < 24; i++)
     {
          if (tile_cols[i] == colour)
-             return (i);
+             return i;
     }
-    return (0);
+    return 0;
 }
 #endif
 
@@ -693,7 +693,7 @@ int str_to_colour(const std::string &str, int default_colour,
             ret = ci;
     }
 
-    return ((ret == 16) ? default_colour : ret);
+    return (ret == 16) ? default_colour : ret;
 }
 
 #if defined(TARGET_OS_WINDOWS) || defined(USE_TILE_LOCAL)
@@ -741,26 +741,26 @@ static unsigned short _dos_reverse_brand(unsigned short colour)
         }
     }
 
-    return (colour);
+    return colour;
 }
 
 static unsigned short _dos_hilite_brand(unsigned short colour,
                                         unsigned short hilite)
 {
     if (!hilite)
-        return (colour);
+        return colour;
 
     if (colour == hilite)
         colour = 0;
 
     colour |= (hilite << 4);
-    return (colour);
+    return colour;
 }
 
 static unsigned short _dos_brand(unsigned short colour, unsigned brand)
 {
     if ((brand & CHATTR_ATTRMASK) == CHATTR_NORMAL)
-        return (colour);
+        return colour;
 
     colour &= 0xFF;
 
@@ -777,21 +777,21 @@ static unsigned _colflag2brand(int colflag)
     switch (colflag)
     {
     case COLFLAG_ITEM_HEAP:
-        return (Options.heap_brand);
+        return Options.heap_brand;
     case COLFLAG_FRIENDLY_MONSTER:
-        return (Options.friend_brand);
+        return Options.friend_brand;
     case COLFLAG_NEUTRAL_MONSTER:
-        return (Options.neutral_brand);
+        return Options.neutral_brand;
     case COLFLAG_WILLSTAB:
-        return (Options.stab_brand);
+        return Options.stab_brand;
     case COLFLAG_MAYSTAB:
-        return (Options.may_stab_brand);
+        return Options.may_stab_brand;
     case COLFLAG_FEATURE_ITEM:
-        return (Options.feature_item_brand);
+        return Options.feature_item_brand;
     case COLFLAG_TRAP_ITEM:
-        return (Options.trap_item_brand);
+        return Options.trap_item_brand;
     default:
-        return (CHATTR_NORMAL);
+        return CHATTR_NORMAL;
     }
 }
 #endif
@@ -815,5 +815,5 @@ unsigned real_colour(unsigned raw_colour, const coord_def& loc)
     }
 #endif
 
-    return (raw_colour);
+    return raw_colour;
 }

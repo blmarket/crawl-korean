@@ -8,15 +8,15 @@
 #include "monster.h"
 #include "mon-util.h"
 
-static int _clamp_stealth (int stealth)
+static int _clamp_stealth(int stealth)
 {
     if (stealth > 3)
-        return (3);
+        return 3;
     else if (stealth < -3)
-        return (-3);
+        return -3;
     else
     {
-        return (stealth);
+        return stealth;
     }
 }
 
@@ -58,7 +58,7 @@ int monster::stealth() const
 
     // Orcs are a noisy bunch and get a penalty here to affect orc wizard
     // invisibility.
-    if (mons_genus(this->type) == MONS_ORC)
+    if (mons_genus(type) == MONS_ORC)
         actual_stealth--;
 
     // Not an issue with invisibility, but glowing or haloes make you

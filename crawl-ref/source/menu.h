@@ -52,7 +52,7 @@ struct menu_letter
     menu_letter operator ++ (int)
     {
         menu_letter copy = *this;
-        this->operator++();
+        operator++();
         return copy;
     }
 };
@@ -77,7 +77,7 @@ struct menu_letter2
     menu_letter2 operator ++ (int)
     {
         menu_letter2 copy = *this;
-        this->operator++();
+        operator++();
         return copy;
     }
 };
@@ -159,7 +159,7 @@ public:
 
     virtual int highlight_colour() const
     {
-        return (menu_colour(get_text(), "", tag));
+        return menu_colour(get_text(), "", tag);
     }
 
     virtual bool selected() const
@@ -269,6 +269,7 @@ enum MenuFlag
     MF_EASY_EXIT        = 0x1000,
     MF_START_AT_END     = 0x2000,
     MF_PRESELECTED      = 0x4000,   /// Has a preselected entry.
+    MF_QUIET_SELECT     = 0x8000,   /// No selection box and no count.
 };
 
 class MenuDisplay
@@ -470,6 +471,8 @@ protected:
     virtual bool is_selectable(int index) const;
 
     virtual bool process_key(int keyin);
+
+    virtual bool allow_easy_exit() const;
 };
 
 /// Allows toggling by specific keys.
@@ -1125,7 +1128,7 @@ protected:
     SelectType m_select_type;
 };
 
-int linebreak_string(std::string& s, int maxcol);
+int linebreak_string(std::string& s, int maxcol, bool indent = false);
 std::string get_linebreak_string(const std::string& s, int maxcol);
 
 #endif

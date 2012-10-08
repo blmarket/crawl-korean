@@ -19,7 +19,7 @@ public:
                       bool clear_aliases = true);
 
     void include(const std::string &file, bool resolve, bool runscript);
-    void report_error(const std::string &error);
+    void report_error(PRINTF(1, ));
 
     std::string resolve_include(const std::string &file,
                                 const char *type = "");
@@ -126,12 +126,10 @@ public:
 
     bool        note_all_skill_levels;  // take note for all skill levels (1-27)
     bool        note_skill_max;   // take note when skills reach new max
-    bool        note_all_spells;  // take note when learning any spell
     std::string user_note_prefix; // Prefix for user notes
     int         note_hp_percent;  // percentage hp for notetaking
     bool        note_xom_effects; // take note of all Xom effects
-    int         ood_interesting;  // how many levels OOD is noteworthy?
-    int         rare_interesting; // what monster rarity is noteworthy?
+    bool        note_chat_messages; // log chat in DGL/Webtiles
     confirm_level_type easy_confirm;    // make yesno() confirming easier
     bool        easy_quit_item_prompts; // make item prompts quitable on space
     confirm_prompt_type allow_self_target;      // yes, no, prompt
@@ -167,6 +165,7 @@ public:
 #ifdef WIZARD
     int                      wiz_mode;   // no, never, start in wiz mode
     std::vector<std::string> terp_files; // Lua files to load for luaterp
+    bool                     no_save;    // don't use persistent save files
 #endif
 
     // internal use only:
@@ -185,7 +184,7 @@ public:
     std::vector<text_pattern> note_messages;  // Interesting messages
     std::vector<std::pair<text_pattern, std::string> > autoinscriptions;
     std::vector<text_pattern> note_items;     // Objects to note
-    std::vector<int> note_skill_levels;       // Skill levels to note
+    FixedBitVector<27+1> note_skill_levels;   // Skill levels to note
     std::vector<std::pair<text_pattern, std::string> > auto_spell_letters;
 
     bool        autoinscribe_artefacts; // Auto-inscribe identified artefacts.
@@ -194,6 +193,8 @@ public:
     bool        pickup_thrown;  // Pickup thrown missiles
     int         travel_delay;   // How long to pause between travel moves
     int         explore_delay;  // How long to pause between explore moves
+
+    bool        show_travel_trail;
 
     int         arena_delay;
     bool        arena_dump_msgs;
@@ -291,6 +292,9 @@ public:
     std::vector<text_pattern> drop_filter;
 
     FixedArray<bool, NUM_DELAYS, NUM_AINTERRUPTS> activity_interrupts;
+#ifdef DEBUG_DIAGNOSTICS
+    FixedBitVector<NUM_DIAGNOSTICS> quiet_debug_messages;
+#endif
 
     // Previous startup options
     bool        remember_name;      // Remember and reprompt with last name
@@ -325,9 +329,9 @@ public:
 #endif  // WIZARD
 
 #ifdef USE_TILE
-    char        tile_show_items[20]; // show which item types in tile inventory
-    bool        tile_skip_title;     // wait for a key at title screen?
-    bool        tile_menu_icons;     // display icons in menus?
+    std::string tile_show_items; // show which item types in tile inventory
+    bool        tile_skip_title; // wait for a key at title screen?
+    bool        tile_menu_icons; // display icons in menus?
 
     // minimap colours
     char        tile_player_col;
@@ -456,6 +460,7 @@ private:
 };
 
 ucs_t get_glyph_override(int c);
+object_class_type item_class_by_sym(ucs_t c);
 
 #ifdef DEBUG_GLOBALS
 #define Options (*real_Options)

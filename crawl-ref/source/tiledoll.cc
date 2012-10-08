@@ -23,19 +23,19 @@
 dolls_data::dolls_data()
 {
     parts = new tileidx_t[TILEP_PART_MAX];
-    memset(parts, 0, TILEP_PART_MAX * sizeof(int));
+    memset(parts, 0, TILEP_PART_MAX * sizeof(tileidx_t));
 }
 
 dolls_data::dolls_data(const dolls_data& _orig)
 {
     parts = new tileidx_t[TILEP_PART_MAX];
-    memcpy(parts, _orig.parts, TILEP_PART_MAX * sizeof(int));
+    memcpy(parts, _orig.parts, TILEP_PART_MAX * sizeof(tileidx_t));
 }
 
 const dolls_data& dolls_data::operator=(const dolls_data& other)
 {
-    memcpy(parts, other.parts, TILEP_PART_MAX * sizeof(int));
-    return (*this);
+    memcpy(parts, other.parts, TILEP_PART_MAX * sizeof(tileidx_t));
+    return *this;
 }
 
 dolls_data::~dolls_data()
@@ -91,10 +91,10 @@ bool save_doll_data(int mode, int num, const dolls_data* dolls)
         }
         fclose(fp);
 
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 bool load_doll_data(const char *fn, dolls_data *dolls, int max,
@@ -119,7 +119,7 @@ bool load_doll_data(const char *fn, dolls_data *dolls, int max,
     {
         // File doesn't exist. By default, use equipment settings.
         *mode = TILEP_MODE_EQUIP;
-        return (false);
+        return false;
     }
     else
     {
@@ -154,7 +154,7 @@ bool load_doll_data(const char *fn, dolls_data *dolls, int max,
 
                 // If we don't need to load a doll, return now.
                 fclose(fp);
-                return (true);
+                return true;
             }
 
             int count = 0;
@@ -184,7 +184,7 @@ bool load_doll_data(const char *fn, dolls_data *dolls, int max,
         }
 
         fclose(fp);
-        return (true);
+        return true;
     }
 }
 
@@ -282,9 +282,7 @@ void fill_doll_equipment(dolls_data &result)
         else if (item == -1)
             result.parts[TILEP_PART_HAND1] = 0;
         else
-        {
             result.parts[TILEP_PART_HAND1] = tilep_equ_weapon(you.inv[item]);
-        }
     }
     // Off hand.
     if (result.parts[TILEP_PART_HAND2] == TILEP_SHOW_EQUIP)
@@ -325,18 +323,26 @@ void fill_doll_equipment(dolls_data &result)
             result.parts[TILEP_PART_HELM] = tilep_equ_helm(you.inv[item]);
         else if (player_mutation_level(MUT_HORNS) > 0)
         {
-            switch (player_mutation_level(MUT_HORNS))
+            if (you.species == SP_FELID
+                && is_player_tile(result.parts[TILEP_PART_BASE], TILEP_BASE_FELID))
             {
-                case 1:
-                    result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS1;
-                    break;
-                case 2:
-                    result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS2;
-                    break;
-                case 3:
-                    result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS3;
-                    break;
+                // Felid horns are offset by the tile variant.
+                result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS_CAT
+                    + result.parts[TILEP_PART_BASE] - TILEP_BASE_FELID;
             }
+            else
+                switch (player_mutation_level(MUT_HORNS))
+                {
+                    case 1:
+                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS1;
+                        break;
+                    case 2:
+                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS2;
+                        break;
+                    case 3:
+                        result.parts[TILEP_PART_HELM] = TILEP_HELM_HORNS3;
+                        break;
+                }
         }
         else
             result.parts[TILEP_PART_HELM] = 0;
@@ -362,6 +368,8 @@ void fill_doll_equipment(dolls_data &result)
         const int item = you.equip[EQ_GLOVES];
         if (item != -1)
             result.parts[TILEP_PART_ARM] = tilep_equ_gloves(you.inv[item]);
+        else if (player_mutation_level(MUT_TENTACLE_SPIKE))
+            result.parts[TILEP_PART_ARM] = TILEP_ARM_OCTOPODE_SPIKE;
         else if (you.has_claws(false) >= 3)
             result.parts[TILEP_PART_ARM] = TILEP_ARM_CLAWS;
         else

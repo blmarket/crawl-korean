@@ -21,7 +21,6 @@
 #include "showsymb.h"
 
 #include "attitude-change.h"
-#include "branch.h"
 #include "cio.h"
 #include "cloud.h"
 #include "clua.h"
@@ -41,7 +40,6 @@
 #include "godpassive.h"
 #include "hints.h"
 #include "libutil.h"
-#include "macro.h"
 #include "message.h"
 #include "misc.h"
 #include "mon-behv.h"
@@ -53,12 +51,10 @@
 #include "output.h"
 #include "player.h"
 #include "random.h"
-#include "stash.h"
 #include "state.h"
 #include "stuff.h"
 #include "terrain.h"
 #include "tilemcache.h"
-#include "tiles.h"
 #include "traps.h"
 #include "travel.h"
 #include "viewmap.h"
@@ -135,6 +131,11 @@ void seen_monsters_react()
            )
         {
             behaviour_event(*mi, ME_ALERT, &you, you.pos(), false);
+
+            // That might have caused a pacified monster to leave the level.
+            if (!(*mi)->alive())
+                continue;
+
             handle_monster_shouts(*mi);
         }
 
@@ -312,7 +313,8 @@ void update_monsters_in_view()
         }
 
         bool warning = false;
-        std::string warning_msg = gettext("Ashenzari warns you: ");
+        std::string warning_msg = _("Ashenzari warns you:");
+        warning_msg += " ";
         for (unsigned int i = 0; i < size; ++i)
         {
             const monster* mon = monsters[i];
@@ -326,14 +328,16 @@ void update_monsters_in_view()
             else
                 warning = true;
 
+            std::string monname;
             if (size == 1)
-                warning_msg += mon->pronoun(PRONOUN_SUBJECTIVE);
+                monname = mon->pronoun(PRONOUN_SUBJECTIVE);
             else if (mon->type == MONS_DANCING_WEAPON)
-                warning_msg += pgettext("Ashenzari", "There");
+                monname = pgettext("Ashenzari", "There");
             else if (types[mon->type] == 1)
-                warning_msg += mon->full_name(DESC_THE);
+                monname = mon->full_name(DESC_THE);
             else
-                warning_msg += mon->full_name(DESC_A);
+                monname = mon->full_name(DESC_A);
+            warning_msg += uppercase_first(monname);
 
             warning_msg += pgettext("Ashenzari", " is");
             warning_msg += get_monster_equipment_desc(mi, DESC_IDENTIFIED,
@@ -459,7 +463,7 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
         if (!suppress_msg)
             canned_msg(MSG_DISORIENTED);
 
-        return (false);
+        return false;
     }
 
     const bool wizard_map = (you.wizard && map_radius == 1000);
@@ -575,9 +579,10 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
         std::vector<std::string> sensed;
 
         if (num_altars > 0)
-            /// 1. num, 2. s or not
-            sensed.push_back(make_stringf(gettext("%d altar%s"), num_altars,
+        {
+            sensed.push_back(make_stringf(_("%d altar%s"), num_altars,
                                           num_altars > 1 ? "s" : ""));
+        }
 
         if (num_shops_portals > 0)
         {
@@ -591,7 +596,7 @@ bool magic_mapping(int map_radius, int proportion, bool suppress_msg,
             mpr_comma_separated_list(gettext("You sensed "), sensed);
     }
 
-    return (did_map);
+    return did_map;
 }
 
 void fully_map_level()
@@ -617,7 +622,7 @@ void fully_map_level()
 bool mons_near(const monster* mons)
 {
     if (crawl_state.game_is_arena() || crawl_state.arena_suspended)
-        return (true);
+        return true;
     return (you.see_cell(mons->pos()));
 }
 
@@ -625,13 +630,13 @@ bool mon_enemies_around(const monster* mons)
 {
     // If the monster has a foe, return true.
     if (mons->foe != MHITNOT && mons->foe != MHITYOU)
-        return (true);
+        return true;
 
     if (crawl_state.game_is_arena())
     {
         // If the arena-mode code in _handle_behaviour() hasn't set a foe then
         // we don't have one.
-        return (false);
+        return false;
     }
     else if (mons->wont_attack())
     {
@@ -642,7 +647,7 @@ bool mon_enemies_around(const monster* mons)
     else
     {
         // For hostile monster* you* are the main enemy.
-        return (mons_near(mons));
+        return mons_near(mons);
     }
 }
 
@@ -695,17 +700,17 @@ std::string screenshot()
         ;                       // ... and from the top
     for (; y < lines.size(); y++)
         ss << lines[y] << "\n";
-    return (ss.str());
+    return ss.str();
 }
 
 int viewmap_flash_colour()
 {
     if (you.attribute[ATTR_SHADOWS])
-        return (DARKGREY);
+        return LIGHTGREY;
     else if (you.berserk())
-        return (RED);
+        return RED;
 
-    return (BLACK);
+    return BLACK;
 }
 
 // Updates one square of the view area. Should only be called for square
@@ -728,8 +733,7 @@ void view_update_at(const coord_def &pos)
     monster_type mons = env.map_knowledge(pos).monster();
     int cell_colour =
         flash_colour &&
-        (mons == MONS_NO_MONSTER || mons_class_is_firewood(mons) ||
-         !you.berserk())
+        (mons == MONS_NO_MONSTER || mons_class_is_firewood(mons))
             ? real_colour(flash_colour)
             : g.col;
 
@@ -774,9 +778,9 @@ bool view_update()
     if (you.num_turns > you.last_view_update)
     {
         viewwindow();
-        return (true);
+        return true;
     }
-    return (false);
+    return false;
 }
 
 void flash_view(colour_t colour, targetter *where)
@@ -904,7 +908,7 @@ static int player_view_update_at(const coord_def &gc)
     env.tile_bk_bg(gc) = env.tile_bg(ep);
 #endif
 
-    return (ret);
+    return ret;
 }
 
 static void player_view_update()
@@ -1133,23 +1137,19 @@ void draw_cell(screen_cell_t *cell, const coord_def &gc,
     // Alter colour if flashing the characters vision.
     if (flash_colour)
     {
-        if (you.see_cell(gc))
-        {
+        if (!you.see_cell(gc))
+            cell->colour = DARKGREY;
 #ifdef USE_TILE_LOCAL
+        else
             cell->colour = real_colour(flash_colour);
 #else
-            monster_type mons = env.map_knowledge(gc).monster();
-            if (mons == MONS_NO_MONSTER || mons_class_is_firewood(mons) ||
-                !you.berserk())
-            {
-                cell->colour = real_colour(flash_colour);
-            }
-#endif
-        }
-        else
+        else if (gc != you.pos())
         {
-            cell->colour = DARKGREY;
+            monster_type mons = env.map_knowledge(gc).monster();
+            if (mons == MONS_NO_MONSTER || mons_class_is_firewood(mons))
+                cell->colour = real_colour(flash_colour);
         }
+#endif
         cell->flash_colour = cell->colour;
     }
     else if (crawl_state.darken_range)

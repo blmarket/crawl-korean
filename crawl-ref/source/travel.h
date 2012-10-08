@@ -102,7 +102,6 @@ int travel_direction(uint8_t branch, int subdungeondepth);
 void prevent_travel_to(const std::string &dungeon_feature_name);
 
 // Sort dungeon features as appropriate.
-void arrange_features(std::vector<coord_def> &features);
 int level_distance(level_id first, level_id second);
 level_id find_deepest_explored(level_id curr);
 bool branch_entered(branch_type branch);
@@ -198,6 +197,9 @@ enum explore_stop_type
     ES_ARTEFACT                  = 0x1000,
     ES_RUNE                      = 0x2000,
     ES_BRANCH                    = 0x4000,
+
+    // Explored into view of an item which can be sacrificied
+    ES_GREEDY_SACRIFICIABLE      = 0x8000,
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -260,6 +262,7 @@ private:
     };
 
     bool can_autopickup;
+    bool sacrifice;
     int es_flags;
     const LevelStashes *current_level;
     std::vector< named_thing<item_def> > items;
@@ -572,6 +575,12 @@ protected:
     // Are we greedy exploring?
     bool need_for_greed;
 
+    // Can we autopickup?
+    bool autopickup;
+
+    // Does god wants sacrifices?
+    bool sacrifice;
+
     // Targets for explore and greedy explore.
     coord_def unexplored_place, greedy_place;
 
@@ -622,5 +631,8 @@ int click_travel(const coord_def &gc, bool force);
 
 bool check_for_interesting_features();
 void clear_level_target();
+
+void clear_travel_trail();
+int travel_trail_index(const coord_def& gc);
 
 #endif // TRAVEL_H

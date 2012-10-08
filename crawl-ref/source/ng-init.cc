@@ -45,27 +45,11 @@ static uint8_t _random_potion_description()
     return desc;
 }
 
-void initialise_branches_for_game_type()
-{
-    if (crawl_state.game_is_sprint())
-    {
-        brdepth.init(-1);
-        brdepth[BRANCH_MAIN_DUNGEON] = 1;
-        brdepth[BRANCH_ABYSS] = 1;
-        return;
-    }
-
-    for (int i = 0; i < NUM_BRANCHES; i++)
-        brdepth[i] = branches[i].numlevels;
-
-    // In trunk builds, test variable-length branches.
-    if (numcmp(Version::Long().c_str(), "0.11-b") == -1)
-        brdepth[BRANCH_ELVEN_HALLS] = random_range(3, 4);
-}
-
 // Determine starting depths of branches.
 void initialise_branch_depths()
 {
+    root_branch = BRANCH_MAIN_DUNGEON;
+
     for (int branch = BRANCH_ECUMENICAL_TEMPLE; branch < NUM_BRANCHES; ++branch)
     {
         const Branch *b = &branches[branch];
@@ -75,7 +59,6 @@ void initialise_branch_depths()
             startdepth[branch] = random_range(b->mindepth, b->maxdepth);
     }
 
-#if 0
     // You will get one of Shoals/Swamp and one of Spider/Snake.
     // This way you get one "water" branch and one "poison" branch.
     const branch_type disabled_branch[] =
@@ -83,13 +66,6 @@ void initialise_branch_depths()
         random_choose(BRANCH_SWAMP, BRANCH_SHOALS, -1),
         random_choose(BRANCH_SNAKE_PIT, BRANCH_SPIDER_NEST, -1),
     };
-#else
-    // For the time being, let's make Spider guaranteed.
-    branch_type disabled_branch[2];
-    disabled_branch[0] = random_choose(BRANCH_SWAMP, BRANCH_SHOALS, BRANCH_SNAKE_PIT, -1);
-    do disabled_branch[1] = random_choose(BRANCH_SWAMP, BRANCH_SHOALS, BRANCH_SNAKE_PIT, -1);
-    while (disabled_branch[0] == disabled_branch[1]);
-#endif
 
     for (unsigned int i = 0; i < ARRAYSZ(disabled_branch); ++i)
     {
@@ -97,7 +73,29 @@ void initialise_branch_depths()
         startdepth[disabled_branch[i]] = -1;
     }
 
-    initialise_branches_for_game_type();
+    if (crawl_state.game_is_sprint())
+    {
+        brdepth.init(-1);
+        brdepth[BRANCH_MAIN_DUNGEON] = 1;
+        brdepth[BRANCH_ABYSS] = 1;
+        return;
+    }
+
+    if (crawl_state.game_is_zotdef())
+    {
+        root_branch = BRANCH_HALL_OF_ZOT;
+        brdepth.init(-1);
+        brdepth[BRANCH_HALL_OF_ZOT] = 1;
+        brdepth[BRANCH_BAZAAR] = 1;
+        return;
+    }
+
+    for (int i = 0; i < NUM_BRANCHES; i++)
+        brdepth[i] = branches[i].numlevels;
+
+    // In trunk builds, test variable-length branches.
+    if (numcmp(Version::Long().c_str(), "0.11-b") == -1)
+        brdepth[BRANCH_ELVEN_HALLS] = random_range(3, 4);
 }
 
 #define MAX_OVERFLOW_LEVEL 9

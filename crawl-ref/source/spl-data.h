@@ -817,7 +817,7 @@ struct spell_desc
      -1, -1,
      0,
      NULL,
-     true,
+     false,
      false
 },
 
@@ -1239,6 +1239,7 @@ struct spell_desc
      true
 },
 
+#if TAG_MAJOR_VERSION == 33
 {
     SPELL_PROJECTED_NOISE, M_("Projected Noise"),
      SPTYP_HEXES,
@@ -1251,6 +1252,7 @@ struct spell_desc
      false,
      false
 },
+#endif
 
 {
     SPELL_DEBUGGING_RAY, M_("Debugging Ray"),
@@ -1386,7 +1388,7 @@ struct spell_desc
     SPELL_DEATH_CHANNEL, M_("Death Channel"),
      SPTYP_NECROMANCY,
      SPFLAG_HELPFUL,
-     7,
+     6,
      200,
      -1, -1,
      0,
@@ -2635,6 +2637,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 33
 {
     SPELL_SUMMON_GREATER_HOLY, M_("Summon Greater Holy"),
      SPTYP_SUMMONING,
@@ -2647,6 +2650,7 @@ struct spell_desc
      false,
      false
 },
+#endif
 
 {
     SPELL_HOLY_WORD, M_("Holy Word"),
@@ -2887,6 +2891,19 @@ struct spell_desc
      SPTYP_CONJURATION | SPTYP_HEXES,
      SPFLAG_DIR_OR_TARGET,
      6,
+     200,
+     6, 6,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_THUNDERBOLT, M_("Thunderbolt"),
+     SPTYP_CONJURATION | SPTYP_AIR,
+     SPFLAG_DIR_OR_TARGET,
+     2, // 2-5
      200,
      6, 6,
      0,

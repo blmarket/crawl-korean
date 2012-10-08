@@ -731,9 +731,10 @@ TAGS:   no_monster_gen no_item_gen no_pool_fixup
 ORIENT: west
 DEPTH:  D:16-
 MONS:   crystal golem, orange crystal statue
-ITEM:   any magical staff / any book / any jewellery w:15 / any scroll w:20 / \
-        potion of magic / potion of brilliance / air elemental fan w:1 / \
-        lamp of fire w:1 / stone of earth elementals w:1 / gold w:30
+ITEM:   any magical staff / any rod w:2 / any book / any jewellery w:15 / \
+        any scroll w:20 / potion of magic / potion of brilliance / \
+        air elemental fan w:1 / lamp of fire w:1 / \
+        stone of earth elementals w:1 / gold w:30
 KFEAT:  _ = altar_sif_muna
 MAP
             bbbbb
@@ -872,17 +873,16 @@ COLOUR: I5M% = white
 SUBST:  I = G
 SUBST:  " = +
 SUBST:  T = ......^
-KFEAT:  ^ = alarm trap / blade trap w:1 / axe trap / bolt trap
+KFEAT:  ^ = alarm trap / blade trap w:1 / spear trap / bolt trap
 # Markers:
 MARKER: V = lua:fog_machine { \
                 pow_max = 10, delay_min = 5, delay_max = 30, \
                 size = 30, size_buildup_amnt = 1, \
                 size_buildup_time = 10, cloud_type = "gloom" \
             }
-MARKER: v = lua:props_marker { veto_fragmentation="veto", veto_disintegrate="veto" }
 # Final subst
 SUBST:  MV = .
-:       dgn.set_feature_desc_short("granite statue", "iron statue")
+:       set_feature_name("granite_statue", "iron statue")
 :       dgn.delayed_decay(_G, '%', 'human corpse / human skeleton')
 veto {{
     if you.uniques("Jory") then
@@ -1002,7 +1002,7 @@ MONS:   draconian shifter / draconian annihilator / lich  / \
         deep elf annihilator / deep elf demonologist
 NSUBST: 4 = 6:5 / *:4
 MONS:   ancient lich
-MONS:   human name:innocent n_adj n_noc att:neutral
+MONS:   human name:sacrificial n_adj n_noc att:neutral
 NSUBST: 4 = 1:7 / *:4
 ITEM:   acquire any
 SUBST:  - = .
@@ -1137,7 +1137,7 @@ MONS:   w:5 deep elf mage / w:2 naga mage / w:30 wizard / \
 MONS:   w:25 deep elf sorcerer / w:50 lich / w:25 ancient lich
 : end
 ITEM:   any book / w:20 any randbook
-ITEM:   w:20 any magical staff / any jewellery
+ITEM:   w:18 any magical staff / any rod w:5 / any jewellery
 ITEM:   any randbook / gold
 SUBST:  '" = .
 MAP

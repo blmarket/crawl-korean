@@ -34,13 +34,11 @@
 #include "env.h"
 #include "exercise.h"
 #include "fight.h"
-#include "food.h"
 #include "fprop.h"
 #include "godpassive.h"
 #include "hints.h"
 #include "hiscores.h"
 #include "invent.h"
-#include "item_use.h"
 #include "itemname.h"
 #include "itemprop.h"
 #include "items.h"
@@ -60,7 +58,6 @@
 #include "mutation.h"
 #include "notes.h"
 #include "ouch.h"
-#include "place.h"
 #include "player-equip.h"
 #include "player-stats.h"
 #include "player.h"
@@ -241,8 +238,8 @@ int torment_player(actor *attacker, int taux)
 
     if (!hploss)
     {
-        mpr(gettext("You feel a surge of unholy energy."));
-        return (0);
+        mpr(_("You feel a surge of unholy energy."));
+        return 0;
     }
 
     mpr(gettext("Your body is wracked with pain!"));
@@ -286,7 +283,10 @@ int torment_player(actor *attacker, int taux)
 
     ouch(hploss, attacker? attacker->mindex() : MHITNOT, type, aux);
 
-    return (1);
+    if (!kiku_shielding_player)
+        maybe_id_resist(BEAM_NEG);
+
+    return 1;
 }
 
 // torment_monsters() is called with power 0 because torment is
@@ -305,10 +305,10 @@ int torment_monsters(coord_def where, actor *attacker, int taux)
     // Is a monster in this cell?
     monster* mons = monster_at(where);
     if (mons == NULL)
-        return (retval);
+        return retval;
 
     if (!mons->alive() || mons->res_torment())
-        return (retval);
+        return retval;
 
     int hploss = std::max(0, mons->hit_points / 2 - 1);
 
@@ -328,7 +328,7 @@ int torment_monsters(coord_def where, actor *attacker, int taux)
     if (hploss)
         retval = 1;
 
-    return (retval);
+    return retval;
 }
 
 int torment(actor *attacker, int taux, const coord_def& where)
@@ -342,7 +342,7 @@ int torment(actor *attacker, int taux, const coord_def& where)
             continue;
         r += torment_monsters(*ri, attacker, taux);
     }
-    return (r);
+    return r;
 }
 
 void immolation(int pow, int caster, coord_def where, bool known,
@@ -354,35 +354,35 @@ void immolation(int pow, int caster, coord_def where, bool known,
 
     bolt beam;
 
-    if (caster < 0)
+    switch (caster)
     {
-        switch (caster)
-        {
-        case IMMOLATION_SCROLL:
-            aux = N_("scroll of immolation");
-            break;
+    case IMMOLATION_SCROLL:
+        aux = M_("a scroll of immolation");
+        break;
 
-        case IMMOLATION_SPELL:
-            aux = N_("a fiery explosion");
-            break;
+    case IMMOLATION_AFFIX:
+        aux = M_("a fiery explosion");
+        break;
 
-        case IMMOLATION_TOME:
-            aux = N_("an exploding Tome of Destruction");
-            break;
-        }
+    case IMMOLATION_TOME:
+        aux = M_("an exploding Tome of Destruction");
+        break;
+
+    default:;
     }
 
     beam.flavour       = BEAM_FIRE;
     beam.glyph         = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage        = dice_def(3, pow);
     beam.target        = where;
-    beam.name          = N_("fiery explosion");
+    beam.name          = M_("fiery explosion");
     beam.colour        = RED;
     beam.aux_source    = aux;
     beam.ex_size       = 2;
     beam.is_explosion  = true;
     beam.effect_known  = known;
-    beam.affects_items = (caster != IMMOLATION_SCROLL);
+    beam.affects_items = caster != IMMOLATION_SCROLL
+                         && caster != IMMOLATION_AFFIX;
 
     if (caster == IMMOLATION_GENERIC)
     {
@@ -418,15 +418,15 @@ static bool _conduct_electricity_damage(bolt &beam, actor* victim,
                                         int &dmg, std::string &dmg_msg)
 {
     dmg = (10 + random2(15)) / 2;
-    return (false);
+    return false;
 }
 
 static bool _conduct_electricity_aoe(bolt& beam, const coord_def& target)
 {
     if (feat_is_water(grd(target)))
-        return (true);
+        return true;
 
-    return (false);
+    return false;
 }
 
 void conduct_electricity(coord_def where, actor *attacker)
@@ -457,7 +457,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     else
     {
         beam.thrower     = KILL_MON;
-        beam.beam_source = attacker->mindex();
+        beam.beam_source = attacker ? attacker->mindex() : MHITNOT;
     }
 
     beam.explode(false, true);
@@ -549,7 +549,7 @@ bool forget_spell(void)
     ASSERT(!crawl_state.game_is_arena());
 
     if (!you.spell_no)
-        return (false);
+        return false;
 
     // find a random spell to forget:
     int slot = -1;
@@ -566,13 +566,13 @@ bool forget_spell(void)
     }
 
     if (slot == -1)              // should never happen though
-        return (false);
+        return false;
 
     mprf(gettext("Your knowledge of %s becomes hazy all of a sudden, and you forget "
          "the spell!"), gettext(spell_title(you.spells[slot])));
 
     del_spell_from_memory_by_slot(slot);
-    return (true);
+    return true;
 }
 
 void direct_effect(monster* source, spell_type spell,
@@ -633,7 +633,7 @@ void direct_effect(monster* source, spell_type spell,
         {
             // lose_stat() must come last {dlb}
             if (one_chance_in(3)
-                && lose_stat(STAT_INT, 1, source))
+                && lose_stat(STAT_INT, 1 + random2(3), source))
             {
                 mpr(gettext("Something feeds on your intellect!"));
                 xom_is_stimulated(50);
@@ -775,7 +775,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                                             OSEL_RECHARGE, true, true, false);
         }
         if (prompt_failed(item_slot))
-            return (-1);
+            return -1;
 
         item_def &wand = you.inv[ item_slot ];
 
@@ -790,8 +790,8 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
             continue;
         }
 
-        if (wand.base_type != OBJ_WANDS && !item_is_rod(wand))
-            return (0);
+        if (wand.base_type != OBJ_WANDS && wand.base_type != OBJ_RODS)
+            return 0;
 
         if (wand.base_type == OBJ_WANDS)
         {
@@ -856,19 +856,17 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
                 work = true;
             }
 
-            if (short(wand.props["rod_enchantment"]) < MAX_WPN_ENCHANT)
+            if (wand.special < MAX_WPN_ENCHANT)
             {
-                static_cast<short&>(wand.props["rod_enchantment"])
-                    += random_range(1,2);
-
-                if (short(wand.props["rod_enchantment"]) > MAX_WPN_ENCHANT)
-                    wand.props["rod_enchantment"] = short(MAX_WPN_ENCHANT);
+                wand.special += random_range(1, 2);
+                if (wand.special > MAX_WPN_ENCHANT)
+                    wand.special = MAX_WPN_ENCHANT;
 
                 work = true;
             }
 
             if (!work)
-                return (0);
+                return 0;
 
             if (pre_msg)
                 mpr(pre_msg->c_str());
@@ -878,11 +876,11 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
         }
 
         you.wield_change = true;
-        return (1);
+        return 1;
     }
     while (true);
 
-    return (0);
+    return 0;
 }
 
 // Berserking monsters cannot be ordered around.
@@ -1010,7 +1008,7 @@ void yell(bool force)
     mprf(gettext(" Anything else - Stay silent%s."),
          one_chance_in(20) ? gettext(" (and be thought a fool)") : "");
 
-    unsigned char keyn = get_ch();
+    int keyn = get_ch();
     mesclr();
 
     switch (keyn)
@@ -1122,7 +1120,7 @@ void yell(bool force)
     noisy(noise_level, you.pos());
 }
 
-inline static dungeon_feature_type _vitrified_feature(dungeon_feature_type feat)
+static inline dungeon_feature_type _vitrified_feature(dungeon_feature_type feat)
 {
     switch (feat)
     {
@@ -1141,7 +1139,7 @@ inline static dungeon_feature_type _vitrified_feature(dungeon_feature_type feat)
 bool vitrify_area(int radius)
 {
     if (radius < 2)
-        return (false);
+        return false;
 
     bool something_happened = false;
     for (radius_iterator ri(you.pos(), radius, C_POINTY); ri; ++ri)
@@ -1155,7 +1153,7 @@ bool vitrify_area(int radius)
             something_happened = true;
         }
     }
-    return (something_happened);
+    return something_happened;
 }
 
 static void _hell_effects()
@@ -1295,7 +1293,7 @@ static bool _feat_is_flanked_by_walls(const coord_def &p)
     // paranoia!
     for (unsigned int i = 0; i < ARRAYSZ(adjs); ++i)
         if (!in_bounds(adjs[i]))
-            return (false);
+            return false;
 
     return (feat_is_wall(grd(adjs[0])) && feat_is_wall(grd(adjs[1]))
                && feat_has_solid_floor(grd(adjs[2])) && feat_has_solid_floor(grd(adjs[3]))
@@ -1349,7 +1347,7 @@ static bool _deadend_check_wall(const coord_def &p)
                 && (!in_bounds(c) || !in_bounds(d)
                     || !feat_is_wall(grd(c)) || !feat_is_wall(grd(d))))
             {
-                return (false);
+                return false;
             }
         }
     }
@@ -1370,12 +1368,12 @@ static bool _deadend_check_wall(const coord_def &p)
                 && (!in_bounds(c) || !in_bounds(d)
                     || !feat_is_wall(grd(c)) || !feat_is_wall(grd(d))))
             {
-                return (false);
+                return false;
             }
         }
     }
 
-    return (true);
+    return true;
 }
 
 // Similar to the above, checks whether turning a wall grid into floor
@@ -1418,7 +1416,7 @@ static bool _deadend_check_floor(const coord_def &p)
 
                 const coord_def c(p.x+j, p.y+i);
                 if (feat_has_solid_floor(grd(c)) && !feat_has_solid_floor(grd(b)))
-                    return (false);
+                    return false;
             }
         }
     }
@@ -1444,12 +1442,12 @@ static bool _deadend_check_floor(const coord_def &p)
 
                 const coord_def c(p.x+i, p.y+j);
                 if (feat_has_solid_floor(grd(c)) && !feat_has_solid_floor(grd(b)))
-                    return (false);
+                    return false;
             }
         }
     }
 
-    return (true);
+    return true;
 }
 
 // Changes a small portion of a labyrinth by exchanging wall against floor
@@ -1777,32 +1775,32 @@ void change_labyrinth(bool msg)
 static bool _food_item_needs_time_check(item_def &item)
 {
     if (!item.defined())
-        return (false);
+        return false;
 
     if (item.base_type != OBJ_CORPSES
         && item.base_type != OBJ_FOOD
         && item.base_type != OBJ_POTIONS)
     {
-        return (false);
+        return false;
     }
 
     if (item.base_type == OBJ_CORPSES
         && item.sub_type > CORPSE_SKELETON)
     {
-        return (false);
+        return false;
     }
 
     if (item.base_type == OBJ_FOOD && item.sub_type != FOOD_CHUNK)
-        return (false);
+        return false;
 
     if (item.base_type == OBJ_POTIONS && !is_blood_potion(item))
-        return (false);
+        return false;
 
     // The object specifically asks not to be checked:
     if (item.props.exists(CORPSE_NEVER_DECAYS))
-        return (false);
+        return false;
 
-    return (true);
+    return true;
 }
 
 #define ROTTING_WARNED_KEY "rotting_warned"
@@ -2062,11 +2060,15 @@ void handle_time()
         if (you.species == SP_VAMPIRE)
         {
             if (you.hunger_state == HS_STARVING)
+            {
                 // No stat recovery for starving vampires.
                 recovery = false;
+            }
             else if (you.hunger_state <= HS_HUNGRY)
+            {
                 // Halved stat recovery for hungry vampires.
                 recovery = coinflip();
+            }
         }
 
         // Slow heal mutation.  Applied last.
@@ -2299,7 +2301,7 @@ void handle_time()
                                false, false, false, false, false, true);
             // it would kill itself anyway, but let's speed that up
             if (one_chance_in(10)
-                && (!player_res_mutation()
+                && (!player_res_mutation_from_item()
                     || one_chance_in(10)))
             {
                 evol |= delete_mutation(MUT_EVOLUTION, "end of evolution", false);
@@ -2310,7 +2312,7 @@ void handle_time()
         }
 
     if (player_in_branch(BRANCH_SPIDER_NEST) && coinflip())
-        place_webs(random2(20 / (6 - you.depth)), true);
+        place_webs(random2(3 * you.depth), true);
 }
 
 // Move monsters around to fake them walking around while player was
@@ -2506,6 +2508,10 @@ void update_level(int elapsedTime)
 {
     ASSERT(!crawl_state.game_is_arena());
 
+    // In ZotDef, no time passes while off-level.
+    if (crawl_state.game_is_zotdef())
+        return;
+
     const int turns = elapsedTime / 10;
 
 #ifdef DEBUG_DIAGNOSTICS
@@ -2692,7 +2698,7 @@ int place_ring(std::vector<coord_def> &ring_points,
                 seen_count++;
     }
 
-    return (spawned_count);
+    return spawned_count;
 }
 
 // Collect lists of points that are within LOS (under the given env map),
@@ -2811,7 +2817,7 @@ static int _mushroom_ring(item_def &corpse, int & seen_count,
 
     // Not enough valid points?
     if (radius_points[chosen_idx].size() < min_spawn)
-        return (0);
+        return 0;
 
     mgen_data temp(MONS_TOADSTOOL,
                    toadstool_behavior, 0, 0, 0,
@@ -2831,7 +2837,7 @@ static int _mushroom_ring(item_def &corpse, int & seen_count,
     int spawned_count = place_ring(radius_points[chosen_idx], corpse.pos, temp,
                                    n_arcs, 1, seen_count);
 
-    return (spawned_count);
+    return spawned_count;
 }
 
 // Try to spawn 'target_count' mushrooms around the position of
@@ -2849,7 +2855,7 @@ int spawn_corpse_mushrooms(item_def& corpse,
 {
     seen_targets = 0;
     if (target_count == 0)
-        return (0);
+        return 0;
 
     int c_size = 8;
     int permutation[] = {0, 1, 2, 3, 4, 5, 6, 7};
@@ -2881,7 +2887,7 @@ int spawn_corpse_mushrooms(item_def& corpse,
 
             seen_targets = -1;
 
-            return (res);
+            return res;
         }
     }
 
@@ -2981,7 +2987,7 @@ int spawn_corpse_mushrooms(item_def& corpse,
         }
     }
 
-    return (placed_targets);
+    return placed_targets;
 }
 
 int mushroom_prob(item_def & corpse)
@@ -3009,7 +3015,7 @@ int mushroom_prob(item_def & corpse)
 
     int trial_prob = static_cast<int>(100 * trial_prob_f);
 
-    return (trial_prob);
+    return trial_prob;
 }
 
 bool mushroom_spawn_message(int seen_targets, int seen_corpses)
@@ -3026,10 +3032,10 @@ bool mushroom_spawn_message(int seen_targets, int seen_corpses)
         mprf(seen_targets > 1 ? gettext("%s grow from %s.") : gettext("%s grows from %s."),
              what.c_str(), where.c_str());
 
-        return (true);
+        return true;
     }
 
-    return (false);
+    return false;
 }
 
 // Randomly decide whether or not to spawn a mushroom over the given
@@ -3136,7 +3142,7 @@ static void _update_corpses(int elapsedTime)
 
 static void _recharge_rod(item_def &rod, int aut, bool in_inv)
 {
-    if (!item_is_rod(rod) || rod.plus >= rod.plus2)
+    if (rod.base_type != OBJ_RODS || rod.plus >= rod.plus2)
         return;
 
     // Skill calculations with a massive scale would overflow, cap it.
@@ -3144,7 +3150,7 @@ static void _recharge_rod(item_def &rod, int aut, bool in_inv)
     // -4 rods don't recharge at all.
     aut = std::min(aut, MAX_ROD_CHARGE * ROD_CHARGE_MULT * 10);
 
-    int rate = 4 + short(rod.props["rod_enchantment"]);
+    int rate = 4 + rod.special;
 
     rate *= 10 * aut + skill_bump(SK_EVOCATIONS, aut);
     rate = div_rand_round(rate, 100);
