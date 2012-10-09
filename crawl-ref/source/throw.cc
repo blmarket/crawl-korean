@@ -158,7 +158,7 @@ void fire_target_behaviour::set_prompt()
     {
         const char* colour = (selected_from_inventory ? "lightgrey" : "w");
         msg << "<" << colour << ">"
-            << active_item()->name(DESC_INVENTORY_EQUIP)
+            << active_item()->name(true, DESC_INVENTORY_EQUIP)
             << "</" << colour << ">";
     }
 
@@ -350,15 +350,15 @@ bool fire_warn_if_impossible(bool silent)
         if (!weapon || !is_range_weapon(*weapon))
         {
             if (!silent)
-                mprf("You cannot throw anything while %s.", held_status());
+                mprf(_("You cannot throw anything while %s."), held_status());
             return true;
         }
         else if (weapon->sub_type != WPN_BLOWGUN)
         {
             if (!silent)
             {
-                mprf("You cannot shoot with your %s while %s.",
-                     weapon->name(DESC_BASENAME).c_str(), held_status());
+                mprf(_("You cannot shoot with your %s while %s."),
+                     weapon->name(true, DESC_BASENAME).c_str(), held_status());
             }
             return true;
         }
@@ -1105,7 +1105,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     ASSERT(!exploding || !is_artefact(item));
 
-    beam.name = item.name(DESC_PLAIN, false, false, false);
+    beam.name = item.name(true, DESC_PLAIN, false, false, false);
 
     // Note that bow_brand is known since the bow is equipped.
 
@@ -1161,9 +1161,9 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     }
 
     if (beam_changed)
-        beam.name = item.name(DESC_PLAIN, false, false, false);
+        beam.name = item.name(true, DESC_PLAIN, false, false, false);
 
-    ammo_name = item.name(DESC_PLAIN);
+    ammo_name = item.name(true, DESC_PLAIN);
 
     ASSERT(beam.flavour == BEAM_MISSILE || !is_artefact(item));
 
@@ -1202,33 +1202,33 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     if (disperses && item.special != SPMSL_DISPERSAL)
     {
-        beam.name = "dispersing " + beam.name;
-        ammo_name = "dispersing " + ammo_name;
+        beam.name = _("dispersing ") + beam.name;
+        ammo_name = _("dispersing ") + ammo_name;
     }
 
     // XXX: This doesn't make sense, but it works.
     if (poisoned && item.special != SPMSL_POISONED)
     {
-        beam.name = "poisoned " + beam.name;
-        ammo_name = "poisoned " + ammo_name;
+        beam.name = _("poisoned ") + beam.name;
+        ammo_name = _("poisoned ") + ammo_name;
     }
 
     if (penetrating && item.special != SPMSL_PENETRATION)
     {
-        beam.name = "penetrating " + beam.name;
-        ammo_name = "penetrating " + ammo_name;
+        beam.name = _("penetrating ") + beam.name;
+        ammo_name = _("penetrating ") + ammo_name;
     }
 
     if (silver && item.special != SPMSL_SILVER)
     {
-        beam.name = "silvery " + beam.name;
-        ammo_name = "silvery " + ammo_name;
+        beam.name = _("silvery ") + beam.name;
+        ammo_name = _("silvery ") + ammo_name;
     }
 
     if (blessed)
     {
-        beam.name = "blessed " + beam.name;
-        ammo_name = "blessed " + ammo_name;
+        beam.name = _("blessed ") + beam.name;
+        ammo_name = _("blessed ") + ammo_name;
     }
 
     // Do this here so that we get all the name mods except for a
@@ -1247,11 +1247,11 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
              expl->name   += " fragments";
 
              const std::string short_name =
-                 item.name(DESC_PLAIN, false, false, false, false,
+                 item.name(true, DESC_PLAIN, false, false, false, false,
                            ISFLAG_IDENT_MASK | ISFLAG_COSMETIC_MASK
                            | ISFLAG_RACIAL_MASK);
 
-             expl->name = replace_all(expl->name, item.name(DESC_PLAIN),
+             expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                       short_name);
          }
          expl->name = "explosion of " + expl->name;
@@ -1328,24 +1328,24 @@ static void _throw_noise(actor* act, const bolt &pbolt, const item_def &ammo)
 
     case WPN_SLING:
         level = 1;
-        msg   = "You hear a whirring sound.";
+        msg   = _("You hear a whirring sound.");
         break;
      case WPN_BOW:
         level = 5;
-        msg   = "You hear a twanging sound.";
+        msg   = _("You hear a twanging sound.");
         break;
      case WPN_LONGBOW:
         level = 6;
-        msg   = "You hear a loud twanging sound.";
+        msg   = _("You hear a loud twanging sound.");
         break;
      case WPN_CROSSBOW:
         level = 7;
-        msg   = "You hear a thunk.";
+        msg   = _("You hear a thunk.");
         break;
 
     default:
         die("Invalid launcher '%s'",
-                 launcher->name(DESC_PLAIN).c_str());
+                 launcher->name(false, DESC_PLAIN).c_str());
         return;
     }
     if (act->is_player() || you.can_see(act))
@@ -2029,7 +2029,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         viewwindow();
         pbolt.fire();
 
-        msg::stream << item.name(DESC_THE) << " returns to your pack!"
+        msg::stream << item.name(true, DESC_THE) << _(" returns to your pack!")
                     << std::endl;
 
         // Player saw the item return.
@@ -2046,8 +2046,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         // Should have returned but didn't.
         if (returning && item_type_known(you.inv[throw_2]))
         {
-            msg::stream << item.name(DESC_THE)
-                        << " fails to return to your pack!" << std::endl;
+            msg::stream << item.name(true, DESC_THE)
+                        << _(" fails to return to your pack!") << std::endl;
         }
         dec_inv_item_quantity(throw_2, 1);
         if (unwielded)
@@ -2338,10 +2338,10 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
     else
     {
         // build shoot message
-        msg += item.name(DESC_A, false, false, false);
+        msg += item.name(true, DESC_A, false, false, false);
 
         // build beam name
-        beam.name = item.name(DESC_PLAIN, false, false, false);
+        beam.name = item.name(true, DESC_PLAIN, false, false, false);
     }
     msg += ".";
 
@@ -2479,7 +2479,7 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where)
 {
     ASSERT(item != NULL);
 
-    std::string name = item->name(DESC_PLAIN, false, true, false);
+    std::string name = item->name(true, DESC_PLAIN, false, true, false);
 
     if (item->base_type != OBJ_MISSILES)
         return false;

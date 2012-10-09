@@ -1461,7 +1461,6 @@ static bool _ms_waste_of_time(const monster* mon, spell_type monspell)
             || mon->friendly() && !you.can_see_invisible(false))
         {
             ret = true;
->>>>>>> temp
         }
         break;
 

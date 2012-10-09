@@ -963,8 +963,8 @@ void monster::equip_jewellery(item_def &item, int near)
 
     if (need_message(near))
     {
-        snprintf(info, INFO_SIZE, " puts on %s.",
-                 item.name(DESC_A).c_str());
+        snprintf(info, INFO_SIZE, _(" puts on %s."),
+                 item.name(true, DESC_A).c_str());
         simple_monster_message(this, info);
     }
 
@@ -1117,8 +1117,8 @@ void monster::unequip_jewellery(item_def &item, int near)
 
     if (need_message(near))
     {
-        snprintf(info, INFO_SIZE, " takes off %s.",
-                 item.name(DESC_A).c_str());
+        snprintf(info, INFO_SIZE, _(" takes off %s."),
+                 item.name(true, DESC_A).c_str());
         simple_monster_message(this, info);
     }
 

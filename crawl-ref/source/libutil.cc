@@ -151,9 +151,9 @@ std::string vmake_stringf(const char* s, va_list args)
     char buf1[8000];
     va_list orig_args;
     va_copy(orig_args, args);
-    size_t len = vsnprintf(buf1, sizeof buf1, s, orig_args);
+    int len = vsnprintf(buf1, sizeof buf1, s, orig_args);
     va_end(orig_args);
-    if (len < sizeof buf1 || len == -1)
+    if (len < (int)(sizeof buf1) || len == -1)
         return buf1;
 
     char *buf2 = (char*)malloc(len + 1);
@@ -422,7 +422,7 @@ std::string pluralise(unsigned int plu_type, const std::string &name,
     if (!name.empty() && name[name.length() - 1] == ']'
         && (pos = name.rfind(" [")) != std::string::npos)
     {
-        return (pluralise(name.substr(0, pos)) + name.substr(pos));
+        return (pluralise(plu_type, name.substr(0, pos)) + name.substr(pos));
     }
 
 #ifdef KR

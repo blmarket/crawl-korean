@@ -83,7 +83,7 @@ static inline std::string _autopickup_item_name(const item_def &item)
 {
     return userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item, true)
            + menu_colour_item_prefix(item, false) + " "
-           + item.name(DESC_PLAIN);
+           + item.name(false, DESC_PLAIN);
 }
 
 // Used to be called "unlink_items", but all it really does is make

@@ -809,8 +809,8 @@ bool do_wear_armour(int item, bool quiet)
         {
             if (!quiet)
             {
-                mprf("%s is stuck to your body!",
-                     you.inv[you.equip[EQ_BODY_ARMOUR]].name(DESC_YOUR)
+                mprf(_("%s is stuck to your body!"),
+                     you.inv[you.equip[EQ_BODY_ARMOUR]].name(true, DESC_YOUR)
                                                        .c_str());
             }
             return false;
@@ -826,7 +826,7 @@ bool do_wear_armour(int item, bool quiet)
         else
         {
             if (!quiet)
-               mpr("Your cloak prevents you from wearing the armour.");
+               mpr(_("Your cloak prevents you from wearing the armour."));
             return false;
         }
     }
@@ -864,7 +864,7 @@ bool takeoff_armour(int item)
 
     if (invitem.base_type != OBJ_ARMOUR)
     {
-        mpr("You aren't wearing that!");
+        mpr(_("You aren't wearing that!"));
         return false;
     }
 
@@ -877,8 +877,8 @@ bool takeoff_armour(int item)
     const equipment_type slot = get_armour_slot(invitem);
     if (item == you.equip[slot] && you.melded[slot])
     {
-        mprf("%s is melded into your body!",
-             invitem.name(DESC_YOUR).c_str());
+        mprf(_("%s is melded into your body!"),
+             invitem.name(true, DESC_YOUR).c_str());
         return false;
     }
 
@@ -888,7 +888,7 @@ bool takeoff_armour(int item)
             return do_wear_armour(item, true);
         else
         {
-            mpr("You aren't wearing that object!");
+            mpr(_("You aren't wearing that object!"));
             return false;
         }
     }
@@ -896,7 +896,7 @@ bool takeoff_armour(int item)
     // If we get here, we're wearing the item.
     if (invitem.cursed())
     {
-        mprf("%s is stuck to your body!", invitem.name(DESC_YOUR).c_str());
+        mprf(_("%s is stuck to your body!"), invitem.name(true, DESC_YOUR).c_str());
         return false;
     }
 
@@ -920,7 +920,7 @@ bool takeoff_armour(int item)
             }
             else
             {
-                mpr("Your cloak prevents you from removing the armour.");
+                mpr(_("Your cloak prevents you from removing the armour."));
                 return false;
             }
         }

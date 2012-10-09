@@ -3711,12 +3711,12 @@ std::string get_monster_equipment_desc(const monster_info& mi,
         if (mon_rng)
         {
             if (found_sth)
-                desc += (!mon_qvr && !mon_carry) ? " and" : ",";
+                desc += (!mon_qvr && !mon_carry) ? _(" and") : ",";
             else
                 found_sth = true;
 
-            desc += " wearing ";
-            desc += mon_rng->name(DESC_A);
+            desc += _(" wearing ");
+            desc += mon_rng->name(true, DESC_A);
         }
 
         if (mon_qvr)

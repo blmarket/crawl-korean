@@ -1873,7 +1873,7 @@ std::string item_def::name_aux(description_level_type desc,
 
     // One plural to rule them all.
     if (need_plural && quantity > 1 && !basename && !qualname)
-        buff.str(pluralise(buff.str()));
+        buff.str(pluralise(PLU_DEFAULT, buff.str()));
 
     // Disambiguation.
     if (!terse && !basename && !dbname && know_type
@@ -2135,14 +2135,14 @@ public:
                  || item->base_type == OBJ_GOLD)
         {
             name = lowercase_string(item_class_name(item->base_type));
-            name = pluralise(name);
+            name = pluralise(PLU_DEFAULT, name);
         }
         else if (item->sub_type == get_max_subtype(item->base_type))
             name = "unknown " + lowercase_string(item_class_name(item->base_type));
         else
         {
-            name = item->name(DESC_PLAIN,false,true,false,false,flags);
-            name = pluralise(name);
+            name = item->name(true, DESC_PLAIN,false,true,false,false,flags);
+            name = pluralise(PLU_DEFAULT, name);
         }
 
         char symbol;
