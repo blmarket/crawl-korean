@@ -1296,7 +1296,7 @@ void search_around()
         {
             ptrap->reveal();
             mprf(_("You found %s trap!"),
-                 ptrap->name(true, DESC_A).c_str());
+                 ptrap->name(DESC_A).c_str());
             learned_something_new(HINT_SEEN_TRAP, *ri);
             practise(EX_TRAP_FOUND);
         }

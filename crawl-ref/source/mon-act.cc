@@ -2744,7 +2744,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
     {
         viewwindow();
 
-        string open_str = pgettet("_mons_open_door", "opens the ");
+        string open_str = pgettext("_mons_open_door", "opens the ");
         open_str += adj;
         open_str += noun;
         open_str += pgettext("_mons_open_door",".");

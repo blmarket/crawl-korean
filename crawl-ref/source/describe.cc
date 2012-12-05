@@ -1030,18 +1030,14 @@ static string _describe_weapon(const item_def &item, bool verbose)
         }
         else
         {
-            /// +x,x 까지 강화가 가능하다.
-            std::string value = _get_value(MAX_WPN_ENCHANT, false);
+            description += _("\nIt can be maximally enchanted to +");
+            _append_value(description, MAX_WPN_ENCHANT, false);
             if (item.sub_type != WPN_BLOWGUN)
             {
-                description += make_stringf(gettext("\nIt can be maximally enchanted to +%s, +%s."),
-                    value.c_str(), value.c_str());
+                description += ", +";
+                _append_value(description, MAX_WPN_ENCHANT, false);
             }
-            else
-            {
-                description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."),
-                    value.c_str());
-            }
+            description += ".";
         }
     }
 
@@ -1424,8 +1420,9 @@ static string _describe_armour(const item_def &item, bool verbose)
         }
         else if (item.plus < max_ench || !item_ident(item, ISFLAG_KNOW_PLUSES))
         {
-            std::string value = _get_value(max_ench, false);
-            description += make_stringf(gettext("\nIt can be maximally enchanted to +%s."), value.c_str());
+            description += "\nIt can be maximally enchanted to +";
+            _append_value(description, max_ench, false);
+            description += ".";
         }
         else
             description += gettext("\nIt cannot be enchanted further.");
@@ -3241,10 +3238,10 @@ static string _monster_stat_description(const monster_info& mi)
         break;
     case FL_WINGED:
         result << make_stringf(_("%s can fly by flapping %s wings.\n"),
-                               uppercase_first(pronoun), mi.pronoun(PRONOUN_POSSESSIVE));
+                               uppercase_first(pronoun).c_str(), mi.pronoun(PRONOUN_POSSESSIVE));
         break;
     case FL_LEVITATE:
-        result << make_stringf(_("%s can fly.\n"), uppercase_first(pronoun));
+        result << make_stringf(_("%s can fly.\n"), uppercase_first(pronoun).c_str());
         break;
     }
 

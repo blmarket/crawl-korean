@@ -2974,7 +2974,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
         else
             verb = gettext("%s evaporates and reforms as %s!");
 
-        mprf(verb, old_name_the.c_str(), obj.c_str());
+        mprf(verb.c_str(), old_name_the.c_str(), obj.c_str());
     }
     else if (can_see)
     {

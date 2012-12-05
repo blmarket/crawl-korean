@@ -105,14 +105,14 @@ void debug_item_scan(void)
             // Check for invalid (zero quantity) items that are linked in.
             if (!mitm[obj].defined())
             {
-                _dump_item(mitm[obj].name(DESC_PLAIN).c_str(), obj, mitm[obj],
+                _dump_item(mitm[obj].name(false, DESC_PLAIN).c_str(), obj, mitm[obj],
                            "Linked invalid item at (%d,%d)!", ri->x, ri->y);
             }
 
             // Check that item knows what stack it's in.
             if (mitm[obj].pos != *ri)
             {
-                _dump_item(mitm[obj].name(DESC_PLAIN).c_str(), obj, mitm[obj],
+                _dump_item(mitm[obj].name(false, DESC_PLAIN).c_str(), obj, mitm[obj],
                            "Item position incorrect at (%d,%d)!", ri->x, ri->y);
             }
 

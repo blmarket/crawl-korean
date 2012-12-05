@@ -351,11 +351,7 @@ void direction_chooser::print_top_prompt() const
 
 void direction_chooser::print_key_hints() const
 {
-<<<<<<< HEAD
-    std::string prompt = gettext("Press: ? - help");
-=======
     string prompt = _("Press: ? - help");
->>>>>>> remotes/master/master
 
     if (just_looking)
     {
@@ -610,16 +606,11 @@ void full_describe_view()
         action += "travel"; // toggle travels to items/features
     }
     title = "Visible " + title;
-<<<<<<< HEAD
-    std::string title1 = make_stringf(gettext("%s  (select to %s, '!' to examine):"),
+    string title1 = make_stringf(gettext("%s  (select to %s, '!' to examine):"),
                                       title.c_str(),
                                       action.c_str());
     title += make_stringf(gettext(" (select for more detail, '!' to %s):"),
                           action.c_str());
-=======
-    string title1 = title + " (select to " + action + ", '!' to examine):";
-    title += " (select for more detail, '!' to " + action + "):";
->>>>>>> remotes/master/master
 
     desc_menu.set_title(new MenuEntry(title, MEL_TITLE), false);
     desc_menu.set_title(new MenuEntry(title1, MEL_TITLE));
@@ -2830,15 +2821,9 @@ void describe_floor()
 {
     dungeon_feature_type grid = env.map_knowledge(you.pos()).feat();
 
-<<<<<<< HEAD
     const char *msg = N_("There is %s here.");
-    std::string feat;
-=======
-    string prefix = "There is ";
     string feat;
-    string suffix = " here.";
 
->>>>>>> remotes/master/master
     switch (grid)
     {
     case DNGN_FLOOR:
@@ -2973,15 +2958,9 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_LAVA_SEA:
         return _(M_("the endless lava"));
     case DNGN_CLOSED_DOOR:
-<<<<<<< HEAD
         return _(M_("closed door"));
-    case DNGN_DETECTED_SECRET_DOOR:
-        return _(M_("detected secret door"));
-=======
-        return "closed door";
     case DNGN_RUNED_DOOR:
-        return "runed door";
->>>>>>> remotes/master/master
+        return _(M_("runed door"));
     case DNGN_METAL_WALL:
         return _(M_("metal wall"));
     case DNGN_GREEN_CRYSTAL_WALL:
@@ -3800,17 +3779,11 @@ static bool _print_cloud_desc(const coord_def where)
     if (suppressed(where))
         areas.push_back(gettext("thrums with a field of magical suppression"));
     if (liquefied(where))
-<<<<<<< HEAD
-        areas.push_back(gettext("is liquefied"));
-    if (orb_haloed(where))
-        areas.push_back(gettext("is covered in magical glow"));
-=======
-        areas.push_back("is liquefied");
+        areas.push_back(_("is liquefied"));
     if (orb_haloed(where) || quad_haloed(where))
-        areas.push_back("is covered in magical glow");
+        areas.push_back(_("is covered in magical glow"));
     if (disjunction_haloed(where))
-        areas.push_back("is bathed in translocation energy");
->>>>>>> remotes/master/master
+        areas.push_back(_("is bathed in translocation energy"));
     if (!areas.empty())
     {
         mprf(gettext("This square %s."),
@@ -3832,23 +3805,11 @@ static bool _print_item_desc(const coord_def where)
     if (targ_item == NON_ITEM)
         return false;
 
-<<<<<<< HEAD
-    std::string name = get_menu_colour_prefix_tags(mitm[targ_item],
-                                                   DESC_A);
-    mprf(MSGCH_FLOOR_ITEMS, gettext("You see %s here."), name.c_str());
-
-    if (mitm[ targ_item ].link != NON_ITEM)
-    {
-        mprf(MSGCH_FLOOR_ITEMS,
-             gettext("There is something else lying underneath."));
-    }
-=======
     string name = get_menu_colour_prefix_tags(mitm[targ_item], DESC_A);
-    mprf(MSGCH_FLOOR_ITEMS, "You see %s here.", name.c_str());
+    mprf(MSGCH_FLOOR_ITEMS, _("You see %s here."), name.c_str());
 
     if (mitm[ targ_item ].link != NON_ITEM)
-        mpr("There is something else lying underneath.", MSGCH_FLOOR_ITEMS);
->>>>>>> remotes/master/master
+        mpr(_("There is something else lying underneath."), MSGCH_FLOOR_ITEMS);
 
     return true;
 }

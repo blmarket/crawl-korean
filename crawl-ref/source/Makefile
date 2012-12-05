@@ -252,6 +252,10 @@ ifdef USE_GETTEXT
 	ifdef WIN32
 		EXTRA_LIBS += -lintl
 	endif
+
+	EXTRA_LIBS += -lintl
+	LIBS += -L/opt/local/lib
+	INCLUDES_L += -I/opt/local/include
 endif
 ifdef USE_LUAJIT
 	BUILD_LUA := YesPlease
