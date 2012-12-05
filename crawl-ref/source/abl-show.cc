@@ -2655,7 +2655,7 @@ static bool _do_ability(const ability_def& abil)
     {
         const item_def* const weapon = you.weapon();
         const string msg = (weapon) ? weapon->name(true, DESC_YOUR)
-                                    : (_("your ") + you.hand_name(true));
+                                    : (_(M_("your ")) + you.hand_name(true));
         mprf(MSGCH_DURATION, _("A thick mucus forms on %s."), msg.c_str());
         you.increase_duration(DUR_SLIMIFY,
                               you.skill_rdiv(SK_INVOCATIONS, 3, 2) + 3,
