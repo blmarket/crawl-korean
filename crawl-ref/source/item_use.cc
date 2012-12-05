@@ -328,7 +328,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             if (needs_handle_warning(*wpn, OPER_WIELD))
             {
                 const string prompt =
-                    make_stringf(_("Really unwield %s?"), wpn->name(true, DESC_INVENTORY));
+                    make_stringf(_("Really unwield %s?"), wpn->name(true, DESC_INVENTORY).c_str());
                 if (!yesno(prompt.c_str(), false, 'n'))
                     return false;
             }
