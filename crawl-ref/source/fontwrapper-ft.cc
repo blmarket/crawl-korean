@@ -806,7 +806,7 @@ void FTFontWrapper::store(FontBuffer &buf, float &x, float &y,
 
 unsigned int FTFontWrapper::char_width() const
 {
-    return m_max_advance.x;
+    return m_max_advance.x / 2;
 }
 
 unsigned int FTFontWrapper::char_height() const
