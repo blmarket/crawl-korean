@@ -3514,6 +3514,7 @@ string filtering_item_prefix(const item_def &item, bool temp)
     return _item_prefix(item, temp, true);
 }
 
+/// returns translated itemname with color tags
 string get_menu_colour_prefix_tags(const item_def &item,
                                    description_level_type desc)
 {

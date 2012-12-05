@@ -247,6 +247,13 @@ int main(int argc, char *argv[])
 #ifndef __ANDROID__
     setlocale(LC_ALL, "");
 #endif
+#ifdef KR 
+    setlocale(LC_ALL, "ko_KR");
+
+    bindtextdomain("Crawl", ".");
+    bind_textdomain_codeset("Crawl", "utf-8");
+    textdomain("Crawl");
+#endif
 #ifdef USE_TILE_WEB
     if (strcasecmp(nl_langinfo(CODESET), "UTF-8"))
     {
