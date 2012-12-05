@@ -1,0 +1,89 @@
+%%%%
+CMD_EXPLORE
+
+Automātiski pētīt pašreizējo līmeni
+%%%%
+CMD_REPLAY_MESSAGES
+
+Pārlasīt nesenās ziņas
+%%%%
+CMD_RESISTS_SCREEN
+
+Parādīt tēla pārskatu
+%%%%
+CMD_RESISTS_SCREEN verbose
+
+Parāda ziņas par zināmajām pretestībām, spējām, aprīkojuma statistiku utt.
+%%%%
+CMD_DISPLAY_SKILLS
+
+Pārvaldīt prasmes
+%%%%
+CMD_DISPLAY_CHARACTER_STATUS
+
+Parādīt tēla stāvokli
+%%%%
+CMD_DISPLAY_KNOWN_OBJECTS
+
+Uzskaitīt atklāto priekšmetu veidus.
+%%%%
+CMD_SAVE_GAME_NOW
+
+Saglabāt un iziet
+%%%%
+CMD_DISPLAY_COMMANDS
+
+Spēles palīdzību
+%%%%
+CMD_DISPLAY_COMMANDS verbose
+
+Pavēļu, iespēju utt. uzskaitījums.
+%%%%
+CMD_AUTOFIGHT
+
+Sist tuvākajam briesmonim
+%%%%
+CMD_AUTOFIGHT_NOMOVE
+
+Sist blakus stāvošajam briesmonim
+%%%%
+CMD_WAIT
+
+Pagaidīt vienu gājienu
+%%%%
+CMD_WAIT verbose
+
+Patērēt gājienu gaidot un atpūšoties.
+%%%%
+CMD_CAST_SPELL
+
+Uzburt burvestību
+%%%%
+CMD_CAST_SPELL verbose
+
+Uzburt burvestību.
+%%%%
+CMD_BUTCHER verbose
+
+Sakapāt līķi gabalos.
+%%%%
+CMD_MEMORISE_SPELL
+
+Iegaumēt burvestību
+%%%%
+CMD_DROP
+
+Nomest priekšmetus
+%%%%
+CMD_DISPLAY_MAP
+
+Ievadīt kartes kodu
+%%%%
+CMD_MAP_FIND_TRAP
+
+Meklēt lamatas
+%%%%
+CMD_MAP_FIND_ALTAR
+
+Meklēt altārus
+%%%%

@@ -87,9 +87,6 @@ enum card_type
     CARD_SUMMON_FLYING,         // wisps and butterflies
     CARD_SUMMON_SKELETON,
     CARD_SUMMON_UGLY,
-#if TAG_MAJOR_VERSION == 33
-    CARD_REMOVED_1,
-#endif
 
     CARD_POTION,
     CARD_FOCUS,
@@ -130,6 +127,9 @@ bool choose_deck_and_draw();
 void nemelex_shuffle_decks();
 void shuffle_all_decks_on_level();
 
+bool draw_three(int slot);
+bool stack_five(int slot);
+
 void card_effect(card_type which_card, deck_rarity_type rarity,
                  uint8_t card_flags = 0, bool tell_card = true);
 void draw_from_deck_of_punishment(bool deal = false);
@@ -151,7 +151,7 @@ card_type get_card_and_flags(const item_def& deck, int idx,
 void sage_card(int power, deck_rarity_type rarity);
 void create_pond(const coord_def& center, int radius, bool allow_deep);
 
-const std::vector<card_type> get_drawn_cards(const item_def& deck);
+const vector<card_type> get_drawn_cards(const item_def& deck);
 // see and mark the first card with a scroll.
 bool deck_identify_first(int slot);
 

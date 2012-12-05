@@ -32,20 +32,24 @@ enum status_type
     STATUS_SUPPRESSED,
     STATUS_TERRAIN,
     STATUS_SILENCE,
+    STATUS_MISSILES,
+    STATUS_NO_CTELE,
+    STATUS_LAST_STATUS = STATUS_NO_CTELE
 };
 
 struct status_info
 {
     int light_colour;
-    std::string light_text; // status light
-    std::string short_text; // @: line
-    std::string long_text;  // @ message
+    string light_text; // status light
+    string short_text; // @: line
+    string long_text;  // @ message
 };
 
 // status should be a duration or status_type
 // *info will be filled in as appropriate for current
 // character state
-void fill_status_info(int status, status_info* info);
+// returns true if the status has a description
+bool fill_status_info(int status, status_info* info);
 
 void init_duration_index();
 

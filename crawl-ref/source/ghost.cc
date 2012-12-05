@@ -33,7 +33,7 @@
 #define MIN_GHOST_SPEED       6
 #define MAX_GHOST_SPEED      13
 
-std::vector<ghost_demon> ghosts;
+vector<ghost_demon> ghosts;
 
 // Order for looking for conjurations for the 1st & 2nd spell slots,
 // when finding spells to be remembered by a player's ghost.
@@ -58,6 +58,7 @@ static spell_type search_order_conj[] = {
     SPELL_DELAYED_FIREBALL,
     SPELL_VENOM_BOLT,
     SPELL_IRON_SHOT,
+    SPELL_FRAGMENTATION,
     SPELL_STONE_ARROW,
     SPELL_THROW_FLAME,
     SPELL_THROW_FROST,
@@ -109,6 +110,7 @@ static spell_type search_order_third[] = {
 // this fails, go through conjurations.  Note: Dig must be in misc2
 // (5th) position to work.
 static spell_type search_order_misc[] = {
+    SPELL_SHATTER,
     SPELL_AGONY,
     SPELL_BANISHMENT,
     SPELL_FREEZING_CLOUD,
@@ -122,7 +124,6 @@ static spell_type search_order_misc[] = {
     SPELL_PETRIFY,
     SPELL_POLYMORPH_OTHER,
     SPELL_TELEPORT_OTHER,
-    SPELL_EVAPORATE, // replaced with Mephitic Cloud, though at lower priority
     SPELL_DIG,
     SPELL_CORONA,
     SPELL_NO_SPELL,                        // end search
@@ -222,7 +223,7 @@ void ghost_demon::init_random_demon()
     // Does demon fly?
     fly = (one_chance_in(3) ? FL_NONE :
            one_chance_in(5) ? FL_LEVITATE
-                            : FL_FLY);
+                            : FL_WINGED);
 
     // hit dice:
     xl = 10 + roll_dice(2, 10);
@@ -451,9 +452,7 @@ void ghost_demon::init_player_ghost()
     species = you.species;
     job = you.char_class;
 
-    // Ghosts can't worship good gods.
-    if (!is_good_god(you.religion))
-        religion = you.religion;
+    religion = you.religion;
 
     best_skill = ::best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);
     best_skill_level = you.skills[best_skill];
@@ -666,16 +665,15 @@ void ghost_demon::init_dancing_weapon(const item_def& weapon, int power)
     int delay = property(weapon, PWPN_SPEED);
     int damg  = property(weapon, PWPN_DAMAGE);
 
-    if (power > 150)
-        power = 150;
+    if (power > 100)
+        power = 100;
 
     colour = weapon.colour;
     fly = FL_LEVITATE;
 
     // We want Tukima to reward characters who invest heavily in both
-    // carrying capacity and enchantments skill.  Therefore, heavy
-    // weapons are a bit stronger when animated, and benefit much more
-    // from very high skill.
+    // carrying capacity and Hexes skill.  Therefore, heavy weapons are a bit
+    // stronger when animated, and benefit much more from very high skill.
 
     // First set up what the monsters will look like at very high skill.
     // Daggers are weak here! In the table, "44+22" means d44+d22 with
@@ -698,29 +696,12 @@ void ghost_demon::init_dancing_weapon(const item_def& weapon, int power)
     // If you aren't an awesome spellcaster, nerf the weapons.  Do it in
     // a way that lays most of the penalty on heavy weapons.
 
-    speed = std::max(3, speed - (10 - power / 15));
-    ev    = std::max(3, ev    - (10 - power / 15));
+    speed = max(3, speed - (10 - power / 10));
+    ev    = max(3, ev    - (10 - power / 10));
 
-    ac = ac * power / 200;
-    max_hp = std::max(5, max_hp * power / 150);
-    damage = std::max(1, damage * power / 150);
-
-    // For a spellpower 75 character (typical late midgame mage with no Ench
-    // focus), we have:
-
-    // Giant spiked club: speed 7,  22+22 damage, 17 AC, 35 HP, 11 EV
-    // Bardiche:          speed 5,  20+20 damage, 10 AC, 20 HP, 10 EV
-    // Dagger:            speed 15,  4+4  damage,  1 AC,  5 HP, 15 EV
-    // Quick blade:       speed 18,  5+5  damage,  2 AC,  5 HP, 17 EV
-    // Sabre:             speed 13,  7+7  damage,  4 AC,  9 HP, 14 EV
-
-    // At spellpower 37 (early game character with focus on Ench):
-
-    // Giant spiked club: speed 5, 11+22 damage, 8 AC, 17 HP,  9 EV
-    // Bardiche:          speed 3, 10+20 damage, 5 AC, 10 HP,  8 EV
-    // Dagger:            speed 13, 2+4  damage, 0 AC,  5 HP, 13 EV
-    // Quick blade:       speed 16, 2+5  damage, 1 AC,  5 HP, 15 EV
-    // Sabre:             speed 11, 3+7  damage, 2 AC,  5 HP, 12 EV
+    ac = ac * power / 100;
+    max_hp = max(5, max_hp * power / 100);
+    damage = max(1, damage * power / 100);
 }
 
 static bool _know_spell(spell_type spell)
@@ -835,11 +816,9 @@ spell_type ghost_demon::translate_spell(spell_type spell) const
     case SPELL_CONTROLLED_BLINK:
         return SPELL_BLINK;        // approximate
     case SPELL_DEMONIC_HORDE:
-        return SPELL_CALL_IMP;
+        return SPELL_SUMMON_MINOR_DEMON;
     case SPELL_DELAYED_FIREBALL:
         return SPELL_FIREBALL;
-    case SPELL_EVAPORATE:
-        return SPELL_MEPHITIC_CLOUD;
     default:
         break;
     }
@@ -847,9 +826,9 @@ spell_type ghost_demon::translate_spell(spell_type spell) const
     return spell;
 }
 
-std::vector<ghost_demon> ghost_demon::find_ghosts()
+vector<ghost_demon> ghost_demon::find_ghosts()
 {
-    std::vector<ghost_demon> gs;
+    vector<ghost_demon> gs;
 
     if (!you.is_undead)
     {
@@ -868,7 +847,7 @@ std::vector<ghost_demon> ghost_demon::find_ghosts()
 }
 
 void ghost_demon::find_transiting_ghosts(
-    std::vector<ghost_demon> &gs, int n)
+    vector<ghost_demon> &gs, int n)
 {
     if (n <= 0)
         return;
@@ -900,7 +879,7 @@ void ghost_demon::announce_ghost(const ghost_demon &g)
 #endif
 }
 
-void ghost_demon::find_extra_ghosts(std::vector<ghost_demon> &gs, int n)
+void ghost_demon::find_extra_ghosts(vector<ghost_demon> &gs, int n)
 {
     for (monster_iterator mi; mi && n > 0; ++mi)
     {
@@ -959,7 +938,7 @@ bool debug_check_ghosts()
         if (ghost.religion < GOD_NO_GOD || ghost.religion >= NUM_GODS)
             return false;
 
-        if (ghost.brand == SPWPN_HOLY_WRATH || is_good_god(ghost.religion))
+        if (ghost.brand == SPWPN_HOLY_WRATH)
             return false;
 
         // Only (very) ugly things get non-plain attack types and
@@ -1004,7 +983,7 @@ int ghost_level_to_rank(const int xl)
 ///////////////////////////////////////////////////////////////////////////////
 // Laboratory rats!
 
-std::string adjective_for_labrat_colour(colour_t l_colour)
+string adjective_for_labrat_colour(colour_t l_colour)
 {
     switch (l_colour)
     {
@@ -1047,7 +1026,7 @@ int tile_offset_for_labrat_colour(colour_t l_colour)
 }
 #endif
 
-colour_t colour_for_labrat_adjective(std::string adjective)
+colour_t colour_for_labrat_adjective(string adjective)
 {
     if (adjective == "armoured")    return CYAN;
     if (adjective == "beastly")     return YELLOW;

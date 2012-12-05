@@ -15,13 +15,6 @@ amulet of conservation
 Ten amulet ochrania zwoje i eliksiry przed zniszczeniem, niestety nie jest
 niezawodny.
 %%%%
-amulet of controlled flight
-
-Jeśli nosiciel tego amuletu zostanie poddany lewitacji w jakiś sposób, amulet
-ten umożliwia kontrolę nad lotem. Daje to między innymi możliwość kontaktu z
-podłożem, podnoszenia przedmiotów leżących na ziemi, jak i schodzenia po
-schodach.
-%%%%
 amulet of guardian spirit
 
 Ten amulet chroni swego nosiciela przed obrażeniami. Odniesione rany zamiast
@@ -179,14 +172,6 @@ book of changes
 
 Księga czarów.
 %%%%
-book of card effects
-
-Księga czarów.
-%%%%
-book of charms
-
-Księga czarów.
-%%%%
 book of clouds
 
 Księga czarów.
@@ -276,10 +261,6 @@ book of power
 Księga czarów.
 %%%%
 book of spatial translocations
-
-Księga czarów.
-%%%%
-book of stalking
 
 Księga czarów.
 %%%%
@@ -499,7 +480,7 @@ disc of storms
 
 Ten potężny przedmiot potrafi wypuścić niszczące elektryczne wyładowanie,
 zwłaszcza w rękach kogoś kto potrafi dobrze posługiwać się magicznymi
-przedmiotami. Nie zadziała jeśli użytkownik jest elektrycznie odizolowany.
+przedmiotami.
 %%%%
 double sword
 
@@ -724,7 +705,7 @@ Miecz o długim prostym ostrzu.
 longbow
 
 Duży, mocny cisowy łuk. Ma spory naciąg i potrafi zadać poważne obrażenia,
-zwłaszcz w rękach zaawansowanego łucznika.
+zwłaszcza w rękach zaawansowanego łucznika.
 %%%%
 lychee
 
@@ -902,10 +883,6 @@ potion of invisibility
 
 Eliksir który daje tymczasową niewidzialność.
 %%%%
-potion of levitation
-
-Eliksir który czyni pijącego lżejszym od powietrza.
-%%%%
 potion of magic
 
 Eliksir który jednorazowo odnawia część zasobów magicznej energii.
@@ -953,10 +930,6 @@ spowodować magiczną skazę!
 potion of strong poison
 
 Wyjątkowo groźna trucizna.
-%%%%
-potion of water
-
-Cudowna substancja, podstawa wszelkiego życia.
 %%%%
 quad damage
 
@@ -1020,12 +993,6 @@ tego efektu — trzeba go aktywować, do czego potrzebna jest umiejętność
 posługiwania się magicznymi przedmiotami. Bycie niewidzialnym znacznie wzmaga
 zużycie metabolizm, a także powoduje magiczne skażenie. Zbyt częste użycie tego
 pierścienia nie jest więc wskazane.
-%%%%
-ring of levitation
-
-Ten pierścień, po uruchomieniu, pozwala unieść się w powietrze na krótki czas.
-Po wylądowaniu można uruchomić pierścień ponownie, nie da się jednak tego
-zrobić z powietrza.
 %%%%
 ring of life protection
 
@@ -1119,10 +1086,6 @@ Ten pręt zawiera czary siejące zniszczenie.
 rod of striking
 
 Ten pręt pozwala uderzać wrógów surową magią, niestety niezbyt efektywnie.
-%%%%
-rod of summoning
-
-Ten pret zawiera czary przywołań.
 %%%%
 rod of venom
 
@@ -1370,11 +1333,6 @@ Zbroja z prostokątnych metalowych płytek, połączonych metalowymi kółkami. 
 to bardzo dobrą ochronę przed ciosami — co prawda znacznie gorszą niż pełna
 zbroja płytowa, jednak umożliwia ona dużo większą swobodę ruchów.
 %%%%
-staff
-
-Patyk którym można się podpierać w czasie marszu, a przy braku innej broni,
-nawet użyć w walce.
-%%%%
 staff of air
 
 Ten kij zwiększa moc czarów Magii Powietrza, a także zapewnia ochronę przed
@@ -1409,12 +1367,6 @@ staff of earth
 Ten kij zwiększa moc czarów Magii Ziemi. Jeśli użytkownik potrafi posługiwać
 się magicznymi przedmiotami, wrogowie uderzeni tym kijem zostaną zmiażdżeni —
 mocniej jeśli użytkownik posiada umiejętności w Magii Ziemi.
-%%%%
-staff of enchantment
-
-Ten kij zwiększa moc Uroków jak i Magii Wspomagania. Przy wystarczających
-umiejętnościach w dowolnej z tych dwóch szkół, także poprawia odporność na
-wrogie uroki.
 %%%%
 staff of energy
 

@@ -30,6 +30,7 @@
 #include "initfile.h"
 #include "itemname.h"
 #include "lang-fake.h"
+#include "libutil.h"
 #include "menu.h"
 #include "message.h"
 #include "misc.h"
@@ -41,6 +42,7 @@
 #include "player.h"
 #include "religion.h"
 #include "skills2.h"
+#include "state.h"
 #include "status.h"
 #include "stuff.h"
 #include "tagstring.h"
@@ -56,7 +58,7 @@
 #include "directn.h"
 #endif
 
-static std::string _god_powers(bool simple = false);
+static string _god_powers(bool simple = false);
 
 // Color for captions like 'Health:', 'Str:', etc.
 #define HUD_CAPTION_COLOUR Options.status_caption_colour
@@ -179,7 +181,7 @@ void update_message_status()
 {
     static const char *msg = "(Hit _)";
     static const int len = strwidth(msg);
-    static const std::string spc(len, ' ');
+    static const string spc(len, ' ');
 
     textcolor(LIGHTBLUE);
 
@@ -361,7 +363,7 @@ static void _print_stats_ac(int x, int y)
         textcolor(RED);
     else
         textcolor(HUD_VALUE_COLOUR);
-    std::string ac = make_stringf("%2d ", you.armour_class());
+    string ac = make_stringf("%2d ", you.armour_class());
 #ifdef WIZARD
     if (you.wizard)
         ac += make_stringf("(%d%%) ", you.gdr_perc());
@@ -394,12 +396,12 @@ static void _print_stats_ev(int x, int y)
 static void _print_stats_wp(int y)
 {
     int col;
-    std::string text;
+    string text;
     if (you.weapon())
     {
         const item_def& wpn = *you.weapon();
 
-        const std::string prefix = menu_colour_item_prefix(wpn);
+        const string prefix = menu_colour_item_prefix(wpn);
         const int prefcol = menu_colour(wpn.name(false, DESC_INVENTORY), prefix);
         if (prefcol != -1)
             col = prefcol;
@@ -410,60 +412,36 @@ static void _print_stats_wp(int y)
     }
     else
     {
-        const std::string prefix = "-) ";
+        const string prefix = "-) ";
         col = LIGHTGREY;
-        text = "무장하지 않음"; // Default
-
-        if (you.species == SP_FELID)
-            text = _("Teeth and claws");
-        else if (you.has_usable_claws(true))
-            text = _("Claws");
-        else if (you.has_usable_tentacles(true))
-            text = _("Tentacles");
-
         switch (you.form)
         {
-            case TRAN_SPIDER:
-                col = LIGHTGREEN;
-                text = "독니";
-                break;
-            case TRAN_BLADE_HANDS:
-                col = RED;
-                text = "칼날의 " + blade_parts(true);
-                break;
-            case TRAN_STATUE:
-                col = LIGHTGREY;
-                if (you.has_usable_claws(true))
-                    text = "바위 손톱";
-                else if (you.has_usable_tentacles(true))
-                    text = "바위 촉수";
-                else
-                    text = "바위 주먹";
-                break;
-            case TRAN_ICE_BEAST:
-                col = WHITE;
-                text = "얼음 주먹";
-                break;
-            case TRAN_DRAGON:
-                col = GREEN;
-                text = "이빨과 발톱";
-                break;
-            case TRAN_LICH:
-                col = MAGENTA;
-                text += " (흡수)";
-                break;
-            case TRAN_BAT:
-            case TRAN_PIG:
-                col = LIGHTGREY;
-                text = "궁뎅이";
-                break;
-            case TRAN_NONE:
-            case TRAN_APPENDAGE:
-            default:
-                break;
+        case TRAN_SPIDER:
+            col = LIGHTGREEN;
+            break;
+        case TRAN_BLADE_HANDS:
+            col = RED;
+            break;
+        case TRAN_STATUE:
+            col = LIGHTGREY;
+            break;
+        case TRAN_ICE_BEAST:
+            col = WHITE;
+            break;
+        case TRAN_DRAGON:
+            col = GREEN;
+            break;
+        case TRAN_LICH:
+            col = MAGENTA;
+            break;
+        case TRAN_BAT:
+        case TRAN_PIG:
+            col = LIGHTGREY;
+            break;
+        default:
+            break;
         }
-
-        text = prefix + text;
+        text = prefix + you.unarmed_attack_name();
     }
 
     cgotoxy(1, y, GOTO_STAT);
@@ -478,14 +456,14 @@ static void _print_stats_wp(int y)
 static void _print_stats_qv(int y)
 {
     int col;
-    std::string text;
+    string text;
 
     int q = you.m_quiver->get_fire_item();
     ASSERT(q >= -1 && q < ENDOFPACK);
     if (q != -1 && !fire_warn_if_impossible(true))
     {
         const item_def& quiver = you.inv[q];
-        const std::string prefix = menu_colour_item_prefix(quiver);
+        const string prefix = menu_colour_item_prefix(quiver);
         const int prefcol =
             menu_colour(quiver.name(false, DESC_INVENTORY), prefix);
         if (prefcol != -1)
@@ -496,7 +474,7 @@ static void _print_stats_qv(int y)
     }
     else
     {
-        const std::string prefix = "-) ";
+        const string prefix = "-) ";
 
         if (fire_warn_if_impossible(true))
         {
@@ -522,9 +500,9 @@ static void _print_stats_qv(int y)
 
 struct status_light
 {
-    status_light(int c, std::string t) : color(c), text(t) {}
+    status_light(int c, string t) : color(c), text(t) {}
     int color;
-    std::string text;
+    string text;
 };
 
 // The colour scheme for these flags is currently:
@@ -536,7 +514,7 @@ struct status_light
 // - magenta, light magenta     for "better" enchantments (deflect, fly)
 //
 // Prints burden, hunger,
-// pray, holy, teleport, regen, insulation, fly/lev, invis, silence,
+// pray, holy, teleport, regen, fly/lev, invis, silence,
 //   conf. touch, bargain, sage
 // confused, mesmerised, fire, poison, disease, rot, held, glow, swift,
 //   fast, slow, breath
@@ -546,7 +524,7 @@ struct status_light
 // using the '@' command.  Things like confusion and sticky flame
 // hide their amounts and are thus always the same colour (so
 // we're not really exposing any new information). --bwr
-static void _get_status_lights(std::vector<status_light>& out)
+static void _get_status_lights(vector<status_light>& out)
 {
 #ifdef DEBUG_DIAGNOSTICS
     {
@@ -573,16 +551,14 @@ static void _get_status_lights(std::vector<status_light>& out)
         DUR_TELEPORT,
         DUR_DEATHS_DOOR,
         DUR_QUAD_DAMAGE,
-        DUR_DEFLECT_MISSILES,
-        DUR_REPEL_MISSILES,
+        STATUS_MISSILES,
         STATUS_REGENERATION,
         DUR_BERSERK,
         DUR_RESISTANCE,
-        DUR_INSULATION,
-        DUR_SEE_INVISIBLE,
         STATUS_AIRBORNE,
         DUR_INVIS,
         DUR_CONTROL_TELEPORT,
+        DUR_DISJUNCTION,
         DUR_SILENCE,
         DUR_CONFUSING_TOUCH,
         DUR_BARGAIN,
@@ -631,6 +607,7 @@ static void _get_status_lights(std::vector<status_light>& out)
         STATUS_SUPPRESSED,
         STATUS_TERRAIN,
         STATUS_SILENCE,
+        STATUS_NO_CTELE,
     };
 
     status_info inf;
@@ -643,13 +620,11 @@ static void _get_status_lights(std::vector<status_light>& out)
             out.push_back(sl);
         }
     }
-    if (!allow_control_teleport(true) && Options.show_no_ctele)
-        out.push_back(status_light(RED,"-cTele"));
 }
 
 static void _print_status_lights(int y)
 {
-    std::vector<status_light> lights;
+    vector<status_light> lights;
     static int last_number_of_lights = 0;
     _get_status_lights(lights);
     if (lights.empty() && last_number_of_lights == 0)
@@ -712,9 +687,9 @@ static bool _need_stats_printed()
 }
 #endif
 
-static void _redraw_title(const std::string &your_name, const std::string &job_name)
+static void _redraw_title(const string &your_name, const string &job_name)
 {
-    std::string title = your_name + " the " + job_name;
+    string title = your_name + " the " + job_name;
 
     unsigned int in_len = strwidth(title);
     const unsigned int WIDTH = crawl_view.hudsz.x;
@@ -723,7 +698,7 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
         in_len -= 3;  // What we're getting back from removing "the".
 
         const unsigned int name_len = strwidth(your_name);
-        std::string trimmed_name = your_name;
+        string trimmed_name = your_name;
 
         // Squeeze name if required, the "- 8" is to not squeeze too much.
         if (in_len > WIDTH && (name_len - 8) > (in_len - WIDTH))
@@ -753,16 +728,16 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
     // Minotaur [of God] [Piety]
     textcolor(YELLOW);
     cgotoxy(1, 2, GOTO_STAT);
-    std::string species = species_name(you.species);
+    string species = species_name(you.species);
     nowrap_eol_cprintf("%s", species.c_str());
     if (you.religion != GOD_NO_GOD)
     {
-        std::string god = " of ";
+        string god = " of ";
         god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
                                          : god_name(you.religion);
         nowrap_eol_cprintf("%s", god.c_str());
 
-        std::string piety = _god_powers(true);
+        string piety = _god_powers(true);
         if (player_under_penance())
             textcolor(RED);
         if ((unsigned int)(strwidth(species) + strwidth(god) + strwidth(piety) + 1)
@@ -781,7 +756,7 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
     else if (you.char_class == JOB_MONK && you.species != SP_DEMIGOD
              && !had_gods())
     {
-        std::string godpiety = "**....";
+        string godpiety = "**....";
         textcolor(DARKGREY);
         if ((unsigned int)(strwidth(species) + strwidth(godpiety) + 1) <= WIDTH)
             nowrap_eol_cprintf(" %s", godpiety.c_str());
@@ -905,10 +880,10 @@ void print_stats(void)
 #endif
 }
 
-static std::string _level_description_string_hud()
+static string _level_description_string_hud()
 {
     const PlaceInfo& place = you.get_place_info();
-    std::string short_name = branches[place.branch].shortname;
+    string short_name = branches[place.branch].shortname;
 
     if (brdepth[place.branch] > 1)
         short_name += make_stringf(":%d", you.depth);
@@ -966,10 +941,9 @@ void draw_border(void)
 // Monster pane
 // ----------------------------------------------------------------------
 
-static std::string _get_monster_name(const monster_info& mi,
-                                     int count, bool fullname)
+static string _get_monster_name(const monster_info& mi, int count, bool fullname)
 {
-    std::string desc = "";
+    string desc = "";
 
     bool adj = false;
     if (mi.attitude == ATT_FRIENDLY)
@@ -983,7 +957,7 @@ static std::string _get_monster_name(const monster_info& mi,
         adj = true;
     }
 
-    std::string monpane_desc;
+    string monpane_desc;
     int col;
     mi.to_string(count, monpane_desc, col, fullname);
 
@@ -1007,13 +981,13 @@ static std::string _get_monster_name(const monster_info& mi,
 
 // If past is true, the messages should be printed in the past tense
 // because they're needed for the morgue dump.
-std::string mpr_monster_list(bool past)
+string mpr_monster_list(bool past)
 {
     // Get monsters via the monster_pane_info, sorted by difficulty.
-    std::vector<monster_info> mons;
+    vector<monster_info> mons;
     get_monster_info(mons);
 
-    std::string msg = "";
+    string msg = "";
     if (mons.empty())
     {
         msg  = past ? _("There were no monsters in sight!") :
@@ -1022,7 +996,7 @@ std::string mpr_monster_list(bool past)
         return msg;
     }
 
-    std::vector<std::string> describe;
+    vector<string> describe;
 
     int count = 0;
     for (unsigned int i = 0; i < mons.size(); ++i)
@@ -1049,7 +1023,7 @@ std::string mpr_monster_list(bool past)
 }
 
 #ifndef USE_TILE_LOCAL
-static void _print_next_monster_desc(const std::vector<monster_info>& mons,
+static void _print_next_monster_desc(const vector<monster_info>& mons,
                                      int& start, bool zombified = false,
                                      int idx = -1)
 {
@@ -1080,7 +1054,7 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
         for (unsigned int i_mon = start; i_mon < end; i_mon++)
         {
             monster_info mi = mons[i_mon];
-            glyph g = get_mons_glyph(mi);
+            cglyph_t g = get_mons_glyph(mi);
             textcolor(g.col);
             cprintf("%s", stringize_glyph(g.ch).c_str());
             ++printed;
@@ -1098,7 +1072,11 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
             cprintf(" ");
 
             monster_info mi = mons[start];
+#ifdef TARGET_OS_WINDOWS
+            textcolor(real_colour(dam_colour(mi) | COLFLAG_ITEM_HEAP));
+#else
             textcolor(real_colour(dam_colour(mi) | COLFLAG_REVERSE));
+#endif
             cprintf(" ");
             textbackground(BLACK);
             textcolor(LIGHTGREY);
@@ -1115,7 +1093,7 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
         if (printed < crawl_view.mlistsz.x)
         {
             int desc_colour;
-            std::string desc;
+            string desc;
             mons[start].to_string(count, desc, desc_colour, zombified);
             textcolor(desc_colour);
             desc.resize(crawl_view.mlistsz.x-printed, ' ');
@@ -1144,7 +1122,7 @@ int update_monster_pane()
     if (max_print <= 0)
         return -1;
 
-    std::vector<monster_info> mons;
+    vector<monster_info> mons;
     get_monster_info(mons);
 
     // Count how many groups of monsters there are.
@@ -1168,13 +1146,13 @@ int update_monster_pane()
     }
 
 #ifdef BOTTOM_JUSTIFY_MONSTER_LIST
-    const int skip_lines = std::max<int>(0, crawl_view.mlistsz.y-lines_needed);
+    const int skip_lines = max<int>(0, crawl_view.mlistsz.y-lines_needed);
 #else
     const int skip_lines = 0;
 #endif
 
     // Print the monsters!
-    std::string blank;
+    string blank;
     blank.resize(crawl_view.mlistsz.x, ' ');
     int i_mons = 0;
     for (int i_print = 0; i_print < max_print; ++i_print)
@@ -1298,11 +1276,11 @@ static const char* _determine_colour_string(int level, int max_level)
     }
 }
 
-static std::string _status_mut_abilities(int sw);
+static string _status_mut_abilities(int sw);
 
 // helper for print_overview_screen
 static void _print_overview_screen_equip(column_composer& cols,
-                                         std::vector<char>& equip_chars)
+                                         vector<char>& equip_chars)
 {
     const int e_order[] =
     {
@@ -1333,7 +1311,7 @@ static void _print_overview_screen_equip(column_composer& cols,
         if (you.species != SP_OCTOPODE && eqslot > EQ_AMULET)
             continue;
 
-        const std::string slot_name_lwr = lowercase_string(equip_slot_to_name(eqslot));
+        const string slot_name_lwr = lowercase_string(equip_slot_to_name(eqslot));
 
         char slot[15] = "";
         // uncomment (and change 42 to 33) to bring back slot names
@@ -1345,7 +1323,7 @@ static void _print_overview_screen_equip(column_composer& cols,
             const int item_idx   = you.equip[e_order[i]];
             const item_def& item = you.inv[item_idx];
             const bool melded    = !player_wearing_slot(e_order[i]);
-            const std::string prefix = menu_colour_item_prefix(item);
+            const string prefix = menu_colour_item_prefix(item);
             const int prefcol = menu_colour(item.name(false, DESC_INVENTORY), prefix);
             const int col = prefcol == -1 ? LIGHTGREY : prefcol;
 
@@ -1406,7 +1384,7 @@ static void _print_overview_screen_equip(column_composer& cols,
     }
 }
 
-static std::string _overview_screen_title(int sw)
+static string _overview_screen_title(int sw)
 {
     char species_job[50];
     snprintf(species_job, sizeof species_job,
@@ -1447,7 +1425,7 @@ static std::string _overview_screen_title(int sw)
                      + strwidth(species_job) + strwidth(time_turns);
     }
 
-    std::string text;
+    string text;
     text = "<yellow>";
 	text += title;
     text += species_job;
@@ -1456,7 +1434,7 @@ static std::string _overview_screen_title(int sw)
 
     const int num_spaces = sw - linelength - 1;
     if (num_spaces > 0)
-        text += std::string(num_spaces, ' ');
+        text += string(num_spaces, ' ');
 
     text += time_turns;
     text += "</yellow>\n";
@@ -1465,18 +1443,18 @@ static std::string _overview_screen_title(int sw)
 }
 
 #ifdef WIZARD
-static std::string _wiz_god_powers()
+static string _wiz_god_powers()
 {
-    std::string godpowers = god_name(you.religion);
+    string godpowers = god_name(you.religion);
     return (make_stringf("%s %d (%d)", god_name(you.religion).c_str(),
                                        you.piety,
                                        you.duration[DUR_PIETY_POOL]));
 }
 #endif
 
-static std::string _god_powers(bool simple)
+static string _god_powers(bool simple)
 {
-    std::string godpowers = simple ? "" : god_name(you.religion) ;
+    string godpowers = simple ? "" : god_name(you.religion) ;
     if (you.religion == GOD_XOM)
     {
         if (!you.gift_timeout)
@@ -1499,8 +1477,7 @@ static std::string _god_powers(bool simple)
 
             // Careful about overflow. We erase some of the god's name
             // if necessary.
-            std::string asterisks = std::string(prank, '*')
-                                    + std::string(6 - prank, '.');
+            string asterisks = string(prank, '*') + string(6 - prank, '.');
             if (simple)
                 return asterisks;
             godpowers = chop_string(godpowers, 20, false)
@@ -1511,7 +1488,7 @@ static std::string _god_powers(bool simple)
     return "";
 }
 
-static std::vector<formatted_string> _get_overview_stats()
+static vector<formatted_string> _get_overview_stats()
 {
     char buf[1000];
 
@@ -1584,76 +1561,77 @@ static std::vector<formatted_string> _get_overview_stats()
     snprintf(buf, sizeof buf, "SH %2d", player_shield_class());
     cols1.add_formatted(1, buf, false);
 
-    if (you.strength() == you.max_strength())
+    if (you.strength(false) == you.max_strength())
     {
         if (boosted_str)
         {
-            snprintf(buf, sizeof buf, "힘   <lightblue>%2d</lightblue>",
-                     you.strength());
+            /// width 맞춰주세요
+            snprintf(buf, sizeof buf, _("Str <lightblue>%2d</lightblue>"),
+                     you.strength(false));
         }
         else
-            snprintf(buf, sizeof buf, "힘   %2d", you.strength());
+            snprintf(buf, sizeof buf, _("Str %2d"), you.strength(false));
     }
     else
     {
         if (boosted_str)
         {
-            snprintf(buf, sizeof buf, "힘   <lightblue>%2d (%d)</lightblue>",
-                     you.strength(), you.max_strength());
+            snprintf(buf, sizeof buf, _("Str <lightblue>%2d (%d)</lightblue>"),
+                     you.strength(false), you.max_strength());
         }
         else
-            snprintf(buf, sizeof buf, "힘   <yellow>%2d</yellow> (%d)",
-                     you.strength(), you.max_strength());
+            snprintf(buf, sizeof buf, _("Str <yellow>%2d</yellow> (%d)"),
+                     you.strength(false), you.max_strength());
     }
     cols1.add_formatted(2, buf, false);
 
-    if (you.intel() == you.max_intel())
+    if (you.intel(false) == you.max_intel())
     {
         if (boosted_int)
         {
-            snprintf(buf, sizeof buf, "지능 <lightblue>%2d</lightblue>",
-                     you.intel());
+            snprintf(buf, sizeof buf, _("Int <lightblue>%2d</lightblue>"),
+                     you.intel(false));
         }
         else
-            snprintf(buf, sizeof buf, "지능 %2d", you.intel());
+            snprintf(buf, sizeof buf, _("Int %2d"), you.intel(false));
     }
     else
     {
         if (boosted_int)
         {
-            snprintf(buf, sizeof buf, "지능 <lightblue>%2d (%d)</lightblue>",
-                     you.intel(), you.max_intel());
+            snprintf(buf, sizeof buf, _("Int <lightblue>%2d (%d)</lightblue>"),
+                     you.intel(false), you.max_intel());
         }
         else
-            snprintf(buf, sizeof buf, "지능 <yellow>%2d</yellow> (%d)",
-                     you.intel(), you.max_intel());
+            snprintf(buf, sizeof buf, _("Int <yellow>%2d</yellow> (%d)"),
+                     you.intel(false), you.max_intel());
     }
     cols1.add_formatted(2, buf, false);
 
-    if (you.dex() == you.max_dex())
+    if (you.dex(false) == you.max_dex())
     {
         if (boosted_dex)
         {
-            snprintf(buf, sizeof buf, "민첩 <lightblue>%2d</lightblue>",
-                     you.dex());
+            snprintf(buf, sizeof buf, _("Dex <lightblue>%2d</lightblue>"),
+                     you.dex(false));
         }
         else
-            snprintf(buf, sizeof buf, "민첩 %2d", you.dex());
+            snprintf(buf, sizeof buf, _("Dex %2d"), you.dex(false));
     }
     else
     {
         if (boosted_dex)
         {
-            snprintf(buf, sizeof buf, "민첩 <lightblue>%2d (%d)</lightblue>",
-                     you.dex(), you.max_dex());
+            snprintf(buf, sizeof buf, _("Dex <lightblue>%2d (%d)</lightblue>"),
+                     you.dex(false), you.max_dex());
         }
         else
-            snprintf(buf, sizeof buf, "민첩 <yellow>%2d</yellow> (%d)",
-                     you.dex(), you.max_dex());
+            snprintf(buf, sizeof buf, _("Dex <yellow>%2d</yellow> (%d)"),
+                     you.dex(false), you.max_dex());
     }
     cols1.add_formatted(2, buf, false);
 
-    std::string godpowers = _god_powers(false);
+    string godpowers = _god_powers(false);
 #ifdef WIZARD
     if (you.wizard)
         godpowers = _wiz_god_powers();
@@ -1686,8 +1664,8 @@ static std::vector<formatted_string> _get_overview_stats()
     return cols1.formatted_lines();
 }
 
-static std::vector<formatted_string> _get_overview_resistances(
-    std::vector<char> &equip_chars,
+static vector<formatted_string> _get_overview_resistances(
+    vector<char> &equip_chars,
     bool calc_unid = false)
 {
     char buf[1000];
@@ -1794,15 +1772,12 @@ static std::vector<formatted_string> _get_overview_resistances(
 
     int rctel = player_control_teleport(calc_unid);
     rctel = allow_control_teleport(true) ? rctel : -1;
-    const int rlevi = you.airborne();
-    const int rcfli = player_effect_cfly(calc_unid);
+    const int rflyi = you.airborne();
     snprintf(buf, sizeof buf,
-             "%s좌표이동   : %s\n"
-             "%s공중부양   : %s\n"
-             "%s비행제어   : %s\n",
+             _("%sCtrl.Telep.: %s\n"
+             "%sFlight     : %s\n"),
              _determine_colour_string(rctel, 1), _itosym1(rctel),
-             _determine_colour_string(rlevi, 1), _itosym1(rlevi),
-             _determine_colour_string(rcfli, 1), _itosym1(rcfli));
+             _determine_colour_string(rflyi, 1), _itosym1(rflyi));
     cols.add_formatted(1, buf, false);
 
     _print_overview_screen_equip(cols, equip_chars);
@@ -1830,7 +1805,7 @@ static char _get_overview_screen_results()
     overview.add_text(_overview_screen_title(get_number_of_cols()));
 
     {
-        std::vector<formatted_string> blines = _get_overview_stats();
+        vector<formatted_string> blines = _get_overview_stats();
         for (unsigned int i = 0; i < blines.size(); ++i)
             overview.add_item_formatted_string(blines[i]);
         overview.add_text(" ");
@@ -1838,8 +1813,8 @@ static char _get_overview_screen_results()
 
 
     {
-        std::vector<char> equip_chars;
-        std::vector<formatted_string> blines =
+        vector<char> equip_chars;
+        vector<formatted_string> blines =
             _get_overview_resistances(equip_chars, calc_unid);
 
         for (unsigned int i = 0; i < blines.size(); ++i)
@@ -1854,16 +1829,16 @@ static char _get_overview_screen_results()
     overview.add_text(" ");
     overview.add_text(_status_mut_abilities(get_number_of_cols()));
 
-    std::vector<MenuEntry *> results = overview.show();
+    vector<MenuEntry *> results = overview.show();
     return (!results.empty()) ? results[0]->hotkeys[0] : 0;
 }
 
-std::string dump_overview_screen(bool full_id)
+string dump_overview_screen(bool full_id)
 {
-    std::string text = formatted_string::parse_string(_overview_screen_title(80));
+    string text = formatted_string::parse_string(_overview_screen_title(80));
     text += "\n";
 
-    std::vector<formatted_string> blines = _get_overview_stats();
+    vector<formatted_string> blines = _get_overview_stats();
     for (unsigned int i = 0; i < blines.size(); ++i)
     {
         text += blines[i];
@@ -1871,7 +1846,7 @@ std::string dump_overview_screen(bool full_id)
     }
     text += "\n";
 
-    std::vector<char> equip_chars;
+    vector<char> equip_chars;
     blines = _get_overview_resistances(equip_chars, full_id);
     for (unsigned int i = 0; i < blines.size(); ++i)
     {
@@ -1903,9 +1878,9 @@ void print_overview_screen()
     }
 }
 
-std::string stealth_desc(int stealth)
+string stealth_desc(int stealth)
 {
-    std::string prefix =
+    string prefix =
          (stealth <  10) ? "극히 미미한" :
          (stealth <  30) ? "매우 약한" :
          (stealth <  60) ? "약한" :
@@ -1920,7 +1895,7 @@ std::string stealth_desc(int stealth)
     return (prefix + "은밀함");
 }
 
-std::string magic_res_adjective(int mr)
+string magic_res_adjective(int mr)
 {
     if (mr == MAG_IMMUNE)
         return "면역";
@@ -1937,7 +1912,7 @@ std::string magic_res_adjective(int mr)
                        : "면역이다");
 }
 
-static std::string _annotate_form_based(std::string desc, bool suppressed)
+static string _annotate_form_based(string desc, bool suppressed)
 {
     if (suppressed)
         return ("<darkgrey>(" + desc + ")</darkgrey>");
@@ -1945,7 +1920,7 @@ static std::string _annotate_form_based(std::string desc, bool suppressed)
         return desc;
 }
 
-static std::string _dragon_abil(std::string desc)
+static string _dragon_abil(string desc)
 {
     const bool supp = form_changed_physiology() && you.form != TRAN_DRAGON;
     return _annotate_form_based(desc, supp);
@@ -1953,13 +1928,13 @@ static std::string _dragon_abil(std::string desc)
 
 // Creates rows of short descriptions for current
 // status, mutations and abilities.
-static std::string _status_mut_abilities(int sw)
+static string _status_mut_abilities(int sw)
 {
     //----------------------------
     // print status information
     //----------------------------
-    std::string text = "<w>@:</w> ";
-    std::vector<std::string> status;
+    string text = "<w>@:</w> ";
+    vector<string> status;
 
     const int statuses[] = {
         DUR_TRANSFORMATION,
@@ -1973,13 +1948,13 @@ static std::string _status_mut_abilities(int sw)
         STATUS_BEHELD,
         DUR_LIQUID_FLAMES,
         DUR_ICY_ARMOUR,
-        DUR_DEFLECT_MISSILES,
-        DUR_REPEL_MISSILES,
+        STATUS_MISSILES,
         DUR_JELLY_PRAYER,
         STATUS_REGENERATION,
         DUR_DEATHS_DOOR,
         DUR_STONESKIN,
         DUR_TELEPORT,
+        DUR_DISJUNCTION,
         DUR_DEATH_CHANNEL,
         DUR_PHASE_SHIFT,
         DUR_SILENCE,
@@ -2038,7 +2013,7 @@ static std::string _status_mut_abilities(int sw)
     int move_cost = (player_speed() * player_movement_speed()) / 10;
     if (move_cost != 10)
     {
-        std::string help = (move_cost <   8) ? "매우 빠름" :
+        string help = (move_cost <   8) ? "매우 빠름" :
                            (move_cost <  10) ? "빠름" :
                            (move_cost <  13) ? "느림"
                                              : "매우 느람";
@@ -2068,7 +2043,7 @@ static std::string _status_mut_abilities(int sw)
     int Int_change = 0;
     int Dex_change = 0;
 
-    std::vector<std::string> mutations;
+    vector<string> mutations;
 
     switch (you.species)   //mv: following code shows innate abilities - if any
     {
@@ -2101,7 +2076,7 @@ static std::string _status_mut_abilities(int sw)
       case SP_TENGU:
           if (you.experience_level > 4)
           {
-              std::string help = "비행 가능";
+              string help = "비행 가능";
               if (you.experience_level > 14)
                   help = make_stringf(_("%s continuously"), help.c_str());
               mutations.push_back(help);
@@ -2113,7 +2088,7 @@ static std::string _status_mut_abilities(int sw)
           mutations.push_back("불에 취약함");
           if (you.experience_level > 12)
           {
-              std::string help = "죽음의 힘에 특화";
+              string help = "죽음의 힘에 특화";
               if (you.experience_level > 25)
                   help = "강한 " + help;
               mutations.push_back(help);
@@ -2164,6 +2139,8 @@ static std::string _status_mut_abilities(int sw)
 
       case SP_BLACK_DRACONIAN:
           mutations.push_back(_dragon_abil(_("breathe lightning")));
+          if (you.experience_level >= 14)
+              mutations.push_back(_("able to fly continuously"));
           break;
 
       case SP_PURPLE_DRACONIAN:
@@ -2210,7 +2187,7 @@ static std::string _status_mut_abilities(int sw)
     if (beogh_water_walk())
         mutations.push_back("물 위 걷기");
 
-    std::string current;
+    string current;
     for (unsigned i = 0; i < NUM_MUTATIONS; ++i)
     {
         if (!you.mutation[i])
@@ -2229,7 +2206,7 @@ static std::string _status_mut_abilities(int sw)
 
             if (mdef.levels > 1)
             {
-                std::ostringstream ostr;
+                ostringstream ostr;
                 ostr << ' ' << level;
 
                 current += ostr.str();
@@ -2302,7 +2279,7 @@ static std::string _status_mut_abilities(int sw)
                     current = "발사체 방어";
                 break;
             case MUT_ICY_BLUE_SCALES:
-                AC_change += level;
+                AC_change += level + (level > 1 ? 1 : 0);
                 EV_change -= level > 1 ? 1 : 0;
                 break;
             case MUT_IRIDESCENT_SCALES:
@@ -2310,10 +2287,10 @@ static std::string _status_mut_abilities(int sw)
                 break;
             case MUT_LARGE_BONE_PLATES:
                 AC_change += level + 1;
-                SH_change += level + 1;
+                SH_change += level * 2;
                 break;
             case MUT_MOLTEN_SCALES:
-                AC_change += level;
+                AC_change += level + (level > 1 ? 1 : 0);
                 EV_change -= level > 1 ? 1 : 0;
                 break;
             case MUT_ROUGH_BLACK_SCALES:
@@ -2321,20 +2298,20 @@ static std::string _status_mut_abilities(int sw)
                 Dex_change -= level;
                 break;
             case MUT_RUGGED_BROWN_SCALES:
-                AC_change += 2;
+                AC_change += level;
                 break;
             case MUT_SLIMY_GREEN_SCALES:
-                AC_change += level;
+                AC_change += level + 1;
                 break;
             case MUT_THIN_METALLIC_SCALES:
-                AC_change += level;
+                AC_change += level + 1;
                 break;
             case MUT_THIN_SKELETAL_STRUCTURE:
                 Dex_change += 2 * level;
-                Str_change -= level;
+                Str_change -= (level - 1);
                 break;
             case MUT_YELLOW_SCALES:
-                AC_change += level;
+                AC_change += level + 1;
                 break;
             case MUT_GELATINOUS_BODY:
                 AC_change += (level == 3) ? 2 : 1;
@@ -2405,7 +2382,7 @@ static std::string _status_mut_abilities(int sw)
     //--------------
     // print runes
     //--------------
-    std::vector<std::string> runes;
+    vector<string> runes;
     for (int i = 0; i < NUM_RUNE_TYPES; i++)
         if (you.runes[i])
             runes.push_back(gettext(rune_type_name(i)));

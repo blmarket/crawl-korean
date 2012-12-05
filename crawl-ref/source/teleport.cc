@@ -59,7 +59,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     bool was_constricted = false;
     const bool jump = type == MONS_JUMPING_SPIDER;
-    const std::string verb = (jump ? "leap" : "blink");
+    const string verb = (jump ? "leap" : "blink");
 
     if (is_constricted())
     {
@@ -69,8 +69,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
         {
             if (!quiet)
             {
-                std::string message = " struggles to " + verb
-                                    + " free from constriction.";
+                string message = " struggles to " + verb
+                                 + " free from constriction.";
                 simple_monster_message(this, message.c_str());
             }
             return false;
@@ -79,8 +79,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     if (!quiet)
     {
-        std::string message = " " + conj_verb(verb)
-                            + (was_constricted ? " free!" : "!");
+        string message = " " + conj_verb(verb)
+                         + (was_constricted ? " free!" : "!");
         simple_monster_message(this, message.c_str());
     }
 
@@ -104,7 +104,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 }
 
 
-typedef std::pair<coord_def, int> coord_weight;
+typedef pair<coord_def, int> coord_weight;
 
 // Try to find a "safe" place for moved close or far from the target.
 // keep_los indicates that the destination should be in view of the target.
@@ -115,7 +115,7 @@ static coord_def random_space_weighted(actor* moved, actor* target,
                                        bool close, bool keep_los = true,
                                        bool allow_sanct = true)
 {
-    std::vector<coord_weight> dests;
+    vector<coord_weight> dests;
     const coord_def tpos = target->pos();
 
     for (radius_iterator ri(moved->get_los_no_trans()); ri; ++ri)
@@ -155,18 +155,26 @@ void blink_other_close(actor* victim, const coord_def &target)
     victim->blink_to(dest);
 }
 
-// Blink the monster away from its foe.
-bool blink_away(monster* mon)
+// Blink a monster away from the caster.
+bool blink_away(monster* mon, actor* caster)
 {
-    actor* foe = mon->get_foe();
-    if (!foe || !mon->can_see(foe))
+    if (!mon->can_see(caster))
         return false;
-    coord_def dest = random_space_weighted(mon, foe, false, false);
+    coord_def dest = random_space_weighted(mon, caster, false, false);
     if (dest.origin())
         return false;
     bool success = mon->blink_to(dest);
     ASSERT(success || mon->is_constricted());
     return success;
+}
+
+// Blink the monster away from its foe.
+bool blink_away(monster* mon)
+{
+    actor* foe = mon->get_foe();
+    if (!foe)
+        return false;
+    return blink_away(mon, foe);
 }
 
 // Blink the monster within range but at distance to its foe.
@@ -253,7 +261,7 @@ bool random_near_space(const coord_def& origin, coord_def& target,
             || restrict_los && !you.see_cell(target)
             || grd(target) < limit
             || actor_at(target)
-            || !allow_adjacent && distance(origin, target) <= 2
+            || !allow_adjacent && distance2(origin, target) <= 2
             || forbid_sanctuary && is_sanctuary(target))
         {
             continue;

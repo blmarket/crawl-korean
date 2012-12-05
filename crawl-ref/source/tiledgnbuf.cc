@@ -85,7 +85,7 @@ void DungeonCellBuffer::add(const packed_cell &cell, int x, int y)
 void DungeonCellBuffer::add_dngn_tile(int tileidx, int x, int y,
                                       bool in_water)
 {
-    assert(tileidx < TILE_FEAT_MAX);
+    ASSERT(tileidx < TILE_FEAT_MAX);
 
     if (tileidx < TILE_FLOOR_MAX)
         m_buf_floor.add(tileidx, x, y);
@@ -223,9 +223,6 @@ void DungeonCellBuffer::pack_background(int x, int y, const packed_cell &cell)
 
     if (bg_idx > TILE_DNGN_UNSEEN)
     {
-        if (bg & TILE_FLAG_WAS_SECRET)
-            m_buf_feat.add(TILE_DNGN_DETECTED_SECRET_DOOR, x, y);
-
         // Draw blood on top of wall tiles.
         if (bg_idx <= TILE_WALL_MAX)
             add_blood_overlay(x, y, cell, bg_idx >= TILE_FLOOR_MAX);
@@ -271,6 +268,10 @@ void DungeonCellBuffer::pack_background(int x, int y, const packed_cell &cell)
 
             if (cell.orb_glow)
                 m_buf_feat.add(TILE_ORB_GLOW + cell.orb_glow - 1, x, y);
+            if (cell.quad_glow)
+                m_buf_feat.add(TILE_QUAD_GLOW, x, y);
+            if (cell.disjunct)
+                m_buf_feat.add(TILE_DISJUNCT, x, y);
 
             // Apply the travel exclusion under the foreground if the cell is
             // visible.  It will be applied later if the cell is unseen.
@@ -334,11 +335,9 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
     default: ;
     }
 
+    //The berserk icon is in the lower right, so status_shift doesn't need changing.
     if (fg & TILE_FLAG_BERSERK)
-    {
         m_buf_icons.add(TILEI_BERSERK, x, y);
-        status_shift += 10;
-    }
 
     // Pet mark
     if (fg & TILE_FLAG_ATT_MASK)
@@ -352,12 +351,12 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
         else if (att_flag == TILE_FLAG_GD_NEUTRAL)
         {
             m_buf_icons.add(TILEI_GOOD_NEUTRAL, x, y);
-            status_shift += 8;
+            status_shift += 7;
         }
         else if (att_flag == TILE_FLAG_NEUTRAL)
         {
             m_buf_icons.add(TILEI_NEUTRAL, x, y);
-            status_shift += 8;
+            status_shift += 7;
         }
     }
 
@@ -367,17 +366,17 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
         if (beh_flag == TILE_FLAG_STAB)
         {
             m_buf_icons.add(TILEI_STAB_BRAND, x, y);
-            status_shift += 15;
+            status_shift += 12;
         }
         else if (beh_flag == TILE_FLAG_MAY_STAB)
         {
             m_buf_icons.add(TILEI_MAY_STAB_BRAND, x, y);
-            status_shift += 8;
+            status_shift += 7;
         }
         else if (beh_flag == TILE_FLAG_FLEEING)
         {
             m_buf_icons.add(TILEI_FLEEING, x, y);
-            status_shift += 4;
+            status_shift += 3;
         }
     }
 
@@ -389,17 +388,17 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
     if (fg & TILE_FLAG_STICKY_FLAME)
     {
         m_buf_icons.add(TILEI_STICKY_FLAME, x, y, -status_shift, 0);
-        status_shift += 5;
+        status_shift += 7;
     }
     if (fg & TILE_FLAG_INNER_FLAME)
     {
         m_buf_icons.add(TILEI_INNER_FLAME, x, y, -status_shift, 0);
-        status_shift += 8;
+        status_shift += 7;
     }
     if (fg & TILE_FLAG_CONSTRICTED)
     {
         m_buf_icons.add(TILEI_CONSTRICTED, x, y, -status_shift, 0);
-        status_shift += 13;
+        status_shift += 11;
     }
     if (fg & TILE_FLAG_GLOWING)
     {
@@ -407,12 +406,17 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
         //    m_buf_feat.add(TILE_HALO, x, y);
 
         m_buf_icons.add(TILEI_GLOWING, x, y, -status_shift, 0);
-        status_shift += 10;
+        status_shift += 7;
     }
     if (fg & TILE_FLAG_SLOWED)
     {
         m_buf_icons.add(TILEI_SLOWED, x, y, -status_shift, 0);
-        status_shift += 13;
+        status_shift += 6;
+    }
+    if (fg & TILE_FLAG_PAIN_MIRROR)
+    {
+        m_buf_icons.add(TILEI_PAIN_MIRROR, x, y, -status_shift, 0);
+        status_shift += 7;
     }
 
     if (fg & TILE_FLAG_ANIM_WEP)

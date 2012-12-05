@@ -17,10 +17,10 @@
 #include "env.h"
 #include "godabil.h"
 #include "goditem.h"
-#include "invent.h"
 #include "item_use.h"
 #include "itemprop.h"
 #include "items.h"
+#include "libutil.h"
 #include "mutation.h"
 #include "output.h"
 #include "player.h"
@@ -70,11 +70,8 @@ bool form_can_wear(transformation_type form)
 
 bool form_can_fly(transformation_type form)
 {
-    if (you.species == SP_TENGU
-        && (you.experience_level >= 15 || you.airborne()))
-    {
+    if (you.racial_permanent_flight())
         return true;
-    }
     return (form == TRAN_DRAGON || form == TRAN_BAT);
 }
 
@@ -175,10 +172,10 @@ bool form_keeps_mutations(transformation_type form)
     }
 }
 
-static std::set<equipment_type>
+static set<equipment_type>
 _init_equipment_removal(transformation_type form)
 {
-    std::set<equipment_type> result;
+    set<equipment_type> result;
     if (!form_can_wield(form) && you.weapon() || you.melded[EQ_WEAPON])
         result.insert(EQ_WEAPON);
 
@@ -208,11 +205,11 @@ _init_equipment_removal(transformation_type form)
     return result;
 }
 
-static void _remove_equipment(const std::set<equipment_type>& removed,
+static void _remove_equipment(const set<equipment_type>& removed,
                               bool meld = true, bool mutation = false)
 {
-    // Meld items into you in (reverse) order. (std::set is a sorted container)
-    std::set<equipment_type>::const_iterator iter;
+    // Meld items into you in (reverse) order. (set is a sorted container)
+    set<equipment_type>::const_iterator iter;
     for (iter = removed.begin(); iter != removed.end(); ++iter)
     {
         const equipment_type e = *iter;
@@ -335,10 +332,10 @@ static void _unmeld_equipment_type(equipment_type e)
     }
 }
 
-static void _unmeld_equipment(const std::set<equipment_type>& melded)
+static void _unmeld_equipment(const set<equipment_type>& melded)
 {
     // Unmeld items in order.
-    std::set<equipment_type>::const_iterator iter;
+    set<equipment_type>::const_iterator iter;
     for (iter = melded.begin(); iter != melded.end(); ++iter)
     {
         const equipment_type e = *iter;
@@ -351,14 +348,14 @@ static void _unmeld_equipment(const std::set<equipment_type>& melded)
 
 void unmeld_one_equip(equipment_type eq)
 {
-    std::set<equipment_type> e;
+    set<equipment_type> e;
     e.insert(eq);
     _unmeld_equipment(e);
 }
 
 void remove_one_equip(equipment_type eq, bool meld, bool mutation)
 {
-    std::set<equipment_type> r;
+    set<equipment_type> r;
     r.insert(eq);
     _remove_equipment(r, meld, mutation);
 }
@@ -419,7 +416,7 @@ monster_type transform_mons()
     return MONS_PLAYER;
 }
 
-std::string blade_parts(bool terse)
+string blade_parts(bool terse)
 {
     if (you.species == SP_FELID)
         return terse ? M_("paws") : M_("front paws");
@@ -470,19 +467,22 @@ int form_hp_mod()
     }
 }
 
-static bool _levitating_in_new_form(transformation_type which_trans)
+static bool _flying_in_new_form(transformation_type which_trans)
 {
-    //if our levitation is uncancellable (or tenguish) then it's not from evoking
-    if (you.attribute[ATTR_LEV_UNCANCELLABLE] || you.permanent_flight())
+    // If our flight is uncancellable (or tenguish) then it's not from evoking
+    if (you.attribute[ATTR_FLIGHT_UNCANCELLABLE]
+        || you.permanent_flight() && you.racial_permanent_flight())
+    {
         return true;
+    }
 
-    if (!you.is_levitating())
+    if (!you.flight_mode())
         return false;
 
-    int sources = player_evokable_levitation();
+    int sources = player_evokable_flight();
     int sources_removed = 0;
-    std::set<equipment_type> removed = _init_equipment_removal(which_trans);
-    for (std::set<equipment_type>::iterator iter = removed.begin();
+    set<equipment_type> removed = _init_equipment_removal(which_trans);
+    for (set<equipment_type>::iterator iter = removed.begin();
          iter != removed.end(); ++iter)
     {
         item_def *item = you.slot_item(*iter, true);
@@ -491,11 +491,11 @@ static bool _levitating_in_new_form(transformation_type which_trans)
         item_info inf = get_item_info(*item);
 
         //similar code to safe_to_remove from item_use.cc
-        if (inf.base_type == OBJ_JEWELLERY && inf.sub_type == RING_LEVITATION)
+        if (inf.base_type == OBJ_JEWELLERY && inf.sub_type == RING_FLIGHT)
             sources_removed++;
-        if (inf.base_type == OBJ_ARMOUR && inf.special == SPARM_LEVITATION)
+        if (inf.base_type == OBJ_ARMOUR && inf.special == SPARM_FLYING)
             sources_removed++;
-        if (is_artefact(inf) && artefact_known_wpn_property(inf, ARTP_LEVITATE))
+        if (is_artefact(inf) && artefact_known_wpn_property(inf, ARTP_FLY))
             sources_removed++;
     }
 
@@ -506,7 +506,7 @@ bool feat_dangerous_for_form(transformation_type which_trans,
                              dungeon_feature_type feat)
 {
     // Everything is okay if we can fly.
-    if (form_can_fly(which_trans) || _levitating_in_new_form(which_trans))
+    if (form_can_fly(which_trans) || _flying_in_new_form(which_trans))
         return false;
 
     // We can only cling for safety if we're already doing so.
@@ -526,7 +526,6 @@ static mutation_type appendages[] =
 {
     MUT_HORNS,
     MUT_TENTACLE_SPIKE,
-    MUT_CLAWS,
     MUT_TALONS,
 };
 
@@ -599,17 +598,17 @@ static int _transform_duration(transformation_type which_trans, int pow)
     switch (which_trans)
     {
     case TRAN_BLADE_HANDS:
-        return std::min(10 + random2(pow), 100);
+        return min(10 + random2(pow), 100);
     case TRAN_APPENDAGE:
     case TRAN_SPIDER:
-        return std::min(10 + random2(pow) + random2(pow), 60);
+        return min(10 + random2(pow) + random2(pow), 60);
     case TRAN_STATUE:
     case TRAN_DRAGON:
     case TRAN_LICH:
     case TRAN_BAT:
-        return std::min(20 + random2(pow) + random2(pow), 100);
+        return min(20 + random2(pow) + random2(pow), 100);
     case TRAN_ICE_BEAST:
-        return std::min(30 + random2(pow) + random2(pow), 100);
+        return min(30 + random2(pow) + random2(pow), 100);
     case TRAN_PIG:
         return pow;
     case TRAN_NONE:
@@ -717,11 +716,11 @@ bool transform(int pow, transformation_type which_trans, bool force,
         return _abort_or_fizzle(just_check);
     }
 
-    std::set<equipment_type> rem_stuff = _init_equipment_removal(which_trans);
+    set<equipment_type> rem_stuff = _init_equipment_removal(which_trans);
 
     int str = 0, dex = 0;
     const char* tran_name = "buggy";
-    std::string msg;
+    string msg;
 
     if (was_in_water && form_can_fly(which_trans))
         msg = gettext("You fly out of the water as you turn into %s");
@@ -829,6 +828,17 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
     default:
         msg += "something buggy!";
+    }
+
+    if (!force && just_check && (str + you.strength() <= 0 || dex + you.dex() <= 0))
+    {
+        string prompt = make_stringf("Transforming will reduce your %s to zero. Continue?",
+                                     str + you.strength() <= 0 ? "strength" : "dexterity");
+        if (!yesno(prompt.c_str(), false, 'n'))
+        {
+            canned_msg(MSG_OK);
+            return false;
+        }
     }
 
     // If we're just pretending return now.
@@ -983,7 +993,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
        you.transform_uncancellable = true;
 
     // Re-check terrain now that be may no longer be swimming or flying.
-    if (was_flying && you.flight_mode() == FL_NONE
+    if (was_flying && !you.flight_mode()
                    || feat_is_water(grd(you.pos()))
                       && (which_trans == TRAN_BLADE_HANDS
                           || which_trans == TRAN_APPENDAGE)
@@ -1009,7 +1019,7 @@ void untransform(bool skip_wielding, bool skip_move)
     int hp_downscale = form_hp_mod();
 
     // We may have to unmeld a couple of equipment types.
-    std::set<equipment_type> melded = _init_equipment_removal(old_form);
+    set<equipment_type> melded = _init_equipment_removal(old_form);
 
     you.form = TRAN_NONE;
     you.duration[DUR_TRANSFORMATION]   = 0;
@@ -1100,7 +1110,7 @@ void untransform(bool skip_wielding, bool skip_move)
     _unmeld_equipment(melded);
 
     // Re-check terrain now that be may no longer be swimming or flying.
-    if (!skip_move && (old_flight && you.flight_mode() == FL_NONE
+    if (!skip_move && (old_flight && !you.flight_mode()
                        || (feat_is_water(grd(you.pos()))
                            && (old_form == TRAN_ICE_BEAST
                                || you.species == SP_MERFOLK))))

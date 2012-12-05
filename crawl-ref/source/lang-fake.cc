@@ -103,6 +103,7 @@ static const char* jager[][4] =
   {"some","zum"},
   {"ouble","ubbel"},
   {"bble","bbel"},
+  {"^ex","hex"},
   {"exc","eks"},
   {"ex","eks"},
   {"accident","exident"},
@@ -113,7 +114,7 @@ static const char* jager[][4] =
   {"^c","k", 0, "h"},
   {"am$","em"},
   {"^th","t"},
-  {"th","dd", "!"LETTERS, "!"LETTERS},
+  {"th","dd", "!" LETTERS, "!" LETTERS},
   {"unix","yoonix"},
   {"^un","on"},
   {"^sh","sch", 0, "e"},
@@ -127,8 +128,8 @@ static const char* jager[][4] =
   {"ing","ink"},
   {"irl","url"},
   {"ish","eesh"},
-  {"^i","hy", 0, ")"LETTERS},
-  {"ve$","ff", "!"LETTERS},
+  {"^i","hy", 0, ")" LETTERS},
+  {"ve$","ff", "!" LETTERS},
   {"ect$","eck"},
   {"and","und"},
   {"^all","hall"},
@@ -200,9 +201,44 @@ static const char* cyrillic[][4] =
   {0}
 };
 
-static void _replace_cap_variants(std::string &str,
-                                  std::string a,
-                                  std::string b,
+static const char* runes[][4] =
+{
+  {"ae",  "ᛇ"},
+  {"a",   "ᚨ"},
+  {"b",   "ᛒ"},
+  {"c",   "ᚲ"},
+  {"d",   "ᛞ"},
+  {"e",   "ᛖ"},
+  {"f",   "ᚠ"},
+  {"g",   "ᚷ"},
+  {"h",   "ᚺ"},
+  {"i",   "ᛁ"},
+  {"j",   "ᛃ"},
+  {"k",   "ᚲ"},
+  {"l",   "ᛚ"},
+  {"m",   "ᛗ"},
+  {"ng",  "ᛜ"},
+  {"n",   "ᚾ"},
+  {"o",   "ᛟ"},
+  {"ph",  "ᚠ"},
+  {"p",   "ᛈ"},
+  {"q",   "ᛩ"},
+  {"r",   "ᚱ"},
+  {"s",   "ᛊ"},
+  {"th",  "ᚦ"},
+  {"t",   "ᛏ"},
+  {"u",   "ᚢ"},
+  {"v",   "ᚡ"},
+  {"w",   "ᚹ"},
+  {"x",   "ᚲᛊ"},
+  {"y",   "ᚤ"}, // Anglo-Saxon, sometimes medieval
+  {"z",   "ᛉ"},
+  {0}
+};
+
+static void _replace_cap_variants(string &str,
+                                  string a,
+                                  string b,
                                   const char* not_after = 0,
                                   const char* not_before = 0)
 {
@@ -234,7 +270,7 @@ static void _replace_cap_variants(std::string &str,
 
     for (int captype = 0; captype < 3; captype++)
     {
-        std::string A;
+        string A;
         switch (captype)
         {
         case 0: A = lowercase(a); break;
@@ -244,7 +280,7 @@ static void _replace_cap_variants(std::string &str,
         }
 
         size_t pos = 0;
-        while ((pos = str.find(A, pos)) != std::string::npos)
+        while ((pos = str.find(A, pos)) != string::npos)
         {
             if (not_after && pos > 0
                 && (yes_after == !strchr(not_after, str[pos - 1])))
@@ -261,7 +297,7 @@ static void _replace_cap_variants(std::string &str,
                 continue;
             }
 
-            std::string B;
+            string B;
             switch (captype)
             {
             case 0: B = lowercase(b); break;
@@ -277,7 +313,7 @@ static void _replace_cap_variants(std::string &str,
     }
 }
 
-static void _german(std::string &txt)
+static void _german(string &txt)
 {
     /*
     The European Commission has just announced an agreement whereby English will
@@ -372,9 +408,9 @@ static const char* german[][4] =
   {0}
 };
 
-static void _wide(std::string &txt)
+static void _wide(string &txt)
 {
-    std::string out;
+    string out;
 
     for (size_t i = 0; i < txt.length(); i++)
     {
@@ -394,7 +430,7 @@ static void _wide(std::string &txt)
     txt = out;
 }
 
-void filter_lang(std::string &str)
+void filter_lang(string &str)
 {
     const char* (*repl)[4];
 
@@ -414,6 +450,9 @@ void filter_lang(std::string &str)
         break;
     case LANG_WIDE:
         return _wide(str);
+    case LANG_FUTHARK:
+        repl = runes;
+        break;
     default:
         return;
     }
@@ -422,7 +461,7 @@ void filter_lang(std::string &str)
         _replace_cap_variants(str, (*repl)[0], (*repl)[1], (*repl)[2], (*repl)[3]);
 }
 
-std::string filtered_lang(std::string str)
+string filtered_lang(string str)
 {
     filter_lang(str);
     return str;

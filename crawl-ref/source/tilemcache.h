@@ -7,7 +7,6 @@
 #ifndef TILEMCACHE_H
 #define TILEMCACHE_H
 
-#include "debug.h"
 #include <vector>
 
 struct dolls_data;
@@ -46,7 +45,7 @@ public:
     enum
     {
         // The maximum number of values written in the info function.
-        MAX_INFO_COUNT = 3
+        MAX_INFO_COUNT = 4
     };
 
     virtual int info(tile_draw_info *dinfo) const { return 0; }
@@ -74,7 +73,7 @@ public:
     bool empty() { return m_entries.empty(); }
 
 protected:
-    std::vector<mcache_entry*> m_entries;
+    vector<mcache_entry*> m_entries;
 };
 
 // The global monster cache.

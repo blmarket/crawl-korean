@@ -21,6 +21,15 @@
 
 #include "platform.h"
 #include <stdint.h>
+namespace std {};
+using namespace std;
+
+#if defined(__cplusplus) && __cplusplus < 201103
+# define unique_ptr auto_ptr
+template<typename T>
+static inline T move(T x) { return x; } // good enough for our purposes
+# define nullptr NULL
+#endif
 
 #ifdef USE_GETTEXT
 #include <libintl.h>
@@ -84,13 +93,6 @@
 #endif
 
 //
-// OS X's Terminal.app has color handling problems; dark grey is
-// especially bad, so we'll want to remap that. OS X is otherwise
-// Unix-ish, so we shouldn't need other special handling.
-//
-#define COL_TO_REPLACE_DARKGREY     BLUE
-
-//
 // MinGW
 //
 #if defined(TARGET_COMPILER_MINGW)
@@ -148,16 +150,6 @@
     //
     // #define SOUND_PLAY_COMMAND "/usr/bin/play -v .5 \"%s\" 2>/dev/null &"
 
-    // For cases when the game will be played on terms that don't support the
-    // curses "bold == lighter" 16 colour mode. -- bwr
-    //
-    // Darkgrey is a particular problem in the 8 colour mode.  Popular values
-    // for replacing it around here are: WHITE, BLUE, and MAGENTA.  This
-    // option has no affect in 16 colour mode. -- bwr
-    //
-    // #define USE_8_COLOUR_TERM_MAP
-    // #define COL_TO_REPLACE_DARKGREY     MAGENTA
-
     #include "libunix.h"
 
 #elif defined(TARGET_OS_WINDOWS)
@@ -180,7 +172,7 @@
     // #define WINMM_PLAY_SOUNDS
 
     // Use Perl-compatible regular expressions. libpcre must be available and
-    // linked in.  This is optional.
+    // linked in.  Required in the absence of POSIX regexes.
     #ifndef REGEX_PCRE
     #define REGEX_PCRE
     #endif
@@ -358,7 +350,6 @@
 // =========================================================================
 //  Game Play Defines
 // =========================================================================
-// use Abyss morphing
 
 // number of older messages stored during play and in save files
 #define NUM_STORED_MESSAGES   1000
@@ -428,8 +419,6 @@ static inline void UNUSED(const volatile T &)
 #endif
 
 #include "externs.h"
-#include "unwind.h"
-#include "version.h"
 
 #ifdef TARGET_COMPILER_VC
 # include "libw32c.h"

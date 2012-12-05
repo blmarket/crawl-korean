@@ -14,7 +14,7 @@ queen_ant MONS_QUEEN_ANT
 
 ## Batty monsters ('b')
 bat MONS_BAT
-../../player/transform/bat_form MONS_VAMPIRE_BAT
+vampire_bat MONS_VAMPIRE_BAT
 butterfly MONS_BUTTERFLY
 butterfly1
 butterfly2
@@ -22,6 +22,10 @@ butterfly3
 butterfly4
 butterfly5
 butterfly6
+butterfly7
+butterfly8
+butterfly9
+butterfly10
 %rim 0
 fire_bat MONS_FIRE_BAT
 %rim 1
@@ -56,7 +60,6 @@ cat4 MONS_FELID
 
 ## Bees ('k')
 killer_bee MONS_KILLER_BEE
-bumblebee MONS_BUMBLEBEE
 queen_bee MONS_QUEEN_BEE
 giant_firefly MONS_FIREFLY
 
@@ -88,12 +91,12 @@ porcupine MONS_PORCUPINE
 ## Laboratory rats
 %sdir mon/rat
 labrat_plain MONS_LABORATORY_RAT
+labrat_airborne
 labrat_armoured
 labrat_beastly
 labrat_fiery
 labrat_gaseous
 labrat_leeching
-labrat_levitating
 labrat_mutated
 labrat_shifting
 labrat_venomous
@@ -180,12 +183,15 @@ blink_frog MONS_BLINK_FROG
 spiny_frog MONS_SPINY_FROG
 
 ## Snakes ('S')
+%rim 0
 ball_python MONS_BALL_PYTHON
 adder MONS_ADDER
 black_mamba MONS_BLACK_MAMBA
 water_moccasin MONS_WATER_MOCCASIN
 anaconda MONS_ANACONDA
+%rim 1
 lava_snake MONS_LAVA_SNAKE
+%rim 0
 sea_snake MONS_SEA_SNAKE
 
 ## Bears ('U')
@@ -214,10 +220,19 @@ fire_elemental MONS_FIRE_ELEMENTAL /*'#'*/
 water_elemental MONS_WATER_ELEMENTAL /*'#'*/
 air_elemental MONS_AIR_ELEMENTAL /*'#'*/
 iron_elemental MONS_IRON_ELEMENTAL
-fire_vortex MONS_FIRE_VORTEX /*'v'*/
-spatial_vortex MONS_SPATIAL_VORTEX /*'v'*/
-twister MONS_TWISTER /*'v'*/
 %rim 0
+fire_vortex1 MONS_FIRE_VORTEX /*'v'*/
+fire_vortex2
+fire_vortex3
+fire_vortex4
+spatial_vortex1 MONS_SPATIAL_VORTEX /*'v'*/
+spatial_vortex2
+spatial_vortex3
+spatial_vortex4
+twister1 MONS_TWISTER /*'v'*/
+twister2
+twister3
+twister4
 vapour MONS_VAPOUR /*'#'*/
 orb_of_fire MONS_ORB_OF_FIRE /*'*'*/
 orb_of_destruction1 MONS_ORB_OF_DESTRUCTION /*'*'*/
@@ -242,6 +257,7 @@ wretched_star MONS_WRETCHED_STAR
 ### Demonic monsters
 ## Arch demons ('&')
 %sdir mon/unique
+%rim 0
 asmodeus MONS_ASMODEUS
 cerebov MONS_CEREBOV
 dispater MONS_DISPATER
@@ -303,7 +319,9 @@ hellwing MONS_HELLWING
 
 # type '5' demons
 crimson_imp MONS_CRIMSON_IMP
+%rim 0
 quasit MONS_QUASIT
+%rim 1
 lemure MONS_LEMURE
 iron_imp MONS_IRON_IMP
 %rim 0
@@ -470,13 +488,16 @@ maud MONS_MAUD
 maurice MONS_MAURICE
 nikola MONS_NIKOLA
 norris MONS_NORRIS
+%rim 0
 psyche MONS_PSYCHE
+%rim 1
 rupert MONS_RUPERT
 sigmund MONS_SIGMUND
 terence MONS_TERENCE
 wiglaf MONS_WIGLAF
 
 %sdir mon
+%rim 0
 human MONS_HUMAN
 hell_knight MONS_HELL_KNIGHT
 necromancer MONS_NECROMANCER
@@ -599,7 +620,9 @@ eye_of_draining MONS_EYE_OF_DRAINING
 mon/giant_orange_brain MONS_GIANT_ORANGE_BRAIN
 great_orb_of_eyes MONS_GREAT_ORB_OF_EYES
 shining_eye MONS_SHINING_EYE
+%rim 0
 eye_of_devastation MONS_EYE_OF_DEVASTATION
+%rim 1
 golden_eye MONS_GOLDEN_EYE
 %sdir mon/holy
 ophan MONS_OPHAN
@@ -619,6 +642,7 @@ shedu MONS_SHEDU
 tengu_conjurer MONS_TENGU_CONJURER
 %sdir mon/unique
 arachne MONS_ARACHNE
+arachne_staveless MONS_ARACHNE_STAVELESS
 
 ## Various beasts ('I')
 %sdir mon/animals
@@ -706,6 +730,7 @@ plant_09
 plant_10
 plant_11
 plant_crypt MONS_WITHERED_PLANT
+plant_demonic MONS_DEMONIC_PLANT
 %rim 1
 bush MONS_BUSH
 %rim 0
@@ -790,13 +815,23 @@ vault/deep_elf_elementalist MONS_DEEP_ELF_ELEMENTALIST
 
 ## Fungi ('f')
 %sdir mon/fungi_plants
+%rim 0
 toadstool_left MONS_TOADSTOOL
 toadstool_right
-fungus MONS_FUNGUS
+fungus1 MONS_FUNGUS
+fungus2
+fungus3
+fungus4
+fungus5
+fungus6
+fungus7
+fungus8
+fungus9
 ballistomycete MONS_BALLISTOMYCETE_INACTIVE
 active_ballistomycete MONS_BALLISTOMYCETE_ACTIVE
 hyperactive_ballistomycete MONS_HYPERACTIVE_BALLISTOMYCETE
 wandering_mushroom MONS_WANDERING_MUSHROOM
+%rim 1
 
 ## Goblins ('g')
 %sdir mon/unique
@@ -912,7 +947,9 @@ flaming_corpse MONS_FLAMING_CORPSE
 %rim 1
 %sdir mon/undead
 curse_skull MONS_CURSE_SKULL
+%rim 0
 curse_toe MONS_CURSE_TOE
+%rim 1
 flying_skull MONS_FLYING_SKULL
 crawling_corpse MONS_CRAWLING_CORPSE
 macabre_mass MONS_MACABRE_MASS
@@ -921,6 +958,14 @@ murray MONS_MURRAY
 %sdir mon/vault
 ## From a special vault (ancient_champions.des)
 ancient_champion MONS_ANCIENT_CHAMPION
+
+## Sprint specials
+%sdir mon/sprint
+succubus MONS_SUCCUBUS
+%rim 0
+orb_of_ice MONS_ORB_OF_ICE
+orb_of_electricity MONS_ORB_OF_ELECTRICITY
+%rim 1
 
 %include dc-zombie.txt
 

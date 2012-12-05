@@ -10,18 +10,21 @@
 #include <errno.h>
 
 #include "acquire.h"
+#include "art-enum.h"
 #include "artefact.h"
 #include "coordit.h"
 #include "message.h"
 #include "cio.h"
 #include "dbg-util.h"
 #include "decks.h"
+#include "describe.h"
 #include "effects.h"
 #include "env.h"
 #include "godpassive.h"
 #include "itemprop.h"
 #include "items.h"
 #include "invent.h"
+#include "libutil.h"
 #include "makeitem.h"
 #include "mapdef.h"
 #include "misc.h"
@@ -66,7 +69,7 @@ static void _make_all_books()
 
 void wizard_create_spec_object_by_name()
 {
-    char buf[500];
+    char buf[1024];
     mprf(MSGCH_PROMPT, "Enter name of item (or ITEM spec): ");
     if (cancelable_get_line_autohist(buf, sizeof buf) || !*buf)
     {
@@ -74,7 +77,7 @@ void wizard_create_spec_object_by_name()
         return;
     }
 
-    std::string error;
+    string error;
     create_item_named(buf, you.pos(), &error);
     if (!error.empty())
     {
@@ -192,12 +195,12 @@ void wizard_create_spec_object()
     }
     else
     {
-        std::string prompt = "What type of item? ";
+        string prompt = "What type of item? ";
         if (class_wanted == OBJ_BOOKS)
             prompt += "(\"all\" for all) ";
         msgwin_get_line_autohist(prompt, specs, sizeof(specs));
 
-        std::string temp = specs;
+        string temp = specs;
         trim_string(temp);
         lowercase(temp);
         strlcpy(specs, temp.c_str(), sizeof(specs));
@@ -221,11 +224,6 @@ void wizard_create_spec_object()
             // Clean up item
             destroy_item(thing_created);
             return;
-        }
-        if (Options.autoinscribe_artefacts && is_artefact(mitm[thing_created]))
-        {
-            mitm[thing_created].inscription
-                = artefact_auto_inscription(mitm[thing_created]);
         }
     }
 
@@ -283,6 +281,8 @@ static const char* _prop_name[] = {
     "Clar",
     "BAcc",
     "BDam",
+    "RMsl",
+    "Fog",
 };
 
 #define ARTP_VAL_BOOL 0
@@ -304,7 +304,7 @@ static int8_t _prop_type[] = {
     ARTP_VAL_POS,  //MAGIC
     ARTP_VAL_BOOL, //EYESIGHT
     ARTP_VAL_BOOL, //INVISIBLE
-    ARTP_VAL_BOOL, //LEVITATE
+    ARTP_VAL_BOOL, //FLIGHT
     ARTP_VAL_BOOL, //BLINK
     ARTP_VAL_BOOL, //BERSERK
     ARTP_VAL_POS,  //NOISES
@@ -324,6 +324,8 @@ static int8_t _prop_type[] = {
     ARTP_VAL_BOOL, //CLARITY
     ARTP_VAL_ANY,  //BASE_ACC
     ARTP_VAL_ANY,  //BASE_DAM
+    ARTP_VAL_BOOL, //RMSL
+    ARTP_VAL_BOOL, //FOG
 };
 
 static void _tweak_randart(item_def &item)
@@ -343,12 +345,12 @@ static void _tweak_randart(item_def &item)
     artefact_properties_t props;
     artefact_wpn_properties(item, props);
 
-    std::string prompt = "";
+    string prompt = "";
 
-    std::vector<unsigned int> choice_to_prop;
+    vector<unsigned int> choice_to_prop;
     for (unsigned int i = 0, choice_num = 0; i < ARTP_NUM_PROPERTIES; ++i)
     {
-        if (_prop_name[i] == std::string("UNUSED"))
+        if (_prop_name[i] == string("UNUSED"))
             continue;
         choice_to_prop.push_back(i);
         if (choice_num % 8 == 0 && choice_num != 0)
@@ -375,7 +377,7 @@ static void _tweak_randart(item_def &item)
 
     mpr("Change which field? ", MSGCH_PROMPT);
 
-    int keyin = tolower(get_ch());
+    int keyin = toalower(get_ch());
     unsigned int  choice;
 
     if (isaalpha(keyin))
@@ -421,9 +423,6 @@ static void _tweak_randart(item_def &item)
                              val);
         break;
     }
-
-    if (Options.autoinscribe_artefacts)
-        item.inscription = artefact_auto_inscription(item);
 }
 
 void wizard_tweak_object(void)
@@ -432,11 +431,9 @@ void wizard_tweak_object(void)
     int keyin;
 
     int item = prompt_invent_item("Tweak which item? ", MT_INVLIST, -1);
-    if (item == PROMPT_ABORT)
-    {
-        canned_msg(MSG_OK);
+
+    if (prompt_failed(item))
         return;
-    }
 
     if (item == you.equip[EQ_WEAPON])
         you.wield_change = true;
@@ -464,7 +461,7 @@ void wizard_tweak_object(void)
 
             mpr("Which field? ", MSGCH_PROMPT);
 
-            keyin = tolower(get_ch());
+            keyin = toalower(get_ch());
 
             if (keyin == 'a')
                 old_val = you.inv[item].plus;
@@ -494,9 +491,9 @@ void wizard_tweak_object(void)
         }
 
         if (keyin != 'e')
-            mprf("Old value: %"PRId64" (0x%04"PRIx64")", old_val, old_val);
+            mprf("Old value: %" PRId64" (0x%04" PRIx64")", old_val, old_val);
         else
-            mprf("Old value: 0x%08"PRIx64, old_val);
+            mprf("Old value: 0x%08" PRIx64, old_val);
 
         msgwin_get_line("New value? ", specs, sizeof(specs));
         if (specs[0] == '\0')
@@ -550,7 +547,7 @@ static bool _make_book_randart(item_def &book)
     do
     {
         mpr("Make book fixed [t]heme or fixed [l]evel? ", MSGCH_PROMPT);
-        type = tolower(getchk());
+        type = toalower(getchk());
     }
     while (type != 't' && type != 'l');
 
@@ -600,7 +597,7 @@ void wizard_create_all_artefacts()
 
         msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_A)
                                         << " (" << debug_art_val_str(item)
-                                        << ")" << std::endl;
+                                        << ")" << endl;
         move_item_to_grid(&islot, you.pos());
 
         // Make all eight.
@@ -623,7 +620,7 @@ void wizard_create_all_artefacts()
         move_item_to_grid(&islot, you.pos());
 
         msg::streams(MSGCH_DIAGNOSTICS) << "Made " << item.name(false, DESC_A)
-                                        << std::endl;
+                                        << endl;
     }
 }
 
@@ -665,11 +662,6 @@ void wizard_make_object_randart()
             return;
         }
 
-        // need to trim before the object changes, or else the old properties
-        // won't be removed
-        if (Options.autoinscribe_artefacts)
-            trim_randart_inscrip(item);
-
         item.special = 0;
         item.flags  &= ~ISFLAG_RANDART;
         item.props.clear();
@@ -709,8 +701,6 @@ void wizard_make_object_randart()
         do_curse_item(item, true);
     else
         do_uncurse_item(item, false);
-
-    add_autoinscription(item);
 
     // If it was equipped, requip the item.
     if (eq != EQ_NONE)
@@ -753,8 +743,6 @@ void wizard_identify_pack()
         {
             set_ident_type(item, ID_KNOWN_TYPE);
             set_ident_flags(item, ISFLAG_IDENT_MASK);
-            if (Options.autoinscribe_artefacts && is_artefact(item))
-                item.inscription = artefact_auto_inscription(item);
         }
     }
     you.wield_change  = true;
@@ -875,7 +863,7 @@ static void _debug_acquirement_stats(FILE *ostat)
         MSGCH_PROMPT);
 
     object_class_type type;
-    const int keyin = tolower(get_ch());
+    const int keyin = toalower(get_ch());
     switch (keyin)
     {
     case 'a': type = OBJ_WEAPONS;    break;
@@ -907,7 +895,7 @@ static void _debug_acquirement_stats(FILE *ostat)
     int num_arts     = 0;
 
     int subtype_quants[256];
-    int ego_quants[SPWPN_DEBUG_RANDART];
+    int ego_quants[NUM_SPECIAL_WEAPONS];
 
     memset(subtype_quants, 0, sizeof(subtype_quants));
     memset(ego_quants, 0, sizeof(ego_quants));
@@ -937,7 +925,7 @@ static void _debug_acquirement_stats(FILE *ostat)
         total_quant += item.quantity;
         subtype_quants[item.sub_type] += item.quantity;
 
-        max_plus    = std::max(max_plus, item.plus + item.plus2);
+        max_plus    = max(max_plus, item.plus + item.plus2);
         total_plus += item.plus + item.plus2;
 
         if (is_artefact(item))
@@ -1001,7 +989,7 @@ static void _debug_acquirement_stats(FILE *ostat)
                                    : "buggy items");
 
     // Print player species/profession.
-    std::string godname = "";
+    string godname = "";
     if (you.religion != GOD_NO_GOD)
         godname += " of " + god_name(you.religion);
 
@@ -1043,7 +1031,7 @@ static void _debug_acquirement_stats(FILE *ostat)
         fprintf(ostat, "Not wearing or wielding anything.\n");
 
     // Also print the skills, in case they matter.
-    std::string skills = "\nSkills:\n";
+    string skills = "\nSkills:\n";
     dump_skills(skills);
     fprintf(ostat, "%s\n\n", skills.c_str());
 
@@ -1051,8 +1039,8 @@ static void _debug_acquirement_stats(FILE *ostat)
     {
         // For spellbooks, for each spell discipline, list the number of
         // unseen and total spells available.
-        std::vector<int> total_spells(SPTYP_LAST_EXPONENT + 1);
-        std::vector<int> unseen_spells(SPTYP_LAST_EXPONENT + 1);
+        vector<int> total_spells(SPTYP_LAST_EXPONENT + 1);
+        vector<int> unseen_spells(SPTYP_LAST_EXPONENT + 1);
 
         for (int i = 0; i < NUM_SPELLS; ++i)
         {
@@ -1129,14 +1117,20 @@ static void _debug_acquirement_stats(FILE *ostat)
             "frost",
             "vampiricism",
             "pain",
+            "antimagic",
             "distortion",
             "reaching",
             "returning",
             "chaos",
+            "evasion",
             "confusion",
+            "penetration",
+            "reaping",
+            "acid",
+            "debug randart",
         };
 
-        for (int i = 0; i <= SPWPN_CONFUSE; ++i)
+        for (int i = 0; i < NUM_SPECIAL_WEAPONS; ++i)
             if (ego_quants[i] > 0)
             {
                 fprintf(ostat, "%14s: %5.2f\n", names[i],
@@ -1165,7 +1159,7 @@ static void _debug_acquirement_stats(FILE *ostat)
             "dexterity",
             "intelligence",
             "ponderous",
-            "levitation",
+            "flight",
             "magic reistance",
             "protection",
             "stealth",
@@ -1173,11 +1167,13 @@ static void _debug_acquirement_stats(FILE *ostat)
             "positive energy",
             "archmagi",
             "preservation",
-            "reflection"
+            "reflection",
+            "spirit shield",
+            "archery",
          };
 
         const int non_art = acq_calls - num_arts;
-        for (int i = 0; i <= SPARM_REFLECTION; ++i)
+        for (int i = 0; i < NUM_SPECIAL_ARMOURS; ++i)
         {
            if (ego_quants[i] > 0)
                fprintf(ostat, "%17s: %5.2f\n", names[i],
@@ -1267,9 +1263,9 @@ static void _debug_acquirement_stats(FILE *ostat)
             continue;
 
         item.sub_type = i;
-        std::string name = item.name(false, desc, terse, true);
+        string name = item.name(false, desc, terse, true);
 
-        max_width = std::max(max_width, strwidth(name));
+        max_width = max(max_width, strwidth(name));
     }
 
     // Now output the sub types.
@@ -1285,7 +1281,7 @@ static void _debug_acquirement_stats(FILE *ostat)
             continue;
 
         item.sub_type = i;
-        std::string name = item.name(false, desc, terse, true);
+        string name = item.name(false, desc, terse, true);
 
         fprintf(ostat, format_str, name.c_str(),
                 (float) subtype_quants[i] * 100.0 / (float) total_quant);
@@ -1301,11 +1297,8 @@ static void _debug_rap_stats(FILE *ostat)
     int i = prompt_invent_item("Generate randart stats on which item?",
                                 MT_INVLIST, -1);
 
-    if (i == PROMPT_ABORT)
-    {
-        canned_msg(MSG_OK);
+    if (prompt_failed(i))
         return;
-    }
 
     // A copy of the item, rather than a reference to the inventory item,
     // so we can fiddle with the item at will.
@@ -1338,7 +1331,7 @@ static void _debug_rap_stats(FILE *ostat)
          1, //ARTP_MAGIC
          1, //ARTP_EYESIGHT
          1, //ARTP_INVISIBLE
-         1, //ARTP_LEVITATE
+         1, //ARTP_FLY
          1, //ARTP_BLINK
          1, //ARTP_CAN_TELEPORT
          1, //ARTP_BERSERK
@@ -1360,6 +1353,8 @@ static void _debug_rap_stats(FILE *ostat)
          1, //ARTP_CLARITY
          0, //ARTP_BASE_ACC
          0, //ARTP_BASE_DAM
+         1, //ARTP_RMSL
+         1, //ARTP_FOG
          -1
     };
 
@@ -1437,10 +1432,10 @@ static void _debug_rap_stats(FILE *ostat)
 
         int balance = num_good_props - num_bad_props;
 
-        max_props         = std::max(max_props, num_props);
-        max_good_props    = std::max(max_good_props, num_good_props);
-        max_bad_props     = std::max(max_bad_props, num_bad_props);
-        max_balance_props = std::max(max_balance_props, balance);
+        max_props         = max(max_props, num_props);
+        max_good_props    = max(max_good_props, num_good_props);
+        max_bad_props     = max(max_bad_props, num_bad_props);
+        max_balance_props = max(max_balance_props, balance);
 
         total_props         += num_props;
         total_good_props    += num_good_props;
@@ -1485,7 +1480,7 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_MAGIC",
         "ARTP_EYESIGHT",
         "ARTP_INVISIBLE",
-        "ARTP_LEVITATE",
+        "ARTP_FLY",
         "ARTP_BLINK",
         "ARTP_BERSERK",
         "ARTP_NOISES",
@@ -1505,6 +1500,8 @@ static void _debug_rap_stats(FILE *ostat)
         "ARTP_CLARITY",
         "ARTP_BASE_ACC",
         "ARTP_BASE_DAM",
+        "ARTP_RMSL"
+        "ARTP_FOG",
     };
 
     fprintf(ostat, "                            All    Good   Bad\n");
@@ -1536,8 +1533,9 @@ void debug_item_statistics(void)
     }
 
     mpr("Generate stats for: [a] acquirement [b] randart properties");
+    flush_prev_message();
 
-    const int keyin = tolower(get_ch());
+    const int keyin = toalower(get_ch());
     switch (keyin)
     {
     case 'a': _debug_acquirement_stats(ostat); break;
@@ -1552,7 +1550,7 @@ void debug_item_statistics(void)
 
 void wizard_draw_card()
 {
-    msg::streams(MSGCH_PROMPT) << "Which card? " << std::endl;
+    msg::streams(MSGCH_PROMPT) << "Which card? " << endl;
     char buf[80];
     if (cancelable_get_line_autohist(buf, sizeof buf))
     {
@@ -1560,16 +1558,16 @@ void wizard_draw_card()
         return;
     }
 
-    std::string wanted = buf;
+    string wanted = buf;
     lowercase(wanted);
 
     bool found_card = false;
     for (int i = 0; i < NUM_CARDS; ++i)
     {
         const card_type c = static_cast<card_type>(i);
-        std::string card = card_name(c);
+        string card = card_name(c);
         lowercase(card);
-        if (card.find(wanted) != std::string::npos)
+        if (card.find(wanted) != string::npos)
         {
             card_effect(c, DECK_RARITY_LEGENDARY);
             found_card = true;

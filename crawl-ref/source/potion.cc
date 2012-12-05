@@ -50,7 +50,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
 {
     bool effect = true;  // current behaviour is all potions id on quaffing
 
-    pow = std::min(pow, 150);
+    pow = min(pow, 150);
 
     int factor = (you.species == SP_VAMPIRE
                   && you.hunger_state < HS_SATIATED
@@ -88,7 +88,6 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         you.rotting = 0;
         you.disease = 0;
         you.duration[DUR_CONF] = 0;
-        you.duration[DUR_MISLED] = 0;
         you.duration[DUR_NAUSEA] = 0;
         break;
 
@@ -223,15 +222,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
-    case POT_LEVITATION:
-        if (liquefied(you.pos()) && you.ground_level())
+    case POT_FLIGHT:
+        if (you.liquefied_ground())
         {
             mprf(MSGCH_WARN, gettext("This potion isn't strong enough to pull you from the ground!"));
             break;
         }
 
-        you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
-        levitate_player(pow);
+        you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
+        fly_player(pow);
         break;
 
     case POT_POISON:
@@ -248,7 +247,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
                  (pot_eff == POT_POISON) ? pgettext("potion", "very") : pgettext("potion", "extremely"));
 
             int amount;
-            std::string msg;
+            string msg;
             if (pot_eff == POT_POISON)
             {
                 amount = 1 + random2avg(5, 2);
@@ -348,12 +347,12 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
 
     // Don't generate randomly - should be rare and interesting.
     case POT_DECAY:
-        if (you.rot(&you, (10 + random2(10)) / factor))
+        if (you.rot(&you, 0, (3 + random2(3)) / factor))
             xom_is_stimulated(50 / xom_factor);
         break;
 
     case POT_FIZZING:
-    case POT_WATER:
+    case NUM_POTIONS:
         if (you.species == SP_VAMPIRE)
             mpr(gettext("Blech - this tastes like water."));
         else
@@ -435,9 +434,10 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         contaminate_player(1, was_known);
         break;
 
-    case NUM_POTIONS:
-        mpr(gettext("You feel bugginess flow through your body."));
+#if TAG_MAJOR_VERSION == 34
+    case POT_WATER:
         break;
+#endif
     }
 
     return (!was_known && effect);

@@ -12,7 +12,7 @@ enum stat_desc_type
 
 const char* stat_desc(stat_type stat, stat_desc_type desc);
 
-void attribute_increase();
+bool attribute_increase();
 
 void modify_stat(stat_type which_stat, int amount, bool suppress_msg,
                  const char* cause, bool see_source = true);
@@ -28,7 +28,7 @@ void notify_stat_change(const char* cause);
 void jiyva_stat_action();
 
 bool lose_stat(stat_type which_stat, int stat_loss,
-               bool force = false, const std::string cause = "",
+               bool force = false, const string cause = "",
                bool see_source = true);
 bool lose_stat(stat_type which_stat, int stat_loss,
                bool force = false, const char* cause = NULL,

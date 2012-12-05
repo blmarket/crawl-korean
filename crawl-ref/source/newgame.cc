@@ -16,10 +16,13 @@
 #include "itemname.h"
 #include "itemprop.h"
 #include "jobs.h"
+#include "libutil.h"
 #include "macro.h"
 #include "makeitem.h"
 #include "maps.h"
 #include "menu.h"
+#include "monster.h"
+#include "newgame_def.h"
 #include "ng-input.h"
 #include "ng-restr.h"
 #include "options.h"
@@ -97,7 +100,7 @@ static bool _char_defined(const newgame_def& ng)
     return (ng.species != SP_UNKNOWN && ng.job != JOB_UNKNOWN);
 }
 
-static std::string _char_description(const newgame_def& ng)
+static string _char_description(const newgame_def& ng)
 {
     if (_is_random_viable_choice(ng))
         return gettext("Viable character");
@@ -121,9 +124,9 @@ static std::string _char_description(const newgame_def& ng)
         return (std::string(gettext(species_name(ng.species).c_str())) + " " + gettext(get_job_name(ng.job)));
 }
 
-static std::string _welcome(const newgame_def* ng)
+static string _welcome(const newgame_def* ng)
 {
-    std::string text;
+    string text;
     if (ng->species != SP_UNKNOWN)
         text = gettext(species_name(ng->species).c_str());
     if (ng->job != JOB_UNKNOWN)
@@ -341,7 +344,7 @@ static void _resolve_species_job(newgame_def* ng, const newgame_def* ng_choice)
     _resolve_job(ng, ng_choice);
 }
 
-static std::string _highlight_pattern(const newgame_def* ng)
+static string _highlight_pattern(const newgame_def* ng)
 {
     if (ng->species != SP_UNKNOWN)
         return species_name(ng->species) + "  ";
@@ -349,7 +352,7 @@ static std::string _highlight_pattern(const newgame_def* ng)
     if (ng->job == JOB_UNKNOWN)
         return "";
 
-    std::string ret;
+    string ret;
     for (int i = 0; i < ng_num_species(); ++i)
     {
         const species_type species = get_species(i);
@@ -404,7 +407,7 @@ static bool _reroll_random(newgame_def* ng)
 {
     clrscr();
 
-    std::string specs = chop_string(species_name(ng->species), 79, false);
+    string specs = chop_string(species_name(ng->species), 79, false);
 
     cprintf(gettext("You are a%s %s %s.\n"),
             (is_vowel(specs[0])) ? "n" : "", gettext(specs.c_str()),
@@ -412,9 +415,9 @@ static bool _reroll_random(newgame_def* ng)
 
     cprintf(gettext("\nDo you want to play this combination? (ynq) [y]"));
     char c = getchm();
-    if (key_is_escape(c) || tolower(c) == 'q')
+    if (key_is_escape(c) || toalower(c) == 'q')
         game_ended();
-    return (tolower(c) == 'n');
+    return (toalower(c) == 'n');
 }
 
 static void _choose_char(newgame_def* ng, newgame_def* choice,
@@ -426,6 +429,18 @@ static void _choose_char(newgame_def* ng, newgame_def* choice,
         choose_tutorial_character(choice);
     else if (ng->type == GAME_TYPE_HINTS)
         pick_hints(choice);
+
+#if defined(DGAMELAUNCH) && defined(TOURNEY)
+    // Apologies to non-public servers.
+    if (ng->type == GAME_TYPE_NORMAL)
+    {
+        if (!yesno("Trunk games don't count for the tournament, you want "
+                   TOURNEY ". Play trunk anyway? (Y/N)", false, 'n'))
+        {
+            game_ended();
+        }
+    }
+#endif
 
     while (true)
     {
@@ -491,7 +506,7 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
     {
         clrscr();
 
-        std::string specs = chop_string(species_name(ng->species), 79, false);
+        string specs = chop_string(species_name(ng->species), 79, false);
 
 	/// 1. an이나 a가 되도록, 2. 종족명, 3. 직업명
         cprintf(gettext("You are a%s %s %s.\n"),
@@ -531,7 +546,7 @@ static void _set_default_choice(newgame_def* ng, newgame_def* ng_choice,
     // Reset *ng so _resolve_species_job will work properly.
     ng->clear_character();
 
-    const std::string name = ng_choice->name;
+    const string name = ng_choice->name;
     const game_type type   = ng_choice->type;
     *ng_choice = defaults;
     ng_choice->name = name;
@@ -577,7 +592,7 @@ static void _construct_species_menu(const newgame_def* ng,
     items_in_column = (items_in_column + 2) / 3;
     // Construct the menu, 3 columns
     TextItem* tmp = NULL;
-    std::string text;
+    string text;
     coord_def min_coord(0,0);
     coord_def max_coord(0,0);
 
@@ -649,9 +664,7 @@ static void _construct_species_menu(const newgame_def* ng,
     if (ng->job != JOB_UNKNOWN)
         tmp->set_id(M_VIABLE);
     else
-    {
         tmp->set_id(M_RANDOM);
-    }
     tmp->set_highlight_colour(LIGHTGRAY);
     tmp->set_description_text(gettext("Picks a random viable species based on your current job choice"));
     menu->attach_item(tmp);
@@ -760,7 +773,7 @@ static void _construct_species_menu(const newgame_def* ng,
 
     if (_char_defined(defaults))
     {
-        std::string tmp_string = "Tab - ";
+        string tmp_string = "Tab - ";
         tmp_string += _char_description(defaults).c_str();
         // Adjust the end marker to aling the - because
         // Tab text is longer by 2
@@ -861,7 +874,7 @@ static void _prompt_species(newgame_def* ng, newgame_def* ng_choice,
         }
         // We have had a significant input key event
         // construct the return vector
-        std::vector<MenuItem*> selection = menu.get_selected_items();
+        vector<MenuItem*> selection = menu.get_selected_items();
         if (!selection.empty())
         {
             // we have a selection!
@@ -915,9 +928,7 @@ static void _prompt_species(newgame_def* ng, newgame_def* ng_choice,
                     return;
                 }
                 else
-                {
                     continue;
-                }
             }
         }
     }
@@ -927,7 +938,7 @@ void job_group::attach(const newgame_def* ng, const newgame_def& defaults,
                        MenuFreeform* menu, menu_letter &letter)
 {
     TextItem* tmp = new NoSelectTextItem();
-    std::string text;
+    string text;
     tmp->set_text(pgettext_expr("Jobgroup", name));
     tmp->set_fg_colour(WHITE);
     coord_def min_coord(2 + position.x, 3 + position.y);
@@ -1019,7 +1030,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
             P_("Jobgroup", "Warrior-mage"),
             coord_def(35, 0), 21,
             {JOB_SKALD, JOB_TRANSMUTER, JOB_WARPER, JOB_ARCANE_MARKSMAN,
-             JOB_ENCHANTER, JOB_STALKER, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
+             JOB_ENCHANTER, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {
             P_("Jobgroup", "Mage"),
@@ -1047,9 +1058,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
     if (ng->species != SP_UNKNOWN)
         tmp->set_id(M_VIABLE);
     else
-    {
         tmp->set_id(M_RANDOM);
-    }
     tmp->set_highlight_colour(LIGHTGRAY);
     tmp->set_description_text(gettext("Picks a random viable background based on your current species choice"));
     menu->attach_item(tmp);
@@ -1264,7 +1273,7 @@ static void _prompt_job(newgame_def* ng, newgame_def* ng_choice,
         }
         // We have had a significant input key event
         // construct the return vector
-        std::vector<MenuItem*> selection = menu.get_selected_items();
+        vector<MenuItem*> selection = menu.get_selected_items();
         if (!selection.empty())
         {
             // we have a selection!
@@ -1327,10 +1336,10 @@ static void _prompt_job(newgame_def* ng, newgame_def* ng_choice,
     }
 }
 
-typedef std::pair<weapon_type, char_choice_restriction> weapon_choice;
+typedef pair<weapon_type, char_choice_restriction> weapon_choice;
 
 static weapon_type _fixup_weapon(weapon_type wp,
-                                 const std::vector<weapon_choice>& weapons)
+                                 const vector<weapon_choice>& weapons)
 {
     if (wp == WPN_UNKNOWN || wp == WPN_RANDOM || wp == WPN_VIABLE)
         return wp;
@@ -1341,12 +1350,12 @@ static weapon_type _fixup_weapon(weapon_type wp,
 }
 
 static void _construct_weapon_menu(const weapon_type& defweapon,
-                                   const std::vector<weapon_choice>& weapons,
+                                   const vector<weapon_choice>& weapons,
                                    MenuFreeform* menu)
 {
     static const int ITEMS_START_Y = 5;
     TextItem* tmp = NULL;
-    std::string text;
+    string text;
     coord_def min_coord(0,0);
     coord_def max_coord(0,0);
 
@@ -1516,7 +1525,7 @@ static void _construct_weapon_menu(const weapon_type& defweapon,
  */
 static bool _prompt_weapon(const newgame_def* ng, newgame_def* ng_choice,
                            const newgame_def& defaults,
-                           const std::vector<weapon_choice>& weapons)
+                           const vector<weapon_choice>& weapons)
 {
     PrecisionMenu menu;
     menu.set_select_type(PrecisionMenu::PRECISION_SINGLESELECT);
@@ -1577,7 +1586,7 @@ static bool _prompt_weapon(const newgame_def* ng, newgame_def* ng_choice,
         }
         // We have a significant key input!
         // Construct selection vector
-        std::vector<MenuItem*> selection = menu.get_selected_items();
+        vector<MenuItem*> selection = menu.get_selected_items();
         // There should only be one selection, otherwise something broke
         if (selection.size() != 1)
         {
@@ -1622,9 +1631,9 @@ static bool _prompt_weapon(const newgame_def* ng, newgame_def* ng_choice,
     return false;
 }
 
-static std::vector<weapon_choice> _get_weapons(const newgame_def* ng)
+static vector<weapon_choice> _get_weapons(const newgame_def* ng)
 {
-    std::vector<weapon_choice> weapons;
+    vector<weapon_choice> weapons;
     if (ng->job == JOB_HUNTER || ng->job == JOB_ARCANE_MARKSMAN)
     {
         weapon_type startwep[4] = { WPN_THROWN, WPN_SLING, WPN_BOW,
@@ -1687,7 +1696,7 @@ static std::vector<weapon_choice> _get_weapons(const newgame_def* ng)
 }
 
 static void _resolve_weapon(newgame_def* ng, newgame_def* ng_choice,
-                            const std::vector<weapon_choice>& weapons)
+                            const vector<weapon_choice>& weapons)
 {
     switch (ng_choice->weapon)
     {
@@ -1743,6 +1752,7 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
     {
     case JOB_FIGHTER:
     case JOB_GLADIATOR:
+    case JOB_BERSERKER:
     case JOB_CHAOS_KNIGHT:
     case JOB_DEATH_KNIGHT:
     case JOB_ABYSSAL_KNIGHT:
@@ -1755,7 +1765,7 @@ static bool _choose_weapon(newgame_def* ng, newgame_def* ng_choice,
         return true;
     }
 
-    std::vector<weapon_choice> weapons = _get_weapons(ng);
+    vector<weapon_choice> weapons = _get_weapons(ng);
 
     ASSERT(!weapons.empty());
     if (weapons.size() == 1)
@@ -1781,7 +1791,7 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
     static const int ITEMS_START_Y = 5;
     static const int MENU_COLUMN_WIDTH = get_number_of_cols();
     TextItem* tmp = NULL;
-    std::string text;
+    string text;
     coord_def min_coord(0,0);
     coord_def max_coord(0,0);
     bool activate_next = false;
@@ -1789,11 +1799,11 @@ static void _construct_gamemode_map_menu(const mapref_vector& maps,
     unsigned int padding_width = 0;
     for (int i = 0; i < static_cast<int> (maps.size()); i++)
     {
-        padding_width = std::max<int>(padding_width,
-                                      strwidth(maps.at(i)->desc_or_name()));
+        padding_width = max<int>(padding_width,
+                                 strwidth(maps.at(i)->desc_or_name()));
     }
     padding_width += 4; // Count the letter and " - "
-    padding_width = std::min<int>(padding_width, MENU_COLUMN_WIDTH - 1);
+    padding_width = min<int>(padding_width, MENU_COLUMN_WIDTH - 1);
 
     for (int i = 0; i < static_cast<int> (maps.size()); i++)
     {
@@ -1948,7 +1958,7 @@ static void _prompt_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
     menu.attach_object(freeform);
     menu.set_active_object(freeform);
 
-    std::sort(maps.begin(), maps.end(), _cmp_map_by_name);
+    sort(maps.begin(), maps.end(), _cmp_map_by_name);
     _construct_gamemode_map_menu(maps, defaults, freeform);
 
     BoxMenuHighlighter* highlighter = new BoxMenuHighlighter(&menu);
@@ -2003,7 +2013,7 @@ static void _prompt_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
         }
         // We have a significant key input!
         // Construct selection vector
-        std::vector<MenuItem*> selection = menu.get_selected_items();
+        vector<MenuItem*> selection = menu.get_selected_items();
         // There should only be one selection, otherwise something broke
         if (selection.size() != 1)
         {
@@ -2054,7 +2064,7 @@ static void _choose_gamemode_map(newgame_def* ng, newgame_def* ng_choice,
     // Sprint, otherwise Tutorial.
     const bool is_sprint = (ng_choice->type == GAME_TYPE_SPRINT);
 
-    const std::string type_name = gametype_to_str(ng_choice->type);
+    const string type_name = gametype_to_str(ng_choice->type);
 
     const mapref_vector maps = find_maps_for_tag(type_name);
 

@@ -29,7 +29,7 @@
 #include "itemprop.h"
 #include "items.h"
 #include "libutil.h"
-#include "los.h"
+#include "losglobal.h"
 #include "makeitem.h"
 #include "map_knowledge.h"
 #include "message.h"
@@ -68,6 +68,7 @@
 #include "transform.h"
 #include "traps.h"
 #include "travel.h"
+#include "unwind.h"
 #include "view.h"
 #include "viewchar.h"
 
@@ -180,9 +181,9 @@ static const char *describe_xom_mood()
                              : "좀의 아주 특별한 장난감.";
 }
 
-const std::string describe_xom_favour()
+const string describe_xom_favour()
 {
-    std::string favour;
+    string favour;
     if (you.religion != GOD_XOM)
         favour = "매우 재미없는 좀의 장난감.";
     else if (you.gift_timeout < 1)
@@ -193,14 +194,9 @@ const std::string describe_xom_favour()
     return favour;
 }
 
-
-// 좀의 말? 
-//    std::string result = getSpeakString("Xom " + key);
-//        result = getSpeakString("Xom general effect");
-//        return ("Xom makes something happen.");
-static std::string _get_xom_speech(const std::string key)
+static string _get_xom_speech(const string key)
 {
-    std::string result = getSpeakString("좀 " + key);
+    string result = getSpeakString("좀 " + key);
 
     if (result.empty())
         result = getSpeakString("좀의 일반적인 효과");
@@ -239,10 +235,10 @@ bool xom_is_nice(int tension)
         const int tension_bonus
             = (tension == -1 ? 0 // :
 // Xom needs to be less negative
-//              : tension ==  0 ? -std::min(abs(HALF_MAX_PIETY - you.piety) / 2,
-//                                         you.piety / 10)
-                             : std::min((MAX_PIETY - you.piety) / 2,
-                                        random2(tension)));
+//              : tension ==  0 ? -min(abs(HALF_MAX_PIETY - you.piety) / 2,
+//                                     you.piety / 10)
+                             : min((MAX_PIETY - you.piety) / 2,
+                                   random2(tension)));
 
         const int effective_piety = you.piety + tension_bonus;
         ASSERT(effective_piety >= 0 && effective_piety <= MAX_PIETY);
@@ -274,7 +270,7 @@ static void _xom_is_stimulated(int maxinterestingness,
 
     int interestingness = random2(piety_scale(maxinterestingness));
 
-    interestingness = std::min(255, interestingness);
+    interestingness = min(200, interestingness);
 
 //역시 디버그 관련
 #if defined(DEBUG_RELIGION) || defined(DEBUG_GIFTS) || defined(DEBUG_XOM)
@@ -311,7 +307,7 @@ void xom_is_stimulated(int maxinterestingness, xom_message_type message_type,
                        force_message);
 }
 
-void xom_is_stimulated(int maxinterestingness, const std::string& message,
+void xom_is_stimulated(int maxinterestingness, const string& message,
                        bool force_message)
 {
     if (you.religion != GOD_XOM)
@@ -332,7 +328,7 @@ void xom_tick()
      if (x_chance_in_y(1, 20))
      {
         // Xom semi-randomly drifts your piety.
-        const std::string old_xom_favour = describe_xom_favour();
+        const string old_xom_favour = describe_xom_favour();
         const bool good = (you.piety == HALF_MAX_PIETY? coinflip()
                                                       : you.piety > HALF_MAX_PIETY);
         int size = abs(you.piety - HALF_MAX_PIETY);
@@ -344,7 +340,7 @@ void xom_tick()
             size = HALF_MAX_PIETY;
 
         you.piety = HALF_MAX_PIETY + (good ? size : -size);
-        std::string new_xom_favour = describe_xom_favour();
+        string new_xom_favour = describe_xom_favour();
         if (old_xom_favour != new_xom_favour)
         {
             // If we entered another favour state, take a big step into
@@ -371,7 +367,7 @@ void xom_tick()
         new_xom_favour = describe_xom_favour();
         if (old_xom_favour != new_xom_favour)
         {
-            const std::string msg = make_stringf(_("You are now %s"), new_xom_favour.c_str());
+            const string msg = make_stringf(_("You are now %s"), new_xom_favour.c_str());
             god_speaks(you.religion, msg.c_str());
             //updating piety status line
             you.redraw_title = true;
@@ -507,7 +503,7 @@ static bool _spell_weapon_check(const spell_type spell)
     {
     case SPELL_TUKIMAS_DANCE:
         // Requires a wielded weapon.
-        return player_weapon_wielded();
+        return player_weapon_wielded() && !player_in_branch(BRANCH_ABYSS);
     case SPELL_FIRE_BRAND:
     case SPELL_FREEZING_AURA:
     case SPELL_POISON_WEAPON:
@@ -584,7 +580,7 @@ static bool _transformation_check(const spell_type spell)
 static int _xom_makes_you_cast_random_spell(int sever, int tension,
                                             bool debug = false)
 {
-    int spellenum = std::max(1, sever);
+    int spellenum = max(1, sever);
 
     god_acting gdact(GOD_XOM);
 
@@ -592,7 +588,7 @@ static int _xom_makes_you_cast_random_spell(int sever, int tension,
     if (tension > 0)
     {
         const int nxomspells = ARRAYSZ(_xom_tension_spells);
-        spellenum = std::min(nxomspells, spellenum);
+        spellenum = min(nxomspells, spellenum);
         spell     = _xom_tension_spells[random2(spellenum)];
 
         // Don't attempt to cast spells that are guaranteed to fail.
@@ -604,7 +600,7 @@ static int _xom_makes_you_cast_random_spell(int sever, int tension,
     else
     {
         const int nxomspells = ARRAYSZ(_xom_nontension_spells);
-        spellenum = std::min(nxomspells, spellenum);
+        spellenum = min(nxomspells, spellenum);
         spell     = _xom_nontension_spells[random2(spellenum)];
     }
 
@@ -890,6 +886,12 @@ static bool _choose_mutatable_monster(const monster* mon)
             && !mon->submerged());
 }
 
+static bool _choose_enchantable_monster(const monster* mon)
+{
+    return (mon->alive() && !mon->wont_attack()
+            && !mons_immune_magic(mon));
+}
+
 static bool _is_chaos_upgradeable(const item_def &item,
                                   const monster* mon)
 {
@@ -1050,7 +1052,7 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
 
         description_level_type desc = mon->friendly() ? DESC_YOUR :
                                                         DESC_THE;
-        std::string msg = apostrophise(mon->name(desc));
+        string msg = apostrophise(mon->name(desc));
 
         msg += " ";
 
@@ -1126,7 +1128,7 @@ static monster_type _xom_random_demon(int sever, bool use_greater_demons = true)
 static bool _player_is_dead()
 {
     return (you.hp <= 0 || you.strength() <= 0 || you.dex() <= 0 || you.intel() <= 0
-            || is_feat_dangerous(grd(you.pos()))
+            || is_feat_dangerous(grd(you.pos())) && !you.is_wall_clinging()
             || you.did_escape_death());
 }
 
@@ -1185,7 +1187,7 @@ static int _xom_do_potion(bool debug = false)
         you.berserk_penalty = NO_BERSERK_PENALTY;
 
     // Take a note.
-    std::string potion_msg = "포션 효과 "; //원래  띄어쓰기가 뒤에 한칸 있습니다.
+    string potion_msg = "포션 효과 "; //원래  띄어쓰기가 뒤에 한칸 있습니다.
     switch (pot)
     {
     case POT_CURING:        potion_msg += gettext(M_("(curing)")); break;
@@ -1235,7 +1237,7 @@ static int _xom_confuse_monsters(int sever, bool debug = false)
             rc = true;
         }
         else if (mi->add_ench(mon_enchant(ENCH_CONFUSION, 0,
-              &menv[ANON_FRIENDLY_MONSTER], random2(sever))))
+              &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
         {
             // Only give this message once.
             if (!rc)
@@ -1265,7 +1267,7 @@ static int _xom_send_allies(int sever, bool debug = false)
     int numdemons = sever;
     for (int i = 0; i < 3; i++)
         numdemons = random2(numdemons + 1);
-    numdemons = std::min(numdemons + 2, 16);
+    numdemons = min(numdemons + 2, 16);
 
     // Limit number of demons by experience level.
     const int maxdemons = (you.experience_level);
@@ -1282,8 +1284,8 @@ static int _xom_send_allies(int sever, bool debug = false)
                                              1, 3,  // both hostile
                                              0);
 
-    std::vector<bool> is_demonic(numdemons, false);
-    std::vector<monster*> summons(numdemons);
+    vector<bool> is_demonic(numdemons, false);
+    vector<monster*> summons(numdemons);
 
     int num_actually_summoned = 0;
 
@@ -1445,7 +1447,7 @@ static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
             god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
 
             bool see_old = you.can_see(mon);
-            std::string old_name = mon->full_name(DESC_PLAIN);
+            string old_name = mon->full_name(DESC_PLAIN);
 
             if (one_chance_in(8)
                 && !mons_is_ghost_demon(mon->type)
@@ -1464,7 +1466,7 @@ static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
 
             if (see_old || see_new)
             {
-                std::string new_name = mon->full_name(DESC_PLAIN);
+                string new_name = mon->full_name(DESC_PLAIN);
                 if (!see_old)
                     old_name = "볼 수 없는 무언가";     //무언가 볼 수 없는?  something unseen
                 else if (!see_new)
@@ -1475,7 +1477,7 @@ static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
                 snprintf(poly_buf, sizeof(poly_buf), "%s 에서 %s 로 변신 ", //"polymorph %s -> %s" 에서 로
                          old_name.c_str(), new_name.c_str());
 
-                std::string poly = poly_buf;
+                string poly = poly_buf;
 #ifdef NOTE_DEBUG_XOM
                 poly += " (";
                 poly += (powerup ? "upgrade" : "downgrade"); // 파워업? 디버그이므로 놔둡니다.
@@ -1501,7 +1503,7 @@ static void _confuse_monster(monster* mons, int sever)
 
     const bool was_confused = mons->confused();
     if (mons->add_ench(mon_enchant(ENCH_CONFUSION, 0,
-          &menv[ANON_FRIENDLY_MONSTER], random2(sever))))
+          &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
     {
         if (was_confused)
             simple_monster_message(mons, " 더욱 혼란스러워 보인다.");  //" looks rather more confused."
@@ -1575,7 +1577,7 @@ static int _xom_swap_weapons(bool debug = false)
         return XOM_DID_NOTHING;
     }
 
-    std::vector<monster* > mons_wpn;
+    vector<monster* > mons_wpn;
     for (monster_iterator mi(&you); mi; ++mi)
     {
         if (!wpn || mi->wont_attack() || mi->is_summoned()
@@ -1689,11 +1691,13 @@ static int _xom_swap_weapons(bool debug = false)
     mprf(gettext("You wield %s %s!"),
          mon->name(DESC_ITS).c_str(),
          you.inv[freeslot].name(true, DESC_PLAIN).c_str());
+    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("swap weapons")), true);
 
     equip_item(EQ_WEAPON, freeslot);
 
     you.wield_change = true;
     you.m_quiver->on_weapon_changed();
+    more();
 
     return XOM_BAD_SWAP_WEAPONS;
 }
@@ -1708,7 +1712,7 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
     if (player_stair_delay())
         return XOM_DID_NOTHING;
 
-    std::vector<monster* > mons;
+    vector<monster* > mons;
     for (monster_iterator mi(&you); mi; ++mi)
         mons.push_back(*mi);
 
@@ -1733,8 +1737,8 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
     if (num_mons > 1 && x_chance_in_y(sever, 70))
     {
         bool did_message = false;
-        const int max_repeats = std::min(num_mons / 2, 8);
-        const int repeats     = std::min(random2(sever / 10) + 1, max_repeats);
+        const int max_repeats = min(num_mons / 2, 8);
+        const int repeats     = min(random2(sever / 10) + 1, max_repeats);
         for (int i = 0; i < repeats; ++i)
         {
             const int mon1 = random2(num_mons);
@@ -1765,11 +1769,11 @@ static int _xom_random_stickable(const int HD)
 {
     unsigned int c;
     // XXX: Unify this with the list in spl-summoning:_snakable_weapon().
-    // It has everything but tridents, demon tridents and bardiches, and
-    // puts the giant club types at the end as special cases.
+    // It has everything but demon tridents and bardiches, and puts the
+    // giant club types at the end as special cases.
     static const int arr[] = {
-        WPN_CLUB,    WPN_SPEAR,      WPN_HALBERD,
-        WPN_SCYTHE,  WPN_GLAIVE,     WPN_STAFF,        WPN_QUARTERSTAFF,
+        WPN_CLUB,    WPN_SPEAR,      WPN_TRIDENT,      WPN_HALBERD,
+        WPN_SCYTHE,  WPN_GLAIVE,     WPN_QUARTERSTAFF,
         WPN_BLOWGUN, WPN_BOW,        WPN_LONGBOW,      WPN_GIANT_CLUB,
         WPN_GIANT_SPIKED_CLUB
     };
@@ -1850,7 +1854,7 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
 
 static int _xom_animate_monster_weapon(int sever, bool debug = false)
 {
-    std::vector<monster* > mons_wpn;
+    vector<monster* > mons_wpn;
     for (monster_iterator mi(&you); mi; ++mi)
     {
         if (mi->wont_attack() || mi->is_summoned()
@@ -1892,7 +1896,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
     const int wpn = mon->inv[MSLOT_WEAPON];
     ASSERT(wpn != NON_ITEM);
 
-    const int dur = std::min(2 + (random2(sever) / 5), 6);
+    const int dur = min(2 + (random2(sever) / 5), 6);
 
     mgen_data mg(MONS_DANCING_WEAPON, BEH_FRIENDLY, &you, dur,
                  SPELL_TUKIMAS_DANCE, mon->pos(), mon->mindex(),
@@ -2051,9 +2055,9 @@ static int _xom_throw_divine_lightning(bool debug = false)
 //흠 아래껀 뭔질 모르겠네요 아무래도 던전 배치 관련인듯한데..
 static int _xom_change_scenery(bool debug = false)
 {
-    std::vector<coord_def> candidates;
-    std::vector<coord_def> closed_doors;
-    std::vector<coord_def> open_doors;
+    vector<coord_def> candidates;
+    vector<coord_def> closed_doors;
+    vector<coord_def> open_doors;
     for (radius_iterator ri(you.get_los()); ri; ++ri)
     {
         if (!you.see_cell(*ri))
@@ -2062,7 +2066,7 @@ static int _xom_change_scenery(bool debug = false)
         dungeon_feature_type feat = grd(*ri);
         if (feat >= DNGN_FOUNTAIN_BLUE && feat <= DNGN_DRY_FOUNTAIN_BLOOD)
             candidates.push_back(*ri);
-        else if (feat >= DNGN_CLOSED_DOOR && feat <= DNGN_SECRET_DOOR)
+        else if (feat_is_closed_door(feat))
         {
             // Check whether this door is already included in a gate.
             bool found_door = false;
@@ -2078,9 +2082,9 @@ static int _xom_change_scenery(bool debug = false)
             if (!found_door)
             {
                 // If it's a gate, add all doors belonging to the gate.
-                std::set<coord_def> all_door;
+                set<coord_def> all_door;
                 find_connected_identical(*ri, grd(*ri), all_door);
-                for (std::set<coord_def>::const_iterator dc = all_door.begin();
+                for (set<coord_def>::const_iterator dc = all_door.begin();
                      dc != all_door.end(); ++dc)
                 {
                     closed_doors.push_back(*dc);
@@ -2105,10 +2109,10 @@ static int _xom_change_scenery(bool debug = false)
             {
                 // Check whether any of the doors belonging to a gate is
                 // blocked by an item or monster.
-                std::set<coord_def> all_door;
+                set<coord_def> all_door;
                 find_connected_identical(*ri, grd(*ri), all_door);
                 bool is_blocked = false;
-                for (std::set<coord_def>::const_iterator dc = all_door.begin();
+                for (set<coord_def>::const_iterator dc = all_door.begin();
                      dc != all_door.end(); ++dc)
                 {
                     if (actor_at(*dc) || igrd(*dc) != NON_ITEM)
@@ -2122,7 +2126,7 @@ static int _xom_change_scenery(bool debug = false)
                 // belonging to the gate.
                 if (!is_blocked)
                 {
-                    for (std::set<coord_def>::const_iterator dc = all_door.begin();
+                    for (set<coord_def>::const_iterator dc = all_door.begin();
                          dc != all_door.end(); ++dc)
                     {
                         open_doors.push_back(*dc);
@@ -2140,7 +2144,7 @@ static int _xom_change_scenery(bool debug = false)
     for (unsigned int k = 0; k < closed_doors.size(); ++k)
         candidates.push_back(closed_doors[k]);
 
-    const std::string speech = _get_xom_speech("배경"); //scenery
+    const string speech = _get_xom_speech("배경"); //scenery
     if (candidates.empty())
     {
         if (!one_chance_in(8))
@@ -2149,7 +2153,7 @@ static int _xom_change_scenery(bool debug = false)
         // Place one or more altars to Xom.
         coord_def place;
         bool success = false;
-        const int max_altars = std::max(1, random2(random2(14)));
+        const int max_altars = max(1, random2(random2(14)));
         for (int tries = max_altars; tries > 0; --tries)
         {
             if ((random_near_space(you.pos(), place)
@@ -2189,8 +2193,7 @@ static int _xom_change_scenery(bool debug = false)
         switch (grd(pos))
         {
         case DNGN_CLOSED_DOOR:
-        case DNGN_DETECTED_SECRET_DOOR:
-        case DNGN_SECRET_DOOR:
+        case DNGN_RUNED_DOOR:
             grd(pos) = DNGN_OPEN_DOOR;
             set_terrain_changed(pos);
             if (you.see_cell(pos))
@@ -2233,7 +2236,7 @@ static int _xom_change_scenery(bool debug = false)
 
     god_speaks(GOD_XOM, speech.c_str());
 
-    std::vector<std::string> effects, terse;
+    vector<string> effects, terse;
     if (fountains_flow > 0)
     {
         snprintf(info, INFO_SIZE,
@@ -2254,8 +2257,8 @@ static int _xom_change_scenery(bool debug = false)
                                     : "",
                  fountains_blood == 1 ? ""  : "s",
                  fountains_blood == 1 ? "s" : "");
-//                "%s%s fountain%s start%s gushing blood",
-        std::string fountains = info;
+
+        string fountains = info;
         if (effects.empty())
             fountains = uppercase_first(fountains);
         effects.push_back(fountains);
@@ -2290,7 +2293,7 @@ static int _xom_change_scenery(bool debug = false)
                                   : "",
                  doors_close == 1 ? ""  : "s",
                  doors_close == 1 ? "s" : "");
-        std::string closed = info;
+        string closed = info;
         if (effects.empty())
             closed = uppercase_first(closed);
         effects.push_back(closed);
@@ -2317,14 +2320,18 @@ static int _xom_inner_flame(int sever, bool debug = false)
     bool rc = false;
     for (monster_iterator mi(you.get_los()); mi; ++mi)
     {
-        if (mi->wont_attack() || one_chance_in(4))
+        if (mi->wont_attack()
+            || mons_immune_magic(*mi)
+            || one_chance_in(4))
+        {
             continue;
+        }
 
         if (debug)
             return XOM_GOOD_INNER_FLAME;
 
         if (mi->add_ench(mon_enchant(ENCH_INNER_FLAME, 0,
-              &menv[ANON_FRIENDLY_MONSTER], random2(sever))))
+              &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
         {
             // Only give this message once.
             if (!rc)
@@ -2344,6 +2351,49 @@ static int _xom_inner_flame(int sever, bool debug = false)
         return XOM_GOOD_INNER_FLAME;
     }
     return XOM_DID_NOTHING;
+}
+
+static int _xom_enchant_monster(bool helpful, bool debug = false)
+{
+    monster* mon = choose_random_nearby_monster(0, _choose_enchantable_monster);
+
+    if (!mon)
+        return XOM_DID_NOTHING;
+
+    if (debug)
+        return (helpful ? XOM_GOOD_ENCHANT_MONSTER : XOM_BAD_ENCHANT_MONSTER);
+
+    const char* lookup = (helpful ? "good enchant monster"
+                                  : "bad enchant monster");
+    god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
+
+    beam_type ench;
+
+    if (helpful) // To the player, not the monster.
+    {
+        beam_type enchantments[] = {
+            BEAM_PETRIFY, BEAM_SLOW, BEAM_PARALYSIS, BEAM_ENSLAVE,
+        };
+        ench = RANDOM_ELEMENT(enchantments);
+    }
+    else
+    {
+        beam_type enchantments[] = {
+            BEAM_HASTE, BEAM_MIGHT, BEAM_INVISIBILITY
+        };
+        ench = RANDOM_ELEMENT(enchantments);
+    }
+
+    enchant_monster_with_flavour(mon, 0, ench);
+
+    // Take a note.
+    static char ench_buf[80];
+    snprintf(ench_buf, sizeof(ench_buf), "enchant monster %s",
+             helpful ? "(good)" : "(bad)");
+    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, ench_buf),
+              true);
+
+    return (helpful ? XOM_GOOD_ENCHANT_MONSTER : XOM_BAD_ENCHANT_MONSTER);
 }
 
 // The nicer stuff.  Note: these things are not necessarily nice.
@@ -2374,27 +2424,29 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
     }
     else if (tension > 0 && x_chance_in_y(5, sever))
         done = _xom_confuse_monsters(sever, debug);
+    else if (tension > 0 && x_chance_in_y(6, sever))
+        done = _xom_enchant_monster(true, debug);
     // It's pointless to send in help if there's no danger.
-    else if (tension > random2(5) && x_chance_in_y(6, sever))
+    else if (tension > random2(5) && x_chance_in_y(7, sever))
         done = _xom_send_one_ally(sever, debug);
-    else if (tension < random2(5) && x_chance_in_y(7, sever))
+    else if (tension < random2(5) && x_chance_in_y(8, sever))
         done = _xom_change_scenery(debug);
-    else if (x_chance_in_y(8, sever))
+    else if (x_chance_in_y(9, sever))
         done = _xom_snakes_to_sticks(sever, debug);
     // It's pointless to send in help if there's no danger.
-    else if (tension > random2(10) && x_chance_in_y(9, sever))
+    else if (tension > random2(10) && x_chance_in_y(10, sever))
         done = _xom_send_allies(sever, debug);
-    else if (tension > random2(8) && x_chance_in_y(10, sever))
+    else if (tension > random2(8) && x_chance_in_y(11, sever))
         done = _xom_animate_monster_weapon(sever, debug);
-    else if (x_chance_in_y(11, sever))
-        done = _xom_polymorph_nearby_monster(true, debug);
     else if (x_chance_in_y(12, sever))
+        done = _xom_polymorph_nearby_monster(true, debug);
+    else if (x_chance_in_y(13, sever))
         done = _xom_inner_flame(sever, debug);
-    else if (tension > 0 && x_chance_in_y(13, sever))
+    else if (tension > 0 && x_chance_in_y(14, sever))
         done = _xom_rearrange_pieces(sever, debug);
-    else if (random2(tension) < 15 && x_chance_in_y(14, sever))
+    else if (random2(tension) < 15 && x_chance_in_y(15, sever))
         done = _xom_give_item(sever, debug);
-    else if (!player_in_branch(BRANCH_ABYSS) && x_chance_in_y(15, sever))
+    else if (!player_in_branch(BRANCH_ABYSS) && x_chance_in_y(16, sever))
     {
         // Try something else if teleportation is impossible.
         if (!_teleportation_check())
@@ -2419,6 +2471,7 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
         {
             count++;
             you_teleport_now(false);
+            search_around();
             more();
             if (one_chance_in(10) || count >= 7 + random2(5))
                 break;
@@ -2437,7 +2490,7 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
         take_note(Note(NOTE_XOM_EFFECT, you.piety, tension, tele_buf), true);
         done = XOM_GOOD_TELEPORT;
     }
-    else if (random2(tension) < 5 && x_chance_in_y(16, sever))
+    else if (random2(tension) < 5 && x_chance_in_y(17, sever))
     {
         if (debug)
             return XOM_GOOD_VITRIFY;
@@ -2451,12 +2504,12 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
             done = XOM_GOOD_VITRIFY;
         }
     }
-    else if (random2(tension) < 5 && x_chance_in_y(17, sever)
+    else if (random2(tension) < 5 && x_chance_in_y(18, sever)
              && x_chance_in_y(16, how_mutated()))
     {
         done = _xom_give_mutations(true, debug);
     }
-    else if (tension > 0 && x_chance_in_y(18, sever))
+    else if (tension > 0 && x_chance_in_y(19, sever))
         done = _xom_throw_divine_lightning(debug);
 
     return done;
@@ -2490,10 +2543,10 @@ static void _get_in_view(FixedVector<bool, NUM_FEATURES>& in_view)
 
 static void _xom_zero_miscast()
 {
-    std::vector<std::string> messages;
-    std::vector<std::string> priority;
+    vector<string> messages;
+    vector<string> priority;
 
-    std::vector<int> inv_items;
+    vector<int> inv_items;
     for (int i = 0; i < ENDOFPACK; ++i)
     {
         const item_def &item(you.inv[i]);
@@ -2582,14 +2635,14 @@ static void _xom_zero_miscast()
         && !feat_is_trap(feat) && feat != DNGN_STONE_ARCH
         && feat != DNGN_OPEN_DOOR && feat != DNGN_ABANDONED_SHOP)
     {
-        const std::string feat_name =
-            feature_description_at(you.pos(), false, DESC_THE, false);
+        const string feat_name = feature_description_at(you.pos(), false,
+                                                        DESC_THE, false);
 
         if (you.airborne())
         {
             // Tengu fly a lot, so don't put airborne messages into the
             // priority vector for them.
-            std::vector<std::string>* vec;
+            vector<string>* vec;
             if (you.species == SP_TENGU)
                 vec = &messages;
             else
@@ -2621,7 +2674,7 @@ static void _xom_zero_miscast()
 
         const item_def &item(you.inv[idx]);
 
-        std::string name;
+        string name;
         if (item.quantity == 1)
             name = item.name(true, DESC_YOUR, false, false, false);
         else
@@ -2633,8 +2686,8 @@ static void _xom_zero_miscast()
                            "??로 뛰어 들어왔다!");//"immediately jumps back in!");
     }
 
-    ////////////////////////////////////////////
-    // Body, player spcies, transformations, etc
+    //////////////////////////////////////////////
+    // Body, player species, transformations, etc.
 
     if (you.species == SP_MUMMY && you_tran_can_wear(EQ_BODY_ARMOUR))
     {
@@ -2644,15 +2697,14 @@ static void _xom_zero_miscast()
     }
 
     {
-        std::string str = "단안경은 잠시 당신의 ";//std::string str = "A monocle briefly appears over your ";
-        str += coinflip() ? "오른쪽을 보여주었다." : "왼쪽을 보여주었다.";//str += coinflip() ? "right" : "left";
+        string str = make_stringf(_("A monocle briefly appears over your %s"), 
+                                  coinflip() ? _(M_("right")) : _(M_("left")));
         if (you.form == TRAN_SPIDER)
             if (coinflip())
                 str += " 최초의";//str += " primary";
             else
             {
-                // FIXME
-                str += random_choose(" front", " middle", " rear");
+                str += random_choose(" front", " middle", " rear", 0);
                 str += " secondary";
             }
         str += " eye.";//str += " eye.";
@@ -2676,9 +2728,7 @@ static void _xom_zero_miscast()
 
     if (_could_wear_eq(EQ_WEAPON))
     {
-        std::string str = "잠시동안 당신에게 ";//std::string str = "A fancy cane briefly appears in your ";
-        str += you.hand_name(false);
-        str += "가 나타났다.";//str += ".";
+        string str = make_stringf(_("A fancy cane briefly appears in your %s."), you.hand_name(false));
 
         messages.push_back(str);
     }
@@ -2688,10 +2738,9 @@ static void _xom_zero_miscast()
 
     if ((item = _tran_get_eq(EQ_HELMET)))
     {
-        std::string str = "당신의 ";//std::string str = "Your ";
-        str += item->name(false, DESC_BASENAME, false, false, false);
-        str += " 는 바람속으로 튀어올랐다가- 갑자기 돌고나서- 당신의 머리 위에 "//str += " leaps into the air, briefly spins, then lands back on "
-               "착지했다!";//"your head!";
+        string str = make_stringf(_("Your %s leaps into the air, "
+                    "briefly spins, then lands back on your head!"),
+                    item->name(true, DESC_BASENAME, false, false, false));
 
         messages.push_back(str);
     }
@@ -2699,17 +2748,17 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_BOOTS)) && item->sub_type == ARM_BOOTS
         && !you.cannot_act())
     {
-        std::string name = item->name(false, DESC_BASENAME, false, false, false);
-        name = replace_all(name, "한쌍의 ", "");//name = replace_all(name, "pair of ", "");
+        string name = item->name(false, DESC_BASENAME, false, false, false);
+        name = replace_all(name, "pair of ", "");
 
-        std::string str = "당신은 강제적으로 당신의 ";//std::string str = "You compulsively click the heels of your ";
+        string str = "You compulsively click the heels of your ";
         str += name;
         str += "의 뒤꿈치를 세번가량 눌렀다.";//str += " together three times.";
     }
 
     if ((item = _tran_get_eq(EQ_SHIELD)))
     {
-        std::string str = "당신의 ";//std::string str = "Your ";
+        string str = "당신의 ";//std::string str = "Your ";
         str += item->name(false, DESC_BASENAME, false, false, false);
         str += "가 회전했다!";//str += " spins!";
 
@@ -2723,10 +2772,10 @@ static void _xom_zero_miscast()
 
     if ((item = _tran_get_eq(EQ_BODY_ARMOUR)))
     {
-        std::string str;
-        std::string name = item->name(false, DESC_BASENAME, false, false, false);
+        string str;
+        string name = item->name(false, DESC_BASENAME, false, false, false);
 
-        if (name.find("용") != std::string::npos)//if (name.find("dragon") != std::string::npos)
+        if (name.find("용") != string::npos)//if (name.find("dragon") != std::string::npos)
         {
             str  = "당신의 ";//str  = "The scales on your ";
             str += name;
@@ -2771,8 +2820,8 @@ static void _xom_zero_miscast()
 
         item = &you.inv[idx];
 
-        std::string name = item->name(false, DESC_YOUR, false, false, false);
-        std::string verb = coinflip() ? "빛나는" : "진동하는";
+        string name = item->name(false, DESC_YOUR, false, false, false);
+        string verb = coinflip() ? "빛나는" : "진동하는";
 
         if (item->quantity == 1)
             verb += "것 들";//verb += "s";
@@ -2785,15 +2834,15 @@ static void _xom_zero_miscast()
     else
         mpr(messages[random2(messages.size())].c_str());
 }
-//겟핸드타입? 뭐지
-static void _get_hand_type(std::string &hand, bool &can_plural)
+
+static void _get_hand_type(string &hand, bool &can_plural)
 {
     hand       = "";
     can_plural = true;
 
-    std::vector<std::string> hand_vec;
-    std::vector<bool>        plural_vec;
-    bool                     plural;
+    vector<string> hand_vec;
+    vector<bool>   plural_vec;
+    bool           plural;
 
     hand_vec.push_back(you.hand_name(false, &plural));
     plural_vec.push_back(plural);
@@ -2885,7 +2934,7 @@ static int _xom_miscast(const int max_level, const bool nasty,
     }
 
     // Take a note.
-    std::string desc = "주문실패 효과";//std::string desc = "miscast effect";
+    string desc = "주문실패 효과";//std::string desc = "miscast effect";
 #ifdef NOTE_DEBUG_XOM
     static char level_buf[20];
     snprintf(level_buf, sizeof(level_buf), " level %d%s",
@@ -2894,15 +2943,15 @@ static int _xom_miscast(const int max_level, const bool nasty,
 #endif
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, desc.c_str()), true);
 
-    if (level == 0 && one_chance_in(20))
+    if (level == 0 && one_chance_in(3))
     {
         god_speaks(GOD_XOM, _get_xom_speech(speech_str).c_str());
         _xom_zero_miscast();
         return XOM_BAD_MISCAST_PSEUDO;
     }
 
-    std::string hand_str;
-    bool        can_plural;
+    string hand_str;
+    bool   can_plural;
 
     _get_hand_type(hand_str, can_plural);
 
@@ -2918,55 +2967,7 @@ static int _xom_miscast(const int max_level, const bool nasty,
     // Not worth distinguishing unless debugging.
     return XOM_BAD_MISCAST_MAJOR;
 }
-//좀에 의한 스탯 감소
-static int _xom_lose_stats(bool debug = false)
-{
-    if (debug)
-        return XOM_BAD_STATLOSS;
 
-    stat_type stat = static_cast<stat_type>(random2(NUM_STATS));
-    int       max  = 2; // was 3
-
-    // Don't kill the player unless Xom is being nasty.
-    if (!_xom_feels_nasty())
-    {
-        // Make sure not to lower strength so much that the player
-        // will die once might wears off.
-        int vals[3] =
-            {you.strength() - ((you.duration[DUR_MIGHT]
-                               || you.duration[DUR_BERSERK]) ? 5 : 0),
-             you.dex() - (you.duration[DUR_AGILITY] ? 5 : 0),
-             you.intel() - (you.duration[DUR_BRILLIANCE] ? 5 : 0)};
-
-        stat_type types[3] = {STAT_STR, STAT_DEX, STAT_INT};
-        int tries = 0;
-        do
-        {
-            int idx = random2(3);
-            stat = types[idx];
-            max  = std::min(max, vals[idx] - 1);
-        }
-        while (max < 1 && (++tries < 30));
-
-        if (tries >= 30)
-            return XOM_DID_NOTHING;
-    }
-
-    god_speaks(GOD_XOM, _get_xom_speech("능력치 하락").c_str());//god_speaks(GOD_XOM, _get_xom_speech("lose stats").c_str());
-    const int loss = 1 + random2(max);
-    lose_stat(stat, loss, true, "좀의 복수");//lose_stat(stat, loss, true, "the vengeance of Xom");
-
-    // Take a note.
-    const char* sstr[3] = { "힘", "지능", "민첩" };//const char* sstr[3] = { "Str", "Int", "Dex" };
-    static char stat_buf[80];
-    snprintf(stat_buf, sizeof(stat_buf), "능력 감소: -%d %s (%d/%d)",
-             loss, sstr[stat], you.stat(stat), you.max_stat(stat));
-//    snprintf(stat_buf, sizeof(stat_buf), "stat loss: -%d %s (%d/%d)",
-    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, stat_buf), true);
-
-    return XOM_BAD_STATLOSS;
-}
-//혼돈 업그레이드? 근처의 몬스터
 static int _xom_chaos_upgrade_nearby_monster(bool debug = false)
 {
     monster* mon = choose_random_nearby_monster(0, _choose_chaos_upgrade);
@@ -3043,7 +3044,7 @@ static int _xom_player_confusion_effect(int sever, bool debug = false)
 
                 if (!mi->check_clarity(false)
                     && mi->add_ench(mon_enchant(ENCH_CONFUSION, 0,
-                           &menv[ANON_FRIENDLY_MONSTER], random2(sever))))
+                           &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
                 {
                     simple_monster_message(*mi,
                                            " 는 혼란한듯 하다.");//" looks rather confused.");
@@ -3053,7 +3054,7 @@ static int _xom_player_confusion_effect(int sever, bool debug = false)
         }
 
         // Take a note.
-        std::string conf_msg = "혼란";//std::string conf_msg = "confusion";
+        string conf_msg = "혼란";//std::string conf_msg = "confusion";
         if (mons_too)
             conf_msg += " (+ 몬스터들)";//conf_msg += " (+ monsters)";
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, conf_msg.c_str()), true);
@@ -3195,8 +3196,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
 
     ASSERT(stair_pos != ray.pos());
 
-    std::string stair_str =
-        feature_description_at(stair_pos, false, DESC_THE, false);
+    string stair_str = feature_description_at(stair_pos, false, DESC_THE, false);
 
     mprf("%s 는 %s 당신을 떨어뜨렸다!", stair_str.c_str(),
 		      away ? "away from" : "towards");
@@ -3241,10 +3241,13 @@ static int _xom_repel_stairs(bool debug = false)
         return XOM_DID_NOTHING;
     }
 
-    std::vector<coord_def> stairs_avail;
+    vector<coord_def> stairs_avail;
     bool real_stairs = false;
-    for (radius_iterator ri(you.get_los()); ri; ++ri)
+    for (radius_iterator ri(you.pos(), LOS_RADIUS, C_ROUND); ri; ++ri)
     {
+        if (!cell_see_cell(you.pos(), *ri, LOS_SOLID_SEE))
+            continue;
+
         dungeon_feature_type feat = grd(*ri);
         if (feat_stair_direction(feat) != CMD_NO_CMD
             && feat != DNGN_ENTER_SHOP)
@@ -3263,10 +3266,10 @@ static int _xom_repel_stairs(bool debug = false)
         return XOM_BAD_STAIRS;
 
     // Don't mention staircases if there aren't any nearby.
-    std::string stair_msg = _get_xom_speech("계단 밀기");//std::string stair_msg = _get_xom_speech("repel stairs");
-    if (stair_msg.find("@계단@") != std::string::npos)//if (stair_msg.find("@staircase@") != std::string::npos)
+    string stair_msg = _get_xom_speech("계단 밀기");//std::string stair_msg = _get_xom_speech("repel stairs");
+    if (stair_msg.find("@계단@") != string::npos)//if (stair_msg.find("@staircase@") != std::string::npos)
     {
-        std::string feat_name;
+        string feat_name;
         if (!real_stairs)
         {
             if (feat_is_escape_hatch(grd(stairs_avail[0])))
@@ -3290,7 +3293,7 @@ static int _xom_repel_stairs(bool debug = false)
         you.duration[DUR_REPEL_STAIRS_CLIMB] = 500;
     }
 
-    std::random_shuffle(stairs_avail.begin(), stairs_avail.end());
+    random_shuffle(stairs_avail.begin(), stairs_avail.end());
     int count_moved = 0;
     for (unsigned int i = 0; i < stairs_avail.size(); i++)
         if (move_stair(stairs_avail[i], true, true))
@@ -3321,7 +3324,7 @@ static int _xom_colour_smoke_trail(bool debug = false)
 
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "colour smoke trail"), true);
 
-    const std::string speech = _get_xom_speech(_(M_("colour smoke trail")));
+    const string speech = _get_xom_speech(_(M_("colour smoke trail")));
     god_speaks(GOD_XOM, speech.c_str());
 
     return XOM_BAD_COLOUR_SMOKE_TRAIL;
@@ -3329,11 +3332,38 @@ static int _xom_colour_smoke_trail(bool debug = false)
 
 static int _xom_draining_torment_effect(int sever, bool debug = false)
 {
-    const std::string speech = _get_xom_speech("흡수나 고통중 어느것?");//const std::string speech = _get_xom_speech("draining or torment");
+    const string speech = _get_xom_speech("흡수나 고통중 어느것?");//const std::string speech = _get_xom_speech("draining or torment");
     const bool nasty = _xom_feels_nasty();
-    int rc = XOM_DID_NOTHING;
 
-    if (one_chance_in(4))
+    if (coinflip())
+    {
+        // Stat loss (50%).
+        if (debug)
+            return XOM_BAD_STATLOSS;
+
+        stat_type stat = static_cast<stat_type>(random2(NUM_STATS));
+        int loss = 1;
+
+        // Don't kill the player unless Xom is being nasty.
+        if (nasty)
+            loss = 1 + random2(3);
+        else if (you.stat(stat) <= loss)
+            return XOM_DID_NOTHING;
+
+        god_speaks(GOD_XOM, speech.c_str());
+        lose_stat(stat, loss, true, "the vengeance of Xom");
+
+        // Take a note.
+        const char* sstr[3] = { "Str", "Int", "Dex" };
+        static char stat_buf[80];
+        snprintf(stat_buf, sizeof(stat_buf), "stat loss: -%d %s (%d/%d)",
+                 loss, sstr[stat], you.stat(stat), you.max_stat(stat));
+
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, stat_buf), true);
+
+        return XOM_BAD_STATLOSS;
+    }
+    else if (coinflip())
     {
         // XP drain effect (25%).
         if (player_prot_life() < 3 && (nasty || you.experience > 0))
@@ -3354,7 +3384,7 @@ static int _xom_draining_torment_effect(int sever, bool debug = false)
     }
     else
     {
-        // Torment effect (75%).
+        // Torment effect (25%).
         if (!player_res_torment())
         {
             if (debug)
@@ -3372,7 +3402,7 @@ static int _xom_draining_torment_effect(int sever, bool debug = false)
             return XOM_BAD_TORMENT;
         }
     }
-    return rc;
+    return XOM_DID_NOTHING;
 }
 
 static bool _has_min_animated_weapon_level()
@@ -3389,19 +3419,19 @@ static bool _has_min_animated_weapon_level()
 static int _xom_summon_hostiles(int sever, bool debug = false)
 {
     bool rc = false;
-    const std::string speech = _get_xom_speech("적대적인 몬스터");//const std::string speech = _get_xom_speech("hostile monster");
+    const string speech = _get_xom_speech("적대적인 몬스터");//const std::string speech = _get_xom_speech("hostile monster");
 
     int result = XOM_DID_NOTHING;
 
     // Nasty, but fun.
     if (player_weapon_wielded() && _has_min_animated_weapon_level()
-        && one_chance_in(4))
+        && one_chance_in(4) && !player_in_branch(BRANCH_ABYSS))
     {
         if (debug)
             return XOM_BAD_ANIMATE_WPN;
 
         const item_def& weapon = *you.weapon();
-        const std::string wep_name = weapon.name(false, DESC_PLAIN);
+        const string wep_name = weapon.name(false, DESC_PLAIN);
         rc = cast_tukimas_dance(100, GOD_XOM, true);
 
         if (rc)
@@ -3423,7 +3453,7 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
         int numdemons = sever;
         for (int i = 0; i < 3; ++i)
             numdemons = random2(numdemons + 1);
-        numdemons = std::min(numdemons + 1, 14);
+        numdemons = min(numdemons + 1, 14);
 
         // Limit number of demons by experience level.
         if (!you.penance[GOD_XOM])
@@ -3503,20 +3533,22 @@ static bool _allow_xom_banishment()
     return true;
 }
 
-static int _xom_maybe_reverts_banishment(bool debug = false)
+int xom_maybe_reverts_banishment(bool xom_banished, bool debug)
 {
     // Never revert if Xom is bored or the player is under penance.
     if (_xom_feels_nasty())
         return XOM_BAD_BANISHMENT;
 
-    // Sometimes Xom will immediately revert the banishment.
-    // Always so, if the banishment happened below the minimum exp level.
-    if (!_has_min_banishment_level() || x_chance_in_y(you.piety, 1000))
+    // Sometimes Xom will immediately revert banishment.
+    // Always if the banishment happened below the minimum exp level and Xom was responsible.
+    if (xom_banished && !_has_min_banishment_level() || x_chance_in_y(you.piety, 1000))
     {
         if (!debug)
         {
             more();
-            god_speaks(GOD_XOM, _get_xom_speech("추방 복귀").c_str());//god_speaks(GOD_XOM, _get_xom_speech("revert banishment").c_str());
+            const char* lookup = (xom_banished ? "revert own banishment"
+                                               : "revert other banishment");
+            god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
             down_stairs(DNGN_EXIT_ABYSS);
             take_note(Note(NOTE_XOM_EFFECT, you.piety, -1,
                            "추방 복귀"), true);//"revert banishment"), true);
@@ -3532,17 +3564,77 @@ static int _xom_do_banishment(bool debug = false)
         return XOM_DID_NOTHING;
 
     if (debug)
-        return _xom_maybe_reverts_banishment(debug);
+        return xom_maybe_reverts_banishment(true, debug);
 
     god_speaks(GOD_XOM, _get_xom_speech("추방").c_str());//    god_speaks(GOD_XOM, _get_xom_speech("banishment").c_str());
 
     // Handles note taking.
-    banished(_(M_("Xom")));
-    const int result = _xom_maybe_reverts_banishment(debug);
+    banished("Xom");
+    const int result = xom_maybe_reverts_banishment(true, debug);
 
     return result;
 }
-//좀 이즈 배드? 좀이 하는 나쁜짓들인가
+
+static int _xom_noise(bool debug = false)
+{
+    if (silenced(you.pos()))
+        return XOM_DID_NOTHING;
+
+    if (debug)
+        return XOM_BAD_NOISE;
+
+    // Ranges from shout to shatter volume, roughly.
+    const int noisiness = 15 + random2(26);
+
+    god_speaks(GOD_XOM, _get_xom_speech("noise").c_str());
+    noisy(noisiness, you.pos());
+
+    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "noise"), true);
+    return XOM_BAD_NOISE;
+}
+
+static int _xom_blink_monsters(bool debug = false)
+{
+    int blinks = 0;
+    // Sometimes blink towards the player, sometimes randomly. It might
+    // end up being helpful instead of dangerous, but Xom doesn't mind.
+    const bool blink_to_player = _xom_feels_nasty() || coinflip();
+    for (monster_iterator mi(you.get_los()); mi; ++mi)
+    {
+        if (blinks >= 5)
+            break;
+
+        if (mi->wont_attack()
+            || mi->no_tele()
+            || mons_is_projectile(*mi)
+            || coinflip())
+        {
+            continue;
+        }
+
+        if (debug)
+            return XOM_BAD_BLINK_MONSTERS;
+
+        // Only give this message once.
+        if (!blinks)
+            god_speaks(GOD_XOM, _get_xom_speech("blink monsters").c_str());
+
+        if (blink_to_player)
+            blink_other_close(*mi, you.pos());
+        else
+            monster_blink(*mi, false);
+
+        blinks++;
+    }
+
+    if (blinks)
+    {
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "blink monster(s)"), true);
+        return XOM_BAD_BLINK_MONSTERS;
+    }
+    return XOM_DID_NOTHING;
+}
+
 static int _xom_is_bad(int sever, int tension, bool debug = false)
 {
     int done   = XOM_DID_NOTHING;
@@ -3563,32 +3655,37 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
             done = _xom_miscast(0, nasty, debug);
         else if (!nasty && x_chance_in_y(4, sever))
             done = _xom_miscast(1, nasty, debug);
-        else if (!nasty && tension <= 0 && x_chance_in_y(4, sever))
+        else if (!nasty && tension <= 0 && x_chance_in_y(5, sever))
             done = _xom_colour_smoke_trail(debug);
+        // Sometimes do noise out of combat.
+        else if ((tension > 0 || coinflip()) && x_chance_in_y(6, sever))
+            done = _xom_noise(debug);
+        else if (tension > 0 && x_chance_in_y(7, sever))
+            done = _xom_enchant_monster(false, debug);
+        else if (tension > 0 && x_chance_in_y(8, sever))
+            done = _xom_blink_monsters(debug);
         // It's pointless to confuse player if there's no danger nearby.
-        else if (tension > 0 && x_chance_in_y(5, sever))
+        else if (tension > 0 && x_chance_in_y(9, sever))
         {
             done    = _xom_player_confusion_effect(sever, debug);
             badness = (random2(tension) > 5 ? 2 : 1);
         }
-        else if (x_chance_in_y(6, sever))
+        else if (tension > 0 && x_chance_in_y(11, sever)
+                 && !player_in_branch(BRANCH_ABYSS))
         {
-            done    = _xom_lose_stats(debug);
-            badness = 2;
-        }
-        else if (tension > 0 && x_chance_in_y(7, sever))
             done = _xom_swap_weapons(debug);
-        else if (x_chance_in_y(8, sever))
+        }
+        else if (x_chance_in_y(12, sever))
         {
             done    = _xom_miscast(2, nasty, debug);
             badness = 2;
         }
-        else if (x_chance_in_y(9, sever))
+        else if (x_chance_in_y(13, sever))
         {
             done    = _xom_chaos_upgrade_nearby_monster(debug);
             badness = 2 + coinflip();
         }
-        else if (x_chance_in_y(10, sever) && !player_in_branch(BRANCH_ABYSS))
+        else if (x_chance_in_y(14, sever) && !player_in_branch(BRANCH_ABYSS))
         {
             // Try something else if teleportation is impossible.
             if (!_teleportation_check())
@@ -3618,6 +3715,7 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
             do
             {
                 you_teleport_now(false);
+                search_around();
                 more();
                 if (count++ >= 7 + random2(5))
                     break;
@@ -3640,35 +3738,35 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
                       true);
             done = XOM_BAD_TELEPORT;
         }
-        else if (x_chance_in_y(11, sever))
+        else if (x_chance_in_y(15, sever))
         {
             done    = _xom_polymorph_nearby_monster(false, debug);
             badness = 3;
         }
-        else if (tension > 0 && x_chance_in_y(12, sever))
+        else if (tension > 0 && x_chance_in_y(16, sever))
         {
             done    = _xom_repel_stairs(debug);
             badness = (you.duration[DUR_REPEL_STAIRS_CLIMB] ? 3 : 2);
         }
-        else if (random2(tension) < 11 && x_chance_in_y(13, sever))
+        else if (random2(tension) < 11 && x_chance_in_y(17, sever))
         {
             done    = _xom_give_mutations(false, debug);
             badness = 3;
         }
-        else if (x_chance_in_y(14, sever))
-        {
-            done    = _xom_draining_torment_effect(sever, debug);
-            badness = (random2(tension) > 5 ? 3 : 2);
-        }
-        else if (x_chance_in_y(15, sever))
+        else if (x_chance_in_y(18, sever))
         {
             done    = _xom_summon_hostiles(sever, debug);
             badness = 3 + coinflip();
         }
-        else if (x_chance_in_y(16, sever))
+        else if (x_chance_in_y(19, sever))
         {
             done    = _xom_miscast(3, nasty, debug);
             badness = 4 + coinflip();
+        }
+        else if (x_chance_in_y(20, sever))
+        {
+            done    = _xom_draining_torment_effect(sever, debug);
+            badness = (random2(tension) > 5 ? 3 : 2);
         }
         else if (one_chance_in(sever) && !player_in_branch(BRANCH_ABYSS))
         {
@@ -3681,8 +3779,8 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
     // to the badness of the effect.
     if (done && !debug && _xom_is_bored())
     {
-        const int interest = random2avg(badness*60, 2);
-        you.gift_timeout   = std::min(interest, 255);
+        const int interest = random2avg(badness * 60, 2);
+        you.gift_timeout   = min(interest, 255);
         //updating piety status line
         you.redraw_title = true;
 #if defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
@@ -3708,7 +3806,7 @@ static void _handle_accidental_death(const int orig_hp,
         return;
     }
 
-    std::string speech_type = "우발적인 살인";//std::string speech_type = "accidental homicide";
+    string speech_type = _(M_("accidental homicide"));
 
     const dungeon_feature_type feat = grd(you.pos());
 
@@ -3755,7 +3853,7 @@ static void _handle_accidental_death(const int orig_hp,
     god_speaks(GOD_XOM, _get_xom_speech("부활").c_str());//    god_speaks(GOD_XOM, _get_xom_speech("resurrection").c_str());
 
     if (you.hp <= 0)
-        you.hp = std::min(orig_hp, you.hp_max);
+        you.hp = min(orig_hp, you.hp_max);
 
     // MUT_THIN_SKELETON can statkill you by str, undo it if necessary
     /*while (you.strength() <= 0 && you.mutation[MUT_THIN_SKELETON] > orig_mutation[MUT_THIN_SKELETON])
@@ -3851,7 +3949,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
     ASSERT(!_player_is_dead());
 #endif
 
-    sever = std::max(1, sever);
+    sever = max(1, sever);
 
     god_type which_god = GOD_XOM;
     // Drawing the Xom card from Nemelex's decks of oddities or punishment.
@@ -3956,12 +4054,12 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
 
     if (you.religion == GOD_XOM && one_chance_in(5))
     {
-        const std::string old_xom_favour = describe_xom_favour();
+        const string old_xom_favour = describe_xom_favour();
         you.piety = random2(MAX_PIETY + 1);
-        const std::string new_xom_favour = describe_xom_favour();
+        const string new_xom_favour = describe_xom_favour();
         if (was_bored || old_xom_favour != new_xom_favour)
         {
-            const std::string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
+            const string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
             god_speaks(you.religion, msg.c_str());
         }
 #ifdef NOTE_DEBUG_XOM//디버그라 놔둠
@@ -3973,8 +4071,8 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
     {
         // If we didn't reroll at least mention the new favour
         // now it's not "BORING thing" anymore.
-        const std::string new_xom_favour = describe_xom_favour();
-        const std::string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
+        const string new_xom_favour = describe_xom_favour();
+        const string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
         god_speaks(you.religion, msg.c_str());
     }
 
@@ -4103,7 +4201,7 @@ static int _death_is_worth_saving(const kill_method_type killed_by,
     }
 }
 
-static std::string _get_death_type_keyword(const kill_method_type killed_by)
+static string _get_death_type_keyword(const kill_method_type killed_by)
 {
     switch (killed_by)
     {
@@ -4145,8 +4243,8 @@ bool xom_saves_your_life(const int dam, const int death_source,
     mpr("You die...");
     more();
 
-    const std::string key = _get_death_type_keyword(death_type);
-    std::string speech = _get_xom_speech("life saving " + key);
+    const string key = _get_death_type_keyword(death_type);
+    string speech = _get_xom_speech("life saving " + key);
     god_speaks(GOD_XOM, speech.c_str());
 
     // Give back some hp.
@@ -4160,7 +4258,7 @@ bool xom_saves_your_life(const int dam, const int death_source,
         stat_type s = static_cast<stat_type>(i);
         while (you.max_stat(s) < 1)
             you.base_stats[s]++;
-        you.stat_loss[s] = std::min<int8_t>(you.stat_loss[s], you.max_stat(s) - 1);
+        you.stat_loss[s] = min<int8_t>(you.stat_loss[s], you.max_stat(s) - 1);
         you.stat_zero[s] = 0;
     }
 
@@ -4180,10 +4278,10 @@ bool xom_saves_your_life(const int dam, const int death_source,
 #ifdef WIZARD
 struct xom_effect_count
 {
-    std::string effect;
-    int         count;
+    string effect;
+    int    count;
 
-    xom_effect_count(std::string e, int c) : effect(e), count(c) {};
+    xom_effect_count(string e, int c) : effect(e), count(c) {};
 };
 
 static bool _sort_xom_effects(const xom_effect_count &a,
@@ -4195,7 +4293,7 @@ static bool _sort_xom_effects(const xom_effect_count &a,
     return (a.count > b.count);
 }
 
-static const std::string _xom_effect_to_name(int effect)
+static const string _xom_effect_to_name(int effect)
 {
     ASSERT(effect < XOM_PLAYER_DEAD);
 
@@ -4219,7 +4317,7 @@ static const std::string _xom_effect_to_name(int effect)
         "banishment"
     };
 
-    std::string result = "";
+    string result = "";
     if (effect > XOM_DID_NOTHING && effect < XOM_PLAYER_DEAD)
     {
         if (effect <= XOM_LAST_GOOD_ACT)
@@ -4293,13 +4391,13 @@ void debug_xom_effects()
     fprintf(ostat, "\nRunning %d times through entire mood cycle.\n", N);
     fprintf(ostat, "---- OUTPUT EFFECT PERCENTAGES ----\n");
 
-    std::vector<int>               mood_effects;
-    std::vector<std::vector<int> > all_effects;
-    std::vector<std::string>       moods;
-    std::vector<int>               mood_good_acts;
+    vector<int>          mood_effects;
+    vector<vector<int> > all_effects;
+    vector<string>       moods;
+    vector<int>          mood_good_acts;
 
-    std::string old_mood = "";
-    std::string     mood = "";
+    string old_mood = "";
+    string     mood = "";
 
     // Add an empty list to later add all effects to.
     all_effects.push_back(mood_effects);
@@ -4345,7 +4443,7 @@ void debug_xom_effects()
     mood_good_acts[0] += mood_good;
 
     const int num_moods = moods.size();
-    std::vector<xom_effect_count> xom_ec_pairs;
+    vector<xom_effect_count> xom_ec_pairs;
     for (int i = 0; i < num_moods; ++i)
     {
         mood_effects    = all_effects[i];
@@ -4361,7 +4459,7 @@ void debug_xom_effects()
         fprintf(ostat, "BAD %7.2f%%\n",
                 (100.0 * (float) (total - mood_good_acts[i]) / (float) total));
 
-        std::sort(mood_effects.begin(), mood_effects.end());
+        sort(mood_effects.begin(), mood_effects.end());
 
         xom_ec_pairs.clear();
         int old_effect = XOM_DID_NOTHING;
@@ -4372,7 +4470,7 @@ void debug_xom_effects()
             {
                 if (count > 0)
                 {
-                    std::string name     = _xom_effect_to_name(old_effect);
+                    string name          = _xom_effect_to_name(old_effect);
                     xom_effect_count xec = xom_effect_count(name, count);
                     xom_ec_pairs.push_back(xec);
                 }
@@ -4385,12 +4483,12 @@ void debug_xom_effects()
 
         if (count > 0)
         {
-            std::string name     = _xom_effect_to_name(old_effect);
+            string name          = _xom_effect_to_name(old_effect);
             xom_effect_count xec = xom_effect_count(name, count);
             xom_ec_pairs.push_back(xec);
         }
 
-        std::sort(xom_ec_pairs.begin(), xom_ec_pairs.end(), _sort_xom_effects);
+        sort(xom_ec_pairs.begin(), xom_ec_pairs.end(), _sort_xom_effects);
         for (unsigned int k = 0; k < xom_ec_pairs.size(); ++k)
         {
             xom_effect_count xec = xom_ec_pairs[k];

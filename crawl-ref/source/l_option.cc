@@ -59,8 +59,6 @@ static option_handler handlers[] =
     { "easy_exit_menu",  &Options.easy_exit_menu, option_hboolean },
     { "dos_use_background_intensity", &Options.dos_use_background_intensity,
                                       option_hboolean },
-    { "menu_colour_prefix_class", &Options.menu_colour_prefix_class,
-                                  option_hboolean },
     { "autopick_on", NULL, option_autopick }
 };
 
@@ -87,7 +85,7 @@ static int option_get(lua_State *ls)
     game_options::opt_map::iterator i = Options.named_options.find(opt);
     if (i != Options.named_options.end())
     {
-        const std::string &ov = i->second;
+        const string &ov = i->second;
         lua_pushstring(ls, ov.c_str());
         return 1;
     }

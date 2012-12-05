@@ -31,6 +31,7 @@
 #include "itemprop.h"
 #include "items.h"
 #include "korean.h"
+#include "libutil.h"
 #include "menu.h"
 #include "mgen_data.h"
 #include "misc.h"
@@ -45,6 +46,7 @@
 #include "religion.h"
 #include "random.h"
 #include "skills2.h"
+#include "state.h"
 #include "stuff.h"
 #include "transform.h"
 #include "hints.h"
@@ -52,10 +54,8 @@
 
 static int _body_covered();
 
-static mutation_def mut_data[] = {
-
+static const mutation_def mut_data[] = {
 #include "mutation-data.h"
-
 };
 
 static const body_facet_def _body_facets[] =
@@ -75,7 +75,7 @@ equipment_type beastly_slot(int mut)
     {
     case MUT_HORNS:
     case MUT_ANTENNAE:
-    case MUT_BEAK:
+    // Not putting MUT_BEAK here because it doesn't conflict with the other two.
         return EQ_HELMET;
     case MUT_CLAWS:
         return EQ_GLOVES;
@@ -88,12 +88,22 @@ equipment_type beastly_slot(int mut)
     }
 }
 
+enum mut_total
+{
+    MT_GOOD,
+    MT_BAD,
+    MT_ALL,
+    NUM_MT
+};
+
 static int mut_index[NUM_MUTATIONS];
+static int total_rarity[NUM_MT];
 
 void init_mut_index()
 {
     for (int i = 0; i < NUM_MUTATIONS; ++i)
         mut_index[i] = -1;
+    memset(total_rarity, 0, sizeof(total_rarity));
 
     for (unsigned int i = 0; i < ARRAYSZ(mut_data); ++i)
     {
@@ -101,10 +111,12 @@ void init_mut_index()
         ASSERT(mut >= 0 && mut < NUM_MUTATIONS);
         ASSERT(mut_index[mut] == -1);
         mut_index[mut] = i;
+        total_rarity[MT_ALL] += mut_data[i].rarity;
+        total_rarity[mut_data[i].bad ? MT_BAD : MT_GOOD] += mut_data[i].rarity;
     }
 }
 
-static mutation_def* _seek_mutation(mutation_type mut)
+static const mutation_def* _seek_mutation(mutation_type mut)
 {
     ASSERT(mut >= 0 && mut < NUM_MUTATIONS);
     if (mut_index[mut] == -1)
@@ -152,29 +164,6 @@ const mutation_def& get_mutation_def(mutation_type mut)
 {
     ASSERT(is_valid_mutation(mut));
     return (*_seek_mutation(mut));
-}
-
-void fixup_mutations()
-{
-    if (player_genus(GENPC_DRACONIAN))
-    {
-        ASSERT(is_valid_mutation(MUT_STINGER));
-        _seek_mutation(MUT_STINGER)->rarity = 8;
-        ASSERT(is_valid_mutation(MUT_BIG_WINGS));
-        _seek_mutation(MUT_BIG_WINGS)->rarity = 4;
-    }
-
-    if (you.species == SP_NAGA)
-    {
-        ASSERT(is_valid_mutation(MUT_STINGER));
-        _seek_mutation(MUT_STINGER)->rarity = 8;
-    }
-
-    if (you.species == SP_OCTOPODE)
-    {
-        ASSERT(is_valid_mutation(MUT_TENTACLE_SPIKE));
-        _seek_mutation(MUT_TENTACLE_SPIKE)->rarity = 10;
-    }
 }
 
 mutation_activity_type mutation_activity_level(mutation_type mut)
@@ -263,6 +252,7 @@ static int _num_full_suppressed = 0;
 static int _num_part_suppressed = 0;
 static int _num_form_based = 0;
 static int _num_hunger_based = 0;
+static int _num_transient = 0;
 
 // Can the player transform?  Returns true if the player is ever capable
 // of transforming (i.e. not a mummy or ghoul) and either: is transformed
@@ -299,7 +289,7 @@ static bool _player_can_transform()
     return false;
 }
 
-static std::string _annotate_form_based(std::string desc, bool suppressed)
+static string _annotate_form_based(string desc, bool suppressed)
 {
     if (suppressed)
     {
@@ -316,28 +306,29 @@ static std::string _annotate_form_based(std::string desc, bool suppressed)
     return desc + "\n";
 }
 
-static std::string _dragon_abil(std::string desc)
+static string _dragon_abil(string desc)
 {
     const bool supp = form_changed_physiology() && you.form != TRAN_DRAGON;
     return _annotate_form_based(desc, supp);
 }
 
-std::string describe_mutations(bool center_title)
+string describe_mutations(bool center_title)
 {
-    std::string result;
+    string result;
     bool have_any = false;
-    const char *mut_title = "선천적, 불가사의한 & 돌연변이 능력";
-    std::string scale_type = "plain brown";
+    const char *mut_title = _("Innate Abilities, Weirdness & Mutations");
+    string scale_type = "plain brown";
 
     _num_full_suppressed = _num_part_suppressed = 0;
     _num_form_based = _num_hunger_based = 0;
+    _num_transient = 0;
 
     if (center_title)
     {
         int offset = 39 - strwidth(mut_title) / 2;
         if (offset < 0) offset = 0;
 
-        result += std::string(offset, ' ');
+        result += string(offset, ' ');
     }
 
     result += "<white>";
@@ -383,10 +374,10 @@ std::string describe_mutations(bool center_title)
 
         if (you.experience_level > 2)
         {
-            std::ostringstream num;
+            ostringstream num;
             num << you.experience_level/3;
-            const std::string acstr = gettext("Your serpentine skin is tough (AC +")
-                                      + num.str() + ").";
+            const string acstr = _("Your serpentine skin is tough (AC +")
+                                 + num.str() + ").";
 
             result += _annotate_form_based(acstr, player_is_shapechanged());
         }
@@ -403,10 +394,9 @@ std::string describe_mutations(bool center_title)
     case SP_TENGU:
         if (you.experience_level > 4)
         {
-            std::string msg = gettext("You can fly.");
+            string msg = _("You can fly.\n");
             if (you.experience_level > 14)
-                msg = gettext("You can fly continuously.");
-            msg += ".\n";
+                msg = gettext("You can fly continuously.\n");
 
             result += msg;
             have_any = true;
@@ -472,8 +462,10 @@ std::string describe_mutations(bool center_title)
         break;
 
     case SP_BLACK_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe wild blasts of lightning."));
-        scale_type = gettext(M_("glossy black"));
+        result += _dragon_abil(_("You can breathe wild blasts of lightning."));
+        if (you.experience_level >= 14)
+            result += _("You can fly continuously.\n");
+        scale_type = _(M_("glossy black"));
         have_any = true;
         break;
 
@@ -610,11 +602,11 @@ std::string describe_mutations(bool center_title)
     {
         // Draconians are large for the purposes of armour, but only medium for
         // weapons and carrying capacity.
-        std::ostringstream num;
+        ostringstream num;
         num << 4 + you.experience_level / 3
                  + (you.species == SP_GREY_DRACONIAN ? 5 : 0);
 
-        const std::string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
+        const string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
             scale_type.c_str(),
             (you.species == SP_GREY_DRACONIAN ? _(M_("very ")) : ""),
             num.str().c_str());
@@ -660,7 +652,20 @@ std::string describe_mutations(bool center_title)
     // Now add removable mutations.
     for (int i = 0; i < NUM_MUTATIONS; i++)
     {
-        if (you.mutation[i] != 0 && !you.innate_mutations[i])
+        if (you.mutation[i] != 0 && !you.innate_mutations[i]
+                && !you.temp_mutations[i])
+        {
+            mutation_type mut_type = static_cast<mutation_type>(i);
+            result += mutation_name(mut_type, -1, true);
+            result += "\n";
+            have_any = true;
+        }
+    }
+
+    //Finally, temporary mutations.
+    for (int i = 0; i < NUM_MUTATIONS; i++)
+    {
+        if (you.mutation[i] != 0 && you.temp_mutations[i])
         {
             mutation_type mut_type = static_cast<mutation_type>(i);
             result += mutation_name(mut_type, -1, true);
@@ -675,7 +680,7 @@ std::string describe_mutations(bool center_title)
     return result;
 }
 
-static const std::string _vampire_Ascreen_footer = gettext(
+static const string _vampire_Ascreen_footer = _(
     "Press '<w>!</w>'"
 #ifdef USE_TILE_LOCAL
     " or <w>Right-click</w>"
@@ -687,11 +692,11 @@ static void _display_vampire_attributes()
 {
     ASSERT(you.species == SP_VAMPIRE);
 
-    std::string result;
+    string result;
 
 	//화면에 표시되는 글자인듯 한데 일단은 다 변경시켜두어 보겠습니다.
     const int lines = 15;
-    std::string column[lines][7] =
+    string column[lines][7] =
     {
        {"                     ", "<lightgreen>살아있는</lightgreen>      ", "<green>가득찬</green>    ",
         "만족한  ", "<yellow>목마른</yellow>  ", "<yellow>아슬아슬한...</yellow>  ",
@@ -783,9 +788,9 @@ static void _display_vampire_attributes()
 
 void display_mutations()
 {
-    std::string mutation_s = describe_mutations(true);
+    string mutation_s = describe_mutations(true);
 
-    std::string extra = "";
+    string extra = "";
     if (_num_part_suppressed)
         extra += "<brown>()</brown>  : Partially suppressed.\n";
     if (_num_full_suppressed)
@@ -794,6 +799,8 @@ void display_mutations()
         extra += "<yellow>*</yellow>   : Suppressed by some changes of form.\n";
     if (_num_hunger_based)
         extra += "<lightred>+</lightred>   : Suppressed by thirst.\n";
+    if (_num_transient)
+        extra += "<magenta>[]</magenta>   : Transient mutations.";
     if (you.species == SP_VAMPIRE)
     {
         if (!extra.empty())
@@ -891,6 +898,9 @@ static bool _accept_mutation(mutation_type mutat, bool ignore_rarity = false)
     if (!is_valid_mutation(mutat))
         return false;
 
+    if (physiology_mutation_conflict(mutat))
+        return false;
+
     const mutation_def& mdef = get_mutation_def(mutat);
 
     if (you.mutation[mutat] >= mdef.levels)
@@ -967,49 +977,37 @@ static mutation_type _get_random_xom_mutation()
     return mutat;
 }
 
-static bool _mut_matches_class(mutation_type mutclass, const mutation_def& mdef)
-{
-    switch (mutclass)
-    {
-    case RANDOM_MUTATION:
-        return true;
-    case RANDOM_BAD_MUTATION:
-        return mdef.bad;
-    case RANDOM_GOOD_MUTATION:
-        return (!mdef.bad);
-    default:
-		// die("invalid mutation class: %d", mutclass);
-        die("인식 불가능한 변이 등급: %d", mutclass);
-    }
-}
-
 static mutation_type _get_random_mutation(mutation_type mutclass)
 {
-    int cweight = 0;
-    mutation_type chosen = NUM_MUTATIONS;
-    for (unsigned i = 0; i < NUM_MUTATIONS; ++i)
+    mut_total mt;
+    switch (mutclass)
     {
-        const mutation_type curr = static_cast<mutation_type>(i);
-        if (!is_valid_mutation(curr))
-            continue;
-
-        const mutation_def& mdef = get_mutation_def(curr);
-        if (!mdef.rarity)
-            continue;
-
-        if (!_mut_matches_class(mutclass, mdef))
-            continue;
-
-        if (!_accept_mutation(curr, true))
-            continue;
-
-        cweight += mdef.rarity;
-
-        if (x_chance_in_y(mdef.rarity, cweight))
-            chosen = curr;
+    case RANDOM_MUTATION:      mt = MT_ALL; break;
+    case RANDOM_BAD_MUTATION:  mt = MT_BAD; break;
+    case RANDOM_GOOD_MUTATION: mt = MT_GOOD; break;
+    default: die("invalid mutation class: %d", mutclass);
     }
 
-    return chosen;
+    int tries = 0;
+retry:
+
+    int cweight = random2(total_rarity[mt]);
+    for (unsigned i = 0; i < ARRAYSZ(mut_data); ++i)
+    {
+        if (!mut_data[i].bad == mt)
+            continue;
+        if ((cweight -= mut_data[i].rarity) >= 0)
+            continue;
+
+        if (_accept_mutation(mut_data[i].mutation, true))
+            return mut_data[i].mutation;
+
+        if (tries++ > 100)
+            return NUM_MUTATIONS;
+        goto retry;
+    }
+
+    die("mutation total changed???");
 }
 
 // Tries to give you the mutation by deleting a conflicting
@@ -1021,29 +1019,32 @@ static mutation_type _get_random_mutation(mutation_type mutclass)
 // -1 if we should stop processing (failure).
 static int _handle_conflicting_mutations(mutation_type mutation,
                                          bool override,
-                                         const std::string &reason)
+                                         const string &reason,
+                                         bool temp = false)
 {
     const int conflict[][3] = {
-        { MUT_REGENERATION,     MUT_SLOW_METABOLISM,  0},
-        { MUT_REGENERATION,     MUT_SLOW_HEALING,     0},
-        { MUT_ACUTE_VISION,     MUT_BLURRY_VISION,    0},
-        { MUT_FAST,             MUT_SLOW,             0},
-        { MUT_FANGS,            MUT_BEAK,            -1},
-        { MUT_ANTENNAE,         MUT_HORNS,           -1},
-        { MUT_HOOVES,           MUT_TALONS,          -1},
-        { MUT_TRANSLUCENT_SKIN, MUT_CAMOUFLAGE,      -1},
-        { MUT_STRONG,           MUT_WEAK,             1},
-        { MUT_CLEVER,           MUT_DOPEY,            1},
-        { MUT_AGILE,            MUT_CLUMSY,           1},
-        { MUT_STRONG_STIFF,     MUT_FLEXIBLE_WEAK,    1},
-        { MUT_ROBUST,           MUT_FRAIL,            1},
-        { MUT_HIGH_MAGIC,       MUT_LOW_MAGIC,        1},
-        { MUT_CARNIVOROUS,      MUT_HERBIVOROUS,      1},
-        { MUT_SLOW_METABOLISM,  MUT_FAST_METABOLISM,  1},
-        { MUT_REGENERATION,     MUT_SLOW_HEALING,     1},
-        { MUT_ACUTE_VISION,     MUT_BLURRY_VISION,    1},
-        { MUT_FAST,             MUT_SLOW,             1},
-        { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,    -1},
+        { MUT_REGENERATION,        MUT_SLOW_METABOLISM,  0},
+        { MUT_REGENERATION,        MUT_SLOW_HEALING,     0},
+        { MUT_ACUTE_VISION,        MUT_BLURRY_VISION,    0},
+        { MUT_FAST,                MUT_SLOW,             0},
+        { MUT_UNBREATHING,         MUT_BREATHE_FLAMES,   0},
+        { MUT_UNBREATHING,         MUT_BREATHE_POISON,   0},
+        { MUT_FANGS,               MUT_BEAK,            -1},
+        { MUT_ANTENNAE,            MUT_HORNS,           -1},
+        { MUT_HOOVES,              MUT_TALONS,          -1},
+        { MUT_TRANSLUCENT_SKIN,    MUT_CAMOUFLAGE,      -1},
+        { MUT_STRONG,              MUT_WEAK,             1},
+        { MUT_CLEVER,              MUT_DOPEY,            1},
+        { MUT_AGILE,               MUT_CLUMSY,           1},
+        { MUT_STRONG_STIFF,        MUT_FLEXIBLE_WEAK,    1},
+        { MUT_ROBUST,              MUT_FRAIL,            1},
+        { MUT_HIGH_MAGIC,          MUT_LOW_MAGIC,        1},
+        { MUT_CARNIVOROUS,         MUT_HERBIVOROUS,      1},
+        { MUT_SLOW_METABOLISM,     MUT_FAST_METABOLISM,  1},
+        { MUT_REGENERATION,        MUT_SLOW_HEALING,     1},
+        { MUT_ACUTE_VISION,        MUT_BLURRY_VISION,    1},
+        { MUT_FAST,                MUT_SLOW,             1},
+        { MUT_MUTATION_RESISTANCE, MUT_EVOLUTION,       -1},
         };
 
     // If we have one of the pair, delete all levels of the other,
@@ -1079,8 +1080,16 @@ static int _handle_conflicting_mutations(mutation_type mutation,
                 case 1:
                     // If we have one of the pair, delete a level of the
                     // other, and that's it.
-                    delete_mutation(b, reason, true, true);
-                    return 1;     // Nothing more to do.
+                    //Temporary mutations can co-exist with things they would ordinarily conflict with
+                    if (temp)
+                        return 0;       // Allow conflicting transient mutations
+                    else
+                    {
+                        delete_mutation(b, reason, true, true);
+                        return 1;     // Nothing more to do.
+                    }
+
+
                 default:
 			//	die("bad mutation conflict resulution");
 					
@@ -1115,7 +1124,7 @@ bool physiology_mutation_conflict(mutation_type mutat)
     // If demonspawn, and mutat is a scale, see if they were going
     // to get it sometime in the future anyway; otherwise, conflict.
     if (you.species == SP_DEMONSPAWN && _is_covering(mutat)
-        && std::find(_all_scales, _all_scales+ARRAYSZ(_all_scales), mutat) !=
+        && find(_all_scales, _all_scales+ARRAYSZ(_all_scales), mutat) !=
                 _all_scales+ARRAYSZ(_all_scales))
     {
         bool found = false;
@@ -1144,9 +1153,12 @@ bool physiology_mutation_conflict(mutation_type mutat)
     if (you.species != SP_OCTOPODE && mutat == MUT_TENTACLE_SPIKE)
         return true;
 
-    // No bones.
-    if (you.species == SP_OCTOPODE && mutat == MUT_THIN_SKELETAL_STRUCTURE)
+    // No bones for thin skeletal structure, and too squishy for horns.
+    if (you.species == SP_OCTOPODE
+        && (mutat == MUT_THIN_SKELETAL_STRUCTURE || mutat == MUT_HORNS))
+    {
         return true;
+    }
 
     // No feet.
     if (!player_has_feet(false)
@@ -1251,10 +1263,26 @@ static const char* _stat_mut_desc(mutation_type mut, bool gain)
     return stat_desc(stat, positive ? SD_INCREASE : SD_DECREASE);
 }
 
-bool mutate(mutation_type which_mutation, const std::string &reason,
-            bool failMsg,
+static bool _undead_rot()
+{
+    if (you.is_undead == US_SEMI_UNDEAD)
+    {
+        switch (you.hunger_state)
+        {
+        case HS_SATIATED:  return !one_chance_in(3);
+        case HS_FULL:      return coinflip();
+        case HS_VERY_FULL: return one_chance_in(3);
+        case HS_ENGORGED:  return false;
+        default: return true;
+        }
+    }
+
+    return you.is_undead;
+}
+
+bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
             bool force_mutation, bool god_gift, bool stat_gain_potion,
-            bool demonspawn, bool no_rot)
+            bool demonspawn, bool no_rot, bool temporary)
 {
     if (!god_gift)
     {
@@ -1280,10 +1308,10 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         if (!god_gift)
         {
             if ((player_res_mutation_from_item()
-                 && !one_chance_in(10) && !stat_gain_potion)
+                 && !one_chance_in(temporary ? 3 : 10) && !stat_gain_potion)
                 || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                 || (player_mutation_level(MUT_MUTATION_RESISTANCE)
-                    && !one_chance_in(3)))
+                    && !one_chance_in(temporary ? 2 : 3)))
             {
                 if (failMsg)
                 {
@@ -1305,7 +1333,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         }
     }
 
-    bool rotting = you.is_undead;
+    bool rotting = _undead_rot();
 
     if (you.is_undead == US_SEMI_UNDEAD)
     {
@@ -1319,18 +1347,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
             if (you.hunger_state >= HS_SATIATED)
                 rotting = false;
         }
-        else
-        {
-            // Else, chances depend on hunger state.
-            switch (you.hunger_state)
-            {
-            case HS_SATIATED:  rotting = !one_chance_in(3); break;
-            case HS_FULL:      rotting = coinflip();        break;
-            case HS_VERY_FULL: rotting = one_chance_in(3);  break;
-            case HS_ENGORGED:  rotting = false;             break;
-            default: ;
-            }
-        }
+        // Else, chances depend on hunger state.
     }
 
     // Undead bodies don't mutate, they fall apart. -- bwr
@@ -1340,17 +1357,23 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         if (no_rot)
             return false;
 
-        mpr(gettext("Your body decomposes!"), MSGCH_MUTATION);
-
-        if (coinflip())
+        if (temporary)
             lose_stat(STAT_RANDOM, 1, false, reason);
         else
         {
-            ouch(3, NON_MONSTER, KILLED_BY_ROTTING, reason.c_str());
-            rot_hp(roll_dice(1, 3));
+            mpr("Your body decomposes!", MSGCH_MUTATION);
+
+            if (coinflip())
+                lose_stat(STAT_RANDOM, 1, false, reason);
+            else
+            {
+                ouch(3, NON_MONSTER, KILLED_BY_ROTTING, reason.c_str());
+                rot_hp(roll_dice(1, 3));
+            }
+
+            xom_is_stimulated(50);
         }
 
-        xom_is_stimulated(50);
         return true;
     }
 
@@ -1434,7 +1457,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
     }
 
     // God gifts and forced mutations clear away conflicting mutations.
-    int rc = _handle_conflicting_mutations(mutat, god_gift || force_mutation, reason);
+    int rc = _handle_conflicting_mutations(mutat, god_gift || force_mutation, reason, temporary);
     if (rc == 1)
         return true;
     if (rc == -1)
@@ -1550,7 +1573,8 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
     // Amusement value will be 12 * (11-rarity) * Xom's-sense-of-humor.
     xom_is_stimulated(_calc_mutation_amusement_value(mutat));
 
-    take_note(Note(NOTE_GET_MUTATION, mutat, you.mutation[mutat], reason.c_str()));
+    if (!temporary)
+        take_note(Note(NOTE_GET_MUTATION, mutat, you.mutation[mutat], reason.c_str()));
 
 #ifdef USE_TILE_LOCAL
     if (your_talents(false).size() != old_talents)
@@ -1568,12 +1592,16 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
 }
 
 static bool _delete_single_mutation_level(mutation_type mutat,
-                                          const std::string &reason)
+                                          const string &reason,
+                                          bool transient = false)
 {
     if (you.mutation[mutat] == 0)
         return false;
 
     if (you.innate_mutations[mutat] >= you.mutation[mutat])
+        return false;
+
+    if (!transient && (you.temp_mutations[mutat] >= you.mutation[mutat]))
         return false;
 
     const mutation_def& mdef = get_mutation_def(mutat);
@@ -1631,12 +1659,13 @@ static bool _delete_single_mutation_level(mutation_type mutat,
     if (mutat == MUT_LOW_MAGIC || mutat == MUT_HIGH_MAGIC)
         calc_mp();
 
-    take_note(Note(NOTE_LOSE_MUTATION, mutat, you.mutation[mutat], reason.c_str()));
+    if (!transient)
+        take_note(Note(NOTE_LOSE_MUTATION, mutat, you.mutation[mutat], reason.c_str()));
 
     return true;
 }
 
-bool delete_mutation(mutation_type which_mutation, const std::string &reason,
+bool delete_mutation(mutation_type which_mutation, const string &reason,
                      bool failMsg,
                      bool force_mutation, bool god_gift,
                      bool disallow_mismatch)
@@ -1672,6 +1701,9 @@ bool delete_mutation(mutation_type which_mutation, const std::string &reason,
                 return false;
             }
         }
+
+        if (_undead_rot())
+            return false;
     }
 
     if (which_mutation == RANDOM_MUTATION
@@ -1737,7 +1769,7 @@ bool delete_mutation(mutation_type which_mutation, const std::string &reason,
     return _delete_single_mutation_level(mutat, reason);
 }
 
-bool delete_all_mutations(const std::string &reason)
+bool delete_all_mutations(const string &reason)
 {
     for (int i = 0; i < NUM_MUTATIONS; ++i)
     {
@@ -1748,9 +1780,34 @@ bool delete_all_mutations(const std::string &reason)
     return !how_mutated();
 }
 
+bool delete_temp_mutation()
+{
+    if (you.attribute[ATTR_TEMP_MUTATIONS] > 0)
+    {
+        mutation_type mutat;
+
+        while (true)
+        {
+            mutat = static_cast<mutation_type>(random2(NUM_MUTATIONS));
+
+            if (you.temp_mutations[mutat] > 0)
+                break;
+        }
+
+        if (_delete_single_mutation_level(mutat, "temp mutation expiry", true))
+        {
+            --you.temp_mutations[mutat];
+            --you.attribute[ATTR_TEMP_MUTATIONS];
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // Return a string describing the mutation.
 // If colour is true, also add the colour annotation.
-std::string mutation_name(mutation_type mut, int level, bool colour)
+string mutation_name(mutation_type mut, int level, bool colour)
 {
     // Ignore the player's forms, etc.
     const bool ignore_player = (level != -1);
@@ -1761,6 +1818,8 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         || active == MUTACT_HUNGER && lowered);
     const bool fully_inactive = (active == MUTACT_INACTIVE);
 
+    const bool temporary   = (you.temp_mutations[mut] > 0);
+
     // level == -1 means default action of current level
     if (level == -1)
     {
@@ -1770,7 +1829,7 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
             level = you.mutation[mut];
     }
 
-    std::string result;
+    string result;
     bool innate_upgrade = (mut == MUT_BREATHE_POISON && you.species == SP_NAGA);
 
     const mutation_def& mdef = get_mutation_def(mut);
@@ -1779,14 +1838,14 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         || mut == MUT_AGILE || mut == MUT_WEAK
         || mut == MUT_DOPEY || mut == MUT_CLUMSY)
     {
-        std::ostringstream ostr;
-        ostr << gettext(mdef.have[0]) << level << ").";
+        ostringstream ostr;
+        ostr << _(mdef.have[0]) << level << ").";
         result = ostr.str();
     }
     else if (mut == MUT_ICEMAIL)
     {
-        std::ostringstream ostr;
-        ostr << gettext(mdef.have[0]) << player_icemail_armour_class() << ").";
+        ostringstream ostr;
+        ostr << _(mdef.have[0]) << player_icemail_armour_class() << ").";
         result = ostr.str();
     }
     else if (mut == MUT_DEFORMED && is_useless_skill(SK_ARMOUR))
@@ -1821,6 +1880,12 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         }
     }
 
+    if (temporary)
+    {
+        result = "[" + result + "]";
+        ++_num_transient;
+    }
+
     if (colour)
     {
         const char* colourname = (mdef.bad ? "red" : "lightgrey");
@@ -1843,11 +1908,11 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
             if (fully_inactive)
                 colourname = "darkgrey";
             else if (partially_active)
-                colourname = demonspawn ? "yellow"   : "blue";
+                colourname = demonspawn ? "yellow"    : "blue";
             else if (extra)
-                colourname = demonspawn ? "lightmagenta" : "cyan";
+                colourname = demonspawn ? "lightcyan" : "cyan";
             else
-                colourname = demonspawn ? "magenta"      : "lightblue";
+                colourname = demonspawn ? "cyan"      : "lightblue";
         }
         else if (fully_inactive)
             colourname = "darkgrey";
@@ -1857,9 +1922,12 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
             colourname = "lightgreen";
         else if (_is_slime_mutation(mut))
             colourname = "green";
+        else if (temporary)
+            colourname = (you.mutation[mut] > you.temp_mutations[mut]) ?
+                         "lightmagenta" : "magenta";
 
         // Build the result
-        std::ostringstream ostr;
+        ostringstream ostr;
         ostr << '<' << colourname << '>' << result
              << "</" << colourname << '>';
         result = ostr.str();
@@ -1951,9 +2019,9 @@ static bool _works_at_tier(const facet_def& facet, int tier)
 
 #define MUTS_IN_SLOT ARRAYSZ(((facet_def*)0)->muts)
 static bool _slot_is_unique(const mutation_type mut[MUTS_IN_SLOT],
-                            std::set<const facet_def *> facets_used)
+                            set<const facet_def *> facets_used)
 {
-    std::set<const facet_def *>::const_iterator iter;
+    set<const facet_def *>::const_iterator iter;
     equipment_type eq[MUTS_IN_SLOT];
 
     int k = 0;
@@ -1988,7 +2056,7 @@ static bool _slot_is_unique(const mutation_type mut[MUTS_IN_SLOT],
     return true;
 }
 
-static std::vector<demon_mutation_info> _select_ds_mutations()
+static vector<demon_mutation_info> _select_ds_mutations()
 {
     int ct_of_tier[] = { 1, 1, 2, 1 };
     // 1 in 10 chance to create a monstrous set
@@ -1999,7 +2067,7 @@ static std::vector<demon_mutation_info> _select_ds_mutations()
     }
 
 try_again:
-    std::vector<demon_mutation_info> ret;
+    vector<demon_mutation_info> ret;
 
     ret.clear();
     int absfacet = 0;
@@ -2008,7 +2076,7 @@ try_again:
     int fire_elemental = 0;
     int cloud_producing = 0;
 
-    std::set<const facet_def *> facets_used;
+    set<const facet_def *> facets_used;
 
     for (int tier = ARRAYSZ(ct_of_tier) - 1; tier >= 0; --tier)
     {
@@ -2017,9 +2085,7 @@ try_again:
             const facet_def* next_facet;
 
             do
-            {
                 next_facet = &RANDOM_ELEMENT(_demon_facets);
-            }
             while (!_works_at_tier(*next_facet, tier)
                    || facets_used.find(next_facet) != facets_used.end()
                    || !_slot_is_unique(next_facet->muts, facets_used));
@@ -2062,22 +2128,20 @@ try_again:
     return ret;
 }
 
-static std::vector<mutation_type>
-_order_ds_mutations(std::vector<demon_mutation_info> muts)
+static vector<mutation_type>
+_order_ds_mutations(vector<demon_mutation_info> muts)
 {
-    std::vector<mutation_type> out;
-    std::vector<int> times;
+    vector<mutation_type> out;
+    vector<int> times;
     FixedVector<int, 1000> time_slots;
     time_slots.init(-1);
     for (unsigned int i = 0; i < muts.size(); i++)
     {
-        int first = std::max(0, muts[i].when);
-        int last = std::min(100, muts[i].when + 100);
+        int first = max(0, muts[i].when);
+        int last = min(100, muts[i].when + 100);
         int k;
         do
-        {
             k = 10 * first + random2(10 * (last - first));
-        }
         while (time_slots[k] >= 0);
         time_slots[k] = i;
         times.push_back(k);
@@ -2106,14 +2170,14 @@ _order_ds_mutations(std::vector<demon_mutation_info> muts)
     return out;
 }
 
-static std::vector<player::demon_trait>
-_schedule_ds_mutations(std::vector<mutation_type> muts)
+static vector<player::demon_trait>
+_schedule_ds_mutations(vector<mutation_type> muts)
 {
-    std::list<mutation_type> muts_left(muts.begin(), muts.end());
+    list<mutation_type> muts_left(muts.begin(), muts.end());
 
-    std::list<int> slots_left;
+    list<int> slots_left;
 
-    std::vector<player::demon_trait> out;
+    vector<player::demon_trait> out;
 
     for (int level = 2; level <= 27; ++level)
     {
@@ -2153,13 +2217,12 @@ void roll_demonspawn_mutations()
                          _select_ds_mutations()));
 }
 
-bool perma_mutate(mutation_type which_mut, int how_much,
-                  const std::string &reason)
+bool perma_mutate(mutation_type which_mut, int how_much, const string &reason)
 {
     ASSERT(is_valid_mutation(which_mut));
 
     int cap = get_mutation_def(which_mut).levels;
-    how_much = std::min(how_much, cap);
+    how_much = min(how_much, cap);
 
     int rc = 1;
     // clear out conflicting mutations
@@ -2183,7 +2246,44 @@ bool perma_mutate(mutation_type which_mut, int how_much,
     return (levels > 0);
 }
 
-//변이 정도 관련? 인듯
+bool temp_mutate(mutation_type which_mut, const string &reason)
+{
+    switch (which_mut)
+    {
+    case RANDOM_MUTATION:
+    case RANDOM_GOOD_MUTATION:
+    case RANDOM_BAD_MUTATION:
+        which_mut = _get_random_mutation(which_mut);
+        break;
+    case RANDOM_XOM_MUTATION:
+        which_mut = _get_random_xom_mutation();
+        break;
+    case RANDOM_SLIME_MUTATION:
+        which_mut = _get_random_slime_mutation();
+        break;
+    default:
+        break;
+    }
+
+    if (which_mut == NUM_MUTATIONS)
+        return false;
+
+    int old_level = you.mutation[which_mut];
+
+    if (mutate(which_mut, reason, false, false, false, false, false, false, true))
+    {
+        // Only increment temp mutation tracking if we actually gained a mutation.
+        if (you.mutation[which_mut] > old_level)
+        {
+            you.temp_mutations[which_mut]++;
+            you.attribute[ATTR_TEMP_MUTATIONS]++;
+            you.increase_duration(DUR_TEMP_MUTATIONS, 20 + roll_dice(3, 10), 50);
+        }
+        return true;
+    }
+
+    return false;
+}
 
 int how_mutated(bool all, bool levels)
 {
@@ -2305,10 +2405,10 @@ void check_antennae_detect()
 {
     int radius = player_mutation_level(MUT_ANTENNAE) * 2;
     if (you.religion == GOD_ASHENZARI && !player_under_penance())
-        radius = std::max(radius, you.piety / 20);
+        radius = max(radius, you.piety / 20);
     if (radius <= 0)
         return;
-    radius = std::min(radius, LOS_RADIUS);
+    radius = min(radius, LOS_RADIUS);
 
     for (radius_iterator ri(you.pos(), radius, C_ROUND); ri; ++ri)
     {
@@ -2345,7 +2445,7 @@ void check_antennae_detect()
                     continue;
                 }
 
-                for (radius_iterator ri2(mon->pos(), 2, C_SQUARE); ri2; ++ri2)
+                for (radius_iterator ri2(mon->pos(), 2, C_ROUND); ri2; ++ri2)
                     if (you.see_cell(*ri2))
                     {
                         mon->flags |= MF_SENSED;
@@ -2389,11 +2489,11 @@ int handle_pbd_corpses(bool do_rot)
 int augmentation_amount()
 {
     int amount = 0;
-    const int level = player_mutation_level(MUT_AUGMENTATION) + 1;
+    const int level = player_mutation_level(MUT_AUGMENTATION);
 
-    for (int i = 1; i < level; ++i)
+    for (int i = 0; i < level; ++i)
     {
-        if (you.hp <= (i * you.hp_max) / level)
+        if (you.hp >= ((i + level) * you.hp_max) / (2 * level))
             amount++;
     }
 

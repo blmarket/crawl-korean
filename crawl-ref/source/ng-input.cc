@@ -5,18 +5,20 @@
 
 #include "cio.h"
 #include "files.h"
-#include "menu.h"
+#include "format.h"
+#include "libutil.h"
 #include "options.h"
 #include "stuff.h"
 #include "unicode.h"
+#include "version.h"
 
-extern std::string init_file_error; // defined in main.cc
+extern string init_file_error; // defined in main.cc
 
 // Eventually, this should be something more grand. {dlb}
 void opening_screen(void)
 {
-    std::string msg =
-    gettext("<yellow>Hello, welcome to " CRAWL " ") + Version::Long() + gettext("!</yellow>\n"
+    string msg =
+    _("<yellow>Hello, welcome to " CRAWL " ") + Version::Long() + _("!</yellow>\n"
     "<brown>(c) Copyright 1997-2002 Linley Henzell, "
     "2002-2012 Crawl DevTeam\n"
     "Read the instructions for legal details."
@@ -63,7 +65,7 @@ static void _show_name_prompt(int where)
     textcolor(LIGHTGREY);
 }
 
-bool is_good_name(const std::string& name, bool blankOK, bool verbose)
+bool is_good_name(const string& name, bool blankOK, bool verbose)
 {
     // verification begins here {dlb}:
     if (name.empty())
@@ -79,7 +81,7 @@ bool is_good_name(const std::string& name, bool blankOK, bool verbose)
     return validate_player_name(name, verbose);
 }
 
-static bool _read_player_name(std::string &name)
+static bool _read_player_name(string &name)
 {
     const int name_x = wherex(), name_y = wherey();
     char buf[kNameLen + 1]; // FIXME: make line_reader handle widths
@@ -127,7 +129,7 @@ void enter_player_name(newgame_def *ng)
     while (!is_good_name(ng->name, false, true));
 }
 
-bool validate_player_name(const std::string &name, bool verbose)
+bool validate_player_name(const string &name, bool verbose)
 {
 #if defined(TARGET_OS_WINDOWS)
     // Quick check for CON -- blows up real good under DOS/Windows.

@@ -7,6 +7,7 @@
 #include "colour.h"
 #include "coord.h"
 #include "coordit.h"
+#include "dungeon.h"
 #include "env.h"
 #include "fprop.h"
 #include "items.h"
@@ -15,6 +16,7 @@
 #include "options.h"
 #include "player.h"
 #include "showsymb.h"
+#include "state.h"
 #include "stuff.h"
 #include "terrain.h"
 #include "tiledef-dngn.h"
@@ -82,13 +84,6 @@ void tile_default_flv(branch_type br, tile_flavour &flv)
         flv.wall  = TILE_WALL_NORMAL;
         flv.floor = TILE_FLOOR_NORMAL;
         return;
-
-#if TAG_MAJOR_VERSION == 33
-    case BRANCH_HIVE:
-        flv.wall  = TILE_WALL_WAX;
-        flv.floor = TILE_FLOOR_ORC;
-        return;
-#endif
 
     case BRANCH_VAULTS:
         flv.wall  = TILE_WALL_VAULT;
@@ -199,7 +194,7 @@ void tile_default_flv(branch_type br, tile_flavour &flv)
         switch (random2(6))
         {
         default:
-        case 0:
+        case 0: flv.wall = TILE_WALL_ABYSS; break;
         case 1:
         case 2:
         case 3: flv.wall = TILE_WALL_PEBBLE
@@ -312,6 +307,38 @@ void tile_init_flavour()
         tile_init_flavour(*ri);
 }
 
+static void _get_dungeon_wall_tiles_by_depth(int depth, vector<tileidx_t>& t)
+{
+    if (crawl_state.game_is_sprint() || crawl_state.game_is_zotdef() || crawl_state.game_is_arena())
+    {
+        t.push_back(TILE_WALL_BRICK_DARK_4);
+        t.push_back(TILE_WALL_BRICK_DARK_5);
+        t.push_back(TILE_WALL_BRICK_DARK_4_TORCH);
+        return;
+    }
+    if (depth <= 6)
+        t.push_back(TILE_WALL_BRICK_DARK_1);
+    if (depth > 3 && depth <= 9)
+    {
+        t.push_back(TILE_WALL_BRICK_DARK_2);
+        t.push_back(TILE_WALL_BRICK_DARK_2_TORCH);
+    }
+    if (depth > 6 && depth <= 14)
+        t.push_back(TILE_WALL_BRICK_DARK_3);
+    if (depth > 9 && depth <= 20)
+    {
+        t.push_back(TILE_WALL_BRICK_DARK_4);
+        t.push_back(TILE_WALL_BRICK_DARK_4_TORCH);
+    }
+    if (depth > 14)
+        t.push_back(TILE_WALL_BRICK_DARK_5);
+    if (depth > 20)
+    {
+        t.push_back(TILE_WALL_BRICK_DARK_6);
+        t.push_back(TILE_WALL_BRICK_DARK_6_TORCH);
+    }
+}
+
 static tileidx_t _pick_random_dngn_tile(tileidx_t idx, int value = -1)
 {
     ASSERT(idx >= 0 && idx < TILE_DNGN_MAX);
@@ -332,6 +359,38 @@ static tileidx_t _pick_random_dngn_tile(tileidx_t idx, int value = -1)
     return idx;
 }
 
+static tileidx_t _pick_random_dngn_tile_multi(vector<tileidx_t> candidates, int value = -1)
+{
+    ASSERT(candidates.size() > 0);
+
+    int total = 0;
+    for (unsigned int i = 0; i < candidates.size(); ++i)
+    {
+        const unsigned int count = tile_dngn_count(candidates[i]);
+        total += tile_dngn_probs(candidates[i] + count - 1);
+    }
+    int rand = (value == -1 ? random2(total) : value % total);
+
+    for (unsigned int i = 0; i < candidates.size(); ++i)
+    {
+        const unsigned int count = tile_dngn_count(candidates[i]);
+        for (unsigned int j = 0; j < count; ++j)
+        {
+            if (rand < tile_dngn_probs(candidates[i] + j))
+                return candidates[i] + j;
+        }
+        rand -= tile_dngn_probs(candidates[i] + count - 1);
+    }
+
+    // Should never reach this place
+    ASSERT(false);
+}
+
+static bool _same_door_at(dungeon_feature_type feat, const coord_def &gc)
+{
+    return (grd(gc) == feat) || map_masked(gc, MMT_WAS_DOOR_MIMIC);
+}
+
 void tile_init_flavour(const coord_def &gc)
 {
     if (!map_bounds(gc))
@@ -348,11 +407,20 @@ void tile_init_flavour(const coord_def &gc)
 
     if (!env.tile_flv(gc).wall)
     {
-        tileidx_t wall_base = env.tile_default.wall;
-        int colour = env.grid_colours(gc);
-        if (colour)
-            wall_base = tile_dngn_coloured(wall_base, colour);
-        env.tile_flv(gc).wall = _pick_random_dngn_tile(wall_base);
+        if (player_in_branch(BRANCH_MAIN_DUNGEON) && env.tile_default.wall == TILE_WALL_NORMAL)
+        {
+            vector<tileidx_t> tile_candidates;
+            _get_dungeon_wall_tiles_by_depth(you.depth, tile_candidates);
+            env.tile_flv(gc).wall = _pick_random_dngn_tile_multi(tile_candidates);
+        }
+        else
+        {
+            tileidx_t wall_base = env.tile_default.wall;
+            int colour = env.grid_colours(gc);
+            if (colour)
+                wall_base = tile_dngn_coloured(wall_base, colour);
+            env.tile_flv(gc).wall = _pick_random_dngn_tile(wall_base);
+        }
     }
 
     if (feat_is_stone_stair(grd(gc)) && player_in_branch(BRANCH_SHOALS))
@@ -364,23 +432,27 @@ void tile_init_flavour(const coord_def &gc)
 
     if (feat_is_door(grd(gc)))
     {
-        // Check for horizontal gates.
+        // Check for gates.
+        bool door_left  = _same_door_at(grd(gc), coord_def(gc.x - 1, gc.y));
+        bool door_right = _same_door_at(grd(gc), coord_def(gc.x + 1, gc.y));
+        bool door_up    = _same_door_at(grd(gc), coord_def(gc.x, gc.y - 1));
+        bool door_down  = _same_door_at(grd(gc), coord_def(gc.x, gc.y + 1));
 
-        const coord_def left(gc.x - 1, gc.y);
-        const coord_def right(gc.x + 1, gc.y);
-
-        bool door_left  = (grd(left) == grd(gc));
-        bool door_right = (grd(right) == grd(gc));
-
-        if (door_left || door_right)
+        if (door_left || door_right || door_up || door_down)
         {
             tileidx_t target;
             if (door_left && door_right)
                 target = TILE_DNGN_GATE_CLOSED_MIDDLE;
+            else if (door_up && door_down)
+                target = TILE_DNGN_VGATE_CLOSED_MIDDLE;
             else if (door_left)
                 target = TILE_DNGN_GATE_CLOSED_RIGHT;
-            else
+            else if (door_right)
                 target = TILE_DNGN_GATE_CLOSED_LEFT;
+            else if (door_up)
+                target = TILE_DNGN_VGATE_CLOSED_DOWN;
+            else
+                target = TILE_DNGN_VGATE_CLOSED_UP;
 
             // NOTE: This requires that closed gates and open gates
             // are positioned in the tile set relative to their
@@ -389,22 +461,6 @@ void tile_init_flavour(const coord_def &gc)
         }
         else
             env.tile_flv(gc).special = 0;
-    }
-    else if (feat_is_secret_door(grd(gc)))
-    {
-        env.tile_flv(gc).special = 0;
-
-        if (env.tile_flv(gc).feat == 0)
-        {
-            // If surrounding tiles from a secret door are using tile
-            // overrides, then use that tile for the secret door.
-            coord_def door;
-            dungeon_feature_type door_feat;
-            find_secret_door_info(gc, &door_feat, &door);
-
-            if (env.tile_flv(door).feat)
-                env.tile_flv(gc).feat = env.tile_flv(door).feat;
-        }
     }
     else if (!env.tile_flv(gc).special)
         env.tile_flv(gc).special = random2(256);
@@ -603,9 +659,7 @@ void tile_floor_halo(dungeon_feature_type target, tileidx_t tile)
             else if (d_spc && r_spc)
                 env.tile_flv[x][y].floor = tile + SPECIAL_NW;
             else
-            {
                 env.tile_flv[x][y].floor = tile + SPECIAL_FULL;
-            }
         }
     }
 
@@ -676,10 +730,7 @@ static tileidx_t _get_floor_bg(const coord_def& gc)
     {
         bg = tileidx_feature(gc);
 
-        dungeon_feature_type feat = grid_appearance(gc);
-        if (feat == DNGN_DETECTED_SECRET_DOOR)
-            bg |= TILE_FLAG_WAS_SECRET;
-        else if (is_unknown_stair(gc))
+        if (is_unknown_stair(gc))
             bg |= TILE_FLAG_NEW_STAIR;
     }
 
@@ -700,6 +751,19 @@ void tile_draw_floor()
             env.tile_bg(ep) = bg;
             env.tile_fg(ep) = 0;
         }
+}
+
+void tile_clear_map(const coord_def& gc)
+{
+    env.tile_bk_fg(gc) = 0;
+    tiles.update_minimap(gc);
+}
+
+void tile_forget_map(const coord_def &gc)
+{
+    env.tile_bk_fg(gc) = 0;
+    env.tile_bk_bg(gc) = 0;
+    tiles.update_minimap(gc);
 }
 
 static void _tile_place_item(const coord_def &gc, const item_info &item,
@@ -903,28 +967,21 @@ void tile_draw_map_cell(const coord_def& gc, bool foreground_only)
 
     const map_cell& cell = env.map_knowledge(gc);
 
-    switch (get_cell_show_class(cell))
-    {
-    default:
-    case SH_NOTHING:
-    case SH_FEATURE:
-        env.tile_bk_fg(gc) = 0;
-        if (cell.item())
-            _tile_place_item_marker(gc, *cell.item());
-        break;
-    case SH_ITEM:
-        _tile_place_item(gc, *cell.item(), (cell.flags & MAP_MORE_ITEMS) != 0);
-        break;
-    case SH_CLOUD:
-        _tile_place_cloud(gc, *cell.cloudinfo());
-        break;
-    case SH_INVIS_EXPOSED:
+    if (cell.invisible_monster())
         _tile_place_invisible_monster(gc);
-        break;
-    case SH_MONSTER:
+    else if (cell.monsterinfo())
         _tile_place_monster(gc, *cell.monsterinfo());
-        break;
+    else if (cell.cloud() != CLOUD_NONE)
+        _tile_place_cloud(gc, *cell.cloudinfo());
+    else if (cell.item())
+    {
+        if (feat_is_stair(cell.feat()))
+            _tile_place_item_marker(gc, *cell.item());
+        else
+            _tile_place_item(gc, *cell.item(), (cell.flags & MAP_MORE_ITEMS) != 0);
     }
+    else
+        env.tile_bk_fg(gc) = 0;
 }
 
 void tile_wizmap_terrain(const coord_def &gc)
@@ -932,16 +989,21 @@ void tile_wizmap_terrain(const coord_def &gc)
     env.tile_bk_bg(gc) = tileidx_feature(gc);
 }
 
+static bool _is_torch(tileidx_t basetile)
+{
+    return (basetile == TILE_WALL_BRICK_DARK_2_TORCH
+            || basetile == TILE_WALL_BRICK_DARK_4_TORCH
+            || basetile == TILE_WALL_BRICK_DARK_6_TORCH);
+}
+
 // Updates the "flavour" of tiles that are animated.
 // Unfortunately, these are all hard-coded for now.
 void tile_apply_animations(tileidx_t bg, tile_flavour *flv)
 {
+#ifndef USE_TILE_WEB
     tileidx_t bg_idx = bg & TILE_FLAG_MASK;
-    if (bg_idx == TILE_DNGN_PORTAL_WIZARD_LAB
-        || bg_idx == TILE_DNGN_ALTAR_CHEIBRIADOS)
-    {
+    if (bg_idx == TILE_DNGN_PORTAL_WIZARD_LAB)
         flv->special = (flv->special + 1) % tile_dngn_count(bg_idx);
-    }
     else if (bg_idx == TILE_DNGN_LAVA)
     {
         // Lava tiles are four sets of four tiles (the second and fourth
@@ -952,14 +1014,13 @@ void tile_apply_animations(tileidx_t bg, tile_flavour *flv)
     }
     else if (bg_idx > TILE_DNGN_LAVA && bg_idx < TILE_BLOOD)
         flv->special = random2(256);
-    else if (bg_idx == TILE_WALL_NORMAL
-             && flv->wall >= TILE_WALL_BRICK_TORCH_START
-             && flv->wall <= TILE_WALL_BRICK_TORCH_END)
+    else if (bg_idx == TILE_WALL_NORMAL)
     {
-        flv->wall += 1;
-        if (flv->wall > TILE_WALL_BRICK_TORCH_END)
-            flv->wall = TILE_WALL_BRICK_TORCH_START;
+        tileidx_t basetile = tile_dngn_basetile(flv->wall);
+        if (_is_torch(basetile))
+            flv->wall = basetile + (flv->wall - basetile + 1) % tile_dngn_count(basetile);
     }
+#endif
 }
 
 static bool _suppress_blood(const map_cell& mc)
@@ -988,21 +1049,21 @@ static bool _suppress_blood(const map_cell& mc)
 
 static bool _suppress_blood(tileidx_t bg_idx)
 {
-    return (bg_idx >= TILE_WALL_BRICK_TORCH_START
-            && bg_idx <= TILE_WALL_BRICK_TORCH_END);
+    tileidx_t basetile = tile_dngn_basetile(bg_idx);
+    return _is_torch(basetile);
 }
 
 // Specifically for vault-overwritten doors. We have three "sets" of tiles that
 // can be dealt with. The tile sets should be 2, 3, 8 and 9 respectively. They
 // are:
 //  2. Closed, open.
-//  3. Detected, closed, open.
+//  3. Runed, closed, open.
 //  8. Closed, open, gate left closed, gate middle closed, gate right closed,
 //     gate left open, gate middle open, gate right open.
-//  9. Detected, closed, open, gate left closed, gate middle closed, gate right
+//  9. Runed, closed, open, gate left closed, gate middle closed, gate right
 //     closed, gate left open, gate middle open, gate right open.
-static int _get_door_offset(tileidx_t base_tile, bool opened = false,
-                            bool detected = false, int gateway_type = 0)
+static int _get_door_offset(tileidx_t base_tile, bool opened, bool runed,
+                            int gateway_type)
 {
     int count = tile_dngn_count(base_tile);
     if (count == 1)
@@ -1014,20 +1075,22 @@ static int _get_door_offset(tileidx_t base_tile, bool opened = false,
     switch (count)
     {
     case 2:
-        return ((opened) ? 1: 0);
+        ASSERT(!runed);
+        return opened ? 1: 0;
     case 3:
         if (opened)
             return 2;
-        else if (detected)
+        else if (runed)
             return 0;
         else
             return 1;
     case 8:
+        ASSERT(!runed);
         // But is BASE_TILE for others.
         offset = 0;
         break;
     case 9:
-        // It's located at BASE_TILE+1 for tile sets with detected doors
+        // It's located at BASE_TILE+1 for tile sets with runed doors
         offset = 1;
         break;
     default:
@@ -1036,18 +1099,17 @@ static int _get_door_offset(tileidx_t base_tile, bool opened = false,
     }
 
     // If we've reached this point, we're dealing with a gate.
-    // Don't believe gateways deal differently with detection.
-    if (detected)
+    if (runed)
         return 0;
 
-    if (!opened && !detected && gateway_type == 0)
+    if (!opened && !runed && gateway_type == 0)
         return 0;
 
     return offset + gateway_type;
 }
 
-static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
-                                     const coord_def &gc)
+void apply_variations(const tile_flavour &flv, tileidx_t *bg,
+                      const coord_def &gc)
 {
     tileidx_t orig = (*bg) & TILE_FLAG_MASK;
     tileidx_t flag = (*bg) & (~TILE_FLAG_MASK);
@@ -1122,31 +1184,25 @@ static inline void _apply_variations(const tile_flavour &flv, tileidx_t *bg,
         *bg = flv.floor;
     else if (orig == TILE_WALL_NORMAL)
         *bg = flv.wall;
-    else if ((orig == TILE_DNGN_CLOSED_DOOR || orig == TILE_DNGN_OPEN_DOOR)
-             && !mimic)
+    else if ((orig == TILE_DNGN_CLOSED_DOOR || orig == TILE_DNGN_OPEN_DOOR
+              || orig == TILE_DNGN_RUNED_DOOR) && !mimic)
     {
         tileidx_t override = flv.feat;
         /*
-          If the override is not a door tile (i.e., between
-          TILE_DNGN_DETECTED_SECRET_DOOR and TILE_DNGN_ORCISH_IDOL),
-          it's assumed to be for an undetected secret door and not
-          used here.
+          Was: secret doors.  Is it ever needed anymore?
          */
         if (is_door_tile(override))
         {
-            // XXX: This doesn't deal properly with detected doors.
             bool opened = (orig == TILE_DNGN_OPEN_DOOR);
-            int offset = _get_door_offset(override, opened, false, flv.special);
+            bool runed = (orig == TILE_DNGN_RUNED_DOOR);
+            int offset = _get_door_offset(override, opened, runed, flv.special);
             *bg = override + offset;
         }
         else
-            *bg = orig + std::min((int)flv.special, 3);
+            *bg = orig + min((int)flv.special, 6);
     }
-    else if (orig == TILE_DNGN_PORTAL_WIZARD_LAB
-             || orig == TILE_DNGN_ALTAR_CHEIBRIADOS)
-    {
+    else if (orig == TILE_DNGN_PORTAL_WIZARD_LAB)
         *bg = orig + flv.special % tile_dngn_count(orig);
-    }
     else if (orig < TILE_DNGN_MAX)
         *bg = _pick_random_dngn_tile(orig, flv.special);
 
@@ -1188,12 +1244,14 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
     if (!map_bounds(gc))
         return;
 
-    _apply_variations(env.tile_flv(gc), &cell.bg, gc);
+    apply_variations(env.tile_flv(gc), &cell.bg, gc);
 
     const map_cell& mc = env.map_knowledge(gc);
 
     bool print_blood = true;
-    if (mc.flags & MAP_HALOED)
+    if (mc.flags & MAP_UMBRAED)
+        cell.halo = HALO_UMBRA;
+    else if (mc.flags & MAP_HALOED)
     {
         monster_info* mon = mc.monsterinfo();
         if (mon && !mons_class_flag(mon->type, M_NO_EXP_GAIN))
@@ -1202,12 +1260,8 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
             print_blood = false;
         }
         else
-        {
             cell.halo = HALO_RANGE;
-        }
     }
-    else if (mc.flags & MAP_UMBRAED)
-        cell.halo = HALO_UMBRA;
     else
         cell.halo = HALO_NONE;
 
@@ -1254,6 +1308,12 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
     if (mc.flags & MAP_ORB_HALOED)
         cell.orb_glow = get_orb_phase(gc) ? 2 : 1;
 
+    if (mc.flags & MAP_QUAD_HALOED)
+        cell.quad_glow = true;
+
+    if (mc.flags & MAP_DISJUNCT)
+        cell.disjunct = true;
+
     if (Options.show_travel_trail)
     {
         int tt_idx = travel_trail_index(gc);
@@ -1271,18 +1331,5 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
             }
         }
     }
-}
-
-void tile_clear_map(const coord_def& gc)
-{
-    env.tile_bk_fg(gc) = 0;
-    tiles.update_minimap(gc);
-}
-
-void tile_forget_map(const coord_def &gc)
-{
-    env.tile_bk_fg(gc) = 0;
-    env.tile_bk_bg(gc) = 0;
-    tiles.update_minimap(gc);
 }
 #endif

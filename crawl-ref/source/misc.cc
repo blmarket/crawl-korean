@@ -23,15 +23,15 @@
 
 #include "abyss.h"
 #include "areas.h"
+#include "artefact.h"
 #include "clua.h"
 #include "cloud.h"
 #include "coordit.h"
 #include "database.h"
 #include "delay.h"
+#include "describe.h"
 #include "dgn-shoals.h"
-#include "directn.h"
 #include "dgnevent.h"
-#include "directn.h"
 #include "env.h"
 #include "exercise.h"
 #include "feature.h"
@@ -72,6 +72,7 @@
 #include "spl-clouds.h"
 #include "state.h"
 #include "stuff.h"
+#include "target.h"
 #include "terrain.h"
 #include "transform.h"
 #include "traps.h"
@@ -89,7 +90,7 @@ static void _create_monster_hide(const item_def corpse)
     if (corpse.props.exists("never_hide"))
         return;
 
-    const monster_type mons_class = corpse.mon_type;
+    monster_type mons_class = corpse.mon_type;
 
     int o = get_mitm_slot();
     if (o == NON_ITEM)
@@ -107,6 +108,8 @@ static void _create_monster_hide(const item_def corpse)
     item.colour    = mons_class_colour(mons_class);
 
     // These values cannot be set by a reasonable formula: {dlb}
+    if (mons_genus(mons_class) == MONS_TROLL)
+        mons_class = MONS_TROLL;
     switch (mons_class)
     {
     case MONS_DRAGON:         item.sub_type = ARM_FIRE_DRAGON_HIDE;    break;
@@ -118,11 +121,8 @@ static void _create_monster_hide(const item_def corpse)
     case MONS_GOLDEN_DRAGON:  item.sub_type = ARM_GOLD_DRAGON_HIDE;    break;
     case MONS_SWAMP_DRAGON:   item.sub_type = ARM_SWAMP_DRAGON_HIDE;   break;
     case MONS_PEARL_DRAGON:   item.sub_type = ARM_PEARL_DRAGON_HIDE;   break;
-    case MONS_SHEEP:
-    case MONS_YAK:
     default:
-        item.sub_type = ARM_ANIMAL_SKIN;
-        break;
+        die("an unknown hide drop");
     }
 
     const monster_type montype =
@@ -284,14 +284,14 @@ void init_stack_blood_potions(item_def &stack, int age)
 // Sort a CrawlVector<int>, should probably be done properly with templates.
 static void _int_sort(CrawlVector &vec)
 {
-    std::vector<int> help;
+    vector<int> help;
     while (!vec.empty())
     {
         help.push_back(vec[vec.size()-1].get_int());
         vec.pop_back();
     }
 
-    std::sort(help.begin(), help.end());
+    sort(help.begin(), help.end());
 
     while (!help.empty())
     {
@@ -336,7 +336,7 @@ void maybe_coagulate_blood_potions_floor(int obj)
     // First count whether coagulating is even necessary.
     int rot_count  = 0;
     int coag_count = 0;
-    std::vector<int> age_timer;
+    vector<int> age_timer;
     int current;
     while (!timer.empty())
     {
@@ -480,7 +480,7 @@ void maybe_coagulate_blood_potions_floor(int obj)
     _compare_blood_quantity(blood, timer.size());
 }
 
-static std::string _get_desc_quantity(const int quant, const int total)
+static string _get_desc_quantity(const int quant, const int total)
 {
     if (total == quant)
         return P_("potion_rot", "Your");
@@ -497,7 +497,7 @@ static std::string _get_desc_quantity(const int quant, const int total)
 // Prints messages for blood potions coagulating in inventory (coagulate = true)
 // or whenever potions are cursed into potions of decay (coagulate = false).
 static void _potion_stack_changed_message(item_def &potion, int num_changed,
-                                          std::string verb)
+                                          string verb)
 {
     ASSERT(num_changed > 0);
 
@@ -534,7 +534,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
     // First count whether coagulating is even necessary.
     int rot_count  = 0;
     int coag_count = 0;
-    std::vector<int> age_timer;
+    vector<int> age_timer;
     int current;
     const int size = timer.size();
     for (int i = 0; i < size; i++)
@@ -809,7 +809,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
 }
 
 // Removes the oldest timer of a stack of blood potions.
-// Mostly used for (q)uaff, (f)ire, and Evaporate.
+// Mostly used for (q)uaff and (f)ire.
 int remove_oldest_blood_potion(item_def &stack)
 {
     ASSERT(stack.defined());
@@ -1058,11 +1058,11 @@ static void _orient_wall_blood(const coord_def& where, coord_def from,
     for (orth_adjacent_iterator ai(where); ai; ++ai)
     {
         if (in_bounds(*ai) && !cell_is_solid(*ai) && ld.see_cell(*ai)
-            && (distance(*ai, from) < dist
-                || distance(*ai, from) == dist && coinflip()))
+            && (distance2(*ai, from) < dist
+                || distance2(*ai, from) == dist && coinflip()))
         {
             closer = *ai;
-            dist = distance(*ai, from);
+            dist = distance2(*ai, from);
         }
     }
 
@@ -1207,7 +1207,7 @@ static void _spatter_neighbours(const coord_def& where, int chance,
     }
 }
 
-void generate_random_blood_spatter_on_level(const map_mask *susceptible_area)
+void generate_random_blood_spatter_on_level(const map_bitmask *susceptible_area)
 {
     const int max_cluster = 7 + random2(9);
 
@@ -1248,61 +1248,57 @@ void generate_random_blood_spatter_on_level(const map_mask *susceptible_area)
     }
 }
 
-void search_around(bool only_adjacent)
+void search_around()
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    const int skill = you.traps_skill();
+    int skill = you.skill(SK_TRAPS, 240);
+    if (you.religion == GOD_ASHENZARI && !player_under_penance())
+        skill += you.piety * 16;
+
+    int farskill = skill;
+    if (int mut = you.mutation[MUT_BLURRY_VISION])
+        farskill >>= mut;
+    if (you.duration[DUR_SWIFTNESS])
+        farskill = farskill * 3 / 4;
     // Traps and doors stepdown skill:
     // skill/(2x-1) for squares at distance x
-    int max_dist = (skill + 1) / 2;
+    int max_dist = div_rand_round(farskill, 32);
     if (max_dist > 5)
         max_dist = 5;
-    if (only_adjacent && max_dist > 1 || max_dist < 1)
+    if (max_dist < 1)
         max_dist = 1;
 
     for (radius_iterator ri(you.pos(), max_dist); ri; ++ri)
     {
         // Must have LOS, with no translucent walls in the way.
-        if (you.see_cell_no_trans(*ri))
+        if (grd(*ri) != DNGN_UNDISCOVERED_TRAP || !you.see_cell_no_trans(*ri))
+            continue;
+
+        int dist = ri->range(you.pos());
+
+        // Own square is not excluded; may be flying.
+        // XXX: Currently, flying over a trap will always detect it.
+
+        int effective = (dist <= 1) ? skill : farskill - 256 * dist;
+
+        trap_def* ptrap = find_trap(*ri);
+        if (!ptrap)
         {
-            // Maybe we want distance() instead of feat_distance()?
-            int dist = grid_distance(*ri, you.pos());
+            // Maybe we shouldn't kill the trap for debugging
+            // purposes - oh well.
+            grd(*ri) = DNGN_FLOOR;
+            dprf("You found a buggy trap! It vanishes!");
+            continue;
+        }
 
-            // Don't exclude own square; may be levitating.
-            // XXX: Currently, levitating over a trap will always detect it.
-            if (dist == 0)
-                ++dist;
-
-            // Making this harsher by removing the old +1...
-            int effective = skill / (2*dist - 1);
-
-            if (grd(*ri) == DNGN_SECRET_DOOR && x_chance_in_y(effective+1, 17))
-            {
-                mpr(gettext("You found a secret door!"));
-                reveal_secret_door(*ri);
-                practise(EX_FOUND_SECRET_DOOR);
-            }
-            else if (grd(*ri) == DNGN_UNDISCOVERED_TRAP
-                     && x_chance_in_y(effective + 1, 17))
-            {
-                trap_def* ptrap = find_trap(*ri);
-                if (ptrap)
-                {
-                    ptrap->reveal();
-                    mprf(gettext("You found %s trap!"),
-                         ptrap->name(DESC_A).c_str());
-                    learned_something_new(HINT_SEEN_TRAP, *ri);
-                    practise(EX_TRAP_FOUND);
-                }
-                else
-                {
-                    // Maybe we shouldn't kill the trap for debugging
-                    // purposes - oh well.
-                    grd(*ri) = DNGN_FLOOR;
-                    dprf("You found a buggy trap! It vanishes!");
-                }
-            }
+        if (effective > ptrap->skill_rnd * 10 - 500)
+        {
+            ptrap->reveal();
+            mprf(_("You found %s trap!"),
+                 ptrap->name(true, DESC_A).c_str());
+            learned_something_new(HINT_SEEN_TRAP, *ri);
+            practise(EX_TRAP_FOUND);
         }
     }
 }
@@ -1357,22 +1353,22 @@ void trackers_init_new_level(bool transit)
     travel_init_new_level();
 }
 
-std::string weird_glowing_colour()
+string weird_glowing_colour()
 {
     return getMiscString("glowing_colour_name");
 }
 
-std::string weird_writing()
+string weird_writing()
 {
     return getMiscString("writing_name");
 }
 
-std::string weird_smell()
+string weird_smell()
 {
     return getMiscString("smell_name");
 }
 
-std::string weird_sound()
+string weird_sound()
 {
     return getMiscString("sound_name");
 }
@@ -1588,20 +1584,20 @@ bool mons_is_safe(const monster* mon, const bool want_move,
 // require_visible Require that monsters be visible to the player
 // range           search radius (defaults: LOS)
 //
-std::vector<monster* > get_nearby_monsters(bool want_move,
-                                           bool just_check,
-                                           bool dangerous_only,
-                                           bool consider_user_options,
-                                           bool require_visible,
-                                           bool check_dist,
-                                           int range)
+vector<monster* > get_nearby_monsters(bool want_move,
+                                      bool just_check,
+                                      bool dangerous_only,
+                                      bool consider_user_options,
+                                      bool require_visible,
+                                      bool check_dist,
+                                      int range)
 {
     ASSERT(!crawl_state.game_is_arena());
 
     if (range == -1)
         range = LOS_RADIUS;
 
-    std::vector<monster* > mons;
+    vector<monster* > mons;
 
     // Sweep every visible square within range.
     for (radius_iterator ri(you.pos(), range); ri; ++ri)
@@ -1662,19 +1658,18 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
     }
 
     // Monster check.
-    std::vector<monster* > visible =
+    vector<monster* > visible =
         get_nearby_monsters(want_move, !announce, true, true, true,
                             check_dist, range);
 
     // Announce the presence of monsters (Eidolos).
-    std::string msg;
+    string msg;
     if (visible.size() == 1)
     {
         const monster& m = *visible[0];
-        const std::string monname = mons_is_mimic(m.type)
-                                  ? gettext(M_("A mimic"))
-                                  : m.name(DESC_A);
-        msg = make_stringf(gettext("%s is nearby!"), monname.c_str());
+        const string monname = mons_is_mimic(m.type) ? _(M_("A mimic"))
+                                                     : m.name(DESC_A);
+        msg = make_stringf(_("%s is nearby!"), monname.c_str());
     }
     else if (visible.size() > 1)
         msg = gettext("There are monsters nearby!");
@@ -1712,7 +1707,7 @@ static const char *shop_types[] = {
     "general"
 };
 
-int str_to_shoptype(const std::string &s)
+int str_to_shoptype(const string &s)
 {
     if (s == "random" || s == "any")
         return SHOP_RANDOM;
@@ -1723,6 +1718,13 @@ int str_to_shoptype(const std::string &s)
             return i;
     }
     return -1;
+}
+
+void list_shop_types()
+{
+    mprnojoin("Available shop types: ");
+    for (unsigned i = 0; i < ARRAYSZ(shop_types); ++i)
+        mpr_nocap(shop_types[i]);
 }
 
 // General threat = sum_of_logexpervalues_of_nearby_unfriendly_monsters.
@@ -1787,7 +1789,7 @@ static void _drop_tomb(const coord_def& pos, bool premature)
             (env.markers.property_at(*ai, MAT_ANY, "tomb") == "card"
              || env.markers.property_at(*ai, MAT_ANY, "tomb") == "monster"))
         {
-            std::vector<map_marker*> markers = env.markers.get_markers_at(*ai);
+            vector<map_marker*> markers = env.markers.get_markers_at(*ai);
             for (int i = 0, size = markers.size(); i < size; ++i)
             {
                 map_marker *mark = markers[i];
@@ -1813,7 +1815,7 @@ static void _drop_tomb(const coord_def& pos, bool premature)
         {
             zin = true;
 
-            std::vector<map_marker*> markers = env.markers.get_markers_at(*ai);
+            vector<map_marker*> markers = env.markers.get_markers_at(*ai);
             for (int i = 0, size = markers.size(); i < size; ++i)
             {
                 map_marker *mark = markers[i];
@@ -1858,11 +1860,11 @@ static void _drop_tomb(const coord_def& pos, bool premature)
     }
 }
 
-static std::vector<map_malign_gateway_marker*> _get_malign_gateways()
+static vector<map_malign_gateway_marker*> _get_malign_gateways()
 {
-    std::vector<map_malign_gateway_marker*> mm_markers;
+    vector<map_malign_gateway_marker*> mm_markers;
 
-    std::vector<map_marker*> markers = env.markers.get_all(MAT_MALIGN);
+    vector<map_marker*> markers = env.markers.get_all(MAT_MALIGN);
     for (int i = 0, size = markers.size(); i < size; ++i)
     {
         map_marker *mark = markers[i];
@@ -1887,7 +1889,7 @@ void timeout_malign_gateways(int duration)
     // Passing 0 should allow us to just touch the gateway and see
     // if it should decay. This, in theory, should resolve the one
     // turn delay between it timing out and being recastable. -due
-    std::vector<map_malign_gateway_marker*> markers = _get_malign_gateways();
+    vector<map_malign_gateway_marker*> markers = _get_malign_gateways();
 
     for (int i = 0, size = markers.size(); i < size; ++i)
     {
@@ -1950,7 +1952,7 @@ void timeout_tombs(int duration)
     if (!duration)
         return;
 
-    std::vector<map_marker*> markers = env.markers.get_all(MAT_TOMB);
+    vector<map_marker*> markers = env.markers.get_all(MAT_TOMB);
 
     for (int i = 0, size = markers.size(); i < size; ++i)
     {
@@ -2017,7 +2019,7 @@ void bring_to_safety()
             || monster_at(pos)
             || env.pgrid(pos) & FPROP_NO_TELE_INTO
             || crawl_state.game_is_sprint()
-               && distance(pos, you.pos()) > dist_range(10))
+               && distance2(pos, you.pos()) > dist_range(10))
         {
             tries++;
             continue;
@@ -2075,7 +2077,7 @@ void revive()
     you.clear_fearmongers();
     you.attribute[ATTR_DIVINE_DEATH_CHANNEL] = 0;
     you.attribute[ATTR_INVIS_UNCANCELLABLE] = 0;
-    you.attribute[ATTR_LEV_UNCANCELLABLE] = 0;
+    you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 0;
     if (you.duration[DUR_SCRYING])
         you.xray_vision = false;
 
@@ -2116,7 +2118,7 @@ void revive()
 // Living breathing dungeon stuff.
 //
 
-static std::vector<coord_def> sfx_seeds;
+static vector<coord_def> sfx_seeds;
 
 void setup_environment_effects()
 {
@@ -2233,28 +2235,7 @@ int speed_to_duration(int speed)
     return div_rand_round(100, speed);
 }
 
-void reveal_secret_door(const coord_def& p)
-{
-    ASSERT(grd(p) == DNGN_SECRET_DOOR);
-
-    const std::string door_open_prompt =
-        env.markers.property_at(p, MAT_ANY, "door_open_prompt");
-
-    // Former secret doors become known but are still hidden to monsters
-    // until opened. Transparent secret doors are opened to not change
-    // LOS, unless they have a warning prompt.
-    dungeon_feature_type door = grid_secret_door_appearance(p);
-    if (feat_is_opaque(door) || !door_open_prompt.empty())
-        grd(p) = DNGN_DETECTED_SECRET_DOOR;
-    else
-        grd(p) = DNGN_OPEN_DOOR;
-
-    set_terrain_changed(p);
-    viewwindow();
-    learned_something_new(HINT_FOUND_SECRET_DOOR, p);
-}
-
-bool bad_attack(const monster *mon, std::string& adj, std::string& suffix)
+bool bad_attack(const monster *mon, string& adj, string& suffix)
 {
     ASSERT(!crawl_state.game_is_arena());
     if (!you.can_see(mon))
@@ -2298,18 +2279,18 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     if (you.confused() || !you.can_see(mon))
         return false;
 
-    std::string adj, suffix;
+    string adj, suffix;
     if (!bad_attack(mon, adj, suffix))
         return false;
 
     // Listed in the form: "your rat", "Blork the orc".
-    std::string mon_name = mon->name(DESC_PLAIN);
+    string mon_name = mon->name(DESC_PLAIN);
     if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
         mon_name.erase(0, 4);
     if (adj.find("your"))
         adj = "the " + adj;
     mon_name = adj + mon_name;
-    std::string verb;
+    string verb;
     if (beam_attack)
     {
         verb = "fire ";
@@ -2333,16 +2314,25 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     snprintf(info, INFO_SIZE, "Really %s%s%s?",
              verb.c_str(), mon_name.c_str(), suffix.c_str());
 
-    return !yesno(info, false, 'n');
+    if (yesno(info, false, 'n'))
+        return false;
+    else
+    {
+        canned_msg(MSG_OK);
+        return true;
+    }
 }
 
-bool stop_attack_prompt(targetter &hitfunc, std::string verb,
+bool stop_attack_prompt(targetter &hitfunc, string verb,
                         bool (*affects)(const actor *victim))
 {
+    if (crawl_state.which_god_acting() == GOD_XOM)
+        return false;
+
     if (you.confused())
         return false;
 
-    std::string adj, suffix;
+    string adj, suffix;
     counted_monster_list victims;
     for (distance_iterator di(hitfunc.origin, false, true, LOS_RADIUS); di; ++di)
     {
@@ -2353,7 +2343,7 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb,
             continue;
         if (affects && !affects(mon))
             continue;
-        std::string adjn, suffixn;
+        string adjn, suffixn;
         if (bad_attack(mon, adjn, suffixn))
         {
             if (victims.empty()) // record the adjectives for the first listed
@@ -2366,7 +2356,7 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb,
         return false;
 
     // Listed in the form: "your rat", "Blork the orc".
-    std::string mon_name = victims.describe(DESC_PLAIN);
+    string mon_name = victims.describe(DESC_PLAIN);
     if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
         mon_name.erase(0, 4);
     if (adj.find("your"))
@@ -2376,7 +2366,13 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb,
     snprintf(info, INFO_SIZE, gettext("Really %s %s%s?"),
              pgettext_expr("verb", verb.c_str()), mon_name.c_str(), suffix.c_str());
 
-    return !yesno(info, false, 'n');
+    if (yesno(info, false, 'n'))
+        return false;
+    else
+    {
+        canned_msg(MSG_OK);
+        return true;
+    }
 }
 
 bool is_orckind(const actor *act)
@@ -2415,9 +2411,6 @@ bool is_dragonkind(const actor *act)
 
     // Else the actor is a monster.
     const monster* mon = act->as_monster();
-
-    if (mon->type == MONS_SERPENT_OF_HELL)
-        return true;
 
     if (mons_is_zombified(mon)
         && (mons_genus(mon->base_monster) == MONS_DRAGON
@@ -2644,6 +2637,8 @@ void maybe_id_resist(beam_type flavour)
 
 bool maybe_id_weapon(item_def &item, const char *msg)
 {
+    // Do we need to identify an artefact brand?
+    bool do_art_brand = false;
     iflags_t id = 0;
 
     // Weapons you have wielded or know enough about.
@@ -2662,14 +2657,19 @@ bool maybe_id_weapon(item_def &item, const char *msg)
         else if (is_throwable(&you, item)
                  && you.skill(SK_THROWING, 20, true) > min_skill20)
         {
-            id = ISFLAG_KNOW_PLUSES | ISFLAG_KNOW_TYPE | ISFLAG_KNOW_CURSE;
+            id = ISFLAG_KNOW_PLUSES | ISFLAG_KNOW_CURSE;
+            if (is_artefact(item))
+                do_art_brand = !artefact_known_wpn_property(item, ARTP_BRAND);
+            else
+                id |= ISFLAG_KNOW_TYPE;
         }
     }
 
-    if ((item.flags | id) != item.flags)
+    if ((item.flags | id) != item.flags || do_art_brand)
     {
         set_ident_flags(item, id);
-        add_autoinscription(item);
+        if (do_art_brand)
+            artefact_wpn_learn_prop(item, ARTP_BRAND);
         if (msg)
             mprf("%s%s", msg, item.name(true, DESC_INVENTORY_EQUIP).c_str());
         you.wield_change = true;
@@ -2731,12 +2731,11 @@ void entered_malign_portal(actor* act)
 
 void handle_real_time(time_t t)
 {
-    you.real_time += std::min<time_t>(t - you.last_keypress_time,
-                                      IDLE_TIME_CLAMP);
+    you.real_time += min<time_t>(t - you.last_keypress_time, IDLE_TIME_CLAMP);
     you.last_keypress_time = t;
 }
 
-std::string part_stack_string(const int num, const int total)
+string part_stack_string(const int num, const int total)
 {
 #ifdef KR
     if (num == total)
@@ -2747,8 +2746,8 @@ std::string part_stack_string(const int num, const int total)
     if (num == total)
         return "Your";
 
-    std::string ret  = uppercase_first(number_in_words(num));
-                ret += " of your";
+    string ret  = uppercase_first(number_in_words(num));
+           ret += " of your";
 
     return ret;
 }
@@ -2765,7 +2764,7 @@ unsigned int breakpoint_rank(int val, const int breakpoints[],
 
 void counted_monster_list::add(const monster* mons)
 {
-    const std::string name = mons->name(DESC_PLAIN);
+    const string name = mons->name(DESC_PLAIN);
     for (counted_list::iterator i = list.begin(); i != list.end(); ++i)
     {
         if (i->first->name(DESC_PLAIN) == name)
@@ -2785,9 +2784,9 @@ int counted_monster_list::count()
     return nmons;
 }
 
-std::string counted_monster_list::describe(description_level_type desc)
+string counted_monster_list::describe(description_level_type desc)
 {
-    std::string out;
+    string out;
 
     for (counted_list::const_iterator i = list.begin(); i != list.end();)
     {

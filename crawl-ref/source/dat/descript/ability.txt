@@ -58,6 +58,8 @@ Turn into a speedy vampire bat. In bat form, you can neither interact with
 items in any form (except picking them up or dropping them), nor cast spells.
 Note that Bat Form will decrease your current Strength while increasing your
 Dexterity. Thus, you won't be able to change form if your Strength is too low.
+The flight is magically augmented, so you will stay in the air even if the
+weight of your possessions or some disability would normally drag you down.
 %%%%
 Bottle Blood
 
@@ -72,7 +74,9 @@ Spit Acid
 # Both for Fly I and II.
 Fly
 
-공중으로 날아오른다.
+Start flying. During flight you can safely cross water and similar obstacles.
+Be warned, though, that flight may time out at inopportune moments and cause
+you to fall to your death.
 %%%%
 Hellfire
 
@@ -119,16 +123,17 @@ Turn Visible
 
 투명화를 해제한다.
 %%%%
-Evoke Levitation
+Evoke Flight
 
-Start levitating. During levitation you can safely cross water and similar
-obstacles. Be warned, though, that levitation may time out at inopportune
-moments and cause you to fall to your death. While levitating, you cannot
-interact with items on the floor or pick them up.
+<Fly>
 %%%%
-Stop Levitating
+Stop Flying
 
-공중부양을 해제하고, 땅으로 내려온다.
+Stop flying.
+%%%%
+Evoke Fog
+
+Release a thick cloud of fog to obscure vision.
 %%%%
 End Transformation
 
@@ -517,6 +522,10 @@ anger said god).
 Request Jelly
 
 중립적인 젤리를 소환한다. 이들은 주변을 배회하며, 아이템을 먹는다.
+%%%%
+Jelly Paralyse
+
+Pray to temporarily halt your slimes' item consumption.
 %%%%
 Slimify
 

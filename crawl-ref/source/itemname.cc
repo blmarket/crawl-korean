@@ -17,15 +17,18 @@
 #include "externs.h"
 #include "options.h"
 
+#include "art-enum.h"
 #include "artefact.h"
 #include "colour.h"
 #include "decks.h"
+#include "describe.h"
 #include "food.h"
 #include "goditem.h"
 #include "invent.h"
 #include "item_use.h"
 #include "itemprop.h"
 #include "items.h"
+#include "libutil.h"
 #include "makeitem.h"
 #include "mon-util.h"
 #include "notes.h"
@@ -65,8 +68,8 @@ bool is_vowel(const ucs_t chr)
 
 // quant_name is useful since it prints out a different number of items
 // than the item actually contains.
-std::string quant_name(const item_def &item, int quant,
-                       description_level_type des, bool terse)
+string quant_name(const item_def &item, int quant,
+                  description_level_type des, bool terse)
 {
     // item_name now requires a "real" item, so we'll mangle a tmp
     item_def tmp = item;
@@ -75,12 +78,9 @@ std::string quant_name(const item_def &item, int quant,
     return tmp.name(true, des, terse);
 }
 
-std::string item_def::name(bool allow_translate,
-                           description_level_type descrip,
-                           bool terse, bool ident,
-                           bool with_inscription,
-                           bool quantity_in_words,
-                           iflags_t ignore_flags) const
+string item_def::name(bool allow_translate, description_level_type descrip, bool terse, bool ident,
+                      bool with_inscription, bool quantity_in_words,
+                      iflags_t ignore_flags) const
 {
     if (crawl_state.game_is_arena())
     {
@@ -93,10 +93,10 @@ std::string item_def::name(bool allow_translate,
 
     translate_flag = allow_translate;
 
-    std::ostringstream buff;
+    ostringstream buff;
 
-    const std::string auxname = name_aux(descrip, terse, ident,
-                                         with_inscription, ignore_flags);
+    const string auxname = name_aux(descrip, terse, ident, with_inscription,
+                                    ignore_flags);
 
     const bool startvowel     = is_vowel(auxname[0]);
 
@@ -211,11 +211,14 @@ std::string item_def::name(bool allow_translate,
                 switch (eq)
                 {
                 case EQ_WEAPON:
-                    if (base_type == OBJ_WEAPONS || base_type == OBJ_STAVES)
+                    if (base_type == OBJ_WEAPONS || base_type == OBJ_STAVES
+                        || base_type == OBJ_RODS)
+                    {
                         buff << " (weapon)";
+                    }
                     else if (you.species == SP_FELID)
                         buff << " (in mouth)";
-                    else // including rods -- intentional?
+                    else
                         buff << " (in " << you.hand_name(false) << ")";
                     break;
                 case EQ_CLOAK:
@@ -268,7 +271,7 @@ std::string item_def::name(bool allow_translate,
     if (descrip != DESC_BASENAME && descrip != DESC_DBNAME && with_inscription)
     {
         const bool  tried  =  !ident && !equipped && item_type_tried(*this);
-        std::string tried_str;
+        string tried_str;
 
         if (tried)
         {
@@ -305,10 +308,17 @@ std::string item_def::name(bool allow_translate,
                 tried_str = "tried";
         }
 
-        std::vector<std::string> insparts;
+        vector<string> insparts;
 
         if (tried)
             insparts.push_back(tried_str);
+
+        if (is_artefact(*this))
+        {
+            string part = artefact_inscription(*this);
+            if (!part.empty())
+                insparts.push_back(part);
+        }
 
         if (with_inscription && !(inscription.empty()))
             insparts.push_back(inscription);
@@ -317,7 +327,7 @@ std::string item_def::name(bool allow_translate,
         {
             buff << " {";
 
-            std::vector<std::string>::iterator iter = insparts.begin();
+            vector<string>::iterator iter = insparts.begin();
 
             for (;;)
             {
@@ -483,7 +493,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
         case SPARM_DEXTERITY:         return M_("dexterity");
         case SPARM_INTELLIGENCE:      return M_("intelligence");
         case SPARM_PONDEROUSNESS:     return M_("ponderousness");
-        case SPARM_LEVITATION:        return M_("levitation");
+        case SPARM_FLYING:            return M_("flying");
         case SPARM_MAGIC_RESISTANCE:  return M_("magic resistance");
         case SPARM_PROTECTION:        return M_("protection");
         case SPARM_STEALTH:           return M_("stealth");
@@ -516,7 +526,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
         case SPARM_DEXTERITY:         return " {Dex+3}";
         case SPARM_INTELLIGENCE:      return " {Int+3}";
         case SPARM_PONDEROUSNESS:     return " {ponderous}";
-        case SPARM_LEVITATION:        return " {Lev}";
+        case SPARM_FLYING:            return " {Fly}";
         case SPARM_MAGIC_RESISTANCE:  return " {MR}";
         case SPARM_PROTECTION:        return " {AC+3}";
         case SPARM_STEALTH:           return " {Stlth+}";
@@ -617,7 +627,7 @@ static const char* potion_type_name(int potiontype)
     case POT_GAIN_STRENGTH:     return M_("gain strength");
     case POT_GAIN_DEXTERITY:    return M_("gain dexterity");
     case POT_GAIN_INTELLIGENCE: return M_("gain intelligence");
-    case POT_LEVITATION:        return M_("levitation");
+    case POT_FLIGHT:            return M_("flight");
     case POT_POISON:            return M_("poison");
     case POT_SLOWING:           return M_("slowing");
     case POT_PARALYSIS:         return M_("paralysis");
@@ -626,7 +636,6 @@ static const char* potion_type_name(int potiontype)
     case POT_PORRIDGE:          return M_("porridge");
     case POT_DEGENERATION:      return M_("degeneration");
     case POT_DECAY:             return M_("decay");
-    case POT_WATER:             return M_("water");
     case POT_EXPERIENCE:        return M_("experience");
     case POT_MAGIC:             return M_("magic");
     case POT_RESTORE_ABILITIES: return M_("restore abilities");
@@ -698,7 +707,7 @@ static const char* jewellery_type_name(int jeweltype)
     case RING_INTELLIGENCE:          return M_("ring of intelligence");
     case RING_WIZARDRY:              return M_("ring of wizardry");
     case RING_MAGICAL_POWER:         return M_("ring of magical power");
-    case RING_LEVITATION:            return M_("ring of levitation");
+    case RING_FLIGHT:                return M_("ring of flight");
     case RING_LIFE_PROTECTION:       return M_("ring of life protection");
     case RING_PROTECTION_FROM_MAGIC: return M_("ring of protection from magic");
     case RING_FIRE:                  return M_("ring of fire");
@@ -710,7 +719,9 @@ static const char* jewellery_type_name(int jeweltype)
     case AMU_RESIST_CORROSION:  return M_("amulet of resist corrosion");
     case AMU_THE_GOURMAND:      return M_("amulet of the gourmand");
     case AMU_CONSERVATION:      return M_("amulet of conservation");
+#if TAG_MAJOR_VERSION == 34
     case AMU_CONTROLLED_FLIGHT: return M_("amulet of controlled flight");
+#endif
     case AMU_INACCURACY:        return M_("amulet of inaccuracy");
     case AMU_RESIST_MUTATION:   return M_("amulet of resist mutation");
     case AMU_GUARDIAN_SPIRIT:   return M_("amulet of guardian spirit");
@@ -751,15 +762,30 @@ static const char* ring_primary_string(int p)
     case 2:  return M_("golden");
     case 3:  return M_("iron");
     case 4:  return M_("steel");
-    case 5:  return M_("bronze");
+    case 5:  return M_("tourmaline");
     case 6:  return M_("brass");
     case 7:  return M_("copper");
     case 8:  return M_("granite");
     case 9:  return M_("ivory");
-    case 10: return M_("bone");
+    case 10: return M_("ruby");
     case 11: return M_("marble");
     case 12: return M_("jade");
     case 13: return M_("glass");
+    case 14: return M_("agate");
+    case 15: return M_("bone");
+    case 16: return M_("diamond");
+    case 17: return M_("emerald");
+    case 18: return M_("peridot");
+    case 19: return M_("garnet");
+    case 20: return M_("opal");
+    case 21: return M_("pearl");
+    case 22: return M_("coral");
+    case 23: return M_("sapphire");
+    case 24: return M_("cabochon");
+    case 25: return M_("gilded");
+    case 26: return M_("onyx");
+    case 27: return M_("bronze");
+    case 28: return M_("moonstone");
     default: return M_("buggy");
     }
 }
@@ -803,6 +829,21 @@ static const char* amulet_primary_string(int p)
     case 11: return M_("platinum");
     case 12: return M_("jade");
     case 13: return M_("fluorescent");
+    case 14: return M_("crystal");
+    case 15: return M_("cameo");
+    case 16: return M_("pearl");
+    case 17: return M_("blue");
+    case 18: return M_("peridot");
+    case 19: return M_("jasper");
+    case 20: return M_("diamond");
+    case 21: return M_("malachite");
+    case 22: return M_("steel");
+    case 23: return M_("cabochon");
+    case 24: return M_("silver");
+    case 25: return M_("soapstone");
+    case 26: return M_("lapis lazuli");
+    case 27: return M_("filigree");
+    case 28: return M_("beryl");
     default: return M_("buggy");
     }
 }
@@ -869,18 +910,17 @@ static const char* misc_type_name(int type, bool known)
     case MISC_DECK_OF_CHANGES:     return M_("deck of changes");
     case MISC_DECK_OF_DEFENCE:     return M_("deck of defence");
 
-    case MISC_CRYSTAL_BALL_OF_ENERGY:   return M_("crystal ball of energy");
-    case MISC_BOX_OF_BEASTS:            return M_("box of beasts");
-    case MISC_EMPTY_EBONY_CASKET:       return M_("empty ebony casket");
-    case MISC_AIR_ELEMENTAL_FAN:        return M_("air elemental fan");
-    case MISC_LAMP_OF_FIRE:             return M_("lamp of fire");
-    case MISC_LANTERN_OF_SHADOWS:       return M_("lantern of shadows");
-    case MISC_HORN_OF_GERYON:           return M_("horn of Geryon");
-    case MISC_DISC_OF_STORMS:           return M_("disc of storms");
-    case MISC_BOTTLED_EFREET:           return M_("bottled efreet");
-    case MISC_STONE_OF_EARTH_ELEMENTALS:
-        return M_("stone of earth elementals");
-    case MISC_QUAD_DAMAGE:              return M_("quad damage");
+    case MISC_CRYSTAL_BALL_OF_ENERGY:    return M_("crystal ball of energy");
+    case MISC_BOX_OF_BEASTS:             return M_("box of beasts");
+    case MISC_EMPTY_EBONY_CASKET:        return M_("empty ebony casket");
+    case MISC_AIR_ELEMENTAL_FAN:         return M_("air elemental fan");
+    case MISC_LAMP_OF_FIRE:              return M_("lamp of fire");
+    case MISC_LANTERN_OF_SHADOWS:        return M_("lantern of shadows");
+    case MISC_HORN_OF_GERYON:            return M_("horn of Geryon");
+    case MISC_DISC_OF_STORMS:            return M_("disc of storms");
+    case MISC_BOTTLED_EFREET:            return M_("bottled efreet");
+    case MISC_STONE_OF_EARTH_ELEMENTALS: return M_("stone of earth elementals");
+    case MISC_QUAD_DAMAGE:               return M_("quad damage");
 
     case MISC_RUNE_OF_ZOT:
     default:
@@ -960,7 +1000,9 @@ static const char* _book_type_name(int booktype)
     case BOOK_POWER:                  return M_("Power");
     case BOOK_CANTRIPS:               return M_("Cantrips");
     case BOOK_PARTY_TRICKS:           return M_("Party Tricks");
+#if TAG_MAJOR_VERSION == 34
     case BOOK_STALKING:               return M_("Stalking");
+#endif
     case BOOK_DEBILITATION:           return M_("Debilitation");
     case BOOK_DRAGON:                 return M_("the Dragon");
     case BOOK_BURGLARY:               return M_("Burglary");
@@ -1015,7 +1057,9 @@ static const char* staff_type_name(int stafftype)
     case STAFF_ENERGY:      return M_("energy");
     case STAFF_DEATH:       return M_("death");
     case STAFF_CONJURATION: return M_("conjuration");
+#if TAG_MAJOR_VERSION == 34
     case STAFF_ENCHANTMENT: return M_("enchantment");
+#endif
     case STAFF_AIR:         return M_("air");
     case STAFF_EARTH:       return M_("earth");
     case STAFF_SUMMONING:   return M_("summoning");
@@ -1028,17 +1072,17 @@ static const char* rod_type_name(int type)
 {
     switch ((rod_type)type)
     {
-    case ROD_SUMMONING:       return M_("summoning");
+    case ROD_SWARM:           return M_("the swarm");
     case ROD_WARDING:         return M_("warding");
     case ROD_LIGHTNING:       return M_("lightning");
     case ROD_STRIKING:        return M_("striking");
     case ROD_DEMONOLOGY:      return M_("demonology");
     case ROD_VENOM:           return M_("venom");
+    case ROD_INACCURACY:      return M_("inaccuracy");
 
     case ROD_DESTRUCTION_I:
     case ROD_DESTRUCTION_II:
     case ROD_DESTRUCTION_III:
-    case ROD_DESTRUCTION_IV:
                               return M_("destruction");
 
     default: return "bugginess";
@@ -1060,12 +1104,12 @@ const char* racial_description_string(const item_def& item, bool terse)
     }
 }
 
-std::string base_type_string(const item_def &item, bool known)
+string base_type_string(const item_def &item, bool known)
 {
     return base_type_string(item.base_type, known);
 }
 
-std::string base_type_string(object_class_type type, bool known)
+string base_type_string(object_class_type type, bool known)
 {
     switch (type)
     {
@@ -1088,7 +1132,7 @@ std::string base_type_string(object_class_type type, bool known)
     }
 }
 
-std::string sub_type_string(const item_def &item, bool known)
+string sub_type_string(const item_def &item, bool known)
 {
     const object_class_type type = item.base_type;
     const int sub_type = item.sub_type;
@@ -1110,7 +1154,7 @@ std::string sub_type_string(const item_def &item, bool known)
         {
             if (!known)
                 return "manual";
-            std::string bookname = "manual of ";
+            string bookname = "manual of ";
             bookname += skill_name(static_cast<skill_type>(item.plus));
             return bookname;
         }
@@ -1123,7 +1167,7 @@ std::string sub_type_string(const item_def &item, bool known)
         else if (sub_type == BOOK_YOUNG_POISONERS)
             return "Young Poisoner's Handbook";
 
-        return std::string("book of ") + _book_type_name(sub_type);
+        return string("book of ") + _book_type_name(sub_type);
     }
     case OBJ_STAVES: return staff_type_name(static_cast<stave_type>(sub_type));
     case OBJ_RODS:   return rod_type_name(static_cast<rod_type>(sub_type));
@@ -1141,7 +1185,7 @@ std::string sub_type_string(const item_def &item, bool known)
 }
 
 /// lua 스크립트에 넘겨주는 놈이니 건드리지 말긔.
-std::string ego_type_string(const item_def &item)
+string ego_type_string(const item_def &item)
 {
     switch (item.base_type)
     {
@@ -1155,7 +1199,7 @@ std::string ego_type_string(const item_def &item)
         else if (get_weapon_brand(item) == SPWPN_ANTIMAGIC)
             return "anti-magic";
         else if (get_weapon_brand(item) != SPWPN_NORMAL)
-            return std::string(weapon_brand_name(item, false)).substr(4);
+            return string(weapon_brand_name(item, false)).substr(4);
         else
             return "";
     case OBJ_MISSILES:
@@ -1180,9 +1224,8 @@ static const char* _torn_net(int plus)
 
 // Note that "terse" is only currently used for the "in hand" listing on
 // the game screen.
-std::string item_def::name_aux(description_level_type desc,
-                               bool terse, bool ident, bool with_inscription,
-                               iflags_t ignore_flags) const
+string item_def::name_aux(description_level_type desc, bool terse, bool ident,
+                          bool with_inscription, iflags_t ignore_flags) const
 {
     // Shortcuts
     const int item_typ   = sub_type;
@@ -1227,7 +1270,7 @@ std::string item_def::name_aux(description_level_type desc,
 
     const bool need_plural = !basename && !dbname;
 
-    std::ostringstream buff;
+    ostringstream buff;
 
     switch (base_type)
     {
@@ -1533,9 +1576,11 @@ std::string item_def::name_aux(description_level_type desc,
             COMPILE_CHECK(ARRAYSZ(potion_qualifiers) == PDQ_NQUALS);
 
             static const char *potion_colours[] = {
-                M_("clear"), M_("blue"), M_("black"), M_("silvery"), M_("cyan"), M_("purple"),
-                M_("orange"), M_("inky"), M_("red"), M_("yellow"), M_("green"), M_("brown"), M_("pink"),
-                M_("white")
+#if TAG_MAJOR_VERSION == 34
+                M_("clear"),
+#endif
+                M_("blue"), M_("black"), M_("silvery"), M_("cyan"), M_("purple"), M_("orange"),
+                M_("inky"), M_("red"), M_("yellow"), M_("green"), M_("brown"), M_("pink"), M_("white")
             };
             COMPILE_CHECK(ARRAYSZ(potion_colours) == PDC_NCOLOURS);
 
@@ -1832,8 +1877,8 @@ std::string item_def::name_aux(description_level_type desc,
 
         uint64_t name_type, name_flags = 0;
 
-        const std::string _name  = get_corpse_name(*this, &name_flags);
-        const bool        shaped = starts_with(_name, "shaped ");
+        const string _name  = get_corpse_name(*this, &name_flags);
+        const bool   shaped = starts_with(_name, "shaped ");
         name_type = (name_flags & MF_NAME_MASK);
 
         if (!_name.empty() && name_type == MF_NAME_ADJECTIVE)
@@ -1892,9 +1937,6 @@ std::string item_def::name_aux(description_level_type desc,
                 break;
             case ROD_DESTRUCTION_III:
                 buff << " [lightning,fireball,iron]";
-                break;
-            case ROD_DESTRUCTION_IV:
-                buff << " [inacc,magma,cold]";
                 break;
             }
             break;
@@ -2079,7 +2121,7 @@ class KnownMenu : public InvMenu
 {
 public:
     // This loads items in the order they are put into the list (sequentially)
-    menu_letter load_items_seq(const std::vector<const item_def*> &mitems,
+    menu_letter load_items_seq(const vector<const item_def*> &mitems,
                                MenuEntry *(*procfn)(MenuEntry *me) = NULL,
                                menu_letter ckey = 'a')
     {
@@ -2109,12 +2151,12 @@ public:
         selected_qty = inv->selected_qty;
     }
 
-    virtual std::string get_text(bool need_cursor) const
+    virtual string get_text(bool need_cursor) const
     {
         need_cursor = need_cursor && show_cursor;
         int flags = item->base_type == OBJ_WANDS ? 0 : ISFLAG_KNOW_PLUSES;
 
-        std::string name;
+        string name;
 
 
         if (item->base_type == OBJ_FOOD)
@@ -2197,11 +2239,11 @@ public:
     {
     }
 
-    virtual std::string get_text(const bool = false) const
+    virtual string get_text(const bool = false) const
     {
         int flags = item->base_type == OBJ_WANDS ? 0 : ISFLAG_KNOW_PLUSES;
 
-        return std::string(" ") + item->name(false, DESC_PLAIN, false, true,
+        return string(" ") + item->name(false, DESC_PLAIN, false, true,
                                              false, false, flags);
     }
 };
@@ -2234,10 +2276,10 @@ static bool _identified_item_names(const item_def *it1,
 
 void check_item_knowledge(bool unknown_items)
 {
-    std::vector<const item_def*> items;
-    std::vector<const item_def*> items_missile; //List of missiles should go after normal items
-    std::vector<const item_def*> items_other;    //List of other items should go after everything
-    std::vector<SelItem> selected_items;
+    vector<const item_def*> items;
+    vector<const item_def*> items_missile; //List of missiles should go after normal items
+    vector<const item_def*> items_other;    //List of other items should go after everything
+    vector<SelItem> selected_items;
 
     bool all_items_known = true;
     for (int ii = 0; ii < NUM_OBJECT_CLASSES; ii++)
@@ -2253,9 +2295,14 @@ void check_item_knowledge(bool unknown_items)
             // Potions of fizzing liquid are not something that
             // need to be identified, because they never randomly
             // generate! [due]
-            // Water is never interesting either. [1KB]
-            if (i == OBJ_POTIONS && (j == POT_FIZZING || j == POT_WATER))
+            if (i == OBJ_POTIONS && j == POT_FIZZING)
                 continue;
+
+#if TAG_MAJOR_VERSION == 34
+            // Water is never interesting either. [1KB]
+            if (i == OBJ_POTIONS && j == POT_WATER)
+                continue;
+#endif
 
             if (unknown_items ? you.type_ids[i][j] != ID_KNOWN_TYPE
                               : you.type_ids[i][j] == ID_KNOWN_TYPE)
@@ -2362,11 +2409,11 @@ void check_item_knowledge(bool unknown_items)
         }
     }
 
-    std::sort(items.begin(), items.end(), _identified_item_names);
-    std::sort(items_missile.begin(), items_missile.end(), _identified_item_names);
+    sort(items.begin(), items.end(), _identified_item_names);
+    sort(items_missile.begin(), items_missile.end(), _identified_item_names);
 
     KnownMenu menu;
-    std::string stitle;
+    string stitle;
 
     if (unknown_items)
         stitle = "Items not yet recognised: (toggle with -)";
@@ -2376,12 +2423,11 @@ void check_item_knowledge(bool unknown_items)
         stitle = "You recognise all items. (Select to toggle autopickup)";
 
 
-    std::string prompt = "(_ for help)";
+    string prompt = "(_ for help)";
     //TODO: when the menu is opened, the text is not justified properly.
-    stitle = stitle + std::string(std::max(0, get_number_of_cols()
-                                                  - strwidth(stitle)
-                                                  - strwidth(prompt)),
-                                      ' ') + prompt;
+    stitle = stitle + string(max(0, get_number_of_cols() - strwidth(stitle)
+                                                         - strwidth(prompt)),
+                             ' ') + prompt;
 
     menu.set_preselect(&selected_items);
     menu.set_flags( MF_QUIET_SELECT | MF_ALLOW_FORMATTING
@@ -2401,7 +2447,7 @@ void check_item_knowledge(bool unknown_items)
 
     char last_char = menu.getkey();
 
-    std::vector<const item_def*>::iterator iter;
+    vector<const item_def*>::iterator iter;
     for (iter = items.begin(); iter != items.end(); ++iter)
          delete *iter;
     for (iter = items_missile.begin(); iter != items_missile.end(); ++iter)
@@ -2415,7 +2461,7 @@ void check_item_knowledge(bool unknown_items)
 
 void display_runes()
 {
-    std::vector<const item_def*> items;
+    vector<const item_def*> items;
     for (int i = 0; i < NUM_RUNE_TYPES; i++)
     {
         if (!you.runes[i])
@@ -2451,7 +2497,7 @@ void display_runes()
     menu.getkey();
     redraw_screen();
 
-    for (std::vector<const item_def*>::iterator iter = items.begin();
+    for (vector<const item_def*>::iterator iter = items.begin();
          iter != items.end(); ++iter)
     {
          delete *iter;
@@ -2459,7 +2505,7 @@ void display_runes()
 }
 
 // Used for: Pandemonium demonlords, shopkeepers, scrolls, random artefacts
-std::string make_name(uint32_t seed, bool all_cap, int maxlen, char start)
+string make_name(uint32_t seed, bool all_cap, int maxlen, char start)
 {
     char name[ITEMNAME_SIZE];
     int  numb[17]; // contains the random seeds used for the name
@@ -2792,7 +2838,7 @@ bool is_interesting_item(const item_def& item)
     if (fully_identified(item) && is_artefact(item))
         return true;
 
-    const std::string iname = menu_colour_item_prefix(item, false) + " "
+    const string iname = menu_colour_item_prefix(item, false) + " "
                               + item.name(false, DESC_PLAIN);
     for (unsigned i = 0; i < Options.note_items.size(); ++i)
         if (Options.note_items[i].matches(iname))
@@ -3003,8 +3049,7 @@ bool is_dangerous_item(const item_def &item, bool temp)
 
     case OBJ_BOOKS:
         // The Tome of Destruction is certainly risky.
-        return (item.sub_type == BOOK_DESTRUCTION
-                || is_dangerous_spellbook(item));
+        return (item.sub_type == BOOK_DESTRUCTION);
 
     default:
         return false;
@@ -3111,26 +3156,24 @@ bool is_useless_item(const item_def &item, bool temp)
         default:
             return false;
         }
+
     case OBJ_WANDS:
         if (you.species == SP_FELID)
             return true;
 
-        if (item.sub_type == WAND_INVISIBILITY && _invisibility_is_useless(temp))
+        if (item.sub_type == WAND_INVISIBILITY
+            && item_type_known(item)
+                && _invisibility_is_useless(temp))
+        {
             return true;
+        }
 
         return (item.plus2 == ZAPCOUNT_EMPTY)
-               || item_ident(item, ISFLAG_KNOW_PLUSES) && !item.plus;
+                || item_ident(item, ISFLAG_KNOW_PLUSES) && !item.plus;
 
     case OBJ_POTIONS:
     {
-        // No potion is useless if it can be used for Evaporate.
-        if (you.char_class == JOB_STALKER && !you.num_turns
-            || you.has_spell(SPELL_EVAPORATE))
-        {
-            return false;
-        }
-
-        // Apart from Evaporate, mummies can't use potions.
+        // Mummies can't use potions.
         if (you.species == SP_MUMMY)
             return true;
 
@@ -3156,11 +3199,10 @@ bool is_useless_item(const item_def &item, bool temp)
                         && (you.species != SP_VAMPIRE
                             || temp && you.hunger_state < HS_SATIATED));
 
-        case POT_LEVITATION:
-            return (you.permanent_levitation() || you.permanent_flight());
+        case POT_FLIGHT:
+            return you.permanent_flight();
 
         case POT_PORRIDGE:
-        case POT_WATER:
         case POT_BLOOD:
         case POT_BLOOD_COAGULATED:
             return !can_ingest(item, true, false);
@@ -3228,9 +3270,11 @@ bool is_useless_item(const item_def &item, bool temp)
             return (player_res_poison(false, temp, false) > 0
                     && (temp || you.species != SP_VAMPIRE));
 
+#if TAG_MAJOR_VERSION == 34
         case AMU_CONTROLLED_FLIGHT:
             return (player_genus(GENPC_DRACONIAN)
                     || (you.species == SP_TENGU && you.experience_level >= 5));
+#endif
 
         case RING_WIZARDRY:
             return (you.religion == GOD_TROG);
@@ -3244,8 +3288,8 @@ bool is_useless_item(const item_def &item, bool temp)
         case RING_INVISIBILITY:
             return _invisibility_is_useless(temp);
 
-        case RING_LEVITATION:
-            return (you.permanent_levitation() || you.permanent_flight());
+        case RING_FLIGHT:
+            return you.permanent_flight();
 
         default:
             return false;
@@ -3310,8 +3354,6 @@ bool is_useless_item(const item_def &item, bool temp)
         {
         case MISC_EMPTY_EBONY_CASKET:
             return item_type_known(item);
-        case MISC_DISC_OF_STORMS:
-            return (player_res_electricity(false, temp) > 0);
         case MISC_LAMP_OF_FIRE:
             return !you.skill(SK_FIRE_MAGIC);
         case MISC_AIR_ELEMENTAL_FAN:
@@ -3337,10 +3379,9 @@ bool is_useless_item(const item_def &item, bool temp)
     return false;
 }
 
-static const std::string _item_prefix(const item_def &item, bool temp,
-                                      bool filter)
+static const string _item_prefix(const item_def &item, bool temp, bool filter)
 {
-    std::vector<std::string> prefixes;
+    vector<string> prefixes;
 
     // No identified/unidentified for filtering, since the user might
     // want to filter on "ident" to find scrolls of identify.
@@ -3404,24 +3445,19 @@ static const std::string _item_prefix(const item_def &item, bool temp,
         if (item.sub_type == NUM_FOODS)
             break;
         if (is_forbidden_food(item))
-            prefixes.push_back("evil_eating");
+            prefixes.push_back("evil_eating"), prefixes.push_back("forbidden");
 
         if (is_inedible(item))
             prefixes.push_back("inedible");
         else if (is_preferred_food(item))
             prefixes.push_back("preferred");
 
-        // Don't include these for filtering, since the user might want
-        // to use "muta" to search for "potion of cure mutation", and
-        // similar.
-        if (filter)
-            ;
-        else if (is_poisonous(item))
-            prefixes.push_back("poisonous");
+        if (is_poisonous(item))
+            prefixes.push_back("poisonous"), prefixes.push_back("inedible");
         else if (is_mutagenic(item))
             prefixes.push_back("mutagenic");
         else if (causes_rot(item))
-            prefixes.push_back("rot-inducing");
+            prefixes.push_back("rot-inducing"), prefixes.push_back("inedible");
         else if (is_contaminated(item))
             prefixes.push_back("contaminated");
         break;
@@ -3459,32 +3495,32 @@ static const std::string _item_prefix(const item_def &item, bool temp,
         break;
     }
 
-    if (Options.menu_colour_prefix_class && !filter)
+    if (!filter)
         prefixes.push_back(item_class_name(item.base_type, true));
 
-    std::string result = comma_separated_line(prefixes.begin(), prefixes.end(),
-                                              " ", " ");
+    string result = comma_separated_line(prefixes.begin(), prefixes.end(),
+                                         " ", " ");
 
     return result;
 }
 
-std::string menu_colour_item_prefix(const item_def &item, bool temp)
+string menu_colour_item_prefix(const item_def &item, bool temp)
 {
     return _item_prefix(item, temp, false);
 }
 
-std::string filtering_item_prefix(const item_def &item, bool temp)
+string filtering_item_prefix(const item_def &item, bool temp)
 {
     return _item_prefix(item, temp, true);
 }
 
-std::string get_menu_colour_prefix_tags(const item_def &item,
-                                        description_level_type desc)
+string get_menu_colour_prefix_tags(const item_def &item,
+                                   description_level_type desc)
 {
-    std::string cprf       = menu_colour_item_prefix(item);
-    std::string colour     = "";
-    std::string colour_off = "";
-    std::string item_name  = item.name(true, desc);
+    string cprf       = menu_colour_item_prefix(item);
+    string colour     = "";
+    string colour_off = "";
+    string item_name  = item.name(true, desc);
     int col = menu_colour(item.name(false, desc), cprf, "pickup");
 
     if (col != -1)
@@ -3501,10 +3537,10 @@ std::string get_menu_colour_prefix_tags(const item_def &item,
     return item_name;
 }
 
-typedef std::map<std::string, item_kind> item_names_map;
+typedef map<string, item_kind> item_names_map;
 static item_names_map item_names_cache;
 
-typedef std::map<unsigned, std::vector<std::string> > item_names_by_glyph_map;
+typedef map<unsigned, vector<string> > item_names_by_glyph_map;
 static item_names_by_glyph_map item_names_by_glyph_cache;
 
 void init_item_name_cache()
@@ -3541,24 +3577,24 @@ void init_item_name_cache()
             for (int plus = 0; plus <= npluses; plus++)
             {
                 if (plus > 0)
-                    item.plus = std::max(0, plus - 1);
+                    item.plus = max(0, plus - 1);
                 if (is_deck(item))
                 {
                     item.plus = 1;
                     item.special = DECK_RARITY_COMMON;
                     init_deck(item);
                 }
-                std::string name = item.name(false, plus ? DESC_PLAIN : DESC_DBNAME,
-                                             true, true);
+                string name = item.name(false, plus ? DESC_PLAIN : DESC_DBNAME,
+                                        true, true);
                 lowercase(name);
-                glyph g = get_item_glyph(&item);
+                cglyph_t g = get_item_glyph(&item);
 
                 if (base_type == OBJ_JEWELLERY && sub_type >= NUM_RINGS
                     && sub_type < AMU_FIRST_AMULET)
                 {
                     continue;
                 }
-                else if (name.find("buggy") != std::string::npos)
+                else if (name.find("buggy") != string::npos)
                 {
                     crawl_state.add_startup_error("Bad name for item name "
                                                   " cache: " + name);
@@ -3580,7 +3616,7 @@ void init_item_name_cache()
     ASSERT(!item_names_cache.empty());
 }
 
-item_kind item_kind_by_name(std::string name)
+item_kind item_kind_by_name(string name)
 {
     lowercase(name);
 
@@ -3594,7 +3630,7 @@ item_kind item_kind_by_name(std::string name)
     return err;
 }
 
-std::vector<std::string> item_name_list_for_glyph(unsigned glyph)
+vector<string> item_name_list_for_glyph(unsigned glyph)
 {
     item_names_by_glyph_map::iterator i;
     i = item_names_by_glyph_cache.find(glyph);
@@ -3602,7 +3638,7 @@ std::vector<std::string> item_name_list_for_glyph(unsigned glyph)
     if (i != item_names_by_glyph_cache.end())
         return i->second;
 
-    std::vector<std::string> empty;
+    vector<string> empty;
     return empty;
 }
 
@@ -3613,7 +3649,7 @@ bool is_named_corpse(const item_def &corpse)
     return corpse.props.exists(CORPSE_NAME_KEY);
 }
 
-std::string get_corpse_name(const item_def &corpse, uint64_t *name_type)
+string get_corpse_name(const item_def &corpse, uint64_t *name_type)
 {
     ASSERT(corpse.base_type == OBJ_CORPSES);
 

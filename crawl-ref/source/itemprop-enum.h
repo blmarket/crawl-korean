@@ -1,8 +1,6 @@
 #ifndef ITEMPROP_ENUM_H
 #define ITEMPROP_ENUM_H
 
-#include "tags.h"
-
 enum armour_type
 {
     ARM_ROBE,
@@ -128,8 +126,6 @@ enum hands_reqd_type
     HANDS_ONE,
     HANDS_HALF,
     HANDS_TWO,
-
-    HANDS_DOUBLE,       // not a level, marks double ended weapons (== half)
 };
 
 enum helmet_desc_type
@@ -174,7 +170,7 @@ enum jewellery_type
     RING_INTELLIGENCE,
     RING_WIZARDRY,
     RING_MAGICAL_POWER,
-    RING_LEVITATION,
+    RING_FLIGHT,
     RING_LIFE_PROTECTION,
     RING_PROTECTION_FROM_MAGIC,
     RING_FIRE,
@@ -194,7 +190,9 @@ enum jewellery_type
     AMU_RESIST_CORROSION,
     AMU_THE_GOURMAND,
     AMU_CONSERVATION,
+#if TAG_MAJOR_VERSION == 34
     AMU_CONTROLLED_FLIGHT,
+#endif
     AMU_INACCURACY,
     AMU_RESIST_MUTATION,
     AMU_GUARDIAN_SPIRIT,
@@ -339,7 +337,7 @@ enum special_armour_type
     SPARM_DEXTERITY,
     SPARM_INTELLIGENCE,
     SPARM_PONDEROUSNESS,
-    SPARM_LEVITATION,
+    SPARM_FLYING,
     SPARM_MAGIC_RESISTANCE,
     SPARM_PROTECTION,
     SPARM_STEALTH,
@@ -393,7 +391,9 @@ enum stave_type
     STAFF_ENERGY,
     STAFF_DEATH,
     STAFF_CONJURATION,
+#if TAG_MAJOR_VERSION == 34
     STAFF_ENCHANTMENT,
+#endif
     STAFF_SUMMONING,
     STAFF_AIR,
     STAFF_EARTH,
@@ -404,11 +404,11 @@ enum stave_type
 enum rod_type
 {
     ROD_LIGHTNING,
-    ROD_SUMMONING,
+    ROD_SWARM,
     ROD_DESTRUCTION_I,
     ROD_DESTRUCTION_II,
     ROD_DESTRUCTION_III,
-    ROD_DESTRUCTION_IV,
+    ROD_INACCURACY,
     ROD_WARDING,
     ROD_DEMONOLOGY,
     ROD_STRIKING,
@@ -468,7 +468,7 @@ enum weapon_type
     WPN_DEMON_TRIDENT,
     WPN_SCYTHE,
 
-    WPN_STAFF,
+    WPN_STAFF,          // Just used for the weapon stats for magical staves.
     WPN_QUARTERSTAFF,
     WPN_LAJATANG,
 

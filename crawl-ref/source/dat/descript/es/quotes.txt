@@ -2,7 +2,7 @@
 long sword
 
 "Y andando en estas priesas entre aquellos grandes guerreros y sus temerosos
-montantes, parece ser acordaron de se Juntar muchos dellos y de mayores fuerzas
+montantes, parece ser acordaron de se juntar muchos dellos y de mayores fuerzas
 para tomar a manos algún caballo, y lo pusieron por obra, y arremetieron, y
 echan mano a una muy buena yegua y bien revuelta, de juego y de carrera, y el
 caballero que en ella iba muy buen jinete, que se decía Pedro de Morón; y como
@@ -23,4 +23,20 @@ fortifican, pero los dedos de mi pie no quieren saberlo. No les interesa otra
 cosa que emitir uñas: láminas córneas, semitransparentes y elásticas, para
 defenderse, ¿de quién?”
     -Jorge Luis Borges
+%%%%
+arrow
+
+“En un corredor vi una flecha que indicaba una dirección y pensé que aquel
+símbolo inofensivo había sido alguna vez una cosa de hierro, un proyectil
+inevitable y mortal, que entró en la carne de los hombres y de los leones y
+nubló el sol en las Termópilas y dio a Harald Sigurdarson, para siempre, seis
+pies de tierra inglesa.”
+    -Jorge Luis Borges, Mutaciones. 1960.
+%%%%
+giant eyeball
+
+“El ojo que ves
+ no es ojo porque tú lo veas,
+ es ojo porque te ve.”
+    -Antonio Machado, Campos de Castilla. 1912-1917.
 %%%%

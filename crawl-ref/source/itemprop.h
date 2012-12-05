@@ -99,7 +99,7 @@ bool is_giant_club_type(int wpn_type);
 bool is_demonic(const item_def &item);
 bool is_blessed(const item_def &item);
 bool is_blessed_convertible(const item_def &item);
-bool convert2good(item_def &item, bool allow_blessed = true);
+bool convert2good(item_def &item);
 bool convert2bad(item_def &item);
 
 int get_vorpal_type(const item_def &item);
@@ -114,7 +114,7 @@ skill_type weapon_skill(object_class_type wclass, int wtype);
 skill_type range_skill(const item_def &item);
 skill_type range_skill(object_class_type wclass, int wtype);
 
-bool item_skills(const item_def &item, std::set<skill_type> &skills);
+bool item_skills(const item_def &item, set<skill_type> &skills);
 void maybe_change_train(const item_def &item, bool start);
 
 // launcher and ammo functions:
@@ -134,8 +134,6 @@ bool item_is_rune(const item_def &item, rune_type which_rune = NUM_RUNE_TYPES);
 bool item_is_unique_rune(const item_def &item);
 bool item_is_orb(const item_def &orb);
 bool item_is_horn_of_geryon(const item_def &item);
-
-bool item_is_corpse(const item_def &item);
 bool item_is_spellbook(const item_def &item);
 
 
@@ -151,7 +149,6 @@ int food_turns(const item_def &item);
 bool can_cut_meat(const item_def &item);
 bool food_is_rotten(const item_def &item);
 bool is_fruit(const item_def & item);
-uint32_t item_fruit_mask(const item_def &item);
 
 // generic item property functions:
 int get_armour_res_fire(const item_def &arm, bool check_artp);
@@ -178,9 +175,9 @@ int item_mass(const item_def &item);
 equipment_type get_item_slot(object_class_type type, int sub_type);
 equipment_type get_item_slot(const item_def& item);
 
-std::string item_base_name(const item_def &item);
-std::string item_base_name(object_class_type type, int sub_type);
-std::string food_type_name(int sub_type);
+string item_base_name(const item_def &item);
+string item_base_name(object_class_type type, int sub_type);
+string food_type_name(int sub_type);
 const char* weapon_base_name(uint8_t subtype);
 
 void seen_item(const item_def &item);

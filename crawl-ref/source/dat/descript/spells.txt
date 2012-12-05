@@ -232,6 +232,12 @@ Dig spell
 
 특별히 강화되어 있지 않은 주변의 돌벽 등을 분해시켜, 통로를 만든다.
 %%%%
+Disjunction spell
+
+This spell destabilizes the space in a sphere around you for a while, causing
+anyone nearby to be randomly blinked. The chance of blinking depends on the
+distance from you, being nearly certain when directly adjacent.
+%%%%
 Dispel Undead spell
 
 This spell uses the very forces that bind an undead creature together to
@@ -256,13 +262,6 @@ Ensorcelled Hibernation spell
 
 This spell tries to lower its target's metabolic rate, inducing hypothermic
 hibernation.
-%%%%
-Evaporate spell
-
-This spell heats a potion to the point that it explodes when thrown. The
-resultant steam is then transmuted into a large cloud, the type of which varies
-from potion to potion. Of course, the volatile potion must be thrown
-immediately for the spell to work.
 %%%%
 Excruciating Wounds spell
 
@@ -310,12 +309,6 @@ Freezing Cloud spell
 
 치명적일 정도로 차가운, 거대한 증기 구름을 생성한다.
 %%%%
-Fulsome Distillation spell
-
-This spell extracts the vile and poisonous essences from a corpse. You probably
-don't want to drink the results. The type of potion produced corresponds
-roughly to the effects of eating said corpse.
-%%%%
 Major Healing spell
 
 시전자의 몸을 크게 회복시킨다.
@@ -357,10 +350,6 @@ Inner Flame spell
 
 This spell fills an enemy with an intense fire, to be explosively released upon
 death. The size of the explosion caused is dependent on the size of the target.
-%%%%
-Insulation spell
-
-이 주문은 시전자를 전기 충격으로 부터 보호한다.
 %%%%
 Invisibility spell
 
@@ -517,7 +506,8 @@ Petrify spell
 
 This spell attempts to petrify a monster. If successful, the monster is slowed
 down for a while until it is temporarily turned into stone. In this state, a
-monster will take less damage upon being hit.
+monster will take less damage upon being hit. It also precludes the use of
+wings, which can be quite unhealthy above lava.
 %%%%
 Phase Shift spell
 
@@ -578,11 +568,6 @@ Sandblast spell
 This spell creates a short blast of high-velocity particles. It works best when
 the caster provides some source (by wielding a stone), but will do what it can
 with whatever ambient grit is available.
-%%%%
-See Invisible spell
-
-This spell enables the caster to perceive things that are shielded from
-ordinary sight.
 %%%%
 Shadow Creatures spell
 

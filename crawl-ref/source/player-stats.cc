@@ -3,6 +3,7 @@
 #include "player-stats.h"
 
 #include "artefact.h"
+#include "clua.h"
 #include "delay.h"
 #include "godpassive.h"
 #include "files.h"
@@ -13,6 +14,7 @@
 #include "misc.h"
 #include "mon-util.h"
 #include "monster.h"
+#include "notes.h"
 #include "ouch.h"
 #include "player.h"
 #include "religion.h"
@@ -20,32 +22,38 @@
 #include "transform.h"
 #include "hints.h"
 
+#ifdef TOUCH_UI
+#include "menu.h"
+#include "tiledef-gui.h"
+#include "tilepick.h"
+#endif
+
 int player::stat(stat_type s, bool nonneg) const
 {
     const int val = max_stat(s) - stat_loss[s];
-    return (nonneg ? std::max(val, 0) : val);
+    return (nonneg ? max(val, 0) : val);
 }
 
-int player::strength() const
+int player::strength(bool nonneg) const
 {
-    return stat(STAT_STR);
+    return stat(STAT_STR, nonneg);
 }
 
-int player::intel() const
+int player::intel(bool nonneg) const
 {
-    return stat(STAT_INT);
+    return stat(STAT_INT, nonneg);
 }
 
-int player::dex() const
+int player::dex(bool nonneg) const
 {
-    return stat(STAT_DEX);
+    return stat(STAT_DEX, nonneg);
 }
 
 static int _stat_modifier(stat_type stat);
 
 int player::max_stat(stat_type s) const
 {
-    return std::min(base_stats[s] + _stat_modifier(s), 72);
+    return min(base_stats[s] + _stat_modifier(s), 72);
 }
 
 int player::max_strength() const
@@ -67,46 +75,72 @@ static void _handle_stat_change(stat_type stat, const char *aux = NULL,
                                 bool see_source = true);
 static void _handle_stat_change(const char *aux = NULL, bool see_source = true);
 
-void attribute_increase()
+bool attribute_increase()
 {
     crawl_state.stat_gain_prompt = true;
-    mpr(gettext("Your experience leads to an increase in your attributes!"),
+#ifdef TOUCH_UI
+    learned_something_new(HINT_CHOOSE_STAT);
+    Popup *pop = new Popup(_("Increase Attributes"));
+    MenuEntry *status = new MenuEntry("", MEL_SUBTITLE);
+    pop->push_entry(new MenuEntry(_("Your experience leads to an increase in "
+                                  "your attributes! Increase:"), MEL_TITLE));
+    pop->push_entry(status);
+    MenuEntry *me = new MenuEntry(_(M_("Strength")), MEL_ITEM, 0, 'S', false);
+    me->add_tile(tile_def(TILEG_FIGHTING_ON, TEX_GUI));
+    pop->push_entry(me);
+    me = new MenuEntry(_(M_("Intelligence")), MEL_ITEM, 0, 'I', false);
+    me->add_tile(tile_def(TILEG_SPELLCASTING_ON, TEX_GUI));
+    pop->push_entry(me);
+    me = new MenuEntry(_(M_("Dexterity")), MEL_ITEM, 0, 'D', false);
+    me->add_tile(tile_def(TILEG_DODGING_ON, TEX_GUI));
+    pop->push_entry(me);
+#else
+    mpr(_("Your experience leads to an increase in your attributes!"),
         MSGCH_INTRINSIC_GAIN);
     learned_something_new(HINT_CHOOSE_STAT);
-    mpr(gettext("Increase (S)trength, (I)ntelligence, or (D)exterity? "), MSGCH_PROMPT);
-    mouse_control mc(MOUSE_MODE_MORE);
+    mpr(_("Increase (S)trength, (I)ntelligence, or (D)exterity? "), MSGCH_PROMPT);
+#endif
+    mouse_control mc(MOUSE_MODE_PROMPT);
     // Calling a user-defined lua function here to let players reply to the
     // prompt automatically.
-    clua.callfn("choose_stat_gain", 0);
+    clua.callfn("choose_stat_gain", 0, 0);
 
     while (true)
     {
+#ifdef TOUCH_UI
+        const int keyin = pop->pop();
+#else
         const int keyin = getchm();
+#endif
 
         switch (keyin)
         {
         CASE_ESCAPE
-            // [ds] It's safe to save the game here; when the player
-            // reloads, the game will re-prompt for their level-up
-            // stat gain.
+            // It is unsafe to save the game here; continue with the turn
+            // normally, when the player reloads, the game will re-prompt
+            // for their level-up stat gain.
             if (crawl_state.seen_hups)
-                sighup_save_and_exit();
+                return false;
             break;
 
         case 's':
         case 'S':
             modify_stat(STAT_STR, 1, false, "level gain");
-            return;
+            return true;
 
         case 'i':
         case 'I':
             modify_stat(STAT_INT, 1, false, "level gain");
-            return;
+            return true;
 
         case 'd':
         case 'D':
             modify_stat(STAT_DEX, 1, false, "level gain");
-            return;
+            return true;
+#ifdef TOUCH_UI
+        default:
+            status->text = "Please choose an option below"; // too naggy?
+#endif
         }
     }
 }
@@ -126,7 +160,7 @@ void jiyva_stat_action()
     int current_capacity = carrying_capacity(BS_UNENCUMBERED);
     int carrying_strength = cur_stat[0] + (you.burden - current_capacity + 249)/250;
     int evp = you.unadjusted_body_armour_penalty();
-    target_stat[0] = std::max(std::max(9, 2 + 3 * evp), 2 + carrying_strength);
+    target_stat[0] = max(max(9, 2 + 3 * evp), 2 + carrying_strength);
     target_stat[1] = 9;
     target_stat[2] = 9;
     int remaining = stat_total - 18 - target_stat[0];
@@ -153,7 +187,7 @@ void jiyva_stat_action()
         }
         // If you are in really heavy armour, then you already are getting a
         // lot of Str and more won't help much, so weight magic more.
-        other_weights = std::max(other_weights - (evp >= 5 ? 4 : 1) * magic_weights/2, 0);
+        other_weights = max(other_weights - (evp >= 5 ? 4 : 1) * magic_weights/2, 0);
         magic_weights = div_rand_round(remaining * magic_weights, magic_weights + other_weights);
         other_weights = remaining - magic_weights;
         target_stat[1] += magic_weights;
@@ -171,7 +205,8 @@ void jiyva_stat_action()
     for (int x = 0; x < 3; ++x)
         for (int y = 0; y < 3; ++y)
         {
-            if (x != y && target_stat[x] - cur_stat[x] + cur_stat[y] - target_stat[y] > 0)
+            if (x != y && cur_stat[y] > 1
+                && target_stat[x] - cur_stat[x] > target_stat[y] - cur_stat[y])
             {
                 choices++;
                 if (one_chance_in(choices))
@@ -183,9 +218,8 @@ void jiyva_stat_action()
         }
     if (choices)
     {
-        simple_god_message(gettext("'s power touches on your attributes."));
-        const std::string cause = "the 'helpfulness' of "
-                                  + god_name(you.religion);
+        simple_god_message(_("'s power touches on your attributes."));
+        const string cause = "the 'helpfulness' of " + god_name(you.religion);
         modify_stat(static_cast<stat_type>(stat_up_choice), 1, true, cause.c_str());
         modify_stat(static_cast<stat_type>(stat_down_choice), -1, true, cause.c_str());
     }
@@ -274,9 +308,9 @@ void notify_stat_change(stat_type which_stat, int amount, bool suppress_msg,
 void notify_stat_change(stat_type which_stat, int amount, bool suppress_msg,
                         const item_def &cause, bool removed)
 {
-    std::string name = cause.name(true, DESC_THE, false, true, false, false,
-                                  ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES);
-    std::string verb;
+    string name = cause.name(true, DESC_THE, false, true, false, false,
+                             ISFLAG_KNOW_CURSE | ISFLAG_KNOW_PLUSES);
+    string verb;
 
     switch (cause.base_type)
     {
@@ -342,7 +376,8 @@ static int _strength_modifier()
               - player_mutation_level(MUT_WEAK);
     result += player_mutation_level(MUT_STRONG_STIFF)
               - player_mutation_level(MUT_FLEXIBLE_WEAK);
-    result -= player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE);
+    result -= player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE)
+              ? player_mutation_level(MUT_THIN_SKELETAL_STRUCTURE) - 1 : 0;
 
     // transformations
     switch (you.form)
@@ -446,7 +481,7 @@ static int _stat_modifier(stat_type stat)
     }
 }
 
-static std::string _stat_name(stat_type stat)
+static string _stat_name(stat_type stat)
 {
     switch (stat)
     {
@@ -499,7 +534,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
 
     if (stat_loss > 0)
     {
-        you.stat_loss[which_stat] = std::min<int>(100,
+        you.stat_loss[which_stat] = min<int>(100,
                                         you.stat_loss[which_stat] + stat_loss);
         _handle_stat_change(which_stat, cause, see_source);
         return true;
@@ -509,7 +544,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
 }
 
 bool lose_stat(stat_type which_stat, int stat_loss, bool force,
-               const std::string cause, bool see_source)
+               const string cause, bool see_source)
 {
     return lose_stat(which_stat, stat_loss, force, cause.c_str(), see_source);
 }
@@ -520,8 +555,8 @@ bool lose_stat(stat_type which_stat, int stat_loss,
     if (cause == NULL || invalid_monster(cause))
         return lose_stat(which_stat, stat_loss, force, NULL, true);
 
-    bool        vis  = you.can_see(cause);
-    std::string name = cause->name(DESC_A, true);
+    bool   vis  = you.can_see(cause);
+    string name = cause->name(DESC_A, true);
 
     if (cause->has_ench(ENCH_SHAPESHIFTER))
         name += " (shapeshifter)";
@@ -589,7 +624,7 @@ static void _normalize_stat(stat_type stat)
 {
     ASSERT(you.stat_loss[stat] >= 0);
     // XXX: this doesn't prevent effective stats over 72.
-    you.base_stats[stat] = std::min<int8_t>(you.base_stats[stat], 72);
+    you.base_stats[stat] = min<int8_t>(you.base_stats[stat], 72);
 }
 
 // Number of turns of stat at zero you start with.
@@ -607,7 +642,9 @@ static void _handle_stat_change(stat_type stat, const char* cause, bool see_sour
     {
         you.stat_zero[stat] = STAT_ZERO_START;
         you.stat_zero_cause[stat] = cause;
-        mprf(MSGCH_WARN, gettext("You have lost your %s."), gettext(stat_desc(stat, SD_NAME)));
+        mprf(MSGCH_WARN, _("You have lost your %s."), stat_desc(stat, SD_NAME));
+        take_note(Note(NOTE_MESSAGE, 0, 0, make_stringf("Lost %s.",
+            stat_desc(stat, SD_NAME)).c_str()), true);
         // 2 to 5 turns of paralysis (XXX: decremented right away?)
         you.increase_duration(DUR_PARALYSIS, 2 + random2(3));
     }
@@ -672,7 +709,7 @@ void update_stat_zero()
         }
 
         int paramax = STAT_DEATH_TURNS - STAT_DEATH_START_PARA;
-        int paradiff = std::max(you.stat_zero[i] - STAT_DEATH_START_PARA, 0);
+        int paradiff = max(you.stat_zero[i] - STAT_DEATH_START_PARA, 0);
         if (x_chance_in_y(paradiff*paradiff, 2*paramax*paramax))
         {
             para_stat = s;

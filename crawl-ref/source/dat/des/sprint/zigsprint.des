@@ -32,7 +32,7 @@ function callback.zig_tele(data, triggerable, triggerer, marker, ev)
     crawl.mpr("Welcome to arena " .. data.teleport_spot .. ".")
     crawl.take_note("Entered arena " .. data.teleport_spot .. ".")
 --  crawl.mark_milestone("sprint", "entered arena " .. data.teleport_spot ..
---                       " of Ziggurat Sprint.")
+--                       " of Ziggurat Sprint.", "")
   end
 end
 
@@ -782,7 +782,7 @@ KITEM:    P = ring of strength not_cursed ident:all plus:6, \
               ring of intelligence not_cursed ident:all plus:6, \
               ring of dexterity not_cursed ident:all plus:6, \
               ring of dexterity not_cursed ident:all plus:6, \
-          ring of levitation not_cursed ident:all
+          ring of flight not_cursed ident:all
 KITEM:    R = broad axe unrand:obsidian_axe ident:all, \
               shield unrand:shield_of_the_gong ident:all, \
               plate armour unrand:maxwells_patent_armour ident:all

@@ -11,7 +11,10 @@ static const char * Job_Abbrev_List[ NUM_JOBS ] =
       "Cj", "En", "FE", "IE", "Su", "AE", "EE", "Sk",
       "VM",
       "CK", "Tm", "He",
-      "St", "Mo", "Wr", "Wn", "Ar", "AM",
+#if TAG_MAJOR_VERSION == 34
+      "St",
+#endif
+      "Mo", "Wr", "Wn", "Ar", "AM",
       "DK", "AK" };
 
 static const char * Job_Name_List[ NUM_JOBS ] =
@@ -22,7 +25,9 @@ static const char * Job_Name_List[ NUM_JOBS ] =
       M_("Earth Elementalist"), M_("Skald"),
       M_("Venom Mage"),
       M_("Chaos Knight"), M_("Transmuter"), M_("Healer"),
+#if TAG_MAJOR_VERSION == 34
       M_("Stalker"),
+#endif
       M_("Monk"), M_("Warper"), M_("Wanderer"), M_("Artificer"), M_("Arcane Marksman"),
       M_("Death Knight"), M_("Abyssal Knight") };
 
@@ -42,8 +47,9 @@ job_type get_job_by_abbrev(const char *abbrev)
 
     for (i = 0; i < NUM_JOBS; i++)
     {
-        if (tolower(abbrev[0]) == tolower(Job_Abbrev_List[i][0])
-            && tolower(abbrev[1]) == tolower(Job_Abbrev_List[i][1]))
+        // This assumes untranslated abbreviations.
+        if (toalower(abbrev[0]) == toalower(Job_Abbrev_List[i][0])
+            && toalower(abbrev[1]) == toalower(Job_Abbrev_List[i][1]))
         {
             break;
         }
@@ -67,14 +73,14 @@ job_type get_job_by_name(const char *name)
     int i;
     job_type cl = JOB_UNKNOWN;
 
-    std::string low_name = lowercase_string(name);
+    string low_name = lowercase_string(name);
 
     for (i = 0; i < NUM_JOBS; i++)
     {
-        std::string low_job = lowercase_string(Job_Name_List[i]);
+        string low_job = lowercase_string(Job_Name_List[i]);
 
         size_t pos = low_job.find(low_name);
-        if (pos != std::string::npos)
+        if (pos != string::npos)
         {
             cl = static_cast<job_type>(i);
             if (!pos)  // prefix takes preference

@@ -4,6 +4,7 @@
 
 #include "areas.h"
 #include "env.h"
+#include "libutil.h"
 #include "misc.h"
 #include "mutation.h"
 #include "player.h"
@@ -19,11 +20,11 @@
 struct duration_def
 {
     duration_type dur;
-    bool expire;              // whether to do automat expiring transforms
-    int         light_colour; // status light base colour
-    std::string light_text;   // for the status lights
-    std::string short_text;   // for @: line
-    std::string long_text ;   // for @ message
+    bool expire;         // whether to do automat expiring transforms
+    int    light_colour; // status light base colour
+    string light_text;   // for the status lights
+    string short_text;   // for @: line
+    string long_text ;   // for @ message
 };
 
 static duration_def duration_data[] =
@@ -45,9 +46,7 @@ static duration_def duration_data[] =
     { DUR_CONTROL_TELEPORT, true,
       MAGENTA, P_("status","cTele"), "", N_("You can control teleportations.") },
     { DUR_DEATH_CHANNEL, true,
-      MAGENTA, P_("status","DChan"), P_("status","death channel"), N_("You are channeling the dead.") },
-    { DUR_DEFLECT_MISSILES, true,
-      MAGENTA, P_("status","DMsl"), P_("status","deflect missiles"), N_("You deflect missiles.") },
+      MAGENTA, P_("status", "DChan"), P_("status", "death channel"), N_("You are channeling the dead.") },
     { DUR_DIVINE_STAMINA, true,
       WHITE, P_("status","Vit"), P_("status","vitalised"), N_("You are divinely vitalised.") },
     { DUR_DIVINE_VIGOUR, false,
@@ -75,13 +74,9 @@ static duration_def duration_data[] =
     { DUR_PETRIFYING, true,
       MAGENTA, P_("status","Petr"), P_("status","petrifying"), N_("You are turning to stone.") },
     { DUR_JELLY_PRAYER, false,
-      WHITE, P_("status","Pray"), P_("status","praying"), N_("You are praying.") },
-    { DUR_REPEL_MISSILES, true,
-      BLUE, P_("status", "RMsl"), P_("status", "repel missiles"), N_("You are protected from missiles.") },
+      WHITE, P_("status", "Pray"), P_("status", "praying"), N_("You are praying.") },
     { DUR_RESISTANCE, true,
       LIGHTBLUE, P_("status", "Resist"), "", N_("You resist elements.") },
-    { DUR_SEE_INVISIBLE, true,
-      BLUE, P_("status","SInv"), "", N_("You can see invisible.") },
     { DUR_SLAYING, false,
       0, "", P_("status","deadly"), "" },
     { DUR_SLIMIFY, true,
@@ -97,9 +92,7 @@ static duration_def duration_data[] =
     { DUR_TELEPORT, false,
       LIGHTBLUE, P_("status","Tele"), P_("status","about to teleport"), N_("You are about to teleport.") },
     { DUR_DEATHS_DOOR, true,
-      LIGHTGREY, P_("status","DDoor"), P_("status","death's door"), "" },
-    { DUR_INSULATION, true,
-      BLUE, P_("status","Ins"), "", N_("You are insulated.") },
+      LIGHTGREY, P_("status", "DDoor"), P_("status", "death's door"), "" },
     { DUR_PHASE_SHIFT, true,
       0, "", P_("status","phasing"), N_("You are out of phase with the material plane.") },
     { DUR_QUAD_DAMAGE, true,
@@ -119,7 +112,7 @@ static duration_def duration_data[] =
       LIGHTGREY, P_("status","Tornado"), P_("status","tornado"),
       N_("You are in the eye of a mighty hurricane.") },
     { DUR_LIQUEFYING, false,
-      YELLOW, P_("status","Liquid"), P_("status","liquefying"),
+      LIGHTBLUE, P_("status","Liquid"), P_("status","liquefying"),
       N_("The ground has become liquefied beneath your feet.") },
     { DUR_HEROISM, false,
       LIGHTBLUE, P_("status","Hero"), P_("status","heroism"), N_("You possess the skills of a mighty hero.") },
@@ -132,7 +125,9 @@ static duration_def duration_data[] =
     { DUR_SHROUD_OF_GOLUBRIA, true,
       BLUE, P_("status","Shroud"), P_("status","shrouded"), N_("You are protected by a distorting shroud.") },
     { DUR_TORNADO_COOLDOWN, false,
-      YELLOW, P_("status","Tornado"), "", "" ,},
+      YELLOW, P_("status", "Tornado"), "", "" ,},
+    { DUR_DISJUNCTION, true,
+      BLUE, P_("status", "Disjoin"), P_("status", "disjoining"), N_("You are disjoining your surroundings.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -226,8 +221,9 @@ static void _describe_poison(status_info* inf);
 static void _describe_transform(status_info* inf);
 static void _describe_stat_zero(status_info* inf, stat_type st);
 static void _describe_terrain(status_info* inf);
+static void _describe_missiles(status_info* inf);
 
-void fill_status_info(int status, status_info* inf)
+bool fill_status_info(int status, status_info* inf)
 {
     _reset_status_info(inf);
 
@@ -240,7 +236,7 @@ void fill_status_info(int status, status_info* inf)
         duration_type dur = static_cast<duration_type>(status);
 
         if (!you.duration[dur])
-            return;
+            return false;
 
         const duration_def* ddef = _lookup_duration(dur);
         if (ddef)
@@ -428,31 +424,25 @@ void fill_status_info(int status, status_info* inf)
         }
         break;
 
-    case DUR_REPEL_MISSILES:
-        // no status light or short text when also deflecting
-        if (you.duration[DUR_DEFLECT_MISSILES])
-        {
-            inf->light_colour = 0;
-            inf->light_text   = "";
-            inf->short_text   = "";
-        }
+    case STATUS_MISSILES:
+        _describe_missiles(inf);
         break;
 
     case STATUS_MANUAL:
         if (!is_invalid_skill(you.manual_skill))
         {
-            std::string sk = skill_name(you.manual_skill);
-            inf->short_text = _("studying ") + sk;
-            inf->long_text = _("You are ") + inf->short_text + ".";
+            string sk = skill_name(you.manual_skill);
+            inf->short_text = make_stringf(_("studying %s"), sk.c_str());
+            inf->long_text = make_stringf(_("You are %s."), inf->short_text);
         }
         break;
 
     case DUR_SURE_BLADE:
     {
         inf->light_colour = BLUE;
-        inf->light_text   = gettext(M_("Blade"));
-        inf->short_text   = gettext(M_("bonded with blade"));
-        std::string desc;
+        inf->light_text   = pgettext("status", "Blade");
+        inf->short_text   = pgettext("status", "bonded with blade");
+        string desc;
         if (you.duration[DUR_SURE_BLADE] > 15 * BASELINE_DELAY)
             desc = pgettext("sureblade", "strong ");
         else if (you.duration[DUR_SURE_BLADE] >  5 * BASELINE_DELAY)
@@ -529,16 +519,27 @@ void fill_status_info(int status, status_info* inf)
         }
         break;
 
+    case STATUS_NO_CTELE:
+        if (!allow_control_teleport(true))
+        {
+            inf->light_colour = RED;
+            inf->light_text = "-cTele";
+        }
+        break;
+
     default:
         if (!found)
         {
             inf->light_colour = RED;
-            inf->light_text   = gettext(M_("Missing"));
-            inf->short_text   = gettext(M_("missing status"));
-            inf->long_text    = gettext("Missing status description.");
+            inf->light_text   = "Missing";
+            inf->short_text   = "missing status";
+            inf->long_text    = "Missing status description.";
+            return false;
         }
-        break;
+        else
+            break;
     }
+    return true;
 }
 
 static void _describe_hunger(status_info* inf)
@@ -678,8 +679,8 @@ static void _describe_poison(status_info* inf)
     int pois = you.duration[DUR_POISONING];
     inf->light_colour = (player_res_poison(false) >= 3
                          ? DARKGREY : _bad_ench_colour(pois, 5, 10));
-    inf->light_text   = _(M_("Pois"));
-    const std::string adj =
+    inf->light_text   = pgettext("status", "Pois");
+    const string adj =
          (pois > 10) ? pgettext("Pois", "extremely") :
          (pois > 5)  ? pgettext("Pois", "very") :
          (pois > 3)  ? pgettext("Pois", "quite")
@@ -712,12 +713,12 @@ static void _describe_speed(status_info* inf)
         inf->long_text = gettext("Your actions are hasted.");
         _mark_expiring(inf, dur_expiring(DUR_HASTE));
     }
-    if (liquefied(you.pos(), true) && you.ground_level())
+    if (you.liquefied_ground())
     {
         inf->light_colour = BROWN;
-        inf->light_text   = gettext(M_("SlowM"));
-        inf->short_text   = gettext(M_("slowed movement"));
-        inf->long_text    = gettext("Your movement is slowed in this liquid ground.");
+        inf->light_text   = pgettext("status", "SlowM");
+        inf->short_text   = pgettext("status", "slowed movement");
+        inf->long_text    = _("Your movement is slowed on this liquid ground.");
     }
 }
 
@@ -726,7 +727,7 @@ static void _describe_sage(status_info* inf)
     if (you.sage_skills.empty())
         return;
 
-    std::vector<const char*> sages;
+    vector<const char*> sages;
     for (unsigned long i = 0; i < you.sage_skills.size(); ++i)
         sages.push_back(skill_name(you.sage_skills[i]));
 
@@ -743,24 +744,13 @@ static void _describe_airborne(status_info* inf)
     if (!you.airborne())
         return;
 
-    const bool perm     = you.permanent_flight() || you.permanent_levitation();
-    const bool expiring = (!perm && dur_expiring(DUR_LEVITATION));
-    const bool uncancel = you.attribute[ATTR_LEV_UNCANCELLABLE];
+    const bool perm     = you.permanent_flight();
+    const bool expiring = (!perm && dur_expiring(DUR_FLIGHT));
 
-    if (player_effect_cfly())
-    {
-        inf->light_colour = you.light_flight() ? BLUE : perm ? WHITE : MAGENTA;
-        inf->light_text   = _(M_("Fly"));
-        inf->short_text   = _(M_("flying"));
-        inf->long_text    = _("You are flying.");
-    }
-    else
-    {
-        inf->light_colour = perm ? WHITE : uncancel ? BLUE : MAGENTA;
-        inf->light_text   = gettext(M_("Lev"));
-        inf->short_text   = gettext(M_("levitating"));
-        inf->long_text    = gettext("You are hovering above the floor.");
-    }
+    inf->light_colour = you.tengu_flight() ? BLUE : perm ? WHITE : MAGENTA;
+    inf->light_text   = pgettext("status", "Fly");
+    inf->short_text   = pgettext("status", "flying");
+    inf->long_text    = _("You are flying.");
     inf->light_colour = _dur_colour(inf->light_colour, expiring);
     _mark_expiring(inf, expiring);
 }
@@ -779,7 +769,7 @@ static void _describe_rotting(status_info* inf)
         inf->long_text = gettext("Your flesh is rotting.");
         int rot = you.rotting;
         if (you.species == SP_GHOUL)
-            rot += 1 + (1 << std::max(0, HS_SATIATED - you.hunger_state));
+            rot += 1 + (1 << max(0, HS_SATIATED - you.hunger_state));
         if (rot > 15)
             inf->long_text = gettext("Your flesh is rotting before your eyes.");
         else if (rot > 8)
@@ -804,9 +794,9 @@ static void _describe_sickness(status_info* inf)
         inf->light_colour   = _bad_ench_colour(you.disease, low, high);
         inf->light_text     = gettext(M_("Sick"));
 
-        std::string mod = (you.disease > high) ? pgettext("Sick", "badly ")  :
-                          (you.disease >  low) ? ""        :
-                                                 pgettext("Sick", "mildly ");
+        string mod = (you.disease > high) ? pgettext("Sick", "badly ")  :
+                     (you.disease >  low) ? ""        :
+                                            pgettext("Sick", "mildly ");
 
         inf->short_text = mod + pgettext("Sick", "diseased");
         inf->long_text  = make_stringf(gettext("You are %sdiseased."), mod.c_str());
@@ -843,13 +833,6 @@ static void _describe_burden(status_info* inf)
         inf->long_text    = gettext("You are burdened.");
         break;
     case BS_UNENCUMBERED:
-        if (you.species == SP_TENGU && you.flight_mode() == FL_FLY)
-        {
-            if (you.travelling_light())
-                inf->long_text = gettext("Your small burden allows quick flight.");
-            else
-                inf->long_text = gettext("Your heavy burden is slowing your flight.");
-        }
         break;
     }
 }
@@ -951,4 +934,34 @@ static void _describe_terrain(status_info* inf)
     default:
         ;
     }
+}
+
+static void _describe_missiles(status_info* inf)
+{
+    const int level = you.missile_deflection();
+    if (!level)
+        return;
+
+    bool expiring;
+    if (level > 1)
+    {
+        inf->light_colour = MAGENTA;
+        inf->light_text   = "DMsl";
+        inf->short_text   = "deflect missiles";
+        inf->long_text    = "You deflect missiles.";
+        expiring = dur_expiring(DUR_DEFLECT_MISSILES);
+    }
+    else
+    {
+        bool perm = (player_mutation_level(MUT_DISTORTION_FIELD) == 3 ||
+                     (!you.suppressed() && scan_artefacts(ARTP_RMSL, true)));
+        inf->light_colour = BLUE;
+        inf->light_text   = "RMsl";
+        inf->short_text   = "repel missiles";
+        inf->long_text    = "You repel missiles.";
+        expiring = (!perm && dur_expiring(DUR_REPEL_MISSILES));
+    }
+
+    inf->light_colour = _dur_colour(inf->light_colour, expiring);
+    _mark_expiring(inf, expiring);
 }

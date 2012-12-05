@@ -20,12 +20,12 @@
 #include "acquire.h"
 #include "artefact.h"
 #include "beam.h"
+#include "cloud.h"
 #include "coordit.h"
 #include "database.h"
 #include "decks.h"
 #include "delay.h"
 #include "describe.h"
-#include "directn.h"
 #include "dungeon.h"
 #include "effects.h"
 #include "env.h"
@@ -35,6 +35,7 @@
 #include "godconduct.h"
 #include "items.h"
 #include "item_use.h"
+#include "libutil.h"
 #include "evoke.h"
 #include "macro.h"
 #include "maps.h"
@@ -57,6 +58,7 @@
 #include "skills2.h"
 #include "species.h"
 #include "spl-cast.h"
+#include "spl-clouds.h"
 #include "spl-damage.h"
 #include "spl-goditem.h"
 #include "spl-other.h"
@@ -64,13 +66,15 @@
 #include "spl-selfench.h"
 #include "spl-summoning.h"
 #include "spl-miscast.h"
-#include "spl-util.h"
 #include "stairs.h"
 #include "state.h"
+#include "stuff.h"
+#include "target.h"
 #include "tilepick.h"
 #include "areas.h"
 #include "transform.h"
 #include "hints.h"
+#include "terrain.h"
 #include "traps.h"
 #include "zotdef.h"
 
@@ -98,66 +102,11 @@ enum ability_flag_type
     ABFLAG_ZOTDEF         = 0x00040000, // ZotDef ability, w/ appropriate hotkey
 };
 
-struct generic_cost
-{
-    int base, add, rolls;
-
-    generic_cost(int num)
-        : base(num), add(num == 0 ? 0 : (num + 1) / 2 + 1), rolls(1)
-    {
-    }
-    generic_cost(int num, int _add, int _rolls = 1)
-        : base(num), add(_add), rolls(_rolls)
-    {
-    }
-    static generic_cost fixed(int fixed)
-    {
-        return generic_cost(fixed, 0, 1);
-    }
-    static generic_cost range(int low, int high, int _rolls = 1)
-    {
-        return generic_cost(low, high - low + 1, _rolls);
-    }
-
-    int cost() const;
-
-    operator bool () const { return base > 0 || add > 0; }
-};
-
-struct scaling_cost
-{
-    int value;
-
-    scaling_cost(int permille) : value(permille) {}
-
-    static scaling_cost fixed(int fixed)
-    {
-        return scaling_cost(-fixed);
-    }
-
-    int cost(int max) const;
-
-    operator bool () const { return value != 0; }
-};
-
-// Structure for representing an ability:
-struct ability_def
-{
-    ability_type        ability;
-    const char *        name;
-    unsigned int        mp_cost;        // magic cost of ability
-    scaling_cost        hp_cost;        // hit point cost of ability
-    unsigned int        food_cost;      // + rand2avg( food_cost, 2 )
-    generic_cost        piety_cost;     // + random2( (piety_cost + 1) / 2 + 1 )
-    unsigned int        zp_cost;        // zot point cost of ability
-    unsigned int        flags;          // used for additonal cost notices
-};
-
 static int  _find_ability_slot(const ability_def& abil);
 static bool _do_ability(const ability_def& abil);
 static void _pay_ability_costs(const ability_def& abil, int zpcost);
 static int _scale_piety_cost(ability_type abil, int original_cost);
-static std::string _zd_mons_description_for_ability(const ability_def &abil);
+static string _zd_mons_description_for_ability(const ability_def &abil);
 static monster_type _monster_for_ability(const ability_def& abil);
 
 /**
@@ -225,7 +174,7 @@ ability_type god_abilities[NUM_GODS][MAX_GOD_ABILITIES] =
     { ABIL_NON_ABILITY, ABIL_BEOGH_SMITING, ABIL_NON_ABILITY,
       ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS, ABIL_NON_ABILITY },
     // Jiyva
-    { ABIL_JIYVA_CALL_JELLY, ABIL_NON_ABILITY, ABIL_NON_ABILITY,
+    { ABIL_JIYVA_CALL_JELLY, ABIL_JIYVA_JELLY_PARALYSE, ABIL_NON_ABILITY,
       ABIL_JIYVA_SLIMIFY, ABIL_JIYVA_CURE_BAD_MUTATION },
     // Fedhas
     { ABIL_FEDHAS_EVOLUTION, ABIL_FEDHAS_SUNLIGHT, ABIL_FEDHAS_PLANT_RING,
@@ -274,9 +223,6 @@ static const ability_def Ability_List[] =
     { ABIL_STOP_FLYING, M_("Stop Flying"), 0, 0, 0, 0, 0, ABFLAG_NONE},
     { ABIL_HELLFIRE, M_("Hellfire"), 0, 150, 200, 0, 0, ABFLAG_NONE},
 
-    // FLY_II used to have ABFLAG_EXHAUSTION, but that's somewhat meaningless
-    // as exhaustion's only (and designed) effect is preventing Berserk. - bwr
-    { ABIL_FLY_II, M_("Fly"), 0, 0, 25, 0, 0, ABFLAG_NONE},
     { ABIL_DELAYED_FIREBALL, M_("Release Delayed Fireball"),
       0, 0, 0, 0, 0, ABFLAG_INSTANT},
     { ABIL_MUMMY_RESTORATION, M_("Self-Restoration"),
@@ -300,8 +246,8 @@ static const ability_def Ability_List[] =
     { ABIL_EVOKE_TURN_INVISIBLE, M_("Evoke Invisibility"),
       2, 0, 250, 0, 0, ABFLAG_NONE},
     { ABIL_EVOKE_TURN_VISIBLE, M_("Turn Visible"), 0, 0, 0, 0, 0, ABFLAG_NONE},
-    { ABIL_EVOKE_LEVITATE, M_("Evoke Levitation"), 1, 0, 100, 0, 0, ABFLAG_NONE},
-    { ABIL_EVOKE_STOP_LEVITATING, M_("Stop Levitating"), 0, 0, 0, 0, 0, ABFLAG_NONE},
+    { ABIL_EVOKE_FLIGHT, M_("Evoke Flight"), 1, 0, 100, 0, 0, ABFLAG_NONE},
+    { ABIL_EVOKE_FOG, M_("Evoke Fog"), 2, 0, 250, 0, 0, ABFLAG_NONE},
 
     { ABIL_END_TRANSFORMATION, M_("End Transformation"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 
@@ -478,7 +424,7 @@ static const ability_def Ability_List[] =
     { ABIL_RENOUNCE_RELIGION, M_("Renounce Religion"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 };
 
-static const ability_def& _get_ability_def(ability_type abil)
+const ability_def& get_ability_def(ability_type abil)
 {
     for (unsigned int i = 0;
          i < sizeof(Ability_List) / sizeof(Ability_List[0]); i++)
@@ -490,26 +436,26 @@ static const ability_def& _get_ability_def(ability_type abil)
     return Ability_List[0];
 }
 
-bool string_matches_ability_name(const std::string& key)
+bool string_matches_ability_name(const string& key)
 {
     for (int i = ABIL_SPIT_POISON; i <= ABIL_RENOUNCE_RELIGION; ++i)
     {
-        const ability_def abil = _get_ability_def(static_cast<ability_type>(i));
+        const ability_def abil = get_ability_def(static_cast<ability_type>(i));
         if (abil.ability == ABIL_NON_ABILITY)
             continue;
 
-        const std::string name = lowercase_string(ability_name(abil.ability));
-        if (name.find(key) != std::string::npos)
+        const string name = lowercase_string(ability_name(abil.ability));
+        if (name.find(key) != string::npos)
             return true;
     }
     return false;
 }
 
-std::string print_abilities()
+string print_abilities()
 {
-    std::string text = "\n<w>a:</w> ";
+    string text = "\n<w>a:</w> ";
 
-    const std::vector<talent> talents = your_talents(false);
+    const vector<talent> talents = your_talents(false);
 
     if (talents.empty())
         text += gettext("no special abilities");
@@ -549,7 +495,7 @@ static monster_type _monster_for_ability(const ability_def& abil)
     return mtyp;
 }
 
-static std::string _zd_mons_description_for_ability(const ability_def &abil)
+static string _zd_mons_description_for_ability(const ability_def &abil)
 {
     switch (abil.ability)
     {
@@ -634,9 +580,9 @@ static int _zp_cost(const ability_def& abil)
                 num /= 5;
             }
             num -= 2;        // first two are base cost
-            num = std::max(num, 0);
-            scale10 = std::min(num, 10);       // next 10 at 10% increment
-            scale20 = num - scale10;           // after that at 20% increment
+            num = max(num, 0);
+            scale10 = min(num, 10);       // next 10 at 10% increment
+            scale20 = num - scale10;      // after that at 20% increment
             break;
 
         // Monster type 2: less generous
@@ -644,7 +590,7 @@ static int _zp_cost(const ability_def& abil)
         case ABIL_MAKE_OCS:
             num = _count_relevant_monsters(abil);
             num -= 2; // first two are base cost
-            scale20 = std::max(num, 0);        // after first two, 20% increment
+            scale20 = max(num, 0);        // after first two, 20% increment
 
         // Monster type 3: least generous
         case ABIL_MAKE_SILVER_STATUE:
@@ -653,7 +599,7 @@ static int _zp_cost(const ability_def& abil)
 
         // Simple Traps
         case ABIL_MAKE_DART_TRAP:
-            scale10 = std::max(count_traps(TRAP_DART)-10, 0); // First 10 at base cost
+            scale10 = max(count_traps(TRAP_DART)-10, 0); // First 10 at base cost
             break;
 
         case ABIL_MAKE_ARROW_TRAP:
@@ -663,7 +609,7 @@ static int _zp_cost(const ability_def& abil)
         case ABIL_MAKE_NET_TRAP:
         case ABIL_MAKE_ALARM_TRAP:
             num = count_traps(_trap_for_ability(abil));
-            scale10 = std::max(num-5, 0);   // First 5 at base cost
+            scale10 = max(num-5, 0);   // First 5 at base cost
             break;
 
         case ABIL_MAKE_TELEPORT_TRAP:
@@ -684,10 +630,10 @@ static int _zp_cost(const ability_def& abil)
     return c;
 }
 
-const std::string make_cost_description(ability_type ability)
+const string make_cost_description(ability_type ability)
 {
-    const ability_def& abil = _get_ability_def(ability);
-    std::ostringstream ret;
+    const ability_def& abil = get_ability_def(ability);
+    ostringstream ret;
     if (abil.mp_cost)
     {
         ret << abil.mp_cost;
@@ -826,7 +772,7 @@ const std::string make_cost_description(ability_type ability)
     return ret.str();
 }
 
-static std::string _get_piety_amount_str(int value)
+static string _get_piety_amount_str(int value)
 {
     return (value > 15 ? gettext("extremely large") :
             value > 10 ? gettext("large") :
@@ -834,12 +780,12 @@ static std::string _get_piety_amount_str(int value)
                          gettext("small") );
 }
 
-static const std::string _detailed_cost_description(ability_type ability)
+static const string _detailed_cost_description(ability_type ability)
 {
-    const ability_def& abil = _get_ability_def(ability);
-    std::ostringstream ret;
-    std::vector<std::string> values;
-    std::string str;
+    const ability_def& abil = get_ability_def(ability);
+    ostringstream ret;
+    vector<string> values;
+    string str;
 
     bool have_cost = false;
     ret << gettext("This ability costs: ");
@@ -951,7 +897,7 @@ talent get_talent(ability_type ability, bool check_confused)
     // doing anything else, so that we'll handle its flags properly.
     result.which = _fixup_ability(ability);
 
-    const ability_def &abil = _get_ability_def(result.which);
+    const ability_def &abil = get_ability_def(result.which);
 
     int failure = 0;
     bool invoc = false;
@@ -1056,12 +1002,8 @@ talent get_talent(ability_type ability, bool check_confused)
             failure -= 20;
         break;
 
-    case ABIL_FLY:              // this is for tengu {dlb}
+    case ABIL_FLY:
         failure = 45 - (3 * you.experience_level);
-        break;
-
-    case ABIL_FLY_II:           // this is for draconians {dlb}
-        failure = 45 - (you.experience_level + you.strength());
         break;
 
     case ABIL_TRAN_BAT:
@@ -1101,17 +1043,17 @@ talent get_talent(ability_type ability, bool check_confused)
         break;
 
     case ABIL_EVOKE_TURN_VISIBLE:
-    case ABIL_EVOKE_STOP_LEVITATING:
     case ABIL_STOP_FLYING:
         failure = 0;
         break;
 
-    case ABIL_EVOKE_LEVITATE:
+    case ABIL_EVOKE_FLIGHT:
     case ABIL_EVOKE_BLINK:
         failure = 40 - you.skill(SK_EVOCATIONS, 2);
         break;
 
     case ABIL_EVOKE_BERSERK:
+    case ABIL_EVOKE_FOG:
         failure = 50 - you.skill(SK_EVOCATIONS, 2);
         break;
         // end item abilities - some possibly mutagenic {dlb}
@@ -1143,6 +1085,7 @@ talent get_talent(ability_type ability, bool check_confused)
     case ABIL_ASHENZARI_END_TRANSFER:
     case ABIL_ASHENZARI_SCRYING:
     case ABIL_JIYVA_CURE_BAD_MUTATION:
+    case ABIL_JIYVA_JELLY_PARALYSE:
         invoc = true;
         failure = 0;
         break;
@@ -1295,26 +1238,26 @@ talent get_talent(ability_type ability, bool check_confused)
 
 const char* ability_name(ability_type ability)
 {
-    return _get_ability_def(ability).name;
+    return get_ability_def(ability).name;
 }
 
-std::vector<const char*> get_ability_names()
+vector<const char*> get_ability_names()
 {
-    std::vector<talent> talents = your_talents(false);
-    std::vector<const char*> result;
+    vector<talent> talents = your_talents(false);
+    vector<const char*> result;
     for (unsigned int i = 0; i < talents.size(); ++i)
         result.push_back(ability_name(talents[i].which));
     return result;
 }
 
 // XXX: should this be in describe.cc?
-std::string get_ability_desc(const ability_type ability)
+string get_ability_desc(const ability_type ability)
 {
-    const std::string& name = ability_name(ability);
+    const string& name = ability_name(ability);
 
     // XXX: The suffix is necessary to distinguish between similarly
     // named spells.  Yes, this is a hack.
-    std::string lookup = getLongDescription(name + " ability");
+    string lookup = getLongDescription(name + " ability");
     if (lookup.empty())
     {
         // Try again without the suffix.
@@ -1341,15 +1284,13 @@ void no_ability_msg()
 {
     // Give messages if the character cannot use innate talents right now.
     // * Vampires can't turn into bats when full of blood.
-    // * Permanent flying (Tengu) cannot be turned off.
+    // * Tengu can't start to fly if already flying.
     if (you.species == SP_VAMPIRE && you.experience_level >= 3)
         mpr(_("Sorry, you're too full to transform right now."));
     else if (you.species == SP_TENGU && you.experience_level >= 5
              || player_mutation_level(MUT_BIG_WINGS))
     {
-        if (you.flight_mode() == FL_LEVITATE)
-            mpr(_("You can only start flying from the ground."));
-        else if (you.flight_mode() == FL_FLY)
+        if (you.flight_mode())
             mpr(_("You're already flying!"));
     }
     else if (silenced(you.pos()) && you.religion != GOD_NO_GOD)
@@ -1371,7 +1312,7 @@ bool activate_ability()
         return false;
     }
 
-    std::vector<talent> talents = your_talents(false);
+    vector<talent> talents = your_talents(false);
     if (talents.empty())
     {
         no_ability_msg();
@@ -1389,12 +1330,19 @@ bool activate_ability()
             return false;
         }
     }
-
+#ifdef TOUCH_UI
+    int selected = choose_ability_menu(talents);
+    if (selected == -1)
+    {
+        canned_msg(MSG_OK);
+        return (false);
+    }
+#else
     int selected = -1;
     while (selected < 0)
     {
-        msg::streams(MSGCH_PROMPT) << gettext("Use which ability? (? or * to list) ")
-                                   << std::endl;
+        msg::streams(MSGCH_PROMPT) << _("Use which ability? (? or * to list) ")
+                                   << endl;
 
         const int keyin = get_ch();
 
@@ -1434,7 +1382,7 @@ bool activate_ability()
             }
         }
     }
-
+#endif
     return activate_talent(talents[selected]);
 }
 
@@ -1445,13 +1393,25 @@ static bool _check_ability_possible(const ability_def& abil,
                                     bool hungerCheck = true,
                                     bool quiet = false)
 {
+    if (silenced(you.pos()) && you.religion != GOD_NEMELEX_XOBEH)
+    {
+        talent tal = get_talent(abil.ability, false);
+        if (tal.is_invocation)
+        {
+            if (!quiet)
+                mprf("You cannot call out to %s while silenced.",
+                     god_name(you.religion).c_str());
+            return false;
+        }
+    }
     // Don't insta-starve the player.
     // (Happens at 100, losing consciousness possible from 500 downward.)
     if (hungerCheck && !you.is_undead)
     {
         const int expected_hunger = you.hunger - abil.food_cost * 2;
-        dprf("hunger: %d, max. food_cost: %d, expected hunger: %d",
-             you.hunger, abil.food_cost * 2, expected_hunger);
+        if (!quiet)
+            dprf("hunger: %d, max. food_cost: %d, expected hunger: %d",
+                 you.hunger, abil.food_cost * 2, expected_hunger);
         // Safety margin for natural hunger, mutations etc.
         if (expected_hunger <= 150)
         {
@@ -1500,9 +1460,9 @@ static bool _check_ability_possible(const ability_def& abil,
         if (!you.disease && !you.rotting && !you.duration[DUR_POISONING]
             && !you.duration[DUR_CONF] && !you.duration[DUR_SLOW]
             && !you.duration[DUR_PARALYSIS] && !you.petrified()
-            && you.strength() == you.max_strength()
-            && you.intel() == you.max_intel()
-            && you.dex() == you.max_dex()
+            && you.strength(false) == you.max_strength()
+            && you.intel(false) == you.max_intel()
+            && you.dex(false) == you.max_dex()
             && !player_rotted()
             && !you.duration[DUR_NAUSEA])
         {
@@ -1513,9 +1473,9 @@ static bool _check_ability_possible(const ability_def& abil,
         return true;
 
     case ABIL_MUMMY_RESTORATION:
-        if (you.strength() == you.max_strength()
-            && you.intel() == you.max_intel()
-            && you.dex() == you.max_dex()
+        if (you.strength(false) == you.max_strength()
+            && you.intel(false) == you.max_intel()
+            && you.dex(false) == you.max_dex()
             && !player_rotted())
         {
             if (!quiet)
@@ -1587,17 +1547,10 @@ static bool _check_ability_possible(const ability_def& abil,
         return (you.can_go_berserk(true, false, true)
                 && (quiet || berserk_check_wielded_weapon()));
 
-    case ABIL_FLY_II:
-        if (you.duration[DUR_EXHAUSTED])
+    case ABIL_EVOKE_FOG:
+        if (env.cgrid(you.pos()) != EMPTY_CLOUD)
         {
-            if (!quiet)
-                mpr(_("You're too exhausted to fly."));
-            return false;
-        }
-        else if (you.burden_state != BS_UNENCUMBERED)
-        {
-            if (!quiet)
-                mpr(_("You're carrying too much weight to fly."));
+            mpr(_("It's too cloudy to do that here."));
             return false;
         }
         return true;
@@ -1610,19 +1563,19 @@ static bool _check_ability_possible(const ability_def& abil,
 bool check_ability_possible(const ability_type ability, bool hungerCheck,
                             bool quiet)
 {
-    return _check_ability_possible(_get_ability_def(ability), hungerCheck,
+    return _check_ability_possible(get_ability_def(ability), hungerCheck,
                                    quiet);
 }
 
 bool activate_talent(const talent& tal)
 {
     // Doing these would outright kill the player.
-    if (tal.which == ABIL_EVOKE_STOP_LEVITATING)
+    if (tal.which == ABIL_STOP_FLYING)
     {
         if (is_feat_dangerous(env.grid(you.pos()), true, true)
             && (!you.can_swim() || !feat_is_water(env.grid(you.pos()))))
         {
-            mpr(gettext("Stopping levitation right now would be fatal!"));
+            mpr(_("Stopping flight right now would be fatal!"));
             crawl_state.zero_turns_taken();
             return false;
         }
@@ -1663,8 +1616,8 @@ bool activate_talent(const talent& tal)
         return false;
     }
 
-    if ((tal.which == ABIL_EVOKE_LEVITATE || tal.which == ABIL_TRAN_BAT)
-        && liquefied(you.pos()) && !you.ground_level())
+    if ((tal.which == ABIL_EVOKE_FLIGHT || tal.which == ABIL_TRAN_BAT)
+        && you.liquefied_ground())
     {
         mpr(gettext("You can't escape from the ground with such puny magic!"), MSGCH_WARN);
         crawl_state.zero_turns_taken();
@@ -1676,7 +1629,6 @@ bool activate_talent(const talent& tal)
     switch (tal.which)
     {
         case ABIL_RENOUNCE_RELIGION:
-        case ABIL_EVOKE_STOP_LEVITATING:
         case ABIL_STOP_FLYING:
         case ABIL_EVOKE_TURN_VISIBLE:
         case ABIL_END_TRANSFORMATION:
@@ -1700,7 +1652,7 @@ bool activate_talent(const talent& tal)
         return false;
     }
 
-    const ability_def& abil = _get_ability_def(tal.which);
+    const ability_def& abil = get_ability_def(tal.which);
 
     // Check that we can afford to pay the costs.
     // Note that mutation shenanigans might leave us with negative MP,
@@ -1931,12 +1883,12 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_REMOVE_CURSE:
         remove_curse();
-        lose_stat(STAT_RANDOM, 1, false, "zot ability");
+        lose_stat(STAT_RANDOM, 1, true, "zot ability");
         break;
 
     case ABIL_MAKE_SAGE:
         sage_card(20, DECK_RARITY_RARE);
-        lose_stat(STAT_RANDOM, 1 + random2(3), false, "zot ability");
+        lose_stat(STAT_RANDOM, 1 + random2(3), true, "zot ability");
         break;
 
     case ABIL_MUMMY_RESTORATION:
@@ -2165,21 +2117,17 @@ static bool _do_ability(const ability_def& abil)
         go_berserk(true);
         break;
 
-    // Fly (tengu) - eventually becomes permanent (see main.cc).
+    // Fly (tengu/drac) - permanent at high XL
     case ABIL_FLY:
-        if (you.experience_level < 15)
-            cast_fly(you.experience_level * 4);
-        else
+        if (you.racial_permanent_flight())
         {
-            you.attribute[ATTR_PERM_LEVITATION] = 1;
-            float_player(true);
-            mpr(gettext("You feel very comfortable in the air."));
+            you.attribute[ATTR_PERM_FLIGHT] = 1;
+            float_player();
+            if (you.species == SP_TENGU)
+                mpr(_("You feel very comfortable in the air."));
         }
-        break;
-
-    // Fly (Draconians, or anything else with wings).
-    case ABIL_FLY_II:
-        cast_fly(you.experience_level * 2);
+        else
+            cast_fly(you.experience_level * 4);
         break;
 
     // DEMONIC POWERS:
@@ -2202,31 +2150,28 @@ static bool _do_ability(const ability_def& abil)
         you.duration[DUR_INVIS] = 1;
         break;
 
-    case ABIL_EVOKE_LEVITATE:           // ring, boots, randarts
-        if (player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_LEVITATION))
+    case ABIL_EVOKE_FLIGHT:             // ring, boots, randarts
+        if (player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_FLYING))
         {
             bool standing = !you.airborne();
-            you.attribute[ATTR_PERM_LEVITATION] = 1;
+            you.attribute[ATTR_PERM_FLIGHT] = 1;
             if (standing)
-                float_player(false);
+                float_player();
             else
                 mpr(gettext("You feel more buoyant."));
         }
         else
-            levitate_player(you.skill(SK_EVOCATIONS, 2) + 30);
+            fly_player(you.skill(SK_EVOCATIONS, 2) + 30);
         break;
 
-    case ABIL_EVOKE_STOP_LEVITATING:
-        ASSERT(!you.attribute[ATTR_LEV_UNCANCELLABLE]);
-        you.duration[DUR_LEVITATION] = 0;
-        // cancels all sources at once: boots + tengu
-        you.attribute[ATTR_PERM_LEVITATION] = 0;
-        land_player();
+    case ABIL_EVOKE_FOG:     // cloak of the Thief
+        mpr("With a swish of your cloak, you release a cloud of fog.");
+        big_cloud(random_smoke_type(), &you, you.pos(), 50, 8 + random2(8));
         break;
 
     case ABIL_STOP_FLYING:
-        you.duration[DUR_LEVITATION] = 0;
-        you.attribute[ATTR_PERM_LEVITATION] = 0;
+        you.duration[DUR_FLIGHT] = 0;
+        you.attribute[ATTR_PERM_FLIGHT] = 0;
         land_player();
         break;
 
@@ -2576,7 +2521,7 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_LUGONU_ABYSS_ENTER:
     {
         // Move permanent hp/mp loss from leaving to entering the Abyss. (jpeg)
-        const int maxloss = std::max(2, div_rand_round(you.hp_max, 30));
+        const int maxloss = max(2, div_rand_round(you.hp_max, 30));
         // Lose permanent HP
         dec_max_hp(random_range(1, maxloss));
 
@@ -2703,16 +2648,15 @@ static bool _do_ability(const ability_def& abil)
     }
 
     case ABIL_JIYVA_JELLY_PARALYSE:
-        // Activated via prayer elsewhere.
+        jiyva_paralyse_jellies();
         break;
 
     case ABIL_JIYVA_SLIMIFY:
     {
         const item_def* const weapon = you.weapon();
-        const std::string msg = (weapon) ? weapon->name(true, DESC_YOUR)
-                                         : ("your " + you.hand_name(true));
-        /// 무기 이름이나, 손의 이름이 나온다.
-        mprf(MSGCH_DURATION, gettext("A thick mucus forms on %s."), msg.c_str());
+        const string msg = (weapon) ? weapon->name(true, DESC_YOUR)
+                                    : (_("your ") + you.hand_name(true));
+        mprf(MSGCH_DURATION, _("A thick mucus forms on %s."), msg.c_str());
         you.increase_duration(DUR_SLIMIFY,
                               you.skill_rdiv(SK_INVOCATIONS, 3, 2) + 3,
                               100);
@@ -2880,7 +2824,7 @@ static void _pay_ability_costs(const ability_def& abil, int zpcost)
         lose_piety(piety_cost);
 }
 
-int choose_ability_menu(const std::vector<talent>& talents)
+int choose_ability_menu(const vector<talent>& talents)
 {
 #ifdef USE_TILE_LOCAL
     const bool text_only = false;
@@ -2889,7 +2833,7 @@ int choose_ability_menu(const std::vector<talent>& talents)
 #endif
 
     ToggleableMenu abil_menu(MF_SINGLESELECT | MF_ANYPRINTABLE
-                             | MF_ALWAYS_SHOW_MORE, text_only);
+                             | MF_TOGGLE_ACTION, text_only);
 
     abil_menu.set_highlighter(NULL);
 #ifdef USE_TILE_LOCAL
@@ -2912,6 +2856,10 @@ int choose_ability_menu(const std::vector<talent>& talents)
                                 "Cost                       Failure"),
                                 MEL_TITLE));
 #endif
+    abil_menu.set_tag("ability");
+    abil_menu.add_toggle_key('!');
+    abil_menu.add_toggle_key('?');
+    abil_menu.menu_action = Menu::ACT_EXECUTE;
 
     if (crawl_state.game_is_hints())
     {
@@ -2925,9 +2873,6 @@ int choose_ability_menu(const std::vector<talent>& talents)
                            "Press '<w>!</w>' or '<w>?</w>' to toggle "
                            "between ability selection and description.")));
     }
-
-    abil_menu.action_cycle = Menu::CYCLE_TOGGLE;
-    abil_menu.menu_action  = Menu::ACT_EXECUTE;
 
     int numbers[52];
     for (int i = 0; i < 52; ++i)
@@ -3021,7 +2966,7 @@ int choose_ability_menu(const std::vector<talent>& talents)
 
     while (true)
     {
-        std::vector<MenuEntry*> sel = abil_menu.show(false);
+        vector<MenuEntry*> sel = abil_menu.show(false);
         if (!crawl_state.doing_prev_cmd_again)
             redraw_screen();
         if (sel.empty())
@@ -3038,22 +2983,22 @@ int choose_ability_menu(const std::vector<talent>& talents)
     }
 }
 
-std::string describe_talent(const talent& tal)
+string describe_talent(const talent& tal)
 {
     ASSERT(tal.which != ABIL_NON_ABILITY);
 
     char* failure = failure_rate_to_string(tal.fail);
 
-    std::ostringstream desc;
-    desc << std::left
-         << chop_string(gettext(ability_name(tal.which)), 32)
+    ostringstream desc;
+    desc << left
+         << chop_string(_(ability_name(tal.which)), 32)
          << chop_string(make_cost_description(tal.which), 27)
          << chop_string(gettext(failure), 10);
     free(failure);
     return desc.str();
 }
 
-static void _add_talent(std::vector<talent>& vec, const ability_type ability,
+static void _add_talent(vector<talent>& vec, const ability_type ability,
                         bool check_confused)
 {
     const talent t = get_talent(ability, check_confused);
@@ -3061,9 +3006,9 @@ static void _add_talent(std::vector<talent>& vec, const ability_type ability,
         vec.push_back(t);
 }
 
-std::vector<talent> your_talents(bool check_confused)
+vector<talent> your_talents(bool check_confused, bool include_unusable)
 {
-    std::vector<talent> talents;
+    vector<talent> talents;
 
     // zot defence abilities; must also be updated in player.cc when these levels are changed
     if (crawl_state.game_is_zotdef())
@@ -3196,29 +3141,21 @@ std::vector<talent> your_talents(bool check_confused)
     if (you.species == SP_VAMPIRE && you.experience_level >= 6)
         _add_talent(talents, ABIL_BOTTLE_BLOOD, false);
 
-    if (you.species == SP_TENGU
-        && !you.attribute[ATTR_PERM_LEVITATION]
-        && you.experience_level >= 5
-        && (you.experience_level >= 15 || !you.airborne()))
+    if ((you.species == SP_TENGU && you.experience_level >= 5
+         || player_mutation_level(MUT_BIG_WINGS)) && !you.airborne()
+        || you.racial_permanent_flight() && !you.attribute[ATTR_PERM_FLIGHT])
     {
         // Tengu can fly, but only from the ground
         // (until level 15, when it becomes permanent until revoked).
-        // jmf: "upgrade" for draconians -- expensive flight
+        // Black draconians get permaflight at XL 14, but they don't get
+        // the tengu movement/evasion bonuses and they don't get temporary
+        // flight before then.
+        // Other dracs can mutate big wings whenever for temporary flight.
         _add_talent(talents, ABIL_FLY, check_confused);
     }
-    else if (player_mutation_level(MUT_BIG_WINGS) && !you.airborne()
-             // Liches' bone wings and statues' stone wings cannot fly.
-             && !form_changed_physiology())
-    {
-        ASSERT(player_genus(GENPC_DRACONIAN));
-        _add_talent(talents, ABIL_FLY_II, check_confused);
-    }
 
-    if (you.attribute[ATTR_PERM_LEVITATION]
-        && you.species == SP_TENGU && you.experience_level >= 5)
-    {
+    if (you.attribute[ATTR_PERM_FLIGHT] && you.racial_permanent_flight())
         _add_talent(talents, ABIL_STOP_FLYING, check_confused);
-    }
 
     // Mutations
     if (player_mutation_level(MUT_HURL_HELLFIRE))
@@ -3231,12 +3168,13 @@ std::vector<talent> your_talents(bool check_confused)
         _add_talent(talents, ABIL_BLINK, check_confused);
 
     // Religious abilities.
-    std::vector<ability_type> abilities = get_god_abilities();
+    vector<ability_type> abilities = get_god_abilities(include_unusable);
     for (unsigned int i = 0; i < abilities.size(); ++i)
         _add_talent(talents, abilities[i], check_confused);
 
     // And finally, the ability to opt-out of your faith {dlb}:
-    if (you.religion != GOD_NO_GOD && !silenced(you.pos()))
+    if (you.religion != GOD_NO_GOD
+        && (include_unusable || !silenced(you.pos())))
         _add_talent(talents, ABIL_RENOUNCE_RELIGION, check_confused);
 
     //jmf: Check for breath weapons - they're exclusive of each other, I hope!
@@ -3259,6 +3197,9 @@ std::vector<talent> your_talents(bool check_confused)
         if (scan_artefacts(ARTP_BLINK))
             _add_talent(talents, ABIL_EVOKE_BLINK, check_confused);
 
+        if (scan_artefacts(ARTP_FOG))
+            _add_talent(talents, ABIL_EVOKE_FOG, check_confused);
+
         if (wearing_amulet(AMU_RAGE) || scan_artefacts(ARTP_BERSERK))
             _add_talent(talents, ABIL_EVOKE_BERSERK, check_confused);
 
@@ -3273,24 +3214,24 @@ std::vector<talent> your_talents(bool check_confused)
                 _add_talent(talents, ABIL_EVOKE_TURN_INVISIBLE, check_confused);
         }
 
-        if (player_evokable_levitation())
+        if (player_evokable_flight())
         {
             // Has no effect on permanently flying Tengu.
-            if (!you.permanent_flight())
+            if (!you.permanent_flight() || !you.racial_permanent_flight())
             {
-                // You can still evoke perm levitation if you have temporary one.
-                if (!you.is_levitating()
-                    || !you.attribute[ATTR_PERM_LEVITATION]
-                       && player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_LEVITATION))
+                // You can still evoke perm flight if you have temporary one.
+                if (!you.flight_mode()
+                    || !you.attribute[ATTR_PERM_FLIGHT]
+                       && player_equip_ego_type(EQ_ALL_ARMOUR, SPARM_FLYING))
                 {
-                    _add_talent(talents, ABIL_EVOKE_LEVITATE, check_confused);
+                    _add_talent(talents, ABIL_EVOKE_FLIGHT, check_confused);
                 }
-                // Now you can only turn levitation off if you have an
+                // Now you can only turn flight off if you have an
                 // activatable item.  Potions and miscast effects will
                 // have to time out (this makes the miscast effect actually
                 // a bit annoying). -- bwr
-                if (you.is_levitating() && !you.attribute[ATTR_LEV_UNCANCELLABLE])
-                    _add_talent(talents, ABIL_EVOKE_STOP_LEVITATING, check_confused);
+                if (you.flight_mode() && !you.attribute[ATTR_FLIGHT_UNCANCELLABLE])
+                    _add_talent(talents, ABIL_STOP_FLYING, check_confused);
             }
         }
 
@@ -3476,9 +3417,9 @@ static int _find_ability_slot(const ability_def &abil)
     return -1;
 }
 
-std::vector<ability_type> get_god_abilities(bool include_unusable)
+vector<ability_type> get_god_abilities(bool include_unusable)
 {
-    std::vector<ability_type> abilities;
+    vector<ability_type> abilities;
     if (you.religion == GOD_TROG && (include_unusable || !silenced(you.pos())))
         abilities.push_back(ABIL_TROG_BURN_SPELLBOOKS);
     else if (you.religion == GOD_ELYVILON && (include_unusable || !silenced(you.pos())))

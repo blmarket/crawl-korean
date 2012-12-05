@@ -21,6 +21,22 @@ last_game_id = 0
 processes = dict()
 unowned_process_logger = logging.LoggerAdapter(logging.getLogger(), {})
 
+def find_game_info(socket_dir, socket_file):
+    game_id = socket_file[socket_file.index(":")+1:-5]
+    if (game_id in config.games and
+        os.path.abspath(config.games[game_id]["socket_path"]) == os.path.abspath(socket_dir)):
+        config.games[game_id]["id"] = game_id
+        return config.games[game_id]
+
+    game_info = None
+    for game_id in config.games.keys():
+        gi = config.games[game_id]
+        if os.path.abspath(gi["socket_path"]) == os.path.abspath(socket_dir):
+            game_info = gi
+            break
+    game_info["id"] = game_id
+    return game_info
+
 def handle_new_socket(path, event):
     dirname, filename = os.path.split(path)
     if ":" not in filename or not filename.endswith(".sock"): return
@@ -30,19 +46,14 @@ def handle_new_socket(path, event):
         if abspath in processes: return # Created by us
 
         # Find a game_info with this socket path
-        game_info = None
-        for game_id in config.games.keys():
-            gi = config.games[game_id]
-            if os.path.abspath(gi["socket_path"]) == os.path.abspath(dirname):
-                game_info = gi
-                break
-        game_info["id"] = game_id
+        game_info = find_game_info(dirname, filename)
 
         # Create process handler
         process = CrawlProcessHandler(game_info, username,
                                       unowned_process_logger)
         processes[abspath] = process
         process.connect(abspath)
+        process.logger.info("Found a %s game.", game_info["id"])
 
         # Notify lobbys
         update_all_lobbys(process)
@@ -51,6 +62,7 @@ def handle_new_socket(path, event):
         process = processes[abspath]
         if process.process: return # Handled by us, will be removed later
         process.handle_process_end()
+        process.logger.info("Game ended.")
         remove_in_lobbys(process)
         del processes[abspath]
 
@@ -67,11 +79,13 @@ class CrawlProcessHandlerBase(object):
     def __init__(self, game_params, username, logger, io_loop=None):
         self.game_params = game_params
         self.username = username
-        self.logger = logger
+        self.logger = logging.LoggerAdapter(logger, {})
+        self.logger.process = self._process_log_msg
         self.io_loop = io_loop or IOLoop.instance()
 
         self.process = None
         self.client_path = self.config_path("client_path")
+        self.crawl_version = None
         self.where = {}
         self.wheretime = 0
         self.last_milestone = None
@@ -82,17 +96,20 @@ class CrawlProcessHandlerBase(object):
         self.lock_basename = self.formatted_time + ".ttyrec"
 
         self.end_callback = None
-        self._watchers = set()
         self._receivers = set()
         self.last_activity_time = time.time()
         self.idle_checker = PeriodicCallback(self.check_idle, 10000,
                                              io_loop = self.io_loop)
         self.idle_checker.start()
         self._was_idle = False
+        self.last_watcher_join = 0
 
         global last_game_id
         self.id = last_game_id + 1
         last_game_id = self.id
+
+    def _process_log_msg(self, msg, kwargs):
+        return "P%-5s %s" % (self.id, msg), kwargs
 
     def format_path(self, path):
         return dgl_format_str(path, self.username, self.game_params)
@@ -132,51 +149,56 @@ class CrawlProcessHandlerBase(object):
 
         self.idle_checker.stop()
 
-        for watcher in list(self._watchers):
-            watcher.stop_watching()
+        for watcher in list(self._receivers):
+            if watcher.watched_game == self:
+                watcher.stop_watching()
 
         if self.end_callback:
             self.end_callback()
 
     def update_watcher_description(self):
-        watcher_names = [watcher.username for watcher in self._watchers
-                         if watcher.username]
-        anon_count = len(self._watchers) - len(watcher_names)
+        def wrap_name(watcher):
+            if watcher.watched_game:
+                return "<span class='watcher'>" + watcher.username + "</span>"
+            else:
+                return "<span class='player'>" + watcher.username + "</span>"
+        watcher_names = [wrap_name(w) for w in self._receivers
+                         if w.username]
+        anon_count = len(self._receivers) - len(watcher_names)
         s = ", ".join(watcher_names)
         if len(watcher_names) > 0 and anon_count > 0:
             s = s + ", and %i Anon" % anon_count
         elif anon_count > 0:
             s = "%i Anon" % anon_count
         self.send_to_all("update_spectators",
-                         count = len(self._watchers),
+                         count = self.watcher_count(),
                          names = s)
 
         update_all_lobbys(self)
 
-    def add_watcher(self, watcher, hide = False):
-        if not hide:
-            self._watchers.add(watcher)
+    def add_watcher(self, watcher):
+        self.last_watcher_join = time.time()
         self._receivers.add(watcher)
         if self.client_path:
             self._send_client(watcher)
-        if not hide:
-            self.update_watcher_description()
+        self.update_watcher_description()
 
     def remove_watcher(self, watcher):
-        if watcher in self._watchers:
-            self._watchers.remove(watcher)
         self._receivers.remove(watcher)
         self.update_watcher_description()
 
     def watcher_count(self):
-        return len(self._watchers)
+        return len([w for w in self._receivers if w.watched_game])
 
     def send_client_to_all(self):
         for receiver in self._receivers:
             self._send_client(receiver)
 
     def _send_client(self, watcher):
-        v = hashlib.sha1(os.path.abspath(self.client_path)).hexdigest()
+        h = hashlib.sha1(os.path.abspath(self.client_path))
+        if self.crawl_version:
+            h.update(self.crawl_version)
+        v = h.hexdigest()
         GameDataHandler.add_version(v,
                                     os.path.join(self.client_path, "static"))
 
@@ -187,9 +209,10 @@ class CrawlProcessHandlerBase(object):
         watcher.send_message("game_client", content = game_html)
 
     def stop(self):
-        self.process.send_signal(subprocess.signal.SIGHUP)
-        t = time.time() + config.kill_timeout
-        self.kill_timeout = self.io_loop.add_timeout(t, self.kill)
+        if self.process:
+            self.process.send_signal(subprocess.signal.SIGHUP)
+            t = time.time() + config.kill_timeout
+            self.kill_timeout = self.io_loop.add_timeout(t, self.kill)
 
     def kill(self):
         if self.process:
@@ -234,7 +257,7 @@ class CrawlProcessHandlerBase(object):
         entry = {
             "id": self.id,
             "username": self.username,
-            "spectator_count": len(self._watchers),
+            "spectator_count": self.watcher_count(),
             "idle_time": (self.idle_time() if self.is_idle() else 0),
             "game_id": self.game_params["id"],
             }
@@ -299,6 +322,11 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
     def start(self):
         self._purge_locks_and_start(True)
 
+    def stop(self):
+        super(CrawlProcessHandler, self).stop()
+        self._stop_purging_stale_processes()
+        self._stale_pid = None
+
     def _purge_locks_and_start(self, firsttime=False):
         # Purge stale locks
         lockfile = self._find_lock()
@@ -318,7 +346,7 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
                     self._process_hup_timeout = to
                 else:
                     self._kill_stale_process()
-            except:
+            except Exception:
                 self.logger.error("Error while handling lockfile %s.", lockfile,
                                   exc_info=True)
                 errmsg = ("Error while trying to terminate a stale process.<br>" +
@@ -348,6 +376,7 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
 
     def _kill_stale_process(self, signal=subprocess.signal.SIGHUP):
         self._process_hup_timeout = None
+        if self._stale_pid == None: return
         if signal == subprocess.signal.SIGHUP:
             self.logger.info("Purging stale lock at %s, pid %s.",
                              self._stale_lockfile, self._stale_pid)
@@ -416,37 +445,45 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
                                     "-await-connection"]
 
         ttyrec_path = self.config_path("ttyrec_path")
-        self.ttyrec_filename = os.path.join(ttyrec_path, self.lock_basename)
+        if ttyrec_path:
+            self.ttyrec_filename = os.path.join(ttyrec_path, self.lock_basename)
 
         processes[os.path.abspath(self.socketpath)] = self
 
-        self.logger.info("Starting crawl.")
+        self.logger.info("Starting %s.", game["id"])
 
-        self.process = TerminalRecorder(call, self.ttyrec_filename,
-                                        self._ttyrec_id_header(),
-                                        self.logger, self.io_loop,
-                                        config.recording_term_size)
-        self.process.end_callback = self._on_process_end
-        self.process.output_callback = self._on_process_output
-        self.process.activity_callback = self.note_activity
+        try:
+            self.process = TerminalRecorder(call, self.ttyrec_filename,
+                                            self._ttyrec_id_header(),
+                                            self.logger, self.io_loop,
+                                            config.recording_term_size)
+            self.process.end_callback = self._on_process_end
+            self.process.output_callback = self._on_process_output
+            self.process.activity_callback = self.note_activity
 
-        self.gen_inprogress_lock()
+            self.gen_inprogress_lock()
 
-        self.connect(self.socketpath)
+            self.connect(self.socketpath, True)
 
-        self.logger.info("Crawl FDs: fd%s, fd%s.",
-                         self.process.child_fd,
-                         self.process.errpipe_read)
+            self.logger.info("Crawl FDs: fd%s, fd%s.",
+                             self.process.child_fd,
+                             self.process.errpipe_read)
 
-        self.last_activity_time = time.time()
+            self.last_activity_time = time.time()
 
-        self.check_where()
+            self.check_where()
+        except Exception:
+            self.logger.warning("Error while starting the Crawl process!", exc_info=True)
+            if self.process:
+                self.stop()
+            else:
+                self._on_process_end()
 
-    def connect(self, socketpath):
+    def connect(self, socketpath, primary = False):
         self.socketpath = socketpath
         self.conn = WebtilesSocketConnection(self.io_loop, self.socketpath)
         self.conn.message_callback = self._on_socket_message
-        self.conn.connect()
+        self.conn.connect(primary)
 
     def gen_inprogress_lock(self):
         self.inprogress_lock = os.path.join(self.config_path("inprogress_path"),
@@ -455,13 +492,18 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
         fcntl.lockf(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
         self.inprogress_lock_file = f
         cols, lines = self.process.get_terminal_size()
-        f.write("%s\n%s\n%s\n" % (self.process.pid, cols, lines))
+        f.write("%s\n%s\n%s\n" % (self.process.pid, lines, cols))
         f.flush()
 
     def remove_inprogress_lock(self):
+        if self.inprogress_lock_file is None: return
         fcntl.lockf(self.inprogress_lock_file.fileno(), fcntl.LOCK_UN)
         self.inprogress_lock_file.close()
-        os.remove(self.inprogress_lock)
+        try:
+            os.remove(self.inprogress_lock)
+        except OSError:
+            # Lock already got deleted
+            pass
 
     def _ttyrec_id_header(self):
         clrscr = "\033[2J"
@@ -491,16 +533,20 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
 
         self.process = None
 
+        self.handle_process_end()
+
+    def handle_process_end(self):
         if self.conn:
             self.conn.close()
             self.conn = None
 
-        self.handle_process_end()
+        super(CrawlProcessHandler, self).handle_process_end()
 
-    def add_watcher(self, watcher, hide = False):
-        super(CrawlProcessHandler, self).add_watcher(watcher, hide)
 
-        if self.conn:
+    def add_watcher(self, watcher):
+        super(CrawlProcessHandler, self).add_watcher(watcher)
+
+        if self.conn and self.conn.open:
             self.conn.send_message('{"msg":"spectator_joined"}')
 
     def handle_input(self, msg):
@@ -529,10 +575,11 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
     def handle_chat_message(self, username, text):
         super(CrawlProcessHandler, self).handle_chat_message(username, text)
 
-        self.conn.send_message(json_encode({
-                    "msg": "note",
-                    "content": "%s: %s" % (username, text)
-                    }))
+        if self.conn and self.conn.open:
+            self.conn.send_message(json_encode({
+                        "msg": "note",
+                        "content": "%s: %s" % (username, text)
+                        }))
 
     def _on_process_output(self, line):
         self.check_where()
@@ -553,12 +600,22 @@ class CrawlProcessHandler(CrawlProcessHandlerBase):
             if msgobj["msg"] == "client_path":
                 if self.client_path == None:
                     self.client_path = self.format_path(msgobj["path"])
+                    if "version" in msgobj:
+                        self.crawl_version = msgobj["version"]
+                        self.logger.info("Crawl version: %s.", self.crawl_version)
                     self.send_client_to_all()
             else:
                 self.logger.warning("Unknown message from the crawl process: %s",
                                     msgobj["msg"])
         else:
             self.check_where()
+            if time.time() > self.last_watcher_join + 2:
+                # Treat socket messages as activity, since it's otherwise
+                # hard to determine activity for games found via
+                # watch_socket_dirs.
+                # But don't if a spectator just joined, since we don't
+                # want that to reset idle time.
+                self.note_activity()
 
             self.write_to_all(msg)
 
@@ -593,7 +650,7 @@ class CompatCrawlProcessHandler(CrawlProcessHandlerBase):
         game = self.game_params
         call = self._base_call()
 
-        self.logger.info("Starting crawl (compat-mode).")
+        self.logger.info("Starting %s (compat-mode).", game["id"])
 
         self.process = subprocess.Popen(call,
                                         stdin = subprocess.PIPE,
@@ -613,6 +670,8 @@ class CompatCrawlProcessHandler(CrawlProcessHandlerBase):
         self.last_activity_time = time.time()
 
         self.create_mock_ttyrec()
+
+        processes[os.path.abspath(self.ttyrec_filename)] = self
 
         self.check_where()
 
@@ -639,11 +698,16 @@ class CompatCrawlProcessHandler(CrawlProcessHandlerBase):
 
             self.logger.info("Crawl terminated. (compat-mode)")
 
+            try:
+                del processes[os.path.abspath(self.ttyrec_filename)]
+            except KeyError:
+                self.logger.warning("Process entry already deleted")
+
             self.delete_mock_ttyrec()
             self.handle_process_end()
 
-    def add_watcher(self, watcher, hide = False):
-        super(CompatCrawlProcessHandler, self).add_watcher(watcher, hide)
+    def add_watcher(self, watcher):
+        super(CompatCrawlProcessHandler, self).add_watcher(watcher)
 
         if self.process:
             self.process.stdin.write("^r")

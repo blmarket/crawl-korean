@@ -115,11 +115,11 @@ greatsword2
 %rim 0
 orcish_great_sword1 WPN_GREAT_SWORD_ORC
 orcish_great_sword2
-%rim 1
 
+
+%rim 0
 falchion1 WPN_FALCHION
 falchion2
-%rim 0
 orcish_falchion1 WPN_FALCHION_ORC
 orcish_falchion2
 dwarven_falchion1 WPN_FALCHION_DWARF
@@ -130,10 +130,20 @@ elven_falchion2
 scimitar1 WPN_SCIMITAR
 scimitar2
 
-sabre1_silver WPN_SABRE
+%rim 0
+sabre1 WPN_SABRE
 sabre2
+sabre3
+orcish_sabre1 WPN_SABRE_ORC
+orcish_sabre2
+dwarven_sabre1 WPN_SABRE_DWARF
+dwarven_sabre2
+elven_sabre1 WPN_SABRE_ELF
+elven_sabre2
 
-quickblade WPN_QUICK_BLADE
+quickblade1 WPN_QUICK_BLADE
+quickblade2
+quickblade3
 
 double_sword WPN_DOUBLE_SWORD
 triple_sword WPN_TRIPLE_SWORD
@@ -150,23 +160,35 @@ dwarven_hand_axe1 WPN_HAND_AXE_DWARF
 dwarven_hand_axe2
 orcish_hand_axe1 WPN_HAND_AXE_ORC
 orcish_hand_axe2
-%rim 1
 war_axe1 WPN_WAR_AXE
 war_axe2
-%rim 0
+war_axe3
 dwarven_war_axe1 WPN_WAR_AXE_DWARF
 dwarven_war_axe2
 orcish_war_axe1 WPN_WAR_AXE_ORC
 orcish_war_axe2
-%rim 1
 broad_axe1 WPN_BROAD_AXE
 broad_axe2
 broad_axe3
+dwarven_broad_axe1 WPN_BROAD_AXE_DWARF
+dwarven_broad_axe2
+orcish_broad_axe1 WPN_BROAD_AXE_ORC
+orcish_broad_axe2
 battle_axe1 WPN_BATTLEAXE
 battle_axe2
 battle_axe3
+dwarven_battle_axe1 WPN_BATTLEAXE_DWARF
+dwarven_battle_axe2
+orcish_battle_axe1 WPN_BATTLEAXE_ORC
+orcish_battle_axe2
 executioner_axe1 WPN_EXECUTIONERS_AXE
 executioner_axe2
+executioner_axe3
+dwarven_executioner_axe1 WPN_EXECUTIONERS_AXE_DWARF
+dwarven_executioner_axe2
+orcish_executioner_axe1 WPN_EXECUTIONERS_AXE_ORC
+orcish_executioner_axe2
+%rim 1
 
 ##Polearm
 %rim 0
@@ -201,6 +223,9 @@ orcish_glaive2
 %rim 1
 bardiche1 WPN_BARDICHE
 bardiche2
+bardiche3
+orcish_bardiche WPN_BARDICHE_ORC
+orcish_bardiche2
 
 ##Staff
 %rim 0
@@ -505,6 +530,10 @@ large_shield1 ARM_LARGE_SHIELD
 large_shield2
 large_shield3
 
+shield_dd SHIELD_DEEP_DWARF
+shield_dd_scion SHIELD_DEEP_DWARF_SCION
+lshield_dd_dk LARGE_SHIELD_DEEP_DWARF_DEATH_KNIGHT
+
 %sdir item/armour/headgear
 #####ARM_HELMET
 elven_leather_helm THELM_CAP
@@ -546,7 +575,7 @@ i-strength BRAND_ARM_STRENGTH
 i-dexterity BRAND_ARM_DEXTERITY
 i-intelligence BRAND_ARM_INTELLIGENCE
 i-ponderous BRAND_ARM_PONDEROUSNESS
-i-levitation BRAND_ARM_LEVITATION
+i-flying BRAND_ARM_FLYING
 i-magic-res BRAND_ARM_MAGIC_RESISTANCE
 i-protection BRAND_ARM_PROTECTION
 %rim 0
@@ -621,7 +650,14 @@ beef_jerky FOOD_BEEF_JERKY
 cheese FOOD_CHEESE
 sausage FOOD_SAUSAGE
 piece_of_ambrosia FOOD_AMBROSIA
-bone FOOD_BONE
+bone_humanoid1 FOOD_BONE_HUMANOID
+bone_humanoid2
+bone_humanoid3
+bone_humanoid4
+bone1 FOOD_BONE
+bone2
+bone3
+bone4
 chunk FOOD_CHUNK
 chunk_rotten FOOD_CHUNK_ROTTEN
 %back chunk
@@ -701,21 +737,23 @@ i-curse-jewellery SCR_CURSE_JEWELLERY SCR_ID_LAST
 ##################OBJ_JEWELLERY
 ############ring
 %sdir item/ring
+%rim 0
 wooden RING_NORMAL_OFFSET UNSEEN_RING
 silver
 gold
 iron
 steel
-bronze
+tourmaline
 brass
 copper
 granite
 ivory
-clay
+ruby
 tiger_eye
 jade
 glass
 ###########random
+%rim 0
 agate RING_RANDOM_OFFSET RING_COL_FIRST
 clay
 diamond
@@ -732,7 +770,27 @@ plain_black
 bronze
 moonstone RING_COL_LAST
 
+###########randarts
+%sdir item/ring/randarts
+%rim 0
+four-colour RING_RANDART_OFFSET
+green
+ice
+blood
+dark
+red-blue
+double
+anvil
+eye
+flower
+zircon
+fire
+pink
+bronze-flower
+snake
+
 #########ID-ed
+%sdir item/ring
 %rim 0
 i-regeneration RING_REGENERATION RING_ID_FIRST
 i-protection RING_PROTECTION
@@ -752,7 +810,7 @@ i-dex RING_DEXTERITY
 i-int RING_INTELLIGENCE
 i-wizardry RING_WIZARDRY
 i-magical-power RING_MAGICAL_POWER
-i-levitation RING_LEVITATION
+i-flight RING_FLIGHT
 i-life-protection RING_LIFE_PROTECTION
 i-r-magic RING_PROTECTION_FROM_MAGIC
 i-fire RING_FIRE
@@ -801,6 +859,7 @@ i-warding AMU_WARDING
 i-r-corrosion AMU_RESIST_CORROSION
 i-gourmand AMU_THE_GOURMAND
 i-conservation AMU_CONSERVATION
+# Remove i-c-flight when save compatibility is broken
 i-c-flight AMU_CONTROLLED_FLIGHT
 i-inaccuracy AMU_INACCURACY
 i-r-mutation AMU_RESIST_MUTATION
@@ -811,7 +870,7 @@ i-stasis AMU_STASIS AMU_ID_LAST
 
 ####################OBJ_POTIONS
 %sdir item/potion
-clear POTION_OFFSET UNSEEN_POTION
+unknown POTION_OFFSET UNSEEN_POTION
 brilliant_blue
 black
 silver
@@ -838,7 +897,7 @@ i-agility POT_AGILITY
 i-gain-strength POT_GAIN_STRENGTH
 i-gain-dexterity POT_GAIN_DEXTERITY
 i-gain-intelligence POT_GAIN_INTELLIGENCE
-i-levitation POT_LEVITATION
+i-flight POT_FLIGHT
 i-poison POT_POISON
 i-slowing POT_SLOWING
 i-paralysis POT_PARALYSIS
@@ -846,8 +905,9 @@ i-confusion POT_CONFUSION
 i-invisibility POT_INVISIBILITY
 i-porridge POT_PORRIDGE
 i-degeneration POT_DEGENERATION
+# please remove when TAG_MAJOR_VERSION is bumped
+i-fizzing POT_REMOVE_ME
 i-decay POT_DECAY
-i-water POT_WATER
 i-experience POT_EXPERIENCE
 i-magic POT_MAGIC
 i-restore-abilities POT_RESTORE_ABILITIES
@@ -858,7 +918,7 @@ i-mutation POT_MUTATION
 i-resistance POT_RESISTANCE
 i-blood POT_BLOOD
 i-coagulated-blood POT_BLOOD_COAGULATED
-i-water POT_FIZZING POT_ID_LAST
+i-fizzing POT_FIZZING POT_ID_LAST
 %back none
 %rim 1
 

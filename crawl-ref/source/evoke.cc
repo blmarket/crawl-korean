@@ -27,6 +27,8 @@
 #include "items.h"
 #include "item_use.h"
 #include "itemprop.h"
+#include "libutil.h"
+#include "mapmark.h"
 #include "message.h"
 #include "mon-place.h"
 #include "mgen_data.h"
@@ -39,7 +41,10 @@
 #include "spl-cast.h"
 #include "spl-clouds.h"
 #include "spl-summoning.h"
+#include "state.h"
 #include "stuff.h"
+#include "target.h"
+#include "terrain.h"
 #include "view.h"
 #include "xom.h"
 
@@ -349,11 +354,8 @@ bool disc_of_storms(bool drac_breath)
     const int fail_rate = 30 - you.skill(SK_EVOCATIONS);
     bool rc = false;
 
-    if ((player_res_electricity() || x_chance_in_y(fail_rate, 100))
-         && !drac_breath)
-    {
+    if (x_chance_in_y(fail_rate, 100) && !drac_breath)
         canned_msg(MSG_NOTHING_HAPPENS);
-    }
     else if (x_chance_in_y(fail_rate, 100) && !drac_breath)
         mpr(gettext("The disc glows for a moment, then fades."));
     else if (x_chance_in_y(fail_rate, 100) && !drac_breath)
@@ -408,7 +410,8 @@ void tome_of_power(int slot)
     int powc = 5 + you.skill(SK_EVOCATIONS)
                  + roll_dice(5, you.skill(SK_EVOCATIONS));
 
-    msg::stream << make_stringf(gettext("The book opens to a page covered in %s."), weird_writing().c_str()) << std::endl;
+    msg::stream << make_stringf(_("The book opens to a page covered in %s."), 
+            weird_writing().c_str()) << std::endl;
 
     you.turn_is_over = true;
     if (!item_ident(you.inv[slot], ISFLAG_KNOW_TYPE))
@@ -546,7 +549,7 @@ void skill_manual(int slot)
 
     if (!known)
     {
-        std::string prompt = make_stringf(gettext("This is a manual of %s. Do you want "
+        string prompt = make_stringf(_("This is a manual of %s. Do you want "
                                           "to study it?"), skill_name(skill));
         if (!yesno(prompt.c_str(), true, 'n'))
         {
@@ -869,6 +872,7 @@ bool evoke_item(int slot)
             you.duration[DUR_QUAD_DAMAGE] = 30 * BASELINE_DELAY;
             ASSERT(in_inventory(item));
             dec_inv_item_quantity(item.link, 1);
+            invalidate_agrid(true);
             break;
 
         default:

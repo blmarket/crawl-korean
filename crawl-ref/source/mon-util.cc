@@ -48,16 +48,30 @@
 #include "stuff.h"
 #include "terrain.h"
 #include "tilepick.h"
+#include "tileview.h"
 #include "traps.h"
 #include "unicode.h"
+#include "unwind.h"
 #include "view.h"
 
 static FixedVector < int, NUM_MONSTERS > mon_entry;
 
+struct mon_display
+{
+    ucs_t        glyph;
+    unsigned     colour;
+    monster_type detected; // What a monster of type "type" is detected as.
+
+    mon_display(unsigned gly = 0, unsigned col = 0,
+                monster_type d = MONS_NO_MONSTER)
+       : glyph(gly), colour(col), detected(d) { }
+};
+
 static mon_display monster_symbols[NUM_MONSTERS];
 
 static bool initialised_randmons = false;
-static std::vector<monster_type> monsters_by_habitat[NUM_HABITATS];
+static vector<monster_type> monsters_by_habitat[NUM_HABITATS];
+static vector<monster_type> species_by_habitat[NUM_HABITATS];
 
 #include "mon-mst.h"
 
@@ -67,7 +81,7 @@ struct mon_spellbook
     spell_type spells[NUM_MONSTER_SPELL_SLOTS];
 };
 
-static mon_spellbook mspell_list[] =
+static const mon_spellbook mspell_list[] =
 {
 #include "mon-spll.h"
 };
@@ -122,6 +136,7 @@ static void _initialise_randmons()
 {
     for (int i = 0; i < NUM_HABITATS; ++i)
     {
+        set<monster_type> tmp_species;
         const dungeon_feature_type grid = habitat2grid(habitat_type(i));
 
         for (monster_type mt = MONS_0; mt < NUM_MONSTERS; ++mt)
@@ -131,25 +146,37 @@ static void _initialise_randmons()
 
             if (monster_habitable_grid(mt, grid))
                 monsters_by_habitat[i].push_back(mt);
+
+            const monster_type species = mons_species(mt);
+            if (monster_habitable_grid(species, grid))
+                tmp_species.insert(species);
+
+        }
+
+        for (set<monster_type>::iterator it = tmp_species.begin();
+             it != tmp_species.end(); ++it)
+        {
+            species_by_habitat[i].push_back(*it);
         }
     }
     initialised_randmons = true;
 }
 
-monster_type random_monster_at_grid(const coord_def& p)
+monster_type random_monster_at_grid(const coord_def& p, bool species)
 {
     if (!initialised_randmons)
         _initialise_randmons();
 
     const habitat_type ht = _grid2habitat(grd(p));
-    const std::vector<monster_type> &valid_mons = monsters_by_habitat[ht];
+    const vector<monster_type> &valid_mons = species ? species_by_habitat[ht]
+                                                     : monsters_by_habitat[ht];
 
     ASSERT(!valid_mons.empty());
     return (valid_mons.empty() ? MONS_PROGRAM_BUG
                                : valid_mons[ random2(valid_mons.size()) ]);
 }
 
-typedef std::map<std::string, monster_type> mon_name_map;
+typedef map<string, monster_type> mon_name_map;
 static mon_name_map Mon_Name_Cache;
 
 void init_mon_name_cache()
@@ -159,7 +186,7 @@ void init_mon_name_cache()
 
     for (unsigned i = 0; i < ARRAYSZ(mondata); ++i)
     {
-        std::string name = mondata[i].name;
+        string name = mondata[i].name;
         lowercase(name);
 
         const int          mtype = mondata[i].mc;
@@ -186,7 +213,7 @@ void init_mon_name_cache()
     }
 }
 
-monster_type get_monster_by_name(std::string name, bool exact)
+monster_type get_monster_by_name(string name, bool exact)
 {
     lowercase(name);
 
@@ -203,13 +230,13 @@ monster_type get_monster_by_name(std::string name, bool exact)
     monster_type mon = MONS_PROGRAM_BUG;
     for (unsigned i = 0; i < ARRAYSZ(mondata); ++i)
     {
-        std::string candidate = mondata[i].name;
+        string candidate = mondata[i].name;
         lowercase(candidate);
 
         const int mtype = mondata[i].mc;
 
-        const std::string::size_type match = candidate.find(name);
-        if (match == std::string::npos)
+        const string::size_type match = candidate.find(name);
+        if (match == string::npos)
             continue;
 
         mon = monster_type(mtype);
@@ -239,7 +266,7 @@ void init_monsters()
 
 void init_monster_symbols()
 {
-    std::map<unsigned, monster_type> base_mons;
+    map<unsigned, monster_type> base_mons;
     for (monster_type mc = MONS_0; mc < NUM_MONSTERS; ++mc)
     {
         mon_display &md = monster_symbols[mc];
@@ -248,25 +275,25 @@ void init_monster_symbols()
         {
             md.glyph  = me->basechar;
             md.colour = me->colour;
-            std::map<unsigned, monster_type>::iterator it = base_mons.find(md.glyph);
+            map<unsigned, monster_type>::iterator it = base_mons.find(md.glyph);
             if (it == base_mons.end() || it->first == MONS_PROGRAM_BUG)
                 base_mons[md.glyph] = mc;
             md.detected = base_mons[md.glyph];
         }
     }
 
-    for (mon_glyph_map::iterator it = Options.mon_glyph_overrides.begin();
+    for (map<monster_type, cglyph_t>::iterator it = Options.mon_glyph_overrides.begin();
          it != Options.mon_glyph_overrides.end(); ++it)
     {
         if (it->first == MONS_PROGRAM_BUG)
             continue;
 
-        const mon_display &md = it->second;
+        const cglyph_t &md = it->second;
 
-        if (md.glyph)
-            monster_symbols[it->first].glyph = get_glyph_override(md.glyph);
-        if (md.colour)
-            monster_symbols[it->first].colour = md.colour;
+        if (md.ch)
+            monster_symbols[it->first].glyph = get_glyph_override(md.ch);
+        if (md.col)
+            monster_symbols[it->first].colour = md.col;
     }
 
     // Validate all glyphs, even those which didn't come from an override.
@@ -399,7 +426,7 @@ int scan_mon_inv_randarts(const monster* mon,
         }
 
         if (second != NON_ITEM && mitm[second].base_type == OBJ_WEAPONS
-            && is_artefact(mitm[second]))
+            && is_artefact(mitm[second]) && mons_wields_two_weapons(mon))
         {
             ret += artefact_wpn_property(mitm[second], ra_prop);
         }
@@ -773,11 +800,14 @@ void discover_mimic(const coord_def& pos, bool wake)
     }
 
     const feature_def feat_d = get_feature_def(feat);
-    const std::string name = feature_mimic ? feat_type_name(feat) :
-               item->base_type == OBJ_GOLD ? "pile of gold coins"
-                                           : item->name(false, DESC_BASENAME);
+    const string name = feature_mimic ? feat_type_name(feat) :
+          item->base_type == OBJ_GOLD ? _(M_("pile of gold coins"))
+                                      : item->name(false, DESC_BASENAME);
 
     tileidx_t tile = tileidx_feature(pos);
+#ifdef USE_TILE
+    apply_variations(env.tile_flv(pos), &tile, pos);
+#endif
 
     // If a monster is standing on top of the mimic, move it out of the way.
     actor* act = actor_at(pos);
@@ -804,7 +834,7 @@ void discover_mimic(const coord_def& pos, bool wake)
         // If we took a note of this feature, then note that it was a mimic.
         if (!is_boring_terrain(feat))
         {
-            std::string desc = feature_description_at(pos, false, DESC_THE, false);
+            string desc = feature_description_at(pos, false, DESC_THE, false);
             take_note(Note(NOTE_FEAT_MIMIC, 0, 0, desc.c_str()));
         }
 
@@ -814,6 +844,9 @@ void discover_mimic(const coord_def& pos, bool wake)
         env.level_map_mask(pos) &= !MMT_MIMIC;
         set_terrain_changed(pos);
         remove_markers_and_listeners_at(pos);
+
+        if (feat_is_door(feat))
+            env.level_map_mask(pos) |= MMT_WAS_DOOR_MIMIC;
     }
 
     // Generate and place the monster.
@@ -976,12 +1009,6 @@ corpse_effect_type mons_corpse_effect(monster_type mc)
     return smc->corpse_thingy;
 }
 
-monster_type mons_species(monster_type mc)
-{
-    const monsterentry *me = get_monster_data(mc);
-    return (me ? me->species : MONS_PROGRAM_BUG);
-}
-
 monster_type mons_genus(monster_type mc)
 {
     if (mc == RANDOM_DRACONIAN || mc == RANDOM_BASE_DRACONIAN
@@ -998,9 +1025,10 @@ monster_type mons_genus(monster_type mc)
     return smc->genus;
 }
 
-monster_type mons_detected_base(monster_type mc)
+monster_type mons_species(monster_type mc)
 {
-    return (monster_symbols[mc].detected);
+    const monsterentry *me = get_monster_data(mc);
+    return (me ? me->species : MONS_PROGRAM_BUG);
 }
 
 monster_type draco_subspecies(const monster* mon)
@@ -1016,6 +1044,11 @@ monster_type draco_subspecies(const monster* mon)
         retval = mon->base_monster;
 
     return retval;
+}
+
+monster_type mons_detected_base(monster_type mc)
+{
+    return (monster_symbols[mc].detected);
 }
 
 int get_shout_noise_level(const shout_type shout)
@@ -1289,7 +1322,7 @@ bool mons_enslaved_soul(const monster* mon)
     return testbits(mon->flags, MF_ENSLAVED_SOUL);
 }
 
-bool name_zombie(monster* mon, monster_type mc, const std::string &mon_name)
+bool name_zombie(monster* mon, monster_type mc, const string &mon_name)
 {
     mon->mname = mon_name;
 
@@ -1314,7 +1347,7 @@ bool name_zombie(monster* mon, monster_type mc, const std::string &mon_name)
     // Also for the Serpent of Hell: treat Serpent of Hell as an
     // adjective to avoid mentions of "the Serpent of Hell the dragon
     // zombie".
-    else if (mc == MONS_SERPENT_OF_HELL)
+    else if (mons_species(mc) == MONS_SERPENT_OF_HELL)
     {
         mon->mname = "Serpent of Hell";
         mon->flags |= MF_NAME_ADJECTIVE;
@@ -1331,7 +1364,7 @@ bool name_zombie(monster* mon, const monster* orig)
     if (!mons_is_unique(orig->type) && orig->mname.empty())
         return false;
 
-    std::string name;
+    string name;
 
     if (!orig->mname.empty())
         name = orig->mname;
@@ -1504,39 +1537,33 @@ flight_type mons_flies(const monster* mon, bool temp)
 
     // Handle the case where the zombified base monster can't fly, but
     // the zombified monster can (e.g. spectral things).
-    if (ret == FL_NONE && mons_is_zombified(mon))
-        ret = mons_class_flies(mon->type);
+    if (mons_is_zombified(mon))
+        ret = max(ret, mons_class_flies(mon->type));
 
-    if (temp && ret == FL_NONE
-        && scan_mon_inv_randarts(mon, ARTP_LEVITATE) > 0)
+    if (temp && ret < FL_LEVITATE)
     {
-        ret = FL_LEVITATE;
-    }
+        if (scan_mon_inv_randarts(mon, ARTP_FLY) > 0)
+            return FL_LEVITATE;
 
-    if (temp && ret == FL_NONE)
-    {
         const int armour = mon->inv[MSLOT_ARMOUR];
         if (armour != NON_ITEM
             && mitm[armour].base_type == OBJ_ARMOUR
-            && mitm[armour].special == SPARM_LEVITATION)
+            && mitm[armour].special == SPARM_FLYING)
         {
-            ret = FL_LEVITATE;
+            return FL_LEVITATE;
         }
-    }
 
-    if (temp && ret == FL_NONE)
-    {
         const int jewellery = mon->inv[MSLOT_JEWELLERY];
         if (jewellery != NON_ITEM
             && mitm[jewellery].base_type == OBJ_JEWELLERY
-            && mitm[jewellery].sub_type == RING_LEVITATION)
+            && mitm[jewellery].sub_type == RING_FLIGHT)
         {
-            ret = FL_LEVITATE;
+            return FL_LEVITATE;
         }
-    }
 
-    if (temp && ret == FL_NONE && mon->has_ench(ENCH_LEVITATION))
-        ret = FL_LEVITATE;
+        if (mon->has_ench(ENCH_FLIGHT))
+            return FL_LEVITATE;
+    }
 
     return ret;
 }
@@ -1937,34 +1964,6 @@ static colour_t _random_butterfly_colour()
     return col;
 }
 
-// Abominations.
-static colour_t _random_large_abomination_colour()
-{
-    colour_t col;
-    // Restricted colours:
-    //  MAGENTA = orb guardian
-    //  GREEN = tentacled monstrosity
-    do
-        col = random_monster_colour();
-    while (col == MAGENTA || col == GREEN);
-
-    return col;
-}
-
-static colour_t _random_small_abomination_colour()
-{
-    colour_t col;
-    // Restricted colours:
-    //  MAGENTA = unseen horror
-    //  BROWN = used for crawling corpses/macabre masses
-    //  LIGHTCYAN = octopode
-    do
-        col = random_monster_colour();
-    while (col == MAGENTA || col == BROWN || col == LIGHTCYAN);
-
-    return col;
-}
-
 bool init_abomination(monster* mon, int hd)
 {
     if (mon->type == MONS_CRAWLING_CORPSE
@@ -1982,7 +1981,7 @@ bool init_abomination(monster* mon, int hd)
     const int max_hd = mon->type == MONS_ABOMINATION_LARGE ? 30 : 15;
     const int max_ac = mon->type == MONS_ABOMINATION_LARGE ? 20 : 10;
 
-    mon->hit_dice = std::min(max_hd, hd);
+    mon->hit_dice = min(max_hd, hd);
 
     const monsterentry *m = get_monster_data(mon->type);
     int hp = hit_points(hd, m->hpdice[1], m->hpdice[2]) + m->hpdice[3];
@@ -1992,13 +1991,13 @@ bool init_abomination(monster* mon, int hd)
 
     if (mon->type == MONS_ABOMINATION_LARGE)
     {
-        mon->ac = std::min(max_ac, 7 + hd / 2);
-        mon->ev = std::min(max_ac, 2 * hd / 3);
+        mon->ac = min(max_ac, 7 + hd / 2);
+        mon->ev = min(max_ac, 2 * hd / 3);
     }
     else
     {
-        mon->ac = std::min(max_ac, 3 + hd * 2 / 3);
-        mon->ev = std::min(max_ac, 4 + hd);
+        mon->ac = min(max_ac, 3 + hd * 2 / 3);
+        mon->ev = min(max_ac, 4 + hd);
     }
 
     return true;
@@ -2031,7 +2030,6 @@ void define_monster(monster* mons)
 
     case MONS_ABOMINATION_SMALL:
         init_abomination(mons, 4 + random2(4));
-        col = _random_small_abomination_colour();
         break;
 
     case MONS_ZOMBIE_SMALL:
@@ -2040,7 +2038,6 @@ void define_monster(monster* mons)
 
     case MONS_ABOMINATION_LARGE:
         init_abomination(mons, 8 + random2(4));
-        col = _random_large_abomination_colour();
         break;
 
     case MONS_ZOMBIE_LARGE:
@@ -2216,7 +2213,7 @@ static const char *ugly_colour_names[] = {
     "red", "brown", "green", "cyan", "purple", "white"
 };
 
-std::string ugly_thing_colour_name(colour_t colour)
+string ugly_thing_colour_name(colour_t colour)
 {
     int colour_offset = ugly_thing_colour_offset(colour);
 
@@ -2235,7 +2232,7 @@ colour_t ugly_thing_random_colour()
     return RANDOM_ELEMENT(ugly_colour_values);
 }
 
-int str_to_ugly_thing_colour(const std::string &s)
+int str_to_ugly_thing_colour(const string &s)
 {
     COMPILE_CHECK(ARRAYSZ(ugly_colour_values) == ARRAYSZ(ugly_colour_names));
     for (int i = 0, size = ARRAYSZ(ugly_colour_values); i < size; ++i)
@@ -2259,7 +2256,7 @@ static const char *drac_colour_names[] = {
     "black", "mottled", "yellow", "green", "purple", "red", "white", "grey", "pale"
 };
 
-std::string draconian_colour_name(monster_type mon_type)
+string draconian_colour_name(monster_type mon_type)
 {
     COMPILE_CHECK(ARRAYSZ(drac_colour_names) ==
                   MONS_PALE_DRACONIAN - MONS_DRACONIAN);
@@ -2270,7 +2267,7 @@ std::string draconian_colour_name(monster_type mon_type)
     return (drac_colour_names[mon_type - MONS_BLACK_DRACONIAN]);
 }
 
-monster_type draconian_colour_by_name(const std::string &name)
+monster_type draconian_colour_by_name(const string &name)
 {
     COMPILE_CHECK(ARRAYSZ(drac_colour_names)
                   == (MONS_PALE_DRACONIAN - MONS_DRACONIAN));
@@ -2284,9 +2281,9 @@ monster_type draconian_colour_by_name(const std::string &name)
     return MONS_PROGRAM_BUG;
 }
 
-std::string mons_type_name(monster_type mc, description_level_type desc)
+string mons_type_name(monster_type mc, description_level_type desc)
 {
-    std::string result;
+    string result;
 
     if (!mons_is_unique(mc))
     {
@@ -2342,13 +2339,13 @@ std::string mons_type_name(monster_type mc, description_level_type desc)
     return result;
 }
 
-static std::string _get_proper_monster_name(const monster* mon)
+static string _get_proper_monster_name(const monster* mon)
 {
     const monsterentry *me = mon->find_monsterentry();
     if (!me)
         return "";
 
-    std::string name = getRandNameString(me->name, " name");
+    string name = getRandNameString(me->name, " name");
     if (!name.empty())
         return name;
 
@@ -2411,7 +2408,7 @@ int mons_class_base_speed(monster_type mc)
 
 int mons_class_zombie_base_speed(monster_type zombie_base_mc)
 {
-    return std::max(3, mons_class_base_speed(zombie_base_mc) - 2);
+    return max(3, mons_class_base_speed(zombie_base_mc) - 2);
 }
 
 int mons_base_speed(const monster* mon)
@@ -2711,6 +2708,14 @@ void mons_pacify(monster* mon, mon_attitude_type att)
         mon->flags |= MF_GOT_HALF_XP;
     }
 
+    if (mon->type == MONS_GERYON)
+    {
+        simple_monster_message(mon,
+            make_stringf(" discards %s horn.",
+                         mon->pronoun(PRONOUN_POSSESSIVE).c_str()).c_str());
+        monster_drop_things(mon, false, item_is_horn_of_geryon);
+    }
+
     // Cancel fleeing and such.
     mon->behaviour = BEH_WANDER;
 
@@ -2723,8 +2728,6 @@ void mons_pacify(monster* mon, mon_attitude_type att)
         elven_twins_pacify(mon);
     if (mons_is_kirke(mon))
         hogs_to_humans();
-    if (mon->type == MONS_GERYON)
-        monster_drop_things(mon, false, item_is_horn_of_geryon);
 
     mons_att_changed(mon);
 }
@@ -3049,63 +3052,65 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
 {
     gender_type gender = GENDER_NEUTER;
 
-    if (mons_genus(mon_type) == MONS_MERMAID
-        || mon_type == MONS_QUEEN_ANT
-        || mon_type == MONS_QUEEN_BEE
-        || mon_type == MONS_HARPY
-        || mon_type == MONS_SPHINX)
+    if (visible)
     {
-        gender = GENDER_FEMALE;
-    }
-    // Mara's fakes aren't a unique, but should still be classified
-    // as male.
-    else if (mon_type == MONS_MARA_FAKE
-             || mon_type == MONS_HELLBINDER
-             || mon_type == MONS_CLOUD_MAGE)
-    {
-        gender = GENDER_MALE;
-    }
-    else if (mons_is_unique(mon_type) && !mons_is_pghost(mon_type))
-    {
-        switch (mon_type)
+        if (mons_genus(mon_type) == MONS_MERMAID
+            || mon_type == MONS_QUEEN_ANT
+            || mon_type == MONS_QUEEN_BEE
+            || mon_type == MONS_HARPY
+            || mon_type == MONS_SPHINX)
         {
-        case MONS_JESSICA:
-        case MONS_PSYCHE:
-        case MONS_JOSEPHINE:
-        case MONS_AGNES:
-        case MONS_MAUD:
-        case MONS_LOUISE:
-        case MONS_FRANCES:
-        case MONS_MARGERY:
-        case MONS_EROLCHA:
-        case MONS_ERICA:
-        case MONS_TIAMAT:
-        case MONS_ERESHKIGAL:
-        case MONS_ROXANNE:
-        case MONS_SONJA:
-        case MONS_ILSUIW:
-        case MONS_NERGALLE:
-        case MONS_KIRKE:
-        case MONS_DUVESSA:
-        case MONS_THE_ENCHANTRESS:
-        case MONS_NELLIE:
-        case MONS_ARACHNE:
             gender = GENDER_FEMALE;
-            break;
-        case MONS_ROYAL_JELLY:
-        case MONS_LERNAEAN_HYDRA:
-        case MONS_IRON_GIANT:
-        case MONS_SERPENT_OF_HELL:
-            gender = GENDER_NEUTER;
-            break;
-        default:
+        }
+        // Mara's fakes aren't a unique, but should still be classified
+        // as male.
+        else if (mon_type == MONS_MARA_FAKE
+                 || mon_type == MONS_HELLBINDER
+                 || mon_type == MONS_CLOUD_MAGE)
+        {
             gender = GENDER_MALE;
-            break;
+        }
+        else if (mons_is_unique(mon_type) && !mons_is_pghost(mon_type))
+        {
+            if (mons_species(mon_type) == MONS_SERPENT_OF_HELL)
+                mon_type = MONS_SERPENT_OF_HELL;
+            switch (mon_type)
+            {
+            case MONS_JESSICA:
+            case MONS_PSYCHE:
+            case MONS_JOSEPHINE:
+            case MONS_AGNES:
+            case MONS_MAUD:
+            case MONS_LOUISE:
+            case MONS_FRANCES:
+            case MONS_MARGERY:
+            case MONS_EROLCHA:
+            case MONS_ERICA:
+            case MONS_TIAMAT:
+            case MONS_ERESHKIGAL:
+            case MONS_ROXANNE:
+            case MONS_SONJA:
+            case MONS_ILSUIW:
+            case MONS_NERGALLE:
+            case MONS_KIRKE:
+            case MONS_DUVESSA:
+            case MONS_THE_ENCHANTRESS:
+            case MONS_NELLIE:
+            case MONS_ARACHNE:
+                gender = GENDER_FEMALE;
+                break;
+            case MONS_ROYAL_JELLY:
+            case MONS_LERNAEAN_HYDRA:
+            case MONS_IRON_GIANT:
+            case MONS_SERPENT_OF_HELL:
+                gender = GENDER_NEUTER;
+                break;
+            default:
+                gender = GENDER_MALE;
+                break;
+            }
         }
     }
-
-    if (!visible)
-        gender = GENDER_NEUTER;
 
     switch (variant)
     {
@@ -3122,9 +3127,9 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
                     (gender == GENDER_MALE)   ? gettext(M_("himself")) : gettext(M_("herself")));
 
         case PRONOUN_OBJECTIVE:
-            return ((gender == GENDER_NEUTER) ? gettext(M_("it"))  :
-                    (gender == GENDER_MALE)   ? gettext(M_("him")) : gettext(M_("her")));
-     }
+            return ((gender == GENDER_NEUTER) ? _(M_("it"))  :
+                    (gender == GENDER_MALE)   ? _(M_("him")) : _(M_("her")));
+    }
 
     return "";
 }
@@ -3281,45 +3286,29 @@ static bool _mons_can_open_doors(const monster* mon)
 
 // Some functions that check whether a monster can open/eat/pass a
 // given door. These all return false if there's no closed door there.
-
-// Normal/smart monsters know about secret doors, since they live in
-// the dungeon, unless they're marked specifically not to be opened unless
-// already opened by the player {bookofjude}.
 bool mons_can_open_door(const monster* mon, const coord_def& pos)
 {
-    if (env.markers.property_at(pos, MAT_ANY, "door_restrict") == "veto")
-        return false;
-
     if (!_mons_can_open_doors(mon))
         return false;
 
-    dungeon_feature_type feat = env.grid(pos);
-    return (feat == DNGN_CLOSED_DOOR
-            || feat_is_secret_door(feat) && mons_intel(mon) >= I_NORMAL);
+    if (env.markers.property_at(pos, MAT_ANY, "door_restrict") == "veto")
+        return false;
+
+    return true;
 }
 
 // Monsters that eat items (currently only jellies) also eat doors.
 // However, they don't realise that secret doors make good eating.
 bool mons_can_eat_door(const monster* mon, const coord_def& pos)
 {
-    if (env.markers.property_at(pos, MAT_ANY, "door_restrict") == "veto")
-        return false;
 
     if (mons_itemeat(mon) != MONEAT_ITEMS)
         return false;
 
-    dungeon_feature_type feat = env.grid(pos);
-    if (feat == DNGN_OPEN_DOOR)
-        return true;
-
-    if (env.markers.property_at(pos, MAT_ANY, "door_restrict") == "veto"
-         // Doors with permarock marker cannot be eaten.
-        || feature_marker_at(pos, DNGN_PERMAROCK_WALL))
-    {
+    if (env.markers.property_at(pos, MAT_ANY, "door_restrict") == "veto")
         return false;
-    }
 
-    return (feat == DNGN_CLOSED_DOOR);
+    return true;
 }
 
 static bool _mons_can_pass_door(const monster* mon, const coord_def& pos)
@@ -3332,19 +3321,11 @@ static bool _mons_can_pass_door(const monster* mon, const coord_def& pos)
 bool mons_can_traverse(const monster* mon, const coord_def& p,
                        bool checktraps)
 {
-    if (_mons_can_pass_door(mon, p))
+    if (grd(p) == DNGN_CLOSED_DOOR && _mons_can_pass_door(mon, p))
         return true;
 
     if (!mon->is_habitable(p))
         return false;
-
-    // Your friends only know about doors you know about, unless they feel
-    // at home in this branch.
-    if (grd(p) == DNGN_SECRET_DOOR && mon->friendly()
-        && (mons_intel(mon) < I_NORMAL || !mons_is_native_in_branch(mon)))
-    {
-        return false;
-    }
 
     const trap_def* ptrap = find_trap(p);
     if (checktraps && ptrap)
@@ -3426,10 +3407,10 @@ monster_type royal_jelly_ejectable_monster()
 //
 // Atheists get "You"/"you", and worshippers of nameless gods get "Your
 // god"/"your god".
-static std::string _replace_god_name(god_type god, bool need_verb = false,
-                                     bool capital = false)
+static string _replace_god_name(god_type god, bool need_verb = false,
+                                bool capital = false)
 {
-    std::string result =
+    string result =
           ((god == GOD_NO_GOD)    ? (capital ? "You"      : "you") :
            (god == GOD_NAMELESS)  ? (capital ? "Your god" : "your god")
                                   : god_name(god, false));
@@ -3439,11 +3420,10 @@ static std::string _replace_god_name(god_type god, bool need_verb = false,
     return result;
 }
 
-static std::string _get_species_insult(const std::string &species,
-                                       const std::string &type)
+static string _get_species_insult(const string &species, const string &type)
 {
-    std::string insult;
-    std::string lookup;
+    string insult;
+    string lookup;
 
     // Get species genus.
     if (!species.empty())
@@ -3467,9 +3447,9 @@ static std::string _get_species_insult(const std::string &species,
     return insult;
 }
 
-static std::string _pluralise_player_genus()
+static string _pluralise_player_genus()
 {
-    std::string sp = species_name(you.species, true, false);
+    string sp = species_name(you.species, true, false);
     if (player_genus(GENPC_ELVEN, you.species)
         || you.species == SP_DEEP_DWARF)
     {
@@ -3484,23 +3464,27 @@ static std::string _pluralise_player_genus()
 
 // Replaces the "@foo@" strings in monster shout and monster speak
 // definitions.
-std::string do_mon_str_replacements(const std::string &in_msg,
-                                    const monster* mons, int s_type)
+string do_mon_str_replacements(const string &in_msg, const monster* mons,
+                               int s_type)
 {
-    std::string msg = in_msg;
+    string msg = in_msg;
 
     const actor*    foe   = (mons->wont_attack()
                              && invalid_monster_index(mons->foe)) ?
-                            &you : mons->get_foe();
+                                &you : mons->get_foe();
 
     if (s_type < 0 || s_type >= NUM_LOUDNESS || s_type == NUM_SHOUTS)
         s_type = mons_shouts(mons->type);
 
-    // FIXME: Handle player_genus in case it was not generalized to foe_genus.
+    msg = maybe_pick_random_substring(msg);
+
+    // FIXME: Handle player_genus in case it was not generalised to foe_genus.
+    msg = replace_all(msg, "@a_player_genus@",
+                      article_a(species_name(you.species, true)));
     msg = replace_all(msg, "@player_genus@", species_name(you.species, true));
     msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());
 
-    std::string foe_species;
+    string foe_species;
 
     if (foe == NULL)
         ;
@@ -3530,7 +3514,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     }
     else
     {
-        std::string foe_name;
+        string foe_name;
         const monster* m_foe = foe->as_monster();
         if (you.can_see(foe) || crawl_state.game_is_arena())
         {
@@ -3539,8 +3523,8 @@ std::string do_mon_str_replacements(const std::string &in_msg,
                 && !crawl_state.game_is_arena())
             {
                 foe_name = foe->name(DESC_YOUR);
-                const std::string::size_type pos = foe_name.find("'");
-                if (pos != std::string::npos)
+                const string::size_type pos = foe_name.find("'");
+                if (pos != string::npos)
                     foe_name = foe_name.substr(0, pos);
             }
             else
@@ -3549,7 +3533,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         else
             foe_name = "something";
 
-        std::string prep = "at";
+        string prep = "at";
         if (s_type == S_SILENT || s_type == S_SHOUT || s_type == S_NORMAL)
             prep = "to";
         msg = replace_all(msg, "@says@ @to_foe@", "@says@ " + prep + " @foe@");
@@ -3565,12 +3549,11 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         if (m_foe->is_named())
             msg = replace_all(msg, "@foe_name@", foe->name(DESC_PLAIN, true));
 
-        std::string species = mons_type_name(mons_species(m_foe->type),
-                                             DESC_PLAIN);
+        string species = mons_type_name(mons_species(m_foe->type), DESC_PLAIN);
 
         msg = replace_all(msg, "@foe_species@", species);
 
-        std::string genus = mons_type_name(mons_genus(m_foe->type), DESC_PLAIN);
+        string genus = mons_type_name(mons_genus(m_foe->type), DESC_PLAIN);
 
         msg = replace_all(msg, "@foe_genus@", genus);
         msg = replace_all(msg, "@Foe_genus@", uppercase_first(genus));
@@ -3583,7 +3566,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     if (mons->is_named() && you.can_see(mons))
     {
-        const std::string name = mons->name(DESC_THE);
+        const string name = mons->name(DESC_THE);
 
         msg = replace_all(msg, "@the_something@", name);
         msg = replace_all(msg, "@The_something@", name);
@@ -3628,7 +3611,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     if (you.can_see(mons))
     {
-        std::string something = mons->name(DESC_PLAIN);
+        string something = mons->name(DESC_PLAIN);
         msg = replace_all(msg, "@something@",   something);
         msg = replace_all(msg, "@a_something@", mons->name(DESC_A));
         msg = replace_all(msg, "@the_something@", mons->name(nocap));
@@ -3652,7 +3635,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     // Player name.
     msg = replace_all(msg, "@player_name@", you.your_name);
 
-    std::string plain = mons->name(DESC_PLAIN);
+    string plain = mons->name(DESC_PLAIN);
     msg = replace_all(msg, "@monster@",     plain);
     msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));
     msg = replace_all(msg, "@the_monster@", mons->name(nocap));
@@ -3676,8 +3659,8 @@ std::string do_mon_str_replacements(const std::string &in_msg,
                       mons->pronoun(PRONOUN_OBJECTIVE));
 
     // Body parts.
-    bool        can_plural = false;
-    std::string part_str   = mons->hand_name(false, &can_plural);
+    bool   can_plural = false;
+    string part_str   = mons->hand_name(false, &can_plural);
 
     msg = replace_all(msg, "@hand@", part_str);
     msg = replace_all(msg, "@Hand@", uppercase_first(part_str));
@@ -3751,8 +3734,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     else if (mons->god == GOD_NAMELESS)
     {
         msg = replace_all(msg, "@God@", "a god");
-        std::string possessive =
-            mons->pronoun(PRONOUN_POSSESSIVE) + " god";
+        string possessive = mons->pronoun(PRONOUN_POSSESSIVE) + " god";
         msg = replace_all(msg, "@possessive_God@", possessive.c_str());
 
         msg = replace_all(msg, "@my_God@", "my God");
@@ -3768,7 +3750,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     }
 
     // Replace with species specific insults.
-    if (msg.find("@species_insult_") != std::string::npos)
+    if (msg.find("@species_insult_") != string::npos)
     {
         msg = replace_all(msg, "@species_insult_adj1@",
                                _get_species_insult(foe_species, "adj1"));
@@ -3818,6 +3800,8 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     msg = apostrophise_fixup(msg);
 
+    msg = maybe_capitalise_substring(msg);
+
     return msg;
 }
 
@@ -3865,7 +3849,7 @@ mon_body_shape get_mon_shape(const monster_type mc)
     if (mc == MONS_CHAOS_SPAWN)
         return (static_cast<mon_body_shape>(random2(MON_SHAPE_MISC + 1)));
 
-    const bool flies = (mons_class_flies(mc) == FL_FLY);
+    const bool flies = (mons_class_flies(mc) == FL_WINGED);
 
     switch (mons_base_char(mc))
     {
@@ -4049,7 +4033,7 @@ mon_body_shape get_mon_shape(const monster_type mc)
     {
         // Assume that a demon has wings if it can fly, and that it has
         // a tail if it has a sting or tail-slap attack.
-        monsterentry *mon_data = get_monster_data(mc);
+        const monsterentry *mon_data = get_monster_data(mc);
         bool tailed = false;
         for (int i = 0; i < 4; ++i)
             if (mon_data->attack[i].type == AT_STING
@@ -4078,7 +4062,7 @@ mon_body_shape get_mon_shape(const monster_type mc)
     return MON_SHAPE_MISC;
 }
 
-std::string get_mon_shape_str(const mon_body_shape shape)
+string get_mon_shape_str(const mon_body_shape shape)
 {
     ASSERT(shape >= MON_SHAPE_HUMANOID && shape <= MON_SHAPE_MISC);
 
@@ -4142,7 +4126,7 @@ int get_dist_to_nearest_monster()
         if (mon->wont_attack())
             continue;
 
-        int dist = distance(you.pos(), *ri);
+        int dist = distance2(you.pos(), *ri);
         if (dist < minRange)
             minRange = dist;
     }
@@ -4169,7 +4153,7 @@ monster *monster_by_mid(mid_t m)
     if (m == MID_ANON_FRIEND)
         return &menv[ANON_FRIENDLY_MONSTER];
 
-    std::map<mid_t, unsigned short>::const_iterator mc = env.mid_cache.find(m);
+    map<mid_t, unsigned short>::const_iterator mc = env.mid_cache.find(m);
     if (mc != env.mid_cache.end())
         return &menv[mc->second];
     return 0;

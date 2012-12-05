@@ -30,7 +30,7 @@ int mons_rarity(monster_type mcls, const level_id &place)
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_TESTS)
 void debug_monpick()
 {
-    std::string fails;
+    string fails;
 
     for (int i = 0; i < NUM_BRANCHES; ++i)
     {
@@ -119,6 +119,7 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_ZOMBIE_SMALL:
         return 35;
 
+    case MONS_WRETCHED_STAR:
     case MONS_BONE_DRAGON:
     case MONS_SIXFIRHY:
         return 20;
@@ -582,7 +583,6 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_SHINING_EYE:
         return 24;
 
-    case MONS_BUMBLEBEE:
     case MONS_ORC_WARLORD:
     case MONS_IRON_TROLL:
     case MONS_YAKTAUR_CAPTAIN:
@@ -813,7 +813,6 @@ int mons_dungeon_rare(monster_type mcls)
     case MONS_KOBOLD_DEMONOLOGIST:
         return 13;
 
-    case MONS_BUMBLEBEE:
     case MONS_ORC_HIGH_PRIEST:
         return 12;
 
@@ -1168,7 +1167,6 @@ int mons_lair_level(monster_type mcls)
 
     case MONS_BLACK_MAMBA:
     case MONS_BRAIN_WORM:
-    case MONS_BUMBLEBEE:
     case MONS_FIRE_DRAKE:
     case MONS_HYDRA:
     case MONS_OKLOB_PLANT:
@@ -1302,7 +1300,6 @@ int mons_lair_rare(monster_type mcls)
         return 8;
 
     case MONS_BRAIN_WORM:
-    case MONS_BUMBLEBEE:
         return 7;
 
     case MONS_WOLF_SPIDER:
@@ -1617,6 +1614,7 @@ int mons_spidernest_level(monster_type mcls)
 
     case MONS_GHOST_MOTH:
     case MONS_MOTH_OF_WRATH:
+    case MONS_MOTH_OF_SUPPRESSION:
         return 6;
 
     default:
@@ -1660,6 +1658,7 @@ int mons_spidernest_rare(monster_type mcls)
     case MONS_BOULDER_BEETLE:
     case MONS_EMPEROR_SCORPION:
     case MONS_GHOST_MOTH:
+    case MONS_MOTH_OF_SUPPRESSION:
         return 20;
 
     case MONS_BORING_BEETLE:

@@ -171,7 +171,7 @@ MONS: patrolling giant mite / patrolling grey rat / patrolling jessica
 MONS: patrolling phantom hd:2 / patrolling wolf hd:2 / patrolling scorpion / \
       patrolling crazy yiuf
 MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
-KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
+KITEM: * = potion of flight q:2 / potion of flight q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
  meat ration / bread ration / royal jelly / honeycomb / choko, \
  scroll of remove curse q:2 / scroll of remove curse q:1 / any scroll, \
@@ -181,7 +181,7 @@ KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
 SUBST: T = t.
 
 MAP
-[<x*$=...TTttttt.
+[<x*$+...TTttttt.
 {.x*$x..3.TTtttt.
 x+xxxx....TTtttT.
 .....x....WTtttT.
@@ -204,7 +204,7 @@ MONS: patrolling giant mite / patrolling grey rat / patrolling jessica
 MONS: patrolling phantom hd:2 / patrolling wolf hd:2 / patrolling scorpion / \
       patrolling crazy yiuf
 MONS: patrolling human hd:2 hp:35 / patrolling elf hd:2 hp:30
-KITEM: * = potion of levitation q:2 / potion of levitation q:1 / any potion, \
+KITEM: * = potion of flight q:2 / potion of flight q:1 / any potion, \
  potion of cure mutation q:2 / potion of cure mutation q:1 / any potion, \
  meat ration / bread ration / royal jelly / honeycomb / choko, \
  scroll of remove curse q:2 / scroll of remove curse q:1 / any scroll, \
@@ -217,7 +217,7 @@ MAP
 ...x......xxxxx..
 ..xx.......x**x..
 xx.xx.xx..2x$$x..
-xx.xx.xxx..xx=x..
+xx.xx.xxx..xx+x..
 x.xxxx.xx..xxx.4.
 .xxx1.xx..xxxx...
 x.....xx..xxx....
@@ -531,12 +531,6 @@ MARKER:  * = lua:fog_machine { \
                  size = 2, size_buildup_amnt = 5, \
                  size_buildup_time = 25, cloud_type = "freezing vapour" \
              }
-KFEAT: ~ = closed_door
-MARKER: ~ = lua:restrict_door({ \
-            door_open_prompt="This door is covered in warnings. Open " .. \
-                             "it anyway?", \
-            door_description_prefix="warning-scrawled " \
-         })
 
 MAP
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -547,10 +541,10 @@ X.6px!!"!"!!!!tttttttx23tttttttttttttttttt
 X.68x!!!"!!!!!tttttttxxx+ttttttttttttttttt
 Xxx+xxxx=xxxxxxxtttttttthxx..xxWWWWWw.icrr
 X...........a...tttttg..xxhxx.xWWWWw..icrr
-Xx~xxxxxxxxxxxxx+ttttt.xxAxxhxx+WWqwwxxcc+
+Xx=mxxxxxxxxxxxx+ttttt.xxAxxhxx+WWqwwxxcc+
 X...xWp.b........ttttt..x.xx...xWw......*.
-X...~WW.fbxxxxxxxxttttt.xx.xx.sxw..=xxxccc
-Xee.xWWW..bf....dpptttt.xx.xxxxx...x....jk
+X...=WW.fbxxxxxxxxttttt.xx.xx.sxw..=xxxccc
+Xee.mWWW..bf....dpptttt.xx.xxxxx...x....jk
 Xee.xWWWWpfbpp...dptttg....xxu.....xttt%_j
 ENDMAP
 
@@ -945,7 +939,7 @@ SUBST: f = f..
 NSUBST: . = 15:M / *:.
 KMONS: M = very ugly thing / slime creature / glowing shapeshifter
 KITEM: % = silver rune of zot
-KITEM: " = ring of levitation, potion of levitation q:3, scroll of acquirement, \
+KITEM: " = ring of flight, potion of flight q:3, scroll of acquirement, \
  wand of disintegration / wand of fire, acquire gold, ring of protection from fire
 
 COLOUR: #~^ = yellow
@@ -1044,7 +1038,6 @@ KITEM: 1234567 = star_item / nothing
 KFEAT: ^ = zot trap
 KFEAT: - = spear trap / needle trap / net trap / blade trap / bolt trap
 NSUBST: ~ = 1:^ / 10:- / *:.
-SUBST: + = +==
 SUBST: ! = +
 
 MAP
@@ -1481,14 +1474,14 @@ mons_gen_marker:add_triggerer(DgnTriggerer:new {
     type = "player_move" })
 lua_marker("e", mons_gen_marker) }}
 SUBST: A = ^
-NSUBST: a = 1:= / *:X
+NSUBST: a = 1:+ / *:X
 KFEAT: - = zot trap
 NSUBST: ^ = 3:- / *:.
 KMONS: k = killer klown
 KMONS: A = plant col:magenta
 KMONS: B = plant col:lightmagenta
 SUBST: p = AAB
-COLOUR: =X = lightmagenta
+COLOUR: X = lightmagenta
 KITEM: $ = orb of zot
 KFEAT: # = closed_door
 KFEAT: ~ = closed_door
@@ -1505,7 +1498,7 @@ MARKER: ~ = lua:props_marker({ \
         door_description_prefix="magically reinforced ", \
         veto_shatter="veto", veto_disintegrate="veto", veto_fragmentation="veto", door_restrict="veto" \
         })
-KPROP: =X#kp+^ag78yL45il%3x21*To$. = no_rtele_into
+KPROP: X#kp+^ag78yL45il%3x21*To$. = no_rtele_into
 MAP
 XXXXXXXXXXXXXXXXXXX
 X.+^^^AX..+...X...X
@@ -1517,6 +1510,6 @@ XpX....X..X...X*X.X
 XXX.78.X..XXxXX.X.X
 X.+..y.XX.X...X.XeX
 X.XXXXXX..X212X.X~X
-X.....L=.XX...=.o$X
+X.....L+.XX...+.o$X
 XXXXXXXXXXXXXXXXXXX
 ENDMAP

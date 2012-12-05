@@ -1,6 +1,6 @@
 define(["exports", "jquery", "key_conversion", "chat", "comm",
         "contrib/jquery.cookie", "contrib/jquery.tablesorter",
-        "contrib/jquery.waitforimages"],
+        "contrib/jquery.waitforimages", "contrib/inflate"],
 function (exports, $, key_conversion, chat, comm) {
 
     // Need to keep this global for backwards compatibility :(
@@ -8,8 +8,8 @@ function (exports, $, key_conversion, chat, comm) {
 
     window.debug_mode = false;
 
-    exports.log_messages = false;
-    exports.log_message_size = false;
+    window.log_messages = false;
+    window.log_message_size = false;
 
     var delay_timeout = undefined;
     var message_inhibit = 0;
@@ -383,7 +383,7 @@ function (exports, $, key_conversion, chat, comm) {
     {
         $(".floating_dialog").hide();
         var elem = $(id);
-        elem.fadeIn(100, function () {
+        elem.stop(true, true).fadeIn(100, function () {
             elem.focus();
         });
         center_element(elem);
@@ -649,7 +649,8 @@ function (exports, $, key_conversion, chat, comm) {
                 sortlist = [[0, 0]];
             new_list.tablesorter({
                 sortList: sortlist,
-                textExtraction: extract_text_or_data
+                textExtraction: extract_text_or_data,
+                headers: { 0: { sorter: "text" } }
             });
         }
         else
@@ -840,7 +841,39 @@ function (exports, $, key_conversion, chat, comm) {
             message_queue.unshift(msg);
     }
 
+    function decode_utf8(bufs, callback)
+    {
+        var b = new Blob(bufs);
+        var f = new FileReader();
+        f.onload = function(e) {
+            callback(e.target.result)
+        }
+        f.readAsText(b, "UTF-8");
+    }
 
+    var blob_construction_supported = true;
+    try {
+        var blob = new Blob([new Uint8Array([0])]);
+    }
+    catch (e)
+    {
+        blob_construction_supported = false;
+        log("Blob construction not supported, disabling compression");
+    }
+
+    function inflate_works_on_ua()
+    {
+        if (!blob_construction_supported)
+            return false;
+        var b = $.browser;
+        if (b.chrome && b.version.match("^14\."))
+            return false; // doesn't support binary frames
+        if (b.chrome && b.version.match("^19\."))
+            return false; // buggy Blob builder
+        if (b.safari)
+            return false;
+        return true;
+    }
 
     // Global functions for backwards compatibility (HACK)
     window.log = log;
@@ -897,7 +930,7 @@ function (exports, $, key_conversion, chat, comm) {
             if (location.hash.match(/^#play-(.+)/i) &&
                 socket.readyState == 1)
             {
-                return "Really quit the game?";
+                return "Really save and quit the game?";
             }
         });
 
@@ -918,6 +951,17 @@ function (exports, $, key_conversion, chat, comm) {
 
         do_layout();
 
+        var inflater = null;
+
+        if ("Uint8Array" in window &&
+            "Blob" in window &&
+            "FileReader" in window &&
+            "ArrayBuffer" in window &&
+            inflate_works_on_ua())
+        {
+            inflater = new Inflater();
+        }
+
         if ("MozWebSocket" in window)
         {
             window.WebSocket = MozWebSocket;
@@ -926,7 +970,11 @@ function (exports, $, key_conversion, chat, comm) {
         if ("WebSocket" in window)
         {
             // socket_server is set in the client.html template
-            socket = new WebSocket(socket_server);
+            if (inflater)
+                socket = new WebSocket(socket_server);
+            else
+                socket = new WebSocket(socket_server, "no-compression");
+            socket.binaryType = "arraybuffer";
 
             socket.onopen = function ()
             {
@@ -943,14 +991,33 @@ function (exports, $, key_conversion, chat, comm) {
 
             socket.onmessage = function (msg)
             {
-                if (exports.log_messages)
+                if (inflater && msg.data instanceof ArrayBuffer)
                 {
+                    var data = new Uint8Array(msg.data.byteLength + 4);
+                    data.set(new Uint8Array(msg.data), 0);
+                    data.set([0, 0, 255, 255], msg.data.byteLength);
+                    var decompressed = [inflater.append(data)];
+                    if (decompressed[0] === -1)
+                    {
+                        console.log("decompression error!");
+                        var x = inflater.append(data);
+                    }
+                    decode_utf8(decompressed, function (s) {
+                        if (window.log_messages)
+                            console.log("Message: " + s);
+                        if (window.log_message_size)
+                            console.log("Message size: " + s.length);
+
+                        enqueue_message(s);
+                    });
+                    return;
+                }
+
+                if (window.log_messages)
                     console.log("Message: " + msg.data);
-                }
-                if (exports.log_message_size)
-                {
+                if (window.log_message_size)
                     console.log("Message size: " + msg.data.length);
-                }
+
                 enqueue_message(msg.data);
             };
 

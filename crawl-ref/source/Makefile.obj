@@ -221,6 +221,7 @@ transform.o \
 traps.o \
 travel.o \
 tutorial.o \
+uncancel.o \
 unicode.o \
 view.o \
 viewchar.o \
@@ -262,6 +263,7 @@ tilereg-mem.o \
 tilereg-menu.o \
 tilereg-mon.o \
 tilereg-msg.o \
+tilereg-popup.o \
 tilereg-skl.o \
 tilereg-spl.o \
 tilereg-stat.o \

@@ -114,7 +114,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_pitslime_rare, mons_pitslime_level,
       'M', true, -5 },
 
-    { BRANCH_VAULTS, BRANCH_MAIN_DUNGEON, 14, 19, 8, 16,
+    { BRANCH_VAULTS, BRANCH_MAIN_DUNGEON, 15, 20, 5, 19,
       0, 0,
       DNGN_ENTER_VAULTS, DNGN_RETURN_FROM_VAULTS,
       "Vaults", "the Vaults", "Vaults",
@@ -123,7 +123,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_vaults_rare, mons_vaults_level,
       'V', true, 0 },
 
-    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 4, 6, 1, 21,
+    { BRANCH_HALL_OF_BLADES, BRANCH_VAULTS, 3, 4, 1, 21,
       BFLAG_NO_ITEMS, 0,
       DNGN_ENTER_HALL_OF_BLADES, DNGN_RETURN_FROM_HALL_OF_BLADES,
       "Hall of Blades", "the Hall of Blades", "Blade",
@@ -132,7 +132,7 @@ const Branch branches[NUM_BRANCHES] = {
       mons_hallblade_rare, mons_hallblade_level,
       'B', false, -7 },
 
-    { BRANCH_CRYPT, BRANCH_VAULTS, 2, 4, 5, 19,
+    { BRANCH_CRYPT, BRANCH_VAULTS, 2, 3, 5, 19,
       0, 0,
       DNGN_ENTER_CRYPT, DNGN_RETURN_FROM_CRYPT,
       "Crypt", "the Crypt", "Crypt",
@@ -320,17 +320,6 @@ const Branch branches[NUM_BRANCHES] = {
       false, LIGHTGREY, BROWN, // set per-map
       mons_null_rare, mons_null_level,
       '8', false, 0 },
-
-#if TAG_MAJOR_VERSION == 33
-    { BRANCH_HIVE, NUM_BRANCHES, -1, -1, 1, 13,
-      BFLAG_NO_XLEV_TRAVEL, 0,
-      DNGN_ENTER_PORTAL_VAULT, DNGN_EXIT_PORTAL_VAULT,
-      "Hive", "a hive", "Hive",
-      "You hear a buzzing sound coming from all directions.",
-      false, YELLOW, BROWN,
-      mons_null_rare, mons_null_level,
-      'H', true, 5 },
-#endif
 };
 
 #endif

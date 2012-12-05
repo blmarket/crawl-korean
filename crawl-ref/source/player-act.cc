@@ -10,6 +10,7 @@
 #include <math.h>
 
 #include "areas.h"
+#include "art-enum.h"
 #include "artefact.h"
 #include "coordit.h"
 #include "dgnevent.h"
@@ -72,6 +73,9 @@ void player::moveto(const coord_def &c, bool clear_net)
     set_position(c);
 
     clear_far_constrictions();
+
+    if (you.duration[DUR_QUAD_DAMAGE])
+        invalidate_agrid(true);
 
     if (player_has_orb())
     {
@@ -361,7 +365,7 @@ void player::make_hungry(int hunger_increase, bool silent)
         ::lessen_hunger(-hunger_increase, silent);
 }
 
-std::string player::name(description_level_type dt, bool) const
+string player::name(description_level_type dt, bool) const
 {
     switch (dt)
     {
@@ -376,7 +380,7 @@ std::string player::name(description_level_type dt, bool) const
     }
 }
 
-std::string player::pronoun(pronoun_type pro, bool) const
+string player::pronoun(pronoun_type pro, bool) const
 {
     switch (pro)
     {
@@ -388,7 +392,7 @@ std::string player::pronoun(pronoun_type pro, bool) const
     }
 }
 
-std::string player::conj_verb(const std::string &verb) const
+string player::conj_verb(const string &verb) const
 {
 #ifdef KR
     return pgettext_expr("verb", verb.c_str());
@@ -396,14 +400,14 @@ std::string player::conj_verb(const std::string &verb) const
     return verb;
 }
 
-std::string player::hand_name(bool plural, bool *can_plural) const
+string player::hand_name(bool plural, bool *can_plural) const
 {
     bool _can_plural;
     if (can_plural == NULL)
         can_plural = &_can_plural;
     *can_plural = true;
 
-    std::string str;
+    string str;
 
     if (form == TRAN_BAT || form == TRAN_DRAGON)
         str = "foreclaw";
@@ -433,14 +437,14 @@ std::string player::hand_name(bool plural, bool *can_plural) const
     return str;
 }
 
-std::string player::foot_name(bool plural, bool *can_plural) const
+string player::foot_name(bool plural, bool *can_plural) const
 {
     bool _can_plural;
     if (can_plural == NULL)
         can_plural = &_can_plural;
     *can_plural = true;
 
-    std::string str;
+    string str;
 
     if (form == TRAN_SPIDER)
         str = "hind leg";
@@ -477,7 +481,7 @@ std::string player::foot_name(bool plural, bool *can_plural) const
     return str;
 }
 
-std::string player::arm_name(bool plural, bool *can_plural) const
+string player::arm_name(bool plural, bool *can_plural) const
 {
     if (form_changed_physiology())
         return hand_name(plural, can_plural);
@@ -485,8 +489,8 @@ std::string player::arm_name(bool plural, bool *can_plural) const
     if (can_plural != NULL)
         *can_plural = true;
 
-    std::string adj;
-    std::string str = "arm";
+    string adj;
+    string str = "arm";
 
     if (player_genus(GENPC_DRACONIAN) || species == SP_NAGA)
         adj = "scaled";
@@ -509,12 +513,60 @@ std::string player::arm_name(bool plural, bool *can_plural) const
     return str;
 }
 
+std::string player::unarmed_attack_name() const
+{
+    std::string text = "Nothing wielded"; // Default
+
+    if (species == SP_FELID)
+        text = "Teeth and claws";
+    else if (has_usable_claws(true))
+        text = "Claws";
+    else if (has_usable_tentacles(true))
+        text = "Tentacles";
+
+    switch (form)
+    {
+    case TRAN_SPIDER:
+        text = "Fangs (venom)";
+        break;
+    case TRAN_BLADE_HANDS:
+        text = "Blade " + blade_parts(true);
+        break;
+    case TRAN_STATUE:
+        if (has_usable_claws(true))
+            text = "Stone claws";
+        else if (has_usable_tentacles(true))
+            text = "Stone tentacles";
+        else
+            text = "Stone fists";
+        break;
+    case TRAN_ICE_BEAST:
+        text = "Ice fists (freeze)";
+        break;
+    case TRAN_DRAGON:
+        text = "Teeth and claws";
+        break;
+    case TRAN_LICH:
+        text += " (drain)";
+        break;
+    case TRAN_BAT:
+    case TRAN_PIG:
+        text = "Teeth";
+        break;
+    case TRAN_NONE:
+    case TRAN_APPENDAGE:
+    default:
+        break;
+    }
+    return text;
+}
+
 bool player::fumbles_attack(bool verbose)
 {
     bool did_fumble = false;
 
     // Fumbling in shallow water.
-    if (floundering() || liquefied(pos()) && ground_level())
+    if (floundering() || liquefied_ground())
     {
         if (x_chance_in_y(4, dex()) || one_chance_in(5))
         {
@@ -533,32 +585,6 @@ bool player::cannot_fight() const
     return false;
 }
 
-// If you have a randart equipped that has the ARTP_ANGRY property,
-// there's a 1/100 chance of it becoming activated whenever you
-// attack a monster. (Same as the berserk mutation at level 1.)
-// The probabilities for actually going berserk are cumulative!
-static bool _equipment_make_berserk()
-{
-    if (you.suppressed())
-        return false;
-
-    for (int eq = EQ_WEAPON; eq < NUM_EQUIP; eq++)
-    {
-        const item_def *item = you.slot_item((equipment_type) eq, false);
-        if (!item)
-            continue;
-
-        if (!is_artefact(*item))
-            continue;
-
-        if (artefact_wpn_property(*item, ARTP_ANGRY) && one_chance_in(100))
-            return true;
-    }
-
-    // nothing found
-    return false;
-}
-
 void player::attacking(actor *other)
 {
     ASSERT(!crawl_state.game_is_arena());
@@ -571,11 +597,8 @@ void player::attacking(actor *other)
     }
 
     const int chance = pow(3, player_mutation_level(MUT_BERSERK) - 1);
-    if (player_mutation_level(MUT_BERSERK) && x_chance_in_y(chance, 100)
-        || _equipment_make_berserk())
-    {
+    if (player_mutation_level(MUT_BERSERK) && x_chance_in_y(chance, 100))
         go_berserk(false);
-    }
 }
 
 void player::go_berserk(bool intentional, bool potion)
@@ -702,10 +725,12 @@ bool player::is_web_immune() const
 bool player::shove(const char* feat_name)
 {
     for (distance_iterator di(pos()); di; ++di)
-        if (in_bounds(*di) && !actor_at(*di) && !is_feat_dangerous(grd(*di)))
+        if (in_bounds(*di) && !actor_at(*di) && !is_feat_dangerous(grd(*di))
+            && you.can_pass_through_feat(grd(*di)))
         {
             moveto(*di);
-            mprf("You are pushed out of the %s.", feat_name);
+            if (*feat_name)
+                mprf("You are pushed out of the %s.", feat_name);
             dprf("Moved to (%d, %d).", pos().x, pos().y);
             return true;
         }

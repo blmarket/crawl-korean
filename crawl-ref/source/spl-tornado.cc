@@ -10,11 +10,12 @@
 #include "env.h"
 #include "fineff.h"
 #include "godconduct.h"
+#include "libutil.h"
 #include "los.h"
+#include "losglobal.h"
 #include "misc.h"
 #include "mon-behv.h"
 #include "ouch.h"
-#include "player.h"
 #include "shout.h"
 #include "spl-cast.h"
 #include "stuff.h"
@@ -22,7 +23,12 @@
 
 static bool _airtight(coord_def c)
 {
-    return grd(c) <= DNGN_MAXWALL;
+    // Broken by 6f473416 -- we should re-allow the wind through grates; this
+    // simplicistic check allows moving people through trees which is no good
+    // either.
+
+    // return grd(c) <= DNGN_MAXWALL && grd(c) != DNGN_MANGROVE;
+    return grd(c) <= DNGN_GRATE && grd(c) != DNGN_MANGROVE;
 }
 
 /* Explanation of the algorithm:
@@ -66,11 +72,11 @@ int WindSystem::visit(coord_def c, int d, coord_def parent)
         if (depth(*ai - org) == -1)
         {
             int sonlow = visit(*ai, d+1, c);
-            low = std::min(low, sonlow);
-            sonmax = std::max(sonmax, sonlow);
+            low = min(low, sonlow);
+            sonmax = max(sonmax, sonlow);
         }
         else if (*ai != parent)
-            low = std::min(low, depth(*ai - org));
+            low = min(low, depth(*ai - org));
     }
 
     cut(c - org) = (sonmax >= d);
@@ -99,11 +105,8 @@ static void _set_tornado_durations(int powc)
 {
     int dur = 60;
     you.duration[DUR_TORNADO] = dur;
-    you.duration[DUR_LEVITATION] =
-        std::max(dur, you.duration[DUR_LEVITATION]);
-    you.duration[DUR_CONTROLLED_FLIGHT] =
-        std::max(dur, you.duration[DUR_CONTROLLED_FLIGHT]);
-    you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
+    you.duration[DUR_FLIGHT] = max(dur, you.duration[DUR_FLIGHT]);
+    you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
 }
 
 spret_type cast_tornado(int powc, bool fail)
@@ -140,7 +143,8 @@ spret_type cast_tornado(int powc, bool fail)
 
     you.props["tornado_since"].get_int() = you.elapsed_time;
     _set_tornado_durations(powc);
-    burden_change();
+    if (you.species == SP_TENGU)
+        you.redraw_evasion = true;
 
     return SPRET_SUCCESS;
 }
@@ -157,7 +161,7 @@ static bool _mons_is_unmovable(const monster *mons)
 }
 
 static coord_def _rotate(coord_def org, coord_def from,
-                         std::vector<coord_def> &avail, int rdur)
+                         vector<coord_def> &avail, int rdur)
 {
     if (avail.empty())
         return from;
@@ -171,20 +175,18 @@ static coord_def _rotate(coord_def org, coord_def from,
         ang0 -= 2 * PI;
     for (unsigned int i = 0; i < avail.size(); i++)
     {
-        // If the path is blocked - say the monster is in a cage -
-        // veto the cell.
-        if (!cell_see_cell(from, avail[i], LOS_SOLID_SEE))
-            continue;
-
         double dist = sqrt((avail[i] - org).abs());
         double distdiff = fabs(dist - dist0);
         double ang = atan2(avail[i].x - org.x, avail[i].y - org.y);
-        double angdiff = std::min(fabs(ang - ang0), fabs(ang - ang0 + 2 * PI));
+        double angdiff = min(fabs(ang - ang0), fabs(ang - ang0 + 2 * PI));
 
         double score = distdiff + angdiff * 2;
         if (score < hiscore)
             best = avail[i], hiscore = score;
     }
+
+    // must find _something_, the original space might be already taken
+    ASSERT(hiscore != 1e38);
 
     return best;
 }
@@ -236,9 +238,9 @@ void tornado_damage(actor *caster, int dur)
     int age = _tornado_age(caster);
     ASSERT(age >= 0);
 
-    std::vector<actor*>        move_act;   // victims to move
-    std::vector<coord_def>     move_avail; // legal destinations
-    std::map<mid_t, coord_def> move_dest;  // chosen destination
+    vector<actor*>        move_act;   // victims to move
+    vector<coord_def>     move_avail; // legal destinations
+    map<mid_t, coord_def> move_dest;  // chosen destination
     int rdurs[TORNADO_RADIUS+1];           // durations at radii
     int cnt_open = 0;
     int cnt_all  = 0;
@@ -273,9 +275,9 @@ void tornado_damage(actor *caster, int dur)
         if (!rpow)
             break;
 
-        noise = std::max(div_rand_round(r * rdur * 3, 100), noise);
+        noise = max(div_rand_round(r * rdur * 3, 100), noise);
 
-        std::vector<coord_def> clouds;
+        vector<coord_def> clouds;
         for (; dam_i && dam_i.radius() == r; ++dam_i)
         {
             if (feat_is_tree(grd(*dam_i)) && dur > 0
@@ -311,9 +313,9 @@ void tornado_damage(actor *caster, int dur)
                     continue;
                 }
 
-                leda = liquefied(victim->pos()) && victim->ground_level()
-                    || victim->is_monster()
-                       && _mons_is_unmovable(victim->as_monster());
+                leda = victim->liquefied_ground()
+                       || victim->is_monster()
+                          && _mons_is_unmovable(victim->as_monster());
                 if (!victim->res_wind())
                 {
                     if (victim->is_monster())
@@ -321,11 +323,10 @@ void tornado_damage(actor *caster, int dur)
                         monster *mon = victim->as_monster();
                         if (!leda)
                         {
-                            // levitate the monster so you get only one attempt
+                            // fly the monster so you get only one attempt
                             // at tossing them into water/lava
-                            mon_enchant ench(ENCH_LEVITATION, 0,
-                                             caster, 20);
-                            if (mon->has_ench(ENCH_LEVITATION))
+                            mon_enchant ench(ENCH_FLIGHT, 0, caster, 20);
+                            if (mon->has_ench(ENCH_FLIGHT))
                                 mon->update_ench(ench);
                             else
                                 mon->add_ench(ench);
@@ -336,16 +337,16 @@ void tornado_damage(actor *caster, int dur)
                     {
                         bool standing = !you.airborne();
                         if (standing)
-                            mpr(gettext("The vortex of raging winds lifts you up."));
-                        you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
-                        you.duration[DUR_LEVITATION]
-                            = std::max(you.duration[DUR_LEVITATION], 20);
+                            mpr(_("The vortex of raging winds lifts you up."));
+                        you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
+                        you.duration[DUR_FLIGHT]
+                            = max(you.duration[DUR_FLIGHT], 20);
                         if (standing)
-                            float_player(false);
+                            float_player();
                     }
-                    int dmg = apply_chunked_AC(
+                    int dmg = victim->apply_ac(
                                 div_rand_round(roll_dice(9, rpow), 15),
-                                victim->armour_class());
+                                0, AC_PROPORTIONAL);
                     if (dur < 0)
                         dmg = 0;
                     dprf("damage done: %d", dmg);
@@ -432,25 +433,23 @@ void cancel_tornado(bool tloc)
         return;
 
     dprf("Aborting tornado.");
-    if (you.duration[DUR_TORNADO] == you.duration[DUR_LEVITATION])
+    if (you.duration[DUR_TORNADO] == you.duration[DUR_FLIGHT])
     {
         if (tloc)
         {
-            // it'd be better to abort levitation instantly, but let's first
+            // it'd be better to abort flight instantly, but let's first
             // make damn sure all ways of translocating are prevented from
             // landing you in water.  Insta-kill due to an arrow of dispersal
             // is not nice.
-            you.duration[DUR_LEVITATION] = std::min(20,
-                you.duration[DUR_LEVITATION]);
-            you.duration[DUR_CONTROLLED_FLIGHT] = std::min(20,
-                you.duration[DUR_CONTROLLED_FLIGHT]);
+            you.duration[DUR_FLIGHT] = min(20,
+                you.duration[DUR_FLIGHT]);
         }
         else
         {
-            you.duration[DUR_LEVITATION] = 0;
-            you.duration[DUR_CONTROLLED_FLIGHT] = 0;
-            you.attribute[ATTR_LEV_UNCANCELLABLE] = 0;
-            burden_change();
+            you.duration[DUR_FLIGHT] = 0;
+            you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 0;
+            if (you.species == SP_TENGU)
+                you.redraw_evasion = true;
             // NO checking for water, since this is called only during level
             // change, and being, say, banished from above water shouldn't
             // kill you.
@@ -489,7 +488,7 @@ void tornado_move(const coord_def &p)
         {
             // blinking/cTele inside an already windy area
             dprf("Tloc penalty: reducing tornado by %d turns", dist - 1);
-            you.duration[DUR_TORNADO] = std::max(1,
+            you.duration[DUR_TORNADO] = max(1,
                          you.duration[DUR_TORNADO] - (dist - 1) * 10);
             return;
         }

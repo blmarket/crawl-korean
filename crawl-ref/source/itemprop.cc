@@ -22,6 +22,7 @@
 #include "invent.h"
 #include "items.h"
 #include "itemprop.h"
+#include "libutil.h"
 #include "misc.h"
 #include "mon-util.h"
 #include "mon-stuff.h"
@@ -56,7 +57,7 @@ struct armour_def
 // flexible and adjustable and can be worn by any player character...
 // providing they also pass the shape test, of course.
 static int Armour_index[NUM_ARMOURS];
-static armour_def Armour_prop[NUM_ARMOURS] =
+static const armour_def Armour_prop[NUM_ARMOURS] =
 {
     { ARM_ANIMAL_SKIN,          M_("animal skin"),            2,  0,  100,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
@@ -172,7 +173,7 @@ struct weapon_def
 };
 
 static int Weapon_index[NUM_WEAPONS];
-static weapon_def Weapon_prop[NUM_WEAPONS] =
+static const weapon_def Weapon_prop[NUM_WEAPONS] =
 {
     // Maces & Flails
     { WPN_CLUB,              M_("club"),                5,  3, 13,  50,  7,
@@ -203,7 +204,7 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
         DAMV_CRUSHING | DAM_PIERCE, 10 },
     { WPN_DIRE_FLAIL,        M_("dire flail"),         13, -3, 13, 240,  9,
-        SK_MACES_FLAILS, HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
+        SK_MACES_FLAILS, HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CRUSHING | DAM_PIERCE, 10 },
     { WPN_EVENINGSTAR,       M_("eveningstar"),        14, -1, 15, 180,  8,
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
@@ -283,13 +284,13 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
     { WPN_WAR_AXE,           M_("war axe"),            11,  0, 15, 180,  7,
         SK_AXES,         HANDS_ONE,    SIZE_MEDIUM, MI_NONE, false,
         DAMV_CHOPPING, 10 },
-    { WPN_BROAD_AXE,         M_("broad axe"),          14, -2, 16, 230,  8,
+    { WPN_BROAD_AXE,         M_("broad axe"),          13, -2, 16, 230,  8,
         SK_AXES,         HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_CHOPPING, 10 },
-    { WPN_BATTLEAXE,         M_("battleaxe"),          17, -4, 17, 250,  8,
+    { WPN_BATTLEAXE,         M_("battleaxe"),          15, -4, 17, 250,  8,
         SK_AXES,         HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CHOPPING, 10 },
-    { WPN_EXECUTIONERS_AXE,  M_("executioner\'s axe"), 20, -6, 20, 280,  9,
+    { WPN_EXECUTIONERS_AXE,  M_("executioner's axe"),  18, -6, 20, 280,  9,
         SK_AXES,         HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CHOPPING, 2 },
 
@@ -320,14 +321,15 @@ static weapon_def Weapon_prop[NUM_WEAPONS] =
         DAMV_CHOPPING, 2 },
 
     // Staves
+    // WPN_STAFF is for weapon stats for magical staves only.
     { WPN_STAFF,             M_("staff"),               5,  5, 12, 150,  6,
-        SK_STAVES,       HANDS_DOUBLE, SIZE_MEDIUM, MI_NONE, false,
+        SK_STAVES,       HANDS_HALF,   SIZE_MEDIUM, MI_NONE, false,
         DAMV_CRUSHING, 0 },
     { WPN_QUARTERSTAFF,      M_("quarterstaff"),        10, 3, 13, 180,  7,
-        SK_STAVES,       HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
+        SK_STAVES,       HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CRUSHING, 10 },
     { WPN_LAJATANG,          M_("lajatang"),            16,-3, 14, 200,  3,
-        SK_STAVES,       HANDS_DOUBLE, SIZE_LARGE,  MI_NONE, false,
+        SK_STAVES,       HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_SLICING, 2 },
 
     // Range weapons
@@ -363,7 +365,7 @@ struct missile_def
 };
 
 static int Missile_index[NUM_MISSILES];
-static missile_def Missile_prop[NUM_MISSILES] =
+static const missile_def Missile_prop[NUM_MISSILES] =
 {
     { MI_NEEDLE,        M_("needle"),        0,    1, false },
     { MI_STONE,         M_("stone"),         4,    6, true  },
@@ -400,7 +402,7 @@ struct food_def
 // (like ghoul chunks) to guarantee that the special thing is only
 // done once.  See the ghoul eating code over in food.cc.
 static int Food_index[NUM_FOODS];
-static food_def Food_prop[NUM_FOODS] =
+static const food_def Food_prop[NUM_FOODS] =
 {
     { FOOD_MEAT_RATION,  M_("meat ration"),  5000,   500, -1500,  80, 4, FFL_NONE },
     { FOOD_SAUSAGE,      M_("sausage"),      1200,   150,  -400,  40, 2, FFL_NONE },
@@ -569,7 +571,7 @@ void do_uncurse_item(item_def &item, bool inscribe, bool no_ash,
     }
 
     if (inscribe && Options.autoinscribe_cursed
-        && item.inscription.find("was cursed") == std::string::npos
+        && item.inscription.find("was cursed") == string::npos
         && !item_ident(item, ISFLAG_SEEN_CURSED)
         && !fully_identified(item))
     {
@@ -633,7 +635,7 @@ static bool _is_affordable(const item_def &item)
 
     // Disregard shop stuff above your reach.
     if (_in_shop(item))
-        return (int)item_value(item) < you.gold;
+        return (int)item_value(item) <= you.gold;
 
     // Explicitly marked by a vault.
     if (item.flags & ISFLAG_UNOBTAINABLE)
@@ -673,7 +675,7 @@ void set_ident_flags(item_def &item, iflags_t flags)
     {
         // Clear "was cursed" inscription once the item is identified.
         if (Options.autoinscribe_cursed
-            && item.inscription.find("was cursed") != std::string::npos)
+            && item.inscription.find("was cursed") != string::npos)
         {
             item.inscription = replace_all(item.inscription, ", was cursed", "");
             item.inscription = replace_all(item.inscription, "was cursed, ", "");
@@ -1357,7 +1359,6 @@ int weapon_rarity(int w_type)
     case WPN_BROAD_AXE:
     case WPN_SPIKED_FLAIL:
     case WPN_WHIP:
-    case WPN_STAFF:
         return 4;
 
     case WPN_GREAT_MACE:
@@ -1391,6 +1392,7 @@ int weapon_rarity(int w_type)
     case WPN_BLESSED_TRIPLE_SWORD:
     case WPN_SACRED_SCOURGE:
     case WPN_TRISHULA:
+    case WPN_STAFF:
         // Zero value weapons must be placed specially -- see make_item() {dlb}
         return 0;
 
@@ -1463,7 +1465,6 @@ hands_reqd_type hands_reqd(const item_def &item, size_type size)
 {
     int         ret = HANDS_ONE;
     int         fit;
-    bool        doub = false;
 
     switch (item.base_type)
     {
@@ -1473,11 +1474,11 @@ hands_reqd_type hands_reqd(const item_def &item, size_type size)
         // as a special case because we want to be very flexible with
         // these useful objects (we want spriggans and ogres to be
         // able to use them).  Rods are always 1-handed.
-        if (item.base_type == OBJ_STAVES || weapon_skill(item) == SK_STAVES)
+        if (item.base_type == OBJ_STAVES)
         {
-            if (size < SIZE_SMALL)
+            if (size < SIZE_MEDIUM)
                 ret = HANDS_TWO;
-            else if (size > SIZE_LARGE)
+            else if (size > SIZE_MEDIUM)
                 ret = HANDS_ONE;
             else
                 ret = HANDS_HALF;
@@ -1485,13 +1486,6 @@ hands_reqd_type hands_reqd(const item_def &item, size_type size)
         }
 
         ret = Weapon_prop[ Weapon_index[item.sub_type] ].hands;
-
-        // Size is the level where we can use one hand for one end.
-        if (ret == HANDS_DOUBLE)
-        {
-            doub = true;
-            ret = HANDS_TWO; // HANDS_HALF once double-ended is implemented.
-        }
 
         // Adjust handedness for size only for non-whip melee weapons.
         if (!is_range_weapon(item) && !is_whip_type(item.sub_type))
@@ -1508,13 +1502,10 @@ hands_reqd_type hands_reqd(const item_def &item, size_type size)
             // Large      XX      XX      0       0     -1      -2
             // Big        XX      XX     XX       0      0      -1
             // Giant      XX      XX     XX      XX      0       0
-
-            // Note the stretching of double weapons for larger characters
-            // by one level since they tend to be larger weapons.
             if (size < SIZE_MEDIUM && fit > 0)
                 ret += fit;
             else if (size > SIZE_MEDIUM && fit < 0)
-                ret += (fit + doub);
+                ret += fit;
         }
         break;
 
@@ -1613,72 +1604,24 @@ bool is_blessed_convertible(const item_def &item)
                     || weapon_skill(item) == SK_LONG_BLADES)));
 }
 
-bool convert2good(item_def &item, bool allow_blessed)
+bool convert2good(item_def &item)
 {
     if (item.base_type != OBJ_WEAPONS)
         return false;
 
     switch (item.sub_type)
     {
-    default:
-        return false;
+    default: return false;
 
-    case WPN_FALCHION:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_FALCHION;
-        break;
-
-    case WPN_LONG_SWORD:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_LONG_SWORD;
-        break;
-
-    case WPN_SCIMITAR:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_SCIMITAR;
-        break;
-
-    case WPN_DEMON_BLADE:
-        if (!allow_blessed)
-            item.sub_type = WPN_SCIMITAR;
-        else
-            item.sub_type = WPN_EUDEMON_BLADE;
-        break;
-
-    case WPN_DOUBLE_SWORD:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_DOUBLE_SWORD;
-        break;
-
-    case WPN_GREAT_SWORD:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_GREAT_SWORD;
-        break;
-
-    case WPN_TRIPLE_SWORD:
-        if (!allow_blessed)
-            return false;
-        item.sub_type = WPN_BLESSED_TRIPLE_SWORD;
-        break;
-
-    case WPN_DEMON_WHIP:
-        if (!allow_blessed)
-            item.sub_type = WPN_WHIP;
-        else
-            item.sub_type = WPN_SACRED_SCOURGE;
-        break;
-
-    case WPN_DEMON_TRIDENT:
-        if (!allow_blessed)
-            item.sub_type = WPN_TRIDENT;
-        else
-            item.sub_type = WPN_TRISHULA;
-        break;
+    case WPN_FALCHION:      item.sub_type = WPN_BLESSED_FALCHION; break;
+    case WPN_LONG_SWORD:    item.sub_type = WPN_BLESSED_LONG_SWORD; break;
+    case WPN_SCIMITAR:      item.sub_type = WPN_BLESSED_SCIMITAR; break;
+    case WPN_DEMON_BLADE:   item.sub_type = WPN_EUDEMON_BLADE; break;
+    case WPN_DOUBLE_SWORD:  item.sub_type = WPN_BLESSED_DOUBLE_SWORD; break;
+    case WPN_GREAT_SWORD:   item.sub_type = WPN_BLESSED_GREAT_SWORD; break;
+    case WPN_TRIPLE_SWORD:  item.sub_type = WPN_BLESSED_TRIPLE_SWORD; break;
+    case WPN_DEMON_WHIP:    item.sub_type = WPN_SACRED_SCOURGE; break;
+    case WPN_DEMON_TRIDENT: item.sub_type = WPN_TRISHULA; break;
     }
 
     if (is_blessed(item))
@@ -1694,44 +1637,17 @@ bool convert2bad(item_def &item)
 
     switch (item.sub_type)
     {
-    default:
-        return false;
+    default: return false;
 
-    case WPN_BLESSED_FALCHION:
-        item.sub_type = WPN_FALCHION;
-        break;
-
-    case WPN_BLESSED_LONG_SWORD:
-        item.sub_type = WPN_LONG_SWORD;
-        break;
-
-    case WPN_BLESSED_SCIMITAR:
-        item.sub_type = WPN_SCIMITAR;
-        break;
-
-    case WPN_EUDEMON_BLADE:
-        item.sub_type = WPN_DEMON_BLADE;
-        break;
-
-    case WPN_BLESSED_DOUBLE_SWORD:
-        item.sub_type = WPN_DOUBLE_SWORD;
-        break;
-
-    case WPN_BLESSED_GREAT_SWORD:
-        item.sub_type = WPN_GREAT_SWORD;
-        break;
-
-    case WPN_BLESSED_TRIPLE_SWORD:
-        item.sub_type = WPN_TRIPLE_SWORD;
-        break;
-
-    case WPN_SACRED_SCOURGE:
-        item.sub_type = WPN_DEMON_WHIP;
-        break;
-
-    case WPN_TRISHULA:
-        item.sub_type = WPN_DEMON_TRIDENT;
-        break;
+    case WPN_BLESSED_FALCHION:     item.sub_type = WPN_FALCHION; break;
+    case WPN_BLESSED_LONG_SWORD:   item.sub_type = WPN_LONG_SWORD; break;
+    case WPN_BLESSED_SCIMITAR:     item.sub_type = WPN_SCIMITAR; break;
+    case WPN_EUDEMON_BLADE:        item.sub_type = WPN_DEMON_BLADE; break;
+    case WPN_BLESSED_DOUBLE_SWORD: item.sub_type = WPN_DOUBLE_SWORD; break;
+    case WPN_BLESSED_GREAT_SWORD:  item.sub_type = WPN_GREAT_SWORD; break;
+    case WPN_BLESSED_TRIPLE_SWORD: item.sub_type = WPN_TRIPLE_SWORD; break;
+    case WPN_SACRED_SCOURGE:       item.sub_type = WPN_DEMON_WHIP; break;
+    case WPN_TRISHULA:             item.sub_type = WPN_DEMON_TRIDENT; break;
     }
 
     return true;
@@ -1808,6 +1724,9 @@ static bool _item_is_swappable(const item_def &item, equipment_type slot, bool s
     if (get_item_slot(item) != slot)
         return true;
 
+    if (item.base_type == OBJ_WEAPONS)
+        return true;
+
     if (item.base_type == OBJ_ARMOUR || !_item_known_uncursed(item))
         return false;
 
@@ -1819,11 +1738,7 @@ static bool _item_is_swappable(const item_def &item, equipment_type slot, bool s
                 || item.sub_type == AMU_GUARDIAN_SPIRIT
                 || (item.sub_type == RING_MAGICAL_POWER && !swap_in));
     }
-
-    const brand_type brand = get_weapon_brand(item);
-    return (brand != SPWPN_DISTORTION
-           && (brand != SPWPN_VAMPIRICISM || you.is_undead != US_ALIVE)
-           && (brand != SPWPN_HOLY_WRATH || you.is_undead == US_ALIVE));
+    return true;
 }
 
 static bool _item_is_swappable(const item_def &item, bool swap_in)
@@ -1876,7 +1791,7 @@ static bool _slot_blocked(const item_def &item)
             && !_item_is_swappable(you.inv[you.equip[eq]], eq, false));
 }
 
-bool item_skills(const item_def &item, std::set<skill_type> &skills)
+bool item_skills(const item_def &item, set<skill_type> &skills)
 {
     const bool equipped = item_is_equipped(item);
 
@@ -1909,14 +1824,6 @@ bool item_skills(const item_def &item, std::set<skill_type> &skills)
     sk = range_skill(item);
     if (sk != SK_THROWING)
         skills.insert(sk);
-
-    if (item.base_type == OBJ_RODS && item_type_known(item))
-    {
-        int sp = 0;
-        while (sp < SPELLBOOK_SIZE && is_valid_spell_in_book(item, sp))
-            if (which_spell_in_book(item, sp++) == SPELL_CONDENSATION_SHIELD)
-                skills.insert(SK_SHIELDS);
-    }
 
     return !skills.empty();
 }
@@ -2105,11 +2012,6 @@ bool item_is_horn_of_geryon(const item_def &item)
             && item.sub_type == MISC_HORN_OF_GERYON);
 }
 
-bool item_is_corpse(const item_def &item)
-{
-    return (item.base_type == OBJ_CORPSES && item.sub_type == CORPSE_BODY);
-}
-
 bool item_is_spellbook(const item_def &item)
 {
     return (item.base_type == OBJ_BOOKS && item.sub_type != BOOK_MANUAL
@@ -2232,11 +2134,6 @@ bool is_fruit(const item_def & item)
         return false;
 
     return (Food_prop[Food_index[item.sub_type]].flags & FFL_FRUIT);
-}
-
-uint32_t item_fruit_mask(const item_def &item)
-{
-    return (is_fruit(item)? (1 << Food_index[item.sub_type]) : 0);
 }
 
 bool food_is_rotten(const item_def &item)
@@ -2639,7 +2536,7 @@ bool gives_ability(const item_def &item)
         break;
     case OBJ_JEWELLERY:
         if (item.sub_type == RING_TELEPORTATION
-            || item.sub_type == RING_LEVITATION
+            || item.sub_type == RING_FLIGHT
             || item.sub_type == RING_INVISIBILITY
             || item.sub_type == AMU_RAGE)
         {
@@ -2653,7 +2550,7 @@ bool gives_ability(const item_def &item)
             return false;
         const special_armour_type ego = get_armour_ego_type(item);
 
-        if (ego == SPARM_DARKNESS || ego == SPARM_LEVITATION)
+        if (ego == SPARM_DARKNESS || ego == SPARM_FLYING)
             return true;
         break;
     }
@@ -2668,6 +2565,11 @@ bool gives_ability(const item_def &item)
     for (int rap = ARTP_INVISIBLE; rap <= ARTP_BERSERK; rap++)
         if (artefact_wpn_property(item, static_cast<artefact_prop_type>(rap)))
             return true;
+
+#if TAG_MAJOR_VERSION == 34
+    if (artefact_wpn_property(item, ARTP_FOG))
+        return true;
+#endif
 
     return false;
 }
@@ -2717,7 +2619,8 @@ bool gives_resistance(const item_def &item)
     }
     case OBJ_STAVES:
         if (item.sub_type >= STAFF_FIRE && item.sub_type <= STAFF_POISON
-            || item.sub_type == STAFF_AIR)
+            || item.sub_type == STAFF_AIR
+            || item.sub_type == STAFF_DEATH)
         {
             return true;
         }
@@ -2761,7 +2664,7 @@ int item_mass(const item_def &item)
 
             // Truncate to the nearest 5 and reduce the item mass:
             unit_mass -= ((reduc / 5) * 5);
-            unit_mass = std::max(unit_mass, 5);
+            unit_mass = max(unit_mass, 5);
         }
         break;
 
@@ -2908,12 +2811,12 @@ void ident_reflector(item_def *item)
         set_ident_flags(*item, ISFLAG_KNOW_TYPE);
 }
 
-std::string item_base_name(const item_def &item)
+string item_base_name(const item_def &item)
 {
     return item_base_name(item.base_type, item.sub_type);
 }
 
-std::string item_base_name(object_class_type type, int sub_type)
+string item_base_name(object_class_type type, int sub_type)
 {
     switch (type)
     {
@@ -2930,7 +2833,7 @@ std::string item_base_name(object_class_type type, int sub_type)
     }
 }
 
-std::string food_type_name(int sub_type)
+string food_type_name(int sub_type)
 {
     return Food_prop[Food_index[sub_type]].name;
 }

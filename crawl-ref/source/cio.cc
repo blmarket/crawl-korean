@@ -132,10 +132,10 @@ void nowrap_eol_cprintf(const char *s, ...)
 
     va_list args;
     va_start(args, s);
-    std::string buf = vmake_stringf(s, args);
+    string buf = vmake_stringf(s, args);
     va_end(args);
 
-    cprintf("%s", chop_string(buf, std::max(wrapcol + 1 - wherex(), 0), false).c_str());
+    cprintf("%s", chop_string(buf, max(wrapcol + 1 - wherex(), 0), false).c_str());
 }
 
 // cprintf that knows how to wrap down lines
@@ -143,7 +143,7 @@ static void wrapcprintf(int wrapcol, const char *s, ...)
 {
     va_list args;
     va_start(args, s);
-    std::string buf = vmake_stringf(s, args);
+    string buf = vmake_stringf(s, args);
     va_end(args);
 
     while (!buf.empty())
@@ -163,7 +163,7 @@ int cancelable_get_line(char *buf, int len, input_history *mh,
 {
     flush_prev_message();
 
-    mouse_control mc(MOUSE_MODE_MORE);
+    mouse_control mc(MOUSE_MODE_PROMPT);
     line_reader reader(buf, len, get_number_of_cols());
     reader.set_input_history(mh);
     reader.set_keyproc(keyproc);
@@ -185,7 +185,7 @@ input_history::input_history(size_t size)
     pos = history.end();
 }
 
-void input_history::new_input(const std::string &s)
+void input_history::new_input(const string &s)
 {
     history.remove(s);
 
@@ -198,7 +198,7 @@ void input_history::new_input(const std::string &s)
     go_end();
 }
 
-const std::string *input_history::prev()
+const string *input_history::prev()
 {
     if (history.empty())
         return NULL;
@@ -209,7 +209,7 @@ const std::string *input_history::prev()
     return &*--pos;
 }
 
-const std::string *input_history::next()
+const string *input_history::next()
 {
     if (history.empty())
         return NULL;
@@ -245,7 +245,7 @@ line_reader::~line_reader()
 {
 }
 
-std::string line_reader::get_text() const
+string line_reader::get_text() const
 {
     return buffer;
 }
@@ -282,10 +282,31 @@ void line_reader::cursorto(int ncx)
     cgotoxy(x, y, region);
 }
 
+#ifdef USE_TILE_WEB
+static void _webtiles_abort_get_line()
+{
+    tiles.json_open_object();
+    tiles.json_write_string("msg", "abort_get_line");
+    tiles.json_close_object();
+    tiles.finish_message();
+}
+#endif
+
 int line_reader::read_line(bool clear_previous)
 {
     if (bufsz <= 0)
         return false;
+
+#ifdef USE_TILE_WEB
+    if (!tiles.is_in_crt_menu())
+    {
+        tiles.redraw();
+        tiles.json_open_object();
+        tiles.json_write_string("msg", "get_line");
+        tiles.json_close_object();
+        tiles.finish_message();
+    }
+#endif
 
     cursor_control con(true);
 
@@ -321,6 +342,8 @@ int line_reader::read_line(bool clear_previous)
     if (history)
         history->go_end();
 
+    int ret;
+
     while (true)
     {
         int ch = getchm(getch_ck);
@@ -329,7 +352,8 @@ int line_reader::read_line(bool clear_previous)
         if (crawl_state.seen_hups)
         {
             buffer[0] = '\0';
-            return 0;
+            ret = 0;
+            break;
         }
 
         if (keyfn)
@@ -340,19 +364,27 @@ int line_reader::read_line(bool clear_previous)
                 buffer[length] = 0;
                 if (history && length)
                     history->new_input(buffer);
-                return 0;
+                ret = 0;
+                break;
             }
             else if (whattodo == -1)
             {
                 buffer[length] = 0;
-                return ch;
+                ret = ch;
+                break;
             }
         }
 
-        int ret = process_key(ch);
+        ret = process_key(ch);
         if (ret != -1)
-            return ret;
+            break;
     }
+
+#ifdef USE_TILE_WEB
+    _webtiles_abort_get_line();
+#endif
+
+    return ret;
 }
 
 void line_reader::backspace()
@@ -461,8 +493,8 @@ int line_reader::process_key(int ch)
         if (!history)
             break;
 
-        const std::string *text = (ch == CK_UP) ? history->prev()
-                                                : history->next();
+        const string *text = (ch == CK_UP) ? history->prev()
+                                           : history->next();
 
         if (text)
         {
@@ -603,7 +635,7 @@ int line_reader::process_key(int ch)
 /////////////////////////////////////////////////////////////////////////////
 // Of mice and other mice.
 
-static std::queue<c_mouse_event> mouse_events;
+static queue<c_mouse_event> mouse_events;
 
 c_mouse_event get_mouse_event()
 {

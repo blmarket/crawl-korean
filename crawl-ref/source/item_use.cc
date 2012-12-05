@@ -8,14 +8,15 @@
 #include "item_use.h"
 
 #include "abl-show.h"
-#include "acquire.h"
 #include "areas.h"
 #include "artefact.h"
 #include "cloud.h"
 #include "colour.h"
 #include "coordit.h"
 #include "debug.h"
+#include "decks.h"
 #include "delay.h"
+#include "describe.h"
 #include "effects.h"
 #include "env.h"
 #include "exercise.h"
@@ -27,6 +28,7 @@
 #include "evoke.h"
 #include "itemprop.h"
 #include "items.h"
+#include "libutil.h"
 #include "macro.h"
 #include "makeitem.h"
 #include "message.h"
@@ -50,15 +52,19 @@
 #include "spl-selfench.h"
 #include "spl-summoning.h"
 #include "spl-transloc.h"
+#include "state.h"
 #include "stuff.h"
+#include "target.h"
 #include "throw.h"
 #include "transform.h"
+#include "uncancel.h"
+#include "unwind.h"
 #include "view.h"
 #include "xom.h"
 
 static bool _drink_fountain();
 static int _handle_enchant_armour(int item_slot = -1,
-                                  std::string *pre_msg = NULL);
+                                  string *pre_msg = NULL);
 
 static bool _is_cancellable_scroll(scroll_type scroll);
 static bool _safe_to_remove_or_wear(const item_def &item, bool remove,
@@ -321,8 +327,8 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             // Can we safely unwield this item?
             if (needs_handle_warning(*wpn, OPER_WIELD))
             {
-                const std::string prompt =
-                    gettext("Really unwield ") + wpn->name(true, DESC_INVENTORY) + pgettext("wield_weapon","?");
+                const string prompt =
+                    make_stringf(_("Really unwield %s?"), wpn->name(true, DESC_INVENTORY));
                 if (!yesno(prompt.c_str(), false, 'n'))
                     return false;
             }
@@ -491,7 +497,7 @@ bool item_is_worn(int inv_slot)
 // something legit.
 //
 //---------------------------------------------------------------
-bool armour_prompt(const std::string & mesg, int *index, operation_types oper)
+bool armour_prompt(const string & mesg, int *index, operation_types oper)
 {
     ASSERT(index != NULL);
 
@@ -968,6 +974,22 @@ static int _prompt_ring_to_remove(int new_ring)
     const char lslot = index_to_letter(left->link);
     const char rslot = index_to_letter(right->link);
 
+#ifdef TOUCH_UI
+    string prompt = "You're wearing two rings. Remove which one?";
+    Popup *pop = new Popup(prompt);
+    pop->push_entry(new MenuEntry(prompt, MEL_TITLE));
+    InvEntry *me = new InvEntry(*left);
+    pop->push_entry(me);
+    me = new InvEntry(*right);
+    pop->push_entry(me);
+
+    int c;
+    do
+        c = pop->pop();
+    while (c != lslot && c != rslot && c != '<' && c != '>'
+           && !key_is_escape(c) && c != ' ');
+
+#else
     mprf(MSGCH_PROMPT,
          gettext("You're wearing two rings. Remove which one? (%c/%c/<</>/Esc)"),
          lslot, rslot);
@@ -979,12 +1001,13 @@ static int _prompt_ring_to_remove(int new_ring)
     // Deactivate choice from tile inventory.
     // FIXME: We need to be able to get the choice (item letter)
     //        *without* the choice taking action by itself!
-    mouse_control mc(MOUSE_MODE_MORE);
+    mouse_control mc(MOUSE_MODE_PROMPT);
     int c;
     do
         c = getchm();
     while (c != lslot && c != rslot && c != '<' && c != '>'
            && !key_is_escape(c) && c != ' ');
+#endif
 
     mesclr();
 
@@ -1030,7 +1053,7 @@ static int _prompt_ring_to_remove_octopode(int new_ring)
     //        *without* the choice taking action by itself!
     int eqslot = EQ_NONE;
 
-    mouse_control mc(MOUSE_MODE_MORE);
+    mouse_control mc(MOUSE_MODE_PROMPT);
     int c;
     do
     {
@@ -1131,7 +1154,7 @@ static bool _safe_to_remove_or_wear(const item_def &item, bool remove, bool quie
     if (quiet)
         return false;
 
-    std::string verb = "";
+    string verb = "";
     if (remove)
     {
         if (item.base_type == OBJ_WEAPONS)
@@ -1147,8 +1170,9 @@ static bool _safe_to_remove_or_wear(const item_def &item, bool remove, bool quie
             verb = pgettext("item_use","Wear");
     }
 
-    std::string prompt = make_stringf(gettext("%sing this item will reduce your %s to zero or below. Continue?"),
-                                      verb.c_str(), gettext(stat_desc(red_stat, SD_NAME)));
+    string prompt = make_stringf(_("%sing this item will reduce your %s to zero "
+                                 "or below. Continue?"), verb.c_str(),
+                                 _(stat_desc(red_stat, SD_NAME)));
     if (!yesno(prompt.c_str(), true, 'n', true, false))
     {
         canned_msg(MSG_OK);
@@ -1157,27 +1181,27 @@ static bool _safe_to_remove_or_wear(const item_def &item, bool remove, bool quie
     return true;
 }
 
-// Checks whether removing an item would cause levitation to end and the
+// Checks whether removing an item would cause flight to end and the
 // player to fall to their death.
 bool safe_to_remove(const item_def &item, bool quiet)
 {
     item_info inf = get_item_info(item);
 
-    const bool grants_lev =
-         inf.base_type == OBJ_JEWELLERY && inf.sub_type == RING_LEVITATION
-         || inf.base_type == OBJ_ARMOUR && inf.special == SPARM_LEVITATION
+    const bool grants_flight =
+         inf.base_type == OBJ_JEWELLERY && inf.sub_type == RING_FLIGHT
+         || inf.base_type == OBJ_ARMOUR && inf.special == SPARM_FLYING
          || is_artefact(inf)
-            && artefact_known_wpn_property(inf, ARTP_LEVITATE);
+            && artefact_known_wpn_property(inf, ARTP_FLY);
 
-    // assumes item can't grant levitation twice
-    const bool removing_ends_lev =
-        you.is_levitating()
-        && !you.attribute[ATTR_LEV_UNCANCELLABLE]
-        && (player_evokable_levitation() == 1);
+    // assumes item can't grant flight twice
+    const bool removing_ends_flight =
+        you.flight_mode()
+        && !you.attribute[ATTR_FLIGHT_UNCANCELLABLE]
+        && (player_evokable_flight() == 1);
 
     const dungeon_feature_type feat = grd(you.pos());
 
-    if (grants_lev && removing_ends_lev
+    if (grants_flight && removing_ends_flight
         && (feat == DNGN_LAVA
             || feat == DNGN_DEEP_WATER && !player_likes_water()))
     {
@@ -1185,9 +1209,9 @@ bool safe_to_remove(const item_def &item, bool quiet)
             return false;
         else
         {
-            std::string fname = (feat == DNGN_LAVA ? 
+            string fname = (feat == DNGN_LAVA ? 
                     pgettext("item_user", "lava") : pgettext("item_user", "deep water"));
-            std::string prompt = make_stringf(_("Really remove this item over %s?"), fname.c_str());
+            string prompt = make_stringf(_("Really remove this item over %s?"), fname.c_str());
             return yesno(prompt.c_str(), false, 'n');
         }
     }
@@ -1821,7 +1845,7 @@ void zap_wand(int slot)
     const int tracer_range =
         (alreadyknown && wand.sub_type != WAND_RANDOM_EFFECTS) ?
         _wand_range(type_zapped) : _max_wand_range();
-    const std::string zap_title =
+    const string zap_title =
         gettext("Zapping: ") + get_menu_colour_prefix_tags(wand, DESC_INVENTORY);
     direction_chooser_args args;
     args.mode = targ_mode;
@@ -1912,7 +1936,7 @@ void zap_wand(int slot)
 #ifdef WIZARD
     if (you.wizard)
     {
-        std::string str = wand.inscription;
+        string str = wand.inscription;
         int wiz_range = strip_number_tag(str, "range:");
         if (wiz_range != TAG_UNFOUND)
             beam.range = wiz_range;
@@ -2137,16 +2161,13 @@ static bool _drink_fountain()
     if (feat < DNGN_FOUNTAIN_BLUE || feat > DNGN_FOUNTAIN_BLOOD)
         return false;
 
-    if (!player_can_reach_floor("fountain"))
-        return false;
-
     if (you.berserk())
     {
         canned_msg(MSG_TOO_BERSERK);
         return true;
     }
 
-    potion_type fountain_effect = POT_WATER;
+    potion_type fountain_effect = NUM_POTIONS;
     if (feat == DNGN_FOUNTAIN_BLUE)
     {
         if (!yesno(_("Drink from the fountain?"), true, 'n'))
@@ -2170,7 +2191,7 @@ static bool _drink_fountain()
         mpr(gettext("You drink the sparkling water."));
 
         fountain_effect =
-            random_choose_weighted(467, POT_WATER,
+            random_choose_weighted(467, NUM_POTIONS,
                                    48,  POT_DECAY,
                                    40,  POT_MUTATION,
                                    40,  POT_CURING,
@@ -2180,7 +2201,7 @@ static bool _drink_fountain()
                                    40,  POT_AGILITY,
                                    40,  POT_BRILLIANCE,
                                    32,  POT_DEGENERATION,
-                                   27,  POT_LEVITATION,
+                                   27,  POT_FLIGHT,
                                    27,  POT_POISON,
                                    27,  POT_SLOWING,
                                    27,  POT_PARALYSIS,
@@ -2197,7 +2218,7 @@ static bool _drink_fountain()
                                    0);
     }
 
-    if (fountain_effect != POT_WATER && fountain_effect != POT_BLOOD)
+    if (fountain_effect != NUM_POTIONS && fountain_effect != POT_BLOOD)
         xom_is_stimulated(50);
 
     // Good gods do not punish for bad random effects. However, they do
@@ -2246,7 +2267,7 @@ static bool _drink_fountain()
 }
 
 static void _explosion(coord_def where, actor *agent, beam_type flavour,
-                       std::string name, std::string cause)
+                       string name, string cause)
 {
     bolt beam;
     beam.is_explosion = true;
@@ -2296,7 +2317,7 @@ static bool _vorpalise_weapon(bool already_known)
         return false;
 
     // There's a temporary brand, attempt to make it permanent.
-    const std::string itname = wpn.name(true, DESC_YOUR);
+    const string itname = wpn.name(true, DESC_YOUR);
     bool success = true;
     bool msg = true;
 
@@ -2437,7 +2458,7 @@ bool enchant_weapon(item_def &wpn, int acc, int dam, const char *colour)
     bool success = false;
 
     // Get item name now before changing enchantment.
-    std::string iname = wpn.name(true, DESC_YOUR);
+    string iname = wpn.name(true, DESC_YOUR);
     const char *s = wpn.quantity == 1 ? "s" : "";
 
     // Blowguns only have one stat.
@@ -2574,7 +2595,7 @@ bool enchant_armour(int &ac_change, bool quiet, item_def &arm)
     return true;
 }
 
-static int _handle_enchant_armour(int item_slot, std::string *pre_msg)
+static int _handle_enchant_armour(int item_slot, string *pre_msg)
 {
     do
     {
@@ -2881,6 +2902,15 @@ void read_scroll(int slot)
         case SCR_ENCHANT_WEAPON_I:
         case SCR_ENCHANT_WEAPON_II:
         case SCR_ENCHANT_WEAPON_III:
+            if (you.weapon() && is_weapon(*you.weapon())
+                && !you.weapon()->cursed()
+                && (is_artefact(*you.weapon())
+                    || you.weapon()->base_type != OBJ_WEAPONS))
+            {
+                mpr("This weapon cannot be enchanted.");
+                return;
+            }
+        // Fall-through.
         case SCR_VORPALISE_WEAPON:
             if (!you.weapon() || !is_weapon(*you.weapon()))
             {
@@ -2960,8 +2990,8 @@ void read_scroll(int slot)
 
     // For cancellable scrolls leave printing this message to their
     // respective functions.
-    std::string pre_succ_msg =
-            make_stringf(gettext("As you read the %s, it crumbles to dust."),
+    string pre_succ_msg =
+            make_stringf(_("As you read the %s, it crumbles to dust."),
                           scroll.name(true, DESC_QUALNAME).c_str());
     if (you.confused()
         || (which_scroll != SCR_IMMOLATION
@@ -3021,7 +3051,7 @@ void read_scroll(int slot)
         more();
         // Identify it early in case the player checks the '\' screen.
         set_ident_type(scroll, ID_KNOWN_TYPE);
-        acquirement(OBJ_RANDOM, AQ_SCROLL);
+        run_uncancel(UNC_ACQUIREMENT, AQ_SCROLL);
         break;
 
     case SCR_FEAR:
@@ -3239,7 +3269,7 @@ void read_scroll(int slot)
     if (id_the_scroll)
         set_ident_flags(scroll, ISFLAG_KNOW_TYPE); // for notes
 
-    std::string scroll_name = scroll.name(true, DESC_QUALNAME).c_str();
+    string scroll_name = scroll.name(true, DESC_QUALNAME).c_str();
 
     if (!cancel_scroll)
     {
@@ -3295,9 +3325,9 @@ bool stasis_blocks_effect(bool calc_unid,
 
         if (msg)
         {
-            const std::string name(amulet? amulet->name(true, DESC_YOUR) :
+            const string name(amulet? amulet->name(true, DESC_YOUR) :
                                    pgettext("item_use","Something"));
-            const std::string message =
+            const string message =
                 make_stringf(msg, name.c_str());
 
             if (noise)
@@ -3309,9 +3339,7 @@ bool stasis_blocks_effect(bool calc_unid,
                 }
             }
             else
-            {
                 mpr(message.c_str());
-            }
         }
 
         // In all cases, the amulet auto-ids if requested.
@@ -3399,9 +3427,9 @@ static bool _prompt_eat_bad_food(const item_def food)
     if (!is_bad_food(food))
         return true;
 
-    const std::string food_colour = menu_colour_item_prefix(food);
-    std::string colour            = "";
-    std::string colour_off        = "";
+    const string food_colour = menu_colour_item_prefix(food);
+    string colour            = "";
+    string colour_off        = "";
 
     const int col = menu_colour(food.name(false, DESC_A), food_colour, "pickup");
     if (col != -1)
@@ -3414,14 +3442,14 @@ static bool _prompt_eat_bad_food(const item_def food)
         colour      = "<" + colour + ">";
     }
 
-    const std::string qualifier = colour
+    const string qualifier = colour
                                   + (is_poisonous(food)      ? pgettext("_prompt_eat_bad_food","poisonous") :
                                      is_mutagenic(food)      ? pgettext("_prompt_eat_bad_food","mutagenic") :
                                      causes_rot(food)        ? pgettext("_prompt_eat_bad_food","rot-inducing") :
                                      is_forbidden_food(food) ? pgettext("_prompt_eat_bad_food","forbidden") : "")
                                   + colour_off;
 
-    std::string prompt  = pgettext("_prompt_eat_bad_food","Really "); // (deceit, 110825) 원래 코드에서 어순을 바꿈.
+    string prompt  = pgettext("_prompt_eat_bad_food","Really "); // (deceit, 110825) 원래 코드에서 어순을 바꿈.
 	            prompt += pgettext("_prompt_eat_bad_food"," this ") + qualifier;
 				prompt += (food.base_type == OBJ_CORPSES ? pgettext("_prompt_eat_bad_food"," corpse")
                                                          : pgettext("_prompt_eat_bad_food"," chunk of meat"));

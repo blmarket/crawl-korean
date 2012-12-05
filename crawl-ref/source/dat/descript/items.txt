@@ -20,13 +20,6 @@ amulet of conservation
 This amulet protects some of the possessions of its wearer from outright
 destruction, but not infallibly so.
 %%%%
-amulet of controlled flight
-
-Should the wearer of this amulet be levitated by magical means, he or she will
-be able to exercise some control over the resulting motion. This allows the
-descent of staircases and the retrieval of items lying on the ground, for
-example, but does not deprive the wearer of the benefits of levitation.
-%%%%
 amulet of guardian spirit
 
 This amulet makes its wearer less susceptible to external damage, draining
@@ -209,18 +202,6 @@ of legs. The text is full of reassurances that this kind of thing doesn't
 happen anymore, though some potential Transmuters decide to take up Charms
 instead.
 %%%%
-book of card effects
-
-마법의 주문들이 담긴 마법서다. 카드 사이즈 만큼 작다.
-%%%%
-book of charms
-
-마법의 주문들이 담긴 마법서다. 
-%%%%
-book of chemistry
-
-표지에 구멍이 뚫린, 약간 그을린 마법서다.
-%%%%
 book of clouds
 
 A book of magic spells for creating an assortment of clouds, sheathed in a fine
@@ -375,12 +356,6 @@ The classic text of the magical field of Translocations, written by the
 archmage and accomplished Warper Golubria two centuries ago. This book can
 still be found in magical libraries all across the world, although sometimes
 not on the same shelf where the librarian left it.
-%%%%
-book of stalking
-
-An instructional guide to the fundamentals of transmutational Stalking. This
-nondescript, unassuming book tends to blend in with the background, and many
-sorcerers don't give it a second glance.
 %%%%
 book of summonings
 
@@ -643,7 +618,7 @@ disc of storms
 
 This extremely powerful item can unleash a destructive storm of electricity.
 Its effectiveness greatly improves in the hands of one skilled in using magical
-devices, but cannot be used by one who is not a conductor.
+devices.
 %%%%
 double sword
 
@@ -1082,7 +1057,7 @@ potion of invisibility
 
 다른 자의 시야에서 당신을 보이지 않게 하는 물약.
 %%%%
-potion of levitation
+potion of flight
 
 마신 사람이 강하게 부유할 수 있게 해주는 물약.
 %%%%
@@ -1131,10 +1106,6 @@ potion of speed
 potion of strong poison
 
 끔찍한 맹독의 물약.
-%%%%
-potion of water
-
-유일한 물질로 대부분의 생명체에게 지극히 중요한 것이다.
 %%%%
 quad damage
 
@@ -1199,10 +1170,9 @@ ring of invisibility
 This powerful ring can be activated to hide its wearer from the view of others,
 but increases the speed of his or her metabolism greatly while doing so.
 %%%%
-ring of levitation
+ring of flight
 
-This ring allows its wearer to hover above the floor. The ring's power cannot
-be invoked while levitating.
+This ring allows its wearer to fly.
 %%%%
 ring of life protection
 
@@ -1246,8 +1216,8 @@ ring of see invisible
 %%%%
 ring of slaying
 
-This ring increases or decreases the hand-to-hand and missile combat skills of
-its wearer.
+This ring increases or decreases the melee and ranged combat skills of its
+wearer.
 %%%%
 ring of strength
 
@@ -1297,18 +1267,22 @@ rod of destruction
 
 이 마법막대는 파괴와 황폐의 주문을 담고 있다.
 %%%%
->>>>>>> temp
+rod of inaccuracy
+
+This rod allows its wielder to fire a powerful but extremely inaccurate bolt of
+power.
+%%%%
 rod of striking
 
 이 마법막대는 힘의 화살을 사용하여 들고 있는 사람이 원거리에서 적을 때릴 수 있게 한다.
 %%%%
-rod of summoning
+rod of the swarm
 
-이 마법막대는 소환에 관한 주문을 담고 있다.
+This rod allows its wielder to summon a swarm of insects.
 %%%%
 rod of venom
 
-이 마법막대는 독에 관한 여러 주문을 담고 있다.
+This rod contains offensive spells of poison.
 %%%%
 rod of warding
 
@@ -1316,10 +1290,6 @@ rod of warding
 %%%%
 royal jelly
 
-<<<<<<< HEAD
-아주 호화로운 금빛을 한 젤라틴 덩어리다. 포만감을 회복시켜줄 뿐 아니라 능력치를 회복시켜준다.
-# A lump of the magical substance produced by giant bees to be fed to their queens.
-=======
 A particularly rich and golden gelatinous thing. Consuming it will restore lost
 abilities, in addition to the nutrition it provides.
 %%%%
@@ -1571,10 +1541,6 @@ A heavy suit of body armour consisting of narrow strips of metal which are
 attached lengthwise to a thick leather backing. While offering great
 protection, splint mail is quite difficult to move in without proper training.
 %%%%
-staff
-
-A stout walking stick.
-%%%%
 staff of air
 
 This staff increases the power of air spells cast by its wielder, and insulates
@@ -1609,12 +1575,6 @@ staff of earth
 This staff increases the power of earth spells cast by its wielder. If the
 wielder is skilled in evocations, it can crush those struck by it, dealing even
 greater damage if they are also skilled in earth magic.
-%%%%
-staff of enchantment
-
-This staff increases the power of charm and hex spells cast by its wielder. In
-the hands of a skilled person, it also increases resistance to hostile
-enchantments.
 %%%%
 staff of energy
 
@@ -1830,7 +1790,10 @@ miss.
 %%%%
 wand of paralysis
 
-대상을 움직이지 못하게 하는 마법봉.
+A magical device which can render a creature immobile, incapable of moving any
+of its limbs. A paralysed creature can only breathe, think, and helplessly
+watch as it falls into lava below or you put it out of its misery with your
+dagger.
 %%%%
 wand of polymorph other
 

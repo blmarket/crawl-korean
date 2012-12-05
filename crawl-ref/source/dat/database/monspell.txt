@@ -367,6 +367,10 @@ eidolon cast targeted
 basilisk cast targeted
 
 @giant eyeball cast targeted@
+%%%%
+wretched star cast
+
+@The_monster@ glows turbulently.
 ########################################################################
 # Monster species and genus messages.
 ########################################################################
@@ -462,6 +466,10 @@ You hear some strange, mumbled words.
 ######################################################
 # Generic priest, wizard and demonic casting messages.
 ######################################################
+%%%%
+Heal Other priest cast
+
+@The_monster@ calls upon @possessive_God@ to heal @target@.
 %%%%
 priest cast targeted
 

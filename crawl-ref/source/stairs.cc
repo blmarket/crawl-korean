@@ -143,20 +143,19 @@ static bool _stair_moves_pre(dungeon_feature_type stair)
 
     // When the effect is still strong, the chance to actually catch a stair
     // is smaller. (Assuming the duration starts out at 500.)
-    const int dur = std::max(0, you.duration[DUR_REPEL_STAIRS_CLIMB] - 200);
+    const int dur = max(0, you.duration[DUR_REPEL_STAIRS_CLIMB] - 200);
     pct += dur/20;
 
     if (!x_chance_in_y(pct, 100))
         return false;
 
     // Get feature name before sliding stair over.
-    std::string stair_str =
-        feature_description_at(you.pos(), false, DESC_THE, false);
+    string stair_str = feature_description_at(you.pos(), false, DESC_THE, false);
 
     if (!slide_feature_over(you.pos(), coord_def(-1, -1), false))
         return false;
 
-    std::string verb = stair_climb_verb(stair);
+    string verb = stair_climb_verb(stair);
 
     mprf(gettext("%s moves away as you attempt to %s it!"), stair_str.c_str(),
          verb.c_str());
@@ -186,30 +185,29 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
             mpr(gettext("A mysterious force pulls you upwards."));
         else
         {
-            mprf(gettext("You %s downwards."),
-                 pgettext_expr("verb", you.flight_mode() == FL_FLY ? "fly" :
-                     (you.airborne() ? "float" : "slide")));
+            mprf(_("You %s downwards."), pgettext_expr("verb", 
+                you.flight_mode() ? P_("verb", "fly") : P_("verb", "slide")));
         }
     }
     else if (feat_is_gate(stair))
     {
-        mprf(going_up ? gettext("You %s up through the gate.") 
-            : gettext("You %s down through the gate."),
-              pgettext_expr("verb", you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "go")));
+        mprf(going_up ? _("You %s up through the gate.") : 
+                _("You %s down through the gate.")
+                , pgettext_expr("verb", you.flight_mode() ? 
+                    P_("verb", "fly") : P_("verb", "go")));
     }
     else
     {
-        mprf(going_up ? gettext("You %s upwards.") : gettext("You %s downwards."),
-             pgettext_expr("verb", you.flight_mode() == FL_FLY ? "fly" :
-                   (you.airborne() ? "float" : "climb")));
+        mprf(going_up ? _("You %s upwards.") : _("You %s downwards."),
+             pgettext_expr("verb", you.flight_mode() ? 
+                 P_("verb", "fly") : P_("verb", "climb")));
     }
 }
 
 static void _clear_golubria_traps()
 {
-    std::vector<coord_def> traps = find_golubria_on_level();
-    for (std::vector<coord_def>::const_iterator it = traps.begin(); it != traps.end(); ++it)
+    vector<coord_def> traps = find_golubria_on_level();
+    for (vector<coord_def>::const_iterator it = traps.begin(); it != traps.end(); ++it)
     {
         trap_def *trap = find_trap(*it);
         if (trap && trap->type == TRAP_GOLUBRIA)
@@ -232,8 +230,7 @@ static void _leaving_level_now(dungeon_feature_type stair_used)
 
     // Note the name ahead of time because the events may cause markers
     // to be discarded.
-    const std::string newtype =
-        env.markers.property_at(you.pos(), MAT_ANY, "dst");
+    const string newtype = env.markers.property_at(you.pos(), MAT_ANY, "dst");
 
     dungeon_events.fire_position_event(DET_PLAYER_CLIMBS, you.pos());
     dungeon_events.fire_event(DET_LEAVING_LEVEL);
@@ -410,10 +407,8 @@ void up_stairs(dungeon_feature_type force_stair)
 
     const dungeon_feature_type stair_taken = stair_find;
 
-    if (you.flight_mode() == FL_LEVITATE && !feat_is_gate(stair_find))
-        mpr(gettext("You float upwards... And bob straight up to the ceiling!"));
-    else if (you.flight_mode() == FL_FLY && !feat_is_gate(stair_find))
-        mpr(gettext("You fly upwards."));
+    if (you.flight_mode() && !feat_is_gate(stair_find))
+        mpr(_("You fly upwards."));
     else
         _climb_message(stair_find, true, old_level.branch);
 
@@ -423,6 +418,17 @@ void up_stairs(dungeon_feature_type force_stair)
     {
         mprf(gettext("Welcome back to %s!"),
              branches[you.where_are_you].longname);
+        if ((brdepth[old_level.branch] > 1
+             || old_level.branch == BRANCH_VESTIBULE_OF_HELL)
+            && !you.branches_left[old_level.branch])
+        {
+            string old_branch_string = branches[old_level.branch].longname;
+            if (old_branch_string.find("The ") == 0)
+                old_branch_string[0] = tolower(old_branch_string[0]);
+            mark_milestone("br.exit", "left " + old_branch_string + ".",
+                           old_level.describe());
+            you.branches_left[old_level.branch] = true;
+        }
     }
 
     const coord_def stair_pos = you.pos();
@@ -466,7 +472,7 @@ level_id stair_destination(coord_def pos, bool for_real)
 // portal vault entrance (and is ignored for other types of features), and
 // for_real is true if we are actually traversing the feature rather than
 // merely asking what is on the other side.
-level_id stair_destination(dungeon_feature_type feat, const std::string &dst,
+level_id stair_destination(dungeon_feature_type feat, const string &dst,
                            bool for_real)
 {
     if (branches[you.where_are_you].exit_stairs == feat)
@@ -560,11 +566,7 @@ level_id stair_destination(dungeon_feature_type feat, const std::string &dst,
     case DNGN_EXIT_PANDEMONIUM:
         if (you.level_stack.empty())
         {
-#if TAG_MAJOR_VERSION == 33
-            if (you.wizard || you.props.exists("ticket_to_D:1"))
-#else
             if (you.wizard)
-#endif
             {
                 if (for_real)
                 {
@@ -593,7 +595,7 @@ level_id stair_destination(dungeon_feature_type feat, const std::string &dst,
 }
 
 static void _player_change_level_downstairs(dungeon_feature_type stair_find,
-                                            const std::string &dst)
+                                            const string &dst)
 {
     level_id lev = stair_destination(stair_find, dst, true);
     if (!lev.is_valid())
@@ -606,7 +608,7 @@ static void _maybe_destroy_trap(const coord_def &p)
 {
     trap_def* trap = find_trap(p);
     if (trap)
-        trap->destroy();
+        trap->destroy(true);
 }
 
 void down_stairs(dungeon_feature_type force_stair)
@@ -671,13 +673,6 @@ void down_stairs(dungeon_feature_type force_stair)
         const bool known_trap = (grd(you.pos()) != DNGN_UNDISCOVERED_TRAP
                                  && !force_stair);
 
-        if (you.flight_mode() == FL_LEVITATE && !force_stair)
-        {
-            if (known_trap)
-                mpr(gettext("You can't fall through a shaft while levitating."));
-            return;
-        }
-
         if (!is_valid_shaft_level())
         {
             if (known_trap)
@@ -705,10 +700,10 @@ void down_stairs(dungeon_feature_type force_stair)
                                     + short_place_name(shaft_dest) + ".");
         }
 
-        if (you.flight_mode() != FL_FLY || force_stair)
-            mpr(gettext("You fall through a shaft!"));
-        if (you.flight_mode() == FL_FLY && !force_stair)
-            mpr(gettext("You dive down through the shaft."));
+        if (!you.flight_mode() || force_stair)
+            mpr(_("You fall through a shaft!"));
+        if (you.flight_mode() && !force_stair)
+            mpr(_("You dive down through the shaft."));
 
         // Shafts are one-time-use.
         mpr(gettext("The shaft crumbles and collapses."));
@@ -717,7 +712,7 @@ void down_stairs(dungeon_feature_type force_stair)
 
     if (stair_find == DNGN_ENTER_ZOT && !you.opened_zot)
     {
-        std::vector<int> runes;
+        vector<int> runes;
         for (int i = 0; i < NUM_RUNE_TYPES; i++)
             if (you.runes[i])
                 runes.push_back(i);
@@ -740,8 +735,8 @@ void down_stairs(dungeon_feature_type force_stair)
 
         ASSERT(runes.size() >= 3);
 
-        std::random_shuffle(runes.begin(), runes.end());
-        mprf(gettext("You insert the %s rune into the lock."), rune_type_name(runes[0]));
+        random_shuffle(runes.begin(), runes.end());
+        mprf(_("You insert the %s rune into the lock."), rune_type_name(runes[0]));
 #ifdef USE_TILE_LOCAL
         tiles.add_overlay(you.pos(), tileidx_zap(GREEN));
         update_screen();
@@ -778,7 +773,7 @@ void down_stairs(dungeon_feature_type force_stair)
     clear_trapping_net();
 
     // Markers might be deleted when removing portals.
-    const std::string dst = env.markers.property_at(you.pos(), MAT_ANY, "dst");
+    const string dst = env.markers.property_at(you.pos(), MAT_ANY, "dst");
 
     // Fire level-leaving trigger.
     _leaving_level_now(stair_find);
@@ -1053,7 +1048,7 @@ static void _update_level_state()
 {
     env.level_state = 0;
 
-    std::vector<coord_def> golub = find_golubria_on_level();
+    vector<coord_def> golub = find_golubria_on_level();
     if (!golub.empty())
         env.level_state += LSTATE_GOLUBRIA;
 
@@ -1083,5 +1078,5 @@ void new_level(bool restore)
     cancel_tornado();
 
     if (player_in_branch(BRANCH_ZIGGURAT))
-        you.zig_max = std::max(you.zig_max, you.depth);
+        you.zig_max = max(you.zig_max, you.depth);
 }

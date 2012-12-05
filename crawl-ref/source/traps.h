@@ -14,7 +14,6 @@ class monster;
 struct trap_def;
 
 void disarm_trap(const coord_def& where);
-void remove_net_from(monster* mon);
 void free_self_from_net(void);
 
 void handle_traps(trap_type trt, int i, bool trap_known);
@@ -23,7 +22,7 @@ void monster_caught_in_net(monster* mon, bolt &pbolt);
 bool player_caught_in_net();
 void clear_trapping_net();
 void check_net_will_hold_monster(monster* mon);
-std::vector<coord_def> find_golubria_on_level();
+vector<coord_def> find_golubria_on_level();
 
 dungeon_feature_type trap_category(trap_type type);
 

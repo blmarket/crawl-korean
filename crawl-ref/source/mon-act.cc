@@ -15,7 +15,6 @@
 #include "coordit.h"
 #include "dbg-scan.h"
 #include "delay.h"
-#include "directn.h"
 #include "dungeon.h"
 #include "effects.h"
 #include "env.h"
@@ -28,7 +27,9 @@
 #include "itemprop.h"
 #include "items.h"
 #include "item_use.h"
+#include "libutil.h"
 #include "map_knowledge.h"
+#include "mapmark.h"
 #include "message.h"
 #include "misc.h"
 #include "mon-abil.h"
@@ -50,6 +51,8 @@
 #include "spl-damage.h"
 #include "spl-util.h"
 #include "state.h"
+#include "stuff.h"
+#include "target.h"
 #include "teleport.h"
 #include "terrain.h"
 #include "throw.h"
@@ -288,7 +291,7 @@ static bool _ranged_allied_monster_in_dir(monster* mon, coord_def p)
 static bool _allied_monster_at(monster* mon, coord_def a, coord_def b,
                                coord_def c)
 {
-    std::vector<coord_def> pos;
+    vector<coord_def> pos;
     pos.push_back(mon->pos() + a);
     pos.push_back(mon->pos() + b);
     pos.push_back(mon->pos() + c);
@@ -833,6 +836,9 @@ static bool _handle_reaching(monster* mons)
     if (!foe || range <= REACH_NONE)
         return false;
 
+    if (is_sanctuary(mons->pos()) || is_sanctuary(foe->pos()))
+        return false;
+
     if (mons->submerged())
         return false;
 
@@ -1116,7 +1122,7 @@ static bool _thunderbolt_tracer(monster *caster, int pow, coord_def aim)
     mon_attitude_type castatt = caster->temp_attitude();
     int friendly = 0, enemy = 0;
 
-    for (std::map<coord_def, aff_type>::const_iterator p = hitfunc.zapped.begin();
+    for (map<coord_def, aff_type>::const_iterator p = hitfunc.zapped.begin();
          p != hitfunc.zapped.end(); ++p)
     {
         if (p->second <= 0)
@@ -1164,19 +1170,17 @@ static bool _handle_rod(monster *mons, bolt &beem)
         return false;
 
     // XXX: There should be a better way to do this than hardcoding
-    // monster-castable rod spells!
+    // monster-castable rod spells!  Also, there is currently no monster
+    // version of Olgreb's Toxic Radiance, used by the rod of venom.
     switch (mzap)
     {
-    case SPELL_BOLT_OF_COLD:
     case SPELL_BOLT_OF_FIRE:
     case SPELL_BOLT_OF_INACCURACY:
-    case SPELL_BOLT_OF_MAGMA:
     case SPELL_IRON_SHOT:
     case SPELL_LIGHTNING_BOLT:
     case SPELL_POISON_ARROW:
     case SPELL_THROW_FLAME:
     case SPELL_THROW_FROST:
-    case SPELL_VENOM_BOLT:
         break;
 
     case SPELL_STRIKING:
@@ -1195,7 +1199,7 @@ static bool _handle_rod(monster *mons, bolt &beem)
         if (mons->props.exists("thunderbolt_last")
             && mons->props["thunderbolt_last"].get_int() + 1 == you.num_turns)
         {
-            rate = std::min(5 * ROD_CHARGE_MULT, (int)rod.plus);
+            rate = min(5 * ROD_CHARGE_MULT, (int)rod.plus);
             mons->props["thunderbolt_mana"].get_int() = rate;
         }
         break;
@@ -1216,7 +1220,7 @@ static bool _handle_rod(monster *mons, bolt &beem)
     bool zap = false;
 
     // set up the beam
-    const int power = std::max(_generate_rod_power(mons), 1);
+    const int power = max(_generate_rod_power(mons), 1);
 
     dprf("using rod with power %d", power);
 
@@ -1593,7 +1597,7 @@ static void _monster_add_energy(monster* mons)
     {
         // Randomise to make counting off monster moves harder:
         const int energy_gained =
-            std::max(1, div_rand_round(mons->speed * you.time_taken, 10));
+            max(1, div_rand_round(mons->speed * you.time_taken, 10));
         mons->speed_increment += energy_gained;
     }
 }
@@ -1622,7 +1626,7 @@ static void _confused_move_dir(monster *mons)
                 // Players without a spoiler sheet have no way to know which
                 // monsters are I_HIGH, and this behaviour is obscure.
                 // Thus, give a message.
-                const std::string where = make_stringf("%s@%d,%d",
+                const string where = make_stringf("%s@%d,%d",
                     level_id::current().describe().c_str(),
                     mons->pos().x, mons->pos().y);
                 if (!mons->props.exists("no_conf_move")
@@ -1644,12 +1648,11 @@ static void _confused_move_dir(monster *mons)
 
 void handle_monster_move(monster* mons)
 {
-    mons->hit_points = std::min(mons->max_hit_points,
-                                mons->hit_points);
+    mons->hit_points = min(mons->max_hit_points, mons->hit_points);
 
     // This seems to need to go here to actually get monsters to slow down.
     // XXX: Replace with a new ENCH_LIQUEFIED_GROUND or something.
-    if (liquefied(mons->pos()) && mons->ground_level() && !mons->is_insubstantial())
+    if (mons->liquefied_ground())
     {
         mon_enchant me = mon_enchant(ENCH_SLOW, 0, 0, 20);
         if (mons->has_ench(ENCH_SLOW))
@@ -1729,13 +1732,13 @@ void handle_monster_move(monster* mons)
 
     mons->check_speed();
 
-    monsterentry* entry = get_monster_data(mons->type);
+    const monsterentry* entry = get_monster_data(mons->type);
     if (!entry)
         return;
 
     int old_energy      = INT_MAX;
-    int non_move_energy = std::min(entry->energy_usage.move,
-                                   entry->energy_usage.swim);
+    int non_move_energy = min(entry->energy_usage.move,
+                              entry->energy_usage.swim);
 
 #ifdef DEBUG_MONS_SCAN
     bool monster_was_floating = mgrd(mons->pos()) != mons->mindex();
@@ -2007,7 +2010,9 @@ void handle_monster_move(monster* mons)
             if (friendly_or_near
                 || mons->type == MONS_TEST_SPAWNER
                 // Slime creatures can split when offscreen.
-                || mons->type == MONS_SLIME_CREATURE)
+                || mons->type == MONS_SLIME_CREATURE
+                // Let monsters who have Dig use it off-screen.
+                || mons->has_spell(SPELL_DIG))
             {
                 // [ds] Special abilities shouldn't overwhelm
                 // spellcasting in monsters that have both.  This aims
@@ -2235,7 +2240,7 @@ static bool _jelly_divide(monster* parent)
     if (!mons_class_flag(parent->type, M_SPLITS))
         return false;
 
-    const int reqd = std::max(parent->hit_dice * 8, 50);
+    const int reqd = max(parent->hit_dice * 8, 50);
     if (parent->hit_points < reqd)
         return false;
 
@@ -2342,7 +2347,7 @@ static bool _monster_eat_item(monster* mons, bool nearby)
 
         if (si->base_type != OBJ_GOLD)
         {
-            quant = std::min(quant, max_eat - eaten);
+            quant = min(quant, max_eat - eaten);
 
             hps_changed += (quant * item_mass(*si))
                            / (crawl_state.game_is_zotdef() ? 30 : 20) + quant;
@@ -2396,8 +2401,8 @@ static bool _monster_eat_item(monster* mons, bool nearby)
 
     if (eaten > 0)
     {
-        hps_changed = std::max(hps_changed, 1);
-        hps_changed = std::min(hps_changed, 50);
+        hps_changed = max(hps_changed, 1);
+        hps_changed = min(hps_changed, 50);
 
         if (death_ooze_ate_good)
             mons->hurt(NULL, hps_changed, BEAM_NONE, false);
@@ -2407,10 +2412,9 @@ static bool _monster_eat_item(monster* mons, bool nearby)
             // because that function doesn't work quite this way. - bwr
             const int base_max = mons_avg_hp(mons->type);
             mons->hit_points += hps_changed;
-            mons->hit_points = std::min(MAX_MONSTER_HP,
-                               std::min(base_max * 2, mons->hit_points));
-            mons->max_hit_points = std::max(mons->hit_points,
-                                            mons->max_hit_points);
+            mons->hit_points = min(MAX_MONSTER_HP,
+                                   min(base_max * 2, mons->hit_points));
+            mons->max_hit_points = max(mons->hit_points, mons->max_hit_points);
         }
 
         if (death_ooze_ate_corpse)
@@ -2438,10 +2442,9 @@ static bool _monster_eat_single_corpse(monster* mons, item_def& item,
     {
         const int base_max = mons_avg_hp(mons->type);
         mons->hit_points += 1 + random2(mons_weight(mt)) / 100;
-        mons->hit_points = std::min(MAX_MONSTER_HP,
-                           std::min(base_max * 2, mons->hit_points));
-        mons->max_hit_points = std::max(mons->hit_points,
-                                        mons->max_hit_points);
+        mons->hit_points = min(MAX_MONSTER_HP,
+                               min(base_max * 2, mons->hit_points));
+        mons->max_hit_points = max(mons->hit_points, mons->max_hit_points);
     }
 
     if (nearby)
@@ -2540,12 +2543,12 @@ static bool _handle_pickup(monster* mons)
     if (mons->asleep() || mons->submerged())
         return false;
 
-    // Hack - Harpies fly over water, but we don't have a general
-    // system for monster igrd yet.  Flying intelligent monsters
-    // (tengu!) would also count here.
+    // Flying over water doesn't let you pick up stuff.  This is inexact, as
+    // a merfolk could be flying, but that's currently impossible except for
+    // being tornadoed, and with *that* low life expectancy let's not care.
     dungeon_feature_type feat = grd(mons->pos());
 
-    if ((feat == DNGN_LAVA || feat == DNGN_DEEP_WATER) && !mons->flight_mode())
+    if ((feat == DNGN_LAVA || feat == DNGN_DEEP_WATER) && mons->flight_mode())
         return false;
 
     const bool nearby = mons_near(mons);
@@ -2586,6 +2589,9 @@ static bool _handle_pickup(monster* mons)
         // (jpeg)
         for (stack_iterator si(mons->pos()); si; ++si)
         {
+            if (si->flags & ISFLAG_NO_PICKUP)
+                continue;
+
             if (mons->pickup_item(*si, nearby))
                 count_pickup++;
 
@@ -2717,18 +2723,15 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
 {
     const char *adj = "", *noun = "door";
 
-    bool was_secret = false;
     bool was_seen   = false;
 
-    std::set<coord_def> all_door = connected_doors(pos);
+    set<coord_def> all_door = connected_doors(pos);
     get_door_description(all_door.size(), &adj, &noun);
 
-    for (std::set<coord_def>::iterator i = all_door.begin();
+    for (set<coord_def>::iterator i = all_door.begin();
          i != all_door.end(); ++i)
     {
         const coord_def& dc = *i;
-        if (grd(dc) == DNGN_SECRET_DOOR && you.see_cell(dc))
-            was_secret = true;
 
         if (you.see_cell(dc))
             was_seen = true;
@@ -2741,14 +2744,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
     {
         viewwindow();
 
-        if (was_secret)
-        {
-            mprf(_("%s was actually a secret door!"),
-                 feature_description_at(pos, "", DESC_THE, false).c_str());
-            learned_something_new(HINT_FOUND_SECRET_DOOR, pos);
-        }
-
-        std::string open_str = pgettext("_mons_open_door", "opens the ");
+        string open_str = pgettet("_mons_open_door", "opens the ");
         open_str += adj;
         open_str += noun;
         open_str += pgettext("_mons_open_door",".");
@@ -3015,6 +3011,9 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
             return false; // blocks square
         }
 
+        if (!summon_can_attack(mons, targ))
+            return false;
+
         // Cut down plants only when no alternative, or they're
         // our target.
         if (mons_is_firewood(targmonster) && mons->target != targ)
@@ -3063,7 +3062,7 @@ static void _find_good_alternate_move(monster* mons,
 {
     const coord_def target = mons->firing_pos.zero() ? mons->target
                                                      : mons->firing_pos;
-    const int current_distance = distance(mons->pos(), target);
+    const int current_distance = distance2(mons->pos(), target);
 
     int dir = _compass_idx(mmov);
 
@@ -3086,7 +3085,7 @@ static void _find_good_alternate_move(monster* mons,
         {
             const int newdir = (dir + 8 + mod) % 8;
             if (good_move[mon_compass[newdir].x+1][mon_compass[newdir].y+1])
-                dist[i] = distance(mons->pos()+mon_compass[newdir], target);
+                dist[i] = distance2(mons->pos()+mon_compass[newdir], target);
             else
                 dist[i] = mons_is_retreating(mons) ? (-FAR_AWAY) : FAR_AWAY;
         }
@@ -3138,7 +3137,7 @@ static void _jelly_grows(monster* mons)
 
     mons->hit_points += 5;
     // possible with ridiculous farming on a full level
-    mons->hit_points = std::min(mons->hit_points, MAX_MONSTER_HP);
+    mons->hit_points = min(mons->hit_points, MAX_MONSTER_HP);
 
     // note here, that this makes jellies "grow" {dlb}:
     if (mons->hit_points > mons->max_hit_points)
@@ -3251,31 +3250,34 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
         }
     }
 
-    if (mons_can_open_door(mons, f))
+    if (grd(f) == DNGN_CLOSED_DOOR)
     {
-        _mons_open_door(mons, f);
-        return true;
-    }
-    else if (mons_can_eat_door(mons, f))
-    {
-        grd(f) = DNGN_FLOOR;
-        set_terrain_changed(f);
-
-        _jelly_grows(mons);
-
-        if (you.see_cell(f))
+        if (mons_can_open_door(mons, f))
         {
-            viewwindow();
-
-            if (!you.can_see(mons))
-            {
-                mpr(gettext("The door mysteriously vanishes."));
-                interrupt_activity(AI_FORCE_INTERRUPT);
-            }
-            else
-                simple_monster_message(mons, gettext(" eats the door!"));
+            _mons_open_door(mons, f);
+            return true;
         }
-    } // done door-eating jellies
+        else if (mons_can_eat_door(mons, f))
+        {
+            grd(f) = DNGN_FLOOR;
+            set_terrain_changed(f);
+
+            _jelly_grows(mons);
+
+            if (you.see_cell(f))
+            {
+                viewwindow();
+
+                if (!you.can_see(mons))
+                {
+                    mpr(_("The door mysteriously vanishes."));
+                    interrupt_activity(AI_FORCE_INTERRUPT);
+                }
+                else
+                    simple_monster_message(mons, _(" eats the door!"));
+            }
+        } // done door-eating jellies
+    }
 
     // The monster gave a "comes into view" message and then immediately
     // moved back out of view, leaing the player nothing to see, so give
@@ -3366,7 +3368,7 @@ static bool _monster_move(monster* mons)
         if (mons->submerged())
             return false;
 
-        // Trapdoor spiders hide if they can't see their foe.
+        // Trapdoor spiders sometime hide if they can't see their foe.
         // (Note that friendly trapdoor spiders will thus hide even
         // if they can see you.)
         const actor *foe = mons->get_foe();
@@ -3375,7 +3377,8 @@ static bool _monster_move(monster* mons)
         if (monster_can_submerge(mons, grd(mons->pos()))
             && !can_see && !mons_is_confused(mons)
             && !mons->caught()
-            && !mons->berserk())
+            && !mons->berserk()
+            && one_chance_in(5))
         {
             mons->add_ench(ENCH_SUBMERGED);
             mons->behaviour = BEH_LURK;
@@ -3428,8 +3431,8 @@ static bool _monster_move(monster* mons)
     // of flopping into an adjacent water grid.
     if (mons->has_ench(ENCH_AQUATIC_LAND))
     {
-        std::vector<coord_def> adj_water;
-        std::vector<coord_def> adj_move;
+        vector<coord_def> adj_water;
+        vector<coord_def> adj_move;
         for (adjacent_iterator ai(mons->pos()); ai; ++ai)
         {
             if (!cell_is_solid(*ai))
@@ -3445,7 +3448,7 @@ static bool _monster_move(monster* mons)
             return false;
         }
 
-        std::vector<coord_def> moves = adj_water;
+        vector<coord_def> moves = adj_water;
         if (adj_water.empty() || coinflip())
             moves = adj_move;
 
@@ -3564,9 +3567,7 @@ static bool _monster_move(monster* mons)
                     noisy(25, target);
                 }
                 else
-                {
-                    noisy(25, target, gettext("You hear a crashing sound."));
-                }
+                    noisy(25, target, _("You hear a crashing sound."));
             }
             else if (player_can_hear(mons->pos() + mmov))
             {

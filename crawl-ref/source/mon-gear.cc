@@ -11,6 +11,7 @@
 #include "externs.h"
 #include "mon-gear.h"
 
+#include "art-enum.h"
 #include "artefact.h"
 #include "dungeon.h"
 #include "env.h"
@@ -23,6 +24,7 @@
 #include "random.h"
 #include "spl-book.h"
 #include "state.h"
+#include "unwind.h"
 
 
 static void _give_monster_item(monster* mon, int thing,
@@ -299,7 +301,7 @@ static item_make_species_type _give_weapon(monster* mon, int level,
         if (x_chance_in_y(3, 5))     // give hand weapon
         {
             item.base_type = OBJ_WEAPONS;
-            item.sub_type  = (coinflip() ? WPN_DAGGER : WPN_CLUB);
+            item.sub_type  = coinflip() ? WPN_DAGGER : WPN_CLUB;
         }
         else
             return item_race;
@@ -392,12 +394,6 @@ static item_make_species_type _give_weapon(monster* mon, int level,
                 level = MAKE_GOOD_ITEM;
             }
         }
-        else if (one_chance_in(3) && mon->type != MONS_DEEP_DWARF_BERSERKER)
-        {
-            item.plus  = -1 + (-1 * random2(4));
-            item.plus2 = -1 + (-1 * random2(4));
-            do_curse_item(item);
-        }
         break;
 
     case MONS_GNOLL:
@@ -416,7 +412,7 @@ static item_make_species_type _give_weapon(monster* mon, int level,
     case MONS_GNOLL_SHAMAN:
         item_race      = MAKE_ITEM_NO_RACE;
         item.base_type = OBJ_WEAPONS;
-        item.sub_type  = random_choose(WPN_STAFF, WPN_CLUB, WPN_WHIP, -1);
+        item.sub_type  = coinflip() ? WPN_CLUB : WPN_WHIP;
         break;
 
     case MONS_GNOLL_SERGEANT:
@@ -501,14 +497,14 @@ static item_make_species_type _give_weapon(monster* mon, int level,
     case MONS_TERENCE:
         item.base_type = OBJ_WEAPONS;
         item.sub_type  = random_choose_weighted(30, WPN_FLAIL,
-                                                 20, WPN_HAND_AXE,
-                                                 20, WPN_SHORT_SWORD,
-                                                 20, WPN_MACE,
-                                                 10, WPN_TRIDENT,
-                                                 10, WPN_FALCHION,
-                                                 10, WPN_MORNINGSTAR,
-                                                  3, WPN_SPIKED_FLAIL,
-                                                  0);
+                                                20, WPN_HAND_AXE,
+                                                20, WPN_SHORT_SWORD,
+                                                20, WPN_MACE,
+                                                10, WPN_TRIDENT,
+                                                10, WPN_FALCHION,
+                                                10, WPN_MORNINGSTAR,
+                                                 3, WPN_SPIKED_FLAIL,
+                                                 0);
         break;
 
     case MONS_DUVESSA:
@@ -1114,7 +1110,7 @@ static item_make_species_type _give_weapon(monster* mon, int level,
         else
         {
             item.base_type = OBJ_WEAPONS;
-            item.sub_type = WPN_STAFF;
+            item.sub_type = WPN_QUARTERSTAFF;
             set_item_ego_type(item, OBJ_WEAPONS, SPWPN_FREEZING);
             set_equip_race(item, ISFLAG_ELVEN);
             // this might not be the best place for this logic, but:
@@ -1200,6 +1196,8 @@ static item_make_species_type _give_weapon(monster* mon, int level,
         item.base_type = OBJ_STAVES;
         item.sub_type = STAFF_POISON;
         item.flags    |= ISFLAG_KNOW_TYPE;
+        if (one_chance_in(100) && !get_unique_item_status(UNRAND_OLGREB))
+            make_item_unrandart(item, UNRAND_OLGREB);
         break;
 
     case MONS_CEREBOV:
@@ -1660,7 +1658,7 @@ static void _give_shield(monster* mon, int level)
         if (coinflip())
         {
             make_item_for_monster(mon, OBJ_ARMOUR,
-                                  coinflip()? ARM_LARGE_SHIELD : ARM_SHIELD,
+                                  coinflip() ? ARM_LARGE_SHIELD : ARM_SHIELD,
                                   level, MAKE_ITEM_NO_RACE);
         }
         break;
@@ -1669,7 +1667,7 @@ static void _give_shield(monster* mon, int level)
         if (one_chance_in(3))
         {
             make_item_for_monster(mon, OBJ_ARMOUR,
-                                  coinflip()? ARM_BUCKLER : ARM_SHIELD,
+                                  coinflip() ? ARM_BUCKLER : ARM_SHIELD,
                                   level, MAKE_ITEM_NO_RACE);
         }
         break;

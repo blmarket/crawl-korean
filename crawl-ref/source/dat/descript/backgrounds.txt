@@ -54,13 +54,13 @@ spell's power. More earthen spells are in their book of Geomancy.
 %%%%
 Enchanter
 
-Enchanters use spells to boost themselves in battle, or incapacitate others.
-They also start with good darts.
+Enchanters use spells from the book of Maledictions to incapacitate their foes,
+and are equipped with a dagger and some darts.
 %%%%
 Fighter
 
-Fighters come with armour and shield, as well as a weapon of their choice. They
-have more health than any other background.
+Fighters are equipped with armour and shield, as well as a weapon of their
+choice.
 %%%%
 Fire Elementalist
 
@@ -69,8 +69,8 @@ spell. The other spells in their book focus on destruction as well.
 %%%%
 Gladiator
 
-Gladiators are ready for the arena with light armour, shield, nets and a weapon
-of their choice.
+Gladiators are ready for the arena with light armour, nets, and a weapon of
+their choice.
 %%%%
 Healer
 
@@ -79,7 +79,8 @@ healing will possibly pacify beasts and brutes, yielding experience.
 %%%%
 Hunter
 
-Hunters are able to attack at range, without relying on pesky magic.
+Hunters are able to attack with a ranged weapon of their choice, without
+relying on pesky magic.
 %%%%
 Ice Elementalist
 
@@ -88,8 +89,8 @@ other spells are quite versatile.
 %%%%
 Monk
 
-Monks are ready to take on everything in the dungeon wearing just a robe and
-using their body.
+Monks are ready to take on the dungeon wearing just a robe and using their
+body. They will gain additional piety with the first god they worship.
 %%%%
 Necromancer
 
@@ -105,11 +106,6 @@ Skald
 
 Skalds are melee fighters who can boost themselves in battle with spells from
 the book of War Chants.
-%%%%
-Stalker
-
-Stalkers use stealth and transformative magic to approach and subdue their
-victims.
 %%%%
 Summoner
 
@@ -132,7 +128,7 @@ Wanderer
 %%%%
 Warper
 
-Warpers start with a weapon of their choice and a Blinking scroll. They can
+Warpers start with a weapon of their choice and a scroll of blinking. They can
 learn spells from the book of Spatial Translocations.
 %%%%
 Wizard

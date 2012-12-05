@@ -6,6 +6,7 @@
 #include "AppHdr.h"
 
 #include "artefact.h"
+#include "art-enum.h"
 
 #include <cstdlib>
 #include <climits>
@@ -32,6 +33,7 @@
 #include "shout.h"
 #include "species.h"
 #include "spl-book.h"
+#include "state.h"
 #include "stuff.h"
 
 static bool _god_fits_artefact(const god_type which_god, const item_def &item,
@@ -227,17 +229,17 @@ static bool _god_fits_artefact(const god_type which_god, const item_def &item,
     return true;
 }
 
-std::string replace_name_parts(const std::string &name_in, const item_def& item)
+string replace_name_parts(const string &name_in, const item_def& item)
 {
-    std::string name = name_in;
+    string name = name_in;
 
     god_type god_gift;
     (void) origin_is_god_gift(item, &god_gift);
 
     // Don't allow "player's Death" type names for god gifts (except
     // for those from Xom).
-    if (name.find("@player_death@", 0) != std::string::npos
-        || name.find("@player_doom@", 0) != std::string::npos)
+    if (name.find("@player_death@", 0) != string::npos
+        || name.find("@player_doom@", 0) != string::npos)
     {
         if (god_gift == GOD_NO_GOD || god_gift == GOD_XOM)
         {
@@ -262,9 +264,9 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
     name = replace_all(name, "@player_species@",
                  species_name(static_cast<species_type>(you.species), true));
 
-    if (name.find("@branch_name@", 0) != std::string::npos)
+    if (name.find("@branch_name@", 0) != string::npos)
     {
-        std::string place = branches[random2(NUM_BRANCHES)].longname;
+        string place = branches[random2(NUM_BRANCHES)].longname;
         if (!place.empty())
             name = replace_all(name, "@branch_name@", place);
     }
@@ -272,7 +274,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
     // Occasionally use long name for Xom (see religion.cc).
     name = replace_all(name, "@xom_name@", god_name(GOD_XOM, coinflip()));
 
-    if (name.find("@god_name@", 0) != std::string::npos)
+    if (name.find("@god_name@", 0) != string::npos)
     {
         god_type which_god;
 
@@ -303,11 +305,11 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
 // Functions defined in art-func.h are referenced in art-data.h
 #include "art-func.h"
 
-static unrandart_entry unranddata[] = {
+static const unrandart_entry unranddata[] = {
 #include "art-data.h"
 };
 
-static unrandart_entry *_seekunrandart(const item_def &item);
+static const unrandart_entry *_seekunrandart(const item_def &item);
 
 bool is_known_artefact(const item_def &item)
 {
@@ -356,7 +358,6 @@ void autoid_unrand(item_def &item)
         return;
 
     set_ident_flags(item, ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID);
-    add_autoinscription(item);
 }
 
 unique_item_status_type get_unique_item_status(int art)
@@ -454,8 +455,8 @@ void artefact_desc_properties(const item_def &item,
         fake_plus = 9;
         break;
 
-    case RING_LEVITATION:
-        fake_rap = ARTP_LEVITATE;
+    case RING_FLIGHT:
+        fake_rap = ARTP_FLY;
         break;
 
     case AMU_RAGE:
@@ -973,12 +974,12 @@ static void _get_randart_properties(const item_def &item,
         power_level++;
     }
 
-    // levitate
+    // flight
     if (!done_powers
         && one_chance_in(10)
-        && (aclass != OBJ_JEWELLERY || atype != RING_LEVITATION))
+        && (aclass != OBJ_JEWELLERY || atype != RING_FLIGHT))
     {
-        proprt[ARTP_LEVITATE] = 1;
+        proprt[ARTP_FLY] = 1;
         power_level++;
     }
 
@@ -1024,7 +1025,7 @@ static void _get_randart_properties(const item_def &item,
             proprt[ARTP_PREVENT_SPELLCASTING] = 1;
             break;
         case 2:                     // random teleport
-            if (aclass != OBJ_WEAPONS)
+            if (aclass != OBJ_WEAPONS || crawl_state.game_is_sprint())
                 break;
             proprt[ARTP_CAUSE_TELEPORTATION] = 5 + random2(15);
             break;
@@ -1037,10 +1038,10 @@ static void _get_randart_properties(const item_def &item,
             proprt[ARTP_BLINK] = 0;
             proprt[ARTP_PREVENT_TELEPORTATION] = 1;
             break;
-        case 4:                     // berserk on attack
+        case 4:                     // berserk on num-in-100 attacks
             if (aclass != OBJ_WEAPONS || is_range_weapon(item))
                 break;
-            proprt[ARTP_ANGRY] = 1 + random2(8);
+            proprt[ARTP_ANGRY] = 1 + random2(9);
             break;
         case 5:                     // susceptible to fire
             if (aclass == OBJ_JEWELLERY
@@ -1082,10 +1083,9 @@ static void _get_randart_properties(const item_def &item,
             proprt[ARTP_METABOLISM] = 1 + random2(3);
             break;
         case 8:
-            // emits mutagenic radiation - increases
-            // magic_contamination; property is chance (1 in ...) of
-            // increasing magic_contamination
-            proprt[ARTP_MUTAGENIC] = 2 + random2(4);
+            // emits mutagenic radiation - causes
+            // magic contamination when unequipped
+            proprt[ARTP_MUTAGENIC] = 1;
             break;
         }
     }
@@ -1346,11 +1346,9 @@ void artefact_wpn_learn_prop(item_def &item, artefact_prop_type prop)
         return;
 
     known_vec[prop] = static_cast<bool>(true);
-    add_autoinscription(item);
 }
 
-static std::string _get_artefact_type(const item_def &item,
-                                      bool appear = false)
+static string _get_artefact_type(const item_def &item, bool appear = false)
 {
     switch (item.base_type)
     {
@@ -1392,22 +1390,20 @@ static bool _pick_db_name(const item_def &item)
     }
 }
 
-static std::string _artefact_name_lookup(const item_def &item,
-                                 const std::string &lookup)
+static string _artefact_name_lookup(const item_def &item, const string &lookup)
 {
-    const std::string name = getRandNameString(lookup);
+    const string name = getRandNameString(lookup);
     return name.empty() ? name : replace_name_parts(name, item);
 }
 
-static bool _artefact_name_lookup(std::string &result,
-                          const item_def &item,
-                          const std::string &lookup)
+static bool _artefact_name_lookup(string &result, const item_def &item,
+                                  const string &lookup)
 {
     result = _artefact_name_lookup(item, lookup);
     return !result.empty();
 }
 
-std::string make_artefact_name(const item_def &item, bool appearance)
+string make_artefact_name(const item_def &item, bool appearance)
 {
     ASSERT(is_artefact(item));
 
@@ -1425,8 +1421,8 @@ std::string make_artefact_name(const item_def &item, bool appearance)
             return gettext(unrand->unid_name);
     }
 
-    std::string lookup;
-    std::string result;
+    string lookup;
+    string result;
 
     // Use prefix of gifting god, if applicable.
     bool god_gift = false;
@@ -1453,7 +1449,7 @@ std::string make_artefact_name(const item_def &item, bool appearance)
 
     if (appearance)
     {
-        std::string appear = getRandNameString(lookup, " appearance");
+        string appear = getRandNameString(lookup, " appearance");
         if (appear.empty())
         {
             appear = getRandNameString("general appearance");
@@ -1472,7 +1468,7 @@ std::string make_artefact_name(const item_def &item, bool appearance)
         result += item_base_name(item) + " ";
 
         int tries = 100;
-        std::string name;
+        string name;
         do
         {
             (_artefact_name_lookup(name, item, lookup)
@@ -1497,7 +1493,7 @@ std::string make_artefact_name(const item_def &item, bool appearance)
     else
     {
         // construct a unique name
-        const std::string st_p = make_name(random_int(), false);
+        const string st_p = make_name(random_int(), false);
         result += item_base_name(item);
 
         if (one_chance_in(3))
@@ -1516,7 +1512,7 @@ std::string make_artefact_name(const item_def &item, bool appearance)
     return result;
 }
 
-std::string get_artefact_name(const item_def &item, bool force_known)
+string get_artefact_name(const item_def &item, bool force_known)
 {
     ASSERT(is_artefact(item));
 
@@ -1533,7 +1529,7 @@ std::string get_artefact_name(const item_def &item, bool force_known)
     return make_artefact_name(item, true);
 }
 
-void set_artefact_name(item_def &item, const std::string &name)
+void set_artefact_name(item_def &item, const string &name)
 {
     ASSERT(is_artefact(item));
     ASSERT(!name.empty());
@@ -1545,7 +1541,7 @@ int find_unrandart_index(const item_def& artefact)
     return artefact.special;
 }
 
-unrandart_entry* get_unrand_entry(int unrand_index)
+const unrandart_entry* get_unrand_entry(int unrand_index)
 {
     unrand_index -= UNRAND_START;
 
@@ -1555,7 +1551,7 @@ unrandart_entry* get_unrand_entry(int unrand_index)
         return &unranddata[unrand_index];
 }
 
-static unrandart_entry *_seekunrandart(const item_def &item)
+static const unrandart_entry *_seekunrandart(const item_def &item)
 {
     return get_unrand_entry(item.special);
 }
@@ -1618,18 +1614,18 @@ int find_okay_unrandart(uint8_t aclass, uint8_t atype, bool in_abyss)
 
 int get_unrandart_num(const char *name)
 {
-    std::string quoted = "\"";
+    string quoted = "\"";
     quoted += name;
     quoted += "\"";
     lowercase(quoted);
 
     for (unsigned int i = 0; i < ARRAYSZ(unranddata); ++i)
     {
-        std::string art = unranddata[i].name;
+        string art = unranddata[i].name;
         art = replace_all(art, " ", "_");
         art = replace_all(art, "'", "");
         lowercase(art);
-        if (art == name || art.find(quoted) != std::string::npos)
+        if (art == name || art.find(quoted) != string::npos)
             return UNRAND_START + i;
     }
     return SPWPN_NORMAL;
@@ -1705,8 +1701,8 @@ static bool _randart_is_redundant(const item_def &item,
         provides = ARTP_MAGICAL_POWER;
         break;
 
-    case RING_LEVITATION:
-        provides = ARTP_LEVITATE;
+    case RING_FLIGHT:
+        provides = ARTP_FLY;
         break;
 
     case RING_LIFE_PROTECTION:
@@ -1955,6 +1951,15 @@ static void _make_faerie_armour(item_def &item)
         {
             continue;
         }
+
+        if (one_chance_in(20))
+            artefact_set_property(doodad, ARTP_CLARITY, 1);
+        if (one_chance_in(20))
+            artefact_set_property(doodad, ARTP_MAGICAL_POWER, 1 + random2(10));
+        if (one_chance_in(20))
+            artefact_set_property(doodad, ARTP_HP, random2(21) - 10);
+
+        break;
     }
     ASSERT(is_artefact(doodad));
     ASSERT(doodad.sub_type == item.sub_type);
@@ -1978,7 +1983,7 @@ static void _make_octoring(item_def &item)
 {
     if (you.octopus_king_rings == 255)
     {
-        ASSERT(you.wizard);
+        ASSERT(you.wizard || crawl_state.test);
         item.sub_type = octoring_types[random2(8)];
         return;
     }
@@ -2048,7 +2053,6 @@ bool make_item_unrandart(item_def &item, int unrand_index)
         && !strcmp(unrand->name, unrand->unid_name))
     {
         set_ident_flags(item, ISFLAG_IDENT_MASK | ISFLAG_NOTED_ID);
-        add_autoinscription(item);
     }
 
     return true;
@@ -2065,7 +2069,7 @@ void unrand_reacts()
         if (you.unrand_reacts & (1 << i))
         {
             item_def&        item  = you.inv[you.equip[i]];
-            unrandart_entry* entry = get_unrand_entry(item.special);
+            const unrandart_entry* entry = get_unrand_entry(item.special);
 
             entry->world_reacts_func(&item);
         }

@@ -36,17 +36,18 @@ my %field_type = (
     ELEC     => "bool",
     EV       => "num",
     EVIL     => "bool",
+    FOG      => "bool",
     FIRE     => "num",
     HOLY     => "bool",
     INT      => "num",
     INV      => "bool",
-    LEV      => "bool",
+    FLY      => "bool",
     LIFE     => "bool",
     MAGIC    => "num",
     METAB    => "num",
     HP       => "num",
     MP       => "num",
-    MUTATE   => "num",
+    MUTATE   => "bool",
     NAME     => "str",
     NOGEN    => "bool",
     NOISES   => "bool",
@@ -54,6 +55,7 @@ my %field_type = (
     NOTELEP  => "bool",
     POISON   => "bool",
     RANDAPP  => "bool",
+    RMSL     => "bool",
     RND_TELE => "bool",
     SEEINV   => "bool",
     SPECIAL  => "bool",
@@ -483,10 +485,11 @@ my @art_order = (
 
     "{", "BRAND", "AC", "EV", "STR", "INT", "DEX", "\n",
     "FIRE", "COLD", "ELEC", "POISON", "LIFE", "MAGIC", "\n",
-    "SEEINV", "INV", "LEV", "BLINK", "BERSERK",  "NOISES", "\n",
+    "SEEINV", "INV", "FLY", "BLINK", "BERSERK",  "NOISES", "\n",
     "NOSPELL", "RND_TELE", "NOTELEP", "ANGRY", "METAB", "\n",
     "MUTATE", "ACC", "DAM", "CURSED", "STEALTH", "MP", "\n",
     "BASE_DELAY", "HP", "CLARITY", "BASE_ACC", "BASE_DAM", "\n",
+    "RMSL", "FOG", "\n",
     "}",
 
     "equip_func", "unequip_func", "world_reacts_func", "{fight_func_func",
@@ -903,7 +906,7 @@ HEADER_END
 #include "AppHdr.h"
 #include "tiledef-unrand.h"
 
-#include "artefact.h"
+#include "art-enum.h"
 #include "tiledef-main.h"
 #include "tiledef-player.h"
 

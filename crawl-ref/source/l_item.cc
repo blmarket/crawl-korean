@@ -23,6 +23,7 @@
 #include "itemprop.h"
 #include "items.h"
 #include "l_defs.h"
+#include "libutil.h"
 #include "output.h"
 #include "player.h"
 #include "skills2.h"
@@ -255,7 +256,7 @@ static int l_item_do_class(lua_State *ls)
         if (lua_isboolean(ls, 1))
             terse = lua_toboolean(ls, 1);
 
-        std::string s = item_class_name(item->base_type, terse);
+        string s = item_class_name(item->base_type, terse);
         lua_pushstring(ls, s.c_str());
     }
     else
@@ -286,7 +287,7 @@ static const char *ring_types[] =
     "intelligence",
     "wizardry",
     "magical power",
-    "levitation",
+    "flight",
     "life protection",
     "protection from magic",
     "fire",
@@ -297,7 +298,11 @@ static const char *ring_types[] =
 static const char *amulet_types[] =
 {
     "rage", "clarity", "warding", "resist corrosion",
-    "gourmand", "conservation", "controlled flight", "inaccuracy",
+    "gourmand", "conservation",
+#if TAG_MAJOR_VERSION == 34
+    "controlled flight",
+#endif
+    "inaccuracy",
     "resist mutation", "guardian spirit", "faith", "stasis",
 };
 
@@ -327,8 +332,6 @@ static int l_item_do_subtype(lua_State *ls)
                    s = "blood";
                 else if (item->sub_type == POT_BLOOD_COAGULATED)
                    s = "coagulated blood";
-                else if (item->sub_type == POT_WATER)
-                   s = "water";
                 else if (item->sub_type == POT_PORRIDGE)
                    s = "porridge";
                 else if (item->sub_type == POT_BERSERK_RAGE)
@@ -394,7 +397,7 @@ IDEF(worn)
     return 2;
 }
 
-static std::string _item_name(lua_State *ls, item_def* item)
+static string _item_name(lua_State *ls, item_def* item)
 {
     description_level_type ndesc = DESC_PLAIN;
     if (lua_isstring(ls, 1))
@@ -424,11 +427,11 @@ static int l_item_do_name_coloured(lua_State *ls)
 
     if (item)
     {
-        std::string name   = _item_name(ls, item);
-        int         col    = menu_colour(name, menu_colour_item_prefix(*item));
-        std::string colstr = colour_to_str(col);
+        string name   = _item_name(ls, item);
+        int    col    = menu_colour(name, menu_colour_item_prefix(*item));
+        string colstr = colour_to_str(col);
 
-        std::ostringstream out;
+        ostringstream out;
 
         out << "<" << colstr << ">" << name << "</" << colstr << ">";
 
@@ -714,17 +717,17 @@ static int l_item_do_inc_quantity(lua_State *ls)
 
 IDEFN(inc_quantity, do_inc_quantity)
 
-static iflags_t _str_to_item_status_flags(std::string flag)
+static iflags_t _str_to_item_status_flags(string flag)
 {
     iflags_t flags = 0;
-    if (flag.find("curse") != std::string::npos)
+    if (flag.find("curse") != string::npos)
         flags &= ISFLAG_KNOW_CURSE;
     // type is dealt with using item_type_known.
-    //if (flag.find("type") != std::string::npos)
+    //if (flag.find("type") != string::npos)
     //    flags &= ISFLAG_KNOW_TYPE;
-    if (flag.find("pluses") != std::string::npos)
+    if (flag.find("pluses") != string::npos)
         flags &= ISFLAG_KNOW_PLUSES;
-    if (flag.find("properties") != std::string::npos)
+    if (flag.find("properties") != string::npos)
         flags &= ISFLAG_KNOW_PROPERTIES;
     if (flag == "any")
         flags = ISFLAG_IDENT_MASK;
@@ -747,7 +750,7 @@ static int l_item_do_identified(lua_State *ls)
     bool known_status = false;
     if (lua_isstring(ls, 1))
     {
-        std::string flags = luaL_checkstring(ls, 1);
+        string flags = luaL_checkstring(ls, 1);
         if (trimmed_string(flags).empty())
             known_status = item_ident(*item, ISFLAG_IDENT_MASK);
         else
@@ -760,9 +763,7 @@ static int l_item_do_identified(lua_State *ls)
         }
     }
     else
-    {
         known_status = item_ident(*item, ISFLAG_IDENT_MASK);
-    }
 
     lua_pushboolean(ls, known_status);
     return 1;
@@ -1014,9 +1015,9 @@ static int l_item_get_items_at(lua_State *ls)
 
     lua_newtable(ls);
 
-    const std::vector<item_def> items = item_list_in_stash(p);
+    const vector<item_def> items = item_list_in_stash(p);
     int index = 0;
-    for (std::vector<item_def>::const_iterator i = items.begin();
+    for (vector<item_def>::const_iterator i = items.begin();
          i != items.end(); ++i)
     {
         _clua_push_item_temp(ls, *i);

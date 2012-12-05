@@ -5,6 +5,10 @@
 
 #include "AppHdr.h"
 
+#include <cmath>
+#include <vector>
+#include <algorithm>
+
 #include "spl-transloc.h"
 #include "externs.h"
 
@@ -22,6 +26,8 @@
 #include "item_use.h"
 #include "itemprop.h"
 #include "items.h"
+#include "libutil.h"
+#include "losglobal.h"
 #include "message.h"
 #include "misc.h"
 #include "mon-behv.h"
@@ -29,18 +35,17 @@
 #include "mon-util.h"
 #include "mon-stuff.h"
 #include "orb.h"
-#include "player.h"
 #include "random.h"
 #include "shout.h"
 #include "spl-util.h"
 #include "stash.h"
 #include "state.h"
+#include "stuff.h"
 #include "teleport.h"
 #include "terrain.h"
 #include "throw.h"
 #include "transform.h"
 #include "traps.h"
-#include "travel.h"
 #include "view.h"
 #include "viewmap.h"
 #include "xom.h"
@@ -60,11 +65,60 @@ spret_type cast_controlled_blink(int pow, bool fail)
     return SPRET_SUCCESS;
 }
 
+spret_type cast_disjunction(int pow, bool fail)
+{
+    fail_check();
+    int rand = random_range(35, 45) + random2(pow / 12);
+    you.duration[DUR_DISJUNCTION] = min(90 + pow / 12,
+        max(you.duration[DUR_DISJUNCTION] + rand,
+        30 + rand));
+    contaminate_player(1, true);
+    disjunction();
+    return SPRET_SUCCESS;
+}
+
+void disjunction()
+{
+    int steps = you.time_taken;
+    invalidate_agrid(true);
+    for (int step = 0; step < steps; ++step)
+    {
+        vector<monster*> mvec;
+        for (radius_iterator ri(you.pos(), LOS_RADIUS, C_ROUND); ri; ++ri)
+        {
+            monster* mons = monster_at(*ri);
+            if (!mons || !you.see_cell(*ri))
+                continue;
+            mvec.push_back(mons);
+        }
+        if (mvec.empty())
+            return;
+        // blink should be isotropic
+        random_shuffle(mvec.begin(), mvec.end());
+        for (vector<monster*>::iterator mitr = mvec.begin();
+            mitr != mvec.end(); mitr++)
+        {
+            monster* mons = *mitr;
+            if (mons->no_tele())
+                continue;
+            coord_def p = mons->pos();
+            if (!disjunction_haloed(p))
+                continue;
+
+            int dist = grid_distance(you.pos(), p);
+            int decay = max(1, (dist - 1) * (dist + 1));
+            int chance = pow(0.8, 1.0 / decay) * 1000;
+            if (!x_chance_in_y(chance, 1000))
+                blink_away(mons, &you);
+        }
+    }
+}
+
 // If wizard_blink is set, all restriction are ignored (except for
 // a monster being at the target spot), and the player gains no
 // contamination.
 int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
-          std::string *pre_msg)
+          string *pre_msg)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -404,7 +458,7 @@ static void _handle_teleport_update(bool large_change, bool check_ring_TC,
 }
 
 static bool _teleport_player(bool allow_control, bool new_abyss_area,
-                             bool wizard_tele)
+                             bool wizard_tele, int range)
 {
     bool is_controlled = (allow_control && !you.confused()
                           && player_control_teleport()
@@ -611,7 +665,9 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
         do
             newpos = random_in_bounds();
         while (_cell_vetoes_teleport(newpos)
-               || need_distance_check && (newpos - centre).abs() < 34*34
+               || (newpos - old_pos).abs() > dist_range(range)
+               || need_distance_check && (newpos - centre).abs()
+                                          <= dist_range(min(range - 1, 34))
                || testbits(env.pgrid(newpos), FPROP_NO_RTELE_INTO));
 
         if (newpos == old_pos)
@@ -703,10 +759,11 @@ bool you_teleport_to(const coord_def where_to, bool move_monsters)
     return true;
 }
 
-void you_teleport_now(bool allow_control, bool new_abyss_area, bool wizard_tele)
+void you_teleport_now(bool allow_control, bool new_abyss_area,
+                      bool wizard_tele, int range)
 {
     const bool randtele = _teleport_player(allow_control, new_abyss_area,
-                                           wizard_tele);
+                                           wizard_tele, range);
 
     // Xom is amused by uncontrolled teleports that land you in a
     // dangerous place, unless the player is in the Abyss and
@@ -865,13 +922,13 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     // The maximum number of squares the item will actually move, always
     // at least one square.
     int quantity = item.quantity;
-    int apported_mass = unit_mass * std::min(quantity, max_units);
+    int apported_mass = unit_mass * min(quantity, max_units);
 
-    int max_dist = std::max(60 * pow / (apported_mass + 150), 1);
+    int max_dist = max(60 * pow / (apported_mass + 150), 1);
 
     dprf("Apport dist=%d, max_dist=%d", dist, max_dist);
 
-    int location_on_path = std::max(-1, dist - max_dist);
+    int location_on_path = max(-1, dist - max_dist);
     // Don't move mimics under you.
     if ((item.flags & ISFLAG_MIMIC) && location_on_path == -1)
         location_on_path = 0;
@@ -946,7 +1003,7 @@ static bool _quadrant_blink(coord_def dir, int pow)
         }
 
         // ... which is close enough, but also far enough from us.
-        if (distance(base, target) > 10 || distance(you.pos(), target) < 8)
+        if (distance2(base, target) > 10 || distance2(you.pos(), target) < 8)
             continue;
 
         if (!you.see_cell_no_trans(target))

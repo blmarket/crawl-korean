@@ -26,7 +26,6 @@
 #include "libutil.h"
 #include "menu.h"
 #include "message.h"
-#include "misc.h"
 #include "mon-util.h"
 #include "notes.h"
 #include "options.h"
@@ -35,6 +34,7 @@
 #include "shopping.h"
 #include "spl-book.h"
 #include "stash.h"
+#include "state.h"
 #include "stuff.h"
 #include "syscalls.h"
 #include "env.h"
@@ -54,15 +54,15 @@
 // Global
 StashTracker StashTrack;
 
-std::string userdef_annotate_item(const char *s, const item_def *item,
-                                  bool exclusive)
+string userdef_annotate_item(const char *s, const item_def *item,
+                             bool exclusive)
 {
 #ifdef CLUA_BINDINGS
     lua_stack_cleaner cleaner(clua);
     clua_push_item(clua, const_cast<item_def*>(item));
     if (!clua.callfn(s, 1, 1) && !clua.error.empty())
         mprf(MSGCH_ERROR, "Lua error: %s", clua.error.c_str());
-    std::string ann;
+    string ann;
     if (lua_isstring(clua, -1))
         ann = luaL_checkstring(clua, -1);
     return ann;
@@ -71,11 +71,9 @@ std::string userdef_annotate_item(const char *s, const item_def *item,
 #endif
 }
 
-std::string stash_annotate_item(const char *s,
-                                const item_def *item,
-                                bool exclusive)
+string stash_annotate_item(const char *s, const item_def *item, bool exclusive)
 {
-    std::string text = userdef_annotate_item(s, item, exclusive);
+    string text = userdef_annotate_item(s, item, exclusive);
 
     if (item->has_spells())
     {
@@ -100,12 +98,8 @@ std::string stash_annotate_item(const char *s,
 
 void maybe_update_stashes()
 {
-    if (Options.stash_tracking && !crawl_state.game_is_arena())
-    {
-        StashTrack.update_visible_stashes(
-            Options.stash_tracking == STM_ALL ? StashTracker::ST_AGGRESSIVE
-                                              : StashTracker::ST_PASSIVE);
-    }
+    if (!crawl_state.game_is_arena())
+        StashTrack.update_visible_stashes();
 }
 
 bool is_stash(const coord_def& c)
@@ -119,7 +113,7 @@ bool is_stash(const coord_def& c)
     return false;
 }
 
-std::string get_stash_desc(const coord_def& c)
+string get_stash_desc(const coord_def& c)
 {
     LevelStashes *ls = StashTrack.find_current_level();
     if (ls)
@@ -127,7 +121,7 @@ std::string get_stash_desc(const coord_def& c)
         Stash *s = ls->find_stash(c);
         if (s)
         {
-            const std::string desc = s->description();
+            const string desc = s->description();
             if (!desc.empty())
                 return ("[Stash: " + desc + "]");
         }
@@ -137,20 +131,20 @@ std::string get_stash_desc(const coord_def& c)
 
 void describe_stash(const coord_def& c)
 {
-    std::string desc = get_stash_desc(c);
+    string desc = get_stash_desc(c);
     if (!desc.empty())
         mpr(desc.c_str(), MSGCH_EXAMINE_FILTER);
 }
 
 
-std::vector<item_def> Stash::get_items() const
+vector<item_def> Stash::get_items() const
 {
     return items;
 }
 
-std::vector<item_def> item_list_in_stash(const coord_def& pos)
+vector<item_def> item_list_in_stash(const coord_def& pos)
 {
-    std::vector<item_def> ret;
+    vector<item_def> ret;
 
     LevelStashes *ls = StashTrack.find_current_level();
     if (ls)
@@ -226,20 +220,23 @@ bool Stash::pickup_eligible() const
     return false;
 }
 
-bool Stash::sacrificiable() const
+bool Stash::sacrificeable() const
 {
     for (int i = 0, size = items.size(); i < size; ++i)
-    {
-        if (you.religion == GOD_NEMELEX_XOBEH
-            && !check_nemelex_sacrificing_item_type(items[i])
-            || items[i].flags & (ISFLAG_DROPPED | ISFLAG_THROWN))
-        {
-            continue;
-        }
-
-        if (god_likes_item(you.religion, items[i]))
+        if (items[i].is_greedy_sacrificeable())
             return true;
-    }
+
+    return false;
+}
+
+bool Stash::needs_stop() const
+{
+    for (int i = 0, size = items.size(); i < size; ++i)
+        if (!items[i].is_greedy_sacrificeable()
+            && !item_needs_autopickup(items[i]))
+        {
+            return true;
+        }
 
     return false;
 }
@@ -367,7 +364,7 @@ void Stash::update()
                 if (are_items_same(items[i], item))
                 {
                     // Found it. Swap it to the front of the vector.
-                    std::swap(items[i], items[0]);
+                    swap(items[i], items[0]);
 
                     // We don't set verified to true. If this stash was
                     // already unverified, it remains so.
@@ -410,9 +407,9 @@ static short _min_rot(const item_def &item)
 
 // Returns the item name for a given item, with any appropriate
 // stash-tracking pre/suffixes.
-std::string Stash::stash_item_name(const item_def &item)
+string Stash::stash_item_name(const item_def &item)
 {
-    std::string name = item.name(false, DESC_A);
+    string name = item.name(false, DESC_A);
 
     if (!_is_rottable(item))
         return name;
@@ -483,7 +480,7 @@ void StashMenu::draw_title()
                 // XXX: This won't fit in the title, so it goes into the
                 // footer/-more-.  Not ideal, but I don't know where else
                 // to put it.
-                std::string str = "<w>[ENTER: travel]</w>";
+                string str = "<w>[ENTER: travel]</w>";
                 set_more(formatted_string::parse_string(str));
                 flags |= MF_ALWAYS_SHOW_MORE;
             }
@@ -522,11 +519,11 @@ static MenuEntry *stash_menu_fixup(MenuEntry *me)
 }
 
 bool Stash::show_menu(const level_pos &prefix, bool can_travel,
-                      const std::vector<item_def>* matching_items) const
+                      const vector<item_def>* matching_items) const
 {
-    const std::string prefix_str = short_place_name(prefix.id);
-    const std::vector<item_def> *item_list = matching_items ? matching_items
-                                                            : &items;
+    const string prefix_str = short_place_name(prefix.id);
+    const vector<item_def> *item_list = matching_items ? matching_items
+                                                       : &items;
     StashMenu menu;
 
     MenuEntry *mtitle = new MenuEntry("Stash (" + prefix_str, MEL_TITLE);
@@ -535,7 +532,7 @@ bool Stash::show_menu(const level_pos &prefix, bool can_travel,
     menu.set_title(mtitle);
     menu.load_items(InvMenu::xlat_itemvect(*item_list), stash_menu_fixup);
 
-    std::vector<MenuEntry*> sel;
+    vector<MenuEntry*> sel;
     while (true)
     {
         sel = menu.show();
@@ -551,13 +548,13 @@ bool Stash::show_menu(const level_pos &prefix, bool can_travel,
     return false;
 }
 
-std::string Stash::description() const
+string Stash::description() const
 {
     if (!enabled || items.empty())
         return "";
 
     const item_def &item = items[0];
-    std::string desc = stash_item_name(item);
+    string desc = stash_item_name(item);
 
     size_t sz = items.size();
     if (sz > 1)
@@ -571,12 +568,12 @@ std::string Stash::description() const
     return desc;
 }
 
-std::string Stash::feature_description() const
+string Stash::feature_description() const
 {
     return feat_desc;
 }
 
-bool Stash::matches_search(const std::string &prefix,
+bool Stash::matches_search(const string &prefix,
                            const base_pattern &search,
                            stash_search_result &res) const
 {
@@ -587,9 +584,8 @@ bool Stash::matches_search(const std::string &prefix,
     {
         const item_def &item = items[i];
 
-        const std::string s   = stash_item_name(item);
-        const std::string ann =
-            stash_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item);
+        const string s   = stash_item_name(item);
+        const string ann = stash_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item);
         if (search.matches(prefix + " " + ann + s))
         {
             if (!res.count++)
@@ -601,7 +597,7 @@ bool Stash::matches_search(const std::string &prefix,
 
         if (is_dumpable_artefact(item, false))
         {
-            const std::string desc =
+            const string desc =
                 munge_description(get_item_description(item, false, true));
 
             if (search.matches(desc))
@@ -616,7 +612,7 @@ bool Stash::matches_search(const std::string &prefix,
 
     if (!res.matches && feat != DNGN_FLOOR)
     {
-        const std::string fdesc = feature_description();
+        const string fdesc = feature_description();
         if (!fdesc.empty() && search.matches(fdesc))
         {
             res.match = fdesc;
@@ -690,8 +686,7 @@ void Stash::add_item(const item_def &item, bool add_to_front)
     }
 }
 
-void Stash::write(FILE *f, int refx, int refy,
-                  std::string place, bool identify)
+void Stash::write(FILE *f, int refx, int refy, string place, bool identify)
     const
 {
     if (!enabled || (items.empty() && verified))
@@ -711,10 +706,10 @@ void Stash::write(FILE *f, int refx, int refy,
         if (identify)
             _fully_identify_item(&item);
 
-        std::string s = stash_item_name(item);
+        string s = stash_item_name(item);
         strncpy(buf, s.c_str(), sizeof buf);
 
-        std::string ann = userdef_annotate_item(STASH_LUA_DUMP_ANNOTATE, &item);
+        string ann = userdef_annotate_item(STASH_LUA_DUMP_ANNOTATE, &item);
 
         if (!ann.empty())
         {
@@ -727,7 +722,7 @@ void Stash::write(FILE *f, int refx, int refy,
 
         if (is_dumpable_artefact(item, false))
         {
-            std::string desc =
+            string desc =
                 munge_description(get_item_description(item, false, true));
 
             // Kill leading and trailing whitespace
@@ -784,18 +779,7 @@ void Stash::load(reader& inf)
 
     feat =  static_cast<dungeon_feature_type>(unmarshallUByte(inf));
     trap =  static_cast<trap_type>(unmarshallUByte(inf));
-#if TAG_MAJOR_VERSION == 33
-    if (trap == TRAP_AXED)
-        trap = TRAP_SPEAR;
-
-    if (inf.getMinorVersion() < TAG_MINOR_STASH_FEATDESC)
-    {
-        feat_desc = (is_boring_feature(feat)
-                     ? "" : ::feature_description(feat, trap));
-    }
-    else
-        feat_desc = unmarshallString(inf);
-#endif
+    feat_desc = unmarshallString(inf);
 
     uint8_t flags = unmarshallUByte(inf);
     verified = (flags & 1) != 0;
@@ -835,15 +819,15 @@ void ShopInfo::add_item(const item_def &sitem, unsigned price)
     items.push_back(it);
 }
 
-std::string ShopInfo::shop_item_name(const shop_item &si) const
+string ShopInfo::shop_item_name(const shop_item &si) const
 {
     return make_stringf("%s (%u gold)",
                         Stash::stash_item_name(si.item).c_str(), si.price);
 }
 
-std::string ShopInfo::shop_item_desc(const shop_item &si) const
+string ShopInfo::shop_item_desc(const shop_item &si) const
 {
-    std::string desc;
+    string desc;
 
     const iflags_t oldflags = si.item.flags;
 
@@ -888,7 +872,7 @@ class ShopItemEntry : public InvEntry
 
 public:
     ShopItemEntry(const ShopInfo::shop_item &it,
-                  const std::string &item_name,
+                  const string &item_name,
                   menu_letter hotkey, bool _on_list) : InvEntry(it.item)
     {
         text = item_name;
@@ -896,13 +880,13 @@ public:
         on_list = _on_list;
     }
 
-    std::string get_text(const bool = false) const
+    string get_text(const bool = false) const
     {
         ASSERT(level == MEL_ITEM && hotkeys.size());
         char buf[300];
         snprintf(buf, sizeof buf, " %c %c %s",
                  hotkeys[0], on_list ? '$' : '-', text.c_str());
-        return std::string(buf);
+        return string(buf);
     }
 };
 
@@ -924,7 +908,7 @@ void ShopInfo::fill_out_menu(StashMenu &menu, const level_pos &place) const
 bool ShopInfo::show_menu(const level_pos &place,
                          bool can_travel) const
 {
-    const std::string place_str = short_place_name(place.id);
+    const string place_str = short_place_name(place.id);
 
     StashMenu menu;
 
@@ -948,7 +932,7 @@ bool ShopInfo::show_menu(const level_pos &place,
     else
         fill_out_menu(menu, place);
 
-    std::vector<MenuEntry*> sel;
+    vector<MenuEntry*> sel;
     while (true)
     {
         sel = menu.show();
@@ -978,12 +962,12 @@ bool ShopInfo::show_menu(const level_pos &place,
     return false;
 }
 
-std::string ShopInfo::description() const
+string ShopInfo::description() const
 {
     return name;
 }
 
-bool ShopInfo::matches_search(const std::string &prefix,
+bool ShopInfo::matches_search(const string &prefix,
                               const base_pattern &search,
                               stash_search_result &res) const
 {
@@ -997,16 +981,16 @@ bool ShopInfo::matches_search(const std::string &prefix,
 
     for (unsigned i = 0; i < items.size(); ++i)
     {
-        const std::string sname = shop_item_name(items[i]);
-        const std::string ann   = stash_annotate_item(STASH_LUA_SEARCH_ANNOTATE,
-                                                      &items[i].item, true);
+        const string sname = shop_item_name(items[i]);
+        const string ann   = stash_annotate_item(STASH_LUA_SEARCH_ANNOTATE,
+                                                 &items[i].item, true);
 
         bool thismatch = false;
         if (search.matches(prefix + " " + ann + sname))
             thismatch = true;
         else
         {
-            std::string desc = shop_item_desc(items[i]);
+            string desc = shop_item_desc(items[i]);
             if (search.matches(desc))
                 thismatch = true;
         }
@@ -1022,7 +1006,7 @@ bool ShopInfo::matches_search(const std::string &prefix,
 
     if (!res.matches)
     {
-        std::string shoptitle = prefix + " {shop} " + name;
+        string shoptitle = prefix + " {shop} " + name;
         if (!visited && items.empty())
             shoptitle += "*";
         if (search.matches(shoptitle))
@@ -1058,7 +1042,7 @@ void ShopInfo::write(FILE *f, bool identify) const
                 _fully_identify_item(&item.item);
 
             fprintf(f, "  %s\n", OUTS(shop_item_name(item)));
-            std::string desc = shop_item_desc(item);
+            string desc = shop_item_desc(item);
             if (!desc.empty())
                 fprintf(f, "    %s\n", OUTS(desc));
         }
@@ -1168,7 +1152,7 @@ bool LevelStashes::needs_visit(const coord_def& c, bool autopickup,
 {
     const Stash *s = find_stash(c);
     if (s && (s->unverified()
-              || sacrifice && s->sacrificiable()
+              || sacrifice && s->sacrificeable()
               || autopickup && s->pickup_eligible()))
     {
         return true;
@@ -1176,16 +1160,16 @@ bool LevelStashes::needs_visit(const coord_def& c, bool autopickup,
     return shop_needs_visit(c);
 }
 
-bool LevelStashes::unverified_stash(const coord_def &c) const
+bool LevelStashes::needs_stop(const coord_def &c) const
 {
     const Stash *s = find_stash(c);
-    return (s && s->unverified());
+    return (s && s->unverified() && s->needs_stop());
 }
 
-bool LevelStashes::sacrificiable(const coord_def &c) const
+bool LevelStashes::sacrificeable(const coord_def &c) const
 {
     const Stash *s = find_stash(c);
-    return (s && s->sacrificiable());
+    return (s && s->sacrificeable());
 }
 
 ShopInfo &LevelStashes::get_shop(const coord_def& c)
@@ -1225,7 +1209,7 @@ void LevelStashes::move_stash(const coord_def& from, const coord_def& to)
     int old_abs = s->abs_pos();
     s->x = to.x;
     s->y = to.y;
-    m_stashes.insert(std::pair<int, Stash>(s->abs_pos(), *s));
+    m_stashes.insert(pair<int, Stash>(s->abs_pos(), *s));
     m_stashes.erase(old_abs);
 }
 
@@ -1280,12 +1264,12 @@ bool LevelStashes::is_current() const
     return (m_place == level_id::current());
 }
 
-std::string LevelStashes::level_name() const
+string LevelStashes::level_name() const
 {
     return m_place.describe(true, true);
 }
 
-std::string LevelStashes::short_level_name() const
+string LevelStashes::short_level_name() const
 {
     return m_place.describe();
 }
@@ -1307,7 +1291,7 @@ int LevelStashes::_num_enabled_stashes() const
 
 void LevelStashes::_waypoint_search(
         int n,
-        std::vector<stash_search_result> &results) const
+        vector<stash_search_result> &results) const
 {
     level_pos waypoint = travel_cache.get_waypoint(n);
     if (!waypoint.is_valid() || waypoint.id != m_place)
@@ -1323,12 +1307,12 @@ void LevelStashes::_waypoint_search(
 
 void LevelStashes::get_matching_stashes(
         const base_pattern &search,
-        std::vector<stash_search_result> &results) const
+        vector<stash_search_result> &results) const
 {
-    std::string lplace = "{" + m_place.describe() + "}";
+    string lplace = "{" + m_place.describe() + "}";
 
     // a single digit or * means we're searching for waypoints' content.
-    const std::string s = search.tostring();
+    const string s = search.tostring();
     if (s == "*")
     {
         for (int i = 0; i < TRAVEL_WAYPOINT_COUNT; ++i)
@@ -1399,7 +1383,7 @@ void LevelStashes::write(FILE *f, bool identify) const
     {
         const Stash &s = m_stashes.begin()->second;
         int refx = s.getX(), refy = s.getY();
-        std::string levname = short_level_name();
+        string levname = short_level_name();
         for (stashes_t::const_iterator iter = m_stashes.begin();
              iter != m_stashes.end(); ++iter)
         {
@@ -1513,17 +1497,10 @@ void StashTracker::no_stash(int x, int y)
         remove_level();
 }
 
-void StashTracker::add_stash(int x, int y, bool verbose)
+void StashTracker::add_stash(int x, int y)
 {
     LevelStashes &current = get_current_level();
     current.add_stash(x, y);
-
-    if (verbose)
-    {
-        Stash *s = current.find_stash(coord_def(x, y));
-        if (s && s->enabled)
-            mpr("Added stash.");
-    }
 
     if (!current.stash_count())
         remove_level();
@@ -1585,7 +1562,7 @@ void StashTracker::load(reader& inf)
     }
 }
 
-void StashTracker::update_visible_stashes(StashTracker::stash_update_mode mode)
+void StashTracker::update_visible_stashes()
 {
     LevelStashes *lev = find_current_level();
     coord_def c;
@@ -1594,7 +1571,6 @@ void StashTracker::update_visible_stashes(StashTracker::stash_update_mode mode)
         const dungeon_feature_type feat = grd(*ri);
 
         if ((!lev || !lev->update_stash(*ri))
-            && mode == ST_AGGRESSIVE
             && (_grid_has_perceived_item(*ri)
                 || !Stash::is_boring_feature(feat)))
         {
@@ -1612,22 +1588,22 @@ void StashTracker::update_visible_stashes(StashTracker::stash_update_mode mode)
 }
 
 #define SEARCH_SPAM_THRESHOLD 400
-static std::string lastsearch;
+static string lastsearch;
 static input_history search_history(15);
 
-std::string StashTracker::stash_search_prompt()
+string StashTracker::stash_search_prompt()
 {
-    std::vector<std::string> opts;
+    vector<string> opts;
     if (!lastsearch.empty())
     {
-        const std::string disp = replace_all(lastsearch, "<", "<<");
+        const string disp = replace_all(lastsearch, "<", "<<");
         opts.push_back(
             make_stringf("Enter for \"%s\"", disp.c_str()));
     }
     if (lastsearch != ".")
         opts.push_back("? for help");
 
-    std::string prompt_qual =
+    string prompt_qual =
         comma_separated_line(opts.begin(), opts.end(), ", or ", ", or ");
 
     if (!prompt_qual.empty())
@@ -1751,9 +1727,7 @@ void StashTracker::search_stashes()
             redraw_screen();
         }
         else
-        {
             break;
-        }
     }
     msgwin_reply(validline ? buf : "");
 
@@ -1761,24 +1735,19 @@ void StashTracker::search_stashes()
     if (!validline || (!*buf && lastsearch.empty()))
         return;
 
-    std::string csearch = *buf? buf : lastsearch;
-    std::string help = lastsearch;
+    string csearch = *buf? buf : lastsearch;
+    string help = lastsearch;
     lastsearch = csearch;
 
+    if (csearch == "@")
+        csearch = ".";
+    bool curr_lev = (csearch[0] == '@');
+    if (curr_lev)
+        csearch.erase(0, 1);
     if (csearch == ".")
-    {
-#if defined(REGEX_PCRE) || defined(REGEX_POSIX)
-#define RE_ESCAPE "\\"
-#else
-#define RE_ESCAPE ""
-#endif
+        curr_lev = true;
 
-        csearch = (RE_ESCAPE "{")
-            + level_id::current().describe()
-            + (RE_ESCAPE "}");
-    }
-
-    std::vector<stash_search_result> results;
+    vector<stash_search_result> results;
 
     base_pattern *search = NULL;
 
@@ -1797,7 +1766,7 @@ void StashTracker::search_stashes()
         return ;
     }
 
-    get_matching_stashes(*search, results);
+    get_matching_stashes(*search, results, curr_lev);
 
     if (results.empty())
     {
@@ -1828,18 +1797,21 @@ void StashTracker::search_stashes()
 
 void StashTracker::get_matching_stashes(
         const base_pattern &search,
-        std::vector<stash_search_result> &results)
+        vector<stash_search_result> &results,
+        bool curr_lev)
     const
 {
     stash_levels_t::const_iterator iter = levels.begin();
+    level_id curr = level_id::current();
     for (; iter != levels.end(); ++iter)
     {
+        if (curr_lev && curr != iter->first)
+            continue;
         iter->second.get_matching_stashes(search, results);
         if (results.size() > SEARCH_SPAM_THRESHOLD)
             return;
     }
 
-    level_id curr = level_id::current();
     for (unsigned i = 0; i < results.size(); ++i)
     {
         int ldist = level_distance(curr, results[i].pos.id);
@@ -1910,7 +1882,7 @@ bool StashSearchMenu::process_key(int key)
     return Menu::process_key(key);
 }
 
-std::string ShopInfo::get_shop_item_name(const item_def& search_item) const
+string ShopInfo::get_shop_item_name(const item_def& search_item) const
 {
     // Rely on items_similar, rnd, quantity to see if the item_def object is in
     // the shop (extremely unlikely to be cheated and only consequence would be a
@@ -1927,8 +1899,8 @@ std::string ShopInfo::get_shop_item_name(const item_def& search_item) const
     return "";
 }
 
-static void _stash_flatten_results(const std::vector<stash_search_result> &in,
-                                   std::vector<stash_search_result> &out)
+static void _stash_flatten_results(const vector<stash_search_result> &in,
+                                   vector<stash_search_result> &out)
 {
     // Creates search results vector with at most one item in each entry
     out.clear();
@@ -1949,7 +1921,7 @@ static void _stash_flatten_results(const std::vector<stash_search_result> &in,
                 {
                   // Need to check if the item is in the shop so we can add gold price...
                   // tmp.shop->shop_item_name()
-                  std::string sn = tmp.shop->get_shop_item_name(item);
+                  string sn = tmp.shop->get_shop_item_name(item);
                   if (!sn.empty())
                   tmp.match=sn;
                 }
@@ -1964,15 +1936,15 @@ static void _stash_flatten_results(const std::vector<stash_search_result> &in,
 
 // Returns true to request redisplay if display method was toggled
 bool StashTracker::display_search_results(
-    std::vector<stash_search_result> &results_in,
+    vector<stash_search_result> &results_in,
     bool& sort_by_dist,
     bool& show_as_stacks)
 {
     if (results_in.empty())
         return false;
 
-    std::vector<stash_search_result> * results = &results_in;
-    std::vector<stash_search_result> results_single_items;
+    vector<stash_search_result> * results = &results_in;
+    vector<stash_search_result> results_single_items;
     if (!show_as_stacks)
     {
         _stash_flatten_results(results_in, results_single_items);
@@ -1980,9 +1952,9 @@ bool StashTracker::display_search_results(
     }
 
     if (sort_by_dist)
-        std::sort(results->begin(), results->end(), compare_by_distance());
+        sort(results->begin(), results->end(), compare_by_distance());
     else
-        std::sort(results->begin(), results->end(), compare_by_name());
+        sort(results->begin(), results->end(), compare_by_name());
 
     StashSearchMenu stashmenu(show_as_stacks ? "stacks" : "items",
                               sort_by_dist ? "by dist" : "by name");
@@ -1990,7 +1962,7 @@ bool StashTracker::display_search_results(
     stashmenu.can_travel   = can_travel_interlevel();
     stashmenu.action_cycle = Menu::CYCLE_TOGGLE;
     stashmenu.menu_action  = Menu::ACT_EXECUTE;
-    std::string title = "match";
+    string title = "match";
 
     MenuEntry *mtitle = new MenuEntry(title, MEL_TITLE);
     // Abuse of the quantity field.
@@ -2008,7 +1980,7 @@ bool StashTracker::display_search_results(
     for (unsigned i = 0; i < results->size(); ++i, ++hotkey)
     {
         stash_search_result &res = (*results)[i];
-        std::ostringstream matchtitle;
+        ostringstream matchtitle;
         if (const uint8_t waypoint = travel_cache.is_waypoint(res.pos))
             matchtitle << "(" << waypoint << ") ";
 
@@ -2039,7 +2011,7 @@ bool StashTracker::display_search_results(
 
     stashmenu.set_flags(MF_SINGLESELECT);
 
-    std::vector<MenuEntry*> sel;
+    vector<MenuEntry*> sel;
     while (true)
     {
         sel = stashmenu.show();

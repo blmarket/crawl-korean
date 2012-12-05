@@ -313,6 +313,19 @@ struct spell_desc
 },
 
 {
+    SPELL_DISJUNCTION, M_("Disjunction"),
+     SPTYP_TRANSLOCATION,
+     SPFLAG_ESCAPE,
+     8,
+     200,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     true
+},
+
+{
     SPELL_FREEZING_CLOUD, M_("Freezing Cloud"),
      SPTYP_CONJURATION | SPTYP_ICE | SPTYP_AIR,
      SPFLAG_GRID | SPFLAG_AREA,
@@ -912,6 +925,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_FULSOME_DISTILLATION, M_("Fulsome Distillation"),
      SPTYP_TRANSMUTATION | SPTYP_NECROMANCY,
@@ -924,6 +938,7 @@ struct spell_desc
      false,
      true
 },
+#endif
 
 {
     SPELL_POISON_ARROW, M_("Poison Arrow"),
@@ -1022,8 +1037,8 @@ struct spell_desc
     SPELL_TUKIMAS_DANCE, M_("Tukima's Dance"),
      SPTYP_HEXES,
      SPFLAG_NONE,
-     3,
-     150,
+     5,
+     100,
      -1, -1,
      0,
      NULL,
@@ -1187,6 +1202,7 @@ struct spell_desc
      true
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_INSULATION, M_("Insulation"),
      SPTYP_CHARMS | SPTYP_AIR,
@@ -1199,6 +1215,7 @@ struct spell_desc
      false,
      true
 },
+#endif
 
 {
     SPELL_CURE_POISON, M_("Cure Poison"),
@@ -1238,21 +1255,6 @@ struct spell_desc
      false,
      true
 },
-
-#if TAG_MAJOR_VERSION == 33
-{
-    SPELL_PROJECTED_NOISE, M_("Projected Noise"),
-     SPTYP_HEXES,
-     SPFLAG_NONE,
-     2,
-     0,
-     LOS_RADIUS, LOS_RADIUS,
-     0,
-     NULL,
-     false,
-     false
-},
-#endif
 
 {
     SPELL_DEBUGGING_RAY, M_("Debugging Ray"),
@@ -1606,6 +1608,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_SEE_INVISIBLE, M_("See Invisible"),
      SPTYP_CHARMS,
@@ -1618,6 +1621,7 @@ struct spell_desc
      false,
      true
 },
+#endif
 
 {
     SPELL_PHASE_SHIFT, M_("Phase Shift"),
@@ -1736,6 +1740,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_EVAPORATE, M_("Evaporate"),
      SPTYP_FIRE | SPTYP_TRANSMUTATION,
@@ -1748,6 +1753,7 @@ struct spell_desc
      true,
      false
 },
+#endif
 
 {
     SPELL_FRAGMENTATION, M_("Lee's Rapid Deconstruction"),
@@ -1947,6 +1953,7 @@ struct spell_desc
      false
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     SPELL_VAMPIRE_SUMMON, M_("Vampire Summon"),
      SPTYP_SUMMONING,
@@ -1959,6 +1966,7 @@ struct spell_desc
      false,
      false
 },
+#endif
 
 {
     SPELL_BRAIN_FEED, M_("Brain Feed"),
@@ -2637,21 +2645,6 @@ struct spell_desc
      false
 },
 
-#if TAG_MAJOR_VERSION == 33
-{
-    SPELL_SUMMON_GREATER_HOLY, M_("Summon Greater Holy"),
-     SPTYP_SUMMONING,
-     SPFLAG_MONSTER,
-     9,
-     0,
-     -1, -1,
-     0,
-     NULL,
-     false,
-     false
-},
-#endif
-
 {
     SPELL_HOLY_WORD, M_("Holy Word"),
      SPTYP_NONE,
@@ -2909,6 +2902,19 @@ struct spell_desc
      0,
      NULL,
      true,
+     false
+},
+
+{
+    SPELL_SUMMON_MINOR_DEMON, M_("Summon Minor Demon"),
+     SPTYP_SUMMONING,
+     SPFLAG_UNHOLY | SPFLAG_BATTLE,
+     2,
+     200,
+     -1, -1,
+     0,
+     NULL,
+     false,
      false
 },
 

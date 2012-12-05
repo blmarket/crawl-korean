@@ -1,13 +1,31 @@
 define(["jquery", "./view_data", "./tileinfo-main", "./tileinfo-player",
         "./tileinfo-icons", "./tileinfo-dngn", "./enums",
-        "./map_knowledge", "./tileinfos"],
-function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinfos) {
+        "./map_knowledge", "./tileinfos", "./player"],
+function ($, view_data, main, tileinfo_player, icons, dngn, enums, map_knowledge, tileinfos, player) {
     function DungeonCellRenderer()
     {
         this.set_cell_size(32, 32);
         this.display_mode = "tiles";
         this.glyph_mode_font_size = 24;
         this.glyph_mode_font = "monospace";
+        this.smooth_scaling = false;
+    }
+
+    var fg_term_colours, bg_term_colours;
+
+    function determine_term_colours()
+    {
+        fg_term_colours = [];
+        bg_term_colours = [];
+        var $game = $("#game");
+        for (var i = 0; i < 16; ++i)
+        {
+            var elem = $("<span class='glyph fg" + i + " bg" + i + "'></span>");
+            $game.append(elem);
+            fg_term_colours.push(elem.css("color"));
+            bg_term_colours.push(elem.css("background-color"));
+            elem.detach();
+        }
     }
 
     function in_water(cell)
@@ -29,6 +47,8 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
         if (col.attr == enums.CHATTR.HILITE)
         {
             col.bg = col.param;
+            if (col.bg == col.fg)
+                col.fg = 0;
         }
         if (col.attr == enums.CHATTR.REVERSE)
         {
@@ -86,8 +106,8 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
         set_cell_size: function(w, h)
         {
-            this.cell_width = w;
-            this.cell_height = h;
+            this.cell_width = Math.floor(w);
+            this.cell_height = Math.floor(h);
             this.x_scale = w / 32;
             this.y_scale = h / 32;
         },
@@ -186,7 +206,7 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
                     });
                 }
 
-                if ((fg_idx >= player.MCACHE_START) && cell.mcache)
+                if ((fg_idx >= tileinfo_player.MCACHE_START) && cell.mcache)
                 {
                     $.each(cell.mcache, function (i, mcache_part) {
                         if (mcache_part) {
@@ -247,6 +267,12 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             this.render_cursors(cx, cy, x, y);
 
+            if (fg_idx == tileinfo_player.PLAYER &&
+                this.display_mode != "glyphs")
+            {
+                this.draw_minibars(x, y);
+            }
+
             // Debug helper
             if (cell.mark)
             {
@@ -260,6 +286,53 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             }
 
             cell.sy = this.current_sy;
+        },
+
+        // adapted from DungeonRegion::draw_minibars in tilereg_dgn.cc
+        draw_minibars: function(x, y)
+        {
+            var healthy = "#00FF00";
+            //  damaged = "#FFFF00";
+            //  wounded = "#960000";
+            var hp_spend= "#FF0000";
+
+            var magic = "#0000FF";
+            var magic_spend = "#000000";
+
+            // don't draw if hp and mp is full
+            if (player.hp == player.hp_max
+                && player.mp == player.mp_max)
+            {
+                return;
+            }
+
+            var hp_bar_offset = 2;
+
+            // TODO: use different colors if heavily wounded, like in the tiles version
+            if (player.mp > 0) {
+                var mp_percent = player.mp / player.mp_max;
+
+                this.ctx.fillStyle = magic_spend;
+                this.ctx.fillRect(x, y + this.cell_height - 2,
+                                  this.cell_width, 2);
+
+                this.ctx.fillStyle = magic;
+                this.ctx.fillRect(x, y + this.cell_height - 2,
+                                  this.cell_width * mp_percent, 1);
+
+                hp_bar_offset += 2;
+            }
+
+            var hp_percent = player.hp / player.hp_max;
+            if (hp_percent < 0) hp_percent = 0;
+
+            this.ctx.fillStyle = hp_spend;
+            this.ctx.fillRect(x, y + this.cell_height - hp_bar_offset,
+                              this.cell_width, 2);
+
+            this.ctx.fillStyle = healthy;
+            this.ctx.fillRect(x, y + this.cell_height - hp_bar_offset,
+                              this.cell_width * hp_percent, 2);
         },
 
         render_cell: function()
@@ -298,10 +371,10 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             if (!omit_bg)
             {
-                this.ctx.fillStyle = enums.term_colours[col.bg];
+                this.ctx.fillStyle = bg_term_colours[col.bg];
                 this.ctx.fillRect(x, y, this.cell_width, this.cell_height);
             }
-            this.ctx.fillStyle = enums.term_colours[col.fg];
+            this.ctx.fillStyle = fg_term_colours[col.fg];
             this.ctx.font = prefix + this.glyph_mode_font_name();
             this.ctx.textAlign = "center";
             this.ctx.textBaseline = "middle";
@@ -369,14 +442,14 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             }
             else if (cell.bloody)
             {
-                cell.bloodrot = cell.bloodrot || 0;
+                cell.blood_rotation = cell.blood_rotation || 0;
                 var basetile;
                 if (is_wall)
                 {
                     basetile = cell.old_blood ? dngn.WALL_OLD_BLOOD : dngn.WALL_BLOOD_S;
-                    basetile += dngn.tile_count(basetile) * cell.bloodrot;
+                    basetile += dngn.tile_count(basetile) * cell.blood_rotation;
                     basetile = dngn.WALL_BLOOD_S + dngn.tile_count(dngn.WALL_BLOOD_S)
-                        * cell.bloodrot;
+                        * cell.blood_rotation;
                 }
                 else
                     basetile = dngn.BLOOD;
@@ -400,7 +473,7 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             var bg = cell.bg;
             var bg_idx = cell.bg.value;
 
-            if (cell.swtree && bg_idx > dngn.DNGN_UNSEEN)
+            if (cell.mangrove_water && bg_idx > dngn.DNGN_UNSEEN)
                 this.draw_dngn(dngn.DNGN_SHALLOW_WATER, x, y);
             else if (bg_idx >= dngn.DNGN_FIRST_TRANSPARENT)
                 this.draw_dngn(cell.flv.f, x, y); // f = floor
@@ -409,7 +482,7 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             if (bg_idx > dngn.WALL_MAX)
                 this.draw_blood_overlay(x, y, cell);
 
-            if (cell.swtree) // Draw the tree submerged
+            if (cell.mangrove_water) // Draw the tree submerged
             {
                 this.ctx.save();
                 try
@@ -443,9 +516,6 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             if (bg_idx > dngn.DNGN_UNSEEN)
             {
-                if (bg.WAS_SECRET)
-                    this.draw_dngn(dngn.DNGN_DETECTED_SECRET_DOOR, x, y);
-
                 // Draw blood on top of wall tiles.
                 if (bg_idx <= dngn.WALL_MAX)
                     this.draw_blood_overlay(x, y, cell, bg_idx >= dngn.FLOOR_MAX);
@@ -498,6 +568,10 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
                         this.draw_dngn(dngn.UMBRA, x, y);
                     if (cell.orb_glow)
                         this.draw_dngn(dngn.ORB_GLOW + cell.orb_glow - 1, x, y);
+                    if (cell.quad_glow)
+                        this.draw_dngn(dngn.QUAD_GLOW, x, y);
+                    if (cell.disjunct)
+                        this.draw_dngn(dngn.DISJUNCT, x, y);
 
                     // Apply the travel exclusion under the foreground if the cell is
                     // visible.  It will be applied later if the cell is unseen.
@@ -581,16 +655,16 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             var status_shift = 0;
             if (fg.MIMIC_INEPT)
-                this.draw_icon(icons.MIMIC_INEPT, x, y);
+                this.draw_icon(icons.INEPT_MIMIC, x, y);
             else if (fg.MIMIC)
                 this.draw_icon(icons.MIMIC, x, y);
             else if (fg.MIMIC_RAVEN)
-                this.draw_icon(icons.MIMIC_RAVENOUS, x, y);
+                this.draw_icon(icons.RAVENOUS_MIMIC, x, y);
 
+            //The berserk icon is in the lower right, so status_shift doesn't need changing.
             if (fg.BERSERK)
             {
                 this.draw_icon(icons.BERSERK, x, y);
-                status_shift += 10;
             }
 
             // Pet mark
@@ -602,28 +676,28 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             else if (fg.GD_NEUTRAL)
             {
                 this.draw_icon(icons.GOOD_NEUTRAL, x, y);
-                status_shift += 8;
+                status_shift += 7;
             }
             else if (fg.NEUTRAL)
             {
                 this.draw_icon(icons.NEUTRAL, x, y);
-                status_shift += 8;
+                status_shift += 7;
             }
 
             if (fg.STAB)
             {
                 this.draw_icon(icons.STAB_BRAND, x, y);
-                status_shift += 15;
+                status_shift += 12;
             }
             else if (fg.MAY_STAB)
             {
                 this.draw_icon(icons.MAY_STAB_BRAND, x, y);
-                status_shift += 8;
+                status_shift += 7;
             }
             else if (fg.FLEEING)
             {
                 this.draw_icon(icons.FLEEING, x, y);
-                status_shift += 4;
+                status_shift += 3;
             }
 
             if (fg.POISON)
@@ -634,27 +708,32 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             if (fg.STICKY_FLAME)
             {
                 this.draw_icon(icons.STICKY_FLAME, x, y, -status_shift, 0);
-                status_shift += 5;
+                status_shift += 7;
             }
             if (fg.INNER_FLAME)
             {
                 this.draw_icon(icons.INNER_FLAME, x, y, -status_shift, 0);
-                status_shift += 8;
+                status_shift += 7;
             }
             if (fg.CONSTRICTED)
             {
                 this.draw_icon(icons.CONSTRICTED, x, y, -status_shift, 0);
-                status_shift += 13;
+                status_shift += 11;
             }
             if (fg.GLOWING)
             {
                 this.draw_icon(icons.GLOWING, x, y, -status_shift, 0);
-                status_shift += 10;
+                status_shift += 8;
             }
             if (fg.SLOWED)
             {
                 this.draw_icon(icons.SLOWED, x, y, -status_shift, 0);
-                status_shift += 13;
+                status_shift += 6;
+            }
+            if (fg.PAIN_MIRROR)
+            {
+                this.draw_icon(icons.PAIN_MIRROR, x, y, -status_shift, 0);
+                status_shift += 7;
             }
 
             if (fg.ANIM_WEP)
@@ -697,15 +776,15 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
                 this.draw_icon(icons.CURSOR3, x, y);
             }
 
-            if (cell.tt & 0xF)
+            if (cell.travel_trail & 0xF)
             {
                 this.draw_icon(icons.TRAVEL_PATH_FROM +
-                               (cell.tt & 0xF) - 1, x, y);
+                               (cell.travel_trail & 0xF) - 1, x, y);
             }
-            if (cell.tt & 0xF0)
+            if (cell.travel_trail & 0xF0)
             {
                 this.draw_icon(icons.TRAVEL_PATH_TO +
-                               ((cell.tt & 0xF0) >> 4) - 1, x, y);
+                               ((cell.travel_trail & 0xF0) >> 4) - 1, x, y);
             }
 
             if (fg.MDAM_LIGHT)
@@ -757,6 +836,9 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             var w = info.ex - info.sx;
             var h = info.ey - info.sy;
+            this.ctx.imageSmoothingEnabled = this.smooth_scaling;
+            this.ctx.webkitImageSmoothingEnabled = this.smooth_scaling;
+            this.ctx.mozImageSmoothingEnabled = this.smooth_scaling;
             this.ctx.drawImage(img,
                                info.sx, info.sy + sy - pos_sy_adjust,
                                w, h + ey - pos_ey_adjust,
@@ -778,7 +860,7 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
         draw_player: function(idx, x, y, ofsx, ofsy, y_max)
         {
-            this.draw_tile(idx, x, y, player, ofsx, ofsy, y_max);
+            this.draw_tile(idx, x, y, tileinfo_player, ofsx, ofsy, y_max);
         },
 
         draw_icon: function(idx, x, y, ofsx, ofsy)
@@ -792,6 +874,11 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
             this.draw_tile(idx, x, y, mod, ofsx, ofsy);
         },
     });
+
+    $(document).off("game_init.cell_renderer")
+        .on("game_init.cell_renderer", function () {
+            determine_term_colours();
+        });
 
     return {
         DungeonCellRenderer: DungeonCellRenderer,

@@ -30,7 +30,7 @@ int allowed_deaths_door_hp(void)
     if (you.religion == GOD_KIKUBAAQUDGHA && !player_under_penance())
         hp += you.piety / 15;
 
-    return std::max(hp, 1);
+    return max(hp, 1);
 }
 
 spret_type cast_deaths_door(int pow, bool fail)
@@ -77,7 +77,7 @@ spret_type ice_armour(int pow, bool fail)
         return SPRET_ABORT;
     }
 
-    if (you.duration[DUR_STONESKIN])
+    if (you.duration[DUR_STONESKIN] || you.duration[DUR_FIRE_SHIELD])
     {
         mpr("이 마법은 다른 마법과 그 효과가 충돌한다.");//mpr("The spell conflicts with another spell still in effect.");
         return SPRET_ABORT;
@@ -194,7 +194,7 @@ spret_type cast_swiftness(int power, bool fail)
     fail_check();
 
     // [dshaligram] Removed the on-your-feet bit.  Sounds odd when
-    // you're levitating, for instance.
+    // you're flying, for instance.
     you.increase_duration(DUR_SWIFTNESS, 20 + random2(power), 100,
                           "당신은 민첩해짐을 느꼈다.");//"You feel quick.");
     did_god_conduct(DID_HASTY, 8, true);
@@ -204,7 +204,7 @@ spret_type cast_swiftness(int power, bool fail)
 
 spret_type cast_fly(int power, bool fail)
 {
-    if (liquefied(you.pos()) && you.ground_level())
+    if (you.liquefied_ground())
     {
         mpr("이런 작은 마법은 중력으로부터 당신을 당길 수 없다!", MSGCH_WARN);//mpr("Such puny magic can't pull you from the ground!", MSGCH_WARN);
         return SPRET_ABORT;//그런 후잡한 마법으로는 레다쨩의 마법을 벗어날 수 없다능! by 군발트
@@ -212,26 +212,15 @@ spret_type cast_fly(int power, bool fail)
 
     fail_check();
     const int dur_change = 25 + random2(power) + random2(power);
-    const bool was_levitating = you.airborne();
+    const bool was_flying = you.airborne();
 
-    you.increase_duration(DUR_LEVITATION, dur_change, 100);
-    you.increase_duration(DUR_CONTROLLED_FLIGHT, dur_change, 100);
-    you.attribute[ATTR_LEV_UNCANCELLABLE] = 1;
+    you.increase_duration(DUR_FLIGHT, dur_change, 100);
+    you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
 
-    burden_change();
-
-    if (!was_levitating)
-        float_player(true);
+    if (!was_flying)
+        float_player();
     else
         mpr("당신은 부력을 느꼈다.");//mpr("You feel more buoyant.");
-    return SPRET_SUCCESS;
-}
-
-spret_type cast_insulation(int power, bool fail)
-{
-    fail_check();
-    you.increase_duration(DUR_INSULATION, 10 + random2(power), 100,
-                          "당신은 절연상태가 되었다.");//"You feel insulated.");
     return SPRET_SUCCESS;
 }
 
@@ -247,7 +236,7 @@ spret_type cast_teleport_control(int power, bool fail)
     return SPRET_SUCCESS;
 }
 
-int cast_selective_amnesia(std::string *pre_msg)
+int cast_selective_amnesia(string *pre_msg)
 {
     if (you.spell_no == 0)
     {
@@ -306,24 +295,6 @@ int cast_selective_amnesia(std::string *pre_msg)
     }
 
     return 1;
-}
-
-spret_type cast_see_invisible(int pow, bool fail)
-{
-    fail_check();
-    if (you.can_see_invisible())
-        mpr("당신은 시력이 더욱 날카로워 진것을 느꼇다.");//mpr("You feel as though your vision will be sharpened longer."); 는 크롤러
-    else
-    {
-        mpr("당신의 시력은 날카롭다.");//mpr("Your vision seems to sharpen."); 토순이
-
-        // We might have to turn autopickup back on again.
-        autotoggle_autopickup(false);
-    }
-
-    // No message if you already are under the spell.
-    you.increase_duration(DUR_SEE_INVISIBLE, 10 + random2(2 + pow/2), 100);
-    return SPRET_SUCCESS;
 }
 
 spret_type cast_silence(int pow, bool fail)

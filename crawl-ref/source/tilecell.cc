@@ -36,6 +36,8 @@ void packed_cell::clear()
     blood_rotation   = 0;
     old_blood        = false;
     travel_trail     = 0;
+    quad_glow        = 0;
+    disjunct         = 0;
 }
 
 bool packed_cell::operator ==(const packed_cell &other) const
@@ -56,6 +58,8 @@ bool packed_cell::operator ==(const packed_cell &other) const
     if (blood_rotation != other.blood_rotation) return false;
     if (old_blood != other.old_blood) return false;
     if (travel_trail != other.travel_trail) return false;
+    if (quad_glow != other.quad_glow) return false;
+    if (disjunct != other.disjunct) return false;
 
     if (num_dngn_overlay != other.num_dngn_overlay) return false;
     for (int i = 0; i < num_dngn_overlay; ++i)
@@ -124,9 +128,7 @@ static void _add_directional_overlays(const coord_def& gc, packed_cell* cell,
             continue;
 
         if (dir_mask & (1 << i))
-        {
             _add_overlay(tileidx, cell);
-        }
 
         tileidx++;
     }
@@ -352,10 +354,10 @@ static void _pack_default_waves(const coord_def &gc, packed_cell *cell)
     if (cell->mangrove_water && feat == DNGN_TREE)
         feat = DNGN_SHALLOW_WATER;
 
-    if (!feat_is_water(feat) && !feat_is_lava(feat) || env.grid_colours(gc))
+    if (!feat_is_water(feat) && !feat_is_lava(feat))
         return;
 
-    if (feat == DNGN_DEEP_WATER)
+    if (feat == DNGN_DEEP_WATER && !env.grid_colours(gc))
     {
         if (_is_seen_shallow(coord_def(gc.x, gc.y - 1)))
             _add_overlay(TILE_DNGN_WAVE_N, cell);
@@ -375,12 +377,32 @@ static void _pack_default_waves(const coord_def &gc, packed_cell *cell)
             _add_overlay(TILE_DNGN_WAVE_NW, cell);
     }
 
+    // Sewer water
+    if (feat == DNGN_DEEP_WATER && env.grid_colours(gc) == GREEN)
+    {
+        if (_is_seen_shallow(coord_def(gc.x, gc.y - 1)))
+            _add_overlay(TILE_MURKY_WAVE_N, cell);
+        if (_is_seen_shallow(coord_def(gc.x + 1, gc.y - 1)))
+            _add_overlay(TILE_MURKY_WAVE_NE, cell);
+        if (_is_seen_shallow(coord_def(gc.x + 1, gc.y)))
+            _add_overlay(TILE_MURKY_WAVE_E, cell);
+        if (_is_seen_shallow(coord_def(gc.x + 1, gc.y + 1)))
+            _add_overlay(TILE_MURKY_WAVE_SE, cell);
+        if (_is_seen_shallow(coord_def(gc.x, gc.y + 1)))
+            _add_overlay(TILE_MURKY_WAVE_S, cell);
+        if (_is_seen_shallow(coord_def(gc.x - 1, gc.y + 1)))
+            _add_overlay(TILE_MURKY_WAVE_SW, cell);
+        if (_is_seen_shallow(coord_def(gc.x - 1, gc.y)))
+            _add_overlay(TILE_MURKY_WAVE_W, cell);
+        if (_is_seen_shallow(coord_def(gc.x - 1, gc.y - 1)))
+            _add_overlay(TILE_MURKY_WAVE_NW, cell);
+    }
 
     bool north = _is_seen_land(coord_def(gc.x, gc.y - 1));
     bool west  = _is_seen_land(coord_def(gc.x - 1, gc.y));
     bool east  = _is_seen_land(coord_def(gc.x + 1, gc.y));
 
-    if (north || west || east)
+    if (north || west || east && (!env.grid_colours(gc) || env.grid_colours(gc) == LIGHTGREEN))
     {
         if (north)
             _add_overlay(TILE_SHORE_N, cell);
@@ -397,8 +419,9 @@ static void _pack_default_waves(const coord_def &gc, packed_cell *cell)
 
 static bool _is_seen_wall(coord_def gc)
 {
-    dungeon_feature_type feat = _safe_feat(gc);
-    return (feat != DNGN_UNSEEN && feat <= DNGN_MAXWALL);
+    const dungeon_feature_type feat = _safe_feat(gc);
+    return (feat != DNGN_UNSEEN && feat <= DNGN_MAXWALL
+            && feat != DNGN_MANGROVE);
 }
 
 static void _pack_wall_shadows(const coord_def &gc, packed_cell *cell)
