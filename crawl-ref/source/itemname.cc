@@ -140,7 +140,7 @@ string item_def::name(bool allow_translate, description_level_type descrip, bool
         switch (descrip)
         {
         default:
-            buff << "the ";
+            buff << check_gettext("the ");
         case DESC_PLAIN:
         case DESC_DBNAME:
         case DESC_BASENAME:
