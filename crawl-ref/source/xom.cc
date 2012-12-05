@@ -2728,7 +2728,7 @@ static void _xom_zero_miscast()
 
     if (_could_wear_eq(EQ_WEAPON))
     {
-        string str = make_stringf(_("A fancy cane briefly appears in your %s."), you.hand_name(false));
+        string str = make_stringf(_("A fancy cane briefly appears in your %s."), you.hand_name(false).c_str());
 
         messages.push_back(str);
     }
@@ -2740,7 +2740,7 @@ static void _xom_zero_miscast()
     {
         string str = make_stringf(_("Your %s leaps into the air, "
                     "briefly spins, then lands back on your head!"),
-                    item->name(true, DESC_BASENAME, false, false, false));
+                    item->name(true, DESC_BASENAME, false, false, false).c_str());
 
         messages.push_back(str);
     }

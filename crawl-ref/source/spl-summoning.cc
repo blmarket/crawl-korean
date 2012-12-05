@@ -160,7 +160,7 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
 
     const item_def& wpn = *you.weapon();
     const string abort_msg = make_stringf(_("%s feel%s slithery for a moment!"),
-                                          wpn.name(DESC_YOUR).c_str(),
+                                          wpn.name(true, DESC_YOUR).c_str(),
                                           wpn.quantity > 1 ? "" : "s");
 
     // Don't enchant sticks marked with {!D}.

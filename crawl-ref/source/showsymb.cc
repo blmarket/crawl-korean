@@ -214,7 +214,7 @@ static cglyph_t _get_item_override(const item_def &item)
 
     string name = stash_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item)
                 + " {" + filtering_item_prefix(item, false) + "} "
-                + item.name(DESC_PLAIN);
+                + item.name(false, DESC_PLAIN);
 
     {
         // Check the cache...

@@ -433,7 +433,7 @@ bool fill_status_info(int status, status_info* inf)
         {
             string sk = skill_name(you.manual_skill);
             inf->short_text = make_stringf(_("studying %s"), sk.c_str());
-            inf->long_text = make_stringf(_("You are %s."), inf->short_text);
+            inf->long_text = make_stringf(_("You are %s."), inf->short_text.c_str());
         }
         break;
 

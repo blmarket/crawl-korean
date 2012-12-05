@@ -2541,7 +2541,7 @@ void marshallItem(writer &th, const item_def &item, bool iinfo)
         item_def dummy = item;
         if (!item.quantity)
             name = "(quantity: 0) ", dummy.quantity = 1;
-        name += dummy.name(DESC_PLAIN, true);
+        name += dummy.name(false, DESC_PLAIN, true);
         die("Invalid item: %s", name.c_str());
     }
 #endif

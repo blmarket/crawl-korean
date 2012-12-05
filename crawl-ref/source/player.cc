@@ -248,7 +248,7 @@ static bool _check_moveto_terrain(const coord_def& p, const string &move_verb,
             move_verb.c_str(),
             you.ground_level() ? " into " : " over ",
             env.grid(p) == DNGN_DEEP_WATER ? gettext(M_("deep water")) : gettext(M_("lava")),
-            need_expiration_warning(DUR_LEVITATION, p) ? 
+            need_expiration_warning(DUR_FLIGHT, p) ? 
                 _(" while you are losing your buoyancy?") :
                 _(" while your transformation is expiring?"));
 
@@ -3978,7 +3978,7 @@ static void _display_attack_delay()
     if (you.duration[DUR_FINESSE])
         avg = max(20, avg / 2);
 
-    string msg = _("Your attack speed is ") + _(_attack_delay_desc(avg))
+    string msg = string(_("Your attack speed is ")) + string(_(_attack_delay_desc(avg).c_str()))
                  + (you.wizard ? make_stringf(" (%d)", avg) : "") + ".";
 
     mpr(msg);

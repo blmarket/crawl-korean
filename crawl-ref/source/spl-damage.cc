@@ -1569,7 +1569,7 @@ static bool maybe_abort_ignite()
         if (item.base_type == OBJ_MISSILES && item.special == SPMSL_POISONED)
         {
             prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(DESC_PLAIN));
+            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
             prompt += "! Ignite poison anyway?";
             return (!yesno(prompt.c_str(), false, 'n'));
         }
@@ -1581,7 +1581,7 @@ static bool maybe_abort_ignite()
             case POT_DEGENERATION:
             case POT_POISON:
                 prompt += "over ";
-                prompt += (item.quantity == 1 ? "a " : "") + (item.name(DESC_PLAIN));
+                prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
                 prompt += "! Ignite poison anyway?";
                 return (!yesno(prompt.c_str(), false, 'n'));
             default:
@@ -1593,7 +1593,7 @@ static bool maybe_abort_ignite()
                  && chunk_is_poisonous(mons_corpse_effect(item.mon_type)))
         {
             prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(DESC_PLAIN));
+            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
             prompt += "! Ignite poison anyway?";
             return (!yesno(prompt.c_str(), false, 'n'));
         }
@@ -1602,7 +1602,7 @@ static bool maybe_abort_ignite()
                  chunk_is_poisonous(mons_corpse_effect(item.mon_type)))
         {
             prompt += "over ";
-            prompt += (item.quantity == 1 ? "a " : "") + (item.name(DESC_PLAIN));
+            prompt += (item.quantity == 1 ? "a " : "") + (item.name(true, DESC_PLAIN));
             prompt += "! Ignite poison anyway?";
             return (!yesno(prompt.c_str(), false, 'n'));
         }
