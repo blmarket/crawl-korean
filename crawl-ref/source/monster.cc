@@ -1676,7 +1676,7 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
             else if (!dual_wielding)
             {
                 // We've got a good melee weapon, that's enough.
-               return false;
+                return false;
             }
         }
     }
@@ -1740,7 +1740,7 @@ bool monster::pickup_throwable_weapon(item_def &item, int near)
 bool monster::wants_weapon(const item_def &weap) const
 {
     if (!could_wield(weap))
-       return false;
+        return false;
 
     // Blademasters and master archers like their starting weapon and
     // don't want another, thank you.
@@ -1837,7 +1837,7 @@ static int _get_monster_armour_value(const monster *mon,
         value += get_armour_res_poison(item, true);
 
     // Same for life protection.
-    if (mon->holiness() != MH_NATURAL)
+    if (mon->holiness() == MH_NATURAL)
         value += get_armour_life_protection(item, true);
 
     // See invisible also is only useful if not already intrinsic.
@@ -1993,7 +1993,7 @@ static int _get_monster_jewellery_value(const monster *mon,
         value += get_jewellery_res_poison(item, true);
 
     // Same for life protection.
-    if (mon->holiness() != MH_NATURAL)
+    if (mon->holiness() == MH_NATURAL)
         value += get_jewellery_life_protection(item, true);
 
     // See invisible also is only useful if not already intrinsic.
@@ -2716,19 +2716,19 @@ string monster::hand_name(bool plural, bool *can_plural) const
         }
     }
 
-   if (str.empty())
-   {
-       // Reduce the chance of a random-shaped monster having hands.
-       if (rand && coinflip())
-           return hand_name(plural, can_plural);
+    if (str.empty())
+    {
+        // Reduce the chance of a random-shaped monster having hands.
+        if (rand && coinflip())
+            return hand_name(plural, can_plural);
 
-       str = M_("hand");
-   }
+        str = M_("hand");
+    }
 
-   if (plural && *can_plural)
-       str = pluralise(PLU_DEFAULT,str);
+    if (plural && *can_plural)
+        str = pluralise(PLU_DEFAULT, str);
 
-   return _(str.c_str());
+    return str;
 }
 
 string monster::foot_name(bool plural, bool *can_plural) const
@@ -2831,19 +2831,19 @@ string monster::foot_name(bool plural, bool *can_plural) const
         break;
     }
 
-   if (str.empty())
-   {
-       // Reduce the chance of a random-shaped monster having feet.
-       if (rand && coinflip())
-           return foot_name(plural, can_plural);
+    if (str.empty())
+    {
+        // Reduce the chance of a random-shaped monster having feet.
+        if (rand && coinflip())
+            return foot_name(plural, can_plural);
 
-       return (plural ? M_("feet") : M_("foot"));
-   }
+        return (plural ? M_("feet") : M_("foot"));
+    }
 
-   if (plural && *can_plural)
-       str = pluralise(PLU_SUFFIX,gettext(str.c_str()));
+    if (plural && *can_plural)
+        str = pluralise(PLU_SUFFIX,gettext(str.c_str()));
 
-   return _(str.c_str());
+    return str;
 }
 
 string monster::arm_name(bool plural, bool *can_plural) const
@@ -3440,7 +3440,7 @@ bool monster::undead_or_demonic() const
 {
     const mon_holy_type holi = holiness();
 
-    return (holi == MH_UNDEAD || holi == MH_DEMONIC);
+    return (holi == MH_UNDEAD || holi == MH_DEMONIC || type == MONS_DEMONSPAWN);
 }
 
 bool monster::is_holy(bool check_spells) const
@@ -3457,7 +3457,7 @@ bool monster::is_holy(bool check_spells) const
 
 bool monster::is_unholy(bool check_spells) const
 {
-    if (type == MONS_SILVER_STATUE)
+    if (type == MONS_SILVER_STATUE || type == MONS_DEMONSPAWN)
         return true;
 
     if (holiness() == MH_DEMONIC)
@@ -4178,7 +4178,7 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
 
         if (amount != INSTANT_DEATH)
             if (has_ench(ENCH_DEATHS_DOOR))
-               return 0;
+                return 0;
             else if (petrified())
                 amount /= 2;
             else if (petrifying())
@@ -5002,9 +5002,9 @@ void monster::apply_location_effects(const coord_def &oldpos,
             prop &= ~FPROP_BLOODY;
             if (you.see_cell(pos()) && !visible_to(&you))
             {
-               string desc =
-                   feature_description_at(pos(), false, DESC_THE, false);
-               mprf(_("The bloodstain on %s disappears!"), desc.c_str());
+                string desc =
+                    feature_description_at(pos(), false, DESC_THE, false);
+                mprf(_("The bloodstain on %s disappears!"), desc.c_str());
             }
         }
     }
@@ -5769,8 +5769,7 @@ bool monster::is_web_immune() const
             || mons_genus(type) == MONS_MOTH);
 }
 
-// Undead and demonic monsters have nightvision, as do all followers
-// of Yredelemnul.
+// Undead monsters have nightvision, as do all followers of Yredelemnul.
 bool monster::nightvision() const
 {
     return (holiness() == MH_UNDEAD || god == GOD_YREDELEMNUL);

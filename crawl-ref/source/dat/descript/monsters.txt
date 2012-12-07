@@ -625,11 +625,6 @@ black mamba
 
 A large and astonishingly fast tropical snake whose bite bears a deadly venom.
 %%%%
-blessed toe
-
-A sacred relic from the body of a pious saint. It floats through the air and
-shines with a divine light.
-%%%%
 blink frog
 
 A species of giant frog that possesses the ability to blink at will. It can
@@ -1769,13 +1764,6 @@ molten gargoyle
 
 A hideous molten stone statue come to life, with fearsome claws and flames
 licking out from its toothy maw.
-%%%%
-# Orb of Zot special
-monstrous item mimic
-
-This mimic chose nothing else to masquerade as but the fabled Orb of Zot. Since
-it was able to successfully assume its appearance and stay here, saying it
-might be deadly is an understatement.
 %%%%
 moth
 

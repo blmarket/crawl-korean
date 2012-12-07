@@ -1828,8 +1828,6 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_ORB_OF_FIRE;
     case MONS_ORB_OF_DESTRUCTION:
         return _mon_random(TILEP_MONS_ORB_OF_DESTRUCTION);
-    case MONS_BLESSED_TOE:
-        return TILEP_MONS_BLESSED_TOE;
     case MONS_SILVER_STAR:
         return TILEP_MONS_SILVER_STAR;
 
@@ -2566,7 +2564,9 @@ static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
         case MONS_ITEM_MIMIC:
             return tileidx_item(*mon.get_mimic_item()) | TILE_FLAG_MIMIC;
         case MONS_RAVENOUS_ITEM_MIMIC:
+#if TAG_MAJOR_VERSION == 34
         case MONS_MONSTROUS_ITEM_MIMIC:
+#endif
             return tileidx_item(*mon.get_mimic_item()) | TILE_FLAG_MIMIC_RAVEN;
 
         // Feature mimics get drawn with the dungeon, see tileidx_feature.
@@ -2575,7 +2575,6 @@ static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
         case MONS_FEATURE_MIMIC:
             return TILE_FLAG_MIMIC;
         case MONS_RAVENOUS_FEATURE_MIMIC:
-        case MONS_MONSTROUS_FEATURE_MIMIC: // unused
             return TILE_FLAG_MIMIC_RAVEN;
 
         case MONS_DANCING_WEAPON:
@@ -3098,9 +3097,9 @@ static tileidx_t _tileidx_missile_base(const item_def &item)
         case SPMSL_STEEL:    return TILE_MI_JAVELIN_STEEL;
         case SPMSL_SILVER:   return TILE_MI_JAVELIN_SILVER;
         }
-  }
+    }
 
-  return TILE_ERROR;
+    return TILE_ERROR;
 }
 
 static tileidx_t _tileidx_missile(const item_def &item)

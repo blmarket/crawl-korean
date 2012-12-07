@@ -247,8 +247,8 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
     beam.is_beam      = false;
     beam.is_explosion = false;
 
-     switch (spell_cast)
-     { // add touch or range-setting spells here
+    switch (spell_cast)
+    { // add touch or range-setting spells here
         case SPELL_SANDBLAST:
             break;
         case SPELL_FLAME_TONGUE:
@@ -259,7 +259,7 @@ bolt mons_spells(monster* mons, spell_type spell_cast, int power,
             break;
         default:
         beam.range = spell_range(spell_cast, power, false);
-     }
+    }
 
     const int drac_type = (mons_genus(mons->type) == MONS_DRACONIAN)
                             ? draco_subspecies(mons) : mons->type;
@@ -1065,7 +1065,6 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_SYMBOL_OF_TORMENT:
     case SPELL_CAUSE_FEAR:
     case SPELL_MESMERISE:
-    case SPELL_HOLY_WORD:
     case SPELL_DRAIN_LIFE:
     case SPELL_SUMMON_GREATER_DEMON:
     case SPELL_CANTRIP:
@@ -1097,7 +1096,6 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_AWAKEN_FOREST:
     case SPELL_SUMMON_CANIFORMS:
     case SPELL_SUMMON_SPECTRAL_ORCS:
-    case SPELL_SUMMON_HOLIES:
     case SPELL_REGENERATION:
     case SPELL_CORPSE_ROT:
     case SPELL_LEDAS_LIQUEFACTION:
@@ -1161,39 +1159,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     {
         pbolt.target = mons->pos();
     }
-    else if (spell_cast == SPELL_PORKALATOR && one_chance_in(3))
-    {
-        monster*    targ     = NULL;
-        int          count    = 0;
-        monster_type hog_type = MONS_HOG;
-        for (monster_iterator mi(mons); mi; ++mi)
-        {
-            hog_type = MONS_HOG;
-            if (mi->holiness() == MH_DEMONIC)
-                hog_type = MONS_HELL_HOG;
-            else if (mi->holiness() != MH_NATURAL)
-                continue;
 
-            if (mi->type != hog_type
-                && mons_aligned(mons, *mi)
-                && mons_power(hog_type) + random2(4) >= mons_power(mi->type)
-                && (!mi->can_use_spells() || coinflip())
-                && one_chance_in(++count))
-            {
-                targ = *mi;
-            }
-        }
-
-        if (targ)
-        {
-            pbolt.target = targ->pos();
-#ifdef DEBUG_DIAGNOSTICS
-            mprf("Porkalator: targetting %s instead",
-                 targ->name(DESC_PLAIN).c_str());
-#endif
-        }
-        // else target remains as specified
-    }
     return true;
 }
 
@@ -1293,28 +1259,23 @@ static bool _ms_direct_nasty(spell_type monspell)
 // monsters will just "know" whether a player is fully life-protected.
 static bool _foe_should_res_negative_energy(const actor* foe)
 {
-    const mon_holy_type holiness = foe->holiness();
-
     if (foe->is_player())
     {
-        // Non-bloodless vampires do not appear immune.
-        if (holiness == MH_UNDEAD
-            && you.is_undead == US_SEMI_UNDEAD
-            && you.hunger_state > HS_STARVING)
+        switch (you.is_undead)
         {
+        case US_ALIVE:
+            // Demonspawn are not demons, and statue form grants only
+            // partial resistance.
             return false;
+        case US_SEMI_UNDEAD:
+            // Non-bloodless vampires do not appear immune.
+            return you.hunger_state == HS_STARVING;
+        default:
+            return true;
         }
-
-        // Demonspawn do not appear immune.
-        if (holiness == MH_DEMONIC)
-            return false;
-
-        // Nor do statues (they only have partial resistance).
-        if (you.form == TRAN_STATUE)
-            return false;
     }
 
-    return (holiness != MH_NATURAL);
+    return (foe->holiness() != MH_NATURAL);
 }
 
 // Checks to see if a particular spell is worth casting in the first place.
@@ -2541,13 +2502,13 @@ void mons_cast_spectral_orcs(monster* mons)
 
     for (int i = random2(3) + 1; i > 0; --i)
     {
-         monster_type mon = MONS_ORC;
-         if (coinflip())
-             mon = MONS_ORC_WARRIOR;
-         else if (one_chance_in(3))
-             mon = MONS_ORC_KNIGHT;
-         else if (one_chance_in(10))
-             mon = MONS_ORC_WARLORD;
+        monster_type mon = MONS_ORC;
+        if (coinflip())
+            mon = MONS_ORC_WARRIOR;
+        else if (one_chance_in(3))
+            mon = MONS_ORC_KNIGHT;
+        else if (one_chance_in(10))
+            mon = MONS_ORC_WARLORD;
 
         // Use the original monster type as the zombified type here, to
         // get the proper stats from it.
@@ -3024,15 +2985,10 @@ static bool _mon_spell_bail_out_early(monster* mons, spell_type spell_cast)
 
     case SPELL_CHAIN_LIGHTNING:
     case SPELL_SYMBOL_OF_TORMENT:
-    case SPELL_HOLY_WORD:
     case SPELL_OZOCUBUS_REFRIGERATION:
     case SPELL_SHATTER:
-        if (!monsterNearby
-            // friendly holies don't care if you are friendly
-            || (mons->friendly() && spell_cast != SPELL_HOLY_WORD))
-        {
+        if (!monsterNearby)
             return true;
-        }
         break;
 
     default:
@@ -3706,10 +3662,6 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         torment(mons, mons->mindex(), mons->pos());
         return;
 
-    case SPELL_HOLY_WORD:
-        holy_word(0, mons->mindex(), mons->pos());
-        return;
-
     case SPELL_MESMERISE:
         _mons_mesmerise(mons);
         return;
@@ -3826,27 +3778,6 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         for (int i = 0; i < sumcount2; ++i)
         {
             create_monster(mgen_data(summon_type, SAME_ATTITUDE(mons),
-                          mons, duration, spell_cast, mons->pos(),
-                          mons->foe, 0, god));
-        }
-        return;
-
-    case SPELL_SUMMON_HOLIES: // Holy monsters.
-        if (_mons_abjured(mons, monsterNearby))
-            return;
-
-        sumcount2 = 1 + random2(2) + random2(mons->hit_dice / 4 + 1);
-
-        duration  = min(2 + mons->hit_dice / 5, 6);
-        for (int i = 0; i < sumcount2; ++i)
-        {
-            create_monster(
-                mgen_data(random_choose_weighted(
-                            100, MONS_ANGEL,     80,  MONS_CHERUB,
-                            5,   MONS_SPIRIT,    1,   MONS_SHEDU,
-                            1,   MONS_OPHAN,     1,   MONS_PALADIN,
-                            // No holy dragons
-                          0), SAME_ATTITUDE(mons),
                           mons, duration, spell_cast, mons->pos(),
                           mons->foe, 0, god));
         }

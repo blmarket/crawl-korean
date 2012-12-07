@@ -3049,13 +3049,13 @@ void level_change(bool skip_attribute_increase)
 
             if (new_exp == 27)
             {
-               mpr(_("You have reached level 27, the final one!"),
-                   MSGCH_INTRINSIC_GAIN);
+                mpr(_("You have reached level 27, the final one!"),
+                    MSGCH_INTRINSIC_GAIN);
             }
             else
             {
-               mprf(MSGCH_INTRINSIC_GAIN, gettext("You have reached level %d!"),
-                    new_exp);
+                mprf(MSGCH_INTRINSIC_GAIN, _("You have reached level %d!"),
+                     new_exp);
             }
 
             if (!(new_exp % 3) && !skip_attribute_increase)
@@ -3245,18 +3245,18 @@ void level_change(bool skip_attribute_increase)
                 {
                     switch (you.species)
                     {
-                        case SP_GREEN_DRACONIAN:
-                             perma_mutate(MUT_STINGER, 1, "draconian growth");
-                             break;
-                        case SP_YELLOW_DRACONIAN:
-                             perma_mutate(MUT_ACIDIC_BITE, 1, "draconian growth");
-                             break;
-                        case SP_BLACK_DRACONIAN:
-                             perma_mutate(MUT_BIG_WINGS, 1, "draconian growth");
-                             mpr("You can now fly continuously.", MSGCH_INTRINSIC_GAIN);
-                             break;
-                        default:
-                             break;
+                    case SP_GREEN_DRACONIAN:
+                        perma_mutate(MUT_STINGER, 1, "draconian growth");
+                        break;
+                    case SP_YELLOW_DRACONIAN:
+                        perma_mutate(MUT_ACIDIC_BITE, 1, "draconian growth");
+                        break;
+                    case SP_BLACK_DRACONIAN:
+                        perma_mutate(MUT_BIG_WINGS, 1, "draconian growth");
+                        mpr("You can now fly continuously.", MSGCH_INTRINSIC_GAIN);
+                        break;
+                    default:
+                        break;
                     }
                 }
                 break;
@@ -6167,11 +6167,11 @@ int player::armour_class() const
 
         if (player_genus(GENPC_DRACONIAN))
         {
-           AC += 400 + 100 * (you.experience_level / 3);  // max 13
-           if (species == SP_GREY_DRACONIAN) // no breath
-               AC += 500;
-           if (form == TRAN_DRAGON)
-               AC += 1000;
+            AC += 400 + 100 * (you.experience_level / 3);  // max 13
+            if (species == SP_GREY_DRACONIAN) // no breath
+                AC += 500;
+            if (form == TRAN_DRAGON)
+                AC += 1000;
         }
         else
         {
@@ -6240,9 +6240,9 @@ int player::armour_class() const
           ? 100 + _mut_level(MUT_ROUGH_BLACK_SCALES, MUTACT_FULL) * 300 : 0;   // +4, +7, +10
     AC += _mut_level(MUT_RUGGED_BROWN_SCALES, MUTACT_FULL) * 100;              // +1, +2, +3
     AC += _mut_level(MUT_ICY_BLUE_SCALES, MUTACT_FULL) * 100 +
-          (_mut_level(MUT_ICY_BLUE_SCALES, MUTACT_FULL) > 1) ? 100 : 0;        // +1, +3, +4
+          (_mut_level(MUT_ICY_BLUE_SCALES, MUTACT_FULL) > 1 ? 100 : 0);        // +1, +3, +4
     AC += _mut_level(MUT_MOLTEN_SCALES, MUTACT_FULL) * 100 +
-          (_mut_level(MUT_MOLTEN_SCALES, MUTACT_FULL) > 1) ? 100 : 0;          // +1, +3, +4
+          (_mut_level(MUT_MOLTEN_SCALES, MUTACT_FULL) > 1 ? 100 : 0);          // +1, +3, +4
     AC += _mut_level(MUT_SLIMY_GREEN_SCALES, MUTACT_FULL)
           ? 100 + _mut_level(MUT_SLIMY_GREEN_SCALES, MUTACT_FULL) * 100 : 0;   // +2, +3, +4
     AC += _mut_level(MUT_THIN_METALLIC_SCALES, MUTACT_FULL)
@@ -6312,14 +6312,12 @@ mon_holy_type player::holiness() const
     if (is_undead)
         return MH_UNDEAD;
 
-    if (species == SP_DEMONSPAWN)
-        return MH_DEMONIC;
-
     return MH_NATURAL;
 }
 
 bool player::undead_or_demonic() const
 {
+    // This is only for TSO-related stuff, so demonspawn are included.
     return you.is_undead || you.species == SP_DEMONSPAWN;
 }
 

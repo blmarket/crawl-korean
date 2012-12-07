@@ -2047,116 +2047,116 @@ static string _status_mut_abilities(int sw)
 
     switch (you.species)   //mv: following code shows innate abilities - if any
     {
-      case SP_MERFOLK:
-          mutations.push_back(_annotate_form_based(_("change form in water"),
-                                                   form_changed_physiology()));
-          mutations.push_back(_annotate_form_based(_("swift swim"),
-                                                   form_changed_physiology()));
-          break;
+    case SP_MERFOLK:
+        mutations.push_back(_annotate_form_based(_("change form in water"),
+                                                 form_changed_physiology()));
+        mutations.push_back(_annotate_form_based(_("swift swim"),
+                                                 form_changed_physiology()));
+        break;
 
-      case SP_MINOTAUR:
-          mutations.push_back(_annotate_form_based(_("retaliatory headbutt"),
-                                                   !form_keeps_mutations()));
-          break;
+    case SP_MINOTAUR:
+        mutations.push_back(_annotate_form_based(_("retaliatory headbutt"),
+                                                 !form_keeps_mutations()));
+        break;
 
-      case SP_NAGA:
-          // breathe poison replaces spit poison:
-          if (!player_mutation_level(MUT_BREATHE_POISON))
-              mutations.push_back("독 뱉기");
-          else
-              mutations.push_back(_(M_("breathe poison")));
-          mutations.push_back(_annotate_form_based(_("constrict 1"),
-                                                   !form_keeps_mutations()));
-          break;
+    case SP_NAGA:
+        // breathe poison replaces spit poison:
+        if (!player_mutation_level(MUT_BREATHE_POISON))
+            mutations.push_back("독 뱉기");
+        else
+            mutations.push_back(_(M_("breathe poison")));
+        mutations.push_back(_annotate_form_based(_("constrict 1"),
+                                                 !form_keeps_mutations()));
+        break;
 
-      case SP_GHOUL:
-          mutations.push_back("rotting body");
-          break;
+    case SP_GHOUL:
+        mutations.push_back("rotting body");
+        break;
 
-      case SP_TENGU:
-          if (you.experience_level > 4)
-          {
-              string help = "비행 가능";
-              if (you.experience_level > 14)
-                  help = make_stringf(_("%s continuously"), help.c_str());
-              mutations.push_back(help);
-          }
-          break;
+    case SP_TENGU:
+        if (you.experience_level > 4)
+        {
+            string help = "비행 가능";
+            if (you.experience_level > 14)
+                help = make_stringf(_("%s continuously"), help.c_str());
+            mutations.push_back(help);
+        }
+        break;
 
-      case SP_MUMMY:
-          mutations.push_back("물약,음식 섭취 불가");
-          mutations.push_back("불에 취약함");
-          if (you.experience_level > 12)
-          {
-              string help = "죽음의 힘에 특화";
-              if (you.experience_level > 25)
-                  help = "강한 " + help;
-              mutations.push_back(help);
-          }
-          mutations.push_back("restore body");
-          break;
+    case SP_MUMMY:
+        mutations.push_back("물약,음식 섭취 불가");
+        mutations.push_back("불에 취약함");
+        if (you.experience_level > 12)
+        {
+            string help = "죽음의 힘에 특화";
+            if (you.experience_level > 25)
+                help = "강한 " + help;
+            mutations.push_back(help);
+        }
+        mutations.push_back("restore body");
+        break;
 
-      case SP_KOBOLD:
-          mutations.push_back("질병 저항");
-          break;
+    case SP_KOBOLD:
+        mutations.push_back("질병 저항");
+        break;
 
-      case SP_VAMPIRE:
-          if (you.experience_level >= 6)
-              mutations.push_back("bottle blood");
-          break;
+    case SP_VAMPIRE:
+        if (you.experience_level >= 6)
+            mutations.push_back("bottle blood");
+        break;
 
-      case SP_DEEP_DWARF:
-          mutations.push_back(_("damage resistance"));
-          mutations.push_back(_("recharge devices"));
-          break;
+    case SP_DEEP_DWARF:
+        mutations.push_back(_("damage resistance"));
+        mutations.push_back(_("recharge devices"));
+        break;
 
-      case SP_FELID:
-          mutations.push_back("날카로운 발톱");
-          break;
+    case SP_FELID:
+        mutations.push_back("날카로운 발톱");
+        break;
 
-      case SP_RED_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe fire")));
-          break;
+    case SP_RED_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe fire")));
+        break;
 
-      case SP_WHITE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe frost")));
-          break;
+    case SP_WHITE_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe frost")));
+        break;
 
-      case SP_GREEN_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe noxious fumes")));
-          break;
+    case SP_GREEN_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe noxious fumes")));
+        break;
 
-      case SP_YELLOW_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("spit acid")));
-          mutations.push_back(_annotate_form_based(_("acid resistance"),
-                                                   !form_keeps_mutations()
-                                                    && you.form != TRAN_DRAGON));
-          break;
+    case SP_YELLOW_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("spit acid")));
+        mutations.push_back(_annotate_form_based(_("acid resistance"),
+                                                 !form_keeps_mutations()
+                                                  && you.form != TRAN_DRAGON));
+        break;
 
-      case SP_GREY_DRACONIAN:
-          mutations.push_back("물 위 걷기");
-          break;
+    case SP_GREY_DRACONIAN:
+        mutations.push_back("물 위 걷기");
+        break;
 
-      case SP_BLACK_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe lightning")));
-          if (you.experience_level >= 14)
-              mutations.push_back(_("able to fly continuously"));
-          break;
+    case SP_BLACK_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe lightning")));
+        if (you.experience_level >= 14)
+            mutations.push_back(_("able to fly continuously"));
+        break;
 
-      case SP_PURPLE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe power")));
-          break;
+    case SP_PURPLE_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe power")));
+        break;
 
-      case SP_MOTTLED_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe sticky flames")));
-          break;
+    case SP_MOTTLED_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe sticky flames")));
+        break;
 
-      case SP_PALE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe steam")));
-          break;
+    case SP_PALE_DRACONIAN:
+        mutations.push_back(_dragon_abil(_("breathe steam")));
+        break;
 
-      default:
-          break;
+    default:
+        break;
     }                           //end switch - innate abilities
 
     // a bit more stuff

@@ -1684,7 +1684,6 @@ enum holy_word_source_type
 {
     HOLY_WORD_GENERIC     = -1,
     HOLY_WORD_SCROLL      = -2,
-    HOLY_WORD_SPELL       = -3,  // SPELL_HOLY_WORD
     HOLY_WORD_ZIN         = -4,  // Zin effect
     HOLY_WORD_TSO         = -5,  // TSO effect
 };
@@ -2118,11 +2117,15 @@ enum monster_type                      // menv[].type
     MONS_INEPT_ITEM_MIMIC,
     MONS_ITEM_MIMIC,
     MONS_RAVENOUS_ITEM_MIMIC,
+#if TAG_MAJOR_VERSION == 34
     MONS_MONSTROUS_ITEM_MIMIC,
+#endif
     MONS_INEPT_FEATURE_MIMIC,
     MONS_FEATURE_MIMIC,
     MONS_RAVENOUS_FEATURE_MIMIC,
+#if TAG_MAJOR_VERSION == 34
     MONS_MONSTROUS_FEATURE_MIMIC, // unused
+#endif
 
     // Plants:
     MONS_TOADSTOOL,
@@ -2384,7 +2387,9 @@ enum monster_type                      // menv[].type
     MONS_SERAPH,
     MONS_PHOENIX,
     MONS_SILVER_STAR,
+#if TAG_MAJOR_VERSION == 34
     MONS_BLESSED_TOE,
+#endif
     MONS_SHEDU,
     MONS_OPHAN,
     MONS_SPIRIT,
@@ -3236,8 +3241,10 @@ enum spell_type
     SPELL_SUMMON_SPECTRAL_ORCS,
     SPELL_RESURRECT,
     SPELL_HOLY_LIGHT,
+#if TAG_MAJOR_VERSION == 34
     SPELL_HOLY_WORD,
     SPELL_SUMMON_HOLIES,
+#endif
     SPELL_HEAL_OTHER,
     SPELL_SACRIFICE,
     SPELL_HOLY_FLAMES,

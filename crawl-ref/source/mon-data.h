@@ -4444,7 +4444,7 @@ static monsterentry mondata[] = {
     MONS_DEMONSPAWN, '@', DARKGREY, M_("demonspawn"), // likely to become '6'
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
-    550, 10, MONS_HUMAN, MONS_DEMONSPAWN, MH_DEMONIC, -3,
+    550, 10, MONS_HUMAN, MONS_DEMONSPAWN, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 10}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 3, 5, 0 },
     2, 12, MST_NO_SPELLS, CE_CONTAMINATED, Z_SMALL, S_SHOUT,
@@ -4553,6 +4553,7 @@ static monsterentry mondata[] = {
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
 
+#if TAG_MAJOR_VERSION == 34
 {
     MONS_MONSTROUS_ITEM_MIMIC, 'X', BLACK, "monstrous item mimic",
     M_NO_FLAGS,
@@ -4565,6 +4566,7 @@ static monsterentry mondata[] = {
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_TINY
 },
+#endif
 
 // dancing weapon
 // These are named more explicitly when they attack, also when you use 'x'
@@ -5362,18 +5364,6 @@ static monsterentry mondata[] = {
     0, 10, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
     I_PLANT, HT_LAND, FL_LEVITATE, 30, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LITTLE
-},
-
-{
-    MONS_BLESSED_TOE, '*', YELLOW, M_("blessed toe"),
-    M_SPELLCASTER | M_SEE_INVIS | M_SPEAKS | M_UNFINISHED,
-    mrd(MR_RES_ELEC, 2) | MR_RES_POISON | MR_RES_COLD,
-    0, 65, MONS_BLESSED_TOE, MONS_BLESSED_TOE, MH_HOLY, MAG_IMMUNE,
-    { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
-    { 14, 0, 0, 77 },
-    50, 1, MST_BLESSED_TOE, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
-    I_HIGH, HT_LAND, FL_LEVITATE, 10, MOVE_ENERGY(20),
-    MONUSE_NOTHING, MONEAT_NOTHING, SIZE_TINY
 },
 
 {
