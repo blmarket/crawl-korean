@@ -1248,7 +1248,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
                           ISFLAG_IDENT_MASK | ISFLAG_COSMETIC_MASK
                           | ISFLAG_RACIAL_MASK);
 
-            expl->name = replace_all(expl->name, item.name(DESC_PLAIN),
+            expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                      short_name);
         }
         expl->name = "explosion of " + expl->name;

@@ -668,13 +668,8 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (you.has_talons(false) == 3)
         {
             if (verbose)
-<<<<<<< HEAD
                 mpr(_("Boots don't fit your talons!"));
-           return false;
-=======
-                mpr("Boots don't fit your talons!");
             return false;
->>>>>>> remotes/master/master
         }
 
         if (you.species == SP_NAGA)
@@ -687,11 +682,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (!ignore_temporary && you.fishtail)
         {
             if (verbose)
-<<<<<<< HEAD
-               mpr(_("You don't currently have feet!"));
-=======
-                mpr("You don't currently have feet!");
->>>>>>> remotes/master/master
+                mpr(_("You don't currently have feet!"));
             return false;
         }
     }
@@ -708,13 +699,8 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
 
         if (player_mutation_level(MUT_ANTENNAE) == 3)
         {
-<<<<<<< HEAD
-           if (verbose)
-                mpr(_("You can't wear any headgear with your large antennae!"));
-=======
             if (verbose)
-                mpr("You can't wear any headgear with your large antennae!");
->>>>>>> remotes/master/master
+                mpr(_("You can't wear any headgear with your large antennae!"));
             return false;
         }
 
@@ -846,11 +832,7 @@ bool do_wear_armour(int item, bool quiet)
         else
         {
             if (!quiet)
-<<<<<<< HEAD
-               mpr(_("Your cloak prevents you from wearing the armour."));
-=======
-                mpr("Your cloak prevents you from wearing the armour.");
->>>>>>> remotes/master/master
+                mpr(_("Your cloak prevents you from wearing the armour."));
             return false;
         }
     }
