@@ -253,9 +253,11 @@ ifdef USE_GETTEXT
 		EXTRA_LIBS += -lintl
 	endif
 
-	EXTRA_LIBS += -lintl
-	LIBS += -L/opt/local/lib
-	INCLUDES_L += -I/opt/local/include
+	ifeq ($(uname_S),Darwin)
+		EXTRA_LIBS += -lintl
+		LIBS += -L/opt/local/lib
+		INCLUDES_L += -I/opt/local/include
+	endif
 endif
 ifdef USE_LUAJIT
 	BUILD_LUA := YesPlease
