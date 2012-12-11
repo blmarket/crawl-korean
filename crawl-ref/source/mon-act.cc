@@ -140,7 +140,7 @@ static bool _swap_monsters(monster* mover, monster* moved)
     // Although nominally stationary kraken tentacles can be swapped
     // with the main body.
     if (mons_is_stationary(moved)
-        && moved->type != MONS_KRAKEN_TENTACLE)
+        && !moved->is_child_tentacle())
     {
         return false;
     }
@@ -1224,7 +1224,7 @@ static bool _handle_rod(monster *mons, bolt &beem)
 
     dprf("using rod with power %d", power);
 
-    bolt theBeam = mons_spells(mons, mzap, power, check_validity);
+    bolt theBeam = mons_spell_beam(mons, mzap, power, check_validity);
     beem         = _generate_item_beem(beem, theBeam, mons);
 
     if (mons->confused())
@@ -1321,7 +1321,7 @@ static bool _handle_wand(monster* mons, bolt &beem)
 
     // set up the beam
     int power         = 30 + mons->hit_dice;
-    bolt theBeam      = mons_spells(mons, mzap, power);
+    bolt theBeam      = mons_spell_beam(mons, mzap, power);
     beem = _generate_item_beem(beem, theBeam, mons);
 
     beem.aux_source =
@@ -1646,6 +1646,16 @@ static void _confused_move_dir(monster *mons)
         }
 }
 
+int _tentacle_move_speed(monster_type type)
+{
+    if (type == MONS_KRAKEN)
+        return 10;
+    else if (type == MONS_TENTACLED_STARSPAWN)
+        return 18;
+    else
+        return 0;
+}
+
 void handle_monster_move(monster* mons)
 {
     mons->hit_points = min(mons->max_hit_points, mons->hit_points);
@@ -1760,9 +1770,9 @@ void handle_monster_move(monster* mons)
             break;
 
         if (old_pos != mons->pos()
-            && mons_base_type(mons) == MONS_KRAKEN)
+            && mons_is_tentacle_head(mons_base_type(mons)))
         {
-            move_kraken_tentacles(mons);
+            move_child_tentacles(mons);
             kraken_last_update = mons->pos();
         }
 
@@ -2096,10 +2106,10 @@ void handle_monster_move(monster* mons)
 
             // See if we move into (and fight) an unfriendly monster.
             monster* targ = monster_at(mons->pos() + mmov);
-            if (mons_base_type(mons) == MONS_KRAKEN
-                && targ && targ->type == MONS_KRAKEN_TENTACLE_SEGMENT
-                && targ->props.exists("inwards") && targ->props["inwards"].get_int() == mons->mindex()
-                && env.grid(targ->pos()) == DNGN_DEEP_WATER)
+
+            //If a tentacle owner is attempting to move into an adjacent
+            //segment, kill the segment and adjust connectivity data.
+            if (targ && mons_tentacle_adjacent(mons, targ))
             {
                 bool basis = targ->props.exists("outwards");
                 int out_idx = basis ? targ->props["outwards"].get_int() : -1;
@@ -2124,7 +2134,7 @@ void handle_monster_move(monster* mons)
                 }
                 // Figure out if they fight.
                 else if ((!mons_is_firewood(targ)
-                          || mons->type == MONS_KRAKEN_TENTACLE)
+                          || mons->is_child_tentacle())
                               && fight_melee(mons, targ))
                 {
                     if (mons_is_batty(mons))
@@ -2166,11 +2176,17 @@ void handle_monster_move(monster* mons)
         }
     }
 
-    if (mons_base_type(mons) == MONS_KRAKEN)
+    if (mons_is_tentacle_head(mons_base_type(mons)))
     {
         if (mons->pos() != kraken_last_update)
-            move_kraken_tentacles(mons);
-        move_kraken_tentacles(mons);
+            move_child_tentacles(mons);
+
+        mons->number += you.time_taken * _tentacle_move_speed(mons_base_type(mons));
+        while (mons->number >= 100)
+        {
+            move_child_tentacles(mons);
+            mons->number -= 100;
+        }
     }
 
     mons->handle_constriction();
@@ -2778,24 +2794,17 @@ static bool _no_habitable_adjacent_grids(const monster* mon)
     return true;
 }
 
-static bool _same_kraken_parts(const monster* mpusher,
+static bool _same_tentacle_parts(const monster* mpusher,
                                const monster* mpushee)
 {
-    if (mons_base_type(mpusher) != MONS_KRAKEN)
+    if (!mons_is_tentacle_head(mons_base_type(mpusher)))
         return false;
 
-    if (mpushee->type == MONS_KRAKEN_TENTACLE
-        && int(mpushee->number) == mpusher->mindex())
-    {
+    if (mpushee->is_child_tentacle_of(mpusher))
         return true;
-    }
 
-    if (mpushee->type == MONS_KRAKEN_TENTACLE_SEGMENT
-        && int(menv[mpushee->number].number) == mpusher->mindex()
-        && mpushee->props.exists("inwards") && mpushee->props["inwards"].get_int() == mpusher->mindex())
-    {
+    if (mons_tentacle_adjacent(mpusher, mpushee))
         return true;
-    }
 
     return false;
 }
@@ -2812,7 +2821,7 @@ static bool _mons_can_displace(const monster* mpusher,
 
 
     if (immobile_monster[ipushee]
-        && !_same_kraken_parts(mpusher, mpushee))
+        && !_same_tentacle_parts(mpusher, mpushee))
     {
         return false;
     }
@@ -2825,7 +2834,7 @@ static bool _mons_can_displace(const monster* mpusher,
     if (mons_is_confused(mpusher) || mons_is_confused(mpushee)
         || mpusher->cannot_move() || mons_is_stationary(mpusher)
         || mpusher->is_constricted() || mpushee->is_constricted()
-        || (!_same_kraken_parts(mpusher, mpushee)
+        || (!_same_tentacle_parts(mpusher, mpushee)
            && (mpushee->cannot_move()
                || mons_is_stationary(mpushee)))
         || mpusher->asleep() || mpushee->caught())

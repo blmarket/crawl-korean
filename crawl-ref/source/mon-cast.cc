@@ -58,6 +58,7 @@
 
 // kraken stuff
 const int MAX_ACTIVE_KRAKEN_TENTACLES = 4;
+const int MAX_ACTIVE_STARSPAWN_TENTACLES = 2;
 
 static bool _valid_mon_spells[NUM_SPELLS];
 
@@ -65,6 +66,7 @@ static bool _mons_drain_life(monster* mons, bool actual = true);
 static bool _mons_ozocubus_refrigeration(monster *mons, bool actual = true);
 static int  _mons_mesmerise(monster* mons, bool actual = true);
 static int  _mons_cause_fear(monster* mons, bool actual = true);
+static int _mons_available_tentacles(monster* head);
 static coord_def _mons_fragment_target(monster *mons);
 
 void init_mons_spells()
@@ -228,8 +230,8 @@ static bool _set_allied_target(monster* caster, bolt & pbolt)
     return false;
 }
 
-bolt mons_spells(monster* mons, spell_type spell_cast, int power,
-                  bool check_validity)
+bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
+                     bool check_validity)
 {
     ASSERT(power > 0);
 
@@ -1079,7 +1081,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_EARTH_ELEMENTALS:
     case SPELL_IRON_ELEMENTALS:
     case SPELL_SUMMON_ELEMENTAL:
-    case SPELL_KRAKEN_TENTACLES:
+    case SPELL_CREATE_TENTACLES:
     case SPELL_BLINK:
     case SPELL_CONTROLLED_BLINK:
     case SPELL_BLINK_RANGE:
@@ -1111,7 +1113,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     default:
         if (check_validity)
         {
-            bolt beam = mons_spells(mons, spell_cast, 1, true);
+            bolt beam = mons_spell_beam(mons, spell_cast, 1, true);
             return (beam.flavour != NUM_BEAMS);
         }
         break;
@@ -1120,7 +1122,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     // Need to correct this for power of spellcaster
     int power = 12 * mons->hit_dice;
 
-    bolt theBeam         = mons_spells(mons, spell_cast, power);
+    bolt theBeam         = mons_spell_beam(mons, spell_cast, power);
 
     // [ds] remind me again why we're doing this piecemeal copying?
     pbolt.origin_spell   = theBeam.origin_spell;
@@ -2182,6 +2184,12 @@ bool handle_mon_spell(monster* mons, bolt &beem)
             if (!mons_shatter(mons, false))
                 return false;
         }
+        // Check if it's possible to spawn more tentacles. If not, don't bother trying.
+        else if (spell_cast == SPELL_CREATE_TENTACLES)
+        {
+            if (!_mons_available_tentacles(mons))
+                return false;
+        }
 
         if (mons->type == MONS_BALL_LIGHTNING)
             mons->suicide();
@@ -2969,6 +2977,107 @@ static coord_def _mons_fragment_target(monster *mons)
     return target;
 }
 
+static bool _tentacle_can_spawn_at(monster_type type, const coord_def &pos)
+{
+    if (monster_at(pos))
+        return false;
+    else if (type == MONS_KRAKEN_TENTACLE && !feat_is_water(env.grid(pos)))
+        return false;
+    else
+        return true;
+}
+
+static int _max_tentacles(const monster* mon)
+{
+    if (mons_base_type(mon) == MONS_KRAKEN)
+        return MAX_ACTIVE_KRAKEN_TENTACLES;
+    else if (mon->type == MONS_TENTACLED_STARSPAWN)
+        return MAX_ACTIVE_STARSPAWN_TENTACLES;
+    else
+        return 0;
+}
+
+static int _mons_available_tentacles(monster* head)
+{
+    int tentacle_count = 0;
+
+    for (monster_iterator mi; mi; ++mi)
+    {
+        if (mi->is_child_tentacle_of(head))
+            tentacle_count++;
+    }
+
+    return _max_tentacles(head) - tentacle_count;
+}
+
+static int _mons_create_tentacles(monster* head)
+{
+    int head_index = head->mindex();
+    if (invalid_monster_index(head_index))
+    {
+        mpr("Error! Tentacle head is not a part of the current environment!",
+            MSGCH_ERROR);
+        return 0;
+    }
+
+    int possible_count = _mons_available_tentacles(head);
+
+    if (possible_count <= 0)
+        return 0;
+
+    monster_type tent_type = mons_tentacle_child_type(head);
+
+    vector<coord_def> adj_squares;
+
+    // collect open adjacent squares, candidate squares must be
+    // water and not already occupied.
+    for (adjacent_iterator adj_it(head->pos()); adj_it; ++adj_it)
+    {
+        if (_tentacle_can_spawn_at(tent_type, *adj_it))
+            adj_squares.push_back(*adj_it);
+    }
+
+    if (unsigned(possible_count) > adj_squares.size())
+        possible_count = adj_squares.size();
+    else if (adj_squares.size() > unsigned(possible_count))
+        random_shuffle(adj_squares.begin(), adj_squares.end());
+
+    int created_count = 0;
+
+    for (int i=0;i<possible_count;++i)
+    {
+        if (monster *tentacle = create_monster(
+            mgen_data(tent_type, SAME_ATTITUDE(head), head,
+                        0, 0, adj_squares[i], head->foe,
+                        MG_FORCE_PLACE, head->god, MONS_NO_MONSTER, head_index,
+                        head->colour, -1, PROX_CLOSE_TO_PLAYER)))
+        {
+            created_count++;
+            tentacle->props["inwards"].get_int() = head_index;
+
+            if (head->holiness() == MH_UNDEAD)
+                tentacle->flags |= MF_FAKE_UNDEAD;
+        }
+    }
+
+    if (mons_base_type(head) == MONS_KRAKEN)
+    {
+        if (created_count == 1)
+            mpr("A tentacle rises from the water!");
+        else if (created_count > 1)
+            mpr("Tentacles burst out of the water!");
+    }
+    else if (head->type == MONS_TENTACLED_STARSPAWN)
+    {
+        if (created_count == 1)
+            mpr("A tentacle flies out from the starspawn's body!");
+        else if (created_count > 1)
+            mpr("Tentacles burst from the starspawn's body!");
+    }
+
+    return created_count;
+}
+
 static bool _mon_spell_bail_out_early(monster* mons, spell_type spell_cast)
 {
     // single calculation permissible {dlb}
@@ -3365,78 +3474,25 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         _mons_cast_summon_illusion(mons, spell_cast);
         return;
 
-    case SPELL_KRAKEN_TENTACLES:
+    case SPELL_CREATE_TENTACLES:
     {
-        int kraken_index = mons->mindex();
-        if (invalid_monster_index(kraken_index))
+        int created_count = _mons_create_tentacles(mons);
+        if (mons_base_type(mons) == MONS_KRAKEN)
         {
-            mpr("Error! Kraken is not a part of the current environment!",
-                MSGCH_ERROR);
-            return;
+            if (created_count == 1)
+                mpr("A tentacle rises from the water!");
+            else if (created_count > 1)
+                mpr("Tentacles burst out of the water!");
         }
-        int tentacle_count = 0;
-
-        for (monster_iterator mi; mi; ++mi)
+        else if (mons->type == MONS_TENTACLED_STARSPAWN)
         {
-            if (int (mi->number) == kraken_index
-                    && mi->type == MONS_KRAKEN_TENTACLE)
-            {
-                tentacle_count++;
-            }
+            if (created_count == 1)
+                mpr("A tentacle flies out from the starspawn's body!");
+            else if (created_count > 1)
+                mpr("Tentacles burst from the starspawn's body!");
         }
-
-        int possible_count = MAX_ACTIVE_KRAKEN_TENTACLES - tentacle_count;
-
-        if (possible_count <= 0)
-            return;
-
-        vector<coord_def> adj_squares;
-
-        // collect open adjacent squares, candidate squares must be
-        // water and not already occupied.
-        for (adjacent_iterator adj_it(mons->pos()); adj_it; ++adj_it)
-        {
-            if (!monster_at(*adj_it)
-                && feat_is_water(env.grid(*adj_it))
-                && env.grid(*adj_it) != DNGN_OPEN_SEA)
-            {
-                adj_squares.push_back(*adj_it);
-            }
-        }
-
-        if (unsigned(possible_count) > adj_squares.size())
-            possible_count = adj_squares.size();
-        else if (adj_squares.size() > unsigned(possible_count))
-            random_shuffle(adj_squares.begin(), adj_squares.end());
-
-
-        int visible_count = 0;
-
-        for (int i = 0; i < possible_count; ++i)
-        {
-            if (monster *tentacle = create_monster(
-                mgen_data(MONS_KRAKEN_TENTACLE, SAME_ATTITUDE(mons), mons,
-                          0, 0, adj_squares[i], mons->foe,
-                          MG_FORCE_PLACE, god, MONS_NO_MONSTER, kraken_index,
-                          mons->colour, -1, PROX_CLOSE_TO_PLAYER)))
-            {
-                if (you.can_see(tentacle))
-                    visible_count++;
-
-                tentacle->props["inwards"].get_int() = kraken_index;
-
-                if (mons->holiness() == MH_UNDEAD)
-                    tentacle->flags |= MF_FAKE_UNDEAD;
-            }
-        }
-
-        if (visible_count == 1)
-            mpr("A tentacle rises from the water!");
-        else if (visible_count > 1)
-            mpr("Tentacles burst out of the water!");
         return;
     }
-
     case SPELL_FAKE_MARA_SUMMON:
         // We only want there to be two fakes, which, plus Mara, means
         // a total of three Maras; if we already have two, give up, otherwise

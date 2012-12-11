@@ -2295,7 +2295,7 @@ struct spell_desc
 },
 
 {
-    SPELL_KRAKEN_TENTACLES, M_("Spawn Tentacles"),
+    SPELL_CREATE_TENTACLES, M_("Spawn Tentacles"),
      SPTYP_SUMMONING,
      SPFLAG_MONSTER,
      5,

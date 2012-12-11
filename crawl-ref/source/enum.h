@@ -2507,6 +2507,9 @@ enum monster_type                      // menv[].type
 
     MONS_FANNAR,
 
+    MONS_STARSPAWN_TENTACLE,
+    MONS_STARSPAWN_TENTACLE_SEGMENT,
+
     NUM_MONSTERS,               // used for polymorph
 
     // MONS_NO_MONSTER can get put in savefiles, so it shouldn't change
@@ -3213,7 +3216,7 @@ enum spell_type
     SPELL_DRACONIAN_BREATH,
     SPELL_WATER_ELEMENTALS,
     SPELL_PORKALATOR,
-    SPELL_KRAKEN_TENTACLES,
+    SPELL_CREATE_TENTACLES,
     SPELL_TOMB_OF_DOROKLOHE,
     SPELL_SUMMON_EYEBALLS,
     SPELL_HASTE_OTHER,
