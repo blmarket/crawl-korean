@@ -2086,7 +2086,7 @@ bool monster_simulacrum(monster *caster, bool actual)
                  || si->base_type == OBJ_CORPSES && si->sub_type == CORPSE_BODY)
                 && mons_class_can_be_zombified(si->mon_type))
             {
-                dprf("found %s", si->name(DESC_PLAIN).c_str());
+                dprf("found %s", si->name(false, DESC_PLAIN).c_str());
                 if (actual)
                 {
                     if (need_drop)

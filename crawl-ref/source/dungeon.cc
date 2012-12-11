@@ -2207,7 +2207,7 @@ static void _place_item_mimics()
         {
             item.flags |= ISFLAG_MIMIC;
             dprf("Placed a %s mimic at (%d,%d).",
-                 item.name(DESC_BASENAME).c_str(), item.pos.x, item.pos.y);
+                 item.name(false, DESC_BASENAME).c_str(), item.pos.x, item.pos.y);
         }
     }
 

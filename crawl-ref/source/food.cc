@@ -331,7 +331,7 @@ static int _corpse_badness(corpse_effect_type ce, const item_def &item,
         contam /= 2;
 
     dprf("%s: to rot %d, contam %d -> badness %d",
-         item.name(DESC_PLAIN).c_str(),
+         item.name(false, DESC_PLAIN).c_str(),
          item.special - ROTTING_CORPSE, contam,
          contam - 3 * item.special);
 
