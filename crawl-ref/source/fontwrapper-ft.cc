@@ -218,9 +218,14 @@ void FTFontWrapper::load_glyph(unsigned int c, ucs_t uchar)
         const unsigned int offset_x = 0;
         const unsigned int offset_y = 0;
         memset(pixels, 0, sizeof(unsigned char) * 4 * charsz.x * charsz.y);
+
+        // Some fonts have wrong size info
+        const int charw = bmp->width;
+        bmp->width = min(bmp->width, charsz.x);
+        bmp->rows = min(bmp->rows, charsz.y);
+
         if (outl)
         {
-            const int charw = bmp->width;
             for (int x = 0; x < bmp->width; x++)
                 for (int y = 0; y < bmp->rows; y++)
                 {
@@ -254,7 +259,7 @@ void FTFontWrapper::load_glyph(unsigned int c, ucs_t uchar)
                     idx *= 4;
                     if (x < bmp->width && y < bmp->rows)
                     {
-                        unsigned char alpha = bmp->buffer[x + bmp->width * y];
+                        unsigned char alpha = bmp->buffer[x + charw * y];
                         pixels[idx] = 255;
                         pixels[idx + 1] = 255;
                         pixels[idx + 2] = 255;
