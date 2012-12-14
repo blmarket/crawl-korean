@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-14 10:13+0900\n"
+"POT-Creation-Date: 2012-12-14 10:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28864,6 +28864,9 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1731 decks.cc:2944
 #: decks.cc:3011
 #, c-format
@@ -29113,25 +29116,25 @@ msgstr ""
 
 #: food.cc:749 food.cc:795
 msgid "You can't stomach food right now!"
-msgstr ""
+msgstr "당신의 위장이 뒤집혀서 춤을 추고있다!"
 
 #: food.cc:793 food.cc:839
 msgid ", and you want to eat"
-msgstr ""
+msgstr ", 그리고 당신은 지금 배가 고프지"
 
 #: food.cc:795 food.cc:841
 msgid ", and you need some food"
-msgstr ""
+msgstr ", 그리고 당신은 음식이 필요하지"
 
 #. carnivore/gourmand
 #: food.cc:797 food.cc:843
 msgid ", so let's find someone to eat"
-msgstr ""
+msgstr ", 그러니 먹을 수 있는 녀석을 찾아보자"
 
 #: food.cc:798 food.cc:844
 #, c-format
 msgid "Your stomach is not as upset anymore%s."
-msgstr ""
+msgstr "당신의 위장이 조금 잠잠해진것 같다%s."
 
 #: food.cc:2074 food.cc:2143
 msgid "Bleh, bug pizza."
@@ -29388,7 +29391,7 @@ msgstr ""
 #: melee_attack.cc:2031 melee_attack.cc:4106
 msgctxt "verb"
 msgid "bite"
-msgstr ""
+msgstr "을/(를) 물어뜯었"
 
 #: melee_attack.cc:1209 melee_attack.cc:1842 melee_attack.cc:1923
 #: melee_attack.cc:1967 melee_attack.cc:1267 melee_attack.cc:1928
@@ -30912,7 +30915,7 @@ msgstr ""
 #: items.cc:1578
 #, c-format
 msgid "You now have %d gold piece%s%s."
-msgstr ""
+msgstr "당신은 현재 %d개의 금화를 갖고 있다%3$s.%2$.0s"
 
 #: items.cc:2384
 msgid "Drop what? (<Enter> or tap header to drop)"
