@@ -1810,6 +1810,9 @@ bool monster::wants_jewellery(const item_def &item) const
         return false;
     }
 
+    if (item.sub_type == AMU_INACCURACY)
+        return false;
+
     // TODO: figure out what monsters actually want rings or amulets
     return true;
 }
@@ -2122,14 +2125,13 @@ bool monster::pickup_missile(item_def &item, int near, bool force)
                 // If this ammunition is better, drop the old ones.
                 // Don't upgrade to ammunition whose brand cancels the
                 // launcher brand or doesn't improve it further.
+                // Don't drop huge stacks for tiny stacks.
                 if (fires_ammo_type(*launch) == item.sub_type
                     && (fires_ammo_type(*launch) != miss->sub_type
-                        || item.plus > miss->plus
-                           && get_ammo_brand(*miss) == item_brand
-                        || item.plus >= miss->plus
-                           && get_ammo_brand(*miss) == SPMSL_NORMAL
+                        || get_ammo_brand(*miss) == SPMSL_NORMAL
                            && item_brand != SPMSL_NORMAL
-                           && _nonredundant_launcher_ammo_brands(launch, miss)))
+                           && _nonredundant_launcher_ammo_brands(launch, miss))
+                    && item.quantity * 2 > miss->quantity)
                 {
                     if (!drop_item(MSLOT_MISSILE, near))
                         return false;

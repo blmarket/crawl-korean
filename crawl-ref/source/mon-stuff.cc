@@ -4377,6 +4377,8 @@ void monster_teleport(monster* mons, bool instan, bool silent)
     mons->apply_location_effects(oldplace);
 
     mons_relocated(mons);
+
+    shake_off_monsters(mons);
 }
 
 void mons_clear_trapping_net(monster* mon)
@@ -4540,7 +4542,7 @@ void mons_att_changed(monster* mon)
     const mon_attitude_type att = mon->temp_attitude();
 
     if (mons_is_tentacle_head(mons_base_type(mon))
-            || mon->type == MONS_ELDRITCH_TENTACLE)
+        || mon->type == MONS_ELDRITCH_TENTACLE)
     {
         for (monster_iterator mi; mi; ++mi)
             if (mi->is_child_tentacle_of(mon))
@@ -4554,6 +4556,10 @@ void mons_att_changed(monster* mon)
                             connect->attitude = att;
                     }
                 }
+
+                // It's almost always flipping between hostile and friendly;
+                // enslaving a pacified starspawn is still a shock.
+                mi->stop_constricting_all();
             }
     }
 }
