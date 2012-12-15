@@ -3271,7 +3271,7 @@ string feature_description_at(const coord_def& where, bool covering,
         if (!door_desc_adj.empty())
             desc += door_desc_adj;
         else
-            desc += adj;
+            desc += pgettext_expr("featuredesc", adj);
 
         if (door_desc_veto.empty() || door_desc_veto != "veto")
         {
@@ -3286,9 +3286,9 @@ string feature_description_at(const coord_def& where, bool covering,
         desc += door_desc_prefix;
 
         if (!door_desc_noun.empty())
-            desc += door_desc_noun;
+            desc += _(door_desc_noun.c_str());
         else
-            desc += noun;
+            desc += _(noun);
 
         desc += door_desc_suffix;
 

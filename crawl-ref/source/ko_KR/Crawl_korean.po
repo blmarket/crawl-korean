@@ -31266,4 +31266,4 @@ msgstr ""
 #: directn.cc:3281
 msgctxt "featuredesc"
 msgid "runed "
-msgstr ""
+msgstr "룬이 새겨진 "
