@@ -3276,11 +3276,11 @@ string feature_description_at(const coord_def& where, bool covering,
         if (door_desc_veto.empty() || door_desc_veto != "veto")
         {
             if (grid == DNGN_OPEN_DOOR)
-                desc += "open ";
+                desc += pgettext("featuredesc", "open ");
             else if (grid == DNGN_RUNED_DOOR)
-                desc += "runed ";
+                desc += pgettext("featuredesc", "runed ");
             else
-                desc += "closed ";
+                desc += pgettext("featuredesc", "closed ");
         }
 
         desc += door_desc_prefix;

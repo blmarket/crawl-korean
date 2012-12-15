@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-14 10:49+0900\n"
+"POT-Creation-Date: 2012-12-15 13:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26379,17 +26379,16 @@ msgctxt "moncast"
 msgid "you"
 msgstr "당신"
 
-#: directn.cc:3295
 msgctxt "featuredesc"
 msgid "closed door"
 msgstr "닫힌 문"
 
-#: directn.cc:3335
+#: directn.cc:3279
 msgctxt "featuredesc"
 msgid "open "
 msgstr "열린 "
 
-#: directn.cc:3335
+#: directn.cc:3283
 msgctxt "featuredesc"
 msgid "closed "
 msgstr "닫힌 "
@@ -28867,6 +28866,9 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1731 decks.cc:2944
 #: decks.cc:3011
 #, c-format
@@ -29070,7 +29072,7 @@ msgstr ""
 #, c-format
 msgctxt "feature_description"
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #: directn.cc:3772 directn.cc:3780
 msgid "thrums with a field of magical suppression"
@@ -31259,4 +31261,9 @@ msgstr ""
 #, c-format
 msgid ""
 "Your %s leaps into the air, briefly spins, then lands back on your head!"
+msgstr ""
+
+#: directn.cc:3281
+msgctxt "featuredesc"
+msgid "runed "
 msgstr ""
