@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-15 13:46+0900\n"
+"POT-Creation-Date: 2012-12-16 17:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1883,6 +1883,7 @@ msgstr "크라켄"
 #: misc.cc:2219 monster.cc:2361 monster.cc:2504 monster.cc:2395
 #: monster.cc:2538 mon-data.h:4188 monster.cc:2669 monster.cc:2812
 #: mon-data.h:4214 monster.cc:2679 monster.cc:2822 mon-data.h:4235
+#: monster.cc:2681 monster.cc:2824
 msgid "tentacle"
 msgstr "촉수"
 
@@ -2590,7 +2591,7 @@ msgid "test spawner"
 msgstr "테스트 스포너"
 
 #: mon-info.cc:592 mon-info.cc:592 mon-info.cc:611 mon-info.cc:782
-#: mon-info.cc:787
+#: mon-info.cc:787 mon-info.cc:786
 msgid "Lernaean hydra"
 msgstr "레르나이언 히드라"
 
@@ -2598,17 +2599,17 @@ msgstr "레르나이언 히드라"
 #: itemprop.cc:438 itemname.cc:1658 itemname.cc:1660 itemname.cc:1667
 #: itemname.cc:1668 itemname.cc:1675 itemname.cc:1659 itemprop.cc:445
 #: mon-info.cc:613 itemname.cc:1564 itemprop.cc:426 mon-info.cc:784
-#: itemname.cc:1609 itemprop.cc:428 mon-info.cc:789
+#: itemname.cc:1609 itemprop.cc:428 mon-info.cc:789 mon-info.cc:788
 msgid "royal jelly"
 msgstr "로얄 젤리"
 
 #: mon-info.cc:596 mon-info.cc:596 mon-info.cc:615 mon-info.cc:786
-#: mon-info.cc:791
+#: mon-info.cc:791 mon-info.cc:790
 msgid "Serpent of Hell"
 msgstr "지옥의 독사"
 
 #: mon-info.cc:598 mon-info.cc:598 mon-info.cc:619 mon-info.cc:790
-#: mon-info.cc:795
+#: mon-info.cc:795 mon-info.cc:794
 msgid "INVALID MONSTER"
 msgstr "버그입니다"
 
@@ -4281,7 +4282,7 @@ msgstr "그것"
 #: travel.cc:876 travel.cc:876 fight.cc:402 fight.cc:428 mon-util.cc:3105
 #: mon-util.cc:3121 monster.cc:2257 travel.cc:864 mon-util.cc:3113
 #: mon-util.cc:3125 monster.cc:2523 travel.cc:818 mon-util.cc:3118
-#: mon-util.cc:3130 monster.cc:2535 travel.cc:822
+#: mon-util.cc:3130 monster.cc:2535 travel.cc:822 monster.cc:2537
 msgid "it"
 msgstr "그것"
 
@@ -4294,7 +4295,7 @@ msgstr "그것의"
 #: fight.cc:408 fight.cc:425 fight.cc:401 fight.cc:418 mon-util.cc:3073
 #: mon-util.cc:3079 mon-util.cc:3079 fight.cc:404 fight.cc:421
 #: mon-util.cc:3113 mon-util.cc:3117 monster.cc:2525 mon-util.cc:3122
-#: monster.cc:2537
+#: monster.cc:2537 monster.cc:2539
 msgid "its"
 msgstr "그것의"
 
@@ -5313,7 +5314,7 @@ msgstr "긁힘이 있는 "
 #: itemname.cc:1494 mon-info.cc:601 itemname.cc:1493 itemname.cc:1504
 #: itemname.cc:1521 itemname.cc:1528 itemname.cc:1529 itemname.cc:1536
 #: itemname.cc:1079 itemname.cc:1520 mon-info.cc:622 itemname.cc:1429
-#: mon-info.cc:793 itemname.cc:1472 mon-info.cc:798
+#: mon-info.cc:793 itemname.cc:1472 mon-info.cc:798 mon-info.cc:797
 msgid "buggy "
 msgstr "버그 "
 
@@ -5321,22 +5322,22 @@ msgstr "버그 "
 #: itemname.cc:801 itemname.cc:763 itemname.cc:808 itemname.cc:808
 #: kills.cc:513 itemname.cc:789 itemname.cc:834 mon-info.cc:622
 #: itemname.cc:734 itemname.cc:779 mon-info.cc:793 itemname.cc:805
-#: mon-info.cc:798
+#: mon-info.cc:798 mon-info.cc:797
 msgid "large "
 msgstr "큰 "
 
 #: mon-info.cc:601 mon-info.cc:601 mon-info.cc:622 mon-info.cc:793
-#: mon-info.cc:798
+#: mon-info.cc:798 mon-info.cc:797
 msgid "very large "
 msgstr "아주 큰 "
 
 #: mon-info.cc:602 mon-info.cc:602 mon-info.cc:623 mon-info.cc:794
-#: mon-info.cc:799
+#: mon-info.cc:799 mon-info.cc:798
 msgid "enormous "
 msgstr "거대한 "
 
 #: mon-info.cc:602 mon-info.cc:602 mon-info.cc:623 mon-info.cc:794
-#: mon-info.cc:799
+#: mon-info.cc:799 mon-info.cc:798
 msgid "titanic "
 msgstr "아주 거대한 "
 
@@ -7900,7 +7901,7 @@ msgstr "의 시체"
 
 #: itemname.cc:1926 itemname.cc:1954 itemname.cc:1956 itemname.cc:1963
 #: itemname.cc:1964 itemname.cc:1971 itemname.cc:1950 itemname.cc:1857
-#: mon-info.cc:927 itemname.cc:1902 mon-info.cc:931
+#: mon-info.cc:927 itemname.cc:1902 mon-info.cc:931 mon-info.cc:930
 msgid "skeleton"
 msgstr "의 해골"
 
@@ -8153,52 +8154,64 @@ msgid "deep water"
 msgstr "깊은 물"
 
 #: player.cc:3831 player.cc:3831 player.cc:3922 player.cc:4014 player.cc:3974
+#: player.cc:3975
 msgid "extremely slow"
 msgstr "극히 느리다"
 
 #: player.cc:3832 player.cc:3832 player.cc:3923 player.cc:4015 player.cc:3975
+#: player.cc:3976
 msgid "very slow"
 msgstr "매우 느리다"
 
 #: player.cc:3833 player.cc:3833 player.cc:3924 player.cc:4016 player.cc:3976
+#: player.cc:3977
 msgid "quite slow"
 msgstr "느리다"
 
 #: player.cc:3834 player.cc:3834 player.cc:3925 player.cc:4017 player.cc:3977
+#: player.cc:3978
 msgid "below average"
 msgstr "평균 이하이다"
 
 #: player.cc:3835 player.cc:3835 player.cc:3926 player.cc:4018 player.cc:3978
+#: player.cc:3979
 msgid "average"
 msgstr "보통이다"
 
 #: player.cc:3836 player.cc:3836 player.cc:3927 player.cc:4019 player.cc:3979
+#: player.cc:3980
 msgid "above average"
 msgstr "평균 이상이다"
 
 #: player.cc:3837 player.cc:3837 player.cc:3928 player.cc:4020 player.cc:3980
+#: player.cc:3981
 msgid "quite fast"
 msgstr "빠르다"
 
 #: player.cc:3838 player.cc:3838 player.cc:3929 player.cc:4021 player.cc:3981
+#: player.cc:3982
 msgid "very fast"
 msgstr "매우 빠르다"
 
 #: player.cc:3839 player.cc:3839 player.cc:3930 player.cc:4022 player.cc:3982
+#: player.cc:3983
 msgid "extremely fast"
 msgstr "극히 빠르다"
 
 #: player.cc:3840 player.cc:3840 player.cc:3931 player.cc:4023 player.cc:3983
+#: player.cc:3984
 msgid "blindingly fast"
 msgstr "번개같이 빠르다"
 
 # 아래 player.cc에서 사용하는 두 단어는 중복가능성이 있으므로
 # 다른 곳에서 참조한다면 나눠야할듯 (deceit, 110817)
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:4893
+#: player.cc:4894
 msgid "more"
 msgstr "더해졌음"
 
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:4893
+#: player.cc:4894
 msgid "less"
 msgstr "줄어들었음"
 
@@ -10670,19 +10683,21 @@ msgstr "미믹"
 
 #: misc.cc:2207 fight.cc:3694 misc.cc:2208 monster.cc:2319 monster.cc:2479
 #: fight.cc:3534 monster.cc:2353 monster.cc:2513 monster.cc:2627
-#: monster.cc:2787 monster.cc:2637 monster.cc:2797
+#: monster.cc:2787 monster.cc:2637 monster.cc:2797 monster.cc:2639
+#: monster.cc:2799
 msgid "claw"
 msgstr "손톱"
 
 #: misc.cc:2207 misc.cc:2214 misc.cc:2208 misc.cc:2215 monster.cc:2407
-#: monster.cc:2441 monster.cc:2715 monster.cc:2725
+#: monster.cc:2441 monster.cc:2715 monster.cc:2725 monster.cc:2727
 msgid "hand"
 msgstr "손"
 
 #: misc.cc:2209 misc.cc:2216 misc.cc:2210 misc.cc:2217 monster.cc:2460
 #: monster.cc:2464 monster.cc:2472 monster.cc:2494 monster.cc:2498
 #: monster.cc:2506 monster.cc:2768 monster.cc:2772 monster.cc:2780
-#: monster.cc:2778 monster.cc:2782 monster.cc:2790
+#: monster.cc:2778 monster.cc:2782 monster.cc:2790 monster.cc:2784
+#: monster.cc:2792
 msgid "paw"
 msgstr "발"
 
@@ -10748,86 +10763,105 @@ msgid "some gold"
 msgstr "몇 개의 금화"
 
 #: monster.cc:2327 monster.cc:2361 monster.cc:2635 monster.cc:2645
+#: monster.cc:2647
 msgid "pincer"
 msgstr "집게발"
 
 #: monster.cc:2330 monster.cc:2364 monster.cc:2638 monster.cc:2648
+#: monster.cc:2650
 msgid "front "
 msgstr "앞"
 
 #: monster.cc:2341 monster.cc:2375 monster.cc:2649 monster.cc:2659
+#: monster.cc:2661
 msgid "wing"
 msgstr "날개"
 
 #: monster.cc:2347 monster.cc:2381 monster.cc:2655 monster.cc:2665
+#: monster.cc:2667
 msgid "antenna"
 msgstr "더듬이"
 
 #: monster.cc:2351 monster.cc:2385 monster.cc:2659 monster.cc:2669
+#: monster.cc:2671
 msgid "eye-stalk"
 msgstr "눈자루"
 
 #: monster.cc:2355 monster.cc:2389 monster.cc:2663 monster.cc:2673
+#: monster.cc:2675
 msgid "leaf"
 msgstr "잎사귀"
 
 #: monster.cc:2366 monster.cc:2394 monster.cc:2400 monster.cc:2428
 #: monster.cc:2674 monster.cc:2702 monster.cc:2684 monster.cc:2712
+#: monster.cc:2686 monster.cc:2714
 msgid "body"
 msgstr "몸"
 
 #: monster.cc:2374 monster.cc:2391 monster.cc:2408 monster.cc:2425
 #: monster.cc:2682 monster.cc:2699 monster.cc:2692 monster.cc:2709
+#: monster.cc:2694 monster.cc:2711
 msgid "rhizome"
 msgstr "뿌리줄기"
 
 #: monster.cc:2385 monster.cc:2419 monster.cc:2693 monster.cc:2703
+#: monster.cc:2705
 msgid "pupil"
 msgstr "눈동자"
 
 #: monster.cc:2434 monster.cc:2468 monster.cc:2742 monster.cc:2752
+#: monster.cc:2754
 msgid "leg"
 msgstr "다리"
 
 #: monster.cc:2442 monster.cc:2452 monster.cc:2460 monster.cc:2468
 #: monster.cc:2476 monster.cc:2486 monster.cc:2494 monster.cc:2502
 #: monster.cc:2750 monster.cc:2760 monster.cc:2768 monster.cc:2776
-#: monster.cc:2770 monster.cc:2778 monster.cc:2786
+#: monster.cc:2770 monster.cc:2778 monster.cc:2786 monster.cc:2762
+#: monster.cc:2772 monster.cc:2780 monster.cc:2788
 msgid "hoof"
 msgstr "발굽"
 
 #: monster.cc:2446 monster.cc:2484 monster.cc:2480 monster.cc:2518
 #: monster.cc:2754 monster.cc:2792 monster.cc:2764 monster.cc:2802
+#: monster.cc:2766 monster.cc:2804
 msgid "tail"
 msgstr "꼬리"
 
 #: monster.cc:2460 monster.cc:2466 monster.cc:2474 monster.cc:2494
 #: monster.cc:2500 monster.cc:2508 monster.cc:2768 monster.cc:2774
 #: monster.cc:2782 monster.cc:2778 monster.cc:2784 monster.cc:2792
+#: monster.cc:2780 monster.cc:2786 monster.cc:2794
 msgid "talon"
 msgstr "발톱"
 
 #: monster.cc:2489 monster.cc:2523 monster.cc:2797 monster.cc:2807
+#: monster.cc:2809
 msgid "root"
 msgstr "뿌리"
 
 #: monster.cc:2493 monster.cc:2527 monster.cc:2801 monster.cc:2811
+#: monster.cc:2813
 msgid "stem"
 msgstr "줄기"
 
 #: monster.cc:2498 monster.cc:2532 monster.cc:2806 monster.cc:2816
+#: monster.cc:2818
 msgid "pseudopod"
 msgstr "위족"
 
 #: monster.cc:2511 monster.cc:2545 monster.cc:2819 monster.cc:2829
+#: monster.cc:2831
 msgid "underside"
 msgstr "아랫쪽"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2840
+#: monster.cc:2842
 msgid "feet"
 msgstr "발"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2840
+#: monster.cc:2842
 msgid "foot"
 msgstr "발"
 
@@ -11660,6 +11694,7 @@ msgstr "드워프의 광장"
 msgid "minisclue door"
 msgstr "매우 작은 문"
 
+#: terrain.cc:478
 msgid "door"
 msgstr "문"
 
@@ -11672,6 +11707,7 @@ msgstr "거대한 문"
 msgid "minisclue gate"
 msgstr "매우 작은 관문"
 
+#: terrain.cc:480
 msgid "gate"
 msgstr "관문"
 
@@ -12244,15 +12280,15 @@ msgstr ""
 msgid "your electric unarmed attack"
 msgstr ""
 
-#: mon-info.cc:922 mon-info.cc:926
+#: mon-info.cc:922 mon-info.cc:926 mon-info.cc:925
 msgid "zombie"
 msgstr ""
 
-#: mon-info.cc:932 mon-info.cc:936
+#: mon-info.cc:932 mon-info.cc:936 mon-info.cc:935
 msgid "simulacrum"
 msgstr ""
 
-#: mon-info.cc:935 mon-info.cc:939
+#: mon-info.cc:935 mon-info.cc:939 mon-info.cc:938
 msgid "shaped pillar of salt"
 msgstr ""
 

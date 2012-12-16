@@ -3371,8 +3371,8 @@ string get_damage_level_string(mon_holy_type holi, mon_dam_level_type mdam)
         break;
     case MDAM_OKAY:
     default:
-        ss << pgettext("get_damage_level_string", "not");
-        break;
+        ss << (_wounded_damaged(holi) ? pgettext("get_damage_level_string", "not damaged") : pgettext("get_damage_level_string", "not wounded"));
+        return ss.str();
     }
     ss << (_wounded_damaged(holi) ? pgettext("get_damage_level_string", " damaged") : pgettext("get_damage_level_string", " wounded"));
     return ss.str();
