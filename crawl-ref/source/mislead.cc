@@ -10,6 +10,7 @@
 #include "env.h"
 #include "hints.h"
 #include "message.h"
+#include "misc.h"
 #include "monster.h"
 #include "mon-iter.h"
 #include "mon-util.h"
@@ -107,9 +108,11 @@ void mons_cast_mislead(monster* mons)
 
     // We deal with pointless misleads in the right place now.
 
-    if (player_mental_clarity(true))
+    if (you.clarity())
     {
-        mpr(gettext("Your vision blurs momentarily."));
+        mpr(_("Your vision blurs momentarily."));
+        if (!you.clarity(false))
+            maybe_id_clarity();
         return;
     }
 

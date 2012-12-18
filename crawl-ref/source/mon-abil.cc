@@ -8,6 +8,7 @@
 
 #include "externs.h"
 
+#include "act-iter.h"
 #include "arena.h"
 #include "beam.h"
 #include "colour.h"
@@ -43,6 +44,7 @@
 #include "view.h"
 #include "shout.h"
 #include "viewchar.h"
+#include "ouch.h"
 
 #include <algorithm>
 #include <queue>
@@ -355,7 +357,7 @@ static void _stats_from_blob_count(monster* slime, float max_per_blob,
 static monster* _do_split(monster* thing, coord_def & target)
 {
     // Create a new slime.
-    mgen_data new_slime_data = mgen_data(MONS_SLIME_CREATURE,
+    mgen_data new_slime_data = mgen_data(thing->type,
                                          thing->behaviour,
                                          0,
                                          0,
@@ -831,12 +833,138 @@ bool slime_creature_mutate(monster* slime)
     return monster_polymorph(slime, RANDOM_MONSTER);
 }
 
+bool _starcursed_split(monster* mon)
+{
+    if (!mon
+        || mon->number <= 1
+        || mon->type != MONS_STARCURSED_MASS)
+    {
+        return false;
+    }
+
+    const coord_def origin = mon->pos();
+
+    int compass_idx[] = {0, 1, 2, 3, 4, 5, 6, 7};
+    random_shuffle(compass_idx, compass_idx + 8);
+
+    // Anywhere we can place an offspring?
+    for (int i = 0; i < 8; ++i)
+    {
+        coord_def target = origin + Compass[compass_idx[i]];
+
+        if (mons_class_can_pass(MONS_STARCURSED_MASS, env.grid(target))
+            && !actor_at(target))
+        {
+            return _do_split(mon, target);
+        }
+    }
+
+    // No free squares.
+    return false;
+}
+
+void _starcursed_scream(monster* mon, actor* target)
+{
+    if (!target || !target->alive())
+        return;
+
+    // These monsters have too primitive a mind to be affected
+    if (!target->is_player() && mons_intel(target->as_monster()) <= I_INSECT)
+        return;
+
+    //Gather the chorus
+    vector<monster*> chorus;
+
+    for (actor_iterator ai(target->get_los()); ai; ++ai)
+    {
+        if (ai->is_monster())
+        {
+            monster* m = ai->as_monster();
+            if (m->type == MONS_STARCURSED_MASS)
+                chorus.push_back(m);
+        }
+    }
+
+    int n = chorus.size();
+    int dam = 0; int stun = 0;
+    string message;
+
+    dprf("Chorus size: %d", n);
+
+    if (n > 7)
+    {
+        message = "A cacophony of accursed wailing tears at your sanity!";
+        if (coinflip())
+            stun = 2;
+    }
+    else if (n > 4)
+    {
+        message = "A deafening chorus of shrieks assaults your mind!";
+        if (x_chance_in_y(1,3))
+            stun = 1;
+    }
+    else if (n > 1)
+        message = "A chorus of shrieks assaults your mind.";
+    else
+        message = "The starcursed mass shrieks in your mind.";
+
+    dam = 4 + random2(5) + random2(n * 3 / 2);
+
+    if (!target->is_player())
+    {
+        if (you.see_cell(target->pos()))
+        {
+            mprf(target->as_monster()->friendly() ? MSGCH_FRIEND_SPELL
+                                                  : MSGCH_MONSTER_SPELL,
+                 "%s writhes in pain as voices assail %s mind.",
+                 target->name(DESC_THE).c_str(),
+                 target->pronoun(PRONOUN_POSSESSIVE).c_str());
+        }
+        target->hurt(mon, dam);
+    }
+    else
+    {
+        mpr(message, MSGCH_MONSTER_SPELL);
+        ouch(dam, mon->mindex(), KILLED_BY_BEAM, "accursed screaming");
+    }
+
+    if (stun)
+        target->paralyse(mon, stun, "accursed screaming");
+
+    for (unsigned int i = 0; i < chorus.size(); ++i)
+        chorus[i]->add_ench(mon_enchant(ENCH_SCREAMED, 1, chorus[i], 1));
+}
+
+bool _will_starcursed_scream(monster* mon)
+{
+    vector<monster*> chorus;
+
+    for (actor_iterator ai(mon->get_los()); ai; ++ai)
+    {
+        if (ai->is_monster())
+        {
+            monster* m = ai->as_monster();
+            if (m->type == MONS_STARCURSED_MASS)
+            {
+                //Don't scream if any part of the chorus has a scream timeout
+                //(This prevents it being staggered into a bunch of mini-screams)
+                if (m->has_ench(ENCH_SCREAMED))
+                    return false;
+                else
+                    chorus.push_back(m);
+            }
+        }
+    }
+
+    return x_chance_in_y(1, chorus.size() + 1);
+}
+
 // Returns true if you resist the siren's call.
 static bool _siren_movement_effect(const monster* mons)
 {
     bool do_resist = (you.attribute[ATTR_HELD] || you.check_res_magic(70) > 0
                       || you.cannot_act() || you.asleep()
-                      || player_mental_clarity(true));
+                      || you.clarity());
 
     if (!do_resist)
     {
@@ -2816,7 +2944,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             if (!already_mesmerised
                 && (you.species == SP_MERFOLK
                     || you.check_res_magic(100) > 0
-                    || player_mental_clarity(true)))
+                    || you.clarity()))
             {
                 if (!did_resist)
                     canned_msg(MSG_YOU_RESIST);
@@ -2882,6 +3010,17 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
             used = true;
         }
+        break;
+
+    case MONS_STARCURSED_MASS:
+        if (x_chance_in_y(mons->number,8) && x_chance_in_y(2,3))
+            _starcursed_split(mons);
+
+        if (!mons_is_confused(mons)
+                && !is_sanctuary(mons->pos()) && !is_sanctuary(beem.target)
+                && _will_starcursed_scream(mons)
+                && coinflip())
+            _starcursed_scream(mons, actor_at(beem.target));
         break;
 
     default:
@@ -3234,5 +3373,130 @@ void activate_ballistomycetes(monster* mons, const coord_def & origin,
             thread = thread->last;
         }
         env.level_state |= LSTATE_GLOW_MOLD;
+    }
+}
+
+void ancient_zyme_sicken(monster* mons)
+{
+    if (is_sanctuary(mons->pos()))
+        return;
+
+    if (!is_sanctuary(you.pos())
+        && you.res_rotting() <= 0
+        && cell_see_cell(you.pos(), mons->pos(), LOS_SOLID_SEE))
+    {
+        if (!you.disease)
+        {
+            mpr("You feel yourself grow ill in the presence of the ancient zyme.", MSGCH_WARN);
+            you.sicken(50 + random2(50));
+        }
+        else if (x_chance_in_y(you.time_taken, 60))
+            you.sicken(35 + random2(50));
+
+        if (x_chance_in_y(you.time_taken, 100))
+        {
+            mpr("The zyme's presence inflicts a toll on your body.");
+            you.drain_stat((coinflip() ? STAT_STR : STAT_DEX), 1, mons);
+        }
+
+    }
+    for (radius_iterator ri(mons->pos(), LOS_RADIUS, C_ROUND); ri; ++ri)
+    {
+        monster *m = monster_at(*ri);
+        if (m && cell_see_cell(mons->pos(), *ri, LOS_SOLID_SEE)
+            && !is_sanctuary(*ri))
+        {
+            m->sicken(2 * you.time_taken);
+        }
+    }
+}
+
+static bool _do_merge_masses(monster* initial_mass, monster* merge_to)
+{
+    // Combine enchantment durations.
+    _merge_ench_durations(initial_mass, merge_to);
+
+    merge_to->number += initial_mass->number;
+    merge_to->max_hit_points += initial_mass->max_hit_points;
+    merge_to->hit_points += initial_mass->hit_points;
+
+    // Merge monster flags (mostly so that MF_CREATED_NEUTRAL, etc. are
+    // passed on if the merged slime subsequently splits.  Hopefully
+    // this won't do anything weird.
+    merge_to->flags |= initial_mass->flags;
+
+    // Overwrite the state of the slime getting merged into, because it
+    // might have been resting or something.
+    merge_to->behaviour = initial_mass->behaviour;
+    merge_to->foe = initial_mass->foe;
+
+    behaviour_event(merge_to, ME_EVAL);
+
+    // Have to 'kill' the slime doing the merging.
+    monster_die(initial_mass, KILL_DISMISSED, NON_MONSTER, true);
+
+    return true;
+}
+
+void starcursed_merge(monster* mon, bool forced)
+{
+    //Find a random adjacent starcursed mass
+    int compass_idx[] = {0, 1, 2, 3, 4, 5, 6, 7};
+    random_shuffle(compass_idx, compass_idx + 8);
+
+    for (int i = 0; i < 8; ++i)
+    {
+        coord_def target = mon->pos() + Compass[compass_idx[i]];
+        monster* mergee = monster_at(target);
+        if (mergee && mergee->alive() && mergee->type == MONS_STARCURSED_MASS)
+        {
+            if (forced && you.can_see(mon))
+                mpr("The starcursed mass shudders and is absorbed by its neighbour.");
+            if (_do_merge_masses(mon, mergee))
+                return;
+        }
+    }
+
+    // If there was nothing adjacent to merge with, at least try to move toward
+    // another starcursed mass
+    for (distance_iterator di(mon->pos(), true, true, 8); di; ++di)
+    {
+        monster* ally = monster_at(*di);
+        if (ally && ally->alive() && ally->type == MONS_STARCURSED_MASS
+            && mon->can_see(ally))
+        {
+            bool moved = false;
+
+            coord_def sgn = (*di - mon->pos()).sgn();
+            if (mon_can_move_to_pos(mon, sgn))
+            {
+                mon->move_to_pos(mon->pos()+sgn, false);
+                moved = true;
+            }
+            else if (abs(sgn.x) != 0)
+            {
+                coord_def dx(sgn.x, 0);
+                if (mon_can_move_to_pos(mon, dx))
+                {
+                    mon->move_to_pos(mon->pos()+dx, false);
+                    moved = true;
+                }
+            }
+            else if (abs(sgn.y) != 0)
+            {
+                coord_def dy(0, sgn.y);
+                if (mon_can_move_to_pos(mon, dy))
+                {
+                    mon->move_to_pos(mon->pos()+dy, false);
+                    moved = true;
+                }
+            }
+
+            if (moved)
+            {
+                mpr("The starcursed mass shudders and withdraws towards its neighbour.");
+                mon->speed_increment -= 10;
+            }
+        }
     }
 }
