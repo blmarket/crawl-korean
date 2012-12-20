@@ -3159,6 +3159,7 @@ static void _player_reacts_to_monsters()
         you.redraw_stats[STAT_STR] = true;
         you.redraw_stats[STAT_DEX] = true;
         you.redraw_stats[STAT_INT] = true;
+        notify_stat_change("suppression");
 
         if (you.suppressed())
             you.props["exists_if_suppressed"] = true;
@@ -3233,6 +3234,7 @@ void world_reacts()
     if (!crawl_state.game_is_arena())
         _player_reacts();
 
+    abyss_morph(you.time_taken);
     apply_noises();
     handle_monsters(true);
 

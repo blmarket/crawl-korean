@@ -3980,9 +3980,9 @@ static const char *divine_title[NUM_GODS][8] =
     {"진흙괴물",          "젤리",					 "슬라임",                   "갈색 진흙괴물",
      "담청색 젤리",       "죽음의 젤리",			 "산성 덩이",                "로얄 젤리"},
 
-    // Fedhas Madash -- nature theme.  Titles could use some work
-    {"비료 대행자",        "식물 재배자",           "숲의 수호자",              "광합성하는 자",
-     "초록을 일구는 자",   "자연의 대리인",         "비구름을 부르는 자",       "대자연의 화신"},
+    // Fedhas Madash -- nature theme.
+    {"Walking Fertiliser", "Green %s",              "Inciter",                  "Photosynthesist",
+     "Cultivator",         "Green Death",           "Nimbus",                   "Force of Nature"},
 
     // Cheibriados -- slow theme
     {"무풍",               "정시출근",              "시간의 사수",              "시간 관측사",
