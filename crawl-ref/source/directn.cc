@@ -34,6 +34,7 @@
 #include "itemname.h"
 #include "itemprop.h"
 #include "items.h"
+#include "korean.h"
 #include "l_defs.h"
 #include "libutil.h"
 #include "los.h"
