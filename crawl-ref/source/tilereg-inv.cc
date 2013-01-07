@@ -643,7 +643,7 @@ void InventoryRegion::draw_tag()
     else if (_is_prev_button(curs_index))
         draw_desc("Previous page");
     else if (floor && mitm[idx].defined())
-        draw_desc(mitm[idx].name(DESC_PLAIN).c_str());
+        draw_desc(mitm[idx].name(true, DESC_PLAIN).c_str());
     else if (!floor && you.inv[idx].defined())
         draw_desc(you.inv[idx].name(true, DESC_INVENTORY_EQUIP).c_str());
 }
