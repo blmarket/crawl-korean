@@ -839,15 +839,12 @@ lemon
 %%%%
 lightning rod
 
-Once, a wizard ignorant of the workings of mundane items misunderstood the
-purpose of lightning rods. Instead of making one that merely drew lightning, he
-made one that created it instead.
-
-This rod shoots continuous lightning: the discharge is sustained, and can be
-redirected to new targets by evoking the rod in subsequent turns (failing to do
-so will release the trigger). The rod takes a moment to warm up, making short
-bursts rather ineffective. Once the zap is active, one can wave the rod,
-creating impressive and damaging arcs of electricity.
+This rod allows its wielder to fire continuous lightning: the discharge is
+sustained, and can be redirected to new targets by evoking the rod in
+subsequent turns (failing to do so will release the trigger). The rod takes a
+moment to warm up, making short bursts rather ineffective. Once the zap is
+active, one can wave the rod, creating impressive and damaging arcs of
+electricity.
 %%%%
 long sword
 
@@ -1163,7 +1160,7 @@ but increases the speed of his or her metabolism greatly while doing so.
 %%%%
 ring of flight
 
-This ring allows its wearer to fly. The ring's power cannot be invoked while
+This ring allows its wearer to fly. The ring's power cannot be evoked while
 airborne, so it's ill-suited for longer trips above deadly liquid.
 %%%%
 ring of life protection
@@ -1403,9 +1400,6 @@ else nearby.
 scroll of magic mapping
 
 This scroll reveals the surroundings of the one who reads it.
-
-It will reveal the presence of secret doors, but is not strong enough to see
-past them, or into completely sealed areas.
 %%%%
 scroll of noise
 

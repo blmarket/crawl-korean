@@ -451,6 +451,11 @@ static NORETURN void _launch_game()
     // Initialise save game so we can recover from crashes on D:1.
     save_game_state();
 
+#ifdef USE_TILE_WEB
+    // Send initial game state before we do any UI updates
+    tiles.redraw();
+#endif
+
     run_uncancels();
 
     cursor_control ccon(!Options.use_fake_player_cursor);
@@ -744,7 +749,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
 
     case CONTROL('A'):
         if (player_in_branch(BRANCH_ABYSS))
-            abyss_teleport(true);
+            wizard_set_abyss();
         else
             mpr("You can only abyss_teleport() inside the Abyss.");
         break;
@@ -1470,19 +1475,13 @@ static void _go_upstairs()
     if (!_prompt_unique_pan_rune(ygrd))
         return;
 
-    if (ygrd == DNGN_EXIT_DUNGEON)
+    if (ygrd == DNGN_EXIT_DUNGEON && !player_has_orb())
     {
-        bool stay = true;
-        string prompt = make_stringf(gettext("Are you sure you want to leave the "
-                                          "Dungeon?%s"),
-                                          crawl_state.game_is_tutorial() ? "" :
-                                          gettext(" This will make you lose the game!"));
-        if (player_has_orb())
-            stay = !yesno(_("Are you sure you want to win?"));
-        else
-            stay = !yesno(prompt.c_str(), false, 'n');
-
-        if (stay)
+        string prompt = make_stringf(_("Are you sure you want to leave the "
+                                     "Dungeon?%s"),
+                                     crawl_state.game_is_tutorial() ? "" :
+                                     _(" This will make you lose the game!"));
+        if (!yesno(prompt.c_str(), false, 'n'))
         {
             mpr(gettext("Alright, then stay!"));
             return;
@@ -1624,7 +1623,7 @@ static void _experience_check()
                 << " (" << you.num_turns << gettext(" turns)")
                 << endl;
 #ifdef DEBUG_DIAGNOSTICS
-    if (wearing_amulet(AMU_THE_GOURMAND))
+    if (you.gourmand())
     {
         mprf(MSGCH_DIAGNOSTICS, "Gourmand charge: %d",
              you.duration[DUR_GOURMAND]);
@@ -1911,6 +1910,12 @@ void process_command(command_type cmd)
     case CMD_CLEAR_MAP:       _do_clear_map();   break;
     case CMD_DISPLAY_OVERMAP: display_overview(); break;
     case CMD_DISPLAY_MAP:     _do_display_map(); break;
+
+#ifdef TOUCH_UI
+        // zoom commands
+    case CMD_ZOOM_IN:   tiles.zoom_dungeon(true); break;
+    case CMD_ZOOM_OUT:  tiles.zoom_dungeon(false); break;
+#endif
 
         // Stash commands.
     case CMD_SEARCH_STASHES:
@@ -2279,7 +2284,7 @@ static void _decrement_durations()
 {
     int delay = you.time_taken;
 
-    if (player_effect_gourmand())
+    if (you.gourmand())
     {
         if (you.duration[DUR_GOURMAND] < GOURMAND_MAX && coinflip())
             you.duration[DUR_GOURMAND] += delay;
@@ -2868,11 +2873,13 @@ static void _check_banished()
     {
         you.banished = false;
         if (!player_in_branch(BRANCH_ABYSS))
-        {
-            mpr(gettext("You are cast into the Abyss!"), MSGCH_BANISHMENT);
-            more();
-            banished(you.banished_by);
-        }
+            mpr(_("You are cast into the Abyss!"), MSGCH_BANISHMENT);
+        else if (you.depth < brdepth[BRANCH_ABYSS])
+            mpr(_("You are cast deeper into the Abyss!"), MSGCH_BANISHMENT);
+        else
+            mpr(_("The Abyss bends around you!"), MSGCH_BANISHMENT);
+        more();
+        banished(you.banished_by);
         you.banished_by.clear();
     }
 }
@@ -2926,7 +2933,7 @@ static void _regenerate_hp_and_mp(int delay)
 
     // XXX: Don't let DD use guardian spirit for free HP, since their
     // damage shaving is enough. (due, dpeg)
-    if (player_spirit_shield() && you.species == SP_DEEP_DWARF)
+    if (you.spirit_shield() && you.species == SP_DEEP_DWARF)
         return;
 
     // XXX: Doing the same as the above, although overflow isn't an
@@ -3033,7 +3040,8 @@ static void _player_reacts()
             else
                 you_teleport_now(true, false, false, teleportitis_level * 5);
         }
-        else if (player_in_branch(BRANCH_ABYSS) && one_chance_in(80))
+        else if (player_in_branch(BRANCH_ABYSS) && one_chance_in(80)
+          && (!map_masked(you.pos(), MMT_VAULT) || one_chance_in(3)))
         {
             mpr("You are suddenly pulled into a different region of the Abyss!",
                 MSGCH_BANISHMENT);
@@ -3165,6 +3173,7 @@ static void _player_reacts_to_monsters()
         you.redraw_stats[STAT_STR] = true;
         you.redraw_stats[STAT_DEX] = true;
         you.redraw_stats[STAT_INT] = true;
+        notify_stat_change("suppression");
 
         if (you.suppressed())
             you.props["exists_if_suppressed"] = true;
@@ -3239,6 +3248,7 @@ void world_reacts()
     if (!crawl_state.game_is_arena())
         _player_reacts();
 
+    abyss_morph(you.time_taken);
     apply_noises();
     handle_monsters(true);
 
@@ -4438,7 +4448,7 @@ static void _move_player(coord_def move)
     apply_berserk_penalty = !attacking;
 
     if (!attacking && you.religion == GOD_CHEIBRIADOS && one_chance_in(10)
-        && player_effect_running())
+        && you.run())
     {
         did_god_conduct(DID_HASTY, 1, true);
     }

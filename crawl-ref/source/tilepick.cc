@@ -262,6 +262,7 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
     case DNGN_ENTER_TARTARUS:
         return TILE_DNGN_ENTER_TARTARUS;
     case DNGN_ENTER_ABYSS:
+    case DNGN_ABYSSAL_STAIR:
     case DNGN_EXIT_THROUGH_ABYSS:
         return TILE_DNGN_ENTER_ABYSS;
     case DNGN_EXIT_HELL:
@@ -1221,6 +1222,8 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return _mon_cycle(TILEP_MONS_FIRE_VORTEX, tile_num_prop);
     case MONS_SPATIAL_VORTEX:
         return _mon_cycle(TILEP_MONS_SPATIAL_VORTEX, tile_num_prop);
+    case MONS_SPATIAL_MAELSTROM:
+        return _mon_cycle(TILEP_MONS_SPATIAL_MAELSTROM, tile_num_prop);
     case MONS_TWISTER:
         return _mon_cycle(TILEP_MONS_TWISTER, tile_num_prop);
 
@@ -1260,11 +1263,13 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
     case MONS_MACABRE_MASS:
         return TILEP_MONS_MACABRE_MASS;
 
-    // abyssal monsters (not assigned/implemented yet)
+    // abyssal monsters
     case MONS_LURKING_HORROR:
         return TILEP_MONS_LURKING_HORROR;
     case MONS_ANCIENT_ZYME:
         return TILEP_MONS_ANCIENT_ZYME;
+    case MONS_APOCALYPSE_CRAB:
+        return TILEP_MONS_APOCALYPSE_CRAB;
     case MONS_STARCURSED_MASS:
         return TILEP_MONS_STARCURSED_MASS;
     case MONS_TENTACLED_STARSPAWN:
@@ -5443,6 +5448,7 @@ void bind_item_tile(item_def &item)
     if (item.props.exists("item_tile_name"))
     {
         string tile = item.props["item_tile_name"].get_string();
+        dprf("Binding non-worn item tile: \"%s\".", tile.c_str());
         tileidx_t index;
         if (!tile_main_index(tile.c_str(), &index))
         {
@@ -5458,6 +5464,7 @@ void bind_item_tile(item_def &item)
     if (item.props.exists("worn_tile_name"))
     {
         string tile = item.props["worn_tile_name"].get_string();
+        dprf("Binding worn item tile: \"%s\".", tile.c_str());
         tileidx_t index;
         if (!tile_player_index(tile.c_str(), &index))
         {
@@ -5478,7 +5485,7 @@ void tile_init_props(monster* mon)
     if (mon->type != MONS_TOADSTOOL && mon->type != MONS_SLAVE
         && mon->type != MONS_PLANT && mon->type != MONS_FUNGUS
         && mon->type != MONS_FIRE_VORTEX && mon->type != MONS_TWISTER
-        && mon->type != MONS_SPATIAL_VORTEX
+        && mon->type != MONS_SPATIAL_VORTEX && mon->type != MONS_SPATIAL_MAELSTROM
         && mon->type != MONS_ABOMINATION_SMALL
         && mon->type != MONS_ABOMINATION_LARGE)
     {

@@ -265,29 +265,18 @@ brand_type player::damage_brand(int)
 
 // Returns the item in the given equipment slot, NULL if the slot is empty.
 // eq must be in [EQ_WEAPON, EQ_RING_EIGHT], or bad things will happen.
-item_def *player::slot_item(equipment_type eq, bool include_melded)
+item_def *player::slot_item(equipment_type eq, bool include_melded) const
 {
     ASSERT(eq >= EQ_WEAPON && eq < NUM_EQUIP);
 
     const int item = equip[eq];
     if (item == -1 || !include_melded && melded[eq])
         return NULL;
-    return (&inv[item]);
-}
-
-// const variant of the above...
-const item_def *player::slot_item(equipment_type eq, bool include_melded) const
-{
-    ASSERT(eq >= EQ_WEAPON && eq < NUM_EQUIP);
-
-    const int item = equip[eq];
-    if (item == -1 || !include_melded && melded[eq])
-        return NULL;
-    return (&inv[item]);
+    return (const_cast<item_def *>(&inv[item]));
 }
 
 // Returns the item in the player's weapon slot.
-item_def *player::weapon(int /* which_attack */)
+item_def *player::weapon(int /* which_attack */) const
 {
     if (you.melded[EQ_WEAPON])
         return NULL;
@@ -668,7 +657,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
     // trigger when the player attempts to activate berserk,
     // auto-iding at that point, but also killing the berserk and
     // wasting a turn.
-    if (player_effect_stasis(false))
+    if (you.stasis(false))
     {
         if (verbose)
         {
@@ -679,17 +668,13 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         return false;
     }
 
-    if (!intentional && !potion && player_mental_clarity(true))
+    if (!intentional && !potion && you.clarity())
     {
         if (verbose)
         {
             mpr("You're too calm and focused to rage.");
-            item_def *amu;
-            if (!player_mental_clarity(false) && wearing_amulet(AMU_CLARITY)
-                && (amu = &you.inv[you.equip[EQ_AMULET]]) && !item_type_known(*amu))
-            {
-                wear_id_type(*amu);
-            }
+            if (!you.clarity(false))
+                maybe_id_clarity();
         }
 
         return false;

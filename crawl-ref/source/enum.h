@@ -737,6 +737,12 @@ enum command_type
     CMD_MAX_TILE = CMD_EDIT_PLAYER_TILE,
 #endif
 
+#ifdef TOUCH_UI
+    // zoom on dungeon
+    CMD_ZOOM_IN,
+    CMD_ZOOM_OUT,
+#endif
+
     // Repeat previous command
     CMD_PREV_CMD_AGAIN,
 
@@ -1261,6 +1267,9 @@ enum dungeon_feature_type
     DNGN_ENTER_TARTARUS,
     DNGN_ENTER_ABYSS,
     DNGN_EXIT_ABYSS,
+#if TAG_MAJOR_VERSION > 34
+    DNGN_ABYSSAL_STAIR,
+#endif
     DNGN_STONE_ARCH,
     DNGN_ENTER_PANDEMONIUM,
     DNGN_EXIT_PANDEMONIUM,
@@ -1355,6 +1364,10 @@ enum dungeon_feature_type
 
     DNGN_UNKNOWN_ALTAR,
     DNGN_UNKNOWN_PORTAL,
+
+#if TAG_MAJOR_VERSION == 34
+    DNGN_ABYSSAL_STAIR,
+#endif
 
     NUM_FEATURES
 };
@@ -1537,6 +1550,7 @@ enum enchant_type
     ENCH_ROLLING,       // Boulder Beetle in ball form
     ENCH_OZOCUBUS_ARMOUR,
     ENCH_WRETCHED,      // An abstract placeholder for monster mutations
+    ENCH_SCREAMED,      // Starcursed scream timer
     // Update enchantment names in monster.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS
@@ -2506,9 +2520,11 @@ enum monster_type                      // menv[].type
     MONS_ELEMENTAL,             // genus
 
     MONS_FANNAR,
-
+    MONS_APOCALYPSE_CRAB,
     MONS_STARSPAWN_TENTACLE,
     MONS_STARSPAWN_TENTACLE_SEGMENT,
+
+    MONS_SPATIAL_MAELSTROM,
 
     NUM_MONSTERS,               // used for polymorph
 
@@ -3281,6 +3297,8 @@ enum spell_type
     SPELL_THUNDERBOLT,
     SPELL_SUMMON_MINOR_DEMON,
     SPELL_DISJUNCTION,
+    SPELL_CHAOS_BREATH,
+    SPELL_FRENZY,
 
     NUM_SPELLS
 };
@@ -3388,7 +3406,6 @@ enum zap_type
     ZAP_TELEPORTATION,
     ZAP_LIGHTNING,
     ZAP_POLYMORPH_OTHER,
-    ZAP_LAST_RANDOM = ZAP_POLYMORPH_OTHER,   // maximal random_effects beam
     ZAP_VENOM_BOLT,
     ZAP_NEGATIVE_ENERGY,
     ZAP_CRYSTAL_SPEAR,
@@ -3558,6 +3575,7 @@ enum uncancellable_type
     UNC_ACQUIREMENT,           // arg is AQ_SCROLL or AQ_CARD_GENIE
     UNC_DRAW_THREE,            // arg is inv slot of the deck
     UNC_STACK_FIVE,            // arg is inv slot of the deck
+    UNC_MERCENARY,             // arg is mid of the monster
 };
 
 // Tiles stuff.

@@ -514,7 +514,7 @@ static int _mons_offhand_weapon_index(const monster* m)
     return (m->inv[MSLOT_ALT_WEAPON]);
 }
 
-item_def *monster::weapon(int which_attack)
+item_def *monster::weapon(int which_attack) const
 {
     const mon_attack_def attk = mons_attack_spec(this, which_attack);
     if (attk.type != AT_HIT && attk.type != AT_WEAP_ONLY)
@@ -1810,6 +1810,9 @@ bool monster::wants_jewellery(const item_def &item) const
         return false;
     }
 
+    if (item.sub_type == AMU_INACCURACY)
+        return false;
+
     // TODO: figure out what monsters actually want rings or amulets
     return true;
 }
@@ -1844,9 +1847,20 @@ static int _get_monster_armour_value(const monster *mon,
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
         value += get_armour_see_invisible(item, true);
 
+    // Likewise rCorr
+    if (get_armour_ego_type(item) == SPARM_PRESERVATION
+        && !mon->res_corr(false, false))
+    {
+        value++;
+    }
+
     // Give a sizable bonus for shields of reflection.
     if (get_armour_ego_type(item) == SPARM_REFLECTION)
         value += 3;
+
+    // And an even more sizable bonus for boots/bardings of running.
+    if (get_armour_ego_type(item) == SPARM_RUNNING)
+        value += 5;
 
     return value;
 }
@@ -2000,6 +2014,10 @@ static int _get_monster_jewellery_value(const monster *mon,
     if (!mons_class_flag(mon->type, M_SEE_INVIS))
         value += get_jewellery_see_invisible(item, true);
 
+    // If we're not naturally corrosion-resistant.
+    if (item.sub_type == AMU_RESIST_CORROSION && !mon->res_corr(false, false))
+        value++;
+
     return value;
 }
 
@@ -2122,14 +2140,13 @@ bool monster::pickup_missile(item_def &item, int near, bool force)
                 // If this ammunition is better, drop the old ones.
                 // Don't upgrade to ammunition whose brand cancels the
                 // launcher brand or doesn't improve it further.
+                // Don't drop huge stacks for tiny stacks.
                 if (fires_ammo_type(*launch) == item.sub_type
                     && (fires_ammo_type(*launch) != miss->sub_type
-                        || item.plus > miss->plus
-                           && get_ammo_brand(*miss) == item_brand
-                        || item.plus >= miss->plus
-                           && get_ammo_brand(*miss) == SPMSL_NORMAL
+                        || get_ammo_brand(*miss) == SPMSL_NORMAL
                            && item_brand != SPMSL_NORMAL
-                           && _nonredundant_launcher_ammo_brands(launch, miss)))
+                           && _nonredundant_launcher_ammo_brands(launch, miss))
+                    && item.quantity * 2 > miss->quantity)
                 {
                     if (!drop_item(MSLOT_MISSILE, near))
                         return false;
@@ -2427,7 +2444,7 @@ void monster::wield_melee_weapon(int near)
     }
 }
 
-item_def *monster::slot_item(equipment_type eq, bool include_melded)
+item_def *monster::slot_item(equipment_type eq, bool include_melded) const
 {
     return mslot_item(equip_slot_to_mslot(eq));
 }
@@ -3014,13 +3031,14 @@ void monster::go_berserk(bool /* intentional */, bool /* potion */)
         xom_is_stimulated(friendly() ? 25 : 100);
 }
 
-void monster::expose_to_element(beam_type flavour, int strength)
+void monster::expose_to_element(beam_type flavour, int strength,
+                                bool damage_inventory, bool slow_cold_blood)
 {
     switch (flavour)
     {
     case BEAM_COLD:
-        if (mons_class_flag(type, M_COLD_BLOOD) && res_cold() <= 0
-            && coinflip())
+        if (slow_cold_blood && mons_class_flag(type, M_COLD_BLOOD)
+            && res_cold() <= 0 && coinflip())
         {
             slow_down(this, strength);
         }
@@ -3050,7 +3068,7 @@ void monster::banish(actor *agent, const string &)
         // Note: we do not set MF_GOT_HALF_XP, the monster is usually not
         // distinguishable from others of the same kind in the Abyss.
 
-        if (agent->is_player())
+        if (agent->is_player() && !player_in_branch(BRANCH_ABYSS))
             did_god_conduct(DID_BANISH, hit_dice, true /*possibly wrong*/, this);
     }
     monster_die(this, KILL_BANISHED, NON_MONSTER);
@@ -3239,21 +3257,6 @@ bool monster::liquefied_ground() const
             && !mons_class_is_stationary(type));
 }
 
-int monster::warding() const
-{
-    const item_def *w = primary_weapon();
-    if (w && w->base_type == OBJ_STAVES && w->sub_type == STAFF_SUMMONING)
-        return 60;
-    const int jewellery = inv[MSLOT_JEWELLERY];
-    if (jewellery != NON_ITEM
-        && mitm[jewellery].base_type == OBJ_JEWELLERY
-        && mitm[jewellery].sub_type == AMU_WARDING)
-    {
-        return 60;
-    }
-    return 0;
-}
-
 bool monster::friendly() const
 {
     return (attitude == ATT_FRIENDLY || has_ench(ENCH_CHARM));
@@ -3324,7 +3327,7 @@ int monster::missile_deflection() const
 {
     if (mons_class_flag(type, M_DEFLECT_MISSILES))
         return 2;
-    else if (scan_mon_inv_randarts(this, ARTP_RMSL))
+    else if (scan_artefacts(ARTP_RMSL))
         return 1;
     else
         return 0;
@@ -3515,6 +3518,10 @@ bool monster::is_unclean(bool check_spells) const
         return true;
     }
 
+    // A floating mass of disease is nearly the definition of unclean
+    if (type == MONS_ANCIENT_ZYME)
+        return true;
+
     // Assume that all unknown gods (GOD_NAMELESS) are not chaotic.
     // Being a worshipper of a chaotic god doesn't yet make you
     // physically/essentially chaotic (so you don't get hurt by silver),
@@ -3604,7 +3611,7 @@ int monster::res_fire() const
 
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
-        u += scan_mon_inv_randarts(this, ARTP_FIRE);
+        u += scan_artefacts(ARTP_FIRE);
 
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
@@ -3635,7 +3642,7 @@ int monster::res_fire() const
 int monster::res_steam() const
 {
     int res = get_mons_resist(this, MR_RES_STEAM);
-    if (has_equipped(EQ_BODY_ARMOUR, ARM_STEAM_DRAGON_ARMOUR))
+    if (wearing(EQ_BODY_ARMOUR, ARM_STEAM_DRAGON_ARMOUR))
         res += 3;
 
     res += (res_fire() + 1) / 2;
@@ -3652,7 +3659,7 @@ int monster::res_cold() const
 
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
-        u += scan_mon_inv_randarts(this, ARTP_COLD);
+        u += scan_artefacts(ARTP_COLD);
 
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
@@ -3690,7 +3697,7 @@ int monster::res_elec() const
     // Don't bother checking equipment if the monster can't use it.
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
-        u += scan_mon_inv_randarts(this, ARTP_ELECTRICITY);
+        u += scan_artefacts(ARTP_ELECTRICITY);
 
         // No ego armour, but storm dragon.
         // Also no non-artifact rings at present,
@@ -3747,7 +3754,7 @@ int monster::res_poison(bool temp) const
 
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
-        u += scan_mon_inv_randarts(this, ARTP_POISON);
+        u += scan_artefacts(ARTP_POISON);
 
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
@@ -3779,7 +3786,7 @@ int monster::res_sticky_flame() const
     int res = get_mons_resist(this, MR_RES_STICKY_FLAME);
     if (is_insubstantial())
         res += 1;
-    if (has_equipped(EQ_BODY_ARMOUR, ARM_MOTTLED_DRAGON_ARMOUR))
+    if (wearing(EQ_BODY_ARMOUR, ARM_MOTTLED_DRAGON_ARMOUR))
         res += 1;
     return res;
 }
@@ -3853,7 +3860,7 @@ int monster::res_negative_energy() const
 
     if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
     {
-        u += scan_mon_inv_randarts(this, ARTP_NEGATIVE_ENERGY);
+        u += scan_artefacts(ARTP_NEGATIVE_ENERGY);
 
         const int armour    = inv[MSLOT_ARMOUR];
         const int shld      = inv[MSLOT_SHIELD];
@@ -3940,9 +3947,17 @@ int monster::res_constrict() const
     return 0;
 }
 
+bool monster::res_corr(bool calc_unid, bool items) const
+{
+    if (get_mons_resist(this, MR_RES_ACID) > 0)
+        return true;
+
+    return actor::res_corr(calc_unid, items);
+}
+
 int monster::res_acid() const
 {
-    return get_mons_resist(this, MR_RES_ACID);
+    return res_corr() ? 1 : 0;
 }
 
 int monster::res_magic() const
@@ -3957,7 +3972,7 @@ int monster::res_magic() const
         u = hit_dice * -u * 4 / 3;
 
     // Randarts have a multiplicative effect.
-    u *= (scan_mon_inv_randarts(this, ARTP_MAGIC) + 100);
+    u *= (scan_artefacts(ARTP_MAGIC) + 100);
     u /= 100;
 
     // ego armour resistance
@@ -3983,7 +3998,7 @@ int monster::res_magic() const
     return u;
 }
 
-bool monster::no_tele(bool calc_unid, bool permit_id) const
+bool monster::no_tele(bool calc_unid, bool permit_id, bool blinking) const
 {
     // Plants can't survive without roots, so it's either this or auto-kill.
     // Statues have pedestals so moving them is weird.
@@ -4000,20 +4015,11 @@ bool monster::no_tele(bool calc_unid, bool permit_id) const
     if (check_stasis(!permit_id, calc_unid))
         return true;
 
-    // TODO: calc_unid, permit_id
-    if (scan_mon_inv_randarts(this, ARTP_PREVENT_TELEPORTATION))
+    // TODO: permit_id
+    if (has_notele_item(calc_unid))
         return true;
 
     return false;
-}
-
-bool monster::inaccuracy() const
-{
-    const int jewellery = inv[MSLOT_JEWELLERY];
-    return jewellery != NON_ITEM
-           && mitm[jewellery].base_type == OBJ_JEWELLERY
-           && mitm[jewellery].sub_type == AMU_INACCURACY
-           && !suppressed();
 }
 
 flight_type monster::flight_mode() const
@@ -4757,7 +4763,7 @@ bool monster::can_see_invisible() const
         return ghost->see_invis;
     else if (mons_class_flag(type, M_SEE_INVIS))
         return true;
-    else if (scan_mon_inv_randarts(this, ARTP_EYESIGHT) > 0)
+    else if (scan_artefacts(ARTP_EYESIGHT) > 0)
         return true;
     return false;
 }
@@ -5014,6 +5020,7 @@ bool monster::self_destructs()
 {
     if (type == MONS_GIANT_SPORE
         || type == MONS_BALL_LIGHTNING
+        || type == MONS_LURKING_HORROR
         || type == MONS_ORB_OF_DESTRUCTION)
     {
         suicide();
@@ -5179,6 +5186,9 @@ int monster::action_energy(energy_use_type et) const
         if (has_ench(ENCH_SWIFT))
             move_cost -= 2;
 
+        if (run())
+            move_cost -= 2;
+
         // Floundering monsters get the same penalty as the player, except that
         // player get penalty on entering water, while monster get the penalty
         // when leaving it.
@@ -5190,7 +5200,8 @@ int monster::action_energy(energy_use_type et) const
         if (has_ench(ENCH_LIQUEFYING))
             move_cost -= 2;
 
-        return move_cost;
+        // Never reduce the cost to zero
+        return max(move_cost, 1);
     }
     return 10;
 }
@@ -5529,6 +5540,8 @@ void monster::react_to_damage(const actor *oppressor, int damage,
             }
         }
     }
+    else if (type == MONS_STARCURSED_MASS)
+        (new starcursed_merge_fineff(this))->schedule();
 }
 
 reach_type monster::reach_range() const
@@ -5810,49 +5823,42 @@ bool monster::shove(const char* feat_name)
     return false;
 }
 
+void monster::id_if_worn(mon_inv_type mslot, object_class_type base_type,
+                          int sub_type) const
+{
+    item_def *item = mslot_item(mslot);
+
+    if (item && item->base_type == base_type && item->sub_type == sub_type)
+        set_ident_type(*item, ID_KNOWN_TYPE);
+}
+
 bool monster::check_clarity(bool silent) const
 {
-    const int jewellery = inv[MSLOT_JEWELLERY];
-    if (jewellery != NON_ITEM &&
-        mitm[jewellery].base_type == OBJ_JEWELLERY &&
-        mitm[jewellery].sub_type == AMU_CLARITY)
+    if (!clarity())
+        return false;
+
+    if (!silent && you.can_see(this) && !mons_is_lurking(this))
     {
-        if (!silent && you.can_see(this) && !mons_is_lurking(this))
-        {
-            simple_monster_message(this, " seems unimpeded by the mental distress.");
-            set_ident_type(mitm[jewellery], ID_KNOWN_TYPE);
-        }
-        return true;
+        simple_monster_message(this, " seems unimpeded by the mental distress.");
+        id_if_worn(MSLOT_JEWELLERY, OBJ_JEWELLERY, AMU_CLARITY);
+        // TODO: identify the randart property?
     }
 
-    if (scan_mon_inv_randarts(this, ARTP_CLARITY))
-    {
-        if (!silent && you.can_see(this) && !mons_is_lurking(this))
-            simple_monster_message(this, " seems unimpeded by the mental distress.");
-        // TODO: identify the property?
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 bool monster::check_stasis(bool silent, bool calc_unid) const
 {
-    const int jewellery = inv[MSLOT_JEWELLERY];
-    if (jewellery != NON_ITEM
-        && mitm[jewellery].base_type == OBJ_JEWELLERY
-        && mitm[jewellery].sub_type == AMU_STASIS
-        && (calc_unid || item_ident(mitm[jewellery], ISFLAG_KNOW_TYPE)))
+    if (!stasis())
+        return false;
+
+    if (!silent && you.can_see(this) && !mons_is_lurking(this))
     {
-        if (!silent && you.can_see(this) && !mons_is_lurking(this))
-        {
-            simple_monster_message(this, " looks uneasy for a moment.");
-            set_ident_type(mitm[jewellery], ID_KNOWN_TYPE);
-        }
-        return true;
+        simple_monster_message(this, " looks uneasy for a moment.");
+        id_if_worn(MSLOT_JEWELLERY, OBJ_JEWELLERY, AMU_STASIS);
     }
 
-    return false;
+    return true;
 }
 
 bool monster::is_child_tentacle() const

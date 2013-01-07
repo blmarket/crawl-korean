@@ -2194,7 +2194,6 @@ void run_environment_effects()
     run_corruption_effects(you.time_taken);
     shoals_apply_tides(div_rand_round(you.time_taken, BASELINE_DELAY),
                        false, true);
-    abyss_morph(you.time_taken);
     timeout_tombs(you.time_taken);
     timeout_malign_gateways(you.time_taken);
     timeout_phoenix_markers(you.time_taken);
@@ -2579,6 +2578,15 @@ void maybe_id_ring_hunger()
 {
     _maybe_id_jewel(RING_HUNGER, NUM_JEWELLERY, ARTP_METABOLISM);
     _maybe_id_jewel(RING_SUSTENANCE, NUM_JEWELLERY, ARTP_METABOLISM);
+}
+
+void maybe_id_clarity()
+{
+    // If we have clarity without any items
+    if (you.clarity(false, false))
+        return;
+
+    _maybe_id_jewel(NUM_JEWELLERY, AMU_CLARITY, ARTP_CLARITY);
 }
 
 void maybe_id_resist(beam_type flavour)

@@ -126,12 +126,6 @@ void trap_def::prepare_ammo(int charges)
     case TRAP_SPEAR:
         ammo_qty = 2 + random2avg(6, 3);
         break;
-    case TRAP_ALARM:
-        ammo_qty = 2 + random2(4);
-        // Zotdef: alarm traps have practically unlimited ammo
-        if (crawl_state.game_is_zotdef())
-            ammo_qty = 3276; // *10, stored as short
-        break;
     case TRAP_GOLUBRIA:
         // really, turns until it vanishes
         ammo_qty = 30 + random2(20);
@@ -246,14 +240,10 @@ bool trap_def::is_safe(actor* act) const
     if (!act->is_player())
         return false;
 
-    // No prompt (teleport traps are ineffective if
-    // wearing an amulet of stasis)
-    if (type == TRAP_TELEPORT
-        && (player_effect_stasis(false)
-            || player_effect_notele(false)))
-    {
+    // No prompt (teleport traps are ineffective if wearing an amulet of
+    // stasis or a -TELE item)
+    if (type == TRAP_TELEPORT && you.no_tele(false))
         return true;
-    }
 
     if (!is_known(act))
         return false;
@@ -634,22 +624,14 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
         break;
 
     case TRAP_ALARM:
-        if (!ammo_qty--)
-        {
-            if (you_trigger)
-                mpr(gettext("You trigger an alarm trap, but it seems broken."));
-            else if (in_sight && you_know)
-                mpr(gettext("The alarm trap gives no sound."));
+        // In ZotDef, alarm traps don't go away after use.
+        if (!crawl_state.game_is_zotdef())
             trap_destroyed = true;
-        }
-        else if (silenced(pos))
+
+        if (silenced(pos))
         {
             if (you_know && in_sight)
-                mpr(gettext("The alarm trap is silent."));
-
-            // If it's silent, you don't know about it.
-            if (!you_know)
-                hide();
+                mpr(_("The alarm trap vibrates slightly, failing to make a sound."));
         }
         else
         {

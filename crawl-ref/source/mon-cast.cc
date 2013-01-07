@@ -824,6 +824,16 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         beam.is_beam    = true;
         break;
 
+    case SPELL_CHAOS_BREATH:
+        beam.name       = "blast of chaos";
+        beam.aux_source = "blast of chaotic breath";
+        beam.damage     = dice_def(3, (mons->hit_dice * 2));
+        beam.colour     = ETC_RANDOM;
+        beam.hit        = 30;
+        beam.flavour    = BEAM_CHAOS;
+        beam.is_beam    = true;
+        break;
+
     case SPELL_COLD_BREATH:
         beam.name       = "blast of cold";
         beam.aux_source = "blast of icy breath";
@@ -1109,6 +1119,7 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_OZOCUBUS_REFRIGERATION:
     case SPELL_FRAGMENTATION:
     case SPELL_SHATTER:
+    case SPELL_FRENZY:
         return true;
     default:
         if (check_validity)
@@ -1157,7 +1168,8 @@ bool setup_mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         || spell_cast == SPELL_INVISIBILITY
         || spell_cast == SPELL_MINOR_HEALING
         || spell_cast == SPELL_TELEPORT_SELF
-        || spell_cast == SPELL_SILENCE)
+        || spell_cast == SPELL_SILENCE
+        || spell_cast == SPELL_FRENZY)
     {
         pbolt.target = mons->pos();
     }
@@ -1351,6 +1363,11 @@ static bool _ms_waste_of_time(const monster* mon, spell_type monspell)
 
     case SPELL_BERSERKER_RAGE:
         if (!mon->needs_berserk(false))
+            ret = true;
+        break;
+
+    case SPELL_FRENZY:
+        if (mon->has_ench(ENCH_HASTE) && mon->has_ench(ENCH_MIGHT))
             ret = true;
         break;
 
@@ -1618,6 +1635,7 @@ static bool _ms_low_hitpoint_cast(const monster* mon, spell_type monspell)
     case SPELL_HASTE:
     case SPELL_DEATHS_DOOR:
     case SPELL_BERSERKER_RAGE:
+    case SPELL_FRENZY:
         return true;
     case SPELL_VAMPIRIC_DRAINING:
         return !targ_sanct && targ_adj && !targ_friendly && !targ_undead;
@@ -2672,7 +2690,7 @@ static int _mons_mesmerise(monster* mons, bool actual)
     // Don't spam mesmerisation if you're already mesmerised,
     // or don't mesmerise at all if you pass an MR check or have clarity.
     if (you.check_res_magic(pow) > 0
-        || player_mental_clarity(true)
+        || you.clarity()
         || !(mons->foe == MHITYOU
              && !already_mesmerised && coinflip()))
     {
@@ -2923,8 +2941,7 @@ static bool _mons_ozocubus_refrigeration(monster* mons, bool actual)
                 if (m->alive())
                 {
                     print_wounds(m);
-                    if (mons_class_flag(m->type, M_COLD_BLOOD) && coinflip())
-                        m->add_ench(ENCH_SLOW);
+                    m->expose_to_element(BEAM_COLD, 5);
                 }
             }
 
@@ -3010,20 +3027,20 @@ static int _mons_available_tentacles(monster* head)
     return _max_tentacles(head) - tentacle_count;
 }
 
-static int _mons_create_tentacles(monster* head)
+static void _mons_create_tentacles(monster* head)
 {
     int head_index = head->mindex();
     if (invalid_monster_index(head_index))
     {
         mpr("Error! Tentacle head is not a part of the current environment!",
             MSGCH_ERROR);
-        return 0;
+        return;
     }
 
     int possible_count = _mons_available_tentacles(head);
 
     if (possible_count <= 0)
-        return 0;
+        return;
 
     monster_type tent_type = mons_tentacle_child_type(head);
 
@@ -3042,9 +3059,9 @@ static int _mons_create_tentacles(monster* head)
     else if (adj_squares.size() > unsigned(possible_count))
         random_shuffle(adj_squares.begin(), adj_squares.end());
 
-    int created_count = 0;
+    int visible_count = 0;
 
-    for (int i=0;i<possible_count;++i)
+    for (int i = 0 ; i < possible_count; ++i)
     {
         if (monster *tentacle = create_monster(
             mgen_data(tent_type, SAME_ATTITUDE(head), head,
@@ -3052,7 +3069,9 @@ static int _mons_create_tentacles(monster* head)
                         MG_FORCE_PLACE, head->god, MONS_NO_MONSTER, head_index,
                         head->colour, -1, PROX_CLOSE_TO_PLAYER)))
         {
-            created_count++;
+            if (you.can_see(tentacle))
+                visible_count++;
+
             tentacle->props["inwards"].get_int() = head_index;
 
             if (head->holiness() == MH_UNDEAD)
@@ -3062,20 +3081,20 @@ static int _mons_create_tentacles(monster* head)
 
     if (mons_base_type(head) == MONS_KRAKEN)
     {
-        if (created_count == 1)
+        if (visible_count == 1)
             mpr("A tentacle rises from the water!");
-        else if (created_count > 1)
+        else if (visible_count > 1)
             mpr("Tentacles burst out of the water!");
     }
     else if (head->type == MONS_TENTACLED_STARSPAWN)
     {
-        if (created_count == 1)
+        if (visible_count == 1)
             mpr("A tentacle flies out from the starspawn's body!");
-        else if (created_count > 1)
+        else if (visible_count > 1)
             mpr("Tentacles burst from the starspawn's body!");
     }
 
-    return created_count;
+    return;
 }
 
 static bool _mon_spell_bail_out_early(monster* mons, spell_type spell_cast)
@@ -3274,6 +3293,10 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_BERSERKER_RAGE:
         mons->props["went_berserk"] = bool(true);
         mons->go_berserk(true);
+        return;
+
+    case SPELL_FRENZY:
+        mons->go_frenzy();
         return;
 
     case SPELL_TROGS_HAND:
@@ -3476,21 +3499,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     case SPELL_CREATE_TENTACLES:
     {
-        int created_count = _mons_create_tentacles(mons);
-        if (mons_base_type(mons) == MONS_KRAKEN)
-        {
-            if (created_count == 1)
-                mpr("A tentacle rises from the water!");
-            else if (created_count > 1)
-                mpr("Tentacles burst out of the water!");
-        }
-        else if (mons->type == MONS_TENTACLED_STARSPAWN)
-        {
-            if (created_count == 1)
-                mpr("A tentacle flies out from the starspawn's body!");
-            else if (created_count > 1)
-                mpr("Tentacles burst from the starspawn's body!");
-        }
+        _mons_create_tentacles(mons);
         return;
     }
     case SPELL_FAKE_MARA_SUMMON:

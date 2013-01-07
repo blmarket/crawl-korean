@@ -913,6 +913,20 @@ struct spell_desc
 },
 
 {
+    SPELL_FRENZY, M_("Frenzy"),
+     SPTYP_CHARMS,
+     SPFLAG_HASTY | SPFLAG_MONSTER,
+     3,
+     0,
+     -1, -1,
+     0,
+     NULL,
+     false,
+     false
+},
+
+
+{
     SPELL_DISPEL_UNDEAD, M_("Dispel Undead"),
      SPTYP_NECROMANCY,
      SPFLAG_DIR_OR_TARGET,
@@ -2232,6 +2246,19 @@ struct spell_desc
 {
     SPELL_FIRE_BREATH, M_("Fire Breath"),
      SPTYP_CONJURATION | SPTYP_FIRE,
+     SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_INNATE | SPFLAG_NOISY,
+     5,
+     0,
+     6, 6,
+     0,
+     NULL,
+     true,
+     false
+},
+
+{
+    SPELL_CHAOS_BREATH, M_("Chaos Breath"),
+     SPTYP_CONJURATION | SPTYP_RANDOM,
      SPFLAG_DIR_OR_TARGET | SPFLAG_MONSTER | SPFLAG_INNATE | SPFLAG_NOISY,
      5,
      0,

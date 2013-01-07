@@ -153,6 +153,8 @@ static monster_info_flags ench_to_mb(const monster& mons, enchant_type ench)
         return MB_OZOCUBUS_ARMOUR;
     case ENCH_WRETCHED:
         return MB_WRETCHED;
+    case ENCH_SCREAMED:
+        return MB_SCREAMED;
     default:
         return NUM_MB_FLAGS;
     }
@@ -435,8 +437,7 @@ monster_info::monster_info(const monster* m, int milev)
 
         if (m->is_summoned())
             mb.set(MB_SUMMONED);
-
-        if (m->is_perm_summoned())
+        else if (m->is_perm_summoned())
             mb.set(MB_PERM_SUMMON);
     }
     else

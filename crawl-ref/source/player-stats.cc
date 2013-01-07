@@ -158,7 +158,7 @@ void jiyva_stat_action()
     }
     // Try to avoid burdening people or making their armour difficult to use.
     int current_capacity = carrying_capacity(BS_UNENCUMBERED);
-    int carrying_strength = cur_stat[0] + (you.burden - current_capacity + 249)/250;
+    int carrying_strength = cur_stat[0] + (you.burden - current_capacity + 207)/208;
     int evp = you.unadjusted_body_armour_penalty();
     target_stat[0] = max(max(9, 2 + 3 * evp), 2 + carrying_strength);
     target_stat[1] = 9;
@@ -365,10 +365,10 @@ static int _strength_modifier()
         result += 3 * count_worn_ego(SPARM_STRENGTH);
 
         // rings of strength
-        result += player_equip(EQ_RINGS_PLUS, RING_STRENGTH);
+        result += you.wearing(EQ_RINGS_PLUS, RING_STRENGTH);
 
         // randarts of strength
-        result += scan_artefacts(ARTP_STRENGTH);
+        result += you.scan_artefacts(ARTP_STRENGTH);
     }
 
     // mutations
@@ -410,10 +410,10 @@ static int _int_modifier()
         result += 3 * count_worn_ego(SPARM_INTELLIGENCE);
 
         // rings of intelligence
-        result += player_equip(EQ_RINGS_PLUS, RING_INTELLIGENCE);
+        result += you.wearing(EQ_RINGS_PLUS, RING_INTELLIGENCE);
 
         // randarts of intelligence
-        result += scan_artefacts(ARTP_INTELLIGENCE);
+        result += you.scan_artefacts(ARTP_INTELLIGENCE);
     }
 
     // mutations
@@ -441,10 +441,10 @@ static int _dex_modifier()
         result += 3 * count_worn_ego(SPARM_DEXTERITY);
 
         // rings of dexterity
-        result += player_equip(EQ_RINGS_PLUS, RING_DEXTERITY);
+        result += you.wearing(EQ_RINGS_PLUS, RING_DEXTERITY);
 
         // randarts of dexterity
-        result += scan_artefacts(ARTP_DEXTERITY);
+        result += you.scan_artefacts(ARTP_DEXTERITY);
     }
 
     // mutations

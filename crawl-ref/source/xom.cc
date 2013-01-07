@@ -382,7 +382,7 @@ void xom_tick()
     }
 //        simple_god_message(" is getting BORED."); 간단한 신의 메시지? 앞에 좀 이 붙을것 같네요
 
-    if (player_effect_faith() ? coinflip() : one_chance_in(3))
+    if (you.faith() ? coinflip() : one_chance_in(3))
     {
         const int tension = get_tension(GOD_XOM);
         const int chance = (tension ==  0 ? 1 :
@@ -534,7 +534,7 @@ static bool _teleportation_check(const spell_type spell = SPELL_TELEPORT_SELF)
     {
     case SPELL_BLINK:
     case SPELL_TELEPORT_SELF:
-        return !item_blocks_teleport(false, false);
+        return !you.no_tele(false, false, spell == SPELL_BLINK);
     default:
         return true;
     }

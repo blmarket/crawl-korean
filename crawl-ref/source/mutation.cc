@@ -606,7 +606,7 @@ string describe_mutations(bool center_title)
         num << 4 + you.experience_level / 3
                  + (you.species == SP_GREY_DRACONIAN ? 5 : 0);
 
-        const string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
+        string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
             scale_type.c_str(),
             (you.species == SP_GREY_DRACONIAN ? _(M_("very ")) : ""),
             num.str().c_str());
@@ -614,7 +614,14 @@ string describe_mutations(bool center_title)
         result += _annotate_form_based(msg,
                       player_is_shapechanged() && you.form != TRAN_DRAGON);
 
-        result += gettext("Your body does not fit into most forms of armour.\n");
+        result += _("Your body does not fit into most forms of armour.\n");
+
+        msg = _("Your cold-blooded metabolism reacts poorly to cold.");
+        if (you.res_cold() <= 0)
+            result += msg + "\n";
+        else
+            result += "<darkgrey>" + msg + "</darkgrey>\n";
+
         have_any = true;
     }
 
@@ -1307,7 +1314,7 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         // resistance mutation.
         if (!god_gift)
         {
-            if ((player_res_mutation_from_item()
+            if ((you.rmut_from_item()
                  && !one_chance_in(temporary ? 3 : 10) && !stat_gain_potion)
                 || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                 || (player_mutation_level(MUT_MUTATION_RESISTANCE)

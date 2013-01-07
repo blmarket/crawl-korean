@@ -1339,9 +1339,11 @@ static misc_item_type _gift_type_to_deck(int gift)
 static bool _give_nemelex_gift(bool forced = false)
 {
     // But only if you're not flying over deep water.
-    // Merfolk don't get gifts in deep water. {due}
-    if (!feat_has_solid_floor(grd(you.pos())))
+    if (!(feat_has_solid_floor(grd(you.pos()))
+          || feat_is_watery(grd(you.pos())) && species_likes_water(you.species)))
+    {
         return false;
+    }
 
     // Nemelex will give at least one gift early.
     if (forced
@@ -1982,8 +1984,11 @@ bool do_god_gift(bool forced)
         case GOD_TROG:
         {
             // Break early if giving a gift now means it would be lost.
-            if (!feat_has_solid_floor(grd(you.pos())))
+            if (!(feat_has_solid_floor(grd(you.pos()))
+                || feat_is_watery(grd(you.pos())) && species_likes_water(you.species)))
+            {
                 break;
+            }
 
             // Should gift catnip instead.
             if (you.species == SP_FELID)
@@ -2451,7 +2456,7 @@ int piety_scale(int piety)
     if (piety < 0)
         return -piety_scale(-piety);
 
-    if (player_effect_faith())
+    if (you.faith())
         return (piety + div_rand_round(piety, 3));
 
     return piety;

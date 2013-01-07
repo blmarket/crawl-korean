@@ -1065,8 +1065,8 @@ coord_def direction_chooser::find_default_target() const
             // We might be able to hit monsters in LOS that are outside of
             // normal range, but inside explosion/cloud range
             if (!success
-                && you.current_vision > range
-                && hitfunc && hitfunc->can_affect_outside_range())
+                && hitfunc && hitfunc->can_affect_outside_range()
+                && (you.current_vision > range || hitfunc->can_affect_walls()))
             {
                 success = _find_square_wrapper(result, 1, _find_monster_expl,
                                                needs_path, mode, range, hitfunc,
@@ -2434,8 +2434,10 @@ static bool _find_monster(const coord_def& where, int mode, bool need_path,
 }
 
 static bool _find_monster_expl(const coord_def& where, int mode, bool need_path,
-                           int range, targetter *hitfunc)
+                               int range, targetter *hitfunc)
 {
+    ASSERT(hitfunc);
+
 #ifdef CLUA_BINDINGS
     {
         coord_def dp = grid2player(where);
@@ -2448,7 +2450,7 @@ static bool _find_monster_expl(const coord_def& where, int mode, bool need_path,
 #endif
 
     // Only check for explosive targetting at the edge of the range
-    if (you.pos().range(where) != range)
+    if (you.pos().range(where) != range && !hitfunc->can_affect_walls())
         return false;
 
     // Target outside LOS.
@@ -2466,7 +2468,7 @@ static bool _find_monster_expl(const coord_def& where, int mode, bool need_path,
     if (hitfunc->set_aim(where))
         for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
         {
-            if (hitfunc->is_affected(*ri))
+            if (hitfunc->is_affected(*ri) >= AFF_YES)
             {
                 const monster* mon = monster_at(*ri);
                 if (mon != NULL)
@@ -3041,6 +3043,8 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
         return _(M_("one-way gate to the infinite horrors of the Abyss"));
     case DNGN_EXIT_ABYSS:
         return _(M_("gateway leading out of the Abyss"));
+    case DNGN_ABYSSAL_STAIR:
+        return _(M_("gateway leading deeper into the Abyss"));
     case DNGN_EXIT_THROUGH_ABYSS:
         return _(M_("exit through the horrors of the Abyss"));
     case DNGN_STONE_ARCH:

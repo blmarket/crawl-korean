@@ -85,8 +85,7 @@ static bool will_autoinscribe = false;
 static inline string _autopickup_item_name(const item_def &item)
 {
     return userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item, true)
-           + menu_colour_item_prefix(item, false) + " "
-           + item.name(false, DESC_PLAIN);
+           + item_prefix(item, false) + " " + item.name(false, DESC_PLAIN);
 }
 
 // Used to be called "unlink_items", but all it really does is make
@@ -3069,7 +3068,7 @@ bool item_is_active_manual(const item_def &item)
 bool item_def::has_spells() const
 {
     return (item_is_spellbook(*this) && item_type_known(*this)
-            || count_rod_spells(*this, true) > 1);
+            || count_rod_spells(*this, true) > 0);
 }
 
 int item_def::book_number() const
@@ -3098,7 +3097,18 @@ zap_type item_def::zap() const
         return ZAP_DEBUGGING_RAY;
 
     zap_type result = ZAP_DEBUGGING_RAY;
-    switch (static_cast<wand_type>(sub_type))
+    wand_type wand_sub_type = static_cast<wand_type>(sub_type);
+
+    if (wand_sub_type == WAND_RANDOM_EFFECTS)
+    {
+        while (wand_sub_type == WAND_RANDOM_EFFECTS
+               || wand_sub_type == WAND_HEAL_WOUNDS)
+        {
+            wand_sub_type = static_cast<wand_type>(random2(NUM_WANDS));
+        }
+    }
+
+    switch (wand_sub_type)
     {
     case WAND_FLAME:           result = ZAP_FLAME;           break;
     case WAND_FROST:           result = ZAP_FROST;           break;
@@ -3119,14 +3129,7 @@ zap_type item_def::zap() const
     case WAND_ENSLAVEMENT:     result = ZAP_ENSLAVEMENT;     break;
     case WAND_DRAINING:        result = ZAP_NEGATIVE_ENERGY; break;
     case WAND_DISINTEGRATION:  result = ZAP_DISINTEGRATION;  break;
-    case WAND_RANDOM_EFFECTS:
-        result = static_cast<zap_type>(random2(ZAP_LAST_RANDOM + 1));
-        if (one_chance_in(20))
-            result = ZAP_NEGATIVE_ENERGY;
-        if (one_chance_in(17))
-            result = ZAP_ENSLAVEMENT;
-        break;
-
+    case WAND_RANDOM_EFFECTS:  /* impossible */
     case NUM_WANDS: break;
     }
     return result;
@@ -4010,7 +4013,8 @@ item_info get_item_info(const item_def& item)
 
     const char* copy_props[] = {ARTEFACT_APPEAR_KEY, KNOWN_PROPS_KEY,
                                 CORPSE_NAME_KEY, CORPSE_NAME_TYPE_KEY,
-                                "drawn_cards", "item_tile", "item_tile_name"};
+                                "drawn_cards", "item_tile", "item_tile_name",
+                                "worn_tile", "worn_tile_name"};
     for (unsigned i = 0; i < ARRAYSZ(copy_props); ++i)
     {
         if (item.props.exists(copy_props[i]))

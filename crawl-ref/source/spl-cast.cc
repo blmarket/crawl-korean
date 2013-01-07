@@ -500,7 +500,7 @@ static int _spell_enhancement(unsigned int typeflags)
     if (you.attribute[ATTR_SHADOWS])
         enhanced -= 2;
 
-    if (player_effect_archmagi())
+    if (you.archmagi())
         enhanced++;
 
     // These are used in an exponential way, so we'll limit them a bit. -- bwr
@@ -540,7 +540,7 @@ static bool _can_cast()
     }
 
     // Randart weapons.
-    if (player_effect_nocast())
+    if (you.no_cast())
     {
         mpr(gettext("Something interferes with your magic!"));
         return false;
@@ -850,7 +850,7 @@ bool is_prevented_teleport(spell_type spell)
     return (spell == SPELL_BLINK
              || spell == SPELL_CONTROLLED_BLINK
              || spell == SPELL_TELEPORT_SELF)
-            && item_blocks_teleport(false, false);
+            && you.no_tele(false, false, spell != SPELL_TELEPORT_SELF);
 }
 
 bool spell_is_uncastable(spell_type spell, string &msg)

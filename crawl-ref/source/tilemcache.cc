@@ -482,8 +482,8 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
 }
 
 // Returns the amount of pixels necessary to shift a worn shield, like
-// it's done with weapon.  Tiles that have a shield hard-drawn should not
-// be listed here.
+// it's done with weapon.  No monster should have a shield hard-drawn
+// on the tile.
 bool mcache_monster::get_shield_offset(tileidx_t mon_tile,
                                        int *ofs_x, int *ofs_y)
 {
@@ -517,6 +517,35 @@ bool mcache_monster::get_shield_offset(tileidx_t mon_tile,
         *ofs_y = 0;
         break;
 
+    case TILEP_MONS_DONALD:
+        *ofs_x = -1;
+        *ofs_y = -1;
+        break;
+
+    case TILEP_MONS_SPRIGGAN:
+    case TILEP_MONS_SPRIGGAN_DEFENDER:
+    case TILEP_MONS_SPRIGGAN_BERSERKER:
+    case TILEP_MONS_SPRIGGAN_ASSASSIN:
+        *ofs_x = 2;
+        *ofs_y = 3;
+        break;
+
+    case TILEP_MONS_SPRIGGAN_DRUID:
+        *ofs_x = 2;
+        *ofs_y = -4;
+        break;
+
+    case TILEP_MONS_SPRIGGAN_AIR_MAGE:
+        *ofs_x = 2;
+        *ofs_y = -9;
+        break;
+
+    case TILEP_MONS_THE_ENCHANTRESS:
+        *ofs_x = 6;
+        *ofs_y = 3;
+        break;
+
+    case TILEP_MONS_SPRIGGAN_RIDER: // shield covered, out of picture
     default:
         // This monster cannot be displayed with a shield.
         return false;

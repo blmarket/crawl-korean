@@ -1858,10 +1858,11 @@ void StashSearchMenu::draw_title()
 
         draw_title_suffix(formatted_string::parse_string(make_stringf(
                  "<lightgrey> [<w>a-z</w>: %s"
-                 "  <w>?</w>/<w>!</w>: action"
+                 "  <w>?</w>/<w>!</w>: %s"
                  "  <w>-</w>: stacking"
                  "  <w>/</w>: sorting]",
-                 menu_action == ACT_EXECUTE ? "travel" : "examine")), false);
+                 menu_action == ACT_EXECUTE ? "travel" : "examine",
+                 menu_action == ACT_EXECUTE ? "examine" : "travel")), false);
     }
 }
 
@@ -2000,8 +2001,7 @@ bool StashTracker::display_search_results(
         {
             const item_def &first(*res.matching_items.begin());
             const int itemcol = menu_colour(first.name(false, DESC_PLAIN).c_str(),
-                                            menu_colour_item_prefix(first),
-                                            "pickup");
+                                            item_prefix(first), "pickup");
             if (itemcol != -1)
                 me->colour = itemcol;
         }

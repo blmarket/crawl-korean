@@ -21,6 +21,7 @@
 
 #include "areas.h"
 #include "attitude-change.h"
+#include "branch.h"
 #include "cio.h"
 #include "cloud.h"
 #include "colour.h"
@@ -2462,6 +2463,9 @@ void bolt::affect_endpoint()
     if (origin_spell == SPELL_FIRE_BREATH && is_big_cloud)
         big_cloud(CLOUD_FIRE, agent(), pos(), 0, 8 + random2(5));
 
+    if (origin_spell == SPELL_CHAOS_BREATH && is_big_cloud)
+        big_cloud(CLOUD_CHAOS, agent(), pos(), 0, 8 + random2(5));
+
     if (name == "foul vapour")
     {
         // death drake; swamp drakes handled earlier
@@ -2985,7 +2989,7 @@ bool bolt::is_harmless(const monster* mon) const
         return (mon->res_poison() >= 3);
 
     case BEAM_ACID:
-        return (mon->res_acid() >= 3);
+        return mon->res_acid();
 
     case BEAM_PETRIFY:
         return (mon->res_petrify() || mon->petrified());
@@ -3027,7 +3031,7 @@ bool bolt::harmless_to_player() const
         return (player_res_poison(false) >= 3);
 
     case BEAM_POTION_MEPHITIC:
-        return (player_res_poison(false) > 0 || player_mental_clarity(false)
+        return (player_res_poison(false) > 0 || you.clarity(false)
                 || you.is_unbreathing());
 
     case BEAM_ELECTRICITY:
@@ -3408,11 +3412,6 @@ void bolt::affect_player_enchantment()
             mpr(gettext("This spell isn't strong enough to banish yourself."));
             break;
         }
-        if (player_in_branch(BRANCH_ABYSS))
-        {
-            mpr(gettext("You feel trapped."));
-            break;
-        }
         you.banish(agent(), zapper());
         obvious_effect = true;
         break;
@@ -3713,7 +3712,7 @@ void bolt::affect_player()
 
         // Potions exploding.
         if (flavour == BEAM_COLD)
-            expose_player_to_element(BEAM_COLD, burn_power);
+            expose_player_to_element(BEAM_COLD, burn_power, true, false);
 
         // Spore pops.
         if (in_explosion_phase && flavour == BEAM_SPORE)
@@ -4791,7 +4790,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         return MON_AFFECTED;
 
     case BEAM_BANISH:
-        if (player_in_branch(BRANCH_ABYSS))
+        if (player_in_branch(BRANCH_ABYSS) && x_chance_in_y(you.depth, brdepth[BRANCH_ABYSS]))
             simple_monster_message(mon, _(" wobbles for a moment."));
         else
             mon->banish(agent());
@@ -5673,8 +5672,8 @@ bolt::bolt() : origin_spell(SPELL_NO_SPELL),
                affects_nothing(false), affects_items(true), effect_known(true),
                draw_delay(15), special_explosion(NULL), animate(true),
                ac_rule(AC_NORMAL),
-#ifdef DEBUG_DIAGNOSTICD
-               quier_debug(false),
+#ifdef DEBUG_DIAGNOSTICS
+               quiet_debug(false),
 #endif
                range_funcs(),
                damage_funcs(), hit_funcs(), aoe_funcs(), affect_func(NULL),

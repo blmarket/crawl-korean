@@ -73,7 +73,7 @@ static bool _safe_to_remove_or_wear(const item_def &item, bool remove,
 // Rather messy - we've gathered all the can't-wield logic from wield_weapon()
 // here.
 bool can_wield(item_def *weapon, bool say_reason,
-               bool ignore_temporary_disability, bool unwield)
+               bool ignore_temporary_disability, bool unwield, bool only_known)
 {
 #define SAY(x) {if (say_reason) { x; }}
 
@@ -155,7 +155,8 @@ bool can_wield(item_def *weapon, bool say_reason,
         return false;
     }
 
-    if (you.undead_or_demonic() && is_holy_item(*weapon))
+    if (you.undead_or_demonic() && is_holy_item(*weapon)
+        && (item_type_known(*weapon) || !only_known))
     {
         if (say_reason)
         {
@@ -178,7 +179,8 @@ bool can_wield(item_def *weapon, bool say_reason,
         && you.hunger_state < HS_FULL
         && get_weapon_brand(*weapon) == SPWPN_VAMPIRICISM
         && !crawl_state.game_is_zotdef()
-        && !you.is_undead)
+        && !you.is_undead
+        && (item_type_known(*weapon) || !only_known))
     {
         if (say_reason)
         {
@@ -359,6 +361,10 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
         return false;
     }
 
+    // Ensure wieldable, stat loss non-fatal
+    if (!can_wield(&new_wpn, true) || !_safe_to_remove_or_wear(new_wpn, false))
+        return false;
+
     // Unwield any old weapon.
     if (you.weapon())
     {
@@ -371,9 +377,8 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             return false;
     }
 
-    // Ensure wieldable, stat loss non-fatal
-    if (!can_wield(&new_wpn, true)
-        || !_safe_to_remove_or_wear(new_wpn, false))
+    // Really ensure wieldable, even unknown brand
+    if (!can_wield(&new_wpn, true, false, false, false))
     {
         if (!was_barehanded)
         {
@@ -1197,7 +1202,7 @@ bool safe_to_remove(const item_def &item, bool quiet)
     const bool removing_ends_flight =
         you.flight_mode()
         && !you.attribute[ATTR_FLIGHT_UNCANCELLABLE]
-        && (player_evokable_flight() == 1);
+        && (you.evokable_flight() == 1);
 
     const dungeon_feature_type feat = grd(you.pos());
 
@@ -1867,7 +1872,7 @@ void zap_wand(int slot)
     if (alreadyknown && zap_wand.target == you.pos())
     {
         if (wand.sub_type == WAND_TELEPORTATION
-            && item_blocks_teleport(false, false))
+            && you.no_tele(false, false))
         {
             mpr(gettext("You cannot teleport right now."));
             return;
@@ -2731,7 +2736,7 @@ static bool _scroll_modify_item(item_def scroll)
     switch (scroll.sub_type)
     {
     case SCR_IDENTIFY:
-        if (!fully_identified(item))
+        if (!fully_identified(item) || is_deck(item) && !top_card_is_known(item))
         {
             identify(-1, item_slot);
             return true;
@@ -2887,7 +2892,7 @@ void read_scroll(int slot)
         {
         case SCR_BLINKING:
         case SCR_TELEPORTATION:
-            if (item_blocks_teleport(false, false))
+            if (you.no_tele(false, false, which_scroll == SCR_BLINKING))
             {
                 mpr(gettext("You cannot teleport right now."));
                 return;
@@ -3307,21 +3312,18 @@ void examine_object(void)
     mesclr();
 }
 
-bool item_blocks_teleport(bool calc_unid, bool permit_id)
-{
-    return (player_effect_notele(calc_unid)
-            || stasis_blocks_effect(calc_unid, permit_id, NULL)
-            || crawl_state.game_is_zotdef() && orb_haloed(you.pos()));
-}
-
 bool stasis_blocks_effect(bool calc_unid,
                           bool identify,
                           const char *msg, int noise,
                           const char *silenced_msg)
 {
-    if (player_effect_stasis(calc_unid))
+    if (you.stasis(calc_unid))
     {
         item_def *amulet = you.slot_item(EQ_AMULET, false);
+
+        // Just in case a non-amulet stasis source is added.
+        if (amulet && amulet->sub_type != AMU_STASIS)
+            amulet = 0;
 
         if (msg)
         {
@@ -3427,7 +3429,7 @@ static bool _prompt_eat_bad_food(const item_def food)
     if (!is_bad_food(food))
         return true;
 
-    const string food_colour = menu_colour_item_prefix(food);
+    const string food_colour = item_prefix(food);
     string colour            = "";
     string colour_off        = "";
 

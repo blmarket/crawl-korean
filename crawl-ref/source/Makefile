@@ -1093,8 +1093,8 @@ SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
 greet:
 	@if [ ! -e $(GAME) ]; then\
-		printf "  * If you experience any problems building Crawl, please take a second look\\n"\
-		"  * at INSTALL.txt: the solution to your problem just might be in there!\\n";\
+		printf '  * %s\n' "If you experience any problems building Crawl, please take a second look"\
+		                  "at INSTALL.txt: the solution to your problem just might be in there!";\
 	fi
 
 docs: $(GENERATED_DOCS)
@@ -1624,9 +1624,9 @@ tx-sync:
 .PHONY: build-rltiles
 build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
 ifdef ANDROID
-	# force submake to run properly
-	env -i - bash -l -c "$(MAKE) -C $(RLTILES) all TILES=1 V=1"
-    # prove that tiles were generated properly
+        # force submake to run properly
+	+$(MAKE) -C $(RLTILES) all ANDROID=1 TILES=1 V=1
+        # prove that tiles were generated properly
 	grep tile_info rltiles/*.cc| head
 else
 	+$(MAKE) -C $(RLTILES) all ARCH=$(ARCH) TILES=$(TILES)$(WEBTILES)

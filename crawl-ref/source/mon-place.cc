@@ -10,6 +10,7 @@
 #include "mon-place.h"
 #include "mgen_data.h"
 
+#include "abyss.h"
 #include "areas.h"
 #include "arena.h"
 #include "branch.h"
@@ -38,6 +39,7 @@
 #include "random.h"
 #include "religion.h"
 #include "shopping.h"
+#include "spl-clouds.h"
 #include "spl-damage.h"
 #include "sprint.h"
 #include "stairs.h"
@@ -904,6 +906,31 @@ static bool _in_ood_pack_protected_place()
     return (env.turns_on_level < 1400 - env.absdepth0 * 117);
 }
 
+static string _abyss_monster_creation_message(monster* mon, bool visible)
+{
+    if (mon->type == MONS_DEATH_COB)
+    {
+        if (visible)
+            return coinflip() ? " appears in a burst of microwaves!" : " pops from nullspace!";
+        return " smells like butter!";
+    }
+
+    string messages[] = {
+        (visible ? " appears" : " flickers") + string(" in a shower of")
+            + (one_chance_in(3) ? " translocational energy." : " sparks."),
+        " materialises.",
+        string(" emerges from ") + (one_chance_in(3) ? "chaos." : "the beyond."),
+        " assembles " + string(mons_pronoun(mon->type, PRONOUN_REFLEXIVE, visible)) + "!",
+        (one_chance_in(3) ? " erupts" : " bursts") + string(" from nowhere!"),
+        string(" is cast out of ") + (one_chance_in(3) ? "space!" : "reality!"),
+        string(" coalesces out of ") + (one_chance_in(3) ? "pure" : "seething")
+            + string(" chaos."),
+        string(" punctures the fabric of") + (one_chance_in(5) ? " time!" : " the universe."),
+        string(" manifests") + (silenced(you.pos()) ? "!" : " with a bang!")
+    };
+    return messages[min(random2(9), random2(9))];
+}
+
 monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
 {
 #ifdef DEBUG_MON_CREATION
@@ -1135,39 +1162,47 @@ monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
 #endif
     }
 
+    if (player_in_branch(BRANCH_ABYSS) && !mg.summoner)
+        big_cloud(CLOUD_TLOC_ENERGY, mon, mon->pos(), 3 + random2(3), 3, 3);
+
     // Message to player from stairwell/gate appearance.
-    if (you.see_cell(mg.pos) && mg.proximity == PROX_NEAR_STAIRS)
+    if (you.see_cell(mg.pos) &&
+       (mg.proximity == PROX_NEAR_STAIRS ||
+       (player_in_branch(BRANCH_ABYSS) && !mg.summoner)))
     {
         string msg;
-
-        if (mon->visible_to(&you))
+        bool is_visible = mon->visible_to(&you);
+        if (is_visible)
             msg = mon->name(DESC_A);
         else if (shoved)
             msg = gettext(M_("Something"));
 
-        if (shoved)
+        if (mg.proximity == PROX_NEAR_STAIRS)
         {
-            msg += make_stringf(gettext(" shoves you out of the %s!"),
-                (stair_type == DCHAR_ARCH) ? 
-                    pgettext("place_monster", "gateway") : 
-                    pgettext("place_monster", "stairwell"));
-            mpr(msg.c_str());
-        }
-        else if (!msg.empty())
-        {
-            if (stair_type == DCHAR_STAIRS_DOWN)
-                msg += gettext(" comes up the stairs.");
-            else if (stair_type == DCHAR_STAIRS_UP)
-                msg += gettext(" comes down the stairs.");
-            else if (stair_type == DCHAR_ARCH)
-                msg += gettext(" comes through the gate.");
-            else
-                msg = "";
-
-            if (!msg.empty())
+            if (shoved)
+            {
+                msg += make_stringf(gettext(" shoves you out of the %s!"),
+                        (stair_type == DCHAR_ARCH) ? 
+                        pgettext("place_monster", "gateway") : 
+                        pgettext("place_monster", "stairwell"));
                 mpr(msg.c_str());
+            }
+            else if (!msg.empty())
+            {
+                if (stair_type == DCHAR_STAIRS_DOWN)
+                    msg += " comes up the stairs.";
+                else if (stair_type == DCHAR_STAIRS_UP)
+                    msg += " comes down the stairs.";
+                else if (stair_type == DCHAR_ARCH)
+                    msg += " comes through the gate.";
+                else
+                    msg = "";
+            }
         }
-
+        else if (player_in_branch(BRANCH_ABYSS))
+            msg += _abyss_monster_creation_message(mon, is_visible);
+        if (!msg.empty())
+            mpr(msg.c_str());
         // Special case: must update the view for monsters created
         // in player LOS.
         viewwindow();
@@ -1730,16 +1765,16 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
             mons_add_blame(mon, blame_prefix + "the player character");
         else
         {
-            monster* sum = mg.summoner->as_monster();
+            const monster* sum = mg.summoner->as_monster();
             mons_add_blame(mon, (blame_prefix
                                  + sum->full_name(DESC_A, true)));
             if (sum->props.exists("blame"))
             {
-                CrawlVector& oldblame = sum->props["blame"].get_vector();
-                for (CrawlVector::iterator i = oldblame.begin();
+                const CrawlVector& oldblame = sum->props["blame"].get_vector();
+                for (CrawlVector::const_iterator i = oldblame.begin();
                      i != oldblame.end(); ++i)
                 {
-                    mons_add_blame(mon, *i);
+                    mons_add_blame(mon, i->get_string());
                 }
             }
         }

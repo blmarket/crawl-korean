@@ -547,6 +547,11 @@ ancient lich
 A lich who, having existed for countless centuries, has grown almost
 unimaginably powerful through the study of dark magic.
 %%%%
+ancient zyme
+
+A nexus of sentient cancer and disease, borne aloft perhaps by malice alone.
+Its nature inflicts withering illness on all living beings in its presence.
+%%%%
 angel
 
 A divine warrior of the Shining One, it is a towering winged figure of
@@ -562,6 +567,12 @@ apis
 
 A placid, sacred bull of Elyvilon. Beware, evildoers, as it will surely turn on
 you!
+%%%%
+apocalypse crab
+
+An opalescent crab with jet black eyes. A distant relative of the fire crab,
+the rumors claim that this species is waiting for the end of time. The
+chaotic mists effusing from its mandible are hardly suggestive of waiting.
 %%%%
 azure jelly
 
@@ -1696,6 +1707,10 @@ lindwurm
 A small serpentine dragon with a pair of strong forelimbs. Its thick scales
 give off an eerie green glow.
 %%%%
+lurking horror
+
+A formless mass of energy. It seems to stop moving when you look at it.
+%%%%
 macabre mass
 
 A fused and twisted collection of body parts, weakly animated by necromancy. It
@@ -2331,6 +2346,10 @@ soul eater
 This demon looks like a malignantly shifting shadow gliding through the air. It
 radiates an intense aura of negative force.
 %%%%
+spatial maelstrom
+
+A malevolent rift in reality.
+%%%%
 spatial vortex
 
 미친듯이 깜박이며 발광하는 시공의 뒤틀림이다.
@@ -2404,6 +2423,15 @@ spriggan rider
 
 Mounted on giant fireflies, these riders make sure no one who dares to intrude
 on the spriggan forests and cairns will be able to just walk away.
+%%%%
+starcursed mass
+
+An mass of stellar detritus that glows with the sickly putrescence of a
+dying star, forever shrieking soundlessly in a voice beyond mortal grasp.
+Its form quivers and undulates constantly, dividing spontaneously and then
+withdrawing when threatened. While the voice of even a single one is
+unsettling, in chorus, their screams can overwhelm the minds of even the
+bravest warriors, leaving them stunned and helpless.
 %%%%
 starspawn tentacle
 
@@ -2493,6 +2521,11 @@ terrified wizard
 
 This guy has been caught by magic-haters, and is going to be sacrificed on the
 altar of Trog.
+%%%%
+thrashing horror
+
+A seething mass of yellow flesh. It thrashes erratically, sometimes devouring
+friend and foe alike.
 %%%%
 titan
 
@@ -3189,13 +3222,6 @@ sacrificial human
 From the look of things, she was supposed to be sacrificed in some
 demon-summoning ritual.
 %%%%
-shadowy statue
-
-Made of some black lusterless stone, this statue seems to be the focal point
-for swirling shadows that permeate this room. They seem to be more substantial
-than your usual half-light, so it might be a good idea to blow the statue to
-smithereens before the shadows turn fully real.
-%%%%
 sickly siren
 
 A young woman with a fish tail in place of legs. She looks quite sick, but
@@ -3211,20 +3237,9 @@ Since when is having flesh a requirement to be a master archer? These skeletal
 fellows can turn you into a bloody hedgehog with ease. Meatlings like you are
 only good for a supply of sinew for bowstrings anyway.
 %%%%
-snail statue
-
-This idol to the god Cheibriados has the odd property of turning the ground in
-its presence into difficult-to-slog-through mud.
-%%%%
 soapberry tree
 
 <apple tree>
-%%%%
-spearthrower statue
-
-This statue bristles with sharp shards of green crystal that sparkle with every
-gleam of light. The shards seem to be in motion, migrating to form long spears
-of crystal that the statue can shoot through interlopers.
 %%%%
 spooky statue
 

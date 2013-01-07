@@ -4,6 +4,7 @@
 
 #include <sstream>
 
+#include "abyss.h"
 #include "areas.h"
 #include "branch.h"
 #include "chardump.h"
@@ -524,6 +525,9 @@ level_id stair_destination(dungeon_feature_type feat, const string &dst,
         else
             die("hell exit without return destination");
 
+    case DNGN_ABYSSAL_STAIR:
+        ASSERT(you.where_are_you == BRANCH_ABYSS);
+        push_features_to_abyss();
     case DNGN_ESCAPE_HATCH_DOWN:
     case DNGN_STONE_STAIRS_DOWN_I:
     case DNGN_STONE_STAIRS_DOWN_II:
@@ -579,7 +583,9 @@ level_id stair_destination(dungeon_feature_type feat, const string &dst,
                 level_id::current().describe().c_str());
         }
         return you.level_stack.back().id;
-
+    case DNGN_ENTER_ABYSS:
+        push_features_to_abyss();
+        break;
     default:
         break;
     }
@@ -839,10 +845,10 @@ void down_stairs(dungeon_feature_type force_stair)
     {
         mpr(_("You pass through the gate."));
         take_note(Note(NOTE_MESSAGE, 0, 0,
-            stair_find == DNGN_EXIT_ABYSS ? _("Escaped the Abyss.") :
-            stair_find == DNGN_EXIT_PANDEMONIUM ? _("Escaped the Pandemonium.") :
-            stair_find == DNGN_EXIT_THROUGH_ABYSS ? _("Escaped into the Abyss.") :
-            _("Buggered into bugdom.")), true);
+            stair_find == DNGN_EXIT_ABYSS ? _("Escaped the Abyss") :
+            stair_find == DNGN_EXIT_PANDEMONIUM ? _("Escaped Pandemonium") :
+            stair_find == DNGN_EXIT_THROUGH_ABYSS ? _("Escaped into the Abyss") :
+            _("Buggered into bugdom")), true);
 
         if (!you.wizard || !crawl_state.is_replaying_keys())
             more();
@@ -893,6 +899,11 @@ void down_stairs(dungeon_feature_type force_stair)
         break;
 
     case BRANCH_ABYSS:
+        if (old_level.branch == BRANCH_ABYSS)
+        {
+            mpr("You plunge deeper into the Abyss.", MSGCH_BANISHMENT);
+            break;
+        }
         if (!force_stair)
             mpr(gettext("You enter the Abyss!"));
 

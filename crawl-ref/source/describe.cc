@@ -2146,11 +2146,14 @@ string get_item_description(const item_def &item, bool verbose,
     if (verbose && origin_describable(item))
         description << "\n" << origin_desc(item) << ".";
 
-    if (verbose)
+    // This information is obscure and differs per-item, so looking it up in
+    // a docs file you don't know to exist is tedious.  On the other hand,
+    // it breaks the screen for people on very small terminals.
+    if (verbose && get_number_of_lines() >= 28)
     {
         description << "\n\n" << "Stash search prefixes: "
                     << userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item);
-        string menu_prefix = filtering_item_prefix(item, false);
+        string menu_prefix = item_prefix(item, false);
         if (!menu_prefix.empty())
             description << "\nMenu/colouring prefixes: " << menu_prefix;
     }
@@ -2546,8 +2549,8 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
     if (menu.process_key(keyin))
     {
         vector<MenuItem*> selection = menu.get_selected_items();
-        if( selection.size() == 1 )
-            action = (command_type)selection.at(0)->get_id();
+        if (selection.size() == 1)
+            action = (command_type) selection.at(0)->get_id();
     }
 #endif
 
@@ -3980,9 +3983,9 @@ static const char *divine_title[NUM_GODS][8] =
     {"진흙괴물",          "젤리",					 "슬라임",                   "갈색 진흙괴물",
      "담청색 젤리",       "죽음의 젤리",			 "산성 덩이",                "로얄 젤리"},
 
-    // Fedhas Madash -- nature theme.  Titles could use some work
-    {"비료 대행자",        "식물 재배자",           "숲의 수호자",              "광합성하는 자",
-     "초록을 일구는 자",   "자연의 대리인",         "비구름을 부르는 자",       "대자연의 화신"},
+    // Fedhas Madash -- nature theme.
+    {"Walking Fertiliser", "Green %s",              "Inciter",                  "Photosynthesist",
+     "Cultivator",         "Green Death",           "Nimbus",                   "Force of Nature"},
 
     // Cheibriados -- slow theme
     {"무풍",               "정시출근",              "시간의 사수",              "시간 관측사",
@@ -3993,25 +3996,25 @@ static const char *divine_title[NUM_GODS][8] =
      "먼 곳을 보는 자",      "앞을 보는 자",        "미래를 비추는 자",         "베리타스의 추구자"},
 };
 
-static int _piety_level()
+static int _piety_level(int piety)
 {
-    return (you.piety >  160) ? 7 :
-           (you.piety >= 120) ? 6 :
-           (you.piety >= 100) ? 5 :
-           (you.piety >=  75) ? 4 :
-           (you.piety >=  50) ? 3 :
-           (you.piety >=  30) ? 2 :
-           (you.piety >    5) ? 1
-                              : 0;
+    return (piety >  160) ? 7 :
+           (piety >= 120) ? 6 :
+           (piety >= 100) ? 5 :
+           (piety >=  75) ? 4 :
+           (piety >=  50) ? 3 :
+           (piety >=  30) ? 2 :
+           (piety >    5) ? 1
+                          : 0;
 }
 
-string god_title(god_type which_god, species_type which_species)
+string god_title(god_type which_god, species_type which_species, int piety)
 {
     string title;
     if (you.penance[which_god])
         title = divine_title[which_god][0];
     else
-        title = divine_title[which_god][_piety_level()];
+        title = divine_title[which_god][_piety_level(piety)];
 
     title = replace_all(title, "%s",
                         species_name(which_species, true, false));
@@ -4288,7 +4291,7 @@ void describe_god(god_type which_god, bool give_title)
         cprintf("\nTitle - ");
         textcolor(colour);
 
-        string title = god_title(which_god, you.species);
+        string title = god_title(which_god, you.species, you.piety);
         cprintf("%s", title.c_str());
     }
 
@@ -4555,63 +4558,6 @@ string get_skill_description(skill_type skill, bool need_title)
 
     switch (skill)
     {
-    case SK_UNARMED_COMBAT:
-    {
-        // Give a detailed listing of what attacks the character may perform.
-        vector<string> unarmed_attacks;
-
-        if (you.has_usable_tail())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "slap with your tail"));
-
-        if (you.has_usable_fangs())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "bite with your sharp teeth"));
-        else if (player_mutation_level(MUT_BEAK))
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "peck with your beak"));
-
-        if (player_mutation_level(MUT_HORNS))
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "headbutt with your horns"));
-        else if (you.species == SP_NAGA)
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "do a headbutt attack"));
-
-        if (player_mutation_level(MUT_HOOVES))
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "kick with your hooves"));
-        else if (player_mutation_level(MUT_TALONS))
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "claw with your talons"));
-        else if (you.species != SP_NAGA && you.species != SP_FELID
-                 && !you.fishtail)
-        {
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "deliver a kick"));
-        }
-
-        if (you.has_usable_pseudopods())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "bludgeon with your pseudopods"));
-
-        if (you.has_usable_tentacles())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "slap with your tentacles"));
-
-        if (you.species == SP_FELID)
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "use your claws"));
-        else if (you.species != SP_OCTOPODE && !you.weapon())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "throw a punch"));
-        else if (you.species != SP_OCTOPODE && you.has_usable_offhand())
-            unarmed_attacks.push_back(pgettext("unarmed_attacks", "punch with your free hand"));
-
-        if (!unarmed_attacks.empty())
-        {
-            /// 뒤에 사용가능한 unarmed_attacks가 나열됨.
-            string broken = gettext("For example, you could ");
-                        broken += comma_separated_line(unarmed_attacks.begin(),
-                                                       unarmed_attacks.end(),
-                                                       gettext(" or "), ", ");
-                        broken += ".";
-            linebreak_string(broken, get_number_of_cols() - 1);
-
-            result += "\n";
-            result += broken;
-        }
-        break;
-    }
-
     case SK_INVOCATIONS:
         if (you.species == SP_DEMIGOD)
         {

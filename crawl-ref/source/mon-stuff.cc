@@ -22,6 +22,7 @@
 #include "dgn-overview.h"
 #include "dlua.h"
 #include "dungeon.h"
+#include "effects.h"
 #include "env.h"
 #include "exclude.h"
 #include "fprop.h"
@@ -1048,6 +1049,16 @@ static void _setup_lightning_explosion(bolt & beam, const monster& origin)
     beam.ex_size = coinflip() ? 3 : 2;
 }
 
+static void _setup_torment_explosion(bolt & beam, const monster& origin)
+{
+    _setup_base_explosion(beam, origin);
+    beam.flavour = BEAM_NEG;
+    beam.damage  = 0;
+    beam.name    = "wave of negative energy";
+    beam.colour  = LIGHTGRAY;
+    beam.ex_size = 1;
+}
+
 static void _setup_inner_flame_explosion(bolt & beam, const monster& origin,
                                          actor* agent)
 {
@@ -1089,6 +1100,11 @@ static bool _explode_monster(monster* mons, killer_type killer,
         _setup_lightning_explosion(beam, *mons);
         sanct_msg    = gettext("By Zin's power, the ball lightning's explosion "
                        "is contained.");
+    }
+    else if (type == MONS_LURKING_HORROR)
+    {
+        _setup_torment_explosion(beam, *mons);
+        sanct_msg = "The lurking horror fades away harmlessly.";
     }
     else if (mons->has_ench(ENCH_INNER_FLAME))
     {
@@ -1132,8 +1148,10 @@ static bool _explode_monster(monster* mons, killer_type killer,
     if (is_sanctuary(mons->pos()))
         return false;
 
-    // Inner-flamed monsters leave behind some flame clouds.
-    if (mons->has_ench(ENCH_INNER_FLAME))
+    // Explosion side-effects.
+    if (type == MONS_LURKING_HORROR)
+        torment(mons, mons->mindex(), mons->pos());
+    else if (mons->has_ench(ENCH_INNER_FLAME))
     {
         for (adjacent_iterator ai(mons->pos(), false); ai; ++ai)
             if (!feat_is_solid(grd(*ai)) && env.cgrid(*ai) == EMPTY_CLOUD
@@ -1576,7 +1594,7 @@ int monster_die(monster* mons, killer_type killer,
             }
         }
         else if (!you.suppressed()
-                 && wearing_amulet(AMU_RAGE)
+                 && you.wearing(EQ_AMULET, AMU_RAGE)
                  && one_chance_in(30))
         {
             const int bonus = (2 + random2(4)) / 2;
@@ -1600,6 +1618,7 @@ int monster_die(monster* mons, killer_type killer,
 
     if (mons->type == MONS_GIANT_SPORE
         || mons->type == MONS_BALL_LIGHTNING
+        || mons->type == MONS_LURKING_HORROR
         || mons->has_ench(ENCH_INNER_FLAME))
     {
         did_death_message =
@@ -3988,6 +4007,7 @@ bool monster_descriptor(monster_type which_class, mon_desc_type which_descriptor
         case MONS_TROLL:
         case MONS_HYDRA:
         case MONS_KILLER_KLOWN:
+        case MONS_STARCURSED_MASS:
         case MONS_LERNAEAN_HYDRA:
         case MONS_DISSOLUTION:
         case MONS_TEST_SPAWNER:
@@ -4377,6 +4397,8 @@ void monster_teleport(monster* mons, bool instan, bool silent)
     mons->apply_location_effects(oldplace);
 
     mons_relocated(mons);
+
+    shake_off_monsters(mons);
 }
 
 void mons_clear_trapping_net(monster* mon)
@@ -4540,7 +4562,7 @@ void mons_att_changed(monster* mon)
     const mon_attitude_type att = mon->temp_attitude();
 
     if (mons_is_tentacle_head(mons_base_type(mon))
-            || mon->type == MONS_ELDRITCH_TENTACLE)
+        || mon->type == MONS_ELDRITCH_TENTACLE)
     {
         for (monster_iterator mi; mi; ++mi)
             if (mi->is_child_tentacle_of(mon))
@@ -4554,6 +4576,10 @@ void mons_att_changed(monster* mon)
                             connect->attitude = att;
                     }
                 }
+
+                // It's almost always flipping between hostile and friendly;
+                // enslaving a pacified starspawn is still a shock.
+                mi->stop_constricting_all();
             }
     }
 }

@@ -5,6 +5,8 @@
 
 #include "AppHdr.h"
 
+#include <cmath>
+
 #include "mon-pick.h"
 
 #include "externs.h"
@@ -97,12 +99,6 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_ABOMINATION_SMALL:
         return 99;
 
-    case MONS_IRON_IMP:
-    case MONS_LEMURE:
-    case MONS_UFETUBUS:
-    case MONS_WHITE_IMP:
-        return 80;
-
     case MONS_HELLWING:
     case MONS_NEQOXEC:
     case MONS_ORANGE_DEMON:
@@ -110,19 +106,24 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_YNOXINUL:
         return 50;
 
-    case MONS_SKELETON_LARGE:
-    case MONS_SKELETON_SMALL:
-    case MONS_SKELETAL_WARRIOR:
-        return 40;
-
-    case MONS_ZOMBIE_LARGE:
-    case MONS_ZOMBIE_SMALL:
-        return 35;
-
+    // New abyssals, made more common for testing.
     case MONS_WRETCHED_STAR:
     case MONS_TENTACLED_STARSPAWN:
+    case MONS_LURKING_HORROR:
+    case MONS_ANCIENT_ZYME:
+    case MONS_STARCURSED_MASS:
+    case MONS_THRASHING_HORROR:
+        return 40;
+
+    case MONS_IRON_IMP:
+    case MONS_LEMURE:
+    case MONS_UFETUBUS:
+    case MONS_WHITE_IMP:
+        return 30;
+
     case MONS_BONE_DRAGON:
     case MONS_SIXFIRHY:
+    case MONS_SPATIAL_MAELSTROM:
         return 20;
 
     case MONS_EFREET:
@@ -134,6 +135,10 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_BRAIN_WORM:
         return 16;
 
+    case MONS_SKELETON_LARGE:
+    case MONS_SKELETON_SMALL:
+    case MONS_ZOMBIE_LARGE:
+    case MONS_ZOMBIE_SMALL:
     case MONS_FLYING_SKULL:
     case MONS_FREEZING_WRAITH:
     case MONS_GIANT_ORANGE_BRAIN:
@@ -177,6 +182,7 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_SHADOW_IMP:
     case MONS_SUN_DEMON:
     case MONS_WIGHT:
+    case MONS_APOCALYPSE_CRAB:
         return 10;
 
     case MONS_ICE_BEAST:

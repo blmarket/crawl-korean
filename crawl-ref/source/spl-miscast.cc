@@ -11,6 +11,7 @@
 
 #include <sstream>
 
+#include "branch.h"
 #include "colour.h"
 #include "cloud.h"
 #include "directn.h"
@@ -614,9 +615,11 @@ void MiscastEffect::_potion_effect(potion_type pot_eff, int pot_pow)
 
 bool MiscastEffect::_send_to_abyss()
 {
-    if (player_in_branch(BRANCH_ABYSS) || source == HELL_EFFECT_MISCAST)
+    if ((player_in_branch(BRANCH_ABYSS) && x_chance_in_y(you.depth, brdepth[BRANCH_ABYSS]))
+        || source == HELL_EFFECT_MISCAST)
+    {
         return _malign_gateway(); // attempt to degrade to malign gateway
-
+    }
     target->banish(act_source, cause);
     return true;
 }
@@ -2274,7 +2277,7 @@ void MiscastEffect::_ice(int severity)
             else
                 do_msg();
             if (target->alive())
-                target->expose_to_element(BEAM_COLD, 2);
+                target->expose_to_element(BEAM_COLD, 2, true, false);
             break;
         }
         break;

@@ -7,6 +7,8 @@
 
 #include "wiz-you.h"
 
+#include "abyss.h"
+
 #include "cio.h"
 #include "debug.h"
 #include "dbg-util.h"
@@ -270,6 +272,7 @@ void wizard_heal(bool super_heal)
     if (super_heal)
     {
         // Clear more stuff and give a HP boost.
+        unrot_hp(9999);
         you.magic_contamination = 0;
         you.duration[DUR_LIQUID_FLAMES] = 0;
         you.clear_beholders();
@@ -279,6 +282,7 @@ void wizard_heal(bool super_heal)
     // Clear most status ailments.
     you.rotting = 0;
     you.disease = 0;
+    you.duration[DUR_NAUSEA]    = 0;
     you.duration[DUR_CONF]      = 0;
     you.duration[DUR_MISLED]    = 0;
     you.duration[DUR_POISONING] = 0;
@@ -672,6 +676,18 @@ bool wizard_add_mutation()
     return success;
 }
 #endif
+
+void wizard_set_abyss()
+{
+    char buf[80];
+    mprf(MSGCH_PROMPT, "Enter values for X, Y, Z (space separated) or return: ");
+    if (cancelable_get_line_autohist(buf, sizeof buf))
+        abyss_teleport(true);
+
+    uint32_t x, y, z;
+    sscanf(buf, "%d %d %d", &x, &y, &z);
+    set_abyss_state(coord_def(x,y), z);
+}
 
 void wizard_set_stats()
 {

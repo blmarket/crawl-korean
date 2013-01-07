@@ -2302,6 +2302,9 @@ void check_item_knowledge(bool unknown_items)
             // Water is never interesting either. [1KB]
             if (i == OBJ_POTIONS && j == POT_WATER)
                 continue;
+
+            if (i == OBJ_JEWELLERY && j == AMU_CONTROLLED_FLIGHT)
+                continue;
 #endif
 
             if (unknown_items ? you.type_ids[i][j] != ID_KNOWN_TYPE
@@ -2838,8 +2841,7 @@ bool is_interesting_item(const item_def& item)
     if (fully_identified(item) && is_artefact(item))
         return true;
 
-    const string iname = menu_colour_item_prefix(item, false) + " "
-                              + item.name(false, DESC_PLAIN);
+    const string iname = item_prefix(item, false) + " " + item.name(false, DESC_PLAIN);
     for (unsigned i = 0; i < Options.note_items.size(); ++i)
         if (Options.note_items[i].matches(iname))
             return true;
@@ -3379,15 +3381,11 @@ bool is_useless_item(const item_def &item, bool temp)
     return false;
 }
 
-static const string _item_prefix(const item_def &item, bool temp, bool filter)
+string item_prefix(const item_def &item, bool temp)
 {
     vector<string> prefixes;
 
-    // No identified/unidentified for filtering, since the user might
-    // want to filter on "ident" to find scrolls of identify.
-    if (filter)
-        ;
-    else if (item_ident(item, ISFLAG_KNOW_TYPE))
+    if (item_ident(item, ISFLAG_KNOW_TYPE))
         prefixes.push_back("identified");
     else
     {
@@ -3418,7 +3416,10 @@ static const string _item_prefix(const item_def &item, bool temp, bool filter)
     }
 
     if (good_god_hates_item_handling(item) || god_hates_item_handling(item))
+    {
         prefixes.push_back("evil_item");
+        prefixes.push_back("forbidden");
+    }
 
     if (is_emergency_item(item))
         prefixes.push_back("emergency_item");
@@ -3445,7 +3446,10 @@ static const string _item_prefix(const item_def &item, bool temp, bool filter)
         if (item.sub_type == NUM_FOODS)
             break;
         if (is_forbidden_food(item))
-            prefixes.push_back("evil_eating"), prefixes.push_back("forbidden");
+        {
+            prefixes.push_back("evil_eating"); // compat with old configs
+            prefixes.push_back("forbidden");
+        }
 
         if (is_inedible(item))
             prefixes.push_back("inedible");
@@ -3467,6 +3471,7 @@ static const string _item_prefix(const item_def &item, bool temp, bool filter)
             && is_blood_potion(item))
         {
             prefixes.push_back("evil_eating");
+            prefixes.push_back("forbidden");
         }
         if (is_preferred_food(item))
             prefixes.push_back("preferred");
@@ -3495,8 +3500,7 @@ static const string _item_prefix(const item_def &item, bool temp, bool filter)
         break;
     }
 
-    if (!filter)
-        prefixes.push_back(item_class_name(item.base_type, true));
+    prefixes.push_back(item_class_name(item.base_type, true));
 
     string result = comma_separated_line(prefixes.begin(), prefixes.end(),
                                          " ", " ");
@@ -3504,21 +3508,10 @@ static const string _item_prefix(const item_def &item, bool temp, bool filter)
     return result;
 }
 
-string menu_colour_item_prefix(const item_def &item, bool temp)
-{
-    return _item_prefix(item, temp, false);
-}
-
-string filtering_item_prefix(const item_def &item, bool temp)
-{
-    return _item_prefix(item, temp, true);
-}
-
-/// returns translated itemname with color tags
 string get_menu_colour_prefix_tags(const item_def &item,
                                    description_level_type desc)
 {
-    string cprf       = menu_colour_item_prefix(item);
+    string cprf       = item_prefix(item);
     string colour     = "";
     string colour_off = "";
     string item_name  = item.name(true, desc);

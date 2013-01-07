@@ -179,7 +179,7 @@ void InvEntry::select(int qty)
 
 string InvEntry::get_filter_text() const
 {
-    return filtering_item_prefix(*item) + " " + get_text();
+    return item_prefix(*item) + " " + get_text();
 }
 
 string InvEntry::get_text(bool need_cursor) const
@@ -915,7 +915,7 @@ vector<SelItem> InvMenu::get_selitems() const
 
 bool InvMenu::process_key(int key)
 {
-    if ( key == CONTROL('W') )
+    if (key == CONTROL('W'))
     {
         Options.show_inventory_weights = !Options.show_inventory_weights;
         draw_menu();

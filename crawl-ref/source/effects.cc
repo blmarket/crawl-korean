@@ -525,16 +525,18 @@ static string _who_banished(const string &who)
 void banished(const string &who)
 {
     ASSERT(!crawl_state.game_is_arena());
+    push_features_to_abyss();
     if (crawl_state.game_is_zotdef())
         return;
 
-    mark_milestone("abyss.enter",
-                   "is cast into the Abyss!" + _who_banished(who));
+    if (!player_in_branch(BRANCH_ABYSS)) {
+      mark_milestone("abyss.enter",
+                     "is cast into the Abyss!" + _who_banished(who));
+    }
 
     if (player_in_branch(BRANCH_ABYSS))
     {
-        // Can't happen outside wizmode.
-        mpr("You feel trapped.");
+        down_stairs(DNGN_ABYSSAL_STAIR);
         return;
     }
 
@@ -542,7 +544,6 @@ void banished(const string &who)
     take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
 
     stop_delay(true);
-    push_features_to_abyss();
     down_stairs(DNGN_ENTER_ABYSS);  // heh heh
 
     // Xom just might decide to interfere.
@@ -2040,6 +2041,10 @@ void handle_time()
         && !crawl_state.game_is_zotdef())
     {
         spawn_random_monsters();
+        if (player_in_branch(BRANCH_ABYSS))
+          for (int i = 1; i < you.depth; ++i)
+                if (x_chance_in_y(i, 5))
+                    spawn_random_monsters();
     }
 
     // Labyrinth and Abyss maprot.
@@ -2297,7 +2302,7 @@ void handle_time()
                        "evolution", false, false, false, false, false, true);
             // it would kill itself anyway, but let's speed that up
             if (one_chance_in(10)
-                && (!player_res_mutation_from_item()
+                && (!you.rmut_from_item()
                     || one_chance_in(10)))
             {
                 evol |= delete_mutation(MUT_EVOLUTION, "end of evolution", false);

@@ -1646,7 +1646,7 @@ static void _confused_move_dir(monster *mons)
         }
 }
 
-int _tentacle_move_speed(monster_type type)
+static int _tentacle_move_speed(monster_type type)
 {
     if (type == MONS_KRAKEN)
         return 10;
@@ -1721,7 +1721,7 @@ void handle_monster_move(monster* mons)
     // Memory is decremented here for a reason -- we only want it
     // decrementing once per monster "move".
     if (mons->foe_memory > 0 && !you.penance[GOD_ASHENZARI])
-        mons->foe_memory--;
+        mons->foe_memory -= you.time_taken;
 
     // Otherwise there are potential problems with summonings.
     if (mons->type == MONS_GLOWING_SHAPESHIFTER)
@@ -2190,6 +2190,9 @@ void handle_monster_move(monster* mons)
     }
 
     mons->handle_constriction();
+
+    if (mons->type == MONS_ANCIENT_ZYME)
+        ancient_zyme_sicken(mons);
 
     if (mons->type != MONS_NO_MONSTER && mons->hit_points < 1)
         monster_die(mons, KILL_MISC, NON_MONSTER);
@@ -2872,7 +2875,7 @@ static bool _check_slime_walls(const monster *mon,
                                const coord_def &targ)
 {
     if (!player_in_branch(BRANCH_SLIME_PITS) || mons_is_slime(mon)
-        || mon->res_acid() >= 3 || mons_intel(mon) <= I_INSECT)
+        || actor_slime_wall_immune(mon) || mons_intel(mon) <= I_INSECT)
     {
         return false;
     }
@@ -2969,7 +2972,9 @@ bool mon_can_move_to_pos(const monster* mons, const coord_def& delta,
     }
 
     // Wandering mushrooms usually don't move while you are looking.
-    if (mons->type == MONS_WANDERING_MUSHROOM)
+    if (mons->type == MONS_WANDERING_MUSHROOM
+        || (mons->type == MONS_LURKING_HORROR
+            && mons->foe_distance() > random2(LOS_RADIUS + 1)))
     {
         if (!mons->wont_attack()
             && is_sanctuary(mons->pos()))
@@ -3546,20 +3551,34 @@ static bool _monster_move(monster* mons)
     // If we haven't found a good move by this point, we're not going to.
     // ------------------------------------------------------------------
 
+    if (mons->type == MONS_SPATIAL_MAELSTROM)
+    {
+        const dungeon_feature_type feat = grd(mons->pos() + mmov);
+        if (!feat_is_permarock(feat) && feat_is_solid(feat)
+            && mons->type == MONS_SPATIAL_MAELSTROM)
+        {
+            const coord_def target(mons->pos() + mmov);
+            create_monster(
+                    mgen_data(MONS_SPATIAL_VORTEX, SAME_ATTITUDE(mons), mons,
+                          2, MON_SUMM_ANIMATE,
+                          target, MHITNOT,
+                          0, GOD_LUGONU));
+            nuke_wall(target);
+        }
+    }
+
     const bool burrows = mons_class_flag(mons->type, M_BURROWS);
     const bool flattens_trees = mons_flattens_trees(mons);
     // Take care of beetle burrowing.
     if (burrows || flattens_trees)
     {
         const dungeon_feature_type feat = grd(mons->pos() + mmov);
-
         if ((((feat == DNGN_ROCK_WALL || feat == DNGN_CLEAR_ROCK_WALL)
               && burrows)
              || (flattens_trees && feat_is_tree(feat)))
             && good_move[mmov.x + 1][mmov.y + 1] == true)
         {
             const coord_def target(mons->pos() + mmov);
-
             nuke_wall(target);
 
             if (flattens_trees)
