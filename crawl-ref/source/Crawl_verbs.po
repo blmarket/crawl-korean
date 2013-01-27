@@ -1,0 +1,262 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-11 14:28+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# (deceit) 110813 동사형을 오리던크와 같게 수정함. 
+msgid "hit-verb"
+msgstr "을(를) 공격했"
+
+msgid "clumsily bash-verb"
+msgstr "을(를) 어설프게 공격했"
+
+msgid "bite-verb"
+msgstr "을(를) 물어뜯었"
+
+msgid "maul-verb"
+msgstr "에게 강타를 날렸"
+
+msgid "slash-verb"
+msgstr "을(를) 베었"
+
+msgid "slice-verb"
+msgstr "을(를) 베어냈"
+
+msgid "shred-verb"
+msgstr "을(를) 갈갈이 찢었"
+
+msgid "scratch-verb"
+msgstr "을(를) 긁었"
+
+msgid "claw-verb"
+msgstr "을(를) 할퀴었"
+
+msgid "mangle-verb"
+msgstr "을(를) 난도질했"
+
+msgid "eviscerate-verb"
+msgstr "의 창자를 후비어 끄집어냈"
+
+msgid "punch-verb"
+msgstr "에게 추가공격으로 펀치를 했"
+
+msgid "pummel-verb"
+msgstr "을(를) 연달아 때렸"
+
+msgid "trample-verb"
+msgstr "을(를) 짓밟았"
+
+msgid "puncture-verb"
+msgstr "에게 구멍을 냈"
+
+msgid "impale-verb"
+msgstr "을(를) 꿰찔렀"
+
+msgid "spit-verb"
+msgstr "을(를) 찔렀"
+
+msgid "dice-verb"
+msgstr "을(를) 마치 양파 덩어리처럼 토막냈"
+
+msgid "open-verb"
+msgstr "을(를) 마치 배갯잇처럼 갈라버렸"
+
+msgid "thump-verb"
+msgstr "을(를) 세게 후려쳤"
+
+msgid "sock-verb"
+msgstr "을(를) 공격해 충격을 입혔"
+
+msgid "bludgeon-verb"
+msgstr "을(를) 강타했"
+
+msgid "crush-verb"
+msgstr "을(를) 마치 포도처럼 으깨버렸"
+
+msgid "whack-verb"
+msgstr "을(를) 후려쳤"
+
+msgid "thrash-verb"
+msgstr "을(를) 후려갈겼"
+
+msgid "punish-verb"
+msgstr "에게 고통스러운 채찍질을 가했"
+
+msgid "devastate-verb"
+msgstr "을(를) 으스러트렸"
+
+msgid "tentacle-slap-verb"
+msgstr "을(를) 촉수로 타격하는 추가공격을 했"
+
+msgid "batter-verb"
+msgstr "을(를) 촉수로 연달아 공격했"
+
+msgid "kick-verb"
+msgstr "에게 추가공격으로 발차기를 했"
+
+msgid "kick"
+msgstr "에게 발차기를 했"
+
+msgid "peck-verb"
+msgstr "을(를) 추가공격으로 부리로 쪼았"
+
+msgid "headbutt-verb"
+msgstr "에게 추가공격으로 박치기를 했"
+
+msgid "headbutt"
+msgstr "을(를) 들이받았"
+
+msgid "tail-slap-verb"
+msgstr "에게 추가공격으로 꼬리치기를 했"
+
+msgid "squeeze-verb"
+msgstr "을(를) 촉수로 쥐어짰"
+
+# (deceit) 다음 5개는 앞에 오는 글자가 (히드라)'머리'이므로 사실 을(를) 대신
+# 그냥 '를'이라 써도 무방합니다.
+msgid "rip-verb"
+msgstr "을(를) 찢어 잘라냈"
+
+msgid "tear-verb"
+msgstr "을(를) 찢어 베었"
+
+msgid "lop-verb"
+msgstr "을(를) 잘라냈"
+
+msgid "chop-verb"
+msgstr "을(를) 찍어 잘라냈"
+
+msgid "hack-verb"
+msgstr "을(를) 베어 잘라냈"
+
+# (deceit) 유일하게 fight.cc의 verb에서, '을(를)' 등이 앞에 붙지 않음.
+msgid "block-verb"
+msgstr "막았"
+
+msgid "burn-verb"
+msgstr "을(를) 불태웠"
+
+msgid "gore-verb"
+msgstr "을(를) 들이받았"
+
+msgid "sting-verb"
+msgstr "에게 침을 발사했"
+
+msgid "touch-verb"
+msgstr "을(를) 건드렸"
+
+msgid "engulf-verb"
+msgstr "을(를) 휩쌌"
+
+msgid "constrict-verb"
+msgstr "을(를) 조였"
+
+msgid "trunk-slap-verb"
+msgstr "에게 몸통 박치기를 했"
+
+msgid "snap closed at-verb"
+msgstr "을(를) 부러지도록 공격했"
+
+msgid "splash-verb"
+msgstr "에게 액체를 튀겼"
+
+msgid "melt-verb"
+msgstr "을(를) 녹였"
+
+msgid "freeze-verb"
+msgstr "을(를) 얼렸"
+
+msgid "steam-verb"
+msgstr "수증기를 내고 "
+
+msgid "sizzle-verb"
+msgstr "지글거리고 "
+
+# (deceit) 이 부분이 cloud.cc:1380에서 참조하는부분.
+msgid "bask-verb"
+msgstr "에 휩싸였다."
+
+msgid "are-verb engulfed"
+msgstr "[버그/제보바람] are-verb engulfed"
+
+msgid "are-verb"
+msgstr "있"
+
+msgid "shock-verb"
+msgstr "을(를) 감전시켰"
+
+msgid "drain-verb"
+msgstr "을(를) 흡수했"
+
+msgid "writhe-verb"
+msgstr "[버그/제보바람] writhe-verb"
+
+msgid "infuriate-verb"
+msgstr "[버그/제보바람] infuriate-verb"
+
+msgid "sear-verb"
+msgstr "[버그/제보바람] sear-verb"
+
+msgid "slap-verb"
+msgstr "을(를) 후려쳤"
+
+msgid "hold-verb"
+msgstr ""
+
+msgid "skewer-verb"
+msgstr ""
+
+msgid "cut-verb"
+msgstr ""
+
+msgid "shatter-verb"
+msgstr ""
+
+msgid "beat-verb"
+msgstr ""
+
+msgid "hammer-verb"
+msgstr ""
+
+msgid "pound-verb"
+msgstr ""
+
+msgid "roar-verb"
+msgstr ""
+
+msgid "hiss-verb"
+msgstr ""
+
+msgid "squeak-verb"
+msgstr ""
+
+msgid "squeal-verb"
+msgstr ""
+
+msgid "meow-verb"
+msgstr ""
+
+msgid "yowl-verb"
+msgstr ""
+
+msgid "shout-verb"
+msgstr ""
+
+msgid "yell-verb"
+msgstr ""
+
+msgid "scream-verb"
+msgstr ""
+
+msgid "deal-verb"
+msgstr ""
+
+msgid "draw-verb"
+msgstr ""

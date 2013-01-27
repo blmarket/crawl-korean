@@ -3825,7 +3825,7 @@ static void _open_door(coord_def move, bool check_confused)
             else
                verb = gettext("You open the %s%s.");
         }
-
+		
         mprf(verb, adj, noun);
     }
 

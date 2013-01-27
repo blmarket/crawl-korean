@@ -514,11 +514,11 @@ std::set<coord_def> connected_doors(const coord_def& d)
 void get_door_description(int door_size, const char** adjective, const char** noun)
 {
     const char* descriptions[] = {
-        "miniscule " , "buggy door",
-        ""           , "door",
-        "large "     , "door",
-        ""           , "gate",
-        "huge "      , "gate",
+        pgettext("door","miniscule ") , pgettext("door","buggy door"),
+        ""							  , pgettext("door","door"),
+        pgettext("door","large ")     , pgettext("door","door"),
+        ""						      , pgettext("door","gate"),
+        pgettext("door","huge ")      , pgettext("door","gate"),
     };
 
     int max_idx = static_cast<int>(ARRAYSZ(descriptions) - 2);
