@@ -2860,7 +2860,7 @@ static void _append_spell_stats(const spell_type spell,
                  /// 1. 레벨, 2. 학파가 여러개면 s, 3. 학파, 4. 실패 확률
                  gettext("\nLevel: %d        School%s: %s        Fail: %s"),
                  spell_difficulty(spell),
-                 schools.find("/") != std::string::npos ? "s" : "",
+                 "", // schools.find("/") != std::string::npos ? "s" : "", (130128) 한글판에서는 "s"가 붙지 않도록 수정
                  schools.c_str(),
                  failure);
         free(failure);
@@ -3127,12 +3127,12 @@ static const char* _get_threat_desc(mon_threat_level_type threat)
 {
     switch (threat)
     {
-    case MTHRT_TRIVIAL: return "harmless";
-    case MTHRT_EASY:    return "easy";
-    case MTHRT_TOUGH:   return "dangerous";
-    case MTHRT_NASTY:   return "extremely dangerous";
+    case MTHRT_TRIVIAL: return pgettext("threat_desc","harmless");
+    case MTHRT_EASY:    return pgettext("threat_desc","easy");
+    case MTHRT_TOUGH:   return pgettext("threat_desc","dangerous");
+    case MTHRT_NASTY:   return pgettext("threat_desc","extremely dangerous");
     case MTHRT_UNDEF:
-    default:            return "buggily threatening";
+    default:            return pgettext("threat_desc","buggily threatening");
     }
 }
 
@@ -3221,7 +3221,7 @@ static std::string _monster_stat_description(const monster_info& mi)
 				  uppercase_first(pronoun).c_str(),
 				  comma_separated_line(resist_descriptions.begin(),
                                        resist_descriptions.end(),
-                                       "; and ", "; ").c_str());
+                                       gettext("; and "), "; ").c_str());
     }
 
     // Is monster susceptible to anything? (On a new line.)
@@ -3302,13 +3302,13 @@ static std::string _monster_stat_description(const monster_info& mi)
 
     if (mons_is_feat_mimic(mi.type))
     {
-        result << uppercase_first(pronoun) << " is as big as "
+        result << uppercase_first(pronoun) << "은(는) " // " is as big as "
                << thing_do_grammar(DESC_A, true, false,
                                    feat_type_name(mi.get_mimic_feature()))
-               << "\n";
+               << "와(과) 크기가 비슷하다\n."; // "\n";
     }
     else if (sizes[mi.body_size()])
-        result << pronoun << "은 " << sizes[mi.body_size()] << " 덩치를 가졌다.\n"; // result << pronoun << " is " << sizes[mi.body_size()] << ".\n";
+        result << pronoun << "은(는) " << sizes[mi.body_size()] << " 덩치를 가졌다.\n"; // result << pronoun << " is " << sizes[mi.body_size()] << ".\n";
 
     return result.str();
 }
@@ -4435,10 +4435,10 @@ void describe_god(god_type which_god, bool give_title)
         if (which_god == GOD_ZIN)
         {
             have_any = true;
-            const char *how = (you.piety >= 150) ? "carefully" :
-                              (you.piety >= 100) ? "often" :
-                              (you.piety >=  50) ? "sometimes" :
-                                                   "occasionally";
+            const char *how = (you.piety >= 150) ? pgettext("tso_shield", "carefully") :
+                              (you.piety >= 100) ? pgettext("tso_shield", "often") :
+                              (you.piety >=  50) ? pgettext("tso_shield", "sometimes") :
+                                                   pgettext("tso_shield", "occasionally");
 
             /// 1. god_name 2. how(carefully, often, sometimes etc)
             cprintf(gettext("%s %s shields you from chaos.\n"),

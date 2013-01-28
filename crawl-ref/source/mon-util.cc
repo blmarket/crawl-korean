@@ -3110,20 +3110,20 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
     switch (variant)
     {
         case PRONOUN_SUBJECTIVE:
-            return ((gender == GENDER_NEUTER) ? gettext(M_("it")) :
-                    (gender == GENDER_MALE)   ? gettext(M_("he")) : gettext(M_("she")));
+            return ((gender == GENDER_NEUTER) ? pgettext("mon_util_pronoun","it") :
+                    (gender == GENDER_MALE)   ? pgettext("mon_util_pronoun","he") : pgettext("mon_util_pronoun","she"));
 
         case PRONOUN_POSSESSIVE:
-            return ((gender == GENDER_NEUTER) ? gettext(M_("its")) :
-                    (gender == GENDER_MALE)   ? gettext(M_("his")) : gettext(M_("her")));
+            return ((gender == GENDER_NEUTER) ? pgettext("mon_util_pronoun","its") :
+                    (gender == GENDER_MALE)   ? pgettext("mon_util_pronoun","his") : pgettext("mon_util_pronoun","her"));
 
         case PRONOUN_REFLEXIVE:
-            return ((gender == GENDER_NEUTER) ? gettext(M_("itself"))  :
-                    (gender == GENDER_MALE)   ? gettext(M_("himself")) : gettext(M_("herself")));
+            return ((gender == GENDER_NEUTER) ? pgettext("mon_util_pronoun","itself")  :
+                    (gender == GENDER_MALE)   ? pgettext("mon_util_pronoun","himself") : pgettext("mon_util_pronoun","herself"));
 
         case PRONOUN_OBJECTIVE:
-            return ((gender == GENDER_NEUTER) ? gettext(M_("it"))  :
-                    (gender == GENDER_MALE)   ? gettext(M_("him")) : gettext(M_("her")));
+            return ((gender == GENDER_NEUTER) ? pgettext("mon_util_pronoun","it")  :
+                    (gender == GENDER_MALE)   ? pgettext("mon_util_pronoun","him") : pgettext("mon_util_pronoun_obj","her"));
      }
 
     return "";

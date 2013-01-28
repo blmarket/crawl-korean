@@ -166,9 +166,9 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
         // [enne] - Hack.  Make title an item so that it's aligned.
         ToggleableMenuEntry* me =
             new ToggleableMenuEntry(
-                _(" Your Spells                       Type          "
+                gettext(" Your Spells                       Type          "
                 "                Failure   Level"),
-                _(" Your Spells                       Power         "
+                gettext(" Your Spells                       Power         "
                 "Range           Hunger    Level"),
                 MEL_ITEM);
         me->colour = BLUE;
@@ -177,9 +177,9 @@ int list_spells(bool toggle_with_I, bool viewing, bool allow_preselect,
 #else
     spell_menu.set_title(
         new ToggleableMenuEntry(
-            _(" Your Spells                       Type          "
+            gettext(" Your Spells                       Type          "
             "                Failure   Level"),
-            _(" Your Spells                       Power         "
+            gettext(" Your Spells                       Power         "
             "Range           Hunger    Level"),
             MEL_TITLE));
 #endif
@@ -552,7 +552,7 @@ static bool _can_cast()
 
     if (you.confused())
     {
-        mpr("You're too confused to cast spells.");
+        mpr(gettext("You're too confused to cast spells."));
         return false;
     }
 
@@ -669,7 +669,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
 
     if (spell_mana(spell) > you.magic_points)
     {
-        mpr(_("You don't have enough magic to cast that spell."));
+        mpr(gettext("You don't have enough magic to cast that spell."));
         crawl_state.zero_turns_taken();
         return false;
     }
@@ -712,9 +712,9 @@ bool cast_a_spell(bool check_range, spell_type spell)
     {
         // None currently dock just piety, right?
         if (!yesno(god_loathes_spell(spell, you.religion) ?
-            "<lightred>Casting this spell will cause instant excommunication!"
-                "</lightred> Really cast?" :
-            "Casting this spell will put you into penance. Really cast?",
+            gettext("<lightred>Casting this spell will cause instant excommunication!"
+                "</lightred> Really cast?") :
+            gettext("Casting this spell will put you into penance. Really cast?"),
             true, 'n'))
         {
             crawl_state.zero_turns_taken();
@@ -1607,7 +1607,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 33
     case SPELL_PROJECTED_NOISE:
-        mpr("Sorry, this spell is gone!");
+        mpr(gettext("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 

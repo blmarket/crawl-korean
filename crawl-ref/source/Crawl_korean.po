@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-27 16:11+0900\n"
+"POT-Creation-Date: 2013-01-28 14:10+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14830,22 +14830,22 @@ msgstr "미약하게"
 msgid "%s %s shields you from unclean and chaotic effects.\n"
 msgstr "%s은(는) 당신을 사악하고 불경한 기운으로부터 %s 보호해준다.\n"
 
-#: describe.cc:4517 describe.cc:4526 describe.cc:4450
+#: describe.cc:4517 describe.cc:4526 describe.cc:4450 describe.cc:4438
 msgctxt "tso_shield"
 msgid "carefully"
 msgstr "강력하게"
 
-#: describe.cc:4518 describe.cc:4527 describe.cc:4451
+#: describe.cc:4518 describe.cc:4527 describe.cc:4451 describe.cc:4439
 msgctxt "tso_shield"
 msgid "often"
 msgstr "크게"
 
-#: describe.cc:4519 describe.cc:4528 describe.cc:4452
+#: describe.cc:4519 describe.cc:4528 describe.cc:4452 describe.cc:4440
 msgctxt "tso_shield"
 msgid "sometimes"
 msgstr "어느 정도"
 
-#: describe.cc:4520 describe.cc:4529 describe.cc:4453
+#: describe.cc:4520 describe.cc:4529 describe.cc:4453 describe.cc:4441
 msgctxt "tso_shield"
 msgid "occasionally"
 msgstr "미약하게"
@@ -27104,49 +27104,55 @@ msgid ""
 "\n"
 "It cannot be enchanted further."
 msgstr ""
+"\n"
+"이것은 더 이상 강화할 수 없다."
 
 #: describe.cc:1192 describe.cc:1195
 msgid ""
 "It is tipped with a substance that causes a mindless, berserk rage, making "
 "people attack friend and foe alike."
 msgstr ""
+"이것에는 다른 감정을 상실하고 오로지 분노에 휩싸이게 하여, 피아를 가리지 않"
+"고 무차별적인 공격성을 갖도록 만드는 물질이 발라져 있다."
 
 #: describe.cc:1328 describe.cc:1326
 msgid "It allows its wearer to slither at a great speed."
-msgstr ""
+msgstr "착용자를 빠른 속도로 기어갈 수 있게 해준다."
 
 #: describe.cc:1440 describe.cc:1438
 msgid ""
 "\n"
 "It is well-crafted and lightweight"
 msgstr ""
+"\n"
+"상당히 훌륭한 솜씨로 만들어져, 가벼우면서도 탄탄하다"
 
 #: describe.cc:2992 describe.cc:2912
 msgid "You'd be excommunicated if you dared to cast it!\n"
-msgstr ""
+msgstr "이 주문을 외우면 즉시 파문당할 것이다!\n"
 
 #: describe.cc:3311 describe.cc:3240
 #, c-format
 msgid " is %s to hostile enchantments.\n"
-msgstr ""
+msgstr "은(는) 상태 이상에 %s.\n"
 
 #: describe.cc:3316 describe.cc:3245
 msgid " cannot move.\n"
-msgstr ""
+msgstr "은(는) 이 자리에 고정되어 있다.\n"
 
 #: describe.cc:4465 describe.cc:4389
 msgid "Granted powers:"
-msgstr ""
+msgstr "수여받은 권능: "
 
 #: describe.cc:4466 describe.cc:4390
 msgid "(Cost)"
-msgstr ""
+msgstr "(소모)"
 
 #. / 1. god_name 2. how(carefully, often, sometimes etc)
 #: describe.cc:4520 describe.cc:4444
 #, c-format
 msgid "%s %s shields you from chaos.\n"
-msgstr ""
+msgstr "%s은(는) 당신을 혼돈으로부터 %s 보호해준다.\n"
 
 #: directn.cc:373 directn.cc:358
 msgid ", g - get item"
@@ -27920,6 +27926,21 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004
 #, c-format
 msgid "You have %s %s."
@@ -27961,10 +27982,12 @@ msgid ""
 "\n"
 "Base armour rating: "
 msgstr ""
+"\n"
+"방어력 등급       : "
 
 #: describe.cc:1286
 msgid "Base evasion modifier: "
-msgstr ""
+msgstr "회피력 변화치       : "
 
 #: describe.cc:2006
 msgid ""
@@ -27972,20 +27995,25 @@ msgid ""
 "\n"
 "Meat like this may occasionally cause nausea."
 msgstr ""
+"\n"
+"\n"
+"이러한 종류의 고기들은 때때로 복통을 일으킨다."
 
 #: describe.cc:2029
 msgid " disapproves of eating such meat."
-msgstr ""
+msgstr "은(는) 이러한 고기를 먹는 것을 반기지 않을 것이다."
 
 #: describe.cc:2253
 msgid ""
 "Press '<w>!</w>' or <w>Right-click</w> to toggle between the overview and "
 "the extended description."
 msgstr ""
+"'<w>!</w>'키 입력 또는 <w>마우스 우클릭</w>을 통해, 기본 설명과 추가적인 설"
+"명 화면을 전환할 수 있다."
 
 #: describe.cc:2552
 msgid "(=)adjust"
-msgstr ""
+msgstr "(=)단축키 변경"
 
 #. / 1. 레벨, 2. 학파가 여러개면 s, 3. 학파, 4. 실패 확률
 #: describe.cc:2861
@@ -27994,124 +28022,130 @@ msgid ""
 "\n"
 "Level: %d        School%s: %s        Fail: %s"
 msgstr ""
+"\n"
+"레벨 : %d        학파  %s: %s        실패율: %s"
 
 #: describe.cc:2944
 msgid ""
 "\n"
 "(F)orget this spell by destroying the book.\n"
 msgstr ""
+"\n"
+"(F) 마법서를 파기하고, 해당 주문을 기억에서 지운다.\n"
 
 #: describe.cc:2946
 msgid "Sif Muna frowns upon the destroying of books.\n"
-msgstr ""
+msgstr "시프 무나는 책을 파괴하는 행위를 반기지 않을 것이다.\n"
 
 #: describe.cc:2952
 msgid ""
 "\n"
 "(M)emorise this spell.\n"
 msgstr ""
+"\n"
+"(M)이 주문을 기억한다.\n"
 
 #: describe.cc:3190
 #, c-format
 msgid "immune to %s"
-msgstr ""
+msgstr "%s에 완전한 면역력을 가지고 있다"
 
 #: describe.cc:3197
 #, c-format
 msgid "very resistant to %s"
-msgstr ""
+msgstr "%s에 강한 저항력을 가지고 있다"
 
 #: describe.cc:3213
 #, c-format
 msgid "%s looks %s.\n"
-msgstr ""
+msgstr "%s은(는) %s.\n"
 
 #: describe.cc:3220
 #, c-format
 msgid "%s is %s.\n"
-msgstr ""
+msgstr "%s은(는) %s.\n"
 
 #: describe.cc:3230
 #, c-format
 msgid "%s is susceptible to %s.\n"
-msgstr ""
+msgstr "%s은(는) %s에 취약하다.\n"
 
 #: describe.cc:3249
 msgid " is outlined in light.\n"
-msgstr ""
+msgstr "은(는) 밝은 광채를 발하고 있다.\n"
 
 #: describe.cc:3251
 msgid " is glowing with mutagenic radiation.\n"
-msgstr ""
+msgstr "은(는) 돌연변이성의 광채를 발하고 있다.\n"
 
 #: describe.cc:3255
 #, c-format
 msgid "%s can see invisible.\n"
-msgstr ""
+msgstr "%s은(는) 보이지 않는 물체를 감지할 수 있다.\n"
 
 #: describe.cc:3257
 #, c-format
 msgid "%s can sense the presence of invisible creatures.\n"
-msgstr ""
+msgstr "%s은(는) 보이지 않는 물체의 존재를 인지할 수 있다. \n"
 
 #: describe.cc:3264
 #, c-format
 msgid "%s is very slow.\n"
-msgstr ""
+msgstr "%s은(는) 매우 느리게 움직인다.\n"
 
 #: describe.cc:3266
 #, c-format
 msgid "%s is slow.\n"
-msgstr ""
+msgstr "%s은(는) 느리게 움직인다.\n"
 
 #: describe.cc:3268
 #, c-format
 msgid "%s is extremely fast.\n"
-msgstr ""
+msgstr "%s은(는) 번개같이 빠르게 움직인다.\n"
 
 #: describe.cc:3270
 #, c-format
 msgid "%s is very fast.\n"
-msgstr ""
+msgstr "%s은(는) 매우 빠르게 움직인다.\n"
 
 #: describe.cc:3272
 #, c-format
 msgid "%s is fast.\n"
-msgstr ""
+msgstr "%s은(는) 빠르게 움직인다.\n"
 
 #: describe.cc:3835
 #, c-format
 msgid "A prized avatar of %s."
-msgstr ""
+msgstr "당신은 %s의 자랑스러운 대행자이다."
 
 #: describe.cc:3836
 #, c-format
 msgid "A shining star in the eyes of %s."
-msgstr ""
+msgstr "당신은 %s의 훌륭한 샛별이다."
 
 #: describe.cc:3837
 #, c-format
 msgid "A rising star in the eyes of %s."
-msgstr ""
+msgstr "당신은 %s의 떠오르는 별이다."
 
 #: describe.cc:3838
 #, c-format
 msgid "%s is most pleased with you."
-msgstr ""
+msgstr "%은(는) 당신을 흡족하게 여기고 있다."
 
 #: describe.cc:3839
 #, c-format
 msgid "%s has noted your presence."
-msgstr ""
+msgstr "%s은(는) 당신을 어느 정도 인정하고 있다."
 
 #: describe.cc:3840
 #, c-format
 msgid "%s is noncommittal."
-msgstr ""
+msgstr "%s은(는) 당신에게 별다른 관심이 없다."
 
 #: describe.cc:3942
 msgid "Evolving plants requires fruit, and evolving fungi requires piety."
-msgstr ""
+msgstr "식물의 진화에는 과일이, 버섯의 진화에는 신앙도가 소모된다."
 
 #: directn.cc:944 target.cc:302 target.cc:486
 msgid "There's something in the way."
@@ -29756,3 +29790,104 @@ msgstr "관문"
 msgctxt "door"
 msgid "huge "
 msgstr "거대한 "
+
+#: describe.cc:3130
+msgctxt "threat_desc"
+msgid "harmless"
+msgstr "별다른 위협이 되어 보이지 않는다"
+
+#: describe.cc:3131
+msgctxt "threat_desc"
+msgid "easy"
+msgstr "어렵지 않은 상대이다"
+
+#: describe.cc:3132
+msgctxt "threat_desc"
+msgid "dangerous"
+msgstr "만만치 않은 상대이다"
+
+#: describe.cc:3133
+msgctxt "threat_desc"
+msgid "extremely dangerous"
+msgstr "내가 상대하기에는 매우 벅차다"
+
+#: describe.cc:3135
+msgctxt "threat_desc"
+msgid "buggily threatening"
+msgstr "아무리 봐도 얼마나 강한 지 알 수 없다. 버그인것 같다"
+
+#: spl-cast.cc:555
+msgid "You're too confused to cast spells."
+msgstr "주문을 외우기에는 너무 혼란스럽다."
+
+#: spl-cast.cc:715
+msgid ""
+"<lightred>Casting this spell will cause instant excommunication!</lightred> "
+"Really cast?"
+msgstr ""
+"<lightred>이 주문을 외울 경우, 당신은 즉시 신으로부터 파문당할 것이다!!</"
+"lightred> 정말로 이 주문을 외울 것인가?"
+
+#: spl-cast.cc:717
+msgid "Casting this spell will put you into penance. Really cast?"
+msgstr ""
+"이 주문을 외우면 신의 분노를 사게 될 것이다. 정말로 주문을 외울 것인가?"
+
+#: mon-util.cc:3113 mon-util.cc:3125
+msgctxt "mon_util_pronoun"
+msgid "it"
+msgstr "이 몬스터"
+
+#: mon-util.cc:3114
+msgctxt "mon_util_pronoun"
+msgid "he"
+msgstr "그"
+
+#: mon-util.cc:3114
+msgctxt "mon_util_pronoun"
+msgid "she"
+msgstr "그녀"
+
+#: mon-util.cc:3117
+msgctxt "mon_util_pronoun"
+msgid "its"
+msgstr "이 몬스터의"
+
+#: mon-util.cc:3118
+msgctxt "mon_util_pronoun"
+msgid "his"
+msgstr "그의"
+
+#: mon-util.cc:3118
+msgctxt "mon_util_pronoun"
+msgid "her"
+msgstr "그녀의"
+
+#: mon-util.cc:3121
+msgctxt "mon_util_pronoun"
+msgid "itself"
+msgstr "이 몬스터 자신"
+
+#: mon-util.cc:3122
+msgctxt "mon_util_pronoun"
+msgid "himself"
+msgstr "그 자신"
+
+#: mon-util.cc:3122
+msgctxt "mon_util_pronoun"
+msgid "herself"
+msgstr "그녀 자신"
+
+#: mon-util.cc:3126
+msgctxt "mon_util_pronoun"
+msgid "him"
+msgstr "그"
+
+#: mon-util.cc:3126
+msgctxt "mon_util_pronoun_obj"
+msgid "her"
+msgstr "그녀"
+
+#: describe.cc:3224
+msgid "; and "
+msgstr "; 그리고 "
