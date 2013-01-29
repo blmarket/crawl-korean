@@ -2307,30 +2307,30 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     if (!mon_name.find("the ")) // no "your the royal jelly" nor "the the RJ"
         mon_name.erase(0, 4);
     if (adj.find("your"))
-        adj = "the " + adj;
+        adj = gettext(M_("the ")) + adj;
     mon_name = adj + mon_name;
     std::string verb;
     if (beam_attack)
     {
-        verb = "fire ";
+        verb = ""; // pgettext("stop_attack","fire "); (130129) 어순상, fire부분은 공백으로 비워두고, 아래 at이나 in direction등에 fire의 뜻을 넣어 해석문장을 만들어야할듯
         if (beam_target == mon->pos())
-            verb += "at ";
+            verb += pgettext("stop_attack","at ");
         else if (you.pos() < beam_target && beam_target < mon->pos()
                  || you.pos() > beam_target && beam_target > mon->pos())
         {
             if (autohit_first)
                 return false;
 
-            verb += "in " + apostrophise(mon_name) + " direction";
+            verb += /* pgettext("stop_attack","in ") + apostrophise(mon_name) + */ mon_name + pgettext("stop_attack"," direction"); // 문장 구조상 맨 앞은 빼고, 어퍼스트로피도 빼서 direction에 전부 다 담아야할듯 ㅠㅠ
             mon_name = "";
         }
         else
-            verb += "through ";
+            verb += pgettext("stop_attack","through ");
     }
     else
-        verb = "attack ";
+        verb = pgettext("stop_attack","attack ");
 
-    snprintf(info, INFO_SIZE, "Really %s%s%s?",
+    snprintf(info, INFO_SIZE, pgettext("stop_attack","Really %s%s%s?"),
              verb.c_str(), mon_name.c_str(), suffix.c_str());
 
     return !yesno(info, false, 'n');
@@ -2373,7 +2373,7 @@ bool stop_attack_prompt(targetter &hitfunc, std::string verb,
         adj = make_stringf(gettext("the %s"), adj.c_str());
     mon_name = adj + mon_name;
 
-    snprintf(info, INFO_SIZE, gettext("Really %s %s%s?"),
+    snprintf(info, INFO_SIZE, gettext("Really %s %s%s?"), // 1.공격동사(verb. attack,attack near,hit 등등..), 2.몬스터명, 3.접미어(Zin의 성소 안에서 공격할때밖에 붙는 메시지밖에 없음)
              pgettext_expr("verb", verb.c_str()), mon_name.c_str(), suffix.c_str());
 
     return !yesno(info, false, 'n');

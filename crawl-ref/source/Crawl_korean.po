@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 14:10+0900\n"
+"POT-Creation-Date: 2013-01-30 01:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,10 +28,11 @@ msgid "Press <w>?</w> for a list of commands and other information."
 msgstr "<w>?</w>를 누르면 명령 일람 및 기타 정보를 확인할 수 있습니다."
 
 # (deceit, 110814) 이 부분(okay, then)은 원래 오리던크 부분에선 해석하지 않고 공백처리됩니다.
+# (130130) '네 그러세요' 에서 바꿔보았습니다. 어떤가요?
 #: command.cc:1612 command.cc:1629 stuff.cc:438 stuff.cc:438 command.cc:1583
 #: command.cc:1600 stuff.cc:414 command.cc:1489 command.cc:1506 stuff.cc:419
 msgid "Okay, then."
-msgstr "네, 그러세요."
+msgstr "좋아, 그럼."
 
 #: stuff.cc:405 stuff.cc:405 stuff.cc:381 stuff.cc:386
 msgid "Something appears at your feet!"
@@ -1129,23 +1130,23 @@ msgstr ""
 #: command.cc:271 command.cc:271 command.cc:238 command.cc:236
 msgid "Adjust (i)tems, (s)pells, or (a)bilities? "
 msgstr ""
-"어떤 키를 조절할 것인가?\n"
+"어떤 단축키를 변경할 것인가?\n"
 "[i]아이템 [s]주문 [a]특수능력"
 
 #: command.cc:347 command.cc:347 command.cc:314 command.cc:312
 msgid "Adjust which item?"
-msgstr "어느 아이템 키를 바꿀 것인가?"
+msgstr "어느 아이템의 단축키를 바꿀 것인가?"
 
 #: command.cc:353 command.cc:413 command.cc:496 command.cc:496 command.cc:320
 #: command.cc:380 command.cc:463 command.cc:318 command.cc:378
 msgid "Adjust to which letter? "
-msgstr "어느 키로 바꿀 것인가?"
+msgstr "어느 단축키로 바꿀 것인가?"
 
 #. Select starting slot
 #. Select starting slot
 #: command.cc:378 command.cc:378 command.cc:345 command.cc:343
 msgid "Adjust which spell? "
-msgstr "어느 주문의 키를 바꿀 것인가?"
+msgstr "어느 주문의 단축키를 바꿀 것인가?"
 
 #: command.cc:402 command.cc:402 spl-cast.cc:695 spl-cast.cc:707
 #: command.cc:369 spl-cast.cc:654 spl-cast.cc:666 command.cc:367
@@ -1159,7 +1160,7 @@ msgstr "당신은 현재 아무 특수능력도 가지고 있지 않다."
 
 #: command.cc:455 command.cc:455 command.cc:422
 msgid "Adjust which ability? (? or * to list) "
-msgstr "어느 특수능력의 키를 바꿀 것인가? (? 또는 *로 리스트)"
+msgstr "어느 특수능력의 단축키를 바꿀 것인가? (? 또는 *로 리스트)"
 
 #: command.cc:483 command.cc:483 command.cc:450 command.cc:451
 msgid "No such ability."
@@ -1175,7 +1176,7 @@ msgstr "이건 뭐 의미도 없고 감동도 없고..."
 #. / Swapping with: a - evoke skill 따위의 내용이 됨.
 #: command.cc:521 command.cc:521 command.cc:488
 msgid "Swapping with: "
-msgstr "키를 교체함: "
+msgstr "단축키를 변경함: "
 
 #. / Moving to: key - skill name 따위의 내용이 됨.
 #. / Moving to: key - skill name 따위의 내용이 됨.
@@ -3867,8 +3868,10 @@ msgstr "* * * 쿼드 데미지! * * *"
 msgid "You are wielding %s."
 msgstr "당신이 장비하고 있는 무기는 %s(이)다."
 
+#. Don't waste a turn hitting a rock worm when you know it
+#. will do nothing.
 #: fight.cc:593 fight.cc:586 fight.cc:586 beam.cc:1212 beam.cc:1220
-#: fight.cc:585 beam.cc:1205 melee_attack.cc:339
+#: fight.cc:585 beam.cc:1205 melee_attack.cc:339 melee_attack.cc:247
 #, c-format
 msgid "The %s protects %s from harm."
 msgstr "%s는 %s을(를) 피해로로부터 보호했다."
@@ -4110,6 +4113,7 @@ msgstr "%s은(는) 기절했다!"
 msgid "%s %s %s%s"
 msgstr "%1$s은(는) %3$s%2$s다%4$s"
 
+# (공격자) (동사) (방어자)! -> (공격자)는 (방어자)(동사)다!
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
 #. / 공격자, infuriate, 대상
 #. / 1. 공격자. 2. drain의 동사형. 3. 대상
@@ -21962,7 +21966,7 @@ msgstr "죽은 몬스터의 %s을(를) %s이(가) 주웠다."
 #: monster.cc:1096 monster.cc:1116 monster.cc:1233
 #, c-format
 msgid "Item %s, held by monster %s, being picked up by monster %s."
-msgstr "%2$s의 %1$s을(를) %3%s이(가) 주웠다."
+msgstr "%2$s의 %1$s을(를) %3$s이(가) 주웠다."
 
 # (deceit, 110904) mon-stuff.cc 4510번째 줄부터 두번째 인자가 번역됨.
 # ex) a club disappears in a puff of smoke as imp drops it!
@@ -27677,15 +27681,15 @@ msgstr ""
 #: cloud.cc:1371
 msgctxt "verb"
 msgid "bask"
-msgstr ""
+msgstr "에 휩싸였다."
 
 #: command.cc:418
 msgid "Adjust which ability? "
-msgstr ""
+msgstr "어느 특수 능력의 단축키를 바꿀 것인가?"
 
 #: command.cc:460
 msgid "Adjust to which letter?"
-msgstr ""
+msgstr "어느 키로 바꿀 것인가?"
 
 #: command.cc:483
 #, c-format
@@ -27908,6 +27912,33 @@ msgstr ""
 msgid "You deal a card..."
 msgstr ""
 
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
@@ -28392,94 +28423,95 @@ msgstr ""
 #: melee_attack.cc:200
 #, c-format
 msgid "Really attack with %s while in water? "
-msgstr ""
+msgstr "정말로 물 속에서 %s(으)로 공격할 것인가? "
 
 #: melee_attack.cc:218
 msgctxt "verb"
 msgid "attack"
-msgstr ""
+msgstr "을(를) 공격"
 
 #: melee_attack.cc:218
 msgctxt "verb"
 msgid "attack near"
-msgstr ""
+msgstr " 주변을 공격"
 
+#: melee_attack.cc:399, 한글판에서는 쓰지 않는 동사형
 #: melee_attack.cc:399
 msgctxt "verb"
 msgid "phase"
-msgstr ""
+msgstr "(phase) 이 문장을 보면 버그이므로 제보를 해주세요"
 
 #. TODO: Clean this up if possible, checking atype for do / does is ugly
 #: melee_attack.cc:524
 #, c-format
 msgid "%s %s %s but %s no damage."
-msgstr ""
+msgstr "%1$s은(는) %3$s%2$s지만, 아무 손상도 입히지 못했다.%4$.0s"
 
 #: melee_attack.cc:1100 melee_attack.cc:4032
 msgctxt "verb"
 msgid "kick"
-msgstr ""
+msgstr "에게 발차기를 했"
 
 #: melee_attack.cc:1110 melee_attack.cc:1172 melee_attack.cc:1911
 #: melee_attack.cc:1943 melee_attack.cc:1956 melee_attack.cc:4028
 msgctxt "verb"
 msgid "claw"
-msgstr ""
+msgstr "을(를) 할퀴었"
 
 #: melee_attack.cc:1118
 msgctxt "verb"
 msgid "pierce"
-msgstr ""
+msgstr "을(를) 뾰족한 촉수로 찔렀"
 
 #: melee_attack.cc:1132 melee_attack.cc:4029
 msgctxt "verb"
 msgid "peck"
-msgstr ""
+msgstr "을(를) 부리로 쪼았"
 
 #: melee_attack.cc:1138 melee_attack.cc:4030
 msgctxt "verb"
 msgid "headbutt"
-msgstr ""
+msgstr "을(를) 들이받았"
 
 #: melee_attack.cc:1146 melee_attack.cc:4034
 msgctxt "verb"
 msgid "tail-slap"
-msgstr ""
+msgstr "에게 꼬리치기를 했"
 
 #: melee_attack.cc:1161 melee_attack.cc:1935 melee_attack.cc:1976
 #: melee_attack.cc:4031
 msgctxt "verb"
 msgid "punch"
-msgstr ""
+msgstr "에게 주먹을 날렸"
 
 #: melee_attack.cc:1166 melee_attack.cc:1814 melee_attack.cc:1898
 msgctxt "verb"
 msgid "slash"
-msgstr ""
+msgstr "을(를) 베었"
 
 #: melee_attack.cc:1177 melee_attack.cc:1921 melee_attack.cc:1965
 #: melee_attack.cc:4033
 msgctxt "verb"
 msgid "tentacle-slap"
-msgstr ""
+msgstr "을(를) 촉수로 타격했"
 
 #. including weapon attacks
 #: melee_attack.cc:1184 melee_attack.cc:1890 melee_attack.cc:1945
 #: melee_attack.cc:4020
 msgctxt "verb"
 msgid "bite"
-msgstr ""
+msgstr "을(를) 물어뜯었"
 
 #: melee_attack.cc:1209 melee_attack.cc:1842 melee_attack.cc:1923
 #: melee_attack.cc:1967
 msgctxt "verb"
 msgid "bludgeon"
-msgstr ""
+msgstr "을(를) 강타했"
 
 #: melee_attack.cc:1217 melee_attack.cc:3987
 msgctxt "verb"
 msgid "squeeze"
-msgstr ""
+msgstr "을(를) 촉수로 감아 조였"
 
 #: melee_attack.cc:1506
 #, c-format
@@ -28526,27 +28558,27 @@ msgstr ""
 #: melee_attack.cc:3975 melee_attack.cc:4019 melee_attack.cc:4024
 msgctxt "verb"
 msgid "hit"
-msgstr ""
+msgstr "을(를) 공격했"
 
 #: melee_attack.cc:1777
 msgctxt "verb"
 msgid "clumsily bash"
-msgstr ""
+msgstr "을(를) 어설프게 공격했"
 
 #: melee_attack.cc:1789
 msgctxt "verb"
 msgid "puncture"
-msgstr ""
+msgstr "에게 구멍을 냈"
 
 #: melee_attack.cc:1791
 msgctxt "verb"
 msgid "impale"
-msgstr ""
+msgstr "을(를) 꿰찔렀"
 
 #: melee_attack.cc:1798 melee_attack.cc:1803
 msgctxt "verb"
 msgid "spit"
-msgstr ""
+msgstr "을(를) 꿰뚫었"
 
 #: melee_attack.cc:1804
 msgctxt "verb"
@@ -28556,362 +28588,375 @@ msgstr ""
 #: melee_attack.cc:1816 melee_attack.cc:1830 melee_attack.cc:1900
 msgctxt "verb"
 msgid "slice"
-msgstr ""
+msgstr "을(를) 베어냈"
 
-#: melee_attack.cc:1819
+#: melee_attack.cc:1819 / "Like an Onion"
 msgctxt "verb"
 msgid "dice"
-msgstr ""
+msgstr "을(를) 마치 양파 덩어리처럼 토막냈"
 
-#: melee_attack.cc:1824
+#: melee_attack.cc:1824 / "into splinters"
 msgctxt "verb"
 msgid "fracture"
-msgstr ""
+msgstr "을(를) 산산히 부서트렸"
 
-#: melee_attack.cc:1829
+#: melee_attack.cc:1829 / "like a pillowcase"
 msgctxt "verb"
 msgid "open"
-msgstr ""
+msgstr "을(를) 마치 배갯잇처럼 갈라버렸"
+
+#: melee_attack.cc:1830
+msgctxt "verb2"
+msgid "slice"
+msgstr "을(를) 과일을 자르듯 베어버렸"
 
 #: melee_attack.cc:1831
 msgctxt "verb"
 msgid "cut"
-msgstr ""
+msgstr "을(를) 리본을 자르듯 잘라버렸"
 
 #: melee_attack.cc:1840
 msgctxt "verb"
 msgid "thump"
-msgstr ""
+msgstr "을(를) 후려쳤"
 
 #: melee_attack.cc:1840
 msgctxt "verb"
 msgid "sock"
-msgstr ""
+msgstr "을(를) 내리쳤"
 
-#: melee_attack.cc:1845
+#: melee_attack.cc:1845 / "into splinters"
 msgctxt "verb"
 msgid "shatter"
-msgstr ""
+msgstr "을(를) 산산조각냈"
 
-#: melee_attack.cc:1850
+#: melee_attack.cc:1850 / "Like a grape"
 msgctxt "verb"
 msgid "crush"
-msgstr ""
+msgstr "을(를) 마치 포도처럼 으깨버렸"
 
-#: melee_attack.cc:1851
+#: melee_attack.cc:1851 / "like a drum"
 msgctxt "verb"
 msgid "beat"
-msgstr ""
+msgstr "을(를) 후려쳐 거꾸러뜨렸"
 
-#: melee_attack.cc:1852
+#: melee_attack.cc:1852 / "like a gong"
 msgctxt "verb"
 msgid "hammer"
-msgstr ""
+msgstr "의 온 몸이 진동할 정도로 타격을 줬"
 
-#: melee_attack.cc:1853 melee_attack.cc:3979
-msgctxt "verb"
+#: melee_attack.cc:1853
+msgctxt "verb2"
 msgid "pound"
-msgstr ""
+msgstr "을(를) 모루를 치듯 강하게 내리쳤"
 
 #: melee_attack.cc:1862
 msgctxt "verb"
 msgid "whack"
-msgstr ""
+msgstr "을(를) 후려쳤"
 
 #: melee_attack.cc:1864 melee_attack.cc:1927 melee_attack.cc:1971
 msgctxt "verb"
 msgid "thrash"
-msgstr ""
+msgstr "을(를) 후려갈겼"
 
 #: melee_attack.cc:1872
 msgctxt "verb"
 msgid "punish"
-msgstr ""
+msgstr "에게 고통스러운 채찍질을 가했"
 
 #: melee_attack.cc:1876
 msgctxt "verb"
 msgid "devastate"
-msgstr ""
+msgstr "을(를) 으스러트렸"
 
 #: melee_attack.cc:1892 melee_attack.cc:1947
 msgctxt "verb"
 msgid "maul"
-msgstr ""
+msgstr "에게 강타를 날렸"
 
 #: melee_attack.cc:1902
 msgctxt "verb"
 msgid "shred"
-msgstr ""
+msgstr "을(를) 갈갈이 찢었"
 
 #: melee_attack.cc:1909 melee_attack.cc:1954
 msgctxt "verb"
 msgid "scratch"
-msgstr ""
+msgstr "을(를) 긁었"
 
 #: melee_attack.cc:1913 melee_attack.cc:1958
 msgctxt "verb"
 msgid "mangle"
-msgstr ""
+msgstr "을(를) 난도질했"
 
 #: melee_attack.cc:1915 melee_attack.cc:1960
 msgctxt "verb"
 msgid "eviscerate"
-msgstr ""
+msgstr "의 창자를 후비어 끄집어냈"
 
 #: melee_attack.cc:1925 melee_attack.cc:1969
 msgctxt "verb"
 msgid "batter"
-msgstr ""
+msgstr "을(를) 촉수로 연달아 공격했"
 
 #: melee_attack.cc:1937 melee_attack.cc:1978
 msgctxt "verb"
 msgid "pummel"
-msgstr ""
+msgstr "을(를) 연달아 때렸"
 
 #: melee_attack.cc:1947 melee_attack.cc:4037
 msgctxt "verb"
 msgid "trample"
-msgstr ""
+msgstr "을(를) 짓밟았"
 
 #: melee_attack.cc:2138
 msgctxt "verb"
 msgid "drain"
-msgstr ""
+msgstr "의 생명력을 흡수했"
 
 #: melee_attack.cc:2279
 msgid " magic leaks into the air."
-msgstr ""
+msgstr " 마력이 공중으로 사라졌다."
 
+# "(방어자) convulse(conj_verb)(느낌표 혹은 마침표)"
 #: melee_attack.cc:2916 melee_attack.cc:2959 melee_attack.cc:2975
 #, c-format
 msgid "%s %s%s"
-msgstr ""
+msgstr "%1$s은(는) 크게 경련을 일으켰다%3$s%2$.0s"
 
 #. / 1. defender name, 2. are or is
 #: melee_attack.cc:3371
 #, c-format
 msgid "%s %s electrocuted!"
-msgstr ""
+msgstr "%1$s은(는) 감전되었다!%2$.0s"
 
 #. / 1. attacker, 2. "" or "s", 3. defender
 #: melee_attack.cc:3391
 #, c-format
 msgid "%s freeze%s %s!"
-msgstr ""
+msgstr "%1$s은(는) %3$s을(를) 얼렸다!%2$.0s"
 
 #: melee_attack.cc:3406
 #, c-format
 msgid "%s crush%s %s!"
-msgstr ""
+msgstr "%1$s은(는) %3$s에게 대지의 타격을 주었다!%2$.0s"
 
 #: melee_attack.cc:3424
 #, c-format
 msgid "%s burn%s %s!"
-msgstr ""
+msgstr "%1$s은(는) %3$s을(를) 불태웠다!%2$.0s"
 
 #. / 1. defender name, 2. "" or "s"
 #: melee_attack.cc:3456
 #, c-format
 msgid "%s convulse%s in agony!"
-msgstr ""
+msgstr "%1$s은(는) 고통으로 온 몸을 비틀었다!%2$.0s"
 
+# ""%s %s %s attack." -> %1$s은(는) %3$s 공격을 %2$s다." 원문기준 방어자,동사,공격자(conj_verb)순
+# melee_attack.cc (예전에는 fight.cc에 있었죠) 유일하게 fight.cc의 verb에서, '을(를)' 등이 앞에 붙지 않음.
 #: melee_attack.cc:3951
 msgctxt "verb"
 msgid "block"
-msgstr ""
+msgstr "막았"
 
 #: melee_attack.cc:3976
 msgctxt "verb"
 msgid "poke"
-msgstr ""
+msgstr "을(를) 양손가락으로 찔러 밀어냈"
 
 #: melee_attack.cc:3977
 msgctxt "verb"
 msgid "prod"
-msgstr ""
+msgstr "을(를) 손가락으로 쿡 찔렀"
 
 #: melee_attack.cc:3978
 msgctxt "verb"
 msgid "flog"
-msgstr ""
+msgstr "의 엉덩이를 걷어찼"
+
+#: melee_attack.cc:3979
+msgctxt "verb"
+msgid "pound"
+msgstr "을(를) 타격했"
 
 #: melee_attack.cc:3980 melee_attack.cc:4013
 msgctxt "verb"
 msgid "slap"
-msgstr ""
+msgstr "을(를) 철썩 때렸"
 
 #: melee_attack.cc:3981
 msgctxt "verb"
 msgid "tickle"
-msgstr ""
+msgstr "을(를) 간지럼태웠"
 
 #: melee_attack.cc:3982
 msgctxt "verb"
 msgid "defenestrate"
-msgstr ""
+msgstr "을(를) 집어 내던졌"
 
 #: melee_attack.cc:3983
 msgctxt "verb"
 msgid "sucker-punch"
-msgstr ""
+msgstr "의 뒤통수를 후려쳤"
 
 #: melee_attack.cc:3984
 msgctxt "verb"
 msgid "elbow"
-msgstr ""
+msgstr "을(를) 팔꿈치로 내리쳤"
 
 #: melee_attack.cc:3985
 msgctxt "verb"
 msgid "pinch"
-msgstr ""
+msgstr "의 몸을 꼬집었"
 
 #: melee_attack.cc:3986
 msgctxt "verb"
 msgid "strangle-hug"
-msgstr ""
+msgstr "을 강하게 안아 조였"
 
 #: melee_attack.cc:3988
 msgctxt "verb"
 msgid "tease"
-msgstr ""
+msgstr "에게 싸대기를 날렸"
 
 #: melee_attack.cc:3989
 msgctxt "verb"
 msgid "eye-gouge"
-msgstr ""
+msgstr "의 눈알을 손가락으로 찔러버렸"
 
 #: melee_attack.cc:3990
 msgctxt "verb"
 msgid "karate-kick"
-msgstr ""
+msgstr "에게 당수를 날렸"
 
 #: melee_attack.cc:3991
 msgctxt "verb"
 msgid "headlock"
-msgstr ""
+msgstr "에게 헤드락을 걸었"
 
 #: melee_attack.cc:3992
 msgctxt "verb"
 msgid "wrestle"
-msgstr ""
+msgstr "을 들어메쳤"
 
 #: melee_attack.cc:3993
 msgctxt "verb"
 msgid "trip-wire"
-msgstr ""
+msgstr "의 목을 졸랐"
 
 #: melee_attack.cc:3994
 msgctxt "verb"
 msgid "kneecap"
-msgstr ""
+msgstr "의 슬개골을 타격했"
 
 #: melee_attack.cc:4021
 msgctxt "verb"
 msgid "sting"
-msgstr ""
+msgstr "에게 침을 발사했"
 
 #: melee_attack.cc:4026
 msgctxt "verb"
 msgid "touch"
-msgstr ""
+msgstr "을(를) 건드렸"
 
 #: melee_attack.cc:4027
 msgctxt "verb"
 msgid "engulf"
-msgstr ""
+msgstr "을(를) 휩쌌"
 
 #: melee_attack.cc:4035
 msgctxt "verb"
 msgid "gore"
-msgstr ""
+msgstr "을(를) 들이받았"
 
 #: melee_attack.cc:4036
 msgctxt "verb"
 msgid "constrict"
-msgstr ""
+msgstr "을(를) 감아 조였"
 
 #: melee_attack.cc:4038
 msgctxt "verb"
 msgid "trunk-slap"
-msgstr ""
+msgstr "에게 몸통 박치기를 했"
 
 #: melee_attack.cc:4039
 msgctxt "verb"
 msgid "snap closed at"
-msgstr ""
+msgstr "을(를) 부러지도록 공격했"
 
 #: melee_attack.cc:4040
 msgctxt "verb"
 msgid "splash"
-msgstr ""
+msgstr "에게 액체를 튀겼"
 
 #: melee_attack.cc:4041
 msgctxt "verb"
 msgid "pounce on"
-msgstr ""
+msgstr "의 몸을 덮쳤"
 
 #: melee_attack.cc:4322
 #, c-format
 msgid "%s %s strength from %s injuries!"
-msgstr ""
+msgstr "%1$s은(는) %3$s의 상처로부터 힘을 빼앗아간다!%2$.0s"
 
 #: melee_attack.cc:4626
 #, c-format
 msgid "%s %s %s spines."
-msgstr ""
+msgstr "%1$s은(는) %3$s의 가시를 피했다.%2$.0s"
 
 #: melee_attack.cc:4627
 msgctxt "verb"
 msgid "dodge"
-msgstr ""
+msgstr "(dodge) 이 문장을 보면 버그이므로 제보를 해주세요."
 
 #: melee_attack.cc:4672
 msgid "You emit a cloud of foul miasma!"
-msgstr ""
+msgstr "당신에게서 오염된 증기 구름이 방출되어져 나왔다!"
 
 #: melee_attack.cc:4698
 #, c-format
 msgid "%s furiously retaliates!"
-msgstr ""
+msgstr "%s은(는) 격렬하게 반격을 가했다!"
 
 #: melee_attack.cc:4701
 #, c-format
 msgid "%s headbutts %s, but does no damage."
-msgstr ""
+msgstr "%s은(는) %s에게 박치기를 시도했지만, 아무런 손상도 입히지 못했다."
 
 #: melee_attack.cc:4706
 #, c-format
 msgid "%s headbutts %s%s"
-msgstr ""
+msgstr "%s은(는) %s에게 박치기를 했다%s"
 
 #: melee_attack.cc:4743
 msgid "You furiously retaliate!"
-msgstr ""
+msgstr "당신은 격렬하게 반격을 가했다!"
 
 #: melee_attack.cc:4747
 #, c-format
 msgid "You headbutt %s, but do no damage."
-msgstr ""
+msgstr "당신은 %s에게 박치기를 시도했지만, 아무런 손상도 입히지 못했다."
 
 #: melee_attack.cc:4753
 #, c-format
 msgid "You headbutt %s%s"
-msgstr ""
+msgstr "당신은(는) %s에게 박치기를 했다%s"
 
 #: melee_attack.cc:4793
 msgctxt "verb"
 msgid "stumble"
-msgstr ""
+msgstr "(stumble) 이 문장을 보면 버그이므로 제보를 해주세요."
 
 #: melee_attack.cc:4818
 msgctxt "verb"
 msgid "hold"
-msgstr ""
+msgstr "(hold) 이 문장을 보면 버그이므로 제보를 해주세요."
 
 #: melee_attack.cc:5372
 #, c-format
 msgid "You strike %s from behind!"
-msgstr ""
+msgstr "당신은 뒤에서 %s를 가격했다"
 
 #: misc.cc:583
 #, c-format
@@ -28959,7 +29004,7 @@ msgstr ""
 #: misc.cc:2376
 #, c-format
 msgid "Really %s %s%s?"
-msgstr ""
+msgstr "정말로 %2$s%1$s할 것인가?%3$s"
 
 #: mon-abil.cc:1202
 #, c-format
@@ -29891,3 +29936,104 @@ msgstr "그녀"
 #: describe.cc:3224
 msgid "; and "
 msgstr "; 그리고 "
+
+#: misc.cc:2315
+msgctxt "stop_attack"
+msgid "fire "
+msgstr "(fire ) 이 문장을 보면 버그이므로 제보를 해주세요"
+
+#: misc.cc:2317
+msgctxt "stop_attack"
+msgid "at "
+msgstr "에게 발사할 것인가"
+
+#: misc.cc:2324
+msgctxt "stop_attack"
+msgid "in "
+msgstr "(in ) 이 문장을 보면 버그이므로 제보를 해주세요"
+
+#. pgettext("stop_attack","in ") + apostrophise(mon_name) +
+#: misc.cc:2324
+msgctxt "stop_attack"
+msgid " direction"
+msgstr "을(를) 향하여 발사할 것인가"
+
+#: misc.cc:2328
+msgctxt "stop_attack"
+msgid "through "
+msgstr " 쪽으로 발사할 것인가"
+
+#: misc.cc:2331
+msgctxt "stop_attack"
+msgid "attack "
+msgstr "을(를) 공격할 것인가"
+
+#: misc.cc:2333
+#, c-format
+msgctxt "stop_attack"
+msgid "Really %s%s%s?"
+msgstr "정말로 %2$s%1$s?%3$s"
+
+#: actor.cc:334
+#, c-format
+msgid "%s %s %s grip on %s."
+msgstr "%4$s은(는) %1$s%2$s. %3$.0s"
+
+# (130130,deceit) 이부분이 좀 의아해하실지 모르겠는데요,
+# 2번째는 동사 하나에 conj_verb 붙는식이라 무시. 4번째는 디버그용메시지
+# 즉, 조이는캐릭(1) 조임당하는캐릭(3) 조임강도(5) 순입니다.
+#: actor.cc:525
+#, c-format
+msgid "%s %s %s%s%s"
+msgstr "%1$s은(는) %3$s의 몸을 감아 조였다%5$s%4$s%2$.0s"
+
+#: actor.cc:539
+#, c-format
+msgid "%s %s constricted%s%s"
+msgstr "%1$s의 몸이 조여들었다%4$s%3$s%2$.0s"
+
+#: actor.cc:336
+msgctxt "actor"
+msgid "release"
+msgstr "의 조이기로부터 탈출했다"
+
+#: actor.cc:336
+msgctxt "actor"
+msgid "lose"
+msgstr "의 조이기에서 풀려났다"
+
+#: actor.cc:528
+msgctxt "actor"
+msgid "constrict"
+msgstr "(actor:constrict) 이 문장을 보시면 버그이므로 제보를 해 주세요."
+
+#: actor.cc:541
+msgctxt "actor"
+msgid "are"
+msgstr "(actor:are) 이 문장을 보시면 버그이므로 제보를 해 주세요."
+
+#: actor.cc:512
+msgctxt "actor"
+msgid ", but do no damage."
+msgstr "의 몸을 조였으나, 아무런 손상도 주지 못했다."
+
+# (130130) 원래는 이 부분에 동사부를 넣으려고 해서 P_() 넣어서 이렇게 뻈지만, 그냥 원래대로...
+#: actor.cc:515
+msgctxt "actor"
+msgid "."
+msgstr "."
+
+#: actor.cc:517
+msgctxt "actor"
+msgid "!"
+msgstr "!"
+
+#: actor.cc:519
+msgctxt "actor"
+msgid "!!"
+msgstr "!!"
+
+#: actor.cc:521
+msgctxt "actor"
+msgid "!!!"
+msgstr "!!!"

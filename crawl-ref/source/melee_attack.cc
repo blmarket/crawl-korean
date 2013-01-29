@@ -214,8 +214,8 @@ bool melee_attack::handle_phase_attempted()
             {
                 std::string junk1, junk2;
                 const char *verb = (bad_attack(defender->as_monster(),
-                                               junk1, junk2)
-                                    ? P_("verb", "attack") : P_("verb", "attack near"));
+                                               junk1, junk2) 
+                                    ? P_("verb", "attack") : P_("verb", "attack near")); 
                 bool (*aff_func)(const coord_def &) = 0;
                 if (damage_brand == SPWPN_ELECTROCUTION)
                     aff_func = _conduction_affected;
@@ -244,7 +244,7 @@ bool melee_attack::handle_phase_attempted()
         {
             // Don't waste a turn hitting a rock worm when you know it
             // will do nothing.
-            mprf("The %s protects %s from harm.",
+            mprf(gettext("The %s protects %s from harm."), // 130128 추가본
                  raw_feature_description(defender->pos()).c_str(),
                  defender->name(DESC_THE).c_str());
             cancel_attack = true;
@@ -525,7 +525,7 @@ bool melee_attack::handle_phase_hit()
              attacker->name(DESC_THE).c_str(),
              pgettext_expr("verb", attack_verb.c_str()),
              defender->name(DESC_THE).c_str(),
-             attacker->is_player() ? "do" : "does");
+             attacker->is_player() ? "do" : "does"); // (130128) 4번째 인자(do,does)는 번역문에서 사용하지 않음.
     }
 
     // Check for weapon brand & inflict that damage too
@@ -1827,7 +1827,7 @@ void melee_attack::set_attack_verb()
         else
         {
             const char* pierce_desc[][2] = {{P_("verb", "open"),    N_("like a pillowcase")},
-                                            {P_("verb", "slice"),   N_("like a ripe choko")},
+                                            {P_("verb2", "slice"),   N_("like a ripe choko")},
                                             {P_("verb", "cut"),     N_("into ribbons")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
@@ -1850,7 +1850,7 @@ void melee_attack::set_attack_verb()
             const char* pierce_desc[][2] = {{P_("verb", "crush"),   N_("like a grape")},
                                             {P_("verb", "beat"),    N_("like a drum")},
                                             {P_("verb", "hammer"),  N_("like a gong")},
-                                            {P_("verb", "pound"),   N_("like an anvil")}};
+                                            {P_("verb2", "pound"),   N_("like an anvil")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
             verb_degree = pierce_desc[choice][1];
