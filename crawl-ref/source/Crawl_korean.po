@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 01:43+0900\n"
+"POT-Creation-Date: 2013-01-31 00:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12568,7 +12568,7 @@ msgid "The surrounding life force dissipates!"
 msgstr "주위의 생명력들이 소멸되었다!"
 
 #: mon-cast.cc:2370 mon-cast.cc:2556 mon-cast.cc:2556 mon-cast.cc:2450
-#: mon-cast.cc:2631 mon-cast.cc:2900
+#: mon-cast.cc:2631 mon-cast.cc:2900 godwrath.cc:1429
 msgid " is healed."
 msgstr "은(는) 치유되었다."
 
@@ -19878,7 +19878,7 @@ msgstr "@The_monster@은(는) 강력한 국지적 공간 왜곡의 장소에 붙
 msgid "A piece of empty space twists and writhes."
 msgstr "주변의 광범위한 공간이 소용돌이치며 일그러졌다."
 
-#: spl-miscast.cc:1171 godwrath.cc:879 spl-miscast.cc:1175
+#: spl-miscast.cc:1171 godwrath.cc:879 spl-miscast.cc:1175 godwrath.cc:855
 msgid "Space warps around you!"
 msgstr "당신 주변의 공간이 일그려졌다!"
 
@@ -20034,7 +20034,7 @@ msgstr "당신은 집중력을 잃었다."
 
 #. This should zero it.
 #: spl-miscast.cc:1530 spl-miscast.cc:1546 godwrath.cc:848 spl-miscast.cc:1534
-#: spl-miscast.cc:1550 spl-miscast.cc:1524 spl-miscast.cc:1540
+#: spl-miscast.cc:1550 spl-miscast.cc:1524 spl-miscast.cc:1540 godwrath.cc:825
 msgid "You suddenly feel drained of magical energy!"
 msgstr "마력이 어딘가로 빨려 들어간 것을 느꼈다!"
 
@@ -24314,46 +24314,46 @@ msgstr ""
 "\n"
 "주문명                             학파                      레벨 \n"
 
-#: godwrath.cc:132
+#: godwrath.cc:132 godwrath.cc:130
 msgid " sends the divine host to punish you for your evil ways!"
 msgstr "은(는) 당신의 악행을 처벌하기 위해 신의 대행자를 보냈다!"
 
-#: godwrath.cc:134
+#: godwrath.cc:134 godwrath.cc:132
 msgid "'s divine host fails to appear."
 msgstr "의 신의 대행자들은 나타나지 못했다."
 
-#: godwrath.cc:146
+#: godwrath.cc:146 godwrath.cc:144
 msgid " booms out: \"Take the path of righteousness! REPENT!\""
 msgstr "의 목소리가 터져나왔다. \"정의의 길에서 벗어난 자여, 참회하라!\""
 
-#: godwrath.cc:151
+#: godwrath.cc:151 godwrath.cc:149
 msgid "You feel the Shining One's silent rage upon you!"
 msgstr "샤이닝 원의 소리없는 분노가 느껴졌다!"
 
-#: godwrath.cc:166
+#: godwrath.cc:166 godwrath.cc:164
 msgid " draws some chaos from your body!"
 msgstr "은(는) 당신의 육체의 혼돈스러움을 약간 가라앉혔다!"
 
-#: godwrath.cc:185
+#: godwrath.cc:185 godwrath.cc:183
 msgid " rids your body of chaos!"
 msgstr "은 당신의 육체의 혼돈함을 제거해주었다!"
 
 #. recital
-#: godwrath.cc:206
+#: godwrath.cc:206 godwrath.cc:204
 msgid " recites the Axioms of Law to you!"
 msgstr "은 당신에게 진리의 격언을 설교했다!"
 
 #. famine
-#: godwrath.cc:222
+#: godwrath.cc:222 godwrath.cc:220
 msgid " sends a famine down upon you!"
 msgstr "은 당신에게 기근의 고통을 안겼다!"
 
 #. noisiness
-#: godwrath.cc:226
+#: godwrath.cc:226 godwrath.cc:224
 msgid " booms out: \"Turn to the light! REPENT!\""
 msgstr "의 목소리가 터져나왔다. \"빛 바랜 자여, 참회하라!\""
 
-#: godwrath.cc:305
+#: godwrath.cc:305 godwrath.cc:287
 #, c-format
 msgid " dulls %syour weapons."
 msgstr "은(는) 당신의 무기%s를 무뎌지게 만들었다."
@@ -24363,99 +24363,99 @@ msgctxt "wrath"
 msgid "one of "
 msgstr "중 하나"
 
-#: godwrath.cc:316
+#: godwrath.cc:316 godwrath.cc:298
 msgid "'s displeasure finds you."
 msgstr "은(는) 당신에게 불만을 표시했다."
 
-#: godwrath.cc:371
+#: godwrath.cc:371 godwrath.cc:353
 msgid " adjusts the clock."
 msgstr "은(는) 시간을 조정했다."
 
-#: godwrath.cc:378
+#: godwrath.cc:378 godwrath.cc:360
 msgid "You lose track of time."
 msgstr "당신은 시간의 흐름을 놓쳤다."
 
-#: godwrath.cc:387
+#: godwrath.cc:387 godwrath.cc:369
 msgid "You feel the world leave you behind!"
 msgstr "온 세상이 자신을 저버린 듯한 기분이 들었다!"
 
-#: godwrath.cc:396
+#: godwrath.cc:396 godwrath.cc:378
 msgid "Time shudders."
 msgstr "시간의 흐름이 진동했다."
 
-#: godwrath.cc:403
+#: godwrath.cc:403 godwrath.cc:385
 msgid " makes up for lost time."
 msgstr "은(는) 잃어버린 시간을 만회했다."
 
-#: godwrath.cc:433
+#: godwrath.cc:433 godwrath.cc:415
 msgid " sends a greater servant after you!"
 msgstr "은(는) 당신 앞에 자신의 고위 추종자를 보냈다!"
 
-#: godwrath.cc:434
+#: godwrath.cc:434 godwrath.cc:416
 msgid "'s greater servant is unavoidably detained."
 msgstr "은(는) 자신의 추종자를 보내려 했으나, 실패했다."
 
-#: godwrath.cc:459 godwrath.cc:925
+#: godwrath.cc:459 godwrath.cc:925 godwrath.cc:439 godwrath.cc:898
 msgid " sends minions to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 부하들을 보냈다."
 
-#: godwrath.cc:460
+#: godwrath.cc:460 godwrath.cc:440
 msgid " sends a minion to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 부하를 보냈다."
 
-#: godwrath.cc:461 godwrath.cc:926
+#: godwrath.cc:461 godwrath.cc:926 godwrath.cc:441 godwrath.cc:899
 msgid "'s minions fail to arrive."
 msgstr "은(는) 당신을 처벌하기 위해 부하를 보냈으나, 실패했다."
 
-#: godwrath.cc:472
+#: godwrath.cc:472 godwrath.cc:452
 msgid "You hear Kikubaaqudgha cackling."
 msgstr "키쿠바쿠드하가 큭큭대며 웃는 소리가 들렸다."
 
-#: godwrath.cc:473
+#: godwrath.cc:473 godwrath.cc:453
 msgid "Kikubaaqudgha's malice focuses upon you."
 msgstr "키쿠바쿠드하의 악의있는 시선이 당신을 향했다."
 
-#: godwrath.cc:548
+#: godwrath.cc:548 godwrath.cc:526
 msgid " sends servants to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자들을 보냈다."
 
-#: godwrath.cc:549
+#: godwrath.cc:549 godwrath.cc:527
 msgid " sends a servant to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자를 보냈다."
 
-#: godwrath.cc:550
+#: godwrath.cc:550 godwrath.cc:528
 msgid "'s servants fail to arrive."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자를 보으나, 실패했다."
 
-#: godwrath.cc:555
+#: godwrath.cc:555 godwrath.cc:533
 msgid "'s anger turns toward you for a moment."
 msgstr "의 분노가 잠시 당신을 향했다."
 
-#: godwrath.cc:594
+#: godwrath.cc:594 godwrath.cc:572
 msgid " sends monsters to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 몬스터들을 보냈다."
 
-#: godwrath.cc:595
+#: godwrath.cc:595 godwrath.cc:573
 msgid " sends a monster to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 몬스터를 보냈다."
 
-#: godwrath.cc:596
+#: godwrath.cc:596 godwrath.cc:574
 msgid " has no time to punish you... now."
 msgstr "은(는) 지금은 당신을 처벌할 시간이 없는 듯 하다."
 
-#: godwrath.cc:601
+#: godwrath.cc:601 godwrath.cc:579
 msgid "'s voice booms out, \"Feel my wrath!\""
 msgstr "의 목소리가 울려퍼졌다. \"나의 분노를 느껴보아라!\""
 
-#: godwrath.cc:623
+#: godwrath.cc:623 godwrath.cc:601
 msgid "You suddenly pass out!"
 msgstr "갑자기 의식을 잃었다!"
 
-#: godwrath.cc:633
+#: godwrath.cc:633 godwrath.cc:611
 msgid "You suddenly feel exhausted!"
 msgstr "갑자기 온 몸의 기운이 빠졌다!"
 
-#: godwrath.cc:647
+#: godwrath.cc:647 godwrath.cc:625
 msgid "You feel Trog's fiery rage upon you!"
 msgstr "트로그의 불타오르는 분노가 느껴졌다!"
 
@@ -24465,48 +24465,48 @@ msgid " throws %s of %s at you."
 msgstr "은(는) %2$s%1$s을(를) 당신에게 던졌다."
 
 #. " throws "
-#: godwrath.cc:743
+#: godwrath.cc:743 godwrath.cc:720
 msgctxt "wrath"
 msgid "an implement"
 msgstr "기구"
 
-#: godwrath.cc:743
+#: godwrath.cc:743 godwrath.cc:720
 msgctxt "wrath"
 msgid "implements"
 msgstr "기구들"
 
 #. << (num_created == 1 ? "an implement" : "implements")
-#: godwrath.cc:744
+#: godwrath.cc:744 godwrath.cc:721
 msgctxt "wrath"
 msgid "orc slaying"
 msgstr "오크 살육의 "
 
-#: godwrath.cc:744
+#: godwrath.cc:744 godwrath.cc:721
 msgctxt "wrath"
 msgid "electrocution"
 msgstr "뇌전의 "
 
-#: godwrath.cc:786
+#: godwrath.cc:786 godwrath.cc:763
 msgid " sends forth an army of orcs."
 msgstr "은(는) 눈 앞에 오크 부대를 보냈다."
 
-#: godwrath.cc:787
+#: godwrath.cc:787 godwrath.cc:764
 msgid " is still gathering forces against you."
 msgstr "은 당신 앞에 보낼 부대를 아직 모집하고 있는 것 같다."
 
-#: godwrath.cc:805
+#: godwrath.cc:805 godwrath.cc:782
 msgid " sends forces against you!"
 msgstr "은(는) 당신에게 대항할 부대를 내보냈다!"
 
-#: godwrath.cc:806
+#: godwrath.cc:806 godwrath.cc:783
 msgid "'s forces are busy with other wars."
 msgstr "의 부대는 당신을 상대할 시간이 없어보인다."
 
-#: godwrath.cc:816
+#: godwrath.cc:816 godwrath.cc:793
 msgid "'s wrath finds you."
 msgstr "의 분노가 당신을 향했다."
 
-#: godwrath.cc:841
+#: godwrath.cc:841 godwrath.cc:818
 msgid "You get a splitting headache."
 msgstr "머리가 울릴 정도의 두통이 났다."
 
@@ -24515,28 +24515,28 @@ msgid "Your magical effects suddenly unravel."
 msgstr "당신의 마법 효과가 갑자기 흐려져 흩어졌다."
 
 #. Give extra opportunities for embarrassing teleports.
-#: godwrath.cc:871 godwrath.cc:878
+#: godwrath.cc:871 godwrath.cc:878 godwrath.cc:847 godwrath.cc:854
 msgid "'s wrath finds you!"
 msgstr "의 분노가 당신을 향했다!"
 
-#: godwrath.cc:900
+#: godwrath.cc:900 godwrath.cc:875
 msgid " sends a demon after you!"
 msgstr "은(는) 당신 앞에 악마를 보냈다!"
 
-#: godwrath.cc:901
+#: godwrath.cc:901 godwrath.cc:876
 msgid "'s demon is unavoidably detained."
 msgstr "은(는) 당신 앞에 악마를 보내려 했으나, 악마는 말을 듣지 않았다."
 
-#: godwrath.cc:937
+#: godwrath.cc:937 godwrath.cc:910
 msgid "'s vengeance finds you."
 msgstr "의 앙갚음이 당신을 향했다."
 
 #. like Xom, this might actually help the player -- bwr
-#: godwrath.cc:950
+#: godwrath.cc:950 godwrath.cc:923
 msgid " makes you draw from the Deck of Punishment."
 msgstr "은(는) 당신이 처벌의 덱에서 카드를 뽑도록 만들었다."
 
-#: godwrath.cc:963
+#: godwrath.cc:963 godwrath.cc:936
 msgid "You feel Jiyva alter your body."
 msgstr "지이바가 당신의 몸에 영향을 끼치는 것이 느껴졌다."
 
@@ -24545,57 +24545,57 @@ msgstr "지이바가 당신의 몸에 영향을 끼치는 것이 느껴졌다."
 msgid "Jiyva's putrescence saturates the %s!"
 msgstr "지바의 부패가 %s을(를) 가득 채웠다!"
 
-#: godwrath.cc:1001
+#: godwrath.cc:1001 godwrath.cc:974
 msgid "Mutagenic energy floods into your body!"
 msgstr "변이의 에너지가 당신의 육체에 밀려왔다!"
 
-#: godwrath.cc:1055
+#: godwrath.cc:1055 godwrath.cc:1026
 msgid "Some slimes ooze up out of the ground!"
 msgstr "지면에서 슬라임들이 튀어나왔다!"
 
-#: godwrath.cc:1056
+#: godwrath.cc:1056 godwrath.cc:1027
 msgid "The ground quivers slightly."
 msgstr "지면이 살짝 떨리는 것이 느껴졌다."
 
-#: godwrath.cc:1077
+#: godwrath.cc:1077 godwrath.cc:1048
 msgid " produces spores."
 msgstr "은(는) 포자를 내보냈다."
 
 #. Elemental miscast effects.
-#: godwrath.cc:1084
+#: godwrath.cc:1084 godwrath.cc:1055
 msgid " invokes the elements against you."
 msgstr "은(는) 당신에게 대항할 정령들을 불러냈다."
 
-#: godwrath.cc:1196
+#: godwrath.cc:1196 godwrath.cc:1167
 msgid "Plants grow around you in an ominous manner."
 msgstr "주위에 식물들이 불길하게 자라났다."
 
-#: godwrath.cc:1270
+#: godwrath.cc:1270 godwrath.cc:1241
 msgid "The divine experience confuses you!"
 msgstr "신과의 접촉이 당신을 혼란시켰다!"
 
-#: godwrath.cc:1277
+#: godwrath.cc:1277 godwrath.cc:1248
 msgid "The divine experience leaves you feeling exhausted!"
 msgstr "신과의 접촉이 당신을 몹시 지쳐 버리게했다!"
 
-#: godwrath.cc:1319
+#: godwrath.cc:1319 godwrath.cc:1295
 msgid "Beogh is angry!"
 msgstr "베오그는 분노했다!"
 
-#: godwrath.cc:1360 godwrath.cc:1426
+#: godwrath.cc:1360 godwrath.cc:1426 godwrath.cc:1336 godwrath.cc:1447
 #, c-format
 msgid "\"Mortal, I have averted the wrath of %s... this time.\""
 msgstr "\"%s의 분노를 피할 수 있도록 해주지... 이번에는.\""
 
-#: godwrath.cc:1370
+#: godwrath.cc:1370 godwrath.cc:1346
 msgid " blasts you with cleansing flame!"
 msgstr "은(는) 당신에게 정화의 불꽃을 일으켰다!"
 
-#: godwrath.cc:1385
+#: godwrath.cc:1385 godwrath.cc:1361
 msgid "The Shining One is angry!"
 msgstr "샤이닝 원은 분노했다!"
 
-#: godwrath.cc:1458
+#: godwrath.cc:1458 godwrath.cc:1479
 msgid " smites you!"
 msgstr "은(는) 당신에게 일격을 날렸다!"
 
@@ -27972,6 +27972,15 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004
 #, c-format
 msgid "You have %s %s."
@@ -30037,3 +30046,35 @@ msgstr "!!"
 msgctxt "actor"
 msgid "!!!"
 msgstr "!!!"
+
+#: godwrath.cc:967
+#, c-format
+msgid "'s putrescence saturates %s!"
+msgstr "의 부패의 기운이 %s을(를) 가득 채웠다!"
+
+#: godwrath.cc:1403
+msgid "Elyvilon is displeased."
+msgstr "엘리빌론은 불쾌해했다."
+
+#: godwrath.cc:1425
+msgid "Elyvilon touches your foes with healing grace."
+msgstr "엘리빌론이 치료의 은총을, 당신의 적들에게 하사했다."
+
+#: godwrath.cc:288
+msgctxt "godwrath"
+msgid "one of "
+msgstr "중 하나"
+
+#: godwrath.cc의 719~722번째줄. 어차피 단어가 다 정해져있으니
+#: 이렇게 하는게 편할듯
+msgid " throws an implement of orc slaying at you."
+msgstr "은(는) 오크 살육의 무기를 당신에게 던졌다."
+
+msgid " throws implements of orc slaying at you."
+msgstr "은(는) 오크 살육의 무기들을 당신에게 던졌다."
+
+msgid " throws an implement of electrocution at you."
+msgstr "은(는) 전격의 무기를 당신에게 던졌다."
+
+msgid " throws implements of electrocution at you."
+msgstr "은(는) 전격의 무기들을 당신에게 던졌다."

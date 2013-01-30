@@ -9,138 +9,138 @@
 # fall-back in case a keyword can't be found
 Xom general effect
 
-Xom snickers.
+좀은 낄낄대며 웃었다.
 
-"How about this?"
+"이것은 어떠한가?"
 
-"Let's try an experiment, hmmm?"
+"재미있는 실험을 하나 해 보도록 하지, 흠?"
 
 w:1
-"I wonder... What does this button do?"
+"이 단추를 누르면 어떻게 될지, 참으로 궁금하군..."
 %%%%
 ##############################
 # Xom throwing stuff at you.
 ##############################
 Xom general gift
 
-Xom grants you a gift!
+좀은 당신에게 선물을 하사했다!
 
-"Here."
+"이 것을 받아라."
 
-Xom's generous nature manifests itself.
+좀은 자신이 통이 크다는 것을 자랑했다.
 
-Xom grants you an implement of some kind.
+좀은 당신에게 무엇인가를 선물했다.
 
-"Take this instrument of something!"
+"이것이 무엇인지는 모르지만, 아마도 너에게 도움이 될 것이다!"
 
-"Take this token of my esteem."
+"나의 호의의 증표인, 이 것을 받아라."
 
-Xom smiles on you.
+좀이 당신에게 미소었다.
 
-"Catch!"
+"받아라!"
 %%%%
 ####################
 # friendly summons
 ####################
 Xom single summon
 
-"Serve the mortal, my child!"
+"내 아이들아, 이 자를 섬기거라!"
 
-"Serve the toy, my child!"
+"내 아이들아, 나의 장난감을 섬기거라!"
 
-Xom opens a gate.
+좀은 문을 열었다.
 %%%%
 Xom single holy summon
 
-"Serve the mortal, my confused child!"
+"내 아이들아, 이 자를 섬겨라!"
 
-"Serve the toy, my child of exile!"
+"내 아이들아, 내 장난감을 섬기거라!"
 
-Xom calls in a curious servant of another god.
+좀은 당신에게 호기심에 가득한 추종자를 붙여주었다.
 
-Xom lures something onto this plane.
+좀은 이 세계로 무엇인가를 유혹해냈다.
 
-"A toy for the toy!"
+"장난감에게 장난감을 줄 시간이구나!"
 
-"I wonder which toy lasts longer."
+"어느 장난감이 더 오래 갈 것인가 궁금하군."
 
-Xom opens a gate.
+좀은 문을 열었다.
 %%%%
 # higher demonic being
 Xom single major demon summon
 
-Xom grants you a demonic assistant.
+좀은 당신에게 악마 추종자를 붙여주었다.
 
-Xom grants you a demonic servitor.
+좀은 당신에게 악마 종복을 보내주었다.
 
-Xom opens a gate.
+좀은 문을 열었다.
 %%%%
 Xom single major holy summon
 
-Xom grants you an assistant from another god.
+좀은 마치 다른 신의 행세를 내어, 다른 신의 종복을 붙여주었다.
 
-Xom beguiles another god's servant into helping you.
+좀은 다른 신의 종복을 구슬려, 당신을 따르게 만들었다.
 
-"Where'd that come from? Oh, well."
+"이 녀석들은 어디서 온 것일까? 뭐, 상관은 없겠지."
 
-You wonder where Xom got that toy from.
+당신은, 좀이 어디서 몬스터들을 데려오는지 문득 궁금해졌다.
 
-Xom seems to have successfully tricked another god.
+좀은 다른 신들을, 성공적으로 속인 것 처럼 보였다.
 
-Xom opens a gate.
+좀은 문을 열었다.
 %%%%
 # several demons
 Xom multiple summons
 
-"Serve the mortal, my children!"
+"나의 아이들아, 이 자를 섬기거라!"
 
-Xom grants you some temporary aid.
+좀은 당신에게 잠깐 호의를 베풀었다.
 
-Xom momentarily opens a gate.
+좀은 잠시 문을 열었다.
 %%%%
 # holy beings and demons at the same time
 Xom multiple mixed summons
 
-Xom calls in some mixed company.
+좀은 여러 종류의 마물들을 불러냈다.
 
-"Serve the toy, my motley children!"
+"잡다한 녀석들아, 나의 장난감이나 섬기거라!"
 
-Xom sends help from the ranks of the outcast.
+좀은 이계의 존재들을 불러내 당신을 돕게 했다.
 
-"Oh, what a happy playground."
+"오호, 재미있는 놀이터로군."
 
-Xom manages to trick several beings into existence.
+좀은 몇몇 이계의 존재들을 속여, 이 세계로 나타나게 했다.
 
-Xom snickers at the variety.
+좀은 목소리를 다양하게 바꿔가며 웃었다.
 
-Xom momentarily opens several gates.
+좀은 잠시 문을 열었다.
 %%%%
 Xom multiple holy summons
 
-Xom stirs up dislodged servants of other gods.
+좀은 다른 신의 추종자들을 꼬드겨, 자신의 자리를 벗어나게 만들었다.
 
-Xom summons wayward servants of other gods.
+좀은 다루기 힘들어보이는 다른 신의 추종자들을 소환했다.
 
-Xom tricks other gods for their servants.
+좀은 다른 신의 추종자들을 속여, 당신을 따르게 만들었다.
 
-"Different god, different toy."
+"다른 신들의 장난감은, 어떤 지 궁금하구나."
 
-Xom momentarily opens a gate.
+좀은 잠시 문을 열었다.
 %%%%
 # changing the scenery
 Xom scenery
 
-Xom briefly touches your surroundings.
+좀은 주변의 환경을 멋대로 꾸며냈다.
 
-Xom adds some personal touches to your environment.
+좀은 당신의 주변 환경을, 멋대로 바꾸어버렸다.
 
-Xom complains about the scenery.
+좀은 던전 구조에 대해 불평했다.
 
-Xom alters the dungeon around you.
+좀은 주변의 던전 구조를 바꾸어버렸다.
 
-"There, this looks better."
+"이렇게 바꾸는것이, 더 보기 좋지 않은가."
 
-"Just a minor improvement..."
+"맘에 들지 않는군..."
 %%%%
 ##################
 # Xom nastiness
@@ -148,24 +148,24 @@ Xom alters the dungeon around you.
 # miscast strength 0, mostly harmless
 Xom zero miscast effect
 
-Xom almost notices you.
+좀은 당신을 응시하다, 지루한 듯 그만두었다.
 
-Xom's attention almost turns to you for a moment.
+좀은 잠시 당신을 응시하다가, 그만두었다.
 
-Xom's power almost touches on you for a moment.
+좀의 힘이, 잠시 당신에게 닿는 듯한 느낌을 받았다.
 
-You almost hear Xom's maniacal laughter.
+당신은 좀이 미친 듯이 웃는 소리가 들리는 느낌을 받았다.
 %%%%
 # miscast strength random2(2), harmless/annoying
 Xom minor miscast effect
 
-Xom notices you.
+좀은 잠시 당신에게로 눈을 돌렸다.
 
-Xom's attention turns to you for a moment.
+좀은 잠깐 동안 당신에게 주목했다.
 
-Xom's power touches on you for a moment.
+좀의 힘이 잠깐 동안 당신에게 닿았다.
 
-You hear Xom's maniacal laughter.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 # miscast strength random2(3), mostly annoying
 Xom medium miscast effect
@@ -175,34 +175,36 @@ Xom medium miscast effect
 # miscast strength random2(4), up to really nasty
 Xom major miscast effect
 
-"Try this."
+"이거나 먹어라."
 
-Xom's attention turns to you.
+좀은 당신에게 주목했다!
 
-Xom's power touches on you.
+좀은 자신의 힘을 당신에게 시험했다!
 
-Xom giggles.
+좀은 피식거리며 웃었다.
 
 w:1
-"Running a series of toy crash tests now."
+"내 장난감이 충격에 얼마나 잘 견디는지 테스트해볼 시간이군!"
 %%%%
 Xom lose stats
 
-"Suffer!"
+"괴로워해라!"
 
-Xom's malign attention turns to you for a moment.
+좀의 악의있는 주시가, 잠깐 동안 당신에게 집중되었다.
 
-Xom's power touches on you for a moment.
+좀의 힘이 잠깐동안 당신에게 닿았다.
 
-You hear Xom's maniacal laughter.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 Xom rearrange the pieces
 
-Xom decides to rearrange the pieces.
+좀은 당신의 장비를 멋대로 바꾸었다.
 
-"First here, now there."
+"이건 여기에, 그리고 저건 저기에."
 
-"This might be better!"
+"왜 그 따위 무기를 들고 있는거지?"
+
+"이렇게 바꾸니, 훨씬 보기 좋군!"
 %%%%
 Xom swap weapons
 
@@ -210,43 +212,43 @@ Xom swap weapons
 %%%%
 Xom teleportation journey
 
-"Whee!"
+"야호!"
 
-"Let's go for a ride!"
+"다른 곳으로 가 보자!"
 
-"Where it stops, nobody knows!"
+"어디에 멈출지는, 나도 모른다!"
 
 Xom twists space around you.
 %%%%
 Xom confusion
 
-"Heh heh heh..."
+"흐흐흐..."
 
-Xom's power touches on your mind for a moment.
+좀의 힘이 당신의 마음을 잠깐 요동치게 만들었다.
 
-Xom titters.
+좀은 킥킥거리며 웃었다.
 %%%%
 # 25% chance of draining, else torment
 Xom draining or torment
 
-"You have displeased me, mortal."
+"너는 정말로 맘에 안 들어."
 
-"You have grown too confident for your meagre worth."
+"넌 주제도 모르고 너무 기세등등해 있어!"
 
-Xom's power touches on you for a moment.
+좀의 힘이 잠깐 동안 당신에게 닿았다.
 
-You hear Xom's maniacal laughter.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 # 25% chance dancing weapon, else summon hostile monster
 Xom hostile monster
 
-"Time to have some fun!"
+"즐길 시간이다!"
 
-"Fight to survive, mortal."
+"싸워서 살아남아 보아라."
 
-"Let's see if it's strong enough to survive yet."
+"너의 힘이 살아남기에, 충분한지 시험해 보자."
 
-You hear Xom's maniacal laughter.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 Xom animate monster weapon
 
@@ -254,91 +256,95 @@ Xom animate monster weapon
 %%%%
 Xom banishment
 
-"You have grown too comfortable in your little world, mortal!"
+"너는 그런 하찮은 세계에서, 너무 편안하게 살고 있어!"
 
-Xom casts you into the Abyss!
+좀은 당신을 어비스에 던져 넣었다!
 
-The world seems to spin as Xom's maniacal laughter rings in your ears.
+좀이 미친 듯이 웃는 소리가 귀에 울림과 동시에, 주위가 빙글빙글 돌아가기 시작했다.
 %%%%
 Xom revert banishment
 
 w:30
-"Kidding!"
+"장난이었지!"
 
-"On second thought, though..."
+"뻥이야!"
 
-"No, I've changed my mind."
+"다시 생각해보니까, 내가 좀 너무했던 것 같군...."
 
-Xom pulls you back into the comparable quietude of the dungeon.
+"이번 한번은 봐 주도록 하지."
+
+좀은 당신을 어비스에서, 던전으로 다시 되돌려주었다.
 %%%%
 # Xom upgrades a nearby hostile monster's weapon to a chaos brand
 Xom chaos upgrade
 
-Xom's power touches on a nearby weapon.
+좀의 힘이, 근처의 무기에 닿았다.
 
-"Have a taste of chaos, mortal."
+"혼돈의 맛을 느껴보거라, 유한한 자여."
 
-Xom chortles.
+좀은 배를 잡고 깔깔 웃었다.
 %%%%
 #####################
 # other effects
 #####################
 Xom potion effect
 
-"Go forth and destroy!"
+"가라, 그리고 파괴하라!"
 
-"Go forth and cause havoc, mortal!"
+"자, 가라, 그리고 파괴하라!"
 
-Xom grants you a minor favour.
+"자, 가서 엉망으로 만들어라!"
 
-Xom smiles on you.
+좀은 당신에게 얼마간의 호의를 보였다.
+
+좀은 당신에게 미소지었다.
 %%%%
 # random divination (magic mapping, detect items, detect creatures)
 Xom divination
 
-"See what I see, my child!"
+"내가 보는 장면, 너도 보고 싶지?"
 
-Xom grants you insight.
+좀은 당신에게 자신의 시야를 하사했다.
 
-Xom smirks.
+좀이 히죽히죽 웃었다.
 %%%%
 # cast a random spell
 Xom spell effect
 
-Xom's power flows through you!
+좀의 힘이 당신을 통해 넘쳐들었다!
 
-Xom plays with reality for a moment.
+좀은 이 세계의 마력을 건드렸다.
 
-Xom guffaws.
+좀은 크게 웃었다.
 %%%%
 # multicoloured smoke trail
 Xom colour smoke trail
 
-"Go forth and redecorate, my child!"
+"나의 아이야, 가서 장식하라!"
 
-"This place needs a little more atmosphere."
+"이 장소는, 다른 공기가 좀 더 필요하겠군."
 %%%%
 # turns walls into glass
 Xom vitrification
 
-You feel watched.
+응시당한다는 느낌이 들었다.
 
-Everything around seems to assume a strange transparency.
+주위의 모든 것들이, 마치 투명하게 보이기 시작했다.
 
-The walls suddenly lose part of their structure.
+주변의 벽들의 일부 구조가 갑자기 붕괴했다.
 
-Xom alters the dungeon around you.
+좀은 당신 주변의 던전 구조를 바꾸었다.
 %%%%
 # strengthens friendlies, weakens hostiles
 Xom good monster polymorph
 
-"This might be better!"
+"이렇게 바꾸니까, 훨씬 보기 좋군!"
 
-"Hum-dee-hum-dee-hum..."
+"수리수리 마하수리..."
 
-Xom's power touches on a nearby monster.
+좀의 힘이, 근처의 몬스터에 닿았다.
 
-You hear Xom's avuncular chuckle.
+당신은 좀이 정겹게 웃는 소리를 들었다.
 %%%%
 # weakens friendlies, strengthens hostiles
 Xom bad monster polymorph
@@ -347,151 +353,151 @@ Xom bad monster polymorph
 %%%%
 Xom good mutations
 
-"You need some minor adjustments, mortal!"
+"너에게는 약간의 개조가 필요하겠군!"
 
-"Let me alter your pitiful body."
+"너의 보잘것 없는 몸뚱아리를, 내 친히 개조해주지."
 
-Xom's power touches on you for a moment.
+좀의 힘이 잠깐동안 당신에게 닿았다.
 
-You hear Xom's maniacal cackling.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 Xom random mutations
 
-"You need some minor improvements, mortal!"
+"너에게는 약간의 개조가 필요하겠군!"
 
-"Let me alter your body."
+"너의 보잘것 없는 몸뚱아리를, 내 친히 개조해주지."
 
-Xom's power brushes against you for a moment.
+좀의 힘이 잠깐동안 당신에게 닿았다.
 
-You hear Xom's avuncular chuckle.
+당신은 좀이 미친 듯이 웃는 소리를 들었다.
 %%%%
 Xom snakes to sticks
 
-Xom transforms those around you.
+좀은 당신의 주변 환경을 바꾸었다.
 
-"I like them better like this."
+"난 이렇게 만드는 것을 더 좋아한다."
 
-"Never liked these squiggly things."
+"이렇게 구불구불 움직이는 것들, 본 적은 있었는가?"
 
-Xom touches your surroundings.
+좀은 당신의 주변을 손대었다.
 
 @Xom good monster polymorph@
 %%%%
 Xom inner flame
 
-"Let it end in hellfire!"
+"지옥불로 몽땅 다 태워버리자!"
 
-Xom turns up the heat.
+좀은 주변에 뜨거운 기운을 일으켰다.
 %%%%
 Xom accidental homicide
 
-"Oops, I didn't mean to do *that*!"
+"이런, 이럴 의도는 아니었는데!"
 %%%%
 Xom weird death
 
-"How'd *that* happen? Weird."
+"대체 무슨 일인가? 기묘하군."
 %%%%
 Xom resurrection
 
-"Let me repair your body."
+"네 몸뚱아리를 복원시켜 주겠다."
 
-Xom tricks Death into leaving you alone.
+좀은 죽음을 막아주었다.
 
-Xom's maniacal laughter scares Death away.
+좀의 미친듯한 웃음이, 죽음을 쫒아냈다.
 
-Xom's power revives you.
+좀의 힘이, 당신을 부활시켰다.
 
-Xom brings you back to life.
+좀은 당신에게 생명력을 불어넣어주었다.
 
-Xom smiles on you.
+좀은 당신에게 미소지었다.
 %%%%
 Xom repel stairs
 
-Xom changes the scenery.
+좀은 주변 환경을 바꾸었다.
 
-Xom pokes at a nearby @staircase@.
+좀은 근처의 @staircase@을(를) 멀리 밀어냈다.
 
-"Tag, you're it!"
+"좋아, 이제 네가 술래다!"
 
-Xom alters the dungeon around you.
+좀은 당신 주변의 던전 구조를 변화시켰다.
 %%%%
 Xom life saving general
 
-"What? Wait, NO!"
+"잠깐? 잠깐, 기다려!"
 
-"Hey, things were just getting interesting!"
+"재미있는 일은 지금부터 시작이다!"
 
-"NOOOOOOO, not my @_xom_plaything_@!"
+"안돼애애애애, 내 @xom_plaything@!"
 
-"Not here, not now."
+"지금 여기서 끝나는 건 아니다."
 
-Xom is feeling generous.
+좀은 인심을 베풀었다.
 %%%%
 Xom life saving actor
 
 w:20
 @Xom life saving general@
 
-"Hey, that's my @_xom_plaything_@!"
+"이런, 내 @xom_plaything@을(를) 건들지 말아라!"
 
-"Oh, no, you don't!"
+"안돼, 이렇게는!"
 
-"That's my @_xom_plaything_@, go get your own!"
+"이 녀석은 내 @xom_plaything@(이)다. 네 놈의 장난감이나 갖고 놀거라!"
 
-"Leave my @_xom_plaything_@ alone!"
+"내 @xom_plaything@을(를) 가만히 냅두어라!"
 %%%%
 Xom boring death
 
-Xom yawns loudly!
+좀은 길게 하품했다!
 
-"Boring in life, boring in death..."
+"사는 모습도 지겹고, 죽은 모습도 지겨웠다..."
 
-"What!? That's it?"
+"뭐? 이것이 다인가?"
 
-"I guess I need a new plaything now."
+"이제, 새 장난감이 필요하겠군."
 
-"Huh? Did I miss anything?"
+"흠? 내가 애초에 장난감을 잘 못 고른 것 같군."
 %%%%
 # Xom laughing
 # (Currently only used post-game in response to "You die...")
 Xom laughter
 
-Xom guffaws!
+좀은 시끄럽게 웃었다!
 
-Xom roars with laughter!
+좀은 크게 웃으며 소리쳤다!
 
-Xom thinks this is hilarious!
+좀은 우스꽝스러워했다!
 
-Xom is highly amused!
+좀은 크게 재밌어했다!
 
-Xom cackles wildly!
+좀은 방정맞게 낄낄댔다!
 
-Xom snickers!
+좀은 낄낄대며 웃었다!
 
-Xom laughs nastily!
+좀은 악의있는 미소를 지었다!
 
-Xom howls with laughter!
+좀은 크게 웃었다!
 
-Xom bursts into laughter!
+좀은 웃음을 터트렸다!
 
-Xom giggles madly!
+좀은 배를 잡고 웃었다!
 
-Xom titters!
+좀은 킥킥거리며 웃었다!
 
-Xom chuckles heartily!
+좀은 배를 잡고 깔깔대며 웃었다!
 
-Xom chortles!
+좀은 깔깔대며 웃었다!
 %%%%
 _xom_plaything_
 
 # piety > 180 and > 80, respectively
 {{
 if you.piety_rank() > 4 then
-    return "teddy bear"
+    return "곰인형"
 elseif you.piety_rank() > 2 then
-    return "toy"
+    return "인형"
 else
-    return "plaything"
+    return "장난감"
 end
 }}
 %%%%
@@ -501,35 +507,35 @@ end
 # Beogh's messiah has destroyed an idol
 Beogh idol follower
 
-Beogh fumes, "This is no small sin, orc. Repent!"
+베오그는 외쳤다. "그것이 작은 죄라고 생각하는가! 회개하라!"
 
-Beogh whispers, "You will suffer for this misdeed."
+베오그는 속삭였다. "넌 네 업보로 인한 고통을 받게 될 것이다."
 
-Beogh rages, "An eye for an eye..."
+베오그는 분노했다, "눈에는 눈, 이에는 이..."
 %%%%
 # an unbelieving hill orc has destroyed an idol
 Beogh idol hill orc
 
-Beogh's voice booms out: "Heretic, die!"
+베오그의 목소리가 울려퍼졌다. "이단자는, 죽음뿐이다!"
 
-You hear Beogh's thundering voice: "Suffer, infidel!"
+베오그의 천둥과 같은 목소리가 들렸다. "고통스러워해라.. 불신자여!"
 
-Beogh roars, "Feel my power, apostate!"
+베오그는 소리쳤다. "나의 힘 앞에 무릎꿇어라, 변절자여!"
 %%%%
 # a character of another species has destroyed an idol
 Beogh idol other
 
-Beogh is not amused by that idol's destruction.
+베오그는 당신이 석상을 부순 것에 강한 분노를 드러냈다.
 
-Beogh seems highly displeased.
+베오그는 당신에게 커다란 불쾌감을 표했다.
 
-Your arrogance infuriates Beogh.
+베오그는 당신의 오만함에 대해 분노를 표출했다
 
-Beogh utters a curse on your species.
+베오그는 당신의 종족을 저주했다.
 
-Beogh curses everyone not orcish, especially @player_genus_plural@.
+베오그는 오크를 제외한 모두를 저주했다. 특히 @player_genus_plural@.
 
-Beogh swears eternal hatred towards @player_god@.
+베오그는 @player_god@에게 끝없는 증오심이 담긴 욕설을 퍼부었다.
 %%%%
 #################################################
 # The Shining One rants on killing a holy being #
@@ -537,101 +543,128 @@ Beogh swears eternal hatred towards @player_god@.
 # an evil worshipper has killed a holy being
 the Shining One holy evil
 
-The Shining One thunders, "Cease your foul attacks on the divine!"
+샤이닝 원은 호통했다. "감히 신성한 존재에게 더러운 공격을 하다니, 당장 멈추거라!"
 
-The Shining One shouts, "That base death shall not go unavenged!"
+샤이닝 원은 외쳤다. "네놈은 절대로 용서받지 못할 것이다!"
 
-The Shining One shouts, "Your misdeeds are remembered unto the final battle!"
+샤이닝 원은 외쳤다. "네놈의 악행은, 마지막 전투까지 기억할 것이다!"
 
-The Shining One whispers, "The forces of light will burn you to a crisp."
+샤이닝 원은 속삭였다. "신성한 빛의 힘이, 너를 곧 불태워 재로 만들어 버릴 것이다."
 %%%%
 # a non-good worshipper or atheist has killed a holy being
 the Shining One holy other
 
-The Shining One says, "As holy lives are taken, so shall yours be."
+샤이닝 원은 말했다. "성스러운 존재로써의 삶을 산다는건, 너 자신에게 달려있느니라."
 
-The Shining One warns, "Defile yourself no further with such kills."
+샤이닝 원은 경고했다. "이러한 살생으로, 더 이상 너 자신을 더럽히지 않는게 좋을 것이다."
 
-The Shining One demands, "It is time to choose between the fair and the foul."
+샤이닝 원은 강렬하게 말했다. "깨끗한 길을 걸을지 추잡하고 더러운 길을 걸을지, 선택할 시간이니라."
 
-The Shining One says, "Martyrs are remembered forever."
+샤이닝 원은 말했다. "순교자들은 영원히 기억될 것이다."
 
 w:1
-The Shining One says, "An eye for an eye, a tooth for a tooth."
+샤이닝 원은 말했다. "눈에는 눈, 이에는 이!"
 %%%%
 ##########################################
 # Elyvilon hates you killing her animals #
 ##########################################
 Elyvilon holy
 
-Elyvilon hisses: "You foul beast! How dare you!"
+엘리빌론은 소리쳤다. "너무해! 어찌 이런 짓을!"
 
-Elyvilon sadly asks: "How did it come to be that such cruelty exists?"
+엘리빌론은 날카롭게 소리쳤다. "이 짐승! 어떻게 그럴 수 있어요!"
 
-Elyvilon whispers: "No one should ever harm others. Ever!"
+엘리빌론은 슬프게 물었다. "세상에, 어떻게 이런 끔찍한 짓을 할 수 있는건가요?"
+
+엘리빌론은 조용히 말했다. "아무도 다른 이를 다치게 할 수는 없는거에요. 언제까지나!"
 %%%%
 recite_closure
 
-"Amen!"
+"아멘!"
 
-"Glory to Zin!"
+"진에게 영광 있으리!"
 
-"And thus was it written."
+"그리하야, 이것으로 끝을 맺는다."
 
-"So sayeth Zin."
+"진의 말씀으로."
 
-"Purity be upon you all."
+"그대에게 순수함이 언제나 함께하기를.""
 %%%%
 ##########################
 # Xom's response to prayer
 ##########################
 Xom prayer
 
-Xom slaps you with a @_trout_species_@ trout!
+w:33
+좀은 당신을 안중에도 두지 않는다.
 
-Xom toots happily.
+w:5
+좀은 @_trout_species_@(으)로 당신의 머리를 철썩 때렸다.
 
-Xom says: I'm watching you, my @_xom_child_@ child.
+w:5
+좀은 무심한듯 휘파람을 불었다.
 
-You hear crickets chirping.
+w:5
+좀은 당신의 기도를 무시했다.
+
+w:3
+좀은 말했다. "기도하지 않아도, 널 보고 있다. @_xom_child_@ 신도여."
+
+w:2
+당신은 귀뚜라미가 우는 소리를 들었다.
 
 w:1
-You feel someone pinching you. As you turn, you see no one.
+누군가가 당신을 꼬집는 느낌이 들었다. 뒤를 돌아보니, 아무것도 없었다.
 
 w:1
-Xom says: Amen!
+좀은 말했다. "아멘!"
 %%%%
 _trout_species_
 
-rainbow
+무지개색 송어
 
-flathead
+납작머리 물고기
 
-cutthroat
+붉은 반점 청어
 
-bull
+금붕어
 
-silver
+열대어
+
+은빛 붕어
+
+은색 송어
+
+바다송어
+
+길다란 갈치
+
+대왕오징어
 %%%%
 _xom_child_
 
-misbegotten
+무개념한
 
-bastard
+지루한
 
-ugly
+머저리 같은
 
-red-headed step
+못생긴
 
-silly
+원숭이 같은
 
-worthless
+멍청한
 
-prodigal
+무가치한
 
-insane
+난봉꾼
 
-naughty
+정신 못 차리는
+
+더러운
+
+w:1
+잉여스러운
 %%%%
 ######################################
 # Welcome messages on game restoration
@@ -642,15 +675,15 @@ Ashenzari penance
 %%%%
 Ashenzari welcome
 
-Ashenzari says: Partake of my vision. Partake of my curse.
+아센자리는 말했다. "좀 더 나은 앞날을 보기 위해서는, 스스로를 옥죄고 저주할 필요도 있는 법이니라..."
 %%%%
 Beogh penance
 
-Beogh says: Show any more mercy to foul non-orcs and I'll have you killed.
+베오그는 말했다. "더러운 타 종족들에게 다시금 자비를 베풀었다간, 네놈부터 죽음을 면치 못할 것이다."
 %%%%
 Beogh welcome
 
-Beogh says: Drown the unbelievers in a sea of blood!
+베오그는 말했다. "불신자들을, 피의 바다에 빠트리거라!"
 %%%%
 Beogh newgame
 
@@ -658,19 +691,19 @@ Beogh newgame
 %%%%
 Cheibriados penance
 
-Cheibriados says: Don't be so hasty! Slow down!
+체이브리아도스는 말했다. "넌 너무 빠르다! 행동을 늦추거라!"
 %%%%
 Cheibriados welcome
 
-Cheibriados says: Take it easy.
+체이브리아도스는 말했다. "절대 서두르지 마라."
 %%%%
 Elyvilon penance
 
-Elyvilon says: I plead of you, be more careful when helping others!
+엘리빌론은 말했다. "뭐 해요! 말 했잖아요, 다른 자들을 돕는다는게 쉬운게 아나라고요!"
 %%%%
 Elyvilon welcome
 
-Elyvilon says: Go forth and aid the weak!
+엘리빌론은 말했다. "나아가서, 약자들을 돕도록 해요!"
 %%%%
 Elyvilon newgame
 
@@ -678,11 +711,11 @@ Elyvilon newgame
 %%%%
 Fedhas penance
 
-Fedhas protests your encroaching upon nature.
+페다스는 당신이 자연물을 함부로 다룬 일에 화를 냈다.
 %%%%
 Fedhas welcome
 
-Fedhas says: Spread life and death.
+페다스는 말했다. "삶과 죽음은, 자연의 이치인 것..."
 %%%%
 Jiyva penance
 
@@ -690,7 +723,7 @@ Jiyva penance
 %%%%
 Jiyva welcome
 
-Slime for the Slime God!
+"슬라임을 위해, 슬라임의 신이 존재하노라!"
 %%%%
 Kikubaaqudgha penance
 
@@ -698,7 +731,7 @@ Kikubaaqudgha penance
 %%%%
 Kikubaaqudgha welcome
 
-Kikubaaqudgha says: Spread unending torment and darkness!
+키쿠바쿠드하는 말했다. "끝 없는 고통과, 어둠을 전파하라!"
 %%%%
 Lugonu penance
 
@@ -706,11 +739,11 @@ Lugonu penance
 %%%%
 Lugonu welcome
 
-Lugonu says: Spread carnage and corruption!
+루고누는 말했다 "온 세상에 타락을 퍼트려, 아수라장을 만들어라!"
 %%%%
 Lugonu newgame
 
-Lugonu says: Take this gate or call upon me to unleash you onto the world, my servant!
+루고누는 말했다. "이 관문을 통과하거나, 나의 힘을 부르면, 네 임무를 시작할 세상으로 나갈 수 있을 것이다. 나의 사도여!"
 %%%%
 Makhleb penance
 
@@ -718,7 +751,7 @@ Makhleb penance
 %%%%
 Makhleb welcome
 
-Blood and souls for Makhleb!
+"마크레브에게 피와 영혼을!"
 %%%%
 Nemelex Xobeh penance
 
@@ -726,39 +759,39 @@ Nemelex Xobeh penance
 %%%%
 Nemelex Xobeh welcome
 
-Nemelex Xobeh says: It's all in the cards!
+네멜렉스 죠베는 말했다. "세상 만물이 이 카드 안에 다 있다네!"
 %%%%
 Okawaru penance
 
-Okawaru says: Don't be a dastardly coward this time!
+오카와루는 말했다. "네 스스로의 불명예를 어떻게 씻을 것인지, 똑똑히 지켜볼 것이니라!"
 %%%%
 Okawaru welcome
 
-Okawaru says: Bring me glory in combat!
+오카와루는 말했다. "끝 없는 전투를 통해, 나에게 명예를 증명해 보이라!"
 %%%%
 Sif Muna penance
 
-Sif Muna rages: Pay more attention this time!
+시프 무나는 소리쳤다. "오늘은 좀 더 사려깊은 행동을 기대하겠네..."
 %%%%
 Sif Muna welcome
 
-Sif Muna whispers: I know many secrets...
+시프 무나는 속삭였다. "나는 많은 비밀을 알고 있다네..."
 %%%%
 the Shining One penance
 
-The Shining One says: Being a martyr may wash away your sin!
+샤이닝 원은 말했다. "지속적인 믿음이 있다면, 너의 죄는 언젠가 씻겨질 것이니라!"
 %%%%
 the Shining One welcome
 
-The Shining One says: Lead the forces of light to victory!
+샤이닝 원은 말했다. "빛과 힘을 이끌어, 승리를 향해 나아가거라!"
 %%%%
 Trog penance
 
-Trog mutters: Ah, it's this puny scribbler again...
+트로그는 투덜거렸다. "겁쟁이 녀석이 또 오셨군..."
 %%%%
 Trog welcome
 
-Trog says: Kill them all!
+트로그는 말했다. "모조리 죽여라!"
 %%%%
 Trog newgame
 
@@ -770,33 +803,33 @@ Vehumet penance
 %%%%
 Vehumet welcome
 
-Vehumet says: Let it end in hellfire!
+베후멧은 말했다. "지옥의 불로, 모든 것을 끝내거라!"
 %%%%
 Xom bored
 
-Xom yawns.
+좀은 하품했다.
 
-"I wonder what else is on..."
+"지루하구나. 너 말고 다른 존재는 없는가..."
 
 @Xom generic@
 %%%%
 Xom newgame
 
-Xom says: A new plaything!
+좀은 말했다. "새로운 장난감이구나!"
 %%%%
 Xom generic
 
-Xom snickers.
+좀은 깔깔대며 웃었다.
 
-Xom titters.
+좀은 킥킥대며 웃었다.
 %%%%
 Yredelemnul penance
 
-Yredelemnul says: All are equal in death! Holy martyrdom means nothing!
+이레데렘눌은 말했다. "모두가 죽음 앞에선 평등하지... 신성한 족속들이라고 죽음 앞에서 별다를 것은 없노라..."
 %%%%
 Yredelemnul welcome
 
-Yredelemnul says: Carry the black torch! Rouse the idle dead!
+이레데렘눌은 말했다. "검은 횃불을 전도하라...! 그리고 죽은 자들을 일으켜라...!"
 %%%%
 Yredelemnul newgame
 
@@ -804,13 +837,13 @@ Yredelemnul newgame
 %%%%
 Zin penance
 
-Zin castigates you for your disobedience of the Law.
+Zin은(는) 당신이 질서에 복종하지 않은 행동을 강하게 혹평했다.
 
-Zin sternly explains the importance of @_important_subject_@
+진은 @important_subject@의 중요성을 엄하게 설명했다.
 %%%%
 Zin welcome
 
-Zin says: Spread the light, my child.
+진은 명했다. "나의 신도여, 빛을 넓혀라!"
 %%%%
 Zin newgame
 
