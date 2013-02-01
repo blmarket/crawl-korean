@@ -833,6 +833,9 @@ static bool _handle_reaching(monster* mons)
     if (!foe || range <= REACH_NONE)
         return false;
 
+    if (is_sanctuary(mons->pos()) || is_sanctuary(foe->pos()))
+        return false;
+
     if (mons->submerged())
         return false;
 
@@ -2867,7 +2870,7 @@ static bool _check_slime_walls(const monster *mon,
                                const coord_def &targ)
 {
     if (!player_in_branch(BRANCH_SLIME_PITS) || mons_is_slime(mon)
-        || mon->res_acid() >= 3 || mons_intel(mon) <= I_INSECT)
+        || actor_slime_wall_immune(mon) || mons_intel(mon) <= I_INSECT)
     {
         return false;
     }

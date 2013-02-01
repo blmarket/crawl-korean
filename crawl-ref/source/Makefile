@@ -535,6 +535,11 @@ endif
 endif
 
 ifndef BUILD_LUA
+  ifdef NO_PKGCONFIG
+    BUILD_LUA = yes
+  endif
+endif
+ifndef BUILD_LUA
   ifneq ($(shell $(PKGCONFIG) lua5.1 --exists || echo no),)
     ifneq ($(shell $(PKGCONFIG) lua --exists || echo no),)
       BUILD_LUA = yes
@@ -655,7 +660,7 @@ INCLUDES_L += $(PNG_INCLUDE) $(FREETYPE_INCLUDE) $(SDL_INCLUDE)
 endif # TILES
 
 # On clang, unknown -Wfoo is merely a warning, thus -Werror.
-CFWARN_L += $(shell w=-Wno-array-bounds;echo|$(GCC) -E - -Werror $$w >/dev/null 2>&1 && echo $$w)
+CFWARN_L += $(shell w=-Wno-array-bounds;echo|$(GXX) -E - -Werror $$w >/dev/null 2>&1 && echo $$w)
 
 CFWARN_L += -Wno-parentheses -Wno-unused-parameter -Wwrite-strings -Wshadow
 CFOTHERS_L = $(EXTERNAL_FLAGS_L) $(EXTRA_FLAGS) $(DEFINES) $(SDL_CFLAGS)
@@ -1050,8 +1055,8 @@ SRC_PKG_ZIP   := $(PKG_SRC_DIR).zip
 
 greet:
 	@if [ ! -e $(GAME) ]; then\
-		printf "  * If you experience any problems building Crawl, please take a second look\\n"\
-		"  * at INSTALL.txt: the solution to your problem just might be in there!\\n";\
+		printf '  * %s\n' "If you experience any problems building Crawl, please take a second look"\
+		                  "at INSTALL.txt: the solution to your problem just might be in there!";\
 	fi
 
 docs: $(GENERATED_DOCS)
@@ -1611,7 +1616,7 @@ source: removeold prebuildyacc
 	(cd ../..;git ls-files| \
 		grep -v -f crawl-ref/source/misc/src-pkg-excludes.lst| \
 		tar cf - -T -)|tar xf - -C build
-	for x in lua pcre sqlite libpng freetype sdl sdl-image zlib; \
+	for x in lua pcre sqlite libpng freetype sdl sdl-image zlib fonts; \
 	  do \
 	   mkdir -p $(BSRC)contrib/$$x; \
 	   (cd contrib/$$x;git ls-files|tar cf - -T -)| \

@@ -748,6 +748,10 @@ void view_update_at(const coord_def &pos)
     // Force colour back to normal, else clrscr() will flood screen
     // with this colour on DOS.
     textcolor(LIGHTGREY);
+
+#endif
+#ifdef USE_TILE_WEB
+    tiles.mark_for_redraw(pos);
 #endif
 }
 
@@ -1014,7 +1018,9 @@ static bool _show_terrain = false;
 //---------------------------------------------------------------
 void viewwindow(bool show_updates, bool tiles_only)
 {
-    if (you.duration[DUR_TIME_STEP])
+    // The player could be at (0,0) if we are called during level-gen; this can
+    // happen via mpr -> interrupt_activity -> stop_delay -> runrest::stop
+    if (you.duration[DUR_TIME_STEP] || you.pos().origin())
         return;
 
     screen_cell_t *cell(crawl_view.vbuf);

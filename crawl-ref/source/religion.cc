@@ -1502,8 +1502,11 @@ static bool _blessing_wpn(monster* mon)
     const int weapon = mon->inv[MSLOT_WEAPON];
     const int alt_weapon = mon->inv[MSLOT_ALT_WEAPON];
 
-    if (weapon == NON_ITEM && alt_weapon == NON_ITEM)
+    if (weapon == NON_ITEM && alt_weapon == NON_ITEM
+        || mon->type == MONS_DANCING_WEAPON)
+    {
         return false;
+    }
 
     int slot;
 
@@ -1599,8 +1602,11 @@ static bool _tso_blessing_holy_wpn(monster* mon)
     const int weapon = mon->inv[MSLOT_WEAPON];
     const int alt_weapon = mon->inv[MSLOT_ALT_WEAPON];
 
-    if (weapon == NON_ITEM && alt_weapon == NON_ITEM)
+    if (weapon == NON_ITEM && alt_weapon == NON_ITEM
+        || mon->type == MONS_DANCING_WEAPON)
+    {
         return false;
+    }
 
     int slot;
 
@@ -1936,9 +1942,8 @@ bool bless_follower(monster* follower,
     {
         case GOD_SHINING_ONE:
         {
-            // Extend a monster's stay if it's abjurable, optionally
-            // making it friendly if it's charmed.  If neither is
-            // possible, deliberately fall through.
+            // Extend a monster's stay if it's abjurable, or extend charm
+            // duration. If neither is possible, deliberately fall through.
             int more_time = _tso_blessing_extend_stay(follower);
             bool friendliness = false;
 
@@ -2176,7 +2181,6 @@ bool do_god_gift(bool forced)
                     _inc_gift_timeout(15 + roll_dice(2, 4));
                     you.num_current_gifts[you.religion]++;
                     you.num_total_gifts[you.religion]++;
-                    take_note(Note(NOTE_GOD_GIFT, you.religion));
                 }
                 else
                     mpr("아무것도 변화하지 않은 느낌이다.");
@@ -3254,7 +3258,7 @@ bool god_hates_attacking_friend(god_type god, const actor *fr)
 
 bool god_likes_items(god_type god, bool greedy_explore)
 {
-    if (greedy_explore && (!(Options.explore_stop & ES_GREEDY_SACRIFICIABLE)
+    if (greedy_explore && (!(Options.explore_stop & ES_GREEDY_SACRIFICEABLE)
                            || you.religion == GOD_ASHENZARI))
         // Ash's sacrifice isn't trading items for piety so it shouldn't make
         // explore greedy for ?RC
@@ -3668,7 +3672,7 @@ void god_pitch(god_type which_god)
         // rich.  In that case, you have to donate again more...  That the poor
         // widow is not spared doesn't mean the rich can't be milked for more.
         lucre.props["acquired"] = 0;
-        you.gold -= zin_tithe(lucre, lucre.quantity, false);
+        you.gold -= zin_tithe(lucre, lucre.quantity, false, true);
     }
 
     // Refresh wielded/quivered weapons in case we have a new conduct
@@ -4278,7 +4282,7 @@ int get_tension(god_type god)
     // Tension goes up inversely proportional to the percentage of max
     // hp you have.
     tension *= (scale + 1) * you.hp_max;
-    tension /= you.hp_max + scale * you.hp;
+    tension /= std::max(you.hp_max + scale * you.hp, 1);
 
     // Divides by 1 at level 1, 200 at level 27.
     const int exp_lev  = you.get_experience_level();

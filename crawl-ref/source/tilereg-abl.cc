@@ -22,7 +22,7 @@ AbilityRegion::AbilityRegion(const TileRegionInit &init) : GridRegion(init)
 
 void AbilityRegion::activate()
 {
-    if (your_talents(false).size() == 0)
+    if (your_talents(false, true).size() == 0)
     {
         no_ability_msg();
         flush_prev_message();
@@ -205,7 +205,7 @@ static InventoryTile _tile_for_ability(ability_type ability)
     InventoryTile desc;
     desc.tile     = tileidx_ability(ability);
     desc.idx      = (int) ability;
-    desc.quantity = get_talent(ability, true).fail;
+    desc.quantity = get_ability_def(ability).mp_cost;
 
     if (!check_ability_possible(ability, true, true))
     {
@@ -225,7 +225,7 @@ void AbilityRegion::update()
 
     const unsigned int max_abilities = std::min(get_max_slots(), mx*my);
 
-    std::vector<talent> talents = your_talents(false);
+    std::vector<talent> talents = your_talents(false, true);
     if (talents.empty())
         return;
 

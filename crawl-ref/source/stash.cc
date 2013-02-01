@@ -226,20 +226,11 @@ bool Stash::pickup_eligible() const
     return false;
 }
 
-bool Stash::sacrificiable() const
+bool Stash::sacrificeable() const
 {
     for (int i = 0, size = items.size(); i < size; ++i)
-    {
-        if (you.religion == GOD_NEMELEX_XOBEH
-            && !check_nemelex_sacrificing_item_type(items[i])
-            || items[i].flags & (ISFLAG_DROPPED | ISFLAG_THROWN))
-        {
-            continue;
-        }
-
-        if (god_likes_item(you.religion, items[i]))
+        if (items[i].is_greedy_sacrificeable())
             return true;
-    }
 
     return false;
 }
@@ -1168,7 +1159,7 @@ bool LevelStashes::needs_visit(const coord_def& c, bool autopickup,
 {
     const Stash *s = find_stash(c);
     if (s && (s->unverified()
-              || sacrifice && s->sacrificiable()
+              || sacrifice && s->sacrificeable()
               || autopickup && s->pickup_eligible()))
     {
         return true;
@@ -1182,10 +1173,10 @@ bool LevelStashes::unverified_stash(const coord_def &c) const
     return (s && s->unverified());
 }
 
-bool LevelStashes::sacrificiable(const coord_def &c) const
+bool LevelStashes::sacrificeable(const coord_def &c) const
 {
     const Stash *s = find_stash(c);
-    return (s && s->sacrificiable());
+    return (s && s->sacrificeable());
 }
 
 ShopInfo &LevelStashes::get_shop(const coord_def& c)

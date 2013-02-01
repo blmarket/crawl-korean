@@ -65,6 +65,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
         return false;
     }
 
+    bool targ_mid = false;
     dist beam;
 
     direction_chooser_args args;
@@ -161,6 +162,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
                 success = false;
                 beam.target = middle;
                 mons = midmons;
+                targ_mid = true;
                 if (mons->wont_attack())
                 {
                     // Let's assume friendlies cooperate.
@@ -192,9 +194,16 @@ static bool _reaching_weapon_attack(const item_def& wpn)
             mpr(_("You attack empty space."));
         return true;
     }
-    else
+    else if (!fight_melee(&you, mons))
     {
-        if (!fight_melee(&you, mons))
+        if (targ_mid)
+        {
+            // turn_is_over may have been reset to false by fight_melee, but
+            // a failed attempt to reach further should not be free; instead,
+            // charge the same as a successful attempt.
+            you.turn_is_over = true;
+        }
+        else
         {
             canned_msg(MSG_OK);
             return false;
@@ -411,13 +420,6 @@ void tome_of_power(int slot)
     msg::stream << make_stringf(gettext("The book opens to a page covered in %s."), weird_writing().c_str()) << std::endl;
 
     you.turn_is_over = true;
-    if (!item_ident(you.inv[slot], ISFLAG_KNOW_TYPE))
-    {
-        set_ident_flags(you.inv[slot], ISFLAG_KNOW_TYPE);
-
-        if (!yesno(gettext("Read it?"), false, 'n'))
-            return;
-    }
 
     if (player_mutation_level(MUT_BLURRY_VISION) > 0
         && x_chance_in_y(player_mutation_level(MUT_BLURRY_VISION), 4))

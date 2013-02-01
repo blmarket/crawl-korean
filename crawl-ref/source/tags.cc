@@ -1018,6 +1018,18 @@ int unmarshallEnumVal(reader& rd, const enum_info *ei)
     return ers.mapping[raw];
 }
 
+static void marshallStringVector(writer &th, const std::vector<std::string> &vec)
+{
+    marshall_iterator(th, vec.begin(), vec.end(), marshallStringNoMax);
+}
+
+static std::vector<std::string> unmarshallStringVector(reader &th)
+{
+    std::vector<std::string> vec;
+    unmarshall_vector(th, vec, unmarshallStringNoMax);
+    return vec;
+}
+
 
 // Write a tagged chunk of data to the FILE*.
 // tagId specifies what to write.
@@ -1410,6 +1422,9 @@ static void tag_construct_you(writer &th)
             marshallInt(th, ac->second[k]);
     }
 
+    marshallByte(th, NUM_BRANCHES);
+    for (i = 0; i < NUM_BRANCHES; i++)
+        marshallBoolean(th, you.branches_left[i]);
 
     marshallCoord(th, abyssal_state.major_coord);
     marshallFloat(th, abyssal_state.depth);
@@ -1567,6 +1582,7 @@ static void tag_construct_you_dungeon(writer &th)
                       marshallStringNoMax);
     marshall_iterator(th, you.uniq_map_names.begin(), you.uniq_map_names.end(),
                       marshallStringNoMax);
+    marshallMap(th, you.vault_list, marshall_level_id, marshallStringVector);
 
     write_level_connectivity(th);
 }
@@ -1758,6 +1774,7 @@ static void marshall_level_vault_data(writer &th)
 
     marshall_level_map_masks(th);
     marshall_level_map_unique_ids(th);
+    marshallStringVector(th, env.level_vault_list);
     marshall_level_vault_placements(th);
 }
 
@@ -1768,6 +1785,10 @@ static void unmarshall_level_vault_data(reader &th)
 
     unmarshall_level_map_masks(th);
     unmarshall_level_map_unique_ids(th);
+#if TAG_MAJOR_VERSION <= 34
+    if (th.getMinorVersion() >= TAG_MINOR_VAULT_LIST)
+#endif
+    env.level_vault_list = unmarshallStringVector(th);
     unmarshall_level_vault_placements(th);
 }
 
@@ -2210,6 +2231,23 @@ static void tag_read_you(reader &th)
         for (j = 0; j < 27; j++)
             you.action_count[std::pair<caction_type, int>(caction, subtype)][j] = unmarshallInt(th);
     }
+
+#if TAG_MAJOR_VERSION == 33
+    if (th.getMinorVersion() >= TAG_MINOR_BRANCHES_LEFT)
+    {
+#endif
+    count = unmarshallByte(th);
+    for (i = 0; i < count; i++)
+        you.branches_left[i] = unmarshallBoolean(th);
+#if TAG_MAJOR_VERSION == 33
+    }
+    else
+    {
+        // Assume all branches already exited in transferred games.
+        you.branches_left.init(true);
+    }
+#endif
+
     abyssal_state.major_coord = unmarshallCoord(th);
     abyssal_state.depth = unmarshallFloat(th);
     abyssal_state.phase = unmarshallFloat(th);
@@ -2543,6 +2581,11 @@ static void tag_read_you_dungeon(reader &th)
                          (ssipair (string_set::*)(const std::string &))
                          &string_set::insert,
                          unmarshallStringNoMax);
+#if TAG_MAJOR_VERSION <= 34
+    if (th.getMinorVersion() >= TAG_MINOR_VAULT_LIST)
+#endif
+    unmarshallMap(th, you.vault_list, unmarshall_level_id,
+                  unmarshallStringVector);
 
     read_level_connectivity(th);
 }
@@ -2580,7 +2623,7 @@ static void tag_construct_level(writer &th)
 
     marshallInt(th, env.level_flags);
 
-    marshallInt(th, you.elapsed_time);
+    marshallInt(th, you.on_current_level ? you.elapsed_time : env.elapsed_time);
     marshallCoord(th, you.pos());
 
     // Map grids.
@@ -2678,8 +2721,6 @@ void marshallItem(writer &th, const item_def &item, bool iinfo)
     marshallByte(th, item.base_type);
     if (item.base_type == OBJ_UNASSIGNED)
         return;
-
-    ASSERT(item.is_valid(iinfo));
 
     marshallByte(th, item.sub_type);
     marshallShort(th, item.plus);

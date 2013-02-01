@@ -225,6 +225,9 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                 self.send_message("go_lobby")
                 return
 
+        if self.process:
+            return
+
         if config.dgl_mode and game_id not in config.games: return
 
         self.game_id = game_id
@@ -244,7 +247,7 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
             self.process = process_handler.DGLLessCrawlProcessHandler(self.logger, self.ioloop)
 
         self.process.end_callback = self._on_crawl_end
-        self.process.add_watcher(self, hide=True)
+        self.process.add_watcher(self)
         try:
             self.process.start()
         except:
@@ -370,7 +373,8 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                  if process.username.lower() == username.lower()]
         if len(procs) >= 1:
             process = procs[0]
-            self.logger.info("Started watching %s.", process.username)
+            self.logger.info("Started watching %s (P%s).", process.username,
+                             process.id)
             self.watched_game = process
             process.add_watcher(self)
             self.send_message("watching_started")
@@ -422,7 +426,6 @@ class CrawlWebSocket(tornado.websocket.WebSocketHandler):
                                      self.username, config.games[game_id])
         rcfile_path = os.path.join(rcfile_path, self.username + ".rc")
         with open(rcfile_path, 'w') as f:
-            f.write(codecs.BOM_UTF8)
             f.write(contents.encode("utf8"))
 
     def on_message(self, message):

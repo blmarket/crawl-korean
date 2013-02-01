@@ -1098,7 +1098,11 @@ static void _print_next_monster_desc(const std::vector<monster_info>& mons,
             cprintf(" ");
 
             monster_info mi = mons[start];
+#ifdef TARGET_OS_WINDOWS
+            textcolor(real_colour(dam_colour(mi) | COLFLAG_ITEM_HEAP));
+#else
             textcolor(real_colour(dam_colour(mi) | COLFLAG_REVERSE));
+#endif
             cprintf(" ");
             textbackground(BLACK);
             textcolor(LIGHTGREY);
@@ -2090,8 +2094,13 @@ static std::string _status_mut_abilities(int sw)
               mutations.push_back("독 뱉기");
           else
               mutations.push_back(_(M_("breathe poison")));
-          mutations.push_back(_annotate_form_based(_("constrict 1"),
-                                                   !form_keeps_mutations()));
+
+          if (you.experience_level > 12)
+          {
+              mutations.push_back(_annotate_form_based(_("constrict 1"),
+                                                       !form_keeps_mutations()));
+          }
+          AC_change += you.experience_level / 3;
           break;
 
       case SP_GHOUL:
@@ -2159,7 +2168,8 @@ static std::string _status_mut_abilities(int sw)
           break;
 
       case SP_GREY_DRACONIAN:
-          mutations.push_back("물 위 걷기");
+          mutations.push_back(_("walk through water"));
+          AC_change += 5;
           break;
 
       case SP_BLACK_DRACONIAN:
@@ -2187,6 +2197,12 @@ static std::string _status_mut_abilities(int sw)
         || player_genus(GENPC_DRACONIAN) || you.species == SP_SPRIGGAN)
     {
         mutations.push_back("방어구가 맞지 않음");
+    }
+
+    if (player_genus(GENPC_DRACONIAN))
+    {
+        // The five extra points for grey draconians were handled above.
+        AC_change += 4 + you.experience_level / 3;
     }
 
     if (you.species == SP_FELID)

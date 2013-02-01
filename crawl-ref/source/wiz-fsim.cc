@@ -312,13 +312,18 @@ static fight_data _get_fight_data(monster &mon, int iter_limit, bool defend)
     no_messages mx;
     const int hunger = you.hunger;
 
+    const coord_def start_pos = mon.pos();
+
     if (!defend) // you're the attacker
     {
         for (int i = 0; i < iter_limit; i++)
         {
+            // This sets mgrid(mons.pos()) to NON_MONSTER
             mon = orig;
+            // Re-place the monster if it e.g. blinked away.
+            mon.move_to_pos(start_pos);
             mon.hit_points = mon.max_hit_points;
-            mon.move_to_pos(mon.pos());
+            mon.shield_blocks = 0;
             you.time_taken = player_speed();
 
             // first, ranged weapons. note: this includes
@@ -357,9 +362,10 @@ static fight_data _get_fight_data(monster &mon, int iter_limit, bool defend)
         {
             you.hp = you.hp_max = 999; // again, arbitrary
             bool did_hit = false;
+            you.shield_blocks = 0; // no blocks this round
             fight_melee(&mon, &you, &did_hit, true);
 
-            time_taken += (100 / mon.speed);
+            time_taken += 100 / (mon.speed ? mon.speed : 10);
 
             int damage = you.hp_max - you.hp;
             if (did_hit)
@@ -367,6 +373,9 @@ static fight_data _get_fight_data(monster &mon, int iter_limit, bool defend)
             cumulative_damage += damage;
             if (damage > fdata.max_dam)
                 fdata.max_dam = damage;
+
+            // Re-place the monster if it e.g. blinked away.
+            mon.move_to_pos(start_pos);
         }
         you.hp = yhp;
         you.hp_max = ymhp;
@@ -561,6 +570,7 @@ void wizard_fight_sim(bool double_scale)
     if (!o)
     {
         mprf(MSGCH_ERROR, "Can't write %s: %s", fightstat, strerror(errno));
+        _uninit_fsim(mon);
         return;
     }
 
@@ -587,6 +597,7 @@ void wizard_fight_sim(bool double_scale)
             break;
         default:
             canned_msg(MSG_OK);
+            _uninit_fsim(mon);
             return;
         }
     }

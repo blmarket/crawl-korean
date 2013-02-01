@@ -552,7 +552,7 @@
 
   {N_("You are somewhat resistant to further mutation."),
    N_("You are somewhat resistant to both further mutation and mutation removal."),
-   N_("Your current mutations are irrevocably fixed, and you can mutate no more.")},
+   N_("You are almost entirely resistant to further mutation and mutation removal.")},
 
   {N_("You feel genetically stable."),
    N_("You feel genetically stable."),
@@ -576,8 +576,8 @@
    "Your genes go into a fast flux.",
    ""},
 
-  {"Your wild genetic ride slows down.",
-   "You feel genetically stable.",
+  {"You feel genetically stable.",
+   "Your wild genetic ride slows down.",
    ""},
 
   "evolution"

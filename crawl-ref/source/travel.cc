@@ -196,12 +196,11 @@ static inline bool is_trap(const coord_def& c)
 
 static inline bool _is_safe_cloud(const coord_def& c)
 {
-    const int cloud = env.cgrid(c);
-    if (cloud == EMPTY_CLOUD)
+    const cloud_type ctype = env.map_knowledge(c).cloud();
+    if (ctype == CLOUD_NONE)
         return true;
 
     // We can also safely run through smoke.
-    const cloud_type ctype = env.cloud[cloud].type;
     return !is_damaging_cloud(ctype, true);
 }
 
@@ -555,7 +554,7 @@ static bool _prompt_stop_explore(int es_why)
 #define ES_portal (Options.explore_stop & ES_PORTAL)
 #define ES_branch (Options.explore_stop & ES_BRANCH)
 #define ES_stack  (Options.explore_stop & ES_GREEDY_VISITED_ITEM_STACK)
-#define ES_sacrificiable (Options.explore_stop & ES_GREEDY_SACRIFICIABLE)
+#define ES_sacrificeable (Options.explore_stop & ES_GREEDY_SACRIFICEABLE)
 
 // Adds interesting stuff on the point p to explore_discoveries.
 static inline void _check_interesting_square(const coord_def pos,
@@ -834,6 +833,13 @@ void explore_pickup_event(int did_pickup, int tried_pickup)
     }
 }
 
+static bool _can_sacrifice(const coord_def p)
+{
+    const dungeon_feature_type feat = grd(p);
+    return (!you.cannot_speak()
+            && (!feat_is_altar(feat) || feat_is_player_altar(feat)));
+}
+
 // Top-level travel control (called from input() in main.cc).
 //
 // travel() is responsible for making the individual moves that constitute
@@ -932,7 +938,7 @@ command_type travel()
         // Stop greedy explore when visiting an unverified stash.
         if ((*move_x || *move_y)
             && you.running == RMODE_EXPLORE_GREEDY
-            && (ES_stack || ES_sacrificiable))
+            && (ES_stack || ES_sacrificeable))
         {
             const coord_def newpos = you.pos() + coord_def(*move_x, *move_y);
             if (newpos == you.running.pos)
@@ -940,12 +946,12 @@ command_type travel()
                 const LevelStashes *lev = StashTrack.find_current_level();
                 const bool stack = lev && lev->unverified_stash(newpos)
                                    && ES_stack;
-                const bool sacrificiable = lev && lev->sacrificiable(newpos)
-                                           && ES_sacrificiable;
-                if (stack || sacrificiable)
+                const bool sacrificeable = lev && lev->sacrificeable(newpos)
+                                           && ES_sacrificeable;
+                if (stack || sacrificeable)
                 {
                     if (stack && _prompt_stop_explore(ES_GREEDY_VISITED_ITEM_STACK)
-                        || sacrificiable && _prompt_stop_explore(ES_GREEDY_SACRIFICIABLE))
+                        || sacrificeable && _prompt_stop_explore(ES_GREEDY_SACRIFICEABLE))
                     {
                         explore_stopped_pos = newpos;
                         stop_running();
@@ -1208,11 +1214,12 @@ coord_def travel_pathfind::pathfind(run_mode_type rmode)
 
     if (runmode == RMODE_CONNECTIVITY)
         ignore_player_traversability = true;
-
-    autopickup = can_autopickup();
-    sacrifice = god_likes_items(you.religion, true);
-    need_for_greed = runmode == RMODE_EXPLORE_GREEDY
-                     && (autopickup || sacrifice);
+    else if (runmode == RMODE_EXPLORE_GREEDY)
+    {
+        autopickup = can_autopickup();
+        sacrifice = god_likes_items(you.religion, true);
+        need_for_greed = (autopickup || sacrifice);
+    }
 
     if (!ls && (annotate_map || need_for_greed))
         ls = StashTrack.find_current_level();
@@ -1588,8 +1595,12 @@ bool travel_pathfind::path_flood(const coord_def &c, const coord_def &dc)
             && !point_distance[dc.x][dc.y]
             && dc != start)
         {
-            if (features && (is_trap(dc) || is_exclude_root(dc)))
+            if (features && (is_trap(dc) || is_exclude_root(dc))
+                && std::find(features->begin(), features->end(), dc)
+                   == features->end())
+            {
                 features->push_back(dc);
+            }
 
             if (double_flood)
                 reseed_points.push_back(dc);
@@ -1632,14 +1643,20 @@ bool travel_pathfind::path_flood(const coord_def &c, const coord_def &dc)
                        && !feat_is_water(feature)
                        && feature != DNGN_LAVA
                     || is_waypoint(dc)
-                    || is_stash(ls, dc)))
+                    || is_stash(ls, dc))
+                && std::find(features->begin(), features->end(), dc)
+                   == features->end())
             {
                 features->push_back(dc);
             }
         }
 
-        if (features && dc != start && is_exclude_root(dc))
+        if (features && dc != start && is_exclude_root(dc)
+            && std::find(features->begin(), features->end(), dc)
+               == features->end())
+        {
             features->push_back(dc);
+        }
     }
 
     return false;
@@ -2577,8 +2594,8 @@ static int _find_transtravel_stair(const level_id &cur,
     // Have we reached the target level?
     if (cur == target.id)
     {
-        // Are we in an exclude? If so, bail out.
-        if (is_excluded(stair, li.get_excludes()))
+        // Are we in an exclude? If so, bail out. Unless it is just a stair exclusion.
+        if (is_excluded(stair, li.get_excludes()) && !is_stair_exclusion(stair))
             return -1;
 
         // If there's no target position on the target level, or we're on the
@@ -2921,10 +2938,24 @@ void start_explore(bool grab_items)
     if (you.running == RMODE_EXPLORE_GREEDY && god_likes_items(you.religion, true))
     {
         const LevelStashes *lev = StashTrack.find_current_level();
-        if (lev && lev->sacrificiable(you.pos()))
+        if (lev && lev->sacrificeable(you.pos()))
         {
-            if (yesno("Do you want to sacrifice the items here? ", true, 'n'))
+            if (Options.sacrifice_before_explore == 2)
+            {
+                mprnojoin("Things which can be sacrificed:", MSGCH_FLOOR_ITEMS);
+                for (stack_iterator si(you.visible_igrd(you.pos())); si; ++si)
+                    if (si->is_greedy_sacrificeable())
+                        mpr_nocap(get_menu_colour_prefix_tags(*si, DESC_A));
+
+            }
+
+            if ((Options.sacrifice_before_explore == 1
+                 || Options.sacrifice_before_explore == 2
+                    && yesno("Do you want to sacrifice the items here? ", true, 'n'))
+                && _can_sacrifice(you.pos()))
+            {
                 pray();
+            }
             else
                 mark_items_non_visit_at(you.pos());
         }
@@ -3935,7 +3966,7 @@ bool runrest::run_should_stop() const
     if (tcell.cloud() != CLOUD_NONE)
         return true;
 
-    if (is_excluded(targ))
+    if (is_excluded(targ) && !is_stair_exclusion(targ))
     {
 #ifndef USE_TILE_LOCAL
         // XXX: Remove this once exclusions are visible.

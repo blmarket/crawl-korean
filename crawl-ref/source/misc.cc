@@ -1255,7 +1255,7 @@ void search_around(bool only_adjacent)
     const int skill = you.traps_skill();
     // Traps and doors stepdown skill:
     // skill/(2x-1) for squares at distance x
-    int max_dist = (skill + 1) / 2;
+    int max_dist = div_rand_round(skill, 2);
     if (max_dist > 5)
         max_dist = 5;
     if (only_adjacent && max_dist > 1 || max_dist < 1)
@@ -1275,7 +1275,7 @@ void search_around(bool only_adjacent)
                 ++dist;
 
             // Making this harsher by removing the old +1...
-            int effective = skill / (2*dist - 1);
+            int effective = div_rand_round(skill, (2*dist - 1));
 
             if (grd(*ri) == DNGN_SECRET_DOOR && x_chance_in_y(effective+1, 17))
             {
@@ -2339,6 +2339,9 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
 bool stop_attack_prompt(targetter &hitfunc, std::string verb,
                         bool (*affects)(const actor *victim))
 {
+    if (crawl_state.which_god_acting() == GOD_XOM)
+        return false;
+
     if (you.confused())
         return false;
 
@@ -2415,9 +2418,6 @@ bool is_dragonkind(const actor *act)
 
     // Else the actor is a monster.
     const monster* mon = act->as_monster();
-
-    if (mon->type == MONS_SERPENT_OF_HELL)
-        return true;
 
     if (mons_is_zombified(mon)
         && (mons_genus(mon->base_monster) == MONS_DRAGON
@@ -2644,6 +2644,8 @@ void maybe_id_resist(beam_type flavour)
 
 bool maybe_id_weapon(item_def &item, const char *msg)
 {
+    // Do we need to identify an artefact brand?
+    bool do_art_brand = false;
     iflags_t id = 0;
 
     // Weapons you have wielded or know enough about.
@@ -2662,13 +2664,19 @@ bool maybe_id_weapon(item_def &item, const char *msg)
         else if (is_throwable(&you, item)
                  && you.skill(SK_THROWING, 20, true) > min_skill20)
         {
-            id = ISFLAG_KNOW_PLUSES | ISFLAG_KNOW_TYPE | ISFLAG_KNOW_CURSE;
+            id = ISFLAG_KNOW_PLUSES | ISFLAG_KNOW_CURSE;
+            if (is_artefact(item))
+                do_art_brand = !artefact_known_wpn_property(item, ARTP_BRAND);
+            else
+                id |= ISFLAG_KNOW_TYPE;
         }
     }
 
-    if ((item.flags | id) != item.flags)
+    if ((item.flags | id) != item.flags || do_art_brand)
     {
         set_ident_flags(item, id);
+        if (do_art_brand)
+            artefact_wpn_learn_prop(item, ARTP_BRAND);
         add_autoinscription(item);
         if (msg)
             mprf("%s%s", msg, item.name(true, DESC_INVENTORY_EQUIP).c_str());

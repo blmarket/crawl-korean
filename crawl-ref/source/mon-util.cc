@@ -399,7 +399,7 @@ int scan_mon_inv_randarts(const monster* mon,
         }
 
         if (second != NON_ITEM && mitm[second].base_type == OBJ_WEAPONS
-            && is_artefact(mitm[second]))
+            && is_artefact(mitm[second]) && mons_wields_two_weapons(mon))
         {
             ret += artefact_wpn_property(mitm[second], ra_prop);
         }
@@ -1314,7 +1314,7 @@ bool name_zombie(monster* mon, monster_type mc, const std::string &mon_name)
     // Also for the Serpent of Hell: treat Serpent of Hell as an
     // adjective to avoid mentions of "the Serpent of Hell the dragon
     // zombie".
-    else if (mc == MONS_SERPENT_OF_HELL)
+    else if (mons_species(mc) == MONS_SERPENT_OF_HELL)
     {
         mon->mname = "Serpent of Hell";
         mon->flags |= MF_NAME_ADJECTIVE;
@@ -2711,6 +2711,12 @@ void mons_pacify(monster* mon, mon_attitude_type att)
         mon->flags |= MF_GOT_HALF_XP;
     }
 
+    if (mon->type == MONS_GERYON)
+    {
+        simple_monster_message(mon, " discards his horn.");
+        monster_drop_things(mon, false, item_is_horn_of_geryon);
+    }
+
     // Cancel fleeing and such.
     mon->behaviour = BEH_WANDER;
 
@@ -2723,8 +2729,6 @@ void mons_pacify(monster* mon, mon_attitude_type att)
         elven_twins_pacify(mon);
     if (mons_is_kirke(mon))
         hogs_to_humans();
-    if (mon->type == MONS_GERYON)
-        monster_drop_things(mon, false, item_is_horn_of_geryon);
 
     mons_att_changed(mon);
 }
@@ -3067,6 +3071,8 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
     }
     else if (mons_is_unique(mon_type) && !mons_is_pghost(mon_type))
     {
+        if (mons_species(mon_type) == MONS_SERPENT_OF_HELL)
+            mon_type = MONS_SERPENT_OF_HELL;
         switch (mon_type)
         {
         case MONS_JESSICA:
@@ -3124,7 +3130,7 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
         case PRONOUN_OBJECTIVE:
             return ((gender == GENDER_NEUTER) ? pgettext("mon_util_pronoun","it")  :
                     (gender == GENDER_MALE)   ? pgettext("mon_util_pronoun","him") : pgettext("mon_util_pronoun_obj","her"));
-     }
+    }
 
     return "";
 }

@@ -599,8 +599,14 @@ bool melee_attack::handle_phase_damaged()
         int blood = modify_blood_amount(damage_done, attacker->damage_type());
         if (blood > defender->stat_hp())
             blood = defender->stat_hp();
-
-        bleed_onto_floor(defender->pos(), defender->type, blood, true);
+        if (blood)
+        {
+            // ugh: bleed_onto_floor need the monster type, but that won't
+            // be valid if the monster is dead.  Assumes that damage and
+            // monster_type each fit into 16 bits.
+            add_final_effect(FINEFF_BLOOD, attacker, defender, defender->pos(),
+                             blood << 16 | defender->type);
+        }
     }
 
     announce_hit();
@@ -1368,7 +1374,6 @@ bool melee_attack::player_aux_unarmed()
 
 bool melee_attack::player_aux_apply(unarmed_attack_type atk)
 {
-    const int slaying = slaying_bonus(PWPN_DAMAGE);
     did_hit = true;
 
     aux_damage  = player_aux_stat_modify_damage(aux_damage);
@@ -1377,9 +1382,9 @@ bool melee_attack::player_aux_apply(unarmed_attack_type atk)
 
     aux_damage  = player_apply_fighting_skill(aux_damage, true);
 
-    aux_damage += (slaying > -1) ? random2(1 + slaying)
-                                 : -random2(1 - slaying);
     aux_damage  = player_apply_misc_modifiers(aux_damage);
+
+    aux_damage  = player_apply_slaying_bonuses(aux_damage, true);
 
     const int pre_ac_dmg = aux_damage;
     const int post_ac_dmg = apply_defender_ac(aux_damage);
@@ -1622,20 +1627,27 @@ int melee_attack::player_apply_misc_modifiers(int damage)
     return damage;
 }
 
+int melee_attack::player_apply_slaying_bonuses(int damage, bool aux)
+{
+    int damage_plus = 0;
+    if (!aux && weapon && is_weapon(*weapon) && !is_range_weapon(*weapon))
+    {
+        damage_plus = weapon->plus2;
+
+        if (weapon->base_type == OBJ_RODS)
+            damage_plus = weapon->special;
+    }
+    damage_plus += slaying_bonus(PWPN_DAMAGE);
+
+    damage += (damage_plus > -1) ? (random2(1 + damage_plus))
+                                 : (-random2(1 - damage_plus));
+    return damage;
+}
+
 int melee_attack::player_apply_weapon_bonuses(int damage)
 {
     if (weapon && is_weapon(*weapon) && !is_range_weapon(*weapon))
     {
-        int wpn_damage_plus = weapon->plus2;
-
-        if (weapon->base_type == OBJ_RODS)
-            wpn_damage_plus = weapon->special;
-
-        wpn_damage_plus += slaying_bonus(PWPN_DAMAGE);
-
-        damage += (wpn_damage_plus > -1) ? (random2(1 + wpn_damage_plus))
-                                         : (-random2(1 - wpn_damage_plus));
-
         if (get_equip_race(*weapon) == ISFLAG_DWARVEN
             && you.species == SP_DEEP_DWARF)
         {
@@ -2222,7 +2234,8 @@ bool melee_attack::distortion_affects_defender()
         if (crawl_state.game_is_sprint() && defender->is_player()
             || defender->no_tele())
         {
-            canned_msg(MSG_STRANGE_STASIS);
+            if (defender->is_player())
+                canned_msg(MSG_STRANGE_STASIS);
         }
         else if (coinflip())
             add_final_effect(FINEFF_DISTORTION_TELEPORT, 0, defender);
@@ -3405,7 +3418,7 @@ void melee_attack::apply_staff_damage()
                 make_stringf(
                     _("%s crush%s %s!"),
                     attacker->name(DESC_THE).c_str(),
-                    attacker->is_player() ? "" : "s",
+                    attacker->is_player() ? "" : "es",
                     defender->name(DESC_THE).c_str());
         }
         break;
@@ -3457,7 +3470,7 @@ void melee_attack::apply_staff_damage()
                     defender->name(DESC_THE).c_str(),
                     defender->is_player() ? "" : "s");
 
-            did_god_conduct(DID_NECROMANCY, 4);
+            attacker->god_conduct(DID_NECROMANCY, 4);
         }
         break;
 
@@ -4725,7 +4738,6 @@ void melee_attack::do_minotaur_retaliation()
     }
     // This will usually be 2, but could be 3 if the player mutated more.
     const int mut = player_mutation_level(MUT_HORNS);
-    const int slaying = slaying_bonus(PWPN_DAMAGE);
 
     if (5 * you.strength() + 7 * you.dex() > random2(600))
     {
@@ -4734,9 +4746,8 @@ void melee_attack::do_minotaur_retaliation()
         dmg = player_aux_stat_modify_damage(dmg);
         dmg = random2(dmg);
         dmg = player_apply_fighting_skill(dmg, true);
-        dmg += (slaying > -1) ? (random2(1 + slaying))
-                              : (-random2(1 - slaying));
         dmg = player_apply_misc_modifiers(dmg);
+        dmg = player_apply_slaying_bonuses(dmg, true);
         int ac = random2(1 + attacker->armour_class());
         int hurt = dmg - ac;
 
@@ -5201,6 +5212,7 @@ int melee_attack::calc_damage()
         damage_done = player_apply_weapon_skill(damage_done);
         damage_done = player_apply_fighting_skill(damage_done, false);
         damage_done = player_apply_misc_modifiers(damage_done);
+        damage_done = player_apply_slaying_bonuses(damage_done, false);
         damage_done = player_apply_weapon_bonuses(damage_done);
 
         damage_done = player_stab(damage_done);

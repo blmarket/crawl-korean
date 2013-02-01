@@ -1,2 +1,11 @@
 # This file is obsolete, it is present to reduce the need for manual config
 # file updates; please remove it together with others in one go.
+
+{
+  crawl.mpr("Your config file contains obsolete defaults.", "error")
+  crawl.mpr("If you do have any changes of your own, it's probably easiest to delete " ..
+    "everything you did", "error")
+  crawl.mpr("not touch yourself.                                                     " ..
+    "                  ", "error")
+  crawl.more()
+}

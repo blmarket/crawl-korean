@@ -1114,7 +1114,7 @@ static std::string _describe_ammo(const item_def &item)
                     how = gettext("heavily frayed");
             }
 
-            description += make_stringf(gettext("It looks %s."),
+            description += make_stringf(gettext("\n\nIt looks %s."),
                 how.c_str());
         }
     }
@@ -2602,14 +2602,11 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
         eat_food(slot);
         return false;
     case CMD_READ:
-        read_scroll(slot);
-        if (item.base_type == OBJ_BOOKS)
-            return true; // We stay in the inventory to see the book content.
-        else
-        {
+        if (item.base_type != OBJ_BOOKS)
             redraw_screen();
-            return false;
-        }
+        read_scroll(slot);
+        // In case of a book, stay in the inventory to see the content.
+        return item.base_type == OBJ_BOOKS;
     case CMD_WEAR_JEWELLERY:
         redraw_screen();
         puton_ring(slot);
@@ -3917,15 +3914,15 @@ static std::string _religion_help(god_type god)
         break;
 
     case GOD_BEOGH:
-        result += gettext("You can pray to sacrifice all orcish remains on your "
-                  "square. Inscribe orcish remains with !p, !* or =p to avoid "
-                  "sacrificing them accidentally.");
+        result += _("You can pray to sacrifice all orcish remains on your "
+                  "square.");
         break;
 
     case GOD_NEMELEX_XOBEH:
-        result += gettext("You can pray to sacrifice all items on your square. "
+        result += _("You can pray to sacrifice all items on your square. "
                   "Inscribe items with !p, !* or =p to avoid sacrificing "
-                  "them accidentally.");
+                  "them accidentally. See the detailed description to "
+                  "sacrifice only some kinds of items.");
         break;
 
     case GOD_VEHUMET:
@@ -3952,9 +3949,8 @@ static std::string _religion_help(god_type god)
         if (!result.empty())
             result += " ";
 
-        result += gettext("You can pray to sacrifice all fresh corpses on your "
-                  "square. Inscribe fresh corpses with !p, !* or =p to avoid "
-                  "sacrificing them accidentally.");
+        result += _("You can pray to sacrifice all fresh corpses on your "
+                  "square.");
     }
 
     return result;
@@ -4042,25 +4038,25 @@ static const char *divine_title[NUM_GODS][8] =
      "먼 곳을 보는 자",      "앞을 보는 자",        "미래를 비추는 자",         "베리타스의 추구자"},
 };
 
-static int _piety_level()
+static int _piety_level(int piety)
 {
-    return (you.piety >  160) ? 7 :
-           (you.piety >= 120) ? 6 :
-           (you.piety >= 100) ? 5 :
-           (you.piety >=  75) ? 4 :
-           (you.piety >=  50) ? 3 :
-           (you.piety >=  30) ? 2 :
-           (you.piety >    5) ? 1
-                              : 0;
+    return (piety >  160) ? 7 :
+           (piety >= 120) ? 6 :
+           (piety >= 100) ? 5 :
+           (piety >=  75) ? 4 :
+           (piety >=  50) ? 3 :
+           (piety >=  30) ? 2 :
+           (piety >    5) ? 1
+                          : 0;
 }
 
-std::string god_title(god_type which_god, species_type which_species)
+std::string god_title(god_type which_god, species_type which_species, int piety)
 {
     std::string title;
     if (you.penance[which_god])
         title = divine_title[which_god][0];
     else
-        title = divine_title[which_god][_piety_level()];
+        title = divine_title[which_god][_piety_level(piety)];
 
     title = replace_all(title, "%s",
                         species_name(which_species, true, false));
@@ -4192,15 +4188,14 @@ static void _detailed_god_description(god_type which_god)
             break;
 
         case GOD_ELYVILON:
-            broken = gettext("Using your healing abilities on hostile monsters may "
-                     "pacify them, turning them neutral. Pacification works "
-                     "best on natural beasts, worse on humanoids of your "
-                     "species, worse on other humanoids, worst of all on "
-                     "demons and undead, and not at all on sleeping or "
-                     "mindless monsters. If it succeeds, the monster is "
-                     "healed and you gain half of its experience value and "
-                     "possibly some piety. Pacified monsters try to leave "
-                     "the level.");
+            broken = _("Healing hostile monsters may pacify them, turning them "
+                     "neutral. Pacification works best on natural beasts, "
+                     "worse on monsters of your species, worse on other "
+                     "species, worst of all on demons and undead, and not at "
+                     "all on sleeping or mindless monsters. If it succeeds, "
+                     "you gain half of the monster's experience value and "
+                     "possibly some piety. Pacified monsters try to leave the "
+                     "level.");
             break;
 
         case GOD_NEMELEX_XOBEH:
@@ -4221,7 +4216,8 @@ static void _detailed_god_description(god_type which_god)
                          "Evocations skill help here, as the power of Nemelex's "
                          "abilities is governed by Evocations instead of "
                          "Invocations. The type of the deck gifts strongly "
-                         "depends on the dominating item class sacrificed:\n");
+                         "depends on the dominating item class sacrificed. "
+                         "Press a letter now to toggle a class:\n");
 
                 for (int i = 0; i < NUM_NEMELEX_GIFT_TYPES; ++i)
                 {
@@ -4247,7 +4243,7 @@ static void _detailed_god_description(god_type which_god)
                                                     "scrolls, wands");
                         break;
                     }
-                    broken += make_stringf(" %c %s%s%s\n",
+                    broken += make_stringf(" <white>%c</white> %s%s%s\n",
                                            'a' + (char) i,
                                            active ? "+ " : "- <darkgrey>",
                                            desc.c_str(),
@@ -4337,7 +4333,7 @@ void describe_god(god_type which_god, bool give_title)
         cprintf("\nTitle - ");
         textcolor(colour);
 
-        std::string title = god_title(which_god, you.species);
+        std::string title = god_title(which_god, you.species, you.piety);
         cprintf("%s", title.c_str());
     }
 

@@ -1024,7 +1024,7 @@ static void _get_randart_properties(const item_def &item,
             proprt[ARTP_PREVENT_SPELLCASTING] = 1;
             break;
         case 2:                     // random teleport
-            if (aclass != OBJ_WEAPONS)
+            if (aclass != OBJ_WEAPONS || crawl_state.game_is_sprint())
                 break;
             proprt[ARTP_CAUSE_TELEPORTATION] = 5 + random2(15);
             break;
@@ -1955,6 +1955,8 @@ static void _make_faerie_armour(item_def &item)
         {
             continue;
         }
+
+        break;
     }
     ASSERT(is_artefact(doodad));
     ASSERT(doodad.sub_type == item.sub_type);

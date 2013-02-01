@@ -390,13 +390,13 @@ void antimagic()
         DUR_INVIS, DUR_CONF, DUR_PARALYSIS, DUR_HASTE, DUR_MIGHT, DUR_AGILITY,
         DUR_BRILLIANCE, DUR_CONFUSING_TOUCH, DUR_SURE_BLADE, DUR_CORONA,
         DUR_FIRE_SHIELD, DUR_ICY_ARMOUR, DUR_REPEL_MISSILES,
-        DUR_REGENERATION, DUR_SWIFTNESS, DUR_CONTROL_TELEPORT,
+        DUR_SWIFTNESS, DUR_CONTROL_TELEPORT,
         DUR_TRANSFORMATION, DUR_DEATH_CHANNEL, DUR_DEFLECT_MISSILES,
         DUR_PHASE_SHIFT, DUR_SEE_INVISIBLE, DUR_WEAPON_BRAND, DUR_SILENCE,
         DUR_CONDENSATION_SHIELD, DUR_STONESKIN, DUR_INSULATION, DUR_RESISTANCE,
         DUR_SLAYING, DUR_STEALTH,
         DUR_MAGIC_SHIELD, DUR_PETRIFIED, DUR_LIQUEFYING, DUR_DARKNESS,
-        DUR_PETRIFYING, DUR_SHROUD_OF_GOLUBRIA
+        DUR_SHROUD_OF_GOLUBRIA
     };
 
     bool need_msg = false;
@@ -414,16 +414,30 @@ void antimagic()
         need_msg = true;
     }
 
+    // Don't dispel divine regeneration.
+    if (you.duration[DUR_REGENERATION] > 0
+        && !you.attribute[ATTR_DIVINE_REGENERATION])
+    {
+        you.duration[DUR_REGENERATION] = 1;
+        need_msg = true;
+    }
+
     if (you.duration[DUR_TELEPORT] > 0)
     {
         you.duration[DUR_TELEPORT] = 0;
-        mpr("You feel strangely stable.");
+        mpr("You feel strangely stable.", MSGCH_DURATION);
+    }
+
+    if (you.duration[DUR_PETRIFYING] > 0)
+    {
+        you.duration[DUR_PETRIFYING] = 0;
+        mpr("Your limbs stop stiffening.", MSGCH_DURATION);
     }
 
     if (you.attribute[ATTR_DELAYED_FIREBALL])
     {
         you.attribute[ATTR_DELAYED_FIREBALL] = 0;
-        mpr("Your charged fireball dissipates.");
+        mpr("Your charged fireball dissipates.", MSGCH_DURATION);
     }
 
     // Post-berserk slowing isn't magic, so don't remove that.

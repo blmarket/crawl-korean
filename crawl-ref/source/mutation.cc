@@ -156,6 +156,10 @@ const mutation_def& get_mutation_def(mutation_type mut)
 
 void fixup_mutations()
 {
+    _seek_mutation(MUT_STINGER)->rarity = 0;
+    _seek_mutation(MUT_BIG_WINGS)->rarity = 0;
+    _seek_mutation(MUT_TENTACLE_SPIKE)->rarity = 0;
+
     if (player_genus(GENPC_DRACONIAN))
     {
         ASSERT(is_valid_mutation(MUT_STINGER));
@@ -1028,6 +1032,8 @@ static int _handle_conflicting_mutations(mutation_type mutation,
         { MUT_REGENERATION,     MUT_SLOW_HEALING,     0},
         { MUT_ACUTE_VISION,     MUT_BLURRY_VISION,    0},
         { MUT_FAST,             MUT_SLOW,             0},
+        { MUT_UNBREATHING,      MUT_BREATHE_FLAMES,   0},
+        { MUT_UNBREATHING,      MUT_BREATHE_POISON,   0},
         { MUT_FANGS,            MUT_BEAK,            -1},
         { MUT_ANTENNAE,         MUT_HORNS,           -1},
         { MUT_HOOVES,           MUT_TALONS,          -1},
@@ -1182,8 +1188,8 @@ bool physiology_mutation_conflict(mutation_type mutat)
     }
 
     // Felids have innate claws, and unlike trolls/ghouls, there are no
-    // increases for them.
-    if (you.species == SP_FELID && mutat == MUT_CLAWS)
+    // increases for them.  And octopodes have no hands.
+    if ((you.species == SP_FELID || you.species == SP_OCTOPODE) && mutat == MUT_CLAWS)
         return true;
 
     // Merfolk have no feet in the natural form, and we never allow mutations
@@ -1251,6 +1257,23 @@ static const char* _stat_mut_desc(mutation_type mut, bool gain)
     return stat_desc(stat, positive ? SD_INCREASE : SD_DECREASE);
 }
 
+static bool _undead_rot()
+{
+    if (you.is_undead == US_SEMI_UNDEAD)
+    {
+        switch (you.hunger_state)
+        {
+        case HS_SATIATED:  return !one_chance_in(3);
+        case HS_FULL:      return coinflip();
+        case HS_VERY_FULL: return one_chance_in(3);
+        case HS_ENGORGED:  return false;
+        default: return true;
+        }
+    }
+
+    return you.is_undead;
+}
+
 bool mutate(mutation_type which_mutation, const std::string &reason,
             bool failMsg,
             bool force_mutation, bool god_gift, bool stat_gain_potion,
@@ -1305,7 +1328,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         }
     }
 
-    bool rotting = you.is_undead;
+    bool rotting = _undead_rot();
 
     if (you.is_undead == US_SEMI_UNDEAD)
     {
@@ -1319,18 +1342,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
             if (you.hunger_state >= HS_SATIATED)
                 rotting = false;
         }
-        else
-        {
-            // Else, chances depend on hunger state.
-            switch (you.hunger_state)
-            {
-            case HS_SATIATED:  rotting = !one_chance_in(3); break;
-            case HS_FULL:      rotting = coinflip();        break;
-            case HS_VERY_FULL: rotting = one_chance_in(3);  break;
-            case HS_ENGORGED:  rotting = false;             break;
-            default: ;
-            }
-        }
+        // Else, chances depend on hunger state.
     }
 
     // Undead bodies don't mutate, they fall apart. -- bwr
@@ -1672,6 +1684,9 @@ bool delete_mutation(mutation_type which_mutation, const std::string &reason,
                 return false;
             }
         }
+
+        if (_undead_rot())
+            return false;
     }
 
     if (which_mutation == RANDOM_MUTATION

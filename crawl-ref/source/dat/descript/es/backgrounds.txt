@@ -134,6 +134,12 @@ Wanderer
 
 Los Viajeros comienzan con capacidades y una equipación al azar.
 %%%%
+Warper
+
+Los urdidores comienzan con un arma de que hayan elegido y un pergamino de
+"Blinking". Pueden aprender los hechizos contenidos en el libro de
+Translocaciones Espaciales.
+%%%%
 Wizard
 
 Los magos comienzan con un Libro de Magia Menor, conteniendo una amplia gama de

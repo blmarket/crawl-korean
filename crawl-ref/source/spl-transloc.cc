@@ -123,7 +123,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
     else
     {
         // query for location {dlb}:
-        while (!crawl_state.seen_hups)
+        while (1)
         {
             direction_chooser_args args;
             args.restricts = DIR_TARGET;
@@ -131,6 +131,11 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
             args.may_target_monster = false;
             args.top_prompt = gettext("Blink to where?");
             direction(beam, args);
+
+            if (crawl_state.seen_hups) {
+                mpr("Cancelling blink due to HUP.");
+                return -1;
+            }
 
             if (!beam.isValid || beam.target == you.pos())
             {
@@ -983,6 +988,12 @@ spret_type cast_semi_controlled_blink(int pow, bool cheap_cancel, bool fail)
     {
         mpr("Which direction? [ESC to cancel]", MSGCH_PROMPT);
         direction(bmove, args);
+
+        if (crawl_state.seen_hups)
+        {
+            mpr("Cancelling blink due to HUP.");
+            return SPRET_ABORT;
+        }
 
         if (bmove.isValid && !bmove.delta.origin())
             break;

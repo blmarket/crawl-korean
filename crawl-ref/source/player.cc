@@ -3116,7 +3116,8 @@ void level_change(bool skip_attribute_increase)
             }
 
             if (!(new_exp % 3) && !skip_attribute_increase)
-                attribute_increase();
+                if (!attribute_increase())
+                    return; // abort level gain, the xp is still there
 
             crawl_state.stat_gain_prompt = false;
             you.experience_level = new_exp;
@@ -3265,6 +3266,25 @@ void level_change(bool skip_attribute_increase)
                 if (you.experience_level >= 7)
                 {
                     you.species = random_draconian_player_species();
+
+                    // We just changed our aptitudes, so some skills may now
+                    // be at the wrong level (with negative progress); if we
+                    // print anything in this condition, we might trigger a
+                    // --More--, a redraw, and a crash (#6376 on Mantis).
+                    //
+                    // Hence we first fix up our skill levels silently (passing
+                    // do_level_up = false) but save the old values; then when
+                    // we want the messages later, we restore the old skill
+                    // levels and call check_skill_level_change() again, this
+                    // time passing do_update = true.
+
+                    uint8_t saved_skills[NUM_SKILLS];
+                    for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
+                    {
+                        saved_skills[i] = you.skills[i];
+                        check_skill_level_change(static_cast<skill_type>(i),
+                                                 false);
+                    }
                     // The player symbol depends on species.
                     update_player_symbol();
 #ifdef USE_TILE
@@ -3272,10 +3292,14 @@ void level_change(bool skip_attribute_increase)
 #endif
                     _draconian_scale_colour_message();
 
-                    // We check if any skill has changed level because of
-                    // changed aptitude
+                    // Produce messages about skill increases/decreases. We
+                    // restore one skill level at a time so that at most the
+                    // skill being checked is at the wrong level.
                     for (int i = SK_FIRST_SKILL; i < NUM_SKILLS; ++i)
+                    {
+                        you.skills[i] = saved_skills[i];
                         check_skill_level_change(static_cast<skill_type>(i));
+                    }
 
                     redraw_screen();
                 }
@@ -5132,10 +5156,9 @@ bool poison_player(int amount, std::string source, std::string source_aux,
     }
 
     const int old_value = you.duration[DUR_POISONING];
-    you.duration[DUR_POISONING] += amount;
-
     if (player_res_poison() < 0)
         amount *= 2;
+    you.duration[DUR_POISONING] += amount;
 
     if (you.duration[DUR_POISONING] > 40)
         you.duration[DUR_POISONING] = 40;
@@ -5777,6 +5800,7 @@ void player::init()
 
     uniq_map_tags.clear();
     uniq_map_names.clear();
+    vault_list.clear();
 
     global_info = PlaceInfo();
     global_info.make_global();
@@ -5823,6 +5847,8 @@ void player::init()
 #endif
 
     action_count.clear();
+
+    branches_left.init(false);
 
     // Volatile (same-turn) state:
     turn_is_over     = false;
@@ -6055,6 +6081,8 @@ void player::god_conduct(conduct_type thing_done, int level)
 void player::banish(actor *agent, const std::string &who)
 {
     ASSERT(!crawl_state.game_is_arena());
+    if (crawl_state.game_is_zotdef())
+        return;
 
     if (you.elapsed_time <= you.attribute[ATTR_BANISHMENT_IMMUNITY])
     {

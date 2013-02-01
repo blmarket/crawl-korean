@@ -1296,6 +1296,11 @@ void mons_relocated(monster* mons)
         }
 
     }
+
+    // Make boulders stop rolling.
+    if (mons_is_boulder(mons))
+        mons->del_ench(ENCH_ROLLING, false);
+
     mons->clear_clinging();
 }
 
@@ -2189,6 +2194,7 @@ int monster_die(monster* mons, killer_type killer,
 
         // Monster killed by trap/inanimate thing/itself/poison not from you.
         case KILL_MISC:
+        case KILL_MISCAST:
             if (death_message)
             {
                 if (fake_abjuration)
@@ -2329,8 +2335,8 @@ int monster_die(monster* mons, killer_type killer,
         take_note(Note(NOTE_ALLY_DEATH, 0, 0, mons->mname.c_str()));
     else if (mons_base_type(mons) == MONS_KRAKEN)
     {
-        if (_destroy_tentacles(mons) && !in_transit)
-            mpr(gettext("The dead kraken's tentacles slide back into the water."));
+        if (_destroy_tentacles(mons) && !in_transit && you.see_cell(mons->pos()))
+            mpr(_("The dead kraken's tentacles slide back into the water."));
     }
     else if ((mons->type == MONS_KRAKEN_TENTACLE_SEGMENT
                   || mons->type == MONS_KRAKEN_TENTACLE)
@@ -2531,6 +2537,11 @@ void monster_cleanup(monster* mons)
         forest_message(mons->pos(), gettext("The forest abruptly stops moving."));
         env.forest_awoken_until = 0;
     }
+
+    // May have been constricting something. No message because that depends
+    // on the order in which things are cleaned up: If the constrictee is
+    // cleaned up first, we wouldn't get a message anyway.
+    mons->stop_constricting_all(false, true);
 
     env.mid_cache.erase(mons->mid);
     unsigned int monster_killed = mons->mindex();
@@ -3108,6 +3119,7 @@ bool mon_can_be_slimified(monster* mons)
 
     return (!(mons->flags & MF_GOD_GIFT)
             && !mons->is_insubstantial()
+            && !mons_is_tentacle(mons->type)
             && (holi == MH_UNDEAD
                  || holi == MH_NATURAL && !mons_is_slime(mons))
           );
@@ -3115,33 +3127,45 @@ bool mon_can_be_slimified(monster* mons)
 
 void slimify_monster(monster* mon, bool hostile)
 {
-    if (mon->holiness() == MH_UNDEAD)
-        monster_polymorph(mon, MONS_DEATH_OOZE);
+    monster_type target = MONS_JELLY;
+
+    const int x = mon->hit_dice + (coinflip() ? 1 : -1) * random2(5);
+
+    if (x < 3)
+        target = MONS_OOZE;
+    else if (x >= 3 && x < 5)
+        target = MONS_JELLY;
+    else if (x >= 5 && x < 7)
+        target = MONS_BROWN_OOZE;
+    else if (x >= 7 && x <= 11)
+    {
+        if (coinflip())
+            target = MONS_SLIME_CREATURE;
+        else
+            target = MONS_GIANT_AMOEBA;
+    }
     else
     {
-        const int x = mon->hit_dice + (coinflip() ? 1 : -1) * random2(5);
-
-        if (x < 3)
-            monster_polymorph(mon, MONS_OOZE);
-        else if (x >= 3 && x < 5)
-            monster_polymorph(mon, MONS_JELLY);
-        else if (x >= 5 && x < 7)
-            monster_polymorph(mon, MONS_BROWN_OOZE);
-        else if (x >= 7 && x <= 11)
-        {
-            if (coinflip())
-                monster_polymorph(mon, MONS_SLIME_CREATURE);
-            else
-                monster_polymorph(mon, MONS_GIANT_AMOEBA);
-        }
+        if (coinflip())
+            target = MONS_ACID_BLOB;
         else
-        {
-            if (coinflip())
-                monster_polymorph(mon, MONS_ACID_BLOB);
-            else
-                monster_polymorph(mon, MONS_AZURE_JELLY);
-        }
+            target = MONS_AZURE_JELLY;
     }
+
+    if (feat_is_water(grd(mon->pos()))) // Pick something amphibious.
+        target = (x < 7) ? MONS_JELLY : MONS_SLIME_CREATURE;
+
+    if (mon->holiness() == MH_UNDEAD)
+        target = MONS_DEATH_OOZE;
+
+    // Bail out if jellies can't live here.
+    if (!monster_habitable_grid(target, grd(mon->pos())))
+    {
+        simple_monster_message(mon, " quivers momentarily.");
+        return;
+    }
+
+    monster_polymorph(mon, target);
 
     if (!mons_eats_items(mon))
         mon->add_ench(ENCH_EAT_ITEMS);
@@ -4592,7 +4616,8 @@ void debuff_monster(monster* mon)
         ENCH_REGENERATION,
         ENCH_STICKY_FLAME,
         ENCH_TP,
-        ENCH_INNER_FLAME
+        ENCH_INNER_FLAME,
+        ENCH_OZOCUBUS_ARMOUR
     };
 
     // Dispel all magical enchantments...
@@ -4607,6 +4632,18 @@ void debuff_monster(monster* mon)
             // For non-natural invisibility, turn autopickup back on manually,
             // since dispelling invisibility quietly won't do so.
             autotoggle_autopickup(false);
+        }
+        if (lost_enchantments[i] == ENCH_CONFUSION)
+        {
+            // Don't dispel permaconfusion.
+            if (mons_class_flag(mon->type, M_CONFUSED))
+                continue;
+        }
+        if (lost_enchantments[i] == ENCH_REGENERATION)
+        {
+            // Don't dispel regen if it's from Trog.
+            if (mon->has_ench(ENCH_RAISED_MR))
+                continue;
         }
 
         mon->del_ench(lost_enchantments[i], true, true);

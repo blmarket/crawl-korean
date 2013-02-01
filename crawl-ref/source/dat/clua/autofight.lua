@@ -217,15 +217,15 @@ local function attack_melee(x,y)
   crawl.process_keys(move)
 end
 
-local function set_stop_level(key, value)
+local function set_stop_level(key, value, mode)
   AUTOFIGHT_STOP = tonumber(value)
 end
 
-local function set_af_throw(key, value)
+local function set_af_throw(key, value, mode)
   AUTOFIGHT_THROW = string.lower(value) ~= "false"
 end
 
-local function set_af_throw_nomove(key, value)
+local function set_af_throw_nomove(key, value, mode)
   AUTOFIGHT_THROW_NOMOVE = string.lower(value) ~= "false"
 end
 
@@ -242,7 +242,7 @@ function attack(allow_movement)
   elseif caught then
     crawl.mpr("You are " .. caught .. "!")
   elseif hp_is_low() then
-    crawl.mpr("You are too injured to fight blindly!")
+    crawl.mpr("You are too injured to fight recklessly!")
   elseif info == nil then
     crawl.mpr("No target in view!")
   elseif info.attack_type == 3 then

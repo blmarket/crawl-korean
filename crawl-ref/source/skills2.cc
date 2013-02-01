@@ -288,7 +288,7 @@ unsigned get_skill_rank(unsigned skill_lev)
 }
 
 std::string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
-                                int species, int str, int dex, int god)
+                                int species, int str, int dex, int god, int piety)
 {
     // paranoia
     if (is_invalid_skill(best_skill))
@@ -331,7 +331,7 @@ std::string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
 
         case SK_INVOCATIONS:
             if (god != GOD_NO_GOD)
-                result = god_title((god_type)god, (species_type)species);
+                result = god_title((god_type)god, (species_type)species, piety);
             break;
 
         case SK_BOWS:
@@ -371,9 +371,10 @@ std::string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
 }
 
 std::string skill_title(skill_type best_skill, uint8_t skill_lev,
-                        int species, int str, int dex, int god)
+                        int species, int str, int dex, int god, int piety)
 {
-    return skill_title_by_rank(best_skill, get_skill_rank(skill_lev), species, str, dex, god);
+    return skill_title_by_rank(best_skill, get_skill_rank(skill_lev),
+                               species, str, dex, god, piety);
 }
 
 std::string player_title()
@@ -682,6 +683,7 @@ void dump_skills(std::string &text)
         {
             text += make_stringf(" %c Level %.*f%s %s\n",
                                  real == 270       ? 'O' :
+                                 !you.can_train[i] ? ' ' :
                                  you.train[i] == 2 ? '*' :
                                  you.train[i]      ? '+' :
                                                      '-',

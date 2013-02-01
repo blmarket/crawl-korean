@@ -1693,7 +1693,8 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
         snprintf(buf, HIGHSCORE_SIZE, "%8d %s the %s (level %d",
                   points, name.c_str(),
                   skill_title(best_skill, best_skill_lvl,
-                               race, str, dex, god).c_str(), lvl);
+                               race, str, dex, god, piety).c_str(),
+                  lvl);
         desc = buf;
     }
     else
@@ -2592,8 +2593,8 @@ std::string xlog_fields::xlog_line() const
  */
 void mark_milestone(const std::string &type,
                     const std::string &milestone,
-                    bool report_origin_level,
-                    time_t t)
+                    const std::string &origin_level,
+                    time_t milestone_time)
 {
 #ifdef DGL_MILESTONES
     static std::string lasttype, lastmilestone;
@@ -2623,14 +2624,17 @@ void mark_milestone(const std::string &type,
     const scorefile_entry se(0, 0, KILL_MISC, NULL);
     se.set_base_xlog_fields();
     xlog_fields xl = se.get_fields();
-    if (report_origin_level)
+    if (!origin_level.empty())
     {
-        // The branch entrance location
         xl.add_field("oplace", "%s",
-                     current_level_parent().describe().c_str());
+                     ((origin_level == "parent") ?
+                      current_level_parent().describe() :
+                      origin_level).c_str());
     }
     xl.add_field("time", "%s",
-                 make_date_string(se.get_death_time()).c_str());
+                 make_date_string(
+                     milestone_time ? milestone_time
+                                    : se.get_death_time()).c_str());
     xl.add_field("type", "%s", type.c_str());
     xl.add_field("milestone", "%s", milestone.c_str());
     const std::string xlog_line = xl.xlog_line();

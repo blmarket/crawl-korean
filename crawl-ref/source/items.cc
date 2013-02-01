@@ -2533,12 +2533,13 @@ void autoinscribe()
 
 static int _autopickup_subtype(const item_def &item)
 {
+    const int max_type = get_max_subtype(item.base_type);
+
     // Sensed items and item_infos of unknown subtype.
     if (item.base_type >= NUM_OBJECT_CLASSES
-        || get_max_subtype(item.base_type) > 0
-           && item.sub_type >= get_max_subtype(item.base_type))
+        || max_type > 0 && item.sub_type >= max_type)
     {
-        return get_max_subtype(item.base_type);
+        return max_type;
     }
 
     // Only where item_type_known() refers to the subtype (as opposed to the
@@ -2551,20 +2552,18 @@ static int _autopickup_subtype(const item_def &item)
     case OBJ_JEWELLERY:
     case OBJ_POTIONS:
     case OBJ_STAVES:
-        if (item_type_known(item))
-            break;
+        return item_type_known(item) ? item.sub_type : max_type;
     case OBJ_FOOD:
-        if (item.sub_type == FOOD_CHUNK)
-            break;
+        return (item.sub_type == FOOD_CHUNK) ? item.sub_type : max_type;
     case OBJ_MISCELLANY:
-        if (item.sub_type == MISC_RUNE_OF_ZOT)
-            break;
+        return (item.sub_type == MISC_RUNE_OF_ZOT) ? item.sub_type : max_type;
     case OBJ_BOOKS:
     case OBJ_RODS:
     case OBJ_GOLD:
-        return get_max_subtype(item.base_type);
+        return max_type;
+    default:
+        return item.sub_type;
     }
-    return item.sub_type;
 }
 
 static bool _is_option_autopickup(const item_def &item, std::string &iname)
@@ -3256,6 +3255,23 @@ bool item_def::is_mundane() const
     }
 
     return false;
+}
+
+// Does the item causes autoexplore to visit it. It excludes ?RC for Ash,
+// disabled items for Nemelex and items already visited (dropped flag).
+bool item_def::is_greedy_sacrificeable() const
+{
+    if (!god_likes_items(you.religion, true))
+        return false;
+
+    if (you.religion == GOD_NEMELEX_XOBEH
+        && !check_nemelex_sacrificing_item_type(*this)
+        || flags & (ISFLAG_DROPPED | ISFLAG_THROWN))
+    {
+        return false;
+    }
+
+    return god_likes_item(you.religion, *this);
 }
 
 static void _rune_from_specs(const char* _specs, item_def &item)

@@ -2829,7 +2829,7 @@ static int _mons_cause_fear(monster* mons, bool actual)
 
 static bool _mons_drain_life(monster* mons, bool actual)
 {
-    if (actual)
+    if (actual && you.see_cell(mons->pos()))
     {
         if (you.can_see(mons))
         {
@@ -2859,7 +2859,7 @@ static bool _mons_drain_life(monster* mons, bool actual)
                 continue;
 
             if (actual)
-                ouch(hurted, mons->mindex(), KILLED_BY_BEAM, mons->name(DESC_A).c_str());
+                ouch(hurted, mons->mindex(), KILLED_BY_BEAM, "by drain life");
 
             success = true;
 
@@ -3420,9 +3420,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             std::random_shuffle(adj_squares.begin(), adj_squares.end());
 
 
-        int created_count = 0;
+        int visible_count = 0;
 
-        for (int i=0;i<possible_count;++i)
+        for (int i = 0; i < possible_count; ++i)
         {
             if (monster *tentacle = create_monster(
                 mgen_data(MONS_KRAKEN_TENTACLE, SAME_ATTITUDE(mons), mons,
@@ -3430,7 +3430,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
                           MG_FORCE_PLACE, god, MONS_NO_MONSTER, kraken_index,
                           mons->colour, -1, PROX_CLOSE_TO_PLAYER)))
             {
-                created_count++;
+                if (you.can_see(tentacle))
+                    visible_count++;
+
                 tentacle->props["inwards"].get_int() = kraken_index;
 
                 if (mons->holiness() == MH_UNDEAD)
@@ -3438,10 +3440,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             }
         }
 
-
-        if (created_count == 1)
+        if (visible_count == 1)
             mpr("A tentacle rises from the water!");
-        else if (created_count > 1)
+        else if (visible_count > 1)
             mpr("Tentacles burst out of the water!");
         return;
     }

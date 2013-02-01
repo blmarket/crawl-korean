@@ -2688,6 +2688,7 @@ static void _decrement_durations()
             {
                 mpr(gettext("You pass out from exhaustion."), MSGCH_WARN);
                 you.increase_duration(DUR_PARALYSIS, roll_dice(1,4));
+                you.stop_constricting_all();
             }
         }
 
@@ -2781,7 +2782,8 @@ static void _decrement_durations()
 
     if (!you.permanent_flight()
         && _decrement_a_duration(DUR_CONTROLLED_FLIGHT, delay)
-        && you.airborne())
+        && you.airborne()
+        && !player_effect_cfly())
     {
             mpr(gettext("You lose control over your flight."), MSGCH_DURATION);
     }
@@ -3031,12 +3033,16 @@ static void _update_mold()
 
 static void _player_reacts()
 {
-    if (!you.cannot_act() && !player_mutation_level(MUT_BLURRY_VISION)
-        && x_chance_in_y(you.traps_skill(), 50)
-        && (you.duration[DUR_SWIFTNESS] <= 0 || coinflip()))
+    if (!you.cannot_act() && !player_mutation_level(MUT_BLURRY_VISION))
     {
         for (int i = div_rand_round(you.time_taken, player_speed()); i > 0; --i)
-            search_around(false); // Check nonadjacent squares too.
+        {
+            if (x_chance_in_y(you.traps_skill(), 50)
+                && (you.duration[DUR_SWIFTNESS] <= 0 || coinflip()))
+            {
+                search_around(false); // Check nonadjacent squares too.
+            }
+        }
     }
 
     stealth = check_stealth();
@@ -4296,6 +4302,18 @@ static void _move_player(coord_def move)
 
     coord_def mon_swap_dest;
 
+    std::string verb;
+    if (you.flight_mode() == FL_FLY)
+        verb = "fly";
+    else if (you.flight_mode() == FL_LEVITATE)
+        verb = "levitate";
+    else if (you.is_wall_clinging())
+        verb = "cling";
+    else if (you.species == SP_NAGA && !form_changed_physiology())
+        verb = "slither";
+    else
+        verb = "walk";
+
     if (targ_monst && !targ_monst->submerged())
     {
         if (can_swap_places && !beholder && !fmonger)
@@ -4312,6 +4330,16 @@ static void _move_player(coord_def move)
             // an invisible monster attacks the monster, thus allowing
             // the player to figure out which adjacent wall an invis
             // monster is in "for free".
+
+            // Don't allow the player to freely locate invisible monsters
+            // with confirmation prompts.
+            if (!you.can_see(targ_monst) && !check_moveto(targ, verb))
+            {
+                stop_running();
+                you.turn_is_over = false;
+                return;
+            }
+
             you.turn_is_over = true;
             fight_melee(&you, targ_monst);
 
@@ -4354,18 +4382,6 @@ static void _move_player(coord_def move)
 
         if (!you.attempt_escape()) // false means constricted and did not escape
             return;
-
-        std::string verb;
-        if (you.flight_mode() == FL_FLY)
-            verb = "fly";
-        else if (you.flight_mode() == FL_LEVITATE)
-            verb = "levitate";
-        else if (you.is_wall_clinging())
-            verb = "cling";
-        else if (you.species == SP_NAGA && !form_changed_physiology())
-            verb = "slither";
-        else
-            verb = "walk";
 
         if (!you.confused() && !check_moveto(targ, verb))
         {

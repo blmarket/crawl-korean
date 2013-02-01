@@ -2806,7 +2806,7 @@ w:50
 
 @The_monster@ says, "The Crypt, the Tomb, what's next? The Coffin?"
 %%%%
-Lab Donald
+Labyrinth Donald
 
 w:50
 @_generic_Donald_@
@@ -3584,7 +3584,7 @@ _Duvessa_rare_
 
 @The_monster@ says @to_foe@, "Beauty is only skin deep, and my weapons penetrate much further than that."
 
-@The_monster@ says @to_foe@, "Practice, practice, practice! One day you'll be as good as me." @player_only@
+@The_monster@ says @to_foe@, "Practise, practise, practise! One day you'll be as good as me." @player_only@
 %%%%
 Duvessa_Dowan_dies
 
@@ -6203,6 +6203,11 @@ __NONE
 good_god_neutral_holy_being_reaction
 
 VISUAL:@The_monster@ is calmed by your holy aura.
+%%%%
+good_god_neutral_holy_being_reaction_humanoid
+
+w:5
+@good_god_neutral_holy_being_reaction@
 
 VISUAL:@The_monster@ relaxes @possessive@ fighting stance.
 
@@ -6219,6 +6224,11 @@ good_god_neutral_holy_being_speech
 good_god_nonneutral_holy_being_reaction
 
 VISUAL:@The_monster@ ignores your imperfect holy aura.
+%%%%
+good_god_nonneutral_holy_being_reaction_humanoid
+
+w:5
+@good_god_nonneutral_holy_being_reaction@
 
 VISUAL:@The_monster@ frowns, and retains @possessive@ fighting stance.
 
@@ -6814,7 +6824,7 @@ avoiding mutations.
 just saying no to mutations.
 
 # respecting intelligent beings
-proper burial practice.
+proper burial practise.
 
 # demons
 not dealing with demons.

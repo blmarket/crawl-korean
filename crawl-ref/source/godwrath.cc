@@ -1186,7 +1186,7 @@ bool divine_retribution(god_type god, bool no_bonus, bool force)
     // gods don't use divine retribution on followers of gods they don't
     // hate.
     if (!force && ((god == you.religion && is_good_god(god))
-        || (!god_hates_your_god(god))))
+        || (god != you.religion && !god_hates_your_god(god))))
     {
         return false;
     }
@@ -1373,14 +1373,14 @@ static bool _tso_holy_revenge()
         && ((is_evil_god(you.religion) && one_chance_in(6))
             || one_chance_in(8)))
     {
-        const char *revenge;
+        std::string revenge;
 
         if (is_evil_god(you.religion))
-            revenge = _get_tso_speech("holy evil").c_str();
+            revenge = _get_tso_speech("holy evil");
         else
-            revenge = _get_tso_speech("holy other").c_str();
+            revenge = _get_tso_speech("holy other");
 
-        _tso_blasts_cleansing_flame(revenge);
+        _tso_blasts_cleansing_flame(revenge.c_str());
 
         return true;
     }

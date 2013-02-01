@@ -98,61 +98,6 @@ enum ability_flag_type
     ABFLAG_ZOTDEF         = 0x00040000, // ZotDef ability, w/ appropriate hotkey
 };
 
-struct generic_cost
-{
-    int base, add, rolls;
-
-    generic_cost(int num)
-        : base(num), add(num == 0 ? 0 : (num + 1) / 2 + 1), rolls(1)
-    {
-    }
-    generic_cost(int num, int _add, int _rolls = 1)
-        : base(num), add(_add), rolls(_rolls)
-    {
-    }
-    static generic_cost fixed(int fixed)
-    {
-        return generic_cost(fixed, 0, 1);
-    }
-    static generic_cost range(int low, int high, int _rolls = 1)
-    {
-        return generic_cost(low, high - low + 1, _rolls);
-    }
-
-    int cost() const;
-
-    operator bool () const { return base > 0 || add > 0; }
-};
-
-struct scaling_cost
-{
-    int value;
-
-    scaling_cost(int permille) : value(permille) {}
-
-    static scaling_cost fixed(int fixed)
-    {
-        return scaling_cost(-fixed);
-    }
-
-    int cost(int max) const;
-
-    operator bool () const { return value != 0; }
-};
-
-// Structure for representing an ability:
-struct ability_def
-{
-    ability_type        ability;
-    const char *        name;
-    unsigned int        mp_cost;        // magic cost of ability
-    scaling_cost        hp_cost;        // hit point cost of ability
-    unsigned int        food_cost;      // + rand2avg( food_cost, 2 )
-    generic_cost        piety_cost;     // + random2( (piety_cost + 1) / 2 + 1 )
-    unsigned int        zp_cost;        // zot point cost of ability
-    unsigned int        flags;          // used for additonal cost notices
-};
-
 static int  _find_ability_slot(const ability_def& abil);
 static bool _do_ability(const ability_def& abil);
 static void _pay_ability_costs(const ability_def& abil, int zpcost);
@@ -478,7 +423,7 @@ static const ability_def Ability_List[] =
     { ABIL_RENOUNCE_RELIGION, M_("Renounce Religion"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 };
 
-static const ability_def& _get_ability_def(ability_type abil)
+const ability_def& get_ability_def(ability_type abil)
 {
     for (unsigned int i = 0;
          i < sizeof(Ability_List) / sizeof(Ability_List[0]); i++)
@@ -494,7 +439,7 @@ bool string_matches_ability_name(const std::string& key)
 {
     for (int i = ABIL_SPIT_POISON; i <= ABIL_RENOUNCE_RELIGION; ++i)
     {
-        const ability_def abil = _get_ability_def(static_cast<ability_type>(i));
+        const ability_def abil = get_ability_def(static_cast<ability_type>(i));
         if (abil.ability == ABIL_NON_ABILITY)
             continue;
 
@@ -686,7 +631,7 @@ static int _zp_cost(const ability_def& abil)
 
 const std::string make_cost_description(ability_type ability)
 {
-    const ability_def& abil = _get_ability_def(ability);
+    const ability_def& abil = get_ability_def(ability);
     std::ostringstream ret;
     if (abil.mp_cost)
     {
@@ -836,7 +781,7 @@ static std::string _get_piety_amount_str(int value)
 
 static const std::string _detailed_cost_description(ability_type ability)
 {
-    const ability_def& abil = _get_ability_def(ability);
+    const ability_def& abil = get_ability_def(ability);
     std::ostringstream ret;
     std::vector<std::string> values;
     std::string str;
@@ -951,7 +896,7 @@ talent get_talent(ability_type ability, bool check_confused)
     // doing anything else, so that we'll handle its flags properly.
     result.which = _fixup_ability(ability);
 
-    const ability_def &abil = _get_ability_def(result.which);
+    const ability_def &abil = get_ability_def(result.which);
 
     int failure = 0;
     bool invoc = false;
@@ -1295,7 +1240,7 @@ talent get_talent(ability_type ability, bool check_confused)
 
 const char* ability_name(ability_type ability)
 {
-    return _get_ability_def(ability).name;
+    return get_ability_def(ability).name;
 }
 
 std::vector<const char*> get_ability_names()
@@ -1445,13 +1390,25 @@ static bool _check_ability_possible(const ability_def& abil,
                                     bool hungerCheck = true,
                                     bool quiet = false)
 {
+    if (silenced(you.pos()) && you.religion != GOD_NEMELEX_XOBEH)
+    {
+        talent tal = get_talent(abil.ability, false);
+        if (tal.is_invocation)
+        {
+            if (!quiet)
+                mprf("You cannot call out to %s while silenced.",
+                     god_name(you.religion).c_str());
+            return false;
+        }
+    }
     // Don't insta-starve the player.
     // (Happens at 100, losing consciousness possible from 500 downward.)
     if (hungerCheck && !you.is_undead)
     {
         const int expected_hunger = you.hunger - abil.food_cost * 2;
-        dprf("hunger: %d, max. food_cost: %d, expected hunger: %d",
-             you.hunger, abil.food_cost * 2, expected_hunger);
+        if (!quiet)
+            dprf("hunger: %d, max. food_cost: %d, expected hunger: %d",
+                 you.hunger, abil.food_cost * 2, expected_hunger);
         // Safety margin for natural hunger, mutations etc.
         if (expected_hunger <= 150)
         {
@@ -1610,7 +1567,7 @@ static bool _check_ability_possible(const ability_def& abil,
 bool check_ability_possible(const ability_type ability, bool hungerCheck,
                             bool quiet)
 {
-    return _check_ability_possible(_get_ability_def(ability), hungerCheck,
+    return _check_ability_possible(get_ability_def(ability), hungerCheck,
                                    quiet);
 }
 
@@ -1700,7 +1657,7 @@ bool activate_talent(const talent& tal)
         return false;
     }
 
-    const ability_def& abil = _get_ability_def(tal.which);
+    const ability_def& abil = get_ability_def(tal.which);
 
     // Check that we can afford to pay the costs.
     // Note that mutation shenanigans might leave us with negative MP,
@@ -2889,7 +2846,8 @@ int choose_ability_menu(const std::vector<talent>& talents)
 #endif
 
     ToggleableMenu abil_menu(MF_SINGLESELECT | MF_ANYPRINTABLE
-                             | MF_ALWAYS_SHOW_MORE, text_only);
+                             | MF_TOGGLE_ACTION | MF_ALWAYS_SHOW_MORE,
+                             text_only);
 
     abil_menu.set_highlighter(NULL);
 #ifdef USE_TILE_LOCAL
@@ -2912,6 +2870,10 @@ int choose_ability_menu(const std::vector<talent>& talents)
                                 "Cost                       Failure"),
                                 MEL_TITLE));
 #endif
+    abil_menu.set_tag("ability");
+    abil_menu.add_toggle_key('!');
+    abil_menu.add_toggle_key('?');
+    abil_menu.menu_action = Menu::ACT_EXECUTE;
 
     if (crawl_state.game_is_hints())
     {
@@ -2925,9 +2887,6 @@ int choose_ability_menu(const std::vector<talent>& talents)
                            "Press '<w>!</w>' or '<w>?</w>' to toggle "
                            "between ability selection and description.")));
     }
-
-    abil_menu.action_cycle = Menu::CYCLE_TOGGLE;
-    abil_menu.menu_action  = Menu::ACT_EXECUTE;
 
     int numbers[52];
     for (int i = 0; i < 52; ++i)
@@ -3061,7 +3020,7 @@ static void _add_talent(std::vector<talent>& vec, const ability_type ability,
         vec.push_back(t);
 }
 
-std::vector<talent> your_talents(bool check_confused)
+std::vector<talent> your_talents(bool check_confused, bool include_unusable)
 {
     std::vector<talent> talents;
 
@@ -3231,12 +3190,13 @@ std::vector<talent> your_talents(bool check_confused)
         _add_talent(talents, ABIL_BLINK, check_confused);
 
     // Religious abilities.
-    std::vector<ability_type> abilities = get_god_abilities();
+    std::vector<ability_type> abilities = get_god_abilities(include_unusable);
     for (unsigned int i = 0; i < abilities.size(); ++i)
         _add_talent(talents, abilities[i], check_confused);
 
     // And finally, the ability to opt-out of your faith {dlb}:
-    if (you.religion != GOD_NO_GOD && !silenced(you.pos()))
+    if (you.religion != GOD_NO_GOD
+        && (include_unusable || !silenced(you.pos())))
         _add_talent(talents, ABIL_RENOUNCE_RELIGION, check_confused);
 
     //jmf: Check for breath weapons - they're exclusive of each other, I hope!

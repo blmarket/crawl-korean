@@ -78,7 +78,8 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     item_def& wpn = *you.weapon();
 
     if (wpn.base_type != OBJ_WEAPONS
-        || (is_range_weapon(wpn) && brand != SPWPN_HOLY_WRATH)
+        || (is_range_weapon(wpn)
+            && (brand != SPWPN_HOLY_WRATH || wpn.sub_type == WPN_BLOWGUN))
         || is_artefact(wpn))
     {
         return false;
@@ -372,7 +373,7 @@ void pray()
     dprf("piety: %d (-%d)", you.piety, you.piety_hysteresis);
 }
 
-int zin_tithe(item_def& item, int quant, bool quiet)
+int zin_tithe(item_def& item, int quant, bool quiet, bool converting)
 {
     int taken = 0;
     int due = quant += you.attribute[ATTR_TITHE_BASE];
@@ -417,7 +418,7 @@ int zin_tithe(item_def& item, int quant, bool quiet)
         }
         else
         {
-            if (player_in_branch(BRANCH_ORCISH_MINES))
+            if (player_in_branch(BRANCH_ORCISH_MINES) && !converting)
             {
                 // Another special case: Orc gives simply too much compared to
                 // other branches.
@@ -572,14 +573,29 @@ static piety_gain_t _sac_corpse(const item_def& item)
     if (you.religion == GOD_OKAWARU)
     {
         monster dummy;
-        dummy.type = (monster_type)(item.orig_monnum ? item.orig_monnum - 1 : item.plus);
-        if (item.props.exists(MONSTER_HIT_DICE))
-            dummy.hit_dice = item.props[MONSTER_HIT_DICE].get_short();
+        dummy.type = (monster_type)(item.orig_monnum ? item.orig_monnum - 1
+                                                     : item.plus);
         if (item.props.exists(MONSTER_NUMBER))
             dummy.number   = item.props[MONSTER_NUMBER].get_short();
         define_monster(&dummy);
+
+        // Hit dice are overridden by define_monster, so only set them now.
+        if (item.props.exists(MONSTER_HIT_DICE))
+        {
+            int hd = item.props[MONSTER_HIT_DICE].get_short();
+            const monsterentry *m = get_monster_data(dummy.type);
+            int hp = hit_points(hd, m->hpdice[1], m->hpdice[2]) + m->hpdice[3];
+
+            dummy.hit_dice = hd;
+            dummy.max_hit_points = hp;
+        }
         int gain = get_fuzzied_monster_difficulty(&dummy);
         dprf("fuzzied corpse difficulty: %4.2f", gain*0.01);
+
+        // Shouldn't be needed, but just in case an XL:1 spriggan diver walks
+        // into a minotaur corpses vault on D:10 ...
+        if (item.props.exists("cap_sacrifice"))
+            gain = std::min(gain, 700 * 3);
 
         gain_piety(gain, 700);
         gain = div_rand_round(gain, 700);
@@ -875,7 +891,6 @@ static bool _offer_items()
         _show_pure_deck_chances();
 #endif
     }
-
     // Explanatory messages if nothing the god likes is sacrificed.
     else if (num_sacced == 0 && num_disliked > 0)
     {
@@ -904,7 +919,7 @@ static bool _offer_items()
     if (num_sacced == 0 && you.religion == GOD_ELYVILON)
     {
         mprf("There are no %sweapons here to destroy!",
-             you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : "evil ");
+             you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : "unholy or evil ");
     }
 
     return (num_sacced > 0);

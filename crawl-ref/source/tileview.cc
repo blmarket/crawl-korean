@@ -903,28 +903,21 @@ void tile_draw_map_cell(const coord_def& gc, bool foreground_only)
 
     const map_cell& cell = env.map_knowledge(gc);
 
-    switch (get_cell_show_class(cell))
-    {
-    default:
-    case SH_NOTHING:
-    case SH_FEATURE:
-        env.tile_bk_fg(gc) = 0;
-        if (cell.item())
-            _tile_place_item_marker(gc, *cell.item());
-        break;
-    case SH_ITEM:
-        _tile_place_item(gc, *cell.item(), (cell.flags & MAP_MORE_ITEMS) != 0);
-        break;
-    case SH_CLOUD:
-        _tile_place_cloud(gc, *cell.cloudinfo());
-        break;
-    case SH_INVIS_EXPOSED:
+    if (cell.invisible_monster())
         _tile_place_invisible_monster(gc);
-        break;
-    case SH_MONSTER:
+    else if (cell.monsterinfo())
         _tile_place_monster(gc, *cell.monsterinfo());
-        break;
+    else if (cell.cloud() != CLOUD_NONE)
+        _tile_place_cloud(gc, *cell.cloudinfo());
+    else if (cell.item())
+    {
+        if (feat_is_stair(cell.feat()))
+            _tile_place_item_marker(gc, *cell.item());
+        else
+            _tile_place_item(gc, *cell.item(), (cell.flags & MAP_MORE_ITEMS) != 0);
     }
+    else
+        env.tile_bk_fg(gc) = 0;
 }
 
 void tile_wizmap_terrain(const coord_def &gc)
@@ -1193,7 +1186,9 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
     const map_cell& mc = env.map_knowledge(gc);
 
     bool print_blood = true;
-    if (mc.flags & MAP_HALOED)
+    if (mc.flags & MAP_UMBRAED)
+        cell.halo = HALO_UMBRA;
+    else if (mc.flags & MAP_HALOED)
     {
         monster_info* mon = mc.monsterinfo();
         if (mon && !mons_class_flag(mon->type, M_NO_EXP_GAIN))
@@ -1206,8 +1201,6 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
             cell.halo = HALO_RANGE;
         }
     }
-    else if (mc.flags & MAP_UMBRAED)
-        cell.halo = HALO_UMBRA;
     else
         cell.halo = HALO_NONE;
 

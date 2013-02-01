@@ -1220,6 +1220,11 @@ bool deck_triple_draw()
             selected = keyin - 'a';
             break;
         }
+        else if (crawl_state.seen_hups)
+        {
+            selected = 0;
+            break;
+        }
         else
             canned_msg(MSG_HUH);
     }

@@ -2796,12 +2796,24 @@ static tileidx_t _tileidx_weapon_base(const item_def &item)
         return TILE_WPN_WAR_AXE;
 
     case WPN_BROAD_AXE:
+        if (race == ISFLAG_ORCISH)
+            return TILE_WPN_BROAD_AXE_ORC;
+        if (race == ISFLAG_DWARVEN)
+            return TILE_WPN_BROAD_AXE_DWARF;
         return TILE_WPN_BROAD_AXE;
 
     case WPN_BATTLEAXE:
+        if (race == ISFLAG_ORCISH)
+            return TILE_WPN_BATTLEAXE_ORC;
+        if (race == ISFLAG_DWARVEN)
+            return TILE_WPN_BATTLEAXE_DWARF;
         return TILE_WPN_BATTLEAXE;
 
     case WPN_EXECUTIONERS_AXE:
+        if (race == ISFLAG_ORCISH)
+            return TILE_WPN_EXECUTIONERS_AXE_ORC;
+        if (race == ISFLAG_DWARVEN)
+            return TILE_WPN_EXECUTIONERS_AXE_DWARF;
         return TILE_WPN_EXECUTIONERS_AXE;
 
     case WPN_BLOWGUN:
@@ -3675,6 +3687,8 @@ static tileidx_t _tileidx_corpse(const item_def &item)
         return TILE_CORPSE_SPHINX;
     case MONS_SHEDU:
         return TILE_CORPSE_SHEDU;
+    case MONS_ARACHNE:
+        return TILE_CORPSE_ARACHNE;
 
     // beasts ('I')
     case MONS_SKY_BEAST:
@@ -4285,6 +4299,11 @@ tileidx_t tileidx_cloud(const cloud_info &cl, bool disturbance)
 
             case CLOUD_PETRIFY:
                 ch = TILE_CLOUD_PETRIFY;
+                ch += random2(tile_main_count(ch));
+                break;
+
+            case CLOUD_CHAOS:
+                ch = TILE_CLOUD_CHAOS;
                 ch += random2(tile_main_count(ch));
                 break;
 

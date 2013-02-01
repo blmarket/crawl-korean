@@ -1455,35 +1455,47 @@ static bool _is_signature_weapon(monster* mons, const item_def &weapon)
     // we are more interested in the brand, and the brand is *rare*.
     if (mons_is_unique(mons->type))
     {
+        weapon_type wtype = (weapon.base_type == OBJ_WEAPONS) ?
+            (weapon_type)weapon.sub_type : NUM_WEAPONS;
+
         // We might allow Sigmund to pick up a better scythe if he finds
         // one...
         if (mons->type == MONS_SIGMUND)
-            return (weapon.sub_type == WPN_SCYTHE);
+            return (wtype == WPN_SCYTHE);
 
         // Crazy Yiuf's got MONUSE_STARTING_EQUIPMENT right now, but
         // in case that ever changes we don't want him to switch away
         // from his quarterstaff of chaos.
         if (mons->type == MONS_CRAZY_YIUF)
-            return false;
+        {
+            return wtype == WPN_QUARTERSTAFF
+                   && get_weapon_brand(weapon) == SPWPN_CHAOS;
+        }
 
         // Distortion/chaos is immensely flavourful, and we shouldn't
         // allow Psyche to switch away from it.
         if (mons->type == MONS_PSYCHE)
-            return false;
+        {
+            return get_weapon_brand(weapon) == SPWPN_CHAOS
+                   || get_weapon_brand(weapon) == SPWPN_DISTORTION;
+        }
 
         // Don't switch Azrael away from the customary scimitar of
         // flaming.
         if (mons->type == MONS_AZRAEL)
-            return false;
+        {
+            return wtype == WPN_SCIMITAR
+                   && get_weapon_brand(weapon) == SPWPN_FLAMING;
+        }
 
         if (mons->type == MONS_AGNES)
-            return (weapon.sub_type == WPN_LAJATANG);
+            return (wtype == WPN_LAJATANG);
 
         if (mons->type == MONS_EDMUND)
         {
-            return (weapon.sub_type == WPN_FLAIL
-                    || weapon.sub_type == WPN_SPIKED_FLAIL
-                    || weapon.sub_type == WPN_DIRE_FLAIL);
+            return (wtype == WPN_FLAIL
+                 || wtype == WPN_SPIKED_FLAIL
+                 || wtype == WPN_DIRE_FLAIL);
         }
 
         // Pikel's got MONUSE_STARTING_EQUIPMENT right now, but,
@@ -1505,7 +1517,7 @@ static bool _is_signature_weapon(monster* mons, const item_def &weapon)
         }
 
         if (mons->type == MONS_IGNACIO)
-            return (weapon.sub_type == WPN_EXECUTIONERS_AXE);
+            return (wtype == WPN_EXECUTIONERS_AXE);
 
         if (mons->type == MONS_MENNAS)
             return (get_weapon_brand(weapon) == SPWPN_HOLY_WRATH);
@@ -1516,6 +1528,12 @@ static bool _is_signature_weapon(monster* mons, const item_def &weapon)
                     && weapon.sub_type == STAFF_POISON
                  || weapon.base_type == OBJ_WEAPONS
                     && weapon.special == UNRAND_OLGREB);
+        }
+
+        if (mons->type == MONS_FANNAR)
+        {
+            return (weapon.base_type == OBJ_STAVES
+                    && weapon.sub_type == STAFF_COLD);
         }
     }
 
@@ -1616,10 +1634,12 @@ bool monster::pickup_melee_weapon(item_def &item, int near)
 
             // Don't swap from a signature weapon to a non-signature one.
             if (!_is_signature_weapon(this, item)
-                && _is_signature_weapon(this, *weap)
-                && !dual_wielding)
+                && _is_signature_weapon(this, *weap))
             {
-                return false;
+                if (dual_wielding)
+                    continue;
+                else
+                    return false;
             }
 
             // If we get here, the weapon is a melee weapon.
@@ -1826,7 +1846,7 @@ static int _get_monster_armour_value(const monster *mon,
         value += get_armour_res_poison(item, true);
 
     // Same for life protection.
-    if (mon->holiness() != MH_NATURAL)
+    if (mon->holiness() == MH_NATURAL)
         value += get_armour_life_protection(item, true);
 
     // See invisible also is only useful if not already intrinsic.
@@ -1982,7 +2002,7 @@ static int _get_monster_jewellery_value(const monster *mon,
         value += get_jewellery_res_poison(item, true);
 
     // Same for life protection.
-    if (mon->holiness() != MH_NATURAL)
+    if (mon->holiness() == MH_NATURAL)
         value += get_jewellery_life_protection(item, true);
 
     // See invisible also is only useful if not already intrinsic.
@@ -3728,7 +3748,7 @@ int monster::res_poison(bool temp) const
         if (shld != NON_ITEM && mitm[shld].base_type == OBJ_ARMOUR)
             u += get_armour_res_poison(mitm[shld], false);
 
-        if (jewellery != NON_ITEM && mitm[jewellery].base_type == OBJ_ARMOUR)
+        if (jewellery != NON_ITEM && mitm[jewellery].base_type == OBJ_JEWELLERY)
             u += get_jewellery_res_poison(mitm[jewellery], false);
 
         const item_def *w = primary_weapon();
@@ -3834,8 +3854,8 @@ int monster::res_negative_energy() const
         if (shld != NON_ITEM && mitm[shld].base_type == OBJ_ARMOUR)
             u += get_armour_life_protection(mitm[shld], false);
 
-        if (jewellery != NON_ITEM && mitm[jewellery].base_type == OBJ_ARMOUR)
-            u += get_armour_life_protection(mitm[jewellery], false);
+        if (jewellery != NON_ITEM && mitm[jewellery].base_type == OBJ_JEWELLERY)
+            u += get_jewellery_life_protection(mitm[jewellery], false);
 
         const item_def *w = primary_weapon();
         if (w && w->base_type == OBJ_STAVES && w->sub_type == STAFF_DEATH)
@@ -3968,6 +3988,10 @@ bool monster::no_tele(bool calc_unid, bool permit_id) const
         return true;
 
     if (check_stasis(!permit_id, calc_unid))
+        return true;
+
+    // TODO: calc_unid, permit_id
+    if (scan_mon_inv_randarts(this, ARTP_PREVENT_TELEPORTATION))
         return true;
 
     return false;
@@ -4146,7 +4170,8 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
         else if (amount <= 0 && hit_points <= max_hit_points)
             return 0;
 
-        if (agent && agent->is_player() && you.duration[DUR_QUAD_DAMAGE])
+        if (agent && agent->is_player() && you.duration[DUR_QUAD_DAMAGE]
+            && flavour != BEAM_TORMENT_DAMAGE)
         {
             amount *= 4;
             if (amount > hit_points + 50)
@@ -5833,6 +5858,14 @@ bool monster::check_clarity(bool silent) const
             simple_monster_message(this, " seems unimpeded by the mental distress.");
             set_ident_type(mitm[jewellery], ID_KNOWN_TYPE);
         }
+        return true;
+    }
+
+    if (scan_mon_inv_randarts(this, ARTP_CLARITY))
+    {
+        if (!silent && you.can_see(this) && !mons_is_lurking(this))
+            simple_monster_message(this, " seems unimpeded by the mental distress.");
+        // TODO: identify the property?
         return true;
     }
 

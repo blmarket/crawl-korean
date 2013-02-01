@@ -81,8 +81,6 @@
 #include "cio.h" // for cancelable_get_line()
 #endif
 
-#define YOU_DUNGEON_VAULTS_KEY    "you_dungeon_vaults_key"
-
 // DUNGEON BUILDERS
 static bool _build_level_vetoable(bool enable_random_maps,
                                   dungeon_feature_type dest_stairs_type);
@@ -153,7 +151,7 @@ static void _dgn_load_colour_grid();
 static void _dgn_map_colour_fixup();
 
 static void _dgn_unregister_vault(const map_def &map);
-static void _remember_vault_placement(std::string key, const vault_placement &place);
+static void _remember_vault_placement(const vault_placement &place, bool extra);
 
 // Returns true if the given square is okay for use by any character,
 // but always false for squares in non-transparent vaults.
@@ -198,7 +196,7 @@ static bool use_random_maps = true;
 static bool dgn_check_connectivity = false;
 static int  dgn_zones = 0;
 
-static CrawlHashTable _you_vault_list;
+static std::vector<std::string> _you_vault_list;
 
 class dgn_veto_exception : public std::exception
 {
@@ -365,18 +363,6 @@ static bool _build_level_vetoable(bool enable_random_maps,
     env.properties[BUILD_METHOD_KEY] = env.level_build_method;
     env.properties[LAYOUT_TYPE_KEY]  = level_layout_type;
 
-    // Save information in the player's properties has table so
-    // we can include it in the character dump.
-    if (!_you_vault_list.empty())
-    {
-        const std::string lev = level_id::current().describe();
-        CrawlHashTable &all_vaults =
-            you.props[YOU_DUNGEON_VAULTS_KEY].get_table();
-
-        CrawlHashTable &this_level = all_vaults[lev].get_table();
-        this_level = _you_vault_list;
-    }
-
     _dgn_postprocess_level();
 
     env.level_layout_types.clear();
@@ -398,6 +384,12 @@ static bool _build_level_vetoable(bool enable_random_maps,
     strip_all_maps();
 
     check_map_validity();
+
+    if (!_you_vault_list.empty())
+    {
+        std::vector<std::string> &vec(you.vault_list[level_id::current()]);
+        vec.insert(vec.end(), _you_vault_list.begin(), _you_vault_list.end());
+    }
 
     return true;
 }
@@ -1080,11 +1072,7 @@ void dgn_register_place(const vault_placement &place, bool register_vault)
 
     env.level_vaults.push_back(new vault_placement(place));
     if (register_vault)
-    {
-        _remember_vault_placement(place.map.has_tag("extra")
-                                  ? LEVEL_EXTRAS_KEY: LEVEL_VAULTS_KEY,
-                                  place);
-    }
+        _remember_vault_placement(place, place.map.has_tag("extra"));
 }
 
 bool dgn_ensure_vault_placed(bool vault_success,
@@ -1165,6 +1153,7 @@ void dgn_reset_level(bool enable_random_maps)
 {
     env.level_uniq_maps.clear();
     env.level_uniq_map_tags.clear();
+    env.level_vault_list.clear();
 
     you.unique_creatures = temp_unique_creatures;
     you.unique_items = temp_unique_items;
@@ -1186,12 +1175,10 @@ void dgn_reset_level(bool enable_random_maps)
     env.properties.clear();
     env.heightmap.reset(NULL);
 
-    // Set up containers for storing some level generation info.
-    env.properties[LEVEL_VAULTS_KEY].new_table();
-    env.properties[LEVEL_EXTRAS_KEY].new_table();
     env.absdepth0 = absdungeon_depth(you.where_are_you, you.depth);
 
-    dprf("absdepth0 = %d", env.absdepth0);
+    if (!crawl_state.test)
+        dprf("absdepth0 = %d", env.absdepth0);
 
     // Blank level with DNGN_ROCK_WALL.
     env.grid.init(DNGN_ROCK_WALL);
@@ -3991,6 +3978,8 @@ static int _dgn_item_corpse(const item_spec &ispec, const coord_def where)
     }
 
     item_def &corpse(mitm[corpse_index]);
+    corpse.props["cap_sacrifice"].get_bool() = true;
+
     if (ispec.props.exists(CORPSE_NEVER_DECAYS))
     {
         corpse.props[CORPSE_NEVER_DECAYS].get_bool() =
@@ -4732,14 +4721,14 @@ static void _vault_grid_glyph(vault_placement &place, const coord_def& where,
         else if (vgrid == '|')
         {
             which_class = random_choose_weighted(
-                            4, OBJ_WEAPONS,
-                            2, OBJ_ARMOUR,
-                            2, OBJ_JEWELLERY,
-                            2, OBJ_BOOKS,
-                            1, OBJ_STAVES,
-                            1, OBJ_RODS,
-                            2, OBJ_MISCELLANY,
-                            0);
+                            20, OBJ_WEAPONS,
+                            10, OBJ_ARMOUR,
+                            10, OBJ_JEWELLERY,
+                            10, OBJ_BOOKS,
+                             9, OBJ_STAVES,
+                             1, OBJ_RODS,
+                            10, OBJ_MISCELLANY,
+                             0);
             which_depth = MAKE_GOOD_ITEM;
         }
         else if (vgrid == '*')
@@ -6365,22 +6354,18 @@ void vault_placement::connect(bool spotty) const
     }
 }
 
-static void _remember_vault_placement(std::string key, const vault_placement &place)
+static void _remember_vault_placement(const vault_placement &place, bool extra)
 {
-    // First we store some info on the vault into the level's properties
-    // hash table, so that if there's a crash the crash report can list
-    // them all.
-    CrawlHashTable &table = env.properties[key].get_table();
-
-    std::string name = make_stringf("%s [%d]", place.map.name.c_str(),
-                                    table.size() + 1);
-
-    std::string place_str
-        = make_stringf("(%d,%d) (%d,%d) orient: %d lev: %d",
-                       place.pos.x, place.pos.y, place.size.x, place.size.y,
-                       place.orient, place.level_number);
-
-    table[name] = place_str;
+    // First we store some info on the vault, so that if there's a crash the
+    // crash report can list them all.
+    env.level_vault_list.push_back(
+        make_stringf("%s%s: (%d,%d) (%d,%d) orient: %d lev: %d",
+                     place.map.name.c_str(),
+                     extra ? " (extra)" : "",
+                     place.pos.x, place.pos.y,
+                     place.size.x, place.size.y,
+                     place.orient,
+                     place.level_number));
 
     // Second we setup some info to be saved in the player's properties
     // hash table, so the information can be included in the character
@@ -6389,10 +6374,13 @@ static void _remember_vault_placement(std::string key, const vault_placement &pl
         && !place.map.has_tag_suffix("dummy")
         && !place.map.has_tag("no_dump"))
     {
-        const std::string type = place.map.has_tag("extra")
-            ? "extra" : "normal";
-
-        _you_vault_list[type].get_vector().push_back(place.map.name);
+        // When generating a level, vaults may be vetoed together with the
+        // whole level after being placed, thus we need to save them in a
+        // temp list.
+        if (Generating_Level)
+            _you_vault_list.push_back(place.map.name);
+        else
+            you.vault_list[level_id::current()].push_back(place.map.name);
     }
 }
 
@@ -6402,40 +6390,20 @@ std::string dump_vault_maps()
 
     std::vector<level_id> levels = all_dungeon_ids();
 
-    CrawlHashTable &vaults = you.props[YOU_DUNGEON_VAULTS_KEY].get_table();
     for (unsigned int i = 0; i < levels.size(); i++)
     {
         level_id    &lid = levels[i];
-        std::string  lev = lid.describe();
 
-        if (!vaults.exists(lev))
+        if (you.vault_list.find(lid) == you.vault_list.end())
             continue;
 
         out += lid.describe() + ":\n";
 
-        CrawlHashTable &lists = vaults[lev].get_table();
+        std::vector<std::string> &maps(you.vault_list[lid]);
 
-        const char *types[] = {"normal", "extra"};
-        for (int j = 0; j < 2; j++)
-        {
-            if (!lists.exists(types[j]))
-                continue;
-
-            out += "  ";
-            out += types[j];
-            out += ": ";
-
-            CrawlVector &vec = lists[types[j]].get_vector();
-
-            for (unsigned int k = 0, size = vec.size(); k < size; k++)
-            {
-                out += vec[k].get_string();
-                if (k < (size - 1))
-                    out += ", ";
-            }
-
-            out += "\n";
-        }
+        std::string vaults = comma_separated_line(maps.begin(), maps.end(), ", ");
+        while (!vaults.empty())
+            out += "  " + wordwrap_line(vaults, 78) + "\n";
         out += "\n";
     }
     return out;

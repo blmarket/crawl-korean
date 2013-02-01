@@ -574,6 +574,9 @@ public:
     // Returns true if this item should not normally be enchanted.
     bool is_mundane() const;
 
+    // Returns true if this item causes autoexplore to visit it.
+    bool is_greedy_sacrificeable() const;
+
 private:
     std::string name_aux(description_level_type desc,
                          bool terse, bool ident, bool with_inscription,
@@ -699,6 +702,11 @@ struct message_filter
 
     message_filter(const std::string &s) : channel(-1), pattern(s, true) { }
 
+    bool operator== (const message_filter &mf) const
+    {
+        return channel == mf.channel && pattern == mf.pattern;
+    }
+
     bool is_filtered(int ch, const std::string &s) const
     {
         bool channel_match = ch == channel || channel == -1;
@@ -713,6 +721,10 @@ struct sound_mapping
 {
     text_pattern pattern;
     std::string  soundfile;
+    bool operator== (const sound_mapping &o) const
+    {
+        return pattern == o.pattern && soundfile == o.soundfile;
+    }
 };
 
 struct colour_mapping
@@ -720,12 +732,20 @@ struct colour_mapping
     std::string tag;
     text_pattern pattern;
     int colour;
+    bool operator== (const colour_mapping &o) const
+    {
+        return tag == o.tag && pattern == o.pattern && colour == o.colour;
+    }
 };
 
 struct message_colour_mapping
 {
     message_filter message;
     msg_colour_type colour;
+    bool operator== (const message_colour_mapping &o) const
+    {
+        return message == o.message && colour == o.colour;
+    }
 };
 
 class InvEntry;

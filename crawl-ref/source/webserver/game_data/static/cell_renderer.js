@@ -29,6 +29,8 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
         if (col.attr == enums.CHATTR.HILITE)
         {
             col.bg = col.param;
+            if (col.bg == col.fg)
+                col.fg = 0;
         }
         if (col.attr == enums.CHATTR.REVERSE)
         {
@@ -581,11 +583,11 @@ function ($, view_data, main, player, icons, dngn, enums, map_knowledge, tileinf
 
             var status_shift = 0;
             if (fg.MIMIC_INEPT)
-                this.draw_icon(icons.MIMIC_INEPT, x, y);
+                this.draw_icon(icons.INEPT_MIMIC, x, y);
             else if (fg.MIMIC)
                 this.draw_icon(icons.MIMIC, x, y);
             else if (fg.MIMIC_RAVEN)
-                this.draw_icon(icons.MIMIC_RAVENOUS, x, y);
+                this.draw_icon(icons.RAVENOUS_MIMIC, x, y);
 
             if (fg.BERSERK)
             {
