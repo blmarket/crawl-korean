@@ -258,11 +258,11 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "",
       "당신의 공격 속도를 일시적으로 크게 향상시킬 수 있다." },
     // Makhleb
-    { "gain health from killing",
-      "harness Makhleb's destructive might",
-      "summon a lesser servant of Makhleb",
-      "hurl Makhleb's greater destruction",
-      "summon a greater servant of Makhleb" },
+    { "살육을 통해 생명력을 얻을 수 있다",
+      "'마크레브'의 파괴의 힘을 다룰 수 있다.",
+      "'마크레브'의 하급 종복을 소환할 수 있다",
+      "'마크레브'의 강력한 파괴의 힘을 다룰 수 있다.",
+      "'마크레브'의 고위 종복를 소환할 수 있다." },
     // Sif Muna
     { "주변에서 마력을 수집할 수 있다.",
       "새로운 주문을 기억하기 위해 기억을 말소시킬 수 있다",
@@ -276,15 +276,15 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "'트로그'의 전사들을 소환할 수 있다.",
       "" },
     // Nemelex
-    { "draw cards from decks in your inventory",
-      "peek at two random cards from a deck",
-      "choose one out of three cards",
-      "deal four cards at a time",
-      "order the top five cards of a deck, losing the rest" },
+    { "카드를 장비하지 않고도 곧바로 사용할 수 있다.",
+      "카드 덱 중 두 장의 카드를 미리 확인할 수 있다.",
+      "석 장의 카드 중 한 장을 선택하여 사용할 수 있다.",
+      "카드 덱 중 상위 네 장의 카드를 한 번에 사용할 수 있다.",
+      "카드 덱 중 상위 다섯 장의 카드의 순서를 바꿀 수 있다. 덱의 나머지 카드들은 사라진다." },
     // Elyvilon
-    { "미약한 치유를 '엘라이빌론'에게 요청할 수 있다.",
+    { "미약한 치유를 '엘리빌론'에게 요청할 수 있다.",
       "스스로를 정화시킬 수 있다.",
-      "강력한 치유를 '엘라이빌론'에게 요청할 수 있다.",
+      "강력한 치유를 '엘리빌론'에게 요청할 수 있다.",
       "",
       "'엘라이빌론'의 성스러운 활력을 불러낼 수 있다." },
     // Lugonu
@@ -314,11 +314,11 @@ const char* god_gain_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "날씨를 변화시킬 수 있다."
     },
     // Cheibriados
-    { "bend time to slow others",
+    { "주변의 시간의 흐름을 묶어, 느리게 만들 수 있다..",
       "",
-      "warp the flow of time around you",
-      "inflict damage on those overly hasty",
-      "step out of the time flow"
+      "주변의 시공간을 잠시 비틀 수 있다.",
+      "당신보다 빠른 존재들에게 느림의 징벌을 가할 수 있다",
+      "시간의 흐름으로 부터, 잠시 빠져나올 수 있다"
     },
     // Ashenzari
     { "",
@@ -375,11 +375,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "",
       "공격 속도를 일시적으로 크게 향상시킬 수 없다." },
     // Makhleb
-    { "gain health from killing",
-      "harness Makhleb's destructive might",
-      "summon a lesser servant of Makhleb",
-      "hurl Makhleb's greater destruction",
-      "summon a greater servant of Makhleb" },
+    { "'마크레브'의 이름으로 한 살생으로 힘을 얻을 수 없다.",
+      "'마크레브'의 파괴의 힘을 다룰 수 없다.",
+      "'마크레브'의 하급 종복을 소환할 수 없다.",
+      "'마크레브'의 강력한 파괴의 힘을 다룰 수 없다.",
+      "'마크레브'의 고위 종복을 소환할 수 없다." },
     // Sif Muna
     { "주변에서 마력을 수집할 수 없다.",
       "주문을 망각할 수 없다",
@@ -393,11 +393,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "'트로그'의 전사들을 소환할 수 없다.",
       "" },
     // Nemelex
-    { "draw cards from decks in your inventory",
-      "peek at random cards",
-      "choose one out of three cards",
-      "deal four cards at a time",
-      "stack decks" },
+    { "장비하지 않은 카드를 곧바로 사용할 수 없다.",
+      "두 장의 카드를 미리 확인할 수 없다.",
+      "석 장의 카드를 선택하여 사용할 수 없다.",
+      "넉 장의 카드를 동시에 사용할 수 없다.",
+      "다섯 장의 카드를 취할 수 없다." },
     // Elyvilon
     { "미약한 치유를 시전할 수 없다.",
       "스스로를 정화시킬 수 없다.",
@@ -431,11 +431,11 @@ const char* god_lose_power_messages[NUM_GODS][MAX_GOD_ABILITIES] =
       "날씨를 변화시킬 수 없다."
     },
     // Cheibriados
-    { "bend time to slow others",
+    { "주변의 시간의 흐름에 영향을 줄 수 없다.",
       "",
-      "warp the flow of time around you",
-      "inflict damage on those overly hasty",
-      "step out of the time flow"
+      "주변의 시공간을 비틀 수 없다.",
+      "당신보다 빠른 존재들을 벌할 수 없다.",
+      "시간의 흐름으로 부터 빠져나오지 못한다."
     },
     // Ashenzari
     { "",
@@ -533,71 +533,71 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_SIF_MUNA:
-        likes.push_back("you train your various spell casting skills");
+        likes.push_back("다양한 주문들을 시전하고, 수련하는 것");
         break;
 
     case GOD_FEDHAS:
-        snprintf(info, INFO_SIZE, "you promote the decay of nearby "
-                                  "corpses%s",
-                 verbose ? " by <w>p</w>raying" : "");
+        snprintf(info, INFO_SIZE, "%s근처에 있는 시체들의 자연 부패를 "
+                                  "촉진하는 것",
+                 verbose ? " <w>기도(p)</w>를 통해, " : "");
         likes.push_back(info);
         break;
 
     case GOD_TROG:
-        snprintf(info, INFO_SIZE, "you destroy spellbooks (especially ones "
-                                  "you've never read)%s",
-                 verbose ? " via the <w>a</w> command" : "");
+        snprintf(info, INFO_SIZE, "%s마법서를 불태우는 것 (특히 확인하지 않은 "
+                                  "마법서)",
+                 verbose ? "<w>마법서 불태우기 권능(a)</w>을 이용하여 " : "");
 
         likes.push_back(info);
         break;
 
     case GOD_NEMELEX_XOBEH:
-        snprintf(info, INFO_SIZE, "you draw unmarked cards and use up decks%s",
-                 verbose ? " (by <w>w</w>ielding and e<w>v</w>oking them)"
+        snprintf(info, INFO_SIZE, "%s표시되지 않은 카드를 사용하고, 덱을 끝까지 모두 사용하는 것",
+                 verbose ? " (<w>장비(w)</w>와 <w>발동(e)</w>을 통해 "
                          : "");
 
         likes.push_back(info);
         break;
 
     case GOD_ELYVILON:
-        snprintf(info, INFO_SIZE, "you destroy weapons (especially unholy and "
-                                  "evil ones)%s",
-                 verbose ? " via the <w>p</w> command (inscribe items with "
-                           "<w>!p</w> to prevent their accidental destruction)"
+        snprintf(info, INFO_SIZE, "%s무기를 신에게 바쳐 회수하는 것 (특히 불경스럽거나 "
+                                  "사악한 무기)",
+                 verbose ? "<w>기도(p)</w>를 통해 ("
+                           "<w>!p</w>를 통해 아이템에 문장을 새겨서, 실수로 중요한 아이템을 바치는 것을 방지할 수 있다)"
                          : "");
 
         likes.push_back(info);
 
-        likes.push_back("you calm hostilities by healing your foes");
+        likes.push_back("적들을 치유함으로 인해, 적들의 적대감을 가라앉히는 것");
         break;
 
     case GOD_JIYVA:
-        snprintf(info, INFO_SIZE, "you sacrifice items%s",
-                 verbose ? " by allowing slimes to consume them" : "");
+        snprintf(info, INFO_SIZE, "%s아이템을 바치는 것",
+                 verbose ? "슬라임들이 자연스럽게 아이템들을 먹어치우도록 하여" : "");
         likes.push_back(info);
         break;
 
     case GOD_CHEIBRIADOS:
-        snprintf(info, INFO_SIZE, "you kill fast things%s",
-                 verbose ? ", relative to your speed"
+        snprintf(info, INFO_SIZE, "%s빠른 존재들을 제거하는 것",
+                 verbose ? "당신보다 "
                          : "");
         likes.push_back(info);
         break;
 
     case GOD_ASHENZARI:
-        snprintf(info, INFO_SIZE, "you explore the world (preferably while "
-                                  "bound by curses)");
+        snprintf(info, INFO_SIZE, "여러 지역들을 탐사하는 것 (가급적이면, 저주받은 아이템으로 "
+                                  "스스로를 구속한 상태로)");
         likes.push_back(info);
         break;
 
     case GOD_SHINING_ONE:
-        snprintf(info, INFO_SIZE, "you meet creatures to determine whether "
-                                  "they need to be eradicated");
+        snprintf(info, INFO_SIZE, "근절해야 할 필요가 있다고 판단되는 "
+                                  "존재들을 만나는 것");
         likes.push_back(info);
         break;
 
     case GOD_LUGONU:
-        likes.push_back("you banish creatures to the Abyss");
+        likes.push_back("무엇이든 어비스로 추방하는 것");
         break;
 
     default:
@@ -607,27 +607,27 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_ZIN:
-        snprintf(info, INFO_SIZE, "you donate money%s",
-                 verbose ? " (by <w>p</w>raying at an altar)" : "");
+        snprintf(info, INFO_SIZE, "%s헌금을 바치는 것",
+                 verbose ? "제단 위에서 <w>기도(p)</w>를 드림으로써 " : "");
 
         likes.push_back(info);
         break;
 
     case GOD_BEOGH:
-        snprintf(info, INFO_SIZE, "you bless dead orcs%s",
-                 verbose ? " (by standing over their remains and <w>p</w>raying)" : "");
+        snprintf(info, INFO_SIZE, "%s죽은 오크에게 축복을 내리는 것",
+                 verbose ? "오크의 시체 위에서 <w>기도(p)</w>를 통해 " : "");
 
         likes.push_back(info);
         break;
 
     case GOD_NEMELEX_XOBEH:
-        snprintf(info, INFO_SIZE, "you sacrifice items%s",
-                 verbose ? " (by standing over them and <w>p</w>raying)" : "");
+        snprintf(info, INFO_SIZE, "%s아이템을 바치는 것",
+                 verbose ? "아이템 위에서 <w>기도(p)</w>를 함으로써 " : "");
         likes.push_back(info);
         break;
 
     case GOD_ASHENZARI:
-        snprintf(info, INFO_SIZE, "you obtain runes of Zot");
+        snprintf(info, INFO_SIZE, "'조트의 오브'를 획득하는 것");
         likes.push_back(info);
         break;
 
@@ -637,8 +637,8 @@ std::string get_god_likes(god_type which_god, bool verbose)
 
     if (god_likes_fresh_corpses(which_god))
     {
-        snprintf(info, INFO_SIZE, "you sacrifice fresh corpses%s",
-                 verbose ? " (by standing over them and <w>p</w>raying)" : "");
+        snprintf(info, INFO_SIZE, "%s신선한 시체를 제물로 바치는 것",
+                 verbose ? "시체 위해서 <w>기도(p)</w>를 함으로써 " : "");
 
         likes.push_back(info);
     }
@@ -646,24 +646,24 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_VEHUMET: case GOD_MAKHLEB: case GOD_LUGONU:
-        likes.push_back("you or your allies kill living beings");
+        likes.push_back("당신 혹은 당신의 동료가 살아있는 생명체를 처치하는 것");
         break;
 
     case GOD_TROG:
-        likes.push_back("you or your god-given allies kill living beings");
+        likes.push_back("당신 혹은 트로그가 내려준 전우들이 살아있는 생명체를 처치하는 것");
         break;
 
     case GOD_YREDELEMNUL:
     case GOD_KIKUBAAQUDGHA:
-        likes.push_back("you or your undead slaves kill living beings");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 살아있는 생명체를 처치하는 것");
         break;
 
     case GOD_BEOGH:
-        likes.push_back("you or your allied orcs kill living beings");
+        likes.push_back("당신 혹은 당신의 오크 동료가 살아있는 생명체를 처치하는 것");
         break;
 
     case GOD_OKAWARU:
-        likes.push_back("you kill living beings");
+        likes.push_back("살아있는 생명체를 처치하는 것");
         break;
 
     default:
@@ -673,11 +673,11 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_ZIN:
-        likes.push_back("you or your allies kill unclean or chaotic beings");
+        likes.push_back("당신 혹은 당신의 동료가 돌연변이 혹은 혼돈의 존재를 제거하는 것");
         break;
 
     case GOD_SHINING_ONE:
-        likes.push_back("you or your allies kill living unholy or evil beings");
+        likes.push_back("당신 혹은 당신의 동료가 악마 혹은 언데드를 제거하는 것");
         break;
 
     default:
@@ -688,15 +688,15 @@ std::string get_god_likes(god_type which_god, bool verbose)
     {
     case GOD_SHINING_ONE: case GOD_VEHUMET: case GOD_MAKHLEB:
     case GOD_LUGONU:
-        likes.push_back("you or your allies kill the undead");
+        likes.push_back("당신 혹은 당신의 동료가 언데드를 제거하는 것");
         break;
 
     case GOD_BEOGH:
-        likes.push_back("you or your allied orcs kill the undead");
+        likes.push_back("당신 혹은 당신의 오크 동료가 언데드를 제거하는 것");
         break;
 
     case GOD_OKAWARU:
-        likes.push_back("you kill the undead");
+        likes.push_back("언데드를 제거하는 것");
         break;
 
     default:
@@ -706,23 +706,23 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_SHINING_ONE: case GOD_MAKHLEB: case GOD_LUGONU:
-        likes.push_back("you or your allies kill demons");
+        likes.push_back("당신 혹은 당신의 동료가 악마를 처치하는 것");
         break;
 
     case GOD_TROG:
-        likes.push_back("you or your god-given allies kill demons");
+        likes.push_back("당신 혹은 트로그가 내려준 전우들이 악마를 처치하는 것");
         break;
 
     case GOD_KIKUBAAQUDGHA:
-        likes.push_back("you or your undead slaves kill demons");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 악마를 처치하는 것");
         break;
 
     case GOD_BEOGH:
-        likes.push_back("you or your allied orcs kill demons");
+        likes.push_back("당신 혹은 당신의 오크 동료가 악마를 처치하는 것");
         break;
 
     case GOD_OKAWARU:
-        likes.push_back("you kill demons");
+        likes.push_back("악마를 처치하는 것");
         break;
 
     default:
@@ -732,7 +732,7 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_YREDELEMNUL:
-        likes.push_back("you or your undead slaves kill artificial beings");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 인공적인 생명체를 제거하는 것");
         break;
 
     default:
@@ -742,27 +742,27 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_MAKHLEB: case GOD_LUGONU:
-        likes.push_back("you or your allies kill holy beings");
+        likes.push_back("당신 혹은 당신의 동료가 신성한 존재를 처치하는 것");
         break;
 
     case GOD_TROG:
-        likes.push_back("you or your god-given allies kill holy beings");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 신성한 존재를 처치하는 것");
         break;
 
     case GOD_YREDELEMNUL:
-        likes.push_back("your undead slaves kill holy beings");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 신성한 존재를 처치하는 것");
         break;
 
     case GOD_KIKUBAAQUDGHA:
-        likes.push_back("you or your undead slaves kill holy beings");
+        likes.push_back("당신 혹은 당신의 언데드 수하가 신성한 존재를 처치하는 것");
         break;
 
     case GOD_BEOGH:
-        likes.push_back("you or your allied orcs kill holy beings");
+        likes.push_back("당신 혹은 당신의 오크 동료가 신성한 존재를 처치하는 것");
         break;
 
     case GOD_OKAWARU:
-        likes.push_back("you kill holy beings");
+        likes.push_back("신성한 존재를 처치하는 것");
         break;
 
     default:
@@ -773,15 +773,15 @@ std::string get_god_likes(god_type which_god, bool verbose)
     switch (which_god)
     {
     case GOD_YREDELEMNUL:
-        really_likes.push_back("you kill holy beings");
+        really_likes.push_back("신성한 존재를 처치하는 것");
         break;
 
     case GOD_BEOGH:
-        really_likes.push_back("you kill the priests of other religions");
+        really_likes.push_back("다른 신을 믿는 오크 사제를 처치하는 것");
         break;
 
     case GOD_TROG:
-        really_likes.push_back("you kill wizards and other users of magic");
+        really_likes.push_back("마법을 사용하는 존재를 처치하는 것");
         break;
 
     default:
@@ -792,19 +792,19 @@ std::string get_god_likes(god_type which_god, bool verbose)
         text += " doesn't like anything? This is a bug; please report it.";
     else
     {
-        text += " likes it when ";
+        text += "은(는) ";
         text += comma_separated_line(likes.begin(), likes.end());
-        text += ".";
+        text += "와(과) 같은 행동에 기뻐할 것이다.";
 
         if (!really_likes.empty())
         {
-            text += " ";
+            text += " 또한, ";
             text += uppercase_first(god_name(which_god));
 
-            text += " especially likes it when ";
+            text += "은(는) ";
             text += comma_separated_line(really_likes.begin(),
                                          really_likes.end());
-            text += ".";
+            text += "와(과) 같은 행동에는 특히 더욱 기뻐할 것이다.";
         }
     }
 
@@ -822,51 +822,51 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     std::vector<std::string> really_dislikes; // Penance
 
     if (god_hates_cannibalism(which_god))
-        really_dislikes.push_back("you perform cannibalism");
+        really_dislikes.push_back("식인 행위");
 
     if (is_good_god(which_god))
     {
-        really_dislikes.push_back("you desecrate holy remains");
+        really_dislikes.push_back("신성한 존재의 시체를 훼손하는 행위");
 
         if (which_god == GOD_SHINING_ONE)
-            really_dislikes.push_back("you drink blood");
+            really_dislikes.push_back("피를 마시는 행위");
         else
-            dislikes.push_back("you drink blood");
+            dislikes.push_back("피를 마시는 행위");
 
-        really_dislikes.push_back("you use necromancy");
-        really_dislikes.push_back("you use unholy magic or items");
-        really_dislikes.push_back("you attack non-hostile holy beings");
-        really_dislikes.push_back("you or your allies kill non-hostile holy beings");
+        really_dislikes.push_back("강령술을 사용하는 행위");
+        really_dislikes.push_back("부정한 주문이나 아이템을 사용하는 행위");
+        really_dislikes.push_back("적대적이지 않은 성스러운 존재를 공격하는 행위");
+        really_dislikes.push_back("당신 혹은 당신의 동료가 적대적이지 않은 신성한 존재를 살해하는 행위");
 
         if (which_god == GOD_ZIN)
-            dislikes.push_back("you attack neutral beings");
+            dislikes.push_back("중립 몬스터를 공격하는 행위");
         else
-            really_dislikes.push_back("you attack neutral beings");
+            really_dislikes.push_back("중립 몬스터를 공격하는 행위");
     }
 
     switch (which_god)
     {
     case GOD_ZIN:     case GOD_SHINING_ONE:  case GOD_ELYVILON:
     case GOD_OKAWARU:
-        really_dislikes.push_back("you attack allies");
+        really_dislikes.push_back("동료를 공격하는 행위");
         break;
 
     case GOD_BEOGH:
-        really_dislikes.push_back("you attack allied orcs");
+        really_dislikes.push_back("동료 오크를 공격하는 행위");
         break;
 
     case GOD_JIYVA:
-        really_dislikes.push_back("you attack fellow slimes");
+        really_dislikes.push_back("슬라임/젤리 친구들을 공격하는 행위");
         break;
 
     case GOD_FEDHAS:
-        dislikes.push_back("you or your allies destroy plants");
-        dislikes.push_back("allied flora die");
-        really_dislikes.push_back("you use necromancy on corpses, chunks or skeletons");
+        dislikes.push_back("당신 혹은 당신의 동료가 식물을 손상시키는 행위");
+        dislikes.push_back("동료 식물을 죽게 내버려두는 행위");
+        really_dislikes.push_back("시체나 시체로부터의 고기, 뼈 등에 강령술을 사용하는 행위");
         break;
 
     case GOD_SIF_MUNA:
-        really_dislikes.push_back("you destroy spellbooks");
+        really_dislikes.push_back("책을 파괴하는 행위");
         break;
 
     default:
@@ -876,11 +876,11 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     switch (which_god)
     {
     case GOD_ELYVILON: case GOD_OKAWARU:
-        dislikes.push_back("you allow allies to die");
+        dislikes.push_back("당신의 동료를 죽게 내버려두는 행위");
         break;
 
     case GOD_ZIN:
-        dislikes.push_back("you allow sentient allies to die");
+        dislikes.push_back("지성이 있는 동료를 죽게 내버려두는 행위");
         break;
 
     default:
@@ -890,47 +890,47 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     switch (which_god)
     {
     case GOD_ZIN:
-        dislikes.push_back("you deliberately mutate yourself");
-        really_dislikes.push_back("you polymorph monsters");
-        really_dislikes.push_back("you use unclean or chaotic magic or items");
-        really_dislikes.push_back("you eat the flesh of sentient beings");
-        dislikes.push_back("you or your allies attack monsters in a "
-                           "sanctuary");
+        dislikes.push_back("자기 자신을 고의적으로 변이시키는 행위");
+        really_dislikes.push_back("다른 존재를 변이시키는 행위");
+        really_dislikes.push_back("불경하거나 혼돈스러운 주문이나 아이템을 사용하는 행위");
+        really_dislikes.push_back("지성이 있는 존재의 고기를 먹는 행위");
+        dislikes.push_back("성지 위에서, 당신 혹은 당신의 동료가"
+                           "몬스터를 공격하는 행위");
         break;
 
     case GOD_SHINING_ONE:
-        really_dislikes.push_back("you poison monsters");
-        really_dislikes.push_back("you attack intelligent monsters in an "
-                                  "unchivalric manner");
+        really_dislikes.push_back("몬스터를 중독시키는 행위");
+        really_dislikes.push_back("지성이 있는 몬스터를 상대로, "
+                                  "정정당당하지 못한 전투를 하는 행위");
         break;
 
     case GOD_ELYVILON:
-        really_dislikes.push_back("you kill living things while asking for "
-                                  "your life to be spared");
+        really_dislikes.push_back("신의 가호를 받는 동안, 살아있는 존재를 "
+                                  "살해하는 행위");
         break;
 
     case GOD_YREDELEMNUL:
-        really_dislikes.push_back("you use holy magic or items");
+        really_dislikes.push_back("신성한 주문 혹은 아이템을 사용하는 행위");
         break;
 
     case GOD_TROG:
-        really_dislikes.push_back("you memorise spells");
-        really_dislikes.push_back("you attempt to cast spells");
-        really_dislikes.push_back("you train magic skills");
+        really_dislikes.push_back("주문을 기억하는 행위");
+        really_dislikes.push_back("주문을 외워 마법을 사용하는 행위");
+        really_dislikes.push_back("마법 관련 기술들을 수련하는 행위");
         break;
 
     case GOD_BEOGH:
-        really_dislikes.push_back("you desecrate orcish remains");
-        really_dislikes.push_back("you destroy orcish idols");
+        really_dislikes.push_back("오크의 시체를 훼손하는 행위");
+        really_dislikes.push_back("오크의 석상을 부수는 행위");
         break;
 
     case GOD_JIYVA:
-        really_dislikes.push_back("you kill slimes");
+        really_dislikes.push_back("슬라임을 죽이는 행위");
         break;
 
     case GOD_CHEIBRIADOS:
-        really_dislikes.push_back("you hasten yourself or others");
-        really_dislikes.push_back("use unnaturally quick items");
+        really_dislikes.push_back("자기자신을 고의적으로 가속하는 행위");
+        really_dislikes.push_back("비정상적으로 빠른 아이템을 사용하는 행위");
         break;
 
     default:
@@ -943,10 +943,10 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     if (!dislikes.empty())
     {
         text += uppercase_first(god_name(which_god));
-        text += " dislikes it when ";
+        text += "은(는) ";
         text += comma_separated_line(dislikes.begin(), dislikes.end(),
-                                     " or ", ", ");
-        text += ".";
+                                     " 또는 ", ", ");
+        text += "을(를) 싫어한다.";
 
         if (!really_dislikes.empty())
             text += " ";
@@ -955,11 +955,11 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
     if (!really_dislikes.empty())
     {
         text += uppercase_first(god_name(which_god));
-        text += " strongly dislikes it when ";
+        text += "은(는) ";
                 text += comma_separated_line(really_dislikes.begin(),
                                              really_dislikes.end(),
-                                             " or ", ", ");
-        text += ".";
+                                             " 또는 ", ", ");
+        text += "을(를) 매우 싫어한다.";
     }
 
     return text;
@@ -983,8 +983,8 @@ void dec_penance(god_type god, int val)
         const bool dead_jiyva = (god == GOD_JIYVA && jiyva_is_dead());
 
         simple_god_message(
-            make_stringf(" seems mollified%s.",
-                         dead_jiyva ? ", and vanishes" : "").c_str(),
+            make_stringf("은(는) 분노를 누그러뜨린 것 같다.%s",
+                         dead_jiyva ? " (그리고 사라졌다)" : "").c_str(),
             god);
 
         if (dead_jiyva)
@@ -1008,18 +1008,18 @@ void dec_penance(god_type god, int val)
             else if (god == GOD_SHINING_ONE
                 && you.piety >= piety_breakpoint(0))
             {
-                mpr("Your divine halo returns!");
+                mpr("신성한 후광이 다시 돌아왔다!");
                 invalidate_agrid(true);
             }
             else if (god == GOD_ASHENZARI
                 && you.piety >= piety_breakpoint(2))
             {
-                mpr("Your vision regains its divine sight.");
+                mpr("당신의 감지력이 다시 돌아왔다.");
                 autotoggle_autopickup(false);
             }
             else if (god == GOD_CHEIBRIADOS)
             {
-                simple_god_message(" restores the support of your attributes.");
+                simple_god_message("은(는) 당신의 능력치를 다시금 지원해주기 시작했다.");
                 redraw_screen();
                 notify_stat_change("mollifying Cheibriados");
             }
@@ -1036,7 +1036,7 @@ void dec_penance(god_type god, int val)
             return;
         mark_milestone("god.mollify",
                        "partially mollified " + god_name(god) + ".");
-        simple_god_message(" seems mollified... mostly.", god);
+        simple_god_message("은(는) 분노를 누그러뜨린 것 같다... 아마도.", god);
         take_note(Note(NOTE_MOLLIFY_GOD, god));
     }
     else
@@ -1502,11 +1502,8 @@ static bool _blessing_wpn(monster* mon)
     const int weapon = mon->inv[MSLOT_WEAPON];
     const int alt_weapon = mon->inv[MSLOT_ALT_WEAPON];
 
-    if (weapon == NON_ITEM && alt_weapon == NON_ITEM
-        || mon->type == MONS_DANCING_WEAPON)
-    {
+    if (weapon == NON_ITEM && alt_weapon == NON_ITEM)
         return false;
-    }
 
     int slot;
 
@@ -1602,11 +1599,8 @@ static bool _tso_blessing_holy_wpn(monster* mon)
     const int weapon = mon->inv[MSLOT_WEAPON];
     const int alt_weapon = mon->inv[MSLOT_ALT_WEAPON];
 
-    if (weapon == NON_ITEM && alt_weapon == NON_ITEM
-        || mon->type == MONS_DANCING_WEAPON)
-    {
+    if (weapon == NON_ITEM && alt_weapon == NON_ITEM)
         return false;
-    }
 
     int slot;
 
@@ -1871,11 +1865,11 @@ bool bless_follower(monster* follower,
                     // possible.
                     if (_tso_blessing_holy_wpn(follower))
                     {
-                        result = "holy attack power";
+                        result = "성스러운 공격";
                         goto blessing_done;
                     }
                     else if (force)
-                        mpr("Couldn't bless monster's weapon.");
+                        mpr("몬스터의 무기엔 축복을 걸 수 없다.");
                 }
                 else
                 {
@@ -1883,11 +1877,11 @@ bool bless_follower(monster* follower,
                     // possible.
                     if (_tso_blessing_holy_arm(follower))
                     {
-                        result = "life defence";
+                        result = "생명력 보호";
                         goto blessing_done;
                     }
                     else if (force)
-                        mpr("Couldn't bless monster's armour.");
+                        mpr("몬스터의 갑옷엔 축복을 걸 수 없다.");
                 }
                 break;
 
@@ -1895,11 +1889,11 @@ bool bless_follower(monster* follower,
                 // Turn a monster into a priestly monster, if possible.
                 if (_beogh_blessing_priesthood(follower))
                 {
-                    result = "priesthood";
+                    result = "사제직";
                     goto blessing_done;
                 }
                 else if (force)
-                    mpr("Couldn't promote monster to priesthood.");
+                    mpr("몬스터의 사제직을 촉진할 수 없다.");
                 break;
 
             default:
@@ -1916,23 +1910,23 @@ bool bless_follower(monster* follower,
         {
             if (_blessing_wpn(follower))
             {
-                result = "extra attack power";
+                result = "추가 공격력";
                 give_monster_proper_name(follower);
                 goto blessing_done;
             }
             else if (force)
-                mpr("Couldn't enchant monster's weapon.");
+                mpr("몬스터의 무기를 강화할 수 없다.");
         }
         else
         {
             if (_blessing_AC(follower))
             {
-                result = "extra defence";
+                result = "추가 방어력";
                 give_monster_proper_name(follower);
                 goto blessing_done;
             }
             else if (force)
-                mpr("Couldn't enchant monster's armour.");
+                mpr("몬스터의 방어구를 강화할 수 없다.");
         }
     }
 
@@ -1942,8 +1936,9 @@ bool bless_follower(monster* follower,
     {
         case GOD_SHINING_ONE:
         {
-            // Extend a monster's stay if it's abjurable, or extend charm
-            // duration. If neither is possible, deliberately fall through.
+            // Extend a monster's stay if it's abjurable, optionally
+            // making it friendly if it's charmed.  If neither is
+            // possible, deliberately fall through.
             int more_time = _tso_blessing_extend_stay(follower);
             bool friendliness = false;
 
@@ -1954,22 +1949,22 @@ bool bless_follower(monster* follower,
 
             if (friendliness)
             {
-                result += "friendliness";
+                result += "더 높은 충성심";
                 if (more_time)
-                    result += " and ";
+                    result += " 그리고 ";
             }
 
             if (more_time)
             {
-                result += (more_time == 2) ? "permanent time in this world"
-                                           : "more time in this world";
+                result += (more_time == 2) ? "이 세계에 영원히 머무는 것"
+                                           : "이 세계에 더 오래 머무는 것";
             }
 
             if (more_time || friendliness)
                 break;
 
             if (force)
-                mpr("Couldn't increase monster's friendliness or time.");
+                mpr("몬스터의 충성심 혹은 소환 시간을 연장하지 못했다.");
         }
 
         // Deliberate fallthrough for the healing effects.
@@ -1981,11 +1976,11 @@ bool bless_follower(monster* follower,
             {
                 if (_blessing_balms(follower))
                 {
-                    result = "divine balms";
+                    result = "성스러운 연고";
                     goto blessing_done;
                 }
                 else if (force)
-                    mpr("Couldn't apply balms.");
+                    mpr("연고를 적용하지 못했다.");
             }
 
             bool healing = _blessing_healing(follower);
@@ -1998,11 +1993,11 @@ bool bless_follower(monster* follower,
 
             if (healing)
             {
-                result += "healing";
+                result += "치유";
                 break;
             }
             else if (force)
-                mpr("Couldn't heal monster.");
+                mpr("몬스터를 치료할 수 없다.");
 
             return false;
         }
@@ -2015,17 +2010,17 @@ blessing_done:
 
     std::string whom = "";
     if (!follower)
-        whom = "you";
+        whom = "당신";
     else
     {
         if (you.can_see(follower))
             whom = follower->name(DESC_THE);
         else
-            whom = "a follower";
+            whom = "추종자";
     }
 
     simple_god_message(
-        make_stringf(" blesses %s with %s.",
+        make_stringf("은(는) %s에게 %s의 축복을 내렸다.",
                      whom.c_str(), result.c_str()).c_str(),
         god);
 
@@ -2053,7 +2048,7 @@ static void _delayed_gift_callback(const mgen_data &mg, monster *&mon,
 
 static bool _jiyva_mutate()
 {
-    simple_god_message(" alters your body.");
+    simple_god_message("은(는) 당신의 몸에 변화를 일으켰다.");
 
     const int rand = random2(100);
 
@@ -2164,7 +2159,7 @@ bool do_god_gift(bool forced)
 
                 if (yred_random_servants(threshold) != -1)
                 {
-                    _delayed_monster_done(gettext(" grants you @an@ undead servant@s@!"),
+                    _delayed_monster_done("은(는) 당신에게 언데드 수하를 내려주었다!",
                                           "", _delayed_gift_callback);
                     success = true;
                 }
@@ -2181,6 +2176,7 @@ bool do_god_gift(bool forced)
                     _inc_gift_timeout(15 + roll_dice(2, 4));
                     you.num_current_gifts[you.religion]++;
                     you.num_total_gifts[you.religion]++;
+                    take_note(Note(NOTE_GOD_GIFT, you.religion));
                 }
                 else
                     mpr("아무것도 변화하지 않은 느낌이다.");
@@ -2553,10 +2549,10 @@ void dock_piety(int piety_loss, int penance)
         excommunication();
     else if (penance)       // only if still in religion
     {
-        if (last_penance_lecture != you.num_turns)
-        {
+        if (last_penance_lecture != you.num_turns) // (130203) godspeak.txt의 신들의 대사(성격)와 같아지도록 이 부분은 따로 수정한 부분.
+        {                                          // 영문판은 어투가 따로 없지만 한글판의 경우는 존재하니 이 부분이 어색하더라고요.
             god_speaks(you.religion,
-                       "\"너는 네 업보의 대가를 치르게 될 것이다!\"");
+					   (you.religion == GOD_TROG || you.religion == GOD_BEOGH || you.religion == GOD_SHINING_ONE) ? "\"네 놈은 지금 한 짓거리의 대가를 똑똑히 치를 것이다!\"" : (you.religion == GOD_ZIN || you.religion == GOD_SIF_MUNA) ? "\"자네는 자네의 업보의 대가를 치르게 될 것이네!\"" : (you.religion == GOD_ELYVILON ? "\"당신은 이제 업보의 대가를 치르게 될 것이에요!\"" : "\"너는 네 업보의 대가를 치르게 될 것이다!\""));
         }
         last_penance_lecture = you.num_turns;
         _inc_penance(penance);
@@ -2721,7 +2717,7 @@ static void _gain_piety_point()
     if (you.religion == GOD_CHEIBRIADOS
         && che_stat_boost(old_piety) < che_stat_boost())
     {
-        simple_god_message(" raises the support of your attributes as your movement slows.");
+        simple_god_message("은(는) 당신의 움직임이 느려진 만큼, 당신의 능력치를 보조해 줄 것이다.");
         notify_stat_change("Cheibriados piety gain");
     }
 
@@ -2815,22 +2811,22 @@ void lose_piety(int pgn)
             if (you.religion == GOD_ZIN)
             {
                 simple_god_message(
-                    _(" is no longer ready to cure all your mutations."));
+                    "은(는) 이제 변이를 치유해줄 준비가 되어 있지 않다.");
             }
             else if (you.religion == GOD_SHINING_ONE)
             {
                 simple_god_message(
-                    _(" is no longer ready to bless your weapon."));
+                    "은(는) 이제 무기에 축복을 부여할 준비가 되어 있지 않다.");
             }
             else if (you.religion == GOD_KIKUBAAQUDGHA)
             {
                 simple_god_message(
-                    _(" is no longer ready to enhance your necromancy."));
+                    "은(는) 이제 당신의 강령술을 강화시킬 준비가 되어 있지 않다.");
             }
             else if (you.religion == GOD_LUGONU)
             {
                 simple_god_message(
-                    _(" is no longer ready to corrupt your weapon."));
+                    "은(는) 이제 무기에 왜곡을 부여할 준비가 되어 있지 않다.");
             }
         }
 
@@ -2873,7 +2869,7 @@ void lose_piety(int pgn)
     if (you.religion == GOD_CHEIBRIADOS
         && che_stat_boost(old_piety) > che_stat_boost())
     {
-        simple_god_message(" reduces the support of your attributes as your movement quickens.");
+        simple_god_message("은(는) 당신의 움직임이 빨라진 만큼, 당신의 능력치 보정을 줄였다.");
         notify_stat_change("Cheibriados piety loss");
     }
 
@@ -2912,14 +2908,14 @@ static std::string _god_hates_your_god_reaction(god_type god, god_type your_god)
     {
         // Non-good gods always hate your current god.
         if (!is_good_god(god))
-            return "";
+            return "한"; // 바로 아래 50여줄 아래에서 사용하는 부분
 
         // Zin hates chaotic gods.
         if (god == GOD_ZIN && is_chaotic_god(your_god))
-            return " for chaos";
+            return "하고, 혼돈 성향의 신으로 개종한";
 
         if (is_evil_god(your_god))
-            return " for evil";
+            return "하고, 사악한 신으로 개종한";
     }
 
     return "";
@@ -2980,7 +2976,7 @@ void excommunication(god_type new_god)
     if (god_hates_your_god(old_god, new_god))
     {
         simple_god_message(
-            make_stringf(gettext(" does not appreciate desertion%s!"),
+            make_stringf("은(는) 당신이 신앙을 파기%s 것을 불쾌해했다!!",
                          _god_hates_your_god_reaction(old_god, new_god).c_str()).c_str(),
             old_god);
     }
@@ -2992,7 +2988,7 @@ void excommunication(god_type new_god)
         break;
 
     case GOD_KIKUBAAQUDGHA:
-        mpr("You sense decay."); // in the state of Denmark?
+        mpr("무언가가 썩는 것을 느꼈다."); // in the state of Denmark?
         add_daction(DACT_ROT_CORPSES);
         _set_penance(old_god, 30);
         break;
@@ -3258,7 +3254,7 @@ bool god_hates_attacking_friend(god_type god, const actor *fr)
 
 bool god_likes_items(god_type god, bool greedy_explore)
 {
-    if (greedy_explore && (!(Options.explore_stop & ES_GREEDY_SACRIFICEABLE)
+    if (greedy_explore && (!(Options.explore_stop & ES_GREEDY_SACRIFICIABLE)
                            || you.religion == GOD_ASHENZARI))
         // Ash's sacrifice isn't trading items for piety so it shouldn't make
         // explore greedy for ?RC
@@ -3278,7 +3274,7 @@ bool god_likes_items(god_type god, bool greedy_explore)
         return true;
 
     case NUM_GODS: case GOD_RANDOM: case GOD_NAMELESS:
-        mprf(MSGCH_ERROR, "Bad god, no biscuit! %d", static_cast<int>(god));
+        mprf(MSGCH_ERROR, "형편없는 신이다. 과자 하나 안주잖아! %d", static_cast<int>(god));
 
     default:
         return false;
@@ -3432,19 +3428,19 @@ void god_pitch(god_type which_god)
         you.turn_is_over = false;
         if (which_god == GOD_SIF_MUNA)
         {
-            simple_god_message(_(" does not accept worship from the ignorant!"),
+            simple_god_message("은(는) 당신과 같은 비지식인으로부터의 숭배는 받아들이지 않는다!",
                                which_god);
         }
         else if (!_transformed_player_can_join_god(which_god))
         {
-            simple_god_message(_(" says: How dare you come"
-                               " in such a loathsome form!"),
+            simple_god_message("은(는) 말했다. \"어찌 그러한 몰골로 나를 숭배하려 하는가! "
+                               "썩 물러가라!\"",
                                which_god);
         }
         else
         {
-            simple_god_message(_(" does not accept worship"
-                               " from those such as you!"),
+            simple_god_message("은(는) 당신 같은 존재로부터의 숭배는 받아들이지 않는다!"
+                               "",
                                which_god);
         }
         return;
@@ -3533,7 +3529,7 @@ void god_pitch(god_type which_god)
     // Chei worshippers start their stat gain immediately.
     if (you.religion == GOD_CHEIBRIADOS)
     {
-        simple_god_message(" begins to support your attributes as your movement slows.");
+        simple_god_message("은(는) 당신의 움직임이 느려진 만큼, 당신의 능력치를 보정해줬다.");
         notify_stat_change("Cheibriados worship");
     }
 
@@ -3576,9 +3572,8 @@ void god_pitch(god_type which_god)
 
     if (you.religion == GOD_ELYVILON)
     {
-        mpr(gettext("You can now call upon Elyvilon to destroy weapons lying on the "
-            "ground."), MSGCH_GOD);
-        mpr(gettext("You can now provide lesser healing for others."), MSGCH_GOD);
+        mpr("당신은 이제 엘리빌론에게 기도를 드림으로, 바닥에 있는 무기들을 회수할 수 있다.", MSGCH_GOD);
+        mpr("당신은 이제 다른 존재들에게 미약한 치유를 행할 수 있다.", MSGCH_GOD);
     }
     else if (you.religion == GOD_TROG)
     {
@@ -3606,16 +3601,16 @@ void god_pitch(god_type which_god)
         switch (you.religion)
         {
         case GOD_ELYVILON:
-            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
-                               + god_name(you.religion) + "와 함께, 순수한 자들을 도와주어라.").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이군요. 이제 " 
+                               + god_name(you.religion) + "와 함께, 순수한 자들을 도와주세요.").c_str(), old_god);
             break;
         case GOD_SHINING_ONE:
             simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
                                + god_name(you.religion) + "와 함께, 악한 자들을 무찌르거라.").c_str(), old_god);
             break;
         case GOD_ZIN:
-            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
-                               + god_name(you.religion) + "와 함께, 가르침을 전파하거라.").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이네. 이제 " 
+                               + god_name(you.religion) + "와 함께, 가르침을 전파하게나.").c_str(), old_god);
             break;
         default:
             mpr("Unknown good god.", MSGCH_ERROR);
@@ -3672,7 +3667,7 @@ void god_pitch(god_type which_god)
         // rich.  In that case, you have to donate again more...  That the poor
         // widow is not spared doesn't mean the rich can't be milked for more.
         lucre.props["acquired"] = 0;
-        you.gold -= zin_tithe(lucre, lucre.quantity, false, true);
+        you.gold -= zin_tithe(lucre, lucre.quantity, false);
     }
 
     // Refresh wielded/quivered weapons in case we have a new conduct
@@ -3985,7 +3980,7 @@ void handle_god_time()
             break;
 
         default:
-            die("Bad god, no bishop!");
+            die("형편없는 신이다. 주교님도 안 계시잖아!");
             return;
         }
 
@@ -4282,7 +4277,7 @@ int get_tension(god_type god)
     // Tension goes up inversely proportional to the percentage of max
     // hp you have.
     tension *= (scale + 1) * you.hp_max;
-    tension /= std::max(you.hp_max + scale * you.hp, 1);
+    tension /= you.hp_max + scale * you.hp;
 
     // Divides by 1 at level 1, 200 at level 27.
     const int exp_lev  = you.get_experience_level();
