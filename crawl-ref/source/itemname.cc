@@ -140,7 +140,7 @@ std::string item_def::name(bool allow_translate,
         switch (descrip)
         {
         default:
-            buff << "the ";
+            buff << (!allow_translate ? "the " : ""); // 한글판에서는 아티팩트명 앞에 the를 붙이지 않음. 색깔로 구별이 가능하니, 혼동될일은 없을듯?
         case DESC_PLAIN:
         case DESC_DBNAME:
         case DESC_BASENAME:
@@ -167,9 +167,9 @@ std::string item_def::name(bool allow_translate,
             && descrip != DESC_DBNAME)
         {
             if (quantity_in_words)
-                buff << number_in_words(quantity) << " ";
+                buff << number_in_words(quantity) << (!allow_translate ? " " : ""); // (130204) 재작업함.
             else
-                buff << quantity << " ";
+                buff << quantity << (!allow_translate ? " " : ""); // (deceit, 110903) 공백을 삭제해야 할 부분. (110912) 이와같이 수정.
         }
     }
     else
@@ -205,26 +205,26 @@ std::string item_def::name(bool allow_translate,
         if (eq != EQ_NONE)
         {
             if (you.melded[eq])
-                buff << " (melded)";
+                buff << check_gettext(M_(" (melded)"));
             else
             {
                 switch (eq)
                 {
                 case EQ_WEAPON:
                     if (base_type == OBJ_WEAPONS || base_type == OBJ_STAVES)
-                        buff << " (weapon)";
+                        buff << check_gettext(M_(" (weapon)"));
                     else if (you.species == SP_FELID)
-                        buff << " (in mouth)";
+                        buff << check_gettext(M_(" (in mouth)")); // (130204,DECEIT) 여기까진 예전 번역물을 쓸 수 있으니 check_gettext를 쓰고...
                     else // including rods -- intentional?
-                        buff << " (in " << you.hand_name(false) << ")";
-                    break;
+                        buff << ((!allow_translate) ? " (in " : "") << (!allow_translate ? you.hand_name(false) : gettext(you.hand_name(false).c_str())) << (!allow_translate ? ")" : "에 쥠"); 
+                    break; // (130204,DECEIT) 이렇게 복잡한 부분은 걍 이렇게 처리...
                 case EQ_CLOAK:
                 case EQ_HELMET:
                 case EQ_GLOVES:
                 case EQ_BOOTS:
                 case EQ_SHIELD:
                 case EQ_BODY_ARMOUR:
-                    buff << " (worn)";
+                    buff << check_gettext(M_(" (worn)"));
                     break;
                 case EQ_LEFT_RING:
                 case EQ_RIGHT_RING:
@@ -232,16 +232,16 @@ std::string item_def::name(bool allow_translate,
                 case EQ_RING_TWO:
                     buff << " (";
                     buff << ((eq == EQ_LEFT_RING || eq == EQ_RING_ONE)
-                             ? "left" : "right");
+                             ? check_gettext(M_("left")) : check_gettext(M_("right"))); // 돌죽개발자 이살람들 왜이렇게 표현을 바꿔대는것이여ㅡㅡ
                     buff << " ";
-                    buff << you.hand_name(false);
+                    buff << (!allow_translate ? you.hand_name(false) : gettext(you.hand_name(false).c_str())) ;
                     buff << ")";
                     break;
                 case EQ_AMULET:
                     if (you.species == SP_OCTOPODE && form_keeps_mutations())
-                        buff << " (around mantle)";
+                        buff << check_gettext(M_(" (around mantle)"));
                     else
-                        buff << " (around neck)";
+                        buff << check_gettext(M_(" (around neck)"));
                     break;
                 case EQ_RING_THREE:
                 case EQ_RING_FOUR:
@@ -249,7 +249,7 @@ std::string item_def::name(bool allow_translate,
                 case EQ_RING_SIX:
                 case EQ_RING_SEVEN:
                 case EQ_RING_EIGHT:
-                    buff << " (on tentacle)";
+                    buff << check_gettext(M_(" (on tentacle)"));
                     break;
                 default:
                     die("Item in an invalid slot");
@@ -259,10 +259,10 @@ std::string item_def::name(bool allow_translate,
         else if (item_is_quivered(*this))
         {
             equipped = true;
-            buff << " (quivered)";
+            buff << check_gettext(M_(" (quivered)"));
         }
         else if (item_is_active_manual(*this))
-            buff << " (studied)";
+            buff << check_gettext(M_(" (studied)"));
     }
 
     if (descrip != DESC_BASENAME && descrip != DESC_DBNAME && with_inscription)
@@ -275,34 +275,34 @@ std::string item_def::name(bool allow_translate,
             item_type_id_state_type id_type = get_ident_type(*this);
 
             if (id_type == ID_MON_TRIED_TYPE)
-                tried_str = "tried by monster";
+                tried_str = check_gettext(M_("tried by monster"));
             else if (id_type == ID_TRIED_ITEM_TYPE)
             {
-                tried_str = "tried on item";
+                tried_str = check_gettext(M_("tried on item"));
                 if (base_type == OBJ_SCROLLS)
                 {
                     if (sub_type == SCR_IDENTIFY
                         && you.type_id_props.exists("SCR_ID"))
                     {
-                        tried_str = "tried on " +
+                        tried_str = check_gettext(M_("tried on ")) +
                                     you.type_id_props["SCR_ID"].get_string();
                     }
                     else if (sub_type == SCR_RECHARGING
                              && you.type_id_props.exists("SCR_RC"))
                     {
-                        tried_str = "tried on " +
+                        tried_str = check_gettext(M_("tried on ")) +
                                     you.type_id_props["SCR_RC"].get_string();
                     }
                     else if (sub_type == SCR_ENCHANT_ARMOUR
                              && you.type_id_props.exists("SCR_EA"))
                     {
-                        tried_str = "tried on " +
+                        tried_str = check_gettext(M_("tried on ")) +
                                     you.type_id_props["SCR_EA"].get_string();
                     }
                 }
             }
             else
-                tried_str = "tried";
+                tried_str = check_gettext(M_("tried"));
         }
 
         std::vector<std::string> insparts;
@@ -626,7 +626,7 @@ static const char* potion_type_name(int potiontype)
     case POT_PORRIDGE:          return M_("porridge");
     case POT_DEGENERATION:      return M_("degeneration");
     case POT_DECAY:             return M_("decay");
-    case POT_WATER:             return M_("water");
+	case POT_WATER:             return (translate_flag ? "맹물" : M_("water"));
     case POT_EXPERIENCE:        return M_("experience");
     case POT_MAGIC:             return M_("magic");
     case POT_RESTORE_ABILITIES: return M_("restore abilities");
@@ -854,7 +854,7 @@ static const char* misc_type_name(int type, bool known)
     if (!known)
     {
         if (type >= MISC_FIRST_DECK && type <= MISC_LAST_DECK)
-            return "deck of cards";
+            return M_("deck of cards");
     }
 
     switch (static_cast<misc_item_type>(type))
@@ -977,16 +977,16 @@ static const char* staff_secondary_string(int p)
 {
     switch (p) // general descriptions
     {
-    case 0:  return "crooked ";
-    case 1:  return "knobbly ";
-    case 2:  return "weird ";
-    case 3:  return "gnarled ";
-    case 4:  return "thin ";
-    case 5:  return "curved ";
-    case 6:  return "twisted ";
-    case 7:  return "thick ";
-    case 8:  return "long ";
-    case 9:  return "short ";
+    case 0:  return M_("crooked ");
+    case 1:  return M_("knobbly ");
+    case 2:  return M_("weird ");
+    case 3:  return M_("gnarled ");
+    case 4:  return M_("thin ");
+    case 5:  return M_("curved ");
+    case 6:  return M_("twisted ");
+    case 7:  return M_("thick ");
+    case 8:  return M_("long ");
+    case 9:  return M_("short "); // (130204) 큰 의미는 없지만... 나중에 헷갈릴수 있으므로 M_()으로 감쌌습니다
     default: return "buggily ";
     }
 }
@@ -995,10 +995,10 @@ static const char* staff_primary_string(int p)
 {
     switch (p) // special attributes
     {
-    case 0:  return "glowing ";
-    case 1:  return "jewelled ";
-    case 2:  return "runed ";
-    case 3:  return "smoking ";
+    case 0:  return M_("glowing ");
+    case 1:  return M_("jewelled ");
+    case 2:  return M_("runed ");
+    case 3:  return M_("smoking ");
     default: return "buggy ";
     }
 }
@@ -1047,14 +1047,14 @@ static const char* rod_type_name(int type)
 
 const char* racial_description_string(const item_def& item, bool terse)
 {
-    switch (get_equip_race(item))
+    switch (get_equip_race(item)) // (130204) 0.9때 했던거 그대로 가져다씀
     {
     case ISFLAG_ORCISH:
-        return terse ? N_("orc ") : N_("orcish ");
+        return (translate_flag ? "오크제 " : terse ? N_("orc ") : N_("orcish "));
     case ISFLAG_ELVEN:
-        return terse ? N_("elf ") : N_("elven ");
+        return (translate_flag ? "엘프제 " : terse ? N_("elf ") : N_("elven "));
     case ISFLAG_DWARVEN:
-        return terse ? N_("dwarf ") : N_("dwarven ");
+        return (translate_flag ? "드워프제 " : terse ? N_("dwarf ") : N_("dwarven "));
     default:
         return "";
     }
@@ -1166,16 +1166,16 @@ std::string ego_type_string(const item_def &item)
 }
 
 // nets can go +0 .. -7 (-8 always destroys them)
-static const char* _torn_net(int plus)
+static const char* _torn_net(int plus) // (130204 deceit) 이건 뭐지; 그물 많이 던지면 손상된 정도를 나타내주는거같은데 아래쪽에서 참조
 {
     if (plus >= 0)
         return "";
     else if (plus >= -2)
-        return " [frayed]";
+        return M_(" [frayed]");
     else if (plus >= -5)
-        return " [torn]";
+        return M_(" [torn]");
     else
-        return " [falling apart]";
+        return M_(" [falling apart]");
 }
 
 // Note that "terse" is only currently used for the "in hand" listing on
@@ -1329,7 +1329,7 @@ std::string item_def::name_aux(description_level_type desc,
 #endif
         break;
 
-    case OBJ_MISSILES:
+    case OBJ_MISSILES: // (130204) 여기도 뭔가 추가해야하긴하는데.. 일단 나중에
     {
         special_missile_type brand  = get_ammo_brand(*this);
 
@@ -1347,7 +1347,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (item_typ == MI_THROWING_NET && !basename && !qualname && !dbname)
-            buff << _torn_net(it_plus);
+            buff << check_gettext(_torn_net(it_plus));
         break;
     }
     case OBJ_ARMOUR:
@@ -1476,7 +1476,7 @@ std::string item_def::name_aux(description_level_type desc,
         }
 
         if (know_curse && cursed() && terse)
-            buff << " (curse)";
+            buff << check_gettext(" (curse)");
         break;
 
     case OBJ_WANDS:
@@ -1770,7 +1770,7 @@ std::string item_def::name_aux(description_level_type desc,
                      << check_gettext(staff_primary_string(rnd % NDSC_STAVE_PRI));
             }
 
-            buff << "rod";
+            buff << check_gettext(M_("rod"));
         }
         else
         {
@@ -1778,24 +1778,24 @@ std::string item_def::name_aux(description_level_type desc,
                 buff << make_stringf("%+d ", special);
 
             if (item_typ == ROD_LIGHTNING)
-                buff << "lightning rod";
+                buff << check_gettext(M_("lightning rod"));
             else
-                buff << "rod of " << rod_type_name(item_typ);
+                buff << (!translate_flag ? "rod of " : "") << (!translate_flag ? rod_type_name(item_typ) : gettext(rod_type_name(item_typ))) << (!translate_flag ? "" : "의 마법 막대") ; // (130204) 으아.
         }
 
         if (know_curse && cursed() && terse)
-            buff << " (curse)";
+            buff << check_gettext(" (curse)");
         break;
 
     case OBJ_STAVES:
         if (know_curse && !terse)
         {
             if (cursed())
-                buff << "cursed ";
+                buff << check_gettext("cursed ");
             else if (Options.show_uncursed && desc != DESC_PLAIN
                      && (!know_type || !is_artefact(*this)))
             {
-                buff << "uncursed ";
+                buff << check_gettext("uncursed ");
             }
         }
 
@@ -1810,7 +1810,7 @@ std::string item_def::name_aux(description_level_type desc,
             buff << check_gettext(M_("staff"));
         }
         else
-            buff << "staff of " << staff_type_name(item_typ);
+            buff << (!translate_flag ? "staff of " : "") << (!translate_flag ? staff_type_name(item_typ) : gettext(staff_type_name(item_typ))) << (!translate_flag ? "" : " 지팡이"); // (130204) 추가
 
         if (know_curse && cursed() && terse)
             buff << check_gettext(" (curse)");
@@ -1837,10 +1837,10 @@ std::string item_def::name_aux(description_level_type desc,
         name_type = (name_flags & MF_NAME_MASK);
 
         if (!_name.empty() && name_type == MF_NAME_ADJECTIVE)
-            buff << _name << " ";
+            buff << _name << (translate_flag ? "" : " "); // (deceit, 110912) 수정부분
 
         if ((name_flags & MF_NAME_SPECIES) && name_type == MF_NAME_REPLACE)
-            buff << _name << " ";
+            buff << _name << (translate_flag ? "" : " "); // (deceit, 110912) 수정부분
         else if (!dbname && !starts_with(_name, "the "))
         {
             const monster_type mc = static_cast<monster_type>(it_plus);
@@ -1848,7 +1848,7 @@ std::string item_def::name_aux(description_level_type desc,
                 buff << check_gettext(mons_type_name(mc, DESC_PLAIN).c_str()) << ' ';
 
             if (!_name.empty() && shaped)
-                buff << _name << ' ';
+                buff << _name << (translate_flag ? "" : " "); // (deceit, 110912) 수정부분
         }
 
         if (item_typ == CORPSE_BODY)
@@ -1862,7 +1862,7 @@ std::string item_def::name_aux(description_level_type desc,
             && !(name_flags & MF_NAME_SPECIES) && name_type != MF_NAME_SUFFIX
             && !dbname)
         {
-            buff << " of " << _name;
+            if(translate_flag) { buff << " (" << gettext(_name.c_str()) << ")"; } else { buff << " of " << _name;} // (deceit, 110929) 네임드시체 수정부분. 그냥 괄호쳐서 나오게 합니다 (130204) 그대로 가져다씀
         }
         break;
     }
@@ -1873,7 +1873,7 @@ std::string item_def::name_aux(description_level_type desc,
 
     // One plural to rule them all.
     if (need_plural && quantity > 1 && !basename && !qualname)
-        buff.str(pluralise(PLU_DEFAULT, buff.str()));
+        if(!translate_flag) buff.str(pluralise(PLU_DEFAULT, buff.str())); else buff.str(pluralise(PLU_MISC, buff.str())); // (deceit, 130205) '13 화살s' -> '13개의 화살들' 이렇게 수정해주는 부분. 여기 아래에도 pluralise()쓰는게 있는데 번역하면 안되는거같음.
 
     // Disambiguation.
     if (!terse && !basename && !dbname && know_type
@@ -1885,16 +1885,16 @@ std::string item_def::name_aux(description_level_type desc,
             switch (item_typ)
             {
             case ROD_DESTRUCTION_I:
-                buff << " [fire]";
+                buff << check_gettext(M_(" [fire]"));
                 break;
             case ROD_DESTRUCTION_II:
-                buff << " [ice]";
+                buff << check_gettext(M_(" [ice]"));
                 break;
             case ROD_DESTRUCTION_III:
-                buff << " [lightning,fireball,iron]";
+                buff << check_gettext(M_(" [lightning,fireball,iron]"));
                 break;
             case ROD_DESTRUCTION_IV:
-                buff << " [inacc,magma,cold]";
+                buff << check_gettext(M_(" [inacc,magma,cold]"));
                 break;
             }
             break;
@@ -2369,14 +2369,14 @@ void check_item_knowledge(bool unknown_items)
     std::string stitle;
 
     if (unknown_items)
-        stitle = "Items not yet recognised: (toggle with -)";
+        stitle = gettext("Items not yet recognised: (toggle with -)");
     else if (!all_items_known)
-        stitle = "Recognised items. (- for unrecognised, select to toggle autopickup)";
+        stitle = gettext("Recognised items. (- for unrecognised, select to toggle autopickup)");
     else
-        stitle = "You recognise all items. (Select to toggle autopickup)";
+        stitle = gettext("You recognise all items. (Select to toggle autopickup)");
 
 
-    std::string prompt = "(_ for help)";
+    std::string prompt = gettext("(_ for help)");
     //TODO: when the menu is opened, the text is not justified properly.
     stitle = stitle + std::string(std::max(0, get_number_of_cols()
                                                   - strwidth(stitle)
@@ -2435,7 +2435,7 @@ void display_runes()
 
     if (items.empty())
     {
-        mpr("You haven't found any runes yet.");
+        mpr(gettext("You haven't found any runes yet."));
         return;
     }
 
