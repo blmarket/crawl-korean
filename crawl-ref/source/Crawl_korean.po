@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 00:29+0900\n"
+"POT-Creation-Date: 2013-02-05 16:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3224,6 +3224,7 @@ msgstr ""
 "이 고기를 먹는 행위는 %s의 분노를 살 수 있다!"
 
 #: describe.cc:2049 describe.cc:2056 describe.cc:2056 describe.cc:2064
+#: describe.cc:2038
 msgid ""
 "\n"
 "It uses its own mana reservoir for casting spells, and recharges "
@@ -3256,6 +3257,7 @@ msgstr ""
 "이것의 충전 속도는 %+d이다. 이것은 최대 +%d까지 충전이 가능하다."
 
 #: describe.cc:2078 describe.cc:2085 describe.cc:2085 describe.cc:2093
+#: describe.cc:2065
 msgid ""
 "\n"
 "Its recharge rate is at maximum."
@@ -3273,6 +3275,7 @@ msgstr ""
 "이것은 최대 %d회까지 충전이 가능하며, +%d의 충전 속도를 갖고 있다."
 
 #: describe.cc:2098 describe.cc:2105 describe.cc:2105 describe.cc:2113
+#: describe.cc:2088
 msgid ""
 "\n"
 "\n"
@@ -3283,6 +3286,7 @@ msgstr ""
 "이것은 '둔기'류로 분류된다."
 
 #: describe.cc:2105 describe.cc:2112 describe.cc:2112 describe.cc:2120
+#: describe.cc:2097
 msgid ""
 "\n"
 "\n"
@@ -15199,6 +15203,7 @@ msgid "For example, you could "
 msgstr "예를 들면, 당신은 다음과 같은 맨손 격투가 가능하다: "
 
 #: describe.cc:4699 describe.cc:4719 describe.cc:4662 describe.cc:4658
+#: describe.cc:2563
 msgid " or "
 msgstr " 혹은 "
 
@@ -24581,7 +24586,7 @@ msgstr "'%s'파일 열기 실패"
 msgid " %c Level %d%s %s\n"
 msgstr " %c  레벨 %d%s %s\n"
 
-#: describe.cc:1707
+#: describe.cc:1707 describe.cc:1712
 msgid ""
 "\n"
 "\n"
@@ -28269,6 +28274,9 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -30455,7 +30463,8 @@ msgstr "감정된 아이템. (- 키로 미감정 아이템 확인과, 자동 줍
 
 #: itemname.cc:2376
 msgid "You recognise all items. (Select to toggle autopickup)"
-msgstr "당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
+msgstr ""
+"당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
 
 #: itemname.cc:2379
 msgid "(_ for help)"
@@ -30468,3 +30477,132 @@ msgstr "당신은 아직 아무 룬도 찾지 못했다."
 #: output.cc:2171
 msgid "walk through water"
 msgstr ""
+
+#: describe.cc:838
+msgid ""
+"\n"
+"\n"
+"It can be evoked to extend its reach."
+msgstr ""
+"\n"
+"\n"
+"이 아이템을 발동함으로써 더 먼 거리의 적을 공격할 수 있다."
+
+#: describe.cc:1154
+msgid "a random type"
+msgstr "무작위 속성"
+
+#: describe.cc:1156
+msgctxt "spmsl_chaos"
+msgid "When "
+msgstr "이것을 "
+
+#: describe.cc:1160
+msgctxt "spmsl_chaos"
+msgid "thrown, "
+msgstr "던지면, "
+
+#: describe.cc:1162
+msgctxt "spmsl_chaos"
+msgid "or "
+msgstr "혹은 "
+
+#: describe.cc:1166
+msgid "fired from an appropriate launcher, "
+msgstr "이것을 발사할 수 있는 무기로 발사하면, "
+
+#: describe.cc:1168
+msgid "it turns into a bolt of "
+msgstr "이것은"
+
+#: describe.cc:1170
+msgctxt "spmsl_chaos"
+msgid "."
+msgstr "에 휩싸여 발사된다."
+
+#: describe.cc:1294
+msgid ""
+"\n"
+"All pieces of ammunition may get destroyed upon impact."
+msgstr ""
+"\n"
+"대부분의 발사체는 발사했을 경우 그 충격으로 인해 파괴될 수 있다."
+
+#: describe.cc:1852
+msgid "[ERROR: no desc for item name '"
+msgstr "[ERROR: 아이템의 설명을 찾을 수 없다 '"
+
+#: describe.cc:1905
+msgid ""
+"\n"
+"You are currently studying this manual."
+msgstr ""
+"\n"
+"당신은 현재 이 기술서를 학습중이다."
+
+#: describe.cc:2055
+msgid ""
+"\n"
+"Its capacity can be increased no further."
+msgstr ""
+"\n"
+"이것은 이제 더 이상 충전량을 상승시킬 수 없다."
+
+#: describe.cc:2069
+msgid ""
+"\n"
+"It can have at most "
+msgstr ""
+"\n"
+"이것은 최대 "
+
+#: describe.cc:2070
+msgid " charges and +"
+msgstr " 회까지 충전이 가능하며, +"
+
+#: describe.cc:2071
+msgid " recharge rate."
+msgstr "의 재충전율을 가진다."
+
+#: describe.cc:2198
+msgid "Stash search prefixes: "
+msgstr "이 아이템에 대한 검색어: "
+
+#: describe.cc:2467
+msgctxt "_actions_prompt"
+msgid "You can "
+msgstr "당신은 이 아이템에 대해 "
+
+#: describe.cc:2565
+msgctxt "_actions_prompt"
+msgid " the "
+msgstr "와 같은 행동을 할 수 있다 : "
+
+#: describe.cc:2565
+msgctxt "_actions_prompt"
+msgid "."
+msgstr "."
+
+#: describe.cc:3425
+msgctxt "player_ghost"
+msgid "The apparition of "
+msgstr "플레이어 "
+
+#: describe.cc:3425
+msgctxt "player_ghost"
+msgid ".\n"
+msgstr "의 망령.\n"
+
+#: describe.cc:3429
+msgctxt "player_illusion"
+msgid "An illusion of "
+msgstr "플레이어 "
+
+#: describe.cc:3429
+msgctxt "player_illusion"
+msgid ".\n"
+msgstr "의 허상.\n"
+
+#: describe.cc:3784
+msgid "You can provide lesser healing for yourself and others."
+msgstr "당신은 당신 혹은 다른 존재들에게 미약한 치유를 제공할 수 있다."

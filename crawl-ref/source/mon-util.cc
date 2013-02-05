@@ -3624,7 +3624,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         else
             msg = replace_all(msg, "@surface@", "ground");
 
-        msg = replace_all(msg, "@feature@", raw_feature_description(mons->pos()));
+        msg = replace_all(msg, "@feature@", gettext(raw_feature_description(mons->pos()).c_str()));
     }
     else
     {

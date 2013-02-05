@@ -1203,7 +1203,7 @@ void bolt::affect_cell()
             else if (!is_tracer)
             {
                 mprf(_("The %s protects %s from harm."),
-                     raw_feature_description(act->pos()).c_str(),
+                     gettext(raw_feature_description(act->pos()).c_str()),
                      act->name(DESC_THE).c_str());
             }
         }
