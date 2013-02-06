@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 16:15+0900\n"
+"POT-Creation-Date: 2013-02-06 22:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2077,7 +2077,7 @@ msgstr "화염의 구"
 #. not an actual monster, used by a spell
 #. not an actual monster, used by a spell
 #: mon-data.h:5325 mon-data.h:5337 mon-data.h:5326 mon-data.h:5283
-#: mon-data.h:5370
+#: mon-data.h:5370 mon-project.cc:228
 msgid "orb of destruction"
 msgstr "파괴의 구"
 
@@ -4023,7 +4023,7 @@ msgstr "무언가"
 #: itemname.cc:381 itemname.cc:546 itemname.cc:392 itemname.cc:557
 #: itemname.cc:399 itemname.cc:564 itemname.cc:564 cloud.cc:1257
 #: cloud.cc:1248 itemname.cc:419 itemname.cc:590 cloud.cc:1243 itemname.cc:368
-#: itemname.cc:539
+#: itemname.cc:539 mon-cast.cc:396
 msgid "flame"
 msgstr "화염"
 
@@ -4318,7 +4318,8 @@ msgid "digging"
 msgstr "굴착"
 
 #: itemname.cc:558 itemname.cc:569 itemname.cc:576 itemname.cc:576
-#: itemname.cc:602 itemname.cc:551
+#: itemname.cc:602 itemname.cc:551 mon-cast.cc:513 spl-clouds.cc:42
+#: spl-miscast.cc:2172
 msgid "fireball"
 msgstr "화염구"
 
@@ -4330,6 +4331,7 @@ msgstr "공간이동"
 
 #: itemname.cc:560 itemname.cc:571 itemname.cc:578 itemname.cc:578
 #: beam.cc:5708 itemname.cc:604 itemname.cc:553 itemname.cc:1033
+#: spl-damage.cc:2092
 msgid "lightning"
 msgstr "번개"
 
@@ -5653,7 +5655,7 @@ msgstr "마법봉"
 
 #: itemname.cc:1570 itemname.cc:1569 itemname.cc:1580 itemname.cc:1608
 #: itemname.cc:1610 itemname.cc:1617 itemname.cc:1618 itemname.cc:1625
-#: invent.cc:987 itemname.cc:1609 itemname.cc:1514
+#: invent.cc:987 itemname.cc:1609 itemname.cc:1514 mon-cast.cc:727
 msgid "potion"
 msgstr "물약"
 
@@ -7415,7 +7417,7 @@ msgid "power"
 msgstr "마력"
 
 #: itemname.cc:1086 itemname.cc:1093 itemname.cc:1093 itemname.cc:1084
-#: itemname.cc:1015
+#: itemname.cc:1015 mon-cast.cc:601 mon-cast.cc:662
 msgid "energy"
 msgstr "에너지"
 
@@ -11941,7 +11943,7 @@ msgstr "화염의 폭발"
 msgid "an exploding Tome of Destruction"
 msgstr "파괴의 학술서의 폭발"
 
-#: effects.cc:378
+#: effects.cc:378 effects_first.cc:484 mon-stuff.cc:1083
 msgid "fiery explosion"
 msgstr "화염의 폭발"
 
@@ -11976,3 +11978,313 @@ msgstr "번개의 마법 막대"
 #: itemname.cc:1894
 msgid " [lightning,fireball,iron]"
 msgstr " [번개,화염구,강철]"
+
+#: beam.cc:281
+msgid "unimportant"
+msgstr "중요하지 않은"
+
+#: beam.cc:2277
+msgid "mystic blast"
+msgstr "신비한 폭발"
+
+#: effects.cc:440 effects_first.cc:541
+msgid "electric current"
+msgstr "고압 전류"
+
+#: effects.cc:489 effects_first.cc:598
+msgid "golden flame"
+msgstr "황금빛 불꽃"
+
+#: effects.cc:2184 effects_first.cc:2857
+msgid "magical storm"
+msgstr "마력의 폭풍"
+
+#: l_debug.cc:154
+msgid "debug lightning beam"
+msgstr "졸라 짱센 디버그용 100만볼트 레이져빔"
+
+#: mon-cast.cc:104
+msgid "searing blast"
+msgstr "화염의 숨결"
+
+#: mon-cast.cc:110
+msgid "chilling blast"
+msgstr "얼어붙는 숨결"
+
+#. draconians only
+#: mon-cast.cc:118
+msgid "blast of negative energy"
+msgstr "음에너지의 폭발"
+
+#: mon-cast.cc:302
+msgid "magic dart"
+msgstr "마법의 다트"
+
+#: mon-cast.cc:310
+msgid "puff of flame"
+msgstr "화염 덩어리"
+
+#: mon-cast.cc:318
+msgid "puff of frost"
+msgstr "냉기 덩어리"
+
+#: mon-cast.cc:326
+msgid "rocky blast"
+msgstr "모래 폭풍"
+
+#: mon-cast.cc:405
+msgid "bolt of poison"
+msgstr "독화살"
+
+#: mon-cast.cc:414
+msgid "poison arrow"
+msgstr "맹독의 화살"
+
+#: mon-cast.cc:423
+msgid "bolt of magma"
+msgstr "용암의 화살"
+
+#: mon-cast.cc:432
+msgid "bolt of fire"
+msgstr "맹화의 화살"
+
+#: mon-cast.cc:441
+msgid "shard of ice"
+msgstr "얼음조각"
+
+#: mon-cast.cc:449
+msgid "bolt of cold"
+msgstr "동결의 화살"
+
+#: mon-cast.cc:458
+msgid "narrow beam of energy"
+msgstr "얇은 마력의 빛줄기"
+
+#: mon-cast.cc:467
+msgid "great wave of water"
+msgstr "몰아치는 파도"
+
+#: mon-cast.cc:480
+msgid "freezing blast"
+msgstr "얼어붙는 냉기"
+
+#: mon-cast.cc:490
+msgid "zap"
+msgstr "전격"
+
+#: mon-cast.cc:499
+msgid "bolt of lightning"
+msgstr "번개의 화살"
+
+#: mon-cast.cc:527
+msgid "great blast of cold"
+msgstr "맹렬한 냉기 폭풍"
+
+#: mon-cast.cc:538 spl-damage.cc:154
+msgid "burst of hellfire"
+msgstr "맹렬한 지옥불"
+
+#. was splinters
+#: mon-cast.cc:567
+msgid "crystal spear"
+msgstr "수정창"
+
+#: mon-cast.cc:576
+msgid "force bolt"
+msgstr "힘의 화살"
+
+#. negative energy
+#: mon-cast.cc:590
+msgid "bolt of negative energy"
+msgstr "흡성의 화살"
+
+#: mon-cast.cc:600
+msgid "orb of energy"
+msgstr "마력의 구체"
+
+#: mon-cast.cc:609
+msgid "ball of steam"
+msgstr "증기 구체"
+
+#: mon-cast.cc:634
+msgid "sticky flame"
+msgstr "끈적이는 화염"
+
+#: mon-cast.cc:640
+msgid "noxious blast"
+msgstr "유독 가스의 폭발"
+
+#: mon-cast.cc:650
+msgid "blast of poison"
+msgstr "독액의 폭발"
+
+#: mon-cast.cc:661
+msgid "bolt of energy"
+msgstr "마력의 화살"
+
+#: mon-cast.cc:671
+msgid "sting"
+msgstr "독침"
+
+#: mon-cast.cc:679
+msgid "iron shot"
+msgstr "강철의 화살"
+
+#: mon-cast.cc:688
+msgid "stone arrow"
+msgstr "암석의 화살"
+
+#: mon-cast.cc:697
+msgid "splash of poison"
+msgstr "독액 물보라"
+
+#: mon-cast.cc:705
+msgid "splash of acid"
+msgstr "산성 액체"
+
+#: mon-cast.cc:729
+msgid "foul vapour"
+msgstr "부패 구름"
+
+#: mon-cast.cc:744
+msgid "cloud of steam"
+msgstr "증기 구름"
+
+#: mon-cast.cc:758
+msgid "cloud of fire"
+msgstr "화염의 구름"
+
+#: mon-cast.cc:772
+msgid "cloud of poison"
+msgstr "독구름"
+
+#: mon-cast.cc:808
+msgid "bolt of dispelling energy"
+msgstr "항마의 화살"
+
+#. fiend's hellfire
+#: mon-cast.cc:816
+msgid "blast of hellfire"
+msgstr "지옥불의 폭발"
+
+#: mon-cast.cc:827
+msgid "spray of metal splinters"
+msgstr "흩뿌려진 금속 파편"
+
+#: mon-cast.cc:828
+msgid "metal splinters"
+msgstr "금속 파편"
+
+#: mon-cast.cc:852
+msgid "blast of flame"
+msgstr "화염의 폭발"
+
+#: mon-cast.cc:862
+msgid "blast of cold"
+msgstr "냉기의 폭발"
+
+#: mon-cast.cc:873
+msgid "blast of cleansing flame"
+msgstr "정화의 불꽃"
+
+#: mon-cast.cc:889
+msgid "porkalator"
+msgstr "강제 돼지 변신"
+
+#: mon-cast.cc:907
+msgid "ray of light"
+msgstr "강한 빛줄기"
+
+#: mon-cast.cc:914
+msgid "blast of calcifying dust"
+msgstr "석회가루의 폭발"
+
+#: mon-cast.cc:924
+msgid "beam of golden light"
+msgstr "황금빛 빛줄기"
+
+#: mon-cast.cc:934
+msgid "silver bolt"
+msgstr "은빛 화살"
+
+#: mon-cast.cc:943
+msgid "ensnaring beam"
+msgstr "유혹의 빛줄기"
+
+#: mon-cast.cc:977
+msgid "agony"
+msgstr "고통"
+
+#: mon-stuff.cc:1059
+msgid "explosion of spores"
+msgstr "포자의 폭발"
+
+#: mon-stuff.cc:1069 xom.cc:2019
+msgid "blast of lightning"
+msgstr "전격의 방출"
+
+#: spl-damage.cc:94
+msgid "great blast of fire"
+msgstr "맹렬한 화염의 폭발"
+
+#. initialise beam structure
+#: spl-damage.cc:199
+msgid "lightning arc"
+msgstr "방출된 번개"
+
+#: spl-damage.cc:1126
+msgid "shillelagh"
+msgstr "둔기"
+
+#. to hit monsters standing on doors
+#: spl-damage.cc:1670 spl-damage.cc:1736 spl-damage.cc:1840 spl-damage.cc:1915
+msgid "blast of rock fragments"
+msgstr "암석 파편"
+
+#: spl-damage.cc:1678 spl-damage.cc:1777
+msgid "blast of petrified fragments"
+msgstr "석화 파편"
+
+#: spl-damage.cc:1685 spl-damage.cc:1784
+msgid "icy blast"
+msgstr "얼음의 폭발"
+
+#: spl-damage.cc:1693 spl-damage.cc:1792
+msgid "blast of bone shards"
+msgstr "뼛조각의 산탄"
+
+#: spl-damage.cc:1712
+msgid "blast of splinters"
+msgstr "나무 파편"
+
+#: spl-damage.cc:1717
+msgid "blast of toenail fragments"
+msgstr "손톱 파편"
+
+#: spl-damage.cc:1725 spl-damage.cc:1872
+msgid "blast of metal fragments"
+msgstr "금속 파편"
+
+#: spl-damage.cc:1749
+msgid "blast of silver fragments"
+msgstr "은조각 파편"
+
+#: spl-damage.cc:1754
+msgid "blast of orange crystal shards"
+msgstr "주황색 수정 파편"
+
+#: spl-damage.cc:1759 spl-damage.cc:1889
+msgid "blast of crystal shards"
+msgstr "수정 파편"
+
+#: spl-damage.cc:1764
+msgid "blast of sapphire shards"
+msgstr "사파이어 파편"
+
+#: spl-miscast.cc:872
+msgid "explosion"
+msgstr "폭발"
+
+#: xom.cc:3221
+msgid "STAIR BEAM"
+msgstr "밀어낸 계단"

@@ -39,7 +39,7 @@ static void _burn_tree(coord_def pos)
     beam.origin_spell = SPELL_CONJURE_FLAME;
     beam.range = 1;
     beam.flavour = BEAM_FIRE;
-    beam.name = "fireball"; // yay doing this by name
+    beam.name = M_("fireball"); // yay doing this by name
     beam.source = beam.target = pos;
     beam.set_agent(&you);
     beam.fire();

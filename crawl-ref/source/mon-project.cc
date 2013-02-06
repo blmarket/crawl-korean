@@ -225,7 +225,7 @@ static bool _iood_hit(monster& mon, const coord_def &pos, bool big_boom = false)
         return _boulder_hit(mon, pos);
 
     bolt beam;
-    beam.name = "orb of destruction";
+    beam.name = M_("orb of destruction");
     beam.flavour = BEAM_NUKE;
     beam.attitude = mon.attitude;
 

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Throwing and launching stuff.
 **/
@@ -1125,8 +1125,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_CHAOS;
         if (ammo_brand != SPMSL_CHAOS)
         {
-            beam.name    += " of chaos";
-            ammo_name    += " of chaos";
+            beam.name    = make_stringf("혼돈의 %s",beam.name); // += " of chaos";
+            ammo_name    = make_stringf("혼돈의 %s",ammo_name); // += " of chaos";
         }
         else
             beam_changed = true;
@@ -1138,8 +1138,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_FIRE;
         if (ammo_brand != SPMSL_FLAME)
         {
-            beam.name    += " of flame";
-            ammo_name    += " of flame";
+            beam.name    = make_stringf("화염의 %s",beam.name); //+= " of flame";
+            ammo_name    = make_stringf("화염의 %s",ammo_name); //+= " of flame";
         }
         else
             beam_changed = true;
@@ -1152,8 +1152,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_COLD;
         if (ammo_brand != SPMSL_FROST)
         {
-            beam.name    += " of frost";
-            ammo_name   += " of frost";
+            beam.name   = make_stringf("냉기의 %s",beam.name); // += " of frost";
+            ammo_name   = make_stringf("냉기의 %s",ammo_name); // += " of frost";
         }
         else
             beam_changed = true;
@@ -1244,7 +1244,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
          if (beam.flavour == BEAM_MISSILE)
          {
              expl->flavour = BEAM_FRAG;
-             expl->name   += " fragments";
+             expl->name   += P_("throw"," fragments");
 
              const std::string short_name =
                  item.name(true, DESC_PLAIN, false, false, false, false,
@@ -1254,15 +1254,15 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
              expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                       short_name);
          }
-         expl->name = "explosion of " + expl->name;
+         expl->name = expl->name + P_("throw","explosion of "); // + expl->name;
 
          beam.special_explosion = expl;
     }
 
     if (exploding && item.special != SPMSL_EXPLODING)
     {
-        beam.name = "exploding " + beam.name;
-        ammo_name = "exploding " + ammo_name;
+        beam.name = P_("throw","exploding ") + beam.name;
+        ammo_name = P_("throw","exploding ") + ammo_name;
     }
 
     if (beam.flavour != BEAM_MISSILE)
@@ -1271,11 +1271,11 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
         beam.glyph = dchar_glyph(DCHAR_FIRED_BOLT);
     }
-
+	/*
     if (!is_artefact(item))
         ammo_name = article_a(ammo_name, true);
     else
-        ammo_name = "the " + ammo_name;
+        ammo_name = "the " + ammo_name; */  // (130206) 한글판에선 이부분 쓸모가 없음
 
     return false;
 }

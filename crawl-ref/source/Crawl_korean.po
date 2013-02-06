@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 16:15+0900\n"
+"POT-Creation-Date: 2013-02-06 22:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4777,19 +4777,13 @@ msgstr "제물의 두루마리"
 # msgstr "파괴의 학술서의 폭발"
 # msgid "fiery explosion"
 # msgstr "화염의 폭발"
-#: effects.cc:378 effects.cc:378 effects.cc:379 effects.cc:382 effects.cc:383
-#: effects.cc:391 effects.cc:391 effects.cc:392 effects.cc:448 effects.cc:449
-#: effects.cc:440
-msgid "electric current"
-msgstr ""
-
 #: effects.cc:449 effects.cc:449 effects.cc:450 effects.cc:441
 msgid "shocks"
 msgstr "전기 쇼크"
 
 #: effects.cc:451 effects.cc:451 effects.cc:452 effects.cc:443
 msgid "arcing electricity"
-msgstr ""
+msgstr "방전된 전류"
 
 #: effects.cc:479 effects.cc:479 effects.cc:480 effects.cc:471
 msgid "cleansing flame"
@@ -4798,10 +4792,6 @@ msgstr "정화의 불꽃"
 #: effects.cc:488 effects.cc:488 effects.cc:489 effects.cc:480
 msgid "the Shining One's cleansing flame"
 msgstr "샤이닝 원의 정화의 불꽃"
-
-#: effects.cc:497 effects.cc:497 effects.cc:498 effects.cc:489
-msgid "golden flame"
-msgstr "금빛의 화염"
 
 #: effects.cc:536 effects.cc:536 effects.cc:537
 msgid "is cast into the Abyss!"
@@ -5339,10 +5329,6 @@ msgstr ""
 #: effects.cc:2298 effects.cc:2298 effects.cc:2290 effects.cc:2168
 msgid "Your body shudders with the violent release of wild energies!"
 msgstr "당신의 육체는 격렬하게 방출된 에너지로 떨렸다!"
-
-#: effects.cc:2314 effects.cc:2314 effects.cc:2306 effects.cc:2184
-msgid "magical storm"
-msgstr "마력의 폭풍"
 
 #: effects.cc:2316 effects.cc:2316 effects.cc:2308 effects.cc:2186
 msgid "a magical explosion"
@@ -18692,7 +18678,7 @@ msgstr "당신은 마력이 장전된 것을 느꼈다."
 msgid "You can't place the storm on a wall."
 msgstr "벽에는 폭풍을 일으킬 수 없다."
 
-#: spl-damage.cc:128 spl-damage.cc:129
+#: spl-damage.cc:128 spl-damage.cc:129 beam.cc:5261
 msgid "A raging storm of fire appears!"
 msgstr "맹렬한 화염의 폭풍우가 일어났다!"
 
@@ -18976,7 +18962,7 @@ msgctxt "spl-damage"
 msgid "skeleton"
 msgstr "해골"
 
-#: spl-damage.cc:1691
+#: spl-damage.cc:1691 spl-damage.cc:1991
 #, c-format
 msgid "%s shatters!"
 msgstr "%s이(가) 산산히 부서졌다!"
@@ -19000,7 +18986,7 @@ msgstr "이 지면 바닥"
 msgid "That wall"
 msgstr "이 벽"
 
-#: spl-damage.cc:1895
+#: spl-damage.cc:1895 spl-damage.cc:1985
 #, c-format
 msgid "The %s shatters!"
 msgstr "%s은(는) 산산히 부서졌다!"
@@ -21631,7 +21617,7 @@ msgstr "구체가 날카로운 파편들을 흩뿌리며 폭발했다!"
 msgid "The blast explodes into a great storm of ice!"
 msgstr "거대한 얼음의 폭풍우가 일어났다!"
 
-#: beam.cc:5146 beam.cc:5159 beam.cc:5269 beam.cc:5270
+#: beam.cc:5146 beam.cc:5159 beam.cc:5269 beam.cc:5270 beam.cc:5262
 msgid "You hear a raging storm!"
 msgstr "폭풍우가 몰아치는 소리가 들렸다!"
 
@@ -28277,6 +28263,12 @@ msgstr ""
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -30606,3 +30598,34 @@ msgstr "의 허상.\n"
 #: describe.cc:3784
 msgid "You can provide lesser healing for yourself and others."
 msgstr "당신은 당신 혹은 다른 존재들에게 미약한 치유를 제공할 수 있다."
+
+#: beam.cc:5310
+msgid "The silver bolt explodes into a blast of light!"
+msgstr ""
+
+#: beam.cc:5311
+msgid "The dungeon gets brighter for a moment."
+msgstr ""
+
+#: spl-damage.cc:1922
+msgid "You can't deconstruct that!"
+msgstr ""
+
+#: spl-damage.cc:1958
+msgid "Really insult Beogh by defacing this idol?"
+msgstr ""
+
+#: throw.cc:1247
+msgctxt "throw"
+msgid " fragments"
+msgstr ""
+
+#: throw.cc:1257
+msgctxt "throw"
+msgid "explosion of "
+msgstr ""
+
+#: throw.cc:1264 throw.cc:1265
+msgctxt "throw"
+msgid "exploding "
+msgstr ""

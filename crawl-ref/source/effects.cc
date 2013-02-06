@@ -437,7 +437,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     beam.glyph         = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage        = dice_def(1, 15);
     beam.target        = where;
-    beam.name          = N_("electric current");
+    beam.name          = M_("electric current");
     beam.hit_verb      = N_("shocks");
     beam.colour        = ETC_ELECTRICITY;
     beam.aux_source    = N_("arcing electricity");
@@ -486,7 +486,7 @@ void cleansing_flame(int pow, int caster, coord_def where,
     beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage       = dice_def(2, pow);
     beam.target       = you.pos();
-    beam.name         = N_("golden flame");
+    beam.name         = M_("golden flame");
     beam.colour       = YELLOW;
     beam.aux_source   = aux;
     beam.ex_size      = 2;
@@ -2181,7 +2181,7 @@ void handle_time()
                 beam.damage       = dice_def(3, you.magic_contamination
                                              * (you.is_undead ? 4 : 2) / 4);
                 beam.target       = you.pos();
-                beam.name         = N_("magical storm");
+                beam.name         = M_("magical storm");
                 beam.beam_source  = NON_MONSTER;
                 beam.aux_source   = N_("a magical explosion");
                 beam.ex_size      = std::max(1, std::min(9,
