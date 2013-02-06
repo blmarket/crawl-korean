@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 22:18+0900\n"
+"POT-Creation-Date: 2013-02-06 23:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7733,7 +7733,7 @@ msgstr "여기에 있는 것의 일부 밖에 가질 수 없다."
 msgid "These items seem quite similar."
 msgstr "이 물건들은 꽤 비슷해 보인다."
 
-#: items.cc:1833 items.cc:1833 items.cc:1834 items.cc:1836
+#: items.cc:1833 items.cc:1833 items.cc:1834 items.cc:1836 items.cc:1791
 msgid "Now all you have to do is get back out of the dungeon!"
 msgstr "지금 당신이 해야 할 일은 던젼에서  탈출하는 것이다!"
 
@@ -14847,8 +14847,8 @@ msgid ""
 "monster is healed and you gain half of its experience value and possibly "
 "some piety. Pacified monsters try to leave the level."
 msgstr ""
-"'엘라이빌론'의 치료 권능을 적대적인 몬스터에게 사용시,종종 몬스터의 적대감을 "
-"없앨 수 있다. 이와 같은 효과는 자연스러운 짐승류 몬스터에게 최고의 효과를 볼 "
+"'엘리빌론'의 치료 권능을 적대적인 몬스터에게 사용시,종종 몬스터의 적대감을 없"
+"앨 수 있다. 이와 같은 효과는 자연스러운 짐승류 몬스터에게 최고의 효과를 볼 "
 "수 있으며,인간형 몬스터에게는 비교적 효과가 덜하지만 어느 정도 효과를 볼 수 "
 "있다. 다만 언데드/악마 몬스터에게는 효과를 기대하기 힘들며,무생물 몬스터에게"
 "는 효과를 볼 수 없다. 몬스터의 적대감을 없애는데 성공시, 당신은 그 몬스터를 "
@@ -21355,7 +21355,7 @@ msgctxt "beam"
 msgid "hits"
 msgstr "에게 명중했다"
 
-#: beam.cc:3177 beam.cc:3206 beam.cc:3267
+#: beam.cc:3177 beam.cc:3206 beam.cc:3267 beam.cc:3174
 #, c-format
 msgctxt "beam"
 msgid "The %s %s you!"
@@ -23927,7 +23927,7 @@ msgstr "은(는) 당신의 평화적인 행동을 기뻐했다."
 
 #: spl-goditem.cc:297
 msgid "Elyvilon supports your offer of peace."
-msgstr "엘라이빌론은 당신의 평화적인 행동을 도와주었다."
+msgstr "엘리빌론은 당신의 평화적인 행동을 도와주었다."
 
 #: spl-goditem.cc:303
 msgid " turns neutral."
@@ -23948,7 +23948,7 @@ msgstr "은(는) 동료를 치료한 행동을 기뻐했다."
 
 #: spl-goditem.cc:327
 msgid "Elyvilon appreciates your healing of a fellow creature."
-msgstr "엘라이빌론은 당신이 동료를 치료한 것을 기뻐했다."
+msgstr "엘리빌론은 당신이 동료를 치료한 것을 기뻐했다."
 
 #: spl-goditem.cc:408
 #, c-format
@@ -27629,7 +27629,7 @@ msgstr ""
 #: misc.cc:1263 player.cc:184 misc.cc:1293 player.cc:188
 #, c-format
 msgid "You found %s trap!"
-msgstr ""
+msgstr "%s 함정을 발견했다!"
 
 #: misc.cc:2231 misc.cc:2272
 msgid "your ally the "
@@ -28182,91 +28182,7 @@ msgstr ""
 msgid "You deal a card..."
 msgstr ""
 
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
+#. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
@@ -30601,31 +30517,144 @@ msgstr "당신은 당신 혹은 다른 존재들에게 미약한 치유를 제�
 
 #: beam.cc:5310
 msgid "The silver bolt explodes into a blast of light!"
-msgstr ""
+msgstr "은빛 화살이 폭발하여 강한 빛줄기를 내뿜었다!"
 
 #: beam.cc:5311
 msgid "The dungeon gets brighter for a moment."
-msgstr ""
+msgstr "던전 전체가 잠시 밝아졌다."
 
 #: spl-damage.cc:1922
 msgid "You can't deconstruct that!"
-msgstr ""
+msgstr "그것을 해체할 수는 없다!"
 
 #: spl-damage.cc:1958
 msgid "Really insult Beogh by defacing this idol?"
-msgstr ""
+msgstr "정말로 이 석상을 훼손하여, 베오그를 모욕할 것인가?"
 
 #: throw.cc:1247
 msgctxt "throw"
 msgid " fragments"
-msgstr ""
+msgstr " 파편"
 
 #: throw.cc:1257
 msgctxt "throw"
 msgid "explosion of "
-msgstr ""
+msgstr "의 폭발"
 
 #: throw.cc:1264 throw.cc:1265
 msgctxt "throw"
 msgid "exploding "
+msgstr "폭발하는 "
+
+#: items.cc:452
+#, c-format
+msgid ""
+"Item %s claims to be held by monster %s, but it isn't in the monster's "
+"inventory."
 msgstr ""
+"아이템 %s을(를) 몬스터 %s이(가) 장비하도록 시도했지만, 그 몬스터는 해당 아이"
+"템을 소지하고 있지 않다."
+
+#: items.cc:860
+msgid "overloaded)"
+msgstr "중량초과)"
+
+#: items.cc:862
+msgid "burdened)"
+msgstr "중량부담)"
+
+#: items.cc:862
+msgid "unencumbered)"
+msgstr "적절중량)"
+
+#: items.cc:864
+msgid "(Burden: "
+msgstr "(무게: "
+
+#: items.cc:1157
+msgid "Original Equipment"
+msgstr "오리지널 장비"
+
+#: items.cc:1171
+msgid "Buggy Original Equipment: "
+msgstr "버그성 오리지널 장비"
+
+#: items.cc:1180
+msgid "Your wizardly powers created "
+msgstr "당신의 치트키가 "
+
+#: items.cc:1180
+msgctxt "wizaq"
+msgid " "
+msgstr "을(를) 만들어냈다."
+
+#. Bug really.
+#: items.cc:1192
+msgid "You stumbled upon "
+msgstr "당신은 우연히 "
+
+#: items.cc:1192
+msgctxt "item"
+msgid " "
+msgstr "을(를) 발견했다"
+
+#: items.cc:1221
+msgid "Are you sure you want to pick up this pile of gold now?"
+msgstr "정말로 지금 이 금화 더미를 주울 것인가?"
+
+#: items.cc:1577
+#, c-format
+msgid " (gained %d)"
+msgstr " (%d 얻음)"
+
+#: items.cc:1580
+#, c-format
+msgid "You now have %d gold piece%s%s."
+msgstr "당신은 이제 금화 %1$d을(를) 소지하고 있다.%3$s%2$.0s"
+
+#: items.cc:1747
+#, c-format
+msgid "%s (gained %d)"
+msgstr "%s (%d개 얻음)"
+
+#: items.cc:1786
+msgid "The lords of Pandemonium are not amused. Beware!"
+msgstr "판데모니움의 군주들은 그다지 즐겁지 않은 것 같다. 조심하는 것이 좋다!"
+
+#: items.cc:1789
+msgid " tells them not to hurry."
+msgstr "은(는) 그들에게 서두르지 말라고 지시했다."
+
+#: items.cc:2182
+msgid "You don't feel like leaving the orb behind!"
+msgstr "오브를 다시 버려서는 안될 것 같다!"
+
+#: items.cc:2356
+#, c-format
+msgid " (%u%s turn%s)"
+msgstr " (%1$u%2$s 턴)%3$.0s"
+
+#: items.cc:3680
+msgid "Sorry, no books on that skill today."
+msgstr "유감이지만, 이번에는 그 스킬은 아무 책에도 존재하지 않는다."
+
+#: items.cc:3713
+msgid "# turns away from coagulation? [ENTER for fully fresh] "
+msgstr "응고로 부터 몇 턴 만큼? [ENTER키로 신선한 피] "
+
+#: items.cc:3718
+msgid "# turns away from rotting? [ENTER for fully fresh] "
+msgstr "부패로 부터 몇 턴 만큼? [ENTER키로 신선한 고기] "
+
+#: items.cc:4090
+#, c-format
+msgid "[%c] random"
+msgstr "[%c] 무작위"
+
+#: items.cc:4092
+msgid ""
+"\n"
+"What kind of item mimic? "
+msgstr ""
+"\n"
+"어떤 미믹 아이템을? "

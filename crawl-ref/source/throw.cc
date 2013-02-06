@@ -1254,7 +1254,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
              expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                       short_name);
          }
-         expl->name = expl->name + P_("throw","explosion of "); // + expl->name;
+         expl->name = expl->name + P_("throw","explosion of "); 
 
          beam.special_explosion = expl;
     }

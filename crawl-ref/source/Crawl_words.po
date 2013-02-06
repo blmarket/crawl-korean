@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 22:18+0900\n"
+"POT-Creation-Date: 2013-02-06 23:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6653,7 +6653,7 @@ msgstr "'네멜렉스 죠베'의 빛나는 제단"
 #: directn.cc:3144 directn.cc:3144 directn.cc:3147 directn.cc:3165
 #: directn.cc:3133
 msgid "white marble altar of Elyvilon"
-msgstr "'엘라이빌론'의 흰 대리석 제단"
+msgstr "'엘리빌론'의 흰 대리석 제단"
 
 #: directn.cc:3146 directn.cc:3146 directn.cc:3149 directn.cc:3167
 #: directn.cc:3135
@@ -10795,7 +10795,7 @@ msgstr "네멜렉스 죠베"
 
 #: religion.cc:2292
 msgid "Elyvilon"
-msgstr "엘라이빌론"
+msgstr "엘리빌론"
 
 #: religion.cc:2293
 msgid "Lugonu"

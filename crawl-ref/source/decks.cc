@@ -1723,7 +1723,7 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
     case CARD_PAIN:
         if (power_level == 2)
         {
-            /// 1. dealt or drawn, 2. card name
+            // 1. dealt or drawn, 2. card name
             mprf(_("You have %s %s."), participle, card_name(card));
             torment(&you, TORMENT_CARDS, you.pos());
             return;
