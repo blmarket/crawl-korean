@@ -1125,8 +1125,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_CHAOS;
         if (ammo_brand != SPMSL_CHAOS)
         {
-            beam.name    = make_stringf("혼돈의 %s",beam.name); // += " of chaos";
-            ammo_name    = make_stringf("혼돈의 %s",ammo_name); // += " of chaos";
+            beam.name    = make_stringf("혼돈의 %s",beam.name.c_str()); // += " of chaos";
+            ammo_name    = make_stringf("혼돈의 %s",ammo_name.c_str()); // += " of chaos";
         }
         else
             beam_changed = true;
@@ -1138,8 +1138,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_FIRE;
         if (ammo_brand != SPMSL_FLAME)
         {
-            beam.name    = make_stringf("화염의 %s",beam.name); //+= " of flame";
-            ammo_name    = make_stringf("화염의 %s",ammo_name); //+= " of flame";
+            beam.name    = make_stringf("화염의 %s",beam.name.c_str()); //+= " of flame";
+            ammo_name    = make_stringf("화염의 %s",ammo_name.c_str()); //+= " of flame";
         }
         else
             beam_changed = true;
@@ -1152,8 +1152,8 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_COLD;
         if (ammo_brand != SPMSL_FROST)
         {
-            beam.name   = make_stringf("냉기의 %s",beam.name); // += " of frost";
-            ammo_name   = make_stringf("냉기의 %s",ammo_name); // += " of frost";
+            beam.name   = make_stringf("냉기의 %s",beam.name.c_str()); // += " of frost";
+            ammo_name   = make_stringf("냉기의 %s",ammo_name.c_str()); // += " of frost";
         }
         else
             beam_changed = true;
@@ -2122,7 +2122,7 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
     beam.range         = you.current_vision;
 
     if (setup_missile_beam(mons, beam, item, ammo_name, returning))
-        return false;
+	 return false;
 
     beam.aimed_at_spot = returning;
 
