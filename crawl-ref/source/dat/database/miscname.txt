@@ -9,87 +9,87 @@
 # Any word other than "glowing" itself will work here.
 _glowing_adj_
 
-bright
+밝은
 
-brilliant
+빛나는
 
-dark
+어두운
 
-dull
+둔탁한
 
-faint
+희미한
 
-mottled
+얼룩진
 
-pale
+옅은
 
-pulsating
+찬란한
 
-shimmering
+반짝이는
 
-shining
+형광색
 %%%%
 _colour_name_
 
-aubergine
+가지색
 
-azure
+담청색
 
-beige
+베이지색
 
-black
+검은색
 
-blue
+파란색
 
-bronze
+군청색
 
-brown
+갈색
 
-charcoal
+암회색
 
-chartreuse
+연노랑색
 
-cyan
+청록색
 
-gold
+황금색
 
-green
+초록색
 
-grey
+회색
 
-indigo
+남색
 
-leaf green
+연녹색
 
-lime green
+황록색
 
-magenta
+자주색
 
-marigold
+연주홍색
 
-mauve
+연보라색
 
-ochre
+황토색
 
-orange
+주황색
 
-pink
+분홍색
 
-purple
+보라색
 
-red
+빨간색
 
-rubric
+루비색
 
-scarlet
+진홍색
 
-silver
+은색
 
-umber
+암갈색
 
-white
+흰색
 
-yellow
+노란색
 %%%%
 # "dust glows XXX", "eyes glow XXX", "hands glow XXX", "<actor> glows XXX".
 # If a language needs these keys split, please say so.
@@ -101,49 +101,45 @@ glowing_colour_name
 %%%%
 _writing_adj_
 
-angular
+구부러진
 
-blocky
+선명한
 
-bold
+스친듯한
 
-faded
+구불구불한
 
-flowing
+얼룩진
 
-glowing
+모난
 
-shifting
+희미하게 빛나는
 
-sinuous
-
-spidery
-
-writhing
+강렬하게 빛나는
 %%%%
 _writing_noun_
 
-binary code
+메모
 
-figures
+낙서
 
-glyphs
+인장
 
-hieroglyphics
+룬문자
 
-print-out
+상형문자
 
-runes
+속기문자
 
-scrawl
+활자
 
-sigils
+이진부호
 
-symbols
+그림문자
 
-text
+기호
 
-writing
+문장
 %%%%
 # Tome of Destruction: "The book opens to a page covered in XXX."
 writing_name
@@ -159,68 +155,68 @@ writing_name
 # random uselessness: "You smell XXX."
 smell_name
 
-baking bread
+갓 구운 빵 냄새
 
-burning hair
+머리카락이 불타는 냄새
 
-coffee
+커피 냄새
 
-fire and brimstone
+불과 유황의 냄새
 
-pepper
+후추 냄새
 
-salt
+짠 소금 냄새
 
-something weird
+무엇인가 기묘한 냄새
 
-sulphur
+유황 냄새
 
-tea
+차 냄새
 
-wet wool
+젖은 양모의 냄새
 %%%%
 # This doesn't necessarily have to make sense. For example, a name of a
 # fruit or an insect will work here.
 _roaring_animal_name_
 
-albino dragon
+알비노 용
 
-dragon
+용
 
-eggplant
+가지
 
-frog
+개구리
 
-human
+인간
 
-millipede
+노래기
 
-pill bug
+쥐며느리
 
-slug
+민달팽이
 
-yak
+야크
 %%%%
 # random uselessness: "You hear XXX."
 sound_name
 
-a crunching sound
+무언가 부서지는 소리
 
-a very strange noise
+매우 기묘한 소리
 
-a very strange noise indeed
+전에 들어본적 없는 기묘 소음
 
-a voice calling someone else's name
+누군가를 부르는 목소리
 
-roaring flames
+불길이 이글거리는 소리
 
-snatches of song
+노래의 한 소절
 
-the distant roaring of an enraged @_roaring_animal_name_@
+멀리서 @roaring_animal_name@이(가) 분노로 울부짖는 소리
 
-the chiming of a distant gong
+먼 곳에서 종이 울리는 소리
 
-the tinkle of an enormous bell
+작은 벨이 울리는 소리
 %%%%
 # Used both by Summon Horrible Things and Malign Gateway.
 SHT_int_loss
@@ -297,111 +293,115 @@ welcome_spam
 %%%%
 welcome_spam Zot Defence
 
-They are going to get your Orb!
+몬스터들이 당신의 오브를 훔치려고 한다!
 
-Stand and defend the Orb!
+몬스터들을 물리치고 오브를 사수하라!
 
-The safety of the most sacred Orb of Zot relies on you.
+신성한 조트의 오브를 지킬 수 있을지는, 오로지 당신에게 달려있다.
 %%%%
 hell_effect
 
 {{
 if you.can_smell() then
-    return "You smell brimstone."
+    return "독한 유황 냄새를 맡았다."
 else
-    return "Brimstone rains from above."
+    return "유황이 비처럼 쏟아졌다."
 end
 }}
 
-You feel lost and a long, long way from home...
+길을 읽고 미아가 된 느낌이다...
 
-You shiver with fear.
+무엇인가 커다란 공포로 온 몸이 떨렸다.
 
-WARN:You feel a terrible foreboding...
+WARN:무서운 죽음의 예감을 느꼈다...
 
-WARN:Something frightening happens.
+WARN:뭔가 무서운 일이 일어났다.
 
-WARN:You sense an ancient evil watching you...
+WARN:고대의 악이 당신을 감시하는 것을 느꼈다...
 
-WARN:You suddenly feel all small and vulnerable.
+WARN:돌연, 왜소하고 약해진 것 같다.
 
-WARN:You sense a hostile presence.
+WARN:적대적인 존재를 느꼈다.
 
-TALK:"You will not leave this place."
+TALK:"너는 여기서 살아서 나갈 수 없다."
 
-TALK:"Die, mortal!"
+TALK:"네 놈은 여기서 걸어 나갈 수 없다!"
 
-TALK:"We do not forgive those who trespass against us!"
+TALK:"죽어라, 유한한 존재여!"
 
-TALK:"Trespassers are not welcome here!"
+TALK:"사라져라, 필멸자여!"
 
-TALK:"You do not belong in this place!"
+TALK:"우리를 거역하고 이곳에 침입한 자는 용서받지 못한다!!"
 
-TALK:"Leave now, before it is too late!"
+TALK:"침입자가 환영 받을것이라는 생각 따위 버려라!!"
 
-TALK:"We have you now!"
+TALK:"여긴 네 놈 같은 존재가 있을 곳이 아니다!!"
 
-SOUND:A gut-wrenching scream fills the air!
+TALK:"빨리 꺼져라, 우물쭈물 하지 말고!"
 
-SOUND:You hear words spoken in a strange and terrible language...
+TALK:"너는 이제 우리의 것이다!"
 
-SOUND:You hear diabolical laughter!
+SOUND:몸 깊은 곳까지 떨리게한는 절규가 대기를 채웠다!
+
+SOUND:기괴하고 무서운 말을 들었다...
+
+SOUND:악마와 같은 웃음소리를 들었다!
 %%%%
 eating_cheese
 
-Mmm...@_cheese_kind_@.
+음... @_cheese_kind_@ 치즈다.
 %%%%
 _cheese_kind_
 
-Cheddar
+체다
 
-Edam
+에담
 
-Wensleydale
+윈즐리데일
 
-Camembert
+까망베르
 
-Goat cheese
+염소젖
 
-Fruit cheese
+과일
 
-Mozzarella
+모짜렐라
 
-Sheep cheese
+양젖
 
-Yak cheese
+야크젖
 %%%%
 eating_pizza
 
-@_carni_mmm_@ Ham and pineapple.
+@_carni_mmm_@ 햄과 파인애플 피자다.
 
-@_carni_mmm_@ Super Supreme.
+@_carni_mmm_@ 슈퍼 스프림 피자다.
 
 # Apparently, in some locales "pepperoni" is a word for sausage rather than
 # a type of bell peppers like in Europe.
-@_carni_mmm_@ Pepperoni.
+@_carni_mmm_@ 페퍼로니 피자다.
 
-Yeuchh! Anchovies.
+우웩! 비릿한 민물고기 피자다.
 
-@_carni_mmm_@ Chicken.
+@_carni_mmm_@ 치킨 피자다.
 
-Mmm... That's the fabled Pandemonium Pizza!
+음... 이 맛은 전설의 판데모니움 피자?
 
-Mmm... Cheesy.
+음... 치즈 피자다.
 
-@_herbi_mmm_@ Vegetable.
+@_herbi_mmm_@ 야채 피자다.
 
-@_herbi_mmm_@ Peppers.
+@_herbi_mmm_@ 핫 페퍼 피자다.
 
-@_herbi_mmm_@ Mushroom.
+@_herbi_mmm_@ 버섯 피자다.
 %%%%
 _carni_mmm_
 
 {{
 if you.mutation("herbivorous") > 0 then
-    return "Yeuchh!"
+    return "우웩!"
 else
-    return "Mmm..."
+    return "음..."
 end
 }}
 %%%%
@@ -409,9 +409,9 @@ _herbi_mmm_
 
 {{
 if you.mutation("carnivorous") > 0 then
-    return "Yeuchh!"
+    return "우웩!"
 else
-    return "Mmm..."
+    return "음..."
 end
 }}
 %%%%

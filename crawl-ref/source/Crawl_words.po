@@ -12209,7 +12209,7 @@ msgstr "은빛 화살"
 
 #: mon-cast.cc:943
 msgid "ensnaring beam"
-msgstr "유혹의 빛줄기"
+msgstr "거미줄 발사"
 
 #: mon-cast.cc:977
 msgid "agony"
