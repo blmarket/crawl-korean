@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 23:37+0900\n"
+"POT-Creation-Date: 2013-02-10 22:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgstr "특수 능력 없음"
 #: abl-show.cc:502
 msgid ""
 "Tendrils and shoots erupt from the earth and gnarl into the form of a plant."
-msgstr ""
+msgstr "덩굴과 새싹들이 땅 속에서 솟아났고, 곧이어 식물의 형태를 갖추었다."
 
 #: abl-show.cc:549 abl-show.cc:551 abl-show.cc:551 abl-show.cc:546
 #: abl-show.cc:548 abl-show.cc:559 abl-show.cc:561 abl-show.cc:504
@@ -183,6 +183,8 @@ msgid ""
 "A rhizome shoots up through the ground and merges with vitriolic spirits in "
 "the atmosphere."
 msgstr ""
+"뿌리줄기가 땅 속으로부터 솟아나왔고, 주변 환경의 산성 에너지를 끌어 모아 자라"
+"났다."
 
 #: abl-show.cc:553 abl-show.cc:553 abl-show.cc:550 abl-show.cc:563
 #: abl-show.cc:508
@@ -213,7 +215,7 @@ msgid "You sculpt a terrible being from the primitive principle of evil."
 msgstr ""
 
 msgid "You fashion an electric eel."
-msgstr ""
+msgstr "당신은 전기 뱀장어를 만들었다."
 
 #. / (영구적) MP
 #. / (영구적) MP
@@ -3373,7 +3375,7 @@ msgstr ""
 
 #: describe.cc:2264 describe.cc:2271 describe.cc:2271 describe.cc:2275
 msgid "UNDESCRIBED PORTAL VAULT ENTRANCE."
-msgstr ""
+msgstr "**이 PORTAL VAULT 입구의 설명을 찾을 수 없습니다**"
 
 msgid ""
 "Press '<w>!</w>' to toggle between the overview and the extended description."
@@ -3514,7 +3516,7 @@ msgid "The tide rushes in under you."
 msgstr "파도가 발밑으로 점점 차오르기 시작한다."
 
 msgid "%s의 부름으로 인해, 파도가 들어치기 시작한다."
-msgstr ""
+msgstr "%s의 부름으로 인해, 파도가 들어치기 시작한다."
 
 #: command.cc:763 command.cc:763
 msgid ""
@@ -3587,29 +3589,6 @@ msgstr ""
 "<w>,</w>: 몬스터의 HP를 1로 변화\n"
 "<w>Ctrl-B</w>: 몬스터 추방\n"
 "<w>Ctrl-K</w>: 몬스터 제거\n"
-
-msgid "It makes you extremely vulnerable to "
-msgstr ""
-
-msgid "It makes you very vulnerable to "
-msgstr ""
-
-msgid "It makes you vulnerable to "
-msgstr ""
-
-#: describe.cc:494 describe.cc:493 describe.cc:493 describe.cc:502
-#: describe.cc:497
-msgid "Buggy descriptor!"
-msgstr ""
-
-msgid "It protects you from "
-msgstr ""
-
-msgid "It greatly protects you from "
-msgstr ""
-
-msgid "It renders you almost immune to "
-msgstr ""
 
 #: describe.cc:999 describe.cc:998 describe.cc:998 describe.cc:1005
 #: describe.cc:1006
@@ -4145,27 +4124,27 @@ msgstr "당신의 공격은 %s이(가) 순간적으로 사라짐에 따라 허�
 # 해석을 하지 않고 공백으로 처리합니다. 이부분의 해석은 Crawl_verbs.po 에 있습니다.
 #: fight.cc:1985 fight.cc:1978 fight.cc:1978
 msgid " like the proverbial pig"
-msgstr ""
+msgstr "[proverbial pig] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:1988 fight.cc:1981 fight.cc:1981
 msgid " like a pig"
-msgstr ""
+msgstr "[pig] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:2000 fight.cc:1993 fight.cc:1993
 msgid " like an onion"
-msgstr ""
+msgstr "[onion] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:2005 fight.cc:1998 fight.cc:1998
 msgid " like a pillowcase"
-msgstr ""
+msgstr "[pillowcase] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:2017 fight.cc:2010 fight.cc:2010
 msgid " like a grape"
-msgstr ""
+msgstr "[grape] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:2034 fight.cc:2027 fight.cc:2027
 msgid " causing immense pain"
-msgstr ""
+msgstr "[immense pain] 이 문장을 보면 버그이므로 제보를 해 주세요."
 
 #: fight.cc:2156 fight.cc:3518 fight.cc:2149 fight.cc:3511 decks.cc:2846
 #: decks.cc:2845 potion.cc:81 potion.cc:81 decks.cc:2799 fight.cc:2170
@@ -4336,10 +4315,6 @@ msgstr "의 장비가 사라졌다!"
 #: delay.cc:1686
 msgid " appears from thin air!"
 msgstr "(이)가 갑자기 나타났다!"
-
-#: fight.cc:3176 fight.cc:3169 fight.cc:3169 fight.cc:3005
-msgid "a chaos effect from "
-msgstr ""
 
 #. / 수비자, 마침표나 느낌표
 #. / 수비자, 마침표나 느낌표
@@ -4690,23 +4665,6 @@ msgstr "%s은(는) %s을(를) 방어하는데 실패했다."
 msgid "stumble"
 msgstr "뒤로"
 
-# (deceit, 110813) 이부분 fight.cc에서 빠졌네요. 이곳에 해석본 적습니다.
-# 다만 %3$s 부분이 정확하지 않을수도...
-# msgid "%s %s %s ground!"
-# msgstr "%1$s은(는) %3$s(으)로부터 물러서지 않았다!"
-# (deceit, 110813) 따라서, 아래 3개는 현재 unused.
-#: fight.cc:5613 fight.cc:5606 fight.cc:5614 fight.cc:5614 fight.cc:5509
-msgid "hold"
-msgstr ""
-
-#: fight.cc:5857 fight.cc:5850 fight.cc:5858 fight.cc:5858 fight.cc:5760
-msgid "fail"
-msgstr ""
-
-#: fight.cc:5870 fight.cc:5863 fight.cc:5871 fight.cc:5871 fight.cc:5773
-msgid "phase"
-msgstr ""
-
 #: stuff.cc:468 stuff.cc:468
 msgid "You are now empty-clawed."
 msgstr "당신은 이제 빈손이다."
@@ -5033,17 +4991,13 @@ msgstr "쉭~소리"
 msgid "squeak"
 msgstr "찍소리"
 
-#: effects.cc:1065 effects.cc:1065 effects.cc:1070 effects.cc:941
-msgid "__NONE"
-msgstr ""
-
 #: effects.cc:1067 effects.cc:1067 effects.cc:1072 effects.cc:943
 msgid "yell"
 msgstr "고함"
 
 #. / 그냥 소리치는 것인듯. 1. 고함의 종류(shout, roar, squeak)
 #: effects.cc:1069 effects.cc:1069 effects.cc:1084 effects.cc:1112
-#: effects.cc:1074 effects.cc:945
+#: effects.cc:1074 effects.cc:945 effects.cc:960
 msgid "scream"
 msgstr "비명"
 
@@ -6388,7 +6342,7 @@ msgstr "%s의 마법서"
 #: abl-show.cc:2267 abl-show.cc:2267 abl-show.cc:2270 abl-show.cc:2328
 #: abl-show.cc:2285
 msgid "You renew your dark mirror aura."
-msgstr ""
+msgstr "어둠의 반사의 기운이 갱신되었다."
 
 #. / 1. 무기 이름 2. 브랜드( of flaming)의 번역형 3. 저주가 걸려있으면 (curse)
 #: itemname.cc:1362
@@ -7187,7 +7141,7 @@ msgstr "당신은 카드 한 장을 뽑았다..."
 # (deceit, 110814) 번역보류
 #: decks.cc:1346 decks.cc:1346 decks.cc:1353 decks.cc:1358
 msgid " seems to have exchanged this card behind your back!"
-msgstr ""
+msgstr "은(는) 당신이 모르는 사이, 이 카드를 바꿔 친 것 처럼 보인다!"
 
 #: decks.cc:1348 decks.cc:1348 decks.cc:1355 decks.cc:1360
 #, c-format
@@ -7624,7 +7578,7 @@ msgstr "이보다 많은 아이템을 가질 수 없다."
 #: items.cc:1003 items.cc:1003 items.cc:1004 items.cc:1045 items.cc:1023
 #, c-format
 msgid "found %s."
-msgstr ""
+msgstr "%s을(를) 발견했다."
 
 #: items.cc:1161 items.cc:1161 items.cc:1162 items.cc:1198 items.cc:1168
 #, c-format
@@ -7905,8 +7859,7 @@ msgstr "%2$s %1$s가 손상되었다!"
 #: ouch.cc:640 ouch.d.cc:640 ouch.cc:683
 #, c-format
 msgid "%s shields %s delectables from destruction."
-msgstr ""
-"%s은(는) %s delectable를 파괴로부터 지켰다. (무슨뜻인지 모르겠음; 수정예정)"
+msgstr "%1$s은(는) 당신의 먹잇감을 손상으로부터 지켰다.%2$.0s"
 
 #: ouch.cc:701 ouch.d.cc:701 ouch.cc:744
 #, c-format
@@ -7932,11 +7885,6 @@ msgstr "바닥에 있던 아이템이 파괴되었다!"
 #, c-format
 msgid "You are now level %d!"
 msgstr "당신은 레벨 %d(으)로 되돌아갔다!"
-
-#: ouch.cc:772 ouch.d.cc:772 ouch.cc:815
-#, c-format
-msgid "HP: %d/%d MP: %d/%d"
-msgstr ""
 
 #: ouch.cc:829 ouch.d.cc:829 ouch.cc:872 ouch.cc:873
 msgid " protects your life force!"
@@ -8963,10 +8911,6 @@ msgctxt "mon-stuff.cc"
 msgid "jumps into"
 msgstr "뛰어들었다"
 
-#: mon-stuff.d.cc:1851 mon-stuff.d.cc:1852 mon-stuff.d.cc:1853
-msgid "_killer_type_name"
-msgstr ""
-
 #: player-equip.cc:202 player-equip.cc:202 player-equip.cc:230
 #: player-equip.cc:227
 msgctxt "_equip_artefact_effect"
@@ -9349,7 +9293,7 @@ msgstr "부양력을 느꼈다."
 #: player-equip.cc:908
 msgctxt "_equip_armour_effect"
 msgid "You feel resistant to hostile enchantments."
-msgstr "적대적인 주술에 대한 저항력이 생겼다."
+msgstr "상태이상에 대한 저항력이 생겼다."
 
 #: player-equip.cc:893 potion.cc:426 potion.cc:426 player-equip.cc:909
 #: potion.cc:422 player-equip.cc:912 potion.cc:430
@@ -9426,7 +9370,7 @@ msgstr "둔감해진 느낌을 받았다."
 #: player-equip.cc:1066
 msgctxt "_unequip_armour_effect"
 msgid "You feel less resistant to hostile enchantments."
-msgstr "적대적인 주술에 대한 저항력이 약해진 것을 느꼈다."
+msgstr "상태이상에 대한 저항력이 약해진 것을 느꼈다."
 
 #: player-equip.cc:1048 main.cc:2503 main.cc:2503 main.cc:2505
 #: main_backup.cc:2505 main.cc:2527 player-equip.cc:1063 main.cc:2578
@@ -9854,7 +9798,7 @@ msgstr "다른 존재의 신성한 후광이 당신을 빛내고 있다."
 #: player.cc:3982
 #, c-format
 msgid "You are %s resistant to hostile enchantments."
-msgstr "당신은 적대적인 주술에 대해 %s."
+msgstr "당신은 상태이상에 대해 %s."
 
 #. character evaluates their ability to sneak around:
 #. / 은신도에 대한 수식어. 아직 번역 안함.
@@ -10214,7 +10158,7 @@ msgstr "그래도 다음 층으로 이동할 것인가?"
 #: stairs.cc:238 stairs.cc:238 stairs.cc:242 stairs.cc:161
 #, c-format
 msgid "%s moves away as you attempt to %s it!"
-msgstr ""
+msgstr "당신이 %s%s 시도하자, 그것은 도망가버렸다!"
 
 #: stairs.cc:275 stairs.cc:275 stairs.cc:279 stairs.cc:172
 msgid "The hatch slams shut behind you."
@@ -10414,7 +10358,7 @@ msgstr "당신은 관문을 통과했다."
 #: stairs.cc:1069 stairs.cc:1069 stairs.cc:1086 stairs.cc:876 stairs.cc:887
 #, c-format
 msgid "In your confused state, you trip and fall %s."
-msgstr ""
+msgstr "혼란한 나머지, %s(으)로 굴러 떨어졌다."
 
 #. XXX: Ideally, we want to hint at the wall rule (rock > metal),
 #. and that the walls can shift occasionally.
@@ -10610,7 +10554,7 @@ msgstr "당신의 %s은(는) 예리한 낫 모양의 칼날로 변화했다."
 
 #: transform.cc:618 transform.cc:618 transform.cc:670 transform.cc:754
 msgid "You inwardly fear your resemblance to a lawn ornament."
-msgstr ""
+msgstr "이끼가 낀 조각품을 닮아 가는 것에 대한 은근한 두려움이 느껴졌다."
 
 #: transform.cc:620 transform.cc:620 transform.cc:672 transform.cc:756
 msgid "a living statue of rough stone."
@@ -11445,7 +11389,7 @@ msgstr "혼란함이 사라졌다."
 #: main.cc:2514 main.cc:2514 main.cc:2516 main_backup.cc:2516 main.cc:2538
 #: main.cc:2589
 msgid "You feel less vulnerable to hostile enchantments."
-msgstr "적대적인 주술에 대한 저항이 약해졌음을 느꼈다."
+msgstr "상태이상에 대한 저항이 약해졌음을 느꼈다."
 
 #: main.cc:2515 main.cc:2515 main.cc:2517 main_backup.cc:2517 main.cc:2539
 #: main.cc:2590
@@ -13647,32 +13591,27 @@ msgstr "설명 상실."
 #: status.cc:536 status.cc:537 status.cc:555 status.cc:598
 msgctxt "glowing"
 msgid "very slightly "
-msgstr "아주 희미한 "
+msgstr "미세한 "
 
 #: status.cc:537 status.cc:538 status.cc:556 status.cc:599
 msgctxt "glowing"
 msgid "slightly "
-msgstr "희미한 "
+msgstr "약간의 "
 
 #: status.cc:539 status.cc:540 status.cc:558 status.cc:601
 msgctxt "glowing"
 msgid "moderately "
-msgstr "어느정도 "
+msgstr "보통의 "
 
 #: status.cc:540 status.cc:541 status.cc:559 status.cc:602
 msgctxt "glowing"
 msgid "heavily "
-msgstr "강렬한 "
+msgstr "심각한 "
 
 #: status.cc:541 status.cc:542 status.cc:560 status.cc:603
 msgctxt "glowing"
 msgid "really heavily "
-msgstr "극히 강렬한"
-
-#: status.cc:542 status.cc:543
-msgctxt "glowing"
-msgid "glowing"
-msgstr "빛을 발함"
+msgstr "극히 심각한"
 
 #: status.cc:576 status.cc:577 status.cc:615 status.cc:656
 msgid "You are recuperating from your illness."
@@ -14820,7 +14759,7 @@ msgstr "이(가) 있으니 조심하게."
 #: describe.cc:4189 view.cc:194 directn.cc:3789 directn.cc:3427 view.cc:187
 #: describe.cc:4202 directn.cc:3425 directn.cc:3790 view.cc:191
 #: describe.cc:4131 directn.cc:3356 directn.cc:3744 view.cc:189
-#: describe.cc:4127
+#: describe.cc:4127 skills.cc:362
 msgid " and "
 msgstr " 그리고 "
 
@@ -15278,13 +15217,13 @@ msgid "You'd want to drain or bottle this corpse instead. Continue anyway?"
 msgstr "당신은 피 대신 시체를 흡수/제조하려고 한다. 그래도 계속하겠는가?"
 
 #: food.cc:331 food.cc:436 food.cc:584 food.cc:344 food.cc:443 food.cc:383
-#: food.cc:501 food.cc:502
+#: food.cc:501 food.cc:502 food.cc:661
 msgctxt "food"
 msgid "bottle"
 msgstr "피의 물약을 제조"
 
 #: food.cc:331 food.cc:436 food.cc:584 food.cc:344 food.cc:443 food.cc:383
-#: food.cc:501 food.cc:502
+#: food.cc:501 food.cc:502 food.cc:661
 msgctxt "food"
 msgid "butcher"
 msgstr "해체"
@@ -15553,7 +15492,7 @@ msgstr "이 시체들은"
 #: food.cc:1216 food.cc:1359 food.cc:1291 food.cc:1434 food.cc:1322
 #: food.cc:1465 food.cc:1323 food.cc:1466
 msgid "You refuse to eat these food items."
-msgstr ""
+msgstr "이 음식들은 도저히 먹을 수 없다."
 
 #: food.cc:1306 food.cc:1381 food.cc:1412 food.cc:1413
 #, c-format
@@ -18626,10 +18565,6 @@ msgstr "잘못된 주문이다!"
 msgid "Sorry, this spell is gone!"
 msgstr "유감이지만, 그 주문은 이 버전에서 삭제되었다!"
 
-#: spl-cast.cc:1582 spl-cast.cc:1560
-msgid "You feel quite happy just as you are, actually."
-msgstr ""
-
 #: spl-cast.cc:1665 spl-cast.cc:1672
 #, c-format
 msgid "You detect %s"
@@ -20105,7 +20040,7 @@ msgstr "당신 주변의 공간이 일그려졌다!"
 
 #: spl-miscast.cc:1172 spl-miscast.cc:1176
 msgid "Space warps around @the_monster@!"
-msgstr "@the_monster@주변의 공간들이 일그러졌다!"
+msgstr "@the_monster@ 주변의 공간들이 일그러졌다!"
 
 #: spl-miscast.cc:1218 spl-miscast.cc:1222 spl-miscast.cc:1214
 msgid "You are caught in an extremely strong localised spatial distortion!"
@@ -20119,7 +20054,7 @@ msgstr "@The_monster@은(는) 대단히 강력한 국지적 공간 왜곡의 장
 #: spl-miscast.cc:1222 spl-miscast.cc:1229 spl-miscast.cc:1226
 #: spl-miscast.cc:1233 spl-miscast.cc:1218 spl-miscast.cc:1224
 msgid "A rift temporarily opens in the fabric of space!"
-msgstr ""
+msgstr "주변의 공간에 잠시 균열이 생긴 듯 하다!"
 
 #: spl-miscast.cc:1227 spl-miscast.cc:1231 spl-miscast.cc:1222
 msgid "Space warps crazily around you!"
@@ -23393,7 +23328,7 @@ msgstr "은(는) '진'의 분노로 인해, 소금 기둥으로 변했다!"
 #: godabil.cc:1276
 #, c-format
 msgid "%s grants you divine stamina."
-msgstr "%s은(는) 당신에게 신성한 자양의 기운을 불어넣어주었다."
+msgstr "%s은(는) 당신에게 신성한 원기를 불어넣어주었다."
 
 #: godabil.cc:1293
 #, c-format
@@ -23418,7 +23353,7 @@ msgstr "활기가 도는 것"
 
 #: godabil.cc:1305
 msgid "Your divine stamina fades away."
-msgstr "자양의 기운이 사라졌다."
+msgstr "신성한 원기가 사라졌다."
 
 #: godabil.cc:1320
 msgid "You have no mutations to be cured!"
@@ -27364,7 +27299,7 @@ msgstr ""
 #: describe.cc:457 describe.cc:452
 #, c-format
 msgid "It affects your health (%d)."
-msgstr ""
+msgstr "이것은 당신의 생명력에 영향을 준다 (%d)."
 
 #: describe.cc:471 describe.cc:466
 msgid "It protects you against confusion."
@@ -27428,203 +27363,144 @@ msgstr "%s은(는) 당신을 혼돈으로부터 %s 보호해준다.\n"
 
 #: directn.cc:373 directn.cc:358
 msgid ", g - get item"
-msgstr ""
+msgstr ", g - 아이템 줍기"
 
 #: directn.cc:3810 directn.cc:3764
 msgid "lies inside a sanctuary"
-msgstr ""
+msgstr "성지로 지정되어 있"
 
 #: directn.cc:3812 directn.cc:3766
 msgid "is shrouded in silence"
-msgstr ""
+msgstr "정적으로 덮여 있"
 
 #: directn.cc:3814 directn.cc:3768
 msgid "is lit by a halo"
-msgstr ""
+msgstr "후광으로 비추어져 있"
 
 #: directn.cc:3816 directn.cc:3770
 msgid "is wreathed by an umbra"
-msgstr ""
+msgstr "깜깜한 그림자로 둘러 싸여 있"
 
 #: directn.cc:3818 directn.cc:3774
 msgid "is liquefied"
-msgstr ""
+msgstr "액화되어 있"
 
 #: directn.cc:3820 directn.cc:3776
 msgid "is covered in magical glow"
-msgstr ""
+msgstr "마력의 빛으로 덮여 있"
 
 #: directn.cc:3823 directn.cc:3779
 #, c-format
 msgid "This square %s."
-msgstr ""
+msgstr "여기는 %s다."
 
 #: fight.cc:1978 melee_attack.cc:1799 melee_attack.cc:1811
 msgid "like the proverbial pig"
-msgstr ""
+msgstr "[_proverbial pig] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:1982 melee_attack.cc:1803 melee_attack.cc:1815
 msgid "like a pig"
-msgstr ""
+msgstr "[_pig] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:1983 melee_attack.cc:1804 melee_attack.cc:1816
 msgid "like a kebab"
-msgstr ""
+msgstr "[_kebab] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:1999 melee_attack.cc:1820 melee_attack.cc:1832
 msgid "like an onion"
-msgstr ""
+msgstr "[_onion] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2008 melee_attack.cc:1829 melee_attack.cc:1841
 msgid "like a pillowcase"
-msgstr ""
+msgstr "[_pillowcase] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2009 melee_attack.cc:1830 melee_attack.cc:1842
 msgid "like a ripe choko"
-msgstr ""
+msgstr "[_choko] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2010 melee_attack.cc:1831 melee_attack.cc:1843
 msgid "into ribbons"
-msgstr ""
+msgstr "[_ribbions] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2025 melee_attack.cc:1825 melee_attack.cc:1846
 #: melee_attack.cc:1837 melee_attack.cc:1858
 msgid "into splinters"
-msgstr ""
+msgstr "[_splinters] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2029 melee_attack.cc:1850 melee_attack.cc:1862
 msgid "like a grape"
-msgstr ""
+msgstr "[_grape] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2030 melee_attack.cc:1851 melee_attack.cc:1863
 msgid "like a drum"
-msgstr ""
+msgstr "[_drum] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2031 melee_attack.cc:1852 melee_attack.cc:1864
 msgid "like a gong"
-msgstr ""
+msgstr "[_gong] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2032 melee_attack.cc:1853 melee_attack.cc:1865
 msgid "like an anvil"
-msgstr ""
+msgstr "[_anvil] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
 #: fight.cc:2052 melee_attack.cc:1873 melee_attack.cc:1885
 msgid "causing immense pain"
-msgstr ""
+msgstr "[_immense pain] 이 문장을 보면 버그이므로 제보를 해 주세요"
 
-#: fight.cc:4917
+#: fight.cc:4917 monster.cc:5720
 #, c-format
 msgid "%s steals %s your gold!"
-msgstr ""
+msgstr "%s은(는) 당신의 금화%s 훔쳤다!"
 
-#: fight.cc:4920
+#: fight.cc:4920 monster.cc:5722
 msgctxt "stolen"
 msgid "all"
-msgstr ""
+msgstr "를 몽땅 다"
 
-#: fight.cc:4921
+#: fight.cc:4921 monster.cc:5722
 msgctxt "stolen"
 msgid "some of"
-msgstr ""
+msgstr "의 일부를"
 
 #: food.cc:253
 msgid "You could drain or bottle this corpse instead. Continue anyway?"
-msgstr ""
+msgstr "당신은 이 시체를 해제해도 그 고기를 먹을 수 없다. 그래도 계속하겠는가?"
 
 #. FIXME
 #: food.cc:611 food.cc:658 food.cc:659
 #, c-format
 msgid "There isn't anything %s to %s here."
-msgstr ""
-
-#: food.cc:2164
-msgctxt "food"
-msgid "Ham and pineapple."
-msgstr ""
-
-#: food.cc:2165
-msgctxt "food"
-msgid "Super Supreme."
-msgstr ""
-
-#: food.cc:2166
-msgctxt "food"
-msgid "Pepperoni."
-msgstr ""
-
-#: food.cc:2167
-msgctxt "food"
-msgid "Anchovies."
-msgstr ""
-
-#: food.cc:2168
-msgctxt "food"
-msgid "Chicken."
-msgstr ""
-
-#: food.cc:2169
-msgctxt "food"
-msgid "That's the fabled Pandemonium Pizza!"
-msgstr ""
-
-#: food.cc:2170
-msgctxt "food"
-msgid "Cheesy."
-msgstr ""
-
-#: food.cc:2171
-msgctxt "food"
-msgid "Vegetable."
-msgstr ""
-
-#: food.cc:2172
-msgctxt "food"
-msgid "Peppers."
-msgstr ""
-
-#: food.cc:2173
-msgctxt "food"
-msgid "Mushroom."
-msgstr ""
+msgstr "%2$s할 것이 없다.%1$.0s"
 
 #: food.cc:2301 food.cc:2146 food.cc:2147
 #, c-format
 msgid "This %sblood tastes delicious!"
-msgstr ""
-
-#: food.cc:2302
-msgid "warm "
-msgstr ""
+msgstr "이 %s피는 정말로 맛이 좋다!"
 
 #: item_use.cc:761 item_use.cc:728
 msgid "You can't wear that with your reptilian head."
-msgstr ""
-
-#: item_use.cc:827
-#, c-format
-msgid "You'd need %s %s to do that!"
-msgstr ""
-
-#: item_use.cc:1266
-msgid "That weapon is stuck to your "
-msgstr ""
+msgstr "이 모자는 당신 머리 형태에 맞지 않는다."
 
 #: item_use.cc:4649 item_use.cc:2474
 #, c-format
 msgid "%s glow%s silvery %s for a moment."
-msgstr ""
+msgstr "%1$s은(는) 잠시 은빛 섞인 %3$s(으)로 빛났다.%2$.0s"
+
+#: item_use.cc:3117
+msgid "This will not work."
+msgstr "여기에는 효과를 볼 수 없을 것이다."
 
 #: item_use.cc:5304 item_use.cc:3123
 msgid "You feel like taking on a jabberwock."
-msgstr ""
+msgstr "알 수 없는 허무함이 느껴졌다."
 
 #: items.cc:898 items.cc:887
 msgid "Pick up what? (_ for help)"
-msgstr ""
+msgstr "무엇을 주울 것인가? (_ 키로 도움말)"
 
 #: items.cc:2427 items.cc:2401
 msgid "Drop what? (_ for help)"
-msgstr ""
+msgstr "무엇을 내려놓을 것인가? (_ 키로 도움말)"
 
 #: misc.cc:1263 player.cc:184 misc.cc:1293 player.cc:188
 #, c-format
@@ -27633,240 +27509,232 @@ msgstr "%s 함정을 발견했다!"
 
 #: misc.cc:2231 misc.cc:2272
 msgid "your ally the "
-msgstr ""
+msgstr "당신의 동료 "
 
 #: misc.cc:2457 misc.cc:2497
 msgid "You get stuck in the web!"
-msgstr ""
-
-#: mon-abil.cc:1205
-#, c-format
-msgid "%s calls on %s to defend her!"
-msgstr ""
+msgstr "당신은 거미줄에 갇혔다!"
 
 #: mon-death.cc:68 mon-death.cc:69
 msgid "With Pikel's spell broken, the former slave thanks you for freedom."
 msgstr ""
+"피켈의 주문이 사라지고, 피켈의 노예들은 자신들을 해방시켜준것에 대해 감사해했"
+"다."
 
 #. Draconians are large for the purposes of armour, but only medium for
 #. weapons and carrying capacity.
 #: mutation.cc:500
 #, c-format
 msgid "Your %s scales are hard (AC +%d).\n"
-msgstr ""
+msgstr "당신은 단단한 %s 비늘을 가지고 있다. (AC +%d).\n"
 
 #: mutation.cc:502 mutation.cc:625 mutation.cc:629
 msgid "Your body does not fit into most forms of armour.\n"
-msgstr ""
+msgstr "당신은 너무 커 대부분의 갑옷을 입지 못한다.\n"
 
 #: mutation.cc:1232 mutation.cc:1343 mutation.cc:1355
 msgid "Your body decomposes!"
-msgstr ""
+msgstr "당신의 육체가 재형성되었다!"
 
 #: output.cc:1419 output.cc:1440 output.cc:1382 output.cc:1403 output.cc:1386
 #: output.cc:1407
 #, c-format
 msgid "<darkgrey>(no %s)</darkgrey>"
-msgstr ""
+msgstr "<darkgrey>(%s 없음)</darkgrey>"
 
 #: output.cc:1424 output.cc:1387 output.cc:1391
 #, c-format
 msgid "<darkgrey>(%s unavailable)</darkgrey>"
-msgstr ""
+msgstr "<darkgrey>(%s 사용 불가)</darkgrey>"
 
 #: output.cc:1429 output.cc:1392 output.cc:1396
 #, c-format
 msgid "<darkgrey>(%s currently unavailable)</darkgrey>"
-msgstr ""
+msgstr "<darkgrey>(현재 %s 사용 불가)</darkgrey>"
 
 #: output.cc:1435 output.cc:1398 output.cc:1402
 #, c-format
 msgid "<darkgrey>(%s restricted)</darkgrey>"
-msgstr ""
+msgstr "<darkgrey>(%s 제한됨)</darkgrey>"
 
 #: output.cc:1715 output.cc:1677 output.cc:1681
 #, c-format
 msgid "   Next: %2d%%"
-msgstr ""
+msgstr "   다음: %2d%%"
 
 #: player-equip.cc:437 player-equip.cc:431
 msgid "You really shouldn't be using a hasty item like this."
-msgstr ""
+msgstr "이와 같이 몸을 가속시키는 물건은 사용하지 않는 것이 좋을 것 같다."
 
 #: player-equip.cc:447 player-equip.cc:441
 #, c-format
 msgid "It sticks to your %s!"
-msgstr ""
+msgstr "그것은 당신의 %s에 달라붙어 떨어지지 않는다!"
 
 #: player-equip.cc:646 player-equip.cc:648
 #, c-format
 msgid "Pain shudders through your %s!"
-msgstr ""
+msgstr "강렬한 고통이 %s을(를) 타고 올라왔다!"
 
 #: player-equip.cc:648 player-equip.cc:650
 #, c-format
 msgid "A searing pain shoots up your %s!"
-msgstr ""
+msgstr "타는 듯한 고통이 %s을(를) 쑤시기 시작했다!"
 
 #. magic resistance
 #: player.cc:4075 player.cc:4164 player.cc:4188
 #, c-format
 msgid "You are %s to hostile enchantments."
-msgstr ""
+msgstr "당신은 상태이상에 대해 %s."
 
 #: player.cc:4991 player.cc:5237 player.cc:5260
 msgid "Your divine stamina protects you from the miasma!"
-msgstr ""
+msgstr "신성한 원기가 오염으로부터 당신을 보호했다!"
 
 #: player.cc:6548 player.cc:6886 player.cc:6914
 msgid "Your divine stamina protects you from decay!"
-msgstr ""
+msgstr "신성한 원기가 부패로부터 당신을 보호했다!"
 
 #: player.cc:6875 player.cc:7196 player.cc:7224
 msgid "Your divine stamina protects you from disease!"
-msgstr ""
+msgstr "신성한 원기가 질병으로부터 당신을 보호했다!"
 
 #: potion.cc:294 potion.cc:302
 msgctxt "potion"
 msgid "more "
-msgstr ""
-
-#: religion.cc:2163 religion.cc:2162
-msgid " grants you @an@ undead servant@s@!"
-msgstr ""
-
-#: religion.cc:2958 religion.cc:2979
-#, c-format
-msgid " does not appreciate desertion%s!"
-msgstr ""
-
-#: religion.cc:3387 religion.cc:3436
-msgid " says: How dare you come in such a loathsome form!"
-msgstr ""
+msgstr "더욱 "
 
 #: skill_menu.cc:489 skill_menu.cc:515 skill_menu.cc:519
 msgid "In automatic mode, skills are trained as you use them."
 msgstr ""
+"자동 수련 모드에서는, 당신이 사용한 스킬의 빈도에 따라 자동으로 스킬이 수련된"
+"다."
 
 #: skill_menu.cc:491 skill_menu.cc:517 skill_menu.cc:521
 msgid ""
 "In manual mode, experience is spread evenly across all activated skills."
-msgstr ""
+msgstr "수동 수련 모드에서는, 당신이 수련할 스킬들을 수동으로 선택할 수 있다."
 
 #: skills.cc:446 skills.cc:422 skills.cc:425
 #, c-format
 msgid "You stop training %s"
-msgstr ""
-
-#: spl-cast.cc:1635
-msgid "You detect items!"
-msgstr ""
+msgstr "%s 수련을 중단했다."
 
 #: spl-miscast.cc:984 spl-miscast.cc:982
 msgid "Your beak vibrates slightly."
-msgstr ""
+msgstr "당신의 부리가 살짝 떨렸다."
 
 #. / @로 둘러싸인 부분은 원문 그대로 쓰세요.
 #: spl-miscast.cc:1673 spl-miscast.cc:1664
 msgid "@The_monster@ twitches violently."
-msgstr ""
+msgstr "@The_monster@은(는) 격렬하게 몸을 떨었다."
 
 #: spl-miscast.cc:1677 spl-miscast.cc:1668
 msgid "You feel numb."
-msgstr ""
+msgstr "감각이 무뎌짐을 느꼈다."
 
 #: spl-miscast.cc:1680 spl-miscast.cc:1671
 msgid "@The_monster@ pauses, visibly distraught."
-msgstr ""
+msgstr "@The_monster@은(는) 잠시 행동을 멈추고, 이성을 잃은 듯이 보였다."
 
 #. XXX: bleh, dumb message
 #: spl-transloc.cc:1027 spl-transloc.cc:1053 spl-transloc.cc:1064
 msgid "Creating passages of Golubria requires sufficient empty space."
-msgstr ""
+msgstr "골루브리아의 통로를 생성하기 위해서든 충분한 공간이 필요하다."
 
 #: status.cc:561 status.cc:604
 msgctxt "glowing"
 msgid "contaminated"
-msgstr ""
+msgstr "마법 오염"
 
 #: status.cc:846 status.cc:910
 msgid "You have a beastly appendage."
-msgstr ""
+msgstr "당신의 신체 일부가 짐승으로 변형되었다."
+
+#: status.cc:449 stuff.cc:449
+msgctxt "stuff"
+msgid "already"
+msgstr "이미"
+
+#: status.cc:449 stuff.cc:449
+msgctxt "stuff"
+msgid "now"
+msgstr "이제"
 
 #: stuff.cc:446 stuff.cc:451
 #, c-format
 msgid "Your mouth is %s empty."
-msgstr ""
+msgstr "당신은 %s 맨입이다."
 
 #: stuff.cc:448 stuff.cc:453
 #, c-format
 msgid "You are %s empty-clawed."
-msgstr ""
+msgstr "당신은 %s 맨손이다."
 
 #: stuff.cc:450 stuff.cc:455
 #, c-format
 msgid "You are %s empty-tentacled."
-msgstr ""
+msgstr "당신의 촉수에는 %s 아무 것도 없다."
 
 #: stuff.cc:452 stuff.cc:457
 #, c-format
 msgid "You are %s empty-handed."
-msgstr ""
+msgstr "당신은 %s 맨손이다."
 
 #: terrain.cc:1499 terrain.cc:1451 terrain.cc:1452
 msgid "The lava roasts you!!"
-msgstr ""
+msgstr "당신은 용암에 온 몸이 빠졌다!"
 
 #: terrain.cc:1501 terrain.cc:1453 terrain.cc:1454
 msgid "The lava burns you!!"
-msgstr ""
+msgstr "당신은 용암에 끔찍한 화상을 입었다!"
 
 #: terrain.cc:1503 terrain.cc:1455 terrain.cc:1456
 msgid "The lava sears you!!"
-msgstr ""
+msgstr "당신은 용암에 큰 화상을 입었다!"
 
 #: terrain.cc:1505 terrain.cc:1457 terrain.cc:1458
 msgid "The lava scorches you!"
-msgstr ""
+msgstr "당신은 용암에 화상을 입었다!"
 
 #: terrain.cc:1507 terrain.cc:1459 terrain.cc:1460
 msgid "The lava scalds you!"
-msgstr ""
+msgstr "당신은 용암에 그을렸다!"
 
 #: terrain.cc:1566 terrain.cc:1520 terrain.cc:1521
 msgid "You burn to ash..."
-msgstr ""
+msgstr "당신은 불타올라 한 줌의 재가 되었다..."
 
 #: terrain.cc:1568 terrain.cc:1522 terrain.cc:1523
 msgid "You fall apart..."
-msgstr ""
+msgstr "당신은 물 속으로 가라앉았다..."
 
 #. / 1. skillname 2. cur skill progress%, 4.5. +x, x
 #: tilereg-skl.cc:47 tilereg-skl.cc:48
 #, c-format
 msgid "%-14s Skill %4.1f Aptitude %c%d"
-msgstr ""
+msgstr "%-14s 스킬  %4.1f 적성     %c%d"
 
 #: tilereg-skl.cc:75 tilereg-skl.cc:76
 msgid "You cannot train this skill."
-msgstr ""
+msgstr "당신은 이 스킬을 수련할 수 없다."
 
 #: transform.cc:591 transform.cc:675
 msgid "You fail to extend your transformation any further."
-msgstr ""
+msgstr "변신을 연장하는데 실패했다."
 
 #: transform.cc:816 transform.cc:907
 msgid "You wish you had such spider senses a moment ago."
-msgstr ""
+msgstr "조금만 일찍 거미로 변신하면 좋았을 것이라는 생각이 들었다."
 
 #: transform.cc:826 transform.cc:917
 msgid "You shred the web into pieces!"
-msgstr ""
+msgstr "거미줄이 갈기갈기 찢어졌다!"
 
 #: transform.cc:986 transform.cc:1091
 #, c-format
 msgid "Your %s disappear%s."
-msgstr ""
+msgstr "당신의 %1$s(이)가 사라졌다.%2$.0s"
 
 #. Output some text since otherwise snakes will disappear silently.
 #: xom.cc:1914 xom.cc:1836 xom.cc:1838
@@ -27883,70 +27751,72 @@ msgstr ""
 #: abl-show.cc:1359 abl-show.cc:1304
 #, c-format
 msgid "You cannot call out to %s while silenced."
-msgstr ""
+msgstr "정적 상태에서는 %s을(를) 부를 수 없다."
 
 #: abl-show.cc:2277 abl-show.cc:2234
 msgid "You cannot imprison that!"
-msgstr ""
+msgstr "그건 가둘 수 없다!"
 
 #: abl-show.cc:2909 abl-show.cc:2867
 msgid "  Ability - do what?                 Cost                       Failure"
 msgstr ""
+"  능력 - 무엇을 사용할것인가?        소모                       실패율 "
 
 #: abl-show.cc:2911 abl-show.cc:2869
 msgid "  Ability - describe what?           Cost                       Failure"
 msgstr ""
+"  능력 - 무엇의 설명을 보는가?       소모                       실패율 "
 
 #: abyss.cc:1825 abyss.cc:1819
 #, c-format
 msgid "Corrupted %s"
-msgstr ""
+msgstr "타락한 %s"
 
 #. / 1. name, 2. 's' if not player, 3. door or wall
 #: actor.cc:298 actor.cc:299
 #, c-format
 msgid "%s fall%s off the door."
-msgstr ""
+msgstr "%1$s은(는) 문에서 떨어졌다.%2$.0s"
 
 #: actor.cc:298 actor.cc:299
 #, c-format
 msgid "%s fall%s off the wall."
-msgstr ""
+msgstr "%1$s은(는) 벽에서 떨어졌다.%2$.0s"
 
 #: areas.cc:454
 msgid "By Zin's power, hidden traps are revealed to you."
-msgstr ""
+msgstr "진의 힘에 의해, 숨겨져 있던 함정들이 나타났다."
 
 #: areas.cc:460
 msgid "By Zin's power, the foul cloud within the sanctuary is swept away."
-msgstr ""
+msgstr "진의 힘에 의해, 성지를 덮고 있던 구름들이 걷혔다."
 
 #: areas.cc:465
 msgid "By Zin's power, all foul fumes within the sanctuary are swept away."
-msgstr ""
+msgstr "진의 힘으로 인해, 성지를 덮고 있던 연기들이 걷혔다."
 
 #: areas.cc:471
 msgid "By Zin's power, all blood is cleared from the sanctuary."
-msgstr ""
+msgstr "진의 힘으로 인해, 성지 내에 있던 핏자국들이 깨끗이 지워졌다."
 
 #: beam.cc:947
 msgid "The grate screeches as it bends and collapses."
-msgstr ""
+msgstr "쇠창살이 꼬이고 무너져 내리면서 날카로운 쇳소리를 내었다."
 
 #: beam.cc:4377 beam.cc:4378
 #, c-format
 msgid " protects %s plant from harm."
-msgstr ""
+msgstr "은(는) 식물을 피해로부터 보호했다.%1$.0s"
 
 #: beam.cc:4521 beam.cc:4522
 #, c-format
 msgid "%s momentarily phases out as the %s passes through %s."
-msgstr ""
+msgstr "%1$s은(는) 잠시 순간적으로 사라져 %2$s을(를) 피했다.%3$.0s"
 
 #: beam.cc:4527 beam.cc:4528
 #, c-format
 msgid "The %s misses %s."
-msgstr ""
+msgstr "%s은(는) %s을(를) 맞추지 못하고 빗나갔다."
 
 #: cloud.cc:1371
 msgctxt "verb"
@@ -27964,12 +27834,12 @@ msgstr "어느 키로 바꿀 것인가?"
 #: command.cc:483
 #, c-format
 msgid "Swapping with: %c - %s"
-msgstr ""
+msgstr "바꿀 키: %c - %s"
 
 #: command.cc:492
 #, c-format
 msgid "Moving to: %c - %s"
-msgstr ""
+msgstr "다음 키로 바꿈: %c - %s"
 
 #: command.cc:675
 msgid ""
@@ -27990,6 +27860,22 @@ msgid ""
 "<w>)</w> : cycle to previous suitable missile.\n"
 "<w>i</w> : choose from Inventory.\n"
 msgstr ""
+"<h>타겟팅 (마법봉 발동, 주문 시전 등등):\n"
+"대부분의 키는 주변을 조사하는데 사용.\n"
+"몇몇 키는 대상에게 마법봉이나 주문 등을 발사하는데 사용(디폴트),\n"
+"사정거리는 더 높이 평가될수 있으며, 발사체는 멈추지 않음.\n"
+"<w>Enter</w> : 발사 (<w>Space</w>, <w>Del</w>)\n"
+"<w>.</w> : 발사, 대상에서 멈춤\n"
+"<w>@</w> : 발사, 대상에서 멈추며 사정거리 무시\n"
+"<w>!</w> : 발사, 멈추지 않으며 사정거리 무시\n"
+"<w>p</w> : 이전 대상에게 발사 (<w>f</w>)\n"
+"<w>:</w> : 발사 경로를 보이기/감추기\n"
+"<w>Shift-Dir.</w> : 해당 직선 방향으로 발사\n"
+"\n"
+"<h>발사체를 발사 혹은 투척함:\n"
+"<w>(</w> : 다음 발사체 선택.\n"
+"<w>)</w> : 이전 발사체 선택.\n"
+"<w>i</w> : 아이템 목록을 통해 선택.\n"
 
 #: command.cc:1902
 msgid ""
@@ -28017,6 +27903,29 @@ msgid ""
 "<w>5</w>.      List of Enchantments\n"
 "<w>6</w>.      Inscriptions\n"
 msgstr ""
+"<h>매뉴얼 목차\n"
+"\n"
+"<w>*</w>       목차 테이블 컨텐츠\n"
+"<w>A</w>.      개요\n"
+"<w>B</w>.      시작 화면\n"
+"<w>C</w>.      능력치 설명\n"
+"<w>D</w>.      던전 탐험하기\n"
+"<w>E</w>.      경험치와 스킬\n"
+"<w>F</w>.      몬스터\n"
+"<w>G</w>.      아이템\n"
+"<w>H</w>.      주문\n"
+"<w>I</w>.      타게팅\n"
+"<w>J</w>.      신앙\n"
+"<w>K</w>.      변이\n"
+"<w>L</w>.      저작 정보, 컨택트, 갱신 이력\n"
+"<w>M</w>.      매크로, 설정, 성능\n"
+"<w>N</w>.      개발 철학\n"
+"<w>1</w>.      종족 목록\n"
+"<w>2</w>.      직업 목록\n"
+"<w>3</w>.      스킬 목록\n"
+"<w>4</w>.      키와 명령어 목록\n"
+"<w>5</w>.      버프와 상태이상\n"
+"<w>6</w>.      문장 새기기\n"
 
 #: command.cc:2267
 msgid "Suicide the current character"
@@ -28182,6 +28091,15 @@ msgstr ""
 msgid "You deal a card..."
 msgstr ""
 
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
@@ -28468,12 +28386,12 @@ msgstr ""
 
 #: food.cc:2074 food.cc:2075
 msgid "Bleh, bug pizza."
-msgstr ""
+msgstr "헐, 버그 피자다."
 
 #: food.cc:2147 food.cc:2148
 msgctxt "blood"
 msgid "warm "
-msgstr ""
+msgstr "따듯한 "
 
 #: godconduct.cc:356
 msgid " claims a new guest."
@@ -29780,7 +29698,7 @@ msgstr ""
 #: spl-book.cc:2433 spl-book.cc:2446
 msgctxt "bookname"
 msgid " and "
-msgstr ""
+msgstr " 그리고 "
 
 #. 1. book name 2. discipline name(s)
 #: spl-book.cc:2443 spl-book.cc:2456
@@ -29865,100 +29783,88 @@ msgstr "클리어/사망 기록과 점수를 확인한다."
 #: status.cc:52
 msgctxt "status"
 msgid "Vit"
-msgstr ""
+msgstr "원기"
 
 #: status.cc:52
 msgctxt "status"
 msgid "vitalised"
-msgstr ""
+msgstr "신성한 원기"
 
 #: status.cc:52
 msgid "You are divinely vitalised."
-msgstr ""
+msgstr "당신은 신성한 원기를 받고 있다."
 
 #: status.cc:82
 msgctxt "status"
 msgid "Resist"
-msgstr ""
+msgstr "저항"
 
 #: status.cc:82
 msgid "You resist elements."
-msgstr ""
+msgstr "당신은 일시적인 저항력을 얻은 상태다."
 
 #: status.cc:329
 #, c-format
 msgid "You are %s."
-msgstr ""
+msgstr "당신은 %s(이)다."
 
 #: status.cc:445
 msgid "studying "
-msgstr ""
+msgstr "다음을 학습중: "
 
 #: status.cc:786
 msgid "Your flesh is rotting away quickly."
-msgstr ""
+msgstr "당신의 살점은 아주 급속히 썩어가고 있다."
 
 #: status.cc:788
 msgid "Your flesh is rotting badly."
-msgstr ""
+msgstr "당신의 살점은 빠르게 썩어가고 있다."
 
 #: status.cc:791
 msgid "Your flesh is rotting faster than usual."
-msgstr ""
+msgstr "당신의 살점은 평소보다 약간 빠르게 썩어가고 있다."
 
 #: status.cc:793
 msgid "Your flesh is rotting at the usual pace."
-msgstr ""
+msgstr "당신의 살점은 평소처럼 썩어가고 있다."
 
 #: throw.cc:353
 #, c-format
 msgid "You cannot throw anything while %s."
-msgstr ""
+msgstr "%s 상태에서는 무언가를 던질 수 없다."
 
 #: throw.cc:360
 #, c-format
 msgid "You cannot shoot with your %s while %s."
-msgstr ""
+msgstr "%2$s 상태에서는 %1$s(으)로 발사할 수 없다."
 
-#: throw.cc:1205 throw.cc:1206
-msgid "dispersing "
-msgstr ""
+#: stuff.cc:502
+msgid "held in a net"
+msgstr "그물에 잡힌"
 
-#: throw.cc:1212 throw.cc:1213
-msgid "poisoned "
-msgstr ""
-
-#: throw.cc:1218 throw.cc:1219
-msgid "penetrating "
-msgstr ""
-
-#: throw.cc:1224 throw.cc:1225
-msgid "silvery "
-msgstr ""
-
-#: throw.cc:1230 throw.cc:1231
-msgid "blessed "
-msgstr ""
+#: stuff.cc:504
+msgid "caught in a web"
+msgstr "거미줄에 걸린"
 
 #: transform.cc:798
 msgid "You have no appropriate body parts free."
-msgstr ""
+msgstr "당신은 자유롭게 변형할만한 신체부위가 없다."
 
 #: transform.cc:808
 msgid "You grow a pair of large bovine horns."
-msgstr ""
+msgstr "커다란 물소뿔 한 쌍이 머리에서 자라났다."
 
 #: transform.cc:811
 msgid "One of your tentacles grows a vicious spike."
-msgstr ""
+msgstr "당신의 촉수 중 하나가 송곳 같은 가시로 변했다."
 
 #: transform.cc:814
 msgid "Your hands morph into claws."
-msgstr ""
+msgstr "당신의 양 손에 날카로운 손톱이 자라났다."
 
 #: transform.cc:817
 msgid "Your feet morph into talons."
-msgstr ""
+msgstr "당신의 양 발에 발굽이 자라났다."
 
 #: transform.cc:873 transform.cc:880
 #, c-format
@@ -30024,11 +29930,11 @@ msgstr ""
 
 #: xom.cc:2541 xom.cc:2547
 msgid "The granite statue turns to stare at you."
-msgstr ""
+msgstr "화강암 석상이 당신을 노려보기 시작했다."
 
 #: xom.cc:2575 xom.cc:2581
 msgid "The stone arch briefly shows a sunny meadow on the other side."
-msgstr ""
+msgstr "아치형 돌 너머로 잠시 밝은 목축지의 모습이 보였다."
 
 #: xom.cc:2629 xom.cc:2635
 msgid "One of "
@@ -30040,7 +29946,7 @@ msgstr ""
 
 #: xom.cc:3138 xom.cc:3143
 msgid "Couldn't find ray between player and stairs."
-msgstr ""
+msgstr "플레이어와 계단 사이의 직선거리를 파악할 수 없다."
 
 #: beam.cc:3122
 msgctxt "tracer_affect_player"
@@ -30318,10 +30224,13 @@ msgid ""
 "\n"
 "It looks %s."
 msgstr ""
+"\n"
+"\n"
+"이것은 %s 보인다."
 
 #: describe.cc:3917
 msgid "You can pray to sacrifice all orcish remains on your square."
-msgstr ""
+msgstr "당신은 기도를 드림으로써, 바닥에 있는 오크의 시체들을 바칠 수 있다."
 
 #: describe.cc:3922
 msgid ""
@@ -30329,10 +30238,14 @@ msgid ""
 "* or =p to avoid sacrificing them accidentally. See the detailed description "
 "to sacrifice only some kinds of items."
 msgstr ""
+"당신은 당신이 선 바닥에 있는 아이템들을 기도를 드림으로써 바칠 수 있다. 문장"
+"이 새겨져 있는 아이템은받지 않으므로, 실수로 아끼는 아이템을 바치지 않도록, "
+"중요 아이템에는 { 키를 통해 문장을 새겨 놓을 수 있다. 몇몇 종류의 아이템만을"
+"바치도록 설정하는 법은 자세한 설명 보기 메뉴에서 열람이 가능하다."
 
 #: describe.cc:3952
 msgid "You can pray to sacrifice all fresh corpses on your square."
-msgstr ""
+msgstr "당신은 기도를 드림으로써, 바닥에 있는 썩지 않은 시체들을 바칠 수 있다."
 
 #: describe.cc:4191
 msgid ""
@@ -30343,6 +30256,13 @@ msgid ""
 "experience value and possibly some piety. Pacified monsters try to leave the "
 "level."
 msgstr ""
+"적대적인 몬스터를 치유하면, 때때로 몬스터들은 적대감을 가라앉히고, 중립 상태"
+"로 돌아간다. 짐승류의 몬스터들은 교화하기 가장 쉬운 대상이며, 플레이어와 같"
+"은 종족의 몬스터가 그 다음으로 쉽고, 그 뒤로 플레이어와 다른 종족의 몬스터, "
+"마지막으로 악마 혹은 언데드는 교화하기 가장 어렵다. 잠을 자고 있는 몬스터 혹"
+"은 지성이 없는 몬스터는교화할 수 없다. 교화에 성공하면, 당신은 몬스터를 처치"
+"했을 때 얻는 경험치의 절반을 얻을 수 있으며, 신앙도 또한 얻을 수 있다. 교화"
+"된 몬스터는 우선적으로 해당 층을 떠나길 시도할 것이다."
 
 #: describe.cc:4204
 msgid ""
@@ -30658,3 +30578,42 @@ msgid ""
 msgstr ""
 "\n"
 "어떤 미믹 아이템을? "
+
+#: describe.cc:497
+msgid "Buggy descriptor!"
+msgstr ""
+
+#: terrain.cc:1640
+msgctxt "climb"
+msgid "climb"
+msgstr "에 올라가려고"
+
+#: terrain.cc:1642
+msgctxt "climb"
+msgid "use"
+msgstr "을(를) 이용하고자"
+
+#: terrain.cc:1644
+msgctxt "climb"
+msgid "pass through"
+msgstr "을(를) 지나가고자"
+
+#: throw.cc:1205 throw.cc:1206
+msgid "dispersing "
+msgstr "전이의 "
+
+#: throw.cc:1212 throw.cc:1213
+msgid "poisoned "
+msgstr "독이 발라진 "
+
+#: throw.cc:1218 throw.cc:1219
+msgid "penetrating "
+msgstr "관통하는 "
+
+#: throw.cc:1224 throw.cc:1225
+msgid "silvery "
+msgstr "은빛 "
+
+#: throw.cc:1230 throw.cc:1231
+msgid "blessed "
+msgstr "축복받은 "

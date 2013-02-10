@@ -446,7 +446,7 @@ void canned_msg(canned_message_type which_message)
     case MSG_EMPTY_HANDED_NOW:
     {
         const char* when =
-            (which_message == MSG_EMPTY_HANDED_ALREADY ? "already" : "now");
+            (which_message == MSG_EMPTY_HANDED_ALREADY ? P_("stuff","already") : P_("stuff","now"));
         if (you.species == SP_FELID)
             mprf(gettext("Your mouth is %s empty."), when);
         else if (you.has_usable_claws(true))
@@ -499,9 +499,9 @@ void canned_msg(canned_message_type which_message)
 const char* held_status(actor *act)
 {
     if (get_trapping_net(act->pos(), true) != NON_ITEM)
-        return "held in a net";
+        return _("held in a net");
     else
-        return "caught in a web";
+        return _("caught in a web");
 }
 
 // Like yesno, but requires a full typed answer.

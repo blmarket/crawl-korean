@@ -1884,7 +1884,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
     if (debug)
         return XOM_GOOD_ANIMATE_MON_WPN;
 
-    god_speaks(GOD_XOM, _get_xom_speech("무기에 생명??불??넣음").c_str());  //animate monster weapon 번역이 애매함
+    god_speaks(GOD_XOM, _get_xom_speech("animate monster weapon").c_str());  //animate monster weapon 번역이 애매함
 
     const int num_mons = mons_wpn.size();
     // Pick a random monster...
@@ -3003,7 +3003,7 @@ static int _xom_chaos_upgrade_nearby_monster(bool debug = false)
 
     if (rc)
     {
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("chaos upgrade")), true);
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "chaos upgrade"), true);
         return XOM_BAD_CHAOS_UPGRADE;
     }
 

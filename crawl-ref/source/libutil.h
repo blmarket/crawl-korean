@@ -155,7 +155,7 @@ std::vector<std::string> split_string(
 
 template <typename Z>
 std::string comma_separated_line(Z start, Z end,
-                                 const std::string &andc = " and ",
+                                 const std::string &andc = " 그리고 ",
                                  const std::string &comma = ", ")
 {
     std::string text;

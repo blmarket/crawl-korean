@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions used when picking squares.
 **/
@@ -3777,7 +3777,7 @@ static bool _print_cloud_desc(const coord_def where)
     if (!areas.empty())
     {
         mprf(gettext("This square %s."),
-             comma_separated_line(areas.begin(), areas.end()).c_str());
+             comma_separated_line(areas.begin(), areas.end()).c_str(), "고, "); // (130208) 한글판에서는 번역호환을 위해 해당함수에 인자추가
     }
 
     if (env.cgrid(where) == EMPTY_CLOUD)

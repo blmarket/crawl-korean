@@ -812,7 +812,7 @@ void lose_level()
     calc_mp();
 
     char buf[200];
-    sprintf(buf, gettext("HP: %d/%d MP: %d/%d"),
+    sprintf(buf, "HP: %d/%d MP: %d/%d",
             you.hp, you.hp_max, you.magic_points, you.max_magic_points);
     take_note(Note(NOTE_XP_LEVEL_CHANGE, you.experience_level, 0, buf));
 

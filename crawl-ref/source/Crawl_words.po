@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-06 23:37+0900\n"
+"POT-Creation-Date: 2013-02-10 22:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -953,6 +953,7 @@ msgid "emperor scorpion"
 msgstr "황제 전갈"
 
 #: mon-data.h:1920 mon-data.h:1921 mon-data.h:1956 mon-data.h:1907
+#: transform.cc:738
 msgid "spider"
 msgstr "거미"
 
@@ -1192,6 +1193,7 @@ msgid "wyvern"
 msgstr "와이번"
 
 #: mon-data.h:2626 mon-data.h:2627 mon-data.h:2701 mon-data.h:2708
+#: transform.cc:765
 msgid "dragon"
 msgstr "용"
 
@@ -1344,6 +1346,7 @@ msgid "shedu"
 msgstr "셰두"
 
 #: mon-data.h:3111 mon-data.h:3100 mon-data.h:3174 mon-data.h:3193
+#: transform.cc:760
 msgid "ice beast"
 msgstr "얼음 짐승"
 
@@ -1402,6 +1405,7 @@ msgid "kobold demonologist"
 msgstr "코볼트 악마술사"
 
 #: mon-data.h:3296 mon-data.h:3285 mon-data.h:3359 mon-data.h:3378
+#: transform.cc:771
 msgid "lich"
 msgstr "리치"
 
@@ -2012,7 +2016,7 @@ msgstr "주황빛 수정의 상"
 #. always redefined
 #. always redefined
 #: mon-data.h:5171 mon-data.h:5183 mon-data.h:5172 mon-data.h:5129
-#: mon-data.h:5217
+#: mon-data.h:5217 transform.cc:750
 msgid "statue"
 msgstr "동상"
 
@@ -2344,6 +2348,7 @@ msgid "INVALID MONSTER"
 msgstr "버그입니다"
 
 #: mon-data.h:277 mon-data.h:278 mon-data.h:289 mon-data.h:254
+#: transform.cc:777
 msgid "bat"
 msgstr "박쥐"
 
@@ -9439,7 +9444,7 @@ msgstr "작은 동물 소환"
 
 #: spl-data.h:446
 msgid "Abjuration"
-msgstr "해방의 선서"
+msgstr "소환 해방"
 
 #: spl-data.h:459 spl-data.h:472
 msgid "Summon Scorpions"
@@ -11573,19 +11578,19 @@ msgstr "역병의 기운"
 
 #: abl-show.cc:420 abl-show.cc:427 abl-show.cc:372
 msgid "Temporal Distortion"
-msgstr ""
+msgstr "일시적인 왜곡"
 
 #: acquire.cc:1637 acquire.cc:1622
 msgid "Food "
-msgstr ""
+msgstr "음식 "
 
 #: directn.cc:2955 directn.cc:3047 directn.cc:2923 directn.cc:3013
 msgid "web"
-msgstr ""
+msgstr "거미줄"
 
 #: directn.cc:3105 directn.cc:3071
 msgid "hole to the Spider Nest"
-msgstr ""
+msgstr "거미 둥지로 통하는 구멍"
 
 #: directn.cc:3107 directn.cc:3073
 msgid "staircase to the Enchanted Forest"
@@ -11639,7 +11644,7 @@ msgstr ""
 msgid "App"
 msgstr ""
 
-#: status.cc:845 status.cc:909
+#: status.cc:845 status.cc:909 transform.cc:794
 msgid "appendage"
 msgstr ""
 
@@ -12288,3 +12293,11 @@ msgstr "폭발"
 #: xom.cc:3221
 msgid "STAIR BEAM"
 msgstr "밀어낸 계단"
+
+#: spl-data.h:459
+msgid "Mass Abjuration"
+msgstr "해방의 선서"
+
+#: transform.cc:787
+msgid "pig"
+msgstr "돼지"

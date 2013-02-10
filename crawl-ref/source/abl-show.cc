@@ -1302,7 +1302,7 @@ void no_ability_msg()
         // At the very least the player has "Renounce Religion", but
         // cannot use it in silence.
         mprf(_("You cannot call out to %s while silenced."),
-             god_name(you.religion).c_str());
+             _(god_name(you.religion).c_str()));
     }
     else
         mpr(_("Sorry, you're not good enough to have a special ability."));

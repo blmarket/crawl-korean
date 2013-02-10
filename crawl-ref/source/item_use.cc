@@ -3114,7 +3114,7 @@ void read_scroll(int slot)
         {
             if (alreadyknown)
             {
-                mpr("This will not work.");
+                mpr(gettext("This will not work."));
                 cancel_scroll = true;
                 break;
             }

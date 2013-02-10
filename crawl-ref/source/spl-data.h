@@ -456,7 +456,7 @@ struct spell_desc
 },
 
 {
-    SPELL_MASS_ABJURATION, "Mass Abjuration",
+    SPELL_MASS_ABJURATION, M_("Mass Abjuration"),
      SPTYP_SUMMONING,
      SPFLAG_AREA | SPFLAG_NEUTRAL | SPFLAG_ESCAPE,
      6,

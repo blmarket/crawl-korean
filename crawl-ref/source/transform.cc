@@ -735,7 +735,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
     switch (which_trans)
     {
     case TRAN_SPIDER:
-        tran_name = "spider";
+        tran_name = M_("spider");
         dex       = 5;
         msg       = make_stringf(msg.c_str(), gettext("a venomous arachnid creature."));
         break;
@@ -747,7 +747,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_STATUE:
-        tran_name = "statue";
+        tran_name = M_("statue");
         str       = 2;
         dex       = -2;
         if (you.species == SP_DEEP_DWARF && one_chance_in(10))
@@ -757,24 +757,24 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_ICE_BEAST:
-        tran_name = "ice beast";
+        tran_name = M_("ice beast");
         msg       = make_stringf(msg.c_str(), gettext("a creature of crystalline ice."));
         break;
 
     case TRAN_DRAGON:
-        tran_name = "dragon";
+        tran_name = M_("dragon");
         str       = 10;
         msg       = make_stringf(msg.c_str(), gettext("a fearsome dragon!"));
         break;
 
     case TRAN_LICH:
-        tran_name = "lich";
+        tran_name = M_("lich");
         str       = 3;
         msg       = gettext("Your body is suffused with negative energy!");
         break;
 
     case TRAN_BAT:
-        tran_name = "bat";
+        tran_name = M_("bat");
         str       = -5;
         dex       = 5;
         if (you.species == SP_VAMPIRE)
@@ -784,14 +784,14 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_PIG:
-        tran_name = "pig";
+        tran_name = M_("pig");
         msg       = gettext("You have been turned into a pig!");
         you.transform_uncancellable = true;
         break;
 
     case TRAN_APPENDAGE:
     {
-        tran_name = "appendage";
+        tran_name = M_("appendage");
         mutation_type app = _beastly_appendage();
         if (app == NUM_MUTATIONS)
         {
@@ -1088,7 +1088,7 @@ void untransform(bool skip_wielding, bool skip_move)
             // way is one line:
             you.mutation[app] = you.innate_mutations[app];
             you.attribute[ATTR_APPENDAGE] = 0;
-            mprf(MSGCH_DURATION, gettext("Your %s disappear%s."), appendage_name(app),
+            mprf(MSGCH_DURATION, gettext("Your %s disappear%s."), gettext(appendage_name(app)),
                  (app == MUT_TENTACLE_SPIKE) ? "s" : "");
         }
         break;

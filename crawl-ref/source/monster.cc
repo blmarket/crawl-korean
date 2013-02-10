@@ -5717,9 +5717,9 @@ void monster::steal_item_from_player()
             new_item.set_holding_monster(mindex());
         }
         mitm[inv[MSLOT_GOLD]].flags |= ISFLAG_THROWN;
-        mprf("%s steals %s your gold!",
+        mprf(_("%s steals %s your gold!"),
              name(DESC_THE).c_str(),
-             stolen_amount == you.gold ? "all" : "some of");
+             stolen_amount == you.gold ? P_("stolen","all") : P_("stolen","some of"));
 
         you.attribute[ATTR_GOLD_FOUND] -= stolen_amount;
 

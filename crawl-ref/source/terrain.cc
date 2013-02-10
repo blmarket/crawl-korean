@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Terrain related functions.
 **/
@@ -1632,16 +1632,16 @@ std::string feat_preposition(dungeon_feature_type feat, bool active,
         return pgettext("swap", "beside");
 }
 
-std::string stair_climb_verb(dungeon_feature_type feat)
+std::string stair_climb_verb(dungeon_feature_type feat) // stairs.cc 161 참조
 {
     ASSERT(feat_stair_direction(feat) != CMD_NO_CMD);
 
     if (feat_is_staircase(feat))
-        return "climb";
+        return P_("climb","climb");
     else if (feat_is_escape_hatch(feat))
-        return "use";
+        return P_("climb","use");
     else
-        return "pass through";
+        return P_("climb","pass through");
 }
 
 static const char *dngn_feature_names[] =

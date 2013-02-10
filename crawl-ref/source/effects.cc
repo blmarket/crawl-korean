@@ -938,7 +938,7 @@ void yell(bool force)
         noise_level = 8;
     else if (shout_verb == N_("squeak"))
         noise_level = 4;
-    else if (shout_verb == N_("__NONE"))
+    else if (shout_verb == "__NONE")
         noise_level = 0;
     else if (shout_verb == N_("yell"))
         noise_level = 14;
@@ -957,15 +957,15 @@ void yell(bool force)
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a strong urge to %s, but "
                      "you are unable to make a sound!"),
-                     shout_verb == "__NONE" ? "scream"
-                                            : shout_verb.c_str());
+                     shout_verb == "__NONE" ? _("scream")
+                                            : _(shout_verb.c_str()));
             }
             else
             {
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a %s rip itself from your throat, "
                      "but you make no sound!"),
-                     shout_verb.c_str());
+                     _(shout_verb.c_str()));
             }
         }
         else

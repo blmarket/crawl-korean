@@ -359,7 +359,7 @@ static std::string _skill_names(skill_set &skills)
         if (i == size)
             s += ".";
         else if (i == size - 1)
-            s += " and ";
+            s += _(" and ");
         else
             s+= ", ";
     }

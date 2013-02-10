@@ -658,7 +658,7 @@ bool butchery(int which_corpse, bool bottle_blood)
         // FIXME
         mprf(gettext("There isn't anything %s to %s here."),
              Options.confirm_butcher == CONFIRM_NEVER ? "suitable" : "else",
-             bottle_blood ? "bottle" : "butcher");
+             bottle_blood ? P_("food","bottle") : P_("food","butcher"));
     }
     _terminate_butchery(wpn_switch, removed_gloves, old_weapon, old_gloves);
 
