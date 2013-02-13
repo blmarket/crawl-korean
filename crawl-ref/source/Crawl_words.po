@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 15:23+0900\n"
+"POT-Creation-Date: 2013-02-13 21:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6034,55 +6034,15 @@ msgstr "파괴의 학술서"
 msgid "Young Poisoner's Handbook"
 msgstr "초급 독살자의 지침서"
 
-#: mutation-data.h:16 mutation-data.h:16 mutation-data.h:17
-msgid "tough skin"
-msgstr "단단한 피부"
-
 #: itemname.cc:490 mutation-data.h:64 itemname.cc:501 itemname.cc:508
 #: itemname.cc:530 itemname.cc:479 mutation-data.h:65
 msgid "poison resistance"
 msgstr "독 저항"
 
-#: mutation-data.h:74 mutation-data.h:74 mutation-data.h:75
-msgid "carnivore"
-msgstr "육식성"
-
-#: mutation-data.h:92 mutation-data.h:92 mutation-data.h:93
-msgid "herbivore"
-msgstr "채식성"
-
 #: itemname.cc:488 mutation-data.h:110 itemname.cc:499 itemname.cc:506
 #: itemname.cc:528 itemname.cc:477 mutation-data.h:111
 msgid "fire resistance"
 msgstr "화염 저항"
-
-#: mutation-data.h:146 mutation-data.h:146 mutation-data.h:147
-msgid "demonic guardian"
-msgstr "수호 악마"
-
-#: mutation-data.h:164 mutation-data.h:164 mutation-data.h:165
-msgid "electricity resistance"
-msgstr "전기 저항"
-
-#: mutation-data.h:174 mutation-data.h:174 mutation-data.h:175
-msgid "regeneration"
-msgstr "재생"
-
-#: mutation-data.h:192 mutation-data.h:192 mutation-data.h:193
-msgid "slow healing"
-msgstr "느린 치유속도"
-
-#: mutation-data.h:210 mutation-data.h:210 mutation-data.h:211
-msgid "fast metabolism"
-msgstr "신진대사 가속"
-
-#: mutation-data.h:270 mutation-data.h:270 mutation-data.h:271
-msgid "teleport control"
-msgstr "공간이동 제어"
-
-#: mutation-data.h:280 mutation-data.h:280 mutation-data.h:281
-msgid "teleportitis"
-msgstr "공간 왜곡"
 
 #: itemname.cc:498 mutation-data.h:298 itemname.cc:509 itemname.cc:516
 #: itemname.cc:538 itemname.cc:487 mutation-data.h:299
@@ -6094,234 +6054,15 @@ msgstr "마법 저항"
 msgid "speed"
 msgstr "속도 증가"
 
-#: mutation-data.h:334 mutation-data.h:334 mutation-data.h:335
-msgid "slowness"
-msgstr "속도 감소"
-
 #: itemname.cc:491 mutation-data.h:352 itemname.cc:502 itemname.cc:509
 #: itemname.cc:531 itemname.cc:480 mutation-data.h:353
 msgid "see invisible"
 msgstr "투명 감지"
 
-#: mutation-data.h:368 mutation-data.h:368 mutation-data.h:369
-msgid "deformed body"
-msgstr "뒤틀린 몸"
-
-#: mutation-data.h:386 mutation-data.h:386 mutation-data.h:387
-msgid "teleport at will"
-msgstr "공간이동"
-
-#: mutation-data.h:404 mutation-data.h:404 mutation-data.h:406
-#: mutation-data.h:379
-msgid "spit poison"
-msgstr "독 뱉기"
-
-#: mutation-data.h:422 mutation-data.h:422 mutation-data.h:424
-#: mutation-data.h:397
-msgid "breathe flames"
-msgstr "화염 입김"
-
-#: mutation-data.h:440 mutation-data.h:440 mutation-data.h:442
-#: mutation-data.h:415
-msgid "blink"
-msgstr "순간이동"
-
-#: mutation-data.h:494 mutation-data.h:494 mutation-data.h:496
-#: mutation-data.h:469
-msgid "screaming"
-msgstr "비명"
-
-#: mutation-data.h:512 mutation-data.h:512 mutation-data.h:514
-#: mutation-data.h:487
-msgid "clarity"
-msgstr "명석함"
-
-#: mutation-data.h:522 mutation-data.h:522 mutation-data.h:524
-#: mutation-data.h:497
-msgid "berserk"
-msgstr "광폭화"
-
-#: mutation-data.h:540 mutation-data.h:540 mutation-data.h:542
-#: mutation-data.h:515
-msgid "deterioration"
-msgstr "능력 저하"
-
-#: mutation-data.h:558 mutation-data.h:558 mutation-data.h:560
-#: mutation-data.h:533
-msgid "blurry vision"
-msgstr "흐린 시야"
-
-#: mutation-data.h:576 mutation-data.h:576 mutation-data.h:578
-#: mutation-data.h:551
-msgid "mutation resistance"
-msgstr "돌연변이 저항"
-
-#: mutation-data.h:630 mutation-data.h:630 mutation-data.h:650
-#: mutation-data.h:623
-msgid "unbreathing"
-msgstr "무호흡"
-
-#: mutation-data.h:640 mutation-data.h:640 mutation-data.h:660
-#: mutation-data.h:633
-msgid "torment resistance"
-msgstr "고통 면역"
-
-#: mutation-data.h:650 mutation-data.h:650 mutation-data.h:670
-#: mutation-data.h:643
-msgid "life protection"
-msgstr "생명력 보호"
-
-#: mutation-data.h:666 mutation-data.h:666 mutation-data.h:686
-#: mutation-data.h:659
-msgid "hurl hellfire"
-msgstr "지옥불"
-
-#: mutation-data.h:676 mutation-data.h:676 mutation-data.h:697
-msgid "throw flames of Gehenna"
-msgstr "게헨나의 불꽃"
-
-#: mutation-data.h:686 mutation-data.h:686 mutation-data.h:707
-msgid "throw frost of Cocytus"
-msgstr "코큐투스의 냉기"
-
-#: mutation-data.h:697 mutation-data.h:697 mutation-data.h:719
-#: mutation-data.h:670
-msgid "horns"
-msgstr "뿔"
-
-#: mutation-data.h:715 mutation-data.h:715 mutation-data.h:737
-#: mutation-data.h:688
-msgid "beak"
-msgstr "부리"
-
-#: mutation-data.h:725 mutation-data.h:725 mutation-data.h:747
-#: mutation-data.h:698
-msgid "claws"
-msgstr "손톱"
-
-#: mutation-data.h:743 mutation-data.h:743 mutation-data.h:765
-#: mutation-data.h:716
-msgid "fangs"
-msgstr "송곳니"
-
-#: mutation-data.h:761 mutation-data.h:761 mutation-data.h:783
-#: mutation-data.h:734
-msgid "hooves"
-msgstr "발굽"
-
-#: mutation-data.h:779 mutation-data.h:779 mutation-data.h:801
-#: mutation-data.h:752
-msgid "antennae"
-msgstr "더듬이"
-
-#: mutation-data.h:797 mutation-data.h:797 mutation-data.h:819
-#: mutation-data.h:770
-msgid "talons"
-msgstr "발톱"
-
-#: mutation-data.h:815 transform.cc:403 transform.cc:403 transform.cc:383
-#: mutation-data.h:837 transform.cc:427
-msgid "tentacles"
-msgstr "촉수"
-
-#: mutation-data.h:834 mutation-data.h:834 mutation-data.h:874 output.cc:2092
-#: mutation-data.h:808 output.cc:2096
-msgid "breathe poison"
-msgstr "독구름"
-
-#: mutation-data.h:845 mutation-data.h:845 mutation-data.h:885
-#: mutation-data.h:819
-msgid "stinger"
-msgstr "독침"
-
-#: mutation-data.h:864 mutation-data.h:864 mutation-data.h:904
-#: mutation-data.h:838
-msgid "large and strong wings"
-msgstr "크고 강한 날개"
-
-#: mutation-data.h:875 mutation-data.h:875 mutation-data.h:915
-#: mutation-data.h:849
-msgid "saprovore"
-msgstr "썩은 고기 내성"
-
-#: mutation-data.h:887 mutation-data.h:887 mutation-data.h:931
-#: mutation-data.h:865
-msgid "gourmand"
-msgstr "대식가"
-
-#: mutation-data.h:967 mutation-data.h:967 mutation-data.h:1029
-#: mutation-data.h:957
-msgid "sense surroundings"
-msgstr "주변 감지"
-
-#: mutation-data.h:1024 mutation-data.h:1024 mutation-data.h:1086
-#: mutation-data.h:1014
-msgid "nightstalker"
-msgstr "은신"
-
-#: mutation-data.h:1042 mutation-data.h:1042 mutation-data.h:1104
-#: mutation-data.h:1032
-msgid "spiny"
-msgstr "가시"
-
-#: mutation-data.h:1060 mutation-data.h:1060 mutation-data.h:1122
-#: mutation-data.h:1050
-msgid "powered by death"
-msgstr "죽음으로부터의 힘"
-
-#: mutation-data.h:1078 mutation-data.h:1078 mutation-data.h:1140
-#: mutation-data.h:1068
-msgid "powered by pain"
-msgstr "고통으로부터의 힘"
-
-#: mutation-data.h:1131 mutation-data.h:1131 mutation-data.h:1193
-#: mutation-data.h:1137
-msgid "translucent skin"
-msgstr "반투명 피부"
-
-#: mutation-data.h:1149 mutation-data.h:1149 mutation-data.h:1211
-#: mutation-data.h:1155
-msgid "pseudopods"
-msgstr "종양"
-
-#: mutation-data.h:1167 mutation-data.h:1167 mutation-data.h:1229
-#: mutation-data.h:1173
-msgid "spawn jellies when eating"
-msgstr "식사시 젤리 소환"
-
-#: mutation-data.h:1177 mutation-data.h:1177 mutation-data.h:1239
-#: mutation-data.h:1183
-msgid "acidic bite"
-msgstr "산성 침"
-
-#: mutation-data.h:1386 mutation-data.h:1386 mutation-data.h:1448
-#: mutation-data.h:1392
-msgid "camouflage"
-msgstr "보호색"
-
 #: itemname.cc:489 mutation-data.h:128 itemname.cc:500 itemname.cc:507
 #: itemname.cc:529 itemname.cc:478 mutation-data.h:129
 msgid "cold resistance"
 msgstr "냉기 저항"
-
-#: mutation-data.h:228 mutation-data.h:228 mutation-data.h:229
-msgid "slow metabolism"
-msgstr "느린 신진대사"
-
-#: mutation-data.h:995 mutation-data.h:995 mutation-data.h:1057
-#: mutation-data.h:985
-msgid "conserve scrolls"
-msgstr "스크롤 보호"
-
-#: mutation-data.h:1005 mutation-data.h:1005 mutation-data.h:1067
-#: mutation-data.h:995
-msgid "conserve potions"
-msgstr "포션 보호"
-
-#: mutation-data.h:1014 mutation-data.h:1014 mutation-data.h:1076
-#: mutation-data.h:1004
-msgid "passive freeze"
-msgstr "냉기 패시브"
 
 #: describe.cc:447 describe.cc:448 godpassive.cc:110 describe.cc:455
 #: describe.cc:450 describe.cc:3120 describe.cc:3117
@@ -11915,23 +11656,6 @@ msgstr ""
 msgid "Arachne"
 msgstr ""
 
-#: mutation-data.h:929
-msgid "wild magic"
-msgstr ""
-
-#: mutation-data.h:947
-#, c-format
-msgid "50% torment resistance"
-msgstr ""
-
-#: mutation-data.h:1410
-msgid "ignite blood"
-msgstr ""
-
-#: mutation-data.h:1420
-msgid "foul stench"
-msgstr ""
-
 #: spl-data.h:2890
 msgid "Ensnare"
 msgstr ""
@@ -12301,3 +12025,2429 @@ msgstr "해방의 선서"
 #: transform.cc:787
 msgid "pig"
 msgstr "돼지"
+
+# ########################
+# mutation-data.h field #
+# ########################
+#: mutation-data.h:17
+msgid "tough skin"
+msgstr "단단한 피부"
+
+#: mutation-data.h:75
+msgid "carnivore"
+msgstr "육식성"
+
+#: mutation-data.h:93
+msgid "herbivore"
+msgstr "채식성"
+
+#: mutation-data.h:147
+msgid "demonic guardian"
+msgstr "수호 악마"
+
+#: mutation-data.h:165
+msgid "electricity resistance"
+msgstr "전기 저항"
+
+#: mutation-data.h:175
+msgid "regeneration"
+msgstr "재생"
+
+#: mutation-data.h:193
+msgid "slow healing"
+msgstr "느린 치유속도"
+
+#: mutation-data.h:211
+msgid "fast metabolism"
+msgstr "신진대사 가속"
+
+#: mutation-data.h:271
+msgid "teleport control"
+msgstr "공간이동 제어"
+
+#: mutation-data.h:281
+msgid "teleportitis"
+msgstr "공간 왜곡"
+
+#: mutation-data.h:335
+msgid "slowness"
+msgstr "속도 감소"
+
+#: mutation-data.h:369
+msgid "deformed body"
+msgstr "뒤틀린 몸"
+
+#: mutation-data.h:387
+msgid "teleport at will"
+msgstr "공간이동"
+
+#: mutation-data.h:406 mutation-data.h:379
+msgid "spit poison"
+msgstr "독 뱉기"
+
+#: mutation-data.h:424 mutation-data.h:397
+msgid "breathe flames"
+msgstr "화염 입김"
+
+#: mutation-data.h:415
+msgid "blink"
+msgstr "순간이동"
+
+#: mutation-data.h:469
+msgid "screaming"
+msgstr "비명"
+
+#: mutation-data.h:487
+msgid "clarity"
+msgstr "명석함"
+
+#: mutation-data.h:497
+msgid "berserk"
+msgstr "광폭화"
+
+#: mutation-data.h:515
+msgid "deterioration"
+msgstr "능력 저하"
+
+#: mutation-data.h:533
+msgid "blurry vision"
+msgstr "흐린 시야"
+
+#: mutation-data.h:551
+msgid "mutation resistance"
+msgstr "돌연변이 저항"
+
+#: mutation-data.h:623
+msgid "unbreathing"
+msgstr "무호흡"
+
+#: mutation-data.h:633
+msgid "torment resistance"
+msgstr "고통 면역"
+
+#: mutation-data.h:643
+msgid "life protection"
+msgstr "생명력 보호"
+
+#: mutation-data.h:659
+msgid "hurl hellfire"
+msgstr "지옥불"
+
+#: mutation-data.h:697
+msgid "throw flames of Gehenna"
+msgstr "게헨나의 불꽃"
+
+#: mutation-data.h:707
+msgid "throw frost of Cocytus"
+msgstr "코큐투스의 냉기"
+
+#: mutation-data.h:719 mutation-data.h:670
+msgid "horns"
+msgstr "뿔"
+
+#: mutation-data.h:737 mutation-data.h:688
+msgid "beak"
+msgstr "부리"
+
+#: mutation-data.h:698
+msgid "claws"
+msgstr "손톱"
+
+#: mutation-data.h:716
+msgid "fangs"
+msgstr "송곳니"
+
+#: mutation-data.h:734
+msgid "hooves"
+msgstr "발굽"
+
+#: mutation-data.h:752
+msgid "antennae"
+msgstr "더듬이"
+
+#: mutation-data.h:770
+msgid "talons"
+msgstr "발톱"
+
+#: mutation-data.h:837 transform.cc:427
+msgid "tentacles"
+msgstr "촉수"
+
+#: mutation-data.h:834 mutation-data.h:808
+msgid "breathe poison"
+msgstr "독구름"
+
+#: mutation-data.h:845 mutation-data.h:819
+msgid "stinger"
+msgstr "독침"
+
+#: mutation-data.h:864 mutation-data.h:838
+msgid "large and strong wings"
+msgstr "크고 강한 날개"
+
+#: mutation-data.h:875 mutation-data.h:849
+msgid "saprovore"
+msgstr "썩은 고기 내성"
+
+#: mutation-data.h:887 mutation-data.h:865
+msgid "gourmand"
+msgstr "대식가"
+
+#: mutation-data.h:967 mutation-data.h:957
+msgid "sense surroundings"
+msgstr "주변 감지"
+
+#: mutation-data.h:1024 mutation-data.h:1014
+msgid "nightstalker"
+msgstr "은신"
+
+#: mutation-data.h:1042 mutation-data.h:1032
+msgid "spiny"
+msgstr "가시"
+
+#: mutation-data.h:1060 mutation-data.h:1050
+msgid "powered by death"
+msgstr "죽음으로부터의 힘"
+
+#: mutation-data.h:1078 mutation-data.h:1068
+msgid "powered by pain"
+msgstr "고통으로부터의 힘"
+
+#: mutation-data.h:1131 mutation-data.h:1137
+msgid "translucent skin"
+msgstr "반투명 피부"
+
+#: mutation-data.h:1149 mutation-data.h:1155
+msgid "pseudopods"
+msgstr "종양"
+
+#: mutation-data.h:1167 mutation-data.h:1173
+msgid "spawn jellies when eating"
+msgstr "식사시 젤리 소환"
+
+#: mutation-data.h:1177 mutation-data.h:1183
+msgid "acidic bite"
+msgstr "산성 침"
+
+#: mutation-data.h:1386 mutation-data.h:1392
+msgid "camouflage"
+msgstr "보호색"
+
+#: mutation-data.h:228 mutation-data.h:229
+msgid "slow metabolism"
+msgstr "느린 신진대사"
+
+#: mutation-data.h:995 mutation-data.h:985
+msgid "conserve scrolls"
+msgstr "스크롤 보호"
+
+#: mutation-data.h:1005 mutation-data.h:995
+msgid "conserve potions"
+msgstr "포션 보호"
+
+#: mutation-data.h:1014 mutation-data.h:1004
+msgid "passive freeze"
+msgstr "냉기 패시브"
+
+#: mutation-data.h:929
+msgid "wild magic"
+msgstr "마력 폭주"
+
+#: mutation-data.h:947
+#, c-format
+msgid "50% torment resistance"
+msgstr "고통 저항"
+
+#: mutation-data.h:1410
+msgid "ignite blood"
+msgstr "피의 점화"
+
+#: mutation-data.h:1420
+msgid "foul stench"
+msgstr "악취"
+
+#: mutation-data.h:569
+msgid "evolution"
+msgstr "진화"
+
+#: mutation-data.h:789
+msgid "spike"
+msgstr "가시"
+
+#: mutation-data.h:1084
+msgid "augmentation"
+msgstr "힘의 증가"
+
+# #################################
+#: mutation-data.h:18 mutation-data.h:19
+msgid "You have tough skin (AC +1)."
+msgstr "당신은 강인한 피부를 가지고 있다 (AC +1)."
+
+#: mutation-data.h:19 mutation-data.h:20
+msgid "You have very tough skin (AC +2)."
+msgstr "당신은 상당히 강인한 피부를 가지고 있다 (AC +2)"
+
+#: mutation-data.h:20 mutation-data.h:21
+msgid "You have extremely tough skin (AC +3)."
+msgstr "당신은 대단히 강인한 피부를 가지고 있다 (AC +3)"
+
+#: mutation-data.h:22 mutation-data.h:23 mutation-data.h:24 mutation-data.h:25
+msgid "Your skin toughens."
+msgstr "피부가 단단해지는 것을 느꼈다."
+
+#: mutation-data.h:26 mutation-data.h:27 mutation-data.h:28 mutation-data.h:29
+msgid "Your skin feels delicate."
+msgstr "피부가 부드러워진 것을 느꼈다."
+
+#: mutation-data.h:36 mutation-data.h:37
+msgid "Your muscles are strong (Str +"
+msgstr "당신의 근육은 강하다 (힘 +"
+
+#: mutation-data.h:46 mutation-data.h:47
+msgid "Your mind is acute (Int +"
+msgstr "당신의 정신은 날카롭다. (지능+"
+
+#: mutation-data.h:56 mutation-data.h:57
+msgid "You are agile (Dex +"
+msgstr "당신은 민첩하다. (민첩+"
+
+#: mutation-data.h:66 mutation-data.h:67
+msgid "Your system is resistant to poisons."
+msgstr "당신의 신경계는 독에 저항력을 가지고 있다."
+
+#: mutation-data.h:67 mutation-data.h:68
+msgid "You feel healthy."
+msgstr "당신은 건강해졌다."
+
+#: mutation-data.h:68 mutation-data.h:69
+msgid "You feel a little less healthy."
+msgstr "당신은 건강에 약간 문제가 있는 것을 느꼈다."
+
+#: mutation-data.h:76 mutation-data.h:77
+msgid "Your digestive system is specialised to digest meat."
+msgstr "당신의 소화기관은 고기의 소화에 특화되어 있다."
+
+#: mutation-data.h:77 mutation-data.h:78
+msgid "Your digestive system is highly specialised to digest meat."
+msgstr "당신의 소화기관은 고기의 소화에 매우 특화되어 있다."
+
+#: mutation-data.h:78 mutation-data.h:79
+msgid "You are carnivorous and can eat meat at any time."
+msgstr "당신은 육식성이며, 어떤 고기던지 섭취할 수 있다."
+
+#: mutation-data.h:80 mutation-data.h:81 mutation-data.h:82 mutation-data.h:83
+msgid "You hunger for flesh."
+msgstr "갑자기 고기가 매우 먹고 싶어졌음을 느꼈다."
+
+#: mutation-data.h:84 mutation-data.h:85 mutation-data.h:86
+#: mutation-data.h:102 mutation-data.h:103 mutation-data.h:104
+#: mutation-data.h:87 mutation-data.h:105
+msgid "You feel able to eat a more balanced diet."
+msgstr "당신은 좀 더 균형잡힌 식사가 가능해졌다."
+
+#: mutation-data.h:94 mutation-data.h:95
+msgid "You digest meat inefficiently."
+msgstr "당신은 고기를 잘 소화할 수 없다."
+
+#: mutation-data.h:95 mutation-data.h:96
+msgid "You digest meat very inefficiently."
+msgstr "당신은 고기를 제대로 먹을 수 없다."
+
+#: mutation-data.h:96 mutation-data.h:97
+msgid "You are a herbivore."
+msgstr "당신은 초식성이다."
+
+#: mutation-data.h:98 mutation-data.h:99 mutation-data.h:100
+#: mutation-data.h:101
+msgid "You hunger for vegetation."
+msgstr "갑자기 채소가 매우 먹고 싶어졌음을 느꼈다."
+
+#: mutation-data.h:112 mutation-data.h:113
+msgid "Your flesh is heat resistant."
+msgstr "당신의 피부는 열에 내성이 있다."
+
+#: mutation-data.h:113 mutation-data.h:114
+msgid "Your flesh is very heat resistant."
+msgstr "당신의 피부는 열에 상당한 내성이 있다."
+
+#: mutation-data.h:114 mutation-data.h:115
+msgid "Your flesh is almost immune to the effects of heat."
+msgstr "당신의 피부는 열기로부터 거의 손상을 받지 않는다."
+
+#: mutation-data.h:116 mutation-data.h:117 mutation-data.h:118
+#: mutation-data.h:138 mutation-data.h:139 mutation-data.h:140
+#: mutation-data.h:119 mutation-data.h:141
+msgid "You feel a sudden chill."
+msgstr "쌀쌀한 기운을 느꼈다."
+
+#: mutation-data.h:120 mutation-data.h:121 mutation-data.h:122
+#: mutation-data.h:134 mutation-data.h:135 mutation-data.h:136
+#: mutation-data.h:123 mutation-data.h:137
+msgid "You feel hot for a moment."
+msgstr "잠시 더워진 것을 느꼈다."
+
+#: mutation-data.h:130 mutation-data.h:131
+msgid "Your flesh is cold resistant."
+msgstr "당신의 피부는 냉기에 내성이 있다."
+
+#: mutation-data.h:131 mutation-data.h:132
+msgid "Your flesh is very cold resistant."
+msgstr "당신의 피부는 냉기에 상당한 내성이 있다."
+
+#: mutation-data.h:132 mutation-data.h:133
+msgid "Your flesh is almost immune to the effects of cold."
+msgstr "당신의 피부는 냉기로부터 거의 손상을 받지 않는다."
+
+#: mutation-data.h:148 mutation-data.h:149
+msgid "A weak demonic guardian rushes to your aid."
+msgstr "당신은 하급 수호 악마를, 원군으로 부를 수 있다. "
+
+#: mutation-data.h:149 mutation-data.h:150
+msgid "A demonic guardian rushes to your aid."
+msgstr "당신은 수호 악마를, 원군으로 부를 수 있다."
+
+#: mutation-data.h:150 mutation-data.h:151
+msgid "A powerful demonic guardian rushes to your aid."
+msgstr "당신은 강력한 수호 악마를, 원군으로 부를 수 있다."
+
+#: mutation-data.h:152 mutation-data.h:153
+msgid "You feel the presence of a demonic guardian."
+msgstr "수호 악마의 존재를 느꼈다."
+
+#: mutation-data.h:153 mutation-data.h:154 mutation-data.h:155
+msgid "Your guardian grows in power."
+msgstr "수호 악마가 강력해진 것을 느꼈다."
+
+#: mutation-data.h:156 mutation-data.h:157
+msgid "Your demonic guardian is gone."
+msgstr "수호 악마가 사라졌음을 느꼈다."
+
+#: mutation-data.h:157 mutation-data.h:158 mutation-data.h:159
+msgid "Your demonic guardian is weakened."
+msgstr "수호 악마가 힘을 잃었음을 느꼈다."
+
+#: mutation-data.h:166 mutation-data.h:167
+msgid "You are resistant to electric shocks."
+msgstr "당신은 전기 쇼크에 저항력이 있다."
+
+#: mutation-data.h:167 mutation-data.h:168
+msgid "You feel insulated."
+msgstr "부전도체가 된 듯한 느낌을 받았다."
+
+#: mutation-data.h:176 mutation-data.h:177
+msgid "Your natural rate of healing is unusually fast."
+msgstr "당신의 자연적인 상처 치유 속도는 보통 이상으로 빠르다."
+
+#: mutation-data.h:177 mutation-data.h:178
+msgid "You heal very quickly."
+msgstr "당신은 자연적인 상처 치유 속도는 대단히 빠르다."
+
+#: mutation-data.h:178 mutation-data.h:179
+msgid "You regenerate."
+msgstr "당신은 자체적인 재생 능력이 있다."
+
+#: mutation-data.h:180 mutation-data.h:181 mutation-data.h:182
+msgid "You begin to heal more quickly."
+msgstr "당신은 보다 빠르게 상처가 치유되게 되었다."
+
+#: mutation-data.h:182 mutation-data.h:183
+msgid "You begin to regenerate."
+msgstr "온 몸이 근질근질해졌다."
+
+#: mutation-data.h:184 mutation-data.h:185 mutation-data.h:186
+#: mutation-data.h:187
+msgid "Your rate of healing slows."
+msgstr "당신은 보다 느리게 상처가 치유되게 되었다."
+
+#: mutation-data.h:194 mutation-data.h:195
+msgid "You heal slowly."
+msgstr "당신의 자연적인 상처 치유 속도는 느리다."
+
+#: mutation-data.h:195 mutation-data.h:196
+msgid "You heal very slowly."
+msgstr "당신의  자연적인 상처 치유 속도는 매우 느리다."
+
+#: mutation-data.h:196 mutation-data.h:197
+msgid "You do not heal naturally."
+msgstr "당신의 상처는 자연적으로 회복되지 않는다."
+
+#: mutation-data.h:198 mutation-data.h:199 mutation-data.h:200
+msgid "You begin to heal more slowly."
+msgstr "자연적인 치유력이 약해진 것을 느꼈다."
+
+#: mutation-data.h:200 mutation-data.h:201
+msgid "You stop healing."
+msgstr "상처들이 더 이상 아물지 않기 시작함을 느꼈다!"
+
+#: mutation-data.h:202 mutation-data.h:203 mutation-data.h:204
+#: mutation-data.h:205
+msgid "Your rate of healing increases."
+msgstr "자연적인 치유력이 회복됨을 느꼈다."
+
+#: mutation-data.h:212 mutation-data.h:213
+msgid "You have a fast metabolism."
+msgstr "당신의 신진대사는 빠르다."
+
+#: mutation-data.h:213 mutation-data.h:214
+msgid "You have a very fast metabolism."
+msgstr "당신의 신진대사는 매우 빠르다."
+
+#: mutation-data.h:214 mutation-data.h:215
+msgid "Your metabolism is lightning-fast."
+msgstr "당신의 신진대사는 터무니없이 빠르다."
+
+#: mutation-data.h:216 mutation-data.h:217 mutation-data.h:218
+#: mutation-data.h:238 mutation-data.h:239 mutation-data.h:240
+#: mutation-data.h:219
+msgid "You feel a little hungry."
+msgstr "약간의 기묘한 허기를 느꼈다."
+
+#: mutation-data.h:220 mutation-data.h:221 mutation-data.h:222
+#: mutation-data.h:234 mutation-data.h:235 mutation-data.h:236
+#: mutation-data.h:223
+msgid "Your metabolism slows."
+msgstr "당신의 신진대사는 느려졌다."
+
+#: mutation-data.h:247 mutation-data.h:248
+msgid "You are weak (Str -"
+msgstr "당신은 허약하다. (힘 -"
+
+#: mutation-data.h:255 mutation-data.h:256
+msgid "You are dopey (Int -"
+msgstr "당신은 어리석다. (지능 -"
+
+#: mutation-data.h:263 mutation-data.h:264
+msgid "You are clumsy (Dex -"
+msgstr "당신은 우둔하다. (민첩 -"
+
+#: mutation-data.h:272 mutation-data.h:273
+msgid "You can control translocations."
+msgstr "당신은 공간 전위를 제어할 수 있다."
+
+#: mutation-data.h:273 mutation-data.h:274
+msgid "You feel controlled."
+msgstr "무언가를 제어할 수 있는 힘을 느꼈다."
+
+#: mutation-data.h:274 mutation-data.h:275
+msgid "You feel random."
+msgstr "무언가의 힘이 무작위로 흩어져감을 느꼈다."
+
+#: mutation-data.h:282 mutation-data.h:283
+msgid "Space occasionally distorts in your vicinity."
+msgstr "당신 근처에서 이따금 공간이 비뚤어진다."
+
+#: mutation-data.h:283 mutation-data.h:284
+msgid "Space sometimes distorts in your vicinity."
+msgstr "당신 근처에서 때때로 공간이 비뚤어진다."
+
+#: mutation-data.h:284 mutation-data.h:285
+msgid "Space frequently distorts in your vicinity."
+msgstr "당신 근처에서 빈번하게 공간이 비뚤어진다."
+
+#: mutation-data.h:286 mutation-data.h:287
+msgid "You feel weirdly uncertain."
+msgstr "기묘한 불분명함을 느꼈다."
+
+#: mutation-data.h:287 mutation-data.h:288 mutation-data.h:289
+msgid "You feel even more weirdly uncertain."
+msgstr "더욱 기묘한 불문명함을 느꼈다."
+
+#: mutation-data.h:290 mutation-data.h:291 mutation-data.h:292
+#: mutation-data.h:293
+msgid "You feel stable."
+msgstr "안정감을 느꼈다."
+
+#: mutation-data.h:300 mutation-data.h:301
+msgid "You are resistant to hostile enchantments."
+msgstr "당신은 적대적인 주술에 대해 저항력이 있다."
+
+#: mutation-data.h:301 mutation-data.h:302
+msgid "You are highly resistant to hostile enchantments."
+msgstr "당신은 적대적인 주술에 대해 상당한 저항력이 있다."
+
+#: mutation-data.h:302 mutation-data.h:303
+msgid "You are extremely resistant to the effects of hostile enchantments."
+msgstr "당신은 적대적인 주술에 거의 영향을 받지 않는다."
+
+#: mutation-data.h:304 mutation-data.h:305
+msgid "You feel resistant to hostile enchantments."
+msgstr "적대적인 주술에 저항력이 생긴것을 느꼈다."
+
+#: mutation-data.h:305 mutation-data.h:306
+msgid "You feel more resistant to hostile enchantments."
+msgstr "적대적인 주술에 저항력이 더욱 생긴 것을 느꼈다."
+
+#: mutation-data.h:306 mutation-data.h:307
+msgid "You feel almost impervious to the effects of hostile enchantments."
+msgstr "적대적인 주술이 거의 영향을 주지 않는다는것을 느꼈다."
+
+#: mutation-data.h:308 mutation-data.h:309 mutation-data.h:310
+msgid "You feel less resistant to hostile enchantments."
+msgstr "적대적인 주술에 대해 저항력이 약해진 것을 느꼈다."
+
+#: mutation-data.h:310 mutation-data.h:311
+msgid "You feel vulnerable to magic hostile enchantments."
+msgstr "적대적인 주술에 대해 취약해진것을 느꼈다."
+
+#: mutation-data.h:318 mutation-data.h:319
+msgid "You cover ground quickly."
+msgstr "당신은 지면 위를 빠르게 움직인다."
+
+#: mutation-data.h:319 mutation-data.h:320
+msgid "You cover ground very quickly."
+msgstr "당신은 지면 위를 매우 빠르게 움직인다."
+
+#: mutation-data.h:320 mutation-data.h:321
+msgid "You cover ground extremely quickly."
+msgstr "당신은 지면 위를 번개같이 빠르게 움직인다."
+
+#: mutation-data.h:322 mutation-data.h:323 mutation-data.h:324
+#: mutation-data.h:344 mutation-data.h:345 mutation-data.h:346
+#: mutation-data.h:325 mutation-data.h:347
+msgid "You feel quick."
+msgstr "움직임이 빨라진 것을 느꼈다."
+
+#: mutation-data.h:326 mutation-data.h:327 mutation-data.h:328
+#: mutation-data.h:340 mutation-data.h:341 mutation-data.h:342
+#: mutation-data.h:329 mutation-data.h:343
+msgid "You feel sluggish."
+msgstr "움직임이 느려진 것을 느꼈다."
+
+#: mutation-data.h:336 mutation-data.h:337
+msgid "You cover ground slowly."
+msgstr "당신은 지면 위를 느리게 움직인다."
+
+#: mutation-data.h:337 mutation-data.h:338
+msgid "You cover ground very slowly."
+msgstr "당신은 지면 위를 매우 느리게 움직인다."
+
+#: mutation-data.h:338 mutation-data.h:339
+msgid "You cover ground extremely slowly."
+msgstr "당신은 지면 위를 달팽이처럼 느리게 움직인다."
+
+#: mutation-data.h:354 mutation-data.h:355
+msgid "You have supernaturally acute eyesight."
+msgstr "당신은 초자연적인 날카로운 시력이 있다."
+
+#: mutation-data.h:356 mutation-data.h:357 mutation-data.h:358
+#: mutation-data.h:568 mutation-data.h:570 mutation-data.h:359
+#: mutation-data.h:543
+msgid "Your vision sharpens."
+msgstr "시력이 날카로워짐을 느꼈다."
+
+#: mutation-data.h:360 mutation-data.h:361 mutation-data.h:362
+#: mutation-data.h:363
+msgid "Your vision seems duller."
+msgstr "시력이 둔해졌음을 느꼈다."
+
+#: mutation-data.h:370
+msgid "Armour fits poorly on your unusually shaped body."
+msgstr "기형적인 몸 때문에, 갑옷이 잘 맞지 않는다."
+
+#: mutation-data.h:371
+msgid "Armour fits poorly on your deformed body."
+msgstr "심각한 기형적인 몸 때문에 갑옷이 잘 맞지 않는다."
+
+#: mutation-data.h:372
+msgid "Armour fits poorly on your badly deformed body."
+msgstr "극심한 기형적인 몸 때문에 갑옷이 맞지 않는다."
+
+#: mutation-data.h:374
+msgid "Your body twists unusually."
+msgstr "몸이 이상하게 꼬이는 것을 느꼈다."
+
+#: mutation-data.h:375 mutation-data.h:376 mutation-data.h:372
+msgid "Your body twists and deforms."
+msgstr "몸이 비비 꼬여 기형이 되는 것을 느꼈다."
+
+#: mutation-data.h:378 mutation-data.h:373
+msgid "Your body's shape seems more normal."
+msgstr "몸의 형태가 정상으로 돌아감을 느꼈다."
+
+#: mutation-data.h:379 mutation-data.h:380
+msgid "Your body's shape seems slightly more normal."
+msgstr "몸의 형태가 약간 정상으로 돌아갔음을 느꼈다."
+
+#: mutation-data.h:388 mutation-data.h:389
+msgid "You can teleport at will."
+msgstr "당신은 스스로 공간이동이 가능하다."
+
+#: mutation-data.h:389 mutation-data.h:390
+msgid "You are good at teleporting at will."
+msgstr "당신은 스스로 능숙한 공간이동이 가능하다."
+
+#: mutation-data.h:390 mutation-data.h:391
+msgid "You can teleport instantly at will."
+msgstr "당신은 스스로 능숙한 공간이동을 즉시 시전할 수 있다."
+
+#: mutation-data.h:392 mutation-data.h:393
+msgid "You feel jumpy."
+msgstr "몸이 튀어오름을 느꼈다."
+
+#: mutation-data.h:393 mutation-data.h:394
+msgid "You feel more jumpy."
+msgstr "몸이 더욱 튀어오름을 느꼈다."
+
+#: mutation-data.h:394 mutation-data.h:395
+msgid "You feel even more jumpy."
+msgstr "몸이 한층 더 튀어오름을 느꼈다."
+
+#: mutation-data.h:396 mutation-data.h:397
+msgid "You feel a little less jumpy."
+msgstr "기묘한 정체감을 느꼈다."
+
+#: mutation-data.h:397 mutation-data.h:398 mutation-data.h:399
+msgid "You feel less jumpy."
+msgstr "몸이 고정된 느낌을 받았다."
+
+#: mutation-data.h:406 mutation-data.h:408 mutation-data.h:381
+msgid "You can spit poison."
+msgstr "당신은 독을 뱉을 수 있다."
+
+#: mutation-data.h:407 mutation-data.h:409 mutation-data.h:382
+msgid "You can spit moderately strong poison."
+msgstr "당신은 강한 독을 뱉을 수 있다."
+
+#: mutation-data.h:408 mutation-data.h:410 mutation-data.h:383
+msgid "You can spit strong poison."
+msgstr "당신은 강력한 맹독을 뱉을 수 있다."
+
+#: mutation-data.h:410 mutation-data.h:411 mutation-data.h:412
+#: mutation-data.h:413 mutation-data.h:414 mutation-data.h:385
+#: mutation-data.h:386 mutation-data.h:387
+msgid "There is a nasty taste in your mouth for a moment."
+msgstr "목의 안쪽에서 불쾌한 맛이 느껴졌다."
+
+#: mutation-data.h:414 mutation-data.h:415 mutation-data.h:416
+#: mutation-data.h:417 mutation-data.h:418 mutation-data.h:389
+#: mutation-data.h:390 mutation-data.h:391
+msgid "You feel an ache in your throat."
+msgstr "목의 안쪽이 상하는 것을 느꼈다."
+
+#: mutation-data.h:424 mutation-data.h:426 mutation-data.h:399
+msgid "You can breathe flames."
+msgstr "당신은 뜨거운 입김을 뿜을 수 있다."
+
+#: mutation-data.h:425 mutation-data.h:427 mutation-data.h:400
+msgid "You can breathe fire."
+msgstr "당신은 화염 입김을 뿜을 수 있다."
+
+#: mutation-data.h:426 mutation-data.h:428 mutation-data.h:401
+msgid "You can breathe blasts of fire."
+msgstr "당신은 작열하는 불꽃 입김을 뿜을 수 있다."
+
+#: mutation-data.h:428 mutation-data.h:429 mutation-data.h:430
+#: mutation-data.h:431 mutation-data.h:432 mutation-data.h:403
+#: mutation-data.h:404 mutation-data.h:405
+msgid "Your throat feels hot."
+msgstr "목구멍 안쪽이 뜨거워짐을 느꼈다."
+
+#: mutation-data.h:432 mutation-data.h:433 mutation-data.h:434
+#: mutation-data.h:435 mutation-data.h:436 mutation-data.h:407
+#: mutation-data.h:408 mutation-data.h:409
+msgid "A chill runs up and down your throat."
+msgstr "목구멍 안쪽이 식어감을 느꼈다."
+
+#: mutation-data.h:442 mutation-data.h:444 mutation-data.h:417
+msgid "You can translocate small distances at will."
+msgstr "당신은 짧은 거리의 순간이동이 가능하다."
+
+#: mutation-data.h:443 mutation-data.h:445 mutation-data.h:418
+msgid "You are good at translocating small distances at will."
+msgstr "당신은 짧은 거리의 능숙한 순간이동이 가능하다."
+
+#: mutation-data.h:444
+msgid "You can translocate small distances instantaneously."
+msgstr "당신은 짧은 거리의 순간 이동을 즉시 시전하는 능력이 있다."
+
+#: mutation-data.h:446 mutation-data.h:448 mutation-data.h:421
+msgid "You feel jittery."
+msgstr "초조한 기분을 느꼈다."
+
+#: mutation-data.h:447 mutation-data.h:449 mutation-data.h:422
+msgid "You feel more jittery."
+msgstr "더욱 초조한 기분을 느꼈다."
+
+#: mutation-data.h:448 mutation-data.h:450 mutation-data.h:423
+msgid "You feel even more jittery."
+msgstr "한층 더 초조한 기분을 느꼈다."
+
+#: mutation-data.h:450 mutation-data.h:452 mutation-data.h:425
+msgid "You feel a little less jittery."
+msgstr "초조한 기분이 조금 사라졌다."
+
+#: mutation-data.h:451 mutation-data.h:452 mutation-data.h:453
+#: mutation-data.h:454 mutation-data.h:426 mutation-data.h:427
+msgid "You feel less jittery."
+msgstr "초조한 기분이 사라졌다."
+
+#: mutation-data.h:460 mutation-data.h:462 mutation-data.h:435
+msgid "Your muscles are strong, but stiff (Str +1, Dex -1)."
+msgstr "당신의 근육은 강하지만, 뻣뻣하다. (힘 +1, 민첩 -1)"
+
+#: mutation-data.h:461 mutation-data.h:463 mutation-data.h:436
+msgid "Your muscles are very strong, but stiff (Str +2, Dex -2)."
+msgstr "당신의 근육은 상당히 강하지만, 뻣뻣하다. (힘 +2, 민첩 -2)"
+
+#: mutation-data.h:462 mutation-data.h:464 mutation-data.h:437
+msgid "Your muscles are extremely strong, but stiff (Str +3, Dex -3)."
+msgstr "당신의 근육은 대단히 강하지만, 뻣뻣하다. (힘 +3, 민첩 -3)"
+
+#: mutation-data.h:464 mutation-data.h:465 mutation-data.h:466
+#: mutation-data.h:486 mutation-data.h:487 mutation-data.h:488
+#: mutation-data.h:467 mutation-data.h:468 mutation-data.h:489
+#: mutation-data.h:490 mutation-data.h:439 mutation-data.h:440
+#: mutation-data.h:441 mutation-data.h:461 mutation-data.h:462
+#: mutation-data.h:463
+msgid "Your muscles feel sore."
+msgstr "당신은 근육통을 느꼈다."
+
+#: mutation-data.h:468 mutation-data.h:469 mutation-data.h:470
+#: mutation-data.h:482 mutation-data.h:483 mutation-data.h:484
+#: mutation-data.h:471 mutation-data.h:472 mutation-data.h:485
+#: mutation-data.h:486 mutation-data.h:443 mutation-data.h:444
+#: mutation-data.h:445 mutation-data.h:457 mutation-data.h:458
+#: mutation-data.h:459
+msgid "Your muscles feel loose."
+msgstr "근육이 유연해졌음을 느꼈다."
+
+#: mutation-data.h:478 mutation-data.h:480 mutation-data.h:453
+msgid "Your muscles are flexible, but weak (Str -1, Dex +1)."
+msgstr "당신의 근육은 유연하지만, 약하다. (힘 -1, 민첩 +1)"
+
+#: mutation-data.h:479 mutation-data.h:481 mutation-data.h:454
+msgid "Your muscles are very flexible, but weak (Str -2, Dex +2)."
+msgstr "당신의 근육은 유연하지만, 약하다. (힘 -2, 민첩 +2)"
+
+#: mutation-data.h:480 mutation-data.h:482 mutation-data.h:455
+msgid "Your muscles are extremely flexible, but weak (Str -3, Dex +3)."
+msgstr "당신의 근육은 유연하지만, 약하다. (힘 -3, 민첩 +3)"
+
+#: mutation-data.h:496 mutation-data.h:498 mutation-data.h:471
+msgid "You occasionally shout uncontrollably."
+msgstr "당신은 이따금씩, 자신도 모르게 소리를 지른다."
+
+#: mutation-data.h:497 mutation-data.h:499 mutation-data.h:472
+msgid "You sometimes yell uncontrollably."
+msgstr "당신은 때때로 자신도 모르게 고함을 지른다."
+
+#: mutation-data.h:498 mutation-data.h:500 mutation-data.h:473
+msgid "You frequently scream uncontrollably."
+msgstr "당신은 빈번하게 자신도 모르게 비명을 지른다."
+
+#: mutation-data.h:500 mutation-data.h:502 mutation-data.h:475
+msgid "You feel the urge to shout."
+msgstr "제어하기 힘든 외침이 목구멍을 타고 올라옴을 느꼈다."
+
+#: mutation-data.h:501 mutation-data.h:503 mutation-data.h:476
+msgid "You feel a strong urge to yell."
+msgstr "제어하기 힘든 고함이 목구멍을 타고 올라옴을 느꼈다."
+
+#: mutation-data.h:502 mutation-data.h:504 mutation-data.h:477
+msgid "You feel a strong urge to scream."
+msgstr "제어하기 힘든 비명이 목구멍을 타고 올라옴을 느꼈다."
+
+#: mutation-data.h:504 mutation-data.h:506 mutation-data.h:479
+msgid "Your urge to shout disappears."
+msgstr "당신의 목이 안정되었음을 느꼈다."
+
+#: mutation-data.h:505 mutation-data.h:507 mutation-data.h:480
+msgid "Your urge to yell lessens."
+msgstr "당신의 목이 약간 안정되었음을 느꼈다."
+
+#: mutation-data.h:506 mutation-data.h:508 mutation-data.h:481
+msgid "Your urge to scream lessens."
+msgstr "당신의 목이 약간 안정되었음을 느꼈다."
+
+#: mutation-data.h:514 mutation-data.h:516 mutation-data.h:489
+msgid "You possess an exceptional clarity of mind."
+msgstr "당신은 매우 명석한 정신을 지녔다."
+
+#: mutation-data.h:515 mutation-data.h:517 mutation-data.h:490
+msgid "Your thoughts seem clearer."
+msgstr "머리가 매우 맑아짐을 느꼈다."
+
+#: mutation-data.h:516 mutation-data.h:518 mutation-data.h:491
+msgid "Your thinking seems confused."
+msgstr "머리속의 사고가 혼란해짐을 느꼈다."
+
+#: mutation-data.h:524 mutation-data.h:526 mutation-data.h:499
+msgid "You tend to lose your temper in combat."
+msgstr "당신은 전투중에 이성을 잃는 경향이 있다."
+
+#: mutation-data.h:525 mutation-data.h:527 mutation-data.h:500
+msgid "You often lose your temper in combat."
+msgstr "당신은 전투중에 빈번하게 이성을 잃는다."
+
+#: mutation-data.h:526 mutation-data.h:528 mutation-data.h:501
+msgid "You have an uncontrollable temper."
+msgstr "당신은 당신의 분노를 제어할 수 없다."
+
+#: mutation-data.h:528 mutation-data.h:530 mutation-data.h:503
+msgid "You feel a little pissed off."
+msgstr "당신은 분노를 느꼈다."
+
+#: mutation-data.h:529 mutation-data.h:531 mutation-data.h:504
+msgid "You feel angry."
+msgstr "당신은 커다란 분노를 느꼈다."
+
+#: mutation-data.h:530 mutation-data.h:532 mutation-data.h:505
+msgid "You feel extremely angry at everything!"
+msgstr "당신은 모든 것에 대한 격렬한 분노를 느꼈다!"
+
+#: mutation-data.h:532 mutation-data.h:534 mutation-data.h:507
+msgid "You feel a little more calm."
+msgstr "당신은 온화한 기분을 느꼈다."
+
+#: mutation-data.h:533 mutation-data.h:534 mutation-data.h:535
+#: mutation-data.h:536 mutation-data.h:508 mutation-data.h:509
+msgid "You feel a little less angry."
+msgstr "당신은 약간 침착해졌음을 느꼈다."
+
+#: mutation-data.h:542 mutation-data.h:544 mutation-data.h:517
+msgid "Your body is slowly deteriorating."
+msgstr "당신의 육체는 서서히 능력이 저하되어간다."
+
+#: mutation-data.h:543 mutation-data.h:545 mutation-data.h:518
+msgid "Your body is deteriorating."
+msgstr "당신의 육체는 능력치 저하되어간다."
+
+#: mutation-data.h:544 mutation-data.h:546 mutation-data.h:519
+msgid "Your body is rapidly deteriorating."
+msgstr "당신의 육체는 급속하게 능력이 저하되어간다."
+
+#: mutation-data.h:546 mutation-data.h:547 mutation-data.h:548
+#: mutation-data.h:549 mutation-data.h:521 mutation-data.h:522
+msgid "You feel yourself wasting away."
+msgstr "몸이 점점 소모되는것을 느꼈다."
+
+#: mutation-data.h:548 mutation-data.h:550 mutation-data.h:523
+msgid "You feel your body start to fall apart."
+msgstr "몸이 너덜너덜 떨어져감을 느꼈다."
+
+#: mutation-data.h:550 mutation-data.h:552 mutation-data.h:525
+msgid "You feel healthier."
+msgstr "당신은 건강한 몸이 되었다."
+
+#: mutation-data.h:551 mutation-data.h:552 mutation-data.h:553
+#: mutation-data.h:554 mutation-data.h:526 mutation-data.h:527
+msgid "You feel a little healthier."
+msgstr "당신은 건강한 몸에 약간 가까워졌다."
+
+#: mutation-data.h:560 mutation-data.h:562 mutation-data.h:535
+msgid "Your vision is a little blurry."
+msgstr "당신의 시야는 약간 흐릿하다."
+
+#: mutation-data.h:561 mutation-data.h:563 mutation-data.h:536
+msgid "Your vision is quite blurry."
+msgstr "당신의 시야는 매우 흐릿하다."
+
+#: mutation-data.h:562 mutation-data.h:564 mutation-data.h:537
+msgid "Your vision is extremely blurry."
+msgstr "당신의 시야는 지극히 흐릿하다."
+
+#: mutation-data.h:564 mutation-data.h:565 mutation-data.h:566
+#: mutation-data.h:567 mutation-data.h:568 mutation-data.h:539
+#: mutation-data.h:540 mutation-data.h:541
+msgid "Your vision blurs."
+msgstr "시야가 희미해짐을 느꼈다."
+
+#: mutation-data.h:569 mutation-data.h:570 mutation-data.h:571
+#: mutation-data.h:572 mutation-data.h:544 mutation-data.h:545
+msgid "Your vision sharpens a little."
+msgstr "시야가 약간 날카로워졌음을 느꼈다."
+
+#: mutation-data.h:578 mutation-data.h:580 mutation-data.h:553
+msgid "You are somewhat resistant to further mutation."
+msgstr "당신은 돌연변이 진행에 약간의 저항력이 있다."
+
+#: mutation-data.h:579 mutation-data.h:581 mutation-data.h:554
+msgid ""
+"You are somewhat resistant to both further mutation and mutation removal."
+msgstr "당신은 돌연변이의 진행과 제거 모두 약간의 저항력이 있다. "
+
+#: mutation-data.h:580 mutation-data.h:582
+msgid ""
+"Your current mutations are irrevocably fixed, and you can mutate no more."
+msgstr "당신의 돌연변이는 고정되었고, 앞으로의 돌연변이는 없다."
+
+#: mutation-data.h:582 mutation-data.h:583 mutation-data.h:584
+#: mutation-data.h:585 mutation-data.h:557 mutation-data.h:558
+#: mutation-data.h:579
+msgid "You feel genetically stable."
+msgstr "당신은 안정감을 느꼈다."
+
+#: mutation-data.h:584 mutation-data.h:586 mutation-data.h:559
+msgid "You feel genetically immutable."
+msgstr "당신은 유전자상으로 안정해졌음을 느꼈다."
+
+#: mutation-data.h:586 mutation-data.h:587 mutation-data.h:588
+#: mutation-data.h:589 mutation-data.h:590 mutation-data.h:561
+#: mutation-data.h:562 mutation-data.h:563
+msgid "You feel genetically unstable."
+msgstr "당신은 유전자상으로 불안정하게 되었음을 느꼈다."
+
+#: mutation-data.h:596 mutation-data.h:616 mutation-data.h:589
+msgid "You are frail (-10% HP)."
+msgstr "당신은 허약하다. (-10% HP)"
+
+#: mutation-data.h:597 mutation-data.h:617 mutation-data.h:590
+msgid "You are very frail (-20% HP)."
+msgstr "당신은 상당히 허약하다. (-20% HP)"
+
+#: mutation-data.h:598 mutation-data.h:618 mutation-data.h:591
+msgid "You are extremely frail (-30% HP)."
+msgstr "당신은 대단히 허약하다. (-30% HP)"
+
+#: mutation-data.h:600 mutation-data.h:601 mutation-data.h:602
+#: mutation-data.h:622 mutation-data.h:623 mutation-data.h:624
+#: mutation-data.h:620 mutation-data.h:621 mutation-data.h:642
+#: mutation-data.h:643 mutation-data.h:644 mutation-data.h:593
+#: mutation-data.h:594 mutation-data.h:595 mutation-data.h:615
+#: mutation-data.h:616 mutation-data.h:617
+msgid "You feel frail."
+msgstr "몸이 쇠약해짐을 느꼈다."
+
+#: mutation-data.h:604 mutation-data.h:605 mutation-data.h:606
+#: mutation-data.h:618 mutation-data.h:619 mutation-data.h:620
+#: mutation-data.h:624 mutation-data.h:625 mutation-data.h:626
+#: mutation-data.h:638 mutation-data.h:639 mutation-data.h:640
+#: mutation-data.h:597 mutation-data.h:598 mutation-data.h:599
+#: mutation-data.h:611 mutation-data.h:612 mutation-data.h:613
+msgid "You feel robust."
+msgstr "몸이 강건해졌음을 느꼈다."
+
+#: mutation-data.h:614 mutation-data.h:634 mutation-data.h:607
+msgid "You are robust (+10% HP)."
+msgstr "당신은 건강하다. (+10% HP)"
+
+#: mutation-data.h:615 mutation-data.h:635 mutation-data.h:608
+msgid "You are very robust (+20% HP)."
+msgstr "당신은 꽤나 건강하다. (+20% HP)"
+
+#: mutation-data.h:616 mutation-data.h:636 mutation-data.h:609
+msgid "You are extremely robust (+30% HP)."
+msgstr "당신은 대단히 건강하다. (+30% HP)"
+
+#: mutation-data.h:632
+msgid "You do not need to breathe."
+msgstr "당신은 숨을 쉴 필요가 없다."
+
+#: mutation-data.h:633 mutation-data.h:653 mutation-data.h:626
+msgid "You feel breathless."
+msgstr "호흡이 사라져감을 느꼈다."
+
+#: mutation-data.h:642 mutation-data.h:662 mutation-data.h:635
+msgid "You are immune to unholy pain and torment."
+msgstr "당신은 사악한 고통에 면역이 있다."
+
+#: mutation-data.h:643 mutation-data.h:959 mutation-data.h:663
+#: mutation-data.h:1021 mutation-data.h:636 mutation-data.h:950
+msgid "You feel a strange anaesthesia."
+msgstr "기묘한 무감각함을 느꼈다."
+
+#: mutation-data.h:652 mutation-data.h:672 mutation-data.h:645
+msgid "You resist negative energy."
+msgstr "당신은 음에너지에 저항력이 있다."
+
+#: mutation-data.h:653 mutation-data.h:673 mutation-data.h:646
+msgid "You are quite resistant to negative energy."
+msgstr "당신은 음에너지에 큰 저항력이 있다."
+
+#: mutation-data.h:654 mutation-data.h:674 mutation-data.h:647
+msgid "You are immune to negative energy."
+msgstr "당신은 음에너지에 거의 피해를 받지 않는다."
+
+#: mutation-data.h:656 mutation-data.h:657 mutation-data.h:658
+#: mutation-data.h:676 mutation-data.h:677 mutation-data.h:678
+#: mutation-data.h:649 mutation-data.h:650 mutation-data.h:651
+msgid "You feel negative."
+msgstr "부정적인 기운을 느꼈다."
+
+#: mutation-data.h:668 mutation-data.h:688 mutation-data.h:661
+msgid "You can hurl blasts of hellfire."
+msgstr "당신은 지옥불을 일으킬 수 있다."
+
+#: mutation-data.h:669 mutation-data.h:689 mutation-data.h:662
+msgid "You smell fire and brimstone."
+msgstr "불과 유황의 냄새를 맡았다."
+
+#: mutation-data.h:678 mutation-data.h:699
+msgid "You can throw forth the flames of Gehenna."
+msgstr "당신은 게헨나의 불꽃을 일으킬 수 있다."
+
+#: mutation-data.h:679 mutation-data.h:700
+msgid "You smell the fires of Gehenna."
+msgstr "게헨나의 불꽃이 타는 냄새를 맡았다."
+
+#: mutation-data.h:688 mutation-data.h:709
+msgid "You can throw forth the frost of Cocytus."
+msgstr "당신은 코큐투스의 냉기를 일으킬 수 있다."
+
+#: mutation-data.h:689 mutation-data.h:710
+msgid "You feel the icy cold of Cocytus chill your soul."
+msgstr "게헨나의 차가운 냉기가 영혼을 얼어붙게 함을 느꼈다."
+
+#: mutation-data.h:699 mutation-data.h:721 mutation-data.h:672
+msgid "You have a pair of small horns on your head."
+msgstr "당신의 머리에는 한 쌍의 조그마한 뿔이 있다."
+
+#: mutation-data.h:700 mutation-data.h:722 mutation-data.h:673
+msgid "You have a pair of horns on your head."
+msgstr "당신의 머리에는 한 쌍의 뿔이 있다."
+
+#: mutation-data.h:701 mutation-data.h:723 mutation-data.h:674
+msgid "You have a pair of large horns on your head."
+msgstr "당신의 머리에는 한 쌍의 커다란 뿔이 있다."
+
+#: mutation-data.h:703 mutation-data.h:725 mutation-data.h:676
+msgid "A pair of horns grows on your head!"
+msgstr "당신의 머리에 한 쌍의 뿔이 났다!"
+
+#: mutation-data.h:704 mutation-data.h:705 mutation-data.h:726
+#: mutation-data.h:727 mutation-data.h:677 mutation-data.h:678
+msgid "The horns on your head grow some more."
+msgstr "당신의 뿔이 다소 성장했다"
+
+#: mutation-data.h:707 mutation-data.h:729 mutation-data.h:680
+msgid "The horns on your head shrink away."
+msgstr "당신의 머리에 있는 뿔이 점점 수축하여 사라졌다."
+
+#: mutation-data.h:708 mutation-data.h:709 mutation-data.h:730
+#: mutation-data.h:731 mutation-data.h:681 mutation-data.h:682
+msgid "The horns on your head shrink a bit."
+msgstr "당신의 머리에 있는 뿔이 조금 작아졌다."
+
+#: mutation-data.h:717 mutation-data.h:739 mutation-data.h:690
+msgid "You have a beak for a mouth."
+msgstr "당신의 입에는 부리가 있다."
+
+#: mutation-data.h:718 mutation-data.h:740 mutation-data.h:691
+msgid "Your mouth lengthens and hardens into a beak!"
+msgstr "당신의 입이 길어지고, 부리처럼 단단해졌다."
+
+#: mutation-data.h:719 mutation-data.h:741 mutation-data.h:692
+msgid "Your beak shortens and softens into a mouth."
+msgstr "당신의 부리가 짧아지고, 부드러워져 떨어져 나갔다."
+
+#: mutation-data.h:727 mutation-data.h:749 mutation-data.h:700
+msgid "You have sharp fingernails."
+msgstr "당신의 손톱은 날카롭다."
+
+#: mutation-data.h:728 mutation-data.h:750 mutation-data.h:701
+msgid "You have very sharp fingernails."
+msgstr "당신의 손톱은 매우 날카롭다."
+
+#: mutation-data.h:729 mutation-data.h:751 mutation-data.h:702
+msgid "You have claws for hands."
+msgstr "당신은 커다란 갈퀴가 손에 달려 있다."
+
+#: mutation-data.h:731 mutation-data.h:753 mutation-data.h:704
+msgid "Your fingernails lengthen."
+msgstr "당신의 손톱이 성장하여 길어졌다."
+
+#: mutation-data.h:732 mutation-data.h:754 mutation-data.h:705
+msgid "Your fingernails sharpen."
+msgstr "당신의 손톱이 날카로워졌다."
+
+#: mutation-data.h:733 mutation-data.h:755 mutation-data.h:706
+msgid "Your hands twist into claws."
+msgstr "당신의 손톱이 갈고리 모양으로 꼬였다."
+
+#: mutation-data.h:735 mutation-data.h:757 mutation-data.h:708
+msgid "Your fingernails shrink to normal size."
+msgstr "당신의 손톱이 수축하여, 보통 크기로 줄어들어 버렸다."
+
+#: mutation-data.h:736 mutation-data.h:758 mutation-data.h:709
+msgid "Your fingernails look duller."
+msgstr "당신의 손톱이 무뎌졌다."
+
+#: mutation-data.h:737 mutation-data.h:759 mutation-data.h:710
+msgid "Your hands feel fleshier."
+msgstr "당신의 손 구조는 손가락으로 변화했다."
+
+#: mutation-data.h:745 mutation-data.h:767 mutation-data.h:718
+msgid "You have very sharp teeth."
+msgstr "당신의 이빨은 매우 날카롭다."
+
+#: mutation-data.h:746 mutation-data.h:768 mutation-data.h:719
+msgid "You have extremely sharp teeth."
+msgstr "당신의 이빨은 엄청나게 날카롭다."
+
+#: mutation-data.h:747 mutation-data.h:769 mutation-data.h:720
+msgid "You have razor-sharp teeth."
+msgstr "당신의 이빨은 면도날처럼 극도로 날카롭다."
+
+#: mutation-data.h:749 mutation-data.h:771 mutation-data.h:722
+msgid "Your teeth lengthen and sharpen."
+msgstr "당신의 이빨이 길어지고 날카로워졌다."
+
+#: mutation-data.h:750 mutation-data.h:772 mutation-data.h:723
+msgid "Your teeth lengthen and sharpen some more."
+msgstr "당신의 이빨이, 좀 더 길어지고 더욱 날카로워졌다."
+
+#: mutation-data.h:751 mutation-data.h:773 mutation-data.h:724
+msgid "Your teeth are very long and razor-sharp."
+msgstr "당신의 이빨이 한층 더 길어지고, 면도날처럼 날카로워졌다."
+
+#: mutation-data.h:753 mutation-data.h:775 mutation-data.h:726
+msgid "Your teeth shrink to normal size."
+msgstr "당신의 이빨이 수축하여 원래대로 돌아갔다."
+
+#: mutation-data.h:754 mutation-data.h:755 mutation-data.h:776
+#: mutation-data.h:777 mutation-data.h:727 mutation-data.h:728
+msgid "Your teeth shrink and become duller."
+msgstr "당신의 이빨이 수축하여 작아지고, 무뎌졌다."
+
+#: mutation-data.h:763 mutation-data.h:785 mutation-data.h:736
+msgid "You have large cloven feet."
+msgstr "당신은 커다랗고 갈라진 발을 가지고 있다."
+
+#: mutation-data.h:764 mutation-data.h:786 mutation-data.h:737
+msgid "You have hoof-like feet."
+msgstr "당신은 흡사 발굽과 같은 발을 가지고 있다."
+
+#: mutation-data.h:765 mutation-data.h:787 mutation-data.h:738
+msgid "You have hooves in place of feet."
+msgstr "당신은 발에 발굽이 있다."
+
+#: mutation-data.h:767 mutation-data.h:768 mutation-data.h:789
+#: mutation-data.h:790 mutation-data.h:740 mutation-data.h:741
+msgid "Your feet thicken and deform."
+msgstr "당신의 발이 단단해지고, 변형되었다."
+
+#: mutation-data.h:769 mutation-data.h:791 mutation-data.h:742
+msgid "Your feet have mutated into hooves."
+msgstr "당신의 발에 발굽이 생겼다."
+
+#: mutation-data.h:771 mutation-data.h:793 mutation-data.h:744
+msgid "Your hooves expand and flesh out into feet!"
+msgstr "당신의 발굽이 보통의 발로 돌아갔다!"
+
+#: mutation-data.h:772 mutation-data.h:773 mutation-data.h:794
+#: mutation-data.h:795 mutation-data.h:745 mutation-data.h:746
+msgid "Your hooves look more like feet."
+msgstr "당신의 발굽이, 보통의 발에 가까워졌다."
+
+#: mutation-data.h:781 mutation-data.h:803 mutation-data.h:754
+msgid "You have a pair of small antennae on your head."
+msgstr "당신의 머리에는 작은 한 쌍의 더듬이가 달려 있다."
+
+#: mutation-data.h:782 mutation-data.h:804 mutation-data.h:755
+msgid "You have a pair of antennae on your head."
+msgstr "당신의 머리에는 한 쌍의 더듬이가 달려 있다."
+
+#: mutation-data.h:783 mutation-data.h:805 mutation-data.h:756
+msgid "You have a pair of large antennae on your head (SInv)."
+msgstr "당신의 머리에는 커다란 한 쌍의 더듬이가 달려 있다. (투명 감지)"
+
+#: mutation-data.h:785 mutation-data.h:807 mutation-data.h:758
+msgid "A pair of antennae grows on your head!"
+msgstr "더듬이 한 쌍이 머리 위에서 자라났다!"
+
+#: mutation-data.h:786 mutation-data.h:787 mutation-data.h:808
+#: mutation-data.h:809 mutation-data.h:759 mutation-data.h:760
+msgid "The antennae on your head grow some more."
+msgstr "머리의 더듬이가 한층 더 성장했다."
+
+#: mutation-data.h:789 mutation-data.h:811 mutation-data.h:762
+msgid "The antennae on your head shrink away."
+msgstr "머리의 더듬이가 수축하여 사라졌다."
+
+#: mutation-data.h:790 mutation-data.h:791 mutation-data.h:812
+#: mutation-data.h:813 mutation-data.h:763 mutation-data.h:764
+msgid "The antennae on your head shrink a bit."
+msgstr "머리의 더듬이가, 조금 수축하여 줄어들었다."
+
+#: mutation-data.h:799 mutation-data.h:821 mutation-data.h:772
+msgid "You have sharp toenails."
+msgstr "당신은 날카로운 발톱이 있다."
+
+#: mutation-data.h:800 mutation-data.h:822 mutation-data.h:773
+msgid "You have razor-sharp toenails."
+msgstr "당신은 면도날처럼 매우 날카로운 발톱이 있다."
+
+#: mutation-data.h:801 mutation-data.h:823 mutation-data.h:774
+msgid "You have claws for feet."
+msgstr "당신의 발톱은 커다란 갈고리 모양이다."
+
+#: mutation-data.h:803 mutation-data.h:804 mutation-data.h:825
+#: mutation-data.h:826 mutation-data.h:776 mutation-data.h:777
+msgid "Your toenails lengthen and sharpen."
+msgstr "당신의 발톱이 길어지고, 날카로워졌다."
+
+#: mutation-data.h:805 mutation-data.h:827 mutation-data.h:778
+msgid "Your feet stretch into talons."
+msgstr "당신의 발톱이 쭉 뻗어나갔다."
+
+#: mutation-data.h:807 mutation-data.h:829 mutation-data.h:780
+msgid "Your talons dull and shrink into feet."
+msgstr "당신의 발톱이 짧아지고, 무뎌졌다."
+
+#: mutation-data.h:808 mutation-data.h:809 mutation-data.h:830
+#: mutation-data.h:831 mutation-data.h:781 mutation-data.h:782
+msgid "Your talons look more like feet."
+msgstr "당신의 발톱은 보통의 발에 좀 더 가까워졌다."
+
+#: mutation-data.h:817 mutation-data.h:839
+msgid "You have a mass of small tentacles instead of fingers."
+msgstr "당신은 손가락 대신, 작은 촉수들이 양손에 달려 있다."
+
+#: mutation-data.h:818 mutation-data.h:840
+msgid "You have a mass of tentacles instead of hands."
+msgstr "당신은 손 대신, 촉수들이 양 팔 끝에 달려 있다."
+
+#: mutation-data.h:819 mutation-data.h:841
+msgid "You have a mass of large tentacles instead of arms."
+msgstr "당신은 팔 대신, 커다란 촉수들이 양쪽 어깨에 달려 있다."
+
+#: mutation-data.h:821 mutation-data.h:843
+msgid "Your fingers turn into small tentacles."
+msgstr "당신의 손가락들이 작은 촉수들로 변했다."
+
+#: mutation-data.h:822 mutation-data.h:844
+msgid "Your hands turn into tentacles."
+msgstr "당신의 양 손이 촉수들로 변했다."
+
+#: mutation-data.h:823 mutation-data.h:845
+msgid "Your arms turn into large tentacles."
+msgstr "당신의 양 팔이 커다란 촉수들로 변했다"
+
+#: mutation-data.h:825 mutation-data.h:847
+msgid "Your fingers look less like tentacles."
+msgstr "양손의 촉수가 손가락으로 변화했다."
+
+#: mutation-data.h:826 mutation-data.h:848
+msgid "Your hands look less like tentacles."
+msgstr "양팔의 촉수가 손바닥과 손가락으로 변화했다."
+
+#: mutation-data.h:827 mutation-data.h:849
+msgid "Your arms look less like tentacles."
+msgstr "양쪽 어깨의 촉수가 팔로 변화했다."
+
+#: mutation-data.h:836 mutation-data.h:876 mutation-data.h:810
+msgid "You can exhale a cloud of poison."
+msgstr "당신은 독구름을 뿜을 수 있다."
+
+#: mutation-data.h:837 mutation-data.h:877 mutation-data.h:811
+msgid "You taste something nasty."
+msgstr "목의 안쪽에서 불쾌한 맛이 느껴졌다."
+
+#: mutation-data.h:838 mutation-data.h:878 mutation-data.h:812
+msgid "Your breath is less nasty."
+msgstr "목 안쪽의 불쾌한 맛이 사라졌다."
+
+#: mutation-data.h:847 mutation-data.h:887 mutation-data.h:821
+msgid "Your tail ends in a poisonous barb."
+msgstr "당신의 꼬리의 끝에는 독이 있는 가시가 나 있다"
+
+#: mutation-data.h:848 mutation-data.h:888 mutation-data.h:822
+msgid "Your tail ends in a sharp poisonous barb."
+msgstr "당신의 꼬리의 끝에는 독이 있는 날카로운 가시가 나 있다"
+
+#: mutation-data.h:849 mutation-data.h:889 mutation-data.h:823
+msgid "Your tail ends in a wickedly sharp and poisonous barb."
+msgstr "당신의 꼬리의 끝에는 독이 있는 흉악한 가시가 나 있다"
+
+#: mutation-data.h:851 mutation-data.h:891 mutation-data.h:825
+msgid "A poisonous barb forms on the end of your tail."
+msgstr "당신의 꼬리의 끝에 독이 있는 가시가 났다."
+
+#: mutation-data.h:852 mutation-data.h:892 mutation-data.h:826
+msgid "The barb on your tail looks sharper."
+msgstr "당신의 꼬리의 가시는 날카로워졌다."
+
+#: mutation-data.h:853 mutation-data.h:893 mutation-data.h:827
+msgid "The barb on your tail looks very sharp."
+msgstr "당신의 꼬리의 가시는 매우 날카로워졌다."
+
+#: mutation-data.h:855 mutation-data.h:895 mutation-data.h:829
+msgid "The barb on your tail disappears."
+msgstr "당신의 꼬리에 있는 가시가 사라졌다."
+
+#: mutation-data.h:856 mutation-data.h:857 mutation-data.h:896
+#: mutation-data.h:897 mutation-data.h:830 mutation-data.h:831
+msgid "The barb on your tail seems less sharp."
+msgstr "당신의 꼬리에 있는 가시가 조금 무뎌졌다."
+
+#: mutation-data.h:866 mutation-data.h:906 mutation-data.h:840
+msgid "Your wings are large and strong."
+msgstr "당신의 날개는 크고 강인하다."
+
+#: mutation-data.h:867 mutation-data.h:907 mutation-data.h:841
+msgid "Your wings grow larger and stronger."
+msgstr "양쪽 날개가 커지고 튼튼하게 성장했음을 느꼈다."
+
+#: mutation-data.h:868 mutation-data.h:908 mutation-data.h:842
+msgid "Your wings shrivel and weaken."
+msgstr "양쪽 날개가 움츠려들고, 약해졌음을 느꼈다."
+
+#: mutation-data.h:877 mutation-data.h:917 mutation-data.h:851
+msgid "You can tolerate rotten meat."
+msgstr "당신은 썩은 고기를 어떻게든 먹을 수 있다."
+
+#: mutation-data.h:878 mutation-data.h:918 mutation-data.h:852
+msgid "You can eat rotten meat."
+msgstr "당신은 썩은 고기를 그럭저럭 먹을 수 있다."
+
+#: mutation-data.h:879 mutation-data.h:919 mutation-data.h:853
+msgid "You thrive on rotten meat."
+msgstr "당신은 썩은 고기를 즐겨 먹는다."
+
+#: mutation-data.h:889 mutation-data.h:933 mutation-data.h:867
+msgid "You like to eat raw meat."
+msgstr "당신은 날고기를 맛있게 먹을 수 있다."
+
+#: mutation-data.h:899 mutation-data.h:943 mutation-data.h:877
+msgid "You are covered in fur (AC +1)."
+msgstr "당신은 온 몸이 털로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:900 mutation-data.h:944 mutation-data.h:878
+msgid "You are covered in thick fur (AC +2)."
+msgstr "당신은 온 몸이 굵은 털로 덮여 있다. (AC +2)"
+
+#: mutation-data.h:901 mutation-data.h:945 mutation-data.h:879
+msgid "Your thick and shaggy fur keeps you warm (AC +3, rC+)."
+msgstr ""
+"당신은 온 몸이 덥수룩한 굵은 털로 덮여 있어, 추위를 막아준다. (AC +3, rC+)"
+
+#: mutation-data.h:903 mutation-data.h:947 mutation-data.h:881
+msgid "Fur sprouts all over your body."
+msgstr "온 몸에 털이 자라났다."
+
+#: mutation-data.h:904 mutation-data.h:948 mutation-data.h:882
+msgid "Your fur grows into a thick mane."
+msgstr "온 몸에 난 털이, 더욱 굵고 길게 자라났다."
+
+#: mutation-data.h:905 mutation-data.h:949 mutation-data.h:883
+msgid "Your thick fur grows shaggy and warm."
+msgstr "온 몸에 자란 털로 따뜻함을 느꼈다."
+
+#: mutation-data.h:907 mutation-data.h:951 mutation-data.h:885
+msgid "You shed all your fur."
+msgstr "몸에 난 털이 모두 빠져버렸다."
+
+#: mutation-data.h:908 mutation-data.h:952 mutation-data.h:886
+msgid "Your thick fur recedes somewhat."
+msgstr "몸에 난 털들이 가늘어졌다."
+
+#: mutation-data.h:909 mutation-data.h:953 mutation-data.h:887
+msgid "Your shaggy fur recedes somewhat."
+msgstr "몸에 난 털들이 짧아지고 가늘어졌다."
+
+#: mutation-data.h:917 mutation-data.h:961 mutation-data.h:895
+msgid "You have an increased reservoir of magic (+10% MP)."
+msgstr "당신은 풍부한 마력을 지녔다. (+10% MP)"
+
+#: mutation-data.h:918 mutation-data.h:962 mutation-data.h:896
+msgid "You have a considerably increased reservoir of magic (+20% MP)."
+msgstr "당신은 아주 풍부한 마력을 지녔다. (+20% MP)"
+
+#: mutation-data.h:919 mutation-data.h:963 mutation-data.h:897
+msgid "You have a greatly increased reservoir of magic (+30% MP)."
+msgstr "당신은 굉장히 풍부한 마력을 지녔다. (+30% MP)"
+
+#: mutation-data.h:921 mutation-data.h:922 mutation-data.h:923
+#: mutation-data.h:943 mutation-data.h:944 mutation-data.h:945
+#: mutation-data.h:965 mutation-data.h:966 mutation-data.h:967
+#: mutation-data.h:987 mutation-data.h:988 mutation-data.h:989
+#: mutation-data.h:899 mutation-data.h:900 mutation-data.h:901
+msgid "You feel more energetic."
+msgstr "온 몸에 마력의 기운이 차는 것을 느꼈다."
+
+#: mutation-data.h:925 mutation-data.h:926 mutation-data.h:927
+#: mutation-data.h:939 mutation-data.h:940 mutation-data.h:941
+#: mutation-data.h:969 mutation-data.h:970 mutation-data.h:971
+#: mutation-data.h:983 mutation-data.h:984 mutation-data.h:985
+#: mutation-data.h:903 mutation-data.h:904 mutation-data.h:905
+#: mutation-data.h:917 mutation-data.h:918 mutation-data.h:919
+msgid "You feel less energetic."
+msgstr "마력의 기운이 몸을 빠져나가는 것을 느꼈다."
+
+#: mutation-data.h:935 mutation-data.h:979 mutation-data.h:913
+msgid "Your magical capacity is low (-10% MP)."
+msgstr "당신의 마력은 낮다. (-10% MP)"
+
+#: mutation-data.h:936 mutation-data.h:980 mutation-data.h:914
+msgid "Your magical capacity is very low (-20% MP)."
+msgstr "당신의 마력은 아주 낮다. (-20% MP)"
+
+#: mutation-data.h:937 mutation-data.h:981 mutation-data.h:915
+msgid "Your magical capacity is extremely low (-30% MP)."
+msgstr "당신의 마력은 굉장히 낮다. (-30% MP)"
+
+#: mutation-data.h:953 mutation-data.h:1015
+msgid "You are somewhat able to resist unholy torments (1 in 5 success)."
+msgstr "당신은 사악한 고통에 대해 약간의 저항력이 있다."
+
+#: mutation-data.h:954 mutation-data.h:1016
+msgid "You are decently able to resist unholy torments (2 in 5 success)."
+msgstr "당신은 사악한 고통에 대해 어느 정도의 저항력이 있다."
+
+#: mutation-data.h:955 mutation-data.h:1017
+msgid "You are rather able to resist unholy torments (3 in 5 success)."
+msgstr "당신은 사악한 고통에 대해 큰 저항력이 있다."
+
+#: mutation-data.h:957 mutation-data.h:958 mutation-data.h:1019
+#: mutation-data.h:1020
+msgid "You feel a slight anaesthesia."
+msgstr "기묘한 무감각함을 느꼈다."
+
+#: mutation-data.h:969 mutation-data.h:1031 mutation-data.h:959
+msgid "You passively map a small area around you."
+msgstr "당신은 무의식적으로 좁은 범위의 주변을 감지할 수 있다."
+
+#: mutation-data.h:970 mutation-data.h:1032 mutation-data.h:960
+msgid "You passively map the area around you."
+msgstr "당신은 무의식적으로 주변을 감지할 수 있다."
+
+#: mutation-data.h:971 mutation-data.h:1033 mutation-data.h:961
+msgid "You passively map a large area around you."
+msgstr "당신은 무의식적으로 넓은 범위의 주변을 감지할 수 있다."
+
+#: mutation-data.h:973 mutation-data.h:1035 mutation-data.h:963
+msgid "You feel a strange attunement to the structure of the dungeons."
+msgstr "던전의 구조에 대한 낯선 조화감을 느꼈다."
+
+#: mutation-data.h:974 mutation-data.h:1036 mutation-data.h:964
+msgid "Your attunement to dungeon structure grows."
+msgstr "던전의 구조에 대한 조화감이 강해졌다."
+
+#: mutation-data.h:975 mutation-data.h:1037 mutation-data.h:965
+msgid "Your attunement to dungeon structure grows further."
+msgstr "던전의 구조에 대한 조화감이 더욱 강해졌다."
+
+#: mutation-data.h:977 mutation-data.h:978 mutation-data.h:979
+#: mutation-data.h:1039 mutation-data.h:1040 mutation-data.h:1041
+#: mutation-data.h:967 mutation-data.h:968 mutation-data.h:969
+msgid "You feel slightly disoriented."
+msgstr "방향감각을 상실한 느낌이 들었다."
+
+#: mutation-data.h:987 mutation-data.h:1049 mutation-data.h:977
+msgid ""
+"A meltable icy envelope protects you from harm and freezing vapours (AC +"
+msgstr ""
+"봉투 형태의 얼음 갑옷이 당신을 피해와 차가운 증기로부터 보호한다. (AC +"
+
+#: mutation-data.h:988 mutation-data.h:1050 mutation-data.h:978
+msgid "An icy envelope takes form around you."
+msgstr "당신에게 봉투 형태의 얼음 갑옷이 입혀졌다."
+
+#: mutation-data.h:997 mutation-data.h:1059 mutation-data.h:987
+msgid "You are very good at protecting items from fire."
+msgstr "당신은 불로부터, 당신의 아이템을 능숙하게 보호할 수 있다."
+
+#: mutation-data.h:998 mutation-data.h:1060 mutation-data.h:988
+msgid "You feel less concerned about heat."
+msgstr "불에 대한 걱정이 덜해진 것을 느꼈다."
+
+#: mutation-data.h:1007 mutation-data.h:1069 mutation-data.h:997
+msgid "You are very good at protecting items from cold."
+msgstr "당신은 냉기로부터, 당신의 아이템을 능숙하게 보호할 수 있다."
+
+#: mutation-data.h:1008 mutation-data.h:1070 mutation-data.h:998
+msgid "You feel less concerned about cold."
+msgstr "냉기로에 대한 걱정이 덜해진 것을 느꼈다."
+
+#: mutation-data.h:1016 mutation-data.h:1078 mutation-data.h:1006
+msgid "A frigid envelope surrounds you and freezes all who hurt you."
+msgstr "당신의 피부는 강한 냉기에 싸여 있다."
+
+#: mutation-data.h:1017 mutation-data.h:1079 mutation-data.h:1007
+msgid "Your skin feels very cold."
+msgstr "피부가 매우 차가워지는걸 느꼈다."
+
+#: mutation-data.h:1026 mutation-data.h:1088 mutation-data.h:1016
+msgid "You are slightly more attuned to the shadows."
+msgstr "당신은 그림자처럼 능숙하게 숨을 수 있다."
+
+#: mutation-data.h:1027 mutation-data.h:1089 mutation-data.h:1017
+msgid "You are significantly more attuned to the shadows."
+msgstr "당신은 그림자와 동화되는 듯이 매우 능숙하게 몸을 숨길 수 있다."
+
+#: mutation-data.h:1028 mutation-data.h:1090 mutation-data.h:1018
+msgid "You are completely attuned to the shadows."
+msgstr "당신은 그림자와 일치되는 듯이 굉장히 능숙하게 몸을 숨길 수 있다."
+
+#: mutation-data.h:1030 mutation-data.h:1092 mutation-data.h:1020
+msgid "You slip into the darkness of the dungeon."
+msgstr "던전 안의 어둠이 주변에 둘러지는 느낌이 들었다."
+
+#: mutation-data.h:1031 mutation-data.h:1093 mutation-data.h:1021
+msgid "You slip further into the darkness."
+msgstr "던전 안의 어둠이 주변을 더욱 어둡게 만들었다."
+
+#: mutation-data.h:1032 mutation-data.h:1094 mutation-data.h:1022
+msgid "You are surrounded by darkness."
+msgstr "당신은 어둠에 완전히 둘러 싸였다."
+
+#: mutation-data.h:1034 mutation-data.h:1096 mutation-data.h:1024
+msgid "Your affinity for the darkness vanishes."
+msgstr "어둠과의 친밀함이 사라지는 걸 느꼈다."
+
+#: mutation-data.h:1035 mutation-data.h:1036 mutation-data.h:1097
+#: mutation-data.h:1098 mutation-data.h:1025 mutation-data.h:1026
+msgid "Your affinity for the darkness weakens."
+msgstr "어둠과의 친밀함이 약해지는 걸 느꼈다."
+
+#: mutation-data.h:1044 mutation-data.h:1106 mutation-data.h:1034
+msgid "You are partially covered in sharp spines."
+msgstr "당신의 몸의 일부가 날카로운 가시들로 덮여있다."
+
+#: mutation-data.h:1045 mutation-data.h:1107 mutation-data.h:1035
+msgid "You are mostly covered in sharp spines."
+msgstr "당신의 몸의 상당부분이 날카로운 가시들로 덮여있다."
+
+#: mutation-data.h:1046 mutation-data.h:1108 mutation-data.h:1036
+msgid "You are completely covered in sharp spines."
+msgstr "당신의 몸은 날카로운 가시들로 완전히 덮여있다."
+
+#: mutation-data.h:1048 mutation-data.h:1110 mutation-data.h:1038
+msgid "Sharp spines emerge from parts of your body."
+msgstr "몸의 일부에 날카로운 가시들이 자라났다."
+
+#: mutation-data.h:1049 mutation-data.h:1111 mutation-data.h:1039
+msgid "Sharp spines emerge from more of your body."
+msgstr "날카로운 가시들이 몸에 더욱 퍼져서 자라났다."
+
+#: mutation-data.h:1050 mutation-data.h:1112 mutation-data.h:1040
+msgid "Sharp spines emerge from your entire body."
+msgstr "날카로운 가시들이 온 몸을 덮었다."
+
+#: mutation-data.h:1052 mutation-data.h:1114 mutation-data.h:1042
+msgid "Your sharp spines disappear entirely."
+msgstr "몸에 난 가시들이 시들어 떨어져나갔다."
+
+#: mutation-data.h:1053 mutation-data.h:1054 mutation-data.h:1115
+#: mutation-data.h:1116 mutation-data.h:1043 mutation-data.h:1044
+msgid "Your sharp spines retract somewhat."
+msgstr "몸에 난 가시들이 줄어들었다."
+
+#: mutation-data.h:1062 mutation-data.h:1124 mutation-data.h:1052
+msgid "You can steal the life force of nearby defeated enemies."
+msgstr "당신은 가까운 주변의 죽은 적들로부터 생명력을 강탈할 수 있다."
+
+#: mutation-data.h:1063 mutation-data.h:1125 mutation-data.h:1053
+msgid "You can steal the life force of defeated enemies."
+msgstr "당신은 주변의 죽은 적들로부터 생명력을 강탈할 수 있다."
+
+#: mutation-data.h:1064 mutation-data.h:1126 mutation-data.h:1054
+msgid "You can steal the life force of all defeated enemies in sight."
+msgstr "당신은 시야 내의 모든 죽은 적들로부터 생명력을 강탈할 수 있다."
+
+#: mutation-data.h:1066 mutation-data.h:1128 mutation-data.h:1056
+msgid "A wave of death washes over you."
+msgstr "죽음의 파동이 당신을 훑고 지나갔다."
+
+#: mutation-data.h:1067 mutation-data.h:1068 mutation-data.h:1129
+#: mutation-data.h:1130 mutation-data.h:1057 mutation-data.h:1058
+msgid "The wave of death grows in power."
+msgstr "죽음의 파동이 마력으로 더해지는 걸 느꼈다."
+
+#: mutation-data.h:1070 mutation-data.h:1132 mutation-data.h:1060
+msgid "Your control of surrounding life forces is gone."
+msgstr "주변에 존재하는 생명의 파동에 대한 제어감이 상실된 것을 느꼈다."
+
+#: mutation-data.h:1071 mutation-data.h:1072 mutation-data.h:1133
+#: mutation-data.h:1134 mutation-data.h:1061 mutation-data.h:1062
+msgid "Your control of surrounding life forces weakens."
+msgstr "주변에 존재하는 생명의 파동에 대한 제어감이 약해짐을 느꼈다."
+
+#: mutation-data.h:1080 mutation-data.h:1142 mutation-data.h:1070
+msgid "You sometimes regain a little magical energy from taking damage."
+msgstr "당신은 피해를 입음으로써, 약간의 마력을 얻을 수 있다."
+
+#: mutation-data.h:1081 mutation-data.h:1143 mutation-data.h:1071
+msgid "You sometimes regain magical energy from taking damage."
+msgstr "당신은 피해를 입음으로써, 어느정도의 마력을 얻을 수 있다."
+
+#: mutation-data.h:1082 mutation-data.h:1144 mutation-data.h:1072
+msgid "You sometimes regain a lot of magical energy from taking damage."
+msgstr "당신은 피해를 입음으로써, 상당한 마력을 얻을 수 있다."
+
+#: mutation-data.h:1084 mutation-data.h:1146 mutation-data.h:1074
+msgid "You feel energised by your suffering."
+msgstr "고통으로부터 희열감을 느꼈다."
+
+#: mutation-data.h:1085 mutation-data.h:1147 mutation-data.h:1075
+msgid "You feel even more energised by your suffering."
+msgstr "고통으로부터 더 커다란 희열감을 느꼈다."
+
+#: mutation-data.h:1086 mutation-data.h:1148 mutation-data.h:1076
+msgid "You feel completely energised by your suffering."
+msgstr "고통 자체가 슬슬 즐거워짐을 느꼈다."
+
+#: mutation-data.h:1097 mutation-data.h:1159 mutation-data.h:1103
+msgid "Your rubbery body absorbs attacks (AC +1)."
+msgstr "당신은 충격을 흡수하는 고무 같은 몸을 가지고 있다. (AC +1)"
+
+#: mutation-data.h:1098 mutation-data.h:1160 mutation-data.h:1104
+msgid "Your pliable body absorbs attacks (AC +1, EV +1)."
+msgstr ""
+"당신은 충격을 흡수하는 유연한 고무 같은 몸을 가지고 있다. (AC +1, EV +1)"
+
+#: mutation-data.h:1099 mutation-data.h:1161 mutation-data.h:1105
+msgid "Your gelatinous body deflects attacks (AC +2, EV +2)."
+msgstr "당신은 충격을 흘려버리는 젤라틴질의 몸을 가지고 있다. (AC +2, EV +2)"
+
+#: mutation-data.h:1101 mutation-data.h:1163 mutation-data.h:1107
+msgid "Your body becomes stretchy."
+msgstr "온 몸이 늘어짐을 느꼈다."
+
+#: mutation-data.h:1102 mutation-data.h:1164 mutation-data.h:1108
+msgid "Your body becomes more malleable."
+msgstr "온 몸이 더욱 유연해지고 부드러워졌음을 느꼈다."
+
+#: mutation-data.h:1103 mutation-data.h:1165 mutation-data.h:1109
+msgid "Your body becomes viscous."
+msgstr "온 몸이 끈적끈적해졌음을 느꼈다."
+
+#: mutation-data.h:1105 mutation-data.h:1167 mutation-data.h:1111
+msgid "Your body returns to its normal consistency."
+msgstr "온 몸이 원래대로 돌아감을 느꼈다."
+
+#: mutation-data.h:1106 mutation-data.h:1107 mutation-data.h:1168
+#: mutation-data.h:1169 mutation-data.h:1113
+msgid "Your body becomes less viscous."
+msgstr "온 몸이 덜 끈적해졌음을 느꼈다."
+
+#: mutation-data.h:1115 mutation-data.h:1177 mutation-data.h:1121
+msgid "Your body is partially covered in golden eyeballs (Acc +3)."
+msgstr "당신의 몸의 일부에는 황금색 눈알들이 덮여있다. (명중률 +3)"
+
+#: mutation-data.h:1116 mutation-data.h:1178 mutation-data.h:1122
+msgid "Your body is mostly covered in golden eyeballs (Acc +5)."
+msgstr "당신의 몸의 상당 부분에 황금색 눈알들이 덮여있다. (명중률 +5)"
+
+#: mutation-data.h:1117 mutation-data.h:1179 mutation-data.h:1123
+msgid "Your body is completely covered in golden eyeballs (Acc +7, SInv)."
+msgstr "당신의 몸은 황금색 눈알들로 완전히 덮여있다. (명중률 +7, 투명 감지)"
+
+#: mutation-data.h:1119 mutation-data.h:1181 mutation-data.h:1125
+msgid "Eyeballs grow over part of your body."
+msgstr "몸에 황금색 눈알들이 자라났다."
+
+#: mutation-data.h:1120 mutation-data.h:1182 mutation-data.h:1126
+msgid "Eyeballs cover a large portion of your body."
+msgstr "몸에 황금색 눈알들이 더욱 많이 자라났다."
+
+#: mutation-data.h:1121 mutation-data.h:1183 mutation-data.h:1127
+msgid "Eyeballs cover you completely."
+msgstr "온 몸이 황금색 눈알들로 완전히 덮였다."
+
+#: mutation-data.h:1123 mutation-data.h:1185 mutation-data.h:1129
+msgid "The eyeballs on your body disappear."
+msgstr "몸에 자라난 황금색 눈알들이 사라졌다."
+
+#: mutation-data.h:1124 mutation-data.h:1125 mutation-data.h:1186
+#: mutation-data.h:1187 mutation-data.h:1130 mutation-data.h:1131
+msgid "The eyeballs on your body recede somewhat."
+msgstr "몸에 자라난 황금색 눈알들이 일부 사라져 줄어들었다."
+
+#: mutation-data.h:1133 mutation-data.h:1195 mutation-data.h:1139
+msgid "Your skin is partially translucent."
+msgstr "당신의 피부는 부분적으로 반투명하다."
+
+#: mutation-data.h:1134 mutation-data.h:1196 mutation-data.h:1140
+msgid "Your skin is mostly translucent (Stlth)."
+msgstr "당신의 피부는 대부분 반투명하다. (은밀+)"
+
+#: mutation-data.h:1135 mutation-data.h:1197 mutation-data.h:1141
+msgid "Your transparent skin reduces the accuracy of your foes (Stlth)."
+msgstr "당신의 피부는 투명하여, 적들이 맞추기 힘들다. (은밀+)"
+
+#: mutation-data.h:1137 mutation-data.h:1199 mutation-data.h:1143
+msgid "Your skin becomes partially translucent."
+msgstr "피부가 일부 반투명해진것을 느꼈다."
+
+#: mutation-data.h:1138 mutation-data.h:1200 mutation-data.h:1144
+msgid "Your skin becomes more translucent."
+msgstr "피부가 일부 투명해진것을 느꼈다."
+
+#: mutation-data.h:1139 mutation-data.h:1201 mutation-data.h:1145
+msgid "Your skin becomes completely transparent."
+msgstr "피부가 완전히 투명해진 것을 느꼈다."
+
+#: mutation-data.h:1141 mutation-data.h:1203 mutation-data.h:1147
+msgid "Your skin returns to its normal opacity."
+msgstr "반투명한 피부가 원래대로 돌아갔다."
+
+#: mutation-data.h:1142 mutation-data.h:1204 mutation-data.h:1148
+msgid "Your skin's translucency fades."
+msgstr "피부의 반투명함이 약해졌다."
+
+#: mutation-data.h:1143 mutation-data.h:1205 mutation-data.h:1149
+msgid "Your skin's transparency fades."
+msgstr "피부가 반투명하게 돌아갔다."
+
+#: mutation-data.h:1151 mutation-data.h:1213 mutation-data.h:1157
+msgid "Armour fits poorly on your pseudopods."
+msgstr "온 몸의 종양 때문에 갑옷이 잘 맞지 않는다."
+
+#: mutation-data.h:1152 mutation-data.h:1214 mutation-data.h:1158
+msgid "Armour fits poorly on your large pseudopods."
+msgstr "온 몸의 커다란 종양 때문에 갑옷이 잘 맞지 않는다."
+
+#: mutation-data.h:1153 mutation-data.h:1215 mutation-data.h:1159
+msgid "Armour fits poorly on your massive pseudopods."
+msgstr "온 몸에 난 심각한 종양 때문에 갑옷이 거의 맞지 않는다."
+
+#: mutation-data.h:1155 mutation-data.h:1217 mutation-data.h:1161
+msgid "Pseudopods emerge from your body."
+msgstr "당신의 몸에 종양들이 자라났다."
+
+#: mutation-data.h:1156 mutation-data.h:1157 mutation-data.h:1218
+#: mutation-data.h:1219 mutation-data.h:1162 mutation-data.h:1163
+msgid "Your pseudopods grow in size."
+msgstr "당신 몸의 종양들이 자라나 커졌다."
+
+#: mutation-data.h:1159 mutation-data.h:1221 mutation-data.h:1165
+msgid "Your pseudopods retract into your body."
+msgstr "몸의 종양들이 떨어져나갔다."
+
+#: mutation-data.h:1160 mutation-data.h:1161 mutation-data.h:1222
+#: mutation-data.h:1223 mutation-data.h:1166 mutation-data.h:1167
+msgid "Your pseudopods become smaller."
+msgstr "몸의 종양들이 작아졌다."
+
+#: mutation-data.h:1169 mutation-data.h:1231 mutation-data.h:1175
+msgid "You occasionally spawn a jelly by eating."
+msgstr "당신은 무언가를 섭취함으로써, 가끔 젤리를 몸에서 배출할 수 있다."
+
+#: mutation-data.h:1170 mutation-data.h:1232 mutation-data.h:1176
+msgid "You feel more connected to the slimes."
+msgstr "슬라임과의 동화감을 느꼈다."
+
+#: mutation-data.h:1171 mutation-data.h:1233 mutation-data.h:1177
+msgid "Your connection to the slimes vanishes."
+msgstr "슬라임과의 동화감이 사라진 것을 느꼈다."
+
+#: mutation-data.h:1179 mutation-data.h:1241 mutation-data.h:1185
+msgid "You have acidic saliva."
+msgstr "당신은 강산성의 타액을 가지고 있다."
+
+#: mutation-data.h:1180 mutation-data.h:1242 mutation-data.h:1186
+msgid "Acid begins to drip from your mouth."
+msgstr "당신의 입에서 산성 물질이 흘러나오기 시작했다."
+
+#: mutation-data.h:1181 mutation-data.h:1243 mutation-data.h:1187
+msgid "Your mouth feels dry."
+msgstr "입 안이 바싹 마른 걸 느꼈다."
+
+#: mutation-data.h:1190 mutation-data.h:1252 mutation-data.h:1196
+msgid "You are surrounded by a mild repulsion field (EV +2)."
+msgstr "당신은 완만한 반발 필드에 덮여 있다. (EV +2)"
+
+#: mutation-data.h:1191 mutation-data.h:1253 mutation-data.h:1197
+msgid "You are surrounded by a moderate repulsion field (EV +3)."
+msgstr "당신은 반발 필드에 덮여 있다. (EV +3)"
+
+#: mutation-data.h:1192 mutation-data.h:1254 mutation-data.h:1198
+msgid "You are surrounded by a strong repulsion field (EV +4, rMsl)."
+msgstr "당신은 강력한 반발 필드에 덮여 있다. (EV +4, 미사일류 방어)"
+
+#: mutation-data.h:1194 mutation-data.h:1256 mutation-data.h:1200
+msgid "You begin to radiate repulsive energy."
+msgstr "주위에 반발력이 생기기 시작했다."
+
+#: mutation-data.h:1195 mutation-data.h:1196 mutation-data.h:1257
+#: mutation-data.h:1258 mutation-data.h:1201 mutation-data.h:1202
+msgid "Your repulsive radiation grows stronger."
+msgstr "당신 주위의 반발력이 더욱 강해졌다."
+
+#: mutation-data.h:1198 mutation-data.h:1199 mutation-data.h:1200
+#: mutation-data.h:1260 mutation-data.h:1261 mutation-data.h:1262
+#: mutation-data.h:1204 mutation-data.h:1205 mutation-data.h:1206
+msgid "You feel less repulsive."
+msgstr "당신 주위의 반발력이 약해진 것을 느꼈다."
+
+#: mutation-data.h:1208 mutation-data.h:1262 mutation-data.h:1316
+#: mutation-data.h:1334 mutation-data.h:1370
+msgid "You are partially covered in colourless scales (AC +1)."
+msgstr "당신은 무색의 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1209 mutation-data.h:1271 mutation-data.h:1215
+msgid "You are mostly covered in icy blue scales (AC +2, EV -1)."
+msgstr "당신은 얼음빛의 파란 비늘로 대부분 덮여 있다. (AC +2, EV -1)"
+
+#: mutation-data.h:1210 mutation-data.h:1272 mutation-data.h:1216
+msgid "You are completely covered in icy blue scales (AC +3, EV -1, rC+)."
+msgstr "당신은 얼음빛의 파란 비늘로 완전히 덮여 있다. (AC +3, EV -1, rC+)"
+
+#: mutation-data.h:1212 mutation-data.h:1266 mutation-data.h:1320
+#: mutation-data.h:1338 mutation-data.h:1374
+msgid "Colourless scales grow over part of your body."
+msgstr "무색의 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1213
+msgid "Your colourless scales turn blue and spread over more of your body."
+msgstr "무색의 비늘이 몸을 더욱 덮었고, 파랗게 빛을 띄기 시작했다."
+
+#: mutation-data.h:1214 mutation-data.h:1276 mutation-data.h:1220
+msgid "Icy blue scales cover your body completely."
+msgstr "파란 비늘이 당신의 몸을 완전하게 덮었다."
+
+#: mutation-data.h:1216 mutation-data.h:1270 mutation-data.h:1324
+#: mutation-data.h:1342 mutation-data.h:1378
+msgid "Your colourless scales disappear."
+msgstr "당신의 무색 비늘이 사라졌다."
+
+#: mutation-data.h:1217 mutation-data.h:1218 mutation-data.h:1279
+#: mutation-data.h:1280 mutation-data.h:1223 mutation-data.h:1224
+msgid "Your icy blue scales recede somewhat."
+msgstr "당신의 무색 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1226 mutation-data.h:1288 mutation-data.h:1232
+msgid "You are partially covered in iridescent scales (AC +4)."
+msgstr "당신은 무지개빛의 비늘로 부분적으로 덮여 있다. (AC +4)"
+
+#: mutation-data.h:1227 mutation-data.h:1289 mutation-data.h:1233
+msgid "You are mostly covered in iridescent scales (AC +6)."
+msgstr "당신은 무지개빛의 비늘로 대부분 덮여 있다. (AC +6)"
+
+#: mutation-data.h:1228 mutation-data.h:1290 mutation-data.h:1234
+msgid "You are completely covered in iridescent scales (AC +8)."
+msgstr "당신은 무지개빛의 비늘로 완전히 덮여 있다. (AC +8)"
+
+#: mutation-data.h:1230 mutation-data.h:1292 mutation-data.h:1236
+msgid "Iridescent scales grow over part of your body."
+msgstr "무지개빛의 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1231 mutation-data.h:1293 mutation-data.h:1237
+msgid "Iridescent scales spread over more of your body."
+msgstr "무지개빛의 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1232 mutation-data.h:1294 mutation-data.h:1238
+msgid "Iridescent scales cover you completely."
+msgstr "무지개빛의 비늘이 당신의 몸을 완전하게 덮었다."
+
+#: mutation-data.h:1234 mutation-data.h:1296 mutation-data.h:1240
+msgid "Your iridescent scales disappear."
+msgstr "당신의 무지개빛 비늘이 사라졌다."
+
+#: mutation-data.h:1235 mutation-data.h:1236 mutation-data.h:1297
+#: mutation-data.h:1298 mutation-data.h:1241 mutation-data.h:1242
+msgid "Your iridescent scales recede somewhat."
+msgstr "당신의 무지개빛 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1244 mutation-data.h:1306 mutation-data.h:1250
+msgid "You are partially covered in large bone plates (AC +2, SH +2)."
+msgstr "당신은 커다란 뼈 갑옷으로 부분적으로 덮여 있다. (AC +2, SH +2)"
+
+#: mutation-data.h:1245 mutation-data.h:1307 mutation-data.h:1251
+msgid "You are mostly covered in large bone plates (AC +3, SH +3)."
+msgstr "당신은 커다란 뼈 갑옷으로 대부분 덮여 있다. (AC +3, SH +3)"
+
+#: mutation-data.h:1246 mutation-data.h:1308 mutation-data.h:1252
+msgid "You are completely covered in large bone plates (AC +4, SH +4)."
+msgstr "당신은 커다란 뼈 갑옷으로 완전히 덮여 있다. (AC +4, SH +4)"
+
+#: mutation-data.h:1248 mutation-data.h:1310 mutation-data.h:1254
+msgid "Large bone plates grow over parts of your arms."
+msgstr "커다란 뼈 갑옷이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1249 mutation-data.h:1311 mutation-data.h:1255
+msgid "Large bone plates spread over more of your arms."
+msgstr "커다란 뼈 갑옷이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1250 mutation-data.h:1312 mutation-data.h:1256
+msgid "Large bone plates cover your arms completely."
+msgstr "커다란 뼈 갑옷이 당신의 몸을 완전하게 덮었다."
+
+#: mutation-data.h:1252 mutation-data.h:1314 mutation-data.h:1258
+msgid "Your large bone plates disappear."
+msgstr "당신의 뼈 갑옷이 사라졌다."
+
+#: mutation-data.h:1253 mutation-data.h:1254 mutation-data.h:1315
+#: mutation-data.h:1316 mutation-data.h:1259 mutation-data.h:1260
+msgid "Your large bone plates recede somewhat."
+msgstr "당신의 뼈 갑옷이 일부 사라졌다."
+
+#: mutation-data.h:1263 mutation-data.h:1325 mutation-data.h:1269
+msgid "You are mostly covered in molten scales (AC +2, EV -1)."
+msgstr "당신은 얼룩무늬의 비늘로 대부분 덮여 있다. (AC +2, EV -1)"
+
+#: mutation-data.h:1264 mutation-data.h:1326 mutation-data.h:1270
+msgid "You are completely covered in molten scales (AC +3, EV -1, rF+)."
+msgstr "당신은 얼룩무늬의 비늘로 완전히 덮여 있다. (AC +3, EV -1, rF+)"
+
+#: mutation-data.h:1267
+msgid "Your colourless scales turn molten and spread over more of your body."
+msgstr "무색의 비늘이 몸을 더욱 덮었고, 얼룩무늬의 빛을 띄기 시작했다."
+
+#: mutation-data.h:1268 mutation-data.h:1330 mutation-data.h:1274
+msgid "Molten scales cover your body completely."
+msgstr "얼룩무늬의 비늘이 당신의 몸을 완전하게 덮었다."
+
+#: mutation-data.h:1271 mutation-data.h:1272 mutation-data.h:1333
+#: mutation-data.h:1334 mutation-data.h:1277 mutation-data.h:1278
+msgid "Your molten scales recede somewhat."
+msgstr "당신의 얼룩무늬 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1280 mutation-data.h:1342 mutation-data.h:1286
+msgid "You are partially covered in rough black scales (AC +4, Dex -1)."
+msgstr "당신은 거친 검은색 비늘로 부분적으로 덮여 있다. (AC +4, 민첩 -1)"
+
+#: mutation-data.h:1281 mutation-data.h:1343 mutation-data.h:1287
+msgid "You are mostly covered in rough black scales (AC +7, Dex -2)."
+msgstr "당신은 거친 검은색 비늘로 대부분 덮여 있다. (AC +7, 민첩 -2)"
+
+#: mutation-data.h:1282 mutation-data.h:1344 mutation-data.h:1288
+msgid "You are completely covered in rough black scales (AC +10, Dex -3)."
+msgstr "당신은 거친 검은색 비늘로 대부분 덮여 있다. (AC +10, 민첩 -3)"
+
+#: mutation-data.h:1284 mutation-data.h:1346 mutation-data.h:1290
+msgid "Rough black scales grow over part of your body."
+msgstr "거친 검은색 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1285 mutation-data.h:1347 mutation-data.h:1291
+msgid "Rough black scales spread over more of your body."
+msgstr "거친 검은색 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1286 mutation-data.h:1348 mutation-data.h:1292
+msgid "Rough black scales cover you completely."
+msgstr "거친 검은색 비늘이 완전히 몸을 덮었다."
+
+#: mutation-data.h:1288 mutation-data.h:1350 mutation-data.h:1294
+msgid "Your rough black scales disappear."
+msgstr "당신의 거친 검은색 비늘이 사라졌다."
+
+#: mutation-data.h:1289 mutation-data.h:1290 mutation-data.h:1351
+#: mutation-data.h:1352 mutation-data.h:1295 mutation-data.h:1296
+msgid "Your rough black scales recede somewhat."
+msgstr "당신의 거친 검은색 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1298 mutation-data.h:1360 mutation-data.h:1304
+msgid "You are partially covered in rugged brown scales (AC +2, +3% HP)."
+msgstr "당신은 질긴 갈색 비늘로 부분적으로 덮여 있다. (AC +2, HP +3%)"
+
+#: mutation-data.h:1299 mutation-data.h:1361 mutation-data.h:1305
+msgid "You are mostly covered in rugged brown scales (AC +2, +5% HP)."
+msgstr "당신은 질긴 갈색 비늘로 대부분 덮여 있다. (AC+2, HP +5%)"
+
+#: mutation-data.h:1300 mutation-data.h:1362 mutation-data.h:1306
+msgid "You are completely covered in rugged brown scales (AC +2, +7% HP)."
+msgstr "당신은 질긴 갈색 비늘로 완전히 덮여 있다. (AC +2, HP +7%)"
+
+#: mutation-data.h:1302 mutation-data.h:1364 mutation-data.h:1308
+msgid "Rugged brown scales grow over part of your body."
+msgstr "질긴 갈색 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1303 mutation-data.h:1365 mutation-data.h:1309
+msgid "Rugged brown scales spread over more of your body."
+msgstr "질긴 갈색 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1304 mutation-data.h:1366 mutation-data.h:1310
+msgid "Rugged brown scales cover you completely."
+msgstr "질긴 갈색 비늘이 완전히 몸을 덮었다."
+
+#: mutation-data.h:1306 mutation-data.h:1368 mutation-data.h:1312
+msgid "Your rugged brown scales disappear."
+msgstr "당신의 질긴 갈색 비늘이 사라졌다."
+
+#: mutation-data.h:1307 mutation-data.h:1308 mutation-data.h:1369
+#: mutation-data.h:1370 mutation-data.h:1313 mutation-data.h:1314
+msgid "Your rugged brown scales recede somewhat."
+msgstr "당신의 질긴 갈색 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1317 mutation-data.h:1379
+msgid "You are mostly covered in slimy green scales (AC +2, EV -1)."
+msgstr "당신은 미끈한 녹색 비늘로 대부분 덮여 있다. (AC +2, EV -1)"
+
+#: mutation-data.h:1318 mutation-data.h:1380
+msgid "You are completely covered in slimy green scales (AC +3, EV -2, rPois)."
+msgstr "당신은 미끈한 녹색 비늘로 완전히 덮여 있다. (AC +3, EV -2, 독저항)"
+
+#: mutation-data.h:1321
+msgid "Your colourless scales turn green and spread over more of your body."
+msgstr "무색의 비늘이 몸을 더욱 덮었고, 녹색으로 빛을 띄기 시작했다."
+
+#: mutation-data.h:1322 mutation-data.h:1384 mutation-data.h:1328
+msgid "Slimy green scales cover your body completely."
+msgstr "미끈한 녹색 비늘이 완전히 몸을 덮었다."
+
+#: mutation-data.h:1325 mutation-data.h:1326 mutation-data.h:1387
+#: mutation-data.h:1388 mutation-data.h:1331 mutation-data.h:1332
+msgid "Your slimy green scales recede somewhat."
+msgstr "미끈한 녹색 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1335 mutation-data.h:1397 mutation-data.h:1341
+msgid "You are mostly covered in thin metallic scales (AC +2)."
+msgstr "당신은 금속빛의 비늘로 대부분 덮여 있다. (AC +2)"
+
+#: mutation-data.h:1336 mutation-data.h:1398 mutation-data.h:1342
+msgid "You are completely covered in thin metallic scales (AC +3, rElec)."
+msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +3, 전기저항)"
+
+#: mutation-data.h:1339
+msgid "Your colourless scales are metallic and spread over more of your body."
+msgstr "무색의 비늘이 몸을 더욱 덮었고, 금속빛을 띄기 시작했다"
+
+#: mutation-data.h:1340 mutation-data.h:1402 mutation-data.h:1346
+msgid "Thin metallic scales cover your body completely."
+msgstr "얇은 금속빛의 비늘이 완전히 몸을 덮었다."
+
+#: mutation-data.h:1343 mutation-data.h:1344 mutation-data.h:1405
+#: mutation-data.h:1406 mutation-data.h:1349 mutation-data.h:1350
+msgid "Your thin metallic scales recede somewhat."
+msgstr "당신의 얇은 금속빛 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1352 mutation-data.h:1414 mutation-data.h:1358
+msgid "You have a somewhat thin skeletal structure (Dex +2, Str -1, Stlth)."
+msgstr "당신은 약간 마른 골격 구조를 가지고 있다. (민첩 +2, 힘 -1, 은밀)"
+
+#: mutation-data.h:1353 mutation-data.h:1415 mutation-data.h:1359
+msgid "You have a moderately thin skeletal structure (Dex +4, Str -2, Stlth)."
+msgstr "당신은 마른 골격 구조를 가지고 있다. (민첩 +4, 힘 -2, 은밀)"
+
+#: mutation-data.h:1354 mutation-data.h:1416 mutation-data.h:1360
+msgid ""
+"You have an unnaturally thin skeletal structure (Dex +6, Str -3, Stlth)."
+msgstr ""
+"당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
+
+#: mutation-data.h:1356 mutation-data.h:1418 mutation-data.h:1362
+msgid "Your bones become slightly less dense."
+msgstr "당신의 골격이 유연해진 것을 느꼈다."
+
+#: mutation-data.h:1357 mutation-data.h:1419 mutation-data.h:1363
+msgid "Your bones become somewhat less dense."
+msgstr "당신의 골격이 얇아진 것을 느꼈다."
+
+#: mutation-data.h:1358 mutation-data.h:1420 mutation-data.h:1364
+msgid "Your bones become less dense."
+msgstr "온 몸의 뼈들이 가벼워진 느낌이다."
+
+#: mutation-data.h:1360 mutation-data.h:1422 mutation-data.h:1366
+msgid "Your skeletal structure returns to normal."
+msgstr "골격이 뻣뻣해졌지만, 더욱 튼튼해진걸 느꼈다."
+
+#: mutation-data.h:1361 mutation-data.h:1362 mutation-data.h:1423
+#: mutation-data.h:1424 mutation-data.h:1367 mutation-data.h:1368
+msgid "Your skeletal structure densifies."
+msgstr "온 몸의 뼈들이 뻣뻣해진것을 느꼈다."
+
+#: mutation-data.h:1371 mutation-data.h:1433
+msgid "You are mostly covered in yellow scales (AC +2, rAcid+)."
+msgstr "당신은 노란색의 비늘로 대부분 덮여 있다. (AC +2, 부식저항+)"
+
+#: mutation-data.h:1372 mutation-data.h:1434
+msgid "You are completely covered in yellow scales (AC +3, rAcid++)."
+msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +3, 부식저항++)"
+
+#: mutation-data.h:1375
+msgid "Your colourless scales turn yellow and spread over more of your body."
+msgstr "무색의 비늘이 몸을 더욱 덮었고, 노란색으로 빛을 띄기 시작했다."
+
+#: mutation-data.h:1376 mutation-data.h:1438 mutation-data.h:1382
+msgid "Yellow scales cover you completely."
+msgstr "노란색 비늘이 완전히 몸을 덮었다."
+
+#: mutation-data.h:1379 mutation-data.h:1380 mutation-data.h:1441
+#: mutation-data.h:1442 mutation-data.h:1385 mutation-data.h:1386
+msgid "Your yellow scales recede somewhat."
+msgstr "당신의 노란색 비늘이 일부 사라졌다."
+
+#: mutation-data.h:1388 mutation-data.h:1450
+msgid "Your skin changes color to match your surroundings (Stlth)."
+msgstr "당신의 피부는 주변의 색에 맞추어서 보호색을 띈다. (은밀+)"
+
+#: mutation-data.h:1389 mutation-data.h:1451 mutation-data.h:1395
+msgid "Your skin blends seamlessly with your surroundings (Stlth)."
+msgstr "당신의 피부는 주변의 색에 맞추어서 빠르게 조화된다. (은밀+) "
+
+#: mutation-data.h:1390 mutation-data.h:1452 mutation-data.h:1396
+msgid "Your skin perfectly mimics your surroundings (Stlth)."
+msgstr "당신은 주변의 사물을 거의 똑같이 흉내낼 수 있다. (은밀+)"
+
+#: mutation-data.h:1392 mutation-data.h:1454 mutation-data.h:1398
+msgid "Your skin functions as natural camouflage."
+msgstr "당신의 피부가 보호색을 띄기 시작했다."
+
+#: mutation-data.h:1393 mutation-data.h:1394 mutation-data.h:1455
+#: mutation-data.h:1456 mutation-data.h:1399 mutation-data.h:1400
+msgid "Your natural camouflage becomes more effective."
+msgstr "당신의 피부는 더욱 효과적으로 보호색을 띄기 시작했다."
+
+#: mutation-data.h:1396 mutation-data.h:1458 mutation-data.h:1402
+msgid "Your skin no longer functions as natural camouflage."
+msgstr "당신의 피부는 더 이상 주변 환경에 따라 변하지 않는다."
+
+#: mutation-data.h:1397 mutation-data.h:1398 mutation-data.h:1459
+#: mutation-data.h:1460 mutation-data.h:1403 mutation-data.h:1404
+msgid "Your natural camouflage becomes less effective."
+msgstr "당신의 피부의 보호색이 약해졌음을 느꼈다."
+
+#: mutation-data.h:230 mutation-data.h:231
+msgid "You have a slow metabolism."
+msgstr "당신의 신진대사는 느리다."
+
+#: mutation-data.h:232
+msgid "You need consume almost no food."
+msgstr "당신은 음식을 먹을 필요가 거의 없다."
+
+#: mutation-data.h:371
+msgid "Armour fits poorly on your strangely shaped body."
+msgstr "기형적인 몸 때문에, 갑옷이 잘 맞지 않는다."
+
+#: mutation-data.h:419
+msgid "You can easily translocate small distances at will."
+msgstr "당신은 짧은 거리의 순간이동이 가능하다."
+
+#: mutation-data.h:555
+msgid ""
+"You are almost entirely resistant to further mutation and mutation removal."
+msgstr "당신은 돌연변이의 진행과 제거에 대해 거의 완전한 저항력이 있다."
+
+#: mutation-data.h:571
+msgid "You evolve."
+msgstr "당신은 진화한다."
+
+#: mutation-data.h:572
+msgid "You rapidly evolve."
+msgstr "당신은 빠르게 진화한다."
+
+#: mutation-data.h:575
+msgid "You feel nature experimenting on you. Don't worry, failures die fast."
+msgstr "대자연의 실험 대상이 된 듯한 느낌을 받았다."
+
+#: mutation-data.h:576
+msgid "Your genes go into a fast flux."
+msgstr "당신의 진화의 흐름이 더욱 빨라졌다."
+
+#: mutation-data.h:580
+msgid "Your wild genetic ride slows down."
+msgstr "당신은 유전적 진화의 속도가 더뎌짐을 느꼈다."
+
+#: mutation-data.h:625
+msgid "You can survive without breathing."
+msgstr "당신은 이제 숨을 쉬지 않아도 생존이 가능하다."
+
+#: mutation-data.h:791
+msgid "One of your tentacles bears a spike."
+msgstr "당신의 촉수 중 하나에는 가시가 돋아있다."
+
+#: mutation-data.h:792
+msgid "One of your tentacles bears a nasty spike."
+msgstr "당신의 촉수 중 하나에는 날카로운 가시가 돋아있다."
+
+#: mutation-data.h:793
+msgid "One of your tentacles bears a large vicious spike."
+msgstr "당신의 촉수 중 하나에는 커다랗고 섬뜩한 가시가 돋아있다."
+
+#: mutation-data.h:795
+msgid "One of your lower tentacles grows a sharp spike."
+msgstr "당신의 촉수 중 하나에 날카로운 가시가 돋았다."
+
+#: mutation-data.h:796
+msgid "Your tentacle spike grows bigger."
+msgstr "당신의 가시 촉수가 크고 날카로워졌다."
+
+#: mutation-data.h:797
+msgid "Your tentacle spike grows even bigger."
+msgstr "당신의 가시 촉수가 더욱 크고 날카로워졌다."
+
+#: mutation-data.h:799
+msgid "Your tentacle spike disappears."
+msgstr "당신의 가시 촉수가 사라졌다."
+
+#: mutation-data.h:800
+msgid "Your tentacle spike becomes smaller."
+msgstr "당신의 가시 촉수가 작아지고 무뎌졌다."
+
+#: mutation-data.h:801
+msgid "Your tentacle spike recedes somewhat."
+msgstr "가시 촉수가 뭔가 무뎌진 느낌이다."
+
+#: mutation-data.h:855 mutation-data.h:856 mutation-data.h:857
+msgid "You hunger for rotting flesh."
+msgstr "썩은 고기에 대한 갈망이 느껴졌다."
+
+#: mutation-data.h:931
+msgid "Your spells are a little harder to cast, but a little more powerful."
+msgstr "당신은 조금 더 강력한 주문을 시전하지만, 마력을 제어하는데 약간 어려움을 느낀다."
+
+#: mutation-data.h:932
+msgid "Your spells are harder to cast, but more powerful."
+msgstr "당신은 더욱 강력한 주문을 시전하지만, 마력을 제어하는데 어려움을 느낀다."
+
+#: mutation-data.h:933
+msgid "Your spells are much harder to cast, but much more powerful."
+msgstr "당신의 폭주하는 강력한 주문을 시전할 수 있지만, 그 만큼 마력의 제어도 대단히 어렵다."
+
+#: mutation-data.h:935 mutation-data.h:936
+msgid "You feel less in control of your magic."
+msgstr "주문 시전이 불안정해졌다는 느낌을 받았다."
+
+#: mutation-data.h:937
+msgid "You feel your magical power running wild!"
+msgstr "몸 안의 마력이 마구 폭주하는 느낌을 받았다!"
+
+#: mutation-data.h:939
+msgid "You regain control of your magic."
+msgstr "주문 시전이 완전히 안정된 느낌이다."
+
+#: mutation-data.h:940 mutation-data.h:941
+msgid "You feel more in control of your magic."
+msgstr "주문 시전이 안정되었다는 느낌을 받았다."
+
+#: mutation-data.h:949
+msgid "You are somewhat able to resist unholy torments (1 in 2 success)."
+msgstr "당신은 사악한 고통에 대해 저항력이 있다."
+
+#: mutation-data.h:1086
+msgid ""
+"Your magical and physical power is slightly enhanced as your life falls."
+msgstr "당신은 생명력이 감소할 경우, 마력과 물리적인 힘이 약간 향상된다."
+
+#: mutation-data.h:1087
+msgid "Your magical and physical power is enhanced as your life falls."
+msgstr "당신은 생명력이 감소할 경우, 마력과 물리적인 힘이 꽤 향상된다."
+
+#: mutation-data.h:1088
+msgid "Your magical and physical power is greatly enhanced as your life falls."
+msgstr "당신은 생명력이 감소할 경우, 마력과 물리적인 힘이 대폭 향상된다."
+
+#: mutation-data.h:1090
+msgid "You feel power flowing into your body."
+msgstr "몸 속에 힘이 넘치는 느낌을 받았다."
+
+#: mutation-data.h:1091
+msgid "You feel power rushing into your body."
+msgstr "몸 속에 힘이 질주하는 느낌을 받았다."
+
+#: mutation-data.h:1092
+msgid "You feel saturated with power."
+msgstr "강력한 힘에 사로잡힌 느낌을 받았다."
+
+#: mutation-data.h:1112
+msgid "Your body becomes less malleable."
+msgstr "온 몸의 유연성이 덜해짐을 느꼈다."
+
+#: mutation-data.h:1214
+msgid "You are partially covered in icy blue scales (AC +1)."
+msgstr "당신은 얼음빛의 파란 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1218
+msgid "Icy blue scales grow over part of your body."
+msgstr "얼음빛의 비늘이 몸의 일부에 자라났다"
+
+#: mutation-data.h:1219
+msgid "Icy blue scales spread over more of your body."
+msgstr "얼음빛의 비늘이 몸을 더욱 덮었고, 더욱 파란 빛을 띄기 시작했다."
+
+#: mutation-data.h:1222
+msgid "Your icy blue scales disappear."
+msgstr "당신의 얼음빛 비늘이 사라졌다."
+
+#: mutation-data.h:1268
+msgid "You are partially covered in molten scales (AC +1)."
+msgstr "당신은 얼룩색의 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1272
+msgid "Molten scales grow over part of your body."
+msgstr "얼룩색의 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1273
+msgid "Molten scales spread over more of your body."
+msgstr "얼룩색의 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1276
+msgid "Your molten scales disappear."
+msgstr "당신의 얼룩색 비늘이 사라졌다."
+
+#: mutation-data.h:1322
+msgid "You are partially covered in slimy green scales (AC +1)."
+msgstr "당신은 미끈한 녹색 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1323
+msgid "You are mostly covered in slimy green scales (AC +2)."
+msgstr "당신은 미끈한 녹색 비늘로 대부분 덮여 있다. (AC +2)"
+
+#: mutation-data.h:1324
+msgid "You are completely covered in slimy green scales (AC +3, rPois)."
+msgstr "당신은 미끈한 녹색 비늘로 완전히 덮여 있다. (AC +3, 독저항)"
+
+#: mutation-data.h:1326
+msgid "Slimy green scales grow over part of your body."
+msgstr "미끈한 녹색 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1327
+msgid "Slimy green scales spread over more of your body."
+msgstr "미끈한 녹색 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1330
+msgid "Your slimy green scales disappear."
+msgstr "당신의 녹색 비늘이 사라졌다."
+
+#: mutation-data.h:1340
+msgid "You are partially covered in thin metallic scales (AC +1)."
+msgstr "당신은 얇은 금속빛 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1344
+msgid "Thin metallic scales grow over part of your body."
+msgstr "얇은 금속빛 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1345
+msgid "Thin metallic scales spread over more of your body."
+msgstr "얇은 금속빛 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1348
+msgid "Your thin metallic scales disappear."
+msgstr "당신의 금속빛 비늘이 사라졌다."
+
+#: mutation-data.h:1376
+msgid "You are partially covered in yellow scales (AC +1)."
+msgstr "당신은 노란색 비늘로 부분적으로 덮여 있다. (AC +1)"
+
+#: mutation-data.h:1377
+msgid "You are mostly covered in yellow scales (AC +2)."
+msgstr "당신은 노란색 비늘로 대부분 덮여 있다. (AC +2)"
+
+#: mutation-data.h:1378
+msgid "You are completely covered in yellow scales (AC +3, rCorr)."
+msgstr "당신은 노란색 비늘로 완전히 덮여 있다. (AC +3, 부식저항)"
+
+#: mutation-data.h:1380
+msgid "Yellow scales grow over part of your body."
+msgstr "노란색 비늘이 몸의 일부에 자라났다."
+
+#: mutation-data.h:1381
+msgid "Yellow scales spread over more of your body."
+msgstr "노란색 비늘이 몸을 더욱 덮었다."
+
+#: mutation-data.h:1384
+msgid "Your yellow scales disappear."
+msgstr "당신의 노란색 비늘이 사라졌다."
+
+#: mutation-data.h:1394
+msgid "Your skin changes colour to match your surroundings (Stlth)."
+msgstr "당신의 피부는 주변의 색에 맞추어서 보호색을 띈다. (은밀+)"
+
+#: mutation-data.h:1412
+msgid "Your demonic aura causes spilled blood to erupt in flames."
+msgstr "당신의 악마적 기운은 흩뿌려진 핏자국을 화염으로 불태울 수 있다."
+
+#: mutation-data.h:1413
+msgid "Your blood runs red-hot!"
+msgstr "당신의 피가 붉고 뜨겁게 끓어올랐다!"
+
+#: mutation-data.h:1422
+msgid "You emit a foul stench, and are resistant to rotting and decay."
+msgstr "당신은 부패한 악취를 내뿜으며, 부패와 부식에 저항을 가진다."
+
+#: mutation-data.h:1423
+msgid "You radiate miasma, and are resistant to rotting and decay."
+msgstr "당신은 강한 독기를 방출하며, 부패와 부식에 저항을 가진다."
+
+#: mutation-data.h:1426
+msgid "You begin to emit a foul stench of rot and decay."
+msgstr "당신에게서 부패의 기운이 담긴 악취가 나기 시작했다."
+
+#: mutation-data.h:1427
+msgid "You begin to radiate miasma."
+msgstr "당신에게서 강한 독기가 방출되기 시작했다."
+
+#####################
+# Mutation-Data End #
+#####################

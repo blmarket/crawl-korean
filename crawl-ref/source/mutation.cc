@@ -1477,7 +1477,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
     notify_stat_change("변이를 얻었다");
 
     if (gain_msg)
-        mpr(mdef.gain[you.mutation[mutat]-1], MSGCH_MUTATION);
+        mpr(gettext(mdef.gain[you.mutation[mutat]-1]), MSGCH_MUTATION);
 
     // Do post-mutation effects.
     switch (mutat)
@@ -1613,7 +1613,7 @@ static bool _delete_single_mutation_level(mutation_type mutat,
     notify_stat_change("돌연변이를 잃어버렸다");
 
     if (lose_msg)
-        mpr(mdef.lose[you.mutation[mutat]], MSGCH_MUTATION);
+        mpr(gettext(mdef.lose[you.mutation[mutat]]), MSGCH_MUTATION);
 
     // Do post-mutation effects.
     if (mutat == MUT_FRAIL || mutat == MUT_ROBUST
