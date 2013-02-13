@@ -3226,7 +3226,7 @@ std::string feature_description_at(const coord_def& where, bool covering,
 
     if (!marker_desc.empty())
     {
-        marker_desc = make_stringf(pgettext("feature_description", "%s%s"), marker_desc.c_str(), covering_description.c_str());
+        marker_desc = make_stringf("%s%s", marker_desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, marker_desc);
     }
@@ -3284,7 +3284,7 @@ std::string feature_description_at(const coord_def& where, bool covering,
 
         desc += door_desc_suffix;
 
-        desc = make_stringf(pgettext("feature_description", "%s%s"), desc.c_str(), covering_description.c_str());
+        desc = make_stringf("%s%s", desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, desc);
     }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-10 22:21+0900\n"
+"POT-Creation-Date: 2013-02-13 15:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1479,7 +1479,7 @@ msgstr "풀숲"
 
 #: mon-data.h:3521 mon-data.h:3510 mon-data.h:3584 mon-data.h:3594
 msgid "burning bush"
-msgstr "화염의 식물"
+msgstr "불타는 식물"
 
 #: mon-data.h:3535 mon-data.h:3524 mon-data.h:3598 mon-data.h:3608
 msgid "efreet"
@@ -1564,11 +1564,11 @@ msgstr "뱀파이어 마법사"
 
 #: mon-data.h:3806 mon-data.h:3795 mon-data.h:3857 mon-data.h:3882
 msgid "wraith"
-msgstr "레이쓰"
+msgstr "망령"
 
 #: mon-data.h:3818 mon-data.h:3807 mon-data.h:3869 mon-data.h:3894
 msgid "shadow wraith"
-msgstr "그림자 레이쓰"
+msgstr "어둠에 잠긴 망령"
 
 #: mon-data.h:3830 mon-data.h:3819 mon-data.h:3881 mon-data.h:3906
 msgid "freezing wraith"
@@ -1907,7 +1907,7 @@ msgstr "혼돈의 악마"
 #. with randomised stats
 #: mon-data.h:4847 mon-data.h:4836 mon-data.h:4864 mon-data.h:4953
 msgid "hell beast"
-msgstr "짐승"
+msgstr "지옥의 야수"
 
 #: mon-data.h:4860 mon-data.h:4849 mon-data.h:4877 mon-data.h:4966
 msgid "hellion"
@@ -2139,7 +2139,7 @@ msgid "dowan"
 msgstr "도완"
 
 msgid "prince ribbit"
-msgstr "리빗 왕자"
+msgstr "개굴 왕자"
 
 msgid "ijyb"
 msgstr "이지브"
@@ -2174,13 +2174,13 @@ msgid "boris"
 msgstr "보리스"
 
 msgid "menkaure"
-msgstr "멘카우어"
+msgstr "멘카우레"
 
 msgid "khufu"
 msgstr "쿠푸"
 
 msgid "ilsuiw"
-msgstr "아일스이"
+msgstr "일스이우"
 
 msgid "erolcha"
 msgstr "에롤차"
@@ -2249,7 +2249,7 @@ msgid "edmund"
 msgstr "에드먼드"
 
 msgid "psyche"
-msgstr "사이키"
+msgstr "프쉬케"
 
 msgid "donald"
 msgstr "도널드"
@@ -2558,7 +2558,7 @@ msgstr "보리스"
 #: mon-data.h:5683 mon-data.h:5695 mon-data.h:5684 mon-data.h:5641
 #: mon-data.h:5806
 msgid "Menkaure"
-msgstr "멘카우어"
+msgstr "멘카우레"
 
 #: mon-data.h:5695 mon-data.h:5707 mon-data.h:5696 mon-data.h:5653
 #: mon-data.h:5818
@@ -2568,7 +2568,7 @@ msgstr "쿠푸"
 #: mon-data.h:5708 mon-data.h:5720 mon-data.h:5709 mon-data.h:5666
 #: mon-data.h:5831
 msgid "Ilsuiw"
-msgstr "아일스이"
+msgstr "일스이우"
 
 #: mon-data.h:5721 mon-data.h:5733 mon-data.h:5722 mon-data.h:5679
 #: mon-data.h:5844
@@ -2689,7 +2689,7 @@ msgstr "에드먼드"
 #: mon-data.h:6024 mon-data.h:6036 mon-data.h:6025 mon-data.h:5982
 #: mon-data.h:6133
 msgid "Psyche"
-msgstr "사이키"
+msgstr "프쉬케"
 
 #: mon-data.h:6036 mon-data.h:6048 mon-data.h:6037 mon-data.h:5994
 #: mon-data.h:6145
@@ -2852,12 +2852,12 @@ msgstr "요술"
 #: spl-util.cc:897 spl-util.cc:897 skills2.cc:97 spl-util.cc:896
 #: skills2.cc:94 spl-util.cc:853
 msgid "Hexes"
-msgstr "주술"
+msgstr "사술"
 
 #: spl-util.cc:899 spl-util.cc:899 skills2.cc:98 spl-util.cc:898
 #: skills2.cc:95 spl-util.cc:855
 msgid "Charms"
-msgstr "매혹술"
+msgstr "주술"
 
 #. / 마법 학파로서의 Fire
 #. / 마법 학파로서의 Fire
@@ -11538,7 +11538,7 @@ msgstr "심한 빈혈"
 
 #: chardump.cc:1158
 msgid "starving"
-msgstr "배고파 죽음"
+msgstr "매우 굶주림"
 
 #: chardump.cc:1159
 msgid "near bloodless"
@@ -11546,7 +11546,7 @@ msgstr "빈혈"
 
 #: chardump.cc:1159
 msgid "near starving"
-msgstr "매우 배고픔"
+msgstr "굶주림"
 
 #: chardump.cc:1160
 msgid "very thirsty"
@@ -11554,7 +11554,7 @@ msgstr "심한 갈증"
 
 #: chardump.cc:1160
 msgid "very hungry"
-msgstr "배고픔"
+msgstr "매우 배고픔"
 
 #: chardump.cc:1161
 msgid "thirsty"
@@ -11562,7 +11562,7 @@ msgstr "갈증"
 
 #: chardump.cc:1161
 msgid "hungry"
-msgstr "출출함"
+msgstr "배고픔"
 
 #: chardump.cc:1163
 msgid "full"

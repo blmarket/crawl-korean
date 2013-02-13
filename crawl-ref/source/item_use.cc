@@ -792,7 +792,7 @@ bool do_wear_armour(int item, bool quiet)
             if (you.species == SP_OCTOPODE)
                 mpr(_("You need the rest of your tentacles for walking."));
             else
-                mprf(_("You'd need three %s to do that!"), you.hand_name(true).c_str());
+                mprf(_("You'd need three %s to do that!"), _(you.hand_name(true).c_str()));
         }
         return false;
     }

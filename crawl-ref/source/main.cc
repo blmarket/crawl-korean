@@ -4304,15 +4304,15 @@ static void _move_player(coord_def move)
 
     std::string verb;
     if (you.flight_mode() == FL_FLY)
-        verb = "fly";
+        verb = P_("mainverb","fly");
     else if (you.flight_mode() == FL_LEVITATE)
-        verb = "levitate";
+        verb = P_("mainverb","levitate");
     else if (you.is_wall_clinging())
-        verb = "cling";
+        verb = P_("mainverb","cling");
     else if (you.species == SP_NAGA && !form_changed_physiology())
-        verb = "slither";
+        verb = P_("mainverb","slither");
     else
-        verb = "walk";
+        verb = P_("mainverb","walk");
 
     if (targ_monst && !targ_monst->submerged())
     {

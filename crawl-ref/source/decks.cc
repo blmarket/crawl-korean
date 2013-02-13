@@ -460,10 +460,10 @@ static card_type _draw_top_card(item_def& deck, bool message,
 
     if (message)
     {
-        const char *verb = translate_verb(NULL, (_flags & CFLAG_DEALT) ? V_("deal") : V_("draw")).c_str();
+        const char *verb = translate_verb(NULL, (_flags & CFLAG_DEALT) ? P_("deck","deal") : P_("deck","draw")).c_str();
 
         if (_flags & CFLAG_MARKED)
-            mprf(_("You %s %s."), verb, card_name(card));
+            mprf(P_("deck","You %s %s."), verb, card_name(card));
         else
             mprf(_("You %s a card... It is %s."), verb, card_name(card));
 
@@ -2920,7 +2920,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
 {
     ASSERT(!_card_forbidden(which_card));
 
-    const char *participle = (flags & CFLAG_DEALT) ? "dealt" : "drawn";
+    const char *participle = (flags & CFLAG_DEALT) ? P_("deck","dealt") : P_("deck","drawn");
     const int power = _card_power(rarity);
 
     const god_type god =
@@ -3005,7 +3005,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_VENOM:
         if (coinflip())
         {
-            /// 1. drawn/dealt 2. card_name
+            // 1. drawn/dealt 2. card_name
             mprf(_("You have %s %s."), participle, card_name(which_card));
             your_spells(SPELL_OLGREBS_TOXIC_RADIANCE, random2(power/4), false);
         }

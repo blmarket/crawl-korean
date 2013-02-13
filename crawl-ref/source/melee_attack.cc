@@ -1489,7 +1489,7 @@ void melee_attack::player_announce_aux_hit()
          attack_strength_punctuation().c_str());
 }
 
-std::string melee_attack::player_why_missed()
+std::string melee_attack::player_why_missed() // (130211, deceit) 이 함수;; 참조하는 함수가 없는건가?
 {
     const int ev = defender->melee_evasion(attacker);
     const int combined_penalty =

@@ -2,7 +2,7 @@
  * @file
  * @brief Functions used to print player related info.
 **/
-
+// (130213) mutation.cc / religion.cc / output.cc는 소스 직접수정으로 처리된 코드입니다.
 #include "AppHdr.h"
 
 #include "output.h"
@@ -415,11 +415,11 @@ static void _print_stats_wp(int y)
         text = "무장하지 않음"; // Default
 
         if (you.species == SP_FELID)
-            text = _("Teeth and claws");
+            text = "이빨과 발톱";
         else if (you.has_usable_claws(true))
-            text = _("Claws");
+            text = "발톱";
         else if (you.has_usable_tentacles(true))
-            text = _("Tentacles");
+            text = "촉수";
 
         switch (you.form)
         {
@@ -955,9 +955,9 @@ void draw_border(void)
     if (Options.show_gold_turns)
     {
         int yhack = crawl_state.game_is_zotdef();
-        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf(_("Gold:"));
+        cgotoxy(1, 9 + yhack, GOTO_STAT); cprintf("금화:");
         cgotoxy(19, 9 + yhack, GOTO_STAT);
-        cprintf(Options.show_game_turns ? _("Time:") : _("Turn:"));
+        cprintf(Options.show_game_turns ? "시간:" : "턴  :");
     }
     // Line 8 is exp pool, Level
 }
@@ -1016,8 +1016,8 @@ std::string mpr_monster_list(bool past)
     std::string msg = "";
     if (mons.empty())
     {
-        msg  = past ? _("There were no monsters in sight!") :
-                _("There are no monsters in sight!");
+        msg  = past ? "시야 내 몬스터가 보이지 않았다!" :
+                "시야 내 몬스터가 보이지 않는다!";
 
         return msg;
     }
@@ -1364,7 +1364,7 @@ static void _print_overview_screen_equip(column_composer& cols,
                      slot,
                      equip_char,
                      colname,
-                     melded ? "melded " : "",
+                     melded ? "일체화됨 " : "",
                      chop_string(item.name(true, DESC_PLAIN, true), 42, false).c_str(),
                      colname);
             equip_chars.push_back(equip_char);
@@ -1383,28 +1383,28 @@ static void _print_overview_screen_equip(column_composer& cols,
                  && (you.species == SP_NAGA || you.species == SP_CENTAUR))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(no %s)</darkgrey>"), slot_name_lwr.c_str());
+                     gettext("<darkgrey>(%s 없음)</darkgrey>"), slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s unavailable)</darkgrey>"), slot_name_lwr.c_str());
+                     gettext("<darkgrey>(%s 사용불가)</darkgrey>"), slot_name_lwr.c_str());
         }
         else if (!you_tran_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s currently unavailable)</darkgrey>"),
+                     gettext("<darkgrey>(%s 현재 사용불가)</darkgrey>"),
                      slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i]))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s restricted)</darkgrey>"), slot_name_lwr.c_str());
+                     gettext("<darkgrey>(%s 제한됨)</darkgrey>"), slot_name_lwr.c_str());
         }
         else
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(no %s)</darkgrey>"), slot_name_lwr.c_str());
+                     gettext("<darkgrey>(%s 없음)</darkgrey>"), slot_name_lwr.c_str());
         }
         cols.add_formatted(2, buf, false);
     }
@@ -1678,7 +1678,7 @@ static std::vector<formatted_string> _get_overview_stats()
              "주문: %2d레벨 기억함, %2d레벨%s 남음\n"
              "%s",
              you.experience_level,
-             (you.experience_level < 27 ? make_stringf(gettext("   Next: %2d%%"),
+             (you.experience_level < 27 ? make_stringf("   다음: %2d%%",
                                                    get_exp_progress()).c_str()
                                         : ""),
              godpowers.c_str(),
@@ -1711,14 +1711,14 @@ static std::vector<formatted_string> _get_overview_resistances(
     const int rrott = you.res_rotting();
 
     snprintf(buf, sizeof buf,
-             _("%sRes.Fire  : %s\n"
-             "%sRes.Cold  : %s\n"
-             "%sLife Prot.: %s\n"
-             "%sRes.Poison: %s\n"
-             "%sRes.Elec. : %s\n"
-             "%sSust.Abil.: %s\n"
-             "%sRes.Mut.  : %s\n"
-             "%sRes.Rott. : %s\n"),
+             "%s화염 저항 : %s\n"
+             "%s냉기 저항 : %s\n"
+             "%s약화 저항 : %s\n"
+             "%s독소 저항 : %s\n"
+             "%s전기 저항 : %s\n"
+             "%s능력 유지 : %s\n"
+             "%s변이 저항 : %s\n"
+             "%s부패 저항 : %s\n",
              _determine_colour_string(rfire, 3), _itosym3(rfire),
              _determine_colour_string(rcold, 3), _itosym3(rcold),
              _determine_colour_string(rlife, 3), _itosym3(rlife),
@@ -1823,11 +1823,11 @@ static char _get_overview_screen_results()
     overview.set_more(formatted_string::parse_string(
 // FIXME later
 #ifdef USE_TILE_LOCAL
-                        "<cyan>[ +/L-click : Page down.   - : Page up."
-                        "           Esc/R-click exits.]"));
+                        "<cyan>[ +/좌클릭 : 아래 페이지 - : 윗 페이지."
+                        "           Esc/우클릭 : 나가기]"));
 #else
                         "<cyan>[ + : Page down.   - : Page up."
-                        "                           Esc exits.]"));
+                        "                          Esc exits.]"));
 #endif
     overview.set_tag("resists");
 
@@ -1930,9 +1930,9 @@ std::string magic_res_adjective(int mr)
         return "면역";
 
     return ((mr <  10) ? "저항력이 없다" :
-            (mr <  30) ? "약간의 저항력이 있다" :
-            (mr <  60) ? "어느정도 저항력이 있다" :
-            (mr <  90) ? "꽤 저항력이 있다" :
+            (mr <  30) ? "미미한 저항력이 있다" :
+            (mr <  60) ? "약간의 저항력이 있다" :
+            (mr <  90) ? "저항력이 있다" :
             (mr < 120) ? "큰 저항력이 있다" :
             (mr < 150) ? "아주 큰 저항력이 있다" :
             (mr < 190) ? "대단히 큰 저항력이 있다" :
@@ -2050,7 +2050,7 @@ static std::string _status_mut_abilities(int sw)
         status.push_back(help);
     }
 
-    status.push_back("적대적인 주술에 대해 " +
+    status.push_back("상태이상에 대해 " +
 					 magic_res_adjective(player_res_magic(false))
                      );
 
@@ -2077,14 +2077,14 @@ static std::string _status_mut_abilities(int sw)
     switch (you.species)   //mv: following code shows innate abilities - if any
     {
       case SP_MERFOLK:
-          mutations.push_back(_annotate_form_based(_("change form in water"),
+          mutations.push_back(_annotate_form_based("물속에서 변형",
                                                    form_changed_physiology()));
-          mutations.push_back(_annotate_form_based(_("swift swim"),
+          mutations.push_back(_annotate_form_based("빠른 헤엄",
                                                    form_changed_physiology()));
           break;
 
       case SP_MINOTAUR:
-          mutations.push_back(_annotate_form_based(_("retaliatory headbutt"),
+          mutations.push_back(_annotate_form_based("박치기 반격",
                                                    !form_keeps_mutations()));
           break;
 
@@ -2093,18 +2093,18 @@ static std::string _status_mut_abilities(int sw)
           if (!player_mutation_level(MUT_BREATHE_POISON))
               mutations.push_back("독 뱉기");
           else
-              mutations.push_back(_(M_("breathe poison")));
+              mutations.push_back("독 뿜기");
 
           if (you.experience_level > 12)
           {
-              mutations.push_back(_annotate_form_based(_("constrict 1"),
+              mutations.push_back(_annotate_form_based("조이기 1",
                                                        !form_keeps_mutations()));
           }
           AC_change += you.experience_level / 3;
           break;
 
       case SP_GHOUL:
-          mutations.push_back("rotting body");
+          mutations.push_back("썩어가는 육체");
           break;
 
       case SP_TENGU:
@@ -2112,7 +2112,7 @@ static std::string _status_mut_abilities(int sw)
           {
               std::string help = "비행 가능";
               if (you.experience_level > 14)
-                  help = make_stringf(_("%s continuously"), help.c_str());
+                  help = make_stringf("자유로운 %s", help.c_str());
               mutations.push_back(help);
           }
           break;
@@ -2127,7 +2127,7 @@ static std::string _status_mut_abilities(int sw)
                   help = "강한 " + help;
               mutations.push_back(help);
           }
-          mutations.push_back("restore body");
+          mutations.push_back("신체 복구");
           break;
 
       case SP_KOBOLD:
@@ -2136,12 +2136,12 @@ static std::string _status_mut_abilities(int sw)
 
       case SP_VAMPIRE:
           if (you.experience_level >= 6)
-              mutations.push_back("bottle blood");
+              mutations.push_back("피 담기");
           break;
 
       case SP_DEEP_DWARF:
-          mutations.push_back(_("damage resistance"));
-          mutations.push_back(_("recharge devices"));
+          mutations.push_back("피해 저항");
+          mutations.push_back("도구 충전");
           break;
 
       case SP_FELID:
@@ -2149,43 +2149,43 @@ static std::string _status_mut_abilities(int sw)
           break;
 
       case SP_RED_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe fire")));
+          mutations.push_back(_dragon_abil("화염의 숨결"));
           break;
 
       case SP_WHITE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe frost")));
+          mutations.push_back(_dragon_abil("냉기의 숨결"));
           break;
 
       case SP_GREEN_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe noxious fumes")));
+          mutations.push_back(_dragon_abil("독의 숨결"));
           break;
 
       case SP_YELLOW_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("spit acid")));
-          mutations.push_back(_annotate_form_based(_("acid resistance"),
+          mutations.push_back(_dragon_abil("산 내뱉기"));
+          mutations.push_back(_annotate_form_based("부식 저항",
                                                    !form_keeps_mutations()
                                                     && you.form != TRAN_DRAGON));
           break;
 
       case SP_GREY_DRACONIAN:
-          mutations.push_back(_("walk through water"));
+          mutations.push_back("물 속 이동");
           AC_change += 5;
           break;
 
       case SP_BLACK_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe lightning")));
+          mutations.push_back(_dragon_abil("번개의 숨결"));
           break;
 
       case SP_PURPLE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe power")));
+          mutations.push_back(_dragon_abil("마력의 숨결"));
           break;
 
       case SP_MOTTLED_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe sticky flames")));
+          mutations.push_back(_dragon_abil("접착화염 뿜기"));
           break;
 
       case SP_PALE_DRACONIAN:
-          mutations.push_back(_dragon_abil(_("breathe steam")));
+          mutations.push_back(_dragon_abil("증기의 숨결"));
           break;
 
       default:
@@ -2213,13 +2213,13 @@ static std::string _status_mut_abilities(int sw)
 
     if (you.species == SP_OCTOPODE)
     {
-        mutations.push_back(_("almost no armour"));
-        mutations.push_back(_("amphibious"));
+        mutations.push_back("거의 모든 방어구 사용불가");
+        mutations.push_back("수륙양용");
         mutations.push_back(_annotate_form_based(
-            _("8 rings"),
+            "반지 8개 착용가능",
             !form_keeps_mutations() && you.form != TRAN_SPIDER));
         mutations.push_back(_annotate_form_based(
-            make_stringf(_("constrict %d"), you.has_tentacles(false)),
+            make_stringf("조이기 %d", you.has_tentacles(false)),
             !form_keeps_mutations()));
     }
 

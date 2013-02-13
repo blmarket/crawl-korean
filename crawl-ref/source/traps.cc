@@ -1650,9 +1650,9 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
 
         if (act.is_player())
         {
-            mprf(gettext("%s shoots out and hits you!"), shot.name(true, DESC_A).c_str());
+            mprf(gettext("%s shoots out and hits you!"), shot.name(true, DESC_PLAIN).c_str());
 
-            std::string n = name(DESC_A) + " trap";
+            std::string n = name(DESC_PLAIN) + P_("traps"," trap");
 
             // Needle traps can poison.
             if (poison)
@@ -1666,8 +1666,8 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
             {
                 /// 1. 총알 이름, 2. 대상, 3. 그러나 데미지를 입지 않았다
                 mprf(gettext("%s hits %s%s!"),
-                     shot.name(true, DESC_A).c_str(),
-                     act.name(DESC_THE).c_str(),
+                     shot.name(true, DESC_PLAIN).c_str(),
+                     act.name(DESC_PLAIN).c_str(),
                      (damage_taken == 0 && !poison) ?
                          gettext(", but does no damage") : "");
             }

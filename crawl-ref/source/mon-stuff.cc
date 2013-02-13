@@ -3284,7 +3284,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
         if (!quiet)
         {
             simple_monster_message(mons,
-                make_stringf(_(" is %s!"), held_status(mons)).c_str());
+                make_stringf(P_("monstuff"," is %s!"), held_status(mons)).c_str());
         }
         return false;
     }

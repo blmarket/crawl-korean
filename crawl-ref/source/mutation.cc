@@ -2,10 +2,10 @@
  * @file
  * @brief Functions for handling player mutations.
 **/
-
-
-//변이 관련 번역 시작.
-
+//(deceit,130212) (130213) mutation.cc / religion.cc / output.cc는 소스 직접수정으로 처리된 코드입니다. jolgame님께서 번역하셨었죠 아마?
+//번역 자체도 좋아서 굳이 이걸 다시 빼서 gettext() 씌울필요는 없을듯하고 오히려 직접수정이랑 gettext()가 섞여있으면 나중에 수정할때 헷갈릴듯
+//시간이 남는다면 직접수정 처리한 religion.cc와 mutation.cc를 gettext() 형식으로 다시 바꾸는것도 고려해봐야해야겠습니다.
+//0.9.1K와 비교하여 몇몇 부분의 번역이 수정되었습니다.
 #include "AppHdr.h"
 #include "mutation.h"
 
@@ -356,32 +356,32 @@ std::string describe_mutations(bool center_title)
     {
     case SP_MERFOLK:
         result += _annotate_form_based(
-            gettext("You revert to your normal form in water."),
+            "당신은 물 속에서 본연의 모습으로 변한다.", //"You revert to your normal form in water.",
             form_changed_physiology());
         result += _annotate_form_based(
-            gettext("You are very nimble and swift while swimming."),
+            "당신은 물 속에서 매우 민첩하게 행동할 수 있다.", // You are very nimble and swift while swimming.", //"You are very nimble and swift while swimming.",
             form_changed_physiology());
         have_any = true;
         break;
 
     case SP_MINOTAUR:
         result += _annotate_form_based(
-            gettext("You reflexively headbutt those who attack you in melee."),
+            "당신은 근접 전투시 박치기를 통해 반격을 할 수 있다.", // "You reflexively headbutt those who attack you in melee.",
             !form_keeps_mutations());
         have_any = true;
         break;
 
     case SP_NAGA:
-        result += gettext("You cannot wear boots.\n");
+        result += "당신은 신발을 신을 수 없다.\n"; // "You cannot wear boots.\n";
 
         // Breathe poison replaces spit poison.
         if (!player_mutation_level(MUT_BREATHE_POISON))
-            result += _("You can spit poison.\n");
+            result += "당신은 독을 뱉을 수 있다.\n"; // "You can spit poison.\n";
 
         if (you.experience_level > 12)
         {
             result += _annotate_form_based(
-                _("You can use your snake-like lower body to constrict enemies."),
+                "당신은 긴 몸으로 적을 감아 조일 수 있다.", // "You can use your snake-like lower body to constrict enemies.",
                 !form_keeps_mutations());
         }
 
@@ -389,7 +389,7 @@ std::string describe_mutations(bool center_title)
         {
             std::ostringstream num;
             num << you.experience_level/3;
-            const std::string acstr = gettext("Your serpentine skin is tough (AC +")
+            const std::string acstr = "당신은 강인한 비늘 피부를 가지고 있다(AC +" // "Your serpentine skin is tough (AC +"
                                       + num.str() + ").";
 
             result += _annotate_form_based(acstr, player_is_shapechanged());
@@ -399,17 +399,16 @@ std::string describe_mutations(bool center_title)
 
     case SP_GHOUL:
 
-//      result += "Your body is rotting away.\n";
-        result += "당신의 몸은 썩어 문드러진다.\n";
+        result += "당신의 몸은 썩어 문드러진다.\n"; //      result += "Your body is rotting away.\n";
         have_any = true;
         break;
 
     case SP_TENGU:
         if (you.experience_level > 4)
         {
-            std::string msg = gettext("You can fly.");
+            std::string msg = "당신은 날 수 있다."; // "You can fly.";
             if (you.experience_level > 14)
-                msg = gettext("You can fly continuously.");
+                msg = "당신은 자유롭게 날 수 있다."; // "You can fly continuously.";
             msg += ".\n";
 
             result += msg;
@@ -419,101 +418,85 @@ std::string describe_mutations(bool center_title)
 
     case SP_MUMMY:
 
-		//머미의 변이
-        //result += "You do not eat or drink.\n";
-        //result += "Your flesh is vulnerable to fire.\n";
-        result += "당신은 먹거나 마실 수 없다.\n";
-        result += "당신의 육체는 불에 취약하다.\n";
+		//머미의 변이       
+        result += "당신은 먹거나 마실 수 없다.\n"; //result += "You do not eat or drink.\n";
+        result += "당신의 육체는 불에 취약하다.\n"; //result += "Your flesh is vulnerable to fire.\n";
         //12레벨이 넘어가면
 		
 		if (you.experience_level > 12)
         {
-
-			//result += "You are";
-            result += "당신은";
+			result += "당신은"; //result += "You are";
             if (you.experience_level > 25)
-				//result += " strongly";
-				result += " 강한";
-//result += " in touch with the powers of death.\n";
-            result += " 죽음의 힘으로 부여받은 손길이 있다.\n";
-//	result +=
-//      "You can restore your body by infusing magical energy.\n";
-			result +=
-                "당신은 마법 에너지를 불어넣어 육체를 회복할 수 있다.\n";
+				result += " 강력한"; //result += " strongly";
+            result += " 죽음의 힘으로 부여받은 손길이 있다.\n"; //result += " in touch with the powers of death.\n";
+			result += "당신은 마법 에너지를 불어넣어 육체를 회복할 수 있다.\n"; // "You can restore your body by infusing magical energy.\n";
         }
         have_any = true;
         break;
 
 		//각종 색색 드라코들
     case SP_GREEN_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe blasts of noxious fumes."));
+        result += _dragon_abil("당신은 유독한 가스를 뿜어낼 수 있다."); // _dragon_abil("You can breathe blasts of noxious fumes.");
         have_any = true;
-
-//끔찍한 녹색?          scale_type = "lurid green";
-        scale_type = "끔찍한 녹색";
+        scale_type = "반짝이는 녹색"; //끔찍한 녹색?          scale_type = "lurid green";
         break;
 
     case SP_GREY_DRACONIAN:
-		//        result += "You can walk through water.\n";
-        result += "당신은 물 속을 걸을 수 있다.\n";
+        result += "당신은 물 속을 걸을 수 있다.\n"; 		// result += "You can walk through water.\n";
         have_any = true;
-        /// GREY_DRACONIAN 종족의 색깔.
-        scale_type = _(M_("dull iron-grey"));
+        scale_type = "칙칙한 회색"; // ("dull iron-grey"); GREY_DRACONIAN 종족의 색깔.
         break;
 
     case SP_RED_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe blasts of fire."));
+        result += _dragon_abil("당신은 불의 숨결을 뿜어낼 수 있다."); // _dragon_abil(("You can breathe blasts of fire."));
         have_any = true;
-		//scale_type = "fiery red";
-        scale_type = "불타는 듯한 빨강";
+        scale_type = "불타는 듯한 빨강"; 		//scale_type = "fiery red";
         break;
 
     case SP_WHITE_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe waves of freezing cold."));
-        result += _dragon_abil(gettext("You can buffet flying creatures when you breathe cold."));
-        scale_type = gettext(M_("icy white"));
+        result += _dragon_abil("당신은 냉기의 숨결을 뿜어낼 수 있다."); // _dragon_abil(("You can breathe waves of freezing cold."));
+        result += _dragon_abil("당신은 냉기를 뿜어 날아다니는 존재를 뒤흔들 수 있다."); // _dragon_abil(("You can buffet flying creatures when you breathe cold."));
+        scale_type = "얼음빛 흰색"; // (("icy white"));
         have_any = true;
         break;
 
     case SP_BLACK_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe wild blasts of lightning."));
-        scale_type = gettext(M_("glossy black"));
+        result += _dragon_abil("당신은 거세게 방출되는 번개의 숨결을 뿜어낼 수 있다."); // _dragon_abil(("You can breathe wild blasts of lightning."));
+        scale_type = "윤기나는 검정"; // (("glossy black"));
         have_any = true;
         break;
 
     case SP_YELLOW_DRACONIAN:
-        result += _dragon_abil(gettext("You can spit globs of acid."));
-        result += _dragon_abil(gettext("You can corrode armour when you spit acid."));
-        result += _annotate_form_based(gettext("You are resistant to acid."),
+        result += _dragon_abil("당신은 산을 뱉을 수 있다."); // _dragon_abil(("You can spit globs of acid."));
+        result += _dragon_abil("당신은 산을 뱉어서 갑옷을 부식시킬 수 있다."); // _dragon_abil(("You can corrode armour when you spit acid."));
+        result += _annotate_form_based("당신은 부식에 대한 저항을 가지고 있다.", // _annotate_form_based(("You are resistant to acid."),
                       !form_keeps_mutations() && you.form != TRAN_DRAGON);
-        scale_type = gettext(M_("golden yellow"));
+        scale_type = "황금빛 노랑"; // (("golden yellow"));
         have_any = true;
         break;
 
     case SP_PURPLE_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe bolts of energy."));
-        result += _dragon_abil(gettext("You can dispel enchantments when you breathe energy."));
-        scale_type = gettext("rich purple");
+        result += _dragon_abil("당신은 마력의 화살을 뿜어낼 수 있다."); // _dragon_abil(("You can breathe bolts of energy."));
+        result += _dragon_abil("당신은 마력의 화살로 걸려있는 마법을 해제할 수 있다."); // _dragon_abil(("You can dispel enchantments when you breathe energy."));
+        scale_type = "짙은 보라"; // ("rich purple");
         have_any = true;
         break;
 
     case SP_MOTTLED_DRACONIAN:
-        result += _dragon_abil(gettext("You can spit globs of burning liquid."));
-        result += _dragon_abil(gettext("You can ignite nearby creatures when you spit burning liquid."));
-        scale_type = gettext("weird mottled");
+        result += _dragon_abil("당신은 불타는 액체를 뱉을 수 있다."); // _dragon_abil(("You can spit globs of burning liquid."));
+        result += _dragon_abil("당신은 불타는 액체로 근처의 존재에 불을 붙일 수 있다."); // _dragon_abil(("You can ignite nearby creatures when you spit burning liquid."));
+        scale_type = "기묘한 얼룩"; // ("weird mottled");
         have_any = true;
         break;
 
     case SP_PALE_DRACONIAN:
-        result += _dragon_abil(gettext("You can breathe blasts of scalding steam."));
-        scale_type = gettext("pale cyan-grey");
+        result += _dragon_abil("당신은 뜨거운 증기를 뿜을 수 있다."); // _dragon_abil(("You can breathe blasts of scalding steam."));
+        scale_type = "옅은 남회색"; // ("pale cyan-grey");
         have_any = true;
         break;
 
-    case SP_KOBOLD:
-		//코볼트 관련
-        //result += "You recuperate from illness quickly.\n";
-		result += "당신은 질병으로부터 빠르게 회복된다. .\n";
+    case SP_KOBOLD:		//코볼트 관련
+		result += "당신은 질병으로부터 빠르게 회복된다. .\n";         //result += "You recuperate from illness quickly.\n";
         have_any = true;
         break;
 
@@ -559,22 +542,22 @@ std::string describe_mutations(bool center_title)
 
 		//고양이
     case SP_FELID:
-        result += _("You cannot wear armour.\n");
-        result += _("You are incapable of any advanced item manipulation.\n");
-        result += _annotate_form_based(_("Your paws have sharp claws."),
+        result += "당신은 방어구를 착용할 수 없다.\n"; // ("You cannot wear armour.\n");
+        result += "당신은 어떠한 도구도 조작할 수 없다.\n"; // ("You are incapable of any advanced item manipulation.\n");
+        result += _annotate_form_based("당신은 날카로운 발톱을 가지고 있다.", // _annotate_form_based(("Your paws have sharp claws."),
             !form_keeps_mutations() || you.form == TRAN_BLADE_HANDS);
         have_any = true;
         break;
 
 		//무너무너
     case SP_OCTOPODE:
-        result += _("You cannot wear most types of armour.\n");
-        result += _("You are amphibious.\n");
+        result += "당신은 대부분의 방어구를 착용할 수 없다.\n"; // ("You cannot wear most types of armour.\n");
+        result += "당신은 수륙양용이다.\n"; // ("You are amphibious.\n");
         result += _annotate_form_based(
-            _("You can wear up to eight rings at the same time."),
+            "당신은 동시에 8개의 반지를 착용할 수 있다.", // ("You can wear up to eight rings at the same time."),
             !form_keeps_mutations() && you.form != TRAN_SPIDER);
         result += _annotate_form_based(
-            _("You can use your tentacles to constrict many enemies at once."),
+            "당신은 촉수들을 이용하여 많은 적들을 동시에 잡아 조일 수 있다.", // ("You can use your tentacles to constrict many enemies at once."),
             !form_keeps_mutations());
         have_any = true;
         break;
@@ -592,18 +575,18 @@ std::string describe_mutations(bool center_title)
 
 		//보니까 고양이 아머 못낄때 뜨는 메시지 같네요
 		//result += "You are tiny and cannot use many weapons and most armour.\n";
-        result += "당신은 아주 작기에 많은 무기와 대부분의 갑옷을 사용할 수 없다.\n";
+        result += "당신은 너무 작아 몇몇 무기와 대부분의 방어구를 사용할 수 없다.\n";
         have_any = true;
         break;
     case SIZE_SMALL:
 		//이건 그냥 체형이 작은 종족들인듯.
 		//result += "You are small and have problems with some larger weapons.\n";
-        result += "당신은 작아서 몇몇 거대한 무기들을 사용하는 데에 문제가 있다..\n";
+        result += "당신은 너무 작아 몇몇 거대한 무기들을 사용하는 데에 문제가 있다..\n";
         have_any = true;
         break;
     case SIZE_LARGE:
 		//      result += "You are too large for most types of armour.\n";
-        result += "당신은 대부분의 갑옷을 입기에는 너무 크다.\n";
+        result += "당신은 너무 커서 대부분의 갑옷이 맞지 않는다.\n";
         have_any = true;
         break;
     default:
@@ -618,15 +601,15 @@ std::string describe_mutations(bool center_title)
         num << 4 + you.experience_level / 3
                  + (you.species == SP_GREY_DRACONIAN ? 5 : 0);
 
-        const std::string msg = make_stringf(_("Your %s scales are %shard (AC +%s)."),
+        const std::string msg = make_stringf("당신의 %s 비늘은 %s단단하다 (AC +%s).", // make_stringf(("Your %s scales are %shard (AC +%s)."),
             scale_type.c_str(),
-            (you.species == SP_GREY_DRACONIAN ? _(M_("very ")) : ""),
+            (you.species == SP_GREY_DRACONIAN ? "아주 " : ""), // (("very ")) : ""),
             num.str().c_str());
 
         result += _annotate_form_based(msg,
                       player_is_shapechanged() && you.form != TRAN_DRAGON);
 
-        result += gettext("Your body does not fit into most forms of armour.\n");
+        result += "당신의 몸에는 대부분의 방어구들이 맞지 않는다.\n"; // "Your body does not fit into most forms of armour.\n";
         have_any = true;
     }
 
@@ -674,18 +657,18 @@ std::string describe_mutations(bool center_title)
     }
 
     if (!have_any)
-        result += gettext("You are rather mundane.\n");
+        result += "당신에게는 특별한 변이가 없다.\n"; // ("You are rather mundane.\n");
 
     return result;
 }
 
-static const std::string _vampire_Ascreen_footer = gettext(
-    "Press '<w>!</w>'"
+static const std::string _vampire_Ascreen_footer = 
+    "'<w>!</w>' 키" // "Press '<w>!</w>'"
 #ifdef USE_TILE_LOCAL
-    " or <w>Right-click</w>"
+    " 또는 <w>마우스 우클릭</w>" // " or <w>Right-click</w>"
 #endif
-    " to toggle between mutations and properties depending on your\n"
-    "hunger status.\n");
+    "을 통해, 돌연변이 상태 화면과, 배고픔 수치에 따른\n" // " to toggle between mutations and properties depending on your\n"
+    "특징 변화 화면을 전화할 수 있다.\n"; // "hunger status.\n");
 
 static void _display_vampire_attributes()
 {
@@ -791,13 +774,13 @@ void display_mutations()
 
     std::string extra = "";
     if (_num_part_suppressed)
-        extra += "<brown>()</brown>  : Partially suppressed.\n";
+        extra += "<brown>()</brown>  : 부분적으로 무효화됨.\n"; // "<brown>()</brown>  : Partially suppressed.\n";
     if (_num_full_suppressed)
-        extra += "<darkgrey>(())</darkgrey>: Completely suppressed.\n";
+        extra += "<darkgrey>(())</darkgrey>: 완전히 무효화됨.\n"; // "<darkgrey>(())</darkgrey>: Completely suppressed.\n";
     if (_num_form_based) // TODO: check for form spells?
-        extra += "<yellow>*</yellow>   : Suppressed by some changes of form.\n";
+        extra += "<yellow>*</yellow>   : 형태 변화에 따라 무효화됨.\n"; // "<yellow>*</yellow>   : Suppressed by some changes of form.\n";
     if (_num_hunger_based)
-        extra += "<lightred>+</lightred>   : Suppressed by thirst.\n";
+        extra += "<lightred>+</lightred>   : 갈증 상태에 따라 무효화됨.\n"; // "<lightred>+</lightred>   : Suppressed by thirst.\n";
     if (you.species == SP_VAMPIRE)
     {
         if (!extra.empty())
@@ -982,8 +965,7 @@ static bool _mut_matches_class(mutation_type mutclass, const mutation_def& mdef)
     case RANDOM_GOOD_MUTATION:
         return (!mdef.bad);
     default:
-		// die("invalid mutation class: %d", mutclass);
-        die("인식 불가능한 변이 등급: %d", mutclass);
+		die("invalid mutation class: %d", mutclass);
     }
 }
 
@@ -1088,9 +1070,8 @@ static int _handle_conflicting_mutations(mutation_type mutation,
                     delete_mutation(b, reason, true, true);
                     return 1;     // Nothing more to do.
                 default:
-			//	die("bad mutation conflict resulution");
-					
-					die("나쁜 변이가 해결되었다");
+				die("bad mutation conflict resulution");
+
                 }
             }
         }
@@ -1310,7 +1291,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
             {
                 if (failMsg)
                 {
-                    mpr(_("You feel odd for a moment."), MSGCH_MUTATION);
+                    mpr("순간 매우 기묘한 느낌이 들었다.", MSGCH_MUTATION); // mpr(("You feel odd for a moment."), MSGCH_MUTATION);
                     maybe_id_resist(BEAM_POLYMORPH);
                 }
                 return false;
@@ -1323,7 +1304,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
                 || x_chance_in_y(you.piety, MAX_PIETY + 22))
             && !stat_gain_potion)
         {
-            simple_god_message(" protects your body from mutation!");
+            simple_god_message("은(는) 당신의 몸을 변이로부터 지켜냈다!"); // simple_god_message(" protects your body from mutation!");
             return false;
         }
     }
@@ -1352,7 +1333,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         if (no_rot)
             return false;
 
-        mpr(gettext("Your body decomposes!"), MSGCH_MUTATION);
+        mpr("당신의 몸이 퇴화하였다!", MSGCH_MUTATION); // mpr(("Your body decomposes!"), MSGCH_MUTATION);
 
         if (coinflip())
             lose_stat(STAT_RANDOM, 1, false, reason);
@@ -1465,7 +1446,7 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
     {
     case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, gettext("You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, true)));
+        mprf(MSGCH_MUTATION, pgettext("mutation","You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, true)));
         gain_msg = false;
         break;
 
@@ -1473,12 +1454,12 @@ bool mutate(mutation_type which_mutation, const std::string &reason,
         {
             const char *arms;
             if (you.species == SP_FELID)
-                arms = "legs";
+                arms = "다리"; // "legs";
             else if (you.species == SP_OCTOPODE)
-                arms = "tentacles";
+                arms = "촉수"; // "tentacles";
             else
                 break;
-            mpr(replace_all(mdef.gain[you.mutation[mutat]-1], "arms",
+            mpr(replace_all(mdef.gain[you.mutation[mutat]-1], "팔", // "arms",
                             arms).c_str(), MSGCH_MUTATION);
             gain_msg = false;
         }
@@ -1600,7 +1581,7 @@ static bool _delete_single_mutation_level(mutation_type mutat,
     {
     case MUT_STRONG: case MUT_AGILE:  case MUT_CLEVER:
     case MUT_WEAK:   case MUT_CLUMSY: case MUT_DOPEY:
-        mprf(MSGCH_MUTATION, gettext("You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, false)));
+        mprf(MSGCH_MUTATION, pgettext("mutation","You feel %s."), pgettext_expr("stat", _stat_mut_desc(mutat, false)));
         lose_msg = false;
         break;
 
@@ -1676,11 +1657,7 @@ bool delete_mutation(mutation_type which_mutation, const std::string &reason,
                     || coinflip()))
             {
                 if (failMsg)
-#ifdef JP
 					mpr("당신은 잠깐 이상함을 느꼈다.", MSGCH_MUTATION);
-#else
-                    mpr("You feel rather odd for a moment.", MSGCH_MUTATION);
-#endif
                 return false;
             }
         }
@@ -1805,7 +1782,7 @@ std::string mutation_name(mutation_type mut, int level, bool colour)
         result = ostr.str();
     }
     else if (mut == MUT_DEFORMED && is_useless_skill(SK_ARMOUR))
-        result = "Your body is misshapen.";
+        result = "당신의 육체는 기형적이다."; // "Your body is misshapen.";
     else if (result.empty() && level > 0)
         result = gettext(mdef.have[level - 1]);
 
@@ -2295,8 +2272,7 @@ void check_demonic_guardian()
                                MONS_CACODEMON, -1);
             break;
         default:
-	      //die("Invalid demonic guardian level : %d", mutlevel);
-            die("병약한 악마 수호자의 레벨 : %d", mutlevel);
+	      die("Invalid demonic guardian level : %d", mutlevel);
         }
 
         monster *guardian = create_monster(mgen_data(mt, BEH_FRIENDLY, &you,

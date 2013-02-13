@@ -2,7 +2,7 @@
  * @file
  * @brief Misc religion related functions.
 **/
-
+// (130213) mutation.cc / religion.cc / output.cc는 소스 직접수정으로 처리된 코드입니다.
 #include "AppHdr.h"
 
 #include "religion.h"

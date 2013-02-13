@@ -1305,7 +1305,7 @@ void monster::apply_enchantment(const mon_enchant &me)
         {
 #ifdef DEBUG_DIAGNOSTICS
             // For debugging, we don't have this silent.
-            simple_monster_message(this, _(" takes poison damage."),
+            simple_monster_message(this, " takes poison damage.",
                                    MSGCH_DIAGNOSTICS);
             mprf(MSGCH_DIAGNOSTICS, "poison damage: %d", dam);
 #endif

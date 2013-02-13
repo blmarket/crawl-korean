@@ -294,7 +294,7 @@ static bool _check_moveto_exclusion(const coord_def& p,
         && !crawl_state.disables[DIS_CONFIRMATIONS])
     {
         std::string prompt =
-            make_stringf("Really %s into a travel-excluded area?",
+            make_stringf(gettext("Really %s into a travel-excluded area?"),
                          move_verb.c_str());
 
         if (!yesno(prompt.c_str(), false, 'n'))
@@ -5215,7 +5215,7 @@ void dec_poison_player()
         int oldhp = you.hp;
         ouch(hurted, NON_MONSTER, KILLED_BY_POISON);
         if (you.hp < oldhp)
-            mprf(channel, _("You feel %ssick."), pgettext_expr("adj", adj));
+            mprf(channel, _("You feel %ssick."), adj);
 
         if ((you.hp == 1 && one_chance_in(3)) || one_chance_in(8))
             reduce_poison_player(1);
@@ -6086,7 +6086,7 @@ void player::banish(actor *agent, const std::string &who)
 
     if (you.elapsed_time <= you.attribute[ATTR_BANISHMENT_IMMUNITY])
     {
-        mpr("You resist the pull of the Abyss.");
+        mpr(_("You resist the pull of the Abyss."));
         return;
     }
 
@@ -6961,7 +6961,7 @@ void player::paralyse(actor *who, int str, std::string source)
     ASSERT(!crawl_state.game_is_arena());
 
     // The shock is too mild to do damage.
-    if (stasis_blocks_effect(true, true, "%s gives you a mild electric shock."))
+    if (stasis_blocks_effect(true, true, _("%s gives you a mild electric shock.")))
         return;
 
     if (!(who && who->as_monster() && who->as_monster()->type == MONS_RED_WASP)
@@ -7006,7 +7006,7 @@ void player::petrify(actor *who)
 
     if (you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from petrification!");
+        mpr(gettext("Your divine stamina protects you from petrification!"));
         return;
     }
 
@@ -7676,7 +7676,7 @@ bool player::attempt_escape(int attempts)
     if (roll_dice(4 + escape_attempts, 8 + div_rand_round(strength(), 4))
         >= roll_dice(5, 8 + div_rand_round(themonst->hit_dice, 4)))
     {
-        mprf("You escape %s's grasp.", themonst->name(DESC_THE, true).c_str());
+        mprf(_("You escape %s's grasp."), themonst->name(DESC_PLAIN, true).c_str());
 
         // Stun the monster to prevent it from constricting again right away.
         themonst->speed_increment -= 5;
@@ -7687,9 +7687,9 @@ bool player::attempt_escape(int attempts)
     }
     else
     {
-        std::string emsg = "Your attempt to break free from ";
-        emsg += themonst->name(DESC_THE, true);
-        emsg += " fails, but you feel that another attempt might succeed.";
+        std::string emsg = _("Your attempt to break free from ");
+        emsg += themonst->name(DESC_PLAIN, true);
+        emsg += _(" fails, but you feel that another attempt might succeed.");
         mpr(emsg);
         you.turn_is_over = true;
         return false;
@@ -7737,9 +7737,9 @@ static std::string _constriction_description()
     const int num_free_tentacles = you.usable_tentacles();
     if (num_free_tentacles)
     {
-        cinfo += make_stringf("You have %d tentacle%s available for constriction.",
+        cinfo += make_stringf(_("You have %d tentacle%s available for constriction."),
                               num_free_tentacles,
-                              num_free_tentacles > 1 ? "s" : "");
+                              num_free_tentacles > 1 ? P_("constrict","s") : "");
     }
     // name of what this monster is constricted by, if any
     if (you.is_constricted())
@@ -7747,9 +7747,9 @@ static std::string _constriction_description()
         if (!cinfo.empty())
             cinfo += "\n";
 
-        cinfo += make_stringf("You are being %s by %s.",
-                      you.held == HELD_MONSTER ? "held" : "constricted",
-                      monster_by_mid(you.constricted_by)->name(DESC_A).c_str());
+        cinfo += make_stringf(_("You are being %s by %s."),
+                      you.held == HELD_MONSTER ? P_("constrict","held") : P_("constrict","constricted"),
+                      monster_by_mid(you.constricted_by)->name(DESC_PLAIN).c_str());
     }
 
     if (you.constricting && !you.constricting->empty())
@@ -7765,9 +7765,9 @@ static std::string _constriction_description()
         if (!cinfo.empty())
             cinfo += "\n";
 
-        cinfo += "You are constricting ";
+        cinfo += _("You are constricting ");
         cinfo += comma_separated_line(c_name.begin(), c_name.end());
-        cinfo += ".";
+        cinfo += P_("constrict",".");
     }
 
     return cinfo;

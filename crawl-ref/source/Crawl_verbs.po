@@ -254,9 +254,3 @@ msgstr ""
 
 msgid "scream-verb"
 msgstr ""
-
-msgid "deal-verb"
-msgstr ""
-
-msgid "draw-verb"
-msgstr ""

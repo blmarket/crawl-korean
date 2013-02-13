@@ -614,7 +614,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             }
 
             // Get name and quantity before destruction.
-            const std::string item_name = you.inv[i].name(false, DESC_PLAIN);
+            const std::string item_name = you.inv[i].name(true, DESC_PLAIN);
             const int quantity = you.inv[i].quantity;
             num_dest = 0;
 
@@ -662,7 +662,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                          item_name.c_str(),
                          (num_dest == 1) ? "is" : "are",
                          (flavour == BEAM_DEVOUR_FOOD) ?
-                             _("devoured") : _("covered with spores"));
+                             P_("ouch","devoured") : _("covered with spores"));
                     break;
 
                 default: // (deceit, 110815) same as 'covered with spores'.
