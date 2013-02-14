@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * @file
  * @brief Misc monster related functions.
 **/
@@ -3435,12 +3435,12 @@ monster_type royal_jelly_ejectable_monster()
 static std::string _replace_god_name(god_type god, bool need_verb = false,
                                      bool capital = false)
 {
-    std::string result = // (130214) ÀÌ°Å gettext·ÎÇÏ±â ³Ê¹« ±ÍÂúÀ½ ¤Ğ¤Ğ ±×³É Á÷Á¢¼öÁ¤
-          ((god == GOD_NO_GOD)    ? (capital ? "´ç½Å"      : "´ç½Å") : // (capital ? "You"      : "you") :
-           (god == GOD_NAMELESS)  ? (capital ? "´ç½ÅÀÇ ½Å" : "´ç½ÅÀÇ ½Å") // (capital ? "Your god" : "your god")
+    std::string result = // (130214) ì´ê±° gettextë¡œí•˜ê¸° ë„ˆë¬´ ê·€ì°®ìŒ ã… ã…  ê·¸ëƒ¥ ì§ì ‘ìˆ˜ì •
+          ((god == GOD_NO_GOD)    ? (capital ? "ë‹¹ì‹ "      : "ë‹¹ì‹ ") : // (capital ? "You"      : "you") :
+           (god == GOD_NAMELESS)  ? (capital ? "ë‹¹ì‹ ì˜ ì‹ " : "ë‹¹ì‹ ì˜ ì‹ ") // (capital ? "Your god" : "your god")
                                   : _(god_name(god, false).c_str()));
     if (need_verb)
-        result += "Àº(´Â)"; // (god == GOD_NO_GOD) ? " are" : " is";
+        result += "ì€(ëŠ”)"; // (god == GOD_NO_GOD) ? " are" : " is";
 
     return result;
 }
@@ -3504,7 +3504,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     // FIXME: Handle player_genus in case it was not generalized to foe_genus.
     msg = replace_all(msg, "@player_genus@", _(species_name(you.species, true).c_str()));
-    msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());	// ÇÑ±ÛÆÇ¿¡¼± @player_genus_plural@À» »ç¿ëÇÏÁö ¾ÊÀ½.
+    msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());	// í•œê¸€íŒì—ì„  @player_genus_plural@ì„ ì‚¬ìš©í•˜ì§€ ì•ŠìŒ.
 
     std::string foe_species;
 
@@ -3532,7 +3532,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         msg = replace_all(msg, "@foe_genus@", _(foe_species.c_str()));
         msg = replace_all(msg, "@Foe_genus@", _(foe_species.c_str())); // uppercase_first(foe_species));
         msg = replace_all(msg, "@foe_genus_plural@",
-                          _pluralise_player_genus()); // ÇÑ±ÛÆÇ¿¡¼­ »ç¿ë¾ÈÇÔ
+                          _pluralise_player_genus()); // í•œê¸€íŒì—ì„œ ì‚¬ìš©ì•ˆí•¨
     }
     else
     {
@@ -3636,12 +3636,12 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     {
         std::string something = mons->name(DESC_PLAIN);
         msg = replace_all(msg, "@something@",   something);
-        msg = replace_all(msg, "@a_something@", mons->name(DESC_A)); // ÇÑ±ÛÆÇ ¹Ì»ç¿ë
+        msg = replace_all(msg, "@a_something@", mons->name(DESC_A)); // í•œê¸€íŒ ë¯¸ì‚¬ìš©
         msg = replace_all(msg, "@the_something@", mons->name(nocap));
 
         something[0] = toupper(something[0]);
         msg = replace_all(msg, "@Something@",   something);
-        msg = replace_all(msg, "@A_something@", mons->name(DESC_A)); // ÇÑ±ÛÆÇ ¹Ì»ç¿ë
+        msg = replace_all(msg, "@A_something@", mons->name(DESC_A)); // í•œê¸€íŒ ë¯¸ì‚¬ìš©
         msg = replace_all(msg, "@The_something@", mons->name(cap));
     }
     else
@@ -3660,7 +3660,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     std::string plain = mons->name(DESC_PLAIN);
     msg = replace_all(msg, "@monster@",     plain);
-    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));  // ÇÑ±ÛÆÇ ¹Ì»ç¿ë
+    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));  // í•œê¸€íŒ ë¯¸ì‚¬ìš©
     msg = replace_all(msg, "@the_monster@", mons->name(nocap));
 
     plain[0] = toupper(plain[0]);
@@ -3668,7 +3668,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     msg = replace_all(msg, "@A_monster@",   mons->name(DESC_A));
     msg = replace_all(msg, "@The_monster@", mons->name(cap));
 
-    msg = replace_all(msg, "@Subjective@", // ÀÌ»ó ¼­ºêÁ§,Æ÷Á¦½º,¸®ÇÃ·º 3ÇüÁ¦´Â ÇÑ±ÛÆÇ¿¡¼­ »ç¿ë¾ÈÇÔ
+    msg = replace_all(msg, "@Subjective@", // ì´ìƒ ì„œë¸Œì ,í¬ì œìŠ¤,ë¦¬í”Œë ‰ 3í˜•ì œëŠ” í•œê¸€íŒì—ì„œ ì‚¬ìš©ì•ˆí•¨
                       mons->pronoun(PRONOUN_SUBJECTIVE));
     msg = replace_all(msg, "@subjective@",
                       mons->pronoun(PRONOUN_SUBJECTIVE));
@@ -3685,7 +3685,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     bool        can_plural = false;
     std::string part_str   = _(mons->hand_name(false, &can_plural).c_str());
 
-    msg = replace_all(msg, "@hand@", part_str); // @hand@µµ ÇÑ±ÛÆÇ¿¡¼± ¹Ì»ç¿ëÀÎµí
+    msg = replace_all(msg, "@hand@", part_str); // @hand@ë„ í•œê¸€íŒì—ì„  ë¯¸ì‚¬ìš©ì¸ë“¯
     msg = replace_all(msg, "@Hand@", uppercase_first(part_str));
 
     if (!can_plural)
@@ -3731,7 +3731,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         // Replace with "you are" for atheists.
         msg = replace_all(msg, "@god_is@",
                           _replace_god_name(god, true, false));
-        msg = replace_all(msg, "@God_is@", _replace_god_name(god, true, true)); // (130214) _replace_god_name ÀÚÃ¼¿¡¼­ ¹ø¿ªµÈ ½Å ÀÌ¸§À» ¸®ÅÏ
+        msg = replace_all(msg, "@God_is@", _replace_god_name(god, true, true)); // (130214) _replace_god_name ìì²´ì—ì„œ ë²ˆì—­ëœ ì‹  ì´ë¦„ì„ ë¦¬í„´
 
         // No verb needed.
         msg = replace_all(msg, "@foe_god@",
