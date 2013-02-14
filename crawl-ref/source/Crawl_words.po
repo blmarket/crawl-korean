@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 21:20+0900\n"
+"POT-Creation-Date: 2013-02-14 13:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,11 +85,11 @@ msgstr "슬럿지 엘프"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
-#: species.cc:212 species.cc:212
+#: species.cc:212 species.cc:212 species.cc:178
 msgid "Dwarven"
 msgstr "드워프족"
 
-#: species.cc:214 species.cc:221 species.cc:221
+#: species.cc:214 species.cc:221 species.cc:221 species.cc:178
 msgid "Dwarf"
 msgstr "드워프"
 
@@ -97,7 +97,7 @@ msgstr "드워프"
 msgid "Mountain Dwarf"
 msgstr "마운틴 드워프"
 
-#: species.cc:220 species.cc:220
+#: species.cc:220 species.cc:220 species.cc:178
 msgid "Deep Dwarf"
 msgstr "딥 드워프"
 
@@ -205,19 +205,19 @@ msgstr "뱀파이어"
 msgid "Vampire"
 msgstr "뱀파이어"
 
-#: species.cc:250 species.cc:250
+#: species.cc:250 species.cc:250 species.cc:181
 msgid "Feline"
 msgstr "펠리드"
 
-#: species.cc:250 species.cc:250
+#: species.cc:250 species.cc:250 species.cc:181
 msgid "Felid"
 msgstr "펠리드"
 
-#: species.cc:251 species.cc:251
+#: species.cc:251 species.cc:251 species.cc:184
 msgid "Octopoid"
 msgstr "옥토퍼드족"
 
-#: species.cc:251 species.cc:251
+#: species.cc:251 species.cc:251 species.cc:184
 msgid "Octopode"
 msgstr "옥토퍼드"
 
@@ -3953,7 +3953,7 @@ msgid "Ration"
 msgstr "보존 식량"
 
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
-#: player-act.cc:382 actor.cc:526 actor.cc:527
+#: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528
 msgid "You"
 msgstr "당신"
 
@@ -3962,6 +3962,7 @@ msgstr "당신"
 #: player-act.cc:383 player-act.cc:387 terrain.cc:1155 terrain.cc:1163
 #: misc.cc:2722 player-act.cc:372 player-act.cc:384 terrain.cc:1096
 #: terrain.cc:1104 misc.cc:2730 terrain.cc:1097 terrain.cc:1105
+#: mon-util.cc:3527
 msgid "you"
 msgstr "당신"
 
@@ -3971,7 +3972,7 @@ msgid "Your"
 msgstr "당신의"
 
 #: player-act.cc:377 player-act.cc:360 player-act.cc:360 player-act.cc:368
-#: player-act.cc:385 player-act.cc:375
+#: player-act.cc:385 player-act.cc:375 mon-util.cc:3526
 msgid "your"
 msgstr "당신의"
 
@@ -4021,7 +4022,7 @@ msgstr "자기 자신"
 msgid "Something"
 msgstr "무언가"
 
-#: fight.cc:432 fight.cc:425 fight.cc:425 fight.cc:428
+#: fight.cc:432 fight.cc:425 fight.cc:425 fight.cc:428 mon-util.cc:3556
 msgid "something"
 msgstr "무언가"
 
@@ -4604,7 +4605,7 @@ msgstr "부패"
 #: itemname.cc:636 itemname.cc:647 itemname.cc:654 mon-stuff.cc:3988
 #: mon-stuff.d.cc:3988 terrain.cc:1425 tmp.cc:3968 itemname.cc:680
 #: mon-stuff.cc:3850 terrain.cc:1479 itemname.cc:629 mon-stuff.cc:3904
-#: terrain.cc:1428 mon-stuff.cc:3928 terrain.cc:1429
+#: terrain.cc:1428 mon-stuff.cc:3928 terrain.cc:1429 mon-util.cc:3621
 msgid "water"
 msgstr "물"
 
@@ -7493,7 +7494,7 @@ msgstr "전기"
 #: terrain.cc:1424 tmp.cc:3968 main.cc:4034 mon-util.cc:3571
 #: main_backup.cc:4035 main.cc:4068 mon-stuff.cc:3850 player.cc:270
 #: terrain.cc:1478 mon-stuff.cc:3904 player.cc:273 terrain.cc:1427
-#: mon-stuff.cc:3928 terrain.cc:1428
+#: mon-stuff.cc:3928 terrain.cc:1428 mon-util.cc:3619
 msgid "lava"
 msgstr "용암"
 
@@ -10680,16 +10681,17 @@ msgstr "사용함: "
 msgid "tried"
 msgstr "사용함"
 
-#: mon-util.cc:3575
+#: mon-util.cc:3575 mon-util.cc:3623
 msgid "altar"
 msgstr "제단"
 
-#: mon-util.cc:3577
+#: mon-util.cc:3577 mon-util.cc:3625
 msgid "ground"
 msgstr "지면"
 
 #. S_SOFT
-#: mon-util.cc:3729 mon-util.cc:3750
+#: mon-util.cc:3729 mon-util.cc:3750 mon-util.cc:3789 mon-util.cc:3807
+#: mon-util.cc:3811
 msgid "says"
 msgstr "은(는) 말했다"
 
@@ -10723,83 +10725,91 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
-#: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
+#: mon-util.cc:3792 mon-util.cc:3812
 msgid "shouts"
 msgstr "이(가) 소리쳤다"
 
-#: mon-util.cc:3731
+#: mon-util.cc:3731 mon-util.cc:3791
 msgid "barks"
 msgstr "이(가) 짖었다"
 
-#: mon-util.cc:3733
+#: mon-util.cc:3733 mon-util.cc:3793
 msgid "roars"
 msgstr "이(가) 으르렁댔다"
 
 #. S_LOUD
-#: mon-util.cc:3734 mon-util.cc:3752
+#: mon-util.cc:3734 mon-util.cc:3752 mon-util.cc:3794 mon-util.cc:3813
 msgid "screams"
 msgstr "은(는) 비명을 질렀다"
 
-#: mon-util.cc:3735
+#: mon-util.cc:3735 mon-util.cc:3795
 msgid "bellows"
 msgstr "은(는) 고함쳤다"
 
-#: mon-util.cc:3736
+#: mon-util.cc:3736 mon-util.cc:3796
 msgid "trumpets"
 msgstr "은(는) 울부짖었다"
 
-#: mon-util.cc:3737
+#: mon-util.cc:3737 mon-util.cc:3797
 msgid "screeches"
 msgstr "은(는) 날카로운 소리를 냈다"
 
-#: mon-util.cc:3738
+#: mon-util.cc:3738 mon-util.cc:3798
 msgid "buzzes"
 msgstr "은(는) 윙윙거리는 소리를 냈다"
 
-#: mon-util.cc:3739
+#: mon-util.cc:3739 mon-util.cc:3799
 msgid "moans"
 msgstr "은(는) 투덜거렸다"
 
-#: mon-util.cc:3740
+#: mon-util.cc:3740 mon-util.cc:3800
 msgid "gurgles"
 msgstr "은(는) 쏴~ 하는 소리를 냈다"
 
-#: mon-util.cc:3741
+#: mon-util.cc:3741 mon-util.cc:3801
 msgid "whines"
 msgstr "은(는) 칭얼거렸다"
 
-#: mon-util.cc:3742
+#: mon-util.cc:3742 mon-util.cc:3802
 msgid "croaks"
 msgstr "은(는) 개굴개굴거렸다"
 
-#: mon-util.cc:3743
+#: mon-util.cc:3743 mon-util.cc:3803
 msgid "growls"
 msgstr "은(는) 으르렁댔다"
 
-#: mon-util.cc:3744
+#: mon-util.cc:3744 mon-util.cc:3804
 msgid "hisses"
 msgstr "은(는) 쉬익~ 하는 소리를 냈다"
 
-#: mon-util.cc:3745
+#: mon-util.cc:3745 mon-util.cc:3805
 msgid "sneers"
 msgstr "은(는) 비웃었다"
 
 #. S_DEMON_TAUNT
-#: mon-util.cc:3746
+#: mon-util.cc:3746 mon-util.cc:3806
 msgid "caws"
 msgstr "은(는) 까악거리고 울었다"
 
-#: mon-util.cc:3747
+#. S_CHERUB -- they just speak normally.
+#: mon-util.cc:3747 mon-util.cc:3808
 msgid "buggily says"
 msgstr "은(는) 이것이 버그라고 말했다"
 
 #. NUM_SHOUTS
-#: mon-util.cc:3748
+#: mon-util.cc:3748 mon-util.cc:3809
 msgid "breathes"
 msgstr "은(는) 호흡했다"
 
 #. S_VERY_SOFT
-#: mon-util.cc:3749
+#: mon-util.cc:3749 mon-util.cc:3810
 msgid "whispers"
 msgstr "은(는) 속삭였다"
 
@@ -14265,15 +14275,20 @@ msgstr "썩은 고기에 대한 갈망이 느껴졌다."
 
 #: mutation-data.h:931
 msgid "Your spells are a little harder to cast, but a little more powerful."
-msgstr "당신은 조금 더 강력한 주문을 시전하지만, 마력을 제어하는데 약간 어려움을 느낀다."
+msgstr ""
+"당신은 조금 더 강력한 주문을 시전하지만, 마력을 제어하는데 약간 어려움을 느낀"
+"다."
 
 #: mutation-data.h:932
 msgid "Your spells are harder to cast, but more powerful."
-msgstr "당신은 더욱 강력한 주문을 시전하지만, 마력을 제어하는데 어려움을 느낀다."
+msgstr ""
+"당신은 더욱 강력한 주문을 시전하지만, 마력을 제어하는데 어려움을 느낀다."
 
 #: mutation-data.h:933
 msgid "Your spells are much harder to cast, but much more powerful."
-msgstr "당신의 폭주하는 강력한 주문을 시전할 수 있지만, 그 만큼 마력의 제어도 대단히 어렵다."
+msgstr ""
+"당신의 폭주하는 강력한 주문을 시전할 수 있지만, 그 만큼 마력의 제어도 대단히 "
+"어렵다."
 
 #: mutation-data.h:935 mutation-data.h:936
 msgid "You feel less in control of your magic."
@@ -14448,6 +14463,14 @@ msgstr "당신에게서 부패의 기운이 담긴 악취가 나기 시작했다
 msgid "You begin to radiate miasma."
 msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 
-#####################
-# Mutation-Data End #
-#####################
+#: mon-cast.cc:4346
+msgid "nothing"
+msgstr "없음"
+
+#: species.cc:181
+msgid "Cat"
+msgstr "고양이"
+
+#: species.cc:184
+msgid "Octopus"
+msgstr "문어족"

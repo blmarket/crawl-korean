@@ -2540,9 +2540,9 @@ static std::string _mon_special_name(const monster& mon, description_level_type 
         switch (desc)
         {
         case DESC_THE: case DESC_A: case DESC_PLAIN:
-            return _(M_("it"));
+            return "무언가"; // (130214,deceit) "it", "its" 임시로 이렇게 바꿈
         case DESC_ITS:
-            return _(M_("its"));
+            return "무언가의";
         default:
             return "it (buggy)";
         }

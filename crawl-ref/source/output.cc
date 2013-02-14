@@ -1383,28 +1383,28 @@ static void _print_overview_screen_equip(column_composer& cols,
                  && (you.species == SP_NAGA || you.species == SP_CENTAUR))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s 없음)</darkgrey>"), slot_name_lwr.c_str());
+                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s 사용불가)</darkgrey>"), slot_name_lwr.c_str());
+                     "<darkgrey>(%s 사용불가)</darkgrey>", slot_name_lwr.c_str());
         }
         else if (!you_tran_can_wear(e_order[i], true))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s 현재 사용불가)</darkgrey>"),
+                     "<darkgrey>(%s 현재 사용불가)</darkgrey>",
                      slot_name_lwr.c_str());
         }
         else if (!you_can_wear(e_order[i]))
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s 제한됨)</darkgrey>"), slot_name_lwr.c_str());
+                     "<darkgrey>(%s 제한됨)</darkgrey>", slot_name_lwr.c_str());
         }
         else
         {
             snprintf(buf, sizeof buf,
-                     gettext("<darkgrey>(%s 없음)</darkgrey>"), slot_name_lwr.c_str());
+                     "<darkgrey>(%s 없음)</darkgrey>", slot_name_lwr.c_str());
         }
         cols.add_formatted(2, buf, false);
     }

@@ -3245,10 +3245,10 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     if (mons->is_constricted())
     {
         if (mons->attempt_escape())
-            simple_monster_message(mons, " escapes!");
+            simple_monster_message(mons, _(" escapes!"));
         else
         {
-            simple_monster_message(mons, " struggles to escape constriction.");
+            simple_monster_message(mons, _(" struggles to escape constriction."));
             _swim_or_move_energy(mons);
             return true;
         }

@@ -609,7 +609,7 @@ bool check_selected_skills()
 
     if (trainable_skill)
     {
-        mpr("You need to enable at least one skill for training.");
+        mpr(_("You need to enable at least one skill for training."));
         more();
         reset_training();
         skill_menu();
@@ -618,7 +618,7 @@ bool check_selected_skills()
     }
 
     if (could_train)
-        mpr("You cannot train any new skill.");
+        mpr(_("You cannot train any new skill."));
 
     return false;
     // It's possible to have no selectable skills, if they are all untrainable

@@ -2908,13 +2908,13 @@ bool melee_attack::apply_damage_brand()
     case SPWPN_FLAMING:
         res = fire_res_apply_cerebov_downgrade(defender->res_fire());
         calc_elemental_brand_damage(BEAM_FIRE, res,
-                                    defender->is_icy() ? "melt" : "burn");
+                                    defender->is_icy() ? P_("verb","melt") : P_("verb","burn"));
         defender->expose_to_element(BEAM_FIRE);
         noise_factor += 400 / std::max(1, damage_done);
         break;
 
     case SPWPN_FREEZING:
-        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), "freeze");
+        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), P_("verb","freeze"));
         defender->expose_to_element(BEAM_COLD);
         break;
 

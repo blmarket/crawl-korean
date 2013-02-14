@@ -415,7 +415,7 @@ void weapon_acid(int acid_strength)
 
     if (hand_thing == -1)
     {
-        msg::stream << make_stringf(gettext("Your %s burn!"), you.hand_name(true).c_str()) << std::endl;
+        msg::stream << make_stringf(gettext("Your %s burn!"), _(you.hand_name(true).c_str())) << std::endl;
         ouch(roll_dice(1, acid_strength), NON_MONSTER, KILLED_BY_ACID);
     }
     else if (x_chance_in_y(acid_strength + 1, 20))

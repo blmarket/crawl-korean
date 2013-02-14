@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-13 21:20+0900\n"
+"POT-Creation-Date: 2013-02-14 13:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7697,7 +7697,7 @@ msgstr "지금 당신이 해야 할 일은 던젼에서  탈출하는 것이다!
 
 #: items.cc:2149 items.cc:2173 items.cc:2173 items.cc:2150 items.cc:2174
 #: items.cc:2152 items.cc:2176 items.cc:2200 items.cc:2224 items.cc:2170
-#: items.cc:2199
+#: items.cc:2199 items.cc:2168 items.cc:2197
 msgid "You will have to take that off first."
 msgstr "먼저 착용해제 부터 해야한다."
 
@@ -7706,18 +7706,18 @@ msgid "That object is stuck to you!"
 msgstr "그것은 당신의 몸에 달라붙어 있다!"
 
 #: items.cc:2212 delay.cc:1270 delay.cc:1270 items.cc:2210 items.cc:2263
-#: items.cc:2237
+#: items.cc:2237 items.cc:2235
 msgid "Too many items on this level, not dropping the item."
 msgstr "이 층에는 너무 많은 물건이 있어, 더 이상 물건을 버릴 수 없다."
 
 #: items.cc:2216 delay.cc:1274 delay.cc:1274 items.cc:2214 items.cc:2267
-#: items.cc:2241
+#: items.cc:2241 items.cc:2239
 #, c-format
 msgid "You drop %s."
 msgstr "%s을(를) 버렸다."
 
 #: items.cc:2262 items.cc:2262 items.cc:2258 items.cc:2260 items.cc:2312
-#: items.cc:2286
+#: items.cc:2286 items.cc:2284
 msgid "No item to drop."
 msgstr "버릴 물건이 없다."
 
@@ -7726,48 +7726,48 @@ msgid "Drop what? (Press _ for help.)"
 msgstr "무엇을 버릴 것인가? (_ 키로 도움말)"
 
 #: items.cc:2856 items.cc:2856 items.cc:2857 items.cc:2859 items.cc:2887
-#: items.cc:2911 items.cc:2910
+#: items.cc:2911 items.cc:2910 items.cc:2908
 msgid "You can't pick everything up without burdening yourself."
 msgstr "소지하고 있는 짐이 무거워, 더 이상 들 수 없다."
 
 #: items.cc:2888 items.cc:2888 items.cc:2889 items.cc:2891 items.cc:2919
-#: items.cc:2943 items.cc:2942
+#: items.cc:2943 items.cc:2942 items.cc:2940
 msgid "You can't carry any more."
 msgstr "더 이상 들 수 없다."
 
 #: items.cc:2890 items.cc:2890 items.cc:2891 items.cc:2893 items.cc:2921
-#: items.cc:2945 items.cc:2944
+#: items.cc:2945 items.cc:2944 items.cc:2942
 msgid "Your pack is full."
 msgstr "당신의 짐은 가득찼다."
 
 #: items.cc:3317 items.cc:3317 items.cc:3318 items.cc:3320 items.cc:3345
-#: items.cc:3298 items.cc:3314
+#: items.cc:3298 items.cc:3314 items.cc:3312
 msgid "Which rune (ESC to exit)? "
 msgstr "어느 룬을 선택하는가? (ESC키로 종료)"
 
 #: items.cc:3395 items.cc:3395 items.cc:3396 items.cc:3398 items.cc:3423
-#: items.cc:3376 items.cc:3392
+#: items.cc:3376 items.cc:3392 items.cc:3390
 msgid "[a] escape     [b] destruction [c] dungeons [d] summoning [e] wonders"
 msgstr "[a] 탈출의 덱     [b] 파괴의 덱  [c] 던전의 덱  [d] 소환의 덱 "
 
 #: items.cc:3398 items.cc:3398 items.cc:3399 items.cc:3401 items.cc:3426
-#: items.cc:3379 items.cc:3395
+#: items.cc:3379 items.cc:3395 items.cc:3393
 msgid "[f] punishment [g] war         [h] changes  [i] defence"
 msgstr ""
 "[e] 불가사의의 덱 [f] 징벌의 덱  [g] 전쟁의 덱  [h] 변화의 덱  [i] 방어의 덱"
 
 #: items.cc:3400 items.cc:3400 items.cc:3401 items.cc:3403 items.cc:3428
-#: items.cc:3381 items.cc:3397
+#: items.cc:3381 items.cc:3397 items.cc:3395
 msgid "Which deck (ESC to exit)? "
 msgstr "어느 덱을 선택하는가? (ESC키로 종료)"
 
 #: items.cc:3440 items.cc:3440 items.cc:3441 items.cc:3443 items.cc:3468
-#: items.cc:3421 items.cc:3437
+#: items.cc:3421 items.cc:3437 items.cc:3435
 msgid "[a] plain [b] ornate [c] legendary? (ESC to exit)"
 msgstr "[a] 평이한 덱 [b] 화려한 덱 [c] 전설적인 덱 (ESC키로 종료)"
 
 #: items.cc:3472 items.cc:3472 items.cc:3473 items.cc:3475 items.cc:3500
-#: items.cc:3453 items.cc:3469
+#: items.cc:3453 items.cc:3469 items.cc:3467
 msgid "How many cards? "
 msgstr "몇 장 선택하는가?"
 
@@ -18018,7 +18018,7 @@ msgstr "정말로 그러길 원한다고 생각하지 않는다."
 msgid "You can't take that off while it's melded."
 msgstr "일체화된 상태에서는 벗을 수 없다."
 
-#: item_use.cc:3832 item_use.cc:1624 items.cc:2190
+#: item_use.cc:3832 item_use.cc:1624 items.cc:2190 items.cc:2188
 #, c-format
 msgid "%s is stuck to you!"
 msgstr "%s은(는) 당신에게 달라붙어 떨어지지 않는다!"
@@ -25097,19 +25097,19 @@ msgctxt "monutil"
 msgid " at @foe@"
 msgstr "@foe@에게"
 
-#: mon-util.cc:3559
+#: mon-util.cc:3559 mon-util.cc:3607
 msgid "your @the_something@"
 msgstr "당신의 @the_something@"
 
-#: mon-util.cc:3560
+#: mon-util.cc:3560 mon-util.cc:3608
 msgid "Your @The_something@"
 msgstr "당신의 @The_something@"
 
-#: mon-util.cc:3561
+#: mon-util.cc:3561 mon-util.cc:3609
 msgid "your @the_monster@"
 msgstr "당신의 @the_monster@"
 
-#: mon-util.cc:3562
+#: mon-util.cc:3562 mon-util.cc:3610
 msgid "Your @the_monster@"
 msgstr "당신의 @the_monster@"
 
@@ -27501,7 +27501,7 @@ msgstr "알 수 없는 허무함이 느껴졌다."
 msgid "Pick up what? (_ for help)"
 msgstr "무엇을 주울 것인가? (_ 키로 도움말)"
 
-#: items.cc:2427 items.cc:2401
+#: items.cc:2427 items.cc:2401 items.cc:2399
 msgid "Drop what? (_ for help)"
 msgstr "무엇을 내려놓을 것인가? (_ 키로 도움말)"
 
@@ -28209,6 +28209,15 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -29048,6 +29057,21 @@ msgstr "의 생명력을 흡수했"
 #: melee_attack.cc:2279 melee_attack.cc:2292
 msgid " magic leaks into the air."
 msgstr " 마력이 공중으로 사라졌다."
+
+#: melee_attack.cc:2911
+msgctxt "verb"
+msgid "melt"
+msgstr "을(를) 녹였"
+
+#: melee_attack.cc:2911
+msgctxt "verb"
+msgid "burn"
+msgstr "을(를) 불태웠"
+
+#: melee_attack.cc:2917
+msgctxt "verb"
+msgid "freeze"
+msgstr "을(를) 얼렸"
 
 # "(방어자) convulse(conj_verb)(느낌표 혹은 마침표)"
 #: melee_attack.cc:2916 melee_attack.cc:2959 melee_attack.cc:2975
@@ -30495,33 +30519,33 @@ msgstr "판데모니움의 군주들은 그다지 즐겁지 않은 것 같다. �
 msgid " tells them not to hurry."
 msgstr "은(는) 그들에게 서두르지 말라고 지시했다."
 
-#: items.cc:2182
+#: items.cc:2182 items.cc:2180
 msgid "You don't feel like leaving the orb behind!"
 msgstr "오브를 다시 버려서는 안될 것 같다!"
 
-#: items.cc:2356
+#: items.cc:2356 items.cc:2354
 #, c-format
 msgid " (%u%s turn%s)"
 msgstr " (%1$u%2$s 턴)%3$.0s"
 
-#: items.cc:3680
+#: items.cc:3680 items.cc:3678
 msgid "Sorry, no books on that skill today."
 msgstr "유감이지만, 이번에는 그 스킬은 아무 책에도 존재하지 않는다."
 
-#: items.cc:3713
+#: items.cc:3713 items.cc:3711
 msgid "# turns away from coagulation? [ENTER for fully fresh] "
 msgstr "응고로 부터 몇 턴 만큼? [ENTER키로 신선한 피] "
 
-#: items.cc:3718
+#: items.cc:3718 items.cc:3716
 msgid "# turns away from rotting? [ENTER for fully fresh] "
 msgstr "부패로 부터 몇 턴 만큼? [ENTER키로 신선한 고기] "
 
-#: items.cc:4090
+#: items.cc:4090 items.cc:4088
 #, c-format
 msgid "[%c] random"
 msgstr "[%c] 무작위"
 
-#: items.cc:4092
+#: items.cc:4092 items.cc:4090
 msgid ""
 "\n"
 "What kind of item mimic? "
@@ -30568,22 +30592,25 @@ msgstr "은빛 "
 msgid "blessed "
 msgstr "축복받은 "
 
-#: output.cc:1386 output.cc:1407
-#, c-format
-msgid "<darkgrey>(%s 없음)</darkgrey>"
-msgstr ""
+#: monster.cc:2543
+msgctxt "mon_special_name"
+msgid "it"
+msgstr "무언가"
 
-#: output.cc:1391
-#, c-format
-msgid "<darkgrey>(%s 사용불가)</darkgrey>"
-msgstr ""
+#: monster.cc:2545
+msgctxt "mon_special_name"
+msgid "its"
+msgstr "무언가의"
 
-#: output.cc:1396
-#, c-format
-msgid "<darkgrey>(%s 현재 사용불가)</darkgrey>"
-msgstr ""
+#: mon-util.cc:3563
+msgid " to @foe@"
+msgstr " @foe@에게"
 
-#: output.cc:1402
-#, c-format
-msgid "<darkgrey>(%s 제한됨)</darkgrey>"
-msgstr ""
+#: mon-util.cc:3563 mon-util.cc:3564
+msgid " at @foe@"
+msgstr " @foe@에게"
+
+#: mon-util.cc:3567
+msgid "@foe@'s"
+msgstr " @foe@의"
+

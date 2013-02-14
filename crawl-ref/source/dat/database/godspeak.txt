@@ -533,7 +533,7 @@ Beogh idol other
 
 베오그는 당신의 종족을 저주했다.
 
-베오그는 오크를 제외한 모두를 저주했다. 특히 @player_genus_plural@.
+베오그는 오크를 제외한 모두를 저주했다. 특히 @player_genusl@을(를).
 
 베오그는 @player_god@에게 끝없는 증오심이 담긴 욕설을 퍼부었다.
 %%%%

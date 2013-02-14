@@ -3435,12 +3435,12 @@ monster_type royal_jelly_ejectable_monster()
 static std::string _replace_god_name(god_type god, bool need_verb = false,
                                      bool capital = false)
 {
-    std::string result =
-          ((god == GOD_NO_GOD)    ? (capital ? "You"      : "you") :
-           (god == GOD_NAMELESS)  ? (capital ? "Your god" : "your god")
-                                  : god_name(god, false));
+    std::string result = // (130214) 이거 gettext로하기 너무 귀찮음 ㅠㅠ 그냥 직접수정
+          ((god == GOD_NO_GOD)    ? (capital ? "당신"      : "당신") : // (capital ? "You"      : "you") :
+           (god == GOD_NAMELESS)  ? (capital ? "당신의 신" : "당신의 신") // (capital ? "Your god" : "your god")
+                                  : _(god_name(god, false).c_str()));
     if (need_verb)
-        result += (god == GOD_NO_GOD) ? " are" : " is";
+        result += "은(는)"; // (god == GOD_NO_GOD) ? " are" : " is";
 
     return result;
 }
@@ -3503,8 +3503,8 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         s_type = mons_shouts(mons->type);
 
     // FIXME: Handle player_genus in case it was not generalized to foe_genus.
-    msg = replace_all(msg, "@player_genus@", species_name(you.species, true));
-    msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());
+    msg = replace_all(msg, "@player_genus@", _(species_name(you.species, true).c_str()));
+    msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());	// 한글판에선 @player_genus_plural@을 사용하지 않음.
 
     std::string foe_species;
 
@@ -3523,16 +3523,16 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         msg = replace_all(msg, "@player", "@foe");
         msg = replace_all(msg, "@Player", "@Foe");
 
-        msg = replace_all(msg, "@foe_possessive@", "your");
-        msg = replace_all(msg, "@foe@", "you");
-        msg = replace_all(msg, "@Foe@", "You");
+        msg = replace_all(msg, "@foe_possessive@", _(M_("your")));
+        msg = replace_all(msg, "@foe@", _(M_("you")));
+        msg = replace_all(msg, "@Foe@", _(M_("You")));
 
         msg = replace_all(msg, "@foe_name@", you.your_name);
-        msg = replace_all(msg, "@foe_species@", species_name(you.species));
-        msg = replace_all(msg, "@foe_genus@", foe_species);
-        msg = replace_all(msg, "@Foe_genus@", uppercase_first(foe_species));
+        msg = replace_all(msg, "@foe_species@", _(species_name(you.species).c_str()));
+        msg = replace_all(msg, "@foe_genus@", _(foe_species.c_str()));
+        msg = replace_all(msg, "@Foe_genus@", _(foe_species.c_str())); // uppercase_first(foe_species));
         msg = replace_all(msg, "@foe_genus_plural@",
-                          _pluralise_player_genus());
+                          _pluralise_player_genus()); // 한글판에서 사용안함
     }
     else
     {
@@ -3553,20 +3553,20 @@ std::string do_mon_str_replacements(const std::string &in_msg,
                 foe_name = foe->name(DESC_THE);
         }
         else
-            foe_name = "something";
+            foe_name = _(M_("something"));
 
         std::string prep = "at";
         if (s_type == S_SILENT || s_type == S_SHOUT || s_type == S_NORMAL)
             prep = "to";
         msg = replace_all(msg, "@says@ @to_foe@", "@says@ " + prep + " @foe@");
 
-        msg = replace_all(msg, " @to_foe@", " to @foe@");
-        msg = replace_all(msg, " @at_foe@", " at @foe@");
+        msg = replace_all(msg, " @to_foe@", _(" to @foe@"));
+        msg = replace_all(msg, " @at_foe@", _(" at @foe@"));
         msg = replace_all(msg, "@foe,@",    "@foe@,");
 
-        msg = replace_all(msg, "@foe_possessive@", "@foe@'s");
+        msg = replace_all(msg, "@foe_possessive@", _("@foe@'s"));
         msg = replace_all(msg, "@foe@", foe_name);
-        msg = replace_all(msg, "@Foe@", uppercase_first(foe_name));
+        msg = replace_all(msg, "@Foe@", foe_name); // uppercase_first(foe_name));
 
         if (m_foe->is_named())
             msg = replace_all(msg, "@foe_name@", foe->name(DESC_PLAIN, true));
@@ -3585,11 +3585,11 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         foe_species = genus;
     }
 
-    description_level_type nocap = DESC_THE, cap = DESC_THE;
+    description_level_type nocap = DESC_PLAIN, cap = DESC_PLAIN; // description_level_type nocap = DESC_THE, cap = DESC_THE;
 
     if (mons->is_named() && you.can_see(mons))
     {
-        const std::string name = mons->name(DESC_THE);
+        const std::string name = mons->name(DESC_PLAIN); // mons->name(DESC_THE);
 
         msg = replace_all(msg, "@the_something@", name);
         msg = replace_all(msg, "@The_something@", name);
@@ -3604,10 +3604,10 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         nocap = DESC_PLAIN;
         cap   = DESC_PLAIN;
 
-        msg = replace_all(msg, "@the_something@", "your @the_something@");
-        msg = replace_all(msg, "@The_something@", "Your @The_something@");
-        msg = replace_all(msg, "@the_monster@",   "your @the_monster@");
-        msg = replace_all(msg, "@The_monster@",   "Your @the_monster@");
+        msg = replace_all(msg, "@the_something@", _("your @the_something@"));
+        msg = replace_all(msg, "@The_something@", _("Your @The_something@"));
+        msg = replace_all(msg, "@the_monster@",   _("your @the_monster@"));
+        msg = replace_all(msg, "@The_monster@",   _("Your @the_monster@"));
     }
 
     if (you.see_cell(mons->pos()))
@@ -3616,13 +3616,13 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         if (feat < DNGN_MINMOVE || feat >= NUM_FEATURES)
             msg = replace_all(msg, "@surface@", "buggy surface");
         else if (feat == DNGN_LAVA)
-            msg = replace_all(msg, "@surface@", "lava");
+            msg = replace_all(msg, "@surface@", _(M_("lava")));
         else if (feat_is_water(feat))
-            msg = replace_all(msg, "@surface@", "water");
+            msg = replace_all(msg, "@surface@", _(M_("water")));
         else if (feat_is_altar(feat))
-            msg = replace_all(msg, "@surface@", "altar");
+            msg = replace_all(msg, "@surface@", _(M_("altar")));
         else
-            msg = replace_all(msg, "@surface@", "ground");
+            msg = replace_all(msg, "@surface@", _(M_("ground")));
 
         msg = replace_all(msg, "@feature@", gettext(raw_feature_description(mons->pos()).c_str()));
     }
@@ -3636,12 +3636,12 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     {
         std::string something = mons->name(DESC_PLAIN);
         msg = replace_all(msg, "@something@",   something);
-        msg = replace_all(msg, "@a_something@", mons->name(DESC_A));
+        msg = replace_all(msg, "@a_something@", mons->name(DESC_A)); // 한글판 미사용
         msg = replace_all(msg, "@the_something@", mons->name(nocap));
 
         something[0] = toupper(something[0]);
         msg = replace_all(msg, "@Something@",   something);
-        msg = replace_all(msg, "@A_something@", mons->name(DESC_A));
+        msg = replace_all(msg, "@A_something@", mons->name(DESC_A)); // 한글판 미사용
         msg = replace_all(msg, "@The_something@", mons->name(cap));
     }
     else
@@ -3660,7 +3660,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     std::string plain = mons->name(DESC_PLAIN);
     msg = replace_all(msg, "@monster@",     plain);
-    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));
+    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));  // 한글판 미사용
     msg = replace_all(msg, "@the_monster@", mons->name(nocap));
 
     plain[0] = toupper(plain[0]);
@@ -3668,7 +3668,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     msg = replace_all(msg, "@A_monster@",   mons->name(DESC_A));
     msg = replace_all(msg, "@The_monster@", mons->name(cap));
 
-    msg = replace_all(msg, "@Subjective@",
+    msg = replace_all(msg, "@Subjective@", // 이상 서브젝,포제스,리플렉 3형제는 한글판에서 사용안함
                       mons->pronoun(PRONOUN_SUBJECTIVE));
     msg = replace_all(msg, "@subjective@",
                       mons->pronoun(PRONOUN_SUBJECTIVE));
@@ -3683,21 +3683,21 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     // Body parts.
     bool        can_plural = false;
-    std::string part_str   = mons->hand_name(false, &can_plural);
+    std::string part_str   = _(mons->hand_name(false, &can_plural).c_str());
 
-    msg = replace_all(msg, "@hand@", part_str);
+    msg = replace_all(msg, "@hand@", part_str); // @hand@도 한글판에선 미사용인듯
     msg = replace_all(msg, "@Hand@", uppercase_first(part_str));
 
     if (!can_plural)
         part_str = "NO PLURAL HANDS";
     else
-        part_str = mons->hand_name(true);
+        part_str = _(mons->hand_name(true).c_str());
 
     msg = replace_all(msg, "@hands@", part_str);
     msg = replace_all(msg, "@Hands@", uppercase_first(part_str));
 
     can_plural = false;
-    part_str   = mons->arm_name(false, &can_plural);
+    part_str   = _(mons->arm_name(false, &can_plural).c_str());
 
     msg = replace_all(msg, "@arm@", part_str);
     msg = replace_all(msg, "@Arm@", uppercase_first(part_str));
@@ -3705,13 +3705,13 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     if (!can_plural)
         part_str = "NO PLURAL ARMS";
     else
-        part_str = mons->arm_name(true);
+        part_str = _(mons->arm_name(true).c_str());
 
     msg = replace_all(msg, "@arms@", part_str);
     msg = replace_all(msg, "@Arms@", uppercase_first(part_str));
 
     can_plural = false;
-    part_str   = mons->foot_name(false, &can_plural);
+    part_str   = _(mons->foot_name(false, &can_plural).c_str());
 
     msg = replace_all(msg, "@foot@", part_str);
     msg = replace_all(msg, "@Foot@", uppercase_first(part_str));
@@ -3719,7 +3719,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     if (!can_plural)
         part_str = "NO PLURAL FOOT";
     else
-        part_str = mons->foot_name(true);
+        part_str = _(mons->foot_name(true).c_str());
 
     msg = replace_all(msg, "@feet@", part_str);
     msg = replace_all(msg, "@Feet@", uppercase_first(part_str));
@@ -3731,7 +3731,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         // Replace with "you are" for atheists.
         msg = replace_all(msg, "@god_is@",
                           _replace_god_name(god, true, false));
-        msg = replace_all(msg, "@God_is@", _replace_god_name(god, true, true));
+        msg = replace_all(msg, "@God_is@", _replace_god_name(god, true, true)); // (130214) _replace_god_name 자체에서 번역된 신 이름을 리턴
 
         // No verb needed.
         msg = replace_all(msg, "@foe_god@",
@@ -3766,11 +3766,11 @@ std::string do_mon_str_replacements(const std::string &in_msg,
     }
     else
     {
-        msg = replace_all(msg, "@God@", god_name(mons->god));
-        msg = replace_all(msg, "@possessive_God@", god_name(mons->god));
+        msg = replace_all(msg, "@God@", _(god_name(mons->god).c_str()));
+        msg = replace_all(msg, "@possessive_God@", _(god_name(mons->god).c_str()));
 
-        msg = replace_all(msg, "@my_God@", god_name(mons->god));
-        msg = replace_all(msg, "@My_God@", god_name(mons->god));
+        msg = replace_all(msg, "@my_God@", _(god_name(mons->god).c_str()));
+        msg = replace_all(msg, "@My_God@", _(god_name(mons->god).c_str()));
     }
 
     // Replace with species specific insults.
@@ -3786,31 +3786,31 @@ std::string do_mon_str_replacements(const std::string &in_msg,
 
     static const char * sound_list[] =
     {
-        "says",         // actually S_SILENT
-        "shouts",
-        "barks",
-        "shouts",
-        "roars",
-        "screams",
-        "bellows",
-        "trumpets",
-        "screeches",
-        "buzzes",
-        "moans",
-        "gurgles",
-        "whines",
-        "croaks",
-        "growls",
-        "hisses",
-        "sneers",       // S_DEMON_TAUNT
-        "caws",
-        "says",         // S_CHERUB -- they just speak normally.
-        "buggily says", // NUM_SHOUTS
-        "breathes",     // S_VERY_SOFT
-        "whispers",     // S_SOFT
-        "says",         // S_NORMAL
-        "shouts",       // S_LOUD
-        "screams",      // S_VERY_LOUD
+        M_("says"),         // actually S_SILENT
+        M_("shouts"),
+        M_("barks"),
+        M_("shouts"),
+        M_("roars"),
+        M_("screams"),
+        M_("bellows"),
+        M_("trumpets"),
+        M_("screeches"),
+        M_("buzzes"),
+        M_("moans"),
+        M_("gurgles"),
+        M_("whines"),
+        M_("croaks"),
+        M_("growls"),
+        M_("hisses"),
+        M_("sneers"),       // S_DEMON_TAUNT
+        M_("caws"),
+        M_("says"),         // S_CHERUB -- they just speak normally.
+        M_("buggily says"), // NUM_SHOUTS
+        M_("breathes"),     // S_VERY_SOFT
+        M_("whispers"),     // S_SOFT
+        M_("says"),         // S_NORMAL
+        M_("shouts"),       // S_LOUD
+        M_("screams"),      // S_VERY_LOUD
     };
     COMPILE_CHECK(ARRAYSZ(sound_list) == NUM_LOUDNESS);
 
@@ -3820,7 +3820,7 @@ std::string do_mon_str_replacements(const std::string &in_msg,
         msg = replace_all(msg, "@says@", "buggily says");
     }
     else
-        msg = replace_all(msg, "@says@", sound_list[s_type]);
+        msg = replace_all(msg, "@says@", _(sound_list[s_type]));
 
     msg = apostrophise_fixup(msg);
 

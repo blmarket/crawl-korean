@@ -727,8 +727,6 @@ VISUAL:@The_monster@은(는) 찬찬히 생각을 정리하려고 시도했다.
 @The_monster@은(는) 말했다. "세상이 빙글빙글 도네, 왜 이러지?"
 
 @The_monster@은(는) 소리쳤다. "어쨌든 널 죽이고 말겠다!"
-
-VISUAL:@The_monster@ covers @possessive@ eyes.
 %%%%
 _confused_humanoid_rare_
 
@@ -857,7 +855,7 @@ friendly_family
 
 @The_monster@은(는) 말했다. "@player_name@, 우린 언제나 함께한다!"
 
-@The_monster@은(는) 외쳤다. "@player_genus_plural@은(는) 최고지!"
+@The_monster@은(는) 외쳤다. "@player_genus@은(는) 최고지!"
 
 @The_monster@은(는) 미소지으며 말했다. "너와 나는, 한 가족이지."
 %%%%
@@ -1271,29 +1269,6 @@ Traps & Doors player ghost
 @The_monster@은(는) 말했다. "넌 도망칠 수 없어! 네가 어디로 도망갈 지, 훤히 보이거든!"
 
 VISUAL:@The_monster@은(는) 눈 앞에서 재빨리 화살 함정을 조립하고 바로 해제시켰다. 그리고, 씨익 웃었다. @player_only@
-#
-#@The_monster@은(는) 말했다. "With tracks like that, I knew you had to be a @foe_genus@."
-#
-#:1
-#@The_monster@ giggles, and steps all the way around you, then returns to @possessive@ position; suddenly you realise that this is only a game to it.
-#
-#w:1
-#@The_monster@ whirls like a shadow given life, stepping faster than you can keep track, before standing precisely still, watching, waiting for your next assault.
-#
-#w:1
-#VISUAL SPELL:@The_monster@ produces a bizarre clockwork butterfly, ethereal and luminous, from @possessive@ pack, and hurls it at you - so perfect is its making that it comes to life and darts away before touching you.
-#
-#w:1
-#@The_monster@ regards you luminously, comprehending your nature, and seems resigned. @Subjective@ shouts, "Do you know what I know, @foe@..."
-#
-#w:1
-#@The_monster@ whispers, "I have found a way out of unlife even Necromancers could not discover."
-#
-#@The_monster@ strategises, and dematerialises before your eyes, reforming brighter.
-#
-#@The_monster@ rises to @possessive@ full height, drawing on the power of @possessive@ mind.
-#
-#@The_monster@ regards you with anger at your presumption in entering @possessive@ workshop - the Dungeon.
 %%%%
 Unarmed Combat player ghost
 
@@ -4245,8 +4220,8 @@ confused Ijyb
 @The_monster@은(는) 소리쳤다, "나 니한테 앞으로 잘해줄게! 약속할게!"
 
 @The_monster@은(는) 소리쳤다, "나 너를 곧 죽이러 돌아온다!"
-
-VISUAL:@The_monster@ clutches @possessive@ head and gibbers rapidly, swaying.
+#
+#VISUAL:@The_monster@ clutches @possessive@ head and gibbers rapidly, swaying.
 ## END Ijyb ##
 %%%%
 ############ ILSUIW ### a pretty merfolk witch
@@ -4973,7 +4948,7 @@ _Nergalle_rare_
 
 @The_monster@은(는) 말했다. "바로..! 그것 때문이야. 엄청나게 끔찍해. 너!"
 
-@The_monster@ blows @possessive@ nose.
+@The_monster@은(는) 콧바람을 불었다.
 ## END Nergalle ##
 %%%%
 ############ NESSOS ### evil centaur
@@ -6027,7 +6002,7 @@ _Killer_Klown_rare_
 
 @The_monster@은(는) 나팔 소리를 냈다.
 
-VISUAL:@The_monster@은(는) @foe_possessive@의 처형장면을 팬토마임으로 나타내었다.
+VISUAL:@The_monster@은(는) @foe_possessive@ 처형장면을 팬토마임으로 나타내었다.
 
 VISUAL:@The_monster@은(는) 혀를 내밀었다.
 

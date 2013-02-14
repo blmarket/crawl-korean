@@ -1017,7 +1017,7 @@ std::string monster_info::proper_name(description_level_type desc) const
     if (has_proper_name())
     {
         if (desc == DESC_ITS)
-            return apostrophise(mname);
+            return apostrophise(gettext(mname.c_str()));
         else
             return gettext(mname.c_str());
     }

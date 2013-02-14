@@ -4343,7 +4343,7 @@ static void _noise_fill_target(std::string& targ_prep, std::string& target,
                         bool gestured)
 {
     targ_prep = "at";
-    target    = "nothing";
+    target    = M_("nothing");
 
     bolt tracer = pbolt;
     // For a targeted but rangeless spell make the range positive so that
@@ -4593,8 +4593,8 @@ void mons_cast_noise(monster* mons, const bolt &pbolt,
     if (targeted)
         _noise_fill_target(targ_prep, target, mons, pbolt, gestured);
 
-    msg = replace_all(msg, "@at@",     targ_prep);
-    msg = replace_all(msg, "@target@", target);
+    msg = replace_all(msg, "@at@",     targ_prep);	// (130214) 한글판에서는 @at@을 사용하지 않음.
+    msg = replace_all(msg, "@target@", _(target.c_str()));
 
     std::string beam_name;
     if (!targeted)
@@ -4604,7 +4604,7 @@ void mons_cast_noise(monster* mons, const bolt &pbolt,
     else
         beam_name = pbolt.get_short_name();
 
-    msg = replace_all(msg, "@beam@", beam_name);
+    msg = replace_all(msg, "@beam@", _(beam_name.c_str()));
 
     const msg_channel_type chan =
         (unseen              ? MSGCH_SOUND :
