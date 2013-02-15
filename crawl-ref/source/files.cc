@@ -1001,7 +1001,7 @@ static void _grab_followers()
             && fol->hit_points < fol->max_hit_points / 2)
         {
             if (fol->visible_to(&you))
-                mpr("The ghost fades into the shadows.");
+                mpr(_("The ghost fades into the shadows."));
             monster_teleport(fol, true);
         }
     }
@@ -1648,7 +1648,7 @@ bool load_ghost(bool creating_level)
     if (!inf.valid())
     {
         if (wiz_cmd && !creating_level)
-            mpr("No ghost files for this level.", MSGCH_PROMPT);
+            mpr(_("No ghost files for this level."), MSGCH_PROMPT);
         return false;                 // no such ghost.
     }
 
@@ -1713,13 +1713,13 @@ bool load_ghost(bool creating_level)
             unplaced_ghosts--;
             if (!mons->alive())
             {
-                mpr("Placed ghost is not alive.", MSGCH_DIAGNOSTICS);
+                mpr(_("Placed ghost is not alive."), MSGCH_DIAGNOSTICS);
                 ghost_errors = true;
             }
             else if (mons->type != MONS_PLAYER_GHOST)
             {
                 mprf(MSGCH_DIAGNOSTICS,
-                     "Placed ghost is not MONS_PLAYER_GHOST, but %s",
+                     _("Placed ghost is not MONS_PLAYER_GHOST, but %s"),
                      mons->name(DESC_PLAIN, true).c_str());
                 ghost_errors = true;
             }
@@ -2139,7 +2139,7 @@ void save_ghost(bool force)
     {
 #ifdef BONES_DIAGNOSTICS
         if (do_diagnostics)
-            mpr("Ghost file for this level already exists.",
+            mpr(_("Ghost file for this level already exists."),
                 MSGCH_DIAGNOSTICS);
 #endif
         fclose(gfile);
@@ -2152,7 +2152,7 @@ void save_ghost(bool force)
     {
 #ifdef BONES_DIAGNOSTICS
         if (do_diagnostics)
-            mpr("Could not find any ghosts for this level.",
+            mpr(_("Could not find any ghosts for this level."),
                 MSGCH_DIAGNOSTICS);
 #endif
         return;
@@ -2274,8 +2274,8 @@ void sighup_save_and_exit()
 {
     if (crawl_state.seen_hups == 0)
     {
-        mpr("sighup_save_and_exit() called without a HUP signal; please"
-            "file a bug report", MSGCH_ERROR);
+        mpr(_("sighup_save_and_exit() called without a HUP signal; please"
+            "file a bug report"), MSGCH_ERROR);
         return;
     }
 
@@ -2291,7 +2291,7 @@ void sighup_save_and_exit()
     crawl_state.saving_game = true;
     if (crawl_state.need_save)
     {
-        mpr("Received HUP signal, saved and exited game.", MSGCH_ERROR);
+        mpr(_("Received HUP signal, saved and exited game."), MSGCH_ERROR);
 
         // save_game(true) exits from the game. The "true" is also required
         // to save changes to the current level.

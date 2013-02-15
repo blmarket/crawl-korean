@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Weapon enchantment spells.
 **/
@@ -71,7 +71,7 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
 {
     if (!you.weapon())
     {
-        mpr("You aren't wielding a weapon.");
+        mpr(_("You aren't wielding a weapon."));
         return SPRET_ABORT;
     }
 
@@ -81,20 +81,20 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
     // Can't brand non-weapons, but can brand some launchers (see later).
     if (weapon.base_type != OBJ_WEAPONS)
     {
-        mpr("This isn't a weapon.");
+        mpr(_("This isn't a weapon."));
         return SPRET_ABORT;
     }
 
     if (weapon.sub_type == WPN_BLOWGUN || is_artefact(weapon))
     {
-        mpr("You cannot enchant this weapon.");
+        mpr(_("You cannot enchant this weapon."));
         return SPRET_ABORT;
     }
 
     // Can't brand already-branded items.
     if (!temp_brand && get_weapon_brand(weapon) != SPWPN_NORMAL)
     {
-        mpr("This weapon is already enchanted.");
+        mpr(_("This weapon is already enchanted."));
         return SPRET_ABORT;
     }
 
@@ -112,14 +112,14 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
 
         if (!is_missile_brand_ok(missile, _convert_to_missile(which_brand), true))
         {
-            mpr("You cannot enchant this weapon with this spell.");
+            mpr(_("You cannot enchant this weapon with this spell."));
             return SPRET_ABORT;
         }
 
         // If the brand isn't appropriate for that launcher, also say no.
         if (!_ok_for_launchers(which_brand))
         {
-            mpr("You cannot enchant this weapon with this spell.");
+            mpr(_("You cannot enchant this weapon with this spell."));
             return SPRET_ABORT;
         }
 
@@ -146,40 +146,40 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
     {
     case SPWPN_FLAME:
     case SPWPN_FLAMING:
-        msg += " bursts into flame!";
+        msg += _(" bursts into flame!");
         duration_affected = 7;
         break;
 
     case SPWPN_FROST:
-        msg += " frosts over!";
+        msg += _(" frosts over!");
         duration_affected = 7;
         break;
 
     case SPWPN_FREEZING:
-        msg += " glows blue.";
+        msg += _(" glows blue.");
         duration_affected = 7;
         break;
 
     case SPWPN_VENOM:
-        msg += " starts dripping with poison.";
+        msg += _(" starts dripping with poison.");
         duration_affected = 15;
         break;
 
     case SPWPN_DRAINING:
-        msg += " crackles with unholy energy.";
+        msg += _(" crackles with unholy energy.");
         duration_affected = 12;
         break;
 
     case SPWPN_VORPAL:
-        msg += " glows silver and looks extremely sharp.";
+        msg += _(" glows silver and looks extremely sharp.");
         duration_affected = 10;
         break;
 
     case SPWPN_DISTORTION:
-        msg += " seems to ";
-        msg += random_choose("twist", "bend", "vibrate",
-                                    "flex", "wobble", "twang", NULL);
-        msg += (coinflip() ? " oddly." : " strangely.");
+        msg += P_("wpnench"," seems to ");
+        msg += random_choose(P_("wpnench","twist"), P_("wpnench","bend"), P_("wpnench","vibrate"),
+                                    P_("wpnench","flex"), P_("wpnench","wobble"), P_("wpnench","twang"), NULL);
+        msg += (coinflip() ? P_("wpnench"," oddly.") : P_("wpnench"," strangely."));
         duration_affected = 5;
 
         // Low duration, but power still helps.
@@ -191,10 +191,10 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
         // we casting the brand spell?
         // 1KB: Xom can cast it.  The Blade card currently can't.
         if (silenced(you.pos()))
-            msg += " writhes in agony.";
+            msg += _(" writhes in agony.");
         else
         {
-            msg += " shrieks in agony.";
+            msg += _(" shrieks in agony.");
             noisy(15, you.pos());
         }
         duration_affected = 8;
@@ -203,15 +203,15 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
         break;
 
     case SPWPN_HOLY_WRATH:
-        msg += " shines with holy light.";
+        msg += _(" shines with holy light.");
         break;
 
     case SPWPN_ELECTROCUTION:
-        msg += " starts to spark.";
+        msg += _(" starts to spark.");
         break;
 
     case SPWPN_ANTIMAGIC:
-        msg += " depletes magic around it.";
+        msg += _(" depletes magic around it.");
         break;
 
     case SPWPN_CHAOS:
@@ -219,7 +219,7 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
         break;
 
     case SPWPN_RETURNING:
-        msg += " wiggles in your " + you.hand_name(false) + ".";
+        msg += _(" wiggles in your ") + you.hand_name(false); msg += P_("wpnench",".");
         duration_affected = 5;
         break;
 
@@ -236,7 +236,7 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
     if (emit_special_message)
         mpr(msg.c_str());
     else
-        mprf("%s flashes.", weapon.name(true, DESC_YOUR).c_str());
+        mprf(_("%s flashes."), weapon.name(true, DESC_YOUR).c_str());
 
     you.increase_duration(DUR_WEAPON_BRAND,
                           duration_affected + roll_dice(2, power), 50);
@@ -249,9 +249,9 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
 spret_type cast_confusing_touch(int power, bool fail)
 {
     fail_check();
-    msg::stream << "Your " << you.hand_name(true) << " begin to glow "
-                << (you.duration[DUR_CONFUSING_TOUCH] ? "brighter" : "red")
-                << "." << std::endl;
+    msg::stream << "당신의 " << _(you.hand_name(true).c_str()) << "이(가) " // 이렇게 stream형식인곳은 gettext쓰기 너무;;
+                << (you.duration[DUR_CONFUSING_TOUCH] ? "밝게 " : "붉게 ")
+                << "빛나기 시작했다." << std::endl;
 
     you.increase_duration(DUR_CONFUSING_TOUCH, 5 + (random2(power) / 5),
                           50, NULL);
@@ -262,19 +262,19 @@ spret_type cast_confusing_touch(int power, bool fail)
 spret_type cast_sure_blade(int power, bool fail)
 {
     if (!you.weapon())
-        mpr("You aren't wielding a weapon!");
+        mpr(_("You aren't wielding a weapon!"));
     else if (weapon_skill(you.weapon()->base_type,
                           you.weapon()->sub_type) != SK_SHORT_BLADES)
     {
-        mpr("You cannot bond with this weapon.");
+        mpr(_("You cannot bond with this weapon."));
     }
     else
     {
         fail_check();
         if (!you.duration[DUR_SURE_BLADE])
-            mpr("You become one with your weapon.");
+            mpr(_("You become one with your weapon."));
         else if (you.duration[DUR_SURE_BLADE] < 25 * BASELINE_DELAY)
-            mpr("Your bond becomes stronger.");
+            mpr(_("Your bond becomes stronger."));
 
         you.increase_duration(DUR_SURE_BLADE, 8 + (random2(power) / 10),
                               25, NULL);

@@ -4287,7 +4287,7 @@ template <class C> void explore_discoveries::say_any(
 
     if (has_duplicates(coll.begin(), coll.end()))
     {
-        mprf("Found %s %s.", number_in_words(size).c_str(), category);
+        mprf(_("Found %s %s."), number_in_words(size).c_str(), category);
         return;
     }
 
@@ -4295,7 +4295,7 @@ template <class C> void explore_discoveries::say_any(
         comma_separated_line(coll.begin(), coll.end()).c_str());
 
     if (strwidth(message) >= get_number_of_cols())
-        mprf("Found %s %s.", number_in_words(size).c_str(), category);
+        mprf(_("Found %s %s."), number_in_words(size).c_str(), category);
     else
         mprf("%s", message.c_str());
 }

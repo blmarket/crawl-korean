@@ -615,7 +615,7 @@ bool zin_check_able_to_recite(bool quiet)
     if (you.duration[DUR_BREATH_WEAPON])
     {
         if (!quiet)
-            mpr("You're too short of breath to recite.");
+            mpr(_("You're too short of breath to recite."));
         return false;
     }
 
@@ -624,11 +624,11 @@ bool zin_check_able_to_recite(bool quiet)
 
 static const char* zin_book_desc[NUM_RECITE_TYPES] =
 {
-    "Abominations (harms the forces of chaos and mutation)",
-    "Ablutions (harms the unclean and walking corpses)",
-    "Apostates (harms the faithless and heretics)",
-    "Anathema (harms all types of demons and undead)",
-    "Alliances (blesses intelligent allies)",
+    M_("Abominations (harms the forces of chaos and mutation)"),
+    M_("Ablutions (harms the unclean and walking corpses)"),
+    M_("Apostates (harms the faithless and heretics)"),
+    M_("Anathema (harms all types of demons and undead)"),
+    M_("Alliances (blesses intelligent allies)"),
 };
 
 int zin_check_recite_to_monsters(recite_type *prayertype)
@@ -691,7 +691,7 @@ int zin_check_recite_to_monsters(recite_type *prayertype)
     // But often, you'll have multiple options...
     mesclr();
 
-    mpr("Recite a passage from which book of the Axioms of Law?", MSGCH_PROMPT);
+    mpr(_("Recite a passage from which book of the Axioms of Law?"), MSGCH_PROMPT);
 
     int menu_cnt = 0;
     recite_type letters[NUM_RECITE_TYPES];
@@ -1057,7 +1057,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
                     simple_monster_message(mon, "'s eyes and ears begin to bleed.");
                 else
                 {
-                    mprf("%s bleeds profusely from %s eyes and ears.",
+                    mprf(_("%s bleeds profusely from %s eyes and ears."),
                          mon->name(DESC_THE).c_str(),
                          mon->pronoun(PRONOUN_POSSESSIVE).c_str());
                 }
@@ -1258,7 +1258,7 @@ static void _zin_saltify(monster* mon)
 
 bool zin_vitalisation()
 {
-    simple_god_message(" grants you divine stamina.");
+    simple_god_message(_(" grants you divine stamina."));
 
     // Feed the player slightly.
     if (you.hunger_state < HS_FULL)
@@ -1278,7 +1278,7 @@ bool zin_vitalisation()
 
 void zin_remove_divine_stamina()
 {
-    mpr("Your divine stamina fades away.", MSGCH_DURATION);
+    mpr(_("Your divine stamina fades away."), MSGCH_DURATION);
     notify_stat_change(STAT_STR, -you.attribute[ATTR_DIVINE_STAMINA],
                 true, "Zin's divine stamina running out");
     notify_stat_change(STAT_INT, -you.attribute[ATTR_DIVINE_STAMINA],
@@ -1293,14 +1293,14 @@ bool zin_remove_all_mutations()
 {
     if (!how_mutated())
     {
-        mpr("You have no mutations to be cured!");
+        mpr(_("You have no mutations to be cured!"));
         return false;
     }
 
     you.one_time_ability_used[GOD_ZIN] = true;
     take_note(Note(NOTE_GOD_GIFT, you.religion));
 
-    simple_god_message(" draws all chaos from your body!");
+    simple_god_message(_(" draws all chaos from your body!"));
     delete_all_mutations("Zin's power");
 
     return true;
@@ -1315,9 +1315,9 @@ bool zin_sanctuary()
 
     // Yes, shamelessly stolen from NetHack...
     if (!silenced(you.pos())) // How did you manage that?
-        mpr("You hear a choir sing!", MSGCH_SOUND);
+        mpr(_("You hear a choir sing!"), MSGCH_SOUND);
     else
-        mpr("You are suddenly bathed in radiance!");
+        mpr(_("You are suddenly bathed in radiance!"));
 
     flash_view(WHITE);
 
@@ -1347,14 +1347,14 @@ void tso_divine_shield()
         if (you.shield()
             || you.duration[DUR_CONDENSATION_SHIELD])
         {
-            mprf("Your shield is strengthened by %s's divine power.",
+            mprf(_("Your shield is strengthened by %s's divine power."),
                  god_name(GOD_SHINING_ONE).c_str());
         }
         else
-            mpr("A divine shield forms around you!");
+            mpr(_("A divine shield forms around you!"));
     }
     else
-        mpr("Your divine shield is renewed.");
+        mpr(_("Your divine shield is renewed."));
 
     you.redraw_armour_class = true;
 
@@ -1370,7 +1370,7 @@ void tso_divine_shield()
 
 void tso_remove_divine_shield()
 {
-    mpr("Your divine shield disappears!", MSGCH_DURATION);
+    mpr(_("Your divine shield disappears!"), MSGCH_DURATION);
     you.duration[DUR_DIVINE_SHIELD] = 0;
     you.attribute[ATTR_DIVINE_SHIELD] = 0;
     you.redraw_armour_class = true;
@@ -1378,7 +1378,7 @@ void tso_remove_divine_shield()
 
 void elyvilon_purification()
 {
-    mpr("You feel purified!");
+    mpr(_("You feel purified!"));
 
     you.disease = 0;
     you.rotting = 0;
@@ -1397,7 +1397,7 @@ bool elyvilon_divine_vigour()
 
     if (!you.duration[DUR_DIVINE_VIGOUR])
     {
-        mprf("%s grants you divine vigour.",
+        mprf(_("%s grants you divine vigour."),
              god_name(GOD_ELYVILON).c_str());
 
         const int vigour_amt = 1 + you.skill_rdiv(SK_INVOCATIONS, 1, 3);
@@ -1422,7 +1422,7 @@ bool elyvilon_divine_vigour()
 
 void elyvilon_remove_divine_vigour()
 {
-    mpr("Your divine vigour fades away.", MSGCH_DURATION);
+    mpr(_("Your divine vigour fades away."), MSGCH_DURATION);
     you.duration[DUR_DIVINE_VIGOUR] = 0;
     you.attribute[ATTR_DIVINE_VIGOUR] = 0;
     calc_hp();
@@ -1467,7 +1467,7 @@ bool trog_burn_spellbooks()
     {
         if (item_is_spellbook(*si))
         {
-            mpr("Burning your own feet might not be such a smart idea!");
+            mpr(_("Burning your own feet might not be such a smart idea!"));
             return false;
         }
     }
@@ -1505,7 +1505,7 @@ bool trog_burn_spellbooks()
             // Ignore {!D} inscribed books.
             if (!check_warning_inscriptions(*si, OPER_DESTROY))
             {
-                mpr("Won't ignite {!D} inscribed spellbook.");
+                mpr(_("Won't ignite {!D} inscribed spellbook."));
                 continue;
             }
 
@@ -1530,7 +1530,7 @@ bool trog_burn_spellbooks()
             if (cloud != EMPTY_CLOUD)
             {
                 // Reinforce the cloud.
-                mpr("The fire roars with new energy!");
+                mpr(_("The fire roars with new energy!"));
                 const int extra_dur = count + random2(rarity / 2);
                 env.cloud[cloud].decay += extra_dur * 5;
                 env.cloud[cloud].set_whose(KC_YOU);
@@ -1540,21 +1540,21 @@ bool trog_burn_spellbooks()
             const int duration = std::min(4 + count + random2(rarity/2), 23);
             place_cloud(CLOUD_FIRE, *ri, duration, &you);
 
-            mprf(MSGCH_GOD, "The spellbook%s burst%s into flames.",
-                 count == 1 ? ""  : "s",
+            mprf(MSGCH_GOD, _("The spellbook%s burst%s into flames."),
+                 count == 1 ? ""  : P_("sssss","s"),
                  count == 1 ? "s" : "");
         }
     }
 
     if (totalpiety)
     {
-        simple_god_message(" is delighted!", GOD_TROG);
+        simple_god_message(_(" is delighted!"), GOD_TROG);
         gain_piety(totalpiety);
     }
     else if (totalblocked)
     {
-        mprf("The spellbook%s fail%s to ignite!",
-             totalblocked == 1 ? ""  : "s",
+        mprf(_("The spellbook%s fail%s to ignite!"),
+             totalblocked == 1 ? ""  : P_("sssss","s"),
              totalblocked == 1 ? "s" : "");
         for (std::vector<coord_def>::iterator it = mimics.begin();
              it != mimics.end(); ++it)
@@ -1565,7 +1565,7 @@ bool trog_burn_spellbooks()
     }
     else
     {
-        mpr("You cannot see a spellbook to ignite!");
+        mpr(_("You cannot see a spellbook to ignite!"));
         return false;
     }
 
@@ -1602,9 +1602,9 @@ void jiyva_paralyse_jellies()
     if (jelly_count > 0)
     {
         if (jelly_count > 1)
-            mpr("The nearby slimes join your prayer.", MSGCH_PRAY);
+            mpr(_("The nearby slimes join your prayer."), MSGCH_PRAY);
         else
-            mpr("A nearby slime joins your prayer.", MSGCH_PRAY);
+            mpr(_("A nearby slime joins your prayer."), MSGCH_PRAY);
 
         lose_piety(5);
     }
@@ -1614,7 +1614,7 @@ bool jiyva_remove_bad_mutation()
 {
     if (!how_mutated())
     {
-        mpr("You have no bad mutations to be cured!");
+        mpr(_("You have no bad mutations to be cured!"));
         return false;
     }
 
@@ -1625,7 +1625,7 @@ bool jiyva_remove_bad_mutation()
         return false;
     }
 
-    mpr("You feel cleansed.");
+    mpr(_("You feel cleansed."));
     return true;
 }
 
@@ -1658,14 +1658,14 @@ void yred_animate_remains_or_dead()
         if (animate_remains(you.pos(), CORPSE_BODY, BEH_FRIENDLY,
                             MHITYOU, &you, "", GOD_YREDELEMNUL) < 0)
         {
-            mpr("There are no remains here to animate!");
+            mpr(_("There are no remains here to animate!"));
         }
     }
 }
 
 void yred_drain_life()
 {
-    mpr("You draw life from your surroundings.");
+    mpr(_("You draw life from your surroundings."));
 
     flash_view(DARKGREY);
     more();
@@ -1683,7 +1683,7 @@ void yred_drain_life()
         if (mi->wont_attack())
             continue;
 
-        mprf("You draw life from %s.",
+        mprf(_("You draw life from %s."),
              mi->name(DESC_THE).c_str());
 
         behaviour_event(*mi, ME_WHACK, &you, you.pos());
@@ -1703,7 +1703,7 @@ void yred_drain_life()
 
     if (hp_gain)
     {
-        mpr("You feel life flooding into your body.");
+        mpr(_("You feel life flooding into your body."));
         inc_hp(hp_gain);
     }
 }
@@ -1769,8 +1769,8 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     mon->stop_constricting_all(false);
     mon->stop_being_constricted();
 
-    mprf("%s soul %s.", whose.c_str(),
-         !force_hostile ? "is now yours" : "fights you");
+    mprf(_("%s soul %s."), whose.c_str(),
+         !force_hostile ? _("is now yours") : _("fights you"));
 }
 
 bool kiku_receive_corpses(int pow, coord_def where)
@@ -1862,8 +1862,8 @@ bool kiku_receive_corpses(int pow, coord_def where)
     {
         if (you.religion == GOD_KIKUBAAQUDGHA)
         {
-            simple_god_message(corpses_created > 1 ? " delivers you corpses!"
-                                                   : " delivers you a corpse!");
+            simple_god_message(corpses_created > 1 ? _(" delivers you corpses!")
+                                                   : _(" delivers you a corpse!"));
         }
         maybe_update_stashes();
         return true;
@@ -1871,7 +1871,7 @@ bool kiku_receive_corpses(int pow, coord_def where)
     else
     {
         if (you.religion == GOD_KIKUBAAQUDGHA)
-            simple_god_message(" can find no cadavers for you!");
+            simple_god_message(_(" can find no cadavers for you!"));
         return false;
     }
 }
@@ -1981,7 +1981,7 @@ int fedhas_fungal_bloom()
                 // Maybe turn a zombie into a skeleton.
                 if (mons_skeleton(mons_zombie_base(target)))
                 {
-                    simple_monster_message(target, "'s flesh rots away.");
+                    simple_monster_message(target, _("'s flesh rots away."));
 
                     downgrade_zombie_to_skeleton(target);
 
@@ -1996,7 +1996,7 @@ int fedhas_fungal_bloom()
                 // Ghoul-type monsters are always destroyed.
             case MONS_GHOUL:
             {
-                simple_monster_message(target, " rots away and dies.");
+                simple_monster_message(target, _(" rots away and dies."));
 
                 kills = true;
 
@@ -2083,12 +2083,12 @@ int fedhas_fungal_bloom()
         mushroom_spawn_message(seen_mushrooms, seen_corpses);
 
     if (kills)
-        mpr("That felt like a moral victory.");
+        mpr(_("That felt like a moral victory."));
 
     if (processed_count)
     {
-        simple_god_message(" appreciates your contribution to the "
-                           "ecosystem.", GOD_FEDHAS);
+        simple_god_message(_(" appreciates your contribution to the "
+                           "ecosystem."), GOD_FEDHAS);
         // Doubling the expected value per sacrifice to approximate the
         // extra piety gain blood god worshipers get for the initial kill.
         // -cao
@@ -2126,11 +2126,11 @@ static bool _create_plant(coord_def & target, int hp_adjust = 0)
         {
             if (hp_adjust)
             {
-                mprf("A plant, strengthened by %s, grows up from the ground.",
+                mprf(_("A plant, strengthened by %s, grows up from the ground."),
                      god_name(GOD_FEDHAS).c_str());
             }
             else
-                mpr("A plant grows up from the ground.");
+                mpr(_("A plant grows up from the ground."));
         }
         return true;
     }
@@ -2207,8 +2207,8 @@ bool fedhas_sunlight()
 
     if (revealed_count)
     {
-        mprf("In the bright light, you notice %s.", revealed_count == 1 ?
-             "an invisible shape" : "some invisible shapes");
+        mprf(_("In the bright light, you notice %s."), revealed_count == 1 ?
+             _("an invisible shape") : _("some invisible shapes"));
     }
 
     return true;
@@ -2303,10 +2303,10 @@ void process_sunlights(bool future)
     }
 
     if (evap_count)
-        mpr("Some water evaporates in the bright sunlight.");
+        mpr(_("Some water evaporates in the bright sunlight."));
 
     if (cloud_count)
-        mpr("Sunlight penetrates the thick gloom.");
+        mpr(_("Sunlight penetrates the thick gloom."));
 
     invalidate_agrid(true);
 }
@@ -2455,7 +2455,7 @@ static bool _prompt_amount(int max, int& selected, const std::string& prompt)
     selected = max;
     while (true)
     {
-        msg::streams(MSGCH_PROMPT) << prompt << " (" << max << " max) "
+        msg::streams(MSGCH_PROMPT) << prompt << " (" << max << _(" max) ")
                                    << std::endl;
 
         const int keyin = get_ch();
@@ -2512,9 +2512,9 @@ static void _decrease_amount(std::vector<std::pair<int, int> >& available,
         dec_inv_item_quantity(available[i].second, decrease_amount);
     }
     if (total_decrease > 1)
-        mprf("%d pieces of fruit are consumed!", total_decrease);
+        mprf(_("%d pieces of fruit are consumed!"), total_decrease);
     else
-        mpr("A piece of fruit is consumed!");
+        mpr(_("A piece of fruit is consumed!"));
 }
 
 // Create a ring or partial ring around the caster.  The user is
@@ -2546,9 +2546,9 @@ bool fedhas_plant_ring_from_fruit()
     if (max_use == 0)
     {
         if (adjacent.empty())
-            mpr("No empty adjacent squares.");
+            mpr(_("No empty adjacent squares."));
         else
-            mpr("No fruit available.");
+            mpr(_("No fruit available."));
 
         return false;
     }
@@ -2574,7 +2574,7 @@ bool fedhas_plant_ring_from_fruit()
     // And how many plants does the user want to create?
     int target_count;
     if (!_prompt_amount(max_use, target_count,
-                        "How many plants will you create?"))
+                        _("How many plants will you create?")))
     {
         // User canceled at the prompt.
         return false;
@@ -2719,9 +2719,9 @@ int fedhas_rain(const coord_def &target)
 
     if (spawned_count > 0)
     {
-        mprf("%s grow%s in the rain.",
-             (spawned_count > 1 ? "Some plants" : "A plant"),
-             (spawned_count > 1 ? "" : "s"));
+        mprf(_("%s grow%s in the rain."),
+             (spawned_count > 1 ? _("Some plants") : _("A plant")),
+             (spawned_count > 1 ? "" : P_("sssss","s")));
     }
 
     return processed_count;
@@ -2776,7 +2776,7 @@ int fedhas_corpse_spores(beh_type behavior, bool interactive)
 #endif
     }
 
-    if (interactive && yesnoquit("Will you create these spores?",
+    if (interactive && yesnoquit(_("Will you create these spores?"),
                                  true, 'y') <= 0)
     {
         viewwindow(false);
@@ -2891,8 +2891,8 @@ static bool _place_ballisto(const coord_def & pos)
                                                   GOD_FEDHAS)))
     {
         remove_mold(pos);
-        mpr("The mold grows into a ballistomycete.");
-        mpr("Your piety has decreased.");
+        mpr(_("The mold grows into a ballistomycete."));
+        mpr(_("Your piety has decreased."));
         lose_piety(1);
         return true;
     }
@@ -2925,7 +2925,7 @@ bool fedhas_evolve_flora()
 
     if (!in_range)
     {
-        mpr("No evolvable flora in sight.");
+        mpr(_("No evolvable flora in sight."));
         return false;
     }
 
@@ -2938,7 +2938,7 @@ bool fedhas_evolve_flora()
     args.needs_path = false;
     args.may_target_monster = false;
     args.show_floor_desc = true;
-    args.top_prompt = "Select plant or fungus to evolve.";
+    args.top_prompt = _("Select plant or fungus to evolve.");
 
     direction(spelld, args);
 
@@ -2958,9 +2958,9 @@ bool fedhas_evolve_flora()
                                     env.grid(spelld.target)))
         {
             if (feat_is_tree(env.grid(spelld.target)))
-                mpr("The tree has already reached the pinnacle of evolution.");
+                mpr(_("The tree has already reached the pinnacle of evolution."));
             else
-                mpr("You must target a plant or fungus.");
+                mpr(_("You must target a plant or fungus."));
             return false;
         }
         return _place_ballisto(spelld.target);
@@ -2970,12 +2970,12 @@ bool fedhas_evolve_flora()
     if (!_possible_evolution(target, upgrade))
     {
         if (target->type == MONS_GIANT_SPORE)
-            mpr("You can evolve only complete plants, not seeds.");
+            mpr(_("You can evolve only complete plants, not seeds."));
         else  if (mons_is_plant(target))
-            simple_monster_message(target, " has already reached "
-                                   "the pinnacle of evolution.");
+            simple_monster_message(target, _(" has already reached "
+                                   "the pinnacle of evolution."));
         else
-            mpr("Only plants or fungi may be evolved.");
+            mpr(_("Only plants or fungi may be evolved."));
 
         return false;
     }
@@ -2987,14 +2987,14 @@ bool fedhas_evolve_flora()
 
         if (total_fruit < upgrade.fruit_cost)
         {
-            mpr("Not enough fruit available.");
+            mpr(_("Not enough fruit available."));
             return false;
         }
     }
 
     if (upgrade.piety_cost && upgrade.piety_cost > you.piety)
     {
-        mpr("Not enough piety available.");
+        mpr(_("Not enough piety available."));
         return false;
     }
 
@@ -3003,16 +3003,16 @@ bool fedhas_evolve_flora()
     case MONS_PLANT:
     case MONS_BUSH:
     {
-        std::string evolve_desc = " can now spit acid";
+        std::string evolve_desc = _(" can now spit acid");
         int skill = you.skill(SK_INVOCATIONS);
         if (skill >= 20)
-            evolve_desc += " continuously";
+            evolve_desc += P_("fedhas"," continuously");
         else if (skill >= 15)
-            evolve_desc += " quickly";
+            evolve_desc += P_("fedhas"," quickly");
         else if (skill >= 10)
-            evolve_desc += " rather quickly";
+            evolve_desc += P_("fedhas"," rather quickly");
         else if (skill >= 5)
-            evolve_desc += " somewhat quickly";
+            evolve_desc += P_("fedhas"," somewhat quickly");
         evolve_desc += ".";
 
         simple_monster_message(target, evolve_desc.c_str());
@@ -3020,17 +3020,17 @@ bool fedhas_evolve_flora()
     }
 
     case MONS_OKLOB_SAPLING:
-        simple_monster_message(target, " appears stronger.");
+        simple_monster_message(target, _(" appears stronger."));
         break;
 
     case MONS_FUNGUS:
     case MONS_TOADSTOOL:
         simple_monster_message(target,
-                               " can now pick up its mycelia and move.");
+                               _(" can now pick up its mycelia and move."));
         break;
 
     case MONS_BALLISTOMYCETE:
-        simple_monster_message(target, " appears agitated.");
+        simple_monster_message(target, _(" appears agitated."));
         env.level_state |= LSTATE_GLOW_MOLD;
         break;
 
@@ -3063,7 +3063,7 @@ bool fedhas_evolve_flora()
     if (upgrade.piety_cost)
     {
         lose_piety(upgrade.piety_cost);
-        mpr("Your piety has decreased.");
+        mpr(_("Your piety has decreased."));
     }
 
     return true;
@@ -3080,7 +3080,7 @@ static int _lugonu_warp_monster(monster* mon, int pow)
     int res_margin = mon->check_res_magic(pow * 2);
     if (res_margin > 0)
     {
-        mprf("%s%s",
+        mprf("%s%s", // 손댈필요 없음. 굳이 손댄다면 아래 DESC_THE때문에 the 붙어나올경우정도;
              mon->name(DESC_THE).c_str(),
              mons_resist_string(mon, res_margin));
         return 1;
@@ -3112,7 +3112,7 @@ void lugonu_bend_space()
     const int pow = 4 + skill_bump(SK_INVOCATIONS);
     const bool area_warp = random2(pow) > 9;
 
-    mprf("Space bends %saround you!", area_warp ? "sharply " : "");
+    mprf(_("Space bends %saround you!"), area_warp ? _("sharply ") : "");
 
     if (area_warp)
         _lugonu_warp_area(pow);
@@ -3125,7 +3125,7 @@ void lugonu_bend_space()
 
 void cheibriados_time_bend(int pow)
 {
-    mpr("The flow of time bends around you.");
+    mpr(_("The flow of time bends around you."));
 
     for (adjacent_iterator ai(you.pos()); ai; ++ai)
     {
@@ -3142,7 +3142,7 @@ void cheibriados_time_bend(int pow)
             }
 
             simple_god_message(
-                make_stringf(" rebukes %s.",
+                make_stringf(_(" rebukes %s."),
                              mon->name(DESC_THE).c_str()).c_str(),
                              GOD_CHEIBRIADOS);
             do_slow_monster(mon, &you);
@@ -3190,7 +3190,7 @@ bool cheibriados_slouch(int pow)
 {
     int count = apply_area_visible(_slouchable, pow, &you);
     if (!count)
-        if (!yesno("There's no one hasty visible. Invoke Slouch anyway?",
+        if (!yesno(_("There's no one hasty visible. Invoke Slouch anyway?"),
                    true, 'n'))
         {
             return false;
@@ -3200,7 +3200,7 @@ bool cheibriados_slouch(int pow)
     if (stop_attack_prompt(hitfunc, "hurt", _act_slouchable))
         return false;
 
-    mpr("You can feel time thicken for a moment.");
+    mpr(_("You can feel time thicken for a moment."));
     dprf("your speed is %d", player_movement_speed());
 
     apply_area_visible(_slouch_monsters, pow, &you);
@@ -3236,14 +3236,14 @@ void cheibriados_temporal_distortion()
     you.moveto(old_pos);
     you.duration[DUR_TIME_STEP] = 0;
 
-    mpr("You warp the flow of time around you!");
+    mpr(_("You warp the flow of time around you!"));
 }
 
 void cheibriados_time_step(int pow) // pow is the number of turns to skip
 {
     const coord_def old_pos = you.pos();
 
-    mpr("You step out of the flow of time.");
+    mpr(_("You step out of the flow of time."));
     flash_view(LIGHTBLUE);
     you.moveto(coord_def(0, 0));
     you.duration[DUR_TIME_STEP] = pow;
@@ -3276,7 +3276,7 @@ void cheibriados_time_step(int pow) // pow is the number of turns to skip
     you.duration[DUR_TIME_STEP] = 0;
 
     flash_view(0);
-    mpr("You return to the normal time flow.");
+    mpr(_("You return to the normal time flow."));
 }
 
 bool ashenzari_transfer_knowledge()

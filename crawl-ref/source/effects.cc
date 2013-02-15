@@ -532,7 +532,7 @@ void banished(const std::string &who)
     if (player_in_branch(BRANCH_ABYSS))
     {
         // Can't happen outside wizmode.
-        mpr("You feel trapped.");
+        mpr(_("You feel trapped."));
         return;
     }
 
@@ -828,7 +828,7 @@ int recharge_wand(int item_slot, bool known, std::string *pre_msg)
 
             if (!charged && !item_ident(wand, ISFLAG_KNOW_PLUSES))
             {
-                mprf("It has %d charges and is fully charged.", new_charges);
+                mprf(_("It has %d charges and is fully charged."), new_charges);
                 set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
             }
 
@@ -932,17 +932,17 @@ void yell(bool force)
     int noise_level = 12; // "shout"
 
     // Tweak volume for different kinds of vocalisation.
-    if (shout_verb == N_("roar"))
+    if (shout_verb == "roar" || shout_verb == _(M_("roar"))) // 이런식으로 처리.
         noise_level = 18;
-    else if (shout_verb == N_("hiss"))
+    else if (shout_verb == "hiss"|| shout_verb == _(M_("hiss")))
         noise_level = 8;
-    else if (shout_verb == N_("squeak"))
+    else if (shout_verb == "squeak"|| shout_verb == _(M_("squeak")))
         noise_level = 4;
     else if (shout_verb == "__NONE")
         noise_level = 0;
-    else if (shout_verb == N_("yell"))
+    else if (shout_verb == "yell"|| shout_verb == _(M_("yell")))
         noise_level = 14;
-    else if (shout_verb == N_("scream"))
+    else if (shout_verb == "scream"|| shout_verb == _(M_("scream")))
         noise_level = 16;
 
     if (silenced(you.pos()) || you.cannot_speak())
@@ -957,7 +957,7 @@ void yell(bool force)
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a strong urge to %s, but "
                      "you are unable to make a sound!"),
-                     shout_verb == "__NONE" ? _("scream")
+                     shout_verb == "__NONE" ? _(M_("scream"))
                                             : _(shout_verb.c_str()));
             }
             else
@@ -985,7 +985,7 @@ void yell(bool force)
     /// 동료 order 메뉴인듯.
     mpr(gettext("What do you say?"), MSGCH_PROMPT);
     /// 그냥 소리치는 것인듯. 1. 고함의 종류(shout, roar, squeak)
-    mprf(" t - %s!", cap_shout.c_str());
+    mprf(" t - %s!", _(cap_shout.c_str()));
 
     if (!you.berserk())
     {
@@ -1501,7 +1501,7 @@ void change_labyrinth(bool msg)
     if (targets.empty())
     {
         if (msg)
-            mpr("No unexplored wall grids found!");
+            mpr(_("No unexplored wall grids found!"));
         return;
     }
 
@@ -1511,7 +1511,7 @@ void change_labyrinth(bool msg)
              c1.x, c1.y, c2.x, c2.y);
 
         std::string path_str = "";
-        mpr("Here's the list of targets: ", MSGCH_DIAGNOSTICS);
+        mpr(_("Here's the list of targets: "), MSGCH_DIAGNOSTICS);
         for (unsigned int i = 0; i < targets.size(); i++)
         {
             snprintf(info, INFO_SIZE, "(%d, %d)  ", targets[i].x, targets[i].y);
@@ -1561,7 +1561,7 @@ void change_labyrinth(bool msg)
         {
             if (msg)
             {
-                mpr("Something went badly wrong - no path found!",
+                mpr(_("Something went badly wrong - no path found!"),
                     MSGCH_DIAGNOSTICS);
             }
             continue;

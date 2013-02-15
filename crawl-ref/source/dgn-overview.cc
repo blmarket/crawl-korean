@@ -904,7 +904,7 @@ void do_annotate(level_id& li)
 {
     if (!get_level_annotation(li).empty())
     {
-        mpr("Current level annotation: " +
+        mpr(_("Current level annotation: ") +
             colour_string(get_level_annotation(li, true, true), LIGHTGREY),
             MSGCH_PROMPT);
     }
@@ -922,7 +922,7 @@ void do_annotate(level_id& li)
         canned_msg(MSG_OK);
     else if (yesno("Really clear the annotation?", true, 'n'))
     {
-        mpr("Cleared.");
+        mpr(_("Cleared."));
         level_annotations.erase(li);
     }
 }

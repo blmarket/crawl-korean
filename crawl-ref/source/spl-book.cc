@@ -800,8 +800,8 @@ static bool _get_mem_list(spell_list &mem_spells,
     }
     else
     {
-        mpr("You can't memorise any new spells for an unknown reason; "
-            "please file a bug report.", MSGCH_PROMPT);
+        mpr(_("You can't memorise any new spells for an unknown reason; "
+            "please file a bug report."), MSGCH_PROMPT);
     }
 
     if (num_unreadable)

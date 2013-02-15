@@ -688,9 +688,9 @@ void timeout_phoenix_markers(int duration)
             env.markers.remove(mmark);
 
             if (from_inventory)
-                simple_monster_message(mons, " is reborn from your pack in a blaze of fire!");
+                simple_monster_message(mons, _(" is reborn from your pack in a blaze of fire!"));
             else if (you.can_see(mons))
-                simple_monster_message(mons, " is reborn in a blaze of fire!");
+                simple_monster_message(mons, _(" is reborn in a blaze of fire!"));
 
             // Now, place a cloud to compensate
             place_cloud(CLOUD_FIRE, place_at, 4+random2(10), NULL);

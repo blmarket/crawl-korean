@@ -519,7 +519,7 @@ bool player::fumbles_attack(bool verbose)
         if (x_chance_in_y(4, dex()) || one_chance_in(5))
         {
             if (verbose)
-                mpr("Your unstable footing causes you to fumble your attack.");
+                mpr(_("Your unstable footing causes you to fumble your attack."));
             did_fumble = true;
         }
         if (floundering())
@@ -650,8 +650,8 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         if (verbose)
         {
             const item_def *amulet = you.slot_item(EQ_AMULET, false);
-            mprf("You cannot go berserk with %s on.",
-                 amulet? amulet->name(true, DESC_YOUR).c_str() : "your amulet");
+            mprf(_("You cannot go berserk with %s on."),
+                 amulet? amulet->name(true, DESC_YOUR).c_str() : _("your amulet"));
         }
         return false;
     }
@@ -660,7 +660,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
     {
         if (verbose)
         {
-            mpr("You're too calm and focused to rage.");
+            mpr(_("You're too calm and focused to rage."));
             item_def *amu;
             if (!player_mental_clarity(false) && wearing_amulet(AMU_CLARITY)
                 && (amu = &you.inv[you.equip[EQ_AMULET]]) && !item_type_known(*amu))
@@ -705,7 +705,7 @@ bool player::shove(const char* feat_name)
         if (in_bounds(*di) && !actor_at(*di) && !is_feat_dangerous(grd(*di)))
         {
             moveto(*di);
-            mprf("You are pushed out of the %s.", feat_name);
+            mprf(_("You are pushed out of the %s."), feat_name);
             dprf("Moved to (%d, %d).", pos().x, pos().y);
             return true;
         }

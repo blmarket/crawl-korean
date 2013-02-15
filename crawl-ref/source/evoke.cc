@@ -61,7 +61,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
 {
     if (you.caught())
     {
-        mprf("You cannot attack while %s.", held_status());
+        mprf(_("You cannot attack while %s."), held_status());
         return false;
     }
 
@@ -534,8 +534,8 @@ void skill_manual(int slot)
     if (is_useless_skill(skill) || you.skills[skill] >= 27)
     {
         if (!known)
-            mprf("This is a manual of %s.", skill_name(skill));
-        mpr("You have no use for it.");
+            mprf(_("This is a manual of %s."), skill_name(skill));
+        mpr(_("You have no use for it."));
         return;
     }
 
@@ -746,7 +746,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr("You're too confused.");
+            mpr(_("You're too confused."));
             return false;
         }
 
@@ -769,7 +769,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr("You're too confused.");
+            mpr(_("You're too confused."));
             return false;
         }
 

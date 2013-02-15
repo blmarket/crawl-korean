@@ -2053,7 +2053,7 @@ void process_command(command_type cmd)
 
     case CMD_CHARACTER_DUMP:
         if (!dump_char(you.your_name))
-            mpr("Char dump unsuccessful! Sorry about that.");
+            mpr(_("Char dump unsuccessful! Sorry about that."));
         break;
 
         // Travel commands.
@@ -3072,7 +3072,7 @@ static void _player_reacts()
             you_teleport_now(true);
         else if (player_in_branch(BRANCH_ABYSS) && one_chance_in(80))
         {
-            mpr("You are suddenly pulled into a different region of the Abyss!",
+            mpr(_("You are suddenly pulled into a different region of the Abyss!"),
                 MSGCH_BANISHMENT);
             you_teleport_now(false, true); // to new area of the Abyss
 
@@ -4574,7 +4574,7 @@ static void _run_input_with_keys(const keyseq& keys)
 
     if (get_macro_buf_size() < old_buf_size)
     {
-        mpr("(Key replay stole keys)", MSGCH_ERROR);
+        mpr(_("(Key replay stole keys)"), MSGCH_ERROR);
         crawl_state.cancel_cmd_all();
     }
 }

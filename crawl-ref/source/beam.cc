@@ -867,7 +867,7 @@ void bolt::digging_wall_effect()
 
     case DNGN_SECRET_DOOR:
         obvious_effect = true;
-        mpr("There is a secret door!");
+        mpr(_("There is a secret door!"));
         reveal_secret_door(pos());
         finish_beam();
         break;
@@ -2308,7 +2308,7 @@ static void _imb_explosion(bolt *parent, coord_def center)
             if (first && !beam.is_tracer)
             {
                 if (you.see_cell(center))
-                    mpr("The orb of energy explodes!");
+                    mpr(_("The orb of energy explodes!"));
                 noisy(10, center);
                 first = false;
             }

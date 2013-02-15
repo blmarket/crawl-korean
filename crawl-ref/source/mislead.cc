@@ -93,7 +93,7 @@ void end_mislead(bool level_change)
 {
     if (level_change)
     {
-        mpr("Away from their source, illusions no longer mislead you.",
+        mpr(_("Away from their source, illusions no longer mislead you."),
             MSGCH_DURATION);
     }
     you.duration[DUR_MISLED] = 0;

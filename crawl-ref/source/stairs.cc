@@ -949,7 +949,7 @@ void down_stairs(dungeon_feature_type force_stair)
         if (branches[branch].entry_message)
             mpr(branches[branch].entry_message);
         else
-            mprf("Welcome to %s!", branches[branch].longname);
+            mprf(_("Welcome to %s!"), branches[branch].longname);
         enter_branch(branch, old_level);
     }
 

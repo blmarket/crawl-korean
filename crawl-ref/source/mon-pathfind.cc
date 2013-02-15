@@ -109,7 +109,7 @@ bool monster_pathfind::init_pathfind(const monster* mon, coord_def dest,
     if (start == target)
     {
         if (msg)
-            mpr("The monster is already there!");
+            mpr(_("The monster is already there!"));
 
         return true;
     }

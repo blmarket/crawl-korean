@@ -2853,7 +2853,7 @@ static void _slime_connectivity_fixup()
                             // squares should have adjacency of DISCONNECT_DIST
                             // but oh well
                             if (env.level_map_mask(*adj_it) & MMT_VAULT)
-                                mprf("Whoops, nicked a vault in slime connectivity fixup");
+                                mprf(_("Whoops, nicked a vault in slime connectivity fixup"));
                             env.grid(*adj_it) = DNGN_FLOOR;
                         }
                     }
@@ -4983,7 +4983,7 @@ static dungeon_feature_type _pick_temple_altar(vault_placement &place)
     {
         if (_current_temple_hash != NULL)
         {
-            mpr("Ran out of altars for temple!", MSGCH_ERROR);
+            mpr(_("Ran out of altars for temple!"), MSGCH_ERROR);
             return DNGN_FLOOR;
         }
         // Randomized altar list for mini-temples.

@@ -601,10 +601,10 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
                     if (outside_items)
                     {
-                        mprf("I'll put %s outside for you.",
-                              num_items == 1             ? "it" :
-                              num_items == outside_items ? "them"
-                                                         : "part of them");
+                        mprf(_("I'll put %s outside for you."),
+                              num_items == 1             ? P_("shop","it") :
+                              num_items == outside_items ? P_("shop","them")
+                                                         : P_("shop","part of them"));
                     }
                     bought_something = true;
                 }
@@ -2068,7 +2068,7 @@ void shop()
     if (_shop_get_stock(i).empty())
     {
         const shop_struct& shop = env.shop[i];
-        mprf("%s appears to be closed.", shop_name(shop.pos).c_str());
+        mprf(_("%s appears to be closed."), shop_name(shop.pos).c_str());
         _delete_shop(i);
         return;
     }
@@ -2085,10 +2085,10 @@ void shop()
     redraw_screen();
 
     if (bought_something)
-        mprf("Thank you for shopping at %s!", shopname.c_str());
+        mprf(_("Thank you for shopping at %s!"), shopname.c_str());
 
     if (num_in_list > 0)
-        mpr("You can access your shopping list by pressing '$'.");
+        mpr(_("You can access your shopping list by pressing '$'."));
 }
 
 void destroy_shop_at(coord_def p)
@@ -2621,7 +2621,7 @@ void ShoppingList::gold_changed(int old_amount, int new_amount)
             if (thing.exists(SHOPPING_THING_VERB_KEY))
                 desc += thing[SHOPPING_THING_VERB_KEY].get_string();
             else
-                desc = "buy";
+                desc = P_("shop","buy");
             desc += " ";
 
             desc += describe_thing(thing, DESC_A);
@@ -2630,9 +2630,9 @@ void ShoppingList::gold_changed(int old_amount, int new_amount)
         }
         ASSERT(!descs.empty());
 
-        mpr_comma_separated_list("You now have enough gold to ", descs,
-                                 ", or ");
-        mpr("You can access your shopping list by pressing '$'.");
+        mpr_comma_separated_list(_("You now have enough gold to "), descs,
+                                 P_("shop",", or "));
+        mpr(_("You can access your shopping list by pressing '$'."));
 
         // Reset max_buyable and min_unbuyable info
         refresh();
@@ -2734,7 +2734,7 @@ void ShoppingList::display()
         shopmenu.set_maxpagesize(52);
     }
 
-    std::string more_str = make_stringf("<yellow>You have %d gp</yellow>",
+    std::string more_str = make_stringf(_("<yellow>You have %d gp</yellow>"),
                                         you.gold);
     shopmenu.set_more(formatted_string::parse_string(more_str));
 
@@ -2767,8 +2767,8 @@ void ShoppingList::display()
             if (cost > you.gold)
             {
                 std::string prompt =
-                   make_stringf("You cannot afford %s; travel there "
-                                "anyway? (y/N)",
+                   make_stringf(_("You cannot afford %s; travel there "
+                                "anyway? (y/N)"),
                                 describe_thing(*thing, DESC_A).c_str());
                 clrscr();
                 if (!yesno(prompt.c_str(), true, 'n'))
@@ -2791,7 +2791,7 @@ void ShoppingList::display()
             {
                 // HACK: Assume it's some kind of portal vault.
                 snprintf(info, INFO_SIZE,
-                         "%s with an entry fee of %d gold pieces.",
+                         _("%s with an entry fee of %d gold pieces."),
                          describe_thing(*thing, DESC_A).c_str(),
                          (int) thing_cost(*thing));
 
@@ -2802,7 +2802,7 @@ void ShoppingList::display()
         else if (shopmenu.menu_action == Menu::ACT_MISC)
         {
             std::string prompt =
-                make_stringf("Delete %s from shopping list? (y/N)",
+                make_stringf(_("Delete %s from shopping list? (y/N)"),
                              describe_thing(*thing, DESC_A).c_str());
             clrscr();
             if (!yesno(prompt.c_str(), true, 'n'))

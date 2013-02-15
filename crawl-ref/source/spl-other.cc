@@ -336,7 +336,7 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
         if (mons->check_clarity(false))
             return 1;
         mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
-        simple_monster_message(mons, " looks rather confused.");
+        simple_monster_message(mons, _(" looks rather confused."));
         return 1;
     }
     return 0;
@@ -345,7 +345,7 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
 spret_type cast_intoxicate(int pow, bool fail)
 {
     fail_check();
-    mpr("You radiate an intoxicating aura.");
+    mpr(_("You radiate an intoxicating aura."));
     if (x_chance_in_y(60 - pow/3, 100))
         potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
 

@@ -1501,7 +1501,7 @@ static void _swap_monster_card(int power, deck_rarity_type rarity)
 static void _velocity_card(int power, deck_rarity_type rarity)
 {
     if (you.religion == GOD_CHEIBRIADOS)
-        return simple_god_message(" protects you from inadvertent hurry.");
+        return simple_god_message(_(" protects you from inadvertent hurry."));
 
     const int power_level = _get_power_level(power, rarity);
     if (power_level >= 2)
@@ -1602,7 +1602,7 @@ static void _flight_card(int power, deck_rarity_type rarity)
         if (you.religion != GOD_CHEIBRIADOS)
             cast_swiftness(random2(power/4));
         else
-            simple_god_message(" protects you from inadvertent hurry.");
+            simple_god_message(_(" protects you from inadvertent hurry."));
     }
 
     if (power_level == 2) // Stacks with the above.
@@ -1926,7 +1926,7 @@ static void _blade_card(int power, deck_rarity_type rarity)
                  wpn->quantity == 1 ? "s" : "");
         }
         else
-            mprf("Your %s twitch.", you.hand_name(true).c_str());
+            mprf(_("Your %s twitch."), _(you.hand_name(true).c_str()));
     }
 }
 
@@ -1964,7 +1964,7 @@ static void _potion_card(int power, deck_rarity_type rarity)
 
     if (you.religion == GOD_CHEIBRIADOS && pot == POT_SPEED)
     {
-        simple_god_message(" protects you from inadvertent hurry.");
+        simple_god_message(_(" protects you from inadvertent hurry."));
         pot = POT_WATER;
     }
 
@@ -2329,9 +2329,9 @@ static void _dowsing_card(int power, deck_rarity_type rarity)
     if (things_to_do[1])
     {
         if (detect_traps(random2(power/4)))
-            mpr("You sense traps nearby.");
+            mpr(_("You sense traps nearby."));
         if (detect_items(random2(power/4)))
-            mpr("You sense items nearby.");
+            mpr(_("You sense items nearby."));
     }
     if (things_to_do[2])
     {
@@ -2824,9 +2824,9 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
         const int fee = fuzz_value(exper_value(mon), 15, 15);
         if (fee > you.gold)
         {
-            mprf("You cannot afford %s fee of %d gold!",
+            mprf(_("You cannot afford %s fee of %d gold!"),
                  mon->name(DESC_ITS).c_str(), fee);
-            simple_monster_message(mon, " attacks!");
+            simple_monster_message(mon, _(" attacks!"));
             return;
         }
 
@@ -2844,7 +2844,7 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
         you.del_gold(fee);
     }
     else
-        mpr("You see a puff of smoke.");
+        mpr(_("You see a puff of smoke."));
 }
 
 static void _alchemist_card(int power, deck_rarity_type rarity)
@@ -3062,7 +3062,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
 #endif
     case NUM_CARDS:
         // The compiler will complain if any card remains unhandled.
-        mprf("You have %s a buggy card!", participle);
+        mprf(_("You have %s a buggy card!"), participle);
         break;
     }
 }

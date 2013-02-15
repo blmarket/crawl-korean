@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions for inventory related commands.
 **/
@@ -449,59 +449,59 @@ static std::string _no_selectables_message(int item_selector)
     switch (item_selector)
     {
     case OSEL_ANY:
-        return "You aren't carrying anything.";
+        return _("You aren't carrying anything.");
     case OSEL_WIELD:
     case OBJ_WEAPONS:
-        return "You aren't carrying any weapons.";
+        return _("You aren't carrying any weapons.");
     case OBJ_ARMOUR:
     {
         if (_has_melded_armour())
-            return "Your armour is currently melded into you.";
+            return _("Your armour is currently melded into you.");
         else if (_has_tran_unwearable_armour())
-            return "You aren't carrying any armour you can wear in your "
-                   "current form.";
+            return _("You aren't carrying any armour you can wear in your "
+                   "current form.");
         else
-            return "You aren't carrying any armour.";
+            return _("You aren't carrying any armour.");
     }
     case OSEL_UNIDENT:
-        return "You don't have any unidentified items.";
+        return _("You don't have any unidentified items.");
     case OSEL_RECHARGE:
-        return "You aren't carrying any rechargeable items.";
+        return _("You aren't carrying any rechargeable items.");
     case OSEL_ENCH_ARM:
-        return "You aren't carrying any armour which can be enchanted further.";
+        return _("You aren't carrying any armour which can be enchanted further.");
     case OBJ_CORPSES:
     case OSEL_VAMP_EAT:
-        return "You aren't carrying any corpses which you can drain.";
+        return _("You aren't carrying any corpses which you can drain.");
     case OSEL_DRAW_DECK:
-        return "You aren't carrying any decks from which to draw.";
+        return _("You aren't carrying any decks from which to draw.");
     case OBJ_FOOD:
-        return "You aren't carrying any food.";
+        return _("You aren't carrying any food.");
     case OBJ_POTIONS:
-        return "You aren't carrying any potions.";
+        return _("You aren't carrying any potions.");
     case OBJ_SCROLLS:
     case OBJ_BOOKS:
-        return "You aren't carrying any books or scrolls.";
+        return _("You aren't carrying any books or scrolls.");
     case OBJ_WANDS:
-        return "You aren't carrying any wands.";
+        return _("You aren't carrying any wands.");
     case OBJ_JEWELLERY:
-        return "You aren't carrying any pieces of jewellery.";
+        return _("You aren't carrying any pieces of jewellery.");
     case OSEL_THROWABLE:
-        return "You aren't carrying any items that might be thrown or fired.";
+        return _("You aren't carrying any items that might be thrown or fired.");
     case OSEL_BUTCHERY:
-        return "You aren't carrying any sharp implements.";
+        return _("You aren't carrying any sharp implements.");
     case OSEL_EVOKABLE:
-        return "You aren't carrying any items that can be evoked.";
+        return _("You aren't carrying any items that can be evoked.");
     case OSEL_FRUIT:
-        return "You aren't carrying any fruit.";
+        return _("You aren't carrying any fruit.");
     case OSEL_CURSED_WORN:
-        return "None of your equipped items are cursed.";
+        return _("None of your equipped items are cursed.");
     case OSEL_UNCURSED_WORN_ARMOUR:
-        return "You aren't wearing any piece of uncursed armour.";
+        return _("You aren't wearing any piece of uncursed armour.");
     case OSEL_UNCURSED_WORN_JEWELLERY:
-        return "You aren't wearing any piece of uncursed jewellery.";
+        return _("You aren't wearing any piece of uncursed jewellery.");
     }
 
-    return "You aren't carrying any such object.";
+    return _("You aren't carrying any such object.");
 }
 
 void InvMenu::load_inv_items(int item_selector, int excluded_slot,
@@ -1499,7 +1499,7 @@ std::vector<SelItem> prompt_invent_items(
             ret = letter_to_index(keyin);
 
             if (!you.inv[ret].defined())
-                mpr("You don't have any such object.");
+                mpr(_("You don't have any such object."));
             else
                 break;
         }
@@ -1589,7 +1589,7 @@ bool check_old_item_warning(const item_def& item,
         if (!needs_handle_warning(old_item, OPER_WIELD))
             return true;
 
-        prompt += "Really unwield ";
+        prompt += _("Really unwield ");
     }
     else if (oper == OPER_WEAR) // can we safely take off old item?
     {
@@ -1605,7 +1605,7 @@ bool check_old_item_warning(const item_def& item,
         if (!needs_handle_warning(old_item, OPER_TAKEOFF))
             return true;
 
-        prompt += "Really take off ";
+        prompt += _("Really take off ");
     }
     else if (oper == OPER_PUTON) // can we safely remove old item?
     {
@@ -1621,7 +1621,7 @@ bool check_old_item_warning(const item_def& item,
             if (!needs_handle_warning(old_item, OPER_TAKEOFF))
                 return true;
 
-            prompt += "Really remove ";
+            prompt += _("Really remove ");
         }
         else // rings handled in prompt_ring_to_remove
             return true;
@@ -1631,7 +1631,7 @@ bool check_old_item_warning(const item_def& item,
 
     // now ask
     prompt += old_item.name(true, DESC_INVENTORY);
-    prompt += "?";
+    prompt += P_("wield_weapon","?");
     return yesno(prompt.c_str(), false, 'n');
 }
 
@@ -1639,27 +1639,27 @@ static std::string _operation_verb(operation_types oper)
 {
     switch (oper)
     {
-    case OPER_WIELD:          return "wield";
-    case OPER_QUAFF:          return "quaff";
-    case OPER_DROP:           return "drop";
+    case OPER_WIELD:          return P_("invent","wield");
+    case OPER_QUAFF:          return P_("invent","quaff");
+    case OPER_DROP:           return P_("invent","drop");
     case OPER_EAT:            return (you.species == SP_VAMPIRE ?
-                                      "drain" : "eat");
-    case OPER_TAKEOFF:        return "take off";
-    case OPER_WEAR:           return "wear";
-    case OPER_PUTON:          return "put on";
-    case OPER_REMOVE:         return "remove";
-    case OPER_READ:           return "read";
-    case OPER_MEMORISE:       return "memorise from";
-    case OPER_ZAP:            return "zap";
-    case OPER_EXAMINE:        return "examine";
-    case OPER_FIRE:           return "fire";
-    case OPER_PRAY:           return "sacrifice";
-    case OPER_EVOKE:          return "evoke";
-    case OPER_DESTROY:        return "destroy";
-    case OPER_QUIVER:         return "quiver";
+                                      P_("invent","drain") : P_("invent","eat"));
+    case OPER_TAKEOFF:        return P_("invent","take off");
+    case OPER_WEAR:           return P_("invent","wear");
+    case OPER_PUTON:          return P_("invent","put on");
+    case OPER_REMOVE:         return P_("invent","remove");
+    case OPER_READ:           return P_("invent","read");
+    case OPER_MEMORISE:       return P_("invent","memorise from");
+    case OPER_ZAP:            return P_("invent","zap");
+    case OPER_EXAMINE:        return P_("invent","examine");
+    case OPER_FIRE:           return P_("invent","fire");
+    case OPER_PRAY:           return P_("invent","sacrifice");
+    case OPER_EVOKE:          return P_("invent","evoke");
+    case OPER_DESTROY:        return P_("invent","destroy");
+    case OPER_QUIVER:         return P_("invent","quiver");
     case OPER_ANY:
     default:
-        return "choose";
+        return P_("invent","choose");
     }
 }
 
@@ -1783,14 +1783,14 @@ bool check_warning_inscriptions(const item_def& item,
                 return true;
         }
 
-        std::string prompt = "Really " + _operation_verb(oper) + " ";
+        std::string prompt = P_("invent","Really "); // + _operation_verb(oper) + " ";
         prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
-                                      : item.name(true, DESC_A));
+                                      : item.name(true, DESC_A)) + _operation_verb(oper); // (130216) 여기는 어순상 수정
         if (_nasty_stasis(item, oper))
-            prompt += std::string(" while ")
-                      + (you.duration[DUR_TELEPORT] ? "about to teleport" :
-                         you.duration[DUR_SLOW] ? "slowed" : "hasted");
-        prompt += "?";
+            prompt += std::string(P_("invent"," while "))
+                      + (you.duration[DUR_TELEPORT] ? P_("invent","about to teleport") :
+                         you.duration[DUR_SLOW] ? P_("invent","slowed") : P_("invent","hasted"));
+        prompt += P_("invent","?");
         return (yesno(prompt.c_str(), false, 'n')
                 && check_old_item_warning(item, oper));
     }
@@ -1863,7 +1863,7 @@ int prompt_invent_item(const char *prompt,
 
         if (need_prompt)
         {
-            mprf(MSGCH_PROMPT, "%s (<w>?</w> for menu, <w>Esc</w> to quit)",
+            mprf(MSGCH_PROMPT, _("%s (<w>?</w> for menu, <w>Esc</w> to quit)"),
                  prompt);
         }
         else
@@ -1963,7 +1963,7 @@ int prompt_invent_item(const char *prompt,
             ret = letter_to_index(keyin);
 
             if (must_exist && !you.inv[ret].defined())
-                mpr("You don't have any such object.");
+                mpr(_("You don't have any such object."));
             else if (check_warning_inscriptions(you.inv[ret], oper))
                 break;
         }
@@ -2024,8 +2024,8 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
                       bool all_wands, bool msg, bool equip)
 {
     const std::string error = item_is_melded(item)
-            ? "Your " + item.name(true, DESC_QUALNAME) + " is melded into your body."
-            : "That item can only be evoked when wielded.";
+            ? P_("invent","Your ") + item.name(true, DESC_QUALNAME) + _(" is melded into your body.")
+            : _("That item can only be evoked when wielded.");
 
     if (is_unrandom_artefact(item))
     {
@@ -2053,7 +2053,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
         if (you.species == SP_FELID)
         {
             if (msg)
-                mpr("You cannot grasp it well enough.");
+                mpr(_("You cannot grasp it well enough."));
             return false;
         }
 
@@ -2063,7 +2063,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
         if (item.plus2 == ZAPCOUNT_EMPTY)
         {
             if (msg)
-                mpr("This wand has no charges.");
+                mpr(_("This wand has no charges."));
             return false;
         }
         return true;
@@ -2084,7 +2084,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
         }
 
         if (msg)
-            mpr("That item cannot be evoked!");
+            mpr(_("That item cannot be evoked!"));
         return false;
 
     case OBJ_RODS:
@@ -2110,7 +2110,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
             return true;
         }
         if (msg)
-            mpr("That item cannot be evoked!");
+            mpr(_("That item cannot be evoked!"));
         return false;
 
     case OBJ_MISCELLANY:
@@ -2134,7 +2134,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
         // else fall through
     default:
         if (msg)
-            mpr("That item cannot be evoked!");
+            mpr(_("That item cannot be evoked!"));
         return false;
     }
 }

@@ -91,7 +91,7 @@ void jiyva_eat_offlevel_items()
 
                 // Needs a message now to explain possible hp or mp
                 // gain from jiyva_slurp_bonus()
-                mpr("You hear a distant slurping noise.");
+                mpr(_("You hear a distant slurping noise."));
                 sacrifice_item_stack(*si, &js);
                 item_was_destroyed(*si);
                 destroy_item(si.link());
@@ -139,11 +139,11 @@ void jiyva_slurp_message(int js)
     if (js != JS_NONE)
     {
         if (js & JS_FOOD)
-            mpr("You feel a little less hungry.");
+            mpr(_("You feel a little less hungry."));
         if (js & JS_MP)
-            mpr("You feel your power returning.");
+            mpr(_("You feel your power returning."));
         if (js & JS_HP)
-            mpr("You feel a little better.");
+            mpr(_("You feel a little better."));
     }
 }
 
@@ -282,64 +282,64 @@ std::string ash_describe_bondage(int flags, bool level)
     {
         if (you.bondage[ET_WEAPON] == you.bondage[ET_SHIELD])
         {
-            desc = make_stringf("Your %s are %sbound. ",
+            desc = make_stringf(_("Your %s are %sbound. "),
                                 you.hand_name(true).c_str(),
-                                you.bondage[ET_WEAPON] ? "" : "not ");
+                                you.bondage[ET_WEAPON] ? "" : P_("godpassive","not "));
         }
         else
         {
-            desc = make_stringf("Your %s %s is bound but not your %s %s. ",
-                                you.bondage[ET_WEAPON] ? "weapon" : "shield",
+            desc = make_stringf(_("Your %s %s is bound but not your %s %s. "),
+                                you.bondage[ET_WEAPON] ? P_("godpassive","weapon") : P_("godpassive","shield"),
                                 you.hand_name(false).c_str(),
-                                you.bondage[ET_WEAPON] ? "shield" : "weapon",
+                                you.bondage[ET_WEAPON] ? P_("godpassive","shield") : P_("godpassive","weapon"),
                                 you.hand_name(false).c_str());
         }
     }
     else if (flags & ETF_WEAPON && you.bondage[ET_WEAPON] != -1)
     {
-        desc = make_stringf("Your weapon %s is %sbound. ",
+        desc = make_stringf(_("Your weapon %s is %sbound. "),
                             you.hand_name(false).c_str(),
-                            you.bondage[ET_WEAPON] ? "" : "not ");
+                            you.bondage[ET_WEAPON] ? "" : P_("godpassive","not "));
     }
     else if (flags & ETF_SHIELD && you.bondage[ET_SHIELD] != -1)
     {
-        desc = make_stringf("Your shield %s is %sbound. ",
+        desc = make_stringf(_("Your shield %s is %sbound. "),
                             you.hand_name(false).c_str(),
-                            you.bondage[ET_SHIELD] ? "" : "not ");
+                            you.bondage[ET_SHIELD] ? "" : P_("godpassive","not "));
     }
 
     if (flags & ETF_ARMOUR && flags & ETF_JEWELS
         && you.bondage[ET_ARMOUR] == you.bondage[ET_JEWELS]
         && you.bondage[ET_ARMOUR] != -1)
     {
-        desc += make_stringf("You are %s bound in armour and magic. ",
-                             you.bondage[ET_ARMOUR] == 0 ? "not" :
-                             you.bondage[ET_ARMOUR] == 1 ? "partially"
-                                                         : "fully");
+        desc += make_stringf(_("You are %s bound in armour and magic. "),
+                             you.bondage[ET_ARMOUR] == 0 ? P_("godpassive","not") :
+                             you.bondage[ET_ARMOUR] == 1 ? P_("godpassive","partially")
+                                                         : P_("godpassive","fully"));
     }
     else
     {
         if (flags & ETF_ARMOUR && you.bondage[ET_ARMOUR] != -1)
-            desc += make_stringf("You are %s bound in armour. ",
-                                 you.bondage[ET_ARMOUR] == 0 ? "not" :
-                                 you.bondage[ET_ARMOUR] == 1 ? "partially"
-                                                             : "fully");
+            desc += make_stringf(_("You are %s bound in armour. "),
+                                 you.bondage[ET_ARMOUR] == 0 ? P_("godpassive","not") :
+                                 you.bondage[ET_ARMOUR] == 1 ? P_("godpassive","partially")
+                                                             : P_("godpassive","fully"));
 
         if (flags & ETF_JEWELS && you.bondage[ET_JEWELS] != -1)
-            desc += make_stringf("You are %s bound in magic. ",
-                                 you.bondage[ET_JEWELS] == 0 ? "not" :
-                                 you.bondage[ET_JEWELS] == 1 ? "partially"
-                                                             : "fully");
+            desc += make_stringf(_("You are %s bound in magic. "),
+                                 you.bondage[ET_JEWELS] == 0 ? P_("godpassive","not") :
+                                 you.bondage[ET_JEWELS] == 1 ? P_("godpassive","partially")
+                                                             : P_("godpassive","fully"));
     }
 
     if (level)
     {
-        desc += make_stringf("You are %s bound.",
-                             you.bondage_level == 0 ? "not" :
-                             you.bondage_level == 1 ? "slightly" :
-                             you.bondage_level == 2 ? "moderately" :
-                             you.bondage_level == 3 ? "seriously" :
-                             you.bondage_level == 4 ? "fully"
+        desc += make_stringf(_("You are %s bound."),
+                             you.bondage_level == 0 ? P_("godpassive","not") :
+                             you.bondage_level == 1 ? P_("godpassive","slightly") :
+                             you.bondage_level == 2 ? P_("godpassive","moderately") :
+                             you.bondage_level == 3 ? P_("godpassive","seriously") :
+                             you.bondage_level == 4 ? P_("godpassive","fully")
                                                     : "buggily");
     }
 

@@ -785,7 +785,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     {
         // Not a single habitable place left on the level.  Possible in a Zig
         // or if a paranoid player covers a small Trove with summons.
-        mpr("There is some commotion, and a hidden mimic gets squished!");
+        mpr(_("There is some commotion, and a hidden mimic gets squished!"));
         if (item)
             destroy_item(*item, true);
         else
@@ -858,7 +858,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     monster *mimic = place_monster(mg, true, true);
     if (!mimic)
     {
-        mpr("Too many monsters on level, can't place mimic.", MSGCH_ERROR);
+        mpr(_("Too many monsters on level, can't place mimic."), MSGCH_ERROR);
         if (item)
             destroy_item(*item, true);
         return;
@@ -1462,10 +1462,10 @@ const char* resist_margin_phrase(int margin)
 {
     ASSERT(margin > 0);
 
-    return (margin >= 40) ? " easily resists." :
-           (margin >= 24) ? " resists." :
-           (margin >= 12) ? " resists with some effort."
-                          : " struggles to resist.";
+    return (margin >= 40) ? _(" easily resists.") :
+           (margin >= 24) ? _(" resists.") :
+           (margin >= 12) ? _(" resists with some effort.")
+                          : _(" struggles to resist.");
 }
 
 bool mons_immune_magic(const monster* mon)
@@ -1476,7 +1476,7 @@ bool mons_immune_magic(const monster* mon)
 const char* mons_resist_string(const monster* mon, int res_margin)
 {
     if (mons_immune_magic(mon))
-        return " is unaffected.";
+        return _(" is unaffected.");
     else
         return resist_margin_phrase(res_margin);
 }

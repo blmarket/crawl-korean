@@ -450,7 +450,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             ac -= props["ozocubus_ac"].get_byte();
         if (!quiet && you.can_see(this))
         {
-            mprf("%s icy armour evaporates.",
+            mprf(_("%s icy armour evaporates."),
                  apostrophise(name(DESC_THE)).c_str());
         }
         break;

@@ -501,28 +501,28 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
         {
             // FIXME: I don't know about plu enums
             if (crawlie->type == old_type)
-                mprf("Two %s merge%s%s.",
+                mprf(_("Two %s merge%s%s."),
                      pluralise(PLU_DEFAULT, crawlie->name(DESC_PLAIN)).c_str(),
-                     changed ? " to form " : "",
+                     changed ? _(" to form ") : "",
                      changed ? merge_to->name(DESC_A).c_str() : "");
             else
-                mprf("%s merges with %s%s%s.",
+                mprf(_("%s merges with %s%s%s."),
                      crawlie->name(DESC_A).c_str(),
                      old_name.c_str(),
-                     changed ? " to form " : "",
+                     changed ? _(" to form ") : "",
                      changed ? merge_to->name(DESC_A).c_str() : "");
         }
         else if (changed)
         {
-            mprf("%s suddenly becomes %s.",
+            mprf(_("%s suddenly becomes %s."),
                  uppercase_first(old_name).c_str(),
                  merge_to->name(DESC_A).c_str());
         }
         else
-            mprf("%s twists grotesquely.", merge_to->name(DESC_A).c_str());
+            mprf(_("%s twists grotesquely."), merge_to->name(DESC_A).c_str());
     }
     else if (you.can_see(crawlie))
-        mprf("%s suddenly disappears!", crawlie->name(DESC_A).c_str());
+        mprf(_("%s suddenly disappears!"), crawlie->name(DESC_A).c_str());
 
     // Now kill the other monster
     monster_die(crawlie, KILL_DISMISSED, NON_MONSTER, true);
@@ -2587,7 +2587,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
                 if (coinflip())
                 {
                 //  behaviour_event(mons, ME_CORNERED);
-                    simple_monster_message(mons, " curls into a ball and rolls away!");
+                    simple_monster_message(mons, _(" curls into a ball and rolls away!"));
                     boulder_start(mons, &beem);
                 }
             }
@@ -2595,7 +2595,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             else if (one_chance_in(3) &&
                      !adjacent(mons->pos(), beem.target))
             {
-                simple_monster_message(mons, " curls into a ball and starts rolling!");
+                simple_monster_message(mons, _(" curls into a ball and starts rolling!"));
                 boulder_start(mons, &beem);
             }
         }

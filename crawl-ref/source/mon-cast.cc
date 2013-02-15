@@ -2174,7 +2174,7 @@ bool handle_mon_spell(monster* mons, bolt &beem)
         {
             // This may be a bad idea -- if we decide monsters shouldn't
             // lose a turn like players do not, please make this just return.
-            simple_monster_message(mons, " falters for a moment.");
+            simple_monster_message(mons, _(" falters for a moment."));
             mons->lose_energy(EUT_SPELL);
             return true;
         }
@@ -2382,7 +2382,7 @@ static int _monster_abjuration(const monster* caster, bool actual)
     int maffected = 0;
 
     if (actual)
-        mpr("Send 'em back where they came from!");
+        mpr(_("Send 'em back where they came from!"));
 
     int pow = std::min(caster->hit_dice * 90, 2500);
 
@@ -2702,7 +2702,7 @@ static int _mons_mesmerise(monster* mons, bool actual)
     // you with messages. Otherwise, it's trying!
     if (actual && !already_mesmerised && you.can_see(mons))
     {
-        simple_monster_message(mons, " attempts to bespell you!");
+        simple_monster_message(mons, _(" attempts to bespell you!"));
 
         flash_view(LIGHTMAGENTA);
     }
@@ -2734,9 +2734,9 @@ static int _mons_cause_fear(monster* mons, bool actual)
     if (actual)
     {
         if (you.can_see(mons))
-            simple_monster_message(mons, " radiates an aura of fear!");
+            simple_monster_message(mons, _(" radiates an aura of fear!"));
         else
-            mpr("An aura of fear fills the air!");
+            mpr(_("An aura of fear fills the air!"));
 
         flash_view_delay(DARKGREY, 300);
     }
@@ -2814,7 +2814,7 @@ static int _mons_cause_fear(monster* mons, bool actual)
                 retval = 1;
 
                 if (you.can_see(m))
-                    simple_monster_message(m, " looks frightened!");
+                    simple_monster_message(m, _(" looks frightened!"));
 
                 behaviour_event(m, ME_SCARE, mons);
 
@@ -2837,7 +2837,7 @@ static bool _mons_drain_life(monster* mons, bool actual)
                                    _(" draws from the surrounding life force!"));
         }
         else
-            mpr("The surrounding life force dissipates!");
+            mpr(_("The surrounding life force dissipates!"));
 
         flash_view_delay(DARKGREY, 300);
     }
@@ -2910,11 +2910,11 @@ static bool _mons_ozocubus_refrigeration(monster* mons, bool actual)
         if (you.can_see(mons))
         {
             simple_monster_message(mons,
-                                   " drains the heat from the surrounding"
-                                   " environment!");
+                                   _(" drains the heat from the surrounding"
+                                   " environment!"));
         }
         else
-            mpr("The ambient heat is drained!");
+            mpr(_("The ambient heat is drained!"));
 
         flash_view_delay(LIGHTCYAN, 300);
     }
@@ -2936,7 +2936,7 @@ static bool _mons_ozocubus_refrigeration(monster* mons, bool actual)
                                                   "refrigeration");
             if (actual)
             {
-                mpr("You feel very cold.");
+                mpr(_("You feel very cold."));
                 ouch(hurted, mons->mindex(), KILLED_BY_BEAM,
                      "by Ozocubu's Refrigeration", true,
                      mons->name(DESC_A).c_str());
@@ -3156,12 +3156,12 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     case SPELL_MAJOR_HEALING:
         if (mons->heal(50 + random2avg(mons->hit_dice * 10, 2)))
-            simple_monster_message(mons, " is healed.");
+            simple_monster_message(mons, _(" is healed."));
         return;
 
     case SPELL_MIRROR_DAMAGE:
         simple_monster_message(mons,
-                               " kneels in prayer and is bathed in unholy energy.",
+                               _(" kneels in prayer and is bathed in unholy energy."),
                                MSGCH_MONSTER_SPELL);
         mons->add_ench(mon_enchant(ENCH_MIRROR_DAMAGE, 0, mons,
                        20 * BASELINE_DELAY));
@@ -3179,7 +3179,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_TROGS_HAND:
     {
         simple_monster_message(mons,
-                               make_stringf(" invokes %s's protection!",
+                               make_stringf(_(" invokes %s's protection!"),
                                    god_name(mons->god).c_str()).c_str(),
                                MSGCH_MONSTER_SPELL);
         const int dur = BASELINE_DELAY
@@ -3225,7 +3225,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             mons->props[TIDE_CALL_TURN].get_int() = you.num_turns;
             if (simple_monster_message(
                     mons,
-                    " sings a water chant to call the tide!"))
+                    _(" sings a water chant to call the tide!")))
             {
                 flash_view_delay(ETC_WATER, 300);
             }
@@ -3240,7 +3240,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
         simple_monster_message(
             mons,
-            " squirts a massive cloud of ink into the water!");
+            _(" squirts a massive cloud of ink into the water!"));
         return;
 
     case SPELL_SUMMON_SMALL_MAMMALS:
@@ -3380,7 +3380,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         int kraken_index = mons->mindex();
         if (invalid_monster_index(duration))
         {
-            mpr("Error! Kraken is not a part of the current environment!",
+            mpr(_("Error! Kraken is not a part of the current environment!"),
                 MSGCH_ERROR);
             return;
         }
@@ -3441,9 +3441,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         }
 
         if (visible_count == 1)
-            mpr("A tentacle rises from the water!");
+            mpr(_("A tentacle rises from the water!"));
         else if (visible_count > 1)
-            mpr("Tentacles burst out of the water!");
+            mpr(_("Tentacles burst out of the water!"));
         return;
     }
 
@@ -3681,7 +3681,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_LEDAS_LIQUEFACTION:
         if (!mons->has_ench(ENCH_LIQUEFYING) && you.can_see(mons))
         {
-            mprf("%s liquefies the ground around %s!", mons->name(DESC_THE).c_str(),
+            mprf(_("%s liquefies the ground around %s!"), mons->name(DESC_THE).c_str(),
                 mons->pronoun(PRONOUN_REFLEXIVE).c_str());
             flash_view_delay(BROWN, 80);
         }
@@ -3883,7 +3883,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             }
             else if (friendly)
             {
-                simple_monster_message(mons, " shimmers for a moment.",
+                simple_monster_message(mons, _(" shimmers for a moment."),
                                        channel);
             }
             else // "Enchant" the player.
@@ -4008,7 +4008,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
         if (sumcount)
         {
-            mpr("Walls emerge from the floor!");
+            mpr(_("Walls emerge from the floor!"));
 
             // XXX: Assume that the entombed monster can regenerate.
             // Also, base the regeneration rate on HD to avoid
@@ -4072,7 +4072,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         env.forest_awoken_until = you.elapsed_time + duration;
 
         // You may be unable to see the monster, but notice an affected tree.
-        forest_message(mons->pos(), "The forest starts to sway and rumble!");
+        forest_message(mons->pos(), _("The forest starts to sway and rumble!"));
         return;
 
     case SPELL_SUMMON_DRAGON:
@@ -4116,7 +4116,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         {
             const int dur = BASELINE_DELAY * 2 * mons->skill(SK_NECROMANCY);
             simple_monster_message(mons,
-                                   " stands defiantly in death's doorway!");
+                                   _(" stands defiantly in death's doorway!"));
             mons->hit_points = std::max(std::min(mons->hit_points,
                                         mons->skill(SK_NECROMANCY)), 1);
             mons->add_ench(mon_enchant(ENCH_DEATHS_DOOR, 0, mons, dur));
@@ -4126,7 +4126,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     case SPELL_REGENERATION:
     {
         simple_monster_message(mons,
-                               "'s wounds begin to heal before your eyes!");
+                               _("'s wounds begin to heal before your eyes!"));
         const int dur = BASELINE_DELAY
             * std::min(5 + roll_dice(2, (mons->hit_dice * 10) / 3 + 1), 100);
         mons->add_ench(mon_enchant(ENCH_REGENERATION, 0, mons, dur));
@@ -4135,7 +4135,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     case SPELL_OZOCUBUS_ARMOUR:
     {
-        mprf("A film of ice covers %s body!",
+        mprf(_("A film of ice covers %s body!"),
         apostrophise(mons->name(DESC_THE)).c_str());
         const int power = (mons->hit_dice * 15) / 10;
         mons->add_ench(mon_enchant(ENCH_OZOCUBUS_ARMOUR, 0, mons,

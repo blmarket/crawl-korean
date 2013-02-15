@@ -570,7 +570,7 @@ void check_player_sense(sense_type sense, int range, const coord_def& where)
              // Don't message if you can see the square.
              if (!you.see_cell(where))
              {
-                 mprf("You smell fresh blood%s.",
+                 mprf(_("You smell fresh blood%s."),
                       _player_vampire_smells_blood(player_distance));
              }
              break;
@@ -583,7 +583,7 @@ void check_player_sense(sense_type sense, int range, const coord_def& where)
                  // Don't message if you can see the square.
                  if (!you.see_cell(where))
                  {
-                     mprf("You hear a 'twang'%s.",
+                     mprf(_("You hear a 'twang'%s."),
                           _player_spider_senses_web(player_distance));
                  }
              }

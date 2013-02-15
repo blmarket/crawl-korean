@@ -3292,7 +3292,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
     if (mons->is_constricted())
     {
         if (!quiet)
-            simple_monster_message(mons, " is being constricted!");
+            simple_monster_message(mons, _(" is being constricted!"));
         return false;
     }
 

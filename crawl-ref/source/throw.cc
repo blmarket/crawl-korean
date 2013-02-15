@@ -332,7 +332,7 @@ bool fire_warn_if_impossible(bool silent)
     if (you.species == SP_FELID)
     {
         if (!silent)
-            mpr("You can't grasp things well enough to throw them.");
+            mpr(_("You can't grasp things well enough to throw them."));
         return true;
     }
 
@@ -753,9 +753,9 @@ static bool _dispersal_hit_victim(bolt& beam, actor* victim, int dmg)
         const bool        seen = you.can_see(mon);
         const std::string name = mon->name(DESC_THE);
         if (was_seen && seen)
-            mprf("%s blinks!", name.c_str());
+            mprf(_("%s blinks!"), name.c_str());
         else if (was_seen && !seen)
-            mprf("%s vanishes!", name.c_str());
+            mprf(_("%s vanishes!"), name.c_str());
     }
 
     return true;
@@ -1967,10 +1967,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
               pbolt.hit, pbolt.damage.num, pbolt.damage.size);
 
     // Create message.
-    mprf("%s %s%s %s.",
-          teleport  ? "Magically, you" : "You",
-          projected ? "" : "awkwardly ",
-          projected == LRET_LAUNCHED ? "shoot" : "throw",
+    mprf(P_("throwx","%s %s%s %s."),
+          teleport  ? P_("throwx","Magically, you") : P_("throwx","You"),
+          projected ? "" : P_("throwx","awkwardly "),
+          projected == LRET_LAUNCHED ? P_("throwx","shoot") : P_("throwx","throw"),
           ammo_name.c_str());
 
     // Ensure we're firing a 'missile'-type beam.

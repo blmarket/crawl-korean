@@ -309,9 +309,9 @@ int check_your_resists(int hurted, beam_type flavour, std::string source,
             if (hurted <= 0)
                 canned_msg(MSG_YOU_RESIST);
             else if (multiplier > 50)
-                mpr("The blast sears you terribly!");
+                mpr(_("The blast sears you terribly!"));
             else
-                mpr("The blast sears you!");
+                mpr(_("The blast sears you!"));
 
             if (one_chance_in(3)
                 // delete_mutation() handles MUT_MUTATION_RESISTANCE but not the amulet

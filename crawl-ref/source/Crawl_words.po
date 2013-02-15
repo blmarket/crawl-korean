@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 13:50+0900\n"
+"POT-Creation-Date: 2013-02-16 01:50+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2890,6 +2890,7 @@ msgid "Holy"
 msgstr "신성"
 
 #: spl-util.cc:913 decks.cc:334 decks.cc:334 spl-util.cc:912 spl-util.cc:865
+#: godprayer.cc:525
 msgid "Summoning"
 msgstr "소환술"
 
@@ -5978,14 +5979,14 @@ msgstr "마법 두루마리"
 #: itemname.cc:1675 itemname.cc:1674 itemname.cc:1687 itemprop.cc:2897
 #: itemname.cc:1715 itemname.cc:1717 itemname.cc:1724 itemname.cc:1725
 #: itemname.cc:1732 itemname.cc:1716 itemprop.cc:3071 itemname.cc:1620
-#: itemprop.cc:2927 itemprop.cc:2934
+#: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400
 msgid "amulet"
 msgstr "부적"
 
 #: itemname.cc:1677 itemname.cc:1676 itemname.cc:1689 itemprop.cc:2897
 #: itemname.cc:1717 itemname.cc:1719 itemname.cc:1726 itemname.cc:1727
 #: itemname.cc:1734 itemname.cc:1718 itemprop.cc:3071 itemname.cc:1622
-#: itemprop.cc:2927 itemprop.cc:2934
+#: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400
 msgid "ring"
 msgstr "반지"
 
@@ -7246,12 +7247,13 @@ msgstr "공중폭격"
 
 #: itemname.cc:1924 itemname.cc:1952 itemname.cc:1954 itemname.cc:1961
 #: itemname.cc:1962 itemname.cc:1969 itemname.cc:1948 itemname.cc:1855
+#: spl-summoning.cc:1548
 msgid "corpse"
 msgstr "의 시체"
 
 #: itemname.cc:1926 itemname.cc:1954 itemname.cc:1956 itemname.cc:1963
 #: itemname.cc:1964 itemname.cc:1971 itemname.cc:1950 itemname.cc:1857
-#: mon-info.cc:927
+#: mon-info.cc:927 spl-summoning.cc:1548
 msgid "skeleton"
 msgstr "의 해골"
 
@@ -10731,6 +10733,14 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812
 msgid "shouts"
@@ -11098,7 +11108,7 @@ msgstr "발사체"
 msgid "food"
 msgstr "음식"
 
-#: invent.cc:986
+#: invent.cc:986 spl-goditem.cc:720 spl-goditem.cc:758
 msgid "jewellery"
 msgstr "장신구"
 
@@ -11234,6 +11244,7 @@ msgstr "알람"
 msgid "blade"
 msgstr "칼날"
 
+#: misc.cc:2487
 msgid "net"
 msgstr "그물"
 
@@ -11336,6 +11347,7 @@ msgid "Food "
 msgstr "음식 "
 
 #: directn.cc:2955 directn.cc:3047 directn.cc:2923 directn.cc:3013
+#: misc.cc:2487
 msgid "web"
 msgstr "거미줄"
 
@@ -11682,7 +11694,7 @@ msgstr "화염의 폭발"
 msgid "an exploding Tome of Destruction"
 msgstr "파괴의 학술서의 폭발"
 
-#: effects.cc:378 effects_first.cc:484 mon-stuff.cc:1083
+#: effects.cc:378 effects_first.cc:484 mon-stuff.cc:1083 effects_first.cc:488
 msgid "fiery explosion"
 msgstr "화염의 폭발"
 
@@ -11726,15 +11738,15 @@ msgstr "중요하지 않은"
 msgid "mystic blast"
 msgstr "신비한 폭발"
 
-#: effects.cc:440 effects_first.cc:541
+#: effects.cc:440 effects_first.cc:541 effects_first.cc:545
 msgid "electric current"
 msgstr "고압 전류"
 
-#: effects.cc:489 effects_first.cc:598
+#: effects.cc:489 effects_first.cc:598 effects_first.cc:602
 msgid "golden flame"
 msgstr "황금빛 불꽃"
 
-#: effects.cc:2184 effects_first.cc:2857
+#: effects.cc:2184 effects_first.cc:2857 effects_first.cc:2861
 msgid "magical storm"
 msgstr "마력의 폭풍"
 
@@ -14474,3 +14486,83 @@ msgstr "고양이"
 #: species.cc:184
 msgid "Octopus"
 msgstr "문어족"
+
+#: godabil.cc:580 godabil.cc:627
+msgid "Abominations (harms the forces of chaos and mutation)"
+msgstr "혐오의 서 : 혼돈의 힘과, 변이의 해악"
+
+#: godabil.cc:581 godabil.cc:628
+msgid "Ablutions (harms the unclean and walking corpses)"
+msgstr "정화의 서 : 부정함과 일으켜진 망자들의 해악"
+
+#: godabil.cc:582 godabil.cc:629
+msgid "Apostates (harms the faithless and heretics)"
+msgstr "변절의 서 : 믿지 않는 자와 이교도들의 해악"
+
+#: godabil.cc:583 godabil.cc:630
+msgid "Anathema (harms all types of demons and undead)"
+msgstr "반대의 서 : 모든 악마와 언데드의 해악"
+
+#: godabil.cc:584 godabil.cc:631
+msgid "Alliances (blesses intelligent allies)"
+msgstr "동맹의 서 : 지성 있는 동료들에게 축복을"
+
+#: godprayer.cc:525
+msgid "Escape"
+msgstr ""
+
+#: godprayer.cc:525
+msgid "Destruction"
+msgstr ""
+
+#: godprayer.cc:525
+msgid "Dungeons"
+msgstr ""
+
+#: godprayer.cc:525
+msgid "Wonder"
+msgstr ""
+
+#. "shout"
+#. Tweak volume for different kinds of vocalisation.
+#: effects.cc:1059 player.cc:6055 effects.cc:935
+msgid "roar"
+msgstr "포효"
+
+#: effects.cc:1061 player.cc:6057 effects.cc:937
+msgid "hiss"
+msgstr "쉭~소리"
+
+#: effects.cc:1063 player.cc:6059 effects.cc:939
+msgid "squeak"
+msgstr "찍소리"
+
+#: player.cc:6061
+msgid "squeal"
+msgstr "꿀꿀"
+
+#: player.cc:6064
+msgid "meow"
+msgstr "야옹"
+
+#: player.cc:6064
+msgid "yowl"
+msgstr "갸울"
+
+#: player.cc:6068
+msgid "shout"
+msgstr "외치기"
+
+#: player.cc:6070 effects.cc:943
+msgid "yell"
+msgstr "고함"
+
+#. level == 3
+#: player.cc:6072 effects.cc:945 effects.cc:960
+msgid "scream"
+msgstr ""
+
+#: spl-goditem.cc:720 spl-goditem.cc:758 melee_attack.cc:1508
+#: melee_attack.cc:1544
+msgid "armour"
+msgstr ""

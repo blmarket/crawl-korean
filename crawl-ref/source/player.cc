@@ -3162,7 +3162,7 @@ void level_change(bool skip_attribute_increase)
             case SP_DEEP_DWARF:
                 if (you.experience_level == 14)
                 {
-                    mpr("You feel somewhat more resistant.",
+                    mpr(_("You feel somewhat more resistant."),
                         MSGCH_INTRINSIC_GAIN);
                     perma_mutate(MUT_NEGATIVE_ENERGY_RESISTANCE, 1, "level up");
                 }
@@ -3203,7 +3203,7 @@ void level_change(bool skip_attribute_increase)
             case SP_MUMMY:
                 if (you.experience_level == 13 || you.experience_level == 26)
                 {
-                    mpr("You feel more in touch with the powers of death.",
+                    mpr(_("You feel more in touch with the powers of death."),
                         MSGCH_INTRINSIC_GAIN);
                 }
 
@@ -3247,8 +3247,8 @@ void level_change(bool skip_attribute_increase)
 
                 if (you.experience_level == 13)
                 {
-                    mpr("Your tail grows strong enough to constrict"
-                        " your enemies.", MSGCH_INTRINSIC_GAIN);
+                    mpr(_("Your tail grows strong enough to constrict"
+                        " your enemies."), MSGCH_INTRINSIC_GAIN);
                 }
                 break;
 
@@ -5073,7 +5073,7 @@ bool confuse_player(int amount, bool resistable)
 
     if (you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from confusion!");
+        mpr(_("Your divine stamina protects you from confusion!"));
         return false;
     }
 
@@ -5151,7 +5151,7 @@ bool poison_player(int amount, std::string source, std::string source_aux,
 
     if (!force && you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from poison!");
+        mpr(_("Your divine stamina protects you from poison!"));
         return false;
     }
 
@@ -6052,24 +6052,24 @@ std::string player::shout_verb() const
     switch (you.form)
     {
     case TRAN_DRAGON:
-        return V_("roar");
+        return M_("roar");
     case TRAN_SPIDER:
-        return V_("hiss");
+        return M_("hiss");
     case TRAN_BAT:
-        return V_("squeak");
+        return M_("squeak");
     case TRAN_PIG:
-        return V_("squeal");
+        return M_("squeal");
     default:
         if (you.species == SP_FELID)
-            return coinflip() ? V_("meow") : V_("yowl");
+            return coinflip() ? M_("meow") : M_("yowl");
         // depends on SCREAM mutation
         int level = player_mutation_level(MUT_SCREAM);
         if (level <= 1)
-            return V_("shout");
+            return M_("shout");
         else if (level == 2)
-            return V_("yell");
+            return M_("yell");
         else // level == 3
-            return V_("scream");
+            return M_("scream");
     }
 }
 

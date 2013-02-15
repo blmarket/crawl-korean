@@ -1505,7 +1505,7 @@ std::string melee_attack::player_why_missed() // (130211, deceit) 이 함수;; �
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const std::string armour_name =
-            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext("armour")));
+            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext(M_("armour"))));
 
         if (armour_miss && !shield_miss)
             return make_stringf(gettext("Your %s prevents you from hitting "), armour_name.c_str());
@@ -1541,7 +1541,7 @@ void melee_attack::player_warn_miss()
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const std::string armour_name =
-            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext("armour")));
+            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext(M_("armour"))));
 
         if (armour_miss && !shield_miss)
             return mprf(gettext("Your %s prevents you from hitting %s"), 
@@ -3288,7 +3288,7 @@ bool melee_attack::chop_hydra_head(int dam,
     {
         if (defender_visible)
         {
-            mprf("%s %s one of %s's heads off!",
+            mprf(_("%s %s one of %s's heads off!"),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb(verb).c_str(),
                  def_name(DESC_THE).c_str());
@@ -4141,7 +4141,7 @@ void melee_attack::mons_do_poison()
                  defender_name().c_str());
             if (force)
             {
-                mprf("%s partially resist%s.",
+                mprf(_("%s partially resist%s."),
                     defender_name().c_str(),
                     defender->is_player() ? "" : "s");
             }
@@ -4470,14 +4470,14 @@ void melee_attack::mons_apply_attack_flavour()
 
         // The expose_ message doesn't convey the agent.
         if (needs_message)
-            mprf("%s lunges at you hungrily!", atk_name(DESC_THE).c_str());
+            mprf(_("%s lunges at you hungrily!"), atk_name(DESC_THE).c_str());
 
         expose_player_to_element(BEAM_DEVOUR_FOOD, 10);
         const bool ground = expose_items_to_element(BEAM_DEVOUR_FOOD, you.pos(),
                                                     10);
 
         if (needs_message && ground)
-            mpr("Some of the food beneath you is devoured!");
+            mpr(_("Some of the food beneath you is devoured!"));
         break;
     }
 
@@ -4653,7 +4653,7 @@ void melee_attack::do_spines()
                 return;
             if (you.can_see(defender) || attacker->is_player())
             {
-                mprf("%s %s struck by %s spines.", attacker->name(DESC_THE).c_str(),
+                mprf(_("%s %s struck by %s spines."), attacker->name(DESC_THE).c_str(),
                      attacker->conj_verb("are").c_str(),
                      defender->name(DESC_ITS).c_str());
             }

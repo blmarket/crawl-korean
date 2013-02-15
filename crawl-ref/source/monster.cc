@@ -4568,7 +4568,7 @@ bool monster::sicken(int amount, bool unused)
     if (!has_ench(ENCH_SICK) && you.can_see(this))
     {
         // Yes, could be confused with poisoning.
-        mprf("%s looks sick.", name(DESC_THE).c_str());
+        mprf(_("%s looks sick."), name(DESC_THE).c_str());
     }
 
     add_ench(mon_enchant(ENCH_SICK, 0, 0, amount * 10));
@@ -5395,9 +5395,9 @@ bool monster::should_evoke_jewellery(jewellery_type jtype) const
 // Return the ID status gained.
 item_type_id_state_type monster::evoke_jewellery_effect(jewellery_type jtype)
 {
-    mprf("%s evokes %s %s.", name(DESC_THE).c_str(),
+    mprf(_("%s evokes %s %s."), name(DESC_THE).c_str(),
          pronoun(PRONOUN_POSSESSIVE).c_str(),
-         jewellery_is_amulet(jtype) ? "amulet" : "ring");
+         jewellery_is_amulet(jtype) ? _(M_("amulet")) : _(M_("ring")));
 
     item_type_id_state_type ident = ID_MON_TRIED_TYPE;
 
@@ -5746,7 +5746,7 @@ void monster::steal_item_from_player()
     new_item.pos.reset();
     new_item.link = NON_ITEM;
 
-    mprf("%s steals %s!",
+    mprf(_("%s steals %s!"),
          name(DESC_THE).c_str(),
          new_item.name(true, DESC_YOUR).c_str());
 

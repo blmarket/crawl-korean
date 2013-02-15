@@ -727,7 +727,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         return (rot_count > 0);
     }
 
-    mprf("You can't carry %s right now.", coag_count > 1 ? "them" : "it");
+    mprf(_("You can't carry %s right now."), coag_count > 1 ? "them" : "it");
 
     // No space in inventory, check floor.
     int o = igrd(you.pos());
@@ -1414,7 +1414,7 @@ bool go_berserk(bool intentional, bool potion)
     if (you.duration[DUR_FINESSE] > 0)
     {
         you.duration[DUR_FINESSE] = 0; // Totally incompatible.
-        mpr("Finesse? Hah! Time to rip out guts!");
+        mpr(_("Finesse? Hah! Time to rip out guts!"));
     }
 
     if (you.religion == GOD_CHEIBRIADOS)
@@ -2484,7 +2484,7 @@ void swap_with_monster(monster* mon_to_swap)
             int net = get_trapping_net(you.pos());
             if (net != NON_ITEM)
                 destroy_item(net);
-            mprf("The %s rips apart!", (net == NON_ITEM) ? "web" : "net");
+            mprf(_("The %s rips apart!"), (net == NON_ITEM) ? _(M_("web")) : _(M_("net")));
             you.attribute[ATTR_HELD] = 0;
             you.redraw_quiver = true;
         }

@@ -479,19 +479,19 @@ void canned_msg(canned_message_type which_message)
         mpr(gettext("You're too hungry."));
         break;
     case MSG_DETECT_NOTHING:
-        mpr("You detect nothing.");
+        mpr(_("You detect nothing."));
         break;
     case MSG_CALL_DEAD:
-        mpr("You call on the dead to rise...");
+        mpr(_("You call on the dead to rise..."));
         break;
     case MSG_ANIMATE_REMAINS:
-        mpr("You attempt to give life to the dead...");
+        mpr(_("You attempt to give life to the dead..."));
         break;
     case MSG_DECK_EXHAUSTED:
-        mpr("The deck of cards disappears in a puff of smoke.");
+        mpr(_("The deck of cards disappears in a puff of smoke."));
         break;
     case MSG_EVOCATION_SUPPRESSED:
-        mpr("You may not evoke while suppressed!");
+        mpr(_("You may not evoke while suppressed!"));
         break;
     }
 }
@@ -700,16 +700,16 @@ int yesnoquit(const char* str, bool safe, int safeanswer, bool allow_all,
             else
             {
                 bool upper = (!safe && crawl_state.game_is_hints_tutorial());
-                mprf("Choose %s[Y]es%s, [N]o, [Q]uit, or [A]ll!",
-                     upper ? "uppercase " : "",
+                mprf(_("Choose %s[Y]es%s, [N]o, [Q]uit, or [A]ll!"),
+                     upper ? _("uppercase ") : "",
                      _list_alternative_yes(alt_yes, alt_yes2, false, true).c_str());
             }
         }
         else
         {
             bool upper = (!safe && crawl_state.game_is_hints_tutorial());
-            mprf("%s[Y]es%s, [N]o or [Q]uit only, please.",
-                 upper ? "Uppercase " : "",
+            mprf(_("%s[Y]es%s, [N]o or [Q]uit only, please."),
+                 upper ? _("Uppercase ") : "",
                  _list_alternative_yes(alt_yes, alt_yes2, false, true).c_str());
         }
     }

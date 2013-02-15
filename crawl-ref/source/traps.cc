@@ -168,7 +168,7 @@ std::string trap_def::name(description_level_type desc) const
         return (prefix + basename);
     }
     else if (desc == DESC_THE)
-        return (std::string("the ") + basename);
+        return basename; // (std::string("the ") + basename);
     else                        // everything else
         return basename;
 }
@@ -338,11 +338,11 @@ void monster_caught_in_net(monster* mon, bolt &pbolt)
         {
             if (mon->visible_to(&you))
             {
-                mprf("The net is caught on %s!",
+                mprf(_("The net is caught on %s!"),
                      mon->name(DESC_THE).c_str());
             }
             else
-                mpr("The net is caught on something unseen!");
+                mpr(_("The net is caught on something unseen!"));
         }
         return;
     }
@@ -615,7 +615,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
         if (!you_trigger && !you_know && !in_sight)
             hide();
         if (you_trigger)
-            mpr("You enter a teleport trap!");
+            mpr(_("You enter a teleport trap!"));
         if (ammo_qty > 0 && !--ammo_qty)
         {
             // can't use trap_destroyed, as we might recurse into a shaft
@@ -623,7 +623,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             if (in_sight)
             {
                 env.map_knowledge(pos).set_feature(DNGN_FLOOR);
-                mpr("The teleport trap disappears.");
+                mpr(_("The teleport trap disappears."));
             }
             disarm();
         }
@@ -722,13 +722,13 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                 if (in_sight)
                 {
                     // TODO: FIXME: Translate later
-                    std::string msg = "A huge blade swings out";
+                    std::string msg = _("A huge blade swings out");
                     if (m->visible_to(&you))
                     {
-                        msg += " and slices into ";
+                        msg += _(" and slices into ");
                         msg += m->name(DESC_THE);
                     }
-                    msg += "!";
+                    msg += P_("bladetrap","!");
                     mpr(msg.c_str());
                 }
 
@@ -851,9 +851,9 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
         {
             trap_destroyed = true;
             if (you_trigger)
-                mprf("You tear through %s web.", you_know ? "the" : "a");
+                mprf(_("You tear through %s web."), you_know ? "the" : "a");
             else if (m)
-                simple_monster_message(m, " tears through a web.");
+                simple_monster_message(m, _(" tears through a web."));
             break;
         }
 
@@ -862,9 +862,9 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             if (m)
             {
                 if (m->is_insubstantial())
-                    simple_monster_message(m, " passes through a web.");
+                    simple_monster_message(m, _(" passes through a web."));
                 else if (mons_genus(m->type) == MONS_JELLY)
-                    simple_monster_message(m, " oozes through a web.");
+                    simple_monster_message(m, _(" oozes through a web."));
                 // too spammy for spiders, and expected
             }
             break;
@@ -873,10 +873,10 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
         if (you_trigger)
         {
             if (trig_knows && one_chance_in(3))
-                mpr("You pick your way through the web.");
+                mpr(_("You pick your way through the web."));
             else
             {
-                mpr("You are caught in the web!");
+                mpr(_("You are caught in the web!"));
 
                 if (_player_caught_in_web())
                 {
@@ -892,7 +892,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             {
                 // Not triggered, trap stays.
                 if (you_know)
-                    simple_monster_message(m, " evades a web.");
+                    simple_monster_message(m, _(" evades a web."));
                 else
                     hide();
             }
@@ -902,9 +902,9 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                 if (in_sight)
                 {
                     if (m->visible_to(&you))
-                        simple_monster_message(m, " is caught in a web!");
+                        simple_monster_message(m, _(" is caught in a web!"));
                     else
-                        mpr("A web moves frantically as something is caught in it!");
+                        mpr(_("A web moves frantically as something is caught in it!"));
                 }
 
                 // If somehow already caught, make it worse.
@@ -1394,7 +1394,7 @@ void free_self_from_net()
         {
             if (x_chance_in_y(40 - you.stat(STAT_STR), 66))
             {
-                mpr("You struggle to detach yourself from the web.");
+                mpr(_("You struggle to detach yourself from the web."));
                 return;
             }
             maybe_destroy_web(&you);
@@ -1581,14 +1581,14 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (!force_hit && (one_chance_in(5) || was_known && !one_chance_in(4)))
         {
-            mprf("You avoid triggering %s trap.", name(DESC_A).c_str());
+            mprf(_("You avoid triggering %s trap."), name(DESC_A).c_str());
             return;         // no ammo generated either
         }
     }
     else if (!force_hit && one_chance_in(5))
     {
         if (was_known && you.see_cell(pos) && you.can_see(&act))
-            mprf("%s avoids triggering %s trap.", act.name(DESC_THE).c_str(),
+            mprf(_("%s avoids triggering %s trap."), act.name(DESC_THE).c_str(),
                  name(DESC_A).c_str());
         return;
     }
@@ -1613,12 +1613,12 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (act.is_player())
         {
-            mprf("%s shoots out and misses you.", shot.name(true, DESC_A).c_str());
+            mprf(_("%s shoots out and misses you."), shot.name(true, DESC_A).c_str());
             practise(EX_DODGE_TRAP);
         }
         else if (you.see_cell(act.pos()))
         {
-            mprf("%s misses %s!", shot.name(true, DESC_A).c_str(),
+            mprf(_("%s misses %s!"), shot.name(true, DESC_A).c_str(),
                  act.name(DESC_THE).c_str());
         }
     }
@@ -1626,12 +1626,12 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         std::string owner;
         if (act.is_player())
-            owner = "your";
+            owner = P_("trap_ammo","your");
         else if (you.can_see(&act))
             owner = apostrophise(act.name(DESC_THE));
         else // "its" sounds abysmal; animals don't use shields
-            owner = "someone's";
-        mprf("%s shoots out and hits %s shield.", shot.name(true, DESC_A).c_str(),
+            owner = P_("trap_ammo","someone's");
+        mprf(_("%s shoots out and hits %s shield."), shot.name(true, DESC_A).c_str(),
              owner.c_str());
 
         act.shield_block_succeeded(0);
@@ -2044,16 +2044,16 @@ bool maybe_destroy_web(actor *oaf)
     if (coinflip())
     {
         if (oaf->is_monster())
-            simple_monster_message(oaf->as_monster(), " pulls away from the web.");
+            simple_monster_message(oaf->as_monster(), _(" pulls away from the web."));
         else
-            mpr("You disentangle yourself.");
+            mpr(_("You disentangle yourself."));
         return false;
     }
 
     if (oaf->is_monster())
-        simple_monster_message(oaf->as_monster(), " tears the web.");
+        simple_monster_message(oaf->as_monster(), _(" tears the web."));
     else
-        mpr("The web tears apart.");
+        mpr(_("The web tears apart."));
     destroy_trap(oaf->pos());
     return true;
 }
@@ -2067,7 +2067,7 @@ bool ensnare(actor *fly)
     {
         // currently webs are stateless so except for flavour it's a no-op
         if (fly->is_player())
-            mpr("You are even more entangled.");
+            mpr(_("You are even more entangled."));
         return false;
     }
 
@@ -2076,9 +2076,9 @@ bool ensnare(actor *fly)
         if (you.can_see(fly))
         {
             if (fly->is_player())
-                mpr("A web splats on you, sticky and dirtying but otherwise harmless.");
+                mpr(_("A web splats on you, sticky and dirtying but otherwise harmless."));
             else
-                mprf("A web harmlessly splats on %s.", fly->name(DESC_THE).c_str());
+                mprf(_("A web harmlessly splats on %s."), fly->name(DESC_THE).c_str());
         }
         return false;
     }
@@ -2098,11 +2098,11 @@ bool ensnare(actor *fly)
     if (fly->is_player())
     {
         if (_player_caught_in_web()) // no fail, returns false if already held
-            mpr("You are caught in a web!");
+            mpr(_("You are caught in a web!"));
     }
     else
     {
-        simple_monster_message(fly->as_monster(), " is caught in a web!");
+        simple_monster_message(fly->as_monster(), _(" is caught in a web!"));
         fly->as_monster()->add_ench(ENCH_HELD);
     }
 

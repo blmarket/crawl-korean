@@ -1164,12 +1164,12 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_FIRE:
-        mpr("You feel more attuned to fire.");
+        mpr(_("You feel more attuned to fire."));
         ident = ID_KNOWN_TYPE;
         break;
 
     case RING_ICE:
-        mpr("You feel more attuned to ice.");
+        mpr(_("You feel more attuned to ice."));
         ident = ID_KNOWN_TYPE;
         break;
 

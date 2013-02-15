@@ -1152,13 +1152,13 @@ void shillelagh(actor *wielder, coord_def where, int pow)
     if (!affected_monsters.empty())
     {
         const std::string message =
-            make_stringf("%s shudder%s.",
+            make_stringf(_("%s shudder%s."),
                          affected_monsters.describe().c_str(),
                          affected_monsters.count() == 1? "s" : "");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
-            mpr("There is a shattering impact!");
+            mpr(_("There is a shattering impact!"));
     }
 
     // need to do this again to do the actual damage

@@ -1412,9 +1412,9 @@ static bool _write_dump(const std::string &fname, dump_params &par,
         succeeded = true;
         if (print_dump_path)
 #ifdef DGAMELAUNCH
-            mprf("Char dumped successfully.");
+            mprf(_("Char dumped successfully."));
 #else
-            mprf("Char dumped to '%s'.", file_name.c_str());
+            mprf(_("Char dumped to '%s'."), file_name.c_str());
 #endif
     }
     else

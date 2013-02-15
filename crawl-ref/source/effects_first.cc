@@ -3,6 +3,10 @@
  * @brief Misc stuff.
 **/
 
+effects_first.cc는 0.9때는 썼었는지 기억이 가물가물한데.. 0.11버전에서는 확실히 안쓰는듯.
+애초에 원래 있던 돌죽이 아니라.. Neonssi님 만나기 전에 혼자서 ifdef 써가면서 삽질할때 그때 해놨던거였나요 ㅋㅋㅋㅋㅋ
+하여간 주석도 안쓰고 이렇게 한글을 막 적는데 에러안나는거 보면 확실히 이 소스코드는 상관없습니다.
+
 #include "AppHdr.h"
 
 #include "effects.h"
@@ -1357,7 +1361,7 @@ static void _set_allies_patrol_point(bool clear = false)
             mi->behaviour = BEH_WANDER;
     }
 }
-
+HAHAHA!
 void yell(bool force)
 {
     ASSERT(!crawl_state.game_is_arena());

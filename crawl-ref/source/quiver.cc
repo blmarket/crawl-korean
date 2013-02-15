@@ -166,22 +166,22 @@ void quiver_item(int slot)
         t = _get_weapon_ammo_type(weapon);
 
     you.m_quiver->set_quiver(you.inv[slot], t);
-    mprf("Quivering %s for %s.", you.inv[slot].name(true, DESC_INVENTORY).c_str(),
-         t == AMMO_THROW    ? "throwing" :
-         t == AMMO_BLOWGUN  ? "blowguns" :
-         t == AMMO_SLING    ? "slings" :
-         t == AMMO_BOW      ? "bows" :
-                              "crossbows");
+    mprf(_("Quivering %s for %s."), you.inv[slot].name(true, DESC_INVENTORY).c_str(),
+         t == AMMO_THROW    ? P_("quiver","throwing") :
+         t == AMMO_BLOWGUN  ? P_("quiver","blowguns") :
+         t == AMMO_SLING    ? P_("quiver","slings") :
+         t == AMMO_BOW      ? P_("quiver","bows") :
+                              P_("quiver","crossbows"));
 }
 
 void choose_item_for_quiver()
 {
     if (you.species == SP_FELID)
     {
-        mpr("You can't grasp things well enough to throw them.");
+        mpr(_("You can't grasp things well enough to throw them."));
         return;
     }
-    int slot = prompt_invent_item("Quiver which item? (- for none, * to show all)",
+    int slot = prompt_invent_item(_("Quiver which item? (- for none, * to show all)"),
                                   MT_INVLIST,
                                   OSEL_THROWABLE, true, true, true, '-',
                                   you.equip[EQ_WEAPON], NULL, OPER_QUIVER);
@@ -206,7 +206,7 @@ void choose_item_for_quiver()
     {
         // Don't quiver a wielded weapon unless it's a weapon of returning
         // and we've got some throwing skill.
-        mpr("You can't quiver wielded weapons.");
+        mpr(_("You can't quiver wielded weapons."));
         return;
     }
     else
@@ -215,7 +215,7 @@ void choose_item_for_quiver()
         {
             if (you.equip[i] == slot)
             {
-                mpr("You can't quiver worn items.");
+                mpr(_("You can't quiver worn items."));
                 return;
             }
         }

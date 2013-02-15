@@ -120,10 +120,10 @@ static void _trj_spawns(actor *attacker, actor *trj, coord_def pos, int damage)
         }
     }
     else if (spawned == 1)
-        mpr("One of the Royal Jelly's fragments survives.");
+        mpr(_("One of the Royal Jelly's fragments survives."));
     else
     {
-        mprf("The dying Royal Jelly spits out %s more jellies.",
+        mprf(_("The dying Royal Jelly spits out %s more jellies."),
              number_in_words(spawned).c_str());
     }
 }
@@ -145,7 +145,7 @@ void fire_final_effects()
         {
         case FINEFF_LIGHTNING_DISCHARGE:
             if (you.see_cell(fe.pos))
-                mpr("Electricity arcs through the water!");
+                mpr(_("Electricity arcs through the water!"));
             conduct_electricity(fe.pos, attacker);
             break;
 
@@ -155,12 +155,12 @@ void fire_final_effects()
             // defender being dead is ok, if we killed them we still suffer
             if (fe.att == MID_PLAYER)
             {
-                mpr("It reflects your damage back at you!");
+                mpr(_("It reflects your damage back at you!"));
                 ouch(fe.x, NON_MONSTER, KILLED_BY_REFLECTION);
             }
             else if (fe.def == MID_PLAYER)
             {
-                simple_god_message(" mirrors your injury!");
+                simple_god_message(_(" mirrors your injury!"));
 #ifndef USE_TILE_LOCAL
                 flash_monster_colour(attacker->as_monster(), RED, 200);
 #endif
