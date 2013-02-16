@@ -1947,15 +1947,15 @@ static void _apport_and_butcher(monster *caster, item_def &item)
                  caster->name(DESC_THE).c_str(),
                  item_name.c_str(),
                  theft.c_str(),
-                 item.quantity > 1 ? "" : P_("sssss","s"));
+                 item.quantity > 1 ? "" : "s");
         }
         else if (you.see_cell(item.pos))
         {
             mprf(_("%s%s suddenly rise%s and float%s away!"),
                  item_name.c_str(),
                  theft.c_str(),
-                 item.quantity > 1 ? "" : P_("sssss","s"),
-                 item.quantity > 1 ? "" : P_("sssss","s"));
+                 item.quantity > 1 ? "" : "s",
+                 item.quantity > 1 ? "" : "s");
         }
         if (!theft.empty())
             xom_is_stimulated(100);

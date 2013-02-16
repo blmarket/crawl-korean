@@ -5203,13 +5203,13 @@ void dec_poison_player()
         {
             hurted = random2(10) + 5;
             channel = MSGCH_DANGER;
-            adj = P_("adj", "extremely ");
+            adj = pgettext("adj", "extremely ");
         }
         else if (you.duration[DUR_POISONING] > 5 && coinflip())
         {
             hurted = coinflip() ? 3 : 2;
             channel = MSGCH_WARN;
-            adj = P_("adj", "very ");
+            adj = pgettext("adj", "very ");
         }
 
         int oldhp = you.hp;

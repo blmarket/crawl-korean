@@ -725,8 +725,8 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                     std::string msg = _("A huge blade swings out");
                     if (m->visible_to(&you))
                     {
-                        msg += _(" and slices into ");
-                        msg += m->name(DESC_THE);
+                        msg += m->name(DESC_PLAIN); //msg += _(" and slices into ");
+                        msg += _(" and slices into "); //msg += m->name(DESC_THE);
                     }
                     msg += P_("bladetrap","!");
                     mpr(msg.c_str());
@@ -1581,7 +1581,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (!force_hit && (one_chance_in(5) || was_known && !one_chance_in(4)))
         {
-            mprf(_("You avoid triggering %s trap."), name(DESC_A).c_str());
+            mprf(_("You avoid triggering %s trap."), name(DESC_PLAIN).c_str());
             return;         // no ammo generated either
         }
     }
@@ -1589,7 +1589,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (was_known && you.see_cell(pos) && you.can_see(&act))
             mprf(_("%s avoids triggering %s trap."), act.name(DESC_THE).c_str(),
-                 name(DESC_A).c_str());
+                 name(DESC_PLAIN).c_str());
         return;
     }
 
@@ -1613,12 +1613,12 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (act.is_player())
         {
-            mprf(_("%s shoots out and misses you."), shot.name(true, DESC_A).c_str());
+            mprf(_("%s shoots out and misses you."), shot.name(true, DESC_PLAIN).c_str());
             practise(EX_DODGE_TRAP);
         }
         else if (you.see_cell(act.pos()))
         {
-            mprf(_("%s misses %s!"), shot.name(true, DESC_A).c_str(),
+            mprf(_("%s misses %s!"), shot.name(true, DESC_PLAIN).c_str(),
                  act.name(DESC_THE).c_str());
         }
     }

@@ -1784,13 +1784,13 @@ bool check_warning_inscriptions(const item_def& item,
         }
 
         std::string prompt = P_("invent","Really "); // + _operation_verb(oper) + " ";
-        prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
-                                      : item.name(true, DESC_A)) + _operation_verb(oper); // (130216) 여기는 어순상 수정
         if (_nasty_stasis(item, oper))
             prompt += std::string(P_("invent"," while "))
                       + (you.duration[DUR_TELEPORT] ? P_("invent","about to teleport") :
                          you.duration[DUR_SLOW] ? P_("invent","slowed") : P_("invent","hasted"));
-        prompt += P_("invent","?");
+        prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
+                                      : item.name(true, DESC_A)) + _operation_verb(oper); // (130216) 여기는 어순상 수정
+        prompt += _operation_verb(oper) + "?";
         return (yesno(prompt.c_str(), false, 'n')
                 && check_old_item_warning(item, oper));
     }

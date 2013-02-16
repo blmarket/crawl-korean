@@ -2481,7 +2481,7 @@ bool enchant_weapon(item_def &wpn, int acc, int dam, const char *colour)
     if (!success && colour)
     {
         if (!wpn.defined())
-            iname = "Your " + you.hand_name(true);
+            iname = P_("invent","Your "); iname += _(you.hand_name(true).c_str());
         mprf(_("%s very briefly gain%s a %s sheen."), iname.c_str(), s, colour);
     }
 
@@ -3095,15 +3095,15 @@ void read_scroll(int slot)
         break;
 
     case SCR_ENCHANT_WEAPON_I:
-        _handle_enchant_weapon(1, 0, "green");
+        _handle_enchant_weapon(1, 0, _(M_("green")));
         break;
 
     case SCR_ENCHANT_WEAPON_II:
-        _handle_enchant_weapon(0, 1, "red");
+        _handle_enchant_weapon(0, 1, _(M_("red")));
         break;
 
     case SCR_ENCHANT_WEAPON_III:
-        _handle_enchant_weapon(1 + random2(2), 1 + random2(2), "bright yellow");
+        _handle_enchant_weapon(1 + random2(2), 1 + random2(2), _(M_("bright yellow")));
         break;
 
     case SCR_VORPALISE_WEAPON:

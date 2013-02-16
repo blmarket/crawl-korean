@@ -337,7 +337,7 @@ void pray()
 
     mprf(MSGCH_PRAY, _("You %s prayer to %s."),
          you.duration[DUR_JELLY_PRAYER] ? P_("godprayer","renew your") : P_("godprayer","offer a"),
-         god_name(you.religion).c_str());
+         _(god_name(you.religion).c_str()));
 
     switch (you.religion)
     {
@@ -487,8 +487,8 @@ static void _zin_donate_gold()
         return;
     }
 
-    std::string result = "You feel that " + god_name(GOD_ZIN)
-                       + " will soon be ";
+    std::string result = P_("zin","You feel that "); result += _(god_name(GOD_ZIN).c_str());
+                result += P_("zin"," will soon be ");
     result +=
         (estimated_piety > 130) ? _("exalted by your worship") :
         (estimated_piety > 100) ? _("extremely pleased with you") :
@@ -497,7 +497,7 @@ static void _zin_donate_gold()
         (estimated_piety >  20) ? _("pleased with you") :
         (estimated_piety >   5) ? _("noncommittal")
                                 : _("displeased");
-    result += (donation >= 30 && you.piety <= 170) ? "!" : ".";
+    result += (donation >= 30 && you.piety <= 170) ? P_("zin","!") : P_("zin",".");
 
     mpr(result.c_str());
 }

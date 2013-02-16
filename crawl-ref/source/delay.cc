@@ -1723,10 +1723,10 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         if (!mweap.empty())
         {
             if (ash_id)
-                ash_warning = "Ashenzari warns you:";
+                ash_warning = _("Ashenzari warns you:");
 
             (ash_id ? ash_warning : text) +=
-                " " + uppercase_first(mon->pronoun(PRONOUN_SUBJECTIVE)) + " is"
+                " " + uppercase_first(mon->pronoun(PRONOUN_SUBJECTIVE)) + "의 "
                 + mweap + ".";
         }
 

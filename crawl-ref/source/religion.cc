@@ -3992,7 +3992,7 @@ void handle_god_time()
 // yet another wrapper for mpr() {dlb}:
 void simple_god_message(const char *event, god_type which_deity)
 {
-    std::string msg = uppercase_first(god_name(which_deity)) + event;
+    std::string msg = uppercase_first(_(god_name(which_deity).c_str())) + event;
     msg = apostrophise_fixup(msg);
     god_speaks(which_deity, msg.c_str());
 }

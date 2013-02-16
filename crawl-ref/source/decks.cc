@@ -2817,7 +2817,7 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
 
         if (player_will_anger_monster(mon))
         {
-            simple_monster_message(mon, " is repulsed!");
+            simple_monster_message(mon, _(" is repulsed!"));
             return;
         }
 
@@ -2830,15 +2830,15 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
             return;
         }
 
-        const std::string prompt = make_stringf("Pay %s fee of %d gold?",
+        const std::string prompt = make_stringf(_("Pay %s fee of %d gold?"),
                                                 mon->name(DESC_ITS).c_str(), fee);
         if (!yesno(prompt.c_str()))
         {
-            simple_monster_message(mon, " attacks!");
+            simple_monster_message(mon, _(" attacks!"));
             return;
         }
 
-        simple_monster_message(mon, " joins your ranks!");
+        simple_monster_message(mon, _(" joins your ranks!"));
         mon->attitude = ATT_FRIENDLY;
         mons_att_changed(mon);
         you.del_gold(fee);

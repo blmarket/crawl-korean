@@ -105,16 +105,16 @@ static void _trj_spawns(actor *attacker, actor *trj, coord_def pos, int damage)
     if (trj)
     {
         const std::string monnam = trj->name(DESC_THE);
-        mprf("%s shudders%s.", monnam.c_str(),
-             spawned >= 5 ? " alarmingly" :
-             spawned >= 3 ? " violently" :
-             spawned > 1 ? " vigorously" : "");
+        mprf(_("%s shudders%s."), monnam.c_str(),
+             spawned >= 5 ? P_("react"," alarmingly") :
+             spawned >= 3 ? P_("react"," violently") :
+             spawned > 1 ? P_("react"," vigorously") : "");
 
         if (spawned == 1)
-            mprf("%s spits out another jelly.", monnam.c_str());
+            mprf(_("%s spits out another jelly."), monnam.c_str());
         else
         {
-            mprf("%s spits out %s more jellies.",
+            mprf(_("%s spits out %s more jellies."),
                  monnam.c_str(),
                  number_in_words(spawned).c_str());
         }
@@ -175,7 +175,7 @@ void fire_final_effects()
             else
             {
                 simple_monster_message(attacker->as_monster(),
-                                       " suffers a backlash!");
+                                       _(" suffers a backlash!"));
                 attacker->hurt(defender, fe.x);
             }
             break;

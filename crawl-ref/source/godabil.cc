@@ -786,9 +786,9 @@ bool zin_recite_to_single_monster(const coord_def& where,
     if (mon->can_speak() && one_chance_in(5))
     {
         if (check < -10)
-            simple_monster_message(mon, " guffaws at your puny god.");
+            simple_monster_message(mon, _(" guffaws at your puny god."));
         else if (check < -5)
-            simple_monster_message(mon, " sneers at your recitation.");
+            simple_monster_message(mon, _(" sneers at your recitation."));
     }
 
     if (check <= 0)
@@ -989,7 +989,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         if (mon->can_sleep())
         {
             mon->put_to_sleep(&you, 0);
-            simple_monster_message(mon, " nods off for a moment.");
+            simple_monster_message(mon, _(" nods off for a moment."));
             affected = true;
         }
         break;
@@ -998,7 +998,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         if (mon->add_ench(mon_enchant(ENCH_DAZED, degree, &you,
                           (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
-            simple_monster_message(mon, " is dazed by your recitation.");
+            simple_monster_message(mon, _(" is dazed by your recitation."));
             affected = true;
         }
         break;
@@ -1010,9 +1010,9 @@ bool zin_recite_to_single_monster(const coord_def& where,
                              (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
             if (prayertype == RECITE_HERETIC)
-                simple_monster_message(mon, " is confused by your recitation.");
+                simple_monster_message(mon, _(" is confused by your recitation."));
             else
-                simple_monster_message(mon, " stumbles about in disarray.");
+                simple_monster_message(mon, _(" stumbles about in disarray."));
             affected = true;
         }
         break;
@@ -1022,11 +1022,11 @@ bool zin_recite_to_single_monster(const coord_def& where,
                           (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
             if (prayertype == RECITE_HERETIC)
-                simple_monster_message(mon, " is terrified by your recitation.");
+                simple_monster_message(mon, _(" is terrified by your recitation."));
             else if (minor)
-                simple_monster_message(mon, " tries to escape the wrath of Zin.");
+                simple_monster_message(mon, _(" tries to escape the wrath of Zin."));
             else
-                simple_monster_message(mon, " flees in terror at the wrath of Zin!");
+                simple_monster_message(mon, _(" flees in terror at the wrath of Zin!"));
             behaviour_event(mon, ME_SCARE, 0, you.pos());
             affected = true;
         }
@@ -1037,8 +1037,8 @@ bool zin_recite_to_single_monster(const coord_def& where,
                           (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
             simple_monster_message(mon,
-                minor ? " is awed by your recitation."
-                      : " is aghast at the heresy of your recitation.");
+                minor ? _(" is awed by your recitation.")
+                      : _(" is aghast at the heresy of your recitation."));
             affected = true;
         }
         break;
@@ -1054,7 +1054,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
             {
             case RECITE_HERETIC:
                 if (minor)
-                    simple_monster_message(mon, "'s eyes and ears begin to bleed.");
+                    simple_monster_message(mon, _("'s eyes and ears begin to bleed."));
                 else
                 {
                     mprf(_("%s bleeds profusely from %s eyes and ears."),
@@ -1064,13 +1064,13 @@ bool zin_recite_to_single_monster(const coord_def& where,
                 break;
             case RECITE_CHAOTIC:
                 simple_monster_message(mon,
-                    minor ? "'s chaotic flesh is covered in bleeding sores."
-                          : "'s chaotic flesh erupts into weeping sores!");
+                    minor ? _("'s chaotic flesh is covered in bleeding sores.")
+                          : _("'s chaotic flesh erupts into weeping sores!"));
                 break;
             case RECITE_IMPURE:
                 simple_monster_message(mon,
-                    minor ? "'s impure flesh is covered in bleeding sores."
-                          : "'s impure flesh erupts into weeping sores!");
+                    minor ? _("'s impure flesh is covered in bleeding sores.")
+                          : _("'s impure flesh erupts into weeping sores!"));
                 break;
             default:
                 die("bad recite bleed");
@@ -1081,9 +1081,9 @@ bool zin_recite_to_single_monster(const coord_def& where,
 
     case ZIN_SMITE:
         if (minor)
-            simple_monster_message(mon, " is smitten by the wrath of Zin.");
+            simple_monster_message(mon, _(" is smitten by the wrath of Zin."));
         else
-            simple_monster_message(mon, " is blasted by the fury of Zin!");
+            simple_monster_message(mon, _(" is blasted by the fury of Zin!"));
         // XXX: This duplicates code in cast_smiting().
         mon->hurt(&you, 7 + (random2(spellpower) * 33 / 191));
         if (mon->alive())
@@ -1094,7 +1094,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     case ZIN_BLIND:
         if (mon->add_ench(mon_enchant(ENCH_BLIND, degree, &you, INFINITE_DURATION)))
         {
-            simple_monster_message(mon, " is struck blind by the wrath of Zin!");
+            simple_monster_message(mon, _(" is struck blind by the wrath of Zin!"));
             affected = true;
         }
         break;
@@ -1103,7 +1103,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
         if (mon->add_ench(mon_enchant(ENCH_SILVER_CORONA, degree, &you,
                           (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
-            simple_monster_message(mon, " is limned with silver light.");
+            simple_monster_message(mon, _(" is limned with silver light."));
             affected = true;
         }
         break;
@@ -1114,8 +1114,8 @@ bool zin_recite_to_single_monster(const coord_def& where,
                           (degree + random2(spellpower)) * BASELINE_DELAY)))
         {
             simple_monster_message(mon,
-                minor ? " quails at your recitation."
-                      : " looks feeble and powerless before your recitation.");
+                minor ? _(" quails at your recitation.")
+                      : _(" looks feeble and powerless before your recitation."));
             affected = true;
         }
         break;
@@ -1123,7 +1123,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     case ZIN_MUTE:
         if (mon->add_ench(mon_enchant(ENCH_MUTE, degree, &you, INFINITE_DURATION)))
         {
-            simple_monster_message(mon, " is struck mute by the wrath of Zin!");
+            simple_monster_message(mon, _(" is struck mute by the wrath of Zin!"));
             affected = true;
         }
         break;
@@ -1131,7 +1131,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     case ZIN_MAD:
         if (mon->add_ench(mon_enchant(ENCH_MAD, degree, &you, INFINITE_DURATION)))
         {
-            simple_monster_message(mon, " is driven mad by the wrath of Zin!");
+            simple_monster_message(mon, _(" is driven mad by the wrath of Zin!"));
             affected = true;
         }
         break;
@@ -1139,7 +1139,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     case ZIN_DUMB:
         if (mon->add_ench(mon_enchant(ENCH_DUMB, degree, &you, INFINITE_DURATION)))
         {
-            simple_monster_message(mon, " is left stupefied by the wrath of Zin!");
+            simple_monster_message(mon, _(" is left stupefied by the wrath of Zin!"));
             affected = true;
         }
         break;
@@ -1159,9 +1159,9 @@ bool zin_recite_to_single_monster(const coord_def& where,
                 if (mon->alive())
                 {
                     simple_monster_message(mon,
-                      (damage < 25) ? "'s chaotic flesh sizzles and spatters!" :
-                      (damage < 50) ? "'s chaotic flesh bubbles and boils."
-                                    : "'s chaotic flesh runs like molten wax.");
+                      (damage < 25) ? _("'s chaotic flesh sizzles and spatters!") :
+                      (damage < 50) ? _("'s chaotic flesh bubbles and boils.")
+                                    : _("'s chaotic flesh runs like molten wax."));
 
                     print_wounds(mon);
                     behaviour_event(mon, ME_WHACK, &you);
@@ -1170,7 +1170,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
                 else
                 {
                     simple_monster_message(mon,
-                        " melts away into a sizzling puddle of chaotic flesh.");
+                        _(" melts away into a sizzling puddle of chaotic flesh."));
                     monster_die(mon, KILL_YOU, NON_MONSTER);
                 }
             }
@@ -1190,8 +1190,8 @@ bool zin_recite_to_single_monster(const coord_def& where,
             mon->add_ench(mon_enchant(ENCH_SICK, degree, &you,
                           (degree + random2(spellpower)) * BASELINE_DELAY));
             simple_monster_message(mon,
-                minor ? "'s impure flesh begins to rot away."
-                      : "'s impure flesh sloughs off!");
+                minor ? _("'s impure flesh begins to rot away.")
+                      : _("'s impure flesh sloughs off!"));
             affected = true;
         }
         break;
@@ -1229,7 +1229,7 @@ static void _zin_saltify(monster* mon)
                                : mons_species(mon->type);
     const int hd = mon->get_experience_level();
 
-    simple_monster_message(mon, " is turned into a pillar of salt by the wrath of Zin!");
+    simple_monster_message(mon, _(" is turned into a pillar of salt by the wrath of Zin!"));
 
     // If the monster leaves a corpse when it dies, destroy the corpse.
     int corpse = monster_die(mon, KILL_YOU, NON_MONSTER);
@@ -2153,7 +2153,7 @@ bool fedhas_sunlight()
     args.range = LOS_RADIUS;
     args.needs_path = false;
     args.may_target_monster = false;
-    args.top_prompt = "Select sunlight destination.";
+    args.top_prompt = _("Select sunlight destination.");
     direction(spelld, args);
 
     if (!spelld.isValid)

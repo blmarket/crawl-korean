@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-16 01:50+0900\n"
+"POT-Creation-Date: 2013-02-17 03:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2159,7 +2159,7 @@ msgid "the royal jelly"
 msgstr "로얄 젤리"
 
 msgid "dissolution"
-msgstr "디스솔루션"
+msgstr "용해하는 자"
 
 msgid "gastronok"
 msgstr "가스트로노크"
@@ -2180,7 +2180,7 @@ msgid "khufu"
 msgstr "쿠푸"
 
 msgid "ilsuiw"
-msgstr "일스이우"
+msgstr "아일스이"
 
 msgid "erolcha"
 msgstr "에롤차"
@@ -2261,7 +2261,7 @@ msgid "erica"
 msgstr "에리카"
 
 msgid "josephine"
-msgstr "조세핀"
+msgstr "요세핀"
 
 msgid "harold"
 msgstr "해럴드"
@@ -2330,7 +2330,7 @@ msgstr "테스트 스포너"
 
 #: mon-info.cc:592 mon-info.cc:592 mon-info.cc:611 mon-info.cc:782
 msgid "Lernaean hydra"
-msgstr "레르나이언 히드라"
+msgstr "고대의 히드라"
 
 #: mon-info.cc:594 itemname.cc:1620 itemname.cc:1619 itemname.cc:1630
 #: itemprop.cc:438 itemname.cc:1658 itemname.cc:1660 itemname.cc:1667
@@ -2484,7 +2484,7 @@ msgstr "싸후아"
 #: mon-data.h:5484 mon-data.h:5496 mon-data.h:5485 mon-data.h:5442
 #: mon-data.h:5529
 msgid "the Lernaean hydra"
-msgstr "레르나이언 히드라"
+msgstr "고대의 히드라"
 
 #: mon-data.h:5496 mon-data.h:5508 mon-data.h:5497 mon-data.h:5454
 #: mon-data.h:5541 mon-data.h:5554 mon-data.h:5567 mon-data.h:5580
@@ -2529,7 +2529,7 @@ msgstr "아그네스"
 #: mon-data.h:5612 mon-data.h:5624 mon-data.h:5613 mon-data.h:5570
 #: mon-data.h:5735
 msgid "Dissolution"
-msgstr "디스솔루션"
+msgstr "용해하는 자"
 
 #: mon-data.h:5626 mon-data.h:5638 mon-data.h:5627 mon-data.h:5584
 #: mon-data.h:5749
@@ -2568,7 +2568,7 @@ msgstr "쿠푸"
 #: mon-data.h:5708 mon-data.h:5720 mon-data.h:5709 mon-data.h:5666
 #: mon-data.h:5831
 msgid "Ilsuiw"
-msgstr "일스이우"
+msgstr "아일스이"
 
 #: mon-data.h:5721 mon-data.h:5733 mon-data.h:5722 mon-data.h:5679
 #: mon-data.h:5844
@@ -2709,7 +2709,7 @@ msgstr "에리카"
 #: mon-data.h:6072 mon-data.h:6084 mon-data.h:6073 mon-data.h:6030
 #: mon-data.h:6181
 msgid "Josephine"
-msgstr "조세핀"
+msgstr "요세핀"
 
 #: mon-data.h:6084 mon-data.h:6096 mon-data.h:6085 mon-data.h:6042
 #: mon-data.h:6193
@@ -3519,12 +3519,12 @@ msgstr "죽은 자 일으키기"
 #: abl-show.cc:340 abl-show.cc:340 abl-show.cc:339 abl-show.cc:344
 #: abl-show.cc:289
 msgid "Heroism"
-msgstr "영웅화"
+msgstr "영웅의 기상"
 
 #: abl-show.cc:341 abl-show.cc:341 status.cc:135 abl-show.cc:340
 #: abl-show.cc:345 abl-show.cc:290
 msgid "Finesse"
-msgstr "신속의 공격"
+msgstr "신속의 기교"
 
 #. Makhleb
 #. Makhleb
@@ -3580,7 +3580,7 @@ msgstr "트로그의 손길"
 #: abl-show.cc:363 abl-show.cc:363 spl-data.h:2698 abl-show.cc:362
 #: spl-data.h:2691 abl-show.cc:368 spl-data.h:2563 abl-show.cc:313
 msgid "Brothers in Arms"
-msgstr "전우"
+msgstr "광폭의 전우"
 
 #. Elyvilon
 #. Elyvilon
@@ -3747,17 +3747,17 @@ msgstr "중량화"
 #: abl-show.cc:423 abl-show.cc:423 abl-show.cc:419 abl-show.cc:426
 #: abl-show.cc:371
 msgid "Bend Time"
-msgstr "시간 왜곡"
+msgstr "시간의 뒤틀림"
 
 #: abl-show.cc:424 abl-show.cc:424 abl-show.cc:421 abl-show.cc:429
 #: abl-show.cc:374
 msgid "Slouch"
-msgstr "시공간의 비틀림"
+msgstr "느림의 징벌"
 
 #: abl-show.cc:425 abl-show.cc:425 abl-show.cc:422 abl-show.cc:430
 #: abl-show.cc:375
 msgid "Step From Time"
-msgstr "시간 도약"
+msgstr "시간의 도약"
 
 #. Ashenzari
 #. Ashenzari
@@ -5791,7 +5791,7 @@ msgstr "칠흑색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3102
 msgid "red"
 msgstr "빨간색"
 
@@ -5803,7 +5803,7 @@ msgstr "노란색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3098
 msgid "green"
 msgstr "녹색"
 
@@ -5824,6 +5824,10 @@ msgstr "분홍색"
 #: itemname.cc:1633 itemname.cc:1538
 msgid "white"
 msgstr "흰색"
+
+#: item_use.cc:3106
+msgid "bright yellow"
+msgstr "밝은 노란색"
 
 #: itemname.cc:1614 itemname.cc:1613 itemname.cc:1624 itemprop.cc:417
 #: itemname.cc:1652 itemname.cc:1654 itemname.cc:1661 itemname.cc:1662
@@ -6016,13 +6020,13 @@ msgstr "격렬하게 반짝이는 고대의 책"
 #: itemname.cc:1862 itemname.cc:1869 itemname.cc:1870 itemname.cc:1877
 #: itemname.cc:1856
 msgid "Necronomicon"
-msgstr "강령술의 비서"
+msgstr "네크로노미콘"
 
 #: itemname.cc:1822 itemname.cc:1821 itemname.cc:1834 itemname.cc:1862
 #: itemname.cc:1864 itemname.cc:1871 itemname.cc:1872 itemname.cc:1879
 #: itemname.cc:1858
 msgid "Grand Grimoire"
-msgstr "악마학의 마법서"
+msgstr "그랜드 그리모어"
 
 #: itemname.cc:1824 itemname.cc:1823 itemname.cc:1836 itemname.cc:1864
 #: itemname.cc:1866 itemname.cc:1873 itemname.cc:1874 itemname.cc:1881
@@ -6426,7 +6430,7 @@ msgstr "'페다스'의 꽃들이 만개한 제단"
 #: directn.cc:3154 directn.cc:3154 directn.cc:3157 directn.cc:3175
 #: directn.cc:3143
 msgid "snail-covered altar of Cheibriados"
-msgstr "'체브리아도스'의 달팽이집에 덮인 제단"
+msgstr "'체이브리아도스'의 달팽이집에 덮인 제단"
 
 #: directn.cc:3156 directn.cc:3156 directn.cc:3159 directn.cc:3177
 #: directn.cc:3145
@@ -10560,7 +10564,7 @@ msgstr "페다스"
 
 #: religion.cc:2301
 msgid "Cheibriados"
-msgstr "체브리아도스"
+msgstr "체이브리아도스"
 
 #: religion.cc:2304
 msgid "Ashenzari"
@@ -10697,6 +10701,18 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -11172,23 +11188,23 @@ msgstr "기타"
 msgid "Carrion"
 msgstr "시체"
 
-#: travel.cc:250 travel.cc:4090
+#: travel.cc:250 travel.cc:4090 travel.cc:275
 msgid "travel"
 msgstr "자동 이동"
 
-#: travel.cc:251
+#: travel.cc:251 travel.cc:276
 msgid "intertravel"
 msgstr "층간 자동 이동"
 
-#: travel.cc:252 travel.cc:4087
+#: travel.cc:252 travel.cc:4087 travel.cc:277
 msgid "explore"
 msgstr "탐색"
 
-#: travel.cc:253
+#: travel.cc:253 travel.cc:278
 msgid "explore_greedy"
 msgstr "그리디 탐색"
 
-#: travel.cc:254 travel.cc:4093
+#: travel.cc:254 travel.cc:4093 travel.cc:279
 msgid "run"
 msgstr "달리기"
 
@@ -11340,7 +11356,7 @@ msgstr "역병의 기운"
 
 #: abl-show.cc:420 abl-show.cc:427 abl-show.cc:372
 msgid "Temporal Distortion"
-msgstr "일시적인 왜곡"
+msgstr "시간의 왜곡"
 
 #: acquire.cc:1637 acquire.cc:1622
 msgid "Food "
@@ -11457,11 +11473,11 @@ msgstr ""
 
 #: mon-data.h:904 mon-data.h:869
 msgid "gnoll shaman"
-msgstr ""
+msgstr "놀 주술사"
 
 #: mon-data.h:916 mon-data.h:881
 msgid "gnoll sergeant"
-msgstr ""
+msgstr "놀 대장"
 
 #: mon-data.h:2538 mon-data.h:2545
 msgid "profane servitor"
@@ -11469,7 +11485,7 @@ msgstr ""
 
 #: mon-data.h:3148 mon-data.h:3167
 msgid "tengu"
-msgstr ""
+msgstr "텐구"
 
 #: mon-data.h:4446 mon-data.h:4520
 msgid "item mimic"
@@ -11481,11 +11497,11 @@ msgstr ""
 
 #: mon-data.h:4519 mon-data.h:4632
 msgid "crimson imp"
-msgstr ""
+msgstr "진홍색 임프"
 
 #: mon-data.h:4828 mon-data.h:4917
 msgid "blizzard demon"
-msgstr ""
+msgstr "폭풍우의 악마"
 
 #: mon-data.h:4927 mon-data.h:5016
 msgid "Brimstone Fiend"
@@ -11496,7 +11512,7 @@ msgstr ""
 #. dummy for the genus, never spawns
 #: mon-data.h:4994 mon-data.h:5082
 msgid "golem"
-msgstr ""
+msgstr "골렘"
 
 #: spl-data.h:2743 spl-data.h:2615
 msgid "Holy Light"
@@ -11603,11 +11619,11 @@ msgstr ""
 
 #: mon-info.cc:922
 msgid "zombie"
-msgstr ""
+msgstr "좀비"
 
 #: mon-info.cc:932
 msgid "simulacrum"
-msgstr ""
+msgstr "환영"
 
 #: mon-info.cc:935
 msgid "shaped pillar of salt"
@@ -11648,15 +11664,15 @@ msgstr ""
 
 #: mon-data.h:2519
 msgid "seraph"
-msgstr ""
+msgstr "세라프"
 
 #: mon-data.h:3646
 msgid "ball python"
-msgstr ""
+msgstr "작은 뱀"
 
 #: mon-data.h:3659
 msgid "adder"
-msgstr ""
+msgstr "뱀"
 
 #: mon-data.h:4496
 msgid "inept item mimic"
@@ -11668,15 +11684,15 @@ msgstr ""
 
 #: mon-data.h:5054
 msgid "Hell Sentinel"
-msgstr ""
+msgstr "지옥의 감시자"
 
 #: mon-data.h:5618
 msgid "Fannar"
-msgstr ""
+msgstr "패나르"
 
 #: mon-data.h:5682
 msgid "Arachne"
-msgstr ""
+msgstr "아라크네"
 
 #: spl-data.h:2890
 msgid "Ensnare"
@@ -14475,6 +14491,7 @@ msgstr "당신에게서 부패의 기운이 담긴 악취가 나기 시작했다
 msgid "You begin to radiate miasma."
 msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 
+# #############################################################################
 #: mon-cast.cc:4346
 msgid "nothing"
 msgstr "없음"
@@ -14509,19 +14526,19 @@ msgstr "동맹의 서 : 지성 있는 동료들에게 축복을"
 
 #: godprayer.cc:525
 msgid "Escape"
-msgstr ""
+msgstr "탈출"
 
 #: godprayer.cc:525
 msgid "Destruction"
-msgstr ""
+msgstr "파괴"
 
 #: godprayer.cc:525
 msgid "Dungeons"
-msgstr ""
+msgstr "던전"
 
 #: godprayer.cc:525
 msgid "Wonder"
-msgstr ""
+msgstr "불가사의"
 
 #. "shout"
 #. Tweak volume for different kinds of vocalisation.
@@ -14560,9 +14577,9 @@ msgstr "고함"
 #. level == 3
 #: player.cc:6072 effects.cc:945 effects.cc:960
 msgid "scream"
-msgstr ""
+msgstr "비명"
 
 #: spl-goditem.cc:720 spl-goditem.cc:758 melee_attack.cc:1508
 #: melee_attack.cc:1544
 msgid "armour"
-msgstr ""
+msgstr "방어구"

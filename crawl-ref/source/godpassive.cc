@@ -283,22 +283,22 @@ std::string ash_describe_bondage(int flags, bool level)
         if (you.bondage[ET_WEAPON] == you.bondage[ET_SHIELD])
         {
             desc = make_stringf(_("Your %s are %sbound. "),
-                                you.hand_name(true).c_str(),
+                                _(you.hand_name(true).c_str()),
                                 you.bondage[ET_WEAPON] ? "" : P_("godpassive","not "));
         }
         else
         {
             desc = make_stringf(_("Your %s %s is bound but not your %s %s. "),
                                 you.bondage[ET_WEAPON] ? P_("godpassive","weapon") : P_("godpassive","shield"),
-                                you.hand_name(false).c_str(),
+                                _(you.hand_name(false).c_str()),
                                 you.bondage[ET_WEAPON] ? P_("godpassive","shield") : P_("godpassive","weapon"),
-                                you.hand_name(false).c_str());
+                                _(you.hand_name(false).c_str()));
         }
     }
     else if (flags & ETF_WEAPON && you.bondage[ET_WEAPON] != -1)
     {
         desc = make_stringf(_("Your weapon %s is %sbound. "),
-                            you.hand_name(false).c_str(),
+                            _(you.hand_name(false).c_str()),
                             you.bondage[ET_WEAPON] ? "" : P_("godpassive","not "));
     }
     else if (flags & ETF_SHIELD && you.bondage[ET_SHIELD] != -1)

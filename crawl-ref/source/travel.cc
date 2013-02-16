@@ -163,7 +163,7 @@ bool deviant_route_warning::warn_continue_travel(
 
     target = dest;
     const std::string prompt =
-        make_stringf("Have to go through %s. Continue?",
+        make_stringf(_("Have to go through %s. Continue?"),
                      deviant.describe().c_str());
     // If the user says "Yes, shut up and take me there", we won't ask
     // again for that destination. If the user says "No", we will
@@ -272,11 +272,11 @@ bool feat_is_traversable(dungeon_feature_type feat)
 
 static const char *_run_mode_name(int runmode)
 {
-    return (runmode == RMODE_TRAVEL         ? "travel" :
-            runmode == RMODE_INTERLEVEL     ? "intertravel" :
-            runmode == RMODE_EXPLORE        ? "explore" :
-            runmode == RMODE_EXPLORE_GREEDY ? "explore_greedy" :
-            runmode > 0                     ? "run"
+    return (runmode == RMODE_TRAVEL         ? M_("travel") :
+            runmode == RMODE_INTERLEVEL     ? M_("intertravel") :
+            runmode == RMODE_EXPLORE        ? M_("explore") :
+            runmode == RMODE_EXPLORE_GREEDY ? M_("explore_greedy") :
+            runmode > 0                     ? M_("run")
                                             : "");
 }
 
@@ -540,7 +540,7 @@ static bool _is_branch_stair(const coord_def& pos)
 static bool _prompt_stop_explore(int es_why)
 {
     return (!(Options.explore_stop_prompt & es_why)
-            || yesno("Stop exploring?", true, 'y', true, false));
+            || yesno(_("Stop exploring?"), true, 'y', true, false));
 }
 
 #define ES_item   (Options.explore_stop & ES_ITEM)
@@ -2942,7 +2942,7 @@ void start_explore(bool grab_items)
         {
             if (Options.sacrifice_before_explore == 2)
             {
-                mprnojoin("Things which can be sacrificed:", MSGCH_FLOOR_ITEMS);
+                mprnojoin(_("Things which can be sacrificed:"), MSGCH_FLOOR_ITEMS);
                 for (stack_iterator si(you.visible_igrd(you.pos())); si; ++si)
                     if (si->is_greedy_sacrificeable())
                         mpr_nocap(get_menu_colour_prefix_tags(*si, DESC_A));
@@ -2951,7 +2951,7 @@ void start_explore(bool grab_items)
 
             if ((Options.sacrifice_before_explore == 1
                  || Options.sacrifice_before_explore == 2
-                    && yesno("Do you want to sacrifice the items here? ", true, 'n'))
+                    && yesno(_("Do you want to sacrifice the items here? "), true, 'n'))
                 && _can_sacrifice(you.pos()))
             {
                 pray();
@@ -3970,7 +3970,7 @@ bool runrest::run_should_stop() const
     {
 #ifndef USE_TILE_LOCAL
         // XXX: Remove this once exclusions are visible.
-        mprf(MSGCH_WARN, "Stopped running for exclusion.");
+        mprf(MSGCH_WARN, _("Stopped running for exclusion."));
 #endif
         return true;
     }
@@ -4209,9 +4209,9 @@ void explore_discoveries::add_item(const item_def &i)
     std::string itemname = get_menu_colour_prefix_tags(i, DESC_A);
     monster* mon = monster_at(i.pos);
     if (mon && mon->type == MONS_BUSH)
-        itemname += " (under bush)";
+        itemname += _(" (under bush)");
     else if (mon && mon->type == MONS_PLANT)
-        itemname += " (under plant)";
+        itemname += _(" (under plant)");
 
     items.push_back(named_thing<item_def>(itemname, i));
 
@@ -4333,7 +4333,7 @@ bool explore_discoveries::prompt_stop() const
         mprf("%s", marker_msgs[i].c_str());
 
     for (unsigned int i = 0; i < marked_feats.size(); i++)
-        mprf("Found %s", marked_feats[i].c_str());
+        mprf(_("Found %s"), marked_feats[i].c_str());
 
     if (!es_flags)
         return marker_stop;

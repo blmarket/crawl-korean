@@ -4574,7 +4574,7 @@ static void _run_input_with_keys(const keyseq& keys)
 
     if (get_macro_buf_size() < old_buf_size)
     {
-        mpr(_("(Key replay stole keys)"), MSGCH_ERROR);
+        mpr("(Key replay stole keys)", MSGCH_ERROR);
         crawl_state.cancel_cmd_all();
     }
 }

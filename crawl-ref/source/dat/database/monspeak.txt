@@ -2408,7 +2408,7 @@ w:1
 @The_monster@은(는) 불길한 전조를 예견했다. "......산의 홍수가 모든 찌꺼기를 녹여줄 것이다."
 
 w:2
-@The_monster@은(는) 말했다. "......'디졸버'라는 이름의 문제 해결사가 있지!"
+@The_monster@은(는) 말했다. "......'용해하는 자'라는 이름의 문제 해결사가 있지!"
 ## END Dissolution ##
 %%%%
 ############ DONALD ### An adventurer hating competition

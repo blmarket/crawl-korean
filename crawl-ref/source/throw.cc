@@ -133,22 +133,22 @@ void fire_target_behaviour::set_prompt()
 
     // Build the action.
     if (!active_item())
-        msg << "Firing ";
+        msg << P_("throw","Firing ");
     else
     {
         const launch_retval projected = is_launched(&you, you.weapon(),
                                                     *active_item());
         switch (projected)
         {
-        case LRET_FUMBLED:  msg << "Awkwardly throwing "; break;
-        case LRET_LAUNCHED: msg << "Firing ";             break;
-        case LRET_THROWN:   msg << "Throwing ";           break;
+        case LRET_FUMBLED:  msg << P_("throw","Awkwardly throwing "); break;
+        case LRET_LAUNCHED: msg << P_("throw","Firing ");             break;
+        case LRET_THROWN:   msg << P_("throw","Throwing ");           break;
         }
     }
 
     // And a key hint.
-    msg << (no_other_items ? "(i - inventory)"
-                           : "(i - inventory. (,) - cycle)")
+    msg << (no_other_items ? _("(i - inventory)")
+                           : _("(i - inventory. (,) - cycle)"))
         << ": ";
 
     // Describe the selected item for firing.
@@ -292,7 +292,7 @@ static int _fire_prompt_for_item()
     if (inv_count() < 1)
         return -1;
 
-    int slot = prompt_invent_item("Fire/throw which item? (* to show all)",
+    int slot = prompt_invent_item(_("Fire/throw which item? (* to show all)"),
                                    MT_INVLIST,
                                    OSEL_THROWABLE, true, true, true, 0, -1,
                                    NULL, OPER_FIRE);
@@ -310,17 +310,17 @@ static bool _fire_validate_item(int slot, std::string &err)
         && is_weapon(you.inv[slot])
         && you.inv[slot].cursed())
     {
-        err = "That weapon is stuck to your " + you.hand_name(false) + "!";
+        err = _("That weapon is stuck to your "); err += _(you.hand_name(false).c_str()); err += P_("throwstuck","!");
         return false;
     }
     else if (item_is_worn(slot))
     {
-        err = "You are wearing that object!";
+        err = _("You are wearing that object!");
         return false;
     }
     else if (you.inv[slot].base_type == OBJ_ORBS)
     {
-       err = "You don't feel like leaving the orb behind!";
+       err = _("You don't feel like leaving the orb behind!");
        return false;
     }
     return true;
@@ -662,7 +662,7 @@ static bool _silver_damages_victim(bolt &beam, actor* victim, int &dmg,
         return false;
 
     if (!beam.is_tracer && you.can_see(victim))
-       dmg_msg = "The silver sears " + victim->name(DESC_THE) + "!";
+       dmg_msg = _("The silver sears ") + victim->name(DESC_THE) + P_("silversears","!");
 
     return false;
 }
@@ -784,11 +784,11 @@ static bool _charged_damages_victim(bolt &beam, actor* victim, int &dmg,
     if (you.can_see(victim))
     {
         if (victim->is_player())
-            dmg_msg = "You are electrocuted!";
+            dmg_msg = _("You are electrocuted!");
         else if (victim->type == MONS_SIXFIRHY)
-            dmg_msg = victim->name(DESC_THE) + " is charged up!";
+            dmg_msg = victim->name(DESC_THE) + _(" is charged up!");
         else
-            dmg_msg = "There is a sudden explosion of sparks!";
+            dmg_msg = _("There is a sudden explosion of sparks!");
     }
 
     if (feat_is_water(grd(victim->pos())))
@@ -808,8 +808,8 @@ static bool _blessed_damages_victim(bolt &beam, actor* victim, int &dmg,
         dmg += 1 + (random2(dmg * 15) / 10);
 
         if (!beam.is_tracer && you.can_see(victim))
-           dmg_msg = victim->name(DESC_THE) + " "
-                   + victim->conj_verb("convulse") + "!";
+           dmg_msg = victim->name(DESC_THE) // + " "
+                    + _(" convulses!"); // + victim->conj_verb("convulse") + "!";
     }
 
     return false;
@@ -850,7 +850,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (victim->holiness() == MH_UNDEAD || victim->holiness() == MH_NONLIVING)
     {
         if (victim->is_monster())
-            simple_monster_message(victim->as_monster(), " is unaffected.");
+            simple_monster_message(victim->as_monster(), _(" is unaffected."));
         else
             canned_msg(MSG_YOU_UNAFFECTED);
         return false;
@@ -879,7 +879,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (resist_roll < victim->get_experience_level())
     {
         if (victim->is_monster())
-            simple_monster_message(victim->as_monster(), " resists.");
+            simple_monster_message(victim->as_monster(), _(" resists."));
         else
             canned_msg(MSG_YOU_RESIST);
         return false;
@@ -2330,8 +2330,8 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
 
     // Now, if a monster is, for some reason, throwing something really
     // stupid, it will have baseHit of 0 and damage of 0.  Ah well.
-    std::string msg = mons->name(DESC_THE);
-    msg += ((projected == LRET_LAUNCHED) ? " shoots " : " throws ");
+/*    std::string msg = mons->name(DESC_THE);
+    msg += ((projected == LRET_LAUNCHED) ? P_("throw"," shoots ") : P_("throw"," throws "));
 
     if (!beam.name.empty() && projected == LRET_LAUNCHED)
         msg += article_a(beam.name);
@@ -2344,6 +2344,17 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
         beam.name = item.name(true, DESC_PLAIN, false, false, false);
     }
     msg += ".";
+*/  // (130216) 이상 애매한 부분이라 gettextized하지 않고 이렇게 직접수정으로 처리했습니다.
+	std::string msg = mons->name(DESC_PLAIN) + "은(는) ";
+	if (!beam.name.empty() && projected == LRET_LAUNCHED)
+        msg += _(beam.name.c_str());
+	else
+	{
+		msg += item.name(true, DESC_PLAIN, false, false, false);
+		beam.name = item.name(true, DESC_PLAIN, false, false, false);
+	}
+    msg += ((projected == LRET_LAUNCHED) ? "을(를) 쏘았다" : "을(를) 던졌다");
+	msg += ".";
 
     if (mons->observable())
     {
@@ -2362,13 +2373,13 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
     // hiscores.cc (scorefile_entry::terse_missile_cause()) to match.
     if (projected == LRET_LAUNCHED)
     {
-        beam.aux_source = make_stringf("Shot with a%s %s by %s",
+        beam.aux_source = make_stringf(_("Shot with a%s %s by %s"),
                  (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
                  mons->name(DESC_A).c_str());
     }
     else
     {
-        beam.aux_source = make_stringf("Hit by a%s %s thrown by %s",
+        beam.aux_source = make_stringf(_("Hit by a%s %s thrown by %s"),
                  (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
                  mons->name(DESC_A).c_str());
     }
@@ -2450,12 +2461,12 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
         // Otherwise we get "The weapon returns whence it came from!" regardless.
         if (you.see_cell(beam.target) || you.can_see(mons))
         {
-            msg::stream << "The weapon returns "
-                        << (you.can_see(mons)?
-                              ("to " + mons->name(DESC_THE))
-                            : "from whence it came")
-                        << "!" << std::endl;
-        }
+            msg::stream << "그 무기는" // "The weapon returns "
+                        <<  (you.can_see(mons) ? mons->name(DESC_PLAIN) + "에게로" //  << (you.can_see(mons)?
+                            : "왔던 곳으로") //        ("to " + mons->name(DESC_THE))
+                        << "되돌아갔다."    << std::endl; //    : "from whence it came")
+                        //<< "!" << std::endl;
+        }               //(130216, deceit) 인간적으로 스트림좀 쓰지말자 ㅠㅠ gettext씌우기 진짜 애매함; std::string(gettext(...)) 형식으로 쓰자니 가독성이 떨어지고;
 
         // Player saw the item return.
         if (!is_artefact(item))
