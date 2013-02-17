@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Random and unrandom artefact functions.
 **/
@@ -33,6 +33,14 @@
 #include "species.h"
 #include "spl-book.h"
 #include "stuff.h"
+
+static bool translate_flag;
+std::string make_random_kr_name();
+static const char * check_gettext(const char *ptr)
+{
+    if(translate_flag == false || ptr[0] == 0) return ptr;
+    return gettext(ptr);
+}
 
 static bool _god_fits_artefact(const god_type which_god, const item_def &item,
                                bool name_check_only = false)
@@ -245,16 +253,16 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
                                "@player_name@"
                                + getRandNameString("killer_name"));
             name = replace_all(name, "@player_doom@",
-                               "@player_name@'s "
+                               "@player_name@의 "
                                + getRandNameString("death_or_doom"));
         }
         else
         {
             // Simply overwrite the name with one of type "God's Favour".
-            name = "of ";
-            name += god_name(god_gift, false);
-            name += "'s ";
-            name += getRandNameString("divine_esteem");
+            name = " \"";
+            name += _(god_name(god_gift, false).c_str());
+            name += "의 ";
+            name += getRandNameString("divine_esteem") + "\"";
         }
     }
     name = replace_all(name, "@player_name@", you.your_name);
@@ -1384,9 +1392,9 @@ static bool _pick_db_name(const item_def &item)
     {
     case OBJ_WEAPONS:
     case OBJ_ARMOUR:
-        return coinflip();
+        return !(one_chance_in(4)); // coinflip(); (130218, deceit) 0.9와 마찬가지로 한글판의 경우 make_name()을 사용하지 않고 make_random_kr_name()을 사용하는데, 후자의 경우 경우의 수가 한정적이므로, 전자쪽에 무게를 더 두었습니다.
     case OBJ_JEWELLERY:
-        return one_chance_in(5);
+        return coinflip(); // one_chance_in(5); (deceit, 130218) 무기/방어구는 1/2 -> 3/4 , 장신구는 1/5 -> 1/2.
     default:
         return false;
     }
@@ -1407,7 +1415,7 @@ static bool _artefact_name_lookup(std::string &result,
     return !result.empty();
 }
 
-std::string make_artefact_name(const item_def &item, bool appearance)
+std::string make_artefact_name(bool allow_translate, const item_def &item, bool appearance)
 {
     ASSERT(is_artefact(item));
 
@@ -1415,6 +1423,8 @@ std::string make_artefact_name(const item_def &item, bool appearance)
            || item.base_type == OBJ_ARMOUR
            || item.base_type == OBJ_JEWELLERY
            || item.base_type == OBJ_BOOKS);
+
+	translate_flag = allow_translate;
 
     if (is_unrandom_artefact(item))
     {
@@ -1463,13 +1473,13 @@ std::string make_artefact_name(const item_def &item, bool appearance)
 
         result += appear;
         result += " ";
-        result += item_base_name(item);
+        result += check_gettext(item_base_name(item).c_str());
         return result;
     }
 
     if (_pick_db_name(item))
     {
-        result += item_base_name(item) + " ";
+        result += check_gettext(item_base_name(item).c_str()) + std::string(" ");
 
         int tries = 100;
         std::string name;
@@ -1492,25 +1502,49 @@ std::string make_artefact_name(const item_def &item, bool appearance)
         if (name.empty()) // still nothing found?
             result += "of Bugginess";
         else
-            result += name;
+		{
+			if (name.find_first_of("_SUFFIX_") != -1)
+			{
+				name = replace_all(name, "_SUFFIX_", "");
+				result += "\"" + name + "\"";
+			}
+			else
+			{
+				if (name.find_first_of("_NOPOS_") != -1)
+				{
+					name = replace_all(name, "_NOPOS_", "");
+					result = name + " " + result;
+				}
+				else
+					result = name + "의 " + result;
+			}
+
+			result = replace_all(result, "(name)", "");
+		}
     }
     else
     {
-        // construct a unique name
-        const std::string st_p = make_name(random_int(), false);
-        result += item_base_name(item);
+		const std::string st_p = make_random_kr_name();
+		result += check_gettext(item_base_name(item).c_str());
 
-        if (one_chance_in(3))
-        {
-            result += " of ";
-            result += st_p;
-        }
-        else
-        {
-            result += " \"";
-            result += st_p;
-            result += "\"";
-        }
+		result += " \"";
+		result += st_p;
+		result += "\"";
+        // construct a unique name
+        //const std::string st_p = make_name(random_int(), false);
+        //result += check_gettext(item_base_name(item).c_str());
+		//
+        //if (one_chance_in(3))
+        //{
+        //   result += " of ";
+        //    result += st_p;
+        //}
+        //else
+        //{
+        //    result += " \"";
+        //    result += st_p;
+        //    result += "\"";
+        //}
     }
 
     return result;
@@ -1525,12 +1559,12 @@ std::string get_artefact_name(const item_def &item, bool force_known)
         // print artefact's real name
         if (item.props.exists(ARTEFACT_NAME_KEY))
             return item.props[ARTEFACT_NAME_KEY].get_string();
-        return make_artefact_name(item, false);
+        return make_artefact_name(true, item, false);
     }
     // print artefact appearance
     if (item.props.exists(ARTEFACT_APPEAR_KEY))
         return item.props[ARTEFACT_APPEAR_KEY].get_string();
-    return make_artefact_name(item, true);
+    return make_artefact_name(true, item, true);
 }
 
 void set_artefact_name(item_def &item, const std::string &name)
@@ -1919,14 +1953,14 @@ bool make_item_randart(item_def &item, bool force_mundane)
     if (item.props.exists(ARTEFACT_NAME_KEY))
         ASSERT(item.props[ARTEFACT_NAME_KEY].get_type() == SV_STR);
     else
-        set_artefact_name(item, make_artefact_name(item, false));
+        set_artefact_name(item, make_artefact_name(true, item, false));
 
     // get artefact appearance
     if (item.props.exists(ARTEFACT_APPEAR_KEY))
         ASSERT(item.props[ARTEFACT_APPEAR_KEY].get_type() == SV_STR);
     else
         item.props[ARTEFACT_APPEAR_KEY].get_string() =
-            make_artefact_name(item, true);
+            make_artefact_name(true, item, true);
 
     return true;
 }
@@ -2029,7 +2063,7 @@ bool make_item_unrandart(item_def &item, int unrand_index)
         item.props[ARTEFACT_APPEAR_KEY].get_string() = gettext(unrand->unid_name);
     else
     {
-        item.props[ARTEFACT_APPEAR_KEY].get_string() = make_artefact_name(item, true);
+        item.props[ARTEFACT_APPEAR_KEY].get_string() = make_artefact_name(true, item, true);
         item_colour(item);
     }
 
@@ -2115,4 +2149,152 @@ void artefact_fixup_props(item_def &item)
 
     if (props.exists(KNOWN_PROPS_KEY))
         artefact_pad_store_vector(props[KNOWN_PROPS_KEY], false);
+}
+
+std::string make_random_kr_name()
+{
+	const char* rand_pre_name[] = 
+	{
+		"붉은색 ",      //색채,0
+		"다홍색의 ",
+		"푸른색 ",
+		"감청색의 ",
+		"녹색의 ",
+		"하얀 ",
+		"백악색의 ",
+		"검은 ",
+		"칠흑의 ",
+		"회색의 ",
+		"수정의 ",    //재질, 10
+		"비취의 ",
+		"호박의 ",
+		"금강의 ",
+		"강철의 ",
+		"은의 ",
+		"황금의 ",
+		"피로 물들여진 ",  //상태·성질
+		"오래된 ",
+		"어두운 ",
+		"사나운 ", //20
+		"냉혹한 ",
+		"잔인한 ",
+		"조용한 ",
+		"절망의 ",
+		"고뇌의 ",
+		"방황하는 ",
+		"기다리는 ",
+		"잠든 ",
+		"반짝이는 ",
+		"빛의 ",      //속성·장소, 30
+		"별의 ",
+		"명계의 ",
+		"황천의 ",
+		"지옥의 ",
+		"혼돈의 ",
+		"암흑의 ",
+		"천계의 ",
+		"묵시록의 ",
+		"땅거미의 ",
+		"운명의 ", // 40
+		"봉인의 ",
+		"이계의 ",
+		"예언의 ",
+		"흉운의 ",
+		"동방의 ",
+		"서방의 ",
+		"죽음의 ",
+		"사망의 ",
+		"불사의 ", 
+		"망각의 ", // 50
+		"황혼의 ",
+		"새로운 ",
+		"황홀한 ",
+		"기쁨의 ",
+		"노래하는 ",
+		"되돌릴 수 없는 ",
+		"잔인한 ",
+		"잔혹한 ",
+		"섬광의 ",
+		"불타오르는 ", // 60
+		"우아한 ", 
+		"보이지 않는 ",
+		"버그의 ",
+		"버그의 ",
+		"버그의 "
+	};
+
+	const char* rand_suf_name[] = 
+	{
+		"눈동자",    //육체의 일부 등, 0.
+		"한쪽 눈",
+		"송곳니",
+		"턱",
+		"손톱",
+		"심장",
+		"날개",
+		"양쪽 날개",
+		"거미",  //생물 등
+		"뱀",
+		"매", // 10
+		"야생 매",
+		"사냥개",
+		"이리",
+		"사자",
+		"호랑이",
+		"표범",
+		"왕",    //역할 등
+		"귀공자",
+		"맹주",
+		"익살꾼", //20
+		"성자",
+		"죄인",
+		"경비원",
+		"경호원",
+		"이야기꾼",
+		"징조",    //물건 등
+		"문장",
+		"휘장",
+		"각인",
+		"비문", //30
+		"유물",
+		"쇠사슬",
+		"포효",
+		"선율",
+		"찬가",
+		"개선가",
+		"질병",
+		"성찬",
+		"영력",  //의사나 의식 등
+		"기도",  //40
+		"서원",
+		"축복",
+		"주저",
+		"흉장",
+		"처벌",
+		"심판",
+		"공고",
+		"비적",
+		"선서", 
+		"마녀", // 50
+		"여행자",
+		"고통",
+		"지변",
+		"선율",
+		"가락",
+		"약속",
+		"꽃",
+		"눈물",
+		"도달자",
+		"생명", // 60
+		"야생마",
+		"계시",
+		"버그",
+		"버그",
+		"버그"
+	};
+
+	std::string result = rand_pre_name[random2(62)];
+	result += rand_suf_name[random2(62)];
+	
+	return result;
 }

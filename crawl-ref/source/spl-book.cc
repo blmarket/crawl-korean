@@ -1628,7 +1628,7 @@ static void _make_book_randart(item_def &book)
         if (!book.props.exists(ARTEFACT_APPEAR_KEY))
         {
             book.props[ARTEFACT_APPEAR_KEY].get_string() =
-                make_artefact_name(book, true);
+                make_artefact_name(false, book, true); // 일단 randart book은 해석하지 않습니다.
         }
     }
 }

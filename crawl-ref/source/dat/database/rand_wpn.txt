@@ -22,218 +22,236 @@ w:7
 %%%%
 _power_name_
 
-Power
+힘
 
-Might
+활력
 
-Wondrous Power
+불가사의한 힘_SUFFIX_
 
-Invincibility
+무적
 
-Glory
+영광
 
-Success
+완수
 
-Triumph
+승리
 
-Domination
+지배
 
-Dominance
+정복
 
-Victory
+완수
 
-Intimidation
+위협
 
-Grandeur
+장엄함
 
-Mastery
+정통
 
-Superiority
+우월
 
-Magnificence
+웅대
 %%%%
 _conflict_name_
 
-Conflict
+충돌
 
-Tension
+긴장
 
-Dischord
+불협화음
 
-Division
+분할
 
-Doubt
+의심
 
-Internal Strife
+내면의 증오_SUFFIX_
 
-Contention
+논쟁
 
-Dissent
+언쟁
 
-Quarrel
+불만
 %%%%
 _anger_name_
 
-Anger
+화
 
-Fury
+분노
 
-Righteous Anger
+정당한 진노_SUFFIX_
 
-Righteous Fury
+정당한 분노_SUFFIX_
 
-Wrath
+진노
 
-Brutal Revenge
+복수
 
-Vengeance
+처절한 복수_SUFFIX_
 
-Hatred
+앙갚음
 
-Indignation
+증오
 
-Outrage
+분개
 
-Scorn
+격노
+
+경멸
 %%%%
 _battle_or_war_
 
-Battle
+전투
 
-Crusades
+성전
 
-War
+전쟁
 
-Eternal War
+영원한 전쟁_SUFFIX_
 
-the Eternal Warrior
+길이 남을 영웅_SUFFIX_
 
-the Onslaught
+맹공
 
-Skirmishing
+각개전투
 
-the Endless March
+끝없는 행진_SUFFIX_
 
-Plunder
+약탈
 
-Ravage
+유린
 
 # Lemuel's Suggestions
-the Warrior
+영웅
 
-the Doomed Warrior
+파멸한 영웅_SUFFIX_
 
 # akrasiac patch
-the Pyrrhic Victory
+왕가의 승리_SUFFIX_
 
 #killing
-Blood-Lust
+폭력의 충동_SUFFIX_
 
-Joyful Slaughter
+살인 도착자_SUFFIX_
 
-Wounding
+마음의 상처_SUFFIX_
 
-Blood
+혈류
 
-Fear
+공포
 
-Massacring
+대학살
 
 # was Pain, clashing with the brand
-Insufficient Pleasure
+행복 결핍_SUFFIX_
 
-Agony
+고통
 
-Trauma
+트라우마
 
 # Lemuel's suggestion
-Hacking and Slashing
+베고 찌르기_SUFFIX_
 
 # related to cutting
-Truncation
+절개
 
-Severance
+단절
 
-Dullness
+멍청함
 
-Precise Incision
+외과 수술_SUFFIX_
 
-Laceration
+찢어진 상처_SUFFIX_
 
 #collateral effects
-Mourning
+상복
 
-Death's Door
+죽음의 아가리_SUFFIX_
 
-the Grave
+묘지_SUFFIX_
 %%%%
 # used from C++'s side
 death_or_doom
 
 # death
-Death
+죽음
 
-Bloody Death
+혈류
 
-Painful Death
+참살
 
-Quick Death
+고통
 
-Instant Death
+급사
 
-Imminent Death
+죽음의 임박_SUFFIX_
 
-Sudden Death
+급작스런 죽음_SUFFIX_
 
-Slow Death
+서서히 찾아오는 죽음_SUFFIX_
 
-Certain Death
+확실한 죽음_SUFFIX_
 
-Uncertain Death
+죽음의 노크_SUFFIX_
 
-Exquisite Death
+죽음과 고통_SUFFIX_
 
-Pain and Death
+무한한 업벌_SUFFIX_
 
-Untimely Demise
+영원한 통고_SUFFIX_
 
 # doom
-Doom
+파멸
 
-Premature Burial
+파멸_SUFFIX_
 
-Peril
+무자비
 
-Execution
+연약한 자비_SUFFIX_
 
-Destruction
+묵시록
 
-Disembowelment
+아포칼립스_SUFFIX_
 
-Evisceration
+어릿광대
 
-Extermination
+어릿광대_SUFFIX_
 
-Extinguishment
+위기
+
+절대 절명_SUFFIX_
+
+처형
+
+엑시큐서너_SUFFIX_
+
+파괴
+
+할복
+
+해부
+
+신체 해부_SUFFIX_
+
+근절
 
 # pain and misery
-Infinite Pain
+끝없는 고통_SUFFIX_
 
-Eternal Torment
+한 없이 이어지는 고문_SUFFIX_
 
-Dismemberment
+절단_SUFFIX_
 
-Terror
+공포
 
-Misery
+비참함
 
-Woe
+비통
 
-Excruciating Pain
+극심한 고통_SUFFIX_
 
-Exquisite Torment
+정교한 고문_SUFFIX_
 
-Anguish
+괴로움
 %%%%
 _strategy_or_justice_
 
@@ -249,184 +267,196 @@ w:3
 _strategy_name_
 
 #strategy
-Defence
+방어
 
-Defence by Offence
+공방전
 
-Offence
+공격에 의한 방어_SUFFIX_
 
-Reinforcement
+공격
 
-Expedience
+지원군
 
-Optimality
+공리
 
-Overwhelming Force
+공리주의자_SUFFIX_
 
-Subterfuge
+최선
 
-Strategic Superiority
+넘치는 힘_SUFFIX_
 
-Guile
+완벽한 작전_SUFFIX_
+
+속임수
 %%%%
 _valour_name_
 
-Honour
+명예
 
-Integrity
+보전
 
-Responsibility
+책임
 
-Watchfulness
+시중성
 
-Duty
+의무
 
-Prudence
+여자이름
 
-Valour
+신중함
 
-Resourcefulness
+주는
 
-Action
+지략
 
-Purpose
+동작
 
-Fortitude
+목적
 
-Defiance
+꿋꿋함
 
-Valiance
+도전
 
-Courage
+용기
 
-Eternal Vigilance
+영원한 각성_SUFFIX_
 
-Gallantry
+용맹
 
-Tenacity
+끈기
 
-True Grit
+영원의 모래_SUFFIX_
 
-Indomitability
+불굴
 
-Conscience
+양심
 %%%%
 _justice_name_
 
-Tender Mercy
+부드러운 자비_SUFFIX_
 
-Cruel Justice
+잔혹한 정의실현_SUFFIX_
 
-Punishment
+처벌
 
-Innocence
+무결
 
-Guilt
+범죄
 
-Tortfeasance
+범죄
 
-Extenuating Circumstances
+면제
 
-Absolution
+구원
 
-Exoneration
+거짓 고발_SUFFIX_
 
-False Accusations
+불법 감금_SUFFIX_
 
-Wrongful Imprisonment
+체형
 
-Corporal Punishment
+사형
 
-Capital Punishment
+용서
 
-Forgiveness
+심판의 가책_SUFFIX_
 
-Trial by Ordeal
-
-Blind Justice
+눈먼 정의_SUFFIX_
 %%%%
 _diviner_name_
 
-Augurer
+점쟁이
 
-Water Diviner
+풍수사
 
-Soothsayer
+예언자
 
-Seeker
+주시자
 
-Visionary
+관찰자
 
-Oracle
+투시
 
-Fortune-Teller
+포츈텔러_SUFFIX_
 
-Sybil
+시빌_SUFFIX_
 
-Seer
+감시자
 %%%%
 _people_name_
 
-King
+왕
 
-Queen
+대왕
 
-Jester
+군주
 
-Fool
+여왕
 
-Ancients
+공주님
 
-Saviour
+제스터
 
-Messenger
+광대
 
-Genius
+바보
 
-Coward
+고대인
 
-Philosopher
+고대 군주
 
-Hero
+구세주
 
-Traitor
+전도사
 
-Enemy
+전달사
 
-Priest
+천재
 
-Madman
+겁쟁이
 
-Scavenger
+철학자
 
-w:15
+영웅
+
+성직자
+
+적군
+
+반역자
+
+미치광이
+
+걸인
+
+w:25
 @_diviner_name_@
 %%%%
 _weapon_animal_
 
 # insects
-Pill Bug
+쥐며느리
 
-Butterfly
+사마귀
 
-Wasp
+나비
 
-Moth
+말벌
 
-Mosquito
+나방
 
-Gnat
+모기
 
-Blowfly
+각다귀
 
-Dragonfly
+파리
 
-Firefly
+똥파리
 
 # arachnids
-Spider
+거미
 
-Scorpion
+전갈
 
 # amphibians and reptiles
 Rattle-Snake
@@ -436,555 +466,676 @@ Viper
 Asp
 
 # fish
-Shark
+상어
 
-Lamprey
+백상아리
 
-Eel
+칠성장어
 
-Salmon
+연어
 
 # birds
-Penguin
+펭귄
 
-Puffin
+바다오리
 
-Fulmar
+기러기
 
-Dove
+괭이갈매기
 
-Hawk
+갈매기
 
-Hummingbird
+올빼미
 
-Owl
+황새
 
-Stork
-
-Vulture
+독수리
 
 # mammals
+족제비
+
+염소
+
+돌고래
+
+범고래
+
+당나귀
+
+두더지
+
+곰
+
+여우
+
+쥐
+
+멧돼지
+
 w:5
-Weasel
+담비
 
-Goat
+사자
 
-Whale
+호랑이
 
-Ass
-
-Badger
-
-Bear
-
-Boar
-
-Fox
-
-Rat
-
-w:5
-Stoat
-
-Tiger
-
-Wolf
+늑대
 %%%%
 # plants and fungi
 _plant_name_
 
 #plants
-Eggplant
+가지
 
-Turnip
+계란이 열리는 나무_SUFFIX_
 
-Chickpea
+순무
 
-Lettuce
+병아리콩
 
-Radish
+상추
 
-Sugar Beet
+무우
 
-Shallot
+사탕수수
 
-Tomato
+샬롯
+
+토마토
 
 # er...aren't whelks gastropods?
-Whelk
+뾰루지
 
 #fungus and similar
-Mushroom
+버섯
 
-Toadstool
+도깨비버섯
 
-Puffball
+기생버섯
 
-Slime-mold
+슬라임
 %%%%
 # undead and evil beings
 _evil_stuff_
 
-Curses
+끝없는 저주_SUFFIX_
 
-Hell's Wrath
+지옥의 진노_SUFFIX_
 
-the Undead
+망자
 
-Ancient Evil
+고대의 사악함_SUFFIX_
 
-Evil
+사악
 
-the Beast
+짐승
 
-Shrieking Terror
+공포의 비명_SUFFIX_
 
-the Lurker
+은둔자
 
-the Crawling Thing
+기어가는 괴물_SUFFIX_
 
-the Thing
+괴물
 
-Abomination
+혐오
 
-Mutilation
+불구자
 
-Deformation
+기형아
 
-Infection
+감염
 
-Corruption
+타락
 
-Demonkind
+악마혈족
 
-Abuse
+부정
 
-the Dead
+죽음
 
-Defilement
+더럽힘
 
-the Evil Eye
+사악한 눈_SUFFIX_
 
-the Ghost
+유령
 
-the Living Dead
+망자의 사회_SUFFIX_
 
-Nightmares
+악몽
 
-Perversion
+도착
 
-Putrescence
+부패
 
-the Reaper
+죽음의 사신_SUFFIX_
 
-the Spectre
+망령
 
-the Unliving
+언데드
 
-the Unspeakable One
+부를 수 없는 누군가_SUFFIX_
 
-the Wraith
+레이스
 %%%%
 # catastrophes etc.
 _catastrophe_name_
 
-the Inferno
+인페르노
 
-Earthquakes
+불지옥
 
-Cataclysm
+지진
 
-Drought
+대홍수
 
-Floods
+가뭄
 
-Ruination
+홍수
+
+멸망
 
 # the Apocalypse
 the Apocalypse
 
-Armageddon
+묵시록
 
-World's End
+선악의 종결전_SUFFIX_
 
-Ragnarok
+아마게돈_SUFFIX_
 
-Annihilation
+아포칼립스_SUFFIX_
 
-the End of Times
+세계의 종말_SUFFIX_
 
-World Downfall
+신들의 전쟁_SUFFIX_
+
+라그나로크_SUFFIX_
 
 # the Apocalyptic Riders (except Death)
-Pestilence
+질병
 
-Plague
+재앙
 
-Famine
+병균
+
+기근
 %%%%
 _chaos_name_
 
-Chaos
+혼란
 
-Chance
+카오스_SUFFIX_
 
-Mayhem
+기회
 
-Havoc
+신체 상해_SUFFIX_
 
-Turmoil
+대파괴
 
-Calamity
+소란
 
-Arbitration
+재난
 
-the Extremes
+주재
 
-Disorder
+극한
 
-Disaster
+무질서
 
-Imbalance
+자연재해
 
-Disharmony
+자연 재해_SUFFIX_
 
-Ambiguity
+불균형
 
-Change
+부조화
 
-Extremism
+불일치
 
-Impermanence
+모호
 
-Constant Reorganisation
+애매모호_SUFFIX_
 
-Contradiction
+변화
 
-Disarray
+극단주의
 
-Disintegration
+극단주의_SUFFIX_
 
-Dissolution
+변함없는 편성_SUFFIX_
 
-Distraction
+모순
 
-Forced Transition
+혼란
 
-the Fray
+분해
 
-Revolt
+해산
 
-Tumult
+기분전환
 
-Upheaval
+강제전환
+
+프레이
+
+반란
+
+격동
+
+융기
 %%%%
 _balance_or_order_
 
-the Middle
+중동
 
-the Median
+중간값
 
-Departure
+출발
 
-Arrival
+첫단추
 
-Ascent
+도착
 
-Descent
+오르막길
 
-Symmetry
+내리막길
 
-Bodily Harmony
+하강
 
-Moderation
+상승
 
-Eternal Harmony
+대칭
 
-Peace
+데칼 코마니_SUFFIX_
 
-Equivalence
+신체의 균형_SUFFIX_
 
-Balance
+절제
 
-Harmony
+영원한 조화_SUFFIX_
 
-Fragile Peace
+평화
 
-Circularity
+등가
 
-Linearity
+균형
 
-Law
+조화
 
-Order
+전체적인 조화_SUFFIX_
 
-Accord
+불가촉천민
 
-Conformity
+천민
 
-Due Proportion
+비천
 
-Equilibrium
+오탁
 
-the Establishment
+깨지기 쉬운 평화_SUFFIX_
 
-the Final Decision
+순환성
 
-Propriety
+선형성
+
+질서
+
+법률
+
+명령
+
+순서
 %%%%
 _economics_or_politics_
 
 # economics
-Inflation
+인플레이션
 
-Deflation
+디플레이션
 
-Supply
+공급
 
-Demand
+수요
 
-Amortisation
+무효 선언_SUFFIX_
 
-Animal Spirits
+짐승의 영혼_SUFFIX_
 
-Bankruptcy
+파산
 
-Collusion
+공모
 
-Compound Interest
+복리
 
-Currency
+통화
 
-Debt
+빚
 
-Dividends
+배당
 
-Exchange
+교환
 
-Growth
+성장
 
-Income
+수입
 
-Luxury
+사치
 
-Profit
+이익
 
-Risk Management
+위험 관리_SUFFIX_
 
-Taxation
+과세
 
-Valuable Assets
+귀중한 자산_SUFFIX_
 
-Welfare
+복지
 
 # politics
-the Imperium
+임페리움_SUFFIX_
 
-Greatest Utility
+위대한 도구의 발견_SUFFIX_
 
-the Revolution
+혁명
 
-Defenestration
+내던짐
 
-the People
+평범
 
-the Little People
+난쟁이
 
-Wealth
+부자
 
-Poverty
+가난
 
-Reapportionment
+재분배
 
-Checks and Balances
+견제와 균형_SUFFIX_
 
-the Common Good
+공평한 분배_SUFFIX_
 
-Conservatism
+보수주의
 
-the Dark Horse
+다크호스
 
-the Demagogue
+선동 정치가_SUFFIX_
 
-Governance
+통치
 
-the Lame Duck
+레임덕
 
-the Lesser Evil
+레서 이블_SUFFIX_
 
-Popular Demand
+인기있는_NOPOS_
 
-Radicalism
+근본으로부터의 생각_SUFFIX_
 
-Royalism
+로얄리즘_SUFFIX_
 
-the Silent Majority
+말 없는 다수_SUFFIX_
 
 # akrasiac patch
-Impeachment
+탄핵
 
 # umm, quoi?
-Freehold
+자유의 보장_SUFFIX_
 
-Attainder
+불명예
 
-Fee Simple
+지불
 
-Mandamus
+위반
 
-Breach
+기본 위반_SUFFIX_
 
-Fundamental Breach
+종료
 
-Termination
+처단
 
-Sequestration
+격리
 %%%%
 _place_name_
 
-the World
+세계
 
-the Sea
+바다
 
-the Forest
+숲
 
-the Trees
+나무
 
-the Volcano
+화산
 
-the Equator
+적도
 
-the Poles
+미지의 대륙_SUFFIX_
 
-the Old World
+신세계
 
-the New World
+머나먼 천체_SUFFIX_
 
-Distant Worlds
+천문
 
-the Unseen Realm
+보이지 않는 자연_SUFFIX_
 
-the Spheres
+머나먼 이세계_SUFFIX_
 
-Proximity
+분야
 
-the Wilderness
+근접
 
-the Maze
+황야
 
-the Pit
+광야
 
-the Eternal Void
+구덩이
 
-Beyond
+미로
 
-the Blessed Realm
+영원한 공허_SUFFIX_
 
-the Desert
+저 너머
 
-Distant Shores
+축복받은 대지_SUFFIX_
 
-the Hidden Vale
+사막
 
-the Hills
+먼 해안
 
-the Known World
+비밀의 계곡_SUFFIX_
 
-the Land of Plenty
+힐즈_SUFFIX_
 
-the Other Side
+알려져 있던 세계_SUFFIX_
 
-Parts Unknown
+풍요의 땅_SUFFIX_
 
-Somewhere Else
+반면
 
-the Shore
+미지의 세계로의 여행_SUFFIX_
 
-the Tundras
+이세계
 
-the Valley
+해안가
 
-the Valley of Death
+툰드라
 
-the Wasteland
+계곡
+
+죽음의 계곡_SUFFIX_
+
+황무지
 %%%%
 _discomfort_weapon_
 
-Unpleasantness
+오해
 
-Discomfort
+불쾌
 
-Disgust
+혐오
 
-Frustration
+싫어함
 
-Chagrin
+좌절
 
-Dismay
+억울함
 
-Desperation
+놀람
 
-Shame
+정말
 
-Embarrassment
+부끄러움
 
-Annoyance
+당황
 
-Anxiety
+성가심
 
-Urgency
+걱정
 
-Awkwardness
+긴급
 
-Dissatisfaction
+어색함
 
-Foul Odors
+쓰기 불편한_NOPOS_
 
-Flawed Execution
+냄새나는_NOPOS_
 
-Gloom
+빛바랜 처형_SUFFIX_
 
-Inconvenience
+어두운_NOPOS_
 
-Irritation
+어설픈_NOPOS_
 
-Malaise
+짜증
 
-Stickiness
+비규명
 
-Uncomfortable Rashes
+끈적끈적한_NOPOS_
+
+불편한 발진_SUFFIX_
 %%%%
 _mental_illness_weapon_
 
-Psychosis
+w:70
+@phobia_name@ 공포증_SUFFIX_
 
-Neurosis
+@phobia_name_eng@포비아_SUFFIX_
 
-Fixation
+정신병
 
-Megalomania
+신경증
 
-Egomania
+정치
 
-Obsession
+두통
 
-Compulsion
+과대 망상_SUFFIX_
 
-Fatigue
+병적 자기중심_SUFFIX_
 
-Exhibitionism
+정리벽
 
-Insomnia
+결벽증
 
-Oenomania
+망상
 
-Perfectionism
+강박
 
-Pyromania
+피로
+%%%%
+phobia_name
 
-Satyriasis
+w:50
+고소
 
-Suicidal Tendencies
+w:50
+폐쇄
+
+w:40
+악마
+
+숫자
+
+남자
+
+심해
+
+선단
+
+구토
+
+암흑
+
+고양이
+
+마늘
+
+땅콩
+
+실패
+
+식물
+
+번개
+
+유리
+
+성교
+
+군중
+
+고독
+
+대인
+
+대화
+
+백색
+
+버섯
+
+망자
+
+신
+
+뱀
+
+악취
+
+질병
+
+배고픔
+
+철학
+
+개구리
+
+진흙
+
+어둠
+
+바닷물
+
+변화
+
+마녀
+
+질투
+
+황색
+%%%%
+phobia_name_eng
+
+네크로
+
+데모노
+
+제노
+
+호모
+
+하이드로
 %%%%
 _philosophy_or_science_
 
@@ -994,362 +1145,372 @@ _philosophy_or_science_
 %%%%
 _philosophy_name_
 
-Monotheism
+일신교
 
-Henotheism
+헤노테이즘_SUFFIX_
 
-Polytheism
+신이
 
-Atheism
+무신론
 
-Autotheism
+오토테이즘_SUFFIX_
 
-Pantheism
+만유신론
 
-Panentheism
+파넨테이즘_SUFFIX_
 
-Agnosticism
+불가지론
 
-Existentialism
+실존주의
 
-Relativism
+상대주의
 
-Absolutism
+전제주의
 
-Abstinence
+금주
 
-Hedonism
+쾌락주의
 
-Orthodoxy
+정설
 
-Heresy
+이교
 
-Free Expression
+표현의 자유_SUFFIX_
 
-the Ego
+에고
 
-Optimism
+낙천주의
 
-Pessimism
+염세주의
 
-Serendipity
+세렌디피티
 
-Limitation
+한정
 
-Levity
+경솔주의
 
-Nihilism
+허무주의
 
-Pragmatism
+프래그머티즘_SUFFIX_
 
-Idealism
+이상주의
 
-Activism
+액티비즘_SUFFIX_
 
-Altruism
+이타주의
 
-Anarchy
+무정부주의
 
-Dogma
+도그마_SUFFIX_
 
-Egalitarianism
+안티 도그마_SUFFIX_
 
-Elitism
+평등주의
 
-Ethics
+엘리트주의
 
-Fallacy
+윤리
 
-Fanaticism
+오류
 
-Free Will
+광신도
 
-Liberalism
+자유의지
 
-Morality
+자유
 
-Mysticism
+도덕
 
-Rationality
+비밀
+
+순리성
 %%%%
 _science_name_
 
-Reason
+이유
 
-Unreason
+알수 없는 이유_SUFFIX_
 
-Calculation
+계산
 
-Instinct
+본능
 
-Intuition
+직권
 
-Circular Logic
+순환적 계산체계_SUFFIX_
 
-Context
+문맥
 
-Articulation
+관절
 
-the Mind
+마음
 
-the Nexus
+연결체
 
-the Beginning
+시작
 
-the End
+끝
 
-Analysis
+분석
 
-Infinity
+무한대
 
-Quantum Leap
+퀀텀 리프_SUFFIX_
 
-Gravity
+중력
 
-Rotation
+무중력
 
-the Big Bang
+회전
 
-the Boiling Point
+빅뱅
 
-Classification
+끓는점
 
-Evolution
+분류
 
-Experimentation
+진화
 
-Focus
+실험
 
-Inference
+초점
 
-Inquiry
+추론
 
-Objectivity
+문의
 
-Subjectivity
+객관성
 
-Variability
+주관
 
-Patterns
+다양성
 
-Theory
+패턴
+
+이론
 %%%%
 _item_name_
 
 # items
-Orb
+오브
 
-Egg
+날달걀
 
-Globe
+마술 구체
 
-Candle
+촛불
 
-Candelabrum
+촛대
 
-Key
+열쇠
 
-Ring
+원환
 
-Chain
+사슬
 
-Coin
+동전
 
-Cup
+찻잔
 
-Feather
+깃털
 
-Girdle
+여자 속옷_SUFFIX_
 
-Horn
+쇠뿔
 
-Pillar
+기둥
 
-Purse
+지갑
 
-Scroll
+두루마리
 
-Ship
+나룻배
 
-Tent
+텐트
 
-Vase
+꽃병
 
-Vine
+덩굴
 
-Walnut
+포도 덩굴_SUFFIX_
 
-Wheel
+호두
 
-Yoke
+바퀴
+
+요크_SUFFIX_
 
 # body parts
-Heart
+심장
 
-Brain
+뇌
 
-Tooth
+이빨
 
-Foot
+발바닥
 
-Hand
+손바닥
 
-Head
+머리
 
-Mouth
+입술
 
-Throat
+목구멍
 
-Kidney
+신장
+
+콩팥
 %%%%
 _magic_name_
 
-the Magi
+마법사
 
-the Archmagi
+아크메이지
 
-the Warrior-Mage
+궁수마법사
 
-the Hierophant
+마검사
 
-the Sage
+사제
+
+현자
 %%%%
 # substances
 _substance_name_
 
-Bread
+맛있는 빵_SUFFIX_
 
-Sulphur
+유황지대
 
-Crystal
+수정의 상
 
-Bloodstone
+혈석
 
-Oozing Pus
+흘러나오는 고름_SUFFIX_
 
-Ash
+잿더미
 
-Slime
+슬라임의 분열_SUFFIX_
 
-Bile
+담즙
 
-Bodily Humours
+몸개그
 
-Cobwebs
+거미줄
 
-Cheese
+치즈
 
-Dried Tears
+메마른 눈물_SUFFIX_
 
-Dung
+똥
 
-Ointment
+연고
 
-Paper
+종이
 
-Rubbish
+쓰레기
 
-Salt
+소금
 
-Saltpetre
+초석
 
-Sharkskin
+샤크스킨_SUFFIX_
 
-Terra Cotta
+테라코타
 
 # these don't really fit
-Mana
+마나
 
-Yeast
+이스트
 
-Spores
+포자의 확산
 
-Dust
+먼지투성이
 %%%%
 # non-groupables
 other_weapon_name
 
-the Omega Point
+종말점
 
-Crawling
+크롤링
 
-Conversion
+전환
 
-Prescription
+규칙
 
-the Open Hand
+향응
 
-Spontaneous Combustion
+자연 발화_SUFFIX_
 
-Res Nullius
+레스-눌리어스_SUFFIX_
 
-Terra Nullius
+테라-눌리어스_SUFFIX_
 
-Desertification
+사막화
 
-the Spinneret
+방적돌기
 
-Grontol
+그론톨
 
-the Two Names
+두 이름
 
-No Interval
+무간격
 
-Interdependent Arising
+상호 의견_SUFFIX_
 
-the Blind Eye
+멀어버린 눈_SUFFIX_
 
-the Briny Deep
+브리니 딥_SUFFIX_
 
-Broken Luck
+불운
 
-Entrepreneurial Spirit
+기업가정신
 
-the Vendetta
+벤데타_SUFFIX_
 
-the Empty Page
+빈 페이지_SUFFIX_
 
-the Final Chapter
+마지막 장_SUFFIX_
 
-Hard Scrabble
+먹고 살기 힘든_NOPOS_
 
-Red Wine
+레드 와인_SUFFIX_
 
-Undoing
+아무 것도 안 하는_NOPOS_
 
 # akrasiac patch
-Irrepressible Laughter
+참을수 없는 웃음
 %%%%
 # single word monster names, to allow for combinations like <Monster>slayer
 short_monster_name_
 
-Dragon
+용
 
-Hydra
+히드라
 
-Ogre
+오우거
 
-Spider
+거미
 
-Newt
+뉴트
 
-Giant
+거인
 
-Beetle
+딱정벌레
 
-Jelly
-
-w:1
-Testudine
+젤리
 
 w:1
-Pirate
+테스터
 
-Beast
+w:1
+해적
 
-Demon
+짐승
 
-Goblin
+악마
+
+고블린
 %%%%
 _monster_name_
 
@@ -1357,197 +1518,267 @@ _monster_name_
 
 @player_species@
 
-Killer Bee
+킬러비
 
-Killer Klown
+살인 피에로
 
-Orb Guardian
+오브 수호자
 %%%%
 _short_killer_name_
 
-bane
+천적
 
-slayer
+살육자
 %%%%
 # used from the C++ side
 killer_name
 
-'s Bane
+의 천적
 
-'s Death
+의 죽음
 
-'s Doom
+의 파멸
 
-'s Foe
+의 적대
 
-'s Regret
+의 후회
 
-'s Curse
+의 저주
 
-'s Peril
+의 위협
 %%%%
 _long_killer_name_
 
-'s Death Toll
+의 떼죽음
 
-'s Funeral
+의 장례
 
-'s Nightmare
+의 악몽
 
-'s Undoing
+의 나태함
 
-'s Demise
+의 소멸
 
 w:1
-'s Looming Annihilation
+의 무시무시함
 %%%%
 _real_weapon_name_
 
-Grim Tooth
+그림투스_SUFFIX_
 
-w:5
-Widowmaker
+오우거투스_SUFFIX_
 
-w:5
-Widowermaker
+테일핑_SUFFIX_
 
-Lifebane
+미스틸테인_SUFFIX_
 
-Conservator
+과부제조기_SUFFIX_
 
-Banisher
+생명의 파멸_SUFFIX_
 
-Tormentor
+시중꾼
 
-Pendulum
+추방자
 
-Murmur
+고문기술자
 
-Sarcophage
+우유부단
 
-Concordance
+불평 불만_SUFFIX_
 
-Dragon's Tongue
+석관
 
-Arbiter
+조화
 
-Death Rattle
+용의 혀_SUFFIX_
 
-Arcanum
+집정관
 
-Transmigrator
+중재자
 
-Ultimatum
+임종시의 천식_SUFFIX_
 
-Earthworm
+아르카나
 
-Worm
+영혼의 윤회_SUFFIX_
 
-Worm's Wrath
+최후의 통첩_SUFFIX_
 
-Leviticus
+지렁이
 
-Grim
+버러지
 
-# Lemuel's suggestions
-Eviscerator
+버러지의 역습_SUFFIX_
 
-Undertaker
+레위기
 
-Embalmer
+뼈다귀
 
-Trog's @_anger_name_@
+도살자
 
-Hellblazer
+학살
 
-Hell-Harrower
+불타는 시체_SUFFIX_
+
+시체의 보존_SUFFIX_
+
+트로그의 @anger_name@_SUFFIX_
+
+지옥의 불길_SUFFIX_
+
+지옥의 땅고르기_SUFFIX_
+
+말해지지 않은 비밀_SUFFIX_
+
+유한한 책임
+
+하잠
+
+보호와 구속_SUFFIX_
+
+진공
+
+수세미
+
+바다거북이
+
+육지거북이
+
+독수리의 눈_SUFFIX_
 %%%%
 _joke_weapon_name_
 
-Secret Weapon
+w:30
+좀의 @xom_esteem@_SUFFIX_
 
-With Two Names
+비밀 병기_SUFFIX_
 
-Thing
+두 얼굴의 사나이_SUFFIX_
 
-Mud Pie of Death
+그냥 무기_SUFFIX_
 
-Xom's @_xom_esteem_@
+이쑤시개_SUFFIX_
 
-String
+송곳_SUFFIX_
 
-Stringbean
+우로보로스_SUFFIX_
 
-Blob
+죽음의 진흙 만두_SUFFIX_
 
-Globulus
+의적
 
-Hulk
+바베큐_SUFFIX_
 
-Raisin
+교수형
 
-Starlight
+처형
 
-Giant's Toothpick
+할아버지
 
-Backscratcher
+머리카락
 
-Brush
+강낭콩
 
-Gram
+길로틴_SUFFIX_
 
-Grom
+브로브
 
-Grum
+하모니카
 
-Rummage
+소인배
 
-Omelette
+바늘두더지
 
-Egg
+그로브루스
 
-Aubergine
+그로보루스_SUFFIX_
 
-Z
+헐크
 
-X
+영혼
 
-Q
+쭈글쭈글 할망구_SUFFIX_
 
-Ox
+성월야
 
-Tattletale
+거인의 이쑤시개_SUFFIX_
 
-Fish
+아첨꾼
 
-Bung
+아첨꾼_SUFFIX_
 
-Bingo
+일당백
+
+그램
+
+그롬
+
+그룸
+
+그림자
+
+뒤적거리는 자_SUFFIX_
+
+오믈렛_SUFFIX_
+
+우와! 정말 맛있는 빵_SUFFIX_
+
+미숙한 자_SUFFIX_
+
+가지
+
+Z_SUFFIX_
+
+X_SUFFIX_
+
+Q_SUFFIX_
+
+황소
+
+임종시의 천식_SUFFIX_
+
+고기
+
+고기_SUFFIX_
+
+매춘녀
+
+뇌물
+
+완벽한 정답_SUFFIX_
+
+수다쟁이
+
+물고기
+
+뻥_SUFFIX_
+
+빙고_SUFFIX_
 
 # from the crawl.akrasiac.org patch
-Cookie Cutter
+케이크 식칼_SUFFIX_
 
-ETAOIN SHRDLU
+에투안 셔들루_SUFFIX_
 
-Lorem Ipsum
+로렘 입숨_SUFFIX_
 %%%%
 _plain_weapon_name_
 
-w:15
-@short_monster_name_@@_short_killer_name_@
+w:9
+@short_monster_name_@@_short_killer_name_@_SUFFIX_
 
-w:8
-@_monster_name_@@killer_name@
+w:6
+@_monster_name_@@killer_name@_SUFFIX_
 
-w:2
-@short_monster_name_@@_long_killer_name_@
+w:4
+@short_monster_name_@@_long_killer_name_@_SUFFIX_
 
-w:1
+w:3
 @player_death@
 
-w:15
+w:18
 @_real_weapon_name_@
 
-w:5
+w:12
 @_joke_weapon_name_@
 %%%%
