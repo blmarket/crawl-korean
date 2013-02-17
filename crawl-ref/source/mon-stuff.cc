@@ -3008,11 +3008,11 @@ bool monster_polymorph(monster* mons, monster_type targetc,
         else
             verb = gettext("%s evaporates and reforms as %s!");
 
-        mprf(verb, old_name_the.c_str(), obj.c_str());
+        mprf(verb, old_name_the.c_str(), _(obj.c_str()));
     }
     else if (can_see)
     {
-        mprf(gettext("%s appears out of thin air!"), mons->name(DESC_A).c_str());
+        mprf(gettext("%s appears out of thin air!"), mons->name(DESC_PLAIN).c_str());
         autotoggle_autopickup(false);
     }
     else

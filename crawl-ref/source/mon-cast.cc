@@ -3877,8 +3877,8 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
             };
 
             if (buff_only || crawl_state.game_is_arena() || x_chance_in_y(2,3))
-            {
-                simple_monster_message(mons, RANDOM_ELEMENT(buff_msgs),
+            {	std::string new_buff_msgs = RANDOM_ELEMENT(buff_msgs);
+                simple_monster_message(mons, _(new_buff_msgs.c_str()),
                                        channel);
             }
             else if (friendly)
@@ -3887,9 +3887,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
                                        channel);
             }
             else // "Enchant" the player.
-            {
+            {	std::string new_other_msgs = RANDOM_ELEMENT(other_msgs);
                 mons_cast_noise(mons, pbolt, spell_cast);
-                mpr(RANDOM_ELEMENT(other_msgs));
+                mpr(_(new_other_msgs.c_str()));
             }
         }
         return;

@@ -510,16 +510,16 @@ void actor::handle_constriction()
         if (damage <= 0 && is_player()
             && you.can_see(defender))
         {
-            exclams = P_("actor",", but do no damage.");
+            exclams = pgettext("actor",", but do no damage.");
         }
         else if (damage < HIT_WEAK)
-            exclams = P_("actor",".");
+            exclams = pgettext("actor",".");
         else if (damage < HIT_MED)
-            exclams = P_("actor","!");
+            exclams = pgettext("actor","!");
         else if (damage < HIT_STRONG)
-            exclams = P_("actor","!!");
+            exclams = pgettext("actor","!!");
         else
-            exclams = P_("actor","!!!");
+            exclams = pgettext("actor","!!!");
 
         if (is_player() || you.can_see(this))
         {

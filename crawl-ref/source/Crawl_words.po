@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 03:18+0900\n"
+"POT-Creation-Date: 2013-02-17 15:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10757,6 +10757,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812
 msgid "shouts"
@@ -14540,6 +14542,9 @@ msgstr "던전"
 msgid "Wonder"
 msgstr "불가사의"
 
+#. "shout"
+#. Tweak volume for different kinds of vocalisation.
+#. cap_shout[0] = toupper(cap_shout[0]); (한글판에서는 번역 호환을 위해 대문자로 바꾸지 않음)
 #. "shout"
 #. Tweak volume for different kinds of vocalisation.
 #: effects.cc:1059 player.cc:6055 effects.cc:935

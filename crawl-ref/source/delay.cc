@@ -1670,7 +1670,7 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         return false;
     else
     {
-        std::string text = mon->full_name(DESC_A);
+        std::string text = mon->full_name(DESC_PLAIN);
         if (mon->type == MONS_PLAYER_GHOST)
         {
             text += make_stringf(" (%s)",

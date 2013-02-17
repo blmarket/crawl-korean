@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 03:18+0900\n"
+"POT-Creation-Date: 2013-02-17 15:18+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4690,6 +4690,8 @@ msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
+#. / %s convulses! 로 쓰임.
+#. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
 #. / %s convulses! 로 쓰임.
@@ -13830,6 +13832,9 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -28263,6 +28268,9 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -30118,7 +30126,7 @@ msgstr "%4$s은(는) %1$s%2$s. %3$.0s"
 #: actor.cc:525 actor.cc:526
 #, c-format
 msgid "%s %s %s%s%s"
-msgstr "%1$s은(는) %3$s의 몸을 감아 조였다%5$s%4$s%2$.0s"
+msgstr "%1$s은(는) %3$s의 몸을 감아 조였%5$s%4$s%2$.0s"
 
 #: actor.cc:539 actor.cc:540
 #, c-format
@@ -30148,28 +30156,27 @@ msgstr "(actor:are) 이 문장을 보시면 버그이므로 제보를 해 주세
 #: actor.cc:512 actor.cc:513
 msgctxt "actor"
 msgid ", but do no damage."
-msgstr "의 몸을 조였으나, 아무런 손상도 주지 못했다."
+msgstr "으나, 아무런 손상도 주지 못했다."
 
-# (130130) 원래는 이 부분에 동사부를 넣으려고 해서 P_() 넣어서 이렇게 뻈지만, 그냥 원래대로...
 #: actor.cc:515 actor.cc:516
 msgctxt "actor"
 msgid "."
-msgstr "."
+msgstr "다."
 
 #: actor.cc:517 actor.cc:518
 msgctxt "actor"
 msgid "!"
-msgstr "!"
+msgstr "다!"
 
 #: actor.cc:519 actor.cc:520
 msgctxt "actor"
 msgid "!!"
-msgstr "!!"
+msgstr "다!!"
 
 #: actor.cc:521 actor.cc:522
 msgctxt "actor"
 msgid "!!!"
-msgstr "!!!"
+msgstr "다!!!"
 
 #: godwrath.cc:967
 #, c-format

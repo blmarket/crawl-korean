@@ -927,7 +927,7 @@ void yell(bool force)
 
     const std::string shout_verb = you.shout_verb();
     std::string cap_shout = shout_verb;
-    cap_shout[0] = toupper(cap_shout[0]);
+    // cap_shout[0] = toupper(cap_shout[0]); (한글판에서는 번역 호b환을 위해 대문자로 바꾸지 않음)
 
     int noise_level = 12; // "shout"
 
@@ -977,7 +977,7 @@ void yell(bool force)
     if (force)
     {
         /// 1. 비명, 고함, 괴성
-        mprf(gettext("A %s rips itself from your throat!"), shout_verb.c_str());
+        mprf(gettext("A %s rips itself from your throat!"), _(shout_verb.c_str()));
         noisy(noise_level, you.pos());
         return;
     }
@@ -1016,7 +1016,7 @@ void yell(bool force)
     case '!':    // for players using the old keyset
     case 't':
         /// 1. 고함의 종류 (shout, roar, squeak) 이걸 동사로 번역해야 함.
-        mprf(MSGCH_SOUND, gettext("You %s for attention!"), shout_verb.c_str());
+        mprf(MSGCH_SOUND, gettext("You %s for attention!"), _(shout_verb.c_str()));
         noisy(noise_level, you.pos());
         you.turn_is_over = true;
         return;

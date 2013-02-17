@@ -173,7 +173,7 @@ static std::string _desc_mons_type_map(std::map<monster_type, int> types)
         std::string name;
         description_level_type desc;
         if (it->second == 1)
-            desc = DESC_A;
+            desc = DESC_PLAIN; // desc = DESC_A;
         else
             desc = DESC_PLAIN;
 
