@@ -1,323 +1,307 @@
 %%%%
 Fighting
 
-Fighting skill increases your accuracy and damage in hand-to-hand combat, and
-also increases your maximum hit points.
+근접 전투에 좀 더 능숙하게 하는 것 외에도, 전투 기술은 당신의 최대 체력을
+늘려준다.
 %%%%
 Short Blades
-단검을 더욱 효과적으로 사용할 수 있도록 해 준다. 특정한 무기 종류에 숙련되면 그 종류의 모든 무기를 잘 사용하여 더 많은 피해를 입힐 수 있다. 일반적으로 하나 혹은 두 가지 무기 종류에 집중하여 수련하는 것을 권장한다. 단검류는 다른 무기에 비해 게임 후반으로 갈 수록 적은 피해를 입힌다는 평가가 있지만, 암습에는 최적의 도구이다.
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+단검술을 수련하면 단검을 들었을 때 더 빠르게, 더 정확하게, 더 강력하게 적을
+공격할 수 있다. 무기마다 빨라지는 한계가 있어 대형 몽둥이를 단검 쓰듯이 사용할
+수는 없으며, 무거운 무기일수록 최대 속도로 공격하기 위해서는 많은 수련이
+필요하다. 사람들이 말하기를, 쓰고 싶은 무기를 하나 골라서 집중적으로 수련하고
+보조무기를 한두 개쯤 골라서 사용법을 익혀두는 게 가장 효율적이라고들 한다.
 
-Short Blades have a reputation for producing rather little damage in the late
-game, but, on the other hand, they are the best implements for stabbing.
+단검은 강력한 적에게는 거의 피해를 주지 못한다는 치명적인 단점이 있지만, 그래도
+암습에는 이만한 무기를 찾을 수 없다.
 
-Being skilled with Short Blades makes it easier to become more skilled with
-Long Blades, and vice versa.
+단검술을 수련하면 장검술을 수련할 때 큰 도움이 되며, 그 반대 역시 마찬가지로
+적용된다.
 %%%%
 Long Blades
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+장검을 더욱 효과적으로 사용할 수 있도록 해 준다. 특정한 무기 종류에 숙련되면 그
+종류의 모든 무기를 잘 사용하여 더 많은 피해를 입힐 수 있다. 일반적으로 하나
+혹은 두 가지 무기 종류에 집중하여 수련하는 것을 권장한다.
 
-Being skilled with Long Blades makes it easier to become more skilled with
-Short Blades, and vice versa.
+이미 장검류에 숙달되어 있다면 단검류 무기를 더 쉽게 쓸 수 있으며, 그 반대도
+마찬가지이다.
 %%%%
 Axes
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+도끼를 더욱 효과적으로 사용할 수 있도록 해 준다. 특정한 무기 종류에 숙련되면 그
+종류의 모든 무기를 잘 사용하여 더 많은 피해를 입힐 수 있다. 일반적으로 하나
+혹은 두 가지 무기 종류에 집중하여 수련하는 것을 권장한다.
 
-Axes have some of the strongest two-handed weapons, although they require a lot
-of skill to be used effectively.
+도끼 계열 무기 중에는 가장 강력한 양손 무기들도 있지만, 그것들을 잘 사용하려면
+높은 스킬 레벨이 필요하다.
 
-Being skilled with Axes makes it easier to become more skilled with Maces &
-Flails or Polearms, and vice versa.
+도끼 기술에 숙달되면 둔기나 장창을 사용하는 법을 더 쉽게 익힐 수 있다.
 %%%%
 Maces & Flails
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+둔기술을 수련하면 둔기를 들었을 때 더 빠르게, 더 정확하게, 더 강력하게 적을
+공격할 수 있다. 무기마다 빨라지는 한계가 있어 대형 몽둥이를 단검 쓰듯이 사용할
+수는 없으며, 무거운 무기일수록 최대 속도로 공격하기 위해서는 많은 수련이
+필요하다. 사람들이 말하기를, 쓰고 싶은 무기를 하나 골라서 집중적으로 수련하고
+보조무기를 한두 개쯤 골라서 사용법을 익혀두는 게 가장 효율적이라고들 한다.
 
-Being skilled with Maces & Flails makes it easier to become more skilled with
-Axes or Staves, and vice versa.
+둔기술을 수련하면 도끼술이나 봉술을 수련할 때 큰 도움이 되며, 그 반대 역시
+마찬가지로 적용된다.
 %%%%
 Polearms
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+창술을 수련하면 창을 들었을 때 더 빠르게, 더 정확하게, 더 강력하게 적을 공격할
+수 있다. 무기마다 빨라지는 한계가 있어 대형 몽둥이를 단검 쓰듯이 사용할 수는
+없으며, 무거운 무기일수록 최대 속도로 공격하기 위해서는 많은 수련이 필요하다.
+사람들이 말하기를, 쓰고 싶은 무기를 하나 골라서 집중적으로 수련하고 보조무기를
+한두 개쯤 골라서 사용법을 익혀두는 게 가장 효율적이라고들 한다.
 
-Polearms can be evoked with 'v' to attack enemies from two spaces away.
+모든 창은 'v' 키를 눌러서 한 칸 떨어진 곳에 있는 적을 공격할 수 있다.
 
-Being skilled with Polearms makes it easier to become more skilled with Axes or
-Staves, and vice versa.
+창술을 수련하면 도끼술이나 봉술을 수련할 때 큰 도움이 되며, 그 반대 역시
+마찬가지로 적용된다.
 %%%%
 Staves
 
-Being skilled with a particular type of weapon will allow you to attack more
-quickly with all weapons of this type, as well as increasing your accuracy and
-damage with them. It is generally recommended to concentrate your efforts on
-one or two weapon types to become more powerful in them.
+봉술을 수련하면 봉을 들었을 때 더 빠르게, 더 정확하게, 더 강력하게 적을 공격할
+수 있다. 무기마다 빨라지는 한계가 있어 대형 몽둥이를 단검 쓰듯이 사용할 수는
+없으며, 무거운 무기일수록 최대 속도로 공격하기 위해서는 많은 수련이 필요하다.
+사람들이 말하기를, 쓰고 싶은 무기를 하나 골라서 집중적으로 수련하고 보조무기를
+한두 개쯤 골라서 사용법을 익혀두는 게 가장 효율적이라고들 한다.
 
-Staves require a relatively low amount of skill to be used most effectively,
-although they lack the high damage potential of some other weapon classes.
+봉, 즉 일반적인 막대기는 다른 무기에 비해 적은 수련으로 큰 효과를 볼 수 있는
+무기지만, 특별한 봉이 아닌 이상 다른 무기에 비해 큰 피해를 줄 수는 없다.
 
-Being skilled with Staves makes it easier to become more skilled with Maces &
-Flails or Polearms, and vice versa.
+봉술을 수련하면 둔기술이나 창술을을 수련할 때 큰 도움이 되며, 그 반대 역시
+마찬가지로 적용된다.
 %%%%
 Slings
 
-Being skilled in a particular type of ranged attack will let you deal more
-damage when using the appropriate launcher and ammunition.
+투석술을 수련하면 투석구로 돌이나 투석탄을 더 빠르게, 더 정확하게, 더 강력하게
+발사할 수 있다.
 
-Being skilled with Slings makes it easier to become more skilled in Throwing,
-and vice versa.
+투석술을 수련하면 투척술을 수련할 때 큰 도움이 되며, 그 반대 역시 마찬가지로
+적용된다.
 %%%%
 Bows
 
-Being skilled in a particular type of ranged attack will let you deal more
-damage when using the appropriate launcher and ammunition.
+특정한 종류의 원거리 공격에 숙달되면 적절한 투사기와 투사체를 사용했을 때 더
+많은 피해를 입힐 수 있다.
 %%%%
 Crossbows
 
-Being skilled in a particular type of ranged attack will let you deal more
-damage when using the appropriate launcher and ammunition.
+특정한 종류의 원거리 공격에 숙달되면 적절한 투사기와 투사체를 사용했을 때 더
+많은 피해를 입힐 수 있다.
 %%%%
 Darts
 
-Being skilled in a particular type of ranged attack will let you deal more
-damage when using the appropriate launcher and ammunition.
+특정한 종류의 원거리 공격에 숙달되면 적절한 투사기와 투사체를 사용했을 때 더
+많은 피해를 입힐 수 있다.
 %%%%
 Throwing
 
-Training Throwing will make thrown weapons (such as javelins) and blowguns more
-effective. In particular, it makes weapons of returning more likely to return
-to their thrower, and makes certain magical needles more likely to have an
-effect when fired from a blowgun.
+투척술을 수련하면 바람총이나 투창, 다트 등의 투척 무기를 더 효과적으로 (더
+빠르게, 더 강하게) 사용할 수 있다. 특히 투척술은 던지면 돌아오는 효과가 있는
+무기를 던졌을 때 제대로 돌아올 확률과, 특수한 효과를 일으키는 바늘을 명중시켰을
+때 적이 저항하지 못할 확률을 높여준다.
 
-Being skilled in Throwing makes it easier to become more skilled with Slings,
-and vice versa.
+투척술을 수련하면 투석술을 수련할 때 큰 도움이 되며, 그 반대 역시 마찬가지로
+적용된다.
 %%%%
 Armour
 
-Armour skill increases the AC gained by wearing heavy armour, and it also helps
-lessen the hindrance of heavy armour on melee combat and spellcasting.
+갑옷 기술은 무거운 갑옷을 입었을 때의 방어력을 높여주며, 무거운 갑옷이 이동,
+마법 시전 등을 덜 방해하도록 만든다.
 %%%%
 Dodging
 
-The Dodging skill will affect your chance of dodging an attack, be it melee,
-ranged or magical. Certain types of attack cannot be dodged, however, such as
-enchantments (which must be resisted) and explosions.
+회피 기술은 근접, 원거리, 마법 공격을 피할 확률에 확실히 영향을 준다. 아쉽게도
+상태이상 부여마법은 피할 수 없다. 대신 그것들을 저항하기 위해선 경험을 쌓거나
+아이템에서 얻을 수 있는 적대적인 부여 마법에 대한 저항력이 필요하다.
 %%%%
 Stealth
 
-By training Stealth, you can make it less likely that monsters will notice you
-if they are asleep or otherwise unalert, and increase your chances of monsters
-losing track of you after you leave their vision. Note that monsters become
-more suspicious and observant as you descend.
+은밀한 움직임은 수면 중이거나 침입자를 알아채지 못한 적에게 들킬 확률을
+줄여주며, 적의 시야를 벗어나 도망칠 때 적이 추적에 실패할 확률이 높아진다. 은밀
+기술과는 상관없이, 당신이 접근할수록 적이 수상한 낌새를 알아챌 확률이 점점 더
+높아진다는 것을 주의해야 한다.
+
+은밀 기술은 수련하기 쉬운 기술이다. 그래서 수련 속도가 다른 기술들에 비해 조금
+빠를 것이다.
 %%%%
 Stabbing
 
-Stabbing is the skill that governs the likeliness of doing a great amount of
-damage when attacking a distracted or helpless creature (usually with a short
-blade), as well as the amount of extra damage dealt. Some gods may disapprove
-of this.
+암습은 무방비한 적에게 확률적으로 엄청난 피해를 줄 수 있는 기술이다. (암살자
+대부분은 단검을 이용한다) 적이 자고 있거나 마비가 됐다거나 해서 거의 움직일 수
+없는 상태에서는 절대 빗나가지 않는 일격필살의 암습 공격이 가능하며, 적이 혼란에
+빠졌거나 해서 암살자를 신경 쓰지 못하는 상태에서는 꽤 자주 쓸만한 암습 공격을
+할 수 있다. 단순히 적이 산만해진 틈을 타 암습을 할 수도 있지만, 이 경우에는
+확률도 높지 않고 큰 피해 역시 줄 수 없다. 샤이닝 원은 암습을 비겁한 행위로 여겨
+좋아하지 않는다.
 %%%%
 Shields
 
-A high Shields skill helps you block melee attacks or projectiles (both magical
-and non-magical) with your equipped (or a magical) shield. Some attacks, such
-as penetrating bolts, cannot be blocked at all.
-%%%%
-Traps & Doors
-
-A character trained in Traps & Doors will be more observant to his or her
-surroundings and be quicker in noticing traps and secret doors.
+높은 방패술은 근접 공격이나 (마법을 포함한) 원거리 공격을 더 잘 막을 수 있게
+도와준다. (마법의 방패를 사용할 때도 방패술을 사용한다) 하지만 관통 화살이나
+관통 마법 같은 몇몇 공격은 방패로 막을 수 없다.
 %%%%
 Unarmed Combat
 
-Being skilled in Unarmed Combat increases your accuracy, damage and attack
-speed in melee combat when barehanded. It also allows you to occasionally punch
-with your off hand as an additional melee attack, provided your hand is free to
-do so.
+맨손 전투를 수련하면 맨손일 때 더 빠르게, 더 정확하게, 더 강력하게 적을 공격할
+수 있다. 또한 각종 신체 부위를 사용할 수 있다는 가정하에, 다양한 추가 공격을 할
+수도 있다.
 %%%%
 Spellcasting
 
-Training Spellcasting makes it easier to learn and cast spells, along with
-increasing your magical reserves. Gaining a level in Spellcasting gives you
-more "spell slots" to spend on new spells. Spellcasting skill and your
-intelligence are the only factors countering spell hunger.
+모든 마법 학파의 근본으로, 약간이지만 모든 마법의 난이도와 성공률에 영향을
+준다. 주문 시전술을 수련하면 더 많은 주문을 외우고 다닐 수 있으며, 최대 마력이
+올라가 한번에 더 많은 주문을 사용할 수 있다. 주문을 사용할 때 소모되는 만복도를
+줄이는 방법은 지능을 높이거나 이 주문 시전술을 높이는 것, 단 두 가지뿐이다.
+
+주문 시전술은 수련하기 어려운 기술이다. 그래서 수련 속도가 다른 기술들에 비해
+조금 느릴 것이다.
 %%%%
 Conjurations
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Conjurations are battle oriented spells, which often work by conjuring up a
-chunk of short-lived matter and propelling it towards the victim to deal direct
-damage. Being skilled in Conjurations usually increases the damage of such
-spells, and sometimes affects their range or the size of the area affected.
+요술은 각종 피해를 주는 전투용 마법으로, 대개 물체를 소환하여 대상에게 직접
+투척함으로서 피해를 입히는 류의 마법들로 구성되어 있다. 요술에 숙달되면 요술
+마법의 공격력이 높아지며, 일부 주변 적들에게까지 피해를 입힐 수 있게 된다.
 %%%%
 Hexes
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Hexes try to bestow various enchantments on nearby things. While none do direct
-damage, being ensorcelled can effectively take an opponent out of combat,
-although they often require overcoming an opponent's resistance to hostile
-enchantments to have an effect. Being skilled in Hexes will help overcome this
-resistance.
+사술은 여러가지 상태이상을 다른 대상에 부여하는 주문이다. 직접 피해를 주지는
+않지만, 적을 현혹하여 전투에서 이탈하게 할 수 있다. 아쉽게도 사술은 생명체에게
+시전할 때 마법 저항력에 크게 영향받는다. 사술에 숙달될 수록 더 쉽게 효과를 내게
+된다.
 %%%%
 Charms
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Charms provide you with a number of self-enhancing auras. Training Charms skill
-will often increase the duration or effectiveness of these auras.
+주술은 자신의 능력을 향상시키는 여러 효과를 가지고 있다. 주술 학파에 숙달되면,
+그러한 효과의 지속시간이 늘어나게 된다.
 %%%%
 Summonings
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 마법의 "학파" 를 수련하면 그 학파의 마법을 더 쉽게 배우고 사용할 수 있다.
+많은 마법은 두세 가지 학파의 지식이 필요하며, 이런 마법의 시전 성공률과 화력은
+해당하는 학파들의 평균 수치로 결정한다.
 
-Summonings deals with summoning creatures from another plane of reality to join
-your army or distract your foes. Increasing Summonings skill may have a number
-of effects depending on the spell, such as longer duration, more powerful
-allies, or lower chances of creating hostile creatures. Note that summoned
-beings don't leave corpses and don't give experience when killed, and their
-equipment is as ephemeral as they are.
+소환술은 다른 세계의 존재를 불러와 함께 싸우거나 적을 유인하는 학파로, 능숙한
+소환술사는 적대적인 소환수가 나올 확률을 줄일 수 있고, 더 강력한 소환수를 더
+많이 그리고 더 오래 소환할 수 있다. 그 어떤 소환수를 죽여도 시체나 착용하고
+있던 장비를 남기지 않으며, 경험치 또한 얻을 수 없다.
 %%%%
 Necromancy
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 마법의 "학파" 를 수련하면 그 학파의 마법을 더 쉽게 배우고 사용할 수 있다.
+많은 마법은 두세 가지 학파의 지식이 필요하며, 이런 마법의 시전 성공률과 화력은
+해당하는 학파들의 평균 수치로 결정한다.
 
-Necromancy is the art of draining and gaining life, although most often
-associated with zombies and other undead. As such, Necromancy spells have a
-wide range of effects, ranging from spells to create or control the undead to
-spells granting unholy healing in various forms.
+강령술은 기본적으로 '생명' 과 '생명력' 을 다루는 학파지만, 실제로는 대부분의
+주문이 좀비나 다른 언데드와 관련되어 있다. 강령술은 일반적인 주문 이외에도
+언데드를 만들고, 조종하고, 각종 부정한 방법으로 생명력을 회복하는 등 다양한
+주문이 존재한다.
 %%%%
 Translocations
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 마법의 "학파" 를 수련하면 그 학파의 마법을 더 쉽게 배우고 사용할 수 있다.
+많은 마법은 두세 가지 학파의 지식이 필요하며, 이런 마법의 시전 성공률과 화력은
+해당하는 학파들의 평균 수치로 결정한다.
 
-Translocations focus on the spatial movement of beings or objects, including
-useful spells to translocate yourself over short distances quickly or to
-transport your enemies away from you.
+전이술은 어떤 존재나 물건을 순간적으로 이동시키는 마법을 연구하는 학파로,
+자신을 순간이동 시키거나 적을 멀리 보내버리는 등 굉장히 유용한 주문들이 많다.
 %%%%
 Transmutations
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 마법의 "학파" 를 수련하면 그 학파의 마법을 더 쉽게 배우고 사용할 수 있다.
+많은 마법은 두세 가지 학파의 지식이 필요하며, 이런 마법의 시전 성공률과 화력은
+해당하는 학파들의 평균 수치로 결정한다.
 
-Transmutations deal with changing shapes. Many Transmutations involve changing
-your own form, but the school also contains spells to change the shape of
-enemies, or to transform objects around you.
+변이술은 '모양을 변화시키는 것' 에 대해 연구하는 학파로, 변이술을 이용해 자신의
+몸을 다양하게 변화시킬 수 있다. 또한 적의 모습을 바꾸거나, 벽을 액화시켜
+없애버리는 등 주변 물체를 변화시키는 주문 역시 사용할 수 있다.
 %%%%
 Fire Magic
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Fire Magic focuses mainly on dealing fire damage over long distances, with many
-effective Conjurations.
+불의 마술은 먼 거리에 있는 적을 불태우는 것에 초점이 맞춰져 있으며, 많은 요술
+마법들로 구성되어 있다.
 
 불의 마술에 숙달되면 얼음의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
 %%%%
 Ice Magic
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Ice Magic contains a range of direct damage spells, as well as some defensive
-effects such as spells to craft temporary shields and armour from ice.
+얼음의 마술 크게 직접 공격을 주는 마법 계열과, 얼음 방패나 갑옷을 만들어내는
+방어적인 계열의 마법으로 구성되어 있다.
 
 얼음의 마술에 숙달되면 불의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
 %%%%
 Air Magic
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Air Magic provides spells to deal damage directly with the wind, as well as
-noisy but powerful lightning conjurations. It also provides some utility
-spells, such as Charms to call the wind to assist your movement or protect you
-from projectile attacks.
+대기의 마술은 바람으로 직접 타격을 입히는 마술들과, 시끄럽지만 강력한 번개
+마법으로 구성되어 있다. 또한 바람으로 당신의 이동을 돕거나 탄환류 공격을
+막아주는 유용한 마법들도 있다.
 
-바람의 마술에 숙달되면 땅의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
+대기의 마술에 숙달되면 땅의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
 %%%%
 Earth Magic
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 "학파" 에 숙달되면 그 학파의 주문을 더 쉽게 배우고 사용할 수 있게 된다.
+많은 주문들은 여러 학파에 속해 있는데, 그런 경우 해당 학파들의 기술의 평균이
+주문의 위력과 성공 확률을 결정한다.
 
-Earth Magic contains spells able to deal large amounts of direct physical
-damage, which cannot be resisted like fire, cold and lightning damage can. It
-is also linked with some Transmutations, with spells to liquefy the earth
-around you, or to turn your enemies to stone.
+땅의 마술은 직접 물리적인 피해를 주는 마법들로 구성되어 있으며, 그러한 마법들은
+속성 공격과는 달리 저항할 수가 없다. 또한 일부 땅의 마술은 변이술과도 관련되어
+있는데, 당신 주변의 대지를 물렁하게 한다던가 적을 석화시키는 마법들이 그에
+해당된다.
 
-땅의 마술에 숙달되면 바람의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
+땅의 마술에 숙달되면 대기의 마술을 익히는 것이 어려워지며, 그 역도 성립한다.
 %%%%
 Poison Magic
 
-Being skilled in a magical "school" makes it easier to learn and cast spells of
-this school. Many spells belong to a combination of several schools, in which
-case spellcasting success and power will depend on the average skill in these
-schools.
+특정 마법의 "학파" 를 수련하면 그 학파의 마법을 더 쉽게 배우고 사용할 수 있다.
+많은 마법은 두세 가지 학파의 지식이 필요하며, 이런 마법의 시전 성공률과 화력은
+해당하는 학파들의 평균 수치로 결정한다.
 
-Poison magic is at its most useful early on, as many monsters are resistant to
-poison in the later game. There are poison spells of high utility throughout
-the game, though.
+독 마법은 초반에는 가장 강력한 학파지만, 뒤로 갈수록 독 저항을 가진 적이
+많아져서 그 힘이 약해지는 경향이 있다. 그래도 독과 관련된 주문은 언제나
+유용하게 쓰이는 편이다.
 %%%%
 Invocations
 
-Your Invocations skill affects the likelihood that an attempt to use a divine
-ability will be successful, and often the power of such abilities. The
-Invocations skill also affects your magical reserve, but to a lesser degree
-than the Spellcasting skill, and only the highest contribution is used.
+기도술은 신의 권능을 사용할 때 성공할 확률과 그 위력을 높여준다. 기도술은 또한
+당신의 최대 마나량을 늘려주는 효과가 있지만, 주문 시전 기술로 인해 늘어나는
+것보다는 효율이 낮으며, 또한 그중 가장 높은 효과만 적용된다.
 %%%%
 Evocations
 
-Evocations is all about using magical items like wands, decks or other uncommon
-objects. The higher your skill, the more likely a positive outcome is when
-evoking items. Also, high skill may let you determine the amount of charges a
-zapped wand has left. The Evocations skill also affects your magical reserve,
-but to a lesser degree than the Spellcasting skill, and only the highest
-contribution is used.
+발동술은 마법봉, 카드 덱 혹은 다른 귀한 마법 물품을 사용하는 데 관련되어 있다.
+이 기술에 능숙해질수록, 마법 물품 사용시 긍정적인 효과를 끌어낼 확률이
+높아진다. 또한 이 기술에 고도로 능숙해지면 마법봉에 얼마나 마력이 남아있는 지
+알아낼 수 있다. 발동술은 또한 당신의 최대 마나량을 늘려주는 효과가 있지만, 주문
+시전 기술로 인해 늘어나는 것보다는 효율이 낮으며, 또한 그중 가장 높은 효과만
+적용된다.
 %%%%

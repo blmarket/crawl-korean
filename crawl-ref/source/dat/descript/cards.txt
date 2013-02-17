@@ -1,308 +1,296 @@
-﻿%%%%
-dummy_cards
-
-dummy_cards
 %%%%
-# decks of transport -> escape
 the Portal card
 
-This card teleports you to a random location, allowing control of the
-translocation at high power. It is usually found in decks of escape and war, or
-in Nemelex Xobeh's deck of punishment.
+이 카드는 사용자를 공간이동시킨다. 카드를 능숙하게 다룰 수 있다는 전제 하에,
+희귀한 카드 덱에서 뽑았다면 어디로 이동할지 정할 수도 있다. 주로 탈출, 전쟁의
+카드 덱에서 발견된다. 또한 네멜렉스 조베의 징벌의 카드 덱에도 들어있다.
 %%%%
 the Warp card
 
-This card translocates you a short distance, either randomly or with increasing
-levels of control at higher power levels. It is usually found in decks of
-escape and war.
+이 카드는 사용자를 짧은 거리 순간이동시킨다. 카드를 능숙하게 다룰 수 있다는
+전제 하에, 희귀한 카드 덱에서 뽑았다면 도착지점을 정할 수도 있다. 주로 탈출,
+전쟁의 카드 덱에서 발견된다.
 %%%%
 Swap card
 
-This card swaps your position with that of a nearby creature. It is usually
-found in decks of escape and war.
+이 카드는 사용자와 근처에 있는 적의 위치를 서로 바꾼다. 주로 탈출, 전쟁의 카드
+덱에서 발견된다.
 %%%%
 Velocity card
 
-This card makes you move or even act faster. It is usually found in decks of
-escape and war.
+이 카드는 사용자의 이동속도를 빠르게 해준다. 전체적인 행동을 빠르게 만들어줄
+수도 있다. 주로 탈출, 전쟁의 카드 덱에서 발견된다.
 %%%%
-# decks of emergency -> escape
 the Tomb card
 
-This card entombs the player in protective walls of solid rock. At lower power
-levels, the tomb may be imperfect. Use with caution! It is usually found in
-decks of defence, escape and war, or in Nemelex Xobeh's deck of punishment.
+이 카드는 사용자 주변에 벽을 만들어서 공격을 차단한다. 평범한 카드 덱에서
+나왔거나, 카드 사용능력이 부족한 경우 벽이 완벽하게 만들어지지 않는다. 사용시
+탈출수단 필수! 주로 방어, 탈출, 전쟁의 카드 덱에서 발견된다. 또한 네멜렉스
+조베의 징벌의 카드 덱에도 들어있다.
 %%%%
 the Banshee card
 
-The wail of the Banshee instils fear in nearby creatures. It is usually found
-in decks of defence, escape and war.
+밴시의 통곡이 주변의 적들에게 공포를 불어넣는다. 주로 방어, 탈출, 전쟁의 카드
+덱에서 발견된다.
 %%%%
 Damnation card
 
-This card banishes one or more nearby creatures to the Abyss, possibly
-including you. It is usually found in decks of defence, escape and war, or in
-Nemelex Xobeh's deck of punishment.
+이 카드는 근처에 있는 1마리 이상의 적들을 어비스로 추방시킨다. 카드의 사용자도
+여기에 포함될 수 있음을 명심하라! 주로 방어, 탈출, 전쟁의 카드 덱에서 발견된다.
+또한, 네멜렉스 조베의 징벌의 카드 덱에도 들어있다.
 %%%%
 Solitude card
 
-This card randomly teleports creatures that are adjacent to you. It is usually
-found in decks of defence, escape and war.
+이 카드는 사용자 주변의 적들을 공간이동시킨다. 주로 방어, 탈출, 전쟁의 카드
+덱에서 발견된다.
 %%%%
 Warpwright card
 
-This card may create teleportation traps. It is usually found in decks of
-defence, escape and war.
+이 카드는 주변에 텔레포트 함정을 설치한다. 주로 방어, 탈출, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 Flight card
 
-This card helps you run away by transforming you, speeding you up or creating
-other avenues of escape. It is usually found in decks of defence, escape and
-war.
+이 카드는 사용자를 다른 형태로 변이시키거나, 빠른 비행을 가능하게 해주거나,
+다른 도주공간을 만들어서 사용자의 도주를 돕는다. 주로 방어, 탈출, 전쟁의 카드
+덱에서 발견된다.
 %%%%
-# deck of battle -> changes, defence, war
 the Elixir card
 
-This card heals you and may also drain or restore your magical energy in the
-process. It is usually found in decks of changes, defence and war.
+이 카드는 사용자를 치료해주며, 이 과정에서 사용자의 마력은 회복될 수도, 증발할
+수도 있다. 주로 변화, 방어, 전쟁의 카드 덱에서 발견된다.
 %%%%
 Battlelust card
 
-This card makes you more powerful in physical combat. It is usually found in
-decks of changes, defence and war.
+이 카드는 사용자의 근접전투에 도움이 되는 효과를 준다. 주로 변화, 방어, 전쟁의
+카드 덱에서 발견된다.
 %%%%
 Metamorphosis card
 
-This card temporarily transforms you. It is usually found in decks of changes,
-defence and war.
+이 카드는 사용자를 잠시동안 다른 형태로 변이시킨다. 주로 변화, 방어, 전쟁의
+카드 덱에서 발견된다.
 %%%%
 the Helm card
 
-This card increases your defences. It is usually found in decks of changes,
-defence and war.
+이 카드는 사용자의 방어능력을 향상시킨다. 주로 변화, 방어, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 the Blade card
 
-This card temporarily enchants or even animates your weapon. It is usually
-found in decks of changes, defence and war.
+이 카드는 잠시동안 사용자의 무기에 특수효과를 부여하거나 살아 움직이게 한다.
+주로 변화, 방어, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Shadow card
 
-This card lets you blend into the shadows, making you less perceptible. It is
-usually found in decks of changes, defence and war.
+이 카드는 사용자와 그림자를 융화시켜, 좀 더 은밀히 다닐 수 있도록 만들어준다.
+주로 변화, 방어, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Mercenary card
 
-This card summons mercenaries to fight by your side... for a price. It is
-usually found in decks of changes, defence and war.
+이 카드는 죽을 때까지 당신만을 위해 싸워줄 용병을 소환한다. 물론 고용할 돈도
+없으면서 용병을 불렀다간... 주로 변화, 방어, 전쟁의 카드 덱에서 발견된다.
 %%%%
-# deck of wonders -> also changes
 the Potion card
 
-This card has the same effect, positive or negative, as drinking a random
-magical potion. It is usually found in decks of changes and wonders.
+이 카드는 긍정적인 효과건 부정적인 효과건 간에, 랜덤한 포션을 마신 것과 같은
+효과를 준다. 주로 변화, 불가사의의 카드 덱에서 발견된다.
 %%%%
 Focus card
 
-This card further boosts your strongest attribute at the cost of your worst. It
-is usually found in decks of changes and wonders.
+이 카드는 사용자의 가장 낮은 능력치를 대가로 가장 높은 능력치를 올려준다. 주로
+변화, 불가사의의 카드 덱에서 발견된다.
 %%%%
 Shuffle card
 
-This card interchanges your three attributes. Use with caution! It is usually
-found in decks of changes and wonders.
+이 카드는 사용자의 힘, 민첩, 지능 수치를 랜덤하게 서로 바꾼다. 사용시 주의요망!
+주로 변화, 불가사의의 카드 덱에서 발견된다.
 %%%%
 Experience card
 
-This card makes you more experienced. It is usually found in decks of changes
-and wonders.
+이 카드는 사용자에게 경험치를 제공한다. 주로 변화, 불가사의의 카드 덱에서
+발견된다.
 %%%%
 Wild Magic card
 
-This card causes wild magic, as if from miscasting a spell, to act upon you. It
-is usually found in decks of changes and wonders.
+이 카드는 사용자에게 마법의 실패 효과를 일으킨다. 주로 변화, 불가사의의 카드
+덱에서 발견된다.
 %%%%
 the Helix card
 
-This card changes your mutations. Higher power levels make the change more
-likely to be beneficial. It is usually found in decks of changes and wonders.
+이 카드는 사용자의 돌연변이 상태를 변화시킨다. 카드를 능숙하게 다룰 수 있다는
+전제 하에, 희귀한 카드일수록 사용자에게 득이 되는 방향으로 변이가 일어난다.
+주로 변화, 불가사의의 카드 덱에서 발견된다.
 %%%%
 the Sage card
 
-This card will funnel some of your earned experience towards training a
-specific skill and train it faster than it normally would. It is usually found
-in decks of changes and wonders.
+이 카드는 사용자가 획득한 경험치의 일부를 특정 스킬에 강제로 투자하게 만든다.
+대신, 스킬의 수련 속도가 빨라진다. 주로 변화, 불가사의의 카드 덱에서 발견된다.
 %%%%
 the Alchemist card
 
-This card transmutes some of your gold into health and magical energy. It is
-usually found in decks of changes and wonders.
+이 카드는 사용자의 돈을 소모해서 체력과 마력을 회복시킨다. 주로 변화와
+불가사의의 카드 덱에서 발견된다.
 %%%%
-# deck of dungeons -> also changes
 Water card
 
-This card changes the floor around you into water. It is usually found in decks
-of changes and dungeons.
+이 카드는 사용자 주변의 지형을 물바다로 만든다. 주로 변화, 던전의 카드 덱에서
+발견된다.
 %%%%
 Vitrification card
 
-This card turns walls translucent. It is usually found in decks of changes and
-dungeons.
+이 카드는 주변의 벽들을 유리벽으로 만든다. 주로 변화, 던전의 카드 덱에서
+발견된다.
 %%%%
 Dowsing card
 
-This card lets you detect secret doors, traps, creatures or some combination
-thereof. It is usually found in decks of changes and dungeons.
+이 카드는 비밀문 탐지, 함정 탐지, 주변의 적 감지 효과 중 하나를 주거나, 또는
+여러 효과를 동시에 준다. 주로 변화, 던전의 카드 덱에서 발견된다.
 %%%%
 the Trowel card
 
-This card may create an altar, a statue, a golem or even a portal, but works
-best only in the main dungeon and its branches. It is usually found in decks of
-changes and dungeons.
+이 카드는 신전, 석상, 골렘, 또는 포탈을 만들어낸다. 메인 던전과 여기서 갈 수
+있는 다른 던전에서 쓰는 것이 좋다. 주로 변화, 던전의 카드 덱에서 발견된다.
 %%%%
 the Minefield card
 
-This card makes your immediate surroundings more dangerous. It is usually found
-in decks of changes and dungeons, or in Nemelex Xobeh's deck of punishment.
+이 카드는 사용자 주변을 훨씬 위험한 곳으로 만들어버린다. 주로 변화, 던전의 카드
+덱에서 발견된다. 또한, 네멜렉스의 징벌의 카드 덱에도 들어있다.
 %%%%
-# deck of summonings
 the Crusade card
 
-This card tries to convert nearby creatures to your cause. It is usually found
-in decks of summonings and war.
+이 카드는 주변의 적들을 잠시동안 자신의 편으로 만드려고 시도하며, 소환된 적들은
+추방시킨다. 주로 소환, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Herd card
 
-This card summons animals. It is usually found in decks of summonings and war.
+이 카드는 동물 동료들을 소환한다. 주로 소환, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Pentagram card
 
-This card summons a demon to your aid. It is usually found in decks of
-summonings and war.
+이 카드는 당신을 도와 같이 싸울 악마들을 소환한다. 주로 소환, 전쟁의 카드
+덱에서 발견된다.
 %%%%
 the Dance card
 
-This card summons a dancing weapon. It is usually found in decks of summonings
-and war.
+이 카드는 살아 움직이는 무기를 소환한다. 주로 소환, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 Foxfire card
 
-This card summons flying creatures. It is usually found in decks of summonings
-and war.
+이 카드는 비행능력이 있는 동료들을 소환한다. 주로 소환, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 the Bones card
 
-This card summons a skeletal creature. It is usually found in decks of
-summonings and war.
+이 카드는 몸이 뼈로 이루어진 동료들을 소환한다. 주로 소환, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 Repulsiveness card
 
-This card summons an ugly or very ugly thing. It is usually found in decks of
-summonings and war.
+이 카드는 못생기거나, 혹은 매우 못생긴 것을 소환할 것이다. 주로 소환, 전쟁의
+카드 덱에서 발견된다.
 %%%%
 Vitriol card
 
-This card unleashes a corrosive or degenerating attack spell. It is usually
-found in decks of destruction and war.
+이 카드는 적에게 산성 공격 혹은 시고트비의 타락 마법을 건다. 주로 파괴, 전쟁의
+카드 덱에서 발견된다.
 %%%%
 Flame card
 
-This card unleashes a fiery attack spell. It is usually found in decks of
-destruction and war.
+이 카드는 불 계열 공격마법을 품고 있다. 주로 파괴, 전쟁의 카드 덱에서 발견된다.
 %%%%
 Frost card
 
-This card unleashes an icy attack spell. It is usually found in decks of
-destruction and war.
+이 카드는 얼음 계열 공격마법을 품고 있다. 주로 파괴, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 Venom card
 
-This card unleashes a poisonous attack spell, which may affect you as well. It
-is usually found in decks of destruction and war.
+이 카드는 독 계열 공격마법을 품고 있다. 사용자도 이 카드로 인해 피해를 입을지도
+모른다. 주로 파괴, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Spark card
 
-This card unleashes an electrical attack spell. It is usually found in decks of
-destruction and war.
+이 카드는 전기 계열 공격마법을 품고 있다. 주로 파괴, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 the Hammer card
 
-This card unleashes a physical attack spell. It is usually found in decks of
-destruction and war.
+이 카드는 물리적인 공격 마법을 품고있다. 주로 파괴, 전쟁의 카드 덱에서
+발견된다.
 %%%%
 Pain card
 
-이 카드는 강령술 계열 공격 주문을 발생시킨다. 당신에게도 영향을 줄 수 있다.
-이 카드는 파괴, 전쟁의 덱에 포함된다.
+이 카드는 강령술 계열 공격마법을 품고 있다. 사용자도 이 카드로 인해 피해를
+입을지도 모른다. 주로 파괴, 전쟁의 카드 덱에서 발견된다.
 %%%%
 Torment card
 
-This card calls on the powers of darkness to cause agonising injury to any
-nearby living creature. It is usually found in decks of destruction and war.
+이 카드는 어둠의 힘을 불러 주변의 모든 생명체들에게 지옥의 고통을 준다. 주로
+파괴, 전쟁의 카드 덱에서 발견된다.
 %%%%
 the Orb card
 
-This card unleashes a destructive orb of pure magic, sometimes even multiple
-ones. It is usually found in decks of destruction and war.
+이 카드는 순수한 파괴 마법을 품고있다. 마법*들* 일지도..? 주로 파괴, 전쟁의
+카드 덱에서 발견된다.
 %%%%
-# deck of punishment (along with a few others)
 Wrath card
 
-This card draws a god's wrath against you. It is usually only found in Nemelex
-Xobeh's deck of punishment.
+이 카드는 사용자에게 랜덤한 신의 징벌을 내린다. 오직 네멜렉스 조베의 징벌의
+카드 덱에서만 발견된다.
 %%%%
 the Wraith card
 
-This card will drain you. It is usually only found in Nemelex Xobeh's deck of
-punishment.
+이 카드는 사용자의 경험치를 흡수해간다. 오직 네멜렉스 조베의 징벌의 카드
+덱에서만 발견된다.
 %%%%
 the Curse card
 
-This card places curses on your possessions. It is usually only found in
-Nemelex Xobeh's deck of punishment.
+이 카드는 사용자의 소지품에 저주를 내리게 한다. 오직 네멜렉스 조베의 징벌의
+카드 덱에서만 발견된다.
 %%%%
 Xom card
 
-This card draws the attention of Xom on yourself. It is usually only found in
-Nemelex Xobeh's deck of punishment.
+이 카드는 사용자가 좀의 관심을 받게 한다. 오직 네멜렉스 조베의 징벌의 카드
+덱에서만 발견된다.
 %%%%
 Famine card
 
-This card starves you. It is usually only found in Nemelex Xobeh's deck of
-punishment.
+이 카드는 사용자를 배고프게 만든다. 오직 네멜렉스 조베의 징벌의 카드 덱에서만
+발견된다.
 %%%%
 the Swine card
 
-This card will make you turn pink and root for truffles. It is usually only
-found in Nemelex Xobeh's deck of punishment.
+이 카드는 사용자를 송로버섯을 찾기 위해 돌아다니는 분홍색 생물 - 두 글자로
+줄이면... 돼지 - 로 만들어버린다. 오직 네멜렉스 조베의 징벌의 카드 덱에서만
+발견된다.
 %%%%
-# deck of oddities (random card, along with a few others)
 the Bargain card
 
-This card grants you a temporary discount in shops. It is not normally part of
-any deck.
+이 카드는 잠시동안 상점의 물건 가격을 할인시켜준다. 모든 카드 덱에서 아주
+가끔씩 발견된다.
 %%%%
 the Genie card
 
-The Genie may grant you an acquirement or punish you for trying. It is not
-normally part of any deck.
+지니가 나타나서 소원을 들어주거나, 버릇없는 사용자를 벌할 것이다. 모든 카드
+덱에서 아주 가끔씩 발견된다.
 %%%%
 the Feast card
 
-This card feeds you. It is not normally part of any deck.
+이 카드는 사용자를 배부르게 한다. 모든 카드 덱에서 아주 가끔씩 발견된다.
 %%%%
-# cards for wizmode testing (&c)
 the Stairs card
 
-This card makes staircases slide towards or away from you. (It is a bug if you
-ever encounter this card.)
+이 카드는 근처의 계단들을 사용자 근처로 오게하거나 더 멀어지게 한다. (이 카드는
+버그입니다! 버그를 발견한 사실을 친구들에게 자랑하세요.)
 %%%%
-# buggy cards
 a buggy card
 
-Buggy (It's a bug if you ever see this.)
+버그. (축하합니다! 당신의 이 게임의 버그를 발견하셨습니다! 이 사실을 주변
+사람들에게 자랑하세요.)
 %%%%
 a very buggy card
 
-Buggy (It's a bug if you ever see this.)
+버그. (축하합니다! 당신의 이 게임의 버그를 발견하셨습니다! 이 사실을 주변
+사람들에게 자랑하세요.)
 %%%%
