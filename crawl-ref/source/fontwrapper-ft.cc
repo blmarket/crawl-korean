@@ -19,9 +19,9 @@
 #include "options.h"
 
 // maximum number of unique glyphs that can be rendered with this font at once; e.g. 4096, 256, 36
-#define MAX_GLYPHS 256
+#define MAX_GLYPHS 1024
 // dimensions of glyph grid; GLYPHS_PER_ROWCOL^2 <= MAX_GLYPHS; e.g. 64, 16, 6
-#define GLYPHS_PER_ROWCOL 16
+#define GLYPHS_PER_ROWCOL 32
 // char to use if we can't find it in the font (upside-down question mark)
 #define MISSING_CHAR 0xbf
 
