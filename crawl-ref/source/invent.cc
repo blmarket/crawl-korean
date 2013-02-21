@@ -405,13 +405,13 @@ void InvMenu::set_title(const std::string &s)
         const int cap = carrying_capacity(BS_UNENCUMBERED);
 
         stitle = make_stringf(
-            "Inventory: %.0f/%.0f aum (%d%%, %d/52 slots)",
+            _("Inventory: %.0f/%.0f aum (%d%%, %d/52 slots)"),
             BURDEN_TO_AUM * you.burden,
             BURDEN_TO_AUM * cap,
             (you.burden * 100) / cap,
             inv_count());
 
-        std::string prompt = "(_ for help)";
+        std::string prompt = _("(_ for help)");
         stitle = stitle + std::string(std::max(0, get_number_of_cols()
                                                   - strwidth(stitle)
                                                   - strwidth(prompt)),
@@ -830,7 +830,7 @@ menu_letter InvMenu::load_items(const std::vector<const item_def*> &mitems,
 
         if (type != MT_RUNES)
         {
-            std::string subtitle = item_class_name(i);
+            std::string subtitle = _(item_class_name(i).c_str());
 
             // Mention the class selection shortcuts.
             if (is_set(MF_MULTISELECT) && inv_class[i] > 1)
@@ -840,10 +840,10 @@ menu_letter InvMenu::load_items(const std::vector<const item_def*> &mitems,
                 if (!glyphs.empty())
                 {
                     // longest string
-                    const std::string str = "Magical Staves and Rods";
+                    const std::string str = _("Magical Staves and Rods");
                     subtitle += std::string(strwidth(str)
                                             - strwidth(subtitle) + 1, ' ');
-                    subtitle += "(select all with <w>";
+                    subtitle += _("(select all with <w>");
                     for (unsigned int k = 0; k < glyphs.size(); ++k)
                          subtitle += glyphs[k];
                     subtitle += "</w><blue>)";
@@ -978,7 +978,7 @@ bool InvMenu::process_key(int key)
             {
                 lastch = CONTROL('D');
                 temp_title = title->text;
-                set_title("Select to reset item to default: ");
+                set_title(_("Select to reset item to default: "));
                 update_title();
             }
 
@@ -1416,7 +1416,7 @@ std::vector<SelItem> prompt_invent_items(
 
         if (need_prompt)
         {
-            mprf(MSGCH_PROMPT, "%s (<w>?</w> for menu, <w>Esc</w> to quit)",
+            mprf(MSGCH_PROMPT, _("%s (<w>?</w> for menu, <w>Esc</w> to quit)"),
                  prompt);
         }
 

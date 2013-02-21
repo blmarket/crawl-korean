@@ -2091,6 +2091,7 @@ _crazy_yiuf_word_end_
 
 이구나!
 
+w:5
 ...냐?
 %%%%
 # Uppercase words
@@ -2398,10 +2399,10 @@ dissolution_speech
 %%%%
 dissolution_rare
 
-@The_monster@은(는) 말했다. "......우리는 슬라임에서 났고, 슬라임으로 바뀌었다."
+@The_monster@은(는) 말했다. "......우리는 슬라임으로부터 태어났고, 슬라임으로 바뀌었다."
 
 w:1
-@The_monster@은(는) 말했다. "......우린 슬라임에서 나서, 슬라임으로 돌아가지." 
+@The_monster@은(는) 말했다. "......우린 슬라임으로 태어나, 슬라임으로 돌아가지." 
 
 @The_monster@은(는) 말했다. "......녹여버리기 위해 문제를 해결하지!"
 
@@ -2432,11 +2433,11 @@ w:50
 
 VISUAL:@The_monster@은(는) 바위를 걷어차더니, 바위를 노려봤다.
 
-@The_monster@은(는) 말했다. "왜 이렇게 어둡지? 오크들은 횄불이라는 것도 모르나?"
+@The_monster@은(는) 말했다. "왜 이렇게 어둡지? 오크들은 횃불 켜는 법도 모르나?"
 
 @The_monster@은(는) 말했다. "가게에서 랜턴을 샀는데, 작동하지 않아. 싫다."
 
-@The_monster@은(는) 말했다. "쟤들도 지독하게 못생겼어!"
+@The_monster@은(는) 말했다. "쟤들 진짜 지독하게 못생겼어!"
 
 @The_monster@은(는) 말했다. "내가 어떤 오크한테 달려든 적이 있어. 글쎄 그 오크가 자길 워로드라 부르는 거야, 그래서 내가 왠 전쟁? 이라고 물었지."
 
@@ -2453,27 +2454,27 @@ Elven Halls Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "엘프들은 정말 예뻐, 저들이 매혹 기술이라도 사용한건가."
+@The_monster@은(는) 말했다. "엘프는 엘프라고 진짜 이쁘긴 이쁘네. 아님 저들이 매혹 기술이라도 사용한거라던가."
 
-@The_monster@은(는) 말했다. "이 곳은 한없이 아래로 이어질거야. 아마 바닥에는 거북이가 있는지도 모르지."
+@The_monster@은(는) 말했다. "이 곳은 한없이 아래로 이어질거야. 뭐, 바닥에는 거북이가 있는지도 모르지."
 
-@The_monster@은(는) 말했다. "너같으면 광산에 입구를 두고 싶겠니? 멍청하게."
+@The_monster@은(는) 말했다. "고귀한 엘프님들이 무슨 오크 광산 따위에 입구를 만들어 놨어? 참 멍청하게."
 
-@The_monster@은(는) 말했다. "여기 룬은 고생할만한 가치가 있는 물건이었으면 해!"
+@The_monster@은(는) 말했다. "여기 분명 룬은 있겠지? 이렇게 고생해서 내려가는데 당연히 그 정도 가치 있는 룬은 있겠지!"
 
 @The_monster@은(는) 말했다. "왜 내 물약과 두루마리들을 위층에 두고왔지? 포션을 마셔야 하는데."
 
 @The_monster@은(는) 말했다. "엘프들은 성대한 축제를 벌일 줄 알았어. 전혀 아니더군."
 
-@The_monster@은(는) 말했다. "정말 예뻐. 근데, 정말로, 정말로 지루해. 이런 건 싫어."
+@The_monster@은(는) 말했다. "쟤네들 진짜 이쁘긴 이쁘다. 근데, 이젠 진짜 지루해."
 
 @The_monster@은(는) 말했다. "손짓해대는 게 무슨 의미라도 있나? 정말 싫다."
 
 @The_monster@은(는) 말했다. "하이 엘프와 딥 엘프의 차이점을 모르겠어."
 
-@The_monster@은(는) 말했다. "어쨌건간, 무슨 종류의 슬럿지라고?"
+@The_monster@은(는) 말했다. "그런데, 슬럿지 엘프? 그건 또 무슨 엘프 종류야?"
 
-@The_monster@은(는) 말했다. "참, 색깔 한번 요란하네."
+@The_monster@은(는) 말했다. "참, 쟤네들 옷 색깔 한번 요란하네."
 
 @The_monster@은(는) 말했다. "여기 엘프들은 싸우는 법 따위 모르곘지. 한심하긴."
 %%%%
@@ -2482,13 +2483,13 @@ Swamp Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "무슨 끔찍한 냄새지? 이건 마치… 우웩."
+@The_monster@은(는) 말했다. "이건 대체 무슨 냄새지? 이건 마치… 우웩."
 
-@The_monster@은(는) 말했다. "물보다 더 싫은 게 있디면, 늪지의 시커먼 물이야."
+@The_monster@은(는) 말했다. "물보다 더 싫은 게 있디면, 늪지의 시커먼 물이지."
 
-@The_monster@은(는) 말했다. "난 나무가 싫어. 난 늪지 물도 싫어. 그냥 여기가 싫어."
+@The_monster@은(는) 말했다. "난 나무가 싫어 난 늪지 물도 싫어. 그냥 여기가 싫어."
 
-@The_monster@은(는) 말했다. "모기들을 한방에 다 쓸어버리고 싶어. '살충의 마법 두루마리'같은건 없나?"
+@The_monster@은(는) 말했다. "저 모기들을 한방에 다 쓸어버리고 싶어. '살충의 마법 두루마리'같은건 없나?"
 
 @The_monster@은(는) 말했다. "붕붕거리는 소리잖아? 난 저게 제일 싫어."
 
@@ -2515,19 +2516,19 @@ w:50
 
 @The_monster@은(는) 말했다. "파도? 어쨌든 물은 싫어!"
 
-@The_monster@은(는) 말했다. "거북이로 죽을 끓이면 맛있지. 근데 거북이는 싫어."
+@The_monster@은(는) 말했다. "거북이로 죽을 끓이면 맛있지. 잡는게 좀 짜증나지만."
 
 @The_monster@은(는) 말했다. "하피들이 내 도시락을 훔쳐 도망갔지. 망할 하피들!"
 
-@The_monster@은(는) 말했다. "여기 해적선이 출몰하는건 아니겠지? 해적은 정말 싫다."
+@The_monster@은(는) 말했다. "여기 해적선이 출몰하는건 아니겠지?"
 
 @The_monster@은(는) 말했다. "그나마, 늪지보다는 여기가 냄새는 덜하네."
 
-@The_monster@은(는) 말했다. "저 세이렌들 노래 정말 못 참아주겠어. 귀가 썩는 것 같아!"
+@The_monster@은(는) 말했다. "저 세이렌들 노래 정말 못 참아주겠어. 저런거에 현혹되다니, 너도 참 한심하다!"
 
-@The_monster@은(는) 말했다. "저게 사이렌들이 내는 노래야? 내가 불러도 저거보단 잘 부르겠다!"
+@The_monster@은(는) 말했다. "저게 세이렌들이 내는 노래야? 내가 불러도 저거보단 잘 부르겠다!"
 
-@The_monster@은(는) 말했다. "그런데, 이 바다는 대체 어디서 온 거지? 여기 분명 지하 아니었어?"
+@The_monster@은(는) 말했다. "그런데, 이 바다는 대체... 어디에서 온 바다지? 여기 분명 지하 아니었어?"
 
 @The_monster@은(는) 말했다. "난 해변이 좋아. 그런데 바닷물은 질색이야."
 
@@ -2551,24 +2552,24 @@ w:50
 
 @The_monster@은(는) 말했다. "거북이가 날 물었어! 망할 거북이!"
 
-@The_monster@은(는) 말했다. "저 바다 속에서 촉수가 튀어나와서 날 건드렸었지. 촉수는 소름끼쳐!"
+@The_monster@은(는) 말했다. "저 바다 속에서 촉수가 튀어나와서 날 건드렸었지. 으으.. 생각만 해도 소름끼쳐!"
 %%%%
 Spider Nest Donald
 
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "니 등에 거미가 붙었어!"
+@The_monster@은(는) 말했다. "야, 야! 니 등에 거미가 붙었어! 진짜!"
 
 @The_monster@은(는) 말했다. "그들이 보고있다. 알다시피, 이건 음모야."
 
-@The_monster@은(는) 말했다. "누군가에게 감시당하는 느낌, 질색이지 않아?"
+@The_monster@은(는) 말했다. "누군가에게 감시당하는 느낌, 딱 질색이지 않아?"
 
 @The_monster@은(는) 말했다. "신문지 없어? 저 거미 새끼들 잡아서 눌러버리게."
 
-@The_monster@은(는) 말했다. "기어다니는 것들, 다 밟아 버리고 싶어."
+@The_monster@은(는) 말했다. "기어다니는 것들은 죄~다 밟아 버려야해."
 
-@The_monster@은(는) 말했다. "여기를 한번 싹 청소해버릴 사람 없나. 거미줄은 정말 싫어."
+@The_monster@은(는) 말했다. "여기를 한번 싹 청소해버릴 사람 없나. 사방에 저 거미줄좀 봐봐."
 
 @The_monster@은(는) 말했다. "내 삼촌네 집 다락방에는 이것보다 큰 거미줄이 있었지. 생각만 해도 넌덜머리나."
 
@@ -2580,9 +2581,9 @@ w:50
 
 @The_monster@은(는) 말했다. "내 바지 속에 무언가 기어올라오고 있어! 으이이이익!"
 
-@The_monster@은(는) 말했다. "저놈들이 깨무는 건 무엇보다 질색이야. 독 걸리잖아."
+@The_monster@은(는) 말했다. "저놈들이 깨무는 건 무엇보다 질색이야. 독 걸리잖아. 아프다고."
 
-@The_monster@은(는) 말했다. "살충제가 필요해."
+@The_monster@은(는) 말했다. "에프킬라 한 통 없어?"
 
 @The_monster@은(는) 말했다. "세스코를 부를까?"
 
@@ -2590,7 +2591,7 @@ w:50
 
 @The_monster@은(는) 말했다. "거미 공포증은 병이 아냐. 그냥 다들 있는거일껄."
 
-@The_monster@은(는) 말했다. "저기 있다, 아니.. 천장에도, 또, 저 벽에도!"
+@The_monster@은(는) 말했다. "저기 벽에 거미가 붙어있다! 아니.. 천장에도, 또, 저 벽에도!"
 
 # TODO: If the Hellspider is added, you know what to do.
 %%%%
@@ -2599,13 +2600,13 @@ Slime Pits Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "'부식 저항 부적'을 갖고오는 걸 깜빡했어. 정말 짜증나."
+@The_monster@은(는) 말했다. "'부식 저항 부적'을 갖고오는 걸 깜빡했어. 또 돌아가야하나? 짜증나네."
 
-@The_monster@은(는) 말했다. "저 눈알들 참 음산해."
+@The_monster@은(는) 말했다. "저 눈알들 참 음산하지 않아? 어딜 노려보는거지."
 
-@The_monster@은(는) 말했다. "보물들은 어디 있지?"
+@The_monster@은(는) 말했다. "근데 여기.. 뭐 아이템같은건 안 떨어져있나? 다 녹았나?"
 
-@The_monster@은(는) 말했다. "젤리가 내 점심을 먹어치웠어. 난 젤리가 싫어."
+@The_monster@은(는) 말했다. "젤리가 내 점심을 먹어치웠어. 그래서 젤리가 질색이라는거야."
 
 @The_monster@은(는) 말했다. "내가 마치 젤리 샌드위치가 된거 같다."
 
@@ -2617,7 +2618,7 @@ w:50
 
 @The_monster@은(는) 말했다. "이 기분 나쁜 슬라임을 발에서 떼어 낼 수가 없어."
 
-@The_monster@은(는) 말했다. "갖고 있던 다른 칼은 완전히 녹슬어버렸어. 정말 싫어!"
+@The_monster@은(는) 말했다. "내가 쓰던 다른 칼은 여기서 다 녹아버렸다고. 제길!"
 
 @The_monster@은(는) 말했다. "누군가 날 지켜보는 것 같다는 느낌이 계속 들어. 음산해."
 
@@ -2625,25 +2626,25 @@ w:50
 
 @The_monster@은(는) 말했다. "난 감시당하고 있다는 생각이 들면 그 자리에서 굳어버린 듯 움직일 수가 없더라."
 
-@The_monster@은(는) 말했다. "포션을 내려놨는데 젤리가 먹어버렸어. 젤리는 닥 질색이야!"
+@The_monster@은(는) 말했다. "포션을 내려놨는데 젤리가 먹어버렸어. 젤리는 딱 질색이야!"
 
-@The_monster@은(는) 말했다. "죽음의 젤리가 내 앞에서 파들거렸어. 참 한심해 보이던데."
+@The_monster@은(는) 말했다. "죽음의 젤리가 내 앞에서 파들거렸어. 참으로 한심해 보이던데."
 
-@The_monster@은(는) 말했다. "산성 덩이는 신물이 올라오는걸 생각나게 해. 난 신물이 넘어오는 건 싫단 말야."
+@The_monster@은(는) 말했다. "산성 덩이를 볼때마다 목구멍에서 신물이 올라오는걸 생각나게 해. 난 신물이 넘어오는 건 딱 질색이란 말야."
 
-@The_monster@은(는) 말했다. "이 색색의 슬라임들은 다 뭐야? 꼭 '뿌요뿌요'를 하는거 같군. 정말 싫어."
+@The_monster@은(는) 말했다. "아주 형형색색의 슬라임이 다 나오네. 참, '뿌요뿌요'라도 하라는 건가?"
 
-@The_monster@은(는) 말했다. "거대한 저 아메바들. 난 원생생물이 좋았던 적이 없어."
+@The_monster@은(는) 말했다. "저 거대한 아메바들 좀 봐. 원생생물 같은거 좋아하는 사람이 있을지는 모르겠네."
 
-@The_monster@은(는) 말했다. "내 모든 문제를 해결하려면 산을 쓰라고 누군가가 말했었지. 이제 상황이 더 나빠졌어."
+@The_monster@은(는) 말했다. "내 모든 문제를 해결하려면 '산'을 쓰라고 누군가가 말했었지. 잘 봐. 상황이 더 나아진 거 같긴 해?"
 
-@The_monster@은(는) 말했다. "여기 룬은 제발 끈적거리지 않았으면."
+@The_monster@은(는) 말했다. "여기 있는 룬 주우면 가방이 다 녹는 거 아냐?"
 
 @The_monster@은(는) 말했다. "젤리들이 룬을 이미 삼켜버렸다는거에 내 칼을 걸어보지."
 
-@The_monster@은(는) 말했다. "꿀렁꿀렁대는 소리, 정말 싫다."
+@The_monster@은(는) 말했다. "꿀렁꿀렁 소리.... 정말 싫다."
 
-@The_monster@은(는) 말했다. "쩍쩍 갈라지는 소리, 정말 싫다."
+@The_monster@은(는) 말했다. "저 쩍쩍 갈라지는 소리, 정말 싫다."
 %%%%
 Snake Pit Donald
 
@@ -2652,17 +2653,17 @@ w:50
 
 @The_monster@은(는) 말했다. "쉿쉿거리는 소리에서 뭔가 짚히는게 있어? 정말 짜증나.."
 
-@The_monster@은(는) 말했다. "기어가는 소리 들었어? 정말 싫어."
+@The_monster@은(는) 말했다. "방금 뭔가 기어가는 소리 들었어? 정말 싫어."
 
-@The_monster@은(는) 말했다. "뱀들을 장갑 재료로 쓸려고 했는데, 가만보니 난 장갑을 싫어했었군."
+@The_monster@은(는) 말했다. "뱀들 가죽을 벗겨버려서 장갑 재료로 쓸려고 했는데, 가만보니 난 장갑 끼는거 싫어했지."
 
-@The_monster@은(는) 말했다. "여긴 말 그대로 뱀의 소굴이네."
+@The_monster@은(는) 말했다. "진짜, 말 그대로 뱀의 소굴이네."
 
-@The_monster@은(는) 말했다. "내가 나가 꼬리갑옷을 어디다 쓰겠어?"
+@The_monster@은(는) 말했다. "아니, 나가 꼬리갑옷을 얻어봤자 이걸 어디다 쓰라고?"
 
-@The_monster@은(는) 말했다. "그나저나 꼬리갑옷은 뭐야? 하체를 다 감싸던데 뭘?"
+@The_monster@은(는) 말했다. "그나저나 꼬리 갑옷은 대체 뭐야? 하체를 다 감싸던데 무슨?"
 
-@The_monster@은(는) 말했다. "로브는 겁쟁이들이나 입는거야. 진정한 남자라면 말야 중갑을 입어야지!"
+@The_monster@은(는) 말했다. "로브는 겁쟁이들이나 입는거야. 진정한 남자라면 말야, 중갑을 입어야지, 중갑을!"
 
 @The_monster@은(는) 말했다. "나가들은 진짜 못생겼어. 질색이야."
 
@@ -2674,17 +2675,17 @@ w:50
 
 @The_monster@은(는) 말했다. "빠른 것들이 나가야, 아님 다른거야?"
 
-@The_monster@은(는) 말했다. "근데 나가라는 이름은 대체 뭔 이름이야? 저것들 잘 나가지도 않더만."
+@The_monster@은(는) 말했다. "근데 '나가'라는 이름은 대체 뭔 이름이야? 저것들 잘 '나가'지도 않더만."
 
 @The_monster@은(는) 말했다. "그래도 가루다는 없네. 난 가루다를 싫어하는데 말야."
 
 @The_monster@은(는) 말했다. "넌 아마 이 곳에 구덩이가 더 있을거라고 생각했겠지. 난 근데 그런건 못 봤어."
 
-@The_monster@은(는) 말했다. "이 장소 정말 구역질 나. 아니면 독 때문에 그런건가..."
+@The_monster@은(는) 말했다. "이 장소 진짜 역겹다. 아니면 독 때문에 그런건가..."
 
-@The_monster@은(는) 말했다. "최소한 빠른 놈들은 무기는 안 갖고 있네."
+@The_monster@은(는) 말했다. "그래도 다행인게, 빠른 놈들은 그나마 무기는 안 갖고 있네."
 
-@The_monster@은(는) 말했다. "그래, 나가가 은밀하다고? 웃기지좀 마."
+@The_monster@은(는) 말했다. "그래서, 나가가 은밀하다고? 웃기지좀 마."
 
 @The_monster@은(는) 말했다. "나가들이 좀 빨리 기어와서 복도를 그만 막았으면 좋겠어."
 
@@ -2699,7 +2700,7 @@ w:50
 
 @The_monster@은(는) 말했다. "나도 용 가죽을 못 얻었어."
 
-@The_monster@은(는) 말했다. "보물창고? 쓰레기장이라고 불러야 할 것 같은데s."
+@The_monster@은(는) 말했다. "보물창고? 쓰레기장이라고 불러야 할 것 같은데."
 
 @The_monster@은(는) 말했다. "괜히 고생하지 마, 마지막 층엔 쓰레기밖에 없더만."
 %%%%
@@ -2708,23 +2709,23 @@ Hall of Blades Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "대형 메이스는 날도 없잖아."
+@The_monster@은(는) 말했다. "칼날의 방이라고? 대형 메이스는 칼날도 없잖아."
 
 @The_monster@은(는) 말했다. "맨 밑층에 어비스로 통하는 차원문이라도 넣었을 지도 몰라."
 
-@The_monster@은(는) 말했다. "춤 추는 무기가 어떻게 노려보지?"
+@The_monster@은(는) 말했다. "춤 추는 무기가 어떻게 우릴 노려보지?"
 
 @The_monster@은(는) 말했다. "여기 오기 직전부터 반쯤 싸나이가 된 기분이야."
 
 @The_monster@은(는) 말했다. "있잖아, 난 춤추는 무기가, 정말로 춤출 줄 알았는데?"
 
-@The_monster@은(는) 말했다. "여긴 어떻게 왔지?"
+@The_monster@은(는) 말했다. "그런데 여긴 어떻게 왔지?"
 
-@The_monster@은(는) 말했다. "저 검 불타오르는데."
+@The_monster@은(는) 말했다. "저 검, 불타오르는데."
 
-@The_monster@은(는) 말했다. "근데, 바르디슈 가지고는 뭘 하는 거야?"
+@The_monster@은(는) 말했다. "근데, 바르디슈는 어디에 쓰는 무기야?"
 
-@The_monster@은(는) 말했다. "내가 원하던 무기를 찾지 못했어. 아마 새 무기가 다시 들어오겠지."
+@The_monster@은(는) 말했다. "여긴 내가 원하던 무기는 없는 거 같네. 좀 기다리면 다른 무기들이 들어오려나?"
 
 @The_monster@은(는) 말했다. "누가 수고스럽게 이런데 오려고 하겠어? 지겨운 곳인데."
 
@@ -2732,15 +2733,15 @@ w:50
 
 @The_monster@은(는) 말했다. "저 도끼 날 서 있는 것좀 봐."
 
-@The_monster@은(는) 말했다. "움직이게 된 무기들은 한세기는 족히 간대."
+@The_monster@은(는) 말했다. "움직이게 된 무기들은 한 세기는 족히 간다는데."
 
 @The_monster@은(는) 말했다. "배고파."
 
-@The_monster@은(는) 말했다. "한참 기다렸는데. 새로워진 건 없네."
+@The_monster@은(는) 말했다. "내가 원하는 무기가 나올까 한참 기다렸는데. 뭐 새로 나오거나 하는 건 없네."
 
 @The_monster@은(는) 말했다. "팔치온? 샤벨? 펄션, 세이버라고 써야 맞는 거 아냐?"
 
-@The_monster@은(는) 말했다. "같이 춤 출만한 상대는 없네. 정말 싫다."
+@The_monster@은(는) 말했다. "같이 춤 출만한 상대는 없나? 진짜 싫다."
 %%%%
 Crypt Donald
 
@@ -2765,15 +2766,11 @@ w:50
 
 @The_monster@은(는) 말했다. "여기 그리 으스스하지도 않잖아."
 
-@The_monster@은(는) 말했다. "여기 참 묘한데"
+@The_monster@은(는) 말했다. "여기 참 묘한데. 안그래?"
 
 @The_monster@은(는) 말했다. "해골들은 소름돋아."
 
-@The_monster@은(는) 말했다. "난 해골이 싫어."
-
-@The_monster@은(는) 말했다. "난 좀비가 싫어."
-
-@The_monster@은(는) 말했다. "난 뱀파이어가 싫어."
+@The_monster@은(는) 말했다. "난 해골이 싫어. 좀비도 싫고, 뱀파이어는 질색이야."
 
 @The_monster@은(는) 말했다. "뱀파이어하고 쥐 패티시하고 뭔 관계가 있는 걸까?"
 
@@ -2801,7 +2798,7 @@ w:50
 
 @The_monster@은(는) 말했다. "흉흉한 언데드 얘기는 여기서 그만하자구."
 
-@The_monster@은(는) 말했다. "그래도 많이 어정대진 않는군, 안그래? 난 어정대는 게 싫어."
+@The_monster@은(는) 말했다. "그래도 여기 놈들은 그렇게 얼쩡대진 않는군, 안그래? 난 얼쩡대는 게 싫어."
 
 @The_monster@은(는) 말했다. "여기선 음악조차 연주하질 않는군."
 
@@ -2809,16 +2806,16 @@ w:50
 
 @The_monster@은(는) 말했다. "이전에 스핑크스를 본 적이 있어. 스핑크스는 싫어."
 
-@The_monster@은(는) 말했다. "납골당, 무덤, 그 다음엔 뭐지? 관?"
+@The_monster@은(는) 말했다. "납골당, 무덤, 그 다음엔 뭐지? 공동묘지?"
 %%%%
 Lab Donald
 
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "빵이랑 고기 좀 나눠줄래?"
+@The_monster@은(는) 말했다. "빵이랑 고기 있으면 좀 줄래?"
 
-@The_monster@은(는) 말했다. "나도 길을 잃었어, 친구야."
+@The_monster@은(는) 말했다. "나도 길을 잃었어, 동지."
 
 @The_monster@은(는) 말했다. "배고픈건 딱 질색인데."
 
@@ -2844,7 +2841,7 @@ w:50
 
 @The_monster@은(는) 말했다. "진? 왜 더 귀찮아 지려는거지?"
 
-@The_monster@은(는) 말했다. "말씀을 전하고 다닐수록, 얼굴을 얻어맞을 일이 많아질거야."
+@The_monster@은(는) 말했다. "말씀을 전하고 다닐수록, 뒤통수 얻어맞을 일이 많아질거야."
 
 @The_monster@은(는) 말했다. "이 안내책자는 진의 교리 낭독의 요점이 뭔지는 설명하고 있지 않아."
 
@@ -2875,13 +2872,13 @@ the Shining One Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "아무도 기사도 따윈 존중해주지 않는데 기사도를 지키는 의미가 있을까?"
+@The_monster@은(는) 말했다. "여기 놈들은 아무도 기사도 따윈 지키지도 알지도 않는데 너 혼자 기사도를 지키는 의미가 있을까?"
 
-@The_monster@은(는) 말했다. "고블린한테 문을 열어주니깐, 그놈이 내 얼굴을 후려갈겼어. 난 기사도가 싫어."
+@The_monster@은(는) 말했다. "저번에 고블린한테 문을 열어주니깐, 그놈이 내 얼굴을 후려갈겼어. 난 기사도가 싫어."
 
-@The_monster@은(는) 말했다. "낮잠 좀 자야겠다. 그 후광, 그렇게 밝아서야 잘 수나 있겠니?"
+@The_monster@은(는) 말했다. "낮잠 좀 자야겠다. 그런데 그 후광, 그렇게 밝아서야 잘 수나 있겠니?"
 
-@The_monster@은(는) 말했다. "하! 1마일 밖에서도 너가 오는게 보였어."
+@The_monster@은(는) 말했다. "그 후광 좀 봐라! 한 1마일 밖에서도 너가 오는게 다 보이겠다."
 
 @The_monster@은(는) 말했다. "악마 녀석들 잡는다는데 흡수무기나 강령술좀 쓰면 안돼? 샤이닝원 이놈은 참 융통성도 없어."
 
@@ -2904,17 +2901,17 @@ w:50
 
 @The_monster@은(는) 말했다. "네가 믿는 신 철자 말야-좀 천천히 말해줄래?"
 
-@The_monster@은(는) 말했다. "그런 이름을 어떻게 발음하니?"
+@The_monster@은(는) 말했다. "키쿠..비.. 뭐? 그런 이름을 어떻게 발음하니?"
 
-@The_monster@은(는) 말했다. "넌 최소한 메모장이라도 가지고 있어야 할거 같구나. 난 네 신 이름 못외우겠다."
+@The_monster@은(는) 말했다. "넌 기도할떄마다 최소한 메모장이라도 가지고 있어야 할거 같구나. 난 네 신 이름 못외우겠다."
 
 @The_monster@은(는) 말했다. "난 좀비가 싫어."
 
 @The_monster@은(는) 말했다. "시체를 해체한다는건 참 짜증나는 일이야, 그렇지 않아?"
 
-@The_monster@은(는) 말했다. "배고파. 네 신은 돼지나 닭 시체 같은건 못 만들어내?"
+@The_monster@은(는) 말했다. "배고파. 니네 신은 돼지나 닭 시체 같은건 못 만들어내?"
 
-@The_monster@은(는) 말했다. "우웩, 네 몸에서 시체 썩는 냄새 나는거같다."
+@The_monster@은(는) 말했다. "우웩, 니 몸에서 시체 썩는 냄새 나는거같다."
 %%%%
 Yredelemnul Donald
 
@@ -2937,7 +2934,6 @@ w:50
 
 @The_monster@은(는) 말했다. "냉기의 레이스가 방금 내 물약을 얼려버렸어. 짜증나."
 
-w:2
 @The_monster@은(는) 말했다. "해골 용? 살인 옥수수? 네가 믿는 신은 일단 아무 단어나 짬뽕한다음에 일단 뭐가 튀어나올지부터 보는 모양이군?"
 
 @The_monster@은(는) 말했다. "좀비? 해골? 진짜 동료를 갖고 싶어지진 않는거야?"
@@ -2953,11 +2949,11 @@ Okawaru Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "오카와루는 항상 초코를 생각나게 만들어."
+@The_monster@은(는) 말했다. "오카와루는 항상 내 친구 왈도를 생각나게 만들어."
 
-@The_monster@은(는) 말했다. "오카와루? 하암."
+@The_monster@은(는) 말했다. "오카와루? 보통은 오카왈도라고 더 많이 부르지 않나?"
 
-@The_monster@은(는) 말했다. "오, 이봐! 새 동물 가죽옷을 입고 싶은데. 남는 거 있어?"
+@The_monster@은(는) 말했다. "오, 이봐! 새 갑옷 좀 입고 싶은데. 네가 믿는 신이 준거 중에서, 뭐 버릴만한 거 있어?"
 
 @The_monster@은(는) 말했다. "템빨 좋은데."
 
@@ -2965,22 +2961,22 @@ VISUAL:@The_monster@은(는) 지루한 듯 하품했다.
 
 @The_monster@은(는) 물었다. "그 신발을 받으려고 얼마나 많은 무고한 생물들을 죽인거야?"
 
-@The_monster@은(는) 말했다. "오카와루의 선물은 살인의 선물이야."
+@The_monster@은(는) 말했다. "잘 생각해봐. 오카와루의 선물은 살인의 선물이야."
 
-@The_monster@은(는) 말했다. "그 동물 가죽이 지겨워지지도 않니?"
+@The_monster@은(는) 말했다. "네 신이 '-1 동물 가죽' 같은 거 줄 때마다, 왜 저딴 녀석을 믿어야 하냐.. 이런 회의감은 안 드냐?"
 
-@The_monster@은(는) 말했다. "넌 망토 하나만을 입을 수 있어, 알긴 해?"
+@The_monster@은(는) 말했다. "그런데 스킬들을 완벽하게 수련하면 오카와루의 권능은 아무 의미도 없잖아? 템좀 더 뜯어먹고 갈아타게?"
 %%%%
 Makhleb Donald
 
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "최소한 악마 동료들은 두고 있구나."
+@The_monster@은(는) 말했다. "그래. 넌 최소한 악마 동료들은 두고 있구나. 심심하진 않아서 좋겠다."
 
-@The_monster@은(는) 말했다. "악마를 소환하는게 좋은 생각이라고 확신하는거야?"
+@The_monster@은(는) 말했다. "그런데, 악마를 소환하는게 좋은 생각이라고 확신하는거야?"
 
-@The_monster@은(는) 말했다. "네 신이 내려주는 악마들이 어디서 나오는지 궁금하지도 않니?"
+@The_monster@은(는) 말했다. "네 신이 내려주는 악마들이 대체 어디서 나오고 어디로 돌아가는지 궁금하지도 않니?"
 
 @The_monster@은(는) 말했다. "이봐, 전기 구체를 던질땐 좀 보고 던져!"
 
@@ -2992,7 +2988,7 @@ w:50
 
 @The_monster@은(는) 말했다. "난 고통받는거 따위 싫어."
 
-@The_monster@은(는) 말했다. "방금 발가락을 치였어. 나, 정화 당한거야?"
+@The_monster@은(는) 말했다. "방금 돌에 발가락을 치였어. 나, 정화 당한거야?"
 %%%%
 Sif Muna Donald
 
@@ -3001,9 +2997,9 @@ w:50
 
 @The_monster@은(는) 말했다. "이동식 책장을 갖고 싶진 않니?"
 
-@The_monster@은(는) 말했다. "너렁 네 신의 취미를 위해서 얼마나 많은 나무가 잘려나갔는가를 상상해봐."
+@The_monster@은(는) 말했다. "네가 믿는 신의 취미를 위해서 얼마나 많은 나무가 잘려나갔는가를 상상해봐."
 
-@The_monster@은(는) 말했다. "이런, 거 참 큰 도서관이군."
+@The_monster@은(는) 말했다. "이런, 그거 참 큰 도서관이군."
 
 @The_monster@은(는) 말했다. "그래, 네 신이 원하는 마법이 담긴 책은 내려줬냐?"
 
@@ -3063,7 +3059,7 @@ w:50
 
 @The_monster@은(는) 말했다. "카드에 뭐가 다 있는데? 너의 미래?"
 
-@The_monster@은(는) 말했다. "너 위층에 한 군데를 놓친거 같아."
+@The_monster@은(는) 말했다. "너, 위층에 바칠만한 물건 하나 놓치고 오지 않았어? 내가 아까 오다 봤는데."
 
 @The_monster@은(는) 말했다. "저기 있는 쓰레기 더미를 바치는 걸 깜빡한 거 같은데."
 
@@ -3073,7 +3069,7 @@ w:50
 
 @The_monster@은(는) 말했다. "내가 카드 한 장을 뽑으면, 어떤 걸 뽑았는지 맞출 수 있어?"
 
-@The_monster@은(는) 말했다. "그 카드덱은 다 어디다 둬?"
+@The_monster@은(는) 말했다. "그래. 그렇게 뭐든지 바치고 다니다가 모르는 사이에 '황금 용 갑옷' 같은것도 바쳐버린다에 걸어보지."
 
 @The_monster@은(는) 말했다. "그 카드들 다 들고 다니느라 포션 가지고 다닐 공간은 있어?"
 
@@ -3094,7 +3090,7 @@ w:50
 
 @The_monster@은(는) 말했다. "'우선, 해를 가하지 마라'라는 수칙을 지키면 어떻게 되는거야?"
 
-@The_monster@은(는) 말했다. "아직 배는 안 고파?"
+@The_monster@은(는) 말했다. "그렇게 회유만 하고 다녀서야... 먹을 시체는 남겨두니?"
 
 @The_monster@은(는) 말했다. "적을 치료해 준다는 게 의미 없어 보이지 않아?"
 
@@ -3102,9 +3098,9 @@ w:50
 
 @The_monster@은(는) 말했다. "내 무기를 줘 버리면, 날 그냥 놔둘래?"
 
-@The_monster@은(는) 말했다. "이봐. 나한테 거절할 수 없는 평화 제의를 한번 해봐!"
+@The_monster@은(는) 말했다. "이봐. 그럼 나한테 거절할 수 없는 평화 제의를 한번 해봐!"
 
-@The_monster@은(는) 말했다. "그래서, 몬스터들은 안 잡을꺼야? 내가 세 마리 잡아본다?"
+@The_monster@은(는) 말했다. "그래서, 몬스터들은 안 잡을꺼야? 내가 저기 지나가는 세 마리 잡아본다?"
 
 @The_monster@은(는) 말했다. "엘리빌론이 정말 선신이라 생각해? 걔 삐지면, 악마나 언데드도 회복시켜준다고."
 %%%%
@@ -3188,21 +3184,17 @@ w:50
 
 @The_monster@은(는) 말했다. "나도 바닥에 물웅덩이쯤은 만들 수 있어."
 
-@The_monster@은(는) 말했다. "나무는 질색이야."
-
-@The_monster@은(는) 말했다. "식물들은 질색이야."
-
-@The_monster@은(는) 말했다. "난 과일이 싫어."
+@The_monster@은(는) 말했다. "나무, 과일, 아니 그냥 식물들은 다 딱 질색이야."
 
 @The_monster@은(는) 말했다. "너 마치 걸어다니는 과일 샐러드처럼 보이는데. 그거 맘에 안든다."
 
-@The_monster@은(는) 말했다. "어쨌거나, 그 태양광선은 어디서 나오는 거야?"
+@The_monster@은(는) 말했다. "어쨌거나, 그 태양 광선은 어디서 나오는 거야?"
 
-@The_monster@은(는) 말했다. "원예 좋아해? 난 원예가 싫어."
+@The_monster@은(는) 말했다. "원예 좋아하나보네? 별꼴이다."
 
-@The_monster@은(는) 말했다. "그럼, 잡초는 어떻게 해?"
+@The_monster@은(는) 말했다. "넌 밖에 나가면 니네 집 마당 제초작업도 못하겠다 이제."
 
-@The_monster@은(는) 말했다. "제초제는 아마 안 쓸거라고 생각되네."
+@The_monster@은(는) 말했다. "제초제 같은거 썼다가는 네 신이 널 그자리에서 거름으로 만들어버리겠지?"
 
 @The_monster@은(는) 말했다. "이 근처에 곰팡이 제거제를 어디에 뒀었는데..."
 
@@ -3213,23 +3205,23 @@ Cheibriados Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "천천히 가, 임마!"
+@The_monster@은(는) 말했다. "좀 빨리 빨리좀 가, 임마!"
 
 @The_monster@은(는) 말했다. "그렇게 천천히 무기를 휘둘러서, 위력은 나오겠냐?"
 
-@The_monster@은(는) 말했다. "내가 너가 듣기엔 너무 빨리 말하고 있는건가?"
+@The_monster@은(는) 말했다. "내가 말하는게, 너가 듣기엔 너무 빠른건가?"
 
-@The_monster@은(는) 말했다. "그래서, 달팽이들한텐 뭔 일이 일어난 거야? 난 그것들이 싫어."
+@The_monster@은(는) 말했다. "그래서, 민달팽이들한텐 뭔 일이 일어난 거야? 뭐 내가 알 바 아니지만."
 
-@The_monster@은(는) 말했다. "날 봐봐! 뛴다, 달린다구!"
+@The_monster@은(는) 말했다. "날 봐봐! 뛴다, 달린다구! 히히!"
 
-@The_monster@은(는) 말했다. "어쨌던간, 체이브리아도스는 그냥 바보같아보여."
+@The_monster@은(는) 말했다. "어쨌던간, 체이브리아도스는 그냥 바보같아보여. 느림신이라니. 위엄따위 없잖아."
 
 @The_monster@은(는) 말했다. "그래, 체이브리아도스인가, 그 이름은 어느나라 말이야?"
 
 @The_monster@은(는) 말했다. "체이브리아도스 철자가 어떻게 되지?"
 
-@The_monster@은(는) 말했다. "발음은 어떻게 해?"
+@The_monster@은(는) 말했다. "체이..브..뭐? 네 신은 부르는것조차 느리게 하려고 이름까지 참 길게 지었구나?"
 %%%%
 Xom Donald
 
@@ -3325,33 +3317,29 @@ _generic_Donald_
 
 @The_monster@은(는) 말했다. "이건 정말 의미없는 모험이야."
 
-@The_monster@은(는) 말했다. "오브를 찾아오지 않으면 그들은 날 모험가 클럽에 넣어주지 않을거야."
+@The_monster@은(는) 말했다. "오브를 찾아오지 않으면 아마도 모험가 클럽에 들어갈 수 없겠지?"
 
 @The_monster@은(는) 말했다. "난 여기가 싫어."
 
-@The_monster@은(는) 말했다. "난 너도 싫어."
+@The_monster@은(는) 말했다. "난 니가 싫어."
 
 @The_monster@은(는) 말했다. "발이 아퍼."
 
-@The_monster@은(는) 말했다. "손도 아퍼."
+@The_monster@은(는) 말했다. "손이 아퍼."
 
 @The_monster@은(는) 말했다. "기침을 하기 시작한거 같애. 싫어."
 
 @The_monster@은(는) 말했다. "두통이 있어. 짜증나."
 
-@The_monster@은(는) 말했다. "너가 차려입은 옷 색 말야? 그거 싫어."
+@The_monster@은(는) 말했다. "너가 차려입은 옷 색 말야? 참 촌스러워."
 
-@The_monster@은(는) 말했다. "내가 항상 말했듯이, 물컵은 반이나 비어있는 법이지."
+@The_monster@은(는) 말했다. "내가 항상 말했듯이, 물컵에 물이 반이나 남았다고 생각해야해.. 그런데 넌, '물컵이 반밖에 안 남았다'고 생각하겠지. 그렇지?"
 
-@The_monster@은(는) 말했다. "그리고 넌, '물컵이 반밖에 안 남았다'고 생각하겠지. 그렇지?"
-
-@The_monster@은(는) 말했다. "난 이 곳에 끝이란게 있는지 궁금해."
+@The_monster@은(는) 말했다. "난 이 던전에 끝이라는 게 있는지 궁금해."
 
 @The_monster@은(는) 말했다. "거북이들은, 정말 아래로만 쭈욱 가나?"
 
 @The_monster@은(는) 말했다. "이걸 사람들이 지은 거라고? 미친 놈들이 틀림없군."
-
-@The_monster@은(는) 말했다. "여기 공기는 참 구려. 짜증나."
 
 @The_monster@은(는) 말했다. "여기 공기는 참 구려. 짜증나."
 
@@ -3363,9 +3351,9 @@ _generic_Donald_
 
 @The_monster@은(는) 말했다. "여기 있는 다른 사람들은 정말 무례해."
 
-@The_monster@은(는) 말했다. "아마 담번엔 지옥을 들를지도 모르겠어."
+@The_monster@은(는) 말했다. "아마 다음 번엔 지옥을 들를지도 모르겠어."
 
-@The_monster@은(는) 말했다. "여기 보물창고도, 그냥 지루해 보이는군."
+@The_monster@은(는) 말했다. "여기 보물창고란 곳을 가 봤는데, 아무 것도 없더라. 그냥 지루해 보이는군."
 
 @The_monster@은(는) 말했다. "여기 음식만 파는 상점들은 대체 무슨 생각이야? 집에 돌아가서 음식 가져오면 안돼?"
 
@@ -3399,11 +3387,11 @@ default hostile confused Donald
 
 @The_monster@은(는) 말했다. "모두가 안전할 거라고 믿어, 안그래?"
 
-@The_monster@은(는) 말했다. "사실, 난 너가 좋아."
+@The_monster@은(는) 말했다. "지금 고백하지, 난 너가 좋아."
 
 @The_monster@은(는) 말했다. "오 이런, 오 이런, 오 이런!"
 
-@The_monster@은(는) 말했다. "아이고, 가엾어라!"
+@The_monster@은(는) 말했다. "아이고, 가엾어라! 너 말고 나 말야!"
 
 @The_monster@은(는) 말했다. "근데 난 부인이 있단 말야! 아이들도! 있었던가?"
 
@@ -3583,7 +3571,7 @@ _Duvessa_rare_
 
 @The_monster@은(는) 외쳤다. "도망갈 수는 있겠지만, 우리에게 영원히 벗어날 수는 없어!" @player_only@
 
-@The_monster@은(는) 말했다. "난 외모따윈 신경쓰지 않아. 검술에만 신경쓴다고!"
+@The_monster@은(는) 말했다. "난 다른 거 신경쓰지 않아. 검술에만 신경쓴다고!"
 
 @The_monster@은(는) 말했다. "이 동작을 보았니? 완벽하지!"
 
@@ -3659,7 +3647,7 @@ VISUAL:@The_monster@은(는) 이를 갈더니 한숨을 내쉬었다.
 w:1
 VISUAL:@The_monster@은(는) 시기심에 가득차 보인다.
 
-@The_monster@은(는) 말했다. "플레일이 낫 보다는 낫지, 어느 요일에라도 말야!"
+@The_monster@은(는) 말했다. "플레일이 낫 보다는 낫지 않아? 누가 봐도 말이지!"
 
 w:5
 @The_monster@은(는) 말했다. "어쨌든 간에, 주문이 무슨 상관인가?"
@@ -3731,7 +3719,7 @@ VISUAL:@The_monster@은(는) 사악한 미소를 지었다.
 
 @The_monster@은(는) 소리쳤다. "점심먹는다!"
 
-@The_monster@은(는) 소리쳤다. "에롤차 나죽인다!"
+@The_monster@은(는) 소리쳤다. "에롤차 너 죽인다!"
 %%%%
 _Erolcha_rare_
 
@@ -3806,18 +3794,18 @@ ENCHANT:@The_monster@은(는) 알 수 없는 언어로 무언가를 말했다.
 
 ENCHANT:@The_monster@은(는) 알 수 없는 단어들을 중얼거렸다.
 
-@The_monster@은(는) 말했다. "자네가 여기 와서, 정복한 것들을 나에게 증명해보게. 그럼 위대한 모험가라고 불러주도록 하지." @player_only@
+@The_monster@은(는) 말했다. "네가 여기 와서, 정복한 것들을 나에게 증명해봐. 그럼 위대한 모험가라고 불러주도록 하지." @player_only@
 
-@The_monster@은(는) 말했다. "이 몸은 악마의 군대를 지휘한다. 자넨 무엇을 지휘하는가?" @player_only@
+@The_monster@은(는) 말했다. "난 악마의 군대를 지휘한다. 넌 따르는 부하라도 있어?" @player_only@
 
-@The_monster@은(는) 말했다. "이 몸은 힘과 마력을 높게 평가하지. 자네에게는 그런 것들이 보이지 않는군." @player_only@
+@The_monster@은(는) 말했다. "난 힘과 마력을 높게 평가해. 그런데 너한 그런 것들이 보이지 않는군." @player_only@
 
-@The_monster@은(는) 말했다. "이 몸은, 악마의 언어로 이야기한다!"
+@The_monster@은(는) 말했다. "난 악마의 언어로 이야기한다!"
 
 @The_monster@은(는) 알 수 없는 저주의 말을 외쳤다.
 VISUAL WARN:무언가 오싹함이 느껴졌다.
 
-@The_monster@은(는) 말했다. "이 몸은, 모든 상상 너머의 세계와 우주를 보아왔다네."
+@The_monster@은(는) 말했다. "난, 모든 상상 너머의 세계와 우주를 보아왔다."
 %%%%
 _Frances_rare_
 
@@ -3825,16 +3813,16 @@ VISUAL:@The_monster@은(는) 방어 자세를 취했다.
 
 ENCHANT:@The_monster@은(는) 목 뒤에서 나오는 소리로 으르렁거렸다.
 
-@The_monster@은(는) 말했다. "악마에게선 뭔가 설명하기 힘든 아름다움이 느껴지지. 그렇지 않나?"
+@The_monster@은(는) 말했다. "악마에게선 뭔가 설명하기 힘든 아름다움이 느껴지지. 그렇지 않아?"
 
-@The_monster@은(는) 말했다. "내 힘을 알고 싶은가? 이 몸에게 도전해보게."
+@The_monster@은(는) 말했다. "내 힘을 알고 싶어? 한번 나한테 도전해보라고."
 
-@The_monster@은(는) 말했다. "이 몸은, 일대일 결투에선 패배한 적이 없지.."
+@The_monster@은(는) 말했다. "난 일대일 결투에선 패배한 적이 없어."
 
-@The_monster@은(는) 말했다. "전사란 자고로, 전쟁과 전투를 위해 태어났지. 자넨 자기 자신을 전사라고 부를수나 있는가?"
+@The_monster@은(는) 말했다. "전사란 자고로, 전쟁과 전투를 위해 태어났지. 넌 너 자신을 전사라고 부를수나 있긴 해?"
 
 w:1
-@The_monster@은(는) 말했다. "심지어, 지옥도 날 감당할 수는 없을걸세."
+@The_monster@은(는) 말했다. "심지어, 지옥도 날 감당할 수는 없을걸?"
 
 @The_monster@은(는) 말했다. "난 이 자리에서 널 꺾을 것이다. 결코 후회는 없을거야!" @player_only@
 %%%%
@@ -3914,25 +3902,25 @@ w:5
 %%%%
 _Fannar_common_
 
-VISUAL:@The_monster@ glares icily @at_foe@.
+VISUAL:@The_monster@은(는) @foe@을(를) 차갑게 노려보았다.
 
-VISUAL:Some snowflakes condense on @the_monster@.
+VISUAL:눈꽃들이 @the_monster@ 주위로 응결되었다.
 
-VISUAL:@The_monster@ brushes some snowflakes from @possessive@ robe.
+VISUAL:@The_monster@이(가) 자신의 로브를 손으로 털자, 로브에서 눈꽃들이 털어져나왔다.
 
-@The_monster@ murmurs some mystic words to @reflexive@.
+@The_monster@은(는) 무언가 신비한 단어들을 중얼거렸다.
 %%%%
 _Fannar_rare_
 
-@The_monster@ says @to_foe@, "Freeze!"
+@The_monster@은(는) 말했다. "얼어버려라!"
 
-@The_monster@ says @to_foe@, "I shall freeze you to your soul!"
+@The_monster@은(는) 말했다. "네 영혼까지 꽁꽁 얼려주지!"
 
-@The_monster@ says @to_foe@, "An icy embrace awaits you..."
+@The_monster@은(는) 말했다., "얼음의 포옹이 널 기다리고 있다..."
 
-@The_monster@ says @to_foe@, "You will make a fine ice sculpture."
+@The_monster@은(는) 말했다. "넌 곧 멋진 얼음 동상이 될거야."
 
-@The_monster@ says @to_foe@, "Does this not give you the chills?"
+@The_monster@은(는) 말했다. "이 정도로는, 아직 안 추운가보지?"
 %%%%
 ############ Gastronok ### A rather hungry wizard-slug
 # Cantrip messages:
@@ -3950,39 +3938,39 @@ gastronok_debuff
 %%%%
 _gastronok_self_buff_
 
-@The_monster@ bubbles merrily.
+@The_monster@은(는) 무언가 즐거운 듯 거품을 내뿜었다.
 
-@The_monster@ glows a brilliant shade of cerise.
+@The_monster@의 그림자가 밝은 선홍색으로 빛났다.
 
-@The_monster@ wobbles crazily.
+@The_monster@이(가) 미친 듯 몸을 떨었다.
 
-@The_monster@'s eyestalks stretch out, then return to normal size.
+@The_monster@의 눈꺼풀이 쭉 뻗어나갔다가, 원래대로 돌아왔다.
 %%%%
 # When targetting other monsters.
 _gastronok_other_buff_
 
-@The_monster@ wobbles.
+@The_monster@이(가) 몸을 떨었다.
 
-@The_monster@ slows momentarily.
+@The_monster@이(가) 잠시 느려진 듯 보였다.
 
-@The_monster@ makes a slurping sound, then looks surprised.
+@The_monster@이(가) 후루룩 거리는 소리를 냈고, 놀란 듯 보였다.
 %%%%
 # Slugform affecting the player.
 _gastronok_debuff_
 
 w:20
-You feel sluggish.
+부진한 느낌을 받았다.
 
-You feel a sudden, passing aversion to salt.
+갑자기 소금에 대한 혐오감이 일어나기 시작했다.
 
-Your skin takes on a slight green cast.
+당신의 피부가 옅은 녹색을 띄기 시작했다.
 
 # Doesn't work for Naga and transformed Merfolk.
 # There's a hack in mon-cast.cc to prevent it from being used in those cases.
-Your legs wobble like jelly.
+당신의 두 다리(꼬리)가 젤리처럼 후들거렸다.
 
 w:5
-You feel a sudden urge to swivel your nonexistent eyestalks around.
+갑자기 있지도 않은 눈자루를 돌리고 싶다는 느낌이 들었다.
 %%%%
 # And finally, his speech.
 Gastronok
@@ -4254,7 +4242,7 @@ VISUAL:@The_monster@은(는) @_hypnot_or_seductively_@ 눈빛으로 당신을 �
 
 @The_monster@은(는) 말했다. "날 잡아 봐요! 날 만져주고, 사랑해주고, 배부르게 해 줘요!"
 
-@The_monster@은(는) 순진하게 속삭였다. "떠도는 이야기  믿지 마세요. 절 믿어요!"
+@The_monster@은(는) 순진하게 속삭였다. "떠도는 이야기  믿지 마세요. 날 믿어요!"
 %%%%
 _hypnot_or_seductively_
 
@@ -4574,11 +4562,11 @@ ENCHANT:@The_monster@의 양 손이 빛나기 시작했다.
 %%%%
 _Margery_visual_spell_results_
 
-VISUAL ENCHANT:@The_monster@ is surrounded with an aura of power.
+VISUAL ENCHANT:@The_monster@은(는) 마력의 기운에 둘러쌓였다.
 
-VISUAL ENCHANT:@The_monster@ becomes transparent for a moment.
+VISUAL ENCHANT:@The_monster@은(는) 잠시 투명해졌다.
 
-VISUAL ENCHANT:@The_monster@'s hands start to glow.
+VISUAL ENCHANT:@The_monster@의 양 손이 빛나기 시작했다.
 %%%%
 _bad_effect_
 
@@ -4630,7 +4618,7 @@ VISUAL:@The_monster@은(는) 매우 자신감이 넘쳐 보인다.
 
 @The_monster@은(는) 소리쳤다. "죽음은, 내 가운데 이름이지!"
 
-@The_monster@은(는) 소리쳤다. "오브는 이야기일 뿐이야, 하지만 어찌됐던 난 널 죽여야겠다!" @player_only@
+@The_monster@은(는) 소리쳤다. "오브는 이야기일 뿐이야, 하지만 어찌됐던 난 널 죽여야겠어!" @player_only@
 ## END Margery
 %%%%
 ############ MAUD ### A warrior princess looking for the sword "Entarex".
@@ -4994,17 +4982,17 @@ Nikola
 
 @The_monster@은(는) 외쳤다., "위험! 위험! 전압이 높아지고 있어!"
 
-@The_monster@은(는) 말했다. "너의 눈에서 마법의 불똥이 보이는군."
+@The_monster@은(는) 말했다. "당신의 눈에서, 마법의 불꽃이 보이는군."
 
-@The_monster@은(는) 악을 썼다. "느껴져? 느껴져? 느껴져?"
+@The_monster@은(는) 악을 썼다. "느껴지? 느껴져? 느껴져?"
 
-@The_monster@은(는) 주의를 주었다. "내 골렘들 중 하나라도 보게 된다면 조심히 다가가라고, 문다니깐."
+@The_monster@은(는) 주의를 주었다. "내 골렘들 중 하나라도 보게 된다면 조심히 다가가라고, 무니까."
 
-@The_monster@은(는) 물었다. "절연화 됐나?"
+@The_monster@은(는) 물었다. "절연화는 되셨나?"
 
 @The_monster@은(는) 말했다. "좋은 절연체는 아닌것 같아 보이는군."
 
-@The_monster@은(는) 웅얼거렸다. "흐흠, 네가 전도성인지 궁금하군."
+@The_monster@은(는) 웅얼거렸다. "흐흠, 당신, 전도성인지 부도체인지 궁금하군."
 %%%%
 ############ NORRIS ### An enlightened but crazy man
 Norris
@@ -5768,27 +5756,27 @@ You are afraid.
 
 VISUAL:@The_monster@은(는) @foe@을(를) 노려보았다.
 
-@The_monster@은(는) 으르렁거렸다. "넌 지루하기 짝이없군!!!"
+@The_monster@은(는) 으르렁거렸다. "넌 지.루.하.기 짝이없군!!!"
 
-@The_monster@은(는) 울부짖었다. "죽어라!!! 보잘것 없는 놈!!!"
+@The_monster@은(는) 울부짖었다. "죽어라!!! 보.잘.것.없.는 놈!!!"
 
-@The_monster@은(는) 울부짖었다. "내 분노를 맛보아라!!!"
+@The_monster@은(는) 울부짖었다. "내 분노를 맛.보.아.라!!!"
 
-@The_monster@은(는) 울부짖었다. "여기에 온 것이 네놈의 마지막 실수다!!!"
+@The_monster@은(는) 울부짖었다. "여기에 온 것이 네.놈.의 마지막 실수다!!!"
 
-@The_monster@은(는) 울부짖었다. "난 수백명의 모험가를 죽여왔다!!!" @player_only@
+@The_monster@은(는) 울부짖었다. "난 수백명의 모험가를 죽.여.왔.다!!!" @player_only@
 %%%%
 _Xtahua_rare_
 
-@The_monster@은(는) 투덜거렸다. "넌 간식거리 밖에 안되는군!!!"
+@The_monster@은(는) 투덜거렸다. "넌 간.식.거.리 밖에 안되는군!!!"
 
-@The_monster@은(는) 울부짖었다. "네 놈을 게걸스럽게 먹어치워주지!!!"
+@The_monster@은(는) 울부짖었다. "네 놈을 게.걸.스.럽.게 먹어치워주지!!!"
 
-@The_monster@은(는) 울부짖었다. "난 귀찮은건 딱 질색이다!!!"
+@The_monster@은(는) 울부짖었다. "난 귀찮은건 딱 질.색.이.다!!!"
 
 @The_monster@은(는) 울부짖었다. "네놈은 맛있기를 바란다!!!"
 
-@The_monster@은(는) 울부짖었다. "흥! 빌어먹을 모험자들!!!" @player_only@
+@The_monster@은(는) 울부짖었다. "흥! 빌.어.먹.을 모험자들!!!" @player_only@
 ## END Xtahua ##
 %%%%
 ##########################################
@@ -5812,19 +5800,19 @@ VISUAL:@The_monster@은(는) 잠시간 기분나쁠 정도로 당신의 것과 �
 ################## Catoblepas ##############################
 catoblepas
 
-@The_monster@ roars fiercely, eyes lowered.
+@The_monster@은(는) 눈을 낮게 깔고 맹렬하게 울부짖었다.
 
-@The_monster@ stomps with a crash on the ground.
+@The_monster@은(는) 발굽으로 땅을 힘차게 굴렸다.
 
-VISUAL:@The_monster@ smashes @possessive@ foot into the earth.
+VISUAL:@The_monster@은(는) 땅 위로 발을 굴렸다.
 
-VISUAL:@The_monster@ rams the ground with @possessive@ head heavily.
+VISUAL:@The_monster@은(는) 머리로 땅을 둔탁하게 들이받았다.
 
-VISUAL:@The_monster@ carves a crescent into the ground, and seems achingly sad.
+VISUAL:@The_monster@은(는) 땅 위로 발을 끌어 초승달 무늬를 새겼고, 뭔가 마음 아파 울적한듯한 표정을 지었다.
 
 VISUAL:@The_monster@ claws at the earth roughly with @possessive@ hoof, venting @possessive@ fury.
 
-@The_monster@ breathes in.
+@The_monster@이(가) 거칠게 숨을 들이마셨다.
 
 VISUAL:@The_monster@ stares balefully at the ground.
 
@@ -6012,14 +6000,22 @@ VISUAL:@The_monster@은(는) 제자리에서 잠시 방방 뛰었다.
 
 @The_monster@은(는) 말했다. "이리 와서, 나랑 놀자!"
 
-@The_monster@은(는) 말했다. "날 믿어 줘. 난 의사님이야."
+@The_monster@은(는) 말했다. "날 믿어 줘. 난 @_killer_klown_insists_@님이야."
 ## END Killer Klown ##
+%%%%
+_killer_klown_insists_
+
+의사
+
+박사
+
+선생
 %%%%
 ################## Moth of suppression######################
 moth of suppression
 
 w:1
-VISUAL:@The_monster@ undresses you with its eyes!
+VISUAL:@The_monster@이(가) 눈을 까닥여 당신의 옷을 벗겼다!
 %%%%
 ################## Moth of wrath ###########################
 moth of wrath
@@ -6030,30 +6026,30 @@ VISUAL:@The_monster@은(는) 더듬이를 분노한 듯이 흔들어댔다.
 # with it being a moth.
 default confused moth of wrath
 
-VISUAL:@The_monster@ salivates at the thought of eating you, but forgets you're only a short distance away.
+VISUAL:@The_monster@은(는) 당신을 먹을 생각에 침을 흘리고 있지만, 당신이 가까이 있다는 건 잊은 듯 보인다.
 
-@The_monster@ scrapes @possessive@ wings on the ground slowly, weirdly suspended on a wingtip.
+@The_monster@은(는) 이상하게도 날개 끝을 멈춘 채 날개를 지면에 비벼댔다.
 
 VISUAL:@The_monster@은(는) 불규칙한 원을 그리며 날았다.
 
-VISUAL:@The_monster@ collides with @possessive@ own huge wings.
+VISUAL:@The_monster@은(는) 커다란 날개들을 부딪혀대었다.
 
-VISUAL:Dropping a few feet, @the_monster@ flutters unhappily.
+VISUAL:몇 걸음을 걷자, @the_monster@이(가) 성질이 난 듯 파닥였다.
 
-VISUAL SPELL:@The_monster@ flaps @possessive@ wings at @foe@!
-VISUAL ENCHANT:@Foe@ looks confused.
+VISUAL SPELL:@The_monster@은(는) @foe@을(를) 향해 날개를 펄럭였다!
+VISUAL ENCHANT:@Foe@은(는) 혼란한 듯 보인다.
 
-VISUAL:@The_monster@ slowly flaps @possessive@ antennae at @reflexive@.
+VISUAL:@The_monster@은(는) 더듬이를 천천히 흔들었다.
 
-VISUAL:@The_monster@ stares wrathfully at the floor.
+VISUAL:@The_monster@은(는) 지면 위를 성질 난 듯 노려보았다.
 
-VISUAL SPELL:@The_monster@ flicks @possessive@ antennae at the ground!
-VISUAL WARN:The ground rattles!
+VISUAL SPELL:@The_monster@이(가) 바닥 위로 더듬이를 튕겼다!
+VISUAL WARN:바닥이 달가닥거리는게 느껴졌다!
 
-VISUAL:@The_monster@ tries to bite you, but has no teeth.
+VISUAL:@The_monster@은(는) 당신을 물려 시도했으나, 사실 이빨이 없었다.
 
-VISUAL:@The_monster@ forgets @subjective@ is a moth of wrath and starts meditating mothfully.
-VISUAL ENCHANT:The Dungeon calms.
+VISUAL:@The_monster@이(가) 자기 자신이 진노의 나방이라는 걸 잊은 듯, 바닥에 앉아 조용히 명상을 시작했다.
+VISUAL ENCHANT:덕분에 던전 전체가 조용해진 듯 하다.
 %%%%
 ################## Statues ##################
 default orange crystal statue
