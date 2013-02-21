@@ -376,8 +376,8 @@ void moveto_location_effects(dungeon_feature_type old_feat,
                 else
                 {
                     mprf("당신은 %s 물로 %s.",
-                         stepped ? "들어갔다" : "떨어졌다",
-                         new_grid == DNGN_SHALLOW_WATER ? "얕은" : "깊은");
+                         new_grid == DNGN_SHALLOW_WATER ? "얕은" : "깊은", // stepped ? "들어갔다" : "떨어졌다",
+                         stepped ? "들어갔다" : "떨어졌다"); // new_grid == DNGN_SHALLOW_WATER ? "얕은" : "깊은"); (130221,deceit) 음? 이것만 왜 소드코드 직접수정으로 되어있지;
                 }
             }
 

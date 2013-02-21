@@ -30003,7 +30003,7 @@ msgstr "만만치 않은 상대이다"
 #: describe.cc:3133 describe.cc:3130
 msgctxt "threat_desc"
 msgid "extremely dangerous"
-msgstr "내가 상대하기에는 매우 벅차다"
+msgstr "극히 위험한 상대이다"
 
 #: describe.cc:3135 describe.cc:3132
 msgctxt "threat_desc"

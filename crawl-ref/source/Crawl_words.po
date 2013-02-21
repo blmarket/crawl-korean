@@ -2444,7 +2444,7 @@ msgstr "캐커데몬"
 #: mon-data.h:5207 mon-data.h:5219 mon-data.h:5208 mon-data.h:5165
 #: mon-data.h:5253
 msgid "lightning spire"
-msgstr "라이트닝 스파이어"
+msgstr "번개탑"
 
 #: mon-data.h:5379 mon-data.h:5391 mon-data.h:5380 mon-data.h:5336
 #: mon-data.h:5423
@@ -6375,7 +6375,7 @@ msgstr "'좀'의 미광이 흔들거리는 제단"
 #: directn.cc:3132 directn.cc:3132 directn.cc:3135 directn.cc:3153
 #: directn.cc:3121
 msgid "radiant altar of Vehumet"
-msgstr "'베후멧'의 빛을 발하는 제단"
+msgstr "'베후메트'의 빛을 발하는 제단"
 
 #: directn.cc:3134 directn.cc:3134 directn.cc:3137 directn.cc:3155
 #: directn.cc:3123
@@ -10524,7 +10524,7 @@ msgstr "이레데렘눌"
 
 #: religion.cc:2285
 msgid "Vehumet"
-msgstr "베후멧"
+msgstr "베후메트"
 
 #: religion.cc:2286
 msgid "Okawaru"

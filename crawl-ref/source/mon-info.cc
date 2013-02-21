@@ -798,7 +798,7 @@ std::string monster_info::_core_name() const
         {
         case MONS_SLIME_CREATURE:
             ASSERT(number <= 5);
-            s = _(slime_sizes[number]) + s;
+            if(number != 1) s = _(slime_sizes[number]) + s; // (deceit,130222) gettext에 공백 들어가는 문제 수정 (if number != 1 을 넣음)
             break;
         case MONS_UGLY_THING:
         case MONS_VERY_UGLY_THING:

@@ -2,6 +2,7 @@ drop_filter += useless_item
 
 auto_exclude += oklob,statue,curse skull,roxanne,hyperactive,lightning spire
 auto_exclude += mimic
+auto_exclude += 오클롭,얼음의 상,은의 상,주황빛 수정의 상,동상,저주받은 해골,록산느,번개탑,활발한 발리,미믹
 
 # Interrupting run and rest compound commands:
 runrest_ignore_poison  = 2:30

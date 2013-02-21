@@ -63,7 +63,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 std::string god_prayer_reaction()
 {
     return make_stringf(crawl_state.player_is_dead() ?
-        P_("godprayer","%s was %s.") : P_("godprayer","%s is %s."), god_name(you.religion).c_str(),
+        pgettext("godprayer","%s was %s.") : pgettext("godprayer","%s is %s."), _(god_name(you.religion).c_str()),
         (you.piety > 130) ? _("exalted by your worship") :
         (you.piety > 100) ? _("extremely pleased with you") :
         (you.piety >  70) ? _("greatly pleased with you") :
@@ -89,11 +89,11 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     std::string prompt = gettext("Do you wish to have ") + wpn.name(true, DESC_YOUR)
                        + " ";
     if (brand == SPWPN_PAIN)
-        prompt += P_("godprayer","bloodied with pain");
+        prompt += pgettext("godprayer","bloodied with pain");
     else if (brand == SPWPN_DISTORTION)
-        prompt += P_("godprayer","corrupted");
+        prompt += pgettext("godprayer","corrupted");
     else
-        prompt += P_("godprayer","blessed");
+        prompt += pgettext("godprayer","blessed");
     prompt += "?";
 
     if (!yesno(prompt.c_str(), true, 'n'))
@@ -329,14 +329,14 @@ void pray()
 
         mprf(MSGCH_PRAY,
              _("You spend a moment contemplating the meaning of %s."),
-             holi == MH_NONLIVING || holi == MH_UNDEAD ? P_("godprayer","existence") : P_("godprayer","life"));
+             holi == MH_NONLIVING || holi == MH_UNDEAD ? pgettext("godprayer","existence") : pgettext("godprayer","life"));
 
         // Zen meditation is timeless.
         return;
     }
 
     mprf(MSGCH_PRAY, _("You %s prayer to %s."),
-         you.duration[DUR_JELLY_PRAYER] ? P_("godprayer","renew your") : P_("godprayer","offer a"),
+         you.duration[DUR_JELLY_PRAYER] ? pgettext("godprayer","renew your") : pgettext("godprayer","offer a"),
          _(god_name(you.religion).c_str()));
 
     switch (you.religion)
@@ -487,8 +487,8 @@ static void _zin_donate_gold()
         return;
     }
 
-    std::string result = P_("zin","You feel that "); result += _(god_name(GOD_ZIN).c_str());
-                result += P_("zin"," will soon be ");
+    std::string result = pgettext("zin","You feel that "); result += _(god_name(GOD_ZIN).c_str());
+                result += pgettext("zin"," will soon be ");
     result +=
         (estimated_piety > 130) ? _("exalted by your worship") :
         (estimated_piety > 100) ? _("extremely pleased with you") :
@@ -497,7 +497,7 @@ static void _zin_donate_gold()
         (estimated_piety >  20) ? _("pleased with you") :
         (estimated_piety >   5) ? _("noncommittal")
                                 : _("displeased");
-    result += (donation >= 30 && you.piety <= 170) ? P_("zin","!") : P_("zin",".");
+    result += (donation >= 30 && you.piety <= 170) ? pgettext("zin","!") : pgettext("zin",".");
 
     mpr(result.c_str());
 }
@@ -655,7 +655,7 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
                              _(" welcomes the destruction of %s %s weapon%s."),
                              item.quantity == 1 ? "this" : "these",
                              _(desc_weapon),
-                             item.quantity == 1 ? ""     : P_("sssss","s")).c_str(),
+                             item.quantity == 1 ? ""     : pgettext("sssss","s")).c_str(),
                              GOD_ELYVILON);
                 }
             }
