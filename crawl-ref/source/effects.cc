@@ -1981,14 +1981,14 @@ static void _rot_inventory_food(int time_delta)
 
             std::vector<std::string> strs;
             if (num_chunks_gone > 0)
-                strs.push_back("살점");
+                strs.push_back("고기");
             if (num_bones_gone > 0)
                 strs.push_back("뼛조각");
             if ((num_corpses_gone + num_corpses_rotted) > 0)
                 strs.push_back("시체");
 
             msg += comma_separated_line(strs.begin(), strs.end());
-            msg += "이/가";
+            msg += "이(가)";
 
             if (num_corpses_rotted == 0)
                 msg += " 완전히";

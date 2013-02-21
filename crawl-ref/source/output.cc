@@ -714,7 +714,7 @@ static bool _need_stats_printed()
 
 static void _redraw_title(const std::string &your_name, const std::string &job_name)
 {
-    std::string title = your_name + " the " + job_name;
+    std::string title = _(job_name.c_str()) + std::string(" ") + your_name; // your_name + " the " + job_name;
 
     unsigned int in_len = strwidth(title);
     const unsigned int WIDTH = crawl_view.hudsz.x;
@@ -732,7 +732,7 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
                                        name_len - (in_len - WIDTH) - 1);
         }
 
-        title = trimmed_name + ", " + job_name;
+        title = _(job_name.c_str()) + std::string(" ") + trimmed_name;  // trimmed_name + ", " + job_name;
     }
 
     // Line 1: Foo the Bar    *WIZARD*
@@ -743,7 +743,7 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
     {
         textcolor(LIGHTBLUE);
         cgotoxy(1 + crawl_view.hudsz.x-9, 1, GOTO_STAT);
-        cprintf(" *WIZARD*");
+        cprintf(" *위저드*");
     }
 #ifdef DGL_SIMPLE_MESSAGING
     update_message_status();
@@ -753,13 +753,13 @@ static void _redraw_title(const std::string &your_name, const std::string &job_n
     // Minotaur [of God] [Piety]
     textcolor(YELLOW);
     cgotoxy(1, 2, GOTO_STAT);
-    std::string species = species_name(you.species);
+    std::string species = _(species_name(you.species).c_str());
     nowrap_eol_cprintf("%s", species.c_str());
     if (you.religion != GOD_NO_GOD)
     {
-        std::string god = " of ";
+        std::string god = ", "; //" of ";
         god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
-                                         : god_name(you.religion);
+                                         : _(god_name(you.religion).c_str());
         nowrap_eol_cprintf("%s", god.c_str());
 
         std::string piety = _god_powers(true);

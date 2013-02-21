@@ -1673,7 +1673,7 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
         const monster& m = *visible[0];
         const std::string monname = mons_is_mimic(m.type)
                                   ? gettext(M_("A mimic"))
-                                  : m.name(DESC_A);
+                                  : m.name(DESC_THE);
         msg = make_stringf(gettext("%s is nearby!"), monname.c_str());
     }
     else if (visible.size() > 1)

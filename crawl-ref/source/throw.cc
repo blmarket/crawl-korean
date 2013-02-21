@@ -140,9 +140,9 @@ void fire_target_behaviour::set_prompt()
                                                     *active_item());
         switch (projected)
         {
-        case LRET_FUMBLED:  msg << P_("throw","Awkwardly throwing "); break;
-        case LRET_LAUNCHED: msg << P_("throw","Firing ");             break;
-        case LRET_THROWN:   msg << P_("throw","Throwing ");           break;
+        case LRET_FUMBLED:  msg << pgettext("throw","Awkwardly throwing "); break;
+        case LRET_LAUNCHED: msg << pgettext("throw","Firing ");             break;
+        case LRET_THROWN:   msg << pgettext("throw","Throwing ");           break;
         }
     }
 
@@ -1244,7 +1244,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
          if (beam.flavour == BEAM_MISSILE)
          {
              expl->flavour = BEAM_FRAG;
-             expl->name   += P_("throw"," fragments");
+             expl->name   += pgettext("throw"," fragments");
 
              const std::string short_name =
                  item.name(true, DESC_PLAIN, false, false, false, false,
@@ -1254,7 +1254,7 @@ bool setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
              expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                       short_name);
          }
-         expl->name = expl->name + P_("throw","explosion of "); 
+         expl->name = expl->name + pgettext("throw","explosion of "); 
 
          beam.special_explosion = expl;
     }
@@ -1967,10 +1967,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
               pbolt.hit, pbolt.damage.num, pbolt.damage.size);
 
     // Create message.
-    mprf(P_("throwx","%s %s%s %s."),
-          teleport  ? P_("throwx","Magically, you") : P_("throwx","You"),
-          projected ? "" : P_("throwx","awkwardly "),
-          projected == LRET_LAUNCHED ? P_("throwx","shoot") : P_("throwx","throw"),
+    mprf(pgettext("throwx","%s %s%s %s."),
+          teleport  ? pgettext("throwx","Magically, you") : pgettext("throwx","You"),
+          projected ? "" : pgettext("throwx","awkwardly "),
+          projected == LRET_LAUNCHED ? pgettext("throwx","shoot") : pgettext("throwx","throw"),
           ammo_name.c_str());
 
     // Ensure we're firing a 'missile'-type beam.

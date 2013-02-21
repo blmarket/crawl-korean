@@ -2088,9 +2088,9 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
             if (allow_waypoints)
             {
                 if (waypoint_list)
-                    segs.push_back("* - list branches");
+                    segs.push_back(_("* - list branches"));
                 else if (waycount)
-                    segs.push_back("* - list waypoints");
+                    segs.push_back(_("* - list waypoints"));
             }
 
             if (!trans_travel_dest.empty() && remember_targ)
@@ -2106,7 +2106,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
             shortcuts += ") ";
         }
         mprf(MSGCH_PROMPT, "%s? %s",
-             *to_entrance ? "Entrance to where" : "Where to",
+             *to_entrance ? _("Entrance to where") : _("Where to"),
              shortcuts.c_str());
 
         int keyin = get_ch();
@@ -2341,8 +2341,8 @@ static travel_target _prompt_travel_depth(const level_id &id,
     while (true)
     {
         mesclr();
-        mprf(MSGCH_PROMPT, "What level of %s? "
-             "(default %s, ? - help) ",
+        mprf(MSGCH_PROMPT, _("What level of %s? "
+             "(default %s, ? - help) "),
              branches[target.p.id.branch].longname,
              _get_trans_travel_dest(target, true).c_str());
 

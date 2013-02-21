@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 15:18+0900\n"
+"POT-Creation-Date: 2013-02-21 22:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7884,11 +7884,11 @@ msgstr "매료"
 msgid "mesmerised"
 msgstr "매료됨"
 
-#: status.cc:309 status.cc:310 status.cc:326 status.cc:327
+#: status.cc:309 status.cc:310 status.cc:326 status.cc:327 status.cc:512
 msgid "Held"
 msgstr "그물"
 
-#: status.cc:310 status.cc:311 status.cc:327 status.cc:328
+#: status.cc:310 status.cc:311 status.cc:327 status.cc:328 status.cc:513
 msgid "held"
 msgstr "그물"
 
@@ -10759,6 +10759,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812
 msgid "shouts"
@@ -11415,15 +11417,15 @@ msgstr ""
 
 #: species.cc:174 species.cc:172
 msgid "Tengu"
-msgstr ""
+msgstr "텐구"
 
 #: status.cc:549 status.cc:592
 msgid "Contam"
-msgstr ""
+msgstr "오염"
 
 #: status.cc:844 status.cc:908
 msgid "App"
-msgstr ""
+msgstr "짐승"
 
 #: status.cc:845 status.cc:909 transform.cc:794
 msgid "appendage"
@@ -11491,11 +11493,11 @@ msgstr "텐구"
 
 #: mon-data.h:4446 mon-data.h:4520
 msgid "item mimic"
-msgstr ""
+msgstr "아이템 미믹"
 
 #: mon-data.h:4459 mon-data.h:4533
 msgid "feature mimic"
-msgstr ""
+msgstr "지형지물 미믹"
 
 #: mon-data.h:4519 mon-data.h:4632
 msgid "crimson imp"
@@ -11507,7 +11509,7 @@ msgstr "폭풍우의 악마"
 
 #: mon-data.h:4927 mon-data.h:5016
 msgid "Brimstone Fiend"
-msgstr ""
+msgstr "브림스톤 핀드"
 
 #. non-living creatures
 #. golems ('8')
@@ -11530,7 +11532,7 @@ msgstr ""
 
 #: abl-show.cc:402 abl-show.cc:347
 msgid "Deal Four"
-msgstr ""
+msgstr "넉 장 돌리기"
 
 #: cloud.cc:1251 cloud.cc:1264
 msgid "sparse dust"
@@ -14547,6 +14549,9 @@ msgstr "불가사의"
 #. cap_shout[0] = toupper(cap_shout[0]); (한글판에서는 번역 호환을 위해 대문자로 바꾸지 않음)
 #. "shout"
 #. Tweak volume for different kinds of vocalisation.
+#. cap_shout[0] = toupper(cap_shout[0]); (한글판에서는 번역 호b환을 위해 대문자로 바꾸지 않음)
+#. "shout"
+#. Tweak volume for different kinds of vocalisation.
 #: effects.cc:1059 player.cc:6055 effects.cc:935
 msgid "roar"
 msgstr "포효"
@@ -14588,3 +14593,11 @@ msgstr "비명"
 #: melee_attack.cc:1544
 msgid "armour"
 msgstr "방어구"
+
+#: status.cc:512
+msgid "Constr"
+msgstr "조임"
+
+#: status.cc:513
+msgid "constricted"
+msgstr "조여짐"

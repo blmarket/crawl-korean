@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 15:18+0900\n"
+"POT-Creation-Date: 2013-02-21 22:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4690,6 +4690,8 @@ msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
+#. / %s convulses! 로 쓰임.
+#. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
 #. / %s convulses! 로 쓰임.
@@ -13832,6 +13834,9 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -25900,7 +25905,7 @@ msgstr "이 층"
 msgid "Attack whom?"
 msgstr "어느 것을 공격하는가?"
 
-#: invent.cc:401
+#: invent.cc:401 invent.cc:408
 #, c-format
 msgid "Inventory: %.0f/%.0f aum (%d%%, %d/52 slots)"
 msgstr "소지품창: %.0f/%.0f aum (%d%%, %d/52 슬롯)"
@@ -25999,17 +26004,17 @@ msgid "Runes"
 msgstr "룬"
 
 #. longest string
-#: invent.cc:835
+#: invent.cc:835 invent.cc:843
 msgid "Magical Staves and Rods"
 msgstr "마법 지팡이와 막대"
 
 #. subtitle += std::string(strwidth(str)
 #. - strwidth(subtitle) + 1, ' '); (deceit, 110922) 한글판에서 에러남. 딱히 필요도 없는 부분이니 삭제
-#: invent.cc:838
+#: invent.cc:838 invent.cc:846
 msgid "(select all with <w>"
 msgstr "(모두 선택 : <w>"
 
-#: invent.cc:1332 invent.cc:1769 invent.cc:1866
+#: invent.cc:1332 invent.cc:1769 invent.cc:1866 invent.cc:1419
 #, c-format
 msgid "%s (<w>?</w> for menu, <w>Esc</w> to quit)"
 msgstr "%s (<w>?</w> : 메뉴 , <w>Esc</w> : 종료)"
@@ -28271,6 +28276,9 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -30299,7 +30307,7 @@ msgid "You recognise all items. (Select to toggle autopickup)"
 msgstr ""
 "당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
 
-#: itemname.cc:2379
+#: itemname.cc:2379 invent.cc:414
 msgid "(_ for help)"
 msgstr "(_ 키: 도움말)"
 
@@ -31800,3 +31808,7 @@ msgstr "정말로 여기 있는 아이템들을 바칠 것인가? "
 msgctxt "monsterwarn"
 msgid " is"
 msgstr "의 "
+
+#: invent.cc:981
+msgid "Select to reset item to default: "
+msgstr ""

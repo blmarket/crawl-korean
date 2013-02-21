@@ -509,8 +509,8 @@ void fill_status_info(int status, status_info* inf)
         if (you.is_constricted())
         {
             inf->light_colour = YELLOW;
-            inf->light_text   = you.held == HELD_MONSTER ? "Held" : "Constr";
-            inf->short_text   = you.held == HELD_MONSTER ? "held" : "constricted";
+            inf->light_text   = you.held == HELD_MONSTER ? gettext(M_("Held")) : gettext(M_("Constr"));
+            inf->short_text   = you.held == HELD_MONSTER ? gettext(M_("held")) : gettext(M_("constricted"));
         }
         break;
 
