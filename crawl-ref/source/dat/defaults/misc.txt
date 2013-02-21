@@ -1,8 +1,8 @@
-drop_filter += useless_item
+ï»¿drop_filter += useless_item
 
 auto_exclude += oklob,statue,curse skull,roxanne,hyperactive,lightning spire
 auto_exclude += mimic
-auto_exclude += ¿ÀÅ¬·Ó,¾óÀ½ÀÇ »ó,ÀºÀÇ »ó,ÁÖÈ²ºû ¼öÁ¤ÀÇ »ó,µ¿»ó,ÀúÁÖ¹ŞÀº ÇØ°ñ,·Ï»ê´À,¹ø°³Å¾,È°¹ßÇÑ ¹ß¸®,¹Ì¹Í
+auto_exclude += ì˜¤í´ë¡­,ì–¼ìŒì˜ ìƒ,ì€ì˜ ìƒ,ì£¼í™©ë¹› ìˆ˜ì •ì˜ ìƒ,ë™ìƒ,ì €ì£¼ë°›ì€ í•´ê³¨,ë¡ì‚°ëŠ,ë²ˆê°œíƒ‘,í™œë°œí•œ ë°œë¦¬,ë¯¸ë¯¹
 
 # Interrupting run and rest compound commands:
 runrest_ignore_poison  = 2:30
