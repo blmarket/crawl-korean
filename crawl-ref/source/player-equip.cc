@@ -1436,7 +1436,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     if (item.cursed())
     {
         mprf(gettext("Oops, that %s feels deathly cold."),
-             jewellery_is_amulet(item)? "amulet" : "ring");
+             jewellery_is_amulet(item)? _(M_("amulet")) : _(M_("ring")));
         learned_something_new(HINT_YOU_CURSED);
 
         int amusement = 32;

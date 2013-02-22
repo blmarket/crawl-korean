@@ -373,7 +373,7 @@ static monster* _do_split(monster* thing, coord_def & target)
     // XXX copy summoner info
 
     if (you.can_see(thing))
-        mprf(gettext("%s splits."), thing->name(DESC_A).c_str());
+        mprf(gettext("%s splits."), thing->name(DESC_PLAIN).c_str());
 
     int split_off = thing->number / 2;
     float max_per_blob = thing->max_hit_points / float(thing->number);
@@ -568,12 +568,12 @@ static bool _do_merge_slimes(monster* initial_slime, monster* merge_to)
         if (you.can_see(initial_slime))
         {
             mprf(gettext("Two slime creatures merge to form %s."),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
         else
         {
             mprf(gettext("A slime creature suddenly becomes %s."),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
 
         flash_view_delay(LIGHTGREEN, 150);
@@ -2353,7 +2353,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             break;
 
         // Setup tracer.
-        beem.name        = "glob of lava";
+        beem.name        = M_("glob of lava");
         beem.aux_source  = "glob of lava";
         beem.range       = 6;
         beem.damage      = dice_def(3, 10);
@@ -2389,7 +2389,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             break;
 
         // Setup tracer.
-        beem.name        = "bolt of electricity";
+        beem.name        = M_("bolt of electricity");
         beem.aux_source  = "bolt of electricity";
         beem.range       = 8;
         beem.damage      = dice_def(3, 6);
@@ -2617,7 +2617,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         // easy to set up and doesn't involve inventory.
 
         // Set up the beam.
-        beem.name        = "volley of spikes";
+        beem.name        = M_("volley of spikes");
         beem.aux_source  = "volley of spikes";
         beem.range       = 6;
         beem.hit         = 14;

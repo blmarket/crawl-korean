@@ -57,7 +57,7 @@ static void _shop_print(const char *shoppy, int line)
 static void _shop_more()
 {
     cgotoxy(65, 20, GOTO_CRT);
-    cprintf("-more-");
+    cprintf(_("-more-"));
     get_ch();
 }
 
@@ -140,9 +140,9 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
     {
         shop_list = "[<w>$</w>] ";
         if (num_selected > 0)
-            shop_list += "selected -> shopping list";
+            shop_list += _("selected -> shopping list");
         else if (num_in_list > 0)
-            shop_list += "shopping list -> selected";
+            shop_list += _("shopping list -> selected");
         else
             shop_list = "";
     }
@@ -172,8 +172,8 @@ static void _list_shop_keys(const std::string &purchasable, bool viewing,
 
     if (!pkeys.empty())
     {
-        pkeys = "[" + pkeys + "] select item to "
-                + (viewing ? "examine" : "buy");
+        pkeys = "[" + pkeys + _("] select item to ")
+                + (viewing ? pgettext("shop","examine") : pgettext("shop","buy"));
     }
     fs = formatted_string::parse_string(make_stringf(
             "[<w>x</w>/<w>Esc</w>"
@@ -350,7 +350,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
     clrscr();
 
-    const std::string hello = "Welcome to " + shop_name(shop.pos) + "!";
+    const std::string hello = shop_name(shop.pos) + pgettext("inashop","!"); // ("Welcome to ") + 
     bool first = true;
     int total_cost = 0;
 
@@ -414,7 +414,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         clrscr();
         if (stock.empty())
         {
-            _shop_print("I'm sorry, my shop is empty now.", 1);
+            _shop_print(_("I'm sorry, my shop is empty now."), 1);
             _shop_more();
             return bought_something;
         }
@@ -459,17 +459,17 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
         if (!total_cost)
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s.", you.gold,
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s."), you.gold,
                      you.gold != 1 ? "s" : "");
 
             textcolor(YELLOW);
         }
         else if (total_cost > you.gold)
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s. "
-                           "You are short %d gold piece%s for the purchase.",
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s. "
+                           "You are short %d gold piece%s for the purchase."),
                      you.gold,
-                     you.gold != 1 ? "s" : "",
+                     "", // you.gold != 1 ? "s" : "",
                      total_cost - you.gold,
                      (total_cost - you.gold != 1) ? "s" : "");
 
@@ -477,12 +477,12 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         }
         else
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s. "
-                     "After the purchase, you will have %d gold piece%s.",
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s. "
+                     "After the purchase, you will have %d gold piece%s."),
                      you.gold,
-                     you.gold != 1 ? "s" : "",
+                     "", // you.gold != 1 ? "s" : "",
                      you.gold - total_cost,
-                     (you.gold - total_cost != 1) ? "s" : "");
+                     ""); // (you.gold - total_cost != 1) ? "s" : "");
 
             textcolor(YELLOW);
         }
@@ -492,11 +492,11 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         if (first)
         {
             first = false;
-            snprintf(info, INFO_SIZE, "%s What would you like to do? ",
+            snprintf(info, INFO_SIZE, _("%s What would you like to do? "),
                       hello.c_str());
         }
         else
-            snprintf(info, INFO_SIZE, "What would you like to do? ");
+            snprintf(info, INFO_SIZE, _("What would you like to do? "));
 
         textcolor(CYAN);
         _shop_print(info, 1);
@@ -517,7 +517,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
             if (num_selected == 0 && num_in_list > 0)
             {
-                if (_shop_yesno("Buy items on shopping list? (Y/n)", 'y'))
+                if (_shop_yesno(_("Buy items on shopping list? (Y/n)"), 'y'))
                 {
                     to_buy = in_list;
 
@@ -543,14 +543,14 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             // Do purchase.
             if (total_purchase > you.gold)
             {
-                _shop_print("I'm sorry, you don't seem to have enough money.",
+                _shop_print(_("I'm sorry, you don't seem to have enough money."),
                             1);
             }
             else if (!total_purchase) // Nothing selected.
                 continue;
             else
             {
-                snprintf(info, INFO_SIZE, "Purchase for %d gold? (y/n)",
+                snprintf(info, INFO_SIZE, _("Purchase for %d gold? (y/n)"),
                          total_purchase);
 
                 if (_shop_yesno(info, 'n'))
@@ -684,7 +684,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         }
         else if (!isaalpha(key))
         {
-            _shop_print("Huh?", 1);
+            _shop_print(_("Huh?"), 1);
             _shop_more();
         }
         else
@@ -692,7 +692,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             key = tolower(key) - 'a';
             if (key >= static_cast<int>(stock.size()))
             {
-                _shop_print("No such item.", 1);
+                _shop_print(_("No such item."), 1);
                 _shop_more();
                 continue;
             }
@@ -726,7 +726,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                 {
                     if (gp_value > you.gold)
                     {
-                        if (_shop_yesno("Remove from shopping list? (y/N)",
+                        if (_shop_yesno(_("Remove from shopping list? (y/N)"),
                                          'n'))
                         {
                             shopping_list.del_thing(item);
@@ -737,8 +737,8 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                     }
                     else
                     {
-                        if (_shop_yesno("Remove item from shopping list and "
-                                         "mark for purchase? (Y/n)",  'y'))
+                        if (_shop_yesno(_("Remove item from shopping list and "
+                                         "mark for purchase? (Y/n)"),  'y'))
                         {
                             shopping_list.del_thing(item);
                             in_list[key] = false;

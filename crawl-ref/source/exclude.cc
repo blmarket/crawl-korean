@@ -92,7 +92,7 @@ void set_auto_exclude(const monster* mon)
         //        (as is possible for some vaults), this could be really
         //        annoying. (jpeg)
         mprf(MSGCH_WARN,
-             "Marking area around %s as unsafe for travelling.",
+             _("Marking area around %s as unsafe for travelling."),
              mon->name(DESC_THE).c_str());
 
 #ifdef USE_TILE

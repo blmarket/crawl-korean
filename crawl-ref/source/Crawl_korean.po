@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-21 22:15+0900\n"
+"POT-Creation-Date: 2013-02-23 00:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,7 +97,7 @@ msgid "The spell fizzles."
 msgstr "주문은 실패했다."
 
 #: stuff.cc:461 stuff.cc:461 shopping.cc:600 shopping.cc:648 stuff.cc:437
-#: stuff.cc:442
+#: stuff.cc:442 shopping.cc:687
 msgid "Huh?"
 msgstr "뭐라고?"
 
@@ -4690,6 +4690,14 @@ msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
 #. / %s convulses! 로 쓰임.
@@ -11011,7 +11019,7 @@ msgstr ""
 "다."
 
 #: main.cc:1784 main.cc:1784 main.cc:1785 shopping.cc:435 main_backup.cc:1785
-#: main.cc:1792 main.cc:1843
+#: main.cc:1792 main.cc:1843 shopping.cc:462
 #, c-format
 msgid "You have %d gold piece%s."
 msgstr "당신은 %d개의 금화를 가지고 있다."
@@ -13834,6 +13842,18 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -21846,9 +21866,9 @@ msgstr "은 계단을 오르내리지 못한다.\n"
 
 #. << mi.pronoun(PRONOUN_CAP)
 #: describe.cc:3546 describe.cc:3547 directn.cc:3573 describe.cc:3562
-#: describe.cc:3478 describe.cc:3475
+#: describe.cc:3478 describe.cc:3475 directn.cc:3514
 msgid " is mindless.\n"
-msgstr "은 감정이 없다.\n"
+msgstr "은(는) 감정이 없다.\n"
 
 #. << mi.pronoun(PRONOUN_CAP)
 #: describe.cc:3551 describe.cc:3552 describe.cc:3567 describe.cc:3483
@@ -22687,83 +22707,83 @@ msgctxt "delayline1719"
 msgid "is %s."
 msgstr " %s"
 
-#: directn.cc:3537
+#: directn.cc:3537 directn.cc:3472
 msgid " is clinging to the wall.\n"
 msgstr "은 벽에 매달려 있다.\n"
 
-#: directn.cc:3540
+#: directn.cc:3540 directn.cc:3475
 msgid "You are mesmerised by her song.\n"
 msgstr "당신은 그녀의 노래에 매혹되어있다.\n"
 
-#: directn.cc:3544
+#: directn.cc:3544 directn.cc:3479
 #, c-format
 msgid "%s appears to be %s.\n"
 msgstr "%s은 %s.\n"
 
 #. pronoun + " appears to be "
-#: directn.cc:3545 directn.cc:3470
+#: directn.cc:3545 directn.cc:3470 directn.cc:3480
 msgid "sleepwalking"
 msgstr "마치 몽유병에 걸린 것 같다"
 
-#: directn.cc:3545 directn.cc:3470
+#: directn.cc:3545 directn.cc:3470 directn.cc:3481
 msgid "resting"
 msgstr "잠을 자고 있다"
 
-#: directn.cc:3551
+#: directn.cc:3551 directn.cc:3486
 msgid " is retreating.\n"
 msgstr "은 도망치고 있다.\n"
 
-#: directn.cc:3554
+#: directn.cc:3554 directn.cc:3489
 msgid " doesn't appear to have noticed you.\n"
 msgstr "은 당신을 알아차리지 못했다.\n"
 
-#: directn.cc:3557
+#: directn.cc:3557 directn.cc:3492
 msgid " is friendly.\n"
 msgstr "은 당신에게 우호적이다.\n"
 
-#: directn.cc:3559
+#: directn.cc:3559 directn.cc:3494
 msgid " seems to be peaceful towards you.\n"
 msgstr "은 당신에게 적대감을 드러내지 않는다.\n"
 
 #. don't differentiate between permanent or not
-#: directn.cc:3561
+#: directn.cc:3561 directn.cc:3496
 msgid " is indifferent to you.\n"
 msgstr "은 당신에게 무관심해 보인다.\n"
 
-#: directn.cc:3564
+#: directn.cc:3564 directn.cc:3499
 msgid " has been summoned.\n"
 msgstr "은 소환되었다.\n"
 
-#: directn.cc:3567
+#: directn.cc:3567 directn.cc:3502
 msgid " has been summoned but will not time out.\n"
 msgstr "은 소환되었고, 죽을 때까지 이 세계에 머무른다.\n"
 
-#: directn.cc:3570
+#: directn.cc:3570 directn.cc:3505
 msgid " is illuminated by a divine halo.\n"
 msgstr "은 성스러운 후광으로 빛을 발하고 있다.\n"
 
-#: directn.cc:3576
+#: directn.cc:3576 directn.cc:3517
 msgid " is chaotic.\n"
 msgstr "은 무질서하다.\n"
 
-#: directn.cc:3581
+#: directn.cc:3581 directn.cc:3522
 msgid " soul is ripe for the taking.\n"
 msgstr "의 영혼은 제어할 수 있어 보인다.\n"
 
-#: directn.cc:3584
+#: directn.cc:3584 directn.cc:3525
 msgid " is a disembodied soul.\n"
 msgstr "의 영혼은 육신에서 분리되었다.\n"
 
-#: directn.cc:3587
+#: directn.cc:3587 directn.cc:3528
 msgid " is reflecting injuries back at attackers.\n"
 msgstr "은 자신이 입은 피해를 공격자들에게 반사하고 있다.\n"
 
-#: directn.cc:3594
+#: directn.cc:3594 directn.cc:3535
 #, c-format
 msgid "Your line of fire to %s is blocked by %s\n"
 msgstr "이것을 향한 조준은 %2$s에 의해 가로막혀 있다.%1$.0s\n"
 
-#: directn.cc:3590
+#: directn.cc:3590 directn.cc:3531
 msgid " is filled with an inner flame.\n"
 msgstr "에는 잠재의 불씨가 깃들어있다.\n"
 
@@ -23783,7 +23803,7 @@ msgstr "%s[Y]예%s, [N]아니오, [Q]취소 중 하나로 대답해 주세요."
 msgid "Have to go through %s. Continue?"
 msgstr "%s을(를) 통해 이동한다. 계속하겠는가?"
 
-#: travel.cc:2342
+#: travel.cc:2342 travel.cc:2344
 #, c-format
 msgid "What level of %s? (default %s, ? - help) "
 msgstr "%s의 몇 층으로 이동하는가? (디폴트:%s, ? - 도움말)"
@@ -25676,7 +25696,7 @@ msgstr "에 의해 막혀있다"
 msgid "--more--"
 msgstr "--다음장--"
 
-#: shopping.cc:58
+#: shopping.cc:58 shopping.cc:60
 msgid "-more-"
 msgstr "-다음-"
 
@@ -25720,46 +25740,46 @@ msgid "Welcome to "
 msgstr "환영합니다, "
 
 #. gettext("Welcome to ") +
-#: shopping.cc:332
+#: shopping.cc:332 shopping.cc:353
 msgctxt "inashop"
 msgid "!"
 msgstr "에 온 걸 환영해!"
 
-#: shopping.cc:391
+#: shopping.cc:391 shopping.cc:417
 msgid "I'm sorry, my shop is empty now."
 msgstr "미안하군. 내 가게에는 이제 재고가 없어."
 
-#: shopping.cc:442
+#: shopping.cc:442 shopping.cc:469
 #, c-format
 msgid ""
 "You have %d gold piece%s. You are short %d gold piece%s for the purchase."
 msgstr "금화 %d를 갖고 있네%s. 이렇게 사려면 금화 %d이 부족하지.%s"
 
-#: shopping.cc:453
+#: shopping.cc:453 shopping.cc:480
 #, c-format
 msgid ""
 "You have %d gold piece%s. After the purchase, you will have %d gold piece%s."
 msgstr "금화 %d를 갖고 있네%s. 이렇게 사면, 금화 %d가 남을거야%s."
 
-#: shopping.cc:468
+#: shopping.cc:468 shopping.cc:495
 #, c-format
 msgid "%s What would you like to do? "
 msgstr "%s 무엇을 도와 줄까?"
 
-#: shopping.cc:472
+#: shopping.cc:472 shopping.cc:499
 #, c-format
 msgid "What would you like to do? "
 msgstr "무엇을 도와 줄까?"
 
-#: shopping.cc:493
+#: shopping.cc:493 shopping.cc:520
 msgid "Buy items on shopping list? (Y/n)"
 msgstr "이 아이템을 구입 목록에 추가할꺼야? (Y/n)"
 
-#: shopping.cc:519
+#: shopping.cc:519 shopping.cc:546
 msgid "I'm sorry, you don't seem to have enough money."
 msgstr "미안하지만, 넌 돈이 부족해 보이는걸."
 
-#: shopping.cc:526
+#: shopping.cc:526 shopping.cc:553
 #, c-format
 msgid "Purchase for %d gold? (y/n)"
 msgstr "금화 %d인데, 정말 살꺼야? (y/n)"
@@ -25784,11 +25804,11 @@ msgctxt "shop"
 msgid "part of them"
 msgstr "일단 몇 개는 "
 
-#: shopping.cc:656
+#: shopping.cc:656 shopping.cc:695
 msgid "No such item."
 msgstr "그런 건 없어."
 
-#: shopping.cc:690
+#: shopping.cc:690 shopping.cc:729
 msgid "Remove from shopping list? (y/N)"
 msgstr "그거, 구매 목록에서 빼려고? (y/N)"
 
@@ -25804,7 +25824,7 @@ msgstr "%s은(는) 문을 닫은 듯 하다."
 #: shopping.cc:2054 shopping.cc:2088
 #, c-format
 msgid "Thank you for shopping at %s!"
-msgstr "우리 %s에서 사줘서 고마워!"
+msgstr "우리 %s에서 물건을 사 줘서 정말 고마워!"
 
 #: shopping.cc:2057 shopping.cc:2616 shopping.cc:2091 shopping.cc:2635
 msgid "You can access your shopping list by pressing '$'."
@@ -25839,7 +25859,7 @@ msgstr "구매 목록: %s을(를) 제거합니까? (Y/n)"
 msgid "Shopping-list: removing %s"
 msgstr "구매 목록: %s을(를) 제거"
 
-#: shopping.cc:2605 shopping.cc:2624
+#: shopping.cc:2605 shopping.cc:2624 shopping.cc:176
 msgctxt "shop"
 msgid "buy"
 msgstr "구입"
@@ -25862,7 +25882,7 @@ msgctxt "shop"
 msgid "travel"
 msgstr "이동"
 
-#: shopping.cc:2653
+#: shopping.cc:2653 shopping.cc:176
 msgctxt "shop"
 msgid "examine"
 msgstr "확인"
@@ -26617,11 +26637,11 @@ msgstr "분수"
 msgid "flickers out of sight"
 msgstr "깜박이며 시야에서 사라졌다"
 
-#: travel.cc:2086
+#: travel.cc:2086 travel.cc:2091
 msgid "* - list branches"
 msgstr "* - 분기점 목록"
 
-#: travel.cc:2088
+#: travel.cc:2088 travel.cc:2093
 msgid "* - list waypoints"
 msgstr "* - 기억된 지점 목록"
 
@@ -26634,11 +26654,11 @@ msgstr "엔터 - %s"
 msgid "? - help"
 msgstr "? - 도움말"
 
-#: travel.cc:2104
+#: travel.cc:2104 travel.cc:2109
 msgid "Entrance to where"
 msgstr "어느 곳의 입구로"
 
-#: travel.cc:2104
+#: travel.cc:2104 travel.cc:2109
 msgid "Where to"
 msgstr "어디로"
 
@@ -26787,7 +26807,7 @@ msgstr " (해골이 됨)"
 msgid " (rotten by now)"
 msgstr " (부패함)"
 
-#: exclude.cc:89
+#: exclude.cc:89 exclude.cc:95
 #, c-format
 msgid "Marking area around %s as unsafe for travelling."
 msgstr "%s 주위로 탐험 예외 지역을 설정했다."
@@ -28279,6 +28299,18 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -29581,7 +29613,7 @@ msgstr "당신의 비늘이 칙칙한 금속빛으로 변화하기 시작했다.
 #: player.cc:297
 #, c-format
 msgid "Really %s into a travel-excluded area?"
-msgstr "정말로 탐험 제외 지역으로 %s 것인가?"
+msgstr "정말로 탐험 제외 지역으로 이동할 것인가?%1$.0s"
 
 #: player.cc:5183 player.cc:5206
 msgctxt "adj"
@@ -31057,7 +31089,7 @@ msgstr "삶"
 #: godprayer.cc:338
 #, c-format
 msgid "You %s prayer to %s."
-msgstr "당신은 %s에게 %s."
+msgstr "당신은 %2$s에게 %1$s."
 
 #: godprayer.cc:339
 msgctxt "godprayer"
@@ -31811,4 +31843,56 @@ msgstr "의 "
 
 #: invent.cc:981
 msgid "Select to reset item to default: "
-msgstr ""
+msgstr "디폴트로 바꿀 아이템을 선택: "
+
+#: mon-project.cc:256 mon-project.cc:253
+msgid "wavering "
+msgstr "요동치는 "
+
+#: directn.cc:3508
+msgid " is wreathed by an unholy umbra.\n"
+msgstr "은(는) 사악한 그림자에 둘러쌓여있다.\n"
+
+#: directn.cc:3511
+msgid " exudes an aura of magical suppression.\n"
+msgstr "은(는) 마력 억제의 기운을 방출하고 있다.\n"
+
+#: effects.cc:441
+msgctxt "beam"
+msgid "shocks"
+msgstr "을(를) 감전시켰다"
+
+#: throw.cc:1177
+msgctxt "beam"
+msgid "pierces through"
+msgstr "을(를) 뚫고 지나갔다"
+
+#: mon-info.cc:1383
+msgid " is "
+msgstr "은(는) "
+
+#: shopping.cc:143
+msgid "selected -> shopping list"
+msgstr "선택됨 -> 구입 목록"
+
+#: shopping.cc:145
+msgid "shopping list -> selected"
+msgstr "구입 목록 -> 선택됨"
+
+#: shopping.cc:175
+msgid "] select item to "
+msgstr "] "
+
+#: shopping.cc:740
+msgid "Remove item from shopping list and mark for purchase? (Y/n)"
+msgstr "그거, 구입 목록에서 빼고 사려고? (Y/n)"
+
+#: travel.cc:774
+msgctxt "travel"
+msgid "items"
+msgstr "아이템(들)"
+
+#: travel.cc:776
+msgctxt "travel"
+msgid "places"
+msgstr "장소(들)"

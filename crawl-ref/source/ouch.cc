@@ -662,7 +662,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                          item_name.c_str(),
                          (num_dest == 1) ? "is" : "are",
                          (flavour == BEAM_DEVOUR_FOOD) ?
-                             P_("ouch","devoured") : _("covered with spores"));
+                             pgettext("ouch","devoured") : _("covered with spores"));
                     break;
 
                 default: // (deceit, 110815) same as 'covered with spores'.

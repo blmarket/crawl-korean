@@ -438,7 +438,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     beam.damage        = dice_def(1, 15);
     beam.target        = where;
     beam.name          = M_("electric current");
-    beam.hit_verb      = N_("shocks");
+    beam.hit_verb      = pgettext("beam","shocks");
     beam.colour        = ETC_ELECTRICITY;
     beam.aux_source    = N_("arcing electricity");
     beam.ex_size       = 1;

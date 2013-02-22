@@ -771,9 +771,9 @@ static void _explore_find_target_square()
         {
             std::vector<std::string> inacc;
             if (estatus & EST_GREED_UNFULFILLED)
-                inacc.push_back("items");
+                inacc.push_back(pgettext("travel","items"));
             if (estatus & EST_PARTLY_EXPLORED)
-                inacc.push_back("places");
+                inacc.push_back(pgettext("travel","places"));
 
             mprf(gettext("Partly explored, can't reach some %s."),
                  comma_separated_line(inacc.begin(),

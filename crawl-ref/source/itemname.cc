@@ -1565,7 +1565,7 @@ std::string item_def::name_aux(description_level_type desc,
         case FOOD_SNOZZCUMBER: buff << check_gettext(M_("snozzcumber")); break;
         case FOOD_PIZZA: buff << check_gettext(M_("slice of pizza")); break;
         case FOOD_APRICOT: buff << check_gettext(M_("apricot")); break;
-        case FOOD_ORANGE: buff << check_gettext(M_("orange")); break;
+		case FOOD_ORANGE: buff << ((!translate_flag) ? "orange" : "오렌지"); break; // check_gettext(M_("orange")); break;
         case FOOD_BANANA: buff << check_gettext(M_("banana")); break;
         case FOOD_STRAWBERRY: buff << check_gettext(M_("strawberry")); break;
         case FOOD_RAMBUTAN: buff << check_gettext(M_("rambutan")); break;
@@ -1680,7 +1680,7 @@ std::string item_def::name_aux(description_level_type desc,
         if (item_typ == MISC_RUNE_OF_ZOT)
         {
             if (!dbname)
-                buff << check_gettext(rune_type_name(it_plus)) << " ";
+                buff << check_gettext(rune_type_name(it_plus)) << ((!translate_flag) ? " " : "");
             buff << check_gettext(M_("rune of Zot"));
         }
         else

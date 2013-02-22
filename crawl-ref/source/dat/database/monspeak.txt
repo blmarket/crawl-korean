@@ -932,7 +932,7 @@ _pauses_or_stops_
 %%%%
 hound
 
-@The_monster@은(는) 잠시 @pauses_or_stops@, 바닥에 코를 대고 킁킁거렸다.
+@The_monster@은(는) 잠시 @_pauses_or_stops_@, 바닥에 코를 대고 킁킁거렸다.
 
 VISUAL:@The_monster@은(는) 전방을 똑바로 주시하며, 혼자 다니는 누군가를 찾았다.
 %%%%

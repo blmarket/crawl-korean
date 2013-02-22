@@ -902,7 +902,7 @@ static monsterentry mondata[] = {
 },
 
 { // one vault.  Polymorph disabled.
-    MONS_GNOME, 'g', LIGHTBLUE, "gnome",
+    MONS_GNOME, 'g', LIGHTBLUE, M_("gnome"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_NO_FLAGS,
     400, 10, MONS_GNOME, MONS_GNOME, MH_NATURAL, -3,
@@ -1993,7 +1993,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_ORB_SPIDER, 's', MAGENTA, "orb spider",
+    MONS_ORB_SPIDER, 's', MAGENTA, M_("orb spider"),
     M_NO_SKELETON | M_SPELLCASTER | M_FAKE_SPELLS | M_WEB_SENSE
         | M_MAINTAIN_RANGE | M_NO_FLEE,
     MR_VUL_POISON,
@@ -2262,7 +2262,7 @@ static monsterentry mondata[] = {
 
 {
     // See comment under MONS_ABOMINATION_SMALL regarding holiness.
-    MONS_CRAWLING_CORPSE, 'x', BROWN, "crawling corpse",
+    MONS_CRAWLING_CORPSE, 'x', BROWN, M_("crawling corpse"),
     M_NO_EXP_GAIN | M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 8, MONS_MACABRE_MASS, MONS_CRAWLING_CORPSE, MH_UNDEAD, MAG_IMMUNE,
@@ -2275,7 +2275,7 @@ static monsterentry mondata[] = {
 
 {
     // See comment under MONS_ABOMINATION_SMALL regarding holiness.
-    MONS_MACABRE_MASS, 'x', BROWN, "macabre mass",
+    MONS_MACABRE_MASS, 'x', BROWN, M_("macabre mass"),
     M_NO_EXP_GAIN | M_NO_REGEN,
     mrd(MR_RES_COLD, 2),
     0, 8, MONS_MACABRE_MASS, MONS_MACABRE_MASS, MH_UNDEAD, MAG_IMMUNE,
@@ -2363,7 +2363,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_MOTH_OF_SUPPRESSION, 'y', LIGHTGREEN, "moth of suppression",
+    MONS_MOTH_OF_SUPPRESSION, 'y', LIGHTGREEN, M_("moth of suppression"),
     M_NO_SKELETON | M_UNFINISHED,
     MR_NO_FLAGS,
     300, 2, MONS_MOTH, MONS_MOTH_OF_SUPPRESSION, MH_NATURAL, -3,
