@@ -804,7 +804,7 @@ void discover_mimic(const coord_def& pos, bool wake)
         // If we took a note of this feature, then note that it was a mimic.
         if (!is_boring_terrain(feat))
         {
-            std::string desc = feature_description_at(pos, false, DESC_THE, false);
+            std::string desc = feature_description_at(true, pos, false, DESC_PLAIN, false);
             take_note(Note(NOTE_FEAT_MIMIC, 0, 0, desc.c_str()));
         }
 

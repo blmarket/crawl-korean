@@ -2747,7 +2747,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         if (was_secret)
         {
             mprf(_("%s was actually a secret door!"),
-                 feature_description_at(pos, "", DESC_THE, false).c_str());
+                 feature_description_at(true, pos, "", DESC_PLAIN, false).c_str());
             learned_something_new(HINT_FOUND_SECRET_DOOR, pos);
         }
 

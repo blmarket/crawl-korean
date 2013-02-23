@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-23 00:03+0900\n"
+"POT-Creation-Date: 2013-02-23 22:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -295,7 +295,7 @@ msgstr "대지술사"
 
 #: jobs.cc:31 jobs.cc:31 jobs.cc:32 jobs.cc:22
 msgid "Skald"
-msgstr "성전사"
+msgstr "음유시인"
 
 #: jobs.cc:32 jobs.cc:32 jobs.cc:33 jobs.cc:23
 msgid "Venom Mage"
@@ -339,7 +339,7 @@ msgstr "발동술사"
 
 #: jobs.cc:38 jobs.cc:38 jobs.cc:39 jobs.cc:26
 msgid "Arcane Marksman"
-msgstr "아케인 마크스맨"
+msgstr "마법 궁수"
 
 #: jobs.cc:39 jobs.cc:39 jobs.cc:40 jobs.cc:27
 msgid "Death Knight"
@@ -2897,7 +2897,7 @@ msgstr "소환술"
 # (보류)
 #: spl-util.cc:915 spl-util.cc:915 spl-util.cc:914 spl-util.cc:867
 msgid "Divination"
-msgstr ""
+msgstr "Divination"
 
 #: spl-util.cc:917 spl-util.cc:917 spl-util.cc:916 spl-util.cc:869
 msgid "Translocation"
@@ -6162,12 +6162,12 @@ msgid "natural trap"
 msgstr "자연적 함정"
 
 #: directn.cc:3035 directn.cc:3035 directn.cc:3038 directn.cc:3049
-#: directn.cc:3015
+#: directn.cc:3015 travel.cc:4342
 msgid "shop"
 msgstr "상점"
 
 #: directn.cc:3037 directn.cc:3037 directn.cc:3040 directn.cc:3051
-#: directn.cc:3017
+#: directn.cc:3017 directn.cc:3305 directn.cc:3322
 msgid "abandoned shop"
 msgstr "문 닫은 상점"
 
@@ -6508,7 +6508,7 @@ msgid "alarm trap"
 msgstr "알람 함정"
 
 #: directn.cc:2935 directn.cc:2935 directn.cc:2938 directn.cc:2945
-#: directn.cc:2913
+#: directn.cc:2913 describe.cc:556
 msgid "shaft"
 msgstr "구덩이"
 
@@ -6528,7 +6528,7 @@ msgid "passage of Golubria"
 msgstr "골루브리아의 통로"
 
 #: directn.cc:2943 directn.cc:2943 directn.cc:2946 directn.cc:2953
-#: directn.cc:2921
+#: directn.cc:2921 describe.cc:556
 msgid "pressure plate"
 msgstr "압착 발판"
 
@@ -7036,6 +7036,7 @@ msgstr "집행인의 도끼"
 #. Polearms
 #. Polearms
 #: itemprop.cc:312 itemprop.cc:312 itemprop.cc:316 itemprop.cc:297
+#: describe.cc:553
 msgid "spear"
 msgstr "창"
 
@@ -7110,6 +7111,7 @@ msgid "longbow"
 msgstr "장궁"
 
 #: itemprop.cc:380 itemprop.cc:380 itemprop.cc:387 itemprop.cc:368
+#: describe.cc:555
 msgid "needle"
 msgstr "바늘"
 
@@ -7118,14 +7120,17 @@ msgid "stone"
 msgstr "작은 돌"
 
 #: itemprop.cc:382 itemprop.cc:382 itemprop.cc:389 itemprop.cc:370
+#: describe.cc:553
 msgid "dart"
 msgstr "다트"
 
 #: itemprop.cc:383 itemprop.cc:383 itemprop.cc:390 itemprop.cc:371
+#: describe.cc:553
 msgid "arrow"
 msgstr "화살"
 
 #: itemprop.cc:384 itemprop.cc:384 itemprop.cc:391 itemprop.cc:372
+#: describe.cc:555
 msgid "bolt"
 msgstr "석궁화살"
 
@@ -7914,6 +7919,7 @@ msgid "Cling"
 msgstr "매달림"
 
 #: status.cc:435 status.cc:436 directn.cc:3485 status.cc:456 status.cc:475
+#: directn.cc:3438
 msgid "clinging"
 msgstr "매달림"
 
@@ -10688,7 +10694,7 @@ msgstr "사용함: "
 msgid "tried"
 msgstr "사용함"
 
-#: mon-util.cc:3575 mon-util.cc:3623
+#: mon-util.cc:3575 mon-util.cc:3623 travel.cc:4343
 msgid "altar"
 msgstr "제단"
 
@@ -10702,6 +10708,16 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -11015,7 +11031,7 @@ msgstr "코큐투스"
 msgid "Tartarus"
 msgstr "타르타로스"
 
-#: branch-data.h:194
+#: branch-data.h:194 describe.cc:555
 msgid "Zot"
 msgstr "조트"
 
@@ -11072,56 +11088,56 @@ msgstr "성지"
 msgid "silenced"
 msgstr "정적화됨"
 
-#: directn.cc:3472
+#: directn.cc:3472 directn.cc:3425
 msgid "retreating"
 msgstr "도망침"
 
-#: directn.cc:3474
+#: directn.cc:3474 directn.cc:3427
 msgid "hasn't noticed you"
 msgstr "당신을 알아차리지 못함"
 
-#: directn.cc:3488
+#: directn.cc:3488 directn.cc:3441
 msgid "mesmerising"
 msgstr "매혹됨"
 
-#: directn.cc:3493 xom.cc:1418
+#: directn.cc:3493 xom.cc:1418 directn.cc:3446
 msgid "friendly"
 msgstr "우호적"
 
-#: directn.cc:3495
+#: directn.cc:3495 directn.cc:3448
 msgid "peaceful"
 msgstr "비적대적"
 
 #. don't differentiate between permanent or not
-#: directn.cc:3497
+#: directn.cc:3497 directn.cc:3450
 msgid "indifferent"
 msgstr "당신에게 무관심함"
 
-#: directn.cc:3500
+#: directn.cc:3500 directn.cc:3453
 msgid "summoned"
 msgstr "소환됨"
 
-#: directn.cc:3503
+#: directn.cc:3503 directn.cc:3456
 msgid "durably summoned"
 msgstr "영구 소환됨"
 
-#: directn.cc:3506
+#: directn.cc:3506 directn.cc:3459
 msgid "haloed"
 msgstr "후광을 발함"
 
-#: directn.cc:3509
+#: directn.cc:3509 directn.cc:3468
 msgid "possessable"
 msgstr "영혼 제어가능"
 
-#: directn.cc:3511
+#: directn.cc:3511 directn.cc:3470
 msgid "disembodied soul"
 msgstr "제어중"
 
-#: directn.cc:3514
+#: directn.cc:3514 directn.cc:3473
 msgid "reflecting injuries"
 msgstr "고통을 반사함"
 
-#: directn.cc:3517
+#: directn.cc:3517 directn.cc:3476
 msgid "inner flame"
 msgstr "잠재의 불씨"
 
@@ -11260,23 +11276,27 @@ msgstr "우둘투둘한 "
 msgid "smoking "
 msgstr "연기를 피우는 "
 
-#: Another trap names (describe.cc : 543)
+#: Another trap names (describe.cc : 543) describe.cc:553
 msgid "axe"
 msgstr "도끼"
 
+#: describe.cc:554
 msgid "teleport"
 msgstr "공간이동"
 
+#: describe.cc:554
 msgid "alarm"
 msgstr "알람"
 
+#: describe.cc:554
 msgid "blade"
 msgstr "칼날"
 
-#: misc.cc:2487
+#: misc.cc:2487 describe.cc:555
 msgid "net"
 msgstr "그물"
 
+#: describe.cc:556
 msgid "passage"
 msgstr "통로"
 
@@ -11376,7 +11396,7 @@ msgid "Food "
 msgstr "음식 "
 
 #: directn.cc:2955 directn.cc:3047 directn.cc:2923 directn.cc:3013
-#: misc.cc:2487
+#: misc.cc:2487 describe.cc:556
 msgid "web"
 msgstr "거미줄"
 
@@ -11386,15 +11406,15 @@ msgstr "거미 둥지로 통하는 구멍"
 
 #: directn.cc:3107 directn.cc:3073
 msgid "staircase to the Enchanted Forest"
-msgstr ""
+msgstr "Enchanted Forest로 통하는 계단"
 
 #: directn.cc:3113 directn.cc:3079
 msgid "gate leading back out of here"
-msgstr ""
+msgstr "출구"
 
 #: directn.cc:3130 directn.cc:3098
 msgid "crawl-hole back to the Lair"
-msgstr ""
+msgstr "짐승 소굴로 돌아가는 구멍"
 
 #: itemname.cc:525 itemname.cc:474
 msgid "speedy slithering"
@@ -11434,11 +11454,11 @@ msgstr "오염"
 
 #: status.cc:844 status.cc:908
 msgid "App"
-msgstr "짐승"
+msgstr "야수"
 
 #: status.cc:845 status.cc:909 transform.cc:794
 msgid "appendage"
-msgstr ""
+msgstr "야수화"
 
 #: xom.cc:1284 xom.cc:1191
 msgid "(curing)"
@@ -11529,7 +11549,7 @@ msgstr "골렘"
 
 #: spl-data.h:2743 spl-data.h:2615
 msgid "Holy Light"
-msgstr ""
+msgstr "성스러운 빛"
 
 #: spl-data.h:2990 spl-data.h:2864
 msgid "Beastly Appendage"
@@ -11537,7 +11557,7 @@ msgstr "야수의 흉기"
 
 #: spl-data.h:3003 spl-data.h:2877
 msgid "Silver Blast"
-msgstr ""
+msgstr "은빛의 폭발"
 
 #: abl-show.cc:402 abl-show.cc:347
 msgid "Deal Four"
@@ -11545,7 +11565,7 @@ msgstr "넉 장 돌리기"
 
 #: cloud.cc:1251 cloud.cc:1264
 msgid "sparse dust"
-msgstr ""
+msgstr "희박한 먼지"
 
 #: decks.cc:350
 msgid "the Mercenary"
@@ -11553,15 +11573,15 @@ msgstr ""
 
 #: directn.cc:2909
 msgid "gas trap"
-msgstr ""
+msgstr "가스 함정"
 
 #: directn.cc:2945
 msgid "the open sea"
-msgstr ""
+msgstr "바다 건너편"
 
 #: directn.cc:2947
 msgid "the endless lava"
-msgstr ""
+msgstr "용암 건너편"
 
 #: directn.cc:2967
 msgid "mangrove"
@@ -11569,19 +11589,19 @@ msgstr ""
 
 #: directn.cc:2976
 msgid "some lava"
-msgstr ""
+msgstr "용암"
 
 #: directn.cc:2978
 msgid "some deep water"
-msgstr ""
+msgstr "깊은 물"
 
 #: directn.cc:2980
 msgid "some shallow water"
-msgstr ""
+msgstr "얕은 물"
 
 #: directn.cc:2983
 msgid "floor"
-msgstr ""
+msgstr "지면"
 
 #: directn.cc:3005
 msgid "teleporter"
@@ -11589,24 +11609,24 @@ msgstr ""
 
 #: directn.cc:3033
 msgid "exit through the horrors of the Abyss"
-msgstr ""
+msgstr "무한 공포의 어비스로 통하는 출구"
 
 #. should be set whenever used
 #: directn.cc:3084
 msgid "collapsed entrance"
-msgstr ""
+msgstr "무너진 입구"
 
 #: directn.cc:3161
 msgid "detected altar"
-msgstr ""
+msgstr "탐지된 제단"
 
 #: directn.cc:3163
 msgid "detected shop or portal"
-msgstr ""
+msgstr "탐지된 상점/관문"
 
 #: effects.cc:360
 msgid "a scroll of immolation"
-msgstr ""
+msgstr "희생의 두루마리"
 
 # msgid "a fiery explosion"
 # msgstr ""
@@ -11616,19 +11636,19 @@ msgstr ""
 # msgstr ""
 #: effects.cc:364 effects.cc:368 effects.cc:378 food.cc:1817 food.cc:1818
 msgid "mutagenic meat"
-msgstr ""
+msgstr "돌연변이 유발 고기"
 
 #: food.cc:2177 food.cc:2178
 msgid "mutagenic blood"
-msgstr ""
+msgstr "돌연변이 "
 
 #: itemname.cc:654
 msgid "unholy creation"
-msgstr ""
+msgstr "부정한 소환"
 
 #: melee_attack.cc:203
 msgid "your electric unarmed attack"
-msgstr ""
+msgstr "전기가 부여된 맨손"
 
 #: mon-info.cc:922
 msgid "zombie"
@@ -11645,18 +11665,6 @@ msgstr ""
 #. / GREY_DRACONIAN 종족의 색깔.
 #: mutation.cc:457 mutation.cc:461
 msgid "dull iron-grey"
-msgstr ""
-
-#: mutation.cc:470 mutation.cc:474
-msgid "icy white"
-msgstr ""
-
-#: mutation.cc:476 mutation.cc:480
-msgid "glossy black"
-msgstr ""
-
-#: mutation.cc:485 mutation.cc:489
-msgid "golden yellow"
 msgstr ""
 
 #: spl-book.cc:1213
@@ -11689,11 +11697,11 @@ msgstr "뱀"
 
 #: mon-data.h:4496
 msgid "inept item mimic"
-msgstr ""
+msgstr "서투른 아이템 미믹"
 
 #: mon-data.h:4508
 msgid "inept feature mimic"
-msgstr ""
+msgstr "서투른 지형지물 미믹"
 
 #: mon-data.h:5054
 msgid "Hell Sentinel"
@@ -11709,11 +11717,11 @@ msgstr "아라크네"
 
 #: spl-data.h:2890
 msgid "Ensnare"
-msgstr ""
+msgstr "인스네어"
 
 #: spl-data.h:2903
 msgid "Thunderbolt"
-msgstr ""
+msgstr "번개 화살"
 
 #: effects.cc:364
 msgid "a fiery explosion"
@@ -14645,3 +14653,35 @@ msgstr "섬뜩한 덩어리"
 #: mon-data.h:2366
 msgid "moth of suppression"
 msgstr "항마의 나방"
+
+#: travel.cc:4341
+msgid "item"
+msgstr "아이템"
+
+#: travel.cc:4344
+msgid "portal"
+msgstr "관문"
+
+#: travel.cc:4345
+msgid "stair"
+msgstr "계단"
+
+#: describe.cc:556
+msgid "gas"
+msgstr "가스"
+
+#: status.cc:822
+msgid "Nausea"
+msgstr "구역질"
+
+#: status.cc:823
+msgid "nauseated"
+msgstr "구역질남"
+
+#: directn.cc:3462
+msgid "umbra"
+msgstr "그림자"
+
+#: directn.cc:3465
+msgid "suppressed"
+msgstr "억제됨"

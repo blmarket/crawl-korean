@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-23 00:03+0900\n"
+"POT-Creation-Date: 2013-02-23 22:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4690,6 +4690,18 @@ msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
 #. / %s convulses! 로 쓰임.
@@ -9535,6 +9547,7 @@ msgstr "정말로 조트의 함정 위로 이동할 것인가?"
 
 #. / 1. 이동 동사, 2. onto 혹은 info, 3. 바닥 이름
 #. / 1. 이동 동사, 2. onto 혹은 info, 3. 바닥 이름
+#. 1. 이동 동사, 2. onto 혹은 info, 3. 바닥 이름. 3만 사용하고 한글판에서 1,2는 사용하지 않음.
 #: player.cc:210 player.cc:210 player.cc:209 player.cc:213
 #, c-format
 msgid "Really %s %s that %s?"
@@ -13317,14 +13330,17 @@ msgid "You're starting to get the hang of this magic thing."
 msgstr "당신은 마법의 학습에 대한 발판을 얻었다."
 
 #: directn.cc:3261 directn.cc:3264 directn.cc:3282 directn.cc:3220
+#: directn.cc:3232
 msgid ", spattered with blood"
 msgstr "혈흔이 남은 "
 
 #: directn.cc:3263 directn.cc:3266 directn.cc:3284 directn.cc:3222
+#: directn.cc:3234
 msgid ", covered with glowing mold"
 msgstr "빛나는 곰팡이로 덮인 "
 
 #: directn.cc:3265 directn.cc:3268 directn.cc:3286 directn.cc:3224
+#: directn.cc:3236
 msgid ", covered with mold"
 msgstr "곰팡이로 덮인 "
 
@@ -13842,6 +13858,24 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -14792,7 +14826,8 @@ msgstr "이(가) 있으니 조심하게."
 #: describe.cc:4189 view.cc:194 directn.cc:3789 directn.cc:3427 view.cc:187
 #: describe.cc:4202 directn.cc:3425 directn.cc:3790 view.cc:191
 #: describe.cc:4131 directn.cc:3356 directn.cc:3744 view.cc:189
-#: describe.cc:4127 skills.cc:362
+#: describe.cc:4127 skills.cc:362 directn.cc:3363 directn.cc:3751
+#: directn.cc:3380 directn.cc:3768
 msgid " and "
 msgstr " 그리고 "
 
@@ -19573,52 +19608,62 @@ msgstr "<w>Esc</w>키를 눌러, 메인 게임 화면으로 돌아갈 수 있다
 msgid "Targeting interrupted by HUP signal."
 msgstr "HUP 신호에 의해, 타겟팅이 인터럽트되었음."
 
-#: directn.cc:3643 directn.cc:3647 directn.cc:3586
+#: directn.cc:3643 directn.cc:3647 directn.cc:3586 directn.cc:3593
+#: directn.cc:3610
 msgctxt "mondesc"
 msgid "charmed"
 msgstr "매혹됨"
 
-#: directn.cc:3645 directn.cc:3649 directn.cc:3588
+#: directn.cc:3645 directn.cc:3649 directn.cc:3588 directn.cc:3595
+#: directn.cc:3612
 msgctxt "mondesc"
 msgid "friendly"
 msgstr "우호적"
 
-#: directn.cc:3647 directn.cc:3651 directn.cc:3590
+#: directn.cc:3647 directn.cc:3651 directn.cc:3590 directn.cc:3597
+#: directn.cc:3614
 msgctxt "mondesc"
 msgid "peaceful"
 msgstr "비적대적"
 
-#: directn.cc:3649 directn.cc:3653 directn.cc:3592
+#: directn.cc:3649 directn.cc:3653 directn.cc:3592 directn.cc:3599
+#: directn.cc:3616
 msgctxt "mondesc"
 msgid "neutral"
 msgstr "중립"
 
-#: directn.cc:3655 directn.cc:3659 directn.cc:3598
+#: directn.cc:3655 directn.cc:3659 directn.cc:3598 directn.cc:3605
+#: directn.cc:3622
 msgctxt "mondesc"
 msgid "summoned"
 msgstr "소환됨"
 
-#: directn.cc:3662 directn.cc:3666 directn.cc:3605
+#: directn.cc:3662 directn.cc:3666 directn.cc:3605 directn.cc:3612
+#: directn.cc:3629
 msgctxt "mondesc"
 msgid "durably summoned"
 msgstr "영구 소환됨"
 
-#: directn.cc:3674 directn.cc:3677 directn.cc:3616
+#: directn.cc:3674 directn.cc:3677 directn.cc:3616 directn.cc:3623
+#: directn.cc:3640
 msgctxt "mondesc"
 msgid "dancing weapon"
 msgstr "춤추는 무기"
 
-#: directn.cc:3676 directn.cc:3679 directn.cc:3618
+#: directn.cc:3676 directn.cc:3679 directn.cc:3618 directn.cc:3625
+#: directn.cc:3642
 msgctxt "mondesc"
 msgid "pandemonium lord"
 msgstr "판데모니움 군주"
 
-#: directn.cc:3678 directn.cc:3681 directn.cc:3620
+#: directn.cc:3678 directn.cc:3681 directn.cc:3620 directn.cc:3627
+#: directn.cc:3644
 msgctxt "mondesc"
 msgid "ghost"
 msgstr "플레이어의 유령"
 
-#: directn.cc:3680 directn.cc:3683 directn.cc:3622
+#: directn.cc:3680 directn.cc:3683 directn.cc:3622 directn.cc:3629
+#: directn.cc:3646
 msgctxt "mondesc"
 msgid "illusion"
 msgstr "플레이어의 환영"
@@ -19631,28 +19676,36 @@ msgstr "미믹"
 #: directn.cc:3748 directn.cc:3759 directn.cc:3770 directn.cc:3781
 #: directn.cc:3749 directn.cc:3760 directn.cc:3771 directn.cc:3782
 #: directn.cc:3691 directn.cc:3703 directn.cc:3714 directn.cc:3725
-#: directn.cc:3736
+#: directn.cc:3736 directn.cc:3698 directn.cc:3710 directn.cc:3721
+#: directn.cc:3732 directn.cc:3743 directn.cc:3715 directn.cc:3727
+#: directn.cc:3738
 msgid " and"
 msgstr ", "
 
 #: directn.cc:3752 directn.cc:3763 directn.cc:3753 directn.cc:3764
-#: directn.cc:3696 directn.cc:3707 directn.cc:3718
+#: directn.cc:3696 directn.cc:3707 directn.cc:3718 directn.cc:3703
+#: directn.cc:3714 directn.cc:3725 directn.cc:3720 directn.cc:3731
+#: directn.cc:3742
 msgid " wearing "
 msgstr "장착: "
 
-#: directn.cc:3774 directn.cc:3775 directn.cc:3729
+#: directn.cc:3774 directn.cc:3775 directn.cc:3729 directn.cc:3736
+#: directn.cc:3753
 msgid " quivering "
 msgstr "소지: "
 
-#: directn.cc:3783 directn.cc:3784 directn.cc:3738
+#: directn.cc:3783 directn.cc:3784 directn.cc:3738 directn.cc:3745
+#: directn.cc:3762
 msgid " carrying "
 msgstr "소지: "
 
-#: directn.cc:3797 directn.cc:3798 directn.cc:3752
+#: directn.cc:3797 directn.cc:3798 directn.cc:3752 directn.cc:3759
+#: directn.cc:3776
 msgid "a wand"
 msgstr "알 수 없는 마법봉"
 
-#: directn.cc:3422 directn.cc:3420 directn.cc:3351
+#: directn.cc:3422 directn.cc:3420 directn.cc:3351 directn.cc:3358
+#: directn.cc:3375
 #, c-format
 msgid " wielding %s"
 msgstr "무기: %s"
@@ -19670,68 +19723,83 @@ msgstr " 그리고 정적으로 가려있다."
 msgid "This square is shrouded in silence."
 msgstr "이 지역은 정적으로 가려있다."
 
-#: directn.cc:3818 directn.cc:3830 directn.cc:3786
+#: directn.cc:3818 directn.cc:3830 directn.cc:3786 directn.cc:3793
+#: directn.cc:3810
 #, c-format
 msgid "There is a cloud of %s here."
 msgstr "여기에는 %s 구름이 떠다닌다."
 
 #: directn.cc:3832 directn.cc:3842 directn.cc:3849 directn.cc:3805
+#: directn.cc:3812 directn.cc:3829
 msgid "There is something else lying underneath."
 msgstr "무엇인가가 아래에 깔려있다."
 
 #: directn.cc:3837 directn.cc:3939 directn.cc:3844 directn.cc:3800
+#: directn.cc:3807 directn.cc:3824
 #, c-format
 msgid "You see %s here."
 msgstr "여기에는 %s이(가) 있다."
 
 # (DECEIT, 110831) 아래 3개는 디버그메시지라 따로 번역하지 않음.
-#: directn.cc:3910 directn.cc:3915 directn.cc:3871
+#: directn.cc:3910 directn.cc:3915 directn.cc:3871 directn.cc:3878
+#: directn.cc:3895
 #, c-format
 msgid "There is a non-visible %smonster here."
 msgstr "There is a non-visible %smonster here."
 
-#: directn.cc:3911 directn.cc:3916 directn.cc:3872
+#: directn.cc:3911 directn.cc:3916 directn.cc:3872 directn.cc:3879
+#: directn.cc:3896
 msgid "exposed by water "
 msgstr "exposed by water "
 
-#: directn.cc:3912 directn.cc:3917 directn.cc:3873
+#: directn.cc:3912 directn.cc:3917 directn.cc:3873 directn.cc:3880
+#: directn.cc:3897
 msgid "exposed by cloud "
 msgstr "exposed by cloud"
 
-#: directn.cc:3919 directn.cc:3924 directn.cc:3880
+#: directn.cc:3919 directn.cc:3924 directn.cc:3880 directn.cc:3887
+#: directn.cc:3904
 msgid "There is a strange disturbance in the water here."
 msgstr "여기 물 속에는, 무언가 알 수 없는 방해물이 있다."
 
-#: directn.cc:3924 directn.cc:3929 directn.cc:3885
+#: directn.cc:3924 directn.cc:3929 directn.cc:3885 directn.cc:3892
+#: directn.cc:3909
 msgid "There is a strange disturbance in the cloud here."
 msgstr "여기의 구름 속에는, 무언가 알 수 없는 방해물이 있다."
 
-#: directn.cc:3952 directn.cc:3942 directn.cc:3898
+#: directn.cc:3952 directn.cc:3942 directn.cc:3898 directn.cc:3905
+#: directn.cc:3922
 #, c-format
 msgid "%s is out of range."
 msgstr "%s은(는) 사거리 밖에 있다."
 
-#: directn.cc:3967 directn.cc:3956 directn.cc:3912
+#: directn.cc:3967 directn.cc:3956 directn.cc:3912 directn.cc:3919
+#: directn.cc:3936
 msgid "(<w>Right-click</w> for more information.)"
 msgstr "(<w>마우스 우클릭</w>을 통해, 더 많은 정보를 열람할 수 있다.)"
 
-#: directn.cc:3969 directn.cc:3958 directn.cc:3914
+#: directn.cc:3969 directn.cc:3958 directn.cc:3914 directn.cc:3921
+#: directn.cc:3938
 msgid "(Press <w>v</w> for more information.)"
 msgstr "(<w>v</w>키를 입력하여, 더 많은 정보를 열람할 수 있다.)"
 
-#: directn.cc:3993 directn.cc:3980 directn.cc:3936
+#: directn.cc:3993 directn.cc:3980 directn.cc:3936 directn.cc:3943
+#: directn.cc:3960
 msgid " (<w>Right-click</w> for more information.)"
 msgstr "(<w>마우스 우클릭</w>을 통해, 더 많은 정보를 열람할 수 있다.)"
 
-#: directn.cc:3995 directn.cc:3982 directn.cc:3938
+#: directn.cc:3995 directn.cc:3982 directn.cc:3938 directn.cc:3945
+#: directn.cc:3962
 msgid " (Press <w>v</w> for more information.)"
 msgstr "<w>/v</w>키를 입력하여, 더 많은 정보를 열람할 수 있다.)"
 
-#: directn.cc:4012 directn.cc:3993 directn.cc:3949
+#: directn.cc:4012 directn.cc:3993 directn.cc:3949 directn.cc:3956
+#: directn.cc:3973
 msgid " (Right-click for more information.)"
 msgstr "마우스 우클릭을 통해, 더 많은 정보를 열람할 수 있다.)"
 
-#: directn.cc:4014 directn.cc:3995 directn.cc:3951
+#: directn.cc:4014 directn.cc:3995 directn.cc:3951 directn.cc:3958
+#: directn.cc:3975
 msgid " (Press 'v' for more information.)"
 msgstr "('v'키를 입력하여, 더 많은 정보를 열람할 수 있다.)"
 
@@ -21866,7 +21934,8 @@ msgstr "은 계단을 오르내리지 못한다.\n"
 
 #. << mi.pronoun(PRONOUN_CAP)
 #: describe.cc:3546 describe.cc:3547 directn.cc:3573 describe.cc:3562
-#: describe.cc:3478 describe.cc:3475 directn.cc:3514
+#: describe.cc:3478 describe.cc:3475 directn.cc:3514 directn.cc:3521
+#: directn.cc:3538
 msgid " is mindless.\n"
 msgstr "은(는) 감정이 없다.\n"
 
@@ -22707,83 +22776,85 @@ msgctxt "delayline1719"
 msgid "is %s."
 msgstr " %s"
 
-#: directn.cc:3537 directn.cc:3472
+#: directn.cc:3537 directn.cc:3472 directn.cc:3479 directn.cc:3496
 msgid " is clinging to the wall.\n"
 msgstr "은 벽에 매달려 있다.\n"
 
-#: directn.cc:3540 directn.cc:3475
+#: directn.cc:3540 directn.cc:3475 directn.cc:3482 directn.cc:3499
 msgid "You are mesmerised by her song.\n"
 msgstr "당신은 그녀의 노래에 매혹되어있다.\n"
 
-#: directn.cc:3544 directn.cc:3479
+#: directn.cc:3544 directn.cc:3479 directn.cc:3486 directn.cc:3503
 #, c-format
 msgid "%s appears to be %s.\n"
 msgstr "%s은 %s.\n"
 
 #. pronoun + " appears to be "
-#: directn.cc:3545 directn.cc:3470 directn.cc:3480
+#: directn.cc:3545 directn.cc:3470 directn.cc:3480 directn.cc:3487
+#: directn.cc:3423 directn.cc:3504
 msgid "sleepwalking"
 msgstr "마치 몽유병에 걸린 것 같다"
 
-#: directn.cc:3545 directn.cc:3470 directn.cc:3481
+#: directn.cc:3545 directn.cc:3470 directn.cc:3481 directn.cc:3488
+#: directn.cc:3423 directn.cc:3505
 msgid "resting"
 msgstr "잠을 자고 있다"
 
-#: directn.cc:3551 directn.cc:3486
+#: directn.cc:3551 directn.cc:3486 directn.cc:3493 directn.cc:3510
 msgid " is retreating.\n"
 msgstr "은 도망치고 있다.\n"
 
-#: directn.cc:3554 directn.cc:3489
+#: directn.cc:3554 directn.cc:3489 directn.cc:3496 directn.cc:3513
 msgid " doesn't appear to have noticed you.\n"
 msgstr "은 당신을 알아차리지 못했다.\n"
 
-#: directn.cc:3557 directn.cc:3492
+#: directn.cc:3557 directn.cc:3492 directn.cc:3499 directn.cc:3516
 msgid " is friendly.\n"
 msgstr "은 당신에게 우호적이다.\n"
 
-#: directn.cc:3559 directn.cc:3494
+#: directn.cc:3559 directn.cc:3494 directn.cc:3501 directn.cc:3518
 msgid " seems to be peaceful towards you.\n"
 msgstr "은 당신에게 적대감을 드러내지 않는다.\n"
 
 #. don't differentiate between permanent or not
-#: directn.cc:3561 directn.cc:3496
+#: directn.cc:3561 directn.cc:3496 directn.cc:3503 directn.cc:3520
 msgid " is indifferent to you.\n"
 msgstr "은 당신에게 무관심해 보인다.\n"
 
-#: directn.cc:3564 directn.cc:3499
+#: directn.cc:3564 directn.cc:3499 directn.cc:3506 directn.cc:3523
 msgid " has been summoned.\n"
 msgstr "은 소환되었다.\n"
 
-#: directn.cc:3567 directn.cc:3502
+#: directn.cc:3567 directn.cc:3502 directn.cc:3509 directn.cc:3526
 msgid " has been summoned but will not time out.\n"
 msgstr "은 소환되었고, 죽을 때까지 이 세계에 머무른다.\n"
 
-#: directn.cc:3570 directn.cc:3505
+#: directn.cc:3570 directn.cc:3505 directn.cc:3512 directn.cc:3529
 msgid " is illuminated by a divine halo.\n"
 msgstr "은 성스러운 후광으로 빛을 발하고 있다.\n"
 
-#: directn.cc:3576 directn.cc:3517
+#: directn.cc:3576 directn.cc:3517 directn.cc:3524 directn.cc:3541
 msgid " is chaotic.\n"
 msgstr "은 무질서하다.\n"
 
-#: directn.cc:3581 directn.cc:3522
+#: directn.cc:3581 directn.cc:3522 directn.cc:3529 directn.cc:3546
 msgid " soul is ripe for the taking.\n"
 msgstr "의 영혼은 제어할 수 있어 보인다.\n"
 
-#: directn.cc:3584 directn.cc:3525
+#: directn.cc:3584 directn.cc:3525 directn.cc:3532 directn.cc:3549
 msgid " is a disembodied soul.\n"
 msgstr "의 영혼은 육신에서 분리되었다.\n"
 
-#: directn.cc:3587 directn.cc:3528
+#: directn.cc:3587 directn.cc:3528 directn.cc:3535 directn.cc:3552
 msgid " is reflecting injuries back at attackers.\n"
 msgstr "은 자신이 입은 피해를 공격자들에게 반사하고 있다.\n"
 
-#: directn.cc:3594 directn.cc:3535
+#: directn.cc:3594 directn.cc:3535 directn.cc:3542 directn.cc:3559
 #, c-format
 msgid "Your line of fire to %s is blocked by %s\n"
 msgstr "이것을 향한 조준은 %2$s에 의해 가로막혀 있다.%1$.0s\n"
 
-#: directn.cc:3590 directn.cc:3531
+#: directn.cc:3590 directn.cc:3531 directn.cc:3538 directn.cc:3555
 msgid " is filled with an inner flame.\n"
 msgstr "에는 잠재의 불씨가 깃들어있다.\n"
 
@@ -24871,7 +24942,7 @@ msgstr ""
 "있다. 무기 강화 두루마리를 사용하여, 발사체를 강화한다면, 파괴될 확률을 줄일 "
 "수 있다."
 
-#: directn.cc:2082
+#: directn.cc:2082 directn.cc:2102
 msgid "[unseen terrain]"
 msgstr "[미확인 지형]"
 
@@ -25668,17 +25739,17 @@ msgctxt "featuredesc"
 msgid "closed door"
 msgstr "닫힌 문"
 
-#: directn.cc:3335
+#: directn.cc:3335 directn.cc:3276 directn.cc:3288
 msgctxt "featuredesc"
 msgid "open "
 msgstr "열린 "
 
-#: directn.cc:3335
+#: directn.cc:3335 directn.cc:3278 directn.cc:3290
 msgctxt "featuredesc"
 msgid "closed "
 msgstr "닫힌 "
 
-#: directn.cc:3337
+#: directn.cc:3337 directn.cc:3274 directn.cc:3286
 msgctxt "featuredesc"
 msgid "detected secret "
 msgstr "감지된 비밀 "
@@ -26650,7 +26721,7 @@ msgstr "* - 기억된 지점 목록"
 msgid "Enter - %s"
 msgstr "엔터 - %s"
 
-#: travel.cc:2097
+#: travel.cc:2097 travel.cc:2102
 msgid "? - help"
 msgstr "? - 도움말"
 
@@ -26844,7 +26915,7 @@ msgid ""
 "                    <white>Dungeon Overview and Level Annotations</white>\n"
 msgstr "                    <white>던전 개요와 레벨 주석 목록</white>\n"
 
-#: dgn-overview.cc:348
+#: dgn-overview.cc:348 dgn-overview.cc:276
 msgid ""
 "\n"
 "<green>Branches:</green>"
@@ -26852,7 +26923,7 @@ msgstr ""
 "\n"
 "<green>분기점:</green>"
 
-#: dgn-overview.cc:351
+#: dgn-overview.cc:351 dgn-overview.cc:279
 msgid ""
 " (use <white>G</white> to reach them and <white>?/B</white> for more "
 "information)"
@@ -27395,31 +27466,31 @@ msgstr "%s은(는) 당신을 혼돈으로부터 %s 보호해준다.\n"
 msgid ", g - get item"
 msgstr ", g - 아이템 줍기"
 
-#: directn.cc:3810 directn.cc:3764
+#: directn.cc:3810 directn.cc:3764 directn.cc:3771 directn.cc:3788
 msgid "lies inside a sanctuary"
 msgstr "성지로 지정되어 있"
 
-#: directn.cc:3812 directn.cc:3766
+#: directn.cc:3812 directn.cc:3766 directn.cc:3773 directn.cc:3790
 msgid "is shrouded in silence"
 msgstr "정적으로 덮여 있"
 
-#: directn.cc:3814 directn.cc:3768
+#: directn.cc:3814 directn.cc:3768 directn.cc:3775 directn.cc:3792
 msgid "is lit by a halo"
 msgstr "후광으로 비추어져 있"
 
-#: directn.cc:3816 directn.cc:3770
+#: directn.cc:3816 directn.cc:3770 directn.cc:3777 directn.cc:3794
 msgid "is wreathed by an umbra"
 msgstr "깜깜한 그림자로 둘러 싸여 있"
 
-#: directn.cc:3818 directn.cc:3774
+#: directn.cc:3818 directn.cc:3774 directn.cc:3781 directn.cc:3798
 msgid "is liquefied"
 msgstr "액화되어 있"
 
-#: directn.cc:3820 directn.cc:3776
+#: directn.cc:3820 directn.cc:3776 directn.cc:3783 directn.cc:3800
 msgid "is covered in magical glow"
 msgstr "마력의 빛으로 덮여 있"
 
-#: directn.cc:3823 directn.cc:3779
+#: directn.cc:3823 directn.cc:3779 directn.cc:3786 directn.cc:3803
 #, c-format
 msgid "This square %s."
 msgstr "여기는 %s다."
@@ -28311,6 +28382,24 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -28523,7 +28612,8 @@ msgstr "식물의 진화에는 과일이, 버섯의 진화에는 신앙도가 �
 msgid "There's something in the way."
 msgstr "무언가가 길을 막고 있다."
 
-#: directn.cc:3229 directn.cc:3287 directn.cc:3772
+#: directn.cc:3229 directn.cc:3287 directn.cc:3772 directn.cc:3779
+#: directn.cc:3796
 #, c-format
 msgid "thrums with a field of magical suppression"
 msgstr "마력의 억제 필드로 덮여 있"
@@ -30781,7 +30871,7 @@ msgstr "예외 지역을 해제헸다."
 msgid "Reduced exclusion size to a single square."
 msgstr "예외 지역의 크기를 1칸으로 줄였다."
 
-#: directn.cc:3864
+#: directn.cc:3864 directn.cc:3871 directn.cc:3888
 msgid "You."
 msgstr "당신."
 
@@ -31849,11 +31939,11 @@ msgstr "디폴트로 바꿀 아이템을 선택: "
 msgid "wavering "
 msgstr "요동치는 "
 
-#: directn.cc:3508
+#: directn.cc:3508 directn.cc:3515 directn.cc:3532
 msgid " is wreathed by an unholy umbra.\n"
 msgstr "은(는) 사악한 그림자에 둘러쌓여있다.\n"
 
-#: directn.cc:3511
+#: directn.cc:3511 directn.cc:3518 directn.cc:3535
 msgid " exudes an aura of magical suppression.\n"
 msgstr "은(는) 마력 억제의 기운을 방출하고 있다.\n"
 
@@ -31896,3 +31986,11 @@ msgstr "아이템(들)"
 msgctxt "travel"
 msgid "places"
 msgstr "장소(들)"
+
+#: status.cc:825
+msgid "You would have trouble eating anything."
+msgstr "당신은 음식을 먹는 데 문제가 있다."
+
+#: status.cc:826
+msgid "You cannot eat right now."
+msgstr "당신은 지금은 뭔가를 먹기 힘들다."

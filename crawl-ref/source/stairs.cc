@@ -151,7 +151,7 @@ static bool _stair_moves_pre(dungeon_feature_type stair)
 
     // Get feature name before sliding stair over.
     std::string stair_str =
-        feature_description_at(you.pos(), false, DESC_THE, false);
+        feature_description_at(true, you.pos(), false, DESC_PLAIN, false);
 
     if (!slide_feature_over(you.pos(), coord_def(-1, -1), false))
         return false;
@@ -422,12 +422,12 @@ void up_stairs(dungeon_feature_type force_stair)
     if (old_level.branch != you.where_are_you)
     {
         mprf(gettext("Welcome back to %s!"),
-             branches[you.where_are_you].longname);
+             _(branches[you.where_are_you].longname));
         if ((brdepth[old_level.branch] > 1
              || old_level.branch == BRANCH_VESTIBULE_OF_HELL)
             && !you.branches_left[old_level.branch])
         {
-            std::string old_branch_string = branches[old_level.branch].longname;
+            std::string old_branch_string = _(branches[old_level.branch].longname);
             if (old_branch_string.find("The ") == 0)
                 old_branch_string[0] = tolower(old_branch_string[0]);
             mark_milestone("br.exit", "left " + old_branch_string + ".",
@@ -870,7 +870,7 @@ void down_stairs(dungeon_feature_type force_stair)
     {
         mprf(_("Welcome %sto %s!"),
              you.char_direction == GDT_GAME_START ? "" : P_("stairs","back "),
-             branches[you.where_are_you].longname);
+             _(branches[you.where_are_you].longname));
     }
 
     if (!you.airborne()
@@ -947,7 +947,7 @@ void down_stairs(dungeon_feature_type force_stair)
     {
         const branch_type branch = you.where_are_you;
         if (branches[branch].entry_message)
-            mpr(branches[branch].entry_message);
+            mpr(_(branches[branch].entry_message));
         else
             mprf(_("Welcome to %s!"), branches[branch].longname);
         enter_branch(branch, old_level);

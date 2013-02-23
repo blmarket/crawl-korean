@@ -147,7 +147,7 @@ static std::string coloured_branch(branch_type br)
     }
 
     const std::string colname = colour_to_str(col);
-    return make_stringf("<%s>%s</%s>", colname.c_str(), branches[br].shortname,
+    return make_stringf("<%s>%s</%s>", colname.c_str(), _(branches[br].shortname),
                         colname.c_str());
 }
 
@@ -273,11 +273,11 @@ static std::string _get_seen_branches(bool display)
     char buffer[100];
     std::string disp;
 
-    disp += "\n<green>Branches:</green>";
+    disp += _("\n<green>Branches:</green>");
     if (display)
     {
-        disp += " (use <white>G</white> to reach them and "
-                "<white>?/B</white> for more information)";
+        disp += _(" (use <white>G</white> to reach them and "
+                "<white>?/B</white> for more information)");
     }
     disp += "\n";
 
@@ -300,7 +300,7 @@ static std::string _get_seen_branches(bool display)
 
             // "D" is a little too short here.
             const char *brname = (branch == BRANCH_MAIN_DUNGEON
-                                  ? branches[branch].shortname
+                                  ? _(branches[branch].shortname)
                                   : branches[branch].abbrevname);
 
             snprintf(buffer, sizeof buffer,

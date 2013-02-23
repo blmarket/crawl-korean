@@ -1086,8 +1086,8 @@ static void _announce_swap_real(coord_def orig_pos, coord_def dest_pos)
     const dungeon_feature_type orig_feat = grd(dest_pos);
 
     const std::string orig_name =
-        feature_description_at(dest_pos, false,
-                            you.see_cell(orig_pos) ? DESC_THE : DESC_A,
+        feature_description_at(true, dest_pos, false,
+                            DESC_PLAIN, // you.see_cell(orig_pos) ? DESC_THE : DESC_A,
                             false);
 
     std::string prep = feat_preposition(orig_feat, false);

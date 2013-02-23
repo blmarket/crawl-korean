@@ -546,14 +546,14 @@ static std::string _randart_descrip(const item_def &item)
 }
 #undef known_proprt
 
-/// 내부적으로 trap 이름으로 가지고 meatspin하는 부분이 있어서 여기서 번역하면
-/// 안될것 같고, 화면 출력하는 부분을 찾아서 번역하던가 해야겠다.
+// 내부적으로 trap 이름으로 가지고 meatspin하는 부분이 있어서 여기서 번역하면
+// 안될것 같고, 화면 출력하는 부분을 찾아서 번역하던가 해야겠다.
 static const char *trap_names[] =
 {
-    "dart", "arrow", "spear", "axe",
-    "teleport", "alarm", "blade",
-    "bolt", "net", "Zot", "needle",
-    "shaft", "passage", "pressure plate", "web", "gas",
+    M_("dart"), M_("arrow"), M_("spear"), M_("axe"),
+    M_("teleport"), M_("alarm"), M_("blade"),
+    M_("bolt"), M_("net"), M_("Zot"), M_("needle"),
+    M_("shaft"), M_("passage"), M_("pressure plate"), M_("web"), M_("gas"),
 };
 
 std::string trap_name(trap_type trap)
@@ -2206,7 +2206,7 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
 {
     dungeon_feature_type feat = grd(pos);
 
-    std::string desc      = feature_description_at(pos, false, DESC_A, false);
+    std::string desc      = feature_description_at(false, pos, false, DESC_A, false);
     std::string db_name   = feat == DNGN_ENTER_SHOP ? "a shop" : desc;
     std::string long_desc = getLongDescription(db_name);
 
@@ -2221,7 +2221,7 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
     // the feature's base name is different.
     if (long_desc.empty())
     {
-        db_name   = feature_description_at(pos, false, DESC_A, false, true);
+        db_name   = feature_description_at(false, pos, false, DESC_A, false, true);
         long_desc = getLongDescription(db_name);
     }
 

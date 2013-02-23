@@ -1451,7 +1451,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
                 && feat_stair_direction(stair_taken) != CMD_NO_CMD)
             {
                 std::string stair_str =
-                    feature_description_at(you.pos(), "", DESC_THE, false);
+                    feature_description_at(true, you.pos(), "", DESC_PLAIN, false);
                 std::string verb = stair_climb_verb(feat);
 
                 if (coinflip()

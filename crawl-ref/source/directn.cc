@@ -722,7 +722,7 @@ void full_describe_view()
 
             desc += "</" + colour_str +">) ";
 #endif
-            desc += feature_description_at(c);
+            desc += feature_description_at(false, c);
             if (is_unknown_stair(c))
                 desc += " (not visited)";
             FeatureMenuEntry *me = new FeatureMenuEntry(desc, c, hotkey);
@@ -1555,7 +1555,7 @@ void direction_chooser::print_floor_description(bool boring_too) const
     _debug_describe_feature_at(target());
 #else
     mprf(MSGCH_EXAMINE_FILTER, "%s",
-         feature_description_at(target(), true).c_str());
+         feature_description_at(false, target(), true).c_str());
 #endif
 }
 
@@ -2099,7 +2099,7 @@ bool direction_chooser::choose_direction()
 std::string get_terse_square_desc(const coord_def &gc)
 {
     std::string desc = "";
-    const char *unseen_desc = "[unseen terrain]";
+    const char *unseen_desc = _("[unseen terrain]");
 
     if (gc == you.pos())
         desc = you.your_name;
@@ -2109,7 +2109,7 @@ std::string get_terse_square_desc(const coord_def &gc)
     {
         if (env.map_knowledge(gc).seen())
         {
-            desc = "[" + feature_description_at(gc, false, DESC_PLAIN, false)
+            desc = "[" + feature_description_at(true, gc, false, DESC_PLAIN, false)
                        + "]";
         }
         else
@@ -2123,7 +2123,7 @@ std::string get_terse_square_desc(const coord_def &gc)
             desc = mitm[you.visible_igrd(gc)].name(false, DESC_PLAIN);
     }
     else
-        desc = feature_description_at(gc, false, DESC_PLAIN, false);
+        desc = feature_description_at(true, gc, false, DESC_PLAIN, false);
 
     return desc;
 }
@@ -2775,7 +2775,7 @@ static void _describe_oos_feature(const coord_def& where)
     if (feat == DNGN_SECRET_DOOR)
         desc = feature_description(grid_secret_door_appearance(where));
     else
-        desc = feature_description_at(where);
+        desc = feature_description_at(true, where);
 
     if (!desc.empty())
         mprf(MSGCH_EXAMINE_FILTER, "[%s]", desc.c_str());
@@ -2821,8 +2821,8 @@ void describe_floor()
         break;
     }
 
-    feat = feature_description_at(you.pos(), true,
-                               DESC_A, false);
+    feat = feature_description_at(true, you.pos(), true,
+                               DESC_PLAIN, false);
     if (feat.empty())
         return;
 
@@ -3178,6 +3178,18 @@ std::string feature_description(dungeon_feature_type grid,
     return thing_do_grammar(dtype, add_stop, feat_is_trap(grid), desc);
 }
 
+std::string feature_description_kr(dungeon_feature_type grid,
+                                trap_type trap,
+                                const std::string & cover_desc,
+                                description_level_type dtype,
+                                bool add_stop, bool base_desc) // (130223, deceit) 번역된 trap명을 받기 위해 따로 함수를 하나 더 만듬.
+{
+    std::string desc = _(_base_feature_desc(grid, trap).c_str());
+    desc = cover_desc + desc;
+
+    return thing_do_grammar(dtype, add_stop, feat_is_trap(grid), desc);
+}
+
 std::string raw_feature_description(const coord_def &where)
 {
     dungeon_feature_type feat = grd(where);
@@ -3205,28 +3217,31 @@ static bool _interesting_feature(dungeon_feature_type feat)
 }
 #endif
 
-std::string feature_description_at(const coord_def& where, bool covering,
+std::string feature_description_at(bool allow_translate, const coord_def& where, bool covering,
                                 description_level_type dtype, bool add_stop,
                                 bool base_desc)
-{
+{	// (130223,deceit) feature name쪽도 item name쪽처럼 allow_translate인자를 추가하였습니다. 0.9때는 처음부터 번역명을 써서 지형지물 검색쪽에 문제가 생겼죠
     std::string marker_desc =
         env.markers.property_at(where, MAT_ANY, "feature_description");
-
+	
     std::string covering_description = "";
 
     if (covering)
     {
         if (is_bloodcovered(where))
-            covering_description = gettext(", spattered with blood");
+            covering_description = ((!allow_translate) ? ", spattered with blood" : _(", spattered with blood"));
         else if (glowing_mold(where))
-            covering_description = gettext(", covered with glowing mold");
+            covering_description = ((!allow_translate) ? ", covered with glowing mold" : _(", covered with glowing mold"));
         else if (is_moldy(where))
-            covering_description = gettext(", covered with mold");
+            covering_description = ((!allow_translate) ? ", covered with mold" : _(", covered with mold"));
     }
 
     if (!marker_desc.empty())
     {
-        marker_desc = make_stringf("%s%s", marker_desc.c_str(), covering_description.c_str());
+		if (allow_translate)
+			marker_desc = make_stringf("%s%s", covering_description.c_str(), marker_desc.c_str()); // 한글인지, 영어인지에 따라 어순조정
+		else
+			marker_desc = make_stringf("%s%s", marker_desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, marker_desc);
     }
@@ -3240,7 +3255,7 @@ std::string feature_description_at(const coord_def& where, bool covering,
     {
         const std::string door_desc_prefix =
             env.markers.property_at(where, MAT_ANY,
-                                    "door_description_prefix");
+                                    "door_description_prefix"); // env.markers.property_at()은 찾아보니 lua쪽 메시지네요. 예를 들자면 Wizlab의 특수한 문에는 특수한 수식어가 붙는다던지.. 그냥 lua쪽 파일을 수정하면 되므로 여기선 건드리지 않아도 됩니다.
         const std::string door_desc_suffix =
             env.markers.property_at(where, MAT_ANY,
                                     "door_description_suffix");
@@ -3257,22 +3272,22 @@ std::string feature_description_at(const coord_def& where, bool covering,
         std::set<coord_def> all_door;
         find_connected_identical(where, grd(where), all_door);
         const char *adj, *noun;
-        get_door_description(all_door.size(), &adj, &noun);
+        get_door_description(all_door.size(), &adj, &noun); // adj와 noun은 get_door_description()에서 미리 번역되어 리턴됩니다. door를 검색할 일은 없으니 별 문제 없는듯
 
         std::string desc;
         if (!door_desc_adj.empty())
-            desc += door_desc_adj;
+            desc += ((!allow_translate) ? door_desc_adj : _(door_desc_adj.c_str()));
         else
             desc += adj;
 
         if (door_desc_veto.empty() || door_desc_veto != "veto")
         {
             if (grid == DNGN_DETECTED_SECRET_DOOR)
-                desc += "detected secret ";
+                desc += ((!allow_translate) ? "detected secret " : pgettext("featuredesc","detected secret "));
             else if (grid == DNGN_OPEN_DOOR)
-                desc += "open ";
+                desc += ((!allow_translate) ? "open " : pgettext("featuredesc","open "));
             else
-                desc += "closed ";
+                desc += ((!allow_translate) ? "closed " : pgettext("featuredesc", "closed "));
         }
 
         desc += door_desc_prefix;
@@ -3284,7 +3299,7 @@ std::string feature_description_at(const coord_def& where, bool covering,
 
         desc += door_desc_suffix;
 
-        desc = make_stringf("%s%s", desc.c_str(), covering_description.c_str());
+        if (!allow_translate) desc = make_stringf("%s%s", desc.c_str(), covering_description.c_str()); else desc = make_stringf("%s%s", covering_description.c_str(), desc.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, desc);
     }
@@ -3295,11 +3310,16 @@ std::string feature_description_at(const coord_def& where, bool covering,
     case DNGN_TRAP_MAGICAL:
     case DNGN_TRAP_NATURAL:
     case DNGN_TRAP_WEB:
-        return feature_description(grid, get_trap_type(where),
-                                   covering_description, dtype,
-                                   add_stop, base_desc);
+		if(!allow_translate)
+			return feature_description(grid, get_trap_type(where),
+				                       covering_description, dtype,
+					                   add_stop, base_desc);
+		else
+			return feature_description_kr(grid, get_trap_type(where),
+				                       covering_description, dtype,
+					                   add_stop, base_desc);
     case DNGN_ABANDONED_SHOP:
-        return thing_do_grammar(dtype, add_stop, false, "an abandoned shop");
+        return thing_do_grammar(dtype, add_stop, false, ((!allow_translate) ? "an abandoned shop" : _(M_("abandoned shop"))));
 
     case DNGN_ENTER_SHOP:
         return shop_name(where, add_stop);
@@ -3310,8 +3330,12 @@ std::string feature_description_at(const coord_def& where, bool covering,
                    dtype, add_stop, false,
                    "UNAMED PORTAL VAULT ENTRY");
     default:
-        return thing_do_grammar(dtype, add_stop, feat_is_trap(grid),
-                   raw_feature_description(where) + covering_description);
+		if(!allow_translate)
+			return thing_do_grammar(dtype, add_stop, feat_is_trap(grid),
+			       raw_feature_description(where) + covering_description);
+		else
+			return thing_do_grammar(dtype, add_stop, feat_is_trap(grid),
+			       covering_description + _(raw_feature_description(where).c_str()));
     }
 }
 
@@ -3396,11 +3420,11 @@ static std::vector<std::string> _get_monster_behaviour_vector(const monster_info
     std::vector<std::string> descs;
 
     if (mi.is(MB_SLEEPING) || mi.is(MB_DORMANT))
-        descs.push_back(mi.is(MB_CONFUSED) ? "sleepwalking" : "resting");
+        descs.push_back(mi.is(MB_CONFUSED) ? _("sleepwalking") : _("resting"));
     else if (mi.is(MB_FLEEING))
-        descs.push_back("retreating");
+        descs.push_back(_(M_("retreating")));
     else if (mi.attitude == ATT_HOSTILE && (mi.is(MB_UNAWARE) || mi.is(MB_WANDERING)))
-        descs.push_back("hasn't noticed you");
+        descs.push_back(_(M_("hasn't noticed you")));
 
     return descs;
 }
@@ -3411,45 +3435,45 @@ static std::vector<std::string> _get_monster_desc_vector(const monster_info& mi)
     std::vector<std::string> descs;
 
     if (mi.is(MB_CLINGING))
-        descs.push_back("clinging");
+        descs.push_back(_(M_("clinging")));
 
     if (mi.is(MB_MESMERIZING))
-        descs.push_back("mesmerising");
+        descs.push_back(_(M_("mesmerising")));
 
     _append_container(descs, _get_monster_behaviour_vector(mi));
 
     if (mi.attitude == ATT_FRIENDLY)
-        descs.push_back("friendly");
+        descs.push_back(_(M_("friendly")));
     else if (mi.attitude == ATT_GOOD_NEUTRAL)
-        descs.push_back("peaceful");
+        descs.push_back(_(M_("peaceful")));
     else if (mi.attitude != ATT_HOSTILE) // don't differentiate between permanent or not
-        descs.push_back("indifferent");
+        descs.push_back(_(M_("indifferent")));
 
     if (mi.is(MB_SUMMONED))
-        descs.push_back("summoned");
+        descs.push_back(_(M_("summoned")));
 
     if (mi.is(MB_PERM_SUMMON))
-        descs.push_back("durably summoned");
+        descs.push_back(_(M_("durably summoned")));
 
     if (mi.is(MB_HALOED))
-        descs.push_back("haloed");
+        descs.push_back(_(M_("haloed")));
 
     if (mi.is(MB_UMBRAED))
-        descs.push_back("umbra");
+        descs.push_back(_(M_("umbra")));
 
     if (mi.is(MB_SUPPRESSED))
-        descs.push_back("suppressed");
+        descs.push_back(_(M_("suppressed")));
 
     if (mi.is(MB_POSSESSABLE))
-        descs.push_back("possessable"); // FIXME: better adjective
+        descs.push_back(_(M_("possessable"))); // FIXME: better adjective
     else if (mi.is(MB_ENSLAVED))
-        descs.push_back("disembodied soul");
+        descs.push_back(_(M_("disembodied soul")));
 
     if (mi.is(MB_MIRROR_DAMAGE))
-        descs.push_back("reflecting injuries");
+        descs.push_back(_(M_("reflecting injuries")));
 
     if (mi.is(MB_INNER_FLAME))
-        descs.push_back("inner flame");
+        descs.push_back(_(M_("inner flame")));
 
     if (mi.fire_blocker)
     {
@@ -3811,7 +3835,7 @@ static bool _print_item_desc(const coord_def where)
 #ifdef DEBUG_DIAGNOSTICS
 static void _debug_describe_feature_at(const coord_def &where)
 {
-    const std::string feature_desc = feature_description_at(where, true);
+    const std::string feature_desc = feature_description_at(false, where, true);
     std::string marker;
     if (map_marker *mark = env.markers.find(where, MAT_ANY))
     {
@@ -3928,7 +3952,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
     bool cloud_described = _print_cloud_desc(where);
     bool item_described = _print_item_desc(where);
 
-    std::string feature_desc = feature_description_at(where, true);
+    std::string feature_desc = feature_description_at(false, where, true);
     const bool bloody = is_bloodcovered(where);
     if (crawl_state.game_is_hints() && hints_pos_interesting(where.x, where.y))
     {

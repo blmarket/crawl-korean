@@ -4979,7 +4979,7 @@ void monster::apply_location_effects(const coord_def &oldpos,
             if (you.see_cell(pos()) && !visible_to(&you))
             {
                std::string desc =
-                   feature_description_at(pos(), false, DESC_THE, false);
+                   feature_description_at(true, pos(), false, DESC_PLAIN, false);
                mprf(_("The bloodstain on %s disappears!"), desc.c_str());
             }
         }

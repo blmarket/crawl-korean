@@ -272,7 +272,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
 
     if (name.find("@branch_name@", 0) != std::string::npos)
     {
-        std::string place = branches[random2(NUM_BRANCHES)].longname;
+        std::string place = _(branches[random2(NUM_BRANCHES)].longname);
         if (!place.empty())
             name = replace_all(name, "@branch_name@", place);
     }

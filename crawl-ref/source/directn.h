@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions used when picking squares.
 **/
@@ -300,7 +300,7 @@ std::string get_monster_equipment_desc(const monster_info& mi,
 
 int dos_direction_unmunge(int doskey);
 
-std::string feature_description_at(const coord_def& where, bool covering = false,
+std::string feature_description_at(bool allow_translate, const coord_def& where, bool covering = false,
                                 description_level_type dtype = DESC_A,
                                 bool add_stop = true, bool base_desc = false);
 std::string raw_feature_description(const coord_def& where);
@@ -308,6 +308,11 @@ std::string feature_description(dungeon_feature_type grid,
                                 trap_type trap = NUM_TRAPS,
                                 const std::string & cover_desc = "",
                                 description_level_type dtype = DESC_A,
+                                bool add_stop = true, bool base_desc = false);
+std::string feature_description_kr(dungeon_feature_type grid,
+                                trap_type trap = NUM_TRAPS,
+                                const std::string & cover_desc = "",
+                                description_level_type dtype = DESC_PLAIN,
                                 bool add_stop = true, bool base_desc = false);
 
 std::vector<dungeon_feature_type> features_by_desc(const base_pattern &pattern);

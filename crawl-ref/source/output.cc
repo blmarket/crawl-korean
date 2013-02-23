@@ -908,7 +908,7 @@ void print_stats(void)
 static std::string _level_description_string_hud()
 {
     const PlaceInfo& place = you.get_place_info();
-    std::string short_name = branches[place.branch].shortname;
+    std::string short_name = _(branches[place.branch].shortname);
 
     if (brdepth[place.branch] > 1)
         short_name += make_stringf(":%d", you.depth);

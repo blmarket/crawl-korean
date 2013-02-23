@@ -394,7 +394,7 @@ static void _sdump_visits(dump_params &par)
         place_info = you.get_place_info(br);
         if (!place_info.num_visits)
             continue;
-        std::string name = branches[br].shortname;
+        std::string name = _(branches[br].shortname);
         if (place_info.num_visits > 1)
             name += make_stringf(" (%d times)", place_info.num_visits);
         misc_portals.push_back(name);

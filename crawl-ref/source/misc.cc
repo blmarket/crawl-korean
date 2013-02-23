@@ -1290,8 +1290,8 @@ void search_around(bool only_adjacent)
                 if (ptrap)
                 {
                     ptrap->reveal();
-                    mprf(gettext("You found %s trap!"),
-                         ptrap->name(DESC_A).c_str());
+                    mprf(gettext("You found %s trap!"), // 메모
+                         _(ptrap->name(DESC_PLAIN).c_str()));
                     learned_something_new(HINT_SEEN_TRAP, *ri);
                     practise(EX_TRAP_FOUND);
                 }

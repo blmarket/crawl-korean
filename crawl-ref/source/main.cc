@@ -3854,7 +3854,7 @@ static void _open_door(coord_def move, bool check_confused)
             {
                 seen_secret = true;
                 mprf(_("That %s was a secret door!"),
-                     feature_description_at(dc, "", DESC_PLAIN, false).c_str());
+                     feature_description_at(true, dc, "", DESC_PLAIN, false).c_str());
             }
         }
         grd(dc) = DNGN_OPEN_DOOR;

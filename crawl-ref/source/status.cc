@@ -819,11 +819,11 @@ static void _describe_nausea(status_info* inf)
         return;
 
     inf->light_colour = you.is_undead == US_UNDEAD ? DARKGREY : BROWN;
-    inf->light_text   = "Nausea";
-    inf->short_text   = "nauseated";
+    inf->light_text   = gettext(M_("Nausea"));
+    inf->short_text   = gettext(M_("nauseated"));
     inf->long_text    = (you.hunger_state <= HS_NEAR_STARVING) ?
-                "You would have trouble eating anything." :
-                "You cannot eat right now.";
+                gettext("You would have trouble eating anything.") :
+                gettext("You cannot eat right now.");
 }
 
 static void _describe_burden(status_info* inf)

@@ -2589,7 +2589,7 @@ static void _xom_zero_miscast()
         && feat != DNGN_OPEN_DOOR && feat != DNGN_ABANDONED_SHOP)
     {
         const std::string feat_name =
-            feature_description_at(you.pos(), false, DESC_THE, false);
+            feature_description_at(true, you.pos(), false, DESC_PLAIN, false);
 
         if (you.airborne())
         {
@@ -3201,7 +3201,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
     ASSERT(stair_pos != ray.pos());
 
     std::string stair_str =
-        feature_description_at(stair_pos, false, DESC_THE, false);
+        feature_description_at(true, stair_pos, false, DESC_PLAIN, false);
 
     mprf("%s 는 %s 당신을 떨어뜨렸다!", stair_str.c_str(),
 		      away ? "away from" : "towards");

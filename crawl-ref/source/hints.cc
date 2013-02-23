@@ -1025,7 +1025,7 @@ static bool _cant_butcher()
 
 static std::string _describe_portal(const coord_def &gc)
 {
-    const std::string desc = feature_description_at(gc);
+    const std::string desc = feature_description_at(true, gc);
 
     std::ostringstream text;
 

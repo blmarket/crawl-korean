@@ -114,7 +114,7 @@ static void _moveto_maybe_repel_stairs()
         if (slide_feature_over(you.pos(), coord_def(-1, -1), false))
         {
             std::string stair_str =
-                feature_description_at(you.pos(), "", DESC_THE, false);
+                feature_description_at(true, you.pos(), "", DESC_PLAIN, false);
             std::string prep = feat_preposition(new_grid, true, &you);
 
             mprf(gettext("%s slides away as you move %s it!"), stair_str.c_str(),
@@ -185,8 +185,8 @@ static bool _check_moveto_trap(const coord_def& p, const std::string &move_verb)
             viewwindow();
 
             mprf(MSGCH_WARN,
-                 gettext("You found %s trap!"),
-                 trap->name(DESC_A).c_str());
+                 gettext("You found %s trap!"),	// 메모
+                 _(trap->name(DESC_PLAIN).c_str()));
 
             if (!you.running.is_any_travel())
                 more();
@@ -209,12 +209,12 @@ static bool _check_moveto_trap(const coord_def& p, const std::string &move_verb)
     else if (!trap->is_safe() && !crawl_state.disables[DIS_CONFIRMATIONS])
     {
         std::string prompt = make_stringf(
-            /// 1. 이동 동사, 2. onto 혹은 info, 3. 바닥 이름
+            // 1. 이동 동사, 2. onto 혹은 info, 3. 바닥 이름. 3만 사용하고 한글판에서 1,2는 사용하지 않음.
             gettext("Really %s %s that %s?"),
             move_verb.c_str(),
             (trap->type == TRAP_ALARM || trap->type == TRAP_PLATE) ? "onto"
                                                                    : "into",
-            feature_description_at(p, "", DESC_BASENAME, false).c_str());
+            feature_description_at(true, p, "", DESC_BASENAME, false).c_str());
 
         if (!yesno(prompt.c_str(), true, 'n'))
         {

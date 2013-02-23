@@ -1809,7 +1809,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         if (caster->is_player() && !quiet)
         {
             mprf(_("%s seems to be unnaturally hard."),
-                 feature_description_at(target, false, DESC_THE, false).c_str());
+                 feature_description_at(true, target, false, DESC_PLAIN, false).c_str());
         }
         return false;
     }

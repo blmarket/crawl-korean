@@ -2076,7 +2076,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
                 }
                 line += make_stringf("(%c) %-14s ",
                                      branches[br[i]].travel_shortcut,
-                                     branches[br[i]].shortname);
+                                     _(branches[br[i]].shortname));
             }
             if (!line.empty())
                 mpr(line.c_str());
@@ -2099,7 +2099,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
                     make_stringf("Enter - %s", trans_travel_dest.c_str()));
             }
 
-            segs.push_back("? - help");
+            segs.push_back(_("? - help"));
 
             shortcuts += comma_separated_line(segs.begin(), segs.end(),
                                               ", ", ", ");
@@ -2343,7 +2343,7 @@ static travel_target _prompt_travel_depth(const level_id &id,
         mesclr();
         mprf(MSGCH_PROMPT, _("What level of %s? "
              "(default %s, ? - help) "),
-             branches[target.p.id.branch].longname,
+             _(branches[target.p.id.branch].longname),
              _get_trans_travel_dest(target, true).c_str());
 
         char buf[100];
@@ -4088,7 +4088,7 @@ explore_discoveries::explore_discoveries()
 std::string explore_discoveries::cleaned_feature_description(
     const coord_def &pos) const
 {
-    std::string s = lowercase_first(feature_description_at(pos));
+    std::string s = lowercase_first(feature_description_at(true,pos)); // (deceit,130223) [개인메모] 여기를 바꾸는게 답이었던듯. 잊지말고 차후 버전에서도 이렇게 적용
     if (s.length() && s[s.length() - 1] == '.')
         s.erase(s.length() - 1);
     if (s.find("a ") != std::string::npos)
@@ -4164,7 +4164,7 @@ void explore_discoveries::found_feature(const coord_def &pos,
             env.markers.property_at(pos, MAT_ANY, "stop_explore");
         if (!feat_stop.empty())
         {
-            std::string desc = lowercase_first(feature_description_at(pos));
+            std::string desc = lowercase_first(feature_description_at(true,pos,false,DESC_PLAIN));
             marked_feats.push_back(desc);
             return;
         }
@@ -4278,10 +4278,10 @@ template <class C> void explore_discoveries::say_any(
 {
     if (coll.empty())
         return;
-
+	
     const int size = coll.size();
 
-    std::string plural = pluralise(PLU_DEFAULT, category);
+    std::string plural = pluralise(PLU_SUFFIX, category); // PLU_DEFAULT -> SUFFIX
     if (size != 1)
         category = plural.c_str();
 
@@ -4328,7 +4328,7 @@ std::vector<std::string> explore_discoveries::apply_quantities(
 bool explore_discoveries::prompt_stop() const
 {
     const bool marker_stop = !marker_msgs.empty() || !marked_feats.empty();
-
+	
     for (unsigned int i = 0; i < marker_msgs.size(); i++)
         mprf("%s", marker_msgs[i].c_str());
 
@@ -4337,12 +4337,12 @@ bool explore_discoveries::prompt_stop() const
 
     if (!es_flags)
         return marker_stop;
-
-    say_any(items, "item");
-    say_any(shops, "shop");
-    say_any(apply_quantities(altars), "altar");
-    say_any(apply_quantities(portals), "portal");
-    say_any(apply_quantities(stairs), "stair");
+	
+    say_any(items, _(M_("item")));
+    say_any(shops, _(M_("shop")));
+    say_any(apply_quantities(altars), _(M_("altar")));
+    say_any(apply_quantities(portals), _(M_("portal")));
+    say_any(apply_quantities(stairs), _(M_("stair")));
 
     return ((Options.explore_stop_prompt & es_flags) != es_flags
             || marker_stop
