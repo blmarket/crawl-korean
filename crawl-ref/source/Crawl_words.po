@@ -267,7 +267,7 @@ msgstr "사냥꾼"
 
 #: jobs.cc:29 jobs.cc:29 skills2.cc:96 jobs.cc:30 jobs.cc:20 skills2.cc:93
 msgid "Conjurer"
-msgstr "요술사"
+msgstr "파괴술사"
 
 #: jobs.cc:29 jobs.cc:29 jobs.cc:30 jobs.cc:20
 msgid "Enchanter"
@@ -550,7 +550,7 @@ msgstr "딥 엘프 소환술사"
 
 #: mon-data.h:709 mon-data.h:710 mon-data.h:721 mon-data.h:686
 msgid "deep elf conjurer"
-msgstr "딥 엘프 요술사"
+msgstr "딥 엘프 파괴술사"
 
 #: mon-data.h:721 mon-data.h:722 mon-data.h:733 mon-data.h:698
 msgid "deep elf priest"
@@ -566,7 +566,7 @@ msgstr "딥 엘프 악마술사"
 
 #: mon-data.h:757 mon-data.h:758 mon-data.h:769 mon-data.h:734
 msgid "deep elf annihilator"
-msgstr "딥 엘프 파괴술사"
+msgstr "딥 엘프 섬멸술사"
 
 #: mon-data.h:769 mon-data.h:770 mon-data.h:781 mon-data.h:746
 msgid "deep elf sorcerer"
@@ -1463,7 +1463,7 @@ msgstr "오우거 마술사"
 
 #: mon-data.h:3472 mon-data.h:3461 mon-data.h:3535 mon-data.h:3546
 msgid "plant"
-msgstr "잡초"
+msgstr "식물"
 
 #: mon-data.h:3484 mon-data.h:3473 mon-data.h:3547 mon-data.h:3558
 msgid "oklob sapling"
@@ -2018,7 +2018,7 @@ msgstr "주황빛 수정의 상"
 #: mon-data.h:5171 mon-data.h:5183 mon-data.h:5172 mon-data.h:5129
 #: mon-data.h:5217 transform.cc:750
 msgid "statue"
-msgstr "동상"
+msgstr "석상"
 
 #: mon-data.h:5183 mon-data.h:5195 mon-data.h:5184 mon-data.h:5141
 #: mon-data.h:5229
@@ -2847,7 +2847,7 @@ msgstr "아주 강한 감지된 몬스터"
 
 #: spl-util.cc:895 spl-util.cc:895 spl-util.cc:894 spl-util.cc:851
 msgid "Conjuration"
-msgstr "요술"
+msgstr "파괴 마술"
 
 #: spl-util.cc:897 spl-util.cc:897 skills2.cc:97 spl-util.cc:896
 #: skills2.cc:94 spl-util.cc:853
@@ -3791,7 +3791,7 @@ msgstr "다트 함정 생성"
 #: abl-show.cc:439 abl-show.cc:439 abl-show.cc:436 abl-show.cc:444
 #: abl-show.cc:389
 msgid "Make plant"
-msgstr "잡초 생성"
+msgstr "식물 생성"
 
 #: abl-show.cc:440 abl-show.cc:440 abl-show.cc:437 abl-show.cc:445
 #: abl-show.cc:390
@@ -5438,7 +5438,7 @@ msgstr "기초 마법"
 #: itemname.cc:990 itemname.cc:1001 itemname.cc:1008 itemname.cc:1008
 #: skills2.cc:96 itemname.cc:999 itemname.cc:931 skills2.cc:93
 msgid "Conjurations"
-msgstr "요술"
+msgstr "파괴 마술"
 
 #: itemname.cc:991 itemname.cc:1002 itemname.cc:1009 itemname.cc:1009
 #: itemname.cc:1000 itemname.cc:932
@@ -6633,7 +6633,7 @@ msgstr "밀납 벽"
 #: directn.cc:2995 directn.cc:2995 directn.cc:2998 directn.cc:3007
 #: directn.cc:2974
 msgid "granite statue"
-msgstr "화강암 동상"
+msgstr "화강암 석상"
 
 #: directn.cc:2997 directn.cc:2997 directn.cc:3000 directn.cc:3009
 msgid "Some lava"
@@ -7187,7 +7187,7 @@ msgstr "죽음의"
 #: itemname.cc:1088 itemname.cc:1095 itemname.cc:1095 itemname.cc:1086
 #: itemname.cc:1017
 msgid "conjuration"
-msgstr "요술"
+msgstr "파괴 마술"
 
 #: itemname.cc:1089 itemname.cc:1096 itemname.cc:1096 itemname.cc:1087
 #: itemname.cc:1018

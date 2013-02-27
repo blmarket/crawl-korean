@@ -28,21 +28,21 @@ end
 function bazaar_portal(timed)
   local messager =
     timed_msg {
-      initmsg = { "You hear coins being counted.",
-                  "An interdimensional caravan has stopped on this level "
-                  .. "and set up a bazaar. Hurry and find its entrance before "
-                  .. "they move on!" },
-      finalmsg = "You hear the last, dying notes of the bell.",
-      verb = 'tolling',
-      noisemaker = 'bell'
+      initmsg = { "어디선가 동전 세는 소리가 들려왔다.",
+                  "아마도 다른 세계의 행상인들이, 이 층에 자리를 잡고 "
+                  .. "시장을 꾸린 모양이다. 이들이 다시 다른 곳으로 옮겨가기 전에, "
+                  .. "서둘러 시장의 입구를 찾는 것이 좋을 것이다!" },
+      finalmsg = "마치 죽어가는 듯한, 마지막 종소리가 들려왔다.",
+      verb = '울려퍼지는',
+      noisemaker = '종소리'
     }
   local blow = 200 + 30*(40 - you.absdepth()) + crawl.random2(200)
   local bhigh = blow + crawl.random2(blow) + 100
   if timed then
     return timed_marker {
                   low=blow, high=bhigh, msg=messager, single_timed=true,
-                  disappear='The gate to the bazaar disappears!',
-                  desc = "flickering gateway to a bazaar", dst = 'Bazaar',
+                  disappear='시장으로 향하는 관문이 사라졌다!',
+                  desc = "시장으로 향하는 깜박이는 관문", dst = 'Bazaar',
                   floor = 'stone_arch', feat_tile = 'dngn_portal_bazaar_gone'
               }
   else

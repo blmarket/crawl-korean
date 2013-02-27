@@ -10,7 +10,7 @@ function dis_setup(e)
    e.lflags("no_tele_control")
 -- turn granite statues into iron statues
 -- you still have to colour the statues, if desired
-   e.set_feature_name("granite_statue", "iron statue")
+   e.set_feature_name("granite_statue", "철의 상")
 end
 
 function dis_rune(e)
@@ -27,8 +27,8 @@ function geh_setup(e)
    e.lfloorcol("lightgrey")
    e.lfloortile("floor_pebble_darkgray")
    e.colour("v = red")
-   e.set_feature_name("floor", "Ashen ground")
-   e.set_feature_name("metal_wall", "tempered metal wall")
+   e.set_feature_name("floor", "재로 덮인 지면")
+   e.set_feature_name("metal_wall", "달구어진 철벽")
 end
 
 function coc_setup(e)
@@ -41,9 +41,9 @@ function coc_setup(e)
    e.lfloorcol("white")
    e.lfloortile("floor_ice")
    e.colour("c = lightblue")
-   e.set_feature_name("rock_wall", "ice-covered rock wall")
-   e.set_feature_name("stone_wall", "ice-covered stone wall")
-   e.set_feature_name("floor", "Frost-covered floor")
+   e.set_feature_name("rock_wall", "얼음 암벽")
+   e.set_feature_name("stone_wall", "얼음 돌벽")
+   e.set_feature_name("floor", "눈 덮인 지면")
 end
 
 function tar_setup(e)
@@ -84,7 +84,7 @@ function callback.grunt_iron_hall_animate(data,triggerable,trigger,marker,ev)
                                "patrolling iron golem generate_awake")
         end
     end
-    crawl.mpr("You hear the creaking of ancient metal!", "warning")
+    crawl.mpr("고대의 철기들이 삐걱대는 소리가 들렸다!", "warning")
     end
 end
 
@@ -105,9 +105,9 @@ function callback.grunt_gauntlet_trap_activate(data,triggerable,trigger,marker,e
         dgn.terrain_changed(slave.x, slave.y, "stone_wall", false, false, false)
         dgn.colour_at(slave.x, slave.y, "lightmagenta")
     end
-    crawl.mpr("You hear an unearthly scream, and the grinding of stone!",
+    crawl.mpr("기이하고도 섬뜩한 비명이 들렸고, 주변 벽과 바닥이 갈라졌다!",
              "warning")
-    crawl.mpr("The path is suddenly blocked!", "warning")
+    crawl.mpr("순식간에 이 통로가 막혀버렸다!", "warning")
     end
 end
 
@@ -485,7 +485,7 @@ DEPTH:  Coc:1-6
 COLOUR: c = blue
 MONS:   Ice Fiend, blizzard demon, ice devil, blue devil, white imp
 KMONS:  H = ice statue
-KMONS:  O = ice statue name:chilling_statue name_replace name_descriptor \
+KMONS:  O = ice statue name:눈보라의_상 name_replace name_descriptor \
             hd:15 spells:bolt_of_cold;ozocubu's_refrigeration;\
             ozocubu's_refrigeration;freezing_cloud;\
             ozocubu's_refrigeration;ozocubu's_refrigeration \
@@ -943,8 +943,8 @@ TILE:    o = dngn_statue_iron_golem
 # Use master/slave setup.
 MARKER:  o = lua:monster_on_death { \
             death_monster="Dispater", new_monster="generate_awake iron golem", \
-            message_seen="The iron statue comes to life!", \
-            message_unseen="You hear a grinding sound.", \
+            message_seen="철의 상이 살아 움직이기 시작한다!", \
+            message_unseen="무엇인가 갈아 없어지는 소리가 들렸다.", \
             monster_place_feature=dgn.fnum("granite_statue"), \
             veto_fragmentation="veto", veto_disintegrate="veto", \
             veto_shatter="veto" \

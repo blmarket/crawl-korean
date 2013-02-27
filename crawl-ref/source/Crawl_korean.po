@@ -29880,7 +29880,7 @@ msgstr "버그의 나라에 어서오세요! (제보 부탁드립니다)"
 #: stairs.cc:860 stairs.cc:871
 #, c-format
 msgid "Welcome %sto %s!"
-msgstr "$2%s에 %1$s온 것을 환영하네!"
+msgstr "%2$s에 %1$s온 것을 환영하네!"
 
 #: stairs.cc:872
 msgctxt "stairs"

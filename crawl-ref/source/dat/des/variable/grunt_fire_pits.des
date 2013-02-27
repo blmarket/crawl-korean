@@ -5,7 +5,7 @@ function grunt_burn_victim_die(monster, killer_type, killer_index, silent, wizar
            local x = monster.x + pp.x
            local y = monster.y + pp.y
            if (you.see_cell(x, y)) then
-               crawl.mpr("The corpse bursts into flame!", "warning")
+               crawl.mpr("시체들에 불길이 솟아올랐다!", "warning")
            end
            dgn.create_monster(x, y, "flaming corpse")
       end

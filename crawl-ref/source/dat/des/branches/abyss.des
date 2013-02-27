@@ -174,7 +174,7 @@ ENDMAP
 NAME:   hangedman_abyss_mock_shop
 TAGS:   abyss no_monster_gen patrolling
 KMONS:  1 = water elemental / nothing w:5
-KMONS:  2 = statue name:archer tile:mons_statue_archer \
+KMONS:  2 = statue name:궁수 tile:mons_statue_archer \
         n_adj; longbow ego:chaos . arrow q:40
 KFEAT:  0 = abandoned_shop
 KFEAT:  1 = permadry_fountain
@@ -317,7 +317,7 @@ FTILE:  ._+OAL = floor_crystal_squares
 NSUBST: A = 2:L / *:.
 SUBST:  ' = .
 KMONS:  O = tentacled monstrosity / large abomination / chaos spawn
-KMONS:  L = wizard hd:16 name:mad_acolyte_of_Lugonu n_rpl n_des col:lightgreen \
+KMONS:  L = wizard hd:16 name:루고누의_광신도 n_rpl n_des col:lightgreen \
             tile:mons_hell_wizard priest_spells \
             spells:smiting;blink_other;invisibility;malign_gateway;blink ; \
             robe . quarterstaff ego:distortion | dagger ego:distortion
@@ -342,7 +342,7 @@ KITEM:  O = abyssal rune of Zot
 KFEAT:  _ = altar_lugonu
 FTILE:  ._+OL = floor_crystal_squares
 SUBST:  ' = .
-KMONS:  L = wizard hd:16 name:mad_acolyte_of_Lugonu n_rpl n_des col:lightgreen \
+KMONS:  L = wizard hd:16 name:루고누의_광신도 n_rpl n_des col:lightgreen \
             tile:mons_hell_wizard priest_spells \
             spells:smiting;blink_other;invisibility;malign_gateway;blink ; \
             robe . quarterstaff ego:distortion | dagger ego:distortion
@@ -1128,8 +1128,8 @@ NAME:   bmh_abyss_demonologist_exit
 TAGS:   abyss_exit allow_dup no_monster_gen
 MONS:   generate_awake deep elf demonologist
 MONS:   generate_awake kobold demonologist
-MONS:   generate_awake orc sorcerer name:orc_demonologist name_replace name_descriptor
-MONS:   generate_awake lich name:lich_demonologist name_replace name_descriptor \
+MONS:   generate_awake orc sorcerer name:오크_악마술사 name_replace name_descriptor
+MONS:   generate_awake lich name:리치_악마술사 name_replace name_descriptor \
                             spells:shadow_creatures;summon_greater_demon
 SUBST:  d = ccxxW....
 SUBST:  e = ccxxW...
@@ -1141,9 +1141,9 @@ KFEAT:  0 = exit_abyss
 KFEAT:  B = floor
 KPROP:  B = bloody
 MARKER: + = lua:props_marker { \
-            door_open_prompt="This door is covered in dire warnings. " .. \
-                             "Open it anyway?", \
-            door_description_prefix="warning-scrawled " \
+            door_open_prompt="이 문에는 갖가지 경고문들이 휘갈겨 쓰여 있다. " .. \
+                             "그래도 이 문을 열겠는가?", \
+            door_description_prefix="경고문이 씌어진 " \
             }
 MAP
 fffffffffffffffffff
@@ -1185,9 +1185,9 @@ NSUBST: E = 5:E / *:.
 NSUBST: H = 5:H / *:.
 NSUBST: S = 4:S / *:.
 MARKER: + = lua:props_marker { \
-            door_open_prompt="This door is covered in dire warnings. " .. \
-                             "Open it anyway?", \
-            door_description_prefix="warning-scrawled " \
+            door_open_prompt="이 문에는 갖가지 경고문들이 휘갈겨 쓰여 있다. " .. \
+                             "그래도 이 문을 열겠는가?", \
+            door_description_prefix="경고문이 씌어진 " \
         }
 MAP
     ddddddd

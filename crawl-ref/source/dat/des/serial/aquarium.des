@@ -100,7 +100,7 @@ function init_aquarium(e)
     --  mons_diamond_obelisk tile then.  The problem went away
     --  when I put it back to single quotes
     e.kmons('_ = generate_awake statue n_rpl n_des ' ..
-                'name:diamond_obelisk hp:10000 ' ..
+                'name:다이아몬드_오벨리스크 hp:10000 ' ..
                 'col:white tile:mons_diamond_obelisk ' ..
                 'perm_ench:tornado')
   elseif you.absdepth() <= 3 then
@@ -153,7 +153,7 @@ function init_aquarium(e)
     e.kmons('_ = w:' .. nothing_weight .. [[ nothing /
                  w:4  generate_awake ice beast /
                  w:1  generate_awake bat simulacrum
-                      name:ice_bat n_rpl n_des n_spe n_zom /
+                      name:얼음_박쥐 n_rpl n_des n_spe n_zom /
                  w:1  generate_awake red wasp simulacrum /
                  w:1  generate_awake orc simulacrum /
                  w:1  generate_awake yaktaur simulacrum /

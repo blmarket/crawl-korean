@@ -2243,8 +2243,8 @@ MARKER: * = lua:fog_machine { cloud_type="flame", \
             size = 2, walk_dist = 0, spread_rate= 75 }
 COLOUR: n = red
 SUBST:  * = .
-MARKER: G = lua:props_marker { stop_explore = "a scorch-marked granite statue."\
-        , feature_description = "scorch-marked granite statue" }
+MARKER: G = lua:props_marker { stop_explore = "불에 그을린 화강암 석상."\
+        , feature_description = "불에 그을린 화강암 석상" }
 MAP
 ...........
 .xxxx.xxxx.
@@ -2267,8 +2267,8 @@ MARKER: * = lua:fog_machine { cloud_type="flame", \
             size = 2, walk_dist = 0, spread_rate= 75 }
 COLOUR: * = red
 SUBST:  * = .
-MARKER: G = lua:props_marker { stop_explore = "a scorch-marked granite statue."\
-        , feature_description = "scorch-marked granite statue" }
+MARKER: G = lua:props_marker { stop_explore = "불에 그을린 화강암 석상."\
+        , feature_description = "불에 그을린 화강암 석상" }
 MAP
 xxxxxxxxxxxxx
 xxxxxxxxxxxxx
@@ -2437,8 +2437,8 @@ MARKER: e = lua:fog_machine { cloud_type = "flame", \
 MARKER: f = lua:fog_machine { cloud_type = "flame", \
              pow_min = 2, pow_max = 4, delay = 37, start_clouds = 1, \
              size = 2, walk_dist = 2, spread_rate= 0 }
-MARKER: G = lua:props_marker { stop_explore = "a scorch-marked granite statue."\
-        , feature_description = "scorch-marked granite statue" }
+MARKER: G = lua:props_marker { stop_explore = "불에 그을린 화강암 석상"\
+        , feature_description = "불에 그을린 화강암 석상" }
 MAP
 .............
 .............
@@ -2502,8 +2502,8 @@ MARKER: * = lua:fog_machine { cloud_type="flame", \
 COLOUR: * = red
 SUBST:  * = .
 SUBST:  $ : $$*|.c
-MARKER: G = lua:props_marker { stop_explore = "a scorch-marked granite statue."\
-        , feature_description = "scorch-marked granite statue" }
+MARKER: G = lua:props_marker { stop_explore = "불에 그을린 화강암 석상."\
+        , feature_description = "불에 그을린 화강암 석상" }
 MAP
 ccccccccccccccccccccccc
 ccxxx*xxxxx*xxxxx*xxxxc
@@ -2561,7 +2561,7 @@ NAME:  kilobyte_tornado_obelisk
 TAGS:  no_monster_gen
 DEPTH: D:15-27, Elf
 ITEM:  acquire any
-MONS:  statue generate_awake n_rpl n_des name:diamond_obelisk hp:10000 \
+MONS:  statue generate_awake n_rpl n_des name:다이아몬드_오벨리스크 hp:10000 \
        col:white tile:mons_diamond_obelisk perm_ench:tornado
 KPROP: .d1 = no_tele_into
 MAP

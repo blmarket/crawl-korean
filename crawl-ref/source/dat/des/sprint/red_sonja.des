@@ -10,7 +10,7 @@
 
 NAME:   dungeon_sprint_1
 TAGS:   sprint no_item_gen no_trap_gen no_monster_gen no_pool_fixup no_rotate no_hmirror no_vmirror
-DESC:   Sprint I: "Red Sonja"
+DESC:   던전 돌파 I:  "붉은 소냐"
 ORIENT: encompass
 MARKER: L = lua:fog_machine { \
              pow_min = 2, pow_max = 4, delay = 5, \

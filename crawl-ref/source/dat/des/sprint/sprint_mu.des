@@ -14,7 +14,7 @@
 function sprint_mu_zot_mons_gen(data, triggerable, triggerer, marker, ev)
     function spawn_zombie (x, y, spec)
         local mons = dgn.create_monster(x, y, spec)
-        crawl.mpr("You hear a whooshing noise from somewhere close by.")
+        crawl.mpr("어딘가 멀지 않은 곳에서 무엇인가가 휙 지나가는 소리가 났다.")
         return mons
     end
 
@@ -34,7 +34,7 @@ end
 # Main sprint map, making use of subvaults (by Mu.)
 #
 NAME:   dungeon_sprint_mu
-DESC:   Sprint III: "The Ten Rune Challenge"
+DESC:   던전 돌파 III: "10룬 도전기"
 TAGS:   sprint no_item_gen no_trap_gen no_monster_gen no_pool_fixup no_rotate no_hmirror no_vmirror
 ORIENT: encompass
 SHUFFLE:  hnw
@@ -273,7 +273,7 @@ KITEM: * = royal jelly
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Ecumenical Temple",
+:           door_description_suffix=" (만신전)",
 :           })
 MARKER: # = lua:restrict_door()
 SUBST: x = c
@@ -308,13 +308,13 @@ SUBST: 5 = 4...
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Orcish Mines",
+:           door_description_prefix="오크 광산으로 통하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 COLOUR: & = yellow
 KFEAT: & = closed_door
 : lua_marker('&', props_marker {
-:           door_description_suffix=" to the Lair of Beasts",
+:           door_description_prefix="짐승 소굴로 통하는 ",
 :           })
 MARKER: & = lua:restrict_door()
 MARKER:  ! = lua:fog_machine { \
@@ -348,13 +348,13 @@ NSUBST: ^ = 2:4 / 1:5 / 10:~ / *:.
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Orcish Mines",
+:           door_description_prefix="오크 광산으로 통하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 COLOUR: & = yellow
 KFEAT: & = closed_door
 : lua_marker('&', props_marker {
-:           door_description_suffix=" to the Lair of Beasts",
+:           door_description_prefix="짐승 소굴로 통하는 ",
 :           })
 MARKER: & = lua:restrict_door()
 
@@ -425,7 +425,7 @@ KFEAT: b = floor
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Elven Halls",
+:           door_description_prefix="엘프의 방으로 통하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 
@@ -456,7 +456,7 @@ NSUBST: 1 = 1:2 / *:1
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Hive",
+:           door_description_prefix="벌집으로 통하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 COLOUR: a = yellow
@@ -533,9 +533,9 @@ MARKER:  * = lua:fog_machine { \
              }
 KFEAT: ~ = closed_door
 MARKER: ~ = lua:restrict_door({ \
-            door_open_prompt="This door is covered in warnings. Open " .. \
-                             "it anyway?", \
-            door_description_prefix="warning-scrawled " \
+            door_open_prompt="이 문에는 섬뜩한 경고문이 가득 쓰여져 있다. 그래도 " .. \
+                             "열어보겠는가?", \
+            door_description_prefix="경고문이 쓰여진 " \
          })
 
 MAP
@@ -570,7 +570,7 @@ SUBST: $ = ||*
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Pits of Slime",
+:           door_description_prefix="슬라임 구덩이로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 
@@ -613,7 +613,7 @@ KITEM: $ = serpentine rune of zot
 COLOUR: #c = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Snake Pit",
+:           door_description_prefix="뱀 소굴로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 
@@ -653,7 +653,7 @@ COLOUR: X = blue
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Shoals",
+:           door_description_prefix="해안으로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 MAP
@@ -698,7 +698,7 @@ COLOUR: X = blue
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Shoals",
+:           door_description_prefix="해안으로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 
@@ -771,7 +771,7 @@ KITEM: $ = decaying rune of zot
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Swamp",
+:           door_description_prefix="늪지로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 MAP
@@ -864,9 +864,9 @@ NSUBST: * = 1:i / 1:d / 1:e / 1:f / 1:g / 1:h / 1:j / 1:k / *:*
 COLOUR: Z = shimmer_blue
 KFEAT:  Z = closed_door
 MARKER: Z = lua:props_marker({ \
-            door_description_prefix="flickering ", \
-            door_description_suffix=" to a bazaar", \
-            door_description_noun="gateway", \
+            door_description_prefix="시장으로 향하는 ", \
+            door_description_adj="깜박이는 ", \
+            door_description_noun="관문 ", \
          })
 KFEAT: # = closed_door
 KFEAT: ~ = closed_door
@@ -953,13 +953,13 @@ KFEAT: # = closed_door
 KFEAT: ~ = closed_door
 KFEAT: ^ = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Vaults",
+:           door_description_prefix="보물창고로 향하는 ",
 :           })
 : lua_marker('~', props_marker {
-:           door_description_suffix=" to the Hall of Blades",
+:           door_description_prefix="칼날의 방으로 향하는 ",
 :           })
 : lua_marker('^', props_marker {
-:           door_description_suffix=" to the Crypt",
+:           door_description_prefix="납골당으로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 MARKER: ~ = lua:restrict_door()
@@ -1113,7 +1113,7 @@ COLOUR: X = lightgrey
 COLOUR: # = yellow
 KFEAT: # = closed_door
 : lua_marker('#', props_marker {
-:           door_description_suffix=" to the Tomb of the Ancients",
+:           door_description_prefix="무덤으로 향하는 ",
 :           })
 MARKER: # = lua:restrict_door()
 MAP
@@ -1214,8 +1214,8 @@ MARKER: L = lua:fog_machine { \
 COLOUR: # = red
 KFEAT: # = closed_door
 MARKER: # = lua:props_marker({ \
-            door_description_suffix=" to Hell", \
-            door_description_noun="gateway", \
+            door_description_prefix="지옥으로 향하는 ", \
+            door_description_noun="관문", \
          })
 MARKER: # = lua:restrict_door()
 MAP
@@ -1283,8 +1283,8 @@ SUBST: . = ......^
 COLOUR: # = cyan
 KFEAT: # = closed_door
 MARKER: # = lua:props_marker({ \
-            door_description_suffix=" to the Iron City of Dis", \
-            door_description_noun="gateway", \
+            door_description_prefix="철의 도시, 디스로 향하는 ", \
+            door_description_noun="관문", \
          })
 MARKER: # = lua:restrict_door()
 MAP
@@ -1323,8 +1323,8 @@ MARKER:  G = lua:fog_machine { \
 COLOUR: #vG = red
 KFEAT: # = closed_door
 MARKER: # = lua:props_marker({ \
-            door_description_suffix=" to the ashen valley of Gehenna", \
-            door_description_noun="gateway", \
+            door_description_prefix="재의 계곡, 게헨나로 향하는 ", \
+            door_description_noun="관문", \
          })
 MARKER: # = lua:restrict_door()
 MAP
@@ -1369,8 +1369,8 @@ KITEM: ! = potion of resistance q:3, potion of agility q:3, cloak ego:preservati
 COLOUR: #c = lightcyan
 KFEAT: # = closed_door
 MARKER: # = lua:props_marker({ \
-            door_description_suffix=" to the freezing wastes of Cocytus", \
-            door_description_noun="gateway", \
+            door_description_prefix="얼어붙은 황무지, 코큐투스로 향하는 ", \
+            door_description_noun="관문", \
          })
 MARKER: # = lua:restrict_door()
 
@@ -1413,8 +1413,8 @@ COLOUR: # = darkgrey
 COLOUR: c = lightgrey
 KFEAT: # = closed_door
 MARKER: # = lua:props_marker({ \
-        door_description_suffix=" to the decaying netherworld of Tartarus", \
-        door_description_noun="gateway", \
+            door_description_prefix="부패의 지하세계, 타르타로스로 향하는 ", \
+            door_description_noun="관문", \
         })
 MARKER: # = lua:restrict_door()
 SUBST: . = ..........2233445
@@ -1494,15 +1494,15 @@ KFEAT: # = closed_door
 KFEAT: ~ = closed_door
 COLOUR: # = magenta
 MARKER: # = lua:props_marker({ \
-        door_description_suffix=" to the Realm of Zot", \
-        door_description_noun="gate", \
-        veto_reason="You need three runes to open the Realm of Zot!", \
+        door_description_prefix="조트의 렐름으로 향하는 ", \
+        door_description_noun="관문", \
+        veto_reason="조트의 렐름에 들어가기 위해선 최소 3개의 룬이 필요하다!", \
         veto_shatter="veto", veto_disintegrate="veto", veto_fragmentation="veto" \
         })
 MARKER: # = lua:lock_door {}
 MARKER: # = lua:restrict_door {}
 MARKER: ~ = lua:props_marker({ \
-        door_description_prefix="magically reinforced ", \
+        door_description_prefix="마법으로 강화된 ", \
         veto_shatter="veto", veto_disintegrate="veto", veto_fragmentation="veto", door_restrict="veto" \
         })
 KPROP: =X#kp+^ag78yL45il%3x21*To$. = no_rtele_into

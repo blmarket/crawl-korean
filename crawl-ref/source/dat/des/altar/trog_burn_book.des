@@ -32,8 +32,8 @@ function callback.trog_book_convert_book(data, triggerable,
       if string.find(book.name(), 'book') then
         book.destroy()
         dgn.place_cloud(_x, _y, "flame", 15)
-        crawl.god_speaks("Trog", "The spellbook bursts into flames! "
-                              .. "Trog roars with delight!")
+        crawl.god_speaks("Trog", "마법서들이 불타버렸다! "
+                              .. "트로그는 기쁨에 찬 함성을 질렀다!")
       end
     end
     data.triggered = true

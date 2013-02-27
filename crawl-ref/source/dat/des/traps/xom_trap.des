@@ -34,20 +34,20 @@ function callback.xom_item_pickup(data, triggerable, triggerer, marker, ev)
   local c = dgn.find_marker_positions_by_prop("item", 1) [1]
   local u_x,u_y = you.pos()
   if (u_x ~= c.x) or (u_y ~= c.y) then
-    crawl.god_speaks("Xom", "Xom laughs at your impertinence.")
+    crawl.god_speaks("Xom", "좀은 당신의 경박함을 비웃었다.")
     return
   end
 
   -- we check to see if the player's LOS; if there are no monsters in sight we will continue
   -- otherwise we break the function and Xom gives some flavour
   if callback.see_monster(x,y) then
-    crawl.god_speaks("Xom","You hear laughter all around you.")
+    crawl.god_speaks("Xom","사방에서 웃음소리가 들려왔다.")
     return
   end
 
   -- When you pick up the item, Xom reacts visibly
-  crawl.god_speaks("Xom","The space around you changes and a monster appears!")
-  crawl.god_speaks("Xom","You hear Xom's laughter.")
+  crawl.god_speaks("Xom","공간이 비틀리고, 몬스터들이 나타났다!")
+  crawl.god_speaks("Xom","당신은 좀의 웃음소리를 들었다.")
 
   -- This enacts the terrain changes; adding the walls and removing the altar
   for slave in iter.slave_iterator("wall_phase", 1) do
@@ -79,16 +79,16 @@ function callback.xom_trap_step(data, triggerable, triggerer, marker, ev)
   local item_exist = #stack ~= 0
 
   if not item_exist then
-    crawl.god_speaks("Xom","You sense Xom watching you.")
+    crawl.god_speaks("Xom","좀의 시선이 느껴졌다.")
   else
     -- this checks LOS.  if you see a monster the item is destroyed; if not the item will remain
     -- and Xom warns the player (in his way)
     if callback.see_monster(x,y) then
       -- this eliminates the wand
-      crawl.god_speaks("Xom", "Xom laughs as a nearby item is destroyed.")
+      crawl.god_speaks("Xom", "근처의 아이템이 파괴되고, 좀은 깔깔 웃었다.")
       iter.stack_destroy(c.x,c.y)
     else
-      crawl.god_speaks("Xom", "Xom guffaws as you eye the nearby treasure.")
+      crawl.god_speaks("Xom", "근처의 보물들로 눈을 돌리자, 좀은 피식 웃었다.")
     end
   end
 end

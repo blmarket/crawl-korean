@@ -504,8 +504,8 @@ COLOUR: '!@ = green
 : if you.race() ~= "Mummy" and you.race() ~= "Ghoul"
 :   and you.race() ~= "Vampire"
 : then
-MARKER:  ! = lua:message_at_spot("Fedhas urges you to decompose the vile \
-                                 beasts imprisoned behind the altar.", \
+MARKER:  ! = lua:message_at_spot("페다스는 제단 주위의 불경스러운 존재들을 \
+                                 거름으로 만들어줄 것을 당신에게 제안해왔다.", \
                                  "god")
 : end
 SUBST:  ! = .

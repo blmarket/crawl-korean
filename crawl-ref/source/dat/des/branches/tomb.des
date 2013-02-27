@@ -104,8 +104,8 @@ ORIENT: float
 TAGS:   tomb_entry no_monster_gen
 KFEAT:  f = .
 # "withered plant" instead of "plant"
-KMONS:  f = w:2 col:darkgrey plant name:withered name_adjective              \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered \
+KMONS:  f = w:2 col:darkgrey plant name:메마른 name_adjective              \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른 \
             name_adjective tile:mons_withered_plant
 SUBST:  p = f.
 KFEAT:  O = enter_tomb
@@ -185,7 +185,7 @@ SUBST:   3 = 3., 4 = 4., 5 = 5.
 MONS:    mummy, guardian mummy, mummy priest, sphinx, greater mummy
 MONS:    silver statue / orange crystal statue / ice statue
 #
-: set_feature_name("granite_statue", "sarcophagus")
+: set_feature_name("granite_statue", "석관")
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

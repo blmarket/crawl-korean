@@ -45,13 +45,13 @@ function callback.grate_trap_stepped(data, triggerable, triggerer, marker, ev)
         -- If there is an item on the square it will be destroyed.
         -- TODO: deal damage to the player / monsters that are caught under a grate!
         if (dgn.mons_at(slave.x, slave.y) ~= nil or (slave.x == you_x and slave.y == you_y)) then
-            crawl.mpr("You hear a faint grinding sound.")
+            crawl.mpr("무언가 긁히는 듯한 희미한 소리가 들렸다.")
         else
             dgn.terrain_changed(slave.x, slave.y, "iron_grate", false, false, false)
             if (you.see_cell(slave.x, slave.y)) then
-                crawl.mpr("An iron grate slams shut!")
+                crawl.mpr("철창이 닫혀버렸다!")
             else
-                crawl.mpr("You hear an iron grate slam shut!")
+                crawl.mpr("철창이 닫히는 소리가 들렸다!")
             end
         end
     end

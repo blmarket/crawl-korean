@@ -30,12 +30,12 @@ function init_undead(e)
     e.kmons('.-_ = w:2 guardian mummy / w:8 mummy / large zombie / small zombie / \
             skeletal warrior / rotting hulk / w:1 ghoul / w:300 nothing')
   end
-  e.kmons('t = w:2 col:darkgrey plant name:withered name_adjective \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+  e.kmons('t = w:2 col:darkgrey plant name:메마른 name_adjective \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant')
 
   e.tile('G = dngn_gravestone')
-  e.set_feature_name("granite_statue", "a gravestone")
+  e.set_feature_name("granite_statue", "비석")
 end
 }}
 

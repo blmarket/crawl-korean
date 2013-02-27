@@ -3,7 +3,7 @@
 {{
 function callback.dk_crumbling_pickup(data, triggerable, triggerer, marker, ev)
   dgn.persist.dk_crumbling_triggered = true
-  crawl.mpr("Suddenly, the floor starts to tremble!", "warning")
+  crawl.mpr("갑자기, 바닥이 진동하기 시작했다!", "warning")
 end
 
 function callback.dk_crumbling_turn(data, triggerable, triggerer, marker, ev)
@@ -16,7 +16,7 @@ function callback.dk_crumbling_turn(data, triggerable, triggerer, marker, ev)
 
   -- don't spam too much messages
   if crawl.coinflip() then
-    crawl.mpr("The floor trembles.")
+    crawl.mpr("바닥이 진동했다.")
   end
 
   -- create a dictionary to keep track of positions already changed to water
@@ -28,7 +28,7 @@ function callback.dk_crumbling_turn(data, triggerable, triggerer, marker, ev)
   -- don't create too much water
   if data.c > 20 and crawl.one_chance_in(3) then
     triggerable:remove(marker)
-    crawl.mpr("The trembling seems to have ended.")
+    crawl.mpr("바닥의 진동이 멎은 것 같다.")
     dgn.persist.dk_crumbling_triggered = false
     return
   end
@@ -50,7 +50,7 @@ function callback.dk_crumbling_turn(data, triggerable, triggerer, marker, ev)
   -- don't spam too much messages
   if water ~= nil and crawl.coinflip() then
     if you.see_cell(water[1], water[2]) then
-      crawl.mpr("Water seeps in.")
+      crawl.mpr("물이 스며들어왔다.")
     end
   end
 
@@ -62,7 +62,7 @@ function callback.dk_crumbling_turn(data, triggerable, triggerer, marker, ev)
 
       -- don't spam too much messages
       if crawl.coinflip() and you.see_cell(slave.x, slave.y) then
-        crawl.mpr("The statue crumbles to dust.")
+        crawl.mpr("석상이 무너져내렸다.")
       end
     end
 

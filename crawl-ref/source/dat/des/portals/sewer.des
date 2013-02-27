@@ -23,19 +23,19 @@ function sewer_portal(e)
       -- $F{xxx} will be substituted with the 'entity' property of the timed
       -- marker, or with the desc property (if entity is not set).
       messages = time_messages(timeout_turns/10,
-                               "$F{The} is slowly rusting away.",
-                               "$F{The} is rusting away.",
-                               "$F{The} is quickly rusting away.",
-                               "$F{The} is falling apart.")
+                               "$F{The}은(는) 천천히 부식되어 사라지고있다.",
+                               "$F{The}은(는) 부식되어 사라지고있다.",
+                               "$F{The}은(는) 급속히 부식되어 사라지고있다.",
+                               "$F{The}은(는) 무너져 내리고 있다.")
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The drain falls to bits.",
-        desc = "glowing drain",
+        disappear = "배수로는 무너져 사라졌다.",
+        desc = "반짝이는 배수로",
         entity = 'drain',
         dst = "Sewer",
-        overview = "glowing drain",
+        overview = "반짝이는 배수로",
         turns = timeout_turns,
         floor = "expired_portal",
         feat_tile = "dngn_portal_sewer_rusted",
@@ -746,8 +746,8 @@ NAME:   sewer_sea
 TAGS:   no_item_gen no_monster_gen no_rotate no_pool_fixup
 ORIENT: encompass
 MONS:   rat w:3 / grey rat w:1 / nothing w:1, rat / grey rat / green rat
-KMONS:  G = mermaid hd:3 name:malarious name_adjective name_species
-KMONS:  H = siren hd:3 name:sickly name_adjective name_species
+KMONS:  G = mermaid hd:3 name:감염된 name_adjective name_species
+KMONS:  H = siren hd:3 name:연약한 name_adjective name_species
 KMONS:  hJ = giant newt / ball python / adder / nothing w:2
 KMONS:  g = giant newt / ball python / giant mite / giant cockroach / \
             giant gecko / nothing w:7

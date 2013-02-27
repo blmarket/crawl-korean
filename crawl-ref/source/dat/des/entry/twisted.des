@@ -178,7 +178,7 @@ ITEM:    stone q:1 w:5 / nothing
 ITEM:    stone q:1 w:1 / nothing w:20
 TILE:    G = dngn_granite_stump
 SHUFFLE: {[(
-:        set_feature_name("granite_statue", "granite stump")
+:        set_feature_name("granite_statue", "화강암 받침")
 MAP
    xxxxxxx
   xx.....xx
@@ -581,9 +581,9 @@ SHUFFLE: XZ
 NSUBST:  Z = ) / ]
 NSUBST:  X = ( / [
 MARKER:  = = lua:props_marker { \
-            door_open_prompt="This door is covered in warnings. Open " .. \
-                             "it anyway?", \
-            door_description_prefix="warning-scrawled " \
+            door_open_prompt="이 문에는 각종 경고문들이 쓰여져 있다. 무시하고 " .. \
+                             "열 것인가?", \
+            door_description_prefix="경고문이 쓰여진 " \
          }
 MAP
           ...
@@ -793,9 +793,9 @@ ORIENT:  float
 SHUFFLE: ABC
 KFEAT:   ABC = floor
 KMONS:  A = gnome ; nothing
-KMONS:  B = elf col:darkgrey name:grey n_adj n_spe n_des ; nothing
-KMONS:  C = dwarf name:hill n_adj n_spe n_des ; nothing
-KMONS:  D = dwarf name:mountain n_adj n_spe n_des ; nothing
+KMONS:  B = elf col:darkgrey name:그레이 n_adj n_spe n_des ; nothing
+KMONS:  C = dwarf name:힐 n_adj n_spe n_des ; nothing
+KMONS:  D = dwarf name:마운틴 n_adj n_spe n_des ; nothing
 FTILE:  .m+T = floor_vault
 TILE:   X = wall_vines
 COLOUR: .= lightgrey

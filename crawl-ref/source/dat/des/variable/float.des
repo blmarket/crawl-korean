@@ -1328,9 +1328,9 @@ MONS:   yak / sheep / weight:3 death yak
 MONS:   hound / wolf / hog
 SUBST:  1 = 1:30 2 3 4 .
 MARKER: + = lua:props_marker { \
-            door_open_prompt="This door is covered in warnings. Open " .. \
-                             "it anyway?", \
-            door_description_prefix="warning-scrawled " \
+            door_open_prompt="이 문에는 섬뜩한 경고문이 가득 쓰여져 있다. 그래도 " .. \
+                             "열어보겠는가?", \
+            door_description_prefix="경고문이 쓰여진 " \
         }
 MAP
 cccccccccc
@@ -1665,8 +1665,8 @@ MONS:    generate_awake angel / generate_awake daeva / w:1 angel / w:1 daeva
 COLOUR:  - : yellow
 SUBST:   - : +
 KMASK:   + = no_secret_doors
-MARKER:  ! = lua:message_at_spot ( "You almost think you hear a voice: \
-                                   \"Seek not undue power, mortal.\"", \
+MARKER:  ! = lua:message_at_spot ( "어디선가 목소리가 들려왔다: \
+                                   \"과도한 힘을 탐하지 말라, 필멸자여.\"", \
                                    "warning" )
 SUBST:   ! : .
 MAP
@@ -1718,8 +1718,8 @@ SUBST:   T = T F:1
 COLOUR:  - : yellow
 SUBST:   - : +
 KMASK:   + = no_secret_doors
-MARKER:  ! = lua:message_at_spot ( "You almost think you hear a voice: \
-                                   \"Seek not undue power, mortal.\"", \
+MARKER:  ! = lua:message_at_spot ( "어디선가 목소리가 들려왔다: \
+                                   \"과도한 힘을 탐하지 말라, 필멸자여.\"", \
                                    "warning" )
 SUBST:   ! : .
 MAP
@@ -1769,8 +1769,8 @@ SUBST:   T = T F:1
 COLOUR:  - : yellow
 SUBST:   - : +
 KMASK:   + = no_secret_doors
-MARKER:  ! = lua:message_at_spot ( "You almost think you hear a voice: \
-                                   \"Seek not undue power, mortal.\"", \
+MARKER:  ! = lua:message_at_spot ( "어디선가 목소리가 들려왔다: \
+                                   \"과도한 힘을 탐하지 말라, 필멸자여.\"", \
                                    "warning" )
 SUBST:   ! : .
 MAP
@@ -1886,7 +1886,7 @@ KMONS:  7 = fire vortex
 #
 : if you.in_branch("elf") then
 KMONS:  Z = col:flash deep elf sorcerer \
-        name:deep_elf_elementalist n_rpl n_des tile:mons_deep_elf_elementalist \
+        name:딥_엘프_정령술사 n_rpl n_des tile:mons_deep_elf_elementalist \
         spells:iron_shot;summon_air_elementals;sticky_flame_range;\
         summon_water_elementals;haste;blink actual_spells \
         ; robe ego:fire_resistance race:elven | \
@@ -1895,7 +1895,7 @@ KMONS:  Z = col:flash deep elf sorcerer \
         dagger ego:flaming race:elven | dagger ego:electrocution race:elven
 : else
 KMONS:  Z = col:flash wizard hd:15 name_descriptor tile:mons_master_elementalist \
-        name:master_elementalist name_replace \
+        name:정령술사 name_replace \
         spells:iron_shot;summon_air_elementals;sticky_flame_range;\
         summon_water_elementals;haste;blink actual_spells \
         ; robe ego:fire_resistance | robe ego:cold_resistance | \

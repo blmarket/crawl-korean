@@ -3,14 +3,14 @@ function callback.grunt_nemelex_gamble_announce(data,triggerable,triggerer,marke
     if not dgn.persist.grunt_nemelex_gamble_announced then
         dgn.persist.grunt_nemelex_gamble_announced = true
         local msg = {
-            "\"Care to risk it all for some fabulous prizes, mortal?\"",
-            "\"Through this portal lies a prize... or peril!\"",
-            "\"The prize could be yours... at the risk of your life!\"",
-            "\"Care for a little wager, mortal?\""
+            "\"필멸자여, 네 자신의 운을 한번 시험해 보지 않겠는가?\"",
+            "\"필멸자여, 보상과 위험, 둘 중 하나에 운을 걸어보지 않겠는가?\"",
+            "\"필멸자여, 목숨을 걸 자신이 있다면, 그 만큼 보상이 따를 것이네!\"",
+            "\"필멸자여, 게임 하나 해 보지 않겠는가?\""
         }
-        crawl.god_speaks("Nemelex Xobeh", "Nemelex Xobeh says, " ..
+        crawl.god_speaks("Nemelex Xobeh", "네멜렉스 죠베는 말했다, " ..
                          msg[crawl.random_range(1, 4)])
-        crawl.god_speaks("Nemelex Xobeh", "\"Beware! This is a limited time offer!\"")
+        crawl.god_speaks("Nemelex Xobeh", "\"이 관문은 보이는 두 장소 중 하나로 연결되지. 우물쭈물하다간 관문은 닫힐 것이고, 저 안으론 공간이동으로 들어갈수도 없네!\"")
     end
 end
 
@@ -24,25 +24,25 @@ function callback.grunt_nemelex_gamble_start(data,triggerable,triggerer,marker,e
     if crawl.coinflip() then
         slave = dgn.find_marker_positions_by_prop("prize", 1)
         you.teleport_to(slave[1].x, slave[1].y)
-        crawl.god_speaks("Nemelex Xobeh", "Nemelex Xobeh says, \"You win!\"")
+        crawl.god_speaks("Nemelex Xobeh", "네멜렉스 죠베는 말했다, \"축하하네, 자네의 승리군!\"")
     else
         slave = dgn.find_marker_positions_by_prop("peril", 1)
         you.teleport_to(slave[1].x, slave[1].y)
-        crawl.god_speaks("Nemelex Xobeh", "Nemelex Xobeh says, \"You lose!\"")
+        crawl.god_speaks("Nemelex Xobeh", "네멜렉스 죠베는 말했다, \"아쉽군. 자네는 패배했네!\"")
     end
-    crawl.mpr("Your surroundings suddenly seem different.")
+    crawl.mpr("당신 주변의 모습이 갑자기 변화했다.")
 end
 
 function callback.grunt_nemelex_gamble_finish1(data,triggerable,triggerer,marker,ev)
     slave = dgn.find_marker_positions_by_prop("exit", 1)
     you.teleport_to(slave[1].x, slave[1].y)
-    crawl.mpr("Your surroundings suddenly seem different.")
+    crawl.mpr("당신 주변의 모습이 갑자기 변화했다.")
 end
 
 function callback.grunt_nemelex_gamble_finish2(data,triggerable,triggerer,marker,ev)
     slave = dgn.find_marker_positions_by_prop("exit", 1)
     you.teleport_to(slave[1].x, slave[1].y)
-    crawl.mpr("Your surroundings suddenly seem different.")
+    crawl.mpr("당신 주변의 모습이 갑자기 변화했다.")
 end
 
 function callback.grunt_nemelex_gamble_expire(data,triggerable,triggerer,marker,ev)
@@ -60,7 +60,7 @@ function callback.grunt_nemelex_gamble_expire(data,triggerable,triggerer,marker,
     slave = dgn.find_marker_positions_by_prop("start_tele", 1)
     dgn.terrain_changed(slave[1].x, slave[1].y, "floor", false, false, false)
     if (you.see_cell(slave[1].x, slave[1].y)) then
-        crawl.mpr("<white>The teleporter glows with a rainbow of weird colours and disappears.</white>")
+        crawl.mpr("<white>공간이동 관문이 기이한 무지갯빛으로 빛났고, 사라져버렸다.</white>")
     end
 end
 }}

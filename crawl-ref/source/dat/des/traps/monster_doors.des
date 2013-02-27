@@ -23,7 +23,7 @@ function callback.monster_doors_stepped(data, triggerable, triggerer, marker, ev
     else
       data.triggered = true
       dgn.grid(x,y,"floor")
-      crawl.mpr("You hear a faint click.")
+      crawl.mpr("희미하게 딸깍거리는 소리가 들렸다.")
       return
     end
   end
@@ -36,7 +36,7 @@ function callback.monster_doors_stepped(data, triggerable, triggerer, marker, ev
   -- if there are, it cancels the entire trap
   for slave in iter.slave_iterator("grate", 1) do
      if dgn.mons_at(slave.x, slave.y) ~= nil then
-       crawl.mpr("You feel the floor shift and hear a click.")
+       crawl.mpr("바닥이 움직이는 느낌과 함께, 딸깍거리는 소리가 났다.")
        return
      end
   end
@@ -47,7 +47,7 @@ function callback.monster_doors_stepped(data, triggerable, triggerer, marker, ev
       if not dgn.is_passable(slave.x,slave.y) then
         dgn.terrain_changed(slave.x, slave.y, "closed_door", false, false, false)
       else
-        crawl.mpr("You feel the floor shift and hear a click.")
+        crawl.mpr("바닥이 움직이는 느낌과 함께, 딸깍거리는 소리가 났다.")
         return
       end
   end
@@ -58,8 +58,8 @@ function callback.monster_doors_stepped(data, triggerable, triggerer, marker, ev
       dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
   end
   -- and then announce the changes
-  crawl.mpr("You step on to a pressure plate and iron grates slam shut around you!")
-  crawl.mpr("You now see doors in the wall!")
+  crawl.mpr("압착 버튼 위에 올라서자, 철창이 큰 소리를 내며 닫혔다!")
+  crawl.mpr("벽에 문들이 나타났다!")
 
 end
 

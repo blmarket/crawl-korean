@@ -10,18 +10,18 @@ function callback.release_the_mummies(data, triggerable, triggerer, marker, ev)
         return
     end
 
-    crawl.mpr("You hear a click.")
+    crawl.mpr("딸깍거리는 소리가 들렸다.")
 
     for slave in iter.slave_iterator("stone_door", 1) do
         if (dgn.mons_at(slave.x, slave.y) ~= nil or (slave.x == you_x and slave.y == you_y)) then
-            crawl.mpr("The walls vibrate for a moment.")
+            crawl.mpr("벽들이 잠시 흔들렸다.")
         else
             dgn.terrain_changed(slave.x, slave.y, "stone_wall", false, false, false)
             if (you.see_cell(slave.x, slave.y)) then
                 -- This can happen, in theory (combination of LRD + apportation is needed)
-                crawl.mpr("You see a stone wall slide shut!")
+                crawl.mpr("벽이 닫혀 길이 막혀버렸다!")
             else
-                crawl.mpr("You hear a loud grinding somewhere in the distance, followed by a thud.")
+                crawl.mpr("어디선가 쾅 하는 소리가 들려왔다.")
             end
         end
     end
@@ -30,7 +30,7 @@ function callback.release_the_mummies(data, triggerable, triggerer, marker, ev)
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
     end
 
-    crawl.mpr("A number of walls slide open! You sense an ancient evil...", "warning")
+    crawl.mpr("주변의 벽들이 열렸다! 사악한 고대의 존재들이 느껴졌다...", "warning")
 end
 }}
 

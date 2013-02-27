@@ -37,9 +37,9 @@
                                                   data.teleport_spot)
 
     if you.teleport_to(my_slaves[1].x, my_slaves[1].y, true) then
-      crawl.mpr("Your surroundings suddenly seem different!")
+      crawl.mpr("주변 모습이 갑자기 변화했다!")
     else
-      crawl.mpr("There is a strange hissing noise.")
+      crawl.mpr("뭔가를 긁는듯한 기이한 소음이 들린다.")
     end
   end
 
@@ -705,8 +705,8 @@ SUBVAULT: D : vault8_quadrant
 SUBST:    ABCD = .
 MONS: vault guard
 {{
-  set_feature_name("metal_wall", "heavily etched metal wall")
-  set_feature_name("green_crystal_wall", "heavily etched wall of green crystal")
+  set_feature_name("metal_wall", "장식된 철벽")
+  set_feature_name("green_crystal_wall", "장식된 녹색 수정 벽")
 }}
 MAP
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
