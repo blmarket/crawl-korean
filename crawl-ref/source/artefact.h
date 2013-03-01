@@ -44,7 +44,7 @@ enum setup_missile_type
 
 struct unrandart_entry
 {
-    const char *name;        // true name of unrandart
+    const char *name;		const char *kr_name;       // true name of unrandart
     const char *unid_name;   // un-id'd name of unrandart
     const char *type_name;   // custom item type
 

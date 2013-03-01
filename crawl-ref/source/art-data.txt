@@ -151,6 +151,7 @@
 # This entry must always be first.
 ENUM:   DUMMY1
 NAME:   DUMMY UNRANDART 1
+K_NAME: DUMMY UNRANDART 1
 OBJ:    OBJ_UNASSIGNED/250
 PLUS:   250/250
 COLOUR: BLACK
@@ -158,6 +159,7 @@ COLOUR: BLACK
 ####################### First come the old fixed arts.
 
 NAME:    Singing Sword
+K_NAME:  노래하는 검
 OBJ:     OBJ_WEAPONS/WPN_LONG_SWORD
 PLUS:    +7/+7
 COLOUR:  ETC_GOLD
@@ -167,6 +169,7 @@ VALUE:   1200
 BOOL:    special
 
 NAME:    Wrath of Trog
+K_NAME:  트로그의 분노
 OBJ:     OBJ_WEAPONS/WPN_BATTLEAXE
 PLUS:    +3/+11
 COLOUR:  ETC_BLOOD
@@ -176,6 +179,7 @@ VALUE:   1000
 BRAND:   SPWPN_ANTIMAGIC
 
 NAME:    Mace of Variability
+K_NAME:	 변덕의 메이스
 OBJ:     OBJ_WEAPONS/WPN_GREAT_MACE
 PLUS:    0/0   # Set on generation
 COLOUR:  ETC_RANDOM
@@ -186,6 +190,7 @@ BOOL:    special
 BRAND:   SPWPN_CHAOS
 
 NAME:    Glaive of Prune
+K_NAME:  자두 글레이브
 OBJ:     OBJ_WEAPONS/WPN_GLAIVE
 PLUS:    +4/+12
 COLOUR:  MAGENTA
@@ -196,6 +201,7 @@ BOOL:    chaotic
 BRAND:   SPWPN_VORPAL
 
 NAME:    Sword of Power
+K_NAME:  마력의 검
 OBJ:     OBJ_WEAPONS/WPN_GREAT_SWORD
 PLUS:    0/0 # Set on wield
 COLOUR:  RED
@@ -205,6 +211,7 @@ VALUE:   1000
 BOOL:    tilerim, special
 
 NAME:    Staff of Olgreb
+K_NAME:  올그레브의 지팡이
 OBJ:     OBJ_WEAPONS/WPN_STAFF
 PLUS:    0/0 # Set on wield
 COLOUR:  ETC_POISON
@@ -214,6 +221,7 @@ VALUE:   1000
 BOOL:    poison
 
 NAME:    Staff of Wucad Mu
+K_NAME:  우카드 무의 지팡이
 OBJ:     OBJ_WEAPONS/WPN_STAFF
 PLUS:    0/0 # Set on wield
 COLOUR:  ETC_MAGIC
@@ -223,6 +231,7 @@ VALUE:   1000
 BOOL:    special
 
 NAME:    Vampire's Tooth
+K_NAME:  흡혈귀의 송곳니
 OBJ:     OBJ_WEAPONS/WPN_DAGGER
 # it's a dagger made from a tooth -> no TYPE
 PLUS:    +3/+4
@@ -234,6 +243,7 @@ VALUE:   1000
 BOOL:    special
 
 NAME:    Scythe of Curses
+K_NAME:  저주의 대형 낫
 OBJ:     OBJ_WEAPONS/WPN_SCYTHE
 PLUS:    +13/+13
 COLOUR:  ETC_DEATH
@@ -245,6 +255,7 @@ CURSED:  3
 BOOL:    evil
 
 NAME:    Sceptre of Torment
+K_NAME:  고문의 셉터
 OBJ:     OBJ_WEAPONS/WPN_MACE
 PLUS:    +7/+6
 COLOUR:  ETC_GOLD
@@ -254,6 +265,7 @@ VALUE:   1200
 BOOL:    tilerim, special, evil
 
 NAME:    Sword of Zonguldrok
+K_NAME:  존굴르드로크의 검
 OBJ:     OBJ_WEAPONS/WPN_DOUBLE_SWORD
 PLUS:    +9/+9
 COLOUR:  ETC_BONE
@@ -265,6 +277,7 @@ CURSED:  3
 BOOL:    tilerim, special, evil, corpse_violating
 
 NAME:    Sword of Cerebov
+K_NAME:  세레보브의 검
 APPEAR:  great serpentine sword
 TYPE:    flamberge
 OBJ:     OBJ_WEAPONS/WPN_GREAT_SWORD
@@ -277,6 +290,7 @@ BRAND:   SPWPN_FLAMING
 BOOL:    cursed, tilerim, evil, nogen
 
 NAME:    Staff of Dispater
+K_NAME:  디스페이터의 지팡이
 APPEAR:  golden staff
 OBJ:     OBJ_WEAPONS/WPN_STAFF
 PLUS:    +4/+4
@@ -287,6 +301,7 @@ VALUE:   1200
 BOOL:    tilerim, special, evil, nogen
 
 NAME:    Sceptre of Asmodeus
+K_NAME:  아스모데우스의 셉터
 APPEAR:  ruby sceptre
 OBJ:     OBJ_WEAPONS/WPN_STAFF
 PLUS:    +7/+7
@@ -300,6 +315,7 @@ BOOL:    tilerim, special, evil, nogen
 # Reserved for the Enchantress.
 ENUM:    FAERIE
 NAME:    faerie dragon armour
+K_NAME:  요정 용 갑옷
 OBJ:     OBJ_ARMOUR/ARM_MOTTLED_DRAGON_ARMOUR
 PLUS:    +3
 COLOUR:  ETC_JEWEL
@@ -310,6 +326,7 @@ BOOL:    nogen, unided
 ##################### End of old fixed arts.
 
 NAME:    demon blade "Bloodbane"
+K_NAME:  악마의 칼날 "블러드베인"
 OBJ:     OBJ_WEAPONS/WPN_DEMON_BLADE
 PLUS:    +7/+8
 COLOUR:  ETC_DARK
@@ -321,6 +338,7 @@ BOOL:    berserk
 STEALTH: -20
 
 NAME:    scimitar of Flaming Death
+K_NAME:  불타는 죽음의 시미터
 OBJ:     OBJ_WEAPONS/WPN_SCIMITAR
 PLUS:    +7/+5
 COLOUR:  ETC_FIRE
@@ -333,6 +351,7 @@ BOOL:    poison
 MAGIC:   20
 
 NAME:    mace of Brilliance
+K_NAME:  광채의 메이스
 OBJ:     OBJ_WEAPONS/WPN_MACE
 PLUS:    +5/+5
 COLOUR:  ETC_HOLY
@@ -345,6 +364,7 @@ STEALTH: -20
 BOOL:    life, seeinv
 
 NAME:    demon blade "Leech"
+K_NAME:  악마의 칼날 "거머리"
 OBJ:     OBJ_WEAPONS/WPN_DEMON_BLADE
 PLUS:    +13/+4
 COLOUR:  MAGENTA
@@ -359,6 +379,7 @@ BOOL:    life
 CURSED:  4
 
 NAME:    dagger of Chilly Death
+K_NAME:  사파이어 단도 "얼어붙는 죽음"
 OBJ:     OBJ_WEAPONS/WPN_DAGGER
 PLUS:    +5/+7
 COLOUR:  ETC_ICE
@@ -371,6 +392,7 @@ MAGIC:   20
 BOOL:    poison
 
 NAME:     dagger "Morg"
+K_NAME:   단도 "모르그"
 OBJ:      OBJ_WEAPONS/WPN_DAGGER
 PLUS:     -1/+4
 COLOUR:   LIGHTRED
@@ -381,6 +403,7 @@ INT:      5
 MAGIC:    30
 
 NAME:    scythe "Finisher"
+K_NAME:  대형 낫 "최후의 일격"
 OBJ:     OBJ_WEAPONS/WPN_SCYTHE
 PLUS:    +3/+5
 COLOUR:  ETC_DARK
@@ -391,6 +414,7 @@ STR:     3
 BOOL:    cursed
 
 NAME:    sling "Punk"
+K_NAME:  투석기 "펑크"
 OBJ:     OBJ_WEAPONS/WPN_SLING
 PLUS:    +9/+12
 COLOUR:  ETC_ICE
@@ -401,6 +425,7 @@ COLD:    1
 
 ENUM:     KRISHNA
 NAME:     bow of Krishna "Sharnga"
+K_NAME:   크리슈나의 활 "차량가"
 OBJ:      OBJ_WEAPONS/WPN_BOW
 PLUS:     +8/+8
 COLOUR:   ETC_GOLD
@@ -411,6 +436,7 @@ DEX:      3
 BOOL:     seeinv
 
 NAME:    giant club "Skullcrusher"
+K_NAME:  거대 곤봉 "두개골 파괴자"
 OBJ:     OBJ_WEAPONS/WPN_GIANT_CLUB
 PLUS:    +0/+5
 COLOUR:  BROWN
@@ -420,6 +446,7 @@ BRAND:   SPWPN_SPEED
 STR:     5
 
 NAME:     glaive of the Guard
+K_NAME:   파수꾼의 글레이브
 OBJ:      OBJ_WEAPONS/WPN_GLAIVE
 PLUS:     +5/+8
 COLOUR:   ETC_ELECTRICITY
@@ -430,6 +457,7 @@ AC:       5
 BOOL:     seeinv, berserk
 
 NAME:     sword of Jihad
+K_NAME:   지하드의 검
 OBJ:      OBJ_WEAPONS/WPN_EUDEMON_BLADE
 PLUS:     +12/+10
 COLOUR:   ETC_HOLY
@@ -443,6 +471,7 @@ STEALTH:  -50
 BOOL:     life
 
 NAME:    crossbow "Hellfire"
+K_NAME:  석궁 "지옥불"
 OBJ:     OBJ_WEAPONS/WPN_CROSSBOW
 PLUS:    +6/+9
 COLOUR:  ETC_FIRE
@@ -454,6 +483,7 @@ COLD:    -1
 MAGIC:   40
 
 NAME:    sword of the Doom Knight
+K_NAME:  다이아몬드 대검 "심판의 기사"
 OBJ:     OBJ_WEAPONS/WPN_GREAT_SWORD
 PLUS:    +13/+13
 COLOUR:  BLUE
@@ -464,6 +494,7 @@ MAGIC:   50
 BOOL:    nospell
 
 NAME:    morningstar "Eos"
+K_NAME:  모닝스타 "에오스"
 OBJ:     OBJ_WEAPONS/WPN_MORNINGSTAR
 PLUS:    +11/+11
 COLOUR:  ETC_JEWEL
@@ -477,6 +508,7 @@ BOOL:    elec, seeinv, notelep
 # spells designed to do harm. Priests (or rather sorcerers) of bo are
 # called botono.
 NAME:     spear of the Botono
+K_NAME:   부두인형의 창
 OBJ:      OBJ_WEAPONS/WPN_SPEAR
 PLUS:     +2/+10
 COLOUR:   ETC_UNHOLY
@@ -487,6 +519,7 @@ HP:       -3
 BOOL:     poison, life, noises
 
 NAME:     trident of the Octopus King
+K_NAME:   문어왕의 삼지창
 OBJ:      OBJ_WEAPONS/WPN_TRIDENT
 PLUS:     +10/+4
 COLOUR:   ETC_WATER
@@ -497,6 +530,7 @@ BOOL:     elec, poison
 MAGIC:    50
 
 NAME:    mithril axe "Arga"
+K_NAME:  미스릴 도끼 "아루가"
 OBJ:     OBJ_WEAPONS/WPN_WAR_AXE
 PLUS:    +10/+6
 COLOUR:  WHITE
@@ -507,6 +541,7 @@ STR:     2
 MAGIC:   30
 
 NAME:     Elemental Staff
+K_NAME:   다섯 원소의 지팡이
 OBJ:      OBJ_WEAPONS/WPN_STAFF
 PLUS:     +3/+1
 COLOUR:   DARKGREY
@@ -520,6 +555,7 @@ METAB:    2
 BOOL:     noises
 
 NAME:    crossbow "Sniper"
+K_NAME:  석궁 "저격수"
 OBJ:     OBJ_WEAPONS/WPN_CROSSBOW
 PLUS:    +10/+0
 COLOUR:  ETC_DARK
@@ -529,6 +565,7 @@ BRAND:   SPWPN_VENOM
 BOOL:    seeinv
 
 NAME:    longbow "Piercer"
+K_NAME:  장궁 "꿰뚫는 자"
 OBJ:     OBJ_WEAPONS/WPN_LONGBOW
 PLUS:    +2/+10
 COLOUR:  CYAN
@@ -539,6 +576,7 @@ EV:      -2
 
 ENUM:    BLOWGUN_ASSASSIN
 NAME:    blowgun of the Assassin
+K_NAME:  암살자의 블로우 건
 OBJ:     OBJ_WEAPONS/WPN_BLOWGUN
 PLUS:    +6/+6
 COLOUR:  WHITE
@@ -548,6 +586,7 @@ STEALTH: 60
 BOOL:    inv, tilerim
 
 NAME:    lance "Wyrmbane"
+K_NAME:  와이엄베인
 OBJ:     OBJ_WEAPONS/WPN_SPEAR
 TYPE:    lance
 BASE_DAM: +2
@@ -561,6 +600,7 @@ FIRE:    1
 BOOL:    poison, berserk, tilerim
 
 NAME:     Spriggan's Knife
+K_NAME:   스프리건의 나이프
 OBJ:      OBJ_WEAPONS/WPN_DAGGER
 TYPE:     knife
 PLUS:     +4/+10
@@ -574,6 +614,7 @@ MAGIC:    20
 STEALTH:  50
 
 NAME:    plutonium sword
+K_NAME:  방사능 검
 OBJ:     OBJ_WEAPONS/WPN_TRIPLE_SWORD
 PLUS:    +12/+16
 COLOUR:  ETC_RANDOM
@@ -584,6 +625,7 @@ CURSED:  1
 STEALTH: -20
 
 NAME:     great mace "Undeadhunter"
+K_NAME:   대형 메이스 "망자를 쫓는 자"
 OBJ:      OBJ_WEAPONS/WPN_GREAT_MACE
 PLUS:     +7/+7
 COLOUR:   LIGHTGREY
@@ -592,6 +634,7 @@ TILE_EQ:  undeadhunter
 BOOL:     life
 
 NAME:    whip "Snakebite"
+K_NAME:  채찍 "사교상"
 OBJ:     OBJ_WEAPONS/WPN_WHIP
 PLUS:    +5/+10
 COLOUR:  DARKGREY
@@ -601,6 +644,7 @@ BRAND:   SPWPN_VENOM
 BOOL:    poison, tilerim
 
 NAME:     knife of Accuracy
+K_NAME:   명중의 단도
 OBJ:      OBJ_WEAPONS/WPN_DAGGER
 TYPE:     knife
 PLUS:     +27/-1
@@ -612,6 +656,7 @@ BOOL:     tilerim
 # A play on the spell of the same name.  Colour taken from crystal walls.
 ENUM:     CRYSTAL_SPEAR
 NAME:     Lehudib's crystal spear
+K_NAME:   레후딥의 수정창
 OBJ:      OBJ_WEAPONS/WPN_SPEAR
 PLUS:     +6/+6
 COLOUR:   GREEN
@@ -621,6 +666,7 @@ INT:      3
 BRAND:    SPWPN_RETURNING
 
 NAME:     captain's cutlass
+K_NAME:   해적선장의 커틀라스
 OBJ:      OBJ_WEAPONS/WPN_SABRE
 TYPE:     cutlass
 PLUS:     +6/+7
@@ -632,6 +678,7 @@ TILE_EQ:  cutlass
 BRAND:    SPWPN_SPEED
 
 NAME:     storm bow
+K_NAME:   폭풍의 활
 OBJ:      OBJ_WEAPONS/WPN_LONGBOW
 PLUS:     +8/+8
 COLOUR:   BLUE
@@ -640,6 +687,7 @@ TILE_EQ:  bow_blue
 BRAND:    SPWPN_ELECTROCUTION
 
 NAME:    large shield of Ignorance
+K_NAME:  무지의 방패
 OBJ:     OBJ_ARMOUR/ARM_LARGE_SHIELD
 PLUS:    +8
 COLOUR:  BROWN
@@ -652,6 +700,7 @@ BOOL:    life
 CURSED:  3
 
 NAME:    robe of Augmentation
+K_NAME:  증강의 로브
 OBJ:     OBJ_ARMOUR/ARM_ROBE
 PLUS:    +4
 COLOUR:  LIGHTRED
@@ -662,6 +711,7 @@ INT:     4
 DEX:     4
 
 NAME:     cloak of the Thief
+K_NAME:   도둑의 망토
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
 PLUS:     +1
 COLOUR:   ETC_DARK
@@ -674,6 +724,7 @@ STEALTH:  60
 BOOL:     seeinv, inv, lev
 
 NAME:    shield "Bullseye"
+K_NAME:  방패 "황소의 눈"
 OBJ:     OBJ_ARMOUR/ARM_SHIELD
 PLUS:    +15
 COLOUR:  RED
@@ -682,6 +733,7 @@ TILE_EQ: bullseye
 EV:      -5
 
 NAME:    crown of Dyrovepreva
+K_NAME:  다이로베프러버의 왕관
 OBJ:     OBJ_ARMOUR/ARM_CAP
 PLUS:    +3
 COLOUR:  ETC_JEWEL
@@ -692,6 +744,7 @@ METAB:   1
 BOOL:    elec, seeinv
 
 NAME:     hat of the Bear Spirit
+K_NAME:   곰 영혼의 모자
 OBJ:      OBJ_ARMOUR/ARM_CAP
 PLUS:     +2
 COLOUR:   DARKGREY
@@ -702,6 +755,7 @@ BOOL:     life, berserk
 MAGIC:    50
 
 NAME:     robe of Misfortune
+K_NAME:   불운의 로브
 OBJ:      OBJ_ARMOUR/ARM_ROBE
 PLUS:     -5
 COLOUR:   MAGENTA
@@ -717,6 +771,7 @@ STEALTH:  -80
 BOOL:     nospell, rnd_tele, randapp, unided
 
 NAME:     cloak of Flash
+K_NAME:   섬광의 망토
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
 PLUS:     +3
 COLOUR:   ETC_FLASH
@@ -727,6 +782,7 @@ BOOL:     lev
 
 ENUM:     BOOTS_ASSASSIN
 NAME:     boots of the Assassin
+K_NAME:   암살자의 장화
 OBJ:      OBJ_ARMOUR/ARM_BOOTS
 PLUS:     +2
 COLOUR:   BROWN
@@ -738,6 +794,7 @@ BOOL:     inv
 
 ENUM:    LEAR
 NAME:    Lear's chain mail
+K_NAME:  리어 왕의 사슬 갑옷
 OBJ:     OBJ_ARMOUR/ARM_CHAIN_MAIL
 PLUS:    -1
 COLOUR:  ETC_GOLD
@@ -747,6 +804,7 @@ DEX:     -3
 BOOL:    cursed, nospell, randapp, unided
 
 NAME:    skin of Zhor
+K_NAME:  즈홀의 가죽
 OBJ:     OBJ_ARMOUR/ARM_ANIMAL_SKIN
 PLUS:    +4
 COLOUR:  BROWN
@@ -756,6 +814,7 @@ COLD:    2
 
 ENUM:    SALAMANDER
 NAME:    salamander hide armour
+K_NAME:  살라맨더의 갑옷
 OBJ:     OBJ_ARMOUR/ARM_LEATHER_ARMOUR
 PLUS:    +3
 COLOUR:  ETC_FIRE
@@ -765,6 +824,7 @@ FIRE:    2
 BOOL:    berserk
 
 NAME:    gauntlets of War
+K_NAME:  전쟁의 건틀렛
 OBJ:     OBJ_ARMOUR/ARM_GLOVES
 PLUS:    +3
 COLOUR:  BROWN
@@ -774,6 +834,7 @@ ACC:     5
 DAM:     5
 
 NAME:    shield of Resistance
+K_NAME:  내성의 방패
 OBJ:     OBJ_ARMOUR/ARM_SHIELD
 PLUS:    +5
 COLOUR:  LIGHTRED
@@ -784,6 +845,7 @@ COLD:    1
 MAGIC:   40
 
 NAME:    robe of Folly
+K_NAME:  우둔의 로브
 OBJ:     OBJ_ARMOUR/ARM_ROBE
 PLUS:    -1
 COLOUR:  LIGHTGREY
@@ -795,6 +857,7 @@ BOOL:    nospell, randapp, unided
 
 ENUM:    MAXWELL
 NAME:    Maxwell's patent armour
+K_NAME:  맥스웰의 특허 갑옷
 OBJ:     OBJ_ARMOUR/ARM_PLATE_ARMOUR
 PLUS:    +15
 COLOUR:  LIGHTGREEN
@@ -806,6 +869,7 @@ BOOL:    nospell, notelep, cursed
 
 ENUM:    DRAGONMASK
 NAME:    mask of the Dragon
+K_NAME:  용의 가면
 OBJ:     OBJ_ARMOUR/ARM_CAP
 COLOUR:  ETC_SHIMMER_BLUE
 TILE:    urand_dragonmask
@@ -816,6 +880,7 @@ DAM:     3
 BOOL:    seeinv
 
 NAME:     robe of Night
+K_NAME:   암야의 로브
 OBJ:      OBJ_ARMOUR/ARM_ROBE
 PLUS:     +4
 COLOUR:   ETC_DARK
@@ -826,6 +891,7 @@ STEALTH:  50
 BOOL:     seeinv, inv
 
 NAME:    armour of the Dragon King
+K_NAME:  용왕의 갑옷
 OBJ:     OBJ_ARMOUR/ARM_GOLD_DRAGON_ARMOUR
 PLUS:    +9
 COLOUR:  ETC_GOLD
@@ -834,6 +900,7 @@ TILE_EQ: dragonarm_gold
 MAGIC:   50
 
 NAME:    hat of the Alchemist
+K_NAME:  연금술사의 모자
 OBJ:     OBJ_ARMOUR/ARM_WIZARD_HAT
 PLUS:    +2
 COLOUR:  MAGENTA
@@ -845,6 +912,7 @@ MAGIC:   30
 BOOL:    elec
 
 NAME:    fencer's gloves
+K_NAME:  검사의 장갑
 OBJ:     OBJ_ARMOUR/ARM_GLOVES
 PLUS:    +2
 COLOUR:  WHITE
@@ -855,6 +923,7 @@ DEX:     3
 ACC:     8
 
 NAME:     cloak of Starlight
+K_NAME:   별빛의 망토
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
 COLOUR:   ETC_ICE
 TILE:     urand_starlight
@@ -865,6 +934,7 @@ STEALTH:  -30
 BOOL:     elec
 
 NAME:     ratskin cloak
+K_NAME:   쥐가죽 망토
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
 PLUS:     +1
 COLOUR:   ETC_BEOGH
@@ -875,6 +945,7 @@ DEX:      -1
 BOOL:     life, poison
 
 NAME:     shield of the gong
+K_NAME:   징 방패
 OBJ:      OBJ_ARMOUR/ARM_SHIELD
 PLUS:     +6
 COLOUR:   ETC_GOLD
@@ -885,6 +956,7 @@ MAGIC:    50
 BOOL:     elec, life
 
 NAME:    amulet of the Air
+K_NAME:  대기의 부적
 OBJ:     OBJ_JEWELLERY/AMU_CONTROLLED_FLIGHT
 COLOUR:  ETC_ELECTRICITY
 TILE:    urand_air
@@ -893,6 +965,7 @@ STEALTH: 50
 BOOL:    elec, lev
 
 NAME:    ring of Shadows
+K_NAME:  그림자의 반지
 OBJ:     OBJ_JEWELLERY/RING_INVISIBILITY
 COLOUR:  ETC_DARK
 TILE:    urand_shadows
@@ -902,6 +975,7 @@ STEALTH: 40
 BOOL:    life, seeinv
 
 NAME:    amulet of Cekugob
+K_NAME:  세크코브의 부적
 OBJ:     OBJ_JEWELLERY/AMU_WARDING
 COLOUR:  LIGHTGREY
 TILE:    urand_cekugob
@@ -911,6 +985,7 @@ BOOL:    elec, poison, life, notelep
 METAB:   2
 
 NAME:    amulet of the Four Winds
+K_NAME:  사방위 바람의 부적
 OBJ:     OBJ_JEWELLERY/AMU_CLARITY
 COLOUR:  ETC_POISON
 TILE:    urand_four_winds
@@ -918,6 +993,7 @@ BOOL:    life
 MAGIC:   100
 
 NAME:    necklace of Bloodlust
+K_NAME:  피에 굶주린 목걸이
 OBJ:     OBJ_JEWELLERY/AMU_RAGE
 COLOUR:  ETC_BLOOD
 TILE:    urand_bloodlust
@@ -930,18 +1006,21 @@ CURSED:  3
 STEALTH: -20
 
 NAME:    ring of Shaolin
+K_NAME:  소림사의 반지
 OBJ:     OBJ_JEWELLERY/RING_EVASION
 PLUS:    +8
 COLOUR:  ETC_POISON
 TILE:    urand_shaolin
 
 NAME:    ring of Robustness
+K_NAME:  강건의 반지
 OBJ:     OBJ_JEWELLERY/RING_PROTECTION
 PLUS:    +8
 COLOUR:  LIGHTGREY
 TILE:    urand_robustness
 
 NAME:    ring of the Mage
+K_NAME:  현자의 반지
 OBJ:     OBJ_JEWELLERY/RING_WIZARDRY
 COLOUR:  ETC_ENCHANT
 TILE:    urand_mage
@@ -949,6 +1028,7 @@ INT:     3
 MAGIC:   50
 
 NAME:     brooch of Shielding
+K_NAME:   차폐의 브로치
 OBJ:      OBJ_JEWELLERY/AMU_WARDING
 COLOUR:   ETC_MAGIC
 TILE:     urand_brooch_of_shielding
@@ -957,6 +1037,7 @@ EV:       4
 
 ENUM:     RCLOUDS
 NAME:     robe of Clouds
+K_NAME:   구름의 로브
 OBJ:      OBJ_ARMOUR/ARM_ROBE
 PLUS:     +3
 COLOUR:   ETC_MIST
@@ -965,6 +1046,7 @@ TILE_EQ:  robe_clouds
 BOOL:     elec, lev
 
 NAME:     hat of Pondering
+K_NAME:   심사숙고의 모자
 OBJ:      OBJ_ARMOUR/ARM_WIZARD_HAT
 PLUS:     +3
 COLOUR:   LIGHTRED
@@ -977,6 +1059,7 @@ MAGIC:    30
 
 ENUM:     DEMON_AXE
 NAME:     obsidian axe
+K_NAME:   흑요석 도끼
 OBJ:      OBJ_WEAPONS/WPN_BROAD_AXE
 PLUS:     +12/+15
 COLOUR:   ETC_UNHOLY
@@ -988,6 +1071,7 @@ STR:      +3
 BOOL:     evil, seeinv, lev, special
 
 NAME:     lightning scales
+K_NAME:   번개 비늘
 OBJ:      OBJ_ARMOUR/ARM_NAGA_BARDING
 PLUS:     +3
 TILE:     urand_lightning_scales
@@ -998,6 +1082,7 @@ BOOL:     elec
 
 ENUM:     BLACK_KNIGHT_HORSE
 NAME:     Black Knight's horse barding
+K_NAME:   흑기사의 마갑
 OBJ:      OBJ_ARMOUR/ARM_CENTAUR_BARDING
 PLUS:     +10
 TILE:     urand_bk_barding
@@ -1008,12 +1093,14 @@ METAB:    -2
 BOOL:     life, evil
 
 NAME:     ring of Vitality
+K_NAME:   활력의 반지
 OBJ:      OBJ_JEWELLERY/RING_REGENERATION
 HP:       +15
 COLOUR:   LIGHTMAGENTA
 TILE:     urand_vitality
 
 NAME:     autumn katana
+K_NAME:   가을 카타나
 OBJ:      OBJ_WEAPONS/WPN_LONG_SWORD
 TYPE:     katana
 TILE:     urand_katana
@@ -1027,6 +1114,7 @@ BOOL:     clarity
 BRAND:    SPWPN_VORPAL
 
 NAME:     shillelagh "Devastator"
+K_NAME:   막대기 "완전한 파괴"
 OBJ:      OBJ_WEAPONS/WPN_CLUB
 TYPE:     shillelagh
 TILE:     urand_shillelagh
@@ -1040,6 +1128,7 @@ COLOUR:   WHITE
 # Worn by Tiamat.
 ENUM:     DRAGONSKIN
 NAME:     dragonskin cloak
+K_NAME:   용가죽 망토
 APPEAR:   opalescent scaly cloak
 OBJ:      OBJ_ARMOUR/ARM_CLOAK
 TILE:     urand_dragonskin
@@ -1050,6 +1139,7 @@ BOOL:     nogen
 
 ENUM:     OCTOPUS_KING_RING
 NAME:     ring of the Octopus King
+K_NAME:   문어 왕의 반지
 OBJ:      OBJ_JEWELLERY/RING_HUNGER
 COLOUR:   ETC_WATER
 TILE:     urand_octoring
@@ -1070,6 +1160,7 @@ BOOL:     unided
 # Obviously, because it contains every positive property in the game,
 # this should never be randomly generated!
 NAME:    milk chocolate
+K_NAME:  밀크 초콜릿
 OBJ:     OBJ_JEWELLERY/AMU_STASIS
 COLOUR:  BROWN
 TILE:    urand_air
@@ -1092,6 +1183,7 @@ BOOL:    nogen, berserk, blink, clarity, elec, inv, lev, life, nospell, notelep,
 
 # This is the second of two amulets used to test suppression. See above.
 NAME:    dark chocolate
+K_NAME:  다크 초콜릿
 OBJ:     OBJ_JEWELLERY/AMU_RESIST_CORROSION
 COLOUR:  DARKGREY
 TILE:    urand_bloodlust
@@ -1109,9 +1201,34 @@ STEALTH: -100
 STR:     -3
 BOOL:    nogen, rnd_tele
 
+NAME:    Test Sword
+K_NAME:  테스트 검
+OBJ:     OBJ_WEAPONS/WPN_LONG_SWORD
+PLUS:     +100/+100
+COLOUR:   ETC_HOLY
+TILE:     urand_jihad
+TILE_EQ:  jihad
+BRAND:    SPWPN_HOLY_WRATH
+AC:      30
+ACC:     100
+COLD:    3
+DAM:     100
+DEX:     27
+EV:      30
+FIRE:    3
+INT:     27
+MAGIC:   100
+METAB:   -10
+HP:      500
+MP:      100
+STEALTH: 100
+STR:     27
+BOOL:    nogen, berserk, blink, clarity, elec, inv, lev, life, poison, seeinv
+
 # This entry must always be last.
 ENUM:   DUMMY2
 NAME:   DUMMY UNRANDART 2
+K_NAME: DUMMY UNRANDART 2
 OBJ:    OBJ_UNASSIGNED/250
 PLUS:   250/250
 COLOUR: BLACK

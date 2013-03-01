@@ -48,6 +48,7 @@ my %field_type = (
     MP       => "num",
     MUTATE   => "num",
     NAME     => "str",
+	K_NAME   => "str",
     NOGEN    => "bool",
     NOISES   => "bool",
     NOSPELL  => "bool",
@@ -477,7 +478,7 @@ sub process_line
 }
 
 my @art_order = (
-    "NAME", "APPEAR", "TYPE", "\n",
+    "NAME", "K_NAME", "APPEAR", "TYPE", "\n",
     "base_type", "sub_type", "plus", "plus2", "COLOUR", "VALUE", "\n",
     "flags",
 

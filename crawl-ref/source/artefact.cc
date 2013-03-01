@@ -1430,9 +1430,9 @@ std::string make_artefact_name(bool allow_translate, const item_def &item, bool 
     {
         const unrandart_entry *unrand = _seekunrandart(item);
         if (!appearance)
-            return gettext(unrand->name);
+            return (translate_flag ? unrand->kr_name : unrand->name);
         if (!(unrand->flags & UNRAND_FLAG_RANDAPP))
-            return gettext(unrand->unid_name);
+            return unrand->unid_name;
     }
 
     std::string lookup;
@@ -2055,7 +2055,7 @@ bool make_item_unrandart(item_def &item, int unrand_index)
 
     // get true artefact name
     ASSERT(!item.props.exists(ARTEFACT_NAME_KEY));
-    item.props[ARTEFACT_NAME_KEY].get_string() = gettext(unrand->name);
+    item.props[ARTEFACT_NAME_KEY].get_string() = gettext(unrand->kr_name);
 
     // get artefact appearance
     ASSERT(!item.props.exists(ARTEFACT_APPEAR_KEY));
