@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions related to teleportation and blinking.
 **/
@@ -59,7 +59,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     bool was_constricted = false;
     const bool jump = type == MONS_JUMPING_SPIDER;
-    const std::string verb = (jump ? "leap" : "blink");
+    const std::string verb = (jump ? "멀리 뛰어올랐다" : "사라졌다");
 
     if (is_constricted())
     {
@@ -69,8 +69,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
         {
             if (!quiet)
             {
-                std::string message = " struggles to " + verb
-                                    + " free from constriction.";
+                std::string message = "당신에게서 벗어나려고 발버둥쳤다."; // " struggles to " + verb
+                                    //+ " free from constriction.";
                 simple_monster_message(this, message.c_str());
             }
             return false;
@@ -79,8 +79,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     if (!quiet)
     {
-        std::string message = " " + conj_verb(verb)
-                            + (was_constricted ? " free!" : "!");
+        std::string message = "이(가) " + (was_constricted ? "" : verb)
+                            + (was_constricted ? "당신으로부터 탈출했다!" : "!");
         simple_monster_message(this, message.c_str());
     }
 

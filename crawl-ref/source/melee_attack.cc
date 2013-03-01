@@ -1097,7 +1097,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
     switch (atk)
     {
     case UNAT_CONSTRICT:
-        aux_attack = aux_verb = "grab";
+        aux_attack = aux_verb = P_("verb","grab");
         aux_damage = 0;
         noise_factor = 10; // extremely quiet?
         break;
@@ -4512,7 +4512,7 @@ void melee_attack::mons_apply_attack_flavour()
     case AF_CRUSH:
         if (needs_message)
         {
-            mprf("%s %s %s.",
+            mprf(pgettext("afcrush","%s %s %s."),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb("grab").c_str(),
                  defender_name().c_str());

@@ -74,7 +74,7 @@ end
 function LockDoor:check_veto (marker, pname, dry_run)
   local rune_count = you.num_runes()
 
-  if dry_run ~= nil then crawl.mpr("Got " .. rune_count .. " runes") end
+  if dry_run ~= nil then crawl.mpr(rune_count .. "개의 룬을 얻었다") end
   if rune_count < 3 then
     return "veto"
   else

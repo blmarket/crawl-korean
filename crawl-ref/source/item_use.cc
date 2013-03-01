@@ -457,7 +457,7 @@ void warn_shield_penalties()
              && cmp_weapon_size(*weapon, SIZE_LARGE) >= 0)
     {
         mprf(MSGCH_WARN, gettext("Your %s severely limits your weapon's effectiveness."),
-             shield_base_name(you.shield()));
+             _(shield_base_name(you.shield())));
     }
 }
 

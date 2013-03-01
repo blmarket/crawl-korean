@@ -525,7 +525,7 @@ std::string get_god_likes(god_type which_god, bool verbose)
     if (which_god == GOD_NO_GOD || which_god == GOD_XOM)
         return "";
 
-    std::string text = uppercase_first(god_name(which_god));
+    std::string text = uppercase_first(_(god_name(which_god).c_str()));
     std::vector<std::string> likes;
     std::vector<std::string> really_likes;
 
@@ -799,7 +799,7 @@ std::string get_god_likes(god_type which_god, bool verbose)
         if (!really_likes.empty())
         {
             text += " 또한, ";
-            text += uppercase_first(god_name(which_god));
+            text += uppercase_first(_(god_name(which_god).c_str()));
 
             text += "은(는) ";
             text += comma_separated_line(really_likes.begin(),
@@ -942,7 +942,7 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
 
     if (!dislikes.empty())
     {
-        text += uppercase_first(god_name(which_god));
+        text += uppercase_first(_(god_name(which_god).c_str()));
         text += "은(는) ";
         text += comma_separated_line(dislikes.begin(), dislikes.end(),
                                      " 또는 ", ", ");
@@ -954,7 +954,7 @@ std::string get_god_dislikes(god_type which_god, bool /*verbose*/)
 
     if (!really_dislikes.empty())
     {
-        text += uppercase_first(god_name(which_god));
+        text += uppercase_first(_(god_name(which_god).c_str()));
         text += "은(는) ";
                 text += comma_separated_line(really_dislikes.begin(),
                                              really_dislikes.end(),
@@ -3412,7 +3412,7 @@ static void _god_welcome_identify_gear()
 void god_pitch(god_type which_god)
 {
     mprf("당신은 %s의 제단%s",
-		 god_name(which_god).c_str(),
+		 _(god_name(which_god).c_str()),
          you.species == SP_NAGA ? "앞에 몸을 꼬아 앉았다." :
          // < TGWi> you curl up on the altar and go to sleep
          you.species == SP_FELID  ? "앞에 살포시 앉았다."
@@ -3597,20 +3597,22 @@ void god_pitch(god_type which_god)
 
     if (is_good_god(you.religion) && is_good_god(old_god))
     {
+		std::string good_god_temp1 = ((old_god == GOD_ELYVILON) ? "네요" : ((old_god == GOD_SHINING_ONE) ? "군" : "네"));
+		std::string good_god_temp2 = ((old_god == GOD_ELYVILON) ? "세요" : ((old_god == GOD_SHINING_ONE) ? "거라" : "게나"));
         // Some feedback that piety moved over.
         switch (you.religion)
         {
         case GOD_ELYVILON:
-            simple_god_message(("은(는) 말했다: 작별이군요. 이제 " 
-                               + god_name(you.religion) + "와 함께, 순수한 자들을 도와주세요.").c_str(), old_god);
+			simple_god_message(("은(는) 말했다: 작별이" + good_god_temp1 + ". 이제 " 
+                               + std::string(_(god_name(you.religion).c_str())) + "와(과) 함께, 순수한 자들을 도와주" + good_god_temp2 + ".").c_str(), old_god);
             break;
         case GOD_SHINING_ONE:
-            simple_god_message(("은(는) 말했다: 작별이다. 이제 " 
-                               + god_name(you.religion) + "와 함께, 악한 자들을 무찌르거라.").c_str(), old_god);
+			simple_god_message(("은(는) 말했다: 작별이" + good_god_temp1 + ". 이제 " 
+                               + std::string(_(god_name(you.religion).c_str())) + "와(과) 함께, 악한 자들을 무찌르" + good_god_temp2 + ".").c_str(), old_god);
             break;
         case GOD_ZIN:
-            simple_god_message(("은(는) 말했다: 작별이네. 이제 " 
-                               + god_name(you.religion) + "와 함께, 가르침을 전파하게나.").c_str(), old_god);
+            simple_god_message(("은(는) 말했다: 작별이" + good_god_temp1 + ". 이제 " 
+                               + std::string(_(god_name(you.religion).c_str())) + "와(과) 함께, 그의 가르침을 전파하" + good_god_temp2 + ".").c_str(), old_god);
             break;
         default:
             mpr("Unknown good god.", MSGCH_ERROR);

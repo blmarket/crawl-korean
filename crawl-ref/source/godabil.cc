@@ -1348,7 +1348,7 @@ void tso_divine_shield()
             || you.duration[DUR_CONDENSATION_SHIELD])
         {
             mprf(_("Your shield is strengthened by %s's divine power."),
-                 god_name(GOD_SHINING_ONE).c_str());
+                 _(god_name(GOD_SHINING_ONE).c_str()));
         }
         else
             mpr(_("A divine shield forms around you!"));
@@ -1398,7 +1398,7 @@ bool elyvilon_divine_vigour()
     if (!you.duration[DUR_DIVINE_VIGOUR])
     {
         mprf(_("%s grants you divine vigour."),
-             god_name(GOD_ELYVILON).c_str());
+             _(god_name(GOD_ELYVILON).c_str()));
 
         const int vigour_amt = 1 + you.skill_rdiv(SK_INVOCATIONS, 1, 3);
         const int old_hp_max = you.hp_max;
@@ -2127,7 +2127,7 @@ static bool _create_plant(coord_def & target, int hp_adjust = 0)
             if (hp_adjust)
             {
                 mprf(_("A plant, strengthened by %s, grows up from the ground."),
-                     god_name(GOD_FEDHAS).c_str());
+                     _(god_name(GOD_FEDHAS).c_str()));
             }
             else
                 mpr(_("A plant grows up from the ground."));

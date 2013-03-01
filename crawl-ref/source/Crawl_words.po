@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-23 22:40+0900\n"
+"POT-Creation-Date: 2013-03-01 17:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1668,7 +1668,7 @@ msgstr "크라켄"
 #: mon-data.h:4137 mon-data.h:4126 misc.cc:2211 misc.cc:2218 misc.cc:2212
 #: misc.cc:2219 monster.cc:2361 monster.cc:2504 monster.cc:2395
 #: monster.cc:2538 mon-data.h:4188 monster.cc:2669 monster.cc:2812
-#: mon-data.h:4214 monster.cc:2689 monster.cc:2832
+#: mon-data.h:4214 monster.cc:2689 monster.cc:2832 monster.cc:2888
 msgid "tentacle"
 msgstr "촉수"
 
@@ -2336,6 +2336,7 @@ msgstr "고대의 히드라"
 #: itemprop.cc:438 itemname.cc:1658 itemname.cc:1660 itemname.cc:1667
 #: itemname.cc:1668 itemname.cc:1675 itemname.cc:1659 itemprop.cc:445
 #: mon-info.cc:613 itemname.cc:1564 itemprop.cc:426 mon-info.cc:784
+#: itemname.cc:1567
 msgid "royal jelly"
 msgstr "로얄 젤리"
 
@@ -2852,7 +2853,7 @@ msgstr "파괴 마술"
 #: spl-util.cc:897 spl-util.cc:897 skills2.cc:97 spl-util.cc:896
 #: skills2.cc:94 spl-util.cc:853
 msgid "Hexes"
-msgstr "사술"
+msgstr "저주"
 
 #: spl-util.cc:899 spl-util.cc:899 skills2.cc:98 spl-util.cc:898
 #: skills2.cc:95 spl-util.cc:855
@@ -3024,7 +3025,7 @@ msgstr "램프 요정"
 msgid "the Tomb"
 msgstr "무덤"
 
-#: decks.cc:322 decks.cc:322 decks.cc:319
+#: decks.cc:322 decks.cc:322 decks.cc:319 status.cc:941 status.cc:945
 msgid "Water"
 msgstr "물"
 
@@ -4070,7 +4071,7 @@ msgstr "폭발"
 #: itemname.cc:389 itemname.cc:400 itemname.cc:407 itemname.cc:407
 #: itemname.cc:427 itemname.cc:376
 msgid "exploding"
-msgstr "폭발"
+msgstr "폭발의"
 
 #: itemname.cc:391 itemname.cc:764 itemname.cc:402 itemname.cc:775
 #: itemname.cc:409 itemname.cc:782 itemname.cc:782 itemname.cc:429
@@ -4113,7 +4114,7 @@ msgstr "마취"
 #: itemname.cc:399 itemname.cc:410 itemname.cc:417 itemname.cc:417
 #: status.cc:94 itemname.cc:437 itemname.cc:386
 msgid "sleeping"
-msgstr "마취의"
+msgstr "마취"
 
 #: itemname.cc:401 itemname.cc:412 itemname.cc:419 itemname.cc:419
 #: itemname.cc:439 itemname.cc:388
@@ -4151,7 +4152,7 @@ msgstr "귀환"
 #: itemname.cc:407 itemname.cc:418 itemname.cc:425 itemname.cc:425
 #: itemname.cc:445 itemname.cc:394
 msgid "returning"
-msgstr "귀환"
+msgstr "귀환의"
 
 #: itemname.cc:409 itemname.cc:420 itemname.cc:427 itemname.cc:427
 #: godabil.cc:132 itemname.cc:447 itemname.cc:396
@@ -4409,7 +4410,7 @@ msgstr "갈라진 "
 #: itemname.cc:593 itemname.cc:758 itemname.cc:1467 itemname.cc:1484
 #: itemname.cc:600 itemname.cc:765 itemname.cc:1491 itemname.cc:1492
 #: itemname.cc:1499 itemname.cc:626 itemname.cc:791 itemname.cc:1483
-#: itemname.cc:575 itemname.cc:736 itemname.cc:1392
+#: itemname.cc:575 itemname.cc:736 itemname.cc:1392 itemname.cc:1395
 msgid "shiny "
 msgstr "빛나는 "
 
@@ -4436,7 +4437,8 @@ msgstr "쇠퇴한 "
 #: itemname.cc:629 itemname.cc:783 itemname.cc:832 itemname.cc:959
 #: itemname.cc:1351 itemname.cc:1496 itemname.cc:1625 itemname.cc:578
 #: itemname.cc:728 itemname.cc:777 itemname.cc:900 itemname.cc:1288
-#: itemname.cc:1405 itemname.cc:1530 itemname.cc:998
+#: itemname.cc:1405 itemname.cc:1530 itemname.cc:998 itemname.cc:1408
+#: itemname.cc:1533
 msgid "glowing "
 msgstr "반짝이는 "
 
@@ -4997,7 +4999,7 @@ msgstr "긁힘이 있는 "
 #: itemname.cc:1494 mon-info.cc:601 itemname.cc:1493 itemname.cc:1504
 #: itemname.cc:1521 itemname.cc:1528 itemname.cc:1529 itemname.cc:1536
 #: itemname.cc:1079 itemname.cc:1520 mon-info.cc:622 itemname.cc:1429
-#: mon-info.cc:793
+#: mon-info.cc:793 itemname.cc:1432
 msgid "buggy "
 msgstr "버그 "
 
@@ -5096,7 +5098,7 @@ msgstr "세모난 "
 #: itemname.cc:794 itemname.cc:1585 itemname.cc:1584 itemname.cc:805
 #: itemname.cc:1595 itemname.cc:1623 itemname.cc:1625 itemname.cc:812
 #: itemname.cc:1632 itemname.cc:1633 itemname.cc:1640 itemname.cc:838
-#: itemname.cc:1624 itemname.cc:783 itemname.cc:1529
+#: itemname.cc:1624 itemname.cc:783 itemname.cc:1529 itemname.cc:1532
 msgid "lumpy "
 msgstr "우둘투둘한 "
 
@@ -5345,7 +5347,7 @@ msgstr "알 수 없는 기타 아이템(버그)"
 #: itemname.cc:914 itemname.cc:1751 itemname.cc:1750 itemname.cc:925
 #: itemname.cc:1763 itemname.cc:1791 itemname.cc:1793 itemname.cc:932
 #: itemname.cc:1800 itemname.cc:1801 itemname.cc:1808 itemname.cc:1792
-#: itemname.cc:1692 itemname.cc:857
+#: itemname.cc:1692 itemname.cc:857 itemname.cc:1695
 msgid "deck of cards"
 msgstr "카드 덱"
 
@@ -5633,144 +5635,146 @@ msgstr "칼날"
 #: itemname.cc:1502 itemname.cc:1501 itemname.cc:1512 itemprop.cc:121
 #: itemname.cc:1530 itemname.cc:1531 itemname.cc:1538 itemname.cc:1539
 #: itemname.cc:1546 itemprop.cc:123 itemname.cc:1439 itemprop.cc:120
+#: itemname.cc:1442
 msgid "gloves"
 msgstr "장갑"
 
 #: itemname.cc:1503 itemname.cc:1502 itemname.cc:1513 itemname.cc:1531
 #: itemname.cc:1532 itemname.cc:1539 itemname.cc:1540 itemname.cc:1547
-#: itemname.cc:1440
+#: itemname.cc:1440 itemname.cc:1443
 msgid "gauntlets"
 msgstr "건틀렛"
 
 #: itemname.cc:1504 itemname.cc:1503 itemname.cc:1514 itemname.cc:1532
 #: itemname.cc:1533 itemname.cc:1540 itemname.cc:1541 itemname.cc:1548
-#: itemname.cc:1441
+#: itemname.cc:1441 itemname.cc:1444
 msgid "bracers"
 msgstr "팔찌"
 
 #: itemname.cc:1505 itemname.cc:1504 itemname.cc:1515 itemname.cc:1533
 #: itemname.cc:1534 itemname.cc:1541 itemname.cc:1542 itemname.cc:1549
-#: itemname.cc:1442
+#: itemname.cc:1442 itemname.cc:1445
 msgid "bug-ridden gloves"
 msgstr "버그난 장갑"
 
 #: itemname.cc:1537 itemname.cc:1536 itemname.cc:1547 itemname.cc:1575
 #: itemname.cc:1577 itemname.cc:1584 itemname.cc:1585 itemname.cc:1592
-#: invent.cc:983 itemname.cc:1576 itemname.cc:1485
+#: invent.cc:983 itemname.cc:1576 itemname.cc:1485 itemname.cc:1488
 msgid "wand"
 msgstr "마법봉"
 
 #: itemname.cc:1570 itemname.cc:1569 itemname.cc:1580 itemname.cc:1608
 #: itemname.cc:1610 itemname.cc:1617 itemname.cc:1618 itemname.cc:1625
 #: invent.cc:987 itemname.cc:1609 itemname.cc:1514 mon-cast.cc:727
+#: itemname.cc:1517
 msgid "potion"
 msgstr "물약"
 
 #: itemname.cc:1585 itemname.cc:1584 itemname.cc:1595 itemname.cc:1623
 #: itemname.cc:1625 itemname.cc:1632 itemname.cc:1633 itemname.cc:1640
-#: itemname.cc:1624 itemname.cc:1529
+#: itemname.cc:1624 itemname.cc:1529 itemname.cc:1532
 msgid "bubbling "
 msgstr "부글거리는 "
 
 #: itemname.cc:1585 itemname.cc:1584 itemname.cc:1595 itemname.cc:1623
 #: itemname.cc:1625 itemname.cc:1632 itemname.cc:1633 itemname.cc:1640
-#: itemname.cc:1624 itemname.cc:1529
+#: itemname.cc:1624 itemname.cc:1529 itemname.cc:1532
 msgid "fuming "
 msgstr "냄새가 진한 "
 
 #: itemname.cc:1585 itemname.cc:1584 itemname.cc:1595 itemname.cc:1623
 #: itemname.cc:1625 itemname.cc:1632 itemname.cc:1633 itemname.cc:1640
-#: itemname.cc:1624 itemname.cc:1529
+#: itemname.cc:1624 itemname.cc:1529 itemname.cc:1532
 msgid "fizzy "
 msgstr "거품이 나는 "
 
 #: itemname.cc:1585 itemname.cc:1584 itemname.cc:1595 itemname.cc:1623
 #: itemname.cc:1625 itemname.cc:1632 itemname.cc:1633 itemname.cc:1640
-#: itemname.cc:1624 itemname.cc:1529
+#: itemname.cc:1624 itemname.cc:1529 itemname.cc:1532
 msgid "viscous "
 msgstr "끈적거리는 "
 
 #: itemname.cc:1586 itemname.cc:1585 itemname.cc:1596 itemname.cc:1624
 #: itemname.cc:1626 itemname.cc:1633 itemname.cc:1634 itemname.cc:1641
-#: itemname.cc:1625 itemname.cc:1530
+#: itemname.cc:1625 itemname.cc:1530 itemname.cc:1533
 msgid "smoky "
 msgstr "연기가 나는 "
 
 #: itemname.cc:1586 itemname.cc:1585 itemname.cc:1596 itemname.cc:1624
 #: itemname.cc:1626 itemname.cc:1633 itemname.cc:1634 itemname.cc:1641
-#: itemname.cc:1625 itemname.cc:1530
+#: itemname.cc:1625 itemname.cc:1530 itemname.cc:1533
 msgid "sedimented "
 msgstr "침전물이 있는 "
 
 #: itemname.cc:1586 itemname.cc:1585 itemname.cc:1596 itemname.cc:1624
 #: itemname.cc:1626 itemname.cc:1633 itemname.cc:1634 itemname.cc:1641
-#: itemname.cc:1625 itemname.cc:1530
+#: itemname.cc:1625 itemname.cc:1530 itemname.cc:1533
 msgid "metallic "
 msgstr "금속빛이 나는 "
 
 #: itemname.cc:1586 itemname.cc:1585 itemname.cc:1596 itemname.cc:1624
 #: itemname.cc:1626 itemname.cc:1633 itemname.cc:1634 itemname.cc:1641
-#: itemname.cc:1625 itemname.cc:1530
+#: itemname.cc:1625 itemname.cc:1530 itemname.cc:1533
 msgid "murky "
 msgstr "탁한 "
 
 #: itemname.cc:1587 itemname.cc:1586 itemname.cc:1597 itemname.cc:1625
 #: itemname.cc:1627 itemname.cc:1634 itemname.cc:1635 itemname.cc:1642
-#: itemname.cc:1626 itemname.cc:1531
+#: itemname.cc:1626 itemname.cc:1531 itemname.cc:1534
 msgid "gluggy "
 msgstr "끓어 오르는 "
 
 #: itemname.cc:1587 itemname.cc:1586 itemname.cc:1597 itemname.cc:1625
 #: itemname.cc:1627 itemname.cc:1634 itemname.cc:1635 itemname.cc:1642
-#: itemname.cc:1626 itemname.cc:1531
+#: itemname.cc:1626 itemname.cc:1531 itemname.cc:1534
 msgid "oily "
 msgstr "기름진 "
 
 #: itemname.cc:1587 itemname.cc:1586 itemname.cc:1597 itemname.cc:1625
 #: itemname.cc:1627 itemname.cc:1634 itemname.cc:1635 itemname.cc:1642
-#: itemname.cc:1626 itemname.cc:1531
+#: itemname.cc:1626 itemname.cc:1531 itemname.cc:1534
 msgid "slimy "
 msgstr "덩어리진 "
 
 #: itemname.cc:1587 itemname.cc:1586 itemname.cc:1597 itemname.cc:1625
 #: itemname.cc:1627 itemname.cc:1634 itemname.cc:1635 itemname.cc:1642
-#: itemname.cc:1626 itemname.cc:1531
+#: itemname.cc:1626 itemname.cc:1531 itemname.cc:1534
 msgid "emulsified "
 msgstr "고체인듯한 "
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "clear"
 msgstr "투명"
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "blue"
 msgstr "파란색"
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "black"
 msgstr "검은색"
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "silvery"
 msgstr "은색"
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "cyan"
 msgstr "청록색"
 
 #: itemname.cc:1592 itemname.cc:1591 itemname.cc:1602 itemname.cc:1630
 #: itemname.cc:1632 itemname.cc:1639 itemname.cc:1640 itemname.cc:1647
-#: itemname.cc:1631 itemname.cc:1536
+#: itemname.cc:1631 itemname.cc:1536 itemname.cc:1539
 msgid "purple"
 msgstr "보라색"
 
@@ -5779,49 +5783,49 @@ msgstr "보라색"
 #: itemname.cc:1662 itemname.cc:1633 itemname.cc:1664 itemname.cc:1640
 #: itemname.cc:1671 itemname.cc:1641 itemname.cc:1672 itemname.cc:1648
 #: itemname.cc:1679 itemname.cc:1632 itemname.cc:1663 itemprop.cc:432
-#: itemname.cc:1537 itemname.cc:1568 itemprop.cc:413
+#: itemname.cc:1537 itemname.cc:1568 itemprop.cc:413 itemname.cc:1540
 msgid "orange"
 msgstr "주홍색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 itemname.cc:1540
 msgid "inky"
 msgstr "칠흑색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3102
+#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3102 itemname.cc:1540
 msgid "red"
 msgstr "빨간색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 itemname.cc:1540
 msgid "yellow"
 msgstr "노란색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3098
+#: itemname.cc:1632 itemname.cc:1537 item_use.cc:3098 itemname.cc:1540
 msgid "green"
 msgstr "녹색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 itemname.cc:1540
 msgid "brown"
 msgstr "갈색"
 
 #: itemname.cc:1593 itemname.cc:1592 itemname.cc:1603 itemname.cc:1631
 #: itemname.cc:1633 itemname.cc:1640 itemname.cc:1641 itemname.cc:1648
-#: itemname.cc:1632 itemname.cc:1537
+#: itemname.cc:1632 itemname.cc:1537 itemname.cc:1540
 msgid "pink"
 msgstr "분홍색"
 
 #: itemname.cc:1594 itemname.cc:1593 itemname.cc:1604 itemname.cc:1632
 #: itemname.cc:1634 itemname.cc:1641 itemname.cc:1642 itemname.cc:1649
-#: itemname.cc:1633 itemname.cc:1538
+#: itemname.cc:1633 itemname.cc:1538 itemname.cc:1541
 msgid "white"
 msgstr "흰색"
 
@@ -5832,62 +5836,62 @@ msgstr "밝은 노란색"
 #: itemname.cc:1614 itemname.cc:1613 itemname.cc:1624 itemprop.cc:417
 #: itemname.cc:1652 itemname.cc:1654 itemname.cc:1661 itemname.cc:1662
 #: itemname.cc:1669 itemname.cc:1653 itemprop.cc:424 itemname.cc:1558
-#: itemprop.cc:405
+#: itemprop.cc:405 itemname.cc:1561
 msgid "meat ration"
 msgstr "휴대용 고기"
 
 #: itemname.cc:1615 itemname.cc:1614 itemname.cc:1625 itemprop.cc:422
 #: itemname.cc:1653 itemname.cc:1655 itemname.cc:1662 itemname.cc:1663
 #: itemname.cc:1670 itemname.cc:1654 itemprop.cc:429 itemname.cc:1559
-#: itemprop.cc:410
+#: itemprop.cc:410 itemname.cc:1562
 msgid "bread ration"
 msgstr "휴대용 빵"
 
 #: itemname.cc:1616 itemname.cc:1615 itemname.cc:1626 itemprop.cc:428
 #: itemname.cc:1654 itemname.cc:1656 itemname.cc:1663 itemname.cc:1664
 #: itemname.cc:1671 itemname.cc:1655 itemprop.cc:435 itemname.cc:1560
-#: itemprop.cc:416
+#: itemprop.cc:416 itemname.cc:1563
 msgid "pear"
 msgstr "배"
 
 #: itemname.cc:1617 itemname.cc:1616 itemname.cc:1627 itemprop.cc:429
 #: itemname.cc:1655 itemname.cc:1657 itemname.cc:1664 itemname.cc:1665
 #: itemname.cc:1672 itemname.cc:1656 itemprop.cc:436 itemname.cc:1561
-#: itemprop.cc:417
+#: itemprop.cc:417 itemname.cc:1564
 msgid "apple"
 msgstr "사과"
 
 #: itemname.cc:1618 itemname.cc:1617 itemname.cc:1628 itemprop.cc:431
 #: itemname.cc:1656 itemname.cc:1658 itemname.cc:1665 itemname.cc:1666
 #: itemname.cc:1673 itemname.cc:1657 itemprop.cc:438 itemname.cc:1562
-#: itemprop.cc:419
+#: itemprop.cc:419 itemname.cc:1565
 msgid "choko"
 msgstr "초코 열매"
 
 #: itemname.cc:1619 itemname.cc:1618 itemname.cc:1629 itemprop.cc:439
 #: itemname.cc:1657 itemname.cc:1659 itemname.cc:1666 itemname.cc:1667
 #: itemname.cc:1674 itemname.cc:1658 itemprop.cc:446 itemname.cc:1563
-#: itemprop.cc:427
+#: itemprop.cc:427 itemname.cc:1566
 msgid "honeycomb"
 msgstr "벌집"
 
 #: itemname.cc:1621 itemname.cc:1620 itemname.cc:1631 itemprop.cc:424
 #: itemname.cc:1659 itemname.cc:1661 itemname.cc:1668 itemname.cc:1669
 #: itemname.cc:1676 itemname.cc:1660 itemprop.cc:431 itemname.cc:1565
-#: itemprop.cc:412
+#: itemprop.cc:412 itemname.cc:1568
 msgid "snozzcumber"
 msgstr "덩쿨오이"
 
 #: itemname.cc:1622 itemname.cc:1621 itemname.cc:1632 itemname.cc:1660
 #: itemname.cc:1662 itemname.cc:1669 itemname.cc:1670 itemname.cc:1677
-#: itemname.cc:1661 itemname.cc:1566
+#: itemname.cc:1661 itemname.cc:1566 itemname.cc:1569
 msgid "slice of pizza"
 msgstr "피자 조각"
 
 #: itemname.cc:1623 itemname.cc:1622 itemname.cc:1633 itemprop.cc:430
 #: itemname.cc:1661 itemname.cc:1663 itemname.cc:1670 itemname.cc:1671
 #: itemname.cc:1678 itemname.cc:1662 itemprop.cc:437 itemname.cc:1567
-#: itemprop.cc:418
+#: itemprop.cc:418 itemname.cc:1570
 msgid "apricot"
 msgstr "살구"
 
@@ -5896,88 +5900,88 @@ msgstr "살구"
 #: itemname.cc:1625 itemname.cc:1624 itemname.cc:1635 itemprop.cc:426
 #: itemname.cc:1663 itemname.cc:1665 itemname.cc:1672 itemname.cc:1673
 #: itemname.cc:1680 itemname.cc:1664 itemprop.cc:433 itemname.cc:1569
-#: itemprop.cc:414
+#: itemprop.cc:414 itemname.cc:1572
 msgid "banana"
 msgstr "바나나"
 
 #: itemname.cc:1626 itemname.cc:1625 itemname.cc:1636 itemprop.cc:434
 #: itemname.cc:1664 itemname.cc:1666 itemname.cc:1673 itemname.cc:1674
 #: itemname.cc:1681 itemname.cc:1665 itemprop.cc:441 itemname.cc:1570
-#: itemprop.cc:422
+#: itemprop.cc:422 itemname.cc:1573
 msgid "strawberry"
 msgstr "딸기"
 
 #: itemname.cc:1627 itemname.cc:1626 itemname.cc:1637 itemprop.cc:432
 #: itemname.cc:1665 itemname.cc:1667 itemname.cc:1674 itemname.cc:1675
 #: itemname.cc:1682 itemname.cc:1666 itemprop.cc:439 itemname.cc:1571
-#: itemprop.cc:420
+#: itemprop.cc:420 itemname.cc:1574
 msgid "rambutan"
 msgstr "람부탄"
 
 #: itemname.cc:1628 itemname.cc:1627 itemname.cc:1638 itemprop.cc:427
 #: itemname.cc:1666 itemname.cc:1668 itemname.cc:1675 itemname.cc:1676
 #: itemname.cc:1683 itemname.cc:1667 itemprop.cc:434 itemname.cc:1572
-#: itemprop.cc:415
+#: itemprop.cc:415 itemname.cc:1575
 msgid "lemon"
 msgstr "레몬"
 
 #: itemname.cc:1629 itemname.cc:1628 itemname.cc:1639 itemprop.cc:435
 #: itemname.cc:1667 itemname.cc:1669 itemname.cc:1676 itemname.cc:1677
 #: itemname.cc:1684 itemname.cc:1668 itemprop.cc:442 itemname.cc:1573
-#: itemprop.cc:423
+#: itemprop.cc:423 itemname.cc:1576
 msgid "grape"
 msgstr "포도"
 
 #: itemname.cc:1630 itemname.cc:1629 itemname.cc:1640 itemprop.cc:436
 #: itemname.cc:1668 itemname.cc:1670 itemname.cc:1677 itemname.cc:1678
 #: itemname.cc:1685 itemname.cc:1669 itemprop.cc:443 itemname.cc:1574
-#: itemprop.cc:424
+#: itemprop.cc:424 itemname.cc:1577
 msgid "sultana"
 msgstr "건포도"
 
 #: itemname.cc:1631 itemname.cc:1630 itemname.cc:1641 itemprop.cc:433
 #: itemname.cc:1669 itemname.cc:1671 itemname.cc:1678 itemname.cc:1679
 #: itemname.cc:1686 itemname.cc:1670 itemprop.cc:440 itemname.cc:1575
-#: itemprop.cc:421
+#: itemprop.cc:421 itemname.cc:1578
 msgid "lychee"
 msgstr "라이치"
 
 #: itemname.cc:1632 itemname.cc:1631 itemname.cc:1642 itemprop.cc:420
 #: itemname.cc:1670 itemname.cc:1672 itemname.cc:1679 itemname.cc:1680
 #: itemname.cc:1687 itemname.cc:1671 itemprop.cc:427 itemname.cc:1576
-#: itemprop.cc:408
+#: itemprop.cc:408 itemname.cc:1579
 msgid "beef jerky"
 msgstr "육포"
 
 #: itemname.cc:1633 itemname.cc:1632 itemname.cc:1643 itemprop.cc:441
 #: itemname.cc:1671 itemname.cc:1673 itemname.cc:1680 itemname.cc:1681
 #: itemname.cc:1688 itemname.cc:1672 itemprop.cc:448 itemname.cc:1577
-#: itemprop.cc:429
+#: itemprop.cc:429 itemname.cc:1580
 msgid "cheese"
 msgstr "치즈"
 
 #: itemname.cc:1634 itemname.cc:1633 itemname.cc:1644 itemprop.cc:418
 #: itemname.cc:1672 itemname.cc:1674 itemname.cc:1681 itemname.cc:1682
 #: itemname.cc:1689 itemname.cc:1673 itemprop.cc:425 itemname.cc:1578
-#: itemprop.cc:406
+#: itemprop.cc:406 itemname.cc:1581
 msgid "sausage"
 msgstr "소세지"
 
 #: itemname.cc:1635 itemname.cc:1634 itemname.cc:1645 itemname.cc:1673
 #: itemname.cc:1675 itemname.cc:1682 itemname.cc:1683 itemname.cc:1690
-#: itemname.cc:1674 itemname.cc:1579
+#: itemname.cc:1674 itemname.cc:1579 itemname.cc:1582
 msgid "piece of ambrosia"
 msgstr "암브로시아 조각"
 
 #: itemname.cc:1640 itemname.cc:1639 itemname.cc:1650 itemname.cc:1678
 #: itemname.cc:1680 itemname.cc:1687 itemname.cc:1688 itemname.cc:1695
-#: itemname.cc:1679 itemname.cc:1584
+#: itemname.cc:1679 itemname.cc:1584 itemname.cc:1587
 msgid "rotting "
 msgstr "부패한 "
 
 #: itemname.cc:1652 itemname.cc:1651 itemname.cc:1663 itemname.cc:1691
 #: itemname.cc:1693 itemname.cc:1700 itemname.cc:1701 itemname.cc:1708
-#: invent.cc:985 itemname.cc:1692 itemname.cc:1597
+#: invent.cc:985 itemname.cc:1692 itemname.cc:1597 itemname.cc:1600
 msgid "scroll"
 msgstr "마법 두루마리"
 
@@ -5985,6 +5989,7 @@ msgstr "마법 두루마리"
 #: itemname.cc:1715 itemname.cc:1717 itemname.cc:1724 itemname.cc:1725
 #: itemname.cc:1732 itemname.cc:1716 itemprop.cc:3071 itemname.cc:1620
 #: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400 player-equip.cc:1439
+#: itemname.cc:1623
 msgid "amulet"
 msgstr "부적"
 
@@ -5992,6 +5997,7 @@ msgstr "부적"
 #: itemname.cc:1717 itemname.cc:1719 itemname.cc:1726 itemname.cc:1727
 #: itemname.cc:1734 itemname.cc:1718 itemprop.cc:3071 itemname.cc:1622
 #: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400 player-equip.cc:1439
+#: itemname.cc:1625
 msgid "ring"
 msgstr "반지"
 
@@ -6000,7 +6006,7 @@ msgstr "반지"
 #: itemname.cc:1838 itemname.cc:1842 itemname.cc:1845 itemname.cc:1849
 #: itemname.cc:1846 itemname.cc:1850 itemname.cc:1853 itemname.cc:1857
 #: invent.cc:988 itemname.cc:1837 itemname.cc:1841 itemname.cc:1737
-#: itemname.cc:1741
+#: itemname.cc:1741 itemname.cc:1740 itemname.cc:1744
 msgid "book"
 msgstr "마법서"
 
@@ -6008,7 +6014,7 @@ msgstr "마법서"
 #: itemname.cc:1812 itemname.cc:1827 itemname.cc:1840 itemname.cc:1855
 #: itemname.cc:1842 itemname.cc:1857 itemname.cc:1849 itemname.cc:1864
 #: itemname.cc:1850 itemname.cc:1865 itemname.cc:1872 itemname.cc:1841
-#: itemname.cc:1851 itemname.cc:1741
+#: itemname.cc:1851 itemname.cc:1741 itemname.cc:1744
 msgid "manual"
 msgstr "설명서"
 
@@ -6078,13 +6084,13 @@ msgstr "음에너지"
 
 #: itemname.cc:1452 itemname.cc:1451 itemname.cc:1462 itemname.cc:1479
 #: itemname.cc:1486 itemname.cc:1487 itemname.cc:1494 itemname.cc:1478
-#: itemname.cc:1387
+#: itemname.cc:1387 itemname.cc:1390
 msgid "embroidered "
 msgstr "수놓아진 "
 
 #: itemname.cc:1460 itemname.cc:1459 itemname.cc:1470 itemname.cc:1487
 #: itemname.cc:1494 itemname.cc:1495 itemname.cc:1502 itemname.cc:1486
-#: itemname.cc:1395
+#: itemname.cc:1395 itemname.cc:1398
 msgid "dyed "
 msgstr "염색된 "
 
@@ -6100,49 +6106,49 @@ msgstr "항마의 "
 
 #: itemname.cc:1487 itemname.cc:1486 itemname.cc:1497 itemname.cc:1514
 #: itemname.cc:1521 itemname.cc:1522 itemname.cc:1529 itemname.cc:1513
-#: itemname.cc:1422
+#: itemname.cc:1422 itemname.cc:1425
 msgid "winged "
 msgstr "날개 달린 "
 
 #: itemname.cc:1488 itemname.cc:1487 itemname.cc:1498 itemname.cc:1515
 #: itemname.cc:1522 itemname.cc:1523 itemname.cc:1530 itemname.cc:1514
-#: itemname.cc:1423
+#: itemname.cc:1423 itemname.cc:1426
 msgid "horned "
 msgstr "뿔 달린 "
 
 #: itemname.cc:1489 itemname.cc:1488 itemname.cc:1499 itemname.cc:1516
 #: itemname.cc:1523 itemname.cc:1524 itemname.cc:1531 itemname.cc:1515
-#: itemname.cc:1424
+#: itemname.cc:1424 itemname.cc:1427
 msgid "crested "
 msgstr "꼭대기 장식된 "
 
 #: itemname.cc:1490 itemname.cc:1489 itemname.cc:1500 itemname.cc:1517
 #: itemname.cc:1524 itemname.cc:1525 itemname.cc:1532 itemname.cc:1516
-#: itemname.cc:1425
+#: itemname.cc:1425 itemname.cc:1428
 msgid "plumed "
 msgstr "깃털 장식된 "
 
 #: itemname.cc:1491 itemname.cc:1490 itemname.cc:1501 itemname.cc:1518
 #: itemname.cc:1525 itemname.cc:1526 itemname.cc:1533 itemname.cc:1517
-#: itemname.cc:1426
+#: itemname.cc:1426 itemname.cc:1429
 msgid "spiked "
 msgstr "가시 달린 "
 
 #: itemname.cc:1492 itemname.cc:1491 itemname.cc:1502 itemname.cc:1519
 #: itemname.cc:1526 itemname.cc:1527 itemname.cc:1534 itemname.cc:1518
-#: itemname.cc:1427
+#: itemname.cc:1427 itemname.cc:1430
 msgid "visored "
 msgstr "챙 달린 "
 
 #: itemname.cc:1493 itemname.cc:1492 itemname.cc:1503 itemname.cc:1520
 #: itemname.cc:1527 itemname.cc:1528 itemname.cc:1535 itemname.cc:1519
-#: itemname.cc:1428
+#: itemname.cc:1428 itemname.cc:1431
 msgid "golden "
 msgstr "황금 "
 
 #: itemname.cc:1743 itemname.cc:1742 itemname.cc:1755 itemname.cc:1783
 #: itemname.cc:1785 itemname.cc:1792 itemname.cc:1793 itemname.cc:1800
-#: itemname.cc:1784 itemname.cc:1684
+#: itemname.cc:1784 itemname.cc:1684 itemname.cc:1687
 msgid "rune of Zot"
 msgstr "의 조트의 룬"
 
@@ -6856,7 +6862,7 @@ msgstr "방패"
 
 #: itemprop.cc:151 itemprop.cc:151 itemprop.cc:153 itemprop.cc:150
 msgid "large shield"
-msgstr "큰 방패"
+msgstr "대형 방패"
 
 #. Maces & Flails
 #. Maces & Flails
@@ -7241,13 +7247,14 @@ msgstr "파괴의"
 
 #: itemname.cc:1865 itemname.cc:1893 itemname.cc:1895 itemname.cc:1902
 #: itemname.cc:1903 itemname.cc:1910 itemname.cc:1889 itemname.cc:1773
+#: itemname.cc:1776
 msgid "rod"
 msgstr "마법 막대"
 
 #. Staves
 #: itemname.cc:1865 itemname.cc:1893 itemname.cc:1895 itemname.cc:1902
 #: itemname.cc:1903 itemname.cc:1910 invent.cc:989 itemname.cc:1889
-#: itemprop.cc:342 itemname.cc:1810 itemprop.cc:323
+#: itemprop.cc:342 itemname.cc:1810 itemprop.cc:323 itemname.cc:1813
 msgid "staff"
 msgstr "지팡이"
 
@@ -7257,13 +7264,13 @@ msgstr "공중폭격"
 
 #: itemname.cc:1924 itemname.cc:1952 itemname.cc:1954 itemname.cc:1961
 #: itemname.cc:1962 itemname.cc:1969 itemname.cc:1948 itemname.cc:1855
-#: spl-summoning.cc:1548
+#: spl-summoning.cc:1548 itemname.cc:1858
 msgid "corpse"
 msgstr "의 시체"
 
 #: itemname.cc:1926 itemname.cc:1954 itemname.cc:1956 itemname.cc:1963
 #: itemname.cc:1964 itemname.cc:1971 itemname.cc:1950 itemname.cc:1857
-#: mon-info.cc:927 spl-summoning.cc:1548
+#: mon-info.cc:927 spl-summoning.cc:1548 itemname.cc:1860
 msgid "skeleton"
 msgstr "의 해골"
 
@@ -10178,19 +10185,7 @@ msgstr "발"
 msgid "foot"
 msgstr "발"
 
-#: monster.cc:2545
-msgid "scaled arm"
-msgstr "비늘로 덮인 팔"
-
-#: monster.cc:2547
-msgid "bandaged wrapped arm"
-msgstr "붕대에 싸인 팔"
-
-#: monster.cc:2550
-msgid "bony arm"
-msgstr "팔뼈"
-
-#: monster.cc:2552
+#: monster.cc:2552 monster.cc:2870
 msgid "arm"
 msgstr "팔"
 
@@ -10521,6 +10516,12 @@ msgstr "진"
 msgid "The Shining One"
 msgstr "샤이닝 원"
 
+msgid "the Shining One"
+msgstr "샤이닝 원"
+
+msgid "Shining One"
+msgstr "샤이닝 원"
+
 #: religion.cc:2282
 msgid "Kikubaaqudgha"
 msgstr "키쿠바쿠드하"
@@ -10649,11 +10650,11 @@ msgstr "조트의 오브"
 msgid "gold piece"
 msgstr "금화"
 
-#: itemname.cc:2001 itemname.cc:1888
+#: itemname.cc:2001 itemname.cc:1888 itemname.cc:1891
 msgid " [fire]"
 msgstr " [화염]"
 
-#: itemname.cc:2004 itemname.cc:1891
+#: itemname.cc:2004 itemname.cc:1891 itemname.cc:1894
 msgid " [ice]"
 msgstr " [얼음]"
 
@@ -10661,7 +10662,7 @@ msgstr " [얼음]"
 msgid " [lightning,iron,fireball]"
 msgstr " [번개,철,화염구]"
 
-#: itemname.cc:2010 itemname.cc:1897
+#: itemname.cc:2010 itemname.cc:1897 itemname.cc:1900
 msgid " [inacc,magma,cold]"
 msgstr " [부정확,용암,냉기]"
 
@@ -10708,6 +10709,36 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -11157,7 +11188,7 @@ msgstr "음식"
 msgid "jewellery"
 msgstr "장신구"
 
-#: invent.cc:990
+#: invent.cc:990 mon-info.cc:998
 msgid "orb"
 msgstr "오브"
 
@@ -11514,7 +11545,7 @@ msgstr "놀 대장"
 
 #: mon-data.h:2538 mon-data.h:2545
 msgid "profane servitor"
-msgstr ""
+msgstr "타락한 천사"
 
 #: mon-data.h:3148 mon-data.h:3167
 msgid "tengu"
@@ -11759,11 +11790,11 @@ msgstr " [손상됨]"
 msgid " [falling apart]"
 msgstr " [거의 찢어짐]"
 
-#: itemname.cc:1781
+#: itemname.cc:1781 itemname.cc:1784
 msgid "lightning rod"
 msgstr "번개의 마법 막대"
 
-#: itemname.cc:1894
+#: itemname.cc:1894 itemname.cc:1897
 msgid " [lightning,fireball,iron]"
 msgstr " [번개,화염구,강철]"
 
@@ -14685,3 +14716,55 @@ msgstr "그림자"
 #: directn.cc:3465
 msgid "suppressed"
 msgstr "억제됨"
+
+#: spl-clouds.cc:131
+msgid "stinking cloud"
+msgstr "악취의 구름"
+
+#: ...
+msgid "arms"
+msgstr "양 팔"
+
+#: monster.cc:2876
+msgid "scaled arm"
+msgstr "비늘 덮인 팔"
+
+msgid "scaled arms"
+msgstr "비늘 덮인 양 팔"
+
+#: monster.cc:2880
+msgid "feathered arm"
+msgstr "깃털 달린 팔"
+
+msgid "feathered arms"
+msgstr "깃털 달린 양 팔"
+
+#: monster.cc:2884
+msgid "bandage-wrapped arm"
+msgstr "붕대 감긴 팔"
+
+msgid "bandage-wrapped arms"
+msgstr "붕대 감긴 양 팔"
+
+#: monster.cc:2893
+msgid "bony arm"
+msgstr "뼈만 남은 팔"
+
+msgid "bony arms"
+msgstr "뼈만 남은 양 팔"
+
+#: mon-info.cc:991
+msgid "pile of gold"
+msgstr "금화"
+
+#: mon-info.cc:995
+msgid "rune"
+msgstr "룬"
+
+#: mon-info.cc:1006
+msgid "mimic"
+msgstr "미믹"
+
+#: status.cc:949
+msgid "Lava"
+msgstr "용암"

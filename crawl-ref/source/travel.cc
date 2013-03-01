@@ -858,7 +858,7 @@ command_type travel()
 
     if (Options.travel_key_stop && kbhit())
     {
-        mprf(gettext("Key pressed, stopping %s."), you.running.runmode_name().c_str());
+        mprf(gettext("Key pressed, stopping %s."), _(you.running.runmode_name().c_str()));
         stop_running();
         return CMD_NO_CMD;
     }

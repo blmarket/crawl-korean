@@ -1480,7 +1480,7 @@ static std::string _wiz_god_powers()
 
 static std::string _god_powers(bool simple)
 {
-    std::string godpowers = simple ? "" : god_name(you.religion) ;
+    std::string godpowers = simple ? "" : _(god_name(you.religion).c_str()) ;
     if (you.religion == GOD_XOM)
     {
         if (!you.gift_timeout)

@@ -1213,7 +1213,7 @@ static int _do_description(std::string key, std::string type,
     {
         if (is_good_god(which_god))
         {
-            inf.suffix = "\n\n" + god_name(which_god) +
+            inf.suffix = std::string("\n\n") + _(god_name(which_god).c_str()) +
                          gettext(" won't accept worship from undead or evil beings.");
         }
         std::string help = get_god_powers(which_god);

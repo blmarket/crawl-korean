@@ -89,12 +89,12 @@ std::string attack::anon_name(description_level_type desc,
         return "";
     case DESC_YOUR:
     case DESC_ITS:
-        return "its";
+        return pgettext("anon","its");
     case DESC_THE:
     case DESC_A:
     case DESC_PLAIN:
     default:
-        return actor_invisible? "it" : "something";
+        return actor_invisible? pgettext("anon","it") : pgettext("anon","something");
     }
 }
 

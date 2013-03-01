@@ -1248,7 +1248,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (you.religion == GOD_TROG)
         {
             text << "\nAs a worshipper of "
-                 << god_name(GOD_TROG)
+                 << _(god_name(GOD_TROG).c_str())
                  << ", though, you might instead wish to burn those tomes "
                     "of hated magic by using the corresponding "
                     "<w>%</w>bility.";
@@ -1423,7 +1423,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (god_likes_fresh_corpses(you.religion))
         {
             text << "\nYou can also offer corpses to "
-                 << god_name(you.religion)
+                 << _(god_name(you.religion).c_str())
                  << " by <w>%</w>raying over them. Note that the gods will not "
                     "accept rotting flesh.";
             cmd.push_back(CMD_PRAY);
@@ -2172,7 +2172,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
 
         text << "Hey, that monster left a corpse! If you don't need it for "
                 "food or other purposes, you can sacrifice it to "
-             << god_name(you.religion)
+             << _(god_name(you.religion).c_str())
              << " by <w>%</w>raying over it to offer it. ";
         cmd.push_back(CMD_PRAY);
         break;

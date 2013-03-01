@@ -654,7 +654,7 @@ static void _sdump_religion(dump_params &par)
             text += "You worshipped ";
         else
             text += "You worship ";
-        text += god_name(you.religion);
+        text += _(god_name(you.religion).c_str());
         text += ".\n";
 
         if (you.religion != GOD_XOM)
@@ -668,7 +668,7 @@ static void _sdump_religion(dump_params &par)
             {
                 std::string verb = par.se ? "was" : "is";
 
-                text += god_name(you.religion);
+                text += _(god_name(you.religion).c_str());
                 text += " " + verb + " demanding penance.\n";
             }
         }

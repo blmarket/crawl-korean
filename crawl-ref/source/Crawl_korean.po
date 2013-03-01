@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-23 22:40+0900\n"
+"POT-Creation-Date: 2013-03-01 17:04+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -590,7 +590,7 @@ msgid "You spit a bolt of dispelling energy."
 msgstr "눈부시게 빛나는 마력의 숨결을 내뿜었다."
 
 #: abl-show.cc:2047 abl-show.cc:2047 abl-show.cc:2066 abl-show.cc:2116
-#: abl-show.cc:2073
+#: abl-show.cc:2073 abl-show.cc:1987
 msgid "You spit a glob of burning liquid."
 msgstr "액상 화염 덩어리를 뱉어 내었다."
 
@@ -1656,7 +1656,7 @@ msgstr "이것은 때때로 다시 저주에 걸린다."
 msgid "It slows your movement."
 msgstr "이것은 당신의 이동을 늦춘다."
 
-#: describe.cc:512 describe.cc:511 describe.cc:511
+#: describe.cc:512 describe.cc:511 describe.cc:511 describe.cc:515
 msgid ""
 "\n"
 "It greatly speeds your metabolism."
@@ -1664,7 +1664,7 @@ msgstr ""
 "\n"
 "이것은 당신의 신진대사 속도를 급격히 가속시킨다."
 
-#: describe.cc:514 describe.cc:513 describe.cc:513
+#: describe.cc:514 describe.cc:513 describe.cc:513 describe.cc:517
 msgid ""
 "\n"
 "It speeds your metabolism. "
@@ -2712,8 +2712,8 @@ msgid ""
 "Compared to normal ammo, it does 30% more damage, is destroyed upon impact "
 "only 1/10th of the time, and weighs three times as much."
 msgstr ""
-"일반 투사체에 비해, 이것은 30%%의 추가 데미지를 주고, 90%% 확률로 다시 쓸 수 "
-"있으며, 세배 무겁다."
+"일반 투사체에 비해, 이것은 30% 추가 데미지를 주고, 90% 확률로 다시 쓸 수 있으"
+"며, 세배 무겁다."
 
 #: describe.cc:1224 describe.cc:1223 describe.cc:1223 describe.cc:1227
 #, c-format
@@ -4722,6 +4722,36 @@ msgstr "샤이닝 원의 성스러운 언어"
 #. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
 #: effects.cc:160 effects.cc:332 effects.cc:332 beam.cc:4743 beam.cc:4757
 #: effects.cc:161 effects.cc:333 beam.cc:4850 effects.cc:154 effects.cc:317
 #: beam.cc:4851 throw.cc:812
@@ -6312,14 +6342,14 @@ msgstr "남음: "
 
 #: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819 itemname.cc:1847
 #: itemname.cc:1849 itemname.cc:1856 itemname.cc:1857 itemname.cc:1864
-#: itemname.cc:1844 itemname.cc:1744
+#: itemname.cc:1844 itemname.cc:1744 itemname.cc:1747
 #, c-format
 msgid "%s%smanual"
 msgstr "%s%s설명서"
 
 #: itemname.cc:1807 itemname.cc:1806 itemname.cc:1819 itemname.cc:1847
 #: itemname.cc:1849 itemname.cc:1856 itemname.cc:1857 itemname.cc:1864
-#: itemname.cc:1844 itemname.cc:1744
+#: itemname.cc:1844 itemname.cc:1744 itemname.cc:1747
 #, c-format
 msgid "%s%sbook"
 msgstr "%s%s마법서"
@@ -8265,6 +8295,7 @@ msgid "something you cannot see"
 msgstr "무엇인가 알 수 없는 것"
 
 #: mon-stuff.cc:2842 mon-stuff.cc:2844 mon-stuff.d.cc:2844 tmp.cc:2824
+#: mon-stuff.cc:2994
 msgid " of flesh"
 msgstr "의 살덩어리"
 
@@ -14097,6 +14128,51 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533
 msgid "The fire roars with new energy!"
@@ -15039,25 +15115,25 @@ msgid "%s %s shields you from unclean and chaotic effects.\n"
 msgstr "%s은(는) 당신을 사악하고 불경한 기운으로부터 %s 보호해준다.\n"
 
 #: describe.cc:4517 describe.cc:4526 describe.cc:4450 describe.cc:4438
-#: describe.cc:4434 describe.cc:4446
+#: describe.cc:4434 describe.cc:4446 describe.cc:4469
 msgctxt "tso_shield"
 msgid "carefully"
 msgstr "강력하게"
 
 #: describe.cc:4518 describe.cc:4527 describe.cc:4451 describe.cc:4439
-#: describe.cc:4435 describe.cc:4447
+#: describe.cc:4435 describe.cc:4447 describe.cc:4470
 msgctxt "tso_shield"
 msgid "often"
 msgstr "크게"
 
 #: describe.cc:4519 describe.cc:4528 describe.cc:4452 describe.cc:4440
-#: describe.cc:4436 describe.cc:4448
+#: describe.cc:4436 describe.cc:4448 describe.cc:4471
 msgctxt "tso_shield"
 msgid "sometimes"
 msgstr "어느 정도"
 
 #: describe.cc:4520 describe.cc:4529 describe.cc:4453 describe.cc:4441
-#: describe.cc:4437 describe.cc:4449
+#: describe.cc:4437 describe.cc:4449 describe.cc:4472
 msgctxt "tso_shield"
 msgid "occasionally"
 msgstr "미약하게"
@@ -19425,7 +19501,7 @@ msgstr "근력이 강해진 것을 느꼈다!"
 #: misc.cc:1614 misc.cc:1615 misc.cc:1633 misc.cc:1651
 #, c-format
 msgid "You're standing in a cloud of %s!"
-msgstr "당신은 %s 구름에 휩싸여있다!"
+msgstr "당신은 %s에 휩싸여있다!"
 
 #. m.name(DESC_CAP_A); (deceit, 110909) 수정
 #: misc.cc:1640 misc.cc:1641 misc.cc:1659 misc.cc:1677
@@ -22379,7 +22455,7 @@ msgstr "%s은(는) 지면 아래로 숨었다."
 msgid "%s submerges."
 msgstr "은(는) 잠수했다."
 
-#: monster.cc:4375 spl-monench.cc:102 mon-ench.cc:412
+#: monster.cc:4375 spl-monench.cc:102 mon-ench.cc:412 spl-monench.cc:110
 msgid " is no longer moving quickly."
 msgstr "의 움직임이 원래대로 돌아왔다."
 
@@ -23907,7 +23983,7 @@ msgid "Loading maps..."
 msgstr "맵 로딩 중..."
 
 #. Print title based on piety.
-#: describe.cc:4400
+#: describe.cc:4400 describe.cc:4333
 msgid ""
 "\n"
 "Title - "
@@ -23915,7 +23991,7 @@ msgstr ""
 "\n"
 "칭호 - "
 
-#: describe.cc:4412
+#: describe.cc:4412 describe.cc:4345
 msgid ""
 "\n"
 "\n"
@@ -25260,7 +25336,7 @@ msgstr "은(는) 잠깐 동안 밝게 빛났다."
 msgid " glows brighter."
 msgstr "은(는) 더 밝게 빛났다."
 
-#: spl-monench.cc:112
+#: spl-monench.cc:112 spl-monench.cc:120
 msgid " seems to slow down."
 msgstr "의 움직임이 느려졌다."
 
@@ -25763,7 +25839,7 @@ msgstr "몬스터"
 msgid "fire blocked by "
 msgstr "에 의해 막혀있다"
 
-#: message.cc:568
+#: message.cc:568 message.cc:584
 msgid "--more--"
 msgstr "--다음장--"
 
@@ -26257,142 +26333,142 @@ msgstr "그 아이템을 발동시키기 전에, 먼저 손에 들고 있어야 
 msgid "That item cannot be evoked!"
 msgstr "그 아이템은 발동할 수 없다!"
 
-#: mon-info.cc:1057
+#: mon-info.cc:1057 mon-info.cc:1286
 msgctxt "attributes"
 msgid "poisoned"
 msgstr "독에 시달리고"
 
-#: mon-info.cc:1059
+#: mon-info.cc:1059 mon-info.cc:1288
 msgctxt "attributes"
 msgid "sick"
 msgstr "병에 시달리고"
 
-#: mon-info.cc:1061
+#: mon-info.cc:1061 mon-info.cc:1290
 msgctxt "attributes"
 msgid "rotting away"
 msgstr "몸이 썩어가고"
 
-#: mon-info.cc:1063
+#: mon-info.cc:1063 mon-info.cc:1292
 msgctxt "attributes"
 msgid "softly glowing"
 msgstr "부드럽게 빛나고"
 
-#: mon-info.cc:1065
+#: mon-info.cc:1065 mon-info.cc:1294
 msgctxt "attributes"
 msgid "moving slowly"
 msgstr "느리게 움직이고"
 
-#: mon-info.cc:1067
+#: mon-info.cc:1067 mon-info.cc:1296
 msgctxt "attributes"
 msgid "frenzied and insane"
 msgstr "무척 화가 나"
 
-#: mon-info.cc:1069
+#: mon-info.cc:1069 mon-info.cc:1298
 msgctxt "attributes"
 msgid "berserk"
 msgstr "광폭해져"
 
-#: mon-info.cc:1071
+#: mon-info.cc:1071 mon-info.cc:1300
 msgctxt "attributes"
 msgid "consumed by blood-lust"
 msgstr "피의 분노에 사로잡혀"
 
-#: mon-info.cc:1073
+#: mon-info.cc:1073 mon-info.cc:1304
 msgctxt "attributes"
 msgid "moving very quickly"
 msgstr "매우 빠르게 움직이고"
 
-#: mon-info.cc:1075
+#: mon-info.cc:1075 mon-info.cc:1306
 msgctxt "attributes"
 msgid "unusually strong"
 msgstr "비정상적으로 강해져"
 
-#: mon-info.cc:1077
+#: mon-info.cc:1077 mon-info.cc:1308
 msgctxt "attributes"
 msgid "bewildered and confused"
 msgstr "혼란해져"
 
-#: mon-info.cc:1079
+#: mon-info.cc:1079 mon-info.cc:1310
 msgctxt "attributes"
 msgid "slightly transparent"
 msgstr "반투명해져"
 
-#: mon-info.cc:1081
+#: mon-info.cc:1081 mon-info.cc:1312
 msgctxt "attributes"
 msgid "in your thrall"
 msgstr "노예화되어"
 
-#: mon-info.cc:1083
+#: mon-info.cc:1083 mon-info.cc:1314
 msgctxt "attributes"
 msgid "covered in liquid flames"
 msgstr "액상 화염에 덮여"
 
-#: mon-info.cc:1085
+#: mon-info.cc:1085 mon-info.cc:1316
 msgctxt "attributes"
 msgid "entangled in a net"
 msgstr "그물에 사로잡혀"
 
-#: mon-info.cc:1087
+#: mon-info.cc:1087 mon-info.cc:1320
 msgctxt "attributes"
 msgid "petrified"
 msgstr "석화되어"
 
-#: mon-info.cc:1089
+#: mon-info.cc:1089 mon-info.cc:1322
 msgctxt "attributes"
 msgid "slowly petrifying"
 msgstr "천천히 석화되어가고"
 
-#: mon-info.cc:1091
+#: mon-info.cc:1091 mon-info.cc:1324
 msgctxt "attributes"
 msgid "susceptible to magic"
 msgstr "마법에 취약해져"
 
-#: mon-info.cc:1093
+#: mon-info.cc:1093 mon-info.cc:1326
 msgctxt "attributes"
 msgid "moving somewhat quickly"
 msgstr "빠르게 움직이고"
 
-#: mon-info.cc:1095
+#: mon-info.cc:1095 mon-info.cc:1328
 msgctxt "attributes"
 msgid "radiating silence"
 msgstr "정적에 싸여"
 
-#: mon-info.cc:1097
+#: mon-info.cc:1097 mon-info.cc:1330
 msgctxt "attributes"
 msgid "paralysed"
 msgstr "마비되어"
 
-#: mon-info.cc:1099
+#: mon-info.cc:1099 mon-info.cc:1332
 msgctxt "attributes"
 msgid "bleeding"
 msgstr "피를 흘리고"
 
-#: mon-info.cc:1101
+#: mon-info.cc:1101 mon-info.cc:1334
 msgctxt "attributes"
 msgid "deflecting missiles"
 msgstr "발사체를 반사하고"
 
-#: mon-info.cc:1103
+#: mon-info.cc:1103 mon-info.cc:1336
 msgctxt "attributes"
 msgid "quietly preparing"
 msgstr "철저히 준비되어"
 
-#: mon-info.cc:1105
+#: mon-info.cc:1105 mon-info.cc:1338
 msgctxt "attributes"
 msgid "slowly fading away"
 msgstr "천천히 사라져가고"
 
-#: mon-info.cc:1107
+#: mon-info.cc:1107 mon-info.cc:1340
 msgctxt "attributes"
 msgid "mostly faded away"
 msgstr "거의 사라져가고"
 
-#: mon-info.cc:1109
+#: mon-info.cc:1109 mon-info.cc:1342
 msgctxt "attributes"
 msgid "inspiring fear"
 msgstr "공포를 유발하고"
 
-#: mon-info.cc:1112
+#: mon-info.cc:1112 mon-info.cc:1350
 msgctxt "attributes"
 msgid "regenerating health quickly"
 msgstr "빠르게 상처를 회복하고"
@@ -26402,32 +26478,32 @@ msgctxt "attributes"
 msgid "protected by its shell"
 msgstr "껍질로 자기자실을 보호하고"
 
-#: mon-info.cc:1116
+#: mon-info.cc:1116 mon-info.cc:1355
 msgctxt "attributes"
 msgid "attached and sucking blood"
 msgstr "흡혈을 원하고"
 
-#: mon-info.cc:1118
+#: mon-info.cc:1118 mon-info.cc:1357
 msgctxt "attributes"
 msgid "dazed"
 msgstr "현혹되어"
 
-#: mon-info.cc:1120
+#: mon-info.cc:1120 mon-info.cc:1359
 msgctxt "attributes"
 msgid "permanently mute"
 msgstr "영원히 침묵상태로"
 
-#: mon-info.cc:1122
+#: mon-info.cc:1122 mon-info.cc:1361
 msgctxt "attributes"
 msgid "permanently blind"
 msgstr "영원히 시력을 잃고"
 
-#: mon-info.cc:1124
+#: mon-info.cc:1124 mon-info.cc:1363
 msgctxt "attributes"
 msgid "stupefied"
 msgstr "지능에 손상을 입고"
 
-#: mon-info.cc:1126
+#: mon-info.cc:1126 mon-info.cc:1365
 msgctxt "attributes"
 msgid "lost in madness"
 msgstr "광기에 사로잡혀"
@@ -26741,11 +26817,11 @@ msgstr "(풀숲 아래)"
 msgid " (under plant)"
 msgstr "(식물 아래)"
 
-#: player.cc:297
+#: player.cc:297 player.cc:321
 msgid "Floosh!"
 msgstr "풍덩!"
 
-#: player.cc:299
+#: player.cc:299 player.cc:323
 msgid "Splash!"
 msgstr "첨벙!"
 
@@ -27038,7 +27114,7 @@ msgstr "%s에 온 것을 환영하네!"
 msgid "%s %s %s ground!"
 msgstr "%1$s은(는) 밀리지 않고 버텨냈다!"
 
-#: message.cc:1404
+#: message.cc:1404 message.cc:1525
 msgid ""
 "<cyan>[up/<< : Page up.    down/Space/> : Page down.                         "
 "Esc exits.]</cyan>"
@@ -28400,6 +28476,51 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -28920,6 +29041,11 @@ msgstr "(phase) 이 문장을 보면 버그이므로 제보를 해주세요"
 #, c-format
 msgid "%s %s %s but %s no damage."
 msgstr "%1$s은(는) %3$s%2$s지만, 아무 손상도 입히지 못했다.%4$.0s"
+
+#: melee_attack.cc:1100
+msgctxt "verb"
+msgid "grab"
+msgstr "을(를) 움켜잡았"
 
 #: melee_attack.cc:1100 melee_attack.cc:4032 melee_attack.cc:1106
 #: melee_attack.cc:4045
@@ -30182,7 +30308,7 @@ msgstr "그녀의"
 #: mon-util.cc:3121 mon-util.cc:3127
 msgctxt "mon_util_pronoun"
 msgid "itself"
-msgstr "이 몬스터 자신"
+msgstr "자기자신"
 
 #: mon-util.cc:3122 mon-util.cc:3128
 msgctxt "mon_util_pronoun"
@@ -30416,24 +30542,24 @@ msgstr ""
 "에 영향을 받는다. 죠베가 선물하는 카드 덱 종류는, 어떤 아이템을 제물로 바쳤느"
 "냐에 따라 큰 영향을 받는다. (이제 키를 눌러 클래스를 전환할 수 있다):\n"
 
-#: itemname.cc:2372
+#: itemname.cc:2372 itemname.cc:2375
 msgid "Items not yet recognised: (toggle with -)"
 msgstr "감정되지 않은 아이템: (- 키로 전환)"
 
-#: itemname.cc:2374
+#: itemname.cc:2374 itemname.cc:2377
 msgid "Recognised items. (- for unrecognised, select to toggle autopickup)"
 msgstr "감정된 아이템. (- 키로 미감정 아이템 확인과, 자동 줍기 여부 설정)"
 
-#: itemname.cc:2376
+#: itemname.cc:2376 itemname.cc:2379
 msgid "You recognise all items. (Select to toggle autopickup)"
 msgstr ""
 "당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
 
-#: itemname.cc:2379 invent.cc:414
+#: itemname.cc:2379 invent.cc:414 itemname.cc:2382
 msgid "(_ for help)"
 msgstr "(_ 키: 도움말)"
 
-#: itemname.cc:2438
+#: itemname.cc:2438 itemname.cc:2441
 msgid "You haven't found any runes yet."
 msgstr "당신은 아직 아무 룬도 찾지 못했다."
 
@@ -31994,3 +32120,152 @@ msgstr "당신은 음식을 먹는 데 문제가 있다."
 #: status.cc:826
 msgid "You cannot eat right now."
 msgstr "당신은 지금은 뭔가를 먹기 힘들다."
+
+#: mon-info.cc:1302
+msgctxt "attributes"
+msgid "roused with righteous anger"
+msgstr ""
+
+#: mon-info.cc:1318
+msgctxt "attributes"
+msgid "entangled in a web"
+msgstr "거미줄에 걸려"
+
+#: mon-info.cc:1367
+msgctxt "attributes"
+msgid "standing in death's doorway"
+msgstr "죽음의 아가리에 서 "
+
+#: mon-info.cc:1369
+msgctxt "attributes"
+msgid "regenerating"
+msgstr "재생하고"
+
+#: mon-info.cc:1371
+msgctxt "attributes"
+msgid "rolling"
+msgstr "구르고"
+
+#: mon-info.cc:1373
+msgctxt "attributes"
+msgid "covered in an icy film"
+msgstr "얇은 얼음 막이 둘러져"
+
+#: melee_attack.cc:4515
+#, c-format
+msgctxt "afcrush"
+msgid "%s %s %s."
+msgstr "%1$s은(는) %3$s을(를) 잡아 움켜 조였다.%2$.0s"
+
+#: describe.cc:519
+msgid ""
+"\n"
+"It greatly slows your metabolism."
+msgstr ""
+"\n"
+"이것은 당신의 신진대사 속도를 급격히 떨어트린다."
+
+#: describe.cc:521
+msgid ""
+"\n"
+"It slows your metabolism. "
+msgstr ""
+"\n"
+"이것은 당신의 신진대사 속도를 떨어트린다. "
+
+#: message.cc:576
+msgid "--more-- Press Space "
+msgstr "--다음장-- 스페이스바"
+
+#: message.cc:578
+msgid "or click "
+msgstr " 혹은 마우스 버튼"
+
+#: message.cc:579
+msgid "to continue. You can later reread messages with Ctrl-P."
+msgstr ""
+"을(를) 누르면 다음으로 진행합니다. 지나간 메시지를 다시 보려면 Ctrl-P를 누르"
+"세요."
+
+#: mon-info.cc:980
+msgid "inept "
+msgstr "어설픈 "
+
+#: mon-info.cc:982
+msgid "ravenous "
+msgstr "노련한 "
+
+#: mon-info.cc:984
+msgid "monstrous "
+msgstr "흉포한 "
+
+#: mon-util.cc:883
+#, c-format
+msgid "The %s is a mimic!"
+msgstr "그 %s은(는) 미믹이었다!"
+
+#: mon-util.cc:891
+msgid "The orb mimic lets out a hideous shriek!"
+msgstr "오브 미믹은 끔찍한 소리를 질렀다!"
+
+#: mon-util.cc:892
+msgid "The orb mimic lets out a furious burst of light!"
+msgstr "오브 미믹은 격렬한 빛을 사방으로 내뿜었다!"
+
+#: attack.cc:92
+msgctxt "anon"
+msgid "its"
+msgstr "무언가의"
+
+#: attack.cc:97
+msgctxt "anon"
+msgid "it"
+msgstr "무언가"
+
+#: attack.cc:97
+msgctxt "anon"
+msgid "something"
+msgstr "무언가"
+
+#: mon-stuff.cc:3024
+msgid "something unseen"
+msgstr "보이지 않는 무언가"
+
+#: monster.cc:5840
+#, c-format
+msgid " is pushed out of the %s."
+msgstr "이(가) %s(으)로부터 밀려났다."
+
+#: monster.cc:5858 monster.cc:5867
+msgid " seems unimpeded by the mental distress."
+msgstr "은(는) 정신적 고통으로 부터 영향을 받지 않는 듯 보인다."
+
+#: monster.cc:5885
+msgid " looks uneasy for a moment."
+msgstr "의 모습이 잠시 불안정해 보였다."
+
+#: describe.cc:4474
+#, c-format
+msgid "%s %s shields your consumables from destruction.\n"
+msgstr "%s은(는) 당신의 소비품을 파괴로부터 %s 보호한다.\n"
+
+#: describe.cc:4535
+msgid " slows and strengthens your metabolism."
+msgstr "은(는) 당신의 신진 대사 속도를 늦추어준다."
+
+#: describe.cc:4546
+msgid "You can provide lesser healing for others."
+msgstr "당신은 다른 이에게 미약한 치유를 행할 수 있다."
+
+#: skills.cc:393
+msgid "You resume training "
+msgstr "당신은 다음 스킬들의 수련을 재개했다: "
+
+#: effects.cc:1955
+#, c-format
+msgid "%s (slot%s %s)"
+msgstr "%1$s (슬롯 %3$s)%2$s"
+
+#: abl-show.cc:1934
+msgid "Aiming: <white>Delayed Fireball</white>"
+msgstr "조준: <white>축적된 화염구</white>"

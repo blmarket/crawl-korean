@@ -451,7 +451,7 @@ static std::string _print_altars_for_gods(const std::vector<god_type>& gods,
         if (!display)
         {
             if (has_altar_been_seen)
-                disp += god_name(god, false) + "\n";
+                disp += _(god_name(god, false).c_str()) + std::string("\n");
             continue;
         }
 
@@ -476,7 +476,7 @@ static std::string _print_altars_for_gods(const std::vector<god_type>& gods,
             colour = "darkgrey";
 
         snprintf(buffer, sizeof buffer, "<%s>%s</%s>",
-                 colour, god_name(god, false).c_str(), colour);
+                 colour, _(god_name(god, false).c_str()), colour);
         disp += buffer;
         num_printed++;
 
@@ -486,13 +486,13 @@ static std::string _print_altars_for_gods(const std::vector<god_type>& gods,
             // manually aligning the god columns: five whitespaces between columns
             switch (num_printed % 5)
             {
-            case 1: disp += std::string(14 - strwidth(god_name(god, false)), ' ');
+            case 1: disp += std::string(14 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 2: disp += std::string(18 - strwidth(god_name(god, false)), ' ');
+            case 2: disp += std::string(18 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 3: disp += std::string(13 - strwidth(god_name(god, false)), ' ');
+            case 3: disp += std::string(13 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 4: disp += std::string(16 - strwidth(god_name(god, false)), ' ');
+            case 4: disp += std::string(16 - strwidth(_(god_name(god, false).c_str())), ' ');
             }
     }
 

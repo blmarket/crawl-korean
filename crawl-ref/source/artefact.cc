@@ -278,7 +278,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
     }
 
     // Occasionally use long name for Xom (see religion.cc).
-    name = replace_all(name, "@xom_name@", god_name(GOD_XOM, coinflip()));
+    name = replace_all(name, "@xom_name@", _(god_name(GOD_XOM, coinflip()).c_str()));
 
     if (name.find("@god_name@", 0) != std::string::npos)
     {
@@ -294,7 +294,7 @@ std::string replace_name_parts(const std::string &name_in, const item_def& item)
             while (!_god_fits_artefact(which_god, item, true));
         }
 
-        name = replace_all(name, "@god_name@", god_name(which_god, false));
+        name = replace_all(name, "@god_name@", _(god_name(which_god, false).c_str()));
     }
 
     // copied from monster speech handling (mon-util.cc):

@@ -543,8 +543,8 @@ static const char* _wand_type_name(int wandtype)
     case WAND_MAGIC_DARTS:     return M_("magic darts");
     case WAND_HEAL_WOUNDS:     return M_("heal wounds");
     case WAND_PARALYSIS:       return M_("paralysis");
-    case WAND_FIRE:            return M_("fire");
-    case WAND_COLD:            return M_("cold");
+	case WAND_FIRE:            return ((!translate_flag) ? M_("fire") : "불");
+	case WAND_COLD:            return ((!translate_flag) ? M_("cold") : "얼음");
     case WAND_CONFUSION:       return M_("confusion");
     case WAND_INVISIBILITY:    return M_("invisibility");
     case WAND_DIGGING:         return M_("digging");
@@ -932,8 +932,8 @@ static const char* _book_type_name(int booktype)
     case BOOK_FLAMES:                 return M_("Flames");
     case BOOK_FROST:                  return M_("Frost");
     case BOOK_SUMMONINGS:             return M_("Summonings");
-    case BOOK_FIRE:                   return M_("Fire");
-    case BOOK_ICE:                    return M_("Ice");
+	case BOOK_FIRE:                   return ((!translate_flag) ? M_("Fire") : "불");
+	case BOOK_ICE:                    return ((!translate_flag) ? M_("Ice")  : "얼음");
     case BOOK_SPATIAL_TRANSLOCATIONS: return M_("Spatial Translocations");
     case BOOK_ENCHANTMENTS:           return M_("Enchantments");
     case BOOK_TEMPESTS:               return M_("the Tempests");
@@ -946,7 +946,7 @@ static const char* _book_type_name(int booktype)
     case BOOK_NECROMANCY:             return M_("Necromancy");
     case BOOK_CALLINGS:               return M_("Callings");
     case BOOK_MALEDICT:               return M_("Maledictions");
-    case BOOK_AIR:                    return M_("Air");
+	case BOOK_AIR:                    return ((!translate_flag) ? M_("Air") : "바람");
     case BOOK_SKY:                    return M_("the Sky");
     case BOOK_WARP:                   return M_("the Warp");
     case BOOK_ENVENOMATIONS:          return M_("Envenomations");
@@ -1107,23 +1107,23 @@ std::string sub_type_string(const item_def &item, bool known)
     case OBJ_BOOKS:
     {
         if (sub_type == BOOK_MANUAL)
-        {
+        {	std::string bookname;
             if (!known)
-                return "manual";
-            std::string bookname = "manual of ";
-            bookname += skill_name(static_cast<skill_type>(item.plus));
+                return check_gettext("manual");
+			if (!translate_flag) { bookname = "manual of "; bookname += skill_name(static_cast<skill_type>(item.plus)); }
+						    else { bookname = skill_name(static_cast<skill_type>(item.plus)); bookname += "의 설명서";  }
             return bookname;
         }
         else if (sub_type == BOOK_NECRONOMICON)
-            return "Necronomicon";
+            return check_gettext("Necronomicon");
         else if (sub_type == BOOK_GRAND_GRIMOIRE)
-            return "Grand Grimoire";
+            return check_gettext("Grand Grimoire");
         else if (sub_type == BOOK_DESTRUCTION)
-            return "tome of Destruction";
+            return check_gettext("tome of Destruction");
         else if (sub_type == BOOK_YOUNG_POISONERS)
-            return "Young Poisoner's Handbook";
+            return check_gettext("Young Poisoner's Handbook");
 
-        return std::string("book of ") + _book_type_name(sub_type);
+        if(!translate_flag) return std::string("book of ") + _book_type_name(sub_type); else return _(_book_type_name(sub_type)) + std::string("의 마법서");
     }
     case OBJ_STAVES: return staff_type_name(static_cast<stave_type>(sub_type));
     case OBJ_RODS:   return rod_type_name(static_cast<rod_type>(sub_type));
@@ -1329,20 +1329,23 @@ std::string item_def::name_aux(description_level_type desc,
 #endif
         break;
 
-    case OBJ_MISSILES: // (130204) 여기도 뭔가 추가해야하긴하는데.. 일단 나중에
+    case OBJ_MISSILES: // (130204) 여기도 뭔가 추가해야하긴하는데.. 일단 나중에 (130228) ammo이름은 한글판에서는 무조건 접두로 처리하도록 변경
     {
         special_missile_type brand  = get_ammo_brand(*this);
 
         if (!terse && _missile_brand_is_prefix(brand))
             buff << check_gettext(_missile_brand_name(brand, MBN_NAME)) << ' ';
 
+		if (brand != SPMSL_NORMAL && !basename && !qualname && !dbname && translate_flag && !terse && !_missile_brand_is_prefix(brand))
+			buff << _(_missile_brand_name(brand, MBN_NAME)) << " ";
+
         buff << check_gettext(ammo_name(static_cast<missile_type>(item_typ)));
 
         if (brand != SPMSL_NORMAL && !basename && !qualname && !dbname)
         {
             if (terse)
-                buff << " (" <<  _missile_brand_name(brand, MBN_TERSE) << ")";
-            else if (_missile_brand_is_postfix(brand))
+                buff << " (" <<  ((!translate_flag) ? _missile_brand_name(brand, MBN_TERSE) : _(_missile_brand_name(brand, MBN_TERSE)))  << ")";
+            else if (_missile_brand_is_postfix(brand) && !translate_flag)
                 buff << " of " << _missile_brand_name(brand, MBN_NAME);
         }
 
@@ -1803,8 +1806,8 @@ std::string item_def::name_aux(description_level_type desc,
         {
             if (!basename)
             {
-                buff << staff_secondary_string(special / NDSC_STAVE_PRI)
-                     << staff_primary_string(special % NDSC_STAVE_PRI);
+                buff << check_gettext(staff_secondary_string(special / NDSC_STAVE_PRI))
+                     << check_gettext(staff_primary_string(special % NDSC_STAVE_PRI));
             }
 
             buff << check_gettext(M_("staff"));

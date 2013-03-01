@@ -76,9 +76,9 @@ static int dgn_feature_desc_at(lua_State *ls)
     description_type_by_name(lua_tostring(ls, 3));
     const bool need_stop = lua_isboolean(ls, 4)? lua_toboolean(ls, 4) : false;
     const std::string s =
-    feature_description_at(false, coord_def(luaL_checkint(ls, 1),
+    feature_description_at(true, coord_def(luaL_checkint(ls, 1),
                                   luaL_checkint(ls, 2)),
-                        false, dtype, need_stop);
+                        false, DESC_PLAIN, need_stop);
     lua_pushstring(ls, s.c_str());
     return 1;
 }

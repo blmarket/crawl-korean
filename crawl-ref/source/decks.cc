@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions with decks of cards.
 **/
@@ -2000,7 +2000,7 @@ static void _focus_card(int power, deck_rarity_type rarity)
     {
         god_type which_god = crawl_state.which_god_acting();
         if (crawl_state.is_god_retribution())
-            cause = "the wrath of " + god_name(which_god);
+            cause = "the wrath of " + god_name(which_god); // 메모
         else if (which_god == GOD_XOM)
             cause = "the capriciousness of Xom";
         else
@@ -2349,7 +2349,7 @@ static void _create_altar(coord_def pos)
     grd(pos) = altar_for_god(god);
     ASSERT(grd(pos) != DNGN_FLOOR);
     mprf(_("An altar to %s grows from the floor before you!"),
-         god_name(god).c_str());
+         _(god_name(god).c_str()));
 }
 
 static void _trowel_card(int power, deck_rarity_type rarity)

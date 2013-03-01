@@ -512,13 +512,13 @@ static std::string _randart_descrip(const item_def &item)
     if (known_proprt(ARTP_METABOLISM))
     {
         if (proprt[ARTP_METABOLISM] >= 3)
-            description += "\nIt greatly speeds your metabolism.";
+            description += gettext("\nIt greatly speeds your metabolism.");
         else if (proprt[ARTP_METABOLISM] >= 1)
-            description += "\nIt speeds your metabolism. ";
+            description += gettext("\nIt speeds your metabolism. ");
         if (proprt[ARTP_METABOLISM] <= -3)
-            description += "\nIt greatly slows your metabolism.";
+            description += gettext("\nIt greatly slows your metabolism.");
         else if (proprt[ARTP_METABOLISM] <= -1)
-            description += "\nIt slows your metabolism. ";
+            description += gettext("\nIt slows your metabolism. ");
     }
 
     if (known_proprt(ARTP_STEALTH))
@@ -2025,7 +2025,7 @@ std::string get_item_description(const item_def &item, bool verbose,
                 || (is_good_god(you.religion)
                    && mons_class_holiness(item.mon_type) == MH_HOLY))
             {
-                description << "\n\n" << uppercase_first(god_name(you.religion))
+                description << "\n\n" << _(god_name(you.religion).c_str())
                             << _(" disapproves of eating such meat.");
             }
         }
@@ -2903,14 +2903,14 @@ static int _get_spell_description(const spell_type spell,
 
     if (god_hates_spell(spell, you.religion))
     {
-        description += god_name(you.religion)
+        description += std::string(_(god_name(you.religion).c_str()))
                        + gettext(" frowns upon the use of this spell.\n");
         if (god_loathes_spell(spell, you.religion))
             description += gettext("You'd be excommunicated if you dared to cast it!\n");
     }
     else if (god_likes_spell(spell, you.religion))
     {
-        description += god_name(you.religion)
+        description += std::string(_(god_name(you.religion).c_str()))
                        + gettext(" supports the use of this spell.\n");
     }
     if (item && !player_can_memorise_from_spellbook(*item))
@@ -3731,7 +3731,7 @@ std::string get_ghost_description(const monster_info &mi, bool concise)
 
     if (mi.u.ghost.religion != GOD_NO_GOD)
     {
-        gstr << god_name(mi.u.ghost.religion) //<< " of "
+        gstr << _(god_name(mi.u.ghost.religion).c_str()) //<< " of "
              << "의 신자"; //<< god_name(mi.u.ghost.religion);
     }
 
@@ -3828,7 +3828,7 @@ static std::string _describe_favour(god_type which_god)
     if (which_god == GOD_XOM)
         return uppercase_first(describe_xom_favour());
 
-    const std::string godname = god_name(which_god);
+    const std::string godname = _(god_name(which_god).c_str());
     return (you.piety > 130) ? make_stringf(gettext("A prized avatar of %s."), godname.c_str()) :
            (you.piety > 100) ? make_stringf(gettext("A shining star in the eyes of %s."), godname.c_str()) :
            (you.piety >  70) ? make_stringf(gettext("A rising star in the eyes of %s."), godname.c_str()) :
@@ -3891,7 +3891,7 @@ static std::string _religion_help(god_type god)
 
     case GOD_ELYVILON:
         result += gettext("You can pray to destroy weapons on the ground in ")
-                + apostrophise(god_name(god)) + gettext(" name. Inscribe them ")
+                + std::string(_(god_name(god).c_str())) + gettext(" name. Inscribe them ")
                 + gettext("with !p, !* or =p to avoid sacrificing them accidentally.");
         break;
 
@@ -3928,7 +3928,7 @@ static std::string _religion_help(god_type god)
     case GOD_VEHUMET:
         if (you.piety >= piety_breakpoint(1))
         {
-            result += god_name(god) + gettext(" assists you in casting "
+            result += std::string(_(god_name(god).c_str())) + gettext(" assists you in casting "
                       "Conjurations and Summonings.");
         }
         break;
@@ -4316,7 +4316,7 @@ void describe_god(god_type which_god, bool give_title)
 
     // Print long god's name.
     textcolor(colour);
-    cprintf("%s", uppercase_first(god_name(which_god, true)).c_str());
+    cprintf("%s", uppercase_first(std::string(_(god_name(which_god, true).c_str()))).c_str());
     cprintf("\n\n");
 
     // Print god's description.
@@ -4330,7 +4330,7 @@ void describe_god(god_type which_god, bool give_title)
     if (you.religion == which_god)
     {
         // Print title based on piety.
-        cprintf("\nTitle - ");
+        cprintf(_("\nTitle - "));
         textcolor(colour);
 
         std::string title = god_title(which_god, you.species, you.piety);
@@ -4342,7 +4342,7 @@ void describe_god(god_type which_god, bool give_title)
     // something better, do it.
 
     textcolor(LIGHTGREY);
-    cprintf("\n\nFavour - ");
+    cprintf(_("\n\nFavour - "));
     textcolor(colour);
 
     //mv: Player is praying at altar without appropriate religion.
@@ -4371,7 +4371,7 @@ void describe_god(god_type which_god, bool give_title)
                  (which_god_penance >   0)   ? gettext("%s is ready to forgive your sins.") :
                  (you.worshipped[which_god]) ? gettext("%s is ambivalent towards you.")
                                              : gettext("%s is neutral towards you."),
-                 god_name(which_god).c_str());
+                 _(god_name(which_god).c_str()));
     }
     else
     {
@@ -4421,7 +4421,7 @@ void describe_god(god_type which_god, bool give_title)
 
             /// 1. 신 이름, 2. context "elyvilon_save" 참조. 시간에 관한 단어, 3. 특수조건을 설명하는 구, 없을수도 있다.
             std::string buf = make_stringf(gettext("%s %s watches over you%s."), 
-                    uppercase_first(god_name(which_god)).c_str(),
+                    uppercase_first(_(god_name(which_god).c_str())).c_str(),
                     how,
                     when);
 
@@ -4438,7 +4438,7 @@ void describe_god(god_type which_god, bool give_title)
 
             /// 1. god_name 2. how(carefully, often, sometimes etc)
             cprintf(gettext("%s %s shields you from chaos.\n"),
-                    uppercase_first(god_name(which_god)).c_str(), how);
+                    uppercase_first(_(god_name(which_god).c_str())).c_str(), how);
         }
         else if (which_god == GOD_SHINING_ONE)
         {
@@ -4449,7 +4449,7 @@ void describe_god(god_type which_god, bool give_title)
                                                    pgettext("tso_shield", "occasionally");
 
             cprintf(gettext("%s %s shields you from negative energy.\n"),
-                    uppercase_first(god_name(which_god)).c_str(), how);
+                    uppercase_first(_(god_name(which_god).c_str())).c_str(), how);
         }
         else if (which_god == GOD_TROG)
         {
@@ -4457,7 +4457,7 @@ void describe_god(god_type which_god, bool give_title)
             /// 1. god name.
             std::string buf = make_stringf(gettext("You can call upon %s"
                               " to burn spellbooks in your surroundings."),
-                              god_name(which_god).c_str());
+                              _(god_name(which_god).c_str()));
             _print_final_god_abil_desc(which_god, buf,
                                        ABIL_TROG_BURN_SPELLBOOKS);
         }
@@ -4466,13 +4466,13 @@ void describe_god(god_type which_god, bool give_title)
             if (!player_under_penance())
             {
                 have_any = true;
-                const char *how = (you.piety >= 150) ? "carefully" :
-                                  (you.piety >= 100) ? "often" :
-                                  (you.piety >=  50) ? "sometimes" :
-                                                       "occasionally";
+                const char *how = (you.piety >= 150) ? pgettext("tso_shield","carefully") :
+                                  (you.piety >= 100) ? pgettext("tso_shield","often") :
+                                  (you.piety >=  50) ? pgettext("tso_shield","sometimes") :
+                                                       pgettext("tso_shield","occasionally");
 
-                cprintf("%s %s shields your consumables from destruction.\n",
-                        uppercase_first(god_name(which_god)).c_str(), how);
+                cprintf(_("%s %s shields your consumables from destruction.\n"),
+                        uppercase_first(_(god_name(which_god).c_str())).c_str(), how);
             }
             if (jiyva_can_paralyse_jellies())
             {
@@ -4486,7 +4486,7 @@ void describe_god(god_type which_god, bool give_title)
             {
                 have_any = true;
                 cprintf(gettext("%s shields you from corrosive effects.\n"),
-                        uppercase_first(god_name(which_god)).c_str());
+                        uppercase_first(_(god_name(which_god).c_str())).c_str());
             }
             if (you.piety >= piety_breakpoint(1))
             {
@@ -4521,7 +4521,7 @@ void describe_god(god_type which_god, bool give_title)
             std::string buf = make_stringf(gettext("You can pray to bestow "
                               "%s curse upon scrolls that usually remove "
                                 "them."),
-                              apostrophise(god_name(which_god)).c_str());
+                              apostrophise(_(god_name(which_god).c_str())).c_str());
             _print_final_god_abil_desc(which_god, buf,
                                        ABIL_NON_ABILITY);
         }
@@ -4531,8 +4531,8 @@ void describe_god(god_type which_god, bool give_title)
             {
                 have_any = true;
                 _print_final_god_abil_desc(which_god,
-                                           uppercase_first(god_name(which_god))
-                                           + " slows and strengthens your metabolism.",
+                                           uppercase_first(_(god_name(which_god).c_str()))
+                                           + _(" slows and strengthens your metabolism."),
                                            ABIL_NON_ABILITY);
             }
         }
@@ -4543,7 +4543,7 @@ void describe_god(god_type which_god, bool give_title)
             {
                 have_any = true;
                 _print_final_god_abil_desc(which_god,
-                                           "You can provide lesser healing for others.",
+                                           _("You can provide lesser healing for others."),
                                            ABIL_ELYVILON_LESSER_HEALING_OTHERS);
             }
         }

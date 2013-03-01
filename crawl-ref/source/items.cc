@@ -1183,7 +1183,7 @@ std::string origin_desc(const item_def &item)
                 if (iorig > GOD_NO_GOD && iorig < NUM_GODS)
                 {
                     desc += make_stringf(gettext("%s gifted %s to you "),
-			god_name(static_cast<god_type>(iorig)).c_str(),
+			_(god_name(static_cast<god_type>(iorig)).c_str()),
 			gettext(_article_it(item).c_str()));
                 }
                 else

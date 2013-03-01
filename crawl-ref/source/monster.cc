@@ -2867,7 +2867,7 @@ std::string monster::arm_name(bool plural, bool *can_plural) const
         *can_plural = true;
 
     std::string adj;
-    std::string str = "arm";
+    std::string str = M_("arm");
 
     switch (mons_genus(type))
     {
@@ -5837,7 +5837,7 @@ bool monster::shove(const char* feat_name)
             moveto(*di);
             mgrd(*di) = mindex();
             simple_monster_message(this,
-                make_stringf(" is pushed out of the %s.", feat_name).c_str());
+                make_stringf(_(" is pushed out of the %s."), feat_name).c_str());
             dprf("Moved to (%d, %d).", pos().x, pos().y);
 
             return true;
@@ -5855,7 +5855,7 @@ bool monster::check_clarity(bool silent) const
     {
         if (!silent && you.can_see(this) && !mons_is_lurking(this))
         {
-            simple_monster_message(this, " seems unimpeded by the mental distress.");
+            simple_monster_message(this, _(" seems unimpeded by the mental distress."));
             set_ident_type(mitm[jewellery], ID_KNOWN_TYPE);
         }
         return true;
@@ -5864,7 +5864,7 @@ bool monster::check_clarity(bool silent) const
     if (scan_mon_inv_randarts(this, ARTP_CLARITY))
     {
         if (!silent && you.can_see(this) && !mons_is_lurking(this))
-            simple_monster_message(this, " seems unimpeded by the mental distress.");
+            simple_monster_message(this, _(" seems unimpeded by the mental distress."));
         // TODO: identify the property?
         return true;
     }
@@ -5882,7 +5882,7 @@ bool monster::check_stasis(bool silent, bool calc_unid) const
     {
         if (!silent && you.can_see(this) && !mons_is_lurking(this))
         {
-            simple_monster_message(this, " looks uneasy for a moment.");
+            simple_monster_message(this, _(" looks uneasy for a moment."));
             set_ident_type(mitm[jewellery], ID_KNOWN_TYPE);
         }
         return true;

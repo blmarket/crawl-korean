@@ -989,15 +989,15 @@ void game_options::reset_options()
 
     // font selection
     tile_font_crt_file   = MONOSPACED_FONT;
-    tile_font_crt_size   = 0;
+    tile_font_crt_size   = 16;
     tile_font_stat_file  = MONOSPACED_FONT;
-    tile_font_stat_size  = 0;
+    tile_font_stat_size  = 16;
     tile_font_msg_file   = MONOSPACED_FONT;
-    tile_font_msg_size   = 0;
+    tile_font_msg_size   = 16;
     tile_font_tip_file   = MONOSPACED_FONT;
-    tile_font_tip_size   = 0;
+    tile_font_tip_size   = 16;
     tile_font_lbl_file   = PROPORTIONAL_FONT;
-    tile_font_lbl_size   = 0;
+    tile_font_lbl_size   = 16;
 #ifdef USE_FT
     // TODO: init this from system settings.  This would probably require
     // using fontconfig, but that's planned.

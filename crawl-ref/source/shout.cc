@@ -406,7 +406,7 @@ void item_noise(const item_def &item, std::string msg, int loudness)
     msg = replace_all(msg, "@player_name@", you.your_name);
     msg = replace_all(msg, "@player_god@",
                       you.religion == GOD_NO_GOD ? "atheism"
-                      : god_name(you.religion, coinflip()));
+                      : _(god_name(you.religion, coinflip()).c_str()));
 
     mpr(msg.c_str(), channel);
 

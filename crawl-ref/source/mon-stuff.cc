@@ -103,7 +103,7 @@ bool curse_an_item(bool quiet)
         if (!quiet)
         {
             mprf(MSGCH_GOD, gettext("The curse is absorbed by %s."),
-                 god_name(GOD_ASHENZARI).c_str());
+                 _(god_name(GOD_ASHENZARI).c_str()));
         }
         return false;
     }
@@ -780,7 +780,7 @@ static bool _ely_heal_monster(monster* mons, killer_type killer, int i)
     dprf("new hp: %d, ely penance: %d", mons->hit_points, ely_penance);
 
     snprintf(info, INFO_SIZE, gettext("%s heals %s%s"),
-             god_name(god, false).c_str(),
+             _(god_name(god, false).c_str()),
              mons->name(DESC_THE).c_str(),
              mons->hit_points * 2 <= mons->max_hit_points ? "." : "!");
 
@@ -2212,7 +2212,7 @@ int monster_die(monster* mons, killer_type killer,
                     }
                     else
                     {
-                        std::string msg = " " + summoned_poof_msg(mons) + "!";
+                        std::string msg = summoned_poof_msg(mons) + "!"; // " " + summoned_poof_msg(mons) + "!";
                         simple_monster_message(mons, msg.c_str());
                     }
                 }
@@ -2970,8 +2970,8 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
     bool could_see = you.can_see(mons);
     bool need_note = (could_see && MONST_INTERESTING(mons));
-    std::string old_name_a = mons->full_name(DESC_A);
-    std::string old_name_the = mons->full_name(DESC_THE);
+    std::string old_name_a = mons->full_name(DESC_PLAIN);
+    std::string old_name_the = mons->full_name(DESC_PLAIN);
     monster_type oldc = mons->type;
 
     change_monster_type(mons, targetc);
@@ -2989,9 +2989,9 @@ bool monster_polymorph(monster* mons, monster_type targetc,
             obj = gettext("something you cannot see");
         else
         {
-            obj = mons_type_name(targetc, DESC_A);
+            obj = _(mons_type_name(targetc, DESC_PLAIN).c_str());
             if (targetc == MONS_PULSATING_LUMP)
-                obj += " of flesh";
+                obj += _(" of flesh");
         }
 
         if (oldc == MONS_OGRE && targetc == MONS_TWO_HEADED_OGRE)
@@ -3020,8 +3020,8 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
     if (need_note || could_see && can_see && MONST_INTERESTING(mons))
     {
-        std::string new_name = can_see ? mons->full_name(DESC_A)
-                                       : "something unseen";
+        std::string new_name = can_see ? mons->full_name(DESC_PLAIN)
+                                       : _("something unseen");
 
         take_note(Note(NOTE_POLY_MONSTER, 0, 0, old_name_a.c_str(),
                        new_name.c_str()));

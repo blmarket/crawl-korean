@@ -394,7 +394,7 @@ void splash_with_acid(int acid_strength, bool corrode_items,
 
     if (post_res_dam > 0)
     {
-        mpr(hurt_message.empty() ? gettext("The acid burns!") : hurt_message);
+        mpr(hurt_message.empty() ? gettext("The acid burns!") : _(hurt_message.c_str()));
 
         if (post_res_dam < dam)
             canned_msg(MSG_YOU_RESIST);
@@ -681,7 +681,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     if (jiyva_block)
     {   // (deceit, 110815) god name, (some of) your
         mprf(gettext("%s shields %s delectables from destruction."), 
-             god_name(GOD_JIYVA).c_str(),
+             _(god_name(GOD_JIYVA).c_str()),
              (total_dest > 0) ? "some of your" : "your");
     }
 

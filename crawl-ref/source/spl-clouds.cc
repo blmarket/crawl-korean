@@ -128,7 +128,7 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
 // Assumes beem.range has already been set. -cao
 spret_type stinking_cloud(int pow, bolt &beem, bool fail)
 {
-    beem.name        = "stinking cloud";
+    beem.name        = M_("stinking cloud");
     beem.colour      = GREEN;
     beem.damage      = dice_def(1, 0);
     beem.hit         = 20;

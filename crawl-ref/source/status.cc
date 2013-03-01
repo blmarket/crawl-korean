@@ -938,15 +938,15 @@ static void _describe_terrain(status_info* inf)
     {
     case DNGN_SHALLOW_WATER:
         inf->light_colour = LIGHTBLUE;
-        inf->light_text = "Water";
+        inf->light_text = _(M_("Water"));
         break;
     case DNGN_DEEP_WATER:
         inf->light_colour = BLUE;
-        inf->light_text = "Water";
+        inf->light_text = _(M_("Water"));
         break;
     case DNGN_LAVA:
         inf->light_colour = RED;
-        inf->light_text = "Lava";
+        inf->light_text = _(M_("Lava"));
         break;
     default:
         ;

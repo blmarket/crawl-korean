@@ -977,33 +977,33 @@ std::string monster_info::mimic_name() const
 {
     std::string s;
     if (type == MONS_INEPT_ITEM_MIMIC || type == MONS_INEPT_FEATURE_MIMIC)
-        s = "inept ";
+        s = _("inept ");
     if (type == MONS_RAVENOUS_ITEM_MIMIC || type == MONS_RAVENOUS_FEATURE_MIMIC)
-        s = "ravenous ";
+        s = _("ravenous ");
     if (type == MONS_MONSTROUS_ITEM_MIMIC || type == MONS_MONSTROUS_FEATURE_MIMIC)
-        s = "monstrous ";
+        s = _("monstrous ");
 
     if (props.exists("feat_type"))
-        s += feat_type_name(get_mimic_feature());
+        s += _(feat_type_name(get_mimic_feature()));
     else if (item_def* item = inv[MSLOT_MISCELLANY].get())
     {
         if (item->base_type == OBJ_GOLD)
-            s += "pile of gold";
+            s += _(M_("pile of gold"));
         else if (item->base_type == OBJ_MISCELLANY
                  && item->sub_type == MISC_RUNE_OF_ZOT)
         {
-            s += "rune";
+            s += _(M_("rune"));
         }
         else if (item->base_type == OBJ_ORBS)
-            s += "orb";
+            s += _(M_("orb"));
         else
-            s += item->name(false, DESC_BASENAME);
+            s += item->name(true, DESC_BASENAME);
     }
 
     if (!s.empty())
         s += " ";
 
-    return (s + "mimic");
+    return (s + _(M_("mimic")));
 }
 
 bool monster_info::has_proper_name() const
@@ -1283,94 +1283,94 @@ std::vector<std::string> monster_info::attributes() const
 {
     std::vector<std::string> v;
     if (is(MB_POISONED))
-        v.push_back("poisoned");
+        v.push_back(pgettext("attributes","poisoned"));
     if (is(MB_SICK))
-        v.push_back("sick");
+        v.push_back(pgettext("attributes","sick"));
     if (is(MB_ROTTING))
-        v.push_back("rotting away"); //jmf: "covered in sores"?
+        v.push_back(pgettext("attributes","rotting away")); //jmf: "covered in sores"?
     if (is(MB_GLOWING))
-        v.push_back("softly glowing");
+        v.push_back(pgettext("attributes","softly glowing"));
     if (is(MB_SLOWED))
-        v.push_back("moving slowly");
+        v.push_back(pgettext("attributes","moving slowly"));
     if (is(MB_INSANE))
-        v.push_back("frenzied and insane");
+        v.push_back(pgettext("attributes","frenzied and insane"));
     if (is(MB_BERSERK))
-        v.push_back("berserk");
+        v.push_back(pgettext("attributes","berserk"));
     if (is(MB_FRENZIED))
-        v.push_back("consumed by blood-lust");
+        v.push_back(pgettext("attributes","consumed by blood-lust"));
     if (is(MB_ROUSED))
-        v.push_back("roused with righteous anger");
+        v.push_back(pgettext("attributes","roused with righteous anger"));
     if (is(MB_HASTED))
-        v.push_back("moving very quickly");
+        v.push_back(pgettext("attributes","moving very quickly"));
     if (is(MB_STRONG))
-        v.push_back("unusually strong");
+        v.push_back(pgettext("attributes","unusually strong"));
     if (is(MB_CONFUSED))
-        v.push_back("bewildered and confused");
+        v.push_back(pgettext("attributes","bewildered and confused"));
     if (is(MB_INVISIBLE))
-        v.push_back("slightly transparent");
+        v.push_back(pgettext("attributes","slightly transparent"));
     if (is(MB_CHARMED))
-        v.push_back("in your thrall");
+        v.push_back(pgettext("attributes","in your thrall"));
     if (is(MB_BURNING))
-        v.push_back("covered in liquid flames");
+        v.push_back(pgettext("attributes","covered in liquid flames"));
     if (is(MB_CAUGHT))
-        v.push_back("entangled in a net");
+        v.push_back(pgettext("attributes","entangled in a net"));
     if (is(MB_WEBBED))
-        v.push_back("entangled in a web");
+        v.push_back(pgettext("attributes","entangled in a web"));
     if (is(MB_PETRIFIED))
-        v.push_back("petrified");
+        v.push_back(pgettext("attributes","petrified"));
     if (is(MB_PETRIFYING))
-        v.push_back("slowly petrifying");
+        v.push_back(pgettext("attributes","slowly petrifying"));
     if (is(MB_VULN_MAGIC))
-        v.push_back("susceptible to magic");
+        v.push_back(pgettext("attributes","susceptible to magic"));
     if (is(MB_SWIFT))
-        v.push_back("moving somewhat quickly");
+        v.push_back(pgettext("attributes","moving somewhat quickly"));
     if (is(MB_SILENCING))
-        v.push_back("radiating silence");
+        v.push_back(pgettext("attributes","radiating silence"));
     if (is(MB_PARALYSED))
-        v.push_back("paralysed");
+        v.push_back(pgettext("attributes","paralysed"));
     if (is(MB_BLEEDING))
-        v.push_back("bleeding");
+        v.push_back(pgettext("attributes","bleeding"));
     if (is(MB_DEFLECT_MSL))
-        v.push_back("deflecting missiles");
+        v.push_back(pgettext("attributes","deflecting missiles"));
     if (is(MB_PREP_RESURRECT))
-        v.push_back("quietly preparing");
+        v.push_back(pgettext("attributes","quietly preparing"));
     if (is(MB_FADING_AWAY))
-        v.push_back("slowly fading away");
+        v.push_back(pgettext("attributes","slowly fading away"));
     if (is(MB_MOSTLY_FADED))
-        v.push_back("mostly faded away");
+        v.push_back(pgettext("attributes","mostly faded away"));
     if (is(MB_FEAR_INSPIRING))
-        v.push_back("inspiring fear");
+        v.push_back(pgettext("attributes","inspiring fear"));
     if (is(MB_BREATH_WEAPON))
     {
-        v.push_back(std::string("catching ")
-                    + pronoun(PRONOUN_POSSESSIVE) + " breath");
+        v.push_back("자신의 숨을 고르고"); //v.push_back(std::string("catching ")
+                    //+ pronoun(PRONOUN_POSSESSIVE) + " breath");
     }
     if (is(MB_WITHDRAWN))
     {
-        v.push_back("regenerating health quickly");
-        v.push_back(std::string("protected by ")
-                    + pronoun(PRONOUN_POSSESSIVE) + " shell");
+        v.push_back(pgettext("attributes","regenerating health quickly"));
+        v.push_back("자신의 껍질로 몸을 보호하고"); // v.push_back(std::string("protected by ")
+                    // + pronoun(PRONOUN_POSSESSIVE) + " shell");
     }
     if (is(MB_ATTACHED))
-        v.push_back("attached and sucking blood");
+        v.push_back(pgettext("attributes","attached and sucking blood"));
     if (is(MB_DAZED))
-        v.push_back("dazed");
+        v.push_back(pgettext("attributes","dazed"));
     if (is(MB_MUTE))
-        v.push_back("permanently mute");
+        v.push_back(pgettext("attributes","permanently mute"));
     if (is(MB_BLIND))
-        v.push_back("permanently blind");
+        v.push_back(pgettext("attributes","permanently blind"));
     if (is(MB_DUMB))
-        v.push_back("stupefied");
+        v.push_back(pgettext("attributes","stupefied"));
     if (is(MB_MAD))
-        v.push_back("lost in madness");
+        v.push_back(pgettext("attributes","lost in madness"));
     if (is(MB_DEATHS_DOOR))
-        v.push_back("standing in death's doorway");
+        v.push_back(pgettext("attributes","standing in death's doorway"));
     if (is(MB_REGENERATION))
-        v.push_back("regenerating");
+        v.push_back(pgettext("attributes","regenerating"));
     if (is(MB_ROLLING))
-        v.push_back("rolling");
+        v.push_back(pgettext("attributes","rolling"));
     if (is(MB_OZOCUBUS_ARMOUR))
-        v.push_back("covered in an icy film");
+        v.push_back(pgettext("attributes","covered in an icy film"));
     return v;
 }
 

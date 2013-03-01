@@ -3399,17 +3399,17 @@ static std::string _stair_destination_description(const coord_def &pos)
 }
 #endif
 
-static std::string _mon_enchantments_string(const monster_info& mi)
+static std::string _mon_enchantments_string(const monster_info& mi) // (deceit, 110918/130228) 애매한 부분이라 코드 직접수정으로 합니다.
 {
     const std::vector<std::string> enchant_descriptors = mi.attributes();
 
     if (!enchant_descriptors.empty())
     {
-        return std::string(mi.pronoun(PRONOUN_SUBJECTIVE))
-            + " is "
+        return std::string("이것") // std::string(mi.pronoun(PRONOUN_SUBJECTIVE))
+            + "은(는) "
             + comma_separated_line(enchant_descriptors.begin(),
                                    enchant_descriptors.end())
-            + ".";
+            + "있다.";
     }
     else
         return "";

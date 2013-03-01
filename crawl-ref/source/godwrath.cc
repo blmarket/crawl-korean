@@ -1335,7 +1335,7 @@ static void _tso_blasts_cleansing_flame(const char *message)
         god_speaks(you.religion,
                    make_stringf(_("\"Mortal, I have averted the wrath of %s... "
                                 "this time.\""),
-                                god_name(GOD_SHINING_ONE).c_str()).c_str());
+                                _(god_name(GOD_SHINING_ONE).c_str())).c_str());
     }
     else
     {
@@ -1445,7 +1445,7 @@ static void _god_smites_you(god_type god, const char *message,
     {
         god_speaks(you.religion,
                    make_stringf(_("\"Mortal, I have averted the wrath of %s... "
-                                "this time.\""), god_name(god).c_str()).c_str());
+                                "this time.\""), _(god_name(god).c_str())).c_str());
     }
     else
     {

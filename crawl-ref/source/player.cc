@@ -318,9 +318,9 @@ bool check_moveto(const coord_def& p, const std::string &move_verb,
 static void _splash()
 {
     if (you.can_swim())
-        noisy(4, you.pos(), "Floosh!");
+        noisy(4, you.pos(), _("Floosh!"));
     else if (!beogh_water_walk())
-        noisy(8, you.pos(), "Splash!");
+        noisy(8, you.pos(), _("Splash!"));
 }
 
 void moveto_location_effects(dungeon_feature_type old_feat,

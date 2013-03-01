@@ -880,7 +880,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     // Announce the mimic.
     if (mons_near(mimic))
     {
-        mprf(MSGCH_WARN, "The %s is a mimic!", name.c_str());
+        mprf(MSGCH_WARN, _("The %s is a mimic!"), item->name(true, DESC_BASENAME).c_str());
         mimic->seen_context = SC_JUST_SEEN;
     }
 
@@ -888,8 +888,8 @@ void discover_mimic(const coord_def& pos, bool wake)
     if (item && item->base_type == OBJ_ORBS)
     {
         orb_pickup_noise(pos, 30,
-            "The orb mimic lets out a hideous shriek!",
-            "The orb mimic lets out a furious burst of light!");
+            _("The orb mimic lets out a hideous shriek!"),
+            _("The orb mimic lets out a furious burst of light!"));
     }
 
     // Just in case there's another one.

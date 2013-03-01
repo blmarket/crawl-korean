@@ -3180,7 +3180,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
     {
         simple_monster_message(mons,
                                make_stringf(_(" invokes %s's protection!"),
-                                   god_name(mons->god).c_str()).c_str(),
+                                   _(god_name(mons->god).c_str())).c_str(),
                                MSGCH_MONSTER_SPELL);
         const int dur = BASELINE_DELAY
             * std::min(5 + roll_dice(2, (mons->hit_dice * 10) / 3 + 1), 100);
