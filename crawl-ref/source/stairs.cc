@@ -869,7 +869,7 @@ void down_stairs(dungeon_feature_type force_stair)
         && old_level.branch != you.where_are_you)
     {
         mprf(_("Welcome %sto %s!"),
-             you.char_direction == GDT_GAME_START ? "" : P_("stairs","back "),
+             you.char_direction == GDT_GAME_START ? "" : pgettext("stairs","back "),
              _(branches[you.where_are_you].longname));
     }
 

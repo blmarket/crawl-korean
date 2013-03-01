@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Place related functions.
 **/
@@ -61,8 +61,8 @@ std::string place_name(unsigned short place, bool long_name,
             // decapitalise 'the'
             if (result.find("The") == 0)
                 result[0] = 't';
-            result = make_stringf("Level %d of %s",
-                      lev, result.c_str());
+            result = make_stringf(_("Level %d of %s"),
+                      lev, _(result.c_str()));
         }
         else if (lev)
             result = make_stringf("%s:%d", result.c_str(), lev);
@@ -84,11 +84,11 @@ std::string short_place_name(unsigned short place)
 // Abyss" or "on level 3 of the Main Dungeon".
 std::string prep_branch_level_name(unsigned short packed_place)
 {
-    std::string place = place_name(packed_place, true, true);
+    std::string place = _(place_name(packed_place, true, true).c_str());
     if (!place.empty() && place != "Pandemonium")
         place[0] = tolower(place[0]);
-    return (place.find("level") == 0 ? "on " + place
-                                     : "in " + place);
+    return (place.find("level") == 0 ? place + "에서,"// "on " + place
+                                     : place + "에서,"); // "in " + place);
 }
 
 // Use current branch and depth

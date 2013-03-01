@@ -1081,10 +1081,10 @@ static std::string _origin_monster_name(const item_def &item)
 {
     const monster_type monnum = static_cast<monster_type>(item.orig_monnum - 1);
     if (monnum == MONS_PLAYER_GHOST)
-        return "a player ghost";
+        return _(M_("a player ghost"));
     else if (monnum == MONS_PANDEMONIUM_LORD)
-        return "a pandemonium lord";
-    return mons_type_name(monnum, DESC_A);
+        return _(M_("a pandemonium lord"));
+    return mons_type_name(monnum, DESC_PLAIN);
 }
 
 static std::string _origin_place_desc(const item_def &item)
@@ -1105,7 +1105,7 @@ bool origin_describable(const item_def &item)
 static std::string _article_it(const item_def &item)
 {
     // "it" is always correct, since gloves and boots also come in pairs.
-    return "it";
+    return pgettext("articleitem","it");
 }
 
 static bool _origin_is_original_equip(const item_def &item)
@@ -1156,7 +1156,7 @@ std::string origin_desc(const item_def &item)
     if (_origin_is_original_equip(item))
         return _("Original Equipment");
 
-    std::string desc;
+    std::string desc = _origin_place_desc(item) + " "; // (130302) 수정부
     if (item.orig_monnum)
     {
         if (item.orig_monnum < 0)
@@ -1165,13 +1165,13 @@ std::string origin_desc(const item_def &item)
             switch (iorig)
             {
             case IT_SRC_SHOP:
-                desc += make_stringf(gettext("You bought %s in a shop "), gettext(_article_it(item).c_str()));
+                desc += make_stringf(gettext("You bought %s in a shop "), _article_it(item).c_str());
                 break;
             case IT_SRC_START:
                 desc += _("Buggy Original Equipment: ");
                 break;
             case AQ_SCROLL:
-                desc += make_stringf(gettext("You acquired %s "), gettext(_article_it(item).c_str()));
+                desc += make_stringf(gettext("You acquired %s "), _article_it(item).c_str());
                 break;
             case AQ_CARD_GENIE:
                 desc += gettext("You drew the Genie ");
@@ -1200,14 +1200,14 @@ std::string origin_desc(const item_def &item)
         {
             desc += make_stringf(gettext("You took %s off %s "),
 		    gettext(_article_it(item).c_str()),
-                    _origin_monster_name(item).c_str());
+                    _(_origin_monster_name(item).c_str()));
         }
     }
     else
         desc += make_stringf(gettext("You found %s "),
-		gettext(_article_it(item).c_str()));
+		_article_it(item).c_str());
 
-    desc += _origin_place_desc(item);
+    // desc += _origin_place_desc(item); (130302,deceit) 어순변경.
     return desc;
 }
 

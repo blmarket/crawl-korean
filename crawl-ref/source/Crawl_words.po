@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-01 17:04+0900\n"
+"POT-Creation-Date: 2013-03-02 00:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10817,6 +10817,16 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812
 msgid "shouts"
@@ -10917,75 +10927,75 @@ msgid "chaos eruption"
 msgstr ""
 
 #. sentinel values
-#: branch-data.h:22
+#: branch-data.h:22 branch-data.h:21
 msgid "Dungeon"
 msgstr "던전"
 
-#: branch-data.h:22
+#: branch-data.h:22 branch-data.h:21
 msgid "the Dungeon"
 msgstr "메인 던전"
 
-#: branch-data.h:31
+#: branch-data.h:31 branch-data.h:30
 msgid "Temple"
 msgstr "신전"
 
-#: branch-data.h:31
+#: branch-data.h:31 branch-data.h:30
 msgid "the Ecumenical Temple"
 msgstr "만신전"
 
-#: branch-data.h:40
+#: branch-data.h:40 branch-data.h:39
 msgid "Orcish Mines"
 msgstr "오크 광산"
 
-#: branch-data.h:40
+#: branch-data.h:40 branch-data.h:39
 msgid "the Orcish Mines"
 msgstr "오크 광산"
 
-#: branch-data.h:49
+#: branch-data.h:49 branch-data.h:48
 msgid "Elven Halls"
 msgstr "엘프의 방"
 
-#: branch-data.h:49
+#: branch-data.h:49 branch-data.h:48
 msgid "the Elven Halls"
 msgstr "엘프의 방"
 
-#: branch-data.h:58
+#: branch-data.h:58 branch-data.h:66
 msgid "Lair"
 msgstr "짐승 소굴"
 
-#: branch-data.h:58
+#: branch-data.h:58 branch-data.h:66
 msgid "the Lair of Beasts"
 msgstr "짐승 소굴"
 
-#: branch-data.h:67
+#: branch-data.h:67 branch-data.h:75
 msgid "Swamp"
 msgstr "늪지"
 
-#: branch-data.h:67
+#: branch-data.h:67 branch-data.h:75
 msgid "the Swamp"
 msgstr "늪지"
 
-#: branch-data.h:76
+#: branch-data.h:76 branch-data.h:84
 msgid "Shoals"
 msgstr "해안"
 
-#: branch-data.h:76
+#: branch-data.h:76 branch-data.h:84
 msgid "the Shoals"
 msgstr "해안"
 
-#: branch-data.h:85
+#: branch-data.h:85 branch-data.h:111
 msgid "Slime Pits"
 msgstr "슬라임 구덩이"
 
-#: branch-data.h:85
+#: branch-data.h:85 branch-data.h:111
 msgid "the Pits of Slime"
 msgstr "슬라임 구덩이"
 
-#: branch-data.h:94
+#: branch-data.h:94 branch-data.h:93
 msgid "Snake Pit"
 msgstr "뱀 소굴"
 
-#: branch-data.h:94
+#: branch-data.h:94 branch-data.h:93
 msgid "the Snake Pit"
 msgstr "뱀 소굴"
 
@@ -11001,88 +11011,88 @@ msgstr "벌집"
 msgid "You hear a buzzing sound coming from all directions."
 msgstr "사방에서 붕붕거리는 소리가 들린다."
 
-#: branch-data.h:112
+#: branch-data.h:112 branch-data.h:120
 msgid "Vaults"
 msgstr "보물창고"
 
-#: branch-data.h:112
+#: branch-data.h:112 branch-data.h:120
 msgid "the Vaults"
 msgstr "보물창고"
 
-#: branch-data.h:121
+#: branch-data.h:121 branch-data.h:129
 msgid "Hall of Blades"
 msgstr "칼날의 방"
 
-#: branch-data.h:121
+#: branch-data.h:121 branch-data.h:129
 msgid "the Hall of Blades"
 msgstr "칼날의 방"
 
-#: branch-data.h:130
+#: branch-data.h:130 branch-data.h:138
 msgid "Crypt"
 msgstr "납골당"
 
-#: branch-data.h:130
+#: branch-data.h:130 branch-data.h:138
 msgid "the Crypt"
 msgstr "납골당"
 
-#: branch-data.h:140
+#: branch-data.h:140 branch-data.h:147
 msgid "Tomb"
 msgstr "무덤"
 
-#: branch-data.h:140
+#: branch-data.h:140 branch-data.h:147
 msgid "the Tomb of the Ancients"
 msgstr "고대인의 무덤"
 
 #. sentinel
-#: branch-data.h:149
+#: branch-data.h:149 branch-data.h:156
 msgid "the Vestibule of Hell"
 msgstr "지옥의 입구"
 
 #. sentinel
-#: branch-data.h:158
+#: branch-data.h:158 branch-data.h:165
 msgid "Dis"
 msgstr "디스"
 
-#: branch-data.h:158
+#: branch-data.h:158 branch-data.h:165
 msgid "the Iron City of Dis"
 msgstr "철의 도시, 디스"
 
 #. sentinel
-#: branch-data.h:167
+#: branch-data.h:167 branch-data.h:174
 msgid "Gehenna"
 msgstr "게헨나"
 
 #. sentinel
-#: branch-data.h:176
+#: branch-data.h:176 branch-data.h:183
 msgid "Cocytus"
 msgstr "코큐투스"
 
 #. sentinel
-#: branch-data.h:185
+#: branch-data.h:185 branch-data.h:192
 msgid "Tartarus"
 msgstr "타르타로스"
 
-#: branch-data.h:194 describe.cc:555
+#: branch-data.h:194 describe.cc:555 branch-data.h:201
 msgid "Zot"
 msgstr "조트"
 
-#: branch-data.h:194 artefact.cc:293
+#: branch-data.h:194 artefact.cc:293 branch-data.h:201
 msgid "the Realm of Zot"
 msgstr "조트의 렐름"
 
-#: branch-data.h:212
+#: branch-data.h:212 branch-data.h:102
 msgid "Spider Nest"
 msgstr "거미 둥지"
 
-#: branch-data.h:212
+#: branch-data.h:212 branch-data.h:102
 msgid "the Spider Nest"
 msgstr "거미 둥지"
 
-#: branch-data.h:221
+#: branch-data.h:221 branch-data.h:57
 msgid "Dwarven Hall"
 msgstr "드워프의 광장"
 
-#: branch-data.h:221
+#: branch-data.h:221 branch-data.h:57
 msgid "the Dwarven Hall"
 msgstr "드워프의 광장"
 
@@ -14768,3 +14778,99 @@ msgstr "미믹"
 #: status.cc:949
 msgid "Lava"
 msgstr "용암"
+
+#: items.cc:1084
+msgid "a player ghost"
+msgstr "플레이어의 망령"
+
+#: items.cc:1086
+msgid "a pandemonium lord"
+msgstr "판데모니움의 군주"
+
+#: branch-data.h:210
+msgid "Forest"
+msgstr "숲"
+
+#: branch-data.h:210
+msgid "the Enchanted Forest"
+msgstr "마법의 숲"
+
+#: branch-data.h:219
+msgid "Abyss"
+msgstr "어비스"
+
+#: branch-data.h:237
+msgid "Ziggurat"
+msgstr "지구라트"
+
+#: branch-data.h:237
+msgid "a ziggurat"
+msgstr "지구라트"
+
+#: branch-data.h:246
+msgid "Labyrinth"
+msgstr "미궁"
+
+#: branch-data.h:255
+msgid "Bazaar"
+msgstr "시장"
+
+#: branch-data.h:255
+msgid "a bazaar"
+msgstr "시장"
+
+#: branch-data.h:264
+msgid "Trove"
+msgstr "비밀 창고"
+
+#: branch-data.h:264
+msgid "a treasure trove"
+msgstr "비밀 창고"
+
+#: branch-data.h:273
+msgid "Sewer"
+msgstr "배수로"
+
+#: branch-data.h:273
+msgid "a sewer"
+msgstr "배수로"
+
+#: branch-data.h:282
+msgid "Ossuary"
+msgstr "작은 무덤"
+
+#: branch-data.h:282
+msgid "an ossuary"
+msgstr "작은 무덤"
+
+#: branch-data.h:291
+msgid "Bailey"
+msgstr "성채"
+
+#: branch-data.h:291
+msgid "a bailey"
+msgstr "성채"
+
+#: branch-data.h:300
+msgid "Ice Cave"
+msgstr "얼음 동굴"
+
+#: branch-data.h:300
+msgid "an ice cave"
+msgstr "얼음 동굴"
+
+#: branch-data.h:309
+msgid "Volcano"
+msgstr "화산"
+
+#: branch-data.h:309
+msgid "a volcano"
+msgstr "화산지대"
+
+#: branch-data.h:318
+msgid "Wizlab"
+msgstr "마법사의 연구실"
+
+#: branch-data.h:318
+msgid "a wizard's laboratory"
+msgstr "마법사의 연구실"
