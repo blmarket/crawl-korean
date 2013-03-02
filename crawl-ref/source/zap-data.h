@@ -8,7 +8,7 @@
 
 {
     ZAP_FLAME,
-    "puff of flame",
+    M_("puff of flame"),
     50,
     new dicedef_calculator<2, 4, 1, 10>,
     new tohit_calculator<8, 1, 10>,
@@ -24,7 +24,7 @@
 
 {
     ZAP_FROST,
-    "puff of frost",
+    M_("puff of frost"),
     50,
     new dicedef_calculator<2, 4, 1, 10>,
     new tohit_calculator<8, 1, 10>,
@@ -72,7 +72,7 @@
 
 {
     ZAP_MAGIC_DARTS,
-    "magic dart",
+    M_("magic dart"),
     25,
     new dicedef_calculator<1, 3, 1, 5>,
     new tohit_calculator<AUTOMATIC_HIT>,
@@ -120,7 +120,7 @@
 
 {
     ZAP_FIRE,
-    "bolt of fire",
+    M_("bolt of fire"),
     200,
     new calcdice_calculator<6, 18, 2, 3>,
     new tohit_calculator<10, 1, 25>,
@@ -136,7 +136,7 @@
 
 {
     ZAP_COLD,
-    "bolt of cold",
+    M_("bolt of cold"),
     200,
     new calcdice_calculator<6, 18, 2, 3>,
     new tohit_calculator<10, 1, 25>,
@@ -152,7 +152,7 @@
 
 {
     ZAP_PRIMAL_WAVE,
-    "great wave of water",
+    M_("great wave of water"),
     200,
     new calcdice_calculator<4, 14, 3, 5>,
     new tohit_calculator<10, 1, 25>,
@@ -216,7 +216,7 @@
 
 {
     ZAP_FIREBALL,
-    "fireball",
+    M_("fireball"),
     200,
     new calcdice_calculator<3, 10, 1, 2>,
     new tohit_calculator<40>,
@@ -248,7 +248,7 @@
 
 {
     ZAP_LIGHTNING,
-    "bolt of lightning",
+    M_("bolt of lightning"),
     200,
     new calcdice_calculator<1, 11, 3, 5>,
     new tohit_calculator<7, 1, 40>,
@@ -280,7 +280,7 @@
 
 {
     ZAP_VENOM_BOLT,
-    "bolt of poison",
+    M_("bolt of poison"),
     200,
     new calcdice_calculator<4, 15, 1, 2>,
     new tohit_calculator<8, 1, 20>,
@@ -296,7 +296,7 @@
 
 {
     ZAP_NEGATIVE_ENERGY,
-    "bolt of negative energy",
+    M_("bolt of negative energy"),
     200,
     new calcdice_calculator<4, 15, 3, 5>,
     new tohit_calculator<8, 1, 20>,
@@ -312,7 +312,7 @@
 
 {
     ZAP_CRYSTAL_SPEAR,
-    "crystal spear",
+    M_("crystal spear"),
     200,
     new calcdice_calculator<10, 23, 1, 1>,
     new tohit_calculator<10, 1, 15>,
@@ -328,7 +328,7 @@
 
 {
     ZAP_BEAM_OF_ENERGY,
-    "narrow beam of energy",
+    M_("narrow beam of energy"),
     1000,
     new calcdice_calculator<10, 40, 1, 1>,
     new tohit_calculator<1>,
@@ -344,7 +344,7 @@
 
 {
     ZAP_MYSTIC_BLAST,
-    "orb of energy",
+    M_("orb of energy"),
     100,
     new calcdice_calculator<2, 12, 1, 3>,
     new tohit_calculator<10, 1, 7>,
@@ -392,7 +392,7 @@
 
 {
     ZAP_STICKY_FLAME,
-    "sticky flame",
+    M_("sticky flame"),
     100,
     new dicedef_calculator<2, 3, 1, 12>,
     new tohit_calculator<AUTOMATIC_HIT>,
@@ -456,7 +456,7 @@
 
 {
     ZAP_STING,
-    "sting",
+    M_("sting"),
     25,
     new dicedef_calculator<1, 3, 1, 5>,
     new tohit_calculator<8, 1, 5>,
@@ -472,7 +472,7 @@
 
 {
     ZAP_HELLFIRE,
-    "hellfire",
+    M_("hellfire"),
     200,
     new calcdice_calculator<3, 8, 3, 5>,
     new tohit_calculator<20, 1, 10>,
@@ -488,7 +488,7 @@
 
 {
     ZAP_IRON_SHOT,
-    "iron shot",
+    M_("iron shot"),
     200,
     new calcdice_calculator<9, 15, 3, 4>,
     new tohit_calculator<7, 1, 15>,
@@ -504,7 +504,7 @@
 
 {
     ZAP_STRIKING,
-    "force bolt",
+    M_("force bolt"),
     50,
     new dicedef_calculator<1, 8, 1, 5>,
     new tohit_calculator<8, 1, 10>,
@@ -520,7 +520,7 @@
 
 {
     ZAP_STONE_ARROW,
-    "stone arrow",
+    M_("stone arrow"),
     50,
     new dicedef_calculator<3, 5, 1, 8>,
     new tohit_calculator<8, 1, 10>,
@@ -536,7 +536,7 @@
 
 {
     ZAP_ELECTRICITY,
-    "zap",
+    M_("zap"),
     25,
     new dicedef_calculator<1, 3, 1, 4>,
     new tohit_calculator<8, 1, 7>,
@@ -552,7 +552,7 @@
 
 {
     ZAP_ORB_OF_ELECTRICITY,
-    "orb of electricity",
+    M_("orb of electricity"),
     200,
     new calcdice_calculator<0, 13, 4, 5>,
     new tohit_calculator<40>,
@@ -568,7 +568,7 @@
 
 {
     ZAP_SPIT_POISON,
-    "splash of poison",
+    M_("splash of poison"),
     50,
     new dicedef_calculator<1, 4, 1, 2>,
     new tohit_calculator<5, 1, 6>,
@@ -584,7 +584,7 @@
 
 {
     ZAP_DEBUGGING_RAY,
-    "debugging ray",
+    M_("debugging ray"),
     10000,
     new dicedef_calculator<AUTOMATIC_HIT, 1, 0, 1>,
     new tohit_calculator<AUTOMATIC_HIT>,
@@ -601,7 +601,7 @@
 // XXX: How loud should breath be?
 {
     ZAP_BREATHE_FIRE,
-    "fiery breath",
+    M_("fiery breath"),
     50,
     new dicedef_calculator<3, 4, 1, 3>,
     new tohit_calculator<8, 1, 6>,
@@ -618,7 +618,7 @@
 
 {
     ZAP_BREATHE_FROST,
-    "freezing breath",
+    M_("freezing breath"),
     50,
     new dicedef_calculator<3, 4, 1, 3>,
     new tohit_calculator<8, 1, 6>,
@@ -634,7 +634,7 @@
 
 {
     ZAP_BREATHE_ACID,
-    "acid",
+    M_("acid"),
     50,
     new dicedef_calculator<3, 3, 1, 3>,
     new tohit_calculator<5, 1, 6>,
@@ -650,7 +650,7 @@
 
 {
     ZAP_BREATHE_POISON,
-    "poison gas",
+    M_("poison gas"),
     50,
     new dicedef_calculator<3, 2, 1, 6>,
     new tohit_calculator<6, 1, 6>,
@@ -666,7 +666,7 @@
 
 {
     ZAP_BREATHE_POWER,
-    "bolt of energy",
+    M_("bolt of energy"),
     50,
     new dicedef_calculator<3, 3, 1, 3>,
     new tohit_calculator<5, 1, 6>,
@@ -698,7 +698,7 @@
 
 {
     ZAP_AGONY,
-    "agony",
+    M_("agony"),
     100,
     NULL,
     new tohit_calculator<0, 5, 1>,
@@ -730,7 +730,7 @@
 
 {
     ZAP_BREATHE_STEAM,
-    "ball of steam",
+    M_("ball of steam"),
     50,
     new dicedef_calculator<3, 4, 1, 5>,
     new tohit_calculator<10, 1, 10>,
@@ -746,7 +746,7 @@
 
 {
     ZAP_THROW_ICICLE,
-    "shard of ice",
+    M_("shard of ice"),
     100,
     new calcdice_calculator<3, 10, 1, 2>,
     new tohit_calculator<9, 1, 12>,
@@ -762,7 +762,7 @@
 
 {                           // ench_power controls radius
     ZAP_ICE_STORM,
-    "great blast of cold",
+    M_("great blast of cold"),
     200,
     new calcdice_calculator<7, 22, 1, 1>,
     new tohit_calculator<20, 1, 10>,
@@ -810,7 +810,7 @@
 
 {
     ZAP_FLAME_TONGUE,
-    "flame",
+    M_("flame"),
     25,
     new dicedef_calculator<1, 8, 1, 4>,
     new tohit_calculator<11, 1, 6>,
@@ -826,7 +826,7 @@
 
 {
     ZAP_LARGE_SANDBLAST,
-    "large rocky blast",
+    M_("large rocky blast"),
     50,
     new dicedef_calculator<3, 4, 1, 3>,
     new tohit_calculator<13, 1, 10>,
@@ -842,7 +842,7 @@
 
 {
     ZAP_SANDBLAST,
-    "rocky blast",
+    M_("rocky blast"),
     50,
     new dicedef_calculator<2, 4, 1, 3>,
     new tohit_calculator<13, 1, 10>,
@@ -858,7 +858,7 @@
 
 {
     ZAP_SMALL_SANDBLAST,
-    "blast of sand",
+    M_("blast of sand"),
     25,
     new dicedef_calculator<1, 8, 1, 4>,
     new tohit_calculator<8, 1, 5>,
@@ -874,7 +874,7 @@
 
 {
     ZAP_MAGMA,
-    "bolt of magma",
+    M_("bolt of magma"),
     200,
     new calcdice_calculator<4, 15, 3, 5>,
     new tohit_calculator<8, 1, 25>,
@@ -890,7 +890,7 @@
 
 {
     ZAP_POISON_ARROW,
-    "poison arrow",
+    M_("poison arrow"),
     200,
     new calcdice_calculator<4, 15, 1, 1>,
     new tohit_calculator<5, 1, 10>,
@@ -922,7 +922,7 @@
 
 {
     ZAP_PORKALATOR,
-    "porkalator",
+    M_("porkalator"),
     100,
     NULL,
     NULL,
@@ -971,7 +971,7 @@
 
 {
     ZAP_SUNRAY,
-    "ray of light",
+    M_("ray of light"),
     200,
     new calcdice_calculator<4, 15, 1, 1>,
     new tohit_calculator<5, 1, 20>,
@@ -987,7 +987,7 @@
 
 {
     ZAP_HOLY_LIGHT,
-    "beam of light",
+    M_("beam of light"),
     200,
     new calcdice_calculator<3, 11, 1, 3>,
     new tohit_calculator<10, 1, 25>,
@@ -1003,7 +1003,7 @@
 
 {
     ZAP_HOLY_BREATH,
-    "holy breath",
+    M_("holy breath"),
     50,
     new dicedef_calculator<3, 2, 1, 6>,
     new tohit_calculator<6, 1, 6>,
@@ -1019,7 +1019,7 @@
 
 {
     ZAP_BREATHE_STICKY_FLAME, // same data as spell but has different effects on hit
-    "splash of liquid fire",
+    M_("splash of liquid fire"),
     100,
     new dicedef_calculator<2, 3, 1, 12>,
     new tohit_calculator<11, 1, 10>,
@@ -1035,7 +1035,7 @@
 
 {
     ZAP_BREATHE_MEPHITIC,
-    "blast of choking fumes",
+    M_("blast of choking fumes"),
     50,
     new dicedef_calculator<3, 2, 1, 6>,
     new tohit_calculator<6, 1, 6>,
@@ -1067,7 +1067,7 @@
 
 {
     ZAP_BLAST_OF_SILVER,
-    "silver light",
+    M_("silver light"),
     200,
     new calcdice_calculator<3, 10, 1, 2>,
     new tohit_calculator<40>,

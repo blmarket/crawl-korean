@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-02 00:28+0900\n"
+"POT-Creation-Date: 2013-03-03 02:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2987,7 +2987,7 @@ msgstr "집중"
 
 #: decks.cc:312 decks.cc:312 decks.cc:309
 msgid "Shuffle"
-msgstr "뒤섞임"
+msgstr "셔플"
 
 #: decks.cc:313 decks.cc:313 decks.cc:310
 msgid "Experience"
@@ -4031,7 +4031,7 @@ msgstr "무언가"
 #: itemname.cc:381 itemname.cc:546 itemname.cc:392 itemname.cc:557
 #: itemname.cc:399 itemname.cc:564 itemname.cc:564 cloud.cc:1257
 #: cloud.cc:1248 itemname.cc:419 itemname.cc:590 cloud.cc:1243 itemname.cc:368
-#: itemname.cc:539 mon-cast.cc:396
+#: itemname.cc:539 mon-cast.cc:396 zap-data.h:813
 msgid "flame"
 msgstr "화염"
 
@@ -4155,7 +4155,7 @@ msgid "returning"
 msgstr "귀환의"
 
 #: itemname.cc:409 itemname.cc:420 itemname.cc:427 itemname.cc:427
-#: godabil.cc:132 itemname.cc:447 itemname.cc:396
+#: godabil.cc:132 itemname.cc:447 itemname.cc:396 godabil.cc:127
 msgid "chaos"
 msgstr "혼돈"
 
@@ -4327,7 +4327,7 @@ msgstr "굴착"
 
 #: itemname.cc:558 itemname.cc:569 itemname.cc:576 itemname.cc:576
 #: itemname.cc:602 itemname.cc:551 mon-cast.cc:513 spl-clouds.cc:42
-#: spl-miscast.cc:2172
+#: spl-miscast.cc:2172 zap-data.h:219
 msgid "fireball"
 msgstr "화염구"
 
@@ -8196,6 +8196,7 @@ msgid "freezing vapour"
 msgstr "냉기 구름"
 
 #: cloud.cc:1257 cloud.cc:1268 cloud.cc:1248 cloud.cc:1259 cloud.cc:1243
+#: zap-data.h:653
 msgid "poison gas"
 msgstr "독 구름"
 
@@ -10190,317 +10191,317 @@ msgid "arm"
 msgstr "팔"
 
 # (deceit, 110905) sinner
-#: godabil.cc:100
+#: godabil.cc:100 godabil.cc:95
 msgid "hordes of the Abyss"
 msgstr "심연의 무리"
 
-#: godabil.cc:101
+#: godabil.cc:101 godabil.cc:96
 msgid "bastard children of Xom"
 msgstr "혼돈신의 사생아"
 
-#: godabil.cc:102
+#: godabil.cc:102 godabil.cc:97
 msgid "amorphous wretches"
 msgstr "무형의 악마"
 
-#: godabil.cc:103
+#: godabil.cc:103 godabil.cc:98
 msgid "fetid masses"
 msgstr "악취를 풍기는 존재"
 
-#: godabil.cc:104
+#: godabil.cc:104 godabil.cc:99
 msgid "agents of filth"
 msgstr "부패의 대리인"
 
-#: godabil.cc:105
+#: godabil.cc:105 godabil.cc:100
 msgid "squalid dregs"
 msgstr "불결한 존재"
 
-#: godabil.cc:106
+#: godabil.cc:106 godabil.cc:101
 msgid "unbelievers"
 msgstr "믿지 않는 자"
 
-#: godabil.cc:107
+#: godabil.cc:107 godabil.cc:102
 msgid "heretics"
 msgstr "이단자"
 
-#: godabil.cc:108
+#: godabil.cc:108 godabil.cc:103
 msgid "guilty"
 msgstr "죄악"
 
-#: godabil.cc:109
+#: godabil.cc:109 godabil.cc:104
 msgid "legions of the damned"
 msgstr "저주받은 군단"
 
-#: godabil.cc:110
+#: godabil.cc:110 godabil.cc:105
 msgid "servants of Hell"
 msgstr "지옥의 추종자"
 
-#: godabil.cc:111
+#: godabil.cc:111 godabil.cc:106
 msgid "forces of darkness"
 msgstr "어둠의 세력"
 
 # (deceit, 110905) sin
-#: godabil.cc:116
+#: godabil.cc:116 godabil.cc:111
 msgid "chaotic"
 msgstr "혼돈"
 
-#: godabil.cc:117
+#: godabil.cc:117 godabil.cc:112
 msgid "discordant"
 msgstr "불화"
 
-#: godabil.cc:118
+#: godabil.cc:118 godabil.cc:113
 msgid "anarchic"
 msgstr "무법"
 
-#: godabil.cc:119
+#: godabil.cc:119 godabil.cc:114
 msgid "unclean"
 msgstr "불결"
 
-#: godabil.cc:120
+#: godabil.cc:120 godabil.cc:115
 msgid "impure"
 msgstr "부도덕"
 
-#: godabil.cc:121
+#: godabil.cc:121 godabil.cc:116
 msgid "contaminated"
 msgstr "오염됨"
 
-#: godabil.cc:122
+#: godabil.cc:122 godabil.cc:117
 msgid "unfaithful"
 msgstr "불충"
 
-#: godabil.cc:123
+#: godabil.cc:123 godabil.cc:118
 msgid "disloyal"
 msgstr "불성실"
 
-#: godabil.cc:124
+#: godabil.cc:124 godabil.cc:119
 msgid "doubting"
 msgstr "의심"
 
-#: godabil.cc:125
+#: godabil.cc:125 godabil.cc:120
 msgid "profane"
 msgstr "신성 모독"
 
-#: godabil.cc:126
+#: godabil.cc:126 godabil.cc:121
 msgid "blasphemous"
 msgstr "모독"
 
-#: godabil.cc:127
+#: godabil.cc:127 godabil.cc:122
 msgid "sacrilegious"
 msgstr "무엄"
 
 # (deceit, 110905) long sin
-#: godabil.cc:133
+#: godabil.cc:133 godabil.cc:128
 msgid "discord"
 msgstr "불화"
 
-#: godabil.cc:134
+#: godabil.cc:134 godabil.cc:129
 msgid "anarchy"
 msgstr "무법"
 
-#: godabil.cc:135
+#: godabil.cc:135 godabil.cc:130
 msgid "uncleanliness"
 msgstr "불결"
 
-#: godabil.cc:136
+#: godabil.cc:136 godabil.cc:131
 msgid "impurity"
 msgstr "부도덕"
 
-#: godabil.cc:137
+#: godabil.cc:137 godabil.cc:132
 msgid "contamination"
 msgstr "오염됨"
 
-#: godabil.cc:138
+#: godabil.cc:138 godabil.cc:133
 msgid "unfaithfulness"
 msgstr "불충"
 
-#: godabil.cc:139
+#: godabil.cc:139 godabil.cc:134
 msgid "disloyalty"
 msgstr "불성실"
 
-#: godabil.cc:140
+#: godabil.cc:140 godabil.cc:135
 msgid "doubt"
 msgstr "의심"
 
-#: godabil.cc:141
+#: godabil.cc:141 godabil.cc:136
 msgid "profanity"
 msgstr "신성 모독"
 
-#: godabil.cc:142
+#: godabil.cc:142 godabil.cc:137
 msgid "blasphemy"
 msgstr "모독"
 
-#: godabil.cc:143
+#: godabil.cc:143 godabil.cc:138
 msgid "sacrilege"
 msgstr "불결"
 
 # (deceit, 110905) virtue
-#: godabil.cc:148
+#: godabil.cc:148 godabil.cc:143
 msgid "ordered"
 msgstr "정돈"
 
-#: godabil.cc:149
+#: godabil.cc:149 godabil.cc:144
 msgid "harmonic"
 msgstr "조화"
 
-#: godabil.cc:150
+#: godabil.cc:150 godabil.cc:145
 msgid "lawful"
 msgstr "질서"
 
-#: godabil.cc:151
+#: godabil.cc:151 godabil.cc:146
 msgid "clean"
 msgstr "청결"
 
-#: godabil.cc:152
+#: godabil.cc:152 godabil.cc:147
 msgid "pure"
 msgstr "순수"
 
-#: godabil.cc:153
+#: godabil.cc:153 godabil.cc:148
 msgid "hygienic"
 msgstr "깨끗함"
 
-#: godabil.cc:154
+#: godabil.cc:154 godabil.cc:149
 msgid "faithful"
 msgstr "깊은 신앙심"
 
-#: godabil.cc:155
+#: godabil.cc:155 godabil.cc:150
 msgid "loyal"
 msgstr "성실함"
 
-#: godabil.cc:156
+#: godabil.cc:156 godabil.cc:151
 msgid "believing"
 msgstr "믿음"
 
-#: godabil.cc:157
+#: godabil.cc:157 godabil.cc:152
 msgid "reverent"
 msgstr "숭배"
 
-#: godabil.cc:158
+#: godabil.cc:158 godabil.cc:153
 msgid "pious"
 msgstr "경건함"
 
-#: godabil.cc:159
+#: godabil.cc:159 godabil.cc:154
 msgid "obedient"
 msgstr "복종"
 
 # (deceit, 110905) long virtue
-#: godabil.cc:164
+#: godabil.cc:164 godabil.cc:159
 msgid "order"
 msgstr "정돈"
 
-#: godabil.cc:165
+#: godabil.cc:165 godabil.cc:160
 msgid "harmony"
 msgstr "조화"
 
-#: godabil.cc:166
+#: godabil.cc:166 godabil.cc:161
 msgid "lawfulness"
 msgstr "질서"
 
-#: godabil.cc:167
+#: godabil.cc:167 godabil.cc:162
 msgid "cleanliness"
 msgstr "청결"
 
-#: godabil.cc:168
+#: godabil.cc:168 godabil.cc:163
 msgid "purity"
 msgstr "순수"
 
-#: godabil.cc:169
+#: godabil.cc:169 godabil.cc:164
 msgid "hygiene"
 msgstr "깨끗함"
 
-#: godabil.cc:170
+#: godabil.cc:170 godabil.cc:165
 msgid "faithfulness"
 msgstr "깊은 신앙심"
 
-#: godabil.cc:171
+#: godabil.cc:171 godabil.cc:166
 msgid "loyalty"
 msgstr "성실함"
 
-#: godabil.cc:172
+#: godabil.cc:172 godabil.cc:167
 msgid "belief"
 msgstr "믿음"
 
-#: godabil.cc:173
+#: godabil.cc:173 godabil.cc:168
 msgid "reverence"
 msgstr "숭배"
 
-#: godabil.cc:174
+#: godabil.cc:174 godabil.cc:169
 msgid "piety"
 msgstr "신앙도"
 
-#: godabil.cc:175
+#: godabil.cc:175 godabil.cc:170
 msgid "obedience"
 msgstr "복종"
 
 # (deceit, 110905) smite
-#: godabil.cc:180
+#: godabil.cc:180 godabil.cc:175
 msgid "purify"
 msgstr "정화"
 
-#: godabil.cc:181
+#: godabil.cc:181 godabil.cc:176
 msgid "censure"
 msgstr "견책"
 
-#: godabil.cc:182
+#: godabil.cc:182 godabil.cc:177
 msgid "condemn"
 msgstr "규탄"
 
-#: godabil.cc:183
+#: godabil.cc:183 godabil.cc:178
 msgid "strike down"
 msgstr "일격"
 
-#: godabil.cc:184
+#: godabil.cc:184 godabil.cc:179
 msgid "expel"
 msgstr "퇴출"
 
-#: godabil.cc:185
+#: godabil.cc:185 godabil.cc:180
 msgid "oust"
 msgstr "몰아냄"
 
-#: godabil.cc:186
+#: godabil.cc:186 godabil.cc:181
 msgid "smite"
 msgstr "천벌"
 
-#: godabil.cc:187
+#: godabil.cc:187 godabil.cc:182
 msgid "castigate"
 msgstr "면박"
 
-#: godabil.cc:188
+#: godabil.cc:188 godabil.cc:183
 msgid "rebuke"
 msgstr "꾸짖음"
 
 # (deceit, 110905) smitten
-#: godabil.cc:193
+#: godabil.cc:193 godabil.cc:188
 msgid "purified"
 msgstr "정화"
 
-#: godabil.cc:194
+#: godabil.cc:194 godabil.cc:189
 msgid "censured"
 msgstr "견책"
 
-#: godabil.cc:195
+#: godabil.cc:195 godabil.cc:190
 msgid "condemned"
 msgstr "규탄"
 
-#: godabil.cc:196
+#: godabil.cc:196 godabil.cc:191
 msgid "struck down"
 msgstr "일격"
 
-#: godabil.cc:197
+#: godabil.cc:197 godabil.cc:192
 msgid "expelled"
 msgstr "퇴출"
 
-#: godabil.cc:198
+#: godabil.cc:198 godabil.cc:193
 msgid "ousted"
 msgstr "몰아냄"
 
-#: godabil.cc:199
+#: godabil.cc:199 godabil.cc:194
 msgid "smitten"
 msgstr "천벌"
 
-#: godabil.cc:200
+#: godabil.cc:200 godabil.cc:195
 msgid "castigated"
 msgstr "면박"
 
-#: godabil.cc:201
+#: godabil.cc:201 godabil.cc:196
 msgid "rebuked"
 msgstr "꾸짖음"
 
@@ -10709,6 +10710,16 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -11112,6 +11123,7 @@ msgstr "거대한 문"
 msgid "minisclue gate"
 msgstr "매우 작은 관문"
 
+#: xom.cc:3196
 msgid "gate"
 msgstr "관문"
 
@@ -11501,47 +11513,47 @@ msgstr "야수"
 msgid "appendage"
 msgstr "야수화"
 
-#: xom.cc:1284 xom.cc:1191
+#: xom.cc:1284 xom.cc:1191 xom.cc:1121
 msgid "(curing)"
 msgstr ""
 
-#: xom.cc:1285 xom.cc:1192
+#: xom.cc:1285 xom.cc:1192 xom.cc:1122
 msgid "(heal wounds)"
 msgstr ""
 
-#: xom.cc:1286 xom.cc:1193
+#: xom.cc:1286 xom.cc:1193 xom.cc:1123
 msgid "(magic)"
 msgstr ""
 
-#: xom.cc:1287 xom.cc:1194
+#: xom.cc:1287 xom.cc:1194 xom.cc:1124
 msgid "(speed)"
 msgstr ""
 
-#: xom.cc:1288 xom.cc:1195
+#: xom.cc:1288 xom.cc:1195 xom.cc:1125
 msgid "(might)"
 msgstr ""
 
-#: xom.cc:1289 xom.cc:1196
+#: xom.cc:1289 xom.cc:1196 xom.cc:1126
 msgid "(agility)"
 msgstr ""
 
-#: xom.cc:1290 xom.cc:1197
+#: xom.cc:1290 xom.cc:1197 xom.cc:1127
 msgid "(brilliance)"
 msgstr ""
 
-#: xom.cc:1291 xom.cc:1198
+#: xom.cc:1291 xom.cc:1198 xom.cc:1128
 msgid "(invisibility)"
 msgstr ""
 
-#: xom.cc:1292 xom.cc:1199
+#: xom.cc:1292 xom.cc:1199 xom.cc:1129
 msgid "(berserk)"
 msgstr ""
 
-#: xom.cc:1293 xom.cc:1200
+#: xom.cc:1293 xom.cc:1200 xom.cc:1130
 msgid "(experience)"
 msgstr ""
 
-#: xom.cc:1294 xom.cc:1201
+#: xom.cc:1294 xom.cc:1201 xom.cc:1131
 msgid "(other)"
 msgstr ""
 
@@ -11602,7 +11614,7 @@ msgstr "은빛의 폭발"
 
 #: abl-show.cc:402 abl-show.cc:347
 msgid "Deal Four"
-msgstr "넉 장 돌리기"
+msgstr "넉 장 뒤집기"
 
 #: cloud.cc:1251 cloud.cc:1264
 msgid "sparse dust"
@@ -11845,51 +11857,51 @@ msgstr "얼어붙는 숨결"
 msgid "blast of negative energy"
 msgstr "음에너지의 폭발"
 
-#: mon-cast.cc:302
+#: mon-cast.cc:302 zap-data.h:75
 msgid "magic dart"
 msgstr "마법의 다트"
 
-#: mon-cast.cc:310
+#: mon-cast.cc:310 zap-data.h:11
 msgid "puff of flame"
 msgstr "화염 덩어리"
 
-#: mon-cast.cc:318
+#: mon-cast.cc:318 zap-data.h:27
 msgid "puff of frost"
 msgstr "냉기 덩어리"
 
-#: mon-cast.cc:326
+#: mon-cast.cc:326 zap-data.h:845
 msgid "rocky blast"
 msgstr "모래 폭풍"
 
-#: mon-cast.cc:405
+#: mon-cast.cc:405 zap-data.h:283
 msgid "bolt of poison"
 msgstr "독화살"
 
-#: mon-cast.cc:414
+#: mon-cast.cc:414 zap-data.h:893
 msgid "poison arrow"
 msgstr "맹독의 화살"
 
-#: mon-cast.cc:423
+#: mon-cast.cc:423 zap-data.h:877
 msgid "bolt of magma"
 msgstr "용암의 화살"
 
-#: mon-cast.cc:432
+#: mon-cast.cc:432 zap-data.h:123
 msgid "bolt of fire"
 msgstr "맹화의 화살"
 
-#: mon-cast.cc:441
+#: mon-cast.cc:441 zap-data.h:749
 msgid "shard of ice"
 msgstr "얼음조각"
 
-#: mon-cast.cc:449
+#: mon-cast.cc:449 zap-data.h:139
 msgid "bolt of cold"
 msgstr "동결의 화살"
 
-#: mon-cast.cc:458
+#: mon-cast.cc:458 zap-data.h:331
 msgid "narrow beam of energy"
 msgstr "얇은 마력의 빛줄기"
 
-#: mon-cast.cc:467
+#: mon-cast.cc:467 zap-data.h:155
 msgid "great wave of water"
 msgstr "몰아치는 파도"
 
@@ -11897,15 +11909,15 @@ msgstr "몰아치는 파도"
 msgid "freezing blast"
 msgstr "얼어붙는 냉기"
 
-#: mon-cast.cc:490
+#: mon-cast.cc:490 zap-data.h:539
 msgid "zap"
 msgstr "전격"
 
-#: mon-cast.cc:499
+#: mon-cast.cc:499 zap-data.h:251
 msgid "bolt of lightning"
 msgstr "번개의 화살"
 
-#: mon-cast.cc:527
+#: mon-cast.cc:527 zap-data.h:765
 msgid "great blast of cold"
 msgstr "맹렬한 냉기 폭풍"
 
@@ -11914,28 +11926,28 @@ msgid "burst of hellfire"
 msgstr "맹렬한 지옥불"
 
 #. was splinters
-#: mon-cast.cc:567
+#: mon-cast.cc:567 zap-data.h:315
 msgid "crystal spear"
 msgstr "수정창"
 
-#: mon-cast.cc:576
+#: mon-cast.cc:576 zap-data.h:507
 msgid "force bolt"
 msgstr "힘의 화살"
 
 #. negative energy
-#: mon-cast.cc:590
+#: mon-cast.cc:590 zap-data.h:299
 msgid "bolt of negative energy"
 msgstr "흡성의 화살"
 
-#: mon-cast.cc:600
+#: mon-cast.cc:600 zap-data.h:347
 msgid "orb of energy"
 msgstr "마력의 구체"
 
-#: mon-cast.cc:609
+#: mon-cast.cc:609 zap-data.h:733
 msgid "ball of steam"
 msgstr "증기 구체"
 
-#: mon-cast.cc:634
+#: mon-cast.cc:634 zap-data.h:395
 msgid "sticky flame"
 msgstr "끈적이는 화염"
 
@@ -11947,23 +11959,23 @@ msgstr "유독 가스의 폭발"
 msgid "blast of poison"
 msgstr "독액의 폭발"
 
-#: mon-cast.cc:661
+#: mon-cast.cc:661 zap-data.h:669
 msgid "bolt of energy"
 msgstr "마력의 화살"
 
-#: mon-cast.cc:671
+#: mon-cast.cc:671 zap-data.h:459
 msgid "sting"
 msgstr "독침"
 
-#: mon-cast.cc:679
+#: mon-cast.cc:679 zap-data.h:491
 msgid "iron shot"
 msgstr "강철의 화살"
 
-#: mon-cast.cc:688
+#: mon-cast.cc:688 zap-data.h:523
 msgid "stone arrow"
 msgstr "암석의 화살"
 
-#: mon-cast.cc:697
+#: mon-cast.cc:697 zap-data.h:571
 msgid "splash of poison"
 msgstr "독액 물보라"
 
@@ -12016,11 +12028,11 @@ msgstr "냉기의 폭발"
 msgid "blast of cleansing flame"
 msgstr "정화의 불꽃"
 
-#: mon-cast.cc:889
+#: mon-cast.cc:889 zap-data.h:925
 msgid "porkalator"
 msgstr "강제 돼지 변신"
 
-#: mon-cast.cc:907
+#: mon-cast.cc:907 zap-data.h:974
 msgid "ray of light"
 msgstr "강한 빛줄기"
 
@@ -12040,7 +12052,7 @@ msgstr "은빛 화살"
 msgid "ensnaring beam"
 msgstr "거미줄 발사"
 
-#: mon-cast.cc:977
+#: mon-cast.cc:977 zap-data.h:701
 msgid "agony"
 msgstr "고통"
 
@@ -12048,7 +12060,7 @@ msgstr "고통"
 msgid "explosion of spores"
 msgstr "포자의 폭발"
 
-#: mon-stuff.cc:1069 xom.cc:2019
+#: mon-stuff.cc:1069 xom.cc:2019 xom.cc:1937
 msgid "blast of lightning"
 msgstr "전격의 방출"
 
@@ -12114,7 +12126,7 @@ msgstr "사파이어 파편"
 msgid "explosion"
 msgstr "폭발"
 
-#: xom.cc:3221
+#: xom.cc:3221 xom.cc:3134
 msgid "STAIR BEAM"
 msgstr "밀어낸 계단"
 
@@ -14874,3 +14886,100 @@ msgstr "마법사의 연구실"
 #: branch-data.h:318
 msgid "a wizard's laboratory"
 msgstr "마법사의 연구실"
+
+#: xom.cc:118 xom.cc:128
+msgid "Xom is interested."
+msgstr "좀은 흥미를 느꼈다."
+
+#: xom.cc:119
+msgid "Xom is mildly amused."
+msgstr "좀은 조금 재미있어했다."
+
+#: xom.cc:120
+msgid "Xom is amused."
+msgstr "좀은 재미있어했다."
+
+#: xom.cc:121
+msgid "Xom is highly amused!"
+msgstr "좀은 매우 재미있어했다!"
+
+#: xom.cc:122
+msgid "Xom thinks this is hilarious!"
+msgstr "좀은 이것이 매우 우습다고 생각했다!"
+
+#: xom.cc:129
+msgid "Xom is very interested."
+msgstr "좀은 매우 흥미로워했다."
+
+#: xom.cc:130
+msgid "Xom is extremely interested."
+msgstr "좀은 비상한 관심을 가졌다."
+
+#: xom.cc:131
+msgid "Xom is intrigued!"
+msgstr "좀은 아주 흥미로워했다!"
+
+#: xom.cc:132
+msgid "Xom is very intrigued!"
+msgstr "좀은 정말로 흥미로워했다!"
+
+#: xom.cc:133
+msgid "Xom is fascinated!"
+msgstr "좀은 매료되었다!"
+
+#: xom.cc:3199
+msgid "staircase"
+msgstr "계단"
+
+#: zap-data.h:475
+msgid "hellfire"
+msgstr "지옥불"
+
+#: zap-data.h:555
+msgid "orb of electricity"
+msgstr "전기의 구"
+
+#: zap-data.h:587
+msgid "debugging ray"
+msgstr "짱짱쎈 디버그용 파.괘.광선"
+
+#: zap-data.h:604
+msgid "fiery breath"
+msgstr "화염의 숨결"
+
+#: zap-data.h:621
+msgid "freezing breath"
+msgstr "냉기의 숨결"
+
+#: zap-data.h:637
+msgid "acid"
+msgstr "강한 산"
+
+#: zap-data.h:829
+msgid "large rocky blast"
+msgstr "커다란 암석 폭풍"
+
+#: zap-data.h:861
+msgid "blast of sand"
+msgstr "모래 폭풍"
+
+#: zap-data.h:990
+msgid "beam of light"
+msgstr "빛줄기"
+
+#: zap-data.h:1006
+msgid "holy breath"
+msgstr "신성의 숨결"
+
+#. same data as spell but has different effects on hit
+#: zap-data.h:1022
+msgid "splash of liquid fire"
+msgstr "흩뿌려진 액상 화염"
+
+#: zap-data.h:1038
+msgid "blast of choking fumes"
+msgstr "숨 막히는 연기의 확산"
+
+#: zap-data.h:1070
+msgid "silver light"
+msgstr "은색 빛줄기"

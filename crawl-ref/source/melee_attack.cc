@@ -4277,7 +4277,7 @@ void melee_attack::mons_apply_attack_flavour()
 
         if (needs_message && special_damage)
         {
-            mprf(gettext("%s %s %s%s"),
+            mprf(pgettext("freezeattack","%s %s %s%s"),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb("freeze").c_str(),
                  defender_name().c_str(),
@@ -4303,7 +4303,7 @@ void melee_attack::mons_apply_attack_flavour()
 
         if (needs_message && special_damage)
         {
-            mprf(gettext("%s %s %s%s"),
+            mprf(pgettext("shockattack","%s %s %s%s"),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb("shock").c_str(),
                  defender_name().c_str(),
@@ -4487,7 +4487,7 @@ void melee_attack::mons_apply_attack_flavour()
 
         if (needs_message && special_damage)
         {
-            mprf(gettext("%s %s %s%s"),
+            mprf(pgettext("searattack","%s %s %s%s"),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb("sear").c_str(),
                  defender_name().c_str(),

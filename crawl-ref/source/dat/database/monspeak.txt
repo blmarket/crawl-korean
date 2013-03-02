@@ -6727,64 +6727,58 @@ cherub
 glowing angel
 
 w:40
-@The_monster@ recites @_axioms_of_law_@
+@The_monster@은(는) @_axioms_of_law_@을(를) 암송했다.
 
-@The_monster@ recites @_recite_what_@ @_recite_subject_@
+@The_monster@은(는) @_recite_what_@ @_recite_subject_@을(를) 암송했다.
 
-@The_monster@ preaches about @_recite_subject_@
+@The_monster@은(는) @_recite_subject_@을(를) 전도했다.
 
-@The_monster@ @_recites_start_@ a @_lecture_modifier_@ lecture about @_recite_subject_@
+@The_monster@(는) @_recite_subject_@의 세부적인 내용을 설명했다.
 
-@The_monster@ explains in detail about @_recite_subject_@
+@The_monster@은(는) @_important_subject_@의 중요성을 설명했다.
 
-@The_monster@ explains the importance of @_important_subject_@
+@The_monster@은(는) @_lecture_modifier_@@_recite_subject_@에 대한 설교를 @_recites_start_@.
 
-@The_monster@ @_recites_start_@ a @_lecture_modifier_@ sermon about @_recite_subject_@
-
-@The_monster@ @_recites_start_@ a @_lecture_modifier_@ speech about @_recite_subject_@
+@The_monster@은(는) @_lecture_modifier_@@_recite_subject_@에 대해 연설을 @_recites_start_@.
 
 w:5
-@The_monster@ speaks about @_recite_subject_@
+@The_monster@은(는) @_recite_subject_@에 대해 말했다.
 %%%%
 _recites_start_
 
-begins
+시작했다
 
-launches into
+개시했다
 
-embarks on
+늘어놓았다
 %%%%
 _recite_what_
 
-a poem about
+에 대한 짧은 구절
 
-the sacred texts on
+에 대한 신성한 구절
 
-the word of Zin on
-
-sonorously on
-
-loudly on
+이라는 진의 말씀
 %%%%
 _lecture_modifier_
 
-lengthy
+장황한 
 
-passionate
+근엄한 
 
-righteous
+엄중한 
 
-stern
+근사한
 %%%%
 _axioms_of_law_
 
-Zin's Axioms of Law.
+진의 질서의 이치
 
-the Axioms of Law.
+질서의 이치
 
-the books of the Law.
+질서의 대경
 
-the sacred Law of Zin.
+진의 성스러운 질서
 %%%%
 # used for "explaining the importance of ..."
 _important_subject_
@@ -6793,33 +6787,33 @@ _important_subject_
 w:50
 @_axioms_of_law_@
 
-the eternal Law.
+영원한 질서
 
-obedience to the Law.
+질서에 대한 복종
 
-the one true way.
+하나의 참된 질서
 
 # purity
-purity of body and mind.
+몸과 마음의 깨끗함
 
-preserving your bodily integrity.
+육체의 온전함을 유지하는 것
 
-keeping your body clean and pure.
+육체를 깨끗하고 순수하게 유지하는 것
 
-proper care of body and soul.
+참된 몸가짐과 마음가짐
 
 # mutations
-avoiding mutations.
+돌연변이 회피
 
-just saying no to mutations.
+순수함을 유지하는 것
 
 # respecting intelligent beings
-proper burial practice.
+죽은 자를 올바르게 매장하는 법
 
 # demons
-not dealing with demons.
+악마와 타협하지 않는 것
 
-rejecting the service of demons.
+악마의 무리를 배척하는 것
 %%%%
 # the subject of your recital/lecture/whatever
 # needs the full dot or exclamation mark
@@ -6832,35 +6826,35 @@ w:120
 w:80
 @_axioms_of_law_@
 
-the Law and the prophets.
+질서와 예언
 
-the importance of the Law.
+질서의 중요성
 
 # anti-mutation
-mutations, and how to avoid them.
+변이와, 변이를 피하는 방법
 
-potions of Mutation - the devil's brew!
+구절 '돌연변이의 물약 : 악마의 양조물!'
 
-Neqoxecs and Cacodemons - may they all be destroyed!
+구절 '천벌의 대상 - 네퀘젝과 캐커데몬'
 
 # respecting intelligent beings
-a proper diet respecting intelligent beings.
+지성체를 존중하기 위한 음식 식단
 
 # necromancy and evil
-the evils of necromancy.
+강령술의 사악함
 
-undead, and why they are evil.
+구절 '언데드, 그들은 왜 사악한가'
 
 # the gods
-the fall of Lugonu.
+루고누의 타락
 
-the alliance of Zin and the Shining One.
+진과 샤이닝 원의 연합
 
-the alliance of Zin and Elyvilon.
+진과 엘라이빌론의 연합.
 
-the lawlessness of @_chaotic_god_@.
+@chaotic_god@의 무질서함
 
-the evilness of @_evil_god_@.
+@evil_god@의 사악함
 %%%%
 _chaotic_god_
 
@@ -6894,70 +6888,68 @@ _evil_god_
 ###############################################################################
 deformed humanoid
 
-VISUAL:@The_monster@ howls in pain.
+VISUAL:@The_monster@은(는) 고통으로 울부짖었다.
 
-VISUAL:@The_monster@ wails in agony.
+VISUAL:@The_monster@은(는) 괴로움에 흐느꼈다.
 
-VISUAL:@The_monster@ weeps.
+VISUAL:@The_monster@이(가) 울었다.
 
-VISUAL:@The_monster@ sobs.
+VISUAL:@The_monster@은(는) 울먹였다.
 
-@The_monster@ screams, "The pain, the pain!"
+@The_monster@은(는) 소리쳤다. "아파, 고통스러워!"
 
-VISUAL:@The_monster@ begins coughing up blood.
+VISUAL:@The_monster@은(는) 각혈을 하기 시작했다.
 
-@The_monster@ yells, "Please, just kill me!"
-
-w:1
-VISUAL:@The_monster@ begins hyperventilating.
-
-VISUAL:@The_monster@ twists in agony.
-
-VISUAL:@The_monster@ stares vacantly at @possessive@ hideously deformed hands.
-
-@The_monster@ asks, "What has happened to me?"
-
-@The_monster@ asks, "What has been done to me?"
-
-VISUAL:@The_monster@ prays for aid.
-
-@The_monster@ says, "I think I died... I think I'm dead..."
-
-w:3
-@The_monster@ wails, "So itchy! Itchy, itchy, itchy! Always itchy!"
-
-VISUAL:@The_monster@ gurgles, unable to form words.
+@The_monster@은(는) 고함쳤다다, "제발, 날 죽여 줘!
 
 w:1
-@The_monster@ yells, "I will have my revenge on the monster who did this!"
+VISUAL:@The_monster@이(가) 과호흡 상태에 빠졌다.
 
-@The_monster@ mumbles, "Took all my skin, all gone, all gone..."
+VISUAL:@The_monster@은(는) 고통에 몸을 뒤틀었다.
 
-@The_monster@ says, "I was beautiful once. Now look at me."
+VISUAL:@The_monster@이(가) 자신의 괴기스럽게 뒤틀어진 손을 공허하게 바라보았다.
 
-VISUAL:@The_monster@ wriggles @possessive@ tentacles.
+@The_monster@은(는) 묻는다. "나에게 무슨 일이 일어난 거지?"
 
-VISUAL:A dozen eyes blink open in the @monster@'s chest.
+@The_monster@은(는) 묻는다. "나한테 뭘 한거야?"
 
-VISUAL:Strange appendages sprout from the @monster@'s back.
+VISUAL:@The_monster@은(는) 신에게 구원을 청했다.
 
-VISUAL:@The_monster@ lashes @possessive@ tail.
-
-VISUAL:@The_monster@ suddenly sprouts two large horns!
+@The_monster@은(는) 말했다. "난 죽었다고 생각했는데... 난 이미 죽었다고 생각했는데..."
 
 w:3
-VISUAL:@The_monster@'s flesh secretes a thick mucus.
+@The_monster@은(는) 흐느꼈다, "온 몸이 정말 가려워! 가려워, 가려워, 가렵다고! 긁어도 끝없이 가려워!"
 
-VISUAL:Hollow, blind eyes appear on the @monster@'s head.
+VISUAL:@The_monster@은(는) 꺽꺽대며, 말을 잇지 못했다.
 
-VISUAL:Suppurating sores blossom under the @monster@'s eyelids.
+w:1
+@The_monster@은(는) 외쳤다. "나에게 이런 짓을 한 녀석한테 복수하겠어!"
 
-@The_monster@ begs you to kill @objective@.
+@The_monster@은(는) 중얼거렸다. "내 피부를 모두 가져갔어, 전부 사라졌어, 전부 사라졌다구…"
 
-VISUAL:@The_monster@ looks at @possessive@ body and cries without tears.
+@The_monster@은(는) 말했다. "나도 한때는 아름다웠어. 지금의 내 모습은..."
+
+VISUAL:@The_monster@이(가) 촉수를 꿈틀거렸다.
+
+VISUAL:@The_monster@의 가슴에서 12개의 눈이 깜빡였다.
+
+VISUAL:@The_monster@의 등에서 괴상한 부속물이 솟아나왔다.
+
+VISUAL:@The_monster@이(가)  꼬리를 찰싹 휘둘렀다.
+
+VISUAL:갑자기 @The_monster@에게서 한 쌍의 큰 뿔이 돋아나왔다!
+
+w:3
+VISUAL:@The_monster@의 살점에서 끈적한 점액질이 흘러나왔다.
+
+VISUAL:텅 비어, 기능을 잃은 눈이 그것의 머리에서 생겨났다.
+
+@The_monster@은(는) 자신을 죽여달라고 빌었다.
+
+VISUAL:@The_monster@은(는) 자기 자신을 보고 눈물도 못 흘리며 울었다.
 
 # Pungent Stench
-@The_monster@ screams, "I am only a sick, bizarre, defaced creation."
+@The_monster@은(는) 소리쳤다. "난 병들고, 끔찍하고, 문드러진 괴물이야."
 
 ##### REMOVED #####
 ############ FRANCIS ### A wizard looking for body-parts as spell components

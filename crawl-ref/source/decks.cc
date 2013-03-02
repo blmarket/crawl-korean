@@ -460,12 +460,12 @@ static card_type _draw_top_card(item_def& deck, bool message,
 
     if (message)
     {
-        const char *verb = translate_verb(NULL, (_flags & CFLAG_DEALT) ? P_("deck","deal") : P_("deck","draw")).c_str();
+        const char *verb = (_flags & CFLAG_DEALT) ? pgettext("deck","deal") : pgettext("deck","draw");
 
         if (_flags & CFLAG_MARKED)
-            mprf(P_("deck","You %s %s."), verb, card_name(card));
+            mprf(pgettext("deck","You %s %s."), verb, _(card_name(card)));
         else
-            mprf(_("You %s a card... It is %s."), verb, card_name(card));
+            mprf(_("You %s a card... It is %s."), verb, _(card_name(card)));
 
         _check_odd_card(_flags);
     }
@@ -855,7 +855,7 @@ bool deck_peek()
         already_seen++;
 
     mprf(_("You draw two cards from the deck. They are: %s and %s."),
-         card_name(card1), card_name(card2));
+         _(card_name(card1)), _(card_name(card2)));
 
     _set_card_and_flags(deck, 0, card1, flags1 | CFLAG_SEEN);
     _set_card_and_flags(deck, 1, card2, flags2 | CFLAG_SEEN);
@@ -882,7 +882,7 @@ bool deck_identify_first(int slot)
     _set_card_and_flags(deck, -1, card, flags | CFLAG_SEEN | CFLAG_MARKED);
     deck.props["num_marked"]++;
 
-    mprf(_("You get a glimpse of the first card. It is %s."), card_name(card));
+    mprf(_("You get a glimpse of the first card. It is %s."), _(card_name(card)));
     return true;
 
 }
@@ -966,7 +966,7 @@ static void _redraw_stacked_cards(const std::vector<card_type>& draws,
     {
         cgotoxy(1, i+2);
         textcolor(selected == i ? WHITE : LIGHTGREY);
-        cprintf("%u - %s", i+1, card_name(draws[i]));
+        cprintf("%u - %s", i+1, _(card_name(draws[i])));
         clear_to_end_of_line();
     }
 }
@@ -1205,7 +1205,7 @@ bool deck_triple_draw()
             for (int i = 0; i < num_to_draw; ++i)
             {
                 msg::streams(MSGCH_PROMPT) << (static_cast<char>(i + 'a')) << " - "
-                                           << card_name(draws[i]) << std::endl;
+                                           << _(card_name(draws[i])) << std::endl;
             }
             need_prompt_redraw = false;
         }
@@ -1357,7 +1357,7 @@ void evoke_deck(item_def& deck)
             {
                 simple_god_message(gettext(" seems to have exchanged this card "
                                    "behind your back!"), GOD_NEMELEX_XOBEH);
-                mprf(gettext("It's actually %s."), card_name(card));
+                mprf(gettext("It's actually %s."), _(card_name(card)));
                 // You never completely appease Nemelex, but the effects
                 // get less frequent.
                 you.penance[GOD_NEMELEX_XOBEH] -=
@@ -1724,7 +1724,7 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
         if (power_level == 2)
         {
             // 1. dealt or drawn, 2. card name
-            mprf(_("You have %s %s."), participle, card_name(card));
+            mprf(_("You have %s %s."), participle, _(card_name(card)));
             torment(&you, TORMENT_CARDS, you.pos());
             return;
         }
@@ -1739,7 +1739,7 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
     std::string prompt = "You have ";
     prompt += participle;
     prompt += " ";
-    prompt += card_name(card);
+    prompt += _(card_name(card));
     prompt += ".";
 
     bolt beam;
@@ -2939,7 +2939,7 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
             && which_card != CARD_VENOM && which_card != CARD_ORB)
         {
             /// 1. dealt or draw 2. card name
-            mprf(_("You have %s %s."), participle, card_name(which_card));
+            mprf(_("You have %s %s."), participle, _(card_name(which_card)));
         }
     }
 
@@ -3005,8 +3005,8 @@ void card_effect(card_type which_card, deck_rarity_type rarity,
     case CARD_VENOM:
         if (coinflip())
         {
-            // 1. drawn/dealt 2. card_name
-            mprf(_("You have %s %s."), participle, card_name(which_card));
+            // 1. drawn or dealt 2. card_name
+            mprf(_("You have %s %s."), participle, _(card_name(which_card)));
             your_spells(SPELL_OLGREBS_TOXIC_RADIANCE, random2(power/4), false);
         }
         else

@@ -586,8 +586,8 @@ bool yesno(const char *str, bool safe, int safeanswer, bool clear_after,
         {
             bool upper = (!safe && crawl_state.game_is_hints_tutorial());
             const std::string pr
-                = make_stringf("%s[Y]es or [N]o only, please.",
-                               upper ? "Uppercase " : "");
+                = make_stringf(_("%s[Y]es or [N]o only, please."),
+                               upper ? _("Uppercase ") : "");
             if (message)
                 mpr(pr);
             else

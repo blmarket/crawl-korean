@@ -35,7 +35,7 @@ Xom general gift
 
 "나의 호의의 증표인, 이 것을 받아라."
 
-좀이 당신에게 미소었다.
+좀이 당신에게 미소지었다.
 
 "받아라!"
 %%%%
@@ -218,7 +218,7 @@ Xom teleportation journey
 
 "어디에 멈출지는, 나도 모른다!"
 
-Xom twists space around you.
+좀은 당신 주변의 공간을 왜곡시켰다.
 %%%%
 Xom confusion
 
@@ -839,7 +839,7 @@ Zin penance
 
 Zin은(는) 당신이 질서에 복종하지 않은 행동을 강하게 혹평했다.
 
-진은 @important_subject@의 중요성을 엄하게 설명했다.
+진은 @_important_subject_@의 중요성을 엄하게 설명했다.
 %%%%
 Zin welcome
 

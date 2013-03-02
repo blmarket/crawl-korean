@@ -1622,7 +1622,7 @@ static std::string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(drawn_cards[i]);
+            description += _(card_name(drawn_cards[i]));
         }
         description += "\n";
     }
@@ -1668,7 +1668,7 @@ static std::string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(marked_cards[i]);
+            description += _(card_name(marked_cards[i]));
         }
         description += "\n";
     }
@@ -1694,7 +1694,7 @@ static std::string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(seen_cards[i]);
+            description += _(card_name(seen_cards[i]));
         }
         description += "\n";
     }

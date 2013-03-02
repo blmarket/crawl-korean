@@ -107,8 +107,8 @@ spret_type conjure_flame(int pow, const coord_def& where, bool fail)
 
     if (cloud != EMPTY_CLOUD)
     {
-        // Reinforce the cloud - but not too much.
-        // It must be a fire cloud from a previous test.
+        // Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+        
         mpr(gettext("The fire roars with new energy!"));
         const int extra_dur = 2 + std::min(random2(pow) / 2, 20);
         env.cloud[cloud].decay += extra_dur * 5;

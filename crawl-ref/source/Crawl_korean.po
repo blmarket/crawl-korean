@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-02 00:28+0900\n"
+"POT-Creation-Date: 2013-03-03 02:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -787,7 +787,7 @@ msgid "Saved games:"
 msgstr "저장된 게임들:"
 
 #: abyss.cc:726 abyss.cc:726 abyss.cc:554 xom.cc:4102 abyss.cc:589
-#: xom.cc:3993 xom.cc:4001
+#: xom.cc:3993 xom.cc:4001 xom.cc:3914 xom.cc:3937
 msgid "Xom snickers loudly."
 msgstr "좀은 낄낄거리며 폭소했다."
 
@@ -809,7 +809,7 @@ msgstr "무한한 공허의 악마가 당신에게 미소지었다."
 
 #. / simple_god_message
 #. / simple_god_message
-#: acquire.cc:1573 acquire.cc:1573 acquire.cc:1601 acquire.cc:1586
+#: acquire.cc:1573 acquire.cc:1573 acquire.cc:1601 acquire.cc:1586 xom.cc:739
 msgid " snickers."
 msgstr "은(는) 낄낄대며 웃었다."
 
@@ -3045,7 +3045,9 @@ msgstr ""
 msgid ""
 "This buggy ring affects neither your accuracy nor your damage-dealing "
 "abilities."
-msgstr "이 반지는 버그 반지이다. 꼬우면 개발자에게 신고ㄱㄱ"
+msgstr ""
+"이 반지는 버그 반지이다. 이름과는 달리 명중률이나 대미지에 영향을 미치지 않는"
+"다. 버그제보를 바랍니다."
 
 #: describe.cc:1562 describe.cc:1561 describe.cc:1561 describe.cc:1568
 #: describe.cc:1566
@@ -4690,6 +4692,16 @@ msgid "the Shining One's holy word"
 msgstr "샤이닝 원의 성스러운 언어"
 
 #. / %s convulses! 로 쓰임.
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
+#. / %s convulses! 로 쓰임.
+#. + " "
 #. / %s convulses! 로 쓰임.
 #. + " "
 #. / %s convulses! 로 쓰임.
@@ -7392,7 +7404,7 @@ msgid "Xom roars with laughter!"
 msgstr "좀은 크게 웃었다!"
 
 #: decks.cc:2937 decks.cc:2936 decks.cc:2936 decks.cc:2890 decks.cc:2951
-#: decks.cc:2956
+#: decks.cc:2956 xom.cc:3909 xom.cc:3923
 msgid "Xom laughs nastily."
 msgstr "좀은 사악하게 웃었다."
 
@@ -7966,8 +7978,10 @@ msgstr "* * * 경고! 생명력이 낮음 * * *"
 msgid "something (%d)"
 msgstr "무언가 (%d)"
 
+#. Fake death message.
 #: ouch.cc:1310 ouch.cc:1414 ouch.d.cc:1310 ouch.d.cc:1414 tutorial.cc:91
 #: ouch.cc:1358 ouch.cc:1462 tutorial.cc:69 ouch.cc:1356 ouch.cc:1450
+#: xom.cc:4066
 msgid "You die..."
 msgstr "죽었다..."
 
@@ -8381,7 +8395,7 @@ msgstr "내려왔다"
 msgid "takes"
 msgstr "통해 나왔다"
 
-#: mon-stuff.cc:3511
+#: mon-stuff.cc:3511 xom.cc:3194
 msgid "escape hatch"
 msgstr "탈출구"
 
@@ -13899,305 +13913,10 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533
 msgid "The fire roars with new energy!"
@@ -18767,11 +18486,16 @@ msgstr "당신은 아무것도 발견하지 못했다."
 #. glyph is still on the map when the original one has been
 #. killed. Then another one is spawned, so the number is
 #. the same as before. There's no way we can check this however.
-#: spl-cast.cc:1694 spl-cast.cc:1654
+#. This is not strictly true.  You could have cast Detect
+#. Creatures with a big enough fuzz that the detected glyph is
+#. still on the map when the original one has been killed.  Then
+#. another one is spawned, so the number is the same as before.
+#. There's no way we can check this, however.
+#: spl-cast.cc:1694 spl-cast.cc:1654 xom.cc:661
 msgid "You detect no further creatures."
 msgstr "당신은 아무 몬스터도 감지하지 못했다."
 
-#: spl-cast.cc:1697 spl-cast.cc:1657
+#: spl-cast.cc:1697 spl-cast.cc:1657 xom.cc:664
 msgid "You detect creatures!"
 msgstr "당신은 몬스터를 감지했다!"
 
@@ -21394,7 +21118,8 @@ msgstr "이(가) 잠시 바람에 날렸으나, 가볍게 다시 착지했다."
 msgid " gets badly buffeted."
 msgstr "은(는) 공중에서 내뒹굴었다."
 
-#: beam.cc:1936 beam.cc:1969 beam.cc:1952 spl-other.cc:339
+#: beam.cc:1936 beam.cc:1969 beam.cc:1952 spl-other.cc:339 xom.cc:1170
+#: xom.cc:1432 xom.cc:2970
 msgid " looks rather confused."
 msgstr "은(는) 정신을 못 차리고 있다."
 
@@ -21712,11 +21437,11 @@ msgstr "은(는) 물러났다!"
 msgid " is charmed."
 msgstr "은(는) 매료되었다."
 
-#: beam.cc:4975 beam.cc:4988 beam.cc:5096 beam.cc:5097
+#: beam.cc:4975 beam.cc:4988 beam.cc:5096 beam.cc:5097 xom.cc:2256
 msgid " is filled with an intense inner flame!"
 msgstr "의 내부에 격렬한 화염의 불씨가 일었다!"
 
-#: beam.cc:4976 beam.cc:4989 beam.cc:5097 beam.cc:5098
+#: beam.cc:4976 beam.cc:4989 beam.cc:5097 beam.cc:5098 xom.cc:2257
 msgid " is filled with an inner flame."
 msgstr "의 내부에 불씨가 일었다."
 
@@ -22959,34 +22684,34 @@ msgstr "이것을 향한 조준은 %2$s에 의해 가로막혀 있다.%1$.0s\n"
 msgid " is filled with an inner flame.\n"
 msgstr "에는 잠재의 불씨가 깃들어있다.\n"
 
-#: godabil.cc:220
+#: godabil.cc:220 godabil.cc:215
 #, c-format
 msgid "It was the word of Zin that there would not be %s..."
 msgstr "이것은 %s함을 원하지 아니하시는 진의 말씀으로 시작하여,"
 
-#: godabil.cc:221
+#: godabil.cc:221 godabil.cc:217
 #, c-format
 msgid "...and did the people not suffer until they had %s..."
 msgstr "...사람들이 %s(으)로부터 받는 고통을 사해주기 위함이니..."
 
 #. smite[1].c_str());
-#: godabil.cc:222
+#: godabil.cc:222 godabil.cc:219
 #, c-format
 msgid "...the %s, after which all was well?"
 msgstr "...진의 %s은(는), 지금 모든 것이 옳지 아니한가?"
 
-#: godabil.cc:225
+#: godabil.cc:225 godabil.cc:222
 #, c-format
 msgid "The voice of Zin, pure and clear, did say that the %s..."
 msgstr "%s에 관하여, 진께서 그윽하고 청량한 목소리로 가라시대..."
 
-#: godabil.cc:226
+#: godabil.cc:226 godabil.cc:224
 #, c-format
 msgid "...were not %s! And hearing this, the people rose up..."
 msgstr ""
 "...%s의 자들이 아니라고 하셨노라! 그리고 그 소리를 듣자, 군중들은 일제히..."
 
-#: godabil.cc:227
+#: godabil.cc:227 godabil.cc:226
 #, c-format
 msgid "...and embraced %s, for they feared Zin's wrath."
 msgstr "...%s의 진리를 포용하기 시작하였다. 진의 분노가 두려웠던 것이었노라."
@@ -22996,352 +22721,352 @@ msgstr "...%s의 진리를 포용하기 시작하였다. 진의 분노가 두려
 msgid "Zin spoke of the doctrine of %s, and..."
 msgstr "진께서 %s(으)로부터의 교훈을 말씀하여 이르시되..."
 
-#: godabil.cc:231
+#: godabil.cc:231 godabil.cc:232
 #, c-format
 msgid "...saw the %s filled with fear, for they were..."
 msgstr "...%s의 무리들이 공포에 떠는 걸 보셨노라..."
 
-#: godabil.cc:232
+#: godabil.cc:232 godabil.cc:234
 #, c-format
 msgid "...%s and knew Zin's wrath would come for them."
 msgstr "...%s에 대한 진의 분노가 그들 무리 가운데 퍼져나가고 있었으니라."
 
-#: godabil.cc:235
+#: godabil.cc:235 godabil.cc:238
 #, c-format
 msgid "And so Zin bade the %s to come before..."
 msgstr "그리하야 진께서 %s을(를) 불러 세우셨으니..."
 
-#: godabil.cc:236
+#: godabil.cc:236 godabil.cc:240
 msgid "...the altar, that judgement might be passed..."
 msgstr "...그것들의 제단에, 진의 심판이 지나갈 것이고..."
 
-#: godabil.cc:237
+#: godabil.cc:237 godabil.cc:241
 #, c-format
 msgid "...upon those who were not %s."
 msgstr "...그리하야 더 이상 %s은(는) 찾아오지 아니하였노라."
 
-#: godabil.cc:240
+#: godabil.cc:240 godabil.cc:244
 msgid "To the devout, Zin provideth. From the rest..."
 msgstr "경건함과 진의 은총, 그리고 평온한 휴양 가운데에서도..."
 
-#: godabil.cc:241
+#: godabil.cc:241 godabil.cc:245
 #, c-format
 msgid "...ye %s, ye guilty..."
 msgstr "... %s이(가) 자라고 너희의 죄악이 싹틀 수 있느니..."
 
-#: godabil.cc:242
+#: godabil.cc:242 godabil.cc:246
 #, c-format
 msgid "...of %s, Zin taketh."
 msgstr "바로 %s을(를), 진께서 취해 주시노라..."
 
-#: godabil.cc:245
+#: godabil.cc:245 godabil.cc:249
 #, c-format
 msgid "Zin saw the %s of the %s, and..."
 msgstr "진께서 %2$s의 %1$s에 대하여 말씀하시기를..."
 
-#: godabil.cc:246
+#: godabil.cc:246 godabil.cc:251
 msgid "...was displeased, for did the law not say that..."
 msgstr "...보시기에 악하시니, 질서의 이름으로 그 말씀을 삼가셨으니..."
 
-#: godabil.cc:247
+#: godabil.cc:247 godabil.cc:252
 #, c-format
 msgid "...those who did not become %s would be %s?"
 msgstr ""
 "...%s을(를) 따르지 않는 자들이여, %s을(를) 면치 못하게 될 것이라 이르셨노라."
 
-#: godabil.cc:250
+#: godabil.cc:250 godabil.cc:256
 #, c-format
 msgid "Zin said that %s shall be the law of the land, and..."
 msgstr "진께서 이르시되 %s이(가) 이 땅의 질서가 될 것이라 하셨노라..."
 
-#: godabil.cc:251
+#: godabil.cc:251 godabil.cc:258
 #, c-format
 msgid "...those who turn to %s will be %s. This was fair..."
 msgstr "...%s을(를) 따르는 자들은 %s을(를) 당할 것이 분명하다 말씀하시니..."
 
-#: godabil.cc:252
+#: godabil.cc:252 godabil.cc:260
 msgid "...and just, and not a voice dissented."
 msgstr "...그 말씀에 반대하는 목소리 하나 없었도다."
 
-#: godabil.cc:255
+#: godabil.cc:255 godabil.cc:263
 #, c-format
 msgid "Damned, damned be the %s and..."
 msgstr "저주받고, 또 다시 저주받은 %s들이 활개치고..."
 
-#: godabil.cc:256
+#: godabil.cc:256 godabil.cc:264
 #, c-format
 msgid "...all else who abandon %s! Let them..."
 msgstr "...%s이(가) 버려지기 시작했었느니!..."
 
-#: godabil.cc:257
+#: godabil.cc:257 godabil.cc:266
 #, c-format
 msgid "...be %s by the jurisprudence of Zin!"
 msgstr "...진의 법학이 이러한 세를 %s함이라!"
 
-#: godabil.cc:260
+#: godabil.cc:260 godabil.cc:270
 msgid "And Zin said to all in attendance, 'Which of ye..."
 msgstr "그리하야 진께서 모든 이들에게 이르시되, ..."
 
-#: godabil.cc:261
+#: godabil.cc:261 godabil.cc:271
 #, c-format
 msgid "...number among the %s? Come before me, that..."
 msgstr "...너희들 중 몇 명이 %s(으)로 싹트는가? 나에게 오라..."
 
-#: godabil.cc:262
+#: godabil.cc:262 godabil.cc:273
 #, c-format
 msgid "...I may %s you now for your %s!'"
 msgstr "...너의 %2$s을(를) 나의 %1$s(으)로 사해주겠노라! 라고 하셨노라."
 
-#: godabil.cc:265
+#: godabil.cc:265 godabil.cc:277
 msgid "Yea, I say unto thee, bring forth..."
 msgstr "그리하야 내가 말할 때가 되었노니..."
 
-#: godabil.cc:266
+#: godabil.cc:266 godabil.cc:278
 #, c-format
 msgid "...the %s that they may know..."
 msgstr "...%s들을 멀리 떨쳐내고, 그 자들로 하여금..."
 
-#: godabil.cc:267
+#: godabil.cc:267 godabil.cc:279
 #, c-format
 msgid "...the wrath of Zin, and thus be %s!"
 msgstr "...진의 분노와, %s당하게 될 것을 각인시켜 명하노라!"
 
-#: godabil.cc:270
+#: godabil.cc:270 godabil.cc:283
 msgid "In a great set of silver scales are weighed the..."
 msgstr "은으로 만들어진 거대한 저울에..."
 
-#: godabil.cc:271
+#: godabil.cc:271 godabil.cc:284
 #, c-format
 msgid "...souls of the %s, and with their %s..."
 msgstr "...%s들의 영혼과, 그들의 %s함을 저울질해 보았노니..."
 
-#: godabil.cc:272
+#: godabil.cc:272 godabil.cc:286
 msgid "...ways, the balance hath tipped against them!"
 msgstr "...저울의 화살이, 그들이 있는 곳을 향해 기울었노라!"
 
-#: godabil.cc:275
+#: godabil.cc:275 godabil.cc:289
 #, c-format
 msgid "It is just that the %s shall be %s..."
 msgstr "섭리에 따라 %s들은 %s받을 것이며..."
 
-#: godabil.cc:276
+#: godabil.cc:276 godabil.cc:291
 #, c-format
 msgid "...in due time, for %s is what Zin has declared..."
 msgstr "...이후로 하여금, 진께서 공표하신 %s(으)로 하여금..."
 
-#: godabil.cc:277
+#: godabil.cc:277 godabil.cc:293
 msgid "...the law of the land, and Zin's word is law!"
 msgstr "...진의 말씀이 진리이며, 이 진리를 온 세상에 명하노라!"
 
-#: godabil.cc:280
+#: godabil.cc:280 godabil.cc:296
 #, c-format
 msgid "Thus the people made the covenant of %s with..."
 msgstr "사람들로 하여금, %s의 약속을..."
 
-#: godabil.cc:281
+#: godabil.cc:281 godabil.cc:298
 msgid "...Zin, and all was good, for they knew that the..."
 msgstr "...진과 함께 전파하도록 하거늘, 그 어느 것이 이보다 좋을 것이요..."
 
-#: godabil.cc:282
+#: godabil.cc:282 godabil.cc:299
 #, c-format
 msgid "...%s would trouble them no longer."
 msgstr "...%s함으로 인한 괴로움도 더 이상 없을 것으로 아시니라."
 
-#: godabil.cc:285
+#: godabil.cc:285 godabil.cc:302
 #, c-format
 msgid "What of the %s? %s for their..."
 msgstr "%s들의 정의는 무엇인가? 그들을 %s함으로..."
 
-#: godabil.cc:286
+#: godabil.cc:286 godabil.cc:304
 #, c-format
 msgid "...%s they shall be! Zin will %s them again..."
 msgstr "...진께서 다시 %2$s하심으로 하여금, 그들의 %1$s을(를)..."
 
-#: godabil.cc:287
+#: godabil.cc:287 godabil.cc:306
 msgid "...and again, and again!"
 msgstr "...멸하시고, 또다시 멸하셨노라!"
 
-#: godabil.cc:290
+#: godabil.cc:290 godabil.cc:309
 msgid "And lo, the wrath of Zin did find..."
 msgstr "진의 진노가 온 사방에 미치어..."
 
-#: godabil.cc:291
+#: godabil.cc:291 godabil.cc:310
 #, c-format
 msgid "...them wherever they hid, and the %s..."
 msgstr "...여기저기에 숨어있는 %s들을 색출해 내시니..."
 
-#: godabil.cc:292
+#: godabil.cc:292 godabil.cc:312
 #, c-format
 msgid "...were %s for their %s!"
 msgstr "그들의 %s함으로 하여금 %s을(를) 받게 하였도다!"
 
-#: godabil.cc:295
+#: godabil.cc:295 godabil.cc:316
 #, c-format
 msgid "Zin looked out upon the remains of the %s..."
 msgstr "진께서 %s의 잔당들을 우러러보았으니..."
 
-#: godabil.cc:296
+#: godabil.cc:296 godabil.cc:318
 msgid "...and declared it good that they had been..."
 msgstr "...이르러 공표하시기를, 그들이..."
 
-#: godabil.cc:297
+#: godabil.cc:297 godabil.cc:319
 #, c-format
 msgid "...%s. And thus justice was done."
 msgstr "...%s을(를) 받아야 했음이 옳고, 이로 정의가 실현되었도다."
 
-#: godabil.cc:300
+#: godabil.cc:300 godabil.cc:322
 msgid "The law of Zin demands thee..."
 msgstr "진께서 당신에게 바라는 사항이라 하면..."
 
-#: godabil.cc:301
+#: godabil.cc:301 godabil.cc:323
 #, c-format
 msgid "...be %s, and that the punishment for %s..."
 msgstr "...%2$s을(를) 빠르고 가혹하게 벌하기 위해 %1$s에..."
 
-#: godabil.cc:302
+#: godabil.cc:302 godabil.cc:325
 msgid "...shall be swift and harsh!"
 msgstr "...전념하여 깨우치는 것이라고 하셨도다!"
 
-#: godabil.cc:305
+#: godabil.cc:305 godabil.cc:328
 msgid "It was then that Zin bade them..."
 msgstr "언제금 진께서 그들을 불러 세우셨을 때..."
 
-#: godabil.cc:306
+#: godabil.cc:306 godabil.cc:329
 #, c-format
 msgid "...not to stray from %s, lest..."
 msgstr "%s을(를) 지킴에 있어 해이하지 않을 것이며..."
 
-#: godabil.cc:307
+#: godabil.cc:307 godabil.cc:330
 #, c-format
 msgid "...they become as damned as the %s."
 msgstr "...%s와(과) 같이 저주받지 않도록 말씀하셨느니라."
 
-#: godabil.cc:310
+#: godabil.cc:310 godabil.cc:333
 #, c-format
 msgid "Only the %s shall be judged worthy, and..."
 msgstr "%s의 중요성을 이야기하며 심판을 했을때..."
 
-#: godabil.cc:311
+#: godabil.cc:311 godabil.cc:335
 #, c-format
 msgid "...all the %s will be found wanting. Such is..."
 msgstr "...모든 %s들조차 이것을 원하였노라... 그것이..."
 
-#: godabil.cc:312
+#: godabil.cc:312 godabil.cc:337
 msgid "...the word of Zin, and such is the law!"
 msgstr "진의 말씀이고, 그것이 진리이니라!"
 
-#: godabil.cc:315
+#: godabil.cc:315 godabil.cc:340
 #, c-format
 msgid "To those who would swear an oath of %s on my altar..."
 msgstr "그리하여 %s의 맹세와 서약을 나의 제단에 논하느니..."
 
-#: godabil.cc:316
+#: godabil.cc:316 godabil.cc:342
 #, c-format
 msgid "...I bring ye salvation. To the rest, ye %s..."
 msgstr "...나는 너를 구원할 것이오, %s와..."
 
-#: godabil.cc:317
+#: godabil.cc:317 godabil.cc:344
 #, c-format
 msgid "...and the %s, the name of Zin shall be thy damnation."
 msgstr "...%s에게, 진의 이름으로 그들의 몰락을 말하는 것이노라."
 
-#: godabil.cc:320
+#: godabil.cc:320 godabil.cc:348
 msgid "And Zin decreed that the people would be..."
 msgstr "진께서 모두들에게 칙령을 내리고저..."
 
-#: godabil.cc:321
+#: godabil.cc:321 godabil.cc:349
 #, c-format
 msgid "...protected from %s in all its forms, and..."
 msgstr "...모든 %s(으)로부터 모두를 보호해줄 것이며..."
 
-#: godabil.cc:322
+#: godabil.cc:322 godabil.cc:351
 #, c-format
 msgid "...preserved in their %s for all the days to come."
 msgstr "...또한 모두의 %s을(를) 보존해 주실 것이라고 하셨느니라."
 
-#: godabil.cc:325
+#: godabil.cc:325 godabil.cc:355
 msgid "For those who would enter Zin's holy bosom..."
 msgstr "진의 성스러운 품 안에 오는 모든 이들이여..."
 
-#: godabil.cc:326
+#: godabil.cc:326 godabil.cc:356
 #, c-format
 msgid "...and live in %s, Zin provideth. Such is..."
 msgstr "...그리고 %s을(를) 지는 모든 이들이여, 진께서 가라시대..."
 
-#: godabil.cc:327
+#: godabil.cc:327 godabil.cc:358
 msgid "...the covenant, and such is the way of things."
 msgstr "...모든 것들의 진리를 약속하셨느니라."
 
-#: godabil.cc:330
+#: godabil.cc:330 godabil.cc:361
 #, c-format
 msgid "Zin hath not damned the %s, but it is they..."
 msgstr "진은 %s에 대해 직접적으로 처단을 내리시지 않으셨어도..."
 
-#: godabil.cc:331
+#: godabil.cc:331 godabil.cc:363
 #, c-format
 msgid "...that have damned themselves for their %s, for..."
 msgstr "...%s들은 스스로 자멸하도록 되어 있느니라, 따라..."
 
-#: godabil.cc:332
+#: godabil.cc:332 godabil.cc:365
 #, c-format
 msgid "...did Zin not decree that to be %s was wrong?"
 msgstr "...진께서 %s이(가) 그르지 않다고 이야기할 필요가 없느니라."
 
-#: godabil.cc:335
+#: godabil.cc:335 godabil.cc:369
 #, c-format
 msgid "And Zin, furious at their %s, held..."
 msgstr "한 번 진께서, %s에 분노하셨너니라, 곧..."
 
-#: godabil.cc:336
+#: godabil.cc:336 godabil.cc:370
 #, c-format
 msgid "...aloft a silver sceptre! The %s..."
 msgstr "...하늘 높이 %s의 은색 악령이 솟아올랐느니라..."
 
-#: godabil.cc:337
+#: godabil.cc:337 godabil.cc:371
 #, c-format
 msgid "...were %s, and thus the way of things was maintained."
 msgstr "...그는 곧 %s당했고, 진리는 지금까지 이어져 내리노라..."
 
-#: godabil.cc:340
+#: godabil.cc:340 godabil.cc:375
 msgid "When the law of the land faltered, Zin rose..."
 msgstr "이 땅의 질서가 흔들리기 시작할 때, 진께서는..."
 
-#: godabil.cc:341
+#: godabil.cc:341 godabil.cc:376
 #, c-format
 msgid "...from the silver throne, and the %s were..."
 msgstr "...%s을(를) 은빛 왕좌에서 들어 올리셨느라..."
 
-#: godabil.cc:342
+#: godabil.cc:342 godabil.cc:378
 #, c-format
 msgid "...%s. And it was thus that the law was made good."
 msgstr ""
 "...그것은 %s되었고, 이것으로 우리의 질서는 지금까지 더럽혀지지 않았노라."
 
-#: godabil.cc:345
+#: godabil.cc:345 godabil.cc:382
 msgid "Zin descended from on high in a silver chariot..."
 msgstr "진께서 은빛의 전차를 타고 이 땅에 내려오셨느니라..."
 
-#: godabil.cc:346
+#: godabil.cc:346 godabil.cc:383
 #, c-format
 msgid "...to %s the %s for their..."
 msgstr "...%s들을 %s하기 위해..."
 
-#: godabil.cc:347
+#: godabil.cc:347 godabil.cc:385
 #, c-format
 msgid "...%s, and thus judgement was rendered."
 msgstr "...그리고 %s에 대한 심판을 이 땅에 전하기 위해."
 
-#: godabil.cc:350
+#: godabil.cc:350 godabil.cc:389
 #, c-format
 msgid "The %s stood before Zin, and in that instant..."
 msgstr "%s이(가) 진의 뒤에 서 있었고, 그들은 즉시..."
 
-#: godabil.cc:351
+#: godabil.cc:351 godabil.cc:391
 #, c-format
 msgid "...they knew they would be found guilty of %s..."
 msgstr "...%s에 대한 죄를 짓고 있다는 것을 스스로 일깨웠으며..."
 
-#: godabil.cc:352
+#: godabil.cc:352 godabil.cc:393
 msgid "...for that is the word of Zin, and Zin's word is law."
 msgstr "...이는 진의 말씀과, 진의 말씀의 진리에 의한 것이었도다."
 
@@ -23349,27 +23074,27 @@ msgstr "...이는 진의 말씀과, 진의 말씀의 진리에 의한 것이었�
 msgid "Hail Satan."
 msgstr "사탄 만세."
 
-#: godabil.cc:360
+#: godabil.cc:360 godabil.cc:401
 msgctxt "recite"
 msgid "Abominations"
 msgstr "혐오의 서"
 
-#: godabil.cc:361
+#: godabil.cc:361 godabil.cc:402
 msgctxt "recite"
 msgid "Ablutions"
 msgstr "정화의 서"
 
-#: godabil.cc:362
+#: godabil.cc:362 godabil.cc:403
 msgctxt "recite"
 msgid "Apostates"
 msgstr "변절의 서"
 
-#: godabil.cc:363
+#: godabil.cc:363 godabil.cc:404
 msgctxt "recite"
 msgid "Anathema"
 msgstr "반대의 서"
 
-#: godabil.cc:364
+#: godabil.cc:364 godabil.cc:405
 msgctxt "recite"
 msgid "Alliances"
 msgstr "동맹의 서"
@@ -23923,12 +23648,12 @@ msgstr "은(는) 발버둥치며 저항해냈다."
 msgid "%s? (Confirm with \"yes\".) "
 msgstr "%s? (\"yes\"를 입력하여 다시 확인)"
 
-#: stuff.cc:580
+#: stuff.cc:580 stuff.cc:589
 #, c-format
 msgid "%s[Y]es or [N]o only, please."
 msgstr "%s[Y]예/[N]아니오 로 대답해 주세요."
 
-#: stuff.cc:581 stuff.cc:703 stuff.cc:712
+#: stuff.cc:581 stuff.cc:703 stuff.cc:712 stuff.cc:590
 msgid "Uppercase "
 msgstr "(대문자) "
 
@@ -27923,16 +27648,6 @@ msgstr "거미줄이 갈기갈기 찢어졌다!"
 msgid "Your %s disappear%s."
 msgstr "당신의 %1$s(이)가 사라졌다.%2$.0s"
 
-#. Output some text since otherwise snakes will disappear silently.
-#: xom.cc:1914 xom.cc:1836 xom.cc:1838
-#, c-format
-msgid "%s reforms as %s."
-msgstr ""
-
-#: xom.cc:4099 xom.cc:3990 xom.cc:3998
-msgid "Xom snickers."
-msgstr ""
-
 #. At the very least the player has "Renounce Religion", but
 #. cannot use it in silence.
 #: abl-show.cc:1359 abl-show.cc:1304
@@ -28356,7 +28071,7 @@ msgstr ""
 #: decks.cc:463
 msgctxt "deck"
 msgid "deal"
-msgstr "돌렸다"
+msgstr "뒤집었다"
 
 #: decks.cc:463
 msgctxt "deck"
@@ -28376,29 +28091,29 @@ msgstr "당신은 카드 한 장을 %s... %s 카드이다."
 
 #: decks.cc:895
 msgid "Deal from which deck?"
-msgstr "어느 덱에서 카드를 돌립니까?"
+msgstr "어느 덱에서 카드를 뒤집습니까?"
 
 #: decks.cc:908
 msgid "You cannot deal from marked decks."
-msgstr "표시된 덱에서는 돌릴 수 없다."
+msgstr "표시된 덱에서는 카드를 뒤집을 수 없다."
 
 #: decks.cc:914
 msgid "This deck seems insufficiently random for dealing."
-msgstr "이 카드는 돌리기에는 숫자가 너무 부족하다"
+msgstr "이 카드는 뒤집기에는 숫자가 너무 부족하다"
 
 #: decks.cc:945
 msgid "Nemelex gives you another card to finish dealing."
 msgstr ""
-"네멜렉스 죠베는 당신이 카드 돌리기를 끝마칠 수 있도록 여분의 카드를 지원했다."
+"네멜렉스 죠베는 당신이 카드 뒤집기를 끝마칠 수 있도록 여분의 카드를 지원했다."
 
 #: decks.cc:1273 decks.cc:1278
 msgid "You deal a card..."
-msgstr "당신은 카드를 돌렸다..."
+msgstr "당신은 카드를 뒤집었다..."
 
 #: decks.cc:2923
 msgctxt "deck"
 msgid "dealt"
-msgstr "돌렸다"
+msgstr "뒤집었다"
 
 #: decks.cc:2923
 msgctxt "deck"
@@ -28407,160 +28122,10 @@ msgstr "뽑았다"
 
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
+#. 1. drawn or dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
+#. 1. drawn or dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009
 #, c-format
@@ -30181,63 +29746,6 @@ msgstr "%1$s은(는) 구덩이 아래로 떨어졌다.%2$.0s"
 msgid "Ashenzari warns you:"
 msgstr "아센자리는 경고했다:"
 
-#: xom.cc:209
-msgid "Xom makes something happen."
-msgstr ""
-
-#: xom.cc:374
-#, c-format
-msgid "You are now %s"
-msgstr ""
-
-#: xom.cc:1417
-#, c-format
-msgid "summons %s %s"
-msgstr ""
-
-#. / 1. 몬스터 이름, 2. 장비 이름
-#: xom.cc:1652
-#, c-format
-msgid "%s wields %s!"
-msgstr ""
-
-#. / 1. mon's 2. item name
-#: xom.cc:1689
-#, c-format
-msgid "You wield %s %s!"
-msgstr ""
-
-#. / 1. Mon's 2. item name
-#: xom.cc:1913 xom.cc:1915
-#, c-format
-msgid "%s %s dances into the air!"
-msgstr ""
-
-#: xom.cc:2245 xom.cc:2247
-#, c-format
-msgid "%d fountains restart"
-msgstr ""
-
-#: xom.cc:2541 xom.cc:2547
-msgid "The granite statue turns to stare at you."
-msgstr "화강암 석상이 당신을 노려보기 시작했다."
-
-#: xom.cc:2575 xom.cc:2581
-msgid "The stone arch briefly shows a sunny meadow on the other side."
-msgstr "아치형 돌 너머로 잠시 밝은 목축지의 모습이 보였다."
-
-#: xom.cc:2629 xom.cc:2635
-msgid "One of "
-msgstr ""
-
-#: xom.cc:3001 xom.cc:3006
-msgid "chaos upgrade"
-msgstr ""
-
-#: xom.cc:3138 xom.cc:3143
-msgid "Couldn't find ray between player and stairs."
-msgstr "플레이어와 계단 사이의 직선거리를 파악할 수 없다."
-
 #: beam.cc:3122
 msgctxt "tracer_affect_player"
 msgid "beam"
@@ -31205,6 +30713,8 @@ msgstr "은(는) 당신에게 신성한 원기를 불어넣어주었다."
 
 #: godabil.cc:1544 godabil.cc:1557 godabil.cc:2724 godprayer.cc:658
 #: spl-summoning.cc:1950 spl-summoning.cc:1957 spl-summoning.cc:1958
+#: xom.cc:1298 xom.cc:1866 xom.cc:2160 xom.cc:2173 xom.cc:2196 xom.cc:2209
+#: xom.cc:3375
 msgctxt "sssss"
 msgid "s"
 msgstr "들"
@@ -32267,7 +31777,7 @@ msgctxt "anon"
 msgid "something"
 msgstr "무언가"
 
-#: mon-stuff.cc:3024
+#: mon-stuff.cc:3024 xom.cc:1392 xom.cc:1394
 msgid "something unseen"
 msgstr "보이지 않는 무언가"
 
@@ -32320,3 +31830,639 @@ msgstr "이 아이템"
 #, c-format
 msgid "Level %d of %s"
 msgstr "%2$s %1$d층"
+
+#: melee_attack.cc:4280
+#, c-format
+msgctxt "freezeattack"
+msgid "%s %s %s%s"
+msgstr "%3$s의 냉기가 %1$s을(를) 얼렸다%4$s%2$.0s"
+
+#: melee_attack.cc:4306
+#, c-format
+msgctxt "shockattack"
+msgid "%s %s %s%s"
+msgstr "%3$s의 전격이 %1$s을(를) 감전시켰다%4$s%2$.0s"
+
+#: melee_attack.cc:4490
+#, c-format
+msgctxt "searattack"
+msgid "%s %s %s%s"
+msgstr "%3$s의 성스러운 불꽃이 %1$s을(를) 그을렸다%4$s%2$.0s"
+
+#: xom.cc:2541 xom.cc:2547 xom.cc:2463
+msgid "The granite statue turns to stare at you."
+msgstr "화강암 석상이 당신을 노려보기 시작했다."
+
+#: xom.cc:2575 xom.cc:2581 xom.cc:2497
+msgid "The stone arch briefly shows a sunny meadow on the other side."
+msgstr "아치형 돌 너머로 잠시 밝은 목축지의 모습이 보였다."
+
+#: xom.cc:3138 xom.cc:3143 xom.cc:3057
+msgid "Couldn't find ray between player and stairs."
+msgstr "플레이어와 계단 사이의 직선거리를 파악할 수 없다."
+
+#: xom.cc:139
+msgid "Xom's teddy bear."
+msgstr "좀의 곰인형"
+
+#: xom.cc:140
+msgid "a beloved toy of Xom."
+msgstr "좀의 사랑하는 장난감"
+
+#: xom.cc:141
+msgid "a favourite toy of Xom."
+msgstr "좀의 좋아하는 장난감"
+
+#: xom.cc:142
+msgid "a toy of Xom."
+msgstr "좀의 장난감"
+
+#: xom.cc:143
+msgid "a plaything of Xom."
+msgstr "좀의 놀잇거리"
+
+#: xom.cc:144
+msgid "a special plaything of Xom."
+msgstr "좀의 특별한 장난감"
+
+#: xom.cc:145
+msgid "a very special plaything of Xom."
+msgstr "좀의 아주 특별한 장난감"
+
+#: xom.cc:152
+msgid "a very buggy toy of Xom."
+msgstr "매우 버그스러운 좀의 장난감."
+
+#: xom.cc:154
+msgid "a BORING thing."
+msgstr "지루한 것."
+
+#: xom.cc:169
+msgid "Xom makes something happen."
+msgstr "좀은 무언가를 일으켰다."
+
+#: xom.cc:331
+#, c-format
+msgid "You are now %s"
+msgstr "당신은 이제 '%s'이다."
+
+#: xom.cc:339
+msgid " is getting BORED."
+msgstr "은(는) 점점 지루해했다."
+
+#: xom.cc:368
+msgid " is interested."
+msgstr "은(는) 흥미를 가졌다."
+
+#: xom.cc:370
+msgid " is intrigued."
+msgstr "은(는) 아주 흥미로워했다."
+
+#: xom.cc:587
+#, c-format
+msgid "cast spell '%s'"
+msgstr "'%s' 주문을 외움"
+
+#: xom.cc:608
+msgid "divination: magic mapping"
+msgstr "신의 효과: 마법 지도"
+
+#: xom.cc:629
+msgid "divination: detect items"
+msgstr "신의 효과: 아이템 감지"
+
+#: xom.cc:634
+msgid "You detect items!"
+msgstr "당신은 아이템들을 감지했다!"
+
+#: xom.cc:647
+msgid "divination: detect creatures"
+msgstr "신의 효과: 몬스터 감지"
+
+#: xom.cc:746 xom.cc:773
+msgid "\"No, never mind.\""
+msgstr "\"아냐, 신경쓰지마.\""
+
+#: xom.cc:753 xom.cc:780
+#, c-format
+msgid "god gift: %s"
+msgstr "신의 선물: %s"
+
+#: xom.cc:993
+msgid " is briefly surrounded by a scintillating aura of random colours."
+msgstr "은(는) 잠시 반짝반짝 빛나는 형형색색의 오라에 둘러싸였다."
+
+#. Take a note.
+#: xom.cc:1118
+msgid "potion effect "
+msgstr "포션 효과 "
+
+#: xom.cc:1177
+msgid "confuse monster(s)"
+msgstr "몬스터(들)을 혼란시킴"
+
+#: xom.cc:1293
+#, c-format
+msgid "summons %d %s%s%s"
+msgstr "%d 마리의 %s%s%s을(를) 소환"
+
+#: xom.cc:1295
+msgctxt "xom"
+msgid "friendly "
+msgstr "우호적인 "
+
+#: xom.cc:1296
+msgctxt "xom"
+msgid "hostile "
+msgstr "적대적인 "
+
+#: xom.cc:1297
+msgctxt "xom"
+msgid "demon"
+msgstr "악마"
+
+#: xom.cc:1297
+msgctxt "xom"
+msgid "monster"
+msgstr "몬스터"
+
+#: xom.cc:1342
+#, c-format
+msgid "summons %s %s"
+msgstr "%s %s을(를) 소환"
+
+#: xom.cc:1343
+msgctxt "xom"
+msgid "friendly"
+msgstr "우호적인"
+
+#: xom.cc:1343
+msgctxt "xom"
+msgid "hostile"
+msgstr "적대적인"
+
+#: xom.cc:1398
+#, c-format
+msgid "polymorph %s -> %s"
+msgstr "%s 에서 %s 로 변신 "
+
+#: xom.cc:1430
+msgid " looks rather more confused."
+msgstr "은(는) 더욱 혼란스러워 보인다."
+
+#: xom.cc:1563
+msgid "Monster wouldn't take item."
+msgstr "몬스터가 아이템을 가지지 않을 것이다."
+
+#: xom.cc:1574
+#, c-format
+msgid "%s wields %s!"
+msgstr "%s은(는) %s을(를) 장비했다!"
+
+#: xom.cc:1610
+#, c-format
+msgid "You wield %s %s!"
+msgstr "당신은 %s의 %s을(를) 장비했다!"
+
+#: xom.cc:1613
+msgid "swap weapons"
+msgstr "무기 교체"
+
+#: xom.cc:1670
+msgid "Some monsters swap places."
+msgstr "몇몇 몬스터들이 자리를 바꾸었다."
+
+#: xom.cc:1680
+msgid "swap monsters"
+msgstr "몬스터 자리 교체"
+
+#: xom.cc:1730
+msgid "snakes to sticks"
+msgstr "나무토막의 뱀"
+
+#. Output some text since otherwise snakes will disappear silently.
+#: xom.cc:1757
+#, c-format
+msgid "%s reforms as %s."
+msgstr "%s은(는) %s(으)로 모습을 바꾸었다."
+
+#: xom.cc:1833
+#, c-format
+msgid "%s %s dances into the air!"
+msgstr "%s %s이(가) 공중으로 떠올라 춤을 추기 시작했다!"
+
+#: xom.cc:1860
+#, c-format
+msgid "give %smutation%s"
+msgstr "%s 변이%s을(를) 얻음"
+
+#: xom.cc:1870
+msgid "Your body is suffused with distortional energy."
+msgstr "당신의 몸에 왜곡된 마력이 퍼졌다."
+
+#: xom.cc:1880
+msgid "Xom's grace"
+msgstr "좀의 은혜"
+
+#: xom.cc:1880
+msgid "Xom's mischief"
+msgstr "좀의 짖궂은 장난"
+
+#: xom.cc:1929
+msgid "The area is suffused with divine lightning!"
+msgstr "이곳은 신의 번개로 가득 차 있다!"
+
+#: xom.cc:1949
+msgid "Your divine protection wanes."
+msgstr "당신의 신의 가호는 약해졌다"
+
+#: xom.cc:1964
+#, c-format
+msgid "divine lightning%s"
+msgstr "신의 전격%s"
+
+#: xom.cc:1964
+msgid " (protected)"
+msgstr " (보호받음)"
+
+#: xom.cc:2088
+msgid "scenery: create altars"
+msgstr "지형: 제단 생성"
+
+#: xom.cc:2158
+#, c-format
+msgid "%s fountain%s start%s reflowing"
+msgstr "분수%2$s에 물이 다시 차오르기 시작했다%1$.0s%3$.0s"
+
+#: xom.cc:2163
+#, c-format
+msgid "%d fountains restart"
+msgstr "%d개의 분수가 다시 차오름"
+
+#: xom.cc:2168
+#, c-format
+msgid "%s%s fountain%s start%s gushing blood"
+msgstr "분수%3$s 안이 피로 채워지기 시작했다%1$.0s%2$.0s%4$.0s"
+
+#: xom.cc:2180
+#, c-format
+msgid "%d fountains blood"
+msgstr "%d개의 분수가 피로 차오름"
+
+#: xom.cc:2186
+msgid ", and "
+msgstr ", 그리고 "
+
+#: xom.cc:2192
+#, c-format
+msgid "%s door%s burst%s open"
+msgstr "%1$s 문%2$s이(가) 부서질듯 열렸다%3$.0s"
+
+#: xom.cc:2193
+msgctxt "xom"
+msgid "A"
+msgstr "하나의"
+
+#: xom.cc:2194
+msgctxt "xom"
+msgid "Two"
+msgstr "두 개의"
+
+#: xom.cc:2195
+msgctxt "xom"
+msgid "Several"
+msgstr "몇몇"
+
+#: xom.cc:2199
+#, c-format
+msgid "%d doors open"
+msgstr "%d개의 문이 열림"
+
+#: xom.cc:2203
+#, c-format
+msgid "%s%s door%s slam%s shut"
+msgstr "%1$s 문%3$s이(가) 쾅 하고 닫혔다%2$.0s%4$.0s"
+
+#: xom.cc:2204
+msgctxt "xom"
+msgid "a"
+msgstr "하나의"
+
+#: xom.cc:2205
+msgctxt "xom"
+msgid "two"
+msgstr "두 개의"
+
+#: xom.cc:2206
+msgctxt "xom"
+msgid "several"
+msgstr "몇몇"
+
+#: xom.cc:2215
+#, c-format
+msgid "%d doors close"
+msgstr "%d개의 문이 닫힘"
+
+#: xom.cc:2264
+msgid "inner flame monster(s)"
+msgstr "몬스터(들)에게 잠재의 불씨를 심음"
+
+#: xom.cc:2354 xom.cc:3554
+#, c-format
+msgid "%d-stop teleportation journey%s"
+msgstr "%d회 멈춘 텔레포트 여행%s"
+
+#: xom.cc:2372
+msgctxt "xom"
+msgid "vitrification"
+msgstr "신성한 원기"
+
+#. Assure that the messages vector has at least one element.
+#: xom.cc:2430 xom.cc:3223
+msgid "Nothing appears to happen... Ominous!"
+msgstr "아무 일도 일어나지 않았다... 불길함을 느꼈다!"
+
+#: xom.cc:2439
+msgid "The lava spits out sparks!"
+msgstr "용암에서 불길이 뿜어져나왔다!"
+
+#: xom.cc:2443
+msgid "The water briefly bubbles."
+msgstr "물에서 잠시 거품이 일었다."
+
+#: xom.cc:2444
+msgid "The water briefly swirls."
+msgstr "물이 잠시 소용돌이쳤다."
+
+#: xom.cc:2445
+msgid "The water briefly glows."
+msgstr "물에서 잠시 빛이 났다."
+
+#: xom.cc:2450
+msgid ""
+"From the corner of your eye you spot something lurking in the deep water."
+msgstr "보이지 않는 깊은 물 속에서, 숨어있는 시선을 느꼈다."
+
+#: xom.cc:2457
+msgid "The idol of Beogh turns to glare at you."
+msgstr "베오그의 우상은 당신을 노려보았다."
+
+#: xom.cc:2459
+msgid "The orcish idol turns to glare at you."
+msgstr "오키쉬 우상은 당신을 노려보았다"
+
+#: xom.cc:2468
+msgid "Dim shapes swim through the translucent wall."
+msgstr "흐릿한 물체가 반투명한 벽을 통과했다."
+
+#: xom.cc:2472
+msgid "Dim shapes swim through the green crystal wall."
+msgstr "흐릿한 물체가 녹색 수정 벽을 통과했다."
+
+#: xom.cc:2476
+msgid "Tendrils of electricity crawl over the metal wall!"
+msgstr "전기의 덩굴이 강철 벽을 타고 넘어왔다!"
+
+#: xom.cc:2482
+msgid "The water in the fountain briefly bubbles."
+msgstr "분수 안의 물에서 잠시 거품이 일었다."
+
+#: xom.cc:2483
+msgid "The water in the fountain briefly swirls."
+msgstr "분수 안의 물은 잠깐 소용돌이쳤다."
+
+#: xom.cc:2484
+msgid "The water in the fountain briefly glows."
+msgstr "분수 안의 물은 잠시 반짝거렸다."
+
+#: xom.cc:2491
+msgid "Water briefly sprays from the dry fountain."
+msgstr "마른 분수에서 잠시 물안개가 일어났다."
+
+#: xom.cc:2492
+msgid "Dust puffs up from the dry fountain."
+msgstr "마른 분수에서 흙먼지가 뿜어져나왔다."
+
+#: xom.cc:2521
+msgid " seems to fall away from under you!"
+msgstr "은(는) 당신에게서부터 떨어진 것 같다!"
+
+#: xom.cc:2523
+msgid " seems to rush up at you!"
+msgstr "은(는) 당신에게서부터 올라온 것 같다!"
+
+#: xom.cc:2527
+msgid "Something invisible splashes into the water beneath you!"
+msgstr "물 속 아래에, 무언가 보이지 않는 것이 있다!"
+
+#: xom.cc:2533
+msgid "The water briefly recedes away from you."
+msgstr "물이 잠시 당신에게서부터 멀어졌다."
+
+#: xom.cc:2534
+msgid "Something invisible splashes into the water beside you!"
+msgstr "당신 근처에, 무언가 보이지 않는 것이 물 속에 숨어있다!"
+
+#: xom.cc:2554
+msgid " falls out of your pack, then immediately jumps back in!"
+msgstr "이(가) 당신의 가방에서 떨어져 나갔다가, 다시 되돌아왔다!"
+
+#: xom.cc:2563
+msgid "You briefly get tangled in your bandages."
+msgstr "당신은 잠시동안 당신의 붕대에 엉켜졌다."
+
+#: xom.cc:2565
+msgid "You trip over your bandages."
+msgstr "당신은 당신의 붕대에 걸렸다."
+
+#: xom.cc:2569
+msgid "A monocle briefly appears over your "
+msgstr "외눈 안경은 잠시 당신의 "
+
+#: xom.cc:2570
+msgctxt "xom"
+msgid "right"
+msgstr "오른쪽"
+
+#: xom.cc:2570
+msgctxt "xom"
+msgid "left"
+msgstr "왼쪽"
+
+#: xom.cc:2573
+msgctxt "xom"
+msgid " primary"
+msgstr "앞쪽"
+
+#. str += random_choose(" front"," middle"," rear"), 0);
+#: xom.cc:2577
+msgctxt "xom"
+msgid " secondary"
+msgstr "뒷쪽"
+
+#: xom.cc:2579
+msgctxt "xom"
+msgid " eye."
+msgstr " 눈을 보여주었다."
+
+#: xom.cc:2587
+msgid "Your eyebrows briefly feel incredibly bushy."
+msgstr "당신의 눈썹은 갑자기 무지막지하게 풍성해졌다."
+
+#: xom.cc:2588
+msgid "Your eyebrows wriggle."
+msgstr "당신의 눈썹이 꿈틀거렸다"
+
+#: xom.cc:2592
+msgid "You do an impromptu tapdance."
+msgstr "당신은 즉흥적으로 탭댄스를 추었다."
+
+#: xom.cc:2600
+msgid "A fancy cane briefly appears in your "
+msgstr "당신에게 잠시 동안, "
+
+#: xom.cc:2602
+msgctxt "xomzeromiscast"
+msgid "."
+msgstr "의 모습이 나타났다."
+
+#: xom.cc:2608
+msgid "Your cloak billows in an unfelt wind."
+msgstr "당신의 망토는 미풍에 나부꼈다."
+
+#: xom.cc:2612 xom.cc:2633 xom.cc:2639 xom.cc:2665 xom.cc:2678
+msgctxt "xomzeromiscast"
+msgid "Your "
+msgstr "당신의 "
+
+#: xom.cc:2614
+msgid " leaps into the air, briefly spins, then lands back on your head!"
+msgstr "이(가) 바람에 날려 올라갔다가, 한 바퀴 돌아 당신의 머리 위로 착지했다!"
+
+#: xom.cc:2626
+msgid "You compulsively click the heels of your "
+msgstr "당신은 강제적으로, 당신의"
+
+#: xom.cc:2628
+msgid " together three times."
+msgstr "의 가장자리를 세 번 가량 눌렀다."
+
+#: xom.cc:2635
+msgid " spins!"
+msgstr "이(가) 빙빙 돌았다!"
+
+#: xom.cc:2641
+msgid " briefly flashes a lurid colour!"
+msgstr "이(가) 잠시 형형색색으로 반짝였다!"
+
+#: xom.cc:2652
+msgid "The scales on your "
+msgstr "당신의 "
+
+#: xom.cc:2654
+msgid " wiggle briefly."
+msgstr "에 달린 비늘이 잠시 꿈틀거렸다."
+
+#: xom.cc:2658
+msgid "The fur on your "
+msgstr "당신의 "
+
+#: xom.cc:2660
+msgid " grows longer at an alarming rate, then retracts back to normal."
+msgstr "에 달린 털이 급속도로 자라났다가, 원래대로 되돌아갔다."
+
+#: xom.cc:2667
+msgid " briefly grows fur, then returns to normal."
+msgstr "에 동물의 털들이 자라났다가, 곧 원래대로 되돌아갔다."
+
+#: xom.cc:2671
+msgid "You briefly become tangled in your "
+msgstr "당신은 잠시 당신의 "
+
+#. pluralise(name);
+#: xom.cc:2673
+msgctxt "xomzerorobe"
+msgid "."
+msgstr "에 양 팔이 엉켰다."
+
+#: xom.cc:2680
+msgid " briefly appears rusty."
+msgstr "이(가) 잠시 녹이 슨 듯 보였다."
+
+#: xom.cc:2696
+msgctxt "xomzeromiscast"
+msgid "glow"
+msgstr "반짝였다"
+
+#: xom.cc:2696
+msgctxt "xomzeromiscast"
+msgid "vibrate"
+msgstr "떨렸다"
+
+#. if (item->quantity == 1)
+#. verb += "s";
+#: xom.cc:2701
+msgctxt "xomzeromiscast"
+msgid " briefly "
+msgstr "이(가) 잠시 "
+
+#: xom.cc:3092
+msgid "Ray didn't cross stairs."
+msgstr "광선은 계단을 지나가지 못했다."
+
+#: xom.cc:3120
+#, c-format
+msgid "%s slides %s you!"
+msgstr "%s이(가) 당신%s!"
+
+#: xom.cc:3121
+msgctxt "xom"
+msgid "away from"
+msgstr "으로부터 멀어져 도망갔다"
+
+#: xom.cc:3121
+msgctxt "xom"
+msgid "towards"
+msgstr "에게 가까이 다가왔다"
+
+#: xom.cc:3332
+#, c-format
+msgid "animates weapon (%s)"
+msgstr "무기가 살아남 (%s)"
+
+#: xom.cc:3374
+#, c-format
+msgid "summons %d hostile demon%s"
+msgstr "%d 마리의 적대적인 악마%s을(를) 소환"
+
+#: xom.cc:3443
+msgid "revert banishment"
+msgstr "추방으로부터의 복귀"
+
+#: xom.cc:3787
+msgid " asks Xom for help in punishing you, and Xom happily agrees."
+msgstr "은(는) 좀에게 당신을 징벌할 것을 요청했고, 좀은 즐겁게 받아들였다."
+
+#: xom.cc:3793
+msgid " calls in a favour from Xom."
+msgstr "은(는) 좀에게 협동을 요구했다."
+
+#: xom.cc:3846
+msgid "XOM is BORED!"
+msgstr "*좀이 지루해하고 있다!*"
+
+#: xom.cc:3885 xom.cc:3898
+msgid "You are now "
+msgstr "넌 이제부터, "
+
+#: xom.cc:3911 xom.cc:3927 xom.cc:3938
+msgid "Xom snickers."
+msgstr "좀은 낄낄거리며 웃었다."
+
+#: xom.cc:3939
+msgid "Xom snickers softly."
+msgstr "좀은 부드럽게 웃었다."
+
+#: xom.cc:4088
+msgid "Xom revives you!"
+msgstr "좀이 당신을 부활시켰다!"
