@@ -963,7 +963,7 @@ static int _prompt_ring_to_remove(int new_ring)
     const item_def *right = you.slot_item(EQ_RIGHT_RING, true);
 
     mesclr();
-    mprf(gettext("Wearing %s."), you.inv[new_ring].name(true, DESC_A).c_str());
+    mprf(gettext("Wearing %s."), you.inv[new_ring].name(true, DESC_PLAIN).c_str());
 
     const char lslot = index_to_letter(left->link);
     const char rslot = index_to_letter(right->link);

@@ -4073,7 +4073,7 @@ std::string melee_attack::mons_attack_desc()
 
     if (weapon && attacker->type != MONS_DANCING_WEAPON)
         ret += make_stringf(gettext(" with %s"),
-                            weapon->name(true, DESC_A).c_str());
+                            weapon->name(true, DESC_PLAIN).c_str());
 
     return ret;
 }

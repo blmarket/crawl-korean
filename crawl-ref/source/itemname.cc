@@ -2031,7 +2031,7 @@ void set_ident_type(item_def &item, item_type_id_state_type setting,
         && !(item.flags & (ISFLAG_NOTED_ID | ISFLAG_NOTED_GET)))
     {
         // Make a note of it.
-        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
+        take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_PLAIN).c_str(),
                        origin_desc(item).c_str()));
 
         // Sometimes (e.g. shops) you can ID an item before you get it;

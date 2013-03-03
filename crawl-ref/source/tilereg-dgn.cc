@@ -1100,7 +1100,7 @@ bool tile_dungeon_tip(const coord_def &gc, std::string &tip)
                         _add_tip(tip, gettext("[L-Click] Move"));
                     else if (mon)
                     {
-                        tip = mon->name(DESC_A);
+                        tip = mon->name(DESC_PLAIN);
                         _add_tip(tip, gettext("[L-Click] Attack"));
                     }
                 }

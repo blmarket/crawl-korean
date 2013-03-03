@@ -292,7 +292,7 @@ static std::string _shop_print_stock(const std::vector<int>& stock,
         else
             textcolor(i % 2 ? LIGHTGREY : WHITE);
 
-        std::string item_name = item.name(true, DESC_A, false, id);
+        std::string item_name = item.name(true, DESC_PLAIN, false, id);
         if (unknown)
             item_name += " (unknown)";
 
@@ -578,7 +578,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
                             // Take a note of the purchase.
                             take_note(Note(NOTE_BUY_ITEM, gp_value, 0,
-                                           item.name(true, DESC_A).c_str()));
+                                           item.name(true, DESC_PLAIN).c_str()));
 
                             // But take no further similar notes.
                             item.flags |= ISFLAG_NOTED_GET;
@@ -2624,7 +2624,7 @@ void ShoppingList::gold_changed(int old_amount, int new_amount)
                 desc = P_("shop","buy");
             desc += " ";
 
-            desc += describe_thing(thing, DESC_A);
+            desc += describe_thing(thing, DESC_PLAIN);
 
             descs.push_back(desc);
         }
@@ -2769,7 +2769,7 @@ void ShoppingList::display()
                 std::string prompt =
                    make_stringf(_("You cannot afford %s; travel there "
                                 "anyway? (y/N)"),
-                                describe_thing(*thing, DESC_A).c_str());
+                                describe_thing(*thing, DESC_PLAIN).c_str());
                 clrscr();
                 if (!yesno(prompt.c_str(), true, 'n'))
                     continue;
@@ -2792,7 +2792,7 @@ void ShoppingList::display()
                 // HACK: Assume it's some kind of portal vault.
                 snprintf(info, INFO_SIZE,
                          _("%s with an entry fee of %d gold pieces."),
-                         describe_thing(*thing, DESC_A).c_str(),
+                         describe_thing(*thing, DESC_PLAIN).c_str(),
                          (int) thing_cost(*thing));
 
                 print_description(info);
@@ -2803,7 +2803,7 @@ void ShoppingList::display()
         {
             std::string prompt =
                 make_stringf(_("Delete %s from shopping list? (y/N)"),
-                             describe_thing(*thing, DESC_A).c_str());
+                             describe_thing(*thing, DESC_PLAIN).c_str());
             clrscr();
             if (!yesno(prompt.c_str(), true, 'n'))
                 continue;

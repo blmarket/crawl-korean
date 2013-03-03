@@ -581,7 +581,7 @@ bool butchery(int which_corpse, bool bottle_blood)
         {
             corpse_id = -1;
 
-            std::string corpse_name = si->name(true, DESC_A);
+            std::string corpse_name = si->name(true, DESC_PLAIN);
 
             // We don't need to check for undead because
             // * Mummies can't eat.

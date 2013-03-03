@@ -1854,7 +1854,7 @@ std::string get_item_description(const item_def &item, bool verbose,
                 }
                 else
                 {
-                    description << uppercase_first(item.name(true, DESC_A, true,
+                    description << uppercase_first(item.name(true, DESC_PLAIN, true,
                                                              false, false));
                     description << ".\n";
                 }
@@ -2209,10 +2209,10 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
     std::string desc      = feature_description_at(false, pos, false, DESC_A, false);
     std::string db_name   = feat == DNGN_ENTER_SHOP ? "a shop" : desc;
     std::string long_desc = getLongDescription(db_name);
-
-    inf.title = uppercase_first(desc);
-    if (!ends_with(desc, ".") && !ends_with(desc, "!")
-        && !ends_with(desc, "?"))
+	std::string desc_kr   = feature_description_at(true, pos, false, DESC_PLAIN, false);
+    inf.title = uppercase_first(desc_kr);
+    if (!ends_with(desc_kr, ".") && !ends_with(desc_kr, "!")
+        && !ends_with(desc_kr, "?"))
     {
         inf.title += ".";
     }
@@ -3300,7 +3300,7 @@ static std::string _monster_stat_description(const monster_info& mi)
     if (mons_is_feat_mimic(mi.type))
     {
         result << uppercase_first(pronoun) << "은(는) " // " is as big as "
-               << thing_do_grammar(DESC_A, true, false,
+               << thing_do_grammar(DESC_PLAIN, true, false,
                                    feat_type_name(mi.get_mimic_feature()))
                << "와(과) 크기가 비슷하다\n."; // "\n";
     }
@@ -3330,7 +3330,7 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
                          bool &has_stat_desc, bool force_seen)
 {
     if (inf.title.empty())
-        inf.title = uppercase_first(mi.full_name(DESC_A, true)) + ".";
+        inf.title = uppercase_first(mi.full_name(DESC_PLAIN, true)) + ".";
 
     std::string db_name;
 

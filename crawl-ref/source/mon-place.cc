@@ -1138,7 +1138,7 @@ monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
         std::string msg;
 
         if (mon->visible_to(&you))
-            msg = mon->name(DESC_A);
+            msg = mon->name(DESC_PLAIN);
         else if (shoved)
             msg = gettext(M_("Something"));
 

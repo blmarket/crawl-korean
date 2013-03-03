@@ -967,7 +967,7 @@ static bool _handle_scroll(monster* mons)
                 if (you.can_see(mon))
                 {
                     ident = ID_KNOWN_TYPE;
-                    mprf(_("%s appears!"), mon->name(DESC_A).c_str());
+                    mprf(_("%s appears!"), mon->name(DESC_PLAIN).c_str());
                 }
                 player_angers_monster(mon);
             }
@@ -2766,7 +2766,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         }
         else if (!you_are_delayed())
         {
-            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_A).c_str(),
+            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_PLAIN).c_str(),
                  open_str.c_str());
         }
     }

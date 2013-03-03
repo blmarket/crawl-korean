@@ -101,7 +101,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 
     you.duration[DUR_WEAPON_BRAND] = 0;     // just in case
 
-    std::string old_name = wpn.name(true, DESC_A);
+    std::string old_name = wpn.name(true, DESC_PLAIN);
     set_equip_desc(wpn, ISFLAG_GLOWING);
     set_item_ego_type(wpn, OBJ_WEAPONS, brand);
     wpn.colour = colour;
@@ -143,7 +143,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
                                               : _("touched by the gods"));
 
     take_note(Note(NOTE_ID_ITEM, 0, 0,
-              wpn.name(true, DESC_A).c_str(), desc.c_str()));
+              wpn.name(true, DESC_PLAIN).c_str(), desc.c_str()));
     wpn.flags |= ISFLAG_NOTED_ID;
 
     mpr(_("Your weapon shines brightly!"), MSGCH_GOD);
@@ -863,7 +863,7 @@ static bool _offer_items()
         {
             const std::string msg =
                   make_stringf(gettext("Really sacrifice %s?"),
-				  item.name(true, DESC_A).c_str());
+				  item.name(true, DESC_PLAIN).c_str());
 
             if (!yesno(msg.c_str(), false, 'n'))
             {

@@ -2338,7 +2338,7 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
     else
     {
         // build shoot message
-        msg += item.name(true, DESC_A, false, false, false);
+        msg += item.name(true, DESC_PLAIN, false, false, false);
 
         // build beam name
         beam.name = item.name(true, DESC_PLAIN, false, false, false);
@@ -2375,13 +2375,13 @@ bool mons_throw(monster* mons, struct bolt &beam, int msl)
     {
         beam.aux_source = make_stringf(_("Shot with a%s %s by %s"),
                  (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
-                 mons->name(DESC_A).c_str());
+                 mons->name(DESC_PLAIN).c_str());
     }
     else
     {
         beam.aux_source = make_stringf(_("Hit by a%s %s thrown by %s"),
                  (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
-                 mons->name(DESC_A).c_str());
+                 mons->name(DESC_PLAIN).c_str());
     }
 
     // And restore it here.

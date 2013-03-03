@@ -1631,7 +1631,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
             owner = apostrophise(act.name(DESC_THE));
         else // "its" sounds abysmal; animals don't use shields
             owner = P_("trap_ammo","someone's");
-        mprf(_("%s shoots out and hits %s shield."), shot.name(true, DESC_A).c_str(),
+        mprf(_("%s shoots out and hits %s shield."), shot.name(true, DESC_PLAIN).c_str(),
              owner.c_str());
 
         act.shield_block_succeeded(0);

@@ -855,7 +855,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, gettext(" wields %s."),
-                 item.name(true, DESC_A, false, false, true, false,
+                 item.name(true, DESC_PLAIN, false, false, true, false,
                            ISFLAG_CURSED).c_str());
         msg = simple_monster_message(this, info);
     }

@@ -461,7 +461,7 @@ int place_monster_corpse(const monster* mons, bool silent,
             else
             {
                 mprf(gettext("%s appears out of nowhere!"),
-                     mitm[o].name(true, DESC_A).c_str());
+                     mitm[o].name(true, DESC_PLAIN).c_str());
             }
         }
         if (o != NON_ITEM && !silent)
@@ -500,7 +500,7 @@ void record_monster_defeat(monster* mons, killer_type killer)
     if (MONST_INTERESTING(mons))
     {
         take_note(Note(NOTE_DEFEAT_MONSTER, mons->type, mons->friendly(),
-                       mons->full_name(DESC_A).c_str(),
+                       mons->full_name(DESC_PLAIN).c_str(),
                        _milestone_kill_verb(killer).c_str()));
     }
     // XXX: See comment in monster_polymorph.

@@ -1631,7 +1631,7 @@ bool check_old_item_warning(const item_def& item,
 
     // now ask
     prompt += old_item.name(true, DESC_INVENTORY);
-    prompt += P_("wield_weapon","?");
+    prompt += pgettext("wield_weapon","?");
     return yesno(prompt.c_str(), false, 'n');
 }
 
@@ -1639,27 +1639,27 @@ static std::string _operation_verb(operation_types oper)
 {
     switch (oper)
     {
-    case OPER_WIELD:          return P_("invent","wield");
-    case OPER_QUAFF:          return P_("invent","quaff");
-    case OPER_DROP:           return P_("invent","drop");
+    case OPER_WIELD:          return pgettext("invent","wield");
+    case OPER_QUAFF:          return pgettext("invent","quaff");
+    case OPER_DROP:           return pgettext("invent","drop");
     case OPER_EAT:            return (you.species == SP_VAMPIRE ?
-                                      P_("invent","drain") : P_("invent","eat"));
-    case OPER_TAKEOFF:        return P_("invent","take off");
-    case OPER_WEAR:           return P_("invent","wear");
-    case OPER_PUTON:          return P_("invent","put on");
-    case OPER_REMOVE:         return P_("invent","remove");
-    case OPER_READ:           return P_("invent","read");
-    case OPER_MEMORISE:       return P_("invent","memorise from");
-    case OPER_ZAP:            return P_("invent","zap");
-    case OPER_EXAMINE:        return P_("invent","examine");
-    case OPER_FIRE:           return P_("invent","fire");
-    case OPER_PRAY:           return P_("invent","sacrifice");
-    case OPER_EVOKE:          return P_("invent","evoke");
-    case OPER_DESTROY:        return P_("invent","destroy");
-    case OPER_QUIVER:         return P_("invent","quiver");
+                                      pgettext("invent","drain") : pgettext("invent","eat"));
+    case OPER_TAKEOFF:        return pgettext("invent","take off");
+    case OPER_WEAR:           return pgettext("invent","wear");
+    case OPER_PUTON:          return pgettext("invent","put on");
+    case OPER_REMOVE:         return pgettext("invent","remove");
+    case OPER_READ:           return pgettext("invent","read");
+    case OPER_MEMORISE:       return pgettext("invent","memorise from");
+    case OPER_ZAP:            return pgettext("invent","zap");
+    case OPER_EXAMINE:        return pgettext("invent","examine");
+    case OPER_FIRE:           return pgettext("invent","fire");
+    case OPER_PRAY:           return pgettext("invent","sacrifice");
+    case OPER_EVOKE:          return pgettext("invent","evoke");
+    case OPER_DESTROY:        return pgettext("invent","destroy");
+    case OPER_QUIVER:         return pgettext("invent","quiver");
     case OPER_ANY:
     default:
-        return P_("invent","choose");
+        return pgettext("invent","choose");
     }
 }
 
@@ -1783,13 +1783,13 @@ bool check_warning_inscriptions(const item_def& item,
                 return true;
         }
 
-        std::string prompt = P_("invent","Really "); // + _operation_verb(oper) + " ";
+        std::string prompt = pgettext("invent","Really "); // + _operation_verb(oper) + " ";
         if (_nasty_stasis(item, oper))
-            prompt += std::string(P_("invent"," while "))
-                      + (you.duration[DUR_TELEPORT] ? P_("invent","about to teleport") :
-                         you.duration[DUR_SLOW] ? P_("invent","slowed") : P_("invent","hasted"));
+            prompt += std::string(pgettext("invent"," while "))
+                      + (you.duration[DUR_TELEPORT] ? pgettext("invent","about to teleport") :
+                         you.duration[DUR_SLOW] ? pgettext("invent","slowed") : pgettext("invent","hasted"));
         prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
-                                      : item.name(true, DESC_A)) + _operation_verb(oper); // (130216) 여기는 어순상 수정
+                                      : item.name(true, DESC_PLAIN)); // (130216) 여기는 어순상 수정
         prompt += _operation_verb(oper) + "?";
         return (yesno(prompt.c_str(), false, 'n')
                 && check_old_item_warning(item, oper));
@@ -2024,7 +2024,7 @@ bool item_is_evokable(const item_def &item, bool reach, bool known,
                       bool all_wands, bool msg, bool equip)
 {
     const std::string error = item_is_melded(item)
-            ? P_("invent","Your ") + item.name(true, DESC_QUALNAME) + _(" is melded into your body.")
+            ? pgettext("invent","Your ") + item.name(true, DESC_QUALNAME) + _(" is melded into your body.")
             : _("That item can only be evoked when wielded.");
 
     if (is_unrandom_artefact(item))

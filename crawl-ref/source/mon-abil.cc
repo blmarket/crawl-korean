@@ -516,13 +516,13 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
         {
             mprf(_("%s suddenly becomes %s."),
                  uppercase_first(old_name).c_str(),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
         else
-            mprf(_("%s twists grotesquely."), merge_to->name(DESC_A).c_str());
+            mprf(_("%s twists grotesquely."), merge_to->name(DESC_PLAIN).c_str());
     }
     else if (you.can_see(crawlie))
-        mprf(_("%s suddenly disappears!"), crawlie->name(DESC_A).c_str());
+        mprf(_("%s suddenly disappears!"), crawlie->name(DESC_PLAIN).c_str());
 
     // Now kill the other monster
     monster_die(crawlie, KILL_DISMISSED, NON_MONSTER, true);

@@ -1933,7 +1933,7 @@ static void _apport_and_butcher(monster *caster, item_def &item)
     if (item.pos != caster->pos())
     {
         apported = true;
-        const std::string item_name = item.name(true, DESC_A);
+        const std::string item_name = item.name(true, DESC_PLAIN);
 
         std::string theft;
         if (is_being_drained(item))
@@ -1968,7 +1968,7 @@ static void _apport_and_butcher(monster *caster, item_def &item)
     {
         mprf(_("%s picks up %s%s."),
              caster->name(DESC_THE).c_str(),
-             item.name(true, apported ? DESC_THE : DESC_A).c_str(),
+             item.name(true, DESC_PLAIN).c_str(),
              item.base_type == OBJ_CORPSES ? _(" and starts butchering it")
                                            : "");
     }

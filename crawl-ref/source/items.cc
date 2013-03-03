@@ -1020,7 +1020,7 @@ static int _first_corpse_monnum(const coord_def& where)
 static std::string _milestone_rune(const item_def &item)
 {
     /// milesone에 적을 목적인듯.
-    return make_stringf(gettext("found %s."), item.name(true, DESC_A).c_str());
+    return make_stringf(gettext("found %s."), item.name(true, DESC_PLAIN).c_str());
 }
 
 static void _milestone_check(const item_def &item)
@@ -1038,7 +1038,7 @@ static void _check_note_item(item_def &item)
 
     if (item_is_rune(item) || item_is_orb(item) || is_artefact(item))
     {
-        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
+        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_PLAIN).c_str(),
                        origin_desc(item).c_str()));
         item.flags |= ISFLAG_NOTED_GET;
 
@@ -2237,7 +2237,7 @@ bool drop_item(int item_dropped, int quant_drop)
     }
 
     mprf(gettext("You drop %s."),
-         quant_name(you.inv[item_dropped], quant_drop, DESC_A).c_str());
+         quant_name(you.inv[item_dropped], quant_drop, DESC_PLAIN).c_str());
 
     bool quiet = silenced(you.pos());
 
