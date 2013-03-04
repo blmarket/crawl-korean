@@ -1049,14 +1049,14 @@ ENDMAP
 
 
 NAME: ossuary_deceit_water_processing
-WEIGHT: 1
+WEIGHT: 2
 ORIENT: encompass
 TAGS:   ossuary no_item_gen no_monster_gen
-MONS:   rat zombie / grey rat zombie / ball python zombie / adder zombie / kobold zombie / goblin zombie / hobgoblin zombie
-MONS:   gnoll zombie / big kobold zombie / iguana zombie / hound zombie
-MONS:   ogre zombie / human zombie / elf zombie
+MONS:   rat zombie / grey rat zombie / ball python zombie / adder zombie / kobold zombie / goblin zombie / hobgoblin zombie / giant gecko zombie
+MONS:   gnoll zombie / big kobold zombie / iguana zombie / hound zombie / green rat zombie / water moccasin zombie
+MONS:   ogre zombie / human zombie / elf zombie / yak zombie / war dog zombie / killer bee zombie
 MONS:   mummy
-MONS:   wraith
+MONS:   guardian mummy
 LROCKTILE:  wall_brick_vines
 TILE:       G = dngn_sarcophagus_pedestal_left
 ITEM:   any scroll / any potion / nothing w:5
@@ -1078,7 +1078,7 @@ ccc+cc=cc ccccccc   ccc=ccc   ccc=ccc cc=cc=ccc
   c~c                 c~c       c.c       c~c
 ccc+ccc               c~c     ccc+ccc   ccc+ccc
 c.....c               c.c     c.....c   c.....c
-c.1W1.c     ccc       c4c     cW1.1Wc   cW111Wc
+c.1W1.c     ccc       c4c     cW3.3Wc   cW111Wc
 c.WWW.c     cecc      c.c     cWW.WWc   cW1W1Wc
 c.1W1.c     cc+cccc   c~c     cW3.3Wc   cW111Wc
 c.....c      ccddWc   c~c    cc.....c   c.....c
@@ -1087,20 +1087,20 @@ ccc+ccc       cd4Wc   c.c   cc=cccccc   ccc+ccc
   c~c         cccc=cccc+cccc=cc           c~c
   c~c            cc~.......~cc            c~c
 ccc+ccc           c..WWWWW..c           ccc+ccc
-c.....c           c.WW.4.WW.c           c.....c
+c.....c           c.WW.1.WW.c           c.....c
 c.W1W.ccccccccccccc.W.WWW.W.c           c.2.2.c
-c.1W1.=..~~.4.~~..+.W4W5W4W~c           c..3..c
+c.1W1.=..~~.4.~~..+.W1W5W1W~c           c..3..c
 c.W1W.ccccccccccccc.W.WWW.W.c           c.WWW.c
-c.....c           c.WW.4.WW.c           cWW.WWc
+c.....c           c.WW.1.WW.c           cWW.WWc
 ccc+ccc           c..WWWWW..c           ccc+ccc
   c~c            cc~...~...~cc            c~c
   c~c           cc=ccccccccc=cccc         c~c
   c~c          cc4cc       cc.WWc         c~c
 ccc+ccc   cccccc=cc         cW4dc       ccc+ccc
 c.....c   c.WWW.cc          cWddcc     ccW....c
-c.1.1.ccccc.1W3.c           cccc+cc   ccW...2.c
+c.1.1.ccccc.3W3.c           cccc+cc   ccW...2.c
 cWWWWW=.~.+.....c              ccec  ccW..2WWWc
-c.2.2.ccccc.1W3.c               ccc ccW1..WW..c
+c.2.2.ccccc.3W3.c               ccc ccW1..WW..c
 c.....c   c.WWW.c                  ccW....W..1c
 ccc+ccc   ccccccc                 ccW3.cc~W~ccc
   c~c                            ccW3.+dc.W.c

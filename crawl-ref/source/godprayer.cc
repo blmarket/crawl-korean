@@ -525,7 +525,7 @@ static void _give_sac_group_feedback(int which)
         M_("Escape"), M_("Destruction"), M_("Dungeons"), M_("Summoning"), M_("Wonder")
     };
     mprf(MSGCH_GOD, _("A symbol of %s coalesces before you, then vanishes."),
-         names[which]);
+         (names[which]));
 }
 
 static void _ashenzari_sac_scroll(const item_def& item)

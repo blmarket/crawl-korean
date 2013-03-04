@@ -775,7 +775,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     const feature_def feat_d = get_feature_def(feat);
     const std::string name = feature_mimic ? feat_type_name(feat) :
                item->base_type == OBJ_GOLD ? "pile of gold coins"
-                                           : item->name(false, DESC_BASENAME);
+                                           : item->name(false, DESC_BASENAME); // 이부분에서 feature명을 참조했다면 한글판에서 크래시가 발생하지만, item일경우만 해당되므로 여기는 수정할 필요 없음 (883번줄 참조)
 
     tileidx_t tile = tileidx_feature(pos);
 
@@ -879,8 +879,8 @@ void discover_mimic(const coord_def& pos, bool wake)
 
     // Announce the mimic.
     if (mons_near(mimic))
-    {
-        mprf(MSGCH_WARN, _("The %s is a mimic!"), item->name(true, DESC_BASENAME).c_str());
+    {	// (130304) 한글판에서 item이 Feature(지형지물)일때 item->name을 참조하면 왜인지 몰라도 튕깁니다;;;; item_name쪽은 나중에 다시 정비해야할듯 싶고, 일단 아래와 같이 임시조치했습니다. 원래는 item->name(true, DESC_BASENAME).c_str(); 만 있습니다. 
+        mprf(MSGCH_WARN, _("The %s is a mimic!"), ((!feature_mimic) ? item->name(true, DESC_BASENAME).c_str() : _(feat_type_name(feat))));
         mimic->seen_context = SC_JUST_SEEN;
     }
 

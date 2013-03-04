@@ -4,7 +4,7 @@ function callback.grunt_ashenzari_visionary_reveal(data,triggerable,triggerer,ma
         return
     end
     data.trig = true
-    crawl.god_speaks("Ashenzari", "아센자리는 말했다: \"나의 시야를 보여 주겠노라, 필멸자여...\"")
+    crawl.god_speaks("Ashenzari", "아쉔자리는 말했다: \"나의 시야를 보여 주겠노라, 필멸자여...\"")
     for slave in iter.slave_iterator("revealing_wall", 1) do
         dgn.terrain_changed(slave.x, slave.y, "clear_stone_wall", false, false, false)
     end

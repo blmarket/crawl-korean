@@ -116,7 +116,7 @@ static void _initialize()
         && crawl_state.title_screen)
     {
         tiles.draw_title();
-        tiles.update_title_msg("Loading databases...");
+        tiles.update_title_msg(_("Loading databases..."));
     }
 #endif
 
@@ -124,7 +124,7 @@ static void _initialize()
     databaseSystemInit();
 #ifdef USE_TILE_LOCAL
     if (crawl_state.title_screen)
-        tiles.update_title_msg("Loading spells and features...");
+        tiles.update_title_msg(_("Loading spells and features..."));
 #endif
 
     init_feat_desc_cache();
@@ -132,7 +132,7 @@ static void _initialize()
     init_spell_rarities();
 #ifdef USE_TILE_LOCAL
     if (crawl_state.title_screen)
-        tiles.update_title_msg("Loading maps...");
+        tiles.update_title_msg(_("Loading maps..."));
 #endif
 
     // Read special levels and vaults.

@@ -2323,6 +2323,12 @@ msgstr "아스모데우스"
 msgid "ereshkigal"
 msgstr "에레쉬키갈"
 
+msgid "lamia"
+msgstr "라미아"
+
+msgid "jorgrun"
+msgstr "요르그륀"
+
 #: mon-data.h:6350 mon-data.h:6362 mon-data.h:6351 mon-data.h:6308
 #: mon-data.h:6446
 msgid "test spawner"
@@ -2840,6 +2846,12 @@ msgstr "쉬운 감지된 몬스터"
 #: mon-data.h:6508
 msgid "tough sensed monster"
 msgstr "강한 감지된 몬스터"
+
+msgid "Lamia"
+msgstr "라미아"
+
+msgid "Jorgrun"
+msgstr "요르그륀"
 
 #: mon-data.h:6424 mon-data.h:6436 mon-data.h:6425 mon-data.h:6382
 #: mon-data.h:6520
@@ -6442,7 +6454,7 @@ msgstr "'체이브리아도스'의 달팽이집에 덮인 제단"
 #: directn.cc:3156 directn.cc:3156 directn.cc:3159 directn.cc:3177
 #: directn.cc:3145
 msgid "shattered altar of Ashenzari"
-msgstr "'아센자리'의 산산히 부서진 제단"
+msgstr "'아쉔자리'의 산산히 부서진 제단"
 
 #: directn.cc:3159 directn.cc:3159 directn.cc:3162 directn.cc:3180
 #: directn.cc:3148
@@ -6945,7 +6957,7 @@ msgstr "단검"
 
 #: itemprop.cc:240 itemprop.cc:240 itemprop.cc:242 itemprop.cc:231
 msgid "sabre"
-msgstr "샤벨"
+msgstr "세이버"
 
 #. Long Blades
 #. Long Blades
@@ -10577,7 +10589,7 @@ msgstr "체이브리아도스"
 
 #: religion.cc:2304
 msgid "Ashenzari"
-msgstr "아센자리"
+msgstr "아쉔자리"
 
 #: religion.cc:2312
 msgid "Jiyva"
@@ -11575,11 +11587,11 @@ msgstr "텐구"
 
 #: mon-data.h:4446 mon-data.h:4520
 msgid "item mimic"
-msgstr "아이템 미믹"
+msgstr ""
 
 #: mon-data.h:4459 mon-data.h:4533
 msgid "feature mimic"
-msgstr "지형지물 미믹"
+msgstr ""
 
 #: mon-data.h:4519 mon-data.h:4632
 msgid "crimson imp"
@@ -11750,11 +11762,11 @@ msgstr "뱀"
 
 #: mon-data.h:4496
 msgid "inept item mimic"
-msgstr "서투른 아이템 미믹"
+msgstr ""
 
 #: mon-data.h:4508
 msgid "inept feature mimic"
-msgstr "서투른 지형지물 미믹"
+msgstr ""
 
 #: mon-data.h:5054
 msgid "Hell Sentinel"

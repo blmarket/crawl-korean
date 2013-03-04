@@ -13191,7 +13191,7 @@ msgstr "%s의 권능에 의하여, 향상된 스킬들은 <blue>푸른색</blue>
 #: skill_menu.cc:496 skill_menu.cc:496 skill_menu.cc:515 skill_menu.cc:541
 #: skill_menu.cc:545
 msgid "Skills reduced by the power of Ashenzari are in <red>red</red>. "
-msgstr "아센자리에 의하여, 하락한 스킬들은 <red>붉은색</red>으로 표시된다."
+msgstr "아쉔자리에 의하여, 하락한 스킬들은 <red>붉은색</red>으로 표시된다."
 
 #: skill_menu.cc:504 skill_menu.cc:504 skill_menu.cc:523 skill_menu.cc:549
 #: skill_menu.cc:553
@@ -14599,7 +14599,7 @@ msgstr "%s이(가) 시야에 들어왔다."
 
 #: view.cc:321 view.cc:314 view.cc:318
 msgid "Ashenzari warns you: "
-msgstr "아센자리는 경고했다: "
+msgstr "아쉔자리는 경고했다: "
 
 #: view.cc:336 view.cc:329 view.cc:333 view.cc:335
 msgctxt "Ashenzari"
@@ -21949,7 +21949,7 @@ msgid ""
 "Ashenzari won't support your skills until you bind yourself with cursed "
 "items."
 msgstr ""
-"'아센자리'는 당신이 스스로 저주받을 아이템을 통해 당신을 구속하지 않는다면, "
+"'아쉔자리'는 당신이 스스로 저주받을 아이템을 통해 당신을 구속하지 않는다면, "
 "당신의 스킬을 돕지 않는다."
 
 #: describe.cc:4141 describe.cc:4142 describe.cc:4155 describe.cc:4084
@@ -29744,7 +29744,7 @@ msgstr "%1$s은(는) 구덩이 아래로 떨어졌다.%2$.0s"
 
 #: view.cc:316 delay.cc:1726
 msgid "Ashenzari warns you:"
-msgstr "아센자리는 경고했다:"
+msgstr "아쉔자리는 경고했다:"
 
 #: beam.cc:3122
 msgctxt "tracer_affect_player"
@@ -30925,7 +30925,7 @@ msgstr "는 것을 느꼈다."
 #: godprayer.cc:527
 #, c-format
 msgid "A symbol of %s coalesces before you, then vanishes."
-msgstr "%s의 상징이 당신 뒤에서 합쳐졌다가, 사라졌다."
+msgstr "'%s'의 상징이 눈앞에서 잠시 나타났다."
 
 #: godprayer.cc:544
 msgid "You feel the world is against you."
