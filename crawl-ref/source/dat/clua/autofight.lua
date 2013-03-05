@@ -108,7 +108,7 @@ local function move_towards(dx, dy)
     if move == nil then move = try_move(sign(dx), 0) end
   end
   if move == nil then
-    crawl.mpr("ëŒ€ìƒìœ¼ë¡œì˜ ì´ë™ì„ ì‹¤íŒ¨í–ˆë‹¤.")
+    crawl.mpr("´ë»óÀ¸·ÎÀÇ ÀÌµ¿À» ½ÇÆĞÇß´Ù.")
   else
     crawl.process_keys(move)
   end
@@ -238,13 +238,13 @@ function attack(allow_movement)
   local x, y, info = get_target(not allow_movement)
   local caught = you.caught()
   if you.confused() then
-    crawl.mpr("ë‹¹ì‹ ì€ ë„ˆë¬´ í˜¼ë€ìŠ¤ëŸ½ë‹¤!")
+    crawl.mpr("´ç½ÅÀº ³Ê¹« È¥¶õ½º·´´Ù!")
   elseif caught then
-    crawl.mpr("ë‹¹ì‹ ì€ " .. caught .. "(ì´)ë‹¤!")
+    crawl.mpr("´ç½ÅÀº " .. caught .. "(ÀÌ)´Ù!")
   elseif hp_is_low() then
-    crawl.mpr("ìë™ ê³µê²©ì„ í•˜ê¸°ì—” ë¶€ìƒì´ í¬ë‹¤!")
+    crawl.mpr("ÀÚµ¿ °ø°İÀ» ÇÏ±â¿£ ºÎ»óÀÌ Å©´Ù!")
   elseif info == nil then
-    crawl.mpr("ì‹œì•¼ ë‚´ì— ëŒ€ìƒì´ ë³´ì´ì§€ ì•ŠëŠ”ë‹¤!")
+    crawl.mpr("½Ã¾ß ³»¿¡ ´ë»óÀÌ º¸ÀÌÁö ¾Ê´Â´Ù!")
   elseif info.attack_type == 3 then
     attack_fire(x,y)
   elseif info.attack_type == 2 then
@@ -254,7 +254,7 @@ function attack(allow_movement)
   elseif allow_movement then
     move_towards(x,y)
   else
-    crawl.mpr("ì‚¬ì •ê±°ë¦¬ ë‚´ì— ëŒ€ìƒì´ ì—†ë‹¤!")
+    crawl.mpr("»çÁ¤°Å¸® ³»¿¡ ´ë»óÀÌ ¾ø´Ù!")
   end
 end
 
@@ -268,7 +268,7 @@ end
 
 function toggle_autothrow()
   AUTOFIGHT_THROW = not AUTOFIGHT_THROW
-  crawl.mpr(AUTOFIGHT_THROW and "ìë™ ì‚¬ê²© ì‹œì‘." or "ìë™ ì‚¬ê²© í•´ì œ.")
+  crawl.mpr(AUTOFIGHT_THROW and "ÀÚµ¿ »ç°İ ½ÃÀÛ." or "ÀÚµ¿ »ç°İ ÇØÁ¦.")
 end
 
 chk_lua_option.autofight_stop = set_stop_level
