@@ -526,9 +526,10 @@ unsigned int FTFontWrapper::string_width(const char *text)
 
     unsigned int width = base_width;
     unsigned int adjust = 0;
-    for (const unsigned char *itr = (unsigned const char *)text; *itr; itr++)
+    ucs_t cc;
+    for (const char *tp = text; int s = utf8towc(&cc, tp); tp += s)
     {
-        if (*itr == '\n')
+        if (cc == '\n')
         {
             max_width = std::max(width + adjust, max_width);
             width = base_width;
@@ -536,7 +537,7 @@ unsigned int FTFontWrapper::string_width(const char *text)
         }
         else
         {
-            unsigned int c = map_unicode(*itr);
+            unsigned int c = map_unicode(cc);
             width += m_glyphs[c].advance;
             adjust = std::max(0, m_glyphs[c].width - m_glyphs[c].advance);
         }
