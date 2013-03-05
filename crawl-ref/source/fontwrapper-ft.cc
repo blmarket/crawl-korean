@@ -641,7 +641,7 @@ void FTFontWrapper::render_string(unsigned int px, unsigned int py,
     {
         int w = wcwidth(c);
         if (w != -1)
-            cols += w;
+            cols++;
         max_cols = std::max(cols, max_cols);
 
         // NOTE: only newlines should be used for tool tips.  Don't use EOL.
@@ -671,8 +671,6 @@ void FTFontWrapper::render_string(unsigned int px, unsigned int py,
         {
             chars[cols + rows * max_cols] = c;
             cols++;
-            if (w == 2)
-                chars[cols + rows * max_cols] = ' ', cols++;
         }
 
         if (c == '\n')
