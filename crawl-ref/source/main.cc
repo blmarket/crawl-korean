@@ -794,6 +794,11 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
             mpr("But you're not in Zot Defence!");
         break;
 
+	case '!':
+		mpr("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		mpr("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij");
+		mpr("가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마가나다라마");
+		break;
 
     default:
         if (!silent_fail)
