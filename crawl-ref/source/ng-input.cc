@@ -16,11 +16,11 @@ extern std::string init_file_error; // defined in main.cc
 void opening_screen(void)
 {
     std::string msg =
-    gettext("<yellow>Hello, welcome to " CRAWL " ") + Version::Long() + gettext("!</yellow>\n"
-    "<brown>(c) Copyright 1997-2002 Linley Henzell, "
-    "2002-2012 Crawl DevTeam\n"
+    gettext("<yellow>Hello, welcome to " CRAWL " ") + Version::Long() + "!</yellow>"
+    "\n <brown>(c) Copyright 1997-2002 Linley Henzell, "
+    "2002-2012 Crawl DevTeam, 2011-2013 DCSS Korean-translation Center.\n"
     "Read the instructions for legal details."
-    "</brown> ") ;
+    "</brown> " ;
 
     const bool init_found = init_file_error.empty();
 

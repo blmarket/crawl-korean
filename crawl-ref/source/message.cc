@@ -416,7 +416,7 @@ public:
 
     unsigned int out_width() const
     {
-        return (width() - (use_first_col() ? 1 : 0));
+        return (width() - (use_first_col() ? 1 : 0)) * 1.8; // (deceit, 130306) 한글판에선 이 부분을 1.8정도 곱해주는것으로 수정. 영문/한글간의 차이 때문인지 이전에는 메시지창에서 텍스트가 한 줄의 절반정도만 쓰여져도 다음줄로 넘어가버렸죠.
     }
 
     unsigned int out_height() const
