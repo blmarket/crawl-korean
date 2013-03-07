@@ -820,7 +820,7 @@ std::string wordwrap_line(std::string &s, int width, bool tags, bool indent)
             break;
 
         if (cw >= 0)
-            width -= cw;
+            width -= ((cw > 1) ? cw - 1 : cw);
         cp += clen;
     }
 
