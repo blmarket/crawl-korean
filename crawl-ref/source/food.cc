@@ -541,7 +541,7 @@ bool butchery(int which_corpse, bool bottle_blood)
             && !_should_butcher(corpse_id, bottle_blood))
         {
             mprf(_("There isn't anything suitable to %s here."),
-                 bottle_blood ? P_("food","bottle") : P_("food","butcher"));
+                 bottle_blood ? pgettext("food","bottle") : pgettext("food","butcher"));
             return false;
         }
 
@@ -658,7 +658,7 @@ bool butchery(int which_corpse, bool bottle_blood)
         // FIXME
         mprf(gettext("There isn't anything %s to %s here."),
              Options.confirm_butcher == CONFIRM_NEVER ? "suitable" : "else",
-             bottle_blood ? P_("food","bottle") : P_("food","butcher"));
+             bottle_blood ? pgettext("food","bottle") : pgettext("food","butcher"));
     }
     _terminate_butchery(wpn_switch, removed_gloves, old_weapon, old_gloves);
 
@@ -1840,8 +1840,8 @@ static void _eat_chunk(item_def& food)
         if (player_mutation_level(MUT_SAPROVOROUS) == 3)
         {
             mprf(_("This %s flesh tastes %s!"),
-                 chunk_effect == CE_ROTTEN   ? P_("food","rotting")   : P_("food","raw"),
-                 x_chance_in_y(contam, 1000) ? P_("food","delicious") : P_("food","good"));
+                 chunk_effect == CE_ROTTEN   ? pgettext("food","rotting")   : pgettext("food","raw"),
+                 x_chance_in_y(contam, 1000) ? pgettext("food","delicious") : pgettext("food","good"));
             if (you.species == SP_GHOUL)
             {
                 int hp_amt = 1 + random2(5) + random2(1 + you.experience_level);

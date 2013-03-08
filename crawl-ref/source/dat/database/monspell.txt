@@ -135,7 +135,7 @@ unseen Holy Word cast
 %%%%
 Orb of Destruction orb spider cast
 
-@The_monster@ weaves a glowing orb of energy.
+@The_monster@은(는) 빛나는 구체를 만들어냈다.
 %%%%
 Orb of Destruction cast
 
@@ -147,7 +147,7 @@ Orb of Destruction cast
 %%%%
 Sticky Flame cast
 
-@The_monster@ sprays @target@ with burning goo.
+@The_monster@은(는) 끈적한 액상 화염을 흩뿌렸다.
 %%%%
 Sunray cast
 

@@ -2694,7 +2694,7 @@ void auto_id_inventory()
         item_def& item = you.inv[i];
         if (item.defined())
         {
-            maybe_id_weapon(item, "You determine that: ");
+            maybe_id_weapon(item, _("You determine that: "));
             god_id_item(item, false);
         }
     }

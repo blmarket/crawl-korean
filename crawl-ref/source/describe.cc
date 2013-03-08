@@ -3655,8 +3655,8 @@ std::string short_ghost_description(const monster *mon, bool abbrev)
 
     std::string desc = make_stringf(pgettext("xlrank","%s %s %s"),
                         gettext(rank),
-                        species_name(ghost.species).c_str(),
-                        get_job_name(ghost.job));
+                        _(species_name(ghost.species).c_str()),
+                        _(get_job_name(ghost.job)));
 
     //if (abbrev || strwidth(desc) > 40)
     //{

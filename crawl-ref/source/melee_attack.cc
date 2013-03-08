@@ -4278,7 +4278,7 @@ void melee_attack::mons_apply_attack_flavour()
         if (needs_message && special_damage)
         {
             mprf(pgettext("freezeattack","%s %s %s%s"),
-                 atk_name(DESC_THE).c_str(),
+                 atk_name(DESC_PLAIN).c_str(),
                  attacker->conj_verb("freeze").c_str(),
                  defender_name().c_str(),
                  special_attack_punctuation().c_str());

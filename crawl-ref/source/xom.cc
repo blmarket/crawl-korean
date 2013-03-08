@@ -251,12 +251,12 @@ static void _xom_is_stimulated(int maxinterestingness,
     if (was_stimulated || force_message)
     {
         god_speaks(GOD_XOM,
-                   ((interestingness > 160) ? message_array[5] :
-                    (interestingness >  80) ? message_array[4] :
-                    (interestingness >  60) ? message_array[3] :
-                    (interestingness >  40) ? message_array[2] :
-                    (interestingness >  20) ? message_array[1]
-                                            : message_array[0]));
+                   ((interestingness > 160) ? _(message_array[5]) :
+                    (interestingness >  80) ? _(message_array[4]) :
+                    (interestingness >  60) ? _(message_array[3]) :
+                    (interestingness >  40) ? _(message_array[2]) :
+                    (interestingness >  20) ? _(message_array[1])
+                                            : _(message_array[0])));
         //updating piety status line
         you.redraw_title = true;
     }

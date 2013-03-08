@@ -4978,12 +4978,12 @@ std::string describe_contamination(int cont)
         return _("Your entire body has taken on an eerie glow!");
     else if (cont > 1)
     {
-        /// 이것도 걍 코드에 바로 작업하는게 나을듯.
+        // 이것도 걍 코드에 바로 작업하는게 나을듯....은(는) 훼이크고 get gettextized!
         return (make_stringf(gettext("You are %s with residual magics%s"),
-                   (cont == 4) ? "practically glowing" :
-                   (cont == 3) ? "heavily infused" :
-                   (cont == 2) ? "contaminated"
-                                    : "lightly contaminated",
+                   (cont == 4) ? _("practically glowing") :
+                   (cont == 3) ? _("heavily infused") :
+                   (cont == 2) ? pgettext("contam","contaminated")
+                                    : _("lightly contaminated"),
                    (cont == 4) ? "!" : "."));
     }
     else if (cont == 1)

@@ -334,7 +334,7 @@ void actor::end_constriction(actor::constricting_t::iterator i,
     {
         mprf(_("%s %s %s grip on %s."), // 주어,동사(release,lose),주어의 소유격(po파일에서는 해석안하고 무시),constrict당하는 대상
                 name(DESC_THE).c_str(),
-                conj_verb(intentional ? P_("actor","release") : P_("actor","lose")).c_str(),
+                conj_verb(intentional ? pgettext("actor","release") : pgettext("actor","lose")).c_str(),
                 pronoun(PRONOUN_POSSESSIVE).c_str(),
                 constrictee->name(DESC_THE).c_str());
     }
@@ -526,7 +526,7 @@ void actor::handle_constriction()
             mprf(_("%s %s %s%s%s"),
                  (is_player() ? _(M_("You"))
                               : name(DESC_THE).c_str()),
-                 conj_verb(P_("actor","constrict")).c_str(),
+                 conj_verb(pgettext("actor","constrict")).c_str(),
                  defender->name(DESC_THE).c_str(),
 #ifdef DEBUG_DIAGNOSTICS
                  make_stringf(" for %d", damage).c_str(),
@@ -539,7 +539,7 @@ void actor::handle_constriction()
         {
             mprf(_("%s %s constricted%s%s"),
                  defender->name(DESC_THE).c_str(),
-                 defender->conj_verb(P_("actor","are")).c_str(),
+                 defender->conj_verb(pgettext("actor","are")).c_str(),
 #ifdef DEBUG_DIAGNOSTICS
                  make_stringf(" for %d", damage).c_str(),
 #else
