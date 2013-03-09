@@ -3583,7 +3583,7 @@ Duvessa_Dowan_dies
 
 @The_monster@은(는) 분노에 찬 비명을 질렀다.
 
-@The_monster@은(는) 소리쳤다. "안돼! 어떻게 네놈이!"
+@The_monster@은(는) 소리쳤다. "안돼! 어떻게 네가!"
 
 @The_monster@은(는) 울먹이고, 스스로를 추스려 무기를 휘저었다.
 %%%%

@@ -324,9 +324,9 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
     // Will generate strings such as 'Duvessa_Duvessa_dies' or, alternately
     // 'Dowan_Dowan_dies', but as neither will match, these can safely be
     // ignored.
-    std::string key = mons->name(DESC_THE, true) + "_"
-                    + twin->name(DESC_THE) + "_dies_";
-
+    std::string key = (mons_is_dowan(mons) ? "Dowan_Duvessa_dies_" : "Duvessa_Dowan_dies_"); //mons->name(DESC_THE, true) + "_"
+                    // + twin->name(DESC_THE) + "_dies_";
+	
     if (mons_near(mons) && !mons->observable())
         key += "invisible_";
     else if (!mons_near(mons))
@@ -345,7 +345,7 @@ void elven_twin_died(monster* twin, bool in_transit, killer_type killer, int kil
     key.erase(key.length() - 1);
 
     std::string death_message = getSpeakString(key);
-
+	death_message = replace_all(death_message, "@The_monster@", mons->name(DESC_THE)); // (130309) 추가부분
     // Check if they can speak or not: they may have been polymorphed.
     if (mons_near(mons) && !death_message.empty() && mons->can_speak())
         mons_speaks_msg(mons, death_message, MSGCH_TALK, silenced(you.pos()));
