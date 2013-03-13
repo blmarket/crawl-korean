@@ -264,14 +264,14 @@ void DungeonCellBuffer::pack_background(int x, int y, const packed_cell &cell)
             if (cell.halo == HALO_RANGE)
                 m_buf_feat.add(TILE_HALO_RANGE, x, y);
             if (cell.halo == HALO_UMBRA)
-                m_buf_feat.add(TILE_UMBRA, x, y);
+                m_buf_feat.add(TILE_UMBRA + random2(4), x, y);
 
             if (cell.orb_glow)
                 m_buf_feat.add(TILE_ORB_GLOW + cell.orb_glow - 1, x, y);
             if (cell.quad_glow)
                 m_buf_feat.add(TILE_QUAD_GLOW, x, y);
             if (cell.disjunct)
-                m_buf_feat.add(TILE_DISJUNCT, x, y);
+                m_buf_feat.add(TILE_DISJUNCT + cell.disjunct - 1, x, y);
 
             // Apply the travel exclusion under the foreground if the cell is
             // visible.  It will be applied later if the cell is unseen.
@@ -408,15 +408,40 @@ void DungeonCellBuffer::pack_foreground(int x, int y, const packed_cell &cell)
         m_buf_icons.add(TILEI_GLOWING, x, y, -status_shift, 0);
         status_shift += 7;
     }
+    if (fg & TILE_FLAG_HASTED)
+    {
+        m_buf_icons.add(TILEI_HASTED, x, y, -status_shift, 0);
+        status_shift += 6;
+    }
     if (fg & TILE_FLAG_SLOWED)
     {
         m_buf_icons.add(TILEI_SLOWED, x, y, -status_shift, 0);
+        status_shift += 6;
+    }
+    if (fg & TILE_FLAG_MIGHT)
+    {
+        m_buf_icons.add(TILEI_MIGHT, x, y, -status_shift, 0);
         status_shift += 6;
     }
     if (fg & TILE_FLAG_PAIN_MIRROR)
     {
         m_buf_icons.add(TILEI_PAIN_MIRROR, x, y, -status_shift, 0);
         status_shift += 7;
+    }
+    if (fg & TILE_FLAG_PETRIFYING)
+    {
+        m_buf_icons.add(TILEI_PETRIFYING, x, y, -status_shift, 0);
+        status_shift += 6;
+    }
+    if (fg & TILE_FLAG_PETRIFIED)
+    {
+        m_buf_icons.add(TILEI_PETRIFIED, x, y, -status_shift, 0);
+        status_shift += 6;
+    }
+    if (fg & TILE_FLAG_BLIND)
+    {
+        m_buf_icons.add(TILEI_BLIND, x, y, -status_shift, 0);
+        status_shift += 10;
     }
 
     if (fg & TILE_FLAG_ANIM_WEP)

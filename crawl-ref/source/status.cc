@@ -129,7 +129,9 @@ static duration_def duration_data[] =
     { DUR_TORNADO_COOLDOWN, false,
       YELLOW, P_("status", "Tornado"), "", "" ,},
     { DUR_DISJUNCTION, true,
-      BLUE, P_("status", "Disjoin"), P_("status", "disjoining"), N_("You are disjoining your surroundings.") },
+      BLUE, P_("status", "Disjoin"), P_("status","disjoining"), N_("You are disjoining your surroundings.") },
+    { DUR_SENTINEL_MARK, true,
+      MAGENTA, P_("status","Mark"), P_("status","marked"), N_("You are marked for hunting.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -531,6 +533,16 @@ bool fill_status_info(int status, status_info* inf)
         }
         break;
 
+    case STATUS_RECALL:
+        if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
+        {
+            inf->light_colour = WHITE;
+            inf->light_text   = "Recall";
+            inf->short_text   = "recalling";
+            inf->long_text    = "You are recalling your allies.";
+        }
+        break;
+
     default:
         if (!found)
         {
@@ -823,7 +835,7 @@ static void _describe_burden(status_info* inf)
 
 static void _describe_transform(status_info* inf)
 {
-    const bool vampbat = (you.species == SP_VAMPIRE && player_in_bat_form());
+    const bool vampbat = (you.species == SP_VAMPIRE && you.form == TRAN_BAT);
     const bool expire  = dur_expiring(DUR_TRANSFORMATION) && !vampbat;
 
     switch (you.form)
@@ -875,6 +887,26 @@ static void _describe_transform(status_info* inf)
         inf->light_text = gettext(M_("App"));
         inf->short_text = gettext(M_("appendage"));
         inf->long_text  = gettext("You have a beastly appendage.");
+        break;
+    case TRAN_TREE:
+        inf->light_text = "Tree";
+        inf->short_text = "tree-form";
+        inf->long_text  = "You are an animated tree.";
+        break;
+    case TRAN_JELLY:
+        inf->light_text = "Jelly";
+        inf->short_text = "jelly-form";
+        inf->long_text  = "You are a lump of jelly.";
+        break;
+    case TRAN_PORCUPINE:
+        inf->light_text = "Porc";
+        inf->short_text = "porcupine-form";
+        inf->long_text  = "You are a porcupine.";
+        break;
+    case TRAN_WISP:
+        inf->light_text = "Wisp";
+        inf->short_text = "wisp-form";
+        inf->long_text  = "You are an insubstantial wisp.";
         break;
     case TRAN_NONE:
         break;

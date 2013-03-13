@@ -608,7 +608,8 @@ bool melee_attack::handle_phase_damaged()
     if (defender->can_bleed()
         && !defender->is_summoned()
         && !defender->submerged()
-        && in_bounds(defender->pos()))
+        && in_bounds(defender->pos())
+        && !simu)
     {
         int blood = modify_blood_amount(damage_done, attacker->damage_type());
         if (blood > defender->stat_hp())
@@ -766,7 +767,7 @@ bool melee_attack::handle_phase_killed()
     return true;
 }
 
-bool melee_attack::handle_phase_end()
+bool melee_attack::handle_phase_aux()
 {
     if (attacker->is_player())
     {
@@ -781,6 +782,11 @@ bool melee_attack::handle_phase_end()
         print_wounds(defender->as_monster());
     }
 
+    return true;
+}
+
+bool melee_attack::handle_phase_end()
+{
     if (!cleave_targets.empty())
     {
         attack_cleave_targets(attacker, cleave_targets, attack_number,
@@ -817,7 +823,6 @@ bool melee_attack::attack()
     if (attacker != defender && attacker->self_destructs())
         return (did_hit = perceived_attack = true);
 
-
     if (can_cleave && !cleaving)
         cleave_setup();
 
@@ -853,7 +858,7 @@ bool melee_attack::attack()
         {
             simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
             dec_penance(GOD_ELYVILON, 1);
-
+            handle_phase_end();
             return false;
         }
         // Check for stab (and set stab_attempt and stab_bonus)
@@ -885,6 +890,7 @@ bool melee_attack::attack()
             if (attacker != defender && attack_warded_off())
             {
                 perceived_attack = true;
+                handle_phase_end();
                 return false;
             }
 
@@ -893,7 +899,10 @@ bool melee_attack::attack()
             attacker_sustain_passive_damage();
 
             if (!cont)
+            {
+                handle_phase_end();
                 return false;
+            }
         }
         else
             handle_phase_dodged();
@@ -969,6 +978,8 @@ bool melee_attack::attack()
     if (!defender->alive())
         handle_phase_killed();
 
+    handle_phase_aux();
+
     handle_phase_end();
 
     enable_attack_conducts(conducts);
@@ -976,7 +987,7 @@ bool melee_attack::attack()
     return attack_occurred;
 }
 
-/* Initializes the noise_factor
+/* Initialises the noise_factor
  *
  * For both players and monsters, separately sets the noise_factor for weapon
  * attacks based on damage type or attack_type/attack_flavour respectively.
@@ -988,8 +999,6 @@ void melee_attack::adjust_noise()
 {
     if (attacker->is_player() && weapon != NULL)
     {
-        hands = hands_reqd(*weapon, attacker->body_size());
-
         switch (single_damage_type(*weapon))
         {
         case DAM_BLUDGEON:
@@ -1175,8 +1184,8 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         {
             aux_verb = P_("verb", "claw");
 
-            // Max talon damage: 8.
-            aux_damage += player_mutation_level(MUT_TALONS);
+            // Max talon damage: 9.
+            aux_damage += 1 + player_mutation_level(MUT_TALONS);
         }
         else if (player_mutation_level(MUT_TENTACLE_SPIKE))
         {
@@ -1854,7 +1863,7 @@ void melee_attack::set_attack_verb()
     // has a non-weapon in hand. - bwr
     // Exception: vampire bats only bite to allow for drawing blood.
     if (damage_done < HIT_WEAK
-        && (you.species != SP_VAMPIRE || !player_in_bat_form())
+        && (you.species != SP_VAMPIRE || you.form != TRAN_BAT)
         && you.species != SP_FELID)
     {
         if (weap_type != WPN_UNKNOWN)
@@ -1970,6 +1979,7 @@ void melee_attack::set_attack_verb()
         case TRAN_SPIDER:
         case TRAN_BAT:
         case TRAN_PIG:
+        case TRAN_PORCUPINE:
             if (damage_done < HIT_WEAK)
                 attack_verb = P_("verb", "hit");
             else if (damage_done < HIT_STRONG)
@@ -2015,12 +2025,23 @@ void melee_attack::set_attack_verb()
             }
             // or fall-through
         case TRAN_ICE_BEAST:
+        case TRAN_JELLY: // ?
             if (damage_done < HIT_WEAK)
                 attack_verb = P_("verb", "hit");
             else if (damage_done < HIT_MED)
                 attack_verb = P_("verb", "punch");
             else
                 attack_verb = P_("verb", "pummel");
+            break;
+        case TRAN_TREE:
+            if (damage_done < HIT_WEAK)
+                attack_verb = "hit";
+            else if (damage_done < HIT_MED)
+                attack_verb = "smack";
+            else if (damage_done < HIT_STRONG)
+                attack_verb = "pummel";
+            else
+                attack_verb = "thrash";
             break;
         case TRAN_DRAGON:
             if (damage_done < HIT_WEAK)
@@ -2031,6 +2052,15 @@ void melee_attack::set_attack_verb()
                 attack_verb = P_("verb", "bite");
             else
                 attack_verb = coinflip() ? P_("verb", "maul") : P_("verb", "trample");
+            break;
+        case TRAN_WISP:
+            if (damage_done < HIT_WEAK)
+                attack_verb = "touch";
+            else if (damage_done < HIT_MED)
+                attack_verb = "hit";
+            else
+                attack_verb = "engulf";
+            break;
             break;
         case TRAN_NONE:
         case TRAN_APPENDAGE:
@@ -3417,9 +3447,38 @@ void melee_attack::attacker_sustain_passive_damage()
     if (defender->type == MONS_PROGRAM_BUG)
         return;
 
-    // FIXME: monsters should suffer from attacking jellies
-    if (attacker->is_player() && mons_class_flag(defender->type, M_ACID_SPLASH))
-        weapon_acid(5);
+    if (mons_class_flag(defender->type, M_ACID_SPLASH)
+        || defender->is_player() && you.form == TRAN_JELLY)
+    {
+        int rA = attacker->res_acid();
+        if (rA < 3)
+        {
+            int acid_strength = resist_adjust_damage(attacker, BEAM_ACID, rA, 5);
+            item_def *weap = weapon;
+
+            if (!weap)
+                weap = attacker->slot_item(EQ_GLOVES);
+
+            if (weap)
+            {
+                if (x_chance_in_y(acid_strength + 1, 20))
+                    corrode_item(*weap, attacker);
+            }
+            else if (attacker->is_player())
+            {
+                mprf("Your %s burn!", you.hand_name(true).c_str());
+                ouch(roll_dice(1, acid_strength), defender->mindex(),
+                     KILLED_BY_ACID);
+            }
+            else
+            {
+                simple_monster_message(attacker->as_monster(),
+                                       " is burned by acid!");
+                attacker->hurt(defender, roll_dice(1, acid_strength),
+                    BEAM_ACID, false);
+            }
+        }
+    }
 }
 
 int melee_attack::staff_damage(skill_type skill)
@@ -3695,28 +3754,24 @@ int melee_attack::calc_to_hit(bool random)
             switch (you.form)
             {
             case TRAN_SPIDER:
+            case TRAN_ICE_BEAST:
+            case TRAN_DRAGON:
+            case TRAN_LICH:
+            case TRAN_TREE:
+            case TRAN_WISP:
                 mhit += maybe_random2(10, random);
                 break;
             case TRAN_BAT:
-                mhit += maybe_random2(12, random);
-                break;
-            case TRAN_ICE_BEAST:
-                mhit += maybe_random2(10, random);
-                break;
             case TRAN_BLADE_HANDS:
                 mhit += maybe_random2(12, random);
                 break;
             case TRAN_STATUE:
                 mhit += maybe_random2(9, random);
                 break;
-            case TRAN_DRAGON:
-                mhit += maybe_random2(10, random);
-                break;
-            case TRAN_LICH:
-                mhit += maybe_random2(10, random);
-                break;
+            case TRAN_PORCUPINE:
             case TRAN_PIG:
             case TRAN_APPENDAGE:
+            case TRAN_JELLY:
             case TRAN_NONE:
                 break;
             }
@@ -3752,6 +3807,9 @@ int melee_attack::calc_to_hit(bool random)
 
     if (attacker->confused())
         mhit -= 5;
+
+    if (weapon && is_unrandom_artefact(*weapon) && weapon->special == UNRAND_WOE)
+        return AUTOMATIC_HIT;
 
     // If no defender, we're calculating to-hit for debug-display
     // purposes, so don't drop down to defender code below
@@ -3814,14 +3872,9 @@ int melee_attack::calc_attack_delay(bool random, bool scaled)
         random_var shield_penalty = constant(0);
         if (attacker_shield_penalty)
         {
-            if (weapon && hands == HANDS_HALF)
-                shield_penalty = div_rand_round(rv::roll_dice(1, attacker_shield_penalty), 20);
-            else
-            {
-                shield_penalty = div_rand_round(rv::min(rv::roll_dice(1, attacker_shield_penalty),
-                                                        rv::roll_dice(1, attacker_shield_penalty)),
-                                                20);
-            }
+            shield_penalty = div_rand_round(rv::min(rv::roll_dice(1, attacker_shield_penalty),
+                                                    rv::roll_dice(1, attacker_shield_penalty)),
+                                            20);
         }
         // Give unarmed shield-users a slight penalty always.
         if (!weapon && player_wearing_slot(EQ_SHIELD))
@@ -3968,8 +4021,8 @@ random_var melee_attack::player_unarmed_speed()
     if (you.burden_state == BS_UNENCUMBERED)
         unarmed_delay -= div_rand_round(constant(you.skill(SK_UNARMED_COMBAT, 10)), 54);
     // Bats are faster (for what good it does them).
-    if (player_in_bat_form())
-        unarmed_delay = div_rand_round(constant(3)*unarmed_delay, 5);
+    if (you.form == TRAN_BAT)
+        unarmed_delay = div_rand_round(unarmed_delay * constant(3), 5);
     return unarmed_delay;
 }
 
@@ -4681,7 +4734,8 @@ void melee_attack::do_spines()
     {
         const item_def *body = you.slot_item(EQ_BODY_ARMOUR, false);
         const int evp = body ? -property(*body, PARM_EVASION) : 0;
-        const int mut = player_mutation_level(MUT_SPINY);
+        const int mut = (you.form == TRAN_PORCUPINE) ? 3
+                        : player_mutation_level(MUT_SPINY);
 
         if (mut && attacker->alive() && one_chance_in(evp + 1))
         {
@@ -5085,14 +5139,11 @@ int melee_attack::calc_your_to_hit_unarmed(int uattack, bool vampiric)
 // weighted average of strength and dex, between (str+dex)/2 and dex
 int melee_attack::calc_stat_to_hit_base()
 {
-    // towards_str_avg is a variable, whose sign points towards strength,
-    // and the magnitude is half the difference (thus, when added directly
-    // to you.dex() it gives the average of the two.
-    const signed int towards_str_avg = (you.strength() - you.dex()) / 2;
+    const int weight = weapon ? weapon_str_weight(*weapon) : 4;
 
     // dex is modified by strength towards the average, by the
-    // weighted amount weapon_str_weight() / 10.
-    return (you.dex() + towards_str_avg * player_weapon_str_weight() / 10);
+    // weighted amount weapon_str_weight() / 20.
+    return you.dex() + (you.strength() - you.dex()) * weight / 20;
 }
 
 int melee_attack::test_hit(int to_land, int ev, bool randomise_ev)
@@ -5160,6 +5211,7 @@ int melee_attack::calc_base_unarmed_damage()
             damage = (you.species == SP_VAMPIRE ? 2 : 1);
             break;
         case TRAN_ICE_BEAST:
+        case TRAN_TREE:
             damage = 12;
             break;
         case TRAN_BLADE_HANDS:
@@ -5172,9 +5224,12 @@ int melee_attack::calc_base_unarmed_damage()
             damage = 12 + div_rand_round(you.strength() * 2, 3);
             break;
         case TRAN_LICH:
+        case TRAN_WISP:
             damage = 5;
             break;
         case TRAN_PIG:
+        case TRAN_PORCUPINE:
+        case TRAN_JELLY:
             break;
         case TRAN_NONE:
         case TRAN_APPENDAGE:
@@ -5188,7 +5243,7 @@ int melee_attack::calc_base_unarmed_damage()
             apply_bleeding = true;
         }
 
-        if (player_in_bat_form())
+        if (you.form == TRAN_BAT || you.form == TRAN_PORCUPINE)
         {
             // Bats really don't do a lot of damage.
             damage += you.skill_rdiv(SK_UNARMED_COMBAT, 1, 5);
@@ -5303,14 +5358,6 @@ int melee_attack::calc_damage()
             !weapon ? calc_base_unarmed_damage()
                     : calc_base_weapon_damage();
 
-        // [0.6 AC/EV overhaul] Shields don't go well with hand-and-half weapons.
-        if (weapon && hands == HANDS_HALF)
-        {
-            potential_damage =
-                max(1,
-                    potential_damage - div_rand_round(roll_dice(1, attacker_shield_penalty), 20));
-        }
-
         potential_damage = player_stat_modify_damage(potential_damage);
 
         damage_done =
@@ -5376,7 +5423,7 @@ bool melee_attack::_player_vampire_draws_blood(const monster* mon, const int dam
     const corpse_effect_type chunk_type = mons_corpse_effect(mon->type);
 
     // Now print message, need biting unless already done (never for bat form!)
-    if (needs_bite_msg && !player_in_bat_form())
+    if (needs_bite_msg && you.form != TRAN_BAT)
     {
         mprf(gettext("You bite %s, and draw %s blood!"),
              mon->name(DESC_THE, true).c_str(),
@@ -5398,7 +5445,7 @@ bool melee_attack::_player_vampire_draws_blood(const monster* mon, const int dam
             heal = you.experience_level;
 
         // Decrease healing when done in bat form.
-        if (player_in_bat_form())
+        if (you.form == TRAN_BAT)
             heal /= 2;
 
         if (heal > 0 && !you.duration[DUR_DEATHS_DOOR])
@@ -5421,7 +5468,7 @@ bool melee_attack::_player_vampire_draws_blood(const monster* mon, const int dam
         }
 
         // Bats get rather less nutrition out of it.
-        if (player_in_bat_form())
+        if (you.form == TRAN_BAT)
             food_value /= 2;
 
         food_value /= reduction;
@@ -5437,8 +5484,8 @@ bool melee_attack::_player_vampire_draws_blood(const monster* mon, const int dam
 // weighted average of strength and dex, between str and (str+dex)/2
 int melee_attack::calc_stat_to_dam_base()
 {
-    const signed int towards_dex_avg = (you.dex() - you.strength()) / 2;
-    return (you.strength() + towards_dex_avg * player_weapon_dex_weight() / 10);
+    const int weight = weapon ? 10 - weapon_str_weight(*weapon) : 6;
+    return you.strength() + (you.dex() - you.strength()) * weight / 20;
 }
 
 void melee_attack::stab_message()

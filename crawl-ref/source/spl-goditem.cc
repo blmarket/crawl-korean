@@ -26,6 +26,7 @@
 #include "mapmark.h"
 #include "message.h"
 #include "misc.h"
+#include "mon-abil.h"
 #include "mon-behv.h"
 #include "mon-stuff.h"
 #include "mon-util.h"
@@ -325,9 +326,11 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
 
         int pgain = 0;
         if (!is_holy && !is_summoned && you.piety < MAX_PIETY)
+        {
             pgain = random2(mons->max_hit_points / (2 + you.piety / 20));
-        if (!pgain) // Always give a 50% chance of gaining a little piety.
-            pgain = coinflip();
+            if (!pgain) // Always give a 50% chance of gaining a little piety.
+                pgain = coinflip();
+        }
 
         // The feedback no longer tells you if you gained any piety this time,
         // it tells you merely the general rate.
@@ -396,7 +399,7 @@ void antimagic()
         DUR_CONDENSATION_SHIELD, DUR_STONESKIN, DUR_RESISTANCE,
         DUR_SLAYING, DUR_STEALTH,
         DUR_MAGIC_SHIELD, DUR_PETRIFIED, DUR_LIQUEFYING, DUR_DARKNESS,
-        DUR_SHROUD_OF_GOLUBRIA, DUR_DISJUNCTION
+        DUR_SHROUD_OF_GOLUBRIA, DUR_DISJUNCTION, DUR_SENTINEL_MARK
     };
 
     bool need_msg = false;
@@ -797,39 +800,50 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
         bool success = true;
         bool none_vis = true;
 
+        vector<coord_def> veto_spots(8);
+        for (adjacent_iterator ai(where); ai; ++ai)
+            veto_spots.push_back(*ai);
+
+        // Check that any adjacent creatures can be pushed out of the way.
         for (adjacent_iterator ai(where); ai; ++ai)
         {
             // The tile is occupied.
-            if (actor *fatass = actor_at(*ai))
+            if (actor *act = actor_at(*ai))
             {
-                success = false;
-                if (you.can_see(fatass))
-                    none_vis = false;
-                break;
+                // Can't push ourselves.
+                coord_def newpos;
+                if (act->is_player()
+                    || !get_push_space(*ai, newpos, act, true, &veto_spots))
+                {
+                    success = false;
+                    if (you.can_see(act))
+                        none_vis = false;
+                    break;
+                }
+                else
+                    veto_spots.push_back(newpos);
             }
 
             // Make sure we have a legitimate tile.
             proceed = false;
             for (unsigned int i = 0; i < ARRAYSZ(safe_tiles) && !proceed; ++i)
-                if (grd(*ai) == safe_tiles[i] || feat_is_trap(grd(*ai), true))
-                    proceed = true;
-
-            if (!proceed && feat_is_reachable_past(grd(*ai)))
             {
-                success = false;
-                none_vis = false;
-                break;
+                if (feat_is_solid(grd(*ai)) && !feat_is_opaque(grd(*ai)))
+                {
+                    success = false;
+                    none_vis = false;
+                    break;
+                }
             }
         }
 
         if (!success)
         {
             mprf(none_vis ? "You briefly glimpse something next to %s."
-                          : "You need more space to imprison %s.",
-                 targname.c_str());
+                        : "You need more space to imprison %s.",
+                targname.c_str());
             return false;
         }
-
     }
 
     for (adjacent_iterator ai(where); ai; ++ai)
@@ -839,20 +853,36 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
             continue;
 
         // The tile is occupied.
-        if (actor_at(*ai))
-            continue;
+        if (zin)
+        {
+            if (actor* act = actor_at(*ai))
+            {
+                coord_def newpos;
+                get_push_space(*ai, newpos, act, true);
+                act->move_to_pos(newpos);
+            }
+        }
 
         // Make sure we have a legitimate tile.
         proceed = false;
-        for (unsigned int i = 0; i < ARRAYSZ(safe_tiles) && !proceed; ++i)
-            if (grd(*ai) == safe_tiles[i] || feat_is_trap(grd(*ai), true))
-                proceed = true;
+        if (!zin)
+        {
+            for (unsigned int i = 0; i < ARRAYSZ(safe_tiles) && !proceed; ++i)
+                if (grd(*ai) == safe_tiles[i] || feat_is_trap(grd(*ai), true))
+                    proceed = true;
+        }
+        else if (!feat_is_solid(grd(*ai)))
+            proceed = true;
 
         if (proceed)
         {
-            // All items are moved inside.
+            // All items are moved aside.
             if (igrd(*ai) != NON_ITEM)
-                move_items(*ai, where);
+            {
+                coord_def newpos;
+                get_push_space(*ai, newpos, NULL, true);
+                move_items(*ai, newpos);
+            }
 
             // All clouds are destroyed.
             if (env.cgrid(*ai) != EMPTY_CLOUD)
@@ -863,17 +893,21 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
                 ptrap->destroy();
 
             // Actually place the wall.
-
             if (zin)
             {
-                // Make the walls silver.
-                grd(*ai) = DNGN_METAL_WALL;
-                env.grid_colours(*ai) = LIGHTGREY;
-
                 map_wiz_props_marker *marker = new map_wiz_props_marker(*ai);
                 marker->set_property("feature_description", "a gleaming silver wall");
                 marker->set_property("tomb", "Zin");
+
+                // Preserve the old feature, unless it's bare floor (or trap)
+                if (grd(*ai) != DNGN_FLOOR & !feat_is_trap(grd(*ai), true))
+                    marker->set_property("old_feat", dungeon_feature_name(grd(*ai)));
+
                 env.markers.add(marker);
+
+                // Make the walls silver.
+                grd(*ai) = DNGN_METAL_WALL;
+                env.grid_colours(*ai) = LIGHTGREY;
             }
             // Tomb card
             else

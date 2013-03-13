@@ -23,6 +23,16 @@ enum tag_minor_version
     TAG_MINOR_DEEP_ABYSS,          // Multi-level abyss
     TAG_MINOR_COORD_SERIALIZER,    // Serialize coord_def as int
     TAG_MINOR_REMOVE_ABYSS_SEED,   // Remove the abyss seed.
+    TAG_MINOR_REIFY_SUBVAULTS,     // Save subvaults with level for attribution
+    TAG_MINOR_VEHUMET_SPELL_GIFT,  // Vehumet gift spells instead of books
+    TAG_MINOR_0_11 = 17,           // 0.11 final saves
+    TAG_MINOR_0_12,                // (no change)
+    TAG_MINOR_BATTLESPHERE_MID,    // Monster battlesphere (mid of creator)
+    TAG_MINOR_MALMUTATE,           // Convert Polymorph to Malmutate on old monsters
+    TAG_MINOR_VEHUMET_MULTI_GIFTS, // Vehumet can offer multiple spells at once
+    TAG_MINOR_ADD_ABYSS_SEED,      // Reinstate abyss seed. Mistakes were made.
+    TAG_MINOR_COMPANION_LIST,      // Added companion list
+    TAG_MINOR_INCREMENTAL_RECALL,  // Made recall incremental
     NUM_TAG_MINORS,
     TAG_MINOR_VERSION = NUM_TAG_MINORS - 1
 };

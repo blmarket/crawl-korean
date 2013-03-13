@@ -133,7 +133,6 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
 
         client.show_dialog("#menu");
 
-        update_visible_indices();
         if (menu.flags & enums.menu_flag.START_AT_END)
         {
             scroll_bottom_to_item(menu.items.length - 1, true);
@@ -141,9 +140,9 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
         else if (menu.jump_to)
         {
             scroll_to_item(menu.jump_to, true);
+        } else {
+            scroll_to_item(0, true);
         }
-        // Hide -more- if at the bottom
-        menu_scroll_handler();
     }
 
     function prepare_item_range(start, end, no_request, container)
@@ -305,9 +304,9 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
         contents.scrollTop(item.elem.offset().top - baseline);
 
         menu.anchor_last = false;
-        menu.first_visible = index;
         if (!was_server_initiated)
             menu.server_scroll = false;
+        menu_scroll_handler();
     }
 
     function scroll_bottom_to_item(item_or_index, was_server_initiated)
@@ -327,9 +326,9 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
                            - baseline - contents.innerHeight());
 
         menu.anchor_last = true;
-        menu.last_visible = index;
         if (!was_server_initiated)
             menu.server_scroll = false;
+        menu_scroll_handler();
     }
 
     function update_visible_indices()
@@ -531,7 +530,6 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
             scroll_bottom_to_item(menu.last_visible, true);
         else
             scroll_to_item(menu.first_visible, true);
-        menu_scroll_handler();
     }
 
     function menu_scroll_handler()
@@ -554,10 +552,13 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
 
     function menu_keydown_handler(event)
     {
-        if (event.altKey || event.shiftkey)
-            return;
-
         if (!menu || menu.type === "crt") return;
+
+        if (event.altKey || event.shiftkey) {
+            if (update_server_scroll_timeout)
+                update_server_scroll();
+            return;
+        }
 
         if (event.ctrlKey)
         {
@@ -570,6 +571,8 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
                 event.preventDefault();
                 return false;
             }
+            if (update_server_scroll_timeout)
+                update_server_scroll();
             return;
         }
 
@@ -604,6 +607,9 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
             event.preventDefault();
             return false;
         }
+
+        if (update_server_scroll_timeout)
+            update_server_scroll();
     }
 
     function menu_keypress_handler(event)
@@ -615,8 +621,10 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
         switch (chr)
         {
         case "-":
-            if (menu.tag == "inventory")
+            if (menu.tag == "inventory") {
+                update_server_scroll();
                 return true; // Don't capture - for wield prompts
+            }
 
         case "<":
         case ";":
@@ -631,10 +639,16 @@ function ($, comm, client, enums, dungeon_renderer, cr, util) {
             event.preventDefault();
             return false;
         }
+
+        if (update_server_scroll_timeout)
+            update_server_scroll();
     }
 
     function item_click_handler(event)
     {
+        if (update_server_scroll_timeout)
+            update_server_scroll();
+
         var item = $(this).data("item");
         if (!item) return;
         if (item.hotkeys && item.hotkeys.length)

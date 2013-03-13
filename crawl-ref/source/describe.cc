@@ -232,7 +232,7 @@ static vector<string> _randart_propnames(const item_def& item,
         { "rF",     ARTP_FIRE,                  1 },
         { "rC",     ARTP_COLD,                  1 },
         { "rN",     ARTP_NEGATIVE_ENERGY,       1 },
-        { "MR",     ARTP_MAGIC,                 2 },
+        { "MR",     ARTP_MAGIC,                 2 }, // handled specially
 
         // Quantitative attributes
         { "HP",     ARTP_HP,                    0 },
@@ -348,6 +348,9 @@ static vector<string> _randart_propnames(const item_def& item,
                     else if (val < 0)
                         work << "-";
                 }
+                // Robe of Folly
+                else if (propanns[i].prop == ARTP_MAGIC && val < 0)
+                    work << "-";
                 break;
             }
             propnames.push_back(work.str());
@@ -417,8 +420,8 @@ static string _randart_descrip(const item_def &item)
         { ARTP_COLD, M_("cold"), true},
         { ARTP_ELECTRICITY, _("It insulates you from electricity."), false},
         { ARTP_POISON, _("It protects you from poison."), false},
-        { ARTP_NEGATIVE_ENERGY, M_("negative energy"), true},
-        { ARTP_MAGIC, _("It increases your resistance to enchantments."), false},
+        { ARTP_NEGATIVE_ENERGY, _("negative energy"), true},
+        { ARTP_MAGIC, _("It affects your resistance to hostile enchantments."), false},
         { ARTP_HP, _("It affects your health (%d)."), false},
         { ARTP_MAGICAL_POWER, _("It affects your mana capacity (%d)."), false},
         { ARTP_EYESIGHT, _("It enhances your eyesight."), false},
@@ -569,37 +572,37 @@ static string _describe_demon(const string& name, flight_type fly)
     seed_rng(seed);
 
     const char* body_descs[] = {
-        N_(" huge, barrel-shaped "),
-        N_(" wispy, insubstantial "),
-        N_(" spindly "),
-        N_(" skeletal "),
-        N_(" horribly deformed "),
-        N_(" spiny "),
-        N_(" waif-like "),
-        N_(" scaly "),
-        N_(" sickeningly deformed "),
-        N_(" bruised and bleeding "),
-        N_(" sickly "),
-        N_(" mass of writhing tentacles for a "),
-        N_(" mass of ropey tendrils for a "),
-        N_(" tree trunk-like "),
-        N_(" hairy "),
-        N_(" furry "),
-        N_(" fuzzy "),
-        N_("n obese "),
-        N_(" fat "),
-        N_(" slimy "),
-        N_(" wrinkled "),
-        N_(" metallic "),
-        N_(" glassy "),
-        N_(" crystalline "),
-        N_(" muscular "),
-        N_("n icky "),
-        N_(" swollen "),
-        N_(" lumpy "),
-        N_("n armoured "),
-        N_(" carapaced "),
-        N_(" slender "),
+        N_("huge, barrel-shaped "),
+        N_("wispy, insubstantial "),
+        N_("spindly "),
+        N_("skeletal "),
+        N_("horribly deformed "),
+        N_("spiny "),
+        N_("waif-like "),
+        N_("scaly "),
+        N_("sickeningly deformed "),
+        N_("bruised and bleeding "),
+        N_("sickly "),
+        N_("mass of writhing tentacles for a "),
+        N_("mass of ropey tendrils for a "),
+        N_("tree trunk-like "),
+        N_("hairy "),
+        N_("furry "),
+        N_("fuzzy "),
+        N_("obese "),
+        N_("fat "),
+        N_("slimy "),
+        N_("wrinkled "),
+        N_("metallic "),
+        N_("glassy "),
+        N_("crystalline "),
+        N_("muscular "),
+        N_("icky "),
+        N_("swollen "),
+        N_("lumpy "),
+        N_("armoured "),
+        N_("carapaced "),
+        N_("slender "),
     };
 
     const char* wing_names[] = {
@@ -616,7 +619,7 @@ static string _describe_demon(const string& name, flight_type fly)
     };
 
     const char* lev_names[] = {
-        N_(" which hovers in mid-air"),
+        N_(" who hovers in mid-air"),
         N_(" with sacs of gas hanging from its back"),
     };
 
@@ -645,7 +648,7 @@ static string _describe_demon(const string& name, flight_type fly)
         N_(" and the head of a jackal"),
         N_(" and the head of a baboon"),
         N_(" and a huge, slobbery tongue"),
-        N_(" which is covered in oozing lacerations"),
+        N_(" who is covered in oozing lacerations"),
         N_(" and the head of a frog"),
         N_(" and the head of a yak"),
         N_(" and eyes out on stalks"),
@@ -781,11 +784,6 @@ static string _handedness_string(const item_def &item)
     case HANDS_ONE:
         description += "It is a one handed weapon.";
         break;
-    case HANDS_HALF:
-        description += "It can be used with one hand, or more "
-                       "effectively with two (i.e. when not using a "
-                       "shield).";
-        break;
     case HANDS_TWO:
         description += "It is a two handed weapon.";
         break;
@@ -819,8 +817,31 @@ static string _describe_weapon(const item_def &item, bool verbose)
     if (!is_artefact(item) && !verbose)
         spec_ench = SPWPN_NORMAL;
 
-    if (verbose && weapon_skill(item) == SK_POLEARMS)
-        description += "\n\nIt can be evoked to extend its reach.";
+    if (verbose)
+    {
+        switch (weapon_skill(item))
+        {
+        case SK_POLEARMS:
+            description += "\n\nIt can be evoked to extend its reach.";
+            break;
+        case SK_AXES:
+            description += "\n\nIt can hit multiple enemies in an arc"
+                           " around the wielder.";
+            break;
+        case SK_SHORT_BLADES:
+            // TODO: should we mention stabbing for "ok" stabbing weapons?
+            // (long blades, piercing polearms, and clubs)
+            {
+                string adj = (item.sub_type == WPN_DAGGER) ? "extremely"
+                                                           : "particularly";
+                description += "\n\nIt is " + adj + " good for stabbing"
+                               " unaware enemies.";
+            }
+            break;
+        default:
+            break;
+        }
+    }
 
     // special weapon descrip
     if (spec_ench != SPWPN_NORMAL && item_type_known(item))
@@ -2897,7 +2918,9 @@ static int _get_spell_description(const spell_type spell,
     if (you_cannot_memorise(spell, undead))
         description += "\n" + desc_cannot_memorise_reason(undead) + "\n";
 
-    if (item && item->base_type == OBJ_BOOKS && in_inventory(*item))
+    if (item && item->base_type == OBJ_BOOKS && in_inventory(*item)
+        && you.form != TRAN_WISP)
+    {
         if (you.has_spell(spell))
         {
             description += _("\n(F)orget this spell by destroying the book.\n");
@@ -2911,6 +2934,7 @@ static int _get_spell_description(const spell_type spell,
             description += _("\n(M)emorise this spell.\n");
             return BOOK_MEM;
         }
+    }
 
     return BOOK_NEITHER;
 }
@@ -2947,7 +2971,7 @@ void describe_spell(spell_type spelled, const item_def* item)
     if (mem_or_forget == BOOK_MEM && toupper(ch) == 'M')
     {
         redraw_screen();
-        if (!learn_spell(spelled, item->sub_type) || !you.turn_is_over)
+        if (!learn_spell(spelled) || !you.turn_is_over)
             more();
         redraw_screen();
     }
@@ -3472,6 +3496,10 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
         return; // not a real monster
     monster& mons = *monster_at(mi.pos);
 
+    if (mons.has_originating_map())
+        inf.body << make_stringf("\nPlaced by map: %s",
+                                 mons.originating_map().c_str());
+
     inf.body << "\nMonster health: "
              << mons.hit_points << "/" << mons.max_hit_points << "\n";
 
@@ -3607,9 +3635,9 @@ static const char* xl_rank_names[] = {
 
 static string _xl_rank_name(const int xl_rank)
 {
-    const char* rank = xl_rank_names[xl_rank];
+    const string rank = xl_rank_names[xl_rank];
 
-    return make_stringf(pgettext("xlrank", "a%s %s"), is_vowel(rank[0]) ? "n" : "", _(rank));
+    return _(rank.c_str()); // article_a(rank, false);
 }
 
 string short_ghost_description(const monster *mon, bool abbrev)
@@ -3787,12 +3815,12 @@ static string _describe_favour(god_type which_god)
         return uppercase_first(describe_xom_favour());
 
     const string godname = god_name(which_god);
-    return (you.piety > 130) ? make_stringf(gettext("A prized avatar of %s."), godname.c_str()) :
-           (you.piety > 100) ? make_stringf(gettext("A shining star in the eyes of %s."), godname.c_str()) :
-           (you.piety >  70) ? make_stringf(gettext("A rising star in the eyes of %s."), godname.c_str()) :
-           (you.piety >  40) ? make_stringf(gettext("%s is most pleased with you."), godname.c_str()) :
-           (you.piety >  20) ? make_stringf(gettext("%s has noted your presence."), godname.c_str()) :
-           (you.piety >   5) ? make_stringf(gettext("%s is noncommittal."), godname.c_str())
+    return (you.piety > 130) ? make_stringf(gettext("A prized avatar of %s."), _(godname.c_str())) :
+           (you.piety > 100) ? make_stringf(gettext("A shining star in the eyes of %s."), _(godname.c_str())) :
+           (you.piety >  70) ? make_stringf(gettext("A rising star in the eyes of %s."), _(godname.c_str())) :
+           (you.piety >  40) ? make_stringf(gettext("%s is most pleased with you."), _(godname.c_str())) :
+           (you.piety >  20) ? make_stringf(gettext("%s is pleased with you."), _(godname.c_str())) :
+           (you.piety >   5) ? make_stringf(gettext("%s is noncommittal."), _(godname.c_str()))
                              : _("You are beneath notice.");
 }
 
@@ -3881,14 +3909,6 @@ static string _religion_help(god_type god)
                   "Inscribe items with !p, !* or =p to avoid sacrificing "
                   "them accidentally. See the detailed description to "
                   "sacrifice only some kinds of items.");
-        break;
-
-    case GOD_VEHUMET:
-        if (you.piety >= piety_breakpoint(1))
-        {
-            result += god_name(god) + gettext(" assists you in casting "
-                      "Conjurations and Summonings.");
-        }
         break;
 
     case GOD_FEDHAS:
@@ -4495,6 +4515,23 @@ void describe_god(god_type which_god, bool give_title)
                 _print_final_god_abil_desc(which_god,
                                            "You can provide lesser healing for others.",
                                            ABIL_ELYVILON_LESSER_HEALING_OTHERS);
+            }
+        }
+        else if (which_god == GOD_VEHUMET)
+        {
+            set<spell_type>::iterator it = you.vehumet_gifts.begin();
+            if (it != you.vehumet_gifts.end())
+            {
+                have_any = true;
+
+                string offer = spell_title(*it);
+                // If we have multiple offers, just summarise.
+                if (++it != you.vehumet_gifts.end())
+                    offer = "some of Vehumet's most lethal spells";
+
+                _print_final_god_abil_desc(which_god,
+                                           "You can memorise " + offer + ".",
+                                           ABIL_NON_ABILITY);
             }
         }
 

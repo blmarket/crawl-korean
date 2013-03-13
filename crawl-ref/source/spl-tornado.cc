@@ -105,8 +105,11 @@ static void _set_tornado_durations(int powc)
 {
     int dur = 60;
     you.duration[DUR_TORNADO] = dur;
-    you.duration[DUR_FLIGHT] = max(dur, you.duration[DUR_FLIGHT]);
-    you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
+    if (you.form != TRAN_TREE)
+    {
+        you.duration[DUR_FLIGHT] = max(dur, you.duration[DUR_FLIGHT]);
+        you.attribute[ATTR_FLIGHT_UNCANCELLABLE] = 1;
+    }
 }
 
 spret_type cast_tornado(int powc, bool fail)
@@ -134,9 +137,9 @@ spret_type cast_tornado(int powc, bool fail)
 
     fail_check();
 
-    mprf(gettext("A great vortex of raging winds %s."),
-         you.airborne() ? pgettext("cast_tornado", "appears around you")
-                        : pgettext("cast_tornado", "appears and lifts you up"));
+    mprf(_("A great vortex of raging winds %s."),
+         (you.airborne() || you.form == TRAN_TREE) ?
+         pgettext("cast_tornado","appears around you") : pgettext("cast_tornado","appears and lifts you up"));
 
     if (you.fishtail)
         merfolk_stop_swimming();
@@ -298,10 +301,7 @@ void tornado_damage(actor *caster, int dur)
             if (actor* victim = actor_at(*dam_i))
             {
                 if (victim->submerged())
-                {
-                    leda = true; // and with fish, too
                     continue;
-                }
                 if (victim->is_player() && monster_at(*dam_i))
                 {
                     // A far-fetched case: you're using Fedhas' passthrough
@@ -309,9 +309,10 @@ void tornado_damage(actor *caster, int dur)
                     // no free spots, and a monster tornado rotates you.
                     // Plants don't get uprooted, so the logic would be
                     // really complex.  Let's not go there.
-                    leda = true;
                     continue;
                 }
+                if (victim->is_player() && you.form == TRAN_TREE)
+                    continue;
 
                 leda = victim->liquefied_ground()
                        || victim->is_monster()

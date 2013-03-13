@@ -572,7 +572,7 @@ function ($, view_data, main, tileinfo_player, icons, dngn, enums, map_knowledge
                     if (cell.quad_glow)
                         this.draw_dngn(dngn.QUAD_GLOW, x, y);
                     if (cell.disjunct)
-                        this.draw_dngn(dngn.DISJUNCT, x, y);
+                        this.draw_dngn(dngn.DISJUNCT + cell.disjunct - 1, x, y);
 
                     // Apply the travel exclusion under the foreground if the cell is
                     // visible.  It will be applied later if the cell is unseen.
@@ -726,15 +726,40 @@ function ($, view_data, main, tileinfo_player, icons, dngn, enums, map_knowledge
                 this.draw_icon(icons.GLOWING, x, y, -status_shift, 0);
                 status_shift += 8;
             }
+            if (fg.HASTED)
+            {
+                this.draw_icon(icons.HASTED, x, y, -status_shift, 0);
+                status_shift += 6;
+            }
             if (fg.SLOWED)
             {
                 this.draw_icon(icons.SLOWED, x, y, -status_shift, 0);
+                status_shift += 6;
+            }
+            if (fg.MIGHT)
+            {
+                this.draw_icon(icons.MIGHT, x, y, -status_shift, 0);
                 status_shift += 6;
             }
             if (fg.PAIN_MIRROR)
             {
                 this.draw_icon(icons.PAIN_MIRROR, x, y, -status_shift, 0);
                 status_shift += 7;
+            }
+            if (fg.PETRIFYING)
+            {
+                this.draw_icon(icons.PETRIFYING, x, y, -status_shift, 0);
+                status_shift += 6;
+            }
+            if (fg.PETRIFIED)
+            {
+                this.draw_icon(icons.PETRIFIED, x, y, -status_shift, 0);
+                status_shift += 6;
+            }
+            if (fg.BLIND)
+            {
+                this.draw_icon(icons.BLIND, x, y, -status_shift, 0);
+                status_shift += 10;
             }
 
             if (fg.ANIM_WEP)

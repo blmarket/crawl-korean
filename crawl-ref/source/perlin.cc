@@ -1,6 +1,10 @@
 /*
  * This is a C++ port of version Stefan Gustavson's public domain
- * implementation of simplex noise (Version 2012-03-09).
+ * implementation of simplex noise (Version 2012-03-09), which can be
+ * found at <http://webstaff.itn.liu.se/~stegu/simplexnoise/>.
+ *
+ * (Simplex Noise is a new (2001) algorithm created by Ken Perlin to
+ * replace his classic "Perlin" noise algorithm.)
  *
  * It was ported by Brendan Hickey (brendan@bhickey.net) and released on
  * 2012-09-16.
@@ -31,7 +35,7 @@
 namespace perlin
 {
     // Inner class to speed upp gradient computations
-    // (array access is a lot slower than member access)
+    // ([in Java,] array access is a lot slower than member access)
     class Grad {
         public:
             const double x, y, z, w;
@@ -96,8 +100,11 @@ namespace perlin
     const double F4 = (sqrt(5.0)-1.0)/4.0;
     const double G4 = (5.0-sqrt(5.0))/20.0;
 
-    static int fastfloor(const double x) {
-        int xi = (int)x;
+    // Use uint64_t so that noise() can work sensibly for
+    // coordinates from the full range of uint32_t; otherwise scaling,
+    // signedness, and skew will give us considerably less than that.
+    static uint64_t fastfloor(const double x) {
+        uint64_t xi = (uint64_t) x;
         return x<xi ? xi-1 : xi;
     }
 
@@ -117,8 +124,8 @@ namespace perlin
         double n0, n1, n2; // Noise contributions from the three corners
         // Skew the input space to determine which simplex cell we're in
         double s = (xin+yin)*F2; // Hairy factor for 2D
-        int i = fastfloor(xin+s);
-        int j = fastfloor(yin+s);
+        uint64_t i = fastfloor(xin+s);
+        uint64_t j = fastfloor(yin+s);
         double t = (i+j)*G2;
         double X0 = i-t; // Unskew the cell origin back to (x,y) space
         double Y0 = j-t;
@@ -171,9 +178,9 @@ namespace perlin
         double n0, n1, n2, n3; // Noise contributions from the four corners
         // Skew the input space to determine which simplex cell we're in
         double s = (xin+yin+zin)*F3; // Very nice and simple skew factor for 3D
-        int i = fastfloor(xin+s);
-        int j = fastfloor(yin+s);
-        int k = fastfloor(zin+s);
+        uint64_t i = fastfloor(xin+s);
+        uint64_t j = fastfloor(yin+s);
+        uint64_t k = fastfloor(zin+s);
         double t = (i+j+k)*G3;
         double X0 = i-t; // Unskew the cell origin back to (x,y,z) space
         double Y0 = j-t;
@@ -254,10 +261,10 @@ namespace perlin
         double n0, n1, n2, n3, n4; // Noise contributions from the five corners
         // Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in
         double s = (x + y + z + w) * F4; // Factor for 4D skewing
-        int i = fastfloor(x + s);
-        int j = fastfloor(y + s);
-        int k = fastfloor(z + s);
-        int l = fastfloor(w + s);
+        uint64_t i = fastfloor(x + s);
+        uint64_t j = fastfloor(y + s);
+        uint64_t k = fastfloor(z + s);
+        uint64_t l = fastfloor(w + s);
         double t = (i + j + k + l) * G4; // Factor for 4D unskewing
         double X0 = i - t; // Unskew the cell origin back to (x,y,z,w) space
         double Y0 = j - t;
@@ -366,6 +373,8 @@ namespace perlin
         return 27.0 * (n0 + n1 + n2 + n3 + n4);
     }
 
+    // This is *not* in Stefan Gustavson's Java original
+    // FIXME: what does it do?
     double fBM(double x, double y, double z, uint32_t octaves) {
         if (octaves < 1)
             return 0.0;

@@ -695,8 +695,17 @@ void handle_delay()
             break;
 
         case DELAY_MEMORISE:
-            mpr(gettext("You start memorising the spell."), MSGCH_MULTITURN_ACTION);
+        {
+            spell_type spell = static_cast<spell_type>(delay.parm1);
+            if (vehumet_is_offering(spell))
+            {
+                string message = make_stringf(_(" grants you knowledge of %s."),
+                    spell_title(spell)); // 메모
+                simple_god_message(message.c_str());
+            }
+            mpr(_("You start memorising the spell."), MSGCH_MULTITURN_ACTION);
             break;
+        }
 
         case DELAY_PASSWALL:
             mpr(gettext("You begin to meditate on the wall."), MSGCH_MULTITURN_ACTION);
@@ -751,7 +760,7 @@ void handle_delay()
                  || mitm[ delay.parm2 ].base_type != OBJ_CORPSES  // noncorpse
                  || mitm[ delay.parm2 ].pos != you.pos()) )       // elsewhere
             || you.hunger_state == HS_ENGORGED
-            || you.hunger_state > HS_SATIATED && player_in_bat_form()
+            || you.hunger_state > HS_SATIATED && you.form == TRAN_BAT
             || (you.hunger_state >= HS_SATIATED
                && mitm[delay.parm2].defined()
                && is_poisonous(mitm[delay.parm2])) )
@@ -1083,9 +1092,13 @@ static void _finish_delay(const delay_queue_item &delay)
     }
 
     case DELAY_MEMORISE:
-        mpr(gettext("You finish memorising."));
-        add_spell_to_memory(static_cast<spell_type>(delay.parm1));
+    {
+        spell_type spell = static_cast<spell_type>(delay.parm1);
+        mpr(_("You finish memorising."));
+        add_spell_to_memory(spell);
+        vehumet_accept_gift(spell);
         break;
+    }
 
     case DELAY_RECITE:
     {

@@ -95,7 +95,10 @@ public:
   int burden;
   burden_state_type burden_state;
   FixedVector<spell_type, MAX_KNOWN_SPELLS> spells;
+  set<spell_type> old_vehumet_gifts;
+
   uint8_t spell_no;
+  set<spell_type> vehumet_gifts;
   game_direction_type char_direction;
   bool opened_zot;
   bool royal_jelly_dead;
@@ -288,6 +291,9 @@ public:
   // A stack -- back() is the first to go.
   vector<pair<uncancellable_type, int> > uncancel;
 
+  // A list of allies awaiting an active recall
+  vector<mid_t> recall_list;
+
 
   // -------------------
   // Non-saved UI state:
@@ -404,10 +410,10 @@ public:
 
     void reset_prev_move();
 
-    int stat(stat_type stat, bool nonneg=true) const;
-    int strength(bool nonneg=true) const;
-    int intel(bool nonneg=true) const;
-    int dex(bool nonneg=true) const;
+    int stat(stat_type stat, bool nonneg = true) const;
+    int strength(bool nonneg = true) const;
+    int intel(bool nonneg = true) const;
+    int dex(bool nonneg = true) const;
     int max_stat(stat_type stat) const;
     int max_strength() const;
     int max_intel() const;
@@ -423,7 +429,7 @@ public:
     bool invisible() const;
     bool misled() const;
     bool can_see_invisible() const;
-    bool can_see_invisible(bool unid) const;
+    bool can_see_invisible(bool unid, bool items = true) const;
     bool visible_to(const actor *looker) const;
     bool can_see(const actor* a) const;
     bool nightvision() const;
@@ -557,8 +563,10 @@ public:
     bool has_lifeforce() const;
     bool can_mutate() const;
     bool can_safely_mutate() const;
+    bool can_polymorph() const;
     bool can_bleed(bool allow_tran = true) const;
     bool mutate(const string &reason);
+    bool polymorph(int pow);
     void backlight();
     void banish(actor *agent, const string &who = "");
     void blink(bool allow_partial_control = true);
@@ -583,6 +591,7 @@ public:
     bool heal(int amount, bool max_too = false);
     bool drain_exp(actor *, bool quiet = false, int pow = 3);
     bool rot(actor *, int amount, int immediate = 0, bool quiet = false);
+    void sentinel_mark();
     int hurt(const actor *attacker, int amount,
              beam_type flavour = BEAM_MISSILE,
              bool cleanup_dead = true);
@@ -602,7 +611,7 @@ public:
     bool is_unbreathing() const;
     bool is_insubstantial() const;
     bool is_cloud_immune(cloud_type) const;
-    int res_acid() const;
+    int res_acid(bool calc_unid = true) const;
     int res_fire() const;
     int res_steam() const;
     int res_cold() const;
@@ -617,7 +626,7 @@ public:
     int res_torment() const;
     int res_wind() const;
     int res_petrify(bool temp = true) const;
-    int res_constrict() const { return 0; };
+    int res_constrict() const;
     int res_magic() const;
     bool no_tele(bool calc_unid = true, bool permit_id = true,
                  bool blink = false) const;
@@ -829,6 +838,7 @@ int player_res_acid(bool calc_unid = true, bool items = true);
 int player_acid_resist_factor();
 
 int player_res_torment(bool calc_unid = true, bool temp = true);
+int player_kiku_res_torment();
 
 int player_likes_chunks(bool permanently = false);
 bool player_likes_water(bool permanently = false);
@@ -890,7 +900,6 @@ void forget_map(bool rot = false);
 int get_exp_progress();
 void gain_exp(unsigned int exp_gained, unsigned int* actual_gain = NULL);
 
-bool player_in_bat_form();
 bool player_can_open_doors();
 
 void level_change(bool skip_attribute_increase = false);

@@ -1810,22 +1810,28 @@ static void _drop_tomb(const coord_def& pos, bool premature)
         }
 
         // Zin's Imprison.
-        if (grd(*ai) == DNGN_METAL_WALL &&
-            env.markers.property_at(*ai, MAT_ANY, "tomb") == "Zin")
+        if (grd(*ai) == DNGN_METAL_WALL
+            && env.markers.property_at(*ai, MAT_ANY, "tomb") == "Zin")
         {
             zin = true;
 
+            dungeon_feature_type old_feat = DNGN_FLOOR;
             vector<map_marker*> markers = env.markers.get_markers_at(*ai);
             for (int i = 0, size = markers.size(); i < size; ++i)
             {
                 map_marker *mark = markers[i];
                 if (mark->property("tomb") == "Zin")
+                {
+                    string old_feat_name = mark->property("old_feat");
+                    if (old_feat_name != "")
+                        old_feat = dungeon_feature_by_name(old_feat_name);
                     env.markers.remove(mark);
+                }
             }
 
             env.markers.clear_need_activate();
 
-            grd(*ai) = DNGN_FLOOR;
+            grd(*ai) = old_feat;
             env.grid_colours(*ai) = 0;
 
             set_terrain_changed(*ai);
@@ -1984,6 +1990,47 @@ void timeout_tombs(int duration)
             env.markers.remove(cmark);
         }
     }
+}
+
+void timeout_door_seals(int duration, bool force)
+{
+    if (!duration && !force)
+        return;
+
+    vector<map_marker*> markers = env.markers.get_all(MAT_DOOR_SEAL);
+
+    int num_faded_seen = 0;
+
+    for (int i = 0, size = markers.size(); i < size; ++i)
+    {
+        map_door_seal_marker *seal = dynamic_cast<map_door_seal_marker*>(markers[i]);
+
+        // If there is somehow no longer a sealed door at this location
+        // (for example, a monster opened it, or ate it, you blew it up)
+        // simply remove the marker silently
+        if (grd(seal->pos) != DNGN_SEALED_DOOR)
+        {
+            env.markers.remove(seal);
+            continue;
+        }
+
+        seal->duration -= duration;
+
+        monster* mon_src = monster_by_mid(seal->mon_num);
+        if (seal->duration <= 0 || !mon_src || !mon_src->alive())
+        {
+            grd(seal->pos) = seal->old_feature;
+            env.markers.remove(seal);
+            set_terrain_changed(seal->pos);
+            if (you.see_cell(seal->pos))
+                ++num_faded_seen;
+        }
+    }
+
+    if (num_faded_seen > 1)
+        mpr("The seals upon the doors fade away.");
+    else if (num_faded_seen > 0)
+        mpr("The seal upon the door fades away.");
 }
 
 void bring_to_safety()
@@ -2197,6 +2244,7 @@ void run_environment_effects()
     timeout_tombs(you.time_taken);
     timeout_malign_gateways(you.time_taken);
     timeout_phoenix_markers(you.time_taken);
+    timeout_door_seals(you.time_taken);
 }
 
 coord_def pick_adjacent_free_square(const coord_def& p)
@@ -2266,7 +2314,7 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
     else if (mon->wont_attack())
         adj += gettext("non-hostile ");
 
-    if (you.religion == GOD_JIYVA && mons_is_slime(mon))
+    if (you.religion == GOD_JIYVA && is_fellow_slime(mon))
         return true;
 
     return !adj.empty() || !suffix.empty();
@@ -2633,7 +2681,7 @@ void maybe_id_resist(beam_type flavour)
         _maybe_id_jewel(RING_PROTECTION_FROM_FIRE, NUM_JEWELLERY, ARTP_FIRE);
         break;
 
-    case BEAM_POLYMORPH:
+    case BEAM_MALMUTATE:
         if (player_mutation_level(MUT_MUTATION_RESISTANCE))
             return;
         _maybe_id_jewel(NUM_JEWELLERY, AMU_RESIST_MUTATION);
@@ -2694,7 +2742,7 @@ void auto_id_inventory()
         item_def& item = you.inv[i];
         if (item.defined())
         {
-            maybe_id_weapon(item, "You determine that: ");
+            maybe_id_weapon(item, "You determine that you are carrying: ");
             god_id_item(item, false);
         }
     }

@@ -375,7 +375,7 @@ string describe_mutations(bool center_title)
         if (you.experience_level > 2)
         {
             ostringstream num;
-            num << you.experience_level/3;
+            num << you.experience_level / 3;
             const string acstr = _("Your serpentine skin is tough (AC +")
                                  + num.str() + ").";
 
@@ -1323,7 +1323,7 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
                 if (failMsg)
                 {
                     mpr(_("You feel odd for a moment."), MSGCH_MUTATION);
-                    maybe_id_resist(BEAM_POLYMORPH);
+                    maybe_id_resist(BEAM_MALMUTATE);
                 }
                 return false;
             }
@@ -1952,7 +1952,7 @@ string mutation_name(mutation_type mut, int level, bool colour)
 static const facet_def _demon_facets[] =
 {
     // Body Slot facets
-    { 0,  { MUT_CLAWS, MUT_CLAWS, MUT_CLAWS },
+    { 0, { MUT_CLAWS, MUT_CLAWS, MUT_CLAWS },
       { -33, -33, -33 } },
     { 0, { MUT_HORNS, MUT_HORNS, MUT_HORNS },
       { -33, -33, -33 } },
@@ -1976,7 +1976,7 @@ static const facet_def _demon_facets[] =
     { 1, { MUT_ROUGH_BLACK_SCALES, MUT_ROUGH_BLACK_SCALES, MUT_ROUGH_BLACK_SCALES },
       { -33, -33, 0 } },
     { 1, { MUT_RUGGED_BROWN_SCALES, MUT_RUGGED_BROWN_SCALES,
-        MUT_RUGGED_BROWN_SCALES },
+           MUT_RUGGED_BROWN_SCALES },
       { -33, -33, 0 } },
     { 1, { MUT_SLIMY_GREEN_SCALES, MUT_SLIMY_GREEN_SCALES, MUT_SLIMY_GREEN_SCALES },
       { -33, -33, 0 } },
@@ -1984,7 +1984,7 @@ static const facet_def _demon_facets[] =
         MUT_THIN_METALLIC_SCALES },
       { -33, -33, 0 } },
     { 1, { MUT_THIN_SKELETAL_STRUCTURE, MUT_THIN_SKELETAL_STRUCTURE,
-        MUT_THIN_SKELETAL_STRUCTURE },
+           MUT_THIN_SKELETAL_STRUCTURE },
       { -33, -33, 0 } },
     { 1, { MUT_YELLOW_SCALES, MUT_YELLOW_SCALES, MUT_YELLOW_SCALES },
       { -33, -33, 0 } },
@@ -2013,7 +2013,7 @@ static const facet_def _demon_facets[] =
     { 3, { MUT_ROBUST, MUT_ROBUST, MUT_ROBUST },
       { 50, 50, 50 } },
     { 3, { MUT_NEGATIVE_ENERGY_RESISTANCE, MUT_NEGATIVE_ENERGY_RESISTANCE,
-          MUT_STOCHASTIC_TORMENT_RESISTANCE },
+           MUT_STOCHASTIC_TORMENT_RESISTANCE },
       { 50, 50, 50 } },
     { 3, { MUT_AUGMENTATION, MUT_AUGMENTATION, MUT_AUGMENTATION },
       { 50, 50, 50 } },
@@ -2284,7 +2284,8 @@ bool temp_mutate(mutation_type which_mut, const string &reason)
         {
             you.temp_mutations[which_mut]++;
             you.attribute[ATTR_TEMP_MUTATIONS]++;
-            you.increase_duration(DUR_TEMP_MUTATIONS, 20 + roll_dice(3, 10), 50);
+            you.attribute[ATTR_TEMP_MUT_XP] =
+                    min(you.experience_level, 17) * (500 + roll_dice(5, 500)) / 17;
         }
         return true;
     }

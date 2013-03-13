@@ -480,6 +480,9 @@ const char* armour_ego_name(const item_def& item, bool terse)
         {
         case SPARM_NORMAL:            return "";
         case SPARM_RUNNING:
+            // "naga barding of running" doesn't make any sense, and yes,
+            // they are possible. The terse ego name for these is {run}
+            // still to avoid player confusion, it used to be {sslith}.
             if (item.sub_type == ARM_NAGA_BARDING)
                                       return M_("speedy slithering");
             else
@@ -512,11 +515,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
         switch (get_armour_ego_type(item))
         {
         case SPARM_NORMAL:            return "";
-        case SPARM_RUNNING:
-            if (item.sub_type == ARM_NAGA_BARDING)
-                                      return " {sslith}";
-            else
-                                      return " {run}";
+        case SPARM_RUNNING:           return " {run}";
         case SPARM_FIRE_RESISTANCE:   return " {rF+}";
         case SPARM_COLD_RESISTANCE:   return " {rC+}";
         case SPARM_POISON_RESISTANCE: return " {rPois}";
@@ -534,7 +533,7 @@ const char* armour_ego_name(const item_def& item, bool terse)
         case SPARM_POSITIVE_ENERGY:   return " {rN+}";
         case SPARM_ARCHMAGI:          return " {Archmagi}";
         case SPARM_PRESERVATION:      return " {rCorr, Cons}";
-        case SPARM_REFLECTION:        return " {rflct}";
+        case SPARM_REFLECTION:        return " {reflect}";
         case SPARM_SPIRIT_SHIELD:     return " {Spirit}";
         case SPARM_ARCHERY:           return " {archer}";
         default:                      return " {buggy}";
@@ -561,7 +560,7 @@ static const char* _wand_type_name(int wandtype)
     case WAND_FIREBALL:        return M_("fireball");
     case WAND_TELEPORTATION:   return M_("teleportation");
     case WAND_LIGHTNING:       return M_("lightning");
-    case WAND_POLYMORPH_OTHER: return M_("polymorph other");
+    case WAND_POLYMORPH:       return M_("polymorph");
     case WAND_ENSLAVEMENT:     return M_("enslavement");
     case WAND_DRAINING:        return M_("draining");
     case WAND_RANDOM_EFFECTS:  return M_("random effects");
@@ -1293,7 +1292,9 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
         if (know_pluses)
         {
-            if ((terse && it_plus == item_plus2) || sub_type == WPN_BLOWGUN)
+            if (is_unrandom_artefact(*this) && special == UNRAND_WOE)
+                buff << (terse ? "+∞ " : "+∞,+∞ ");
+            else if ((terse && it_plus == item_plus2) || sub_type == WPN_BLOWGUN)
                 buff << make_stringf("%+d ", it_plus);
             else
                 buff << make_stringf("%+d,%+d ", it_plus, item_plus2);
@@ -1489,23 +1490,9 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
             if (know_ego && !is_artefact(*this))
             {
-                const special_armour_type sparm = get_armour_ego_type(*this);
-
-                if (sparm != SPARM_NORMAL)
-                {
-                    // "naga barding of running" doesn't make any sense, and yes,
-                    // they are possible.
-                    if (sub_type == ARM_NAGA_BARDING && sparm == SPARM_RUNNING)
-                        itemegoname = (terse ? "speed" : " of speedy slithering");
-                    else
-                    {
-                        if(!terse)
-                            itemegoname = make_stringf(check_gettext(" of %s")
-                                , check_gettext(armour_ego_name(*this, terse)));
-                        else
-                            itemegoname = check_gettext(armour_ego_name(*this, terse));
-                    }
-                }
+                if (!terse)
+                    buff << " of "; // 메모
+                buff << armour_ego_name(*this, terse);
             }
 
 #ifdef KR
@@ -3239,11 +3226,18 @@ bool is_useless_item(const item_def &item, bool temp)
                         && (you.species != SP_VAMPIRE
                             || temp && you.hunger_state <= HS_SATIATED));
 
+        case AMU_CLARITY:
+            return (you.clarity(false, false));
+
+        case AMU_RESIST_CORROSION:
+            return (you.res_corr(false, false));
+
         case AMU_THE_GOURMAND:
             return (player_likes_chunks(true) == 3
                       && player_mutation_level(MUT_SAPROVOROUS) == 3
                       && you.species != SP_GHOUL // makes clean chunks
                                                  // contaminated
+                    || player_mutation_level(MUT_GOURMAND) > 0
                     || player_mutation_level(MUT_HERBIVOROUS) == 3
                     || you.is_undead
                         && you.species != SP_GHOUL);
@@ -3266,7 +3260,7 @@ bool is_useless_item(const item_def &item, bool temp)
                        && you.hunger_state == HS_STARVING);
 
         case RING_SEE_INVISIBLE:
-            return player_mutation_level(MUT_ACUTE_VISION);
+            return (you.can_see_invisible(false, false));
 
         case RING_POISON_RESISTANCE:
             return (player_res_poison(false, temp, false) > 0
@@ -3385,35 +3379,15 @@ string item_prefix(const item_def &item, bool temp)
 {
     vector<string> prefixes;
 
-    if (item_ident(item, ISFLAG_KNOW_TYPE))
+    if (fully_identified(item))
         prefixes.push_back("identified");
-    else
+    else if (item_ident(item, ISFLAG_KNOW_TYPE)
+             || get_ident_type(item) == ID_KNOWN_TYPE)
     {
-        if (get_ident_type(item) == ID_KNOWN_TYPE)
-        {
-            // Wands are only fully identified if we know the number of
-            // charges.
-            if (item.base_type == OBJ_WANDS)
-                prefixes.push_back("known");
-
-            // Rings are fully identified simply by knowing their type,
-            // unless the ring has plusses, like a ring of dexterity.
-            else if (item.base_type == OBJ_JEWELLERY
-                     && !jewellery_is_amulet(item))
-            {
-                if (item.plus == 0 && item.plus2 == 0)
-                    prefixes.push_back("identified");
-                else
-                    prefixes.push_back("known");
-            }
-            // All other types of magical items are fully identified
-            // simply by knowing the type.
-            else
-                prefixes.push_back("identified");
-        }
-        else
-            prefixes.push_back("unidentified");
+        prefixes.push_back("known");
     }
+    else
+        prefixes.push_back("unidentified");
 
     if (good_god_hates_item_handling(item) || god_hates_item_handling(item))
     {

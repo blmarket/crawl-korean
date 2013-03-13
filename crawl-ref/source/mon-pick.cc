@@ -109,10 +109,10 @@ int mons_abyss_rare(monster_type mcls)
     // New abyssals, made more common for testing.
     case MONS_WRETCHED_STAR:
     case MONS_TENTACLED_STARSPAWN:
-    case MONS_LURKING_HORROR:
     case MONS_ANCIENT_ZYME:
     case MONS_STARCURSED_MASS:
     case MONS_THRASHING_HORROR:
+    case MONS_CHAOS_BUTTERFLY:
         return 40;
 
     case MONS_IRON_IMP:
@@ -124,6 +124,8 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_BONE_DRAGON:
     case MONS_SIXFIRHY:
     case MONS_SPATIAL_MAELSTROM:
+    case MONS_APOCALYPSE_CRAB:
+    case MONS_LURKING_HORROR:
         return 20;
 
     case MONS_EFREET:
@@ -182,7 +184,6 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_SHADOW_IMP:
     case MONS_SUN_DEMON:
     case MONS_WIGHT:
-    case MONS_APOCALYPSE_CRAB:
         return 10;
 
     case MONS_ICE_BEAST:
@@ -225,7 +226,6 @@ int mons_abyss_rare(monster_type mcls)
     case MONS_STONE_GOLEM:
     case MONS_TENTACLED_MONSTROSITY:
     case MONS_WIZARD:
-    case MONS_WOOD_GOLEM:
     case MONS_DEATH_DRAKE:
     case MONS_SILENT_SPECTRE:
     case MONS_DEEP_DWARF:
@@ -346,7 +346,6 @@ int mons_pan_rare(monster_type mcls)
     case MONS_IRON_GOLEM:
     case MONS_STONE_GOLEM:
     case MONS_TOENAIL_GOLEM:
-    case MONS_WOOD_GOLEM:
         return 5;
     // elementals
     case MONS_AIR_ELEMENTAL:
@@ -486,7 +485,6 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_OKLOB_PLANT:
     case MONS_TROLL:
     case MONS_TWO_HEADED_OGRE:
-    case MONS_WOOD_GOLEM:
     case MONS_YAK:
         return 14;
 
@@ -543,7 +541,7 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_GIANT_SLUG:
     case MONS_IRON_GOLEM:
     case MONS_OGRE_MAGE:
-    case MONS_ROCK_TROLL:
+    case MONS_DEEP_TROLL:
     case MONS_TOENAIL_GOLEM:
     case MONS_YAKTAUR:
     case MONS_WOLF_SPIDER:
@@ -570,6 +568,7 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_VERY_UGLY_THING:
     case MONS_HARPY:
     case MONS_FIRE_CRAB:
+    case MONS_VAULT_WARDEN:
         return 21;
 
     case MONS_BOULDER_BEETLE:
@@ -584,6 +583,8 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_REDBACK:
     case MONS_SPHINX:
     case MONS_VAPOUR:
+    case MONS_VAULT_SENTINEL:
+    case MONS_IRONBRAND_CONVOKER:
         return 23;
 
     case MONS_ORC_SORCERER:
@@ -593,10 +594,12 @@ int mons_dungeon_level(monster_type mcls)
     case MONS_ORC_WARLORD:
     case MONS_IRON_TROLL:
     case MONS_YAKTAUR_CAPTAIN:
+    case MONS_IRONHEART_PRESERVER:
         return 25;
 
     case MONS_DANCING_WEAPON:
-    case MONS_DEEP_TROLL:
+    case MONS_DEEP_TROLL_EARTH_MAGE:
+    case MONS_DEEP_TROLL_SHAMAN:
     case MONS_FIRE_GIANT:
     case MONS_FROST_GIANT:
     case MONS_HELL_KNIGHT:
@@ -701,7 +704,7 @@ int mons_dungeon_rare(monster_type mcls)
     case MONS_WORM:
         return 50;
 
-    case MONS_ROCK_TROLL:
+    case MONS_DEEP_TROLL:
         return 48;
 
     case MONS_MANTICORE:
@@ -773,11 +776,12 @@ int mons_dungeon_rare(monster_type mcls)
     case MONS_BOGGART:
     case MONS_DEEP_ELF_FIGHTER:
     case MONS_DEEP_ELF_KNIGHT:
-    case MONS_DEEP_TROLL:
     case MONS_FIRE_GIANT:
     case MONS_FROST_GIANT:
     case MONS_GREAT_ORB_OF_EYES:
     case MONS_IRON_TROLL:
+    case MONS_DEEP_TROLL_EARTH_MAGE:
+    case MONS_DEEP_TROLL_SHAMAN:
     case MONS_OOZE:
     case MONS_ORC_PRIEST:
     case MONS_PLANT:
@@ -813,7 +817,6 @@ int mons_dungeon_rare(monster_type mcls)
     case MONS_EFREET:
     case MONS_EYE_OF_DEVASTATION:
     case MONS_NECROMANCER:
-    case MONS_WOOD_GOLEM:
     case MONS_GNOLL_SHAMAN:
         return 15;
 
@@ -912,9 +915,10 @@ int mons_dwarf_rare(monster_type mcls)
     case MONS_FROST_GIANT:
     case MONS_STONE_GIANT:
         return 5;
-    case MONS_DEEP_TROLL:
+    case MONS_DEEP_TROLL_EARTH_MAGE:
+    case MONS_DEEP_TROLL_SHAMAN:
     case MONS_IRON_TROLL:
-    case MONS_ROCK_TROLL:
+    case MONS_DEEP_TROLL:
     case MONS_SHADOW_WRAITH:
         return 2;
 
@@ -946,7 +950,7 @@ int mons_mineorc_level(monster_type mcls)
     case MONS_ORC_HIGH_PRIEST:
     case MONS_ORC_SORCERER:
     case MONS_ORC_WARLORD:
-    case MONS_ROCK_TROLL:
+    case MONS_DEEP_TROLL:
     case MONS_STONE_GIANT:
     case MONS_TROLL:
     case MONS_TWO_HEADED_OGRE:
@@ -999,7 +1003,7 @@ int mons_mineorc_rare(monster_type mcls)
 
     case MONS_ETTIN:
     case MONS_IRON_TROLL:
-    case MONS_ROCK_TROLL:
+    case MONS_DEEP_TROLL:
     case MONS_STONE_GIANT:
         return 3;
 
@@ -1769,7 +1773,19 @@ int mons_vaults_level(monster_type mcls)
 
 int mons_vaults_rare(monster_type mcls)
 {
-    return mons_dungeon_rare(mcls);
+    switch (mcls)
+    {
+        case MONS_VAULT_WARDEN:
+            return 42;
+        case MONS_VAULT_SENTINEL:
+            return 52;
+        case MONS_IRONBRAND_CONVOKER:
+            return 50;
+        case MONS_IRONHEART_PRESERVER:
+            return 40;
+        default:
+            return mons_dungeon_rare(mcls);
+    }
 }
 
 // The Hall of Blades

@@ -1,5 +1,5 @@
-define(["jquery", "comm", "./util", "./settings"],
-function ($, comm, util, settings) {
+define(["jquery", "comm", "client", "./util", "./settings"],
+function ($, comm, client, util, settings) {
     var messages = [];
     var more = false;
     var old_scroll_top;
@@ -22,7 +22,6 @@ function ($, comm, util, settings) {
         var last_msg_elem = $("#messages .game_message").last();
         var prefix_glyph = last_msg_elem.find(".prefix_glyph");
         prefix_glyph.html(html);
-        prefix_glyph.removeClass(prefix_glyph_classes);
         prefix_glyph.addClass(classes);
     }
 
@@ -106,6 +105,9 @@ function ($, comm, util, settings) {
 
     function get_line(msg)
     {
+        if (client.is_watching != null && client.is_watching())
+            return;
+
         var prompt = $("#messages .game_message").last();
         var input = $("<input class='text' type='text'>");
         prompt.append(input);

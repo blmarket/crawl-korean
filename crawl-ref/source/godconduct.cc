@@ -120,10 +120,20 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             }
             break;
 
+        case DID_DESECRATE_HOLY_REMAINS:
+            if (you.religion == GOD_YREDELEMNUL)
+            {
+                simple_god_message(" appreciates your desecration of holy "
+                                   "remains.");
+                retval = true;
+                piety_change = 1;
+                break;
+            }
+            // deliberate fall through
+
         case DID_NECROMANCY:
         case DID_UNHOLY:
         case DID_ATTACK_HOLY:
-        case DID_DESECRATE_HOLY_REMAINS:
             switch (you.religion)
             {
             case GOD_ZIN:
@@ -137,7 +147,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                     break;
                 }
 
-                if (thing_done == DID_ATTACK_HOLY && victim
+                if (thing_done == DID_ATTACK_HOLY
+                    && victim
                     && !testbits(victim->flags, MF_NO_REWARD)
                     && !testbits(victim->flags, MF_WAS_NEUTRAL))
                 {
@@ -398,6 +409,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             switch (you.religion)
             {
             case GOD_SHINING_ONE:
+            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_KIKUBAAQUDGHA:
@@ -529,6 +541,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             case GOD_YREDELEMNUL:
             case GOD_KIKUBAAQUDGHA:
             case GOD_TROG:
+            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
@@ -616,7 +629,6 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             {
             case GOD_YREDELEMNUL:
             case GOD_KIKUBAAQUDGHA:
-            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
@@ -635,7 +647,6 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_LIVING_KILLED_BY_SERVANT:
             switch (you.religion)
             {
-            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
@@ -655,7 +666,6 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_UNDEAD_KILLED_BY_UNDEAD_SLAVE:
             switch (you.religion)
             {
-            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
@@ -675,7 +685,6 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             switch (you.religion)
             {
             case GOD_SHINING_ONE:
-            case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
             case GOD_LUGONU:
@@ -999,10 +1008,10 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         if (you.religion == GOD_OKAWARU
             // currently no constructs and plants
             && (thing_done == DID_KILL_LIVING
-             || thing_done == DID_KILL_UNDEAD
-             || thing_done == DID_KILL_DEMON
-             || thing_done == DID_KILL_HOLY)
-            && ! god_hates_attacking_friend(you.religion, victim))
+                || thing_done == DID_KILL_UNDEAD
+                || thing_done == DID_KILL_DEMON
+                || thing_done == DID_KILL_HOLY)
+            && !god_hates_attacking_friend(you.religion, victim))
         {
             piety_change = get_fuzzied_monster_difficulty(victim);
             dprf("fuzzied monster difficulty: %4.2f", piety_change * 0.01);

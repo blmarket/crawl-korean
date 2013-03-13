@@ -19,6 +19,7 @@
 #include <time.h>
 #include <math.h>
 
+#include "abyss.h"
 #include "cio.h"
 #include "colour.h"
 #include "crash.h"
@@ -48,9 +49,9 @@
 
 #ifdef __ANDROID__
 #include <android/log.h>
-double log2( double n )
+double log2(double n)
 {
-    return log(n)/log(2); // :(
+    return log(n) / log(2); // :(
 }
 #endif
 
@@ -126,6 +127,7 @@ static void _clear_globals_on_exit()
     clear_zap_info_on_exit();
     clear_colours_on_exit();
     dgn_clear_vault_placements(env.level_vaults);
+    destroy_abyss();
 }
 
 #if (defined(TARGET_OS_WINDOWS) && !defined(USE_TILE_LOCAL)) \
@@ -493,19 +495,22 @@ void canned_msg(canned_message_type which_message)
         mpr(gettext("You're too hungry."));
         break;
     case MSG_DETECT_NOTHING:
-        mpr("You detect nothing.");
+        mpr(gettext("You detect nothing."));
         break;
     case MSG_CALL_DEAD:
-        mpr("You call on the dead to rise...");
+        mpr(gettext("You call on the dead to rise..."));
         break;
     case MSG_ANIMATE_REMAINS:
-        mpr("You attempt to give life to the dead...");
+        mpr(gettext("You attempt to give life to the dead..."));
         break;
     case MSG_DECK_EXHAUSTED:
-        mpr("The deck of cards disappears in a puff of smoke.");
+        mpr(gettext("The deck of cards disappears in a puff of smoke."));
         break;
     case MSG_EVOCATION_SUPPRESSED:
-        mpr("You may not evoke while suppressed!");
+        mpr(gettext("You may not evoke while suppressed!"));
+        break;
+    case MSG_BEING_WATCHED:
+        mpr(gettext("You feel you are being watched by something."));
         break;
     }
 }
@@ -555,7 +560,7 @@ bool yesno(const char *str, bool safe, int safeanswer, bool clear_after,
 #ifdef TOUCH_UI
     Popup *pop = new Popup(prompt);
     MenuEntry *status = new MenuEntry("", MEL_SUBTITLE);
-    pop->push_entry(new MenuEntry(prompt, MEL_TITLE ));
+    pop->push_entry(new MenuEntry(prompt, MEL_TITLE));
     pop->push_entry(status);
     MenuEntry *me = new MenuEntry("Yes", MEL_ITEM, 0, 'Y', false);
     me->add_tile(tile_def(TILEG_PROMPT_YES, TEX_GUI));

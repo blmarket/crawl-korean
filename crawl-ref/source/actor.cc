@@ -5,6 +5,7 @@
 #include "artefact.h"
 #include "attack.h"
 #include "coord.h"
+#include "describe.h"
 #include "env.h"
 #include "fprop.h"
 #include "itemprop.h"
@@ -370,6 +371,9 @@ bool actor::evokable_invis(bool calc_unid) const
 // Return an int so we know whether an item is the sole source.
 int actor::evokable_flight(bool calc_unid) const
 {
+    if (is_player() && you.form == TRAN_TREE)
+        return 0;
+
     if (suppressed())
         return 0;
 
@@ -428,11 +432,11 @@ int actor::apply_ac(int damage, int max_damage, ac_type ac_rule,
 
 bool actor_slime_wall_immune(const actor *act)
 {
-    // res_acid is immunity only for monsters; players need Jiyva
-    return (act->is_player() ?
-              you.religion == GOD_JIYVA && !you.penance[GOD_JIYVA]
-            : act->res_acid());
+    return
+       act->is_player() && you.religion == GOD_JIYVA && !you.penance[GOD_JIYVA]
+       || act->res_acid() == 3;
 }
+
 /**
  * Accessor method to the clinging member.
  *
@@ -746,4 +750,63 @@ void actor::handle_constriction()
             monster_die(defender->as_monster(), this);
         }
     }
+}
+
+string actor::describe_props() const
+{
+    ostringstream oss;
+
+    if (props.size() == 0)
+        return "";
+
+    for (CrawlHashTable::const_iterator i = props.begin(); i != props.end(); ++i)
+    {
+        if (i != props.begin())
+            oss <<  ", ";
+        oss << string(i->first) << ": ";
+
+        CrawlStoreValue val = i->second;
+
+        switch (val.get_type())
+        {
+            case SV_BOOL:
+                oss << val.get_bool();
+                break;
+            case SV_BYTE:
+                oss << val.get_byte();
+                break;
+            case SV_SHORT:
+                oss << val.get_short();
+                break;
+            case SV_INT:
+                oss << val.get_int();
+                break;
+            case SV_FLOAT:
+                oss << val.get_float();
+                break;
+            case SV_STR:
+                oss << val.get_string();
+                break;
+            case SV_COORD:
+            {
+                coord_def coord = val.get_coord();
+                oss << "(" << coord.x << ", " << coord.y << ")";
+                break;
+            }
+            case SV_MONST:
+            {
+                monster mon = val.get_monster();
+                oss << mon.name(DESC_PLAIN) << "(" << mon.mid << ")";
+                break;
+            }
+            case SV_INT64:
+                oss << val.get_int64();
+                break;
+
+            default:
+                oss << "???";
+                break;
+        }
+    }
+    return oss.str();
 }

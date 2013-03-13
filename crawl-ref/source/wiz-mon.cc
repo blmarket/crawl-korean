@@ -584,7 +584,7 @@ void debug_stethoscope(int mon)
 
     // Print stats and other info.
     mprf(MSGCH_DIAGNOSTICS,
-         "HD=%d (%u) HP=%d/%d AC=%d(%d) EV=%d MR=%d SP=%d "
+         "HD=%d (%u) HP=%d/%d AC=%d(%d) EV=%d MR=%d XP=%d SP=%d "
          "energy=%d%s%s mid=%u num=%d stealth=%d flags=%04" PRIx64,
          mons.hit_dice,
          mons.experience,
@@ -592,6 +592,7 @@ void debug_stethoscope(int mon)
          mons.ac, mons.armour_class(),
          mons.ev,
          mons.res_magic(),
+         exper_value(&mons),
          mons.speed, mons.speed_increment,
          mons.base_monster != MONS_NO_MONSTER ? " base=" : "",
          mons.base_monster != MONS_NO_MONSTER ?
@@ -625,7 +626,8 @@ void debug_stethoscope(int mon)
           mons_is_retreating(&mons)      ? "retreat" :
           mons_is_cornered(&mons)        ? "cornered" :
           mons_is_panicking(&mons)       ? "panic" :
-          mons_is_lurking(&mons)         ? "lurk"
+          mons_is_lurking(&mons)         ? "lurk" :
+          mons.behaviour == BEH_WITHDRAW ? "withdraw"
                                          : "unknown"),
          mons.behaviour,
          ((mons.foe == MHITYOU)                    ? "you" :
@@ -652,6 +654,9 @@ void debug_stethoscope(int mon)
 
     mprf(MSGCH_DIAGNOSTICS, "ench: %s",
          mons.describe_enchantments().c_str());
+
+    mprf(MSGCH_DIAGNOSTICS, "props: %s",
+         mons.describe_props().c_str());
 
     ostringstream spl;
     const monster_spells &hspell_pass = mons.spells;

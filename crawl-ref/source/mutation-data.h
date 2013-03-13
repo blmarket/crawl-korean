@@ -1067,9 +1067,9 @@
 { MUT_POWERED_BY_PAIN,                0,  3, false, false, false,
   M_("powered by pain"),
 
-  {N_("You sometimes regain a little magical energy from taking damage."),
-   N_("You sometimes regain magical energy from taking damage."),
-   N_("You sometimes regain a lot of magical energy from taking damage.")},
+  {N_("You sometimes gain a little power by taking damage."),
+   N_("You sometimes gain power by taking damage."),
+   N_("You are powered by pain.")},
 
   {N_("You feel energised by your suffering."),
    N_("You feel even more energised by your suffering."),

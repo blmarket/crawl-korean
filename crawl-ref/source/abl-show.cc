@@ -20,6 +20,7 @@
 #include "acquire.h"
 #include "artefact.h"
 #include "beam.h"
+#include "branch.h"
 #include "cloud.h"
 #include "coordit.h"
 #include "database.h"
@@ -190,9 +191,9 @@ ability_type god_abilities[NUM_GODS][MAX_GOD_ABILITIES] =
 // The description screen was way out of date with the actual costs.
 // This table puts all the information in one place... -- bwr
 //
-// The four numerical fields are: MP, HP, food, and piety.
-// Note:  food_cost  = val + random2avg( val, 2 )
-//        piety_cost = val + random2( (val + 1) / 2 + 1 );
+// The five numerical fields are: MP, HP, food, piety and ZP.
+// Note:  food_cost  = val + random2avg(val, 2)
+//        piety_cost = val + random2((val + 1) / 2 + 1);
 //        hp cost is in per-mil of maxhp (i.e. 20 = 2% of hp, rounded up)
 static const ability_def Ability_List[] =
 {
@@ -210,7 +211,7 @@ static const ability_def Ability_List[] =
       0, 0, 125, 0, 0, ABFLAG_BREATH},
     { ABIL_BREATHE_LIGHTNING, M_("Breathe Lightning"),
       0, 0, 125, 0, 0, ABFLAG_BREATH},
-    { ABIL_BREATHE_POWER, M_("Breathe Energy"), 0, 0, 125, 0, 0, ABFLAG_BREATH},
+    { ABIL_BREATHE_POWER, M_("Breathe Dispelling Energy"), 0, 0, 125, 0, 0, ABFLAG_BREATH},
     { ABIL_BREATHE_STICKY_FLAME, M_("Breathe Sticky Flame"),
       0, 0, 125, 0, 0, ABFLAG_BREATH},
     { ABIL_BREATHE_STEAM, M_("Breathe Steam"), 0, 0, 75, 0, 0, ABFLAG_BREATH},
@@ -508,7 +509,7 @@ static string _zd_mons_description_for_ability(const ability_def &abil)
     case ABIL_MAKE_BURNING_BUSH:
         return _("Blackened shoots writhe from the ground and burst into flame!");
     case ABIL_MAKE_ICE_STATUE:
-        return _("Water vapor collects and crystallizes into an icy humanoid shape.");
+        return _("Water vapor collects and crystallises into an icy humanoid shape.");
     case ABIL_MAKE_OCS:
         return _("Quartz juts from the ground and forms a humanoid shape. You smell citrus.");
     case ABIL_MAKE_SILVER_STATUE:
@@ -575,7 +576,7 @@ static int _zp_cost(const ability_def& abil)
                 num /= 3;
             // ... and for harmless stuff
             else if (abil.ability == ABIL_MAKE_PLANT
-                  || abil.ability == ABIL_MAKE_FUNGUS)
+                     || abil.ability == ABIL_MAKE_FUNGUS)
             {
                 num /= 5;
             }
@@ -591,11 +592,13 @@ static int _zp_cost(const ability_def& abil)
             num = _count_relevant_monsters(abil);
             num -= 2; // first two are base cost
             scale20 = max(num, 0);        // after first two, 20% increment
+            break;
 
         // Monster type 3: least generous
         case ABIL_MAKE_SILVER_STATUE:
         case ABIL_MAKE_CURSE_SKULL:
             scale20 = _count_relevant_monsters(abil); // scale immediately
+            break;
 
         // Simple Traps
         case ABIL_MAKE_DART_TRAP:
@@ -665,7 +668,7 @@ const string make_cost_description(ability_type ability)
         ret << " ZP";
     }
 
-    if (abil.food_cost && you.is_undead != US_UNDEAD
+    if (abil.food_cost && !you_foodless()
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
         if (!ret.str().empty())
@@ -815,7 +818,7 @@ static const string _detailed_cost_description(ability_type ability)
         ret << abil.zp_cost;
     }
 
-    if (abil.food_cost && you.is_undead != US_UNDEAD
+    if (abil.food_cost && !you_foodless()
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
         have_cost = true;
@@ -1459,7 +1462,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_ELYVILON_PURIFICATION:
         if (!you.disease && !you.rotting && !you.duration[DUR_POISONING]
             && !you.duration[DUR_CONF] && !you.duration[DUR_SLOW]
-            && !you.duration[DUR_PARALYSIS] && !you.petrified()
+            && !you.petrifying()
             && you.strength(false) == you.max_strength()
             && you.intel(false) == you.max_intel()
             && you.dex(false) == you.max_dex()
@@ -1497,7 +1500,7 @@ static bool _check_ability_possible(const ability_def& abil,
         return !is_level_incorruptible(quiet);
 
     case ABIL_LUGONU_ABYSS_ENTER:
-        if (player_in_branch(BRANCH_ABYSS))
+        if (player_in_branch(BRANCH_ABYSS) || brdepth[BRANCH_ABYSS] == -1)
         {
             if (!quiet)
                 mpr(_("You're already here!"));
@@ -1601,8 +1604,8 @@ bool activate_talent(const talent& tal)
             crawl_state.zero_turns_taken();
             return false;
         }
-        if (player_in_bat_form() && you.dex() <= 5
-            && !yesno(gettext("Turning back will reduce your dexterity to zero. Continue?"), false, 'n'))
+        if (you.form == TRAN_BAT && you.dex() <= 5
+            && !yesno(_("Turning back will reduce your dexterity to zero. Continue?"), false, 'n'))
         {
             crawl_state.zero_turns_taken();
             return false;
@@ -1644,7 +1647,7 @@ bool activate_talent(const talent& tal)
             break;
     }
 
-    if (hungerCheck && !you.is_undead
+    if (hungerCheck && !you.is_undead && !you_foodless()
         && you.hunger_state == HS_STARVING)
     {
         canned_msg(MSG_TOO_HUNGRY);
@@ -1724,6 +1727,21 @@ static int _calc_breath_ability_range(ability_type ability)
         break;
     }
     return -2;
+}
+
+static bool _sticky_flame_can_hit(const actor *act)
+{
+    if (act->is_monster())
+    {
+        const monster* mons = act->as_monster();
+        bolt testbeam;
+        testbeam.thrower = KILL_YOU;
+        zappy(ZAP_BREATHE_STICKY_FLAME, 100, testbeam);
+
+        return !testbeam.ignores_monster(mons);
+    }
+    else
+        return false;
 }
 
 static bool _do_ability(const ability_def& abil)
@@ -1922,7 +1940,7 @@ static bool _do_ability(const ability_def& abil)
         power = calc_spell_power(SPELL_DELAYED_FIREBALL, true);
         beam.range = spell_range(SPELL_FIREBALL, power);
 
-        targetter_beam tgt(&you, beam.range, ZAP_FIREBALL, power, true, 1, 1);
+        targetter_beam tgt(&you, beam.range, ZAP_FIREBALL, power, 1, 1);
 
         if (!spell_direction(spd, beam, DIR_NONE, TARG_HOSTILE, beam.range,
                              true, true, false, NULL,
@@ -1932,7 +1950,7 @@ static bool _do_ability(const ability_def& abil)
             return false;
         }
 
-        if (!fireball(power, beam))
+        if (!zapping(ZAP_FIREBALL, power, beam, true, NULL, false))
             return false;
 
         // Only one allowed, since this is instantaneous. - bwr
@@ -1974,7 +1992,7 @@ static bool _do_ability(const ability_def& abil)
             return false;
         }
 
-        if (stop_attack_prompt(hitfunc, "spit at"))
+        if (stop_attack_prompt(hitfunc, "spit at", _sticky_flame_can_hit))
             return false;
 
         zapping(ZAP_BREATHE_STICKY_FLAME, (you.form == TRAN_DRAGON) ?
@@ -2151,6 +2169,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_EVOKE_FLIGHT:             // ring, boots, randarts
+        ASSERT(you.form != TRAN_TREE);
         if (you.wearing_ego(EQ_ALL_ARMOUR, SPARM_FLYING))
         {
             bool standing = !you.airborne();
@@ -2223,8 +2242,13 @@ static bool _do_ability(const ability_def& abil)
             return false;
         }
 
-        power = 3 + roll_dice(6, (30 + you.skill(SK_INVOCATIONS, 10))
-                                 / (3 + mons->hit_dice)) / 3;
+        if (mons->friendly() || mons->good_neutral())
+        {
+            mpr("You cannot imprison a law-abiding creature!");
+            return false;
+        }
+
+        power = 3 + (roll_dice(5, you.skill(SK_INVOCATIONS, 5) + 12) / 26);
 
         if (!cast_imprison(power, mons, -GOD_ZIN))
             return false;
@@ -2270,12 +2294,11 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_YRED_INJURY_MIRROR:
         if (yred_injury_mirror())
-            mpr(gettext("You renew your dark mirror aura."));
+            mpr(_("Another wave of unholy energy enters you."));
         else
         {
-            mprf(you.species == SP_NAGA  ? gettext("You coil in prayer and are bathed in unholy energy.") :
-                 you.species == SP_FELID ? gettext("You sit in prayer and are bathed in unholy energy.") 
-                                         : gettext("You kneel in prayer and are bathed in unholy energy."));
+            mprf(_("You offer yourself to %s, and fill with unholy energy."),
+                 _(god_name(you.religion).c_str()));
         }
         you.duration[DUR_MIRROR_DAMAGE] = 9 * BASELINE_DELAY
                      + random2avg(you.piety * BASELINE_DELAY, 2) / 10;
@@ -2287,7 +2310,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_YRED_RECALL_UNDEAD_SLAVES:
-        recall(1);
+        start_recall(1);
         break;
 
     case ABIL_YRED_DRAIN_LIFE:
@@ -2357,10 +2380,10 @@ static bool _do_ability(const ability_def& abil)
 
         switch (random2(5))
         {
-        case 0: beam.range =  8; zapping(ZAP_FLAME, power, beam); break;
+        case 0: beam.range =  8; zapping(ZAP_THROW_FLAME, power, beam); break;
         case 1: beam.range =  8; zapping(ZAP_PAIN,  power, beam); break;
         case 2: beam.range =  5; zapping(ZAP_STONE_ARROW, power, beam); break;
-        case 3: beam.range =  8; zapping(ZAP_ELECTRICITY, power, beam); break;
+        case 3: beam.range =  8; zapping(ZAP_SHOCK, power, beam); break;
         case 4: beam.range =  8; zapping(ZAP_BREATHE_ACID, power/2, beam); break;
         }
         break;
@@ -2388,12 +2411,12 @@ static bool _do_ability(const ability_def& abil)
             zap_type ztype = ZAP_DEBUGGING_RAY;
             switch (random2(7))
             {
-            case 0: beam.range =  7; ztype = ZAP_FIRE;               break;
+            case 0: beam.range =  7; ztype = ZAP_BOLT_OF_FIRE;       break;
             case 1: beam.range =  6; ztype = ZAP_FIREBALL;           break;
-            case 2: beam.range =  8; ztype = ZAP_LIGHTNING;          break;
+            case 2: beam.range =  8; ztype = ZAP_LIGHTNING_BOLT;     break;
             case 3: beam.range =  5; ztype = ZAP_STICKY_FLAME;       break;
             case 4: beam.range =  5; ztype = ZAP_IRON_SHOT;          break;
-            case 5: beam.range =  6; ztype = ZAP_NEGATIVE_ENERGY;    break;
+            case 5: beam.range =  6; ztype = ZAP_BOLT_OF_DRAINING;   break;
             case 6: beam.range =  8; ztype = ZAP_ORB_OF_ELECTRICITY; break;
             }
             zapping(ztype, power, beam);
@@ -2579,7 +2602,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS:
-        recall(2);
+        start_recall(2);
         break;
 
     case ABIL_FEDHAS_SUNLIGHT:
@@ -2833,7 +2856,8 @@ int choose_ability_menu(const vector<talent>& talents)
 #endif
 
     ToggleableMenu abil_menu(MF_SINGLESELECT | MF_ANYPRINTABLE
-                             | MF_TOGGLE_ACTION, text_only);
+                             | MF_TOGGLE_ACTION | MF_ALWAYS_SHOW_MORE,
+                             text_only);
 
     abil_menu.set_highlighter(NULL);
 #ifdef USE_TILE_LOCAL
@@ -3446,7 +3470,7 @@ vector<ability_type> get_god_abilities(bool include_unusable)
         const ability_type abil =
             _fixup_ability(god_abilities[you.religion][i]);
         if (abil == ABIL_NON_ABILITY
-            || crawl_state.game_is_zotdef()
+            || brdepth[BRANCH_ABYSS] == -1
                && (abil == ABIL_LUGONU_ABYSS_EXIT
                    || abil == ABIL_LUGONU_ABYSS_ENTER))
         {

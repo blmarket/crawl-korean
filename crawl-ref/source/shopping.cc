@@ -1117,8 +1117,10 @@ int artefact_value(const item_def &item)
         ret += 30;
 
     // magic resistance is from 35-100
-    if (prop[ ARTP_MAGIC ])
+    if (prop[ ARTP_MAGIC ] > 0)
         ret += 5 + prop[ ARTP_MAGIC ] / 15;
+    else if (prop[ ARTP_MAGIC ] < 0)
+        ret -= 5;
 
     if (prop[ ARTP_EYESIGHT ])
         ret += 10;
@@ -1254,7 +1256,9 @@ unsigned int item_value(item_def item, bool ident)
             valued += 45;
             break;
 
+#if TAG_MAJOR_VERSION == 34
         case WPN_SPIKED_FLAIL:
+#endif
         case WPN_BLESSED_LONG_SWORD:
         case WPN_BLESSED_SCIMITAR:
             valued += 50;
@@ -1803,7 +1807,7 @@ unsigned int item_value(item_def item, bool ident)
                 break;
 
             case WAND_ENSLAVEMENT:
-            case WAND_POLYMORPH_OTHER:
+            case WAND_POLYMORPH:
             case WAND_PARALYSIS:
                 valued += 20;
                 break;

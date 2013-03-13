@@ -2140,6 +2140,7 @@ void get_square_desc(const coord_def &c, describe_info &inf,
 
             inf.title = desc;
         }
+
         bool temp = false;
         get_monster_db_desc(mi, inf, temp);
     }
@@ -2471,7 +2472,7 @@ static bool _find_monster_expl(const coord_def& where, int mode, bool need_path,
             if (hitfunc->is_affected(*ri) >= AFF_YES)
             {
                 const monster* mon = monster_at(*ri);
-                if (mon != NULL)
+                if (mon && _mons_is_valid_target(mon, mode, range))
                     return _want_target_monster(mon, mode);
             }
         }
@@ -2963,6 +2964,8 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
         return _(M_("closed door"));
     case DNGN_RUNED_DOOR:
         return _(M_("runed door"));
+    case DNGN_SEALED_DOOR:
+        return _(M_("sealed door"));
     case DNGN_METAL_WALL:
         return _(M_("metal wall"));
     case DNGN_GREEN_CRYSTAL_WALL:
@@ -3283,6 +3286,8 @@ string feature_description_at(const coord_def& where, bool covering,
                 desc += "open ";
             else if (grid == DNGN_RUNED_DOOR)
                 desc += "runed ";
+            else if (grid == DNGN_SEALED_DOOR)
+                desc += "sealed ";
             else
                 desc += "closed ";
         }
@@ -3843,7 +3848,7 @@ static void _debug_describe_feature_at(const coord_def &where)
         const vault_placement &vp(*env.level_vaults[map_index]);
         const coord_def br = vp.pos + vp.size - 1;
         vault = make_stringf(" [Vault: %s (%d,%d)-(%d,%d) (%dx%d)]",
-                             vp.map.name.c_str(),
+                             vp.map_name_at(where).c_str(),
                              vp.pos.x, vp.pos.y,
                              br.x, br.y,
                              vp.size.x, vp.size.y);

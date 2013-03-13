@@ -53,8 +53,7 @@ bool targetter::anyone_there(coord_def loc)
 }
 
 targetter_beam::targetter_beam(const actor *act, int range, zap_type zap,
-                               int pow, bool stop,
-                               int min_ex_rad, int max_ex_rad) :
+                               int pow, int min_ex_rad, int max_ex_rad) :
                                min_expl_rad(min_ex_rad),
                                max_expl_rad(max_ex_rad)
 {
@@ -78,7 +77,7 @@ targetter_beam::targetter_beam(const actor *act, int range, zap_type zap,
     beam.ex_size = min_ex_rad;
     beam.aimed_at_spot = true;
 
-    penetrates_targets = !stop;
+    penetrates_targets = beam.is_beam;
     range2 = dist_range(range);
 }
 
@@ -106,7 +105,7 @@ bool targetter_beam::set_aim(coord_def a)
                 break;
             tempbeam2.target = *i;
             if (anyone_there(*i)
-                && !fedhas_shoot_through(tempbeam, monster_at(*i)))
+                && !tempbeam.ignores_monster(monster_at(*i)))
             {
                 break;
             }
@@ -174,8 +173,8 @@ aff_type targetter_beam::is_affected(coord_def loc)
                 return current;
         }
         if (anyone_there(*i)
-            && !fedhas_shoot_through(beam, monster_at(*i))
-            && !penetrates_targets)
+            && !penetrates_targets
+            && !beam.ignores_monster(monster_at(*i)))
         {
             // We assume an exploding spell will always stop here.
             if (max_expl_rad > 0)
@@ -200,7 +199,7 @@ aff_type targetter_beam::is_affected(coord_def loc)
 }
 
 targetter_imb::targetter_imb(const actor *act, int pow, int range) :
-               targetter_beam(act, range, ZAP_MYSTIC_BLAST, pow, true, 0, 0)
+               targetter_beam(act, range, ZAP_ISKENDERUNS_MYSTIC_BLAST, pow, 0, 0)
 {
 }
 
@@ -229,7 +228,7 @@ bool targetter_imb::set_aim(coord_def a)
         c = *i;
         cur_path.push_back(c);
         if (!(anyone_there(c)
-              && !fedhas_shoot_through(beam, monster_at(c)))
+              && !beam.ignores_monster((monster_at(c))))
             && c != end)
             continue;
 
@@ -243,7 +242,7 @@ bool targetter_imb::set_aim(coord_def a)
             which_splash->push_back(*ai);
             if (!cell_is_solid(*ai)
                 && !(anyone_there(*ai)
-                     && !fedhas_shoot_through(beam, monster_at(*ai))))
+                     && !beam.ignores_monster(monster_at(*ai))))
             {
                 which_splash->push_back(c + (*ai - c) * 2);
             }
@@ -799,4 +798,80 @@ aff_type targetter_thunderbolt::is_affected(coord_def loc)
         return AFF_NO;
 
     return zapped[loc];
+}
+
+targetter_spray::targetter_spray(const actor* act, int range, zap_type zap)
+{
+    ASSERT(act);
+    agent = act;
+    origin = aim = act->pos();
+    _range = range;
+    range2 = dist_range(range);
+}
+
+bool targetter_spray::valid_aim(coord_def a)
+{
+    if (a != origin && !cell_see_cell(origin, a, LOS_NO_TRANS))
+    {
+        if (agent->see_cell(a))
+            return notify_fail("There's something in the way.");
+        return notify_fail("You cannot see that place.");
+    }
+    if ((origin - a).abs() > range2)
+        return notify_fail("Out of range.");
+    return true;
+}
+
+bool targetter_spray::set_aim(coord_def a)
+{
+    if (!targetter::set_aim(a))
+        return false;
+
+    if (a == origin)
+        return false;
+
+    beams = get_spray_rays(agent, aim, _range, 3);
+
+    paths_taken.clear();
+    for (unsigned int i = 0; i < beams.size(); ++i)
+        paths_taken.push_back(beams[i].path_taken);
+
+    return true;
+}
+
+aff_type targetter_spray::is_affected(coord_def loc)
+{
+    coord_def c;
+    aff_type affected = AFF_NO;
+
+    for (unsigned int n = 0; n < paths_taken.size(); ++n)
+    {
+        aff_type beam_affect = AFF_YES;
+        bool beam_reached = false;
+        for (vector<coord_def>::const_iterator i = paths_taken[n].begin();
+         i != paths_taken[n].end(); ++i)
+        {
+            c = *i;
+            if (c == loc)
+            {
+                if (cell_is_solid(*i))
+                    beam_affect = AFF_NO;
+                else if (beam_affect != AFF_MAYBE)
+                    beam_affect = AFF_YES;
+
+                beam_reached = true;
+                break;
+            }
+            else if (anyone_there(*i)
+                && !beams[n].ignores_monster(monster_at(*i)))
+            {
+                beam_affect = AFF_MAYBE;
+            }
+        }
+
+        if (beam_reached && beam_affect > affected)
+            affected = beam_affect;
+    }
+
+    return affected;
 }

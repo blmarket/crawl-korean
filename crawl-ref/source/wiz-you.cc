@@ -454,6 +454,7 @@ void wizard_set_skill_level(skill_type skill)
     if (amount == 27)
     {
         you.train[skill] = 0;
+        you.train_alt[skill] = 0;
         reset_training();
         check_selected_skills();
     }
@@ -681,7 +682,7 @@ void wizard_set_abyss()
 {
     char buf[80];
     mprf(MSGCH_PROMPT, "Enter values for X, Y, Z (space separated) or return: ");
-    if (cancelable_get_line_autohist(buf, sizeof buf))
+    if (!cancelable_get_line_autohist(buf, sizeof buf))
         abyss_teleport(true);
 
     uint32_t x, y, z;
@@ -796,8 +797,16 @@ static const char* dur_names[] =
     "tornado cooldown",
     "nausea",
     "ambrosia",
+#if TAG_MAJOR_VERSION == 34
     "temporary mutations",
+#endif
     "disjunction",
+    "vehumet gift",
+#if TAG_MAJOR_VERSION == 34
+    "battlesphere",
+#endif
+    "sentinel's mark",
+    "sickening"
 };
 
 void wizard_edit_durations(void)
@@ -865,7 +874,6 @@ void wizard_edit_durations(void)
     {
         vector<int>    matches;
         vector<string> match_names;
-        max_len = 0;
 
         for (int i = 0; i < NUM_DURATIONS; ++i)
         {

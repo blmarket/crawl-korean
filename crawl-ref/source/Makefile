@@ -120,10 +120,6 @@ CFOPTIMIZE := -O2
 
 endif # USE_ICC
 
-ifdef LTO
-CFOPTIMIZE += -flto=jobserver -fwhole-program
-endif
-
 CFOTHERS := -pipe $(EXTERNAL_FLAGS)
 CFWARN := -Wall -Wformat-security
 CFWARN_L := -Wundef
@@ -550,6 +546,14 @@ ifdef AUTO_OPT
 ifndef NO_AUTO_OPT
 CFOPTIMIZE += -march=native
 endif
+endif
+
+ifdef LTO
+CFOPTIMIZE += -flto=jobserver -fwhole-program
+  # FIXME: this check is fragile, and should be done via a full compile test.
+  ifeq ($(shell $(GXX) -x c++ /dev/null -fno-fat-lto-objects 2>&1 | grep 'unrecognized command line option'),)
+    CFOPTIMIZE += -fno-fat-lto-objects
+  endif
 endif
 
 # Okay, we have to assume we're on something else that
@@ -1710,7 +1714,9 @@ package-windows:
 ifneq (x$(SRC_VERSION),x$(shell cat build-win/version.txt 2>/dev/null))
 	+$(MAKE) build-windows
 endif
-	makensis -NOCD -DVERSION=$(SRC_VERSION) util/crawl.nsi
+	if $(GXX) -dumpmachine|grep -q x86_64; \
+	  then WINARCH=win64; else WINARCH=win32; fi; \
+	makensis -NOCD -DVERSION=$(SRC_VERSION) -DWINARCH="$$WINARCH" util/crawl.nsi
 
 build-windows:
 ifneq ($(GAME),crawl.exe)

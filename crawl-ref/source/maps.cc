@@ -10,6 +10,8 @@
 #include <cstring>
 #include <cstdlib>
 #include <algorithm>
+#include <sys/types.h>
+#include <sys/param.h>
 
 #ifndef TARGET_COMPILER_VC
 #include <unistd.h>
@@ -35,6 +37,18 @@
 #include "syscalls.h"
 #include "tags.h"
 #include "terrain.h"
+
+#ifdef __ANDROID__
+  #include <sys/endian.h>
+#endif
+#ifndef BYTE_ORDER
+# error BYTE_ORDER is not defined
+#endif
+#if BYTE_ORDER == LITTLE_ENDIAN
+# define WORD_LEN sizeof(long)
+#else
+# define WORD_LEN -sizeof(long)
+#endif
 
 static map_section_type _write_vault(map_def &mdef,
                                      vault_placement &,
@@ -150,6 +164,8 @@ static void _dgn_flush_map_environment_for(const string &mapname)
     dlua.callfn("dgn_flush_map_environment_for", "s", mapname.c_str());
 }
 
+// Execute the map's Lua, perform substitutions and other transformations,
+// and validate the map
 static bool _resolve_map_lua(map_def &map)
 {
     _dgn_flush_map_environment_for(map.name);
@@ -180,7 +196,8 @@ static bool _resolve_map_lua(map_def &map)
     return true;
 }
 
-// Mirror the map if appropriate, resolve substitutable symbols (?),
+// Resolve Lua and transformation directives, then mirror and rotate the
+// map if allowed
 static bool _resolve_map(map_def &map)
 {
     if (!_resolve_map_lua(map))
@@ -400,6 +417,12 @@ static bool _map_safe_vault_place(const map_def &map,
     const bool water_ok =
         map.has_tag("water_ok") || player_in_branch(BRANCH_SWAMP);
 
+    const bool vault_can_overwrite_other_vaults =
+        map.has_tag("can_overwrite");
+
+    const bool vault_can_replace_portals =
+        map.has_tag("replace_portal");
+
     const vector<string> &lines = map.map.get_lines();
     for (rectangle_iterator ri(c, c + size - 1); ri; ++ri)
     {
@@ -409,7 +432,7 @@ static bool _map_safe_vault_place(const map_def &map,
         if (lines[dp.y][dp.x] == ' ')
             continue;
 
-        if (!map.has_tag("can_overwrite"))
+        if (!vault_can_overwrite_other_vaults)
         {
             // Also check adjacent squares for collisions, because being next
             // to another vault may block off one of this vault's exits.
@@ -423,7 +446,7 @@ static bool _map_safe_vault_place(const map_def &map,
         // Don't overwrite features other than floor, rock wall, doors,
         // nor water, if !water_ok.
         if (!_may_overwrite_feature(cp, water_ok)
-            && (!map.has_tag("replace_portal")
+            && (!vault_can_replace_portals
                 || !_is_portal_place(cp)))
         {
             return false;
@@ -455,7 +478,6 @@ static bool _connected_minivault_place(const coord_def &c,
         return true;
 
     // Must not be completely isolated.
-    const bool water_ok = place.map.has_tag("water_ok");
     const vector<string> &lines = place.map.map.get_lines();
 
     for (rectangle_iterator ri(c, c + place.size - 1); ri; ++ri)
@@ -465,7 +487,7 @@ static bool _connected_minivault_place(const coord_def &c,
         if (lines[ci.y - c.y][ci.x - c.x] == ' ')
             continue;
 
-        if (_may_overwrite_feature(ci, water_ok, false)
+        if (_may_overwrite_feature(ci, false, false)
             || (place.map.has_tag("replace_portal")
                 && _is_portal_place(ci)))
             return true;
@@ -500,7 +522,7 @@ static coord_def _find_minivault_place(
 
     // [ds] The margin around the edges of the map where the minivault
     // won't be placed. Purely arbitrary as far as I can see.
-    const int margin = MAPGEN_BORDER * 2;
+    const int margin = MAPGEN_BORDER * 2 + 1;
 
     // Find a target area which can be safely overwritten.
     for (int tries = 0; tries < 600; ++tries)
@@ -1172,10 +1194,12 @@ static bool verify_file_version(const string &file, time_t mtime)
         reader inf(fp);
         const uint8_t major = unmarshallUByte(inf);
         const uint8_t minor = unmarshallUByte(inf);
+        const int8_t word = unmarshallByte(inf);
         const int64_t t = unmarshallSigned(inf);
         fclose(fp);
         return (major == TAG_MAJOR_VERSION
                 && minor <= TAG_MINOR_VERSION
+                && word == WORD_LEN
                 && t == mtime);
     }
     catch (short_read_exception &E)
@@ -1199,21 +1223,23 @@ static bool _load_map_index(const string& cache, const string &base,
                             time_t mtime)
 {
     // If there's a global prelude, load that first.
+    if (FILE *fp = fopen_u((base + ".lux").c_str(), "rb"))
     {
-        FILE *fp = fopen_u((base + ".lux").c_str(), "rb");
-        if (fp)
+        reader inf(fp, TAG_MINOR_VERSION);
+        uint8_t major = unmarshallUByte(inf);
+        uint8_t minor = unmarshallUByte(inf);
+        int8_t word = unmarshallByte(inf);
+        int64_t t = unmarshallSigned(inf);
+        if (major != TAG_MAJOR_VERSION || minor > TAG_MINOR_VERSION
+            || word != WORD_LEN || t != mtime)
         {
-            reader inf(fp, TAG_MINOR_VERSION);
-            uint8_t major = unmarshallUByte(inf);
-            uint8_t minor = unmarshallUByte(inf);
-            int64_t t = unmarshallSigned(inf);
-            if (major != TAG_MAJOR_VERSION || minor > TAG_MINOR_VERSION || t != mtime)
-                return false;
-            lc_global_prelude.read(inf);
-            fclose(fp);
-
-            global_preludes.push_back(lc_global_prelude);
+            return false;
         }
+
+        lc_global_prelude.read(inf);
+        fclose(fp);
+
+        global_preludes.push_back(lc_global_prelude);
     }
 
     FILE* fp = fopen_u((base + ".idx").c_str(), "rb");
@@ -1224,9 +1250,14 @@ static bool _load_map_index(const string& cache, const string &base,
     // Re-check version, might have been modified in the meantime.
     uint8_t major = unmarshallUByte(inf);
     uint8_t minor = unmarshallUByte(inf);
+    int8_t word = unmarshallByte(inf);
     int64_t t = unmarshallSigned(inf);
-    if (major != TAG_MAJOR_VERSION || minor > TAG_MINOR_VERSION || t != mtime)
+    if (major != TAG_MAJOR_VERSION || minor > TAG_MINOR_VERSION
+        || word != WORD_LEN || t != mtime)
+    {
         return false;
+    }
+
     const int nmaps = unmarshallShort(inf);
     const int nexist = vdefs.size();
     vdefs.resize(nexist + nmaps, map_def());
@@ -1279,6 +1310,7 @@ static void _write_map_prelude(const string &filebase, time_t mtime)
     writer outf(luafile, fp);
     marshallUByte(outf, TAG_MAJOR_VERSION);
     marshallUByte(outf, TAG_MINOR_VERSION);
+    marshallByte(outf, WORD_LEN);
     marshallSigned(outf, mtime);
     lc_global_prelude.write(outf);
     fclose(fp);
@@ -1295,6 +1327,7 @@ static void _write_map_full(const string &filebase, size_t vs, size_t ve,
     writer outf(cfile, fp);
     marshallUByte(outf, TAG_MAJOR_VERSION);
     marshallUByte(outf, TAG_MINOR_VERSION);
+    marshallByte(outf, WORD_LEN);
     marshallSigned(outf, mtime);
     for (size_t i = vs; i < ve; ++i)
         vdefs[i].write_full(outf);
@@ -1312,6 +1345,7 @@ static void _write_map_index(const string &filebase, size_t vs, size_t ve,
     writer outf(cfile, fp);
     marshallUByte(outf, TAG_MAJOR_VERSION);
     marshallUByte(outf, TAG_MINOR_VERSION);
+    marshallByte(outf, WORD_LEN);
     marshallSigned(outf, mtime);
     marshallShort(outf, ve > vs? ve - vs : 0);
     for (size_t i = vs; i < ve; ++i)

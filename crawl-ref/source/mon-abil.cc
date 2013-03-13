@@ -15,6 +15,12 @@
 #include "coordit.h"
 #include "delay.h"
 #include "directn.h"
+#include "dgnevent.h" //XXX
+#include "exclude.h" //XXX
+#ifdef USE_TILE
+ #include "tiledef-dngn.h"
+ #include "tilepick.h"
+#endif
 #include "fprop.h"
 #include "ghost.h"
 #include "losglobal.h"
@@ -36,6 +42,7 @@
 #include "random.h"
 #include "religion.h"
 #include "spl-miscast.h"
+#include "spl-summoning.h"
 #include "spl-util.h"
 #include "state.h"
 #include "stuff.h"
@@ -46,6 +53,8 @@
 #include "viewchar.h"
 #include "ouch.h"
 #include "target.h"
+#include "items.h"
+#include "mapmark.h"
 
 #include <algorithm>
 #include <queue>
@@ -814,7 +823,7 @@ static bool _slime_split_merge(monster* thing)
 }
 
 // Splits and polymorphs merged slime creatures.
-bool slime_creature_mutate(monster* slime)
+bool slime_creature_polymorph(monster* slime)
 {
     ASSERT(slime->type == MONS_SLIME_CREATURE);
 
@@ -824,7 +833,7 @@ bool slime_creature_mutate(monster* slime)
         while (slime->number > 1 && count <= 10)
         {
             if (monster *splinter = _slime_split(slime, true))
-                slime_creature_mutate(splinter);
+                slime_creature_polymorph(splinter);
             else
                 break;
             count++;
@@ -834,7 +843,7 @@ bool slime_creature_mutate(monster* slime)
     return monster_polymorph(slime, RANDOM_MONSTER);
 }
 
-bool _starcursed_split(monster* mon)
+static bool _starcursed_split(monster* mon)
 {
     if (!mon
         || mon->number <= 1
@@ -864,7 +873,7 @@ bool _starcursed_split(monster* mon)
     return false;
 }
 
-void _starcursed_scream(monster* mon, actor* target)
+static void _starcursed_scream(monster* mon, actor* target)
 {
     if (!target || !target->alive())
         return;
@@ -937,7 +946,7 @@ void _starcursed_scream(monster* mon, actor* target)
             chorus[i]->add_ench(mon_enchant(ENCH_SCREAMED, 1, chorus[i], 1));
 }
 
-bool _will_starcursed_scream(monster* mon)
+static bool _will_starcursed_scream(monster* mon)
 {
     vector<monster*> chorus;
 
@@ -1404,6 +1413,313 @@ static bool _queen_incite_worker(const monster* queen)
 
     return goaded != 0;
 
+}
+
+static void _set_door(set<coord_def> door, dungeon_feature_type feat)
+{
+    for (set<coord_def>::const_iterator i = door.begin();
+         i != door.end(); ++i)
+    {
+        grd(*i) = feat;
+        set_terrain_changed(*i);
+    }
+}
+
+// Find an adjacent space to displace a stack of items or a creature
+// (If act is null, we are just moving items and not an actor)
+bool get_push_space(const coord_def& pos, coord_def& newpos, actor* act,
+                    bool ignore_tension, const vector<coord_def>* excluded)
+{
+    if (act && act->is_monster() && mons_is_stationary(act->as_monster()))
+        return false;
+
+    int max_tension = -1;
+    coord_def best_spot(-1, -1);
+    bool can_push = false;
+    for (adjacent_iterator ai(pos); ai; ++ai)
+    {
+        dungeon_feature_type feat = grd(*ai);
+        if (feat_has_solid_floor(feat))
+        {
+            // Extra checks if we're moving a monster instead of an item
+            if (act)
+            {
+                if (actor_at(*ai)
+                    || !act->can_pass_through(*ai)
+                    || !act->is_habitable(*ai))
+                {
+                    continue;
+                }
+
+                bool spot_vetoed = false;
+                if (excluded)
+                {
+                    for (unsigned int i = 0; i < excluded->size(); ++i)
+                        if (excluded->at(i) == *ai)
+                        {
+                            spot_vetoed = true;
+                            break;
+                        }
+                }
+                if (spot_vetoed)
+                    continue;
+
+                // If we don't care about tension, first valid spot is acceptable
+                if (ignore_tension)
+                {
+                    newpos = *ai;
+                    return true;
+                }
+                else // Calculate tension with monster at new location
+                {
+                    set<coord_def> all_door;
+                    find_connected_identical(pos, grd(pos), all_door);
+                    dungeon_feature_type old_feat = grd(pos);
+
+                    act->move_to_pos(*ai);
+                    _set_door(all_door, DNGN_CLOSED_DOOR);
+                    int new_tension = get_tension(GOD_NO_GOD);
+                    _set_door(all_door, old_feat);
+                    act->move_to_pos(pos);
+
+                    if (new_tension > max_tension)
+                    {
+                        max_tension = new_tension;
+                        best_spot = *ai;
+                        can_push = true;
+                    }
+                }
+            }
+            else //If we're not moving a creature, the first open spot is enough
+            {
+                newpos = *ai;
+                return true;
+            }
+        }
+    }
+
+    if (can_push)
+        newpos = best_spot;
+    return can_push;
+}
+
+bool has_push_space(const coord_def& pos, actor* act,
+                    const vector<coord_def>* excluded)
+{
+    coord_def dummy(-1, -1);
+    return get_push_space(pos, dummy, act, true, excluded);
+}
+
+static bool _can_force_door_shut(const coord_def& door)
+{
+    if (grd(door) != DNGN_OPEN_DOOR)
+        return false;
+
+    set<coord_def> all_door;
+    vector<coord_def> veto_spots;
+    find_connected_identical(door, grd(door), all_door);
+    copy(all_door.begin(), all_door.end(), back_inserter(veto_spots));
+
+    for (set<coord_def>::const_iterator i = all_door.begin();
+         i != all_door.end(); ++i)
+    {
+        // Only attempt to push players and non-hostile monsters out of
+        // doorways
+        actor* act = actor_at(*i);
+        if (act)
+        {
+            if (act->is_player()
+                || act->is_monster()
+                    && act->as_monster()->attitude != ATT_HOSTILE)
+            {
+                coord_def newpos;
+                if (!get_push_space(*i, newpos, act, true, &veto_spots))
+                    return false;
+                else
+                    veto_spots.push_back(newpos);
+            }
+            else
+                return false;
+        }
+        // If there are items in the way, see if there's room to push them
+        // out of the way
+        else if (igrd(*i) != NON_ITEM)
+        {
+            if (!has_push_space(*i, 0))
+                return false;
+        }
+    }
+
+    // Didn't find any items we couldn't displace
+    return true;
+}
+
+static bool _should_force_door_shut(const coord_def& door)
+{
+    if (grd(door) != DNGN_OPEN_DOOR)
+        return false;
+
+    dungeon_feature_type old_feat = grd(door);
+    int cur_tension = get_tension(GOD_NO_GOD);
+
+    set<coord_def> all_door;
+    vector<coord_def> veto_spots;
+    find_connected_identical(door, grd(door), all_door);
+    copy(all_door.begin(), all_door.end(), back_inserter(veto_spots));
+
+    bool player_in_door = false;
+    for (set<coord_def>::const_iterator i = all_door.begin();
+        i != all_door.end(); ++i)
+    {
+        if (you.pos() == *i)
+        {
+            player_in_door = true;
+            break;
+        }
+    }
+
+    int new_tension;
+    if (player_in_door)
+    {
+        coord_def newpos;
+        coord_def oldpos = you.pos();
+        get_push_space(oldpos, newpos, &you, false, &veto_spots);
+        you.move_to_pos(newpos);
+        _set_door(all_door, DNGN_CLOSED_DOOR);
+        new_tension = get_tension(GOD_NO_GOD);
+        _set_door(all_door, old_feat);
+        you.move_to_pos(oldpos);
+    }
+    else
+    {
+        _set_door(all_door, DNGN_CLOSED_DOOR);
+        new_tension = get_tension(GOD_NO_GOD);
+        _set_door(all_door, old_feat);
+    }
+
+    // If closing the door would reduce player tension by too much, probably
+    // it is scarier for the player to leave it open and thus it should be left
+    // open
+
+    // Currently won't allow tension to be lowered by more than 33%
+    return (((cur_tension - new_tension) * 3) <= cur_tension);
+}
+
+static bool _seal_doors(const monster* warden)
+{
+    ASSERT(warden && warden->type == MONS_VAULT_WARDEN);
+
+    int num_closed = 0;
+    int seal_duration = 80 + random2(80);
+    bool player_pushed = false;
+    bool had_effect = false;
+
+    for (radius_iterator ri(you.pos(), LOS_RADIUS, C_ROUND);
+                 ri; ++ri)
+    {
+        if (grd(*ri) == DNGN_OPEN_DOOR)
+        {
+            if (!_can_force_door_shut(*ri))
+                continue;
+
+            // If it's scarier to leave this door open, do so
+            if (!_should_force_door_shut(*ri))
+                continue;
+
+            set<coord_def> all_door;
+            vector<coord_def> veto_spots;
+            find_connected_identical(*ri, grd(*ri), all_door);
+            copy(all_door.begin(), all_door.end(), back_inserter(veto_spots));
+            for (set<coord_def>::const_iterator i = all_door.begin();
+                 i != all_door.end(); ++i)
+            {
+                // If there are things in the way, push them aside
+                actor* act = actor_at(*i);
+                if (igrd(*i) != NON_ITEM || act)
+                {
+                    coord_def newpos;
+                    get_push_space(*i, newpos, act, false, &veto_spots);
+                    move_items(*i, newpos);
+                    if (act)
+                    {
+                        actor_at(*i)->move_to_pos(newpos);
+                        if (act->is_player())
+                            player_pushed = true;
+                        veto_spots.push_back(newpos);
+                    }
+                }
+            }
+
+            // Close the door
+            bool seen = false;
+            vector<coord_def> excludes;
+            for (set<coord_def>::const_iterator i = all_door.begin();
+                 i != all_door.end(); ++i)
+            {
+                const coord_def& dc = *i;
+                grd(dc) = DNGN_CLOSED_DOOR;
+                set_terrain_changed(dc);
+                dungeon_events.fire_position_event(DET_DOOR_CLOSED, dc);
+
+                if (env.map_knowledge(dc).seen())
+                {
+                    env.map_knowledge(dc).set_feature(DNGN_CLOSED_DOOR);
+#ifdef USE_TILE
+                    env.tile_bk_bg(dc) = TILE_DNGN_CLOSED_DOOR;
+#endif
+                }
+                if (is_excluded(dc))
+                    excludes.push_back(dc);
+
+                if (you.see_cell(dc))
+                    seen = true;
+
+                had_effect = true;
+            }
+            update_exclusion_los(excludes);
+            if (seen)
+                ++num_closed;
+        }
+
+        // Try to seal the door
+        if (grd(*ri) == DNGN_CLOSED_DOOR)
+        {
+            set<coord_def> all_door;
+            find_connected_identical(*ri, grd(*ri), all_door);
+            for (set<coord_def>::const_iterator i = all_door.begin();
+                 i != all_door.end(); ++i)
+            {
+                map_door_seal_marker *sealmarker =
+                    new map_door_seal_marker(*i, seal_duration, warden->mid,
+                                             DNGN_CLOSED_DOOR);
+                env.markers.add(sealmarker);
+                env.markers.clear_need_activate();
+
+                grd(*i) = DNGN_SEALED_DOOR;
+                set_terrain_changed(*i);
+
+                had_effect = true;
+            }
+        }
+    }
+
+    if (had_effect)
+    {
+        mprf(MSGCH_MONSTER_SPELL, "%s activates a sealing rune.",
+                (warden->visible_to(&you) ? warden->name(DESC_THE, true).c_str()
+                                          : "Someone"));
+        if (num_closed > 1)
+            mpr("The doors slam shut!");
+        else if (num_closed == 1)
+            mpr("A door slams shut!");
+
+        if (player_pushed)
+            mpr("You are pushed out of the doorway!");
+
+        return true;
+    }
+
+    return false;
 }
 
 static inline void _mons_cast_abil(monster* mons, bolt &pbolt,
@@ -2401,8 +2717,8 @@ bool mon_special_ability(monster* mons, bolt & beem)
     case MONS_UGLY_THING:
     case MONS_VERY_UGLY_THING:
         // A (very) ugly thing's proximity to you if you're glowing, or
-        // to others of its kind, can mutate it into a different (very)
-        // ugly thing.
+        // to others of its kind, or to other monsters glowing with
+        // radiation, can mutate it into a different (very) ugly thing.
         used = ugly_thing_mutate(mons, true);
         break;
 
@@ -2808,6 +3124,19 @@ bool mon_special_ability(monster* mons, bolt & beem)
             spell = SPELL_CHAOS_BREATH;
     // Intentional fallthrough
 
+    case MONS_CHAOS_BUTTERFLY:
+        if (spell == SPELL_NO_SPELL)
+        {
+            if (!mons->props.exists("twister_time")
+                || you.elapsed_time - (int)mons->props["twister_time"] > 200)
+            {
+                spell = SPELL_SUMMON_TWISTER;
+            }
+            else
+                break;
+        }
+    // Intentional fallthrough
+
     // Dragon breath weapons:
     case MONS_DRAGON:
     case MONS_HELL_HOUND:
@@ -2824,14 +3153,16 @@ bool mon_special_ability(monster* mons, bolt & beem)
         if (!you.visible_to(mons))
             break;
 
-        if ((mons_genus(mons->type) == MONS_DRAGON || mons_genus(mons->type) == MONS_DRACONIAN)
-            && mons->has_ench(ENCH_BREATH_WEAPON))
+        if ((mons_genus(mons->type) == MONS_DRAGON
+            || mons_genus(mons->type) == MONS_DRACONIAN)
+                && mons->has_ench(ENCH_BREATH_WEAPON))
         {
             break;
         }
 
-        if (mons->type != MONS_HELL_HOUND && x_chance_in_y(3, 13)
-            || one_chance_in(10))
+        if (mons->type == MONS_HELL_HOUND || mons->type == MONS_CHAOS_BUTTERFLY
+                ? one_chance_in(10)
+                : x_chance_in_y(4, 13))
         {
             setup_mons_cast(mons, beem, spell);
 
@@ -2848,10 +3179,16 @@ bool mon_special_ability(monster* mons, bolt & beem)
             }
 
             // Fire tracer.
-            fire_tracer(mons, beem);
+            bool spellOK = true;
+
+            if (spell_needs_tracer(spell))
+            {
+                fire_tracer(mons, beem);
+                spellOK = mons_should_fire(beem);
+            }
 
             // Good idea?
-            if (mons_should_fire(beem))
+            if (spellOK)
             {
                 make_mons_stop_fleeing(mons);
                 _mons_cast_abil(mons, beem, spell);
@@ -3036,6 +3373,45 @@ bool mon_special_ability(monster* mons, bolt & beem)
             _starcursed_scream(mons, actor_at(beem.target));
         break;
 
+
+    case MONS_VAULT_SENTINEL:
+        if (mons->has_ench(ENCH_CONFUSION) || mons->friendly())
+            break;
+
+        if (!silenced(mons->pos()) && !mons->has_ench(ENCH_BREATH_WEAPON)
+                && one_chance_in(4))
+        {
+            if (you.can_see(mons))
+            {
+                simple_monster_message(mons, " blows on a signal horn!");
+                noisy(25, mons->pos());
+            }
+            else
+                noisy(25, mons->pos(), "You hear a note blown loudly on a horn!");
+
+            // This is probably coopting the enchant for something beyond its
+            // intended purpose, but the message does match....
+            mon_enchant breath_timeout =
+                mon_enchant(ENCH_BREATH_WEAPON, 1, mons, (4 +  random2(9)) * 10);
+            mons->add_ench(breath_timeout);
+            used = true;
+        }
+        break;
+
+    case MONS_VAULT_WARDEN:
+        if (mons->has_ench(ENCH_CONFUSION) || mons->attitude != ATT_HOSTILE)
+            break;
+
+        if (!mons->can_see(&you))
+            break;
+
+        if (one_chance_in(4))
+        {
+            if (_seal_doors(mons))
+                used = true;
+        }
+        break;
+
     default:
         break;
     }
@@ -3045,8 +3421,16 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
     // XXX: Unless monster dragons get abilities that are not a breath
     // weapon...
-    if (used && (mons_genus(mons->type) == MONS_DRAGON || mons_genus(mons->type) == MONS_DRACONIAN))
-        setup_breath_timeout(mons);
+    if (used)
+    {
+        if (mons_genus(mons->type) == MONS_DRAGON
+            || mons_genus(mons->type) == MONS_DRACONIAN)
+        {
+            setup_breath_timeout(mons);
+        }
+        else if (mons->type == MONS_CHAOS_BUTTERFLY)
+            mons->props["twister_time"].get_int() = you.elapsed_time;
+    }
 
     return used;
 }
@@ -3100,6 +3484,9 @@ void mon_nearby_ability(monster* mons)
 
     switch (mons->type)
     {
+    case MONS_PANDEMONIUM_LORD:
+        if (!mons->ghost->cycle_colours)
+            break;
     case MONS_SPATIAL_VORTEX:
     case MONS_KILLER_KLOWN:
         // Choose random colour.
@@ -3119,7 +3506,7 @@ void mon_nearby_ability(monster* mons)
 
             if (foe->is_player() && !can_see)
             {
-                mpr(_("You feel you are being watched by something."));
+                canned_msg(MSG_BEING_WATCHED);
                 interrupt_activity(AI_MONSTER_ATTACKS, mons);
             }
 
@@ -3152,7 +3539,7 @@ void mon_nearby_ability(monster* mons)
                      foe->name(DESC_THE).c_str());
 
             if (foe->is_player() && !can_see)
-                mpr(_("You feel you are being watched by something."));
+                canned_msg(MSG_BEING_WATCHED);
 
             // Subtly different from old paralysis behaviour, but
             // it'll do.
@@ -3167,7 +3554,7 @@ void mon_nearby_ability(monster* mons)
             if (you.can_see(mons))
                 simple_monster_message(mons, gettext(" stares at you."));
             else
-                mpr(gettext("You feel you are being watched by something."));
+                canned_msg(MSG_BEING_WATCHED);
 
             interrupt_activity(AI_MONSTER_ATTACKS, mons);
 
@@ -3181,11 +3568,6 @@ void mon_nearby_ability(monster* mons)
     case MONS_AIR_ELEMENTAL:
         if (one_chance_in(5))
             mons->add_ench(ENCH_SUBMERGED);
-        break;
-
-    case MONS_PANDEMONIUM_LORD:
-        if (mons->ghost->cycle_colours)
-            mons->colour = random_colour();
         break;
 
     default:
@@ -3396,23 +3778,31 @@ void ancient_zyme_sicken(monster* mons)
 
     if (!is_sanctuary(you.pos())
         && you.res_rotting() <= 0
+        && !you.duration[DUR_DIVINE_STAMINA]
         && cell_see_cell(you.pos(), mons->pos(), LOS_SOLID_SEE))
     {
         if (!you.disease)
         {
-            mpr("You feel yourself grow ill in the presence of the ancient zyme.", MSGCH_WARN);
-            you.sicken(50 + random2(50));
-        }
-        else if (x_chance_in_y(you.time_taken, 60))
-            you.sicken(35 + random2(50));
+            if (!you.duration[DUR_SICKENING])
+            {
+                mprf(MSGCH_WARN, "You feel yourself growing ill in the presence of %s.",
+                    mons->name(DESC_THE).c_str());
+            }
 
-        if (x_chance_in_y(you.time_taken, 100))
+            you.duration[DUR_SICKENING] += (2 + random2(4)) * BASELINE_DELAY;
+            if (you.duration[DUR_SICKENING] > 100)
+            {
+                you.sicken(40 + random2(30));
+                you.duration[DUR_SICKENING] = 0;
+            }
+        }
+        else
         {
-            mpr("The zyme's presence inflicts a toll on your body.");
-            you.drain_stat((coinflip() ? STAT_STR : STAT_DEX), 1, mons);
+            if (x_chance_in_y(you.time_taken, 60))
+                you.sicken(15 + random2(30));
         }
-
     }
+
     for (radius_iterator ri(mons->pos(), LOS_RADIUS, C_ROUND); ri; ++ri)
     {
         monster *m = monster_at(*ri);
@@ -3463,8 +3853,8 @@ void starcursed_merge(monster* mon, bool forced)
         monster* mergee = monster_at(target);
         if (mergee && mergee->alive() && mergee->type == MONS_STARCURSED_MASS)
         {
-            if (forced && you.can_see(mon))
-                mpr("The starcursed mass shudders and is absorbed by its neighbour.");
+            if (forced)
+                simple_monster_message(mon, " shudders and is absorbed by its neighbour.");
             if (_do_merge_masses(mon, mergee))
                 return;
         }
@@ -3507,7 +3897,7 @@ void starcursed_merge(monster* mon, bool forced)
 
             if (moved)
             {
-                mpr("The starcursed mass shudders and withdraws towards its neighbour.");
+                simple_monster_message(mon, " shudders and withdraws towards its neighbour.");
                 mon->speed_increment -= 10;
             }
         }

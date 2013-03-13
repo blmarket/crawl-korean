@@ -293,6 +293,18 @@ static void _sdump_transform(dump_params &par)
                                      par.se ? "had" : "have", appendage_name());
             }
             break;
+        case TRAN_TREE:
+            text += "You " + verb + " an animated tree.";
+            break;
+        case TRAN_JELLY:
+            text += "You " + verb + " an acidic jelly.";
+            break;
+        case TRAN_PORCUPINE:
+            text += "You " + verb + " a porcupine.";
+            break;
+        case TRAN_WISP:
+            text += "You " + verb + " a barely coherent strand of gas.";
+            break;
         case TRAN_NONE:
             break;
         }
@@ -335,8 +347,11 @@ static void _sdump_visits(dump_params &par)
                          have.c_str(), (int)branches_visited.size());
     if (branches_visited.size() != 1)
         text += "es";
-    text += make_stringf(" of the dungeon, and %s %d of its levels.\n",
-                         seen.c_str(), branches_total.levels_seen);
+    if (brdepth[root_branch] > 1 || branches_visited.size() != 1)
+    {
+        text += make_stringf(" of the dungeon, and %s %d of its levels.\n",
+                             seen.c_str(), branches_total.levels_seen);
+    }
 
     PlaceInfo place_info = you.get_place_info(BRANCH_PANDEMONIUM);
     if (place_info.num_visits > 0)

@@ -22,6 +22,7 @@
 #include "areas.h"
 #include "artefact.h"
 #include "beam.h"
+#include "branch.h"
 #include "cloud.h"
 #include "colour.h"
 #include "coordit.h"
@@ -74,6 +75,7 @@
 #include "state.h"
 #include "stuff.h"
 #include "terrain.h"
+#include "transform.h"
 #include "traps.h"
 #include "travel.h"
 #include "viewchar.h"
@@ -214,11 +216,7 @@ int torment_player(actor *attacker, int taux)
     }
 
     // Kiku protects you from torment to a degree.
-    const bool kiku_shielding_player =
-        (you.religion == GOD_KIKUBAAQUDGHA
-        && !player_under_penance()
-        && you.piety > 80
-        && !you.gift_timeout); // no protection during pain branding weapon
+    const bool kiku_shielding_player = player_kiku_res_torment();
 
     if (kiku_shielding_player)
     {
@@ -526,12 +524,13 @@ void banished(const string &who)
 {
     ASSERT(!crawl_state.game_is_arena());
     push_features_to_abyss();
-    if (crawl_state.game_is_zotdef())
+    if (brdepth[BRANCH_ABYSS] == -1)
         return;
 
-    if (!player_in_branch(BRANCH_ABYSS)) {
-      mark_milestone("abyss.enter",
-                     "is cast into the Abyss!" + _who_banished(who));
+    if (!player_in_branch(BRANCH_ABYSS))
+    {
+        mark_milestone("abyss.enter",
+                       "is cast into the Abyss!" + _who_banished(who));
     }
 
     if (player_in_branch(BRANCH_ABYSS))
@@ -748,7 +747,6 @@ void random_uselessness(int scroll_slot)
         break;
 
     case 5:
-        temp_rand = random2(3);
         if (player_mutation_level(MUT_BEAK) || one_chance_in(3))
             mpr(gettext("Your brain hurts!"));
         else if (you.species == SP_MUMMY || coinflip())
@@ -894,6 +892,7 @@ static bool _follows_orders(monster* mon)
 {
     return (mon->friendly()
             && mon->type != MONS_GIANT_SPORE
+            && mon->type != MONS_BATTLESPHERE
             && !mon->berserk()
             && !mons_is_projectile(mon->type));
 }
@@ -920,6 +919,30 @@ static void _set_allies_patrol_point(bool clear = false)
         mi->patrol_point = (clear ? coord_def(0, 0) : mi->pos());
         if (!clear)
             mi->behaviour = BEH_WANDER;
+        else
+            mi->behaviour = BEH_SEEK;
+    }
+}
+
+static void _set_allies_withdraw(const coord_def &target)
+{
+    coord_def delta = target - you.pos();
+    float mult = float(LOS_RADIUS * 2) / (float)max(abs(delta.x), abs(delta.y));
+    coord_def rally_point = clamp_in_bounds(coord_def(delta.x * mult, delta.y * mult) + you.pos());
+
+    for (monster_iterator mi(you.get_los()); mi; ++mi)
+    {
+        if (!_follows_orders(*mi))
+            continue;
+        mi->behaviour = BEH_WITHDRAW;
+        mi->target = target;
+        mi->patrol_point = rally_point;
+        mi->foe = MHITNOT;
+
+        mi->props.erase("last_pos");
+        mi->props.erase("idle_point");
+        mi->props.erase("idle_deadline");
+        mi->props.erase("blocked_deadline");
     }
 }
 
@@ -951,14 +974,16 @@ void yell(bool force)
     else if (shout_verb == N_("scream"))
         noise_level = 16;
 
-    if (silenced(you.pos()) || you.cannot_speak())
+    if (you.cannot_speak() || !form_has_mouth())
         noise_level = 0;
 
     if (noise_level == 0)
     {
         if (force)
         {
-            if (shout_verb == "__NONE" || you.paralysed())
+            if (!form_has_mouth())
+                mpr("You have no mouth, and you must scream!");
+            else if (shout_verb == "__NONE" || you.paralysed())
             {
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a strong urge to %s, but "
@@ -974,6 +999,8 @@ void yell(bool force)
                      shout_verb.c_str());
             }
         }
+        else if (!form_has_mouth())
+            mpr("You have no mouth!");
         else
             mpr(gettext("You are unable to make a sound!"));
 
@@ -1006,10 +1033,10 @@ void yell(bool force)
             }
         }
 
-        /// 이전에 때리던 target이 있으면 "   p - Attack previous target."의 번역물이 여기 들어감.
-        mprf(gettext("Orders for allies: a - Attack new target.%s"), previous.c_str());
-        mpr(gettext("                   s - Stop attacking."));
-        mpr(gettext("                   w - Wait here.           f - Follow me."));
+		// 이전에 때리던 target이 있으면 "    p - Attack previous target."의 번역물이 여기 들어감.
+        mprf(_("Orders for allies: a - Attack new target.%s"), previous.c_str());
+        mpr(_("                   r - Retreat!             s - Stop attacking."));
+        mpr(_("                   w - Wait here.           f - Follow me."));
     }
     mprf(gettext(" Anything else - Stay silent%s."),
          one_chance_in(20) ? gettext(" (and be thought a fool)") : "");
@@ -1120,6 +1147,37 @@ void yell(bool force)
                 return;
             }
         }
+        break;
+
+    case 'r':
+        if (you.berserk())
+        {
+            canned_msg(MSG_TOO_BERSERK);
+            return;
+        }
+
+        {
+            direction_chooser_args args;
+            args.restricts = DIR_TARGET;
+            args.mode = TARG_ANY;
+            args.needs_path = false;
+            args.top_prompt = "Retreat in which direction?";
+            direction(targ, args);
+        }
+
+        if (targ.isCancel)
+        {
+            canned_msg(MSG_OK);
+            return;
+        }
+
+        if (targ.isValid)
+        {
+            mpr("Fall back!");
+            mons_targd = MHITNOT;
+        }
+
+        _set_allies_withdraw(targ.target);
         break;
 
     default:
@@ -2999,40 +3057,6 @@ bool mushroom_spawn_message(int seen_targets, int seen_corpses)
     return false;
 }
 
-// Randomly decide whether or not to spawn a mushroom over the given
-// corpse.  Assumption: this is called before the rotting away logic in
-// update_corpses.  Some conditions in this function may set the corpse
-// timer to 0, assuming that the corpse will be turned into a
-// skeleton/destroyed on this update.
-static void _maybe_spawn_mushroom(item_def & corpse, int rot_time)
-{
-    if (crawl_state.disables[DIS_SPAWNS])
-        return;
-
-    // We won't spawn a mushroom within 10 turns of the corpse's being created
-    // or rotting away.
-    int low_threshold  = 5;
-    int high_threshold = FRESHEST_CORPSE - 15;
-
-    if (corpse.special < low_threshold || corpse.special > high_threshold)
-        return;
-
-    int spawn_time = (rot_time > corpse.special ? corpse.special : rot_time);
-
-    if (spawn_time > high_threshold)
-        spawn_time = high_threshold;
-
-    int step_size = 10;
-
-    int current_trials = spawn_time / step_size;
-    int trial_prob     = mushroom_prob(corpse);
-    int success_count  = binomial_generator(current_trials, trial_prob);
-
-    int seen_spawns;
-    spawn_corpse_mushrooms(corpse, success_count, seen_spawns);
-    mushroom_spawn_message(seen_spawns, you.see_cell(corpse.pos) ? 1 : 0);
-}
-
 //---------------------------------------------------------------
 //
 // update_corpses
@@ -3059,9 +3083,6 @@ static void _update_corpses(int elapsedTime)
             maybe_coagulate_blood_potions_floor(c);
             continue;
         }
-
-        if (it.sub_type == CORPSE_BODY)
-            _maybe_spawn_mushroom(it, rot_time);
 
         if (rot_time >= it.special && !is_being_butchered(it))
         {

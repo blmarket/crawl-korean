@@ -67,6 +67,7 @@
 #include "fineff.h"
 #include "food.h"
 #include "godabil.h"
+#include "godcompanions.h"
 #include "godpassive.h"
 #include "godprayer.h"
 #include "hiscores.h"
@@ -83,6 +84,7 @@
 #include "makeitem.h"
 #include "mapmark.h"
 #include "maps.h"
+#include "melee_attack.h"
 #include "message.h"
 #include "misc.h"
 #include "mislead.h"
@@ -115,7 +117,9 @@
 #include "spl-goditem.h"
 #include "spl-other.h"
 #include "spl-selfench.h"
+#include "spl-summoning.h"
 #include "spl-transloc.h"
+#include "spl-util.h"
 #include "stairs.h"
 #include "stash.h"
 #include "state.h"
@@ -247,12 +251,29 @@ int main(int argc, char *argv[])
 #ifndef __ANDROID__
     setlocale(LC_ALL, "");
 #endif
+
+
 #ifdef KR 
     setlocale(LC_ALL, "ko_KR");
 
     bindtextdomain("Crawl", ".");
     bind_textdomain_codeset("Crawl", "utf-8");
     textdomain("Crawl");
+#endif
+
+#ifdef TARGET_OS_WINDOWS
+    // No documentation about resetting this, nor about which versions of
+    // Windows is required.  Previous ones can't handle writing to the console
+    // outside ancient locales AT ALL via standard means.
+    // Even with _O_U8TEXT, output tends to fail unless the user manually
+    // switches the terminal to a truetype font.  And even that fails for
+    // anything not directly in the font, above U+FFFF, or within Arabic or
+    // any complex scripts.
+#ifndef _O_U8TEXT
+#define _O_U8TEXT 0x40000
+# endif
+    _setmode(_fileno(stdout), _O_U8TEXT);
+    _setmode(_fileno(stderr), _O_U8TEXT);
 #endif
 #ifdef USE_TILE_WEB
     if (strcasecmp(nl_langinfo(CODESET), "UTF-8"))
@@ -561,8 +582,10 @@ static void _god_greeting_message(bool game_start)
 
     string msg = god_name(you.religion);
 
-    /// 이건 db에서 값을 가져오기 위한 key 값이니 번역하면 안됨.
-    if (game_start)
+    // 이건 db에서 값을 가져오기 위한 key 값이니 번역하면 안됨.
+    if (brdepth[BRANCH_ABYSS] == -1 && you.religion == GOD_LUGONU)
+        msg += " welcome";
+    else if (game_start)
         msg += " newgame";
     else if (you.religion == GOD_XOM)
     {
@@ -657,6 +680,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
     case CONTROL('L'): wizard_set_xl(); break;
     case CONTROL('M'): wizard_memorise_spec_spell(); break;
     case CONTROL('P'): wizard_transform(); break;
+    case CONTROL('Q'): wizard_toggle_dprf(); break;
     case CONTROL('R'): wizard_recreate_level(); break;
     case CONTROL('S'): wizard_abyss_speed(); break;
     case CONTROL('T'): debug_terp_dlua(); break;
@@ -718,6 +742,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
     case 'W': wizard_god_wrath();                    break;
     case 'w': wizard_god_mollify();                  break;
     case '#': wizard_load_dump_file();               break;
+    case '&': wizard_list_companions();              break;
 
     case 'x':
         you.experience = 1 + exp_needed(1 + you.experience_level);
@@ -1159,7 +1184,7 @@ static void _update_place_info()
 static void _input()
 {
     if (crawl_state.seen_hups)
-        sighup_save_and_exit();
+        save_game(true, "Game saved, see you later!");
 
     crawl_state.clear_mon_acting();
 
@@ -1290,7 +1315,7 @@ static void _input()
         const command_type cmd = _get_next_cmd();
 
         if (crawl_state.seen_hups)
-            sighup_save_and_exit();
+            save_game(true, "Game saved, see you later!");
 
         crawl_state.waiting_for_command = false;
 
@@ -2286,7 +2311,10 @@ static void _decrement_durations()
 
     if (you.gourmand())
     {
-        if (you.duration[DUR_GOURMAND] < GOURMAND_MAX && coinflip())
+        // Innate gourmand is always fully active.
+        if (player_mutation_level(MUT_GOURMAND) > 0)
+            you.duration[DUR_GOURMAND] = GOURMAND_MAX;
+        else if (you.duration[DUR_GOURMAND] < GOURMAND_MAX && coinflip())
             you.duration[DUR_GOURMAND] += delay;
     }
     else
@@ -2354,7 +2382,9 @@ static void _decrement_durations()
         remove_regen(you.attribute[ATTR_DIVINE_REGENERATION]);
     }
 
-    _decrement_a_duration(DUR_JELLY_PRAYER, delay, gettext("Your prayer is over."));
+    _decrement_a_duration(DUR_VEHUMET_GIFT, delay);
+
+    _decrement_a_duration(DUR_JELLY_PRAYER, delay, _("Your prayer is over."));
 
     if (you.duration[DUR_DIVINE_SHIELD] > 0)
     {
@@ -2456,7 +2486,7 @@ static void _decrement_durations()
     }
 
     // Vampire bat transformations are permanent (until ended).
-    if (you.species != SP_VAMPIRE || !player_in_bat_form()
+    if (you.species != SP_VAMPIRE || you.form != TRAN_BAT
         || you.duration[DUR_TRANSFORMATION] <= 5 * BASELINE_DELAY)
     {
         if (_decrement_a_duration(DUR_TRANSFORMATION, delay, NULL, random2(3),
@@ -2845,23 +2875,13 @@ static void _decrement_durations()
                           0,
                           _("Your shroud begins to fray at the edges."));
 
-    if (_decrement_a_duration(DUR_TEMP_MUTATIONS, delay))
-    {
+    _decrement_a_duration(DUR_SENTINEL_MARK, delay,
+                          "The sentinel's mark upon you fades away.");
 
-        int num_remove = min(you.attribute[ATTR_TEMP_MUTATIONS],
-                max(you.attribute[ATTR_TEMP_MUTATIONS] * 5 / 12 - random2(3),
-                2 + random2(3)));
+    _decrement_a_duration(DUR_SICKENING, delay);
 
-        if (num_remove == you.attribute[ATTR_TEMP_MUTATIONS])
-            mpr("You feel the corruption within you wane completely.", MSGCH_DURATION);
-        else
-            mpr("You feel the corruption within you wane somewhat.", MSGCH_DURATION);
-
-        for (int i = 0; i < num_remove; ++i)
-            delete_temp_mutation();
-        if (you.attribute[ATTR_TEMP_MUTATIONS] > 0)
-            you.increase_duration(DUR_TEMP_MUTATIONS, 20 + roll_dice(3,10), 50);
-    }
+    if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
+        do_recall(delay);
 
     if (!env.sunlight.empty())
         process_sunlights();
@@ -2869,8 +2889,9 @@ static void _decrement_durations()
 
 static void _check_banished()
 {
-    if (you.banished && !crawl_state.game_is_zotdef())
+    if (you.banished)
     {
+        ASSERT(brdepth[BRANCH_ABYSS] != -1);
         you.banished = false;
         if (!player_in_branch(BRANCH_ABYSS))
             mpr(_("You are cast into the Abyss!"), MSGCH_BANISHMENT);
@@ -3052,6 +3073,8 @@ static void _player_reacts()
             // mutations).
             save_game(false);
         }
+        else if (you.form == TRAN_WISP)
+            random_blink(false);
     }
 
     actor_apply_cloud(&you);
@@ -3524,26 +3547,31 @@ static bool _untrap_target(const coord_def move, bool check_confused)
                     dungeon_events.fire_vetoable_position_event(event,
                                                                 target);
             }
-
-            list<actor*> cleave_targets;
-            if (you.weapon() && weapon_skill(*you.weapon()) == SK_AXES
-                && !you.confused())
+            else
             {
-                get_all_cleave_targets(&you, target, cleave_targets);
-            }
+                list<actor*> cleave_targets;
+                if (you.weapon() && weapon_skill(*you.weapon()) == SK_AXES
+                    && !you.confused())
+                {
+                    get_all_cleave_targets(&you, target, cleave_targets);
+                }
 
-            if (!cleave_targets.empty())
-            {
-                targetter_cleave hitfunc(&you, target);
-                if (stop_attack_prompt(hitfunc, "attack"))
-                    return true;
+                if (!cleave_targets.empty())
+                {
+                    targetter_cleave hitfunc(&you, target);
+                    if (stop_attack_prompt(hitfunc, "attack"))
+                        return true;
 
-                if (!you.fumbles_attack())
-                    attack_cleave_targets(&you, cleave_targets);
+                    if (!you.fumbles_attack())
+                        attack_cleave_targets(&you, cleave_targets);
+                }
+                else if (do_msg && !you.fumbles_attack())
+                    mpr("You swing at nothing.");
+                make_hungry(3, true);
+                // Take the usual attack delay.
+                melee_attack attk(&you, NULL);
+                you.time_taken = attk.calc_attack_delay();
             }
-            else if (do_msg && !you.fumbles_attack())
-                mpr(_("You swing at nothing."));
-            make_hungry(3, true);
             you.turn_is_over = true;
             return true;
         }
@@ -3572,11 +3600,7 @@ static void _open_door(coord_def move, bool check_confused)
     if (!move.origin())
     {
         if (check_confused && you.confused() && !one_chance_in(3))
-        {
-            do
-                move = coord_def(random2(3) - 1, random2(3) - 1);
-            while (move.origin());
-        }
+            move = Compass[random2(8)];
         if (_untrap_target(move, check_confused))
             return;
     }
@@ -3621,11 +3645,7 @@ static void _open_door(coord_def move, bool check_confused)
         door_move.delta = move;
 
     if (check_confused && you.confused() && !one_chance_in(3))
-    {
-        do
-            door_move.delta = coord_def(random2(3) - 1, random2(3) - 1);
-        while (door_move.delta.origin());
-    }
+        door_move.delta = Compass[random2(8)];
 
     // We got a valid direction.
     const coord_def doorpos = you.pos() + door_move.delta;
@@ -3674,6 +3694,12 @@ static void _open_door(coord_def move, bool check_confused)
         else
             mpr(door_veto_message.c_str());
 
+        return;
+    }
+
+    if (feat == DNGN_SEALED_DOOR)
+    {
+        mpr("That door is sealed shut!");
         return;
     }
 
@@ -3878,11 +3904,7 @@ static void _close_door(coord_def move)
         door_move.delta = move;
 
     if (you.confused() && !one_chance_in(3))
-    {
-        do
-            door_move.delta = coord_def(random2(3) - 1, random2(3) - 1);
-        while (door_move.delta.origin());
-    }
+        door_move.delta = Compass[random2(8)];
 
     if (door_move.delta.origin())
     {
@@ -4023,7 +4045,7 @@ static void _close_door(coord_def move)
              i != all_door.end(); ++i)
         {
             const coord_def& dc = *i;
-            // Once opened, formerly secret doors become normal doors.
+            // Once opened, formerly runed doors become normal doors.
             grd(dc) = DNGN_CLOSED_DOOR;
             set_terrain_changed(dc);
             dungeon_events.fire_position_event(DET_DOOR_CLOSED, dc);
@@ -4159,6 +4181,10 @@ static void _move_player(coord_def move)
                 }
             }
         }
+
+        if (you.form == TRAN_TREE)
+            dangerous = DNGN_FLOOR; // still warn about allies
+
         if (dangerous != DNGN_FLOOR || bad_mons)
         {
             string prompt = _("Are you sure you want to move while confused "
@@ -4204,6 +4230,20 @@ static void _move_player(coord_def move)
             return;
         }
     }
+    else if (you.form == TRAN_WISP && one_chance_in(10))
+    {
+        // Full confusion appears to be a pain in the rear, and monster
+        // wisps don't attack allies either.  Thus, you can get redirected
+        // only into empty places or towards enemies.
+        coord_def dir = Compass[random2(8)];
+        coord_def targ = you.pos() + dir;
+        monster *dude = monster_at(targ);
+        if (in_bounds(targ) && (dude? !dude->wont_attack() :
+                                      you.can_pass_through(targ)))
+        {
+            move = dir;
+        }
+    }
 
     const coord_def& targ = you.pos() + move;
 
@@ -4211,7 +4251,7 @@ static void _move_player(coord_def move)
     if (!in_bounds(targ))
         return;
 
-    const dungeon_feature_type targ_grid = grd(targ);
+    dungeon_feature_type targ_grid = grd(targ);
 
     monster* targ_monst = monster_at(targ);
     if (fedhas_passthrough(targ_monst))
@@ -4234,7 +4274,7 @@ static void _move_player(coord_def move)
         targ_monst = NULL;
     }
 
-    const bool targ_pass = you.can_pass_through(targ);
+    bool targ_pass = you.can_pass_through(targ) && you.form != TRAN_TREE;
 
     // You can swap places with a friendly or good neutral monster if
     // you're not confused, or if both of you are inside a sanctuary.
@@ -4311,6 +4351,14 @@ static void _move_player(coord_def move)
 
             attacking = true;
         }
+    }
+
+    if (you.form == TRAN_JELLY && feat_is_closed_door(targ_grid))
+    {
+        mpr("You eat the door.");
+        nuke_wall(targ);
+        targ_pass = true;
+        targ_grid = grd(targ);
     }
 
     if (!attacking && targ_pass && moving && !beholder && !fmonger)
@@ -4411,14 +4459,14 @@ static void _move_player(coord_def move)
     }
     else if (!targ_pass && !attacking)
     {
-        if (grd(targ) == DNGN_OPEN_SEA)
-            mpr(gettext("The ferocious winds and tides of the open sea thwart your progress."));
-
-        if (grd(targ) == DNGN_LAVA_SEA)
-            mpr(gettext("The endless sea of lava is not a nice place."));
-
-        if (feat_is_tree(grd(targ)) && you.religion == GOD_FEDHAS)
-            mpr(gettext("You cannot walk through the dense trees."));
+        if (you.form == TRAN_TREE)
+            mpr(_("You cannot move."));
+        else if (grd(targ) == DNGN_OPEN_SEA)
+            mpr(_("The ferocious winds and tides of the open sea thwart your progress."));
+        else if (grd(targ) == DNGN_LAVA_SEA)
+            mpr(_("The endless sea of lava is not a nice place."));
+        else if (feat_is_tree(grd(targ)) && you.religion == GOD_FEDHAS)
+            mpr(_("You cannot walk through the dense trees."));
 
         stop_running();
         move.reset();

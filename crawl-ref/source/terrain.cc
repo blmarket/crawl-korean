@@ -310,19 +310,25 @@ bool cell_is_solid(const coord_def &c)
 
 bool feat_has_solid_floor(dungeon_feature_type feat)
 {
-    return (!feat_is_solid(feat) && feat != DNGN_DEEP_WATER &&
-            feat != DNGN_LAVA);
+    return (!feat_is_solid(feat) && feat != DNGN_DEEP_WATER
+            && feat != DNGN_LAVA);
+}
+
+bool feat_has_dry_floor(dungeon_feature_type feat)
+{
+    return (feat_has_solid_floor(feat) && feat != DNGN_SHALLOW_WATER);
 }
 
 bool feat_is_door(dungeon_feature_type feat)
 {
     return (feat == DNGN_CLOSED_DOOR || feat == DNGN_RUNED_DOOR
-            || feat == DNGN_OPEN_DOOR);
+            || feat == DNGN_OPEN_DOOR || feat == DNGN_SEALED_DOOR);
 }
 
 bool feat_is_closed_door(dungeon_feature_type feat)
 {
-    return (feat == DNGN_CLOSED_DOOR || feat == DNGN_RUNED_DOOR);
+    return (feat == DNGN_CLOSED_DOOR || feat == DNGN_RUNED_DOOR
+            || feat == DNGN_SEALED_DOOR);
 }
 
 bool feat_is_statue_or_idol(dungeon_feature_type feat)
@@ -419,6 +425,11 @@ bool feat_is_branchlike(dungeon_feature_type feat)
 bool feat_is_tree(dungeon_feature_type feat)
 {
     return (feat == DNGN_TREE || feat == DNGN_MANGROVE);
+}
+
+bool feat_is_metal(dungeon_feature_type feat)
+{
+    return (feat == DNGN_METAL_WALL || feat == DNGN_GRATE);
 }
 
 bool feat_is_bidirectional_portal(dungeon_feature_type feat)
@@ -691,11 +702,10 @@ bool is_critical_feature(dungeon_feature_type feat)
 
 bool is_valid_border_feat(dungeon_feature_type feat)
 {
-    return ((feat <= DNGN_MAXWALL && feat >= DNGN_MINWALL)
-            || (feat == DNGN_TREE
-               || feat == DNGN_MANGROVE
-               || feat == DNGN_OPEN_SEA
-               || feat == DNGN_LAVA_SEA));
+    return (feat <= DNGN_MAXWALL && feat >= DNGN_MINWALL)
+            || (feat_is_tree(feat)
+                || feat == DNGN_OPEN_SEA
+                || feat == DNGN_LAVA_SEA);
 }
 
 // This is for randomly generated mimics.
@@ -1549,10 +1559,7 @@ string stair_climb_verb(dungeon_feature_type feat)
 
 static const char *dngn_feature_names[] =
 {
-"unseen", "closed_door", "runed_door",
-#if TAG_MAJOR_VERSION == 34
-"non-secret_door",
-#endif
+"unseen", "closed_door", "runed_door", "sealed_door",
 "mangrove", "metal_wall", "green_crystal_wall", "rock_wall",
 "slimy_wall", "stone_wall", "permarock_wall",
 "clear_rock_wall", "clear_stone_wall", "clear_permarock_wall", "iron_grate",
@@ -1617,6 +1624,7 @@ static const char *dngn_feature_names[] =
 
 #if TAG_MAJOR_VERSION == 34
 "abyssal_stair",
+"badly_sealed_door",
 #endif
 };
 

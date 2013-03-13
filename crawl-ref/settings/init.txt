@@ -162,8 +162,8 @@
 # runrest_ignore_poison  = 2:30
 # runrest_ignore_monster ^= butterfly:1
 # runrest_ignore_monster ^= swamp worm:3
-# runrest_stop_message ^= You hear a.* slurping noise
-# runrest_ignore_message ^= Jiyva's power touches on your attributes
+# runrest_stop_message += You hear a.* slurping noise
+# runrest_ignore_message += Jiyva's power touches on your attributes
 
 # A good number of runrest_messages is defined by default; you may want to
 # clear them or override some.
@@ -187,11 +187,12 @@
 # easy_eat_gourmand      = true
 # easy_eat_contaminated  = true
 # auto_eat_chunks        = true
+# auto_drop_chunks       = (never | rotten | yes)
 # prompt_for_swap        = false
 # easy_quit_item_prompts = false
 # easy_exit_menu         = true
-# sort_menus += pickup: true : art, ego, basename, qualname, curse, qty
-# sort_menus += inv: true : equipped, freshness, charged
+# sort_menus = pickup: true : art, ego, basename, qualname, curse, qty
+# sort_menus = inv: true : equipped, freshness, charged
 
 # autofight_stop = 30
 
@@ -218,7 +219,6 @@
 # show_more                  = false
 # show_inventory_weights     = true
 # item_stack_summary_minimum = 5
-# auto_drop_chunks           = (never | rotten | yes)
 # msg_condense_repeats   = false
 # msg_condense_short     = false
 # skill_focus            = false
@@ -383,7 +383,7 @@
 # dump_order  = header, hiscore, stats, misc, notes, inventory,
 # dump_order += turns_by_place, skills, spells, overview, mutations,
 # dump_order += messages, screenshot, monlist, kills_by_place, kills
-# dump_order += action_counts
+# dump_order += vaults, action_counts
 # dump_book_spells = false
 
 ##### 4-c       Notes #################################

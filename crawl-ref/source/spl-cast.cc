@@ -77,14 +77,16 @@ static void _surge_power(spell_type spell)
 
     if (enhanced)               // one way or the other {dlb}
     {
-        mprf(gettext("You feel a%s %s"),
-             (enhanced < -2)  ? gettext("n extraordinarily") :
-             (enhanced == -2) ? gettext("n extremely") :
-             (enhanced == 2)  ? gettext(" strong") :
-             (enhanced > 2)   ? gettext(" huge")
-                              : "",
-             (enhanced < 0) ? gettext("numb sensation.")
-                            : gettext("surge of power!"));
+        const string modifier = (enhanced  < -2) ? pgettext("splcast","extraordinarily") :
+                                (enhanced == -2) ? pgettext("splcast","extremely") :
+                                (enhanced ==  2) ? pgettext("splcast","strong") :
+                                (enhanced  >  2) ? pgettext("splcast","huge")
+                                                 : "";
+        mprf(pgettext("splcast","You feel %s %s"), // 메모
+             !modifier.length() ? "a"
+                                : article_a(modifier).c_str(),
+             (enhanced < 0) ? _("numb sensation.")
+                            : _("surge of power!"));
     }
 }
 
@@ -281,7 +283,7 @@ static int _apply_spellcasting_success_boosts(spell_type spell, int chance)
     int wiz_factor = 87;
 
     if (you.religion == GOD_VEHUMET
-        && !player_under_penance() && you.piety >= piety_breakpoint(1)
+        && !player_under_penance() && you.piety >= piety_breakpoint(2)
         && vehumet_supports_spell(spell))
     {
         // [dshaligram] Fail rate multiplier used to be .5, scaled
@@ -527,7 +529,8 @@ void inspect_spells()
 
 static bool _can_cast()
 {
-    if (player_in_bat_form() || you.form == TRAN_PIG)
+    if (you.form == TRAN_BAT || you.form == TRAN_PIG || you.form == TRAN_JELLY
+        || you.form == TRAN_PORCUPINE || you.form == TRAN_WISP)
     {
         canned_msg(MSG_PRESENT_FORM);
         return false;
@@ -713,7 +716,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
         return false;
     }
 
-    if (!you.is_undead
+    if (!you.is_undead && !you_foodless()
         && (you.hunger_state == HS_STARVING
             || you.hunger <= spell_hunger(spell)))
     {
@@ -984,29 +987,14 @@ static targetter* _spell_targetter(spell_type spell, int pow, int range)
     switch (spell)
     {
     case SPELL_ICE_STORM:
-        return new targetter_beam(&you, range, ZAP_ICE_STORM, pow, true, 2,
-                                  (pow > 76) ? 3 : 2);
+        return new targetter_beam(&you, range, ZAP_ICE_STORM, pow, 2, (pow > 76) ? 3 : 2);
     case SPELL_FIREBALL:
-        return new targetter_beam(&you, range, ZAP_FIREBALL, pow, true, 1, 1);
+        return new targetter_beam(&you, range, ZAP_FIREBALL, pow, 1, 1);
     case SPELL_HELLFIRE:
-        return new targetter_beam(&you, range, ZAP_HELLFIRE, pow, true, 1, 1);
+        return new targetter_beam(&you, range, ZAP_HELLFIRE, pow, 1, 1);
     case SPELL_MEPHITIC_CLOUD:
-        return new targetter_beam(&you, range, ZAP_BREATHE_MEPHITIC, pow, true,
+        return new targetter_beam(&you, range, ZAP_BREATHE_MEPHITIC, pow,
                                   pow >= 100 ? 1 : 0, 1);
-    case SPELL_SHOCK:
-    case SPELL_LIGHTNING_BOLT:
-        return new targetter_beam(&you, range, spell_to_zap(spell), pow, false,
-                                  0, 0);
-    case SPELL_FLAME_TONGUE:
-    case SPELL_THROW_FLAME:
-        return new targetter_beam(&you, range, spell_to_zap(spell), pow, true,
-                                  0, 0);
-    case SPELL_BOLT_OF_FIRE:
-        return new targetter_beam(&you, range, ZAP_FIRE, pow, false, 0, 0);
-    case SPELL_THROW_FROST:
-        return new targetter_beam(&you, range, ZAP_FROST, pow, true, 0, 0);
-    case SPELL_BOLT_OF_COLD:
-        return new targetter_beam(&you, range, ZAP_COLD, pow, false, 0, 0);
     case SPELL_ISKENDERUNS_MYSTIC_BLAST:
         return new targetter_imb(&you, pow, range);
     case SPELL_FIRE_STORM:
@@ -1020,8 +1008,44 @@ static targetter* _spell_targetter(spell_type spell, int pow, int range)
             (you.props.exists("thunderbolt_last")
              && you.props["thunderbolt_last"].get_int() + 1 == you.num_turns) ?
                 you.props["thunderbolt_aim"].get_coord() : coord_def());
-    case SPELL_FRAGMENTATION:
+    case SPELL_LRD:
         return new targetter_fragment(&you, pow, range);
+    case SPELL_FULMINANT_PRISM:
+        return new targetter_smite(&you, range, 0, 2);
+    case SPELL_DAZZLING_SPRAY:
+        return new targetter_spray(&you, 6, ZAP_DAZZLING_SPRAY);
+    case SPELL_MAGIC_DART:
+    case SPELL_FORCE_LANCE:
+    case SPELL_SHOCK:
+    case SPELL_LIGHTNING_BOLT:
+    case SPELL_FLAME_TONGUE:
+    case SPELL_THROW_FLAME:
+    case SPELL_BOLT_OF_FIRE:
+    case SPELL_THROW_FROST:
+    case SPELL_THROW_ICICLE:
+    case SPELL_BOLT_OF_COLD:
+    case SPELL_STING:
+    case SPELL_VENOM_BOLT:
+    case SPELL_POISON_ARROW:
+    case SPELL_BOLT_OF_MAGMA:
+    case SPELL_IRON_SHOT:
+    case SPELL_STONE_ARROW:
+    case SPELL_LEHUDIBS_CRYSTAL_SPEAR:
+    case SPELL_CORONA:
+    case SPELL_SLOW:
+    case SPELL_CONFUSE:
+    case SPELL_ENSLAVEMENT:
+    case SPELL_INNER_FLAME:
+    case SPELL_PAIN:
+    case SPELL_AGONY:
+    case SPELL_BOLT_OF_DRAINING:
+    case SPELL_HASTE:
+    case SPELL_PETRIFY:
+    case SPELL_POLYMORPH:
+    case SPELL_DIG:
+    case SPELL_CIGOTUVIS_DEGENERATION:
+    case SPELL_DISPEL_UNDEAD:
+        return new targetter_beam(&you, range, spell_to_zap(spell), pow, 0, 0);
     default:
         return 0;
     }
@@ -1115,8 +1139,8 @@ spret_type your_spells(spell_type spell, int powc,
 
         if (testbits(flags, SPFLAG_NOT_SELF) && spd.isMe())
         {
-            if (spell == SPELL_TELEPORT_OTHER || spell == SPELL_POLYMORPH_OTHER)
-                mpr(gettext("Sorry, this spell works on others only."));
+            if (spell == SPELL_TELEPORT_OTHER)
+                mpr(_("Sorry, this spell works on others only."));
             else
                 canned_msg(MSG_UNTHINKING_ACT);
 
@@ -1157,9 +1181,23 @@ spret_type your_spells(spell_type spell, int powc,
                                "death!"), GOD_KIKUBAAQUDGHA);
 
             // The spell still goes through, but you get a miscast anyway.
-            MiscastEffect(&you, -god, SPTYP_NECROMANCY,
+            MiscastEffect(&you, -GOD_KIKUBAAQUDGHA, SPTYP_NECROMANCY,
                           (you.experience_level / 2) + (spell_difficulty(spell) * 2),
                           random2avg(88, 3), "the malice of Kikubaaqudgha");
+        }
+        else if (vehumet_supports_spell(spell)
+                 && you.religion != GOD_VEHUMET
+                 && you.penance[GOD_VEHUMET]
+                 && one_chance_in(20))
+        {
+            // And you thought you'd Fire Storm your way out of penance...
+            simple_god_message(" does not allow the disloyal to dabble in "
+                               "destruction!", GOD_VEHUMET);
+
+            // The spell still goes through, but you get a miscast anyway.
+            MiscastEffect(&you, -GOD_VEHUMET, SPTYP_CONJURATION,
+                          (you.experience_level / 2) + (spell_difficulty(spell) * 2),
+                          random2avg(88, 3), "the malice of Vehumet");
         }
 
         const int spfail_chance = spell_fail(spell);
@@ -1173,9 +1211,15 @@ spret_type your_spells(spell_type spell, int powc,
     if (crawl_state.prev_cmd == CMD_CAST_SPELL && god == GOD_NO_GOD)
         _maybe_cancel_repeat(spell);
 
+    // Have to set aim first, in case the spellcast kills its first target
+    if (you.props.exists("battlesphere") && allow_fail)
+        aim_battlesphere(&you, spell, powc, beam);
+
     switch (_do_cast(spell, powc, spd, beam, god, potion, check_range, fail))
     {
     case SPRET_SUCCESS:
+        if (you.props.exists("battlesphere") && allow_fail)
+            trigger_battlesphere(&you, beam);
         _spellcasting_side_effects(spell, powc, god);
         return SPRET_SUCCESS;
 
@@ -1311,9 +1355,6 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_HELLFIRE_BURST:
         return cast_hellfire_burst(powc, beam) ? SPRET_SUCCESS : SPRET_ABORT;
 
-    case SPELL_FIREBALL:
-        return fireball(powc, beam, fail);
-
     case SPELL_DELAYED_FIREBALL:
         return cast_delayed_fireball(fail);
 
@@ -1327,7 +1368,7 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_AIRSTRIKE:
         return cast_airstrike(powc, spd, fail);
 
-    case SPELL_FRAGMENTATION:
+    case SPELL_LRD:
         return cast_fragmentation(powc, &you, spd.target, fail);
 
     case SPELL_PORTAL_PROJECTILE:
@@ -1360,6 +1401,9 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     case SPELL_THUNDERBOLT:
         return cast_thunderbolt(&you, powc, target, fail);
+
+    case SPELL_DAZZLING_SPRAY:
+        return cast_dazzling_spray(&you, powc, target, fail);
 
     // Summoning spells, and other spells that create new monsters.
     // If a god is making you cast one of these spells, any monsters
@@ -1442,6 +1486,9 @@ static spret_type _do_cast(spell_type spell, int powc,
 
     case SPELL_DEATH_CHANNEL:
         return cast_death_channel(powc, god, fail);
+
+    case SPELL_BATTLESPHERE:
+        return cast_battlesphere(&you, powc, god, fail);
 
     // Enchantments.
     case SPELL_CONFUSING_TOUCH:
@@ -1629,6 +1676,9 @@ static spret_type _do_cast(spell_type spell, int powc,
     case SPELL_SHROUD_OF_GOLUBRIA:
         return cast_shroud_of_golubria(powc, fail);
 
+    case SPELL_FULMINANT_PRISM:
+        return cast_fulminating_prism(powc, beam.target, fail);
+
     default:
         return SPRET_NONE;
     }
@@ -1768,8 +1818,8 @@ string spell_noise_string(spell_type spell)
         break;
 
     // Medium explosions
-    case SPELL_FRAGMENTATION:   //LRD most often do small and medium explosions
-        effect_noise = 20;      //and sometimes big ones with green crystal
+    case SPELL_LRD:         //LRD most often do small and medium explosions
+        effect_noise = 20;  //and sometimes big ones with green crystal
         break;
 
     // Big explosions

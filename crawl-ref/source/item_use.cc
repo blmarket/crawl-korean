@@ -456,20 +456,13 @@ void warn_shield_penalties()
     if (!you.shield())
         return;
 
-    // Warnings are limited to launchers and staves at the moment.
+    // Warnings are limited to launchers at the moment.
     const item_def *weapon = you.weapon();
     if (!weapon)
         return;
 
     if (is_range_weapon(*weapon))
         _warn_launcher_shield_slowdown(*weapon);
-    else if (weapon_skill(*weapon) == SK_STAVES
-             && weapon->base_type == OBJ_WEAPONS
-             && cmp_weapon_size(*weapon, SIZE_LARGE) >= 0)
-    {
-        mprf(MSGCH_WARN, gettext("Your %s severely limits your weapon's effectiveness."),
-             shield_base_name(you.shield()));
-    }
 }
 
 void warn_armour_penalties()
@@ -1724,18 +1717,17 @@ static targetter *_wand_targetter(const item_def *wand)
     switch (wand->sub_type)
     {
     case WAND_FIREBALL:
-        return new targetter_beam(&you, range, ZAP_FIREBALL, power, true, 1, 1);
+        return new targetter_beam(&you, range, ZAP_FIREBALL, power, 1, 1);
     case WAND_LIGHTNING:
-        return new targetter_beam(&you, range, ZAP_LIGHTNING, power, false, 0,
-                                  0);
+        return new targetter_beam(&you, range, ZAP_LIGHTNING_BOLT, power, 0, 0);
     case WAND_FLAME:
-        return new targetter_beam(&you, range, ZAP_FLAME, power, true, 0, 0);
+        return new targetter_beam(&you, range, ZAP_THROW_FLAME, power, 0, 0);
     case WAND_FIRE:
-        return new targetter_beam(&you, range, ZAP_FIRE, power, false, 0, 0);
+        return new targetter_beam(&you, range, ZAP_BOLT_OF_FIRE, power, 0, 0);
     case WAND_FROST:
-        return new targetter_beam(&you, range, ZAP_FROST, power, true, 0, 0);
+        return new targetter_beam(&you, range, ZAP_THROW_FROST, power, 0, 0);
     case WAND_COLD:
-        return new targetter_beam(&you, range, ZAP_COLD, power, false, 0, 0);
+        return new targetter_beam(&you, range, ZAP_BOLT_OF_COLD, power, 0, 0);
     default:
         return 0;
     }
@@ -1743,7 +1735,7 @@ static targetter *_wand_targetter(const item_def *wand)
 
 void zap_wand(int slot)
 {
-    if (you.species == SP_FELID || !form_can_wield())
+    if (you.species == SP_FELID || !form_can_use_wand())
     {
         mpr(gettext("You have no means to grasp a wand firmly enough."));
         return;
@@ -2034,9 +2026,12 @@ static void _vampire_corpse_help()
 
 void drink(int slot)
 {
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
     {
-        mpr(gettext("You can't drink."));
+        if (you.form == TRAN_TREE)
+            mpr(_("It'd take too long for a potion to reach your roots."));
+        else
+            mpr(_("You can't drink."));
         return;
     }
 
@@ -2876,6 +2871,12 @@ void read_scroll(int slot)
         return;
     }
 
+    if (you.form == TRAN_WISP)
+    {
+        crawl_state.zero_turns_taken();
+        return mpr("You have no means to unroll scrolls.");
+    }
+
     if (silenced(you.pos()))
     {
         mpr(gettext("Magic scrolls do not work when you're silenced!"));
@@ -2998,9 +2999,7 @@ void read_scroll(int slot)
     string pre_succ_msg =
             make_stringf(_("As you read the %s, it crumbles to dust."),
                           scroll.name(true, DESC_QUALNAME).c_str());
-    if (you.confused()
-        || (which_scroll != SCR_IMMOLATION
-            && !_is_cancellable_scroll(which_scroll)))
+    if (which_scroll != SCR_IMMOLATION && !_is_cancellable_scroll(which_scroll))
     {
         mpr(pre_succ_msg.c_str());
         // Actual removal of scroll done afterwards. -- bwr

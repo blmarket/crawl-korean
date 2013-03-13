@@ -204,6 +204,8 @@ static void _post_init(bool newc)
     crawl_state.last_type = crawl_state.type;
     crawl_state.last_game_won = false;
 
+    destroy_abyss();
+
     calc_hp();
     calc_mp();
     if (you.form != TRAN_LICH)
@@ -280,6 +282,7 @@ static void _post_init(bool newc)
     ash_check_bondage(false);
 
     trackers_init_new_level(false);
+    tile_new_level(newc);
 
     if (newc) // start a new game
     {
@@ -295,8 +298,6 @@ static void _post_init(bool newc)
         if (crawl_state.game_is_zotdef())
             fully_map_level();
     }
-
-    tile_new_level(newc);
 
     // This just puts the view up for the first turn.
     viewwindow();

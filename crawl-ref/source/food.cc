@@ -81,7 +81,7 @@ void make_hungry(int hunger_amount, bool suppress_msg,
         return;
     }
 
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return;
 
     if (allow_reducing)
@@ -108,7 +108,7 @@ void make_hungry(int hunger_amount, bool suppress_msg,
 
 void lessen_hunger(int satiated_amount, bool suppress_msg)
 {
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return;
 
     you.hunger += satiated_amount;
@@ -125,7 +125,7 @@ void lessen_hunger(int satiated_amount, bool suppress_msg)
 
 void set_hunger(int new_hunger_level, bool suppress_msg)
 {
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return;
 
     int hunger_difference = (new_hunger_level - you.hunger);
@@ -134,6 +134,13 @@ void set_hunger(int new_hunger_level, bool suppress_msg)
         make_hungry(-hunger_difference, suppress_msg);
     else if (hunger_difference > 0)
         lessen_hunger(hunger_difference, suppress_msg);
+}
+
+bool you_foodless()
+{
+    return you.is_undead == US_UNDEAD
+        || you.form == TRAN_TREE
+        || you.form == TRAN_WISP;
 }
 
 /**
@@ -733,6 +740,7 @@ bool prompt_eat_inventory_item(int slot)
                 prompt_invent_item(you.species == SP_VAMPIRE ? pgettext("food","Drain what?")
                                                              : pgettext("food","Eat which item?"),
                                    MT_INVLIST,
+                                   you.form == TRAN_JELLY ? OSEL_ANY :
                                    you.species == SP_VAMPIRE ? (int)OSEL_VAMP_EAT
                                                              : OBJ_FOOD,
                                    true, true, true, 0, -1, NULL,
@@ -744,7 +752,18 @@ bool prompt_eat_inventory_item(int slot)
 
     // This conditional can later be merged into food::can_ingest() when
     // expanded to handle more than just OBJ_FOOD 16mar200 {dlb}
-    if (you.species != SP_VAMPIRE)
+    if (you.form == TRAN_JELLY)
+    {
+        const item_def &item(you.inv[which_inventory_slot]);
+        if (item_is_melded(item))
+        {
+            // Allowing eating it would be natural, but we don't want to
+            // let folks get rid of curses or distortion a scummy way.
+            mpr("It's melded into your body!");
+            return false;
+        }
+    }
+    else if (you.species != SP_VAMPIRE)
     {
         if (you.inv[which_inventory_slot].base_type != OBJ_FOOD)
         {
@@ -775,11 +794,14 @@ bool prompt_eat_inventory_item(int slot)
 
 static bool _eat_check(bool check_hunger = true, bool silent = false)
 {
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
     {
         if (!silent)
         {
-            mpr(gettext("You can't eat."));
+            if (you.form == TRAN_TREE)
+                mpr(_("Just photosynthesize."));
+            else
+                mpr(_("You can't eat."));
             crawl_state.zero_turns_taken();
         }
         return false;
@@ -966,6 +988,8 @@ bool food_change(bool suppress_message)
         state_changed = true;
         if (newstate > you.hunger_state)
             less_hungry = true;
+        else
+            maybe_id_ring_hunger();
 
         you.hunger_state = newstate;
         set_redraw_status(REDRAW_HUNGER);
@@ -991,7 +1015,7 @@ bool food_change(bool suppress_message)
                     you.set_duration(DUR_TRANSFORMATION, 2);
                 }
             }
-            else if (player_in_bat_form()
+            else if (you.form == TRAN_BAT
                      && you.duration[DUR_TRANSFORMATION] > 5)
             {
                 print_stats();
@@ -1060,9 +1084,6 @@ bool food_change(bool suppress_message)
             default:
                 return state_changed;
             }
-
-            if (!less_hungry)
-                maybe_id_ring_hunger();
         }
     }
 
@@ -1101,6 +1122,9 @@ static void _describe_food_change(int food_increment)
 
 static bool _player_can_eat_rotten_meat(bool need_msg = false)
 {
+    if (you.form == TRAN_JELLY) // gelatin from mad cow carcasses anyone?
+        return true;
+
     if (player_mutation_level(MUT_SAPROVOROUS))
         return true;
 
@@ -1114,14 +1138,16 @@ static bool _player_can_eat_rotten_meat(bool need_msg = false)
 void eat_inventory_item(int which_inventory_slot)
 {
     item_def& food(you.inv[which_inventory_slot]);
-    if (food.base_type == OBJ_CORPSES && food.sub_type == CORPSE_BODY)
+
+    if (you.form == TRAN_JELLY)
+        _eating(food);
+    else if (food.base_type == OBJ_CORPSES && food.sub_type == CORPSE_BODY)
     {
         _vampire_consume_corpse(which_inventory_slot, true);
         you.turn_is_over = true;
         return;
     }
-
-    if (food.sub_type == FOOD_CHUNK)
+    else if (food.sub_type == FOOD_CHUNK)
     {
         if (food_is_rotten(food) && !_player_can_eat_rotten_meat(true))
             return;
@@ -1138,7 +1164,9 @@ void eat_inventory_item(int which_inventory_slot)
 void eat_floor_item(int item_link)
 {
     item_def& food(mitm[item_link]);
-    if (food.base_type == OBJ_CORPSES && food.sub_type == CORPSE_BODY)
+    if (you.form == TRAN_JELLY)
+        _eating(food);
+    else if (food.base_type == OBJ_CORPSES && food.sub_type == CORPSE_BODY)
     {
         if (you.species != SP_VAMPIRE)
             return;
@@ -1169,43 +1197,46 @@ class compare_by_freshness
 public:
     bool operator()(const item_def *food1, const item_def *food2)
     {
-        ASSERT(food1->base_type == OBJ_CORPSES || food1->base_type == OBJ_FOOD);
-        ASSERT(food2->base_type == OBJ_CORPSES || food2->base_type == OBJ_FOOD);
-        ASSERT(food1->base_type == food2->base_type);
-
         if (is_inedible(*food1))
             return false;
 
         if (is_inedible(*food2))
             return true;
 
-        if (food1->base_type == OBJ_FOOD)
-        {
-            // Prefer chunks to non-chunks. (Herbivores handled above.)
-            if (food1->sub_type != FOOD_CHUNK && food2->sub_type == FOOD_CHUNK)
-                return false;
-            if (food2->sub_type != FOOD_CHUNK && food1->sub_type == FOOD_CHUNK)
-                return true;
-        }
+        // Permafood can last longest, skip it if possible.
+        if (food1->base_type == OBJ_FOOD && food1->sub_type != FOOD_CHUNK)
+            return false;
+        if (food2->base_type == OBJ_FOOD && food2->sub_type != FOOD_CHUNK)
+            return true;
 
-        // Both food types are edible (not rotten, or player is Saprovore).
-        if (food1->base_type == OBJ_CORPSES
-            || food1->sub_type == FOOD_CHUNK && food2->sub_type == FOOD_CHUNK)
-        {
-            // Always offer poisonous/mutagenic chunks last.
-            if (is_bad_food(*food1) && !is_bad_food(*food2))
-                return false;
-            if (is_bad_food(*food2) && !is_bad_food(*food1))
-                return true;
+        // If we can eat non-food (jelly), use it up first: when the transform
+        // expires, chunks may be usable, that chainmail won't.
+        if (food1->base_type != OBJ_CORPSES && food1->base_type != OBJ_FOOD)
+            return true;
+        if (food2->base_type != OBJ_CORPSES && food2->base_type != OBJ_FOOD)
+            return false;
 
-            if (Options.prefer_safe_chunks && !you.is_undead)
-            {
-                // Offer contaminated chunks last.
-                if (is_contaminated(*food1) && !is_contaminated(*food2))
-                    return false;
-                if (is_contaminated(*food2) && !is_contaminated(*food1))
-                    return true;
-            }
+        // At this point, we know bothe are corpses or chunks, edible
+        // (not rotten, or player is saprovore).
+
+        // Always offer poisonous/mutagenic chunks last.
+        if (is_bad_food(*food1) && !is_bad_food(*food2))
+            return false;
+        if (is_bad_food(*food2) && !is_bad_food(*food1))
+            return true;
+
+        if (Options.prefer_safe_chunks && !you.is_undead)
+        {
+            // Offer rotten chunks last.
+            if (food_is_rotten(*food1) && !food_is_rotten(*food2))
+                return false;
+            if (food_is_rotten(*food2) && !food_is_rotten(*food1))
+                return true;
+            // Offer contaminated chunks last.
+            if (is_contaminated(*food1) && !is_contaminated(*food2))
+                return false;
+            if (is_contaminated(*food2) && !is_contaminated(*food1))
+                return true;
         }
 
         return (food1->special < food2->special);
@@ -1237,7 +1268,9 @@ int eat_from_floor(bool skip_chunks)
     vector<const item_def*> food_items;
     for (stack_iterator si(you.pos(), true); si; ++si)
     {
-        if (you.species == SP_VAMPIRE)
+        if (you.form == TRAN_JELLY)
+            /*burp*/; // scuse me
+        else if (you.species == SP_VAMPIRE)
         {
             if (si->base_type != OBJ_CORPSES || si->sub_type != CORPSE_BODY)
                 continue;
@@ -1813,7 +1846,6 @@ static int _contamination_ratio(corpse_effect_type chunk_effect)
     case CE_ROT:
         return 1000;
     case CE_POISON_CONTAM:
-        chunk_effect = CE_CONTAMINATED;
     case CE_CONTAMINATED:
         switch (sapro)
         {
@@ -1985,9 +2017,12 @@ static void _eating(item_def& food)
     }
 
     int duration = food_turns(food) - 1;
+    if (you.form == TRAN_JELLY) // remarkably fast eaters, monsters even get
+        duration = 0;           // to eat multiple things per turn
 
     // use delay.parm3 to figure out whether to output "finish eating"
-    start_delay(DELAY_EAT, duration, 0, food.sub_type, duration);
+    start_delay(DELAY_EAT, duration, 0, food.base_type == OBJ_FOOD ?
+        food.sub_type : -2, duration);
 
     lessen_hunger(food_value, true);
 
@@ -2006,6 +2041,12 @@ static void _eating(item_def& food)
 // Some food types may not get a message.
 void finished_eating_message(int food_type)
 {
+    if (food_type == -2) // non-food, unyay magic cookie
+    {
+        mpr("You finish eating.");
+        return;
+    }
+
     bool herbivorous = player_mutation_level(MUT_HERBIVOROUS) > 0;
     bool carnivorous = player_mutation_level(MUT_CARNIVOROUS) > 0;
 
@@ -2369,8 +2410,11 @@ static int _player_likes_food_type(int type)
 // be eaten (respecting species and mutations set).
 bool is_inedible(const item_def &item)
 {
-    // Mummies don't eat.
-    if (you.is_undead == US_UNDEAD)
+    if (you.form == TRAN_JELLY)
+        return !can_ingest(item, true, false);
+
+    // Mummies, liches, trees and wisps don't eat.
+    if (you_foodless())
         return true;
 
     if (food_is_rotten(item)
@@ -2400,8 +2444,8 @@ bool is_inedible(const item_def &item)
 // still be edible or even delicious.
 bool is_preferred_food(const item_def &food)
 {
-    // Mummies don't eat.
-    if (you.is_undead == US_UNDEAD)
+    // Mummies/etc don't eat.
+    if (you_foodless())
         return false;
 
     // Vampires don't really have a preferred food type, but they really
@@ -2422,8 +2466,8 @@ bool is_preferred_food(const item_def &food)
     if (is_bad_food(food))
         return false;
 
-    // Honeycombs are tasty for everyone.
-    if (food.sub_type == FOOD_HONEYCOMB || food.sub_type == FOOD_ROYAL_JELLY)
+    // Royal jellies restore stats for everyone.
+    if (food.sub_type == FOOD_ROYAL_JELLY)
         return true;
 
     // Ghouls specifically like rotten food.
@@ -2472,6 +2516,13 @@ bool is_forbidden_food(const item_def &food)
 
 bool can_ingest(const item_def &food, bool suppress_msg, bool check_hunger)
 {
+    if (food.is_critical())
+    {
+        if (!suppress_msg)
+            mpr("Eating this would be a bad idea.");
+        return false;
+    }
+
     if (check_hunger)
     {
         if (is_poisonous(food))
@@ -2499,6 +2550,13 @@ bool can_ingest(int what_isit, int kindof_thing, bool suppress_msg,
     // [ds] These redundant checks are now necessary - Lua might be calling us.
     if (!_eat_check(check_hunger, suppress_msg))
         return false;
+
+    if (you.form == TRAN_JELLY)
+    {
+        // a rather indiscriminating diet
+        return what_isit != OBJ_MISSILES || kindof_thing != MI_STONE &&
+            kindof_thing != MI_LARGE_ROCK;
+    }
 
     if (you.species == SP_VAMPIRE)
     {
@@ -2750,8 +2808,7 @@ static void _heal_from_food(int hp_amt, bool unrot, bool restore_str)
 
 int you_max_hunger()
 {
-    // This case shouldn't actually happen.
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return HUNGER_DEFAULT;
 
     // Ghouls can never be full or above.
@@ -2764,7 +2821,7 @@ int you_max_hunger()
 int you_min_hunger()
 {
     // This case shouldn't actually happen.
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return HUNGER_DEFAULT;
 
     // Vampires can never starve to death.  Ghouls will just rot much faster.
@@ -2776,8 +2833,7 @@ int you_min_hunger()
 
 void handle_starvation()
 {
-    if (you.is_undead != US_UNDEAD && !you.duration[DUR_DEATHS_DOOR]
-        && you.hunger <= 500)
+    if (!you_foodless() && !you.duration[DUR_DEATHS_DOOR] && you.hunger <= 500)
     {
         if (!you.cannot_act() && one_chance_in(40))
         {
@@ -2801,7 +2857,7 @@ void handle_starvation()
 
 string hunger_cost_string(const int hunger)
 {
-    if (you.is_undead == US_UNDEAD)
+    if (you_foodless())
         return "N/A";
 
 #ifdef WIZARD

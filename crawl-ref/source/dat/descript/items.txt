@@ -46,7 +46,7 @@ amulet of resist mutation
 %%%%
 amulet of the gourmand
 
-This amulet protects its wearer from sickness due to eating fresh raw meat and
+This amulet protects its wearer from nausea due to eating fresh raw meat and
 allows them to digest it when not hungry, but these effects on the wearer's
 digestion are cumulative over time and are initially small.
 %%%%
@@ -164,8 +164,8 @@ book of annihilations
 Blood leaks from the tattered pages of this book, and even an illiterate will
 feel the sheer impact of arcane fury contained within. It is sought after by
 sorcerers, for it allows the gifted and resourceful to command destruction with
-ease. Feeble wizards, however, may well meet their doom when trying to read this
-opus.
+ease. Feeble wizards, however, may well meet their doom when trying to read
+this opus.
 %%%%
 book of beasts
 
@@ -528,8 +528,8 @@ deck of changes
 
 It may contain the following cards: the Elixir, Battlelust, Metamorphosis, the
 Helm, the Blade, the Shadow, the Mercenary, the Potion, Focus, Shuffle,
-Experience, Wild Magic, the Helix, the Sage, Water, Vitrification, the Map,
-Dowsing, the Spade, Trowel, the Minefield.
+Experience, Wild Magic, the Helix, the Sage, the Alchemist, Water,
+Vitrification, Dowsing, Trowel, the Minefield.
 %%%%
 deck of defence
 
@@ -552,8 +552,8 @@ deck of dungeons
 
 던전의 모양을 바꾸는 마법 카드로 구성된 덱이다.
 
-It may contain the following cards: Water, Vitrification, the Map, Dowsing, the
-Spade, Trowel, the Minefield.
+It may contain the following cards: Water, Vitrification, Dowsing, Trowel, the
+Minefield.
 %%%%
 deck of escape
 
@@ -567,8 +567,8 @@ deck of punishment
 
 사용자에게 막대한 피해를 줄 수있는 마법카드로 구성된 덱이다.
 
-It may contain the following cards: Wrath, the Wraith, the Curse, Xom, Famine,
-Wild Magic, the Portal, the Tomb, Damnation, the Minefield, Torment.
+It may contain the following cards: the Wraith, Wild Magic, Wrath, Xom, Famine,
+the Curse, the Tomb, Damnation, the Portal, the Minefield, the Swine, Torment.
 %%%%
 deck of summonings
 
@@ -657,8 +657,8 @@ concentrated at the point to increase its lethality.
 %%%%
 fire dragon armour
 
-A magical armour, made from the scales of a fire-breathing dragon. It provides
-great protection from the effects of fire, while rendering its wearer more
+Armour made from the scales of a fire-breathing dragon. It provides great
+protection from the effects of fire, while rendering its wearer more
 susceptible to the effects of cold.
 %%%%
 fire dragon hide
@@ -686,8 +686,8 @@ glaive
 %%%%
 gold dragon armour
 
-A magical armour made from the scales of a gold dragon. It is much heavier than
-most dragon scale armours, and grants its wearer resistance to poison, fire and
+Armour made from the scales of a gold dragon. It is much heavier than most
+dragon scale armours, and grants its wearer resistance to poison, fire and
 cold.
 %%%%
 gold dragon hide
@@ -758,9 +758,9 @@ gain entry.
 %%%%
 ice dragon armour
 
-A magical armour, made from the scales of a cold-breathing dragon. It provides
-great protection from the effects of cold while rendering its wearer more
-susceptible to the effects of fire and heat.
+Armour made from the scales of a cold-breathing dragon. It provides great
+protection from the effects of cold while rendering its wearer more susceptible
+to the effects of fire and heat.
 %%%%
 ice dragon hide
 
@@ -882,11 +882,10 @@ of a well-trained combatant.
 %%%%
 mottled dragon armour
 
-A magical armour made from the scales of a mottled dragon. Although it does not
-provide its wearer with much in the way of special magical protection, unlike
-the armour made from the scales of some larger dragons, it is as light and
-relatively uncumbersome as leather armour. It is also remarkably smooth,
-letting sticky flames flow down like water.
+Armour made from the scales of a mottled dragon. Although it does not provide
+its wearer with much protection, unlike the armour made from the scales of some
+larger dragons, it is as light and relatively uncumbersome as leather armour.
+It is also remarkably smooth, letting sticky flames flow down like water.
 %%%%
 mottled dragon hide
 
@@ -942,8 +941,8 @@ pear
 %%%%
 pearl dragon armour
 
-A magical armour made from the nacreous scales of a pearl dragon. It grants its
-wearer resistance to negative energies.
+Armour made from the nacreous scales of a pearl dragon. It grants its wearer
+resistance to negative energies.
 %%%%
 pearl dragon hide
 
@@ -1316,7 +1315,9 @@ makes it a little bit harder to handle accurately.
 scroll of acquirement
 
 This wonderful scroll causes the creation of a valuable item, with the reader
-choosing the type of item to be created.
+choosing the type of item to be created. Items produced are heavily biased
+towards something fitting the reader's skills, and also towards gear that
+hasn't been seen yet, but, alas, nothing is guaranteed.
 %%%%
 scroll of amnesia
 
@@ -1597,10 +1598,9 @@ spells.
 %%%%
 steam dragon armour
 
-A magical armour, made from the scales of a steam-breathing dragon. Although,
-unlike the armour made from the scales of some larger dragons, it does not
-provide its wearer with much in the way of special magical protection, it is
-extremely light and as supple as cloth.
+Armour made from the scales of a steam-breathing dragon. Although, unlike the
+armour made from the scales of some larger dragons, it does not provide its
+wearer with much protection, it is extremely light and as supple as cloth.
 %%%%
 steam dragon hide
 
@@ -1622,9 +1622,9 @@ same time.
 %%%%
 storm dragon armour
 
-A magical armour made from the scales of a lightning-breathing dragon. It is
-heavier than most dragon scale armours, and gives its wearer great resistance
-to electrical discharges.
+Armour made from the scales of a lightning-breathing dragon. It is heavier than
+most dragon scale armours, and gives its wearer great resistance to electrical
+discharges.
 %%%%
 storm dragon hide
 
@@ -1643,8 +1643,8 @@ sultana
 %%%%
 swamp dragon armour
 
-A magical armour made from the scales of a swamp dragon. It confers resistance
-to poison on its wearer.
+Armour made from the scales of a swamp dragon. It confers resistance to poison
+on its wearer.
 %%%%
 swamp dragon hide
 
@@ -1679,9 +1679,8 @@ may be hazardous to you or your surroundings!
 %%%%
 trident
 
-A fishing spear improved with a longer shaft and a three-pronged metal head. It
-can be wielded with one or two hands, but due to the added weight it cannot be
-thrown effectively.
+A fishing spear improved with a longer shaft and a three-pronged metal head.
+Due to the added weight it cannot be thrown effectively.
 %%%%
 triple sword
 
@@ -1705,9 +1704,8 @@ Wearable, like other beastly skins, it also reacts well to enchantment.
 %%%%
 troll leather armour
 
-A magical armour, made from the stiff and knobbly skin of a common troll. It
-magically regenerates its wearer's flesh at a fairly slow rate (unless already
-a troll).
+Armour made from the stiff and knobbly skin of a common troll. It magically
+regenerates its wearer's flesh at a fairly slow rate (unless already a troll).
 %%%%
 wand of cold
 
@@ -1719,7 +1717,7 @@ wand of confusion
 %%%%
 wand of digging
 
-가공되지 않은 바위를 녹여 터널을 만드는 마법봉이다.
+A magical device which forms tunnels through unworked rock by liquefying it.
 %%%%
 wand of disintegration
 
@@ -1781,11 +1779,10 @@ of its limbs. A paralysed creature can only breathe, think, and helplessly
 watch as it falls into lava below or you put it out of its misery with your
 dagger.
 %%%%
-wand of polymorph other
+wand of polymorph
 
 A magical device which causes a creature to be transmogrified into another
-form. It is especially effective against shape-changing creatures. It doesn't
-work on you, so don't even try.
+form. It is especially effective against shape-changing creatures.
 %%%%
 wand of random effects
 
