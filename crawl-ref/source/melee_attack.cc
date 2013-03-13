@@ -1568,7 +1568,7 @@ string melee_attack::player_why_missed()
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const string armour_name = armour ? armour->name(true, DESC_BASENAME)
-                                          : string(_("armour"));
+                                          : string(_(M_("armour")));
 
         if (armour_miss && !shield_miss)
             return make_stringf(gettext("Your %s prevents you from hitting "), armour_name.c_str());
@@ -1604,7 +1604,7 @@ void melee_attack::player_warn_miss()
 
         const item_def *armour = you.slot_item(EQ_BODY_ARMOUR, false);
         const std::string armour_name =
-            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext("armour")));
+            (armour? armour->name(true, DESC_BASENAME) : std::string(gettext(M_("armour"))));
 
         if (armour_miss && !shield_miss)
             return mprf(gettext("Your %s prevents you from hitting %s"), 

@@ -437,7 +437,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     beam.glyph         = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage        = dice_def(1, 15);
     beam.target        = where;
-    beam.name          = N_("electric current");
+    beam.name          = M_("electric current");
     beam.hit_verb      = N_("shocks");
     beam.colour        = ETC_ELECTRICITY;
     beam.aux_source    = N_("arcing electricity");
@@ -486,7 +486,7 @@ void cleansing_flame(int pow, int caster, coord_def where,
     beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage       = dice_def(2, pow);
     beam.target       = you.pos();
-    beam.name         = N_("golden flame");
+    beam.name         = M_("golden flame");
     beam.colour       = YELLOW;
     beam.aux_source   = aux;
     beam.ex_size      = 2;
@@ -961,17 +961,17 @@ void yell(bool force)
     int noise_level = 12; // "shout"
 
     // Tweak volume for different kinds of vocalisation.
-    if (shout_verb == N_("roar"))
+    if (shout_verb == M_("roar") || shout_verb == _(M_("roar")))
         noise_level = 18;
-    else if (shout_verb == N_("hiss"))
+    else if (shout_verb == M_("hiss") || shout_verb == _(M_("hiss")))
         noise_level = 8;
-    else if (shout_verb == N_("squeak"))
+    else if (shout_verb == M_("squeak") || shout_verb == _(M_("squeak")))
         noise_level = 4;
-    else if (shout_verb == N_("__NONE"))
+    else if (shout_verb == "__NONE")
         noise_level = 0;
-    else if (shout_verb == N_("yell"))
+    else if (shout_verb == M_("yell") || shout_verb == _(M_("yell")))
         noise_level = 14;
-    else if (shout_verb == N_("scream"))
+    else if (shout_verb == M_("scream") || shout_verb == _(M_("scream")))
         noise_level = 16;
 
     if (you.cannot_speak() || !form_has_mouth())
@@ -2240,7 +2240,7 @@ void handle_time()
                 beam.damage       = dice_def(3, you.magic_contamination
                                              * (you.is_undead ? 4 : 2) / 4);
                 beam.target       = you.pos();
-                beam.name         = N_("magical storm");
+                beam.name         = M_("magical storm");
                 beam.beam_source  = NON_MONSTER;
                 beam.aux_source   = N_("a magical explosion");
                 beam.ex_size      = max(1, min(9, you.magic_contamination / 15));

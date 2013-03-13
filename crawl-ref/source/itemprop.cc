@@ -208,7 +208,7 @@ static const weapon_def Weapon_prop[NUM_WEAPONS] =
     { WPN_DIRE_FLAIL,        M_("dire flail"),         13, -3, 13, 240,  9,
         SK_MACES_FLAILS, HANDS_TWO,    SIZE_LARGE,  MI_NONE, false,
         DAMV_CRUSHING | DAM_PIERCE, 10 },
-    { WPN_EVENINGSTAR,       M_("eveningstar",        15, -1, 15, 180,  8,
+    { WPN_EVENINGSTAR,       M_("eveningstar"),        15, -1, 15, 180,  8,
         SK_MACES_FLAILS, HANDS_ONE,    SIZE_SMALL,  MI_NONE, false,
         DAMV_CRUSHING | DAM_PIERCE, 2 },
     { WPN_GREAT_MACE,        M_("great mace"),         18, -4, 17, 270,  9,

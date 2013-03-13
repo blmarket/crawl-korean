@@ -2502,7 +2502,7 @@ static void _decrement_durations()
                           MSGCH_RECOVERY);
 
     _decrement_a_duration(DUR_SWIFTNESS, delay,
-                          _("You feel sluggish."), coinflip(),
+                          pgettext("main","You feel sluggish."), coinflip(),
                           _("You start to feel a little slower."));
     _decrement_a_duration(DUR_RESISTANCE, delay,
                           _("Your resistance to elements expires."), coinflip(),

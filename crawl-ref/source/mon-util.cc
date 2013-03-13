@@ -3313,15 +3313,15 @@ const char *mons_pronoun(monster_type mon_type, pronoun_type variant,
 
     case PRONOUN_POSSESSIVE:
         return ((gender == GENDER_NEUTER) ? _(M_("its")) :
-                (gender == GENDER_MALE)   ? _(M_("his")) : "her")));
+                (gender == GENDER_MALE)   ? _(M_("his")) : _(M_("her")));
 
     case PRONOUN_REFLEXIVE:
         return ((gender == GENDER_NEUTER) ? _(M_("itself"))  :
-                (gender == GENDER_MALE)   ? _(M_("himself")) : "herself")));
+                (gender == GENDER_MALE)   ? _(M_("himself")) : _(M_("herself")));
 
     case PRONOUN_OBJECTIVE:
         return ((gender == GENDER_NEUTER) ? _(M_("it"))  :
-                (gender == GENDER_MALE)   ? _(M_("him")) : "her")));
+                (gender == GENDER_MALE)   ? _(M_("him")) : _(M_("her")));
     }
 
     return "";

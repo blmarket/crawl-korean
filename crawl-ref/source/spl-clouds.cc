@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Cloud creating spells.
 **/
@@ -269,7 +269,7 @@ spret_type cast_corpse_rot(bool fail)
         {
             if (si->base_type == OBJ_CORPSES && si->sub_type == CORPSE_BODY)
             {
-                if (!yesno(("Really cast Corpse Rot while standing on " + si->name(DESC_A) + "?").c_str(), false, 'n'))
+                if (!yesno(("정말로 " + si->name(true, DESC_PLAIN) + " 위에서 피의 승화를 사용할 것인가?").c_str(), false, 'n')) // "Really cast Corpse Rot while standing on "
                     return SPRET_ABORT;
                 break;
             }
