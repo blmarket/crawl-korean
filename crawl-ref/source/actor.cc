@@ -523,9 +523,9 @@ void actor::end_constriction(actor::constricting_t::iterator i,
     if (!quiet && alive() && constrictee->alive()
         && (you.see_cell(pos()) || you.see_cell(constrictee->pos())))
     {
-        mprf("%s %s %s grip on %s.",
+        mprf(_("%s %s %s grip on %s."),
                 name(DESC_THE).c_str(),
-                conj_verb(intentional ? "release" : "lose").c_str(),
+                conj_verb(intentional ? pgettext("actor","release") : pgettext("actor","lose")).c_str(),
                 pronoun(PRONOUN_POSSESSIVE).c_str(),
                 constrictee->name(DESC_THE).c_str());
     }
@@ -701,23 +701,23 @@ void actor::handle_constriction()
         if (damage <= 0 && is_player()
             && you.can_see(defender))
         {
-            exclams = ", but do no damage.";
+            exclams = pgettext("actor",", but do no damage.");
         }
         else if (damage < HIT_WEAK)
-            exclams = ".";
+            exclams = pgettext("actor",".");
         else if (damage < HIT_MED)
-            exclams = "!";
+            exclams = pgettext("actor","!");
         else if (damage < HIT_STRONG)
-            exclams = "!!";
+            exclams = pgettext("actor","!!");
         else
-            exclams = "!!!";
+            exclams = pgettext("actor","!!!");
 
         if (is_player() || you.can_see(this))
         {
-            mprf("%s %s %s%s%s",
-                 (is_player() ? "You"
+            mprf(_("%s %s %s%s%s"),
+                 (is_player() ? _(M_("You"))
                               : name(DESC_THE).c_str()),
-                 conj_verb("constrict").c_str(),
+                 conj_verb(pgettext("actor","constrict")).c_str(),
                  defender->name(DESC_THE).c_str(),
 #ifdef DEBUG_DIAGNOSTICS
                  make_stringf(" for %d", damage).c_str(),
@@ -728,9 +728,9 @@ void actor::handle_constriction()
         }
         else if (you.can_see(defender) || defender->is_player())
         {
-            mprf("%s %s constricted%s%s",
+            mprf(_("%s %s constricted%s%s"),
                  defender->name(DESC_THE).c_str(),
-                 defender->conj_verb("are").c_str(),
+                 defender->conj_verb(pgettext("actor","are")).c_str(),
 #ifdef DEBUG_DIAGNOSTICS
                  make_stringf(" for %d", damage).c_str(),
 #else

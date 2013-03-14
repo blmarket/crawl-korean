@@ -563,7 +563,7 @@ static bool _can_cast()
 
     if (you.confused())
     {
-        mpr("You're too confused to cast spells.");
+        mpr(_("You're too confused to cast spells."));
         return false;
     }
 
@@ -736,9 +736,9 @@ bool cast_a_spell(bool check_range, spell_type spell)
     {
         // None currently dock just piety, right?
         if (!yesno(god_loathes_spell(spell, you.religion) ?
-            "<lightred>Casting this spell will cause instant excommunication!"
-                "</lightred> Really cast?" :
-            "Casting this spell will put you into penance. Really cast?",
+            _("<lightred>Casting this spell will cause instant excommunication!"
+                "</lightred> Really cast?") :
+            _("Casting this spell will put you into penance. Really cast?"),
             true, 'n'))
         {
             crawl_state.zero_turns_taken();
@@ -1335,7 +1335,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 34
     case SPELL_EVAPORATE:
-        mpr("Sorry, this spell is gone!");
+        mpr(_("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1534,7 +1534,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 #if TAG_MAJOR_VERSION == 34
     case SPELL_INSULATION:
     case SPELL_SEE_INVISIBLE:
-        mpr("Sorry, this spell is gone!");
+        mpr(_("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 
@@ -1663,7 +1663,7 @@ static spret_type _do_cast(spell_type spell, int powc,
 
 #if TAG_MAJOR_VERSION == 34
     case SPELL_FULSOME_DISTILLATION:
-        mpr("Sorry, this spell is gone!");
+        mpr(_("Sorry, this spell is gone!"));
         return SPRET_ABORT;
 #endif
 

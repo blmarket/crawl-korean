@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-13 23:28+0900\n"
+"POT-Creation-Date: 2013-03-14 23:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4241,7 +4241,7 @@ msgid "Ration"
 msgstr "보존 식량"
 
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
-#: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528
+#: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
 msgid "You"
 msgstr "당신"
 
@@ -7697,7 +7697,7 @@ msgid "The "
 msgstr ""
 
 #: itemname.cc:193 itemname.cc:220 itemname.cc:224 itemname.cc:224
-#: misc.cc:2310
+#: misc.cc:2310 misc.cc:2338
 msgid "the "
 msgstr ""
 

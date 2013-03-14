@@ -459,7 +459,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
 #else
     tmp = new TextItem();
 #endif
-    text = "High Scores";
+    text = _("High Scores");
     tmp->set_text(text);
     tmp->set_fg_colour(WHITE);
     tmp->set_highlight_colour(WHITE);
@@ -467,7 +467,7 @@ static void _construct_game_modes_menu(MenuScroller* menu)
     // Scroller does not care about x-coordinates and only cares about
     // item height obtained from max.y - min.y
     tmp->set_bounds(coord_def(1, 1), coord_def(1, 2));
-    tmp->set_description_text("View the high score list.");
+    tmp->set_description_text(_("View the high score list."));
     menu->attach_item(tmp);
     tmp->set_visible(true);
 }

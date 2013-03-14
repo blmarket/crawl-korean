@@ -219,7 +219,7 @@ bool melee_attack::handle_phase_attempted()
                 string junk1, junk2;
                 const char *verb = (bad_attack(defender->as_monster(),
                                                junk1, junk2)
-                                    ? P_("verb", "attack") : P_("verb", "attack near"));
+                                    ? pgettext("verb", "attack") : pgettext("verb", "attack near"));
                 bool (*aff_func)(const coord_def &) = 0;
                 if (damage_brand == SPWPN_ELECTROCUTION)
                     aff_func = _conduction_affected;
@@ -257,7 +257,7 @@ bool melee_attack::handle_phase_attempted()
         {
             // Don't waste a turn hitting a rock worm when you know it
             // will do nothing.
-            mprf("The %s protects %s from harm.",
+            mprf(_("The %s protects %s from harm."),
                  raw_feature_description(defender->pos()).c_str(),
                  defender->name(DESC_THE).c_str());
             cancel_attack = true;
@@ -409,7 +409,7 @@ bool melee_attack::handle_phase_dodged()
             mprf(gettext("%s momentarily %s out as %s "
                  "attack passes through %s%s"),
                  defender->name(DESC_THE).c_str(),
-                 defender->conj_verb(P_("verb", "phase")).c_str(),
+                 defender->conj_verb(pgettext("verb", "phase")).c_str(),
                  atk_name(DESC_ITS).c_str(),
                  defender->pronoun(PRONOUN_OBJECTIVE).c_str(),
                  attack_strength_punctuation().c_str());
@@ -539,7 +539,7 @@ bool melee_attack::handle_phase_hit()
              attacker->name(DESC_THE).c_str(),
              pgettext_expr("verb", attack_verb.c_str()),
              defender->name(DESC_THE).c_str(),
-             attacker->is_player() ? "do" : "does");
+             attacker->is_player() ? "do" : "does"); // (130128) 4번째 인자(do,does)는 번역문에서 사용하지 않음.
     }
 
     // Check for weapon brand & inflict that damage too
@@ -1172,7 +1172,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_KICK:
-        aux_attack = aux_verb = P_("verb", "kick");
+        aux_attack = aux_verb = pgettext("verb", "kick");
         aux_damage = 5;
 
         if (player_mutation_level(MUT_HOOVES))
@@ -1182,7 +1182,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         }
         else if (you.has_usable_talons())
         {
-            aux_verb = P_("verb", "claw");
+            aux_verb = pgettext("verb", "claw");
 
             // Max talon damage: 9.
             aux_damage += 1 + player_mutation_level(MUT_TALONS);
@@ -1190,7 +1190,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         else if (player_mutation_level(MUT_TENTACLE_SPIKE))
         {
             aux_attack = "tentacle spike";
-            aux_verb = P_("verb", "pierce");
+            aux_verb = pgettext("verb", "pierce");
 
             // Max spike damage: 8.
             aux_damage += player_mutation_level(MUT_TENTACLE_SPIKE);
@@ -1206,11 +1206,11 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
 
     case UNAT_HEADBUTT:
         aux_damage = 5 + player_mutation_level(MUT_HORNS) * 3;
-        aux_attack = aux_verb = P_("verb", "headbutt");
+        aux_attack = aux_verb = pgettext("verb", "headbutt");
         break;
 
     case UNAT_TAILSLAP:
-        aux_attack = aux_verb = P_("verb", "tail-slap");
+        aux_attack = aux_verb = pgettext("verb", "tail-slap");
 
         aux_damage = 6 * you.has_usable_tail();
 
@@ -1225,30 +1225,30 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PUNCH:
-        aux_attack = aux_verb = P_("verb", "punch");
+        aux_attack = aux_verb = pgettext("verb", "punch");
         aux_damage = 5 + you.skill_rdiv(SK_UNARMED_COMBAT, 1, 2);
 
         if (you.form == TRAN_BLADE_HANDS)
         {
-            aux_verb = P_("verb", "slash");
+            aux_verb = pgettext("verb", "slash");
             aux_damage += 6;
             noise_factor = 75;
         }
         else if (you.has_usable_claws())
         {
-            aux_verb = P_("verb", "claw");
+            aux_verb = pgettext("verb", "claw");
             aux_damage += roll_dice(you.has_claws(), 3);
         }
         else if (you.has_usable_tentacles())
         {
-            aux_attack = aux_verb = P_("verb", "tentacle-slap");
+            aux_attack = aux_verb = pgettext("verb", "tentacle-slap");
             noise_factor = 125;
         }
 
         break;
 
     case UNAT_BITE:
-        aux_attack = aux_verb = P_("verb", "bite");
+        aux_attack = aux_verb = pgettext("verb", "bite");
         aux_damage += you.has_usable_fangs() * 2;
         aux_damage += div_rand_round(max(you.strength()-10, 0), 5);
         noise_factor = 75;
@@ -1273,7 +1273,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         break;
 
     case UNAT_PSEUDOPODS:
-        aux_attack = aux_verb = P_("verb", "bludgeon");
+        aux_attack = aux_verb = pgettext("verb", "bludgeon");
         aux_damage += 4 * you.has_usable_pseudopods();
         noise_factor = 125;
         break;
@@ -1281,7 +1281,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
         // Tentacles give you both a main attack (replacing punch)
         // and this secondary, high damage attack.
     case UNAT_TENTACLES:
-        aux_attack = aux_verb = P_("verb", "squeeze");
+        aux_attack = aux_verb = pgettext("verb", "squeeze");
         aux_damage += you.has_usable_tentacles() ? 12 : 0;
         noise_factor = 100; // quieter than slapping
         break;
@@ -1867,9 +1867,9 @@ void melee_attack::set_attack_verb()
         && you.species != SP_FELID)
     {
         if (weap_type != WPN_UNKNOWN)
-            attack_verb = P_("verb", "hit");
+            attack_verb = pgettext("verb", "hit");
         else
-            attack_verb = P_("verb", "clumsily bash");
+            attack_verb = pgettext("verb", "clumsily bash");
         return;
     }
 
@@ -1881,22 +1881,22 @@ void melee_attack::set_attack_verb()
     {
     case DAM_PIERCE:
         if (damage_done < HIT_MED)
-            attack_verb = P_("verb", "puncture");
+            attack_verb = pgettext("verb", "puncture");
         else if (damage_done < HIT_STRONG)
-            attack_verb = P_("verb", "impale");
+            attack_verb = pgettext("verb", "impale");
         else
         {
             if (defender->is_monster()
                 && defender_visible
                 && defender_genus == MONS_HOG)
             {
-                attack_verb = P_("verb", "spit");
+                attack_verb = pgettext("verb", "spit");
                 verb_degree = N_("like the proverbial pig");
             }
             else
             {
-                const char* pierce_desc[][2] = {{P_("verb", "spit"), N_("like a pig")},
-                                                {P_("verb", "skewer"), N_("like a kebab")}};
+                const char* pierce_desc[][2] = {{pgettext("verb", "spit"), N_("like a pig")},
+                                                {pgettext("verb", "skewer"), N_("like a kebab")}};
                 const int choice = random2(ARRAYSZ(pierce_desc));
                 attack_verb = pierce_desc[choice][0];
                 verb_degree = pierce_desc[choice][1];
@@ -1906,24 +1906,24 @@ void melee_attack::set_attack_verb()
 
     case DAM_SLICE:
         if (damage_done < HIT_MED)
-            attack_verb = P_("verb", "slash");
+            attack_verb = pgettext("verb", "slash");
         else if (damage_done < HIT_STRONG)
-            attack_verb = P_("verb", "slice");
+            attack_verb = pgettext("verb", "slice");
         else if (defender_genus == MONS_OGRE)
         {
-            attack_verb = P_("verb", "dice");
+            attack_verb = pgettext("verb", "dice");
             verb_degree = N_("like an onion");
         }
         else if (defender_genus == MONS_SKELETON_SMALL)
         {
-            attack_verb = P_("verb", "fracture");
+            attack_verb = pgettext("verb", "fracture");
             verb_degree = N_("into splinters");
         }
         else
         {
-            const char* pierce_desc[][2] = {{P_("verb", "open"),    N_("like a pillowcase")},
-                                            {P_("verb", "slice"),   N_("like a ripe choko")},
-                                            {P_("verb", "cut"),     N_("into ribbons")}};
+            const char* pierce_desc[][2] = {{pgettext("verb", "open"),    N_("like a pillowcase")},
+                                            {pgettext("verb2", "slice"),   N_("like a ripe choko")},
+                                            {pgettext("verb", "cut"),     N_("into ribbons")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
             verb_degree = pierce_desc[choice][1];
@@ -1932,20 +1932,20 @@ void melee_attack::set_attack_verb()
 
     case DAM_BLUDGEON:
         if (damage_done < HIT_MED)
-            attack_verb = one_chance_in(4) ? P_("verb", "thump") : P_("verb", "sock");
+            attack_verb = one_chance_in(4) ? pgettext("verb", "thump") : pgettext("verb", "sock");
         else if (damage_done < HIT_STRONG)
-            attack_verb = P_("verb", "bludgeon");
+            attack_verb = pgettext("verb", "bludgeon");
         else if (defender_genus == MONS_SKELETON_SMALL)
         {
-            attack_verb = P_("verb", "shatter");
+            attack_verb = pgettext("verb", "shatter");
             verb_degree = N_("into splinters");
         }
         else
         {
-            const char* pierce_desc[][2] = {{P_("verb", "crush"),   N_("like a grape")},
-                                            {P_("verb", "beat"),    N_("like a drum")},
-                                            {P_("verb", "hammer"),  N_("like a gong")},
-                                            {P_("verb", "pound"),   N_("like an anvil")}};
+            const char* pierce_desc[][2] = {{pgettext("verb", "crush"),   N_("like a grape")},
+                                            {pgettext("verb", "beat"),    N_("like a drum")},
+                                            {pgettext("verb", "hammer"),  N_("like a gong")},
+                                            {pgettext("verb2", "pound"),   N_("like an anvil")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
             verb_degree = pierce_desc[choice][1];
@@ -1954,9 +1954,9 @@ void melee_attack::set_attack_verb()
 
     case DAM_WHIP:
         if (damage_done < HIT_MED)
-            attack_verb = P_("verb", "whack");
+            attack_verb = pgettext("verb", "whack");
         else if (damage_done < HIT_STRONG)
-            attack_verb = P_("verb", "thrash");
+            attack_verb = pgettext("verb", "thrash");
         else
         {
             switch (defender->holiness())
@@ -1964,11 +1964,11 @@ void melee_attack::set_attack_verb()
             case MH_HOLY:
             case MH_NATURAL:
             case MH_DEMONIC:
-                attack_verb = P_("verb", "punish");
+                attack_verb = pgettext("verb", "punish");
                 verb_degree = N_("causing immense pain");
                 break;
             default:
-                attack_verb = P_("verb", "devastate");
+                attack_verb = pgettext("verb", "devastate");
             }
         }
         break;
@@ -1981,57 +1981,57 @@ void melee_attack::set_attack_verb()
         case TRAN_PIG:
         case TRAN_PORCUPINE:
             if (damage_done < HIT_WEAK)
-                attack_verb = P_("verb", "hit");
+                attack_verb = pgettext("verb", "hit");
             else if (damage_done < HIT_STRONG)
-                attack_verb = P_("verb", "bite");
+                attack_verb = pgettext("verb", "bite");
             else
-                attack_verb = P_("verb", "maul");
+                attack_verb = pgettext("verb", "maul");
             break;
         case TRAN_BLADE_HANDS:
             if (damage_done < HIT_WEAK)
-                attack_verb = P_("verb", "hit");
+                attack_verb = pgettext("verb", "hit");
             else if (damage_done < HIT_MED)
-                attack_verb = P_("verb", "slash");
+                attack_verb = pgettext("verb", "slash");
             else if (damage_done < HIT_STRONG)
-                attack_verb = P_("verb", "slice");
+                attack_verb = pgettext("verb", "slice");
             else
-                attack_verb = P_("verb", "shred");
+                attack_verb = pgettext("verb", "shred");
             break;
         case TRAN_STATUE:
         case TRAN_LICH:
             if (you.has_usable_claws())
             {
                 if (damage_done < HIT_WEAK)
-                    attack_verb = P_("verb", "scratch");
+                    attack_verb = pgettext("verb", "scratch");
                 else if (damage_done < HIT_MED)
-                    attack_verb = P_("verb", "claw");
+                    attack_verb = pgettext("verb", "claw");
                 else if (damage_done < HIT_STRONG)
-                    attack_verb = P_("verb", "mangle");
+                    attack_verb = pgettext("verb", "mangle");
                 else
-                    attack_verb = P_("verb", "eviscerate");
+                    attack_verb = pgettext("verb", "eviscerate");
                 break;
             }
             else if (you.has_usable_tentacles())
             {
                 if (damage_done < HIT_WEAK)
-                    attack_verb = P_("verb", "tentacle-slap");
+                    attack_verb = pgettext("verb", "tentacle-slap");
                 else if (damage_done < HIT_MED)
-                    attack_verb = P_("verb", "bludgeon");
+                    attack_verb = pgettext("verb", "bludgeon");
                 else if (damage_done < HIT_STRONG)
-                    attack_verb = P_("verb", "batter");
+                    attack_verb = pgettext("verb", "batter");
                 else
-                    attack_verb = P_("verb", "thrash");
+                    attack_verb = pgettext("verb", "thrash");
                 break;
             }
             // or fall-through
         case TRAN_ICE_BEAST:
         case TRAN_JELLY: // ?
             if (damage_done < HIT_WEAK)
-                attack_verb = P_("verb", "hit");
+                attack_verb = pgettext("verb", "hit");
             else if (damage_done < HIT_MED)
-                attack_verb = P_("verb", "punch");
+                attack_verb = pgettext("verb", "punch");
             else
-                attack_verb = P_("verb", "pummel");
+                attack_verb = pgettext("verb", "pummel");
             break;
         case TRAN_TREE:
             if (damage_done < HIT_WEAK)
@@ -2045,13 +2045,13 @@ void melee_attack::set_attack_verb()
             break;
         case TRAN_DRAGON:
             if (damage_done < HIT_WEAK)
-                attack_verb = P_("verb", "hit");
+                attack_verb = pgettext("verb", "hit");
             else if (damage_done < HIT_MED)
-                attack_verb = P_("verb", "claw");
+                attack_verb = pgettext("verb", "claw");
             else if (damage_done < HIT_STRONG)
-                attack_verb = P_("verb", "bite");
+                attack_verb = pgettext("verb", "bite");
             else
-                attack_verb = coinflip() ? P_("verb", "maul") : P_("verb", "trample");
+                attack_verb = coinflip() ? pgettext("verb", "maul") : pgettext("verb", "trample");
             break;
         case TRAN_WISP:
             if (damage_done < HIT_WEAK)
@@ -2067,31 +2067,31 @@ void melee_attack::set_attack_verb()
             if (you.damage_type() == DVORP_CLAWING)
             {
                 if (damage_done < HIT_WEAK)
-                    attack_verb = P_("verb", "scratch");
+                    attack_verb = pgettext("verb", "scratch");
                 else if (damage_done < HIT_MED)
-                    attack_verb = P_("verb", "claw");
+                    attack_verb = pgettext("verb", "claw");
                 else if (damage_done < HIT_STRONG)
-                    attack_verb = P_("verb", "mangle");
+                    attack_verb = pgettext("verb", "mangle");
                 else
-                    attack_verb = P_("verb", "eviscerate");
+                    attack_verb = pgettext("verb", "eviscerate");
             }
             else if (you.damage_type() == DVORP_TENTACLE)
             {
                 if (damage_done < HIT_WEAK)
-                    attack_verb = P_("verb", "tentacle-slap");
+                    attack_verb = pgettext("verb", "tentacle-slap");
                 else if (damage_done < HIT_MED)
-                    attack_verb = P_("verb", "bludgeon");
+                    attack_verb = pgettext("verb", "bludgeon");
                 else if (damage_done < HIT_STRONG)
-                    attack_verb = P_("verb", "batter");
+                    attack_verb = pgettext("verb", "batter");
                 else
-                    attack_verb = P_("verb", "thrash");
+                    attack_verb = pgettext("verb", "thrash");
             }
             else
             {
                 if (damage_done < HIT_MED)
-                    attack_verb = P_("verb", "punch");
+                    attack_verb = pgettext("verb", "punch");
                 else
-                    attack_verb = P_("verb", "pummel");
+                    attack_verb = pgettext("verb", "pummel");
             }
             break;
         } // transformations
@@ -2099,7 +2099,7 @@ void melee_attack::set_attack_verb()
 
     case WPN_UNKNOWN:
     default:
-        attack_verb = P_("verb", "hit");
+        attack_verb = pgettext("verb", "hit");
         break;
     }
 }
@@ -2254,7 +2254,7 @@ void melee_attack::drain_defender()
                 make_stringf(
                     gettext("%s %s %s!"),
                     atk_name(DESC_THE).c_str(),
-                    attacker->conj_verb(P_("verb", "drain")).c_str(),
+                    attacker->conj_verb(pgettext("verb", "drain")).c_str(),
                     defender_name().c_str());
         }
 
@@ -4090,7 +4090,7 @@ bool melee_attack::attack_shield_blocked(bool verbose)
         {
             mprf(gettext("%s %s %s attack."),
                  def_name(DESC_THE).c_str(),
-                 defender->conj_verb(P_("verb", "block")).c_str(),
+                 defender->conj_verb(pgettext("verb", "block")).c_str(),
                  atk_name(DESC_ITS).c_str());
         }
 
@@ -4114,26 +4114,26 @@ string melee_attack::mons_attack_verb()
 {
     static const char *klown_attack[] =
     {
-        P_("verb","hit"),
-        P_("verb","poke"),
-        P_("verb","prod"),
-        P_("verb","flog"),
-        P_("verb","pound"),
-        P_("verb","slap"),
-        P_("verb","tickle"),
-        P_("verb","defenestrate"),
-        P_("verb","sucker-punch"),
-        P_("verb","elbow"),
-        P_("verb","pinch"),
-        P_("verb","strangle-hug"),
-        P_("verb","squeeze"),
-        P_("verb","tease"),
-        P_("verb","eye-gouge"),
-        P_("verb","karate-kick"),
-        P_("verb","headlock"),
-        P_("verb","wrestle"),
-        P_("verb","trip-wire"),
-        P_("verb","kneecap")
+        pgettext("verb","hit"),
+        pgettext("verb","poke"),
+        pgettext("verb","prod"),
+        pgettext("verb","flog"),
+        pgettext("verb","pound"),
+        pgettext("verb","slap"),
+        pgettext("verb","tickle"),
+        pgettext("verb","defenestrate"),
+        pgettext("verb","sucker-punch"),
+        pgettext("verb","elbow"),
+        pgettext("verb","pinch"),
+        pgettext("verb","strangle-hug"),
+        pgettext("verb","squeeze"),
+        pgettext("verb","tease"),
+        pgettext("verb","eye-gouge"),
+        pgettext("verb","karate-kick"),
+        pgettext("verb","headlock"),
+        pgettext("verb","wrestle"),
+        pgettext("verb","trip-wire"),
+        pgettext("verb","kneecap")
     };
 
     if (attacker->type == MONS_KILLER_KLOWN && attk_type == AT_HIT)
@@ -4152,35 +4152,35 @@ string melee_attack::mons_attack_verb()
         && (attacker->type == MONS_KRAKEN_TENTACLE
             || attacker->type == MONS_ELDRITCH_TENTACLE))
     {
-        return P_("verb", "slap");
+        return pgettext("verb", "slap");
     }
 
     static const char *attack_types[] =
     {
         "",
-        P_("verb","hit"),         // including weapon attacks
-        P_("verb","bite"),
-        P_("verb","sting"),
+        pgettext("verb","hit"),         // including weapon attacks
+        pgettext("verb","bite"),
+        pgettext("verb","sting"),
 
         // spore
-        P_("verb", "hit"),
+        pgettext("verb", "hit"),
 
-        P_("verb", "touch"),
-        P_("verb", "engulf"),
-        P_("verb", "claw"),
-        P_("verb", "peck"),
-        P_("verb", "headbutt"),
-        P_("verb", "punch"),
-        P_("verb", "kick"),
-        P_("verb", "tentacle-slap"),
-        P_("verb", "tail-slap"),
-        P_("verb", "gore"),
-        P_("verb", "constrict"),
-        P_("verb", "trample"),
-        P_("verb", "trunk-slap"),
-        P_("verb", "snap closed at"),
-        P_("verb", "splash"),
-        P_("verb", "pounce on")
+        pgettext("verb", "touch"),
+        pgettext("verb", "engulf"),
+        pgettext("verb", "claw"),
+        pgettext("verb", "peck"),
+        pgettext("verb", "headbutt"),
+        pgettext("verb", "punch"),
+        pgettext("verb", "kick"),
+        pgettext("verb", "tentacle-slap"),
+        pgettext("verb", "tail-slap"),
+        pgettext("verb", "gore"),
+        pgettext("verb", "constrict"),
+        pgettext("verb", "trample"),
+        pgettext("verb", "trunk-slap"),
+        pgettext("verb", "snap closed at"),
+        pgettext("verb", "splash"),
+        pgettext("verb", "pounce on")
     };
 
     ASSERT(attk_type < (int)ARRAYSZ(attack_types));
@@ -4773,7 +4773,7 @@ void melee_attack::do_spines()
             if (you.can_see(defender))
             {
                 mprf(_("%s %s %s spines."), attacker->name(DESC_THE).c_str(),
-                     attacker->conj_verb(P_("verb", "dodge")).c_str(),
+                     attacker->conj_verb(pgettext("verb", "dodge")).c_str(),
                      defender->name(DESC_ITS).c_str());
                 return;
             }
@@ -4936,7 +4936,7 @@ bool melee_attack::do_knockback(bool trample)
         {
             mprf(gettext("%s %s backwards!"),
                  def_name(DESC_THE).c_str(),
-                 defender->conj_verb(P_("verb", "stumble")).c_str());
+                 defender->conj_verb(pgettext("verb", "stumble")).c_str());
         }
 
         // Schedule following _before_ actually trampling -- if the defender
@@ -4961,7 +4961,7 @@ bool melee_attack::do_knockback(bool trample)
     {
         mprf(gettext("%s %s %s ground!"),
              def_name(DESC_THE).c_str(),
-             defender->conj_verb(P_("verb", "hold")).c_str(),
+             defender->conj_verb(pgettext("verb", "hold")).c_str(),
              defender->pronoun(PRONOUN_POSSESSIVE).c_str());
     }
 

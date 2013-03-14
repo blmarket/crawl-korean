@@ -3063,7 +3063,7 @@ void bolt::tracer_affect_player()
         if (!aimed_at_feet && !dont_stop_player && !harmless_to_player())
         {
             string prompt = make_stringf(_("That %s is likely to hit you. Continue anyway?"),
-                                         item ? name.c_str() : _(M_("beam")));
+                                         item ? name.c_str() : pgettext("tracer_affect_player","beam"));
 
             if (yesno(prompt.c_str(), false, 'n'))
             {

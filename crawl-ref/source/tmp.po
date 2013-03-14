@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-13 23:28+0900\n"
+"POT-Creation-Date: 2013-03-14 23:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3870,7 +3870,7 @@ msgstr "당신이 장비하고 있는 무기는 %s(이)다."
 #. will do nothing.
 #: fight.cc:593 fight.cc:586 fight.cc:586 beam.cc:1212 beam.cc:1220
 #: fight.cc:585 beam.cc:1205 melee_attack.cc:339 melee_attack.cc:247
-#: beam.cc:1218 melee_attack.cc:352
+#: beam.cc:1218 melee_attack.cc:352 melee_attack.cc:260
 #, c-format
 msgid "The %s protects %s from harm."
 msgstr "%s는 %s을(를) 피해로로부터 보호했다."
@@ -15273,24 +15273,28 @@ msgstr "%s은(는) 당신을 사악하고 불경한 기운으로부터 %s 보호
 
 #: describe.cc:4517 describe.cc:4526 describe.cc:4450 describe.cc:4438
 #: describe.cc:4434 describe.cc:4446 describe.cc:4469 describe.cc:4424
+#: describe.cc:4447
 msgctxt "tso_shield"
 msgid "carefully"
 msgstr "강력하게"
 
 #: describe.cc:4518 describe.cc:4527 describe.cc:4451 describe.cc:4439
 #: describe.cc:4435 describe.cc:4447 describe.cc:4470 describe.cc:4425
+#: describe.cc:4448
 msgctxt "tso_shield"
 msgid "often"
 msgstr "크게"
 
 #: describe.cc:4519 describe.cc:4528 describe.cc:4452 describe.cc:4440
 #: describe.cc:4436 describe.cc:4448 describe.cc:4471 describe.cc:4426
+#: describe.cc:4449
 msgctxt "tso_shield"
 msgid "sometimes"
 msgstr "어느 정도"
 
 #: describe.cc:4520 describe.cc:4529 describe.cc:4453 describe.cc:4441
 #: describe.cc:4437 describe.cc:4449 describe.cc:4472 describe.cc:4427
+#: describe.cc:4450
 msgctxt "tso_shield"
 msgid "occasionally"
 msgstr "미약하게"
@@ -18977,6 +18981,7 @@ msgstr "잘못된 주문이다!"
 
 #: spl-cast.cc:1381 spl-cast.cc:1522 spl-cast.cc:1610 spl-cast.cc:1629
 #: spl-cast.cc:1347 spl-cast.cc:1494 spl-cast.cc:1588 spl-cast.cc:1607
+#: spl-cast.cc:1338 spl-cast.cc:1537 spl-cast.cc:1666
 msgid "Sorry, this spell is gone!"
 msgstr "유감이지만, 그 주문은 이 버전에서 삭제되었다!"
 
@@ -29126,6 +29131,9 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025
 #, c-format
@@ -29847,7 +29855,7 @@ msgctxt "verb"
 msgid "open"
 msgstr "을(를) 마치 배갯잇처럼 갈라버렸"
 
-#: melee_attack.cc:1830 melee_attack.cc:1842
+#: melee_attack.cc:1830 melee_attack.cc:1842 melee_attack.cc:1925
 msgctxt "verb2"
 msgid "slice"
 msgstr "을(를) 과일을 자르듯 베어버렸"
@@ -29891,7 +29899,7 @@ msgctxt "verb"
 msgid "hammer"
 msgstr "의 온 몸이 진동할 정도로 타격을 줬"
 
-#: melee_attack.cc:1853 melee_attack.cc:1865
+#: melee_attack.cc:1853 melee_attack.cc:1865 melee_attack.cc:1948
 msgctxt "verb2"
 msgid "pound"
 msgstr "을(를) 모루를 치듯 강하게 내리쳤"
@@ -30647,11 +30655,11 @@ msgstr "돌아"
 msgid "Hints Mode for Dungeon Crawl"
 msgstr "던전 크롤 (힌트 모드)"
 
-#: startup.cc:464
+#: startup.cc:464 startup.cc:462
 msgid "High Scores"
 msgstr "최고 기록"
 
-#: startup.cc:472
+#: startup.cc:472 startup.cc:470
 msgid "View the high score list."
 msgstr "클리어/사망 기록과 점수를 확인한다."
 
@@ -30771,71 +30779,71 @@ msgstr "%1$s은(는) 구덩이 아래로 떨어졌다.%2$.0s"
 msgid "Ashenzari warns you:"
 msgstr "아쉔자리는 경고했다:"
 
-#: beam.cc:3122
+#: beam.cc:3122 beam.cc:3066
 msgctxt "tracer_affect_player"
 msgid "beam"
 msgstr "마법 효과"
 
-#: terrain.cc:517
+#: terrain.cc:517 terrain.cc:491
 msgctxt "door"
 msgid "miniscule "
 msgstr "조그만 "
 
-#: terrain.cc:517
+#: terrain.cc:517 terrain.cc:491
 msgctxt "door"
 msgid "buggy door"
 msgstr "버그의 차원문"
 
-#: terrain.cc:518 terrain.cc:519
+#: terrain.cc:518 terrain.cc:519 terrain.cc:492 terrain.cc:493
 msgctxt "door"
 msgid "door"
 msgstr "문"
 
-#: terrain.cc:519
+#: terrain.cc:519 terrain.cc:493
 msgctxt "door"
 msgid "large "
 msgstr "커다란 "
 
-#: terrain.cc:520 terrain.cc:521
+#: terrain.cc:520 terrain.cc:521 terrain.cc:494 terrain.cc:495
 msgctxt "door"
 msgid "gate"
 msgstr "관문"
 
-#: terrain.cc:521
+#: terrain.cc:521 terrain.cc:495
 msgctxt "door"
 msgid "huge "
 msgstr "거대한 "
 
-#: describe.cc:3130 describe.cc:3127
+#: describe.cc:3130 describe.cc:3127 describe.cc:3113
 msgctxt "threat_desc"
 msgid "harmless"
 msgstr "별다른 위협이 되어 보이지 않는다"
 
-#: describe.cc:3131 describe.cc:3128
+#: describe.cc:3131 describe.cc:3128 describe.cc:3114
 msgctxt "threat_desc"
 msgid "easy"
 msgstr "어렵지 않은 상대이다"
 
-#: describe.cc:3132 describe.cc:3129
+#: describe.cc:3132 describe.cc:3129 describe.cc:3115
 msgctxt "threat_desc"
 msgid "dangerous"
 msgstr "만만치 않은 상대이다"
 
-#: describe.cc:3133 describe.cc:3130
+#: describe.cc:3133 describe.cc:3130 describe.cc:3116
 msgctxt "threat_desc"
 msgid "extremely dangerous"
 msgstr "극히 위험한 상대이다"
 
-#: describe.cc:3135 describe.cc:3132
+#: describe.cc:3135 describe.cc:3132 describe.cc:3118
 msgctxt "threat_desc"
 msgid "buggily threatening"
 msgstr "아무리 봐도 얼마나 강한 지 알 수 없다. 버그인것 같다"
 
-#: spl-cast.cc:555
+#: spl-cast.cc:555 spl-cast.cc:566
 msgid "You're too confused to cast spells."
 msgstr "주문을 외우기에는 너무 혼란스럽다."
 
-#: spl-cast.cc:715
+#: spl-cast.cc:715 spl-cast.cc:739
 msgid ""
 "<lightred>Casting this spell will cause instant excommunication!</lightred> "
 "Really cast?"
@@ -30843,67 +30851,68 @@ msgstr ""
 "<lightred>이 주문을 외울 경우, 당신은 즉시 신으로부터 파문당할 것이다!!</"
 "lightred> 정말로 이 주문을 외울 것인가?"
 
-#: spl-cast.cc:717
+#: spl-cast.cc:717 spl-cast.cc:741
 msgid "Casting this spell will put you into penance. Really cast?"
 msgstr ""
 "이 주문을 외우면 신의 분노를 사게 될 것이다. 정말로 주문을 외울 것인가?"
 
 #: mon-util.cc:3113 mon-util.cc:3125 mon-util.cc:3119 mon-util.cc:3131
+#: mon-util.cc:3311 mon-util.cc:3323
 msgctxt "mon_util_pronoun"
 msgid "it"
 msgstr "이 몬스터"
 
-#: mon-util.cc:3114 mon-util.cc:3120
+#: mon-util.cc:3114 mon-util.cc:3120 mon-util.cc:3312
 msgctxt "mon_util_pronoun"
 msgid "he"
 msgstr "그"
 
-#: mon-util.cc:3114 mon-util.cc:3120
+#: mon-util.cc:3114 mon-util.cc:3120 mon-util.cc:3312
 msgctxt "mon_util_pronoun"
 msgid "she"
 msgstr "그녀"
 
-#: mon-util.cc:3117 mon-util.cc:3123
+#: mon-util.cc:3117 mon-util.cc:3123 mon-util.cc:3315
 msgctxt "mon_util_pronoun"
 msgid "its"
 msgstr "이 몬스터의"
 
-#: mon-util.cc:3118 mon-util.cc:3124
+#: mon-util.cc:3118 mon-util.cc:3124 mon-util.cc:3316
 msgctxt "mon_util_pronoun"
 msgid "his"
 msgstr "그의"
 
-#: mon-util.cc:3118 mon-util.cc:3124
+#: mon-util.cc:3118 mon-util.cc:3124 mon-util.cc:3316
 msgctxt "mon_util_pronoun"
 msgid "her"
 msgstr "그녀의"
 
-#: mon-util.cc:3121 mon-util.cc:3127
+#: mon-util.cc:3121 mon-util.cc:3127 mon-util.cc:3319
 msgctxt "mon_util_pronoun"
 msgid "itself"
 msgstr "자기자신"
 
-#: mon-util.cc:3122 mon-util.cc:3128
+#: mon-util.cc:3122 mon-util.cc:3128 mon-util.cc:3320
 msgctxt "mon_util_pronoun"
 msgid "himself"
 msgstr "그 자신"
 
-#: mon-util.cc:3122 mon-util.cc:3128
+#: mon-util.cc:3122 mon-util.cc:3128 mon-util.cc:3320
 msgctxt "mon_util_pronoun"
 msgid "herself"
 msgstr "그녀 자신"
 
-#: mon-util.cc:3126 mon-util.cc:3132
+#: mon-util.cc:3126 mon-util.cc:3132 mon-util.cc:3324
 msgctxt "mon_util_pronoun"
 msgid "him"
 msgstr "그"
 
-#: mon-util.cc:3126 mon-util.cc:3132
+#: mon-util.cc:3126 mon-util.cc:3132 mon-util.cc:3324
 msgctxt "mon_util_pronoun_obj"
 msgid "her"
 msgstr "그녀"
 
-#: describe.cc:3224 describe.cc:3221
+#: describe.cc:3224 describe.cc:3221 describe.cc:3207
 msgid "; and "
 msgstr "; 그리고 "
 
@@ -30912,7 +30921,7 @@ msgctxt "stop_attack"
 msgid "fire "
 msgstr "(fire ) 이 문장을 보면 버그이므로 제보를 해주세요"
 
-#: misc.cc:2317
+#: misc.cc:2317 misc.cc:2345
 msgctxt "stop_attack"
 msgid "at "
 msgstr "에게 발사할 것인가"
@@ -30923,28 +30932,28 @@ msgid "in "
 msgstr "(in ) 이 문장을 보면 버그이므로 제보를 해주세요"
 
 #. pgettext("stop_attack","in ") + apostrophise(mon_name) +
-#: misc.cc:2324
+#: misc.cc:2324 misc.cc:2352
 msgctxt "stop_attack"
 msgid " direction"
 msgstr "을(를) 향하여 발사할 것인가"
 
-#: misc.cc:2328
+#: misc.cc:2328 misc.cc:2356
 msgctxt "stop_attack"
 msgid "through "
 msgstr " 쪽으로 발사할 것인가"
 
-#: misc.cc:2331
+#: misc.cc:2331 misc.cc:2359
 msgctxt "stop_attack"
 msgid "attack "
 msgstr "을(를) 공격할 것인가"
 
-#: misc.cc:2333
+#: misc.cc:2333 misc.cc:2361
 #, c-format
 msgctxt "stop_attack"
 msgid "Really %s%s%s?"
 msgstr "정말로 %2$s%1$s?%3$s"
 
-#: actor.cc:334 actor.cc:335
+#: actor.cc:334 actor.cc:335 actor.cc:526
 #, c-format
 msgid "%s %s %s grip on %s."
 msgstr "%4$s은(는) %1$s%2$s. %3$.0s"
@@ -30952,57 +30961,57 @@ msgstr "%4$s은(는) %1$s%2$s. %3$.0s"
 # (130130,deceit) 이부분이 좀 의아해하실지 모르겠는데요,
 # 2번째는 동사 하나에 conj_verb 붙는식이라 무시. 4번째는 디버그용메시지
 # 즉, 조이는캐릭(1) 조임당하는캐릭(3) 조임강도(5) 순입니다.
-#: actor.cc:525 actor.cc:526
+#: actor.cc:525 actor.cc:526 actor.cc:717
 #, c-format
 msgid "%s %s %s%s%s"
 msgstr "%1$s은(는) %3$s의 몸을 감아 조였%5$s%4$s%2$.0s"
 
-#: actor.cc:539 actor.cc:540
+#: actor.cc:539 actor.cc:540 actor.cc:731
 #, c-format
 msgid "%s %s constricted%s%s"
 msgstr "%1$s의 몸이 조여들었다%4$s%3$s%2$.0s"
 
-#: actor.cc:336 actor.cc:337
+#: actor.cc:336 actor.cc:337 actor.cc:528
 msgctxt "actor"
 msgid "release"
 msgstr "의 조이기로부터 탈출했다"
 
-#: actor.cc:336 actor.cc:337
+#: actor.cc:336 actor.cc:337 actor.cc:528
 msgctxt "actor"
 msgid "lose"
 msgstr "의 조이기에서 풀려났다"
 
-#: actor.cc:528 actor.cc:529
+#: actor.cc:528 actor.cc:529 actor.cc:720
 msgctxt "actor"
 msgid "constrict"
 msgstr "(actor:constrict) 이 문장을 보시면 버그이므로 제보를 해 주세요."
 
-#: actor.cc:541 actor.cc:542
+#: actor.cc:541 actor.cc:542 actor.cc:733
 msgctxt "actor"
 msgid "are"
 msgstr "(actor:are) 이 문장을 보시면 버그이므로 제보를 해 주세요."
 
-#: actor.cc:512 actor.cc:513
+#: actor.cc:512 actor.cc:513 actor.cc:704
 msgctxt "actor"
 msgid ", but do no damage."
 msgstr "으나, 아무런 손상도 주지 못했다."
 
-#: actor.cc:515 actor.cc:516
+#: actor.cc:515 actor.cc:516 actor.cc:707
 msgctxt "actor"
 msgid "."
 msgstr "다."
 
-#: actor.cc:517 actor.cc:518
+#: actor.cc:517 actor.cc:518 actor.cc:709
 msgctxt "actor"
 msgid "!"
 msgstr "다!"
 
-#: actor.cc:519 actor.cc:520
+#: actor.cc:519 actor.cc:520 actor.cc:711
 msgctxt "actor"
 msgid "!!"
 msgstr "다!!"
 
-#: actor.cc:521 actor.cc:522
+#: actor.cc:521 actor.cc:522 actor.cc:713
 msgctxt "actor"
 msgid "!!!"
 msgstr "다!!!"
@@ -38887,7 +38896,7 @@ msgid "Ration"
 msgstr "보존 식량"
 
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
-#: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528
+#: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
 msgid "You"
 msgstr "당신"
 
@@ -42343,7 +42352,7 @@ msgid "The "
 msgstr ""
 
 #: itemname.cc:193 itemname.cc:220 itemname.cc:224 itemname.cc:224
-#: misc.cc:2310
+#: misc.cc:2310 misc.cc:2338
 msgid "the "
 msgstr ""
 
