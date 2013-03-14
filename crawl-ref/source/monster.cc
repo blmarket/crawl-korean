@@ -1093,7 +1093,7 @@ void monster::unequip_armour(item_def &item, int near)
         simple_monster_message(this, info);
     }
 
-    ac += armour_bonus(item);
+    ac -= armour_bonus(item);
     ev -= property(item, PARM_EVASION) / 2;
 }
 
@@ -2208,10 +2208,13 @@ bool monster::pickup_scroll(item_def &item, int near)
         return false;
     }
 
-    // Holy monsters and worshippers of good gods won't pick up evil
-    // scrolls.
-    if ((is_holy() || is_good_god(god)) && is_evil_item(item))
+    // Holy monsters and worshippers of good gods won't pick up evil or
+    // unholy scrolls.
+    if ((is_holy() || is_good_god(god))
+        && (is_evil_item(item) || is_unholy_item(item)))
+    {
         return false;
+    }
 
     return pickup(item, MSLOT_SCROLL, near);
 }
@@ -3062,7 +3065,7 @@ void monster::banish(actor *agent, const string &)
         // Note: we do not set MF_GOT_HALF_XP, the monster is usually not
         // distinguishable from others of the same kind in the Abyss.
 
-        if (agent->is_player() && !player_in_branch(BRANCH_ABYSS))
+        if (agent->is_player())
             did_god_conduct(DID_BANISH, hit_dice, true /*possibly wrong*/, this);
     }
     monster_die(this, KILL_BANISHED, NON_MONSTER);

@@ -353,13 +353,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 }
                 break;
 
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_KIKUBAAQUDGHA:
             case GOD_YREDELEMNUL:
             case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -382,11 +384,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_KILL_UNDEAD:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_SHINING_ONE:
             case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -408,13 +412,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_KILL_DEMON:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_SHINING_ONE:
             case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_KIKUBAAQUDGHA:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -538,13 +544,15 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
                 break;
 
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_YREDELEMNUL:
             case GOD_KIKUBAAQUDGHA:
             case GOD_TROG:
             case GOD_VEHUMET:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -569,11 +577,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_HOLY_KILLED_BY_UNDEAD_SLAVE:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_YREDELEMNUL:
             case GOD_KIKUBAAQUDGHA:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -606,10 +616,12 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
                 retval = true;
                 break;
 
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_TROG:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
                 if (god_hates_attacking_friend(you.religion, victim))
                     break;
 
@@ -627,12 +639,14 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_LIVING_KILLED_BY_UNDEAD_SLAVE:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_YREDELEMNUL:
             case GOD_KIKUBAAQUDGHA:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your slave's kill."));
+                simple_god_message(_(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -647,11 +661,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_LIVING_KILLED_BY_SERVANT:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your collateral kill."));
+                simple_god_message(_(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -666,10 +682,12 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_UNDEAD_KILLED_BY_UNDEAD_SLAVE:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your slave's kill."));
+                simple_god_message(_(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -684,11 +702,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_UNDEAD_KILLED_BY_SERVANT:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_SHINING_ONE:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your collateral kill."));
+                simple_god_message(_(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - (is_good_god(you.religion) ? 0 :
                                             you.experience_level/3);
@@ -704,11 +724,13 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_DEMON_KILLED_BY_UNDEAD_SLAVE:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_KIKUBAAQUDGHA:
             case GOD_MAKHLEB:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your slave's kill."));
+                simple_god_message(_(" accepts your slave's kill."));
                 retval = true;
                 piety_denom = level + 10 - you.experience_level/3;
                 piety_change = piety_denom - 6;
@@ -723,12 +745,14 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_DEMON_KILLED_BY_SERVANT:
             switch (you.religion)
             {
+            case GOD_LUGONU:    // No piety from Abyss denizens.
+                if (player_in_branch(BRANCH_ABYSS))
+                    break;
             case GOD_SHINING_ONE:
             case GOD_MAKHLEB:
             case GOD_TROG:
             case GOD_BEOGH:
-            case GOD_LUGONU:
-                simple_god_message(gettext(" accepts your collateral kill."));
+                simple_god_message(_(" accepts your collateral kill."));
                 retval = true;
                 piety_denom = level + 10 - (is_good_god(you.religion) ? 0 :
                                             you.experience_level/3);
