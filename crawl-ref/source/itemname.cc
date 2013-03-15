@@ -1350,27 +1350,31 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         }
 
         /// 1. 무기 이름 2. 브랜드( of flaming)의 번역형 3. 저주가 걸려있으면 (curse)
-#ifdef KR
-        if(terse)
-        {
-            buff << make_stringf("%s%s%s",
-                check_gettext(item_base_name(*this).c_str()),
-                know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
-                (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
-        }
-        else
-        {
-            buff << make_stringf("%s%s%s",
-                know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
-                check_gettext(item_base_name(*this).c_str()),
-                (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
-        }
-#else
-        buff << make_stringf("%s%s%s",
-            check_gettext(item_base_name(*this).c_str()),
-            know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
-            (know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
-#endif
+		if(translate_flag)
+		{
+			if(terse)
+			{
+				buff << make_stringf("%s%s%s",
+					check_gettext(item_base_name(*this).c_str()),
+					know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
+					(know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+			}
+			else
+			{
+				buff << make_stringf("%s%s%s",
+					know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
+					check_gettext(item_base_name(*this).c_str()),
+					(know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+			}
+		}
+		else
+		{	
+			buff << make_stringf("%s%s%s",
+				check_gettext(item_base_name(*this).c_str()),
+				know_brand ? check_gettext(weapon_brand_name(*this, terse)) : "",
+				(know_curse && cursed() && terse) ? check_gettext(" (curse)") : "");
+		}
+
         break;
 
     case OBJ_MISSILES:
@@ -1473,27 +1477,35 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
                                                    : check_gettext(M_("buggy ")));
         }
 
-        // 어순을 바꿔야 할 곳이라서 코드를 많이 고치게 됨.
-        {
-            std::string itembasename, itemegoname;
-            if (!basename && item_typ == ARM_GLOVES)
-            {
-                const short dglov = get_gloves_desc(*this);
+		// 어순을 바꿔야 할 곳이라서 코드를 많이 고치게 됨. 
+		// (deceit,130316) 여기 뭔가 merging이 잘못되었던듯;;; 원본코드 내려받아서 고쳤습니다.
+		{
+		std::string itembasename, itemegoname;
+		if (!basename && item_typ == ARM_GLOVES)
+		{
+			const short dglov = get_gloves_desc(*this);
 
-                itembasename = check_gettext((dglov == TGLOV_DESC_GLOVES)    ? M_("gloves") :
-                               (dglov == TGLOV_DESC_GAUNTLETS) ? M_("gauntlets") :
-                               (dglov == TGLOV_DESC_BRACERS)   ? M_("bracers") :
-                                                                 M_("bug-ridden gloves"));
-            }
-            else
-                itembasename = check_gettext(item_base_name(*this).c_str());
+            itembasename = check_gettext((dglov == TGLOV_DESC_GLOVES)    ? M_("gloves") :
+                           (dglov == TGLOV_DESC_GAUNTLETS) ? M_("gauntlets") :
+                           (dglov == TGLOV_DESC_BRACERS)   ? M_("bracers") :
+                                                             M_("bug-ridden gloves"));
+		}
+		else
+            itembasename = check_gettext(item_base_name(*this).c_str());
 
-            if (know_ego && !is_artefact(*this))
-            {
-                if (!terse)
-                    buff << " of "; // 메모
-                buff << armour_ego_name(*this, terse);
-            }
+		if (know_ego && !is_artefact(*this))
+		{
+			const special_armour_type sparm = get_armour_ego_type(*this);
+
+			if (sparm != SPARM_NORMAL)
+			{
+				if (!terse)
+					itemegoname = make_stringf(check_gettext(" of %s")
+					, check_gettext(armour_ego_name(*this, terse)));
+				else
+					itemegoname = check_gettext(armour_ego_name(*this, terse));
+			}
+		}
 
 #ifdef KR
             if(translate_flag == false)
@@ -1503,7 +1515,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 #else
             buff << itembasename << itemegoname;
 #endif
-        }
+			}
 
         if (know_curse && cursed() && terse)
             buff << check_gettext(" (curse)"); 
