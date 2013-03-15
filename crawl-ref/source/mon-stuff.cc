@@ -1063,7 +1063,7 @@ void setup_spore_explosion(bolt & beam, const monster& origin)
     _setup_base_explosion(beam, origin);
     beam.flavour = BEAM_SPORE;
     beam.damage  = dice_def(3, 15);
-    beam.name    = "explosion of spores";
+    beam.name    = M_("explosion of spores");
     beam.colour  = LIGHTGREY;
     beam.ex_size = 2;
 }
@@ -1073,8 +1073,8 @@ static void _setup_lightning_explosion(bolt & beam, const monster& origin)
     _setup_base_explosion(beam, origin);
     beam.flavour   = BEAM_ELECTRICITY;
     beam.damage    = dice_def(3, 20);
-    beam.name      = "blast of lightning";
-    beam.noise_msg = "You hear a clap of thunder!";
+    beam.name      = M_("blast of lightning");
+    beam.noise_msg = _("You hear a clap of thunder!");
     beam.colour    = LIGHTCYAN;
     beam.ex_size   = coinflip() ? 3 : 2;
 }
@@ -1085,7 +1085,7 @@ static void _setup_prism_explosion(bolt& beam, const monster& origin)
     beam.flavour = BEAM_MMISSILE;
     beam.damage  = (origin.number == 2 ? dice_def(3, 6 + origin.hit_dice * 7 / 4)
                     : dice_def(2, 6 + origin.hit_dice * 7 / 4));
-    beam.name    = "blast of energy";
+    beam.name    = M_("blast of energy");
     beam.colour  = MAGENTA;
     beam.ex_size = origin.number;
 }
@@ -1099,7 +1099,7 @@ static void _setup_inner_flame_explosion(bolt & beam, const monster& origin,
     beam.damage      = (size > SIZE_BIG)  ? dice_def(3, 25) :
                        (size > SIZE_TINY) ? dice_def(3, 20) :
                                             dice_def(3, 15);
-    beam.name        = "fiery explosion";
+    beam.name        = M_("fiery explosion");
     beam.colour      = RED;
     beam.ex_size     = (size > SIZE_BIG) ? 2 : 1;
     beam.source_name = origin.name(DESC_A, true);
@@ -3449,7 +3449,7 @@ void print_wounds(const monster* mons)
         return;
 
     mon_dam_level_type dam_level = mons_get_damage_level(mons);
-    string desc = get_damage_level_string(mons->holiness(), dam_level);
+    string desc = make_stringf(gettext(" is %s."), get_damage_level_string(mons->holiness(), dam_level).c_str());
 
     simple_monster_message(mons, desc.c_str(), MSGCH_MONSTER_DAMAGE,
                            dam_level);

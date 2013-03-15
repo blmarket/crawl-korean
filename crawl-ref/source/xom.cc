@@ -2018,7 +2018,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
     beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
     beam.damage       = dice_def(3, 30);
     beam.target       = you.pos();
-    beam.name         = "번개 폭발"; //blast of lightning
+    beam.name         = M_("blast of lightning");
     beam.colour       = LIGHTCYAN;
     beam.thrower      = KILL_MISC;
     beam.beam_source  = NON_MONSTER;
@@ -3213,7 +3213,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
     beam.colour  = feat_def.colour;
     beam.source  = stair_pos;
     beam.target  = ray.pos();
-    beam.name    = "STAIR BEAM";
+    beam.name    = M_("STAIR BEAM");
     beam.draw_delay = 50; // Make beam animation slower than normal.
 
     beam.aimed_at_spot = true;

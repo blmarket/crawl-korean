@@ -105,13 +105,13 @@ static void _scale_draconian_breath(bolt& beam, int drac_type)
     switch (drac_type)
     {
     case MONS_RED_DRACONIAN:
-        beam.name       = "searing blast";
+        beam.name       = M_("searing blast");
         beam.aux_source = "blast of searing breath";
         scaling         = 65;
         break;
 
     case MONS_WHITE_DRACONIAN:
-        beam.name       = "chilling blast";
+        beam.name       = M_("chilling blast");
         beam.aux_source = "blast of chilling breath";
         beam.short_name = "frost";
         scaling         = 65;
@@ -119,7 +119,7 @@ static void _scale_draconian_breath(bolt& beam, int drac_type)
         break;
 
     case MONS_PLAYER_GHOST: // draconians only
-        beam.name       = "blast of negative energy";
+        beam.name       = M_("blast of negative energy");
         beam.aux_source = "blast of draining breath";
         beam.flavour    = BEAM_NEG;
         beam.colour     = DARKGREY;
@@ -293,7 +293,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
     {
     case SPELL_MAGIC_DART:
         beam.colour   = LIGHTMAGENTA;
-        beam.name     = "magic dart";
+        beam.name     = M_("magic dart");
         beam.damage   = dice_def(3, 4 + (power / 100));
         beam.hit      = AUTOMATIC_HIT;
         beam.flavour  = BEAM_MMISSILE;
@@ -301,7 +301,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_THROW_FLAME:
         beam.colour   = RED;
-        beam.name     = "puff of flame";
+        beam.name     = M_("puff of flame");
         beam.damage   = dice_def(3, 5 + (power / 40));
         beam.hit      = 25 + power / 40;
         beam.flavour  = BEAM_FIRE;
@@ -309,7 +309,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_THROW_FROST:
         beam.colour   = WHITE;
-        beam.name     = "puff of frost";
+        beam.name     = M_("puff of frost");
         beam.damage   = dice_def(3, 5 + (power / 40));
         beam.hit      = 25 + power / 40;
         beam.flavour  = BEAM_COLD;
@@ -317,7 +317,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_SANDBLAST:
         beam.colour   = BROWN;
-        beam.name     = "rocky blast";
+        beam.name     = M_("rocky blast");
         beam.damage   = dice_def(3, 5 + (power / 40));
         beam.hit      = 20 + power / 40;
         beam.flavour  = BEAM_FRAG;
@@ -392,7 +392,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_FLAME_TONGUE:
-        beam.name     = "flame";
+        beam.name     = M_("flame");
         beam.damage   = dice_def(3, 3 + power / 12);
         beam.colour   = RED;
         beam.flavour  = BEAM_FIRE;
@@ -401,7 +401,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_VENOM_BOLT:
-        beam.name     = "bolt of poison";
+        beam.name     = M_("bolt of poison");
         beam.damage   = dice_def(3, 6 + power / 13);
         beam.colour   = LIGHTGREEN;
         beam.flavour  = BEAM_POISON;
@@ -410,7 +410,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_POISON_ARROW:
-        beam.name     = "poison arrow";
+        beam.name     = M_("poison arrow");
         beam.damage   = dice_def(3, 7 + power / 12);
         beam.colour   = LIGHTGREEN;
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
@@ -419,7 +419,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_BOLT_OF_MAGMA:
-        beam.name     = "bolt of magma";
+        beam.name     = M_("bolt of magma");
         beam.damage   = dice_def(3, 8 + power / 11);
         beam.colour   = RED;
         beam.flavour  = BEAM_LAVA;
@@ -428,7 +428,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_BOLT_OF_FIRE:
-        beam.name     = "bolt of fire";
+        beam.name     = M_("bolt of fire");
         beam.damage   = dice_def(3, 8 + power / 11);
         beam.colour   = RED;
         beam.flavour  = BEAM_FIRE;
@@ -437,7 +437,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_THROW_ICICLE:
-        beam.name     = "shard of ice";
+        beam.name     = M_("shard of ice");
         beam.damage   = dice_def(3, 8 + power / 11);
         beam.colour   = WHITE;
         beam.flavour  = BEAM_ICE;
@@ -445,7 +445,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_BOLT_OF_COLD:
-        beam.name     = "bolt of cold";
+        beam.name     = M_("bolt of cold");
         beam.damage   = dice_def(3, 8 + power / 11);
         beam.colour   = WHITE;
         beam.flavour  = BEAM_COLD;
@@ -454,7 +454,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_BOLT_OF_INACCURACY:
-        beam.name     = "narrow beam of energy";
+        beam.name     = M_("narrow beam of energy");
         beam.damage   = calc_dice(12, 40 + (3 * power)/ 2);
         beam.colour   = YELLOW;
         beam.flavour  = BEAM_ENERGY;
@@ -463,7 +463,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_PRIMAL_WAVE:
-        beam.name     = "great wave of water";
+        beam.name     = M_("great wave of water");
         // Water attack is weaker than the pure elemental damage
         // attacks, but also less resistible.
         beam.damage   = dice_def(3, 6 + power / 12);
@@ -476,7 +476,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_FREEZING_CLOUD:
-        beam.name     = "freezing blast";
+        beam.name     = M_("freezing blast");
         beam.damage   = dice_def(2, 9 + power / 11);
         beam.colour   = WHITE;
         beam.flavour  = BEAM_COLD;
@@ -486,7 +486,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_SHOCK:
-        beam.name     = "zap";
+        beam.name     = M_("zap");
         beam.damage   = dice_def(1, 8 + (power / 20));
         beam.colour   = LIGHTCYAN;
         beam.flavour  = BEAM_ELECTRICITY;
@@ -495,7 +495,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_LIGHTNING_BOLT:
-        beam.name     = "bolt of lightning";
+        beam.name     = M_("bolt of lightning");
         beam.damage   = dice_def(3, 10 + power / 17);
         beam.colour   = LIGHTCYAN;
         beam.flavour  = BEAM_ELECTRICITY;
@@ -509,7 +509,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_FIREBALL:
         beam.colour   = RED;
-        beam.name     = "fireball";
+        beam.name     = M_("fireball");
         beam.damage   = dice_def(3, 7 + power / 10);
         beam.hit      = 40;
         beam.flavour  = BEAM_FIRE;
@@ -523,7 +523,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_ICE_STORM:
-        beam.name           = "great blast of cold";
+        beam.name           = M_("great blast of cold");
         beam.colour         = BLUE;
         beam.damage         = calc_dice(10, 18 + power / 2);
         beam.hit            = 20 + power / 10;    // 50: 25   100: 30
@@ -535,7 +535,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_HELLFIRE_BURST:
         beam.aux_source   = "burst of hellfire";
-        beam.name         = "burst of hellfire";
+        beam.name         = M_("burst of hellfire");
         beam.ex_size      = 1;
         beam.flavour      = BEAM_HELLFIRE;
         beam.is_explosion = true;
@@ -563,7 +563,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_LEHUDIBS_CRYSTAL_SPEAR:      // was splinters
-        beam.name     = "crystal spear";
+        beam.name     = M_("crystal spear");
         beam.damage   = dice_def(3, 16 + power / 10);
         beam.colour   = WHITE;
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
@@ -572,7 +572,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_STRIKING:
-        beam.name      = "force bolt",
+        beam.name      = M_("force bolt"),
         beam.damage    = dice_def(1, 8),
         beam.colour    = BLACK,
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
@@ -586,7 +586,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_BOLT_OF_DRAINING:      // negative energy
-        beam.name     = "bolt of negative energy";
+        beam.name     = M_("bolt of negative energy");
         beam.damage   = dice_def(3, 6 + power / 13);
         beam.colour   = DARKGREY;
         beam.flavour  = BEAM_NEG;
@@ -596,8 +596,8 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_ISKENDERUNS_MYSTIC_BLAST: // mystic blast
         beam.colour     = LIGHTMAGENTA;
-        beam.name       = "orb of energy";
-        beam.short_name = "energy";
+        beam.name       = M_("orb of energy");
+        beam.short_name = M_("energy");
         beam.damage     = dice_def(3, 7 + (power / 14));
         beam.hit        = 20 + (power / 20);
         beam.flavour    = BEAM_MMISSILE;
@@ -605,7 +605,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_STEAM_BALL:
         beam.colour   = LIGHTGREY;
-        beam.name     = "ball of steam";
+        beam.name     = M_("ball of steam");
         beam.damage   = dice_def(3, 7 + (power / 15));
         beam.hit      = 20 + power / 20;
         beam.flavour  = BEAM_STEAM;
@@ -630,13 +630,13 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         if (real_spell != SPELL_STICKY_FLAME)
             beam.hit      = 18 + power / 15;
         beam.colour   = RED;
-        beam.name     = "sticky flame";
+        beam.name     = M_("sticky flame");
         beam.damage   = dice_def(3, 3 + power / 50);
         beam.flavour  = BEAM_FIRE;
         break;
 
     case SPELL_NOXIOUS_CLOUD:
-        beam.name     = "noxious blast";
+        beam.name     = M_("noxious blast");
         beam.damage   = dice_def(1, 0);
         beam.colour   = GREEN;
         beam.flavour  = BEAM_MEPHITIC;
@@ -646,7 +646,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_POISONOUS_CLOUD:
-        beam.name     = "blast of poison";
+        beam.name     = M_("blast of poison");
         beam.damage   = dice_def(3, 3 + power / 25);
         beam.colour   = LIGHTGREEN;
         beam.flavour  = BEAM_POISON;
@@ -657,8 +657,8 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_ENERGY_BOLT:        // eye of devastation
         beam.colour     = YELLOW;
-        beam.name       = "bolt of energy";
-        beam.short_name = "energy";
+        beam.name       = M_("bolt of energy");
+        beam.short_name = M_("energy");
         beam.damage     = dice_def(3, 20);
         beam.hit        = 15 + power / 30;
         beam.flavour    = BEAM_NUKE; // a magical missile which destroys walls
@@ -667,7 +667,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_STING:              // sting
         beam.colour   = GREEN;
-        beam.name     = "sting";
+        beam.name     = M_("sting");
         beam.damage   = dice_def(1, 6 + power / 25);
         beam.hit      = 60;
         beam.flavour  = BEAM_POISON;
@@ -675,7 +675,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_IRON_SHOT:
         beam.colour   = LIGHTCYAN;
-        beam.name     = "iron shot";
+        beam.name     = M_("iron shot");
         beam.damage   = dice_def(3, 8 + (power / 9));
         beam.hit      = 20 + (power / 25);
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
@@ -684,7 +684,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_STONE_ARROW:
         beam.colour   = LIGHTGREY;
-        beam.name     = "stone arrow";
+        beam.name     = M_("stone arrow");
         beam.damage   = dice_def(3, 5 + (power / 10));
         beam.hit      = 14 + power / 35;
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
@@ -693,7 +693,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_POISON_SPLASH:
         beam.colour   = GREEN;
-        beam.name     = "splash of poison";
+        beam.name     = M_("splash of poison");
         beam.damage   = dice_def(1, 4 + power / 10);
         beam.hit      = 16 + power / 20;
         beam.flavour  = BEAM_POISON;
@@ -701,7 +701,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_ACID_SPLASH:
         beam.colour   = YELLOW;
-        beam.name     = "splash of acid";
+        beam.name     = M_("splash of acid");
         beam.damage   = dice_def(3, 7);
 
         // Zotdef change: make acid splash dmg dependent on power
@@ -722,7 +722,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_MEPHITIC_CLOUD:
-        beam.name     = "foul vapour";
+        beam.name     = M_("foul vapour");
         beam.damage   = dice_def(1, 0);
         beam.colour   = GREEN;
         beam.flavour  = BEAM_MEPHITIC;
@@ -733,7 +733,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_MIASMA:            // death drake
-        beam.name     = "foul vapour";
+        beam.name     = M_("foul vapour");
         beam.damage   = dice_def(3, 5 + power / 24);
         beam.colour   = DARKGREY;
         beam.flavour  = BEAM_MIASMA;
@@ -744,7 +744,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_QUICKSILVER_BOLT:   // Quicksilver dragon and purple draconian
         beam.colour     = random_colour();
-        beam.name       = "bolt of dispelling energy";
+        beam.name       = M_("bolt of dispelling energy");
         beam.short_name = "energy";
         beam.damage     = dice_def(3, 20);
         beam.hit        = 16 + power / 25;
@@ -752,7 +752,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_HELLFIRE:           // fiend's hellfire
-        beam.name         = "blast of hellfire";
+        beam.name         = M_("blast of hellfire");
         beam.aux_source   = "blast of hellfire";
         beam.colour       = RED;
         beam.damage       = dice_def(3, 20);
@@ -763,7 +763,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_METAL_SPLINTERS:
-        beam.name       = "spray of metal splinters";
+        beam.name       = M_("spray of metal splinters");
         beam.short_name = "metal splinters";
         beam.damage     = dice_def(3, 20 + power / 20);
         beam.colour     = CYAN;
@@ -788,7 +788,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_FIRE_BREATH:
-        beam.name       = "blast of flame";
+        beam.name       = M_("blast of flame");
         beam.aux_source = "blast of fiery breath";
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
         beam.colour     = RED;
@@ -798,7 +798,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_CHAOS_BREATH:
-        beam.name       = "blast of chaos";
+        beam.name       = M_("blast of chaos");
         beam.aux_source = "blast of chaotic breath";
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
         beam.colour     = ETC_RANDOM;
@@ -808,7 +808,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_COLD_BREATH:
-        beam.name       = "blast of cold";
+        beam.name       = M_("blast of cold");
         beam.aux_source = "blast of icy breath";
         beam.short_name = "frost";
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
@@ -819,7 +819,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_HOLY_BREATH:
-        beam.name     = "blast of cleansing flame";
+        beam.name     = M_("blast of cleansing flame");
         beam.damage   = dice_def(3, (mons->hit_dice * 2));
         beam.colour   = ETC_HOLY;
         beam.flavour  = BEAM_HOLY;
@@ -835,7 +835,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_PORKALATOR:
-        beam.name     = "porkalator";
+        beam.name     = M_("porkalator");
         beam.glyph    = 0;
         beam.flavour  = BEAM_PORKALATOR;
         beam.thrower  = KILL_MON_MISSILE;
@@ -853,14 +853,14 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_SUNRAY:
         beam.colour   = ETC_HOLY;
-        beam.name     = "ray of light";
+        beam.name     = M_("ray of light");
         beam.damage   = dice_def(3, 7 + (power / 12));
         beam.hit      = 10 + power / 25; // lousy accuracy, but ignores RMsl
         beam.flavour  = BEAM_LIGHT;
         break;
 
     case SPELL_PETRIFYING_CLOUD:
-        beam.name     = "blast of calcifying dust";
+        beam.name     = M_("blast of calcifying dust");
         beam.colour   = WHITE;
         beam.damage   = dice_def(2, 6);
         beam.hit      = AUTOMATIC_HIT;
@@ -870,7 +870,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_HOLY_LIGHT:
-        beam.name     = "beam of golden light";
+        beam.name     = M_("beam of golden light");
         beam.damage   = dice_def(3, 8 + power / 11);
         beam.colour   = ETC_HOLY;
         beam.flavour  = BEAM_HOLY;
@@ -880,7 +880,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_SILVER_BLAST:
         beam.colour   = LIGHTGRAY;
-        beam.name     = "silver bolt";
+        beam.name     = M_("silver bolt");
         beam.damage   = dice_def(3, 7 + power / 10);
         beam.hit      = 40;
         beam.flavour  = BEAM_BOLT_OF_ZIN;
@@ -889,7 +889,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_ENSNARE:
-        beam.name     = "ensnaring beam";
+        beam.name     = M_("ensnaring beam");
         beam.colour   = WHITE;
         beam.glyph    = dchar_glyph(DCHAR_FIRED_MISSILE);
         beam.flavour  = BEAM_ENSNARE;
@@ -898,7 +898,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_FORCE_LANCE:
         beam.colour   = LIGHTGREY;
-        beam.name     = "lance of force";
+        beam.name     = M_("lance of force");
         beam.damage   = dice_def(3, 3 + power / 50);
         beam.hit      = 20 + power / 20;
         beam.flavour  = BEAM_MMISSILE;
@@ -937,7 +937,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
     }
 
     if (spell_cast == SPELL_AGONY)
-        beam.name = "agony";
+        beam.name = M_("agony");
 
     if (spell_cast == SPELL_DRACONIAN_BREATH)
         _scale_draconian_breath(beam, drac_type);

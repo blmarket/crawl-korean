@@ -3815,7 +3815,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         else
             msg = replace_all(msg, "@surface@", "ground");
 
-        msg = replace_all(msg, "@feature@", raw_feature_description(mons->pos()));
+        msg = replace_all(msg, "@feature@", _(raw_feature_description(mons->pos()).c_str()));
     }
     else
     {

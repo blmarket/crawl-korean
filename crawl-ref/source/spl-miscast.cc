@@ -893,7 +893,7 @@ void MiscastEffect::_conjuration(int severity)
             beam.flavour = BEAM_MISSILE;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
             beam.damage  = dice_def(3, 20);
-            beam.name    = "explosion";
+            beam.name    = M_("explosion");
             beam.colour  = random_colour();
             beam.ex_size = coinflip() ? 1 : 2;
 
@@ -2162,7 +2162,7 @@ void MiscastEffect::_fire(int severity)
             beam.flavour = BEAM_FIRE;
             beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
             beam.damage  = dice_def(3, 20);
-            beam.name    = "fireball";
+            beam.name    = M_("fireball");
             beam.colour  = RED;
             beam.ex_size = coinflip() ? 1 : 2;
 

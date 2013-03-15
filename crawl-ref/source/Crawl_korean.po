@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-14 23:31+0900\n"
+"POT-Creation-Date: 2013-03-16 01:48+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -736,14 +736,14 @@ msgid "You cannot banish yourself!"
 msgstr "자기 자신을 추방할 수는 없다!"
 
 #: abl-show.cc:2610 abl-show.cc:2610 abl-show.cc:2608 abl-show.cc:2667
-#: abl-show.cc:2624 abl-show.cc:2635
+#: abl-show.cc:2624 abl-show.cc:2635 abl-show.cc:2623
 msgid "No corpses are in range."
 msgstr "주위에 시체가 보이지 않는다."
 
 #. / 무기 이름이나, 손의 이름이 나온다.
 #. / 무기 이름이나, 손의 이름이 나온다.
 #: abl-show.cc:2658 abl-show.cc:2658 abl-show.cc:2656 abl-show.cc:2715
-#: abl-show.cc:2672 abl-show.cc:2682
+#: abl-show.cc:2672 abl-show.cc:2682 abl-show.cc:2670
 #, c-format
 msgid "A thick mucus forms on %s."
 msgstr "두꺼운 점액질이 %s의 몸을 덮었다."
@@ -758,27 +758,27 @@ msgid "your speed is %d"
 msgstr "DEBUG : 당신의 속도는 이제 %d이다."
 
 #: abl-show.cc:2690 abl-show.cc:2690 abl-show.cc:2689 abl-show.cc:2748
-#: abl-show.cc:2705 abl-show.cc:2715
+#: abl-show.cc:2705 abl-show.cc:2715 abl-show.cc:2703
 msgid "You extend your astral sight."
 msgstr "당신의 두 눈에 투시력이 더욱 길게 이어진다."
 
 #: abl-show.cc:2692 abl-show.cc:2692 abl-show.cc:2691 abl-show.cc:2750
-#: abl-show.cc:2707 abl-show.cc:2717
+#: abl-show.cc:2707 abl-show.cc:2717 abl-show.cc:2705
 msgid "You gain astral sight."
 msgstr "당신의 두 눈에 투시력이 생겼다."
 
 #: abl-show.cc:2710 abl-show.cc:2710 abl-show.cc:2709 abl-show.cc:2768
-#: abl-show.cc:2725 abl-show.cc:2735
+#: abl-show.cc:2725 abl-show.cc:2735 abl-show.cc:2723
 msgid "Really renounce your faith, foregoing its fabulous benefits?"
 msgstr "정말로 현재 신앙을 포기하고, 모든 혜택을 포기할 것인가?"
 
 #: abl-show.cc:2712 abl-show.cc:2712 abl-show.cc:2711 abl-show.cc:2770
-#: abl-show.cc:2727 abl-show.cc:2737
+#: abl-show.cc:2727 abl-show.cc:2737 abl-show.cc:2725
 msgid "Are you sure you won't change your mind later?"
 msgstr "나중에 후회하지 않을 것인가?"
 
 #: abl-show.cc:2726 abl-show.cc:2726 abl-show.cc:2725 abl-show.cc:2784
-#: abl-show.cc:2741 abl-show.cc:2751
+#: abl-show.cc:2741 abl-show.cc:2751 abl-show.cc:2739
 msgid "Sorry, you can't do that."
 msgstr "유감이지만, 그렇게 할 수 없다."
 
@@ -793,7 +793,7 @@ msgstr ""
 "  특수능력 - 설명 보기                 소모                           성공률"
 
 #: abl-show.cc:2849 abl-show.cc:2849 abl-show.cc:2848 abl-show.cc:2925
-#: abl-show.cc:2887 abl-show.cc:2897
+#: abl-show.cc:2887 abl-show.cc:2897 abl-show.cc:2885
 msgid ""
 "Press '<w>!</w>' or '<w>?</w>' to toggle between ability selection and "
 "description."
@@ -1184,7 +1184,7 @@ msgid "The forest fire spreads!"
 msgstr "나무에 불이 옮겨 붙었다!"
 
 #: cloud.cc:340 cloud.cc:341 cloud.cc:341 cloud.cc:419 cloud.cc:422
-#: cloud.cc:366
+#: cloud.cc:366 cloud.cc:367
 msgid "The rain has left you waist-deep in water!"
 msgstr "세찬 비로 인해 허리까지 빗물이 차올랐다!"
 
@@ -1205,11 +1205,12 @@ msgid "The rain washes away your illusions!"
 msgstr "당신의 환영들이 비에 씻겨 사라졌다!"
 
 #: cloud.cc:904 cloud.cc:904 cloud.cc:901 cloud.cc:910 cloud.cc:845
+#: cloud.cc:846
 msgid "You choke on the stench!"
 msgstr "심한 악취에 숨이 막힌다!"
 
 #: cloud.cc:989 cloud.cc:989 beam.cc:3253 beam.cc:3276 cloud.cc:986
-#: beam.cc:3334 cloud.cc:995 beam.cc:3280 cloud.cc:926
+#: beam.cc:3334 cloud.cc:995 beam.cc:3280 cloud.cc:926 cloud.cc:927
 msgid "Strange energies course through your body."
 msgstr "기묘한 에너지가 당신의 몸속을 따라 흘렀다."
 
@@ -3122,7 +3123,7 @@ msgstr ""
 "이 고기를 먹는 행위는 %s의 분노를 살 수 있다!"
 
 #: describe.cc:2049 describe.cc:2056 describe.cc:2056 describe.cc:2064
-#: describe.cc:2038
+#: describe.cc:2038 describe.cc:2018
 msgid ""
 "\n"
 "It uses its own mana reservoir for casting spells, and recharges "
@@ -3155,7 +3156,7 @@ msgstr ""
 "이것의 충전 속도는 %+d이다. 이것은 최대 +%d까지 충전이 가능하다."
 
 #: describe.cc:2078 describe.cc:2085 describe.cc:2085 describe.cc:2093
-#: describe.cc:2065
+#: describe.cc:2065 describe.cc:2045
 msgid ""
 "\n"
 "Its recharge rate is at maximum."
@@ -3173,7 +3174,7 @@ msgstr ""
 "이것은 최대 %d회까지 충전이 가능하며, +%d의 충전 속도를 갖고 있다."
 
 #: describe.cc:2098 describe.cc:2105 describe.cc:2105 describe.cc:2113
-#: describe.cc:2088
+#: describe.cc:2088 describe.cc:2068
 msgid ""
 "\n"
 "\n"
@@ -3895,13 +3896,13 @@ msgstr "%s은(는) %s을(를) 공격했으나, %s에 의해 막혔다."
 #. / 두번째 %s는 그냥 생략하고 '그것의' 정도로 번역해도 될 듯 합니다.
 #. / 두번째 %s는 그냥 생략하고 '그것의' 정도로 번역해도 될 듯 합니다.
 #: fight.cc:746 fight.cc:739 fight.cc:739 fight.cc:737 melee_attack.cc:5281
-#: melee_attack.cc:5293 melee_attack.cc:5428
+#: melee_attack.cc:5293 melee_attack.cc:5428 melee_attack.cc:5429
 #, c-format
 msgid "You bite %s, and draw %s blood!"
 msgstr "당신은 %s을(를) 물어 뜯었고, 그것의 피를 빨아냈다! %.0s"
 
 #: fight.cc:752 fight.cc:745 fight.cc:745 fight.cc:743 melee_attack.cc:5287
-#: melee_attack.cc:5299 melee_attack.cc:5434
+#: melee_attack.cc:5299 melee_attack.cc:5434 melee_attack.cc:5435
 #, c-format
 msgid "You draw %s blood!"
 msgstr "당신은 %s 피를 빨아냈다!"
@@ -3918,13 +3919,13 @@ msgstr "당신은 %s 피를 빨아냈다!"
 #. / 1. "a little "이 번역된 단어. 혹은 ""
 #: fight.cc:774 fight.cc:767 player.cc:4851 player.cc:4851 fight.cc:765
 #: player.cc:4977 melee_attack.cc:5307 player.cc:5223 melee_attack.cc:5319
-#: player.cc:5246 melee_attack.cc:5454 player.cc:5029
+#: player.cc:5246 melee_attack.cc:5454 player.cc:5029 melee_attack.cc:5455
 #, c-format
 msgid "You feel %sbetter."
 msgstr "몸이 %s 회복된 것을 느꼈다."
 
 #: fight.cc:775 fight.cc:768 fight.cc:768 fight.cc:766 melee_attack.cc:5307
-#: melee_attack.cc:5319 melee_attack.cc:5454
+#: melee_attack.cc:5319 melee_attack.cc:5454 melee_attack.cc:5455
 msgid "much "
 msgstr "꽤 "
 
@@ -4496,6 +4497,7 @@ msgstr "은(는) 당신의 가시에 명중당했다."
 #. / 대상, stumble
 #: fight.cc:5588 fight.cc:5581 fight.cc:5589 fight.cc:5589 fight.cc:5484
 #: melee_attack.cc:4791 melee_attack.cc:4802 melee_attack.cc:4937
+#: melee_attack.cc:4938
 #, c-format
 msgid "%s %s backwards!"
 msgstr "%s은(는) 휘청거렸다!"
@@ -4555,30 +4557,35 @@ msgstr "정말로 %s(으)로 공격할 것인가? "
 
 #: fight.cc:6530 fight.cc:6523 fight.cc:6531 fight.cc:6531 fight.cc:6465
 #: melee_attack.cc:5353 melee_attack.cc:5365 melee_attack.cc:5500
+#: melee_attack.cc:5501
 #, c-format
 msgid "You pounce on %s from a blind spot!"
 msgstr "당신은 %s의 빈틈을 찾아 기습했다!"
 
 #: fight.cc:6531 fight.cc:6524 fight.cc:6532 fight.cc:6532 fight.cc:6466
 #: melee_attack.cc:5354 melee_attack.cc:5366 melee_attack.cc:5501
+#: melee_attack.cc:5502
 #, c-format
 msgid "You strike %s from a blind spot!"
 msgstr "당신은 %s의 순간적인 빈틈을 찾아내었다!"
 
 #: fight.cc:6536 fight.cc:6529 fight.cc:6537 fight.cc:6537 fight.cc:6471
 #: melee_attack.cc:5359 melee_attack.cc:5371 melee_attack.cc:5506
+#: melee_attack.cc:5507
 #, c-format
 msgid "You catch %s momentarily off-guard."
 msgstr "당신은 %s의 헛점을 정확하게 찾아내었다."
 
 #: fight.cc:6543 fight.cc:6536 fight.cc:6544 fight.cc:6544 fight.cc:6478
 #: melee_attack.cc:5366 melee_attack.cc:5378 melee_attack.cc:5513
+#: melee_attack.cc:5514
 #, c-format
 msgid "You catch %s completely off-guard!"
 msgstr "당신은 %s이(가) 완전히 무방비한 순간을 노렸다!"
 
 #: fight.cc:6549 fight.cc:6542 fight.cc:6550 fight.cc:6550 fight.cc:6484
 #: melee_attack.cc:5371 melee_attack.cc:5383 melee_attack.cc:5518
+#: melee_attack.cc:5519
 #, c-format
 msgid "You pounce on %s from behind!"
 msgstr "당신은 뒤에서 %s을(를) 덮쳤다!"
@@ -4590,12 +4597,14 @@ msgstr "당신은 뒤에서 %s를 가격했다!"
 
 #: fight.cc:6558 fight.cc:6551 fight.cc:6559 fight.cc:6559 fight.cc:6493
 #: melee_attack.cc:5380 melee_attack.cc:5392 melee_attack.cc:5527
+#: melee_attack.cc:5528
 #, c-format
 msgid "You pounce on the unaware %s!"
 msgstr "당신은 %s이(가) 눈치채지 못하게 기습을 날렸다!"
 
 #: fight.cc:6562 fight.cc:6555 fight.cc:6563 fight.cc:6563 fight.cc:6497
 #: melee_attack.cc:5384 melee_attack.cc:5396 melee_attack.cc:5531
+#: melee_attack.cc:5532
 #, c-format
 msgid "%s fails to defend %s."
 msgstr "%s은(는) %s을(를) 방어하는데 실패했다."
@@ -5850,7 +5859,7 @@ msgstr "%s"
 #. / 한국어에는 The에 해당하는 번역이 따로 없지요.
 #: libutil.cc:92 libutil.cc:91 libutil.cc:91 libutil.cc:114 libutil.cc:105
 #: misc.cc:2373 spl-book.cc:2458 misc.cc:2376 spl-book.cc:2471 libutil.cc:110
-#: misc.cc:2410 spl-book.cc:2402
+#: misc.cc:2410 spl-book.cc:2402 misc.cc:2413
 #, c-format
 msgid "the %s"
 msgstr "%s"
@@ -5931,12 +5940,14 @@ msgstr "(M)이 마법을 암기한다.(T)"
 
 #. / 함수 구조가 복잡해서 한글화하기엔 좀 조심스럽다.
 #: cloud.cc:873 cloud.cc:873 cloud.cc:870 cloud.cc:879 cloud.cc:823
+#: cloud.cc:824
 #, c-format
 msgid "%s %s in the rain."
 msgstr "%s는 빗속에서 %s다."
 
 #. / 한글화 하기 어려움. 일단 내비둘것.
 #: cloud.cc:1372 cloud.cc:1371 cloud.cc:1371 cloud.cc:1362 cloud.cc:1293
+#: cloud.cc:1294
 #, c-format
 msgid "%s %s standing in the rain."
 msgstr "%s는 빗속에서 서 %s다."
@@ -5944,7 +5955,7 @@ msgstr "%s는 빗속에서 서 %s다."
 # (deceit) 액터, bask(s) 또는 are engulfed, 구름 이름
 #. / 한글화 하기 몹시 어려움. 내비둘것.
 #: cloud.cc:1380 cloud.cc:1379 cloud.cc:1378 cloud.cc:1378 cloud.cc:1369
-#: cloud.cc:1300
+#: cloud.cc:1300 cloud.cc:1301
 #, c-format
 msgid "%s %s in %s."
 msgstr "%1$s은(는) %3$s%2$s."
@@ -7254,7 +7265,7 @@ msgstr "당신은 마법 아이템 기술을 통해, 덱을 감정할 수 있었
 
 #: decks.cc:1500 decks.cc:1500 misc.cc:2401 spl-miscast.cc:1093 decks.cc:1491
 #: misc.cc:2407 spl-miscast.cc:1097 misc.cc:2448 spl-miscast.cc:1096
-#: decks.cc:1496 misc.cc:2488 spl-miscast.cc:1081
+#: decks.cc:1496 misc.cc:2488 spl-miscast.cc:1081 misc.cc:2491
 msgid "You spin around."
 msgstr "눈 앞이 빙글빙글 돌았다."
 
@@ -7563,32 +7574,34 @@ msgstr "은(는) 당신이 가호를 받는 동안 살생을 한 것에 대해 �
 #: godconduct.cc:358 godconduct.cc:409 godconduct.cc:429 godconduct.cc:441
 #: godconduct.cc:501 godconduct.cc:538 godconduct.cc:1013 godconduct.cc:369
 #: godconduct.cc:393 godconduct.cc:421 godconduct.cc:453 godconduct.cc:513
-#: godconduct.cc:551 godconduct.cc:1022
+#: godconduct.cc:551 godconduct.cc:1022 godconduct.cc:371 godconduct.cc:397
+#: godconduct.cc:427 godconduct.cc:447 godconduct.cc:459 godconduct.cc:519
+#: godconduct.cc:559 godconduct.cc:1046
 msgid " accepts your kill."
 msgstr "은(는) 당신의 살생을 기뻐했다."
 
 #: godconduct.cc:447 godconduct.cc:447 godconduct.cc:455 godconduct.cc:452
-#: godconduct.cc:464
+#: godconduct.cc:464 godconduct.cc:470
 msgid " appreciates your killing of a heretic priest."
 msgstr "은(는) 당신이 이단자를 죽인 것을 기뻐했다."
 
 #: godconduct.cc:459 godconduct.cc:459 godconduct.cc:467 godconduct.cc:464
-#: godconduct.cc:476
+#: godconduct.cc:476 godconduct.cc:482
 msgid " appreciates your killing of a magic user."
 msgstr "은(는) 당신이 마법 사용자를 죽인 것을 기뻐했다."
 
 #: godconduct.cc:485 godconduct.cc:485 godconduct.cc:493 godconduct.cc:490
-#: godconduct.cc:502
+#: godconduct.cc:502 godconduct.cc:508
 msgid " thoroughly appreciates the change of pace."
 msgstr "은(는) 재빠른 존재를 살생한 것을 크게 기뻐했다."
 
 #: godconduct.cc:488 godconduct.cc:488 godconduct.cc:496 godconduct.cc:493
-#: godconduct.cc:505
+#: godconduct.cc:505 godconduct.cc:511
 msgid " appreciates the change of pace."
 msgstr "은(는) 당신보다 빠른 존재를 살생한 것을 기뻐했다."
 
 #: godconduct.cc:542 godconduct.cc:542 godconduct.cc:550 godconduct.cc:545
-#: godconduct.cc:558
+#: godconduct.cc:558 godconduct.cc:566
 msgid " appreciates your killing of a holy being."
 msgstr "은(는) 당신이 신성한 존재를 죽인 것을 기뻐했다."
 
@@ -7597,7 +7610,8 @@ msgstr "은(는) 당신이 신성한 존재를 죽인 것을 기뻐했다."
 #: godconduct.cc:666 godconduct.cc:705 godconduct.cc:764 godconduct.cc:567
 #: godconduct.cc:623 godconduct.cc:662 godconduct.cc:702 godconduct.cc:761
 #: godconduct.cc:580 godconduct.cc:635 godconduct.cc:672 godconduct.cc:711
-#: godconduct.cc:770
+#: godconduct.cc:770 godconduct.cc:590 godconduct.cc:649 godconduct.cc:690
+#: godconduct.cc:733 godconduct.cc:794
 msgid " accepts your slave's kill."
 msgstr "은(는) 당신의 노예가 적을 죽인 것을 기뻐했다."
 
@@ -7607,51 +7621,52 @@ msgstr "은(는) 당신의 노예가 적을 죽인 것을 기뻐했다."
 #: godconduct.cc:753 godconduct.cc:603 godconduct.cc:643 godconduct.cc:682
 #: godconduct.cc:722 godconduct.cc:739 godconduct.cc:750 godconduct.cc:616
 #: godconduct.cc:654 godconduct.cc:691 godconduct.cc:731 godconduct.cc:748
-#: godconduct.cc:759
+#: godconduct.cc:759 godconduct.cc:628 godconduct.cc:670 godconduct.cc:711
+#: godconduct.cc:755 godconduct.cc:772 godconduct.cc:783
 msgid " accepts your collateral kill."
 msgstr "은(는) 당신의 부수적인 살생을 기뻐했다."
 
 #: godconduct.cc:844 godconduct.cc:904 godconduct.cc:904 godconduct.cc:854
 #: godconduct.cc:914 godconduct.cc:851 godconduct.cc:911 godconduct.cc:860
-#: godconduct.cc:920
+#: godconduct.cc:920 godconduct.cc:884 godconduct.cc:944
 msgid " forgives your inadvertent chaotic act, just this once."
 msgstr ""
 "은(는) 다시는 이러한 행동을 하지 않겠다는 전제하에, 당신의 혼돈스러운 행동을 "
 "용서해주었다."
 
 #: godconduct.cc:854 godconduct.cc:854 godconduct.cc:864 godconduct.cc:861
-#: godconduct.cc:870
+#: godconduct.cc:870 godconduct.cc:894
 msgid " is not enthusiastic about the mutagenic glow surrounding you."
 msgstr "은(는) 당신이 발광을 일으킨 행동에 대해 언짢아했다."
 
 #. Increase contamination within yellow glow.
 #. Increase contamination within yellow glow.
 #: godconduct.cc:861 godconduct.cc:861 godconduct.cc:871 godconduct.cc:868
-#: godconduct.cc:877
+#: godconduct.cc:877 godconduct.cc:901
 msgid " does not appreciate the extra mutagenic glow surrounding you!"
 msgstr "은(는) 당신이 더욱 발광을 일으킨 행동을 좋게 생각하지 않았다!"
 
 #: godconduct.cc:889 godconduct.cc:889 godconduct.cc:899 godconduct.cc:896
-#: godconduct.cc:905
+#: godconduct.cc:905 godconduct.cc:929
 msgid " forgives your inadvertent unclean act, just this once."
 msgstr ""
 "은(는) 다시는 이러한 행동을 하지 않곘다는 전제하에, 당신의 불결한 행동을 용서"
 "해주었다."
 
 #: godconduct.cc:943 godconduct.cc:943 godconduct.cc:953 godconduct.cc:950
-#: godconduct.cc:959
+#: godconduct.cc:959 godconduct.cc:983
 msgid " forgives your accidental hurry, just this once."
 msgstr ""
 "은(는) 다시는 이러한 행동을 하지 않겠다는 전제하에, 당신의 서두름을 용서해주"
 "었다."
 
 #: godconduct.cc:946 godconduct.cc:946 godconduct.cc:956 godconduct.cc:953
-#: godconduct.cc:962
+#: godconduct.cc:962 godconduct.cc:986
 msgid " thinks you should slow down."
 msgstr "은(는) 당신에게 감속할 것을 요구했다."
 
 #: godconduct.cc:993 godconduct.cc:993 godconduct.cc:1016 godconduct.cc:1011
-#: godconduct.cc:1020
+#: godconduct.cc:1020 godconduct.cc:1044
 msgid " appreciates your kill."
 msgstr "은(는) 당신의 살생을 기뻐했다."
 
@@ -8612,7 +8627,7 @@ msgstr "이(가) 좀비로 변했다!"
 msgid " %s the shaft."
 msgstr "이(가) 구덩이에 %s!"
 
-#: cloud.cc:1381 cloud.cc:1381 cloud.cc:1372 cloud.cc:1303
+#: cloud.cc:1381 cloud.cc:1381 cloud.cc:1372 cloud.cc:1303 cloud.cc:1304
 msgctxt "cloud_struct::announce_actor_engulfed"
 msgid "are engulfed"
 msgstr "에 휘말렸다"
@@ -9577,7 +9592,7 @@ msgstr "당신의 마력이, 다시 재생되기 시작했다."
 #: player-equip.cc:1077 player.cc:4707 player.cc:5136 player.cc:5136
 #: item_use.cc:5610 spl-cast.cc:111 player-stats.cc:456 player-stats.cc:457
 #: misc.cc:2501 misc.cc:2477 misc.cc:2517 misc.cc:2566 misc.cc:2557
-#: misc.cc:2606
+#: misc.cc:2606 misc.cc:2560 misc.cc:2609
 #, c-format
 msgid "You are wearing: %s"
 msgstr "당신은 %s을(를) 장비하고 있다."
@@ -12365,7 +12380,7 @@ msgid "You dart out from under the net!"
 msgstr "당신은 공중에서 그물 함정을 피했다!"
 
 #: traps.cc:375 traps.cc:375 misc.cc:2448 misc.cc:2455 traps.cc:407
-#: misc.cc:2495 traps.cc:402 misc.cc:2535 traps.cc:394
+#: misc.cc:2495 traps.cc:402 misc.cc:2535 traps.cc:394 misc.cc:2538
 msgid "You become entangled in the net!"
 msgstr "당신은 그물에 사로잡혔다!"
 
@@ -12780,7 +12795,7 @@ msgid "Something prevents you from swapping places with %s."
 msgstr "무엇인가가 당신이 %s와 자리를 바꾸는 것을 막고있다."
 
 #: mon-abil.cc:735 mon-abil.cc:735 misc.cc:2411 misc.cc:2417 mon-abil.cc:901
-#: misc.cc:2458 mon-abil.cc:895 misc.cc:2498 mon-abil.cc:1043
+#: misc.cc:2458 mon-abil.cc:895 misc.cc:2498 mon-abil.cc:1043 misc.cc:2501
 #, c-format
 msgid "You swap places with %s."
 msgstr "당신은 %s와 자리를 바꾸었다."
@@ -13026,7 +13041,7 @@ msgstr "주위의 생명력들이 소멸되었다!"
 
 #: mon-cast.cc:2370 mon-cast.cc:2556 mon-cast.cc:2556 mon-cast.cc:2450
 #: mon-cast.cc:2631 mon-cast.cc:2900 godwrath.cc:1429 mon-cast.cc:3159
-#: mon-cast.cc:3006
+#: mon-cast.cc:3006 godwrath.cc:1430
 msgid " is healed."
 msgstr "은(는) 치유되었다."
 
@@ -15445,7 +15460,7 @@ msgid "For example, you could "
 msgstr "예를 들면, 당신은 다음과 같은 맨손 격투가 가능하다: "
 
 #: describe.cc:4699 describe.cc:4719 describe.cc:4662 describe.cc:4658
-#: describe.cc:2563
+#: describe.cc:2563 describe.cc:2550
 msgid " or "
 msgstr " 혹은 "
 
@@ -19039,7 +19054,7 @@ msgstr "당신은 마력이 장전된 것을 느꼈다."
 msgid "You can't place the storm on a wall."
 msgstr "벽에는 폭풍을 일으킬 수 없다."
 
-#: spl-damage.cc:128 spl-damage.cc:129 beam.cc:5261
+#: spl-damage.cc:128 spl-damage.cc:129 beam.cc:5261 beam.cc:5215
 msgid "A raging storm of fire appears!"
 msgstr "맹렬한 화염의 폭풍우가 일어났다!"
 
@@ -19375,7 +19390,7 @@ msgctxt "spl-damage"
 msgid "skeleton"
 msgstr "해골"
 
-#: spl-damage.cc:1691 spl-damage.cc:1991
+#: spl-damage.cc:1691 spl-damage.cc:1991 spl-damage.cc:2128
 #, c-format
 msgid "%s shatters!"
 msgstr "%s이(가) 산산히 부서졌다!"
@@ -19399,7 +19414,7 @@ msgstr "이 지면 바닥"
 msgid "That wall"
 msgstr "이 벽"
 
-#: spl-damage.cc:1895 spl-damage.cc:1985
+#: spl-damage.cc:1895 spl-damage.cc:1985 spl-damage.cc:2113
 #, c-format
 msgid "The %s shatters!"
 msgstr "%s은(는) 산산히 부서졌다!"
@@ -19617,7 +19632,7 @@ msgstr "%s은(는) 분노했다."
 #: mon-act.cc:3677 mon-act.cc:3695 monster.cc:6035 mon-act.cc:3729
 #: mon-act.cc:3747 monster.cc:4462 mon-act.cc:3444 mon-act.cc:3462
 #: monster.cc:4914 mon-act.cc:3447 mon-act.cc:3465 monster.cc:4939
-#: mon-act.cc:3569 mon-act.cc:3587 monster.cc:5019
+#: mon-act.cc:3569 mon-act.cc:3587 monster.cc:5019 monster.cc:5022
 msgid " flops around on dry land!"
 msgstr "은(는) 땅 위에서 퍼덕였다!"
 
@@ -19757,34 +19772,34 @@ msgctxt "_mons_open_door"
 msgid "opens the "
 msgstr "이(가) "
 
-#: misc.cc:435 misc.cc:436 misc.cc:486
+#: misc.cc:435 misc.cc:436 misc.cc:486 misc.cc:487
 msgctxt "potion_rot"
 msgid "Your"
 msgstr " 전부"
 
-#: misc.cc:437 misc.cc:438 misc.cc:488
+#: misc.cc:437 misc.cc:438 misc.cc:488 misc.cc:489
 msgctxt "potion_rot"
 msgid "One of your"
 msgstr "중 하나가"
 
-#: misc.cc:439 misc.cc:440 misc.cc:490
+#: misc.cc:439 misc.cc:440 misc.cc:490 misc.cc:491
 msgctxt "potion_rot"
 msgid "Two of your"
 msgstr "중 둘이"
 
-#: misc.cc:441 misc.cc:442 misc.cc:492
+#: misc.cc:441 misc.cc:442 misc.cc:492 misc.cc:493
 msgctxt "potion_rot"
 msgid "Most of your"
 msgstr "의 대부분이"
 
-#: misc.cc:443 misc.cc:444 misc.cc:494
+#: misc.cc:443 misc.cc:444 misc.cc:494 misc.cc:495
 msgctxt "potion_rot"
 msgid "Some of your"
 msgstr "의 일부가"
 
 #. / 포션이 썩거나(blood->coagulated) 저주받았을 때(->decay) 나오는 메시지.
 #. / 1. 갯수를 의미하는 단어. 2. 포션 이름 3. 동사
-#: misc.cc:456 misc.cc:457 misc.cc:507
+#: misc.cc:456 misc.cc:457 misc.cc:507 misc.cc:508
 #, c-format
 msgctxt "potion_rot"
 msgid "%s %s %s."
@@ -19796,7 +19811,7 @@ msgctxt "porion_rot"
 msgid "rot%s away"
 msgstr "썩어 없어졌다"
 
-#: misc.cc:561 misc.cc:562 misc.cc:605
+#: misc.cc:561 misc.cc:562 misc.cc:605 misc.cc:606
 #, c-format
 msgctxt "potion_rot"
 msgid "coagulate%s"
@@ -19811,68 +19826,82 @@ msgid "You found a trap!"
 msgstr "함정을 발견했다!"
 
 #: misc.cc:1265 misc.cc:1266 misc.cc:1282 misc.cc:1312 misc.cc:1308
+#: misc.cc:1309
 msgid "You quickly transform back into your natural form."
 msgstr "당신은 원래의 모습으로 빠르게 되돌아갔다."
 
 #: misc.cc:1278 misc.cc:1279 misc.cc:1295 misc.cc:1325 misc.cc:1321
+#: misc.cc:1322
 msgid "Your legs become a tail as you enter the water."
 msgstr "물 속으로 들어가자, 당신의 다리는 물고기 꼬리로 변했다."
 
 #: misc.cc:1280 misc.cc:1281 misc.cc:1297 misc.cc:1327 misc.cc:1323
+#: misc.cc:1324
 msgid "Your legs become a tail as you dive into the water."
 msgstr "물 속으로 뛰어들자, 당신의 다리는 물고기 꼬리로 변했다."
 
 #: misc.cc:1283 misc.cc:1284 misc.cc:1300 misc.cc:1330 misc.cc:1326
+#: misc.cc:1327
 msgid "...but don't expect to remain undetected."
 msgstr "물 속에서 당신의 투명화는 소용없어졌다."
 
 #: misc.cc:1357 misc.cc:1358 misc.cc:1374 misc.cc:1402 misc.cc:1398
+#: misc.cc:1399
 #, c-format
 msgid "%s thrums violently and saps your rage."
 msgstr "%s은(는) 격렬하게 떨리며, 당신의 분노를 가라앉혔다."
 
 #: misc.cc:1359 misc.cc:1360 misc.cc:1376 misc.cc:1404 misc.cc:1400
+#: misc.cc:1401
 #, c-format
 msgid "%s vibrates violently and saps your rage."
 msgstr "%s은(는) 격렬하게 진동하며, 당신의 분노를 가라앉혔다."
 
 #: misc.cc:1367 misc.cc:1368 misc.cc:1384 misc.cc:1412 misc.cc:1408
+#: misc.cc:1409
 msgid "A red film seems to cover your vision as you go berserk!"
 msgstr "당신의 시야는 새빨갛게 물들어가고, 당신은 광전사 상태에 돌입했다!"
 
 #: misc.cc:1381 misc.cc:1382 misc.cc:1402 misc.cc:1430 misc.cc:1426
+#: misc.cc:1427
 msgid " forces you to slow down."
 msgstr "은(는) 당신의 가속을 막았다."
 
 #: misc.cc:1384 misc.cc:1385 misc.cc:1405 misc.cc:1433 decks.cc:1504
-#: decks.cc:1605 decks.cc:1967 misc.cc:1429
+#: decks.cc:1605 decks.cc:1967 misc.cc:1429 misc.cc:1430
 msgid " protects you from inadvertent hurry."
 msgstr "은(는) 당신을 예기치 못한 가속으로부터 지켰다."
 
 #: misc.cc:1387 misc.cc:1388 misc.cc:1408 misc.cc:1436 misc.cc:1432
+#: misc.cc:1433
 msgid "You feel yourself moving faster!"
 msgstr "움직임이 빨라지는 것을 느꼈다!"
 
 #: misc.cc:1389 misc.cc:1390 misc.cc:1410 misc.cc:1438 misc.cc:1434
+#: misc.cc:1435
 msgid "You feel mighty!"
 msgstr "근력이 강해진 것을 느꼈다!"
 
 #: misc.cc:1614 misc.cc:1615 misc.cc:1633 misc.cc:1651 misc.cc:1647
+#: misc.cc:1648
 #, c-format
 msgid "You're standing in a cloud of %s!"
 msgstr "당신은 %s에 휩싸여있다!"
 
 #. m.name(DESC_CAP_A); (deceit, 110909) 수정
 #: misc.cc:1640 misc.cc:1641 misc.cc:1659 misc.cc:1677 misc.cc:1672
+#: misc.cc:1673
 #, c-format
 msgid "%s is nearby!"
 msgstr "%s이(가) 근처에 있다!"
 
 #: misc.cc:1643 misc.cc:1644 misc.cc:1662 misc.cc:1680 misc.cc:1675
+#: misc.cc:1676
 msgid "There are monsters nearby!"
 msgstr "근처에 몬스터들이 있다!"
 
 #: misc.cc:1645 misc.cc:1646 misc.cc:1664 misc.cc:1682 misc.cc:1677
+#: misc.cc:1678
 msgid "There is a strange disturbance nearby!"
 msgstr "보이지 않는 적대적인 존재가 근처에 있다!"
 
@@ -19895,18 +19924,22 @@ msgid "Zin dismisses the silver walls, but there is nothing inside them."
 msgstr "진은 은의 벽을 거두었으나, 안에는 아무 것도 없었다 "
 
 #: misc.cc:1802 misc.cc:1803 misc.cc:1821 misc.cc:1854 misc.cc:1862
+#: misc.cc:1865
 msgid "You hear a deep rumble."
 msgstr "깊게 우르릉거리는 소리가 들렸다."
 
 #: misc.cc:1804 misc.cc:1805 misc.cc:1823 misc.cc:1856 misc.cc:1864
+#: misc.cc:1867
 msgid "You feel the ground shudder."
 msgstr "땅이 흔들리기 시작했다."
 
 #: misc.cc:2049 misc.cc:2050 misc.cc:2068 misc.cc:2104 misc.cc:2153
+#: misc.cc:2156
 msgid "You are too frail to live."
 msgstr "당신은 부활하기에는, 더이상 전생에 남아 있는 생명력이 없다."
 
 #: misc.cc:2054 misc.cc:2055 misc.cc:2073 misc.cc:2109 misc.cc:2158
+#: misc.cc:2161
 msgid "You rejoin the land of the living..."
 msgstr "당신은 부활하였다."
 
@@ -19936,7 +19969,7 @@ msgid "Really %s%s?"
 msgstr "정말로 %s할 것인가%s?"
 
 #: misc.cc:2296 misc.cc:2322 misc.cc:2297 misc.cc:2323 misc.cc:2226
-#: misc.cc:2267 misc.cc:2295
+#: misc.cc:2267 misc.cc:2295 misc.cc:2298
 msgid ", despite your sanctuary"
 msgstr " 당신의 성소를 더럽힐 수 있다!"
 
@@ -19951,10 +19984,12 @@ msgid "friendly "
 msgstr "호의적인 "
 
 #: misc.cc:2316 misc.cc:2317 misc.cc:2246 misc.cc:2287 misc.cc:2315
+#: misc.cc:2318
 msgid "non-hostile "
 msgstr "적대적이지 않은 "
 
 #: misc.cc:2317 misc.cc:2318 misc.cc:2244 misc.cc:2285 misc.cc:2313
+#: misc.cc:2316
 msgid "neutral "
 msgstr "중립의 "
 
@@ -19963,6 +19998,7 @@ msgid "holy "
 msgstr "신성한 "
 
 #: misc.cc:2533 misc.cc:2546 misc.cc:2721 misc.cc:2729 misc.cc:2777
+#: misc.cc:2780
 #, c-format
 msgid "The portal repels %s, its terrible forces doing untold damage!"
 msgstr ""
@@ -20624,7 +20660,7 @@ msgid "A piece of empty space twists and writhes."
 msgstr "주변의 광범위한 공간이 소용돌이치며 일그러졌다."
 
 #: spl-miscast.cc:1171 godwrath.cc:879 spl-miscast.cc:1175 godwrath.cc:855
-#: spl-miscast.cc:1169
+#: spl-miscast.cc:1169 godwrath.cc:857
 msgid "Space warps around you!"
 msgstr "당신 주변의 공간이 일그려졌다!"
 
@@ -20814,7 +20850,7 @@ msgstr "당신은 집중력을 잃었다."
 #. This should zero it.
 #: spl-miscast.cc:1530 spl-miscast.cc:1546 godwrath.cc:848 spl-miscast.cc:1534
 #: spl-miscast.cc:1550 spl-miscast.cc:1524 spl-miscast.cc:1540 godwrath.cc:825
-#: spl-miscast.cc:1509 spl-miscast.cc:1525
+#: spl-miscast.cc:1509 spl-miscast.cc:1525 godwrath.cc:827
 msgid "You suddenly feel drained of magical energy!"
 msgstr "마력이 어딘가로 빨려 들어간 것을 느꼈다!"
 
@@ -22110,18 +22146,19 @@ msgid "You momentarily phase out as the %s passes through you."
 msgstr "당신은 잠시 순간적으로 사라져 %s을(를) 피했다."
 
 #: beam.cc:3173 beam.cc:4457 beam.cc:3202 beam.cc:4477 beam.cc:3264
-#: beam.cc:4566 beam.cc:4567 beam.cc:3208 beam.cc:4476
+#: beam.cc:4566 beam.cc:4567 beam.cc:3208 beam.cc:4476 beam.cc:3117
 msgctxt "beam"
 msgid "engulfs"
 msgstr "을(를) 덮쳤다"
 
 #: beam.cc:3173 beam.cc:4457 beam.cc:3202 beam.cc:4477 beam.cc:3264
-#: beam.cc:4566 beam.cc:4567 beam.cc:3208 beam.cc:4476
+#: beam.cc:4566 beam.cc:4567 beam.cc:3208 beam.cc:4476 beam.cc:3117
 msgctxt "beam"
 msgid "hits"
 msgstr "에게 명중했다"
 
 #: beam.cc:3177 beam.cc:3206 beam.cc:3267 beam.cc:3174 beam.cc:3211
+#: beam.cc:3118
 #, c-format
 msgctxt "beam"
 msgid "The %s %s you!"
@@ -22372,6 +22409,7 @@ msgid "The orb of electricity explodes!"
 msgstr "전기 구체가 폭발했다!"
 
 #: beam.cc:5117 beam.cc:5130 beam.cc:5238 beam.cc:5239 beam.cc:5193
+#: mon-stuff.cc:1077
 msgid "You hear a clap of thunder!"
 msgstr "천둥소리가 들렸다!"
 
@@ -22388,7 +22426,7 @@ msgid "The blast explodes into a great storm of ice!"
 msgstr "거대한 얼음의 폭풍우가 일어났다!"
 
 #: beam.cc:5146 beam.cc:5159 beam.cc:5269 beam.cc:5270 beam.cc:5262
-#: beam.cc:5224
+#: beam.cc:5224 beam.cc:5216
 msgid "You hear a raging storm!"
 msgstr "폭풍우가 몰아치는 소리가 들렸다!"
 
@@ -23053,74 +23091,74 @@ msgid "%s drops %s."
 msgstr "%s은(는) %s을(를) 떨어트렸다."
 
 #: monster.cc:2596 monster.cc:2650 monster.cc:2926 monster.cc:2946
-#: monster.cc:2947
+#: monster.cc:2947 monster.cc:2950
 msgid " becomes momentarily stuck in the liquid earth."
 msgstr "은(는) 잠시 끈적끈적한 지면에 갇혔다."
 
 #: monster.cc:2597 monster.cc:2651 monster.cc:2927 monster.cc:2947
-#: monster.cc:2948
+#: monster.cc:2948 monster.cc:2951
 msgid " splashes around in the water."
 msgstr "은(는) 물 속에서 첨벙거렸다."
 
 #: monster.cc:2600 monster.cc:2654 monster.cc:2930 monster.cc:2950
-#: monster.cc:2951
+#: monster.cc:2951 monster.cc:2954
 msgid "You hear a splashing noise."
 msgstr "첨벙거리는 소리가 들렸다."
 
 #: monster.cc:2632 monster.cc:2663 monster.cc:2686 monster.cc:2717
 #: monster.cc:2962 monster.cc:2996 monster.cc:2982 monster.cc:3016
-#: monster.cc:2983 monster.cc:3017
+#: monster.cc:2983 monster.cc:3017 monster.cc:2986 monster.cc:3020
 #, c-format
 msgid " shakes off %s lethargy."
 msgstr "은(는) 무기력함을 떨쳐냈다."
 
 #: monster.cc:2649 monster.cc:2703 monster.cc:2979 monster.cc:2999
-#: monster.cc:3000
+#: monster.cc:3000 monster.cc:3003
 msgid " flies into a frenzy!"
 msgstr "이(가) 격분하기 시작했다!"
 
 #: monster.cc:2670 monster.cc:2723 monster.cc:3002 monster.cc:3022
-#: monster.cc:3023
+#: monster.cc:3023 monster.cc:3026
 msgid " goes berserk!"
 msgstr "은(는) 광폭해졌다!"
 
 #: monster.cc:2697 monster.cc:2750 monster.cc:3029 monster.cc:3049
-#: monster.cc:3051
+#: monster.cc:3051 monster.cc:3054
 msgid " is devoured by a tear in reality."
 msgstr "은(는) 공간의 왜곡에 삼켜졌다."
 
 #: monster.cc:3566 monster.cc:3640 monster.cc:4064 monster.cc:4088
-#: monster.cc:4105
+#: monster.cc:4105 monster.cc:4108
 #, c-format
 msgid "%s is drained!"
 msgstr "%s의 생명력이 흡수되었다!"
 
 #: monster.cc:3593 monster.cc:3667 monster.cc:4091 monster.cc:4115
-#: monster.cc:4132
+#: monster.cc:4132 monster.cc:4135
 #, c-format
 msgctxt "rot"
 msgid "%s %s!"
 msgstr "%s%s!"
 
 #: monster.cc:3594 monster.cc:3668 monster.cc:4092 monster.cc:4116
-#: monster.cc:4133
+#: monster.cc:4133 monster.cc:4136
 msgctxt "rot"
 msgid "rots"
 msgstr "의 몸이 썩었다"
 
 #: monster.cc:3594 monster.cc:3668 monster.cc:4092 monster.cc:4116
-#: monster.cc:4133
+#: monster.cc:4133 monster.cc:4136
 msgctxt "rot"
 msgid "looks less resilient"
 msgstr "은(는) 원기를 잃었다"
 
 #: monster.cc:3716 monster.cc:3793 monster.cc:4220 monster.cc:4245
-#: monster.cc:4283
+#: monster.cc:4283 monster.cc:4286
 msgid " turns to stone!"
 msgstr "은(는) 돌로 굳었다!"
 
 #: monster.cc:3716 monster.cc:3793 monster.cc:4220 monster.cc:4245
-#: monster.cc:4283
+#: monster.cc:4283 monster.cc:4286
 msgid " stops moving altogether!"
 msgstr "은(는) 움직임을 완전히 멈추었다!"
 
@@ -23397,57 +23435,59 @@ msgid "%s looks sick."
 msgstr "%s은(는) 독에 시달리고 있다."
 
 #: monster.cc:5701 monster.cc:4558 monster.cc:4583 monster.cc:4645
+#: monster.cc:4648
 #, c-format
 msgid "%s begins to bleed from %s wounds!"
 msgstr "%s은(는) 상처에서 피를 흘리기 시작했다!"
 
 #: monster.cc:6038 monster.cc:4465 monster.cc:4917 monster.cc:4942
-#: monster.cc:5022
+#: monster.cc:5022 monster.cc:5025
 msgid " dives back into the water!"
 msgstr "은(는) 물 속으로 다시 뛰어들었다!"
 
 #: monster.cc:6079 monster.cc:4506 monster.cc:4958 monster.cc:4983
-#: monster.cc:5063
+#: monster.cc:5063 monster.cc:5066
 #, c-format
 msgid "The bloodstain on %s disappears!"
 msgstr "%s 위의 핏자국이 사라졌다!"
 
 #: monster.cc:6137 monster.cc:4565 monster.cc:5031 monster.cc:5056
-#: monster.cc:5138
+#: monster.cc:5138 monster.cc:5141
 #, c-format
 msgid "A shaft briefly opens up underneath %s!"
 msgstr "%s 아래의 바닥이 꺼져 구덩이가 만들어졌다!"
 
 #: monster.cc:6141 monster.cc:4569 monster.cc:5035 monster.cc:5060
-#: monster.cc:5142
+#: monster.cc:5142 monster.cc:5145
 msgid "A shaft briefly opens up in the floor!"
 msgstr "바닥이 꺼져 구덩이가 만들어졌다!"
 
 #: monster.cc:6160 monster.cc:4588 monster.cc:5054 monster.cc:5079
-#: monster.cc:5161
+#: monster.cc:5161 monster.cc:5164
 msgid " falls through a shaft!"
 msgstr "은(는) 구덩이에 빠졌다!"
 
 #: monster.cc:6348 monster.cc:4778 monster.cc:5259 monster.cc:5284
-#: monster.cc:5369
+#: monster.cc:5369 monster.cc:5372
 msgid " drinks a potion."
 msgstr "은(는) 물약을 마셨다."
 
 #: monster.cc:6357 monster.cc:6373 monster.cc:6381 monster.cc:4787
 #: monster.cc:4803 monster.cc:4811 monster.cc:5268 monster.cc:5284
 #: monster.cc:5292 monster.cc:5293 monster.cc:5309 monster.cc:5317
-#: monster.cc:5378 monster.cc:5394 monster.cc:5402
+#: monster.cc:5378 monster.cc:5394 monster.cc:5402 monster.cc:5381
+#: monster.cc:5397 monster.cc:5405
 msgid " is healed!"
 msgstr "은(는) 치료되었다!"
 
 #. overcharging is deadly
 #: monster.cc:6419 monster.cc:4849 monster.cc:5409 monster.cc:5434
-#: monster.cc:5519
+#: monster.cc:5519 monster.cc:5522
 msgid " explodes in a shower of sparks!"
 msgstr "은(는) 전기 불꽃을 쏟아내며 폭발했다! "
 
 #: monster.cc:6421 monster.cc:4851 monster.cc:5411 monster.cc:5436
-#: monster.cc:5521
+#: monster.cc:5521 monster.cc:5524
 msgid " seems to be charged up!"
 msgstr "은(는) 마력을 충전했다!"
 
@@ -23482,23 +23522,23 @@ msgid "%s spits out %s more jellies."
 msgstr "%s은(는) %s 마리의 젤리를 분열해냈다."
 
 #: monster.cc:6585 monster.cc:5015 monster.cc:5525 monster.cc:5550
-#: monster.cc:5581
+#: monster.cc:5581 monster.cc:5584
 #, c-format
 msgid "As %s mount dies, %s plunges down into %s!"
 msgstr "%1$s이(가) 탄 몬스터가 죽자, 그는 추락하여 %3$s%2$.0s!"
 
 #: monster.cc:6589 monster.cc:5019 monster.cc:5529 monster.cc:5554
-#: monster.cc:5585
+#: monster.cc:5585 monster.cc:5588
 msgid "lava and is incinerated"
 msgstr "용암에 빠져 재가 되었다"
 
 #: monster.cc:6590 monster.cc:5020 monster.cc:5530 monster.cc:5555
-#: monster.cc:5586
+#: monster.cc:5586 monster.cc:5589
 msgid "deep water and drowns"
 msgstr "깊은 물 속으로 빠져 가라앉았다"
 
 #: monster.cc:6594 monster.cc:5024 monster.cc:5534 monster.cc:5559
-#: monster.cc:5590
+#: monster.cc:5590 monster.cc:5593
 #, c-format
 msgid "%s jumps down from %s now dead mount."
 msgstr "%s은(는) 죽은 몬스터 아래로 뛰어내렸다."
@@ -25378,7 +25418,7 @@ msgstr "'%s'파일 열기 실패"
 msgid " %c Level %d%s %s\n"
 msgstr " %c  레벨 %d%s %s\n"
 
-#: describe.cc:1707 describe.cc:1712
+#: describe.cc:1707 describe.cc:1712 describe.cc:1695
 msgid ""
 "\n"
 "\n"
@@ -25427,7 +25467,7 @@ msgstr "은 당신에게 기근의 고통을 안겼다!"
 msgid " booms out: \"Turn to the light! REPENT!\""
 msgstr "의 목소리가 터져나왔다. \"빛 바랜 자여, 참회하라!\""
 
-#: godwrath.cc:305 godwrath.cc:287
+#: godwrath.cc:305 godwrath.cc:287 godwrath.cc:289
 #, c-format
 msgid " dulls %syour weapons."
 msgstr "은(는) 당신의 무기%s를 무뎌지게 만들었다."
@@ -25437,99 +25477,101 @@ msgctxt "wrath"
 msgid "one of "
 msgstr "중 하나"
 
-#: godwrath.cc:316 godwrath.cc:298
+#: godwrath.cc:316 godwrath.cc:298 godwrath.cc:300
 msgid "'s displeasure finds you."
 msgstr "은(는) 당신에게 불만을 표시했다."
 
-#: godwrath.cc:371 godwrath.cc:353
+#: godwrath.cc:371 godwrath.cc:353 godwrath.cc:355
 msgid " adjusts the clock."
 msgstr "은(는) 시간을 조정했다."
 
-#: godwrath.cc:378 godwrath.cc:360
+#: godwrath.cc:378 godwrath.cc:360 godwrath.cc:362
 msgid "You lose track of time."
 msgstr "당신은 시간의 흐름을 놓쳤다."
 
-#: godwrath.cc:387 godwrath.cc:369
+#: godwrath.cc:387 godwrath.cc:369 godwrath.cc:371
 msgid "You feel the world leave you behind!"
 msgstr "온 세상이 자신을 저버린 듯한 기분이 들었다!"
 
-#: godwrath.cc:396 godwrath.cc:378
+#: godwrath.cc:396 godwrath.cc:378 godwrath.cc:380
 msgid "Time shudders."
 msgstr "시간의 흐름이 진동했다."
 
-#: godwrath.cc:403 godwrath.cc:385
+#: godwrath.cc:403 godwrath.cc:385 godwrath.cc:387
 msgid " makes up for lost time."
 msgstr "은(는) 잃어버린 시간을 만회했다."
 
-#: godwrath.cc:433 godwrath.cc:415
+#: godwrath.cc:433 godwrath.cc:415 godwrath.cc:417
 msgid " sends a greater servant after you!"
 msgstr "은(는) 당신 앞에 자신의 고위 추종자를 보냈다!"
 
-#: godwrath.cc:434 godwrath.cc:416
+#: godwrath.cc:434 godwrath.cc:416 godwrath.cc:418
 msgid "'s greater servant is unavoidably detained."
 msgstr "은(는) 자신의 추종자를 보내려 했으나, 실패했다."
 
 #: godwrath.cc:459 godwrath.cc:925 godwrath.cc:439 godwrath.cc:898
+#: godwrath.cc:441 godwrath.cc:900
 msgid " sends minions to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 부하들을 보냈다."
 
-#: godwrath.cc:460 godwrath.cc:440
+#: godwrath.cc:460 godwrath.cc:440 godwrath.cc:442
 msgid " sends a minion to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 부하를 보냈다."
 
 #: godwrath.cc:461 godwrath.cc:926 godwrath.cc:441 godwrath.cc:899
+#: godwrath.cc:443 godwrath.cc:901
 msgid "'s minions fail to arrive."
 msgstr "은(는) 당신을 처벌하기 위해 부하를 보냈으나, 실패했다."
 
-#: godwrath.cc:472 godwrath.cc:452
+#: godwrath.cc:472 godwrath.cc:452 godwrath.cc:454
 msgid "You hear Kikubaaqudgha cackling."
 msgstr "키쿠바쿠드하가 큭큭대며 웃는 소리가 들렸다."
 
-#: godwrath.cc:473 godwrath.cc:453
+#: godwrath.cc:473 godwrath.cc:453 godwrath.cc:455
 msgid "Kikubaaqudgha's malice focuses upon you."
 msgstr "키쿠바쿠드하의 악의있는 시선이 당신을 향했다."
 
-#: godwrath.cc:548 godwrath.cc:526
+#: godwrath.cc:548 godwrath.cc:526 godwrath.cc:528
 msgid " sends servants to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자들을 보냈다."
 
-#: godwrath.cc:549 godwrath.cc:527
+#: godwrath.cc:549 godwrath.cc:527 godwrath.cc:529
 msgid " sends a servant to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자를 보냈다."
 
-#: godwrath.cc:550 godwrath.cc:528
+#: godwrath.cc:550 godwrath.cc:528 godwrath.cc:530
 msgid "'s servants fail to arrive."
 msgstr "은(는) 당신을 처벌하기 위해 자신의 추종자를 보으나, 실패했다."
 
-#: godwrath.cc:555 godwrath.cc:533
+#: godwrath.cc:555 godwrath.cc:533 godwrath.cc:535
 msgid "'s anger turns toward you for a moment."
 msgstr "의 분노가 잠시 당신을 향했다."
 
-#: godwrath.cc:594 godwrath.cc:572
+#: godwrath.cc:594 godwrath.cc:572 godwrath.cc:574
 msgid " sends monsters to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 몬스터들을 보냈다."
 
-#: godwrath.cc:595 godwrath.cc:573
+#: godwrath.cc:595 godwrath.cc:573 godwrath.cc:575
 msgid " sends a monster to punish you."
 msgstr "은(는) 당신을 처벌하기 위해 몬스터를 보냈다."
 
-#: godwrath.cc:596 godwrath.cc:574
+#: godwrath.cc:596 godwrath.cc:574 godwrath.cc:576
 msgid " has no time to punish you... now."
 msgstr "은(는) 지금은 당신을 처벌할 시간이 없는 듯 하다."
 
-#: godwrath.cc:601 godwrath.cc:579
+#: godwrath.cc:601 godwrath.cc:579 godwrath.cc:581
 msgid "'s voice booms out, \"Feel my wrath!\""
 msgstr "의 목소리가 울려퍼졌다. \"나의 분노를 느껴보아라!\""
 
-#: godwrath.cc:623 godwrath.cc:601
+#: godwrath.cc:623 godwrath.cc:601 godwrath.cc:603
 msgid "You suddenly pass out!"
 msgstr "갑자기 의식을 잃었다!"
 
-#: godwrath.cc:633 godwrath.cc:611
+#: godwrath.cc:633 godwrath.cc:611 godwrath.cc:613
 msgid "You suddenly feel exhausted!"
 msgstr "갑자기 온 몸의 기운이 빠졌다!"
 
-#: godwrath.cc:647 godwrath.cc:625
+#: godwrath.cc:647 godwrath.cc:625 godwrath.cc:627
 msgid "You feel Trog's fiery rage upon you!"
 msgstr "트로그의 불타오르는 분노가 느껴졌다!"
 
@@ -25560,27 +25602,27 @@ msgctxt "wrath"
 msgid "electrocution"
 msgstr "뇌전의 "
 
-#: godwrath.cc:786 godwrath.cc:763
+#: godwrath.cc:786 godwrath.cc:763 godwrath.cc:765
 msgid " sends forth an army of orcs."
 msgstr "은(는) 눈 앞에 오크 부대를 보냈다."
 
-#: godwrath.cc:787 godwrath.cc:764
+#: godwrath.cc:787 godwrath.cc:764 godwrath.cc:766
 msgid " is still gathering forces against you."
 msgstr "은 당신 앞에 보낼 부대를 아직 모집하고 있는 것 같다."
 
-#: godwrath.cc:805 godwrath.cc:782
+#: godwrath.cc:805 godwrath.cc:782 godwrath.cc:784
 msgid " sends forces against you!"
 msgstr "은(는) 당신에게 대항할 부대를 내보냈다!"
 
-#: godwrath.cc:806 godwrath.cc:783
+#: godwrath.cc:806 godwrath.cc:783 godwrath.cc:785
 msgid "'s forces are busy with other wars."
 msgstr "의 부대는 당신을 상대할 시간이 없어보인다."
 
-#: godwrath.cc:816 godwrath.cc:793
+#: godwrath.cc:816 godwrath.cc:793 godwrath.cc:795
 msgid "'s wrath finds you."
 msgstr "의 분노가 당신을 향했다."
 
-#: godwrath.cc:841 godwrath.cc:818
+#: godwrath.cc:841 godwrath.cc:818 godwrath.cc:820
 msgid "You get a splitting headache."
 msgstr "머리가 울릴 정도의 두통이 났다."
 
@@ -25590,27 +25632,28 @@ msgstr "당신의 마법 효과가 갑자기 흐려져 흩어졌다."
 
 #. Give extra opportunities for embarrassing teleports.
 #: godwrath.cc:871 godwrath.cc:878 godwrath.cc:847 godwrath.cc:854
+#: godwrath.cc:849 godwrath.cc:856
 msgid "'s wrath finds you!"
 msgstr "의 분노가 당신을 향했다!"
 
-#: godwrath.cc:900 godwrath.cc:875
+#: godwrath.cc:900 godwrath.cc:875 godwrath.cc:877
 msgid " sends a demon after you!"
 msgstr "은(는) 당신 앞에 악마를 보냈다!"
 
-#: godwrath.cc:901 godwrath.cc:876
+#: godwrath.cc:901 godwrath.cc:876 godwrath.cc:878
 msgid "'s demon is unavoidably detained."
 msgstr "은(는) 당신 앞에 악마를 보내려 했으나, 악마는 말을 듣지 않았다."
 
-#: godwrath.cc:937 godwrath.cc:910
+#: godwrath.cc:937 godwrath.cc:910 godwrath.cc:912
 msgid "'s vengeance finds you."
 msgstr "의 앙갚음이 당신을 향했다."
 
 #. like Xom, this might actually help the player -- bwr
-#: godwrath.cc:950 godwrath.cc:923
+#: godwrath.cc:950 godwrath.cc:923 godwrath.cc:925
 msgid " makes you draw from the Deck of Punishment."
 msgstr "은(는) 당신이 처벌의 덱에서 카드를 뽑도록 만들었다."
 
-#: godwrath.cc:963 godwrath.cc:936
+#: godwrath.cc:963 godwrath.cc:936 godwrath.cc:938
 msgid "You feel Jiyva alter your body."
 msgstr "지이바가 당신의 몸에 영향을 끼치는 것이 느껴졌다."
 
@@ -25619,57 +25662,58 @@ msgstr "지이바가 당신의 몸에 영향을 끼치는 것이 느껴졌다."
 msgid "Jiyva's putrescence saturates the %s!"
 msgstr "지바의 부패가 %s을(를) 가득 채웠다!"
 
-#: godwrath.cc:1001 godwrath.cc:974
+#: godwrath.cc:1001 godwrath.cc:974 godwrath.cc:976
 msgid "Mutagenic energy floods into your body!"
 msgstr "변이의 에너지가 당신의 육체에 밀려왔다!"
 
-#: godwrath.cc:1055 godwrath.cc:1026
+#: godwrath.cc:1055 godwrath.cc:1026 godwrath.cc:1028
 msgid "Some slimes ooze up out of the ground!"
 msgstr "지면에서 슬라임들이 튀어나왔다!"
 
-#: godwrath.cc:1056 godwrath.cc:1027
+#: godwrath.cc:1056 godwrath.cc:1027 godwrath.cc:1029
 msgid "The ground quivers slightly."
 msgstr "지면이 살짝 떨리는 것이 느껴졌다."
 
-#: godwrath.cc:1077 godwrath.cc:1048
+#: godwrath.cc:1077 godwrath.cc:1048 godwrath.cc:1050
 msgid " produces spores."
 msgstr "은(는) 포자를 내보냈다."
 
 #. Elemental miscast effects.
-#: godwrath.cc:1084 godwrath.cc:1055
+#: godwrath.cc:1084 godwrath.cc:1055 godwrath.cc:1057
 msgid " invokes the elements against you."
 msgstr "은(는) 당신에게 대항할 정령들을 불러냈다."
 
-#: godwrath.cc:1196 godwrath.cc:1167
+#: godwrath.cc:1196 godwrath.cc:1167 godwrath.cc:1169
 msgid "Plants grow around you in an ominous manner."
 msgstr "주위에 식물들이 불길하게 자라났다."
 
-#: godwrath.cc:1270 godwrath.cc:1241
+#: godwrath.cc:1270 godwrath.cc:1241 godwrath.cc:1242
 msgid "The divine experience confuses you!"
 msgstr "신과의 접촉이 당신을 혼란시켰다!"
 
-#: godwrath.cc:1277 godwrath.cc:1248
+#: godwrath.cc:1277 godwrath.cc:1248 godwrath.cc:1249
 msgid "The divine experience leaves you feeling exhausted!"
 msgstr "신과의 접촉이 당신을 몹시 지쳐 버리게했다!"
 
-#: godwrath.cc:1319 godwrath.cc:1295
+#: godwrath.cc:1319 godwrath.cc:1295 godwrath.cc:1296
 msgid "Beogh is angry!"
 msgstr "베오그는 분노했다!"
 
 #: godwrath.cc:1360 godwrath.cc:1426 godwrath.cc:1336 godwrath.cc:1447
+#: godwrath.cc:1337 godwrath.cc:1448
 #, c-format
 msgid "\"Mortal, I have averted the wrath of %s... this time.\""
 msgstr "\"%s의 분노를 피할 수 있도록 해주지... 이번에는.\""
 
-#: godwrath.cc:1370 godwrath.cc:1346
+#: godwrath.cc:1370 godwrath.cc:1346 godwrath.cc:1347
 msgid " blasts you with cleansing flame!"
 msgstr "은(는) 당신에게 정화의 불꽃을 일으켰다!"
 
-#: godwrath.cc:1385 godwrath.cc:1361
+#: godwrath.cc:1385 godwrath.cc:1361 godwrath.cc:1362
 msgid "The Shining One is angry!"
 msgstr "샤이닝 원은 분노했다!"
 
-#: godwrath.cc:1458 godwrath.cc:1479
+#: godwrath.cc:1458 godwrath.cc:1479 godwrath.cc:1480
 msgid " smites you!"
 msgstr "은(는) 당신에게 일격을 날렸다!"
 
@@ -27812,7 +27856,7 @@ msgstr "%s에 온 것을 환영하네!"
 
 #. / 대상, hold, its
 #: fight.cc:5612 melee_attack.cc:4816 melee_attack.cc:4827
-#: melee_attack.cc:4962
+#: melee_attack.cc:4962 melee_attack.cc:4963
 #, c-format
 msgid "%s %s %s ground!"
 msgstr "%1$s은(는) 밀리지 않고 버텨냈다!"
@@ -28404,15 +28448,16 @@ msgid "Drop what? (_ for help)"
 msgstr "무엇을 내려놓을 것인가? (_ 키로 도움말)"
 
 #: misc.cc:1263 player.cc:184 misc.cc:1293 player.cc:188 misc.cc:1298
+#: misc.cc:1299
 #, c-format
 msgid "You found %s trap!"
 msgstr "%s 함정을 발견했다!"
 
-#: misc.cc:2231 misc.cc:2272 misc.cc:2300
+#: misc.cc:2231 misc.cc:2272 misc.cc:2300 misc.cc:2303
 msgid "your ally the "
 msgstr "당신의 동료 "
 
-#: misc.cc:2457 misc.cc:2497 misc.cc:2537
+#: misc.cc:2457 misc.cc:2497 misc.cc:2537 misc.cc:2540
 msgid "You get stuck in the web!"
 msgstr "당신은 거미줄에 갇혔다!"
 
@@ -28634,12 +28679,12 @@ msgstr "정적 상태에서는 %s을(를) 부를 수 없다."
 msgid "You cannot imprison that!"
 msgstr "그건 가둘 수 없다!"
 
-#: abl-show.cc:2909 abl-show.cc:2867 abl-show.cc:2877
+#: abl-show.cc:2909 abl-show.cc:2867 abl-show.cc:2877 abl-show.cc:2865
 msgid "  Ability - do what?                 Cost                       Failure"
 msgstr ""
 "  능력 - 무엇을 사용할것인가?        소모                       실패율 "
 
-#: abl-show.cc:2911 abl-show.cc:2869 abl-show.cc:2879
+#: abl-show.cc:2911 abl-show.cc:2869 abl-show.cc:2879 abl-show.cc:2867
 msgid "  Ability - describe what?           Cost                       Failure"
 msgstr ""
 "  능력 - 무엇의 설명을 보는가?       소모                       실패율 "
@@ -28695,7 +28740,7 @@ msgstr "%1$s은(는) 잠시 순간적으로 사라져 %2$s을(를) 피했다.%3$
 msgid "The %s misses %s."
 msgstr "%s은(는) %s을(를) 맞추지 못하고 빗나갔다."
 
-#: cloud.cc:1371 cloud.cc:1302
+#: cloud.cc:1371 cloud.cc:1302 cloud.cc:1303
 msgctxt "verb"
 msgid "bask"
 msgstr "에 휩싸였다."
@@ -29134,6 +29179,12 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
+#. / 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. / 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025
 #, c-format
@@ -29423,7 +29474,7 @@ msgctxt "blood"
 msgid "warm "
 msgstr "따뜻한 "
 
-#: godconduct.cc:356 godconduct.cc:367
+#: godconduct.cc:356 godconduct.cc:367 godconduct.cc:369
 msgid " claims a new guest."
 msgstr "은(는) 어비스로 새 손님을 초대한 것을 기뻐했다."
 
@@ -30197,93 +30248,102 @@ msgid "You emit a cloud of foul miasma!"
 msgstr "당신에게서 오염된 증기 구름이 방출되어져 나왔다!"
 
 #: melee_attack.cc:4698 melee_attack.cc:4711 melee_attack.cc:4846
+#: melee_attack.cc:4847
 #, c-format
 msgid "%s furiously retaliates!"
 msgstr "%s은(는) 격렬하게 반격을 가했다!"
 
 #: melee_attack.cc:4701 melee_attack.cc:4714 melee_attack.cc:4849
+#: melee_attack.cc:4850
 #, c-format
 msgid "%s headbutts %s, but does no damage."
 msgstr "%s은(는) %s에게 박치기를 시도했지만, 아무런 손상도 입히지 못했다."
 
 #: melee_attack.cc:4706 melee_attack.cc:4719 melee_attack.cc:4854
+#: melee_attack.cc:4855
 #, c-format
 msgid "%s headbutts %s%s"
 msgstr "%s은(는) %s에게 박치기를 했다%s"
 
 #: melee_attack.cc:4743 melee_attack.cc:4754 melee_attack.cc:4889
+#: melee_attack.cc:4890
 msgid "You furiously retaliate!"
 msgstr "당신은 격렬하게 반격을 가했다!"
 
 #: melee_attack.cc:4747 melee_attack.cc:4758 melee_attack.cc:4893
+#: melee_attack.cc:4894
 #, c-format
 msgid "You headbutt %s, but do no damage."
 msgstr "당신은 %s에게 박치기를 시도했지만, 아무런 손상도 입히지 못했다."
 
 #: melee_attack.cc:4753 melee_attack.cc:4764 melee_attack.cc:4899
+#: melee_attack.cc:4900
 #, c-format
 msgid "You headbutt %s%s"
 msgstr "당신은(는) %s에게 박치기를 했다%s"
 
 #: melee_attack.cc:4793 melee_attack.cc:4804 melee_attack.cc:4939
+#: melee_attack.cc:4940
 msgctxt "verb"
 msgid "stumble"
 msgstr "(stumble) 이 문장을 보면 버그이므로 제보를 해주세요."
 
 #: melee_attack.cc:4818 melee_attack.cc:4829 melee_attack.cc:4964
+#: melee_attack.cc:4965
 msgctxt "verb"
 msgid "hold"
 msgstr "(hold) 이 문장을 보면 버그이므로 제보를 해주세요."
 
 #: melee_attack.cc:5372 melee_attack.cc:5384 melee_attack.cc:5519
+#: melee_attack.cc:5520
 #, c-format
 msgid "You strike %s from behind!"
 msgstr "당신은 뒤에서 %s를 가격했다"
 
-#: misc.cc:583
+#: misc.cc:583 misc.cc:584
 #, c-format
 msgctxt "potion_rot"
 msgid "rot%s away"
 msgstr "썩어 없어졌다"
 
-#: misc.cc:1839 misc.cc:1847
+#: misc.cc:1839 misc.cc:1847 misc.cc:1850
 msgid "The walls disappear prematurely!"
 msgstr "생각보다 빠르게 벽이 사라졌다!"
 
-#: misc.cc:1839 misc.cc:1847
+#: misc.cc:1839 misc.cc:1847 misc.cc:1850
 msgid "The walls disappear!"
 msgstr "벽이 사라졌다!"
 
-#: misc.cc:1842 misc.cc:1850
+#: misc.cc:1842 misc.cc:1850 misc.cc:1853
 #, c-format
 msgid "Zin %s %s %s."
 msgstr "진은 %2$s을(를) %3$s%1$s."
 
-#: misc.cc:1843 misc.cc:1851
+#: misc.cc:1843 misc.cc:1851 misc.cc:1854
 msgctxt "zin"
 msgid "releases"
 msgstr "풀어주었다"
 
-#: misc.cc:1844 misc.cc:1852
+#: misc.cc:1844 misc.cc:1852 misc.cc:1855
 msgctxt "zin"
 msgid "dismisses"
 msgstr "거두어들었다 "
 
-#: misc.cc:1846 misc.cc:1854
+#: misc.cc:1846 misc.cc:1854 misc.cc:1857
 msgctxt "zin"
 msgid "the silver walls,"
 msgstr "은빛 벽"
 
-#: misc.cc:1847 misc.cc:1855
+#: misc.cc:1847 misc.cc:1855 misc.cc:1858
 #, c-format
 msgid "from %s prison"
 msgstr "감옥으로부터 "
 
-#: misc.cc:1849 misc.cc:1857
+#: misc.cc:1849 misc.cc:1857 misc.cc:1860
 msgid "but there is nothing inside them"
 msgstr "아무것도 걸리지 않은 채 "
 
-#: misc.cc:2376 misc.cc:2379 misc.cc:2413
+#: misc.cc:2376 misc.cc:2379 misc.cc:2413 misc.cc:2416
 #, c-format
 msgid "Really %s %s%s?"
 msgstr "정말로 %2$s%1$s할 것인가?%3$s"
@@ -30921,7 +30981,7 @@ msgctxt "stop_attack"
 msgid "fire "
 msgstr "(fire ) 이 문장을 보면 버그이므로 제보를 해주세요"
 
-#: misc.cc:2317 misc.cc:2345
+#: misc.cc:2317 misc.cc:2345 misc.cc:2348
 msgctxt "stop_attack"
 msgid "at "
 msgstr "에게 발사할 것인가"
@@ -30932,22 +30992,22 @@ msgid "in "
 msgstr "(in ) 이 문장을 보면 버그이므로 제보를 해주세요"
 
 #. pgettext("stop_attack","in ") + apostrophise(mon_name) +
-#: misc.cc:2324 misc.cc:2352
+#: misc.cc:2324 misc.cc:2352 misc.cc:2355
 msgctxt "stop_attack"
 msgid " direction"
 msgstr "을(를) 향하여 발사할 것인가"
 
-#: misc.cc:2328 misc.cc:2356
+#: misc.cc:2328 misc.cc:2356 misc.cc:2359
 msgctxt "stop_attack"
 msgid "through "
 msgstr " 쪽으로 발사할 것인가"
 
-#: misc.cc:2331 misc.cc:2359
+#: misc.cc:2331 misc.cc:2359 misc.cc:2362
 msgctxt "stop_attack"
 msgid "attack "
 msgstr "을(를) 공격할 것인가"
 
-#: misc.cc:2333 misc.cc:2361
+#: misc.cc:2333 misc.cc:2361 misc.cc:2364
 #, c-format
 msgctxt "stop_attack"
 msgid "Really %s%s%s?"
@@ -31016,20 +31076,20 @@ msgctxt "actor"
 msgid "!!!"
 msgstr "다!!!"
 
-#: godwrath.cc:967
+#: godwrath.cc:967 godwrath.cc:969
 #, c-format
 msgid "'s putrescence saturates %s!"
 msgstr "의 부패의 기운이 %s을(를) 가득 채웠다!"
 
-#: godwrath.cc:1403
+#: godwrath.cc:1403 godwrath.cc:1404
 msgid "Elyvilon is displeased."
 msgstr "엘리빌론은 불쾌해했다."
 
-#: godwrath.cc:1425
+#: godwrath.cc:1425 godwrath.cc:1426
 msgid "Elyvilon touches your foes with healing grace."
 msgstr "엘리빌론이 치료의 은총을, 당신의 적들에게 하사했다."
 
-#: godwrath.cc:288
+#: godwrath.cc:288 godwrath.cc:290
 msgctxt "godwrath"
 msgid "one of "
 msgstr "중 하나"
@@ -31124,24 +31184,24 @@ msgstr ""
 "에 영향을 받는다. 죠베가 선물하는 카드 덱 종류는, 어떤 아이템을 제물로 바쳤느"
 "냐에 따라 큰 영향을 받는다. (이제 키를 눌러 클래스를 전환할 수 있다):\n"
 
-#: itemname.cc:2372 itemname.cc:2375
+#: itemname.cc:2372 itemname.cc:2375 itemname.cc:2409
 msgid "Items not yet recognised: (toggle with -)"
 msgstr "감정되지 않은 아이템: (- 키로 전환)"
 
-#: itemname.cc:2374 itemname.cc:2377
+#: itemname.cc:2374 itemname.cc:2377 itemname.cc:2411
 msgid "Recognised items. (- for unrecognised, select to toggle autopickup)"
 msgstr "감정된 아이템. (- 키로 미감정 아이템 확인과, 자동 줍기 여부 설정)"
 
-#: itemname.cc:2376 itemname.cc:2379
+#: itemname.cc:2376 itemname.cc:2379 itemname.cc:2413
 msgid "You recognise all items. (Select to toggle autopickup)"
 msgstr ""
 "당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
 
-#: itemname.cc:2379 invent.cc:414 itemname.cc:2382
+#: itemname.cc:2379 invent.cc:414 itemname.cc:2382 itemname.cc:2416
 msgid "(_ for help)"
 msgstr "(_ 키: 도움말)"
 
-#: itemname.cc:2438 itemname.cc:2441
+#: itemname.cc:2438 itemname.cc:2441 itemname.cc:2474
 msgid "You haven't found any runes yet."
 msgstr "당신은 아직 아무 룬도 찾지 못했다."
 
@@ -31159,39 +31219,39 @@ msgstr ""
 "\n"
 "이 아이템을 발동함으로써 더 먼 거리의 적을 공격할 수 있다."
 
-#: describe.cc:1154
+#: describe.cc:1154 describe.cc:1139
 msgid "a random type"
 msgstr "무작위 속성"
 
-#: describe.cc:1156
+#: describe.cc:1156 describe.cc:1141
 msgctxt "spmsl_chaos"
 msgid "When "
 msgstr "이것을 "
 
-#: describe.cc:1160
+#: describe.cc:1160 describe.cc:1145
 msgctxt "spmsl_chaos"
 msgid "thrown, "
 msgstr "던지면, "
 
-#: describe.cc:1162
+#: describe.cc:1162 describe.cc:1147
 msgctxt "spmsl_chaos"
 msgid "or "
 msgstr "혹은 "
 
-#: describe.cc:1166
+#: describe.cc:1166 describe.cc:1151
 msgid "fired from an appropriate launcher, "
 msgstr "이것을 발사할 수 있는 무기로 발사하면, "
 
-#: describe.cc:1168
+#: describe.cc:1168 describe.cc:1153
 msgid "it turns into a bolt of "
 msgstr "이것은"
 
-#: describe.cc:1170
+#: describe.cc:1170 describe.cc:1155
 msgctxt "spmsl_chaos"
 msgid "."
 msgstr "에 휩싸여 발사된다."
 
-#: describe.cc:1294
+#: describe.cc:1294 describe.cc:1279
 msgid ""
 "\n"
 "All pieces of ammunition may get destroyed upon impact."
@@ -31199,11 +31259,11 @@ msgstr ""
 "\n"
 "대부분의 발사체는 발사했을 경우 그 충격으로 인해 파괴될 수 있다."
 
-#: describe.cc:1852
+#: describe.cc:1852 describe.cc:1838
 msgid "[ERROR: no desc for item name '"
 msgstr "[ERROR: 아이템의 설명을 찾을 수 없다 '"
 
-#: describe.cc:1905
+#: describe.cc:1905 describe.cc:1891
 msgid ""
 "\n"
 "You are currently studying this manual."
@@ -31211,7 +31271,7 @@ msgstr ""
 "\n"
 "당신은 현재 이 기술서를 학습중이다."
 
-#: describe.cc:2055
+#: describe.cc:2055 describe.cc:2035
 msgid ""
 "\n"
 "Its capacity can be increased no further."
@@ -31219,7 +31279,7 @@ msgstr ""
 "\n"
 "이것은 이제 더 이상 충전량을 상승시킬 수 없다."
 
-#: describe.cc:2069
+#: describe.cc:2069 describe.cc:2049
 msgid ""
 "\n"
 "It can have at most "
@@ -31227,84 +31287,84 @@ msgstr ""
 "\n"
 "이것은 최대 "
 
-#: describe.cc:2070
+#: describe.cc:2070 describe.cc:2050
 msgid " charges and +"
 msgstr " 회까지 충전이 가능하며, +"
 
-#: describe.cc:2071
+#: describe.cc:2071 describe.cc:2051
 msgid " recharge rate."
 msgstr "의 재충전율을 가진다."
 
-#: describe.cc:2198
+#: describe.cc:2198 describe.cc:2175
 msgid "Stash search prefixes: "
 msgstr "이 아이템에 대한 검색어: "
 
-#: describe.cc:2467
+#: describe.cc:2467 describe.cc:2444
 msgctxt "_actions_prompt"
 msgid "You can "
 msgstr "당신은 이 아이템에 대해 "
 
-#: describe.cc:2565
+#: describe.cc:2565 describe.cc:2552
 msgctxt "_actions_prompt"
 msgid " the "
 msgstr "와 같은 행동을 할 수 있다 : "
 
-#: describe.cc:2565
+#: describe.cc:2565 describe.cc:2552
 msgctxt "_actions_prompt"
 msgid "."
 msgstr "."
 
-#: describe.cc:3425
+#: describe.cc:3425 describe.cc:3418
 msgctxt "player_ghost"
 msgid "The apparition of "
 msgstr "플레이어 "
 
-#: describe.cc:3425
+#: describe.cc:3425 describe.cc:3418
 msgctxt "player_ghost"
 msgid ".\n"
 msgstr "의 망령.\n"
 
-#: describe.cc:3429
+#: describe.cc:3429 describe.cc:3422
 msgctxt "player_illusion"
 msgid "An illusion of "
 msgstr "플레이어 "
 
-#: describe.cc:3429
+#: describe.cc:3429 describe.cc:3422
 msgctxt "player_illusion"
 msgid ".\n"
 msgstr "의 분신.\n"
 
-#: describe.cc:3784
+#: describe.cc:3784 describe.cc:3770
 msgid "You can provide lesser healing for yourself and others."
 msgstr "당신은 당신 혹은 다른 존재들에게 미약한 치유를 제공할 수 있다."
 
-#: beam.cc:5310
+#: beam.cc:5310 beam.cc:5248
 msgid "The silver bolt explodes into a blast of light!"
 msgstr "은빛 화살이 폭발하여 강한 빛줄기를 내뿜었다!"
 
-#: beam.cc:5311
+#: beam.cc:5311 beam.cc:5249
 msgid "The dungeon gets brighter for a moment."
 msgstr "던전 전체가 잠시 밝아졌다."
 
-#: spl-damage.cc:1922
+#: spl-damage.cc:1922 spl-damage.cc:2048
 msgid "You can't deconstruct that!"
 msgstr "그것을 해체할 수는 없다!"
 
-#: spl-damage.cc:1958
+#: spl-damage.cc:1958 spl-damage.cc:2086
 msgid "Really insult Beogh by defacing this idol?"
 msgstr "정말로 이 석상을 훼손하여, 베오그를 모욕할 것인가?"
 
-#: throw.cc:1247
+#: throw.cc:1247 throw.cc:1229
 msgctxt "throw"
 msgid " fragments"
 msgstr " 파편"
 
-#: throw.cc:1257
+#: throw.cc:1257 throw.cc:1239
 msgctxt "throw"
 msgid "explosion of "
 msgstr "의 폭발"
 
-#: throw.cc:1264 throw.cc:1265
+#: throw.cc:1264 throw.cc:1265 throw.cc:1246 throw.cc:1247
 msgctxt "throw"
 msgid "exploding "
 msgstr "폭발하는 "
@@ -34670,3 +34730,34 @@ msgstr ""
 #: xom.cc:3002
 msgid "chaos upgrade"
 msgstr ""
+
+#: itemname.cc:2480
+#, c-format
+msgid "Runes of Zot: %d/%d"
+msgstr "조트의 룬: %d/%d"
+
+#: spl-damage.cc:21119 spl-damage.cc:2119
+msgid "You shatter!"
+msgstr "당신의 몸이 강렬한 충격과 함께 부서져내렸다!"
+
+#: describe.cc:2077
+msgid ""
+"\n"
+"\n"
+"It falls into the 'Staves' category. "
+msgstr ""
+"\n"
+"\n"
+"이것은 '지팡이'류로 분류된다. "
+
+#: describe.cc:2179
+msgid ""
+"\n"
+"Menu/colouring prefixes: "
+msgstr ""
+"\n"
+"메뉴/컬러링 접두어: "
+
+#: spl-damage.cc:2527
+msgid "You can't see any targets in that direction!"
+msgstr "그 방향으로는 아무 대상도 볼 수 없다!"

@@ -1107,8 +1107,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_CHAOS;
         if (ammo_brand != SPMSL_CHAOS)
         {
-            beam.name    += " of chaos";
-            ammo_name    += " of chaos";
+            beam.name    = make_stringf("È¥µ·ÀÇ %s",beam.name.c_str()); // += " of chaos"; 
+            ammo_name    = make_stringf("È¥µ·ÀÇ %s",ammo_name.c_str()); // += " of chaos"; 
         }
         else
             beam_changed = true;
@@ -1120,8 +1120,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_FIRE;
         if (ammo_brand != SPMSL_FLAME)
         {
-            beam.name    += " of flame";
-            ammo_name    += " of flame";
+            beam.name    += make_stringf("È­¿°ÀÇ %s",beam.name.c_str()); //+= " of flame"; 
+            ammo_name    += make_stringf("È­¿°ÀÇ %s",ammo_name.c_str()); //+= " of flame"; 
         }
         else
             beam_changed = true;
@@ -1134,8 +1134,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_COLD;
         if (ammo_brand != SPMSL_FROST)
         {
-            beam.name    += " of frost";
-            ammo_name   += " of frost";
+            beam.name    += make_stringf("³Ã±âÀÇ %s",beam.name.c_str()); // += " of frost"; 
+            ammo_name   += make_stringf("³Ã±âÀÇ %s",ammo_name.c_str()); // += " of frost"; 
         }
         else
             beam_changed = true;
@@ -1156,7 +1156,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     if (penetrating)
     {
         beam.range_funcs.push_back(_item_penetrates_victim);
-        beam.hit_verb = "pierces through";
+        beam.hit_verb = "pierces through"; // ¸Þ¸ð
     }
     if (disperses)
         beam.hit_funcs.push_back(_dispersal_hit_victim);
@@ -1226,7 +1226,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         if (beam.flavour == BEAM_MISSILE)
         {
             expl->flavour = BEAM_FRAG;
-            expl->name   += " fragments";
+            expl->name   += pgettext("throw"," fragments"); 
 
             const string short_name =
                 item.name(true, DESC_PLAIN, false, false, false, false,
@@ -1236,15 +1236,15 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
             expl->name = replace_all(expl->name, item.name(true, DESC_PLAIN),
                                      short_name);
         }
-        expl->name = "explosion of " + expl->name;
+        expl->name = expl->name + pgettext("throw","explosion of "); // + expl->name; 
 
         beam.special_explosion = expl;
     }
 
     if (exploding && item.special != SPMSL_EXPLODING)
     {
-        beam.name = "exploding " + beam.name;
-        ammo_name = "exploding " + ammo_name;
+        beam.name = pgettext("throw","exploding ") + beam.name; 
+        ammo_name = pgettext("throw","exploding ") + ammo_name;
     }
 
     if (beam.flavour != BEAM_MISSILE)
@@ -1253,11 +1253,11 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
         beam.glyph = dchar_glyph(DCHAR_FIRED_BOLT);
     }
-
+/*
     if (!is_artefact(item))
         ammo_name = article_a(ammo_name, true);
     else
-        ammo_name = "the " + ammo_name;
+        ammo_name = "the " + ammo_name; */ // (130206) ÇÑ±ÛÆÇ¿¡¼± ÀÌºÎºÐ ¾µ¸ð°¡ ¾øÀ½ 
 
     return false;
 }

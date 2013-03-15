@@ -151,7 +151,7 @@ LUAFN(debug_bouncy_beam)
     if (findray)
         beam.chose_ray = find_ray(source, target, beam.ray, opc_solid_see);
 
-    beam.name       = "debug lightning beam";
+    beam.name       = M_("debug lightning beam");
     beam.short_name = "DEBUG";
 
     beam.fire();

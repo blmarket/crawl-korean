@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Damage-dealing spells not already handled elsewhere.
  *           Other targeted spells are covered in spl-zap.cc.
@@ -87,7 +87,7 @@ spret_type cast_delayed_fireball(bool fail)
 
 void setup_fire_storm(const actor *source, int pow, bolt &beam)
 {
-    beam.name         = "great blast of fire";
+    beam.name         = M_("great blast of fire");
     beam.ex_size      = 2 + (random2(pow) > 75);
     beam.flavour      = BEAM_LAVA;
     beam.real_flavour = beam.flavour;
@@ -147,7 +147,7 @@ spret_type cast_fire_storm(int pow, bolt &beam, bool fail)
 // torment too.
 bool cast_hellfire_burst(int pow, bolt &beam)
 {
-    beam.name              = "burst of hellfire";
+    beam.name              = M_("burst of hellfire");
     beam.aux_source        = "burst of hellfire";
     beam.ex_size           = 1;
     beam.flavour           = BEAM_HELLFIRE;
@@ -192,7 +192,7 @@ spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
     bolt beam;
 
     // initialise beam structure
-    beam.name           = "lightning arc";
+    beam.name           = M_("lightning arc");
     beam.aux_source     = "chain lightning";
     beam.beam_source    = caster->mindex();
     beam.thrower        = caster->is_player() ? KILL_YOU_MISSILE : KILL_MON_MISSILE;
@@ -1191,7 +1191,7 @@ bool mons_shatter(monster* caster, bool actual)
 void shillelagh(actor *wielder, coord_def where, int pow)
 {
     bolt beam;
-    beam.name = "shillelagh";
+    beam.name = M_("shillelagh");
     beam.flavour = BEAM_VISUAL;
     beam.set_agent(wielder);
     beam.colour = BROWN;
@@ -1526,7 +1526,7 @@ static int _ignite_poison_player(coord_def where, int pow, int, actor *actor)
         return 0;
 }
 
-static bool maybe_abort_ignite()
+static bool maybe_abort_ignite() // 메모
 {
     // Fire cloud immunity.
     if (you.duration[DUR_FIRE_SHIELD] || you.mutation[MUT_IGNITE_BLOOD])
@@ -1806,7 +1806,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         if (you.form == TRAN_STATUE)
         {
             beam.ex_size    = 2;
-            beam.name       = "blast of rock fragments";
+            beam.name       = M_("blast of rock fragments");
             beam.colour     = BROWN;
             beam.damage.num = 3;
             return true;
@@ -1814,14 +1814,14 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         else if (petrifying || petrified)
         {
             beam.ex_size    = petrifying ? 1 : 2;
-            beam.name       = "blast of petrified fragments";
+            beam.name       = M_("blast of petrified fragments");
             beam.colour     = mons_class_colour(player_mons(true));
             beam.damage.num = petrifying ? 2 : 3;
             return true;
         }
         else if (you.form == TRAN_ICE_BEAST) // blast of ice
         {
-            beam.name       = "icy blast";
+            beam.name       = M_("icy blast");
             beam.colour     = WHITE;
             beam.damage.num = 2;
             beam.flavour    = BEAM_ICE;
@@ -1838,14 +1838,14 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         {
         case MONS_TOENAIL_GOLEM:
             beam.damage.num = 2;
-            beam.name       = "blast of toenail fragments";
+            beam.name       = M_("blast of toenail fragments");
             beam.colour     = RED;
             break;
 
         case MONS_IRON_ELEMENTAL:
         case MONS_IRON_GOLEM:
         case MONS_METAL_GARGOYLE:
-            beam.name       = "blast of metal fragments";
+            beam.name       = M_("blast of metal fragments");
             beam.colour     = CYAN;
             beam.damage.num = 4;
             break;
@@ -1856,7 +1856,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         case MONS_STATUE:
         case MONS_GARGOYLE:
             beam.ex_size    = 2;
-            beam.name       = "blast of rock fragments";
+            beam.name       = M_("blast of rock fragments");
             beam.colour     = BROWN;
             beam.damage.num = 3;
             break;
@@ -1869,22 +1869,22 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
             beam.damage.num = 4;
             if (mon->type == MONS_SILVER_STATUE)
             {
-                beam.name       = "blast of silver fragments";
+                beam.name       = M_("blast of silver fragments");
                 beam.colour     = WHITE;
             }
             else if (mon->type == MONS_ORANGE_STATUE)
             {
-                beam.name       = "blast of orange crystal shards";
+                beam.name       = M_("blast of orange crystal shards");
                 beam.colour     = LIGHTRED;
             }
             else if (mon->type == MONS_CRYSTAL_GOLEM)
             {
-                beam.name       = "blast of crystal shards";
+                beam.name       = M_("blast of crystal shards");
                 beam.colour     = GREEN;
             }
             else
             {
-                beam.name       = "blast of sapphire shards";
+                beam.name       = M_("blast of sapphire shards");
                 beam.colour     = BLUE;
             }
             break;
@@ -1897,14 +1897,14 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
             if (petrifying || petrified)
             {
                 beam.ex_size    = petrifying ? 1 : 2;
-                beam.name       = "blast of petrified fragments";
+                beam.name       = M_("blast of petrified fragments");
                 beam.colour     = mons_class_colour(mon->type);
                 beam.damage.num = petrifying ? 2 : 3;
                 break;
             }
             else if (mon->is_icy()) // blast of ice
             {
-                beam.name       = "icy blast";
+                beam.name       = M_("icy blast");
                 beam.colour     = WHITE;
                 beam.damage.num = 2;
                 beam.flavour    = BEAM_ICE;
@@ -1912,7 +1912,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
             }
             else if (mon->is_skeletal()) // blast of bone
             {
-                beam.name   = "blast of bone shards";
+                beam.name   = M_("blast of bone shards");
                 beam.colour = LIGHTGREY;
                 beam.damage.num = 2;
                 break;
@@ -1962,7 +1962,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         if (what && (*what == NULL))
             *what = "statue";
 
-        beam.name       = "blast of rock fragments";
+        beam.name       = M_("blast of rock fragments");
         beam.damage.num = 3;
 
         if ((grid == DNGN_ORCISH_IDOL
@@ -1994,7 +1994,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
     case DNGN_GRATE:
         if (what && (*what == NULL))
             *what = "iron grate";
-        beam.name       = "blast of metal fragments";
+        beam.name       = M_("blast of metal fragments");
         beam.damage.num = 4;
 
         if (pow >= 80 && (allow_random && x_chance_in_y(pow / 5, 500)
@@ -2011,7 +2011,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         if (what)
             *what = "crystal wall";
         beam.ex_size    = 2;
-        beam.name       = "blast of crystal shards";
+        beam.name       = M_("blast of crystal shards");
         beam.damage.num = 4;
 
         if (allow_random && coinflip()
@@ -2038,14 +2038,14 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
         if (what && (*what == NULL))
             *what = "stone arch";
         hole            = false;  // to hit monsters standing on doors
-        beam.name       = "blast of rock fragments";
+        beam.name       = M_("blast of rock fragments");
         beam.damage.num = 2;
         break;
 
     default:
         // Couldn't find a monster or wall to shatter - abort casting!
         if (caster->is_player() && !quiet)
-            mpr("You can't deconstruct that!");
+            mpr(_("You can't deconstruct that!"));
         return false;
     }
 
@@ -2083,7 +2083,7 @@ spret_type cast_fragmentation(int pow, const actor *caster,
     {
         if (grid == DNGN_ORCISH_IDOL)
         {
-            if (!yesno("Really insult Beogh by defacing this idol?",
+            if (!yesno(_("Really insult Beogh by defacing this idol?"),
                        false, 'n'))
             {
                 canned_msg(MSG_OK);
@@ -2110,13 +2110,13 @@ spret_type cast_fragmentation(int pow, const actor *caster,
 
     if (what != NULL) // Terrain explodes.
     {
-        mprf("The %s shatters!", what);
+        mprf(_("The %s shatters!"), what);
         if (destroy_wall)
             nuke_wall(target);
     }
     else if (target == you.pos()) // You explode.
     {
-        mpr("You shatter!");
+        mpr(_("You shatter!"));
 
         ouch(beam.damage.roll(), caster->mindex(), KILLED_BY_BEAM,
              "by Lee's Rapid Deconstruction", true,
@@ -2125,7 +2125,7 @@ spret_type cast_fragmentation(int pow, const actor *caster,
     }
     else // Monster explodes.
     {
-        mprf("%s shatters!", mon->name(DESC_THE).c_str());
+        mprf(_("%s shatters!"), mon->name(DESC_THE).c_str());
 
         if ((mons_is_statue(mon->type) || mon->is_skeletal())
              && x_chance_in_y(pow / 5, 50)) // potential insta-kill
@@ -2227,7 +2227,7 @@ spret_type cast_thunderbolt(actor *caster, int pow, coord_def aim, bool fail)
     int juice = prev.origin() ? 2 * ROD_CHARGE_MULT
                               : caster->props["thunderbolt_mana"].get_int();
     bolt beam;
-    beam.name              = "lightning";
+    beam.name              = M_("lightning");
     beam.aux_source        = "rod of lightning";
     beam.flavour           = BEAM_ELECTRICITY;
     beam.glyph             = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2524,7 +2524,7 @@ spret_type cast_dazzling_spray(actor *caster, int pow, coord_def aim, bool fail)
 
     if (beams.size() == 0)
     {
-        mpr("You can't see any targets in that direction!");
+        mpr(_("You can't see any targets in that direction!"));
         return SPRET_ABORT;
     }
 

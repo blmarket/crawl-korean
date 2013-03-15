@@ -1302,7 +1302,7 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
                  act->name(DESC_THE).c_str(),
                  beneficial ? act->conj_verb(P_("verb", "bask")).c_str()
                  : pgettext("cloud_struct::announce_actor_engulfed", "are engulfed"),
-                 cloud_name().c_str());
+                 _(cloud_name().c_str()));
         }
     }
 }

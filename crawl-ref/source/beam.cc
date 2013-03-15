@@ -282,7 +282,7 @@ bool player_tracer(zap_type ztype, int power, bolt &pbolt, int range)
         && pbolt.affects_wall(DNGN_TREE) == B_FALSE
         && pbolt.affects_wall(DNGN_MANGROVE) == B_FALSE)
     {
-        pbolt.name = "unimportant";
+        pbolt.name = M_("unimportant");
     }
 
     pbolt.is_tracer      = true;
@@ -1216,7 +1216,7 @@ void bolt::affect_cell()
             else if (!is_tracer)
             {
                 mprf(_("The %s protects %s from harm."),
-                     raw_feature_description(act->pos()).c_str(),
+                     _(raw_feature_description(act->pos()).c_str()), 
                      act->name(DESC_THE).c_str());
             }
         }
@@ -2297,7 +2297,7 @@ static void _imb_explosion(bolt *parent, coord_def center)
     if (dist == 0 || (!parent->is_tracer && !x_chance_in_y(3, 2 + 2 * dist)))
         return;
     bolt beam;
-    beam.name           = "mystic blast";
+    beam.name           = M_("mystic blast");
     beam.aux_source     = "orb of energy";
     beam.beam_source    = parent->beam_source;
     beam.thrower        = parent->thrower;
@@ -3114,8 +3114,8 @@ bool bolt::misses_player()
     if (is_explosion || aimed_at_feet || auto_hit)
     {
         if (hit_verb.empty())
-            hit_verb = engulfs ? "engulfs" : "hits";
-        mprf("The %s %s you!", name.c_str(), hit_verb.c_str());
+            hit_verb = engulfs ? pgettext("beam", "engulfs") : pgettext("beam", "hits"); 
+        mprf(pgettext("beam", "The %s %s you!"), _(name.c_str()), _(hit_verb.c_str())); 
         return false;
     }
 
@@ -3158,13 +3158,13 @@ bool bolt::misses_player()
             {
                 mprf(gettext("Your %s reflects the %s!"),
                       you.shield()->name(true, DESC_PLAIN).c_str(),
-                      name.c_str());
+                      _(name.c_str()));
                 ident_reflector(you.shield());
                 reflect();
             }
             else
             {
-                mprf(gettext("You block the %s."), name.c_str());
+                mprf(gettext("You block the %s."), _(name.c_str()));
                 finish_beam();
             }
             you.shield_block_succeeded(agent());
@@ -3188,17 +3188,17 @@ bool bolt::misses_player()
         defl = 0;
 
     if (!_test_beam_hit(real_tohit, dodge_less, is_beam, 0, r))
-        mprf(gettext("The %s misses you."), name.c_str());
+        mprf(gettext("The %s misses you."), _(name.c_str()));
     else if (defl && !_test_beam_hit(real_tohit, dodge_less, is_beam, defl, r))
     {
         // active voice to imply stronger effect
         mprf(defl == 1 ? gettext("The %s is repelled.") : gettext("You deflect the %s!"),
-             name.c_str());
+             _(name.c_str()));
     }
     else if (!_test_beam_hit(real_tohit, dodge, is_beam, defl, r))
     {
         mprf(gettext("You momentarily phase out as the %s "
-             "passes through you."), name.c_str());
+             "passes through you."), _(name.c_str()));
     }
     else
     {
@@ -3208,9 +3208,9 @@ bool bolt::misses_player()
             hit_verb = engulfs ? pgettext("beam","engulfs") : pgettext("beam","hits");
 
         if (_test_beam_hit(real_tohit, dodge_more, is_beam, defl, r))
-            mprf(pgettext("beam", "The %s %s you!"), name.c_str(), hit_verb.c_str());
+            mprf(pgettext("beam", "The %s %s you!"), _(name.c_str()), _(hit_verb.c_str()));
         else
-            mprf(gettext("Helpless, you fail to dodge the %s."), name.c_str());
+            mprf(gettext("Helpless, you fail to dodge the %s."), _(name.c_str()));
 
         miss = false;
     }
@@ -4211,20 +4211,20 @@ bool bolt::attempt_block(monster* mon)
                 {
                     mprf(gettext("%s reflects the %s off %s %s!"),
                          mon->name(DESC_THE).c_str(),
-                         name.c_str(),
+                         _(name.c_str()),
                          mon->pronoun(PRONOUN_POSSESSIVE).c_str(),
                          shield->name(true, DESC_PLAIN).c_str());
                     ident_reflector(shield);
                 }
                 else if (you.see_cell(pos()))
-                    mprf(gettext("The %s bounces off of thin air!"), name.c_str());
+                    mprf(gettext("The %s bounces off of thin air!"), _(name.c_str()));
 
                 reflect();
             }
             else if (you.see_cell(pos()))
             {
                 mprf(gettext("%s blocks the %s."),
-                     mon->name(DESC_THE).c_str(), name.c_str());
+                     mon->name(DESC_THE).c_str(), _(name.c_str()));
                 finish_beam();
             }
 
@@ -4422,7 +4422,7 @@ void bolt::affect_monster(monster* mon)
             if (_test_beam_hit(beam_hit, rand_ev, is_beam, 0, r))
             {
                 mprf(defl == 2 ? _("%s deflects the %s!") : _("%s repels the %s!"),
-                     mon->name(DESC_THE).c_str(), name.c_str());
+                     mon->name(DESC_THE).c_str(), _(name.c_str()));
             }
             else if (mons_class_flag(mon->type, M_PHASE_SHIFT)
                      && _test_beam_hit(beam_hit, rand_ev - random2(8),
@@ -4430,11 +4430,11 @@ void bolt::affect_monster(monster* mon)
             {
                 mprf(gettext("%s momentarily phases out as the %s passes"
                      " through %s."), mon->name(DESC_THE).c_str(),
-                     name.c_str(), mon->pronoun(PRONOUN_OBJECTIVE).c_str());
+                     _(name.c_str()), mon->pronoun(PRONOUN_OBJECTIVE).c_str());
             }
             else
             {
-                mprf(_("The %s misses %s."), name.c_str(),
+                mprf(_("The %s misses %s."), _(name.c_str()),
                      mon->name(DESC_THE).c_str());
             }
         }
@@ -4476,8 +4476,8 @@ void bolt::affect_monster(monster* mon)
             hit_verb = engulfs ? pgettext("beam","engulfs") : pgettext("beam","hits");
 
         mprf(pgettext("beam","The %s %s %s."),
-             name.c_str(),
-             hit_verb.c_str(),
+             _(name.c_str()),
+             _(hit_verb.c_str()),
              mon->observable() ?
                  mon->name(DESC_THE).c_str() : pgettext("beam", "something"));
 
@@ -4489,7 +4489,7 @@ void bolt::affect_monster(monster* mon)
     else if (!silenced(you.pos()) && flavour == BEAM_MISSILE
              && YOU_KILL(thrower))
     {
-        mprf(MSGCH_SOUND, gettext("The %s hits something."), name.c_str());
+        mprf(MSGCH_SOUND, gettext("The %s hits something."), _(name.c_str()));
     }
 
     // handling of missiles
@@ -5212,8 +5212,8 @@ void bolt::refine_for_explosion()
 
     if (name == "great blast of fire")
     {
-        seeMsg  = "A raging storm of fire appears!";
-        hearMsg = "You hear a raging storm!";
+        seeMsg  = gettext("A raging storm of fire appears!");
+        hearMsg = gettext("You hear a raging storm!");
 
         // Everything else is handled elsewhere...
     }
@@ -5245,8 +5245,8 @@ void bolt::refine_for_explosion()
 
     if (name == "silver bolt")
     {
-        seeMsg  = "The silver bolt explodes into a blast of light!";
-        hearMsg = "The dungeon gets brighter for a moment.";
+        seeMsg  = gettext("The silver bolt explodes into a blast of light!");
+        hearMsg = gettext("The dungeon gets brighter for a moment.");
 
         glyph   = dchar_glyph(DCHAR_FIRED_BURST);
         flavour = BEAM_BOLT_OF_ZIN;

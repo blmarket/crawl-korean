@@ -1136,23 +1136,23 @@ static string _describe_ammo(const item_def &item)
             break;
         case SPMSL_CHAOS:
             if (bolt_name.empty())
-                bolt_name = "a random type";
+                bolt_name = gettext("a random type");
 
-            description += "When ";
+            description += pgettext("spmsl_chaos","When "); 
 
             if (can_throw)
             {
-                description += "thrown, ";
+                description += pgettext("spmsl_chaos","thrown, ");
                 if (can_launch)
-                    description += "or ";
+                    description += pgettext("spmsl_chaos","or ");
             }
 
             if (can_launch)
-                description += "fired from an appropriate launcher, ";
+                description += gettext("fired from an appropriate launcher, ");
 
-            description += "it turns into a bolt of ";
+            description += gettext("it turns into a bolt of "); 
             description += bolt_name;
-            description += ".";
+            description += pgettext("spmsl_chaos","."); 
             always_destroyed = true;
             break;
         case SPMSL_POISONED:
@@ -1276,7 +1276,7 @@ void append_armour_stats(string &description, const item_def &item)
 
 void append_missile_info(string &description)
 {
-    description += "\nAll pieces of ammunition may get destroyed upon impact.";
+    description += _("\nAll pieces of ammunition may get destroyed upon impact.");
 }
 
 //---------------------------------------------------------------
@@ -1692,7 +1692,7 @@ void append_spells(string &desc, const item_def &item)
     if (!item.has_spells())
         return;
 
-    desc += "\n\nSpells                             Type                      Level\n";
+    desc += _("\n\nSpells                             Type                      Level\n");
 
     for (int j = 0; j < SPELLBOOK_SIZE; ++j)
     {
@@ -1835,7 +1835,7 @@ string get_item_description(const item_def &item, bool verbose,
             {
                 if (item_type_known(item))
                 {
-                    description << "[ERROR: no desc for item name '" << db_name
+                    description << _("[ERROR: no desc for item name '") << db_name
                                 << "']\n";
                 }
                 else
@@ -1888,7 +1888,7 @@ string get_item_description(const item_def &item, bool verbose,
 
     case OBJ_BOOKS:
         if (item_is_active_manual(item))
-            description << "\nYou are currently studying this manual.";
+            description << _("\nYou are currently studying this manual.");
 
         if (!player_can_memorise_from_spellbook(item))
         {
@@ -2015,9 +2015,9 @@ string get_item_description(const item_def &item, bool verbose,
         if (verbose)
         {
             description <<
-                "\nIt uses its own mana reservoir for casting spells, and "
+                _("\nIt uses its own mana reservoir for casting spells, and "
                 "recharges automatically according to the recharging "
-                "rate.";
+                "rate.");
 
             const int max_charges = MAX_ROD_CHARGE;
             const int max_recharge_rate = MAX_WPN_ENCHANT;
@@ -2032,7 +2032,7 @@ string get_item_description(const item_def &item, bool verbose,
                                 " charges."), num_charges, max_charges);
                 }
                 else
-                    description << "\nIts capacity can be increased no further.";
+                    description << _("\nIts capacity can be increased no further.");
 
                 const int recharge_rate = item.special;
                 if (recharge_rate < max_recharge_rate)
@@ -2042,13 +2042,13 @@ string get_item_description(const item_def &item, bool verbose,
                                     "recharged up to +%d."), recharge_rate, max_recharge_rate);
                 }
                 else
-                    description << "\nIts recharge rate is at maximum.";
+                    description << _("\nIts recharge rate is at maximum.");
             }
             else
             {
-                description << "\nIt can have at most " << max_charges
-                            << " charges and +" << max_recharge_rate
-                            << " recharge rate.";
+                description << _("\nIt can have at most ") << max_charges
+                            << _(" charges and +") << max_recharge_rate
+                            << _(" recharge rate.");
             }
         }
         else if (Options.dump_book_spells)
@@ -2065,7 +2065,7 @@ string get_item_description(const item_def &item, bool verbose,
             append_weapon_stats(stats, item);
             description << stats;
         }
-        description << "\n\nIt falls into the 'Maces & Flails' category.";
+        description << _("\n\nIt falls into the 'Maces & Flails' category.");
         break;
 
     case OBJ_STAVES:
@@ -2074,7 +2074,7 @@ string get_item_description(const item_def &item, bool verbose,
             append_weapon_stats(stats, item);
             description << stats;
         }
-        description << "\n\nIt falls into the 'Staves' category. ";
+        description << _("\n\nIt falls into the 'Staves' category. ");
         description << _handedness_string(item);
         break;
 
@@ -2172,11 +2172,11 @@ string get_item_description(const item_def &item, bool verbose,
     // it breaks the screen for people on very small terminals.
     if (verbose && get_number_of_lines() >= 28)
     {
-        description << "\n\n" << "Stash search prefixes: "
+        description << "\n\n" << _("Stash search prefixes: ")
                     << userdef_annotate_item(STASH_LUA_SEARCH_ANNOTATE, &item);
         string menu_prefix = item_prefix(item, false);
         if (!menu_prefix.empty())
-            description << "\nMenu/colouring prefixes: " << menu_prefix;
+            description << _("\nMenu/colouring prefixes: ") << menu_prefix;
     }
 
     return description.str();
@@ -2441,7 +2441,7 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
     highlighter->init(coord_def(0, 0), coord_def(0, 0), "highlighter");
     menu.attach_object(highlighter);
 #endif
-    string prompt = "You can ";
+    string prompt = pgettext("_actions_prompt","You can ");
     int keyin;
     vector<command_type> actions;
     actions.push_back(CMD_ADJUST_INVENTORY);
@@ -2547,9 +2547,9 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
         if (at < actions.end() - 2)
             prompt += ", ";
         else if (at == actions.end() - 2)
-            prompt += " or ";
+            prompt += _(" or ");
     }
-    prompt += " the " + item.name(true, DESC_BASENAME) + ".";
+    prompt += pgettext("_actions_prompt"," the ") + item.name(true, DESC_BASENAME) + pgettext("_actions_prompt","."); 
 
     prompt = "<cyan>" + prompt + "</cyan>";
     formatted_string::parse_string(prompt).display();
@@ -3415,11 +3415,11 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
     }
 
     case MONS_PLAYER_GHOST:
-        inf.body << "The apparition of " << get_ghost_description(mi) << ".\n";
+        inf.body << pgettext("player_ghost","The apparition of ") << get_ghost_description(mi) << pgettext("player_ghost",".\n"); 
         break;
 
     case MONS_PLAYER_ILLUSION:
-        inf.body << "An illusion of " << get_ghost_description(mi) << ".\n";
+        inf.body << pgettext("player_illusion","An illusion of ") << get_ghost_description(mi) << pgettext("player_illusion",".\n"); 
         break;
 
     case MONS_PANDEMONIUM_LORD:
@@ -3767,7 +3767,7 @@ static bool _print_god_abil_desc(int god, int numpower)
     if (god == GOD_ELYVILON && numpower == 0)
     {
         _print_final_god_abil_desc(god,
-                                   "You can provide lesser healing for yourself and others.",
+                                   _("You can provide lesser healing for yourself and others."),
                                    ABIL_ELYVILON_LESSER_HEALING_SELF);
         return true;
     }
@@ -4013,7 +4013,7 @@ static const char *divine_title[NUM_GODS][8] =
 
     // Ashenzari -- divination theme
     {"운명이 꼬인 자",       "저주받은 자",         "옭아매는 자",              "예지하는 자",
-     "먼 곳을 보는 자",      "앞을 보는 자",        "미래를 비추는 자",         "베리타스의 추구자"},
+     "먼 곳을 보는 자",      "앞을 보는 자",        "미래를 비추는 자",         "진리의 추구자"},
 };
 
 static int _piety_level(int piety)
