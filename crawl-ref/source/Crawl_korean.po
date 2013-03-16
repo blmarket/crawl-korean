@@ -32527,3 +32527,9 @@ msgid ""
 msgstr ""
 "\n"
 "[Ctrl + L-Click] "
+
+msgid " icky "
+msgstr " 끈적한 "
+
+msgid " obese "
+msgstr " 육중한 "

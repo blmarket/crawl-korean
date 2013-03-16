@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Menus and associated malarkey.
 **/
@@ -1572,6 +1572,80 @@ int menu_colour(const std::string &text, const std::string &prefix,
             return cm.colour;
         }
     }
+
+	// (deceit,130316) 0.11에도 적용
+
+	if(prefix.find("identified") != -1 && prefix.find("jewellery") != -1 
+		&& prefix.find("artefact") == -1 && prefix.find("unidentified") == -1)
+		return 2; // green
+
+	if(prefix.find("identified") != -1 && text.find(_(M_("cursed "))) != -1)
+		return 4; // red
+
+	if(prefix.find("weapon") != -1 && prefix.find("artefact") == -1)
+	{
+		const char* id_ego_wep_name[] = 
+		{
+			" of flaming", " of freezing", " of holy wrath", " of electrocution",
+			" of orc slaying", " of dragon slaying", " of venom", " of protection",
+			" of evasion", " of draining", " of speed", " of pain"
+			" of distortion", " of reaching", " of returning", " of velocity",
+			" of crushing", " of slicing", " of piercing", " of chopping",
+			" of slashing", " of stabbing", " of flame", " of frost",
+			" of penetration", " of reaping", " of chaos", "vampiric ", "anti-magic "
+		};
+
+		const char* unid_ego_wep_name[] = 
+		{
+			"runed ",	"glowing "
+		};
+
+		if(prefix.find("unidentified") != -1)
+		{
+			for(int j=0; j<2; j++)
+				if(text.find(gettext(unid_ego_wep_name[j])) != -1)
+					return 9; // lightblue
+		}
+		else
+		{
+			for(int j=0; j<28; j++)
+				if(text.find(gettext(id_ego_wep_name[j])) != -1)
+					return 9; // lightblue
+		}
+
+	}
+
+	if(prefix.find("armour") != -1 && prefix.find("artefact") == -1)
+	{
+		const char* id_ego_arm_name[] = 
+		{
+			"speedy slithering", "running", "fire resistance",
+			"cold resistance", "poison resistance", "see invisible", "darkness",
+			"strength", "dexterity", "intelligence", "ponderousness", "flying",
+			"magic resistance", "protection", "stealth", "resistance", "positive energy",
+			"the Archmagi", "preservation", "reflection", "spirit shield", "archery"
+		};
+
+		const char* unid_ego_arm_name[] = 
+		{
+			"embroidered ",	"runed ", "glowing ", "shiny ", "dyed "
+		};
+
+		if(prefix.find("unidentified") != -1)
+		{
+			for(int j=0; j<5; j++)
+				if(text.find(gettext(unid_ego_arm_name[j])) != -1)
+					return 9; // lightblue
+		}
+		else
+		{
+			for(int j=0; j<22; j++)
+				if(text.find(gettext(id_ego_arm_name[j])) != -1)
+					return 9; // lightblue
+		}
+
+	}
+
     return -1;
 }
 
