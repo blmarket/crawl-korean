@@ -1082,9 +1082,9 @@ void MiscastEffect::_translocation(int severity)
             mon_msg_seen = gettext("@The_monster@ spins around.");
             break;
         case 5:
-            you_msg      = "Strange energies run through your body.";
-            mon_msg_seen = make_stringf("@The_monster@ glows %s for a moment.", _(weird_glowing_colour().c_str()));
-            mon_msg_unseen = make_stringf("A spot of thin air glows %s for a moment.", _(weird_glowing_colour().c_str()));
+            you_msg      = gettext("Strange energies run through your body.");
+            mon_msg_seen = make_stringf(gettext("@The_monster@ glows %s for a moment."), _(weird_glowing_colour().c_str()));
+            mon_msg_unseen = make_stringf(gettext("A spot of thin air glows %s for a moment."), _(weird_glowing_colour().c_str()));
             break;
         case 6:
             you_msg      = gettext("Your skin tingles.");
@@ -1142,18 +1142,18 @@ void MiscastEffect::_translocation(int severity)
         case 0:
         case 1:
         case 2:
-            you_msg        = "You are caught in a strong localised spatial "
-                             "distortion.";
-            mon_msg_seen   = "@The_monster@ is caught in a strong localised "
-                             "spatial distortion.";
-            mon_msg_unseen = "A piece of empty space twists and writhes.";
+            you_msg        = gettext("You are caught in a strong localised spatial "
+                             "distortion.");
+            mon_msg_seen   = gettext("@The_monster@ is caught in a strong localised "
+                             "spatial distortion.");
+            mon_msg_unseen = gettext("A piece of empty space twists and writhes.");
             _ouch(9 + random2avg(23, 2));
             break;
         case 3:
         case 4:
-            you_msg        = "Space warps around you!";
-            mon_msg_seen   = "Space warps around @the_monster@!";
-            mon_msg_unseen = "A piece of empty space twists and writhes.";
+            you_msg        = gettext("Space warps around you!");
+            mon_msg_seen   = gettext("Space warps around @the_monster@!");
+            mon_msg_unseen = gettext("A piece of empty space twists and writhes.");
             _ouch(5 + random2avg(9, 2));
             if (target->alive())
             {
@@ -1180,7 +1180,7 @@ void MiscastEffect::_translocation(int severity)
             }
 
             if (success)
-                all_msg = "Space twists in upon itself!";
+                all_msg = gettext("Space twists in upon itself!");
             break;
         }
         case 6:

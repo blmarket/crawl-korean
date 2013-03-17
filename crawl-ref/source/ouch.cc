@@ -506,7 +506,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
             }
 
             // Get name and quantity before destruction.
-            const string item_name = you.inv[i].name(false, DESC_PLAIN);
+            const string item_name = you.inv[i].name(true, DESC_PLAIN);
             const int quantity = you.inv[i].quantity;
             num_dest = 0;
 
@@ -554,7 +554,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
                          item_name.c_str(),
                          (num_dest == 1) ? "is" : "are",
                          (flavour == BEAM_DEVOUR_FOOD) ?
-                             _("devoured") : _("covered with spores"));
+                             pgettext("ouch","devoured") : _("covered with spores"));
                     break;
 
                 default: // (deceit, 110815) same as 'covered with spores'.
@@ -714,7 +714,7 @@ void lose_level()
     calc_mp();
 
     char buf[200];
-    sprintf(buf, gettext("HP: %d/%d MP: %d/%d"),
+    sprintf(buf, "HP: %d/%d MP: %d/%d",
             you.hp, you.hp_max, you.magic_points, you.max_magic_points);
     take_note(Note(NOTE_XP_LEVEL_CHANGE, you.experience_level, 0, buf));
 

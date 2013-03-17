@@ -988,15 +988,15 @@ void yell(bool force)
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a strong urge to %s, but "
                      "you are unable to make a sound!"),
-                     shout_verb == "__NONE" ? "scream"
-                                            : shout_verb.c_str());
+                     shout_verb == "__NONE" ? _(M_("scream"))
+                                            : _(shout_verb.c_str()));
             }
             else
             {
                 /// 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a %s rip itself from your throat, "
                      "but you make no sound!"),
-                     shout_verb.c_str());
+                     _(shout_verb.c_str()));
             }
         }
         else if (!form_has_mouth())

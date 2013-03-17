@@ -269,7 +269,7 @@ static bool _check_moveto_exclusion(const coord_def& p, const string &move_verb)
         && !is_excluded(you.pos())
         && !crawl_state.disables[DIS_CONFIRMATIONS])
     {
-        string prompt = make_stringf("Really %s into a travel-excluded area?",
+        string prompt = make_stringf(_("Really %s into a travel-excluded area?"),
                                      move_verb.c_str());
 
         if (!yesno(prompt.c_str(), false, 'n'))
@@ -293,9 +293,9 @@ bool check_moveto(const coord_def& p, const string &move_verb,
 static void _splash()
 {
     if (you.can_swim())
-        noisy(4, you.pos(), "Floosh!");
+        noisy(4, you.pos(), _("Floosh!"));
     else if (!beogh_water_walk())
-        noisy(8, you.pos(), "Splash!");
+        noisy(8, you.pos(), _("Splash!"));
 }
 
 void moveto_location_effects(dungeon_feature_type old_feat,
@@ -4986,19 +4986,19 @@ void dec_poison_player()
         {
             hurted = random2(10) + 5;
             channel = MSGCH_DANGER;
-            adj = P_("adj", "extremely ");
+            adj = pgettext("adj", "extremely ");
         }
         else if (you.duration[DUR_POISONING] > 5 && coinflip())
         {
             hurted = coinflip() ? 3 : 2;
             channel = MSGCH_WARN;
-            adj = P_("adj", "very ");
+            adj = pgettext("adj", "very ");
         }
 
         int oldhp = you.hp;
         ouch(hurted, NON_MONSTER, KILLED_BY_POISON);
         if (you.hp < oldhp)
-            mprf(channel, _("You feel %ssick."), pgettext_expr("adj", adj));
+            mprf(channel, _("You feel %ssick."), adj);
 
         if ((you.hp == 1 && one_chance_in(3)) || one_chance_in(8))
             reduce_poison_player(1);
@@ -5874,7 +5874,7 @@ void player::banish(actor *agent, const string &who)
 
     if (you.elapsed_time <= you.attribute[ATTR_BANISHMENT_IMMUNITY])
     {
-        mpr("You resist the pull of the Abyss.");
+        mpr(_("You resist the pull of the Abyss."));
         return;
     }
 
@@ -6771,7 +6771,7 @@ void player::petrify(actor *who)
 
     if (you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from petrification!");
+        mpr(_("Your divine stamina protects you from petrification!"));
         return;
     }
 
@@ -7466,7 +7466,7 @@ bool player::attempt_escape(int attempts)
     if (roll_dice(4 + escape_attempts, 8 + div_rand_round(strength(), 4))
         >= roll_dice(5, 8 + div_rand_round(themonst->hit_dice, 4)))
     {
-        mprf("You escape %s's grasp.", themonst->name(DESC_THE, true).c_str());
+        mprf("You escape %s's grasp.", themonst->name(DESC_PLAIN, true).c_str());
 
         // Stun the monster to prevent it from constricting again right away.
         themonst->speed_increment -= 5;
@@ -7477,9 +7477,9 @@ bool player::attempt_escape(int attempts)
     }
     else
     {
-        string emsg = "Your attempt to break free from ";
-        emsg += themonst->name(DESC_THE, true);
-        emsg += " fails, but you feel that another attempt might succeed.";
+        string emsg = _("Your attempt to break free from ");
+        emsg += themonst->name(DESC_PLAIN, true);
+        emsg += _(" fails, but you feel that another attempt might succeed.");
         mpr(emsg);
         you.turn_is_over = true;
         return false;
@@ -7490,12 +7490,12 @@ void player::sentinel_mark()
 {
     if (duration[DUR_SENTINEL_MARK])
     {
-        mpr("The mark upon you grows brighter.");
+        mpr(_("The mark upon you grows brighter."));
         you.increase_duration(DUR_SENTINEL_MARK, random_range(30, 50), 250);
     }
     else
     {
-        mpr("A sentinel's mark forms upon you.", MSGCH_WARN);
+        mpr(_("A sentinel's mark forms upon you."), MSGCH_WARN);
         you.increase_duration(DUR_SENTINEL_MARK, random_range(50, 80), 250);
     }
 }
@@ -7541,9 +7541,9 @@ static string _constriction_description()
     const int num_free_tentacles = you.usable_tentacles();
     if (num_free_tentacles)
     {
-        cinfo += make_stringf("You have %d tentacle%s available for constriction.",
+        cinfo += make_stringf(_("You have %d tentacle%s available for constriction."),
                               num_free_tentacles,
-                              num_free_tentacles > 1 ? "s" : "");
+                              num_free_tentacles > 1 ? pgettext("sssss","s") : "");
     }
     // name of what this monster is constricted by, if any
     if (you.is_constricted())
@@ -7551,8 +7551,8 @@ static string _constriction_description()
         if (!cinfo.empty())
             cinfo += "\n";
 
-        cinfo += make_stringf("You are being %s by %s.",
-                      you.held == HELD_MONSTER ? "held" : "constricted",
+        cinfo += make_stringf(_("You are being %s by %s."),
+                      you.held == HELD_MONSTER ? pgettext("constrict","held") : pgettext("constrict","constricted"),
                       monster_by_mid(you.constricted_by)->name(DESC_A).c_str());
     }
 
@@ -7569,9 +7569,9 @@ static string _constriction_description()
         if (!cinfo.empty())
             cinfo += "\n";
 
-        cinfo += "You are constricting ";
+        cinfo += _("You are constricting ");
         cinfo += comma_separated_line(c_name.begin(), c_name.end());
-        cinfo += ".";
+        cinfo += pgettext("constrict",".");
     }
 
     return cinfo;

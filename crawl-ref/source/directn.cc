@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions used when picking squares.
 **/
@@ -3244,7 +3244,7 @@ string feature_description_at(const coord_def& where, bool covering,
 
     if (!marker_desc.empty())
     {
-        marker_desc = make_stringf(pgettext("feature_description", "%s%s"), marker_desc.c_str(), covering_description.c_str());
+        marker_desc = make_stringf("%s%s", marker_desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, marker_desc);
     }
@@ -3301,7 +3301,7 @@ string feature_description_at(const coord_def& where, bool covering,
 
         desc += door_desc_suffix;
 
-        desc = make_stringf(pgettext("feature_description", "%s%s"), desc.c_str(), covering_description.c_str());
+        desc = make_stringf("%s%s", desc.c_str(), covering_description.c_str());
 
         return thing_do_grammar(dtype, add_stop, false, desc);
     }
@@ -3796,7 +3796,7 @@ static bool _print_cloud_desc(const coord_def where)
     if (!areas.empty())
     {
         mprf(gettext("This square %s."),
-             comma_separated_line(areas.begin(), areas.end()).c_str());
+             comma_separated_line(areas.begin(), areas.end()).c_str(), "고, "); // (130208) 한글판에서는 번역호환을 위해 해당함수에 인자추가
     }
 
     if (env.cgrid(where) == EMPTY_CLOUD)

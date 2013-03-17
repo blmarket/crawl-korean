@@ -688,7 +688,7 @@ void handle_delay()
                 default: tool = you.inv[delay.parm3].name(true, DESC_QUALNAME);
                 }
                 mprf(MSGCH_MULTITURN_ACTION,
-                     /// 1. 아이템 이름, 2. knife, claws, teeth, beak and talons, 혹은 아이템 이름 중 하나.
+                     // 1. 아이템 이름, 2. knife, claws, teeth, beak and talons, 혹은 아이템 이름 중 하나.
                      gettext("You start butchering %s with your %s."),
                      mitm[delay.parm1].name(true, DESC_THE).c_str(), tool.c_str());
             }

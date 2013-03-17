@@ -150,7 +150,7 @@ vector<string> split_string(const string &sep, string s, bool trim = true,
                             bool accept_empties = false, int nsplits = -1);
 
 template <typename Z>
-string comma_separated_line(Z start, Z end, const string &andc = " and ",
+string comma_separated_line(Z start, Z end, const string &andc = " 그리고 ",
                             const string &comma = ", ")
 {
     string text;

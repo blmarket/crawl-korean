@@ -449,8 +449,8 @@ void unlink_item(int dest)
                 return;
             }
         }
-        mprf(MSGCH_ERROR, "Item %s claims to be held by monster %s, but "
-                          "it isn't in the monster's inventory.",
+        mprf(MSGCH_ERROR, _("Item %s claims to be held by monster %s, but "
+                          "it isn't in the monster's inventory."),
              mitm[dest].name(false, DESC_PLAIN, false, true).c_str(),
              mons->name(DESC_PLAIN, true).c_str());
         // Don't return so the debugging code can take a look at it.
@@ -857,11 +857,11 @@ static string _menu_burden_invstatus(const Menu *menu, bool is_pickup = false)
     //TODO: Should somehow colour burdened/overloaded in LIGHTRED/RED
     //      respectively {kittel}
     string newstate =
-        new_burd > carrying_capacity(BS_ENCUMBERED) ? "overloaded)" :
-      new_burd > carrying_capacity(BS_UNENCUMBERED) ? "burdened)"
-                                                    : "unencumbered)";
+        new_burd > carrying_capacity(BS_ENCUMBERED) ? _("overloaded)") :
+      new_burd > carrying_capacity(BS_UNENCUMBERED) ? _("burdened)")
+                                                    : _("unencumbered)");
 
-    string burden = "(Burden: ";
+    string burden = _("(Burden: ");
     burden += Options.show_inventory_weights ?
                   make_stringf("%.0f%s/%.0f aum)",
                       you.burden * BURDEN_TO_AUM,
@@ -1157,7 +1157,7 @@ string origin_desc(const item_def &item)
         return "";
 
     if (_origin_is_original_equip(item))
-        return "Original Equipment";
+        return _("Original Equipment");
 
     string desc;
     if (item.orig_monnum)
@@ -1171,7 +1171,7 @@ string origin_desc(const item_def &item)
                 desc += make_stringf(gettext("You bought %s in a shop "), gettext(_article_it(item).c_str()));
                 break;
             case IT_SRC_START:
-                desc += "Buggy Original Equipment: ";
+                desc += _("Buggy Original Equipment: ");
                 break;
             case AQ_SCROLL:
                 desc += make_stringf(gettext("You acquired %s "), gettext(_article_it(item).c_str()));
@@ -1180,7 +1180,7 @@ string origin_desc(const item_def &item)
                 desc += gettext("You drew the Genie ");
                 break;
             case AQ_WIZMODE:
-                desc += "Your wizardly powers created "+ _article_it(item)+ " ";
+                desc += _("Your wizardly powers created ")+ _article_it(item)+ " ";
                 break;
             default:
                 if (iorig > GOD_NO_GOD && iorig < NUM_GODS)
@@ -1192,7 +1192,7 @@ string origin_desc(const item_def &item)
                 else
                 {
                     // Bug really.
-                    desc += "You stumbled upon " + _article_it(item) + " ";
+                    desc += _("You stumbled upon ") + _article_it(item) + " ";
                 }
                 break;
             }
@@ -1218,7 +1218,7 @@ bool pickup_single_item(int link, int qty)
 {
     item_def* item = &mitm[link];
     if (item->base_type == OBJ_GOLD && !qty && !i_feel_safe()
-        && !yesno("Are you sure you want to pick up this pile of gold now?",
+        && !yesno(_("Are you sure you want to pick up this pile of gold now?"),
                   true, 'n'))
     {
         return false;
@@ -1747,7 +1747,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
                 if (!quiet)
                 {
-                    mprf_nocap("%s (gained %d)",
+                    mprf_nocap(_("%s (gained %d)"),
                                get_menu_colour_prefix_tags(you.inv[m],
                                    DESC_INVENTORY).c_str(),
                                quant_got);
@@ -1786,12 +1786,12 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         env.orb_pos = you.pos(); // can be wrong in wizmode
         orb_pickup_noise(you.pos(), 30);
 
-        mpr("The lords of Pandemonium are not amused. Beware!", MSGCH_WARN);
+        mpr(_("The lords of Pandemonium are not amused. Beware!"), MSGCH_WARN);
 
         if (you.religion == GOD_CHEIBRIADOS)
-            simple_god_message(" tells them not to hurry.");
+            simple_god_message(_(" tells them not to hurry."));
 
-        mpr("Now all you have to do is get back out of the dungeon!", MSGCH_ORB);
+        mpr(_("Now all you have to do is get back out of the dungeon!"), MSGCH_ORB);
 
         you.char_direction = GDT_ASCENDING;
         xom_is_stimulated(200, XM_INTRIGUED);
@@ -2158,7 +2158,7 @@ bool drop_item(int item_dropped, int quant_drop)
 
     if (you.inv[item_dropped].base_type == OBJ_ORBS)
     {
-        mpr("You don't feel like leaving the orb behind!");
+        mpr(_("You don't feel like leaving the orb behind!"));
         return false;
     }
 
@@ -2332,7 +2332,7 @@ static string _drop_selitem_text(const vector<MenuEntry*> *s)
         }
     }
 
-    return (make_stringf(" (%u%s turn%s)",
+    return (make_stringf(_(" (%u%s turn%s)"),
                 (unsigned int)s->size(),
                 extraturns? "+" : "",
                 s->size() > 1? "s" : ""));
@@ -3631,7 +3631,7 @@ bool get_item_by_name(item_def *item, char* specs,
     case OBJ_ARMOUR:
     {
         char buf[80];
-        msgwin_get_line_autohist("What ego type? ", buf, sizeof(buf));
+        msgwin_get_line_autohist(_("What ego type? "), buf, sizeof(buf));
 
         if (buf[0] != '\0')
         {
@@ -3665,7 +3665,7 @@ bool get_item_by_name(item_def *item, char* specs,
         if (item->sub_type == BOOK_MANUAL)
         {
             skill_type skill =
-                    debug_prompt_for_skill("A manual for which skill? ");
+                    debug_prompt_for_skill(_("A manual for which skill? "));
 
             if (skill != SK_NONE)
             {
@@ -3673,7 +3673,7 @@ bool get_item_by_name(item_def *item, char* specs,
                 item->plus2 = random_range(2000, 3000);
             }
             else
-                mpr("Sorry, no books on that skill today.");
+                mpr(_("Sorry, no books on that skill today."));
         }
         else if (type_wanted == BOOK_RANDART_THEME)
             make_book_theme_randart(*item, 0, 0, 5 + coinflip(), 20);
@@ -3706,13 +3706,13 @@ bool get_item_by_name(item_def *item, char* specs,
             const char* prompt;
             if (item->sub_type == POT_BLOOD)
             {
-                prompt = "# turns away from coagulation? "
-                         "[ENTER for fully fresh] ";
+                prompt = _("# turns away from coagulation? "
+                         "[ENTER for fully fresh] ");
             }
             else
             {
-                prompt = "# turns away from rotting? "
-                         "[ENTER for fully fresh] ";
+                prompt = _("# turns away from rotting? "
+                         "[ENTER for fully fresh] ");
             }
             int age = prompt_for_int(prompt, false);
 
@@ -4083,12 +4083,12 @@ object_class_type get_item_mimic_type()
     for (unsigned int i = 0; i < ARRAYSZ(_mimic_item_classes); ++i)
     {
         mprf("[%c] %s ", letter,
-             item_class_name(_mimic_item_classes[i], true).c_str());
+             _(item_class_name(_mimic_item_classes[i], true).c_str()));
         choices[letter++] = _mimic_item_classes[i];
     }
-    mprf("[%c] random", letter);
+    mprf(_("[%c] random"), letter);
     choices[letter] = OBJ_RANDOM;
-    mpr("\nWhat kind of item mimic? ", MSGCH_PROMPT);
+    mpr(_("\nWhat kind of item mimic? "), MSGCH_PROMPT);
     const int keyin = toalower(get_ch());
 
     if (choices.find(keyin) == choices.end())

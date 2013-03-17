@@ -783,7 +783,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
     switch (which_trans)
     {
     case TRAN_SPIDER:
-        tran_name = "spider";
+        tran_name = M_("spider");
         dex       = 5;
         msg       = make_stringf(msg.c_str(), gettext("a venomous arachnid creature."));
         break;
@@ -795,7 +795,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_STATUE:
-        tran_name = "statue";
+        tran_name = M_("statue");
         str       = 2;
         dex       = -2;
         if (you.species == SP_DEEP_DWARF && one_chance_in(10))
@@ -805,41 +805,41 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_ICE_BEAST:
-        tran_name = "ice beast";
+        tran_name = M_("ice beast");
         msg       = make_stringf(msg.c_str(), gettext("a creature of crystalline ice."));
         break;
 
     case TRAN_DRAGON:
-        tran_name = "dragon";
+        tran_name = M_("dragon");
         str       = 10;
         msg       = make_stringf(msg.c_str(), gettext("a fearsome dragon!"));
         break;
 
     case TRAN_LICH:
-        tran_name = "lich";
+        tran_name = M_("lich");
         str       = 3;
         msg       = gettext("Your body is suffused with negative energy!");
         break;
 
     case TRAN_BAT:
-        tran_name = "bat";
+        tran_name = M_("bat");
         str       = -5;
         dex       = 5;
         if (you.species == SP_VAMPIRE)
-            msg = make_stringf(msg.c_str(), "a vampire bat.");
+            msg = make_stringf(msg.c_str(), _("a vampire bat."));
         else
-            msg = make_stringf(msg.c_str(), "a bat.");
+            msg = make_stringf(msg.c_str(), _("a bat."));
         break;
 
     case TRAN_PIG:
-        tran_name = "pig";
+        tran_name = M_("pig");
         msg       = gettext("You have been turned into a pig!");
         you.transform_uncancellable = true;
         break;
 
     case TRAN_APPENDAGE:
     {
-        tran_name = "appendage";
+        tran_name = M_("appendage");
         mutation_type app = _beastly_appendage();
         if (app == NUM_MUTATIONS)
         {
@@ -872,30 +872,30 @@ bool transform(int pow, transformation_type which_trans, bool force,
     }
 
     case TRAN_JELLY:
-        tran_name = "jelly";
-        msg      += "a lump of acidic jelly.";
+        tran_name = M_("jelly");
+        msg      += _("a lump of acidic jelly.");
         break;
 
     case TRAN_PORCUPINE:
-        tran_name = "spider";
+        tran_name = M_("spider");
         str       = -3;
-        msg      += "a spiny porcupine.";
+        msg      += _("a spiny porcupine.");
         break;
 
     case TRAN_TREE:
-        tran_name = "tree";
+        tran_name = M_("tree");
         str       = 10;
-        msg      += "an animated tree.";
+        msg      += _("an animated tree.");
         break;
 
     case TRAN_WISP:
-        tran_name = "wisp";
-        msg      += "an insubstantial wisp of gas.";
+        tran_name = M_("wisp");
+        msg      += _("an insubstantial wisp of gas.");
         break;
 
     case TRAN_NONE:
         tran_name = "null";
-        msg += "your old self.";
+        msg += _("your old self.");
         break;
     default:
         msg += "something buggy!";
@@ -904,7 +904,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
     if (!force && just_check && (str + you.strength() <= 0 || dex + you.dex() <= 0))
     {
         string prompt = make_stringf("Transforming will reduce your %s to zero. Continue?",
-                                     str + you.strength() <= 0 ? "strength" : "dexterity");
+                                     str + you.strength() <= 0 ? _(M_("strength")) : _(M_("dexterity")));
         if (!yesno(prompt.c_str(), false, 'n'))
         {
             canned_msg(MSG_OK);

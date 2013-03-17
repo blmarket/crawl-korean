@@ -448,7 +448,7 @@ static void _wield_cursed(item_def& item, bool known_cursed, bool unmeld)
 {
     if (!item.cursed() || unmeld)
         return;
-    mprf(gettext("It sticks to your %s!"), you.hand_name(false).c_str());
+    mprf(gettext("It sticks to your %s!"), _(you.hand_name(false).c_str()));
     int amusement = 16;
     if (!known_cursed)
     {
@@ -653,9 +653,9 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     if (you.skill(SK_NECROMANCY) == 0)
                         mpr(gettext("You have a feeling of ineptitude."));
                     else if (you.skill(SK_NECROMANCY) <= 6)
-                        mprf(gettext("Pain shudders through your %s!"), your_arm);
+                        mprf(gettext("Pain shudders through your %s!"), _(your_arm));
                     else
-                        mprf(gettext("A searing pain shoots up your %s!"), your_arm);
+                        mprf(gettext("A searing pain shoots up your %s!"), _(your_arm));
                     break;
                 }
 

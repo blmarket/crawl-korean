@@ -1625,15 +1625,16 @@ int menu_colour(const string &text, const string &prefix, const string &tag)
     }
 	// (deceit,0316) 한글 아이템명에서 인벤토리상 아이템 색깔을 결정하는 위 부분이 제대로 동작하지 않습니다;
 	// 저부분을 수정하는게 어려워서, 아래처럼 무식한 방법으로 해결 -_-
+	const unsigned int NOT_IN = (unsigned int) -1;
 
-	if(prefix.find("identified") != -1 && prefix.find("jewellery") != -1 
-		&& prefix.find("artefact") == -1 && prefix.find("unidentified") == -1)
+	if(prefix.find("identified") != NOT_IN && prefix.find("jewellery") != NOT_IN 
+		&& prefix.find("artefact") == NOT_IN && prefix.find("unidentified") == NOT_IN)
 		return 2; // green
 
-	if(prefix.find("identified") != -1 && text.find(_(M_("cursed "))) != -1)
+	if(prefix.find("identified") != NOT_IN && text.find(_("cursed ")) != NOT_IN)
 		return 4; // red
 
-	if(prefix.find("weapon") != -1 && prefix.find("artefact") == -1)
+	if(prefix.find("weapon") != NOT_IN && prefix.find("artefact") == NOT_IN)
 	{
 		const char* id_ego_wep_name[] = 
 		{
@@ -1651,22 +1652,22 @@ int menu_colour(const string &text, const string &prefix, const string &tag)
 			"runed ",	"glowing "
 		};
 
-		if(prefix.find("unidentified") != -1)
+		if(prefix.find("unidentified") != NOT_IN)
 		{
 			for(int j=0; j<2; j++)
-				if(text.find(gettext(unid_ego_wep_name[j])) != -1)
+				if(text.find(gettext(unid_ego_wep_name[j])) != NOT_IN)
 					return 9; // lightblue
 		}
 		else
 		{
 			for(int j=0; j<28; j++)
-				if(text.find(gettext(id_ego_wep_name[j])) != -1)
+				if(text.find(gettext(id_ego_wep_name[j])) != NOT_IN)
 					return 9; // lightblue
 		}
 
 	}
 
-	if(prefix.find("armour") != -1 && prefix.find("artefact") == -1)
+	if(prefix.find("armour") != NOT_IN && prefix.find("artefact") == NOT_IN)
 	{
 		const char* id_ego_arm_name[] = 
 		{
@@ -1682,16 +1683,16 @@ int menu_colour(const string &text, const string &prefix, const string &tag)
 			"embroidered ",	"runed ", "glowing ", "shiny ", "dyed "
 		};
 
-		if(prefix.find("unidentified") != -1)
+		if(prefix.find("unidentified") != NOT_IN)
 		{
 			for(int j=0; j<5; j++)
-				if(text.find(gettext(unid_ego_arm_name[j])) != -1)
+				if(text.find(gettext(unid_ego_arm_name[j])) != NOT_IN)
 					return 9; // lightblue
 		}
 		else
 		{
 			for(int j=0; j<22; j++)
-				if(text.find(gettext(id_ego_arm_name[j])) != -1)
+				if(text.find(gettext(id_ego_arm_name[j])) != NOT_IN)
 					return 9; // lightblue
 		}
 

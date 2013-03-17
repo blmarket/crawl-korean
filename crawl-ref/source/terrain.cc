@@ -1550,11 +1550,11 @@ string stair_climb_verb(dungeon_feature_type feat)
     ASSERT(feat_stair_direction(feat) != CMD_NO_CMD);
 
     if (feat_is_staircase(feat))
-        return "climb";
+        return pgettext("climb","climb");
     else if (feat_is_escape_hatch(feat))
-        return "use";
+        return pgettext("climb","use");
     else
-        return "pass through";
+        return pgettext("climb","pass through");
 }
 
 static const char *dngn_feature_names[] =

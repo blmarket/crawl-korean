@@ -671,7 +671,7 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
             {
                 mpr(_("A huge blade swings out and slices into you!"));
                 const int damage = you.apply_ac(48 + random2avg(29, 2));
-                string n = name(DESC_A) + " trap";
+                string n = name(DESC_PLAIN) + pgettext("traps"," trap");
                 ouch(damage, NON_MONSTER, KILLED_BY_TRAP, n.c_str());
                 bleed_onto_floor(you.pos(), MONS_PLAYER, damage, true);
             }
@@ -1556,9 +1556,9 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
 
         if (act.is_player())
         {
-            mprf(gettext("%s shoots out and hits you!"), shot.name(true, DESC_A).c_str());
+            mprf(gettext("%s shoots out and hits you!"), shot.name(true, DESC_PLAIN).c_str());
 
-            string n = name(DESC_A) + " trap";
+            string n = name(DESC_PLAIN) + pgettext("traps"," trap");
 
             // Needle traps can poison.
             if (poison)
@@ -1570,10 +1570,10 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
         {
             if (you.see_cell(act.pos()))
             {
-                /// 1. 총알 이름, 2. 대상, 3. 그러나 데미지를 입지 않았다
+                // 1. 총알 이름, 2. 대상, 3. 그러나 데미지를 입지 않았다
                 mprf(gettext("%s hits %s%s!"),
-                     shot.name(true, DESC_A).c_str(),
-                     act.name(DESC_THE).c_str(),
+                     shot.name(true, DESC_PLAIN).c_str(),
+                     act.name(DESC_PLAIN).c_str(),
                      (damage_taken == 0 && !poison) ?
                          gettext(", but does no damage") : "");
             }

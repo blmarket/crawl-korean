@@ -181,7 +181,7 @@ spret_type cast_swiftness(int power, bool fail)
 {
     if (you.form == TRAN_TREE)
     {
-        mpr("You cannot move!");
+        mpr("당신은 움직일 수 없다!");
         return SPRET_ABORT;
     }
 
@@ -212,7 +212,7 @@ spret_type cast_fly(int power, bool fail)
 {
     if (you.form == TRAN_TREE)
     {
-        mpr("Your roots keep you in place.", MSGCH_WARN);
+        mpr("뿌리가 박혀 날아오를 수 없다.", MSGCH_WARN);
         return SPRET_ABORT;
     }
 
@@ -240,9 +240,9 @@ spret_type cast_teleport_control(int power, bool fail)
 {
     fail_check();
     if (allow_control_teleport(true))
-        mpr(_("You feel in control."));
+        mpr("당신은 이제 공간이동을 제어할 수 있다.");
     else
-        mpr(_("You feel your control is inadequate."));
+        mpr("여기서는 공간이동을 제어할 수 없을 것 같다.");
 
     you.increase_duration(DUR_CONTROL_TELEPORT, 10 + random2(power), 50);
     return SPRET_SUCCESS;
@@ -312,7 +312,7 @@ int cast_selective_amnesia(string *pre_msg)
 spret_type cast_silence(int pow, bool fail)
 {
     fail_check();
-    mpr(_("A profound silence engulfs you."));
+    mpr("깊은 정적이 당신을 감쌌다.");
 
     you.increase_duration(DUR_SILENCE, 10 + pow/4 + random2avg(pow/2, 2), 100);
     invalidate_agrid(true);
@@ -331,13 +331,13 @@ spret_type cast_liquefaction(int pow, bool fail)
         if (!you.ground_level())
             mpr("당신은 땅에 닿지 않은 상태로 이 마법을 영창할 수 없다.");//mpr("You can't cast this spell without touching the ground.");
         else
-            mpr(_("You need to be on clear, solid ground to cast this spell."));
+            mpr("이 주문을 외우기 위해선 빈 공간의 땅이 필요하다.");
         return SPRET_ABORT;
     }
 
     if (you.duration[DUR_LIQUEFYING] || liquefied(you.pos()))
     {
-        mpr(_("The ground here is already liquefied! You'll have to wait."));
+        mpr("이 땅은 이미 액화되었다. 기다려야 할 것이다.");
         return SPRET_ABORT;
     }
 

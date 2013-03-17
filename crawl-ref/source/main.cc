@@ -4307,13 +4307,13 @@ static void _move_player(coord_def move)
 
     string verb;
     if (you.flight_mode())
-        verb = "fly";
+        verb = pgettext("mainverb","fly");
     else if (you.is_wall_clinging())
-        verb = "cling";
+        verb = pgettext("mainverb","cling");
     else if (you.species == SP_NAGA && !form_changed_physiology())
-        verb = "slither";
+        verb = pgettext("mainverb","slither");
     else
-        verb = "walk";
+        verb = pgettext("mainverb","walk");
 
     if (targ_monst && !targ_monst->submerged())
     {

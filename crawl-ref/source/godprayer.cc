@@ -60,7 +60,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 string god_prayer_reaction()
 {
     return make_stringf(crawl_state.player_is_dead() ?
-        _("%s was %s.") : _("%s is %s."), god_name(you.religion).c_str(),
+        pgettext("godprayer","%s was %s.") : pgettext("godprayer","%s is %s."), god_name(you.religion).c_str(),
         (you.piety > 130) ? _("exalted by your worship") :
         (you.piety > 100) ? _("extremely pleased with you") :
         (you.piety >  70) ? _("greatly pleased with you") :
@@ -82,15 +82,15 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
         return false;
     }
 
-    /// 뒤에 무기 이름이 붙음. 근데 그 뒤로 계속 뭔가 붙으니 어순도 이대로 유지해야함.
+    // 뒤에 무기 이름이 붙음. 근데 그 뒤로 계속 뭔가 붙으니 어순도 이대로 유지해야함.
     string prompt = _("Do you wish to have ") + 
         wpn.name(true, DESC_YOUR) + " ";
     if (brand == SPWPN_PAIN)
-        prompt += "bloodied with pain";
+        prompt += pgettext("godprayer","bloodied with pain");
     else if (brand == SPWPN_DISTORTION)
-        prompt += "corrupted";
+        prompt += pgettext("godprayer","corrupted");
     else
-        prompt += "blessed";
+        prompt += pgettext("godprayer","blessed");
     prompt += "?";
 
     if (!yesno(prompt.c_str(), true, 'n'))
@@ -831,7 +831,7 @@ static bool _offer_items()
         // Ignore {!D} inscribed items.
         if (!check_warning_inscriptions(item, OPER_DESTROY))
         {
-            mpr("Won't sacrifice {!D} inscribed item.");
+            mpr(_("Won't sacrifice {!D} inscribed item."));
             i = next;
             continue;
         }

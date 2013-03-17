@@ -354,7 +354,7 @@ bool fire_warn_if_impossible(bool silent)
         if (!weapon || !is_range_weapon(*weapon))
         {
             if (!silent)
-                mprf(_("You cannot throw anything while %s."), held_status());
+                mprf(_("You cannot throw anything while %s."), _(held_status()));
             return true;
         }
         else if (weapon->sub_type != WPN_BLOWGUN)
@@ -362,7 +362,7 @@ bool fire_warn_if_impossible(bool silent)
             if (!silent)
             {
                 mprf(_("You cannot shoot with your %s while %s."),
-                     weapon->name(true, DESC_BASENAME).c_str(), held_status());
+                     weapon->name(true, DESC_BASENAME).c_str(), _(held_status()));
             }
             return true;
         }
