@@ -243,7 +243,7 @@ static bool _check_moveto_terrain(const coord_def& p, const string &move_verb,
             prompt = msg + " ";
 
         // prompt += "Are you sure you want to " + move_verb;
-        /// 1. 이동 동사, 2. into 혹은 over, 3. deep water 혹은 lava의 번역문, 4. while you ... 에 해당하는 절
+        // 1. 이동 동사, 2. into 혹은 over, 3. deep water 혹은 lava의 번역문, 4. while you ... 에 해당하는 절
         prompt += make_stringf(gettext("Are you sure you want to %s%s%s%s"),
             move_verb.c_str(),
             you.ground_level() ? " into " : " over ",
@@ -2840,9 +2840,9 @@ static void _remove_temp_mutations()
         2 + random2(3)));
 
     if (num_remove >= you.attribute[ATTR_TEMP_MUTATIONS])
-        mpr("You feel the corruption within you wane completely.", MSGCH_DURATION);
+        mpr(_("You feel the corruption within you wane completely."), MSGCH_DURATION);
     else
-        mpr("You feel the corruption within you wane somewhat.", MSGCH_DURATION);
+        mpr(_("You feel the corruption within you wane somewhat."), MSGCH_DURATION);
 
     for (int i = 0; i < num_remove; ++i)
         delete_temp_mutation();
@@ -3155,7 +3155,7 @@ void level_change(bool skip_attribute_increase)
             case SP_DEEP_DWARF:
                 if (you.experience_level == 14)
                 {
-                    mpr("You feel somewhat more resistant.",
+                    mpr(_("You feel somewhat more resistant."),
                         MSGCH_INTRINSIC_GAIN);
                     perma_mutate(MUT_NEGATIVE_ENERGY_RESISTANCE, 1, "level up");
                 }
@@ -3196,7 +3196,7 @@ void level_change(bool skip_attribute_increase)
             case SP_MUMMY:
                 if (you.experience_level == 13 || you.experience_level == 26)
                 {
-                    mpr("You feel more in touch with the powers of death.",
+                    mpr(_("You feel more in touch with the powers of death."),
                         MSGCH_INTRINSIC_GAIN);
                 }
 
@@ -3240,8 +3240,8 @@ void level_change(bool skip_attribute_increase)
 
                 if (you.experience_level == 13)
                 {
-                    mpr("Your tail grows strong enough to constrict"
-                        " your enemies.", MSGCH_INTRINSIC_GAIN);
+                    mpr(_("Your tail grows strong enough to constrict"
+                        " your enemies."), MSGCH_INTRINSIC_GAIN);
                 }
                 break;
 
@@ -3326,7 +3326,7 @@ void level_change(bool skip_attribute_increase)
                         break;
                     case SP_BLACK_DRACONIAN:
                         perma_mutate(MUT_BIG_WINGS, 1, "draconian growth");
-                        mpr("You can now fly continuously.", MSGCH_INTRINSIC_GAIN);
+                        mpr(_("You can now fly continuously."), MSGCH_INTRINSIC_GAIN);
                         break;
                     default:
                         break;
@@ -3473,63 +3473,63 @@ void level_change(bool skip_attribute_increase)
         if (crawl_state.game_is_zotdef())
         {
             if (you.experience_level == 1)
-                mpr("Your Zot abilities now extend through the making of dart traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of dart traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 2)
-                mpr("Your Zot abilities now extend through the making of oklob saplings.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of oklob saplings."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 3)
-                mpr("Your Zot abilities now extend through the making of arrow traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of arrow traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 4)
-                mpr("Your Zot abilities now extend through the making of plants.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of plants."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 4)
-                mpr("Your Zot abilities now extend through removing curses.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through removing curses."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 5)
-                mpr("Your Zot abilities now extend through the making of burning bushes.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of burning bushes."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 6)
-                mpr("Your Zot abilities now extend through the making of altars and grenades.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of altars and grenades."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 7)
-                mpr("Your Zot abilities now extend through the making of oklob plants.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of oklob plants."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 8)
-                mpr("Your Zot abilities now extend through the making of net traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of net traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 9)
-                mpr("Your Zot abilities now extend through the making of ice statues.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of ice statues."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 10)
-                mpr("Your Zot abilities now extend through the making of spear traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of spear traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 11)
-                mpr("Your Zot abilities now extend through the making of alarm traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of alarm traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 12)
-                mpr("Your Zot abilities now extend through the making of mushroom circles.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of mushroom circles."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 13)
-                mpr("Your Zot abilities now extend through the making of bolt traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of bolt traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 14)
-                mpr("Your Zot abilities now extend through the making of orange crystal statues.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of orange crystal statues."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 15)
-                mpr("Your Zot abilities now extend through the making of needle traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of needle traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 16)
-                mpr("Your Zot abilities now extend through self-teleportation.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through self-teleportation."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 17)
-                mpr("Your Zot abilities now extend through making water.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through making water."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 19)
-                mpr("Your Zot abilities now extend through the making of lightning spires.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of lightning spires."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 20)
-                mpr("Your Zot abilities now extend through the making of silver statues.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of silver statues."), MSGCH_INTRINSIC_GAIN);
             // gold and bazaars gained together
             if (you.experience_level == 21)
-                mpr("Your Zot abilities now extend through the making of bazaars.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of bazaars."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 21)
-                mpr("Your Zot abilities now extend through acquiring gold.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through acquiring gold."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 22)
-                mpr("Your Zot abilities now extend through the making of oklob circles.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of oklob circles."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 23)
-                mpr("Your Zot abilities now extend through invoking Sage effects.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through invoking Sage effects."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 24)
-                mpr("Your Zot abilities now extend through acquirement.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through acquirement."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 25)
-                mpr("Your Zot abilities now extend through the making of blade traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of blade traps."), MSGCH_INTRINSIC_GAIN);
             if (you.experience_level == 26)
-                mpr("Your Zot abilities now extend through the making of curse skulls.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of curse skulls."), MSGCH_INTRINSIC_GAIN);
 #if 0
             if (you.experience_level == 27)
-                mpr("Your Zot abilities now extend through the making of teleport traps.", MSGCH_INTRINSIC_GAIN);
+                mpr(_("Your Zot abilities now extend through the making of teleport traps."), MSGCH_INTRINSIC_GAIN);
 #endif
         }
 
@@ -3902,62 +3902,62 @@ static void _output_expiring_message(duration_type dur, const char* msg)
     if (you.duration[dur])
     {
         const bool expires = dur_expiring(dur);
-        mprf("%s%s", expires ? "Expiring: " : "", msg);
+        mprf("%s%s", expires ? _("Expiring: ") : "", msg);
     }
 }
 
 static void _display_vampire_status()
 {
-    string msg = "At your current hunger state you ";
+    string msg = _("At your current hunger state you ");
     vector<string> attrib;
 
     switch (you.hunger_state)
     {
         case HS_STARVING:
-            attrib.push_back("resist poison");
-            attrib.push_back("significantly resist cold");
-            attrib.push_back("strongly resist negative energy");
-            attrib.push_back("resist torment");
-            attrib.push_back("do not heal.");
+            attrib.push_back(_("resist poison"));
+            attrib.push_back(_("significantly resist cold"));
+            attrib.push_back(_("strongly resist negative energy"));
+            attrib.push_back(_("resist torment"));
+            attrib.push_back(_("do not heal."));
             break;
         case HS_NEAR_STARVING:
-            attrib.push_back("resist poison");
-            attrib.push_back("significantly resist cold");
-            attrib.push_back("strongly resist negative energy");
-            attrib.push_back("have an extremely slow metabolism");
-            attrib.push_back("heal slowly.");
+            attrib.push_back(_("resist poison"));
+            attrib.push_back(_("significantly resist cold"));
+            attrib.push_back(_("strongly resist negative energy"));
+            attrib.push_back(_("have an extremely slow metabolism"));
+            attrib.push_back(_("heal slowly."));
             break;
         case HS_VERY_HUNGRY:
         case HS_HUNGRY:
-            attrib.push_back("resist poison");
-            attrib.push_back("resist cold");
-            attrib.push_back("significantly resist negative energy");
+            attrib.push_back(_("resist poison"));
+            attrib.push_back(_("resist cold"));
+            attrib.push_back(_("significantly resist negative energy"));
             if (you.hunger_state == HS_HUNGRY)
-                attrib.push_back("have a slow metabolism");
+                attrib.push_back(_("have a slow metabolism"));
             else
-                attrib.push_back("have a very slow metabolism");
-            attrib.push_back("heal slowly.");
+                attrib.push_back(_("have a very slow metabolism"));
+            attrib.push_back(_("heal slowly."));
             break;
         case HS_SATIATED:
-            attrib.push_back("resist negative energy.");
+            attrib.push_back(_("resist negative energy."));
             break;
         case HS_FULL:
-            attrib.push_back("have a fast metabolism");
-            attrib.push_back("heal quickly.");
+            attrib.push_back(_("have a fast metabolism"));
+            attrib.push_back(_("heal quickly."));
             break;
         case HS_VERY_FULL:
-            attrib.push_back("have a very fast metabolism");
-            attrib.push_back("heal quickly.");
+            attrib.push_back(_("have a very fast metabolism"));
+            attrib.push_back(_("heal quickly."));
             break;
         case HS_ENGORGED:
-            attrib.push_back("have an extremely fast metabolism");
-            attrib.push_back("heal extremely quickly.");
+            attrib.push_back(_("have an extremely fast metabolism"));
+            attrib.push_back(_("heal extremely quickly."));
             break;
     }
 
     if (!attrib.empty())
-    {
-        msg += comma_separated_line(attrib.begin(), attrib.end());
+    {	
+        msg += comma_separated_line(attrib.begin(), attrib.end());	msg += "다.";
         mpr(msg.c_str());
     }
 }
@@ -3975,23 +3975,23 @@ static void _display_movement_speed()
     /// 여긴 귀찮으니 나중에 그냥 한글로 때려박자.
     mprf(gettext("Your %s speed is %s%s%s."),
           // order is important for these:
-          (swim)    ? "swimming" :
-          (water)   ? "wading" :
-          (fly)     ? "flying"
-                    : "movement",
+          (swim)    ? "헤엄" :
+          (water)   ? "물속 이동" :
+          (fly)     ? "비행"
+                    : "움직임",
 
-          (water && !swim)  ? "uncertain and " :
-          (!water && swift) ? "aided by the wind" : "",
+          (water && !swim)  ? "확실하지 않지만," :
+          (!water && swift) ? "바람의 마업의 도움을 받" : "",
 
-          (!water && swift) ? ((move_cost >= 10) ? ", but still "
-                                                 : " and ")
+          (!water && swift) ? ((move_cost >= 10) ? "았지만, 여전히 "
+                                                 : "아 ")
                             : "",
 
-          (move_cost <   8) ? "very quick" :
-          (move_cost <  10) ? "quick" :
-          (move_cost == 10) ? "average" :
-          (move_cost <  13) ? "slow"
-                            : "very slow");
+          (move_cost <   8) ? "매우 빠르다" :
+          (move_cost <  10) ? "빠르다" :
+          (move_cost == 10) ? "보통 속도이다" :
+          (move_cost <  13) ? "느리다"
+                            : "매우 느리다");
 }
 
 static void _display_tohit()
@@ -4765,10 +4765,10 @@ string describe_contamination(int cont)
     {
         /// 이것도 걍 코드에 바로 작업하는게 나을듯.
         return (make_stringf(gettext("You are %s with residual magics%s"),
-                   (cont == 4) ? "practically glowing" :
-                   (cont == 3) ? "heavily infused" :
-                   (cont == 2) ? "contaminated"
-                                    : "lightly contaminated",
+                   (cont == 4) ? _( "practically glowing") :
+                   (cont == 3) ? _("heavily infused") :
+                   (cont == 2) ? _(M_("contaminated"))
+                                    : _("lightly contaminated"),
                    (cont == 4) ? "!" : "."));
     }
     else if (cont == 1)
@@ -4857,7 +4857,7 @@ bool confuse_player(int amount, bool resistable)
 
     if (you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from confusion!");
+        mpr(_("Your divine stamina protects you from confusion!"));
         return false;
     }
 
@@ -4934,7 +4934,7 @@ bool poison_player(int amount, string source, string source_aux, bool force)
 
     if (!force && you.duration[DUR_DIVINE_STAMINA] > 0)
     {
-        mpr("Your divine stamina protects you from poison!");
+        mpr(_("Your divine stamina protects you from poison!"));
         return false;
     }
 
@@ -5199,8 +5199,8 @@ bool haste_player(int turns, bool rageext)
     if (turns <= 0)
         return false;
 
-    if (stasis_blocks_effect(true, true, "%s emits a piercing whistle.", 20,
-                             "%s makes your neck tingle."))
+    if (stasis_blocks_effect(true, true, _("%s emits a piercing whistle."), 20,
+                             _("%s makes your neck tingle.")))
     {
         return false;
     }
@@ -5315,7 +5315,7 @@ void float_player()
 void fly_player(int pow, bool already_flying)
 {
     if (you.form == TRAN_TREE)
-        return mpr("Your roots keep you in place.");
+        return mpr(_("Your roots keep you in place."));
 
     bool standing = !you.airborne() && !already_flying;
     if (!already_flying)
@@ -5849,15 +5849,15 @@ string player::shout_verb() const // 메모
 
     default:
         if (you.species == SP_FELID)
-            return coinflip() ? V_("meow") : V_("yowl");
+            return coinflip() ? "meow" : "yowl";
         // depends on SCREAM mutation
         int level = player_mutation_level(MUT_SCREAM);
         if (level <= 1)
-            return V_("shout");
+            return "shout";
         else if (level == 2)
-            return V_("yell");
+            return "yell";
         else // level == 3
-            return V_("scream");
+            return "scream";
     }
 }
 
@@ -7466,7 +7466,7 @@ bool player::attempt_escape(int attempts)
     if (roll_dice(4 + escape_attempts, 8 + div_rand_round(strength(), 4))
         >= roll_dice(5, 8 + div_rand_round(themonst->hit_dice, 4)))
     {
-        mprf("You escape %s's grasp.", themonst->name(DESC_PLAIN, true).c_str());
+        mprf(_("You escape %s's grasp."), themonst->name(DESC_PLAIN, true).c_str());
 
         // Stun the monster to prevent it from constricting again right away.
         themonst->speed_increment -= 5;

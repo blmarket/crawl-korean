@@ -238,10 +238,10 @@ void start_recall(int type)
 
         you.attribute[ATTR_NEXT_RECALL_INDEX] = 1;
         you.attribute[ATTR_NEXT_RECALL_TIME] = 0;
-        mpr("You begin recalling your allies.");
+        mpr(_("You begin recalling your allies."));
     }
     else
-        mpr("Nothing appears to have answered your call.");
+        mpr(_("Nothing appears to have answered your call."));
 }
 
 // Attempt to recall a single monster by mid, which might be either on or off
@@ -263,7 +263,7 @@ static bool _try_recall(mid_t mid)
             if (empty_surrounds(you.pos(), DNGN_FLOOR, 3, false, empty)
                 && mons->move_to_pos(empty))
             {
-                simple_monster_message(mons, " is recalled.");
+                simple_monster_message(mons, _(" is recalled."));
                 return true;
             }
         }
@@ -400,7 +400,7 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
         if (mons->check_clarity(false))
             return 1;
         mons->add_ench(mon_enchant(ENCH_CONFUSION, 0, &you));
-        simple_monster_message(mons, " looks rather confused.");
+        simple_monster_message(mons, _(" looks rather confused."));
         return 1;
     }
     return 0;
@@ -409,7 +409,7 @@ static int _intoxicate_monsters(coord_def where, int pow, int, actor *)
 spret_type cast_intoxicate(int pow, bool fail)
 {
     fail_check();
-    mpr("You radiate an intoxicating aura.");
+    mpr(_("You radiate an intoxicating aura."));
     if (x_chance_in_y(60 - pow/3, 100))
         potion_effect(POT_CONFUSION, 10 + (100 - pow) / 10);
 

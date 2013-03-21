@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-18 00:01+0900\n"
+"POT-Creation-Date: 2013-03-22 01:29+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -85,11 +85,11 @@ msgstr "슬럿지 엘프"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
-#: species.cc:212 species.cc:212 species.cc:178
+#: species.cc:212 species.cc:212 species.cc:178 species.cc:180
 msgid "Dwarven"
 msgstr "드워프족"
 
-#: species.cc:214 species.cc:221 species.cc:221 species.cc:178
+#: species.cc:214 species.cc:221 species.cc:221 species.cc:178 species.cc:180
 msgid "Dwarf"
 msgstr "드워프"
 
@@ -97,7 +97,7 @@ msgstr "드워프"
 msgid "Mountain Dwarf"
 msgstr "마운틴 드워프"
 
-#: species.cc:220 species.cc:220 species.cc:178
+#: species.cc:220 species.cc:220 species.cc:178 species.cc:180
 msgid "Deep Dwarf"
 msgstr "딥 드워프"
 
@@ -205,19 +205,19 @@ msgstr "뱀파이어"
 msgid "Vampire"
 msgstr "뱀파이어"
 
-#: species.cc:250 species.cc:250 species.cc:181
+#: species.cc:250 species.cc:250 species.cc:181 species.cc:183
 msgid "Feline"
 msgstr "펠리드"
 
-#: species.cc:250 species.cc:250 species.cc:181
+#: species.cc:250 species.cc:250 species.cc:181 species.cc:183
 msgid "Felid"
 msgstr "펠리드"
 
-#: species.cc:251 species.cc:251 species.cc:184
+#: species.cc:251 species.cc:251 species.cc:184 species.cc:186
 msgid "Octopoid"
 msgstr "옥토퍼드족"
 
-#: species.cc:251 species.cc:251 species.cc:184
+#: species.cc:251 species.cc:251 species.cc:184 species.cc:186
 msgid "Octopode"
 msgstr "옥토퍼드"
 
@@ -1858,7 +1858,7 @@ msgstr "크라켄"
 #: monster.cc:2538 mon-data.h:4188 monster.cc:2669 monster.cc:2812
 #: mon-data.h:4214 monster.cc:2689 monster.cc:2832 monster.cc:2888
 #: monster.cc:2690 monster.cc:2833 mon-data.h:4370 monster.cc:2693
-#: monster.cc:2836
+#: monster.cc:2836 player-act.cc:427 player-act.cc:507
 msgid "tentacle"
 msgstr "촉수"
 
@@ -3158,7 +3158,7 @@ msgid "Holy"
 msgstr "신성"
 
 #: spl-util.cc:913 decks.cc:334 decks.cc:334 spl-util.cc:912 spl-util.cc:865
-#: godprayer.cc:525 spl-util.cc:857
+#: godprayer.cc:525 spl-util.cc:857 godprayer.cc:502
 msgid "Summoning"
 msgstr "소환술"
 
@@ -3299,6 +3299,7 @@ msgid "the Tomb"
 msgstr "무덤"
 
 #: decks.cc:322 decks.cc:322 decks.cc:319 status.cc:941 status.cc:945
+#: status.cc:940 status.cc:944
 msgid "Water"
 msgstr "물"
 
@@ -4207,7 +4208,7 @@ msgid "Make grenades"
 msgstr "수류탄 생성"
 
 #: abl-show.cc:465 abl-show.cc:465 status.cc:86 abl-show.cc:462
-#: abl-show.cc:474 abl-show.cc:419 abl-show.cc:421
+#: abl-show.cc:474 abl-show.cc:419 abl-show.cc:421 status.cc:731
 msgid "Sage"
 msgstr "현자"
 
@@ -4244,6 +4245,7 @@ msgstr "보존 식량"
 
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
 #: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
+#: mon-util.cc:3720
 msgid "You"
 msgstr "당신"
 
@@ -4253,7 +4255,7 @@ msgstr "당신"
 #: misc.cc:2722 player-act.cc:372 player-act.cc:384 terrain.cc:1096
 #: terrain.cc:1104 misc.cc:2730 terrain.cc:1097 terrain.cc:1105
 #: mon-util.cc:3527 misc.cc:2778 player-act.cc:369 player-act.cc:381
-#: terrain.cc:1011 terrain.cc:1019 misc.cc:2781
+#: terrain.cc:1011 terrain.cc:1019 misc.cc:2781 mon-util.cc:3719
 msgid "you"
 msgstr "당신"
 
@@ -4265,7 +4267,7 @@ msgstr "당신의"
 
 #: player-act.cc:377 player-act.cc:360 player-act.cc:360 player-act.cc:368
 #: player-act.cc:385 player-act.cc:375 mon-util.cc:3526 player-act.cc:372
-#: player-act.cc:382
+#: player-act.cc:382 mon-util.cc:3718
 msgid "your"
 msgstr "당신의"
 
@@ -4319,6 +4321,7 @@ msgid "Something"
 msgstr "무언가"
 
 #: fight.cc:432 fight.cc:425 fight.cc:425 fight.cc:428 mon-util.cc:3556
+#: mon-util.cc:3748
 msgid "something"
 msgstr "무언가"
 
@@ -4504,7 +4507,7 @@ msgstr "어둠"
 #: player-stats.cc:207 player-stats.cc:541 player-stats.cc:208
 #: player-stats.cc:542 itemname.cc:533 player-stats.cc:540 itemname.cc:482
 #: player-stats.cc:210 player-stats.cc:211 itemname.cc:495 player-stats.cc:244
-#: transform.cc:907
+#: transform.cc:907 player-stats.cc:489
 msgid "strength"
 msgstr "힘"
 
@@ -4512,7 +4515,7 @@ msgstr "힘"
 #: player-stats.cc:209 player-stats.cc:545 player-stats.cc:210
 #: player-stats.cc:546 itemname.cc:534 player-stats.cc:544 itemname.cc:483
 #: player-stats.cc:212 player-stats.cc:213 itemname.cc:496 player-stats.cc:246
-#: transform.cc:907
+#: transform.cc:907 player-stats.cc:493
 msgid "dexterity"
 msgstr "민첩"
 
@@ -4520,6 +4523,7 @@ msgstr "민첩"
 #: player-stats.cc:208 player-stats.cc:543 player-stats.cc:209
 #: player-stats.cc:544 itemname.cc:535 player-stats.cc:542 itemname.cc:484
 #: player-stats.cc:211 player-stats.cc:212 itemname.cc:497 player-stats.cc:245
+#: player-stats.cc:491
 msgid "intelligence"
 msgstr "지능"
 
@@ -4945,7 +4949,7 @@ msgstr "부패"
 #: mon-stuff.d.cc:3988 terrain.cc:1425 tmp.cc:3968 itemname.cc:680
 #: mon-stuff.cc:3850 terrain.cc:1479 itemname.cc:629 mon-stuff.cc:3904
 #: terrain.cc:1428 mon-stuff.cc:3928 terrain.cc:1429 mon-util.cc:3621
-#: mon-stuff.cc:3970 terrain.cc:1343
+#: mon-stuff.cc:3970 terrain.cc:1343 mon-util.cc:3812
 msgid "water"
 msgstr "물"
 
@@ -5542,7 +5546,7 @@ msgstr "심연"
 #. special pandemonium runes:
 #. special pandemonium runes:
 #: itemname.cc:844 itemname.cc:855 itemname.cc:862 itemname.cc:862
-#: itemname.cc:888 itemname.cc:833 itemname.cc:873
+#: itemname.cc:888 itemname.cc:833 itemname.cc:873 status.cc:300
 msgid "glowing"
 msgstr "빛"
 
@@ -6393,6 +6397,7 @@ msgstr "마법 두루마리"
 #: itemname.cc:1732 itemname.cc:1716 itemprop.cc:3071 itemname.cc:1620
 #: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400 player-equip.cc:1439
 #: itemname.cc:1623 itemname.cc:1652 itemprop.cc:2806 itemname.cc:1664
+#: monster.cc:5488
 msgid "amulet"
 msgstr "부적"
 
@@ -6401,6 +6406,7 @@ msgstr "부적"
 #: itemname.cc:1734 itemname.cc:1718 itemprop.cc:3071 itemname.cc:1622
 #: itemprop.cc:2927 itemprop.cc:2934 monster.cc:5400 player-equip.cc:1439
 #: itemname.cc:1625 itemname.cc:1654 itemprop.cc:2806 itemname.cc:1666
+#: monster.cc:5488
 msgid "ring"
 msgstr "반지"
 
@@ -7755,6 +7761,7 @@ msgid "the "
 msgstr ""
 
 #: itemname.cc:194 itemname.cc:223 itemname.cc:227 itemname.cc:227
+#: item_use.cc:2505
 msgid "Your "
 msgstr "당신의 "
 
@@ -7990,7 +7997,7 @@ msgstr "전기"
 #: main_backup.cc:4035 main.cc:4068 mon-stuff.cc:3850 player.cc:270
 #: terrain.cc:1478 mon-stuff.cc:3904 player.cc:273 terrain.cc:1427
 #: mon-stuff.cc:3928 terrain.cc:1428 mon-util.cc:3619 mon-stuff.cc:3970
-#: player.cc:250 terrain.cc:1342
+#: player.cc:250 terrain.cc:1342 mon-util.cc:3810
 msgid "lava"
 msgstr "용암"
 
@@ -8081,7 +8088,7 @@ msgid "front paws"
 msgstr "앞발"
 
 #: transform.cc:404 transform.cc:404 transform.cc:384 transform.cc:428
-#: transform.cc:459
+#: transform.cc:459 player-act.cc:431
 msgid "hands"
 msgstr "손"
 
@@ -8158,11 +8165,11 @@ msgstr "영매"
 msgid "death channel"
 msgstr "죽음의 영매"
 
-#: status.cc:48
+#: status.cc:48 status.cc:965
 msgid "DMsl"
 msgstr "튕김"
 
-#: status.cc:48
+#: status.cc:48 status.cc:966
 msgid "deflect missiles"
 msgstr "미사일류 방어"
 
@@ -8246,11 +8253,11 @@ msgstr "기도"
 msgid "praying"
 msgstr "기도 중"
 
-#: status.cc:78
+#: status.cc:78 status.cc:975
 msgid "RMsl"
 msgstr "편향"
 
-#: status.cc:78
+#: status.cc:78 status.cc:976
 msgid "repel missiles"
 msgstr "미사일류 방어"
 
@@ -8326,7 +8333,7 @@ msgstr "사라짐"
 msgid "Quad"
 msgstr "*쿼드*"
 
-#: status.cc:116
+#: status.cc:116 status.cc:522
 msgid "Sil"
 msgstr "침묵"
 
@@ -8391,12 +8398,12 @@ msgid "mesmerised"
 msgstr "매료됨"
 
 #: status.cc:309 status.cc:310 status.cc:326 status.cc:327 status.cc:512
-#: status.cc:329
+#: status.cc:329 status.cc:508
 msgid "Held"
 msgstr "그물"
 
 #: status.cc:310 status.cc:311 status.cc:327 status.cc:328 status.cc:513
-#: status.cc:330
+#: status.cc:330 status.cc:509
 msgid "held"
 msgstr "그물"
 
@@ -9948,6 +9955,7 @@ msgid "Projected Noise"
 msgstr "소음의 방출"
 
 #: spl-data.h:1380 spl-data.h:1382 spl-data.h:1271 spl-data.h:1286
+#: status.cc:540
 msgid "Recall"
 msgstr "소집"
 
@@ -10533,13 +10541,13 @@ msgstr "미믹"
 #: misc.cc:2207 fight.cc:3694 misc.cc:2208 monster.cc:2319 monster.cc:2479
 #: fight.cc:3534 monster.cc:2353 monster.cc:2513 monster.cc:2627
 #: monster.cc:2787 monster.cc:2647 monster.cc:2807 monster.cc:2648
-#: monster.cc:2808 monster.cc:2651 monster.cc:2811
+#: monster.cc:2808 monster.cc:2651 monster.cc:2811 player-act.cc:425
 msgid "claw"
 msgstr "손톱"
 
 #: misc.cc:2207 misc.cc:2214 misc.cc:2208 misc.cc:2215 monster.cc:2407
 #: monster.cc:2441 monster.cc:2715 monster.cc:2735 monster.cc:2736
-#: monster.cc:2739
+#: monster.cc:2739 player-act.cc:431
 msgid "hand"
 msgstr "손"
 
@@ -10548,19 +10556,20 @@ msgstr "손"
 #: monster.cc:2506 monster.cc:2768 monster.cc:2772 monster.cc:2780
 #: monster.cc:2788 monster.cc:2792 monster.cc:2800 monster.cc:2789
 #: monster.cc:2793 monster.cc:2801 monster.cc:2796 monster.cc:2804
+#: player-act.cc:410 player-act.cc:423
 msgid "paw"
 msgstr "발"
 
 # (deceit, 110831) 원래 뜻은 '앞다리'죠. 돼지로 변신당했을때인데, 재미삼아 이렇게 번역해봅니다.
-#: misc.cc:2222 misc.cc:2223
+#: misc.cc:2222 misc.cc:2223 player-act.cc:408
 msgid "front leg"
 msgstr "앞다리"
 
-#: misc.cc:2226 misc.cc:2227
+#: misc.cc:2226 misc.cc:2227 player-act.cc:406
 msgid "foreclaw"
 msgstr "이빨"
 
-#: misc.cc:2229 misc.cc:2230
+#: misc.cc:2229 misc.cc:2230 player-act.cc:412
 msgid "scythe-like blade"
 msgstr "칼날의 손"
 
@@ -10670,12 +10679,14 @@ msgstr "다리"
 #: monster.cc:2770 monster.cc:2780 monster.cc:2788 monster.cc:2796
 #: monster.cc:2771 monster.cc:2781 monster.cc:2789 monster.cc:2797
 #: monster.cc:2774 monster.cc:2784 monster.cc:2792 monster.cc:2800
+#: player-act.cc:460
 msgid "hoof"
 msgstr "발굽"
 
 #: monster.cc:2446 monster.cc:2484 monster.cc:2480 monster.cc:2518
 #: monster.cc:2754 monster.cc:2792 monster.cc:2774 monster.cc:2812
 #: monster.cc:2775 monster.cc:2813 monster.cc:2778 monster.cc:2816
+#: player-act.cc:475
 msgid "tail"
 msgstr "꼬리"
 
@@ -10683,12 +10694,12 @@ msgstr "꼬리"
 #: monster.cc:2500 monster.cc:2508 monster.cc:2768 monster.cc:2774
 #: monster.cc:2782 monster.cc:2788 monster.cc:2794 monster.cc:2802
 #: monster.cc:2789 monster.cc:2795 monster.cc:2803 monster.cc:2792
-#: monster.cc:2798 monster.cc:2806
+#: monster.cc:2798 monster.cc:2806 player-act.cc:462
 msgid "talon"
 msgstr "발톱"
 
 #: monster.cc:2489 monster.cc:2523 monster.cc:2797 monster.cc:2817
-#: monster.cc:2818 monster.cc:2821
+#: monster.cc:2818 monster.cc:2821 player-act.cc:451
 msgid "root"
 msgstr "뿌리"
 
@@ -10703,21 +10714,21 @@ msgid "pseudopod"
 msgstr "위족"
 
 #: monster.cc:2511 monster.cc:2545 monster.cc:2819 monster.cc:2839
-#: monster.cc:2840 monster.cc:2843
+#: monster.cc:2840 monster.cc:2843 player-act.cc:455
 msgid "underside"
 msgstr "아랫쪽"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2850
-#: monster.cc:2851 monster.cc:2854
+#: monster.cc:2851 monster.cc:2854 player-act.cc:481
 msgid "feet"
 msgstr "발"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2850
-#: monster.cc:2851 monster.cc:2854
+#: monster.cc:2851 monster.cc:2854 player-act.cc:481
 msgid "foot"
 msgstr "발"
 
-#: monster.cc:2552 monster.cc:2870
+#: monster.cc:2552 monster.cc:2870 player-act.cc:498
 msgid "arm"
 msgstr "팔"
 
@@ -10791,7 +10802,7 @@ msgstr "불결"
 msgid "impure"
 msgstr "부도덕"
 
-#: godabil.cc:121 godabil.cc:116
+#: godabil.cc:121 godabil.cc:116 player.cc:4770
 msgid "contaminated"
 msgstr "오염됨"
 
@@ -11230,17 +11241,17 @@ msgstr "사용함: "
 msgid "tried"
 msgstr "사용함"
 
-#: mon-util.cc:3575 mon-util.cc:3623 travel.cc:4343
+#: mon-util.cc:3575 mon-util.cc:3623 travel.cc:4343 mon-util.cc:3814
 msgid "altar"
 msgstr "제단"
 
-#: mon-util.cc:3577 mon-util.cc:3625
+#: mon-util.cc:3577 mon-util.cc:3625 mon-util.cc:3816
 msgid "ground"
 msgstr "지면"
 
 #. S_SOFT
 #: mon-util.cc:3729 mon-util.cc:3750 mon-util.cc:3789 mon-util.cc:3807
-#: mon-util.cc:3811
+#: mon-util.cc:3811 mon-util.cc:3980 mon-util.cc:3998 mon-util.cc:4002
 msgid "says"
 msgstr "은(는) 말했다"
 
@@ -11376,85 +11387,93 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
-#: mon-util.cc:3792 mon-util.cc:3812
+#: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
+#: mon-util.cc:4003
 msgid "shouts"
 msgstr "이(가) 소리쳤다"
 
-#: mon-util.cc:3731 mon-util.cc:3791
+#: mon-util.cc:3731 mon-util.cc:3791 mon-util.cc:3982
 msgid "barks"
 msgstr "이(가) 짖었다"
 
-#: mon-util.cc:3733 mon-util.cc:3793
+#: mon-util.cc:3733 mon-util.cc:3793 mon-util.cc:3984
 msgid "roars"
 msgstr "이(가) 으르렁댔다"
 
 #. S_LOUD
 #: mon-util.cc:3734 mon-util.cc:3752 mon-util.cc:3794 mon-util.cc:3813
+#: mon-util.cc:3985 mon-util.cc:4004
 msgid "screams"
 msgstr "은(는) 비명을 질렀다"
 
-#: mon-util.cc:3735 mon-util.cc:3795
+#: mon-util.cc:3735 mon-util.cc:3795 mon-util.cc:3986
 msgid "bellows"
 msgstr "은(는) 고함쳤다"
 
-#: mon-util.cc:3736 mon-util.cc:3796
+#: mon-util.cc:3736 mon-util.cc:3796 mon-util.cc:3987
 msgid "trumpets"
 msgstr "은(는) 울부짖었다"
 
-#: mon-util.cc:3737 mon-util.cc:3797
+#: mon-util.cc:3737 mon-util.cc:3797 mon-util.cc:3988
 msgid "screeches"
 msgstr "은(는) 날카로운 소리를 냈다"
 
-#: mon-util.cc:3738 mon-util.cc:3798
+#: mon-util.cc:3738 mon-util.cc:3798 mon-util.cc:3989
 msgid "buzzes"
 msgstr "은(는) 윙윙거리는 소리를 냈다"
 
-#: mon-util.cc:3739 mon-util.cc:3799
+#: mon-util.cc:3739 mon-util.cc:3799 mon-util.cc:3990
 msgid "moans"
 msgstr "은(는) 투덜거렸다"
 
-#: mon-util.cc:3740 mon-util.cc:3800
+#: mon-util.cc:3740 mon-util.cc:3800 mon-util.cc:3991
 msgid "gurgles"
 msgstr "은(는) 쏴~ 하는 소리를 냈다"
 
-#: mon-util.cc:3741 mon-util.cc:3801
+#: mon-util.cc:3741 mon-util.cc:3801 mon-util.cc:3992
 msgid "whines"
 msgstr "은(는) 칭얼거렸다"
 
-#: mon-util.cc:3742 mon-util.cc:3802
+#: mon-util.cc:3742 mon-util.cc:3802 mon-util.cc:3993
 msgid "croaks"
 msgstr "은(는) 개굴개굴거렸다"
 
-#: mon-util.cc:3743 mon-util.cc:3803
+#: mon-util.cc:3743 mon-util.cc:3803 mon-util.cc:3994
 msgid "growls"
 msgstr "은(는) 으르렁댔다"
 
-#: mon-util.cc:3744 mon-util.cc:3804
+#: mon-util.cc:3744 mon-util.cc:3804 mon-util.cc:3995
 msgid "hisses"
 msgstr "은(는) 쉬익~ 하는 소리를 냈다"
 
-#: mon-util.cc:3745 mon-util.cc:3805
+#: mon-util.cc:3745 mon-util.cc:3805 mon-util.cc:3996
 msgid "sneers"
 msgstr "은(는) 비웃었다"
 
 #. S_DEMON_TAUNT
-#: mon-util.cc:3746 mon-util.cc:3806
+#: mon-util.cc:3746 mon-util.cc:3806 mon-util.cc:3997
 msgid "caws"
 msgstr "은(는) 까악거리고 울었다"
 
 #. S_CHERUB -- they just speak normally.
-#: mon-util.cc:3747 mon-util.cc:3808
+#: mon-util.cc:3747 mon-util.cc:3808 mon-util.cc:3999
 msgid "buggily says"
 msgstr "은(는) 이것이 버그라고 말했다"
 
 #. NUM_SHOUTS
-#: mon-util.cc:3748 mon-util.cc:3809
+#: mon-util.cc:3748 mon-util.cc:3809 mon-util.cc:4000
 msgid "breathes"
 msgstr "은(는) 호흡했다"
 
 #. S_VERY_SOFT
-#: mon-util.cc:3749 mon-util.cc:3810
+#: mon-util.cc:3749 mon-util.cc:3810 mon-util.cc:4001
 msgid "whispers"
 msgstr "은(는) 속삭였다"
 
@@ -11732,7 +11751,7 @@ msgstr "거대한 관문"
 msgid "sanctuary"
 msgstr "성지"
 
-#: directn.cc:1419
+#: directn.cc:1419 status.cc:523
 msgid "silenced"
 msgstr "정적화됨"
 
@@ -11940,7 +11959,7 @@ msgstr "알람"
 msgid "blade"
 msgstr "칼날"
 
-#: misc.cc:2487 describe.cc:555
+#: misc.cc:2487 describe.cc:555 misc.cc:2530
 msgid "net"
 msgstr "그물"
 
@@ -12044,7 +12063,7 @@ msgid "Food "
 msgstr "음식 "
 
 #: directn.cc:2955 directn.cc:3047 directn.cc:2923 directn.cc:3013
-#: misc.cc:2487 describe.cc:556 directn.cc:2939 directn.cc:3030
+#: misc.cc:2487 describe.cc:556 directn.cc:2939 directn.cc:3030 misc.cc:2530
 msgid "web"
 msgstr "거미줄"
 
@@ -12881,7 +12900,7 @@ msgstr "더듬이"
 msgid "talons"
 msgstr "발톱"
 
-#: mutation-data.h:837 transform.cc:427 transform.cc:458
+#: mutation-data.h:837 transform.cc:427 transform.cc:458 player-act.cc:465
 msgid "tentacles"
 msgstr "촉수"
 
@@ -15170,47 +15189,47 @@ msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 msgid "nothing"
 msgstr "없음"
 
-#: species.cc:181
+#: species.cc:181 species.cc:183
 msgid "Cat"
 msgstr "고양이"
 
-#: species.cc:184
+#: species.cc:184 species.cc:186
 msgid "Octopus"
 msgstr "문어족"
 
-#: godabil.cc:580 godabil.cc:627
+#: godabil.cc:580 godabil.cc:627 godabil.cc:628
 msgid "Abominations (harms the forces of chaos and mutation)"
 msgstr "혐오의 서 : 혼돈의 힘과, 변이의 해악"
 
-#: godabil.cc:581 godabil.cc:628
+#: godabil.cc:581 godabil.cc:628 godabil.cc:629
 msgid "Ablutions (harms the unclean and walking corpses)"
 msgstr "정화의 서 : 부정함과 일으켜진 망자들의 해악"
 
-#: godabil.cc:582 godabil.cc:629
+#: godabil.cc:582 godabil.cc:629 godabil.cc:630
 msgid "Apostates (harms the faithless and heretics)"
 msgstr "변절의 서 : 믿지 않는 자와 이교도들의 해악"
 
-#: godabil.cc:583 godabil.cc:630
+#: godabil.cc:583 godabil.cc:630 godabil.cc:631
 msgid "Anathema (harms all types of demons and undead)"
 msgstr "반대의 서 : 모든 악마와 언데드의 해악"
 
-#: godabil.cc:584 godabil.cc:631
+#: godabil.cc:584 godabil.cc:631 godabil.cc:632
 msgid "Alliances (blesses intelligent allies)"
 msgstr "동맹의 서 : 지성 있는 동료들에게 축복을"
 
-#: godprayer.cc:525
+#: godprayer.cc:525 godprayer.cc:502
 msgid "Escape"
 msgstr "탈출"
 
-#: godprayer.cc:525
+#: godprayer.cc:525 godprayer.cc:502
 msgid "Destruction"
 msgstr "파괴"
 
-#: godprayer.cc:525
+#: godprayer.cc:525 godprayer.cc:502
 msgid "Dungeons"
 msgstr "던전"
 
-#: godprayer.cc:525
+#: godprayer.cc:525 godprayer.cc:502
 msgid "Wonder"
 msgstr "불가사의"
 
@@ -15264,28 +15283,28 @@ msgstr "비명"
 msgid "armour"
 msgstr "방어구"
 
-#: status.cc:512
+#: status.cc:512 status.cc:508
 msgid "Constr"
 msgstr "조임"
 
-#: status.cc:513
+#: status.cc:513 status.cc:509
 msgid "constricted"
 msgstr "조여짐"
 
 #. Setup tracer.
-#: mon-abil.cc:2356
+#: mon-abil.cc:2356 mon-abil.cc:2806
 msgid "glob of lava"
 msgstr "용암 덩어리"
 
 #. Setup tracer.
-#: mon-abil.cc:2392
+#: mon-abil.cc:2392 mon-abil.cc:2842
 msgid "bolt of electricity"
 msgstr "전격의 화살"
 
 #. Do the throwing right here, since the beam is so
 #. easy to set up and doesn't involve inventory.
 #. Set up the beam.
-#: mon-abil.cc:2620
+#: mon-abil.cc:2620 mon-abil.cc:3070
 msgid "volley of spikes"
 msgstr "가시 사격"
 
@@ -15323,11 +15342,11 @@ msgstr "계단"
 msgid "gas"
 msgstr "가스"
 
-#: status.cc:822
+#: status.cc:822 status.cc:808
 msgid "Nausea"
 msgstr "구역질"
 
-#: status.cc:823
+#: status.cc:823 status.cc:809
 msgid "nauseated"
 msgstr "구역질남"
 
@@ -15387,7 +15406,7 @@ msgstr "룬"
 msgid "mimic"
 msgstr "미믹"
 
-#: status.cc:949
+#: status.cc:949 status.cc:948
 msgid "Lava"
 msgstr "용암"
 
@@ -16042,4 +16061,144 @@ msgstr ""
 
 #: mutation-data.h:1378
 msgid "You are completely covered in yellow scales (AC +4, rCorr)."
+msgstr ""
+
+#: player-act.cc:414
+msgid "branch"
+msgstr ""
+
+#: player-act.cc:416
+msgid "misty tendril"
+msgstr ""
+
+#: player-act.cc:418
+msgid "bump"
+msgstr ""
+
+#: player-act.cc:449
+msgid "hind leg"
+msgstr ""
+
+#: player-act.cc:453
+msgid "strand"
+msgstr ""
+
+#: player-act.cc:470
+msgid "underbelly"
+msgstr ""
+
+#: player-act.cc:501
+msgid "scaled"
+msgstr ""
+
+#: player-act.cc:503
+msgid "feathered"
+msgstr ""
+
+#: player-act.cc:505
+msgid "bandage-wrapped"
+msgstr ""
+
+#: player-act.cc:510
+msgid "bony"
+msgstr ""
+
+#: player-act.cc:523
+msgid "Nothing wielded"
+msgstr ""
+
+#: player-act.cc:526 player-act.cc:552
+msgid "Teeth and claws"
+msgstr ""
+
+#: player-act.cc:528
+msgid "Claws"
+msgstr ""
+
+#: player-act.cc:530
+msgid "Tentacles"
+msgstr ""
+
+#: player-act.cc:535
+msgid "Fangs (venom)"
+msgstr ""
+
+#: player-act.cc:538
+msgid "Blade "
+msgstr ""
+
+#: player-act.cc:542
+msgid "Stone claws"
+msgstr ""
+
+#: player-act.cc:544
+msgid "Stone tentacles"
+msgstr ""
+
+#: player-act.cc:546
+msgid "Stone fists"
+msgstr ""
+
+#: player-act.cc:549
+msgid "Ice fists (freeze)"
+msgstr ""
+
+#: player-act.cc:560
+msgid "Teeth"
+msgstr ""
+
+#: player-act.cc:563
+msgid "Branches"
+msgstr ""
+
+#: status.cc:309
+msgid "Umbra"
+msgstr ""
+
+#: status.cc:319
+msgid "Suppress"
+msgstr ""
+
+#: status.cc:532
+msgid "-cTele"
+msgstr ""
+
+#: status.cc:541
+msgid "recalling"
+msgstr ""
+
+#: status.cc:732
+msgid "sage ["
+msgstr ""
+
+#: status.cc:892
+msgid "Tree"
+msgstr ""
+
+#: status.cc:893
+msgid "tree-form"
+msgstr ""
+
+#: status.cc:897
+msgid "Jelly"
+msgstr ""
+
+#: status.cc:898
+msgid "jelly-form"
+msgstr ""
+
+#: status.cc:902
+msgid "Porc"
+msgstr ""
+
+#: status.cc:903
+msgid "porcupine-form"
+msgstr ""
+
+#: status.cc:907
+msgid "Wisp"
+msgstr ""
+
+#: status.cc:908
+msgid "wisp-form"
 msgstr ""

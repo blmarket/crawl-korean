@@ -444,7 +444,7 @@ static void _warn_launcher_shield_slowdown(const item_def &launcher)
         {
             mprf(MSGCH_WARN,
                     gettext("Your %s %sslows your rate of fire."),
-                    shield_base_name(you.shield()),
+                    _(shield_base_name(you.shield())),
                     slow_degree);
         }
     }
@@ -601,8 +601,8 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
     {
         if (verbose)
         {
-            mprf("Your wings%s won't fit in that.", you.mutation[MUT_BIG_WINGS]
-                 ? "" : ", even vestigial as they are,");
+            mprf(_("Your wings%s won't fit in that."), you.mutation[MUT_BIG_WINGS]
+                 ? "" : _(", even vestigial as they are,"));
         }
         return false;
     }
@@ -758,7 +758,7 @@ bool do_wear_armour(int item, bool quiet)
     if (!invitem.defined())
     {
         if (!quiet)
-            mpr("You don't have any such object.");
+            mpr(_("You don't have any such object."));
         return false;
     }
 
@@ -770,7 +770,7 @@ bool do_wear_armour(int item, bool quiet)
     if (item == you.equip[EQ_WEAPON])
     {
         if (!quiet)
-            mpr("You are wielding that object!");
+            mpr(_("You are wielding that object!"));
         return false;
     }
 
@@ -780,7 +780,7 @@ bool do_wear_armour(int item, bool quiet)
             return !takeoff_armour(item);
         else
         {
-            mpr("You're already wearing that object!");
+            mpr(_("You're already wearing that object!"));
             return false;
         }
     }
@@ -973,7 +973,7 @@ static int _prompt_ring_to_remove(int new_ring)
     const char rslot = index_to_letter(right->link);
 
 #ifdef TOUCH_UI
-    string prompt = "You're wearing two rings. Remove which one?";
+    string prompt = _("You're wearing two rings. Remove which one?");
     Popup *pop = new Popup(prompt);
     pop->push_entry(new MenuEntry(prompt, MEL_TITLE));
     InvEntry *me = new InvEntry(*left);
@@ -1040,7 +1040,7 @@ static int _prompt_ring_to_remove_octopode(int new_ring)
 //I think it looks better without the letters.
 // (%c/%c/%c/%c/%c/%c/%c/%c/Esc)",
 //         one_slot, two_slot, three_slot, four_slot, five_slot, six_slot, seven_slot, eight_slot);
-    mprf(MSGCH_PROMPT, "(<w>?</w> for menu, <w>Esc</w> to cancel)");
+    mprf(MSGCH_PROMPT, _("(<w>?</w> for menu, <w>Esc</w> to cancel)"));
 
     for (int i = 0; i < num_rings; i++)
         mprf_nocap("%s", rings[i]->name(true, DESC_INVENTORY).c_str());
@@ -1313,7 +1313,7 @@ static bool _swap_rings_octopode(int ring_slot)
     {
         // Shouldn't happen, because hogs and bats can't put on jewellery at
         // all and thus won't get this far.
-        mpr("You can't wear that in your present form.");
+        mpr(_("You can't wear that in your present form."));
         return false;
     }
     else if (available == 0)
@@ -1415,7 +1415,7 @@ static bool _puton_item(int item_slot)
     {
         if (!you_tran_can_wear(item))
         {
-            mpr("You can't wear that in your present form.");
+            mpr(_("You can't wear that in your present form."));
             return false;
         }
 
@@ -2483,7 +2483,7 @@ bool enchant_weapon(item_def &wpn, int acc, int dam, const char *colour)
                     wpn.plus2++, success = true;
             }
             if (success && colour)
-                mprf("%s glow%s %s for a moment.", iname.c_str(), s, colour);
+                mprf(_("%s glow%s %s for a moment."), iname.c_str(), s, colour);
         }
         if (wpn.cursed())
         {
@@ -2502,8 +2502,8 @@ bool enchant_weapon(item_def &wpn, int acc, int dam, const char *colour)
     if (!success && colour)
     {
         if (!wpn.defined())
-            iname = "Your " + you.hand_name(true);
-        mprf("%s very briefly gain%s a %s sheen.", iname.c_str(), s, colour);
+            iname = _(M_("Your ")) + std::string(_(you.hand_name(true).c_str()));
+        mprf(_("%s very briefly gain%s a %s sheen."), iname.c_str(), s, colour);
     }
 
     if (success)
@@ -2835,7 +2835,7 @@ void read_scroll(int slot)
 
     if (you.confused())
     {
-        mpr("You're too confused.");
+        mpr(_("You're too confused."));
         return;
     }
 
@@ -2874,7 +2874,7 @@ void read_scroll(int slot)
     if (you.form == TRAN_WISP)
     {
         crawl_state.zero_turns_taken();
-        return mpr("You have no means to unroll scrolls.");
+        return mpr(_("You have no means to unroll scrolls."));
     }
 
     if (silenced(you.pos()))
@@ -2913,7 +2913,7 @@ void read_scroll(int slot)
                 && (is_artefact(*you.weapon())
                     || you.weapon()->base_type != OBJ_WEAPONS))
             {
-                mpr("This weapon cannot be enchanted.");
+                mpr(_("This weapon cannot be enchanted."));
                 return;
             }
         // Fall-through.
@@ -3059,7 +3059,7 @@ void read_scroll(int slot)
         break;
 
     case SCR_FEAR:
-        mpr("You assume a fearsome visage.");
+        mpr(_("You assume a fearsome visage."));
         mass_enchantment(ENCH_FEAR, 1000);
         break;
 
@@ -3103,7 +3103,7 @@ void read_scroll(int slot)
         break;
 
     case SCR_IMMOLATION:
-        mprf(gettext("The scroll explodes in your %s!"), you.hand_name(true).c_str());
+        mprf(gettext("The scroll explodes in your %s!"), _(you.hand_name(true).c_str()));
 
         // Doesn't destroy scrolls anymore, so no special check needed. (jpeg)
         immolation(10, IMMOLATION_SCROLL, you.pos(), alreadyknown, &you);

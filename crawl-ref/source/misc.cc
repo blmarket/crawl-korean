@@ -728,7 +728,7 @@ bool maybe_coagulate_blood_potions_inv(item_def &blood)
         return (rot_count > 0);
     }
 
-    mprf("You can't carry %s right now.", coag_count > 1 ? "them" : "it");
+    mprf(_("You can't carry %s right now."), coag_count > 1 ? "them" : "it");
 
     // No space in inventory, check floor.
     int o = igrd(you.pos());
@@ -1411,7 +1411,7 @@ bool go_berserk(bool intentional, bool potion)
     if (you.duration[DUR_FINESSE] > 0)
     {
         you.duration[DUR_FINESSE] = 0; // Totally incompatible.
-        mpr("Finesse? Hah! Time to rip out guts!");
+        mpr(_("Finesse? Hah! Time to rip out guts!"));
     }
 
     if (you.religion == GOD_CHEIBRIADOS)
@@ -2031,9 +2031,9 @@ void timeout_door_seals(int duration, bool force)
     }
 
     if (num_faded_seen > 1)
-        mpr("The seals upon the doors fade away.");
+        mpr(_("The seals upon the doors fade away."));
     else if (num_faded_seen > 0)
-        mpr("The seal upon the door fades away.");
+        mpr(_("The seal upon the door fades away."));
 }
 
 void bring_to_safety()
@@ -2343,7 +2343,7 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
     string verb;
     if (beam_attack)
     {
-        ""; // pgettext("stop_attack","fire "); (130129) 어순상, fire부분은 공백으로 비워두고, 아래 at이나 in direction등에 fire의 뜻을 넣어 해석문장을 만들어야할듯
+        verb = ""; // pgettext("stop_attack","fire "); (130129) 어순상, fire부분은 공백으로 비워두고, 아래 at이나 in direction등에 fire의 뜻을 넣어 해석문장을 만들어야할듯
         if (beam_target == mon->pos())
             verb += pgettext("stop_attack","at ");
         else if (you.pos() < beam_target && beam_target < mon->pos()
@@ -2527,7 +2527,7 @@ void swap_with_monster(monster* mon_to_swap)
             int net = get_trapping_net(you.pos());
             if (net != NON_ITEM)
                 destroy_item(net);
-            mprf("The %s rips apart!", (net == NON_ITEM) ? "web" : "net");
+            mprf(_("The %s rips apart!"), (net == NON_ITEM) ? _(M_("web")) : _(M_("net")));
             you.attribute[ATTR_HELD] = 0;
             you.redraw_quiver = true;
         }

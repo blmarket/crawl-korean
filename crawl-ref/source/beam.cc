@@ -857,7 +857,7 @@ void bolt::digging_wall_effect()
             {
                 if (!silenced(you.pos()))
                 {
-                    mpr("You hear a grinding noise.", MSGCH_SOUND);
+                    mpr(_("You hear a grinding noise."), MSGCH_SOUND);
                     obvious_effect = true; // You may still see the caster.
                     msg_generated = true;
                 }
@@ -2329,7 +2329,7 @@ static void _imb_explosion(bolt *parent, coord_def center)
             if (first && !beam.is_tracer)
             {
                 if (you.see_cell(center))
-                    mpr("The orb of energy explodes!");
+                    mpr(_("The orb of energy explodes!"));
                 noisy(10, center);
                 first = false;
             }

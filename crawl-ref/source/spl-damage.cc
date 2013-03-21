@@ -1116,8 +1116,8 @@ static int _shatter_player(int pow, actor *wielder, bool devastator = false)
 
     if (damage > 0)
     {
-        mpr(damage > 15 ? "You shudder from the earth-shattering force."
-                        : "You shudder.");
+        mpr(damage > 15 ? _("You shudder from the earth-shattering force.")
+                        : _("You shudder."));
         if (devastator)
             ouch(damage, wielder->mindex(), KILLED_BY_MONSTER);
         else
@@ -1135,12 +1135,12 @@ bool mons_shatter(monster* caster, bool actual)
     if (actual)
     {
         if (silence)
-            mprf("The dungeon shakes around %s!",
+            mprf(_("The dungeon shakes around %s!"),
                  caster->name(DESC_THE).c_str());
         else
         {
             noisy(30, caster->pos(), caster->mindex());
-            mprf(MSGCH_SOUND, "The dungeon rumbles around %s!",
+            mprf(MSGCH_SOUND, _("The dungeon rumbles around %s!"),
                  caster->name(DESC_THE).c_str());
         }
     }
@@ -1177,7 +1177,7 @@ bool mons_shatter(monster* caster, bool actual)
     }
 
     if (dest && !silence)
-        mpr("Ka-crash!", MSGCH_SOUND);
+        mpr(_("Ka-crash!"), MSGCH_SOUND);
 
     if (!caster->wont_attack())
         foes *= -1;
@@ -1220,13 +1220,13 @@ void shillelagh(actor *wielder, coord_def where, int pow)
     if (!affected_monsters.empty())
     {
         const string message =
-            make_stringf("%s shudder%s.",
+            make_stringf(_("%s shudder%s."),
                          affected_monsters.describe().c_str(),
                          affected_monsters.count() == 1? "s" : "");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
-            mpr("There is a shattering impact!");
+            mpr(_("There is a shattering impact!"));
     }
 
     // need to do this again to do the actual damage
@@ -1611,7 +1611,7 @@ spret_type cast_ignite_poison(int pow, bool fail)
     targetter_los hitfunc(&you, LOS_NO_TRANS);
     flash_view(RED, &hitfunc);
 
-    mpr("You ignite the poison in your surroundings!");
+    mpr(_("You ignite the poison in your surroundings!"));
 
     apply_area_visible(_ignite_poison_clouds, pow, &you);
     apply_area_visible(_ignite_poison_objects, pow, &you);
@@ -2382,8 +2382,8 @@ void forest_damage(const actor *mon)
                 msg = replace_all(replace_all(msg,
                     // "it" looks butt-ugly here...
                     "@foe@", foe->visible_to(&you) ? foe->name(DESC_THE)
-                                                   : "something"),
-                    "@is@", foe->is_player() ? "are" : "is");
+                                                   : pgettext("beam","something")),
+                    "@is@", "은(는) "); //foe->is_player() ? "are" : "is");
                 if (you.see_cell(foe->pos()))
                     mpr(msg.c_str());
 

@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * @file
  * @brief Throwing and launching stuff.
 **/
@@ -137,22 +137,22 @@ void fire_target_behaviour::set_prompt()
 
     // Build the action.
     if (!active_item())
-        msg << "Firing ";
+        msg << pgettext("throw","Firing ");
     else
     {
         const launch_retval projected = is_launched(&you, you.weapon(),
                                                     *active_item());
         switch (projected)
         {
-        case LRET_FUMBLED:  msg << "Awkwardly throwing "; break;
-        case LRET_LAUNCHED: msg << "Firing ";             break;
-        case LRET_THROWN:   msg << "Throwing ";           break;
+        case LRET_FUMBLED:  msg << pgettext("throw","Awkwardly throwing "); break;
+        case LRET_LAUNCHED: msg << pgettext("throw","Firing ");             break;
+        case LRET_THROWN:   msg << pgettext("throw","Throwing ");           break;
         }
     }
 
     // And a key hint.
-    msg << (no_other_items ? "(i - inventory)"
-                           : "(i - inventory. (,) - cycle)")
+    msg << (no_other_items ? _("(i - inventory)")
+                           : _("(i - inventory. (,) - cycle)"))
         << ": ";
 
     // Describe the selected item for firing.
@@ -296,7 +296,7 @@ static int _fire_prompt_for_item()
     if (inv_count() < 1)
         return -1;
 
-    int slot = prompt_invent_item("Fire/throw which item? (* to show all)",
+    int slot = prompt_invent_item(_("Fire/throw which item? (* to show all)"),
                                    MT_INVLIST,
                                    OSEL_THROWABLE, true, true, true, 0, -1,
                                    NULL, OPER_FIRE);
@@ -314,17 +314,17 @@ static bool _fire_validate_item(int slot, string &err)
         && is_weapon(you.inv[slot])
         && you.inv[slot].cursed())
     {
-        err = "That weapon is stuck to your " + you.hand_name(false) + "!";
+        err = _("That weapon is stuck to your ") + std::string(_(you.hand_name(false).c_str())) + pgettext("throwstuck","!");
         return false;
     }
     else if (item_is_worn(slot))
     {
-        err = "You are wearing that object!";
+        err = _("You are wearing that object!");
         return false;
     }
     else if (you.inv[slot].base_type == OBJ_ORBS)
     {
-        err = "You don't feel like leaving the orb behind!";
+        err = _("You don't feel like leaving the orb behind!");
         return false;
     }
     return true;
@@ -336,7 +336,7 @@ bool fire_warn_if_impossible(bool silent)
     if (you.species == SP_FELID)
     {
         if (!silent)
-            mpr("You can't grasp things well enough to throw them.");
+            mpr(_("You can't grasp things well enough to throw them."));
         return true;
     }
 
@@ -650,7 +650,7 @@ static bool _silver_damages_victim(bolt &beam, actor* victim, int &dmg,
         return false;
 
     if (!beam.is_tracer && you.can_see(victim))
-       dmg_msg = "The silver sears " + victim->name(DESC_THE) + "!";
+       dmg_msg = _("The silver sears ") + victim->name(DESC_THE) + pgettext("silversears","!");
 
     return false;
 }
@@ -738,9 +738,9 @@ static bool _dispersal_hit_victim(bolt& beam, actor* victim, int dmg)
         const bool   seen = you.can_see(mon);
         const string name = mon->name(DESC_THE);
         if (was_seen && seen)
-            mprf("%s blinks!", name.c_str());
+            mprf(_("%s blinks!"), name.c_str());
         else if (was_seen && !seen)
-            mprf("%s vanishes!", name.c_str());
+            mprf(_("%s vanishes!"), name.c_str());
     }
 
     return true;
@@ -769,11 +769,11 @@ static bool _charged_damages_victim(bolt &beam, actor* victim, int &dmg,
     if (you.can_see(victim))
     {
         if (victim->is_player())
-            dmg_msg = "You are electrocuted!";
+            dmg_msg = _("You are electrocuted!");
         else if (victim->type == MONS_SIXFIRHY)
-            dmg_msg = victim->name(DESC_THE) + " is charged up!";
+            dmg_msg = victim->name(DESC_THE) + _(" is charged up!");
         else
-            dmg_msg = "There is a sudden explosion of sparks!";
+            dmg_msg = _("There is a sudden explosion of sparks!");
     }
 
     if (feat_is_water(grd(victim->pos())))
@@ -791,7 +791,7 @@ static bool _blessed_damages_victim(bolt &beam, actor* victim, int &dmg,
 
         if (!beam.is_tracer && you.can_see(victim))
            dmg_msg = victim->name(DESC_THE) + " "
-                   + victim->conj_verb("convulse") + "!";
+                   + victim->conj_verb(pgettext("throwconvulse","convulse")) + "!";
     }
 
     return false;
@@ -832,7 +832,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (victim->holiness() == MH_UNDEAD || victim->holiness() == MH_NONLIVING)
     {
         if (victim->is_monster())
-            simple_monster_message(victim->as_monster(), " is unaffected.");
+            simple_monster_message(victim->as_monster(), _(" is unaffected."));
         else
             canned_msg(MSG_YOU_UNAFFECTED);
         return false;
@@ -861,7 +861,7 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
     if (resist_roll < victim->get_experience_level())
     {
         if (victim->is_monster())
-            simple_monster_message(victim->as_monster(), " resists.");
+            simple_monster_message(victim->as_monster(), _(" resists."));
         else
             canned_msg(MSG_YOU_RESIST);
         return false;
@@ -1107,8 +1107,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_CHAOS;
         if (ammo_brand != SPMSL_CHAOS)
         {
-            beam.name    = make_stringf("È¥µ·ÀÇ %s",beam.name.c_str()); // += " of chaos"; 
-            ammo_name    = make_stringf("È¥µ·ÀÇ %s",ammo_name.c_str()); // += " of chaos"; 
+            beam.name    = make_stringf("í˜¼ëˆì˜ %s",beam.name.c_str()); // += " of chaos"; 
+            ammo_name    = make_stringf("í˜¼ëˆì˜ %s",ammo_name.c_str()); // += " of chaos"; 
         }
         else
             beam_changed = true;
@@ -1120,8 +1120,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_FIRE;
         if (ammo_brand != SPMSL_FLAME)
         {
-            beam.name    += make_stringf("È­¿°ÀÇ %s",beam.name.c_str()); //+= " of flame"; 
-            ammo_name    += make_stringf("È­¿°ÀÇ %s",ammo_name.c_str()); //+= " of flame"; 
+            beam.name    += make_stringf("í™”ì—¼ì˜ %s",beam.name.c_str()); //+= " of flame"; 
+            ammo_name    += make_stringf("í™”ì—¼ì˜ %s",ammo_name.c_str()); //+= " of flame"; 
         }
         else
             beam_changed = true;
@@ -1134,8 +1134,8 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
         beam.flavour = BEAM_COLD;
         if (ammo_brand != SPMSL_FROST)
         {
-            beam.name    += make_stringf("³Ã±âÀÇ %s",beam.name.c_str()); // += " of frost"; 
-            ammo_name   += make_stringf("³Ã±âÀÇ %s",ammo_name.c_str()); // += " of frost"; 
+            beam.name    += make_stringf("ëƒ‰ê¸°ì˜ %s",beam.name.c_str()); // += " of frost"; 
+            ammo_name   += make_stringf("ëƒ‰ê¸°ì˜ %s",ammo_name.c_str()); // += " of frost"; 
         }
         else
             beam_changed = true;
@@ -1156,7 +1156,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     if (penetrating)
     {
         beam.range_funcs.push_back(_item_penetrates_victim);
-        beam.hit_verb = "pierces through"; // ¸Ş¸ğ
+        beam.hit_verb = "pierces through"; // ë©”ëª¨
     }
     if (disperses)
         beam.hit_funcs.push_back(_dispersal_hit_victim);
@@ -1257,7 +1257,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     if (!is_artefact(item))
         ammo_name = article_a(ammo_name, true);
     else
-        ammo_name = "the " + ammo_name; */ // (130206) ÇÑ±ÛÆÇ¿¡¼± ÀÌºÎºĞ ¾µ¸ğ°¡ ¾øÀ½ 
+        ammo_name = "the " + ammo_name; */ // (130206) í•œê¸€íŒì—ì„  ì´ë¶€ë¶„ ì“¸ëª¨ê°€ ì—†ìŒ 
 
     return false;
 }
@@ -1962,10 +1962,10 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
               pbolt.hit, pbolt.damage.num, pbolt.damage.size);
 
     // Create message.
-    mprf("%s %s%s %s.",
-          teleport  ? "Magically, you" : "You",
-          projected ? "" : "awkwardly ",
-          projected == LRET_LAUNCHED ? "shoot" : "throw",
+    mprf(pgettext("throwx","%s %s%s %s."),
+          teleport  ? pgettext("throwx","Magically, you") : pgettext("throwx","You"),
+          projected ? "" : pgettext("throwx","awkwardly "),
+          projected == LRET_LAUNCHED ? pgettext("throwx","shoot") : pgettext("throwx","throw"),
           ammo_name.c_str());
 
     // Ensure we're firing a 'missile'-type beam.
@@ -2024,7 +2024,7 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         viewwindow();
         pbolt.fire();
 
-        msg::stream << item.name(true, DESC_THE) << " returns to your pack!"
+        msg::stream << item.name(true, DESC_THE) << _(" returns to your pack!")
                     << endl;
 
         // Player saw the item return.
@@ -2325,19 +2325,20 @@ bool mons_throw(monster* mons, bolt &beam, int msl)
 
     // Now, if a monster is, for some reason, throwing something really
     // stupid, it will have baseHit of 0 and damage of 0.  Ah well.
-    string msg = mons->name(DESC_THE);
-    msg += ((projected == LRET_LAUNCHED) ? " shoots " : " throws ");
+
+    string msg = mons->name(DESC_THE) + "ì€(ëŠ”) ";
 
     if (!beam.name.empty() && projected == LRET_LAUNCHED)
-        msg += article_a(beam.name);
+        msg += _(beam.name.c_str());
     else
     {
         // build shoot message
-        msg += item.name(true, DESC_A, false, false, false);
+        msg += item.name(true, DESC_PLAIN, false, false, false);
 
         // build beam name
         beam.name = item.name(true, DESC_PLAIN, false, false, false);
     }
+    msg += ((projected == LRET_LAUNCHED) ? "ì„(ë¥¼) ì˜ì•˜ë‹¤ " : "ì„(ë¥¼) ë˜ì¡Œë‹¤ ");
     msg += ".";
 
     if (mons->observable())
@@ -2448,11 +2449,11 @@ bool mons_throw(monster* mons, bolt &beam, int msl)
         // Otherwise we get "The weapon returns whence it came from!" regardless.
         if (you.see_cell(beam.target) || you.can_see(mons))
         {
-            msg::stream << "The weapon returns "
-                        << (you.can_see(mons)?
-                              ("to " + mons->name(DESC_THE))
-                            : "from whence it came")
-                        << "!" << endl;
+            msg::stream << "ê·¸ ë¬´ê¸°ëŠ” "
+                        <<  (you.can_see(mons) ? mons->name(DESC_PLAIN) + "ì—ê²Œë¡œ"
+                            : "ì™”ë˜ ê³³ìœ¼ë¡œ")
+                        << "ë˜ëŒì•„ê°”ë‹¤." << std::endl;
+                        
         }
 
         // Player saw the item return.

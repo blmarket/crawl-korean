@@ -255,7 +255,7 @@ string overview_description_string(bool display)
 {
     string disp;
 
-    disp += "                    <white>Dungeon Overview and Level Annotations</white>\n" ;
+    disp += _("                    <white>Dungeon Overview and Level Annotations</white>\n") ;
     disp += _get_branches(display);
     disp += _get_altars(display);
     disp += _get_shops(display);
@@ -278,8 +278,8 @@ static string _get_seen_branches(bool display)
     disp += "\n<green>Branches:</green>";
     if (display)
     {
-        disp += " (use <white>G</white> to reach them and "
-                "<white>?/B</white> for more information)";
+        disp += _(" (use <white>G</white> to reach them and "
+                "<white>?/B</white> for more information)");
     }
     disp += "\n";
 
@@ -414,8 +414,8 @@ static string _get_altars(bool display)
     disp += "\n<green>Altars:</green>";
     if (display)
     {
-        disp += " (use <white>Ctrl-F \"altar\"</white> to reach them and "
-                "<white>?/G</white> for information about gods)";
+        disp += _(" (use <white>Ctrl-F \"altar\"</white> to reach them and "
+                "<white>?/G</white> for information about gods)");
     }
     disp += "\n";
     disp += _print_altars_for_gods(temple_god_list(), true, display);
@@ -513,7 +513,7 @@ static string _get_shops(bool display)
     {
         disp +="\n<green>Shops:</green>";
         if (display)
-            disp += " (use <white>Ctrl-F \"shop\"</white> to reach them - yellow denotes antique shop)";
+            disp += _(" (use <white>Ctrl-F \"shop\"</white> to reach them - yellow denotes antique shop)");
         disp += "\n";
     }
     last_id.depth = 10000;
@@ -894,7 +894,7 @@ void annotate_level()
 
     if (li2 != level_id::current())
     {
-        if (yesno("Annotate level on other end of current stairs?", true, 'n'))
+        if (yesno(_("Annotate level on other end of current stairs?"), true, 'n'))
             li = li2;
     }
 
@@ -905,13 +905,13 @@ void do_annotate(level_id& li)
 {
     if (!get_level_annotation(li).empty())
     {
-        mpr("Current level annotation: " +
+        mpr(_("Current level annotation: ") +
             colour_string(get_level_annotation(li, true, true), LIGHTGREY),
             MSGCH_PROMPT);
     }
 
-    const string prompt = "New annotation for " + li.describe()
-                          + " (include '!' for warning): ";
+    const string prompt = _("New annotation for ") + li.describe()
+                          + _(" (include '!' for warning): ");
 
     char buf[77];
     if (msgwin_get_line_autohist(prompt, buf, sizeof(buf)))
@@ -921,9 +921,9 @@ void do_annotate(level_id& li)
         level_annotations[li] = buf;
     else if (get_level_annotation(li, true).empty())
         canned_msg(MSG_OK);
-    else if (yesno("Really clear the annotation?", true, 'n'))
+    else if (yesno(_("Really clear the annotation?"), true, 'n'))
     {
-        mpr("Cleared.");
+        mpr(_("Cleared."));
         level_annotations.erase(li);
     }
 }

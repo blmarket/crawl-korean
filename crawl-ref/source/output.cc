@@ -738,7 +738,7 @@ static void _print_stats_wp(int y)
         default:
             break;
         }
-        text = prefix + you.unarmed_attack_name();
+        text = prefix + _(you.unarmed_attack_name().c_str());
     }
 
     CGOTOXY(1, y, GOTO_STAT);

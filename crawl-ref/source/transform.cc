@@ -991,14 +991,14 @@ bool transform(int pow, transformation_type which_trans, bool force,
 
     case TRAN_TREE:
         if (you.religion == GOD_FEDHAS)
-            simple_god_message(" smiles upon you.");
+            simple_god_message(_(" smiles upon you."));
         you.hunger_state = HS_SATIATED;
         set_redraw_status(REDRAW_HUNGER);
-        mpr("Your roots penetrate the ground.");
+        mpr(_("Your roots penetrate the ground."));
         if (you.duration[DUR_TELEPORT])
         {
             you.duration[DUR_TELEPORT] = 0;
-            mpr("You feel strangely stable.");
+            mpr(_("You feel strangely stable."));
         }
         you.duration[DUR_FLIGHT] = 0;
         // break out of webs/nets as well
@@ -1197,7 +1197,7 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_TREE:
-        mpr("You feel less woody.", MSGCH_DURATION);
+        mpr(_("You feel less woody."), MSGCH_DURATION);
         if (grd(you.pos()) == DNGN_DEEP_WATER && you.species == SP_TENGU
             && you.experience_level >= 5)
         {
@@ -1206,7 +1206,7 @@ void untransform(bool skip_wielding, bool skip_move)
                 you.attribute[ATTR_PERM_FLIGHT] = 1;
             else
                 you.increase_duration(DUR_FLIGHT, 50, 100);
-            mpr("You frantically escape the water.");
+            mpr(_("You frantically escape the water."));
         }
         notify_stat_change(STAT_STR, -10, true,
                      "losing the tree transformation");
@@ -1224,7 +1224,7 @@ void untransform(bool skip_wielding, bool skip_move)
         && !you.attribute[ATTR_PERM_FLIGHT]) // tengu may have both
     {
         you.attribute[ATTR_PERM_FLIGHT] = 1;
-        mpr("You frantically enable flight.");
+        mpr(_("You frantically enable flight."));
     }
 
     // Re-check terrain now that be may no longer be swimming or flying.

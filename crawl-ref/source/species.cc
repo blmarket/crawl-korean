@@ -177,13 +177,13 @@ string species_name(species_type speci, bool genus, bool adj)
             res = (adj ? M_("Orcish") : genus ? M_("Orc") : M_("Hill Orc"));
             break;
         case SP_DEEP_DWARF:
-            res = (adj ? "Dwarven" : genus ? "Dwarf" : "Deep Dwarf");
+            res = (adj ? M_("Dwarven") : genus ? M_("Dwarf") : M_("Deep Dwarf"));
             break;
         case SP_FELID:
-            res = (adj ? "Feline" : genus ? "Cat" : "Felid");
+            res = (adj ? M_("Feline") : genus ? M_("Cat") : M_("Felid"));
             break;
         case SP_OCTOPODE:
-            res = (adj ? "Octopoid" : genus ? "Octopus" : "Octopode");
+            res = (adj ? M_("Octopoid") : genus ? M_("Octopus") : M_("Octopode"));
             break;
 
         case SP_OGRE:       res = (adj ? M_("Ogreish")    : M_("Ogre"));       break;

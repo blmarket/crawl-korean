@@ -126,11 +126,11 @@ bool targetter_beam::valid_aim(coord_def a)
     if (a != origin && !cell_see_cell(origin, a, LOS_NO_TRANS))
     {
         if (agent->see_cell(a))
-            return notify_fail("There's something in the way.");
-        return notify_fail("You cannot see that place.");
+            return notify_fail(_("There's something in the way."));
+        return notify_fail(_("You cannot see that place."));
     }
     if ((origin - a).abs() > range2)
-        return notify_fail("Out of range.");
+        return notify_fail(_("Out of range."));
     return true;
 }
 
@@ -655,12 +655,12 @@ targetter_los::targetter_los(const actor *act, los_type _los,
 bool targetter_los::valid_aim(coord_def a)
 {
     if ((a - origin).abs() > range_max2)
-        return notify_fail("Out of range.");
+        return notify_fail(_("Out of range."));
     // If this message ever becomes used, please improve it.  I did not
     // bother adding complexity just for monsters and "hit allies" prompts
     // which don't need it.
     if (!is_affected(a))
-        return notify_fail("The effect is blocked.");
+        return notify_fail(_("The effect is blocked."));
     return true;
 }
 
@@ -697,11 +697,11 @@ bool targetter_thunderbolt::valid_aim(coord_def a)
     {
         // Scrying/glass/tree/grate.
         if (agent->see_cell(a))
-            return notify_fail("There's something in the way.");
-        return notify_fail("You cannot see that place.");
+            return notify_fail(_("There's something in the way."));
+        return notify_fail(_("You cannot see that place."));
     }
     if ((origin - a).abs() > range2)
-        return notify_fail("Out of range.");
+        return notify_fail(_("Out of range."));
     return true;
 }
 
@@ -814,11 +814,11 @@ bool targetter_spray::valid_aim(coord_def a)
     if (a != origin && !cell_see_cell(origin, a, LOS_NO_TRANS))
     {
         if (agent->see_cell(a))
-            return notify_fail("There's something in the way.");
-        return notify_fail("You cannot see that place.");
+            return notify_fail(_("There's something in the way."));
+        return notify_fail(_("You cannot see that place."));
     }
     if ((origin - a).abs() > range2)
-        return notify_fail("Out of range.");
+        return notify_fail(_("Out of range."));
     return true;
 }
 

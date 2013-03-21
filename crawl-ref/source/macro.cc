@@ -670,7 +670,7 @@ void macro_save()
     f = fopen_u(macrofile.c_str(), "w");
     if (!f)
     {
-        mprf(MSGCH_ERROR, "Couldn't open %s for writing!", macrofile.c_str());
+        mprf(MSGCH_ERROR, _("Couldn't open %s for writing!"), macrofile.c_str());
         return;
     }
 
@@ -708,7 +708,7 @@ static keyseq _getch_mul(int (*rgetch)() = NULL)
     // get new keys from the user.
     if (crawl_state.is_replaying_keys())
     {
-        mpr("(Key replay ran out of keys)", MSGCH_ERROR);
+        mpr(_("(Key replay ran out of keys)"), MSGCH_ERROR);
         crawl_state.cancel_cmd_repeat();
         crawl_state.cancel_cmd_again();
     }
@@ -818,7 +818,7 @@ void flush_input_buffer(int reason)
 
 static string _macro_prompt_string(const string &macro_type)
 {
-    return make_stringf("Input %s action: ", macro_type.c_str());
+    return make_stringf(_("Input %s action: "), macro_type.c_str());
 }
 
 static void _macro_prompt(const string &macro_type)
@@ -889,9 +889,9 @@ void macro_add_query(void)
     KeymapContext keymc = KMC_DEFAULT;
 
     mesclr();
-    mpr("(m)acro, (M)acro raw, keymap "
+    mpr(_("(m)acro, (M)acro raw, keymap "
         "[(k) default, (x) level-map, (t)argetting, (c)onfirm, m(e)nu], "
-        "(s)ave? ",
+        "(s)ave? "),
         MSGCH_PROMPT);
     input = m_getch();
     int low = toalower(input);
@@ -928,20 +928,20 @@ void macro_add_query(void)
     }
     else if (input == 's')
     {
-        mpr("Saving macros.");
+        mpr(_("Saving macros."));
         macro_save();
         return;
     }
     else
     {
-        mpr("Aborting.");
+        mpr(_("Aborting."));
         return;
     }
 
     // reference to the appropriate mapping
     macromap &mapref = (keymap ? Keymaps[keymc] : Macros);
     const string macro_type = _macro_type_name(keymap, keymc);
-    const string trigger_prompt = make_stringf("Input %s trigger key: ",
+    const string trigger_prompt = make_stringf(_("Input %s trigger key: "),
                                                macro_type.c_str());
     msgwin_prompt(trigger_prompt);
 
@@ -955,8 +955,8 @@ void macro_add_query(void)
     {
         string action = vtostr(mapref[key]);
         action = replace_all(action, "<", "<<");
-        mprf(MSGCH_WARN, "Current Action: %s", action.c_str());
-        mpr("Do you wish to (r)edefine, (c)lear, or (a)bort? ", MSGCH_PROMPT);
+        mprf(MSGCH_WARN, _("Current Action: %s"), action.c_str());
+        mpr(_("Do you wish to (r)edefine, (c)lear, or (a)bort? "), MSGCH_PROMPT);
 
         input = m_getch();
 
@@ -968,7 +968,7 @@ void macro_add_query(void)
         }
         else if (input == 'c')
         {
-            mprf("Cleared %s '%s' => '%s'.",
+            mprf(_("Cleared %s '%s' => '%s'."),
                  macro_type.c_str(),
                  vtostr(key).c_str(),
                  vtostr(mapref[key]).c_str());
@@ -988,7 +988,7 @@ void macro_add_query(void)
     {
         const bool deleted_macro = macro_del(mapref, key);
         if (deleted_macro)
-            mprf("Deleted %s for '%s'.",
+            mprf(_("Deleted %s for '%s'."),
                  macro_type.c_str(),
                  vtostr(key).c_str());
         else
@@ -997,7 +997,7 @@ void macro_add_query(void)
     else
     {
         macro_add(mapref, key, action);
-        mprf("Created %s '%s' => '%s'.",
+        mprf(_("Created %s '%s' => '%s'."),
              macro_type.c_str(),
              vtostr(key).c_str(), vtostr(action).c_str());
     }
@@ -1237,8 +1237,8 @@ command_type key_to_command(int key, KeymapContext context)
         if (cmd_context != context)
         {
             mprf(MSGCH_ERROR,
-                 "key_to_command(): command '%s' (%d:%d) wrong for desired "
-                 "context",
+                 _("key_to_command(): command '%s' (%d:%d) wrong for desired "
+                 "context"),
                  command_to_name(cmd).c_str(), -key - CMD_NO_CMD,
                  CMD_MAX_CMD + key);
             if (is_processing_macro())
@@ -1313,25 +1313,25 @@ void bind_command_to_key(command_type cmd, int key)
     {
         if (command_name == "CMD_NO_CMD")
         {
-            mprf(MSGCH_ERROR, "Cannot bind command #%d to a key.",
+            mprf(MSGCH_ERROR, _("Cannot bind command #%d to a key."),
                  (int) cmd);
             return;
         }
 
-        mprf(MSGCH_ERROR, "Cannot bind command '%s' to a key.",
+        mprf(MSGCH_ERROR, _("Cannot bind command '%s' to a key."),
              command_name.c_str());
         return;
     }
 
     if (is_userfunction(key))
     {
-        mpr("Cannot bind user function keys to a command.", MSGCH_ERROR);
+        mpr(_("Cannot bind user function keys to a command."), MSGCH_ERROR);
         return;
     }
 
     if (is_synthetic_key(key))
     {
-        mpr("Cannot bind synthetic keys to a command.", MSGCH_ERROR);
+        mpr(_("Cannot bind synthetic keys to a command."), MSGCH_ERROR);
         return;
     }
 

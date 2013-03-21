@@ -123,8 +123,8 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
         case DID_DESECRATE_HOLY_REMAINS:
             if (you.religion == GOD_YREDELEMNUL)
             {
-                simple_god_message(" appreciates your desecration of holy "
-                                   "remains.");
+                simple_god_message(_(" appreciates your desecration of holy "
+                                   "remains."));
                 retval = true;
                 piety_change = 1;
                 break;
@@ -835,7 +835,7 @@ bool did_god_conduct(conduct_type thing_done, int level, bool known,
             }
             else if (you.religion == GOD_TROG)
             {
-                simple_god_message(" doesn't appreciate your training magic!");
+                simple_god_message(_(" doesn't appreciate your training magic!"));
                 piety_change = -level;
                 piety_denom = 10;
                 retval = true;

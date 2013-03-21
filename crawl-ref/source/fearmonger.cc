@@ -23,11 +23,11 @@ bool player::add_fearmonger(const monster* mon)
     {
         if (you.can_see(mon))
         {
-            mprf("%s's aura of fear is muted, and has no effect on you.",
+            mprf(_("%s's aura of fear is muted, and has no effect on you."),
                  mon->name(DESC_THE).c_str());
         }
         else
-            mpr("The fearful aura is strangely muted, and has no effect on you.");
+            mpr(_("The fearful aura is strangely muted, and has no effect on you."));
 
         return false;
     }
@@ -36,7 +36,7 @@ bool player::add_fearmonger(const monster* mon)
     {
         you.set_duration(DUR_AFRAID, 7, 12);
         fearmongers.push_back(mon->mindex());
-        mprf(MSGCH_WARN, "You are terrified of %s!",
+        mprf(MSGCH_WARN, _("You are terrified of %s!"),
                          mon->name(DESC_THE).c_str());
     }
     else
@@ -116,7 +116,7 @@ void player::fearmongers_check_noise(int loudness, bool axe)
 
     if (loudness >= 20 && beheld())
     {
-        mprf("For a moment, your terror fades away!");
+        mprf(_("For a moment, your terror fades away!"));
         clear_fearmongers();
         _removed_fearmonger();
     }
@@ -169,7 +169,7 @@ void player::_removed_fearmonger()
     if (fearmongers.empty())
     {
         duration[DUR_AFRAID] = 0;
-        mpr("You are no longer terrified.",
+        mpr(_("You are no longer terrified."),
             MSGCH_DURATION);
     }
 }

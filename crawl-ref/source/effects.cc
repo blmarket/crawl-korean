@@ -709,13 +709,13 @@ void random_uselessness(int scroll_slot)
     switch (temp_rand)
     {
     case 0:
-        /// 색깔 이름이 나와야 할듯.
+        // 색깔 이름이 나와야 할듯.
         mprf(gettext("The dust glows %s!"), weird_glowing_colour().c_str());
         break;
 
     case 1:
         mprf(gettext("The scroll reassembles itself in your %s!"),
-             you.hand_name(true).c_str());
+             _(you.hand_name(true).c_str()));
         inc_inv_item_quantity(scroll_slot, 1);
         break;
 
@@ -730,7 +730,7 @@ void random_uselessness(int scroll_slot)
         else
         {
             mprf(gettext("Your %s glow %s for a moment."),
-                 gettext(you.hand_name(true).c_str()), weird_glowing_colour().c_str());
+                 gettext(_(you.hand_name(true).c_str())), weird_glowing_colour().c_str());
         }
         break;
 
@@ -832,7 +832,7 @@ int recharge_wand(int item_slot, bool known, string *pre_msg)
 
             if (!charged && !item_ident(wand, ISFLAG_KNOW_PLUSES))
             {
-                mprf("It has %d charges and is fully charged.", new_charges);
+                mprf(_("It has %d charges and is fully charged."), new_charges);
                 set_ident_flags(wand, ISFLAG_KNOW_PLUSES);
             }
 
@@ -985,7 +985,7 @@ void yell(bool force)
                 mpr("You have no mouth, and you must scream!");
             else if (shout_verb == "__NONE" || you.paralysed())
             {
-                /// 1. 비명, 고함, 괴성
+                // 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a strong urge to %s, but "
                      "you are unable to make a sound!"),
                      shout_verb == "__NONE" ? _(M_("scream"))
@@ -993,7 +993,7 @@ void yell(bool force)
             }
             else
             {
-                /// 1. 비명, 고함, 괴성
+                // 1. 비명, 고함, 괴성
                 mprf(gettext("You feel a %s rip itself from your throat, "
                      "but you make no sound!"),
                      _(shout_verb.c_str()));
@@ -1009,16 +1009,16 @@ void yell(bool force)
 
     if (force)
     {
-        /// 1. 비명, 고함, 괴성
+        // 1. 비명, 고함, 괴성
         mprf(gettext("A %s rips itself from your throat!"), shout_verb.c_str());
         noisy(noise_level, you.pos());
         return;
     }
 
-    /// 동료 order 메뉴인듯.
+    // 동료 order 메뉴인듯.
     mpr(gettext("What do you say?"), MSGCH_PROMPT);
-    /// 그냥 소리치는 것인듯. 1. 고함의 종류(shout, roar, squeak)
-    mprf(" t - %s!", cap_shout.c_str());
+    // 그냥 소리치는 것인듯. 1. 고함의 종류(shout, roar, squeak)
+    mprf(" t - %s!", _(cap_shout.c_str()));
 
     if (!you.berserk())
     {
@@ -1161,7 +1161,7 @@ void yell(bool force)
             args.restricts = DIR_TARGET;
             args.mode = TARG_ANY;
             args.needs_path = false;
-            args.top_prompt = "Retreat in which direction?";
+            args.top_prompt = _("Retreat in which direction?");
             direction(targ, args);
         }
 
@@ -1173,7 +1173,7 @@ void yell(bool force)
 
         if (targ.isValid)
         {
-            mpr("Fall back!");
+            mpr(_("Fall back!"));
             mons_targd = MHITNOT;
         }
 
@@ -1577,7 +1577,7 @@ void change_labyrinth(bool msg)
     if (targets.empty())
     {
         if (msg)
-            mpr("No unexplored wall grids found!");
+            mpr(_("No unexplored wall grids found!"));
         return;
     }
 
@@ -1587,7 +1587,7 @@ void change_labyrinth(bool msg)
              c1.x, c1.y, c2.x, c2.y);
 
         string path_str = "";
-        mpr("Here's the list of targets: ", MSGCH_DIAGNOSTICS);
+        mpr(_("Here's the list of targets: "), MSGCH_DIAGNOSTICS);
         for (unsigned int i = 0; i < targets.size(); i++)
         {
             snprintf(info, INFO_SIZE, "(%d, %d)  ", targets[i].x, targets[i].y);
@@ -1637,7 +1637,7 @@ void change_labyrinth(bool msg)
         {
             if (msg)
             {
-                mpr("Something went badly wrong - no path found!",
+                mpr(_("Something went badly wrong - no path found!"),
                     MSGCH_DIAGNOSTICS);
             }
             continue;

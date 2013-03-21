@@ -1426,9 +1426,9 @@ static bool _prompt_unique_pan_rune(dungeon_feature_type ygrd)
     item_def* rune = find_floor_item(OBJ_MISCELLANY, MISC_RUNE_OF_ZOT);
     if (rune && item_is_unique_rune(*rune))
     {
-        return yesno("An item of great power still resides in this realm, "
+        return yesno(_("An item of great power still resides in this realm, "
                 "and once you leave you can never return. "
-                "Are you sure you want to leave?");
+                "Are you sure you want to leave?"));
     }
     return true;
 }
@@ -2056,7 +2056,7 @@ void process_command(command_type cmd)
 
     case CMD_CHARACTER_DUMP:
         if (!dump_char(you.your_name))
-            mpr("Char dump unsuccessful! Sorry about that.");
+            mpr(_("Char dump unsuccessful! Sorry about that."));
         break;
 
         // Travel commands.
@@ -2594,7 +2594,7 @@ static void _decrement_durations()
 
     _decrement_a_duration(DUR_CONFUSING_TOUCH, delay, 
                           make_stringf(gettext("Your %s stop glowing."),
-                                       you.hand_name(true).c_str()).c_str());
+                                       _(you.hand_name(true).c_str())).c_str());
 
     _decrement_a_duration(DUR_SURE_BLADE, delay,
                           gettext("The bond with your blade fades away."));
@@ -3064,7 +3064,7 @@ static void _player_reacts()
         else if (player_in_branch(BRANCH_ABYSS) && one_chance_in(80)
           && (!map_masked(you.pos(), MMT_VAULT) || one_chance_in(3)))
         {
-            mpr("You are suddenly pulled into a different region of the Abyss!",
+            mpr(_("You are suddenly pulled into a different region of the Abyss!"),
                 MSGCH_BANISHMENT);
             you_teleport_now(false, true); // to new area of the Abyss
 
@@ -3566,7 +3566,7 @@ static bool _untrap_target(const coord_def move, bool check_confused)
                         attack_cleave_targets(&you, cleave_targets);
                 }
                 else if (do_msg && !you.fumbles_attack())
-                    mpr("You swing at nothing.");
+                    mpr(_("You swing at nothing."));
                 make_hungry(3, true);
                 // Take the usual attack delay.
                 melee_attack attk(&you, NULL);
@@ -3699,7 +3699,7 @@ static void _open_door(coord_def move, bool check_confused)
 
     if (feat == DNGN_SEALED_DOOR)
     {
-        mpr("That door is sealed shut!");
+        mpr(_("That door is sealed shut!"));
         return;
     }
 
@@ -4355,7 +4355,7 @@ static void _move_player(coord_def move)
 
     if (you.form == TRAN_JELLY && feat_is_closed_door(targ_grid))
     {
-        mpr("You eat the door.");
+        mpr(_("You eat the door."));
         nuke_wall(targ);
         targ_pass = true;
         targ_grid = grd(targ);
@@ -4586,7 +4586,7 @@ static void _run_input_with_keys(const keyseq& keys)
 
     if (get_macro_buf_size() < old_buf_size)
     {
-        mpr("(Key replay stole keys)", MSGCH_ERROR);
+        mpr(_("(Key replay stole keys)"), MSGCH_ERROR);
         crawl_state.cancel_cmd_all();
     }
 }

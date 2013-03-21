@@ -1640,7 +1640,7 @@ int monster_die(monster* mons, killer_type killer,
             {
                 const int bonus = (2 + random2(4)) / 2;
                 you.increase_duration(DUR_BERSERK, bonus);
-                mpr("The necklace of Bloodlust glows a violent red.");
+                mpr(_("The necklace of Bloodlust glows a violent red."));
             }
         }
         else if (!you.suppressed()
@@ -1679,7 +1679,7 @@ int monster_die(monster* mons, killer_type killer,
     {
         if (!silent && !hard_reset && !was_banished)
         {
-            simple_monster_message(mons, " detonates feebly.",
+            simple_monster_message(mons, _(" detonates feebly."),
                                    MSGCH_MONSTER_DAMAGE, MDAM_DEAD);
             silent = true;
         }
@@ -2380,9 +2380,9 @@ int monster_die(monster* mons, killer_type killer,
             && you.see_cell(mons->pos()))
         {
             if (mons_base_type(mons) == MONS_KRAKEN)
-                mpr("The dead kraken's tentacles slide back into the water.");
+                mpr(_("The dead kraken's tentacles slide back into the water."));
             else if (mons->type == MONS_TENTACLED_STARSPAWN)
-                mpr("The starspawn's tentacles wither and die.");
+                mpr(_("The starspawn's tentacles wither and die."));
         }
     }
     else if (mons_is_tentacle(mons->type) && killer != KILL_MISC
@@ -3199,7 +3199,7 @@ void slimify_monster(monster* mon, bool hostile)
     // Bail out if jellies can't live here.
     if (!monster_habitable_grid(target, grd(mon->pos())))
     {
-        simple_monster_message(mon, " quivers momentarily.");
+        simple_monster_message(mon, _(" quivers momentarily."));
         return;
     }
 
@@ -3277,7 +3277,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
 
     if (you.form == TRAN_TREE)
     {
-        mpr("You can't move.");
+        mpr(_("You can't move."));
         return false;
     }
 
@@ -3308,7 +3308,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
     if (mons->is_constricted())
     {
         if (!quiet)
-            simple_monster_message(mons, " is being constricted!");
+            simple_monster_message(mons, _(" is being constricted!"));
         return false;
     }
 
@@ -4691,7 +4691,7 @@ void debuff_monster(monster* mon)
             dispelled = true;
     }
     if (dispelled)
-        simple_monster_message(mon, "'s magical effects unravel!");
+        simple_monster_message(mon, _("'s magical effects unravel!"));
 }
 
 // Return the number of monsters of the specified type.

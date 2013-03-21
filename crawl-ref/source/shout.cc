@@ -392,7 +392,7 @@ void item_noise(const item_def &item, string msg, int loudness)
     if (msg.empty()) // give default noises
     {
         channel = MSGCH_SOUND;
-        msg = "You hear a strange noise.";
+        msg = _("You hear a strange noise.");
     }
 
     // Replace weapon references.  Can't use DESC_THE because that includes
@@ -540,10 +540,10 @@ static const char* _player_vampire_smells_blood(int dist)
         return "";
 
     if (dist < 16) // 4*4
-        return " near-by";
+        return _(" near-by");
 
     if (you.hunger_state <= HS_NEAR_STARVING && dist > get_los_radius_sq())
-        return " in the distance";
+        return _(" in the distance");
 
     return "";
 }
@@ -551,10 +551,10 @@ static const char* _player_vampire_smells_blood(int dist)
 static const char* _player_spider_senses_web(int dist)
 {
     if (dist < 4)
-        return " near-by";
+        return _(" near-by");
 
     if (dist > LOS_RADIUS)
-        return " in the distance";
+        return _(" in the distance");
 
     return "";
 }
@@ -574,7 +574,7 @@ void check_player_sense(sense_type sense, int range, const coord_def& where)
             // Don't message if you can see the square.
             if (!you.see_cell(where))
             {
-                mprf("You smell fresh blood%s.",
+                mprf(_("You smell fresh blood%s."),
                      _player_vampire_smells_blood(player_distance));
             }
             break;
@@ -587,7 +587,7 @@ void check_player_sense(sense_type sense, int range, const coord_def& where)
                 // Don't message if you can see the square.
                 if (!you.see_cell(where))
                 {
-                    mprf("You hear a 'twang'%s.",
+                    mprf(_("You hear a 'twang'%s."),
                          _player_spider_senses_web(player_distance));
                 }
             }
@@ -654,8 +654,8 @@ void check_monsters_sense(sense_type sense, int range, const coord_def& where)
                     else
                     {
                         mi->add_ench(mon_enchant(ENCH_BATTLE_FRENZY, 1, 0, dur));
-                        simple_monster_message(*mi, " is consumed with "
-                                                    "blood-lust!");
+                        simple_monster_message(*mi, _(" is consumed with "
+                                                    "blood-lust!"));
                     }
                 }
             }

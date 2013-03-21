@@ -3016,13 +3016,13 @@ bool melee_attack::apply_damage_brand()
     case SPWPN_FLAMING:
         res = fire_res_apply_cerebov_downgrade(defender->res_fire());
         calc_elemental_brand_damage(BEAM_FIRE, res,
-                                    defender->is_icy() ? "melt" : "burn");
+                                    defender->is_icy() ? pgettext("verb","melt") : pgettext("verb","burn"));
         defender->expose_to_element(BEAM_FIRE);
         noise_factor += 400 / max(1, damage_done);
         break;
 
     case SPWPN_FREEZING:
-        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), "freeze");
+        calc_elemental_brand_damage(BEAM_COLD, defender->res_cold(), pgettext("verb","freeze"));
         defender->expose_to_element(BEAM_COLD, 2, false);
         break;
 
@@ -3393,7 +3393,7 @@ bool melee_attack::chop_hydra_head(int dam,
     {
         if (defender_visible)
         {
-            mprf("%s %s one of %s's heads off!",
+            mprf(_("%s %s one of %s's heads off!"),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb(verb).c_str(),
                  def_name(DESC_THE).c_str());
@@ -3466,14 +3466,14 @@ void melee_attack::attacker_sustain_passive_damage()
             }
             else if (attacker->is_player())
             {
-                mprf("Your %s burn!", you.hand_name(true).c_str());
+                mprf(_("Your %s burn!"), _(you.hand_name(true).c_str()));
                 ouch(roll_dice(1, acid_strength), defender->mindex(),
                      KILLED_BY_ACID);
             }
             else
             {
                 simple_monster_message(attacker->as_monster(),
-                                       " is burned by acid!");
+                                       _(" is burned by acid!"));
                 attacker->hurt(defender, roll_dice(1, acid_strength),
                     BEAM_ACID, false);
             }
@@ -4270,7 +4270,7 @@ void melee_attack::mons_do_poison()
                  defender_name().c_str());
             if (force)
             {
-                mprf("%s partially resist%s.",
+                mprf(_("%s partially resist%s."),
                     defender_name().c_str(),
                     defender->is_player() ? "" : "s");
             }
@@ -4536,7 +4536,7 @@ void melee_attack::mons_apply_attack_flavour()
         // protects from the paralysis and slow.
         if (you.duration[DUR_DIVINE_STAMINA] > 0)
         {
-            mpr("Your divine stamina protects you from poison!");
+            mpr(_("Your divine stamina protects you from poison!"));
             break;
         }
 
@@ -4606,14 +4606,14 @@ void melee_attack::mons_apply_attack_flavour()
 
         // The expose_ message doesn't convey the agent.
         if (needs_message)
-            mprf("%s lunges at you hungrily!", atk_name(DESC_THE).c_str());
+            mprf(_("%s lunges at you hungrily!"), atk_name(DESC_THE).c_str());
 
         expose_player_to_element(BEAM_DEVOUR_FOOD, 10);
         const bool ground = expose_items_to_element(BEAM_DEVOUR_FOOD, you.pos(),
                                                     10);
 
         if (needs_message && ground)
-            mpr("Some of the food beneath you is devoured!");
+            mpr(_("Some of the food beneath you is devoured!"));
         break;
     }
 
@@ -4648,7 +4648,7 @@ void melee_attack::mons_apply_attack_flavour()
     case AF_CRUSH:
         if (needs_message)
         {
-            mprf("%s %s %s.",
+            mprf(pgettext("afcrush","%s %s %s."),
                  atk_name(DESC_THE).c_str(),
                  attacker->conj_verb("grab").c_str(),
                  defender_name().c_str());
@@ -4788,7 +4788,7 @@ void melee_attack::do_spines()
                 return;
             if (you.can_see(defender) || attacker->is_player())
             {
-                mprf("%s %s struck by %s spines.", attacker->name(DESC_THE).c_str(),
+                mprf(_("%s %s struck by %s spines."), attacker->name(DESC_THE).c_str(),
                      attacker->conj_verb("are").c_str(),
                      defender->name(DESC_ITS).c_str());
             }

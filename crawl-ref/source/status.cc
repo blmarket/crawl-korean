@@ -30,108 +30,108 @@ struct duration_def
 static duration_def duration_data[] =
 {
     { DUR_AGILITY, false,
-      0, "", P_("status","agile"), N_("You are agile.") },
+      0, "", pgettext("status","agile"), N_("You are agile.") },
     { DUR_BARGAIN, true,
-      BLUE, P_("status","Brgn"), P_("status","charismatic"), N_("You get a bargain in shops.") },
+      BLUE, pgettext("status","Brgn"), pgettext("status","charismatic"), N_("You get a bargain in shops.") },
     { DUR_BERSERK, true,
-      BLUE, P_("status","Berserk"), P_("status","berserking"), N_("You are possessed by a berserker rage.") },
+      BLUE, pgettext("status","Berserk"), pgettext("status","berserking"), N_("You are possessed by a berserker rage.") },
     { DUR_BREATH_WEAPON, false,
-      YELLOW, P_("status","Breath"), P_("status","short of breath"), N_("You are short of breath.") },
+      YELLOW, pgettext("status","Breath"), pgettext("status","short of breath"), N_("You are short of breath.") },
     { DUR_BRILLIANCE, false,
-      0, "", P_("status","brilliant"), N_("You are brilliant.") },
+      0, "", pgettext("status","brilliant"), N_("You are brilliant.") },
     { DUR_CONF, false,
-      RED, P_("status","Conf"), P_("status","confused"), N_("You are confused.") },
+      RED, pgettext("status","Conf"), pgettext("status","confused"), N_("You are confused.") },
     { DUR_CONFUSING_TOUCH, true,
-      BLUE, P_("status","Touch"), P_("status","confusing touch"), "" },
+      BLUE, pgettext("status","Touch"), pgettext("status","confusing touch"), "" },
     { DUR_CONTROL_TELEPORT, true,
-      MAGENTA, P_("status", "cTele"), "", N_("You can control teleportations.") },
+      MAGENTA, pgettext("status", "cTele"), "", N_("You can control teleportations.") },
     { DUR_CORONA, false,
-      YELLOW, P_("status", "Corona"), "", "" },
+      YELLOW, pgettext("status", "Corona"), "", "" },
     { DUR_DEATH_CHANNEL, true,
-      MAGENTA, P_("status", "DChan"), P_("status", "death channel"), N_("You are channeling the dead.") },
+      MAGENTA, pgettext("status", "DChan"), pgettext("status", "death channel"), N_("You are channeling the dead.") },
     { DUR_DIVINE_STAMINA, true,
-      WHITE, P_("status","Vit"), P_("status","vitalised"), N_("You are divinely vitalised.") },
+      WHITE, pgettext("status","Vit"), pgettext("status","vitalised"), N_("You are divinely vitalised.") },
     { DUR_DIVINE_VIGOUR, false,
-      0, "", P_("status","divinely vigorous"), N_("You are imbued with divine vigour.") },
+      0, "", pgettext("status","divinely vigorous"), N_("You are imbued with divine vigour.") },
     { DUR_EXHAUSTED, false,
-      YELLOW, P_("status","Exh"), P_("status","exhausted"), N_("You are exhausted.") },
+      YELLOW, pgettext("status","Exh"), pgettext("status","exhausted"), N_("You are exhausted.") },
     { DUR_FIRE_SHIELD, true,
-      BLUE, P_("status","RoF"), P_("status","immune to fire clouds"), "" },
+      BLUE, pgettext("status","RoF"), pgettext("status","immune to fire clouds"), "" },
     { DUR_ICY_ARMOUR, true,
-      0, "", P_("status","icy armour"), N_("You are protected by a layer of icy armour.") },
+      0, "", pgettext("status","icy armour"), N_("You are protected by a layer of icy armour.") },
     { DUR_LIQUID_FLAMES, false,
-      RED, P_("status","Fire"), P_("status","liquid flames"), N_("You are covered in liquid flames.") },
+      RED, pgettext("status","Fire"), pgettext("status","liquid flames"), N_("You are covered in liquid flames.") },
     { DUR_LOWERED_MR, false,
-      RED, P_("status","-MR"), "", "" },
+      RED, pgettext("status","-MR"), "", "" },
     { DUR_MAGIC_SHIELD, false,
-      0, "", P_("status","shielded"), "" },
+      0, "", pgettext("status","shielded"), "" },
     { DUR_MIGHT, false,
-      0, "", P_("status","mighty"), N_("You are mighty.") },
+      0, "", pgettext("status","mighty"), N_("You are mighty.") },
     { DUR_MISLED, true,
-      LIGHTMAGENTA, P_("status","Misled"), "", "" },
+      LIGHTMAGENTA, pgettext("status","Misled"), "", "" },
     { DUR_PARALYSIS, false,
-      RED, P_("status","Para"), P_("status","paralysed"), N_("You are paralysed.") },
+      RED, pgettext("status","Para"), pgettext("status","paralysed"), N_("You are paralysed.") },
     { DUR_PETRIFIED, false,
-      RED, P_("status","Stone"), P_("status","petrified"), N_("You are petrified.") },
+      RED, pgettext("status","Stone"), pgettext("status","petrified"), N_("You are petrified.") },
     { DUR_PETRIFYING, true,
-      MAGENTA, P_("status","Petr"), P_("status","petrifying"), N_("You are turning to stone.") },
+      MAGENTA, pgettext("status","Petr"), pgettext("status","petrifying"), N_("You are turning to stone.") },
     { DUR_JELLY_PRAYER, false,
-      WHITE, P_("status", "Pray"), P_("status", "praying"), N_("You are praying.") },
+      WHITE, pgettext("status", "Pray"), pgettext("status", "praying"), N_("You are praying.") },
     { DUR_RESISTANCE, true,
-      LIGHTBLUE, P_("status", "Resist"), "", N_("You resist elements.") },
+      LIGHTBLUE, pgettext("status", "Resist"), "", N_("You resist elements.") },
     { DUR_SLAYING, false,
-      0, "", P_("status","deadly"), "" },
+      0, "", pgettext("status","deadly"), "" },
     { DUR_SLIMIFY, true,
-      GREEN, P_("status","Slime"), P_("status","slimy"), "" },
+      GREEN, pgettext("status","Slime"), pgettext("status","slimy"), "" },
     { DUR_SLEEP, false,
-      0, "", P_("status", "sleeping"), N_("You are sleeping.") },
+      0, "", pgettext("status", "sleeping"), N_("You are sleeping.") },
     { DUR_STONESKIN, false,
-      0, "", P_("status","stone skin"), N_("Your skin is tough as stone.") },
+      0, "", pgettext("status","stone skin"), N_("Your skin is tough as stone.") },
     { DUR_SWIFTNESS, true,
-      BLUE, P_("status","Swift"), P_("status","swift"), N_("You can move swiftly.") },
+      BLUE, pgettext("status","Swift"), pgettext("status","swift"), N_("You can move swiftly.") },
     { DUR_TELEPATHY, false,
-      LIGHTBLUE, P_("status","Emp"), "", "" },
+      LIGHTBLUE, pgettext("status","Emp"), "", "" },
     { DUR_TELEPORT, false,
-      LIGHTBLUE, P_("status","Tele"), P_("status","about to teleport"), N_("You are about to teleport.") },
+      LIGHTBLUE, pgettext("status","Tele"), pgettext("status","about to teleport"), N_("You are about to teleport.") },
     { DUR_DEATHS_DOOR, true,
-      LIGHTGREY, P_("status", "DDoor"), P_("status", "death's door"), "" },
+      LIGHTGREY, pgettext("status", "DDoor"), pgettext("status", "death's door"), "" },
     { DUR_PHASE_SHIFT, true,
-      0, "", P_("status","phasing"), N_("You are out of phase with the material plane.") },
+      0, "", pgettext("status","phasing"), N_("You are out of phase with the material plane.") },
     { DUR_QUAD_DAMAGE, true,
-      BLUE, P_("status","Quad"), "", "" },
+      BLUE, pgettext("status","Quad"), "", "" },
     { DUR_SILENCE, true,
-      BLUE, P_("status","Sil"), P_("status","silence"), N_("You radiate silence.") },
+      BLUE, pgettext("status","Sil"), pgettext("status","silence"), N_("You radiate silence.") },
     { DUR_STEALTH, false,
-      BLUE, P_("status","Stlth"), "", "" },
+      BLUE, pgettext("status","Stlth"), "", "" },
     { DUR_AFRAID, true,
-      RED, P_("status","Fear"), P_("status","afraid"), N_("You are terrified.") },
+      RED, pgettext("status","Fear"), pgettext("status","afraid"), N_("You are terrified.") },
     { DUR_MIRROR_DAMAGE, false,
-      WHITE, P_("status","Mirror"), P_("status","injury mirror"), N_("You mirror injuries.") },
+      WHITE, pgettext("status","Mirror"), pgettext("status","injury mirror"), N_("You mirror injuries.") },
     { DUR_SCRYING, false,
-      LIGHTBLUE, P_("status","Scry"), P_("status","scrying"),
+      LIGHTBLUE, pgettext("status","Scry"), pgettext("status","scrying"),
       N_("Your astral vision lets you see through walls.") },
     { DUR_TORNADO, true,
-      LIGHTGREY, P_("status","Tornado"), P_("status","tornado"),
+      LIGHTGREY, pgettext("status","Tornado"), pgettext("status","tornado"),
       N_("You are in the eye of a mighty hurricane.") },
     { DUR_LIQUEFYING, false,
-      LIGHTBLUE, P_("status","Liquid"), P_("status","liquefying"),
+      LIGHTBLUE, pgettext("status","Liquid"), pgettext("status","liquefying"),
       N_("The ground has become liquefied beneath your feet.") },
     { DUR_HEROISM, false,
-      LIGHTBLUE, P_("status","Hero"), P_("status","heroism"), N_("You possess the skills of a mighty hero.") },
+      LIGHTBLUE, pgettext("status","Hero"), pgettext("status","heroism"), N_("You possess the skills of a mighty hero.") },
     { DUR_FINESSE, false,
-      LIGHTBLUE, P_("status","Finesse"), P_("status","finesse"), N_("Your blows are lightning fast.") },
+      LIGHTBLUE, pgettext("status","Finesse"), pgettext("status","finesse"), N_("Your blows are lightning fast.") },
     { DUR_LIFESAVING, true,
-      LIGHTGREY, P_("status","Prot"), P_("status","protection"), N_("You ask for being saved.") },
+      LIGHTGREY, pgettext("status","Prot"), pgettext("status","protection"), N_("You ask for being saved.") },
     { DUR_DARKNESS, true,
-      BLUE, P_("status","Dark"), P_("status","darkness"), N_("You emit darkness.") },
+      BLUE, pgettext("status","Dark"), pgettext("status","darkness"), N_("You emit darkness.") },
     { DUR_SHROUD_OF_GOLUBRIA, true,
-      BLUE, P_("status","Shroud"), P_("status","shrouded"), N_("You are protected by a distorting shroud.") },
+      BLUE, pgettext("status","Shroud"), pgettext("status","shrouded"), N_("You are protected by a distorting shroud.") },
     { DUR_TORNADO_COOLDOWN, false,
-      YELLOW, P_("status", "Tornado"), "", "" ,},
+      YELLOW, pgettext("status", "Tornado"), "", "" ,},
     { DUR_DISJUNCTION, true,
-      BLUE, P_("status", "Disjoin"), P_("status","disjoining"), N_("You are disjoining your surroundings.") },
+      BLUE, pgettext("status", "Disjoin"), pgettext("status","disjoining"), N_("You are disjoining your surroundings.") },
     { DUR_SENTINEL_MARK, true,
-      MAGENTA, P_("status","Mark"), P_("status","marked"), N_("You are marked for hunting.") },
+      MAGENTA, pgettext("status","Mark"), pgettext("status","marked"), N_("You are marked for hunting.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -297,8 +297,8 @@ bool fill_status_info(int status, status_info* inf)
     case STATUS_BACKLIT:
         if (you.backlit())
         {
-            inf->short_text = "glowing";
-            inf->long_text  = "You are glowing.";
+            inf->short_text = _(M_("glowing"));
+            inf->long_text  = _("You are glowing.");
         }
         break;
 
@@ -306,9 +306,9 @@ bool fill_status_info(int status, status_info* inf)
         if (you.umbra())
         {
             inf->light_colour = MAGENTA;
-            inf->light_text   = "Umbra";
-            inf->short_text   = "wreathed by umbra";
-            inf->long_text    = "You are wreathed by an unholy umbra.";
+            inf->light_text   = _(M_("Umbra"));
+            inf->short_text   = _("wreathed by umbra");
+            inf->long_text    = _("You are wreathed by an unholy umbra.");
         }
         break;
 
@@ -316,9 +316,9 @@ bool fill_status_info(int status, status_info* inf)
         if (you.suppressed())
         {
             inf->light_colour = LIGHTGREEN;
-            inf->light_text   = "Suppress";
-            inf->short_text   = "magically suppressed";
-            inf->long_text    = "You are enveloped in a field of magical suppression.";
+            inf->light_text   = _(M_("Suppress"));
+            inf->short_text   = _("magically suppressed");
+            inf->long_text    = _("You are enveloped in a field of magical suppression.");
         }
         break;
 
@@ -382,7 +382,7 @@ bool fill_status_info(int status, status_info* inf)
         const int high = 40 * BASELINE_DELAY;
         const int low  = 20 * BASELINE_DELAY;
         inf->long_text = make_stringf(gettext("Your %s are glowing %sred."),
-                            you.hand_name(true).c_str(),
+                            _(you.hand_name(true).c_str()),
                             dur > high ? pgettext("glowing", "an extremely bright ") :
                             dur > low ? pgettext("glowing", "bright ") :
                             pgettext("glowing", "a soft "));
@@ -505,8 +505,8 @@ bool fill_status_info(int status, status_info* inf)
         if (you.is_constricted())
         {
             inf->light_colour = YELLOW;
-            inf->light_text   = you.held == HELD_MONSTER ? "Held" : "Constr";
-            inf->short_text   = you.held == HELD_MONSTER ? "held" : "constricted";
+            inf->light_text   = you.held == HELD_MONSTER ? _(M_("Held")) : _(M_("Constr"));
+            inf->short_text   = you.held == HELD_MONSTER ? _(M_("held")) : _(M_("constricted"));
         }
         break;
 
@@ -519,9 +519,9 @@ bool fill_status_info(int status, status_info* inf)
         if (silenced(you.pos()) && !you.duration[DUR_SILENCE])
         {
             inf->light_colour = LIGHTMAGENTA;
-            inf->light_text   = "Sil";
-            inf->short_text   = "silenced";
-            inf->long_text    = "You are silenced.";
+            inf->light_text   = _(M_("Sil"));
+            inf->short_text   = _(M_("silenced"));
+            inf->long_text    = _("You are silenced.");
         }
         break;
 
@@ -529,7 +529,7 @@ bool fill_status_info(int status, status_info* inf)
         if (!allow_control_teleport(true))
         {
             inf->light_colour = RED;
-            inf->light_text = "-cTele";
+            inf->light_text = _(M_("-cTele"));
         }
         break;
 
@@ -537,9 +537,9 @@ bool fill_status_info(int status, status_info* inf)
         if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
         {
             inf->light_colour = WHITE;
-            inf->light_text   = "Recall";
-            inf->short_text   = "recalling";
-            inf->long_text    = "You are recalling your allies.";
+            inf->light_text   = _(M_("Recall"));
+            inf->short_text   = _(M_("recalling"));
+            inf->long_text    = _("You are recalling your allies.");
         }
         break;
 
@@ -549,7 +549,7 @@ bool fill_status_info(int status, status_info* inf)
             inf->light_colour = RED;
             inf->light_text   = "Missing";
             inf->short_text   = "missing status";
-            inf->long_text    = "Missing status description.";
+            inf->long_text    = _("Missing status description.");
             return false;
         }
         else
@@ -725,14 +725,14 @@ static void _describe_sage(status_info* inf)
 
     vector<const char*> sages;
     for (unsigned long i = 0; i < you.sage_skills.size(); ++i)
-        sages.push_back(skill_name(you.sage_skills[i]));
+        sages.push_back(_(skill_name(you.sage_skills[i])));
 
     inf->light_colour = LIGHTBLUE;
-    inf->light_text   = "Sage";
-    inf->short_text   = "sage [" + comma_separated_line(sages.begin(),
+    inf->light_text   = _(M_("Sage"));
+    inf->short_text   = _(M_("sage [")) + comma_separated_line(sages.begin(),
                         sages.end(), ", ") + "]";
-    inf->long_text    = "You feel studious about " + comma_separated_line(
-                        sages.begin(), sages.end()) + ".";
+    inf->long_text    = _("You feel studious about ") + comma_separated_line(
+                        sages.begin(), sages.end()) + pgettext("sagestatus",".");
 }
 
 static void _describe_airborne(status_info* inf)
@@ -805,11 +805,11 @@ static void _describe_nausea(status_info* inf)
         return;
 
     inf->light_colour = you.is_undead == US_UNDEAD ? DARKGREY : BROWN;
-    inf->light_text   = "Nausea";
-    inf->short_text   = "nauseated";
+    inf->light_text   = _(M_("Nausea"));
+    inf->short_text   = _(M_("nauseated"));
     inf->long_text    = (you.hunger_state <= HS_NEAR_STARVING) ?
-                "You would have trouble eating anything." :
-                "You cannot eat right now.";
+                _("You would have trouble eating anything.") :
+                _("You cannot eat right now.");
 }
 
 static void _describe_burden(status_info* inf)
@@ -889,24 +889,24 @@ static void _describe_transform(status_info* inf)
         inf->long_text  = gettext("You have a beastly appendage.");
         break;
     case TRAN_TREE:
-        inf->light_text = "Tree";
-        inf->short_text = "tree-form";
-        inf->long_text  = "You are an animated tree.";
+        inf->light_text = _(M_("Tree"));
+        inf->short_text = _(M_("tree-form"));
+        inf->long_text  = _("You are an animated tree.");
         break;
     case TRAN_JELLY:
-        inf->light_text = "Jelly";
-        inf->short_text = "jelly-form";
-        inf->long_text  = "You are a lump of jelly.";
+        inf->light_text = _(M_("Jelly"));
+        inf->short_text = _(M_("jelly-form"));
+        inf->long_text  = _("You are a lump of jelly.");
         break;
     case TRAN_PORCUPINE:
-        inf->light_text = "Porc";
-        inf->short_text = "porcupine-form";
-        inf->long_text  = "You are a porcupine.";
+        inf->light_text = _(M_("Porc"));
+        inf->short_text = _(M_("porcupine-form"));
+        inf->long_text  = _("You are a porcupine.");
         break;
     case TRAN_WISP:
-        inf->light_text = "Wisp";
-        inf->short_text = "wisp-form";
-        inf->long_text  = "You are an insubstantial wisp.";
+        inf->light_text = _(M_("Wisp"));
+        inf->short_text = _(M_("wisp-form"));
+        inf->long_text  = _("You are an insubstantial wisp.");
         break;
     case TRAN_NONE:
         break;
@@ -937,15 +937,15 @@ static void _describe_terrain(status_info* inf)
     {
     case DNGN_SHALLOW_WATER:
         inf->light_colour = LIGHTBLUE;
-        inf->light_text = "Water";
+        inf->light_text = _(M_("Water"));
         break;
     case DNGN_DEEP_WATER:
         inf->light_colour = BLUE;
-        inf->light_text = "Water";
+        inf->light_text = _(M_("Water"));
         break;
     case DNGN_LAVA:
         inf->light_colour = RED;
-        inf->light_text = "Lava";
+        inf->light_text = _(M_("Lava"));
         break;
     default:
         ;
@@ -962,9 +962,9 @@ static void _describe_missiles(status_info* inf)
     if (level > 1)
     {
         inf->light_colour = MAGENTA;
-        inf->light_text   = "DMsl";
-        inf->short_text   = "deflect missiles";
-        inf->long_text    = "You deflect missiles.";
+        inf->light_text   = _(M_("DMsl"));
+        inf->short_text   = _(M_("deflect missiles"));
+        inf->long_text    = _("You deflect missiles.");
         expiring = dur_expiring(DUR_DEFLECT_MISSILES);
     }
     else
@@ -972,9 +972,9 @@ static void _describe_missiles(status_info* inf)
         bool perm = player_mutation_level(MUT_DISTORTION_FIELD) == 3
                     || !you.suppressed() && you.scan_artefacts(ARTP_RMSL);
         inf->light_colour = BLUE;
-        inf->light_text   = "RMsl";
-        inf->short_text   = "repel missiles";
-        inf->long_text    = "You repel missiles.";
+        inf->light_text   = _(M_("RMsl"));
+        inf->short_text   = _(M_("repel missiles"));
+        inf->long_text    = _("You repel missiles.");
         expiring = (!perm && dur_expiring(DUR_REPEL_MISSILES));
     }
 

@@ -1191,8 +1191,8 @@ spret_type your_spells(spell_type spell, int powc,
                  && one_chance_in(20))
         {
             // And you thought you'd Fire Storm your way out of penance...
-            simple_god_message(" does not allow the disloyal to dabble in "
-                               "destruction!", GOD_VEHUMET);
+            simple_god_message(_(" does not allow the disloyal to dabble in "
+                               "destruction!"), GOD_VEHUMET);
 
             // The spell still goes through, but you get a miscast anyway.
             MiscastEffect(&you, -GOD_VEHUMET, SPTYP_CONJURATION,

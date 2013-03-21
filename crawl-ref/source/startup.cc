@@ -118,7 +118,7 @@ static void _initialize()
         && crawl_state.title_screen)
     {
         tiles.draw_title();
-        tiles.update_title_msg("Loading databases...");
+        tiles.update_title_msg(_("Loading databases..."));
     }
 #endif
 
@@ -126,7 +126,7 @@ static void _initialize()
     databaseSystemInit();
 #ifdef USE_TILE_LOCAL
     if (crawl_state.title_screen)
-        tiles.update_title_msg("Loading spells and features...");
+        tiles.update_title_msg(_("Loading spells and features..."));
 #endif
 
     init_feat_desc_cache();
@@ -134,7 +134,7 @@ static void _initialize()
     init_spell_rarities();
 #ifdef USE_TILE_LOCAL
     if (crawl_state.title_screen)
-        tiles.update_title_msg("Loading maps...");
+        tiles.update_title_msg(_("Loading maps..."));
 #endif
 
     // Read special levels and vaults.
@@ -823,7 +823,7 @@ again:
                 textcolor(RED);
                 cgotoxy(SCROLLER_MARGIN_X ,GAME_MODES_START_Y - 1);
                 clear_to_end_of_line();
-                cprintf("That's a silly name");
+                cprintf(_("That's a silly name"));
             }
             continue;
 
@@ -862,13 +862,13 @@ static void _choose_arena_teams(newgame_def* choice,
     clear_message_store();
     clrscr();
 
-    cprintf("Enter your choice of teams:\n");
+    cprintf(_("Enter your choice of teams:\n"));
 
     cgotoxy(1, 4);
     if (!defaults.arena_teams.empty())
         cprintf("Enter - %s\n", defaults.arena_teams.c_str());
     cprintf("\n");
-    cprintf("Examples:\n");
+    cprintf(_("Examples:\n"));
     cprintf("  Sigmund v Jessica\n");
     cprintf("  99 orc v the royal jelly\n");
     cprintf("  20-headed hydra v 10 kobold ; scimitar ego:flaming\n");

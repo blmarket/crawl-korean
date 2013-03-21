@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Shop keeper functions.
 **/
@@ -60,7 +60,7 @@ static void _shop_print(const char *shoppy, int line)
 static void _shop_more()
 {
     cgotoxy(65, 20, GOTO_CRT);
-    cprintf("-more-");
+    cprintf(_("-more-"));
     get_ch();
 }
 
@@ -150,9 +150,9 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     {
         shop_list = "[$] ";
         if (num_selected > 0)
-            shop_list += "selected -> shopping list";
+            shop_list += _("selected -> shopping list");
         else if (num_in_list > 0)
-            shop_list += "shopping list -> selected";
+            shop_list += _("shopping list -> selected");
         else
             shop_list = "";
     }
@@ -208,7 +208,7 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     // print formatted string for BUY/EXAMINE ITEMS
     fs = formatted_string::parse_string(make_stringf(
             "[<w>!</w>] %s",
-            (viewing ? "buy items" : "examine items") ));
+            (viewing ? _("buy items") : _("examine items")) ));
     // print menu item
     tmp = new TextItem();
     tmp->set_fg_colour(LIGHTGRAY);
@@ -246,8 +246,8 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
 
     if (!pkeys.empty())
     {
-        pkeys = "[" + pkeys + "] select item to "
-                + (viewing ? "examine" : "buy");
+        pkeys = "[" + pkeys + _("] select item to ")
+                + (viewing ? pgettext("shop","examine") : pgettext("shop","buy"));
     }
     fs = formatted_string::parse_string(pkeys.c_str());
     fs.display();
@@ -258,8 +258,8 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     cgotoxy(1, numlines, GOTO_CRT);
     // print formatted string
     fs = formatted_string::parse_string(
-            "[<w>Enter</w>"
-            "] make purchase");
+            _("[<w>Enter</w>"
+            "] make purchase"));
     // print menu item
     tmp = new TextItem();
     tmp->set_fg_colour(LIGHTGRAY);
@@ -280,7 +280,7 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     // cursor at 1 + 21 chars + 2 whitespace
     cgotoxy(24, numlines, GOTO_CRT);
     // print formatted string
-    fs = formatted_string::parse_string("[<w>\\</w>] list known items");
+    fs = formatted_string::parse_string(_("[<w>\\</w>] list known items"));
     // print menu item
     tmp = new TextItem();
     tmp->set_fg_colour(LIGHTGRAY);
@@ -301,7 +301,7 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     // cursor at 24 + 20 chars + 1 whitespace
     cgotoxy(45, numlines, GOTO_CRT);
     // print formatted string
-    fs = formatted_string::parse_string("[<w>?</w>] inventory");
+    fs = formatted_string::parse_string(_("[<w>?</w>] inventory"));
     // print menu item
     tmp = new TextItem();
     tmp->set_fg_colour(LIGHTGRAY);
@@ -322,7 +322,7 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     // cursor at 45 + 13 chars + 2 whitespace
     cgotoxy(60, numlines, GOTO_CRT);
     // print formatted string
-    fs = formatted_string::parse_string("[<w>*</w>] invert selection");
+    fs = formatted_string::parse_string(_("[<w>*</w>] invert selection"));
     // print menu item
     tmp = new TextItem();
     tmp->set_fg_colour(LIGHTGRAY);
@@ -353,9 +353,9 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     {
         shop_list = "[<w>$</w>] ";
         if (num_selected > 0)
-            shop_list += "selected -> shopping list";
+            shop_list += _("selected -> shopping list");
         else if (num_in_list > 0)
-            shop_list += "shopping list -> selected";
+            shop_list += _("shopping list -> selected");
         else
             shop_list = "";
     }
@@ -385,16 +385,16 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
 
     if (!pkeys.empty())
     {
-        pkeys = "[" + pkeys + "] select item to "
-                + (viewing ? "examine" : "buy");
+        pkeys = "[" + pkeys + _("] select item to ")
+                + (viewing ? pgettext("shop","examine") : pgettext("shop","buy"));
     }
     fs = formatted_string::parse_string(make_stringf(
-            "[<w>x</w>/<w>Esc</w>"
-#ifdef USE_TILE
+            _("[<w>x</w>/<w>Esc</w>"
+//#ifdef USE_TILE
             "/<w>R-Click</w>"
-#endif
-            "] exit           [<w>!</w>] %s  %s",
-            (viewing ? "buy items      " : "examine items  "),
+//#endif
+            "] exit           [<w>!</w>] %s  %s"),
+            (viewing ? _("buy items      ") : _("examine items  ")),
             pkeys.c_str()));
 
     fs.cprintf("%*s", get_number_of_cols() - fs.width() - 1, "");
@@ -402,14 +402,14 @@ static void _list_shop_keys(const string &purchasable, bool viewing,
     cgotoxy(1, numlines, GOTO_CRT);
 
     fs = formatted_string::parse_string(
-            "[<w>Enter</w>"
-#ifdef USE_TILE
-#ifndef TOUCH_UI
+            _("[<w>Enter</w>"
+//#ifdef USE_TILE
+//#ifndef TOUCH_UI
             "/<w>L-Click</w>"
-#endif
-#endif
+//#endif
+//#endif
             "] make purchase  [<w>\\</w>] list known items "
-            "[<w>?</w>] inventory  [<w>*</w>] invert selection");
+            "[<w>?</w>] inventory  [<w>*</w>] invert selection"));
 
     fs.cprintf("%*s", get_number_of_cols() - fs.width() - 1, "");
     fs.display();
@@ -577,7 +577,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
     clrscr();
 
-    const string hello = "Welcome to " + shop_name(shop.pos) + "!";
+    const string hello = _("Welcome to ") + shop_name(shop.pos) + pgettext("inashop","!");
     bool first = true;
     int total_cost = 0;
 
@@ -645,7 +645,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         clrscr();
         if (stock.empty())
         {
-            _shop_print("I'm sorry, my shop is empty now.", 1);
+            _shop_print(_("I'm sorry, my shop is empty now."), 1);
             _shop_more();
             return bought_something;
         }
@@ -696,30 +696,30 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
         if (!total_cost)
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s.", you.gold,
-                     you.gold != 1 ? "s" : "");
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s."), you.gold,
+                     you.gold != 1 ? pgettext("sssss","s") : "");
 
             textcolor(YELLOW);
         }
         else if (total_cost > you.gold)
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s. "
-                           "You are short %d gold piece%s for the purchase.",
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s. "
+                           "You are short %d gold piece%s for the purchase."),
                      you.gold,
-                     you.gold != 1 ? "s" : "",
+                     you.gold != 1 ? "" : "",
                      total_cost - you.gold,
-                     (total_cost - you.gold != 1) ? "s" : "");
+                     (total_cost - you.gold != 1) ? "" : "");
 
             textcolor(LIGHTRED);
         }
         else
         {
-            snprintf(info, INFO_SIZE, "You have %d gold piece%s. "
-                     "After the purchase, you will have %d gold piece%s.",
+            snprintf(info, INFO_SIZE, _("You have %d gold piece%s. "
+                     "After the purchase, you will have %d gold piece%s."),
                      you.gold,
-                     you.gold != 1 ? "s" : "",
+                     you.gold != 1 ? "" : "",
                      you.gold - total_cost,
-                     (you.gold - total_cost != 1) ? "s" : "");
+                     (you.gold - total_cost != 1) ? "" : "");
 
             textcolor(YELLOW);
         }
@@ -729,11 +729,11 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         if (first)
         {
             first = false;
-            snprintf(info, INFO_SIZE, "%s What would you like to do? ",
+            snprintf(info, INFO_SIZE, _("%s What would you like to do? "),
                       hello.c_str());
         }
         else
-            snprintf(info, INFO_SIZE, "What would you like to do? ");
+            snprintf(info, INFO_SIZE, _("What would you like to do? "));
 
         textcolor(CYAN);
         _shop_print(info, 1);
@@ -775,7 +775,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
             if (num_selected == 0 && num_in_list > 0)
             {
-                if (_shop_yesno("Buy items on shopping list? (Y/n)", 'y'))
+                if (_shop_yesno(_("Buy items on shopping list? (Y/n)"), 'y'))
                 {
                     to_buy = in_list;
 
@@ -801,14 +801,14 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             // Do purchase.
             if (total_purchase > you.gold)
             {
-                _shop_print("I'm sorry, you don't seem to have enough money.",
+                _shop_print(_("I'm sorry, you don't seem to have enough money."),
                             1);
             }
             else if (!total_purchase) // Nothing selected.
                 continue;
             else
             {
-                snprintf(info, INFO_SIZE, "Purchase for %d gold? (y/n)",
+                snprintf(info, INFO_SIZE, _("Purchase for %d gold? (y/n)"),
                          total_purchase);
 
                 if (_shop_yesno(info, 'n'))
@@ -859,10 +859,10 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
                     if (outside_items)
                     {
-                        mprf("I'll put %s outside for you.",
-                              num_items == 1             ? "it" :
-                              num_items == outside_items ? "them"
-                                                         : "part of them");
+                        mprf(_("I'll put %s outside for you."),
+                              num_items == 1             ? pgettext("shop","it") :
+                              num_items == outside_items ? pgettext("shop","them")
+                                                         : pgettext("shop","part of them"));
                     }
                     bought_something = true;
                 }
@@ -881,7 +881,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
         {
             if (viewing || (num_selected == 0 && num_in_list == 0))
             {
-                _shop_print("Huh?", 1);
+                _shop_print(pgettext("shop","Huh?"), 1);
                 _shop_more();
                 continue;
             }
@@ -945,7 +945,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 #ifdef TOUCH_UI
             // do nothing: this should be arrow key presses and the like
 #else
-            _shop_print("Huh?", 1);
+            _shop_print(pgettext("shop","Huh?"), 1);
             _shop_more();
 #endif
         }
@@ -954,7 +954,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             key = toalower(key) - 'a';
             if (key >= static_cast<int>(stock.size()))
             {
-                _shop_print("No such item.", 1);
+                _shop_print(_("No such item."), 1);
                 _shop_more();
                 continue;
             }
@@ -988,7 +988,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                 {
                     if (gp_value > you.gold)
                     {
-                        if (_shop_yesno("Remove from shopping list? (y/N)",
+                        if (_shop_yesno(_("Remove from shopping list? (y/N)"),
                                          'n'))
                         {
                             shopping_list.del_thing(item);
@@ -999,8 +999,8 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                     }
                     else
                     {
-                        if (_shop_yesno("Remove item from shopping list and "
-                                         "mark for purchase? (Y/n)",  'y'))
+                        if (_shop_yesno(_("Remove item from shopping list and "
+                                         "mark for purchase? (Y/n)"),  'y'))
                         {
                             shopping_list.del_thing(item);
                             in_list[key] = false;
@@ -2319,7 +2319,7 @@ void shop()
 
     if (i == MAX_SHOPS)
     {
-        mpr("Help! Non-existent shop.", MSGCH_ERROR);
+        mpr(_("Help! Non-existent shop."), MSGCH_ERROR);
         return;
     }
 
@@ -2327,7 +2327,7 @@ void shop()
     if (_shop_get_stock(i).empty())
     {
         const shop_struct& shop = env.shop[i];
-        mprf("%s appears to be closed.", shop_name(shop.pos).c_str());
+        mprf(_("%s appears to be closed."), shop_name(shop.pos).c_str());
         _delete_shop(i);
         return;
     }
@@ -2344,10 +2344,10 @@ void shop()
     redraw_screen();
 
     if (bought_something)
-        mprf("Thank you for shopping at %s!", shopname.c_str());
+        mprf(_("Thank you for shopping at %s!"), shopname.c_str());
 
     if (num_in_list > 0)
-        mpr("You can access your shopping list by pressing '$'.");
+        mpr(_("You can access your shopping list by pressing '$'."));
 }
 
 void destroy_shop_at(coord_def p)
@@ -2381,36 +2381,36 @@ string shop_name(const coord_def& where, bool add_stop)
     return name;
 }
 
-static string _shop_type_name(shop_type type)
+static string _shop_type_name(shop_type type) // 가게이름은 그냥 한글때려박음
 {
     switch (type)
     {
         case SHOP_WEAPON_ANTIQUE:
-            return "Antique Weapon";
+            return "골동 무기";
         case SHOP_ARMOUR_ANTIQUE:
-            return "Antique Armour";
+            return "골동 방어구";
         case SHOP_WEAPON:
-            return "Weapon";
+            return "무기";
         case SHOP_ARMOUR:
-            return "Armour";
+            return "방어구";
         case SHOP_JEWELLERY:
-            return "Jewellery";
+            return "장신구";
         case SHOP_WAND:
-            return "Magical Wand";
+            return "마법봉";
         case SHOP_BOOK:
-            return "Book";
+            return "서점";
         case SHOP_FOOD:
-            return "Food";
+            return "음식";
         case SHOP_SCROLL:
-            return "Magic Scroll";
+            return "마법 두루마리";
         case SHOP_GENERAL_ANTIQUE:
-            return "Assorted Antiques";
+            return "골동품 가게";
         case SHOP_DISTILLERY:
-            return "Distillery";
+            return "양조장";
         case SHOP_GENERAL:
-            return "General Store";
+            return "잡화점";
         default:
-            return "Bug";
+            return "버그 가게";
     }
 }
 
@@ -2418,12 +2418,12 @@ static string _shop_type_suffix(shop_type type, const coord_def &where)
 {
     if (type == SHOP_GENERAL
         || type == SHOP_GENERAL_ANTIQUE
-        || type == SHOP_DISTILLERY)
+        || type == SHOP_DISTILLERY || type == SHOP_BOOK)
     {
         return "";
     }
 
-    const char* suffixnames[] = {"Shoppe", "Boutique", "Emporium", "Shop"};
+	const char* suffixnames[] = {"전문점", "상점", "백화점", "가게"};
     const int temp = (where.x + where.y) % 4;
 
     return string(suffixnames[temp]);
@@ -2438,9 +2438,24 @@ string shop_name(const coord_def& where)
 
     if (!cshop)
     {
-        mpr("Help! Non-existent shop.");
+        mpr(_("Help! Non-existent shop."));
         return "Buggy Shop";
     }
+
+	const char *rand_store_names[] = 
+	{
+		"어빈", "알랭", "앤디", "아스마엘", "애그버트",
+		"가드", "카를", "귄터", "존", "조니",
+		"드와이트", "디타", "데릭", "나훔", "나단",
+		"베리", "바텔", "브랜든", "마이크", "마라카이",
+		"라이너스", "루터", "랄프", "레스터", "로저",
+		"아라벨라", "아르마", "아레시아", "아델", "이루마",
+		"일레인", "에스더", "카밀라", "컬린", "테레지아",
+		"드루실라", "나탈리아", "넬리", "헤르미온느", "폴라",
+		"마리", "마르티나", "모니카", "리넷", "루루",
+		"레나", "리자이나", "로럴", "로웨나", "로레타", 
+		"매클", "갈레언", "마발", "사이키", "퀘라", "(버그상점이름)", "(버그상점이름2)" // 55(57)
+	};
 
     const shop_type type = cshop->type;
 
@@ -2450,11 +2465,15 @@ string shop_name(const coord_def& where)
         sh_name += apostrophise(cshop->shop_name) + " ";
     else
     {
+#ifdef KR
+		sh_name += rand_store_names[roll_dice(1,55)-1] + std::string("의 ");
+#else
         uint32_t seed = static_cast<uint32_t>(cshop->keeper_name[0])
             | (static_cast<uint32_t>(cshop->keeper_name[1]) << 8)
             | (static_cast<uint32_t>(cshop->keeper_name[1]) << 16);
 
         sh_name += apostrophise(make_name(seed, false)) + " ";
+#endif
     }
 
     if (!cshop->shop_type_name.empty())
@@ -2521,8 +2540,8 @@ bool ShoppingList::add_thing(const item_def &item, int cost,
 
     if (find_thing(item, pos) != -1)
     {
-        mprf(MSGCH_ERROR, "%s is already on the shopping list.",
-             item.name(false, DESC_THE).c_str());
+        mprf(MSGCH_ERROR, _("%s is already on the shopping list."),
+             item.name(true, DESC_THE).c_str());
         return false;
     }
 
@@ -2545,7 +2564,7 @@ bool ShoppingList::add_thing(string desc, string buy_verb, int cost,
 
     if (find_thing(desc, pos) != -1)
     {
-        mprf(MSGCH_ERROR, "%s is already on the shopping list.",
+        mprf(MSGCH_ERROR, _("%s is already on the shopping list."),
              desc.c_str());
         return false;
     }
@@ -2603,7 +2622,7 @@ bool ShoppingList::del_thing(const item_def &item,
 
     if (idx == -1)
     {
-        mprf(MSGCH_ERROR, "%s isn't on shopping list, can't delete it.",
+        mprf(MSGCH_ERROR, _("%s isn't on shopping list, can't delete it."),
              item.name(true, DESC_THE).c_str());
         return false;
     }
@@ -2620,7 +2639,7 @@ bool ShoppingList::del_thing(string desc, const level_pos* _pos)
 
     if (idx == -1)
     {
-        mprf(MSGCH_ERROR, "%s isn't on shopping list, can't delete it.",
+        mprf(MSGCH_ERROR, _("%s isn't on shopping list, can't delete it."),
              desc.c_str());
         return false;
     }
@@ -2758,8 +2777,8 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
             thing[REPLACE_PROMPTED_KEY] = (bool) true;
 
             string prompt =
-                make_stringf("Shopping-list: replace %dgp %s with cheaper "
-                             "one? (Y/n)", list_cost,
+                make_stringf(_("Shopping-list: replace %dgp %s with cheaper "
+                             "one? (Y/n)"), list_cost,
                              describe_thing(thing).c_str());
 
             if (_shop_yesno(prompt.c_str(), 'y'))
@@ -2778,7 +2797,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
                 continue;
             thing[REMOVE_PROMPTED_KEY] = (bool) true;
 
-            string prompt = make_stringf("Shopping-list: remove %s? (Y/n)",
+            string prompt = make_stringf(_("Shopping-list: remove %s? (Y/n)"),
                                          describe_thing(thing, DESC_A).c_str());
 
             if (_shop_yesno(prompt.c_str(), 'y'))
@@ -2786,7 +2805,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
         }
         else
         {
-            string str = make_stringf("Shopping-list: removing %s",
+            string str = make_stringf(_("Shopping-list: removing %s"),
                                       describe_thing(thing, DESC_A).c_str());
 
             _shop_mpr(str.c_str());
@@ -2885,9 +2904,9 @@ void ShoppingList::gold_changed(int old_amount, int new_amount)
         }
         ASSERT(!descs.empty());
 
-        mpr_comma_separated_list("You now have enough gold to ", descs,
-                                 ", or ");
-        mpr("You can access your shopping list by pressing '$'.");
+        mpr_comma_separated_list(_("You now have enough gold to "), descs,
+                                 _(", or "));
+        mpr(_("You can access your shopping list by pressing '$'."));
 
         // Reset max_buyable and min_unbuyable info
         refresh();
@@ -2922,16 +2941,16 @@ void ShoppingListMenu::draw_title()
 
         cgotoxy(1, 1);
         textcolor(title->colour);
-        cprintf("%d %s%s, total cost %d gp",
+        cprintf(_("%d %s%s, total cost %d gp"),
                 title->quantity, title->text.c_str(),
                 title->quantity > 1? "s" : "",
                 total_cost);
 
-        const char *verb = menu_action == ACT_EXECUTE ? "travel" :
-                           menu_action == ACT_EXAMINE ? "examine" :
-                                                        "delete";
+        const char *verb = menu_action == ACT_EXECUTE ? pgettext("shop","travel") :
+                           menu_action == ACT_EXAMINE ? pgettext("shop","examine") :
+                                                        pgettext("shop","delete");
         draw_title_suffix(formatted_string::parse_string(make_stringf(
-            "<lightgrey>  [<w>a-z</w>: %s  <w>?</w>/<w>!</w>: change action]",
+            _("<lightgrey>  [<w>a-z</w>: %s  <w>?</w>/<w>!</w>: change action]"),
             verb)), false);
     }
 }
@@ -2993,7 +3012,7 @@ void ShoppingList::display()
         shopmenu.set_maxpagesize(52);
     }
 
-    string more_str = make_stringf("<yellow>You have %d gp</yellow>", you.gold);
+    string more_str = make_stringf(_("<yellow>You have %d gp</yellow>"), you.gold);
     shopmenu.set_more(formatted_string::parse_string(more_str));
 
     shopmenu.set_flags(MF_SINGLESELECT | MF_ALWAYS_SHOW_MORE
@@ -3025,8 +3044,8 @@ void ShoppingList::display()
             if (cost > you.gold)
             {
                 string prompt =
-                   make_stringf("You cannot afford %s; travel there "
-                                "anyway? (y/N)",
+                   make_stringf(_("You cannot afford %s; travel there "
+                                "anyway? (y/N)"),
                                 describe_thing(*thing, DESC_A).c_str());
                 clrscr();
                 if (!yesno(prompt.c_str(), true, 'n'))
@@ -3049,7 +3068,7 @@ void ShoppingList::display()
             {
                 // HACK: Assume it's some kind of portal vault.
                 snprintf(info, INFO_SIZE,
-                         "%s with an entry fee of %d gold pieces.",
+                         _("%s with an entry fee of %d gold pieces."),
                          describe_thing(*thing, DESC_A).c_str(),
                          (int) thing_cost(*thing));
 
@@ -3059,7 +3078,7 @@ void ShoppingList::display()
         }
         else if (shopmenu.menu_action == Menu::ACT_MISC)
         {
-            string prompt = make_stringf("Delete %s from shopping list? (y/N)",
+            string prompt = make_stringf(_("Delete %s from shopping list? (y/N)"),
                                          describe_thing(*thing, DESC_A).c_str());
             clrscr();
             if (!yesno(prompt.c_str(), true, 'n'))

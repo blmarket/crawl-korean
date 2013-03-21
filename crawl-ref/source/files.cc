@@ -1012,7 +1012,7 @@ static void _grab_followers()
             && fol->hit_points < fol->max_hit_points / 2)
         {
             if (fol->visible_to(&you))
-                mpr("The ghost fades into the shadows.");
+                mpr(_("The ghost fades into the shadows."));
             monster_teleport(fol, true);
         }
     }
@@ -1584,7 +1584,7 @@ static void _save_game_exit()
     // Prompt for saving macros.
     if (crawl_state.unsaved_macros
         && !crawl_state.seen_hups
-        && yesno("Save macros?", true, 'n'))
+        && yesno(_("Save macros?"), true, 'n'))
     {
         macro_save();
     }
@@ -1609,7 +1609,7 @@ void save_game(bool leave_game, const char *farewellmsg)
 
     if (leave_game && Options.dump_on_save && !dump_char(you.your_name, true))
     {
-        mpr("Char dump unsuccessful! Sorry about that.");
+        mpr(_("Char dump unsuccessful! Sorry about that."));
         if (!crawl_state.seen_hups)
             more();
     }
@@ -1682,7 +1682,7 @@ bool load_ghost(bool creating_level)
     if (!inf.valid())
     {
         if (wiz_cmd && !creating_level)
-            mpr("No ghost files for this level.", MSGCH_PROMPT);
+            mpr(_("No ghost files for this level."), MSGCH_PROMPT);
         return false;                 // no such ghost.
     }
 
@@ -1747,13 +1747,13 @@ bool load_ghost(bool creating_level)
             unplaced_ghosts--;
             if (!mons->alive())
             {
-                mpr("Placed ghost is not alive.", MSGCH_DIAGNOSTICS);
+                mpr(_("Placed ghost is not alive."), MSGCH_DIAGNOSTICS);
                 ghost_errors = true;
             }
             else if (mons->type != MONS_PLAYER_GHOST)
             {
                 mprf(MSGCH_DIAGNOSTICS,
-                     "Placed ghost is not MONS_PLAYER_GHOST, but %s",
+                     _("Placed ghost is not MONS_PLAYER_GHOST, but %s"),
                      mons->name(DESC_PLAIN, true).c_str());
                 ghost_errors = true;
             }
@@ -1764,7 +1764,7 @@ bool load_ghost(bool creating_level)
 #ifdef BONES_DIAGNOSTICS
     if (do_diagnostics && unplaced_ghosts > 0)
     {
-        mprf(MSGCH_DIAGNOSTICS, "Unable to place %u ghost(s)",
+        mprf(MSGCH_DIAGNOSTICS, _("Unable to place %u ghost(s)"),
              (unsigned int)ghosts.size());
         ghost_errors = true;
     }
@@ -1787,10 +1787,10 @@ static bool _restore_game(const string& filename)
     {
         // Note: if we are here, the save info was properly read, it would
         // raise an exception otherwise.
-        if (yesno(("This game comes from an incompatible version of Crawl ("
-                   + you.prev_save_version + ").\n"
+        if (yesno((_("This game comes from an incompatible version of Crawl (")
+                   + you.prev_save_version + _(").\n"
                    "Unless you reinstall that version, you can't load it.\n"
-                   "Do you want to DELETE that game and start a new one?"
+                   "Do you want to DELETE that game and start a new one?")
                   ).c_str(),
                   true, 'n'))
         {
@@ -1805,8 +1805,8 @@ static bool _restore_game(const string& filename)
     if (numcmp(you.prev_save_version.c_str(), Version::Long().c_str(), 2) == -1
         && version_is_stable(you.prev_save_version.c_str()))
     {
-        if (!yesno("This game comes from a previous release of Crawl.  If you "
-                   "load it now, you won't be able to go back. Continue?",
+        if (!yesno(_("This game comes from a previous release of Crawl.  If you "
+                   "load it now, you won't be able to go back. Continue?"),
                    true, 'n'))
         {
             you.save->abort(); // don't even rewrite the header
@@ -1882,8 +1882,8 @@ bool restore_game(const string& filename)
     catch (corrupted_save &err)
     {
         if (yesno(make_stringf(
-                   "There exists a save by that name but it appears to be invalid.\n"
-                   "(Error: %s).  Do you want to delete it?", err.msg.c_str()).c_str(),
+                   _("There exists a save by that name but it appears to be invalid.\n"
+                   "(Error: %s).  Do you want to delete it?"), err.msg.c_str()).c_str(),
                   true, 'n'))
         {
             if (you.save)
@@ -2046,7 +2046,7 @@ static bool _tagged_chunk_version_compatible(reader &inf, string* reason)
 
     if (!get_save_version(inf, major, minor))
     {
-        *reason = "File is corrupt.";
+        *reason = _("File is corrupt.");
         return false;
     }
 
@@ -2058,14 +2058,14 @@ static bool _tagged_chunk_version_compatible(reader &inf, string* reason)
     {
         if (Version::ReleaseType())
         {
-            *reason = (CRAWL " " + Version::Short() + " is not compatible with "
+            *reason = (CRAWL " " + Version::Short() + _(" is not compatible with "
                        "save files from older versions. You can continue your "
                        "game with the appropriate older version, or you can "
-                       "delete it and start a new game.");
+                       "delete it and start a new game."));
         }
         else
         {
-            *reason = make_stringf("Major version mismatch: %d (want %d).",
+            *reason = make_stringf(_("Major version mismatch: %d (want %d)."),
                                    major, TAG_MAJOR_VERSION);
         }
         return false;
@@ -2073,15 +2073,15 @@ static bool _tagged_chunk_version_compatible(reader &inf, string* reason)
 
     if (minor < 0)
     {
-        *reason = make_stringf("Minor version %d is negative!",
+        *reason = make_stringf(_("Minor version %d is negative!"),
                                minor);
         return false;
     }
 
     if (minor > TAG_MINOR_VERSION)
     {
-        *reason = make_stringf("Minor version mismatch: %d (want <= %d). "
-                               "The save is from a newer version.",
+        *reason = make_stringf(_("Minor version mismatch: %d (want <= %d). "
+                               "The save is from a newer version."),
                                minor, TAG_MINOR_VERSION);
         return false;
     }
@@ -2148,7 +2148,7 @@ static bool _ghost_version_compatible(reader &inf)
     catch (short_read_exception &E)
     {
         mprf(MSGCH_ERROR,
-             "Ghost file \"%s\" seems to be invalid (short read); deleting it.",
+             _("Ghost file \"%s\" seems to be invalid (short read); deleting it."),
              inf.filename().c_str());
         return false;
     }
@@ -2184,7 +2184,7 @@ void save_ghost(bool force)
     {
 #ifdef BONES_DIAGNOSTICS
         if (do_diagnostics)
-            mpr("Ghost file for this level already exists.",
+            mpr(_("Ghost file for this level already exists."),
                 MSGCH_DIAGNOSTICS);
 #endif
         fclose(gfile);
@@ -2197,7 +2197,7 @@ void save_ghost(bool force)
     {
 #ifdef BONES_DIAGNOSTICS
         if (do_diagnostics)
-            mpr("Could not find any ghosts for this level.",
+            mpr(_("Could not find any ghosts for this level."),
                 MSGCH_DIAGNOSTICS);
 #endif
         return;
@@ -2211,7 +2211,7 @@ void save_ghost(bool force)
 
 #ifdef BONES_DIAGNOSTICS
     if (do_diagnostics)
-        mprf(MSGCH_DIAGNOSTICS, "Saved ghost (%s).", cha_fil.c_str());
+        mprf(MSGCH_DIAGNOSTICS, _("Saved ghost (%s)."), cha_fil.c_str());
 #endif
 }
 
@@ -2240,7 +2240,7 @@ FILE *lk_open(const char *mode, const string &file)
 
     if (handle && !lock_file_handle(handle, locktype))
     {
-        mprf(MSGCH_ERROR, "ERROR: Could not lock file %s", file.c_str());
+        mprf(MSGCH_ERROR, _("ERROR: Could not lock file %s"), file.c_str());
         fclose(handle);
         handle = NULL;
     }
@@ -2270,7 +2270,7 @@ file_lock::file_lock(const string &s, const char *_mode, bool die_on_fail)
     : handle(NULL), mode(_mode), filename(s)
 {
     if (!(handle = lk_open(mode, filename)) && die_on_fail)
-        end(1, true, "Unable to open lock file \"%s\"", filename.c_str());
+        end(1, true, _("Unable to open lock file \"%s\""), filename.c_str());
 }
 
 file_lock::~file_lock()
@@ -2319,8 +2319,8 @@ void sighup_save_and_exit()
 {
     if (crawl_state.seen_hups == 0)
     {
-        mpr("sighup_save_and_exit() called without a HUP signal; please"
-            "file a bug report", MSGCH_ERROR);
+        mpr(_("sighup_save_and_exit() called without a HUP signal; please"
+            "file a bug report"), MSGCH_ERROR);
         return;
     }
 
@@ -2336,7 +2336,7 @@ void sighup_save_and_exit()
     crawl_state.saving_game = true;
     if (crawl_state.need_save)
     {
-        mpr("Received HUP signal, saved and exited game.", MSGCH_ERROR);
+        mpr(_("Received HUP signal, saved and exited game."), MSGCH_ERROR);
 
         // save_game(true) exits from the game. The "true" is also required
         // to save changes to the current level.

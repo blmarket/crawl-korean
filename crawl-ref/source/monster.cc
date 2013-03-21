@@ -904,7 +904,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
             mprf(gettext("%s %s briefly pass through it before %s manages to get a "
                  "firm grip on it."),
                  pronoun(PRONOUN_POSSESSIVE).c_str(),
-                 hand_name(true).c_str(),
+                 _(hand_name(true).c_str()),
                  pronoun(PRONOUN_SUBJECTIVE).c_str());
             break;
         case SPWPN_REAPING:
@@ -2546,9 +2546,9 @@ static string _mon_special_name(const monster& mon, description_level_type desc,
         switch (desc)
         {
         case DESC_THE: case DESC_A: case DESC_PLAIN:
-            return _(M_("it"));
+            return "무언가"; // (130214,deceit) "it", "its" 임시로 이렇게 바꿈
         case DESC_ITS:
-            return _(M_("its"));
+            return "무언가의";
         default:
             return "it (buggy)";
         }
@@ -2660,14 +2660,14 @@ string monster::hand_name(bool plural, bool *can_plural) const
         else
         {
             str = M_("front ");
-            return (str + foot_name(plural, can_plural));
+            return ("앞 " + std::string(_(foot_name(plural, can_plural).c_str())));
         }
         break;
 
     case MON_SHAPE_BLOB:
     case MON_SHAPE_SNAKE:
     case MON_SHAPE_FISH:
-        return foot_name(plural, can_plural);
+        return _(foot_name(plural, can_plural).c_str());
 
     case MON_SHAPE_BAT:
         str = M_("wing");
@@ -2739,8 +2739,8 @@ string monster::hand_name(bool plural, bool *can_plural) const
         str = M_("hand");
     }
 
-    if (plural && *can_plural)
-        str = pluralise(PLU_DEFAULT, str);
+    // if (plural && *can_plural)
+    //    str = pluralise(PLU_DEFAULT, str);
 
     return str;
 }
@@ -2854,8 +2854,8 @@ string monster::foot_name(bool plural, bool *can_plural) const
         return (plural ? M_("feet") : M_("foot"));
     }
 
-    if (plural && *can_plural)
-        str = pluralise(PLU_SUFFIX,gettext(str.c_str()));
+    //if (plural && *can_plural)
+    //    str = pluralise(PLU_SUFFIX,gettext(str.c_str()));
 
     return str;
 }
@@ -2904,8 +2904,8 @@ string monster::arm_name(bool plural, bool *can_plural) const
     if (!adj.empty())
         str = adj + " " + str;
 
-    if (plural)
-        str = pluralise(PLU_DEFAULT, str);
+    //if (plural)
+    //    str = pluralise(PLU_DEFAULT, str);
 
     return str;
 }
@@ -4633,7 +4633,7 @@ bool monster::sicken(int amount, bool unused)
     if (!has_ench(ENCH_SICK) && you.can_see(this))
     {
         // Yes, could be confused with poisoning.
-        mprf("%s looks sick.", name(DESC_THE).c_str());
+        mprf(_("%s looks sick."), name(DESC_THE).c_str());
     }
 
     add_ench(mon_enchant(ENCH_SICK, 0, 0, amount * 10));
@@ -5483,9 +5483,9 @@ bool monster::should_evoke_jewellery(jewellery_type jtype) const
 // Return the ID status gained.
 item_type_id_state_type monster::evoke_jewellery_effect(jewellery_type jtype)
 {
-    mprf("%s evokes %s %s.", name(DESC_THE).c_str(),
+    mprf(_("%s evokes %s %s."), name(DESC_THE).c_str(),
          pronoun(PRONOUN_POSSESSIVE).c_str(),
-         jewellery_is_amulet(jtype) ? "amulet" : "ring");
+         jewellery_is_amulet(jtype) ? _(M_("amulet")) : _(M_("ring")));
 
     item_type_id_state_type ident = ID_MON_TRIED_TYPE;
 
@@ -5782,7 +5782,7 @@ void monster::steal_item_from_player()
     new_item.pos.reset();
     new_item.link = NON_ITEM;
 
-    mprf("%s steals %s!",
+    mprf(_("%s steals %s!"),
          name(DESC_THE).c_str(),
          new_item.name(true, DESC_YOUR).c_str());
 
@@ -5870,7 +5870,7 @@ bool monster::shove(const char* feat_name)
             moveto(*di);
             mgrd(*di) = mindex();
             simple_monster_message(this,
-                make_stringf(" is pushed out of the %s.", feat_name).c_str());
+                make_stringf(_(" is pushed out of the %s."), _(feat_name)).c_str());
             dprf("Moved to (%d, %d).", pos().x, pos().y);
 
             return true;
@@ -5895,7 +5895,7 @@ bool monster::check_clarity(bool silent) const
 
     if (!silent && you.can_see(this) && !mons_is_lurking(this))
     {
-        simple_monster_message(this, " seems unimpeded by the mental distress.");
+        simple_monster_message(this, _(" seems unimpeded by the mental distress."));
         id_if_worn(MSLOT_JEWELLERY, OBJ_JEWELLERY, AMU_CLARITY);
         // TODO: identify the randart property?
     }
@@ -5910,7 +5910,7 @@ bool monster::check_stasis(bool silent, bool calc_unid) const
 
     if (!silent && you.can_see(this) && !mons_is_lurking(this))
     {
-        simple_monster_message(this, " looks uneasy for a moment.");
+        simple_monster_message(this, _(" looks uneasy for a moment."));
         id_if_worn(MSLOT_JEWELLERY, OBJ_JEWELLERY, AMU_STASIS);
     }
 

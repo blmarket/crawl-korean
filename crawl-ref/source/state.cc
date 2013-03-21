@@ -62,10 +62,10 @@ void game_state::show_startup_errors()
                          | MF_EASY_EXIT);
     error_menu.set_more(
         formatted_string::parse_string(
-                           "<cyan>[ + : Page down.   - : Page up."
-                           "                    Esc or Enter to continue.]"));
+                           _("<cyan>[ + : Page down.   - : Page up."
+                           "                    Esc or Enter to continue.]")));
     error_menu.set_title(
-        new MenuEntry("Warning: Crawl encountered errors during startup:",
+        new MenuEntry(_("Warning: Crawl encountered errors during startup:"),
                       MEL_TITLE));
     for (int i = 0, size = startup_errors.size(); i < size; ++i)
         error_menu.add_entry(new MenuEntry(startup_errors[i]));
@@ -145,7 +145,7 @@ void game_state::cancel_cmd_all(string reason)
 void game_state::cant_cmd_repeat(string reason)
 {
     if (reason.empty())
-        reason = "Can't repeat that command.";
+        reason = _("Can't repeat that command.");
 
     cancel_cmd_repeat(reason);
 }
@@ -153,7 +153,7 @@ void game_state::cant_cmd_repeat(string reason)
 void game_state::cant_cmd_again(string reason)
 {
     if (reason.empty())
-        reason = "Can't redo that command.";
+        reason = _("Can't redo that command.");
 
     cancel_cmd_again(reason);
 }
@@ -246,11 +246,11 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         || crawl_state.repeat_cmd == CMD_WAIT)
     {
         if (ai == AI_FULL_MP)
-            crawl_state.cancel_cmd_repeat("Magic restored.");
+            crawl_state.cancel_cmd_repeat(_("Magic restored."));
         else if (ai == AI_FULL_HP)
-            crawl_state.cancel_cmd_repeat("HP restored.");
+            crawl_state.cancel_cmd_repeat(_("HP restored."));
         else
-            crawl_state.cancel_cmd_repeat("Command repetition interrupted.");
+            crawl_state.cancel_cmd_repeat(_("Command repetition interrupted."));
 
         return true;
     }
@@ -271,7 +271,7 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
             return false;
         }
 
-        crawl_state.cancel_cmd_repeat("Command repetition interrupted.");
+        crawl_state.cancel_cmd_repeat(_("Command repetition interrupted."));
         return true;
     }
 

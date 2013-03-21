@@ -486,11 +486,11 @@ static string _stat_name(stat_type stat)
     switch (stat)
     {
     case STAT_STR:
-        return "strength";
+        return M_("strength");
     case STAT_INT:
-        return "intelligence";
+        return M_("intelligence");
     case STAT_DEX:
-        return "dexterity";
+        return M_("dexterity");
     default:
         die("invalid stat");
     }
@@ -509,7 +509,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
         if (you.duration[DUR_DIVINE_STAMINA] > 0)
         {
             mprf("Your divine stamina protects you from %s loss.",
-                 _stat_name(which_stat).c_str());
+                 _(_stat_name(which_stat).c_str()));
             return false;
         }
 

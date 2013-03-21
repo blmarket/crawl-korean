@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Misc monster related functions.
 **/
@@ -982,7 +982,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     {
         // Not a single habitable place left on the level.  Possible in a Zig
         // or if a paranoid player covers a small Trove with summons.
-        mpr("There is some commotion, and a hidden mimic gets squished!");
+        mpr(_("There is some commotion, and a hidden mimic gets squished!"));
         if (item)
             destroy_item(*item, true);
         else
@@ -1055,7 +1055,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     monster *mimic = place_monster(mg, true, true);
     if (!mimic)
     {
-        mpr("Too many monsters on level, can't place mimic.", MSGCH_ERROR);
+        mpr(_("Too many monsters on level, can't place mimic."), MSGCH_ERROR);
         if (item)
             destroy_item(*item, true);
         return;
@@ -1077,7 +1077,7 @@ void discover_mimic(const coord_def& pos, bool wake)
     // Announce the mimic.
     if (mons_near(mimic))
     {
-        mprf(MSGCH_WARN, "The %s is a mimic!", name.c_str());
+        mprf(MSGCH_WARN, _("The %s is a mimic!"), name.c_str());
         mimic->seen_context = SC_JUST_SEEN;
     }
 
@@ -1085,8 +1085,8 @@ void discover_mimic(const coord_def& pos, bool wake)
     if (item && item->base_type == OBJ_ORBS)
     {
         orb_pickup_noise(pos, 30,
-            "The orb mimic lets out a hideous shriek!",
-            "The orb mimic lets out a furious burst of light!");
+            _("The orb mimic lets out a hideous shriek!"),
+            _("The orb mimic lets out a furious burst of light!"));
     }
 
     // Just in case there's another one.
@@ -1662,10 +1662,10 @@ const char* resist_margin_phrase(int margin)
 {
     ASSERT(margin > 0);
 
-    return (margin >= 40) ? " easily resists." :
-           (margin >= 24) ? " resists." :
-           (margin >= 12) ? " resists with some effort."
-                          : " struggles to resist.";
+    return (margin >= 40) ? _(" easily resists.") :
+           (margin >= 24) ? _(" resists.") :
+           (margin >= 12) ? _(" resists with some effort.")
+                          : _(" struggles to resist.");
 }
 
 bool mons_immune_magic(const monster* mon)
@@ -1676,7 +1676,7 @@ bool mons_immune_magic(const monster* mon)
 const char* mons_resist_string(const monster* mon, int res_margin)
 {
     if (mons_immune_magic(mon))
-        return " is unaffected.";
+        return _(" is unaffected.");
     else
         return resist_margin_phrase(res_margin);
 }
@@ -3616,19 +3616,19 @@ static string _replace_god_name(god_type god, bool need_verb = false,
     string result;
 
     if (god == GOD_NO_GOD)
-        result = capital ? "You" : "you";
+        result = capital ? "당신" : "당신"; // "You" : "you";
     else if (god == GOD_NAMELESS)
-        result = capital ? "Your god" : "your god";
+        result = capital ? "당신의 신" : "당신의 신"; // "Your god" : "your god";
     else
     {
-        const string godname = god_name(god, false);
+        const string godname = _(god_name(god, false).c_str());
         result = capital ? uppercase_first(godname) : godname;
     }
 
     if (need_verb)
     {
-        result += ' ';
-        result += (god == GOD_NO_GOD) ? "are" : "is";
+        // result += ' ';
+        result += "은(는)"; // result += (god == GOD_NO_GOD) ? "are" : "is";
     }
 
     return result;
@@ -3694,8 +3694,8 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
 
     // FIXME: Handle player_genus in case it was not generalised to foe_genus.
     msg = replace_all(msg, "@a_player_genus@",
-                      article_a(species_name(you.species, true)));
-    msg = replace_all(msg, "@player_genus@", species_name(you.species, true));
+                     _(species_name(you.species, true).c_str())); // article_a(species_name(you.species, true)));
+    msg = replace_all(msg, "@player_genus@", _(species_name(you.species, true).c_str()));
     msg = replace_all(msg, "@player_genus_plural@", _pluralise_player_genus());
 
     string foe_species;
@@ -3715,14 +3715,14 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         msg = replace_all(msg, "@player", "@foe");
         msg = replace_all(msg, "@Player", "@Foe");
 
-        msg = replace_all(msg, "@foe_possessive@", "your");
-        msg = replace_all(msg, "@foe@", "you");
-        msg = replace_all(msg, "@Foe@", "You");
+        msg = replace_all(msg, "@foe_possessive@", _(M_("your")));
+        msg = replace_all(msg, "@foe@", _(M_("you")));
+        msg = replace_all(msg, "@Foe@", _(M_("You")));
 
         msg = replace_all(msg, "@foe_name@", you.your_name);
-        msg = replace_all(msg, "@foe_species@", species_name(you.species));
-        msg = replace_all(msg, "@foe_genus@", foe_species);
-        msg = replace_all(msg, "@Foe_genus@", uppercase_first(foe_species));
+        msg = replace_all(msg, "@foe_species@", _(species_name(you.species).c_str()));
+        msg = replace_all(msg, "@foe_genus@", _(foe_species.c_str()));
+        msg = replace_all(msg, "@Foe_genus@", _(foe_species.c_str())); // uppercase_first(foe_species));
         msg = replace_all(msg, "@foe_genus_plural@",
                           _pluralise_player_genus());
     }
@@ -3745,20 +3745,20 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
                 foe_name = foe->name(DESC_THE);
         }
         else
-            foe_name = "something";
+            foe_name = _(M_("something"));
 
         string prep = "at";
         if (s_type == S_SILENT || s_type == S_SHOUT || s_type == S_NORMAL)
             prep = "to";
         msg = replace_all(msg, "@says@ @to_foe@", "@says@ " + prep + " @foe@");
 
-        msg = replace_all(msg, " @to_foe@", " to @foe@");
-        msg = replace_all(msg, " @at_foe@", " at @foe@");
+        msg = replace_all(msg, " @to_foe@", _(" to @foe@"));
+        msg = replace_all(msg, " @at_foe@", _(" at @foe@"));
         msg = replace_all(msg, "@foe,@",    "@foe@,");
 
-        msg = replace_all(msg, "@foe_possessive@", "@foe@'s");
+        msg = replace_all(msg, "@foe_possessive@", _("@foe@'s"));
         msg = replace_all(msg, "@foe@", foe_name);
-        msg = replace_all(msg, "@Foe@", uppercase_first(foe_name));
+        msg = replace_all(msg, "@Foe@", foe_name); //uppercase_first(foe_name));
 
         if (m_foe->is_named())
             msg = replace_all(msg, "@foe_name@", foe->name(DESC_PLAIN, true));
@@ -3776,11 +3776,11 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         foe_species = genus;
     }
 
-    description_level_type nocap = DESC_THE, cap = DESC_THE;
+    description_level_type nocap = DESC_PLAIN, cap = DESC_PLAIN;
 
     if (mons->is_named() && you.can_see(mons))
     {
-        const string name = mons->name(DESC_THE);
+        const string name = mons->name(DESC_PLAIN);
 
         msg = replace_all(msg, "@the_something@", name);
         msg = replace_all(msg, "@The_something@", name);
@@ -3795,10 +3795,10 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         nocap = DESC_PLAIN;
         cap   = DESC_PLAIN;
 
-        msg = replace_all(msg, "@the_something@", "your @the_something@");
-        msg = replace_all(msg, "@The_something@", "Your @The_something@");
-        msg = replace_all(msg, "@the_monster@",   "your @the_monster@");
-        msg = replace_all(msg, "@The_monster@",   "Your @the_monster@");
+        msg = replace_all(msg, "@the_something@", _("your @the_something@"));
+        msg = replace_all(msg, "@The_something@", _("Your @The_something@"));
+        msg = replace_all(msg, "@the_monster@",   _("your @the_monster@"));
+        msg = replace_all(msg, "@The_monster@",   _("Your @the_monster@"));
     }
 
     if (you.see_cell(mons->pos()))
@@ -3807,13 +3807,13 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         if (feat < DNGN_MINMOVE || feat >= NUM_FEATURES)
             msg = replace_all(msg, "@surface@", "buggy surface");
         else if (feat == DNGN_LAVA)
-            msg = replace_all(msg, "@surface@", "lava");
+            msg = replace_all(msg, "@surface@", _(M_("lava")));
         else if (feat_is_water(feat))
-            msg = replace_all(msg, "@surface@", "water");
+            msg = replace_all(msg, "@surface@", _(M_("water")));
         else if (feat_is_altar(feat))
-            msg = replace_all(msg, "@surface@", "altar");
+            msg = replace_all(msg, "@surface@", _(M_("altar")));
         else
-            msg = replace_all(msg, "@surface@", "ground");
+            msg = replace_all(msg, "@surface@", _(M_("ground")));
 
         msg = replace_all(msg, "@feature@", _(raw_feature_description(mons->pos()).c_str()));
     }
@@ -3827,12 +3827,12 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     {
         string something = mons->name(DESC_PLAIN);
         msg = replace_all(msg, "@something@",   something);
-        msg = replace_all(msg, "@a_something@", mons->name(DESC_A));
+        msg = replace_all(msg, "@a_something@", mons->name(DESC_PLAIN));
         msg = replace_all(msg, "@the_something@", mons->name(nocap));
 
         something[0] = toupper(something[0]);
         msg = replace_all(msg, "@Something@",   something);
-        msg = replace_all(msg, "@A_something@", mons->name(DESC_A));
+        msg = replace_all(msg, "@A_something@", mons->name(DESC_PLAIN));
         msg = replace_all(msg, "@The_something@", mons->name(cap));
     }
     else
@@ -3851,12 +3851,12 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
 
     string plain = mons->name(DESC_PLAIN);
     msg = replace_all(msg, "@monster@",     plain);
-    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_A));
+    msg = replace_all(msg, "@a_monster@",   mons->name(DESC_PLAIN));
     msg = replace_all(msg, "@the_monster@", mons->name(nocap));
 
     plain[0] = toupper(plain[0]);
     msg = replace_all(msg, "@Monster@",     plain);
-    msg = replace_all(msg, "@A_monster@",   mons->name(DESC_A));
+    msg = replace_all(msg, "@A_monster@",   mons->name(DESC_PLAIN));
     msg = replace_all(msg, "@The_monster@", mons->name(cap));
 
     msg = replace_all(msg, "@Subjective@",
@@ -3874,7 +3874,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
 
     // Body parts.
     bool   can_plural = false;
-    string part_str   = mons->hand_name(false, &can_plural);
+    string part_str   = _(mons->hand_name(false, &can_plural).c_str());
 
     msg = replace_all(msg, "@hand@", part_str);
     msg = replace_all(msg, "@Hand@", uppercase_first(part_str));
@@ -3882,13 +3882,13 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     if (!can_plural)
         part_str = "NO PLURAL HANDS";
     else
-        part_str = mons->hand_name(true);
+        part_str = _(mons->hand_name(true).c_str());
 
     msg = replace_all(msg, "@hands@", part_str);
     msg = replace_all(msg, "@Hands@", uppercase_first(part_str));
 
     can_plural = false;
-    part_str   = mons->arm_name(false, &can_plural);
+    part_str   = _(mons->arm_name(false, &can_plural).c_str());
 
     msg = replace_all(msg, "@arm@", part_str);
     msg = replace_all(msg, "@Arm@", uppercase_first(part_str));
@@ -3896,13 +3896,13 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     if (!can_plural)
         part_str = "NO PLURAL ARMS";
     else
-        part_str = mons->arm_name(true);
+        part_str = _(mons->arm_name(true).c_str());
 
     msg = replace_all(msg, "@arms@", part_str);
     msg = replace_all(msg, "@Arms@", uppercase_first(part_str));
 
     can_plural = false;
-    part_str   = mons->foot_name(false, &can_plural);
+    part_str   = _(mons->foot_name(false, &can_plural).c_str());
 
     msg = replace_all(msg, "@foot@", part_str);
     msg = replace_all(msg, "@Foot@", uppercase_first(part_str));
@@ -3910,7 +3910,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     if (!can_plural)
         part_str = "NO PLURAL FOOT";
     else
-        part_str = mons->foot_name(true);
+        part_str = _(mons->foot_name(true).c_str());
 
     msg = replace_all(msg, "@feet@", part_str);
     msg = replace_all(msg, "@Feet@", uppercase_first(part_str));
@@ -3956,7 +3956,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     }
     else
     {
-        const string godname = god_name(mons->god);
+        const string godname = _(god_name(mons->god).c_str());
         msg = replace_all(msg, "@God@", godname);
         msg = replace_all(msg, "@possessive_God@", godname);
 
@@ -3977,31 +3977,31 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
 
     static const char * sound_list[] =
     {
-        "says",         // actually S_SILENT
-        "shouts",
-        "barks",
-        "shouts",
-        "roars",
-        "screams",
-        "bellows",
-        "trumpets",
-        "screeches",
-        "buzzes",
-        "moans",
-        "gurgles",
-        "whines",
-        "croaks",
-        "growls",
-        "hisses",
-        "sneers",       // S_DEMON_TAUNT
-        "caws",
-        "says",         // S_CHERUB -- they just speak normally.
-        "buggily says", // NUM_SHOUTS
-        "breathes",     // S_VERY_SOFT
-        "whispers",     // S_SOFT
-        "says",         // S_NORMAL
-        "shouts",       // S_LOUD
-        "screams",      // S_VERY_LOUD
+        M_("says"),         // actually S_SILENT
+        M_("shouts"),
+        M_("barks"),
+        M_("shouts"),
+        M_("roars"),
+        M_("screams"),
+        M_("bellows"),
+        M_("trumpets"),
+        M_("screeches"),
+        M_("buzzes"),
+        M_("moans"),
+        M_("gurgles"),
+        M_("whines"),
+        M_("croaks"),
+        M_("growls"),
+        M_("hisses"),
+        M_("sneers"),       // S_DEMON_TAUNT
+        M_("caws"),
+        M_("says"),         // S_CHERUB -- they just speak normally.
+        M_("buggily says"), // NUM_SHOUTS
+        M_("breathes"),     // S_VERY_SOFT
+        M_("whispers"),     // S_SOFT
+        M_("says"),         // S_NORMAL
+        M_("shouts"),       // S_LOUD
+        M_("screams"),      // S_VERY_LOUD
     };
     COMPILE_CHECK(ARRAYSZ(sound_list) == NUM_LOUDNESS);
 
@@ -4011,7 +4011,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
         msg = replace_all(msg, "@says@", "buggily says");
     }
     else
-        msg = replace_all(msg, "@says@", sound_list[s_type]);
+        msg = replace_all(msg, "@says@", _(sound_list[s_type]));
 
     msg = apostrophise_fixup(msg);
 

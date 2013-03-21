@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Implementing the actor interface for player.
 **/
@@ -403,35 +403,35 @@ string player::hand_name(bool plural, bool *can_plural) const
     string str;
 
     if (form == TRAN_BAT || form == TRAN_DRAGON)
-        str = "foreclaw";
+        str = M_("foreclaw");
     else if (form == TRAN_PIG || form == TRAN_SPIDER || form == TRAN_PORCUPINE)
-        str = "front leg";
+        str = M_("front leg");
     else if (form == TRAN_ICE_BEAST)
-        str = "paw";
+        str = M_("paw");
     else if (form == TRAN_BLADE_HANDS)
-        str = "scythe-like blade";
+        str = M_("scythe-like blade");
     else if (form == TRAN_TREE)
-        str = "branch";
+        str = M_("branch");
     else if (form == TRAN_WISP)
-        str = "misty tendril";
+        str = M_("misty tendril");
     else if (form == TRAN_JELLY)
-        str = "bump"; // not even pseudopods...
+        str = M_("bump"); // not even pseudopods...
     else if (form == TRAN_LICH || form == TRAN_STATUE
              || !form_changed_physiology())
     {
         if (species == SP_FELID)
-            str = "paw";
+            str = M_("paw");
         else if (you.has_usable_claws())
-            str = "claw";
+            str = M_("claw");
         else if (you.has_usable_tentacles())
-            str = "tentacle";
+            str = M_("tentacle");
     }
 
     if (str.empty())
-        return (plural ? "hands" : "hand");
+        return (plural ? M_("hands") : M_("hand"));
 
-    if (plural && *can_plural)
-        str = pluralise(PLU_DEFAULT, str);
+    // if (plural && *can_plural)
+    //    str = pluralise(PLU_DEFAULT, str); (deceit,130320) pluralise 무효화
 
     return str;
 }
@@ -446,42 +446,42 @@ string player::foot_name(bool plural, bool *can_plural) const
     string str;
 
     if (form == TRAN_SPIDER)
-        str = "hind leg";
+        str = M_("hind leg");
     else if (form == TRAN_TREE)
-        str = "root";
+        str = M_("root");
     else if (form == TRAN_WISP)
-        str = "strand";
+        str = M_("strand");
     else if (form == TRAN_JELLY)
-        str = "underside", *can_plural = false;
+        str = M_("underside"), *can_plural = false;
     else if (form == TRAN_LICH || form == TRAN_STATUE
              || !form_changed_physiology())
     {
         if (player_mutation_level(MUT_HOOVES) >= 3)
-            str = "hoof";
+            str = M_("hoof");
         else if (you.has_usable_talons())
-            str = "talon";
+            str = M_("talon");
         else if (you.has_usable_tentacles())
         {
-            str         = "tentacles";
+            str         = M_("tentacles");
             *can_plural = false;
         }
         else if (species == SP_NAGA)
         {
-            str         = "underbelly";
+            str         = M_("underbelly");
             *can_plural = false;
         }
         else if (fishtail)
         {
-            str         = "tail";
+            str         = M_("tail");
             *can_plural = false;
         }
     }
 
     if (str.empty())
-        return (plural ? "feet" : "foot");
+        return (plural ? M_("feet") : M_("foot"));
 
     if (plural && *can_plural)
-        str = pluralise(PLU_DEFAULT,str);
+        str = pluralise(PLU_SUFFIX,str);
 
     return str;
 }
@@ -495,19 +495,19 @@ string player::arm_name(bool plural, bool *can_plural) const
         *can_plural = true;
 
     string adj;
-    string str = "arm";
+    string str = M_("arm");
 
     if (player_genus(GENPC_DRACONIAN) || species == SP_NAGA)
-        adj = "scaled";
+        adj = M_("scaled");
     else if (species == SP_TENGU)
-        adj = "feathered";
+        adj = M_("feathered");
     else if (species == SP_MUMMY)
-        adj = "bandage-wrapped";
+        adj = M_("bandage-wrapped");
     else if (species == SP_OCTOPODE)
-        str = "tentacle";
+        str = M_("tentacle");
 
     if (form == TRAN_LICH)
-        adj = "bony";
+        adj = M_("bony");
 
     if (!adj.empty())
         str = adj + " " + str;
@@ -520,47 +520,47 @@ string player::arm_name(bool plural, bool *can_plural) const
 
 string player::unarmed_attack_name() const
 {
-    string text = "Nothing wielded"; // Default
+    string text = M_("Nothing wielded"); // Default
 
     if (species == SP_FELID)
-        text = "Teeth and claws";
+        text = M_("Teeth and claws");
     else if (has_usable_claws(true))
-        text = "Claws";
+        text = M_("Claws");
     else if (has_usable_tentacles(true))
-        text = "Tentacles";
+        text = M_("Tentacles");
 
     switch (form)
     {
     case TRAN_SPIDER:
-        text = "Fangs (venom)";
+        text = M_("Fangs (venom)");
         break;
     case TRAN_BLADE_HANDS:
-        text = "Blade " + blade_parts(true);
+        text = M_("Blade ") + blade_parts(true);	// 메모
         break;
     case TRAN_STATUE:
         if (has_usable_claws(true))
-            text = "Stone claws";
+            text = M_("Stone claws");
         else if (has_usable_tentacles(true))
-            text = "Stone tentacles";
+            text = M_("Stone tentacles");
         else
-            text = "Stone fists";
+            text = M_("Stone fists");
         break;
     case TRAN_ICE_BEAST:
-        text = "Ice fists (freeze)";
+        text = M_("Ice fists (freeze)");
         break;
     case TRAN_DRAGON:
-        text = "Teeth and claws";
+        text = M_("Teeth and claws");
         break;
     case TRAN_LICH:
-        text += " (drain)";
+        text += N_(" (drain)");
         break;
     case TRAN_BAT:
     case TRAN_PIG:
     case TRAN_PORCUPINE:
-        text = "Teeth";
+        text = M_("Teeth");
         break;
     case TRAN_TREE:
-        text = "Branches";
+        text = M_("Branches");
         break;
     case TRAN_NONE:
     case TRAN_APPENDAGE:
@@ -580,7 +580,7 @@ bool player::fumbles_attack(bool verbose)
         if (x_chance_in_y(4, dex()) || one_chance_in(5))
         {
             if (verbose)
-                mpr("Your unstable footing causes you to fumble your attack.");
+                mpr(_("Your unstable footing causes you to fumble your attack."));
             did_fumble = true;
         }
         if (floundering())
@@ -682,8 +682,8 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
         if (verbose)
         {
             const item_def *amulet = you.slot_item(EQ_AMULET, false);
-            mprf("You cannot go berserk with %s on.",
-                 amulet? amulet->name(true, DESC_YOUR).c_str() : "your amulet");
+            mprf(_("You cannot go berserk with %s on."),
+                 amulet? amulet->name(true, DESC_YOUR).c_str() : _("your amulet"));
         }
         return false;
     }
@@ -692,7 +692,7 @@ bool player::can_go_berserk(bool intentional, bool potion, bool quiet) const
     {
         if (verbose)
         {
-            mpr("You're too calm and focused to rage.");
+            mpr(_("You're too calm and focused to rage."));
             if (!you.clarity(false))
                 maybe_id_clarity();
         }
@@ -735,7 +735,7 @@ bool player::shove(const char* feat_name)
         {
             moveto(*di);
             if (*feat_name)
-                mprf("You are pushed out of the %s.", feat_name);
+                mprf(_("You are pushed out of the %s."), _(feat_name));
             dprf("Moved to (%d, %d).", pos().x, pos().y);
             return true;
         }

@@ -452,7 +452,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             ac -= props["stoneskin_ac"].get_byte();
         if (!quiet && you.can_see(this))
         {
-            mprf("%s skin looks tender.",
+            mprf(_("%s skin looks tender."),
                  apostrophise(name(DESC_THE)).c_str());
         }
         break;
@@ -462,7 +462,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             ac -= props["ozocubus_ac"].get_byte();
         if (!quiet && you.can_see(this))
         {
-            mprf("%s icy armour evaporates.",
+            mprf(_("%s icy armour evaporates."),
                  apostrophise(name(DESC_THE)).c_str());
         }
         break;
@@ -745,7 +745,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_ROLLING:
         calc_speed();
         if (!quiet && alive())
-            simple_monster_message(this, " stops rolling.");
+            simple_monster_message(this, _(" stops rolling."));
         break;
 
     //The following should never happen, but just in case...
@@ -792,7 +792,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
     case ENCH_WRETCHED:
         if (!quiet)
         {
-            snprintf(info, INFO_SIZE, " seems to return to %s normal shape.",
+            snprintf(info, INFO_SIZE, _(" seems to return to %s normal shape."),
                      pronoun(PRONOUN_POSSESSIVE, true).c_str());
             simple_monster_message(this, info);
         }
@@ -1693,7 +1693,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             del_ench(ENCH_WORD_OF_RECALL, true, false);
             if (you.can_see(this))
             {
-                mprf("%s word of recall is interrupted.",
+                mprf(_("%s word of recall is interrupted."),
                      name(DESC_ITS).c_str());
             }
             break;

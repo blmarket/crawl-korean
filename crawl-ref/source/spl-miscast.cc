@@ -452,12 +452,12 @@ void MiscastEffect::do_msg(bool suppress_nothing_happens)
         return;
     }
 
-    bool plural;
+    bool plural = false;
 
     if (hand_str.empty())
     {
-        msg = replace_all(msg, "@hand@",  target->hand_name(false, &plural));
-        msg = replace_all(msg, "@hands@", target->hand_name(true));
+        msg = replace_all(msg, "@hand@",  _(target->hand_name(false).c_str()));
+        msg = replace_all(msg, "@hands@", _(target->hand_name(true).c_str()));
     }
     else
     {
@@ -2403,7 +2403,7 @@ void MiscastEffect::_earth(int severity)
         case 9:
         {
             bool          pluralised = true;
-            string        feet       = you.foot_name(true, &pluralised);
+            string        feet       = _(you.foot_name(true, &pluralised).c_str());
             ostringstream str;
 
             str << pgettext("earth","Your ") << feet << (pluralised ? pgettext("earth"," feel") : pgettext("earth"," feels"))

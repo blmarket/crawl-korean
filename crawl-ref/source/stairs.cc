@@ -189,7 +189,7 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
         else
         {
             mprf(_("You %s downwards."), pgettext_expr("verb", 
-                you.flight_mode() ? P_("verb", "fly") : P_("verb", "slide")));
+                you.flight_mode() ? pgettext("verb", "fly") : pgettext("verb", "slide")));
         }
     }
     else if (feat_is_gate(stair))
@@ -197,13 +197,13 @@ static void _climb_message(dungeon_feature_type stair, bool going_up,
         mprf(going_up ? _("You %s up through the gate.") : 
                 _("You %s down through the gate.")
                 , pgettext_expr("verb", you.flight_mode() ? 
-                    P_("verb", "fly") : P_("verb", "go")));
+                    pgettext("verb", "fly") : pgettext("verb", "go")));
     }
     else
     {
         mprf(going_up ? _("You %s upwards.") : _("You %s downwards."),
              pgettext_expr("verb", you.flight_mode() ? 
-                 P_("verb", "fly") : P_("verb", "climb")));
+                 pgettext("verb", "fly") : pgettext("verb", "climb")));
     }
 }
 
@@ -747,7 +747,7 @@ void down_stairs(dungeon_feature_type force_stair)
                 break;
 
             default:
-                /// 1. 필요한 룬의 갯수. 0.9버전에선 3개겠죠.
+                // 1. 필요한 룬의 갯수. 0.9버전에선 3개겠죠.
                 mprf(gettext("You need at least %d runes to enter this place."),
                      NUMBER_OF_RUNES_NEEDED);
             }
@@ -961,7 +961,7 @@ void down_stairs(dungeon_feature_type force_stair)
         if (branches[branch].entry_message)
             mpr(branches[branch].entry_message);
         else
-            mprf("Welcome to %s!", branches[branch].longname);
+            mprf(_("Welcome to %s!"), branches[branch].longname);
         enter_branch(branch, old_level);
     }
 

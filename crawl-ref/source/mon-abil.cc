@@ -387,7 +387,7 @@ static monster* _do_split(monster* thing, coord_def & target)
         return 0;
 
     if (you.can_see(thing))
-        mprf("%s splits.", thing->name(DESC_A).c_str());
+        mprf(_("%s splits."), thing->name(DESC_PLAIN).c_str());
 
     // Inflict the new slime with any enchantments on the parent.
     _split_ench_durations(thing, new_slime);
@@ -522,28 +522,28 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
         {
             // FIXME: I don't know about plu enums
             if (crawlie->type == old_type)
-                mprf("Two %s merge%s%s.",
+                mprf(_("Two %s merge%s%s."),
                      pluralise(PLU_DEFAULT, crawlie->name(DESC_PLAIN)).c_str(),
-                     changed ? " to form " : "",
-                     changed ? merge_to->name(DESC_A).c_str() : "");
+                     changed ? _(" to form ") : "",
+                     changed ? merge_to->name(DESC_PLAIN).c_str() : "");
             else
-                mprf("%s merges with %s%s%s.",
+                mprf(_("%s merges with %s%s%s."),
                      crawlie->name(DESC_A).c_str(),
                      old_name.c_str(),
                      changed ? " to form " : "",
-                     changed ? merge_to->name(DESC_A).c_str() : "");
+                     changed ? merge_to->name(DESC_PLAIN).c_str() : "");
         }
         else if (changed)
         {
-            mprf("%s suddenly becomes %s.",
+            mprf(_("%s suddenly becomes %s."),
                  uppercase_first(old_name).c_str(),
                  merge_to->name(DESC_A).c_str());
         }
         else
-            mprf("%s twists grotesquely.", merge_to->name(DESC_A).c_str());
+            mprf(_("%s twists grotesquely."), merge_to->name(DESC_PLAIN).c_str());
     }
     else if (you.can_see(crawlie))
-        mprf("%s suddenly disappears!", crawlie->name(DESC_A).c_str());
+        mprf(_("%s suddenly disappears!"), crawlie->name(DESC_PLAIN).c_str());
 
     // Now kill the other monster
     monster_die(crawlie, KILL_DISMISSED, NON_MONSTER, true);
@@ -903,20 +903,20 @@ static void _starcursed_scream(monster* mon, actor* target)
 
     if (n > 7)
     {
-        message = "A cacophony of accursed wailing tears at your sanity!";
+        message = _("A cacophony of accursed wailing tears at your sanity!");
         if (coinflip())
             stun = 2;
     }
     else if (n > 4)
     {
-        message = "A deafening chorus of shrieks assaults your mind!";
+        message = _("A deafening chorus of shrieks assaults your mind!");
         if (x_chance_in_y(1,3))
             stun = 1;
     }
     else if (n > 1)
-        message = "A chorus of shrieks assaults your mind.";
+        message = _("A chorus of shrieks assaults your mind.");
     else
-        message = "The starcursed mass shrieks in your mind.";
+        message = _("The starcursed mass shrieks in your mind.");
 
     dam = 4 + random2(5) + random2(n * 3 / 2);
 
@@ -926,7 +926,7 @@ static void _starcursed_scream(monster* mon, actor* target)
         {
             mprf(target->as_monster()->friendly() ? MSGCH_FRIEND_SPELL
                                                   : MSGCH_MONSTER_SPELL,
-                 "%s writhes in pain as voices assail %s mind.",
+                 _("%s writhes in pain as voices assail %s mind."),
                  target->name(DESC_THE).c_str(),
                  target->pronoun(PRONOUN_POSSESSIVE).c_str());
         }
@@ -1281,8 +1281,8 @@ static void _cherub_hymn(monster* chief)
         {
             if (you.can_see(chief) && player_can_hear(chief->pos()))
             {
-                mprf(MSGCH_SOUND, "%s sings a powerful hymn!",
-                     chief->name(DESC_THE).c_str());
+                mprf(MSGCH_SOUND, _("%s sings a powerful hymn!"),
+                     chief->name(DESC_PLAIN).c_str());
             }
 
             // The yell happens whether you happen to see it or not.
@@ -1299,11 +1299,11 @@ static void _cherub_hymn(monster* chief)
                 if (seen_affected.size() == 1)
                 {
                     who = seen_affected[0]->name(DESC_THE);
-                    mprf(channel, "%s is roused by the hymn!", who.c_str());
+                    mprf(channel, _("%s is roused by the hymn!"), who.c_str());
                 }
                 else
                 {
-                    mprf(channel, "%s holy creatures are roused to righteous anger!",
+                    mprf(channel, _("%s holy creatures are roused to righteous anger!"),
                          chief->friendly() ? "Your" : "The");
                 }
             }
@@ -1705,16 +1705,16 @@ static bool _seal_doors(const monster* warden)
 
     if (had_effect)
     {
-        mprf(MSGCH_MONSTER_SPELL, "%s activates a sealing rune.",
+        mprf(MSGCH_MONSTER_SPELL, _("%s activates a sealing rune."),
                 (warden->visible_to(&you) ? warden->name(DESC_THE, true).c_str()
-                                          : "Someone"));
+                                          : pgettext("sealdoors","Someone")));
         if (num_closed > 1)
-            mpr("The doors slam shut!");
+            mpr(_("The doors slam shut!"));
         else if (num_closed == 1)
-            mpr("A door slams shut!");
+            mpr(_("A door slams shut!"));
 
         if (player_pushed)
-            mpr("You are pushed out of the doorway!");
+            mpr(_("You are pushed out of the doorway!"));
 
         return true;
     }
@@ -2297,7 +2297,7 @@ static int _collect_connection_data(monster* start_monster,
         {
             current_mon = &menv[next_idx];
             if (int(current_mon->number) != start_monster->mindex())
-                mprf("link information corruption!!! tentacle in chain doesn't match mindex");
+                mprf(_("link information corruption!!! tentacle in chain doesn't match mindex"));
             if (!retract_found)
             {
                 retract_pos = current_mon->pos();
@@ -2649,7 +2649,7 @@ void move_child_tentacles(monster* mons)
 
         if (pull_constrictee)
         {
-            mprf("The tentacle pulls %s backwards!",
+            mprf(_("The tentacle pulls %s backwards!"),
                  constrictee->name(DESC_THE).c_str());
 
             if (constrictee->as_player())
@@ -2803,7 +2803,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             break;
 
         // Setup tracer.
-        beem.name        = "glob of lava";
+        beem.name        = M_("glob of lava");
         beem.aux_source  = "glob of lava";
         beem.range       = 6;
         beem.damage      = dice_def(3, 10);
@@ -2839,7 +2839,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             break;
 
         // Setup tracer.
-        beem.name        = "bolt of electricity";
+        beem.name        = M_("bolt of electricity");
         beem.aux_source  = "bolt of electricity";
         beem.range       = 8;
         beem.damage      = dice_def(3, 6);
@@ -3067,7 +3067,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
         // easy to set up and doesn't involve inventory.
 
         // Set up the beam.
-        beem.name        = "volley of spikes";
+        beem.name        = M_("volley of spikes");
         beem.aux_source  = "volley of spikes";
         beem.range       = 6;
         beem.hit         = 14;
@@ -3318,7 +3318,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             {
                 targetter_los hitfunc(mons, LOS_SOLID);
                 flash_view_delay(MAGENTA, 300, &hitfunc);
-                simple_monster_message(mons, " pulses with an eldritch light!");
+                simple_monster_message(mons, _(" pulses with an eldritch light!"));
 
                 if (!is_sanctuary(you.pos())
                         && cell_see_cell(you.pos(), mons->pos(), LOS_SOLID))
@@ -3383,11 +3383,11 @@ bool mon_special_ability(monster* mons, bolt & beem)
         {
             if (you.can_see(mons))
             {
-                simple_monster_message(mons, " blows on a signal horn!");
+                simple_monster_message(mons, _(" blows on a signal horn!"));
                 noisy(25, mons->pos());
             }
             else
-                noisy(25, mons->pos(), "You hear a note blown loudly on a horn!");
+                noisy(25, mons->pos(), _("You hear a note blown loudly on a horn!"));
 
             // This is probably coopting the enchant for something beyond its
             // intended purpose, but the message does match....
@@ -3785,7 +3785,7 @@ void ancient_zyme_sicken(monster* mons)
         {
             if (!you.duration[DUR_SICKENING])
             {
-                mprf(MSGCH_WARN, "You feel yourself growing ill in the presence of %s.",
+                mprf(MSGCH_WARN, _("You feel yourself growing ill in the presence of %s."),
                     mons->name(DESC_THE).c_str());
             }
 
@@ -3854,7 +3854,7 @@ void starcursed_merge(monster* mon, bool forced)
         if (mergee && mergee->alive() && mergee->type == MONS_STARCURSED_MASS)
         {
             if (forced)
-                simple_monster_message(mon, " shudders and is absorbed by its neighbour.");
+                simple_monster_message(mon, _(" shudders and is absorbed by its neighbour."));
             if (_do_merge_masses(mon, mergee))
                 return;
         }
@@ -3897,7 +3897,7 @@ void starcursed_merge(monster* mon, bool forced)
 
             if (moved)
             {
-                simple_monster_message(mon, " shudders and withdraws towards its neighbour.");
+                simple_monster_message(mon, _(" shudders and withdraws towards its neighbour."));
                 mon->speed_increment -= 10;
             }
         }

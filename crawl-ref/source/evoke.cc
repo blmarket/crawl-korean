@@ -66,7 +66,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
 {
     if (you.caught())
     {
-        mprf("You cannot attack while %s.", held_status());
+        mprf(_("You cannot attack while %s."), held_status());
         return false;
     }
 
@@ -77,7 +77,7 @@ static bool _reaching_weapon_attack(const item_def& wpn)
     args.restricts = DIR_TARGET;
     args.mode = TARG_HOSTILE;
     args.range = 2;
-    args.top_prompt = "Attack whom?";
+    args.top_prompt = _("Attack whom?");
     args.cancel_at_self = true;
     targetter_reach hitfunc(&you, REACH_TWO);
     args.hitfunc = &hitfunc;
@@ -275,8 +275,8 @@ static bool _evoke_horn_of_geryon(item_def &item)
             }
 
         if (rc)
-            /// 당신의 지옥으로 가는 길은 이미 열려있다.
-            /// 게리욘의 뿔피리이기때문에 지옥으로 가는길로 의역했습니다.
+            // 당신의 지옥으로 가는 길은 이미 열려있다.
+            // 게리욘의 뿔피리이기때문에 지옥으로 가는길로 의역했습니다.
             mpr(gettext("Your way has been unbarred."));
     }
     else
@@ -419,7 +419,7 @@ void tome_of_power(int slot)
     if (you.form == TRAN_WISP)
     {
         crawl_state.zero_turns_taken();
-        return mpr("You can't handle books in this form.");
+        return mpr(_("You can't handle books in this form."));
     }
 
     const int powc = 5 + you.skill(SK_EVOCATIONS)
@@ -542,8 +542,8 @@ void skill_manual(int slot)
     if (is_useless_skill(skill) || you.skills[skill] >= 27)
     {
         if (!known)
-            mprf("This is a manual of %s.", skill_name(skill));
-        mpr("You have no use for it.");
+            mprf(_("This is a manual of %s."), skill_name(skill));
+        mpr(_("You have no use for it."));
         return;
     }
 
@@ -670,7 +670,7 @@ static bool _ball_of_energy(void)
 bool evoke_item(int slot)
 {
     if (you.form == TRAN_WISP)
-        return mpr("You cannot handle anything in this form."), false;
+        return mpr(_("You cannot handle anything in this form.")), false;
 
     if (you.berserk() && (slot == -1
                        || slot != you.equip[EQ_WEAPON]
@@ -756,7 +756,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr("You're too confused.");
+            mpr(_("You're too confused."));
             return false;
         }
 
@@ -779,7 +779,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr("You're too confused.");
+            mpr(_("You're too confused."));
             return false;
         }
 

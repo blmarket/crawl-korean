@@ -31,7 +31,7 @@ static int _englaciate_monsters(coord_def where, int pow, int, actor *actor)
     if (mons->res_cold() > 0 || mons_is_stationary(mons))
     {
         if (!mons_is_firewood(mons))
-            simple_monster_message(mons, " is unaffected.");
+            simple_monster_message(mons, _(" is unaffected."));
         return 0;
     }
 
@@ -40,7 +40,7 @@ static int _englaciate_monsters(coord_def where, int pow, int, actor *actor)
 
     if (duration <= 0)
     {
-        simple_monster_message(mons, " resists.");
+        simple_monster_message(mons, _(" resists."));
         return 0;
     }
 
@@ -53,7 +53,7 @@ static int _englaciate_monsters(coord_def where, int pow, int, actor *actor)
 spret_type cast_englaciation(int pow, bool fail)
 {
     fail_check();
-    mpr("You radiate an aura of cold.");
+    mpr(_("You radiate an aura of cold."));
     apply_area_visible(_englaciate_monsters, pow, &you);
     return SPRET_SUCCESS;
 }
@@ -82,7 +82,7 @@ bool backlight_monsters(coord_def where, int pow, int garbage)
         {
             mons->add_ench(
                 mon_enchant(ENCH_CORONA, 1, 0, random_range(30, 50)));
-            simple_monster_message(mons, " is lined in light.");
+            simple_monster_message(mons, _(" is lined in light."));
         }
         return true;
     }
@@ -90,11 +90,11 @@ bool backlight_monsters(coord_def where, int pow, int garbage)
     mons->add_ench(mon_enchant(ENCH_CORONA, 1));
 
     if (lvl == 0)
-        simple_monster_message(mons, " is outlined in light.");
+        simple_monster_message(mons, _(" is outlined in light."));
     else if (lvl == 4)
-        simple_monster_message(mons, " glows brighter for a moment.");
+        simple_monster_message(mons, _(" glows brighter for a moment."));
     else
-        simple_monster_message(mons, " glows brighter.");
+        simple_monster_message(mons, _(" glows brighter."));
 
     return true;
 }
@@ -109,7 +109,7 @@ bool do_slow_monster(monster* mon, const actor* agent, int dur)
         && mon->add_ench(mon_enchant(ENCH_SLOW, 0, agent, dur)))
     {
         if (!mon->paralysed() && !mon->petrified()
-            && simple_monster_message(mon, " seems to slow down."))
+            && simple_monster_message(mon, _(" seems to slow down.")))
         {
             return true;
         }

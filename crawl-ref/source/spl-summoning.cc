@@ -159,7 +159,7 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
 {
     if (!you.weapon())
     {
-        mprf("Your %s feel slithery!", you.hand_name(true).c_str());
+        mprf(_("Your %s feel slithery!"), _(you.hand_name(true).c_str()));
         return SPRET_ABORT;
     }
 
@@ -251,7 +251,7 @@ spret_type cast_sticks_to_snakes(int pow, god_type god, bool fail)
     }
 
     dec_inv_item_quantity(you.equip[EQ_WEAPON], count);
-    mpr((count > 1) ? "You create some snakes!" : "You create a snake!");
+    mpr((count > 1) ? _("You create some snakes!") : _("You create a snake!"));
     return SPRET_SUCCESS;
 }
 
@@ -459,7 +459,7 @@ spret_type cast_summon_elemental(int pow, god_type god,
 
     while (true)
     {
-        mpr("Summon from material in which direction?", MSGCH_PROMPT);
+        mpr(_("Summon from material in which direction?"), MSGCH_PROMPT);
 
         direction_chooser_args args;
         args.restricts = DIR_DIR;
@@ -476,20 +476,20 @@ spret_type cast_summon_elemental(int pow, god_type god,
         if (const monster* m = monster_at(targ))
         {
             if (you.can_see(m))
-                mpr("There's something there already!");
+                mpr(_("There's something there already!"));
             else
             {
                 fail_check();
-                mpr("Something seems to disrupt your summoning.");
+                mpr(_("Something seems to disrupt your summoning."));
                 return SPRET_SUCCESS; // still losing a turn
             }
         }
         else if (smove.delta.origin())
-            mpr("You can't summon an elemental from yourself!");
+            mpr(_("You can't summon an elemental from yourself!"));
         else if (!in_bounds(targ))
         {
             // XXX: Should this cost a turn?
-            mpr("That material won't yield to your beckoning.");
+            mpr(_("That material won't yield to your beckoning."));
             return SPRET_ABORT;
         }
 
@@ -556,10 +556,10 @@ spret_type cast_summon_elemental(int pow, god_type god,
         return SPRET_SUCCESS;
     }
 
-    mpr("An elemental appears!");
+    mpr(_("An elemental appears!"));
 
     if (!friendly)
-        mpr("It doesn't seem to appreciate being summoned.");
+        mpr(_("It doesn't seem to appreciate being summoned."));
 
     return SPRET_SUCCESS;
 }
@@ -575,7 +575,7 @@ spret_type cast_summon_ice_beast(int pow, god_type god, bool fail)
                       you.pos(), MHITYOU,
                       0, god)))
     {
-        mpr("A chill wind blows around you.");
+        mpr(_("A chill wind blows around you."));
     }
     else
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -603,8 +603,8 @@ spret_type cast_summon_ugly_thing(int pow, god_type god, bool fail)
                       MHITYOU,
                       0, god)))
     {
-        mpr((mon == MONS_VERY_UGLY_THING) ? "A very ugly thing appears."
-                                          : "An ugly thing appears.");
+        mpr((mon == MONS_VERY_UGLY_THING) ? _("A very ugly thing appears.")
+                                          : _("An ugly thing appears."));
     }
     else
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -638,7 +638,7 @@ spret_type cast_summon_hydra(actor *caster, int pow, god_type god, bool fail)
                       MONS_HYDRA, heads)))
     {
         if (you.see_cell(hydra->pos()))
-            mpr("A hydra appears.");
+            mpr(_("A hydra appears."));
         player_angers_monster(hydra); // currently no-op
     }
     else if (caster->is_player())
@@ -704,7 +704,7 @@ spret_type cast_summon_dragon(actor *caster, int pow, god_type god, bool fail)
                           0, god)))
         {
             if (you.see_cell(dragon->pos()))
-                mpr("A dragon appears.");
+                mpr(_("A dragon appears."));
             // Xom summoning evil dragons if you worship a good god?  Sure!
             player_angers_monster(dragon);
             success = true;
@@ -826,7 +826,7 @@ static bool _summon_holy_being_wrapper(int pow, god_type god, int spell,
     summon->flags |= MF_ATT_CHANGE_ATTEMPT;
 
     if (!quiet)
-        mpr("You are momentarily dazzled by a brilliant light.");
+        mpr(_("You are momentarily dazzled by a brilliant light."));
 
     player_angers_monster(summon);
     return true;
@@ -868,12 +868,12 @@ spret_type cast_tukimas_dance(int pow, god_type god, bool force_hostile,
     {
         if (wpn)
         {
-            mprf("%s vibrate%s crazily for a second.",
+            mprf(_("%s vibrate%s crazily for a second."),
                  wpn->name(true, DESC_YOUR).c_str(),
                  wpn->quantity > 1 ? "" : "s");
         }
         else
-            mprf("Your %s twitch.", you.hand_name(true).c_str());
+            mprf(_("Your %s twitch."), _(you.hand_name(true).c_str()));
 
         return SPRET_ABORT;
     }
@@ -921,7 +921,7 @@ spret_type cast_tukimas_dance(int pow, god_type god, bool force_hostile,
 
     if (why)
     {
-        simple_god_message(" booms: How dare you animate that foul thing!");
+        simple_god_message(_(" booms: How dare you animate that foul thing!"));
         did_god_conduct(why, 10, true, mons);
     }
 
@@ -968,7 +968,7 @@ spret_type cast_conjure_ball_lightning(int pow, god_type god, bool fail)
     }
 
     if (success)
-        mpr("You create some ball lightning!");
+        mpr(_("You create some ball lightning!"));
     else
         canned_msg(MSG_NOTHING_HAPPENS);
 
@@ -991,10 +991,10 @@ spret_type cast_call_imp(int pow, god_type god, bool fail)
             mgen_data(mon, BEH_FRIENDLY, &you, dur, SPELL_CALL_IMP,
                       you.pos(), MHITYOU, MG_FORCE_BEH, god)))
     {
-        mpr((mon == MONS_WHITE_IMP)  ? "A beastly little devil appears in a puff of frigid air." :
-            (mon == MONS_IRON_IMP)   ? "A metallic apparition takes form in the air." :
-            (mon == MONS_SHADOW_IMP) ? "A shadowy apparition takes form in the air."
-                                     : "A beastly little devil appears in a puff of flame.");
+        mpr((mon == MONS_WHITE_IMP)  ? _("A beastly little devil appears in a puff of frigid air.") :
+            (mon == MONS_IRON_IMP)   ? _("A metallic apparition takes form in the air.") :
+            (mon == MONS_SHADOW_IMP) ? _("A shadowy apparition takes form in the air.")
+                                     : _("A beastly little devil appears in a puff of flame."));
 
         if (!player_angers_monster(imp))
             _monster_greeting(imp, "_friendly_imp_greeting");
@@ -1019,12 +1019,12 @@ static bool _summon_demon_wrapper(int pow, god_type god, int spell,
     {
         success = true;
 
-        mpr("A demon appears!");
+        mpr(_("A demon appears!"));
 
         if (!player_angers_monster(demon) && !friendly)
         {
-            mpr(charmed ? "You don't feel so good about this..."
-                        : "It doesn't seem very happy.");
+            mpr(charmed ? _("You don't feel so good about this...")
+                        : _("It doesn't seem very happy."));
         }
         else if (friendly
                     && (mon == MONS_CRIMSON_IMP || mon == MONS_WHITE_IMP
@@ -1083,7 +1083,7 @@ bool summon_demon_type(monster_type mon, int pow, god_type god,
 spret_type cast_summon_demon(int pow, god_type god, bool fail)
 {
     fail_check();
-    mpr("You open a gate to Pandemonium!");
+    mpr(_("You open a gate to Pandemonium!"));
 
     if (!_summon_common_demon(pow, god, SPELL_SUMMON_DEMON, false))
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -1094,7 +1094,7 @@ spret_type cast_summon_demon(int pow, god_type god, bool fail)
 spret_type cast_demonic_horde(int pow, god_type god, bool fail)
 {
     fail_check();
-    mpr("You open a gate to Pandemonium!");
+    mpr(_("You open a gate to Pandemonium!"));
 
     bool success = false;
 
@@ -1115,7 +1115,7 @@ spret_type cast_demonic_horde(int pow, god_type god, bool fail)
 spret_type cast_summon_greater_demon(int pow, god_type god, bool fail)
 {
     fail_check();
-    mpr("You open a gate to Pandemonium!");
+    mpr(_("You open a gate to Pandemonium!"));
 
     if (!_summon_greater_demon(pow, god, SPELL_SUMMON_GREATER_DEMON, false))
         canned_msg(MSG_NOTHING_HAPPENS);
@@ -1138,7 +1138,7 @@ static monster_type _zotdef_shadow()
 spret_type cast_shadow_creatures(god_type god, bool fail)
 {
     fail_check();
-    mpr("Wisps of shadow whirl around you...");
+    mpr(_("Wisps of shadow whirl around you..."));
 
     monster_type critter = RANDOM_MOBILE_MONSTER;
     if (crawl_state.game_is_zotdef())
@@ -1173,7 +1173,7 @@ spret_type cast_shadow_creatures(god_type god, bool fail)
         }
     }
     else
-        mpr("The shadows disperse without effect.");
+        mpr(_("The shadows disperse without effect."));
 
     return SPRET_SUCCESS;
 }
@@ -1246,8 +1246,8 @@ spret_type cast_malign_gateway(actor * caster, int pow, god_type god, bool fail)
         env.grid(point) = DNGN_MALIGN_GATEWAY;
 
         noisy(10, point);
-        mpr("The dungeon shakes, a horrible noise fills the air, and a portal "
-            "to some otherworldly place is opened!", MSGCH_WARN);
+        mpr(_("The dungeon shakes, a horrible noise fills the air, and a portal "
+            "to some otherworldly place is opened!"), MSGCH_WARN);
 
         if (one_chance_in(5) && caster->is_player())
         {
@@ -1261,7 +1261,7 @@ spret_type cast_malign_gateway(actor * caster, int pow, god_type god, bool fail)
     }
     // We don't care if monsters fail to cast it.
     if (is_player)
-        mpr("A gateway cannot be opened in this cramped space!");
+        mpr(_("A gateway cannot be opened in this cramped space!"));
 
     return SPRET_ABORT;
 }
@@ -1490,21 +1490,21 @@ static void _display_undead_motions(int motions)
 
     // Check bitfield from _raise_remains for types of corpse(s) being animated.
     if (motions & DEAD_ARE_WALKING)
-        motions_list.push_back("walking");
+        motions_list.push_back(pgettext("summoning","walking"));
     if (motions & DEAD_ARE_HOPPING)
-        motions_list.push_back("hopping");
+        motions_list.push_back(pgettext("summoning","hopping"));
     if (motions & DEAD_ARE_SWIMMING)
-        motions_list.push_back("swimming");
+        motions_list.push_back(pgettext("summoning","swimming"));
     if (motions & DEAD_ARE_FLYING)
-        motions_list.push_back("flying");
+        motions_list.push_back(pgettext("summoning","flying"));
     if (motions & DEAD_ARE_SLITHERING)
-        motions_list.push_back("slithering");
+        motions_list.push_back(pgettext("summoning","slithering"));
 
     // Prevents the message from getting too long and spammy.
     if (motions_list.size() > 3)
-        mpr("The dead have arisen!");
+        mpr(_("The dead have arisen!"));
     else
-        mpr("The dead are " + comma_separated_line(motions_list.begin(),
+        mpr(_("The dead are ") + comma_separated_line(motions_list.begin(),
             motions_list.end()) + "!");
 }
 
@@ -1543,8 +1543,8 @@ static bool _raise_remains(const coord_def &pos, int corps, beh_type beha,
     {
         if (you.see_cell(pos))
         {
-            mprf("The headless hydra %s sways and immediately collapses!",
-                 item.sub_type == CORPSE_BODY ? "corpse" : "skeleton");
+            mprf(_("The headless hydra %s sways and immediately collapses!"),
+                 item.sub_type == CORPSE_BODY ? pgettext("summoning","corpse") : pgettext("summoning","skeleton"));
         }
         return false;
     }
@@ -1680,11 +1680,11 @@ int animate_remains(const coord_def &a, corpse_type class_allowed,
                 // Ignore quiet.
                 if (was_butchering || was_draining)
                 {
-                    mprf("The corpse you are %s rises to %s!",
-                         was_draining ? "drinking from"
-                                      : "butchering",
-                         beha == BEH_FRIENDLY ? "join your ranks"
-                                              : "attack");
+                    mprf(_("The corpse you are %s rises to %s!"),
+                         was_draining ? pgettext("summoning","drinking from")
+                                      : pgettext("summoning","butchering"),
+                         beha == BEH_FRIENDLY ? pgettext("summoning","join your ranks")
+                                              : pgettext("summoning","attack"));
                 }
 
                 if (!quiet && you.see_cell(a))
@@ -1767,7 +1767,7 @@ spret_type cast_animate_skeleton(god_type god, bool fail)
             && mons_class_can_be_zombified(si->mon_type))
         {
             butcher_corpse(*si, B_TRUE);
-            mpr("Before your eyes, flesh is ripped from the corpse!");
+            mpr(_("Before your eyes, flesh is ripped from the corpse!"));
             if (Options.chunks_autopickup)
                 request_autopickup();
             // Only convert the top one.
@@ -1779,7 +1779,7 @@ spret_type cast_animate_skeleton(god_type god, bool fail)
     if (animate_remains(you.pos(), CORPSE_SKELETON, BEH_FRIENDLY,
                         MHITYOU, &you, "", god) < 0)
     {
-        mpr("There is no skeleton here to animate!");
+        mpr(_("There is no skeleton here to animate!"));
     }
 
     return SPRET_SUCCESS;
@@ -1840,8 +1840,8 @@ spret_type cast_simulacrum(int pow, god_type god, bool fail)
            && flesh->sub_type != FOOD_MEAT_RATION
            && flesh->sub_type != FOOD_SAUSAGE)
     {
-        mpr("You need to wield a piece of raw flesh for this spell to be "
-            "effective!");
+        mpr(_("You need to wield a piece of raw flesh for this spell to be "
+            "effective!"));
         return SPRET_ABORT;
     }
 
@@ -1855,7 +1855,7 @@ spret_type cast_simulacrum(int pow, god_type god, bool fail)
         break;
     case FOOD_BEEF_JERKY:
         sim_type = MONS_YAK;
-        name = coinflip() ? "cow" : "bull";
+        name = coinflip() ? pgettext("summoning","cow") : pgettext("summoning","bull");
         break;
     case FOOD_SAUSAGE:
         sim_type = MONS_HOG;
@@ -1934,13 +1934,13 @@ static void _apport_and_butcher(monster *caster, item_def &item)
 
         string theft;
         if (is_being_drained(item))
-            theft = " you were drinking from";
+            theft = _(" you were drinking from");
         else if (is_being_butchered(item))
-            theft = " you were butchering";
+            theft = _(" you were butchering");
 
         if (you.can_see(caster))
         {
-            mprf("%s casts a spell and %s%s float%s close.",
+            mprf(_("%s casts a spell and %s%s float%s close."),
                  caster->name(DESC_THE).c_str(),
                  item_name.c_str(),
                  theft.c_str(),
@@ -1948,7 +1948,7 @@ static void _apport_and_butcher(monster *caster, item_def &item)
         }
         else if (you.see_cell(item.pos))
         {
-            mprf("%s%s suddenly rise%s and float%s away!",
+            mprf(_("%s%s suddenly rise%s and float%s away!"),
                  item_name.c_str(),
                  theft.c_str(),
                  item.quantity > 1 ? "" : "s",
@@ -1963,10 +1963,10 @@ static void _apport_and_butcher(monster *caster, item_def &item)
     // Rot as guaranteed defense.
     if (you.see_cell(caster->pos()))
     {
-        mprf("%s picks up %s%s.",
+        mprf(_("%s picks up %s%s."),
              caster->name(DESC_THE).c_str(),
              item.name(true, apported ? DESC_THE : DESC_A).c_str(),
-             item.base_type == OBJ_CORPSES ? " and starts butchering it"
+             item.base_type == OBJ_CORPSES ? _(" and starts butchering it")
                                            : "");
     }
 
@@ -2035,7 +2035,7 @@ bool monster_simulacrum(monster *caster, bool actual)
                     if (!created++ && cast_visible)
                     {
                         simple_monster_message(caster,
-                            " holds a chunk of flesh high, and a cloud of icy vapour forms.",
+                            _(" holds a chunk of flesh high, and a cloud of icy vapour forms."),
                             caster->friendly() ? MSGCH_FRIEND_SPELL : MSGCH_MONSTER_SPELL);
                     }
 
@@ -2055,14 +2055,14 @@ bool monster_simulacrum(monster *caster, bool actual)
                 if (seen > 1)
                 {
                     mprf(MSGCH_WARN,
-                         "The vapour coalesces into ice likenesses of %s.",
+                         _("The vapour coalesces into ice likenesses of %s."),
                          pluralise(PLU_MON, mons_class_name(sim_type)).c_str());
                 }
                 else if (seen == 1)
                 {
                     const char *name = mons_class_name(sim_type);
                     mprf(MSGCH_WARN,
-                         "The vapour coalesces into an ice likeness of %s.",
+                         _("The vapour coalesces into an ice likeness of %s."),
                          article_a(name).c_str());
                 }
             }
@@ -2112,11 +2112,11 @@ static const char *_count_article(int number, bool definite)
     if (number == 0)
         return "No";
     else if (definite)
-        return "The";
+        return ""; // "The";
     else if (number == 1)
-        return "A";
+        return ""; // "A";
     else
-        return "Some";
+        return "¸î¸î";
 }
 
 bool twisted_resurrection(actor *caster, int pow, beh_type beha,
@@ -2223,21 +2223,21 @@ bool twisted_resurrection(actor *caster, int pow, beh_type beha,
         return false;
 
     if (num_lost)
-        mprf("%s %s into %s!",
+        mprf(pgettext("summoning","%s %s into %s!"),
              _count_article(num_lost, num_crawlies + num_masses == 0),
-             num_lost == 1 ? "corpse collapses" : "corpses collapse",
-             num_lost_piles == 1 ? "a pulpy mess" : "pulpy messes");
+             num_lost == 1 ? pgettext("summoning","corpse collapses") : pgettext("summoning","corpses collapse"),
+             num_lost_piles == 1 ? pgettext("summoning","a pulpy mess") : pgettext("summoning","pulpy messes"));
 
     if (num_crawlies > 0)
-        mprf("%s %s to drag %s along the ground!",
+        mprf(_("%s %s to drag %s along the ground!"),
              _count_article(num_crawlies, num_lost + num_masses == 0),
-             num_crawlies == 1 ? "corpse begins" : "corpses begin",
-             num_crawlies == 1 ? "itself" : "themselves");
+             num_crawlies == 1 ? pgettext("summoning","corpse begins") : pgettext("summoning","corpses begin"),
+             num_crawlies == 1 ? pgettext("summoning","itself") : pgettext("summoning","themselves"));
 
     if (num_masses > 0)
-        mprf("%s corpses meld into %s of writhing flesh!",
+        mprf(_("%s corpses meld into %s of writhing flesh!"),
              _count_article(2, num_crawlies + num_lost == 0),
-             num_masses == 1 ? "an agglomeration" : "agglomerations");
+             num_masses == 1 ? pgettext("summoning","an agglomeration") : pgettext("summoning","agglomerations"));
 
     if (num_orcs > 0 && caster->is_player())
         did_god_conduct(DID_DESECRATE_ORCISH_REMAINS, 2 * num_orcs);
@@ -2253,7 +2253,7 @@ spret_type cast_twisted_resurrection(int pow, god_type god, bool fail)
         return (fail ? SPRET_FAIL : SPRET_SUCCESS);
     else
     {
-        mpr("There are no corpses nearby!");
+        mpr(_("There are no corpses nearby!"));
         return SPRET_ABORT;
     }
 }
@@ -2265,7 +2265,7 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
     if (m == NULL)
     {
         fail_check();
-        mpr("An evil force gathers, but it quickly dissipates.");
+        mpr(_("An evil force gathers, but it quickly dissipates."));
         return SPRET_SUCCESS; // still losing a turn
     }
 
@@ -2308,13 +2308,13 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
 
     if (success > 1)
     {
-        mpr(friendly ? "Insubstantial figures form in the air."
-                     : "You sense hostile presences.");
+        mpr(friendly ? _("Insubstantial figures form in the air.")
+                     : _("You sense hostile presences."));
     }
     else if (success)
     {
-        mpr(friendly ? "An insubstantial figure forms in the air."
-                     : "You sense a hostile presence.");
+        mpr(friendly ? _("An insubstantial figure forms in the air.")
+                     : _("You sense a hostile presence."));
     }
     else
     {
@@ -2356,7 +2356,7 @@ static int _abjuration(int pow, monster *mon)
             sockage = sockage * (30 - mon->hit_dice) / 45;
             if (sockage < duration)
             {
-                simple_god_message(" protects a fellow warrior from your evil magic!",
+                simple_god_message(_(" protects a fellow warrior from your evil magic!"),
                                    GOD_SHINING_ONE);
                 shielded = true;
             }
@@ -2366,7 +2366,7 @@ static int _abjuration(int pow, monster *mon)
             sockage = sockage * 8 / 15;
             if (sockage < duration)
             {
-                simple_god_message(" shields an ally from your puny magic!",
+                simple_god_message(_(" shields an ally from your puny magic!"),
                                    GOD_TROG);
                 shielded = true;
             }
@@ -2435,11 +2435,11 @@ spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail)
 
         if (recalled)
         {
-            mpr("You recall your battlesphere and imbue it with additional"
-                " charge.");
+            mpr(_("You recall your battlesphere and imbue it with additional"
+                " charge."));
         }
         else
-            mpr("You imbue your battlesphere with additional charge.");
+            mpr(_("You imbue your battlesphere with additional charge."));
 
         battlesphere->number = min(20, (int) battlesphere->number
                                    + 4 + random2(pow + 10) / 10);
@@ -2473,16 +2473,16 @@ spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail)
             agent->props["battlesphere"].get_int() = battlesphere->mid;
 
             if (agent->is_player())
-                mpr("You conjure a globe of magical energy.");
+                mpr(_("You conjure a globe of magical energy."));
             else
             {
                 if (you.can_see(agent) && you.can_see(battlesphere))
                 {
                     simple_monster_message(agent->as_monster(),
-                                       " conjures a globe of magical energy!");
+                                       _(" conjures a globe of magical energy!"));
                 }
                 else if (you.can_see(battlesphere))
-                    simple_monster_message(battlesphere, " appears!");
+                    simple_monster_message(battlesphere, _(" appears!"));
                 battlesphere->props["band_leader"].get_int() = agent->mid;
             }
             battlesphere->number = 4 + random2(pow + 10) / 10;
@@ -2511,16 +2511,16 @@ void end_battlesphere(monster* mons, bool killed)
             if (you.can_see(mons))
             {
                 if ((mons->number == 0))
-                    mpr("Your battlesphere expends the last of its energy"
-                        " and dissipates.");
+                    mpr(_("Your battlesphere expends the last of its energy"
+                        " and dissipates."));
                 else
-                    mpr("Your battlesphere wavers and loses cohesion.");
+                    mpr(_("Your battlesphere wavers and loses cohesion."));
             }
             else
-                mpr("You feel your bond with your battlesphere wane.");
+                mpr(_("You feel your bond with your battlesphere wane."));
         }
         else if (you.can_see(mons))
-            simple_monster_message(mons, " dissipates.");
+            simple_monster_message(mons, _(" dissipates."));
 
         place_cloud(CLOUD_MAGIC_TRAIL, mons->pos(),
                     3 + random2(3), mons);
@@ -2720,7 +2720,7 @@ bool fire_battlesphere(monster* mons)
         // Sanity check: if we have somehow ended up targeting ourselves, bail
         if (beam.target == mons->pos())
         {
-            mpr("Battlesphere targetting itself? Fixing.", MSGCH_ERROR);
+            mpr(_("Battlesphere targetting itself? Fixing."), MSGCH_ERROR);
             mons->props.erase("firing");
             mons->props.erase("firing_target");
             mons->props.erase("foe");
@@ -2749,7 +2749,7 @@ bool fire_battlesphere(monster* mons)
                     != beam.path_taken.end()))
         {
             beam.thrower = (agent->is_player()) ? KILL_YOU : KILL_MON;
-            simple_monster_message(mons, " fires!");
+            simple_monster_message(mons, _(" fires!"));
             beam.fire();
 
             used = true;
@@ -2823,13 +2823,13 @@ spret_type cast_fulminating_prism(int pow, const coord_def& where, bool fail)
     if (distance2(where, you.pos()) > dist_range(spell_range(SPELL_FULMINANT_PRISM,
                                                       pow)))
     {
-        mpr("That's too far away.");
+        mpr(_("That's too far away."));
         return SPRET_ABORT;
     }
 
     if (cell_is_solid(where))
     {
-        mpr("You can't conjure that within a solid object!");
+        mpr(_("You can't conjure that within a solid object!"));
         return SPRET_ABORT;
     }
 
@@ -2839,14 +2839,14 @@ spret_type cast_fulminating_prism(int pow, const coord_def& where, bool fail)
     {
         if (you.can_see(mons))
         {
-            mpr("You can't place the prism on a creature.");
+            mpr(_("You can't place the prism on a creature."));
             return SPRET_ABORT;
         }
 
         fail_check();
 
         // FIXME: maybe should do _paranoid_option_disable() here?
-        mpr("You see a ghostly outline there, and the spell fizzles.");
+        mpr(_("You see a ghostly outline there, and the spell fizzles."));
         return SPRET_SUCCESS;      // Don't give free detection!
     }
 
@@ -2861,7 +2861,7 @@ spret_type cast_fulminating_prism(int pow, const coord_def& where, bool fail)
     monster *prism = create_monster(prism_data);
 
     if (prism)
-        mpr("You conjure a prism of explosive energy!");
+        mpr(_("You conjure a prism of explosive energy!"));
     else
         canned_msg(MSG_NOTHING_HAPPENS);
 

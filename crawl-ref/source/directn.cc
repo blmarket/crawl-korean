@@ -976,7 +976,7 @@ bool direction_chooser::move_is_ok() const
 
             if (cancel_at_self)
             {
-                mpr("Sorry, you can't target yourself.", MSGCH_EXAMINE_FILTER);
+                mpr(_("Sorry, you can't target yourself."), MSGCH_EXAMINE_FILTER);
                 return false;
             }
         }
@@ -1306,7 +1306,7 @@ bool direction_chooser::pickup_item()
         ii = env.map_knowledge(target()).item();
     if (!ii || !ii->is_valid(true))
     {
-        mpr("You can't see any item there.", MSGCH_EXAMINE_FILTER);
+        mpr(_("You can't see any item there."), MSGCH_EXAMINE_FILTER);
         return false;
     }
     ii->flags |= ISFLAG_THROWN; // make autoexplore greedy
@@ -1351,7 +1351,7 @@ bool direction_chooser::handle_signals()
         moves.isValid  = false;
         moves.isCancel = true;
 
-        mpr("Targetting interrupted by HUP signal.", MSGCH_ERROR);
+        mpr(_("Targetting interrupted by HUP signal."), MSGCH_ERROR);
         return true;
     }
     return false;
@@ -1523,7 +1523,7 @@ void direction_chooser::print_items_description() const
          get_menu_colour_prefix_tags(*item, DESC_A).c_str());
 
     if (multiple_items_at(target()))
-        mprf(MSGCH_FLOOR_ITEMS, "There is something else lying underneath.");
+        mprf(MSGCH_FLOOR_ITEMS, _("There is something else lying underneath."));
 }
 
 void direction_chooser::print_floor_description(bool boring_too) const
@@ -1579,7 +1579,7 @@ void direction_chooser::toggle_beam()
 {
     if (!needs_path)
     {
-        mprf(MSGCH_EXAMINE_FILTER, "This spell doesn't need a beam path.");
+        mprf(MSGCH_EXAMINE_FILTER, _("This spell doesn't need a beam path."));
         return;
     }
 
@@ -1608,7 +1608,7 @@ bool direction_chooser::select_previous_target()
     }
     else
     {
-        mpr("Your target is gone.", MSGCH_EXAMINE_FILTER);
+        mpr(_("Your target is gone."), MSGCH_EXAMINE_FILTER);
         flush_prev_message();
         return false;
     }
@@ -1884,7 +1884,7 @@ bool direction_chooser::do_main_loop()
             break;
 
         if (!is_map_persistent())
-            mpr("You cannot set exclusions on this level.");
+            mpr(_("You cannot set exclusions on this level."));
         else
         {
             const bool was_excluded = is_exclude_root(target());
@@ -1895,11 +1895,11 @@ bool direction_chooser::do_main_loop()
 #endif
             const bool is_excluded = is_exclude_root(target());
             if (!was_excluded && is_excluded)
-                mpr("Placed new exclusion.");
+                mpr(_("Placed new exclusion."));
             else if (was_excluded && !is_excluded)
-                mpr("Removed exclusion.");
+                mpr(_("Removed exclusion."));
             else
-                mpr("Reduced exclusion size to a single square.");
+                mpr(_("Reduced exclusion size to a single square."));
         }
 
         need_cursor_redraw = true;
@@ -2162,8 +2162,8 @@ void get_square_desc(const coord_def &c, describe_info &inf,
     const int cloudidx = env.cgrid(c);
     if (cloudidx != EMPTY_CLOUD)
     {
-        inf.prefix = "There is a cloud of " + cloud_name_at_index(cloudidx)
-                     + " here.\n\n";
+        inf.prefix = _("There is a cloud of ") + std::string(_(cloud_name_at_index(cloudidx).c_str()))
+                     + _(" here.\n\n");
     }
 }
 
@@ -2230,7 +2230,7 @@ static void _extend_move_to_edge(dist &moves)
 // cache and noted in the Dungeon (O)verview, names the stair.
 static void _describe_oos_square(const coord_def& where)
 {
-    mpr("You can't see that place.", MSGCH_EXAMINE_FILTER);
+    mpr(_("You can't see that place."), MSGCH_EXAMINE_FILTER);
 
     if (!in_bounds(where) || !env.map_knowledge(where).seen())
     {
@@ -3796,7 +3796,7 @@ static bool _print_cloud_desc(const coord_def where)
     if (!areas.empty())
     {
         mprf(gettext("This square %s."),
-             comma_separated_line(areas.begin(), areas.end()).c_str(), "고, "); // (130208) 한글판에서는 번역호환을 위해 해당함수에 인자추가
+             comma_separated_line(areas.begin(), areas.end(), "고, ").c_str()); // (130208) 한글판에서는 번역호환을 위해 해당함수에 인자추가
     }
 
     if (env.cgrid(where) == EMPTY_CLOUD)

@@ -135,20 +135,20 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     you.one_time_ability_used[god] = true;
     calc_mp(); // in case the old brand was antimagic
     string desc  = old_name + " ";
-            desc += (god == GOD_SHINING_ONE   ? "blessed by the Shining One" :
-                     god == GOD_LUGONU        ? "corrupted by Lugonu" :
-                     god == GOD_KIKUBAAQUDGHA ? "bloodied by Kikubaaqudgha"
-                                              : "touched by the gods");
+            desc += (god == GOD_SHINING_ONE   ? _("blessed by the Shining One") :
+                     god == GOD_LUGONU        ? _("corrupted by Lugonu") :
+                     god == GOD_KIKUBAAQUDGHA ? _("bloodied by Kikubaaqudgha")
+                                              : _("touched by the gods"));
 
     take_note(Note(NOTE_ID_ITEM, 0, 0,
               wpn.name(true, DESC_A).c_str(), desc.c_str()));
     wpn.flags |= ISFLAG_NOTED_ID;
 
-    mpr("Your weapon shines brightly!", MSGCH_GOD);
+    mpr(_("Your weapon shines brightly!"), MSGCH_GOD);
 
     flash_view(colour);
 
-    simple_god_message(" booms: Use this gift wisely!");
+    simple_god_message(_(" booms: Use this gift wisely!"));
 
     if (god == GOD_SHINING_ONE)
     {
@@ -186,7 +186,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 static bool _altar_prayer()
 {
     // Different message from when first joining a religion.
-    mpr("You prostrate yourself in front of the altar and pray.");
+    mpr(_("You prostrate yourself in front of the altar and pray."));
 
     god_acting gdact;
 
@@ -233,7 +233,7 @@ static bool _altar_prayer()
         && you.piety > 160)
     {
         simple_god_message(
-            " will bloody your weapon with pain or grant you the Necronomicon.");
+            _(" will bloody your weapon with pain or grant you the Necronomicon."));
 
         bool kiku_did_bless_weapon = false;
 
@@ -247,12 +247,12 @@ static bool _altar_prayer()
             did_something = kiku_did_bless_weapon;
         }
         else
-            mpr("You have no weapon to bloody with pain.");
+            mpr(_("You have no weapon to bloody with pain."));
 
         // If not, ask if the player wants a Necronomicon.
         if (!kiku_did_bless_weapon)
         {
-            if (!yesno("Do you wish to receive the Necronomicon?", true, 'n'))
+            if (!yesno(_("Do you wish to receive the Necronomicon?"), true, 'n'))
                 return false;
 
             int thing_created = items(1, OBJ_BOOKS, BOOK_NECRONOMICON, true, 1,
@@ -266,7 +266,7 @@ static bool _altar_prayer()
 
             if (thing_created != NON_ITEM)
             {
-                simple_god_message(" grants you a gift!");
+                simple_god_message(_(" grants you a gift!"));
                 more();
 
                 you.one_time_ability_used[you.religion] = true;
@@ -287,7 +287,7 @@ void pray()
 {
     if (you.cannot_speak())
     {
-        mpr("You are unable to make a sound!");
+        mpr(_("You are unable to make a sound!"));
         return;
     }
 
@@ -304,7 +304,7 @@ void pray()
         {
             if (you.species == SP_DEMIGOD)
             {
-                mpr("Sorry, a being of your status cannot worship here.");
+                mpr(_("Sorry, a being of your status cannot worship here."));
                 return;
             }
 
@@ -321,15 +321,15 @@ void pray()
         const mon_holy_type holi = you.holiness();
 
         mprf(MSGCH_PRAY,
-             "You spend a moment contemplating the meaning of %s.",
-             holi == MH_NONLIVING || holi == MH_UNDEAD ? "existence" : "life");
+             _("You spend a moment contemplating the meaning of %s."),
+             holi == MH_NONLIVING || holi == MH_UNDEAD ? pgettext("godprayer","existence") : pgettext("godprayer","life"));
 
         // Zen meditation is timeless.
         return;
     }
 
-    mprf(MSGCH_PRAY, "You offer a prayer to %s.",
-         god_name(you.religion).c_str());
+    mprf(MSGCH_PRAY, _("You offer a prayer to %s."),
+         _(god_name(you.religion).c_str()));
 
     if (you.religion == GOD_FEDHAS && fedhas_fungal_bloom())
         something_happened = true;
@@ -340,7 +340,7 @@ void pray()
     if (you.religion == GOD_XOM)
         mpr(getSpeakString("Xom prayer"), MSGCH_GOD);
     else if (player_under_penance())
-        simple_god_message(" demands penance!");
+        simple_god_message(_(" demands penance!"));
     else
         mpr(god_prayer_reaction().c_str(), MSGCH_PRAY, you.religion);
 
@@ -370,13 +370,13 @@ int zin_tithe(item_def& item, int quant, bool quiet, bool converting)
         }
         taken = tithe;
         you.attribute[ATTR_DONATIONS] += tithe;
-        mprf("You pay a tithe of %d gold.", tithe);
+        mprf(_("You pay a tithe of %d gold."), tithe);
 
         if (item.plus == 1) // seen before worshipping Zin
         {
             tithe = 0;
-            simple_god_message(" is a bit unhappy you did not bring this "
-                               "gold earlier.");
+            simple_god_message(_(" is a bit unhappy you did not bring this "
+                               "gold earlier."));
         }
         // A single scroll can give you more than D:1-18, Lair and Orc
         // together, limit the gains.  You're still required to pay from
@@ -419,11 +419,11 @@ static bool _zin_donate_gold()
 {
     if (you.gold == 0)
     {
-        mpr("You don't have anything to sacrifice.");
+        mpr(_("You don't have anything to sacrifice."));
         return false;
     }
 
-    if (!yesno("Do you wish to donate half of your money?", true, 'n'))
+    if (!yesno(_("Do you wish to donate half of your money?"), true, 'n'))
         return false;
 
     const int donation_cost = (you.gold / 2) + 1;
@@ -442,7 +442,7 @@ static bool _zin_donate_gold()
 
     if (donation < 1)
     {
-        simple_god_message(" finds your generosity lacking.");
+        simple_god_message(_(" finds your generosity lacking."));
         return false;
     }
 
@@ -456,22 +456,22 @@ static bool _zin_donate_gold()
     if (player_under_penance())
     {
         if (estimated_piety >= you.penance[GOD_ZIN])
-            mpr("You feel that you will soon be absolved of all your sins.");
+            mpr(_("You feel that you will soon be absolved of all your sins."));
         else
-            mpr("You feel that your burden of sins will soon be lighter.");
+            mpr(_("You feel that your burden of sins will soon be lighter."));
     }
     else
     {
-        string result = "You feel that " + god_name(GOD_ZIN) + " will soon be ";
+        string result = pgettext("zin","You feel that ") + std::string(_(god_name(GOD_ZIN).c_str())) + pgettext("zin"," will soon be ");
         result +=
-            (estimated_piety > 130) ? "exalted by your worship" :
-            (estimated_piety > 100) ? "extremely pleased with you" :
-            (estimated_piety >  70) ? "greatly pleased with you" :
-            (estimated_piety >  40) ? "most pleased with you" :
-            (estimated_piety >  20) ? "pleased with you" :
-            (estimated_piety >   5) ? "noncommittal"
-                                    : "displeased";
-        result += (donation >= 30 && you.piety <= 170) ? "!" : ".";
+            (estimated_piety > 130) ? _("exalted by your worship") :
+            (estimated_piety > 100) ? _("extremely pleased with you") :
+            (estimated_piety >  70) ? _("greatly pleased with you") :
+            (estimated_piety >  40) ? _("most pleased with you") :
+            (estimated_piety >  20) ? _("pleased with you") :
+            (estimated_piety >   5) ? _("noncommittal")
+                                    : _("displeased");
+        result += (donation >= 30 && you.piety <= 170) ? pgettext("zin","!") : ".";
 
         mpr(result.c_str());
     }
@@ -499,10 +499,10 @@ static void _give_sac_group_feedback(int which)
 {
     ASSERT(which >= 0 && which < 5);
     const char* names[] = {
-        "Escape", "Destruction", "Dungeons", "Summoning", "Wonder"
+        M_("Escape"), M_("Destruction"), M_("Dungeons"), M_("Summoning"), M_("Wonder")
     };
-    mprf(MSGCH_GOD, "A symbol of %s coalesces before you, then vanishes.",
-         names[which]);
+    mprf(MSGCH_GOD, _("A symbol of %s coalesces before you, then vanishes."),
+         _(names[which]));
 }
 
 static void _ashenzari_sac_scroll(const item_def& item)
@@ -518,7 +518,7 @@ static void _ashenzari_sac_scroll(const item_def& item)
                    0, 0, GOD_ASHENZARI);
     if (it == NON_ITEM)
     {
-        mpr("You feel the world is against you.");
+        mpr(_("You feel the world is against you."));
         return;
     }
 
@@ -623,16 +623,16 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
         {
             if (unholy_weapon || evil_weapon)
             {
-                const char *desc_weapon = evil_weapon ? "evil" : "unholy";
+                const char *desc_weapon = evil_weapon ? _("evil") : _("unholy");
 
                 // Print this in addition to the above!
                 if (first)
                 {
                     simple_god_message(make_stringf(
-                             " welcomes the destruction of %s %s weapon%s.",
+                             _(" welcomes the destruction of %s %s weapon%s."),
                              item.quantity == 1 ? "this" : "these",
                              desc_weapon,
-                             item.quantity == 1 ? ""     : "s").c_str(),
+                             item.quantity == 1 ? ""     : pgettext("sssss","s")).c_str(),
                              GOD_ELYVILON);
                 }
             }
@@ -875,29 +875,29 @@ static bool _offer_items()
         ASSERT(disliked_item);
 
         if (item_is_orb(*disliked_item))
-            simple_god_message(" wants the Orb's power used on the surface!");
+            simple_god_message(_(" wants the Orb's power used on the surface!"));
         else if (item_is_rune(*disliked_item))
-            simple_god_message(" wants the runes to be proudly displayed.");
+            simple_god_message(_(" wants the runes to be proudly displayed."));
         else if (item_is_horn_of_geryon(*disliked_item))
-            simple_god_message(" doesn't want your path blocked.");
+            simple_god_message(_(" doesn't want your path blocked."));
         // Zin was handled above, and the other gods don't care about
         // sacrifices.
         else if (god_likes_fresh_corpses(you.religion))
-            simple_god_message(" only cares about fresh corpses!");
+            simple_god_message(_(" only cares about fresh corpses!"));
         else if (you.religion == GOD_BEOGH)
-            simple_god_message(" only cares about orcish remains!");
+            simple_god_message(_(" only cares about orcish remains!"));
         else if (you.religion == GOD_NEMELEX_XOBEH)
             if (disliked_item->base_type == OBJ_GOLD)
-                simple_god_message(" does not care about gold!");
+                simple_god_message(_(" does not care about gold!"));
             else
-                simple_god_message(" expects you to use your decks, not offer them!");
+                simple_god_message(_(" expects you to use your decks, not offer them!"));
         else if (you.religion == GOD_ASHENZARI)
-            simple_god_message(" can corrupt only scrolls of remove curse.");
+            simple_god_message(_(" can corrupt only scrolls of remove curse."));
     }
     if (num_sacced == 0 && you.religion == GOD_ELYVILON)
     {
-        mprf("There are no %sweapons here to destroy!",
-             you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : "unholy or evil ");
+        mprf(_("There are no %sweapons here to destroy!"),
+             you.piety_max[GOD_ELYVILON] < piety_breakpoint(2) ? "" : _("unholy or evil "));
     }
 
     return (num_sacced > 0);

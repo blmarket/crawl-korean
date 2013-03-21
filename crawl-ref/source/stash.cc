@@ -1249,8 +1249,8 @@ void LevelStashes::no_stash(int x, int y)
         m_stashes[ newStash.abs_pos() ] = newStash;
     }
 
-    mpr(en? "I'll no longer ignore what I see on this square."
-          : "Ok, I'll ignore what I see on this square.");
+    mpr(en? _("I'll no longer ignore what I see on this square.")
+          : _("Ok, I'll ignore what I see on this square."));
 }
 
 void LevelStashes::add_stash(int x, int y)
@@ -1773,7 +1773,7 @@ void StashTracker::search_stashes()
 
     if (!search->valid() && csearch != "*")
     {
-        mpr("Your search expression is invalid.", MSGCH_PLAIN);
+        mpr(_("Your search expression is invalid."), MSGCH_PLAIN);
         lastsearch = help;
         return ;
     }
@@ -1782,13 +1782,13 @@ void StashTracker::search_stashes()
 
     if (results.empty())
     {
-        mpr("Can't find anything matching that.", MSGCH_PLAIN);
+        mpr(_("Can't find anything matching that."), MSGCH_PLAIN);
         return;
     }
 
     if (results.size() > SEARCH_SPAM_THRESHOLD)
     {
-        mpr("Too many matches; use a more specific search.", MSGCH_PLAIN);
+        mpr(_("Too many matches; use a more specific search."), MSGCH_PLAIN);
         return;
     }
 

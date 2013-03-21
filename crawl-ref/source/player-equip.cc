@@ -404,7 +404,7 @@ static void _unequip_artefact_effect(item_def &item,
 
     if (proprt[ARTP_MUTAGENIC] && !meld)
     {
-        mpr("Mutagenic energies flood into your body!");
+        mpr(_("Mutagenic energies flood into your body!"));
         contaminate_player(7, true);
     }
 
@@ -614,7 +614,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
 
                 case SPWPN_SPEED:
                     mprf(gettext("Your %s tingle!"),
-                         you.hand_name(true).c_str());
+                         _(you.hand_name(true).c_str()));
                     break;
 
                 case SPWPN_FLAME:
@@ -667,7 +667,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 case SPWPN_PENETRATION:
                     mprf(gettext("Your %s briefly pass through it before you manage "
                          "to get a firm grip on it."),
-                         you.hand_name(true).c_str());
+                         _(you.hand_name(true).c_str()));
                     break;
 
                 case SPWPN_REAPING:
@@ -1172,12 +1172,12 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_FIRE:
-        mpr("You feel more attuned to fire.");
+        mpr(_("You feel more attuned to fire."));
         ident = ID_KNOWN_TYPE;
         break;
 
     case RING_ICE:
-        mpr("You feel more attuned to ice.");
+        mpr(_("You feel more attuned to ice."));
         ident = ID_KNOWN_TYPE;
         break;
 

@@ -91,7 +91,7 @@ void jiyva_eat_offlevel_items()
 
                 // Needs a message now to explain possible hp or mp
                 // gain from jiyva_slurp_bonus()
-                mpr("You hear a distant slurping noise.");
+                mpr(_("You hear a distant slurping noise."));
                 sacrifice_item_stack(*si, &js);
                 item_was_destroyed(*si);
                 destroy_item(si.link());
@@ -139,11 +139,11 @@ void jiyva_slurp_message(int js)
     if (js != JS_NONE)
     {
         if (js & JS_FOOD)
-            mpr("You feel a little less hungry.");
+            mpr(_("You feel a little less hungry."));
         if (js & JS_MP)
-            mpr("You feel your power returning.");
+            mpr(_("You feel your power returning."));
         if (js & JS_HP)
-            mpr("You feel a little better.");
+            mpr(_("You feel a little better."));
     }
 }
 
@@ -280,64 +280,64 @@ string ash_describe_bondage(int flags, bool level)
     {
         if (you.bondage[ET_WEAPON] == you.bondage[ET_SHIELD])
         {
-            desc = make_stringf("Your %s are %sbound.\n",
-                                you.hand_name(true).c_str(),
-                                you.bondage[ET_WEAPON] ? "" : "not ");
+            desc = make_stringf(_("Your %s are %sbound.\n"),
+                                _(you.hand_name(true).c_str()),
+                                you.bondage[ET_WEAPON] ? "" : pgettext("godpassive","not "));
         }
         else
         {
-            desc = make_stringf("Your %s %s is bound but not your %s %s.\n",
-                                you.bondage[ET_WEAPON] ? "weapon" : "shield",
-                                you.hand_name(false).c_str(),
-                                you.bondage[ET_WEAPON] ? "shield" : "weapon",
-                                you.hand_name(false).c_str());
+            desc = make_stringf(_("Your %s %s is bound but not your %s %s.\n"),
+                                you.bondage[ET_WEAPON] ? pgettext("godpassive","weapon") : pgettext("godpassive","shield"),
+                                _(you.hand_name(false).c_str()),
+                                you.bondage[ET_WEAPON] ? pgettext("godpassive","shield") : pgettext("godpassive","weapon"),
+                                _(you.hand_name(false).c_str()));
         }
     }
     else if (flags & ETF_WEAPON && you.bondage[ET_WEAPON] != -1)
     {
-        desc = make_stringf("Your weapon %s is %sbound.\n",
-                            you.hand_name(false).c_str(),
-                            you.bondage[ET_WEAPON] ? "" : "not ");
+        desc = make_stringf(_("Your weapon %s is %sbound.\n"),
+                            _(you.hand_name(false).c_str()),
+                            you.bondage[ET_WEAPON] ? "" : pgettext("godpassive","not "));
     }
     else if (flags & ETF_SHIELD && you.bondage[ET_SHIELD] != -1)
     {
-        desc = make_stringf("Your shield %s is %sbound.\n",
-                            you.hand_name(false).c_str(),
-                            you.bondage[ET_SHIELD] ? "" : "not ");
+        desc = make_stringf(_("Your shield %s is %sbound.\n"),
+                            _(you.hand_name(false).c_str()),
+                            you.bondage[ET_SHIELD] ? "" : pgettext("godpassive","not "));
     }
 
     if (flags & ETF_ARMOUR && flags & ETF_JEWELS
         && you.bondage[ET_ARMOUR] == you.bondage[ET_JEWELS]
         && you.bondage[ET_ARMOUR] != -1)
     {
-        desc += make_stringf("You are %s bound in armour and magic.\n",
-                             you.bondage[ET_ARMOUR] == 0 ? "not" :
-                             you.bondage[ET_ARMOUR] == 1 ? "partially"
-                                                         : "fully");
+        desc += make_stringf(_("You are %s bound in armour and magic.\n"),
+                             you.bondage[ET_ARMOUR] == 0 ? pgettext("godpassive","not") :
+                             you.bondage[ET_ARMOUR] == 1 ? pgettext("godpassive","partially")
+                                                         : pgettext("godpassive","fully"));
     }
     else
     {
         if (flags & ETF_ARMOUR && you.bondage[ET_ARMOUR] != -1)
-            desc += make_stringf("You are %s bound in armour.\n",
-                                 you.bondage[ET_ARMOUR] == 0 ? "not" :
-                                 you.bondage[ET_ARMOUR] == 1 ? "partially"
-                                                             : "fully");
+            desc += make_stringf(_("You are %s bound in armour.\n"),
+                                 you.bondage[ET_ARMOUR] == 0 ? pgettext("godpassive","not") :
+                                 you.bondage[ET_ARMOUR] == 1 ? pgettext("godpassive","partially")
+                                                             : pgettext("godpassive","fully"));
 
         if (flags & ETF_JEWELS && you.bondage[ET_JEWELS] != -1)
-            desc += make_stringf("You are %s bound in magic.\n",
-                                 you.bondage[ET_JEWELS] == 0 ? "not" :
-                                 you.bondage[ET_JEWELS] == 1 ? "partially"
-                                                             : "fully");
+            desc += make_stringf(_("You are %s bound in magic.\n"),
+                                 you.bondage[ET_JEWELS] == 0 ? pgettext("godpassive","not") :
+                                 you.bondage[ET_JEWELS] == 1 ? pgettext("godpassive","partially")
+                                                             : pgettext("godpassive","fully"));
     }
 
     if (level)
     {
-        desc += make_stringf("You are %s bound.",
-                             you.bondage_level == 0 ? "not" :
-                             you.bondage_level == 1 ? "slightly" :
-                             you.bondage_level == 2 ? "moderately" :
-                             you.bondage_level == 3 ? "seriously" :
-                             you.bondage_level == 4 ? "fully"
+        desc += make_stringf(_("You are %s bound."),
+                             you.bondage_level == 0 ? pgettext("godpassive","not") :
+                             you.bondage_level == 1 ? pgettext("godpassive","slightly") :
+                             you.bondage_level == 2 ? pgettext("godpassive","moderately") :
+                             you.bondage_level == 3 ? pgettext("godpassive","seriously") :
+                             you.bondage_level == 4 ? pgettext("godpassive","fully")
                                                     : "buggily");
     }
 

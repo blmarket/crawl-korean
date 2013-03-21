@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Misc stuff.
 **/
@@ -158,7 +158,7 @@ static bool _print_error_screen(const char *message, ...)
     //       any formatting!
     error_msg = replace_all(error_msg, "<", "<<");
 
-    error_msg += "\n\n\nHit any key to exit...\n";
+    error_msg += _("\n\n\nHit any key to exit...\n");
 
     // Break message into correctly sized lines.
     int width = 80;
@@ -243,7 +243,7 @@ NORETURN void end(int exit_code, bool print_error, const char *format, ...)
     if (need_pause && exit_code && !crawl_state.game_is_arena()
         && !crawl_state.seen_hups && !crawl_state.test)
     {
-        fprintf(stderr, "Hit Enter to continue...\n");
+        fprintf(stderr, _("Hit Enter to continue...\n"));
         getchar();
     }
 #endif
@@ -535,7 +535,7 @@ bool yes_or_no(const char* fmt, ...)
     va_end(args);
     buf[sizeof(buf)-1] = 0;
 
-    mprf(MSGCH_PROMPT, "%s? (Confirm with \"yes\".) ", buf);
+    mprf(MSGCH_PROMPT, _("%s? (Confirm with \"yes\".) "), buf);
 
     if (cancelable_get_line(buf, sizeof buf))
         return false;
@@ -620,8 +620,8 @@ bool yesno(const char *str, bool safe, int safeanswer, bool clear_after,
         else if (!noprompt)
         {
             bool upper = (!safe && crawl_state.game_is_hints_tutorial());
-            const string pr = make_stringf("%s[Y]es or [N]o only, please.",
-                                           upper ? "Uppercase " : "");
+            const string pr = make_stringf(_("%s[Y]es or [N]o only, please."),
+                                           upper ? _("Uppercase ") : "");
 #ifdef TOUCH_UI
             status->text = pr;
 #else
@@ -675,11 +675,11 @@ static string _list_allowed_keys(char yes1, char yes2, bool lowered = false,
                                  bool allow_all = false)
 {
     string result = " [";
-    result += (lowered ? "(y)es" : "(Y)es");
+    result += (lowered ? _("(y)es") : _("(Y)es"));
     result += _list_alternative_yes(yes1, yes2, lowered);
     if (allow_all)
-        result += (lowered? "/(a)ll" : "/(A)ll");
-    result += (lowered ? "/(n)o/(q)uit" : "/(N)o/(Q)uit");
+        result += (lowered? _("/(a)ll") : _("/(A)ll"));
+    result += (lowered ? _("/(n)o/(q)uit") : _("/(N)o/(Q)uit"));
     result += "]";
 
     return result;
@@ -736,16 +736,16 @@ int yesnoquit(const char* str, bool safe, int safeanswer, bool allow_all,
             else
             {
                 bool upper = (!safe && crawl_state.game_is_hints_tutorial());
-                mprf("Choose %s[Y]es%s, [N]o, [Q]uit, or [A]ll!",
-                     upper ? "uppercase " : "",
+                mprf(_("Choose %s[Y]es%s, [N]o, [Q]uit, or [A]ll!"),
+                     upper ? _("uppercase ") : "",
                      _list_alternative_yes(alt_yes, alt_yes2, false, true).c_str());
             }
         }
         else
         {
             bool upper = (!safe && crawl_state.game_is_hints_tutorial());
-            mprf("%s[Y]es%s, [N]o or [Q]uit only, please.",
-                 upper ? "Uppercase " : "",
+            mprf(_("%s[Y]es%s, [N]o or [Q]uit only, please."),
+                 upper ? _("Uppercase ") : "",
                  _list_alternative_yes(alt_yes, alt_yes2, false, true).c_str());
         }
     }

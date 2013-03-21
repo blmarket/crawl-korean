@@ -356,9 +356,9 @@ void stop_delay(bool stop_stair_travel, bool force_unsafe)
                        "Keep equipping yourself?" :
                        "Keep disrobing?", false, 0, false))
             {
-                mprf("You stop %s your armour.",
-                     delay.type == DELAY_ARMOUR_ON ? "putting on"
-                                                   : "removing");
+                mprf(_("You stop %s your armour."),
+                     delay.type == DELAY_ARMOUR_ON ? pgettext("delay","putting on")
+                                                   : pgettext("delay","removing"));
                 _pop_delay();
             }
             else
@@ -1133,8 +1133,8 @@ static void _finish_delay(const delay_queue_item &delay)
             default:
                 if (!you.is_habitable(pass))
                 {
-                    mpr("...yet there is something new on the other side. "
-                        "You quickly turn back.");
+                    mpr(_("...yet there is something new on the other side. "
+                        "You quickly turn back."));
                     goto passwall_aborted;
                 }
                 break;
@@ -1156,7 +1156,7 @@ static void _finish_delay(const delay_queue_item &delay)
                 // Might still fail.
                 if (monster_at(pass))
                 {
-                    mpr("...and sense your way blocked. You quickly turn back.");
+                    mpr(_("...and sense your way blocked. You quickly turn back."));
                     goto passwall_aborted;
                 }
 

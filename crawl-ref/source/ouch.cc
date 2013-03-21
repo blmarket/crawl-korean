@@ -311,9 +311,9 @@ int check_your_resists(int hurted, beam_type flavour, string source,
             if (hurted <= 0)
                 canned_msg(MSG_YOU_RESIST);
             else if (multiplier > 50)
-                mpr("The blast sears you terribly!");
+                mpr(_("The blast sears you terribly!"));
             else
-                mpr("The blast sears you!");
+                mpr(_("The blast sears you!"));
 
             if (one_chance_in(3)
                 // delete_mutation() handles MUT_MUTATION_RESISTANCE but not the amulet
@@ -747,7 +747,7 @@ bool drain_exp(bool announce_full)
 
     if (you.experience == 0)
     {
-        mpr("You are drained of all life!");
+        mpr(_("You are drained of all life!"));
         ouch(INSTANT_DEATH, NON_MONSTER, KILLED_BY_DRAINING);
 
         // Return in case death was escaped via wizard mode.
@@ -756,7 +756,7 @@ bool drain_exp(bool announce_full)
 
     if (you.experience_level == 1)
     {
-        mpr("You feel drained.");
+        mpr(_("You feel drained."));
         you.experience = 0;
 
         return true;
@@ -1249,7 +1249,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
             dprf("Damage: %d; Hit points: %d", dam, you.hp);
 
-            if (crawl_state.test || !yesno("Die?", false, 'n'))
+            if (crawl_state.test || !yesno(_("Die?"), false, 'n'))
             {
                 take_note(Note(NOTE_DEATH, you.hp, you.hp_max,
                                 death_desc.c_str()), true);

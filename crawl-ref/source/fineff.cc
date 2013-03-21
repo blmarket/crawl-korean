@@ -126,7 +126,7 @@ void deferred_damage_fineff::merge(const final_effect &fe)
 void lightning_fineff::fire()
 {
     if (you.see_cell(posn))
-        mpr("Electricity arcs through the water!");
+        mpr(_("Electricity arcs through the water!"));
     conduct_electricity(posn, attacker());
 }
 
@@ -139,12 +139,12 @@ void mirror_damage_fineff::fire()
 
     if (att == MID_PLAYER)
     {
-        mpr("Your damage is reflected back at you!");
+        mpr(_("Your damage is reflected back at you!"));
         ouch(damage, NON_MONSTER, KILLED_BY_MIRROR_DAMAGE);
     }
     else if (def == MID_PLAYER)
     {
-        simple_god_message(" mirrors your injury!");
+        simple_god_message(_(" mirrors your injury!"));
 #ifndef USE_TILE_LOCAL
         flash_monster_colour(monster_by_mid(att), RED, 200);
 #endif
@@ -158,7 +158,7 @@ void mirror_damage_fineff::fire()
     }
     else
     {
-        simple_monster_message(monster_by_mid(att), " suffers a backlash!");
+        simple_monster_message(monster_by_mid(att), _(" suffers a backlash!"));
         attack->hurt(defender(), damage);
     }
 }
@@ -240,25 +240,25 @@ void trj_spawn_fineff::fire()
     if (trj)
     {
         const string monnam = trj->name(DESC_THE);
-        mprf("%s shudders%s.", monnam.c_str(),
-             spawned >= 5 ? " alarmingly" :
-             spawned >= 3 ? " violently" :
-             spawned > 1 ? " vigorously" : "");
+        mprf(_("%s shudders%s."), monnam.c_str(),
+             spawned >= 5 ? pgettext("react"," alarmingly") :
+             spawned >= 3 ? pgettext("react"," violently") :
+             spawned > 1 ? pgettext("react"," vigorously") : "");
 
         if (spawned == 1)
-            mprf("%s spits out another jelly.", monnam.c_str());
+            mprf(_("%s spits out another jelly."), monnam.c_str());
         else
         {
-            mprf("%s spits out %s more jellies.",
+            mprf(_("%s spits out %s more jellies."),
                  monnam.c_str(),
                  number_in_words(spawned).c_str());
         }
     }
     else if (spawned == 1)
-        mpr("One of the royal jelly's fragments survives.");
+        mpr(_("One of the royal jelly's fragments survives."));
     else
     {
-        mprf("The dying royal jelly spits out %s more jellies.",
+        mprf(_("The dying royal jelly spits out %s more jellies."),
              number_in_words(spawned).c_str());
     }
 }

@@ -163,7 +163,7 @@ bool deviant_route_warning::warn_continue_travel(
         return true;
 
     target = dest;
-    const string prompt = make_stringf("Have to go through %s. Continue?",
+    const string prompt = make_stringf(_("Have to go through %s. Continue?"),
                                        deviant.describe().c_str());
     // If the user says "Yes, shut up and take me there", we won't ask
     // again for that destination. If the user says "No", we will
@@ -544,7 +544,7 @@ static bool _is_branch_stair(const coord_def& pos)
 static bool _prompt_stop_explore(int es_why)
 {
     return (!(Options.explore_stop_prompt & es_why)
-            || yesno("Stop exploring?", true, 'y', true, false));
+            || yesno(_("Stop exploring?"), true, 'y', true, false));
 }
 
 #define ES_item   (Options.explore_stop & ES_ITEM)
@@ -817,7 +817,7 @@ void explore_pickup_event(int did_pickup, int tried_pickup)
         {
             const string prompt =
                 make_stringf(
-                    gettext("Could not pick up %s here; shall I ignore %s?"),
+                    gettext(_("Could not pick up %s here; shall I ignore %s?")),
                     tried_pickup == 1? gettext(M_("an item")) : gettext(M_("some items")),
                     tried_pickup == 1? gettext(M_("it")) : gettext(M_("them")));
 
@@ -2099,9 +2099,9 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
             if (allow_waypoints)
             {
                 if (waypoint_list)
-                    segs.push_back("* - list branches");
+                    segs.push_back(_("* - list branches"));
                 else if (waycount)
-                    segs.push_back("* - list waypoints");
+                    segs.push_back(_("* - list waypoints"));
             }
 
             if (!trans_travel_dest.empty() && remember_targ)
@@ -2117,7 +2117,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
             shortcuts += ") ";
         }
         mprf(MSGCH_PROMPT, "%s? %s",
-             *to_entrance ? "Entrance to where" : "Where to",
+             *to_entrance ? _("Entrance to where") : _("Where to"),
              shortcuts.c_str());
 
         int keyin = get_ch();
@@ -2352,8 +2352,8 @@ static travel_target _prompt_travel_depth(const level_id &id,
     while (true)
     {
         mesclr();
-        mprf(MSGCH_PROMPT, "What level of %s? "
-             "(default %s, ? - help) ",
+        mprf(MSGCH_PROMPT, _("What level of %s? "
+             "(default %s, ? - help) "),
              branches[target.p.id.branch].longname,
              _get_trans_travel_dest(target, true).c_str());
 
@@ -2936,7 +2936,7 @@ void start_explore(bool grab_items)
         {
             if (Options.auto_sacrifice == OPT_PROMPT)
             {
-                mprnojoin("Things which can be sacrificed:", MSGCH_FLOOR_ITEMS);
+                mprnojoin(_("Things which can be sacrificed:"), MSGCH_FLOOR_ITEMS);
                 for (stack_iterator si(you.visible_igrd(you.pos())); si; ++si)
                     if (si->is_greedy_sacrificeable())
                         mpr_nocap(get_menu_colour_prefix_tags(*si, DESC_A));
@@ -2946,7 +2946,7 @@ void start_explore(bool grab_items)
             if ((Options.auto_sacrifice == OPT_YES
                  || Options.auto_sacrifice == OPT_BEFORE_EXPLORE
                  || Options.auto_sacrifice == OPT_PROMPT
-                    && yesno("Do you want to sacrifice the items here? ", true, 'n'))
+                    && yesno(_("Do you want to sacrifice the items here? "), true, 'n'))
                 && _can_sacrifice(you.pos()))
             {
                 pray();
@@ -4303,7 +4303,7 @@ template <class C> void explore_discoveries::say_any(
 
     if (has_duplicates(coll.begin(), coll.end()))
     {
-        mprf("Found %s %s.", number_in_words(size).c_str(), category);
+        mprf(_("Found %s %s."), number_in_words(size).c_str(), category);
         return;
     }
 
@@ -4311,7 +4311,7 @@ template <class C> void explore_discoveries::say_any(
         comma_separated_line(coll.begin(), coll.end()).c_str());
 
     if (strwidth(message) >= get_number_of_cols())
-        mprf("Found %s %s.", number_in_words(size).c_str(), category);
+        mprf(_("Found %s %s."), number_in_words(size).c_str(), category);
     else
         mprf("%s", message.c_str());
 }
@@ -4349,7 +4349,7 @@ bool explore_discoveries::prompt_stop() const
         mprf("%s", marker_msgs[i].c_str());
 
     for (unsigned int i = 0; i < marked_feats.size(); i++)
-        mprf("Found %s", marked_feats[i].c_str());
+        mprf(_("Found %s"), marked_feats[i].c_str());
 
     if (!es_flags)
         return marker_stop;

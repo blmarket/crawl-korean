@@ -1680,7 +1680,7 @@ static void _confused_move_dir(monster *mons)
                     // But don't spam.
                     mons->props["no_conf_move"] = where;
                     simple_monster_message(mons,
-                        make_stringf(" stays still, afraid of the %s.",
+                        make_stringf(_(" stays still, afraid of the %s."),
                         feat_type_name(grd(*ai))).c_str());
                 }
                 mmov.reset();
@@ -1905,11 +1905,11 @@ void handle_monster_move(monster* mons)
                 {
                     if (you.can_see(mons))
                     {
-                        simple_monster_message(mons, " crackles loudly.",
+                        simple_monster_message(mons, _(" crackles loudly."),
                                                MSGCH_WARN);
                     }
                     else
-                        mpr("You hear a loud crackle.", MSGCH_SOUND);
+                        mpr(_("You hear a loud crackle."), MSGCH_SOUND);
                 }
                 // Done this way to keep the detonation timer predictable
                 mons->speed_increment -= 10;
@@ -3363,10 +3363,10 @@ static bool _do_move_monster(monster* mons, const coord_def& delta)
     if (mons->is_constricted())
     {
         if (mons->attempt_escape())
-            simple_monster_message(mons, " escapes!");
+            simple_monster_message(mons, _(" escapes!"));
         else
         {
-            simple_monster_message(mons, " struggles to escape constriction.");
+            simple_monster_message(mons, _(" struggles to escape constriction."));
             _swim_or_move_energy(mons);
             return true;
         }

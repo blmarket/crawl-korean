@@ -57,7 +57,7 @@ int identify(int power, int item_slot, string *pre_msg)
     {
         if (item_slot == -1)
         {
-            item_slot = prompt_invent_item("Identify which item?", MT_INVLIST,
+            item_slot = prompt_invent_item(_("Identify which item?"), MT_INVLIST,
                                            OSEL_UNIDENT, true, true, false);
         }
         if (prompt_failed(item_slot))
@@ -68,7 +68,7 @@ int identify(int power, int item_slot, string *pre_msg)
         if (fully_identified(item)
             && (!is_deck(item) || top_card_is_known(item)))
         {
-            mpr("Choose an unidentified item, or Esc to abort.");
+            mpr(_("Choose an unidentified item, or Esc to abort."));
             if (Options.auto_list)
                 more();
             item_slot = -1;
@@ -259,11 +259,11 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     {
         if (not_self)
         {
-            mpr("You can only heal others!");
+            mpr(_("You can only heal others!"));
             return -1;
         }
 
-        mpr("You are healed.");
+        mpr(_("You are healed."));
         inc_hp(healed);
         return 1;
     }
@@ -287,19 +287,19 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     {
         if (can_pacify == 0)
         {
-            mprf("The light of Elyvilon fails to reach %s.",
+            mprf(_("The light of Elyvilon fails to reach %s."),
                  mons->name(DESC_THE).c_str());
             return 0;
         }
         else if (can_pacify == -3)
         {
-            mprf("The light of Elyvilon almost touches upon %s.",
+            mprf(_("The light of Elyvilon almost touches upon %s."),
                  mons->name(DESC_THE).c_str());
             return 0;
         }
         else if (can_pacify == -4)
         {
-            mprf("%s is completely unfazed by your meager offer of peace.",
+            mprf(_("%s is completely unfazed by your meager offer of peace."),
                  mons->name(DESC_THE).c_str());
             return 0;
         }
@@ -307,11 +307,11 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
         {
             if (can_pacify == -2)
             {
-                mprf("You cannot pacify this monster while %s is sleeping!",
+                mprf(_("You cannot pacify this monster while %s is sleeping!"),
                      mons->pronoun(PRONOUN_SUBJECTIVE).c_str());
             }
             else
-                mpr("You cannot pacify this monster!");
+                mpr(_("You cannot pacify this monster!"));
             return -1;
         }
     }
@@ -338,15 +338,15 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
         // The feedback no longer tells you if you gained any piety this time,
         // it tells you merely the general rate.
         if (random2(1 + pgain))
-            simple_god_message(" approves of your offer of peace.");
+            simple_god_message(_(" approves of your offer of peace."));
         else
-            mpr("Elyvilon supports your offer of peace.");
+            mpr(_("Elyvilon supports your offer of peace."));
 
         if (is_holy)
             good_god_holy_attitude_change(mons);
         else
         {
-            simple_monster_message(mons, " turns neutral.");
+            simple_monster_message(mons, _(" turns neutral."));
             record_monster_defeat(mons, KILL_PACIFIED);
             mons_pacify(mons, ATT_NEUTRAL);
 
@@ -358,10 +358,10 @@ static int _healing_spell(int healed, int max_healed, bool divine_ability,
     if (mons->heal(healed))
     {
         did_something = true;
-        mprf("You heal %s.", mons->name(DESC_THE).c_str());
+        mprf(_("You heal %s."), mons->name(DESC_THE).c_str());
 
         if (mons->hit_points == mons->max_hit_points)
-            simple_monster_message(mons, " is completely healed.");
+            simple_monster_message(mons, _(" is completely healed."));
         else
             print_wounds(mons);
     }
@@ -425,19 +425,19 @@ void antimagic()
     if (you.duration[DUR_TELEPORT] > 0)
     {
         you.duration[DUR_TELEPORT] = 0;
-        mpr("You feel strangely stable.", MSGCH_DURATION);
+        mpr(_("You feel strangely stable."), MSGCH_DURATION);
     }
 
     if (you.duration[DUR_PETRIFYING] > 0)
     {
         you.duration[DUR_PETRIFYING] = 0;
-        mpr("You feel limber!", MSGCH_DURATION);
+        mpr(_("You feel limber!"), MSGCH_DURATION);
     }
 
     if (you.attribute[ATTR_DELAYED_FIREBALL])
     {
         you.attribute[ATTR_DELAYED_FIREBALL] = 0;
-        mpr("Your charged fireball dissipates.", MSGCH_DURATION);
+        mpr(_("Your charged fireball dissipates."), MSGCH_DURATION);
     }
 
     // Post-berserk slowing isn't magic, so don't remove that.
@@ -458,8 +458,8 @@ void antimagic()
     if (need_msg)
     {
         mprf(danger ? MSGCH_DANGER : MSGCH_WARN,
-             "%sYour magical effects are unravelling.",
-             danger ? "Careful! " : "");
+             _("%sYour magical effects are unravelling."),
+             danger ? _("Careful! ") : "");
     }
 
     contaminate_player(-1 * (1 + random2(5)));
@@ -614,11 +614,11 @@ static bool _selectively_remove_curse(string *pre_msg)
     {
         if (!any_items_to_select(OSEL_CURSED_WORN, false) && used)
         {
-            mpr("You have uncursed all your worn items.");
+            mpr(_("You have uncursed all your worn items."));
             return used;
         }
 
-        int item_slot = prompt_invent_item("Uncurse which item?", MT_INVLIST,
+        int item_slot = prompt_invent_item(_("Uncurse which item?"), MT_INVLIST,
                                            OSEL_CURSED_WORN, true, true, false);
         if (prompt_failed(item_slot))
             return used;
@@ -629,7 +629,7 @@ static bool _selectively_remove_curse(string *pre_msg)
             || !item_is_equipped(item)
             || &item == you.weapon() && !is_weapon(item))
         {
-            mpr("Choose a cursed equipped item, or Esc to abort.");
+            mpr(_("Choose a cursed equipped item, or Esc to abort."));
             if (Options.auto_list)
                 more();
             continue;
@@ -683,11 +683,11 @@ bool remove_curse(bool alreadyknown, string *pre_msg)
     {
         if (pre_msg)
             mpr(*pre_msg);
-        mpr("You feel as if something is helping you.");
+        mpr(_("You feel as if something is helping you."));
         learned_something_new(HINT_REMOVED_CURSE);
     }
     else if (alreadyknown)
-        mpr("None of your equipped items are cursed.", MSGCH_PROMPT);
+        mpr(_("None of your equipped items are cursed."), MSGCH_PROMPT);
     else
     {
         if (pre_msg)
@@ -702,7 +702,7 @@ static bool _selectively_curse_item(bool armour, string *pre_msg)
 {
     while (1)
     {
-        int item_slot = prompt_invent_item("Curse which item?", MT_INVLIST,
+        int item_slot = prompt_invent_item(_("Curse which item?"), MT_INVLIST,
                                            armour ? OSEL_UNCURSED_WORN_ARMOUR
                                                   : OSEL_UNCURSED_WORN_JEWELLERY,
                                            true, true, false);
@@ -716,8 +716,8 @@ static bool _selectively_curse_item(bool armour, string *pre_msg)
             || armour && item.base_type != OBJ_ARMOUR
             || !armour && item.base_type != OBJ_JEWELLERY)
         {
-            mprf("Choose an uncursed equipped piece of %s, or Esc to abort.",
-                 armour ? "armour" : "jewellery");
+            mprf(_("Choose an uncursed equipped piece of %s, or Esc to abort."),
+                 armour ? _(M_("armour")) : _(M_("jewellery")));
             if (Options.auto_list)
                 more();
             continue;
@@ -754,8 +754,8 @@ bool curse_item(bool armour, bool alreadyknown, string *pre_msg)
     {
         if (you.religion == GOD_ASHENZARI && alreadyknown)
         {
-            mprf(MSGCH_PROMPT, "You aren't wearing any piece of uncursed %s.",
-                 armour ? "armour" : "jewellery");
+            mprf(MSGCH_PROMPT, _("You aren't wearing any piece of uncursed %s."),
+                 armour ? _(M_("armour")) : _(M_("jewellery")));
         }
         else
         {
@@ -842,8 +842,8 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
 
         if (!success)
         {
-            mprf(none_vis ? "You briefly glimpse something next to %s."
-                        : "You need more space to imprison %s.",
+            mprf(none_vis ? _("You briefly glimpse something next to %s.")
+                        : _("You need more space to imprison %s."),
                 targname.c_str());
             return false;
         }
@@ -933,11 +933,11 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
     {
         if (zin)
         {
-            mprf("Zin imprisons %s with walls of pure silver!",
+            mprf(_("Zin imprisons %s with walls of pure silver!"),
                  targname.c_str());
         }
         else
-            mpr("Walls emerge from the floor!");
+            mpr(_("Walls emerge from the floor!"));
 
         you.update_beholders();
         you.update_fearmongers();
@@ -954,7 +954,7 @@ bool entomb(int pow)
     // Zotdef - turned off
     if (crawl_state.game_is_zotdef())
     {
-        mpr("The dungeon rumbles ominously, and rocks fall from the ceiling!");
+        mpr(_("The dungeon rumbles ominously, and rocks fall from the ceiling!"));
         return false;
     }
     if (_do_imprison(pow, you.pos(), false))
@@ -1006,7 +1006,7 @@ bool cast_smiting(int pow, monster* mons)
     {
         set_attack_conducts(conducts, mons);
 
-        mprf("You smite %s!", mons->name(DESC_THE).c_str());
+        mprf(_("You smite %s!"), mons->name(DESC_THE).c_str());
 
         behaviour_event(mons, ME_ANNOY, &you);
     }

@@ -952,7 +952,7 @@ bool show_map(level_pos &lpos,
                 break;
 
             case CMD_MAP_FORGET:
-                if (yesno("Really forget level map?", true, 'n'))
+                if (yesno(_("Really forget level map?"), true, 'n'))
                     forget_map();
                 break;
 

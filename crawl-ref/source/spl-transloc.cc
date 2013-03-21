@@ -1049,12 +1049,12 @@ spret_type cast_semi_controlled_blink(int pow, bool cheap_cancel, bool fail)
 
     while (1)
     {
-        mpr("Which direction? [ESC to cancel]", MSGCH_PROMPT);
+        mpr(_("Which direction? [ESC to cancel]"), MSGCH_PROMPT);
         direction(bmove, args);
 
         if (crawl_state.seen_hups)
         {
-            mpr("Cancelling blink due to HUP.");
+            mpr(_("Cancelling blink due to HUP."));
             return SPRET_ABORT;
         }
 
@@ -1062,7 +1062,7 @@ spret_type cast_semi_controlled_blink(int pow, bool cheap_cancel, bool fail)
             break;
 
         if (cheap_cancel
-            || yesno("Are you sure you want to cancel this blink?", false ,'n'))
+            || yesno(_("Are you sure you want to cancel this blink?"), false ,'n'))
         {
             canned_msg(MSG_OK);
             return SPRET_ABORT;

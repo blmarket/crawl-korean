@@ -552,8 +552,8 @@ bool butchery(int which_corpse, bool bottle_blood)
         if (Options.confirm_butcher == CONFIRM_NEVER
             && !_should_butcher(corpse_id, bottle_blood))
         {
-            mprf("There isn't anything suitable to %s here.",
-                 bottle_blood ? "bottle" : "butcher");
+            mprf(_("There isn't anything suitable to %s here."),
+                 bottle_blood ? pgettext("food","bottle") : pgettext("food","butcher"));
             return false;
         }
 
@@ -1129,7 +1129,7 @@ static bool _player_can_eat_rotten_meat(bool need_msg = false)
         return true;
 
     if (need_msg)
-        mpr("You refuse to eat that rotten meat.");
+        mpr(_("You refuse to eat that rotten meat."));
 
     return false;
 }
@@ -1937,9 +1937,9 @@ static void _eat_chunk(item_def& food)
         int contam = _contamination_ratio(chunk_effect);
         if (player_mutation_level(MUT_SAPROVOROUS) == 3)
         {
-            mprf("This %s flesh tastes %s!",
-                 chunk_effect == CE_ROTTEN   ? "rotting"   : "raw",
-                 x_chance_in_y(contam, 1000) ? "delicious" : "good");
+            mprf(_("This %s flesh tastes %s!"),
+                 chunk_effect == CE_ROTTEN   ? pgettext("food","rotting")   : pgettext("food","raw"),
+                 x_chance_in_y(contam, 1000) ? pgettext("food","delicious") : pgettext("food","good"));
             if (you.species == SP_GHOUL)
             {
                 int hp_amt = 1 + random2(5) + random2(1 + you.experience_level);
@@ -1954,12 +1954,12 @@ static void _eat_chunk(item_def& food)
             if (x_chance_in_y(contam, 1000))
             {
                 if (you.duration[DUR_NAUSEA])
-                    mpr("You can barely stomach this raw meat while nauseous.");
+                    mpr(_("You can barely stomach this raw meat while nauseous."));
                 else
-                    mpr("There is something wrong with this meat.");
+                    mpr(_("There is something wrong with this meat."));
 
                 if (you.duration[DUR_DIVINE_STAMINA] > 0)
-                    mpr("Your divine stamina protects you from sickness.");
+                    mpr(_("Your divine stamina protects you from sickness."));
                 else
                 {
                     if (you.duration[DUR_NAUSEA])
@@ -2012,7 +2012,7 @@ static void _eating(item_def& food)
     if (you.duration[DUR_NAUSEA])
     {
         // possible only when starving or near starving
-        mpr("You force it down, but cannot stomach much of it.");
+        mpr(_("You force it down, but cannot stomach much of it."));
         food_value /= 2;
     }
 
@@ -2043,7 +2043,7 @@ void finished_eating_message(int food_type)
 {
     if (food_type == -2) // non-food, unyay magic cookie
     {
-        mpr("You finish eating.");
+        mpr(_("You finish eating."));
         return;
     }
 
@@ -2187,7 +2187,7 @@ void finished_eating_message(int food_type)
     {
         string taste = getMiscString("eating_cheese");
         if (taste.empty())
-            taste = "Yeuchh! Moldy bug cheese.";
+            taste = _("Yeuchh! Moldy bug cheese.");
         mprf("%s", taste.c_str());
         break;
     }
@@ -2398,7 +2398,7 @@ static int _player_likes_food_type(int type)
         return 0;
 
     case NUM_FOODS:
-        mpr("Bad food type", MSGCH_ERROR);
+        mpr(_("Bad food type"), MSGCH_ERROR);
         return 0;
     }
 
@@ -2519,7 +2519,7 @@ bool can_ingest(const item_def &food, bool suppress_msg, bool check_hunger)
     if (food.is_critical())
     {
         if (!suppress_msg)
-            mpr("Eating this would be a bad idea.");
+            mpr(_("Eating this would be a bad idea."));
         return false;
     }
 
@@ -2528,13 +2528,13 @@ bool can_ingest(const item_def &food, bool suppress_msg, bool check_hunger)
         if (is_poisonous(food))
         {
             if (!suppress_msg)
-                mpr("It contains deadly poison!");
+                mpr(_("It contains deadly poison!"));
             return false;
         }
         if (causes_rot(food))
         {
             if (!suppress_msg)
-                mpr("It is caustic! Not only inedible but also greatly harmful!");
+                mpr(_("It is caustic! Not only inedible but also greatly harmful!"));
             return false;
         }
     }

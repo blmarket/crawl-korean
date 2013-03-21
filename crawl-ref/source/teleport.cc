@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions related to teleportation and blinking.
 **/
@@ -59,7 +59,7 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     bool was_constricted = false;
     const bool jump = type == MONS_JUMPING_SPIDER;
-    const string verb = (jump ? "leap" : "blink");
+    const string verb = (jump ? pgettext("blinkto","leap") : pgettext("blinkto","blink"));
 
     if (is_constricted())
     {
@@ -69,8 +69,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
         {
             if (!quiet)
             {
-                string message = " struggles to " + verb
-                                 + " free from constriction.";
+                string message = _(" struggles to ") + verb
+                                 + _(" free from constriction.");
                 simple_monster_message(this, message.c_str());
             }
             return false;
@@ -79,8 +79,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
 
     if (!quiet)
     {
-        string message = " " + conj_verb(verb)
-                         + (was_constricted ? " free!" : "!");
+        string message = conj_verb(verb); // 메모
+                         //+ (was_constricted ? " free!" : "!");
         simple_monster_message(this, message.c_str());
     }
 
