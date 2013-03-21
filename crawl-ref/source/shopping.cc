@@ -2470,7 +2470,7 @@ string shop_name(const coord_def& where)
 		sh_name += std::string("\"") + rand_store_names[(where.x * 37 + where.y * 23) % 57] + std::string("\"의 ");
 #else
         uint32_t seed = static_cast<uint32_t>(cshop->keeper_name[0])
-            | (static_cast<uibnt32_t>(cshop->keeper_name[1]) << 8)
+            | (static_cast<uint32_t>(cshop->keeper_name[1]) << 8)
             | (static_cast<uint32_t>(cshop->keeper_name[1]) << 16);
 
         sh_name += apostrophise(make_name(seed, false)) + " ";
