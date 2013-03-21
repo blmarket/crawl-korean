@@ -2454,7 +2454,8 @@ string shop_name(const coord_def& where)
 		"드루실라", "나탈리아", "넬리", "헤르미온느", "폴라",
 		"마리", "마르티나", "모니카", "리넷", "루루",
 		"레나", "리자이나", "로럴", "로웨나", "로레타", 
-		"매클", "갈레언", "마발", "사이키", "퀘라", "(버그상점이름)", "(버그상점이름2)" // 55(57)
+		"매클", "갈레언", "마발", "사이키", "퀘라", 
+		"알파", "둠보", "(버그상점이름)", "(버그상점이름2)", "(버그상점이름3)" // 57(60)
 	};
 
     const shop_type type = cshop->type;
@@ -2466,10 +2467,10 @@ string shop_name(const coord_def& where)
     else
     {
 #ifdef KR
-		sh_name += rand_store_names[roll_dice(1,55)-1] + std::string("의 ");
+		sh_name += std::string("\"") + rand_store_names[(where.x * 37 + where.y * 23) % 57] + std::string("\"의 ");
 #else
         uint32_t seed = static_cast<uint32_t>(cshop->keeper_name[0])
-            | (static_cast<uint32_t>(cshop->keeper_name[1]) << 8)
+            | (static_cast<uibnt32_t>(cshop->keeper_name[1]) << 8)
             | (static_cast<uint32_t>(cshop->keeper_name[1]) << 16);
 
         sh_name += apostrophise(make_name(seed, false)) + " ";
