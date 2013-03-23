@@ -10,6 +10,7 @@
 #include "env.h"
 #include "externs.h"
 #include "mapdef.h"
+#include "mon-pick.h"
 
 #include <vector>
 #include <set>
@@ -129,8 +130,6 @@ public:
     map_def map;
     vector<coord_def> exits;
 
-    int level_number;
-
     // The PC has seen at least one square of this vault.
     bool seen;
 
@@ -227,8 +226,7 @@ coord_def dgn_find_nearby_stair(dungeon_feature_type stair_to_find,
                                 coord_def base_pos, bool find_closest);
 
 class mons_spec;
-monster *dgn_place_monster(mons_spec &mspec,
-                           int monster_level, const coord_def& where,
+monster *dgn_place_monster(mons_spec &mspec, coord_def where,
                            bool force_pos = false, bool generate_awake = false,
                            bool patrolling = false);
 int dgn_place_item(const item_spec &spec,
@@ -237,8 +235,7 @@ int dgn_place_item(const item_spec &spec,
 
 class item_list;
 void dgn_place_multiple_items(item_list &list,
-                              const coord_def& where,
-                              int level);
+                              const coord_def& where);
 
 bool set_level_flags(uint32_t flags, bool silent = false);
 bool unset_level_flags(uint32_t flags, bool silent = false);
@@ -268,10 +265,6 @@ void dgn_replace_area(int sx, int sy, int ex, int ey,
                       dungeon_feature_type feature,
                       unsigned mmask = 0, bool needs_update = false);
 
-bool dgn_ensure_vault_placed(bool vault_success,
-                             bool disable_further_vaults);
-
-
 vault_placement *dgn_vault_at(coord_def gp);
 void dgn_seen_vault_at(coord_def gp);
 
@@ -284,10 +277,6 @@ static inline int count_neighbours(const coord_def& p, dungeon_feature_type feat
 string dump_vault_maps();
 
 bool dgn_square_travel_ok(const coord_def &c);
-
-set<coord_def> dgn_spotty_connect_path(
-    const coord_def& from,
-    bool (*overwriteable)(dungeon_feature_type) = NULL);
 
 // Resets travel_point_distance!
 vector<coord_def> dgn_join_the_dots_pathfind(const coord_def &from,

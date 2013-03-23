@@ -410,7 +410,7 @@ int monster::body_weight(bool /*base*/) const
             weight /= 2;
     }
 
-    if (mc == MONS_SKELETON_SMALL || mc == MONS_SKELETON_LARGE)
+    if (mc == MONS_SKELETON)
         weight /= 2;
 
     // Slime creature weight is multiplied by the number merged.
@@ -2203,7 +2203,7 @@ bool monster::pickup_scroll(item_def &item, int near)
 {
     if (item.sub_type != SCR_TELEPORTATION
         && item.sub_type != SCR_BLINKING
-        && item.sub_type != SCR_UNHOLY_CREATION)
+        && item.sub_type != SCR_SUMMONING)
     {
         return false;
     }
@@ -3801,12 +3801,8 @@ int monster::res_rotting(bool temp) const
         res = 0;
         break;
     case MH_UNDEAD:
-        if (mons_base_char(type) == 'n'
-            || type == MONS_ZOMBIE_SMALL
-            || type == MONS_ZOMBIE_LARGE)
-        {
+        if (mons_base_char(type) == 'n' || type == MONS_ZOMBIE)
             res = 1;
-        }
         else
             res = 3;
         break;
@@ -4912,8 +4908,7 @@ bool monster::polymorph(int pow)
 static bool _mons_is_icy(int mc)
 {
     return (mc == MONS_ICE_BEAST
-            || mc == MONS_SIMULACRUM_SMALL
-            || mc == MONS_SIMULACRUM_LARGE
+            || mc == MONS_SIMULACRUM
             || mc == MONS_ICE_STATUE);
 }
 
@@ -4944,8 +4939,7 @@ bool monster::is_fiery() const
 
 static bool _mons_is_skeletal(int mc)
 {
-    return (mc == MONS_SKELETON_SMALL
-            || mc == MONS_SKELETON_LARGE
+    return (mc == MONS_SKELETON
             || mc == MONS_BONE_DRAGON
             || mc == MONS_SKELETAL_WARRIOR
             || mc == MONS_FLYING_SKULL

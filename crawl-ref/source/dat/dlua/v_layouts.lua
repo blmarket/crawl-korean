@@ -52,20 +52,20 @@ function vaults_default_options()
 
   -- Main options table
   local options = {
-    max_rooms = 27, -- Maximum number of rooms to attempt to place
+    max_rooms = 20, -- Maximum number of rooms to attempt to place
     max_room_depth = 0, -- No max depth (not implemented yet anyway)
     min_distance_from_wall = 2, -- Room must be at least this far from outer walls (in open areas). Reduces chokepoints.
     -- The following settings (in addition to max_rooms) can adjust how long it takes to build a level, at the expense of potentially less intereting layouts
-    max_room_tries = 27, -- How many *consecutive* rooms can fail to place before we exit the entire routine
-    max_place_tries = 50, -- How many times we will attempt to place *each room* before picking another
+    max_room_tries = 10, -- How many *consecutive* rooms can fail to place before we exit the entire routine
+    max_place_tries = 20, -- How many times we will attempt to place *each room* before picking another
 
     -- Special option for Vaults (handled in hyper.vaults.floor_vault) - chance out of 100 of placing a stair somewhere in the middle of the floor vault
     stair_chance = 80,
 
     -- Weightings of various types of room generators.
     room_type_weights = {
-      { generator = "code", paint_callback = hyper.vaults.floor_vault, weight = 40, min_size = 6, max_size = 15 }, -- Floor vault
-      { generator = "code", paint_callback = junction_vault_paint_callback, weight = 20, min_size = 10, max_size = 20, min_corridor = 3, max_corridor = 6 }, -- Floor vault ++
+      { generator = "code", paint_callback = hyper.vaults.floor_vault, weight = 50, min_size = 6, max_size = 15 }, -- Floor vault
+      { generator = "code", paint_callback = junction_vault_paint_callback, weight = 10, min_size = 10, max_size = 20, min_corridor = 3, max_corridor = 5 }, -- Floor vault ++
       { generator = "tagged", tag = "vaults_room", weight = 50, max_rooms = 6 },
       { generator = "tagged", tag = "vaults_empty", weight = 40 },
       { generator = "tagged", tag = "vaults_hard", weight = 10, max_rooms = 1 },
@@ -118,7 +118,7 @@ end
 -- but alternately should be able to wire room generators to create initial terrain. Since rooms can now be created from paint arrays _anyway_,
 -- it seems that pre-painting the layout is completely unneccesary and room generation can do anything ...
 function hypervaults.build_layout(e, name, paint, options)
-  if not crawl.game_started() then return end
+  if e.is_validating() then return; end
 
   if _VAULTS_DEBUG then print("Hypervaults Layout: " .. name) end
 
@@ -149,8 +149,7 @@ end
 -- Build any vaults layout from a paint array, useful to quickly prototype
 -- layouts in layout_vaults.des
 function build_vaults_layout(e, name, paint, options)
-
-  if not crawl.game_started() then return end
+  if e.is_validating() then return; end
 
   if _VAULTS_DEBUG then print("Vaults Layout: " .. name) end
 
@@ -166,7 +165,6 @@ end
 
 function build_vaults_ring_layout(e, corridorWidth, outerPadding)
 
-  if not crawl.game_started() then return end
   local gxm, gym = dgn.max_bounds()
 
   local c1 = { x = outerPadding, y = outerPadding }
@@ -187,7 +185,6 @@ end
 function build_vaults_cross_layout(e, corridorWidth, intersect)
 
   -- Ignoring intersect for now
-  if not crawl.game_started() then return end
   local gxm, gym = dgn.max_bounds()
 
   local corridorWidth = 3 + crawl.random2avg(3,2)
@@ -205,8 +202,6 @@ end
 
 function build_vaults_big_room_layout(e, minPadding,maxPadding)
   -- The Big Room
-  -- Sorry, no imps
-  if not crawl.game_started() then return end
   local gxm, gym = dgn.max_bounds()
   local padx,pady = crawl.random_range(minPadding,maxPadding),crawl.random_range(minPadding,maxPadding)
 
@@ -219,7 +214,6 @@ function build_vaults_big_room_layout(e, minPadding,maxPadding)
 end
 
 function build_vaults_chaotic_city_layout(e)
-  if not crawl.game_started() then return end
   local gxm, gym = dgn.max_bounds()
 
   -- Paint entire level with floor
@@ -232,7 +226,6 @@ function build_vaults_chaotic_city_layout(e)
 end
 
 function build_vaults_maze_layout(e,veto_callback, name)
-  if not crawl.game_started() then return end
   local gxm, gym = dgn.max_bounds()
   if name == nil then name = "Maze" end
 

@@ -2562,11 +2562,10 @@ static monster_type _pick_undead_summon()
     static monster_type undead[] =
     {
         MONS_NECROPHAGE, MONS_GHOUL, MONS_HUNGRY_GHOST, MONS_FLAYED_GHOST,
-        MONS_ZOMBIE_SMALL, MONS_SKELETON_SMALL, MONS_SIMULACRUM_SMALL,
+        MONS_ZOMBIE, MONS_SKELETON, MONS_SIMULACRUM, MONS_SPECTRAL_THING,
         MONS_FLYING_SKULL, MONS_FLAMING_CORPSE, MONS_MUMMY, MONS_VAMPIRE,
         MONS_WIGHT, MONS_WRAITH, MONS_SHADOW_WRAITH, MONS_FREEZING_WRAITH,
-        MONS_PHANTASMAL_WARRIOR, MONS_ZOMBIE_LARGE, MONS_SKELETON_LARGE,
-        MONS_SIMULACRUM_LARGE, MONS_SHADOW
+        MONS_PHANTASMAL_WARRIOR, MONS_SHADOW
     };
 
     return RANDOM_ELEMENT(undead);
@@ -3120,16 +3119,6 @@ static coord_def _mons_fragment_target(monster *mons)
     return target;
 }
 
-static bool _tentacle_can_spawn_at(monster_type type, const coord_def &pos)
-{
-    if (monster_at(pos))
-        return false;
-    else if (type == MONS_KRAKEN_TENTACLE && !feat_is_water(env.grid(pos)))
-        return false;
-    else
-        return true;
-}
-
 static int _max_tentacles(const monster* mon)
 {
     if (mons_base_type(mon) == MONS_KRAKEN)
@@ -3172,11 +3161,11 @@ static void _mons_create_tentacles(monster* head)
 
     vector<coord_def> adj_squares;
 
-    // collect open adjacent squares, candidate squares must be
-    // water and not already occupied.
+    // Collect open adjacent squares. Candidate squares must be
+    // unoccupied.
     for (adjacent_iterator adj_it(head->pos()); adj_it; ++adj_it)
     {
-        if (_tentacle_can_spawn_at(tent_type, *adj_it))
+        if (!monster_at(*adj_it))
             adj_squares.push_back(*adj_it);
     }
 
@@ -3193,7 +3182,7 @@ static void _mons_create_tentacles(monster* head)
             mgen_data(tent_type, SAME_ATTITUDE(head), head,
                         0, 0, adj_squares[i], head->foe,
                         MG_FORCE_PLACE, head->god, MONS_NO_MONSTER, head_index,
-                        head->colour, -1, PROX_CLOSE_TO_PLAYER)))
+                        head->colour, PROX_CLOSE_TO_PLAYER)))
         {
             if (you.can_see(tentacle))
                 visible_count++;
@@ -3626,10 +3615,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         return;
 
     case SPELL_CREATE_TENTACLES:
-    {
         _mons_create_tentacles(mons);
         return;
-    }
+
     case SPELL_FAKE_MARA_SUMMON:
         // We only want there to be two fakes, which, plus Mara, means
         // a total of three Maras; if we already have two, give up, otherwise
@@ -3657,7 +3645,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         for (sumcount = 0; sumcount < sumcount2; sumcount++)
         {
             create_monster(
-                mgen_data(summon_any_demon(DEMON_COMMON),
+                mgen_data(summon_any_demon(RANDOM_DEMON_COMMON),
                           SAME_ATTITUDE(mons), mons, duration, spell_cast,
                           mons->pos(), mons->foe, 0, god));
         }
@@ -3719,7 +3707,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         for (sumcount = 0; sumcount < sumcount2; ++sumcount)
         {
             create_monster(
-                mgen_data(summon_any_demon(DEMON_LESSER),
+                mgen_data(summon_any_demon(RANDOM_DEMON_LESSER),
                           SAME_ATTITUDE(mons), mons,
                           duration, spell_cast, mons->pos(), mons->foe, 0,
                           god));
@@ -3907,7 +3895,7 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
         duration  = min(2 + mons->hit_dice / 10, 6);
 
         create_monster(
-            mgen_data(summon_any_demon(DEMON_GREATER),
+            mgen_data(summon_any_demon(RANDOM_DEMON_GREATER),
                       SAME_ATTITUDE(mons), mons,
                       duration, spell_cast,
                       mons->pos(), mons->foe, 0, god));

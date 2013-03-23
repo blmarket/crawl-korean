@@ -3472,8 +3472,9 @@ void god_pitch(god_type which_god)
              || you.form == TRAN_DRAGON
              || you.form == TRAN_PIG    ? "앞에 머리숙여" :
          you.form == TRAN_TREE   ? "앞에서 가지를 일렁이며" :
+         you.form == TRAN_FUNGUS ? "앞에서 포자를 흘리며" :
          you.form == TRAN_PORCUPINE ? "앞에서 가시를 말아 웅크리고" :
-         you.form == TRAN_JELLY  ? " 앞에서 침착하게 몸을 떨며" :
+         you.form == TRAN_JELLY  ? "앞에서 침착하게 몸을 떨며" :
          you.species == SP_NAGA  ? "에 몸을 말고 앉아" :
          // < TGWi> you curl up on the altar and go to sleep
             /// You %s the altar...
@@ -3834,10 +3835,12 @@ bool god_hates_killing(god_type god, const monster* mon)
 
 bool god_likes_fresh_corpses(god_type god)
 {
+    if (god == GOD_LUGONU)
+        return !player_in_branch(BRANCH_ABYSS);
+
     return (god == GOD_OKAWARU
             || god == GOD_MAKHLEB
-            || god == GOD_TROG
-            || god == GOD_LUGONU);
+            || god == GOD_TROG);
 }
 
 bool god_likes_spell(spell_type spell, god_type god)

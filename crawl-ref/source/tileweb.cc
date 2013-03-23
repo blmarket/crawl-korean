@@ -147,6 +147,10 @@ bool TilesFramework::initialise()
 
     _send_version();
 
+    m_cursor[CURSOR_MOUSE] = NO_CURSOR;
+    m_cursor[CURSOR_TUTORIAL] = NO_CURSOR;
+    m_cursor[CURSOR_MAP] = NO_CURSOR;
+
     // Initially, switch to CRT.
     cgotoxy(1, 1, GOTO_CRT);
 
@@ -406,10 +410,10 @@ void TilesFramework::_send_version()
 {
 #ifdef WEB_DIR_PATH
     // The star signals a message to the server
-    send_message("*{\"msg\":\"client_path\",\"path\":\"%s\",\"version\":\"%s\"}", WEB_DIR_PATH, Version::Long().c_str());
+    send_message("*{\"msg\":\"client_path\",\"path\":\"%s\",\"version\":\"%s\"}", WEB_DIR_PATH, Version::Long);
 #endif
 
-    string title = CRAWL " " + Version::Long();
+    string title = CRAWL " " + string(Version::Long);
     send_message("{\"msg\":\"version\",\"text\":\"%s\"}", title.c_str());
 }
 
@@ -521,7 +525,19 @@ static bool _update_statuses(player_info& c)
     status_info inf;
     for (unsigned int status = 0; status <= STATUS_LAST_STATUS; ++status)
     {
-        if (!fill_status_info(status, &inf))
+        if (status == DUR_CONDENSATION_SHIELD || status == DUR_DIVINE_SHIELD)
+        {
+            if (!you.duration[status])
+                continue;
+            inf.short_text = "shielded";
+        }
+        else if (status == DUR_ICEMAIL_DEPLETED)
+        {
+            if (you.duration[status] <= ICEMAIL_TIME / ICEMAIL_MAX)
+                continue;
+            inf.short_text = "icemail depleted";
+        }
+        else if (!fill_status_info(status, &inf))
             continue;
 
         if (!inf.light_text.empty() || !inf.short_text.empty())
@@ -749,13 +765,11 @@ void TilesFramework::_send_item(item_info& current, const item_info& next,
 
             const string current_prefix = item_prefix(current);
             const string prefix = item_prefix(next);
-            if (force_full || current_prefix != prefix)
-            {
-                const int current_prefcol = menu_colour(current.name(DESC_INVENTORY), current_prefix);
-                const int prefcol = menu_colour(next.name(DESC_INVENTORY), prefix);
-                if (current_prefcol != prefcol)
-                    json_write_int("col", prefcol);
-            }
+
+            const int current_prefcol = menu_colour(current.name(DESC_INVENTORY), current_prefix);
+            const int prefcol = menu_colour(next.name(DESC_INVENTORY), prefix);
+            if (current_prefcol != prefcol)
+                json_write_int("col", prefcol);
         }
 
         tileidx_t tile = tileidx_item(next);
@@ -1086,7 +1100,6 @@ void TilesFramework::_send_cell(const coord_def &gc,
             {
                 json_write_comma();
                 write_message("\"doll\":[[%u,%d]]", (unsigned int) fg_idx, TILE_Y);
-                // TODO: _transform_add_weapon
             }
         }
 

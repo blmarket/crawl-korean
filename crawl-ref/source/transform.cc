@@ -54,6 +54,7 @@ static const char* form_names[] =
     "porcupine",
     "wisp",
     "jelly",
+    "fungus",
 };
 
 const char* transform_name(transformation_type form)
@@ -108,7 +109,9 @@ bool form_likes_water(transformation_type form)
 
 bool form_has_mouth(transformation_type form)
 {
-    return form != TRAN_TREE && form != TRAN_WISP && form != TRAN_JELLY;
+    return form != TRAN_TREE
+        && form != TRAN_WISP
+        && form != TRAN_JELLY;
 }
 
 bool form_can_butcher_barehanded(transformation_type form)
@@ -169,6 +172,9 @@ bool form_can_wear_item(const item_def& item, transformation_type form)
     case TRAN_STATUE:
         return (eqslot == EQ_CLOAK || eqslot == EQ_HELMET
                 || eqslot == EQ_SHIELD);
+
+    case TRAN_FUNGUS:
+        return (eqslot == EQ_HELMET && !is_hard_helmet(item));
 
     case TRAN_TREE:
         return (eqslot == EQ_SHIELD || eqslot == EQ_HELMET);
@@ -390,6 +396,7 @@ size_type player::transform_size(transformation_type tform, int psize) const
     case TRAN_BAT:
     case TRAN_PORCUPINE:
     case TRAN_WISP:
+    case TRAN_FUNGUS:
         return SIZE_TINY;
     case TRAN_PIG:
     case TRAN_JELLY:
@@ -419,6 +426,8 @@ monster_type transform_mons()
 {
     switch (you.form)
     {
+    case TRAN_FUNGUS:
+        return MONS_WANDERING_MUSHROOM;
     case TRAN_SPIDER:
         return MONS_SPIDER;
     case TRAN_STATUE:
@@ -652,6 +661,7 @@ static int _transform_duration(transformation_type which_trans, int pow)
         return min(20 + random2(pow) + random2(pow), 100);
     case TRAN_ICE_BEAST:
         return min(30 + random2(pow) + random2(pow), 100);
+    case TRAN_FUNGUS:
     case TRAN_PIG:
     case TRAN_PORCUPINE:
     case TRAN_JELLY:
@@ -871,6 +881,13 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
     }
 
+    case TRAN_FUNGUS:
+        tran_name = "fungus";
+        msg      += "a fleshy mushroom.";
+        you.set_duration(DUR_CONFUSING_TOUCH,
+            you.duration[DUR_TRANSFORMATION] ? you.duration[DUR_TRANSFORMATION] : INFINITE_DURATION);
+        break;
+
     case TRAN_JELLY:
         tran_name = M_("jelly");
         msg      += make_stringf(msg.c_str(), _("a lump of acidic jelly."));
@@ -989,9 +1006,18 @@ bool transform(int pow, transformation_type which_trans, bool force,
         }
         break;
 
+    case TRAN_FUNGUS:
+        if (you.religion == GOD_FEDHAS)
+            simple_god_message(" smiles upon you.");
+        // ignore hunger_state (but don't reset hunger)
+        you.hunger_state = HS_SATIATED;
+        set_redraw_status(REDRAW_HUNGER);
+        break;
+
     case TRAN_TREE:
         if (you.religion == GOD_FEDHAS)
             simple_god_message(_(" smiles upon you."));
+        // ignore hunger_state (but don't reset hunger)
         you.hunger_state = HS_SATIATED;
         set_redraw_status(REDRAW_HUNGER);
         mpr(_("Your roots penetrate the ground."));
@@ -1002,6 +1028,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         }
         you.duration[DUR_FLIGHT] = 0;
         // break out of webs/nets as well
+
     case TRAN_DRAGON:
         if (you.attribute[ATTR_HELD])
         {
@@ -1196,6 +1223,10 @@ void untransform(bool skip_wielding, bool skip_move)
         }
         break;
 
+    case TRAN_FUNGUS:
+        mpr("You stop sporulating.", MSGCH_DURATION);
+        you.set_duration(DUR_CONFUSING_TOUCH, 0);
+        break;
     case TRAN_TREE:
         mpr(_("You feel less woody."), MSGCH_DURATION);
         if (grd(you.pos()) == DNGN_DEEP_WATER && you.species == SP_TENGU

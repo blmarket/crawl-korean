@@ -3062,6 +3062,19 @@ void map_def::hmirror()
     case MAP_SOUTHWEST: orient = MAP_SOUTHEAST; break;
     default: break;
     }
+
+    for (int i = 0, nsubvaults = this->subvault_places.size();
+         i < nsubvaults; ++i)
+    {
+        subvault_place &sv = subvault_places[i];
+
+        coord_def old_tl = sv.tl;
+        coord_def old_br = sv.br;
+        sv.tl.x = map.width() - 1 - old_br.x;
+        sv.br.x = map.width() - 1 - old_tl.x;
+
+        sv.subvault->map.hmirror();
+    }
 }
 
 void map_def::vmirror()
@@ -3082,6 +3095,19 @@ void map_def::vmirror()
     case MAP_SOUTHEAST: orient = MAP_NORTHEAST; break;
     case MAP_SOUTHWEST: orient = MAP_NORTHWEST; break;
     default: break;
+    }
+
+    for (int i = 0, nsubvaults = this->subvault_places.size();
+         i < nsubvaults; ++i)
+    {
+        subvault_place &sv = subvault_places[i];
+
+        coord_def old_tl = sv.tl;
+        coord_def old_br = sv.br;
+        sv.tl.y = map.height() - 1 - old_br.y;
+        sv.br.y = map.height() - 1 - old_tl.y;
+
+        sv.subvault->map.vmirror();
     }
 }
 
@@ -3117,6 +3143,29 @@ void map_def::rotate(bool clock)
                 orient = clockrotate_orients[i][!refindex];
                 break;
             }
+
+        for (int i = 0, nsubvaults = this->subvault_places.size();
+             i < nsubvaults; ++i)
+        {
+            subvault_place &sv = subvault_places[i];
+
+            coord_def p1, p2;
+            if (clock) //Clockwise
+            {
+                p1 = coord_def(map.width() - 1 - sv.tl.y, sv.tl.x);
+                p2 = coord_def(map.width() - 1 - sv.br.y, sv.br.x);
+            }
+            else
+            {
+                p1 = coord_def(sv.tl.y, map.height() - 1 - sv.tl.x);
+                p2 = coord_def(sv.br.y, map.height() - 1 - sv.br.x);
+            }
+
+            sv.tl = coord_def(min(p1.x, p2.x), min(p1.y, p2.y));
+            sv.br = coord_def(max(p1.x, p2.x), max(p1.y, p2.y));
+
+            sv.subvault->map.rotate(clock);
+        }
     }
 }
 
@@ -3402,16 +3451,6 @@ mons_list::mons_list() : mons()
 {
 }
 
-int mons_list::fix_demon(int demon) const
-{
-    if (demon >= -1)
-        return demon;
-
-    demon = -100 - demon;
-
-    return summon_any_demon(static_cast<demon_class_type>(demon));
-}
-
 mons_spec mons_list::pick_monster(mons_spec_slot &slot)
 {
     int totweight = 0;
@@ -3422,16 +3461,14 @@ mons_spec mons_list::pick_monster(mons_spec_slot &slot)
     {
         const int weight = i->genweight;
         if (x_chance_in_y(weight, totweight += weight))
-        {
             pick = *i;
-
-            if (pick.type < 0 && pick.fix_mons)
-                pick.type = i->type = fix_demon(pick.type);
-        }
     }
 
-    if (pick.type < 0)
-        pick = fix_demon(pick.type);
+#if TAG_MAJOR_VERSION == 34
+    // Force rebuild of the des cache to drop this check.
+    if (pick.type < -1)
+        pick = (monster_type)(-100 - pick.type);
+#endif
 
     if (slot.fix_slot)
     {
@@ -3637,7 +3674,6 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(string spec)
             mspec.extra_monster_flags |= MF_ACTUAL_SPELLS;
         }
 
-        mspec.fix_mons       = strip_tag(mon_str, "fix_mons");
         mspec.generate_awake = strip_tag(mon_str, "generate_awake");
         mspec.patrolling     = strip_tag(mon_str, "patrolling");
         mspec.band           = strip_tag(mon_str, "band");
@@ -3694,10 +3730,6 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(string spec)
                 return slot;
             }
         }
-
-        mspec.mlevel = strip_number_tag(mon_str, "lev:");
-        if (mspec.mlevel == TAG_UNFOUND)
-            mspec.mlevel = 0;
 
         mspec.hd = min(100, strip_number_tag(mon_str, "hd:"));
         if (mspec.hd == TAG_UNFOUND)
@@ -3894,9 +3926,9 @@ mons_list::mons_spec_slot mons_list::parse_mons_spec(string spec)
         trim_string(mon_str);
 
         if (mon_str == "8")
-            mspec.mlevel = -8;
+            mspec.type = RANDOM_SUPER_OOD;
         else if (mon_str == "9")
-            mspec.mlevel = -9;
+            mspec.type = RANDOM_MODERATE_OOD;
         else if (mspec.place.is_valid())
         {
             // For monster specs such as place:Orc:4 zombie, we may
@@ -4007,13 +4039,10 @@ void mons_list::get_zombie_type(string s, mons_spec &spec) const
     };
 
     // This order must match zombie_types, indexed from one.
-    static const monster_type zombie_montypes[][2] =
-    {     // small               // large
-        { MONS_PROGRAM_BUG,      MONS_PROGRAM_BUG },
-        { MONS_ZOMBIE_SMALL,     MONS_ZOMBIE_LARGE },
-        { MONS_SKELETON_SMALL,   MONS_SKELETON_LARGE },
-        { MONS_SIMULACRUM_SMALL, MONS_SIMULACRUM_LARGE },
-        { MONS_SPECTRAL_THING,   MONS_SPECTRAL_THING },
+    static const monster_type zombie_montypes[] =
+    {
+        MONS_PROGRAM_BUG, MONS_ZOMBIE, MONS_SKELETON, MONS_SIMULACRUM,
+        MONS_SPECTRAL_THING,
     };
 
     int mod = ends_with(s, zombie_types);
@@ -4054,7 +4083,7 @@ void mons_list::get_zombie_type(string s, mons_spec &spec) const
         return;
     }
 
-    spec.type = zombie_montypes[mod][zombie_size - 1];
+    spec.type = zombie_montypes[mod];
 }
 
 mons_spec mons_list::get_hydra_spec(const string &name) const
@@ -4202,7 +4231,7 @@ mons_spec mons_list::mons_by_name(string name) const
     name = replace_all(name, "random", "any");
 
     if (name == "nothing")
-        return -1;
+        return MONS_NO_MONSTER;
 
     // Special casery:
     if (name == "pandemonium lord")
@@ -4212,34 +4241,23 @@ mons_spec mons_list::mons_by_name(string name) const
         return RANDOM_MONSTER;
 
     if (name == "any demon")
-        return (-100 - DEMON_RANDOM);
+        return RANDOM_DEMON;
 
     if (name == "any lesser demon" || name == "lesser demon")
-        return (-100 - DEMON_LESSER);
+        return RANDOM_DEMON_LESSER;
 
     if (name == "any common demon" || name == "common demon")
-        return (-100 - DEMON_COMMON);
+        return RANDOM_DEMON_COMMON;
 
     if (name == "any greater demon" || name == "greater demon")
-        return (-100 - DEMON_GREATER);
+        return RANDOM_DEMON_GREATER;
 
-    if (name == "small zombie")
-        return MONS_ZOMBIE_SMALL;
-    if (name == "large zombie")
-        return MONS_ZOMBIE_LARGE;
-
-    if (name == "small skeleton")
-        return MONS_SKELETON_SMALL;
-    if (name == "large skeleton")
-        return MONS_SKELETON_LARGE;
-
-    if (name == "spectral thing")
-        return MONS_SPECTRAL_THING;
-
-    if (name == "small simulacrum")
-        return MONS_SIMULACRUM_SMALL;
-    if (name == "large simulacrum")
-        return MONS_SIMULACRUM_LARGE;
+    if (name == "small zombie" || name == "large zombie"
+        || name == "small skeleton" || name == "large skeleton"
+        || name == "small simulacrum" || name == "large simulacrum")
+    {
+        return MONS_PROGRAM_BUG;
+    }
 
     if (name == "small abomination")
         return MONS_ABOMINATION_SMALL;

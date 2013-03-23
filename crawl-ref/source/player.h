@@ -471,6 +471,8 @@ public:
     void update_fearmongers();
     void update_fearmonger(const monster* mon);
 
+    bool made_nervous_by(const coord_def &pos);
+
     kill_category kill_alignment() const;
 
     bool has_spell(spell_type spell) const;
@@ -591,7 +593,7 @@ public:
     bool heal(int amount, bool max_too = false);
     bool drain_exp(actor *, bool quiet = false, int pow = 3);
     bool rot(actor *, int amount, int immediate = 0, bool quiet = false);
-    void sentinel_mark();
+    void sentinel_mark(bool trap = false);
     int hurt(const actor *attacker, int amount,
              beam_type flavour = BEAM_MISSILE,
              bool cleanup_dead = true);

@@ -36,14 +36,6 @@
 #include "stuff.h"
 #include "terrain.h"
 #include "travel.h"
-
-#ifdef NOTE_DEBUG_CHAOS_BRAND
-    #define NOTE_DEBUG_CHAOS_EFFECTS
-#endif
-
-#ifdef NOTE_DEBUG_CHAOS_EFFECTS
-    #include "notes.h"
-#endif
 #include "korean.h"
 
 /* Handles melee combat between attacker and defender

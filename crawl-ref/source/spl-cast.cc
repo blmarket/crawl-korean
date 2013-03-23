@@ -530,7 +530,8 @@ void inspect_spells()
 static bool _can_cast()
 {
     if (you.form == TRAN_BAT || you.form == TRAN_PIG || you.form == TRAN_JELLY
-        || you.form == TRAN_PORCUPINE || you.form == TRAN_WISP)
+        || you.form == TRAN_PORCUPINE || you.form == TRAN_WISP
+        || you.form == TRAN_FUNGUS)
     {
         canned_msg(MSG_PRESENT_FORM);
         return false;
@@ -1043,7 +1044,6 @@ static targetter* _spell_targetter(spell_type spell, int pow, int range)
     case SPELL_PETRIFY:
     case SPELL_POLYMORPH:
     case SPELL_DIG:
-    case SPELL_CIGOTUVIS_DEGENERATION:
     case SPELL_DISPEL_UNDEAD:
         return new targetter_beam(&you, range, spell_to_zap(spell), pow, 0, 0);
     default:
@@ -1336,6 +1336,10 @@ static spret_type _do_cast(spell_type spell, int powc,
 #if TAG_MAJOR_VERSION == 34
     case SPELL_EVAPORATE:
         mpr(_("Sorry, this spell is gone!"));
+        return SPRET_ABORT;
+
+    case SPELL_CIGOTUVIS_DEGENERATION:
+        mpr("Sorry, this spell has degenerated away!");
         return SPRET_ABORT;
 #endif
 

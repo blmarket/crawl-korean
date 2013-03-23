@@ -120,10 +120,6 @@ This spell releases a massive electrical discharge that arcs from target to
 target until it grounds out. It may ground out harmlessly if there are no
 targets sufficiently close to the caster, however.
 %%%%
-Cigotuvi's Degeneration spell
-
-하나의 생명체를, 맥동하는 뭉친 살덩어리로 만들어버린다.
-%%%%
 Condensation Shield spell
 
 This spell causes a disc of dense vapour to condense out of the air surrounding
@@ -357,6 +353,13 @@ Ice Storm spell
 
 This spell hurls a raging blizzard of ice, sleet and freezing gasses at the
 target, dealing partially irresistible cold damage in a large area.
+%%%%
+Ice Storm spell:quote
+
+“Neither Deluge Nor Ice Storm Nor The Black Silence Of The Netherhells Shall
+Stay These Messengers About Their Sacred Business. Do Not Ask Us About
+Sabre-Tooth Tigers, Tar Pits, Big Green Things With Teeth Or The Goddess Czol.”
+    -Anghammarad, “Going Postal”, Terry Pratchett.
 %%%%
 Ignite Poison spell
 

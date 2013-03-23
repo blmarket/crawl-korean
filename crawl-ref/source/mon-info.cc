@@ -276,9 +276,9 @@ static void _translate_tentacle_ref(monster_info& mi, const monster* m,
             // (distortion etc.), just treat them as not connected.
             if (adjacent(m->pos(), h_pos)
                 && other->type != MONS_KRAKEN
-                && other->type != MONS_ZOMBIE_LARGE
+                && other->type != MONS_ZOMBIE
                 && other->type != MONS_SPECTRAL_THING
-                && other->type != MONS_SIMULACRUM_LARGE
+                && other->type != MONS_SIMULACRUM
                 && !_tentacle_pos_unknown(other, m->pos()))
             {
                 mi.props[key] = h_pos - m->pos();
@@ -773,9 +773,14 @@ string monster_info::_core_name() const
 
     switch (type)
     {
+    case MONS_ZOMBIE:
+    case MONS_SKELETON:
+    case MONS_SIMULACRUM:
+#if TAG_MAJOR_VERSION == 34
     case MONS_ZOMBIE_SMALL:     case MONS_ZOMBIE_LARGE:
     case MONS_SKELETON_SMALL:   case MONS_SKELETON_LARGE:
     case MONS_SIMULACRUM_SMALL: case MONS_SIMULACRUM_LARGE:
+#endif
     case MONS_SPECTRAL_THING:   case MONS_PILLAR_OF_SALT:
         nametype = base_type;
         break;
@@ -927,18 +932,27 @@ string monster_info::common_name(description_level_type desc) const
     // Add suffixes.
     switch (type)
     {
+    case MONS_ZOMBIE:
+#if TAG_MAJOR_VERSION == 34
     case MONS_ZOMBIE_SMALL:
     case MONS_ZOMBIE_LARGE:
+#endif
         if (!is(MB_NAME_ZOMBIE))
             ss << (nocore ? "" : " ") << _(M_("zombie"));
         break;
+    case MONS_SKELETON:
+#if TAG_MAJOR_VERSION == 34
     case MONS_SKELETON_SMALL:
     case MONS_SKELETON_LARGE:
+#endif
         if (!is(MB_NAME_ZOMBIE))
             ss << (nocore ? "" : " ") << _(M_("skeleton"));
         break;
+    case MONS_SIMULACRUM:
+#if TAG_MAJOR_VERSION == 34
     case MONS_SIMULACRUM_SMALL:
     case MONS_SIMULACRUM_LARGE:
+#endif
         if (!is(MB_NAME_ZOMBIE))
             ss << (nocore ? "" : " ") << _(M_("simulacrum"));
         break;

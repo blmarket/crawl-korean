@@ -1077,8 +1077,8 @@ static bool _silver_statue_effects(monster* mons)
 
         create_monster(
             mgen_data(
-                summon_any_demon((coinflip() ? DEMON_COMMON
-                                             : DEMON_LESSER)),
+                summon_any_demon((coinflip() ? RANDOM_DEMON_COMMON
+                                             : RANDOM_DEMON_LESSER)),
                 SAME_ATTITUDE(mons), mons, abjuration_duration, 0,
                 foe->pos(), mons->foe));
         return true;
@@ -1661,13 +1661,6 @@ static bool _seal_doors(const monster* warden)
                 set_terrain_changed(dc);
                 dungeon_events.fire_position_event(DET_DOOR_CLOSED, dc);
 
-                if (env.map_knowledge(dc).seen())
-                {
-                    env.map_knowledge(dc).set_feature(DNGN_CLOSED_DOOR);
-#ifdef USE_TILE
-                    env.tile_bk_bg(dc) = TILE_DNGN_CLOSED_DOOR;
-#endif
-                }
                 if (is_excluded(dc))
                     excludes.push_back(dc);
 
@@ -1676,9 +1669,24 @@ static bool _seal_doors(const monster* warden)
 
                 had_effect = true;
             }
-            update_exclusion_los(excludes);
+
             if (seen)
+            {
+                for (set<coord_def>::const_iterator i = all_door.begin();
+                     i != all_door.end(); ++i)
+                {
+                    if (env.map_knowledge(*i).seen())
+                    {
+                        env.map_knowledge(*i).set_feature(DNGN_CLOSED_DOOR);
+#ifdef USE_TILE
+                        env.tile_bk_bg(*i) = TILE_DNGN_CLOSED_DOOR;
+#endif
+                    }
+                }
+
+                update_exclusion_los(excludes);
                 ++num_closed;
+            }
         }
 
         // Try to seal the door
@@ -1758,7 +1766,7 @@ static void _establish_connection(int tentacle,
             mgen_data(connector_type, SAME_ATTITUDE(main), main,
                       0, 0, last->pos, main->foe,
                       MG_FORCE_PLACE, main->god, MONS_NO_MONSTER, tentacle,
-                      main->colour, -1, PROX_CLOSE_TO_PLAYER)))
+                      main->colour, PROX_CLOSE_TO_PLAYER)))
         {
             connect->props["inwards"].get_int()  = -1;
             connect->props["outwards"].get_int() = -1;
@@ -1803,7 +1811,7 @@ static void _establish_connection(int tentacle,
             mgen_data(connector_type, SAME_ATTITUDE(main), main,
                       0, 0, current->pos, main->foe,
                       MG_FORCE_PLACE, main->god, MONS_NO_MONSTER, tentacle,
-                      main->colour, -1, PROX_CLOSE_TO_PLAYER)))
+                      main->colour, PROX_CLOSE_TO_PLAYER)))
         {
             connect->max_hit_points = menv[tentacle].max_hit_points;
             connect->hit_points = menv[tentacle].hit_points;

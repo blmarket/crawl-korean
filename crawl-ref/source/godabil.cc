@@ -23,6 +23,7 @@
 #include "food.h"
 #include "fprop.h"
 #include "godabil.h"
+#include "godcompanions.h"
 #include "goditem.h"
 #include "invent.h"
 #include "itemprop.h"
@@ -1588,7 +1589,7 @@ void jiyva_paralyse_jellies()
     {
         monster* mon = monster_at(*ri);
 
-        if (mon != NULL && is_fellow_slime(mon))
+        if (mon != NULL && mons_is_slime(mon) && !mon->is_shapeshifter())
         {
             mon->add_ench(mon_enchant(ENCH_PARALYSIS, 0,
                                       &you, 200));
@@ -1710,6 +1711,7 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     ASSERT(mons_enslaved_body_and_soul(mon));
 
     add_daction(DACT_OLD_ENSLAVED_SOULS_POOF);
+    remove_enslaved_soul_companion();
 
     const string whose = you.can_see(mon) ? apostrophise(mon->name(DESC_THE))
                                           : mon->pronoun(PRONOUN_POSSESSIVE);
@@ -1758,6 +1760,7 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     name_zombie(mon, &orig);
 
     mons_make_god_gift(mon, GOD_YREDELEMNUL);
+    add_companion(mon);
 
     mon->attitude = !force_hostile ? ATT_FRIENDLY : ATT_HOSTILE;
     behaviour_event(mon, ME_ALERT, force_hostile ? &you : 0);
@@ -1817,7 +1820,11 @@ bool kiku_receive_corpses(int pow, coord_def where)
         for (int i = 0; i < 200 && !mons_class_can_be_zombified(mon_type); ++i)
         {
             adjusted_power = min(pow / 4, random2(random2(pow)));
-            mon_type = pick_local_zombifiable_monster(adjusted_power);
+            // Pick a place based on the power.  This may be below the branch's
+            // start, that's ok.
+            level_id lev(you.where_are_you, adjusted_power
+                - absdungeon_depth(you.where_are_you, 0));
+            mon_type = pick_local_zombifiable_monster(lev);
         }
 
         // Create corpse object.
@@ -1973,7 +1980,7 @@ int fedhas_fungal_bloom()
             bool piety = !target->is_summoned();
             switch (mons_genus(target->mons_species()))
             {
-            case MONS_ZOMBIE_SMALL:
+            case MONS_ZOMBIE:
                 // Maybe turn a zombie into a skeleton.
                 if (mons_skeleton(mons_zombie_base(target)))
                 {

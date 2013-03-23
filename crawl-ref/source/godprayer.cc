@@ -304,7 +304,7 @@ void pray()
         {
             if (you.species == SP_DEMIGOD)
             {
-                mpr(_("Sorry, a being of your status cannot worship here."));
+                mpr(_("A being of your status worships no god."));
                 return;
             }
 

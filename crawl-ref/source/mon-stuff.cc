@@ -1704,8 +1704,7 @@ int monster_die(monster* mons, killer_type killer,
         if (killer == KILL_RESET)
             killer = KILL_DISMISSED;
     }
-    else if (mons->type == MONS_SIMULACRUM_SMALL
-             || mons->type == MONS_SIMULACRUM_LARGE)
+    else if (mons->type == MONS_SIMULACRUM)
     {
         if (!silent && !mons_reset && !was_banished)
         {
@@ -2347,7 +2346,7 @@ int monster_die(monster* mons, killer_type killer,
             mons_speaks(mons);
     }
 
-    if (mons->type == MONS_BORIS && !in_transit)
+    if (mons->type == MONS_BORIS && !in_transit && !mons->pacified())
     {
         // XXX: Actual blood curse effect for Boris? - bwr
 
@@ -2371,7 +2370,7 @@ int monster_die(monster* mons, killer_type killer,
         // he goes away.
         pikel_band_neutralise();
     }
-    else if (mons->is_named() && mons->friendly())
+    else if (mons->is_named() && mons->friendly() && killer != KILL_RESET)
         take_note(Note(NOTE_ALLY_DEATH, 0, 0, mons->mname.c_str()));
     else if (mons_is_tentacle_head(mons_base_type(mons)))
     {
@@ -2504,8 +2503,9 @@ int monster_die(monster* mons, killer_type killer,
     if (mons->type == MONS_SILENT_SPECTRE
         || mons->type == MONS_PROFANE_SERVITOR
         || mons->type == MONS_MOTH_OF_SUPPRESSION)
+    {
         invalidate_agrid();
-
+    }
     const coord_def mwhere = mons->pos();
     if (drop_items)
         monster_drop_things(mons, YOU_KILL(killer) || pet_kill);

@@ -269,16 +269,57 @@ static tileidx_t _random_trousers()
 
 void fill_doll_equipment(dolls_data &result)
 {
-    // The support for eq-using forms is working too badly for this one, so
-    // we use regular player code here instead.
-    if (you.form == TRAN_TREE)
+    // Equipment-using forms
+    switch (you.form)
     {
+    case TRAN_TREE:
         result.parts[TILEP_PART_BASE]    = TILEP_TRAN_TREE;
         result.parts[TILEP_PART_HELM]    = 0; // fixme, should show up
         result.parts[TILEP_PART_DRCHEAD] = 0;
+        result.parts[TILEP_PART_DRCWING] = 0;
         result.parts[TILEP_PART_HAIR]    = 0;
+        result.parts[TILEP_PART_BEARD]   = 0;
         result.parts[TILEP_PART_LEG]     = 0;
         result.parts[TILEP_PART_SHADOW]  = 0;
+        break;
+    case TRAN_STATUE:
+        tileidx_t ch;
+        switch (you.species)
+        {
+        case SP_CENTAUR: ch = TILEP_TRAN_STATUE_CENTAUR;  break;
+        case SP_NAGA:    ch = TILEP_TRAN_STATUE_NAGA;     break;
+        case SP_FELID:   ch = TILEP_TRAN_STATUE_FELID;    break;
+        case SP_OCTOPODE:ch = TILEP_TRAN_STATUE_OCTOPODE; break;
+        default:         ch = TILEP_TRAN_STATUE_HUMANOID; break;
+        }
+        result.parts[TILEP_PART_BASE]    = ch;
+        result.parts[TILEP_PART_DRCHEAD] = 0;
+        result.parts[TILEP_PART_HAIR]    = 0;
+        result.parts[TILEP_PART_LEG]     = 0;
+        break;
+    case TRAN_LICH:
+        switch (you.species)
+        {
+        case SP_CENTAUR: ch = TILEP_TRAN_LICH_CENTAUR;  break;
+        case SP_NAGA:    ch = TILEP_TRAN_LICH_NAGA;     break;
+        case SP_FELID:   ch = TILEP_TRAN_LICH_FELID;    break;
+        case SP_OCTOPODE:ch = TILEP_TRAN_LICH_OCTOPODE; break;
+        default:         ch = TILEP_TRAN_LICH_HUMANOID; break;
+        }
+        result.parts[TILEP_PART_BASE]    = ch;
+        result.parts[TILEP_PART_DRCHEAD] = 0;
+        result.parts[TILEP_PART_HAIR]    = 0;
+        result.parts[TILEP_PART_BEARD]   = 0;
+        result.parts[TILEP_PART_LEG]     = 0;
+
+        // fixme: these should show up, but look ugly with the lich tile
+        result.parts[TILEP_PART_HELM]    = 0;
+        result.parts[TILEP_PART_BOOTS]   = 0;
+        result.parts[TILEP_PART_BODY]    = 0;
+        result.parts[TILEP_PART_ARM]     = 0;
+        break;
+    default:
+        break;
     }
 
     // Base tile.
@@ -299,7 +340,7 @@ void fill_doll_equipment(dolls_data &result)
     // Off hand.
     if (result.parts[TILEP_PART_HAND2] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_SHIELD];
+        const int item = you.melded[EQ_SHIELD] ? -1 : you.equip[EQ_SHIELD];
         if (you.form == TRAN_BLADE_HANDS)
             result.parts[TILEP_PART_HAND2] = TILEP_HAND2_BLADEHAND;
         else if (item == -1)
@@ -310,7 +351,7 @@ void fill_doll_equipment(dolls_data &result)
     // Body armour.
     if (result.parts[TILEP_PART_BODY] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_BODY_ARMOUR];
+        const int item = you.melded[EQ_BODY_ARMOUR] ? -1 : you.equip[EQ_BODY_ARMOUR];
         if (item == -1)
             result.parts[TILEP_PART_BODY] = 0;
         else
@@ -319,7 +360,7 @@ void fill_doll_equipment(dolls_data &result)
     // Cloak.
     if (result.parts[TILEP_PART_CLOAK] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_CLOAK];
+        const int item = you.melded[EQ_CLOAK] ? -1 : you.equip[EQ_CLOAK];
         if (item == -1)
             result.parts[TILEP_PART_CLOAK] = 0;
         else
@@ -328,7 +369,7 @@ void fill_doll_equipment(dolls_data &result)
     // Helmet.
     if (result.parts[TILEP_PART_HELM] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_HELMET];
+        const int item = you.melded[EQ_HELMET] ? -1 : you.equip[EQ_HELMET];
         if (item != -1)
             result.parts[TILEP_PART_HELM] = tilep_equ_helm(you.inv[item]);
         else if (player_mutation_level(MUT_HORNS) > 0)
@@ -364,7 +405,7 @@ void fill_doll_equipment(dolls_data &result)
     // Boots.
     if (result.parts[TILEP_PART_BOOTS] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_BOOTS];
+        const int item = you.melded[EQ_BOOTS] ? -1 : you.equip[EQ_BOOTS];
         if (item != -1)
             result.parts[TILEP_PART_BOOTS] = tilep_equ_boots(you.inv[item]);
         else if (player_mutation_level(MUT_HOOVES) >= 3)
@@ -375,7 +416,7 @@ void fill_doll_equipment(dolls_data &result)
     // Gloves.
     if (result.parts[TILEP_PART_ARM] == TILEP_SHOW_EQUIP)
     {
-        const int item = you.equip[EQ_GLOVES];
+        const int item = you.melded[EQ_GLOVES] ? -1 : you.equip[EQ_GLOVES];
         if (item != -1)
             result.parts[TILEP_PART_ARM] = tilep_equ_gloves(you.inv[item]);
         else if (player_mutation_level(MUT_TENTACLE_SPIKE))

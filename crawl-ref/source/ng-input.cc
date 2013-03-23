@@ -18,7 +18,7 @@ extern string init_file_error; // defined in main.cc
 void opening_screen(void)
 {
     string msg =
-    _("<yellow>Hello, welcome to " CRAWL " ") + Version::Long() + _("!</yellow>\n"
+    _("<yellow>Hello, welcome to " CRAWL " ") + string(Version::Long) + _("!</yellow>\n"
     "<brown>(c) Copyright 1997-2002 Linley Henzell, "
     "2002-2013 Crawl DevTeam\n"
     "Read the instructions for legal details."

@@ -888,6 +888,11 @@ static void _describe_transform(status_info* inf)
         inf->short_text = gettext(M_("appendage"));
         inf->long_text  = gettext("You have a beastly appendage.");
         break;
+    case TRAN_FUNGUS:
+        inf->light_text = "Fungus";
+        inf->short_text = "fungus-form";
+        inf->long_text  = "You are a sentient fungus.";
+        break;
     case TRAN_TREE:
         inf->light_text = _(M_("Tree"));
         inf->short_text = _(M_("tree-form"));
@@ -971,7 +976,7 @@ static void _describe_missiles(status_info* inf)
     {
         bool perm = player_mutation_level(MUT_DISTORTION_FIELD) == 3
                     || !you.suppressed() && you.scan_artefacts(ARTP_RMSL);
-        inf->light_colour = BLUE;
+        inf->light_colour = perm ? WHITE : BLUE;
         inf->light_text   = _(M_("RMsl"));
         inf->short_text   = _(M_("repel missiles"));
         inf->long_text    = _("You repel missiles.");

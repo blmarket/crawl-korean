@@ -1314,8 +1314,8 @@ void MiscastEffect::_summoning(int severity)
             break;
         case 4:
         case 5:
-            if (_create_monster(summon_any_demon(DEMON_LESSER), 5, true))
-                all_msg = gettext("Something appears in a flash of light!");
+            if (_create_monster(summon_any_demon(RANDOM_DEMON_LESSER), 5, true))
+                all_msg = _("Something appears in a flash of light!");
             do_msg();
             break;
         }
@@ -1342,8 +1342,8 @@ void MiscastEffect::_summoning(int severity)
 
         case 1:
         case 2:
-            if (_create_monster(summon_any_demon(DEMON_COMMON), 5, true))
-                all_msg = gettext("Something forms from out of thin air!");
+            if (_create_monster(summon_any_demon(RANDOM_DEMON_COMMON), 5, true))
+                all_msg = _("Something forms from out of thin air!");
             do_msg();
             break;
 
@@ -1355,7 +1355,7 @@ void MiscastEffect::_summoning(int severity)
 
             for (int i = 1 + random2(2); i >= 0; --i)
             {
-                if (_create_monster(summon_any_demon(DEMON_LESSER), 5, true))
+                if (_create_monster(summon_any_demon(RANDOM_DEMON_LESSER), 5, true))
                     success = true;
             }
 
@@ -1388,8 +1388,8 @@ void MiscastEffect::_summoning(int severity)
                 break;
 
             case 1:
-                if (_create_monster(summon_any_demon(DEMON_GREATER), 0, true))
-                    all_msg = gettext("You sense a hostile presence.");
+                if (_create_monster(summon_any_demon(RANDOM_DEMON_GREATER), 0, true))
+                    all_msg = _("You sense a hostile presence.");
                 do_msg();
                 reroll = false;
                 break;
@@ -1400,7 +1400,7 @@ void MiscastEffect::_summoning(int severity)
 
                 for (int i = 1 + random2(2); i >= 0; --i)
                 {
-                    if (_create_monster(summon_any_demon(DEMON_COMMON), 3, true))
+                    if (_create_monster(summon_any_demon(RANDOM_DEMON_COMMON), 3, true))
                         success = true;
                 }
 

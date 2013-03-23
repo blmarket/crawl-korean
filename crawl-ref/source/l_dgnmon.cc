@@ -132,7 +132,13 @@ static int dgn_set_random_mon_list(lua_State *ls)
             }
             if (mon.type == -1)
                 mon.type = MONS_PROGRAM_BUG;
-            name = mons_type_name(static_cast<monster_type>(mon.type), DESC_PLAIN);
+            if (mon.type == MONS_NO_MONSTER)
+                name = "nothing";
+            else
+            {
+                name = mons_type_name(static_cast<monster_type>(mon.type),
+                                      DESC_PLAIN);
+            }
         }
 
         mons.push_back(mon);
@@ -203,7 +209,7 @@ static int dgn_create_monster(lua_State *ls)
     for (int i = 0, size = mlist.size(); i < size; ++i)
     {
         mons_spec mspec = mlist.get_monster(i);
-        if (monster *mon = dgn_place_monster(mspec, -1, c, false, false, false))
+        if (monster *mon = dgn_place_monster(mspec, c, false, false, false))
         {
             push_monster(ls, mon);
             return 1;

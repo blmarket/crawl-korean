@@ -75,6 +75,14 @@
 #include "xom.h"
 #include "korean.h"
 
+#ifdef NOTE_DEBUG_CHAOS_BRAND
+    #define NOTE_DEBUG_CHAOS_EFFECTS
+#endif
+
+#ifdef NOTE_DEBUG_CHAOS_EFFECTS
+    #include "notes.h"
+#endif
+
 // Odd helper function, why is this declared like this?
 #define DID_AFFECT() \
 { \
@@ -133,9 +141,7 @@ melee_attack::melee_attack(actor *attk, actor *defn,
             else
                 attk_type = AT_HIT;
         }
-        else if (attk_type == AT_TRUNK_SLAP
-                 && (attacker->type == MONS_SKELETON_LARGE
-                     || attacker->type == MONS_SKELETON_SMALL))
+        else if (attk_type == AT_TRUNK_SLAP && attacker->type == MONS_SKELETON)
         {
             // Elephant trunks have no bones inside.
             attk_type = AT_NONE;
@@ -653,8 +659,7 @@ bool melee_attack::handle_phase_damaged()
         // The message sequences look too weird.  Also, stealing
         // attacks aren't handled until after the damage msg. Also,
         // no attack flavours for dead defenders
-        if (attacker != defender && attk_flavour != AF_STEAL
-            && defender->alive())
+        if (attacker != defender && defender->alive())
         {
             mons_apply_attack_flavour();
             apply_staff_damage();
@@ -1914,7 +1919,7 @@ void melee_attack::set_attack_verb()
             attack_verb = pgettext("verb", "dice");
             verb_degree = N_("like an onion");
         }
-        else if (defender_genus == MONS_SKELETON_SMALL)
+        else if (defender_genus == MONS_SKELETON)
         {
             attack_verb = pgettext("verb", "fracture");
             verb_degree = N_("into splinters");
@@ -1935,7 +1940,7 @@ void melee_attack::set_attack_verb()
             attack_verb = one_chance_in(4) ? pgettext("verb", "thump") : pgettext("verb", "sock");
         else if (damage_done < HIT_STRONG)
             attack_verb = pgettext("verb", "bludgeon");
-        else if (defender_genus == MONS_SKELETON_SMALL)
+        else if (defender_genus == MONS_SKELETON)
         {
             attack_verb = pgettext("verb", "shatter");
             verb_degree = N_("into splinters");
@@ -2024,6 +2029,7 @@ void melee_attack::set_attack_verb()
                 break;
             }
             // or fall-through
+        case TRAN_FUNGUS:
         case TRAN_ICE_BEAST:
         case TRAN_JELLY: // ?
             if (damage_done < HIT_WEAK)
@@ -2776,6 +2782,24 @@ void melee_attack::chaos_affects_attacker()
 #ifdef NOTE_DEBUG_CHAOS_EFFECTS
             take_note(Note(NOTE_MESSAGE, 0, 0,
                            "CHAOS affects attacker: noise"), true);
+#endif
+            DID_AFFECT();
+        }
+    }
+
+    if (attacker->is_player() && !you.form && one_chance_in(1000))
+    {
+        // Non-weapon using forms are uncool here: you'd need to run away
+        // instead of continuing the fight.
+        transformation_type form = coinflip() ? TRAN_TREE : TRAN_APPENDAGE;
+        if (one_chance_in(5))
+            form = coinflip() ? TRAN_STATUE : TRAN_LICH;
+        if (transform(0, form))
+        {
+#ifdef NOTE_DEBUG_CHAOS_EFFECTS
+            take_note(Note(NOTE_MESSAGE, 0, 0,
+                           (string("CHAOS affects attacker: transform into ")
+                           + transform_name(form)).c_str()), true);
 #endif
             DID_AFFECT();
         }
@@ -3757,6 +3781,7 @@ int melee_attack::calc_to_hit(bool random)
             case TRAN_ICE_BEAST:
             case TRAN_DRAGON:
             case TRAN_LICH:
+            case TRAN_FUNGUS:
             case TRAN_TREE:
             case TRAN_WISP:
                 mhit += maybe_random2(10, random);
@@ -3941,6 +3966,7 @@ void melee_attack::player_stab_check()
     switch (uat)
     {
     case UCAT_NO_ATTACK:
+    case NUM_UCAT:
         stab_bonus = 0;
         break;
     case UCAT_SLEEPING:
@@ -3969,6 +3995,9 @@ void melee_attack::player_stab_check()
         stab_attempt = x_chance_in_y(you.skill_rdiv(SK_STABBING) + you.dex() + 1,
                                      roll);
     }
+
+    if (stab_attempt)
+        count_action(CACT_STAB, uat);
 }
 
 
@@ -5212,6 +5241,7 @@ int melee_attack::calc_base_unarmed_damage()
             damage = (you.species == SP_VAMPIRE ? 2 : 1);
             break;
         case TRAN_ICE_BEAST:
+        case TRAN_FUNGUS:
         case TRAN_TREE:
             damage = 12;
             break;

@@ -139,6 +139,7 @@ void set_hunger(int new_hunger_level, bool suppress_msg)
 bool you_foodless()
 {
     return you.is_undead == US_UNDEAD
+        || you.form == TRAN_FUNGUS
         || you.form == TRAN_TREE
         || you.form == TRAN_WISP;
 }
@@ -800,6 +801,8 @@ static bool _eat_check(bool check_hunger = true, bool silent = false)
         {
             if (you.form == TRAN_TREE)
                 mpr(_("Just photosynthesize."));
+            else if (you.form == TRAN_FUNGUS)
+                mpr(_("You decompose your surroundings."));
             else
                 mpr(_("You can't eat."));
             crawl_state.zero_turns_taken();

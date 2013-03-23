@@ -249,7 +249,12 @@ __attribute__((externally_visible))
 int main(int argc, char *argv[])
 {
 #ifndef __ANDROID__
+# ifdef DGAMELAUNCH
+    // avoid commas instead of dots, etc, on CDO
+    setlocale(LC_CTYPE, "");
+# else
     setlocale(LC_ALL, "");
+# endif
 #endif
 
 
@@ -416,11 +421,11 @@ static NORETURN void _launch_game()
     // Override some options when playing in hints mode.
     init_hints_options();
 
-    if (!game_start && you.prev_save_version != Version::Long())
+    if (!game_start && you.prev_save_version != Version::Long)
     {
         snprintf(info, INFO_SIZE, "Upgraded the game from %s to %s",
                                   you.prev_save_version.c_str(),
-                                  Version::Long().c_str());
+                                  Version::Long);
         take_note(Note(NOTE_MESSAGE, 0, 0, info));
     }
 
@@ -1491,7 +1496,9 @@ static void _go_upstairs()
         return;
     }
 
-    if (ygrd == DNGN_EXIT_PORTAL_VAULT && player_in_branch(BRANCH_ZIGGURAT))
+    if (ygrd == DNGN_EXIT_PORTAL_VAULT
+        && player_in_branch(BRANCH_ZIGGURAT)
+        && you.depth < brdepth[BRANCH_ZIGGURAT])
     {
         if (!yesno(gettext("Are you sure you want to leave this Ziggurat?")))
             return;
@@ -1575,7 +1582,9 @@ static void _go_downstairs()
     if (!check_annotation_exclusion_warning())
         return;
 
-    if (ygrd == DNGN_EXIT_PORTAL_VAULT && player_in_branch(BRANCH_ZIGGURAT))
+    if (ygrd == DNGN_EXIT_PORTAL_VAULT
+        && player_in_branch(BRANCH_ZIGGURAT)
+        && you.depth < brdepth[BRANCH_ZIGGURAT])
     {
         if (!yesno(gettext("Are you sure you want to leave this Ziggurat?")))
             return;
@@ -4354,6 +4363,15 @@ static void _move_player(coord_def move)
                 you.berserk_penalty = 0;
 
             attacking = true;
+        }
+    }
+    else if (you.form == TRAN_FUNGUS && moving)
+    {
+        if (you.made_nervous_by(targ))
+        {
+                moving = false;
+                you.turn_is_over = false;
+                return;
         }
     }
 

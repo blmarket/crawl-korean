@@ -990,25 +990,21 @@ static bool _handle_scroll(monster* mons)
         }
         break;
 
-    case SCR_UNHOLY_CREATION:
+    case SCR_SUMMONING:
         if (mons_near(mons))
         {
-            simple_monster_message(mons, gettext(" reads a scroll."));
+            simple_monster_message(mons, _(" reads a scroll."));
+            mprf(_("Wisps of shadow swirl around %s."), mons->name(DESC_THE).c_str());
             read = true;
-            if (monster *mon = create_monster(
-                mgen_data(MONS_ABOMINATION_SMALL, SAME_ATTITUDE(mons),
-                          mons, 0, 0, mons->pos(), mons->foe,
-                          MG_FORCE_BEH)))
+            int count = roll_dice(2, 2);
+            for (int i = 0; i < count; ++i)
             {
-                if (you.can_see(mon))
-                {
-                    ident = ID_KNOWN_TYPE;
-                    mprf(_("%s appears!"), mon->name(DESC_A).c_str());
-                }
-                player_angers_monster(mon);
+                create_monster(
+                    mgen_data(RANDOM_MOBILE_MONSTER, SAME_ATTITUDE(mons), mons,
+                              3, SPELL_SHADOW_CREATURES, mons->pos(), mons->foe,
+                              0, GOD_NO_GOD));
             }
-            else if (you.can_see(mons))
-                canned_msg(MSG_NOTHING_HAPPENS);
+            ident = ID_KNOWN_TYPE;
         }
         break;
     }
@@ -1421,6 +1417,10 @@ static bool _handle_wand(monster* mons, bolt &beem)
     case WAND_ENSLAVEMENT:
     case WAND_RANDOM_EFFECTS:
         // These have been deemed "too tricky" at this time {dlb}:
+        return false;
+
+    case WAND_DIGGING:
+        // This is handled elsewhere.
         return false;
 
     // These are wands that monsters will aim at themselves {dlb}:

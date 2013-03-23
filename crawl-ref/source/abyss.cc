@@ -35,6 +35,7 @@
 #include "misc.h"
 #include "mon-iter.h"
 #include "mon-pathfind.h"
+#include "mon-pick.h"
 #include "mon-place.h"
 #include "mon-transit.h"
 #include "mon-util.h"
@@ -61,7 +62,7 @@ static const int ABYSSAL_RUNE_MIN_LEVEL = 3;
 
 abyss_state abyssal_state;
 
-static ProceduralLayout *abyssLayout = NULL;
+static ProceduralLayout *abyssLayout = nullptr, *levelLayout = nullptr;
 
 typedef priority_queue<ProceduralSample, vector<ProceduralSample>, ProceduralSamplePQCompare> sample_queue;
 
@@ -383,6 +384,13 @@ static bool _abyss_check_place_feat(coord_def p,
 
     if (place_feat && feats_wanted)
         ++*feats_wanted;
+
+    // Don't place features in bubbles.
+    int wall_count = 0;
+    for (adjacent_iterator ai(p); ai; ++ai)
+        wall_count += feat_is_solid(grd(p));
+    if (wall_count > 6)
+        return false;
 
     // There's no longer a need to check for features under items,
     // since we're working on fresh grids that are guaranteed
@@ -852,8 +860,7 @@ static void _abyss_generate_monsters(int nmonsters)
 
     for (int mcount = 0; mcount < nmonsters; mcount++)
     {
-        mg.cls = pick_random_monster_for_place(BRANCH_ABYSS, MONS_NO_MONSTER,
-                                               false, false, false);
+        mg.cls = pick_random_monster(level_id::current());
         if (!invalid_monster_type(mg.cls))
             mons_place(mg);
     }
@@ -995,8 +1002,8 @@ static ProceduralSample _abyss_grid(const coord_def &p)
     if (abyssLayout == NULL)
     {
         const level_id lid = _get_real_level();
-        ProceduralLayout* dungeon_level = new LevelLayout(lid, 5, rivers);
-        const ProceduralLayout* complex_layout[] = { dungeon_level, &rivers };
+        levelLayout = new LevelLayout(lid, 5, rivers);
+        const ProceduralLayout* complex_layout[] = { levelLayout, &rivers };
         const static vector<const ProceduralLayout*> complex_vec(complex_layout, complex_layout + 2);
         abyssLayout = new WorleyLayout(23571113, complex_vec, 6.1);
     }
@@ -1080,11 +1087,20 @@ static void _update_abyss_terrain(const coord_def &p,
     if (_abyssal_rune_at(rp))
         return;
 
-    const dungeon_feature_type feat = sample.feat();
+    dungeon_feature_type feat = sample.feat();
 
     // Don't replace open doors with closed doors!
     if (feat_is_door(currfeat) && feat_is_door(feat))
         return;
+
+    // Veto dangerous terrain.
+    if (you.pos() == rp)
+    {
+        if (feat == DNGN_DEEP_WATER)
+            feat = DNGN_SHALLOW_WATER;
+        if (feat == DNGN_LAVA)
+            feat = DNGN_FLOOR;
+    }
 
     // If the selected grid is already there, *or* if we're morphing and
     // the selected grid should have been there, do nothing.
@@ -1249,7 +1265,6 @@ static void _generate_area(const map_bitmask &abyss_genlevel_mask)
         link_items();
     }
     _abyss_create_items(abyss_genlevel_mask, placed_abyssal_rune, use_vaults);
-    generate_random_blood_spatter_on_level(&abyss_genlevel_mask);
     setup_environment_effects();
 
     // Abyss has a constant density.
@@ -1258,11 +1273,11 @@ static void _generate_area(const map_bitmask &abyss_genlevel_mask)
 
 static void _initialize_abyss_state()
 {
-    abyssal_state.major_coord.x = random2(0x7FFFFFFF);
-    abyssal_state.major_coord.y = random2(0x7FFFFFFF);
-    abyssal_state.seed = random2(0x7FFFFFFF);
+    abyssal_state.major_coord.x = random_int() & 0x7FFFFFFF;
+    abyssal_state.major_coord.y = random_int() & 0x7FFFFFFF;
+    abyssal_state.seed = random_int() & 0x7FFFFFFF;
     abyssal_state.phase = 0.0;
-    abyssal_state.depth = random2(0x7FFFFFFF);
+    abyssal_state.depth = random_int() & 0x7FFFFFFF;
     abyssal_state.nuke_all = false;
     abyss_sample_queue = sample_queue(ProceduralSamplePQCompare());
 }
@@ -1271,7 +1286,7 @@ void set_abyss_state(coord_def coord, uint32_t depth)
 {
     abyssal_state.major_coord = coord;
     abyssal_state.depth = depth;
-    abyssal_state.seed = random2(0x7FFFFFFF);
+    abyssal_state.seed = random_int() & 0x7FFFFFFF;
     abyssal_state.phase = 0.0;
     abyssal_state.nuke_all = true;
     abyss_sample_queue = sample_queue(ProceduralSamplePQCompare());
@@ -1317,6 +1332,8 @@ void destroy_abyss()
     {
         delete abyssLayout;
         abyssLayout = nullptr;
+        delete levelLayout;
+        levelLayout = nullptr;
     }
 }
 
@@ -1451,7 +1468,6 @@ retry:
         }
     }
 
-    generate_random_blood_spatter_on_level();
     setup_environment_effects();
 }
 
@@ -1557,6 +1573,11 @@ static void _initialise_level_corrupt_seeds(int power)
     }
 }
 
+static bool _incorruptible(monster_type mt)
+{
+    return mons_is_abyssal_only(mt) || mons_class_holiness(mt) == MH_HOLY;
+}
+
 // Create a corruption spawn at the given position. Returns false if further
 // monsters should not be placed near this spot (overcrowding), true if
 // more monsters can fit in.
@@ -1584,24 +1605,12 @@ static bool _spawn_corrupted_servant_near(const coord_def &pos)
             continue;
         }
 
-        // Got a place, summon the beast.
-        // Retry on invalid monsters.
-        for (int x = 0; x < 10; ++x)
-        {
-            monster_type mons = pick_random_monster(level_id(BRANCH_ABYSS));
-            if (mons_is_abyssal_only(mons)
-                || mons_class_holiness(mons) == MH_HOLY)
-            {
-                continue;
-            }
-            if (invalid_monster_type(mons))
-                continue;
-
-            mgen_data mg(mons, beh, 0, 5, 0, p);
-            mg.non_actor_summoner = "Lugonu's corruption";
-            mg.place = BRANCH_ABYSS;
-            return create_monster(mg);
-        }
+        monster_type mons = pick_monster(level_id(BRANCH_ABYSS), _incorruptible);
+        ASSERT(mons);
+        mgen_data mg(mons, beh, 0, 5, 0, p);
+        mg.non_actor_summoner = "Lugonu's corruption";
+        mg.place = BRANCH_ABYSS;
+        return create_monster(mg);
     }
 
     return false;

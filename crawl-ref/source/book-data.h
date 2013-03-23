@@ -87,7 +87,7 @@
     SPELL_NO_SPELL,
 },
 
-{   // Book of Enchantments (fourth one)
+{   // Book of Enchantments
     SPELL_CAUSE_FEAR,
     SPELL_SILENCE,
     SPELL_TUKIMAS_DANCE,
@@ -155,10 +155,10 @@
 
 {   // Book of Transfigurations
     SPELL_STONESKIN,
+    SPELL_POLYMORPH,
     SPELL_ICE_FORM,
     SPELL_STATUE_FORM,
     SPELL_DRAGON_FORM,
-    SPELL_NO_SPELL,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
@@ -286,16 +286,18 @@
     SPELL_NO_SPELL,
 },
 
+#if TAG_MAJOR_VERSION == 34
 {   // Book of Morphology
     SPELL_STICKS_TO_SNAKES,
     SPELL_PETRIFY,
     SPELL_POLYMORPH,
-    SPELL_CIGOTUVIS_DEGENERATION,
     SPELL_IGNITE_POISON,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
+    SPELL_NO_SPELL,
 },
+#endif
 
 {   // Book of Geomancy
     SPELL_SANDBLAST,
@@ -426,7 +428,7 @@
     SPELL_CONDENSATION_SHIELD,
     SPELL_INTOXICATE,
     SPELL_PETRIFY,
-    SPELL_NO_SPELL,
+    SPELL_IGNITE_POISON,
     SPELL_NO_SPELL,
     SPELL_NO_SPELL,
 },

@@ -402,7 +402,7 @@ bool disc_of_storms(bool drac_breath)
         {
             for (radius_iterator ri(you.pos(), LOS_RADIUS, false); ri; ++ri)
             {
-                if (grd(*ri) < DNGN_MAXWALL)
+                if (!in_bounds(*ri) || grd(*ri) < DNGN_MAXWALL)
                     continue;
 
                 if (one_chance_in(60 - you.skill(SK_EVOCATIONS)))
@@ -502,7 +502,7 @@ void tome_of_power(int slot)
              (temp_rand >  7) ? SPELL_BOLT_OF_INACCURACY :
              (temp_rand >  6) ? SPELL_STICKY_FLAME_RANGE :
              (temp_rand >  5) ? SPELL_TELEPORT_SELF :
-             (temp_rand >  4) ? SPELL_CIGOTUVIS_DEGENERATION :
+             (temp_rand >  4) ? SPELL_DAZZLING_SPRAY :
              (temp_rand >  3) ? SPELL_POLYMORPH :
              (temp_rand >  2) ? SPELL_MEPHITIC_CLOUD :
              (temp_rand >  1) ? SPELL_THROW_FLAME :

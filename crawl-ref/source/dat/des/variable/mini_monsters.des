@@ -22,6 +22,18 @@
 # best or else delegate to Random or Others. Be picky with Guardians, please.
 ###############################################################################
 
+# Functionality for some of HangedMan's decor vaults.
+{{
+function init_hm_decor_walldepth(e, variables)
+local a = you.absdepth() * 5
+  if a - 75 > 0 then
+    e.subst(variables .. " : x:50 c:" .. a .. " b:" .. a - 75)
+  else
+    e.subst(variables .. " : x:50 c:" .. a)
+  end
+end
+}}
+
 default-depth: D:9-27, Elf
 
 ###############################################################################
@@ -1231,7 +1243,7 @@ DEPTH:  D:6-10
 MONS:   human; club | mace w:3 . animal skin | leather armour
 MONS:   human; sling . stone | sling bullet w:3 . animal skin | leather armour
 SUBST:  1 = 112.
-KMONS:  3 = human; flail | spiked flail w:3 . ring mail | scale mail
+KMONS:  3 = human; flail . ring mail | scale mail
 KITEM:  3 = %
 MAP
 .........
@@ -1681,7 +1693,7 @@ ITEM:    amulet of warding w:5 / amulet of warding randart
 ITEM:    air elemental fan / lamp of fire / \
          stone of earth elementals / lantern of shadows
 KITEM:   % = any, any / gold / nothing, any / nothing
-KITEM:   _ = scroll of unholy creation, scroll of unholy creation / nothing
+KITEM:   _ = scroll of summoning, scroll of summoning / nothing
 KFEAT:   _ = altar_sif_muna
 KMASK:   "'@ = !no_monster_gen
 SHUFFLE: 12, 34, 12 / 34
@@ -1762,7 +1774,7 @@ MONS:    deep dwarf artificer ; wand of fire | wand of flame w:5 . \
          robe race:none ego:fire_resistance w:15 | \
          robe race:none ego:cold_resistance w:14 | \
          robe race:none ego:resistance w:1
-MONS:    small simulacrum, fire elemental
+MONS:    simulacrum, fire elemental
 ITEM:    empty ebony casket, lamp of fire
 SHUFFLE: 12, 3df / 4eF
 FTILE:   fF'@ = floor_pebble_darkgray
@@ -2298,8 +2310,8 @@ ENDMAP
 
 NAME:   hangedman_weighted_door
 DEPTH:  D:9-, Crypt
-MONS:   large zombie / large skeleton
-KMONS:  A = spectral thing / large simulacrum
+MONS:   zombie / skeleton
+KMONS:  A = spectral thing / simulacrum
 KITEM:  A = any good_item
 KMASK:  .%* = no_monster_gen
 KITEM:  * = star_item
@@ -4382,6 +4394,45 @@ MAP
       ..........
 ENDMAP
 
+NAME:  grunt_potential
+TAGS:  no_pool_fixup
+DEPTH: D:6-27
+: init_hm_decor_walldepth(_G, 'x')
+SHUFFLE: wlvbn
+: if you.absdepth() > 20 then
+SUBST: 9 = 8
+SUBST: 1 = 8
+SUBST: * = |
+NSUBST: % = 4:* / *:.
+NSUBST: 0 = 2:9 / *:0
+: elseif you.absdepth() >= 12 then
+SUBST: 1 = 9
+: else
+SUBST: 1 = 0
+SUBST: * = %
+: end
+KMONS: 0 = 0 band
+KMONS: 9 = 9 band
+MAP
+       @
+    xxx+xxx
+  xxx.....xxx
+ xx..0.w.0..xx
+ x....%w%....x
+xx...wwwww...xx
+x......w......x
+x.....%w%.....x
+x%0...1*1...0%x
+x.....%9%.....x
+x.............x
+xx...lllll...xx
+ x....%.%....x
+ xx...0.0...xx
+  xxx.....xxx
+    xxx+xxx
+       @
+ENDMAP
+
 ################################################################
 #
 # <<8>> Minivaults with monsters guarding a thematic item.
@@ -4430,7 +4481,6 @@ ENDMAP
 NAME:   minmay_guarded_unrand_robustness
 DEPTH:  D:10-, Vaults
 TAGS:   no_monster_gen no_item_gen
-TAGS:   vaults_room_15_spin_encounter
 WEIGHT: 3, 1 (Vaults)
 # Iron golems are speed 7, so even a naga can outrun them.
 MONS:   patrolling iron golem, patrolling metal gargoyle
@@ -4639,7 +4689,6 @@ ENDMAP
 #
 NAME:   sword_in_stone
 TAGS:   mini_float patrolling
-TAGS:   vaults_7_room_spin_encounter
 DEPTH:  D:5-26, Vaults, Orc, Elf
 NSUBST: k = 4=k / *= .:19 k:1
 KITEM:  S = good_item long sword / good_item great sword / good_item demon blade /\
@@ -4695,6 +4744,119 @@ kkkkkkk
 kkkkkkk
 ENDMAP
 
+# obsidian axe
+# A mini-temple of Makhleb; demons ahoy!
+NAME:   grunt_guarded_unrand_obsidian_axe
+TAGS:   no_monster_gen no_item_gen
+DEPTH:  D:17-
+WEIGHT: 3
+MONS:   silver statue
+MONS:   patrolling hell knight ; broad axe unrand:obsidian_axe . \
+                                 chain mail | splint mail | plate armour . \
+                                 shield | large shield
+MONS:   patrolling hell knight
+MONS:   sun demon / soul eater / ice devil / smoke demon / neqoxec / \
+        ynoxinul / chaos spawn
+MONS:   blue devil / iron devil / orange demon / red devil / rotting devil / \
+        sixfirhy
+KPROP:  ._cGO12345 = bloody / nothing w:20
+KFEAT:  _ = altar_makhleb
+MARKER: O = lua:fog_machine { cloud_type = "flame", pow_min = 10, \
+                              pow_max = 10, delay = 10, size = 1, \
+                              walk_dist = 0, excl_rad = 0}
+MAP
+      ccccc
+      cO1Oc
+      c3_3c
+     cc424cc
+    cc5.4.5cc
+   cc.G5.5G.cc
+  ccc5.....5ccc
+.ccOc.G5.5G.cOcc.
+.c5.c.......c.5c.
+@+.3+.G.4.G.+3.+@
+.c5.c..._...c.5c.
+.ccOcc.O1O.ccOcc.
+..ccccccccccccc..
+ ...............
+ENDMAP
+
+# Arga
+# The end of a dwarven mineshaft; perhaps they just found the axe again?
+NAME:   grunt_guarded_unrand_arga
+TAGS:   no_monster_gen no_item_gen patrolling
+DEPTH:  D:14-
+WEIGHT: 3
+# KMONS is used here to get the fallback to work properly.
+KMONS:  W = Wiglaf ; war axe unrand:arga . \
+                     shield race:dwarven . \
+                     chain mail w:3 race:dwarven | \
+                     splint mail w:5 race:dwarven | \
+                     plate armour w:10 race:dwarven | \
+                     crystal plate armour w:1 race:dwarven, \
+            deep dwarf berserker ; war axe unrand:arga . \
+                                   chain mail w:5 race:dwarven | \
+                                   splint mail w:2 race:dwarven | \
+                                   plate armour w:1 race:dwarven
+KMONS:  J = Jorgrun, deep dwarf necromancer
+MONS:   deep dwarf berserker
+MONS:   deep dwarf scion / deep dwarf death knight w:2
+MONS:   deep dwarf
+SUBST:  X = x.
+KITEM:  . = gold w:5 / stone / large rock q:1 w:1 / nothing w:40
+MAP
+xX.@.Xxxxxxxxxxxxx
+xX...Xxxccccccxxxx
+xXx2.XXccX1.Xcccxx
+xXX.3XXcXW.J..Xccx
+xxX..XxccX1...2.Xx
+xX3.XXxxccccX2..Xx
+xX..XXxxxxxxXX.XXx
+xX.3XXxxxxxXX.1XXx
+xXX.2XXXXXxX3..XXx
+xxXX.3.2XXXX.1XXxx
+xxxXXX.3.2...XXxxx
+xxxxxXXXX..3XXxxxx
+xxxxxxxxXXXXXxxxxx
+xxxxxxxxxxxxxxxxxx
+ENDMAP
+
+# sword of the Doom Knight
+# A temple to Yredelemnul, with a champion wielding the blade designate.
+NAME:   grunt_unrand_guarded_doom_knight
+TAGS:   no_monster_gen no_item_gen patrolling
+DEPTH:  D:20-, Crypt
+WEIGHT: 3
+MONS:   deep dwarf death knight ; \
+        great sword unrand:sword_of_the_doom_knight . \
+        chain mail race:dwarven w:5 | \
+        splint mail race:dwarven w:2 | \
+        plate armour race:dwarven w:1
+MONS:   profane servitor, bone dragon, ghoul, death cob, skeletal warrior
+MONS:   rotting hulk / freezing wraith / phantasmal warrior / \
+        flaming corpse / flayed ghost / skeletal warrior
+KFEAT:  _ = altar_yredelemnul
+KFEAT:  - = open_door
+MAP
+    ccccc
+    c2_3c
+    c.1.c
+    c465c
+ccccc+++ccccc
+ccc.......ccc
+c7-.G...G.-7c
+ccc.......ccc
+c7-.G...G.-7c
+ccc.......ccc
+c7-.G...G.-7c
+ccc.......ccc
+c7-.G...G.-7c
+ccc.......ccc
+c7-.G...G.-7c
+ccc.......ccc
+ccccc+++ccccc
+     .@.
+ENDMAP
 
 ###################################################################
 #
@@ -4767,7 +4929,6 @@ ENDMAP
 # gate that opens all at once.
 NAME:   door_vault
 TAGS:   allow_dup
-TAGS:   vaults_room_10_spin_dangerous
 WEIGHT: 1 (Vaults), 10
 DEPTH:  D:15-27, Elf, Vaults, Crypt, Dis, Geh, Tar, Coc, Zot
 MARKER: X = lua: props_marker { connected_exclude="true" }
@@ -4782,7 +4943,7 @@ KMONS:  8 = deep elf annihilator / deep elf blademaster / deep elf master archer
             deep elf high priest / w:20 place:Elf
 : elseif you.branch() == "Crypt" then
 KMONS:  8 = bone dragon / lich / ancient lich / w:5 death cob / w:5 curse toe / \
-            w:5 large zombie / w:5 large skeleton / eidolon / w:20 reaper / \
+            w:5 zombie / w:5 skeleton / eidolon / w:20 reaper / \
             soul eater / w:30 place:Crypt
 : elseif you.branch() == "Dis" then
 KMONS:  8 = w:5 shadow fiend / w:5 ice fiend / w:5 brimstone fiend / w:5 hell sentinel / \
@@ -4795,7 +4956,7 @@ KMONS:  8 = w:15 shadow fiend / reaper / w:5 soul eater / shadow dragon / lich /
             ancient lich / w:15 place:Tar
 : elseif you.branch() == "Coc" then
 KMONS:  8 = w:15 blizzard demon / frost giant / w:5 titan / w:15 ice fiend / \
-            w:5 large simulacrum / place:Coc
+            w:5 simulacrum / place:Coc
 : elseif you.branch() == "Zot" then
 KMONS:  8 = w:35 nonbase draconian / orb of fire / electric golem / killer klown / \
             death cob / w:5 curse toe / w:5 ancient lich

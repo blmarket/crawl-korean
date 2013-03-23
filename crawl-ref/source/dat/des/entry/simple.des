@@ -1,6 +1,6 @@
 ##############################################################################
 # Simple maps for D:1 entry vaults.
-# See entry.des for where your new entry vault belongs.
+# See entry_guide.txt for where your new entry vault belongs.
 #
 # Please do not rearrange the vaults. The order is chosen so that readers are
 # introduced to new features one by one.
@@ -1892,4 +1892,42 @@ MAP
  +....+
  ++++++
    @@
+ENDMAP
+
+##############################################################
+NAME:    grunt_entry_crossed_arrows
+ORIENT:  float
+TAGS:    entry no_monster_gen transparent
+SHUFFLE: {([<
+MAP
+....G....
+.xx...xx.
+..xx.xx..
+ ..x+x..
+ ..x+x..
+..xx{xx..
+.++(T[++.
+..xx<xx..
+ ..x+x..
+ ..x+x..
+..xx.xx..
+.xx...xx.
+....G....
+ENDMAP
+
+# Come back for the item later if you want it.
+NAME:    grunt_entry_lava_bath
+ORIENT:  float
+TAGS:    entry no_monster_gen
+SHUFFLE: {([<
+MAP
+    .@...xxxxx
+   ....G.ccccx
+  .......lllcx
+ ...[...llllcx
+@.G..G{.lll%cx
+ ...(...llllcx
+  .......lllcx
+   ....G.ccccx
+    .@...xxxxx
 ENDMAP

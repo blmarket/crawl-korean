@@ -2114,6 +2114,7 @@ void drink(int slot)
     // potions on monsters.
     const bool dangerous = (player_in_a_dangerous_place()
                             && you.experience_level > 1);
+    potion_type pot_type = (potion_type)potion.sub_type;
 
     // Identify item and type.
     if (potion_effect(static_cast<potion_type>(potion.sub_type),
@@ -2150,7 +2151,7 @@ void drink(int slot)
         lessen_hunger(40, true);
 
     // This got deferred from the it_use2 switch to prevent SIGHUP abuse.
-    if (potion.sub_type == POT_EXPERIENCE)
+    if (pot_type == POT_EXPERIENCE)
         level_change();
 }
 
@@ -3067,23 +3068,10 @@ void read_scroll(int slot)
         noisy(25, you.pos(), gettext("You hear a loud clanging noise!"));
         break;
 
-    case SCR_UNHOLY_CREATION:
-    {
-        if (monster *mons = create_monster(
-                            mgen_data(MONS_ABOMINATION_SMALL, BEH_FRIENDLY,
-                                      &you, 0, 0, you.pos(), MHITYOU,
-                                      MG_FORCE_BEH)))
-        {
-            mpr(gettext("A horrible Thing appears!"));
-            player_angers_monster(mons);
-        }
-        else
-        {
-            canned_msg(MSG_NOTHING_HAPPENS);
-            id_the_scroll = false;
-        }
+    case SCR_SUMMONING:
+        cast_shadow_creatures(GOD_NO_GOD, false, true);
+        did_god_conduct(DID_UNHOLY, 10, item_type_known(scroll));
         break;
-    }
 
     case SCR_FOG:
         mpr(gettext("The scroll dissolves into smoke."));

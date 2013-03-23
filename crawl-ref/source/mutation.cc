@@ -1185,9 +1185,12 @@ bool physiology_mutation_conflict(mutation_type mutat)
     }
 
     // Felids have innate claws, and unlike trolls/ghouls, there are no
-    // increases for them.
-    if (you.species == SP_FELID && mutat == MUT_CLAWS)
+    // increases for them.  And octopodes have no hands.
+    if ((you.species == SP_FELID || you.species == SP_OCTOPODE)
+         && mutat == MUT_CLAWS)
+    {
         return true;
+    }
 
     // Merfolk have no feet in the natural form, and we never allow mutations
     // that show up only in a certain transformation.
@@ -2421,10 +2424,19 @@ void check_antennae_detect()
             if (remembered_monster != mon->type)
             {
                 monster_type mc = MONS_SENSED;
-                if (you.religion == GOD_ASHENZARI && !player_under_penance())
+
+                if (mon->friendly())
+                    mc = MONS_SENSED_FRIENDLY;
+                else if (you.religion == GOD_ASHENZARI
+                         && !player_under_penance())
+                {
                     mc = ash_monster_tier(mon);
+                }
                 env.map_knowledge(*ri).set_detected_monster(mc);
 
+                // Don't bother warning the player (or interrupting
+                // autoexplore) about monsters known to be easy or
+                // friendly, or those recently warned about
                 if (mc == MONS_SENSED_TRIVIAL || mc == MONS_SENSED_EASY
                     || mc == MONS_SENSED_FRIENDLY
                     || testbits(mon->flags, MF_SENSED))

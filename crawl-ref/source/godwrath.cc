@@ -61,18 +61,13 @@ static bool _yred_random_zombified_hostile()
     const bool skel = one_chance_in(4);
 
     monster_type z_base;
-    monster_type z_type;
 
     do
         z_base = pick_random_zombie();
     while (skel && !mons_skeleton(z_base));
 
-    if (mons_zombie_size(z_base) == Z_BIG)
-        z_type = skel ? MONS_SKELETON_LARGE : MONS_ZOMBIE_LARGE;
-    else
-        z_type = skel ? MONS_SKELETON_SMALL : MONS_ZOMBIE_SMALL;
-
-    mgen_data temp = mgen_data::hostile_at(z_type, "the anger of Yredelemnul",
+    mgen_data temp = mgen_data::hostile_at(skel ? MONS_SKELETON : MONS_ZOMBIE,
+                                           "the anger of Yredelemnul",
                                            true, 0, 0, you.pos(), 0,
                                            GOD_YREDELEMNUL, z_base);
 
@@ -125,7 +120,7 @@ static bool _tso_retribution()
 
         for (; how_many > 0; --how_many)
         {
-            if (summon_holy_warrior(100, god, 0, true, true, true))
+            if (summon_holy_warrior(100, true))
                 success = true;
         }
 
@@ -863,43 +858,49 @@ static bool _lugonu_retribution()
         // No return.
     }
 
-    if (random2(you.experience_level) > 7 && !one_chance_in(5))
+    bool success = false;
+    bool major = (you.experience_level > (4 + random2(12)) && !one_chance_in(5));
+    int how_many = (major ? random2(you.experience_level / 9 + 1)
+                          : 1 + you.experience_level /7);
+
+    for (; how_many > 0; --how_many)
     {
         mgen_data temp =
-            mgen_data::hostile_at(random_choose(MONS_GREEN_DEATH,
-                                  MONS_BLIZZARD_DEMON, MONS_BALRUG, -1),
-                                  "the touch of Lugonu",
-                                  true, 0, 0, you.pos(), 0, god);
+            mgen_data::hostile_at(
+                random_choose_weighted(
+                    15 - (you.experience_level/2),  MONS_ABOMINATION_SMALL,
+                    (you.experience_level/2),       MONS_ABOMINATION_LARGE,
+                    6,                              MONS_THRASHING_HORROR,
+                    3,                              MONS_ANCIENT_ZYME,
+                    0),
+                "the touch of Lugonu",
+                true, 0, 0, you.pos(), 0, god);
 
         temp.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
 
-        bool success = create_monster(temp, false);
-        simple_god_message(success ? _(" sends a demon after you!")
-                                   : _("'s demon is unavoidably detained."), god);
+        if (create_monster(temp, false))
+            success = true;
     }
-    else
+
+    if (major)
     {
-        bool success = false;
-        int how_many = 1 + (you.experience_level / 7);
+        mgen_data temp =
+        mgen_data::hostile_at(random_choose(
+                                MONS_TENTACLED_STARSPAWN,
+                                MONS_WRETCHED_STAR,
+                                MONS_STARCURSED_MASS,
+                                -1),
+                                "the touch of Lugonu",
+                                true, 0, 0, you.pos(), 0, god);
 
-        for (; how_many > 0; --how_many)
-        {
-            mgen_data temp =
-                mgen_data::hostile_at(random_choose(MONS_HELLWING, MONS_NEQOXEC,
-                                      MONS_ORANGE_DEMON, MONS_SMOKE_DEMON,
-                                      MONS_YNOXINUL, -1),
-                                      "the touch of Lugonu",
-                                      true, 0, 0, you.pos(), 0, god);
+        temp.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
 
-            temp.extra_flags |= (MF_NO_REWARD | MF_HARD_RESET);
-
-            if (create_monster(temp, false))
-                success = true;
-        }
-
-        simple_god_message(success ? _(" sends minions to punish you.")
-                                   : _("'s minions fail to arrive."), god);
+        if (create_monster(temp, false))
+            success = true;
     }
+
+    simple_god_message(success ? _(" sends minions to punish you.")
+                                : _("'s minions fail to arrive."), god);
 
     return false;
 }

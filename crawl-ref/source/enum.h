@@ -306,8 +306,9 @@ enum transformation_type
     TRAN_PORCUPINE,
     TRAN_WISP,
     TRAN_JELLY,
+    TRAN_FUNGUS,
     // no NUM_TRANSFORMS due to too many switch statements
-    LAST_FORM = TRAN_JELLY
+    LAST_FORM = TRAN_FUNGUS
 };
 
 enum beam_type                  // bolt::flavour
@@ -422,7 +423,9 @@ enum book_type
     BOOK_ENVENOMATIONS,
     BOOK_UNLIFE,
     BOOK_CONTROL,
+#if TAG_MAJOR_VERSION == 34
     BOOK_MUTATIONS,
+#endif
     BOOK_GEOMANCY,
     BOOK_EARTH,
     BOOK_WIZARDRY,
@@ -521,6 +524,7 @@ enum caction_type    // Primary categorization of counted actions.
     CACT_ABIL,       // ability_type
     CACT_EVOKE,      // evoc_type
     CACT_USE,        // object_class_type
+    CACT_STAB,       // unchivalric_attack_type
     NUM_CACTIONS,
 };
 
@@ -2406,13 +2410,13 @@ enum monster_type                      // menv[].type
     MONS_CURSE_TOE,
     MONS_CURSE_SKULL,
     MONS_PROFANE_SERVITOR,
-    MONS_SKELETON_SMALL,
-    MONS_SKELETON_LARGE,
-    MONS_ZOMBIE_SMALL,
-    MONS_ZOMBIE_LARGE,
+    MONS_SKELETON_SMALL,   // recolouring only
+    MONS_SKELETON_LARGE,   // recolouring only
+    MONS_ZOMBIE_SMALL,     // recolouring only
+    MONS_ZOMBIE_LARGE,     // recolouring only
     MONS_SPECTRAL_THING,
-    MONS_SIMULACRUM_SMALL,
-    MONS_SIMULACRUM_LARGE,
+    MONS_SIMULACRUM_SMALL, // recolouring only
+    MONS_SIMULACRUM_LARGE, // recolouring only
 
     // Holies:
     MONS_ANGEL,
@@ -2570,6 +2574,10 @@ enum monster_type                      // menv[].type
     MONS_IRONBRAND_CONVOKER,
     MONS_IRONHEART_PRESERVER,
 
+    MONS_ZOMBIE,
+    MONS_SKELETON,
+    MONS_SIMULACRUM,
+
     NUM_MONSTERS,               // used for polymorph
 
     // MONS_NO_MONSTER can get put in savefiles, so it shouldn't change
@@ -2581,12 +2589,18 @@ enum monster_type                      // menv[].type
 
     // A random draconian, either base coloured drac or specialised.
     RANDOM_DRACONIAN,
-
     // Any random base draconian colour.
     RANDOM_BASE_DRACONIAN,
-
     // Any random specialised draconian, such as a draconian knight.
     RANDOM_NONBASE_DRACONIAN,
+
+    RANDOM_DEMON_LESSER,               //    0: Class V
+    RANDOM_DEMON_COMMON,               //    1: Class II-IV
+    RANDOM_DEMON_GREATER,              //    2: Class I
+    RANDOM_DEMON,                      //    any of the above
+
+    RANDOM_MODERATE_OOD, // +5 depth, AKA '9' glyph on maps
+    RANDOM_SUPER_OOD, // *2 + 4 depth, AKA '8'
 
     WANDERING_MONSTER = 3500, // only used in monster placement routines - forced limit checks {dlb}
 };
@@ -3173,7 +3187,9 @@ enum spell_type
     SPELL_TWISTED_RESURRECTION,
     SPELL_REGENERATION,
     SPELL_BANISHMENT,
+#if TAG_MAJOR_VERSION == 34
     SPELL_CIGOTUVIS_DEGENERATION,
+#endif
     SPELL_STING,
     SPELL_SUBLIMATION_OF_BLOOD,
     SPELL_TUKIMAS_DANCE,

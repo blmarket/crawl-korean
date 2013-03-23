@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Tracking peramallies granted by Yred and Beogh.
+ * @brief Tracking permallies granted by Yred and Beogh.
 **/
 
 #include "AppHdr.h"
@@ -27,6 +27,11 @@ companion::companion(const monster& m)
     timestamp = you.elapsed_time;
 }
 
+void init_companions(void)
+{
+    companion_list.clear();
+}
+
 void add_companion(monster* mons)
 {
     companion_list[mons->mid] = companion(*mons);
@@ -35,6 +40,22 @@ void add_companion(monster* mons)
 void remove_companion(monster* mons)
 {
     companion_list.erase(mons->mid);
+}
+
+void remove_enslaved_soul_companion()
+{
+    for (map<mid_t, companion>::iterator i = companion_list.begin();
+         i != companion_list.end(); ++i)
+    {
+        monster* mons = monster_by_mid(i->first);
+        if (!mons)
+            mons = &i->second.mons.mons;
+        if (mons_enslaved_soul(mons))
+        {
+            remove_companion(mons);
+            return;
+        }
+    }
 }
 
 void remove_all_companions(god_type god)

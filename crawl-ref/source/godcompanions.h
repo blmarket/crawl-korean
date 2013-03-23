@@ -23,14 +23,14 @@ struct companion
 
 extern map<mid_t, companion> companion_list;
 
+void init_companions(void);
 void add_companion(monster* mons);
 void remove_companion(monster* mons);
+void remove_enslaved_soul_companion();
 void remove_all_companions(god_type god);
 void move_companion_to(const monster* mons, const level_id lid);
 
 void update_companions();
-
-bool recall_offlevel_companions();
 
 void list_companions();
 bool companion_is_elsewhere(mid_t mid, bool must_exist = false);

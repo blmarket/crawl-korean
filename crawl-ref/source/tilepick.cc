@@ -272,7 +272,6 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
     case DNGN_EXIT_HELL:
         return TILE_DNGN_RETURN_HELL;
     case DNGN_EXIT_ABYSS:
-    case DNGN_EXIT_PANDEMONIUM:
         return TILE_DNGN_EXIT_ABYSS;
     case DNGN_STONE_ARCH:
         if (you.where_are_you == BRANCH_VESTIBULE_OF_HELL)
@@ -282,6 +281,8 @@ static tileidx_t _tileidx_feature_base(dungeon_feature_type feat)
         return TILE_DNGN_ENTER_PANDEMONIUM;
     case DNGN_TRANSIT_PANDEMONIUM:
         return TILE_DNGN_TRANSIT_PANDEMONIUM;
+    case DNGN_EXIT_PANDEMONIUM:
+        return TILE_DNGN_EXIT_PANDEMONIUM;
     case DNGN_ENTER_DWARVEN_HALL:
     case DNGN_ENTER_HALL_OF_BLADES:
     case DNGN_ENTER_TEMPLE:
@@ -852,13 +853,13 @@ static tileidx_t _tileidx_monster_zombified(const monster_info& mon)
         z_tile = TILEP_ERROR;
     }
 
-    if (z_type == MONS_SKELETON_SMALL || z_type == MONS_SKELETON_LARGE)
+    if (z_type == MONS_SKELETON)
         z_tile = _zombie_tile_to_skeleton(z_tile);
 
     if (z_type == MONS_SPECTRAL_THING)
         z_tile = _zombie_tile_to_spectral(z_tile);
 
-    if (z_type == MONS_SIMULACRUM_SMALL || z_type == MONS_SIMULACRUM_LARGE)
+    if (z_type == MONS_SIMULACRUM)
         z_tile = _zombie_tile_to_simulacrum(z_tile);
 
     return z_tile;
@@ -1310,10 +1311,13 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
         return TILEP_MONS_MOTH_OF_SUPPRESSION;
 
     // small zombies, etc. ('z')
+    case MONS_ZOMBIE:
     case MONS_ZOMBIE_SMALL:
         return TILEP_MONS_ZOMBIE_SMALL;
+    case MONS_SIMULACRUM:
     case MONS_SIMULACRUM_SMALL:
         return TILEP_MONS_SIMULACRUM_SMALL;
+    case MONS_SKELETON:
     case MONS_SKELETON_SMALL:
         return TILEP_MONS_SKELETON_SMALL;
     case MONS_WIGHT:
@@ -4725,7 +4729,6 @@ tileidx_t tileidx_spell(spell_type spell)
     case SPELL_DISPEL_UNDEAD:            return TILEG_DISPEL_UNDEAD;
     case SPELL_HAUNT:                    return TILEG_HAUNT;
     case SPELL_BORGNJORS_REVIVIFICATION: return TILEG_BORGNJORS_REVIVIFICATION;
-    case SPELL_CIGOTUVIS_DEGENERATION:   return TILEG_CIGOTUVIS_DEGENERATION;
     case SPELL_AGONY:                    return TILEG_AGONY;
     case SPELL_TWISTED_RESURRECTION:     return TILEG_TWISTED_RESURRECTION;
     case SPELL_EXCRUCIATING_WOUNDS:      return TILEG_EXCRUCIATING_WOUNDS;

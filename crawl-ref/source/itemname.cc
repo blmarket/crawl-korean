@@ -659,7 +659,7 @@ static const char* scroll_type_name(int scrolltype)
     case SCR_FEAR:               return M_("fear");
     case SCR_NOISE:              return M_("noise");
     case SCR_REMOVE_CURSE:       return M_("remove curse");
-    case SCR_UNHOLY_CREATION:    return M_("unholy creation");
+    case SCR_SUMMONING:	         return M_("summoning");
     case SCR_ENCHANT_WEAPON_I:   return M_("enchant weapon I");
     case SCR_ENCHANT_ARMOUR:     return M_("enchant armour");
     case SCR_TORMENT:            return M_("torment");
@@ -992,7 +992,9 @@ static const char* _book_type_name(int booktype)
     case BOOK_ANNIHILATIONS:          return M_("Annihilations");
     case BOOK_UNLIFE:                 return M_("Unlife");
     case BOOK_CONTROL:                return M_("Control");
+#if TAG_MAJOR_VERSION == 34
     case BOOK_MUTATIONS:              return M_("Morphology");
+#endif
     case BOOK_GEOMANCY:               return M_("Geomancy");
     case BOOK_EARTH:                  return M_("the Earth");
     case BOOK_WIZARDRY:               return M_("Wizardry");
@@ -1871,6 +1873,9 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
     case OBJ_CORPSES:
     {
+        if (dbname && item_typ == CORPSE_SKELETON)
+            return "decaying skeleton";
+
         if (food_is_rotten(*this) && !dbname && it_plus != MONS_ROTTING_HULK)
             buff << check_gettext("rotting ");
 
@@ -2949,10 +2954,10 @@ bool is_bad_item(const item_def &item, bool temp)
                 return false;
         case SCR_CURSE_JEWELLERY:
             return (you.religion != GOD_ASHENZARI);
-        case SCR_UNHOLY_CREATION:
-            // Summoning will always produce hostile monsters if you
-            // worship a good god. (Use temp to allow autopickup to
-            // prevent monsters from reading it.)
+        case SCR_SUMMONING:
+            // Summoning will sometimes produce unholy monsters (and anger
+            // your god, if you are worshipping a good one. (Use temp to
+            // allow autopickup to prevent monsters from reading it.)
             return (temp && is_good_god(you.religion));
         default:
             return false;
