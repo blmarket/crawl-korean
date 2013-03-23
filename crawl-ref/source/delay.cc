@@ -700,7 +700,7 @@ void handle_delay()
             if (vehumet_is_offering(spell))
             {
                 string message = make_stringf(_(" grants you knowledge of %s."),
-                    spell_title(spell)); // 메모
+                    _(spell_title(spell))); // 메모
                 simple_god_message(message.c_str());
             }
             mpr(_("You start memorising the spell."), MSGCH_MULTITURN_ACTION);

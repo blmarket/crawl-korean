@@ -2679,7 +2679,7 @@ static void _xom_zero_miscast()
             name = item.name(true, DESC_YOUR, false, false, false);
         else
         {
-            name  = gettext("One of ");
+            name  = "One of ";
             name += item.name(true, DESC_YOUR, false, false, false);
         }
         messages.push_back(name + " 당신의 가방에서 떨어지자,"//messages.push_back(name + " falls out of your pack, then "
@@ -2697,7 +2697,7 @@ static void _xom_zero_miscast()
     }
 
     {
-        string str = make_stringf(_("A monocle briefly appears over your %s"), 
+        string str = make_stringf("A monocle briefly appears over your %s", 
                                   coinflip() ? _(M_("right")) : _(M_("left")));
         if (you.form == TRAN_SPIDER)
             if (coinflip())
@@ -2728,7 +2728,7 @@ static void _xom_zero_miscast()
 
     if (_could_wear_eq(EQ_WEAPON))
     {
-        string str = make_stringf(_("A fancy cane briefly appears in your %s."), you.hand_name(false).c_str());
+        string str = make_stringf("A fancy cane briefly appears in your %s.", you.hand_name(false).c_str());
 
         messages.push_back(str);
     }
@@ -2738,8 +2738,8 @@ static void _xom_zero_miscast()
 
     if ((item = _tran_get_eq(EQ_HELMET)))
     {
-        string str = make_stringf(_("Your %s leaps into the air, "
-                    "briefly spins, then lands back on your head!"),
+        string str = make_stringf("Your %s leaps into the air, "
+                    "briefly spins, then lands back on your head!",
                     item->name(true, DESC_BASENAME, false, false, false).c_str());
 
         messages.push_back(str);
@@ -3794,7 +3794,7 @@ static void _handle_accidental_death(const int orig_hp,
         return;
     }
 
-    string speech_type = _(M_("accidental homicide"));
+    string speech_type = "accidental homicide";
 
     const dungeon_feature_type feat = grd(you.pos());
 

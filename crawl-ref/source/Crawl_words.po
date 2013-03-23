@@ -15723,168 +15723,152 @@ msgstr "무리떼의"
 msgid "inaccuracy"
 msgstr "부정확의"
 
-#: mutation.cc:460
-msgid "icy white"
-msgstr ""
-
-#: mutation.cc:468
-msgid "glossy black"
-msgstr ""
-
-#: mutation.cc:477
-msgid "golden yellow"
-msgstr ""
-
 #: player-stats.cc:88
 msgid "Strength"
-msgstr ""
+msgstr "힘"
 
 #: player-stats.cc:91
 msgid "Intelligence"
-msgstr ""
+msgstr "지능"
 
 #: player-stats.cc:94
 msgid "Dexterity"
-msgstr ""
+msgstr "민첩"
 
 #: skills2.cc:91
 msgid "Traps"
-msgstr ""
-
-#: xom.cc:3797
-msgid "accidental homicide"
-msgstr ""
+msgstr "함정 기술"
 
 #: mon-data.h:316
 msgid "chaos butterfly"
-msgstr ""
+msgstr "혼돈의 나비"
 
 #. lizards ('l')
 #. dummy for giant lizard genus
 #: mon-data.h:1191
 msgid "giant lizard"
-msgstr ""
+msgstr "거대 도마뱀"
 
 #. drakes (also 'l', but dragon-like)
 #. dummy for drake genus
 #: mon-data.h:1264
 msgid "drake"
-msgstr ""
+msgstr "드레이크"
 
 #: mon-data.h:2100
 msgid "apocalypse crab"
-msgstr ""
+msgstr "묵시의 게"
 
 #: mon-data.h:2162
 msgid "spatial maelstrom"
-msgstr ""
+msgstr "시공간의 소용돌이"
 
 #: mon-data.h:2328
 msgid "ancient zyme"
-msgstr ""
+msgstr "고대 병원균"
 
 #. dummy for moth genus
 #: mon-data.h:2378
 msgid "moth"
-msgstr ""
+msgstr "나방"
 
 #. elementals (E)
 #. dummy for the genus, never spawns
 #: mon-data.h:2927
 msgid "elemental"
-msgstr ""
+msgstr "정령"
 
 #. dummy for transformed display
 #: mon-data.h:3659
 msgid "animated tree"
-msgstr ""
+msgstr "움직이는 나무"
 
 #: mon-data.h:3851
 msgid "deep troll earth mage"
-msgstr ""
+msgstr "딥 트롤 대지술사"
 
 #: mon-data.h:3865
 msgid "deep troll shaman"
-msgstr ""
+msgstr "딥 트롤 주술사"
 
 #. bears ('U')
 #. dummy for the genus, never spawns
 #: mon-data.h:3879
 msgid "bear"
-msgstr ""
+msgstr "곰"
 
 #: mon-data.h:4063
 msgid "thrashing horror"
-msgstr ""
+msgstr "요동치는 공포"
 
 #: mon-data.h:4102
 msgid "tentacled starspawn"
-msgstr ""
+msgstr "스타스폰"
 
 #: mon-data.h:4115
 msgid "starspawn tentacle"
-msgstr ""
+msgstr "스타스폰 촉수"
 
 #: mon-data.h:4128
 msgid "starspawn tentacle segment"
-msgstr ""
+msgstr "스타스폰의 촉수"
 
 #: mon-data.h:4141
 msgid "starcursed mass"
-msgstr ""
+msgstr "저주받은 덩어리"
 
 #: mon-data.h:4651
 msgid "vault sentinel"
-msgstr ""
+msgstr "보물창고 감시자"
 
 #: mon-data.h:4664
 msgid "vault warden"
-msgstr ""
+msgstr "보물창고 관리자"
 
 #: mon-data.h:4676
 msgid "ironbrand convoker"
-msgstr ""
+msgstr "ironbrand convoker"
 
 #: mon-data.h:4688
 msgid "ironheart preserver"
-msgstr ""
+msgstr"ironheart preserver"
 
 #: mon-data.h:4751
 msgid "ravenous item mimic"
-msgstr ""
+msgstr "ravenous item mimic"
 
 #: mon-data.h:4764
 msgid "ravenous feature mimic"
-msgstr ""
+msgstr "ravenous feature mimic"
 
 #: mon-data.h:4778
 msgid "monstrous item mimic"
-msgstr ""
+msgstr "monstrous item mimic"
 
 #: mon-data.h:5447
 msgid "diamond obelisk"
-msgstr ""
+msgstr "다이아몬드 오벨리스크"
 
 #: mon-data.h:5563
 msgid "lurking horror"
-msgstr ""
+msgstr "숨어있는 공포"
 
 #. not an actual monster, used by a spell
 #: mon-data.h:5601
 msgid "fulminant prism"
-msgstr ""
+msgstr "폭발성 분광기"
 
 #: mon-data.h:5626
 msgid "wretched star"
-msgstr ""
+msgstr "비통의 별"
 
 #: mon-data.h:5639
 msgid "battlesphere"
-msgstr ""
+msgstr "비전력 구체"
 
 #: spl-data.h:196
 msgid "Polymorph"
-msgstr ""
+msgstr "변신"
 
 #: spl-data.h:316
 msgid "Disjunction"
@@ -15892,7 +15876,7 @@ msgstr "차단"
 
 #: spl-data.h:916
 msgid "Frenzy"
-msgstr ""
+msgstr "광분"
 
 #: spl-data.h:1915
 msgid "Fulminant Prism"
@@ -15900,11 +15884,11 @@ msgstr "폭발성 분광기"
 
 #: spl-data.h:2270
 msgid "Chaos Breath"
-msgstr ""
+msgstr "혼돈의 숨결"
 
 #: spl-data.h:2569
 msgid "Might Other"
-msgstr ""
+msgstr "타인 힘 부여"
 
 #: spl-data.h:2922
 msgid "Iskenderun's Battlesphere"
@@ -15912,15 +15896,15 @@ msgstr "이스킨데룬의 비전력 구체"
 
 #: spl-data.h:2935
 msgid "Summon Minor Demon"
-msgstr ""
+msgstr "하급 악마 소환"
 
 #: spl-data.h:2948
 msgid "Malmutate"
-msgstr ""
+msgstr "맬뮤테이트"
 
 #: spl-data.h:2961
 msgid "Summon Twister"
-msgstr ""
+msgstr "트위스터 소환"
 
 #: spl-data.h:2974
 msgid "Dazzling Spray"
@@ -15932,273 +15916,288 @@ msgstr "힘의 창살"
 
 #: spl-data.h:3000
 msgid "Sentinel's Mark"
-msgstr ""
+msgstr "파수꾼의 표식"
 
 #: spl-data.h:3014
 msgid "Word of Recall"
-msgstr ""
+msgstr "소집의 문장"
 
 #: spl-data.h:3027
 msgid "Injury Bond"
-msgstr ""
+msgstr "피의 상처"
 
 #: mon-cast.cc:801
 msgid "blast of chaos"
-msgstr ""
+msgstr "혼돈의 폭발"
 
 #: mon-cast.cc:901
 msgid "lance of force"
-msgstr ""
+msgstr "힘의 창살"
 
 #: mon-stuff.cc:1088
 msgid "blast of energy"
-msgstr ""
+msgstr "마력의 폭발"
 
 #: transform.cc:892
 msgid "wisp"
-msgstr ""
+msgstr "위습"
 
 #: mutation-data.h:1070
 msgid "You sometimes gain a little power by taking damage."
-msgstr ""
+msgstr "당신은 때때로 고통으로부터 미약한 힘을 얻는다."
 
 #: mutation-data.h:1071
 msgid "You sometimes gain power by taking damage."
-msgstr ""
+msgstr "당신은 때때로 고통으로부터 힘을 얻는다."
 
 #: mutation-data.h:1072
 msgid "You are powered by pain."
-msgstr ""
+msgstr "당신은 고통으로부터 힘을 얻는다."
 
 #: mutation-data.h:1086
 msgid "Your magical and physical power is slightly enhanced at high health."
-msgstr ""
+msgstr "당신은 체력이 높은 상태일 경우, 마법적, 물리적인 힘이 약간 향상된다."
 
 #: mutation-data.h:1087
 msgid "Your magical and physical power is enhanced at high health."
-msgstr ""
+msgstr "당신은 체력이 높은 상태일 경우, 마법적, 물리적인 힘이 향상된다."
 
 #: mutation-data.h:1088
 msgid "Your magical and physical power is greatly enhanced at high health."
-msgstr ""
+msgstr "당신은 체력이 높은 상태일 경우, 마법적, 물리적인 힘이 크게 향상된다."
 
 #: mutation-data.h:1215
 msgid "You are mostly covered in icy blue scales (AC +3, EV -1)."
-msgstr ""
+msgstr "당신은 얼음빛의 파란 비늘로 대부분 덮여 있다. (AC +3, EV -1)"
 
 #: mutation-data.h:1216
 msgid "You are completely covered in icy blue scales (AC +4, EV -1, rC+)."
-msgstr ""
+msgstr "당신은 얼음빛의 파란 비늘로 완전히 덮여 있다. (AC +4, EV -1, 냉기저항+)"
 
 #: mutation-data.h:1251
 msgid "You are mostly covered in large bone plates (AC +3, SH +4)."
-msgstr ""
+msgstr "당신은 커다란 뼈 갑옷으로 부분적으로 덮여 있다. (AC +3, SH +4)"
 
 #: mutation-data.h:1252
 msgid "You are completely covered in large bone plates (AC +4, SH +6)."
-msgstr ""
+msgstr "당신은 커다란 뼈 갑옷으로 완전히 덮여 있다. (AC +4, SH +6)"
 
 #: mutation-data.h:1269
 msgid "You are mostly covered in molten scales (AC +3, EV -1)."
-msgstr ""
+msgstr "당신은 얼룩무늬의 비늘로 대부분 덮여 있다. (AC +3, EV -1)"
 
 #: mutation-data.h:1270
 msgid "You are completely covered in molten scales (AC +4, EV -1, rF+)."
-msgstr ""
+msgstr "당신은 얼룩무늬의 비늘로 완전히 덮여 있다. (AC +4, EV -1, 불저항+)"
 
 #: mutation-data.h:1304
 msgid "You are partially covered in rugged brown scales (AC +1, +3% HP)."
-msgstr ""
+msgstr "당신은 질긴 갈색 비늘로 부분적으로 덮여 있다. (AC +1, HP +3%)"
 
 #: mutation-data.h:1306
 msgid "You are completely covered in rugged brown scales (AC +3, +7% HP)."
-msgstr ""
+msgstr "당신은 질긴 갈색 비늘로 완전히 덮여 있다. (AC +3, HP +7%)"
 
 #: mutation-data.h:1322
 msgid "You are partially covered in slimy green scales (AC +2)."
-msgstr ""
+msgstr "당신은 미끈한 녹색 비늘로 부분적으로 덮여 있다. (AC+2)"
 
 #: mutation-data.h:1323
 msgid "You are mostly covered in slimy green scales (AC +3)."
-msgstr ""
+msgstr "당신은 미끈한 녹색 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1324
 msgid "You are completely covered in slimy green scales (AC +4, rPois)."
-msgstr ""
+msgstr "당신은 미끈한 녹색 비늘로 완전히 덮여 있다. (AC +3, EV -2, 독저항+)"
 
 #: mutation-data.h:1340
 msgid "You are partially covered in thin metallic scales (AC +2)."
-msgstr ""
+msgstr "당신은 금속빛의 비늘로 부분적으로 덮여 있다. (AC +2)"
 
 #: mutation-data.h:1341
 msgid "You are mostly covered in thin metallic scales (AC +3)."
-msgstr ""
+msgstr "당신은 금속빛의 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1342
 msgid "You are completely covered in thin metallic scales (AC +4, rElec)."
-msgstr ""
+msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +4, 전기저항+)"
 
 #: mutation-data.h:1358
 msgid "You have a somewhat thin skeletal structure (Dex +2, Stlth)."
-msgstr ""
+msgstr "당신은 약간 마른 골격 구조를 가지고 있다. (민첩 +2, 은밀)"
 
 #: mutation-data.h:1359
 msgid "You have a moderately thin skeletal structure (Dex +4, Str -1, Stlth)."
-msgstr ""
+msgstr "당신은 마른 골격 구조를 가지고 있다. (민첩 +4, 힘 -1, 은밀)"
 
 #: mutation-data.h:1360
 msgid ""
 "You have an unnaturally thin skeletal structure (Dex +6, Str -2, Stlth)."
-msgstr ""
+msgstr "당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -2, 은밀)"
 
 #: mutation-data.h:1376
 msgid "You are partially covered in yellow scales (AC +2)."
-msgstr ""
+msgstr "당신은 노란색의 비늘로 부분적으로 덮여 있다. (AC +2)"
 
 #: mutation-data.h:1377
 msgid "You are mostly covered in yellow scales (AC +3)."
-msgstr ""
+msgstr "당신은 노란색의 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1378
 msgid "You are completely covered in yellow scales (AC +4, rCorr)."
-msgstr ""
+msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +4, 부식저항+)"
 
 #: player-act.cc:414
 msgid "branch"
-msgstr ""
+msgstr "나뭇가지"
 
 #: player-act.cc:416
 msgid "misty tendril"
-msgstr ""
+msgstr "옅은 덩굴손"
 
 #: player-act.cc:418
 msgid "bump"
-msgstr ""
+msgstr "몸통박치기"
 
 #: player-act.cc:449
 msgid "hind leg"
-msgstr ""
+msgstr "뒷다리"
 
 #: player-act.cc:453
 msgid "strand"
-msgstr ""
+msgstr "가닥"
 
 #: player-act.cc:470
 msgid "underbelly"
-msgstr ""
+msgstr "아랫배"
 
 #: player-act.cc:501
 msgid "scaled"
-msgstr ""
+msgstr "비늘로 덮인"
 
 #: player-act.cc:503
 msgid "feathered"
-msgstr ""
+msgstr "깃털 달린"
 
 #: player-act.cc:505
 msgid "bandage-wrapped"
-msgstr ""
+msgstr "붕대가 감긴"
 
 #: player-act.cc:510
 msgid "bony"
-msgstr ""
+msgstr "뼈골격"
 
 #: player-act.cc:523
 msgid "Nothing wielded"
-msgstr ""
+msgstr "무장하지 않음"
 
 #: player-act.cc:526 player-act.cc:552
 msgid "Teeth and claws"
-msgstr ""
+msgstr "이빨과 손톱"
 
 #: player-act.cc:528
 msgid "Claws"
-msgstr ""
+msgstr "손톱"
 
 #: player-act.cc:530
 msgid "Tentacles"
-msgstr ""
+msgstr "촉수"
 
 #: player-act.cc:535
 msgid "Fangs (venom)"
-msgstr ""
+msgstr "독니"
 
 #: player-act.cc:538
 msgid "Blade "
-msgstr ""
+msgstr "칼날 "
+
+msgid "Blade paws"
+msgstr "칼날의 발"
+
+msgid "Blade front paws"
+msgstr "칼날의 앞발"
+
+msgid "Blade tentacles"
+msgstr "칼날의 촉수"
+
+msgid "Blade hands"
+msgstr "칼날의 손"
 
 #: player-act.cc:542
 msgid "Stone claws"
-msgstr ""
+msgstr "돌 손톱"
 
 #: player-act.cc:544
 msgid "Stone tentacles"
-msgstr ""
+msgstr "돌 촉수"
 
 #: player-act.cc:546
 msgid "Stone fists"
-msgstr ""
+msgstr "돌 주먹"
 
 #: player-act.cc:549
 msgid "Ice fists (freeze)"
-msgstr ""
+msgstr "냉기 주먹"
 
 #: player-act.cc:560
 msgid "Teeth"
-msgstr ""
+msgstr "이빨"
 
 #: player-act.cc:563
 msgid "Branches"
-msgstr ""
+msgstr "나뭇가지"
 
 #: status.cc:309
 msgid "Umbra"
-msgstr ""
+msgstr "그림자"
 
 #: status.cc:319
 msgid "Suppress"
-msgstr ""
+msgstr "억제"
 
 #: status.cc:532
 msgid "-cTele"
-msgstr ""
+msgstr "전이-"
 
 #: status.cc:541
 msgid "recalling"
-msgstr ""
+msgstr "소집"
 
 #: status.cc:732
 msgid "sage ["
-msgstr ""
+msgstr "현자 ["
 
 #: status.cc:892
 msgid "Tree"
-msgstr ""
+msgstr "나무"
 
 #: status.cc:893
 msgid "tree-form"
-msgstr ""
+msgstr "나무 변신"
 
 #: status.cc:897
 msgid "Jelly"
-msgstr ""
+msgstr "젤리"
 
 #: status.cc:898
 msgid "jelly-form"
-msgstr ""
+msgstr "젤리 변신"
 
 #: status.cc:902
 msgid "Porc"
-msgstr ""
+msgstr "고슴도치"
 
 #: status.cc:903
 msgid "porcupine-form"
-msgstr ""
+msgstr "고슴도치 변신"
 
 #: status.cc:907
 msgid "Wisp"
-msgstr ""
+msgstr "위습"
 
 #: status.cc:908
 msgid "wisp-form"
-msgstr ""
+msgstr "위습 변신"
+
+msgid "barrage of energy"
+msgstr "발사된 마력"

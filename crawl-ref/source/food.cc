@@ -2398,7 +2398,7 @@ static int _player_likes_food_type(int type)
         return 0;
 
     case NUM_FOODS:
-        mpr(_("Bad food type"), MSGCH_ERROR);
+        mpr("Bad food type", MSGCH_ERROR);
         return 0;
     }
 

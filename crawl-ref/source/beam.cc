@@ -883,7 +883,7 @@ void bolt::digging_wall_effect()
 
             mprf(gettext("%s %s shatters into small pieces."),
                  agent() && agent()->is_player() ? pgettext("grate","The") : pgettext("grate","Some"),
-                 wall.c_str()); // 메모.
+                 wall.c_str());
         }
         break;
 

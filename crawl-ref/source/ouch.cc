@@ -574,7 +574,7 @@ static bool _expose_invent_to_element(beam_type flavour, int strength)
     {
         simple_god_message(
             make_stringf(_(" shields %s delectables from destruction."),
-                         (total_dest > 0) ? "some of your" : "your").c_str(),
+                         (total_dest > 0) ? pgettext("delectables","some of your") : pgettext("delectables","your")).c_str(),
             GOD_JIYVA);
     }
 

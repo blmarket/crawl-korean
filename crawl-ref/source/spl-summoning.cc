@@ -2110,13 +2110,13 @@ bool monster_simulacrum(monster *caster, bool actual)
 static const char *_count_article(int number, bool definite)
 {
     if (number == 0)
-        return "No";
+        return ""; // "No";
     else if (definite)
         return ""; // "The";
     else if (number == 1)
         return ""; // "A";
     else
-        return "¸î¸î";
+        return "";
 }
 
 bool twisted_resurrection(actor *caster, int pow, beh_type beha,
@@ -2727,7 +2727,7 @@ bool fire_battlesphere(monster* mons)
             return false;
         }
 
-        beam.name       = "barrage of energy";
+        beam.name       = M_("barrage of energy");
         beam.range      = LOS_RADIUS;
         beam.hit        = AUTOMATIC_HIT;
         beam.damage     = dice_def(2, 5 + mons->hit_dice);
@@ -2749,7 +2749,7 @@ bool fire_battlesphere(monster* mons)
                     != beam.path_taken.end()))
         {
             beam.thrower = (agent->is_player()) ? KILL_YOU : KILL_MON;
-            simple_monster_message(mons, _(" fires!"));
+            simple_monster_message(mons, pgettext("battlesphere"," fires!"));
             beam.fire();
 
             used = true;

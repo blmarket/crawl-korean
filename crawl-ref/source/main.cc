@@ -4191,7 +4191,10 @@ static void _move_player(coord_def move)
                             "and next to ");
 
             if (dangerous != DNGN_FLOOR)
-                prompt += (dangerous == DNGN_LAVA ? "lava" : "deep water");
+            {   
+				prompt += (dangerous == DNGN_LAVA ? _(M_("lava")) : _(M_("deep water")));	
+				prompt += "에 빠질 위험을 감수하고 움직일 것인가";
+			}
             else
             {
                 string name = bad_mons->name(DESC_PLAIN);
@@ -4200,6 +4203,7 @@ static void _move_player(coord_def move)
                 if (bad_adj.find("your") != 0)
                     bad_adj = "the " + bad_adj;
                 prompt += bad_adj + name + bad_suff;
+				prompt += " 옆에 있는 상태에서 움직일 것인가?";
             }
             prompt += "?";
 

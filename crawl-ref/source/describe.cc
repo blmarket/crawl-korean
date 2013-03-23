@@ -1058,7 +1058,7 @@ static string _describe_weapon(const item_def &item, bool verbose)
                 description += ", +";
                 _append_value(description, MAX_WPN_ENCHANT, false);
             }
-            description += ".";
+            description += pgettext("wpnench2",".");
         }
     }
 

@@ -873,24 +873,24 @@ bool transform(int pow, transformation_type which_trans, bool force,
 
     case TRAN_JELLY:
         tran_name = M_("jelly");
-        msg      += _("a lump of acidic jelly.");
+        msg      += make_stringf(msg.c_str(), _("a lump of acidic jelly."));
         break;
 
     case TRAN_PORCUPINE:
         tran_name = M_("spider");
         str       = -3;
-        msg      += _("a spiny porcupine.");
+        msg      += make_stringf(msg.c_str(), _("a spiny porcupine."));
         break;
 
     case TRAN_TREE:
         tran_name = M_("tree");
         str       = 10;
-        msg      += _("an animated tree.");
+        msg      += make_stringf(msg.c_str(), _("an animated tree."));
         break;
 
     case TRAN_WISP:
         tran_name = M_("wisp");
-        msg      += _("an insubstantial wisp of gas.");
+        msg      += make_stringf(msg.c_str(), _("an insubstantial wisp of gas."));
         break;
 
     case TRAN_NONE:

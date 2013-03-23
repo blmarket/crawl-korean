@@ -3462,25 +3462,25 @@ static void _god_welcome_identify_gear()
 
 void god_pitch(god_type which_god)
 {
-    mprf(_("You %s the altar of %s."),
-         you.form == TRAN_WISP   ? _("swirl around") :
-         you.form == TRAN_BAT    ? _("perch on") :
-         you.flight_mode()       ? _("hover solemnly before") :
-         you.form == TRAN_SPIDER ? _("cling to") :
-         you.form == TRAN_STATUE ? _("place yourself before") :
+    mprf("당신은 %s의 제단%s, 기도를 드렸다.", _(god_name(which_god).c_str()),
+         you.form == TRAN_WISP   ? " 주위를 맴돌며," :
+         you.form == TRAN_BAT    ? " 위에 걸터앉아" :
+         you.flight_mode()       ? " 위에서 침착히 떠다니며" :
+         you.form == TRAN_SPIDER ? "에 매달려" :
+         you.form == TRAN_STATUE ? "앞에서 자세를 잡고" :
          you.form == TRAN_ICE_BEAST
              || you.form == TRAN_DRAGON
-             || you.form == TRAN_PIG    ? _("bow your head before") :
-         you.form == TRAN_TREE   ? _("sway towards") :
-         you.form == TRAN_PORCUPINE ? _("curl into a sanctuary of spikes before") :
-         you.form == TRAN_JELLY  ? _("quiver devoutly before") :
-         you.species == SP_NAGA  ? _("coil in front of") :
+             || you.form == TRAN_PIG    ? "앞에 머리숙여" :
+         you.form == TRAN_TREE   ? "앞에서 가지를 일렁이며" :
+         you.form == TRAN_PORCUPINE ? "앞에서 가시를 말아 웅크리고" :
+         you.form == TRAN_JELLY  ? " 앞에서 침착하게 몸을 떨며" :
+         you.species == SP_NAGA  ? "에 몸을 말고 앉아" :
          // < TGWi> you curl up on the altar and go to sleep
             /// You %s the altar...
-         you.species == SP_FELID ? _("sit before")
+         you.species == SP_FELID ? "에 다소곳이 앉아"
             /// You %s the altar...
-                                 : _("kneel at"),
-         _(god_name(which_god).c_str()));
+                                 : "에 무릎꿇어"
+         );
     more();
 
     // Note: using worship we could make some gods not allow followers to

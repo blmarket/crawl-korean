@@ -1,4 +1,4 @@
-#include "AppHdr.h"
+﻿#include "AppHdr.h"
 #include <math.h>
 
 #include "godpassive.h"
@@ -282,7 +282,7 @@ string ash_describe_bondage(int flags, bool level)
         {
             desc = make_stringf(_("Your %s are %sbound.\n"),
                                 _(you.hand_name(true).c_str()),
-                                you.bondage[ET_WEAPON] ? "" : pgettext("godpassive","not "));
+                                you.bondage[ET_WEAPON] ? pgettext("godpassive","(NULL)") : pgettext("godpassive","not "));
         }
         else
         {
@@ -297,13 +297,13 @@ string ash_describe_bondage(int flags, bool level)
     {
         desc = make_stringf(_("Your weapon %s is %sbound.\n"),
                             _(you.hand_name(false).c_str()),
-                            you.bondage[ET_WEAPON] ? "" : pgettext("godpassive","not "));
+                            you.bondage[ET_WEAPON] ? pgettext("godpassive","(NULL)") : pgettext("godpassive","not "));
     }
     else if (flags & ETF_SHIELD && you.bondage[ET_SHIELD] != -1)
     {
         desc = make_stringf(_("Your shield %s is %sbound.\n"),
                             _(you.hand_name(false).c_str()),
-                            you.bondage[ET_SHIELD] ? "" : pgettext("godpassive","not "));
+                            you.bondage[ET_SHIELD] ? pgettext("godpassive","(NULL)") : pgettext("godpassive","not "));
     }
 
     if (flags & ETF_ARMOUR && flags & ETF_JEWELS

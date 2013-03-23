@@ -1694,7 +1694,7 @@ void monster::apply_enchantment(const mon_enchant &me)
             if (you.can_see(this))
             {
                 mprf(_("%s word of recall is interrupted."),
-                     name(DESC_ITS).c_str());
+                     name(DESC_PLAIN).c_str());
             }
             break;
         }
