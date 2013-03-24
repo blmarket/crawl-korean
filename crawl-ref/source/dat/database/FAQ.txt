@@ -42,409 +42,370 @@ Dungeon Crawl Stone Soup - Frequently Asked Questions
 %%%%
 Q:goal
 
-What exactly is the goal of this game?
+게임의 정확한 목표가 무엇입니까?
 %%%%
 A:goal
 
-A: To survive and to win, obviously. For this you need to find the fabled Orb of Zot deep down in the dungeon and bring it back to the surface. To enter the realm of Zot, you'll first need to collect three runes to be found in various branches of the dungeon.
+A: 살아남고, 승리하는 것입니다. 궁극적인 목표는, 당신은 던전의 깊은 곳에서 전설로 전해지는 조트의 오브를 찾아 지상으로 가져와야 합니다. 조트의 렐름에 입장하기 위해서, 당신은 먼저 다양한 서브 던전에서 세 개의 룬을 찾아야 합니다.
 
-However, if you're new to the game, you really shouldn't worry about this. Just try to delve as deeply as possible and have fun exploring the many side branches in Crawl with various characters of different species, skill sets, and religions.
+하지만 당신이 이 게임을 처음 하는 것이라면, 게임의 목적에 대해 고민할 필요성은 적습니다. 다양한 직업과 종족, 스킬들과 종교를 가지고 가능한 한 깊숙한 곳까지 탐사하고 많은 서브 던전들을 탐험하며 즐기십시오.
 %%%%
 Q:userdir
 
-I can't find my save files, morgue and character dumps. Where are they?
+세이브 파일과 사망 기록, 캐릭터 덤프 파일는 어디에서 찾을 수 있습니까?
 %%%%
 A:userdir
 
-If you're playing locally (i.e. not on one of the servers), the chardump command will tell you where the morgue file is written, and this information is also displayed below the highscore at the end of a game.
+A: 온라인이 아닌 로컬 플레이라면, 덤프 생성 명령어가 사망 기록이 저장되는 디렉토리를 표시할 것입니다. 또한 이 정보는 사망시의 최고 기록 화면의 아래쪽에도 표시됩니다.
 
-The saves/ directory can be found in the same directory as the morgue/ one.
-
-If you'd like to change either location, modify the morgue_dir and/or save_dir options in the init file.
+세이브 파일 폴더는 사망 기록 폴더와 같은 주소에 위치합니다. 주소 설정을 변경하고 싶다면, init 파일에서 morgue_dir 과 save_dir 의 값을 변경해야 합니다.
+(주: 온라인 플레이는, 던전 크롤 스톤 수프의 다중 온라인 플레이 버전이 있다는 것이 아닌, 웹 상에서 실행하고, 실시간으로 점수를 확인할 수 있는 웹 서버 버전을 뜻하는 것입니다.)
 %%%%
 Q:drop
 
-How can I drop/pick up only part of a stack?
+쌓여 있는 아이템 중 일부만 버리거나 집는 방법은 없습니까?
 %%%%
 A:drop
 
-A: When choosing items to drop or pick up from a menu, you can select part of a stack by first entering a number (the desired amount), followed by the item slot. Stacks that are selected only in part are marked with '#' rather than '+'.
+A: 버리거나 집을 아이템을 메뉴에서 선택할 때, 먼저 원하는 양 만큼의 숫자를 입력하고 나서 해당 아이템 슬롯을 선택하십시오. 일부분만 선택된 아이템은 + 가 아니라 # 로 표시됩니다.
 
-If you want to pick up part of a single-item stack, you can use the ';' command, which will prompt you for the quantity, but otherwise behaves the same as ','.
+바닥에 한 종류의 아이템이 있는 경우, ';'키를 입력하면 몇 개를 주울 건지를 입력할 수 있습니다. 다만, 바닥에 두 종료의 아이템들이 있는 경우에는 ';'키는 캐릭터가 위치한 타일의 정보, ','키로 아이템을 줍는 기능이 수행됩니다.
 %%%%
 Q:roguelike difference
 
-What are the biggest differences to other popular roguelike games?
+'Dungeon Crawl'이 다른 유명 로그라이크 게임들과의 가장 큰 차이점이 무엇입니까?
 %%%%
 A:roguelike difference
 
-A: First, you might want to read the philosophy section in the manual ('?N') to read about general important principles in Stone Soup's game design.
+A: 우선, ?N 명령어를 통해 '철학' 부분을 읽어보면 Stone Soup의 게임 디자인에 관한 일반적이고 중요한 원리들을 알 수 있습니다.
 
-As for specific differences, the most important are probably the following:
+구체적인 차이점들 중, 중요한 것들은 다음과 같습니다:
 
-* Species is *much* more important than the character background (or "class").
+* 종족 선택이 직업 선택보다 *훨씬* 더 큰 영향력을 가집니다.
+* Bones 파일들은 망령에 대한 정보만을 포함하며, 장비나 사인에 관한 정보는 포함하지 않습니다.
+* 상점 등에 아이템을 팔 수 없습니다.
+#(deceit,130130) 0.9때까지만 해도 저항포션이 없었지만, 이 FAQ부분은 수정되지 않았네요. 한글판에서라도 제외. * 저항력은 변이 혹은 아이템 양쪽 모두를 통해 얻을 수 있지만, 무언가를 먹는 것으로는 일반적으로 얻을 수 없습니다.
+* 기도는 주로 신에게 아이템이나 시체를 바치는 데에 사용됩니다. 신의 권능을 사용할 때에는 a 명령을 사용합니다
+* 피할 수 없는 죽음의 상황들이 존재하지만, 초보 플레이어들도 실수를 통해 배워나간다면 공략 없이 게임을 클리어할 수 있습니다. 뛰어난 플레이어들은 몇 번이고 클리어하기도 합니다.
 
-* Bones files only contain ghosts, never their equipment or cause of death.
+또한, 개발진의 의도는 Crawl에 매우 편리한 인터페이스를 제공하는 것으로, 당신은 '?'키를 두 번 누름으로 명령어를 통해 명령어 목록을 읽어보아야 할 경우가 있습니다. 새로운 명령어들 중 가장 흥미로운 것들은 다음과 같을 것입니다:
 
-* You cannot sell items to shops or elsewhere.
-
-* Resistances can be gained via mutations or items, never through eating.
-
-* Praying is mostly used to offer items or corpses to gods who'll accept them. To make use of divine powers use the 'a'bility command.
-
-* There are inevitable deaths, but new players can win without spoilers, if they learn from their mistakes. Very good players win streaks.
-
-Also, our aim is to give Crawl a really smooth interface, so you should really read through the command list ('??') some time. The most intriguing "newish" commands are probably the following:
-
-* 'o', for automatic exploration of an unknown level
-
-* 'G', for automatic travel to another level ('G?' for help)
-
-* 'X', to access the level map for travelling and other tasks ('X?')
-
-* 'Ctrl-F', to find and travel to items you've seen before ('Ctrl-F?')
+* 'o' 명령어를 통해 탐험되지 않은 층을 자동으로 탐사할 수 있습니다.
+* 'G' 명령어를 통해 다른 층으로 자동적으로 이동할 수 있습니다
+* 'X' 명령어를 통해 탐사나 다른 작업을 할 수 있는 '층 지도'를 사용할 수 있습니다.
+* Ctrl+F 명령어를 통해 당신이 본 적 있는 아이템을 검색하고 찾아갈 수 있습니다
 %%%%
 Q:survival
 
-How can I avoid dying all the time? Can you give me some playing tips?
+도대체 어떻게 하면 죽지 않을 수 있습니까? 팁 같은 것은 없나요?
 %%%%
 A:survival
 
-A: If you've got trouble even reaching the Temple, you might want to try a game or two in hints mode for some general playing hints.
+A: 신전까지 도달하는 것이 어려운 수준이라면, 일반적인 진행상의 팁을 얻기 위해 한두 번의 힌트 모드를 플레이해보십시오.
 
-Also, there are easy playing combinations and more challenging ones (marked in dark grey on the selection screen). If you are new to Crawl, sticking to the easier ones is advisable. In general, treat each new monster you meet with utmost caution and keep an eye on your hit points and magic.
+또한, 종족과 직업의 조합에서 플레이하기 쉬운 것과 어려운 것(선택 화면에서 어두운 회색으로 표시)이 있습니다. 게임을 처음 접하는 것이라면, 쉬운 조합을 선택하는 것이 좋습니다. 일반적인 경우, 처음 마주치는 몬스터는 최대한 경계하고, 당신의 체력과 마력 수치에 주의하십시오.
 
-For specific hints dealing with a particular character, you can press '#' in-game to create a "character dump" in your morgue directory that you can then post e.g. in the Stone Soup forum (https://crawl.develz.org/tavern/) or on the rec.games.roguelike.misc group, so other players can comment on your equipment, skills or spell selection. Please trim your dump by removing stuff unnecessary for this task (such as the extensive Vanquished list).
+특정한 캐릭터와 관련된 구체적인 도움을 원한다면 # 명령어를 통해 캐릭터 덤프를 생성하여 Stone Soup 포럼(https://crawl.develz.org/tavern/) 등에서 도움을 요청할 수 있습니다. 이러한 경우에는 덤프 파일에서 불필요한 부분(처치한 몬스터의 목록등)을 제거하여 정리하십시오.
+(주: 국내 유저의 경우는 한국 로그라이크 포럼 (http://nethack.byus.net) 에서 도움을 얻는 것이 쉽습니다. 혹은 던전 크롤 위키(영문, http://crawl.chaosforge.org/index.php?title=CrawlWiki) 를 참조하는 것도 도움이 됩니다.)
 
-If you're playing online on one of the public servers, you can join the ##crawl channel of the freenode IRC, where you will find helpful souls who will even watch you and give hints.
+공개 서버에서 온라인 플레이 중이라면, IRC의 freenode 서버에서 ##crawl 채널에 입장하여 도움을 요청할 수 있습니다.
 %%%%
 Q:downstairs
 
-I can't find any downstairs. Am I missing something?
+내려가는 계단을 찾을 수가 없습니다. 뭐가 잘못된 거죠?
 %%%%
 A:downstairs
 
-A: They may be in a part of the level that is not reachable from the upstairs you came from. Try going up to the previous level and coming back down from there via a different set of stairs. Note that most levels feature three downstairs as well as three upstairs, not counting any escape hatches.
+A: 아주 가끔, 버그로 진짜 계단이 없는 경우도 있지만, 내려가는 계단이 비밀문으로 닫혀있는 공간에 위치해 있을 가능성도 있습니다. 의심스러운 곳에서 5 명령어를 이용해 탐색하다보면 비밀문을 발견할 수 있을 것입니다. 대부분의 층은 비상구를 제외하고 세 개씩의 내려가는 계단과 올라가는 계단을 가지고 있다는 점을 유념하십시오. 탐색 중 막다른 길에 다다른 경우, 윗층의 다른 내려가는 계단을 이용해 보십시오.
 
-Alternatively, if you are in one of the branches, you might also have reached its lowest level and have to turn around to explore another one. Check the dungeon overview ('Ctrl-O') to see how deep you've delved into a given branch, or the database ('?/b') for the number of levels for unseen branches.
+그 외에, 당신이 서브 던전에 있는 경우라면, 최하층에 도달한 경우일 수 있습니다. Ctrl+O 명령어를 이용해 해당 서브 던전을 얼마나 깊이 탐색했는지 확인하거나, ?/b 명령어를 통해 발견되지 않은 서브 던전의 층수를 확인할 수 있습니다
 %%%%
 Q:stuck
 
-I teleported and ended up in a closed room without any exits. Am I stuck?
+공간이동을 했더니 출구가 없는 방으로 왔습니다. 갇힌 건가요?
 %%%%
 A:stuck
 
-A: Unlike previous versions of Crawl that had secret doors, this cannot happen anymore. If it somehow does, it could be a bug that needs fixing, so please report it on our Mantis bug tracker: https://crawl.develz.org/mantis/
+A: 아닙니다. 5 명령어를 이용해 비밀문이 있는지 모든 벽을 조사해 보십시오. 비밀문이 하나도 없는 경우, 그것은 버그일 수 있으며 수정되어야 합니다. http://crawl.develz.org/mantis/ 의 버그 트래커로 제보해 주십시오.
 
-If you're playing locally, be sure to upload your save file!
-
-If you're playing online, please create a copy of your save file for the developers to access before you continue playing. On CDO, you can do this from the main menu; on CAO you need to use the !copysave IRC command: !copysave username reason.
-Don't forget to include the server and your username in your bug report!
-
-In the meantime, you can try to escape with digging, disintegration or teleportation.
+온라인으로 플레이하고 있는 경우, 플레이를 계속하기 전에 개발자들이 접근할 수 있도록 세이브 파일을 복사해 주십시오. CDO에서는 메인 메뉴에서 이것이 가능하고, CAO에서는 다음과 같은 IRC 명령어를 사용해야 합니다: !copysave 유저이름 사유
+버그 제보에 서버와 유저이름을 빼먹지 마세요! 그 동안에, 당신은 굴착이나 해체, 공간이동 등을 이용해 탈출을 시도할 수 있습니다.
 %%%%
 Q:starving
 
-My characters keep starving. What am I doing wrong?
+내 캐릭터는 항상 굶주려 있어요. 뭐가 잘못이죠?
 %%%%
 A:starving
 
-A: It's possible that you simply spend too much time on cleared levels where not enough monsters are generated to dine on. You might also be too choosy about what you eat; unless you are herbivorous, you will have to occasionally eat monster chunks, even those that sometimes make you sick (coloured brown in the menu and the prompt). If you worship a god who enjoys sacrifices, pay attention to your own hunger status instead of offering all corpses you come across.
+A: 탐험이 끝나서 잡아먹기에 충분할 만큼의 몬스터가 생성되지 않는 층에서 너무 많은 시간을 허비하는 경우일 수 있습니다. 혹은, 먹는 것을 선택하는 것이 지나치게 까다로운 경우일 수 있습니다. 초식성이 아닌 이상, 당신은 가끔 오염된 몬스터 고기(갈색으로 표시됨. 질병을 유발할 수 있음)라도 먹어야 합니다. 제물을 취하는 신을 섬기는 경우에는, 시체를 신에게 바치는 데에 있어 당신의 공복도를 염두에 두십시오.
 
-Also, casting (difficult) spells will make you hungry, but high Intelligence and Spellcasting will lessen this effect. If you press 'II', you can read about the hunger effects of your spells. Invocations likewise often have a Food cost.
+또한, (어려운) 주문을 시전하는 것은 허기를 유발하지만, 높은 지능 수치와 주문 시전 스킬의 레벨이 허기를 감소시킵니다. II 명령어를 통해 당신이 보유한 주문의 만복도 소모량을 확인할 수 있습니다. 신의 권능도 마찬가지로 만복도를 소모하는 경우가 있습니다.
 %%%%
 Q:labyrinth
 
-I'm stuck in a labyrinth and can't find the exit. How do I get out?
+미궁에 갇혀서 출구를 찾을 수가 없어요. 어떻게 빠져나가죠?
 %%%%
 A:labyrinth
 
-A: To escape a labyrinth, it can be useful to know a few things:
+A: 미궁을 탈춣려면, 몇 가지 사항을 유념해야 합니다:
 
-* Each labyrinth consists of several layers of different wall types, ranging from rock in the outer border to metal in the centre part, at the very centre of which the exit is located. (Though the exit itself may be part of a vault that has non-metal walls.)
+1. 미궁은 각각 다른 종류의 벽으로 이루어진 몇 겹으로 이루어져 있는데, 가장 바깥쪽은 암석으로, 중심부는 금속으로 이루어져 있습니다. 출구는 중심부의 가장 가운데에 위치합니다.(출구 자체는 비금속 벽으로 이루어진 금고의 일부일 수 있습니다.)
+2. 공간이동으로는 금속 지대 근처에도 갈 수 없습니다.
+3. 시간이 지날수록 벽이 움직입니다. 출구로 가는 길이 막히는 경우는 없지만, 경로가 바뀔 수는 없습니다. 즉, '왼손 법칙'은 통하지 않습니다
 
-* Teleportation will never take you into or even near the metal region.
-
-* From time to time, the walls will rearrange themselves. Though they will never close off the path to the exit, the path itself might change. In particular, this means that the "left hand" rule is not entirely reliable.
-
-Also, exit and loot are guarded by a brutish minotaur, who is very much alive. Don't let yourself get sidetracked by necromantic remnants of its ancestors.
+또한, 출구와 전리품은 미궁에서 실제로 살고 있는 야만스러운 미노타우르스가 지키고 있습니다. 강령술에 의해 일으켜진 그것의 조상 때문에 엉뚱한 길로 빠지지 않도록 조심하십시오.
 %%%%
 Q:cheating
 
-Is there a cheating mode to Crawl where I can play without dying?
+죽지 않고 플레이할 수 있는 치트 모드가 있나요?
 %%%%
 A:cheating
 
-A: Not a cheating mode, exactly, but if your build supports it you can play in wizard mode (access with '&') where you are prompted whenever you're about to die and have access to a number of nifty commands to create equipment, travel to distant branches, or fiddle with your stats or skills. Note that wizard mode games will never appear on the highscore list.
+A: 치트 모드는 아니지만, 당신이 플레이하는 게임의 버전이 지원하는 경우 & 명령어를 통해 위자드 모드로 플레이 할 수 있습니다. 이 모드에서는 장비를 생성할 수도 있고, 멀리 떨어진 서브 던전을 탐험할 수도 있으며, 능력치나 스킬을 조작할 수도 있습니다. 위자드 모드에서는 게임 점수가 기록되지 않는다는 점을 유념하십시오.
 
-Many players reckon long-time use of wizard mode to be detrimental to your playing skills. On the other hand, wizard mode has its uses: we are really grateful whenever we get bug reports using wizard mode for reproducing and exploring bugs.
+많은 플레이어들은 위자드 모드에서 오래 플레이하는 것은 진행 실력에 해롭다고 생각합니다. 그러나 한편으로, 위자드 모드는 나름의 쓰임새를 가지고 있습니다: 개발진이 버그 제보를 접수할 때마다 위자드 모드를 이용해 버그를 조사할 수 있다는 점은 매우 유용합니다.
 %%%%
 Q:weapons
 
-I've got two cool weapons. How can I tell which one is better?
+제가 괜찮은 두 개의 무기를 얻었습니다. 어떤 것이 더 좋다고 말할 수 있나요?
 %%%%
 A:weapons
 
-A: "Better" depends on a number of factors, such as your weapon skills, whether it's one- or two-handed, the randart properties, the weapon brand, and the monsters you're about to face. In general, switching from a weapon type at which you are already highly skilled to another one that you have no skill in is a waste of time. The brands may greatly differ in damage output, but you can get a good idea by bashing a few comparatively harmless monsters with each and comparing the results.
+A: 더 좋은 무기는 당신의 무기 스킬, 한 손 혹은 두 손 무기이냐, 랜다트의 부가 효과, 무기의 종류, 싸워야 할 몬스터와 같은 여러 가지 요소의 영향을 받습니다. 대체적으로 당신이 높은 스킬 레벨을 가진 무기에서 스킬 경험이 전혀 없는 무기로 바꾸는 것은 시간을 낭비하는 행위입니다. 무기 종류에 따라 데미지가 편이하게 차이 나지만, 당신은 많은 몬스터를 상대해보고 여러 가지를 결과를 얻으면서 좋은 아이디어를 얻을 것입니다.
 
-Of the enchantments, the second value (damage) is usually much more important than the first (accuracy), unless you hardly ever manage to hit with a weapon. The delay in swinging a weapon can be reduced by the corresponding weapon skill.
+당신이 무기를 제대로 다루지 못해 거의 맞추지 못하는 게 아니라면, 무기의 인챈트는 두 번째 값인 데미지가 보통 첫 번째 값인 정확도 보다 훨씬 중요하게 여겨집니다. 무기를 휘두르는 속도는 각각의 무기 스킬이 숙련될수록 줄어들 수 있습니다.
 %%%%
 Q:religion
 
-Which gods would you recommend to a beginning player?
+초보자들에게 추천할 만한 신은 어떤 것이 있나요?
 %%%%
 A:religion
 
-A: The easiest gods to play are probably Trog (for pure fighters), Vehumet or Sif Muna (for spellcasters), Yredelemnul (for ally-based play), and Okawaru (for pretty much everyone). Also, while unreliable, Xom can be a lot of fun.
+A: 당신이 마법을 쓰지 않는 전사라면 '트로그'를, 마법 사용자라면 '배후멧' 혹은 '시프 무나'를, 소환물을 사용한다면 '이레델렘눌'을, 그외의 나머지는 '오카와루'를 추천합니다. 또한, 예상할수 없는 혼돈의 신 '좀'을 믿는다면 재미있을 것입니다.
 
-Whenever you encounter an altar, be sure to read the corresponding god's description (by 'p'raying on the altar) and take your time in deciding whether to pick this deity or not. As a follower, you can reread your god's description, now more detailed via the '!' toggle, on the '^' screen.
+당신이 제단에 도착하면, 우선 'p' 버튼을 눌러 해당 신의 설명을 읽어봅니다. 그리고 그 신을 섬길 것인지 시간을 들여 생각해봅니다. 신자가 된 후엔 '!' 버튼이나 '^'버튼을 사용해서 당신의 신의 설명을 읽을 수 있습니다.
 
-You're guaranteed to find altars to almost every god on the first nine levels of the main dungeon.
+보통 메인 던전 9층까지 가기 전가지 당신은 모든 신의 제단을 찾을 수 있습니다.
 %%%%
 Q:ghosts
 
-I keep getting murdered by my own ghosts. Can I deactivate them?
+저는 제 망령들한테 계속 살해당하고 있어요. 망령 기능을 끌 수 있나요?
 %%%%
 A:ghosts
 
-A: There isn't any such option, and we're not planning to add one, either.
+A: 그런 옵션은 없을 뿐더러, 우리는 망령 기능을 끌 수 있는 옵션을 제공할 계획 또한 없습니다.
 
-For a more constructive answer, once a ghost has been loaded onto a level, it won't be loaded again - unless you happen to die on that level, thus creating a bones file featuring more than one ghost. Keep in mind that you don't absolutely have to fight every monster you meet, and with ghosts it's even easier: they cannot leave the level they were created on.
+좀 더 쓸만한 답변을 드리자면, 당신이 그 층에서 죽음으로서 하나 이상의 망령이 더 추가되지 않는 이상, 망령이 해당 층에서 불러들여 지면, 망령은 다시 불러들여 지지 않습니다. 당신이 만난 몬스터와 반드시 싸울 필요가 없다는 걸 명심하고 있으면, 망령들은 자신이 불러들여 진 층을 떠날 수 없기 때문에 망령 또한 더 쉽게 느껴질 것입니다.
 
-Alternatively, you could play a couple characters of strong species/background combinations for the sole purpose of busting those ghosts, e.g. Berserkers, spellcasters who've learned Dispel Undead, or followers of the Shining One.
+또는, 당신은 망령을 상대하기 위한 목적을 가진 종족과 직업을 조합한 두번째 캐릭터를 키울 수 있습니다. 예로 광전사, 디스펠 언데드를 배운 마법 사용자, 혹은 샤이닝원의 신자가 있습니다.
 %%%%
 Q:instadeath
 
-I went down these stairs and got killed instantly! Is this a bug?
+제가 층을 내려가자마자 즉사해버렸어요! 버그인가요?
 %%%%
 A:instadeath
 
-A: Probably not. While your death might be due to an ill-placed vault (this would be a bug), it is generally just really bad luck. We believe that a game is more fun if the risk of death is real. This means that such instant deaths cannot be fully avoided, as Crawl relies on randomness for posing challenges. It is important to realize that for highly skilled players, the margin of such deaths is really slim...
+A: 아마도 버그는 아닐 것입니다. 버그로 인해 던전이 잘못 배치된 경우일 수도 있지만, 보통 단순히 운이 나쁜 경우입니다. 우리는 죽음의 위험이 사실적일수록 게임이 재미있다고 생각하기 때문에, 당신이 각종 임의적으로 위험하게 구성된 던전을 탐험하는 동안 즉사의 위험을 완전히 피하지는 못할 것입니다. 숙달된 유저들일수록 앞의 내용이 중요하다는걸 깨닫게 되면, 즉사의 위험이 현저하게 줄어들 것입니다.
 %%%%
 Q:abyss
 
-I've somehow ended up in a place called "Abyss". How do I get out of here?
+제가 어쩌다가 어비스라고 불리는 장소에 도착했습니다. 어떻게 나갈 수 있나요?
 %%%%
 A:abyss
 
-A: If you are in the Abyss for the first time, chances of getting out are slim. Still, here are a few general hints:
+A: 당신이 어비스에 처음 왔다면, 무사히 나갈 확률은 매우 낮습니다. 하지만 몇 가지 유용한 힌트를 알려 드리죠.
 
-* You need to find a gateway leading out of the Abyss. These are rare!
-
-* Don't stick around to fight; move as much as possible!
-
-* If you have it, use defensive equipment (weapons of protection, etc.).
-
-* Use teleportation to hopefully end up in a completely new part of the Abyss.
-
-* Teleportation might take much longer to kick in than in the Dungeon.
-
-* Consider switching your allegiance to Lugonu to get out of there.
+* 당신은 어비스 밖으로 나갈 수 있는 출구를 찾아야 합니다. 하지만 출구는 상당히 드물게 나옵니다!
+* 전투를 질질 끌지 말아야합니다. 최대한 빨리 움직여야 합니다!
+* 당신이 보호의 무기와 같은 방어적인 장비를 가지고 있다면 그것을 장비합니다.
+* 어비스의 새로운 지역으로 이동하기 원한다면 공간 이동을 사용하십시오.
+* 공간 이동은 일반 던전에서보다 훨씬 더 긴 시간이 걸릴지도 모릅니다.
+* 어비스 밖으로 나가기 위해서 당신을 신앙을 루고누로 바꾸는 것을 고려해 보십시오.
 %%%%
 Q:oklobs
 
-Oklob plants suck! Are you planning to remove them at last?
+오클롭 식물은 정말로 짜증납니다! 아예 게임상에서 없애버릴 계획은 없나요?
 %%%%
 A:oklobs
 
-A: No, we don't, because we feel that Oklob plants provide an interesting challenge. Resist the urge to kill them at once. If you absolutely need to bypass them, use your resources wisely.
-
-A hint: They cannot see invisible.
+A: 아뇨, 우리는 오클롭이 흥미로운 도전거리라고 생각하기 때문에 그럴 계획은 없습니다. 오클롭을 꼭 죽일 필요는 없습니다. 당신이 오클롭을 완전히 무시하고 지나치는 것은 당신의 아이템을 현명하게 사용하는 방법입니다.
+힌트 : 오클롭 식물들은 투명한 것을 보지 못합니다.
 %%%%
 Q:randart
 
-What do the terms "randart", "unrandart" and "egoitem" signify?
+'랜다트', '언랜다트', 그리고 '에고아이템'이 정확하게 무엇인가요?
 %%%%
 A:randart
 
-A: Apart from the standard items you'll find lying around in the dungeon, you might also stumble upon artefacts which come in two varieties:
+A: 던전 바닥에 떨어져 있는 일반적인 아이템을 제외하면, 당신은 우연히 두가지 종류의 유물을 발견할 것입니다.
 
-* randart: a random artefact, usually a weapon or type of armour with random properties such as conferring resistances or abilities
+* 랜다트 : 일반적으로 무기나 방어구에 임의의 저항이나 능력과 같은 부가 효과가 부여된 유물. 한글 버전에서는 별표(*)가 붙습니다.
+* 언랜다트 : 랜다트처럼 보이는 유물이지만 이미 효과가 정해진 유물. 정해진 아티펙트로 알려진 몇 가지 아티팩트들은 극한의 효과를 가지고 있지만, 아이템의 모양이나 색상을 보고 아이템을 이미 알고 있는 유저들을 제외하면 랜다트와의 차이점은 거의 없습니다. 한글 버전에서는 두 개의 별표(**)가 앞에 붙습니다.
 
-* unrandart: an artefact that looks like a randart but is really predefined. While a few (formerly known as "fixed artefacts") have special hardcoded effects, for most there's no further difference except that players "in the know" can recognize such an item by its special description and/or colour/tile.
+강화될 수 있든 속성이 부여될 수 있든, 혹은 영구적이든, 일시적이든, 좀 더 자주 발견되는 다른 종류의 아이템이 있습니다.
 
-Neither of these types can be enchanted or branded, either temporarily or permanently. There is another type of special item that pops up a bit more frequently:
+* 에고 아이템: 한가지의 특별한 효과를 가진 평범한 아이템. 예로 맹독의 단검, 투명을 보는 모자, 질주의 부츠가 있다. 에고 아이템들은 인챈트 스크롤이나 부식이나 산에 의해서 영향을 받습니다. 에고아이템의 무기는 속성을 받은 무기이며, 오직 신성한 힘만이 속성을 변화시킬 수 있습니다.
 
-* egoitem: these are ordinary items with one special property. For example, a short sword of venom, a cap of see invisible, or boots of running. These can be affected by enchanting scrolls and also by corrosion and acids. Weapons of this type are branded, and only divine intervention can change the brand.
+랜다트와 언랜다트 아이템의 색은 보통 흰색, 에고 아이템은 푸른색, 그 외의 아이템은 보통 회색으로 표시됩니다. 이를 통해, 아이템의 가치를 어느 정도 판별하는 것도 가능합니다.
 %%%%
 Q:interact
 
-Is there a way for me to interact with other players?
+다른 플레이어와 상호작용할 수 있는 방법이 있나요?
 %%%%
 A:interact
 
-A: If you play online on https://crawl.akrasiac.org or https://crawl.develz.org, you can watch games in progress, other players can watch you while you play, and you can kill other players' ghosts. You can even send and receive messages.
+A: 당신이 http://crawl.akrasiac.org 혹은 http://crawl.develz.org 에서 게임을 한다면, 당신은 다른 플레이어가 하는 것을 볼 수 있거나, 다른 플레이어가 당신이 플레이하는 동안 볼 수 있고, 다른 플레이어의 망령도 죽일 수 있으며, 메세지도 주고받을 수 있습니다.
+당신은 또한 크롤 채널 (irc.freenode.net, ##crawl)에서 채팅을 할 수도 있으며, 스톤 수프 포럼 (https://crawl.develz.org/tavern/)에서 논의할 수 있습니다. 홈페이지에는 다른 포럼이 링크되어 있습니다.
+(주: 크롤 채널에서 플레이하는 버전은 한글화가 되어 있지 않습니다. 던전 크롤의 영어 수준은 어렵지 않으니, 게임에 충분히 익숙하다면 시도해보세요!)
 
-Check docs/ssh_guide.txt or https://crawl.develz.org/wordpress/howto for an explanation about how to play online.
-
-You can also chat in the Crawl channel (irc.freenode.net, ##crawl), or discuss in the Stone Soup forum (https://crawl.develz.org/tavern/), or in one of the other forums linked on the website.
 %%%%
 ##############################################
 # Questions about the development process.
 ##############################################
 Q:version
 
-When will development reach the "stable" version 1.0?
+안정화된 1.0버전은 언제쯤 개발됩니까?
 %%%%
 A:version
 
-A: Actually, by now we consider Stone Soup to be reasonably stable for a game of such active development, so please don't get hung up about the 0.X versioning and give it a try.
-
-We've mostly kept the versioning for historic reasons and because it might cause undue confusion. We might decide to change that at some point, but maybe we won't.
+A: 사실, 우리는 이제 스톤 수프가 안정적인 개발 단계로 넘어갔다고 여기기 때문에 0.X 버전이라고 피하지 말고 한번 해보시길 바랍니다.
+우리는 혼란을 불러일으키지 않기 위해 기록용으로 버전을 남겨놨지만, 우리는 현재 정책을 바꿀 수도 있고 안 바꿀 수도 있습니다.
 %%%%
 Q:beta
 
-Is there a way for me to play the new version before it is released?
+배포되기 전의 새로운 버전을 할 수 있는 방법이 있나요?
 %%%%
 A:beta
 
-A: There certainly is! You can play "trunk" (what will eventually become the next version) online on both https://crawl.akrasiac.org and https://crawl.develz.org; the latter site also hosts Windows and Mac binaries you can download. Note that trunk may be buggy, and that some changes may invalidate your saved games. If that doesn't bother you, go ahead and play!
+A: 할 수 있는 방법이 있습니다! http://crawl.akrasiac.org 와 http://crawl.develz.org 의' 'trunk'란에서 찾을 수 있습니다. 윈도우와 맥 두 가지 버전을 받을 수 있을 수 있습니다. 
+베타 버전은 버그가 날 수 있으며, 몇 가지 변경점은 당신의 세이브 파일이 적용되지 않을 수 있습니다. 당신이 두 가지 문제점을 모두 여의치 않는다면. 가서 어서 해보세요!
 
-Be sure to reports bugs on our bug tracker (https://crawl.develz.org/mantis/) and to leave some feedback/suggestions on the development wiki (https://crawl.develz.org/wiki).
-
-When doing so, please mention the version (see '?v') you're currently playing, in case the bug's already been fixed or the feature already implemented.
+bug tracker(http://crawl.develz.org/mantis/)에 버그를 제보해주시거나 몇가지 피드백이나 건의사항을 development wiki(http://crawl.develz.org/wiki)에 (영어로) 남겨주시면 감사하겠습니다.
+버그나 건의사항을 제보하는 경우엔, 이미 버그가 고쳐져 있거나, 특징이 구현된 경우가 있기 때문에 '?v'를 사용해서 당신이 플레이하는 버전을 언급해주시기 바랍니다.
 %%%%
 Q:bug
 
-The game keeps crashing. / I think I found a bug. What do I do?
+게임이 갑자기 종료되거나, 이상한 에러 메시지가 화면에 표시되었습니다. 제 생각에는 버그를 찾은거 같은데요, 제가 뭘 해야하나요?
 %%%%
 A:bug
 
-A: Please submit a bug report on Mantis (https://crawl.develz.org/mantis/), and give as much information as you can:
+A: Mantis에 오류보고를 해주시고 (http://crawl.develz.org/mantis/), 다음사항과 관련해 가능한 많은 정보를 주시면 감사하겠습니다.:
+* 오류 발생 시 무엇을 하던 중이었습니까?
+* 오류 대신 어떤 결과를 얻으려 하셨습니까?
+* 가장 중요한, 버전은 어떤 버전이었습니까?  (확실치 않다면, 게임안에서 '?v'를 눌러 확인할 수 있습니다.)
+* 콘솔판이었습니까 타일판이었습니까?
 
-* What were you doing at the time?
+충돌현상이나 몬스터,아이템,던전등이 이상하게 작동하는 경우에는, 세이브파일이 필요합니다. 만약 온라인으로 플레이 중이라면, 게임을 이어가기 전에 개발자들에게 줄 세이브파일을 복사본을 만들어주십시오.
+CDO에서는 메인메뉴에서 복사본을 만들 수 있고; CAO에서는 !copysave IRC 명령어를 이용해아합니다. : !copysave username reason. 오류보고시 서버와 아이디를 꼭 적어주세요!     * 참고 - CDO, CAO는 온라인서버의 종류
+가끔은 스크린샷이 도움이 됩니다. 만약 에러메세지가 나타났다면, 그것을 적어주세요. 세이브파일이 없다면, 위자드 모드를 통해 충돌 (혹은 버그)를 다시 재현할 수 있을 것입니다.
 
-* What did you expect to happen, what happened instead, etc.
-
-* Most importantly, what version are you playing?
-  (If you're not sure, you can check in-game with '?v'.)
-
-* Console or tiles?
-
-For crashes or monsters/items/levels behaving oddly, we probably need a save file. If you're playing online, please create a copy of your save file for the developers to access before you continue playing. On CDO, you can do this from the main menu; on CAO you need to use the !copysave IRC command: !copysave username reason. Don't forget to include the server and your username in your bug report!
-
-Sometimes a screenshot can be helpful. If there are error messages, please write them down. Short of a save file, a guide on how to reproduce the crash (or bug) can be useful; you can use wizard mode for this.
-
-Thanks in advance!
+미리 감사드립니다!
 %%%%
 Q:ideas
 
-I've got millions of ideas! Can I join the team?
+수많은 아이디어들을 가지고 있습니다! 팀에 들어갈 수 있을까요?
 %%%%
 A:ideas
 
-A: Sorry, but no. At least not on ideas alone.
-
-All of the devteam members submitted a number of code intensive patches and/or took over responsibility over an important side project before joining. A good way to become indispensable is to help us with patches or vaults, etc.
-
-Please add your ideas in the appropriate section of the Mantis wiki: https://crawl.develz.org/wiki
-
-If they catch the interest of at least one coder, chances are they'll make it into the game.
-
-Note that your idea has a better chance of being accepted if you present the ramifications on gameplay. Since we put a lot of emphasis on the interface, a good proposal on how to make the game play smoother may go in without much ado.
+A: 죄송하지만, 안됩니다. 적어도 아이디어만으로는 안됩니다..
+모든 개발팀의 구성원들은 팀원이 되기 전 각자 몇개의 코드패치를 제출하고, 이에 더하여 몇몇 중요한 프로젝트에 책임을 맡기도 합니다. 중요한 일원이 되려면 패치나 던전 관련사항 등을 도와주면 좋습니다.
+아이디어는 Mantis 위키의 적절한 곳에 올려주세요. 만약 한 명의 코더라도 관심을 가지면, 게임에 반영 될 가능성이 있습니다.
+게임안에서 실제적인 파급효과를 설명해준다면 반영될 가능성이 더 높아진다는 것을 명심하세요. 우리는 인터페이스에 많은 강조를 하기 때문에, 게임진행을 더 부드럽게 할 수 있는 좋은 제안이 있으면 별 무리 없이 받아들여질 수 있을 것입니다.
 %%%%
 Q:feature
 
-Hey! Why did you close my feature request?
+왜 제 특징 요청글을 닫았죠?
 %%%%
 A:feature
 
-A: If you submitted a report on our Mantis tracker, you will get an email any time someone replies to (or fiddles with) the thread in question. Once a thread has been resolved or closed, you can still access it by searching for requests with the "Resolved" and "Closed" status, respectively.
+A: 만약 우리 Mantis 트래커에 보고서를 제출했다면, 어느때나 누군가가 리플을 달면 (혹은 뭔가 조작하면) 메일을 받게 됩니다. 어떤 한 주제가 해결되거나 닫혀져도, 각각 "해결된","닫힌" 상태의 주제를 검색함으로써 여전히 접근 할 수 있습니다.
+우리는 항상 구현되지 않았던 요청을 끝낼 때 어떤 이유를 부여하려 노력합니다. 그러나 보통은 아래 세가지 이유에 해당하죠.
 
-We always try to give a reason for closing a request that has not been implemented, but it usually boils down to three reasons:
+* 우리가 보기에 크롤세계와 맞지 않다.
+* 반복적이거나, 스포일러에 의존하는 것은 피하자는 크롤의 철학을 위반한다.
+* 그냥 흥미롭지 않다고 생각하여서
 
-* It doesn't fit into the Crawl world as we see it.
-
-* It violates Crawl's philosophy to avoid grinding and spoiler-heavy stuff.
-
-* We just don't think it's interesting enough to ever be implemented.
-
-Also, many requests that are reasonable but not urgent are moved to the wiki, where it's easier to keep track of them than in the bug tracker.
-
-Please don't let this stop you from bringing up more suggestions. Already the next one might generate heavy interest and excitement, and end up in the game. However, do try to be specific in your suggestions. If you cannot even explain the basics of your idea, why should we bother to flesh it out, let alone code it?
-%%%%
+또한, 많은 납득할만하지만 급하지는 않은 요청들은 버그 트래커에 있는것보다 지속적으로 지켜보기 편하기때문에 위키로 옮겨집니다.
+위의 사항들이 아이디어를 내는 것을 막지 않기를 바랍니다. 하지만, 제안을 구체적으로 하십시오. 아이디어의 기본적인 것들조차 설명할수 없다면, 왜 우리가 그것을 구체화 하려고 애써야할까요? 
 Q:patch
 
-I've written a patch for a cool new feature! Where should I send it?
+새롭고 멋진 것들을 만들었습니다! 어디로 보내면 될까요?
 %%%%
 A:patch
 
-A: Please submit it as a new issue on our Mantis tracker: https://crawl.develz.org/mantis/
+A: 만드신 새로운 생각들을 우리 Mantis Tracker (http://crawl.develz.org/mantis/)에 올려 주세요!
 
-Keep in mind that without previous discussions, we may not be able to use the patch, or it might need heavy modification. In general, it is safer to first file your suggestions under Feature Requests and wait for people to become enthusiastic and give feedback before you submit a patch. If you want, you can also write a patch that implements an existing FR or fixes a bug.
+사전 토의 없이, 그 패치를 쓰지 않거나, 혹은 대대적인 수정이 이루어질 수 있음을 명심하세요. 일반적으로, 제안 첫번째로 Feature Requests에 올려 사람들이 그것에 관심을 가지고, 피드백이 오기를 기다려 패치를 내는 것이 더 안전합니다. 원한다면, 이미 있는 FR (Feature Requests) 에 적용되는 패치를 작성하거나, 버그를 고칠 수 있습니다.
+패치를 작성하고 싶지만 어떻게 해야할지 모를 때, docs/develop/ 디렉토리에 있는 patch_guide.txt가 도움이 될 것입니다.
 
-If you'd like to write a patch but don't know how to go about it, patch_guide.txt in the docs/develop/ directory is the file for you.
-
-We really appreciate your help!
+당신의 도움에 감사드립니다!
 %%%%
 Q:help
 
-I cannot code, but I'd like to help improve the game. What can I do?
+코딩을 할 수 없습니다, 그런데 게임 개발에 도움을 주고 싶어요. 제가 뭘 하면 좋죠?
 %%%%
 A:help
 
-A: There are several areas where you can get creative and outside help is much appreciated. These are:
+A: 당신이 창의력을 발휘할 수 있고, 외부의 도움이 필요한 몇가지 영역이 있습니다. :
+* 맵/볼트 (dat/ 디렉토리, docs/develop/levels/introduction.txt 를 참고하세요)
+* 몬스터의 대사 (dat/database/, docs/develop/monster_speech.txt를 참고하세요)
+* 몬스터/아이템/마법의 설명 (dat/descript/를 참고하세요)
+* 타일 (source/rltiles/, docs/develop/tiles_creation.txt를 참고하세요)
 
-* maps/vaults (see dat/ directory, docs/develop/levels/introduction.txt)
+또한, 패치를 작성하고 싶지만 어떻게 해야할지 모를 때, docs/develop 디렉토리의 patch_guide.txt를 참고하세요.
+좋은 작품을 만들었다면, 메일을 보내거나, 혹은 Mantis 아이템으로 등록해주세요. 또한 가장 최신버전이나 개발버전에 대한 피드백으로 도움을 줄 수도 있습니다. (git를 통하거나 http://crawl.develoz.org/trunk/에서 윈도우, 맥버전이 다운로드 가능합니다.)
 
-* monster speech (see dat/database/, docs/develop/monster_speech.txt)
-
-* monster/item/spell descriptions (see dat/descript/)
-
-* tiles (see source/rltiles/, docs/develop/tiles_creation.txt)
-
-Also, if you'd like to write a patch but don't know how to go about it, read patch_guide.txt in the docs/develop/ directory.
-
-If you've got some cool addition, you can send it over the mailing list, or post it as a Mantis item. You can also help us by giving feedback on the most recent version or trunk (available via git, Windows and Mac binaries downloadable from https://crawl.develz.org/trunk/).
-
-Thanks a lot for your support!
+당신의 도움에 감사드립니다!
 %%%%
 Q:changes
 
-What did you change in the most recent version?
+가장 최근버전의 변경 점이 뭔가요?
 %%%%
 A:changes
 
-A: The admittedly highly subjective highlights of the most recent major release are listed along with the version information under '?v'. For more details, check out changelog.txt in the docs/ directory.
+A: 장담컨데, 가장 중요하다고 생각하는 변경점은 '?v' 커맨드를 통해 볼 수 있는 버전정보에 나열되어있습니다. 더 자세한 정보를 원하시면 docs/ 디렉토리에 있는 changelog.txt를 참고하세요
 %%%%
 ##############################################
 # Questions about the Tiles version
 ##############################################
 Q:tiles lag
 
-The Tiles version is awfully slow! How can I improve that?
+타일 버전이 너무 느려요 어떻게 해야하죠?
 %%%%
 A:tiles lag
 
-A: Crawl renders its graphics using OpenGL and SDL. Because it uses OpenGL, it depends on a little bit of hardware acceleration to not run slowly. If your system is not set up to enable this, then Crawl will run quite poorly.
+A: 크롤은 OpenGL과 SDL을 통해 그래픽을 표현합니다. OpenGL을 쓰기 때문에, 느려지기 않기 위해서 하드웨어가속에 약간 의존합니다. 만약 당신의 시스템이 이를 지원해주지 않는다면 , 크롤이 부드럽게 진행되지 않을 것 입니다.
 
-On Windows, the default driver that ships with Windows is extremely slow. Make sure to update your graphics card driver to the latest one available. On Linux, you should be sure to enable DRI.
+윈도우에서, 윈도우 기본 드라이버는 매우매우 느립니다. 그래픽 카드 드라이버를 가장 최신의 것으로 업데이트 해주세요. 리눅스에서는 DRI를 가능하게 해야합니다.
 
-In addition to these suggestions, you can also try to see whether tweaking some options will improve performance. See docs/tiles_help.txt for details. If things are still too laggy after all of that, you could try the non-graphical console version, or wait for a future version that does not depend on OpenGL.
+이러한 제안에 덧붙여서, 옵션을 약간 손보는 것으로 성능을 향상시킬 수 있습니다. 자세한 사항은 docs/tiles_help.txt를 참고하세요, 그래도 여전히 느리다면, 그래픽이 없는 콘솔 버전으로 해볼 수 있습니다, 혹은 OpenGL을 쓰지 않는 나중 버전을 기다려주세요.
 %%%%
 Q:tiles online
 
-Can I play Tiles online?
+타일판 온라인을 할 수 있나요?
 %%%%
 A:tiles online
 
-A: A web-based tile interface is available at https://tiles.crawl.develz.org/, though it is missing some features of the local Tiles version. Trunk builds are not currently supported, but may be in the future.
+A: 0.6 버전으로, 타일판 온라인 플레이가 http://crawl.chaosforge.org/index.php?title=NetTiles에서 가능하고, 공식버전보다는 약간 빠진점이 있습니다.
+좀더 최신버전으로는 .. 없습니다. 아직은 없고. 현재 작업을 진행중이지만 시간이 좀 걸릴 것입니다.
+
+가능하다면, 콘솔버전을 플레이해보세요 : 온라인 플레이는 확실히 가치가 있습니다.
 %%%%
 Q:tiles commands
 
-Is there a list of mouse commands anywhere?
+마우스 명령어 일람이 어디 있나요?
 %%%%
 A:tiles commands
 
-Yes, check tiles_help.txt. You can also browse it in-game via the '?t' command.
+네, tiles_help.txt를 확인해보세요. 또 게임안에서 '?t'로 알아볼 수 있습니다.
 %%%%
 Q:tiles options
 
-Is there a way to modify the size of the tiles screen, the font, etc.?
+타일판 화면크기나 폰트 등등을 조정할 수 있나요?
 %%%%
 A:tiles options
 
-A: Yes. Play around with the options in settings/tiles_options.txt until you are satisfied. See docs/options_guide.txt for some explanations.
-
-It is currently not possible to modify any options from within the game itself.
+A: 네, settings/tiles_options.txt에 있는 옵션들을 맘에들때까지 이리저리 바꿔보세요. docs/options_guide.txt에는 설명이 있습니다.
+아직 게임안에서 옵션을 조정하는것은 불가능합니다.
+(주: 한글 버전에서는 폰트나 글씨 크기를 되도록 조정하지 않는 것을 권장합니다!)
 %%%%

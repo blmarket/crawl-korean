@@ -52,7 +52,7 @@ SOUND:@The_monster@이(가) 포효했다!
 %%%%
 __SCREAM unseen
 
-SOUND:당신은 찢어지는 듯한 쇳소리를 들었다
+SOUND:당신은 찢어지는 듯한 쇳소리를 들었다!
 %%%%
 __SCREAM seen
 
@@ -124,15 +124,15 @@ __CROAK seen
 
 SOUND:@The_monster@이(가) 짜증나게 개굴거리는 소리를 냈다!
 
-SOUND:@The_monster@이(가) 개굴개굴 거리는 소리를 냈다
+SOUND:@The_monster@이(가) 개굴개굴 거리는 소리를 냈다.
 %%%%
 __GROWL unseen
 
-SOUND:당신은 험악한 신음 소리를 들었다.
+SOUND:당신은 험악하게 으르렁거리는 소리를 들었다.
 %%%%
 __GROWL seen
 
-SOUND:@The_monster@이(가) 험악한 신음 소리를 냈다.
+SOUND:@The_monster@이(가) 험악하게 으르렁거리는 소리를 냈다.
 %%%%
 __HISS unseen
 
@@ -160,7 +160,7 @@ SOUND:@The_monster@의 독수리 머리가 울부짖었다!
 
 SOUND:@The_monster@의 사자 머리가 고함을 내질렀다!
 
-SOUND:@The_monster@의 소 머리가 음메 했다(...)
+SOUND:@The_monster@의 소 머리가 음메 하고 소리를 질렀다!
 
 SOUND:@The_monster@의 인간 머리가 외쳤다!
 %%%%
@@ -168,13 +168,14 @@ __CHERUB unseen
 
 SOUND:외침 소리가 들린다.
 
-SOUND:새의 울부짖는 소리가 들린다.(screech의 적절한 번역 찾으시는분 제보바람)
+SOUND:새가 날카롭게 울부짖는 소리가 들렸다.
 
 SOUND:야수의 울부짖는 소리가 들린다.
 
-SOUND:음메 소리가 들린다...
+SOUND:음메 소리가 들린다.
 
 SOUND:당신은 까악거리며 우는 소리를 들었다.
+%%%%
 ############################################
 # End of default shouts
 ############################################
@@ -327,7 +328,7 @@ VISUAL:@The_monster@이(가) 당신에게로 눈자루를 홱 돌렸다.
 %%%%
 'cap-J'
 
-VISUAL:@The_monster@이(가) 부들부들 떨었다.
+VISUAL:@The_monster@ quivers.
 ########################################
 # Shouts for specific monsters
 ########################################

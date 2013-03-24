@@ -8,15 +8,15 @@
 sheep flee
 
 w:30
-@The_monster@ bleats in terror.
+@The_monster@은(는) 공포에 질려 울부짖었다.
 
-VISUAL:@The_monster@ is struck with panic!
+VISUAL:@The_monster@은(는) 공포에 사로잡혔다!
 
-VISUAL:@The_monster@ panics and turns to flee.
+VISUAL:@The_monster@은(는) 공황에 빠지고, 도망을 시도했다.
 
-VISUAL:A frightened @monster@ leaps away.
+VISUAL:@monster@이(가) 겁을 먹고, 도망을 시도했다.
 
-VISUAL:@The_monster@ turns to a blind rush.
+VISUAL:@The_monster@은(는) 뒤도 안 보고 도망가기 시작했다.
 
-VISUAL:@The_monster@ stampedes away.
+VISUAL:@The_monster@은(는) 놀라서 도망쳤다.
 %%%%

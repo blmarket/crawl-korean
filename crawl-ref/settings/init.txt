@@ -340,8 +340,8 @@
 ### Note: setting window, map or font sizes to '0' implies auto-sizing.
 
 # tile_full_screen      = true
-# tile_window_width     = 1024
-# tile_window_height    = 768
+ tile_window_width     = 1024
+ tile_window_height    = 768
 # tile_use_small_layout = true
 # tile_map_pixels       = 3
 # tile_cell_pixels      = 32
@@ -351,15 +351,15 @@
 # tile_layout_priority += ability, monster
 
 # tile_font_crt_file  = VeraMono.ttf
-# tile_font_crt_size  = 15
+ tile_font_crt_size  = 16
 # tile_font_stat_file = VeraMono.ttf
-# tile_font_stat_size = 16
+ tile_font_stat_size = 16
 # tile_font_msg_file  = VeraMono.ttf
-# tile_font_msg_size  = 14
+ tile_font_msg_size  = 16
 # tile_font_tip_file  = VeraMono.ttf
-# tile_font_tip_size  = 15
+ tile_font_tip_size  = 16
 # tile_font_lbl_file  = Vera.ttf
-# tile_font_lbl_size  = 14
+ tile_font_lbl_size  = 16
 # tile_font_ft_light  = false
 
 # tile_show_minihealthbar = false

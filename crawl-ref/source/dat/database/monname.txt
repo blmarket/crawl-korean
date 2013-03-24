@@ -49,7 +49,7 @@ orc priest name
 
 # Watch out! :p
 w:1
-Judas
+주다스
 
 w:50
 @orc name@
@@ -58,164 +58,164 @@ w:50
 # (14 at last count)
 beogh_name
 
-Arbeogh
+아르베오그
 
-Bogbarth
+보그바르스
 
 # slavic name, meaning "god's gift" :)
-Bogdan
+보그단
 
-Bogdar
+보그다르
 
-Boghold
+보그호르드
 
-Bogmar
+보그마르
 
-Bogric
+보그릭
 
-Bogrim
+보그림
 
-Bogwald
+보그왈드
 
-Bogward
+보그와드
 
-Bogwik
+보그윅
 
-Morbeogh
+모르베오그
 
-Orbeogh
+오르베오그
 
-Warbeogh
+워르베오그
 %%%%
 # Obvious references to orcs in general
 # (extremely subjective, and 13 at last count)
 orcish_name
 
-Alork
+알로크
 
-Borgk
+보르크
 
-Boruk
+보루크
 
-Marbork
+말보르크
 
-Milork
+밀로크
 
-Ogrik
+오그릭
 
-Okrist
+오크리스트
 
-Oreg
+오레그
 
-Orgrim
+오르그림
 
-Orik
+오리크
 
-Orkrul
+오크룰
 
-Orkwin
+오크윈
 
-Oruk
+오룩
 %%%%
 # Other
 # (49 at last count)
 other_orcish_name
 
-Agrik
+아그리크
 
-Arbolt
+아르보르트
 
-Argrim
+아르그림
 
-Arkwar
+아르크워
 
-Berold
+베롤드
 
-Bladwarg
+블라드워르크
 
-Blodwig
+블로드윅
 
-Boderik
+보데리크
 
-Boldo
+볼도
 
-Bolgrim
+볼그림
 
-Borgoth
+보르고쓰
 
-Borgun
+보르군
 
-Brandogh
+브란도그
 
-Brunolf
+브루놀프
 
-Dorog
+도로그
 
-Garbold
+가르보르드
 
-Gorbash
+고르바시
 
-Gorg
+고르그
 
-Gorm
+고르뭄
 
-Grimold
+그리몰드
 
-Harm
+하름
 
-Hawl
+하울
 
-Herok
+헤로크
 
-Hilgar
+힐가르
 
-Jorge
+조지
 
-Koronagh
+코로나흐
 
-Learuk
+레아루크
 
-Margrim
+말그림
 
-Morguth
+모르구쓰
 
-Morun
+모룬
 
-Murdo
+멀도
 
-Norbak
+노르바크
 
-Nordag
+노르닥
 
-Ognian
+오그니언
 
-Olfik
+오르피크
 
-Olfrun
+오르프룬
 
-Ortolf
+오르토르흐
 
-Rocco
+로코
 
-Syrus
+사이러스
 
-Thorok
+쏘록
 
-Ugbert
+우그베르트
 
-Ugrim
+우그림
 
-Wardok
+워르독
 
-Wargath
+워르가쓰
 
-Wargrak
+워그라크
 
-Warrok
+워록
 
-Worak
+워락
 
-Wulfoc
+우르포크
 
-Zorug
+조르그
 %%%%

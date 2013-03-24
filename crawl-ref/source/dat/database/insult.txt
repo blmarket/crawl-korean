@@ -11,7 +11,7 @@
 %%%%
 imp_taunt
 
-@run_or_give_up@, thou @generic_insult@!
+@run_or_give_up@, @generic_insult@ @taunt_word_ext@!
 %%%%
 run_or_give_up
 
@@ -24,160 +24,183 @@ w:1
 demon_taunt
 
 w:1
-@run_away@, thou @generic_insult@!
+@run_away@, @generic_insult@ @taunt_word_ext@!
 
 w:2
-@give_up@, thou @generic_insult@!
+@give_up@, @generic_insult@ @taunt_word_ext@!
 
 w:3
 @demon_taunt_special@
 %%%%
 demon_taunt_special
 
-Thy @body_or_spiritual_part@ shall be my @meal@!
+너의 @body_or_spiritual_part@은(는) 내 @meal@(으)로 만들겠다!
 
-@give_up@, thou tasty @meal@!
+@give_up@, 내 한 끼 @meal@도 안 되는 놈아!
 
-@run_away@ @whilst_thou_can@!
+@run_away@, @whilst_thou_can@!
 
-I @will_or_shall@ @feast_or_devour@ thy @body_or_spiritual_part@!
+오늘 너의 @body_or_spiritual_part@을(를) @feast_or_devour@ 먹어주겠다!
+%%%%
+taunt_word_ext
+
+w:12
+녀석아
+
+w:6
+놈아
+
+w:6
+자식아
+
+w:3
+같은 존재야
+
+w:3
+새끼야
+
+w:2
+그 자체야
+
+w:2
+것아
 %%%%
 # capitalised "flee" verbs
 run_away
 
-Away with thee
+항복하라
 
-Back with thee
+없어져라
 
-Begone
+떠나라
 
-Bolt
+도망치는게 좋을 것이다
 
-Crawl home
+물러나라
 
-Decamp
+날아서 도망쳐라
 
-Escape
+바보 같은 놈, 꺼져라
 
-Flee
+무레한 놈, 꺼져라
 
-Fly
+다시는 돌아오지 마라
 
-Get thee gone
+죽어버려라
 
-Get thee hence
+네 이놈, 썩 꺼져라
 
-Give up
+네 이놈, 썩 떠나라
 
-Go and return not
+꽁무니를 빼고 도망치는게 좋을 것이다
 
-Leave
+떠나라
 
-Quit
+빨리 사라져라!
 
-Remove thy stench
+꺼져라
 
-Return whence thou came
+죽어라
 
-Run away
+기어서 내눈앞에서 사라져라
 
-Scamper away
+기어서 돌아가라
 
-Scamper hence
+기어서 꺼져라
 
-Scamper home
+엉금엉금 기어서 돌아가라
 
-Slither away
+냉큼 되돌아가라
 
-Slither hence
+냉큼 사라지지 못할까
 
-Slither home
+냉큼 없어져라
 
-Take thy face hence
+당황해 도망치는 것이 좋을 것이다
 
-Turn tail
+살금살금 도망치는 것이 좋을 것이다
 %%%%
 # capitalised synonyms for "give up"
 give_up
 
-Abandon hope
+단념해라
 
-Accept thy failure
+항복해라
 
-Accept thy fall
+멈추어라
 
-Accept thy doom
+그만 항복하라
 
-Admit defeat
+무릎 꿇어라
 
-Beg for mercy
+자비를 청해라
 
-Capitulate
+절망해라
 
-Despair
+복종해라
 
-Despond
+굴복해라
 
-Disclaim thyself
+무서워 해라
 
-Embrace submission
+네놈의 잘못을 인정해라
 
-Embrace thy dedition
+네놈의 좌절을 인정해라
 
-Embrace thy doom
+네놈의 운명을 인정해라
 
-Embrace thy failure
+항복해
 
-Embrace thy fall
+복종해
 
-Face thy fugue
+네놈의 실패를 알고 수용해라
 
-Face thy requiem
+네놈의 좌절을 알고 수용해라
 
-Flounder
+네놈의 운명을 알고 수용해라
 
-Give in
+저항을 그만두어라
 
-Give up
+떨어라
 
-Kneel
+희망을 버려라
 
-Quail
+떨며 꿀어라
 
-Quit
+그 몸을 버려라
 
-Surrender
+희망을 버려라
 
-Succumb
+네놈의 진혼가를 틀어라
 
-Submit
+네놈의 송가를 틀어라
 
-Tremble
+패배를 인정해라
 
-Relinquish hope
+괴롭게 발버둥쳐라
 
-Taste defeat
+패배를 맛봐라
 %%%%
 whilst_thou_can
 
-whilst thou can
+네놈이 그럴 수 있는 동안
 
-whilst thou may
+네놈이 할 수 있는 동안
 
-whilst thou are able
+네놈이 그렇게 할 수 있는 동안
 
-if wit thou hast
+만약 네놈에게 지혜의
 
-whilst thy luck holds
+네놈의 운이 계속되는 동안
 
-before doom catcheth thee
+악운이 너를 차장내기 전에
 
-lest death find thee
+죽음이 너를 찾아내기 전에
 
-whilst thou art whole
+네놈이 만족스러운 동안
 
 # screen vs. this for undead?
-whilst life thou hast
+네놈이 그럴 수 있을 때까지
 %%%%
 body_or_spiritual_part
 
@@ -195,89 +218,85 @@ shall
 %%%%
 feast_or_devour
 
-feast on
+진수성찬으로 알고
 
-devour
+게걸스럽게
+
+잘근잘근 씹어
 %%%%
 important_body_part
 
-head
+머리
 
-brain
+뇌
 
-heart
+심장
 
-viscera
+창자
 
-eyes
+눈알
 
-lungs
+폐
 
-liver
+간
 
-throat
+숨통
 
-neck
+목
 
-skull
+두개골
 
-spine
+척추
 %%%%
 important_spiritual_part
 
-soul
+혼
 
-spirit
+영혼
 
-inner light
+마음의 빛
 
-hope
+희망
 
-faith
+신념
 
-will
+기개
 
-heart
+용기
 
-mind
+마음
 
-sanity
+정신력
 
-fortitude
+근성
 
-life force
+생명력
 %%%%
 meal
 
-meal
+밥
 
-breakfast
+아침밥
 
-lunch
+점심밥
 
-dinner
+저녁밥
 
-supper
+새참
 
-repast
+별미
 
-snack
+간식
 
-victuals
+도시락
 
-refection
+야식
 
-junket
+반찬
 
-luncheon
+식사
 
-snackling
-
-curdle
-
-snacklet
-
-mouthful
+야참
 %%%%
 #######################################################
 # generic insults consist of three random parts
@@ -298,230 +317,205 @@ w:5
 %%%%
 insult general adj1
 
-artless
+서투르고
 
-baffled
+눈치없고
 
-bawdy
+비열하고
 
-beslubbering
+끈적거리고
 
-bootless
+거만하고
 
-bumbling
+위선적이고
 
-canting
+무익하고
 
-churlish
+버릇없고
 
-cockered
+응석부리고
 
-clouted
+멍청하고
 
-craven
+무기력하고
 
-currish
+천하고
 
-dankish
+안색이 나쁘고
 
-dissembling
+무시당하고
 
-droning
+지루하고
 
-ducking
+무책임하고
 
-erky
+변태스럽고
 
-errant
+비굴하고
 
-euchred
+무기력하고
 
-fawning
+겁쟁이고
 
-feckless
+거짓말쟁이고
 
-feeble
+성격은 비뚤어지고
 
-fobbing
+얄팍하고
 
-foisting
+끈질기고
 
-foppish
+들뜨고
 
-froward
+호색하고
 
-frothy
+느슨해지고
 
-fulsome
+때 찌들고
 
-gleeking
+무섭고
 
-goatish
+밉고
 
-gorbellied
+주제넘게 참견하고
 
-grime-gilt
+병옮기고
 
-horrid
+거슬리고
 
-hateful
+고집만 앞서고
 
-impertinent
+굼벵이고
 
-infectious
+말더듬이고
 
-jarring
+망쳐지고
 
-loggerheaded
+울먹거리고
 
-lumpish
+불쾌하고
 
-mammering
+얄밉고
 
-mangled
+겁장이고
 
-mewling
+화나고
 
-obno
+하잘것 없고
 
-odious
+움츠리고
 
-paunchy
+떨고
 
-peaked
+냄새나고
 
-peeagling
+뚜쟁이고
 
-pribbling
+본성을 숨기고
 
-puking
+깃털 뽑히고
 
-puny
+속에 든게 없고
 
+매독걸리고
 
-pandering
+주정꾼이고
 
-pecksniffian
+교양없고
 
-plume-plucked
+질투나고
 
-pottle-deep
+말랑말랑하고
 
-pox-marked
+퉁명스럽고
 
-qualling
+비틀비틀거리고
 
-quaking
+뒤틀리고
 
-rank
+아첨하고
 
-reeling-ripe
+미치고
 
-rough-hewn
+목줄이 풀리고
 
-simpering
+허세부리고
 
-skyhacking
+입이 더럽고
 
-spongy
+멋대로이고
 
-surly
+빈약하고
 
-tottering
+쓸모없고
 
-twisted
-
-unctious
-
-unhinged
-
-unmuzzled
-
-vain
-
-venomed
-
-villainous
-
-warped
-
-wayward
-
-weedy
-
-worthless
-
-yeasty
+경박하고
 %%%%
 ##########################################################
 # adjective1, Elf special
 ##########################################################
 insult elf adj1
 
-weakly
+허약하고
 
-sickly
+빌빌대고
 
-frail
+노쇠하고
 
-delicate
+연약하고
 
-fragile
+허술하고
 
-brittle
+정서 불안하고
 
-tender
+젓가락같고
 
-mooning
+음탕하고
 
-painted
+허세부리고
 
-lily-hearted
+겉멋만 들었고
 
-dandy
+삐쩍 마르고
 
-featherweight
+얄팍하고
 
-flimsy
+근본없고
 
-rootless
+힘없고
 
-spindly
+보잘것없고
 
-puny
+불안에나 차있고
 
-shaky
-
-prissy
-
-underdone
+얌전이나 빼고
 %%%%
 ##########################################################
 # adjective1, Felid special
 ##########################################################
 insult felid adj1
 
-matted
+헝클어지고
 
-grungy
+지저분하고
 
-rabid
+병 걸리고
 
-picayune
+하찮고
 
-weenchy
+벼룩이나 옮기고
 
-crummy
+뒤룩뒤룩 살찌고
 
-daggy
+너저분하고
 
-stray
+길 잃은
 
-sticky
+침이나 질질 흘리고 다니고
 
-musky
+사향
 
-slinking
+기어다니기나 하고
 %%%%
 ##########################################################
 # adjective1, Ghoul special
@@ -529,52 +523,52 @@ slinking
 insult ghoul adj1
 
 # being old and mouldy
-mildewed
+곰팡이나 술술 피고
 
-mouldy
+케케묵고
 
-musty
+퀴퀴한 냄새나 풍기고
 
-stale
+썩어 빠지고
 
-long-expired
+썩어 냄새나고
 
 # falling apart
-worm-eaten
+벌레나 잡아먹고
 
-moth-eaten
+나방이나 잡아먹고
 
-corroded
+좀먹고
 
-leprous
+나병이나 걸린
 
-cankerous
+부패하고
 
-decaying
+썩었고
 
-decomposing
+썩어 빠졌고
 
-deteriorating
+나아질 기미도 없고
 
-infectious
+병균이나 옮기고
 
-diseased
+질병이나 옮기고
 
-wasted
+버려지고
 
-rotting
+점점 썩어가고
 
-stinking
+지독한 냄새나 풍기고
 
-putrescent
+썩은 냄새나 풍기고
 
-foul-smelling
+냄새나고
 
-foetid
+악취가 진동하고
 
-gangrenous
+괴저성이고
 
-foul-breathed
+불결한 공기를 내뿜고
 %%%%
 ###############################################################
 # adjective2, usually longer and consisting of two words
@@ -588,228 +582,212 @@ w:5
 %%%%
 insult general adj2
 
-base-court
+신변잡기스런
 
-bat-fowling
+새를 쫕는
 
-beef-witted
+아둔한
 
-beetle-headed
+치매의
 
-boil-brained
+성질급한
 
-clapper-clawed
+포악한
 
-clay-brained
+덜떨어진
 
-common-kissing
+난잡한
 
-crook-pated
+나쁜쪽으로만 머리좋은
 
-dismal-dreaming
+우울증 걸린듯한
 
-ditch-delivered
+천한 출신의
 
-dizzy-eyed
+난시의
 
-doghearted
+냉혈한
 
-dread-bolted
+불쾌한
 
-earth-vexing
+짜증나는
 
-elf-skinned
+엘프피부의
 
-fat-kidneyed
+뚱뚱한
 
-fen-sucked
+끈적한
 
-flap-mouthed
+입술을 늘어뜰인
 
-flat-headed
+좀스러운
 
-fly-bitten
+타락한
 
-fob-snatching
+바보스러운
 
-folly-fallen
+이중턱인
 
-fool-born
+요절복통인
 
-fool-headed
+얼굴이 반쪽인
 
-full-gorged
+속단이나 잘하는
 
-guts-griping
+비천한
 
-half-faced
+미움받는
 
-hasty-witted
+게으른
 
-hedge-born
+잘못 태어난
 
-hell-hated
+교육을 못받은
 
-idle-headed
+추한
 
-ill-breeding
+정신착란의
 
-ill-nurtured
+절뚝거리는
 
-kobold-kissing
+소심한
 
-knotty-pated
+미친
 
-limp-willed
+익살스런
 
-milk-livered
+잘 우는
 
-miscreant
+이단 같은
 
-moon-mazed
+껄렁한
 
-motley-minded
+곰팡이핀
 
-moldwarp
+발정난
 
-mumble-news
+입이 싼
 
-nose-picking
+건방진
 
-nut-hook
+날치기 같은
 
-onion-eyed
+우울한
 
-pigeon-egg
+애송이 같은
 
-roguish
+버릇없는
 
-rude-growing
+더러운
 
-rump-fed
+딱딱한
 
-ruttish
+도둑같은
 
-saucy
+못생긴
 
-shard-borne
+가축같은
 
-sheep-biting
+디룩디룩 살찐
 
-sow-suckled
+느릿느릿한
 
-spleeny
+근질거리는
 
-spur-galled
+추한
 
-swag-bellied
+신랄한
 
-tardy-gaited
+돼지코
 
-tickle-brained
+구두쇠인
 
-tip-merry
+해충같은
 
-toad-spotted
-
-toenail-biting
-
-toot-wallowing
-
-two-tin-hat
-
-unchin-snouted
-
-weather-bitten
-
-weeb-spouting
-
-weevil-witted
-
-wibble-sucking
+해충의
 %%%%
 ##########################################################
 # adjective2, Dwarf special
 ##########################################################
 insult dwarf adj2
 
-dirt-grubbing
+온몸에 때나 가득한
 
-grit-sucking
+자린고비
 
-muck-plodding
+대변 애호가
 
-stone-broke
+돈만 밝히는 거지
 
-pelf-dandling
+돈에 환장하는
 
-fault-botching
+뭐든지 문외한인
 
-gravel-groveling
+굽신거리기나 하는
 
-boodle-bothering
+뇌물이나 처 먹는
 
-cabbage-coddling
+양배추 대가리
 
-rhino-raveling
+코뿔소 엉덩이
 
-thigh-biting
+내 허벅다리나 핥을
 
-dirt-delving
+먼지나 풀풀 나대는
 %%%%
 ##########################################################
 # adjective2, Felid special
 ##########################################################
 insult felid adj2
 
-worm-riddled
+온 몸에 벌레가 들끓는
 
-mange-covered
+기생충이 가득한
 
-gunky-eyed
+기분나쁜 눈깔
 
-death-cheating
+여러 목숨에만 부지하고 다니는
 
-cutty-eyed
+눈알을 파내버릴
 
-gristle-gnawing
+연골 신경
 
-spot-chasing
+불빛이나 쫒아다닐
 
-chapped-arsed
+갈라진 똥구멍
 
-key-stepping
+방울차고 쥐 잡을
 
-rot-lapping
+썩은 고기나 먹는
 %%%%
 ##########################################################
 # adjective2, Tengu special
 ##########################################################
 insult tengu adj2
 
-hollow-boned
+속빈 새대가리
 
-feather-brained
+뇌까지 깃털로 차있는
 
-beak-witted
+부리 빼면 아무것도 아닌
 
-hen-pecked
+알이나 훔쳐먹는
 
-lightweight
+개뼈다귀 새대가리
 
-frail-limbed
+닭날개 구이로 만들어버릴
 
-bird-brained
+새대가리
 
-featherweight
+닭대가리
 
-pigeon-toed
+닭둘기 같은
 
-crow-beaked
+까마귀나 다름없는
 
-magpie-eyed
+까치눈
 
-mallardish
+치킨 튀겨 먹어버릴
 %%%%
 ##########################################################
 # adjective2, Mummy special
@@ -817,38 +795,38 @@ mallardish
 insult mummy adj2
 
 # pertaining to dryness and flammability
-desiccated
+삐쩍 마른
 
-dried
+말라 비틀어져버린
 
-musty
+저주나 받은
 
-flammable
+화장터에 화장시켜버릴
 
-inflammable
+삐쩍 말라 비틀어진
 
-ignitable
+불태워 재로 만들어버릴
 
-combustible
+방귀로 불태워버릴
 
-smouldering
+곧 불타 사라져버릴
 
 # pertaining to bandages
-shrink-wrapped
+붕대를 풀면 아무것도 없을
 
-crepe-taped
+썩은 붕대로 저주받은
 
-duct-taped
+전생에 노예나 했을
 
-fraying
+썩어빠진
 
-hand-wound
+붕대도 제대로 안 감은
 
-tightly wound
+약해빠진 미이라
 
-high-strung
+붕대 덩어리에 불과한
 
-straight-laced
+붕대 다 풀러버릴
 
 w:30
 @insult undead adj2@
@@ -858,25 +836,25 @@ w:30
 ##########################################################
 insult vampire adj2
 
-bat-flapping
+박쥐 새끼
 
-blood-sucking
+모기처럼 피나 빠는
 
-light-shying
+밝은곳은 나가지도 못하는
 
-pallid
+섬뜩한 얼굴
 
-sallow
+위병 환자
 
-cream-faced
+창백한 얼굴
 
-whey-faced
+귀신 바가지 얼굴
 
-anaemic
+만성 빈혈
 
-bloodless
+급성 빈혈
 
-exsanguinous
+마늘이나 던져줘버릴
 
 w:20
 @insult undead adj2@
@@ -886,15 +864,13 @@ w:20
 ##########################################################
 insult undead adj2
 
-deathlike
+이미 죽은
 
-lifeless
+생명없는
 
-undead
+언데드
 
-corpse-like
-
-deado
+시체나 다름없는
 %%%%
 ###############################################
 # noun of the insult
@@ -908,269 +884,209 @@ w:5
 %%%%
 insult general noun
 
-apple-john
+풋 사과
 
-baggage
+말괄량이
 
-bandersnitch
+좀도둑
 
-barnacle
+편집광
 
-beggar
+허풍선이
 
-blabberskite
+수퇘지
 
-bladder
+거지
 
-bloater
+불한당
 
-boar-pig
+도깨비
 
-bounder
+부랑자
 
-bugbear
+사기꾼
 
-bum-bailey
+시끄러운
 
-buzzard-bait
+고문관
 
-canker-blossom
+얼간이
 
-clack-dish
+겉멋쟁이
 
-clam
+음흉한
 
-clotpole
+곧 죽을
 
-Cock-Lorel
+덜떨어진
 
-coxcomb
+얼뜨기
 
-codpiece
+뜨내기
 
-crab-lanthorn
+암캐
 
-cross-patch
+경박한
 
-dandiprat
+아첨꾼
 
-deadneck
+비관주의자
 
-death-token
+응석쟁이
 
-dewberry
+똘마니
 
-dingleberry
+송사리 같은
 
-efter
+부랑아
 
-erk
+말라깽이
 
-flap-bat
+욕심쟁이
 
-flax-wench
+고집쟁이
 
-fleecer
+짐승같은
 
-flim-flammer
+강도 같은
 
-flirt-gill
+쑥맥
 
-foot-licker
+비열한
 
-frater
+구더기
 
-fustilarian
+해로운
 
-giglet
+빈약한
 
-gnoll-tail
+거지
 
-gonus
+하찮은
 
-gudgeon
+고집쟁이
 
-guttersnipe
+똥거름 장수
 
-haggard
+이름도 없는
 
-harpy
+쓰레기
 
-hedge-pig
+천치
 
-hugger-mugger
+돼지사료 같은
 
-jarkman
+곰보
 
-joithead
+종양 같은
 
-lewdster
+어중간한
 
-lout
+호박 같은
 
-maggot-pie
+쥐약 같은
 
-malt-worm
+시체청소부
 
-mammet
+애송이
 
-measle
+똥덩어리
 
-mendicant
+노예
 
-minnow reeky
+얼간뜨기
 
-mish-mash
+식구
 
-mule
+슬라임 대가리
 
-nert
+뱀 허물 같은
 
-nightsoil
+매춘부
 
-nobody
+사기꾼
 
-nothing
+방랑자
 
-pigeon-egg
+꼬맹이
 
-pignut
+장난꾸러기
 
-pimple
+악당
 
-pot-faker
+하인
 
-prigger-of-prances
+사기꾼
 
-pustule
+쓸모없는
 
-puttock
+아첨꾼
 
-pumpion
+희끄무리한
 
-ratsbane
+징그러운
 
-scavenger
+야크 똥 같은
 
-scut
+좀비 먹이 같은
 
-serf
-
-simpleton
-
-skainsmate
-
-slabber
-
-slime mold
-
-snaffler
-
-snake-molt
-
-socdollager
-
-strumpet
-
-surfacer
-
-swadder
-
-tinkerer
-
-tiddler
-
-tiler
-
-urchin
-
-varlet
-
-vassal
-
-vulture
-
-wastrel
-
-wagtail
-
-whey-face
-
-whip-jack
-
-wormtrail
-
-yak-dropping
-
-zombie-fodder
+한심한
 %%%%
 ##########################################################
 # noun, small species special
 ##########################################################
 small_food
 
-snackling
+간식거리
 
-crunchlet
+과자 한조각
 
-half-meal
+반끼
 
-supper-setting
+애피타이저
 
-snacklet
+입가심
 
-noshlet
+군것질
 
-morsel
+밥 한숟갈
 
-mug-up
+음식
 
-bite-bait
-
-crunch-chow
-
-snack-pap
-
-grub
-
-mouthful
-
-half-pint
-
-weenchy-treat
+한 모금
 %%%%
 ##########################################################
 # noun, Felid special
 ##########################################################
 insult felid noun
 
-kitten
+고양이새끼
 
-fleabag
+벼룩둥지
 
-vermin
+해충
 
-loo-gargler
+소변으로 목욕할
 
-pate-warmer
+털뭉치
 
-pander-nanny
+암코양이
 
-hissie
+울화통
 
-cooking-fat
+뒤룩뒤룩 살찐
 
-sand-tongue
+개미나 퍼먹고 다니는
 
-scamp
+천덕꾸러기
 
-fur-fop
+털복숭이
 
-toe-scratcher
+기물파손꾼
 
-filth-coat
+모피코트
 
-gob-dollager
+주둥아리
 %%%%
 ##########################################################
 # noun, Halfling special
@@ -1180,39 +1096,39 @@ insult halfling noun
 w:100
 @small_food@
 
-footstool
+발 받침대
 
-munchkin
+난쟁이
 
-side-stool
+똥덩어리
 
-pudgelet
+땅딸막이
 
-groundling
+땅꼬마
 
-burrow-snipe
+묻힌 도요새
 
-hole-bolter
+개미귀신
 
-low-roller
+콩벌레
 
-runt
+왜소한 
 
-peewee
+하찮은
 
-mimicus
+주머니쥐
 
-manikin
+인체모형
 
-hop-o-thumb
+엄지공주
 
-knee-biter
+무릎만한
 
-burrow-botch
+작아서 보이지도 않는
 
-hole-pimple
+여드름 같은
 
-hovel-pustule
+고름집
 %%%%
 ##########################################################
 # noun, Spriggan special
@@ -1222,166 +1138,164 @@ insult spriggan noun
 w:100
 @small_food@
 
-rat-rider
+쥐새끼나 타고 다니는
 
-quarter-pint
+밀리그램
 
-nissette
+모조품
 
-fizzle-flop
+주저앉은
 
-spell-botch
+주문실패 마법오염으로 작아진
 
-feeblet
+허약한
 
-weakling
+약해 빠진
 
-pinchbeck-pixie
+모조 도깨비
 
-ankle-biter
+젓가락같은
 
-bootstain
+장화 얼룩
 
-nano-nebbish
+안절부절 못하는 꼬맹이
 
-sopling
+부러진 새싹같은
 
-shrunken violet
+쪼그라든 보랏빛 면상
 
-sissy-prig
+계집아이같은 좀도둑
 
-pussyfoot
+우유부단한
 
-creepsneak
+살금살금 기는
 %%%%
 ##########################################################
 # noun, Centaur special
 ##########################################################
 insult centaur noun
 
-crock
+노새
 
-donkey
+당나귀
 
-four-legs
+네발 짐승
 
-hack
+서커스단 말대가리
 
-half-breed
+반인반수도 아니고 그냥 짐승
 
-horse-flesh
+말고기 스테이크
 
-horse meat
+말고기 덩어리
 
-horsey face
+말대가리
 
-jade
+조랑말
 
-mule
+당나귀 노새 잡종
 
-nag
+말 대가리
 
-nightmare
+악몽에서나 나올 말대가리
 
-pony
+포확찢
 %%%%
 ##########################################################
 # noun, Minotaur special
 ##########################################################
 insult minotaur noun
 
-bovine
+젖소 대가리
 
-briscut
+오늘 저녁 소고기메뉴
 
-bull-brain
+뇌속까지 뿔이 나있을
 
-cud-chewer
+되새김질 동물
 
-calf-wit
+우유나 짜내먹을
 
-cretin
+소 대가리
 
-cow
+젖소
 
-cattle
+황소
 
-horn-beast
+뿔난 괴물
 
-meatloaf
+병든 쇠고기
 
-meatball
+쇠고기 덩어리
 
-mooer
+부뚜막 송아지
 
-rump-roast
+웰던 스테이크
 
-veal
+제삿상 소머리
 
-walking sirloin
+걸어다니는 비상식량
 %%%%
 ##########################################################
 # noun, Mummy special
 ##########################################################
 insult mummy noun
 
-dustbag
+먼지가방
 
-deado
+붕대 주머니
 
-fogey
+옷주머니
 
-linensack
+무덤지기
 
-clothbag
+미라 새끼
 
-tombling
+포대기
 
-mummylet
+종이 랩
 
-shroud
+붕대 뭉치
 
-paper wrap
+거즈 덩어리
 
-roll of bandages
+텅 빈
 
-bundle of gauze
+면화 쓰레기
 
-wound roll
-
-cotton waste
-
-wrapping tissue
+휴지로 감싸진
 
 # susceptibility to fire
-pyre
+장작더미
 
-tinder
+부싯깃
+
+불쏘시개
 %%%%
 ##########################################################
 # noun, Ghoul special
 ##########################################################
 insult ghoul noun
 
-flesh wound
+썩은 살덩어리
 
-running sore
+걸어다니는 고기
 
-wreck
+구역질나는
 
-dirt collector
+먼지 수집가
 
-dust catcher
+먼지 애호가
 
-trash-dump
+쓰레기더미
 
-rubbish heap
+쓰레기 궁뎅이
 
-garbage dump
+쓰레기 뭉치
 
-walking corpse
+걸어다니는 송장
 
-corpse eater
+시체 먹는 시체
 
-scavenger
+시체 청소부
 %%%%

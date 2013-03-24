@@ -1,129 +1,125 @@
 %%%%
 Zin lastname
 
-Zin the Law-Giver
+질서를 불러오는 자, 진
 %%%%
 Yredelemnul lastname
 
-Yredelemnul the Dark
+어둠의 지배자, 이레데넴눌
 %%%%
 Okawaru lastname
 
-Warmaster Okawaru
+전쟁의 지배자, 오카와루
 %%%%
 Makhleb lastname
 
-Makhleb the Destroyer
+파괴의 화신, 마크레브
 %%%%
 Sif Muna lastname
 
-Sif Muna the Loreminder
+지식의 수호자, 시프 무나
 %%%%
 Trog lastname
 
-Trog the Wrathful
+진노하는 자, 트로그
 %%%%
 Elyvilon lastname
 
-Elyvilon the Healer
+치유하는 자, 엘리빌론
 %%%%
 Lugonu lastname
 
-Lugonu the Unformed
+심연의 지배자, 루고누
 %%%%
 Beogh lastname
 
-Beogh the Brigand
+약탈자, 베오그
 %%%%
 Fedhas lastname
 
-Fedhas Madash
+페다스 마다쉬
 %%%%
 Cheibriados lastname
 
-Cheibriados the Contemplative
+사색하는 자, 체이브리아도스
 %%%%
 Ashenzari lastname
 
-Ashenzari the Shackled
+속박된 자, 아쉔자리
 %%%%
 Xom lastname
 
 w:280
-Xom of Chaos
+혼돈의 좀
 
 w:5
-Xom the Random
+무작위의 좀
 
 w:5
-Xom the Random Number God
+난수의 좀
 
-Xom the Tricky
-
-w:5
-Xom the Less-Predictable
+교활함의 좀
 
 w:5
-Xom the Unpredictable
-
-Xom of Many Doors
-
-Xom the Capricious
+변덕스러움의 좀
 
 w:5
-Xom of Bloodstained Whimsey
+예측 불가의 좀
+
+수많은 갈림길의 좀
+
+변덕의 좀
 
 w:5
-Xom of Enforced Whimsey
-
-Xom of Bone-Dry Humour
+피로 물든 좀
 
 w:5
-Xom of Malevolent Giggling
+아이디어의 집행자 좀
+
+잔혹한 재치의 좀
 
 w:5
-Xom of Malicious Giggling
+사악한 장난의 좀
 
 w:5
-Xom the Psychotic
+악의 있는 농담의 좀
 
 w:5
-Xom the Psychopath
+광기의 좀
+
+w:5
+병질자의 좀
 
 w:2
-Xom of Gnomic Intent
+장난의 좀
 
 w:2
-Xom of Ineffable Intent
+공포의 좀
 
 w:2
-Xom of Fickle Intent
+변덕심의 좀
 
 w:2
-Xom of Swiftly Tilting Intent
+전언 철회의 좀
 
 w:2
-Xom of Unknown Intent
-
-Xom the Fickle
-
-Xom of Unknown Intention
+알 수 없는 의도의 좀
 
 w:4
-The Xom-Meister
+좀 - 메이스터
 
 w:2
-The Xom-Meister, Xom-a-lom-a-ding-dong
+좀 - 메이스터, 좀-어-롬-어-딩-동
 
 w:2
-The Xom-Meister, Xom-o-Rama
+좀 - 메이스터, 좀-오-라마
 
 w:2
-The Xom-Meister, Xom-Xom-bo-Bom, Banana-Fana-fo-Fom
+좀 - 메이스터, 좀-좀-보-봄, 바나나-파나-포-폼
 
 w:5
-Xom the Begetter of Turbulence
+소란을 가져오는 자, 좀
 
 w:5
-Xom the Begetter of Discontinuities
+무질서를 가져오는 자, 좀
 %%%%
