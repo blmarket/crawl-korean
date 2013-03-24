@@ -865,7 +865,7 @@ string wordwrap_line(string &s, int width, bool tags, bool indent)
             break;
 
         if (cw >= 0)
-            width -= cw;
+            width -= cw; // width -= ((cw > 1) ? cw - 1 : cw); 0.11과 달리 여기선 같은 길이를 빼야 하는듯.
         cp += clen;
     }
 

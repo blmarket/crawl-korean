@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-24 03:48+0900\n"
+"POT-Creation-Date: 2013-03-24 20:12+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -8030,13 +8030,13 @@ msgstr "전기"
 #: terrain.cc:1478 mon-stuff.cc:3904 player.cc:273 terrain.cc:1427
 #: mon-stuff.cc:3928 terrain.cc:1428 mon-util.cc:3619 mon-stuff.cc:3970
 #: player.cc:250 terrain.cc:1342 mon-util.cc:3810 main.cc:4204
-#: mon-util.cc:3782 player.cc:251
+#: mon-util.cc:3782 player.cc:251 main.cc:4209
 msgid "lava"
 msgstr "용암"
 
 #: player.cc:271 main.cc:4033 main.cc:4033 main.cc:4035 main_backup.cc:4036
 #: main.cc:4069 player.cc:270 player.cc:273 player.cc:250 main.cc:4204
-#: player.cc:251
+#: player.cc:251 main.cc:4209
 msgid "deep water"
 msgstr "깊은 물"
 
@@ -11460,6 +11460,8 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT

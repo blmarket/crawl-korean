@@ -19,9 +19,9 @@
 #include "options.h"
 
 // maximum number of unique glyphs that can be rendered with this font at once; e.g. 4096, 256, 36
-#define MAX_GLYPHS 256
+#define MAX_GLYPHS 1024
 // dimensions of glyph grid; GLYPHS_PER_ROWCOL^2 <= MAX_GLYPHS; e.g. 64, 16, 6
-#define GLYPHS_PER_ROWCOL 16
+#define GLYPHS_PER_ROWCOL 32
 // char to use if we can't find it in the font (upside-down question mark)
 #define MISSING_CHAR 0xbf
 
@@ -526,9 +526,10 @@ unsigned int FTFontWrapper::string_width(const char *text)
 
     unsigned int width = base_width;
     unsigned int adjust = 0;
-    for (const unsigned char *itr = (unsigned const char *)text; *itr; itr++)
+	ucs_t cc;
+	for (const char *tp = text; int s = utf8towc(&cc, tp); tp += s)  // for (const unsigned char *itr = (unsigned const char *)text; *itr; itr++) 
     {
-        if (*itr == '\n')
+        if (cc == '\n') // if (*itr == '\n')
         {
             max_width = max(width + adjust, max_width);
             width = base_width;
@@ -536,7 +537,7 @@ unsigned int FTFontWrapper::string_width(const char *text)
         }
         else
         {
-            unsigned int c = map_unicode(*itr);
+            unsigned int c = map_unicode(cc); // unsigned int c = map_unicode(*itr);
             width += m_glyphs[c].advance;
             adjust = max(0, m_glyphs[c].width - m_glyphs[c].advance);
         }
@@ -641,7 +642,7 @@ void FTFontWrapper::render_string(unsigned int px, unsigned int py,
     {
         int w = wcwidth(c);
         if (w != -1)
-            cols += w;
+            cols++; // cols += w;
         max_cols = max(cols, max_cols);
 
         // NOTE: only newlines should be used for tool tips.  Don't use EOL.
@@ -671,8 +672,8 @@ void FTFontWrapper::render_string(unsigned int px, unsigned int py,
         {
             chars[cols + rows * max_cols] = c;
             cols++;
-            if (w == 2)
-                chars[cols + rows * max_cols] = ' ', cols++;
+            //if (w == 2)
+            //    chars[cols + rows * max_cols] = ' ', cols++;
         }
 
         if (c == '\n')
