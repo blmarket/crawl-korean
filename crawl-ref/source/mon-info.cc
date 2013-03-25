@@ -813,15 +813,15 @@ string monster_info::_core_name() const
         {
         case MONS_SLIME_CREATURE:
             ASSERT(number <= 5);
-            s = slime_sizes[number] + s;
+            if(number != 1) s = _(slime_sizes[number]) + s;
             break;
         case MONS_UGLY_THING:
         case MONS_VERY_UGLY_THING:
-            s = ugly_thing_colour_name(colour) + " " + s;
+            s = _(ugly_thing_colour_name(colour).c_str()) + std::string(" ") + s;
             break;
 
         case MONS_LABORATORY_RAT:
-            s = adjective_for_labrat_colour(colour) + " " + s;
+            s = _(adjective_for_labrat_colour(colour).c_str()) + std::string(" ") + s;
             break;
 
         case MONS_DRACONIAN_CALLER:
@@ -832,7 +832,7 @@ string monster_info::_core_name() const
         case MONS_DRACONIAN_KNIGHT:
         case MONS_DRACONIAN_SCORCHER:
             if (base_type != MONS_NO_MONSTER)
-                s = draconian_colour_name(base_type) + " " + s;
+                s = _(draconian_colour_name(base_type).c_str()) + std::string(" ") + s;
             break;
 
         case MONS_DANCING_WEAPON:

@@ -2819,7 +2819,7 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
 
     if (player_will_anger_monster(mon))
     {
-        simple_monster_message(mon, " is repulsed!");
+        simple_monster_message(mon, _(" is repulsed!"));
         return;
     }
 
@@ -2828,7 +2828,7 @@ static void _mercenary_card(int power, deck_rarity_type rarity)
     {
         mprf(_("You cannot afford %s fee of %d gold!"),
              mon->name(DESC_ITS).c_str(), fee);
-        simple_monster_message(mon, " attacks!");
+        simple_monster_message(mon, _(" attacks!"));
         return;
     }
 
@@ -2843,7 +2843,7 @@ bool recruit_mercenary(int mid)
         return true; // wut?
 
     int fee = mon->props["mercenary_fee"].get_int();
-    const string prompt = make_stringf("Pay %s fee of %d gold?",
+    const string prompt = make_stringf(_("Pay %s fee of %d gold?"),
                                        mon->name(DESC_ITS).c_str(), fee);
     bool paid = yesno(prompt.c_str(), false, 0);
     if (crawl_state.seen_hups)
@@ -2852,11 +2852,11 @@ bool recruit_mercenary(int mid)
     mon->props.erase("mercenary_fee");
     if (!paid)
     {
-        simple_monster_message(mon, " attacks!");
+        simple_monster_message(mon, _(" attacks!"));
         return true;
     }
 
-    simple_monster_message(mon, " joins your ranks!");
+    simple_monster_message(mon, _(" joins your ranks!"));
     mon->attitude = ATT_FRIENDLY;
     mons_att_changed(mon);
     you.del_gold(fee);

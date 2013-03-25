@@ -825,7 +825,7 @@ menu_letter InvMenu::load_items(const vector<const item_def*> &mitems,
 
         if (type != MT_RUNES)
         {
-            string subtitle = item_class_name(i);
+            string subtitle = _(item_class_name(i).c_str());
 
             // Mention the class selection shortcuts.
             if (is_set(MF_MULTISELECT) && inv_class[i] > 1)
@@ -1800,13 +1800,16 @@ bool check_warning_inscriptions(const item_def& item,
         }
 
         string prompt = pgettext("invent","Really ") + _operation_verb(oper) + " ";
-        prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
-                                      : item.name(true, DESC_PLAIN));
+        //prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
+        //                              : item.name(true, DESC_PLAIN));
         if (_nasty_stasis(item, oper))
             prompt += string(pgettext("invent"," while "))
                       + (you.duration[DUR_TELEPORT] ? pgettext("invent","about to teleport") :
                          you.duration[DUR_SLOW] ? pgettext("invent","slowed") : pgettext("invent","hasted"));
-        prompt += "?";
+        //prompt += "?";
+		prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
+                                      : item.name(true, DESC_PLAIN)) + _operation_verb(oper);
+		prompt += _operation_verb(oper) + "?";
         return (yesno(prompt.c_str(), false, 'n')
                 && check_old_item_warning(item, oper));
     }

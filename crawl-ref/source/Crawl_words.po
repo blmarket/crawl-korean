@@ -1030,7 +1030,7 @@ msgstr "붉은 등 거미"
 #: mon-data.h:1994 mon-data.h:1995 mon-data.h:2030 mon-data.h:1983
 #: mon-data.h:1997
 msgid "demonic crawler"
-msgstr "지네의 악마"
+msgstr "악마 지네"
 
 #: mon-data.h:2008 mon-data.h:2009 mon-data.h:2044 mon-data.h:2010
 #: mon-data.h:2024
@@ -1309,12 +1309,12 @@ msgstr "얼룩무늬 용"
 #: mon-data.h:2701 mon-data.h:2702 mon-data.h:2776 mon-data.h:2783
 #: mon-data.h:2835 mon-data.h:2871
 msgid "quicksilver dragon"
-msgstr "수은의 용"
+msgstr "수은 용"
 
 #: mon-data.h:2713 mon-data.h:2714 mon-data.h:2788 mon-data.h:2795
 #: mon-data.h:2847 mon-data.h:2883
 msgid "iron dragon"
-msgstr "철의 용"
+msgstr "강철 용"
 
 #: mon-data.h:2726 mon-data.h:2727 mon-data.h:2801 mon-data.h:2808
 #: mon-data.h:2861 mon-data.h:2897
@@ -1344,22 +1344,22 @@ msgstr "진주 용"
 #: mon-data.h:2792 mon-data.h:2793 mon-data.h:2867 mon-data.h:2886
 #: mon-data.h:2939 mon-data.h:2975
 msgid "earth elemental"
-msgstr "대지의 정령"
+msgstr "대지 정령"
 
 #: mon-data.h:2804 mon-data.h:2805 mon-data.h:2879 mon-data.h:2898
 #: mon-data.h:2951 mon-data.h:2987
 msgid "fire elemental"
-msgstr "불의 정령"
+msgstr "불 정령"
 
 #: mon-data.h:2816 mon-data.h:2817 mon-data.h:2891 mon-data.h:2910
 #: mon-data.h:2963 mon-data.h:2999
 msgid "water elemental"
-msgstr "물의 정령"
+msgstr "물 정령"
 
 #: mon-data.h:2828 mon-data.h:2829 mon-data.h:2903 mon-data.h:2922
 #: mon-data.h:2975 mon-data.h:3011
 msgid "air elemental"
-msgstr "대기의 정령"
+msgstr "대기 정령"
 
 #: mon-data.h:2840 mon-data.h:2841 mon-data.h:2915 mon-data.h:2934
 #: mon-data.h:2987 mon-data.h:3023
@@ -1418,7 +1418,7 @@ msgstr "파괴의 눈"
 #: mon-data.h:2979 mon-data.h:2968 mon-data.h:3042 mon-data.h:3061
 #: mon-data.h:3114 mon-data.h:3150
 msgid "golden eye"
-msgstr "황금의 눈"
+msgstr "황금 눈"
 
 #: mon-data.h:2991 mon-data.h:2980 mon-data.h:3054 mon-data.h:3073
 #: mon-data.h:3126 mon-data.h:3162
@@ -1546,7 +1546,7 @@ msgstr "리치"
 #: mon-data.h:3308 mon-data.h:3297 mon-data.h:3371 mon-data.h:3390
 #: mon-data.h:3443 mon-data.h:3479
 msgid "ancient lich"
-msgstr "고대의 리치"
+msgstr "고대 리치"
 
 #: mon-data.h:3321 mon-data.h:3310 mon-data.h:3384 mon-data.h:3403
 #: mon-data.h:3456 mon-data.h:3492
@@ -1565,7 +1565,7 @@ msgstr "미라 수호자"
 #: mon-data.h:3358 mon-data.h:3347 mon-data.h:3421 mon-data.h:3427
 #: mon-data.h:3480 mon-data.h:3516
 msgid "greater mummy"
-msgstr "고대의 미라"
+msgstr "고대 미라"
 
 #: mon-data.h:3370 mon-data.h:3359 mon-data.h:3433 mon-data.h:3439
 #: mon-data.h:3492 mon-data.h:3528
@@ -1743,7 +1743,7 @@ msgstr "어둠에 잠긴 망령"
 #: mon-data.h:3830 mon-data.h:3819 mon-data.h:3881 mon-data.h:3906
 #: mon-data.h:3999 mon-data.h:4035
 msgid "freezing wraith"
-msgstr "냉기의 레이쓰"
+msgstr "냉기 망령"
 
 #: mon-data.h:3842 mon-data.h:3831 mon-data.h:3893 mon-data.h:3918
 #: mon-data.h:4011 mon-data.h:4047
@@ -2056,7 +2056,7 @@ msgstr "우페터버스"
 #: mon-data.h:4636 mon-data.h:4625 mon-data.h:4581 mon-data.h:4694
 #: mon-data.h:4901 mon-data.h:4937
 msgid "iron imp"
-msgstr "철의 임프"
+msgstr "철 임프"
 
 #: mon-data.h:4648 mon-data.h:4637 mon-data.h:4593
 msgid "midge"
@@ -2242,17 +2242,17 @@ msgstr "벼락 골렘"
 #: mon-data.h:5135 mon-data.h:5147 mon-data.h:5136 mon-data.h:5093
 #: mon-data.h:5181 mon-data.h:5375 mon-data.h:5411
 msgid "ice statue"
-msgstr "얼음의 상"
+msgstr "얼음상"
 
 #: mon-data.h:5147 mon-data.h:5159 mon-data.h:5148 mon-data.h:5105
 #: mon-data.h:5193 mon-data.h:5387 mon-data.h:5423
 msgid "silver statue"
-msgstr "은의 상"
+msgstr "은상"
 
 #: mon-data.h:5159 mon-data.h:5171 mon-data.h:5160 mon-data.h:5117
 #: mon-data.h:5205 mon-data.h:5399 mon-data.h:5435
 msgid "orange crystal statue"
-msgstr "주황빛 수정의 상"
+msgstr "주황빛 수정상"
 
 #. always redefined
 #. always redefined
@@ -2285,7 +2285,7 @@ msgstr "금속 가고일"
 #: mon-data.h:5246 mon-data.h:5258 mon-data.h:5247 mon-data.h:5204
 #: mon-data.h:5292 mon-data.h:5498 mon-data.h:5534
 msgid "molten gargoyle"
-msgstr "용암의 가고일"
+msgstr "용암 가고일"
 
 #: mon-data.h:5261 mon-data.h:5273 mon-data.h:5262 kills.cc:486
 #: mon-data.h:5219 mon-data.h:5307 mon-data.h:5513 mon-data.h:5549
@@ -2662,7 +2662,7 @@ msgstr "살인자 피에로"
 
 #: mon-data.h:4920 mon-data.h:4909
 msgid "Lorocyproca"
-msgstr "로롤시프로카"
+msgstr "롤로시프로카"
 
 #: mon-data.h:4933 mon-data.h:4922
 msgid "Fiend"
@@ -3139,7 +3139,7 @@ msgstr "주술"
 #: status.cc:60 itemname.cc:1003 spl-util.cc:901 itemname.cc:935
 #: spl-util.cc:857 itemname.cc:974 spl-util.cc:849
 msgid "Fire"
-msgstr "불의 마술"
+msgstr "화염 마술"
 
 #. / 마법 학파로서의 Ice
 #. / 마법 학파로서의 Ice
@@ -3148,7 +3148,7 @@ msgstr "불의 마술"
 #: itemname.cc:936 spl-util.cc:859 status.cc:883 itemname.cc:975
 #: spl-util.cc:851 status.cc:862
 msgid "Ice"
-msgstr "얼음의 마술"
+msgstr "얼음 마술"
 
 #: spl-util.cc:907 spl-util.cc:907 spl-util.cc:906 spl-util.cc:861
 #: spl-util.cc:853
@@ -3186,14 +3186,14 @@ msgstr "전이술"
 #: spl-util.cc:920 spl-util.cc:920 spl-util.cc:919 spl-util.cc:871
 #: spl-util.cc:863
 msgid "Poison"
-msgstr "독의 마술"
+msgstr "독 마술"
 
 #. / 마법 학파로서의 Earth
 #. / 마법 학파로서의 Earth
 #: spl-util.cc:923 spl-util.cc:923 spl-util.cc:922 spl-util.cc:873
 #: spl-util.cc:865
 msgid "Earth"
-msgstr "땅의 마술"
+msgstr "대지 마술"
 
 #. / 마법 학파로서의 Air
 #. / 마법 학파로서의 Air
@@ -3201,7 +3201,7 @@ msgstr "땅의 마술"
 #: itemname.cc:1017 spl-util.cc:925 itemname.cc:949 spl-util.cc:875
 #: itemname.cc:988 spl-util.cc:867
 msgid "Air"
-msgstr "바람의 마술"
+msgstr "바람 마술"
 
 #: spl-util.cc:928 spl-util.cc:928 spl-util.cc:927 spl-util.cc:877
 #: spl-util.cc:869
@@ -3545,42 +3545,42 @@ msgstr "순간이동"
 #: abl-show.cc:254 abl-show.cc:254 abl-show.cc:255 abl-show.cc:256
 #: abl-show.cc:201 abl-show.cc:206
 msgid "Breathe Fire"
-msgstr "화염의 숨결"
+msgstr "화염 숨결"
 
 #: abl-show.cc:255 abl-show.cc:255 abl-show.cc:256 abl-show.cc:257
 #: abl-show.cc:202 abl-show.cc:207
 msgid "Breathe Frost"
-msgstr "냉기의 숨결"
+msgstr "냉기 숨결"
 
 #: abl-show.cc:256 abl-show.cc:256 abl-show.cc:257 abl-show.cc:258
 #: abl-show.cc:203 abl-show.cc:208
 msgid "Breathe Poison Gas"
-msgstr "독소의 숨결"
+msgstr "독소 숨결"
 
 #: abl-show.cc:257 abl-show.cc:257 abl-show.cc:258 abl-show.cc:260
 #: abl-show.cc:205 abl-show.cc:210
 msgid "Breathe Noxious Fumes"
-msgstr "독구름의 숨결"
+msgstr "독구름 숨결"
 
 #: abl-show.cc:259 abl-show.cc:259 abl-show.cc:260 abl-show.cc:262
 #: abl-show.cc:207 abl-show.cc:212
 msgid "Breathe Lightning"
-msgstr "번개의 숨결"
+msgstr "번개 숨결"
 
 #: abl-show.cc:261 abl-show.cc:261 abl-show.cc:262 abl-show.cc:264
 #: abl-show.cc:209
 msgid "Breathe Energy"
-msgstr "마력의 숨결"
+msgstr "마력 숨결"
 
 #: abl-show.cc:262 abl-show.cc:262 abl-show.cc:263 abl-show.cc:265
 #: abl-show.cc:210 abl-show.cc:215
 msgid "Breathe Sticky Flame"
-msgstr "끈적이는 화염의 숨결"
+msgstr "끈적이는 화염 숨결"
 
 #: abl-show.cc:264 abl-show.cc:264 abl-show.cc:265 abl-show.cc:267
 #: abl-show.cc:212 abl-show.cc:217
 msgid "Breathe Steam"
-msgstr "증기의 숨결"
+msgstr "증기 숨결"
 
 #: abl-show.cc:265 abl-show.cc:265 abl-show.cc:266 abl-show.cc:268
 #: abl-show.cc:213 abl-show.cc:218
@@ -9467,7 +9467,7 @@ msgstr "변이의 지배자"
 
 #: skills2.cc:104 skills2.cc:101
 msgid "Fire Magic"
-msgstr "불의 마술"
+msgstr "화염 마술"
 
 #: skills2.cc:104 skills2.cc:101
 msgid "Firebug"
@@ -9491,7 +9491,7 @@ msgstr "겁화를 짊어진 자"
 
 #: skills2.cc:105 skills2.cc:102
 msgid "Ice Magic"
-msgstr "얼음의 마술"
+msgstr "냉기 마술"
 
 #: skills2.cc:105 skills2.cc:102
 msgid "Chiller"
@@ -9515,7 +9515,7 @@ msgstr "빙하의 창조자"
 
 #: skills2.cc:106 skills2.cc:103
 msgid "Air Magic"
-msgstr "바람의 마술"
+msgstr "바람 마술"
 
 #: skills2.cc:106 skills2.cc:103
 msgid "Gusty"
@@ -9540,7 +9540,7 @@ msgstr "폭풍우의 눈"
 
 #: skills2.cc:107 skills2.cc:104
 msgid "Earth Magic"
-msgstr "땅의 마술"
+msgstr "대지 마술"
 
 #: skills2.cc:107 skills2.cc:104
 msgid "Digger"
@@ -9564,7 +9564,7 @@ msgstr "대지를 뒤흔드는 자"
 
 #: skills2.cc:108 skills2.cc:105
 msgid "Poison Magic"
-msgstr "독의 마술"
+msgstr "독 마술"
 
 #: skills2.cc:108 skills2.cc:105
 msgid "Stinger"
@@ -9699,7 +9699,7 @@ msgstr "천벌의 일격"
 
 #: spl-data.h:118
 msgid "Conjure Flame"
-msgstr "불기둥의 방출"
+msgstr "불기둥 방출"
 
 #: spl-data.h:131
 msgid "Dig"
@@ -9707,19 +9707,19 @@ msgstr "굴착"
 
 #: spl-data.h:144
 msgid "Bolt of Fire"
-msgstr "맹화의 화살"
+msgstr "맹화 화살"
 
 #: spl-data.h:157
 msgid "Bolt of Cold"
-msgstr "동결의 화살"
+msgstr "동결 화살"
 
 #: spl-data.h:170
 msgid "Lightning Bolt"
-msgstr "번개의 화살"
+msgstr "번개 화살"
 
 #: spl-data.h:183
 msgid "Bolt of Magma"
-msgstr "용암의 화살"
+msgstr "용암 화살"
 
 #: spl-data.h:196
 msgid "Polymorph Other"
@@ -9747,11 +9747,11 @@ msgstr "제어 순간이동"
 
 #: spl-data.h:316 spl-data.h:329
 msgid "Freezing Cloud"
-msgstr "냉기의 구름"
+msgstr "냉기 구름"
 
 #: spl-data.h:329 spl-data.h:342
 msgid "Mephitic Cloud"
-msgstr "악취의 구름"
+msgstr "악취 구름"
 
 #: spl-data.h:342 spl-data.h:355
 msgid "Ring of Flames"
@@ -9759,7 +9759,7 @@ msgstr "불꽃의 고리"
 
 #: spl-data.h:355 spl-data.h:368
 msgid "Venom Bolt"
-msgstr "독액의 화살"
+msgstr "독액 화살"
 
 #: spl-data.h:368 spl-data.h:381
 msgid "Olgreb's Toxic Radiance"
@@ -9775,7 +9775,7 @@ msgstr "죽음의 아가리"
 
 #: spl-data.h:407 spl-data.h:420
 msgid "Mass Confusion"
-msgstr "집단의 혼란"
+msgstr "집단 혼란"
 
 #: spl-data.h:433 spl-data.h:446
 msgid "Summon Small Mammals"
@@ -9795,7 +9795,7 @@ msgstr "공중부양"
 
 #: spl-data.h:485 spl-data.h:500 spl-data.h:498
 msgid "Bolt of Draining"
-msgstr "흡성의 화살"
+msgstr "흡성 화살"
 
 #: spl-data.h:498 spl-data.h:513 spl-data.h:511
 msgid "Lehudib's Crystal Spear"
@@ -9807,11 +9807,11 @@ msgstr "부정확의 화살"
 
 #: spl-data.h:537 spl-data.h:552 spl-data.h:550
 msgid "Poisonous Cloud"
-msgstr "맹독의 구름"
+msgstr "맹독 구름"
 
 #: spl-data.h:550 spl-data.h:565 spl-data.h:563
 msgid "Fire Storm"
-msgstr "불꽃의 폭풍우"
+msgstr "불꽃 폭풍우"
 
 #: spl-data.h:563 spl-data.h:578 spl-data.h:576
 msgid "Hellfire Burst"
@@ -9855,11 +9855,11 @@ msgstr "흡혈의 손길"
 
 #: spl-data.h:787 spl-data.h:789 spl-data.h:760 spl-data.h:773
 msgid "Haunt"
-msgstr "악령의 소집"
+msgstr "악령 소집"
 
 #: spl-data.h:800 spl-data.h:802
 msgid "Detect Items"
-msgstr "아이템의 탐지"
+msgstr "아이템 탐지"
 
 #: spl-data.h:813 spl-data.h:815 spl-data.h:773 spl-data.h:786
 msgid "Borgnjor's Revivification"
@@ -9903,15 +9903,15 @@ msgstr "광폭화"
 
 #: spl-data.h:943 spl-data.h:945 spl-data.h:903 spl-data.h:930
 msgid "Dispel Undead"
-msgstr "언데드의 말살"
+msgstr "언데드 말살"
 
 #: spl-data.h:956 spl-data.h:958 spl-data.h:916 spl-data.h:944
 msgid "Fulsome Distillation"
-msgstr "독물의 추출"
+msgstr "독물 추출"
 
 #: spl-data.h:969 spl-data.h:971 spl-data.h:929 spl-data.h:958
 msgid "Poison Arrow"
-msgstr "맹독의 화살"
+msgstr "맹독 화살"
 
 #: spl-data.h:982 spl-data.h:984 spl-data.h:942 spl-data.h:971
 msgid "Twisted Resurrection"
@@ -9957,7 +9957,7 @@ msgstr "악마 소환"
 #: spl-data.h:1101 spl-data.h:1103 spl-data.h:1048 spl-data.h:1076
 #: spl-data.h:1078
 msgid "Demonic Horde"
-msgstr "작은 악마의 무리"
+msgstr "작은 악마들의 무리"
 
 #: spl-data.h:1114 spl-data.h:1116 spl-data.h:1061 spl-data.h:1089
 #: spl-data.h:1091
@@ -9972,12 +9972,12 @@ msgstr "시체의 부식"
 #: spl-data.h:1140 spl-data.h:1142 spl-data.h:1087 spl-data.h:1115
 #: spl-data.h:1117
 msgid "Fire Brand"
-msgstr "화염의 무기"
+msgstr "화염속성 부여"
 
 #: spl-data.h:1153 spl-data.h:1155 spl-data.h:1100 spl-data.h:1128
 #: spl-data.h:1130
 msgid "Freezing Aura"
-msgstr "동결의 무기"
+msgstr "동결속성 부여"
 
 #: spl-data.h:1166 spl-data.h:1168 spl-data.h:1113 spl-data.h:1141
 #: spl-data.h:1143
@@ -9987,16 +9987,16 @@ msgstr "죽음의 장전"
 #: spl-data.h:1179 spl-data.h:1181 spl-data.h:1126 spl-data.h:1154
 #: spl-data.h:1156
 msgid "Iron Shot"
-msgstr "철괴의 화살"
+msgstr "강철 화살"
 
 #: spl-data.h:1192 spl-data.h:1194 spl-data.h:1139 spl-data.h:1167
 #: spl-data.h:1169
 msgid "Stone Arrow"
-msgstr "암석의 화살"
+msgstr "암석 화살"
 
 #: spl-data.h:1206 spl-data.h:1208
 msgid "Stonemail"
-msgstr "암석의 갑옷"
+msgstr "암석 갑옷"
 
 #: spl-data.h:1220 spl-data.h:1222 spl-data.h:1152 spl-data.h:1180
 #: spl-data.h:1182
@@ -10006,7 +10006,7 @@ msgstr "전격"
 #: spl-data.h:1233 spl-data.h:1235 spl-data.h:1165 spl-data.h:1193
 #: spl-data.h:1195
 msgid "Swiftness"
-msgstr "쾌속의 다리"
+msgstr "재빠른 다리"
 
 #: spl-data.h:1259 spl-data.h:1261 spl-data.h:1191 spl-data.h:1220
 #: spl-data.h:1222
@@ -10015,12 +10015,12 @@ msgstr "절연화"
 
 #: spl-data.h:1272 spl-data.h:1274
 msgid "Detect Creatures"
-msgstr "몬스터의 탐지"
+msgstr "몬스터 탐지"
 
 #: spl-data.h:1285 spl-data.h:1287 spl-data.h:1204 spl-data.h:1234
 #: spl-data.h:1236
 msgid "Cure Poison"
-msgstr "독의 치료"
+msgstr "해독"
 
 #: spl-data.h:1298 spl-data.h:1300 spl-data.h:1217 spl-data.h:1247
 #: spl-data.h:1249
@@ -10030,11 +10030,11 @@ msgstr "제어 공간이동"
 #: spl-data.h:1311 spl-data.h:1313 spl-data.h:1230 spl-data.h:1260
 #: spl-data.h:1262
 msgid "Poison Weapon"
-msgstr "맹독의 무기"
+msgstr "맹독속성 부여"
 
 #: spl-data.h:1339 spl-data.h:1341 spl-data.h:1244
 msgid "Projected Noise"
-msgstr "소음의 방출"
+msgstr "소음 방출"
 
 #: spl-data.h:1380 spl-data.h:1382 spl-data.h:1271 spl-data.h:1286
 #: status.cc:540 spl-data.h:1288
@@ -10049,7 +10049,7 @@ msgstr "고문"
 #: spl-data.h:1367 spl-data.h:1369 spl-data.h:1258 spl-data.h:1273
 #: spl-data.h:1275
 msgid "Debugging Ray"
-msgstr "디버그의 광선"
+msgstr "디버그 광선"
 
 #: spl-data.h:1419 spl-data.h:1421 spl-data.h:1310 spl-data.h:1325
 #: spl-data.h:1327
@@ -10099,12 +10099,12 @@ msgstr "원거리 공격의 저지"
 #: spl-data.h:1537 spl-data.h:1539 spl-data.h:1428 spl-data.h:1443
 #: spl-data.h:1445
 msgid "Throw Icicle"
-msgstr "고드름의 투사"
+msgstr "고드름 투사"
 
 #: spl-data.h:1550 spl-data.h:1552 spl-data.h:1441 spl-data.h:1456
 #: spl-data.h:1458
 msgid "Ice Storm"
-msgstr "빙결의 폭풍우"
+msgstr "빙결 폭풍우"
 
 #: spl-data.h:1563 spl-data.h:1565 spl-data.h:1454 spl-data.h:1469
 #: spl-data.h:1471
@@ -10144,7 +10144,7 @@ msgstr "독의 연소"
 #: spl-data.h:1654 spl-data.h:1656 spl-data.h:1545 spl-data.h:1560
 #: spl-data.h:1562
 msgid "Sticks to Snakes"
-msgstr "나무토막의 뱀"
+msgstr "나무토막 뱀"
 
 #: spl-data.h:1667 spl-data.h:1669 spl-data.h:1558 spl-data.h:1573
 #: spl-data.h:1575
@@ -10237,7 +10237,7 @@ msgstr "맥스웰의 은망치"
 #: spl-data.h:1914 spl-data.h:1907 spl-data.h:1779 spl-data.h:1798
 #: spl-data.h:1800
 msgid "Condensation Shield"
-msgstr "응결의 방패"
+msgstr "응결 방패"
 
 #: spl-data.h:1927 spl-data.h:1920 spl-data.h:1792 spl-data.h:1811
 #: spl-data.h:1813
@@ -10252,12 +10252,12 @@ msgstr "환상"
 #: spl-data.h:1953 spl-data.h:1946 spl-data.h:1818 spl-data.h:1837
 #: spl-data.h:1839
 msgid "Conjure Ball Lightning"
-msgstr "번개의 구체"
+msgstr "번개 구체"
 
 #: spl-data.h:1966 spl-data.h:1959 spl-data.h:1831 spl-data.h:1850
 #: spl-data.h:1852
 msgid "Chain Lightning"
-msgstr "번개의 사슬"
+msgstr "번개 사슬"
 
 #: spl-data.h:1979 spl-data.h:1972 spl-data.h:1844 spl-data.h:1863
 #: spl-data.h:1865
@@ -10267,7 +10267,7 @@ msgstr "고통의 상처"
 #: spl-data.h:1992 spl-data.h:1985 spl-data.h:1857 spl-data.h:1876
 #: spl-data.h:1878
 msgid "Portal Projectile"
-msgstr "투사체의 전이"
+msgstr "투사체 전이"
 
 #: spl-data.h:2005 spl-data.h:1998 spl-data.h:1870 spl-data.h:1889
 #: spl-data.h:1891
@@ -10307,7 +10307,7 @@ msgstr "레다의 용해술"
 #: spl-data.h:2958 spl-data.h:2951 spl-data.h:2825 spl-data.h:2831
 #: spl-data.h:2833
 msgid "Petrifying Cloud"
-msgstr "석화의 구름"
+msgstr "석화 구름"
 
 #: spl-data.h:2971 spl-data.h:2964 spl-data.h:2838 spl-data.h:2844
 #: spl-data.h:2846

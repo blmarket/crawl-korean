@@ -219,7 +219,7 @@ spret_type brand_weapon(brand_type which_brand, int power, bool fail)
         break;
 
     case SPWPN_RETURNING:
-        msg += _(" wiggles in your ") + std::string(_(you.hand_name(false).c_str())) + pgettext("wpnench",".");
+        msg += _(" wiggles in your ") + std::string(_(you.hand_name(false).c_str())) + pgettext("wpnenchbrand",".");
         duration_affected = 5;
         break;
 

@@ -3117,15 +3117,15 @@ void read_scroll(int slot)
         break;
 
     case SCR_ENCHANT_WEAPON_I:
-        _handle_enchant_weapon(1, 0, "green");
+        _handle_enchant_weapon(1, 0, _(M_("green")));
         break;
 
     case SCR_ENCHANT_WEAPON_II:
-        _handle_enchant_weapon(0, 1, "red");
+        _handle_enchant_weapon(0, 1, _(M_("red")));
         break;
 
     case SCR_ENCHANT_WEAPON_III:
-        _handle_enchant_weapon(1 + random2(2), 1 + random2(2), "bright yellow");
+        _handle_enchant_weapon(1 + random2(2), 1 + random2(2), _(M_("bright yellow")));
         break;
 
     case SCR_VORPALISE_WEAPON:

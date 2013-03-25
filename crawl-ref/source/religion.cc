@@ -532,7 +532,7 @@ string get_god_likes(god_type which_god, bool verbose)
     if (which_god == GOD_NO_GOD || which_god == GOD_XOM)
         return "";
 
-    string text = uppercase_first(god_name(which_god));
+    string text = uppercase_first(_(god_name(which_god).c_str()));
     vector<string> likes;
     vector<string> really_likes;
 
@@ -808,7 +808,7 @@ string get_god_likes(god_type which_god, bool verbose)
         if (!really_likes.empty())
         {
             text += " 또한, ";
-            text += uppercase_first(god_name(which_god));
+            text += uppercase_first(_(god_name(which_god).c_str()));
 
             text += "은(는) 특히 ";
             text += comma_separated_line(really_likes.begin(),
@@ -951,7 +951,7 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
 
     if (!dislikes.empty())
     {
-        text += uppercase_first(god_name(which_god));
+        text += uppercase_first(_(god_name(which_god).c_str()));
         text += "은(는) ";
         text += comma_separated_line(dislikes.begin(), dislikes.end(),
                                      " 또는 ", ", ");
@@ -963,7 +963,7 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
 
     if (!really_dislikes.empty())
     {
-        text += uppercase_first(god_name(which_god));
+        text += uppercase_first(_(god_name(which_god).c_str()));
         text += "은(는) 특히, ";
                 text += comma_separated_line(really_dislikes.begin(),
                                              really_dislikes.end(),
@@ -4076,7 +4076,7 @@ void handle_god_time()
 // yet another wrapper for mpr() {dlb}:
 void simple_god_message(const char *event, god_type which_deity)
 {
-    string msg = uppercase_first(god_name(which_deity)) + event;
+    string msg = uppercase_first(_(god_name(which_deity).c_str())) + event;
     msg = apostrophise_fixup(msg);
     god_speaks(which_deity, msg.c_str());
 }
@@ -4517,7 +4517,7 @@ static void _place_delayed_monsters()
 
             // Fake its coming from simple_god_message().
             if (msg[0] == ' ' || msg[0] == '\'')
-                msg = uppercase_first(god_name(mg.god)) + msg;
+                msg = uppercase_first(_(god_name(mg.god).c_str())) + msg;
 
             msg = apostrophise_fixup(msg);
             trim_string(msg);

@@ -523,7 +523,7 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
             // FIXME: I don't know about plu enums
             if (crawlie->type == old_type)
                 mprf(_("Two %s merge%s%s."),
-                     pluralise(PLU_DEFAULT, crawlie->name(DESC_PLAIN)).c_str(),
+                     pluralise(PLU_MON_SUFFIX, crawlie->name(DESC_PLAIN)).c_str(),
                      changed ? _(" to form ") : "",
                      changed ? merge_to->name(DESC_PLAIN).c_str() : "");
             else
@@ -537,7 +537,7 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
         {
             mprf(_("%s suddenly becomes %s."),
                  uppercase_first(old_name).c_str(),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
         else
             mprf(_("%s twists grotesquely."), merge_to->name(DESC_PLAIN).c_str());

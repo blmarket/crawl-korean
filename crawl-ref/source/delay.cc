@@ -1693,7 +1693,7 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         return false;
     else
     {
-        string text = mon->full_name(DESC_A);
+        string text = mon->full_name(DESC_PLAIN);
         if (mon->type == MONS_PLAYER_GHOST)
         {
             text += make_stringf(" (%s)",
@@ -1746,10 +1746,10 @@ static inline bool _monster_warning(activity_interrupt_type ai,
         if (!mweap.empty())
         {
             if (ash_id)
-                ash_warning = "Ashenzari warns you:";
+                ash_warning = _("Ashenzari warns you:");
 
             (ash_id ? ash_warning : text) +=
-                " " + uppercase_first(mon->pronoun(PRONOUN_SUBJECTIVE)) + " is"
+                " " + uppercase_first(mon->pronoun(PRONOUN_SUBJECTIVE)) + "의 "
                 + mweap + ".";
         }
 

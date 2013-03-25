@@ -1922,7 +1922,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
     // One plural to rule them all.
     if (need_plural && quantity > 1 && !basename && !qualname)
-        buff.str(pluralise(PLU_DEFAULT, buff.str()));
+        buff.str(pluralise(((!translate_flag) ? PLU_DEFAULT : PLU_MISC), buff.str()));
 
     // Disambiguation.
     if (!terse && !basename && !dbname && know_type

@@ -542,7 +542,7 @@ void skill_manual(int slot)
     if (is_useless_skill(skill) || you.skills[skill] >= 27)
     {
         if (!known)
-            mprf(_("This is a manual of %s."), skill_name(skill));
+            mprf(_("This is a manual of %s."), _(skill_name(skill)));
         mpr(_("You have no use for it."));
         return;
     }

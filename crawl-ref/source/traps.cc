@@ -708,8 +708,8 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                     string msg = _("A huge blade swings out");
                     if (m->visible_to(&you))
                     {
-                        msg += _(" and slices into ");
-                        msg += m->name(DESC_THE);
+                        msg += m->name(DESC_THE); //msg += _(" and slices into ");
+                        msg += _(" and slices into "); //msg += m->name(DESC_THE);
                     }
                     msg += pgettext("bladetrap","!"); 
                     mpr(msg.c_str());

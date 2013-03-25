@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-#include "areas.h"
+#include "areas.h"_
 #include "artefact.h"
 #include "coordit.h"
 #include "database.h"
@@ -60,7 +60,7 @@ static bool _confirm_pray_sacrifice(god_type god)
 string god_prayer_reaction()
 {
     return make_stringf(crawl_state.player_is_dead() ?
-        pgettext("godprayer","%s was %s.") : pgettext("godprayer","%s is %s."), god_name(you.religion).c_str(),
+        pgettext("godprayer","%s was %s.") : pgettext("godprayer","%s is %s."), _(god_name(you.religion).c_str()),
         (you.piety > 130) ? _("exalted by your worship") :
         (you.piety > 100) ? _("extremely pleased with you") :
         (you.piety >  70) ? _("greatly pleased with you") :

@@ -956,7 +956,7 @@ void yell(bool force)
 
     const string shout_verb = you.shout_verb();
     string cap_shout = shout_verb;
-    cap_shout[0] = toupper(cap_shout[0]);
+    // cap_shout[0] = toupper(cap_shout[0]);
 
     int noise_level = 12; // "shout"
 
@@ -1049,7 +1049,7 @@ void yell(bool force)
     case '!':    // for players using the old keyset
     case 't':
         mprf(MSGCH_SOUND, you.berserk() ? _("You %s wildly!") : _("You %s for attention!"),
-             shout_verb.c_str());
+             _(shout_verb.c_str()));
         noisy(noise_level, you.pos());
         you.turn_is_over = true;
         return;
@@ -2052,14 +2052,14 @@ static void _rot_inventory_food(int time_delta)
 
             vector<string> strs;
             if (num_chunks_gone > 0)
-                strs.push_back("살점");
+                strs.push_back("고기");
             if (num_bones_gone > 0)
                 strs.push_back("뼛조각");
             if ((num_corpses_gone + num_corpses_rotted) > 0)
                 strs.push_back("시체");
 
             msg += comma_separated_line(strs.begin(), strs.end());
-            msg += "이/가";
+            msg += "이(가)";
 
             if (num_corpses_rotted == 0)
                 msg += " 완전히";

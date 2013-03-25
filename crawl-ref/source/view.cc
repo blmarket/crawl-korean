@@ -174,7 +174,7 @@ static string _desc_mons_type_map(map<monster_type, int> types)
         string name;
         description_level_type desc;
         if (it->second == 1)
-            desc = DESC_A;
+            desc = DESC_PLAIN; // DESC_A;
         else
             desc = DESC_PLAIN;
 

@@ -579,7 +579,7 @@ static void _print_stats_hp(int x, int y)
     // Health: xxx/yyy (zzz)
     CGOTOXY(x, y, GOTO_STAT);
     textcolor(HUD_CAPTION_COLOUR);
-    CPRINTF(max_max_hp != you.hp_max ? "HP: " : "Health: ");
+    CPRINTF(max_max_hp != you.hp_max ? "HP: " : "HP  :   ");
     textcolor(hp_colour);
     CPRINTF("%d", you.hp);
     if (!boosted)
@@ -1032,7 +1032,7 @@ static bool _need_stats_printed()
 static void _redraw_title(const string &your_name, const string &job_name)
 {
     const unsigned int WIDTH = crawl_view.hudsz.x;
-    string title = your_name + " the " + job_name;
+    string title = job_name.c_str() + std::string(", ") + your_name;
 
 #ifdef USE_TILE_LOCAL
     if (tiles.is_using_small_layout())
@@ -1054,7 +1054,7 @@ static void _redraw_title(const string &your_name, const string &job_name)
                                            name_len - (in_len - WIDTH) - 1);
             }
 
-            title = trimmed_name + ", " + job_name;
+            title = job_name.c_str() + std::string(", ") + trimmed_name;
         }
     }
 
@@ -1073,7 +1073,7 @@ static void _redraw_title(const string &your_name, const string &job_name)
     {
         textcolor(LIGHTBLUE);
         CGOTOXY(1 + crawl_view.hudsz.x-9, 1, GOTO_STAT);
-        CPRINTF(" *WIZARD*");
+        CPRINTF(" *위자드*");
     }
 #ifdef DGL_SIMPLE_MESSAGING
     update_message_status();
@@ -1083,13 +1083,13 @@ static void _redraw_title(const string &your_name, const string &job_name)
     // Minotaur [of God] [Piety]
     textcolor(YELLOW);
     CGOTOXY(1, 2, GOTO_STAT);
-    string species = species_name(you.species);
+    string species = _(species_name(you.species).c_str());
     NOWRAP_EOL_CPRINTF("%s", species.c_str());
     if (you.religion != GOD_NO_GOD)
     {
-        string god = " of ";
+        string god = ", "; // " of ";
         god += you.religion == GOD_JIYVA ? god_name_jiyva(true)
-                                         : god_name(you.religion);
+                                         : _(god_name(you.religion).c_str());
         NOWRAP_EOL_CPRINTF("%s", god.c_str());
 
         string piety = _god_powers(true);
@@ -1165,7 +1165,7 @@ void print_stats(void)
         if (you.experience_level < 27)
         {
             textcolor(Options.status_caption_colour);
-            CPRINTF("다음t: ");
+            CPRINTF("경험 : ");
             textcolor(HUD_VALUE_COLOUR);
             CPRINTF("%2d%% ", get_exp_progress());
         }
@@ -1191,7 +1191,7 @@ void print_stats(void)
     {
         // Increase y-value for all following lines.
         yhack++;
-        CGOTOXY(1+6, 8 + yhack, GOTO_STAT);
+        CGOTOXY(1+4, 8 + yhack, GOTO_STAT);
         textcolor(HUD_VALUE_COLOUR);
         CPRINTF("%-6d", you.gold);
     }
@@ -1276,14 +1276,14 @@ void draw_border(void)
     textcolor(Options.status_caption_colour);
 
     //CGOTOXY(1, 3, GOTO_STAT); CPRINTF("Hp:");
-    CGOTOXY(1, 4, GOTO_STAT); CPRINTF("Magic:");
+    CGOTOXY(1, 4, GOTO_STAT); CPRINTF("MP  :");
     CGOTOXY(1, 5, GOTO_STAT); CPRINTF("AC:");
     CGOTOXY(1, 6, GOTO_STAT); CPRINTF("EV:");
     CGOTOXY(1, 7, GOTO_STAT); CPRINTF("SH:");
 
-    CGOTOXY(19, 5, GOTO_STAT); CPRINTF("Str:");
-    CGOTOXY(19, 6, GOTO_STAT); CPRINTF("Int:");
-    CGOTOXY(19, 7, GOTO_STAT); CPRINTF("Dex:");
+    CGOTOXY(19, 5, GOTO_STAT); CPRINTF("힘  :");
+    CGOTOXY(19, 6, GOTO_STAT); CPRINTF("지능:");
+    CGOTOXY(19, 7, GOTO_STAT); CPRINTF("민첩:");
 
     if (Options.show_gold_turns)
     {

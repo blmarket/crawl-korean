@@ -4032,12 +4032,12 @@ string god_title(god_type which_god, species_type which_species, int piety)
 {
     string title;
     if (you.penance[which_god])
-        title = divine_title[which_god][0];
+        title = _(divine_title[which_god][0]);
     else
-        title = divine_title[which_god][_piety_level(piety)];
+        title = _(divine_title[which_god][_piety_level(piety)]);
 
     title = replace_all(title, "%s",
-                        species_name(which_species, true, false));
+                        ( _(species_name(which_species, true, false).c_str()) + std::string("족 ")));
 
     return title;
 }

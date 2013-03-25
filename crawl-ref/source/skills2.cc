@@ -300,7 +300,7 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
 {
     // paranoia
     if (is_invalid_skill(best_skill))
-        return "Adventurer";
+        return "모험가"; // "Adventurer";
 
     if (species == -1)
         species = you.species;
@@ -329,11 +329,11 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
         case SK_UNARMED_COMBAT:
             if (species == SP_FELID)
             {
-                result = claw_and_tooth_titles[skill_rank];
+                result = _(claw_and_tooth_titles[skill_rank]);
                 break;
             }
-            result = (dex >= str) ? martial_arts_titles[skill_rank]
-                                  : skills[best_skill][skill_rank];
+            result = (dex >= str) ? _(martial_arts_titles[skill_rank])
+                                  : _(skills[best_skill][skill_rank]);
 
             break;
 
@@ -346,26 +346,26 @@ string skill_title_by_rank(skill_type best_skill, uint8_t skill_rank,
             if (player_genus(GENPC_ELVEN, static_cast<species_type>(species))
                 && skill_rank == 5)
             {
-                result = "Master Archer";
+                result = "신궁"; // "Master Archer";
                 break;
             }
             break;
 
         case SK_SPELLCASTING:
             if (species == SP_OGRE)
-                result = "Ogre Mage";
+                result = "오우거 마법사"; // "Ogre Mage";
             break;
 
         case SK_NECROMANCY:
             if (species == SP_SPRIGGAN && skill_rank == 5)
-                result = "La Petite Mort";
+                result = "작은 죽음"; // "La Petite Mort";
             break;
 
         default:
             break;
         }
         if (result.empty())
-            result = skills[best_skill][skill_rank];
+            result = _(skills[best_skill][skill_rank]);
     }
 
     {
