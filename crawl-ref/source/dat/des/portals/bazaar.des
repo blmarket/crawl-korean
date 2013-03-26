@@ -1532,6 +1532,35 @@ MAP
 """""""""""""""""""""""""""""""""
 ENDMAP
 
+# 4 random shops
+NAME:   grunt_bazaar_doublecross
+DEPTH:  Bazaar
+ORIENT: encompass
+KFEAT:  A = any shop
+SUBST:  T = G:20 T V U:1
+:       bazaar_setup(_G)
+MAP
+xxxxxxxxxxxxxxxxx
+xT.xxxxxxxxxxx.Tx
+x.A.xxxxxxxxx.A.x
+xxx...xxxxx...xxx
+xxxxx.......xxxxx
+xxxxxxx.T.xxxxxxx
+xxxxx.......xxxxx
+xxx...xxxxx...xxx
+x...xx+.<.+xx...x
+xT.xxxx.T.xxxx.Tx
+x...xx+.>.+xx...x
+xxx...xxxxx...xxx
+xxxxx.......xxxxx
+xxxxxxx.T.xxxxxxx
+xxxxx.......xxxxx
+xxx...xxxxx...xxx
+x.A.xxxxxxxxx.A.x
+xT.xxxxxxxxxxx.Tx
+xxxxxxxxxxxxxxxxx
+ENDMAP
+
 ##########################################################################
 # Very rare maps, including dangerous maps (weight 1)
 ##########################################################################
@@ -1775,35 +1804,6 @@ x.......x     x.......x
 x.>...!.x     x.!...>.x
 x.......x     x.......x
 xxxxxxxxx     xxxxxxxxx
-ENDMAP
-
-# Perhaps we should announce the number of shops when entering the vault?
-NAME:   bazaar_minmay_jumpy
-TAGS:   no_rotate
-ORIENT: encompass
-WEIGHT: 1
-KFEAT:  ! = distillery shop / scroll shop / general shop
-KFEAT:  ~ = teleport trap
-:       bazaar_setup(_G)
-MAP
-xxxxx
-x...xxx
-x.!..~x      xxx
-x...xxx      x~x
-xxxxx       xx.xx
-      xxxxx x...x
-    xxx...x x.!.x
-    x~..!.x x...x
-    xxx...x xxxxx xxxxx
-      xxxxx       x...x
-                  x.>.x
-  xxxxx           x...x
-  x...x   xxxxx   xx.xx
-  x.<.x   x...xxx  x~x
-  x...x   x.!..~x  xxx
-  xx.xx   x...xxx
-   x~x    xxxxx
-   xxx
 ENDMAP
 
 ##########################################################################

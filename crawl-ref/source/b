@@ -1,1 +1,1 @@
-make -j 3 TILES=y USE_GETTEXT=y V=y
+make -j 7 TILES=y USE_GETTEXT=y PROPORTIONAL_FONT=/usr/share/fonts/truetype/nanum-coding/NanumGothic_Coding.ttf MONOSPACED_FONT=/usr/share/fonts/truetype/nanum-coding/NanumGothic_Coding.ttf

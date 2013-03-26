@@ -4,7 +4,7 @@
 
 #include <cmath>
 
-#include "areas.h"_
+#include "areas.h"
 #include "artefact.h"
 #include "coordit.h"
 #include "database.h"

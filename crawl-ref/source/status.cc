@@ -268,7 +268,7 @@ bool fill_status_info(int status, status_info* inf)
         break;
 
     case DUR_SWIFTNESS:
-        if (you.in_water())
+        if (you.in_water() || you.liquefied_ground())
             inf->light_colour = DARKGREY;
         break;
 
@@ -356,6 +356,18 @@ bool fill_status_info(int status, status_info* inf)
     case STATUS_SPEED:
         _describe_speed(inf);
         break;
+
+    case STATUS_LIQUEFIED:
+    {
+        if (you.liquefied_ground())
+        {
+            inf->light_colour = BROWN;
+            inf->light_text   = "SlowM";
+            inf->short_text   = "slowed movement";
+            inf->long_text    = "Your movement is slowed on this liquid ground.";
+        }
+        break;
+    }
 
     case STATUS_SAGE:
         _describe_sage(inf);
@@ -708,13 +720,6 @@ static void _describe_speed(status_info* inf)
         inf->short_text = gettext(M_("hasted"));
         inf->long_text = gettext("Your actions are hasted.");
         _mark_expiring(inf, dur_expiring(DUR_HASTE));
-    }
-    if (you.liquefied_ground())
-    {
-        inf->light_colour = BROWN;
-        inf->light_text   = pgettext("status", "SlowM");
-        inf->short_text   = pgettext("status", "slowed movement");
-        inf->long_text    = _("Your movement is slowed on this liquid ground.");
     }
 }
 

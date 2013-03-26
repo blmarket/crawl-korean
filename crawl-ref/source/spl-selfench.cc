@@ -187,7 +187,13 @@ spret_type cast_swiftness(int power, bool fail)
 
     if (you.in_water())
     {
-        mpr("물에서 거품이 일었다!");//mpr("The water foams!");
+        mpr(_("The water foams!"));
+        return SPRET_ABORT;
+    }
+
+    if (you.liquefied_ground())
+    {
+        mpr(_("The liquid ground foams!"));
         return SPRET_ABORT;
     }
 

@@ -855,6 +855,9 @@ static void _abyss_shift_level_contents_around_player(
 
 static void _abyss_generate_monsters(int nmonsters)
 {
+    if (crawl_state.disables[DIS_SPAWNS])
+        return;
+
     mgen_data mg;
     mg.proximity = PROX_ANYWHERE;
 
@@ -1332,8 +1335,13 @@ void destroy_abyss()
     {
         delete abyssLayout;
         abyssLayout = nullptr;
+        /* memory leak!
+           Due to static contructors being called only once, only the first
+           real level referenced will be used, even after a restart_after_game.
+           Restoring the leak so people can play trunk while we talk.
         delete levelLayout;
         levelLayout = nullptr;
+        */
     }
 }
 

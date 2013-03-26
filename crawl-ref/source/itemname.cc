@@ -409,8 +409,9 @@ static const char* _missile_brand_name(special_missile_type brand, mbn_type t)
     case SPMSL_DISPERSAL:
         return (t == MBN_TERSE ? M_("disperse") : M_("dispersal"));
     case SPMSL_NORMAL:
-    default:
         return "";
+    default:
+        return (t == MBN_TERSE ? "buggy" : "bugginess");
     }
 }
 
@@ -451,7 +452,8 @@ const char* weapon_brand_name(const item_def& item, bool terse)
             case DVORP_CHOPPING: return terse ? N_(" (chop)") : N_(" of chopping");
             case DVORP_SLASHING: return terse ? N_(" (slash)") :N_(" of slashing");
             case DVORP_STABBING: return terse ? N_(" (stab)") : N_(" of stabbing");
-            default:             return "";
+            default:             return terse ? " (buggy vorpal)"
+                                              : " of buggy destruction";
             }
         }
     case SPWPN_ANTIMAGIC: return terse ? N_(" (antimagic)") : ""; // non-terse
@@ -466,8 +468,8 @@ const char* weapon_brand_name(const item_def& item, bool terse)
     // both ranged and non-ranged
     case SPWPN_CHAOS: return terse ? N_(" (chaos)") : N_(" of chaos");
 
-    // randart brands
-    default: return "";
+    // buggy brands
+    default: return terse ? " (buggy)" : " of bugginess";
     }
 }
 

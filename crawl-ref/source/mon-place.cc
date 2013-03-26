@@ -716,7 +716,9 @@ static bool _valid_monster_generation_location(const mgen_data &mg,
     if (!in_bounds(mg_pos)
         || monster_at(mg_pos)
         || you.pos() == mg_pos && !fedhas_passthrough_class(mg.cls))
+    {
         return false;
+    }
 
     const monster_type montype = (mons_class_is_zombified(mg.cls) ? mg.base_type
                                                                   : mg.cls);
@@ -3257,7 +3259,7 @@ bool player_angers_monster(monster* mon)
                 mprf(gettext("%s is enraged by your lawfulness!"), mname.c_str());
                 break;
             case DID_SPELL_CASTING:
-                mprf(gettext("%s is enraged by your antimagic god!"), mname.c_str());
+                mprf(_("%s is enraged by your magic-hating god!"), mname.c_str());
                 break;
             default:
                 mprf(gettext("%s is enraged by a buggy thing about you!"), mname.c_str());

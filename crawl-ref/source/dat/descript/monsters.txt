@@ -58,17 +58,18 @@ Aizul:quote
 %%%%
 Agnes
 
-A tall (for her kind) and beautiful warrior, as vain as she is quick. You can't
-help but notice both her exotic weapon and graceful movements. She searches the
-dungeon for aesthetically pleasing objects to surround herself with.
+This somewhat older looking spriggan carries a bladed staff (almost as large as
+she is). The pockets of her threadbare robe bulge with jangling coins. The
+coins and lajatang do not seem to slow her, though, as she darts to and fro,
+her pockets streaming behind her and trembling as if about to burst.
 %%%%
 Antaeus
 
-Once a mighty and renowned Titan, his arrogance was his undoing. Now he is
+Once a mighty and renowned titan, his arrogance was his undoing. Now he is
 corrupt and tainted, a powerful demon who lords over the frozen wastes of
 Cocytus. His gigantic body seems as though it would be easily struck by your
-attacks; unfortunately, it also seems like it would remain unscathed by all but
-the strongest of them.
+attacks; unfortunately, it also seems as though it would remain unscathed by
+all but the strongest of them.
 %%%%
 Antaeus:quote
 
@@ -501,9 +502,8 @@ the ways of gods. This is not the answer.”
 Margery
 
 A lithe spellcaster in service to the powers of Hell; it is her duty to ensure
-that the inhabitants of the Dungeon never forget their place. As a girl, she
-personally slew the ancient dragon from whose hide her strange armour is
-crafted.
+that the inhabitants of the Dungeon never forget their place. She personally
+slew the ancient dragon from whose hide her strange armour is crafted.
 %%%%
 Maud
 
@@ -1826,6 +1826,13 @@ giant eyeball
 A giant floating eyeball, with a mesmerising gaze. Some say giant eyeballs are
 servitors of Jiyva.
 %%%%
+giant eyeball:quote
+
+“El ojo que ves
+ no es ojo porque tú lo veas,
+ es ojo porque te ve.”
+    -Antonio Machado, Campos de Castilla. 1912-1917.
+%%%%
 giant firefly
 
 Unlike its mundane counterparts that are merely half an inch big, this enormous
@@ -2312,6 +2319,18 @@ insubstantial wisp
 
 A thin wisp of floating gas, flickering, disappearing and reforming in a
 disconcertingly random fashion.
+%%%%
+insubstantial wisp:quote
+
+„Dotknij teraz mych czarów
+ Wichrze czarci tańcu
+ Oto płoną błędne ognie
+ Oto bóstwa lasów i gór
+ Których nie przebłagam
+ Ich sny srebrzą się ponad jeziorami
+ Gdzie słyszałem drzewa krzyczące w nocy
+ Wyją błagając o zemstę po raz, po raz, po raz...”
+    Mastiphal, „Nad jeziorami myśli nieśmiertelnej”
 %%%%
 iron devil
 
