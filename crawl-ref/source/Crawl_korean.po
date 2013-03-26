@@ -31135,7 +31135,7 @@ msgstr "%s은(는) 당신의 신성한 기운을 가만 두지 않을 모양이�
 
 #: mon-place.cc:3325 mon-place.cc:3468 mon-place.cc:3260
 #, c-format
-msgid "%s is enraged by your antimagic god!"
+msgid "%s is enraged by your magic-hating god!"
 msgstr "%s은(는) 마법을 싫어하는 당신의 신에 대한 분노를 드러냈다!"
 
 #: mon-place.cc:3328 mon-place.cc:3471 mon-place.cc:3263

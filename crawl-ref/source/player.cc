@@ -153,7 +153,7 @@ static bool _check_moveto_cloud(const coord_def& p, const string &move_verb)
 
             string prompt = make_stringf(_("Really %s into that cloud of %s?"),
                                          move_verb.c_str(),
-                                         cloud_name_at_index(cloud).c_str());
+                                         _(cloud_name_at_index(cloud).c_str()));
             learned_something_new(HINT_CLOUD_WARNING);
 
             if (!yesno(prompt.c_str(), false, 'n'))

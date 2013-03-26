@@ -476,7 +476,7 @@ static string _randart_descrip(const item_def &item)
                     N_("It renders you almost immune to %s.")
                 };
 
-                sdesc = make_stringf(gettext(prefixes[idx]), sdesc.c_str());
+                sdesc = make_stringf(_(prefixes[idx]), _(sdesc.c_str()));
             }
 
             description += '\n';
@@ -675,24 +675,31 @@ static string _describe_demon(const string& name, flight_type fly)
         N_(" It radiates an aura of extreme power."),
     };
 
-    ostringstream description;
+    std::string temp_body_descs = RANDOM_ELEMENT(body_descs); 
+	std::string temp_wing_names = RANDOM_ELEMENT(wing_names); 
+	std::string temp_lev_names = RANDOM_ELEMENT(lev_names); 
+	std::string temp_nonfly_names = RANDOM_ELEMENT(nonfly_names); 
+	std::string temp_misc_desc = RANDOM_ELEMENT(misc_descs);
+
+	ostringstream description;
+
     description << make_stringf(gettext("A powerful demon, %s has a %s body"),
-        gettext(name.c_str()),
-        gettext(RANDOM_ELEMENT(body_descs)));
+        name.c_str(),
+        gettext(temp_body_descs.c_str()));
 
     switch (fly)
     {
     case FL_WINGED:
-        description << _(RANDOM_ELEMENT(wing_names));
+        description << _(temp_wing_names.c_str());
         break;
 
     case FL_LEVITATE:
-        description << gettext(RANDOM_ELEMENT(lev_names));
+        description << _(temp_lev_names.c_str());
         break;
 
     case FL_NONE:  // does not fly
         if (!one_chance_in(4))
-            description << gettext(RANDOM_ELEMENT(nonfly_names));
+            description << _(temp_nonfly_names.c_str());
         break;
     }
 
@@ -721,7 +728,7 @@ static string _describe_demon(const string& name, flight_type fly)
         }
     }
     else if (coinflip())
-        description << RANDOM_ELEMENT(misc_descs);
+        description << _(temp_misc_desc.c_str());
 
     return description.str();
 }
@@ -3274,9 +3281,9 @@ static string _monster_stat_description(const monster_info& mi)
 
     // Unusual regeneration rates.
     if (!mi.can_regenerate())
-        result << pronoun << "은 재생 능력이 없다.\n"; //result << pronoun << " cannot regenerate.\n";
+        result << pronoun << "은(는) 재생 능력이 없다.\n"; //result << pronoun << " cannot regenerate.\n";
     else if (monster_descriptor(mi.type, MDSC_REGENERATES))
-        result << pronoun << "은 빠른 재생 능력이 있다.\n"; //result << pronoun << " regenerates quickly.\n";
+        result << pronoun << "은(는) 빠른 재생 능력이 있다.\n"; //result << pronoun << " regenerates quickly.\n";
 
     // Size
     const char *sizes[NUM_SIZE_LEVELS] = {

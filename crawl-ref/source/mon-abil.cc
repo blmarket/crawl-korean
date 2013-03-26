@@ -528,7 +528,7 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
                      changed ? merge_to->name(DESC_PLAIN).c_str() : "");
             else
                 mprf(_("%s merges with %s%s%s."),
-                     crawlie->name(DESC_A).c_str(),
+                     crawlie->name(DESC_PLAIN).c_str(),
                      old_name.c_str(),
                      changed ? " to form " : "",
                      changed ? merge_to->name(DESC_PLAIN).c_str() : "");
@@ -589,12 +589,12 @@ static bool _do_merge_slimes(monster* initial_slime, monster* merge_to)
         if (you.can_see(initial_slime))
         {
             mprf(gettext("Two slime creatures merge to form %s."),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
         else
         {
             mprf(gettext("A slime creature suddenly becomes %s."),
-                 merge_to->name(DESC_A).c_str());
+                 merge_to->name(DESC_PLAIN).c_str());
         }
 
         flash_view_delay(LIGHTGREEN, 150);

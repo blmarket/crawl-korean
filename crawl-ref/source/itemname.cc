@@ -1613,7 +1613,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         case FOOD_SNOZZCUMBER: buff << check_gettext(M_("snozzcumber")); break;
         case FOOD_PIZZA: buff << check_gettext(M_("slice of pizza")); break;
         case FOOD_APRICOT: buff << check_gettext(M_("apricot")); break;
-        case FOOD_ORANGE: buff << check_gettext(M_("orange")); break;
+        case FOOD_ORANGE: buff << ((!translate_flag) ? "orange" : "오렌지"); break;
         case FOOD_BANANA: buff << check_gettext(M_("banana")); break;
         case FOOD_STRAWBERRY: buff << check_gettext(M_("strawberry")); break;
         case FOOD_RAMBUTAN: buff << check_gettext(M_("rambutan")); break;

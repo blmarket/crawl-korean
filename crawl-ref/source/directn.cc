@@ -3486,74 +3486,74 @@ static string _get_monster_desc(const monster_info& mi)
     string pronoun = mi.pronoun(PRONOUN_SUBJECTIVE);
 
     if (mi.is(MB_CLINGING))
-        text += pronoun + " is clinging to the wall.\n";
+        text += pronoun + _(" is clinging to the wall.\n");
 
     if (mi.is(MB_MESMERIZING))
-        text += "You are mesmerised by her song.\n";
+        text += _("You are mesmerised by her song.\n");
 
     if (mi.is(MB_SLEEPING) || mi.is(MB_DORMANT))
     {
-        text += pronoun + " appears to be "
-                + (mi.is(MB_CONFUSED) ? "sleepwalking"
-                        : "resting")
-                          + ".\n";
+        text += make_stringf(_("%s appears to be %s.\n"), pronoun.c_str(),   // text += pronoun + " appears to be "
+                (mi.is(MB_CONFUSED) ? _("sleepwalking")                      // + (mi.is(MB_CONFUSED) ? "sleepwalking"
+                                    : _("resting")));                        // : "resting")
+                                                                             // + ".\n";
     }
     // Applies to both friendlies and hostiles
     else if (mi.is(MB_FLEEING))
-        text += pronoun + " is retreating.\n";
+        text += pronoun + _(" is retreating.\n");
     // hostile with target != you
     else if (mi.attitude == ATT_HOSTILE && (mi.is(MB_UNAWARE) || mi.is(MB_WANDERING)))
-        text += pronoun + " doesn't appear to have noticed you.\n";
+        text += pronoun + _(" doesn't appear to have noticed you.\n");
 
     if (mi.attitude == ATT_FRIENDLY)
-        text += pronoun + " is friendly.\n";
+        text += pronoun + _(" is friendly.\n");
     else if (mi.attitude == ATT_GOOD_NEUTRAL)
-        text += pronoun + " seems to be peaceful towards you.\n";
+        text += pronoun + _(" seems to be peaceful towards you.\n");
     else if (mi.attitude != ATT_HOSTILE) // don't differentiate between permanent or not
-        text += pronoun + " is indifferent to you.\n";
+        text += pronoun + _(" is indifferent to you.\n");
 
     if (mi.is(MB_SUMMONED))
-        text += pronoun + " has been summoned.\n";
+        text += pronoun + _(" has been summoned.\n");
 
     if (mi.is(MB_PERM_SUMMON))
-        text += pronoun + " has been summoned but will not time out.\n";
+        text += pronoun + _(" has been summoned but will not time out.\n");
 
     if (mi.is(MB_HALOED))
-        text += pronoun + " is illuminated by a divine halo.\n";
+        text += pronoun + _(" is illuminated by a divine halo.\n");
 
     if (mi.is(MB_UMBRAED))
-        text += pronoun + " is wreathed by an unholy umbra.\n";
+        text += pronoun + _(" is wreathed by an unholy umbra.\n");
 
     if (mi.is(MB_SUPPRESSED))
-        text += pronoun + " is surrounded by an aura of magical suppression.\n";
+        text += pronoun + _(" is surrounded by an aura of magical suppression.\n");
 
     if (mi.intel() <= I_PLANT)
-        text += pronoun + " is mindless.\n";
+        text += pronoun + _(" is mindless.\n");
 
     if (mi.is(MB_CHAOTIC))
-        text += pronoun + " is chaotic.\n";
+        text += pronoun + _(" is chaotic.\n");
 
     if (mi.is(MB_POSSESSABLE))
     {
         text += string(mi.pronoun(PRONOUN_POSSESSIVE))
-                + " soul is ripe for the taking.\n";
+                + _(" soul is ripe for the taking.\n");
     }
     else if (mi.is(MB_ENSLAVED))
-        text += pronoun + " is a disembodied soul.\n";
+        text += pronoun + _(" is a disembodied soul.\n");
 
     if (mi.is(MB_MIRROR_DAMAGE))
-        text += pronoun + " is reflecting injuries back at attackers.\n";
+        text += pronoun + _(" is reflecting injuries back at attackers.\n");
 
     if (mi.is(MB_INNER_FLAME))
-        text += pronoun + " is filled with an inner flame.\n";
+        text += pronoun + _(" is filled with an inner flame.\n");
 
     if (mi.fire_blocker)
     {
-        text += string("Your line of fire to ") + mi.pronoun(PRONOUN_OBJECTIVE)
-              + " is blocked by " // FIXME: renamed features
-              + feature_description(mi.fire_blocker, NUM_TRAPS, "",
-                                    DESC_A)
-              + "\n";
+        text += make_stringf(_("Your line of fire to %s is blocked by %s\n"), mi.pronoun(PRONOUN_OBJECTIVE), // text += string("Your line of fire to ") + mi.pronoun(PRONOUN_OBJECTIVE)
+              // + " is blocked by " // FIXME: renamed features
+              feature_description(mi.fire_blocker, NUM_TRAPS, "", // + feature_description(mi.fire_blocker, NUM_TRAPS, "",
+                                    DESC_PLAIN).c_str());         // DESC_A)
+              //+ "\n";
     }
 
     text += _mon_enchantments_string(mi);

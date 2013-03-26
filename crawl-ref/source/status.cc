@@ -362,9 +362,9 @@ bool fill_status_info(int status, status_info* inf)
         if (you.liquefied_ground())
         {
             inf->light_colour = BROWN;
-            inf->light_text   = "SlowM";
-            inf->short_text   = "slowed movement";
-            inf->long_text    = "Your movement is slowed on this liquid ground.";
+            inf->light_text   = pgettext("status","SlowM");
+            inf->short_text   = pgettext("status","slowed movement");
+            inf->long_text    = _("Your movement is slowed on this liquid ground.");
         }
         break;
     }

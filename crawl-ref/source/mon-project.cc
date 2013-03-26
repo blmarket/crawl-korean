@@ -256,9 +256,9 @@ static bool _iood_hit(monster& mon, const coord_def &pos, bool big_boom = false)
     beam.damage = dice_def(9, pow / 4);
 
     if (dist < 3)
-        beam.name = "wavering " + beam.name;
+        beam.name = _("wavering ") + beam.name;
     if (dist < 2)
-        beam.hit_verb = M_("weakly hits");
+        beam.hit_verb = _(M_("weakly hits"));
     beam.ex_size = 1;
     beam.loudness = 7;
 
