@@ -416,7 +416,7 @@ static void _sdump_visits(dump_params &par)
         place_info = you.get_place_info(br);
         if (!place_info.num_visits)
             continue;
-        string name = branches[br].shortname;
+        string name = _(branches[br].shortname);
         if (place_info.num_visits > 1)
             name += make_stringf(" (%d times)", place_info.num_visits);
         misc_portals.push_back(name);
@@ -674,7 +674,7 @@ static void _sdump_religion(dump_params &par)
             text += "You worshipped ";
         else
             text += "You worship ";
-        text += god_name(you.religion);
+        text += _(god_name(you.religion).c_str());
         text += ".\n";
 
         if (you.religion != GOD_XOM)
@@ -688,7 +688,7 @@ static void _sdump_religion(dump_params &par)
             {
                 string verb = par.se ? "was" : "is";
 
-                text += god_name(you.religion);
+                text += _(god_name(you.religion).c_str());
                 text += " " + verb + " demanding penance.\n";
             }
         }

@@ -906,7 +906,7 @@ command_type travel()
 
     if (Options.travel_key_stop && kbhit())
     {
-        mprf(gettext("Key pressed, stopping %s."), you.running.runmode_name().c_str());
+        mprf(gettext("Key pressed, stopping %s."), _(you.running.runmode_name().c_str()));
         stop_running();
         return CMD_NO_CMD;
     }
@@ -2130,7 +2130,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
                 }
                 line += make_stringf("(%c) %-14s ",
                                      branches[br[i]].travel_shortcut,
-                                     branches[br[i]].shortname);
+                                     _(branches[br[i]].shortname));
             }
             if (!line.empty())
                 mpr(line.c_str());
@@ -2153,7 +2153,7 @@ static int _prompt_travel_branch(int prompt_flags, bool* to_entrance)
                     make_stringf("Enter - %s", trans_travel_dest.c_str()));
             }
 
-            segs.push_back("? - help");
+            segs.push_back(_("? - help"));
 
             shortcuts += comma_separated_line(segs.begin(), segs.end(),
                                               ", ", ", ");
@@ -2397,7 +2397,7 @@ static travel_target _prompt_travel_depth(const level_id &id,
         mesclr();
         mprf(MSGCH_PROMPT, _("What level of %s? "
              "(default %s, ? - help) "),
-             branches[target.p.id.branch].longname,
+             _(branches[target.p.id.branch].longname),
              _get_trans_travel_dest(target, true).c_str());
 
         char buf[100];
@@ -4126,7 +4126,7 @@ explore_discoveries::explore_discoveries()
 string explore_discoveries::cleaned_feature_description(
     const coord_def &pos) const
 {
-    string s = lowercase_first(feature_description_at(pos));
+    string s = lowercase_first(feature_description_at(true,pos));
     if (s.length() && s[s.length() - 1] == '.')
         s.erase(s.length() - 1);
     if (s.find("a ") != string::npos)
@@ -4223,7 +4223,7 @@ void explore_discoveries::found_feature(const coord_def &pos,
                                                          "stop_explore");
         if (!feat_stop.empty())
         {
-            string desc = lowercase_first(feature_description_at(pos));
+            string desc = lowercase_first(feature_description_at(true,pos,false,DESC_PLAIN));
             marked_feats.push_back(desc);
             return;
         }
@@ -4340,7 +4340,7 @@ template <class C> void explore_discoveries::say_any(
 
     const int size = coll.size();
 
-    string plural = pluralise(PLU_DEFAULT, category);
+    string plural = pluralise(PLU_SUFFIX, category); // PLU_DEFAULT -> SUFFIX
     if (size != 1)
         category = plural.c_str();
 
@@ -4397,12 +4397,12 @@ bool explore_discoveries::prompt_stop() const
     if (!es_flags)
         return marker_stop;
 
-    say_any(items, "item");
-    say_any(shops, "shop");
-    say_any(apply_quantities(altars), "altar");
-    say_any(apply_quantities(portals), "portal");
-    say_any(apply_quantities(stairs), "stair");
-    say_any(apply_quantities(runed_doors), "runed door");
+    say_any(items, _(M_("item")));
+    say_any(shops, _(M_("shop")));
+    say_any(apply_quantities(altars), _(M_("altar")));
+    say_any(apply_quantities(portals), _(M_("portal")));
+    say_any(apply_quantities(stairs), _(M_("stair")));
+    say_any(apply_quantities(runed_doors), _(M_("runed door")));
 
     return ((Options.explore_stop_prompt & es_flags) != es_flags
             || marker_stop

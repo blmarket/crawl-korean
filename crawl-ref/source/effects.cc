@@ -2026,7 +2026,7 @@ static void _rot_inventory_food(int time_delta)
         else
             msg = _("Something in your inventory has become rotten.");
 
-        mprf(MSGCH_ROTTEN_MEAT, "%s (slot%s %s)",
+        mprf(MSGCH_ROTTEN_MEAT, _("%s (slot%s %s)"),
              msg.c_str(),
              rotten_items.size() > 1 ? "s" : "",
              comma_separated_line(rotten_items.begin(),

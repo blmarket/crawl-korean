@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Random and unrandom artefact functions.
 **/
@@ -253,10 +253,10 @@ string replace_name_parts(const string &name_in, const item_def& item)
         else
         {
             // Simply overwrite the name with one of type "God's Favour".
-            name = "of ";
-            name += god_name(god_gift, false);
-            name += "'s ";
-            name += getRandNameString("divine_esteem");
+            name = " \"";
+            name += _(god_name(god_gift, false).c_str());
+            name += "의 ";
+            name += getRandNameString("divine_esteem") + "\"";
         }
     }
     name = replace_all(name, "@player_name@", you.your_name);
@@ -266,13 +266,13 @@ string replace_name_parts(const string &name_in, const item_def& item)
 
     if (name.find("@branch_name@", 0) != string::npos)
     {
-        string place = branches[random2(NUM_BRANCHES)].longname;
+        string place = _(branches[random2(NUM_BRANCHES)].longname);
         if (!place.empty())
             name = replace_all(name, "@branch_name@", place);
     }
 
     // Occasionally use long name for Xom (see religion.cc).
-    name = replace_all(name, "@xom_name@", god_name(GOD_XOM, coinflip()));
+    name = replace_all(name, "@xom_name@", _(god_name(GOD_XOM, coinflip()).c_str()));
 
     if (name.find("@god_name@", 0) != string::npos)
     {
@@ -288,7 +288,7 @@ string replace_name_parts(const string &name_in, const item_def& item)
             while (!_god_fits_artefact(which_god, item, true));
         }
 
-        name = replace_all(name, "@god_name@", god_name(which_god, false));
+        name = replace_all(name, "@god_name@", _(god_name(which_god, false).c_str()));
     }
 
     // copied from apostrophise() (libutil.cc):

@@ -388,7 +388,7 @@ move_again:
             if (you.see_cell(pos))
             {
                 mprf(_("%s hits %s"), mon.name(DESC_THE, true).c_str(),
-                     feature_description_at(pos, false, DESC_A).c_str());
+                     feature_description_at(true, pos, false, DESC_PLAIN).c_str());
             }
 
             if (!iood) // boulders need to stop now

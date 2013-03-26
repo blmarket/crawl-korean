@@ -2349,7 +2349,7 @@ static void _create_altar(coord_def pos)
     grd(pos) = altar_for_god(god);
     ASSERT(grd(pos) != DNGN_FLOOR);
     mprf(_("An altar to %s grows from the floor before you!"),
-         god_name(god).c_str());
+         _(god_name(god).c_str()));
 }
 
 static void _trowel_card(int power, deck_rarity_type rarity)

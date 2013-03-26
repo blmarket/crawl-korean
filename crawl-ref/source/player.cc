@@ -114,8 +114,8 @@ static void _moveto_maybe_repel_stairs()
     {
         if (slide_feature_over(you.pos(), coord_def(-1, -1), false))
         {
-            string stair_str = feature_description_at(you.pos(), "",
-                                                      DESC_THE, false);
+            string stair_str = feature_description_at(true, you.pos(), "",
+                                                      DESC_PLAIN, false);
             string prep = feat_preposition(new_grid, true, &you);
 
             mprf(gettext("%s slides away as you move %s it!"), stair_str.c_str(),
@@ -192,7 +192,7 @@ static bool _check_moveto_trap(const coord_def& p, const string &move_verb)
             move_verb.c_str(),
             (trap->type == TRAP_ALARM || trap->type == TRAP_PLATE) ? "onto"
                                                                    : "into",
-            feature_description_at(p, "", DESC_BASENAME, false).c_str());
+            feature_description_at(true, p, "", DESC_BASENAME, false).c_str());
 
         if (!yesno(prompt.c_str(), true, 'n'))
         {

@@ -1031,7 +1031,7 @@ static bool _cant_butcher()
 
 static string _describe_portal(const coord_def &gc)
 {
-    const string desc = feature_description_at(gc);
+    const string desc = feature_description_at(true, gc);
 
     ostringstream text;
 
@@ -1254,7 +1254,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (you.religion == GOD_TROG)
         {
             text << "\nAs a worshipper of "
-                 << god_name(GOD_TROG)
+                 << _(god_name(GOD_TROG).c_str())
                  << ", though, you might instead wish to burn those tomes "
                     "of hated magic by using the corresponding "
                     "<w>%</w>bility.";
@@ -1428,7 +1428,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (god_likes_fresh_corpses(you.religion))
         {
             text << "\nYou can also offer corpses to "
-                 << god_name(you.religion)
+                 << _(god_name(you.religion).c_str())
                  << " by <w>%</w>raying over them. Note that the gods will not "
                     "accept rotting flesh.";
             cmd.push_back(CMD_PRAY);

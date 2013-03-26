@@ -149,7 +149,7 @@ static string coloured_branch(branch_type br)
     }
 
     const string colname = colour_to_str(col);
-    return make_stringf("<%s>%s</%s>", colname.c_str(), branches[br].shortname,
+    return make_stringf("<%s>%s</%s>", colname.c_str(), _(branches[br].shortname),
                         colname.c_str());
 }
 
@@ -275,7 +275,7 @@ static string _get_seen_branches(bool display)
     char buffer[100];
     string disp;
 
-    disp += "\n<green>Branches:</green>";
+    disp += _("\n<green>Branches:</green>");
     if (display)
     {
         disp += _(" (use <white>G</white> to reach them and "
@@ -302,7 +302,7 @@ static string _get_seen_branches(bool display)
 
             // "D" is a little too short here.
             const char *brname = (branch == BRANCH_MAIN_DUNGEON
-                                  ? branches[branch].shortname
+                                  ? _(branches[branch].shortname)
                                   : branches[branch].abbrevname);
 
             snprintf(buffer, sizeof buffer,
@@ -453,7 +453,7 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
         if (!display)
         {
             if (has_altar_been_seen)
-                disp += god_name(god, false) + "\n";
+                disp += _(god_name(god, false).c_str()) + std::string("\n");
             continue;
         }
 
@@ -478,7 +478,7 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
             colour = "darkgrey";
 
         snprintf(buffer, sizeof buffer, "<%s>%s</%s>",
-                 colour, god_name(god, false).c_str(), colour);
+                 colour, _(god_name(god, false).c_str()), colour);
         disp += buffer;
         num_printed++;
 
@@ -488,13 +488,13 @@ static string _print_altars_for_gods(const vector<god_type>& gods,
             // manually aligning the god columns: five whitespaces between columns
             switch (num_printed % 5)
             {
-            case 1: disp += string(14 - strwidth(god_name(god, false)), ' ');
+            case 1: disp += string(14 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 2: disp += string(18 - strwidth(god_name(god, false)), ' ');
+            case 2: disp += string(18 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 3: disp += string(13 - strwidth(god_name(god, false)), ' ');
+            case 3: disp += string(13 - strwidth(_(god_name(god, false).c_str())), ' ');
                     break;
-            case 4: disp += string(16 - strwidth(god_name(god, false)), ' ');
+            case 4: disp += string(16 - strwidth(_(god_name(god, false).c_str())), ' ');
             }
     }
 

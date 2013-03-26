@@ -74,9 +74,9 @@ static int dgn_feature_desc_at(lua_State *ls)
     static_cast<description_level_type>(luaL_checkint(ls, 3)) :
     description_type_by_name(lua_tostring(ls, 3));
     const bool need_stop = lua_isboolean(ls, 4)? lua_toboolean(ls, 4) : false;
-    const string s = feature_description_at(coord_def(luaL_checkint(ls, 1),
+    const string s = feature_description_at(true, coord_def(luaL_checkint(ls, 1),
                                                       luaL_checkint(ls, 2)),
-                                            false, dtype, need_stop);
+                                            false, DESC_PLAIN, need_stop);
     lua_pushstring(ls, s.c_str());
     return 1;
 }

@@ -393,7 +393,7 @@ void splash_with_acid(int acid_strength, bool corrode_items, string hurt_message
 
     if (post_res_dam > 0)
     {
-        mpr(hurt_message.empty() ? gettext("The acid burns!") : hurt_message);
+        mpr(hurt_message.empty() ? gettext("The acid burns!") : _(hurt_message.c_str()));
 
         if (post_res_dam < dam)
             canned_msg(MSG_YOU_RESIST);

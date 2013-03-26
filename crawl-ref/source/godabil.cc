@@ -1400,7 +1400,7 @@ bool elyvilon_divine_vigour()
     if (!you.duration[DUR_DIVINE_VIGOUR])
     {
         mprf(_("%s grants you divine vigour."),
-             god_name(GOD_ELYVILON).c_str());
+             _(god_name(GOD_ELYVILON).c_str()));
 
         const int vigour_amt = 1 + you.skill_rdiv(SK_INVOCATIONS, 1, 3);
         const int old_hp_max = you.hp_max;

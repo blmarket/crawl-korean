@@ -1289,7 +1289,7 @@ void search_around()
         {
             ptrap->reveal();
             mprf(_("You found %s trap!"),
-                 ptrap->name(DESC_A).c_str());
+                 _(ptrap->name(DESC_PLAIN).c_str()));
             learned_something_new(HINT_SEEN_TRAP, *ri);
             practise(EX_TRAP_FOUND);
         }
@@ -1638,7 +1638,7 @@ bool i_feel_safe(bool announce, bool want_move, bool just_monsters,
                 if (announce)
                 {
                     mprf(MSGCH_WARN, gettext("You're standing in a cloud of %s!"),
-                         cloud_name_at_index(cloudidx).c_str());
+                         _(cloud_name_at_index(cloudidx).c_str()));
                 }
                 return false;
             }

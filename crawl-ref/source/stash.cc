@@ -302,7 +302,7 @@ void Stash::update()
         feat_desc = "";
     else
     {
-        feat_desc = feature_description_at(coord_def(x, y), false,
+        feat_desc = feature_description_at(false, coord_def(x, y), false,
                                            DESC_A, false);
     }
 

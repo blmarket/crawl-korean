@@ -1403,7 +1403,7 @@ static bool _check_ability_possible(const ability_def& abil,
         {
             if (!quiet)
                 mprf("You cannot call out to %s while silenced.",
-                     god_name(you.religion).c_str());
+                     _(god_name(you.religion).c_str()));
             return false;
         }
     }
@@ -1944,7 +1944,7 @@ static bool _do_ability(const ability_def& abil)
 
         if (!spell_direction(spd, beam, DIR_NONE, TARG_HOSTILE, beam.range,
                              true, true, false, NULL,
-                             "Aiming: <white>Delayed Fireball</white>",
+                             _("Aiming: <white>Delayed Fireball</white>"),
                              false, &tgt))
         {
             return false;
@@ -1997,7 +1997,7 @@ static bool _do_ability(const ability_def& abil)
 
         zapping(ZAP_BREATHE_STICKY_FLAME, (you.form == TRAN_DRAGON) ?
                 2 * you.experience_level : you.experience_level,
-            beam, false, "You spit a glob of burning liquid.");
+            beam, false, _("You spit a glob of burning liquid."));
 
         you.increase_duration(DUR_BREATH_WEAPON,
                       3 + random2(10) + random2(30 - you.experience_level));
@@ -2463,7 +2463,7 @@ static bool _do_ability(const ability_def& abil)
         {
             /// 신의 이름이 인자로 들어옴.
             mprf(gettext("You beseech %s to protect your life."),
-                 god_name(you.religion).c_str());
+                 _(god_name(you.religion).c_str()));
         }
         // Might be a decrease, this is intentional (like Yred).
         you.duration[DUR_LIFESAVING] = 9 * BASELINE_DELAY

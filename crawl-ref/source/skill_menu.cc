@@ -554,7 +554,7 @@ string SkillMenuSwitch::get_help()
         {
             return make_stringf(gettext("Skills enhanced by the power of %s are in "
                                 "<blue>blue</blue>. "),
-                                god_name(you.religion).c_str());
+                                _(god_name(you.religion).c_str()));
         }
         else
         {

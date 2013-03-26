@@ -2871,7 +2871,7 @@ string monster::arm_name(bool plural, bool *can_plural) const
         *can_plural = true;
 
     string adj;
-    string str = "arm";
+    string str = _(M_("arm"));
 
     switch (mons_genus(type))
     {
@@ -5056,7 +5056,7 @@ void monster::apply_location_effects(const coord_def &oldpos,
             if (you.see_cell(pos()) && !visible_to(&you))
             {
                 string desc =
-                    feature_description_at(pos(), false, DESC_THE, false);
+                    feature_description_at(true, pos(), false, DESC_THE, false);
                 mprf(_("The bloodstain on %s disappears!"), desc.c_str());
             }
         }

@@ -392,7 +392,7 @@ static void _check_start_train()
             ++it;
 
     if (!skills.empty())
-        mpr("You resume training " + _skill_names(skills));
+        mpr(std::string(_("You resume training ")) + _(_skill_names(skills).c_str()));
 
     you.start_train.clear();
 }

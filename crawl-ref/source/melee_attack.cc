@@ -1171,7 +1171,7 @@ void melee_attack::player_aux_setup(unarmed_attack_type atk)
     switch (atk)
     {
     case UNAT_CONSTRICT:
-        aux_attack = aux_verb = "grab";
+        aux_attack = aux_verb = pgettext("verb","grab");
         aux_damage = 0;
         noise_factor = 10; // extremely quiet?
         break;

@@ -133,7 +133,7 @@ void set_terrain_seen(int x, int y)
         if (!is_boring_terrain(feat))
         {
             coord_def pos(x, y);
-            string desc = feature_description_at(pos, false, DESC_A);
+            string desc = feature_description_at(true, pos, false, DESC_PLAIN);
             take_note(Note(NOTE_SEEN_FEAT, 0, 0, desc.c_str()));
         }
     }

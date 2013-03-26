@@ -107,7 +107,7 @@ bool curse_an_item(bool quiet)
         if (!quiet)
         {
             mprf(MSGCH_GOD, gettext("The curse is absorbed by %s."),
-                 god_name(GOD_ASHENZARI).c_str());
+                 _(god_name(GOD_ASHENZARI).c_str()));
         }
         return false;
     }
@@ -1257,7 +1257,7 @@ static void _monster_die_cloud(const monster* mons, bool corpse, bool silent,
         prefix = gettext("'s corpse ");
     }
 
-    string msg = summoned_poof_msg(mons) + "!";
+    string msg = summoned_poof_msg(mons) + "!"; // " " + summoned_poof_msg(mons) + "!";
 
     cloud_type cloud = CLOUD_NONE;
     if (msg.find("smoke") != string::npos)
@@ -3030,9 +3030,9 @@ bool monster_polymorph(monster* mons, monster_type targetc,
             obj = _("something you cannot see");
         else
         {
-            obj = mons_type_name(targetc, DESC_A);
+            obj = _(mons_type_name(targetc, DESC_PLAIN).c_str());
             if (targetc == MONS_PULSATING_LUMP)
-                obj += " of flesh";
+                obj += _(" of flesh");
         }
 
         if (oldc == MONS_OGRE && targetc == MONS_TWO_HEADED_OGRE)
@@ -3061,7 +3061,7 @@ bool monster_polymorph(monster* mons, monster_type targetc,
 
     if (need_note || could_see && can_see && MONST_INTERESTING(mons))
     {
-        string new_name = can_see ? mons->full_name(DESC_A)
+        string new_name = can_see ? mons->full_name(DESC_PLAIN)
                                   : "something unseen";
 
         take_note(Note(NOTE_POLY_MONSTER, 0, 0, old_name_a.c_str(),

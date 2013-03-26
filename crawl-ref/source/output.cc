@@ -1242,7 +1242,7 @@ void print_stats(void)
 static string _level_description_string_hud()
 {
     const PlaceInfo& place = you.get_place_info();
-    string short_name = branches[place.branch].shortname;
+    string short_name = _(branches[place.branch].shortname);
 
     if (brdepth[place.branch] > 1)
         short_name += make_stringf(":%d", you.depth);
@@ -1813,7 +1813,7 @@ static string _wiz_god_powers()
 
 static string _god_powers(bool simple)
 {
-    string godpowers = simple ? "" : god_name(you.religion) ;
+    string godpowers = simple ? "" : _(god_name(you.religion).c_str()) ;
     if (you.religion == GOD_XOM)
     {
         if (!you.gift_timeout)

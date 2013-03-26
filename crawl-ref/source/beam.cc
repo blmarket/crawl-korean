@@ -1142,11 +1142,11 @@ bool bolt::hit_wall()
         else
         {
             prompt += pgettext("beam", "the targeted ")
-                    + feature_description_at(target, false, DESC_PLAIN, false);
+                    + feature_description_at(true, target, false, DESC_PLAIN, false);
         }
 
         prompt += pgettext("beam", " is blocked by ")
-                + feature_description_at(pos(), false, DESC_A, false);
+                + feature_description_at(true, pos(), false, DESC_PLAIN, false);
 
         prompt += gettext(". Continue anyway?");
 

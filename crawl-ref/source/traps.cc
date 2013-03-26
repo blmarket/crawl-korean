@@ -1165,7 +1165,7 @@ void disarm_trap(const coord_def& where)
     if (_disarm_is_deadly(trap))
     {
         string prompt = make_stringf(_("Really try disarming that %s?"),
-                                     feature_description_at(where, "",
+                                     feature_description_at(true, where, "",
                                                             DESC_BASENAME,
                                                             false).c_str());
 
@@ -1489,7 +1489,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (!force_hit && (one_chance_in(5) || was_known && !one_chance_in(4)))
         {
-            mprf(_("You avoid triggering %s trap."), name(DESC_PLAIN).c_str());
+            mprf(_("You avoid triggering %s trap."), _(name(DESC_PLAIN).c_str()));
             return;         // no ammo generated either
         }
     }
@@ -1497,7 +1497,7 @@ void trap_def::shoot_ammo(actor& act, bool was_known)
     {
         if (was_known && you.see_cell(pos) && you.can_see(&act))
             mprf(_("%s avoids triggering %s trap."), act.name(DESC_THE).c_str(),
-                 name(DESC_PLAIN).c_str());
+                 _(name(DESC_PLAIN).c_str()));
         return;
     }
 

@@ -577,15 +577,15 @@ public:
             textcolor(channel_to_colour(MSGCH_PROMPT));
             if (crawl_state.game_is_hints())
             {
-                string more_str = "--more-- Press Space ";
+                string more_str = _("--more-- Press Space ");
                 if (is_tiles())
-                    more_str += "or click ";
-                more_str += "to continue. You can later reread messages with "
-                            "Ctrl-P.";
+                    more_str += _("or click ");
+                more_str += _("to continue. You can later reread messages with "
+                            "Ctrl-P.");
                 cprintf(more_str.c_str());
             }
             else
-                cprintf("--more--");
+                cprintf(_("--more--"));
 
             readkey_more(user);
         }
@@ -1615,8 +1615,8 @@ void replay_messages(void)
 {
     formatted_scroller hist(MF_START_AT_END | MF_ALWAYS_SHOW_MORE, "");
     hist.set_more(formatted_string::parse_string(
-                        "<cyan>[up/<< : Page up.    down/Space/> : Page down."
-                        "                         Esc exits.]</cyan>"));
+                        _("<cyan>[up/<< : Page up.    down/Space/> : Page down."
+                        "                         Esc exits.]</cyan>")));
 
     const store_t msgs = buffer.get_store();
     for (int i = 0; i < msgs.size(); ++i)
