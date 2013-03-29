@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-26 22:12+0900\n"
+"POT-Creation-Date: 2013-03-28 21:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14640,6 +14640,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531
 msgid "The fire roars with new energy!"
@@ -28714,7 +28717,7 @@ msgstr "당신은 이제 조트의 권능을 통해 버섯의 원을 생성할 �
 
 #: player.cc:3335 player.cc:3502 player.cc:3512 player.cc:3516
 msgid "Your Zot abilities now extend through the making of bolt traps."
-msgstr "당신은 이제 조트의 권능을 통해 석궁화살 함정을 설치할 수 있다."
+msgstr "당신은 이제 조트의 권능을 통해 볼트 함정을 설치할 수 있다."
 
 #: player.cc:3337 player.cc:3504 player.cc:3514 player.cc:3518
 msgid ""
@@ -29899,6 +29902,9 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -33192,7 +33198,7 @@ msgstr "활"
 #: quiver.cc:174 quiver.cc:175
 msgctxt "quiver"
 msgid "crossbows"
-msgstr "석궁"
+msgstr "쇠뇌"
 
 #: quiver.cc:184 quiver.cc:185
 msgid "Quiver which item? (- for none, * to show all)"
@@ -35863,7 +35869,7 @@ msgstr "활"
 #: quiver.cc:203
 msgctxt "quiver"
 msgid "crossbow"
-msgstr "석궁"
+msgstr "쇠뇌"
 
 #: shopping.cc:211
 msgid "buy items"

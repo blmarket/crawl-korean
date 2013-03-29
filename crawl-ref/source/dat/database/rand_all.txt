@@ -18,55 +18,51 @@
 ######################################################
 _jewellery_animal_
 
-Magpie
+까치
 
-Firefly
+개똥벌레
 
-Scarab
+풍뎅이
 %%%%
 _jewellery_special_name_
 
-Disaster
+재난
 
-Ephemeral Luck
+잠깐의 행운_SUFFIX_
 
-Wishful Thinking
+헛된 바램_SUFFIX_
 
-Moodiness
+우울
 
-Reimbursement
+보상
 
-the Tempest
+천재지변
 
-Finality
+궁극성
 
-Attitude
+태도
 
-Lady Luck
+행운의 여신_SUFFIX_
 
-Temptation
+유혹
 
-False Pretenses
+사취죄
 %%%%
 _suspicion_name_
 
-Secrets
+비밀
 
-Suspicion
+의혹
 
-Mistrust
+불신
 
-Jealousy
+질투
 
-Incredulity
+무신념
 
-Doubts
+의심
 
-Suspected Treachery
-
-Scepticism
-
-Trepidation
+배신
 
 w:20
 @_conflict_name_@
@@ -78,38 +74,34 @@ w:20
 divine_esteem
 
 # good
-Esteem
+가호
 
-Favour
+존중
 
-Hope
+기쁨
 
-Regard
+희망
 
-Approval
+기대
 
-Delight
+승인
 
-Pride
+자부심
 
-Generosity
+관대함
 
-Supremacy
+최고
 
-Benevolence
+자비심
 
-Whim
+변덕
 
 # bad
-Displeasure
+불쾌함
 
-Envy
+분노
 
-Castigation
-
-Condemnation
-
-Reproof
+질투
 
 w:70
 @_anger_name_@
@@ -120,129 +112,122 @@ _xom_esteem_
 w:40
 @divine_esteem@
 
-Entertainment
+장난감
 
-Best Wishes
+간절한 소망
 
-Amusement
+즐거움
 
-Ringing Laughter
+울려퍼지는 웃음소리
 
-Bemusement
+곤혹
 
-Passing Interest
+곤혹스러움
 
-Full Attention
+놀잇감
 
-Whimsicality
+주의집중
 
-Capriciousness
+변덕
 
-Sleight of Hands
+변덕스러움
 
-Flight of Fancy
+교활함
 
-Absentmindedness
+망상
 
-Malicious Joy
+인사불성
 
-Fair Game
+악의있는 웃음
 
-Wantonness
+공정한 놀이
 
-Recklessness
+무자비함
+
+음란함
+
+까닭없음
+
+막무가내
 %%%%
 _time_name_
 
-Day
+낮
 
-Night
+밤
 
-Midnight
+한밤
 
-Twilight
+황혼
 
-Dawn
-
-w:5
-Spring
+새벽
 
 w:5
-Springtime
+봄
 
 w:5
-Summer
+봄날
 
 w:5
-Summertime
+여름
 
-Autumn
+w:5
+여름날
 
-Winter
+가을
 
-Midsummer
+겨울
 
-Midwinter
+한여름
 
-the Solstice
+한겨울
 
-the Harvest
+동지
 
-Eternal Night
+수확
 
-Eternity
+영겁의 밤_SUFFIX_
 
-Noon
-
-the Present
-
-the Morning
-
-the Evening
+영원
 %%%%
 _sky_colour_name_
 
-Black
+거무스름한
 
-Blue
+푸른
 
-Grey
+잿빛
 
-Orange
+노을진
 
-Purple
+보랏빛
 
-Red
+붉게 노을진
 %%%%
 _sky_or_light_
 
-the Sun
+w:25
+@_sky_colour_name_@ 하늘_SUFFIX_
 
-the Moon
+태양
 
-Light
+달
 
-Darkness
+빛
 
-Dim Light
+어둠
 
-the Shining Light
+희미함
 
-Sunlight
+내리쬐는 햇빛
 
-Starshine
+햇빛
 
-the Clouds
+별빛
 
-the Sky
+구름
 
-the Gloaming
-
-the Heavens
-
-the Skies Above
-
-the @_sky_colour_name_@ Skies
+하늘
 %%%%
 _virtue_or_vice_
 
@@ -255,222 +240,222 @@ w:5
 %%%%
 _virtue_name_
 
-Virtue
+미덕
 
-Truth
+진실
 
-Honesty
+정직
 
-Benevolence
+자비
 
-Devotion
+헌신
 
-Generosity
+관대
 
-Grace
+은혜
 
-Temperance
+절제
 
-Hospitality
+환대
 
-Charity
+자선
 
-Patience
+안내
 
-Modesty
+겸손
 %%%%
 _vice_name_
 
 # some of the deadly sins
-Sloth
+게으름
 
-Vanity
+헛됨
 
-Gluttony
+무의미
 
-Pride
+허영
 
-Greed
+식탐
+
+자만심
+
+욕심
 
 # general immorality
-Sin
+죄악
 
-the Original Sin
+원제
 
-Lies
+거짓됨
 
-Dishonesty
+부정직함
 
-Cowardice
+비겁함
 
-Dishonour
+불명예
 
-Impatience
+조바심
 
-Immorality
+부도덕함
 
-Amorality
+몰상식함
 
-Untruth
+부실함
 %%%%
 _destiny_name_
 
-Causality
+인과
 
-Destiny
+운명
 
-Fate
+사명
 
-Karma
+업보
 
-Kismet
+카르마
 
-Wyrd
+숙명
 
-Doom
+응보
 %%%%
 _number_or_qualifier_
 
 # exact numbers
-the Three
+세 개의
 
-the Four
+네 개의
 
-the Five
+다섯
 
-the Six
+여섯
 
-the Seven
+일곱
 
-the Eight
+여덟
 
-the Nine
+아홉
 
-the Ten
+열개의
 
-the Eleven
+열한개의
 
-w:5
-the Twelve
+열두개의
 
-w:5
-the Dozen
+열세개의
 
-the Thirteen
+오십개의
 
-the Fifty
+백 개의
 
-w:5
-a Hundred
+천 개의
 
-w:5
-the Hundredfold
-
-a Thousand
+만 개의
 
 # vague numbers
-the
+수없이 많은
 
-the Many
+수많은
 
-the Countless
+셀수 없는
 
-the Assorted
-
-the Manifold
+천문학적인
 
 # other qualifiers
-the Lost
+잃어버린
 
-the Forgotten
+잊혀진
 
-the Forsaken
+저버린
 
-the Hidden
+숨겨진
 
-the Last
+마지막
 
-the Lonely
+외로운
 
-the Jolly
+즐거운
 
-the Ancient
+고대의
 
-the Exiled
+추방당한
 
-the Illusory
+환영의
 
-the Pure
+순수한
 
-the Peculiar
+기이한
 
-the Special
+이상한
+
+특별한
+
+유일한
 %%%%
 _thing_names_
 
-Suns
+태양
 
-Moons
+달
 
-Stars
+별
 
-Planets
+행성
 
-Hells
+지옥
 
-Lives
+삶
 
-Deaths
+죽음
 
-Curses
+저주
 
-Blessings
+축복
 
-Gods
+신
 
-Spirits
+영혼
 
-Ghosts
+유령
 
-Demons
+악마
 
-Wars
+전쟁
 
-Mice
+쥐
 
-Eyes
+눈
 
-Nights
+밤
 
-Orbs
+오브
 
-Runes
+룬
 
-Seas
+바다
 
-Places
+장소
 
-Realms
+렐름
 
-Wishes
+소망
 
-Wonders
+불가사의
 
-Beds
+침대
 
-Beggars
+거지
 
-Cities
+도시
 
-Dances
+춤
 
-Lies
+거짓말
 
-Ships
+돛단배
 
-Songs
+노래
 
-Souls
+영혼
 
-Tales
+이야기
 %%%%

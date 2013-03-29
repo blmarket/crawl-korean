@@ -15,751 +15,837 @@
 _armour_animal_
 
 # microorganisms
-Amoeba
+아메바
+
+박테리아
 
 # insects
-Butterfly
+나비
 
-Cicada
+매미
 
-Cricket
+크리켓
 
-Ladybird
+바늘두더지
 
-Ant
+무당벌레
 
-Cockroach
+메뚜기
 
-Locust
+개미
 
-Louse
+귀뚜라미
+
+베짱이
+
+바퀴벌레
 
 # invertebrates
-Slug
+민달팽이
 
-Snail
+달팽이
 
-Gastropod
+복족류
 
-Trilobite
+지네
 
-Centipede
+지렁이
 
-Cuttlefish
+삼엽충
 
-Worm
+갑오징어
 
 # arachnids and clams
-Tarantula
+타란튤라
 
-Clam
+조개
 
-Barnacle
+바나클
 
-Lobster
+바닷가재
 
 # amphibians and reptiles
-Tortoise
+남생이
 
-Turtle
+거북이
 
-Frog
+개구리
 
-Komodo Dragon
+코모도 왕도마뱀_SUFFIX_
 
-Lizard
+용
 
-Salamander
+도마뱀
 
-Serpent
+샐러맨더
+
+비단구렁이
 
 # birds
-Turtledove
+산비둘기
 
-Nightingale
+나이팅게일
 
-Meadowlark
+들종다리
 
-Eagle
+이글
 
-Falcon
+팔콘
 
-Heron
+송골매
 
-Raven
+독수리
 
-Sparrow
+왜가리
 
-Swan
+까마귀
+
+참새
+
+백조
+
+오리
 
 # mammals
-Hare
+토끼
 
-Kangaroo
+캥거루
 
-Elephant
+코끼리
 
-Zebra
+얼룩말
 
-Hippo
+하마
 
-Monkey
+원숭이
 
-Bull
+물소
 
-Camelopard
+기린
 
-Dolphin
+돌고래
 
-Echidna
+두더지
 
-Hart
+사슴
 
-Lion
+사자
 
-Stallion
+호랑이
+
+표범
+
+하이에나
+
+재규어
+
+퓨마
+
+치타
+
+종자말
 
 # not strictly an animal... :)
-Monkey's Uncle
+유인원
+
+침팬지
+
+고릴라
+
+오랑우탄
+
+보노보
 
 #classical mythical animals
-Cockatrice
+바실리스크
 
-Dragon
+드래곤
 
-Griffon
+그리폰
 
-Kraken
+크라켄
 
 # modern mythical animals
-Dropbear
+드라프베어_SUFFIX_
 
-Jackalope
+재칼로프_SUFFIX_
 
-Wild Haggis
+하기스_SUFFIX_
 
-Chupacabra
+츄파카브라_SUFFIX_
+
+전투 코알라_SUFFIX_
 %%%%
 _flower_name_
 
-Lilacs
+라일락
 
-Daffodils
+수선화
 
-the Rose
+장미
 
-the Garden
+나팔꽃
 
-Daisies
+제비꽃
 
-the Thistle
+달맞이꽃
 
-Tulips
+물망초
 
-the Lily
+해바라기
 
-the Lotus Blossom
+릴리
+
+수레국화
+
+벚꽃
+
+패랭이
+
+튤립
+
+데이지_SUFFIX_
+
+코스모스_SUFFIX_
+
+델피니움_SUFFIX_
+
+리시안사스_SUFFIX_
+
+공중 정원_SUFFIX_
 %%%%
 # non-Crawl critters
 _critter_name_
 
-Slorg
+진창
 
-Alphagorgon
+알파고르곤_SUFFIX_
 
 # from the crawl.akrasiac.org patch.
-Hot Ocelot
+뜨거운 오셀롯_SUFFIX_
 
-Eight Boll Weevils
+여덟 목화 바구미_SUFFIX_
 
-Grue
+몸서리
 
-Jabberwock
+전율
+
+무의미한 말_SUFFIX_
 
 w:1
-Were-rabbit
+토끼 인간_SUFFIX_
 
-Wumpus
+범프스
 %%%%
 _discomfort_and_inaction_
 
 # discomfort
-Minor Irritation
+저자극
 
-Bitterness
+쓰디씀
 
-Negation
+부정
 
-Failure
+실패
 
-Servitude
+예속
 
-Submission
-
-Insecurity
-
-Vexation
+복종
 
 # inaction
-Lifelessness
+무생물
 
-Boredom
+지루
 
-Ennui
+권태
 
-Restlessness
+저돌
 
-Omission
+형벌
 
-Negligence
+오명
 
-Inaction
+활발
 
-Oblivion
-
-the Doldrums
-
-Listlessness
+휴면
 %%%%
 _mental_illness_armour_
 
-Paranoia
+파라노이아_SUFFIX_
 
-Claustrophobia
+클라우스트로포비아_SUFFIX_
 
-Agoraphobia
+아고라포비아_SUFFIX_
 
-Dyspraxia
+디스프랙시어_SUFFIX_
 
-Mental Paralysis
+정신 분열_SUFFIX_
 
-Catatonia
+캐타토니아_SUFFIX_
 
-Depression
+불경기
 
-Hysteria
+히스테리
 
-Kleptomania
+도벽
 
-Melancholy
+우울
 
-Masochism
+가학성 변태성욕_SUFFIX_
 
-Narcissism
+자아도취_SUFFIX_
 %%%%
 _good_or_divine_
 
 # good things
-the Good
+선함
 
-the Leaf
+잎사귀
 
-Leaves
+삼잎
 
-Music
+선율
 
-Birdsong
+지저귐
 
-Brilliance
+광명
 
-Satisfaction
+편안함
 
-Fun
+희학
 
-Joy
+환희
 
-Happiness
+행복
 
-Wonder
+행복
 
-Surprise
+놀라움
 
-Curiosity
+이상함
 
-Creativity
+호기심
 
-Beauty
+창조욕
 
-Life
+미모
 
-Liberty
+생명
 
-Freedom
+삶
 
-Amelioration
+쟁취
 
-Awe
+자유
 
-Contentment
+혁신
 
-Mirth
+만족
+
+환락
 
 # divine events
-Divine Compulsion
+신들의 통치_SUFFIX_
 
-the Invisible Hand
+보이지 않는 손_SUFFIX_
 
-Divine Intervention
+신성한 개입_SUFFIX_
 
-Intercession
+중재
 
-Miracles
+기적
 
-Salvation
+구원
 
-the Will of the Gods
+신의 의지_SUFFIX_
 %%%%
 # in contrast to "_wacky_armour_name_" these do have some
 # connection to armour and protection
 _armour_name_shielding_
 
-Shielding
+차폐
 
-Impermeability
+불침투
 
-Defence
+방어
 
-Death's Door
+죽음의 아가리_SUFFIX_
 
-the Gate
+관문
 
-the Saviour
+구세주
 
-the Untouchables
+불가촉천민
 
-the Armoured One
+무장한 자
 
-Exclusion
+배척
 
-Repulsion
+반발력
 
-Inviolability
+불가침
 
-Refuge
+피난
 
-the Bulwark
+보루_SUFFIX_
 
-the Ward
+차단
 
-Fortification
+강화
 %%%%
 # other armour properties (beside protection)
 _armour_property_name_
 
-Supple Strength
+강인
 
-Death Resistance
+죽음에의 항전_SUFFIX_
 
-Grace
+은총
 
-Weightlessness
+가벼움
 
-Shadows and Fog
+그림자와 안개_SUFFIX_
 
-Disguise
+변장
 
-Least Resistance
+최소한의 저항_SUFFIX_
 
-Protective Custody
+구치
 
-Resilience
+회복
 
-Fashionability
+최신 유행
 
-Impressiveness
+눈에 확 띄는_NOPOS_
 %%%%
 _wacky_armour_name_
 
-the Onion
+회전
 
-Vlad
+양파
 
-the Eternal Fruit
+브라드 공_SUFFIX_
 
-Plasticity
+영혼의 열매_SUFFIX_
 
-Baldness
+유연
 
-Terror
+대머리
 
-Good Intentions
+공포
 
-the Arcane
+전율
 
-Anaesthesia
+올바른 생각_SUFFIX_
 
-the Armadillo
+아르카나
 
-Weirdness
+무통각
 
-Pathos
+아르마딜로
 
-Loss
+초자연
 
-Hedging
+격정
 
-Indemnity
+호운
 
-Untold Secrets
+손해
 
-the Earth
+보험
 
-Limited Liability
+배상
 
-Hadjma
+제약
 
-Hairiness
+배척
 
-Space
+알려지지 않은 비밀_SUFFIX_
 
-the Vacuum
+대지
 
-Compression
+유한한 책임
 
-Decompression
+하잠
 
-the Loofah
+야만
 
-Love and Death
+강인
 
-Indecent Exposure
+공간
 
-the Road Less Travelled
+진공
 
-the Blind Marksman
+가압
 
-Too Many Cooks
+감압
 
-Thrice Damned Blessings
+수세미
 
-Duck's Teeth
+사랑의 몰락_SUFFIX_
+
+과다 노출
+
+도보 여행_SUFFIX_
+
+맹인 사수 _SUFFIX_
+
+쓸모 없는_NOPOS_
+
+세 저주와 축복_SUFFIX_
+
+오리 이빨_SUFFIX_
 %%%%
 # Lemuel's suggestions
 _celestial_bodies_
 
-Sun
+태양
 
-Moon
+달
 
-Stars
+별
 
-Planets
+행성
 
-Pleiades
+성운
 
-Morning Star
+샛별
 
-Evening Star
+태백성
 
-Comet
+혜성
 
-w:5
-Midnight Sun
-
-w:5
-Blue Moon
+월식
 
 w:5
-Harvest Moon
+미드나잇 썬_SUFFIX_
+
+w:5
+블루문_SUFFIX_
+
+w:5
+하베스트 문_SUFFIX_
 
 # astrological
-Black Moon
+흑월
 %%%%
 _instrument_name_
 
-Trumpets
+나팔
 
-the Kettle-Drum
+케틀드럼
 
-the Accordion
+아코디언
 
-the Bagpipe
+백파이프
 
-the Lute
+류트
 
-the Bells
+종소리
 
-Chimes
+차임
 
-the Flute
+플루트
 
-the Harp
+하프
 
-the Gusle
+구슬라
 %%%%
 _evil_being_
 
-the Devil
+악마
 
-Demons
+마왕
 
-Lesser Demons
+반마족
 
-Greater Demons
+마족
 
-the Iron Devil
+임프
 
-the Devil's Advocate
+악마숭배
 
-the Demon Prince
+대악마
 
-the Evil One
+강철의 악마_SUFFIX_
 
-the Furies
+더 데빌스 애드버킷_SUFFIX_
 
-the Prince of Darkness
+악마 왕자_SUFFIX_
 
-the Fiend
+사악한 자_SUFFIX_
 
-w:5
-the Archfiend
+퓨리스_SUFFIX_
 
-the Little Devil
+어둠의 왕자_SUFFIX_
 
-the Imp
+마왕
 
-the Villain
+사탄
+
+소악마
 %%%%
 _weather_name_
 
-the First Snow
+첫눈
 
-Boiling Hail
+몰아치는 파도_SUFFIX_
 
-Perpetual Drought
+가뭄
 
-the Thunderstorm
+폭풍우
 
-the Hurricane
+템페스트_SUFFIX_
 
-Blue Skies
+태풍
 
-Pleasant Breezes
+푸른 하늘_SUFFIX_
 
-the Blizzard
+잔잔한 바람_SUFFIX_
 
-Chill Winds
+매서운 추위_SUFFIX_
+
+눈보라
 %%%%
 _profession_name_
 
-Guilds
+길드
 
-Guild-Master
+길드마스터
 
-Apprentice
+도자기장인
 
-Blacksmith
+대장장이
 
-Carpenter
+목수
 
-Wheelwright
+나무꾼
 
-Cooper
+미장이
 
-Fisher
+어부
 
-Hunter
+사냥꾼
 
-Ditch-Digger
+노동자
 
-Guardian
+수호자
 
-Beekeeper
+양봉가
 
-Gardener
+정원사
 
-Soldier
+병사
 
-Farrier
+수의사
 
-Engineer
+기술자
 
-Barber Surgeon
+이발사
 
-Journeyman
+여행자
 
-Scribe
+학자
 
-Bard
+음유시인
 
-Undertaker
+장의사
 
-Beggar
+거지
 
-Merchant
+상인
 
-Sailor
+선원
 
-Gravedigger
+묘지기
 
-Pirate
+해적
 
-Buccaneer
+해적왕
 %%%%
 # something for Xom
 _game_name_
 
 # general games
-Fun and Games
+놀이
 
-the Great Game
+위대한 놀이_SUFFIX_
 
-the Game Afoot
-
-Parlour Games
-
-the Game of Kings
+왕의 시험_SUFFIX_
 
 # children's games
-Peek-a-Boo
+술래잡기
 
-Hide-and-Seek
+숨바꼭질
 
-Leapfrog
+목마
 
-Hopscotch
+사방치기
 
-Follow the Leader
+나를 따르라_SUFFIX_
 
-the King of the Hill
+언덕 위의 왕_SUFFIX_
 
-Mumblety Peg
+잭나이프
 
 # board games etc.
-the Game of Life
+생태계
 
-Card Tricks
+카드트릭
 
-Hangman
+사형수
 
-the Dice
+주사위
 
-Jigsaw
+직소
 
-Whack-A-Mole
+두더지
 
-Ladders and Snakes
+사다리
 
-Marbles
+대리석
 
-Noughts and Crosses
+틱-택-토_SUFFIX_
 %%%%
 _politics_name_armour_
 
-the King
+군주
 
-the Queen
+여왕
 
-Royalty
+왕족
 
-Nobility
+귀족
 
-the Republic
+공화국
 
-the Empire
+제국
 
-Coronation
+대관식
 
-the Commoners
+평민
 
-the Peasants
+농부
 
-the Townfolk
+마을
 
-the City
+도시
 
-the Country
+국가
 
-the Suburbs
+교외
 
-the Mutiny
+반란
 
-the Crown
+왕관
 
-the Duke
+공작
 
-the Duchess
+후작
 
-the Rabble
+백작
 
-the Prince
+자작
 
-the Princeling
+남작
 
-the Princess
+폭도
 
-the Oligarchy
+왕자
 
-the Cast Vote
+군주
 
-the Burgomaster
+공주
 
-the Failed Coup
+과두제
+
+시장
+
+쿠데타
 %%%%
 _other_armour_name_
 
-#unpleasantness
-w:5
-Grot
+지저분함
 
-w:5
-Grottiness
+지저분한_NOPOS_
 
-Filth
+더러움
 
-Slovenliness
+쓰레기
+
+쓰레기_NOPOS_
 
 # magic
-Magic
+마법
 
-Sorcery
+마법학
 
-Broken Taboos
+깨진 금기_SUFFIX_
 
-Bedevilment
+괴롬힘
 
 # other
-Crawling
+기어감
 
-the Orb
+오브
 
-the Orb Guardian
+오브수호자
 
-the Storm King
+뇌신
 
-the Hanged Man
+매달린 자_SUFFIX_
 
-Hedge Wizardry
+해지
 
-Feasting
+연회
 
-Insatiable Hunger
+끝없는 배고픔_SUFFIX_
 
-Imperfection
+불완전
 
-Trial and Error
+시행착오
 
-Disaster
+재앙
 
-Wrong Decisions
+오판단
 
-Unambiguity
+명료함
 
-the Lost Path
+길잃음
 
-Misanthropy
+대인기피
 
-Wasted Space
+공간 낭비_SUFFIX_
 
-the Other World
+또다른 세계_SUFFIX_
 
-Inevitability
+불가피한_NOPOS_
 %%%%
 _plain_armour_name_
 
-Forget-Me-Not
+물망초
 
-Hero's Friend
+영웅의 친구_SUFFIX_
 
-Trusted Companion
+믿음의 동반자_SUFFIX_
+
+경호
+
+농담
+
+희학
+
+끊임없는 경계
+
+겁쟁이
+
+초자연
+
+호운
+
+책무
+
+유지
+
+묵비
 %%%%

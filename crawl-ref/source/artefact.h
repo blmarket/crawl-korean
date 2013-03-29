@@ -91,7 +91,7 @@ string get_artefact_name(const item_def &item, bool force_known = false);
 
 void set_artefact_name(item_def &item, const string &name);
 
-string make_artefact_name(const item_def &item, bool appearance = false);
+string make_artefact_name(bool allow_translate, const item_def &item, bool appearance = false);
 string replace_name_parts(const string &name_in, const item_def& item);
 
 int find_okay_unrandart(uint8_t aclass, uint8_t atype = OBJ_RANDOM,

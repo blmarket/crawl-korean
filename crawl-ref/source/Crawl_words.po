@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-26 22:12+0900\n"
+"POT-Creation-Date: 2013-03-28 21:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4142,7 +4142,7 @@ msgstr "화살 함정 생성"
 #: abl-show.cc:449 abl-show.cc:449 abl-show.cc:446 abl-show.cc:455
 #: abl-show.cc:400 abl-show.cc:402
 msgid "Make bolt trap"
-msgstr "석궁화살 함정 생성"
+msgstr "볼트 함정 생성"
 
 #: abl-show.cc:450 abl-show.cc:450 abl-show.cc:447 abl-show.cc:456
 #: abl-show.cc:401 abl-show.cc:403
@@ -7011,7 +7011,7 @@ msgstr "바늘 함정"
 #: directn.cc:2923 directn.cc:2923 directn.cc:2926 directn.cc:2933
 #: directn.cc:2901 directn.cc:2917
 msgid "bolt trap"
-msgstr "석궁화살 함정"
+msgstr "볼트 함정"
 
 #: directn.cc:2925 directn.cc:2925 directn.cc:2928 directn.cc:2935
 #: directn.cc:2903 directn.cc:2919
@@ -7679,7 +7679,7 @@ msgstr "투석기"
 #: itemprop.cc:357 itemprop.cc:357 itemprop.cc:364 itemprop.cc:345
 #: itemprop.cc:348
 msgid "crossbow"
-msgstr "석궁"
+msgstr "쇠뇌"
 
 #: itemprop.cc:360 itemprop.cc:360 itemprop.cc:367 itemprop.cc:348
 #: itemprop.cc:351
@@ -7714,7 +7714,7 @@ msgstr "화살"
 #: itemprop.cc:384 itemprop.cc:384 itemprop.cc:391 itemprop.cc:372
 #: describe.cc:555 itemprop.cc:375 describe.cc:523
 msgid "bolt"
-msgstr "석궁화살"
+msgstr "볼트"
 
 #: itemprop.cc:385 itemprop.cc:385 itemprop.cc:392 itemprop.cc:373
 #: itemprop.cc:376
@@ -9221,11 +9221,11 @@ msgstr "바람의 형속"
 
 #: skills2.cc:84 skills2.cc:81
 msgid "Crossbows"
-msgstr "석궁술"
+msgstr "쇠뇌술"
 
 #: skills2.cc:84 skills2.cc:81
 msgid "Bolt Thrower"
-msgstr "석궁잡이"
+msgstr "쇠뇌잡이"
 
 #: skills2.cc:84 skills2.cc:81
 msgid "Quickloader"
@@ -11593,6 +11593,8 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -16561,3 +16563,289 @@ msgstr "위습 변신"
 #: spl-summoning.cc:2688 spl-summoning.cc:2704
 msgid "barrage of energy"
 msgstr "발사된 마력"
+
+####################
+# unrandart names. #
+####################
+
+msgid "Wrath of Trog"
+msgstr "트로그의 분노"
+
+msgid "Glaive of Prune"
+msgstr "자두 글레이브"
+
+msgid "Sword of Power"
+msgstr "마력의 검"
+
+msgid "Mace of Variability"
+msgstr "변덕의 메이스"
+
+msgid "Staff of Olgreb"
+msgstr "올그레브의 지팡이"
+
+msgid "Staff of Wucad Mu"
+msgstr "우카드 무의 지팡이"
+
+msgid "Vampire's Tooth"
+msgstr "흡혈귀의 송곳니"
+
+msgid "Scythe of Curses"
+msgstr "저주의 낫"
+
+msgid "Sword of Zonguldrok"
+msgstr "존굴르드로크의 검"
+
+msgid "Sword of Cerebov"
+msgstr "세레보브의 검"
+
+msgid "Staff of Dispater"
+msgstr "디스페이터의 지팡이"
+
+msgid "Sceptre of Asmodeus"
+msgstr "아스모데우스의 셉터"
+
+msgid "faerie dragon armour"
+msgstr "요정 용 갑옷"
+
+msgid "demon blade \"Bloodbane\""
+msgstr "악마의 칼날 \"블러드베인\""
+
+msgid "scimitar of Flaming Death"
+msgstr "불타는 죽음의 시미터"
+
+msgid "mace of Brilliance"
+msgstr "광채의 메이스"
+
+msgid "demon blade \"Leech\""
+msgstr "악마의 칼날 \"거머리\""
+
+msgid "dagger of Chilly Death"
+msgstr "사파이어 단도 \"얼어붙는 죽음\""
+
+msgid "dagger \"Morg\""
+msgstr "단도 \"모르그\""
+
+msgid "scythe \"Finisher\""
+msgstr "대형 낫 \"최후의 일격\""
+
+msgid "sling \"Punk\""
+msgstr "투석기 \"펑크\""
+
+msgid "bow of Krishna \"Sharnga\""
+msgstr "크리슈나의 활 \"차량가\""
+
+msgid "giant club \"Skullcrusher\""
+msgstr "거대 곤봉 \"두개골 파괴자\""
+
+msgid "glaive of the Guard"
+msgstr "파수꾼의 글레이브"
+
+msgid "sword of Jihad"
+msgstr "지하드의 검"
+
+msgid "crossbow \"Hellfire\""
+msgstr "쇠뇌 \"지옥불\""
+
+msgid "sword of the Doom Knight"
+msgstr "다이아몬드 대검 \"심판의 기사\""
+
+msgid "morningstar \"Eos\""
+msgstr "모닝스타 \"에오스\""
+
+msgid "spear of the Botono"
+msgstr "부두인형의 창"
+
+msgid "trident of the Octopus King"
+msgstr "문어왕의 삼지창"
+
+msgid "mithril axe \"Arga\""
+msgstr "미스릴 도끼 \"아루가\""
+
+msgid "Elemental Staff"
+msgstr "다섯 원소의 지팡이"
+
+msgid "crossbow \"Sniper\""
+msgstr "쇠뇌 \"저격수\""
+
+msgid "longbow \"Piercer\""
+msgstr "장궁 \"꿰뚫는 자\""
+
+msgid "blowgun of the Assassin"
+msgstr "암살자의 블로우 건"
+
+msgid "lance \"Wyrmbane\""
+msgstr "랜스 \"와이엄베인\""
+
+msgid "Spriggan's Knife"
+msgstr "스프리건의 나이프"
+
+msgid "plutonium sword"
+msgstr "방사능 검"
+
+msgid "great mace \"Undeadhunter\""
+msgstr "대형 메이스 \"망자를 쫒는 자\""
+
+msgid "whip \"Snakebite\""
+msgstr "채찍 \"사교상\""
+
+msgid "knife of Accuracy"
+msgstr "명중의 단도"
+
+msgid "Lehudib's crystal spear"
+msgstr "레후디브의 수정창"
+
+msgid "captain's cutlass"
+msgstr "해적선장의 커틀라스"
+
+msgid "storm bow"
+msgstr "폭풍의 활"
+
+msgid "large shield of Ignorance"
+msgstr "무지의 대형 방패"
+
+msgid "robe of Augmentation"
+msgstr "증강의 로브"
+
+msgid "cloak of the Thief"
+msgstr "도둑의 망토"
+
+msgid "shield \"Bullseye\""
+msgstr "방패 \"황소의 눈\""
+
+msgid "crown of Dyrovepreva"
+msgstr "다이로베프러버의 왕관"
+
+msgid "hat of the Bear Spirit"
+msgstr "곰 영혼의 모자"
+
+msgid "robe of Misfortune"
+msgstr "불운의 로브"
+
+msgid "cloak of Flash"
+msgstr "섬광의 망토"
+
+msgid "boots of the Assassin"
+msgstr "암살자의 장화"
+
+msgid "Lear's chain mail"
+msgstr "리어 왕의 사슬 갑옷"
+
+msgid "skin of Zhor"
+msgstr "즈홀의 가죽"
+
+msgid "salamander hide armour"
+msgstr "샐러맨더의 가봉ㅅ"
+
+msgid "gauntlets of War"
+msgstr "전쟁의 건틀렛"
+
+msgid "shield of Resistance"
+msgstr "내성의 방패"
+
+msgid "robe of Folly"
+msgstr "우둔의 로브"
+
+msgid "Maxwell's patent armour"
+msgstr "맥스웰의 특허 갑옷"
+
+msgid "mask of the Dragon"
+msgstr "용의 가면"
+
+msgid "robe of Night"
+msgstr "암야의 로브"
+
+msgid "armour of the Dragon King"
+msgstr "용왕의 갑옷"
+
+msgid "hat of the Alchemist"
+msgstr "연금술사의 모자"
+
+msgid "fencer's gloves"
+msgstr "검사의 장갑"
+
+msgid "cloak of Starlight"
+msgstr "별빛의 망토"
+
+msgid "ratskin cloak"
+msgstr "쥐가죽 망토"
+
+msgid "shield of the gong"
+msgstr "징 방패"
+
+msgid "amulet of the Air"
+msgstr "대기의 부적"
+
+msgid "ring of Shadows"
+msgstr "그림자의 반지"
+
+msgid "amulet of Cekugob"
+msgstr "세크코브의 부적"
+
+msgid "amulet of the Four Winds"
+msgstr "사방위 바람의 부적"
+
+msgid "necklace of Bloodlust"
+msgstr "피에 굶주린 목걸이"
+
+msgid "ring of Shaolin"
+msgstr "소림사의 반지"
+
+msgid "ring of Robustness"
+msgstr "강건의 반지"
+
+msgid "ring of the Mage"
+msgstr "현자의 반지"
+
+msgid "brooch of Shielding"
+msgstr "차폐의 브로치"
+
+msgid "robe of Clouds"
+msgstr "구름의 로브"
+
+msgid "hat of Pondering"
+msgstr "심사숙고의 모자"
+
+msgid "obsidian axe"
+msgstr "흑요석 도끼"
+
+msgid "lightning scales"
+msgstr "번개 비늘"
+
+msgid "Black Knight's horse barding"
+msgstr "흑기사의 마갑"
+
+msgid "ring of Vitality"
+msgstr "활력의 반지"
+
+msgid "autumn katana"
+msgstr "가을 카타나"
+
+msgid "shillelagh \"Devastator\""
+msgstr "몽둥이 \"완전한 파괴\""
+
+msgid "dragonskin cloak"
+msgstr "용가죽 망토"
+
+msgid "opalescent scaly cloak"
+msgstr "오색 비늘 망토"
+
+msgid "ring of the Octopus King"
+msgstr "문어왕의 반지"
+
+msgid "Axe of Woe"
+msgstr "재앙의 도끼"
+
+msgid "milk chocolate"
+msgstr "우유 초콜릿"
+
+msgid "dark chocolate"
+msgstr "다크 초콜릿"
+
+msgid "great serpentine sword"
+msgstr "구부러진 장검"
+
+msgid "golden staff"
+msgstr "황금 지팡이"
+
+msgid "ruby sceptre"
+msgstr "루비 셉터"
