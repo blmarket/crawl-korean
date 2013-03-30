@@ -86,8 +86,8 @@ string prep_branch_level_name(unsigned short packed_place)
     string place = place_name(packed_place, true, true);
     if (!place.empty() && place != "Pandemonium")
         place[0] = tolower(place[0]);
-    return (place.find("level") == 0 ? "에서," + place
-                                     : "에서, " + place);
+    return (place.find("level") == 0 ? place + "에서,"// "on " + place
+                                     : place + "에서,"); // "in " + place);
 }
 
 // Use current branch and depth
