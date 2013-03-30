@@ -789,10 +789,10 @@ static string _handedness_string(const item_def &item)
     switch (hands_reqd(item, you.body_size()))
     {
     case HANDS_ONE:
-        description += "It is a one handed weapon.";
+        description += _("It is a one handed weapon.");
         break;
     case HANDS_TWO:
-        description += "It is a two handed weapon.";
+        description += _("It is a two handed weapon.");
         break;
     }
 
@@ -829,20 +829,20 @@ static string _describe_weapon(const item_def &item, bool verbose)
         switch (weapon_skill(item))
         {
         case SK_POLEARMS:
-            description += "\n\nIt can be evoked to extend its reach.";
+            description += _("\n\nIt can be evoked to extend its reach.");
             break;
         case SK_AXES:
-            description += "\n\nIt can hit multiple enemies in an arc"
-                           " around the wielder.";
+            description += _("\n\nIt can hit multiple enemies in an arc"
+                           " around the wielder.");
             break;
         case SK_SHORT_BLADES:
             // TODO: should we mention stabbing for "ok" stabbing weapons?
             // (long blades, piercing polearms, and clubs)
             {
-                string adj = (item.sub_type == WPN_DAGGER) ? "extremely"
-                                                           : "particularly";
-                description += "\n\nIt is " + adj + " good for stabbing"
-                               " unaware enemies.";
+                string adj = (item.sub_type == WPN_DAGGER) ? pgettext("shortblades","extremely")
+                                                           : pgettext("shortblades","particularly");
+                description += _("\n\nIt is ") + adj + _(" good for stabbing"
+                               " unaware enemies.");
             }
             break;
         default:
@@ -1612,7 +1612,7 @@ static string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(drawn_cards[i]);
+            description += _(card_name(drawn_cards[i]));
         }
         description += "\n";
     }
@@ -1630,7 +1630,7 @@ static string _describe_deck(const item_def &item)
             {
                 if (i != 0)
                     description += ", ";
-                description += gettext(card_name(card));
+                description += _(card_name(card));
                 last_known_card = i;
             }
             else
@@ -1658,7 +1658,7 @@ static string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(marked_cards[i]);
+            description += _(card_name(marked_cards[i]));
         }
         description += "\n";
     }
@@ -1684,7 +1684,7 @@ static string _describe_deck(const item_def &item)
         {
             if (i != 0)
                 description += ", ";
-            description += card_name(seen_cards[i]);
+            description += _(card_name(seen_cards[i]));
         }
         description += "\n";
     }
@@ -1847,7 +1847,7 @@ string get_item_description(const item_def &item, bool verbose,
                 }
                 else
                 {
-                    description << uppercase_first(item.name(true, DESC_A, true,
+                    description << uppercase_first(item.name(true, DESC_PLAIN, true,
                                                              false, false));
                     description << ".\n";
                 }

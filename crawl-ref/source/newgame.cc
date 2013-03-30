@@ -513,7 +513,7 @@ bool choose_game(newgame_def* ng, newgame_def* choice,
                 (is_vowel(specs[0])) ? "n" : "", gettext(specs.c_str()),
                 gettext(get_job_name(ng->job)));
 
-        enter_player_name(choice);		if(choice->name == "test") choice->name = "한글이름";
+        enter_player_name(choice);		if(choice->name == "test") choice->name = "메루루";
         ng->name = choice->name;
         ng->filename = get_save_filename(choice->name);
 

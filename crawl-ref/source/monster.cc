@@ -850,7 +850,7 @@ void monster::equip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, gettext(" wields %s."),
-                 item.name(true, DESC_A, false, false, true, false,
+                 item.name(true, DESC_PLAIN, false, false, true, false,
                            ISFLAG_CURSED).c_str());
         msg = simple_monster_message(this, info);
     }
@@ -946,7 +946,7 @@ void monster::equip_armour(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, gettext(" wears %s."),
-                 item.name(true, DESC_A).c_str());
+                 item.name(true, DESC_PLAIN).c_str());
         simple_monster_message(this, info);
     }
 
@@ -961,7 +961,7 @@ void monster::equip_jewellery(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, _(" puts on %s."),
-                 item.name(true, DESC_A).c_str());
+                 item.name(true, DESC_PLAIN).c_str());
         simple_monster_message(this, info);
     }
 
@@ -1035,7 +1035,7 @@ void monster::unequip_weapon(item_def &item, int near, bool msg)
     if (msg)
     {
         snprintf(info, INFO_SIZE, gettext(" unwields %s."),
-                             item.name(true, DESC_A, false, false, true, false,
+                             item.name(true, DESC_PLAIN, false, false, true, false,
                              ISFLAG_CURSED).c_str());
         msg = simple_monster_message(this, info);
     }
@@ -1089,7 +1089,7 @@ void monster::unequip_armour(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, gettext(" takes off %s."),
-                 item.name(true, DESC_A).c_str());
+                 item.name(true, DESC_PLAIN).c_str());
         simple_monster_message(this, info);
     }
 
@@ -1104,7 +1104,7 @@ void monster::unequip_jewellery(item_def &item, int near)
     if (need_message(near))
     {
         snprintf(info, INFO_SIZE, _(" takes off %s."),
-                 item.name(true, DESC_A).c_str());
+                 item.name(true, DESC_PLAIN).c_str());
         simple_monster_message(this, info);
     }
 
@@ -1178,7 +1178,7 @@ void monster::pickup_message(const item_def &item, int near)
         mprf(_("%s picks up %s."),
              name(DESC_THE).c_str(),
              item.base_type == OBJ_GOLD ? gettext(M_("some gold"))
-                                        : item.name(true, DESC_A).c_str());
+                                        : item.name(true, DESC_PLAIN).c_str());
     }
 }
 
@@ -1333,7 +1333,7 @@ bool monster::drop_item(int eslot, int near)
         if (need_message(near))
         {
             mprf(gettext("%s drops %s."), name(DESC_THE).c_str(),
-                 pitem->name(true, DESC_A).c_str());
+                 pitem->name(true, DESC_PLAIN).c_str());
         }
 
         if (!move_item_to_grid(&item_index, pos(), swimming()))

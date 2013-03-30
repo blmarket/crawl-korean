@@ -2879,7 +2879,7 @@ static void _mons_open_door(monster* mons, const coord_def &pos)
         }
         else if (!you_are_delayed())
         {
-            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_A).c_str(),
+            mprf(pgettext("_mons_open_door","%s %s"), mons->name(DESC_PLAIN).c_str(),
                  open_str.c_str());
         }
     }

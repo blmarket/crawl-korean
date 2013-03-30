@@ -25,6 +25,10 @@ menu += lightred:.*equipped.* cursed
 menu += red: (a|the) cursed
 menu += inventory:lightgreen:.*equipped.*
 
+menu += lightred:.*무장중.*저주받은
+menu += red:저주받은
+menu += inventory:lightgreen:.*장비중.*
+
 # Important game items
 #
 menu += lightmagenta:.*misc.*rune( of Zot)?
@@ -45,9 +49,18 @@ menu += lightblue:(^identified (weapon|armour).* of )
 menu += lightblue:(^identified weapon.* vampiric .*)
 menu += lightblue:(^identified weapon.* anti-magic .*)
 
+menu += lightblue:(^identified armour.*한 쌍의 .*의 )
+menu += lightgrey:(^identified armour.*한 쌍의 )
+menu += lightblue:(^identified (weapon|armour).*의 )
+menu += lightblue:(^identified weapon.*흡혈의 .*)
+menu += lightblue:(^identified weapon.*항마의 .*)
+
 # Possible egos
 menu += lightblue:^unidentified .*weapon.*(runed|glowing)
 menu += lightblue:^unidentified .*armour.*(runed|glowing|embroidered|shiny|dyed)
+
+menu += lightblue:^unidentified .*weapon.*(룬이 새겨진|반짝이는)
+menu += lightblue:^unidentified .*armour.*(룬이 새겨진|반짝이는|수놓아진|빛나는|염색된)
 
 # Emergency items
 menu += yellow:.*emergency_item.*
@@ -61,6 +74,7 @@ menu += $dangerous:.*dangerous_item.*
 
 # Defaults for normal items
 menu += green:uncursed
+menu += green:저주받지 않은
 
 
 # Colouring of autoinscribed god gifts

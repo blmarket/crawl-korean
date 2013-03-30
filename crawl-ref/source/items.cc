@@ -754,7 +754,7 @@ void item_check(bool verbose)
     if (items.size() == 1)
     {
         item_def it(*items[0]);
-        string name = get_menu_colour_prefix_tags(it, DESC_A);
+        string name = get_menu_colour_prefix_tags(it, DESC_PLAIN);
         strm << make_stringf(gettext("You see here %s."), name.c_str()) << endl;
         _maybe_give_corpse_hint(it);
         return;
@@ -808,7 +808,7 @@ void item_check(bool verbose)
         for (unsigned int i = 0; i < items.size(); ++i)
         {
             item_def it(*items[i]);
-            string name = get_menu_colour_prefix_tags(it, DESC_A);
+            string name = get_menu_colour_prefix_tags(it, DESC_PLAIN);
             mpr_nocap(name);
             _maybe_give_corpse_hint(it);
         }
@@ -1023,7 +1023,7 @@ static int _first_corpse_monnum(const coord_def& where)
 
 static string _milestone_rune(const item_def &item)
 {
-    return make_stringf(gettext("found %s."), item.name(true, DESC_A).c_str());
+    return make_stringf(gettext("found %s."), item.name(true, DESC_PLAIN).c_str());
 }
 
 static void _milestone_check(const item_def &item)
@@ -1041,7 +1041,7 @@ static void _check_note_item(item_def &item)
 
     if (item_is_rune(item) || item_is_orb(item) || is_artefact(item))
     {
-        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
+        take_note(Note(NOTE_GET_ITEM, 0, 0, item.name(true, DESC_PLAIN).c_str(),
                        origin_desc(item).c_str()));
         item.flags |= ISFLAG_NOTED_GET;
 
@@ -1084,10 +1084,10 @@ static string _origin_monster_name(const item_def &item)
 {
     const monster_type monnum = static_cast<monster_type>(item.orig_monnum - 1);
     if (monnum == MONS_PLAYER_GHOST)
-        return "a player ghost";
+        return _(M_("a player ghost"));
     else if (monnum == MONS_PANDEMONIUM_LORD)
-        return "a pandemonium lord";
-    return mons_type_name(monnum, DESC_A);
+        return _(M_("a pandemonium lord"));
+    return mons_type_name(monnum, DESC_PLAIN);
 }
 
 static string _origin_place_desc(const item_def &item)
@@ -1108,7 +1108,7 @@ bool origin_describable(const item_def &item)
 static string _article_it(const item_def &item)
 {
     // "it" is always correct, since gloves and boots also come in pairs.
-    return "it";
+    return pgettext("articleitem","it");
 }
 
 static bool _origin_is_original_equip(const item_def &item)
@@ -1159,7 +1159,7 @@ string origin_desc(const item_def &item)
     if (_origin_is_original_equip(item))
         return _("Original Equipment");
 
-    string desc;
+    string desc = _origin_place_desc(item) + " "; // (130302) 수정부
     if (item.orig_monnum)
     {
         if (item.orig_monnum < 0)
@@ -1168,13 +1168,13 @@ string origin_desc(const item_def &item)
             switch (iorig)
             {
             case IT_SRC_SHOP:
-                desc += make_stringf(gettext("You bought %s in a shop "), gettext(_article_it(item).c_str()));
+                desc += make_stringf(gettext("You bought %s in a shop "), _article_it(item).c_str());
                 break;
             case IT_SRC_START:
                 desc += _("Buggy Original Equipment: ");
                 break;
             case AQ_SCROLL:
-                desc += make_stringf(gettext("You acquired %s "), gettext(_article_it(item).c_str()));
+                desc += make_stringf(gettext("You acquired %s "), _article_it(item).c_str());
                 break;
             case AQ_CARD_GENIE:
                 desc += gettext("You drew the Genie ");
@@ -1203,14 +1203,14 @@ string origin_desc(const item_def &item)
         {
             desc += make_stringf(gettext("You took %s off %s "),
 		    gettext(_article_it(item).c_str()),
-                    _origin_monster_name(item).c_str());
+                    _(_origin_monster_name(item).c_str()));
         }
     }
     else
         desc += make_stringf(gettext("You found %s "),
-		gettext(_article_it(item).c_str()));
+		_article_it(item).c_str());
 
-    desc += _origin_place_desc(item);
+    // desc += _origin_place_desc(item); (130302,deceit) 어순변경. 
     return desc;
 }
 
@@ -1329,7 +1329,7 @@ void pickup(bool partial_quantity)
 
                 mprf(MSGCH_PROMPT, prompt.c_str(),
                      get_menu_colour_prefix_tags(mitm[o],
-                                                 DESC_A).c_str());
+                                                 DESC_PLAIN).c_str());
 
                 mouse_control mc(MOUSE_MODE_YESNO);
                 keyin = getchk();
@@ -2218,7 +2218,7 @@ bool drop_item(int item_dropped, int quant_drop)
     }
 
     mprf(gettext("You drop %s."),
-         quant_name(you.inv[item_dropped], quant_drop, DESC_A).c_str());
+         quant_name(you.inv[item_dropped], quant_drop, DESC_PLAIN).c_str());
 
     bool quiet = silenced(you.pos());
 

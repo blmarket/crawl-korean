@@ -7604,7 +7604,7 @@ static string _constriction_description()
 
         cinfo += make_stringf(_("You are being %s by %s."),
                       you.held == HELD_MONSTER ? pgettext("constrict","held") : pgettext("constrict","constricted"),
-                      monster_by_mid(you.constricted_by)->name(DESC_A).c_str());
+                      monster_by_mid(you.constricted_by)->name(DESC_PLAIN).c_str());
     }
 
     if (you.constricting && !you.constricting->empty())

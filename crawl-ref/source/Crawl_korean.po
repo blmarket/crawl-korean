@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-28 21:16+0900\n"
+"POT-Creation-Date: 2013-03-30 23:19+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5765,7 +5765,7 @@ msgid "# - Viable character"
 msgstr "# - 추천 캐릭터 선택"
 
 #: describe.cc:1008 describe.cc:1007 describe.cc:1007 describe.cc:1014
-#: describe.cc:1015
+#: describe.cc:1015 describe.cc:792
 msgid "It is a one handed weapon."
 msgstr "이것은 한손 무기이다."
 
@@ -5779,7 +5779,7 @@ msgstr ""
 "다"
 
 #: describe.cc:1016 describe.cc:1015 describe.cc:1015 describe.cc:1022
-#: describe.cc:1023
+#: describe.cc:1023 describe.cc:795
 msgid "It is a two handed weapon."
 msgstr "이것은 양손 무기이다."
 
@@ -14620,6 +14620,12 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -24318,23 +24324,23 @@ msgstr "이것을 향한 조준은 %2$s에 의해 가로막혀 있다.%1$.0s\n"
 msgid " is filled with an inner flame.\n"
 msgstr "에는 잠재의 불씨가 깃들어있다.\n"
 
-#: godabil.cc:220 godabil.cc:215
+#: godabil.cc:220 godabil.cc:215 godabil.cc:217
 #, c-format
 msgid "It was the word of Zin that there would not be %s..."
 msgstr "이것은 %s함을 원하지 아니하시는 진의 말씀으로 시작하여,"
 
-#: godabil.cc:221 godabil.cc:217
+#: godabil.cc:221 godabil.cc:217 godabil.cc:219
 #, c-format
 msgid "...and did the people not suffer until they had %s..."
 msgstr "...사람들이 %s(으)로부터 받는 고통을 사해주기 위함이니..."
 
 #. smite[1].c_str());
-#: godabil.cc:222 godabil.cc:219
+#: godabil.cc:222 godabil.cc:219 godabil.cc:221
 #, c-format
 msgid "...the %s, after which all was well?"
 msgstr "...진의 %s은(는), 지금 모든 것이 옳지 아니한가?"
 
-#: godabil.cc:225 godabil.cc:222
+#: godabil.cc:225 godabil.cc:222 godabil.cc:224
 #, c-format
 msgid "The voice of Zin, pure and clear, did say that the %s..."
 msgstr "%s에 관하여, 진께서 그윽하고 청량한 목소리로 가라시대..."
@@ -24345,362 +24351,362 @@ msgid "...were not %s! And hearing this, the people rose up..."
 msgstr ""
 "...%s의 자들이 아니라고 하셨노라! 그리고 그 소리를 듣자, 군중들은 일제히..."
 
-#: godabil.cc:227 godabil.cc:226
+#: godabil.cc:227 godabil.cc:226 godabil.cc:228
 #, c-format
 msgid "...and embraced %s, for they feared Zin's wrath."
 msgstr "...%s의 진리를 포용하기 시작하였다. 진의 분노가 두려웠던 것이었노라."
 
-#: godabil.cc:230
+#: godabil.cc:230 godabil.cc:232
 #, c-format
 msgid "Zin spoke of the doctrine of %s, and..."
 msgstr "진께서 %s(으)로부터의 교훈을 말씀하여 이르시되..."
 
-#: godabil.cc:231 godabil.cc:232
+#: godabil.cc:231 godabil.cc:232 godabil.cc:234
 #, c-format
 msgid "...saw the %s filled with fear, for they were..."
 msgstr "...%s의 무리들이 공포에 떠는 걸 보셨노라..."
 
-#: godabil.cc:232 godabil.cc:234
+#: godabil.cc:232 godabil.cc:234 godabil.cc:236
 #, c-format
 msgid "...%s and knew Zin's wrath would come for them."
 msgstr "...%s에 대한 진의 분노가 그들 무리 가운데 퍼져나가고 있었으니라."
 
-#: godabil.cc:235 godabil.cc:238
+#: godabil.cc:235 godabil.cc:238 godabil.cc:240
 #, c-format
 msgid "And so Zin bade the %s to come before..."
 msgstr "그리하야 진께서 %s을(를) 불러 세우셨으니..."
 
-#: godabil.cc:236 godabil.cc:240
+#: godabil.cc:236 godabil.cc:240 godabil.cc:242
 msgid "...the altar, that judgement might be passed..."
 msgstr "...그것들의 제단에, 진의 심판이 지나갈 것이고..."
 
-#: godabil.cc:237 godabil.cc:241
+#: godabil.cc:237 godabil.cc:241 godabil.cc:243
 #, c-format
 msgid "...upon those who were not %s."
 msgstr "...그리하야 더 이상 %s은(는) 찾아오지 아니하였노라."
 
-#: godabil.cc:240 godabil.cc:244
+#: godabil.cc:240 godabil.cc:244 godabil.cc:246
 msgid "To the devout, Zin provideth. From the rest..."
 msgstr "경건함과 진의 은총, 그리고 평온한 휴양 가운데에서도..."
 
-#: godabil.cc:241 godabil.cc:245
+#: godabil.cc:241 godabil.cc:245 godabil.cc:247
 #, c-format
 msgid "...ye %s, ye guilty..."
 msgstr "... %s이(가) 자라고 너희의 죄악이 싹틀 수 있느니..."
 
-#: godabil.cc:242 godabil.cc:246
+#: godabil.cc:242 godabil.cc:246 godabil.cc:248
 #, c-format
 msgid "...of %s, Zin taketh."
 msgstr "바로 %s을(를), 진께서 취해 주시노라..."
 
-#: godabil.cc:245 godabil.cc:249
+#: godabil.cc:245 godabil.cc:249 godabil.cc:251
 #, c-format
 msgid "Zin saw the %s of the %s, and..."
 msgstr "진께서 %2$s의 %1$s에 대하여 말씀하시기를..."
 
-#: godabil.cc:246 godabil.cc:251
+#: godabil.cc:246 godabil.cc:251 godabil.cc:253
 msgid "...was displeased, for did the law not say that..."
 msgstr "...보시기에 악하시니, 질서의 이름으로 그 말씀을 삼가셨으니..."
 
-#: godabil.cc:247 godabil.cc:252
+#: godabil.cc:247 godabil.cc:252 godabil.cc:254
 #, c-format
 msgid "...those who did not become %s would be %s?"
 msgstr ""
 "...%s을(를) 따르지 않는 자들이여, %s을(를) 면치 못하게 될 것이라 이르셨노라."
 
-#: godabil.cc:250 godabil.cc:256
+#: godabil.cc:250 godabil.cc:256 godabil.cc:258
 #, c-format
 msgid "Zin said that %s shall be the law of the land, and..."
 msgstr "진께서 이르시되 %s이(가) 이 땅의 질서가 될 것이라 하셨노라..."
 
-#: godabil.cc:251 godabil.cc:258
+#: godabil.cc:251 godabil.cc:258 godabil.cc:260
 #, c-format
 msgid "...those who turn to %s will be %s. This was fair..."
 msgstr "...%s을(를) 따르는 자들은 %s을(를) 당할 것이 분명하다 말씀하시니..."
 
-#: godabil.cc:252 godabil.cc:260
+#: godabil.cc:252 godabil.cc:260 godabil.cc:262
 msgid "...and just, and not a voice dissented."
 msgstr "...그 말씀에 반대하는 목소리 하나 없었도다."
 
-#: godabil.cc:255 godabil.cc:263
+#: godabil.cc:255 godabil.cc:263 godabil.cc:265
 #, c-format
 msgid "Damned, damned be the %s and..."
 msgstr "저주받고, 또 다시 저주받은 %s들이 활개치고..."
 
-#: godabil.cc:256 godabil.cc:264
+#: godabil.cc:256 godabil.cc:264 godabil.cc:266
 #, c-format
 msgid "...all else who abandon %s! Let them..."
 msgstr "...%s이(가) 버려지기 시작했었느니!..."
 
-#: godabil.cc:257 godabil.cc:266
+#: godabil.cc:257 godabil.cc:266 godabil.cc:268
 #, c-format
 msgid "...be %s by the jurisprudence of Zin!"
 msgstr "...진의 법학이 이러한 세를 %s함이라!"
 
-#: godabil.cc:260 godabil.cc:270
+#: godabil.cc:260 godabil.cc:270 godabil.cc:272
 msgid "And Zin said to all in attendance, 'Which of ye..."
 msgstr "그리하야 진께서 모든 이들에게 이르시되, ..."
 
-#: godabil.cc:261 godabil.cc:271
+#: godabil.cc:261 godabil.cc:271 godabil.cc:273
 #, c-format
 msgid "...number among the %s? Come before me, that..."
 msgstr "...너희들 중 몇 명이 %s(으)로 싹트는가? 나에게 오라..."
 
-#: godabil.cc:262 godabil.cc:273
+#: godabil.cc:262 godabil.cc:273 godabil.cc:275
 #, c-format
 msgid "...I may %s you now for your %s!'"
 msgstr "...너의 %2$s을(를) 나의 %1$s(으)로 사해주겠노라! 라고 하셨노라."
 
-#: godabil.cc:265 godabil.cc:277
+#: godabil.cc:265 godabil.cc:277 godabil.cc:279
 msgid "Yea, I say unto thee, bring forth..."
 msgstr "그리하야 내가 말할 때가 되었노니..."
 
-#: godabil.cc:266 godabil.cc:278
+#: godabil.cc:266 godabil.cc:278 godabil.cc:280
 #, c-format
 msgid "...the %s that they may know..."
 msgstr "...%s들을 멀리 떨쳐내고, 그 자들로 하여금..."
 
-#: godabil.cc:267 godabil.cc:279
+#: godabil.cc:267 godabil.cc:279 godabil.cc:281
 #, c-format
 msgid "...the wrath of Zin, and thus be %s!"
 msgstr "...진의 분노와, %s당하게 될 것을 각인시켜 명하노라!"
 
-#: godabil.cc:270 godabil.cc:283
+#: godabil.cc:270 godabil.cc:283 godabil.cc:285
 msgid "In a great set of silver scales are weighed the..."
 msgstr "은으로 만들어진 거대한 저울에..."
 
-#: godabil.cc:271 godabil.cc:284
+#: godabil.cc:271 godabil.cc:284 godabil.cc:286
 #, c-format
 msgid "...souls of the %s, and with their %s..."
 msgstr "...%s들의 영혼과, 그들의 %s함을 저울질해 보았노니..."
 
-#: godabil.cc:272 godabil.cc:286
+#: godabil.cc:272 godabil.cc:286 godabil.cc:288
 msgid "...ways, the balance hath tipped against them!"
 msgstr "...저울의 화살이, 그들이 있는 곳을 향해 기울었노라!"
 
-#: godabil.cc:275 godabil.cc:289
+#: godabil.cc:275 godabil.cc:289 godabil.cc:291
 #, c-format
 msgid "It is just that the %s shall be %s..."
 msgstr "섭리에 따라 %s들은 %s받을 것이며..."
 
-#: godabil.cc:276 godabil.cc:291
+#: godabil.cc:276 godabil.cc:291 godabil.cc:293
 #, c-format
 msgid "...in due time, for %s is what Zin has declared..."
 msgstr "...이후로 하여금, 진께서 공표하신 %s(으)로 하여금..."
 
-#: godabil.cc:277 godabil.cc:293
+#: godabil.cc:277 godabil.cc:293 godabil.cc:295
 msgid "...the law of the land, and Zin's word is law!"
 msgstr "...진의 말씀이 진리이며, 이 진리를 온 세상에 명하노라!"
 
-#: godabil.cc:280 godabil.cc:296
+#: godabil.cc:280 godabil.cc:296 godabil.cc:298
 #, c-format
 msgid "Thus the people made the covenant of %s with..."
 msgstr "사람들로 하여금, %s의 약속을..."
 
-#: godabil.cc:281 godabil.cc:298
+#: godabil.cc:281 godabil.cc:298 godabil.cc:300
 msgid "...Zin, and all was good, for they knew that the..."
 msgstr "...진과 함께 전파하도록 하거늘, 그 어느 것이 이보다 좋을 것이요..."
 
-#: godabil.cc:282 godabil.cc:299
+#: godabil.cc:282 godabil.cc:299 godabil.cc:301
 #, c-format
 msgid "...%s would trouble them no longer."
 msgstr "...%s함으로 인한 괴로움도 더 이상 없을 것으로 아시니라."
 
-#: godabil.cc:285 godabil.cc:302
+#: godabil.cc:285 godabil.cc:302 godabil.cc:304
 #, c-format
 msgid "What of the %s? %s for their..."
 msgstr "%s들의 정의는 무엇인가? 그들을 %s함으로..."
 
-#: godabil.cc:286 godabil.cc:304
+#: godabil.cc:286 godabil.cc:304 godabil.cc:306
 #, c-format
 msgid "...%s they shall be! Zin will %s them again..."
 msgstr "...진께서 다시 %2$s하심으로 하여금, 그들의 %1$s을(를)..."
 
-#: godabil.cc:287 godabil.cc:306
+#: godabil.cc:287 godabil.cc:306 godabil.cc:308
 msgid "...and again, and again!"
 msgstr "...멸하시고, 또다시 멸하셨노라!"
 
-#: godabil.cc:290 godabil.cc:309
+#: godabil.cc:290 godabil.cc:309 godabil.cc:311
 msgid "And lo, the wrath of Zin did find..."
 msgstr "진의 진노가 온 사방에 미치어..."
 
-#: godabil.cc:291 godabil.cc:310
+#: godabil.cc:291 godabil.cc:310 godabil.cc:312
 #, c-format
 msgid "...them wherever they hid, and the %s..."
 msgstr "...여기저기에 숨어있는 %s들을 색출해 내시니..."
 
-#: godabil.cc:292 godabil.cc:312
+#: godabil.cc:292 godabil.cc:312 godabil.cc:314
 #, c-format
 msgid "...were %s for their %s!"
 msgstr "그들의 %s함으로 하여금 %s을(를) 받게 하였도다!"
 
-#: godabil.cc:295 godabil.cc:316
+#: godabil.cc:295 godabil.cc:316 godabil.cc:318
 #, c-format
 msgid "Zin looked out upon the remains of the %s..."
 msgstr "진께서 %s의 잔당들을 우러러보았으니..."
 
-#: godabil.cc:296 godabil.cc:318
+#: godabil.cc:296 godabil.cc:318 godabil.cc:320
 msgid "...and declared it good that they had been..."
 msgstr "...이르러 공표하시기를, 그들이..."
 
-#: godabil.cc:297 godabil.cc:319
+#: godabil.cc:297 godabil.cc:319 godabil.cc:321
 #, c-format
 msgid "...%s. And thus justice was done."
 msgstr "...%s을(를) 받아야 했음이 옳고, 이로 정의가 실현되었도다."
 
-#: godabil.cc:300 godabil.cc:322
+#: godabil.cc:300 godabil.cc:322 godabil.cc:324
 msgid "The law of Zin demands thee..."
 msgstr "진께서 당신에게 바라는 사항이라 하면..."
 
-#: godabil.cc:301 godabil.cc:323
+#: godabil.cc:301 godabil.cc:323 godabil.cc:325
 #, c-format
 msgid "...be %s, and that the punishment for %s..."
 msgstr "...%2$s을(를) 빠르고 가혹하게 벌하기 위해 %1$s에..."
 
-#: godabil.cc:302 godabil.cc:325
+#: godabil.cc:302 godabil.cc:325 godabil.cc:327
 msgid "...shall be swift and harsh!"
 msgstr "...전념하여 깨우치는 것이라고 하셨도다!"
 
-#: godabil.cc:305 godabil.cc:328
+#: godabil.cc:305 godabil.cc:328 godabil.cc:330
 msgid "It was then that Zin bade them..."
 msgstr "언제금 진께서 그들을 불러 세우셨을 때..."
 
-#: godabil.cc:306 godabil.cc:329
+#: godabil.cc:306 godabil.cc:329 godabil.cc:331
 #, c-format
 msgid "...not to stray from %s, lest..."
 msgstr "%s을(를) 지킴에 있어 해이하지 않을 것이며..."
 
-#: godabil.cc:307 godabil.cc:330
+#: godabil.cc:307 godabil.cc:330 godabil.cc:332
 #, c-format
 msgid "...they become as damned as the %s."
 msgstr "...%s와(과) 같이 저주받지 않도록 말씀하셨느니라."
 
-#: godabil.cc:310 godabil.cc:333
+#: godabil.cc:310 godabil.cc:333 godabil.cc:335
 #, c-format
 msgid "Only the %s shall be judged worthy, and..."
 msgstr "%s의 중요성을 이야기하며 심판을 했을때..."
 
-#: godabil.cc:311 godabil.cc:335
+#: godabil.cc:311 godabil.cc:335 godabil.cc:337
 #, c-format
 msgid "...all the %s will be found wanting. Such is..."
 msgstr "...모든 %s들조차 이것을 원하였노라... 그것이..."
 
-#: godabil.cc:312 godabil.cc:337
+#: godabil.cc:312 godabil.cc:337 godabil.cc:339
 msgid "...the word of Zin, and such is the law!"
 msgstr "진의 말씀이고, 그것이 진리이니라!"
 
-#: godabil.cc:315 godabil.cc:340
+#: godabil.cc:315 godabil.cc:340 godabil.cc:342
 #, c-format
 msgid "To those who would swear an oath of %s on my altar..."
 msgstr "그리하여 %s의 맹세와 서약을 나의 제단에 논하느니..."
 
-#: godabil.cc:316 godabil.cc:342
+#: godabil.cc:316 godabil.cc:342 godabil.cc:344
 #, c-format
 msgid "...I bring ye salvation. To the rest, ye %s..."
 msgstr "...나는 너를 구원할 것이오, %s와..."
 
-#: godabil.cc:317 godabil.cc:344
+#: godabil.cc:317 godabil.cc:344 godabil.cc:346
 #, c-format
 msgid "...and the %s, the name of Zin shall be thy damnation."
 msgstr "...%s에게, 진의 이름으로 그들의 몰락을 말하는 것이노라."
 
-#: godabil.cc:320 godabil.cc:348
+#: godabil.cc:320 godabil.cc:348 godabil.cc:350
 msgid "And Zin decreed that the people would be..."
 msgstr "진께서 모두들에게 칙령을 내리고저..."
 
-#: godabil.cc:321 godabil.cc:349
+#: godabil.cc:321 godabil.cc:349 godabil.cc:351
 #, c-format
 msgid "...protected from %s in all its forms, and..."
 msgstr "...모든 %s(으)로부터 모두를 보호해줄 것이며..."
 
-#: godabil.cc:322 godabil.cc:351
+#: godabil.cc:322 godabil.cc:351 godabil.cc:353
 #, c-format
 msgid "...preserved in their %s for all the days to come."
 msgstr "...또한 모두의 %s을(를) 보존해 주실 것이라고 하셨느니라."
 
-#: godabil.cc:325 godabil.cc:355
+#: godabil.cc:325 godabil.cc:355 godabil.cc:357
 msgid "For those who would enter Zin's holy bosom..."
 msgstr "진의 성스러운 품 안에 오는 모든 이들이여..."
 
-#: godabil.cc:326 godabil.cc:356
+#: godabil.cc:326 godabil.cc:356 godabil.cc:358
 #, c-format
 msgid "...and live in %s, Zin provideth. Such is..."
 msgstr "...그리고 %s을(를) 지는 모든 이들이여, 진께서 가라시대..."
 
-#: godabil.cc:327 godabil.cc:358
+#: godabil.cc:327 godabil.cc:358 godabil.cc:360
 msgid "...the covenant, and such is the way of things."
 msgstr "...모든 것들의 진리를 약속하셨느니라."
 
-#: godabil.cc:330 godabil.cc:361
+#: godabil.cc:330 godabil.cc:361 godabil.cc:363
 #, c-format
 msgid "Zin hath not damned the %s, but it is they..."
 msgstr "진은 %s에 대해 직접적으로 처단을 내리시지 않으셨어도..."
 
-#: godabil.cc:331 godabil.cc:363
+#: godabil.cc:331 godabil.cc:363 godabil.cc:365
 #, c-format
 msgid "...that have damned themselves for their %s, for..."
 msgstr "...%s들은 스스로 자멸하도록 되어 있느니라, 따라..."
 
-#: godabil.cc:332 godabil.cc:365
+#: godabil.cc:332 godabil.cc:365 godabil.cc:367
 #, c-format
 msgid "...did Zin not decree that to be %s was wrong?"
 msgstr "...진께서 %s이(가) 그르지 않다고 이야기할 필요가 없느니라."
 
-#: godabil.cc:335 godabil.cc:369
+#: godabil.cc:335 godabil.cc:369 godabil.cc:371
 #, c-format
 msgid "And Zin, furious at their %s, held..."
 msgstr "한 번 진께서, %s에 분노하셨너니라, 곧..."
 
-#: godabil.cc:336 godabil.cc:370
+#: godabil.cc:336 godabil.cc:370 godabil.cc:372
 #, c-format
 msgid "...aloft a silver sceptre! The %s..."
 msgstr "...하늘 높이 %s의 은색 악령이 솟아올랐느니라..."
 
-#: godabil.cc:337 godabil.cc:371
+#: godabil.cc:337 godabil.cc:371 godabil.cc:373
 #, c-format
 msgid "...were %s, and thus the way of things was maintained."
 msgstr "...그는 곧 %s당했고, 진리는 지금까지 이어져 내리노라..."
 
-#: godabil.cc:340 godabil.cc:375
+#: godabil.cc:340 godabil.cc:375 godabil.cc:377
 msgid "When the law of the land faltered, Zin rose..."
 msgstr "이 땅의 질서가 흔들리기 시작할 때, 진께서는..."
 
-#: godabil.cc:341 godabil.cc:376
+#: godabil.cc:341 godabil.cc:376 godabil.cc:378
 #, c-format
 msgid "...from the silver throne, and the %s were..."
 msgstr "...%s을(를) 은빛 왕좌에서 들어 올리셨느라..."
 
-#: godabil.cc:342 godabil.cc:378
+#: godabil.cc:342 godabil.cc:378 godabil.cc:380
 #, c-format
 msgid "...%s. And it was thus that the law was made good."
 msgstr ""
 "...그것은 %s되었고, 이것으로 우리의 질서는 지금까지 더럽혀지지 않았노라."
 
-#: godabil.cc:345 godabil.cc:382
+#: godabil.cc:345 godabil.cc:382 godabil.cc:384
 msgid "Zin descended from on high in a silver chariot..."
 msgstr "진께서 은빛의 전차를 타고 이 땅에 내려오셨느니라..."
 
-#: godabil.cc:346 godabil.cc:383
+#: godabil.cc:346 godabil.cc:383 godabil.cc:385
 #, c-format
 msgid "...to %s the %s for their..."
 msgstr "...%s들을 %s하기 위해..."
 
-#: godabil.cc:347 godabil.cc:385
+#: godabil.cc:347 godabil.cc:385 godabil.cc:387
 #, c-format
 msgid "...%s, and thus judgement was rendered."
 msgstr "...그리고 %s에 대한 심판을 이 땅에 전하기 위해."
 
-#: godabil.cc:350 godabil.cc:389
+#: godabil.cc:350 godabil.cc:389 godabil.cc:391
 #, c-format
 msgid "The %s stood before Zin, and in that instant..."
 msgstr "%s이(가) 진의 뒤에 서 있었고, 그들은 즉시..."
 
-#: godabil.cc:351 godabil.cc:391
+#: godabil.cc:351 godabil.cc:391 godabil.cc:393
 #, c-format
 msgid "...they knew they would be found guilty of %s..."
 msgstr "...%s에 대한 죄를 짓고 있다는 것을 스스로 일깨웠으며..."
 
-#: godabil.cc:352 godabil.cc:393
+#: godabil.cc:352 godabil.cc:393 godabil.cc:395
 msgid "...for that is the word of Zin, and Zin's word is law."
 msgstr "...이는 진의 말씀과, 진의 말씀의 진리에 의한 것이었도다."
 
@@ -24708,27 +24714,27 @@ msgstr "...이는 진의 말씀과, 진의 말씀의 진리에 의한 것이었�
 msgid "Hail Satan."
 msgstr "사탄 만세."
 
-#: godabil.cc:360 godabil.cc:401
+#: godabil.cc:360 godabil.cc:401 godabil.cc:403
 msgctxt "recite"
 msgid "Abominations"
 msgstr "혐오의 서"
 
-#: godabil.cc:361 godabil.cc:402
+#: godabil.cc:361 godabil.cc:402 godabil.cc:404
 msgctxt "recite"
 msgid "Ablutions"
 msgstr "정화의 서"
 
-#: godabil.cc:362 godabil.cc:403
+#: godabil.cc:362 godabil.cc:403 godabil.cc:405
 msgctxt "recite"
 msgid "Apostates"
 msgstr "변절의 서"
 
-#: godabil.cc:363 godabil.cc:404
+#: godabil.cc:363 godabil.cc:404 godabil.cc:406
 msgctxt "recite"
 msgid "Anathema"
 msgstr "반대의 서"
 
-#: godabil.cc:364 godabil.cc:405
+#: godabil.cc:364 godabil.cc:405 godabil.cc:407
 msgctxt "recite"
 msgid "Alliances"
 msgstr "동맹의 서"
@@ -29935,6 +29941,12 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025
 #, c-format
@@ -32060,7 +32072,7 @@ msgstr "당신은 아직 아무 룬도 찾지 못했다."
 msgid "walk through water"
 msgstr ""
 
-#: describe.cc:838
+#: describe.cc:838 describe.cc:832
 msgid ""
 "\n"
 "\n"
@@ -33787,29 +33799,29 @@ msgid "Aiming: <white>Delayed Fireball</white>"
 msgstr "조준: <white>축적된 화염구</white>"
 
 #. "it" is always correct, since gloves and boots also come in pairs.
-#: items.cc:1108
+#: items.cc:1108 items.cc:1111
 msgctxt "articleitem"
 msgid "it"
 msgstr "이 아이템"
 
-#: place.cc:64
+#: place.cc:64 place.cc:63
 #, c-format
 msgid "Level %d of %s"
 msgstr "%2$s %1$d층"
 
-#: melee_attack.cc:4280
+#: melee_attack.cc:4280 melee_attack.cc:4438
 #, c-format
 msgctxt "freezeattack"
 msgid "%s %s %s%s"
 msgstr "%1$s의 냉기가 %3$s을(를) 얼렸다%4$s%2$.0s"
 
-#: melee_attack.cc:4306
+#: melee_attack.cc:4306 melee_attack.cc:4464
 #, c-format
 msgctxt "shockattack"
 msgid "%s %s %s%s"
 msgstr "%3$s의 전격이 %1$s을(를) 감전시켰다%4$s%2$.0s"
 
-#: melee_attack.cc:4490
+#: melee_attack.cc:4490 melee_attack.cc:4655
 #, c-format
 msgctxt "searattack"
 msgid "%s %s %s%s"
@@ -36257,72 +36269,122 @@ msgstr "%s이(가) 당신의 목을 간지럽혔다."
 #: describe.cc:1061 describe.cc:1068
 msgctxt "wpnench2"
 msgid "."
-msgstr ""
+msgstr " 까지 강화가 가능하다."
 
 #: food.cc:805
 msgid "You decompose your surroundings."
-msgstr ""
+msgstr "당신은 주변을 분해하여 에너지를 얻는다."
 
 #: mon-act.cc:997
 #, c-format
 msgid "Wisps of shadow swirl around %s."
-msgstr ""
+msgstr "어두운 영혼들이 %s 주변을 돌며 모여들었다."
 
 #: spl-transloc.cc:362
 msgid "It is impossible to concentrate on your destination whilst mesmerised."
-msgstr ""
+msgstr "매료당한 상태에서는 당신의 목적지에 집중할 수 없다."
 
 #: travel.cc:797
 msgid "Partly explored, obstructed by runed door."
-msgstr ""
+msgstr "탐색을 일부 완료했으나, 룬이 새겨진 문 안쪽은 탐색하지 않았다."
 
 #: main.cc:2745 main.cc:2750
 msgid "The translocation energy dissipates."
-msgstr ""
+msgstr "전이의 마력이 사라졌다."
 
 #: describe.cc:4537
 msgid "some of Vehumet's most lethal spells"
-msgstr ""
+msgstr "베후메트가 제공한 몇몇 파괴마법들"
 
 #: describe.cc:4540
 msgid "You can memorise "
-msgstr ""
+msgstr "당신은 '"
 
 #: describe.cc:4540
 msgctxt "vehumetoffer"
 msgid "."
-msgstr ""
+msgstr "'을(를) 기억할 수 있다."
 
 #: directn.cc:3304
 msgctxt "featuredesc"
 msgid "sealed "
-msgstr ""
+msgstr "봉인된 "
 
 #: directn.cc:3554
 msgid " is surrounded by an aura of magical suppression.\n"
-msgstr ""
+msgstr "은(는) 마력 억제의 기운에 둘러싸여있다.\n"
 
 #: mon-info.cc:1438
 msgctxt "attributes"
 msgid "blind"
-msgstr ""
+msgstr "앞을 분간하지 못하고"
 
 #: mon-info.cc:1450
 msgctxt "attributes"
 msgid "stone skin"
-msgstr ""
+msgstr "돌의 피부를 가지고"
 
 #: mon-info.cc:1454
 msgctxt "attributes"
 msgid "misshapen and mutated"
-msgstr ""
+msgstr "비정상적이며 변이되어 있고"
 
 #: mon-info.cc:1456
 msgctxt "attributes"
 msgid "chanting recall"
-msgstr ""
+msgstr "소집 주문을 시전하고"
 
 #: mon-info.cc:1458
 msgctxt "attributes"
 msgid "sheltered from injuries"
+msgstr "부상으로부터 보호받고"
+
+#: decks.cc:1743
+msgctxt "damagingcard"
+msgid "You have "
+msgstr "당신은 "
+
+#: decks.cc:1747
+msgctxt "damagingcard"
+msgid "."
+msgstr "을(를) 가지고 있다."
+
+#: describe.cc:835
+msgid ""
+"\n"
+"\n"
+"It can hit multiple enemies in an arc around the wielder."
 msgstr ""
+"\n"
+"\n"
+"이것은 착용자 주변의 다수의 적들을 한 번에 공격할 수 있다."
+
+#: describe.cc:842
+msgctxt "shortblades"
+msgid "extremely"
+msgstr "대단히 "
+
+#: describe.cc:843
+msgctxt "shortblades"
+msgid "particularly"
+msgstr "특히 "
+
+#: describe.cc:844
+msgid ""
+"\n"
+"\n"
+"It is "
+msgstr ""
+"\n"
+"\n"
+"이것은 당신을 눈치채지 못한 적을 암살하는데 "
+
+#: describe.cc:844
+msgid " good for stabbing unaware enemies."
+msgstr "적합하다."
+
+#: melee_attack.cc:4605
+#, c-format
+msgctxt "infuriateattack"
+msgid "%s %s %s!"
+msgstr "%1$s은(는) %3$s을(를) 분노케했다!%2$.0s"

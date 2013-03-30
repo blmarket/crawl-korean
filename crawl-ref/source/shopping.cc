@@ -508,7 +508,7 @@ static string _shop_print_stock(const vector<int>& stock,
                                     colprf, "shop");
         textcolor(col != -1 ? col : LIGHTGREY);
 
-        string item_name = item.name(true, DESC_A, false, id);
+        string item_name = item.name(true, DESC_PLAIN, false, id);
         if (unknown)
             item_name += " (unknown)";
 
@@ -836,7 +836,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
 
                             // Take a note of the purchase.
                             take_note(Note(NOTE_BUY_ITEM, gp_value, 0,
-                                           item.name(true, DESC_A).c_str()));
+                                           item.name(true, DESC_PLAIN).c_str()));
 
                             // But take no further similar notes.
                             item.flags |= ISFLAG_NOTED_GET;
@@ -2799,7 +2799,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
             thing[REMOVE_PROMPTED_KEY] = (bool) true;
 
             string prompt = make_stringf(_("Shopping-list: remove %s? (Y/n)"),
-                                         describe_thing(thing, DESC_A).c_str());
+                                         describe_thing(thing, DESC_PLAIN).c_str());
 
             if (_shop_yesno(prompt.c_str(), 'y'))
                 to_del.push_back(listed);
@@ -2807,7 +2807,7 @@ unsigned int ShoppingList::cull_identical_items(const item_def& item,
         else
         {
             string str = make_stringf(_("Shopping-list: removing %s"),
-                                      describe_thing(thing, DESC_A).c_str());
+                                      describe_thing(thing, DESC_PLAIN).c_str());
 
             _shop_mpr(str.c_str());
             to_del.push_back(listed);
@@ -2899,7 +2899,7 @@ void ShoppingList::gold_changed(int old_amount, int new_amount)
                 desc = "buy";
             desc += " ";
 
-            desc += describe_thing(thing, DESC_A);
+            desc += describe_thing(thing, DESC_PLAIN);
 
             descs.push_back(desc);
         }
@@ -2967,7 +2967,7 @@ void ShoppingList::fill_out_menu(Menu& shopmenu)
 
         string etitle =
             make_stringf("[%s] %s (%d gp)", short_place_name(pos.id).c_str(),
-                         name_thing(thing, DESC_A).c_str(),
+                         name_thing(thing, DESC_PLAIN).c_str(),
                          cost);
 
         MenuEntry *me = new MenuEntry(etitle, MEL_ITEM, 1, hotkey);
@@ -3047,7 +3047,7 @@ void ShoppingList::display()
                 string prompt =
                    make_stringf(_("You cannot afford %s; travel there "
                                 "anyway? (y/N)"),
-                                describe_thing(*thing, DESC_A).c_str());
+                                describe_thing(*thing, DESC_PLAIN).c_str());
                 clrscr();
                 if (!yesno(prompt.c_str(), true, 'n'))
                     continue;
@@ -3070,7 +3070,7 @@ void ShoppingList::display()
                 // HACK: Assume it's some kind of portal vault.
                 snprintf(info, INFO_SIZE,
                          _("%s with an entry fee of %d gold pieces."),
-                         describe_thing(*thing, DESC_A).c_str(),
+                         describe_thing(*thing, DESC_PLAIN).c_str(),
                          (int) thing_cost(*thing));
 
                 print_description(info);
@@ -3080,7 +3080,7 @@ void ShoppingList::display()
         else if (shopmenu.menu_action == Menu::ACT_MISC)
         {
             string prompt = make_stringf(_("Delete %s from shopping list? (y/N)"),
-                                         describe_thing(*thing, DESC_A).c_str());
+                                         describe_thing(*thing, DESC_PLAIN).c_str());
             clrscr();
             if (!yesno(prompt.c_str(), true, 'n'))
                 continue;

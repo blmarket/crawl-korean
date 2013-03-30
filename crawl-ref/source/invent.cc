@@ -77,7 +77,7 @@ InvEntry::InvEntry(const item_def &i, bool show_bg)
         text = i.name(true, DESC_INVENTORY_EQUIP, false).substr(4);
     }
     else
-        text = i.name(true, DESC_A, false);
+        text = i.name(true, DESC_PLAIN, false);
 
     if (i.base_type != OBJ_GOLD && in_inventory(i))
         add_hotkey(index_to_letter(i.link));

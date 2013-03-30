@@ -337,7 +337,7 @@ void update_monsters_in_view()
             else if (types[mon->type] == 1)
                 monname = mon->full_name(DESC_THE);
             else
-                monname = mon->full_name(DESC_A);
+                monname = mon->full_name(DESC_PLAIN);
             warning_msg += uppercase_first(monname);
 
             warning_msg += pgettext("Ashenzari", " is");

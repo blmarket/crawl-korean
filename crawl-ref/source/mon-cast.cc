@@ -3044,7 +3044,7 @@ static bool _mons_ozocubus_refrigeration(monster* mons, bool actual)
                 mpr(_("You feel very cold."));
                 ouch(hurted, mons->mindex(), KILLED_BY_BEAM,
                      "by Ozocubu's Refrigeration", true,
-                     mons->name(DESC_A).c_str());
+                     mons->name(DESC_PLAIN).c_str());
                 expose_player_to_element(BEAM_COLD, 5);
             }
 

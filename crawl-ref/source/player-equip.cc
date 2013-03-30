@@ -546,7 +546,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                 item.flags |= ISFLAG_NOTED_ID;
 
                 // Make a note of it.
-                take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_A).c_str(),
+                take_note(Note(NOTE_ID_ITEM, 0, 0, item.name(true, DESC_PLAIN).c_str(),
                                origin_desc(item).c_str()));
             }
             else

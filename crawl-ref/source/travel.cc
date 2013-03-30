@@ -2982,7 +2982,7 @@ void start_explore(bool grab_items)
                 mprnojoin(_("Things which can be sacrificed:"), MSGCH_FLOOR_ITEMS);
                 for (stack_iterator si(you.visible_igrd(you.pos())); si; ++si)
                     if (si->is_greedy_sacrificeable())
-                        mpr_nocap(get_menu_colour_prefix_tags(*si, DESC_A));
+                        mpr_nocap(get_menu_colour_prefix_tags(*si, DESC_PLAIN));
 
             }
 

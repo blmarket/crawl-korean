@@ -47,7 +47,7 @@ static bool _confirm_pray_sacrifice(god_type god)
         {
             string prompt = make_stringf(
                     _("Really sacrifice stack with %s in it?"),
-                    si->name(true, DESC_A).c_str());
+                    si->name(true, DESC_PLAIN).c_str());
 
             if (!yesno(prompt.c_str(), false, 'n'))
                 return false;
@@ -98,7 +98,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
 
     you.duration[DUR_WEAPON_BRAND] = 0;     // just in case
 
-    string old_name = wpn.name(true, DESC_A);
+    string old_name = wpn.name(true, DESC_PLAIN);
     set_equip_desc(wpn, ISFLAG_GLOWING);
     set_item_ego_type(wpn, OBJ_WEAPONS, brand);
     wpn.colour = colour;
@@ -141,7 +141,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
                                               : _("touched by the gods"));
 
     take_note(Note(NOTE_ID_ITEM, 0, 0,
-              wpn.name(true, DESC_A).c_str(), desc.c_str()));
+              wpn.name(true, DESC_PLAIN).c_str(), desc.c_str()));
     wpn.flags |= ISFLAG_NOTED_ID;
 
     mpr(_("Your weapon shines brightly!"), MSGCH_GOD);
@@ -841,7 +841,7 @@ static bool _offer_items()
         {
             const string msg =
                   make_stringf(gettext("Really sacrifice %s?"),
-				  item.name(true, DESC_A).c_str());
+				  item.name(true, DESC_PLAIN).c_str());
 
             if (!yesno(msg.c_str(), false, 'n'))
             {

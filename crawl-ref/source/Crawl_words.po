@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-28 21:16+0900\n"
+"POT-Creation-Date: 2013-03-30 23:19+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4479,7 +4479,7 @@ msgstr "귀환의"
 
 #: itemname.cc:409 itemname.cc:420 itemname.cc:427 itemname.cc:427
 #: godabil.cc:132 itemname.cc:447 itemname.cc:396 godabil.cc:127
-#: itemname.cc:406
+#: itemname.cc:406 godabil.cc:130
 msgid "chaos"
 msgstr "혼돈"
 
@@ -11069,317 +11069,318 @@ msgid "arm"
 msgstr "팔"
 
 # (deceit, 110905) sinner
-#: godabil.cc:100 godabil.cc:95
+#: godabil.cc:100 godabil.cc:95 godabil.cc:98
 msgid "hordes of the Abyss"
 msgstr "심연의 무리"
 
-#: godabil.cc:101 godabil.cc:96
+#: godabil.cc:101 godabil.cc:96 godabil.cc:99
 msgid "bastard children of Xom"
 msgstr "혼돈신의 사생아"
 
-#: godabil.cc:102 godabil.cc:97
+#: godabil.cc:102 godabil.cc:97 godabil.cc:100
 msgid "amorphous wretches"
 msgstr "무형의 악마"
 
-#: godabil.cc:103 godabil.cc:98
+#: godabil.cc:103 godabil.cc:98 godabil.cc:101
 msgid "fetid masses"
 msgstr "악취를 풍기는 존재"
 
-#: godabil.cc:104 godabil.cc:99
+#: godabil.cc:104 godabil.cc:99 godabil.cc:102
 msgid "agents of filth"
 msgstr "부패의 대리인"
 
-#: godabil.cc:105 godabil.cc:100
+#: godabil.cc:105 godabil.cc:100 godabil.cc:103
 msgid "squalid dregs"
 msgstr "불결한 존재"
 
-#: godabil.cc:106 godabil.cc:101
+#: godabil.cc:106 godabil.cc:101 godabil.cc:104
 msgid "unbelievers"
 msgstr "믿지 않는 자"
 
-#: godabil.cc:107 godabil.cc:102
+#: godabil.cc:107 godabil.cc:102 godabil.cc:105
 msgid "heretics"
 msgstr "이단자"
 
-#: godabil.cc:108 godabil.cc:103
+#: godabil.cc:108 godabil.cc:103 godabil.cc:106
 msgid "guilty"
 msgstr "죄악"
 
-#: godabil.cc:109 godabil.cc:104
+#: godabil.cc:109 godabil.cc:104 godabil.cc:107
 msgid "legions of the damned"
 msgstr "저주받은 군단"
 
-#: godabil.cc:110 godabil.cc:105
+#: godabil.cc:110 godabil.cc:105 godabil.cc:108
 msgid "servants of Hell"
 msgstr "지옥의 추종자"
 
-#: godabil.cc:111 godabil.cc:106
+#: godabil.cc:111 godabil.cc:106 godabil.cc:109
 msgid "forces of darkness"
 msgstr "어둠의 세력"
 
 # (deceit, 110905) sin
-#: godabil.cc:116 godabil.cc:111
+#: godabil.cc:116 godabil.cc:111 godabil.cc:114
 msgid "chaotic"
 msgstr "혼돈"
 
-#: godabil.cc:117 godabil.cc:112
+#: godabil.cc:117 godabil.cc:112 godabil.cc:115
 msgid "discordant"
 msgstr "불화"
 
-#: godabil.cc:118 godabil.cc:113
+#: godabil.cc:118 godabil.cc:113 godabil.cc:116
 msgid "anarchic"
 msgstr "무법"
 
-#: godabil.cc:119 godabil.cc:114
+#: godabil.cc:119 godabil.cc:114 godabil.cc:117
 msgid "unclean"
 msgstr "불결"
 
-#: godabil.cc:120 godabil.cc:115
+#: godabil.cc:120 godabil.cc:115 godabil.cc:118
 msgid "impure"
 msgstr "부도덕"
 
 #: godabil.cc:121 godabil.cc:116 player.cc:4770 player.cc:4783 player.cc:4788
+#: godabil.cc:119
 msgid "contaminated"
 msgstr "오염됨"
 
-#: godabil.cc:122 godabil.cc:117
+#: godabil.cc:122 godabil.cc:117 godabil.cc:120
 msgid "unfaithful"
 msgstr "불충"
 
-#: godabil.cc:123 godabil.cc:118
+#: godabil.cc:123 godabil.cc:118 godabil.cc:121
 msgid "disloyal"
 msgstr "불성실"
 
-#: godabil.cc:124 godabil.cc:119
+#: godabil.cc:124 godabil.cc:119 godabil.cc:122
 msgid "doubting"
 msgstr "의심"
 
-#: godabil.cc:125 godabil.cc:120
+#: godabil.cc:125 godabil.cc:120 godabil.cc:123
 msgid "profane"
 msgstr "신성 모독"
 
-#: godabil.cc:126 godabil.cc:121
+#: godabil.cc:126 godabil.cc:121 godabil.cc:124
 msgid "blasphemous"
 msgstr "모독"
 
-#: godabil.cc:127 godabil.cc:122
+#: godabil.cc:127 godabil.cc:122 godabil.cc:125
 msgid "sacrilegious"
 msgstr "무엄"
 
 # (deceit, 110905) long sin
-#: godabil.cc:133 godabil.cc:128
+#: godabil.cc:133 godabil.cc:128 godabil.cc:131
 msgid "discord"
 msgstr "불화"
 
-#: godabil.cc:134 godabil.cc:129
+#: godabil.cc:134 godabil.cc:129 godabil.cc:132
 msgid "anarchy"
 msgstr "무법"
 
-#: godabil.cc:135 godabil.cc:130
+#: godabil.cc:135 godabil.cc:130 godabil.cc:133
 msgid "uncleanliness"
 msgstr "불결"
 
-#: godabil.cc:136 godabil.cc:131
+#: godabil.cc:136 godabil.cc:131 godabil.cc:134
 msgid "impurity"
 msgstr "부도덕"
 
-#: godabil.cc:137 godabil.cc:132
+#: godabil.cc:137 godabil.cc:132 godabil.cc:135
 msgid "contamination"
 msgstr "오염됨"
 
-#: godabil.cc:138 godabil.cc:133
+#: godabil.cc:138 godabil.cc:133 godabil.cc:136
 msgid "unfaithfulness"
 msgstr "불충"
 
-#: godabil.cc:139 godabil.cc:134
+#: godabil.cc:139 godabil.cc:134 godabil.cc:137
 msgid "disloyalty"
 msgstr "불성실"
 
-#: godabil.cc:140 godabil.cc:135
+#: godabil.cc:140 godabil.cc:135 godabil.cc:138
 msgid "doubt"
 msgstr "의심"
 
-#: godabil.cc:141 godabil.cc:136
+#: godabil.cc:141 godabil.cc:136 godabil.cc:139
 msgid "profanity"
 msgstr "신성 모독"
 
-#: godabil.cc:142 godabil.cc:137
+#: godabil.cc:142 godabil.cc:137 godabil.cc:140
 msgid "blasphemy"
 msgstr "모독"
 
-#: godabil.cc:143 godabil.cc:138
+#: godabil.cc:143 godabil.cc:138 godabil.cc:141
 msgid "sacrilege"
 msgstr "불결"
 
 # (deceit, 110905) virtue
-#: godabil.cc:148 godabil.cc:143
+#: godabil.cc:148 godabil.cc:143 godabil.cc:146
 msgid "ordered"
 msgstr "정돈"
 
-#: godabil.cc:149 godabil.cc:144
+#: godabil.cc:149 godabil.cc:144 godabil.cc:147
 msgid "harmonic"
 msgstr "조화"
 
-#: godabil.cc:150 godabil.cc:145
+#: godabil.cc:150 godabil.cc:145 godabil.cc:148
 msgid "lawful"
 msgstr "질서"
 
-#: godabil.cc:151 godabil.cc:146
+#: godabil.cc:151 godabil.cc:146 godabil.cc:149
 msgid "clean"
 msgstr "청결"
 
-#: godabil.cc:152 godabil.cc:147
+#: godabil.cc:152 godabil.cc:147 godabil.cc:150
 msgid "pure"
 msgstr "순수"
 
-#: godabil.cc:153 godabil.cc:148
+#: godabil.cc:153 godabil.cc:148 godabil.cc:151
 msgid "hygienic"
 msgstr "깨끗함"
 
-#: godabil.cc:154 godabil.cc:149
+#: godabil.cc:154 godabil.cc:149 godabil.cc:152
 msgid "faithful"
 msgstr "깊은 신앙심"
 
-#: godabil.cc:155 godabil.cc:150
+#: godabil.cc:155 godabil.cc:150 godabil.cc:153
 msgid "loyal"
 msgstr "성실함"
 
-#: godabil.cc:156 godabil.cc:151
+#: godabil.cc:156 godabil.cc:151 godabil.cc:154
 msgid "believing"
 msgstr "믿음"
 
-#: godabil.cc:157 godabil.cc:152
+#: godabil.cc:157 godabil.cc:152 godabil.cc:155
 msgid "reverent"
 msgstr "숭배"
 
-#: godabil.cc:158 godabil.cc:153
+#: godabil.cc:158 godabil.cc:153 godabil.cc:156
 msgid "pious"
 msgstr "경건함"
 
-#: godabil.cc:159 godabil.cc:154
+#: godabil.cc:159 godabil.cc:154 godabil.cc:157
 msgid "obedient"
 msgstr "복종"
 
 # (deceit, 110905) long virtue
-#: godabil.cc:164 godabil.cc:159
+#: godabil.cc:164 godabil.cc:159 godabil.cc:162
 msgid "order"
 msgstr "정돈"
 
-#: godabil.cc:165 godabil.cc:160
+#: godabil.cc:165 godabil.cc:160 godabil.cc:163
 msgid "harmony"
 msgstr "조화"
 
-#: godabil.cc:166 godabil.cc:161
+#: godabil.cc:166 godabil.cc:161 godabil.cc:164
 msgid "lawfulness"
 msgstr "질서"
 
-#: godabil.cc:167 godabil.cc:162
+#: godabil.cc:167 godabil.cc:162 godabil.cc:165
 msgid "cleanliness"
 msgstr "청결"
 
-#: godabil.cc:168 godabil.cc:163
+#: godabil.cc:168 godabil.cc:163 godabil.cc:166
 msgid "purity"
 msgstr "순수"
 
-#: godabil.cc:169 godabil.cc:164
+#: godabil.cc:169 godabil.cc:164 godabil.cc:167
 msgid "hygiene"
 msgstr "깨끗함"
 
-#: godabil.cc:170 godabil.cc:165
+#: godabil.cc:170 godabil.cc:165 godabil.cc:168
 msgid "faithfulness"
 msgstr "깊은 신앙심"
 
-#: godabil.cc:171 godabil.cc:166
+#: godabil.cc:171 godabil.cc:166 godabil.cc:169
 msgid "loyalty"
 msgstr "성실함"
 
-#: godabil.cc:172 godabil.cc:167
+#: godabil.cc:172 godabil.cc:167 godabil.cc:170
 msgid "belief"
 msgstr "믿음"
 
-#: godabil.cc:173 godabil.cc:168
+#: godabil.cc:173 godabil.cc:168 godabil.cc:171
 msgid "reverence"
 msgstr "숭배"
 
-#: godabil.cc:174 godabil.cc:169
+#: godabil.cc:174 godabil.cc:169 godabil.cc:172
 msgid "piety"
 msgstr "신앙도"
 
-#: godabil.cc:175 godabil.cc:170
+#: godabil.cc:175 godabil.cc:170 godabil.cc:173
 msgid "obedience"
 msgstr "복종"
 
 # (deceit, 110905) smite
-#: godabil.cc:180 godabil.cc:175
+#: godabil.cc:180 godabil.cc:175 godabil.cc:178
 msgid "purify"
 msgstr "정화"
 
-#: godabil.cc:181 godabil.cc:176
+#: godabil.cc:181 godabil.cc:176 godabil.cc:179
 msgid "censure"
 msgstr "견책"
 
-#: godabil.cc:182 godabil.cc:177
+#: godabil.cc:182 godabil.cc:177 godabil.cc:180
 msgid "condemn"
 msgstr "규탄"
 
-#: godabil.cc:183 godabil.cc:178
+#: godabil.cc:183 godabil.cc:178 godabil.cc:181
 msgid "strike down"
 msgstr "일격"
 
-#: godabil.cc:184 godabil.cc:179
+#: godabil.cc:184 godabil.cc:179 godabil.cc:182
 msgid "expel"
 msgstr "퇴출"
 
-#: godabil.cc:185 godabil.cc:180
+#: godabil.cc:185 godabil.cc:180 godabil.cc:183
 msgid "oust"
 msgstr "몰아냄"
 
-#: godabil.cc:186 godabil.cc:181
+#: godabil.cc:186 godabil.cc:181 godabil.cc:184
 msgid "smite"
 msgstr "천벌"
 
-#: godabil.cc:187 godabil.cc:182
+#: godabil.cc:187 godabil.cc:182 godabil.cc:185
 msgid "castigate"
 msgstr "면박"
 
-#: godabil.cc:188 godabil.cc:183
+#: godabil.cc:188 godabil.cc:183 godabil.cc:186
 msgid "rebuke"
 msgstr "꾸짖음"
 
 # (deceit, 110905) smitten
-#: godabil.cc:193 godabil.cc:188
+#: godabil.cc:193 godabil.cc:188 godabil.cc:191
 msgid "purified"
 msgstr "정화"
 
-#: godabil.cc:194 godabil.cc:189
+#: godabil.cc:194 godabil.cc:189 godabil.cc:192
 msgid "censured"
 msgstr "견책"
 
-#: godabil.cc:195 godabil.cc:190
+#: godabil.cc:195 godabil.cc:190 godabil.cc:193
 msgid "condemned"
 msgstr "규탄"
 
-#: godabil.cc:196 godabil.cc:191
+#: godabil.cc:196 godabil.cc:191 godabil.cc:194
 msgid "struck down"
 msgstr "일격"
 
-#: godabil.cc:197 godabil.cc:192
+#: godabil.cc:197 godabil.cc:192 godabil.cc:195
 msgid "expelled"
 msgstr "퇴출"
 
-#: godabil.cc:198 godabil.cc:193
+#: godabil.cc:198 godabil.cc:193 godabil.cc:196
 msgid "ousted"
 msgstr "몰아냄"
 
-#: godabil.cc:199 godabil.cc:194
+#: godabil.cc:199 godabil.cc:194 godabil.cc:197
 msgid "smitten"
 msgstr "천벌"
 
-#: godabil.cc:200 godabil.cc:195
+#: godabil.cc:200 godabil.cc:195 godabil.cc:198
 msgid "castigated"
 msgstr "면박"
 
-#: godabil.cc:201 godabil.cc:196
+#: godabil.cc:201 godabil.cc:196 godabil.cc:199
 msgid "rebuked"
 msgstr "꾸짖음"
 
@@ -11593,6 +11594,10 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -15769,11 +15774,11 @@ msgstr "미믹"
 msgid "Lava"
 msgstr "용암"
 
-#: items.cc:1084
+#: items.cc:1084 items.cc:1087
 msgid "a player ghost"
 msgstr "플레이어의 망령"
 
-#: items.cc:1086
+#: items.cc:1086 items.cc:1089
 msgid "a pandemonium lord"
 msgstr "판데모니움의 군주"
 
@@ -16564,10 +16569,9 @@ msgstr "위습 변신"
 msgid "barrage of energy"
 msgstr "발사된 마력"
 
-####################
+# ###################
 # unrandart names. #
-####################
-
+# ###################
 msgid "Wrath of Trog"
 msgstr "트로그의 분노"
 
@@ -16833,7 +16837,7 @@ msgid "ring of the Octopus King"
 msgstr "문어왕의 반지"
 
 msgid "Axe of Woe"
-msgstr "재앙의 도끼"
+msgstr "비통의 도끼"
 
 msgid "milk chocolate"
 msgstr "우유 초콜릿"

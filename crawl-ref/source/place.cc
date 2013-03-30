@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Place related functions.
 **/
@@ -60,8 +60,8 @@ string place_name(unsigned short place, bool long_name, bool include_number)
             // decapitalise 'the'
             if (result.find("The") == 0)
                 result[0] = 't';
-            result = make_stringf("Level %d of %s",
-                      lev, result.c_str());
+            result = make_stringf(_("Level %d of %s"),
+                      lev, _(result.c_str()));
         }
         else if (lev)
             result = make_stringf("%s:%d", result.c_str(), lev);
@@ -76,7 +76,7 @@ string place_name(unsigned short place, bool long_name, bool include_number)
 //      describe places would be nice.
 string short_place_name(unsigned short place)
 {
-    return place_name(place, false, true);
+    return _(place_name(place, false, true).c_str());
 }
 
 // Prepositional form of branch level name.  For example, "in the
@@ -86,8 +86,8 @@ string prep_branch_level_name(unsigned short packed_place)
     string place = place_name(packed_place, true, true);
     if (!place.empty() && place != "Pandemonium")
         place[0] = tolower(place[0]);
-    return (place.find("level") == 0 ? "on " + place
-                                     : "in " + place);
+    return (place.find("level") == 0 ? "에서," + place
+                                     : "에서, " + place);
 }
 
 // Use current branch and depth

@@ -648,7 +648,7 @@ void full_describe_view()
                      + "</" + col_string + ">) ";
 #endif
 
-            string str = get_monster_equipment_desc(*mi, DESC_FULL, DESC_A, true);
+            string str = get_monster_equipment_desc(*mi, DESC_FULL, DESC_PLAIN, true);
             if (mi->is(MB_MESMERIZING))
                 str += gettext(", keeping you mesmerised");
 
@@ -3367,12 +3367,12 @@ static string _describe_monster_weapon(const monster_info& mi, bool ident)
 
     if (weap && (!ident || item_type_known(*weap)))
     {
-        name1 = weap->name(true, DESC_A, false, false, true,
+        name1 = weap->name(true, DESC_PLAIN, false, false, true,
                            false, ISFLAG_KNOW_CURSE);
     }
     if (alt && (!ident || item_type_known(*alt)) && mi.wields_two_weapons())
     {
-        name2 = alt->name(true, DESC_A, false, false, true,
+        name2 = alt->name(true, DESC_PLAIN, false, false, true,
                           false, ISFLAG_KNOW_CURSE);
     }
 
@@ -3383,7 +3383,7 @@ static string _describe_monster_weapon(const monster_info& mi, bool ident)
     {
         item_def dup = *weap;
         ++dup.quantity;
-        name1 = dup.name(true, DESC_A, false, false, true, true,
+        name1 = dup.name(true, DESC_PLAIN, false, false, true, true,
                          ISFLAG_KNOW_CURSE);
         name2.clear();
     }
@@ -3498,7 +3498,7 @@ static vector<string> _get_monster_desc_vector(const monster_info& mi)
     {
         descs.push_back("fire blocked by " // FIXME, renamed features
                         + feature_description(mi.fire_blocker, NUM_TRAPS, "",
-                                              DESC_A, false));
+                                              DESC_PLAIN, false));
     }
 
     return descs;
@@ -3737,7 +3737,7 @@ string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" wearing ");
-            desc += mon_arm->name(true, DESC_A);
+            desc += mon_arm->name(true, DESC_PLAIN);
         }
 
         if (mon_shd)
@@ -3748,7 +3748,7 @@ string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" wearing ");
-            desc += mon_shd->name(true, DESC_A);
+            desc += mon_shd->name(true, DESC_PLAIN);
         }
 
         if (mon_rng)
@@ -3759,7 +3759,7 @@ string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += _(" wearing ");
-            desc += mon_rng->name(true, DESC_A);
+            desc += mon_rng->name(true, DESC_PLAIN);
         }
 
         if (mon_qvr)
@@ -3770,7 +3770,7 @@ string get_monster_equipment_desc(const monster_info& mi,
                 found_sth = true;
 
             desc += gettext(" quivering ");
-            desc += mon_qvr->name(true, DESC_A);
+            desc += mon_qvr->name(true, DESC_PLAIN);
         }
 
         if (mon_carry)
@@ -3782,7 +3782,7 @@ string get_monster_equipment_desc(const monster_info& mi,
 
             if (mon_alt)
             {
-                desc += mon_alt->name(true, DESC_A);
+                desc += mon_alt->name(true, DESC_PLAIN);
                 if (mon_has_wand)
                     desc += gettext(" and ");
             }
@@ -3790,7 +3790,7 @@ string get_monster_equipment_desc(const monster_info& mi,
             if (mon_has_wand)
             {
                 if (mi.props["wand_known"])
-                    desc += mon_wnd->name(true, DESC_A);
+                    desc += mon_wnd->name(true, DESC_PLAIN);
                 else
                     desc += gettext("a wand");
             }
@@ -3840,7 +3840,7 @@ static bool _print_item_desc(const coord_def where)
     if (targ_item == NON_ITEM)
         return false;
 
-    string name = get_menu_colour_prefix_tags(mitm[targ_item], DESC_A);
+    string name = get_menu_colour_prefix_tags(mitm[targ_item], DESC_PLAIN);
     mprf(MSGCH_FLOOR_ITEMS, _("You see %s here."), name.c_str());
 
     if (mitm[ targ_item ].link != NON_ITEM)

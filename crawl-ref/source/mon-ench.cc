@@ -211,12 +211,12 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
             if (type == MONS_AIR_ELEMENTAL)
             {
                 mprf(_("%s merges itself into the air."),
-                     name(DESC_A, true).c_str());
+                     name(DESC_PLAIN, true).c_str());
             }
             else if (type == MONS_TRAPDOOR_SPIDER)
             {
                 mprf(_("%s hides itself under the floor."),
-                     name(DESC_A, true).c_str());
+                     name(DESC_PLAIN, true).c_str());
             }
             else if (seen_context == SC_SURFACES)
             {
@@ -229,7 +229,7 @@ void monster::add_enchantment_effect(const mon_enchant &ench, bool quiet)
                 // to happen mostly (only?) for fish. -- 1KB
             }
             else if (crawl_state.game_is_arena())
-                mprf(_("%s submerges."), name(DESC_A, true).c_str());
+                mprf(_("%s submerges."), name(DESC_PLAIN, true).c_str());
         }
 
         // Pacified monsters leave the level when they submerge.
@@ -332,7 +332,7 @@ static bool _prepare_del_ench(monster* mon, const mon_enchant &me)
         else
             mprf(MSGCH_ERROR, "%s tried to unsubmerge while on same square as "
                  "%s (see bug 2293518)", mon->name(DESC_THE, true).c_str(),
-                 mon->name(DESC_A, true).c_str());
+                 mon->name(DESC_PLAIN, true).c_str());
     }
 
     // Monster un-submerging while under player or another monster.  Try to
@@ -535,7 +535,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             if (!quiet)
             {
                 mprf(_("%s appears from thin air!"),
-                     name(DESC_A, true).c_str());
+                     name(DESC_PLAIN, true).c_str());
                 autotoggle_autopickup(false);
             }
 
@@ -648,7 +648,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             if (you.pos() == pos())
             {
                 mprf(MSGCH_ERROR, _("%s is on the same square as you!"),
-                     name(DESC_A).c_str());
+                     name(DESC_PLAIN).c_str());
             }
         }
 
@@ -677,16 +677,16 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
                 if (type == MONS_AIR_ELEMENTAL)
                 {
                     mprf(channel, _("%s forms itself from the air!"),
-                                  name(DESC_A, true).c_str());
+                                  name(DESC_PLAIN, true).c_str());
                 }
                 else if (type == MONS_TRAPDOOR_SPIDER)
                 {
                     mprf(channel,
                          _("%s leaps out from its hiding place under the floor!"),
-                         name(DESC_A, true).c_str());
+                         name(DESC_PLAIN, true).c_str());
                 }
                 else if (crawl_state.game_is_arena())
-                    mprf(_("%s surfaces."), name(DESC_A, true).c_str());
+                    mprf(_("%s surfaces."), name(DESC_PLAIN, true).c_str());
             }
         }
         else if (mons_near(this)
@@ -1401,7 +1401,7 @@ void monster::apply_enchantment(const mon_enchant &me)
                         mon->add_ench(mon_enchant(ENCH_FEAR, dur + random2(20),
                                                   me.agent()));
                         if (visible_to(&you))
-                            mprf(_("%s catches fire!"), mon->name(DESC_A).c_str());
+                            mprf(_("%s catches fire!"), mon->name(DESC_PLAIN).c_str());
                         behaviour_event(mon, ME_SCARE, me.agent());
                         xom_is_stimulated(100);
                     }
