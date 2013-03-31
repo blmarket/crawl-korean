@@ -619,8 +619,11 @@ bool check_selected_skills()
         return true;
     }
 
-    if (could_train)
+    if (could_train && !you.received_noskill_warning)
+    {
+        you.received_noskill_warning = true;
         mpr(_("You cannot train any new skill."));
+    }
 
     return false;
     // It's possible to have no selectable skills, if they are all untrainable

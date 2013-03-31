@@ -1292,6 +1292,7 @@ int acquirement_create_item(object_class_type class_wanted,
             {
                 if (_try_give_plain_armour(doodad))
                 {
+                    origin_acquired(doodad, agent);
                     // Only Xom gives negatively enchanted items (75% if not 0).
                     if (doodad.plus < 0 && agent != GOD_XOM)
                         doodad.plus = 0;
@@ -1557,9 +1558,6 @@ int acquirement_create_item(object_class_type class_wanted,
                         !one_chance_in(5) ? DECK_RARITY_RARE :
                                             DECK_RARITY_COMMON;
     }
-
-    if (agent > GOD_NO_GOD && agent < NUM_GODS && agent == you.religion)
-        thing.inscription = "god gift";
 
     // Moving this above the move since it might not exist after falling.
     if (thing_created != NON_ITEM && !quiet)

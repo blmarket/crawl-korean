@@ -708,9 +708,11 @@ void item_colour(item_def &item)
             }
             break;
 
+#if TAG_MAJOR_VERSION == 34
         case MISC_EMPTY_EBONY_CASKET:
             item.colour = DARKGREY;
             break;
+#endif
 
         case MISC_QUAD_DAMAGE:
             item.colour = ETC_DARK;
@@ -3051,7 +3053,9 @@ static void _generate_misc_item(item_def& item, int force_type, int force_ego)
              || item.sub_type == MISC_HORN_OF_GERYON
              || item.sub_type == MISC_DECK_OF_PUNISHMENT
              || item.sub_type == MISC_QUAD_DAMAGE
+#if TAG_MAJOR_VERSION == 34
              || item.sub_type == MISC_EMPTY_EBONY_CASKET
+#endif
              // Pure decks are rare in the dungeon.
              || (item.sub_type == MISC_DECK_OF_ESCAPE
                     || item.sub_type == MISC_DECK_OF_DESTRUCTION
@@ -3105,11 +3109,6 @@ int items(bool allow_uniques,
         return NON_ITEM;
 
     item_def& item(mitm[p]);
-
-    // make_item_randart() might do things differently based upon the
-    // acquirement agent, especially for god gifts.
-    if (agent != -1)
-        origin_acquired(item, agent);
 
     const bool force_good = item_level >= MAKE_GIFT_ITEM;
 
@@ -3166,6 +3165,11 @@ int items(bool allow_uniques,
            || force_type < get_max_subtype(item.base_type));
 
     item.quantity = 1;          // generally the case
+
+    // make_item_randart() might do things differently based upon the
+    // acquirement agent, especially for god gifts.
+    if (agent != -1 && !is_stackable_item(item))
+        origin_acquired(item, agent);
 
     if (force_ego < SP_FORBID_EGO)
     {

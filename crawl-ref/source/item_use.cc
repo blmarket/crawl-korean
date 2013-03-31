@@ -299,7 +299,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             item_slot = prompt_invent_item(
                             gettext("Wield which item (- for none, * to show all)?"),
                             MT_INVLIST, OSEL_WIELD,
-                            true, true, true, '-', -1, NULL, OPER_WIELD);
+                            true, true, true, '-', -1, NULL, OPER_WIELD, false, true);
         }
         else
             item_slot = SLOT_BARE_HANDS;
@@ -2711,8 +2711,8 @@ static bool _scroll_modify_item(item_def scroll)
         // Get the slot of the item the scroll is to be used on.
         // Ban the scroll's own slot from the prompt to avoid the stupid situation
         // where you use identify on itself.
-        item_slot = prompt_invent_item(gettext("Use on which item? (\\ to view known items)"),
-                                       MT_INVLIST, OSEL_ANY, true, true, false, 0,
+        item_slot = prompt_invent_item(_("Use on which item? (\\ to view known items)"),
+                                       MT_INVLIST, OSEL_SCROLL_TARGET, true, true, false, 0,
                                        scroll.link, NULL, OPER_ANY, true);
 
         if (item_slot == PROMPT_NOTHING)
@@ -3070,7 +3070,6 @@ void read_scroll(int slot)
 
     case SCR_SUMMONING:
         cast_shadow_creatures(true);
-        did_god_conduct(DID_UNHOLY, 10, item_type_known(scroll));
         break;
 
     case SCR_FOG:

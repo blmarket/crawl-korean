@@ -809,7 +809,6 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
              mitm[thing_created].name(true, DESC_PLAIN).c_str());
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, gift_buf), true);
 
-    mitm[thing_created].inscription = "신의 선물";
     canned_msg(MSG_SOMETHING_APPEARS);
     move_item_to_grid(&thing_created, you.pos());
 

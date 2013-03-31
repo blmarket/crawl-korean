@@ -2205,15 +2205,7 @@ static void _prep_input()
     }
     if (you.seen_invis)
     {
-        if (!you.can_see_invisible(false))
-        {
-            item_def *ring = get_only_unided_ring();
-            if (ring && !is_artefact(*ring)
-                && ring->sub_type == RING_SEE_INVISIBLE)
-            {
-                wear_id_type(*ring);
-            }
-        }
+        maybe_id_ring_see_invis();
         you.seen_invis = false;
     }
 }
@@ -3015,11 +3007,13 @@ static void _update_mold()
     env.level_state &= ~LSTATE_GLOW_MOLD; // we'll restore it if any
 
     for (rectangle_iterator ri(0); ri; ++ri)
+    {
         if (glowing_mold(*ri))
         {
             _update_mold_state(*ri);
             env.level_state |= LSTATE_GLOW_MOLD;
         }
+    }
     for (monster_iterator mon_it; mon_it; ++mon_it)
     {
         if (mon_it->type == MONS_HYPERACTIVE_BALLISTOMYCETE)
@@ -4374,9 +4368,9 @@ static void _move_player(coord_def move)
     {
         if (you.made_nervous_by(targ))
         {
-                moving = false;
-                you.turn_is_over = false;
-                return;
+            moving = false;
+            you.turn_is_over = false;
+            return;
         }
     }
 

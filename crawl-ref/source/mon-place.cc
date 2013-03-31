@@ -441,6 +441,7 @@ void spawn_random_monsters()
 static bool _is_random_monster(monster_type mt)
 {
     return (mt == RANDOM_MONSTER || mt == RANDOM_MOBILE_MONSTER
+            || mt == RANDOM_COMPATIBLE_MONSTER
             || mt == WANDERING_MONSTER);
 }
 
@@ -452,6 +453,12 @@ static bool _is_not_zombifiable(monster_type mt)
 static bool _has_big_aura(monster_type mt)
 {
     return mt == MONS_MOTH_OF_SUPPRESSION || mt == MONS_SILENT_SPECTRE;
+}
+
+static bool _is_incompatible_monster(monster_type mt)
+{
+    return mons_class_is_stationary(mt)
+        || player_will_anger_monster(mt);
 }
 
 // Caller must use !invalid_monster_type to check if the return value
@@ -478,6 +485,8 @@ monster_type pick_random_monster(level_id place,
         return pick_monster(place, arena_veto_random_monster);
     else if (kind == RANDOM_MOBILE_MONSTER)
         return pick_monster(place, mons_class_is_stationary);
+    else if (kind == RANDOM_COMPATIBLE_MONSTER)
+        return pick_monster(place, _is_incompatible_monster);
     else if (mons_class_is_zombified(kind))
         return pick_monster(place, _is_not_zombifiable);
     else if (crawl_state.game_is_sprint())
@@ -2447,7 +2456,7 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
 
     case MONS_IRONHEART_PRESERVER:
         natural_leader = true;
-        switch(random2(4))
+        switch(random2(3))
         {
             case 0:
                 band = BAND_DEEP_ELF_HIGH_PRIEST;
@@ -2458,10 +2467,6 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
                 band_size = 3 + random2(3);
                 break;
             case 2:
-                band = BAND_ORC_KNIGHT;
-                band_size = 5 + random2(5);
-                break;
-            case 3:
                 band = BAND_OGRE_MAGE_EXTERN;
                 band_size = 4 + random2(4);
                 break;
@@ -3199,6 +3204,10 @@ conduct_type player_will_anger_monster(monster_type type)
     monster dummy;
     dummy.type = type;
 
+    // no spellcasting/etc zombies currently
+    if (!mons_class_is_zombified(type))
+        define_monster(&dummy);
+
     return player_will_anger_monster(&dummy);
 }
 
@@ -3208,8 +3217,9 @@ conduct_type player_will_anger_monster(monster* mon)
         return DID_UNHOLY;
     if (is_good_god(you.religion) && mon->is_evil())
         return DID_NECROMANCY;
-    if (you.religion == GOD_FEDHAS && mon->holiness() == MH_UNDEAD
-        && !mon->is_insubstantial())
+    if (you.religion == GOD_FEDHAS
+        && ((mon->holiness() == MH_UNDEAD && !mon->is_insubstantial())
+            || mon->has_corpse_violating_spell()))
     {
         return DID_CORPSE_VIOLATION;
     }

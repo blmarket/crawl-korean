@@ -59,7 +59,8 @@ sep_re = re.compile('[, ]+') # basic separator for user input
 txt_sep_re = re.compile('%{4,}') # txt file entry separator
 cmd_re = re.compile('<(\w)>') # used to find the key in menu command strings
 # Those languages have special wrapping with fullwidth character support
-east_asian_languages = {'ko', 'zh'}
+east_asian_languages = {'ja', 'ko', 'zh'}
+no_space_languages = {'ja', 'zh'}
 
 # This object serves as an intermediate step between txt and ini files.
 # Entries are in a raw format: no wrapping, every new line is significant.
@@ -126,7 +127,7 @@ def title(text):
     text = dash_line + "\n" + text + "\n" + dash_line + "\n"
     return text
 
-def unwrap(text):
+def unwrap(text, no_space):
     """Mostly replicates libutil.cc:unwrap_desc"""
     if not text:
         return ""
@@ -142,6 +143,19 @@ def unwrap(text):
     text = text.replace("\n", " ")
     text = text.replace("\\n", "\n")
 
+    # Remove superfluous spaces surrounded by wide characters
+    if no_space:
+        i = 0
+        j = text.find(" ")
+        while j != -1:
+           i += j
+           # text has been rstriped so no risk of finding a space at the end
+           if i and wide_char(text[i-1]) and wide_char(text[i+1]):
+                text = text[:i] + text[i+1:]
+           else:
+                i += 1
+           j = text[i:].find(" ")
+
     return text
 
 def wrap(text, eac):
@@ -150,7 +164,10 @@ def wrap(text, eac):
     for line in text.splitlines():
         if line:
             if eac:
-                lines += FWwrapper.wrap(line)
+                # Need to rstrip the lines because when the wrapper tries to
+                # add a single character to the end of the line, it might fail
+                # and add an empty string, preventing the removal of whitespace
+                lines += map(unicode.rstrip, FWwrapper.wrap(line))
             else:
                 lines += wrapper.wrap(line)
         elif not lines or lines[-1] != '': # remove consecutive empty lines
@@ -186,12 +203,28 @@ def change_counter(c):
     return " ".join(["%s:%-3d" % (k, c[k]) if c[k] else " " * (len(k) + 4) \
                      for k in sorted(res_index.changes)])
 
-# Subclasses to properly handle wrapping fullwidth unicode character which take
-# 2 columns to be displayed on a terminal
-# See http://code.activestate.com/lists/python-list/631628/"""
+def wide_char(c):
+    return east_asian_width(c) in 'WFA'
+
+"""Subclasses to properly handle wrapping fullwidth unicode character which take
+2 columns to be displayed on a terminal
+See http://code.activestate.com/lists/python-list/631628/"""
 class FullWidthUnicode(unicode):
     def __len__(self):
-        return sum(2 if east_asian_width(c) in 'WFA' else 1 for c in self)
+        return sum(2 if wide_char(c) else 1 for c in self)
+
+    def __getslice__(self, i, j):
+        k = 0
+        while k < i:
+            if wide_char(self[k]):
+                i -= 1
+            k += 1
+        k = i
+        while k < j and k < unicode.__len__(self):
+            if wide_char(self[k]):
+                j -= 1
+            k += 1
+        return FullWidthUnicode(unicode.__getslice__(self, i, j))
 
 class FullWidthTextWrapper(TextWrapper):
     def _split(self, text):
@@ -634,7 +667,7 @@ class TxtFile(ResourceFile):
                 e.value += line + "\n"
         e.value = e.value.rstrip()
         if not e['nowrap']:
-            e.value = unwrap(e.value)
+            e.value = unwrap(e.value, self.lang() in no_space_languages)
         return e
 
     def read_file(self):
@@ -681,7 +714,7 @@ class IniFile(ResourceFile):
 
         # Delete entries with only a link. There's no point in translating them.
         if len(e.value) > 1 and e.value[0] == '<' and e.value[-1] == '>'\
-           and e.value.find("\n") == -1:
+           and e.value.find("\n") == -1 and e.value[1:].find("<") == -1:
             if key in self.entries:
                 self.diff['removed'][key] = self.entries[key]
                 del self.entries[key]
@@ -1155,10 +1188,7 @@ class Menu(OrderedDict):
             self.show_menu()
 
 wrapper = TextWrapper(width = 79, break_on_hyphens = False)
-# The hack to support FullWidth seems to have an issue with words the same size
-# as the line and break_long_word. It adds a space at the beginning of the next one.
-# FWwrapper = FullWidthTextWrapper(width = 79, break_on_hyphens = False)
-FWwrapper = FullWidthTextWrapper(width = 79, break_on_hyphens = False, break_long_words = False)
+FWwrapper = FullWidthTextWrapper(width = 79, break_on_hyphens = False)
 
 # We initialize the resource index early because we might need it if we have to
 # initialize the transifex configuration.

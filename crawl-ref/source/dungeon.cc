@@ -3993,8 +3993,6 @@ static void _build_postvault_level(vault_placement &place)
     // kind of wallification it wants.
     if (place.map.has_tag("dis"))
         dgn_build_chaotic_city_level(DNGN_METAL_WALL);
-    else if (player_in_branch(BRANCH_SWAMP))
-        dgn_build_swamp_level();
     else if (player_in_branch(BRANCH_SPIDER_NEST))
     {
         int ngb_min = 2;
@@ -4104,10 +4102,7 @@ static bool _apply_item_props(item_def &item, const item_spec &spec,
             props["randbook_title"].get_string());
     }
 
-    // Remove {god gift} from the inscription (could have been added if
-    // the item spec contains "acquire:moloch").
-    trim_god_gift_inscrip(item);
-    // And wipe item origin to remove "this is a god gift!" from there,
+    // Wipe item origin to remove "this is a god gift!" from there,
     // unless we're dealing with a corpse.
     if (!spec.corpselike())
         origin_reset(item);

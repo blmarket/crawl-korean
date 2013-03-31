@@ -2459,7 +2459,7 @@ void melee_attack::chaos_affects_defender()
                                            && !immune);
     const bool can_rage   = defender->can_go_berserk();
     const bool can_slow   = !mon || !mons_is_firewood(defender->as_monster());
-    const bool can_petrify= mon && (defender->res_petrify() <= 0);
+    const bool can_petrify= mon && !defender->res_petrify();
 
     int clone_chance   = can_clone                      ?  1 : 0;
     int poly_chance    = can_poly                       ?  1 : 0;
@@ -3242,9 +3242,9 @@ bool melee_attack::apply_damage_brand()
             obvious_effect = beam_temp.obvious_effect;
         }
 
-        if (attacker->is_player() && damage_brand == SPWPN_CONFUSE)
+        if (attacker->is_player() && damage_brand == SPWPN_CONFUSE
+            && you.duration[DUR_CONFUSING_TOUCH])
         {
-            ASSERT(you.duration[DUR_CONFUSING_TOUCH]);
             you.duration[DUR_CONFUSING_TOUCH] -= roll_dice(3, 5)
                                                  * BASELINE_DELAY;
 

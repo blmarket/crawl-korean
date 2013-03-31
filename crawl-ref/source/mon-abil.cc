@@ -3585,7 +3585,7 @@ void mon_nearby_ability(monster* mons)
 
 // When giant spores move maybe place a ballistomycete on the they move
 // off of.
-void ballisto_on_move(monster* mons, const coord_def & position)
+void ballisto_on_move(monster* mons, const coord_def& position)
 {
     if (mons->type == MONS_GIANT_SPORE && !crawl_state.game_is_zotdef()
         && !mons->is_summoned())
@@ -3601,19 +3601,31 @@ void ballisto_on_move(monster* mons, const coord_def & position)
             if (one_chance_in(4))
             {
                 beh_type attitude = actual_same_attitude(*mons);
-                if (monster *rc = create_monster(mgen_data(MONS_BALLISTOMYCETE,
-                                                  attitude,
-                                                  NULL,
-                                                  0,
-                                                  0,
-                                                  position,
-                                                  MHITNOT,
-                                                  MG_FORCE_PLACE)))
+                if (monster *plant = create_monster(mgen_data(MONS_BALLISTOMYCETE,
+                                                        attitude,
+                                                        NULL,
+                                                        0,
+                                                        0,
+                                                        position,
+                                                        MHITNOT,
+                                                        MG_FORCE_PLACE)))
                 {
+                    if (mons_is_god_gift(mons, GOD_FEDHAS))
+                    {
+                        plant->flags |= MF_NO_REWARD;
+
+                        if (attitude == BEH_FRIENDLY)
+                        {
+                            plant->flags |= MF_ATT_CHANGE_ATTEMPT;
+
+                            mons_make_god_gift(plant, GOD_FEDHAS);
+                        }
+                    }
+
                     // Don't leave mold on squares we place ballistos on
                     remove_mold(position);
-                    if  (you.can_see(rc))
-                        mprf(gettext("A ballistomycete grows in the wake of the spore."));
+                    if (you.can_see(plant))
+                        mprf(_("A ballistomycete grows in the wake of the spore."));
                 }
 
                 mons->number = 40;
@@ -3627,7 +3639,7 @@ void ballisto_on_move(monster* mons, const coord_def & position)
 static bool _ballisto_at(const coord_def & target)
 {
     monster* mons = monster_at(target);
-    return (mons && mons ->type == MONS_BALLISTOMYCETE
+    return (mons && mons->type == MONS_BALLISTOMYCETE
             && mons->alive());
 }
 
@@ -3644,7 +3656,7 @@ static bool _mold_connected(const coord_def & target)
 
 // If 'monster' is a ballistomycete or spore, activate some number of
 // ballistomycetes on the level.
-void activate_ballistomycetes(monster* mons, const coord_def & origin,
+void activate_ballistomycetes(monster* mons, const coord_def& origin,
                               bool player_kill)
 {
     if (!mons || mons->is_summoned()
@@ -3767,7 +3779,7 @@ void activate_ballistomycetes(monster* mons, const coord_def & origin,
             }
         }
 
-        const position_node * thread = &(*candidates[index]);
+        const position_node* thread = &(*candidates[index]);
         while (thread)
         {
             if (!one_chance_in(3))

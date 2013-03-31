@@ -620,8 +620,9 @@ static bool _box_of_beasts(item_def &box)
             mpr(gettext("...but nothing happens."));
         else
         {
-            mpr(gettext("...but the box appears empty."));
-            box.sub_type = MISC_EMPTY_EBONY_CASKET;
+            mpr(_("...but the box appears empty, and falls apart."));
+            ASSERT(in_inventory(box));
+            dec_inv_item_quantity(box.link, 1);
         }
     }
 

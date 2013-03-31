@@ -3019,7 +3019,7 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_EXIT_HELL:
         return (M_("gateway back into the Dungeon"));
     case DNGN_TELEPORTER:
-        return (M_("teleporter"));
+        return (M_("short-range portal"));
     case DNGN_TRAP_MECHANICAL:
         return (M_("mechanical trap"));
     case DNGN_TRAP_MAGICAL:

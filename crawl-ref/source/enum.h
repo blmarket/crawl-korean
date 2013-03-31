@@ -2587,6 +2587,7 @@ enum monster_type                      // menv[].type
 
     RANDOM_MONSTER = 2000, // used to distinguish between a random monster and using program bugs for error trapping {dlb}
     RANDOM_MOBILE_MONSTER, // used for monster generation (shadow creatures)
+    RANDOM_COMPATIBLE_MONSTER, // used for player shadow creatures (prevents repulsing summons)
 
     // A random draconian, either base coloured drac or specialised.
     RANDOM_DRACONIAN,
@@ -3780,6 +3781,12 @@ enum tile_flags
     TILE_FLAG_ELDRITCH_NE = 0x0400000000ULL,
     TILE_FLAG_ELDRITCH_SE = 0x0800000000ULL,
     TILE_FLAG_ELDRITCH_SW = 0x1000000000ULL,
+
+    // Starspawn tentacle overlays.
+    TILE_FLAG_STARSPAWN_NW = 0x02000000000ULL,
+    TILE_FLAG_STARSPAWN_NE = 0x04000000000ULL,
+    TILE_FLAG_STARSPAWN_SE = 0x08000000000ULL,
+    TILE_FLAG_STARSPAWN_SW = 0x10000000000ULL,
 
     //// General
 

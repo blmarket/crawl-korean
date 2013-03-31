@@ -4174,7 +4174,7 @@ void display_char_status()
         STATUS_SILENCE,
         DUR_SENTINEL_MARK,
         STATUS_RECALL,
-        STATUS_LIQUEFIED
+        STATUS_LIQUEFIED,
     };
 
     status_info inf;
@@ -5626,6 +5626,7 @@ void player::init()
 
     running.clear();
     received_weapon_warning = false;
+    received_noskill_warning = false;
     ash_init_bondage(this);
 
     delay_queue.clear();
@@ -6469,9 +6470,9 @@ int player::res_holy_energy(const actor *attacker) const
     return 0;
 }
 
-int player::res_negative_energy() const
+int player::res_negative_energy(bool intrinsic_only) const
 {
-    return player_prot_life();
+    return player_prot_life(!intrinsic_only, true, !intrinsic_only);
 }
 
 int player::res_torment() const
@@ -6790,7 +6791,7 @@ void player::petrify(actor *who)
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (you.res_petrify() > 0)
+    if (you.res_petrify())
     {
         canned_msg(MSG_YOU_UNAFFECTED);
         return;

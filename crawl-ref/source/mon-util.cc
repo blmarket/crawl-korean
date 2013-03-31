@@ -706,13 +706,8 @@ bool mons_is_boulder(const monster* mon)
 // at least in some degree, golems have a chem granting them that.
 bool mons_is_object(monster_type mc)
 {
-    return mons_is_projectile(mc)
-           || mc == MONS_BALL_LIGHTNING
-           || mc == MONS_FIRE_VORTEX
-           || mc == MONS_SPATIAL_VORTEX
+    return mons_is_conjured(mc)
            || mc == MONS_TWISTER
-           || mc == MONS_BATTLESPHERE
-           || mc == MONS_FULMINANT_PRISM
            // unloading seeds helps the species
            || mc == MONS_GIANT_SPORE
            || mc == MONS_LURKING_HORROR
@@ -1079,14 +1074,6 @@ void discover_mimic(const coord_def& pos, bool wake)
     {   // (130304) 한글판에서 item이 Feature(지형지물)일때 item->name을 참조하면 왜인지 몰라도 튕깁니다;;;; item_name쪽은 나중에 다시 정비해야할듯 싶고, 일단 아래와 같이 임시조치했습니다. 원래는 item->name(true, DESC_BASENAME).c_str(); 만 있습니다.
         mprf(MSGCH_WARN, _("The %s is a mimic!"), ((!feature_mimic) ? item->name(true, DESC_BASENAME).c_str() : _(feat_type_name(feat))));
         mimic->seen_context = SC_JUST_SEEN;
-    }
-
-    // Orb mimics shriek.
-    if (item && item->base_type == OBJ_ORBS)
-    {
-        orb_pickup_noise(pos, 30,
-            _("The orb mimic lets out a hideous shriek!"),
-            _("The orb mimic lets out a furious burst of light!"));
     }
 
     // Just in case there's another one.

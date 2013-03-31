@@ -1096,7 +1096,7 @@ static monster_type _zotdef_shadow()
             return mc;
     }
 
-    return RANDOM_MOBILE_MONSTER;
+    return RANDOM_COMPATIBLE_MONSTER;
 }
 
 spret_type cast_shadow_creatures(bool scroll, god_type god, bool fail)
@@ -1104,7 +1104,7 @@ spret_type cast_shadow_creatures(bool scroll, god_type god, bool fail)
     fail_check();
     mpr(_("Wisps of shadow whirl around you..."));
 
-    monster_type critter = RANDOM_MOBILE_MONSTER;
+    monster_type critter = RANDOM_COMPATIBLE_MONSTER;
     if (crawl_state.game_is_zotdef())
         critter = _zotdef_shadow();
 
@@ -1119,27 +1119,39 @@ spret_type cast_shadow_creatures(bool scroll, god_type god, bool fail)
                       SPELL_SHADOW_CREATURES, you.pos(), MHITYOU,
                       MG_FORCE_BEH, god), false))
         {
-            // Choose a new duration based on HD.
-            int x = max(mons->hit_dice - 3, 1);
-            int d = div_rand_round(17,x);
-            if (scroll)
-                d++;
-            if (d < 1)
-                d = 1;
-            if (d > 4)
-                d = 4;
-            mon_enchant me = mon_enchant(ENCH_ABJ, d);
-            me.set_duration(mons, &me);
-            mons->update_ench(me);
-            player_angers_monster(mons);
+            // In the rare cases that a specific spell set of a monster will
+            // cause anger, even if others do not, try rerolling
+            int tries = 0;
+            while (player_will_anger_monster(mons) && ++tries <= 20)
+                define_monster(mons);
 
-            // Possibly anger band members, too.
+            // If we didn't find a valid spell set yet, just give up
+            if (tries > 20)
+                monster_die(mons, KILL_RESET, NON_MONSTER);
+            else
+            {
+                // Choose a new duration based on HD.
+                int x = max(mons->hit_dice - 3, 1);
+                int d = div_rand_round(17,x);
+                if (scroll)
+                    d++;
+                if (d < 1)
+                    d = 1;
+                if (d > 4)
+                    d = 4;
+                mon_enchant me = mon_enchant(ENCH_ABJ, d);
+                me.set_duration(mons, &me);
+                mons->update_ench(me);
+            }
+
+            // Remove any band members that would turn hostile
             for (monster_iterator mi; mi; ++mi)
             {
                 if (testbits(mi->flags, MF_BAND_MEMBER)
                     && (mid_t) mi->props["band_leader"].get_int() == mons->mid)
                 {
-                    player_angers_monster(*mi);
+                    if (player_will_anger_monster(*mi))
+                        monster_die(*mi, KILL_RESET, NON_MONSTER);
                 }
             }
 

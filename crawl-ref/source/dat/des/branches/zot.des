@@ -70,30 +70,8 @@ function callback.grunt_zot_stairs_overgrown_oklobify(data, triggerable,
   local pos = possible[crawl.random2(#possible) + 1]
   local mons = dgn.mons_at(pos.x, pos.y)
   mons.dismiss()
-  local spec = "oklob plant"
-  if data.count > 8 then
-     if crawl.coinflip() then
-        spec = "oklob plant name:annihilator col:lightblue n_suf "
-        spec = spec .. "spells:poison_arrow;orb_of_destruction;.;.;"
-        spec = spec .. "bolt_of_cold actual_spells"
-     else
-        spec = "oklob plant name:demonologist col:yellow n_suf "
-        spec = spec .. "spells:summon_demon;.;.;summon_demon;.;"
-        spec = spec .. "malign_gateway actual_spells"
-     end
-  elseif data.count > 5 then
-     if crawl.coinflip() then
-        spec = "oklob plant name:conjurer col:blue n_suf "
-        spec = spec .. "spells:stone_arrow;.;.;.;iskenderun's_mystic_blast "
-        spec = spec .. "actual_spells"
-     else
-        spec = "oklob plant name:summoner col:brown n_suf "
-        spec = spec .. "spells:summon_minor_demon;.;.;summon_swarm "
-        spec = spec .. "actual_spells"
-     end
-  end
 
-  dgn.create_monster(pos.x, pos.y, spec)
+  dgn.create_monster(pos.x, pos.y, "oklob plant")
 
   if not you.see_cell(pos.x, pos.y) then return end
 
@@ -1813,16 +1791,14 @@ xx...G...vv4$v$4vv...G...xx
 ENDMAP
 
 ####
-# Revenge of the spell-casting oklobs!!!
-NAME: grunt_zot_stairs_overgrown
-DEPTH: Zot, !Zot:$
-MONS: oklob plant
-MONS: plant col:lightgray name:demonic n_adj
-MONS: bush col:darkgray name:demonic n_adj
-MONS: fungus col:random name:demonic n_adj
-SUBST: 2 = 23
-SUBST: . = .:30 2 3 4
-SUBST: : = .
+# Revenge of the oklobs!!!
+NAME:   grunt_zot_stairs_overgrown
+DEPTH:  Zot, !Zot:$
+ORIENT: float
+MONS:   oklob plant, plant, bush, fungus
+SUBST:  2 = 23
+SUBST:  . = .:30 2 3 4
+SUBST:  : = .
 {{
 local sm = TriggerableFunction:new {
   func="callback.grunt_zot_stairs_overgrown_start", triggered=false }
@@ -2176,6 +2152,129 @@ MAP
 .bb.bI...y
 .......yyy
   .....yyy
+ENDMAP
+
+####
+# A bit of sporting fun...
+NAME: grunt_zot_stairs_faceoff
+DEPTH: Zot, !Zot:$
+ORIENT: float
+# The competitors:
+{{
+  local teams = { "black", "yellow", "pale", "green", "purple",
+                  "red", "white", "grey", "mottled" }
+  local team1 = crawl.random2(#teams) + 1
+  local team2 = 0
+  repeat
+    team2 = crawl.random2(#teams) + 1
+  until team2 ~= team1
+  mons(teams[team1] .. " draconian")
+  mons(teams[team1] .. " draconian knight")
+  mons(teams[team2] .. " draconian")
+  mons(teams[team2] .. " draconian knight")
+}}
+# The refs:
+MONS:   Killer Klown
+# The ball / puck / whatever:
+ITEM:   crystal ball of energy
+
+KFEAT:  K = iron_grate
+NSUBST: @ = 2:@ / *:x
+SUBST:  } = }:80 >, ] = ]:80 >, ) = ):80 >
+MAP
+  xxxxxxxxxxxxxxxxxxxxxxx
+ xx.....................xx
+xx..mmmmmm.mmmmm.mmmmmm..xx
+x..mm........5........mm..x
+@.mm...................mm.@
+x.m.KK.....1...3.....KK.m.x
+x.m.K}..1.........3...K.m.x
+x.m.K.1....2.d.4....3)K.m.x
+x.m.K]..1.........3...K.m.x
+x.m.KK.....1...3.....KK.m.x
+@.mm...................mm.@
+x..mm........5........mm..x
+xx..mmmmmm.mmmmm.mmmmmm..xx
+ xx.....................xx
+  xxxxxxxxxxxxxxxxxxxxxxx
+ENDMAP
+
+####
+# A microcosm of everything Zot: draconians, dragons, weird enemies,
+# and fractal vault patterns.
+NAME:   grunt_zot_stairs_mandelzot
+TAGS:   no_monster_gen
+DEPTH:  Zot, !Zot:$
+ORIENT: east
+SUBST:  } = }:80 >, ] = ]:80 >, ) = ):80 >
+MONS:   nonbase draconian, base draconian w:30 / nothing, moth of wrath
+MONS:   dragon w:30 / ice dragon w:30 / shadow dragon w:20 / \
+        storm dragon w:50 / bone dragon w:30 / golden dragon w:35
+MONS:   Killer Klown / electric golem w:5 / curse toe w:5 / nothing
+MONS:   orb of fire
+MAP
+                   xxxx
+                   xllxxx
+                   xllllx
+                  xxllllxx
+                 xxll.lllxx
+              xxxxll.].lllxxxxx
+              xllllll..lllllllx
+             xxl3l.......lllllx
+             xll...2.1.2...3llx
+     xxxxxxxxx.l...........lllx
+     xllxllxxll.....2.2.....llx
+    xxllllllll..............llx
+   xxlll....ll...5...........lx
+  xxlll.2.2..l............4.llx
+xxxlll......................llx
+@......2.1.2.3......5..4.}6lllx
+xxxlll......................llx
+  xxlll.2.2..l............4.llx
+   xxlll....ll...5...........lx
+    xxllllllll..............llx
+     xllxllxxll.....2.2.....llx
+     xxxxxxxxx.l...........lllx
+             xll...2.1.2...3llx
+             xxl3l.......lllllx
+              xllllll..lllllllx
+              xxxxll.).lllxxxxx
+                 xxll.lllxx
+                  xxllllxx
+                   xllllx
+                   xllxxx
+                   xxxx
+ENDMAP
+
+####
+NAME: nicolae_moth_party
+TAGS: no_pool_fixup no_monster_gen
+DEPTH: Zot, !Zot:$
+ORIENT: north
+SUBST: l : lw
+SHUFFLE: ]})>, 123
+MONS: ghost moth, moth of wrath, moth of suppression
+MONS: any base draconian
+MAP
+xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxx......xxxxxxxxx......xxx
+xx.4.]....xxx}xxx....).4.xx
+x...llll...x...x...llll...x
+x..llllll.1..2..3.llllll..x
+x..llllll.........llllll..x
+x...llll...........llll...x
+xx...........4...........xx
+xxx......4.......4......xxx
+xxxx..4.............4..xxxx
+xxxxx.................xxxxx
+xxxx...................xxxx
+xxx.....................xxx
+xx...lll...........lll...xx
+xx..lllll..x...x..lllll..xx
+xx...lll...x...x...lll...xx
+xxx...4...xx...xx...4...xxx
+xxxx.....xxx...xxx.....xxxx
+xxxxxxxxxxx@@@@@xxxxxxxxxxx
 ENDMAP
 
 ##############################################################################

@@ -3133,6 +3133,15 @@ bool monster::has_chaotic_spell() const
     return false;
 }
 
+bool monster::has_corpse_violating_spell() const
+{
+     for (int i = 0; i < NUM_MONSTER_SPELL_SLOTS; ++i)
+        if (is_corpse_violating_spell(spells[i]))
+            return true;
+
+    return false;
+}
+
 bool monster::has_attack_flavour(int flavour) const
 {
     for (int i = 0; i < 4; ++i)
@@ -3845,14 +3854,14 @@ int monster::res_holy_energy(const actor *attacker) const
     return 0;
 }
 
-int monster::res_negative_energy() const
+int monster::res_negative_energy(bool intrinsic_only) const
 {
     if (holiness() != MH_NATURAL)
         return 3;
 
     int u = get_mons_resist(this, MR_RES_NEG);
 
-    if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT)
+    if (mons_itemuse(this) >= MONUSE_STARTING_EQUIPMENT && !intrinsic_only)
     {
         u += scan_artefacts(ARTP_NEGATIVE_ENERGY);
 
@@ -3903,6 +3912,8 @@ int monster::res_wind() const
 
 int monster::res_petrify(bool temp) const
 {
+    UNUSED(temp);
+
     if (is_insubstantial())
         return 1;
 
@@ -5265,7 +5276,8 @@ void monster::lose_energy(energy_use_type et, int div, int mult)
 
     // Randomize movement cost slightly, to make it less predictable,
     // and make pillar-dancing not entirely safe.
-    if (et == EUT_MOVE || et == EUT_SWIM)
+    // No randomization for allies following you to avoid traffic jam
+    if ((et == EUT_MOVE || et == EUT_SWIM) && (!friendly() or foe != MHITYOU))
         energy_loss += random2(3) - 1;
 
     speed_increment -= energy_loss;
@@ -5525,6 +5537,15 @@ void monster::react_to_damage(const actor *oppressor, int damage,
 
     if (!alive())
         return;
+
+    if (has_ench(ENCH_OZOCUBUS_ARMOUR)
+        && (flavour == BEAM_FIRE || flavour == BEAM_LAVA
+            || flavour == BEAM_HELLFIRE || flavour == BEAM_NAPALM
+            || flavour == BEAM_STEAM))
+    {
+        lose_ench_duration(get_ench(ENCH_OZOCUBUS_ARMOUR),
+                           damage * BASELINE_DELAY);
+    }
 
     if (mons_is_tentacle(type) && type != MONS_ELDRITCH_TENTACLE
             && flavour != BEAM_TORMENT_DAMAGE

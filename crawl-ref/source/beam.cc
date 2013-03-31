@@ -86,7 +86,8 @@ static void _ench_animation(int flavour, const monster* mon = NULL,
                             bool force = false);
 static beam_type _chaos_beam_flavour();
 static string _beam_type_name(beam_type type);
-static bool _ench_flavour_affects_monster(beam_type flavour, const monster* mon);
+static bool _ench_flavour_affects_monster(beam_type flavour, const monster* mon,
+                                          bool intrinsic_only = false);
 
 tracer_info::tracer_info()
 {
@@ -1531,11 +1532,6 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
                 simple_monster_message(mons, gettext(" is burned terribly!"));
             else
                 simple_monster_message(mons, gettext(" is scalded terribly!"));
-        }
-        if (doFlavouredEffects && mons->has_ench(ENCH_OZOCUBUS_ARMOUR))
-        {
-            mon_enchant armour = mons->get_ench(ENCH_OZOCUBUS_ARMOUR);
-            mons->lose_ench_duration(armour, hurted * BASELINE_DELAY);
         }
         break;
 
@@ -3053,7 +3049,7 @@ bool bolt::harmless_to_player() const
         return false;
 
     case BEAM_PETRIFY:
-        return (you.res_petrify() > 0 || you.petrified());
+        return (you.res_petrify() || you.petrified());
 
     default:
         return false;
@@ -3839,7 +3835,7 @@ void bolt::update_hurt_or_helped(monster* mon)
 void bolt::tracer_enchantment_affect_monster(monster* mon)
 {
     // Only count tracers as hitting creatures they could potentially affect
-    if (_ench_flavour_affects_monster(flavour, mon))
+    if (_ench_flavour_affects_monster(flavour, mon, true))
     {
         // Update friend or foe encountered.
         if (!mons_atts_aligned(attitude, mons_attitude(mon)))
@@ -4682,7 +4678,8 @@ bool bolt::has_saving_throw() const
     }
 }
 
-static bool _ench_flavour_affects_monster(beam_type flavour, const monster* mon)
+static bool _ench_flavour_affects_monster(beam_type flavour, const monster* mon,
+                                          bool intrinsic_only)
 {
     bool rc = true;
     switch (flavour)
@@ -4709,11 +4706,11 @@ static bool _ench_flavour_affects_monster(beam_type flavour, const monster* mon)
         break;
 
     case BEAM_PAIN:
-        rc = !mon->res_negative_energy();
+        rc = !mon->res_negative_energy(intrinsic_only);
         break;
 
     case BEAM_HIBERNATION:
-        rc = mon->can_hibernate();
+        rc = mon->can_hibernate(false, intrinsic_only);
         break;
 
     case BEAM_PORKALATOR:

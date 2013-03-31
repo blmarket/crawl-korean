@@ -78,6 +78,26 @@ string quant_name(const item_def &item, int quant,
     return tmp.name(true, des, terse);
 }
 
+static const char* _interesting_origin(const item_def &item)
+{
+    if (origin_is_god_gift(item))
+        return "god gift";
+    switch (item.orig_monnum - 1)
+    {
+    case MONS_SONJA:
+        if (weapon_skill(item) == SK_SHORT_BLADES)
+            return "Sonja";
+    case MONS_PSYCHE:
+        if (item.base_type == OBJ_WEAPONS && item.sub_type == WPN_DAGGER)
+            return "Psyche";
+    case MONS_DONALD:
+        if (item.base_type == OBJ_ARMOUR && item.sub_type == ARM_SHIELD)
+            return "Donald";
+    default:
+        return 0;
+    }
+}
+
 string item_def::name(bool allow_translate, description_level_type descrip, bool terse, bool ident,
                       bool with_inscription, bool quantity_in_words,
                       iflags_t ignore_flags) const
@@ -313,6 +333,15 @@ string item_def::name(bool allow_translate, description_level_type descrip, bool
         if (tried)
             insparts.push_back(tried_str);
 
+        if (const char *orig = _interesting_origin(*this))
+        {
+            if (Options.show_god_gift == B_TRUE
+                || Options.show_god_gift == B_MAYBE && !fully_identified(*this))
+            {
+                insparts.push_back(orig);
+            }
+        }
+
         if (is_artefact(*this))
         {
             string part = artefact_inscription(*this);
@@ -469,6 +498,9 @@ const char* weapon_brand_name(const item_def& item, bool terse)
     case SPWPN_CHAOS: return terse ? N_(" (chaos)") : N_(" of chaos");
 
     // buggy brands
+#if TAG_MAJOR_VERSION == 34
+    case SPWPN_CONFUSE: return terse ? " (confuse)" : " of confusion";
+#endif
     default: return terse ? " (buggy)" : " of bugginess";
     }
 }
@@ -913,7 +945,9 @@ static const char* misc_type_name(int type, bool known)
 
     case MISC_CRYSTAL_BALL_OF_ENERGY:    return M_("crystal ball of energy");
     case MISC_BOX_OF_BEASTS:             return M_("box of beasts");
+#if TAG_MAJOR_VERSION == 34
     case MISC_EMPTY_EBONY_CASKET:        return M_("empty ebony casket");
+#endif
     case MISC_AIR_ELEMENTAL_FAN:         return M_("air elemental fan");
     case MISC_LAMP_OF_FIRE:              return M_("lamp of fire");
     case MISC_LANTERN_OF_SHADOWS:        return M_("lantern of shadows");
@@ -3370,8 +3404,10 @@ bool is_useless_item(const item_def &item, bool temp)
     case OBJ_MISCELLANY:
         switch (item.sub_type)
         {
+#if TAG_MAJOR_VERSION == 34
         case MISC_EMPTY_EBONY_CASKET:
             return item_type_known(item);
+#endif
         case MISC_LAMP_OF_FIRE:
             return !you.skill(SK_FIRE_MAGIC);
         case MISC_AIR_ELEMENTAL_FAN:

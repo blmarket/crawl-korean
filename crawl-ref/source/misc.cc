@@ -1245,15 +1245,19 @@ void search_around()
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    int skill = you.skill(SK_TRAPS, 240);
+    int base_skill = you.skill(SK_TRAPS, 100);
+    int skill = (2/(1+exp(-(base_skill+120)/325.0))-1) * 225
+                + (base_skill/200.0) + 15;
+
     if (you.religion == GOD_ASHENZARI && !player_under_penance())
-        skill += you.piety * 16;
+        skill += you.piety * 2;
+
+     if (you.duration[DUR_SWIFTNESS])
+        skill = skill / 2;
 
     int farskill = skill;
     if (int mut = you.mutation[MUT_BLURRY_VISION])
         farskill >>= mut;
-    if (you.duration[DUR_SWIFTNESS])
-        farskill = farskill * 3 / 4;
     // Traps and doors stepdown skill:
     // skill/(2x-1) for squares at distance x
     int max_dist = div_rand_round(farskill, 32);
@@ -1273,7 +1277,7 @@ void search_around()
         // Own square is not excluded; may be flying.
         // XXX: Currently, flying over a trap will always detect it.
 
-        int effective = (dist <= 1) ? skill : farskill - 256 * dist;
+        int effective = (dist <= 1) ? skill : farskill / (dist * 2 - 1);
 
         trap_def* ptrap = find_trap(*ri);
         if (!ptrap)
@@ -1285,7 +1289,7 @@ void search_around()
             continue;
         }
 
-        if (effective > ptrap->skill_rnd * 10 - 500)
+        if (effective > ptrap->skill_rnd)
         {
             ptrap->reveal();
             mprf(_("You found %s trap!"),
@@ -2626,10 +2630,19 @@ void maybe_id_ring_hunger()
     _maybe_id_jewel(RING_SUSTENANCE, NUM_JEWELLERY, ARTP_METABOLISM);
 }
 
+void maybe_id_ring_see_invis()
+{
+    // If you can see invisible without un-IDed items
+    if (you.can_see_invisible(false))
+        return;
+
+    _maybe_id_jewel(RING_SEE_INVISIBLE, NUM_JEWELLERY, ARTP_EYESIGHT);
+}
+
 void maybe_id_clarity()
 {
-    // If we have clarity without any items
-    if (you.clarity(false, false))
+    // If we have clarity without un-IDed items
+    if (you.clarity(false))
         return;
 
     _maybe_id_jewel(NUM_JEWELLERY, AMU_CLARITY, ARTP_CLARITY);

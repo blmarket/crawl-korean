@@ -382,7 +382,12 @@ basilisk cast targeted
 %%%%
 wretched star cast
 
-@The_monster@이(가) 격렬하게 빛을 뿜어냈다.
+@The_monster@이(가) 격렬한 빛을 뿜어냈다.
+%%%%
+thrashing horror cast
+
+@The_monster@이(가) 격렬하게 뒤틀렸다!
+%%%%
 ########################################################################
 # Monster species and genus messages.
 ########################################################################
