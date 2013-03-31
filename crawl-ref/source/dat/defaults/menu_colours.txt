@@ -28,7 +28,6 @@ menu += inventory:lightgreen:.*equipped.*
 menu += lightred:.*무장중.*저주받은
 menu += red:저주받은
 menu += inventory:lightgreen:.*장비중.*
-
 # Important game items
 #
 menu += lightmagenta:.*misc.*rune( of Zot)?
@@ -73,13 +72,8 @@ menu += cyan:.*misc.*[lL]antern
 menu += $dangerous:.*dangerous_item.*
 
 # Defaults for normal items
-<<<<<<< HEAD
-menu += green:uncursed
-menu += green:저주받지 않은
-=======
 menu += green:(?<!tried on )uncursed
->>>>>>> upstream/master
-
+menu += green:(?<!tried on )저주받지 않은
 
 # Colouring of autoinscribed god gifts
 menu_colour += pickup:green:god gift
