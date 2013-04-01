@@ -1,4 +1,4 @@
-/**
+ï»¿/**
  * @file
  * @brief Misc (mostly) inventory related functions.
 **/
@@ -1031,7 +1031,7 @@ static void _milestone_check(const item_def &item)
     if (item_is_rune(item))
         mark_milestone("rune", _milestone_rune(item));
     else if (item_is_orb(item))
-        mark_milestone("orb", "found the Orb of Zot!");
+        mark_milestone("orb", _("found the Orb of Zot!"));
 }
 
 static void _check_note_item(item_def &item)
@@ -1153,7 +1153,7 @@ string origin_desc(const item_def &item)
     if (_origin_is_original_equip(item))
         return _("Original Equipment");
 
-    string desc = _origin_place_desc(item) + " "; // (130302) ¼öÁ¤ºÎ
+    string desc = _origin_place_desc(item) + " "; // (130302) ìˆ˜ì •ë¶€
     if (item.orig_monnum)
     {
         if (item.orig_monnum < 0)
@@ -1204,7 +1204,7 @@ string origin_desc(const item_def &item)
         desc += make_stringf(gettext("You found %s "),
 		_article_it(item).c_str());
 
-    // desc += _origin_place_desc(item); (130302,deceit) ¾î¼øº¯°æ. 
+    // desc += _origin_place_desc(item); (130302,deceit) ì–´ìˆœë³€ê²½. 
     return desc;
 }
 

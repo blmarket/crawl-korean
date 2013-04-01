@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-31 15:08+0900\n"
+"POT-Creation-Date: 2013-04-02 00:26+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4876,11 +4876,11 @@ msgstr "정화의 불꽃"
 msgid "the Shining One's cleansing flame"
 msgstr "샤이닝 원의 정화의 불꽃"
 
-#: effects.cc:536 effects.cc:536 effects.cc:537
+#: effects.cc:536 effects.cc:536 effects.cc:537 effects.cc:533
 msgid "is cast into the Abyss!"
 msgstr "어비스로 빠져들었다!"
 
-#: effects.cc:541 effects.cc:541 effects.cc:542
+#: effects.cc:541 effects.cc:541 effects.cc:542 stairs.cc:817
 msgid "escaped from the Abyss!"
 msgstr "어비스로부터 탈출했다!"
 
@@ -14791,6 +14791,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -28610,7 +28613,7 @@ msgstr "첨벙!"
 msgid "destroyed the Orb of Zot"
 msgstr "조트의 오브를 파괴했다"
 
-#: items.cc:1012
+#: items.cc:1012 items.cc:1034
 msgid "found the Orb of Zot!"
 msgstr "조트의 오브를 찾았다!"
 
@@ -28884,7 +28887,7 @@ msgstr "정말로 주석을 지우는가?"
 msgid "Cleared."
 msgstr "지웠다."
 
-#: main.cc:542
+#: main.cc:542 main.cc:622
 msgid ", began the quest for the Orb."
 msgstr ", 오브를 찾기 위한 여정을 떠나다."
 
@@ -30252,6 +30255,9 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -36835,3 +36841,73 @@ msgstr "당신은 마법 두루마리를 사용할 아이템을 가지고 있지
 #: invent.cc:2014
 msgid "That item can't be selected now."
 msgstr "그 아이템은 지금은 선택할 수 없다."
+
+#: mon-stuff.cc:487 mon-stuff.cc:486
+msgctxt "milestonekillverb"
+msgid "banished"
+msgstr "을(를) 어비스로 추방함."
+
+#: mon-stuff.cc:488 mon-stuff.cc:487
+msgctxt "milestonekillverb"
+msgid "pacified"
+msgstr "을(를) 회유함."
+
+#: mon-stuff.cc:489 mon-stuff.cc:488
+msgctxt "milestonekillverb"
+msgid "enslaved"
+msgstr "을(를) 동료로 만듦."
+
+#: mon-stuff.cc:489 mon-stuff.cc:488
+msgctxt "milestonekillverb"
+msgid "killed"
+msgstr "을(를) 물리침."
+
+#: decks.cc:2045
+#, c-format
+msgid "Shuffle card: Str %d[%d], Int %d[%d], Dex %d[%d]"
+msgstr "셔플 카드: 힘 %d[%d], 지능 %d[%d], 민첩 %d[%d]"
+
+#: effects.cc:542
+msgid "Cast into the Abyss"
+msgstr "어비스로 빠져듬"
+
+#: main.cc:631
+msgid "You started the game in wizard mode."
+msgstr "위저드 모드를 시작함."
+
+#: main.cc:875
+msgid "Entered wizard mode."
+msgstr "위저드 모드 시작."
+
+#: main.cc:883
+msgid "Can't repeat entering wizard mode."
+msgstr "위저드 모드 진입 명령은 반복할 수 없다."
+
+#: main.cc:890
+msgid "Enter Wizard Command (? - help): "
+msgstr "위저드 명령을 입력하세요 (? - 도움말): "
+
+#: main.cc:920
+msgid "You cannot repeat that wizard command."
+msgstr "그 위저드 커맨드는 반복할 수 없다."
+
+#: stairs.cc:240
+#, c-format
+msgid "left a Ziggurat at level %d."
+msgstr "지구라트 %d 층에서, 던전으로 나감."
+
+#: stairs.cc:806
+msgid "entered the Abyss!"
+msgstr "어비스로 빠져들었다!"
+
+#: stairs.cc:807
+msgid "Voluntarily entered the Abyss."
+msgstr "의도적으로 어비스로 입장함."
+
+#: stairs.cc:811
+msgid "escaped (hah) into the Abyss!"
+msgstr "어비스로 탈출함. (하!)"
+
+#: stairs.cc:812
+msgid "Took an exit into the Abyss."
+msgstr "어비스로 향하는 출구를 이용."

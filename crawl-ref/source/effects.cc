@@ -530,7 +530,7 @@ void banished(const string &who)
     if (!player_in_branch(BRANCH_ABYSS))
     {
         mark_milestone("abyss.enter",
-                       "is cast into the Abyss!" + _who_banished(who));
+                       _("is cast into the Abyss!") + _who_banished(who));
     }
 
     if (player_in_branch(BRANCH_ABYSS))
@@ -539,7 +539,7 @@ void banished(const string &who)
         return;
     }
 
-    const string what = "Cast into the Abyss" + _who_banished(who);
+    const string what = _who_banished(who) + _("Cast into the Abyss"); // "Cast into the Abyss" + _who_banished(who);
     take_note(Note(NOTE_MESSAGE, 0, 0, what.c_str()), true);
 
     stop_delay(true);
