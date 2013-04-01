@@ -2042,7 +2042,7 @@ static void _shuffle_card(int power, deck_rarity_type rarity)
 
     char buf[128];
     snprintf(buf, sizeof(buf),
-             "Shuffle card: Str %d[%d], Int %d[%d], Dex %d[%d]",
+             _("Shuffle card: Str %d[%d], Int %d[%d], Dex %d[%d]"),
              you.base_stats[STAT_STR], you.strength(),
              you.base_stats[STAT_INT], you.intel(),
              you.base_stats[STAT_DEX], you.dex());

@@ -1028,7 +1028,7 @@ static void _milestone_check(const item_def &item)
     if (item_is_rune(item))
         mark_milestone("rune", _milestone_rune(item));
     else if (item_is_orb(item))
-        mark_milestone("orb", "found the Orb of Zot!");
+        mark_milestone("orb", _("found the Orb of Zot!"));
 }
 
 static void _check_note_item(item_def &item)

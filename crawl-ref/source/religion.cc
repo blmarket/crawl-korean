@@ -978,7 +978,7 @@ void dec_penance(god_type god, int val)
         you.penance[god] = 0;
 
         mark_milestone("god.mollify",
-                       "mollified " + god_name(god) + ".");
+                       _(god_name(god).c_str()) + std::string("의 분노를 누그러트림.")); // "mollified " + god_name(god) + ".");
 
         const bool dead_jiyva = (god == GOD_JIYVA && jiyva_is_dead());
 
@@ -1035,7 +1035,7 @@ void dec_penance(god_type god, int val)
         if ((you.penance[god] -= val) > 100)
             return;
         mark_milestone("god.mollify",
-                       "partially mollified " + god_name(god) + ".");
+                       _(god_name(god).c_str()) + std::string("의 분노를 일부 누그러트림.")); // "partially mollified " + god_name(god) + ".");
         simple_god_message("은(는) 분노를 누그러뜨린 것 같다... 아마도.", god);
         take_note(Note(NOTE_MOLLIFY_GOD, god));
     }
@@ -2596,8 +2596,8 @@ void gain_piety(int original_gain, int denominator, bool force, bool should_scal
     {
         if (you.piety > 160 && you.piety_max[you.religion] <= 160)
         {
-            mark_milestone("god.maxpiety", "became the Champion of "
-                           + god_name(you.religion) + ".");
+            mark_milestone("god.maxpiety", // "became the Champion of "
+                           _(god_name(you.religion).c_str()) + std::string("의 대변자가 됨.")); // + god_name(you.religion) + ".");
         }
         you.piety_max[you.religion] = you.piety;
     }
@@ -2968,7 +2968,7 @@ void excommunication(god_type new_god)
         update_player_symbol();
     }
 
-    mark_milestone("god.renounce", "abandoned " + god_name(old_god) + ".");
+    mark_milestone("god.renounce", _(god_name(old_god).c_str()) + std::string("을(를) 저버림.")); // mark_milestone("god.renounce", "abandoned " + god_name(old_god) + ".");
 #ifdef DGL_WHEREIS
     whereis_record();
 #endif
@@ -3504,8 +3504,8 @@ void god_pitch(god_type which_god)
     whereis_record();
 #endif
 
-    mark_milestone("god.worship", "became a worshipper of "
-                   + god_name(you.religion) + ".");
+    mark_milestone("god.worship", _(god_name(you.religion).c_str()) + std::string("의 신자가 됨.")); // "became a worshipper of "
+                   // + god_name(you.religion) + ".");
 
     simple_god_message(
         make_stringf("은(는) 당신의 입교를 %s환영했다!",

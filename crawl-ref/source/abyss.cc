@@ -1817,7 +1817,7 @@ bool lugonu_corrupt_level(int power)
 
     simple_god_message(_("'s Hand of Corruption reaches out!"));
     take_note(Note(NOTE_MESSAGE, 0, 0, make_stringf(_("Corrupted %s"),
-              level_id::current().describe().c_str()).c_str()));
+              _(level_id::current().describe().c_str())).c_str()));
 
     flash_view(MAGENTA);
 

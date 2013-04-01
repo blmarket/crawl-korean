@@ -484,9 +484,9 @@ static void _hints_inspect_kill()
 
 static std::string _milestone_kill_verb(killer_type killer)
 {
-    return (killer == KILL_BANISHED ? "banished" :
-            killer == KILL_PACIFIED ? "pacified" :
-            killer == KILL_ENSLAVED ? "enslaved" : "killed");
+    return (killer == KILL_BANISHED ? pgettext("milestonekillverb","banished") :
+            killer == KILL_PACIFIED ? pgettext("milestonekillverb","pacified") :
+            killer == KILL_ENSLAVED ? pgettext("milestonekillverb","enslaved") : pgettext("milestonekillverb","killed"));
 }
 
 void record_monster_defeat(monster* mons, killer_type killer)
@@ -510,9 +510,9 @@ void record_monster_defeat(monster* mons, killer_type killer)
     if (mons->type == MONS_PLAYER_GHOST)
     {
         monster_info mi(mons);
-        std::string milestone = _milestone_kill_verb(killer) + " the ghost of ";
-        milestone += get_ghost_description(mi, true);
-        milestone += ".";
+        std::string milestone = get_ghost_description(mi, true); // _milestone_kill_verb(killer) + " the ghost of ";
+        milestone += "ÀÇ À¯·É";                                  // get_ghost_description(mi, true);
+        milestone += _milestone_kill_verb(killer);               // ".";
         mark_milestone("ghost", milestone);
     }
     // Or summoned uniques, which a summoned ghost is treated as {due}

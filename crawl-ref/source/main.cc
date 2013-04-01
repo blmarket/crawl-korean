@@ -585,10 +585,10 @@ static void _god_greeting_message(bool game_start)
 static void _take_starting_note()
 {
     std::ostringstream notestr;
-    notestr << you.your_name << ", the "
-            << species_name(you.species) << " "
-            << you.class_name
-            << ", began the quest for the Orb.";
+    notestr // << you.your_name << ", the "
+            << _(species_name(you.species).c_str()) << " "
+            << _(you.class_name.c_str())
+            << _(", began the quest for the Orb.");
     take_note(Note(NOTE_MESSAGE, 0, 0, notestr.str().c_str()));
 
     notestr.str("");
@@ -597,7 +597,7 @@ static void _take_starting_note()
 #ifdef WIZARD
     if (you.wizard)
     {
-        notestr << "You started the game in wizard mode.";
+        notestr << _("You started the game in wizard mode.");
         take_note(Note(NOTE_MESSAGE, 0, 0, notestr.str().c_str()));
 
         notestr.str("");
@@ -838,7 +838,7 @@ static void _handle_wizard_command(void)
         if (!yesno(gettext("Do you really want to enter wizard mode?"), false, 'n'))
             return;
 
-        take_note(Note(NOTE_MESSAGE, 0, 0, "Entered wizard mode."));
+        take_note(Note(NOTE_MESSAGE, 0, 0, _("Entered wizard mode.")));
 
         you.wizard = true;
         save_game(false);
@@ -846,14 +846,14 @@ static void _handle_wizard_command(void)
 
         if (crawl_state.cmd_repeat_start)
         {
-            crawl_state.cancel_cmd_repeat("Can't repeat entering wizard "
-                                          "mode.");
+            crawl_state.cancel_cmd_repeat(_("Can't repeat entering wizard "
+                                          "mode."));
             return;
         }
     }
 
     {
-        mpr("Enter Wizard Command (? - help): ", MSGCH_PROMPT);
+        mpr(_("Enter Wizard Command (? - help): "), MSGCH_PROMPT);
         cursor_control con(true);
         wiz_command = getchm();
     }
@@ -883,8 +883,8 @@ static void _handle_wizard_command(void)
             break;
 
         default:
-            crawl_state.cant_cmd_repeat("You cannot repeat that "
-                                        "wizard command.");
+            crawl_state.cant_cmd_repeat(_("You cannot repeat that "
+                                        "wizard command."));
             return;
         }
     }
