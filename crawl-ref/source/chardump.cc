@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Dumps character info out to the morgue file.
 **/
@@ -198,18 +198,18 @@ static void _sdump_header(dump_params &par)
     else
         type += " DCSS";
 
-    par.text += " " + type + " version " + Version::Long;
+    par.text += " " + type + " 버전 " + Version::Long;
 #ifdef USE_TILE_LOCAL
-    par.text += " (tiles)";
+    par.text += " (타일 버전)";
 #elif defined(USE_TILE_WEB)
     if (::tiles.is_controlled_from_web())
-        par.text += " (webtiles)";
+        par.text += " (웹타일 버전)";
     else
-        par.text += " (console)";
+        par.text += " (아스키 버전)";
 #else
-    par.text += " (console)";
+    par.text += " (아스키 버전)";
 #endif
-    par.text += " character file.\n\n";
+    par.text += _(" character file.\n\n");
 }
 
 static void _sdump_stats(dump_params &par)
@@ -220,15 +220,15 @@ static void _sdump_stats(dump_params &par)
 
 static void _sdump_burden(dump_params &par)
 {
-    string verb = par.se? "were" : "are";
+    string verb = par.se? pgettext("chardump","were") : pgettext("chardump","are");
 
     switch (you.burden_state)
     {
     case BS_OVERLOADED:
-        par.text += "You " + verb + " overloaded with stuff.\n";
+        par.text += make_stringf("You %s overload with stuff.\n", verb.c_str()); // "You " + verb + " overloaded with stuff.\n";
         break;
     case BS_ENCUMBERED:
-        par.text += "You " + verb + " encumbered.\n";
+        par.text += make_stringf("You %s encumbered.\n", verb.c_str()); // "You " + verb + " encumbered.\n";
         break;
     default:
         break;
@@ -238,11 +238,11 @@ static void _sdump_burden(dump_params &par)
 static void _sdump_hunger(dump_params &par)
 {
     if (par.se)
-        par.text += "You were ";
+        par.text += pgettext("chardump","You were ");
     else
-        par.text += "You are ";
+        par.text += pgettext("chardump","You are ");
 
-    par.text += hunger_level();
+    par.text += _(hunger_level());
     par.text += ".\n\n";
 }
 
@@ -251,63 +251,63 @@ static void _sdump_transform(dump_params &par)
     string &text(par.text);
     if (you.form)
     {
-        string verb = par.se? "were" : "are";
+        string verb = par.se? pgettext("chardump","were") : pgettext("chardump","are");
 
         switch (you.form)
         {
         case TRAN_SPIDER:
-            text += "You " + verb + " in spider-form.";
+            text += make_stringf(_("You %s in spider-form."),verb.c_str()); // "You " + verb + " in spider-form.";
             break;
         case TRAN_BAT:
-            text += "You " + verb + " in ";
+            // text += "You " + verb + " in ";
             if (you.species == SP_VAMPIRE)
-                text += "vampire ";
-            text += "bat-form.";
+                text += make_stringf(_("You %s in vampire."),verb.c_str()); // text += "vampire ";
+            text += make_stringf(_("You %s in bat-form."),verb.c_str()); // "bat-form.";
             break;
         case TRAN_BLADE_HANDS:
-            text += "Your " + blade_parts() + " " + verb + " blades.";
+            text += make_stringf(_("Your %s %s blades."), blade_parts().c_str(), verb.c_str());  // "Your " + blade_parts() + " " + verb + " blades.";
             break;
         case TRAN_STATUE:
-            text += "You " + verb + " a stone statue.";
+            text += make_stringf(_("You %s a stone statue."), verb.c_str()); // "You " + verb + " a stone statue.";
             break;
         case TRAN_ICE_BEAST:
-            text += "You " + verb + " a creature of crystalline ice.";
+            text += make_stringf(_("You %s a creature of crystalline ice."), verb.c_str());  // "You " + verb + " a creature of crystalline ice.";
             break;
         case TRAN_DRAGON:
-            text += "You " + verb + " a fearsome dragon!";
+            text += make_stringf(_("You %s a fearsome dragon!"), verb.c_str()); // "You " + verb + " a fearsome dragon!";
             break;
         case TRAN_LICH:
-            text += "You " + verb + " in lich-form.";
+            text += make_stringf(_("You %s in lich form."), verb.c_str()); // "You " + verb + " in lich-form.";
             break;
         case TRAN_PIG:
-            text += "You " + verb + " a filthy swine.";
+            text += make_stringf(_("You %s a filthy swine."), verb.c_str()); // "You " + verb + " a filthy swine.";
             break;
         case TRAN_APPENDAGE:
             if (you.attribute[ATTR_APPENDAGE] == MUT_TENTACLE_SPIKE)
             {
-                text += make_stringf("One of your tentacles %s a temporary spike.",
-                                     par.se ? "had" : "has");
+                text += make_stringf(_("One of your tentacles %s a temporary spike."),
+                                     par.se ? pgettext("chardump_have","had") : pgettext("chardump_have","has"));
             }
             else
             {
-                text += make_stringf("You %s grown temporary %s.",
-                                     par.se ? "had" : "have", appendage_name());
+                text += make_stringf(_("You %s grown temporary %s."),
+                                     par.se ? pgettext("chardump_have","had") : pgettext("chardump_have","have"), _(appendage_name()));
             }
             break;
         case TRAN_FUNGUS:
-            text += "You " + verb + " an sentient fungus.";
+            text += make_stringf(_("You %s an sentient fungus."), verb.c_str()); // "You " + verb + " an sentient fungus.";
             break;
         case TRAN_TREE:
-            text += "You " + verb + " an animated tree.";
+            text += make_stringf(_("You %s an animated tree."), verb.c_str()); // "You " + verb + " an animated tree.";
             break;
         case TRAN_JELLY:
-            text += "You " + verb + " an acidic jelly.";
+            text += make_stringf(_("You %s an acidic jelly."), verb.c_str()); // "You " + verb + " an acidic jelly.";
             break;
         case TRAN_PORCUPINE:
-            text += "You " + verb + " a porcupine.";
+            text += make_stringf(_("You %s a porcupine."), verb.c_str()); // "You " + verb + " a porcupine.";
             break;
         case TRAN_WISP:
-            text += "You " + verb + " a barely coherent strand of gas.";
+            text += make_stringf(_("You %s a barely coherent strand of gas."), verb.c_str()); // "You " + verb + " a barely coherent strand of gas.";
             break;
         case TRAN_NONE:
             break;
@@ -333,12 +333,12 @@ static void _sdump_visits(dump_params &par)
 {
     string &text(par.text);
 
-    string have = "have ";
-    string seen = "seen";
+    string have = pgettext("chardump","have ");
+    string seen = pgettext("chardump","seen");
     if (par.se) // you died -> past tense
     {
         have = "";
-        seen = "saw";
+        seen = pgettext("chardump","saw");
     }
 
     vector<PlaceInfo> branches_visited = you.get_all_place_info(true, true);
@@ -347,44 +347,44 @@ static void _sdump_visits(dump_params &par)
     for (unsigned int i = 0; i < branches_visited.size(); i++)
         branches_total += branches_visited[i];
 
-    text += make_stringf("You %svisited %d branch",
+    text += make_stringf(_("You %svisited %d branch"),
                          have.c_str(), (int)branches_visited.size());
-    if (branches_visited.size() != 1)
-        text += "es";
+    //if (branches_visited.size() != 1)
+    //    text += "es";
     if (brdepth[root_branch] > 1 || branches_visited.size() != 1)
     {
-        text += make_stringf(" of the dungeon, and %s %d of its levels.\n",
+        text += make_stringf(_(" of the dungeon, and %s %d of its levels.\n"),
                              seen.c_str(), branches_total.levels_seen);
     }
 
     PlaceInfo place_info = you.get_place_info(BRANCH_PANDEMONIUM);
     if (place_info.num_visits > 0)
     {
-        text += make_stringf("You %svisited Pandemonium %d time",
+        text += make_stringf(_("You %svisited Pandemonium %d time"),
                              have.c_str(), place_info.num_visits);
-        if (place_info.num_visits > 1)
-            text += "s";
-        text += make_stringf(", and %s %d of its levels.\n",
+        //if (place_info.num_visits > 1)
+        //    text += "s";
+        text += make_stringf(_(", and %s %d of its levels.\n"),
                              seen.c_str(), place_info.levels_seen);
     }
 
     place_info = you.get_place_info(BRANCH_ABYSS);
     if (place_info.num_visits > 0)
     {
-        text += make_stringf("You %svisited the Abyss %d time",
+        text += make_stringf(_("You %svisited the Abyss %d time"),
                              have.c_str(), place_info.num_visits);
-        if (place_info.num_visits > 1)
-            text += "s";
+        //if (place_info.num_visits > 1)
+        //    text += "s";
         text += ".\n";
     }
 
     place_info = you.get_place_info(BRANCH_BAZAAR);
     if (place_info.num_visits > 0)
     {
-        text += make_stringf("You %svisited %d bazaar",
+        text += make_stringf(_("You %svisited %d bazaar"),
                              have.c_str(), place_info.num_visits);
-        if (place_info.num_visits > 1)
-            text += "s";
+        //if (place_info.num_visits > 1)
+        //    text += "s";
         text += ".\n";
     }
 
@@ -392,20 +392,20 @@ static void _sdump_visits(dump_params &par)
     if (place_info.num_visits > 0)
     {
         int num_zigs = place_info.num_visits;
-        text += make_stringf("You %s%s %d Ziggurat",
+        text += make_stringf(_("You %s%s %d Ziggurat"),
                              have.c_str(),
-                             (num_zigs == you.zigs_completed) ? "completed"
-                                                              : "visited",
+                             (num_zigs == you.zigs_completed) ? pgettext("chardump","completed")
+                                                              : pgettext("chardump","visited"),
                              num_zigs);
-        if (num_zigs > 1)
-            text += "s";
+        //if (num_zigs > 1)
+        //    text += "s";
         if (num_zigs != you.zigs_completed && you.zigs_completed)
-            text += make_stringf(" (completing %d)", you.zigs_completed);
-        text += make_stringf(", and %s %d of %s levels",
+            text += make_stringf(_(" (completing %d)"), you.zigs_completed);
+        text += make_stringf(_(", and %s %d of %s levels"),
                              seen.c_str(), place_info.levels_seen,
-                             num_zigs > 1 ? "their" : "its");
+                             num_zigs > 1 ? pgettext("chardump","their") : pgettext("chardump","its"));
         if (num_zigs != 1 && !you.zigs_completed)
-            text += make_stringf(" (deepest: %d)", you.zig_max);
+            text += make_stringf(_(" (deepest: %d)"), you.zig_max);
         text += ".\n";
     }
 
@@ -418,15 +418,15 @@ static void _sdump_visits(dump_params &par)
             continue;
         string name = _(branches[br].shortname);
         if (place_info.num_visits > 1)
-            name += make_stringf(" (%d times)", place_info.num_visits);
+            name += make_stringf(_(" (%d times)"), place_info.num_visits);
         misc_portals.push_back(name);
     }
     if (!misc_portals.empty())
     {
-        text += "You " + have + "also visited: "
-                + comma_separated_line(misc_portals.begin(),
-                                       misc_portals.end())
-                + ".\n";
+        text += _("You have also visited: ") // "You " + have + "also visited: "
+             + comma_separated_line(misc_portals.begin(),
+                                      misc_portals.end())
+             + ".\n";
     }
 
     text += "\n";
@@ -438,36 +438,36 @@ static void _sdump_gold(dump_params &par)
 
     int lines = 0;
 
-    const char* have = "have ";
+    const char* have = pgettext("chardump","have ");
     if (par.se) // you died -> past tense
         have = "";
 
     if (you.attribute[ATTR_GOLD_FOUND] > 0)
     {
         lines++;
-        text += make_stringf("You %scollected %d gold pieces.\n", have,
+        text += make_stringf(_("You %scollected %d gold pieces.\n"), have,
                              you.attribute[ATTR_GOLD_FOUND]);
     }
 
     if (you.attribute[ATTR_PURCHASES] > 0)
     {
         lines++;
-        text += make_stringf("You %sspent %d gold pieces at shops.\n", have,
+        text += make_stringf(_("You %sspent %d gold pieces at shops.\n"), have,
                              you.attribute[ATTR_PURCHASES]);
     }
 
     if (you.attribute[ATTR_DONATIONS] > 0)
     {
         lines++;
-        text += make_stringf("You %sdonated %d gold pieces.\n", have,
+        text += make_stringf(_("You %sdonated %d gold pieces.\n"), have,
                              you.attribute[ATTR_DONATIONS]);
     }
 
     if (you.attribute[ATTR_MISC_SPENDING] > 0)
     {
         lines++;
-        text += make_stringf("You %sused %d gold pieces for miscellaneous "
-                             "purposes.\n", have,
+        text += make_stringf(_("You %sused %d gold pieces for miscellaneous "
+                             "purposes.\n"), have,
                              you.attribute[ATTR_MISC_SPENDING]);
     }
 
@@ -527,7 +527,7 @@ static void _sdump_turns_by_place(dump_params &par)
     vector<PlaceInfo> all_visited = you.get_all_place_info(true);
 
     text +=
-"Table legend:\n"
+_("Table legend:\n"
 " A = Turns spent in this place as a percentage of turns spent in the\n"
 "     entire game.\n"
 " B = Non-inter-level travel turns spent in this place as a percentage of\n"
@@ -539,7 +539,7 @@ static void _sdump_turns_by_place(dump_params &par)
 " E = Turns spent auto-exploring this place as a percentage of\n"
 "     non-inter-level travel turns spent in this place.\n"
 " F = Non-inter-level travel turns spent in this place divided by the\n"
-"     number of levels of this place that you've seen.\n\n";
+"     number of levels of this place that you've seen.\n\n");
 
     text += "               ";
     text += "    A       B       C       D       E               F\n";
@@ -637,7 +637,7 @@ static void _sdump_notes(dump_params &par)
     if (note_list.empty())
         return;
 
-    text += "\nNotes\nTurn   | Place    | Note\n";
+    text += _("\nNotes\nTurn   | Place    | Note\n");
     text += "--------------------------------------------------------------\n";
     for (unsigned i = 0; i < note_list.size(); ++i)
     {
@@ -655,11 +655,11 @@ static void _sdump_notes(dump_params &par)
 static void _sdump_location(dump_params &par)
 {
     if (you.depth == 0 && player_in_branch(BRANCH_MAIN_DUNGEON))
-        par.text += "You escaped";
+        par.text += _("You escaped");
     else if (par.se)
-        par.text += "You were " + prep_branch_level_name();
+        par.text += make_stringf(pgettext("chardump","You were %s"), prep_branch_level_name().c_str());  // "You were " + prep_branch_level_name();
     else
-        par.text += "You are " + prep_branch_level_name();
+        par.text += make_stringf(pgettext("chardump","You are %s"), prep_branch_level_name().c_str()); // "You are " + prep_branch_level_name();
 
     par.text += ".";
     par.text += "\n";
@@ -671,10 +671,10 @@ static void _sdump_religion(dump_params &par)
     if (you.religion != GOD_NO_GOD)
     {
         if (par.se)
-            text += "You worshipped ";
+            text += make_stringf(gettext("You worshipped %s."), gettext(god_name(you.religion).c_str())); // "You worshipped ";
         else
-            text += "You worship ";
-        text += _(god_name(you.religion).c_str());
+            text += make_stringf(gettext("You worship %s."), gettext(god_name(you.religion).c_str())); // "You worship ";
+        //text += _(god_name(you.religion).c_str());
         text += ".\n";
 
         if (you.religion != GOD_XOM)
@@ -686,19 +686,19 @@ static void _sdump_religion(dump_params &par)
             }
             else
             {
-                string verb = par.se ? "was" : "is";
+                string verb = par.se ? pgettext("religiondump","was") : pgettext("religiondump","is");
 
                 text += _(god_name(you.religion).c_str());
-                text += " " + verb + " demanding penance.\n";
+                text += make_stringf(gettext(" %s demanding penance.\n"), verb.c_str()); // " " + verb + " demanding penance.\n";
             }
         }
         else
         {
             if (par.se)
-                text += "You were ";
+                text += make_stringf(pgettext("chardump","You were %s"),describe_xom_favour().c_str()); // "You were ";
             else
-                text += "You are ";
-            text += describe_xom_favour();
+                text += make_stringf(pgettext("chardump","You are %s"),describe_xom_favour().c_str()); // "You are ";
+            // text += describe_xom_favour();
             text += "\n";
         }
     }
@@ -784,12 +784,12 @@ static void _sdump_inventory(dump_params &par)
 
     if (!inv_count)
     {
-        text += "You aren't carrying anything.";
+        text += _("You aren't carrying anything.");
         text += "\n";
     }
     else
     {
-        text += "Inventory:\n\n";
+        text += _("Inventory:\n\n");
 
         for (i = 0; i < NUM_OBJECT_CLASSES; i++)
         {
@@ -797,20 +797,20 @@ static void _sdump_inventory(dump_params &par)
             {
                 switch (i)
                 {
-                case OBJ_WEAPONS:    text += "Hand weapons";    break;
-                case OBJ_MISSILES:   text += "Missiles";        break;
-                case OBJ_ARMOUR:     text += "Armour";          break;
-                case OBJ_WANDS:      text += "Magical devices"; break;
-                case OBJ_FOOD:       text += "Comestibles";     break;
-                case OBJ_SCROLLS:    text += "Scrolls";         break;
-                case OBJ_JEWELLERY:  text += "Jewellery";       break;
-                case OBJ_POTIONS:    text += "Potions";         break;
-                case OBJ_BOOKS:      text += "Books";           break;
-                case OBJ_STAVES:     text += "Magical staves";  break;
-                case OBJ_RODS:       text += "Rods";            break;
-                case OBJ_ORBS:       text += "Orbs of Power";   break;
-                case OBJ_MISCELLANY: text += "Miscellaneous";   break;
-                case OBJ_CORPSES:    text += "Carrion";         break;
+                case OBJ_WEAPONS:    text += pgettext("chardump","Hand weapons");    break;
+                case OBJ_MISSILES:   text += pgettext("chardump","Missiles");        break;
+                case OBJ_ARMOUR:     text += pgettext("chardump","Armour");          break;
+                case OBJ_WANDS:      text += pgettext("chardump","Magical devices"); break;
+                case OBJ_FOOD:       text += pgettext("chardump","Comestibles");     break;
+                case OBJ_SCROLLS:    text += pgettext("chardump","Scrolls");         break;
+                case OBJ_JEWELLERY:  text += pgettext("chardump","Jewellery");       break;
+                case OBJ_POTIONS:    text += pgettext("chardump","Potions");         break;
+                case OBJ_BOOKS:      text += pgettext("chardump","Books");           break;
+                case OBJ_STAVES:     text += pgettext("chardump","Magical staves");  break;
+                case OBJ_RODS:       text += pgettext("chardump","Rods");            break;
+                case OBJ_ORBS:       text += pgettext("chardump","Orbs of Power");   break;
+                case OBJ_MISCELLANY: text += pgettext("chardump","Miscellaneous");   break;
+                case OBJ_CORPSES:    text += pgettext("chardump","Carrion");         break;
 
                 default:
                     die("Bad item class");
@@ -861,7 +861,7 @@ static void _sdump_skills(dump_params &par)
 {
     string &text(par.text);
 
-    text += "   Skills:\n";
+    text += _("   Skills:\n");
 
     dump_skills(text);
     text += "\n";
@@ -896,40 +896,40 @@ static void _sdump_spells(dump_params &par)
 
     int spell_levels = player_spell_levels();
 
-    string verb = par.se? "had" : "have";
+    string verb = par.se? pgettext("spelldump","had") : pgettext("spelldump","have");
 
     if (spell_levels == 1)
-        text += "You " + verb + " one spell level left.";
+        text += make_stringf(gettext("You %s one spell level left."), verb.c_str()); // "You " + verb + " one spell level left.";
     else if (spell_levels == 0)
     {
-        verb = par.se? "couldn't" : "cannot";
+        verb = par.se? pgettext("spelldump","couldn't") : pgettext("spelldump","cannot"); // "couldn't" : "cannot";
 
-        text += "You " + verb + " memorise any spells.";
+        text += make_stringf(gettext("You %s memorise any spells."), verb.c_str()); // "You " + verb + " memorise any spells.";
     }
     else
     {
         if (par.se)
-            text += "You had ";
+            text += make_stringf(gettext("You had %d spell levels left."), spell_levels); // "You had ";
         else
-            text += "You have ";
-        text += make_stringf("%d spell levels left.", spell_levels);
+            text += make_stringf(gettext("You have %d spell levels left."), spell_levels); // "You have ";
+        // text += make_stringf("%d spell levels left.", spell_levels);
     }
 
     text += "\n";
 
     if (!you.spell_no)
     {
-        verb = par.se? "didn't" : "don't";
+        verb = par.se? pgettext("spelldump","didn't") : pgettext("spelldump","don't"); // "didn't" : "don't";
 
-        text += "You " + verb + " know any spells.\n\n";
+        text += make_stringf(gettext("You %s know any spells.\n\n"), verb.c_str()); // "You " + verb + " know any spells.\n\n";
     }
     else
     {
-        verb = par.se? "knew" : "know";
+        verb = par.se? pgettext("spelldump","knew") : pgettext("spelldump","know"); // "knew" : "know";
 
-        text += "You " + verb + " the following spells:\n\n";
+        text += make_stringf(gettext("You %s the following spells:\n\n"), verb.c_str()); // "You " + verb + " the following spells:\n\n";
 
-        text += " Your Spells              Type           Power        Failure   Level  Hunger" "\n";
+        text += _(" Your Spells              Type           Power        Failure   Level  Hunger" "\n");
 
         for (int j = 0; j < 52; j++)
         {
@@ -1039,7 +1039,7 @@ static void _sdump_kills_by_place(dump_params &par)
     string result = "";
 
     string header =
-    "Table legend:\n"
+    _("Table legend:\n"
     " A = Kills in this place as a percentage of kills in entire the game.\n"
     " B = Kills by you in this place as a percentage of kills by you in\n"
     "     the entire game.\n"
@@ -1050,7 +1050,7 @@ static void _sdump_kills_by_place(dump_params &par)
     " E = Experience gained in this place as a percentage of experience\n"
     "     gained in the entire game.\n"
     " F = Experience gained in this place divided by the number of levels of\n"
-    "     this place that you have seen.\n\n";
+    "     this place that you have seen.\n\n");
 
     header += "               ";
     header += "    A       B       C       D       E               F\n";
@@ -1109,7 +1109,7 @@ static void _sdump_vault_list(dump_params &par)
 #endif
      )
     {
-        par.text += "Vault maps used:\n";
+        par.text += _("Vault maps used:\n");
         par.text += dump_vault_maps();
     }
 }
@@ -1132,23 +1132,23 @@ static string _describe_action(caction_type type)
     switch (type)
     {
     case CACT_MELEE:
-        return "Melee";
+        return pgettext("chardumpatcion","Melee");
     case CACT_FIRE:
-        return " Fire";
+        return pgettext("chardumpatcion"," Fire");
     case CACT_THROW:
-        return "Throw";
+        return pgettext("chardumpatcion","Throw");
     case CACT_CAST:
-        return " Cast";
+        return pgettext("chardumpatcion"," Cast");
     case CACT_INVOKE:
-        return "Invok";
+        return pgettext("chardumpatcion","Invok");
     case CACT_ABIL:
-        return " Abil";
+        return pgettext("chardumpatcion"," Abil");
     case CACT_EVOKE:
-        return "Evoke";
+        return pgettext("chardumpatcion","Evoke");
     case CACT_USE:
-        return "  Use";
+        return pgettext("chardumpatcion","  Use");
     case CACT_STAB:
-        return " Stab";
+        return pgettext("chardumpatcion"," Stab");
     default:
         return "Error";
     }
@@ -1183,7 +1183,7 @@ static string _describe_action_subtype(caction_type type, int subtype)
         else if (basetype == OBJ_WEAPONS)
             ; // fallthrough
         else
-            return "other";
+            return _("other");
     }
     case CACT_MELEE:
     case CACT_FIRE:
@@ -1195,29 +1195,29 @@ static string _describe_action_subtype(caction_type type, int subtype)
                 return uppercase_first(tn);
             subtype = get_unrand_entry(subtype)->sub_type;
         }
-        return ((subtype == -1) ? "Unarmed"
-                : uppercase_first(item_base_name(OBJ_WEAPONS, subtype)));
+        return ((subtype == -1) ? pgettext("chardumpatcion","Unarmed")
+                : uppercase_first(_(item_base_name(OBJ_WEAPONS, subtype).c_str())));
     case CACT_CAST:
-        return spell_title((spell_type)subtype);
+        return _(spell_title((spell_type)subtype));
     case CACT_INVOKE:
     case CACT_ABIL:
-        return ability_name((ability_type)subtype);
+        return _(ability_name((ability_type)subtype));
     case CACT_EVOKE:
         switch ((evoc_type)subtype)
         {
         case EVOC_WAND:
-            return "Wand";
+            return pgettext("chardumpatcion","Wand");
         case EVOC_ROD:
-            return "Rod";
+            return pgettext("chardumpatcion","Rod");
         case EVOC_DECK:
-            return "Deck";
+            return pgettext("chardumpatcion","Deck");
         case EVOC_MISC:
-            return "Miscellaneous";
+            return pgettext("chardumpatcion","Miscellaneous");
         default:
             return "Error";
         }
     case CACT_USE:
-        return uppercase_first(base_type_string((object_class_type)subtype));
+        return uppercase_first(_(base_type_string((object_class_type)subtype).c_str()));
     case CACT_STAB:
         COMPILE_CHECK(ARRAYSZ(_stab_names) == NUM_UCAT);
         ASSERT(subtype >= 1 && subtype < NUM_UCAT);
@@ -1237,11 +1237,11 @@ static void _sdump_action_counts(dump_params &par)
     if (max_lt)
         max_lt++;
 
-    par.text += make_stringf("\n%-24s", "Action");
+    par.text += make_stringf("\n%-32s  ", pgettext("chardumpatcion","Action"));
     for (int lt = 0; lt < max_lt; lt++)
         par.text += make_stringf(" | %2d-%2d", lt * 3 + 1, lt * 3 + 3);
-    par.text += make_stringf(" || %5s", "total");
-    par.text += "\n-------------------------";
+    par.text += make_stringf(" || %5s", pgettext("chardumpatcion","total"));
+    par.text += "\n---------------------------------";
     for (int lt = 0; lt < max_lt; lt++)
         par.text += "+-------";
     par.text += "++-------\n";
@@ -1275,7 +1275,7 @@ static void _sdump_action_counts(dump_params &par)
             }
             else
                 par.text += "       ";
-            par.text += chop_string(_describe_action_subtype(caction_type(cact), ac->first), 17);
+            par.text += chop_string(_describe_action_subtype(caction_type(cact), ac->first), 25);
             for (int lt = 0; lt < max_lt; lt++)
             {
                 int ltotal = 0;
@@ -1471,7 +1471,7 @@ void display_notes()
     scr.set_flags(MF_START_AT_END);
     scr.set_tag("notes");
     scr.set_highlighter(new MenuHighlighter);
-    scr.set_title(new MenuEntry("Turn   | Place    | Note"));
+    scr.set_title(new MenuEntry(_("Turn   | Place    | Note")));
     for (unsigned int i = 0; i < note_list.size(); ++i)
     {
         string prefix = note_list[i].describe(true, true, false);

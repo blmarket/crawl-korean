@@ -163,7 +163,7 @@ string KillMaster::kill_info() const
     {
         char buf[200];
         snprintf(buf, sizeof buf,
-                "Grand Total: %d creatures vanquished",
+                _("Grand Total: %d creatures vanquished"),
                 grandtotal);
         grandt = buf;
     }
@@ -225,7 +225,7 @@ void KillMaster::add_kill_info(string &killtext,
         if (separator)
             killtext += "\n";
 
-        killtext += "Vanquished Creatures";
+        killtext += _("Vanquished Creatures");
         if (category)
             killtext += string(" (") + category + ")";
 
@@ -239,7 +239,7 @@ void KillMaster::add_kill_info(string &killtext,
         {
             char numbuf[100];
             snprintf(numbuf, sizeof numbuf,
-                    "%d creature%s vanquished." "\n", count,
+                    _("%d creature%s vanquished." "\n"), count,
                     count > 1? "s" : "");
             killtext += numbuf;
         }
@@ -449,11 +449,11 @@ static string n_names(const string &name, int n)
     {
         char buf[20];
         snprintf(buf, sizeof buf, "%d", n);
-        return buf + pluralise(PLU_MON,name, standard_plural_qualifiers,
+        return buf + pluralise(PLU_MON, name, standard_plural_qualifiers,
                                modifier_suffixes);
     }
     else
-        return article_a(name, false);
+        return name; // article_a(name, false);
 }
 
 // Returns a string describing the number of times a unique has been killed.
@@ -465,16 +465,16 @@ static string kill_times(int kills)
     switch (kills)
     {
       case 1:
-        strcpy(buf, " (once)");
+        strcpy(buf, _(" (once)"));
         break;
       case 2:
-        strcpy(buf, " (twice)");
+        strcpy(buf, _(" (twice)"));
         break;
       case 3:
-        strcpy(buf, " (thrice)");
+        strcpy(buf, _(" (thrice)"));
         break;
       default:
-        snprintf(buf, sizeof buf, " (%d times)", kills);
+        snprintf(buf, sizeof buf, _(" (%d times)"), kills);
         break;
     }
     return string(buf);
@@ -512,23 +512,23 @@ string kill_def::base_name(const kill_monster_desc &md) const
 {
     string name;
     if (md.monnum == MONS_PANDEMONIUM_LORD)
-        name = "pandemonium lord";
+        name = _(M_("pandemonium lord"));
     else
-        name = mons_type_name(md.monnum, DESC_PLAIN);
+        name = _(mons_type_name(md.monnum, DESC_PLAIN).c_str());
 
     switch (md.modifier)
     {
       case kill_monster_desc::M_ZOMBIE:
-        name += " zombie";
+        name += _(" zombie");
         break;
       case kill_monster_desc::M_SKELETON:
-        name += " skeleton";
+        name += _(" skeleton");
         break;
       case kill_monster_desc::M_SIMULACRUM:
-        name += " simulacrum";
+        name += _(" simulacrum");
         break;
       case kill_monster_desc::M_SPECTRE:
-        name = "spectral " + name;
+        name = _("spectral "); // + name;
         break;
       default:
         // Silence compiler warning about not handling M_NORMAL and
@@ -537,7 +537,7 @@ string kill_def::base_name(const kill_monster_desc &md) const
     }
 
     if (md.monnum == MONS_RAKSHASA_FAKE || md.monnum == MONS_MARA_FAKE)
-        name = "illusory " + name;
+        name = _(M_("illusory ")) + name;
 
     return name;
 }
@@ -558,7 +558,7 @@ string kill_def::info(const kill_monster_desc &md) const
             && md.monnum != MONS_SHAPESHIFTER
             && md.monnum != MONS_GLOWING_SHAPESHIFTER)
         {
-            name += " (shapeshifter)";
+            name += _(" (shapeshifter)");
         }
     }
     else if (kills > 1)
@@ -1012,8 +1012,8 @@ static int kill_lualc_summary(lua_State *ls)
     *buf = 0;
     if (count)
     {
-        snprintf(buf, sizeof buf, "%u creature%s vanquished.",
-                count, count > 1? "s" : "");
+        snprintf(buf, sizeof buf, _("%u creature%s vanquished."),
+                count, count > 1? pgettext("sssss","s") : "");
     }
     lua_pushstring(ls, buf);
     return 1;

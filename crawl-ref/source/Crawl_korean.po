@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 00:26+0900\n"
+"POT-Creation-Date: 2013-04-03 00:05+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,6 +70,7 @@ msgstr "당신의 현재 모습으로는 그렇게 할 수 없다."
 
 #: stuff.cc:430 stuff.cc:430 chardump.cc:773 invent.cc:445 stuff.cc:406
 #: stuff.cc:411 invent.cc:452 stuff.cc:427 invent.cc:450 invent.cc:451
+#: chardump.cc:787
 msgid "You aren't carrying anything."
 msgstr "당신은 아무것도 들고있지 않다."
 
@@ -5904,7 +5905,7 @@ msgid "submerged "
 msgstr "물에 잠긴 "
 
 #: mon-info.cc:698 mon-info.cc:698 kills.cc:502 mon-info.cc:719
-#: mon-info.cc:884 mon-info.cc:899 mon-info.cc:904
+#: mon-info.cc:884 mon-info.cc:899 mon-info.cc:904 kills.cc:531
 msgid "spectral "
 msgstr "영혼상태의 "
 
@@ -5918,15 +5919,15 @@ msgstr "활동적인 "
 msgid "-headed "
 msgstr "머리 "
 
-#: mon-info.cc:734 mon-info.cc:734 kills.cc:493 mon-info.cc:755
+#: mon-info.cc:734 mon-info.cc:734 kills.cc:493 mon-info.cc:755 kills.cc:522
 msgid " zombie"
 msgstr "의 좀비"
 
-#: mon-info.cc:739 mon-info.cc:739 kills.cc:496 mon-info.cc:760
+#: mon-info.cc:739 mon-info.cc:739 kills.cc:496 mon-info.cc:760 kills.cc:525
 msgid " skeleton"
 msgstr "의 해골"
 
-#: mon-info.cc:744 mon-info.cc:744 kills.cc:499 mon-info.cc:765
+#: mon-info.cc:744 mon-info.cc:744 kills.cc:499 mon-info.cc:765 kills.cc:528
 msgid " simulacrum"
 msgstr "의 얼음 환영"
 
@@ -14791,6 +14792,12 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -25883,7 +25890,7 @@ msgid " DCSS"
 msgstr " 던전 크롤 스톤 수프"
 
 #. " " + type + " version " + Version::Long();
-#: chardump.cc:195
+#: chardump.cc:195 chardump.cc:212
 msgid ""
 " character file.\n"
 "\n"
@@ -25891,112 +25898,113 @@ msgstr ""
 " 캐릭터 정보.\n"
 "\n"
 
-#: chardump.cc:206 chardump.cc:237
+#: chardump.cc:206 chardump.cc:237 chardump.cc:223 chardump.cc:254
 msgctxt "chardump"
 msgid "were"
 msgstr "이었다"
 
-#: chardump.cc:206 chardump.cc:237
+#: chardump.cc:206 chardump.cc:237 chardump.cc:223 chardump.cc:254
 msgctxt "chardump"
 msgid "are"
 msgstr "이다"
 
-#: chardump.cc:224
+#: chardump.cc:224 chardump.cc:241
 msgctxt "chardump"
 msgid "You were "
 msgstr "당신의 만복도 : "
 
-#: chardump.cc:226
+#: chardump.cc:226 chardump.cc:243
 msgctxt "chardump"
 msgid "You are "
 msgstr "당신의 만복도 : "
 
-#: chardump.cc:242
+#: chardump.cc:242 chardump.cc:259
 #, c-format
 msgid "You %s in spider-form."
 msgstr "당신은 거미 형태로 변신중%s."
 
-#: chardump.cc:247
+#: chardump.cc:247 chardump.cc:264
 #, c-format
 msgid "You %s in vampire."
 msgstr "당신은 흡혈 박쥐로 변신중%s."
 
 #. "vampire ";
-#: chardump.cc:248
+#. text += "vampire ";
+#: chardump.cc:248 chardump.cc:265
 #, c-format
 msgid "You %s in bat-form."
 msgstr "당시는 박쥐로 변신중%s."
 
-#: chardump.cc:251
+#: chardump.cc:251 chardump.cc:268
 #, c-format
 msgid "Your %s %s blades."
 msgstr "당신의 %s은(는) 칼날로 변이중%s."
 
-#: chardump.cc:254
+#: chardump.cc:254 chardump.cc:271
 #, c-format
 msgid "You %s a stone statue."
 msgstr "당신은 석상 형태로 변신중%s."
 
-#: chardump.cc:257
+#: chardump.cc:257 chardump.cc:274
 #, c-format
 msgid "You %s a creature of crystalline ice."
 msgstr "당신은 수정 얼음 괴수로 변신중%s."
 
-#: chardump.cc:260
+#: chardump.cc:260 chardump.cc:277
 #, c-format
 msgid "You %s a fearsome dragon!"
 msgstr "당신은 무시무시한 용으로 변신중%s!"
 
-#: chardump.cc:263
+#: chardump.cc:263 chardump.cc:280
 #, c-format
 msgid "You %s in lich form."
 msgstr "당신은 리치로 변신%s."
 
-#: chardump.cc:266
+#: chardump.cc:266 chardump.cc:283
 #, c-format
 msgid "You %s a filthy swine."
 msgstr "당신은 돼지로 변신%s."
 
-#: chardump.cc:280 chardump.cc:413
+#: chardump.cc:280 chardump.cc:413 chardump.cc:336 chardump.cc:441
 msgctxt "chardump"
 msgid "have "
 msgstr "었"
 
-#: chardump.cc:281
+#: chardump.cc:281 chardump.cc:337
 msgctxt "chardump"
 msgid "seen"
 msgstr "였었"
 
-#: chardump.cc:281 chardump.cc:285
+#: chardump.cc:281 chardump.cc:285 chardump.cc:341
 msgctxt "chardump"
 msgid "saw"
 msgstr "었"
 
-#: chardump.cc:295
+#: chardump.cc:295 chardump.cc:350
 #, c-format
 msgid "You %svisited %d branch"
 msgstr "당신은 %2$d곳의 메인 던전으로부터의 분기점을 방문했%1$s고, "
 
 #. if (branches_visited.size() != 1)
 #. text += "es";
-#: chardump.cc:299
+#: chardump.cc:299 chardump.cc:356
 #, c-format
 msgid " of the dungeon, and %s %d of its levels.\n"
 msgstr "총 %2$d층의 던전을 탐험하%1$s다.\n"
 
-#: chardump.cc:305
+#: chardump.cc:305 chardump.cc:363
 #, c-format
 msgid "You %svisited Pandemonium %d time"
 msgstr "당신은 판데모니움을 %2$d회 방문했%1$s고, "
 
 #. if (place_info.num_visits > 1)
 #. text += "s";
-#: chardump.cc:309
+#: chardump.cc:309 chardump.cc:367
 #, c-format
 msgid ", and %s %d of its levels.\n"
 msgstr "총 %2$d층의 판데모니움을 탐험하%1$s다.\n"
 
-#: chardump.cc:316
+#: chardump.cc:316 chardump.cc:374
 #, c-format
 msgid "You %svisited the Abyss %d time"
 msgstr "당신은 어비스를 %2$d회 방문했%1$s다"
@@ -26006,47 +26014,47 @@ msgstr "당신은 어비스를 %2$d회 방문했%1$s다"
 msgid "You %svisited %d Labyrinth"
 msgstr "당신은 미궁을 %2$d회 방문했%1$s다"
 
-#: chardump.cc:363
+#: chardump.cc:363 chardump.cc:384
 #, c-format
 msgid "You %svisited %d bazaar"
 msgstr "당신은 시장을 %2$d회 방문했%1$s다"
 
-#: chardump.cc:373
+#: chardump.cc:373 chardump.cc:395
 #, c-format
 msgid "You %s%s %d Ziggurat"
 msgstr "당신은 지구라트를 %3$d회 %2$s%1$s고, "
 
-#: chardump.cc:375
+#: chardump.cc:375 chardump.cc:397
 msgctxt "chardump"
 msgid "completed"
 msgstr "정복했"
 
-#: chardump.cc:376
+#: chardump.cc:376 chardump.cc:398
 msgctxt "chardump"
 msgid "visited"
 msgstr "방문했"
 
-#: chardump.cc:381
+#: chardump.cc:381 chardump.cc:403
 #, c-format
 msgid " (completing %d)"
 msgstr "(%d 완료)"
 
-#: chardump.cc:382
+#: chardump.cc:382 chardump.cc:404
 #, c-format
 msgid ", and %s %d of %s levels"
 msgstr "%2$d층의 %3$s 방문하%1$s다."
 
-#: chardump.cc:384
+#: chardump.cc:384 chardump.cc:406
 msgctxt "chardump"
 msgid "their"
 msgstr "지구라트들을"
 
-#: chardump.cc:384
+#: chardump.cc:384 chardump.cc:406
 msgctxt "chardump"
 msgid "its"
 msgstr "지구라트를"
 
-#: chardump.cc:386
+#: chardump.cc:386 chardump.cc:408
 #, c-format
 msgid " (deepest: %d)"
 msgstr "(최고 도달 층수: %d)"
@@ -26056,27 +26064,27 @@ msgstr "(최고 도달 층수: %d)"
 msgid "You %svisited %d portal chamber"
 msgstr "당신은 총 %2$d곳의 관문으로 이어진 방에 도달했%1$s다"
 
-#: chardump.cc:420
+#: chardump.cc:420 chardump.cc:448
 #, c-format
 msgid "You %scollected %d gold pieces.\n"
 msgstr "당신은 금화 %2$d개를 가지고 있%1$s다.\n"
 
-#: chardump.cc:427
+#: chardump.cc:427 chardump.cc:455
 #, c-format
 msgid "You %sspent %d gold pieces at shops.\n"
 msgstr "당신은 상점 물건 구입에 총 %2$d개의 금화를 사용했%1$s다.\n"
 
-#: chardump.cc:434
+#: chardump.cc:434 chardump.cc:462
 #, c-format
 msgid "You %sdonated %d gold pieces.\n"
 msgstr "당신은 총 %2$d개의 금화를 신에게 기부했%1$s다.\n"
 
-#: chardump.cc:441
+#: chardump.cc:441 chardump.cc:469
 #, c-format
 msgid "You %sused %d gold pieces for miscellaneous purposes.\n"
 msgstr "당신은 총 %2$d개의 금화를 기타 용도로 사용했%1$s다.\n"
 
-#: chardump.cc:504
+#: chardump.cc:504 chardump.cc:530
 msgid ""
 "Table legend:\n"
 " A = Turns spent in this place as a percentage of turns spent in the\n"
@@ -26116,7 +26124,7 @@ msgstr ""
 "메세지 이력\n"
 "\n"
 
-#: chardump.cc:614
+#: chardump.cc:614 chardump.cc:640
 msgid ""
 "\n"
 "Notes\n"
@@ -26126,48 +26134,48 @@ msgstr ""
 "플레이 이력\n"
 "턴     | 장소     | 이력\n"
 
-#: chardump.cc:635
+#: chardump.cc:635 chardump.cc:658
 msgid "You escaped"
 msgstr "당신은 던전을 탈출했다"
 
-#: chardump.cc:638 chardump.cc:676
+#: chardump.cc:638 chardump.cc:676 chardump.cc:660 chardump.cc:698
 #, c-format
 msgctxt "chardump"
 msgid "You were %s"
 msgstr "당신은 %s에 있었다"
 
-#: chardump.cc:640 chardump.cc:678
+#: chardump.cc:640 chardump.cc:678 chardump.cc:662 chardump.cc:700
 #, c-format
 msgctxt "chardump"
 msgid "You are %s"
 msgstr "당신은 %s에 있다"
 
-#: chardump.cc:652
+#: chardump.cc:652 chardump.cc:674
 #, c-format
 msgid "You worshipped %s."
 msgstr "당신은 %s을(를) 숭배했었다."
 
-#: chardump.cc:654
+#: chardump.cc:654 chardump.cc:676
 #, c-format
 msgid "You worship %s."
 msgstr "당신은 %s을(를) 숭배한다."
 
-#: chardump.cc:667
+#: chardump.cc:667 chardump.cc:689
 msgctxt "religiondump"
 msgid "was"
 msgstr "었다."
 
-#: chardump.cc:667
+#: chardump.cc:667 chardump.cc:689
 msgctxt "religiondump"
 msgid "is"
 msgstr "다!"
 
-#: chardump.cc:670
+#: chardump.cc:670 chardump.cc:692
 #, c-format
 msgid " %s demanding penance.\n"
 msgstr "은(는) 참회를 요구하고 있%s\n"
 
-#: chardump.cc:778
+#: chardump.cc:778 chardump.cc:792
 msgid ""
 "Inventory:\n"
 "\n"
@@ -26175,67 +26183,67 @@ msgstr ""
 "소지품 목록:\n"
 "\n"
 
-#: chardump.cc:786
+#: chardump.cc:786 chardump.cc:800
 msgctxt "chardump"
 msgid "Hand weapons"
 msgstr "[무기류]"
 
-#: chardump.cc:787
+#: chardump.cc:787 chardump.cc:801
 msgctxt "chardump"
 msgid "Missiles"
 msgstr "[발사체류]"
 
-#: chardump.cc:788
+#: chardump.cc:788 chardump.cc:802
 msgctxt "chardump"
 msgid "Armour"
 msgstr "[방어구]"
 
-#: chardump.cc:789
+#: chardump.cc:789 chardump.cc:803
 msgctxt "chardump"
 msgid "Magical devices"
 msgstr "[마법봉]"
 
-#: chardump.cc:790
+#: chardump.cc:790 chardump.cc:804
 msgctxt "chardump"
 msgid "Comestibles"
 msgstr "[음식류]"
 
-#: chardump.cc:791
+#: chardump.cc:791 chardump.cc:805
 msgctxt "chardump"
 msgid "Scrolls"
 msgstr "[마법 두루마리]"
 
-#: chardump.cc:792
+#: chardump.cc:792 chardump.cc:806
 msgctxt "chardump"
 msgid "Jewellery"
 msgstr "[장신구]"
 
-#: chardump.cc:793
+#: chardump.cc:793 chardump.cc:807
 msgctxt "chardump"
 msgid "Potions"
 msgstr "[물약]"
 
-#: chardump.cc:794
+#: chardump.cc:794 chardump.cc:808
 msgctxt "chardump"
 msgid "Books"
 msgstr "[책]"
 
-#: chardump.cc:795
+#: chardump.cc:795 chardump.cc:809
 msgctxt "chardump"
 msgid "Magical staves"
 msgstr "[지팡이]"
 
-#: chardump.cc:796
+#: chardump.cc:796 chardump.cc:811
 msgctxt "chardump"
 msgid "Orbs of Power"
 msgstr "[오브]"
 
-#: chardump.cc:797
+#: chardump.cc:797 chardump.cc:812
 msgctxt "chardump"
 msgid "Miscellaneous"
 msgstr "[기타]"
 
-#: chardump.cc:798
+#: chardump.cc:798 chardump.cc:813
 msgctxt "chardump"
 msgid "Carrion"
 msgstr "[시체]"
@@ -26245,51 +26253,53 @@ msgstr "[시체]"
 msgid " (%d gold)"
 msgstr "(%d 금화)"
 
-#: chardump.cc:858
+#: chardump.cc:858 chardump.cc:864
 msgid "   Skills:\n"
 msgstr " 특수 능력:\n"
 
-#: chardump.cc:914
+#: chardump.cc:914 chardump.cc:899
 msgctxt "spelldump"
 msgid "had"
 msgstr "남았었다"
 
-#: chardump.cc:914
+#: chardump.cc:914 chardump.cc:899
 msgctxt "spelldump"
 msgid "have"
 msgstr "남았다"
 
-#: chardump.cc:917
+#: chardump.cc:917 chardump.cc:902
 #, c-format
 msgid "You %s one spell level left."
 msgstr "당신은 마법 주문을 배울 수 있는 여유 점수가 1점 %s."
 
-#: chardump.cc:920
+#: chardump.cc:920 chardump.cc:905
 msgctxt "spelldump"
 msgid "couldn't"
 msgstr "었다"
 
-#: chardump.cc:920
+#: chardump.cc:920 chardump.cc:905
 msgctxt "spelldump"
 msgid "cannot"
 msgstr "다"
 
-#: chardump.cc:922
+#. "couldn't" : "cannot";
+#: chardump.cc:922 chardump.cc:907
 #, c-format
 msgid "You %s memorise any spells."
 msgstr "당신은 마법 주문을 더 이상 배울 수 없%s."
 
-#: chardump.cc:927
+#: chardump.cc:927 chardump.cc:912
 #, c-format
 msgid "You had %d spell levels left."
 msgstr "당신은 마법 주문을 배울 수 있는 여유 점수를 %d점 남겼었다."
 
-#: chardump.cc:929
+#: chardump.cc:929 chardump.cc:914
 #, c-format
 msgid "You have %d spell levels left."
 msgstr "당신은 마법 주문을 배울 수 있는 여유 점수가 %d점 남았다."
 
-#: chardump.cc:939
+#. "didn't" : "don't";
+#: chardump.cc:939 chardump.cc:924
 #, c-format
 msgid ""
 "You %s know any spells.\n"
@@ -26298,7 +26308,8 @@ msgstr ""
 "당신은 아무 주문도 알지 %s.\n"
 "\n"
 
-#: chardump.cc:945
+#. "knew" : "know";
+#: chardump.cc:945 chardump.cc:930
 #, c-format
 msgid ""
 "You %s the following spells:\n"
@@ -26307,22 +26318,22 @@ msgstr ""
 "당신은 다음의 주문을 %s:\n"
 "\n"
 
-#: chardump.cc:937
+#: chardump.cc:937 chardump.cc:922
 msgctxt "spelldump"
 msgid "didn't"
 msgstr "못했다"
 
-#: chardump.cc:937
+#: chardump.cc:937 chardump.cc:922
 msgctxt "spelldump"
 msgid "don't"
 msgstr "못한다"
 
-#: chardump.cc:943
+#: chardump.cc:943 chardump.cc:928
 msgctxt "spelldump"
 msgid "knew"
 msgstr "익혔었다"
 
-#: chardump.cc:943
+#: chardump.cc:943 chardump.cc:928
 msgctxt "spelldump"
 msgid "know"
 msgstr "익혔다"
@@ -26697,38 +26708,38 @@ msgstr "샤이닝 원은 분노했다!"
 msgid " smites you!"
 msgstr "은(는) 당신에게 일격을 날렸다!"
 
-#: kills.cc:164
+#: kills.cc:164 kills.cc:166
 #, c-format
 msgid "Grand Total: %d creatures vanquished"
 msgstr "총 합계: %d마리의 몬스터를 잡았다"
 
-#: kills.cc:223
+#: kills.cc:223 kills.cc:228
 msgid "Vanquished Creatures"
 msgstr "처치한 몬스터: "
 
-#: kills.cc:237
+#: kills.cc:237 kills.cc:242
 #, c-format
 msgid "%d creature%s vanquished.\n"
-msgstr "%d마리의 몬스터%s를 잡았다.\n"
+msgstr "%1$d마리의 몬스터를 처리했다.%2$.0s\n"
 
-#: kills.cc:437
+#: kills.cc:437 kills.cc:468
 msgid " (once)"
 msgstr "(1회)"
 
-#: kills.cc:440
+#: kills.cc:440 kills.cc:471
 msgid " (twice)"
 msgstr "(2회)"
 
-#: kills.cc:443
+#: kills.cc:443 kills.cc:474
 msgid " (thrice)"
 msgstr "(3회)"
 
-#: kills.cc:446
+#: kills.cc:446 chardump.cc:421 kills.cc:477
 #, c-format
 msgid " (%d times)"
 msgstr "(%d회)"
 
-#: kills.cc:542
+#: kills.cc:542 kills.cc:561
 msgid " (shapeshifter)"
 msgstr "(변형괴물)"
 
@@ -30255,6 +30266,12 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -36860,7 +36877,7 @@ msgstr "을(를) 동료로 만듦."
 #: mon-stuff.cc:489 mon-stuff.cc:488
 msgctxt "milestonekillverb"
 msgid "killed"
-msgstr "을(를) 물리침."
+msgstr "을(를) 처치함."
 
 #: decks.cc:2045
 #, c-format
@@ -36911,3 +36928,198 @@ msgstr "어비스로 탈출함. (하!)"
 #: stairs.cc:812
 msgid "Took an exit into the Abyss."
 msgstr "어비스로 향하는 출구를 이용."
+
+#: chardump.cc:288
+#, c-format
+msgid "One of your tentacles %s a temporary spike."
+msgstr "당신의 촉수 중 하나에는 잠시간 유지되는 가시가 달려 %s다."
+
+#: chardump.cc:289 chardump.cc:294
+msgctxt "chardump_have"
+msgid "had"
+msgstr "있었"
+
+#: chardump.cc:289
+msgctxt "chardump_have"
+msgid "has"
+msgstr "있"
+
+#: chardump.cc:293
+#, c-format
+msgid "You %s grown temporary %s."
+msgstr "당신은 일시적인 %2$s을(를) 가지고 %1$s다."
+
+#: chardump.cc:294
+msgctxt "chardump_have"
+msgid "have"
+msgstr "있"
+
+#: chardump.cc:298
+#, c-format
+msgid "You %s an sentient fungus."
+msgstr "당신은 지각력이 있는 버섯으로 변신중%s."
+
+#: chardump.cc:301
+#, c-format
+msgid "You %s an animated tree."
+msgstr "당신은 살아 움직이는 나무로 변신중%s."
+
+#: chardump.cc:304
+#, c-format
+msgid "You %s an acidic jelly."
+msgstr "당신은 산성 젤리로 변신중%s."
+
+#: chardump.cc:307
+#, c-format
+msgid "You %s a porcupine."
+msgstr "당신은 고슴도치로 변신중%s."
+
+#: chardump.cc:310
+#, c-format
+msgid "You %s a barely coherent strand of gas."
+msgstr "당신은 옅고 뿌연 가스 가닥으로 변신중%s."
+
+#: chardump.cc:426
+msgid "You have also visited: "
+msgstr "또한 당신은 다음을 방문했다: "
+
+#: chardump.cc:810
+msgctxt "chardump"
+msgid "Rods"
+msgstr "마법막대"
+
+#. "You " + verb + " the following spells:\n\n";
+#: chardump.cc:932
+msgid ""
+" Your Spells              Type           Power        Failure   Level  "
+"Hunger\n"
+msgstr ""
+" 주문명                   학파           위력         실패율    레벨   만복"
+"도\n"
+
+#: chardump.cc:1042
+msgid ""
+"Table legend:\n"
+" A = Kills in this place as a percentage of kills in entire the game.\n"
+" B = Kills by you in this place as a percentage of kills by you in\n"
+"     the entire game.\n"
+" C = Kills by friends in this place as a percentage of kills by\n"
+"     friends in the entire game.\n"
+" D = Other kills in this place as a percentage of other kills in the\n"
+"     entire game.\n"
+" E = Experience gained in this place as a percentage of experience\n"
+"     gained in the entire game.\n"
+" F = Experience gained in this place divided by the number of levels of\n"
+"     this place that you have seen.\n"
+"\n"
+msgstr ""
+"테이블 범례:\n"
+" A = 전체 처치한 몬스터 수 대비, 해당 장소에서 처치한 몬스터들의 백분율\n"
+" B = 직접 처치한 전체 몬스터 수 대비, 해당 장소에서 직접 처치한\n"
+"     몬스터들의 백분율.\n"
+" C = 동료에 의해 처치된 전체 몬스터 수 대비, 해당 장소에서 동료에 의해\n"
+"     처치된 몬스터들의 백분율.\n"
+" D = 다른 이유로 죽은 전체 몬스터 수 대비, 해당 장소에서 다른 이유로\n"
+"     죽은 몬스터들의 백분율.\n"
+" E = 전체 던전에서 획득한 경험치 대비, 해당 장소에서 획득한 경험치의 백분율\n"
+" F = 전체 던전에서 획득한 스킬 향상 경험치 대비, 해당 장소에서 획득한\n"
+"     스킬 향상 경험치의 백분율.\n"
+"\n"
+"\n"
+
+#: chardump.cc:1112
+msgid "Vault maps used:\n"
+msgstr "특수지형 사용: \n"
+
+#: chardump.cc:1135
+msgctxt "chardumpatcion"
+msgid "Melee"
+msgstr " 공격"
+
+#: chardump.cc:1137
+msgctxt "chardumpatcion"
+msgid " Fire"
+msgstr " 발사"
+
+#: chardump.cc:1139
+msgctxt "chardumpatcion"
+msgid "Throw"
+msgstr " 투척"
+
+#: chardump.cc:1141
+msgctxt "chardumpatcion"
+msgid " Cast"
+msgstr " 주문"
+
+#: chardump.cc:1143
+msgctxt "chardumpatcion"
+msgid "Invok"
+msgstr " 기도"
+
+#: chardump.cc:1145
+msgctxt "chardumpatcion"
+msgid " Abil"
+msgstr " 능력"
+
+#: chardump.cc:1147
+msgctxt "chardumpatcion"
+msgid "Evoke"
+msgstr " 발동"
+
+#: chardump.cc:1149
+msgctxt "chardumpatcion"
+msgid "  Use"
+msgstr " 사용"
+
+#: chardump.cc:1151
+msgctxt "chardumpatcion"
+msgid " Stab"
+msgstr " 암습"
+
+#: chardump.cc:1186
+msgid "other"
+msgstr " 기타"
+
+#: chardump.cc:1198
+msgctxt "chardumpatcion"
+msgid "Unarmed"
+msgstr "비무장"
+
+#: chardump.cc:1209
+msgctxt "chardumpatcion"
+msgid "Wand"
+msgstr "마법봉"
+
+#: chardump.cc:1211
+msgctxt "chardumpatcion"
+msgid "Rod"
+msgstr "마법막대"
+
+#: chardump.cc:1213
+msgctxt "chardumpatcion"
+msgid "Deck"
+msgstr "카드덱"
+
+#: chardump.cc:1215
+msgctxt "chardumpatcion"
+msgid "Miscellaneous"
+msgstr "기타물품"
+
+#: chardump.cc:1240
+msgctxt "chardumpatcion"
+msgid "Action"
+msgstr "행동  "
+
+#: chardump.cc:1243
+msgctxt "chardumpatcion"
+msgid "total"
+msgstr "계   "
+
+#: chardump.cc:1474
+msgid "Turn   | Place    | Note"
+msgstr "턴     | 장소     | 이력"
+
+#: kills.cc:1015
+#, c-format
+msgid "%u creature%s vanquished."
+msgstr "%d마리의 몬스터%s을(를) 처치했다."

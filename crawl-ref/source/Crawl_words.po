@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 00:26+0900\n"
+"POT-Creation-Date: 2013-04-03 00:05+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2289,6 +2289,7 @@ msgstr "용암 가고일"
 
 #: mon-data.h:5261 mon-data.h:5273 mon-data.h:5262 kills.cc:486
 #: mon-data.h:5219 mon-data.h:5307 mon-data.h:5513 mon-data.h:5549
+#: kills.cc:515
 msgid "pandemonium lord"
 msgstr "판데모니움의 악마"
 
@@ -11696,7 +11697,7 @@ msgstr "아쉔자리"
 msgid "Jiyva"
 msgstr "지이바"
 
-#: kills.cc:520
+#: kills.cc:520 kills.cc:540
 msgid "illusory "
 msgstr "분신 "
 
@@ -11830,6 +11831,10 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT

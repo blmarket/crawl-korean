@@ -2769,10 +2769,10 @@ static string _status_mut_abilities(int sw)
             runes.push_back(gettext(rune_type_name(i)));
     if (!runes.empty())
     {
-        text += make_stringf("\n<w>%s:</w> %d/%d 룬%s: %s",
+        text += make_stringf("\n<w>%s:</w> %d/%d 룬: %s",
                     stringize_glyph(get_item_symbol(SHOW_ITEM_MISCELLANY)).c_str(),
                     (int)runes.size(), you.obtainable_runes,
-                    you.obtainable_runes == 1 ? "" : "s",
+                    //you.obtainable_runes == 1 ? "" : "s",
                     comma_separated_line(runes.begin(), runes.end(),
                                          ", ", ", ").c_str());
     }
