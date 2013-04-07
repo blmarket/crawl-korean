@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief A hints mode as an introduction on how to play Dungeon Crawl.
 **/
@@ -156,13 +156,13 @@ static void _print_hints_menu(hints_types type)
     switch (type)
     {
       case HINT_BERSERK_CHAR:
-          strcpy(desc, "(Melee oriented character with divine support)");
+          strcpy(desc, "(신의 도움을 받는 근접 전투 캐릭터)");
           break;
       case HINT_MAGIC_CHAR:
-          strcpy(desc, "(Magic oriented character)");
+          strcpy(desc, "(마법 사용 캐릭터)");
           break;
       case HINT_RANGER_CHAR:
-          strcpy(desc, "(Ranged fighter)");
+          strcpy(desc, "(장거리 공격 캐릭터)");
           break;
       default: // no further choices
           strcpy(desc, "(erroneous character)");
@@ -170,8 +170,8 @@ static void _print_hints_menu(hints_types type)
     }
 
     cprintf("%c - %s %s %s\n",
-            letter, species_name(_get_hints_species(type)).c_str(),
-                    get_job_name(_get_hints_job(type)), desc);
+            letter, _(species_name(_get_hints_species(type)).c_str()),
+                    _(get_job_name(_get_hints_job(type))), desc);
 }
 
 // Hints mode selection screen and choice.
@@ -181,9 +181,9 @@ void pick_hints(newgame_def* choice)
 
     cgotoxy(1,1);
     formatted_string::parse_string(
-        "<white>You must be new here indeed!</white>"
+        "<white>던전크롤이 처음이신가 보군요!</white>"
         "\n\n"
-        "<cyan>You can be:</cyan>"
+        "<cyan>아래 캐릭터 중 하나를 선택하세요:</cyan>"
         "\n").display();
 
     textcolor(LIGHTGREY);
@@ -192,8 +192,8 @@ void pick_hints(newgame_def* choice)
         _print_hints_menu((hints_types)i);
 
     formatted_string::parse_string(
-        "<brown>\nEsc - Quit"
-        "\n* - Random hints mode character"
+        "<brown>\nEsc - 종료"
+        "\n* - 힌트모드 캐릭터 무작위 선택"
         "</brown>\n").display();
 
     while (true)
@@ -221,7 +221,7 @@ void pick_hints(newgame_def* choice)
         CASE_ESCAPE
             game_ended();
         case 'X':
-            cprintf("\nGoodbye!");
+            cprintf("\n잘가!");
             end(0);
             return;
         }
@@ -505,7 +505,7 @@ void hints_death_screen()
     mpr(untag_tiles_console(text), MSGCH_TUTORIAL, 0);
     more();
 
-    mpr("See you next game!", MSGCH_TUTORIAL);
+    mpr("다음 게임에서 봅시다!", MSGCH_TUTORIAL);
 
     Hints.hints_events.init(false);
 }
@@ -634,22 +634,22 @@ static void _hints_healing_reminder()
             Hints.hints_just_triggered = true;
 
             string text;
-            text =  "Remember to rest between fights and to enter unexplored "
-                    "terrain with full hitpoints and magic. Ideally you "
-                    "should retreat into areas you've already explored and "
-                    "cleared of monsters; resting on the edge of the explored "
-                    "terrain increases the chances of your rest being "
-                    "interrupted by wandering monsters. For resting, press "
-                    "<w>5</w> or <w>Shift-numpad 5</w>"
-                    "<tiles>, or <w>click on the stat area</w> with your mouse</tiles>"
+            text =  "전투 후, 탐험하지 않은 지역으로 이동하기 전에는 "
+                    "꼭 제자리에서 휴식을 하여, 체력과 MP를 채우도록 하세요. "
+                    "전투 중 도망가야 할 상황이 생긴다면, 탐험하지 않은 검게 가려진 지역보다는 "
+                    "몬스터들을 처치해온 이미 지나왔고, 밝혀진 길로 도망가는 것이 현명한 판단일 것입니다. "
+                    "탁 트인 곳이 아닌, 구석 지형에서 휴식을 취한다면, 던전을 돌아다니는 몬스터들에게 발각되지 않고 "
+                    "휴식을 취할 확률이 높아질 것입니다. 휴식을 취하려면, 키보드 숫자패드의 "
+                    "<w>5</w>키 혹은 <w>쉬프트-숫자패드 5</w>"
+                    "<tiles>키를 누르거나, 커맨드창의 <w>휴식 아이콘을 마우스 좌클릭</w>하시면 됩니다.</tiles>"
                     ".";
 
             if (you.hp < you.hp_max && you.religion == GOD_TROG
                 && you.can_go_berserk())
             {
-              text += "\nAlso, berserking might help you not to lose so many "
-                      "hitpoints in the first place. To use your abilities type "
-                      "<w>a</w>.";
+              text += "\n또한, '광폭화'를 시전하는 것은 강한 적과의 전투에서, 당신이 너무 많은 체력을 소모하지 않는 것을 "
+                      "도와줄 것입니다. 광폭화와 같은 스킬을 시전하려면, "
+                      "<w>a</w>키를 누르시면 됩니다.";
             }
             mpr(text, MSGCH_TUTORIAL, 0);
 
@@ -902,17 +902,17 @@ void hints_monster_seen(const monster& mon)
     tiles.add_text_tag(TAG_TUTORIAL, mi);
 #endif
 
-    string text = "That ";
+    string text = "저기 보이는 ";
 
     if (is_tiles())
     {
         text +=
-            string("monster is a ") +
+            string("몬스터는 ") +
             mon.name(DESC_PLAIN).c_str() +
-            ". Examples for typical early monsters are rats, giant newts, "
-            "kobolds, or goblins. You can gain information about any monster "
-            "by hovering your mouse over its tile, and read the monster "
-            "description by clicking on it with your <w>right mouse button</w>.";
+			"(이)군요. 게임 초반에 만날수 있는 약한 몬스터들은 쥐, 뉴트, 작은 뱀, "
+            "고블린, 코볼트 등이 있죠. 몬스터들의 좀 더 자세한 정보를 얻고 싶으면, "
+            "몬스터 위로 마우스를 올리면 됩니다. 좀 더 자세하면서도 보기 편한 몬스터의 정보를 보려면 "
+            "몬스터를 <w>마우스 우클릭</w>하시면 됩니다.";
     }
     else
     {
@@ -931,38 +931,38 @@ void hints_monster_seen(const monster& mon)
                 "description by then pressing <w>v</w>. ";
     }
 
-    text += "\nTo attack this monster with your wielded weapon, just move "
-            "into it. ";
+    text += "\n이러한 몬스터를, 장비하고 있는 무기(혹은 맨손)로 공격하는 방법은 아주 간단합니다. 몬스터가 위치해 있는 "
+            "장소로 화살표 혹은 숫자패드, 혹은 마우스 클릭 등을 이용해 이동하면 몬스터에게 근접 공격을 가하게 되죠. ";
     if (is_tiles())
     {
         text +=
-            "Note that as long as there's a non-friendly monster in view you "
-            "won't be able to automatically move to distant squares, to avoid "
-            "death by misclicking.";
+            "참고할 점은, 적대적인 몬스터가 시야 내로 들어왔을 때는, 떨어져 있는 다른 장소로 마우스 클릭을 통해 "
+            "자동으로 이동하는 것이 불가능하게 바뀝니다. 잘못된 클릭으로 죽는 것을 방지하기 위함이죠.";
+            
     }
 
     mpr(text, MSGCH_TUTORIAL, 0);
 
     if (Hints.hints_type == HINT_RANGER_CHAR)
     {
-        text =  "However, as a hunter you will want to deal with it using your "
-                "bow. If you have a look at your bow from your "
-                "<w>i</w>nventory, you'll find an explanation of how to do "
-                "this. ";
+        text =  "하지만, 사냥꾼 직업을 가진 당신이라면 직접 공격보다는 장비하고 있는 활로 "
+                "몬스터를 공격하고 싶으실 겁니다. 소지품창("
+				"<w>i</w>키로 소지품창 열람)을 통해 활의 정보를 보시면, 해당 무기를 어떻게 사용해야 하는지에 대한 설명을 찾을 수 있을 "
+                "것입니다. ";
 
         if (!you.weapon()
             || you.weapon()->base_type != OBJ_WEAPONS
             || you.weapon()->sub_type != WPN_BOW)
         {
-            text += "First <w>w</w>ield it, then follow the instructions."
-                "<tiles>\nAs a short-cut you can also <w>right-click</w> on your "
-                "bow to read its description, and <w>left-click</w> to wield "
-                "it.</tiles>";
+            text += "우선 장거리 무기를 장비(<w>w</w>)합니다, 그리고, 이어지는 설명을 따르세요."
+                "<tiles>\n좀 더 간편한 방법으로는, 화면 오른쪽 소지품창에 있는, 활 아이콘을 <w>마우스 우클릭</w>하시면, "
+                "활에 대한 좀 더 자세한 설명 화면을 열람할 수 있습니다. 그리고 활 아이콘을 <w>마우스 좌클릭k</w>하면, 해당 활을 "
+                "장비하게 되죠.</tiles>";
         }
         else
         {
-            text += "<tiles>Clicking with your <w>right mouse button</w> on your bow "
-                    "will also let you read its description.</tiles>";
+            text += "<tiles>화면 오른쪽 소지품창에 있는, 당신의 활 아이콘을 <w>마우스 우클릭</w>하시면, "
+                    "활에 대한 설명 화면을 열람할 수 있습니다.</tiles>";
         }
 
         mpr(untag_tiles_console(text), MSGCH_TUTORIAL, 0);
@@ -970,12 +970,12 @@ void hints_monster_seen(const monster& mon)
     }
     else if (Hints.hints_type == HINT_MAGIC_CHAR)
     {
-        text =  "However, as a conjurer you will want to deal with it using "
-                "magic. If you have a look at your spellbook from your "
-                "<w>i</w>nventory, you'll find an explanation of how to do "
-                "this."
-                "<tiles>\nAs a short-cut you can also <w>right-click</w> on your "
-                "book in your inventory to read its description.</tiles>";
+        text =  "하지만, 사냥꾼 직업을 가진 당신이라면 직접 공격보다는 마법 주문을 사용하여 "
+                "몬스터를 공격하고 싶으실 것입니다. 소지품창("
+                "<w>i</w>키로 소지품창 열람)을 통해 마법서의 정보를 보시면, 당신의 주문을 어떻게 사용해야 하는지에 대한 설명을 찾을 수 있을 "
+                "것입니다."
+                "<tiles>\n좀 더 간편한 방법으로는, 화면 오른쪽 소지품창에 있는, 마법서 아이콘을 <w>마우스 우클릭</w>하시면, "
+                "마법서에 대한 좀 더 자세한 설명 화면을 열람할 수 있습니다.</tiles>";
         mpr(untag_tiles_console(text), MSGCH_TUTORIAL, 0);
 
     }
@@ -1036,49 +1036,49 @@ static string _describe_portal(const coord_def &gc)
     ostringstream text;
 
     // Ziggurat entrances can rarely appear as early as DL 3.
-    if (desc.find("zig") != string::npos)
+    if ((desc.find("zig") != string::npos) || (desc.find("지구") != string::npos))
     {
-        text << "is a portal to a set of special levels filled with very "
-                "tough monsters; you probably shouldn't even think of going "
-                "in here. Additionally, entering a ziggurat costs a lot of "
-                "gold, a lot more than you'd have right now; don't bother "
-                "saving gold up for it, since at this point your gold is "
-                "better spent at shops buying items which can help you "
-                "survive."
+        text << "은(는) 무시무시한 몬스터들로 가득한, 특수한 장소로 연결되는 "
+                "관문입니다. 왕 초보인 당신은 이 관문 안에 무엇이 있을지 생각하지 않고 "
+                "무작정 들어가려는 시도는 하지 않으셨겠죠?  뭐, 추가적으로 덧붙이면 지구라트로 들어가기 위해서는 "
+                "아주 많은 금화를 지불해야 합니다. 지금까지 던전에서 주워 모은 금화들보다 훨씬 더 많이 말이죠; 그렇다고 "
+                "여기 들어가기 위해 금화를 쓰지 말고 아끼지는 마세요. 상점에서 아이템을 구입하는 데에 "
+                "금화를 쓰는 것이, 당신의 생존에 더욱 큰 도움을 줄 "
+                "테니까요."
 
-                "\n\nIf you <w>still</w> want to enter (and somehow have "
-                "gathered enough gold to do so) ";
+                "\n\n이렇게 경고를 했는데도, <w>아직도</w> 여기 들어가고 싶은 마음이 굴뚝같으시고, 입장에 필요한 금화도 "
+                "모으셨다면, ";
     }
     // For the sake of completeness, though it's very unlikely that a
     // player will find a bazaar entrance before reaching XL 7.
-    else if (desc.find("bazaar") != string::npos)
+    else if ((desc.find("bazaar") != string::npos) || (desc.find("시장") != string::npos))
     {
-        text << "is a portal to an inter-dimensional bazaar filled with "
-                "shops. It will disappear if you don't enter it soon, "
-                "so hurry. To enter ";
+        text << "은(는) 다른 차원에 위치한 시장으로 통하는 관문입니다. 다수의 상점들이 위치한 장소이죠. "
+                "이 곳에 들어가지 않고 머뭇거리신다면, 머지 않아 이 관문은 닫혀버리게 됩니다. "
+                "서둘러 들어가셔야겠다고요? ";
     }
     // The sewers can appear from DL 3 to DL 6.
     else
     {
-        text << "is a portal to a special level where you'll have to fight "
-                "your way back to the exit through some tougher than average "
-                "monsters (the monsters around the portal should give a "
-                "good indication as to how tough), but with the reward of "
-                "some good loot. There's no penalty for skipping it, but if "
-                "you do skip it the portal will disappear, so you have to "
-                "decide now if you want to risk it. To enter ";
+        text << "은(는) 특별한 장소로 통하는 관문입니다. 이 곳에는 관문이 있던 층에 있는 몬스터들보다는 평균적으로 "
+                "좀 더 강한 몬스터들이 서식하고 있고, 들어가는 순간 입구가 닫혀 몬스터들을 물리치며 출구를 찾아야 하는 "
+                "경우도 있죠. 어떤 몬스터가 나올지는, 이 관문 주변에 서식하는 몬스터들이 좋은 참고가 될 것입니다. "
+                "하지만, 이런 위험성을 감수하고 이 관문 내를 정복했다면, 좋은 아이템과 다량의 경험치를 획득하는 것도 가능하죠. "
+                "이 관문을 그냥 지나쳐도 페널티는 없습니다. 하지만, 이 관문을 지나친다면, 이 관문은 곧 사라질 것입니다. 즉, "
+                "위험을 감수하고 이 관문 안으로 들어갈지, 아니면 지나칠지는 당신의 결정의 몫이죠. "
+                ;
     }
 
-    text << "stand over the portal and press <w>></w>. To return find "
-            "<tiles>a similar looking portal tile </tiles>"
+    text << "관문 안으로 들어가시려면 관문 위로 올라간 후, <w>></w>키를 누르시면 됩니다. 안에서 밖으로 나오는 출구"
+		"<tiles>(입구와 보통 비슷하게 생겼죠)을 찾으셨을 경우에는, 출구 위에서 </tiles>"
             "<console>another <w>"
          << stringize_glyph(get_feat_symbol(DNGN_EXIT_PORTAL_VAULT))
          << "</w> (though NOT the ancient stone arch you'll start "
             "out on) </console>"
-            "and press <w><<</w>."
-            "<tiles>\nAlternatively, clicking on your <w>left mouse button</w> "
-            "while pressing the <w>Shift key</w> will let you enter any "
-            "portal you're standing on.</tiles>";
+            "<w><<</w>키를 누르면 원래의 던전으로 돌아오게 됩니다."
+            "<tiles>\n다른 방법으로는, 입구 혹은 출구에 마우스 커서를 올린 후"
+            "<w>쉬프트 키를 누른 채로, 마우스 왼쪽 버튼</w>을 눌러도, 해당 관문의 입구나 출구로 "
+            "들어가실 수 있습니다.</tiles>";
 
     return text.str();
 }
@@ -1201,84 +1201,84 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     switch (seen_what)
     {
     case HINT_SEEN_POTION:
-        text << "You have picked up your first potion"
+        text << "처음으로 물약을 발견하셨습니다. "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_POTION))
              << "</w>'). Use </console>"
-                "<tiles>. Simply click on it with your <w>left mouse button</w>, or "
-                "press </tiles>"
-                "<w>%</w> to quaff it.\n"
-                "Note that potion effects might be good or bad. For the bad "
-                "ones, you might want to wait until you're a bit tougher, but "
-                "at the same time it would be nice to know the good ones when "
-                "you need them. Ah, decisions, decisions...";
+                "<tiles>. 이러한 물약은, 오른쪽 아이템창에서 물약 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭하거나, "
+                "</tiles>"
+                "게임 상에서 <w>%</w>키를 눌러 물약을 마시는 것이 가능하죠.\n"
+                "유의할 점은 물약을 마신다고 무조건 긍정적인 효과가 발생하는 건 아니라는 겁니다. 때때로 치명적인 "
+                "피해를 주는 물약들도 있으니까요. 이러한 확인되지 않은 물약으로부터의 피해를 방지하기 위해선, 나쁜 물약을 마셔도 "
+                "어느정도 감안할 수 있을 정도로 캐릭터가 성장했을 때 확인하는 방법도 있지만, 그렇게 물약을 아낀다면 좋은 효과의 물약을 제 때 "
+                "사용할 수 없다는 문제도 있죠. 뭐.. 이건 당신의 판단력이 필요한 문제겠네요.";
         cmd.push_back(CMD_QUAFF);
         break;
 
     case HINT_SEEN_SCROLL:
-        text << "You have picked up your first scroll"
+        text << "처음으로 마법 두루마리를 발견하셨군요. "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_SCROLL))
              << "</w>'). Type </console>"
-                "<tiles>. Simply click on it with your <w>left mouse button</w>, or "
-                "type </tiles>"
-                "<w>%</w> to read it.";
+                "<tiles>. 마법 두루마리를 사용하는 방법은, 간단히 우측 아이템창에서 두루마리 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭하거나, "
+                "</tiles>"
+                "<w>%</w>키를 눌러 마법 두루마리를 읽는 것이 가능하죠.";
         cmd.push_back(CMD_READ);
         break;
 
     case HINT_SEEN_WAND:
-        text << "You have picked up your first wand"
+        text << "다양한 마법들이 깃들어있는 마법봉을 발견하겼습니다! "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_WAND))
              << "</w>'). Type </console>"
-                "<tiles>. Simply click on it with your <w>left mouse button</w>, or "
-                "type </tiles>"
-                "<w>%</w> to evoke it.";
+                "<tiles>. 마법봉을 사용하는 방법은 간단합니다. 우측 아이템창에서 마법봉 <w>마우스 왼쪽 버튼</w>으로 클릭하거나, "
+                "</tiles>"
+                "<w>%</w>키를 누른 후, 마법봉을 사용할 대상을 마우스 혹은 키보드로 선택한 후 역시 마우스 버튼이나 엔터키를 누르면 되죠.";
         cmd.push_back(CMD_EVOKE);
         break;
 
     case HINT_SEEN_SPBOOK:
-        text << "You have picked up a book"
+        text << "마법서를 발견하셨군요! "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_BOOK))
              << "'</w>) "
-             << "that you can read by typing <w>%</w>. "
-                "If it's a spellbook you'll then be able to memorise spells "
-                "via <w>%</w> and cast a memorised spell with <w>%</w>.</console>"
-                "<tiles>. You can read it doing a <w>right click</w> with your "
-                "mouse, and memorise spells with a <w>left click</w>. </tiles>";
+             << "<w>%</w>키를 눌러, 마법서에 들어 있는 마법 주문들을 확인하실 수 있습니다. "
+                "마법서에 깃들어 있는 마법 주문을 배우려면, "
+                "<w>%</w>키를 누른 후 마법서를 선택하시면 되고, 이렇게 배운 마법을 시전하려면 <w>%</w>키를 누르면 되죠.</console>"
+                "<tiles>. 우측 아이템창의 마법서 아이콘을 <w>마우스 오른쪽 버튼k</w>으로 클릭하면, 마법서의 설명과 함께 "
+                "마법서에 들어 있는 주문들을 확인하실 수 있고, 마법서의 주문들을 배우시기 위해서는 <w>마우스 왼쪽 버튼</w>으로 마법서 아이콘을 클릭하시면, 마법 주문 배우기 화면이 나오죠. </tiles>";
         cmd.push_back(CMD_READ);
         cmd.push_back(CMD_MEMORISE_SPELL);
         cmd.push_back(CMD_CAST_SPELL);
 
         if (you.religion == GOD_TROG)
         {
-            text << "\nAs a worshipper of "
+            text << "\n그런데 당신은 '"
                  << _(god_name(GOD_TROG).c_str())
-                 << ", though, you might instead wish to burn those tomes "
-                    "of hated magic by using the corresponding "
-                    "<w>%</w>bility.";
+                 << "'의 신자군요. 트로그는 마법 사용은 물론 마법을 배우는 것조차 매우 싫어합니다. 하지만 트로그의 신자라면 "
+				 "이러한 마법책을 특수능력 사용 (<w>%</w>키)을 통해 불태움으로써, 마법을 싫어하는 신의 총애를 더 받을 수 "
+                 "있음과 동시에, 일종의 공격용으로도 사용하는 것이 가능하죠.";
             cmd.push_back(CMD_USE_ABILITY);
         }
-        text << "\nIn hint mode you can reread this information at "
-                "any time by "
+        text << "\n힌트 모드에서는, 언제든지"
+                "우측 아이템창의 마법서 아이콘을 "
                 "<console>having a look in your <w>%</w>nventory at the item in "
                 "question.</console>"
-                "<tiles>clicking on it with your <w>right mouse button</w>.</tiles>";
+                "<tiles><w>마우스 오른쪽 버튼</w>으로 클릭하면, 이러한 정보들을 다시 볼 수 있는게 가능합니다.</tiles>";
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
     case HINT_SEEN_WEAPON:
-        text << "This is the first weapon "
+        text << "무기 아이템을 처음으로 발견하셨군요. "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_WEAPON))
              << "</w>') </console>"
-                "you've picked up. Use <w>%</w> "
-                "<tiles>or click on it with your <w>left mouse button</w> </tiles>"
-                "to wield it, but be aware that this weapon "
-                "might train a different skill from your current one. You can "
-                "view the weapon's properties from your <w>%</w>nventory"
-                "<tiles> or by <w>right-clicking</w> on it</tiles>"
+                "무기를 습득하셨다면, <w>%</w>키를 누르시거나, 혹은 "
+                "<tiles>화면 오른쪽 아이템창의 무기 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭하면 </tiles>"
+                "해당 무기를 장비하게 되죠. 다만 주의하세요! 아무 무기나 줍는다고 잘 쓸 수 있는게 아닙니다. "
+                "각각의 무기들은 무기의 종류별로 '무기 스킬 레벨'이라는 일종의 숙련도를 가지고 있고, 익숙하지 않은 종류의 무기는 "
+				"서투르게 사용할 수 밖에 없습니다. 무기가 어떠한 부류에 속하는지, 그리고 좀 더 자세한 정보는, 소지품창 화면(<w>%</w>키)"
+                "을 여시거나, 혹은 무기 아이콘을 <w>마우스 오른쪽 버튼</w>으로 클릭함으로써 보는 것이 가능합니다."
                 ".";
 
         cmd.push_back(CMD_WIELD_WEAPON);
@@ -1286,46 +1286,46 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
 
         if (Hints.hints_type == HINT_BERSERK_CHAR)
         {
-            text << "\nAs you're already trained in Axes you should stick "
-                    "with these. Checking other axes' enchantments and "
-                    "attributes can be worthwhile.";
+            text << "\n아마도 당신은 도끼류 무기에 익숙해져 있을겁니다. 도끼 기술 스킬이 다른 무기 스킬보다 높다는 이야기이죠. 즉, 다른 무기를 사용하기보다는"
+                    "도끼류의 무기를 찾아 사용하는 것이 훨씬 좋습니다. 던전을 탐험하면서, 좀 더 강한 도끼, 마법 효과가 붙은 도끼, 혹은 좀 더 높은 "
+                    "강화가 되어 있는 도끼들을 찾아보는 것이 어떨까요?";
         }
         else if (Hints.hints_type == HINT_MAGIC_CHAR)
         {
-            text << "\nAs a spellslinger you don't need a weapon to fight. "
-                    "It can be useful as a backup, though.";
+            text << "\n그러고 보니 당신은 마법사군요. 마법사는 보통 전투시에는 무기를 사용하지 않습니다. "
+                    "다만 예비용으로 무기를 들고 다니는것은 때때로 유용하죠. 방어력이나 저항력을 높여주는 효과가 걸린 무기를 드는 것은 생존에 도움이 된답니다.";
         }
         break;
 
     case HINT_SEEN_MISSILES:
-        text << "This is the first stack of missiles "
+        text << "처음으로 발사체류 아이템을 발견하셨습니다. "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_MISSILE))
              << "</w>') </console>"
-                "you've picked up. Missiles like darts and throwing nets "
-                "can be thrown by hand, but other missiles like arrows and "
-                "needles require a launcher and training in using it to be "
-                "really effective. "
+                "이러한 발사체에는 여러 종류가 있는데, 다트나 투척용 그물의 경우는 "
+                "별다른 도구가 필요 없이 손으로 던져 사용할 수 있지만, 화살과 같은 발사체 아이템은 "
+                "이러한 발사체를 사용할 도구가 필요하죠. 화살이라면 활이 필요하듯이요. 물론 발사체를 좀 더 효과적으로 "
+                "사용하기 위해서는, 이러한 발사 도구 무기 스킬도 수련할 필요가 있을 것이고요. "
 #ifdef USE_TILE_LOCAL
-                "<w>Right-clicking</w> on "
+				"<w>마우스 오른쪽 버튼</w>"
 #else
                 "Selecting "
 #endif
-                "the item in your <w>%</w>nventory will give more "
-                "information about both missiles and launcher.";
+				"으로 아이템창(<w>%</w>키)의 발사체 아이템을 클릭하면, 해당 아이템과, 그 발사 도구 무기에 대한"
+                "좀 더 자세한 정보를 얻으실 수 있습니다.";
 
         cmd.push_back(CMD_DISPLAY_INVENTORY);
 
         if (Hints.hints_type == HINT_RANGER_CHAR)
         {
-            text << "\nAs you're already trained in Bows you should stick "
-                    "with arrows and collect more of them in the dungeon.";
+            text << "\n아마도 당신은 활 사용에 익숙해져 있을겁니다.활 스킬이 다른 무기 스킬보다 높다는 이야기죠. 즉, 다른 무기를 사용하기보다는 "
+                    "활을 계속 사용하는것이 더욱 도움이 됩니다. 이 이야기는, 던전 곳곳에 떨어져 있는 화살 아이템들도 착실하게 주워야 한다는 이야기죠.";
         }
         else if (Hints.hints_type == HINT_MAGIC_CHAR)
         {
-            text << "\nHowever, as a spellslinger, you don't really need "
-                    "another type of ranged attack, unless there's another "
-                    "effect in addition to damage.";
+            text << "\n그런데 당신은 마법사군요. 아마 당신은 이러한 장거리 공격 도구가 "
+                    "크게 필요하지는 않을 겁니다. 특별히 공격력이 더 높거나, 더 좋은 효과를 "
+                    "줄 수 있거나 하지 않는다면 말이죠.";
         }
         else
         {

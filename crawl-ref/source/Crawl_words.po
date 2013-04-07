@@ -1035,17 +1035,17 @@ msgstr "악마 지네"
 #: mon-data.h:2008 mon-data.h:2009 mon-data.h:2044 mon-data.h:2010
 #: mon-data.h:2024
 msgid "crocodile"
-msgstr "악어 도마뱀"
+msgstr "숲 악어"
 
 #: mon-data.h:2020 mon-data.h:2021 mon-data.h:2056 mon-data.h:2022
 #: mon-data.h:2036
 msgid "baby alligator"
-msgstr "새끼 악어"
+msgstr "새끼 늪지 악어"
 
 #: mon-data.h:2032 mon-data.h:2033 mon-data.h:2068 mon-data.h:2034
 #: mon-data.h:2048
 msgid "alligator"
-msgstr "악어"
+msgstr "늪지 악어"
 
 #: mon-data.h:2045 mon-data.h:2046 mon-data.h:2081 mon-data.h:2047
 #: mon-data.h:2061

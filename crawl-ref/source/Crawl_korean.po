@@ -34134,13 +34134,12 @@ msgstr "--다음장-- 사이띄개"
 
 #: message.cc:578 message.cc:582 message.cc:585
 msgid "or click "
-msgstr " 혹은 마우스 버튼"
+msgstr " / 좌클릭 "
 
 #: message.cc:579 message.cc:583 message.cc:586
 msgid "to continue. You can later reread messages with Ctrl-P."
 msgstr ""
-"을(를) 누르면 다음으로 진행합니다. 지나간 메시지를 다시 보려면 Ctrl-P를 누르"
-"세요."
+": 계속 진행, Ctrl+P : 지나간 메시지 다시보기."
 
 #: mon-info.cc:980 mon-info.cc:1009
 msgid "inept "
