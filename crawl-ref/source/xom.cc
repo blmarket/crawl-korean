@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief All things Xomly
 **/
@@ -112,82 +112,47 @@ static const spell_type _xom_tension_spells[] =
     SPELL_DEATH_CHANNEL, SPELL_NECROMUTATION
 };
 
-//#ifdef JP
-//        mpr("당신의 몸은 부패하였다!", MSGCH_MUTATION);
-//#else
-//        mpr("Your body decomposes!", MSGCH_MUTATION);
-//#endif
-
-
-
 static const char *_xom_message_arrays[NUM_XOM_MESSAGE_TYPES][6] =
 {
     // XM_NORMAL
-	// 좀의 평소 대사 정도인가봅니다.
-    //원문을 모두 남깁니다.
-  //      "Xom is interested.",
- //       "Xom is mildly amused.",
-//        "Xom is amused.",
- //       "Xom is highly amused!",
- //       "Xom thinks this is hilarious!",
- //       "Xom roars with laughter!"
-
-	{
-        "좀은 흥미를 느꼈다.",
-        "좀은 조금 재미있어했다.",
-        "좀은 재미있어했다.",
-        "좀은 매우 재미있어했다!",
-        "좀은 이것이 매우 우습다고 생각했다!",
-        "좀은 크게 웃었다!"
+    {
+        M_("Xom is interested."),
+        M_("Xom is mildly amused."),
+        M_("Xom is amused."),
+        M_("Xom is highly amused!"),
+        M_("Xom thinks this is hilarious!"),
+        "Xom roars with laughter!"
     },
 
     // XM_INTRIGUED
-  //      "Xom is interested.",
- //       "Xom is very interested.",
-  //      "Xom is extremely interested.",
-  //      "Xom is intrigued!",
-  //      "Xom is very intrigued!",
- //       "Xom is fascinated!"
-
     {
-        "좀은 흥미로워했다.",
-        "좀은 매우 흥미로워했다.",
-        "좀은 비상한 관심을 가졌다.",
-        "좀은 아주 흥미로워했다!",
-        "좀은 엄청 흥미로워했다!",
-        "좀은 매료되었다!"
+        M_("Xom is interested."),
+        M_("Xom is very interested."),
+        M_("Xom is extremely interested."),
+        M_("Xom is intrigued!"),
+        M_("Xom is very intrigued!"),
+        M_("Xom is fascinated!")
     }
 };
 
-//신앙도에 따른 신앙스텟에서의 호칭
-//역시 원문을 남깁니다. 토이와 플레이띵 의 뜻이 모두 장난감이긴 한데..
- //   return (you.piety > 180) ? "Xom's teddy bear." :
- //          (you.piety > 150) ? "a beloved toy of Xom." :
- //          (you.piety > 120) ? "a favourite toy of Xom." :
- //          (you.piety >  80) ? "a toy of Xom." :
- //          (you.piety >  50) ? "a plaything of Xom." :
- //          (you.piety >  20) ? "a special plaything of Xom."
- //                            : "a very special plaything of Xom.";
-
-
 static const char *describe_xom_mood()
 {
-    return (you.piety > 180) ? "좀의 테디베어." :
-           (you.piety > 150) ? "좀의 사랑하는 장난감." :
-           (you.piety > 120) ? "좀이 좋아하는 장난감." :
-           (you.piety >  80) ? "좀의 장난감." :
-           (you.piety >  50) ? "좀의 장난감." :
-           (you.piety >  20) ? "좀의 특별한 장난감."
-                             : "좀의 아주 특별한 장난감.";
+    return (you.piety > 180) ? _("Xom's teddy bear.") :
+           (you.piety > 150) ? _("a beloved toy of Xom.") :
+           (you.piety > 120) ? _("a favourite toy of Xom.") :
+           (you.piety >  80) ? _("a toy of Xom.") :
+           (you.piety >  50) ? _("a plaything of Xom.") :
+           (you.piety >  20) ? _("a special plaything of Xom.")
+                             : _("a very special plaything of Xom.");
 }
 
 const string describe_xom_favour()
 {
     string favour;
     if (you.religion != GOD_XOM)
-        favour = "매우 재미없는 좀의 장난감.";
+        favour = _("a very buggy toy of Xom.");
     else if (you.gift_timeout < 1)
-        favour = "지루한 것.";
+        favour = _("a BORING thing.");
     else
         favour = describe_xom_mood();
 
@@ -196,10 +161,10 @@ const string describe_xom_favour()
 
 static string _get_xom_speech(const string key)
 {
-    string result = getSpeakString("좀 " + key);
+    string result = getSpeakString("Xom " + key);
 
     if (result.empty())
-        result = getSpeakString("좀의 일반적인 효과");
+        result = getSpeakString("Xom general effect");
 
     if (result.empty())
         return _("Xom makes something happen.");
@@ -209,7 +174,7 @@ static string _get_xom_speech(const string key)
 
 static bool _xom_is_bored()
 {
-    return (you.religion == GOD_XOM && you.gift_timeout == 0);
+    return (you.religion == GOD_XOM && !you.gift_timeout);
 }
 
 static bool _xom_feels_nasty()
@@ -243,7 +208,6 @@ bool xom_is_nice(int tension)
         const int effective_piety = you.piety + tension_bonus;
         ASSERT(effective_piety >= 0 && effective_piety <= MAX_PIETY);
 
-//디버그 관련이라 놔둡니다.
 #ifdef DEBUG_XOM
         mprf(MSGCH_DIAGNOSTICS,
              "Xom: tension: %d, piety: %d -> tension bonus = %d, eff. piety: %d",
@@ -272,7 +236,6 @@ static void _xom_is_stimulated(int maxinterestingness,
 
     interestingness = min(200, interestingness);
 
-//역시 디버그 관련
 #if defined(DEBUG_RELIGION) || defined(DEBUG_GIFTS) || defined(DEBUG_XOM)
     mprf(MSGCH_DIAGNOSTICS,
          "Xom: gift_timeout: %d, maxinterestingness = %d, interestingness = %d",
@@ -280,7 +243,7 @@ static void _xom_is_stimulated(int maxinterestingness,
 #endif
 
     bool was_stimulated = false;
-    if (interestingness > you.gift_timeout && interestingness >= 12)
+    if (interestingness > you.gift_timeout && interestingness >= 10)
     {
         you.gift_timeout = interestingness;
         was_stimulated = true;
@@ -289,11 +252,11 @@ static void _xom_is_stimulated(int maxinterestingness,
     if (was_stimulated || force_message)
     {
         god_speaks(GOD_XOM,
-                   ((interestingness > 200) ? message_array[5] :
-                    (interestingness > 100) ? message_array[4] :
-                    (interestingness >  75) ? message_array[3] :
-                    (interestingness >  50) ? message_array[2] :
-                    (interestingness >  25) ? message_array[1]
+                   ((interestingness > 160) ? message_array[5] :
+                    (interestingness >  80) ? message_array[4] :
+                    (interestingness >  60) ? message_array[3] :
+                    (interestingness >  40) ? message_array[2] :
+                    (interestingness >  20) ? message_array[1]
                                             : message_array[0]));
         //updating piety status line
         you.redraw_title = true;
@@ -321,7 +284,6 @@ void xom_is_stimulated(int maxinterestingness, const string& message,
     _xom_is_stimulated(maxinterestingness, message_array, force_message);
 }
 
-//좀의 반응인듯 합니다.
 void xom_tick()
 {
     // Xom now ticks every action, not every 20 turns.
@@ -375,12 +337,11 @@ void xom_tick()
 
         if (you.gift_timeout == 1)
         {
-            simple_god_message(" is getting BORED.");
+            simple_god_message(_(" is getting BORED."));
             //updating piety status line
             you.redraw_title = true;
         }
     }
-//        simple_god_message(" is getting BORED."); 간단한 신의 메시지? 앞에 좀 이 붙을것 같네요
 
     if (you.faith() ? coinflip() : one_chance_in(3))
     {
@@ -401,19 +362,13 @@ void xom_tick()
                  && x_chance_in_y(chance - 1, 80))
         {
             // During tension, Xom may briefly forget about being bored.
-            const int interest = random2(chance*15);
-
-			//좀의 메시지들		
-			//                    simple_god_message(" is interested.");
-            //                    simple_god_message(" is intrigued.");
-			if (interest > 0)
+            const int interest = random2(chance * 15);
+            if (interest > 0)
             {
                 if (interest < 25)
-
-                    simple_god_message(" 은 흥미를 가졌다.");
+                    simple_god_message(_(" is interested."));
                 else
-
-				simple_god_message(" 은 아주 흥미로워 했다.");
+                    simple_god_message(_(" is intrigued."));
 
                 you.gift_timeout += interest;
                 //updating piety status line
@@ -473,8 +428,6 @@ static int _exploration_estimate(bool seen_only = false, bool debug = false)
     }
     while (total < 100 && tries < 1000);
 
-
-	//또 디버그.
 #ifdef DEBUG_XOM
     // No message during heavy-duty wizmode testing:
     // Instead all results are written into xom_debug.stat.
@@ -576,7 +529,6 @@ static bool _transformation_check(const spell_type spell)
     return transform(0, tran, true, true);
 }
 
-//좀이 당신에게 랜덤한 스킬을 시전
 static int _xom_makes_you_cast_random_spell(int sever, int tension,
                                             bool debug = false)
 {
@@ -624,10 +576,8 @@ static int _xom_makes_you_cast_random_spell(int sever, int tension,
     if (debug)
         return result;
 
-    god_speaks(GOD_XOM, _get_xom_speech("마법 효과").c_str());
+    god_speaks(GOD_XOM, _get_xom_speech("spell effect").c_str());
 
-	//     god_speaks(GOD_XOM, _get_xom_speech("spell effect").c_str());
-	//아래는 또 디버그군요
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
     mprf(MSGCH_DIAGNOSTICS,
          "_xom_makes_you_cast_random_spell(); spell: %d, spellenum: %d",
@@ -635,16 +585,13 @@ static int _xom_makes_you_cast_random_spell(int sever, int tension,
 #endif
 
     static char spell_buf[100];
-    snprintf(spell_buf, sizeof(spell_buf), "'%s' 마법 시전",
-             gettext(spell_title(spell)));
+    snprintf(spell_buf, sizeof(spell_buf), _("cast spell '%s'"),
+             spell_title(spell));
     take_note(Note(NOTE_XOM_EFFECT, you.piety, tension, spell_buf), true);
 
     your_spells(spell, sever, false);
     return result;
 }
-// 위의 원문     snprintf(spell_buf, sizeof(spell_buf), "cast spell '%s'",
-
-
 
 static int _xom_magic_mapping(int sever, int tension, bool debug = false)
 {
@@ -659,7 +606,7 @@ static int _xom_magic_mapping(int sever, int tension, bool debug = false)
     god_speaks(GOD_XOM, _get_xom_speech("divination").c_str());
 
     take_note(Note(NOTE_XOM_EFFECT, you.piety, tension,
-              "divination: magic mapping"), true);
+              _("divination: magic mapping")), true);
 
     const int power = stepdown_value(sever, 10, 10, 40, 45);
     magic_mapping(5 + power, 50 + random2avg(power * 2, 2), false);
@@ -680,12 +627,12 @@ static int _xom_detect_items(int sever, int tension, bool debug = false)
     god_speaks(GOD_XOM, _get_xom_speech("divination").c_str());
 
     take_note(Note(NOTE_XOM_EFFECT, you.piety, tension,
-              "divination: detect items"), true);
+              _("divination: detect items")), true);
 
     if (detect_items(sever) == 0)
         canned_msg(MSG_DETECT_NOTHING);
     else
-        mpr("You detect items!");
+        mpr(_("You detect items!"));
 
     return XOM_GOOD_DIVINATION;
 }
@@ -698,7 +645,7 @@ static int _xom_detect_creatures(int sever, int tension, bool debug = false)
     god_speaks(GOD_XOM, _get_xom_speech("divination").c_str());
 
     take_note(Note(NOTE_XOM_EFFECT, you.piety, tension,
-              "divination: detect creatures"), true);
+              _("divination: detect creatures")), true);
 
     const int prev_detected = count_detected_mons();
     const int num_creatures = detect_creatures(sever);
@@ -712,10 +659,10 @@ static int _xom_detect_creatures(int sever, int tension, bool debug = false)
         // still on the map when the original one has been killed.  Then
         // another one is spawned, so the number is the same as before.
         // There's no way we can check this, however.
-        mpr("You detect no further creatures.");
+        mpr(_("You detect no further creatures."));
     }
     else
-        mpr("You detect creatures!");
+        mpr(_("You detect creatures!"));
 
     return XOM_GOOD_DIVINATION;
 }
@@ -786,26 +733,25 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
     int thing_created =
         items(true, base, subtype, true, power, MAKE_ITEM_RANDOM_RACE,
               0, 0, GOD_XOM);
-//        simple_god_message(" snickers.", GOD_XOM);
+
     if (feat_destroys_item(grd(you.pos()), mitm[thing_created],
                            !silenced(you.pos())))
     {
-        simple_god_message(" 낄낄낄.", GOD_XOM);
+        simple_god_message(_(" snickers."), GOD_XOM);
         destroy_item(thing_created, true);
         thing_created = NON_ITEM;
     }
 
     if (thing_created == NON_ITEM)
     {
-        god_speaks(GOD_XOM, "\"아냐, 신경쓰지마.\"");
+        god_speaks(GOD_XOM, _("\"No, never mind.\""));
         return;
     }
-	//        god_speaks(GOD_XOM, "\"No, never mind.\"");
 
     _try_brand_switch(thing_created);
 
     static char gift_buf[100];
-    snprintf(gift_buf, sizeof(gift_buf), "신의 선물: %s",
+    snprintf(gift_buf, sizeof(gift_buf), _("god gift: %s"),
              mitm[thing_created].name(true, DESC_PLAIN).c_str());
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, gift_buf), true);
 
@@ -814,9 +760,6 @@ static void _xom_make_item(object_class_type base, int subtype, int power)
 
     stop_running();
 }
-//위는 신의 선물관련
-//    snprintf(gift_buf, sizeof(gift_buf), "god gift: %s",
-//  mitm[thing_created].inscription = "god gift";
 
 static void _xom_acquirement(object_class_type force_class)
 {
@@ -827,26 +770,24 @@ static void _xom_acquirement(object_class_type force_class)
     if (!acquirement(force_class, GOD_XOM, false, &item_index)
         || item_index == NON_ITEM)
     {
-        god_speaks(GOD_XOM, "\"아냐, 신경쓰지마.\"");
+        god_speaks(GOD_XOM, _("\"No, never mind.\""));
         return;
     }
 
     _try_brand_switch(item_index);
 
     static char gift_buf[100];
-    snprintf(gift_buf, sizeof(gift_buf), "신의 선물: %s",
+    snprintf(gift_buf, sizeof(gift_buf), _("god gift: %s"),
              mitm[item_index].name(true, DESC_PLAIN).c_str());
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, gift_buf), true);
 
     stop_running();
 }
-//  여담이지?? 좀??뭔가 주면 달리기를 멈추는군요.[아마 자동탐색이나 일직선 달리기 인가봄]
-//    snprintf(gift_buf, sizeof(gift_buf), "god gift: %s",
 
 static int _xom_give_item(int power, bool debug = false)
 {
     if (!debug)
-        god_speaks(GOD_XOM, _get_xom_speech("일반적인 선물").c_str());
+        god_speaks(GOD_XOM, _get_xom_speech("general gift").c_str());
 
     // There are two kinds of Xom gifts: acquirement and random object.
     // The result from acquirement is very good (usually as good or
@@ -1036,8 +977,6 @@ static bool _choose_chaos_upgrade(const monster* mon)
     return false;
 }
 
-
-// 카오스 업그레이드? 
 static void _do_chaos_upgrade(item_def &item, const monster* mon)
 {
     ASSERT(item.base_type == OBJ_MISSILES
@@ -1057,10 +996,8 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
 
         msg += item.name(true, DESC_PLAIN, false, false, false);
 
-		//        msg += " is briefly surrounded by a scintillating aura of "
-        //	      "random colours.";
-		//원문
-        msg += " 은 잠시 반짝반짝 빛나는 형형색색의 오라에 둘러싸였다. ";
+        msg += _(" is briefly surrounded by a scintillating aura of "
+               "random colours.");
 
         mpr(msg.c_str());
     }
@@ -1092,7 +1029,6 @@ static void _do_chaos_upgrade(item_def &item, const monster* mon)
     }
 }
 
-//여기도 일단은 디버그가 있네요
 static monster_type _xom_random_demon(int sever, bool use_greater_demons = true)
 {
     const int roll = random2(1000 - (MAX_PIETY - sever) * 5);
@@ -1131,7 +1067,6 @@ static bool _player_is_dead()
             || you.did_escape_death());
 }
 
-//좀이 포션도 주나? 포션효과? 를 주나보기도 한데..
 static int _xom_do_potion(bool debug = false)
 {
     if (debug)
@@ -1179,27 +1114,27 @@ static int _xom_do_potion(bool debug = false)
         if (has_effect)
             break;
     }
-// 포션효과     god_speaks(GOD_XOM, _get_xom_speech("potion effect").c_str());
-    god_speaks(GOD_XOM, _get_xom_speech("포션 효과").c_str());
+
+    god_speaks(GOD_XOM, _get_xom_speech("potion effect").c_str());
 
     if (pot == POT_BERSERK_RAGE)
         you.berserk_penalty = NO_BERSERK_PENALTY;
 
     // Take a note.
-    string potion_msg = "포션 효과 "; //원래  띄어쓰기가 뒤에 한칸 있습니다.
+    string potion_msg = _("potion effect ");
     switch (pot)
     {
-    case POT_CURING:        potion_msg += gettext(M_("(curing)")); break;
-    case POT_HEAL_WOUNDS:   potion_msg += gettext(M_("(heal wounds)")); break;
-    case POT_MAGIC:         potion_msg += gettext(M_("(magic)")); break;
-    case POT_SPEED:         potion_msg += gettext(M_("(speed)")); break;
-    case POT_MIGHT:         potion_msg += gettext(M_("(might)")); break;
-    case POT_AGILITY:       potion_msg += gettext(M_("(agility)")); break;
-    case POT_BRILLIANCE:    potion_msg += gettext(M_("(brilliance)")); break;
-    case POT_INVISIBILITY:  potion_msg += gettext(M_("(invisibility)")); break;
-    case POT_BERSERK_RAGE:  potion_msg += gettext(M_("(berserk)")); break;
-    case POT_EXPERIENCE:    potion_msg += gettext(M_("(experience)")); break;
-    default:                potion_msg += gettext(M_("(other)")); break;
+    case POT_CURING:        potion_msg += "(curing)"; break;
+    case POT_HEAL_WOUNDS:   potion_msg += "(heal wounds)"; break;
+    case POT_MAGIC:         potion_msg += "(magic)"; break;
+    case POT_SPEED:         potion_msg += "(speed)"; break;
+    case POT_MIGHT:         potion_msg += "(might)"; break;
+    case POT_AGILITY:       potion_msg += "(agility)"; break;
+    case POT_BRILLIANCE:    potion_msg += "(brilliance)"; break;
+    case POT_INVISIBILITY:  potion_msg += "(invisibility)"; break;
+    case POT_BERSERK_RAGE:  potion_msg += "(berserk)"; break;
+    case POT_EXPERIENCE:    potion_msg += "(experience)"; break;
+    default:                potion_msg += "(other)"; break;
     }
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, potion_msg.c_str()), true);
 
@@ -1209,10 +1144,6 @@ static int _xom_do_potion(bool debug = false)
     return XOM_GOOD_POTION;
 }
 
-//위는 일단 제가 어떤 방식으로 다른분들이 한지는 모르지만 바꿔두겠습니다.
-
-
-// 아래는 혼란? 앞으로는 그냥 주석을 원문 뒤쪽에 쓸 생각입니다. 그 편이 더 좋아보여서요
 static int _xom_confuse_monsters(int sever, bool debug = false)
 {
     bool rc = false;
@@ -1240,16 +1171,16 @@ static int _xom_confuse_monsters(int sever, bool debug = false)
         {
             // Only give this message once.
             if (!rc)
-                god_speaks(GOD_XOM, _get_xom_speech("혼란스러운").c_str()); //confusion
+                god_speaks(GOD_XOM, _get_xom_speech("confusion").c_str());
 
-            simple_monster_message(*mi, " 상당히 혼란스러워 보인다.");//" looks rather confused."
+            simple_monster_message(*mi, _(" looks rather confused."));
             rc = true;
         }
     }
 
     if (rc)
     {
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "혼란스러운 몬스터(들)"), //"confuse monster(s)"
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("confuse monster(s)")),
                   true);
         return XOM_GOOD_CONFUSION;
     }
@@ -1297,7 +1228,7 @@ static int _xom_send_allies(int sever, bool debug = false)
 
         // Even though the friendlies are charged to you for accounting,
         // they should still show as Xom's fault if one of them kills you.
-        mg.non_actor_summoner = "좀"; //Xom 좀쨔응..
+        mg.non_actor_summoner = "Xom";
 
         summons[i] = create_monster(mg);
 
@@ -1321,17 +1252,17 @@ static int _xom_send_allies(int sever, bool debug = false)
         if (only_holy)
         {
             god_speaks(GOD_XOM,
-                       _get_xom_speech("다수의 거룩한 것들을 소환하였다.").c_str()); // 여러마리 소환 "multiple holy summons"
+                       _get_xom_speech("multiple holy summons").c_str());
         }
         else if (only_demonic)
         {
             god_speaks(GOD_XOM,
-                       _get_xom_speech("여러가지를 소환하였다.").c_str()); //"multiple summons"
+                       _get_xom_speech("multiple summons").c_str());
         }
         else
         {
             god_speaks(GOD_XOM,
-                       _get_xom_speech("다수의 혼합된 소환을 하였다.").c_str());  //multiple mixed summons
+                       _get_xom_speech("multiple mixed summons").c_str());
         }
 
         // If we have only non-demons, there's a chance that they
@@ -1365,12 +1296,12 @@ static int _xom_send_allies(int sever, bool debug = false)
 
         // Take a note.
         static char summ_buf[80];
-        snprintf(summ_buf, sizeof(summ_buf), " %d 기의 %s%s%s을(를) 소환했다.",  // 소환 숫자와 속성인듯 하네요 "summons %d %s%s%s"
+        snprintf(summ_buf, sizeof(summ_buf), _("summons %d %s%s%s"),
                  num_actually_summoned,
-                 hostiletype == 0 ? "아군인 " :  //friendly 
-                 hostiletype == 3 ? "적대적인 " : "", // hostile 
-                 only_demonic ? "악마" : "몬스터",  // 악마/ 몬스터 "demon" : "monster",
-                 num_actually_summoned > 1 ? "들" : ""); // 들? "s"
+                 hostiletype == 0 ? pgettext("xom","friendly ") :
+                 hostiletype == 3 ? pgettext("xom","hostile ") : "",
+                 only_demonic ? pgettext("xom","demon") : pgettext("xom","monster"),
+                 num_actually_summoned > 1 ? pgettext("sssss","s") : "");
 
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, summ_buf), true);
 
@@ -1380,7 +1311,6 @@ static int _xom_send_allies(int sever, bool debug = false)
     return XOM_DID_NOTHING;
 }
 
-//아래는 아군소환?
 static int _xom_send_one_ally(int sever, bool debug = false)
 {
     if (debug)
@@ -1402,21 +1332,21 @@ static int _xom_send_one_ally(int sever, bool debug = false)
     mgen_data mg(mon_type, beha, (beha == BEH_FRIENDLY) ? &you : 0, 6,
                  MON_SUMM_AID, you.pos(), MHITYOU, MG_FORCE_BEH, GOD_XOM);
 
-    mg.non_actor_summoner = "좀"; // "Xom"
+    mg.non_actor_summoner = "Xom";
 
     if (monster *summons = create_monster(mg))
     {
         if (different)
-            god_speaks(GOD_XOM, _get_xom_speech("하나의 거룩한 소환").c_str());  //한마리 만 소환하는 것인듯? single holy summon
+            god_speaks(GOD_XOM, _get_xom_speech("single holy summon").c_str());
         else
-            god_speaks(GOD_XOM, _get_xom_speech("하나의 소환").c_str()); //single summon
+            god_speaks(GOD_XOM, _get_xom_speech("single summon").c_str());
 
         player_angers_monster(summons);
 
         // Take a note.
         static char summ_buf[80];
         snprintf(summ_buf, sizeof(summ_buf), _("summons %s %s"),
-                 beha == BEH_FRIENDLY ? _(M_("friendly")) : _(M_("hostile")),
+                 beha == BEH_FRIENDLY ? pgettext("xom","friendly") : pgettext("xom","hostile"),
                  summons->name(DESC_PLAIN).c_str());
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, summ_buf), true);
 
@@ -1426,7 +1356,6 @@ static int _xom_send_one_ally(int sever, bool debug = false)
     return XOM_DID_NOTHING;
 }
 
-//근처의 몬스터를 바꾸는 짓
 static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
 {
     if (there_are_monsters_nearby(false, false))
@@ -1440,9 +1369,8 @@ static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
             if (debug)
                 return (helpful ? XOM_GOOD_POLYMORPH : XOM_BAD_POLYMORPH);
 
-            const char* lookup = (helpful ? "좋은 몬스터로 변신"
-                                          : "나쁜 몬스터로 변신"); // 좋은 몬스터 변경과 나쁜 몬스터 변경? 뭐라고 해야하지"good monster polymorph"
-                                          //: "bad monster polymorph"
+            const char* lookup = (helpful ? "good monster polymorph"
+                                          : "bad monster polymorph");
             god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
 
             bool see_old = you.can_see(mon);
@@ -1467,19 +1395,19 @@ static int _xom_polymorph_nearby_monster(bool helpful, bool debug = false)
             {
                 string new_name = mon->full_name(DESC_PLAIN);
                 if (!see_old)
-                    old_name = "볼 수 없는 무언가";     //무언가 볼 수 없는?  something unseen
+                    old_name = _("something unseen");
                 else if (!see_new)
-                    new_name = "볼 수 없는 무언가";//마찬가지
+                    new_name = _("something unseen");
 
                 // Take a note.
                 static char poly_buf[120];
-                snprintf(poly_buf, sizeof(poly_buf), "%s 에서 %s 로 변신 ", //"polymorph %s -> %s" 에서 로
+                snprintf(poly_buf, sizeof(poly_buf), _("polymorph %s -> %s"),
                          old_name.c_str(), new_name.c_str());
 
                 string poly = poly_buf;
 #ifdef NOTE_DEBUG_XOM
                 poly += " (";
-                poly += (powerup ? "upgrade" : "downgrade"); // 파워업? 디버그이므로 놔둡니다.
+                poly += (powerup ? "upgrade" : "downgrade");
                 poly += ")";
 #endif
                 take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, poly.c_str()),
@@ -1505,9 +1433,9 @@ static void _confuse_monster(monster* mons, int sever)
           &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
     {
         if (was_confused)
-            simple_monster_message(mons, " 더욱 혼란스러워 보인다.");  //" looks rather more confused."
+            simple_monster_message(mons, _(" looks rather more confused."));
         else
-            simple_monster_message(mons, " 혼란스러워 보인다."); //" looks rather confused."
+            simple_monster_message(mons, _(" looks rather confused."));
     }
 }
 
@@ -1610,7 +1538,7 @@ static int _xom_swap_weapons(bool debug = false)
     if (debug)
         return XOM_BAD_SWAP_WEAPONS;
 
-    god_speaks(GOD_XOM, _get_xom_speech("무기의 교환").c_str()); //무기 교환? swap weapons
+    god_speaks(GOD_XOM, _get_xom_speech("swap weapons").c_str());
 
     const int num_mons = mons_wpn.size();
     // Pick a random monster...
@@ -1638,7 +1566,7 @@ static int _xom_swap_weapons(bool debug = false)
     unwind_var<int> save_speedinc(mon->speed_increment);
     if (!mon->pickup_item(mitm[index], false, true))
     {
-        mpr("몬스터가 아이템을 가지지 않을 것이다.", MSGCH_ERROR); //("Monster wouldn't take item."
+        mpr(_("Monster wouldn't take item."), MSGCH_ERROR);
         mon->inv[MSLOT_WEAPON] = monwpn;
         mon->equip(mitm[monwpn], MSLOT_WEAPON, 0);
         unlink_item(index);
@@ -1649,8 +1577,7 @@ static int _xom_swap_weapons(bool debug = false)
     // monster is dead.
     mitm[index].flags |= ISFLAG_THROWN;
 
-	/// 1. 몬스터 이름, 2. 장비 이름
-    mprf(gettext("%s wields %s!"),
+    mprf(_("%s wields %s!"),
          mon->name(DESC_THE).c_str(),
          myweapon.name(true, DESC_YOUR).c_str());
     mon->equip(myweapon, MSLOT_WEAPON, 0);
@@ -1686,11 +1613,10 @@ static int _xom_swap_weapons(bool debug = false)
     you.m_quiver->on_inv_quantity_changed(freeslot, myitem.quantity);
     burden_change();
 
-	/// 1. mon's 2. item name
-    mprf(gettext("You wield %s %s!"),
+    mprf(_("You wield %s %s!"),
          mon->name(DESC_ITS).c_str(),
          you.inv[freeslot].name(true, DESC_PLAIN).c_str());
-    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("swap weapons")), true);
+    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "swap weapons"), true);
 
     equip_item(EQ_WEAPON, freeslot);
 
@@ -1704,8 +1630,6 @@ static int _xom_swap_weapons(bool debug = false)
 // Swap places with a random monster and, depending on severity, also
 // between monsters. This can be pretty bad if there are a lot of
 // hostile monsters around.
-
-//
 static int _xom_rearrange_pieces(int sever, bool debug = false)
 {
     if (player_stair_delay())
@@ -1721,7 +1645,7 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
     if (debug)
         return XOM_GOOD_SWAP_MONSTERS;
 
-    god_speaks(GOD_XOM, _get_xom_speech("장소를 재배치 하였다").c_str()); // 배열이지만 배치로 변경"rearrange the pieces"
+    god_speaks(GOD_XOM, _get_xom_speech("rearrange the pieces").c_str());
 
     const int num_mons = mons.size();
 
@@ -1749,7 +1673,7 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
             {
                 if (!did_message)
                 {
-                    mpr("몇몇 몬스터들은 장소를 바꾼다.");  //몇몇 몬스터들은 장소를 바꾸었다? "Some monsters swap places.
+                    mpr(_("Some monsters swap places."));
                     did_message = true;
                 }
                 if (one_chance_in(3))
@@ -1759,7 +1683,7 @@ static int _xom_rearrange_pieces(int sever, bool debug = false)
             }
         }
     }
-    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "몬스터 변경"), true); //몬스터 변경"swap monsters"
+    take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("swap monsters")), true);
 
     return XOM_GOOD_SWAP_MONSTERS;
 }
@@ -1809,8 +1733,8 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
                     return XOM_GOOD_SNAKES;
 
                 take_note(Note(NOTE_XOM_EFFECT, you.piety, -1,
-                               "막대기를 뱀으로"), true); //막대기에서 뱀으로? snakes to sticks
-                god_speaks(GOD_XOM, _get_xom_speech("막대기를 뱀으로").c_str());// snakes to sticks
+                               _("snakes to sticks")), true);
+                god_speaks(GOD_XOM, _get_xom_speech("snakes to sticks").c_str());
                 action = true;
             }
 
@@ -1837,7 +1761,7 @@ static int _xom_snakes_to_sticks(int sever, bool debug = false)
 
             // Output some text since otherwise snakes will disappear silently.
             mprf(_("%s reforms as %s."), mi->name(DESC_THE).c_str(),
-                 doodad.name(true, DESC_A).c_str());
+                 doodad.name(true, DESC_PLAIN).c_str());
 
             // Dismiss monster silently.
             move_item_to_grid(&thing_created, mi->pos());
@@ -1885,7 +1809,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
     if (debug)
         return XOM_GOOD_ANIMATE_MON_WPN;
 
-    god_speaks(GOD_XOM, _get_xom_speech("animate monster weapon").c_str());  //animate monster weapon 번역이 애매함
+    god_speaks(GOD_XOM, _get_xom_speech("animate monster weapon").c_str());
 
     const int num_mons = mons_wpn.size();
     // Pick a random monster...
@@ -1901,7 +1825,7 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
                  SPELL_TUKIMAS_DANCE, mon->pos(), mon->mindex(),
                  0, GOD_XOM);
 
-    mg.non_actor_summoner = "좀"; //
+    mg.non_actor_summoner = "Xom";
 
     monster *dancing = create_monster(mg);
 
@@ -1912,9 +1836,8 @@ static int _xom_animate_monster_weapon(int sever, bool debug = false)
     mon->unequip(*(mon->mslot_item(MSLOT_WEAPON)), MSLOT_WEAPON, 0, true);
     mon->inv[MSLOT_WEAPON] = NON_ITEM;
 
-	/// 1. Mon's 2. item name 
-    mprf(gettext("%s %s dances into the air!"),
-         apostrophise(mon->name(DESC_THE)).c_str(),
+    mprf(_("%s %s dances into the air!"),
+         apostrophise(mon->name(DESC_PLAIN)).c_str(),
          mitm[wpn].name(true, DESC_PLAIN).c_str());
 
     destroy_item(dancing->inv[MSLOT_WEAPON]);
@@ -1934,15 +1857,15 @@ static int _xom_give_mutations(bool good, bool debug = false)
         if (debug)
             return (good ? XOM_GOOD_MUTATION : XOM_BAD_MUTATION);
 
-        const char* lookup = (good ? "좋은 변이들" : "무작위한 변이들"); //랜덤과 굳"good mutations" : "random mutations"
+        const char* lookup = (good ? "good mutations" : "random mutations");
         god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
 
         const int num_tries = random2(4) + 1;
 
         static char mut_buf[80];
-        snprintf(mut_buf, sizeof(mut_buf), "%s변이를 %s에게 주었다.", // 무슨 변이를 누구에게 줌? "give %smutation%s"
+        snprintf(mut_buf, sizeof(mut_buf), _("give %smutation%s"),
 #ifdef NOTE_DEBUG_XOM
-                 good ? "good " : "random ", // 여긴 디버그
+                 good ? "good " : "random ",
 #else
                  "",
 #endif
@@ -1950,7 +1873,7 @@ static int _xom_give_mutations(bool good, bool debug = false)
 
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, mut_buf), true);
 
-        mpr("당신의 몸은 뒤틀린 에너지로 가득?〈?"); //"Your body is suffused with distortional energy."
+        mpr(_("Your body is suffused with distortional energy."));
 
         dec_hp(random2(you.hp), false);
         deflate_hp(you.hp_max / 2, true);
@@ -2009,7 +1932,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
         protection = true;
     }
 
-    god_speaks(GOD_XOM, "이곳은 신성한 번개로 가득 차 있다!"); //"The area is suffused with divine lightning!"
+    god_speaks(GOD_XOM, _("The area is suffused with divine lightning!"));
 
     bolt beam;
 
@@ -2021,7 +1944,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
     beam.colour       = LIGHTCYAN;
     beam.thrower      = KILL_MISC;
     beam.beam_source  = NON_MONSTER;
-    beam.aux_source   = "좀의 벼락"; //Xom's lightning strike
+    beam.aux_source   = "Xom's lightning strike";
     beam.ex_size      = 2;
     beam.is_explosion = true;
 
@@ -2029,13 +1952,13 @@ static int _xom_throw_divine_lightning(bool debug = false)
 
     if (you.attribute[ATTR_DIVINE_LIGHTNING_PROTECTION])
     {
-        mpr("당신의 신의 가호는 약해졌다."); // Your divine protection wanes.
+        mpr(_("Your divine protection wanes."));
         you.attribute[ATTR_DIVINE_LIGHTNING_PROTECTION] = 0;
     }
 
     // Don't accidentally kill the player when doing a good act.
     if (you.escaped_death_cause == KILLED_BY_WILD_MAGIC
-        && you.escaped_death_aux == "좀의 벼락")  //Xom's lightning strike
+        && you.escaped_death_aux == "Xom's lightning strike")
     {
         you.hp = 1;
         you.reset_escaped_death();
@@ -2044,14 +1967,12 @@ static int _xom_throw_divine_lightning(bool debug = false)
     // Take a note.
     static char lightning_buf[80];
     snprintf(lightning_buf, sizeof(lightning_buf),
-             "신의 전격%s", protection ? " (보호받음)" : ""); // 음 이건 뭐라고해야하지. 라이트닝 버프라는데 뭐에 쓰이는질 모르겠네요
+             _("divine lightning%s"), protection ? _(" (protected)") : "");
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, lightning_buf), true);
 
     return XOM_GOOD_LIGHTNING;
 }
-//위의 원문               "divine lightning%s", protection ? " (protected)" : "");
 
-//흠 아래껀 뭔질 모르겠네요 아무래도 던전 배치 관련인듯한데..
 static int _xom_change_scenery(bool debug = false)
 {
     vector<coord_def> candidates;
@@ -2143,7 +2064,7 @@ static int _xom_change_scenery(bool debug = false)
     for (unsigned int k = 0; k < closed_doors.size(); ++k)
         candidates.push_back(closed_doors[k]);
 
-    const string speech = _get_xom_speech("배경"); //scenery
+    const string speech = _get_xom_speech("scenery");
     if (candidates.empty())
     {
         if (!one_chance_in(8))
@@ -2170,7 +2091,7 @@ static int _xom_change_scenery(bool debug = false)
         if (success)
         {
             take_note(Note(NOTE_XOM_EFFECT, you.piety, -1,
-                           "scenery: create altars"), true);
+                           _("scenery: create altars")), true);
             god_speaks(GOD_XOM, speech.c_str());
             return XOM_GOOD_SCENERY;
         }
@@ -2239,73 +2160,73 @@ static int _xom_change_scenery(bool debug = false)
     if (fountains_flow > 0)
     {
         snprintf(info, INFO_SIZE,
-                 "%s 분수%s %s 채워지기 시작했다.",// "%s fountain%s start%s reflowing",
-                 fountains_flow == 1 ? "한" : "몇몇의",// fountains_flow == 1 ? "A" : "Some",
-                 fountains_flow == 1 ? "가"  : "들이",// fountains_flow == 1 ? ""  : "s",
-                 fountains_flow == 1 ? "" : "");// fountains_flow == 1 ? "s" : "");
+                 _("%s fountain%s start%s reflowing"),
+                 fountains_flow == 1 ? "A" : "Some",
+                 fountains_flow == 1 ? ""  : pgettext("sssss","s"),
+                 fountains_flow == 1 ? "s" : "");
         effects.push_back(info);
-        terse.push_back(make_stringf(_("%d fountains restart"), fountains_flow));
+        terse.push_back(make_stringf("%d fountains restart", fountains_flow));
     }
     if (fountains_blood > 0)
     {
         snprintf(info, INFO_SIZE,
-                 "%s%s 분수%s %s 피로 채워지기 시작했다.",
-                 fountains_blood == 1 ? "한" : "몇몇의", //                 fountains_blood == 1 ? "a" : "some",
+                 _("%s%s fountain%s start%s gushing blood"),
+                 fountains_blood == 1 ? "a" : "some",
                  fountains_flow > 0 ? (fountains_blood == 1 ? "nother"
                                                             : " other")
                                     : "",
-                 fountains_blood == 1 ? ""  : "s",
+                 fountains_blood == 1 ? ""  : pgettext("sssss","s"),
                  fountains_blood == 1 ? "s" : "");
 
         string fountains = info;
         if (effects.empty())
             fountains = uppercase_first(fountains);
         effects.push_back(fountains);
-        terse.push_back(make_stringf("%d fountains blood", fountains_blood));
+        terse.push_back(make_stringf(_("%d fountains blood"), fountains_blood));
     }
     if (!effects.empty())
     {
         mprf("%s!",
              comma_separated_line(effects.begin(), effects.end(),
-                                  ", 그리고 ").c_str());//음? ", and ").c_str());
+                                  _(", and ")).c_str());
         effects.clear();
     }
-//        snprintf(info, INFO_SIZE, "%s door%s burst%s open",
+
     if (doors_open > 0)
     {
-        snprintf(info, INFO_SIZE, "%s 문%s 부숴%s 열었다.",
-                 doors_open == 1 ? "하나의"    :			//doors_open == 1 ? "A"    :
-                 doors_open == 2 ? "두개의"			//doors_open == 2 ? "Two"			
-                                 : "몇몇의",		//: "Several",
-                 doors_open == 1 ? ""  : "들을",// doors_open == 1 ? ""  : "s",
-                 doors_open == 1 ? "" : "");// doors_open == 1 ? "s" : "");
+        snprintf(info, INFO_SIZE, _("%s door%s burst%s open"),
+                 doors_open == 1 ? pgettext("xom","A")    :
+                 doors_open == 2 ? pgettext("xom","Two")
+                                 : pgettext("xom","Several"),
+                 doors_open == 1 ? ""  : pgettext("sssss","s"),
+                 doors_open == 1 ? "s" : "");
         effects.push_back(info);
-        terse.push_back(make_stringf("%d doors open", doors_open));
+        terse.push_back(make_stringf(_("%d doors open"), doors_open));
     }
     if (doors_close > 0)
     {
-        snprintf(info, INFO_SIZE, "%s%s 문%s slam%s shut", //        snprintf(info, INFO_SIZE, "%s%s door%s slam%s shut",
-                 doors_close == 1 ? "a"    :
-                 doors_close == 2 ? "two"
-                                  : "several",
+        snprintf(info, INFO_SIZE, _("%s%s door%s slam%s shut"),
+                 doors_close == 1 ? pgettext("xom","a")    :
+                 doors_close == 2 ? pgettext("xom","two")
+                                  : pgettext("xom","several"),
                  doors_open > 0   ? (doors_close == 1 ? "nother" : " other")
                                   : "",
-                 doors_close == 1 ? ""  : "s",
+                 doors_close == 1 ? ""  : pgettext("sssss","s"),
                  doors_close == 1 ? "s" : "");
         string closed = info;
         if (effects.empty())
             closed = uppercase_first(closed);
         effects.push_back(closed);
-        terse.push_back(make_stringf("%d doors close", doors_close));
-    }
+        terse.push_back(make_stringf(_("%d doors close"), doors_close));
+    }	
     if (!effects.empty())
     {
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, ("scenery: "
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, (_("scenery: ")
             + comma_separated_line(terse.begin(), terse.end(), ", ", ", ")).c_str()),
             true);
         mprf("%s!",
              comma_separated_line(effects.begin(), effects.end(),
-                                  ", and ").c_str());
+                                  _(", and ")).c_str());
     }
 
     if (doors_open || doors_close)
@@ -2337,15 +2258,15 @@ static int _xom_inner_flame(int sever, bool debug = false)
                 god_speaks(GOD_XOM, _get_xom_speech("inner flame").c_str());
 
             simple_monster_message(*mi, (mi->body_size(PSIZE_BODY) > SIZE_BIG)
-                                   ? " is filled with an intense inner flame!"
-                                   : " is filled with an inner flame.");
+                                   ? _(" is filled with an intense inner flame!")
+                                   : _(" is filled with an inner flame."));
             rc = true;
         }
     }
 
     if (rc)
     {
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "inner flame monster(s)"),
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("inner flame monster(s)")),
                   true);
         return XOM_GOOD_INNER_FLAME;
     }
@@ -2387,7 +2308,7 @@ static int _xom_enchant_monster(bool helpful, bool debug = false)
 
     // Take a note.
     static char ench_buf[80];
-    snprintf(ench_buf, sizeof(ench_buf), "enchant monster %s",
+    snprintf(ench_buf, sizeof(ench_buf), _("enchant monster %s"),
              helpful ? "(good)" : "(bad)");
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, ench_buf),
               true);
@@ -2464,7 +2385,7 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
         // The Xom teleportation train takes you on instant
         // teleportation to a few random areas, stopping randomly but
         // most likely in an area that is not dangerous to you.
-        god_speaks(GOD_XOM, _get_xom_speech("순간이동 여행").c_str());		//        god_speaks(GOD_XOM, _get_xom_speech("teleportation journey").c_str());
+        god_speaks(GOD_XOM, _get_xom_speech("teleportation journey").c_str());
         int count = 0;
         do
         {
@@ -2481,9 +2402,9 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
         // Take a note.
         static char tele_buf[80];
         snprintf(tele_buf, sizeof(tele_buf),
-                 "%d-는 %s로 텔레포트 이동을 하었다", count,// "%d-stop teleportation journey%s", count, - 는 원래 붙은건지 잘 몰라서 놔둡니다.
+                 _("%d-stop teleportation journey%s"), count,
 #ifdef NOTE_DEBUG_XOM
-                 player_in_a_dangerous_place() ? " (위험한)" : // see below 원문 " (dangerous)" 
+                 player_in_a_dangerous_place() ? " (dangerous)" : // see below
 #endif
                  "");
         take_note(Note(NOTE_XOM_EFFECT, you.piety, tension, tele_buf), true);
@@ -2497,9 +2418,9 @@ static int _xom_is_good(int sever, int tension, bool debug = false)
         // This can fail with radius 1, or in open areas.
         if (vitrify_area(random2avg(sever / 4, 2) + 1))
         {
-            god_speaks(GOD_XOM, _get_xom_speech("투명화").c_str()); //투명화"vitrification"
+            god_speaks(GOD_XOM, _get_xom_speech("vitrification").c_str());
             take_note(Note(NOTE_XOM_EFFECT, you.piety, tension,
-                           "투명화"), true);// "vitrification"
+                           pgettext("xom","vitrification")), true);
             done = XOM_GOOD_VITRIFY;
         }
     }
@@ -2557,7 +2478,7 @@ static void _xom_zero_miscast()
     }
 
     // Assure that the messages vector has at least one element.
-    messages.push_back("아무 일도 일어나지 않았다... 불길함[을느꼈다]!"); // ("Nothing appears to happen... Ominous!"
+    messages.push_back(_("Nothing appears to happen... Ominous!"));
 
     ///////////////////////////////////
     // Dungeon feature dependent stuff.
@@ -2566,27 +2487,27 @@ static void _xom_zero_miscast()
     _get_in_view(in_view);
 
     if (in_view[DNGN_LAVA])
-        messages.push_back("용암은 불길을 뱉어냈다!");  //"The lava spits out sparks!"
+        messages.push_back(_("The lava spits out sparks!"));
 
     if (in_view[DNGN_SHALLOW_WATER] || in_view[DNGN_DEEP_WATER])
     {
-        messages.push_back("그 물에서 잠시 거품이 일었다.");//        messages.push_back("The water briefly bubbles.");
-        messages.push_back("그 물은 잠시 소용돌이쳤다.");//messages.push_back("The water briefly swirls.");
-        messages.push_back("그 물은 잠시 빛이 났다.");//messages.push_back("The water briefly glows.");
+        messages.push_back(_("The water briefly bubbles."));
+        messages.push_back(_("The water briefly swirls."));
+        messages.push_back(_("The water briefly glows."));
     }
 
     if (in_view[DNGN_DEEP_WATER])
     {
-        messages.push_back("당신의 시야의 사각인 깊은 물 속에서 "//messages.push_back("From the corner of your eye you spot something "
-                           "숨어있는 시선을 느꼈다.");//"lurking in the deep water.");
+        messages.push_back(_("From the corner of your eye you spot something "
+                           "lurking in the deep water."));
     }
 
     if (in_view[DNGN_ORCISH_IDOL])
     {
         if (you.species == SP_HILL_ORC)
-            priority.push_back("베오그의 우상은 당신을 노려보았다."); //priority.push_back("The idol of Beogh turns to glare at you."); 
+            priority.push_back(_("The idol of Beogh turns to glare at you."));
         else
-            priority.push_back("오키쉬 우상은 당신을 노려보았다.");//priority.push_back("The orcish idol turns to glare at you.");
+            priority.push_back(_("The orcish idol turns to glare at you."));
     }
 
     if (in_view[DNGN_GRANITE_STATUE])
@@ -2595,31 +2516,31 @@ static void _xom_zero_miscast()
     if (in_view[DNGN_CLEAR_ROCK_WALL] || in_view[DNGN_CLEAR_STONE_WALL]
         || in_view[DNGN_CLEAR_PERMAROCK_WALL])
     {
-        messages.push_back("흐릿한 물체가 반투명한 벽을 통과했다.");//messages.push_back("Dim shapes swim through the translucent wall.");
+        messages.push_back(_("Dim shapes swim through the translucent wall."));
     }
 
     if (in_view[DNGN_GREEN_CRYSTAL_WALL])
-        messages.push_back("흐릿한 물체가 녹색 수정 벽을 통과했다.");//messages.push_back("Dim shapes swim through the green crystal wall.");
+        messages.push_back(_("Dim shapes swim through the green crystal wall."));
 
     if (in_view[DNGN_METAL_WALL])
     {
-        messages.push_back("전기의 덩굴이 강철 벽을 타고 "//messages.push_back("Tendrils of electricity crawl over the metal "
-                           "넘어왔다!");//"wall!");
+        messages.push_back(_("Tendrils of electricity crawl over the metal "
+                           "wall!"));
     }
 
     if (in_view[DNGN_FOUNTAIN_BLUE] || in_view[DNGN_FOUNTAIN_SPARKLING])
     {
-        priority.push_back("분수 안의 물에서 잠시 ??품이 일었다.");//priority.push_back("The water in the fountain briefly bubbles.");
-        priority.push_back("분수 안의 물은 잠깐 소용돌이쳤다.");//priority.push_back("The water in the fountain briefly swirls.");
-        priority.push_back("분수 안의 물은 잠시 반짝거렸다.");//priority.push_back("The water in the fountain briefly glows.");
+        priority.push_back(_("The water in the fountain briefly bubbles."));
+        priority.push_back(_("The water in the fountain briefly swirls."));
+        priority.push_back(_("The water in the fountain briefly glows."));
     }
 
     if (in_view[DNGN_DRY_FOUNTAIN_BLUE]
         || in_view[DNGN_DRY_FOUNTAIN_SPARKLING]
         || in_view[DNGN_PERMADRY_FOUNTAIN])
     {
-        priority.push_back("마른 분수에서 잠시 물안개가 일어났다.");//priority.push_back("Water briefly sprays from the dry fountain.");
-        priority.push_back("마른 분수에서 흙먼지가 뿜어져나왔다.");//priority.push_back("Dust puffs up from the dry fountain.");
+        priority.push_back(_("Water briefly sprays from the dry fountain."));
+        priority.push_back(_("Dust puffs up from the dry fountain."));
     }
 
     if (in_view[DNGN_STONE_ARCH])
@@ -2635,7 +2556,7 @@ static void _xom_zero_miscast()
         && feat != DNGN_OPEN_DOOR && feat != DNGN_ABANDONED_SHOP)
     {
         const string feat_name = feature_description_at(true, you.pos(), false,
-                                                        DESC_THE, false);
+                                                        DESC_PLAIN, false);
 
         if (you.airborne())
         {
@@ -2648,26 +2569,26 @@ static void _xom_zero_miscast()
                 vec = &priority;
 
             vec->push_back(feat_name
-                           + "은(는) 당신에게서부터 떨어진 것 같다!");//+ " seems to fall away from under you!");
+                           + _(" seems to fall away from under you!"));
             vec->push_back(feat_name
-                           + "은(는) 당신에게서부터 올라온 것 같다!");//+ " seems to rush up at you!");
+                           + _(" seems to rush up at you!"));
 
             if (feat_is_water(feat))
             {
-                priority.push_back("무언가 보이지 않는 것이 물 속에서 당신 아래의 "//priority.push_back("Something invisible splashes into the "
-                                   "물 속에 있다!");//"water beneath you!");
+                priority.push_back(_("Something invisible splashes into the "
+                                   "water beneath you!"));
             }
         }
         else if (feat_is_water(feat))
         {
-            priority.push_back("그 물은 잠시 당신에게서부터 멀어졌다.");//priority.push_back("The water briefly recedes away from you.");
-            priority.push_back("무언가 보이지 않는 것이 물 속의 "//priority.push_back("Something invisible splashes into the water "
-                               "당신 옆에 있다!");//"beside you!");
+            priority.push_back(_("The water briefly recedes away from you."));
+            priority.push_back(_("Something invisible splashes into the water "
+                               "beside you!"));
         }
     }
 
     if (feat_has_solid_floor(feat)
-        && inv_items.size() > 0)
+        && !inv_items.empty())
     {
         int idx = inv_items[random2(inv_items.size())];
 
@@ -2678,11 +2599,11 @@ static void _xom_zero_miscast()
             name = item.name(true, DESC_YOUR, false, false, false);
         else
         {
-            name  = "One of ";
-            name += item.name(true, DESC_YOUR, false, false, false);
+            name  = ""; // "One of ";
+            name += item.name(true, DESC_YOUR, false, false, false) + "중 하나";
         }
-        messages.push_back(name + " 당신의 가방에서 떨어지자,"//messages.push_back(name + " falls out of your pack, then "
-                           "??로 뛰어 들어왔다!");//"immediately jumps back in!");
+        messages.push_back(name + _(" falls out of your pack, then "
+                           "immediately jumps back in!"));
     }
 
     //////////////////////////////////////////////
@@ -2690,23 +2611,23 @@ static void _xom_zero_miscast()
 
     if (you.species == SP_MUMMY && you_tran_can_wear(EQ_BODY_ARMOUR))
     {
-        messages.push_back("당신은 잠시동안 당신의 붕대에 엉켜졌다.");//messages.push_back("You briefly get tangled in your bandages.");
+        messages.push_back(_("You briefly get tangled in your bandages."));
         if (!you.airborne() && !you.swimming())
-            messages.push_back("당신은 당신의 붕대에 걸렸다.");//messages.push_back("You trip over your bandages.");
+            messages.push_back(_("You trip over your bandages."));
     }
 
     {
-        string str = make_stringf("A monocle briefly appears over your %s", 
-                                  coinflip() ? _(M_("right")) : _(M_("left")));
+        string str = _("A monocle briefly appears over your ");
+        str += coinflip() ? pgettext("xom","right") : pgettext("xom","left");
         if (you.form == TRAN_SPIDER)
             if (coinflip())
-                str += " 최초의";//str += " primary";
+                str += pgettext("xom"," primary");
             else
             {
-                str += random_choose(" front", " middle", " rear", 0);
-                str += " secondary";
+                //str += random_choose(" front", " middle", " rear", 0);
+                str += pgettext("xom"," secondary");
             }
-        str += " eye.";//str += " eye.";
+        str += pgettext("xom"," eye.");
         messages.push_back(str);
     }
 
@@ -2714,12 +2635,12 @@ static void _xom_zero_miscast()
         && you.species != SP_MUMMY && you.species != SP_OCTOPODE
         && !form_changed_physiology())
     {
-        messages.push_back("당신의 눈썹은 갑자기 무지막지하게 풍성해졌다.");//messages.push_back("Your eyebrows briefly feel incredibly bushy.");
-        messages.push_back("당신의 눈썹은 꿈틀거렸다.");//messages.push_back("Your eyebrows wriggle.");
+        messages.push_back(_("Your eyebrows briefly feel incredibly bushy."));
+        messages.push_back(_("Your eyebrows wriggle."));
     }
 
     if (you.species != SP_NAGA && !you.fishtail && !you.airborne())
-        messages.push_back("당신은 즉흥적으로 탭댄스를 추었다.");//messages.push_back("You do an impromptu tapdance.");
+        messages.push_back(_("You do an impromptu tapdance."));
 
     ///////////////////////////
     // Equipment related stuff.
@@ -2727,19 +2648,22 @@ static void _xom_zero_miscast()
 
     if (_could_wear_eq(EQ_WEAPON))
     {
-        string str = make_stringf("A fancy cane briefly appears in your %s.", you.hand_name(false).c_str());
+        string str = _("A fancy cane briefly appears in your ");
+        str += _(you.hand_name(false).c_str());
+        str += pgettext("xomzeromiscast",".");
 
         messages.push_back(str);
     }
 
     if (_tran_get_eq(EQ_CLOAK) != NULL)
-        messages.push_back("당신의 망토는 미풍에 나부꼈다.");//messages.push_back("Your cloak billows in an unfelt wind.");
+        messages.push_back(_("Your cloak billows in an unfelt wind."));
 
     if ((item = _tran_get_eq(EQ_HELMET)))
     {
-        string str = make_stringf("Your %s leaps into the air, "
-                    "briefly spins, then lands back on your head!",
-                    item->name(true, DESC_BASENAME, false, false, false).c_str());
+        string str = pgettext("xomzeromiscast","Your ");
+        str += item->name(true, DESC_BASENAME, false, false, false);
+        str += _(" leaps into the air, briefly spins, then lands back on "
+               "your head!");
 
         messages.push_back(str);
     }
@@ -2747,64 +2671,64 @@ static void _xom_zero_miscast()
     if ((item = _tran_get_eq(EQ_BOOTS)) && item->sub_type == ARM_BOOTS
         && !you.cannot_act())
     {
-        string name = item->name(false, DESC_BASENAME, false, false, false);
+        string name = item->name(true, DESC_BASENAME, false, false, false);
         name = replace_all(name, "pair of ", "");
 
-        string str = "You compulsively click the heels of your ";
+        string str = _("You compulsively click the heels of your ");
         str += name;
-        str += "의 뒤꿈치를 세번가량 눌렀다.";//str += " together three times.";
+        str += _(" together three times.");
     }
 
     if ((item = _tran_get_eq(EQ_SHIELD)))
     {
-        string str = "당신의 ";//std::string str = "Your ";
-        str += item->name(false, DESC_BASENAME, false, false, false);
-        str += "가 회전했다!";//str += " spins!";
+        string str = pgettext("xomzeromiscast","Your ");
+        str += item->name(true, DESC_BASENAME, false, false, false);
+        str += _(" spins!");
 
         messages.push_back(str);
 
-        str = "당신의 ";//str = "Your ";
-        str += item->name(false, DESC_BASENAME, false, false, false);
-        str += "는 갑자기 끔찍한 색으로 반짝였다!";//str += " briefly flashes a lurid colour!";
+        str = pgettext("xomzeromiscast","Your ");
+        str += item->name(true, DESC_BASENAME, false, false, false);
+        str += _(" briefly flashes a lurid colour!");
         messages.push_back(str);
     }
 
     if ((item = _tran_get_eq(EQ_BODY_ARMOUR)))
     {
         string str;
-        string name = item->name(false, DESC_BASENAME, false, false, false);
-
-        if (name.find("용") != string::npos)//if (name.find("dragon") != std::string::npos)
+        string name = item->name(true, DESC_BASENAME, false, false, false); string org_name = item->name(false, DESC_BASENAME, false, false, false);
+		
+        if (org_name.find("dragon") != string::npos)
         {
-            str  = "당신의 ";//str  = "The scales on your ";
+            str  = _("The scales on your ");
             str += name;
-            str += " 비늘은 잠시 꿈틀댔다.";//str += " wiggle briefly.";
+            str += _(" wiggle briefly.");
         }
         else if (item->sub_type == ARM_ANIMAL_SKIN)
         {
-            str  = "당신의 ";//str  = "The fur on your ";
+            str  = _("The fur on your ");
             str += name;
-            str += " 털은 ?管좆?속도로 자라?뎬? 그???  "//str += " grows longer at an alarming rate, then retracts back "
-                   "정상으로 되돌아갔다.";//"to normal.";
+            str += _(" grows longer at an alarming rate, then retracts back "
+                   "to normal.");
         }
         else if (item->sub_type == ARM_LEATHER_ARMOUR)
         {
-            str  = "당신의 ";//str  = "Your ";
+            str  = pgettext("xomzeromiscast","Your ");
             str += name;
-            str += "털은 잠시 빛났고 곧 정상으로 되돌아갔다.";//str += " briefly grows fur, then returns to normal.";
+            str += _(" briefly grows fur, then returns to normal.");
         }
         else if (item->sub_type == ARM_ROBE)
         {
-            str  = "당신은 잠시 당신의 ";//str  = "You briefly become tangled in your ";
-            str += pluralise(PLU_SUFFIX,name);
-            str += "에 의해 뒤엉켰다.";//            str += ".";
+            str  = _("You briefly become tangled in your ");
+            str += name; // pluralise(name);
+            str += pgettext("xomzerorobe",".");
         }
         else if (item->sub_type >= ARM_RING_MAIL
                  && item->sub_type <= ARM_PLATE_ARMOUR)
         {
-            str  = "당신의 ";//str  = "Your ";
+            str  = pgettext("xomzeromiscast","Your ");
             str += name;
-            str += "는 잠시 녹이 슬은 표가 났다.";//str += " briefly appears rusty.";
+            str += _(" briefly appears rusty.");
         }
 
         if (!str.empty())
@@ -2813,19 +2737,19 @@ static void _xom_zero_miscast()
 
     ////////
     // Misc.
-    if (inv_items.size() > 0)
+    if (!inv_items.empty())
     {
         int idx = inv_items[random2(inv_items.size())];
 
         item = &you.inv[idx];
 
-        string name = item->name(false, DESC_YOUR, false, false, false);
-        string verb = coinflip() ? "빛나는" : "진동하는";
+        string name = item->name(true, DESC_YOUR, false, false, false);
+        string verb = coinflip() ? pgettext("xomzeromiscast","glow") : pgettext("xomzeromiscast","vibrate");
 
-        if (item->quantity == 1)
-            verb += "것 들";//verb += "s";
+        //if (item->quantity == 1)
+        //    verb += "s";
 
-        messages.push_back(name + " 잠시 " + verb + ".");
+        messages.push_back(name + pgettext("xomzeromiscast"," briefly ") + verb + ".");
     }
 
     if (!priority.empty() && coinflip())
@@ -2851,7 +2775,7 @@ static void _get_hand_type(string &hand, bool &can_plural)
         item_def* item;
         if ((item = _tran_get_eq(EQ_BOOTS)) && item->sub_type == ARM_BOOTS)
         {
-            hand_vec.push_back("부츠");//hand_vec.push_back("boot");
+            hand_vec.push_back("boot");
             plural = true;
         }
         else
@@ -2861,14 +2785,14 @@ static void _get_hand_type(string &hand, bool &can_plural)
 
     if (you.form == TRAN_SPIDER)
     {
-        hand_vec.push_back("부리");//hand_vec.push_back("mandible");
+        hand_vec.push_back("mandible");
         plural_vec.push_back(true);
     }
     else if (you.species != SP_MUMMY && you.species != SP_OCTOPODE
              && !player_mutation_level(MUT_BEAK)
           || form_changed_physiology())
     {
-        hand_vec.push_back("코");//hand_vec.push_back("nose");
+        hand_vec.push_back("nose");
         plural_vec.push_back(false);
     }
 
@@ -2876,44 +2800,44 @@ static void _get_hand_type(string &hand, bool &can_plural)
         || you.species != SP_MUMMY && you.species != SP_OCTOPODE
            && !form_changed_physiology())
     {
-        hand_vec.push_back("귀");//hand_vec.push_back("ear");
+        hand_vec.push_back("ear");
         plural_vec.push_back(true);
     }
 
     if (!form_changed_physiology()
         && you.species != SP_FELID && you.species != SP_OCTOPODE)
     {
-        hand_vec.push_back("팔꿈치");//hand_vec.push_back("elbow");
+        hand_vec.push_back("elbow");
         plural_vec.push_back(true);
     }
 
     ASSERT(hand_vec.size() == plural_vec.size());
-    ASSERT(hand_vec.size() > 0);
+    ASSERT(!hand_vec.empty());
 
     const unsigned int choice = random2(hand_vec.size());
 
     hand       = hand_vec[choice];
     can_plural = plural_vec[choice];
 }
-//좀의 미스캐스트?
+
 static int _xom_miscast(const int max_level, const bool nasty,
                         bool debug = false)
 {
     ASSERT(max_level >= 0 && max_level <= 3);
 
     const char* speeches[4] = {
-        "주문실패에 따른 피해가 없음",
-        "약간 주문 실패에 따른 피해를 받음",
-        "주문 실패에 따른 피해를 입음",
-        "주문 실패에 따른 피해를 크게 입음"
-    };//        "zero miscast effect",         "minor miscast effect",        "medium miscast effect",        "major miscast effect"
+        "zero miscast effect",
+        "minor miscast effect",
+        "medium miscast effect",
+        "major miscast effect"
+    };
 
     const char* causes[4] = {
-        "좀의 장난질",
-        "좀의 변덕",
-        "좀의 변덕",
-        "좀의 심한 변덕"
-    };//"the mischief of Xom","the capriciousness of Xom","the capriciousness of Xom","the severe capriciousness of Xom"
+        "the mischief of Xom",
+        "the capriciousness of Xom",
+        "the capriciousness of Xom",
+        "the severe capriciousness of Xom"
+    };
 
     const char* speech_str = speeches[max_level];
     const char* cause_str  = causes[max_level];
@@ -2933,12 +2857,12 @@ static int _xom_miscast(const int max_level, const bool nasty,
     }
 
     // Take a note.
-    string desc = "주문실패 효과";//std::string desc = "miscast effect";
+    string desc = "miscast effect";
 #ifdef NOTE_DEBUG_XOM
     static char level_buf[20];
     snprintf(level_buf, sizeof(level_buf), " level %d%s",
              level, (nasty ? " (nasty)" : ""));
-    desc += level_buf;//디버그라서 놔둡니다.
+    desc += level_buf;
 #endif
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, desc.c_str()), true);
 
@@ -2977,7 +2901,7 @@ static int _xom_chaos_upgrade_nearby_monster(bool debug = false)
     if (debug)
         return XOM_BAD_CHAOS_UPGRADE;
 
-    god_speaks(GOD_XOM, _get_xom_speech("혼돈 상승").c_str());//god_speaks(GOD_XOM, _get_xom_speech("chaos upgrade").c_str());
+    god_speaks(GOD_XOM, _get_xom_speech("chaos upgrade").c_str());
 
     mon_inv_type slots[] = {MSLOT_WEAPON, MSLOT_ALT_WEAPON, MSLOT_MISSILE};
 
@@ -3004,7 +2928,7 @@ static int _xom_chaos_upgrade_nearby_monster(bool debug = false)
 
     return XOM_DID_NOTHING;
 }
-//좀의 유저 혼란 효과
+
 static int _xom_player_confusion_effect(int sever, bool debug = false)
 {
     if (!_xom_feels_nasty())
@@ -3025,7 +2949,7 @@ static int _xom_player_confusion_effect(int sever, bool debug = false)
     if (confuse_player(random2(sever) + 1, false))
     {
         // FIXME: Message order is a bit off here.
-        god_speaks(GOD_XOM, _get_xom_speech("혼란").c_str());//god_speaks(GOD_XOM, _get_xom_speech("confusion").c_str());
+        god_speaks(GOD_XOM, _get_xom_speech("confusion").c_str());
         rc = true;
 
         // Sometimes Xom gets carried away and starts confusing
@@ -3046,16 +2970,16 @@ static int _xom_player_confusion_effect(int sever, bool debug = false)
                            &menv[ANON_FRIENDLY_MONSTER], random2(sever) * 10)))
                 {
                     simple_monster_message(*mi,
-                                           " 는 혼란한듯 하다.");//" looks rather confused.");
+                                           _(" looks rather confused."));
                 }
                 mons_too = true;
             }
         }
 
         // Take a note.
-        string conf_msg = "혼란";//std::string conf_msg = "confusion";
+        string conf_msg = "confusion";
         if (mons_too)
-            conf_msg += " (+ 몬스터들)";//conf_msg += " (+ monsters)";
+            conf_msg += " (+ monsters)";
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, conf_msg.c_str()), true);
     }
 
@@ -3070,8 +2994,6 @@ static bool _valid_floor_grid(coord_def pos)
     return (grd(pos) == DNGN_FLOOR);
 }
 
-
-//층 이동? 뭐지
 bool move_stair(coord_def stair_pos, bool away, bool allow_under)
 {
     if (!allow_under)
@@ -3170,7 +3092,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
             return stairs_moved;
         }
 
-        mpr("빛은 계단을 통?墟舊? ?刻年?", MSGCH_ERROR);//mpr("Ray didn't cross stairs.", MSGCH_ERROR);
+        mpr(_("Ray didn't cross stairs."), MSGCH_ERROR);
     }
 
     if (away && past_stairs <= 0)
@@ -3197,10 +3119,9 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
 
     string stair_str = feature_description_at(true, stair_pos, false, DESC_THE, false);
 
-    mprf("%s 는 %s 당신을 떨어뜨렸다!", stair_str.c_str(),
-		      away ? "away from" : "towards");
-	//    mprf("%s slides %s you!", stair_str.c_str(),
-	//away ? "away from" : "towards"); 이 부분은 어찌번역해야하는지 모르겠네요
+    mprf(_("%s slides %s you!"), stair_str.c_str(),
+         away ? pgettext("xom","away from") : pgettext("xom","towards"));
+
     // Animate stair moving.
     const feature_def &feat_def = get_feature_def(feat);
 
@@ -3212,7 +3133,7 @@ bool move_stair(coord_def stair_pos, bool away, bool allow_under)
     beam.colour  = feat_def.colour;
     beam.source  = stair_pos;
     beam.target  = ray.pos();
-    beam.name    = M_("STAIR BEAM");
+    beam.name    = "STAIR BEAM";
     beam.draw_delay = 50; // Make beam animation slower than normal.
 
     beam.aimed_at_spot = true;
@@ -3265,20 +3186,20 @@ static int _xom_repel_stairs(bool debug = false)
         return XOM_BAD_STAIRS;
 
     // Don't mention staircases if there aren't any nearby.
-    string stair_msg = _get_xom_speech("계단 밀기");//std::string stair_msg = _get_xom_speech("repel stairs");
-    if (stair_msg.find("@계단@") != string::npos)//if (stair_msg.find("@staircase@") != std::string::npos)
+    string stair_msg = _get_xom_speech("repel stairs");
+    if (stair_msg.find("@staircase@") != string::npos)
     {
         string feat_name;
         if (!real_stairs)
         {
             if (feat_is_escape_hatch(grd(stairs_avail[0])))
-                feat_name = "탈출의 해치"; //feat_name = "escape hatch"; 
+                feat_name = "escape hatch";
             else
-                feat_name = "게이트";//feat_name = "gate";
+                feat_name = "gate";
         }
         else
-            feat_name = "계단";//feat_name = "staircase";
-        stair_msg = replace_all(stair_msg, "@계단@", feat_name);   //stair_msg = replace_all(stair_msg, "@staircase@", feat_name);
+            feat_name = "staircase";
+        stair_msg = replace_all(stair_msg, "@staircase@", feat_name);
     }
 
     god_speaks(GOD_XOM, stair_msg.c_str());
@@ -3301,12 +3222,12 @@ static int _xom_repel_stairs(bool debug = false)
     if (!count_moved)
     {
         if (one_chance_in(8))
-            mpr("아무 일도 일어나지 않았다.. 불길함!"); //mpr("Nothing appears to happen... Ominous!");
+            mpr(_("Nothing appears to happen... Ominous!"));
         else
             canned_msg(MSG_NOTHING_HAPPENS);
     }
     else
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "계단 밀기"), true);//take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "repel stairs"), true); 뭐라고하는거지;
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "repel stairs"), true);
 
     return XOM_BAD_STAIRS;
 }
@@ -3323,7 +3244,7 @@ static int _xom_colour_smoke_trail(bool debug = false)
 
     take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "colour smoke trail"), true);
 
-    const string speech = _get_xom_speech(_(M_("colour smoke trail")));
+    const string speech = _get_xom_speech("colour smoke trail");
     god_speaks(GOD_XOM, speech.c_str());
 
     return XOM_BAD_COLOUR_SMOKE_TRAIL;
@@ -3331,7 +3252,8 @@ static int _xom_colour_smoke_trail(bool debug = false)
 
 static int _xom_draining_torment_effect(int sever, bool debug = false)
 {
-    const string speech = _get_xom_speech("흡수나 고통중 어느것?");//const std::string speech = _get_xom_speech("draining or torment");
+    // Drains stats or experience, or torments the player.
+    const string speech = _get_xom_speech("draining or torment");
     const bool nasty = _xom_feels_nasty();
 
     if (coinflip())
@@ -3377,7 +3299,7 @@ static int _xom_draining_torment_effect(int sever, bool debug = false)
             if (random2(sever) > 3 && (nasty || you.experience > 0))
                 drain_exp();
 
-            take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "경험치를 흡수당함"), true);
+            take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "draining"), true);
             return XOM_BAD_DRAINING;
         }
     }
@@ -3395,7 +3317,7 @@ static int _xom_draining_torment_effect(int sever, bool debug = false)
             // Take a note.
             static char torment_buf[80];
             snprintf(torment_buf, sizeof(torment_buf),
-                     "고통에 의해 (%d/%d 의 hp가 사라졌다.)", you.hp, you.hp_max);//"torment (%d/%d hp)", you.hp, you.hp_max);
+                     "torment (%d/%d hp)", you.hp, you.hp_max);
             take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, torment_buf), true);
 
             return XOM_BAD_TORMENT;
@@ -3407,7 +3329,7 @@ static int _xom_draining_torment_effect(int sever, bool debug = false)
 static int _xom_summon_hostiles(int sever, bool debug = false)
 {
     bool rc = false;
-    const string speech = _get_xom_speech("적대적인 몬스터");//const std::string speech = _get_xom_speech("hostile monster");
+    const string speech = _get_xom_speech("hostile monster");
 
     int result = XOM_DID_NOTHING;
 
@@ -3454,7 +3376,7 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
         {
             if (create_monster(
                     mgen_data::hostile_at(
-                        _xom_random_demon(sever), "좀",
+                        _xom_random_demon(sever), "Xom",
                         true, 4, MON_SUMM_WRATH, you.pos(), 0,
                         GOD_XOM)))
             {
@@ -3467,9 +3389,9 @@ static int _xom_summon_hostiles(int sever, bool debug = false)
     {
         static char summ_buf[80];
         snprintf(summ_buf, sizeof(summ_buf),
-                 "summons %d hostile %s%s",
-                 num_summoned, shadow_creatures ? "shadow creature" : "demon",
-                 num_summoned > 1 ? "s" : "");
+                 _("summons %d hostile %s%s"),
+                 num_summoned, shadow_creatures ? pgettext("xom","shadow creature") : pgettext("xom","demon"),
+                 num_summoned > 1 ? pgettext("sssss","s") : "");
         take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, summ_buf), true);
 
         rc = true;
@@ -3538,7 +3460,7 @@ int xom_maybe_reverts_banishment(bool xom_banished, bool debug)
             god_speaks(GOD_XOM, _get_xom_speech(lookup).c_str());
             down_stairs(DNGN_EXIT_ABYSS);
             take_note(Note(NOTE_XOM_EFFECT, you.piety, -1,
-                           "추방 복귀"), true);//"revert banishment"), true);
+                           _("revert banishment")), true);
         }
         return XOM_BAD_PSEUDO_BANISHMENT;
     }
@@ -3553,7 +3475,7 @@ static int _xom_do_banishment(bool debug = false)
     if (debug)
         return xom_maybe_reverts_banishment(true, debug);
 
-    god_speaks(GOD_XOM, _get_xom_speech("추방").c_str());//    god_speaks(GOD_XOM, _get_xom_speech("banishment").c_str());
+    god_speaks(GOD_XOM, _get_xom_speech("banishment").c_str());
 
     // Handles note taking.
     banished("Xom");
@@ -3616,7 +3538,7 @@ static int _xom_blink_monsters(bool debug = false)
 
     if (blinks)
     {
-        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, "blink monster(s)"), true);
+        take_note(Note(NOTE_XOM_EFFECT, you.piety, -1, _("blink monster(s)")), true);
         return XOM_BAD_BLINK_MONSTERS;
     }
     return XOM_DID_NOTHING;
@@ -3697,7 +3619,7 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
             // teleportation to a few random areas, stopping if either
             // an area is dangerous to you or randomly.
             god_speaks(GOD_XOM,
-                       _get_xom_speech("순간이동 여행").c_str());//_get_xom_speech("teleportation journey").c_str());
+                       _get_xom_speech("teleportation journey").c_str());
             int count = 0;
             do
             {
@@ -3711,12 +3633,12 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
             maybe_update_stashes();
 
             badness = player_in_a_dangerous_place() ? 3 : 1;
-			//"%d-stop teleportation journey%s", count,아래의 원문
+
             // Take a note.
             static char tele_buf[80];
             snprintf(tele_buf, sizeof(tele_buf),
-                     "%d-순간이동 여행 중지%s", count,
-#ifdef NOTE_DEBUG_XOM//역시 디버그
+                     _("%d-stop teleportation journey%s"), count,
+#ifdef NOTE_DEBUG_XOM
                      badness == 3 ? " (dangerous)" : "");
 #else
                      "");
@@ -3777,7 +3699,7 @@ static int _xom_is_bad(int sever, int tension, bool debug = false)
     }
     return done;
 }
-//우연한 죽음의 조절?
+
 static void _handle_accidental_death(const int orig_hp,
     const FixedVector<int8_t, NUM_STATS> orig_stat_loss,
     const FixedVector<uint8_t, NUM_MUTATIONS> &orig_mutation)
@@ -3803,41 +3725,41 @@ static void _handle_accidental_death(const int orig_hp,
         case KILLED_BY_LEAVING:
         case KILLED_BY_WINNING:
         case KILLED_BY_QUITTING:
-            speech_type = "불가사의한 죽음";//weird death 기묘한 죽음? 불가사의한 죽음?
+            speech_type = "weird death";
             break;
 
         case KILLED_BY_LAVA:
         case KILLED_BY_WATER:
             if (!is_feat_dangerous(feat))
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
             break;
 
         case KILLED_BY_STUPIDITY:
             if (you.intel() > 0)
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
             break;
 
         case KILLED_BY_WEAKNESS:
             if (you.strength() > 0)
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
             break;
 
         case KILLED_BY_CLUMSINESS:
             if (you.dex() > 0)
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
             break;
 
         default:
             if (is_feat_dangerous(feat))
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
             if (you.strength() <= 0 || you.intel() <= 0 || you.dex() <= 0)
-                speech_type = "불가사의한 죽음";
+                speech_type = "weird death";
         break;
     }
 
     mpr("You die...");
     god_speaks(GOD_XOM, _get_xom_speech(speech_type).c_str());
-    god_speaks(GOD_XOM, _get_xom_speech("부활").c_str());//    god_speaks(GOD_XOM, _get_xom_speech("resurrection").c_str());
+    god_speaks(GOD_XOM, _get_xom_speech("resurrection").c_str());
 
     if (you.hp <= 0)
         you.hp = min(orig_hp, you.hp_max);
@@ -3898,7 +3820,7 @@ static void _handle_accidental_death(const int orig_hp,
     if (is_feat_dangerous(feat) && !crawl_state.game_is_sprint())
         you_teleport_now(false);
 }
-//디버그 관련
+
 int xom_acts(bool niceness, int sever, int tension, bool debug)
 {
 #if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_RELIGION) || defined(DEBUG_XOM)
@@ -3948,13 +3870,13 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         if (crawl_state.is_god_retribution())
         {
             niceness = false;
-            simple_god_message(" asks Xom for help in punishing you, and "
-                               "Xom happily agrees.", which_god);
+            simple_god_message(_(" asks Xom for help in punishing you, and "
+                               "Xom happily agrees."), which_god);
         }
         else
         {
             niceness = true;
-            simple_god_message(" calls in a favour from Xom.", which_god);
+            simple_god_message(_(" calls in a favour from Xom."), which_god);
         }
     }
 
@@ -3990,7 +3912,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         // is in a bad mood.
         if (tension == 0 && !x_chance_in_y(you.piety, MAX_PIETY))
         {
-#ifdef NOTE_DEBUG_XOM//디버그
+#ifdef NOTE_DEBUG_XOM
             take_note(Note(NOTE_MESSAGE, 0, 0, "suppress good act because of "
                            "zero tension"), true);
 #endif
@@ -4007,8 +3929,8 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
     else
     {
         if (!debug && was_bored && Options.note_xom_effects)
-            take_note(Note(NOTE_MESSAGE, 0, 0, "XOM is BORED!"), true);
-#ifdef NOTE_DEBUG_XOM//디버그
+            take_note(Note(NOTE_MESSAGE, 0, 0, _("XOM is BORED!")), true);
+#ifdef NOTE_DEBUG_XOM
         else if (niceness)
         {
             take_note(Note(NOTE_MESSAGE, 0, 0, "good act randomly turned bad"),
@@ -4021,7 +3943,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         if (!_xom_feels_nasty() && tension > random2(10)
             && x_chance_in_y(you.piety, MAX_PIETY))
         {
-#ifdef NOTE_DEBUG_XOM//디버그
+#ifdef NOTE_DEBUG_XOM
             snprintf(info, INFO_SIZE, "suppress bad act because of %d tension",
                      tension);
             take_note(Note(NOTE_MESSAGE, 0, 0, info), true);
@@ -4046,11 +3968,11 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         const string new_xom_favour = describe_xom_favour();
         if (was_bored || old_xom_favour != new_xom_favour)
         {
-            const string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
+            const string msg = _("You are now ") + new_xom_favour + "(이)야.";
             god_speaks(you.religion, msg.c_str());
         }
-#ifdef NOTE_DEBUG_XOM//디버그라 놔둠
-        snprintf(info, INFO_SIZE, "reroll piety: %d", you.piety);//snprintf(info, INFO_SIZE, "reroll piety: %d", you.piety);
+#ifdef NOTE_DEBUG_XOM
+        snprintf(info, INFO_SIZE, "reroll piety: %d", you.piety);
         take_note(Note(NOTE_MESSAGE, 0, 0, info), true);
 #endif
     }
@@ -4059,7 +3981,7 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
         // If we didn't reroll at least mention the new favour
         // now it's not "BORING thing" anymore.
         const string new_xom_favour = describe_xom_favour();
-        const string msg = "넌 이제부터 " + new_xom_favour;//const std::string msg = "You are now " + new_xom_favour;
+        const string msg = _("You are now ") + new_xom_favour + "(이)야.";
         god_speaks(you.religion, msg.c_str());
     }
 
@@ -4070,12 +3992,12 @@ int xom_acts(bool niceness, int sever, int tension, bool debug)
 void xom_check_lost_item(const item_def& item)
 {
     if (item.base_type == OBJ_ORBS)
-        xom_is_stimulated(255, "좀은 추잡하게 웃었다.", true);//xom_is_stimulated(255, "Xom laughs nastily.", true);
+        xom_is_stimulated(200, _("Xom laughs nastily."), true);
     else if (is_special_unrandom_artefact(item))
-        xom_is_stimulated(100, gettext("Xom snickers."), true);
+        xom_is_stimulated(100, _("Xom snickers."), true);
     // you can't be made lose unique runes anymore, it was voluntary -- not so funny
     else if (item_is_rune(item) && item_is_unique_rune(item))
-        xom_is_stimulated(50, gettext("Xom snickers loudly."), true);
+        xom_is_stimulated(50, _("Xom snickers loudly."), true);
 }
 
 void xom_check_destroyed_item(const item_def& item, int cause)
@@ -4084,23 +4006,23 @@ void xom_check_destroyed_item(const item_def& item, int cause)
 
     if (item.base_type == OBJ_ORBS)
     {
-        xom_is_stimulated(255, "좀은 추잡하게 웃었다.", true);//xom_is_stimulated(255, "Xom laughs nastily.", true);
+        xom_is_stimulated(200, "Xom laughs nastily.", true);
         return;
     }
     else if (is_special_unrandom_artefact(item))
-        xom_is_stimulated(128, "좀은 낄낄댔다.", true);//xom_is_stimulated(128, "Xom snickers.", true);
+        xom_is_stimulated(100, "Xom snickers.", true);
     else if (item_is_rune(item))
     {
         if (item_is_unique_rune(item) || item.plus == RUNE_ABYSSAL)
-            amusement = 255;
+            amusement = 200;
         else
-            amusement = 64;
+            amusement = 50;
     }
 
     xom_is_stimulated(amusement,
-                      (amusement > 128) ? "좀은 큰소리로 낄낄댔다." ://                      (amusement > 128) ? "Xom snickers loudly." :
-                      (amusement > 64)  ? "좀은 낄낄댔다."			//                      (amusement > 64)  ? "Xom snickers."
-                                        : "좀은 조용히 ??낄거렸다.",//: "Xom snickers softly.",
+                      (amusement > 100) ? _("Xom snickers loudly.") :
+                      (amusement > 50)  ? _("Xom snickers.")
+                                        : _("Xom snickers softly."),
                       true);
 }
 
@@ -4136,19 +4058,19 @@ void xom_death_message(const kill_method_type killed_by)
     if (!_death_is_funny(killed_by) && you.hp >= -1 * random2(3)
         && death_tension <= random2(10))
     {
-        god_speaks(GOD_XOM, _get_xom_speech("지루한 죽음이다").c_str()); //god_speaks(GOD_XOM, _get_xom_speech("boring death").c_str()); 
+        god_speaks(GOD_XOM, _get_xom_speech("boring death").c_str());
     }
     // Unusual methods of dying, really low hp, or high tension make
     // for funny deaths.
     else if (_death_is_funny(killed_by) || you.hp <= -10
              || death_tension >= 20)
     {
-        god_speaks(GOD_XOM, _get_xom_speech("웃기네").c_str());//god_speaks(GOD_XOM, _get_xom_speech("laughter").c_str());
+        god_speaks(GOD_XOM, _get_xom_speech("laughter").c_str());
     }
 
     // All others just get ignored by Xom.
 }
-//죽음에서 
+
 static int _death_is_worth_saving(const kill_method_type killed_by,
                                   const char *aux)
 {
@@ -4176,7 +4098,7 @@ static int _death_is_worth_saving(const kill_method_type killed_by,
     case KILLED_BY_WEAKNESS:
     case KILLED_BY_CLUMSINESS:
         if (strstr(aux, "wielding") == NULL && strstr(aux, "wearing") == NULL
-                && strstr(aux, "removing") == NULL)
+            && strstr(aux, "removing") == NULL)
         {
             return true;
         }
@@ -4227,7 +4149,7 @@ bool xom_saves_your_life(const int dam, const int death_source,
         return false;
 
     // Fake death message.
-    mpr("You die...");
+    mpr(_("You die..."));
     more();
 
     const string key = _get_death_type_keyword(death_type);
@@ -4249,7 +4171,7 @@ bool xom_saves_your_life(const int dam, const int death_source,
         you.stat_zero[s] = 0;
     }
 
-    god_speaks(GOD_XOM, "Xom revives you!");
+    god_speaks(GOD_XOM, _("Xom revives you!"));
 
     // Ideally, this should contain the death cause but that is too much
     // trouble for now.
@@ -4339,7 +4261,6 @@ static char* _list_exploration_estimate()
 // Loops over the entire piety spectrum and calls xom_acts() multiple
 // times for each value, then prints the results into a file.
 // TODO: Allow specification of niceness, tension, and boredness.
-// 디버그 관련입니다.
 void debug_xom_effects()
 {
     // Repeat N times.
@@ -4484,9 +4405,9 @@ void debug_xom_effects()
                     xec.effect.c_str());
         }
     }
-    fprintf(ostat, "---- FINISHED XOM DEBUG TESTING ----\n");//좀디버그
+    fprintf(ostat, "---- FINISHED XOM DEBUG TESTING ----\n");
     fclose(ostat);
-    mpr("Results written into 'xom_debug.stat'.");//역시 디버그
+    mpr("Results written into 'xom_debug.stat'.");
 
     you.piety    = real_piety;
     you.religion = real_god;

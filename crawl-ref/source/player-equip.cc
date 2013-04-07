@@ -305,14 +305,14 @@ static void _equip_artefact_effect(item_def &item, bool *show_msgs, bool unmeld)
         && !items_give_ability(item.link, ARTP_BLINK))
     {
         if (msg)
-            mpr("You feel jittery for a moment.");
+            mpr(_("You feel jittery for a moment."));
         artefact_wpn_learn_prop(item, ARTP_BLINK);
     }
 
     if (unknown_proprt(ARTP_MUTAGENIC))
     {
         if (msg)
-            mpr("You feel a build-up of mutagenic energy.");
+            mpr(_("You feel a build-up of mutagenic energy."));
         artefact_wpn_learn_prop(item, ARTP_MUTAGENIC);
     }
 

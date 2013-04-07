@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-07 15:20+0900\n"
+"POT-Creation-Date: 2013-04-07 21:29+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12090,6 +12090,12 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -13421,7 +13427,7 @@ msgid "explosion of spores"
 msgstr "포자의 폭발"
 
 #: mon-stuff.cc:1069 xom.cc:2019 xom.cc:1937 mon-stuff.cc:1076 xom.cc:2021
-#: xom.cc:2020
+#: xom.cc:2020 xom.cc:1943
 msgid "blast of lightning"
 msgstr "전격의 방출"
 
@@ -16321,43 +16327,43 @@ msgstr "마법사의 연구실"
 msgid "a wizard's laboratory"
 msgstr "마법사의 연구실"
 
-#: xom.cc:118 xom.cc:128
+#: xom.cc:118 xom.cc:128 xom.cc:119 xom.cc:129
 msgid "Xom is interested."
 msgstr "좀은 흥미를 느꼈다."
 
-#: xom.cc:119
+#: xom.cc:119 xom.cc:120
 msgid "Xom is mildly amused."
 msgstr "좀은 조금 재미있어했다."
 
-#: xom.cc:120
+#: xom.cc:120 xom.cc:121
 msgid "Xom is amused."
 msgstr "좀은 재미있어했다."
 
-#: xom.cc:121
+#: xom.cc:121 xom.cc:122
 msgid "Xom is highly amused!"
 msgstr "좀은 매우 재미있어했다!"
 
-#: xom.cc:122
+#: xom.cc:122 xom.cc:123
 msgid "Xom thinks this is hilarious!"
 msgstr "좀은 이것이 매우 우습다고 생각했다!"
 
-#: xom.cc:129
+#: xom.cc:129 xom.cc:130
 msgid "Xom is very interested."
 msgstr "좀은 매우 흥미로워했다."
 
-#: xom.cc:130
+#: xom.cc:130 xom.cc:131
 msgid "Xom is extremely interested."
 msgstr "좀은 비상한 관심을 가졌다."
 
-#: xom.cc:131
+#: xom.cc:131 xom.cc:132
 msgid "Xom is intrigued!"
 msgstr "좀은 아주 흥미로워했다!"
 
-#: xom.cc:132
+#: xom.cc:132 xom.cc:133
 msgid "Xom is very intrigued!"
 msgstr "좀은 정말로 흥미로워했다!"
 
-#: xom.cc:133
+#: xom.cc:133 xom.cc:134
 msgid "Xom is fascinated!"
 msgstr "좀은 매료되었다!"
 
@@ -17338,3 +17344,49 @@ msgstr "파이"
 #: jobs.cc:32
 msgid "Jester"
 msgstr "광대"
+
+#: abl-show.cc:388
+msgid "Stop recall"
+msgstr "소집 중단"
+
+#: mutation-data.h:1438
+msgid "tendrils"
+msgstr "덩굴손"
+
+#: mutation-data.h:1440
+msgid "Thin tendrils of slime have grown from your body."
+msgstr "당신의 몸에는 얇은 점액질의 덩굴손이 자라나 있다."
+
+#: mutation-data.h:1441
+msgid "Thin, slimy tendrils emerge from your body."
+msgstr "얇은 점액질의 덩굴손이 당신의 몸에 자라났다."
+
+#: mutation-data.h:1442
+msgid "Your tendrils retract into your body."
+msgstr "당신의 덩굴손이 몸 안으로 움츠려져 들어가버렸다."
+
+#: mutation-data.h:1448
+msgid "a jelly is attached to you"
+msgstr "작은 젤리"
+
+#: mutation-data.h:1450
+msgid "You have a small jelly attached to you that senses nearby items."
+msgstr "주변의 아이템을 감지할 수 있는 작은 젤리들이 당신의 몸에 자라나 있다."
+
+#: mutation-data.h:1451 mutation-data.h:1461
+msgid "Your body partially splits into a small jelly."
+msgstr "당신의 몸 속에서 작은 젤리들이 자라났다."
+
+#: mutation-data.h:1452 mutation-data.h:1462
+msgid "The jelly growth is reabsorbed into your body."
+msgstr "몸에 자라난 젤리들이 몸 속으로 다시 흡수되었다."
+
+#: mutation-data.h:1458
+msgid "absorbing missiles"
+msgstr "발사체 흡수"
+
+#: mutation-data.h:1460
+msgid ""
+"You have a small jelly attached to you that may absorb incoming projectiles."
+msgstr ""
+"발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."

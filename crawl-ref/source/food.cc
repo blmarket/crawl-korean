@@ -2665,7 +2665,7 @@ bool can_ingest(int what_isit, int kindof_thing, bool suppress_msg,
                 if (ur_carnivorous)
                 {
                     if (!suppress_msg)
-                        mpr("Sorry, you're a carnivore.");
+                        mpr(_("Sorry, you're a carnivore."));
                     return false;
                 }
                 return true;

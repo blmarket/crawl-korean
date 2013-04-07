@@ -1435,31 +1435,31 @@
 },
 
 { MUT_TENDRILS,                       0,  1, false,  true, true,
-  "tendrils",
+  M_("tendrils"),
 
-  {"Thin tendrils of slime have grown from your body.", "", ""},
-  {"Thin, slimy tendrils emerge from your body.", "", ""},
-  {"Your tendrils retract into your body.", "", ""},
+  {M_("Thin tendrils of slime have grown from your body."), "", ""},
+  {M_("Thin, slimy tendrils emerge from your body."), "", ""},
+  {M_("Your tendrils retract into your body."), "", ""},
 
   "tendrils"
 },
 
 { MUT_JELLY_GROWTH,                       0,  1, false,  true, true,
-  "a jelly is attached to you",
+  M_("a jelly is attached to you"),
 
-  {"You have a small jelly attached to you that senses nearby items.", "", ""},
-  {"Your body partially splits into a small jelly.", "", ""},
-  {"The jelly growth is reabsorbed into your body.", "", ""},
+  {M_("You have a small jelly attached to you that senses nearby items."), "", ""},
+  {M_("Your body partially splits into a small jelly."), "", ""},
+  {M_("The jelly growth is reabsorbed into your body."), "", ""},
 
   "jelly growth"
 },
 
 { MUT_JELLY_MISSILE,                       0,  1, false,  true, true,
-  "absorbing missiles",
+  M_("absorbing missiles"),
 
-  {"You have a small jelly attached to you that may absorb incoming projectiles.", "", ""},
-  {"Your body partially splits into a small jelly.", "", ""},
-  {"The jelly growth is reabsorbed into your body.", "", ""},
+  {M_("You have a small jelly attached to you that may absorb incoming projectiles."), "", ""},
+  {M_("Your body partially splits into a small jelly."), "", ""},
+  {M_("The jelly growth is reabsorbed into your body."), "", ""},
 
   "jelly missile"
 },

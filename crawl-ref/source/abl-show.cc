@@ -385,7 +385,7 @@ static const ability_def Ability_List[] =
     { ABIL_ASHENZARI_END_TRANSFER, M_("End Transfer Knowledge"),
       0, 0, 0, 0, 0, ABFLAG_NONE},
 
-    { ABIL_STOP_RECALL, "Stop recall", 0, 0, 0, 0, 0, ABFLAG_NONE},
+    { ABIL_STOP_RECALL, M_("Stop recall"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 
     // zot defence abilities
     { ABIL_MAKE_FUNGUS, M_("Make mushroom circle"), 0, 0, 0, 0, 10, ABFLAG_ZOTDEF},
@@ -2602,7 +2602,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_STOP_RECALL:
-        mpr("You stop recalling your allies.");
+        mpr(_("You stop recalling your allies."));
         end_recall();
         break;
 

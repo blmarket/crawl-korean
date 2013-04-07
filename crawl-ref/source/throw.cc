@@ -1210,7 +1210,7 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
 
     if (blinding)
     {
-        beam.hit_verb = "blinds";
+        beam.hit_verb = pgettext("verb","blinds");
         beam.hit_funcs.push_back(_blind_hit_victim);
     }
 

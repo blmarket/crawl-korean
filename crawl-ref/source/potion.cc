@@ -427,7 +427,7 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         break;
 
     case POT_BENEFICIAL_MUTATION:
-        mpr("You feel fantastic!");
+        mpr(_("You feel fantastic!"));
         mutate(RANDOM_GOOD_MUTATION, "potion of beneficial mutation", false);
 
         learned_something_new(HINT_YOU_MUTATED);

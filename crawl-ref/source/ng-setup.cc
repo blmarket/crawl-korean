@@ -1459,7 +1459,7 @@ static void _setup_generic(const newgame_def& ng)
     // Jester flavour.  Maybe this should be elsewhere, but it certainly
     // shouldn't be earlier.
     if (you.char_class == JOB_JESTER)
-        simple_god_message(" thought your last joke was hilarious!", GOD_XOM);
+        simple_god_message(_(" thought your last joke was hilarious!"), GOD_XOM);
 
     // Create the save file.
     if (Options.no_save)
