@@ -8,7 +8,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-03 00:05+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -813,7 +812,6 @@ msgstr "저장된 게임들:"
 
 #: abyss.cc:726 abyss.cc:726 abyss.cc:554 xom.cc:4102 abyss.cc:589
 #: xom.cc:3993 xom.cc:4001 xom.cc:3914 xom.cc:3937 abyss.cc:481 xom.cc:4079
-#: abyss.cc:489 xom.cc:4078
 msgid "Xom snickers loudly."
 msgstr "좀은 낄낄거리며 폭소했다."
 
@@ -837,7 +835,7 @@ msgstr "무한한 공허의 악마가 당신에게 미소지었다."
 #. / simple_god_message
 #. / simple_god_message
 #: acquire.cc:1573 acquire.cc:1573 acquire.cc:1601 acquire.cc:1586 xom.cc:739
-#: acquire.cc:1575
+#: acquire.cc:1575 xom.cc:740
 msgid " snickers."
 msgstr "은(는) 낄낄대며 웃었다."
 
@@ -7354,8 +7352,9 @@ msgstr "이 덱은 이미 표시되어있다."
 msgid "Some cards fall out of the deck."
 msgstr "카드 몇 장이 덱으로 부터 떨어져나왔다."
 
+#. Only one card to draw, so just draw it.
 #: decks.cc:934 decks.cc:1034 decks.cc:1034 decks.cc:923 decks.cc:1027
-#: decks.cc:919 decks.cc:1022
+#: decks.cc:919 decks.cc:1022 decks.cc:1181
 msgid "There's only one card left!"
 msgstr "카드가 단 한 장밖에 남지 않았다!"
 
@@ -8303,7 +8302,7 @@ msgstr "무언가 (%d)"
 #. Fake death message.
 #: ouch.cc:1310 ouch.cc:1414 ouch.d.cc:1310 ouch.d.cc:1414 tutorial.cc:91
 #: ouch.cc:1358 ouch.cc:1462 tutorial.cc:69 ouch.cc:1356 ouch.cc:1450
-#: xom.cc:4066 ouch.cc:1290 ouch.cc:1379 ouch.cc:1303 ouch.cc:1392
+#: xom.cc:4066 ouch.cc:1290 ouch.cc:1379 ouch.cc:1303 ouch.cc:1392 xom.cc:4152
 msgid "You die..."
 msgstr "죽었다..."
 
@@ -14784,56 +14783,6 @@ msgstr "몬스터 바로 위에는 구름을 생성할 수 없다."
 msgid "You see a ghostly outline there, and the spell fizzles."
 msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, 주문은 실패했다."
 
-#. Reinforce the cloud.
-#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#. Reinforce the cloud.
-#. Reinforce the cloud - but not too much.
-#. It must be a fire cloud from a previous test.
-#: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531
 msgid "The fire roars with new energy!"
 msgstr "불길이 새로운 마력으로 다시 타올랐다!"
@@ -14962,7 +14911,7 @@ msgid "Oops! Maybe something was there already."
 msgstr "우왓! 아무래도 그곳에는 무언가가 있는 것 같다."
 
 #: spl-transloc.cc:259 spl-transloc.cc:260 spl-transloc.cc:267
-#: spl-transloc.cc:272 spl-transloc.cc:326
+#: spl-transloc.cc:272 spl-transloc.cc:326 player-equip.cc:308
 msgid "You feel jittery for a moment."
 msgstr "당신은 잠깐 초조함을 느꼈다."
 
@@ -16867,9 +16816,9 @@ msgstr "이 피는 정말이지 너무나 기묘한 맛이다!"
 msgid "Blech - you need blood!"
 msgstr "으윽! 당신에겐 피가 필요하다!"
 
-#: food.cc:2511 food.cc:2594 food.cc:2643 food.cc:2723 food.cc:2479
-#: food.cc:2559 food.cc:2480 food.cc:2560 food.cc:2604 food.cc:2676
-#: food.cc:2607 food.cc:2679 food.cc:2614 food.cc:2686
+#: food.cc:2607 food.cc:2679 food.cc:2614 food.cc:2686 food.cc:2701
+#: food.cc:2668
+>>>>>>> c68e8a9... xom.cc재작업, merging누락번역 추가
 msgid "Sorry, you're a carnivore."
 msgstr "당신은 고기밖에 먹을 수 없다."
 
@@ -19848,11 +19797,11 @@ msgstr "당신은 아무것도 발견하지 못했다."
 #. still on the map when the original one has been killed.  Then
 #. another one is spawned, so the number is the same as before.
 #. There's no way we can check this, however.
-#: spl-cast.cc:1694 spl-cast.cc:1654 xom.cc:661
+#: spl-cast.cc:1694 spl-cast.cc:1654 xom.cc:661 xom.cc:662
 msgid "You detect no further creatures."
 msgstr "당신은 아무 몬스터도 감지하지 못했다."
 
-#: spl-cast.cc:1697 spl-cast.cc:1657 xom.cc:664
+#: spl-cast.cc:1697 spl-cast.cc:1657 xom.cc:664 xom.cc:665
 msgid "You detect creatures!"
 msgstr "당신은 몬스터를 감지했다!"
 
@@ -22898,7 +22847,7 @@ msgstr "은(는) 공중에서 내뒹굴었다."
 
 #: beam.cc:1936 beam.cc:1969 beam.cc:1952 spl-other.cc:339 xom.cc:1170
 #: xom.cc:1432 xom.cc:2970 beam.cc:1978 spl-other.cc:403 beam.cc:1980
-#: spl-other.cc:406 beam.cc:1976
+#: spl-other.cc:406 beam.cc:1976 xom.cc:1176 xom.cc:1438 xom.cc:2973
 msgid " looks rather confused."
 msgstr "은(는) 정신을 못 차리고 있다."
 
@@ -23275,12 +23224,10 @@ msgid " is charmed."
 msgstr "은(는) 매료되었다."
 
 #: beam.cc:4975 beam.cc:4988 beam.cc:5096 beam.cc:5097 xom.cc:2256
-#: beam.cc:5051 beam.cc:5111 beam.cc:5108
 msgid " is filled with an intense inner flame!"
 msgstr "의 내부에 격렬한 화염의 불씨가 일었다!"
 
 #: beam.cc:4976 beam.cc:4989 beam.cc:5097 beam.cc:5098 xom.cc:2257
-#: beam.cc:5052 beam.cc:5112 beam.cc:5109
 msgid " is filled with an inner flame."
 msgstr "의 내부에 불씨가 일었다."
 
@@ -30221,104 +30168,6 @@ msgctxt "deck"
 msgid "drawn"
 msgstr "뽑았다"
 
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn or dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn or dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn or dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn or dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. / 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. / 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#. 1. dealt or drawn, 2. card name
-#. / 1. dealt or draw 2. card name
-#. 1. drawn/dealt 2. card_name
-#: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
-#: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032
 #, c-format
 msgid "You have %s %s."
@@ -33100,11 +32949,6 @@ msgid " grants you divine stamina."
 msgstr "은(는) 당신에게 신성한 원기를 불어넣어주었다."
 
 #: godabil.cc:1544 godabil.cc:1557 godabil.cc:2724 godprayer.cc:658
-#: spl-summoning.cc:1950 spl-summoning.cc:1957 spl-summoning.cc:1958
-#: xom.cc:1298 xom.cc:1866 xom.cc:2160 xom.cc:2173 xom.cc:2196 xom.cc:2209
-#: xom.cc:3375 player.cc:7546 godabil.cc:1541 godabil.cc:1554 godabil.cc:2717
-#: godprayer.cc:635 shopping.cc:700 godabil.cc:1542 godabil.cc:1555
-#: player.cc:7592 player.cc:7597 godabil.cc:2723 player.cc:7598
 msgctxt "sssss"
 msgid "s"
 msgstr "들"
@@ -34182,7 +34026,7 @@ msgctxt "anon"
 msgid "something"
 msgstr "무언가"
 
-#: mon-stuff.cc:3024 xom.cc:1392 xom.cc:1394
+#: mon-stuff.cc:3024 xom.cc:1392 xom.cc:1394 xom.cc:1398 xom.cc:1400
 msgid "something unseen"
 msgstr "보이지 않는 무언가"
 
@@ -34257,179 +34101,179 @@ msgctxt "searattack"
 msgid "%s %s %s%s"
 msgstr "%3$s의 성스러운 불꽃이 %1$s을(를) 그을렸다%4$s%2$.0s"
 
-#: xom.cc:2541 xom.cc:2547 xom.cc:2463 xom.cc:2594 xom.cc:2593
+#: xom.cc:2541 xom.cc:2547 xom.cc:2463 xom.cc:2594 xom.cc:2593 xom.cc:2514
 msgid "The granite statue turns to stare at you."
 msgstr "화강암 석상이 당신을 노려보기 시작했다."
 
-#: xom.cc:2575 xom.cc:2581 xom.cc:2497 xom.cc:2628 xom.cc:2627
+#: xom.cc:2575 xom.cc:2581 xom.cc:2497 xom.cc:2628 xom.cc:2627 xom.cc:2548
 msgid "The stone arch briefly shows a sunny meadow on the other side."
 msgstr "아치형 돌 너머로 잠시 밝은 목축지의 모습이 보였다."
 
-#: xom.cc:3138 xom.cc:3143 xom.cc:3057 xom.cc:3139
+#: xom.cc:3138 xom.cc:3143 xom.cc:3057 xom.cc:3139 xom.cc:3060
 msgid "Couldn't find ray between player and stairs."
 msgstr "플레이어와 계단 사이의 직선거리를 파악할 수 없다."
 
-#: xom.cc:139
+#: xom.cc:139 xom.cc:140
 msgid "Xom's teddy bear."
 msgstr "좀의 곰인형"
 
-#: xom.cc:140
+#: xom.cc:140 xom.cc:141
 msgid "a beloved toy of Xom."
 msgstr "좀의 사랑하는 장난감"
 
-#: xom.cc:141
+#: xom.cc:141 xom.cc:142
 msgid "a favourite toy of Xom."
 msgstr "좀의 좋아하는 장난감"
 
-#: xom.cc:142
+#: xom.cc:142 xom.cc:143
 msgid "a toy of Xom."
 msgstr "좀의 장난감"
 
-#: xom.cc:143
+#: xom.cc:143 xom.cc:144
 msgid "a plaything of Xom."
 msgstr "좀의 놀잇거리"
 
-#: xom.cc:144
+#: xom.cc:144 xom.cc:145
 msgid "a special plaything of Xom."
 msgstr "좀의 특별한 장난감"
 
-#: xom.cc:145
+#: xom.cc:145 xom.cc:146
 msgid "a very special plaything of Xom."
 msgstr "좀의 아주 특별한 장난감"
 
-#: xom.cc:152
+#: xom.cc:152 xom.cc:153
 msgid "a very buggy toy of Xom."
 msgstr "매우 버그스러운 좀의 장난감."
 
-#: xom.cc:154
+#: xom.cc:154 xom.cc:155
 msgid "a BORING thing."
 msgstr "지루한 것."
 
-#: xom.cc:169 xom.cc:205
+#: xom.cc:169 xom.cc:205 xom.cc:170
 msgid "Xom makes something happen."
 msgstr "좀은 무언가를 일으켰다."
 
-#: xom.cc:331 xom.cc:370
+#: xom.cc:331 xom.cc:370 xom.cc:332
 #, c-format
 msgid "You are now %s"
 msgstr "당신은 이제 '%s'이다."
 
-#: xom.cc:339
+#: xom.cc:339 xom.cc:340
 msgid " is getting BORED."
 msgstr "은(는) 점점 지루해했다."
 
-#: xom.cc:368
+#: xom.cc:368 xom.cc:369
 msgid " is interested."
 msgstr "은(는) 흥미를 가졌다."
 
-#: xom.cc:370
+#: xom.cc:370 xom.cc:371
 msgid " is intrigued."
 msgstr "은(는) 아주 흥미로워했다."
 
-#: xom.cc:587
+#: xom.cc:587 xom.cc:588
 #, c-format
 msgid "cast spell '%s'"
 msgstr "'%s' 주문을 외움"
 
-#: xom.cc:608
+#: xom.cc:608 xom.cc:609
 msgid "divination: magic mapping"
 msgstr "신의 효과: 마법 지도"
 
-#: xom.cc:629
+#: xom.cc:629 xom.cc:630
 msgid "divination: detect items"
 msgstr "신의 효과: 아이템 감지"
 
-#: xom.cc:634
+#: xom.cc:634 xom.cc:635
 msgid "You detect items!"
 msgstr "당신은 아이템들을 감지했다!"
 
-#: xom.cc:647
+#: xom.cc:647 xom.cc:648
 msgid "divination: detect creatures"
 msgstr "신의 효과: 몬스터 감지"
 
-#: xom.cc:746 xom.cc:773
+#: xom.cc:746 xom.cc:773 xom.cc:747
 msgid "\"No, never mind.\""
 msgstr "\"아냐, 신경쓰지마.\""
 
-#: xom.cc:753 xom.cc:780
+#: xom.cc:753 xom.cc:780 xom.cc:754
 #, c-format
 msgid "god gift: %s"
 msgstr "신의 선물: %s"
 
-#: xom.cc:993
+#: xom.cc:993 xom.cc:999
 msgid " is briefly surrounded by a scintillating aura of random colours."
 msgstr "은(는) 잠시 반짝반짝 빛나는 형형색색의 오라에 둘러싸였다."
 
 #. Take a note.
-#: xom.cc:1118
+#: xom.cc:1118 xom.cc:1124
 msgid "potion effect "
 msgstr "포션 효과 "
 
-#: xom.cc:1177
+#: xom.cc:1177 xom.cc:1183
 msgid "confuse monster(s)"
 msgstr "몬스터(들)을 혼란시킴"
 
-#: xom.cc:1293
+#: xom.cc:1293 xom.cc:1299
 #, c-format
 msgid "summons %d %s%s%s"
 msgstr "%d 마리의 %s%s%s을(를) 소환"
 
-#: xom.cc:1295
+#: xom.cc:1295 xom.cc:1301
 msgctxt "xom"
 msgid "friendly "
 msgstr "우호적인 "
 
-#: xom.cc:1296
+#: xom.cc:1296 xom.cc:1302
 msgctxt "xom"
 msgid "hostile "
 msgstr "적대적인 "
 
-#: xom.cc:1297
+#: xom.cc:1297 xom.cc:1303 xom.cc:3393
 msgctxt "xom"
 msgid "demon"
 msgstr "악마"
 
-#: xom.cc:1297
+#: xom.cc:1297 xom.cc:1303
 msgctxt "xom"
 msgid "monster"
 msgstr "몬스터"
 
-#: xom.cc:1342 xom.cc:1419 xom.cc:1418
+#: xom.cc:1342 xom.cc:1419 xom.cc:1418 xom.cc:1348
 #, c-format
 msgid "summons %s %s"
 msgstr "%s %s을(를) 소환"
 
-#: xom.cc:1343
+#: xom.cc:1343 xom.cc:1349
 msgctxt "xom"
 msgid "friendly"
 msgstr "우호적인"
 
-#: xom.cc:1343
+#: xom.cc:1343 xom.cc:1349
 msgctxt "xom"
 msgid "hostile"
 msgstr "적대적인"
 
-#: xom.cc:1398
+#: xom.cc:1398 xom.cc:1404
 #, c-format
 msgid "polymorph %s -> %s"
 msgstr "%s 에서 %s 로 변신 "
 
-#: xom.cc:1430
+#: xom.cc:1430 xom.cc:1436
 msgid " looks rather more confused."
 msgstr "은(는) 더욱 혼란스러워 보인다."
 
-#: xom.cc:1563
+#: xom.cc:1563 xom.cc:1569
 msgid "Monster wouldn't take item."
 msgstr "몬스터가 아이템을 가지지 않을 것이다."
 
 #. / 1. 몬스터 이름, 2. 장비 이름
-#: xom.cc:1574 xom.cc:1654 xom.cc:1653
+#: xom.cc:1574 xom.cc:1654 xom.cc:1653 xom.cc:1580
 #, c-format
 msgid "%s wields %s!"
 msgstr "%s은(는) %s을(를) 장비했다!"
 
 #. / 1. mon's 2. item name
-#: xom.cc:1610 xom.cc:1691 xom.cc:1690
+#: xom.cc:1610 xom.cc:1691 xom.cc:1690 xom.cc:1616
 #, c-format
 msgid "You wield %s %s!"
 msgstr "당신은 %s의 %s을(를) 장비했다!"
@@ -34438,36 +34282,36 @@ msgstr "당신은 %s의 %s을(를) 장비했다!"
 msgid "swap weapons"
 msgstr "무기 교체"
 
-#: xom.cc:1670
+#: xom.cc:1670 xom.cc:1676
 msgid "Some monsters swap places."
 msgstr "몇몇 몬스터들이 자리를 바꾸었다."
 
-#: xom.cc:1680
+#: xom.cc:1680 xom.cc:1686
 msgid "swap monsters"
 msgstr "몬스터 자리 교체"
 
-#: xom.cc:1730
+#: xom.cc:1730 xom.cc:1736
 msgid "snakes to sticks"
 msgstr "나무토막의 뱀"
 
 #. Output some text since otherwise snakes will disappear silently.
-#: xom.cc:1757 xom.cc:1840 xom.cc:1839
+#: xom.cc:1757 xom.cc:1840 xom.cc:1839 xom.cc:1763
 #, c-format
 msgid "%s reforms as %s."
 msgstr "%s은(는) %s(으)로 모습을 바꾸었다."
 
 #. / 1. Mon's 2. item name
-#: xom.cc:1833 xom.cc:1917 xom.cc:1916
+#: xom.cc:1833 xom.cc:1917 xom.cc:1916 xom.cc:1839
 #, c-format
 msgid "%s %s dances into the air!"
 msgstr "%s %s이(가) 공중으로 떠올라 춤을 추기 시작했다!"
 
-#: xom.cc:1860
+#: xom.cc:1860 xom.cc:1866
 #, c-format
 msgid "give %smutation%s"
 msgstr "%s 변이%s을(를) 얻음"
 
-#: xom.cc:1870
+#: xom.cc:1870 xom.cc:1876
 msgid "Your body is suffused with distortional energy."
 msgstr "당신의 몸에 왜곡된 마력이 퍼졌다."
 
@@ -34479,28 +34323,28 @@ msgstr "좀의 은혜"
 msgid "Xom's mischief"
 msgstr "좀의 짖궂은 장난"
 
-#: xom.cc:1929
+#: xom.cc:1929 xom.cc:1935
 msgid "The area is suffused with divine lightning!"
 msgstr "이곳은 신의 번개로 가득 차 있다!"
 
-#: xom.cc:1949
+#: xom.cc:1949 xom.cc:1955
 msgid "Your divine protection wanes."
 msgstr "당신의 신의 가호는 약해졌다"
 
-#: xom.cc:1964
+#: xom.cc:1964 xom.cc:1970
 #, c-format
 msgid "divine lightning%s"
 msgstr "신의 전격%s"
 
-#: xom.cc:1964
+#: xom.cc:1964 xom.cc:1970
 msgid " (protected)"
 msgstr " (보호받음)"
 
-#: xom.cc:2088
+#: xom.cc:2088 xom.cc:2094
 msgid "scenery: create altars"
 msgstr "지형: 제단 생성"
 
-#: xom.cc:2158
+#: xom.cc:2158 xom.cc:2163
 #, c-format
 msgid "%s fountain%s start%s reflowing"
 msgstr "분수%2$s에 물이 다시 차오르기 시작했다%1$.0s%3$.0s"
@@ -34510,328 +34354,330 @@ msgstr "분수%2$s에 물이 다시 차오르기 시작했다%1$.0s%3$.0s"
 msgid "%d fountains restart"
 msgstr "%d개의 분수가 다시 차오름"
 
-#: xom.cc:2168
+#: xom.cc:2168 xom.cc:2173
 #, c-format
 msgid "%s%s fountain%s start%s gushing blood"
 msgstr "분수%3$s 안이 피로 채워지기 시작했다%1$.0s%2$.0s%4$.0s"
 
-#: xom.cc:2180
+#: xom.cc:2180 xom.cc:2185
 #, c-format
 msgid "%d fountains blood"
 msgstr "%d개의 분수가 피로 차오름"
 
-#: xom.cc:2186
+#: xom.cc:2186 xom.cc:2191 xom.cc:2229
 msgid ", and "
 msgstr ", 그리고 "
 
-#: xom.cc:2192
+#: xom.cc:2192 xom.cc:2197
 #, c-format
 msgid "%s door%s burst%s open"
 msgstr "%1$s 문%2$s이(가) 부서질듯 열렸다%3$.0s"
 
-#: xom.cc:2193
+#: xom.cc:2193 xom.cc:2198
 msgctxt "xom"
 msgid "A"
 msgstr "하나의"
 
-#: xom.cc:2194
+#: xom.cc:2194 xom.cc:2199
 msgctxt "xom"
 msgid "Two"
 msgstr "두 개의"
 
-#: xom.cc:2195
+#: xom.cc:2195 xom.cc:2200
 msgctxt "xom"
 msgid "Several"
 msgstr "몇몇"
 
-#: xom.cc:2199
+#: xom.cc:2199 xom.cc:2204
 #, c-format
 msgid "%d doors open"
 msgstr "%d개의 문이 열림"
 
-#: xom.cc:2203
+#: xom.cc:2203 xom.cc:2208
 #, c-format
 msgid "%s%s door%s slam%s shut"
 msgstr "%1$s 문%3$s이(가) 쾅 하고 닫혔다%2$.0s%4$.0s"
 
-#: xom.cc:2204
+#: xom.cc:2204 xom.cc:2209
 msgctxt "xom"
 msgid "a"
 msgstr "하나의"
 
-#: xom.cc:2205
+#: xom.cc:2205 xom.cc:2210
 msgctxt "xom"
 msgid "two"
 msgstr "두 개의"
 
-#: xom.cc:2206
+#: xom.cc:2206 xom.cc:2211
 msgctxt "xom"
 msgid "several"
 msgstr "몇몇"
 
-#: xom.cc:2215
+#: xom.cc:2215 xom.cc:2220
 #, c-format
 msgid "%d doors close"
 msgstr "%d개의 문이 닫힘"
 
-#: xom.cc:2264
+#: xom.cc:2264 xom.cc:2269
 msgid "inner flame monster(s)"
 msgstr "몬스터(들)에게 잠재의 불씨를 심음"
 
-#: xom.cc:2354 xom.cc:3554
+#: xom.cc:2354 xom.cc:3554 xom.cc:2405 xom.cc:3640
 #, c-format
 msgid "%d-stop teleportation journey%s"
 msgstr "%d회 멈춘 텔레포트 여행%s"
 
-#: xom.cc:2372
+#: xom.cc:2372 xom.cc:2423
 msgctxt "xom"
 msgid "vitrification"
 msgstr "신성한 원기"
 
 #. Assure that the messages vector has at least one element.
-#: xom.cc:2430 xom.cc:3223
+#: xom.cc:2430 xom.cc:3223 xom.cc:2481 xom.cc:3225
 msgid "Nothing appears to happen... Ominous!"
 msgstr "아무 일도 일어나지 않았다... 불길함을 느꼈다!"
 
-#: xom.cc:2439
+#: xom.cc:2439 xom.cc:2490
 msgid "The lava spits out sparks!"
 msgstr "용암에서 불길이 뿜어져나왔다!"
 
-#: xom.cc:2443
+#: xom.cc:2443 xom.cc:2494
 msgid "The water briefly bubbles."
 msgstr "물에서 잠시 거품이 일었다."
 
-#: xom.cc:2444
+#: xom.cc:2444 xom.cc:2495
 msgid "The water briefly swirls."
 msgstr "물이 잠시 소용돌이쳤다."
 
-#: xom.cc:2445
+#: xom.cc:2445 xom.cc:2496
 msgid "The water briefly glows."
 msgstr "물에서 잠시 빛이 났다."
 
-#: xom.cc:2450
+#: xom.cc:2450 xom.cc:2501
 msgid ""
 "From the corner of your eye you spot something lurking in the deep water."
 msgstr "보이지 않는 깊은 물 속에서, 숨어있는 시선을 느꼈다."
 
-#: xom.cc:2457
+#: xom.cc:2457 xom.cc:2508
 msgid "The idol of Beogh turns to glare at you."
 msgstr "베오그의 우상은 당신을 노려보았다."
 
-#: xom.cc:2459
+#: xom.cc:2459 xom.cc:2510
 msgid "The orcish idol turns to glare at you."
 msgstr "오키쉬 우상은 당신을 노려보았다"
 
-#: xom.cc:2468
+#: xom.cc:2468 xom.cc:2519
 msgid "Dim shapes swim through the translucent wall."
 msgstr "흐릿한 물체가 반투명한 벽을 통과했다."
 
-#: xom.cc:2472
+#: xom.cc:2472 xom.cc:2523
 msgid "Dim shapes swim through the green crystal wall."
 msgstr "흐릿한 물체가 녹색 수정 벽을 통과했다."
 
-#: xom.cc:2476
+#: xom.cc:2476 xom.cc:2527
 msgid "Tendrils of electricity crawl over the metal wall!"
 msgstr "전기의 덩굴이 강철 벽을 타고 넘어왔다!"
 
-#: xom.cc:2482
+#: xom.cc:2482 xom.cc:2533
 msgid "The water in the fountain briefly bubbles."
 msgstr "분수 안의 물에서 잠시 거품이 일었다."
 
-#: xom.cc:2483
+#: xom.cc:2483 xom.cc:2534
 msgid "The water in the fountain briefly swirls."
 msgstr "분수 안의 물은 잠깐 소용돌이쳤다."
 
-#: xom.cc:2484
+#: xom.cc:2484 xom.cc:2535
 msgid "The water in the fountain briefly glows."
 msgstr "분수 안의 물은 잠시 반짝거렸다."
 
-#: xom.cc:2491
+#: xom.cc:2491 xom.cc:2542
 msgid "Water briefly sprays from the dry fountain."
 msgstr "마른 분수에서 잠시 물안개가 일어났다."
 
-#: xom.cc:2492
+#: xom.cc:2492 xom.cc:2543
 msgid "Dust puffs up from the dry fountain."
 msgstr "마른 분수에서 흙먼지가 뿜어져나왔다."
 
-#: xom.cc:2521
+#: xom.cc:2521 xom.cc:2572
 msgid " seems to fall away from under you!"
 msgstr "은(는) 당신에게서부터 떨어진 것 같다!"
 
-#: xom.cc:2523
+#: xom.cc:2523 xom.cc:2574
 msgid " seems to rush up at you!"
 msgstr "은(는) 당신에게서부터 올라온 것 같다!"
 
-#: xom.cc:2527
+#: xom.cc:2527 xom.cc:2578
 msgid "Something invisible splashes into the water beneath you!"
 msgstr "물 속 아래에, 무언가 보이지 않는 것이 있다!"
 
-#: xom.cc:2533
+#: xom.cc:2533 xom.cc:2584
 msgid "The water briefly recedes away from you."
 msgstr "물이 잠시 당신에게서부터 멀어졌다."
 
-#: xom.cc:2534
+#: xom.cc:2534 xom.cc:2585
 msgid "Something invisible splashes into the water beside you!"
 msgstr "당신 근처에, 무언가 보이지 않는 것이 물 속에 숨어있다!"
 
-#: xom.cc:2554
+#: xom.cc:2554 xom.cc:2605
 msgid " falls out of your pack, then immediately jumps back in!"
 msgstr "이(가) 당신의 가방에서 떨어져 나갔다가, 다시 되돌아왔다!"
 
-#: xom.cc:2563
+#: xom.cc:2563 xom.cc:2614
 msgid "You briefly get tangled in your bandages."
 msgstr "당신은 잠시동안 당신의 붕대에 엉켜졌다."
 
-#: xom.cc:2565
+#: xom.cc:2565 xom.cc:2616
 msgid "You trip over your bandages."
 msgstr "당신은 당신의 붕대에 걸렸다."
 
-#: xom.cc:2569
+#: xom.cc:2569 xom.cc:2620
 msgid "A monocle briefly appears over your "
 msgstr "외눈 안경은 잠시 당신의 "
 
-#: xom.cc:2570
+#: xom.cc:2570 xom.cc:2621
 msgctxt "xom"
 msgid "right"
 msgstr "오른쪽"
 
-#: xom.cc:2570
+#: xom.cc:2570 xom.cc:2621
 msgctxt "xom"
 msgid "left"
 msgstr "왼쪽"
 
-#: xom.cc:2573
+#: xom.cc:2573 xom.cc:2624
 msgctxt "xom"
 msgid " primary"
 msgstr "앞쪽"
 
 #. str += random_choose(" front"," middle"," rear"), 0);
-#: xom.cc:2577
+#. str += random_choose(" front", " middle", " rear", 0);
+#: xom.cc:2577 xom.cc:2628
 msgctxt "xom"
 msgid " secondary"
 msgstr "뒷쪽"
 
-#: xom.cc:2579
+#: xom.cc:2579 xom.cc:2630
 msgctxt "xom"
 msgid " eye."
 msgstr " 눈을 보여주었다."
 
-#: xom.cc:2587
+#: xom.cc:2587 xom.cc:2638
 msgid "Your eyebrows briefly feel incredibly bushy."
 msgstr "당신의 눈썹은 갑자기 무지막지하게 풍성해졌다."
 
-#: xom.cc:2588
+#: xom.cc:2588 xom.cc:2639
 msgid "Your eyebrows wriggle."
 msgstr "당신의 눈썹이 꿈틀거렸다"
 
-#: xom.cc:2592
+#: xom.cc:2592 xom.cc:2643
 msgid "You do an impromptu tapdance."
 msgstr "당신은 즉흥적으로 탭댄스를 추었다."
 
-#: xom.cc:2600
+#: xom.cc:2600 xom.cc:2651
 msgid "A fancy cane briefly appears in your "
 msgstr "당신에게 잠시 동안, "
 
-#: xom.cc:2602
+#: xom.cc:2602 xom.cc:2653
 msgctxt "xomzeromiscast"
 msgid "."
 msgstr "의 모습이 나타났다."
 
-#: xom.cc:2608
+#: xom.cc:2608 xom.cc:2659
 msgid "Your cloak billows in an unfelt wind."
 msgstr "당신의 망토는 미풍에 나부꼈다."
 
-#: xom.cc:2612 xom.cc:2633 xom.cc:2639 xom.cc:2665 xom.cc:2678
+#: xom.cc:2612 xom.cc:2633 xom.cc:2639 xom.cc:2665 xom.cc:2678 xom.cc:2663
+#: xom.cc:2684 xom.cc:2690 xom.cc:2716 xom.cc:2729
 msgctxt "xomzeromiscast"
 msgid "Your "
 msgstr "당신의 "
 
-#: xom.cc:2614
+#: xom.cc:2614 xom.cc:2665
 msgid " leaps into the air, briefly spins, then lands back on your head!"
 msgstr "이(가) 바람에 날려 올라갔다가, 한 바퀴 돌아 당신의 머리 위로 착지했다!"
 
-#: xom.cc:2626
+#: xom.cc:2626 xom.cc:2677
 msgid "You compulsively click the heels of your "
 msgstr "당신은 강제적으로, 당신의"
 
-#: xom.cc:2628
+#: xom.cc:2628 xom.cc:2679
 msgid " together three times."
 msgstr "의 가장자리를 세 번 가량 눌렀다."
 
-#: xom.cc:2635
+#: xom.cc:2635 xom.cc:2686
 msgid " spins!"
 msgstr "이(가) 빙빙 돌았다!"
 
-#: xom.cc:2641
+#: xom.cc:2641 xom.cc:2692
 msgid " briefly flashes a lurid colour!"
 msgstr "이(가) 잠시 형형색색으로 반짝였다!"
 
-#: xom.cc:2652
+#: xom.cc:2652 xom.cc:2703
 msgid "The scales on your "
 msgstr "당신의 "
 
-#: xom.cc:2654
+#: xom.cc:2654 xom.cc:2705
 msgid " wiggle briefly."
 msgstr "에 달린 비늘이 잠시 꿈틀거렸다."
 
-#: xom.cc:2658
+#: xom.cc:2658 xom.cc:2709
 msgid "The fur on your "
 msgstr "당신의 "
 
-#: xom.cc:2660
+#: xom.cc:2660 xom.cc:2711
 msgid " grows longer at an alarming rate, then retracts back to normal."
 msgstr "에 달린 털이 급속도로 자라났다가, 원래대로 되돌아갔다."
 
-#: xom.cc:2667
+#: xom.cc:2667 xom.cc:2718
 msgid " briefly grows fur, then returns to normal."
 msgstr "에 동물의 털들이 자라났다가, 곧 원래대로 되돌아갔다."
 
-#: xom.cc:2671
+#: xom.cc:2671 xom.cc:2722
 msgid "You briefly become tangled in your "
 msgstr "당신은 잠시 당신의 "
 
 #. pluralise(name);
-#: xom.cc:2673
+#: xom.cc:2673 xom.cc:2724
 msgctxt "xomzerorobe"
 msgid "."
 msgstr "에 양 팔이 엉켰다."
 
-#: xom.cc:2680
+#: xom.cc:2680 xom.cc:2731
 msgid " briefly appears rusty."
 msgstr "이(가) 잠시 녹이 슨 듯 보였다."
 
-#: xom.cc:2696
+#: xom.cc:2696 xom.cc:2747
 msgctxt "xomzeromiscast"
 msgid "glow"
 msgstr "반짝였다"
 
-#: xom.cc:2696
+#: xom.cc:2696 xom.cc:2747
 msgctxt "xomzeromiscast"
 msgid "vibrate"
 msgstr "떨렸다"
 
 #. if (item->quantity == 1)
 #. verb += "s";
-#: xom.cc:2701
+#: xom.cc:2701 xom.cc:2752
 msgctxt "xomzeromiscast"
 msgid " briefly "
 msgstr "이(가) 잠시 "
 
-#: xom.cc:3092
+#: xom.cc:3092 xom.cc:3095
 msgid "Ray didn't cross stairs."
 msgstr "광선은 계단을 지나가지 못했다."
 
-#: xom.cc:3120
+#: xom.cc:3120 xom.cc:3122
 #, c-format
 msgid "%s slides %s you!"
 msgstr "%s이(가) 당신%s!"
 
-#: xom.cc:3121
+#: xom.cc:3121 xom.cc:3123
 msgctxt "xom"
 msgid "away from"
 msgstr "으로부터 멀어져 도망갔다"
 
-#: xom.cc:3121
+#: xom.cc:3121 xom.cc:3123
 msgctxt "xom"
 msgid "towards"
 msgstr "에게 가까이 다가왔다"
@@ -34846,35 +34692,36 @@ msgstr "무기가 살아남 (%s)"
 msgid "summons %d hostile demon%s"
 msgstr "%d 마리의 적대적인 악마%s을(를) 소환"
 
-#: xom.cc:3443
+#: xom.cc:3443 xom.cc:3463
 msgid "revert banishment"
 msgstr "추방으로부터의 복귀"
 
-#: xom.cc:3787
+#: xom.cc:3787 xom.cc:3873
 msgid " asks Xom for help in punishing you, and Xom happily agrees."
 msgstr "은(는) 좀에게 당신을 징벌할 것을 요청했고, 좀은 즐겁게 받아들였다."
 
-#: xom.cc:3793
+#: xom.cc:3793 xom.cc:3879
 msgid " calls in a favour from Xom."
 msgstr "은(는) 좀에게 협동을 요구했다."
 
-#: xom.cc:3846
+#: xom.cc:3846 xom.cc:3932
 msgid "XOM is BORED!"
 msgstr "*좀이 지루해하고 있다!*"
 
-#: xom.cc:3885 xom.cc:3898
+#: xom.cc:3885 xom.cc:3898 xom.cc:3971 xom.cc:3984
 msgid "You are now "
 msgstr "넌 이제부터, "
 
-#: xom.cc:3911 xom.cc:3927 xom.cc:3938 xom.cc:4076 xom.cc:4075
+#: xom.cc:3911 xom.cc:3927 xom.cc:3938 xom.cc:4076 xom.cc:4075 xom.cc:3997
+#: xom.cc:4024
 msgid "Xom snickers."
 msgstr "좀은 낄낄거리며 웃었다."
 
-#: xom.cc:3939
+#: xom.cc:3939 xom.cc:4025
 msgid "Xom snickers softly."
 msgstr "좀은 부드럽게 웃었다."
 
-#: xom.cc:4088
+#: xom.cc:4088 xom.cc:4174
 msgid "Xom revives you!"
 msgstr "좀이 당신을 부활시켰다!"
 
@@ -37122,3 +36969,65 @@ msgstr "턴     | 장소     | 이력"
 #, c-format
 msgid "%u creature%s vanquished."
 msgstr "%d마리의 몬스터%s을(를) 처치했다."
+
+#: beam.cc:3694
+#, c-format
+msgid "Your attached jelly eats %s!"
+msgstr "당신의 젤리가 %s을(를) 먹어치웠다!"
+
+#: melee_attack.cc:4802
+#, c-format
+msgid "Your tendrils lash around %s %s and pull it to the ground!"
+msgstr "당신의 덩굴손이 %s %s을(를) 쳐내 땅으로 떨어트렸다!"
+
+#: mon-death.cc:139
+msgid "No longer under Kirke's spell, the hogs revert to their human forms!"
+msgstr "키르케의 마법이 풀리고, 돼지들은 본래의 인간으로 되돌아왔다!"
+
+#: mon-death.cc:142
+msgid "No longer under Kirke's spell, the hogs revert to their original forms!"
+msgstr "키르케의 마법이 풀리고, 돼지들은 본래 모습으로 되돌아왔다!"
+
+#: abl-show.cc:2605
+msgid "You stop recalling your allies."
+msgstr "소집을 중단했다."
+
+#: player-equip.cc:315
+msgid "You feel a build-up of mutagenic energy."
+msgstr "변이의 마력이 강해지는 것을 느꼈다."
+
+#: potion.cc:430
+msgid "You feel fantastic!"
+msgstr "이것은 아주 환상적인 맛이다!"
+
+#: throw.cc:1213
+msgctxt "verb"
+msgid "blinds"
+msgstr "의 눈을 일시적으로 멀게 했다"
+
+#: ng-setup.cc:1462
+msgid " thought your last joke was hilarious!"
+msgstr "은(는) 당신의 마지막 농담이 매우 우습다고 생각했다!"
+
+#: xom.cc:2224
+msgid "scenery: "
+msgstr "풍경: "
+
+#: xom.cc:2311
+#, c-format
+msgid "enchant monster %s"
+msgstr "몬스터 강화 %s"
+
+#: xom.cc:3392
+#, c-format
+msgid "summons %d hostile %s%s"
+msgstr "%d 마리의 적대적인 %s%s을(를) 소환"
+
+#: xom.cc:3393
+msgctxt "xom"
+msgid "shadow creature"
+msgstr "그림자"
+
+#: xom.cc:3541
+msgid "blink monster(s)"
+msgstr "몬스터(들)을 순간이동시킴"

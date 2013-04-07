@@ -1,4 +1,4 @@
-// mutation definitions:
+﻿// mutation definitions:
 // first  number  = probability (0 means it doesn't appear naturally
 //                  unless you have some level of it already)
 // second number  = maximum levels

@@ -1,4 +1,4 @@
-#include "AppHdr.h"
+﻿#include "AppHdr.h"
 
 #include "ng-setup.h"
 

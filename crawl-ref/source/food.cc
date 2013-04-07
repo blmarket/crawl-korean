@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions for eating and butchering.
 **/

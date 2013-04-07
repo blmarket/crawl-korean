@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Potion and potion-like effects.
 **/

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions with decks of cards.
 **/
