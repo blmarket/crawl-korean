@@ -51,7 +51,7 @@ COMPILE_CHECK(TILE_DNGN_UNSEEN == 0);
 // These brands start with "normal" which there's no tile for, so subtract 1.
 COMPILE_CHECK(NUM_REAL_SPECIAL_WEAPONS - 1
               == TILE_BRAND_WEP_LAST - TILE_BRAND_WEP_FIRST + 1);
-COMPILE_CHECK(NUM_SPECIAL_ARMOURS - 1
+COMPILE_CHECK(NUM_REAL_SPECIAL_ARMOURS - 1
               == TILE_BRAND_ARM_LAST - TILE_BRAND_ARM_FIRST + 1);
 
 COMPILE_CHECK(NUM_RINGS == TILE_RING_ID_LAST - TILE_RING_ID_FIRST + 1);
@@ -3151,7 +3151,7 @@ static tileidx_t _tileidx_missile_base(const item_def &item)
     case MI_STONE:        return TILE_MI_STONE;
     case MI_LARGE_ROCK:   return TILE_MI_LARGE_ROCK;
     case MI_THROWING_NET: return TILE_MI_THROWING_NET;
-
+    case MI_PIE:          return TILE_MI_PIE;
 
     case MI_DART:
         switch (brand)
@@ -4313,6 +4313,9 @@ tileidx_t tileidx_item_throw(const item_def &item, int dx, int dy)
                 break;
             case MI_THROWING_NET:
                 ch = TILE_MI_THROWING_NET0;
+                break;
+            case MI_PIE:
+                ch = TILE_MI_PIE0;
             default:
                 break;
         }
@@ -4870,7 +4873,9 @@ tileidx_t tileidx_skill(skill_type skill, int train)
     case SK_ARMOUR:         ch = TILEG_ARMOUR_ON; break;
     case SK_DODGING:        ch = TILEG_DODGING_ON; break;
     case SK_STEALTH:        ch = TILEG_STEALTH_ON; break;
+#if TAG_MAJOR_VERSION == 34
     case SK_STABBING:       ch = TILEG_STABBING_ON; break;
+#endif
     case SK_SHIELDS:        ch = TILEG_SHIELDS_ON; break;
     case SK_TRAPS:          ch = TILEG_TRAPS_ON; break;
     case SK_UNARMED_COMBAT: ch = TILEG_UNARMED_COMBAT_ON; break;
@@ -5061,6 +5066,8 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_DELAYED_FIREBALL;
     case ABIL_END_TRANSFORMATION:
         return TILEG_ABILITY_END_TRANSFORMATION;
+    case ABIL_STOP_RECALL:
+        return TILEG_ABILITY_STOP_RECALL;
 
     // Species-specific abilities.
     // Demonspawn-only
@@ -5360,8 +5367,10 @@ tileidx_t tileidx_known_brand(const item_def &item)
             return TILE_BRAND_PARALYSIS;
         case SPMSL_SLOW:
             return TILE_BRAND_SLOWING;
+#if TAG_MAJOR_VERSION == 34
         case SPMSL_SICKNESS:
             return TILE_BRAND_SICKNESS;
+#endif
         case SPMSL_RAGE:
             return TILE_BRAND_RAGE;
         case SPMSL_SLEEP:

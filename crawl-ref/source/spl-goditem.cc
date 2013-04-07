@@ -483,10 +483,14 @@ int detect_items(int pow)
         map_radius = 8 + random2(8) + pow;
     else
     {
-        ASSERT(you.religion == GOD_ASHENZARI);
-        map_radius = min(you.piety / 20, LOS_RADIUS);
-        if (map_radius <= 0)
-            return 0;
+        if (you.religion == GOD_ASHENZARI)
+        {
+            map_radius = min(you.piety / 20, LOS_RADIUS);
+            if (map_radius <= 0)
+                return 0;
+        }
+        else // MUT_JELLY_GROWTH
+            map_radius = 6;
     }
 
     for (radius_iterator ri(you.pos(), map_radius, C_ROUND); ri; ++ri)
@@ -868,13 +872,13 @@ static bool _do_imprison(int pow, const coord_def& where, bool zin)
 
         // Make sure we have a legitimate tile.
         proceed = false;
-        if (!zin)
+        if (!zin && !monster_at(*ai))
         {
             for (unsigned int i = 0; i < ARRAYSZ(safe_tiles) && !proceed; ++i)
                 if (grd(*ai) == safe_tiles[i] || feat_is_trap(grd(*ai), true))
                     proceed = true;
         }
-        else if (!feat_is_solid(grd(*ai)))
+        else if (zin && !feat_is_solid(grd(*ai)))
             proceed = true;
 
         if (proceed)

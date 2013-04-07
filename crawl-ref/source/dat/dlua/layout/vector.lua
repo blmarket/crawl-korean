@@ -28,11 +28,11 @@ vector.directions = util.append({},vector.normals,vector.diagonals)
 
 -- Moves from a start point along a movement vector mapped to actual vectors xVector/yVector
 -- This allows us to deal with coords independently of how they are rotated to the dungeon grid
-function vector.mapped_vector_add(start, move, xVector, yVector)
+function vector.add_mapped(start, move, xMap, yMap)
 
   return {
-    x = start.x + (move.x * xVector.x) + (move.y * yVector.x),
-    y = start.y + (move.x * xVector.y) + (move.y * yVector.y)
+    x = start.x + (move.x * xMap.x) + (move.y * yMap.x),
+    y = start.y + (move.x * xMap.y) + (move.y * yMap.y)
   }
 
 end

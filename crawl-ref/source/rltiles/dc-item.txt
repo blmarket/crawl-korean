@@ -435,6 +435,16 @@ rock MI_LARGE_ROCK
 # flying rock
 effect/rock0 MI_LARGE_ROCK0
 
+pie MI_PIE
+effect/pie0 MI_PIE0
+effect/pie1 MI_PIE1
+effect/pie2 MI_PIE2
+effect/pie3 MI_PIE3
+effect/pie4 MI_PIE4
+effect/pie5 MI_PIE5
+effect/pie6 MI_PIE6
+effect/pie7 MI_PIE7
+
 ######OBJ_ARMOUR
 %sdir item/armour
 robe1 ARM_ROBE
@@ -559,6 +569,8 @@ lshield_louise LSHIELD_LOUISE
 %sdir item/armour/headgear
 #####ARM_HELMET
 elven_leather_helm THELM_CAP
+cap_jester THELM_CAP_JESTER
+
 wizard_hat1 THELM_WIZARD_HAT
 wizard_hat2
 
@@ -613,6 +625,7 @@ i-archery BRAND_ARM_ARCHERY BRAND_ARM_LAST
 
 ###########OBJ_WANDS
 %sdir item/wand
+%rim 0
 gem_iron WAND_OFFSET UNSEEN_WAND
 gem_brass
 gem_bone
@@ -625,6 +638,7 @@ gem_ivory
 gem_glass
 gem_lead
 gem_plastic
+%rim 1
 
 %sdir item/wand
 i-flame WAND_FLAME WAND_ID_FIRST
@@ -942,7 +956,8 @@ i-mutation POT_MUTATION
 i-resistance POT_RESISTANCE
 i-blood POT_BLOOD
 i-coagulated-blood POT_BLOOD_COAGULATED
-i-fizzing POT_FIZZING POT_ID_LAST
+i-fizzing POT_FIZZING
+i-good-mutation POT_BENEFICIAL_MUTATION POT_ID_LAST
 %back none
 %rim 1
 

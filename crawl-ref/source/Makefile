@@ -121,7 +121,7 @@ CFOPTIMIZE := -O2
 endif # USE_ICC
 
 CFOTHERS := -pipe $(EXTERNAL_FLAGS)
-CFWARN := -Wall -Wformat-security
+CFWARN := -Wall -Wformat-security -Wmissing-declarations
 CFWARN_L := -Wundef
 
 DEFINES := $(EXTERNAL_DEFINES)
@@ -252,9 +252,6 @@ ifdef USE_GETTEXT
 		LIBS += -L/opt/local/lib
 		INCLUDES_L += -I/opt/local/include
 	endif
-endif
-ifdef USE_LUAJIT
-	BUILD_LUA := YesPlease
 endif
 ifdef USE_ICC
 	NO_RDYNAMIC := YesPlease
@@ -583,18 +580,26 @@ ifndef BUILD_LUA
   endif
 endif
 ifndef BUILD_LUA
-  ifneq ($(shell $(PKGCONFIG) lua5.1 --exists || echo no),)
-    ifneq ($(shell $(PKGCONFIG) lua --exists || echo no),)
-      BUILD_LUA = yes
+  ifneq ($(USE_LUAJIT),)
+    ifeq ($(shell $(PKGCONFIG) luajit --exists || echo no),)
+      LUA_PACKAGE = luajit
     else
-      ifeq ($(shell $(PKGCONFIG) lua --modversion | head -c 3),5.1)
-        LUA_PACKAGE = lua
-      else
-        BUILD_LUA = yes
-      endif
+      BUILD_LUA = yes
     endif
   else
-    LUA_PACKAGE = lua5.1
+    ifneq ($(shell $(PKGCONFIG) lua5.1 --exists || echo no),)
+      ifneq ($(shell $(PKGCONFIG) lua --exists || echo no),)
+        BUILD_LUA = yes
+      else
+        ifeq ($(shell $(PKGCONFIG) lua --modversion | head -c 3),5.1)
+          LUA_PACKAGE = lua
+        else
+          BUILD_LUA = yes
+        endif
+      endif
+    else
+      LUA_PACKAGE = lua5.1
+    endif
   endif
 endif
 ifndef BUILD_LUA
@@ -1358,7 +1363,8 @@ clean: clean-rltiles clean-webserver clean-android
 	+$(MAKE) -C $(UTIL) clean
 	$(RM) $(GAME) $(GAME).exe $(GENERATED_FILES) $(EXTRA_OBJECTS) libw32c.o\
 	    libunix.o $(ALL_OBJECTS) $(ALL_OBJECTS:.o=.d) *.ixx  \
-	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d util/fake_pty
+	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d util/fake_pty \
+            rltiles/tiledef-unrand.cc
 	$(RM) -r build-win
 	$(RM) -r build
 
@@ -1462,8 +1468,8 @@ $(foreach t,$(CONTRIB_LIBS),$(if $(wildcard $t),,$(shell rm -f .contrib-libs)))
 #############################################################################
 # Build unrandart data
 art-data.h: art-data.txt util/art-data.pl art-func.h
-	$(QUIET_GEN)util/art-data.pl
-art-enum.h: art-data.h
+	util/art-data.pl
+art-enum.h rltiles/dc-unrand.txt rltiles/tiledef-unrand.cc: art-data.h
 
 mon-mst.h: mon-spll.h util/gen-mst.pl
 	$(QUIET_GEN)util/gen-mst.pl
@@ -1489,7 +1495,7 @@ macro.o: cmd-name.h
 # RLTiles
 #
 
-.PHONY: build-rltiles
+#.PHONY: build-rltiles
 build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
 ifdef ANDROID
         # force submake to run properly

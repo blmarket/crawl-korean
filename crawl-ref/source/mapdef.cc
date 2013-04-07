@@ -4501,7 +4501,8 @@ void item_list::set_from_slot(const item_list &list, int slot_index)
 // NOTE: Be sure to update the reference in syntax.txt if this gets moved!
 static int _str_to_ego(item_spec &spec, string ego_str)
 {
-    const char* armour_egos[] = {
+    const char* armour_egos[] =
+    {
         "running",
         "fire_resistance",
         "cold_resistance",
@@ -4525,9 +4526,10 @@ static int _str_to_ego(item_spec &spec, string ego_str)
         "archery",
         NULL
     };
-    COMPILE_CHECK(ARRAYSZ(armour_egos) == NUM_SPECIAL_ARMOURS);
+    COMPILE_CHECK(ARRAYSZ(armour_egos) == NUM_REAL_SPECIAL_ARMOURS);
 
-    const char* weapon_brands[] = {
+    const char* weapon_brands[] =
+    {
         "flaming",
         "freezing",
         "holy_wrath",
@@ -4558,7 +4560,8 @@ static int _str_to_ego(item_spec &spec, string ego_str)
     };
     COMPILE_CHECK(ARRAYSZ(weapon_brands) == NUM_REAL_SPECIAL_WEAPONS);
 
-    const char* missile_brands[] = {
+    const char* missile_brands[] =
+    {
         "flame",
         "ice",
         "poisoned",
@@ -4574,11 +4577,13 @@ static int _str_to_ego(item_spec &spec, string ego_str)
         "slow",
         "sleep",
         "confusion",
+#if TAG_MAJOR_VERSION == 34
         "sickness",
+#endif
         "wrath",
         NULL
     };
-    COMPILE_CHECK(ARRAYSZ(missile_brands) == NUM_SPECIAL_MISSILES);
+    COMPILE_CHECK(ARRAYSZ(missile_brands) == NUM_REAL_SPECIAL_MISSILES);
 
     const char** name_lists[3] = {armour_egos, weapon_brands, missile_brands};
 

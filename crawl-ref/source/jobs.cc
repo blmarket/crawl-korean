@@ -15,7 +15,7 @@ static const char * Job_Abbrev_List[ NUM_JOBS ] =
       "St",
 #endif
       "Mo", "Wr", "Wn", "Ar", "AM",
-      "DK", "AK" };
+      "DK", "AK", "Jr" };
 
 static const char * Job_Name_List[ NUM_JOBS ] =
     { M_("Fighter"), M_("Wizard"), M_("Priest"),
@@ -29,7 +29,7 @@ static const char * Job_Name_List[ NUM_JOBS ] =
       M_("Stalker"),
 #endif
       M_("Monk"), M_("Warper"), M_("Wanderer"), M_("Artificer"), M_("Arcane Marksman"),
-      M_("Death Knight"), M_("Abyssal Knight") };
+      M_("Death Knight"), M_("Abyssal Knight"), M_("Jester") };
 
 const char *get_job_abbrev(int which_job)
 {

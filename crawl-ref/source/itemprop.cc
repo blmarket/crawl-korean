@@ -377,6 +377,7 @@ static const missile_def Missile_prop[NUM_MISSILES] =
     { MI_SLING_BULLET,  M_("sling bullet"),  6,    4, false },
     { MI_JAVELIN,       M_("javelin"),      10,   80, true  },
     { MI_THROWING_NET,  M_("throwing net"),  0,   30, true  },
+    { MI_PIE,           M_("pie"),           2,    6, true  },
 };
 
 enum food_flag_type
@@ -811,10 +812,6 @@ void set_equip_race(item_def &item, iflags_t flags)
         break;
 
     case OBJ_MISSILES:
-        if (item.sub_type > MI_MAX_RACIAL)
-            return;
-        break;
-
     default:
         return;
     }
@@ -1893,7 +1890,8 @@ bool has_launcher(const item_def &ammo)
     return (ammo.sub_type != MI_DART
             && ammo.sub_type != MI_LARGE_ROCK
             && ammo.sub_type != MI_JAVELIN
-            && ammo.sub_type != MI_THROWING_NET);
+            && ammo.sub_type != MI_THROWING_NET
+            && ammo.sub_type != MI_PIE);
 }
 
 // Returns true if item can be reasonably thrown without a launcher.
@@ -2075,11 +2073,19 @@ int food_value(const item_def &item)
 {
     ASSERT(item.defined());
 
-    if (item.base_type != OBJ_FOOD) // TRAN_JELLY
+    if (item.base_type != OBJ_FOOD && item.sub_type != MI_PIE) // TRAN_JELLY
         return max(1, item_mass(item) * 5);
 
     const int herb = player_mutation_level(MUT_HERBIVOROUS);
     const int carn = player_mutation_level(MUT_CARNIVOROUS);
+
+    if (item.sub_type == MI_PIE)
+    {
+        int ret = 1500;
+        ret += carn * -500;
+        ret += herb * 125;
+        return ret;
+    }
 
     const food_def &food = Food_prop[Food_index[item.sub_type]];
 

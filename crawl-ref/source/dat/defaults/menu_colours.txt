@@ -72,7 +72,8 @@ menu += cyan:.*misc.*[lL]antern
 menu += $dangerous:.*dangerous_item.*
 
 # Defaults for normal items
-menu += green:(?<!tried on )uncursed
+menu += lightgrey:tried on uncursed
+menu += green:uncursed
 menu += green:(?<!tried on )저주받지 않은
 
 # Colouring of autoinscribed god gifts
@@ -81,7 +82,6 @@ menu_colour += pickup:green:god gift
 # Highlight (partly) selected items
 menu_colour += inventory:white:\w \+\s
 menu_colour += inventory:white:\w \#\s
-
 
 # Not really menu.
 menu_colour += notes:white:Reached XP level

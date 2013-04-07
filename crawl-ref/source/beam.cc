@@ -3684,6 +3684,18 @@ void bolt::affect_player()
                 was_affected = true;
             }
         }
+
+        if (you.mutation[MUT_JELLY_MISSILE]
+            && you.hp < you.hp_max
+            && !you.duration[DUR_DEATHS_DOOR]
+            && is_item_jelly_edible(*item)
+            && coinflip())
+        {
+            mprf(_("Your attached jelly eats %s!"), item->name(true, DESC_PLAIN).c_str());
+            inc_hp(random2(hurted / 2));
+            mpr(_("You feel a little better."));
+            drop_item = false;
+        }
     }
 
     // Sticky flame.
@@ -5653,13 +5665,16 @@ bool bolt::nasty_to(const monster* mon) const
     if (flavour == BEAM_TELEPORT)
         return !mon->wont_attack();
 
-    // degeneration / sleep / enslave soul
+    // degeneration / enslave soul
     if (flavour == BEAM_DEGENERATE
-        || flavour == BEAM_HIBERNATION
         || flavour == BEAM_ENSLAVE_SOUL)
     {
         return (mon->holiness() == MH_NATURAL);
     }
+
+    // sleep
+    if (flavour == BEAM_HIBERNATION)
+        return mon->can_hibernate(true);
 
     // dispel undead
     if (flavour == BEAM_DISPEL_UNDEAD)

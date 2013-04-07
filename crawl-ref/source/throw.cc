@@ -922,6 +922,7 @@ static bool _slow_hit_victim(bolt &beam, actor* victim, int dmg)
     return true;
 }
 
+#if TAG_MAJOR_VERSION == 34
 static bool _sickness_hit_victim(bolt &beam, actor* victim, int dmg)
 {
     if (beam.is_tracer)
@@ -934,6 +935,7 @@ static bool _sickness_hit_victim(bolt &beam, actor* victim, int dmg)
     victim->sicken(40 + random2(blowgun_power));
     return true;
 }
+#endif
 
 static bool _rage_hit_victim(bolt &beam, actor* victim, int dmg)
 {
@@ -947,6 +949,25 @@ static bool _rage_hit_victim(bolt &beam, actor* victim, int dmg)
         victim->as_monster()->go_frenzy();
     else
         victim->go_berserk(false);
+
+    return true;
+}
+
+static bool _blind_hit_victim(bolt &beam, actor* victim, int dmg)
+{
+    if (beam.is_tracer)
+        return false;
+
+    if (!victim->is_monster())
+    {
+        victim->confuse(beam.agent(), 7);
+        return true;
+    }
+
+    if (victim->as_monster()->has_ench(ENCH_BLIND))
+        return false;
+
+    victim->as_monster()->add_ench(mon_enchant(ENCH_BLIND, 1, beam.agent(), 35));
 
     return true;
 }
@@ -1082,8 +1103,11 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
     const bool slow         = ammo_brand == SPMSL_SLOW;
     const bool sleep        = ammo_brand == SPMSL_SLEEP;
     const bool confusion    = ammo_brand == SPMSL_CONFUSION;
+#if TAG_MAJOR_VERSION == 34
     const bool sickness     = ammo_brand == SPMSL_SICKNESS;
+#endif
     const bool rage         = ammo_brand == SPMSL_RAGE;
+    const bool blinding     = ammo_brand == SPMSL_BLINDING;
 
     ASSERT(!exploding || !is_artefact(item));
 
@@ -1176,10 +1200,18 @@ static bool _setup_missile_beam(const actor *agent, bolt &beam, item_def &item,
             beam.hit_funcs.push_back(_sleep_hit_victim);
         if (confusion)
             beam.hit_funcs.push_back(_confusion_hit_victim);
+#if TAG_MAJOR_VERSION == 34
         if (sickness)
             beam.hit_funcs.push_back(_sickness_hit_victim);
+#endif
         if (rage)
             beam.hit_funcs.push_back(_rage_hit_victim);
+    }
+
+    if (blinding)
+    {
+        beam.hit_verb = "blinds";
+        beam.hit_funcs.push_back(_blind_hit_victim);
     }
 
     if (disperses && item.special != SPMSL_DISPERSAL)
@@ -1763,7 +1795,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
         if (wepClass == OBJ_WEAPONS
             || (wepClass == OBJ_MISSILES
                 && (wepType == MI_STONE || wepType == MI_LARGE_ROCK
-                    || wepType == MI_DART || wepType == MI_JAVELIN)))
+                    || wepType == MI_DART || wepType == MI_JAVELIN
+                    || wepType == MI_PIE)))
         {
             // Elves with elven weapons.
             if (get_equip_race(item) == ISFLAG_ELVEN
@@ -1846,7 +1879,8 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 break;
 
             case MI_DART:
-                // Darts also using throwing skills, now.
+            case MI_PIE:
+                // Darts and pies use throwing skill.
                 exHitBonus += skill_bump(SK_THROWING);
                 exDamBonus += you.skill(SK_THROWING, 3) / 5;
                 break;
@@ -1865,12 +1899,12 @@ bool throw_it(bolt &pbolt, int throw_2, bool teleport, int acc_bonus,
                 break;
 
             case MI_THROWING_NET:
-                // Nets use throwing skill.  They don't do any damage!
+                // Nets use throwing skill. They don't do any damage!
                 baseDam = 0;
                 exDamBonus = 0;
                 ammoDamBonus = 0;
 
-                // ...but accuracy is important for this one.
+                // ...but accuracy is important for them.
                 baseHit = 1;
                 exHitBonus += skill_bump(SK_THROWING, 7) / 2;
                 // Adjust for strength and dex.
@@ -2490,6 +2524,9 @@ bool thrown_object_destroyed(item_def *item, const coord_def& where)
     case MI_NEEDLE:
         chance = (brand == SPMSL_CURARE ? 6 : 12);
         break;
+
+    case MI_PIE:
+        return true;
 
     case MI_SLING_BULLET:
     case MI_STONE:

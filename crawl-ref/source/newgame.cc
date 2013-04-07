@@ -186,6 +186,11 @@ static bool _is_job_valid_choice(job_type job)
     if (job < 0 || job > NUM_JOBS)
         return false;
 
+#if TAG_MAJOR_VERSION == 34
+    if (job == JOB_STALKER)
+        return false;
+#endif
+
     return true;
 }
 
@@ -1016,7 +1021,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
         {
             P_("Jobgroup","Adventurer"),
             coord_def(0, 7), 15,
-            {JOB_ARTIFICER, JOB_WANDERER, JOB_UNKNOWN, JOB_UNKNOWN,
+            {JOB_ARTIFICER, JOB_JESTER, JOB_WANDERER, JOB_UNKNOWN,
              JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {

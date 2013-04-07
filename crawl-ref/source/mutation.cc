@@ -910,7 +910,8 @@ static mutation_type _get_random_slime_mutation()
 {
     const mutation_type slime_muts[] = {
         MUT_GELATINOUS_BODY, MUT_EYEBALLS, MUT_TRANSLUCENT_SKIN,
-        MUT_PSEUDOPODS, MUT_FOOD_JELLY, MUT_ACIDIC_BITE
+        MUT_PSEUDOPODS, MUT_ACIDIC_BITE, MUT_TENDRILS,
+        MUT_JELLY_GROWTH, MUT_JELLY_MISSILE
     };
 
     return RANDOM_ELEMENT(slime_muts);
@@ -941,7 +942,8 @@ static bool _is_slime_mutation(mutation_type m)
 {
     return (m == MUT_GELATINOUS_BODY || m == MUT_EYEBALLS
             || m == MUT_TRANSLUCENT_SKIN || m == MUT_PSEUDOPODS
-            || m == MUT_FOOD_JELLY || m == MUT_ACIDIC_BITE);
+            || m == MUT_ACIDIC_BITE || m == MUT_TENDRILS
+            || m == MUT_JELLY_GROWTH || m == MUT_JELLY_MISSILE);
 }
 
 static mutation_type _get_random_xom_mutation()
@@ -1275,8 +1277,8 @@ static bool _undead_rot()
 }
 
 bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
-            bool force_mutation, bool god_gift, bool stat_gain_potion,
-            bool demonspawn, bool no_rot, bool temporary)
+            bool force_mutation, bool god_gift, bool demonspawn, bool no_rot,
+            bool temporary)
 {
     if (!god_gift)
     {
@@ -1302,7 +1304,7 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         if (!god_gift)
         {
             if ((you.rmut_from_item()
-                 && !one_chance_in(temporary ? 3 : 10) && !stat_gain_potion)
+                 && !one_chance_in(temporary ? 3 : 10))
                 || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                 || (player_mutation_level(MUT_MUTATION_RESISTANCE)
                     && !one_chance_in(temporary ? 2 : 3)))
@@ -1319,34 +1321,16 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         // Zin's protection.
         if (you.religion == GOD_ZIN
             && (x_chance_in_y(you.piety, MAX_PIETY)
-                || x_chance_in_y(you.piety, MAX_PIETY + 22))
-            && !stat_gain_potion)
+                || x_chance_in_y(you.piety, MAX_PIETY + 22)))
         {
             simple_god_message("은(는) 당신의 몸을 변이로부터 지켜냈다!"); // simple_god_message(" protects your body from mutation!");
             return false;
         }
     }
 
-    bool rotting = _undead_rot();
-
-    if (you.is_undead == US_SEMI_UNDEAD)
-    {
-        // The stat gain mutations always come through at Satiated or
-        // higher (mostly for convenience), and, for consistency, also
-        // their negative counterparts.
-        if (which_mutation == MUT_STRONG || which_mutation == MUT_CLEVER
-            || which_mutation == MUT_AGILE || which_mutation == MUT_WEAK
-            || which_mutation == MUT_DOPEY || which_mutation == MUT_CLUMSY)
-        {
-            if (you.hunger_state >= HS_SATIATED)
-                rotting = false;
-        }
-        // Else, chances depend on hunger state.
-    }
-
     // Undead bodies don't mutate, they fall apart. -- bwr
     // except for demonspawn (or other permamutations) in lichform -- haranp
-    if (rotting && !demonspawn)
+    if (_undead_rot() && !demonspawn)
     {
         if (no_rot)
             return false;
@@ -2225,7 +2209,7 @@ bool perma_mutate(mutation_type which_mut, int how_much, const string &reason)
     while (how_much-- > 0)
     {
         if (you.mutation[which_mut] < cap
-            && !mutate(which_mut, reason, false, true, false, false, true))
+            && !mutate(which_mut, reason, false, true, false, true))
         {
             return levels; // a partial success was still possible
         }
@@ -2260,7 +2244,7 @@ bool temp_mutate(mutation_type which_mut, const string &reason)
 
     int old_level = you.mutation[which_mut];
 
-    if (mutate(which_mut, reason, false, false, false, false, false, false, true))
+    if (mutate(which_mut, reason, false, false, false, false, false, true))
     {
         // Only increment temp mutation tracking if we actually gained a mutation.
         if (you.mutation[which_mut] > old_level)

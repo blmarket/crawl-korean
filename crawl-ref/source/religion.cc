@@ -2786,12 +2786,16 @@ static void _gain_piety_point()
                     simple_god_message("은(는) 단 한번, 당신의 모든 변이를 치료해줄 것이다.");
                     break;
                 case GOD_SHINING_ONE:
+                    if (you.species == SP_FELID)
+                        break;
                     simple_god_message("은(는) 단 한번, 제단에 있는 당신의 무기에 축복을 부여해 줄 것이다.");
                     break;
                 case GOD_KIKUBAAQUDGHA:
                     simple_god_message("은(는) 단 한번, 제단에 있는 당신의 강령술을 강화시켜줄 것이다.");
                     break;
                 case GOD_LUGONU:
+                    if (you.species == SP_FELID)
+                        break;
                     simple_god_message("은(는) 단 한번, 제단에 있는 당신의 무기를 왜곡시켜줄 것이다.");
                     break;
                 case GOD_JIYVA:
@@ -2859,7 +2863,7 @@ void lose_piety(int pgn)
                 simple_god_message(
                     "은(는) 이제 변이를 치유해줄 준비가 되어 있지 않다.");
             }
-            else if (you.religion == GOD_SHINING_ONE)
+            else if (you.religion == GOD_SHINING_ONE && you.species != SP_FELID)
             {
                 simple_god_message(
                     "은(는) 이제 무기에 축복을 부여할 준비가 되어 있지 않다.");
@@ -2869,7 +2873,7 @@ void lose_piety(int pgn)
                 simple_god_message(
                     "은(는) 이제 당신의 강령술을 강화시킬 준비가 되어 있지 않다.");
             }
-            else if (you.religion == GOD_LUGONU)
+            else if (you.religion == GOD_LUGONU && you.species != SP_FELID)
             {
                 simple_god_message(
                     "은(는) 이제 무기에 왜곡을 부여할 준비가 되어 있지 않다.");

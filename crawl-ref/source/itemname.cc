@@ -425,8 +425,10 @@ static const char* _missile_brand_name(special_missile_type brand, mbn_type t)
         return (t == MBN_TERSE ? M_("sleep") : M_("sleeping"));
     case SPMSL_CONFUSION:
         return (t == MBN_TERSE ? M_("conf") : M_("confusion"));
+#if TAG_MAJOR_VERSION == 34
     case SPMSL_SICKNESS:
         return (t == MBN_TERSE ? M_("sick") : M_("sickness"));
+#endif
     case SPMSL_RAGE:
         return M_("frenzy");
     case SPMSL_RETURNING:
@@ -437,6 +439,8 @@ static const char* _missile_brand_name(special_missile_type brand, mbn_type t)
         return (t == MBN_TERSE ? M_("penet") : M_("penetration"));
     case SPMSL_DISPERSAL:
         return (t == MBN_TERSE ? M_("disperse") : M_("dispersal"));
+    case SPMSL_BLINDING:
+        return (t == MBN_TERSE ? M_("blind") : M_("blinding"));
     case SPMSL_NORMAL:
         return "";
     default:
@@ -657,9 +661,11 @@ static const char* potion_type_name(int potiontype)
     case POT_MIGHT:             return M_("might");
     case POT_AGILITY:           return M_("agility");
     case POT_BRILLIANCE:        return M_("brilliance");
+#if TAG_MAJOR_VERSION == 34
     case POT_GAIN_STRENGTH:     return M_("gain strength");
     case POT_GAIN_DEXTERITY:    return M_("gain dexterity");
     case POT_GAIN_INTELLIGENCE: return M_("gain intelligence");
+#endif
     case POT_FLIGHT:            return M_("flight");
     case POT_POISON:            return M_("poison");
     case POT_SLOWING:           return M_("slowing");
@@ -680,7 +686,8 @@ static const char* potion_type_name(int potiontype)
     case POT_BLOOD_COAGULATED:  return M_("coagulated blood");
     case POT_RESISTANCE:        return M_("resistance");
     case POT_FIZZING:           return M_("fizzing liquid");
-    default:                    return M_("bugginess");
+    case POT_BENEFICIAL_MUTATION: return M_("beneficial mutation");
+    default:                    return "bugginess";
     }
 }
 
@@ -1427,7 +1434,9 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
         buff << check_gettext(ammo_name(static_cast<missile_type>(item_typ)));
 
-        if (brand != SPMSL_NORMAL && !basename && !qualname && !dbname)
+        if (brand != SPMSL_NORMAL
+            && brand != SPMSL_BLINDING
+            && !basename && !qualname && !dbname)
         {
             if (terse)
 				buff << " (" <<  ((!translate_flag) ? _missile_brand_name(brand, MBN_TERSE) : _(_missile_brand_name(brand, MBN_TERSE)))  << ")";
@@ -2075,9 +2084,12 @@ bool item_type_known(const object_class_type base_type, const int sub_type)
     return (you.type_ids[base_type][sub_type] == ID_KNOWN_TYPE);
 }
 
-bool item_type_tried(const item_def& item)
+bool item_type_tried(const item_def &item)
 {
-    if (item_type_known(item))
+    if (!is_artefact(item) && item_type_known(item))
+        return false;
+
+    if (fully_identified(item))
         return false;
 
     if (item.flags & ISFLAG_TRIED)
@@ -2963,9 +2975,11 @@ bool is_good_item(const item_def &item)
         switch (item.sub_type)
         {
         case POT_CURE_MUTATION:
+#if TAG_MAJOR_VERSION == 34
         case POT_GAIN_STRENGTH:
         case POT_GAIN_INTELLIGENCE:
         case POT_GAIN_DEXTERITY:
+#endif
         case POT_EXPERIENCE:
             return true;
         default:
@@ -2993,11 +3007,6 @@ bool is_bad_item(const item_def &item, bool temp)
                 return false;
         case SCR_CURSE_JEWELLERY:
             return (you.religion != GOD_ASHENZARI);
-        case SCR_SUMMONING:
-            // Summoning will sometimes produce unholy monsters (and anger
-            // your god, if you are worshipping a good one. (Use temp to
-            // allow autopickup to prevent monsters from reading it.)
-            return (temp && is_good_god(you.religion));
         default:
             return false;
         }
@@ -3237,9 +3246,12 @@ bool is_useless_item(const item_def &item, bool temp)
                             || temp && you.hunger_state <= HS_SATIATED));
 
         case POT_CURE_MUTATION:
+#if TAG_MAJOR_VERSION == 34
         case POT_GAIN_STRENGTH:
         case POT_GAIN_INTELLIGENCE:
         case POT_GAIN_DEXTERITY:
+#endif
+        case POT_BENEFICIAL_MUTATION:
             return (you.is_undead
                         && (you.species != SP_VAMPIRE
                             || temp && you.hunger_state < HS_SATIATED));
@@ -3299,7 +3311,7 @@ bool is_useless_item(const item_def &item, bool temp)
                         && you.species != SP_GHOUL);
 
         case AMU_FAITH:
-            return (you.species == SP_DEMIGOD);
+            return (you.species == SP_DEMIGOD && !you.religion);
 
         case RING_LIFE_PROTECTION:
             return (player_prot_life(false, temp, false) == 3);

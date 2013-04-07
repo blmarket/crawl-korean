@@ -225,7 +225,7 @@ skeletons cannot leave the level they were created on.
 %%%%
 Recall Undead Slaves
 
-Recall your undead followers from anywhere on the level to your immediate
+Recall your undead followers from anywhere in the dungeon to your immediate
 surroundings.
 %%%%
 Injury Mirror
@@ -453,10 +453,14 @@ just seeing the enemy is enough.
 %%%%
 Recall Orcish Followers
 
-Recall your orcish followers from anywhere on the level to your immediate
+Recall your orcish followers from anywhere in the dungeon to your immediate
 surroundings.
 %%%%
-# Fedhas(페다스)
+Stop Recall
+
+Stop recalling your followers.
+%%%%
+# Fedhas
 Sunlight
 
 Call sunlight down over a small area of the dungeon. Monsters illuminated by

@@ -2213,9 +2213,7 @@ static bool _drink_fountain()
                                    20,  POT_RESISTANCE,
                                    20,  POT_STRONG_POISON,
                                    20,  POT_BERSERK_RAGE,
-                                   4,   POT_GAIN_STRENGTH,
-                                   4,   POT_GAIN_INTELLIGENCE,
-                                   4,   POT_GAIN_DEXTERITY,
+                                   12,  POT_BENEFICIAL_MUTATION,
                                    0);
     }
 

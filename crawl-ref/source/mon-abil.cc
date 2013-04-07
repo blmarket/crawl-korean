@@ -441,7 +441,7 @@ static void _lose_turn(monster* mons, bool has_gone)
 // abomination.
 static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
 {
-    int orighd = merge_to->hit_dice;
+    const int orighd = merge_to->hit_dice;
     int addhd = crawlie->hit_dice;
 
     // Need twice as many HD past 15.
@@ -456,14 +456,14 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
 
     if (newhd < 6)
     {
-        // Not big enough for an abomination yet
+        // Not big enough for an abomination yet.
         new_type = MONS_MACABRE_MASS;
         mhp = merge_to->max_hit_points + crawlie->max_hit_points;
         hp = merge_to->hit_points += crawlie->hit_points;
     }
     else
     {
-        // Need 11 HD and 3 corpses for a large abomination
+        // Need 11 HD and 3 corpses for a large abomination.
         if (newhd < 11
             || (crawlie->type == MONS_CRAWLING_CORPSE
                 && merge_to->type == MONS_CRAWLING_CORPSE))
@@ -482,18 +482,20 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
 
         if (merge_to->type == MONS_ABOMINATION_SMALL)
         {
-            // Adding to an existing abomination
-            int hp_gain = hit_points(addhd, 2, 5);
+            // Adding to an existing abomination.
+            const int hp_gain = hit_points(addhd, 2, 5);
             mhp = merge_to->max_hit_points + hp_gain;
             hp = merge_to->hit_points + hp_gain;
         }
         else
-            // Making a new abomination
+        {
+            // Making a new abomination.
             hp = mhp = hit_points(newhd, 2, 5);
+        }
     }
 
-    monster_type old_type = merge_to->type;
-    string old_name = merge_to->name(DESC_A);
+    const monster_type old_type = merge_to->type;
+    const string old_name = merge_to->name(DESC_A);
 
     // Change the monster's type if we need to.
     if (new_type != old_type)
@@ -517,21 +519,25 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
     // Messaging.
     if (you.can_see(merge_to))
     {
-        bool changed = new_type != old_type;
+        const bool changed = new_type != old_type;
         if (you.can_see(crawlie))
         {
             // FIXME: I don't know about plu enums
             if (crawlie->type == old_type)
+            {
                 mprf(_("Two %s merge%s%s."),
                      pluralise(PLU_MON_SUFFIX, crawlie->name(DESC_PLAIN)).c_str(),
                      changed ? _(" to form ") : "",
-                     changed ? merge_to->name(DESC_PLAIN).c_str() : "");
+                     changed ? merge_to->name(DESC_A).c_str() : "");
+            }
             else
+            {
                 mprf(_("%s merges with %s%s%s."),
                      crawlie->name(DESC_PLAIN).c_str(),
                      old_name.c_str(),
-                     changed ? " to form " : "",
+                     changed ? _(" to form ") : "",
                      changed ? merge_to->name(DESC_PLAIN).c_str() : "");
+            }
         }
         else if (changed)
         {
@@ -545,14 +551,13 @@ static bool _do_merge_crawlies(monster* crawlie, monster* merge_to)
     else if (you.can_see(crawlie))
         mprf(_("%s suddenly disappears!"), crawlie->name(DESC_PLAIN).c_str());
 
-    // Now kill the other monster
+    // Now kill the other monster.
     monster_die(crawlie, KILL_DISMISSED, NON_MONSTER, true);
 
     return true;
 }
 
-
-// Actually merge two slime creature, pooling their hp, etc.
+// Actually merge two slime creatures, pooling their hp, etc.
 // initial_slime is the one that gets killed off by this process.
 static bool _do_merge_slimes(monster* initial_slime, monster* merge_to)
 {
@@ -2657,8 +2662,11 @@ void move_child_tentacles(monster* mons)
 
         if (pull_constrictee)
         {
-            mprf(_("The tentacle pulls %s backwards!"),
-                 constrictee->name(DESC_THE).c_str());
+            if (you.can_see(tentacle))
+            {
+                mprf(_("The tentacle pulls %s backwards!"),
+                     constrictee->name(DESC_THE).c_str());
+            }
 
             if (constrictee->as_player())
                 move_player_to_grid(old_pos, false, true);

@@ -6,15 +6,100 @@
 : require("dlua/util.lua")
 : require("dlua/layout/procedural.lua")
 : require("dlua/layout/zonify.lua")
+: require("dlua/layout/hyper.lua")
+
+# A similar idea to layered_grids - pick two or three different noise
+# functions from weighted selections and draw them overwritten.
+NAME:   layout_layer_cave
+DEPTH:  D:3-27,Lair,Snake
+WEIGHT: 20
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand
+{{
+  layout_type "caves"
+  if is_validating() then return; end
+
+  local gxm,gym = dgn.max_bounds()
+
+  -- First pass
+  -- These should be sprawling corridors that will connect up the
+  -- bigger features of the second pass
+  local limit = 0.6
+  -- TODO: Implement these functions as rooms and use hyper so we
+  -- can automatically get randomised size/position and door carving
+  local pweights = {
+    -- Cavernous areas
+--    { weight = 10, func = function()
+  --      limit = 0.51
+    --    return procedural.simplex3d { scale = 1 }
+      --end },
+    -- Twisty paths
+    { weight = 10, func = function()
+        limit = 0.2
+        return procedural.abs(procedural.simplex3d { scale = util.random_range_real(.5,1), unit = false })
+      end },
+    -- Angular paths
+    { weight = 10, func = function()
+        limit = 0.3
+        return procedural.worley_diff { scale = util.random_range_real(.2,.4) }
+      end },
+  }
+
+  local primary = procedural.add(
+    util.random_weighted_from("weight",pweights).func(),
+    procedural.mul(procedural.border { padding = 8 }, limit)
+  )
+
+  procedural.render_map(_G,primary,function(v) return v < limit and '.' or 'x' end)
+
+  -- Second pass
+  limit = 0.2
+  local sweights = {
+    { weight = 10, func = nil },
+    -- Large blobby rooms
+    { weight = 10, func = function()
+        limit = util.random_range_real(0.2,0.4)
+        return procedural.simplex3d { scale = util.random_range_real(.2,.4) }
+      end },
+    -- More angular rooms
+    { weight = 10, func = function()
+        limit = 0.5
+        return procedural.sub(1,procedural.worley_diff { scale = util.random_range_real(.02,.1) } )
+      end },
+    -- A big central cavern
+    { weight = 10, func = function()
+        limit = 0.8
+        return procedural.add(
+          procedural.distance { origin = { x = gxm/2, y = gym/2 }, radius = math.min(gxm,gym)/3 },
+          procedural.worley_diff { scale = util.random_range_real(.4,.8) })
+      end },
+  }
+  local schoice = util.random_weighted_from("weight",sweights)
+  -- Add or remove?
+  -- TODO: It produces some very cool variations but sometimes
+  -- results in very small levels. These are still fairly interesting though,
+  -- is it a bad thing? (Should maybe use a separate negative pass anyway)
+  local glyph = crawl.coinflip() and 'x' or '.'
+  if schoice.func ~= nil then
+    local secondary = procedural.add(
+      schoice.func(),
+      procedural.mul(procedural.border { padding = 8 }, limit)
+    )
+    procedural.render_map(_G,secondary,function(v) return v < limit and glyph or nil end)
+  end
+
+  zonify.map_fill_zones(_G, 1, 'x')
+}}
 
 # The premise here is we pick a random shape function and apply cavelike edges.
 # We optionally apply a fairly large-scale domain distortion to the underlying shape.
 # TODO: * Some flooding/river on 1/10 chance (certain branches)
 #       * More shape variety
 #       * Some shapes work better in certain branches. Snake/D could occasionally get straight edged shapes.
-#       * Sake should have domain distortion every time
+#       * Snake should have domain distortion every time (use the one from Halls)
+#       * It should be possible to fold most of these effects into layer_cave
 NAME:   layout_cave_shapes
-DEPTH:  D:5-25,Lair,Snake
+DEPTH:  D:5-25,Lair,Snake,Tar,Coc,Spider
 WEIGHT: 20
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
@@ -46,7 +131,7 @@ TAGS: overwritable layout allow_dup unrand
     { weight = 8, shape = function()
         local outer_r = util.random_range_real(0.6,1.0)
         local circle = fcircle()
-        local cwidth = util.random_range_real(0.2,0.4)
+        local cwidth = util.random_range_real(0.3,0.5)
         local fdonut = function(x,y)
           return 1-procedural.boundary_map(circle(x,y),outer_r-cwidth,outer_r-cwidth*2/3,outer_r-cwidth/3,outer_r)
         end
@@ -121,9 +206,11 @@ TAGS: overwritable layout allow_dup unrand
 }}
 
 # This will have a very open area in the middle and rubble around the edges
+# TODO: This looks very much like a particular instance of cave_shapes. Probably little point keeping it around
+# unless it can do something more interesting?
 NAME:   layout_ant_hill
 DEPTH:  D:5-25,Lair
-WEIGHT: 20
+WEIGHT: 10
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{
@@ -164,6 +251,113 @@ TAGS: overwritable layout allow_dup unrand
   fill_disconnected{wanted = '@'}
   mapgrd[midx][midy] = '.'
 }}
+
+# Intended as a series of interconnected roughly geometrically-shaped rooms
+# for e.g. Dis/Zot, came out much more organic like a burrow of caves.
+NAME:   layout_cave_pods
+DEPTH:  Snake,Lair,Spider
+WEIGHT: 20
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand
+{{
+  layout_type "caves"
+  if is_validating() then return; end
+  local gxm,gym = dgn.max_bounds()
+
+  -- TODO: Add some branch-appropriate domain distortion / water
+  -- TODO: Randomise scales of rooms and corridors (need to scale
+  -- corridor width up and down with noise scale too otherwise they end up hugely wrong size)
+  local frooms = procedural.worley_diff{ scale = 0.15 }
+  local fcorridors = procedural.worley_diff{ scale = 0.1 }
+  local fhalls = procedural.sub(fcorridors,procedural.mul(frooms,0.5))
+  local fbord = procedural.border{ padding = 4,additive = true }
+  frooms = procedural.sub(frooms,fbord)
+  fcorridors = procedural.add(fcorridors,procedural.mul(fbord,0.3))
+
+  procedural.render_map(_G, fcorridors, function(v) return (v < 0.08 and '.' or 'x') end)
+  procedural.render_map(_G, frooms, function(v) return (v > 0.4 and '.' or nil) end)
+
+  zonify.map_fill_zones(_G, 1, 'x')
+}}
+MAP
+ENDMAP
+
+# This is a very similar version of the previous one and
+# should really be folded in with randomisation
+NAME:   layout_chambers
+DEPTH:  Snake,Lair,Spider
+WEIGHT: 10
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand
+{{
+  layout_type "chambers"
+  if is_validating() then return; end
+  local gxm,gym = dgn.max_bounds()
+
+  local frooms = procedural.worley_diff{ scale = 0.2 }
+  local fcorridors = procedural.worley_diff{ scale = 0.3 }
+  local fhalls = procedural.sub(fcorridors,procedural.mul(frooms,0.5))
+  local fbord = procedural.border{ padding = 4,additive = true }
+  frooms = procedural.sub(frooms,fbord)
+  fcorridors = procedural.add(fcorridors,procedural.mul(fbord,0.3))
+
+  procedural.render_map(_G, fcorridors, function(v) return (v < .15 and '.' or 'x') end)
+  procedural.render_map(_G, frooms, function(v) return (v > 0.3 and '.' or nil) end)
+
+  zonify.map_fill_zones(_G, 1, 'x')
+}}
+MAP
+ENDMAP
+
+# A big cavern with a few huts or caves in it
+# TODO: Use other layouts as the base (e.g. cave_shapes, a river/forest/pools layout like bigger_room,
+# even swamp / shoals) and add rooms to them
+NAME: layout_cave_town
+WEIGHT: 0
+ORIENT: encompass
+DEPTH: D:5-, Snake, Lair
+TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup no_hmirror no_vmirror chance_d
+{{
+  if is_validating() then return; end
+
+  -- Similar size calculations to chaotic_city
+  local function room_size_func()
+    return { x = 5 + crawl.random2(7) + crawl.random2(5),y = 5 + crawl.random2(7) + crawl.random2(5) }
+  end
+  local function room_size_func_small()
+    return { x = 4 + crawl.random2(4) + crawl.random2(3),y = 4 + crawl.random2(4) + crawl.random2(3) }
+  end
+  local function room_size_func_big()
+    return { x = 7 + crawl.random2(9) + crawl.random2(7),y = 7 + crawl.random2(9) + crawl.random2(7) }
+  end
+
+  local weights = {
+    { weight = 10, room = hyper.rooms.cavern_vault },
+    { weight = 10, room = hyper.rooms.cave_vault },
+  }
+
+  local chosen = util.random_weighted_from("weight",weights)
+
+  -- This is a very simple approximation of layout_chaotic_city. It's almost identical with a little hyperness.
+  local gxm,gym = dgn.max_bounds()
+  hyper.build_layout(_G,{
+    name = "Hyper City",
+    build_fixture = {
+      { pass = "Primary", type = "build", strategy = hyper.place.strategy_primary, max_rooms = 1, generators = {
+        { generator = "code", paint_callback = hyper.floors.cavern_walls, min_size_x = gxm-12, max_size_x = gxm-2, min_size_y = gym-12, max_size_y = gym-2, place_padding = 1 },
+        { generator = "code", paint_callback = hyper.rooms.cave_walls, min_size_x = gxm-12, max_size_x = gxm-2, min_size_y = gym-12, max_size_y = gym-2, place_padding = 1 }
+      } },
+      { pass = "Rooms", type = "build", strategy = hyper.place.strategy_open, max_rooms = 12, generators = {
+        { generator = "code", class = "room", weight = 5, paint_callback = chosen.room, size_callback = room_size_func_big, room_transform = hyper.rooms.add_walls, max_rooms = 3 },
+        { generator = "code", class = "room", weight = 15, paint_callback = chosen.room, size_callback = room_size_func, room_transform = hyper.rooms.add_walls },
+        { generator = "code", class = "room", weight = 10, paint_callback = chosen.room, size_callback = room_size_func_small,  room_transform = hyper.rooms.add_walls },
+      } }
+    }
+  })
+  zonify.grid_fill_zones(1,"rock_wall")
+}}
+MAP
+ENDMAP
 
 NAME:   layout_gehenna_lava_paths
 DEPTH:  Geh
@@ -253,6 +447,48 @@ TAGS: overwritable layout allow_dup unrand
 
   zonify.map_fill_zones(_G, 1, 'l')
 
+}}
+MAP
+ENDMAP
+
+NAME:   layout_ice_bergs
+DEPTH:  Coc
+CHANCE: 100%
+WEIGHT: 10
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand chance_cocytus
+{{
+  layout_type "caverns"
+  if is_validating() then return; end
+  local gxm,gym = dgn.max_bounds()
+
+  -- There is precedent for requiring flight in Coc, so could have
+  -- a chance that not all bergs will get connected up
+  -- Disabled until it's implemented better
+  local connect_up = true -- crawl.x_chance_in_y(5,6)
+  local nilresult = 'w'
+  if connect_up then
+    local fcorridors = procedural.worley_diff{ scale = 0.15 }
+    procedural.render_map(_G, fcorridors, function(v) return (v < .1 and 'W' or nilresult) end)
+    nilresult = nil
+  end
+
+  local fbord = procedural.border{ padding = 4,additive = true }
+  local fcave = procedural.add(fbord,procedural.worley_diff { scale = 0.2 })
+  procedural.render_map(_G, fcave, function(v) return (v >= 0.8 and 'x' or nilresult) end)
+
+  local fbergs = procedural.worley_diff{ scale = 0.2 }
+  fbergs = procedural.sub(fbergs,fbord)
+  procedural.render_map(_G, fbergs, function(v)
+    if v > 0.6 then return "x"
+    elseif v > 0.2 then return "."
+    else return nil end
+    -- return (v > 0.3 and '.' or nil)
+  end)
+
+  if connect_up then
+    zonify.map_fill_zones(_G, 1, 'x')
+  end
 }}
 MAP
 ENDMAP

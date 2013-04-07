@@ -109,8 +109,8 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         }
         break;
 
-      case POT_BLOOD:
-      case POT_BLOOD_COAGULATED:
+    case POT_BLOOD:
+    case POT_BLOOD_COAGULATED:
         if (you.species == SP_VAMPIRE)
         {
             // No healing anymore! (jpeg)
@@ -200,20 +200,22 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         break;
     }
 
+#if TAG_MAJOR_VERSION == 34
     case POT_GAIN_STRENGTH:
-        if (mutate(MUT_STRONG, "potion of gain strength", true, false, false, true))
+        if (mutate(MUT_STRONG, "potion of gain strength"))
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
     case POT_GAIN_DEXTERITY:
-        if (mutate(MUT_AGILE, "potion of gain dexterity", true, false, false, true))
+        if (mutate(MUT_AGILE, "potion of gain dexterity"))
             learned_something_new(HINT_YOU_MUTATED);
         break;
 
     case POT_GAIN_INTELLIGENCE:
-        if (mutate(MUT_CLEVER, "potion of gain intelligence", true, false, false, true))
+        if (mutate(MUT_CLEVER, "potion of gain intelligence"))
             learned_something_new(HINT_YOU_MUTATED);
         break;
+#endif
 
     case POT_FLIGHT:
         if (you.form == TRAN_TREE)
@@ -423,6 +425,15 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
         learned_something_new(HINT_YOU_MUTATED);
         did_god_conduct(DID_DELIBERATE_MUTATING, 10, was_known);
         break;
+
+    case POT_BENEFICIAL_MUTATION:
+        mpr("You feel fantastic!");
+        mutate(RANDOM_GOOD_MUTATION, "potion of beneficial mutation", false);
+
+        learned_something_new(HINT_YOU_MUTATED);
+        did_god_conduct(DID_DELIBERATE_MUTATING, 10, was_known);
+        break;
+
 
     case POT_RESISTANCE:
         mpr(_("You feel protected."), MSGCH_DURATION);

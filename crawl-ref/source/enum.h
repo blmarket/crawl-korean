@@ -178,6 +178,9 @@ enum ability_type
     ABIL_ASHENZARI_TRANSFER_KNOWLEDGE,
     ABIL_ASHENZARI_END_TRANSFER,
 
+    // For both Yred and Beogh
+    ABIL_STOP_RECALL,
+
     // General divine (pseudo) abilities.
     ABIL_RENOUNCE_RELIGION,
 
@@ -562,6 +565,7 @@ enum canned_message_type
     MSG_DECK_EXHAUSTED,
     MSG_EVOCATION_SUPPRESSED,
     MSG_BEING_WATCHED,
+    MSG_CANNOT_MOVE,
 };
 
 enum char_set_type
@@ -1834,6 +1838,7 @@ enum job_type
     JOB_ARCANE_MARKSMAN,
     JOB_DEATH_KNIGHT,
     JOB_ABYSSAL_KNIGHT,
+    JOB_JESTER,
     NUM_JOBS,                          // always after the last job
 
     JOB_UNKNOWN = 100,
@@ -2753,17 +2758,19 @@ enum mutation_type
     MUT_WEAK,
     MUT_WILD_MAGIC,
     MUT_UNBREATHING,
-
-    // Jiyva-specific mutations
     MUT_ACIDIC_BITE,
     MUT_EYEBALLS,
+#if TAG_MAJOR_VERSION == 34
     MUT_FOOD_JELLY,
+#endif
     MUT_GELATINOUS_BODY,
     MUT_PSEUDOPODS,
     MUT_TRANSLUCENT_SKIN,
-
     MUT_EVOLUTION,
     MUT_AUGMENTATION,
+    MUT_TENDRILS,
+    MUT_JELLY_GROWTH,
+    MUT_JELLY_MISSILE,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION,
@@ -2850,9 +2857,11 @@ enum potion_type
     POT_MIGHT,
     POT_BRILLIANCE,
     POT_AGILITY,
+#if TAG_MAJOR_VERSION == 34
     POT_GAIN_STRENGTH,
     POT_GAIN_DEXTERITY,
     POT_GAIN_INTELLIGENCE,
+#endif
     POT_FLIGHT,
     POT_POISON,
     POT_SLOWING,
@@ -2876,6 +2885,7 @@ enum potion_type
     POT_BLOOD,
     POT_BLOOD_COAGULATED,
     POT_FIZZING,
+    POT_BENEFICIAL_MUTATION,
     NUM_POTIONS
 };
 
@@ -3002,7 +3012,9 @@ enum skill_type
     SK_ARMOUR,
     SK_DODGING,
     SK_STEALTH,
+#if TAG_MAJOR_VERSION == 34
     SK_STABBING,
+#endif
     SK_SHIELDS,
     SK_TRAPS,
     SK_UNARMED_COMBAT,
@@ -3596,6 +3608,7 @@ enum daction_type
 #if TAG_MAJOR_VERSION == 34
     DACT_SLIME_NEW_ATTEMPT,
 #endif
+    DACT_KIRKE_HOGS,
     NUM_DACTIONS,
 };
 

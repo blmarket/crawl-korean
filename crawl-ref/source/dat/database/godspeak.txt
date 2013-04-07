@@ -410,6 +410,9 @@ Xom inner flame
 "태워버려라, 내 아이야, 태워라!"
 
 좀은 주변에 뜨거운 기운을 일으켰다.
+
+w:1
+"지옥의 불로, 모든 것을 끝내버리자고!"
 %%%%
 Xom accidental homicide
 

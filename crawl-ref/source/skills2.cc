@@ -86,7 +86,9 @@ static const char *skills[NUM_SKILLS][6] =
     {M_("Armour"),         M_("Covered"),       M_("Protected"),       M_("Tortoise"),        M_("Impregnable"),    M_("Invulnerable")},
     {M_("Dodging"),        M_("Ducker"),        M_("Nimble"),          M_("Spry"),            M_("Acrobat"),        M_("Intangible")},
     {M_("Stealth"),        M_("Sneak"),         M_("Covert"),          M_("Unseen"),          M_("Imperceptible"),  M_("Ninja")},
+#if TAG_MAJOR_VERSION == 34
     {M_("Stabbing"),       M_("Miscreant"),     M_("Blackguard"),      M_("Backstabber"),     M_("Cutthroat"),      M_("Politician")},
+#endif
     {M_("Shields"),        M_("Shield-Bearer"), M_("Hoplite"),         M_("Blocker"),         M_("Peltast"),        M_("@Adj@ Barricade")},
     {M_("Traps"),          M_("Scout"),         M_("Disarmer"),        M_("Vigilant"),        M_("Perceptive"),     M_("Dungeon Master")},
     // STR based fighters, for DEX/martial arts titles see below.  Felids get their own category, too.
@@ -482,6 +484,10 @@ void calc_mp()
 
 bool is_useless_skill(skill_type skill)
 {
+#if TAG_MAJOR_VERSION == 34
+    if (skill == SK_STABBING)
+        return true;
+#endif
     return species_apt(skill) == -99;
 }
 

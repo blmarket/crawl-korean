@@ -112,12 +112,13 @@ static void _create_monster_hide(const item_def corpse)
         die("an unknown hide drop");
     }
 
-    int o = items(0, OBJ_ARMOUR, type, false, 0, MAKE_ITEM_NO_RACE, 0, 0, -1,
+    int o = items(0, OBJ_ARMOUR, type, true, 0, MAKE_ITEM_NO_RACE, 0, 0, -1,
                   true);
     if (o == NON_ITEM)
         return;
     item_def& item = mitm[o];
 
+    do_uncurse_item(item, false);
     const monster_type montype =
         static_cast<monster_type>(corpse.orig_monnum - 1);
     if (!invalid_monster_type(montype) && mons_is_unique(montype))
@@ -2325,6 +2326,9 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
 bool stop_attack_prompt(const monster* mon, bool beam_attack,
                         coord_def beam_target, bool autohit_first)
 {
+    if (crawl_state.disables[DIS_CONFIRMATIONS])
+        return false;
+
     if (you.confused() || !you.can_see(mon))
         return false;
 
@@ -2375,6 +2379,9 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
 bool stop_attack_prompt(targetter &hitfunc, string verb,
                         bool (*affects)(const actor *victim))
 {
+    if (crawl_state.disables[DIS_CONFIRMATIONS])
+        return false;
+
     if (crawl_state.which_god_acting() == GOD_XOM)
         return false;
 
@@ -2550,13 +2557,16 @@ void swap_with_monster(monster* mon_to_swap)
     }
 }
 
+/**
+ * Identify a worn piece of jewellery's type.
+ */
 void wear_id_type(item_def &item)
 {
-    if (item_ident(item, ISFLAG_KNOW_PROPERTIES))
+    if (item_ident(item, ISFLAG_KNOW_TYPE))
         return;
     set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
-    set_ident_flags(item, ISFLAG_KNOW_PROPERTIES);
-    mprf(gettext("You are wearing: %s"),
+    set_ident_flags(item, ISFLAG_KNOW_TYPE);
+    mprf(_("You are wearing: %s"),
          item.name(true, DESC_INVENTORY_EQUIP).c_str());
 }
 
@@ -2570,20 +2580,18 @@ static void _maybe_id_jewel(jewellery_type ring_type = NUM_JEWELLERY,
         bool artefact = (player_wearing_slot(i)
                          && is_artefact(you.inv[you.equip[i]]));
 
-        if (i == EQ_AMULET && amulet_type == NUM_JEWELLERY
-            && (artp == ARTP_NUM_PROPERTIES || !artefact))
-        {
-            continue;
-        }
+        bool art_relevant = artefact && artp != ARTP_NUM_PROPERTIES;
 
-        if (i != EQ_AMULET && ring_type == NUM_JEWELLERY
-            && (artp == ARTP_NUM_PROPERTIES || !artefact))
-        {
+        if (i == EQ_AMULET && amulet_type == NUM_JEWELLERY && !art_relevant)
             continue;
-        }
+
+        if (i != EQ_AMULET && ring_type == NUM_JEWELLERY && !art_relevant)
+            continue;
 
         if (player_wearing_slot(i)
-            && !item_ident(you.inv[you.equip[i]], ISFLAG_KNOW_PROPERTIES))
+            && !item_ident(you.inv[you.equip[i]], art_relevant
+                                                  ? ISFLAG_KNOW_PROPERTIES
+                                                  : ISFLAG_KNOW_TYPE))
         {
             ++num_unknown;
         }

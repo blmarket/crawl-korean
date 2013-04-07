@@ -256,7 +256,7 @@ static vector<string> _randart_propnames(const item_def& item,
     // For randart jewellery, note the base jewellery type if it's not
     // covered by artefact_desc_properties()
     if (item.base_type == OBJ_JEWELLERY
-        && item_ident(item, ISFLAG_KNOW_PROPERTIES))
+        && (item_ident(item, ISFLAG_KNOW_TYPE)))
     {
         const char* type = _jewellery_base_ability_string(item.sub_type);
         if (*type)
@@ -1174,9 +1174,11 @@ static string _describe_ammo(const item_def &item)
         case SPMSL_CONFUSION:
             description += gettext("It is tipped with a substance that causes confusion.");
             break;
+#if TAG_MAJOR_VERSION == 34
         case SPMSL_SICKNESS:
             description += gettext("It has been contaminated by something likely to cause disease.");
             break;
+#endif
         case SPMSL_RAGE:
             description += gettext("It is tipped with a substance that causes a mindless, "
                 "berserk rage, making people attack friend and foe alike.");

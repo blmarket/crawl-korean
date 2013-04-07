@@ -176,8 +176,12 @@ static int _missile_colour(const item_def &item)
     case MI_THROWING_NET:
         item_colour = DARKGREY;
         break;
-    default:
-        die("invalid missile type");
+    case MI_PIE:
+        item_colour = YELLOW;
+        break;
+    case NUM_SPECIAL_MISSILES:
+    case NUM_REAL_SPECIAL_MISSILES:
+        die("invalid missile brand");
     }
     return item_colour;
 }
@@ -1770,7 +1774,6 @@ static special_missile_type _determine_missile_brand(const item_def& item,
 
         rc = random_choose_weighted(20, SPMSL_SLEEP,
                                     20, SPMSL_SLOW,
-                                    20, SPMSL_SICKNESS,
                                     20, SPMSL_CONFUSION,
                                     10, SPMSL_PARALYSIS,
                                     10, SPMSL_RAGE,
@@ -1814,6 +1817,9 @@ static special_missile_type _determine_missile_brand(const item_def& item,
                                     20, SPMSL_SILVER,
                                     nw, SPMSL_NORMAL,
                                     0);
+        break;
+    case MI_PIE:
+        rc = SPMSL_BLINDING;
         break;
     case MI_STONE:
         // deliberate fall through
@@ -1871,9 +1877,14 @@ bool is_missile_brand_ok(int type, int brand, bool strict)
     case SPMSL_SLOW:
     case SPMSL_SLEEP:
     case SPMSL_CONFUSION:
+#if TAG_MAJOR_VERSION == 34
     case SPMSL_SICKNESS:
+#endif
     case SPMSL_RAGE:
         return (type == MI_NEEDLE);
+
+    case SPMSL_BLINDING:
+        return (type == MI_PIE);
 
     default:
         if (type == MI_NEEDLE)
@@ -1949,6 +1960,7 @@ static void _generate_missile_item(item_def& item, int force_type,
                                    12, MI_SLING_BULLET,
                                    10, MI_NEEDLE,
                                    2,  MI_JAVELIN,
+                                   1,  MI_PIE,
                                    1,  MI_THROWING_NET,
                                    1,  MI_LARGE_ROCK,
                                    0);
@@ -1987,6 +1999,8 @@ static void _generate_missile_item(item_def& item, int force_type,
     {
         item.quantity = random_range(2, 8);
     }
+    else if (item.sub_type == MI_PIE)
+        item.quantity = random_range(1, 4);
     else if (get_ammo_brand(item) != SPMSL_NORMAL)
         item.quantity = 1 + random2(7) + random2(10) + random2(10);
     else
@@ -2347,6 +2361,7 @@ bool is_armour_brand_ok(int type, int brand, bool strict)
         return (type == ARM_CAP || slot == EQ_SHIELD || !strict);
 
     case NUM_SPECIAL_ARMOURS:
+    case NUM_REAL_SPECIAL_ARMOURS:
         die("invalid armour brand");
     }
 
@@ -2673,11 +2688,9 @@ static void _generate_potion_item(item_def& item, int force_type,
                                              230, POT_DEGENERATION,
                                              180, POT_CURE_MUTATION,
                                              125, POT_STRONG_POISON,
+                                              90, POT_BENEFICIAL_MUTATION,
                                               85, POT_BLOOD,
                                               60, POT_PORRIDGE,
-                                              30, POT_GAIN_STRENGTH,
-                                              30, POT_GAIN_DEXTERITY,
-                                              30, POT_GAIN_INTELLIGENCE,
                                               10, POT_EXPERIENCE,
                                               10, POT_DECAY,
                                                0);
@@ -2691,9 +2704,12 @@ static void _generate_potion_item(item_def& item, int force_type,
         item.sub_type = stype;
     }
 
-    if (item.sub_type == POT_GAIN_STRENGTH
+    if (item.sub_type == POT_BENEFICIAL_MUTATION
+#if TAG_MAJOR_VERSION == 34
+        || item.sub_type == POT_GAIN_STRENGTH
         || item.sub_type == POT_GAIN_DEXTERITY
         || item.sub_type == POT_GAIN_INTELLIGENCE
+#endif
         || item.sub_type == POT_EXPERIENCE
         || item.sub_type == POT_RESTORE_ABILITIES)
     {
@@ -2833,7 +2849,15 @@ static void _generate_book_item(item_def& item, bool allow_uniques,
         if (one_chance_in(4))
             item.plus = SK_SPELLCASTING + random2(NUM_SKILLS - SK_SPELLCASTING);
         else
+#if TAG_MAJOR_VERSION == 34
+        {
             item.plus = random2(SK_UNARMED_COMBAT);
+            if (item.plus == SK_STABBING)
+                item.plus = SK_UNARMED_COMBAT;
+        }
+#else
+            item.plus = random2(SK_UNARMED_COMBAT + 1);
+#endif
         // Set number of bonus skill points.
         item.plus2 = random_range(2000, 3000);
     }

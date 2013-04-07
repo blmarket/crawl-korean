@@ -430,7 +430,8 @@ goods.
 %%%%
 A slime covered rock wall
 
-이 암벽은, 슬라임질의 산성 점액으로 두껍게 덮여 있다. 으으.
+This rock wall is thickly coated with bright green slime. Ewwwwww. It is acidic
+to the touch, seeming to grow more caustic the deeper you travel.
 %%%%
 A snail-covered altar of Cheibriados
 

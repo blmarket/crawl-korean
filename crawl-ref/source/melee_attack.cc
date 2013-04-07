@@ -753,6 +753,19 @@ bool melee_attack::handle_phase_damaged()
     if (shroud_broken)
         mpr(gettext("Your shroud falls apart!"), MSGCH_WARN);
 
+    if (defender->is_player() && you.mutation[MUT_JELLY_GROWTH]
+        && x_chance_in_y(damage_done, you.hp_max))
+    {
+        mgen_data mg(MONS_JELLY, BEH_STRICT_NEUTRAL, 0, 0, 0,
+                     you.pos(), MHITNOT, 0, you.religion);
+
+        if (create_monster(mg))
+        {
+            mpr("Your attached jelly is knocked off by the blow!");
+            you.mutation[MUT_JELLY_GROWTH] = 0;
+        }
+    }
+
     return true;
 }
 
@@ -800,7 +813,10 @@ bool melee_attack::handle_phase_end()
 
     // Check for passive mutation effects.
     if (defender->is_player() && defender->alive() && attacker != defender)
+    {
         mons_do_eyeball_confusion();
+        tendril_disarm();
+    }
 
     // This may invalidate both the attacker and defender.
     fire_final_effects();
@@ -830,6 +846,10 @@ bool melee_attack::attack()
 
     if (can_cleave && !cleaving)
         cleave_setup();
+
+    // Attacker might have died from effects of cleaving handled prior to this
+    if (!attacker->alive())
+        return false;
 
     // We might have killed the kraken target by cleaving a tentacle.
     if (!defender->alive())
@@ -1780,6 +1800,8 @@ int melee_attack::player_apply_final_multipliers(int damage)
 
 int melee_attack::player_stab_weapon_bonus(int damage)
 {
+    int stab_skill = you.skill(wpn_skill, 50) + you.skill(SK_STEALTH, 50);
+
     if (weapon && weapon->base_type == OBJ_WEAPONS
         && (weapon->sub_type == WPN_CLUB
             || weapon->sub_type == WPN_SPEAR
@@ -1795,7 +1817,7 @@ int melee_attack::player_stab_weapon_bonus(int damage)
     {
     case SK_SHORT_BLADES:
     {
-        int bonus = (you.dex() * (you.skill(SK_STABBING, 100) + 100)) / 500;
+        int bonus = (you.dex() * (stab_skill + 100)) / 500;
 
         if (weapon->sub_type != WPN_DAGGER)
             bonus /= 2;
@@ -1806,12 +1828,12 @@ int melee_attack::player_stab_weapon_bonus(int damage)
     // fall through
     ok_weaps:
     case SK_LONG_BLADES:
-        damage *= 10 + you.skill_rdiv(SK_STABBING) /
-                       (stab_bonus + (wpn_skill == SK_SHORT_BLADES ? 0 : 2));
+        damage *= 10 + div_rand_round(stab_skill, 100 *
+                       (stab_bonus + (wpn_skill == SK_SHORT_BLADES ? 0 : 2)));
         damage /= 10;
         // fall through
     default:
-        damage *= 12 + you.skill_rdiv(SK_STABBING, 1, stab_bonus);
+        damage *= 12 + div_rand_round(stab_skill, 100 * stab_bonus);
         damage /= 12;
         break;
     }
@@ -2910,10 +2932,6 @@ brand_type melee_attack::random_chaos_brand()
             if (defender->is_icy())
                 susceptible = false;
             break;
-        case SPWPN_ELECTROCUTION:
-            if (defender->airborne())
-                susceptible = false;
-            break;
         case SPWPN_VENOM:
             if (defender->holiness() == MH_UNDEAD)
                 susceptible = false;
@@ -3067,7 +3085,7 @@ bool melee_attack::apply_damage_brand()
 
     case SPWPN_ELECTROCUTION:
         noise_factor += 800 / max(1, damage_done);
-        if (defender->airborne() || defender->res_elec() > 0)
+        if (defender->res_elec() > 0)
             break;
         else if (one_chance_in(3))
         {
@@ -3081,9 +3099,8 @@ bool melee_attack::apply_damage_brand()
             // Check for arcing in water, and add the final effect.
             const coord_def& pos = defender->pos();
 
-            // We know the defender is neither airborne nor electricity
-            // resistant, from above, but we still have to make sure it
-            // is in water (and not clinging above it).
+            // We know the defender isn't electricity resistant, from
+            // above, but we still have to make sure it is in water.
             if (_conduction_affected(pos))
                 (new lightning_fineff(attacker, pos))->schedule();
         }
@@ -3992,7 +4009,9 @@ void melee_attack::player_stab_check()
     // See if we need to roll against dexterity / stabbing.
     if (stab_attempt && roll_needed)
     {
-        stab_attempt = x_chance_in_y(you.skill_rdiv(SK_STABBING) + you.dex() + 1,
+        stab_attempt = x_chance_in_y(you.skill_rdiv(wpn_skill, 1, 2)
+                                     + you.skill_rdiv(SK_STEALTH, 1, 2)
+                                     + you.dex() + 1,
                                      roll);
     }
 
@@ -4456,9 +4475,6 @@ void melee_attack::mons_apply_attack_flavour()
                 random2(attacker->get_experience_level() / 2));
         special_damage_flavour = BEAM_ELECTRICITY;
 
-        if (defender->airborne())
-            special_damage = special_damage * 2 / 3;
-
         if (needs_message && special_damage)
         {
             mprf(pgettext("shockattack","%s %s %s%s"),
@@ -4754,6 +4770,40 @@ void melee_attack::mons_do_eyeball_confusion()
                                           30 + random2(100)));
             }
         }
+    }
+}
+
+void melee_attack::tendril_disarm()
+{
+    monster *mon = attacker->as_monster();
+    item_def *mons_wpn = mon->mslot_item(MSLOT_WEAPON);
+
+    if (!mons_wpn)
+        return;
+
+    // assume the player would not pull weapons into terrain that would destroy them
+    if (!((feat_has_solid_floor(grd(you.pos()))
+           && feat_has_solid_floor(grd(mon->pos())))
+          || (feat_is_watery(grd(you.pos())) && species_likes_water(you.species)
+              && grd(mon->pos()) != DNGN_LAVA)))
+    {
+        return;
+    }
+
+    if (you.mutation[MUT_TENDRILS]
+        && attacker->alive()
+        && adjacent(you.pos(), mon->pos())
+        && you.can_see(mon)
+        && one_chance_in(5)
+        && (random2(you.dex()) > (mons_class_flag(mon->type, M_FIGHTER)) ? mon->hit_dice * 1.5 : mon->hit_dice
+            || random2(you.strength()) > (mons_class_flag(mon->type, M_FIGHTER)) ? mon->hit_dice * 1.5 : mon->hit_dice)
+        && !mons_wpn->cursed())
+    {
+        mprf(_("Your tendrils lash around %s %s and pull it to the ground!"),
+             apostrophise(mon->name(DESC_THE)).c_str(), mons_wpn->name(true, DESC_PLAIN).c_str());
+
+        mon->drop_item(MSLOT_WEAPON, false);
+        move_top_item(mon->pos(), you.pos());
     }
 }
 
@@ -5415,9 +5465,12 @@ int melee_attack::calc_damage()
 
 int melee_attack::apply_defender_ac(int damage, int damage_max)
 {
-    int stab_bypass = stab_bonus
-                      ? random2(you.skill_rdiv(SK_STABBING) / stab_bonus)
-                      : 0;
+    int stab_bypass = 0;
+    if (stab_bonus)
+    {
+        stab_bypass = you.skill(wpn_skill, 50) + you.skill(SK_STEALTH, 50);
+        stab_bypass = random2(div_rand_round(stab_bypass, 100 * stab_bonus));
+    }
     int after_ac = defender->apply_ac(damage, damage_max, AC_NORMAL,
                                       stab_bypass);
     dprf(DIAG_COMBAT, "AC: att: %s, def: %s, ac: %d, gdr: %d, dam: %d -> %d",

@@ -2413,7 +2413,7 @@ spret_type cast_battlesphere(actor* agent, int pow, god_type god, bool fail)
         if (!you.can_see(battlesphere))
         {
             coord_def empty;
-            if (empty_surrounds(agent->pos(), DNGN_FLOOR, 3, false, empty)
+            if (find_habitable_spot_near(agent->pos(), MONS_BATTLESPHERE, 3, false, empty)
                 && battlesphere->move_to_pos(empty))
             {
                 recalled = true;
@@ -2655,7 +2655,7 @@ void reset_battlesphere(monster* mons)
 
 bool fire_battlesphere(monster* mons)
 {
-    if (!mons || !mons->type == MONS_BATTLESPHERE)
+    if (!mons || mons->type != MONS_BATTLESPHERE)
         return false;
 
     actor* agent = actor_by_mid(mons->props["bs_mid"].get_int());

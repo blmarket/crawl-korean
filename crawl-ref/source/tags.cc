@@ -1921,6 +1921,10 @@ static void tag_read_you(reader &th)
     for (i = 0; i < count; ++i)
     {
         you.sage_skills[i] = static_cast<skill_type>(unmarshallByte(th));
+#if TAG_MAJOR_VERSION == 34
+        if (you.sage_skills[i] == SK_STABBING)
+            you.sage_skills[i] = SK_STEALTH;
+#endif
         ASSERT(!is_invalid_skill(you.sage_skills[i]));
         ASSERT(!is_useless_skill(you.sage_skills[i]));
         you.sage_xp[i] = unmarshallInt(th);
@@ -2842,6 +2846,13 @@ void unmarshallItem(reader &th, item_def &item)
 
             trim_string(item.inscription);
         }
+    }
+
+    // Upgrade item knowledge to cope with the fix for #1083
+    if (item.base_type == OBJ_JEWELLERY)
+    {
+        if (item.flags & ISFLAG_KNOW_PROPERTIES)
+            item.flags |= ISFLAG_KNOW_TYPE;
     }
 
     if (item.base_type == OBJ_POTIONS && item.sub_type == POT_WATER)

@@ -319,6 +319,12 @@ void up_stairs(dungeon_feature_type force_stair)
                                        : grd(you.pos()));
     const level_id  old_level = level_id::current();
 
+    if (you.form == TRAN_TREE)
+    {
+        canned_msg(MSG_CANNOT_MOVE);
+        return;
+    }
+
     // Up and down both work for shops.
     if (stair_find == DNGN_ENTER_SHOP)
     {
@@ -643,6 +649,12 @@ void down_stairs(dungeon_feature_type force_stair)
                             && get_trap_type(you.pos()) == TRAP_SHAFT
                         || force_stair == DNGN_TRAP_NATURAL);
     level_id shaft_dest;
+
+    if (you.form == TRAN_TREE)
+    {
+        canned_msg(MSG_CANNOT_MOVE);
+        return;
+    }
 
     // Up and down both work for shops.
     if (stair_find == DNGN_ENTER_SHOP)

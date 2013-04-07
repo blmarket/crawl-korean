@@ -1508,7 +1508,9 @@ unsigned int item_value(item_def item, bool ident)
             case SPMSL_SLOW:
             case SPMSL_SLEEP:
             case SPMSL_CONFUSION:
+#if TAG_MAJOR_VERSION == 34
             case SPMSL_SICKNESS:
+#endif
             case SPMSL_RAGE:
                 valued *= 23;
                 break;
@@ -1849,9 +1851,12 @@ unsigned int item_value(item_def item, bool ident)
                 break;
 
             case POT_CURE_MUTATION:
+#if TAG_MAJOR_VERSION == 34
             case POT_GAIN_DEXTERITY:
             case POT_GAIN_INTELLIGENCE:
             case POT_GAIN_STRENGTH:
+#endif
+            case POT_BENEFICIAL_MUTATION:
                 valued += 350;
                 break;
 

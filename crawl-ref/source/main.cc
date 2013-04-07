@@ -890,6 +890,8 @@ static void _handle_wizard_command(void)
         mpr(_("Enter Wizard Command (? - help): "), MSGCH_PROMPT);
         cursor_control con(true);
         wiz_command = getchm();
+        if (wiz_command == '*')
+            wiz_command = CONTROL(toupper(getchm()));
     }
 
     if (crawl_state.cmd_repeat_start)
@@ -3153,8 +3155,11 @@ static void _player_reacts_to_monsters()
     if (player_mutation_level(MUT_ANTENNAE) || you.religion == GOD_ASHENZARI)
         check_antennae_detect();
 
-    if (you.religion == GOD_ASHENZARI && !player_under_penance())
+    if ((you.religion == GOD_ASHENZARI && !player_under_penance())
+        || you.mutation[MUT_JELLY_GROWTH])
+    {
         detect_items(-1);
+    }
 
     if (you.duration[DUR_TELEPATHY])
         detect_creatures(1 + you.duration[DUR_TELEPATHY] /
@@ -4481,7 +4486,7 @@ static void _move_player(coord_def move)
     else if (!targ_pass && !attacking)
     {
         if (you.form == TRAN_TREE)
-            mpr(_("You cannot move."));
+            canned_msg(MSG_CANNOT_MOVE);
         else if (grd(targ) == DNGN_OPEN_SEA)
             mpr(_("The ferocious winds and tides of the open sea thwart your progress."));
         else if (grd(targ) == DNGN_LAVA_SEA)

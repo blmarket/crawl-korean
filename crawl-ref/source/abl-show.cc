@@ -385,6 +385,8 @@ static const ability_def Ability_List[] =
     { ABIL_ASHENZARI_END_TRANSFER, M_("End Transfer Knowledge"),
       0, 0, 0, 0, 0, ABFLAG_NONE},
 
+    { ABIL_STOP_RECALL, "Stop recall", 0, 0, 0, 0, 0, ABFLAG_NONE},
+
     // zot defence abilities
     { ABIL_MAKE_FUNGUS, M_("Make mushroom circle"), 0, 0, 0, 0, 10, ABFLAG_ZOTDEF},
     { ABIL_MAKE_DART_TRAP, M_("Make dart trap"), 0, 0, 0, 0, 5, ABFLAG_ZOTDEF},
@@ -885,6 +887,11 @@ static ability_type _fixup_ability(ability_type ability)
         else
             return ABIL_YRED_ANIMATE_REMAINS;
 
+    case ABIL_YRED_RECALL_UNDEAD_SLAVES:
+    case ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS:
+        if (!you.recall_list.empty())
+            return ABIL_STOP_RECALL;
+
     default:
         return ability;
     }
@@ -1089,6 +1096,7 @@ talent get_talent(ability_type ability, bool check_confused)
     case ABIL_ASHENZARI_SCRYING:
     case ABIL_JIYVA_CURE_BAD_MUTATION:
     case ABIL_JIYVA_JELLY_PARALYSE:
+    case ABIL_STOP_RECALL:
         invoc = true;
         failure = 0;
         break;
@@ -1575,8 +1583,8 @@ bool activate_talent(const talent& tal)
     // Doing these would outright kill the player.
     if (tal.which == ABIL_STOP_FLYING)
     {
-        if (is_feat_dangerous(env.grid(you.pos()), true, true)
-            && (!you.can_swim() || !feat_is_water(env.grid(you.pos()))))
+        if (grd(you.pos()) == DNGN_DEEP_WATER && !player_likes_water()
+            || grd(you.pos()) == DNGN_LAVA)
         {
             mpr(_("Stopping flight right now would be fatal!"));
             crawl_state.zero_turns_taken();
@@ -2591,6 +2599,11 @@ static bool _do_ability(const ability_def& abil)
 
     case ABIL_BEOGH_RECALL_ORCISH_FOLLOWERS:
         start_recall(2);
+        break;
+
+    case ABIL_STOP_RECALL:
+        mpr("You stop recalling your allies.");
+        end_recall();
         break;
 
     case ABIL_FEDHAS_SUNLIGHT:
