@@ -2108,7 +2108,7 @@ spret_type cast_fragmentation(int pow, const actor *caster,
 
     if (what != NULL) // Terrain explodes.
     {
-        mprf(_("The %s shatters!"), what);
+        mprf(_("The %s shatters!"), _(what));
         if (destroy_wall)
             nuke_wall(target);
     }

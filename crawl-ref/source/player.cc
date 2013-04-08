@@ -4785,7 +4785,7 @@ string describe_contamination(int cont)
         return (make_stringf(gettext("You are %s with residual magics%s"),
                    (cont == 4) ? _( "practically glowing") :
                    (cont == 3) ? _("heavily infused") :
-                   (cont == 2) ? _(M_("contaminated"))
+                   (cont == 2) ? pgettext("contam","contaminated")
                                     : _("lightly contaminated"),
                    (cont == 4) ? "!" : "."));
     }

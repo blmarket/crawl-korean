@@ -1449,7 +1449,7 @@ void direction_chooser::print_target_monster_description(bool &did_cloud) const
         text = get_monster_equipment_desc(mi);
     }
     else
-        text = "Disturbance";
+        text = pgettext("direct","Disturbance");
 
     // Build the final description string.
     if (!suffixes.empty())
@@ -1460,7 +1460,7 @@ void direction_chooser::print_target_monster_description(bool &did_cloud) const
     }
 
     mprf(MSGCH_PROMPT, "%s: <lightgrey>%s</lightgrey>",
-         target_prefix ? target_prefix : "Aim",
+         target_prefix ? target_prefix : pgettext("direct","Aim"),
          text.c_str());
 
     // If there's a cloud here, it's been described.
@@ -1505,8 +1505,8 @@ void direction_chooser::print_target_object_description() const
 
     // FIXME: remove the duplication with print_items_description().
     mprf(MSGCH_PROMPT, "%s: %s",
-         target_prefix ? target_prefix : "Aim",
-         get_menu_colour_prefix_tags(*item, DESC_A).c_str());
+         target_prefix ? target_prefix : pgettext("direct","Aim"),
+         get_menu_colour_prefix_tags(*item, DESC_PLAIN).c_str());
 }
 
 void direction_chooser::print_items_description() const
@@ -3496,9 +3496,9 @@ static vector<string> _get_monster_desc_vector(const monster_info& mi)
 
     if (mi.fire_blocker)
     {
-        descs.push_back("fire blocked by " // FIXME, renamed features
-                        + feature_description(mi.fire_blocker, NUM_TRAPS, "",
-                                              DESC_PLAIN, false));
+        descs.push_back(// "fire blocked by " FIXME, renamed features
+                        + _(feature_description(mi.fire_blocker, NUM_TRAPS, "",
+                        DESC_PLAIN, false).c_str()) + std::string("에 의해 사격이 제한됨"));
     }
 
     return descs;

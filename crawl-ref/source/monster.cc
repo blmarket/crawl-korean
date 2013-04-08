@@ -2877,24 +2877,24 @@ string monster::arm_name(bool plural, bool *can_plural) const
     {
     case MONS_DRACONIAN:
     case MONS_NAGA:
-        adj = "scaled";
+        adj = _(M_("scaled"));
         break;
 
     case MONS_TENGU:
-        adj = "feathered";
+        adj = _(M_("feathered"));
         break;
 
     case MONS_MUMMY:
-        adj = "bandage-wrapped";
+        adj = _(M_("bandage-wrapped"));
         break;
 
     case MONS_OCTOPODE:
-        str = "tentacle";
+        str = _(M_("tentacle"));
         break;
 
     case MONS_LICH:
     case MONS_SKELETAL_WARRIOR:
-        adj = "bony";
+        adj = _(M_("bony"));
         break;
 
     default:

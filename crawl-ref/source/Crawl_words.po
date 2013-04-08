@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-07 21:29+0900\n"
+"POT-Creation-Date: 2013-04-08 21:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1865,7 +1865,7 @@ msgstr "크라켄"
 #: mon-data.h:4214 monster.cc:2689 monster.cc:2832 monster.cc:2888
 #: monster.cc:2690 monster.cc:2833 mon-data.h:4370 monster.cc:2693
 #: monster.cc:2836 player-act.cc:427 player-act.cc:507 mon-data.h:4406
-#: mon-data.h:4402
+#: mon-data.h:4402 monster.cc:2892
 msgid "tentacle"
 msgstr "촉수"
 
@@ -4347,7 +4347,7 @@ msgstr "자기 자신"
 #: mon-act.cc:3796 fight.cc:416 mon-act.cc:3848 mon-place.cc:1207
 #: mon-act.cc:3563 mon-place.cc:1143 mon-act.cc:3566 mon-act.cc:3726
 #: mon-place.cc:1193 mon-place.cc:1041 mon-place.cc:1043 mon-place.cc:1052
-#: mon-act.cc:3731
+#: mon-act.cc:3731 mon-place.cc:1066
 msgid "Something"
 msgstr "무언가"
 
@@ -12096,6 +12096,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -16900,19 +16902,19 @@ msgstr "가닥"
 msgid "underbelly"
 msgstr "아랫배"
 
-#: player-act.cc:501
+#: player-act.cc:501 monster.cc:2880
 msgid "scaled"
 msgstr "비늘로 덮인"
 
-#: player-act.cc:503
+#: player-act.cc:503 monster.cc:2884
 msgid "feathered"
 msgstr "깃털 달린"
 
-#: player-act.cc:505
+#: player-act.cc:505 monster.cc:2888
 msgid "bandage-wrapped"
 msgstr "붕대가 감긴"
 
-#: player-act.cc:510
+#: player-act.cc:510 monster.cc:2897
 msgid "bony"
 msgstr "뼈골격"
 
@@ -17388,5 +17390,4 @@ msgstr "발사체 흡수"
 #: mutation-data.h:1460
 msgid ""
 "You have a small jelly attached to you that may absorb incoming projectiles."
-msgstr ""
-"발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."
+msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."

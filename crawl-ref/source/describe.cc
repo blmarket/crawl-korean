@@ -2192,10 +2192,10 @@ void get_feature_desc(const coord_def &pos, describe_info &inf)
     string desc      = feature_description_at(false, pos, false, DESC_A, false);
     string db_name   = feat == DNGN_ENTER_SHOP ? "a shop" : desc;
     string long_desc = getLongDescription(db_name);
-
+	string desc_kr   = feature_description_at(true, pos, false, DESC_PLAIN, false);
     inf.title = uppercase_first(desc);
-    if (!ends_with(desc, ".") && !ends_with(desc, "!")
-        && !ends_with(desc, "?"))
+    if (!ends_with(desc_kr, ".") && !ends_with(desc_kr, "!")
+        && !ends_with(desc_kr, "?"))
     {
         inf.title += ".";
     }
@@ -3651,8 +3651,8 @@ string short_ghost_description(const monster *mon, bool abbrev)
     const char* rank = xl_rank_names[ghost_level_to_rank(ghost.xl)];
 
     string desc = make_stringf(pgettext("xlrank", "%s %s %s"), _(rank),
-                               species_name(ghost.species).c_str(),
-                               get_job_name(ghost.job));
+                               _(species_name(ghost.species).c_str()),
+                               _(get_job_name(ghost.job)));
 
 
     return desc;
@@ -3713,9 +3713,9 @@ string get_ghost_description(const monster_info &mi, bool concise)
     }
     else
     {
-        gstr << species_name(gspecies)
+        gstr << _(species_name(gspecies).c_str())
              << " "
-             << get_job_name(mi.u.ghost.job);
+             << _(get_job_name(mi.u.ghost.job));
     }
 
     if (mi.u.ghost.religion != GOD_NO_GOD)

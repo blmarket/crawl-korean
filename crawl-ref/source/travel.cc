@@ -3000,7 +3000,7 @@ void start_explore(bool grab_items)
                 explicit_keymap map;
                 map[ESCAPE] = 'n';
                 map[CONTROL('G')] = 'n';
-                if (yesno("There are sacrificable items here, ignore them?",
+                if (yesno(_("There are sacrificable items here, ignore them?"),
                           true, 'y', true, false, false, &map))
                 {
                     mark_items_non_visit_at(you.pos());

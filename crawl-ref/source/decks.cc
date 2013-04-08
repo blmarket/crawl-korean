@@ -1694,7 +1694,7 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
                            bool dealt = false)
 {
     const int power_level = _get_power_level(power, rarity);
-    const char *participle = dealt ? "dealt" : "drawn";
+    const char *participle = dealt ? pgettext("deck","dealt") : pgettext("deck","drawn");
 
     dist target;
     zap_type ztype = ZAP_DEBUGGING_RAY;
@@ -1742,10 +1742,10 @@ static void _damaging_card(card_type card, int power, deck_rarity_type rarity,
     }
 
     string prompt = pgettext("damagingcard","You have ");
-    prompt += participle;
-    prompt += " ";
+    prompt += _(card_name(card)); // prompt += participle;
+    prompt += pgettext("damagingcard"," "); // prompt += " ";
     prompt += _(card_name(card));
-    prompt += pgettext("damagingcard",".");
+    prompt += ".";
 
     bolt beam;
     beam.range = LOS_RADIUS;

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Functions used when placing monsters in the dungeon.
 **/
@@ -776,11 +776,12 @@ static string _abyss_monster_creation_message(const monster* mon, bool visible)
     if (mon->type == MONS_DEATH_COB)
     {
         if (visible)
-            return coinflip() ? " appears in a burst of microwaves!" : " pops from nullspace!";
+            return coinflip() ? _(" appears in a burst of microwaves!") : _(" pops from nullspace!");
         // XXX: What if the player can't smell?
-        return " smells like butter!";
+        return _(" smells like butter!");
     }
 
+	/*
     string messages[] = {
         (visible ? " appears" : " flickers") + string(" in a shower of ")
             + (one_chance_in(3) ? "translocational energy." : "sparks."),
@@ -793,6 +794,19 @@ static string _abyss_monster_creation_message(const monster* mon, bool visible)
             + string(" chaos."),
         string(" punctures the fabric of ") + (one_chance_in(5) ? "time!" : "the universe."),
         string(" manifests") + (silenced(you.pos()) ? "!" : " with a bang!")
+		*/
+
+    string messages[] = {
+        string("이(가) ") + (one_chance_in(3) ? "전이의 마력을 쏟아내며 " : "불꽃을 일으키며 ") + (visible ? "나타났다." : "깜박였다."),
+        string("이(가) 눈 앞에 조합되듯 나타났다."),
+        string("이(가) ") + (one_chance_in(3) ? "혼돈으로부터 나타났다." : "눈 앞에 나타났다."),
+        string("이(가) 주변의 물체들로부터 뭉쳐져 만들어졌다!"),
+        string("이(가) ") + (one_chance_in(3) ? "어디선가에서 갑자기 나타났다!" : "어디선가에서 솟아나왔다!"),
+        string("이(가) ") + (one_chance_in(3) ? "허공에서 나타났다!" : "여기에 소환되었다!"),
+        string("이(가) 혼돈으로부터 나타났다."),
+        string("이(가) 주변 공간을 왜곡시키며 튀어나왔다."),
+        string("이(가) 폭음과 함께 눈 앞에 나타났다!")
+
     };
     return messages[min(random2(9), random2(9))];
 }
@@ -1064,11 +1078,11 @@ monster* place_monster(mgen_data mg, bool force_pos, bool dont_place)
             else if (!msg.empty())
             {
                 if (stair_type == DCHAR_STAIRS_DOWN)
-                    msg += " comes up the stairs.";
+                    msg += _(" comes up the stairs.");
                 else if (stair_type == DCHAR_STAIRS_UP)
-                    msg += " comes down the stairs.";
+                    msg += _(" comes down the stairs.");
                 else if (stair_type == DCHAR_ARCH)
-                    msg += " comes through the gate.";
+                    msg += _(" comes through the gate.");
                 else
                     msg = "";
             }

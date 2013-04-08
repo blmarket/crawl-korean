@@ -500,7 +500,7 @@ priest cast targeted
 
 @The_monster@은(는) @target@을 향해, @God@의 분노를 끌어냈다.
 
-@The_monster@ @target@을(를) 응시하며, 무언가 기묘한 기도의 말을 중얼거렸다.
+@The_monster@은(는) @target@을(를) 응시하며, 무언가 기묘한 기도의 말을 중얼거렸다.
 
 @The_monster@은(는) @target@을(를) 바라보며, @God@의 천벌을 요청했다.
 %%%%

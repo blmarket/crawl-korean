@@ -1646,7 +1646,7 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
         }
 
         if (it.plus == RUNE_ABYSSAL)
-            mpr("You feel the abyssal rune guiding you out of this place.");
+            mpr(_("You feel the abyssal rune guiding you out of this place."));
 
         if (it.plus == RUNE_TOMB)
             add_daction(DACT_TOMB_CTELE);
