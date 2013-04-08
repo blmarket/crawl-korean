@@ -2884,7 +2884,7 @@ static void _decrement_durations()
                           _("Your shroud begins to fray at the edges."));
 
     _decrement_a_duration(DUR_SENTINEL_MARK, delay,
-                          "The sentinel's mark upon you fades away.");
+                          _("The sentinel's mark upon you fades away."));
 
     _decrement_a_duration(DUR_SICKENING, delay);
 
@@ -3943,7 +3943,7 @@ static void _close_door(coord_def move)
         find_connected_identical(doorpos, grd(doorpos), all_door);
         const char *adj, *noun;
         get_door_description(all_door.size(), &adj, &noun);
-        const string waynoun_str = make_stringf("%sway", noun);
+        const string waynoun_str = make_stringf("%s턱", noun);
         const char *waynoun = waynoun_str.c_str();
 
         const string door_desc_adj  =

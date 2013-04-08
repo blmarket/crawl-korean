@@ -1439,7 +1439,7 @@ void skill_menu(int flag, int exp)
     // potion or card; you may elect to sin against Trog
     if (flag & SKMF_EXPERIENCE && all_skills_maxed(true))
     {
-        mpr("You feel omnipotent.");
+        mpr(_("You feel omnipotent."));
         return;
     }
 

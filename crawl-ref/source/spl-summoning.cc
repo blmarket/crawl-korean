@@ -1954,7 +1954,7 @@ static void _apport_and_butcher(monster *caster, item_def &item)
     {
         mprf(_("%s picks up %s%s."),
              caster->name(DESC_THE).c_str(),
-             item.name(true, apported ? DESC_THE : DESC_PLAIN).c_str(),
+             item.name(true, DESC_PLAIN).c_str(),
              item.base_type == OBJ_CORPSES ? _(" and starts butchering it")
                                            : "");
     }

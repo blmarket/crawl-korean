@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-03 00:05+0900\n"
+"POT-Creation-Date: 2013-04-08 21:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1858,11 +1858,7 @@ msgid "kraken"
 msgstr "크라켄"
 
 #: mon-data.h:4137 mon-data.h:4126 misc.cc:2211 misc.cc:2218 misc.cc:2212
-#: misc.cc:2219 monster.cc:2361 monster.cc:2504 monster.cc:2395
-#: monster.cc:2538 mon-data.h:4188 monster.cc:2669 monster.cc:2812
-#: mon-data.h:4214 monster.cc:2689 monster.cc:2832 monster.cc:2888
-#: monster.cc:2690 monster.cc:2833 mon-data.h:4370 monster.cc:2693
-#: monster.cc:2836 player-act.cc:427 player-act.cc:507 mon-data.h:4406
+#: mon-data.h:4402 monster.cc:2892
 msgid "tentacle"
 msgstr "촉수"
 
@@ -4298,14 +4294,6 @@ msgid "It"
 msgstr "그것"
 
 #. Awkward at start of sentence, always lower.
-#. Awkward at start of sentence, always lower.
-#: fight.cc:406 fight.cc:432 fight.cc:399 fight.cc:425 monster.cc:2223
-#: mon-util.cc:3065 mon-util.cc:3081 mon-util.cc:3071 mon-util.cc:3087
-#: travel.cc:876 travel.cc:876 fight.cc:402 fight.cc:428 mon-util.cc:3105
-#: mon-util.cc:3121 monster.cc:2257 travel.cc:864 mon-util.cc:3113
-#: mon-util.cc:3125 monster.cc:2523 travel.cc:818 monster.cc:2543
-#: travel.cc:817 mon-util.cc:3311 mon-util.cc:3323 monster.cc:2546
-#: travel.cc:822 monster.cc:2549 travel.cc:856
 msgid "it"
 msgstr "그것"
 
@@ -11831,8 +11819,6 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
-#: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
-#: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
 #: mon-util.cc:3940 mon-util.cc:3942 mon-util.cc:3962
 msgid "shouts"
@@ -16556,19 +16542,19 @@ msgstr "가닥"
 msgid "underbelly"
 msgstr "아랫배"
 
-#: player-act.cc:501
+#: player-act.cc:501 monster.cc:2880
 msgid "scaled"
 msgstr "비늘로 덮인"
 
-#: player-act.cc:503
+#: player-act.cc:503 monster.cc:2884
 msgid "feathered"
 msgstr "깃털 달린"
 
-#: player-act.cc:505
+#: player-act.cc:505 monster.cc:2888
 msgid "bandage-wrapped"
 msgstr "붕대가 감긴"
 
-#: player-act.cc:510
+#: player-act.cc:510 monster.cc:2897
 msgid "bony"
 msgstr "뼈골격"
 
@@ -17044,5 +17030,4 @@ msgstr "발사체 흡수"
 #: mutation-data.h:1460
 msgid ""
 "You have a small jelly attached to you that may absorb incoming projectiles."
-msgstr ""
-"발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."
+msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."

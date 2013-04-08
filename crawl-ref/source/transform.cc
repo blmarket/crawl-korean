@@ -1218,8 +1218,8 @@ void untransform(bool skip_wielding, bool skip_move)
             // way is one line:
             you.mutation[app] = you.innate_mutations[app];
             you.attribute[ATTR_APPENDAGE] = 0;
-            mprf(MSGCH_DURATION, gettext("Your %s disappear%s."), appendage_name(app),
-                 (app == MUT_TENTACLE_SPIKE) ? "s" : "");
+            mprf(MSGCH_DURATION, gettext("Your %s disappear%s."), _(appendage_name(app)),
+                 (app == MUT_TENTACLE_SPIKE) ? "" : "");
         }
         break;
 

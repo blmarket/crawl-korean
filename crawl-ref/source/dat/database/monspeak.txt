@@ -21,7 +21,7 @@ _shouts_
 
 소리쳤다
 
-크게 소리쳤다
+소리질렀다
 
 고함쳤다
 %%%%
@@ -416,7 +416,7 @@ VISUAL:@The_monster@은(는) 꼬리를 격하게 휘둘렀다.
 
 VISUAL:@The_monster@은(는) 이빨을 부딪혔다.
 
-VISUAL:@The_monster@은(는) @foe@에게 @_smoke_or_steam_@을(를) 내뿜었다.
+VISUAL:@The_monster@은(는) @foe@에게 연기를 내뿜었다.
 %%%%
 _hostile_imp_rare_
 
@@ -6500,7 +6500,7 @@ w:1
 _generic_orc_speech_
 
 w:50
-@The_monster@은(는) @_loudly_or_repeatedly_@@_orc_shouts_@.
+@The_monster@은(는) @_loudly_or_repeatedly_@ @_orc_shouts_@.
 
 w:20
 @The_monster@은(는) 갑자기 @_orc_shouts_@.

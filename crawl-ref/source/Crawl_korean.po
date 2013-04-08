@@ -8,6 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-08 21:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7312,7 +7313,7 @@ msgstr "어느 덱에서 카드를 뽑습니까?"
 #: decks.cc:782 decks.cc:782 decks.cc:784 decks.cc:780
 #, c-format
 msgid "This is %s."
-msgstr "%s 카드이다."
+msgstr "이것은 %s(이)다."
 
 #: decks.cc:810 decks.cc:810 decks.cc:812 decks.cc:808
 msgid "Peek at which deck?"
@@ -7628,11 +7629,6 @@ msgstr "은(는) 더 이상 적대감을 나타내지 않는다."
 #: decks.cc:2627 decks.cc:2682 decks.cc:2757 decks.cc:2803 decks.cc:2826
 #: decks.cc:2626 decks.cc:2681 decks.cc:2756 decks.cc:2802 decks.cc:2825
 #: mon-place.cc:3584 mon-place.cc:3584 decks.cc:2578 decks.cc:2633
-#: decks.cc:2707 decks.cc:2779 mon-place.cc:3381 decks.cc:2583 decks.cc:2702
-#: decks.cc:2751 decks.cc:2774 mon-place.cc:3412 decks.cc:2588 decks.cc:2847
-#: decks.cc:2586 decks.cc:2705 decks.cc:2754 decks.cc:2777 mon-place.cc:3555
-#: decks.cc:2812 mon-place.cc:3347 mon-place.cc:3349 decks.cc:2593
-#: decks.cc:2712 decks.cc:2761 decks.cc:2784 decks.cc:2819 mon-place.cc:3359
 msgid "You see a puff of smoke."
 msgstr "연기가 피어오르는 것을 보았다."
 
@@ -10335,7 +10331,7 @@ msgstr "의 심각한 오염으로 빛을 발하고 있다"
 msgid "heavily infused"
 msgstr "의 오염에 가득 차 있다"
 
-#: player.cc:4985
+#: player.cc:4985 player.cc:4788
 msgctxt "contam"
 msgid "contaminated"
 msgstr "에 오염되어 있다"
@@ -13710,31 +13706,37 @@ msgstr "은(는) 경험을 쌓은 것 처럼 보인다."
 
 #: mon-place.cc:1279 mon-place.cc:1279 mon-place.cc:1211 mon-place.cc:1147
 #: mon-place.cc:1199 mon-place.cc:1047 mon-place.cc:1049 mon-place.cc:1058
+#: mon-place.cc:1072
 #, c-format
 msgid " shoves you out of the %s!"
 msgstr "이(가) 당신을 %s(으)로부터 밀어냈다!"
 
 #: mon-place.cc:1281 mon-place.cc:1281 mon-place.cc:1213 mon-place.cc:1149
 #: mon-place.cc:1201 mon-place.cc:1049 mon-place.cc:1051 mon-place.cc:1060
+#: mon-place.cc:1074
 msgctxt "place_monster"
 msgid "gateway"
 msgstr "입구"
 
 #: mon-place.cc:1282 mon-place.cc:1282 mon-place.cc:1214 mon-place.cc:1150
 #: mon-place.cc:1202 mon-place.cc:1050 mon-place.cc:1052 mon-place.cc:1061
+#: mon-place.cc:1075
 msgctxt "place_monster"
 msgid "stairwell"
 msgstr "계단"
 
 #: mon-place.cc:1288 mon-place.cc:1288 mon-place.cc:1220 mon-place.cc:1156
+#: mon-place.cc:1081
 msgid " comes up the stairs."
 msgstr "이(가) 계단을 올라왔다."
 
 #: mon-place.cc:1290 mon-place.cc:1290 mon-place.cc:1222 mon-place.cc:1158
+#: mon-place.cc:1083
 msgid " comes down the stairs."
 msgstr "이(가) 계단을 내려왔다."
 
 #: mon-place.cc:1292 mon-place.cc:1292 mon-place.cc:1224 mon-place.cc:1160
+#: mon-place.cc:1085
 msgid " comes through the gate."
 msgstr "이(가) 관문을 지나왔다."
 
@@ -15437,6 +15439,7 @@ msgstr "[L-Click] 주문 기억 (%)"
 
 #: tilereg-mem.cc:110 tilereg-skl.cc:138 tilereg-inv.cc:512 tilereg-skl.cc:134
 #: tilereg-mem.cc:112 tilereg-skl.cc:135 tilereg-inv.cc:514 tilereg-mem.cc:113
+#: tilereg-inv.cc:563
 msgid ""
 "\n"
 "[R-Click] Describe"
@@ -16818,7 +16821,6 @@ msgstr "으윽! 당신에겐 피가 필요하다!"
 
 #: food.cc:2607 food.cc:2679 food.cc:2614 food.cc:2686 food.cc:2701
 #: food.cc:2668
->>>>>>> c68e8a9... xom.cc재작업, merging누락번역 추가
 msgid "Sorry, you're a carnivore."
 msgstr "당신은 고기밖에 먹을 수 없다."
 
@@ -25821,12 +25823,13 @@ msgstr "던전이 불길하게 흔들리고, 천장에서 바위와 돌이 떨�
 msgid "You smite %s!"
 msgstr "당신은 %s에게 일격을 가했다!"
 
-#: directn.cc:1455 directn.cc:1468
+#: directn.cc:1455 directn.cc:1468 directn.cc:1452
 msgctxt "direct"
 msgid "Disturbance"
 msgstr "방해물"
 
 #: directn.cc:1467 directn.cc:1512 directn.cc:1480 directn.cc:1526
+#: directn.cc:1463 directn.cc:1508
 msgctxt "direct"
 msgid "Aim"
 msgstr "조준"
@@ -26740,23 +26743,23 @@ msgstr "당신의 %s이(가) 잠시 검게 빛났다."
 msgid " preserves the curse."
 msgstr "은(는) 저주를 막아주었다."
 
-#: tilereg-inv.cc:235 tilereg-inv.cc:236
+#: tilereg-inv.cc:235 tilereg-inv.cc:236 tilereg-inv.cc:273
 msgid "Unwield (%-)"
 msgstr "해제 (%-)"
 
-#: tilereg-inv.cc:237 tilereg-inv.cc:238
+#: tilereg-inv.cc:237 tilereg-inv.cc:238 tilereg-inv.cc:275
 msgid "Wield (%)"
 msgstr "장비 (%)"
 
-#: tilereg-inv.cc:247 tilereg-inv.cc:248
+#: tilereg-inv.cc:247 tilereg-inv.cc:248 tilereg-inv.cc:285
 msgid "Display inventory"
 msgstr "소지품창 표시"
 
-#: tilereg-inv.cc:248 tilereg-inv.cc:249
+#: tilereg-inv.cc:248 tilereg-inv.cc:249 tilereg-inv.cc:286
 msgid "Use items"
 msgstr "아이템 사용"
 
-#: tilereg-inv.cc:290 tilereg-inv.cc:291
+#: tilereg-inv.cc:290 tilereg-inv.cc:291 tilereg-inv.cc:340
 msgid ""
 "\n"
 "[L-Click] Pick up (%)"
@@ -26764,7 +26767,7 @@ msgstr ""
 "\n"
 "[L-Click] 집기 (%)"
 
-#: tilereg-inv.cc:294 tilereg-inv.cc:295
+#: tilereg-inv.cc:294 tilereg-inv.cc:295 tilereg-inv.cc:344
 msgid ""
 "\n"
 "[Ctrl + L-Click] Partial pick up (%)"
@@ -26772,7 +26775,7 @@ msgstr ""
 "\n"
 "[Ctrl + L-Click] 일부 집기 (%)"
 
-#: tilereg-inv.cc:301 tilereg-inv.cc:302
+#: tilereg-inv.cc:301 tilereg-inv.cc:302 tilereg-inv.cc:351
 msgid ""
 "\n"
 "[Shift + L-Click] "
@@ -26780,15 +26783,15 @@ msgstr ""
 "\n"
 "[Shift + L-Click] "
 
-#: tilereg-inv.cc:303 tilereg-inv.cc:304
+#: tilereg-inv.cc:303 tilereg-inv.cc:304 tilereg-inv.cc:353
 msgid "Bottle blood"
 msgstr "피 물약 제조"
 
-#: tilereg-inv.cc:305 tilereg-inv.cc:306
+#: tilereg-inv.cc:305 tilereg-inv.cc:306 tilereg-inv.cc:355
 msgid "Chop up"
 msgstr "시체 해체"
 
-#: tilereg-inv.cc:311 tilereg-inv.cc:312
+#: tilereg-inv.cc:311 tilereg-inv.cc:312 tilereg-inv.cc:361
 msgid ""
 "\n"
 "\n"
@@ -26798,7 +26801,7 @@ msgstr ""
 "\n"
 "[Shift + R-Click] 마시기 (e)"
 
-#: tilereg-inv.cc:319 tilereg-inv.cc:320
+#: tilereg-inv.cc:319 tilereg-inv.cc:320 tilereg-inv.cc:369
 msgid ""
 "\n"
 "[Shift + R-Click] Eat (e)"
@@ -26806,7 +26809,7 @@ msgstr ""
 "\n"
 "[Shift + R-Click] 먹기 (e)"
 
-#: tilereg-inv.cc:342 tilereg-inv.cc:343
+#: tilereg-inv.cc:342 tilereg-inv.cc:343 tilereg-inv.cc:392
 msgid ""
 "\n"
 "[L-Click] "
@@ -26815,6 +26818,7 @@ msgstr ""
 "[L-Click] "
 
 #: tilereg-inv.cc:368 tilereg-inv.cc:377 tilereg-inv.cc:370 tilereg-inv.cc:379
+#: tilereg-inv.cc:419 tilereg-inv.cc:428
 msgid ""
 "\n"
 "[Ctrl + L-Click] Fire (f)"
@@ -26822,66 +26826,67 @@ msgstr ""
 "\n"
 "[Ctrl + L-Click] 발사 (f)"
 
-#: tilereg-inv.cc:388 tilereg-inv.cc:390
+#: tilereg-inv.cc:388 tilereg-inv.cc:390 tilereg-inv.cc:439
 msgid "Evoke (V)"
 msgstr "발동 (V)"
 
-#: tilereg-inv.cc:395 tilereg-inv.cc:397
+#: tilereg-inv.cc:395 tilereg-inv.cc:397 tilereg-inv.cc:446
 msgid "Draw a card (%)"
 msgstr "카드 뽑기 (%)"
 
 #. else fall-through
 #. rods - other staves handled above
 #: tilereg-inv.cc:402 tilereg-inv.cc:438 tilereg-inv.cc:404 tilereg-inv.cc:440
+#: tilereg-inv.cc:453 tilereg-inv.cc:489
 msgid "Evoke (%)"
 msgstr "발동 (%)"
 
-#: tilereg-inv.cc:409 tilereg-inv.cc:411
+#: tilereg-inv.cc:409 tilereg-inv.cc:411 tilereg-inv.cc:460
 msgid "Wear (%)"
 msgstr "장비 (%)"
 
-#: tilereg-inv.cc:414 tilereg-inv.cc:416
+#: tilereg-inv.cc:414 tilereg-inv.cc:416 tilereg-inv.cc:465
 msgid "Take off (%)"
 msgstr "해제 (%)"
 
-#: tilereg-inv.cc:418 tilereg-inv.cc:420
+#: tilereg-inv.cc:418 tilereg-inv.cc:420 tilereg-inv.cc:469
 msgid "Put on (%)"
 msgstr "장비 (%)"
 
-#: tilereg-inv.cc:422 tilereg-inv.cc:424
+#: tilereg-inv.cc:422 tilereg-inv.cc:424 tilereg-inv.cc:473
 msgid "Remove (%)"
 msgstr "해제 (%)"
 
-#: tilereg-inv.cc:428 tilereg-inv.cc:430
+#: tilereg-inv.cc:428 tilereg-inv.cc:430 tilereg-inv.cc:479
 msgid "Fire (%)"
 msgstr "발사 (%)"
 
-#: tilereg-inv.cc:451 tilereg-inv.cc:453
+#: tilereg-inv.cc:451 tilereg-inv.cc:453 tilereg-inv.cc:502
 msgid "Memorise (%)"
 msgstr "기억 (%)"
 
-#: tilereg-inv.cc:460 tilereg-inv.cc:462
+#: tilereg-inv.cc:460 tilereg-inv.cc:462 tilereg-inv.cc:511
 msgid "Read (%)"
 msgstr "읽기 (%)"
 
-#: tilereg-inv.cc:466 tilereg-inv.cc:468
+#: tilereg-inv.cc:466 tilereg-inv.cc:468 tilereg-inv.cc:517
 msgid "Quaff (%)"
 msgstr "마시기 (%)"
 
-#: tilereg-inv.cc:479 tilereg-inv.cc:481
+#: tilereg-inv.cc:479 tilereg-inv.cc:481 tilereg-inv.cc:530
 msgid "Eat (%)"
 msgstr "먹기 (%)"
 
-#: tilereg-inv.cc:493 tilereg-inv.cc:495
+#: tilereg-inv.cc:493 tilereg-inv.cc:495 tilereg-inv.cc:544
 msgid "Drink blood (%)"
 msgstr "마시기 (%)"
 
-#: tilereg-inv.cc:505 tilereg-inv.cc:507
+#: tilereg-inv.cc:505 tilereg-inv.cc:507 tilereg-inv.cc:556
 msgctxt "tile"
 msgid "Use"
 msgstr "사용"
 
-#: tilereg-inv.cc:517 tilereg-inv.cc:519
+#: tilereg-inv.cc:517 tilereg-inv.cc:519 tilereg-inv.cc:568
 msgid ""
 "\n"
 "[Shift + L-Click] Drop (%)"
@@ -26889,7 +26894,7 @@ msgstr ""
 "\n"
 "[Shift + L-Click] 버리기 (%)"
 
-#: tilereg-inv.cc:521 tilereg-inv.cc:523
+#: tilereg-inv.cc:521 tilereg-inv.cc:523 tilereg-inv.cc:572
 msgid ""
 "\n"
 "[Ctrl-Shift + L-Click] Drop quantity (%#)"
@@ -28522,7 +28527,7 @@ msgctxt "drink"
 msgid "fountain"
 msgstr "분수"
 
-#: mon-abil.cc:2267
+#: mon-abil.cc:2267 mon-abil.cc:3009
 msgid "flickers out of sight"
 msgstr "깜박이며 시야에서 사라졌다"
 
@@ -30158,18 +30163,17 @@ msgstr ""
 msgid "You deal a card..."
 msgstr "당신은 카드를 뒤집었다..."
 
-#: decks.cc:2923 decks.cc:2939 decks.cc:2946
+#: decks.cc:2923 decks.cc:2939 decks.cc:2946 decks.cc:2947 decks.cc:1697
 msgctxt "deck"
 msgid "dealt"
 msgstr "뒤집었다"
 
-#: decks.cc:2923 decks.cc:2939 decks.cc:2946
+#: decks.cc:2923 decks.cc:2939 decks.cc:2946 decks.cc:2947 decks.cc:1697
 msgctxt "deck"
 msgid "drawn"
 msgstr "뽑았다"
 
 #: decks.cc:3032
-#, c-format
 msgid "You have %s %s."
 msgstr "당신은 %2$s 카드를 %1$s."
 
@@ -31515,37 +31519,31 @@ msgid "'s flesh"
 msgstr "의 피부"
 
 #: mon-place.cc:3312 mon-place.cc:3455 mon-place.cc:3247 mon-place.cc:3249
-#: mon-place.cc:3259
 #, c-format
 msgid "%s is enraged by your holy aura!"
 msgstr "당신의 신성한 기운이 %s을(를) 분노케 했다!"
 
 #: mon-place.cc:3315 mon-place.cc:3458 mon-place.cc:3250 mon-place.cc:3252
-#: mon-place.cc:3262
 #, c-format
 msgid "%s is revulsed by your support of nature!"
 msgstr "%s은(는) 당신의 자연 수호에 강한 반감을 드러냈다! "
 
 #: mon-place.cc:3318 mon-place.cc:3461 mon-place.cc:3253 mon-place.cc:3255
-#: mon-place.cc:3265
 #, c-format
 msgid "%s is enraged by your evilness!"
 msgstr "%s은(는) 당신의 사악함을 용서하지 않을 모양이다!"
 
 #: mon-place.cc:3322 mon-place.cc:3465 mon-place.cc:3257 mon-place.cc:3259
-#: mon-place.cc:3269
 #, c-format
 msgid "%s is enraged by your lawfulness!"
 msgstr "%s은(는) 당신의 신성한 기운을 가만 두지 않을 모양이다!"
 
 #: mon-place.cc:3325 mon-place.cc:3468 mon-place.cc:3260 mon-place.cc:3262
-#: mon-place.cc:3272
 #, c-format
 msgid "%s is enraged by your magic-hating god!"
 msgstr "%s은(는) 마법을 싫어하는 당신의 신에 대한 분노를 드러냈다!"
 
 #: mon-place.cc:3328 mon-place.cc:3471 mon-place.cc:3263 mon-place.cc:3265
-#: mon-place.cc:3275
 #, c-format
 msgid "%s is enraged by a buggy thing about you!"
 msgstr ""
@@ -34737,13 +34735,16 @@ msgstr "데이터베이스 로딩중..."
 msgid "Loading spells and features..."
 msgstr "주문과 지형지문 로딩중..."
 
-#: tilereg-inv.cc:244
+#: tilereg-inv.cc:244 tilereg-inv.cc:281
 msgid "[L-Click] "
 msgstr "[L-Click] "
 
 #: tilereg-inv.cc:399 tilereg-inv.cc:406 tilereg-inv.cc:434 tilereg-inv.cc:443
 #: tilereg-inv.cc:457 tilereg-inv.cc:465 tilereg-inv.cc:472 tilereg-inv.cc:477
-#: tilereg-inv.cc:485 tilereg-inv.cc:489 tilereg-inv.cc:503
+#: tilereg-inv.cc:485 tilereg-inv.cc:489 tilereg-inv.cc:503 tilereg-inv.cc:448
+#: tilereg-inv.cc:455 tilereg-inv.cc:483 tilereg-inv.cc:492 tilereg-inv.cc:506
+#: tilereg-inv.cc:514 tilereg-inv.cc:521 tilereg-inv.cc:526 tilereg-inv.cc:534
+#: tilereg-inv.cc:538 tilereg-inv.cc:552
 msgid ""
 "\n"
 "[Ctrl + L-Click] "
@@ -35372,7 +35373,7 @@ msgstr "당신의 표식이 더 밝은 빛을 발했다."
 
 #: player.cc:7498 player.cc:7521 player.cc:7526 player.cc:7527
 msgid "A sentinel's mark forms upon you."
-msgstr "수호자의 표식이 당신에게 나타났다/"
+msgstr "감시자의 표식이 당신에게 나타났다."
 
 #: skill_menu.cc:561
 msgid ""
@@ -36648,7 +36649,13 @@ msgctxt "damagingcard"
 msgid "You have "
 msgstr "당신은 "
 
-#: decks.cc:1747
+#. prompt += participle;
+#: decks.cc:1746
+msgctxt "damagingcard"
+msgid " "
+msgstr " 카드를 "
+
+#: decks.cc:1747 decks.cc:1748
 msgctxt "damagingcard"
 msgid "."
 msgstr "을(를) 가지고 있다."
@@ -37031,3 +37038,62 @@ msgstr "그림자"
 #: xom.cc:3541
 msgid "blink monster(s)"
 msgstr "몬스터(들)을 순간이동시킴"
+
+#: items.cc:1649
+msgid "You feel the abyssal rune guiding you out of this place."
+msgstr "어비스의 룬이 당신을 어비스 밖으로 인도하는 듯한 느낌을 주었다."
+
+#: main.cc:2887
+msgid "The sentinel's mark upon you fades away."
+msgstr "당신에게 나타난 감시자의 표식이 사라졌다."
+
+#: misc.cc:2764
+msgid "You determine that you are carrying: "
+msgstr "당신은 다음 아이템을 알아냈다: "
+
+#: mon-place.cc:779
+msgid " appears in a burst of microwaves!"
+msgstr "이(가) 고주파를 일으키며 나타났다!"
+
+#: mon-place.cc:779
+msgid " pops from nullspace!"
+msgstr "이(가) 허공에서 튀어나왔다!"
+
+#. XXX: What if the player can't smell?
+#: mon-place.cc:781
+msgid " smells like butter!"
+msgstr "에게서 버터 냄새가 났다!"
+
+#: stairs.cc:931
+msgid "You plunge deeper into the Abyss."
+msgstr "당신은 어비스의 더욱 깊은 곳으로 내려갔다."
+
+#: tilereg-inv.cc:303
+msgid ""
+"Next page\n"
+"[L-Click] Show next page of items"
+msgstr ""
+"다음 페이지\n"
+"[L-Click] 아이템들의 다음 페이지 보기"
+
+#: tilereg-inv.cc:308
+msgid ""
+"Previous page\n"
+"[L-Click] Show previous page of items"
+msgstr ""
+"이전 페이지\n"
+"[L-Click] 아이템들의 이전 페이지 보기"
+
+#. alt text for next page button
+#: tilereg-inv.cc:612
+msgid "Next page"
+msgstr "다음 페이지"
+
+#. alt text for prev page button
+#: tilereg-inv.cc:617
+msgid "Previous page"
+msgstr "이전 페이지"
+
+#: travel.cc:3003
+msgid "There are sacrificable items here, ignore them?"
+msgstr "신에게 제물로 바치기 적당한 아이템이 있는데, 무시할 것인가?"
