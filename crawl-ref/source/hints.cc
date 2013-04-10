@@ -1329,50 +1329,50 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         }
         else
         {
-            text << "\nFor now you might be best off with sticking to darts "
-                    "or stones for ranged attacks.";
+            text << "\n별다른 장거리 무기 스킬이 없는 당신에게는, 손쉽게 던져 사용할 수 있는 다트류나 "
+                    "돌멩이류가 현재 쓰기에 가장 적당한 투척 무기일거에요.";
         }
         break;
 
     case HINT_SEEN_ARMOUR:
-        text << "This is the first piece of armour "
+        text << "처음으로 갑옷류 아이템을 "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_ARMOUR))
              << "</w>') </console>"
-                "you've picked up. "
-                "<tiles>You can click on it to wear it, and click a second time to "
-                "take it off again. Doing a <w>right mouse click</w> will "
-                "show you its properties.</tiles>"
-                "Use <w>%</w> to wear it and <w>%</w> to take it off again. "
-                "You can view its properties from your <w>%</w>nventory.";
+                "발견하셨습니다. "
+                "<tiles>아이템창의 이와 같은 갑옷/의류 아이템을 클릭하면 이것을 입게 되고, 다시 한번 클릭하면 "
+                "벗을 수 있죠. <w>마우스 오른쪽 버튼k</w>으로 클릭하면, 해당 아이템에 대한 "
+                "좀 더 자세한 정보를 확인하는 것이 가능합니다. </tiles>"
+                "그 외로는 <w>%</w>키를 통해 아이템을 입을 수 있고, 반대로 <w>%</w>키를 눌러 벗을 수 있죠. "
+                "아이템에 대한 좀 더 자세한 정보는 소지품 화면(<w>%</w>)에서도 확인 가능합니다.";
         cmd.push_back(CMD_WEAR_ARMOUR);
         cmd.push_back(CMD_REMOVE_ARMOUR);
         cmd.push_back(CMD_DISPLAY_INVENTORY);
 
         if (you.species == SP_CENTAUR || you.species == SP_MINOTAUR)
         {
-            text << "\nNote that as a " << species_name(you.species)
-                 << " you will be unable to wear "
-                 << (you.species == SP_CENTAUR ? "boots" : "helmets")
-                 << ".";
+            text << "\n종족에 따라 입을 수 없는 방어구가 있는 경우도 있습니다. 당신은 " << _(species_name(you.species).c_str())
+                 << "군요." << _(species_name(you.species).c_str()) << " 종족은 " 
+				 << (you.species == SP_CENTAUR ? "발굽으로 인해 부츠가 맞지 않는답니다." : "머리에 난 커다란 뿔 때문에, 투구를 쓸 수 없고 모자류만 착용이 가능하죠.");
+                 
         }
         break;
 
     case HINT_SEEN_RANDART:
-        text << "Weapons and armour that have unusual descriptions like this "
-                "are much more likely to be of higher enchantment or have "
-                "special properties, good or bad.";
+        text << "이렇게 흰색 이름으로 표시되는, 이상한 이름의 무기나 방어구는 "
+                "일반적인 아이템보다 좀 더 많은 마법 효과를 동시에 지니고 있거나, 처음부터 높은 강화 수치를 "
+                "가지고 있을 수도 있습니다. 꼭 좋은 아이템은 아니에요. 반대로 좋지 않은 마법 효과나 매우 낮은 강화수치를 가질 수도 있으니까요.";
         break;
 
     case HINT_SEEN_FOOD:
-        text << "You have picked up some food"
+        text << "저기 보이는 건 음식이군요"
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_FOOD))
              << "</w>')</console>"
-                ". You can eat it by typing <w>e</w>"
-                "<tiles> or by clicking on it with your <w>left mouse button</w></tiles>"
-                ". However, it is usually best to conserve rations and fruit, "
-                "since raw meat from corpses is generally plentiful.";
+                ". <w>e</w>키를 눌러 먹기 메뉴를 부르거나, "
+                "<tiles><w>마우스 왼쪽 버튼</w>으로 우측 소지품창의 음식 아이콘을 클릭하는 것으로</tiles>"
+                "음식을 먹을 수 있습니다. 알아 둘 것은, 보존 식량이나 과일과 같은 음식들은 상하지 않고, 어떤 종족도 배가 고픔과 상관 없이 먹는 것이 "
+                "가능하지만, 이러한 보존식량은 충분히 나오지 않습니다. 아껴서 먹을 필요가 있다는 것이죠. 꼭 필요한 경우가 아니면, 일반적으로 몬스터의 시체를 해체해서 나오는 고기를 먹는 것이 좋습니다.";
         break;
 
     case HINT_SEEN_CARRION:
@@ -1382,21 +1382,21 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         // TODO: Specialcase skeletons and rotten corpses!
 
         if (gc.x <= 0 || gc.y <= 0)
-            text << "Ah, a corpse!";
+            text << "아, 시체군요!";
         else
         {
             int i = you.visible_igrd(gc);
             if (i == NON_ITEM)
-                text << "Ah, a corpse!";
+                text << "아, 시체군요!";
             else
             {
-                text << "That <console>";
+                text << "저건 <console>";
                 string glyph = glyph_to_tagstr(get_item_glyph(&mitm[i]));
                 const string::size_type found = glyph.find("%");
                 if (found != string::npos)
                     glyph.replace(found, 1, "percent");
                 text << glyph;
-                text << " </console> is a corpse.";
+                text << " </console>시체군요.";
 #ifdef USE_TILE
                 tiles.place_cursor(CURSOR_TUTORIAL, gc);
                 tiles.add_text_tag(TAG_TUTORIAL, mitm[i].name(false, DESC_A), gc);
@@ -1404,70 +1404,70 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
             }
         }
 
-        text << " When a corpse is lying on the ground, you "
-                "can <w>%</w>hop it up";
+        text << " 몬스터를 처치하면 종종 시체가 바닥에 놓입니다. 이러한 시체는 "
+                "<w>%</w>키를 눌러서 해체하여 고기 조각으로 만들 수 있죠. ";
         cmd.push_back(CMD_BUTCHER);
 
         if (_cant_butcher())
         {
-            text << " (though unfortunately you can't do that right now, "
-                    "since the cursed weapon you're wielding can't slice up "
-                    "meat, and you can't let go of it to wield your pocket "
-                    "knife)";
+            text << " 그런데 불행하게도, 당신은 지금 들고 있는 저주받은 무기를 손에서 뗄 수 없기에, "
+                    "이 시체를 해체할 수 없군요. "
+                    "이 무기의 저주를 해제하기 전까지는, 아깝지만 보존 식량등으로 버티다가, 최대한 빨리 저주 해제 두루마리를 "
+                    "찾는 수 밖에요. 어쨌든,";
         }
-        text << ". Once hungry you can then <w>%</w>at the resulting chunks "
-                "(though they may not be healthful).";
+        text << "이러한 고기조각은 먹기에 썩 유쾌한 것들은 아닐겁니다. 하지만 배가 고프다면 어떻게든 이런 것이라도 먹어야겠죠. '배고픔'상태 혹은 그보다 더 배고픈 상태일때는 <w>%</w>키를 눌러 해당 고기를 "
+                "먹을 수 있습니다. 그 고기가 몸에 얼마나 좋냐, 나쁘냐는 따지지 않고 처묵처묵할수 있죠.";
         cmd.push_back(CMD_EAT);
 
-        text << "<tiles> With tiles, you can also chop up any corpse that shows up in "
-                "the floor part of your inventory region, simply by doing a "
-                "<w>left mouse click</w> while pressing <w>Shift</w>, and "
-                "then eat the resulting chunks with <w>Shift + right mouse "
-                "click</w>.</tiles>";
+        text << "<tiles> 타일 버전에서는, 마우스 클릭으로도 시체 해체를 할 수 있습니다. "
+                "시체 위로 캐릭터를 위치시키면, 오른쪽 소지품창 아래에 몬스터의 시체 아이콘이 생기는 걸 보실 수 있을겁니다. "
+                "그럼 <w>Shift</w>키를 누른 상태로, 그 시체 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭하시는 것으로도 "
+                "시체를 해체하실 수 있습니다. 이렇게 해체한 고기는 아이템 창으로 들어오는데, <w>마우스 왼쪽 버튼"
+                "</w>으로 클릭하면 먹을 수 있죠.</tiles>";
 
         if (god_likes_fresh_corpses(you.religion))
         {
-            text << "\nYou can also offer corpses to "
+            text << "\n그러고 보니, '"
                  << _(god_name(you.religion).c_str())
-                 << " by <w>%</w>raying over them. Note that the gods will not "
-                    "accept rotting flesh.";
+                 << "' 신은 시체를 제물로 바치는 것을 좋아합니다. 시체 위에서 신에게 기도(<w>%</w>키)를 드리는 것으로 신에게 시체를 바칠 수 있습니다. 알아 둘 것은 "
+                    "신들은 보통 썩은 시체를 제물로 받아주지 않는다는 점이죠. 깨끗한 시체들을 정성스레 공양하세요.";
             cmd.push_back(CMD_PRAY);
         }
-        text << "\nIn hint mode you can reread this information at "
-                "any time by selecting the item in question in your "
-                "<w>%</w>nventory.";
+        text << "\n힌트 모드에서는, 언제든지"
+                "우측 아이템창 아이템의 아이콘을 "
+                "<tiles><w>마우스 오른쪽 버튼</w>으로 클릭하면, 이러한 정보들을 다시 볼 수 있는게 가능합니다.</tiles>";
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
     case HINT_SEEN_JEWELLERY:
-        text << "You have picked up a a piece of jewellery, either a ring"
+        text << "당신은 장신구 아이템을 발견하셨습니다. 장신구 아이템은 반지와 "
              << "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_RING))
              << "</w>')</console>"
-             << " or an amulet"
-             << "<console> ('<w>"
-             << stringize_glyph(get_item_symbol(SHOW_ITEM_AMULET))
-             << "</w>')"
-             << ". Type <w>%</w> to put it on and <w>%</w> to remove "
-                "it. You can view its properties from your <w>%</w>nventory</console>"
-             << "<tiles>. You can click on it to put it on, and click a second time "
-                "remove it again. By clicking on it with your <w>right mouse "
-                "button</w> you can view its properties</tiles>"
-             << ", though often magic is necessary to reveal its true "
-                "nature.";
+             << "부적으로 "
+             //<< "<console> ('<w>"
+             //<< stringize_glyph(get_item_symbol(SHOW_ITEM_AMULET))
+             //<< "</w>')"
+             << "나뉘죠. 이러한 장신구는 <w>%</w>키를 눌러 착용할 수 있고, <w>%</w>키를 눌러 벗을 수 있습니다. "
+			    "장신구에 대한 좀 더 자세한 정보는 소지품창(<w>%</w>키)을 통해 확인하는 것이 가능하죠."
+             << "<tiles>. 타일 버전에서는 화면 우측 아이템창의 장신구 아이콘을 클릭하여 장신구를 "
+                "착용할 수 있고, 벗을 수도 있습니다. 이 장신구가 감정이 되어 있거나, 혹은 착용하자마자 효과를 볼 수 있는 종류의 종류라면, "
+				"<w>마우스 우측 버튼</w>으로 우측 소지품창의 해당 장신구 아이템을 클릭하여 아이템의 세부 정보를 확인함으로써,</tiles>"
+             << "해당 장신구가 어떠한 효과를 가지고 있는지를 알 수 있습니다."
+                "";
         cmd.push_back(CMD_WEAR_JEWELLERY);
         cmd.push_back(CMD_REMOVE_JEWELLERY);
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
     case HINT_SEEN_MISC:
-        text << "This is a curious object indeed. You can play around with "
-                "it to find out what it does by "
-                "<tiles>clicking on it to e<w>%</w>oke </tiles>"
+        text << "이건 정말 흥미로운 아이템이군요. "
+                "이 아이템을 "
+                "<tiles>아이템창에서 클릭해보거나, 혹은 <w>%</w>키로 발동시켜보는 것은 </tiles>"
                 "<console>e<w>%</w>oking </console>"
-                "it. Some items need to be <w>%</w>ielded first before you can "
-                "e<w>%</w>oke them. As usual, selecting it from your "
-                "<w>%</w>nventory might give you more information.";
+				"어떨까요? 이러한 아이템들중 일부는 먼저 장비(<w>%</w>키)한 후, "
+				"발동(<w>%</w>키)해야 하는 것들도 있습니다. 보통의 경우, 이러한 아이템들이 어떠한 효과가 있는지는 "
+                "소지품창(<w>%</w>키)을 통해 아이템의 좀 더 자세한 정보를 보는 것으로 알 수 있죠.";
         cmd.push_back(CMD_EVOKE);
         cmd.push_back(CMD_WIELD_WEAPON);
         cmd.push_back(CMD_EVOKE_WIELDED);
@@ -1475,24 +1475,24 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_ROD:
-        text << "You have picked up a magical rod"
+        text << "마법 막대 아이템을 발견하셨습니다."
                 "<console> ('<w>";
         text << stringize_glyph(get_item_symbol(SHOW_ITEM_STAVE))
              << "</w>', like staves)</console>"
-                ". It must be <w>%</w>ielded to be of use. "
-                "A rod allows the casting of "
-                "certain spells even without magic knowledge simply by "
-                "e<w>%</w>oking it. The power depends on "
-                "your Evocations skill. It can also be used as a cudgel, "
-                "with its combat value increasing with its recharge rate.";
+                " 마법 막대 아이템은 <w>%</w>키를 눌러 장비한 후 사용할 수 있죠. "
+                "마법 막대는 마법 사용에 대한 지식이 없어도, "
+                "마법을 간단하게 사용할 수 있게 해 주는 도구입니다. "
+                "<w>%</w>키를 눌러 발동시킬 수 있죠. 마법 막대에서 시전하는 마법의 위력은 "
+                "사용자의 발동술 스킬에 비례하여 강해집니다. 또한 마법 막대를 직접 휘둘러 적을 공격하는 것도 가능합니다. "
+                "이 때 마법 막대의 공격력은 마법 막대의 재충전 수치 (-1, +3과 같은)와 같죠. 무기의 강화 수치와 같다고 생각하시면 됩니다.";
         cmd.push_back(CMD_WIELD_WEAPON);
         cmd.push_back(CMD_EVOKE_WIELDED);
 
-        text << "<tiles> Both wielding and evoking a wielded item can be achieved "
-                "by clicking on it with your <w>left mouse button</w>.</tiles>"
-                "\nIn hint mode you can reread this information at "
-                "any time by selecting the item in question in your "
-                "<w>%</w>nventory.";
+        text << "<tiles>마법 막대를 장비하고 발동하는것은, 우측 아이템창의 "
+                "마법 막대 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭함으로써도 할 수 있습니다.</tiles>"
+				"\n힌트 모드에서는, 언제든지 소지품창(<w>%</w>키) 혹은 "
+				"화면 우측 소지품창의 아이템 아이콘을 <w>마우스 우클릭</w>함으로써,"
+                "이러한 정보들을 다시 볼 수 있는게 가능합니다.</tiles>";
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
