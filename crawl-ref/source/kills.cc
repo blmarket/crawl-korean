@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief Player kill tracking
 **/
@@ -445,14 +445,23 @@ static const char *modifier_suffixes[] =
 
 // For a non-unique monster, prefixes a suitable article if we have only one
 // kill, else prefixes a kill count and pluralises the monster name.
-static string n_names(const string &name, int n)
+static string n_names(const string &name, int n, monster_type mon_type)
 {
     if (n > 1)
     {
         char buf[20];
         snprintf(buf, sizeof buf, "%d", n);
-        return buf + pluralise(PLU_MON, name, standard_plural_qualifiers,
-                               modifier_suffixes);
+
+		const unsigned int not_found = (unsigned int) -1;
+
+		if(is_player_same_species(mon_type))
+			return name + " " + buf + "명";
+
+		if(name.find("식물") != not_found || name.find("버섯") != not_found || name.find("발리스토") != not_found || name.find("석상") != not_found || name.find("풀숲") != not_found ||
+		   name.find("은상") != not_found || name.find("얼음상") != not_found || name.find("수정상") != not_found || name.find("소금") != not_found)
+		    return name + " " + buf + "개";
+
+        return name + " " + buf + "마리";                               
     }
     else
         return name; // article_a(name, false);
@@ -551,7 +560,7 @@ string kill_def::info(const kill_monster_desc &md) const
     if (!mons_is_unique(md.monnum))
     {
         // Pluralise as needed.
-        name = n_names(name, kills);
+        name = n_names(name, kills, md.monnum);
 
         // We brand shapeshifters with the (shapeshifter) qualifier.
         // This has to be done after doing pluralise(), else we get very
