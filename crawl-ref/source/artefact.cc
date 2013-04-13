@@ -1503,14 +1503,14 @@ string make_artefact_name(bool allow_translate, const item_def &item, bool appea
             result += "of Bugginess";
         else
 		{  
-			if (name.find_first_of("_SUFFIX_") != match)  
+			if (name.find("_SUFFIX_") != string::npos)  
 			{  
 				name = replace_all(name, "_SUFFIX_", "");  
 				result += "\"" + name + "\"";  
 			}  
 			else  
 			{  
-				if (name.find_first_of("_NOPOS_") != match)  
+				if (name.find("_NOPOS_") != string::npos)  
 				{  
 					name = replace_all(name, "_NOPOS_", "");  
 					result = name + " " + result;  

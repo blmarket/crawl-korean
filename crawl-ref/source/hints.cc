@@ -1201,7 +1201,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     switch (seen_what)
     {
     case HINT_SEEN_POTION:
-        text << "처음으로 물약을 발견하셨습니다. "
+        text << "물약을 획득하셨습니다. "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_POTION))
              << "</w>'). Use </console>"
@@ -1216,7 +1216,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_SCROLL:
-        text << "처음으로 마법 두루마리를 발견하셨군요. "
+        text << "처음으로 마법 두루마리를 주워 보시는군요. "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_SCROLL))
              << "</w>'). Type </console>"
@@ -1227,7 +1227,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_WAND:
-        text << "다양한 마법들이 깃들어있는 마법봉을 발견하겼습니다! "
+        text << "다양한 마법들이 깃들어있는 마법봉을 획득하셨습니다! "
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_WAND))
              << "</w>'). Type </console>"
@@ -1269,7 +1269,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_WEAPON:
-        text << "무기 아이템을 처음으로 발견하셨군요. "
+        text << "무기 아이템을 처음으로 주워보셨군요. "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_WEAPON))
              << "</w>') </console>"
@@ -1298,7 +1298,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_MISSILES:
-        text << "처음으로 발사체류 아이템을 발견하셨습니다. "
+        text << "처음으로 발사체류 아이템을 획득하셨습니다. "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_MISSILE))
              << "</w>') </console>"
@@ -1335,7 +1335,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_ARMOUR:
-        text << "처음으로 갑옷류 아이템을 "
+        text << "갑옷류 아이템을 "
                 "<console>('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_ARMOUR))
              << "</w>') </console>"
@@ -1365,7 +1365,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_FOOD:
-        text << "저기 보이는 건 음식이군요"
+        text << "이건 음식이군요"
                 "<console> ('<w>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_FOOD))
              << "</w>')</console>"
@@ -1435,7 +1435,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         }
         text << "\n힌트 모드에서는, 언제든지"
                 "우측 아이템창 아이템의 아이콘을 "
-                "<tiles><w>마우스 오른쪽 버튼</w>으로 클릭하면, 이러한 정보들을 다시 볼 수 있는게 가능합니다.</tiles>";
+                "<tiles><w>마우스 오른쪽 버튼</w>으로 클릭하면, 이러한 정보들을 다시 보는 것이 가능합니다.</tiles>";
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
@@ -1475,7 +1475,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         break;
 
     case HINT_SEEN_ROD:
-        text << "마법 막대 아이템을 발견하셨습니다."
+        text << "마법 막대 아이템을 획득하셨습니다."
                 "<console> ('<w>";
         text << stringize_glyph(get_item_symbol(SHOW_ITEM_STAVE))
              << "</w>', like staves)</console>"
@@ -1492,44 +1492,44 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "마법 막대 아이콘을 <w>마우스 왼쪽 버튼</w>으로 클릭함으로써도 할 수 있습니다.</tiles>"
 				"\n힌트 모드에서는, 언제든지 소지품창(<w>%</w>키) 혹은 "
 				"화면 우측 소지품창의 아이템 아이콘을 <w>마우스 우클릭</w>함으로써,"
-                "이러한 정보들을 다시 볼 수 있는게 가능합니다.</tiles>";
+                "이러한 정보들을 다시 보는 것이 가능합니다.</tiles>";
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
     case HINT_SEEN_STAFF:
-        text << "You have picked up a magic staff"
+        text << "마법 지팡이를 획득하셨습니다."
                 "<console> ('<w>";
 
         text << stringize_glyph(get_item_symbol(SHOW_ITEM_STAVE))
              << "</w>', like rods)</console>"
-                ". It must be <w>%</w>ielded to be of use. "
-                "Magicians use staves to increase their power in certain "
-                "spell schools. It can also be used as a weapon."
-                "<tiles> Both wielding and evoking a wielded item can be achieved "
-                "by clicking on it with your <w>left mouse button</w>.</tiles>"
-                "\nIn hint mode you can reread this information at "
-                "any time by selecting the item in question in your "
-                "<w>%</w>nventory.";
+                ". 이 아이템을 사용하려면, <w>%</w>키를 눌러 일단 장비를 먼저 해야하죠. "
+                "마법사들은, 이와 같은 마법 지팡이를 사용으로써, 이 마법 지팡이의 종류에 따라 더욱 강한 특정 학파의 마법을 "
+                "사용할 수 있습니다. 마법 강화 외로도 마법을 좀 더 쉽게 사용하거나, 주변의 마력을 수집하는 등의 다른 기능이 있는 지팡이도 있죠. "
+                "물론 지팡이를 휘둘러 공격용으로 쓰는 것도 가능합니다. <tiles>마법 지팡이를 사용하거나, 아니면 특수한 발동 능력이 있는 일부 마법 지팡이를 발동시키려면 "
+                "간단히 화면 오른쪽의 소지품창에서 <w>왼쪽 마우스 버튼</w>으로 지팡이 아이콘을 클릭하시면 됩니다.</tiles>"
+				"\n힌트 모드에서는, 언제든지 소지품창(<w>%</w>키) 혹은 "
+                "화면 우측 소지품창의 아이템 아이콘을 <w>마우스 우클릭</w>함으로써,"
+                "이러한 정보들을 다시 보는 것이 가능합니다.</tiles>";
         cmd.push_back(CMD_WIELD_WEAPON);
         cmd.push_back(CMD_DISPLAY_INVENTORY);
         break;
 
     case HINT_SEEN_GOLD:
-        text << "You have picked up your first pile of gold"
+        text << "처음으로 금화를 획득하셨군요"
                 "<console> ('<yellow>"
              << stringize_glyph(get_item_symbol(SHOW_ITEM_GOLD))
              << "</yellow>')</console>"
-                ". Unlike all other objects in Crawl it doesn't show up in "
-                "your inventory, takes up no space in your inventory, weighs "
-                "nothing and can't be dropped. Gold can be used to buy "
-                "items from shops, and can also be sacrificed to some gods. ";
+                ". 다른 아이템들과는 다르게, 금화는 소지품창으로 들어가지 않습니다. "
+                "즉, 소지품창을 차지하지도 않고, 따로 무게를 차지하지도 않습니다. "
+                "그리고 다시 땅에 버릴 수도 없죠. 금화는 주로 상점에서 아이템을 구입하는데 "
+                "사용됩니다. 그 외로는 몇몇 신들에게 헌금으로 바치거나, 혹은 일부 특별한 장소로 이동하는데 통행료로 사용하기도 하죠. ";
 
         if (!Options.show_gold_turns)
         {
-            text << "Whenever you pick up some gold, your current amount will "
-                    "be mentioned. If you'd like to check your wealth at other "
-                    "times, you can press <w>%</w>. It will also be "
-                    "listed on the <w>%</w> screen.";
+            text << "골드를 주울 때마다, 메시지창에서는 얼마나 골드를"
+                    "얻었는지, 그리고 현재 얼만큼의 골드를 모았는지가 꼬박꼬박 표시됩니다."
+                    "<w>%</w>키를 누르면 언제든지 가지고 있는 골드가 얼마나 되는지를 확인할 수 있습니다."
+                    "<w>%</w> 화면에서도 가능하고요. ";
             cmd.push_back(CMD_LIST_GOLD);
             cmd.push_back(CMD_RESISTS_SCREEN);
         }
@@ -1541,7 +1541,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (you.num_turns < 1)
             DELAY_EVENT;
 
-        text << "These ";
+        text << "저기 보이는 ";
 #ifndef USE_TILE
         // Is a monster blocking the view?
         if (monster_at(gc))
@@ -1552,17 +1552,17 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         tiles.place_cursor(CURSOR_TUTORIAL, gc);
         tiles.add_text_tag(TAG_TUTORIAL, "Stairs", gc);
 #endif
-        text << "are some downstairs. You can enter the next (deeper) "
-                "level by following them down (<w>%</w>). To get back to "
-                "this level again, press <w>%</w> while standing on the "
-                "upstairs.";
+        text << "은(는) 아래로 내려가는 계단입니다. 던전의 좀 더 깊은 곳으로 가시려면, "
+                "계단 위에서 <w>%</w>키를 눌러, 던전의 아랫층으로 내려갈 수 있죠. "
+                "다시 윗층으로 돌아오시려면, 위로 향하는 계단 위에서 <w>%</w>키를 누르시면  "
+                "되고요.";
         cmd.push_back(CMD_GO_DOWNSTAIRS);
         cmd.push_back(CMD_GO_UPSTAIRS);
 
 #ifdef USE_TILE
-        text << "\nAlternatively, clicking on your <w>left mouse button</w> "
-                "while pressing the <w>Shift key</w> will let you follow any "
-                "stairs you're standing on.";
+        text << "\n다른 방법으로는, <w>시프트키</w>를 누른 상태에서 <w>왼쪽 마우스 버튼</w>으로 "
+                "계단을 누르셔도, 던전의 윗층이나 아래층으로 내려가실 수 있답니다. "
+                "";
 #endif
         break;
 
@@ -1574,7 +1574,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (monster_at(gc))
             DELAY_EVENT;
 
-        text << "These ";
+        text << "저기 보이는 ";
 #ifndef USE_TILE
         text << glyph_to_tagstr(get_cell_glyph(gc));
         text << " ";
@@ -1582,20 +1582,20 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         tiles.place_cursor(CURSOR_TUTORIAL, gc);
         tiles.add_text_tag(TAG_TUTORIAL, "Escape hatch", gc);
 #endif
-        text << "are some kind of escape hatch. You can use them to "
-                "quickly leave a level with <w>%</w> and <w>%</w>, "
-                "respectively "
+        text << "은(는) 비상구의 한 종류입니다. 위험한 상황 등이 닥쳤을 때, 비상구 위에서 "
+                "<w>%</w>키, <w>%</w>키를 눌러 이러한 비상구를 이용하면 "
+                "윗층이나 아래층으로 피신할 수 있죠. "
 #ifdef USE_TILE
                 "(or by using your <w>left mouse button</w> in combination "
                 "with the <w>Shift key</w>)"
 #endif
-                ", but will usually be unable to return right away.";
+                "하지만, 비상구는 계단과 달리 내려간 후 곧바로 다시 올라오거나 내려갈 수 없답니다. 꼭 필요한 경우가 아니면, 층을 이동할떄는 비상구보단 계단을 이용하는게 좋아요.";
         cmd.push_back(CMD_GO_UPSTAIRS);
         cmd.push_back(CMD_GO_DOWNSTAIRS);
         break;
 
     case HINT_SEEN_BRANCH:
-        text << "This ";
+        text << "아, 저기 보이는 ";
 #ifndef USE_TILE
         // Is a monster blocking the view?
         if (monster_at(gc))
@@ -1607,18 +1607,18 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         tiles.place_cursor(CURSOR_TUTORIAL, gc);
         tiles.add_text_tag(TAG_TUTORIAL, "Branch stairs", gc);
 #endif
-        text << "is the entrance to a different branch of the dungeon, "
-                "which might have different terrain, level layout and "
-                "monsters from the current main branch you're in. Some "
-                "branches contain only a single level, and others are many "
-                "levels deep. They can also contain entrances to other "
-                "branches."
+        text << "은(는) 던전 내의 색다른 장소로 통하는 입구입니다. 흔히 '서브던전'이라고 불리는 곳이죠. "
+                "서브던전은 메인 던전과는 다른 분위기의 지형과 구조, 그리고 "
+                "그에 맞는 몬스터들이 등장하는 곳입니다. 극히 일부 서브던전은 단층 구조로 "
+                "되어 있지만, 대부분의 서브던전은 여러 층으로 이루어져 있습니다. "
+                "그리고 서브 던전 내에 또 다른 서브 던전의 입구가 있는 경우도 "
+                "존재하죠."
 
-                "\n\nThe first three branches you'll encounter are the "
-                "Temple, the Orcish Mines and the Lair. While the Mines "
-                "and the Lair can be dangerous for the new adventurer, "
-                "the Temple is completely safe and contains a number of "
-                "altars at which you might convert to a new god.";
+                "\n\n당신이 처음으로 발견하게 되는 서브던전의 입구는 아마도 3곳중 한 곳이 될 것입니다. "
+                "만신전, 오크 광산, 짐승 소굴 이렇게 세 곳이죠. 오크 광산과 "
+                "짐승 소굴은, 초보 모험가들에게는 위험한 장소가 될 수 있습니다만, "
+                "만신전은 완전히 안전한 장소입니다. 그리고 만신전에는, 당신이 새로운 신을 모실수 있도록, "
+                "여러 종류의 신들의 제단들이 들어서 있죠.";
         break;
 
     case HINT_SEEN_PORTAL:
@@ -1629,7 +1629,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         if (you.pos() == gc)
             DELAY_EVENT;
 
-        text << "This ";
+        text << "이것";
 #ifndef USE_TILE
         // Is a monster blocking the view?
         if (monster_at(gc))
@@ -1649,8 +1649,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
             DELAY_EVENT;
 
 #ifdef USE_TILE
-        text << "A small question mark on a stair tile signifies that there "
-                "are items in that position that you may want to check out.";
+        text << "계단 하단에 작은 빗금 마크가 있는 것이 보이시나요? 저 빗금 마크는 "
+                "계단이 있는 지형에, 다른 아이템이 놓여 있다는 의미랍니다. 언제든지 저 위로 가서 아이템을 확인하고, 획득할 수 있죠.";
 #else
         text << "If any items are covering stairs or an escape hatch, then "
                 "that will be indicated by highlighting the <w><<</w> or "
@@ -1665,9 +1665,9 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
             DELAY_EVENT;
 
 #ifdef USE_TILE
-        text << "A small question mark on an item tile signifies that there "
-                "is at least one other item in the same heap that you may want "
-                "to check out.";
+        text << "아이템 하단에 작은 빗금 마크가 있는 것이 보이시나요? 저 빗금 마크는 "
+                "아이템이 있는 바닥 위에, 저 아이템 말고도 하나 이상의 아이템이 쌓여 있다는 의미랍니다. "
+                "언제든지 저 위로 가서 아이템을 확인하고, 획득할 수 있죠.";
         break;
 #else
         text << "If two or more items are on a single square, then the square "
@@ -1693,12 +1693,12 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
 
     case HINT_SEEN_TRAP:
         if (you.pos() == gc)
-            text << "Oops... you just triggered a trap. ";
+            text << "이런... 당신은 방금 함정을 작동시키셨습니다. ";
         else
-            text << "You just discovered a trap. ";
+            text << "당신은 방금 함정을 발견하셨습니다. ";
 
-        text << "An unwary adventurer will occasionally stumble into one "
-                "of these nasty constructions";
+        text << "부주의한 모험가들은 때때로 이러한 위험한 장치에 "
+                "걸려 버리기 마련이죠. ";
 #ifndef USE_TILE
         {
             cglyph_t g = get_cell_glyph(gc);
@@ -1709,14 +1709,14 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
             text << " depicted by " << _colourize_glyph(g.col, '^');
         }
 #endif
-        text << ". They can do physical damage (with darts or needles, for "
-                "example) or have other, more magical effects, like "
-                "teleportation. The mechanical variant can be disarmed with "
-                "<w>Ctrl + direction</w> "
+        text << "이러한 함정들은 물리적인 피해를 주거나 (다크나 바늘 등이 "
+                "튀어 나오는 식으로), 다른 방법으로는 마법적인 효과를 주는 경우도 있습니다. 임의의 장소로 "
+                "공간이동을 시켜 버린다던가... 이러한 함정들은 함정 옆 칸에 서서, <w>Ctrl + 방향키</w> "
+                ""
 #ifdef USE_TILE
-                "or with <w>Ctrl + leftclick</w> "
+                "혹은 <w>Ctrl + 마우스 왼쪽 버튼</w> 클릭으"
 #endif
-                "while standing next to it.";
+                "로 함정 해제를 시도할 수 있습니다.";
         break;
 
     case HINT_SEEN_ALTAR:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 21:54+0900\n"
+"POT-Creation-Date: 2013-04-13 13:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5904,7 +5904,8 @@ msgid "submerged "
 msgstr "물에 잠긴 "
 
 #: mon-info.cc:698 mon-info.cc:698 kills.cc:502 mon-info.cc:719
-#: mon-info.cc:884 mon-info.cc:899 mon-info.cc:904 kills.cc:531
+#: mon-info.cc:884 mon-info.cc:899 mon-info.cc:904 kills.cc:531 kills.cc:533
+#: kills.cc:542
 msgid "spectral "
 msgstr "영혼상태의 "
 
@@ -5919,14 +5920,17 @@ msgid "-headed "
 msgstr "머리 "
 
 #: mon-info.cc:734 mon-info.cc:734 kills.cc:493 mon-info.cc:755 kills.cc:522
+#: kills.cc:524 kills.cc:533
 msgid " zombie"
 msgstr "의 좀비"
 
 #: mon-info.cc:739 mon-info.cc:739 kills.cc:496 mon-info.cc:760 kills.cc:525
+#: kills.cc:527 kills.cc:536
 msgid " skeleton"
 msgstr "의 해골"
 
 #: mon-info.cc:744 mon-info.cc:744 kills.cc:499 mon-info.cc:765 kills.cc:528
+#: kills.cc:530 kills.cc:539
 msgid " simulacrum"
 msgstr "의 얼음 환영"
 
@@ -5961,6 +5965,7 @@ msgstr "%s"
 #: libutil.cc:92 libutil.cc:91 libutil.cc:91 libutil.cc:114 libutil.cc:105
 #: misc.cc:2373 spl-book.cc:2458 misc.cc:2376 spl-book.cc:2471 libutil.cc:110
 #: misc.cc:2410 spl-book.cc:2402 misc.cc:2413 misc.cc:2408 misc.cc:2412
+#: misc.cc:2419 spl-book.cc:2404 spl-book.cc:2419
 #, c-format
 msgid "the %s"
 msgstr "%s"
@@ -7542,7 +7547,7 @@ msgid "You feel transcendent for a moment."
 msgstr "당신은 잠시 동안, 초월적인 기운을 느꼈다."
 
 #: decks.cc:2237 decks.cc:2236 decks.cc:2236 decks.cc:2208 decks.cc:2202
-#: decks.cc:2207
+#: decks.cc:2207 skill_menu.cc:1442
 msgid "You feel omnipotent."
 msgstr "전능한 힘을 느꼈다."
 
@@ -26672,24 +26677,24 @@ msgstr "처치한 몬스터: "
 msgid "%d creature%s vanquished.\n"
 msgstr "%1$d마리의 몬스터를 처리했다.%2$.0s\n"
 
-#: kills.cc:437 kills.cc:468
+#: kills.cc:437 kills.cc:468 kills.cc:470 kills.cc:479
 msgid " (once)"
 msgstr "(1회)"
 
-#: kills.cc:440 kills.cc:471
+#: kills.cc:440 kills.cc:471 kills.cc:473 kills.cc:482
 msgid " (twice)"
 msgstr "(2회)"
 
-#: kills.cc:443 kills.cc:474
+#: kills.cc:443 kills.cc:474 kills.cc:476 kills.cc:485
 msgid " (thrice)"
 msgstr "(3회)"
 
-#: kills.cc:446 chardump.cc:421 kills.cc:477
+#: kills.cc:446 chardump.cc:421 kills.cc:477 kills.cc:479 kills.cc:488
 #, c-format
 msgid " (%d times)"
 msgstr "(%d회)"
 
-#: kills.cc:542 kills.cc:561
+#: kills.cc:542 kills.cc:561 kills.cc:563 kills.cc:572
 msgid " (shapeshifter)"
 msgstr "(변형괴물)"
 
@@ -31750,35 +31755,41 @@ msgstr ""
 "     주문   (설명보기)             학파                          실패율   레"
 "벨"
 
-#: spl-book.cc:1852 spl-book.cc:1854 spl-book.cc:1789
+#: spl-book.cc:1852 spl-book.cc:1854 spl-book.cc:1789 spl-book.cc:1793
 #, c-format
 msgctxt "bookname_level"
 msgid "%s%s"
-msgstr "(임시) bookname_level %s %s"
+msgstr "%s%s"
+# msgstr "[BL] name[%s] book[%s]"
 
-#: spl-book.cc:2404 spl-book.cc:2417 spl-book.cc:2348
+#: spl-book.cc:2404 spl-book.cc:2417 spl-book.cc:2348 spl-book.cc:2350
 #, c-format
 msgctxt "bookname"
 msgid "%s of %s"
 msgstr "%2$s의 %1$s"
 
-#: spl-book.cc:2433 spl-book.cc:2446 spl-book.cc:2377
+#: spl-book.cc:2433 spl-book.cc:2446 spl-book.cc:2377 spl-book.cc:2379
+#: spl-book.cc:2394
 msgctxt "bookname"
 msgid " and "
-msgstr " 그리고 "
+msgstr ", "
 
 #. 1. book name 2. discipline name(s)
-#: spl-book.cc:2443 spl-book.cc:2456 spl-book.cc:2387
+#: spl-book.cc:2443 spl-book.cc:2456 spl-book.cc:2387 spl-book.cc:2389
+#: spl-book.cc:2404
 #, c-format
 msgctxt "bookname_with_disc"
 msgid "%s%s"
-msgstr "(임시) bookname_with_desc %s %s"
+msgstr "%s%s"
+# msgstr "[BD] name[%s] type[%s]"
 
-#: spl-book.cc:2463 spl-book.cc:2476 spl-book.cc:2407
+#: spl-book.cc:2463 spl-book.cc:2476 spl-book.cc:2407 spl-book.cc:2409
+#: spl-book.cc:2424
 #, c-format
 msgctxt "bookname"
 msgid "%s%s"
-msgstr "(임시) bookname %s %s"
+msgstr "%s%s"
+# msgstr "[BN] name[%s] book[%s]"
 
 #: spl-cast.cc:169 spl-cast.cc:180 spl-cast.cc:171 spl-cast.cc:182
 msgid ""
@@ -36972,7 +36983,6 @@ msgstr "계   "
 msgid "Turn   | Place    | Note"
 msgstr "턴     | 장소     | 이력"
 
-#: kills.cc:1015
 #, c-format
 msgid "%u creature%s vanquished."
 msgstr "%d마리의 몬스터%s을(를) 처치했다."
@@ -37097,3 +37107,12 @@ msgstr "이전 페이지"
 #: travel.cc:3003
 msgid "There are sacrificable items here, ignore them?"
 msgstr "신에게 제물로 바치기 적당한 아이템이 있는데, 무시할 것인가?"
+
+#: player-stats.cc:646
+#, c-format
+msgid "Lost %s."
+msgstr "%s을(를) 잃어버림."
+
+#: spl-book.cc:2520
+msgid "Kikubaaqudgha's "
+msgstr "키쿠바쿠드하의"
