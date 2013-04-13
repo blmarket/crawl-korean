@@ -956,7 +956,7 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
                     mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
             else
-                mpr("You feel spirits watching over you.");
+                mpr(_("You feel spirits watching over you."));
             break;
 
         case SPARM_ARCHERY:
@@ -1347,7 +1347,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                 mpr(_("Now linked to your health, your magic stops regenerating."));
         }
         else
-            mpr("You feel spirits watching over you.");
+            mpr(_("You feel spirits watching over you."));
         ident = ID_KNOWN_TYPE;
         break;
 

@@ -252,7 +252,7 @@ spret_type cast_teleport_control(int power, bool fail)
 
     if (you.duration[DUR_TELEPORT] && !player_control_teleport())
     {
-        mpr("You feel your translocation being delayed.");
+        mpr(_("You feel your translocation being delayed."));
         you.increase_duration(DUR_TELEPORT, 1 + random2(3));
     }
 

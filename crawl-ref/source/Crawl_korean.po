@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-13 15:18+0900\n"
+"POT-Creation-Date: 2013-04-13 15:46+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9997,6 +9997,7 @@ msgstr "마력의 증폭을 느꼈다."
 
 #: player-equip.cc:919 player-equip.cc:919 player-equip.cc:935
 #: player-equip.cc:938 player-equip.cc:946 player-equip.cc:954
+#: player-equip.cc:959 player-equip.cc:1350
 msgid "You feel spirits watching over you."
 msgstr "지켜보고 있는 정령이 느껴졌다."
 
@@ -12355,7 +12356,7 @@ msgstr "당신의 피부가 부드러워졌다."
 
 #: main.cc:2492 main.cc:2492 main.cc:2494 main_backup.cc:2494 main.cc:2516
 #: main.cc:2568 main.cc:2573 main.cc:2551 main.cc:2560 main.cc:2565
-#: main.cc:2557 main.cc:2559
+#: main.cc:2557 main.cc:2559 spl-transloc.cc:638 spl-transloc.cc:1080
 msgid "You feel uncertain."
 msgstr "불안정함을 느꼈다."
 
@@ -15208,6 +15209,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -30959,6 +30963,9 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032 decks.cc:1732 decks.cc:2966 decks.cc:3033 decks.cc:2960
@@ -38129,3 +38136,12 @@ msgstr "쿼드 대미지"
 msgctxt "status"
 msgid "especially stealthy"
 msgstr "은밀함+"
+
+#: spl-selfench.cc:255 spl-transloc.cc:397
+msgid "You feel your translocation being delayed."
+msgstr "당신이 전이하기 위해서는 시간이 좀 더 필요할 것 같다..."
+
+#: xom.cc:2862
+#, c-format
+msgid "%s %s miscast"
+msgstr "%s %s 마법 실패 효과"

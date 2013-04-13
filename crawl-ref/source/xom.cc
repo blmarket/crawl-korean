@@ -2857,10 +2857,10 @@ static int _xom_miscast(const int max_level, const bool nasty,
     }
 
     // Take a note.
-    const char* levels[4] = { "harmless", "mild", "medium", "severe" };
+    const char* levels[4] = { "거의 무해한", "미약한", "상당한", "치명적인" };
     int school = 1 << random2(SPTYP_LAST_EXPONENT);
-    string desc = make_stringf("%s %s miscast", levels[level],
-                               spelltype_short_name(school));
+    string desc = make_stringf(_("%s %s miscast"), (levels[level]),
+                               _(spelltype_short_name(school)));
 #ifdef NOTE_DEBUG_XOM
     if (nasty)
         desc += " (Xom was nasty)";

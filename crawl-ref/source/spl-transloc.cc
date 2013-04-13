@@ -394,7 +394,7 @@ void you_teleport(void)
         // Doesn't care whether the cTele will actually work or not.
         if (player_control_teleport())
         {
-            mpr("You feel your translocation being delayed.");
+            mpr(_("You feel your translocation being delayed."));
             teleport_delay += 1 + random2(3);
         }
         if (player_in_branch(BRANCH_ABYSS) && !one_chance_in(5))
@@ -635,7 +635,7 @@ static bool _teleport_player(bool allow_control, bool new_abyss_area,
             // End teleport control.
             if (you.duration[DUR_CONTROL_TELEPORT])
             {
-                mpr("You feel uncertain.", MSGCH_DURATION);
+                mpr(_("You feel uncertain."), MSGCH_DURATION);
                 you.duration[DUR_CONTROL_TELEPORT] = 0;
             }
         }
@@ -1077,7 +1077,7 @@ spret_type cast_semi_controlled_blink(int pow, bool cheap_cancel, bool end_ctele
         // End teleport control if this was a random blink upgraded by cTele.
         if (end_ctele && you.duration[DUR_CONTROL_TELEPORT])
         {
-            mpr("You feel uncertain.", MSGCH_DURATION);
+            mpr(_("You feel uncertain."), MSGCH_DURATION);
             you.duration[DUR_CONTROL_TELEPORT] = 0;
         }
     }
