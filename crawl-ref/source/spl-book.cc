@@ -414,7 +414,7 @@ void mark_had_book(const item_def &book)
         if (stype == SPELL_NO_SPELL)
             continue;
 
-        you.seen_spell[stype] = true;
+        you.seen_spell.set(stype);
     }
 
     if (book.sub_type == BOOK_RANDART_LEVEL)
@@ -428,7 +428,7 @@ void mark_had_book(int booktype)
 {
     ASSERT(booktype >= 0 && booktype <= MAX_FIXED_BOOK);
 
-    you.had_book[booktype] = true;
+    you.had_book.set(booktype);
 }
 
 void inscribe_book_highlevel(item_def &book)
@@ -440,29 +440,59 @@ void inscribe_book_highlevel(item_def &book)
     }
 }
 
-int read_book(item_def &book, read_book_action_type action)
+/**
+ * Identify a held book/rod, if appropriate.
+ * @return whether we can see its spells
+ */
+bool maybe_id_book(item_def &book, bool silent)
 {
+    if (book.base_type != OBJ_BOOKS && book.base_type != OBJ_RODS)
+        return false;
+
+    if (book.base_type == OBJ_BOOKS && book.sub_type == BOOK_DESTRUCTION)
+    {
+        ASSERT(fully_identified(book));
+        return false;
+    }
+
+    if (book.base_type == OBJ_BOOKS && book.sub_type == BOOK_MANUAL)
+    {
+        set_ident_flags(book, ISFLAG_IDENT_MASK);
+        return false;
+    }
+
     if (book.base_type == OBJ_BOOKS && !item_type_known(book)
         && !player_can_memorise_from_spellbook(book))
     {
-        mpr(gettext("This book is beyond your current level of understanding."));
-        more();
+        if (!silent)
+        {
+            mpr(_("This book is beyond your current level of understanding."));
+            more();
+        }
 
         inscribe_book_highlevel(book);
-        return 0;
+        return false;
     }
+
+    set_ident_flags(book, ISFLAG_IDENT_MASK);
+
+    if (book.base_type == OBJ_BOOKS)
+        mark_had_book(book);
+
+    return true;
+}
+
+int read_book(item_def &book, read_book_action_type action)
+{
+    if (!maybe_id_book(book))
+        return 0;
 
 #ifdef USE_TILE_WEB
     tiles_crt_control show_as_menu(CRT_MENU, "read_book");
 #endif
 
-    set_ident_flags(book, ISFLAG_IDENT_MASK);
-
     // Remember that this function is called for rods as well.
     const int keyin = spellbook_contents(book, action);
-
-    if (book.base_type == OBJ_BOOKS)
-        mark_had_book(book);
 
     if (!crawl_state.is_replaying_keys())
         redraw_screen();

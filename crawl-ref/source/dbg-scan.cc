@@ -71,8 +71,7 @@ void debug_item_scan(void)
     int   i;
     char  name[256];
 
-    FixedVector<bool, MAX_ITEMS> visited;
-    visited.init(false);
+    FixedBitVector<MAX_ITEMS> visited;
 
     // First we're going to check all the stacks on the level:
     for (rectangle_iterator ri(0); ri; ++ri)
@@ -124,7 +123,7 @@ void debug_item_scan(void)
                      "Potential INFINITE STACK at (%d, %d)", ri->x, ri->y);
                 break;
             }
-            visited[obj] = true;
+            visited.set(obj);
         }
     }
 
@@ -561,8 +560,6 @@ void debug_mons_scan()
 }
 #endif
 
-// These are nearly completely redundant, and should be useless, except for
-// some recent Abyss breakage.
 void check_map_validity()
 {
 #ifdef ASSERTS
@@ -580,8 +577,8 @@ void check_map_validity()
     for (rectangle_iterator ri(0); ri; ++ri)
     {
         dungeon_feature_type feat = grd(*ri);
-        ASSERT(feat > DNGN_UNSEEN);
-        ASSERT(feat < NUM_FEATURES);
+        if (feat <= DNGN_UNSEEN || feat >= NUM_FEATURES)
+            die("invalid feature %d at (%d,%d)", feat, ri->x, ri->y);
         const char *name = dungeon_feature_name(feat);
         ASSERT(name);
         ASSERT(*name); // placeholders get empty names

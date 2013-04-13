@@ -552,8 +552,8 @@ void game_options::set_default_activity_interrupts()
     for (int adelay = 0; adelay < NUM_DELAYS; ++adelay)
         for (int aint = 0; aint < NUM_AINTERRUPTS; ++aint)
         {
-            activity_interrupts[adelay][aint]
-                = is_delay_interruptible(static_cast<delay_type>(adelay));
+            activity_interrupts[adelay].set(aint,
+                is_delay_interruptible(static_cast<delay_type>(adelay)));
         }
 
     const char *default_activity_interrupts[] = {
@@ -588,15 +588,8 @@ void game_options::set_default_activity_interrupts()
         read_option_line(default_activity_interrupts[i], false);
 }
 
-void game_options::clear_activity_interrupts(
-        FixedVector<bool, NUM_AINTERRUPTS> &eints)
-{
-    for (int i = 0; i < NUM_AINTERRUPTS; ++i)
-        eints[i] = false;
-}
-
 void game_options::set_activity_interrupt(
-        FixedVector<bool, NUM_AINTERRUPTS> &eints,
+        FixedBitVector<NUM_AINTERRUPTS> &eints,
         const string &interrupt)
 {
     if (interrupt.find(interrupt_prefix) == 0)
@@ -606,13 +599,10 @@ void game_options::set_activity_interrupt(
         if (delay == NUM_DELAYS)
             return report_error("Unknown delay: %s\n", delay_name.c_str());
 
-        FixedVector<bool, NUM_AINTERRUPTS> &refints =
+        FixedBitVector<NUM_AINTERRUPTS> &refints =
             activity_interrupts[delay];
 
-        for (int i = 0; i < NUM_AINTERRUPTS; ++i)
-            if (refints[i])
-                eints[i] = true;
-
+        eints |= refints;
         return;
     }
 
@@ -623,7 +613,7 @@ void game_options::set_activity_interrupt(
                             interrupt.c_str());
     }
 
-    eints[ai] = true;
+    eints.set(ai);
 }
 
 void game_options::set_activity_interrupt(const string &activity_name,
@@ -636,29 +626,28 @@ void game_options::set_activity_interrupt(const string &activity_name,
         return report_error("Unknown delay: %s\n", activity_name.c_str());
 
     vector<string> interrupts = split_string(",", interrupt_names);
-    FixedVector<bool, NUM_AINTERRUPTS> &eints = activity_interrupts[ delay ];
+    FixedBitVector<NUM_AINTERRUPTS> &eints = activity_interrupts[ delay ];
 
     if (remove_interrupts)
     {
-        FixedVector<bool, NUM_AINTERRUPTS> refints;
-        clear_activity_interrupts(refints);
+        FixedBitVector<NUM_AINTERRUPTS> refints;
         for (int i = 0, size = interrupts.size(); i < size; ++i)
             set_activity_interrupt(refints, interrupts[i]);
 
         for (int i = 0; i < NUM_AINTERRUPTS; ++i)
             if (refints[i])
-                eints[i] = false;
+                eints.set(i, false);
     }
     else
     {
         if (!append_interrupts)
-            clear_activity_interrupts(eints);
+            eints.reset();
 
         for (int i = 0, size = interrupts.size(); i < size; ++i)
             set_activity_interrupt(eints, interrupts[i]);
     }
 
-    eints[AI_FORCE_INTERRUPT] = true;
+    eints.set(AI_FORCE_INTERRUPT);
 }
 
 #if defined(DGAMELAUNCH)
@@ -911,7 +900,7 @@ void game_options::reset_options()
     explore_wall_bias      = 0;
     explore_improved       = false;
     travel_key_stop        = true;
-    auto_sacrifice         = OPT_NO;
+    auto_sacrifice         = AS_NO;
 
     target_unshifted_dirs  = false;
     darken_beyond_range    = true;
@@ -1040,7 +1029,7 @@ void game_options::reset_options()
                                              "command, spell, ability, "
                                              "monster");
 # endif
-    tile_use_small_layout = OPT_AUTO;
+    tile_use_small_layout = B_MAYBE;
 #endif
 
 #ifdef USE_TILE
@@ -3283,13 +3272,13 @@ void game_options::read_option_line(const string &str, bool runscript)
     else if (key == "auto_sacrifice")
     {
         if (field == "prompt_ignore")
-            auto_sacrifice = OPT_PROMPT_IGNORE;
+            auto_sacrifice = AS_PROMPT_IGNORE;
         else if (field == "prompt" || field == "ask")
-            auto_sacrifice = OPT_PROMPT;
+            auto_sacrifice = AS_PROMPT;
         else if (field == "before_explore")
-            auto_sacrifice = OPT_BEFORE_EXPLORE;
+            auto_sacrifice = AS_BEFORE_EXPLORE;
         else
-            auto_sacrifice = _read_bool(field, false) ? OPT_YES : OPT_NO;
+            auto_sacrifice = _read_bool(field, false) ? AS_YES : AS_NO;
     }
     else if (key == "sound")
     {
@@ -3578,11 +3567,11 @@ void game_options::read_option_line(const string &str, bool runscript)
     else if (key == "tile_use_small_layout")
     {
         if (field == "true")
-            tile_use_small_layout = OPT_YES;
+            tile_use_small_layout = B_TRUE;
         else if (field == "false")
-            tile_use_small_layout = OPT_NO;
+            tile_use_small_layout = B_FALSE;
         else
-            tile_use_small_layout = OPT_AUTO;
+            tile_use_small_layout = B_MAYBE;
     }
 #endif
 #ifdef USE_TILE

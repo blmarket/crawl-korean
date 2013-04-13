@@ -2355,8 +2355,14 @@ void check_item_knowledge(bool unknown_items)
 
 #if TAG_MAJOR_VERSION == 34
             // Water is never interesting either. [1KB]
-            if (i == OBJ_POTIONS && j == POT_WATER)
+            if (i == OBJ_POTIONS
+                && (j == POT_WATER
+                 || j == POT_GAIN_STRENGTH
+                 || j == POT_GAIN_DEXTERITY
+                 || j == POT_GAIN_INTELLIGENCE))
+            {
                 continue;
+            }
 
             if (i == OBJ_JEWELLERY && j == AMU_CONTROLLED_FLIGHT)
                 continue;
@@ -3120,6 +3126,12 @@ static bool _invisibility_is_useless(const bool temp)
 
 bool is_useless_item(const item_def &item, bool temp)
 {
+    // During game startup, no item is useless.  If someone re-glyphs an item
+    // based on its uselessness, the glyph-to-item cache will use the useless
+    // value even if your god or species can make use of it.
+    if (you.species == SP_UNKNOWN)
+        return false;
+
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
@@ -3344,7 +3356,7 @@ bool is_useless_item(const item_def &item, bool temp)
             return (you.religion == GOD_TROG);
 
         case RING_TELEPORT_CONTROL:
-            return player_control_teleport(true, temp, false);
+            return crawl_state.game_is_zotdef();
 
         case RING_TELEPORTATION:
             return crawl_state.game_is_sprint();

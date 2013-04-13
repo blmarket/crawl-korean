@@ -5,14 +5,13 @@
 #include "pattern.h"
 #include "newgame_def.h"
 
-// Intended to be somewhat generic
-enum option_value {
-    OPT_AUTO = -1,
-    OPT_NO,
-    OPT_YES,
-    OPT_PROMPT,
-    OPT_BEFORE_EXPLORE,
-    OPT_PROMPT_IGNORE
+enum autosac_type
+{
+    AS_NO,
+    AS_YES,
+    AS_PROMPT,
+    AS_BEFORE_EXPLORE,
+    AS_PROMPT_IGNORE,
 };
 
 struct message_filter
@@ -314,7 +313,7 @@ public:
 
     bool        travel_key_stop;   // Travel stops on keypress.
 
-    option_value auto_sacrifice;
+    autosac_type auto_sacrifice;
 
     vector<sound_mapping> sound_mappings;
     vector<colour_mapping> menu_colour_mappings;
@@ -351,7 +350,7 @@ public:
 
     vector<text_pattern> drop_filter;
 
-    FixedArray<bool, NUM_DELAYS, NUM_AINTERRUPTS> activity_interrupts;
+    FixedVector<FixedBitVector<NUM_AINTERRUPTS>, NUM_DELAYS> activity_interrupts;
 #ifdef DEBUG_DIAGNOSTICS
     FixedBitVector<NUM_DIAGNOSTICS> quiet_debug_messages;
 #endif
@@ -438,7 +437,7 @@ public:
     int         tile_map_pixels;
     int         tile_cell_pixels;
     bool        tile_filter_scaling;
-    option_value tile_use_small_layout;
+    maybe_bool  tile_use_small_layout;
 #endif
 
 #ifdef USE_TILE
@@ -496,8 +495,7 @@ private:
     message_filter parse_message_filter(const string &s);
 
     void set_default_activity_interrupts();
-    void clear_activity_interrupts(FixedVector<bool, NUM_AINTERRUPTS> &eints);
-    void set_activity_interrupt(FixedVector<bool, NUM_AINTERRUPTS> &eints,
+    void set_activity_interrupt(FixedBitVector<NUM_AINTERRUPTS> &eints,
                                 const string &interrupt);
     void set_activity_interrupt(const string &activity_name,
                                 const string &interrupt_names,

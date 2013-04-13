@@ -2020,10 +2020,11 @@ void timeout_door_seals(int duration, bool force)
         if (seal->duration <= 0 || !mon_src || !mon_src->alive())
         {
             grd(seal->pos) = seal->old_feature;
-            env.markers.remove(seal);
             set_terrain_changed(seal->pos);
             if (you.see_cell(seal->pos))
                 ++num_faded_seen;
+
+            env.markers.remove(seal);
         }
     }
 
@@ -2562,7 +2563,7 @@ void swap_with_monster(monster* mon_to_swap)
  */
 void wear_id_type(item_def &item)
 {
-    if (item_ident(item, ISFLAG_KNOW_TYPE))
+    if (item_type_known(item))
         return;
     set_ident_type(item.base_type, item.sub_type, ID_KNOWN_TYPE);
     set_ident_flags(item, ISFLAG_KNOW_TYPE);
@@ -2574,32 +2575,6 @@ static void _maybe_id_jewel(jewellery_type ring_type = NUM_JEWELLERY,
                             jewellery_type amulet_type = NUM_JEWELLERY,
                             artefact_prop_type artp = ARTP_NUM_PROPERTIES)
 {
-    int num_unknown = 0;
-    for (int i = EQ_LEFT_RING; i < NUM_EQUIP; ++i)
-    {
-        bool artefact = (player_wearing_slot(i)
-                         && is_artefact(you.inv[you.equip[i]]));
-
-        bool art_relevant = artefact && artp != ARTP_NUM_PROPERTIES;
-
-        if (i == EQ_AMULET && amulet_type == NUM_JEWELLERY && !art_relevant)
-            continue;
-
-        if (i != EQ_AMULET && ring_type == NUM_JEWELLERY && !art_relevant)
-            continue;
-
-        if (player_wearing_slot(i)
-            && !item_ident(you.inv[you.equip[i]], art_relevant
-                                                  ? ISFLAG_KNOW_PROPERTIES
-                                                  : ISFLAG_KNOW_TYPE))
-        {
-            ++num_unknown;
-        }
-    }
-
-    if (num_unknown != 1)
-        return;
-
     for (int i = EQ_LEFT_RING; i < NUM_EQUIP; ++i)
     {
         if (player_wearing_slot(i))
@@ -2620,18 +2595,6 @@ static void _maybe_id_jewel(jewellery_type ring_type = NUM_JEWELLERY,
     }
 }
 
-// AutoID an equipped ring of teleport.
-void maybe_id_ring_TC()
-{
-    if (you.duration[DUR_CONTROL_TELEPORT]
-        || player_mutation_level(MUT_TELEPORT_CONTROL))
-    {
-        return;
-    }
-
-    _maybe_id_jewel(RING_TELEPORT_CONTROL);
-}
-
 void maybe_id_ring_hunger()
 {
     _maybe_id_jewel(RING_HUNGER, NUM_JEWELLERY, ARTP_METABOLISM);
@@ -2640,19 +2603,11 @@ void maybe_id_ring_hunger()
 
 void maybe_id_ring_see_invis()
 {
-    // If you can see invisible without un-IDed items
-    if (you.can_see_invisible(false))
-        return;
-
     _maybe_id_jewel(RING_SEE_INVISIBLE, NUM_JEWELLERY, ARTP_EYESIGHT);
 }
 
 void maybe_id_clarity()
 {
-    // If we have clarity without un-IDed items
-    if (you.clarity(false))
-        return;
-
     _maybe_id_jewel(NUM_JEWELLERY, AMU_CLARITY, ARTP_CLARITY);
 }
 
@@ -2662,47 +2617,34 @@ void maybe_id_resist(beam_type flavour)
     {
     case BEAM_FIRE:
     case BEAM_LAVA:
-        if (player_res_fire(false))
-            return;
         _maybe_id_jewel(RING_PROTECTION_FROM_FIRE, NUM_JEWELLERY, ARTP_FIRE);
         break;
 
     case BEAM_COLD:
     case BEAM_ICE:
-        if (player_res_cold(false))
-            return;
         _maybe_id_jewel(RING_PROTECTION_FROM_COLD, NUM_JEWELLERY, ARTP_COLD);
         break;
 
     case BEAM_ELECTRICITY:
-        if (player_res_electricity(false))
-            return;
         _maybe_id_jewel(NUM_JEWELLERY, NUM_JEWELLERY, ARTP_ELECTRICITY);
         break;
 
     case BEAM_POISON:
     case BEAM_POISON_ARROW:
-        if (player_res_poison(false))
-            return;
+    case BEAM_MEPHITIC:
         _maybe_id_jewel(RING_POISON_RESISTANCE, NUM_JEWELLERY, ARTP_POISON);
         break;
 
     case BEAM_NEG:
-        if (player_prot_life(false))
-            return;
         _maybe_id_jewel(RING_LIFE_PROTECTION, AMU_WARDING, ARTP_NEGATIVE_ENERGY);
         break;
 
     case BEAM_STEAM:
-        if (player_res_steam(false))
-            return;
         // rF+ grants rSteam, all possibly unidentified sources of rSteam are rF
         _maybe_id_jewel(RING_PROTECTION_FROM_FIRE, NUM_JEWELLERY, ARTP_FIRE);
         break;
 
     case BEAM_MALMUTATE:
-        if (player_mutation_level(MUT_MUTATION_RESISTANCE))
-            return;
         _maybe_id_jewel(NUM_JEWELLERY, AMU_RESIST_MUTATION);
         break;
 

@@ -1,12 +1,12 @@
 ###############################################################################
-# layout_caves.des: Layouts based on cavelike formations, largely using
-#                   procedural noise functions
+# layout_halls.des: Hall-like formations featuring rooms and corridors
 ###############################################################################
 
 : require("dlua/util.lua")
 : require("dlua/layout/procedural.lua")
 : require("dlua/layout/procedural_primitives.lua")
 : require("dlua/layout/procedural_complex.lua")
+: require("dlua/layout/procedural_transform.lua")
 : require("dlua/layout/zonify.lua")
 
 {{
@@ -52,7 +52,7 @@
 
     local fphase = function(x,y)
       local r = fcircle(x,y)
-      if r >= 1 then return 0 end
+      if r >= 1 then return -1 end
       local rr = r * num_rings
       local level = math.floor(rr)
       r = rr - level
@@ -226,7 +226,6 @@ TAGS: overwritable layout allow_dup unrand
 
   -- TODO:
   --  * Implement chaotic gaps sizing
-  --  * Maybe ruin some walls
   --  * Tune params a bit for Snake
 
   local wall_break = util.random_range_real(.4,.7)
@@ -257,7 +256,7 @@ TAGS: overwritable layout allow_dup unrand
 
   procedural.render_map(_G, fphase, function(v) return (v > wall_break and '.' or 'x') end)
 
-  zonify.map_fill_zones(_G, 1, 'x')
+  -- zonify.map_fill_zones(_G, 1, 'x')
 }}
 MAP
 ENDMAP
@@ -265,28 +264,69 @@ ENDMAP
 # Takes an inverted version of the onion layout so what were walls
 # are now rooms - connects these up with a noise pattern.
 # Hopefully this should look like ancient abandoned catacombs.
-# TODO: Other ways of connecting up the rooms.
+# TODO: Other ways of connecting up the rooms. Need something starting
+# in the centre and spreading out in a branching way, like particle diffusion.
 NAME:   layout_catacombs
-DEPTH:  Crypt
-WEIGHT: 0
+DEPTH:  Crypt,Tar
+WEIGHT: 50, 100 (Tar)
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{
-  layout_type "halls"
+  layout_type "catacombs"
   if is_validating() then return; end
   local gxm,gym = dgn.max_bounds()
 
   -- Make the rings
-  local num_rings = crawl.random2avg(6,2)+4
-  local wall_break = util.random_range_real(.5,.8)
+  local num_rings = crawl.random2avg(4,2)+4
+  local wall_break = util.random_range_real(0.4,0.7)
   local fphase = onion_skin(num_rings,wall_break)
 
   -- Position on map
-  fphase = procedural.translate(procedural.scale(fphase,math.min(gxm,gym)/2-2),gxm/2,gym/2)
+  fphase = procedural.translate(procedural.scale(fphase,math.min(gxm,gym)/(crawl.random2(3)/2+1)),
+                                gxm/2,gym/2)
+
+  -- NOTE: The following didn't quite work but was pretty cool. Attempted to 'erode' the
+  -- level by drawing noise layers over it. It mostly managed to connect everything but
+  -- was just a bit too messy.
+  --local fconnect = procedural.sub(1,
+  --  procedural.abs(procedural.simplex3d { scale = 4, unit = false }),
+  --  procedural.abs(procedural.simplex3d { scale = 4, unit = false })
+  --)
+
+  local use_water = you.in_branch("crypt") and crawl.one_chance_in(4)
+
+  -- Pick a connector function to link up the rooms
+  local fconnect
+  if crawl.coinflip() then
+    fconnect = complex.rays(crawl.random_range(5,10), crawl.random_real(), util.random_range_real(30,35), util.random_range_real(0.1,0.2))
+    -- Distort more the further out the rays go
+    local fdsx = procedural.simplex3d { scale = util.random_range_real(.5,1), unit = false }
+    local fdsy = procedural.simplex3d { scale = util.random_range_real(.5,1), unit = false }
+    local fedge = procedural.min(1,procedural.div(primitive.distance,math.min(gxm,gym)/2))
+    local fdx = procedural.mul(fdsx,fedge)
+    local fdy = procedural.mul(fdsy,fedge)
+    fconnect = procedural.distort { source = fconnect, scale = crawl.random_range(10,20), offsetx = fdx, offsety = fdy }
+    fconnect = procedural.translate(fconnect,gxm/2,gym/2)
+    use_water = false
+  else
+    fconnect = procedural.abs(procedural.simplex3d { scale = util.random_range_real(0.6,0.8), unit = false })
+  end
+
+  local connect_glyph = '.'
+  local water_glyph = 'W'
 
   -- Do the render
-  procedural.render_map(_G, fphase, function(v) return (v < wall_break and '.' or 'x') end)
-  procedural.render_map(_G, procedural.worley_diff{scale=util.random_range_real(0.1,0.2) }, function(v) return (v < 0.1 and '.' or nil) end)
+  procedural.render_map(_G, fphase, function(v,x,y)
+    local vconn = fconnect(x,y)
+    if vconn < 0.1 then
+      if use_water and (v == -1 or vconn < 0.06) then
+        return water_glyph
+      elseif v > -1 then
+        return connect_glyph
+      end
+    end
+    return (v < wall_break and v > -1 and '.' or 'x')
+  end)
 
   zonify.map_fill_zones(_G, 1, 'x')
 }}
@@ -299,11 +339,12 @@ WEIGHT: 0
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{
-  -- TODO: * 50% of the time this layout looks great. But often we end up with very long unbroken corridors and
-  -- there should be some semblance of the hole carving algorithm from the first version.
-  -- * Secondly, the negative interference produces some of the best layouts. But also it can break connectivity
-  -- so we end up with tiny levels.
-  -- * Might be nice to try 3 or 4 things interfering (how would this work with negatives?)
+
+  -- TODO: This comes out with really stunning layouts 80% of the time
+  -- but sometimes they're small and weird-looking. Needs more tweaking.
+  -- Ideas:
+  --  * Convert to use the other shape functions
+  --  * Layer different shapes instead of the same two
 
   layout_type "halls"
   if is_validating() then return; end
@@ -311,19 +352,19 @@ TAGS: overwritable layout allow_dup unrand
 
   local fcircle
   if crawl.coinflip() then
-    fcircle = procedural.distance { radius = math.min(gxm,gym)/2.5 - 2, origin = { x = gxm/2, y = gym/2 } }
+    fcircle = procedural.distance { radius = math.min(gxm,gym)/2.2 - 2, origin = { x = gxm/2, y = gym/2 } }
   else
-    local padx,pady = crawl.random_range(2,10),crawl.random_range(2,10)
+    local padx,pady = crawl.random_range(2,5),crawl.random_range(2,5)
     fcircle = procedural.box { x1 = padx, y1 = pady, x2 = gxm-1-padx, y2 = gym-1-pady }
   end
 
   local wall_break = util.random_range_real(.4,.6)
-  local rings = crawl.random_range(4,8)
+  local rings = crawl.random_range(5,8)
 
   local fill_center = crawl.coinflip()
   local frings = function(x,y)
     local r = fcircle(x,y)
-    if r >= 1 then return 0 end
+    if r >= 1 then return -1 end
     local rr = r * rings
     local level = math.floor(rr)
     r = rr - level
@@ -350,21 +391,152 @@ TAGS: overwritable layout allow_dup unrand
 
   -- Generate the interference pattern by combining two coords
   -- from the original func
+  local cardinal = crawl.coinflip()
+  local basedirs
+  if cardinal then
+    basedirs = vector.diagonals
+  else
+    basedirs = {}
+    local dir = { x = util.random_range_real(0.5,1), y = util.random_range_real(0.5,1) }
+    for n=1,4,1 do
+      basedirs[n] = { x = vector.diagonals[n].x*dir.x, y = vector.diagonals[n].y*dir.y }
+    end
+  end
+
+  local dist = crawl.random_range(3,6)
+  local dirs = {}
+  for n=1,4,1 do
+    dirs[n] = { x = basedirs[n].x*dist, y = basedirs[n].y*dist }
+  end
+
   local xor = crawl.coinflip()
-  local dir = util.random_from(vector.directions)
-  local dist = crawl.random_range(4,8)
-  local offx,offy = dist*dir.x,dist*dir.y
-  local fphase = function(x,y)
-    local r1 = frings(x-offx,y-offy)
-    local r2 = frings(x+offx,y+offy)
-    if xor and r1>wall_break and r2>wall_break then
-      return r1-r2
-    else
-      return math.max(r1,r2)
+
+  local vals = {}
+  local fvals = function(x,y)
+    for n=1,4,1 do
+      vals[n] = frings(x+dirs[n].x,y+dirs[n].y)
+    end
+    return vals
+  end
+
+  local fphase
+  local two_or_four = crawl.coinflip()
+  if xor then
+    fphase = function(x,y)
+      local vals = fvals(x,y)
+      if two_or_four then
+        if vals[1] < 0 or vals[2] < 0 or vals[3] < 0 or vals[4] < 0 then return 0 end
+        if vals[1] > wall_break and vals[2] > wall_break or vals[3] > wall_break and vals[4] > wall_break then
+          return vals[1] - vals[2] + vals[3] - vals[4]
+        end
+      else
+        if vals[1] < 0 or vals[3] < 0 then return 0 end
+        if vals[1] > wall_break and vals[3] > wall_break then
+          return vals[1] - vals[3]
+        end
+      end
+      return 1
+    end
+  else
+    fphase = function(x,y)
+      local vals = fvals(x,y)
+      if two_or_four then
+        if vals[1] < 0 or vals[2] < 0 or vals[3] < 0 or vals[4] < 0 then return 0 end
+        return math.max(vals[1],vals[2],vals[3],vals[4])
+      else
+        if vals[1] < 0 or vals[3] < 0 then return 0 end
+        return math.max(vals[1],vals[3])
+      end
     end
   end
 
   procedural.render_map(_G, fphase, function(v) return (v > wall_break and '.' or 'x') end)
+
+  zonify.map_fill_zones(_G, 1, 'x')
+}}
+MAP
+ENDMAP
+
+# This maps the x,y domain to a 3D cylinder extruded along the y-axis in the
+# Worley space. This creates a strong sense of repetition and symmetry along
+# the horizontal whilst still allowing the patterns to connect.
+# Somehow, particularly in Zot, the shapes have a tendency to come out looking like
+# people, faces, skulls... kind of like a paper doll chain.
+NAME:   layout_cathedral_of_symmetry
+DEPTH:  Zot,Tar
+WEIGHT: 20, 100(Tar)
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand
+{{
+  layout_type "halls"
+  if is_validating() then return; end
+  local gxm,gym = dgn.max_bounds()
+
+  -- zscale controls the symmetry within each repetition because with 0
+  -- the coord bounces back and forth along a line instead of tracing
+  -- a circle. Increasing towards 1 results in less and less symmetry until
+  -- we get a standard worley pattern at 1.
+  local zscale = 0
+
+  -- zoff gradually increases the z-axis offset as we move along x.
+  -- A non-zero value results in each repetition looking slightly different.
+  local zoff = 0
+
+  -- How many times to loop the pattern. Use multiples of 0.5 to
+  -- take advantage of the symmetrical nature of the algorithm
+  local reps = (crawl.random2(8)+1)/2
+
+  -- Offsets the whole pattern by a given multiple of repetitions.
+  -- This means the large symmetrical parts can be in the middle or on
+  -- the edge. Using multiples of 0.25 as these create a distinct geometry.
+  local xoff = crawl.random2(4)/4
+
+  -- Note: varying the scales is very tricky. At higher reps we can't get
+  -- away with so much variance.
+  -- Vertical axis scale
+  local yscale = 1
+  -- Scale of the underlying worley
+  local wscale = .2
+
+  local border = crawl.random_range(3,6)
+  local margin = crawl.random_range(0,5)
+
+  if you.in_branch("tar") then
+    -- Tar works best with a lot of dissonance but occasionally
+    -- repeating elements
+    zscale = util.random_range_real(0.2,0.6)
+    zoff = util.random_range_real(0.1,0.3)
+    yscale = util.random_range_real(.4,1)/reps + reps/10
+    wscale = util.random_range_real(.06, .1)
+  else
+    -- Zot:5
+    if you.at_branch_bottom() then
+      reps = crawl.random2(4)+0.5
+      xoff = 0
+      border = 6
+      margin = 8
+    end
+
+    -- In Zot we want a strong set of symmetry and repetition
+    zscale = util.random_range_real(0,0.05)
+    zoff = util.random_range_real(0,0.25)
+    yscale = util.random_range_real(.1,.4)/reps + reps/10
+    wscale = util.random_range_real(.05, .08)
+  end
+
+  local scale = 80/reps
+  local breakpoint = 0.3
+  local fbase = procedural.worley_diff{ scale = wscale }
+  fbase = procedural.transform.wrapped_cylinder(fbase,scale,scale,zscale,zoff)
+  fbase = procedural.scale(fbase,1,yscale)
+  fbase = procedural.translate(fbase,scale*xoff/2,0)
+  fbase = procedural.add(fbase,procedural.mul(breakpoint,procedural.border{padding=border,margin=margin}))
+
+  procedural.render_map(_G, fbase, function(v) return (v < breakpoint and '.' or 'x') end)
+
+  procedural.render_map(_G, fbase, function(v,x,y)
+    return (v < .3 and '.' or 'x')
+  end)
 
   zonify.map_fill_zones(_G, 1, 'x')
 }}

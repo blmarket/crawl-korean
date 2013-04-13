@@ -1969,11 +1969,12 @@ ring of sustenance:quote
 %%%%
 ring of teleport control
 
-This ring allows its wearer to control the destination of any teleportation,
-although without perfect accuracy. Trying to teleport into a solid object will
-result in a random teleportation, at least in the case of a normal
-teleportation. Also be wary that controlled teleports will contaminate the
-subject with residual magical energy.
+This ring can be evoked to allow its wearer to control the destination of a
+teleport or blink, although without perfect accuracy. Trying to teleport into a
+solid object will result in a random teleportation, at least in the case of a
+normal teleportation. Also be wary that controlled translocations will
+contaminate the subject with residual magical energy, and that controlled
+teleports will take longer to trigger than uncontrolled ones.
 %%%%
 ring of teleport control:quote
 
@@ -2015,58 +2016,30 @@ rod of demonology
 This rod contains spells of summoning, some of which can unleash demons unto
 this unsuspecting world.
 %%%%
-rod of demonology:quote
-
-<rod:quote>
-%%%%
 rod of destruction
 
 이 마법막대는 파괴와 황폐의 주문을 담고 있다.
-%%%%
-rod of destruction:quote
-
-<rod:quote>
 %%%%
 rod of inaccuracy
 
 This rod allows its wielder to fire a powerful but extremely inaccurate bolt of
 power.
 %%%%
-rod of inaccuracy:quote
-
-<rod:quote>
-%%%%
 rod of striking
 
 이 마법막대는 힘의 화살을 사용하여 들고 있는 사람이 원거리에서 적을 때릴 수 있게 한다.
-%%%%
-rod of striking:quote
-
-<rod:quote>
 %%%%
 rod of the swarm
 
 This rod allows its wielder to summon a swarm of insects.
 %%%%
-rod of the swarm:quote
-
-<rod:quote>
-%%%%
 rod of venom
 
 This rod contains offensive spells of poison.
 %%%%
-rod of venom:quote
-
-<rod:quote>
-%%%%
 rod of warding
 
 이 마법 막대는 적의 소환물을 물리치는 주문을 담고있다.
-%%%%
-rod of warding:quote
-
-<rod:quote>
 %%%%
 royal jelly
 

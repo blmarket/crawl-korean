@@ -1801,6 +1801,8 @@ int move_item_to_player(int obj, int quant_got, bool quiet,
 
     god_id_item(item);
     maybe_id_weapon(item);
+    if (item.base_type == OBJ_BOOKS)
+        maybe_id_book(item, true);
 
     note_inscribe_item(item);
 
@@ -3236,7 +3238,8 @@ bool item_def::is_greedy_sacrificeable() const
 
     if (you.religion == GOD_NEMELEX_XOBEH
         && !check_nemelex_sacrificing_item_type(*this)
-        || flags & (ISFLAG_DROPPED | ISFLAG_THROWN))
+        || flags & (ISFLAG_DROPPED | ISFLAG_THROWN)
+        || item_is_stationary(*this))
     {
         return false;
     }

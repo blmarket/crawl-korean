@@ -15,7 +15,6 @@
 #include "externs.h"
 #include "items.h"
 #include "itemname.h" // for make_name()
-#include "l_defs.h"
 #include "libutil.h"
 #include "los.h"
 #include "macro.h"
@@ -34,6 +33,7 @@
 #include "spl-util.h"
 #include "state.h"
 #include "stuff.h"
+#include "terrain.h"
 #ifdef USE_TILE
  #include "tileview.h"
 #endif
@@ -411,7 +411,7 @@ namespace arena
         for (int i = 0; i < MAX_MONSTERS; i++)
             to_respawn[i] = -1;
 
-        unwind_var< FixedVector<bool, NUM_MONSTERS> >
+        unwind_var< FixedBitVector<NUM_MONSTERS> >
             uniq(you.unique_creatures);
 
         place_a = dgn_find_feature_marker(DNGN_STONE_STAIRS_UP_I);
@@ -538,6 +538,8 @@ namespace arena
 
         for (monster_iterator mons; mons; ++mons)
         {
+            if (mons_is_tentacle(mons->type))
+                continue;
             if (mons->attitude == ATT_FRIENDLY)
                 faction_a.active_members++;
             else if (mons->attitude == ATT_HOSTILE)
@@ -1022,7 +1024,7 @@ monster_type arena_pick_random_monster(const level_id &place)
         const vector<monster_type> &uniques = arena::uniques_list;
 
         const monster_type type = uniques[random2(uniques.size())];
-        you.unique_creatures[type] = false;
+        you.unique_creatures.set(type, false);
 
         return type;
     }
@@ -1048,6 +1050,8 @@ monster_type arena_pick_random_monster(const level_id &place)
 
 bool arena_veto_random_monster(monster_type type)
 {
+    if (mons_is_tentacle(type))
+        return true;
     if (!arena::allow_immobile && mons_class_is_stationary(type))
         return true;
     if (!arena::allow_zero_xp && mons_class_flag(type, M_NO_EXP_GAIN))
@@ -1087,7 +1091,9 @@ bool arena_veto_place_monster(const mgen_data &mg, bool first_band_member,
 // is placed via splitting.
 void arena_placed_monster(monster* mons)
 {
-    if (mons->attitude == ATT_FRIENDLY)
+    if (mons_is_tentacle(mons->type))
+        ; // we don't count tentacles, even free-standing
+    else if (mons->attitude == ATT_FRIENDLY)
     {
         arena::faction_a.active_members++;
         arena::faction_b.won = false;
@@ -1096,12 +1102,6 @@ void arena_placed_monster(monster* mons)
     {
         arena::faction_b.active_members++;
         arena::faction_a.won = false;
-    }
-    else
-    {
-        mprf(MSGCH_ERROR, "Placed neutral (%d) monster %s",
-             static_cast<int>(mons->attitude),
-             mons->name(DESC_PLAIN, true).c_str());
     }
 
     if (!arena::allow_summons || !arena::allow_animate)
@@ -1191,7 +1191,9 @@ void arena_split_monster(monster* split_from, monster* split_to)
 void arena_monster_died(monster* mons, killer_type killer,
                         int killer_index, bool silent, int corpse)
 {
-    if (mons->attitude == ATT_FRIENDLY)
+    if (mons_is_tentacle(mons->type))
+        ; // part of a monster, or a spell
+    else if (mons->attitude == ATT_FRIENDLY)
         arena::faction_a.active_members--;
     else if (mons->attitude == ATT_HOSTILE)
         arena::faction_b.active_members--;

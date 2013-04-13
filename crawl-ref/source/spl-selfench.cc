@@ -250,7 +250,14 @@ spret_type cast_teleport_control(int power, bool fail)
     else
         mpr("여기서는 공간이동을 제어할 수 없을 것 같다.");
 
+    if (you.duration[DUR_TELEPORT] && !player_control_teleport())
+    {
+        mpr("You feel your translocation being delayed.");
+        you.increase_duration(DUR_TELEPORT, 1 + random2(3));
+    }
+
     you.increase_duration(DUR_CONTROL_TELEPORT, 10 + random2(power), 50);
+
     return SPRET_SUCCESS;
 }
 

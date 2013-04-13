@@ -249,6 +249,7 @@ static const ability_def Ability_List[] =
     { ABIL_EVOKE_TURN_VISIBLE, M_("Turn Visible"), 0, 0, 0, 0, 0, ABFLAG_NONE},
     { ABIL_EVOKE_FLIGHT, M_("Evoke Flight"), 1, 0, 100, 0, 0, ABFLAG_NONE},
     { ABIL_EVOKE_FOG, M_("Evoke Fog"), 2, 0, 250, 0, 0, ABFLAG_NONE},
+    { ABIL_EVOKE_TELEPORT_CONTROL, M_("Evoke Teleport Control"), 4, 0, 200, 0, 0, ABFLAG_NONE},
 
     { ABIL_END_TRANSFORMATION, M_("End Transformation"), 0, 0, 0, 0, 0, ABFLAG_NONE},
 
@@ -1064,6 +1065,7 @@ talent get_talent(ability_type ability, bool check_confused)
 
     case ABIL_EVOKE_BERSERK:
     case ABIL_EVOKE_FOG:
+    case ABIL_EVOKE_TELEPORT_CONTROL:
         failure = 50 - you.skill(SK_EVOCATIONS, 2);
         break;
         // end item abilities - some possibly mutagenic {dlb}
@@ -1521,6 +1523,14 @@ static bool _check_ability_possible(const ability_def& abil,
         {
             if (!quiet)
                 canned_msg(MSG_NO_SPELLS);
+            return false;
+        }
+        return true;
+
+    case ABIL_ASHENZARI_TRANSFER_KNOWLEDGE:
+        if (all_skills_maxed(true))
+        {
+            mpr("You have nothing more to learn.");
             return false;
         }
         return true;
@@ -2194,6 +2204,10 @@ static bool _do_ability(const ability_def& abil)
     case ABIL_EVOKE_FOG:     // cloak of the Thief
         mpr("With a swish of your cloak, you release a cloud of fog.");
         big_cloud(random_smoke_type(), &you, you.pos(), 50, 8 + random2(8));
+        break;
+
+    case ABIL_EVOKE_TELEPORT_CONTROL:
+        cast_teleport_control(30 + you.skill(SK_EVOCATIONS, 2), false);
         break;
 
     case ABIL_STOP_FLYING:
@@ -3265,6 +3279,9 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
         {
             _add_talent(talents, ABIL_EVOKE_TELEPORTATION, check_confused);
         }
+
+        if (you.wearing(EQ_RINGS, RING_TELEPORT_CONTROL))
+            _add_talent(talents, ABIL_EVOKE_TELEPORT_CONTROL, check_confused);
     }
 
     // Find hotkeys for the non-hotkeyed talents.

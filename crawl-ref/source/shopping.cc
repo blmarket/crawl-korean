@@ -426,20 +426,24 @@ static vector<int> _shop_get_stock(int shopidx)
     return result;
 }
 
+static int _bargain_cost(int value)
+{
+    // 20% discount
+    value *= 8;
+    value /= 10;
+
+    return max(value, 1);
+}
+
 static int _shop_get_item_value(const item_def& item, int greed, bool id,
                                 bool ignore_bargain = false)
 {
     int result = (greed * item_value(item, id) / 10);
-    if (you.duration[DUR_BARGAIN] && !ignore_bargain) // 20% discount
-    {
-        result *= 8;
-        result /= 10;
-    }
 
-    if (result < 1)
-        result = 1;
+    if (you.duration[DUR_BARGAIN] && !ignore_bargain)
+        result = _bargain_cost(result);
 
-    return result;
+    return max(result, 1);
 }
 
 static string _shop_print_stock(const vector<int>& stock,
@@ -675,7 +679,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
             {
                 const item_def& item = mitm[stock[i]];
                 const int cost = _shop_get_item_value(item, shop.greed,
-                                                      id_stock);
+                                                      id_stock, true);
 
                 unsigned int num = shopping_list.cull_identical_items(item,
                                                                       cost);
@@ -898,7 +902,7 @@ static bool _in_a_shop(int shopidx, int &num_in_list)
                         {
                             // Ignore Bargaining.
                             const int cost = _shop_get_item_value(item,
-                                        shop.greed, id_stock, false);
+                                        shop.greed, id_stock, true);
                             shopping_list.add_thing(item, cost);
                         }
                         in_list[i]  = true;
@@ -2863,7 +2867,7 @@ void ShoppingList::move_things(const coord_def &_src, const coord_def &_dst)
 void ShoppingList::forget_pos(const level_pos &pos)
 {
     if (!crawl_state.need_save)
-        return; // Shopping list is unitialized and uneeded.
+        return; // Shopping list is uninitialized and unneeded.
 
     for (unsigned int i = 0; i < list->size(); i++)
     {
@@ -2972,6 +2976,9 @@ void ShoppingList::fill_out_menu(Menu& shopmenu)
         level_pos      pos    = thing_pos(thing);
         int            cost   = thing_cost(thing);
 
+        if (you.duration[DUR_BARGAIN])
+            cost = _bargain_cost(cost);
+
         string etitle =
             make_stringf("[%s] %s (%d gp)", short_place_name(pos.id).c_str(),
                          name_thing(thing, DESC_PLAIN).c_str(),
@@ -3047,7 +3054,9 @@ void ShoppingList::display()
 
         if (shopmenu.menu_action == Menu::ACT_EXECUTE)
         {
-            const int cost = thing_cost(*thing);
+            int cost = thing_cost(*thing);
+            if (you.duration[DUR_BARGAIN])
+                cost = _bargain_cost(cost);
 
             if (cost > you.gold)
             {

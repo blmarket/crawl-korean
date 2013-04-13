@@ -44,7 +44,7 @@ static duration_def duration_data[] =
     { DUR_CONFUSING_TOUCH, true,
       BLUE, P_("status","Touch"), P_("status","confusing touch"), "" },
     { DUR_CONTROL_TELEPORT, true,
-      MAGENTA, P_("status", "cTele"), "", N_("You can control teleportations.") },
+      MAGENTA, P_("status", "cTele"), P_("status","controlling teleports"), N_("You can control teleportations.") },
     { DUR_CORONA, false,
       YELLOW, P_("status", "Corona"), "", "" },
     { DUR_DEATH_CHANNEL, true,
@@ -62,13 +62,13 @@ static duration_def duration_data[] =
     { DUR_LIQUID_FLAMES, false,
       RED, P_("status","Fire"), P_("status","liquid flames"), N_("You are covered in liquid flames.") },
     { DUR_LOWERED_MR, false,
-      RED, P_("status","-MR"), "", "" },
+      RED, P_("status","-MR"), P_("status","vulnerable"), "" },
     { DUR_MAGIC_SHIELD, false,
       0, "", P_("status","shielded"), "" },
     { DUR_MIGHT, false,
       0, "", P_("status","mighty"), N_("You are mighty.") },
     { DUR_MISLED, true,
-      LIGHTMAGENTA, P_("status","Misled"), "", "" },
+      LIGHTMAGENTA, P_("status","Misled"), P_("status","misled"), "" },
     { DUR_PARALYSIS, false,
       RED, P_("status","Para"), P_("status","paralysed"), N_("You are paralysed.") },
     { DUR_PETRIFIED, false,
@@ -78,7 +78,7 @@ static duration_def duration_data[] =
     { DUR_JELLY_PRAYER, false,
       WHITE, P_("status", "Pray"), P_("status", "praying"), N_("You are praying.") },
     { DUR_RESISTANCE, true,
-      LIGHTBLUE, P_("status", "Resist"), "", N_("You resist elements.") },
+      LIGHTBLUE, P_("status","Resist"), P_("status","resistant"), N_("You resist elements.") },
     { DUR_SLAYING, false,
       0, "", P_("status","deadly"), "" },
     { DUR_SLIMIFY, true,
@@ -90,7 +90,7 @@ static duration_def duration_data[] =
     { DUR_SWIFTNESS, true,
       BLUE, P_("status","Swift"), P_("status","swift"), N_("You can move swiftly.") },
     { DUR_TELEPATHY, false,
-      LIGHTBLUE, P_("status","Emp"), "", "" },
+      LIGHTBLUE, P_("status","Emp"), P_("status","empathic"), "" },
     { DUR_TELEPORT, false,
       LIGHTBLUE, P_("status","Tele"), P_("status","about to teleport"), N_("You are about to teleport.") },
     { DUR_DEATHS_DOOR, true,
@@ -98,11 +98,11 @@ static duration_def duration_data[] =
     { DUR_PHASE_SHIFT, true,
       0, "", P_("status","phasing"), N_("You are out of phase with the material plane.") },
     { DUR_QUAD_DAMAGE, true,
-      BLUE, P_("status","Quad"), "", "" },
+      BLUE, P_("status","Quad"), P_("status","quad damage"), "" },
     { DUR_SILENCE, true,
       BLUE, P_("status","Sil"), P_("status","silence"), N_("You radiate silence.") },
     { DUR_STEALTH, false,
-      BLUE, P_("status","Stlth"), "", "" },
+      BLUE, P_("status","Stlth"), P_("status","especially stealthy"), "" },
     { DUR_AFRAID, true,
       RED, P_("status","Fear"), P_("status","afraid"), N_("You are terrified.") },
     { DUR_MIRROR_DAMAGE, false,
@@ -603,6 +603,7 @@ static void _describe_hunger(status_info* inf)
     case HS_STARVING:
         inf->light_colour = RED;
         inf->light_text   = (vamp ? gettext(M_("Bloodless")) : gettext(M_("Starving")));
+        inf->short_text   = (vamp ? gettext(M_("bloodless")) : gettext(M_("starving")));
         break;
     case HS_SATIATED: // no status light
     default:

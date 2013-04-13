@@ -834,7 +834,6 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_SHOCK_RESISTANCE:
     case MUT_REGENERATION:
     case MUT_SLOW_METABOLISM:
-    case MUT_TELEPORT_CONTROL:
     case MUT_MAGIC_RESISTANCE:
     case MUT_CLARITY:
     case MUT_MUTATION_RESISTANCE:
@@ -1259,10 +1258,14 @@ static const char* _stat_mut_desc(mutation_type mut, bool gain)
     return stat_desc(stat, positive ? SD_INCREASE : SD_DECREASE);
 }
 
-static bool _undead_rot()
+static bool _undead_rot(bool is_beneficial_mutation)
 {
     if (you.is_undead == US_SEMI_UNDEAD)
     {
+        // Let beneficial mutation potions work at satiated or higher
+        // for convenience
+        if (is_beneficial_mutation && you.hunger_state >= HS_SATIATED)
+            return false;
         switch (you.hunger_state)
         {
         case HS_SATIATED:  return !one_chance_in(3);
@@ -1277,8 +1280,8 @@ static bool _undead_rot()
 }
 
 bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
-            bool force_mutation, bool god_gift, bool demonspawn, bool no_rot,
-            bool temporary)
+            bool force_mutation, bool god_gift, bool beneficial,
+            bool demonspawn, bool no_rot, bool temporary)
 {
     if (!god_gift)
     {
@@ -1304,16 +1307,14 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         if (!god_gift)
         {
             if ((you.rmut_from_item()
-                 && !one_chance_in(temporary ? 3 : 10))
+                 && !one_chance_in(temporary ? 3 : 10) && !beneficial)
                 || player_mutation_level(MUT_MUTATION_RESISTANCE) == 3
                 || (player_mutation_level(MUT_MUTATION_RESISTANCE)
                     && !one_chance_in(temporary ? 2 : 3)))
             {
                 if (failMsg)
-                {
-                    mpr("순간 매우 기묘한 느낌이 들었다.", MSGCH_MUTATION); // mpr(("You feel odd for a moment."), MSGCH_MUTATION);
-                    maybe_id_resist(BEAM_MALMUTATE);
-                }
+                    mpr("순간 매우 기묘한 느낌이 들었다.", MSGCH_MUTATION);
+                maybe_id_resist(BEAM_MALMUTATE);
                 return false;
             }
         }
@@ -1330,7 +1331,7 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
 
     // Undead bodies don't mutate, they fall apart. -- bwr
     // except for demonspawn (or other permamutations) in lichform -- haranp
-    if (_undead_rot() && !demonspawn)
+    if (_undead_rot(beneficial) && !demonspawn)
     {
         if (no_rot)
             return false;
@@ -1676,7 +1677,7 @@ bool delete_mutation(mutation_type which_mutation, const string &reason,
             }
         }
 
-        if (_undead_rot())
+        if (_undead_rot(false))
             return false;
     }
 
@@ -1963,7 +1964,7 @@ static const facet_def _demon_facets[] =
     { 2, { MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH, MUT_POWERED_BY_DEATH },
       { -33, 0, 0 } },
     { 2, { MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN, MUT_DEMONIC_GUARDIAN },
-      { -33, 33, 66 } },
+      { -66, 33, 66 } },
     { 2, { MUT_NIGHTSTALKER, MUT_NIGHTSTALKER, MUT_NIGHTSTALKER },
       { -33, 0, 0 } },
     { 2, { MUT_SPINY, MUT_SPINY, MUT_SPINY },
@@ -2154,17 +2155,13 @@ _schedule_ds_mutations(vector<mutation_type> muts)
     vector<player::demon_trait> out;
 
     for (int level = 2; level <= 27; ++level)
-    {
-        int ct = coinflip() ? 2 : 1;
-
-        for (int i = 0; i < ct; ++i)
-            slots_left.push_back(level);
-    }
+        slots_left.push_back(level);
 
 // 데몬스폰 변이 얻는 레벨
     while (!muts_left.empty())
     {
-        if (x_chance_in_y(muts_left.size(), slots_left.size()))
+        if (out.empty() // always give a mutation at XL 2
+            || x_chance_in_y(muts_left.size(), slots_left.size()))
         {
             player::demon_trait dt;
 
@@ -2208,8 +2205,20 @@ bool perma_mutate(mutation_type which_mut, int how_much, const string &reason)
     int levels = 0;
     while (how_much-- > 0)
     {
-        if (you.mutation[which_mut] < cap
-            && !mutate(which_mut, reason, false, true, false, true))
+    dprf("Perma Mutate: %d, %d, %d", cap, you.mutation[which_mut], you.innate_mutations[which_mut]);
+        if (you.mutation[which_mut] == cap
+            && you.innate_mutations[which_mut] > 0
+            && you.innate_mutations[which_mut] == cap-1)
+        {
+            // [rpb] primarily for demonspawn, if the mutation level is already
+            // at the cap for this facet, the innate mutation level is greater
+            // than zero, and the innate mutation level for the mutation
+            // in question is one less than the cap, we are permafying a
+            // temporary mutation. This fails to produce any output normally.
+            mpr("Your mutations feel more permanent.", MSGCH_MUTATION);
+        }
+        else if (you.mutation[which_mut] < cap
+            && !mutate(which_mut, reason, false, true, false, false, true))
         {
             return levels; // a partial success was still possible
         }
@@ -2244,7 +2253,7 @@ bool temp_mutate(mutation_type which_mut, const string &reason)
 
     int old_level = you.mutation[which_mut];
 
-    if (mutate(which_mut, reason, false, false, false, false, false, true))
+    if (mutate(which_mut, reason, false, false, false, false, false, false, true))
     {
         // Only increment temp mutation tracking if we actually gained a mutation.
         if (you.mutation[which_mut] > old_level)

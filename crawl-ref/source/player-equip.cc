@@ -90,7 +90,7 @@ bool unequip_item(equipment_type slot, bool msg)
         if (!you.melded[slot])
             _unequip_effect(slot, item_slot, false, msg);
         else
-            you.melded[slot] = false;
+            you.melded.set(slot, false);
         ash_check_bondage();
         return true;
     }
@@ -104,7 +104,7 @@ bool meld_slot(equipment_type slot, bool msg)
 
     if (you.equip[slot] != -1 && !you.melded[slot])
     {
-        you.melded[slot] = true;
+        you.melded.set(slot);
         _unequip_effect(slot, you.equip[slot], true, msg);
         return true;
     }
@@ -118,7 +118,7 @@ bool unmeld_slot(equipment_type slot, bool msg)
 
     if (you.equip[slot] != -1 && you.melded[slot])
     {
-        you.melded[slot] = false;
+        you.melded.set(slot, false);
         _equip_effect(slot, you.equip[slot], true, msg);
         return true;
     }
@@ -951,10 +951,12 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             if (!unmeld && you.spirit_shield() < 2)
             {
                 dec_mp(you.magic_points);
-                mpr(_("You feel spirits watching over you."));
+                mpr(_("You feel your power drawn to a protective spirit."));
                 if (you.species == SP_DEEP_DWARF)
                     mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
+            else
+                mpr("You feel spirits watching over you.");
             break;
 
         case SPARM_ARCHERY:
@@ -1178,7 +1180,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
     case RING_SUSTAIN_ABILITIES:
     case RING_SUSTENANCE:
     case RING_SLAYING:
-    case RING_TELEPORT_CONTROL:
         break;
 
     case RING_FIRE:
@@ -1215,12 +1216,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_INVISIBILITY:
-        if (!you.duration[DUR_INVIS])
-        {
-            mpr(_("You become transparent for a moment."));
-            fake_rap = ARTP_INVISIBLE;
-            ident = ID_KNOWN_TYPE;
-        }
+        mprf(_("You become %stransparent for a moment."),
+             you.duration[DUR_INVIS] ? pgettext("playerequip","more ") : "");
+        fake_rap = ARTP_INVISIBLE;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_EVASION:
@@ -1285,15 +1284,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_FLIGHT:
-        if (!you.scan_artefacts(ARTP_FLY))
-        {
-            if (you.airborne())
-                mpr(gettext("You feel vaguely more buoyant than before."));
-            else
-                mpr(_("You feel buoyant."));
-            fake_rap = ARTP_FLY;
-            ident = ID_KNOWN_TYPE;
-        }
+        mprf(_("You feel %sbuoyant."), you.airborne() ? pgettext("playerequip","more ") : "");
+        fake_rap = ARTP_FLY;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_TELEPORTATION:
@@ -1306,13 +1299,16 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         ident = ID_KNOWN_TYPE;
         break;
 
+    case RING_TELEPORT_CONTROL:
+        mprf("You feel %scontrolled for a moment.",
+              you.duration[DUR_CONTROL_TELEPORT] ? "more " : "");
+        ident = ID_KNOWN_TYPE;
+        break;
+
     case AMU_RAGE:
-        if (!you.scan_artefacts(ARTP_BERSERK))
-        {
-            mpr(_("You feel a brief urge to hack something to bits."));
-            fake_rap = ARTP_BERSERK;
-            ident = ID_KNOWN_TYPE;
-        }
+        mpr(_("You feel a brief urge to hack something to bits."));
+        fake_rap = ARTP_BERSERK;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case AMU_FAITH:
@@ -1349,8 +1345,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr(gettext("You feel your power drawn to a protective spirit."));
             if (you.species == SP_DEEP_DWARF)
                 mpr(_("Now linked to your health, your magic stops regenerating."));
-            ident = ID_KNOWN_TYPE;
         }
+        else
+            mpr("You feel spirits watching over you.");
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_REGENERATION:

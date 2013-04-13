@@ -2210,6 +2210,7 @@ bool melee_attack::player_monattk_hit_effects()
         return defender->alive();
 
     // Mutually exclusive with (overrides) brand damage!
+    special_damage = 0;
     apply_staff_damage();
 
     if (!defender->alive())
@@ -2809,7 +2810,7 @@ void melee_attack::chaos_affects_attacker()
         }
     }
 
-    if (attacker->is_player() && !you.form && one_chance_in(1000))
+    if (attacker->is_player() && !you.form && one_chance_in(500))
     {
         // Non-weapon using forms are uncool here: you'd need to run away
         // instead of continuing the fight.
@@ -3535,8 +3536,6 @@ int melee_attack::staff_damage(skill_type skill)
 
 void melee_attack::apply_staff_damage()
 {
-    special_damage = 0;
-
     if (!weapon || weapon->base_type != OBJ_STAVES)
         return;
 

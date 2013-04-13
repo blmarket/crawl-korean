@@ -10,6 +10,40 @@
 
 {{
 
+  function render_grid(e, name, grid, paint)
+
+    local gxm,gym = dgn.max_bounds()
+    local build = {
+      name = name,
+      build_fixture = {
+        { pass = "Primary", type = "build", strategy = hyper.place.strategy_primary, max_rooms = 1, generators = {
+          { generator = "code", paint_callback = omnigrid_floor_plan, grid_options = grid, paint_options = paint,
+            min_size_x = gxm-22, max_size_x = gxm-2, min_size_y = gym-22, max_size_y = gym-2,
+            place_padding = 1, analyse = false }
+        } }
+      }
+    }
+    hyper.build_layout(e,build)
+
+  end
+
+  -- Generate a floor plan based on omnigrid subdivision
+  function omnigrid_floor_plan(room,options,gen)
+
+    local grid_options = (type(gen.grid_options) == "function") and gen.grid_options() or gen.grid_options
+    local paint_options = gen.paint_options or {}
+    paint_options.size = room.size
+
+    local grid = omnigrid.subdivide(0,0,room.size.x-1,room.size.y-1,grid_options)
+
+    local paint = {
+      { type = "floor", corner1 = { x = 0, y = 0 }, corner2 = { x = room.size.x-1, y = room.size.y-1 }, usage = gen.usage_params }
+    }
+
+    return omnigrid.paint(grid, gen.paint_options, paint)
+
+  end
+
   -- Draws a floor plan based on omnigrid
   function hyper.floors.floor_plan_omnigrid(room,options,gen)
 
@@ -74,6 +108,118 @@
     return paint
   end
 
+}}
+
+NAME:   layout_big_grid
+DEPTH:  D:10-, Lair
+WEIGHT: 10
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup no_hmirror no_vmirror
+{{
+  if is_validating() then return; end
+
+  layout_type "open"
+  local edge = crawl.x_chance_in_y(2,3)
+  render_grid(_G, "Big Grid",
+    {
+      guaranteed_divides = edge and 0 or 2,
+      -- 20% chance of a donut *if* we have an outer corridor
+      subdivide_initial_chance = edge and 80 or 100,
+      subdivide_level_multiplier = edge and 0.80 or 0.90,
+      minimum_size = 16,
+    },
+    {
+      fill_chance = 100,
+      corridor_width = crawl.random_range(6,8),
+      outer_corridor = edge,
+      jitter = edge and crawl.coinflip(),
+      jitter_min = -2,
+      jitter_max = 2,
+    } )
+
+  zonify.grid_fill_zones(1, "rock_wall")
+}}
+
+NAME:   layout_small_grid
+DEPTH:  Dis, D:5-, Lair
+WEIGHT: 10
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup no_hmirror no_vmirror
+{{
+  if is_validating() then return; end
+
+  layout_type "corridors"
+  local edge = crawl.x_chance_in_y(1,4)
+
+  render_grid(_G, "Small Grid",
+    {
+      guaranteed_divides = 4,
+      subdivide_initial_chance = 120,
+      subdivide_level_multiplier = .95,
+      minimum_size = 6,
+    },
+    {
+      fill_chance = 80,
+      corridor_width = crawl.random_range(1,2),
+      outer_corridor = edge,
+      jitter = crawl.coinflip(),
+      jitter_min = -1,
+      jitter_max = crawl.random_range(0,1),
+    } )
+}}
+
+NAME:   layout_long_grid
+DEPTH:  Dis, D, Lair
+WEIGHT: 10
+ORIENT: encompass
+TAGS: overwritable layout allow_dup unrand no_rotate no_pool_fixup no_hmirror no_vmirror
+{{
+  if is_validating() then return; end
+  local min_size = you.in_branch("lair") and 1 or 2
+  local max_size = you.in_branch("lair") and 4 or 3
+  local size = crawl.random_range(min_size,max_size)
+  layout_type "corridors"
+  local grid_opts = {
+    -- Keep subdividing until the areas are too small
+    subdivide_initial_chance = 100,
+    subdivide_level_multiplier = 1,
+    minimum_size_x = size * 2,
+    minimum_size_y = you.in_branch("dis")
+                       and size * crawl.random_range(3,5)
+                       or size * crawl.random_range(4,6),
+  }
+  local min_fill = 40 + size * 10
+  local max_fill = 80 + size * 5
+
+  local paint_opts = {
+    fill_chance = crawl.random_range(min_fill,max_fill),
+    corridor_width = size,
+    outer_corridor = you.in_branch("lair"),
+    jitter = false,
+  }
+
+  -- In D, for fairness, allow some narrow corridors (sometimes in Lair)
+  if you.in_branch("D")
+    or (you.in_branch("lair") and size>1 and crawl.one_chance_in(3)) then
+    paint_opts.corridor_width = 1
+    paint_opts.jitter = true
+    paint_opts.jitter_min = -1
+    paint_opts.jitter_max = 0
+    if you.in_branch("D") then paint_opts.outer_corridor = crawl.coinflip() end
+  end
+
+  -- Choose an axis and switch sizes
+  local which = "x"
+  if crawl.coinflip() then
+    which = "y"
+    grid_opts.minimum_size_x,grid_opts.minimum_size_y = grid_opts.minimum_size_y,grid_opts.minimum_size_x
+  end
+  -- The effect this callback has is to keep subdividing a given axis
+  -- until we reach the minimum size - *then* start dividing the other axis
+  grid_opts.choose_axis = function(width,height,depth)
+    return which
+  end
+  render_grid(_G, "Long Grid", grid_opts, paint_opts)
 }}
 
 # Generates up to 3 grids of different granularities, then layers

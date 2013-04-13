@@ -11,7 +11,7 @@
 
 procedural = {}
 require("dlua/layout/procedural_primitives.lua")
-
+require("dlua/util.lua")
 ------------------------------------------------------------------------------
 -- Aggregate functions
 --
@@ -101,6 +101,46 @@ function procedural.phase(func,rep,offset)
   end
 end
 
+-- Loops a function along the x axis over a given period
+function procedural.loop_x(func,period)
+  if period == nil then period = 1 end
+  return function(x,y)
+    return func(x % period,y)
+  end
+end
+
+-- Bounces a function along the x axis over a given period
+-- The x value increases over 0..period, decreases over
+-- period..period*2, and repeats for infinity
+function procedural.bounce_x(func,period)
+  if period == nil then period = 1 end
+  return function(x,y)
+    local bounced = x % period * 2
+    if bounced > period then bounced = period-bounced end
+    return func(bounced,y)
+  end
+end
+
+-- Loops a function along the y axis over a given period
+function procedural.loop_y(func,period)
+  if period == nil then period = 1 end
+  return function(x,y)
+    return func(x,y % period)
+  end
+end
+
+-- Bounces a function along the y axis over a given period
+-- The y value increases over 0..period, decreases over
+-- period..period*2, and repeats for infinity
+function procedural.bounce_y(func,period)
+  if period == nil then period = 1 end
+  return function(x,y)
+    local bounced = y % period * 2
+    if bounced > period then bounced = period-bounced end
+    return func(x,bounced)
+  end
+end
+
 -- A function that returns 1 around the border edge, and fades to 0 over
 -- a specified number of padding squares.
 function procedural.border(params)
@@ -113,6 +153,12 @@ function procedural.border(params)
   if params.y1 ~= nil then y1 = params.y1 end
   if params.y2 ~= nil then y2 = params.y2 end
   local padding = params.padding == nil and 10 or params.padding
+  if params.margin ~= nil then
+    x1 = x1 + params.margin
+    x2 = x2 - params.margin
+    y1 = y1 + params.margin
+    y2 = y2 - params.margin
+  end
   if params.additive then
     return function(x,y)
       local nearx = math.min(x-x1,x2-x)
@@ -230,27 +276,22 @@ end
 
 -- Provides the full data from a Worley call, should not be directly used
 -- e.g.  as a transform
-
 function procedural.worley(params)
   local final_scale_x = params.scale * 0.8
   local final_scale_y = params.scale * 0.8
+  local final_scale_z = params.scale * 0.8
   local major_offset_x = crawl.random2(1000000)
   local major_offset_y = crawl.random2(1000000)
   local major_offset_z = crawl.random2(1000000)
-  return function(x,y)
+  return function(x,y,z)
+    if z == nil then z = 0 end
     local d1,d2,id1,id2,pos1x,pos1y,pos1z,pos2x,pos2y,pos2z =
         crawl.worley(x * final_scale_x + major_offset_x,
-                     y * final_scale_y + major_offset_y, major_offset_z)
+                     y * final_scale_y + major_offset_y,
+                     z * final_scale_z + major_offset_z)
     return {
       d = { d1,d2 },
-
-      -- Transform the ids into a 0..1 range so this gives us a random
-      -- number unique to the whole node.
-
-      -- TODO: It'll often be more useful to split the id up into bytes or
-      -- even bits so we have more random numbers and flags available, but
-      -- for optimisation purposes we only want them if necessary...
-      id = { id1/4294967295.0,id2/4294967295.0 },
+      id = { id1,id2 },
       pos = { { x = pos1x, y = pos1y, z = pos1z },
               { x = pos2x, y = pos2y, z = pos2z } }
     }
@@ -262,28 +303,35 @@ end
 function procedural.worley_diff(params)
   local final_scale_x = params.scale * 0.8
   local final_scale_y = params.scale * 0.8
+  local final_scale_z = params.scale * 0.8
   local major_offset_x = crawl.random2(1000000)
   local major_offset_y = crawl.random2(1000000)
   local major_offset_z = crawl.random2(1000000)
-  return function(x,y)
-    local d1,d2,id1 =
-        crawl.worley(x * final_scale_x + major_offset_x,
-                     y * final_scale_y + major_offset_y, major_offset_z)
-    return d2-d1, id1
+  return function(x,y,z)
+    if z == nil then z = 0 end
+    local diff, id =
+        crawl.worley_diff(x * final_scale_x + major_offset_x,
+                          y * final_scale_y + major_offset_y,
+                          z * final_scale_z + major_offset_z)
+    return diff, id
   end
 end
 
 function procedural.simplex3d(params)
   local final_scale_x = params.scale / 10
   local final_scale_y = params.scale / 10
-  local major_offset_x = crawl.random2(1000000)
-  local major_offset_y = crawl.random2(1000000)
-  local major_offset_z = crawl.random2(1000000)
+  local final_scale_z = params.scale / 10
 
-  return function(x,y)
+  local major_offset_x = 100 + util.random_range_real(0,1)
+  local major_offset_y = 100 + util.random_range_real(0,1)
+  local major_offset_z = 100 + util.random_range_real(0,1)
+  local unit = (params.unit == nil or params.unit) and true or false
+  return function(x,y,z)
+    if z == nil then z = 0 end
     local result = crawl.simplex(x * final_scale_x + major_offset_x,
-                   y * final_scale_y + major_offset_y, major_offset_z)
-    if params.unit == nil or params.unit then result = result / 2 + 0.5 end
+                                 y * final_scale_y + major_offset_y,
+                                 z * final_scale_z + major_offset_z)
+    if unit then result = result / 2.0 + 0.5 end
     return result
   end
 end
@@ -417,7 +465,7 @@ function procedural.render_map(e, fval, fresult)
   for x = 1,gxm-2,1 do
     for y = 1,gym-2,1 do
       local val = fval(x,y)
-      local r = fresult(val)
+      local r = fresult(val,x,y)
       if r ~= nil then e.mapgrd[x][y] = r end
     end
   end

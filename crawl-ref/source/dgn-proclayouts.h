@@ -211,4 +211,116 @@ class CityLayout : public ProceduralLayout
     private:
 };
 
+// Base class is only needed for a couple of support functions
+// TODO: Refactor those functions into ProceduralFunctions
+
+class NoiseLayout : public ProceduralLayout
+{
+    public:
+        NoiseLayout() { };
+        ProceduralSample operator()(const coord_def &p, const uint32_t offset = 0) const;
+
+    protected:
+        double _optimum_range(const double val, const double rstart, const double rend) const;
+        double _optimum_range_mid(const double val, const double rstart, const double rmax1, const double rmax2, const double rend) const;
+};
+
+class ForestLayout : public NoiseLayout
+{
+    public:
+        ForestLayout() { };
+        ProceduralSample operator()(const coord_def &p, const uint32_t offset = 0) const;
+};
+
+class UnderworldLayout : public NoiseLayout
+{
+    public:
+        UnderworldLayout() { };
+        ProceduralSample operator()(const coord_def &p, const uint32_t offset = 0) const;
+};
+
+// ProceduralFunctions abstract a noise calculation for x,y,z coordinates (which could
+// include distortion by domain transformation)
+
+class ProceduralFunction
+{
+    public:
+        double operator()(const coord_def &p, const uint32_t offset) const;
+        double operator()(double x, double y, double z) const;
+};
+
+class SimplexFunction : public ProceduralFunction
+{
+    public:
+        SimplexFunction(double _scale_x, double _scale_y, double _scale_z,
+                        double _seed_x, double _seed_y, double _seed_z = 0,
+                        int _octaves = 1)
+            : scale_x(_scale_x), scale_y(_scale_y), scale_z(_scale_z),
+              seed_x(_seed_x), seed_y(_seed_y), seed_z(_seed_z),
+              octaves(_octaves) { };
+
+        double operator()(const coord_def &p, const uint32_t offset) const;
+        double operator()(double x, double y, double z) const;
+
+    private:
+        const double scale_x;
+        const double scale_y;
+        const double scale_z;
+        const double seed_x;
+        const double seed_y;
+        const double seed_z;
+        const int octaves;
+};
+
+class WorleyFunction : public ProceduralFunction
+{
+    public:
+        WorleyFunction(double _scale_x, double _scale_y, double _scale_z,
+                        double _seed_x, double _seed_y, double _seed_z = 0)
+            : scale_x(_scale_x), scale_y(_scale_y), scale_z(_scale_z),
+              seed_x(_seed_x), seed_y(_seed_y), seed_z(_seed_z) { };
+        double operator()(const coord_def &p, const uint32_t offset) const;
+        double operator()(double x, double y, double z) const;
+        worley::noise_datum datum(double x, double y, double z) const;
+
+    private:
+        const double scale_x;
+        const double scale_y;
+        const double scale_z;
+        const double seed_x;
+        const double seed_y;
+        const double seed_z;
+};
+
+class DistortFunction : public ProceduralFunction
+{
+    public:
+        DistortFunction(const ProceduralFunction &_base,
+                        const ProceduralFunction &_offx, double _scalex,
+                        const ProceduralFunction &_offy, double _scaley)
+            : base(_base), off_x(_offx), scale_x(_scalex),
+                          off_y(_offy), scale_y(_scaley) { };
+        double operator()(double x, double y, double z) const;
+
+    protected:
+        const ProceduralFunction &base;
+        const ProceduralFunction &off_x;
+        const double scale_x;
+        const ProceduralFunction &off_y;
+        const double scale_y;
+};
+
+class WorleyDistortFunction : public DistortFunction
+{
+    public:
+        WorleyDistortFunction(const WorleyFunction &_base,
+                              const ProceduralFunction &_offx, double _scalex,
+                              const ProceduralFunction &_offy, double _scaley)
+            : DistortFunction(_base,_offx,_scalex,_offy,_scaley), wbase(_base) { };
+        worley::noise_datum datum(double x, double y, double z) const;
+
+    private:
+        const WorleyFunction &wbase;
+};
+
 #endif /* PROC_LAYOUTS_H */

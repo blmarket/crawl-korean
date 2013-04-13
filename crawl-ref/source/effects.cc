@@ -49,6 +49,7 @@
 #include "message.h"
 #include "mgen_data.h"
 #include "misc.h"
+#include "mislead.h"
 #include "mon-behv.h"
 #include "mon-cast.h"
 #include "mon-iter.h"
@@ -546,8 +547,11 @@ void banished(const string &who)
     down_stairs(DNGN_ENTER_ABYSS);  // heh heh
 
     // Xom just might decide to interfere.
-    if (you.religion == GOD_XOM && who != "Xom" && who != "wizard command")
+    if (you.religion == GOD_XOM && who != "Xom" && who != "wizard command"
+        && who != "a distortion unwield")
+    {
         xom_maybe_reverts_banishment(false, false);
+    }
 }
 
 bool forget_spell(void)
@@ -894,7 +898,7 @@ static bool _follows_orders(monster* mon)
             && mon->type != MONS_GIANT_SPORE
             && mon->type != MONS_BATTLESPHERE
             && !mon->berserk()
-            && !mons_is_projectile(mon->type));
+            && !mon->is_projectile());
 }
 
 // Sets foe target of friendly monsters.
@@ -2395,7 +2399,7 @@ static void _catchup_monster_moves(monster* mon, int turns)
     if (mon->type == MONS_GIANT_SPORE)
         return;
 
-    if (mon->type == MONS_ORB_OF_DESTRUCTION)
+    if (mon->is_projectile())
     {
         iood_catchup(mon, turns);
         return;

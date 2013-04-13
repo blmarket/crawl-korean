@@ -72,20 +72,20 @@ typedef skill_title_key_t stk;
 static const char *skills[NUM_SKILLS][6] =
 {
   //  Skill name        levels 1-7       levels 8-14        levels 15-20       levels 21-26      level 27
-    {M_("Fighting"),       M_("Skirmisher"),    M_("Fighter"),         M_("Warrior"),         M_("Slayer"),         M_("Conqueror")},
-    {M_("Short Blades"),   M_("Cutter"),        M_("Slicer"),          M_("Swashbuckler"),    M_("Blademaster"),    M_("Eviscerator")},
-    {M_("Long Blades"),    M_("Slasher"),       M_("Carver"),          M_("Fencer"),          M_("@Adj@ Blade"),    M_("Swordmaster")},
-    {M_("Axes"),           M_("Chopper"),       M_("Cleaver"),         M_("Severer"),         M_("Executioner"),    M_("Axe Maniac")},
-    {M_("Maces & Flails"), M_("Cudgeler"),      M_("Basher"),          M_("Bludgeoner"),      M_("Shatterer"),      M_("Skullcrusher")},
-    {M_("Polearms"),       M_("Poker"),         M_("Spear-Bearer"),    M_("Impaler"),         M_("Phalangite"),     M_("@Adj@ Porcupine")},
-    {M_("Staves"),         M_("Twirler"),       M_("Cruncher"),        M_("Stickfighter"),    M_("Pulveriser"),     M_("Chief of Staff")},
-    {M_("Slings"),         M_("Vandal"),        M_("Slinger"),         M_("Whirler"),         M_("Slingshot"),      M_("@Adj@ Catapult")},
-    {M_("Bows"),           M_("Shooter"),       M_("Archer"),          M_("Marks@genus@"),    M_("Crack Shot"),     M_("Merry @Genus@")},
-    {M_("Crossbows"),      M_("Bolt Thrower"),  M_("Quickloader"),     M_("Sharpshooter"),    M_("Sniper"),         M_("@Adj@ Arbalest")},
-    {M_("Throwing"),       M_("Chucker"),       M_("Thrower"),         M_("Deadly Accurate"), M_("Hawkeye"),        M_("@Adj@ Ballista")},
-    {M_("Armour"),         M_("Covered"),       M_("Protected"),       M_("Tortoise"),        M_("Impregnable"),    M_("Invulnerable")},
-    {M_("Dodging"),        M_("Ducker"),        M_("Nimble"),          M_("Spry"),            M_("Acrobat"),        M_("Intangible")},
-    {M_("Stealth"),        M_("Sneak"),         M_("Covert"),          M_("Unseen"),          M_("Imperceptible"),  M_("Ninja")},
+    {M_("Fighting"),      M_("Skirmisher"),   M_("Fighter"),        M_("Warrior"),        M_("Slayer"),        M_("Conqueror")},
+    {M_("Short Blades"),  M_("Cutter"),       M_("Slicer"),         M_("Swashbuckler"),   M_("Cutthroat"),     M_("Politician")},
+    {M_("Long Blades"),   M_("Slasher"),      M_("Carver"),         M_("Fencer"),         M_("@Adj@ Blade"),   M_("Swordmaster")},
+    {M_("Axes"),          M_("Chopper"),      M_("Cleaver"),        M_("Severer"),        M_("Executioner"),   M_("Axe Maniac")},
+    {M_("Maces & Flails"),M_("Cudgeler"),     M_("Basher"),         M_("Bludgeoner"),     M_("Shatterer"),     M_("Skullcrusher")},
+    {M_("Polearms"),      M_("Poker"),        M_("Spear-Bearer"),   M_("Impaler"),        M_("Phalangite"),    M_("@Adj@ Porcupine")},
+    {M_("Staves"),        M_("Twirler"),      M_("Cruncher"),       M_("Stickfighter"),   M_("Pulveriser"),    M_("Chief of Staff")},
+    {M_("Slings"),        M_("Vandal"),       M_("Slinger"),        M_("Whirler"),        M_("Slingshot"),     M_("@Adj@ Catapult")},
+    {M_("Bows"),          M_("Shooter"),      M_("Archer"),         M_("Marks@genus@"),   M_("Crack Shot"),    M_("Merry @Genus@")},
+    {M_("Crossbows"),     M_("Bolt Thrower"), M_("Quickloader"),    M_("Sharpshooter"),   M_("Sniper"),        M_("@Adj@ Arbalest")},
+    {M_("Throwing"),      M_("Chucker"),      M_("Thrower"),        M_("Deadly Accurate"),M_("Hawkeye"),       M_("@Adj@ Ballista")},
+    {M_("Armour"),        M_("Covered"),      M_("Protected"),      M_("Tortoise"),       M_("Impregnable"),   M_("Invulnerable")},
+    {M_("Dodging"),       M_("Ducker"),       M_("Nimble"),         M_("Spry"),           M_("Acrobat"),       M_("Intangible")},
+    {M_("Stealth"),       M_("Sneak"),        M_("Covert"),         M_("Unseen"),         M_("Imperceptible"), M_("Ninja")},
 #if TAG_MAJOR_VERSION == 34
     {M_("Stabbing"),       M_("Miscreant"),     M_("Blackguard"),      M_("Backstabber"),     M_("Cutthroat"),      M_("Politician")},
 #endif
@@ -148,6 +148,8 @@ int get_skill_progress(skill_type sk, int level, int points, int scale)
 
     const int needed = skill_exp_needed(level + 1, sk);
     const int prev_needed = skill_exp_needed(level, sk);
+    if (needed == 0) // invalid race, legitimate at startup
+        return 0;
     // A scale as small as 92 would overflow with 31 bits if skill_rdiv()
     // is involved: needed can be 91985, skill_rdiv() multiplies by 256.
     const int64_t amt_done = points - prev_needed;

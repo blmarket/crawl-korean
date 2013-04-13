@@ -338,14 +338,6 @@ uint8_t unmarshallUByte(reader &th)
     return th.readByte();
 }
 
-void marshallShort(vector<unsigned char>& buf, short data)
-{
-    CHECK_INITIALIZED(data);
-    COMPILE_CHECK(sizeof(data) == 2);
-    buf.push_back((unsigned char) ((data & 0xFF00) >> 8));
-    buf.push_back((unsigned char) ((data & 0x00FF)   ));
-}
-
 // Marshall 2 byte short in network order.
 void marshallShort(writer &th, short data)
 {
@@ -363,15 +355,6 @@ int16_t unmarshallShort(reader &th)
     int16_t b2 = th.readByte();
     int16_t data = (b1 << 8) | (b2 & 0x00FF);
     return data;
-}
-
-void marshallInt(vector<unsigned char>& buf, int32_t data)
-{
-    CHECK_INITIALIZED(data);
-    buf.push_back((unsigned char) ((data & 0xFF000000) >> 24));
-    buf.push_back((unsigned char) ((data & 0x00FF0000) >> 16));
-    buf.push_back((unsigned char) ((data & 0x0000FF00) >>  8));
-    buf.push_back((unsigned char) ((data & 0x000000FF)    ));
 }
 
 // Marshall 4 byte int in network order.
@@ -561,13 +544,13 @@ void marshall_level_id(writer& th, const level_id& id)
     marshallShort(th, id.packed_place());
 }
 
-void marshall_level_id_set(writer& th, const set<level_id>& id)
+static void _marshall_level_id_set(writer& th, const set<level_id>& id)
 {
     marshallSet(th, id, marshall_level_id);
 }
 
 // XXX: Redundant with level_pos.save()/load().
-void marshall_level_pos(writer& th, const level_pos& lpos)
+static void _marshall_level_pos(writer& th, const level_pos& lpos)
 {
     marshallInt(th, lpos.pos.x);
     marshallInt(th, lpos.pos.y);
@@ -610,14 +593,14 @@ level_id unmarshall_level_id(reader& th)
     return level_id::from_packed_place(unmarshallShort(th));
 }
 
-set<level_id> unmarshall_level_id_set(reader& th)
+static set<level_id> _unmarshall_level_id_set(reader& th)
 {
     set<level_id> id;
     unmarshallSet(th, id, unmarshall_level_id);
     return id;
 }
 
-level_pos unmarshall_level_pos(reader& th)
+static level_pos _unmarshall_level_pos(reader& th)
 {
     level_pos lpos;
     lpos.pos.x = unmarshallInt(th);
@@ -1115,7 +1098,6 @@ static void tag_construct_you(writer &th)
 
     marshallShort(th, you.hunger);
     marshallBoolean(th, you.fishtail);
-    marshallInt(th, you.earth_attunement);
     marshallInt(th, you.form);
 
     j = min<int>(you.sage_skills.size(), 32767);
@@ -1261,6 +1243,11 @@ static void tag_construct_you(writer &th)
         marshallByte(th, you.innate_mutations[j]);
         marshallByte(th, you.temp_mutations[j]);
     }
+
+#if TAG_MAJOR_VERSION == 34
+    if (you.mutation[MUT_TELEPORT_CONTROL] == 1)
+        you.mutation[MUT_TELEPORT_CONTROL] = 0;
+#endif
 
     marshallByte(th, you.demonic_traits.size());
     for (j = 0; j < int(you.demonic_traits.size()); ++j)
@@ -1509,15 +1496,15 @@ static void tag_construct_you_dungeon(writer &th)
     marshallInt(th, root_branch);
 
     marshallMap(th, stair_level,
-                _marshall_as_int<branch_type>, marshall_level_id_set);
+                _marshall_as_int<branch_type>, _marshall_level_id_set);
     marshallMap(th, shops_present,
-                marshall_level_pos, _marshall_as_int<shop_type>);
+                _marshall_level_pos, _marshall_as_int<shop_type>);
     marshallMap(th, altars_present,
-                marshall_level_pos, _marshall_as_int<god_type>);
+                _marshall_level_pos, _marshall_as_int<god_type>);
     marshallMap(th, portals_present,
-                marshall_level_pos, _marshall_as_int<branch_type>);
+                _marshall_level_pos, _marshall_as_int<branch_type>);
     marshallMap(th, portal_notes,
-                marshall_level_pos, marshallStringNoMax);
+                _marshall_level_pos, marshallStringNoMax);
     marshallMap(th, level_annotations,
                 marshall_level_id, marshallStringNoMax);
     marshallMap(th, level_exclusions,
@@ -1909,7 +1896,10 @@ static void tag_read_you(reader &th)
     you.hp              = unmarshallShort(th);
     you.hunger          = unmarshallShort(th);
     you.fishtail        = unmarshallBoolean(th);
-    you.earth_attunement= unmarshallInt(th);
+#if TAG_MAJOR_VERSION == 34
+    if (th.getMinorVersion() < TAG_MINOR_NOME_NO_MORE)
+        unmarshallInt(th);
+#endif
     you.form            = static_cast<transformation_type>(unmarshallInt(th));
     ASSERT(you.form >= TRAN_NONE && you.form <= LAST_FORM);
 
@@ -1942,9 +1932,9 @@ static void tag_read_you(reader &th)
     for (i = count; i < NUM_EQUIP; ++i)
         you.equip[i] = -1;
     for (i = 0; i < count; ++i)
-        you.melded[i] = unmarshallBoolean(th);
+        you.melded.set(i, unmarshallBoolean(th));
     for (i = count; i < NUM_EQUIP; ++i)
-        you.melded[i] = false;
+        you.melded.set(i, false);
 
     you.magic_points              = unmarshallByte(th);
     you.max_magic_points          = unmarshallByte(th);
@@ -2183,13 +2173,13 @@ static void tag_read_you(reader &th)
     for (i = 0; i < count; i++)
         you.num_total_gifts[i] = unmarshallShort(th);
     for (i = 0; i < count; i++)
-        you.one_time_ability_used[i] = unmarshallBoolean(th);
+        you.one_time_ability_used.set(i, unmarshallBoolean(th));
     for (i = 0; i < count; i++)
         you.piety_max[i] = unmarshallByte(th);
     count = unmarshallByte(th);
     ASSERT(count == NUM_NEMELEX_GIFT_TYPES);
     for (i = 0; i < count; i++)
-        you.nemelex_sacrificing[i] = unmarshallBoolean(th);
+        you.nemelex_sacrificing.set(i, unmarshallBoolean(th));
 
     you.gift_timeout   = unmarshallByte(th);
 
@@ -2294,7 +2284,7 @@ static void tag_read_you(reader &th)
 #endif
     count = unmarshallByte(th);
     for (i = 0; i < count; i++)
-        you.branches_left[i] = unmarshallBoolean(th);
+        you.branches_left.set(i, unmarshallBoolean(th));
 #if TAG_MAJOR_VERSION == 34
     }
     else
@@ -2309,15 +2299,17 @@ static void tag_read_you(reader &th)
     if (th.getMinorVersion() >= TAG_MINOR_DEEP_ABYSS
         && th.getMinorVersion() != TAG_MINOR_0_11)
     {
-        if (th.getMinorVersion() < TAG_MINOR_REMOVE_ABYSS_SEED
-            || th.getMinorVersion() >= TAG_MINOR_ADD_ABYSS_SEED)
+        if (th.getMinorVersion() >= TAG_MINOR_REMOVE_ABYSS_SEED
+            && th.getMinorVersion() < TAG_MINOR_ADD_ABYSS_SEED)
         {
-            abyssal_state.seed = unmarshallInt(th);
+            abyssal_state.seed = random_int();
         }
         else
-            abyssal_state.seed = random_int();
+#endif
+            abyssal_state.seed = unmarshallInt(th);
         abyssal_state.depth = unmarshallInt(th);
         abyssal_state.nuke_all = false;
+#if TAG_MAJOR_VERSION == 34
     }
     else
     {
@@ -2442,9 +2434,9 @@ static void tag_read_you_items(reader &th)
     count = unmarshallUByte(th);
     COMPILE_CHECK(NUM_FIXED_BOOKS <= 256);
     for (j = 0; j < count && j < NUM_FIXED_BOOKS; ++j)
-        you.had_book[j] = unmarshallByte(th);
+        you.had_book.set(j, unmarshallByte(th));
     for (j = count; j < NUM_FIXED_BOOKS; ++j)
-        you.had_book[j] = 0;
+        you.had_book.set(j, false);
     for (j = NUM_FIXED_BOOKS; j < count; ++j)
         unmarshallByte(th);
 
@@ -2452,9 +2444,9 @@ static void tag_read_you_items(reader &th)
     count = unmarshallShort(th);
     ASSERT(count >= 0);
     for (j = 0; j < count && j < NUM_SPELLS; ++j)
-        you.seen_spell[j] = unmarshallByte(th);
+        you.seen_spell.set(j, unmarshallByte(th));
     for (j = count; j < NUM_SPELLS; ++j)
-        you.seen_spell[j] = 0;
+        you.seen_spell.set(j, false);
     for (j = NUM_SPELLS; j < count; ++j)
         unmarshallByte(th);
 
@@ -2517,13 +2509,13 @@ static void tag_read_you_dungeon(reader &th)
 {
     // how many unique creatures?
     int count = unmarshallShort(th);
-    you.unique_creatures.init(false);
+    you.unique_creatures.reset();
     for (int j = 0; j < count; ++j)
     {
         const bool created = unmarshallBoolean(th);
 
         if (j < NUM_MONSTERS)
-            you.unique_creatures[j] = created;
+            you.unique_creatures.set(j, created);
     }
 
     // how many branches?
@@ -2550,15 +2542,15 @@ static void tag_read_you_dungeon(reader &th)
 
     unmarshallMap(th, stair_level,
                   unmarshall_int_as<branch_type>,
-                  unmarshall_level_id_set);
+                  _unmarshall_level_id_set);
     unmarshallMap(th, shops_present,
-                  unmarshall_level_pos, unmarshall_int_as<shop_type>);
+                  _unmarshall_level_pos, unmarshall_int_as<shop_type>);
     unmarshallMap(th, altars_present,
-                  unmarshall_level_pos, unmarshall_int_as<god_type>);
+                  _unmarshall_level_pos, unmarshall_int_as<god_type>);
     unmarshallMap(th, portals_present,
-                  unmarshall_level_pos, unmarshall_int_as<branch_type>);
+                  _unmarshall_level_pos, unmarshall_int_as<branch_type>);
     unmarshallMap(th, portal_notes,
-                  unmarshall_level_pos, unmarshallStringNoMax);
+                  _unmarshall_level_pos, unmarshallStringNoMax);
     unmarshallMap(th, level_annotations,
                   unmarshall_level_id, unmarshallStringNoMax);
     unmarshallMap(th, level_exclusions,

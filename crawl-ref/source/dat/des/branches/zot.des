@@ -135,39 +135,10 @@ end
 ##############################################################################
 ##############################################################################
 
-# Old-style three stairs
-#
-NAME:   zot_entry_traditional
-TAGS:   zot_entry
-KFEAT:  O = enter_zot
-{{
-  hook("post_place", function()
-    dgn.place_maps { tag = "zot_entry_secondary", count = 2 }
-    if crawl.one_chance_in(100) then
-      dgn.place_maps { tag = "zot_entry_secondary_mimic", count = 1 }
-    end
-  end)
-}}
-MAP
-O
-ENDMAP
-
-NAME:   zot_entry_traditional_secondary
-TAGS:   zot_entry_secondary allow_dup
-KFEAT:  O = enter_zot
-MAP
-O
-ENDMAP
-
-NAME:   zot_entry_traditional_secondary_mimic
-TAGS:   zot_entry_secondary_mimic
-KFEAT:  O = enter_zot mimic
-MAP
-O
-ENDMAP
-
 ###########################
 # Something to give the builder a chance if massive vaults keep failing.
+# NOTE: Not currently used since the large entries are placing as
+#       primary vaults instead
 #
 NAME:   zot_entry_small
 TAGS:   zot_entry
@@ -190,6 +161,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_round
 TAGS:   no_monster_gen zot_entry
+PLACE:  D:27
+ORIENT: float
 SUBST:  = = nnn+
 SUBST:  c: c:70 v:20 b:10
 SUBST:  v: vcxlmb, n: nnnnvbcx
@@ -229,6 +202,8 @@ ENDMAP
 # Sorry, no wand of wishing in this one
 NAME:   evilmike_zot_entry_castle
 TAGS:   no_monster_gen zot_entry
+PLACE:  D:27
+ORIENT: float
 NSUBST: O = 1:O / *:n
 SUBST:  ^ = ^.
 SUBST:  s = ccc=
@@ -275,6 +250,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_gauntlet
 TAGS:   no_monster_gen zot_entry
+PLACE:  D:27
+ORIENT: float
 SUBST:  b: v.., v: c.
 TILE:   X = wall_zot_magenta
 FTILE:  -OD = floor_hall
@@ -341,6 +318,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_argh
 TAGS:   no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
 KFEAT:  O = enter_zot
 # Grey dracs can escape from the islands if they have water. This is intentional.
 SUBST:  G: GXm., m: mmlw
@@ -387,6 +366,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_hall
 TAGS:   no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
 KFEAT:  O = enter_zot
 TILE:   X = wall_zot_magenta
 COLOUR: X+- = magenta
@@ -418,6 +399,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_basic
 TAGS:   no_monster_gen zot_entry
+PLACE:  D:27
+ORIENT: float
 KFEAT:  O = enter_zot
 TILE:   c = wall_zot_magenta
 COLOUR: c+- = magenta
@@ -442,6 +425,8 @@ ENDMAP
 
 NAME:   evilmike_zot_entry_diamond
 TAGS:   no_monster_gen zot_entry
+PLACE:  D:27
+ORIENT: float
 KFEAT:  O = enter_zot
 KFEAT:  A = stone_arch
 TILE:   c = wall_zot_magenta
@@ -474,6 +459,250 @@ MAP
       ..1..
 ENDMAP
 
+NAME:   grunt_zot_entry_hairpin
+TAGS:   no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: ABC-_ = magenta
+FTILE:  ABC-_O = floor_hall
+SUBST:  _ = ., A = 1, B = 2, C = c, - = +
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+      cccccccccccccccccccc
+    ccc..................cc
+   cc...........3.........cc
+  cc.....cccccccccccccc....c
+  c.....cc...........ccc...c
+ cc..3.cc3.CCCCCCCCC3.c.3..c
+@+....cc..CC_____A_CC.c...cc
+@+..2.c.1.-____B__O_C.+1.cc
+@+....cc..CC_____A_CC.c...cc
+ cc..3.cc3.CCCCCCCCC3.c.3..c
+  c.....cc...........ccc...c
+  cc.....cccccccccccccc....c
+   cc...........3.........cc
+    ccc..................cc
+      cccccccccccccccccccc
+ENDMAP
+
+NAME:   grunt_zot_entry_funnels
+TAGS:   no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: 123c+. = magenta
+FTILE:  123c+.O = floor_hall
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+      @       @
+    cc+cc   cc+cc
+    c...ccccc...c
+    cc...ccc...cc
+ ccc cc.3.c.3.cc ccc
+ c.cc cc.....cc cc.c
+@+..cc cc.2.cc cc..+@
+ c...cc cc+cc cc...c
+ cc.3.ccc...ccc.3.cc
+  cc...c..1..c...cc
+  ccc.2+.1O1.+2.ccc
+  cc...c..1..c...cc
+ cc.3.ccc...ccc.3.cc
+ c...cc cc+cc cc...c
+@+..cc cc.2.cc cc..+@
+ c.cc cc.....cc cc.c
+ ccc cc.3.c.3.cc ccc
+    cc...ccc...cc
+    c...ccccc...c
+    cc+cc   cc+cc
+      @       @
+ENDMAP
+
+NAME:   grunt_zot_entry_pinwheel
+TAGS:   no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+KFEAT:  A = stone_arch
+COLOUR: 123c+. = magenta
+FTILE:  123c+.AO = floor_hall
+NSUBST: A = 1:O / *:A
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+       @
+     cc+cc
+    cc...c
+   cc...cc ccccc
+   c...cc cc.3.cc
+   c3.3c cc.2...cc
+   c.2.ccc.1.3...c
+   cc.1.cc..ccc..+@
+    cc..AcAcc cc.c
+ ccc ccccccccc ccc
+ c.cc ccAcA..cc
+@+..ccc..cc.1.cc
+ c...3.1.ccc.2.c
+ cc...2.cc c3.3c
+  cc.3.cc cc...c
+   ccccc cc...cc
+         c...cc
+         cc+cc
+           @
+ENDMAP
+
+NAME:   grunt_zot_entry_bicorn
+TAGS:   transparent no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: 123c+_ = magenta
+FTILE:  123+_OT = floor_hall
+SUBST:  _ = .
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+            .....
+          ...ccc...
+         ..ccc_ccc..
+        ..cc_____cc..
+       ..cc_1_O_1_cc..
+      ..cc___1_1___cc..
+     ..cc___________cc..
+    ..cc_____________cc..
+    .cc___2___T___2___cc.
+   ..c_____3_____3_____c..
+  ..cc_3_____________3_cc..
+ ..cc_2_3_ccccccccc_3_2_cc..
+..cc_3__ccc.......ccc__3_cc..
+.cc___ccc...     ...ccc___cc.
+.c__ccc...         ...ccc__c.
+.c+cc...             ...cc+c.
+..@...                 ...@..
+ENDMAP
+
+NAME:   grunt_zot_entry_tricorne
+TAGS:   transparent no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: ABC-_ = magenta
+FTILE:  ABC-_O = floor_hall
+SUBST:  _ = ., A = 1, B = 3, C = c, - = +
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+@......               ......@
+.+cccc.................cccc+.
+.c...ccccccccccccccccccc...c.
+.cc...........c...........cc.
+..cc...3....CCCCC....3...cc..
+ ..c.3T...CCC___CCC...T3.c..
+  .cc...2.C___A___C.2...cc.
+  ..cc...C-_B___B_-C...cc..
+   ..cc..C_________C..cc..
+    ..c..C____O____C.cc..
+     .cc.C_________C.cc.
+     ..ccCC_A___A_CCcc..
+      ..ccC___B___Ccc..
+       .ccCCC___CCCcc.
+       ..c..CC-CC..c..
+        .cc.......cc.
+        ..c...2...c..
+         .cc..T..cc.
+         ..c.3.3.c..
+          .cc...cc.
+          ..c...c..
+           .c...c.
+           .cc.cc.
+           ..c.c..
+            .c+c.
+            ..@..
+ENDMAP
+
+NAME:   grunt_zot_entry_gee_three
+TAGS:   transparent no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: ABC-_ = magenta
+FTILE:  ABC-_O = floor_hall
+SUBST:  _ = ., A = 1, B = 3, C = c, - = +
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+           .........
+         ...ccccccc...
+        ..ccc.CCC.ccc..
+       ..cc...-_-...cc..
+      ..cc...cC_Cc...cc..
+     ..cc.3.cCC_CCc.3.cc..
+     .cc....cC___Cc....cc.
+    ..c..2.ccCB_BCcc.2..c..
+    .cc3...ccC___Ccc...3cc.
+   ..c.....ccC___Ccc.....c..
+.....c..T3.ccC_A_Ccc.3T..c.....
+.ccccc.....ccC___Ccc.....ccccc.
+@+..c......ccCA_ACcc......c..+@
+.ccc....3..ccC___Ccc..3....ccc.
+...ccc..T..ccC_O_Ccc..T..ccc...
+.cccc.......cCC_CCc.......cccc.
+@+......1...ccCCCcc...1......+@
+.ccc.......3..c.c..3.......ccc.
+...ccccc..T..3.2.3..T..ccccc...
+  ....cc.......T.......cc....
+  ..ccc..3..cc.3.cc..3..ccc..
+ ..cc......ccc...ccc......cc..
+ .cc...ccccc.c...c.ccccc...cc.
+ @+.cccc.....c...c.....cccc.+@
+ .ccc....   .c.3.c.   ....ccc.
+ .....      .c...c.      .....
+            .c...c.
+            .cc.cc.
+            ..c.c..
+             .c.c.
+             .c+c.
+             ..@..
+ENDMAP
+
+NAME:   grunt_zot_entry_alcove
+TAGS:   transparent no_monster_gen patrolling zot_entry
+PLACE:  D:27
+ORIENT: float
+KFEAT:  O = enter_zot
+COLOUR: 1C-_ = magenta
+FTILE:  1C-_O = floor_hall
+SUBST:  _ = ., C = c
+NSUBST: @ = 1:@ / *:.
+MONS:   golden dragon / storm dragon / shadow dragon / bone dragon / \
+        dragon / ice dragon
+MONS:   nonbase draconian, base draconian
+MAP
+     ccccccc
+    ccCCCCCcc
+    cCC___CCc
+    cC_____Cc
+    cC1_O_1Cc
+    cC_1_1_Cc
+    cCC___CCc
+   cc.......cc
+  cc..2...2..cc
+ cc.3..2.2..3.cc
+cc...3.....3...cc
+.................
+@.......T.......@
+ ....3.....3....
+   .3.......3.
+       .@.
+ENDMAP
 
 ##############################################################################
 ##############################################################################

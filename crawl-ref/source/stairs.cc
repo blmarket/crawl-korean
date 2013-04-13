@@ -449,7 +449,7 @@ void up_stairs(dungeon_feature_type force_stair)
                 old_branch_string[0] = tolower(old_branch_string[0]);
             mark_milestone("br.exit", _(old_branch_string.c_str()) + std::string("을(를) 떠남."), 
                            old_level.describe());
-            you.branches_left[old_level.branch] = true;
+            you.branches_left.set(old_level.branch);
         }
     }
 

@@ -1336,10 +1336,6 @@ void mons_relocated(monster* mons)
 
     }
 
-    // Make boulders stop rolling.
-    if (mons_is_boulder(mons))
-        mons->del_ench(ENCH_ROLLING, false);
-
     mons->clear_clinging();
 }
 
@@ -2352,7 +2348,7 @@ int monster_die(monster* mons, killer_type killer,
 
         // Now that Boris is dead, he's a valid target for monster
         // creation again. - bwr
-        you.unique_creatures[mons->type] = false;
+        you.unique_creatures.set(mons->type, false);
         // And his vault can be placed again.
         you.uniq_map_names.erase("uniq_boris");
     }
@@ -3291,7 +3287,7 @@ bool swap_check(monster* mons, coord_def &loc, bool quiet)
         return false;
     }
 
-    if (mons_is_projectile(mons->type))
+    if (mons->is_projectile())
     {
         if (!quiet)
             mpr(_("It's unwise to walk into this."));

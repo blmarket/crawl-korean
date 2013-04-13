@@ -132,7 +132,7 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     }
 
     you.wield_change = true;
-    you.one_time_ability_used[god] = true;
+    you.one_time_ability_used.set(god);
     calc_mp(); // in case the old brand was antimagic
     string desc  = old_name + " ";
             desc += (god == GOD_SHINING_ONE   ? _("blessed by the Shining One") :
@@ -266,7 +266,7 @@ static bool _altar_prayer()
         {
             simple_god_message(_(" grants you a gift!"));
             more();
-            you.one_time_ability_used[you.religion] = true;
+            you.one_time_ability_used.set(you.religion);
             did_something = true;
             take_note(Note(NOTE_GOD_GIFT, you.religion));
         }

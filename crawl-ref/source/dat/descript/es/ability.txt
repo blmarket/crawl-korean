@@ -121,10 +121,6 @@ Turn Visible
 
 Te vuelves visible de nuevo.
 %%%%
-Evoke Flight
-
-<Fly>
-%%%%
 Stop Flying
 
 Paras de volar.
@@ -218,11 +214,6 @@ Animate Remains
 Reanimas a un cadáver o esqueleto y lo conviertes en tu seguidor. Date cuenta
 de que los zombies y los esqueletos no pueden dejar el nivel donde fueron
 creados.
-%%%%
-Recall Undead Slaves
-
-Recuperas a tus seguidores no-muertos desde cualquier lugar del nivel hasta tus
-inmediaciones.
 %%%%
 Injury Mirror
 
@@ -450,11 +441,6 @@ Smiting
 
 Golpea a un enemigo dentro de tu campo de visión. Esto no requiere un camino
 directo, simplemente viendo al enemigo es suficiente.
-%%%%
-Recall Orcish Followers
-
-Recuperas a tus seguidores orcos desde cualquier lugar del nivel hasta tus
-inmediaciones.
 %%%%
 Sunlight
 

@@ -55,9 +55,9 @@
 #include "tags.h"
 #include "terrain.h"
 #include "travel.h"
-#include "view.h"
 #include "viewchar.h"
 #include "viewgeom.h"
+#include "viewmap.h"
 
 static species_type _get_hints_species(unsigned int type);
 static job_type     _get_hints_job(unsigned int type);
