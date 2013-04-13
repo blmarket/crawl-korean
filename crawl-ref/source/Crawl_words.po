@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-08 21:54+0900\n"
+"POT-Creation-Date: 2013-04-13 13:23+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2295,7 +2295,7 @@ msgstr "용암 가고일"
 
 #: mon-data.h:5261 mon-data.h:5273 mon-data.h:5262 kills.cc:486
 #: mon-data.h:5219 mon-data.h:5307 mon-data.h:5513 mon-data.h:5549
-#: kills.cc:515 kills.cc:517 mon-data.h:5545
+#: kills.cc:515 kills.cc:517 mon-data.h:5545 kills.cc:526
 msgid "pandemonium lord"
 msgstr "판데모니움의 악마"
 
@@ -3171,6 +3171,7 @@ msgstr "변이술"
 #: skills2.cc:100 itemname.cc:1014 spl-util.cc:908 itemname.cc:946
 #: skills2.cc:97 spl-util.cc:863 itemname.cc:985 spl-util.cc:855
 #: itemname.cc:987 itemname.cc:1021 itemname.cc:1028 skills2.cc:102
+#: spl-book.cc:2525
 msgid "Necromancy"
 msgstr "강령술"
 
@@ -11792,7 +11793,7 @@ msgstr "아쉔자리"
 msgid "Jiyva"
 msgstr "지이바"
 
-#: kills.cc:520 kills.cc:540 kills.cc:542
+#: kills.cc:520 kills.cc:540 kills.cc:542 kills.cc:551
 msgid "illusory "
 msgstr "분신 "
 
@@ -11930,6 +11931,12 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -15770,7 +15777,7 @@ msgstr "당신은 유전적 진화의 속도가 더뎌짐을 느꼈다."
 
 #: mutation-data.h:625
 msgid "You can survive without breathing."
-msgstr "당신은 이제 숨을 쉬지 않아도 생존이 가능하다."
+msgstr "당신은 숨을 쉬지 않아도 생존이 가능하다."
 
 #: mutation-data.h:791
 msgid "One of your tentacles bears a spike."

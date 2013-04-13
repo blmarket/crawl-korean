@@ -1573,6 +1573,7 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
                              string owner)
 {
     ASSERT(book.base_type == OBJ_BOOKS);
+	bool use_kr_random_artefact_name = false; // 한글판 추가변수
 
     god_type god;
     (void) origin_is_god_gift(book, &god);
@@ -1708,11 +1709,14 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
     if (!owner.empty())
         name = owner;
     else if (god != GOD_NO_GOD)
-        name = god_name(god, false);
+        name = _(god_name(god, false).c_str());
     else if (one_chance_in(30))
-        name = god_name(GOD_SIF_MUNA, false);
-    else if (one_chance_in(3))
-        name = make_name(random_int(), false);
+        name = _(god_name(GOD_SIF_MUNA, false).c_str());
+	else if (one_chance_in(8)) // 한글판에서는 3->8
+	{
+		// 버그날경우 여기 참조
+		use_kr_random_artefact_name = true;
+	}
     else
         has_owner = false;
 
@@ -1721,7 +1725,7 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
 
     // None of these books need a definite article prepended.
     book.props["is_named"].get_bool() = true;
-
+	
     string bookname;
     if (god == GOD_XOM && coinflip())
     {
@@ -1767,15 +1771,15 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
             string number;
             switch (level)
             {
-            case 1: number = "One"; break;
-            case 2: number = "Two"; break;
-            case 3: number = "Three"; break;
-            case 4: number = "Four"; break;
-            case 5: number = "Five"; break;
-            case 6: number = "Six"; break;
-            case 7: number = "Seven"; break;
-            case 8: number = "Eight"; break;
-            case 9: number = "Nine"; break;
+            case 1: number = "1"; break;
+            case 2: number = "2"; break;
+            case 3: number = "3"; break;
+            case 4: number = "4"; break;
+            case 5: number = "5"; break;
+            case 6: number = "6"; break;
+            case 7: number = "7"; break;
+            case 8: number = "8"; break;
+            case 9: number = "9"; break;
             default:
                 number = ""; break;
             }
@@ -1786,7 +1790,13 @@ bool make_book_level_randart(item_def &book, int level, int num_spells,
     if (bookname.empty())
         bookname = getRandNameString("book");
 
-    name = make_stringf(pgettext("bookname_level", "%s%s"), name.c_str(), bookname.c_str());
+	if(!use_kr_random_artefact_name)
+		name = make_stringf(pgettext("bookname_level", "%s%s"), name.c_str(), bookname.c_str());
+	else
+		if(name == " ")
+			name = "마법서 \"" + make_random_kr_name() + "\"";		
+		else
+			name = name + "마법서 \"" + make_random_kr_name() + "\"";
 
     set_artefact_name(book, name);
 
@@ -2067,6 +2077,9 @@ bool make_book_theme_randart(item_def &book,
 {
     ASSERT(book.base_type == OBJ_BOOKS);
 
+	string name_noun; // 한글판 추가변수
+	bool use_kr_random_artefact_name = false; // 한글판 추가변수
+
     god_type god;
     (void) origin_is_god_gift(book, &god);
 
@@ -2247,7 +2260,7 @@ bool make_book_theme_randart(item_def &book,
     if (disc1 == disc2)
         all_spells_disc1 = true;
 
-    // If the owner hasn't been set already use
+	// If the owner hasn't been set already use
     // a) the god's name for god gifts (only applies to Sif Muna and Xom),
     // b) a name depending on the spell disciplines, for pure books
     // c) a random name (all god gifts not named earlier)
@@ -2257,7 +2270,7 @@ bool make_book_theme_randart(item_def &book,
     {
         const bool god_gift = (god != GOD_NO_GOD);
         if (god_gift && !one_chance_in(4))
-            owner = god_name(god, false);
+            owner = _(god_name(god, false).c_str());
         else if (god_gift && one_chance_in(3) || one_chance_in(5))
         {
             bool highlevel = (highest_level >= 7 + random2(3)
@@ -2298,7 +2311,10 @@ bool make_book_theme_randart(item_def &book,
         if (owner.empty())
         {
             if (god_gift || one_chance_in(5)) // Use a random name.
-                owner = make_name(random_int(), false);
+			{
+				// 버그날경우 여기 참조
+				use_kr_random_artefact_name = true;
+			}
             else if (!god_gift && one_chance_in(9))
             {
                 god = GOD_SIF_MUNA;
@@ -2315,12 +2331,13 @@ bool make_book_theme_randart(item_def &book,
                 default:
                     break;
                 }
-                owner = god_name(god, false);
+                owner = _(god_name(god, false).c_str());
             }
         }
     }
 
     string name = "";
+	bool random_book_titled = false; // 추가변수
 
     if (!owner.empty())
     {
@@ -2341,25 +2358,34 @@ bool make_book_theme_randart(item_def &book,
         else if (one_chance_in(20) && (owner.empty() || one_chance_in(3)))
             bookname = getRandNameString("random_book_title");
         bookname = replace_name_parts(bookname, book);
+
+		name = replace_all(name, "_SUFFIX_", "");
+		name = replace_all(name, "_NOPOS_", "");
+
+		random_book_titled = true;
     }
 
     if (!bookname.empty())
     {
-        name += make_stringf(pgettext("bookname", "%s of %s"),
-                             getRandNameString("book_noun").c_str(),
-                             bookname.c_str());
+        name += bookname.c_str() + ((!random_book_titled) ? string("의 ") : "");
+		name_noun = getRandNameString("book_noun").c_str();
+		/*	
+			make_stringf(pgettext("bookname", "%s of %s"),
+                getRandNameString("book_noun").c_str(),
+                bookname.c_str());
+		*/
     }
     else
     {
         // Give a name that reflects the primary and secondary
         // spell disciplines of the spells contained in the book.
-        name += getRandNameString("book_name") + " ";
+        name_noun += " " + getRandNameString("book_name");
 
         // For the actual name there's a 66% chance of getting something like
         //  <book> of the Fiery Traveller (Translocation/Fire), else
         //  <book> of Displacement and Flames.
         string type_name;
-        if (disc1 != disc2 && !one_chance_in(3))
+        if (disc1 != disc2 && one_chance_in(4)) // (disc1 != disc2 && !one_chance_in(3))
         {
             string lookup = spelltype_long_name(disc2);
             type_name = getRandNameString(lookup + " adj");
@@ -2383,8 +2409,8 @@ bool make_book_theme_randart(item_def &book,
                 type_name += subtype_name;
             }
 
-            // 1. book name 2. discipline name(s)
-            name = make_stringf(pgettext("bookname_with_disc", "%s%s"), name.c_str(), type_name.c_str());
+            // 1. book name 2. discipline name(s) 
+            name = make_stringf(pgettext("bookname_with_disc", "%s%s"), name.c_str(), type_name.c_str()) + name_noun;
         }
         else
         {
@@ -2404,7 +2430,15 @@ bool make_book_theme_randart(item_def &book,
                 bookname += type_name;
             }
 
-            name = make_stringf(pgettext("bookname", "%s%s"), name.c_str(), bookname.c_str());
+			if(!use_kr_random_artefact_name)
+				name = make_stringf(pgettext("bookname", "%s%s"), name.c_str(), bookname.c_str()) + name_noun;
+			else
+			{
+				if(name == " ")
+					name = "마법서 \"" + make_random_kr_name() + "\"";
+				else
+					name = name + "마법서 \"" + make_random_kr_name() + "\"";
+			}
         }
     }
 
@@ -2497,14 +2531,16 @@ void make_book_Kiku_gift(item_def &book, bool first)
     for (int i = 0; i < SPELLBOOK_SIZE; i++)
         spell_vec[i].get_int() = chosen_spells[i];
 
-    string name = "Kikubaaqudgha's ";
+    string name = _("Kikubaaqudgha's ");
     book.props["is_named"].get_bool() = true;
-    name += getRandNameString("book_name") + " ";
+    
     string type_name = getRandNameString("Necromancy");
     if (type_name.empty())
-        name += "Necromancy";
+        name += _(M_("Necromancy"));
     else
         name += type_name;
+
+	name += " " + getRandNameString("book_name");
     set_artefact_name(book, name);
 }
 

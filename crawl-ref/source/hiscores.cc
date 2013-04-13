@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief deal with reading and writing of highscore file
 **/
@@ -359,8 +359,8 @@ static void _show_morgue(scorefile_entry& se)
 
     morgue_file.set_more(formatted_string::parse_string(
 #ifdef USE_TILE_LOCAL
-                            "<cyan>[ +/L-click : Page down.   - : Page up."
-                            "           Esc/R-click exits.]"));
+                            "<cyan>[ +/L-click : 페이지 다운  - : 페이지 업."
+                            "           Esc/R-click 종료.]"));
 #else
                             "<cyan>[ + : Page down.   - : Page up."
                             "                           Esc exits.]"));
@@ -537,11 +537,11 @@ static void _hiscore_date_string(time_t time, char buff[INFO_SIZE])
 {
     struct tm *date = TIME_FN(&time);
 
-    const char *mons[12] = { "Jan", "Feb", "Mar", "Apr", "May", "June",
-                             "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    const char *mons[12] = { "1월", "2월", "3월", "4월", "5월", "6월",
+                             "7월", "8월", "9월", "10월", "11월", "12월" };
 
-    snprintf(buff, INFO_SIZE, "%s %d, %d", mons[date->tm_mon],
-              date->tm_mday, date->tm_year + 1900);
+    snprintf(buff, INFO_SIZE, "%d년 %s %d일 ", date->tm_year + 1900, mons[date->tm_mon],
+              date->tm_mday);
 }
 
 static string _hiscore_newline_string()
@@ -819,22 +819,22 @@ enum old_job_type
 static const char* _job_name(int job)
 {
     if (is_valid_job(static_cast<job_type>(job)))
-        return get_job_name(job);
+        return _(get_job_name(job));
 
     switch (job)
     {
     case OLD_JOB_THIEF:
-        return "Thief";
+        return "도둑";
     case OLD_JOB_DEATH_KNIGHT:
-        return "Death Knight";
+        return "죽음의 기사";
     case OLD_JOB_PALADIN:
-        return "Paladin";
+        return "성기사";
     case OLD_JOB_REAVER:
-        return "Reaver";
+        return "약탈자";
     case OLD_JOB_STALKER:
-        return "Stalker";
+        return "추적자";
     default:
-        return "unknown";
+        return "잉여백수";
     }
 }
 
@@ -1201,15 +1201,15 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             death_source_name = mons->full_name(desc, true);
 
         if (death && mons->type == MONS_MARA_FAKE)
-            death_source_name = "an illusion of Mara";
+            death_source_name = "마라의 분신";
 
         if (mons->has_ench(ENCH_SHAPESHIFTER))
-            death_source_name += " (shapeshifter)";
+            death_source_name += " (변형괴물)";
         else if (mons->has_ench(ENCH_GLOWING_SHAPESHIFTER))
-            death_source_name += " (glowing shapeshifter)";
+            death_source_name += " (발광하는 변형괴물)";
 
         if (mons->type == MONS_PANDEMONIUM_LORD)
-            death_source_name += " the pandemonium lord";
+            death_source_name += " (판데모니움의 군주)";
 
         if (mons->props.exists("blame"))
         {
@@ -1566,7 +1566,7 @@ string scorefile_entry::game_time(death_desc_verbosity verbosity) const
     {
         char scratch[INFO_SIZE];
 
-        snprintf(scratch, INFO_SIZE, "The game lasted %s (%d turns).",
+        snprintf(scratch, INFO_SIZE, "경과한 시간 %s (%d 턴).",
                  make_time_string(real_time).c_str(), num_turns);
 
         line += scratch;
@@ -1580,10 +1580,10 @@ const char *scorefile_entry::damage_verb() const
 {
     // GDL: here's an example of using final_hp.  Verbiage could be better.
     // bwr: changed "blasted" since this is for melee
-    return (final_hp > -6)  ? "Slain"   :
-           (final_hp > -14) ? "Mangled" :
-           (final_hp > -22) ? "Demolished"
-                            : "Annihilated";
+    return (final_hp > -6)  ? "죽었다."   :
+           (final_hp > -14) ? "비참하게 죽었다." :
+           (final_hp > -22) ? "끔찍하게 죽었다."
+                            : "참혹하게 죽었다.";
 }
 
 string scorefile_entry::death_source_desc() const
@@ -1595,7 +1595,7 @@ string scorefile_entry::damage_string(bool terse) const
 {
     char scratch[50];
     snprintf(scratch, sizeof scratch, "(%d%s)", damage,
-                       terse? "" : " damage");
+                       terse? "" : " 대미지");
     return scratch;
 }
 
@@ -1883,12 +1883,12 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         if (terse)
             desc += death_source_desc();
         else if (oneline)
-            desc += "slain by " + death_source_desc();
+            desc += death_source_desc() + "에게 죽었다."; // "slain by " + death_source_desc();
         else
         {
-            desc += damage_verb();
-            desc += " by ";
-            desc += death_source_desc();
+            desc += death_source_desc(); // damage_verb();
+            desc += "에게 ";
+            desc += damage_verb(); // death_source_desc();
         }
 
         // put the damage on the weapon line if there is one
@@ -1898,17 +1898,17 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
 
     case KILLED_BY_HEADBUTT:
         if (terse)
-            desc += apostrophise(death_source_desc()) + " headbutt";
+            desc += apostrophise(death_source_desc()) + "의 박치기"; // " headbutt";
         else
-            desc += "Headbutted by " + death_source_desc();
+            desc += death_source_desc() + "의 박치기에 죽었다."; // "Headbutted by " + death_source_desc();
         needs_damage = true;
         break;
 
     case KILLED_BY_ROLLING:
         if (terse)
-            desc += "rolling " + death_source_desc();
+            desc += death_source_desc() + "에게 깔림"; // "rolling " + death_source_desc();
         else
-            desc += "Rolled over by " + death_source_desc();
+            desc += death_source_desc() + "에게 깔려 죽었다."; // "Rolled over by " + death_source_desc();
         needs_damage = true;
         break;
 
@@ -1916,24 +1916,24 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         if (death_source_name.empty() || terse)
         {
             if (!terse)
-                desc += "Succumbed to poison";
+                desc += "중독되어 죽었다"; // "Succumbed to poison";
             else if (!death_source_name.empty())
-                desc += "poisoned by " + death_source_name;
+                desc += death_source_name + "에 중독되어 죽었다."; // "poisoned by " + death_source_name;
             else
-                desc += "poison";
+                desc += "독"; // "poison";
             if (!auxkilldata.empty())
                 desc += " (" + auxkilldata + ")";
         }
         else if (auxkilldata.empty()
-                 && death_source_name.find("poison") != string::npos)
+                 && (death_source_name.find("poison") != string::npos || death_source_name.find("독") != string::npos))
         {
-            desc += "Succumbed to " + death_source_name;
+            desc += death_source_name + "에 중독되어 죽었다."; // "Succumbed to " + death_source_name;
         }
         else
         {
-            desc += "Succumbed to " + ((death_source_name == "you")
-                      ? "their own" : apostrophise(death_source_name)) + " "
-                    + (auxkilldata.empty()? "poison" : auxkilldata);
+            desc += (((death_source_name == "you") || (death_source_name == "당신"))
+                      ? "자기자신의 " : apostrophise(death_source_name)) + "의 "
+                    + (auxkilldata.empty()? "독" : auxkilldata) + "에 중독되어 죽었다.";
         }
         break;
 
@@ -1941,25 +1941,24 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         ASSERT(!auxkilldata.empty()); // there are no nameless clouds
         if (terse)
             if (death_source_name.empty())
-                desc += "cloud of " + auxkilldata;
+                desc += auxkilldata + " 구름"; // "cloud of " + auxkilldata;
             else
-                desc += "cloud of " +auxkilldata + " [" +
-                        death_source_name == "you" ? "self" : death_source_name
-                        + "]";
+                //desc += "cloud of " +auxkilldata + " [" + death_source_name == "you" ? "self" : death_source_name + "]";
+				  desc += ((death_source_name == "you" || death_source_name == "당신") ? "스스로의" : death_source_name + "의") + auxkilldata + " 구름";
         else
         {
-            snprintf(scratch, sizeof(scratch), "Engulfed by %s%s %s",
-                death_source_name.empty() ? "a" :
-                  death_source_name == "you" ? "their own" :
+            snprintf(scratch, sizeof(scratch), "%s %s%s에 말려들어 죽었다.",
+                death_source_name.empty() ? "" :
+                  (death_source_name == "you" || death_source_name == "당신") ? "자기자신의" :
                   apostrophise(death_source_name).c_str(),
-                death_source_name.empty() ? " cloud of" : "",
-                auxkilldata.c_str());
+                auxkilldata.c_str(), death_source_name.empty() ? " 구름" : ""
+                );
             desc += scratch;
         }
         needs_damage = true;
         break;
 
-    case KILLED_BY_BEAM:
+    case KILLED_BY_BEAM: // 메모
         if (oneline || semiverbose)
         {
             // keeping this short to leave room for the deep elf spellcasters:
@@ -2014,38 +2013,38 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
 
     case KILLED_BY_LAVA:
         if (terse)
-            desc += "lava";
+            desc += "용암";
         else
         {
             if (race == SP_MUMMY)
-                desc += "Turned to ash by lava";
+                desc += "용암에 빠져 재가 되었다.";
             else
-                desc += "Took a swim in molten lava";
+                desc += "용암 아래로 가라앉았다.";
         }
         break;
 
     case KILLED_BY_WATER:
         if (race == SP_MUMMY)
-            desc += terse? "fell apart" : "Soaked and fell apart";
+            desc += terse? "익사" : "깊은 물 아래로 가라앉았다.";
         else
-            desc += terse? "drowned" : "Drowned";
+            desc += terse? "익사" : "익사했다.";
         break;
 
     case KILLED_BY_STUPIDITY:
         if (terse)
-            desc += "stupidity";
+            desc += "지능 고갈";
         else if (_species_is_undead(race) || race == SP_GREY_DRACONIAN)
-            desc += "Forgot to exist";
+            desc += "자기자신의 존재를 잊어버렸다.";
         else
-            desc += "Forgot to breathe";
+            desc += "숨쉬는 것을 잊어서 죽었다.";
         break;
 
     case KILLED_BY_WEAKNESS:
-        desc += terse? "collapsed" : "Collapsed under their own weight";
+        desc += terse? "힘 고갈" : "자신이 지고있는 무게를 감당하지 못하여 깔려 죽었다.";
         break;
 
     case KILLED_BY_CLUMSINESS:
-        desc += terse? "clumsiness" : "Slipped on a banana peel";
+        desc += terse? "민첩 고갈" : "바나나 껍질에 미끄러져 죽었다.";
         break;
 
     case KILLED_BY_TRAP:
@@ -2053,7 +2052,7 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
             desc += auxkilldata.c_str();
         else
         {
-            snprintf(scratch, sizeof(scratch), "Killed by triggering %s",
+            snprintf(scratch, sizeof(scratch), "%s 함정에 걸려 죽었다",
                      auxkilldata.c_str());
             desc += scratch;
         }
@@ -2062,49 +2061,49 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
 
     case KILLED_BY_LEAVING:
         if (terse)
-            desc += "left";
+            desc += "떠남";
         else
         {
             if (num_runes > 0)
-                desc += "Got out of the dungeon";
+                desc += "조트의 오브를 포기하고 던전에서 나왔다.";
             else if (_species_is_undead(race))
-                desc += "Safely got out of the dungeon";
+                desc += "임무를 포기하고 던전에서 도망쳤다.";
             else
-                desc += "Got out of the dungeon alive";
+                desc += "임무를 포기하고 던전에서 도망쳤다.";
         }
         break;
 
     case KILLED_BY_WINNING:
-        desc += terse? "escaped" : "Escaped with the Orb";
+        desc += terse? "승리" : "오브를 가지고 던전을 탈출하는데 성공했다!";
         if (num_runes < 1)
             desc += "!";
         break;
 
     case KILLED_BY_QUITTING:
-        desc += terse? "quit" : "Quit the game";
+        desc += terse? "종료" : "게임을 포기하고 종료했다.";
         break;
 
     case KILLED_BY_DRAINING:
-        desc += terse? "drained" : "Was drained of all life";
+        desc += terse? "흡수" : "모든 생명력을 흡수당해 죽었다.";
         break;
 
     case KILLED_BY_STARVATION:
-        desc += terse? "starvation" : "Starved to death";
+        desc += terse? "굶주림" : "굶어 죽었다.";
         break;
 
     case KILLED_BY_FREEZING:    // refrigeration spell
-        desc += terse? "frozen" : "Froze to death";
+        desc += terse? "동사" : "얼어 죽었다.";
         needs_damage = true;
         break;
 
     case KILLED_BY_BURNING:     // sticky flame
-        desc += terse? "burnt" : "Burnt to a crisp";
+        desc += terse? "분사" : "불에 타 죽었다.";
         needs_damage = true;
         break;
 
     case KILLED_BY_WILD_MAGIC:
         if (auxkilldata.empty())
-            desc += terse? "wild magic" : "Killed by wild magic";
+            desc += terse? "주문 부작용" : "주문 시전의 부작용으로 죽었다.";
         else
         {
             if (terse)
@@ -2112,8 +2111,8 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
             else
             {
                 // A lot of sources for this case... some have "by" already.
-                snprintf(scratch, sizeof(scratch), "Killed %s%s",
-                          (auxkilldata.find("by ") != 0) ? "by " : "",
+                snprintf(scratch, sizeof(scratch), "%s%s에게 죽었다",
+                          (auxkilldata.find("by ") != 0) ? "" : "",
                           auxkilldata.c_str());
                 desc += scratch;
             }
@@ -2124,15 +2123,15 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
 
     case KILLED_BY_XOM:
         if (terse)
-            desc += "xom";
+            desc += "좀";
         else
-            desc += auxkilldata.empty() ? "Killed for Xom's enjoyment"
-                                        : "Killed by " + auxkilldata;
+            desc += auxkilldata.empty() ? "좀의 장난으로 죽었다."
+                                        : auxkilldata + "에게 죽었다.";
         needs_damage = true;
         break;
 
     case KILLED_BY_ROTTING:
-        desc += terse? "rotting" : "Rotted away";
+        desc += terse? "부패" : "썩어 죽었다.";
         if (!auxkilldata.empty())
             desc += " (" + auxkilldata + ")";
         if (!death_source_desc().empty())
@@ -2140,28 +2139,28 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         break;
 
     case KILLED_BY_TARGETTING:
-        desc += terse? "shot self" : "Killed themself with bad targetting";
+        desc += terse? "조준 실수" : "조준 실수로 죽었다.";
         needs_damage = true;
         break;
 
     case KILLED_BY_REFLECTION:
         needs_damage = true;
         if (terse)
-            desc += "reflected bolt";
+            desc += "반사체";
         else
         {
-            desc += "Killed by a reflected ";
+            // desc += "Killed by a reflected ";
             if (auxkilldata.empty())
-                desc += "bolt";
+                desc += "반사된 무기에 죽었다.";
             else
-                desc += auxkilldata;
+                desc += "반사된 " + auxkilldata + "에(게) 죽었다.";
 
             if (!death_source_name.empty() && !oneline && !semiverbose)
             {
                 desc += "\n";
                 desc += "             ";
-                desc += "... reflected by ";
-                desc += death_source_name;
+                // desc += "... reflected by ";
+                desc += "반사된 " + death_source_name + "에(게) 죽었다.";
                 needs_damage = false;
             }
         }
