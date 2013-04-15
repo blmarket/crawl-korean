@@ -257,7 +257,6 @@ enum missile_type
     MI_ARROW,
     MI_BOLT,
     MI_JAVELIN,
-    MI_MAX_RACIAL = MI_JAVELIN,
 
     MI_STONE,
     MI_LARGE_ROCK,
@@ -354,7 +353,8 @@ enum special_armour_type
     SPARM_REFLECTION,
     SPARM_SPIRIT_SHIELD,
     SPARM_ARCHERY,
-    NUM_SPECIAL_ARMOURS
+    NUM_REAL_SPECIAL_ARMOURS,
+    NUM_SPECIAL_ARMOURS,
 };
 
 enum special_missile_type // to separate from weapons in general {dlb}
@@ -378,7 +378,8 @@ enum special_missile_type // to separate from weapons in general {dlb}
     SPMSL_CONFUSION,                   // confusing
     SPMSL_SICKNESS,                    // sickness/disease
     SPMSL_RAGE,                        // berserk rage
-    NUM_SPECIAL_MISSILES               // 20
+    NUM_REAL_SPECIAL_MISSILES,
+    NUM_SPECIAL_MISSILES,
 };
 
 enum special_ring_type // jewellery mitm[].special values

@@ -72,8 +72,10 @@ menu += cyan:.*misc.*[lL]antern
 menu += $dangerous:.*dangerous_item.*
 
 # Defaults for normal items
-menu += green:(?<!tried on )uncursed
-menu += green:(?<!tried on )저주받지 않은
+menu += lightgrey:tried on uncursed
+menu += lightgrey:tried on 저주받지 않은
+menu += green:uncursed
+menu += green:저주받지 않은
 
 # Colouring of autoinscribed god gifts
 menu_colour += pickup:green:god gift
