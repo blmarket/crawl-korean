@@ -1178,6 +1178,7 @@ bool draw_three(int slot)
     if (num_cards == 1)
     {
         // Only one card to draw, so just draw it.
+        mpr("There's only one card left!");
         evoke_deck(deck);
         return true;
     }

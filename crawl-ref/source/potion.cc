@@ -236,8 +236,9 @@ bool potion_effect(potion_type pot_eff, int pow, bool drank_it, bool was_known,
     case POT_STRONG_POISON:
         if (player_res_poison() > 0)
         {
-            mprf(gettext("You feel %s nauseous."),
+            mprf(_("You feel %s nauseous."),
                  (pot_eff == POT_POISON) ? pgettext("potion", "slightly") : pgettext("potion", "quite"));
+            maybe_id_resist(BEAM_POISON);
         }
         else
         {

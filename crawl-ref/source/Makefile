@@ -1358,7 +1358,8 @@ clean: clean-rltiles clean-webserver clean-android
 	+$(MAKE) -C $(UTIL) clean
 	$(RM) $(GAME) $(GAME).exe $(GENERATED_FILES) $(EXTRA_OBJECTS) libw32c.o\
 	    libunix.o $(ALL_OBJECTS) $(ALL_OBJECTS:.o=.d) *.ixx  \
-	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d util/fake_pty
+	    .contrib-libs .cflags AppHdr.h.gch AppHdr.h.d util/fake_pty \
+            rltiles/tiledef-unrand.cc
 	$(RM) -r build-win
 	$(RM) -r build
 
@@ -1462,8 +1463,8 @@ $(foreach t,$(CONTRIB_LIBS),$(if $(wildcard $t),,$(shell rm -f .contrib-libs)))
 #############################################################################
 # Build unrandart data
 art-data.h: art-data.txt util/art-data.pl art-func.h
-	$(QUIET_GEN)util/art-data.pl
-art-enum.h: art-data.h
+	util/art-data.pl
+art-enum.h rltiles/dc-unrand.txt rltiles/tiledef-unrand.cc: art-data.h
 
 mon-mst.h: mon-spll.h util/gen-mst.pl
 	$(QUIET_GEN)util/gen-mst.pl
@@ -1489,7 +1490,7 @@ macro.o: cmd-name.h
 # RLTiles
 #
 
-.PHONY: build-rltiles
+#.PHONY: build-rltiles
 build-rltiles: .contrib-libs $(RLTILES)/dc-unrand.txt
 ifdef ANDROID
         # force submake to run properly

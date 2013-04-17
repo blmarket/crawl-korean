@@ -4197,8 +4197,8 @@ static void _move_player(coord_def move)
 
         if (dangerous != DNGN_FLOOR || bad_mons)
         {
-            string prompt = _("Are you sure you want to move while confused "
-                            "and next to ");
+            string prompt = _("Are you sure you want to stumble around while "
+                            "confused and next to ");
 
             if (dangerous != DNGN_FLOOR)
             {   
@@ -4216,6 +4216,10 @@ static void _move_player(coord_def move)
 				prompt += " 옆에 있는 상태에서 움직일 것인가?";
             }
             prompt += "?";
+
+            monster* targ = monster_at(you.pos() + move);
+            if (targ && !targ->wont_attack() && you.can_see(targ))
+                prompt += " (Ctrl+방향키로 공격하지 않고 이동)";
 
             if (!crawl_state.disables[DIS_CONFIRMATIONS]
                 && !yesno(prompt.c_str(), false, 'n'))
@@ -4483,7 +4487,7 @@ static void _move_player(coord_def move)
     else if (!targ_pass && !attacking)
     {
         if (you.form == TRAN_TREE)
-            mpr(_("You cannot move."));
+            canned_msg(MSG_CANNOT_MOVE);
         else if (grd(targ) == DNGN_OPEN_SEA)
             mpr(_("The ferocious winds and tides of the open sea thwart your progress."));
         else if (grd(targ) == DNGN_LAVA_SEA)

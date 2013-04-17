@@ -1536,8 +1536,7 @@ static mon_attack_def _downscale_zombie_attack(const monster* mons,
         break;
     }
 
-    if (mons->type == MONS_SIMULACRUM_LARGE
-        || mons->type == MONS_SIMULACRUM_SMALL)
+    if (mons->type == MONS_SIMULACRUM)
     {
         attk.flavour = AF_COLD;
     }
@@ -2334,6 +2333,14 @@ void define_monster(monster* mons)
         ghost.init_labrat();
         mons->set_ghost(ghost);
         mons->ghost_demon_init();
+    }
+
+    // Load with dummy values so certain monster properties can be queried
+    // before placement without crashing (proper setup is done later here)
+    case MONS_DANCING_WEAPON:
+    {
+        ghost_demon ghost;
+        mons->set_ghost(ghost);
     }
 
     default:

@@ -2075,9 +2075,12 @@ bool item_type_known(const object_class_type base_type, const int sub_type)
     return (you.type_ids[base_type][sub_type] == ID_KNOWN_TYPE);
 }
 
-bool item_type_tried(const item_def& item)
+bool item_type_tried(const item_def &item)
 {
-    if (item_type_known(item))
+    if (!is_artefact(item) && item_type_known(item))
+        return false;
+
+    if (fully_identified(item))
         return false;
 
     if (item.flags & ISFLAG_TRIED)
@@ -2993,11 +2996,6 @@ bool is_bad_item(const item_def &item, bool temp)
                 return false;
         case SCR_CURSE_JEWELLERY:
             return (you.religion != GOD_ASHENZARI);
-        case SCR_SUMMONING:
-            // Summoning will sometimes produce unholy monsters (and anger
-            // your god, if you are worshipping a good one. (Use temp to
-            // allow autopickup to prevent monsters from reading it.)
-            return (temp && is_good_god(you.religion));
         default:
             return false;
         }
@@ -3111,6 +3109,12 @@ static bool _invisibility_is_useless(const bool temp)
 
 bool is_useless_item(const item_def &item, bool temp)
 {
+    // During game startup, no item is useless.  If someone re-glyphs an item
+    // based on its uselessness, the glyph-to-item cache will use the useless
+    // value even if your god or species can make use of it.
+    if (you.species == SP_UNKNOWN)
+        return false;
+
     switch (item.base_type)
     {
     case OBJ_WEAPONS:

@@ -951,10 +951,12 @@ static void _equip_armour_effect(item_def& arm, bool unmeld)
             if (!unmeld && you.spirit_shield() < 2)
             {
                 dec_mp(you.magic_points);
-                mpr(_("You feel spirits watching over you."));
+                mpr(_("You feel your power drawn to a protective spirit."));
                 if (you.species == SP_DEEP_DWARF)
                     mpr(gettext("Now linked to your health, your magic stops regenerating."));
             }
+            else
+                mpr("You feel spirits watching over you.");
             break;
 
         case SPARM_ARCHERY:
@@ -1162,9 +1164,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     // XXX has to match artefact.cc:_artefact_desc_properties(), sort-of (SamB)
 
-    // Also see <https://crawl.develz.org/mantis/view.php?id=1083>:
-    // "Randart jewellery of various base types not auto-identified".
-
     const bool artefact     = is_artefact(item);
     const bool known_cursed = item_known_cursed(item);
     const bool known_bad    = (item_type_known(item)
@@ -1186,18 +1185,15 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
 
     case RING_FIRE:
         mpr(_("You feel more attuned to fire."));
-        // XXX unhandled artefact (#1083)
         ident = ID_KNOWN_TYPE;
         break;
 
     case RING_ICE:
         mpr(_("You feel more attuned to ice."));
-        // XXX unhandled artefact (#1083)
         ident = ID_KNOWN_TYPE;
         break;
 
     case RING_WIZARDRY:
-        // XXX unhandled artefact (#1083)
         ident = ID_KNOWN_TYPE;
         break;
 
@@ -1221,12 +1217,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_INVISIBILITY:
-        if (!you.duration[DUR_INVIS])
-        {
-            mpr(_("You become transparent for a moment."));
-            fake_rap = ARTP_INVISIBLE;
-            ident = ID_KNOWN_TYPE;
-        }
+        mprf(_("You become %stransparent for a moment."),
+             you.duration[DUR_INVIS] ? pgettext("playerequip","more ") : "");
+        fake_rap = ARTP_INVISIBLE;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_EVASION:
@@ -1291,15 +1285,9 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_FLIGHT:
-        if (!you.scan_artefacts(ARTP_FLY))
-        {
-            if (you.airborne())
-                mpr(gettext("You feel vaguely more buoyant than before."));
-            else
-                mpr(_("You feel buoyant."));
-            fake_rap = ARTP_FLY;
-            ident = ID_KNOWN_TYPE;
-        }
+        mprf(_("You feel %sbuoyant."), you.airborne() ? pgettext("playerequip","more ") : "");
+        fake_rap = ARTP_FLY;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_TELEPORTATION:
@@ -1313,19 +1301,15 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case AMU_RAGE:
-        if (!you.scan_artefacts(ARTP_BERSERK))
-        {
-            mpr(_("You feel a brief urge to hack something to bits."));
-            fake_rap = ARTP_BERSERK;
-            ident = ID_KNOWN_TYPE;
-        }
+        mpr(_("You feel a brief urge to hack something to bits."));
+        fake_rap = ARTP_BERSERK;
+        ident = ID_KNOWN_TYPE;
         break;
 
     case AMU_FAITH:
         if (you.religion != GOD_NO_GOD)
         {
             mpr(_("You feel a surge of divine interest."), MSGCH_GOD);
-            // XXX unhandled artefact (#1083)
             ident = ID_KNOWN_TYPE;
         }
         break;
@@ -1339,7 +1323,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             && player_mutation_level(MUT_HERBIVOROUS) < 3)
         {
             mpr(_("You feel a craving for the dungeon's cuisine."));
-            // XXX unhandled artefact (#1083)
             ident = ID_KNOWN_TYPE;
         }
         break;
@@ -1357,19 +1340,17 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
             mpr(gettext("You feel your power drawn to a protective spirit."));
             if (you.species == SP_DEEP_DWARF)
                 mpr(_("Now linked to your health, your magic stops regenerating."));
-            // XXX unhandled artefact (#1083)
-            ident = ID_KNOWN_TYPE;
         }
+        else
+            mpr("You feel spirits watching over you.");
+        ident = ID_KNOWN_TYPE;
         break;
 
     case RING_REGENERATION:
         // To be exact, bloodless vampires should get the id only after they
         // drink anything.  Not worth complicating the code, IMHO. [1KB]
         if (player_mutation_level(MUT_SLOW_HEALING) < 3)
-        {
-            // XXX unhandled artefact (#1083)
             ident = ID_KNOWN_TYPE;
-        }
         break;
 
     case AMU_STASIS:
@@ -1385,7 +1366,6 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
                  (amount > 250) ? pgettext("_equip_jewellery_effect", " massive") :
                  (amount >  50) ? pgettext("_equip_jewellery_effect", " violent") :
                                   "");
-            // XXX unhandled artefact (#1083)
             ident = ID_KNOWN_TYPE;
 
             contaminate_player(pow(amount, 0.333), item_type_known(item));
@@ -1425,7 +1405,10 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         bool show_msgs = true;
         _equip_artefact_effect(item, &show_msgs, unmeld);
 
-        if (learn_pluses && (item.plus != 0 || item.plus2 != 0))
+        if (ident == ID_KNOWN_TYPE)
+            set_ident_flags(item, ISFLAG_KNOW_TYPE);
+
+        if (learn_pluses)
             set_ident_flags(item, ISFLAG_KNOW_PLUSES);
 
         if (fake_rap != ARTP_NUM_PROPERTIES)

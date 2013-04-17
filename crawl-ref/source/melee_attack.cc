@@ -831,6 +831,10 @@ bool melee_attack::attack()
     if (can_cleave && !cleaving)
         cleave_setup();
 
+    // Attacker might have died from effects of cleaving handled prior to this
+    if (!attacker->alive())
+        return false;
+
     // We might have killed the kraken target by cleaving a tentacle.
     if (!defender->alive())
     {
@@ -2188,6 +2192,7 @@ bool melee_attack::player_monattk_hit_effects()
         return defender->alive();
 
     // Mutually exclusive with (overrides) brand damage!
+    special_damage = 0;
     apply_staff_damage();
 
     if (!defender->alive())
@@ -3518,8 +3523,6 @@ int melee_attack::staff_damage(skill_type skill)
 
 void melee_attack::apply_staff_damage()
 {
-    special_damage = 0;
-
     if (!weapon || weapon->base_type != OBJ_STAVES)
         return;
 

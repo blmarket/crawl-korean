@@ -4518,6 +4518,10 @@ tileidx_t tileidx_cloud(const cloud_info &cl, bool disturbance)
                 ch += random2(tile_main_count(ch));
                 break;
 
+            case CLOUD_FOREST_FIRE:
+                ch = TILE_CLOUD_FOREST_FIRE;
+                break;
+
             default:
                 ch = TILE_CLOUD_GREY_SMOKE;
                 break;
@@ -5061,6 +5065,8 @@ tileidx_t tileidx_ability(const ability_type ability)
         return TILEG_ABILITY_DELAYED_FIREBALL;
     case ABIL_END_TRANSFORMATION:
         return TILEG_ABILITY_END_TRANSFORMATION;
+    case ABIL_STOP_RECALL:
+        return TILEG_ABILITY_STOP_RECALL;
 
     // Species-specific abilities.
     // Demonspawn-only

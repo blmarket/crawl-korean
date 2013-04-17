@@ -178,6 +178,9 @@ enum ability_type
     ABIL_ASHENZARI_TRANSFER_KNOWLEDGE,
     ABIL_ASHENZARI_END_TRANSFER,
 
+    // For both Yred and Beogh
+    ABIL_STOP_RECALL,
+
     // General divine (pseudo) abilities.
     ABIL_RENOUNCE_RELIGION,
 
@@ -562,6 +565,7 @@ enum canned_message_type
     MSG_DECK_EXHAUSTED,
     MSG_EVOCATION_SUPPRESSED,
     MSG_BEING_WATCHED,
+    MSG_CANNOT_MOVE,
 };
 
 enum char_set_type
@@ -3596,6 +3600,7 @@ enum daction_type
 #if TAG_MAJOR_VERSION == 34
     DACT_SLIME_NEW_ATTEMPT,
 #endif
+    DACT_KIRKE_HOGS,
     NUM_DACTIONS,
 };
 

@@ -512,6 +512,9 @@ void canned_msg(canned_message_type which_message)
     case MSG_BEING_WATCHED:
         mpr(gettext("You feel you are being watched by something."));
         break;
+    case MSG_CANNOT_MOVE:
+        mpr(_("You cannot move."));
+        break;
     }
 }
 
