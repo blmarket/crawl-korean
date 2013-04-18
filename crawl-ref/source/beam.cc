@@ -1729,8 +1729,8 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
         if (doFlavouredEffects)
         {
             simple_monster_message(mons,
-                                   hurted == 0 ? " appears unharmed."
-                                               : " is seared!");
+                                   hurted == 0 ? _(" appears unharmed.")
+                                               : _(" is seared!"));
         }
         break;
     }
@@ -5284,7 +5284,7 @@ void bolt::refine_for_explosion()
         seeMsg  = gettext("The blast explodes into a great storm of ice!");
         hearMsg = gettext("You hear a raging storm!");
 
-        name       = "ice storm";
+        name       = M_("ice storm");
         glyph      = dchar_glyph(DCHAR_FIRED_ZAP);
         colour     = WHITE;
         ex_size    = is_tracer ? 3 : (2 + (random2(ench_power) > 75));

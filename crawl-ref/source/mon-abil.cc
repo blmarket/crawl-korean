@@ -3048,7 +3048,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
                 if (coinflip())
                 {
                 //  behaviour_event(mons, ME_CORNERED);
-                    simple_monster_message(mons, " curls into a ball and rolls away!");
+                    simple_monster_message(mons, _(" curls into a ball and rolls away!"));
                     boulder_start(mons, &beem);
                 }
             }
@@ -3056,7 +3056,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
             else if (one_chance_in(3) &&
                      !adjacent(mons->pos(), beem.target))
             {
-                simple_monster_message(mons, " curls into a ball and starts rolling!");
+                simple_monster_message(mons, _(" curls into a ball and starts rolling!"));
                 boulder_start(mons, &beem);
             }
         }

@@ -187,7 +187,7 @@ SOUND:당신은 까악거리며 우는 소리를 들었다.
 %%%%
 player ghost
 
-VISUAL:@The_monster@ turns @possessive@ malevolent gaze towards you.
+VISUAL:@The_monster@은(는) 당신에게 악의에 찬 눈빛을 보였다.
 %%%%
 Fighter player ghost
 

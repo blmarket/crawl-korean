@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-17 22:27+0900\n"
+"POT-Creation-Date: 2013-04-18 21:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10723,7 +10723,7 @@ msgstr "당신의 마법 오염이 모두 사라졌다."
 #: player.cc:4808 player.cc:4821 player.cc:4826 player.cc:4823
 #, c-format
 msgid "You feel %s contaminated with magical energies."
-msgstr "당신은 마력의 에너지에 의한 오염이 %s을(를) 느꼈다"
+msgstr "당신은 마력의 에너지에 의한 오염이 %s을(를) 느꼈다."
 
 #: player.cc:4668 player.cc:4668 player.cc:4763 player.cc:5010 player.cc:5034
 #: player.cc:4818 player.cc:4831 player.cc:4836 player.cc:4833
@@ -15287,6 +15287,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -21604,7 +21607,7 @@ msgstr "이 지역은 정적으로 가려있다."
 #: directn.cc:3810 directn.cc:3805 directn.cc:3831 directn.cc:3832
 #, c-format
 msgid "There is a cloud of %s here."
-msgstr "여기에는 %s 구름이 떠다닌다."
+msgstr "여기에는 %s이(가) 떠다닌다."
 
 #: directn.cc:3832 directn.cc:3842 directn.cc:3849 directn.cc:3805
 #: directn.cc:3812 directn.cc:3829 directn.cc:3821 directn.cc:1526
@@ -23418,7 +23421,7 @@ msgstr "은(는) 완벽하게 저항했다."
 #: beam.cc:1823 beam.cc:1563 beam.cc:1588 beam.cc:1604 beam.cc:1623
 #: beam.cc:1712 beam.cc:1792 beam.cc:1825 beam.cc:1514 beam.cc:1559
 #: beam.cc:1584 beam.cc:1600 beam.cc:1619 beam.cc:1708 beam.cc:1788
-#: beam.cc:1821
+#: beam.cc:1821 beam.cc:1732
 msgid " appears unharmed."
 msgstr "에게 아무런 손상을 입히지 못했다."
 
@@ -31068,6 +31071,9 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032 decks.cc:1732 decks.cc:2966 decks.cc:3033 decks.cc:2960
@@ -32718,7 +32724,7 @@ msgid "You resist the pull of the Abyss."
 msgstr "당신은 어비스 추방에 저항했다."
 
 #. The shock is too mild to do damage.
-#: player.cc:6964
+#: player.cc:6964 player.cc:6754
 #, c-format
 msgid "%s gives you a mild electric shock."
 msgstr "%s이(가) 당신에게 약한 전기 충격을 주었다."
@@ -34439,11 +34445,11 @@ msgid "%s suddenly disappears!"
 msgstr "%s이(가) 갑자기 사라졌다!"
 
 #. behaviour_event(mons, ME_CORNERED);
-#: mon-abil.cc:2590
+#: mon-abil.cc:2590 mon-abil.cc:3051
 msgid " curls into a ball and rolls away!"
 msgstr "은(는) 몸을 둥그렇게 말아 굴러 도망쳤다!"
 
-#: mon-abil.cc:2598
+#: mon-abil.cc:2598 mon-abil.cc:3059
 msgid " curls into a ball and starts rolling!"
 msgstr "은(는) 몸을 둥그렇게 말아 굴러가기 시작했다!"
 
@@ -36572,7 +36578,7 @@ msgstr "거대한 "
 #, c-format
 msgctxt "splcast"
 msgid "You feel %s %s"
-msgstr "당신은 %s%s"
+msgstr "당신은 %2$s%1$.0s"
 
 #: spl-damage.cc:2351 spl-damage.cc:2349
 msgid "@foe@ @is@ waved at by a branch."
@@ -36827,7 +36833,7 @@ msgid ""
 " here.\n"
 "\n"
 msgstr ""
-" 구름이 떠다닌다.\n"
+"이(가) 떠다닌다.\n"
 "\n"
 
 #: effects.cc:1164 effects.cc:1168
@@ -38327,3 +38333,12 @@ msgstr "%s %s 마법 실패 효과"
 #: main.cc:4200
 msgid "Are you sure you want to stumble around while confused and next to "
 msgstr "정말로 혼란한 상태에서, "
+
+#: beam.cc:1733
+msgid " is seared!"
+msgstr "은(는) 불에 그을렸다!"
+
+#: player.cc:5153
+#, c-format
+msgid "%s rumbles."
+msgstr "%s이(가) 우르릉거리는 소리를 냈다."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-17 22:27+0900\n"
+"POT-Creation-Date: 2013-04-18 21:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12253,6 +12253,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -17834,3 +17836,7 @@ msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다
 #: abl-show.cc:252
 msgid "Evoke Teleport Control"
 msgstr "공간이동 제어 발동"
+
+#: beam.cc:5287
+msgid "ice storm"
+msgstr "맹렬한 냉기의 폭풍"
