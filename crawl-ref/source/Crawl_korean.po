@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-18 21:52+0900\n"
+"POT-Creation-Date: 2013-04-19 19:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9879,7 +9879,7 @@ msgid "It is covered in frost."
 msgstr "무기에 서리가 일기 시작했다."
 
 #: player-equip.cc:603 player-equip.cc:603 player-equip.cc:621
-#: player-equip.cc:623 player-equip.cc:631 player-equip.cc:639
+#: player-equip.cc:623 player-equip.cc:631 player-equip.cc:639 art-func.h:479
 msgid "You feel a bloodthirsty glee!"
 msgstr "피에 굶주린 황홀감이 느껴졌다!"
 
@@ -15287,6 +15287,15 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -27862,7 +27871,7 @@ msgid "A demon appears!"
 msgstr "악마가 나타났다!"
 
 #: spl-summoning.cc:1190 spl-summoning.cc:1018 spl-summoning.cc:1026
-#: spl-summoning.cc:1000
+#: spl-summoning.cc:1000 art-func.h:97
 msgid "You don't feel so good about this..."
 msgstr "왠지 불길한 예감을 느꼈다..."
 
@@ -29127,39 +29136,39 @@ msgstr "제대로 서 있기가 힘들어, 공격을 실패했다."
 msgid "\"Your arrogance condemns you, mortal!\""
 msgstr "\"넌 오만함의 대가를 받을 것이다, 유한한 존재여!\""
 
-#: art-func.h:91
+#: art-func.h:91 art-func.h:91
 msgid "The Sceptre summons one of its servants."
 msgstr "셉터는 자신의 추종자 하나를 소환했다."
 
-#: art-func.h:94
+#: art-func.h:94 art-func.h:100
 msgid "The air shimmers briefly."
 msgstr "주변의 공기가 잠시 희미하게 빛났다."
 
-#: art-func.h:146
+#: art-func.h:146 art-func.h:140
 msgid "A shiver runs down your spine."
 msgstr "떨림이 당신의 척추를 타고 내려갔다."
 
-#: art-func.h:183
+#: art-func.h:183 art-func.h:193
 msgid "You feel the staff feeding on your energy!"
 msgstr "지팡이가 당신의 마력을 충만시키는 것이 느껴졌다!"
 
-#: art-func.h:214
+#: art-func.h:214 art-func.h:218
 msgid "You smell chlorine."
 msgstr "소독약 냄새가 났다."
 
-#: art-func.h:216
+#: art-func.h:216 art-func.h:220
 msgid "The staff glows a sickly green."
 msgstr "지팡이가 기분 나쁜 녹색으로 빛났다."
 
-#: art-func.h:224
+#: art-func.h:224 art-func.h:228
 msgid "The smell of chlorine vanishes."
 msgstr "소독약 냄새가 사라졌다."
 
-#: art-func.h:226
+#: art-func.h:226 art-func.h:230
 msgid "The staff's sickly green glow vanishes."
 msgstr "지팡이의 녹색 빛이 사라졌다."
 
-#: art-func.h:279
+#: art-func.h:279 art-func.h:289
 msgid "You sense an aura of extreme power."
 msgstr "궁극적인 마력의 기운을 느꼈다."
 
@@ -29167,87 +29176,89 @@ msgstr "궁극적인 마력의 기운을 느꼈다."
 msgid "%s says, \"Hi!  I'm the Singing Sword!\""
 msgstr "%은(는) 말했다. \"안녕, 나는 노래하는 검이야!\""
 
-#: art-func.h:306
+#: art-func.h:306 art-func.h:316
 msgid "The Singing Sword hums in delight!"
 msgstr "노래하는 검은 기쁘게 콧노래를 흥얼거리기 시작했다!"
 
-#: art-func.h:314
+#: art-func.h:314 art-func.h:324
 msgid "The Singing Sword sighs."
 msgstr "노래하는 검이 한숨을 쉬었다."
 
-#: art-func.h:313 art-func.h:328
+#: art-func.h:313 art-func.h:328 art-func.h:323 art-func.h:338
 msgid "Singing Sword"
 msgstr "노래하는 검"
 
-#: art-func.h:326
+#: art-func.h:326 art-func.h:336
 msgid "Sulking Sword"
 msgstr "부루퉁해진 검"
 
-#: art-func.h:330
+#: art-func.h:330 art-func.h:340
 msgid "Screaming Sword"
 msgstr "비명지르는 검"
 
-#: art-func.h:365
+#: art-func.h:365 art-func.h:379
 msgid "You feel pruney."
 msgstr "매우 기이하게도, 뜬금없이 자두 생각이 났다."
 
-#: art-func.h:404
+#: art-func.h:404 art-func.h:418
 msgid "You feel bloodthirsty!"
 msgstr "피에 목말라가는것이 느껴졌다!"
 
-#: art-func.h:409
+#: art-func.h:409 art-func.h:423
 msgid "You feel less violent."
 msgstr "마음이 가라앉는것을 느꼈다."
 
-#: art-func.h:458
+#: art-func.h:458 art-func.h:453
 msgid "Magical energy flows into your mind!"
 msgstr "마력 에너지가 당신의 마음속에 넘쳐흘렀다!"
 
-#: art-func.h:479
+#: art-func.h:479 art-func.h:474
 msgid "You feel a strange hunger, and smell blood in the air..."
 msgstr "기묘한 허기가 느껴지고, 공기중에 피비린내가 나기 시작했다..."
 
-#: art-func.h:483
+#: art-func.h:483 art-func.h:481
 msgid "You feel strangely empty."
 msgstr "기묘한 공허감을 느꼈다."
 
-#: art-func.h:515
+#: art-func.h:515 art-func.h:513
 msgid "You sense an extremely unholy aura."
 msgstr "극도로 사악한 기분이 느껴졌다."
 
-#: art-func.h:558
+#: art-func.h:558 art-func.h:556
 msgid "You hear a strange loud sound."
 msgstr "기묘하고 시끄러운 소리가 들렸다."
 
-#: art-func.h:584
+#: art-func.h:584 art-func.h:582
 msgid "A thin mist springs up around you!"
 msgstr "얇은 안개가 당신의 주위에 피어올랐다!"
 
-#: art-func.h:626
+#: art-func.h:626 art-func.h:617
+#, c-format
 msgid "Visions of slaying %s flood into your mind."
 msgstr "%s의 시체가 쌓여가는 모습이 상상되기 시작했다."
 
-#: art-func.h:640
+#: art-func.h:640 art-func.h:629
 msgid "Your confusion fades away as the thirst for blood takes over your mind."
 msgstr "피에 대한 갈망이 마음을 지배하기 시작하자, 혼란스러움은 사라졌다."
 
-#: art-func.h:656
+#: art-func.h:656 art-func.h:645
 msgid "Your thirst for blood fades away."
 msgstr "피에 대한 갈망이 사라져간다."
 
-#: art-func.h:665
+#: art-func.h:665 art-func.h:654
 msgid "You feel an overwhelming desire to commit suicide."
 msgstr "강렬한 자살충동이 느껴졌다."
 
-#: art-func.h:666
+#: art-func.h:666 art-func.h:655
 msgid "You feel an overwhelming desire to slay dragons!"
 msgstr "용을 죽이고 싶은 강렬한 충동이 느껴졌다!"
 
-#: art-func.h:677
+#. can't currently happen even on a death blow
+#: art-func.h:677 art-func.h:671
 msgid "<green>You see the lance glow as it kills you.</green>"
 msgstr "<green>창이 마치 당신을 죽일 듯 빛을 내는 것이 보였다.</green>"
 
-#: art-func.h:695
+#: art-func.h:695 art-func.h:689
 msgid "<green>The lance glows as it skewers the body.</green>"
 msgstr "<green>마치 당신의 몸을 꿰뚫을 듯, 창이 빛나기 시작했다.</green>"
 
@@ -30987,6 +30998,15 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -38342,3 +38362,129 @@ msgstr "은(는) 불에 그을렸다!"
 #, c-format
 msgid "%s rumbles."
 msgstr "%s이(가) 우르릉거리는 소리를 냈다."
+
+#: art-func.h:173
+msgid "You're too close to death to use this item."
+msgstr "당신은 이 아이템을 사용하기엔 죽음과 너무 가까워졌다."
+
+#: art-func.h:312
+msgid "The sword says, \"Hi! I'm the Singing Sword!\""
+msgstr "검이 말했다. \"안녕! 난 노래하는 검이야!\""
+
+#: art-func.h:392
+msgid "A terribly searing pain shoots up your arm!"
+msgstr "끔찍한 고통이 당신의 팔을 타며 작열했다!"
+
+#: art-func.h:439
+msgid "Your reserves of magic are full."
+msgstr "당신의 마력이 가득찼다."
+
+#: art-func.h:701
+#, c-format
+msgid "%s %s blasted by disruptive energy!"
+msgstr "%s은(는) 파열하는 마력으로 온 몸이 격렬하게 경련하였다!%2$.0s"
+
+#: art-func.h:724
+msgid "Time to introduce the shillelagh law."
+msgstr "이 무기의 위력을 시험해 볼 시간이다."
+
+#: art-func.h:738
+msgid "You feel oddly protected from the elements."
+msgstr "원소 공격으로부터, 무언가 낯설게 보호받는 듯한 느낌을 느꼈다."
+
+#: art-func.h:743
+msgid "You no longer feel protected from the elements."
+msgstr "원소 마법으로부터 보호받는 느낌이 사라졌다."
+
+#: art-func.h:757
+msgid "The light fades from your surroundings."
+msgstr "주변이 어두워지기 시작했다."
+
+#: art-func.h:763
+msgid "The light returns to your surroundings."
+msgstr "주위가 다시 밝아졌다."
+
+#: art-func.h:779
+msgid "Mutagenic energy flows through the plutonium sword!"
+msgstr "방사능 검으로부터 돌연변이의 마력이 뿜어져나왔다!"
+
+#: art-func.h:795
+msgctxt "woe"
+msgid "cleave"
+msgstr "두동강냈다"
+
+#: art-func.h:795
+msgctxt "woe"
+msgid " in twain"
+msgstr "을(를) 수직으로 "
+
+#: art-func.h:796
+msgctxt "woe"
+msgid "pulverise"
+msgstr "찢어발겼다"
+
+#: art-func.h:796
+msgctxt "woe"
+msgid " into thin bloody mist"
+msgstr "을(를) 핏빛 안개로 "
+
+#: art-func.h:797
+msgctxt "woe"
+msgid "hew"
+msgstr "갈기갈기 찢어냈다"
+
+#: art-func.h:797
+msgctxt "woe"
+msgid " savagely"
+msgstr "의 온 몸을 "
+
+#: art-func.h:798
+msgctxt "woe"
+msgid "fatally mangle"
+msgstr "을(를) 형체도 알수 없도록 분쇄해버렸다"
+
+#: art-func.h:799
+msgctxt "woe"
+msgid "dissect"
+msgstr "수평으로 두동강냈다"
+
+#: art-func.h:799
+msgctxt "woe"
+msgid " like a pig carcass"
+msgstr "을(를) 마치 종이를 자르듯 "
+
+#: art-func.h:800
+msgctxt "woe"
+msgid "chop"
+msgstr "조각난 육편들로 만들어버렸다"
+
+#: art-func.h:800
+msgctxt "woe"
+msgid " into pieces"
+msgstr "을(를) 한 번에 "
+
+#: art-func.h:801
+msgctxt "woe"
+msgid "butcher"
+msgstr "고깃덩이를 다지듯 박살냈다"
+
+#: art-func.h:801
+msgctxt "woe"
+msgid " messily"
+msgstr "의 몸체를 "
+
+#: art-func.h:802
+msgctxt "woe"
+msgid "slaughter"
+msgstr "손쉽게 베어냈다"
+
+#: art-func.h:802
+msgctxt "woe"
+msgid " joyfully"
+msgstr "을(를) "
+
+#: art-func.h:806
+#, c-format
+msgctxt "woe"
+msgid "%s %s%s %s%s."
+msgstr "%1$s은(는) %4$s%5$s%2$s.%3$.0s"

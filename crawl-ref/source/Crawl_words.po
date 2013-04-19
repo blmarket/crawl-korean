@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-18 21:52+0900\n"
+"POT-Creation-Date: 2013-04-19 19:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12255,6 +12255,12 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -12881,7 +12887,7 @@ msgstr "파편"
 msgid "enslave soul"
 msgstr "영혼 지배"
 
-#: mon-util.cc:3705 mon-util.cc:3708
+#: mon-util.cc:3705 mon-util.cc:3708 mon-util.cc:3916
 msgid "a god"
 msgstr "신"
 
