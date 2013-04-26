@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-19 19:37+0900\n"
+"POT-Creation-Date: 2013-04-26 22:01+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1001,7 +1001,7 @@ msgstr "황제 전갈"
 
 #: mon-data.h:1920 mon-data.h:1921 mon-data.h:1956 mon-data.h:1907
 #: transform.cc:738 transform.cc:786 transform.cc:880 transform.cc:796
-#: transform.cc:897
+#: transform.cc:897 transform.cc:797 transform.cc:898
 msgid "spider"
 msgstr "거미"
 
@@ -1295,7 +1295,7 @@ msgstr "와이번"
 
 #: mon-data.h:2626 mon-data.h:2627 mon-data.h:2701 mon-data.h:2708
 #: transform.cc:765 mon-data.h:2760 transform.cc:813 transform.cc:823
-#: mon-data.h:2796 mon-data.h:2790
+#: mon-data.h:2796 mon-data.h:2790 transform.cc:824
 msgid "dragon"
 msgstr "용"
 
@@ -1484,7 +1484,7 @@ msgstr "셰두"
 
 #: mon-data.h:3111 mon-data.h:3100 mon-data.h:3174 mon-data.h:3193
 #: transform.cc:760 mon-data.h:3246 transform.cc:808 transform.cc:818
-#: mon-data.h:3282 mon-data.h:3278 mon-data.h:3268
+#: mon-data.h:3282 mon-data.h:3278 mon-data.h:3268 transform.cc:819
 msgid "ice beast"
 msgstr "얼음 짐승"
 
@@ -1500,7 +1500,7 @@ msgstr "진흙괴물"
 
 #: mon-data.h:3148 mon-data.h:3137 mon-data.h:3211 mon-data.h:3230
 #: mon-data.h:3283 transform.cc:875 transform.cc:892 mon-data.h:3319
-#: mon-data.h:3315 mon-data.h:3305
+#: mon-data.h:3315 mon-data.h:3305 transform.cc:893
 msgid "jelly"
 msgstr "젤리"
 
@@ -1558,7 +1558,7 @@ msgstr "코볼트 악마술사"
 
 #: mon-data.h:3296 mon-data.h:3285 mon-data.h:3359 mon-data.h:3378
 #: transform.cc:771 mon-data.h:3431 transform.cc:819 transform.cc:829
-#: mon-data.h:3467 mon-data.h:3463 mon-data.h:3453
+#: mon-data.h:3467 mon-data.h:3463 mon-data.h:3453 transform.cc:830
 msgid "lich"
 msgstr "리치"
 
@@ -1996,6 +1996,7 @@ msgstr "하플링"
 #. Gold mimics are the only mimics that actually use their name. - bwr
 #. Gold mimics are the only mimics that actually use their name. - bwr
 #: mon-data.h:4396 mon-data.h:4385 mon-util.cc:971 mon-util.cc:966
+#: mon-util.cc:973
 msgid "pile of gold coins"
 msgstr "금화 미믹"
 
@@ -2293,6 +2294,7 @@ msgstr "주황빛 수정상"
 #: mon-data.h:5171 mon-data.h:5183 mon-data.h:5172 mon-data.h:5129
 #: mon-data.h:5217 transform.cc:750 mon-data.h:5411 transform.cc:798
 #: transform.cc:808 mon-data.h:5447 mon-data.h:5443 mon-data.h:5433
+#: transform.cc:809
 msgid "statue"
 msgstr "석상"
 
@@ -2654,6 +2656,7 @@ msgstr "INVALID MONSTER"
 
 #: mon-data.h:277 mon-data.h:278 mon-data.h:289 mon-data.h:254
 #: transform.cc:777 mon-data.h:244 transform.cc:825 transform.cc:835
+#: transform.cc:836
 msgid "bat"
 msgstr "박쥐"
 
@@ -4697,7 +4700,7 @@ msgstr "어둠"
 #: player-stats.cc:542 itemname.cc:533 player-stats.cc:540 itemname.cc:482
 #: player-stats.cc:210 player-stats.cc:211 itemname.cc:495 player-stats.cc:244
 #: transform.cc:907 player-stats.cc:489 transform.cc:924 itemname.cc:497
-#: itemname.cc:529
+#: itemname.cc:529 transform.cc:925
 msgid "strength"
 msgstr "힘"
 
@@ -4706,7 +4709,7 @@ msgstr "힘"
 #: player-stats.cc:546 itemname.cc:534 player-stats.cc:544 itemname.cc:483
 #: player-stats.cc:212 player-stats.cc:213 itemname.cc:496 player-stats.cc:246
 #: transform.cc:907 player-stats.cc:493 transform.cc:924 itemname.cc:498
-#: itemname.cc:530
+#: itemname.cc:530 transform.cc:925
 msgid "dexterity"
 msgstr "민첩"
 
@@ -7592,7 +7595,7 @@ msgstr "철창"
 #. perhaps M_("mangrove") or such?
 #: directn.cc:2986 directn.cc:2986 directn.cc:2989 directn.cc:2998
 #: directn.cc:2965 directn.cc:2982 transform.cc:886 transform.cc:903
-#: directn.cc:2983
+#: directn.cc:2983 transform.cc:904
 msgid "tree"
 msgstr "나무"
 
@@ -8594,64 +8597,64 @@ msgid "deep water"
 msgstr "깊은 물"
 
 #: player.cc:3831 player.cc:3831 player.cc:3922 player.cc:4014 player.cc:4038
-#: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044
+#: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044 player.cc:4051
 msgid "extremely slow"
 msgstr "극히 느리다"
 
 #: player.cc:3832 player.cc:3832 player.cc:3923 player.cc:4015 player.cc:4039
-#: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045
+#: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045 player.cc:4052
 msgid "very slow"
 msgstr "매우 느리다"
 
 #: player.cc:3833 player.cc:3833 player.cc:3924 player.cc:4016 player.cc:4040
-#: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046
+#: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046 player.cc:4053
 msgid "quite slow"
 msgstr "느리다"
 
 #: player.cc:3834 player.cc:3834 player.cc:3925 player.cc:4017 player.cc:4041
-#: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047
+#: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047 player.cc:4054
 msgid "below average"
 msgstr "평균 이하이다"
 
 #: player.cc:3835 player.cc:3835 player.cc:3926 player.cc:4018 player.cc:4042
-#: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048
+#: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048 player.cc:4055
 msgid "average"
 msgstr "보통이다"
 
 #: player.cc:3836 player.cc:3836 player.cc:3927 player.cc:4019 player.cc:4043
-#: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049
+#: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049 player.cc:4056
 msgid "above average"
 msgstr "평균 이상이다"
 
 #: player.cc:3837 player.cc:3837 player.cc:3928 player.cc:4020 player.cc:4044
-#: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050
+#: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050 player.cc:4057
 msgid "quite fast"
 msgstr "빠르다"
 
 #: player.cc:3838 player.cc:3838 player.cc:3929 player.cc:4021 player.cc:4045
-#: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051
+#: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051 player.cc:4058
 msgid "very fast"
 msgstr "매우 빠르다"
 
 #: player.cc:3839 player.cc:3839 player.cc:3930 player.cc:4022 player.cc:4046
-#: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052
+#: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052 player.cc:4059
 msgid "extremely fast"
 msgstr "극히 빠르다"
 
 #: player.cc:3840 player.cc:3840 player.cc:3931 player.cc:4023 player.cc:4047
-#: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053
+#: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053 player.cc:4060
 msgid "blindingly fast"
 msgstr "번개같이 빠르다"
 
 # 아래 player.cc에서 사용하는 두 단어는 중복가능성이 있으므로
 # 다른 곳에서 참조한다면 나눠야할듯 (deceit, 110817)
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
-#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824
+#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4831
 msgid "more"
 msgstr "더해졌음"
 
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
-#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824
+#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4831
 msgid "less"
 msgstr "줄어들었음"
 
@@ -8665,17 +8668,17 @@ msgid "very "
 msgstr "강한 "
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465
+#: transform.cc:456 transform.cc:465 transform.cc:466
 msgid "paws"
 msgstr "발"
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465
+#: transform.cc:456 transform.cc:465 transform.cc:466
 msgid "front paws"
 msgstr "앞발"
 
 #: transform.cc:404 transform.cc:404 transform.cc:384 transform.cc:428
-#: transform.cc:459 player-act.cc:431 transform.cc:468
+#: transform.cc:459 player-act.cc:431 transform.cc:468 transform.cc:469
 msgid "hands"
 msgstr "손"
 
@@ -12261,6 +12264,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -12887,7 +12892,7 @@ msgstr "파편"
 msgid "enslave soul"
 msgstr "영혼 지배"
 
-#: mon-util.cc:3705 mon-util.cc:3708 mon-util.cc:3916
+#: mon-util.cc:3705 mon-util.cc:3708 mon-util.cc:3916 mon-util.cc:3922
 msgid "a god"
 msgstr "신"
 
@@ -13027,7 +13032,7 @@ msgid "App"
 msgstr "야수"
 
 #: status.cc:845 status.cc:909 transform.cc:794 status.cc:888 transform.cc:842
-#: transform.cc:852 status.cc:893 status.cc:894
+#: transform.cc:852 status.cc:893 status.cc:894 transform.cc:853
 msgid "appendage"
 msgstr "야수화"
 
@@ -13215,12 +13220,12 @@ msgstr "희생의 두루마리"
 # msgid "fiery explosion"
 # msgstr ""
 #: effects.cc:364 effects.cc:368 effects.cc:378 food.cc:1817 food.cc:1818
-#: food.cc:1916 food.cc:1919 food.cc:1926 food.cc:1928
+#: food.cc:1916 food.cc:1919 food.cc:1926 food.cc:1928 food.cc:1930
 msgid "mutagenic meat"
 msgstr "돌연변이 유발 고기"
 
 #: food.cc:2177 food.cc:2178 food.cc:2285 food.cc:2288 food.cc:2295
-#: food.cc:2287
+#: food.cc:2287 food.cc:2299
 msgid "mutagenic blood"
 msgstr "돌연변이 "
 
@@ -13687,7 +13692,7 @@ msgstr "밀어낸 계단"
 msgid "Mass Abjuration"
 msgstr "해방의 선서"
 
-#: transform.cc:787 transform.cc:835 transform.cc:845
+#: transform.cc:787 transform.cc:835 transform.cc:845 transform.cc:846
 msgid "pig"
 msgstr "돼지"
 
@@ -13835,7 +13840,7 @@ msgid "talons"
 msgstr "발톱"
 
 #: mutation-data.h:837 transform.cc:427 transform.cc:458 player-act.cc:465
-#: transform.cc:467
+#: transform.cc:467 transform.cc:468
 msgid "tentacles"
 msgstr "촉수"
 
@@ -17212,7 +17217,7 @@ msgstr "힘의 창살"
 msgid "blast of energy"
 msgstr "마력의 폭발"
 
-#: transform.cc:892 transform.cc:909
+#: transform.cc:892 transform.cc:909 transform.cc:910
 msgid "wisp"
 msgstr "위습"
 
@@ -17843,6 +17848,6 @@ msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다
 msgid "Evoke Teleport Control"
 msgstr "공간이동 제어 발동"
 
-#: beam.cc:5287
+#: beam.cc:5287 beam.cc:5291
 msgid "ice storm"
 msgstr "맹렬한 냉기의 폭풍"

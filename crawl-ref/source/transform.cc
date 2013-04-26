@@ -111,7 +111,8 @@ bool form_has_mouth(transformation_type form)
 {
     return form != TRAN_TREE
         && form != TRAN_WISP
-        && form != TRAN_JELLY;
+        && form != TRAN_JELLY
+        && form != TRAN_FUNGUS;
 }
 
 bool form_can_butcher_barehanded(transformation_type form)
@@ -320,25 +321,22 @@ static bool _mutations_prevent_wearing(const item_def& item)
 static void _unmeld_equipment_type(equipment_type e)
 {
     item_def& item = you.inv[you.equip[e]];
+    bool force_remove = false;
 
-    if (item.base_type == OBJ_JEWELLERY)
-        unmeld_slot(e);
-    else if (e == EQ_WEAPON)
+    if (e == EQ_WEAPON)
     {
         if (you.slot_item(EQ_SHIELD)
             && is_shield_incompatible(item, you.slot_item(EQ_SHIELD)))
         {
-            mpr(item.name(true, DESC_YOUR) + " is pushed off your body!");
-            unequip_item(e);
+            force_remove = true;
         }
-        else
-            unmeld_slot(e);
     }
-    else
+    else if (item.base_type != OBJ_JEWELLERY)
     {
         // In case the player was mutated during the transformation,
         // check whether the equipment is still wearable.
-        bool force_remove = _mutations_prevent_wearing(item);
+        if (_mutations_prevent_wearing(item))
+            force_remove = true;
 
         // If you switched weapons during the transformation, make
         // sure you can still wear your shield.
@@ -348,15 +346,18 @@ static void _unmeld_equipment_type(equipment_type e)
         {
             force_remove = true;
         }
+    }
 
-        if (force_remove)
-        {
-            mprf(gettext("%s is pushed off your body!"),
-                 item.name(true, DESC_YOUR).c_str());
-            unequip_item(e);
-        }
-        else
-            unmeld_slot(e);
+    if (force_remove)
+    {
+        mprf(_("%s is pushed off your body!"), item.name(true, DESC_YOUR).c_str());
+        unequip_item(e);
+    }
+    else
+    {
+        // if (item.base_type != OBJ_JEWELLERY)
+        mprf(_("%s unmelds from your body."), item.name(true, DESC_YOUR).c_str());
+        unmeld_slot(e);
     }
 }
 
