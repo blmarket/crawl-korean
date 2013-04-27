@@ -22,19 +22,19 @@ function ossuary_portal(e)
       -- $F{xxx} will be substituted with the 'entity' property of the timed
       -- marker, or with the desc property (if entity is not set).
       messages = time_messages(timeout_turns_short,
-          "Nearby sand pours into $F{the}.",
-          "Nearby sand pours into $F{the}, lightly covering it.",
-          "Nearby sand pours into $F{the}, greatly covering it.",
-          "Nearby sand pours into $F{the}, almost completely blocking access.")
+          "모래가 $F{the}(으)로부터 퍼져 나오고있다.", 
+          "모래가 $F{the}(으)로부터 퍼져 나와, 주변에 약간 쌓여 있다.", 
+          "모래가 $F{the}(으)로부터 퍼져 나와, 주변에 깊이 쌓여 있다.", 
+          "모래가 $F{the}(으)로부터 퍼져 나와, 입구를 거의 가려가고 있다.")
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The staircase has disappeared completely beneath the sand.",
-        desc = "sand-covered staircase",
-        entity = 'staircase',
+        disappear = "모래가 내려가는 계단을 완전히 덮어버렸다.",
+        desc = "모래 덮인 계단",
+        entity = '계단',
         dst = "Ossuary",
-        overview = "sand-covered staircase",
+        overview = "모래 덮인 계단",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "expired_portal",
@@ -541,9 +541,9 @@ SUBST:   EFKGHL : d
 SUBST:   CDJ = 1112
 MONS:    generate_awake zombie place:D:6 /\
          w:5 generate_awake mummy
-MONS:    plant col:darkgrey name:withered n_adj tile:mons_withered_plant /\
-         bog body hd:3 spells:throw_frost;slow;corpse_rot name:decayed n_adj n_noc /\
-         w:5 plant col:lightgrey name:withered n_adj tile:mons_withered_plant /\
+MONS:    plant col:darkgrey name:메마른 n_adj tile:mons_withered_plant /\
+         bog body hd:3 spells:throw_frost;slow;corpse_rot name:메마른 n_adj n_noc /\
+         w:5 plant col:lightgrey name:메마른 n_adj tile:mons_withered_plant /\
          w:5 nothing
 ITEM:    any potion / any scroll / any jewellery w:1
 : ossuary_setup_features(_G)
@@ -683,7 +683,7 @@ ITEM:    any scroll / any potion / nothing
 KITEM:   x = any scroll / any potion
 KMONS:   x = guardian mummy
 : ossuary_setup_features(_G)
-: crawl.mpr("You feel the presence of a powerful and evil guardian...", "warning")
+: crawl.mpr("강력하고 사악한 수호자의 존재를 느꼈다...", "warning")
 MAP
 ccccccccccccccccccccccccccccc
 ccccccccccccccccccccccccccccc
@@ -1038,4 +1038,71 @@ c2..A.<.+.............+~<~c
 cc......c.............c~~~c
 c2.cccccccc1ccc1ccc1ccccccc
 cccc      ccc ccc ccc
+ENDMAP
+
+NAME: ossuary_deceit_water_processing
+WEIGHT: 3
+ORIENT: encompass
+TAGS:   ossuary no_item_gen no_monster_gen
+MONS:   rat zombie / grey rat zombie / ball python zombie / adder zombie / kobold zombie / goblin zombie / hobgoblin zombie / giant gecko zombie
+MONS:   gnoll zombie / big kobold zombie / iguana zombie / hound zombie / green rat zombie / water moccasin zombie
+MONS:   ogre zombie / human zombie / elf zombie / yak zombie / war dog zombie / killer bee zombie
+MONS:   mummy / necrophage w:3
+MONS:   guardian mummy
+LROCKTILE:  wall_brick_vines
+TILE:       G = dngn_sarcophagus_pedestal_left
+ITEM:   any scroll / any potion / nothing w:5
+ITEM:   any scroll q:2 w:3 / any potion q:2 w:3 / any wand w:7 / any jewellery w:4
+KFEAT:  ~ = dart trap / arrow trap / needle trap w:3 / floor w:49
+KFEAT:  ) = teleport trap
+: ossuary_setup_features(_G)
+: set_feature_name("granite_statue", "추모글이 씌여진 석관")
+MAP
+ccccccc   ccccccc   ccccccc   ccccccc   ccccccc
+c<....c   c.....c   c.....c   c..W..c   cW.2.<c
+c.AW..ccccc.1W1.ccccc.W1W.ccccc.1W2.ccccc.W.Wdc
+c.WGW.+~~~+.WWW.+~~~+.1W1.+~~~+..W..+~~~+.1W2dc
+c..W..ccccc.1W1.ccccc.W1W.ccccc.1W2.ccccc.W.Wdc
+c.....cc  c.....c   c.....c   c..W..c  ccW.2.Wc
+ccc+cc=cc ccccccc   ccc=ccc   ccc=ccc cc=cc=ccc
+  c~cccdc             c.c       c.c   cdccc~c  
+  c~c ccc             c.c       c~c   ccc c~c  
+  c~c                 c~c       c.c       c~c
+ccc+ccc               c~c     ccc+ccc   ccc+ccc
+c.....c               c.c     c.....c   c.....c
+c.1W1.c     ccc       c4c     cW3.3Wc   cW111Wc
+c.WWW.c     cecc      c.c     cWW.WWc   cW1W1Wc
+c.1W1.c     cc+cccc   c~c     cW3.3Wc   cW111Wc
+c.....c      ccddWc   c~c    cc.....c   c.....c
+ccc+ccc       cd4Wc   c.c   cc=cccccc   ccc+ccc
+  c~c         cWW.cc  c.c  cc4cc          c~c
+  c~c         cccc=cccc+cccc=cc           c~c
+  c~c            cc~.......~cc            c~c
+ccc+ccc           c..WWWWW..c           ccc+ccc
+c.....c           c.WW.1.WW.c           c.....c
+c.W1W.ccccccccccccc.W.WWW.W.c           c.2.2.c
+c.1W1.=..~~.4.~~..+.W1W5W1W~c           c..3..c
+c.W1W.ccccccccccccc.W.WWW.W.c           c.WWW.c
+c.....c           c.WW.1.WW.c           cWW.WWc
+ccc+ccc           c..WWWWW..c           ccc+ccc
+  c~c            cc~...~...~cc            c~c
+  c~c           cc=ccccccccc=cccc         c~c
+  c~c          cc4cc       cc.WWc         c~c
+ccc+ccc   cccccc=cc         cW4dc       ccc+ccc
+c.....c   c.WWW.cc          cWddcc     ccW....c
+c.1.1.ccccc.3W3.c           cccc+cc   ccW...2.c
+cWWWWW=.~.+.....c              ccec  ccW..2WWWc
+c.2.2.ccccc.3W3.c               ccc ccW1..WW..c
+c.....c   c.WWW.c                  ccW....W..1c
+ccc+ccc   ccccccc                 ccW3.cc~W~ccc
+  c~c                            ccW3.+dc.W.c
+  c~c ccc                       ccW..+ddc~W~c  
+  c~cccdc                      ccW1.cdddcWW.c  
+ccc+cc=cc ccccccc   ccccccc   ccW...cccccW.~ccc
+cW...Wcc  c.WWW.c   c....Wc   cW2...~.~WWW..1)c
+c.W1W.ccccc.111.ccccc.2.WWccccc...WWWWWW..W1).c
+c2.W.2=~~~+.1W1.+~~~+..3W.+~~~+..WW.~.~.~.1)WWc
+c.W2W.ccccc.111.ccccc.2.WWccccc..W..ccccc1)WWec
+c<dddWc   c.WWW.c   c....Wc   c.2W.1c   c).Weec
+ccccccc.. ccccccc   ccccccc   ccccccc   ccccccc
 ENDMAP

@@ -24,7 +24,7 @@ function callback.cloud_trap_stepped(data, triggerable, triggerer, marker, ev)
   end
 
     -- TODO: Randomize "coloured"
-  local cloud_message = data.cloud_message or "A coloured vial drops from a hatch in the ceiling!"
+  local cloud_message = data.cloud_message or "천장의 틈새에서 유리병 하나가 떨어져내렸다!"
   local cloud_type = data.cloud_type or "thin mist"
   local walk_dist = 0
   local pow_min = 1

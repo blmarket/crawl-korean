@@ -54,9 +54,9 @@
 
     -- third parameter is whether to teleport whatever is on the reciving pad
     if you.teleport_to(my_slaves[1].x, my_slaves[1].y, false) then
-      crawl.mpr("Your surroundings suddenly seem different!")
+      crawl.mpr("주변의 모습이 갑자기 변화했다!")
     else
-      crawl.mpr("There is a strange hissing noise.")
+      crawl.mpr("긁는 듯한 이상한 소리가 들려왔다.")
     end
   end
 
@@ -144,7 +144,7 @@ WEIGHT:   5
 TAGS:     serial_teleporters_simple allow_dup luniq_teleport_statue
 TAGS:     layout_rooms layout_basic layout_misc transparent mini_float
 DEPTH:    D:6-, Elf, !Elf:$, Crypt, !Crypt:$, Zot, !Zot:$
-MONS:     statue tile:mons_statue_mage name:wizard n_adj; \
+MONS:     statue tile:mons_statue_mage name:마법사 n_adj; \
           spells:.;teleport_other;.;.;.;.
 MAP
 ...
@@ -157,7 +157,7 @@ WEIGHT:   3
 TAGS:     serial_teleporters_simple luniq_teleport_statue transparent
 TAGS:     layout_rooms layout_basic layout_misc mini_float
 DEPTH:    D:6-, Elf, !Elf:$, Crypt, !Crypt:$, Zot, !Zot:$
-MONS:     statue tile:mons_statue_mage name:wizard n_adj; \
+MONS:     statue tile:mons_statue_mage name:마법사 n_adj; \
           spells:.;teleport_other;.;.;.;.
 MAP
    .   .
@@ -183,7 +183,7 @@ ITEM:     any scroll / scroll of blinking / scroll of teleportation
 ITEM:     any scroll q:2 / scroll of blinking q:2 / scroll of teleportation q:2
 ITEM:     any jewellery w:20 / amulet of stasis /\
           ring of teleportation w:20 / ring of teleport control
-MONS:     statue tile:mons_statue_mage name:wizard n_adj; \
+MONS:     statue tile:mons_statue_mage name:마법사 n_adj; \
           spells:.;teleport_other;.;.;.;.
 MAP
 .........
@@ -512,7 +512,7 @@ NSUBST:   K = 1:^ / *:.
 SUBST:    LMN = .
 NSUBST:   P = 1:P / 1:q / 1:R / *:r
 NSUBST:   p = 1:p / 1:Q / 1:S / *:s
-MONS:     statue tile:mons_statue_mage name:wizard n_adj; \
+MONS:     statue tile:mons_statue_mage name:마법사 n_adj; \
           spells:.;teleport_other;.;.;.;.
 : teleporter_serial_init(_G, 'P', 'p', 1001)
 : teleporter_serial_init(_G, 'Q', 'q', 1002)

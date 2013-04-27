@@ -23,19 +23,19 @@ function sewer_portal(e)
       -- $F{xxx} will be substituted with the 'entity' property of the timed
       -- marker, or with the desc property (if entity is not set).
       messages = time_messages(timeout_turns/10,
-                               "$F{The} is slowly rusting away.",
-                               "$F{The} is rusting away.",
-                               "$F{The} is quickly rusting away.",
-                               "$F{The} is falling apart.")
+                               "$F{The}은(는) 천천히 부식되어 사라지고있다.",
+                               "$F{The}은(는) 부식되어 사라지고있다.",
+                               "$F{The}은(는) 급속히 부식되어 사라지고있다.",
+                               "$F{The}은(는) 무너져 내리고 있다.") 
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The drain falls to bits.",
-        desc = "glowing drain",
+        disappear = "배수로는 무너져 사라졌다.", 
+        desc = "반짝이는 배수로", 
         entity = 'drain',
         dst = "Sewer",
-        overview = "glowing drain",
+        overview = "반짝이는 배수로", 
         turns = timeout_turns,
         floor = "expired_portal",
         feat_tile = "dngn_portal_sewer_rusted",
@@ -817,8 +817,8 @@ NAME:   sewer_sea
 TAGS:   no_item_gen no_monster_gen no_rotate no_pool_fixup
 ORIENT: encompass
 MONS:   rat w:3 / grey rat w:1 / nothing w:1, rat / grey rat / green rat
-KMONS:  G = mermaid hd:3 name:malarious name_adjective name_species
-KMONS:  H = siren hd:3 name:sickly name_adjective name_species
+KMONS:  G = mermaid hd:3 name:감염된 name_adjective name_species
+KMONS:  H = siren hd:3 name:연약한 name_adjective name_species
 KMONS:  hJ = giant newt / ball python / adder / nothing w:2
 KMONS:  g = giant newt / ball python / giant mite / giant cockroach / \
             giant gecko / nothing w:7
@@ -1206,4 +1206,93 @@ xxxxxwwwwwwwwwwwwwwwwwwwwwwxxxxxX..PB.2.Xxxx
 xxxxxYwwwwwwwwwwwwwwwwwwwwYxxxxxX.2..e..Xxxx
 xxxxxxYwwwwwwYYYYwwwYYYwwYxxxxxxxX.....Xxxxx
 xxxxxxxYYYxYYxxxxYYYxxxYYxxxxxxxxxxXXXxxxxxx
+ENDMAP
+
+###############################################################
+# Spiral Sewers. by DECEIT.
+
+NAME:    sewer_deceit_spiral
+TAGS:    no_item_gen no_monster_gen no_pool_fixup
+WEIGHT:  2
+ORIENT:  encompass
+COLOUR:  w = green
+COLOUR:  W = lightgreen
+KFEAT:   1 = W
+COLOUR:  1 = lightgreen
+KMONS:   1 = giant newt / ball python / generate_awake ball python w:5 / \
+         adder w:7 / big fish w:5 / nothing w:18
+KFEAT:   2 = w
+COLOUR:  2 = green
+KMONS:   2 = big fish / giant goldfish w:1 / nothing w:8
+KMONS:	 3 = kobold / grey rat w:6 / ooze w:6 / green rat w:3 / big kobold w:3 /\
+             nothing w:7
+KMONS:   4 = Purgy
+KFEAT:   5 = W
+COLOUR:  5 = lightgreen
+KMONS:   5 = siren hd:3 hp:25 name:연약한 name_adjective name_species
+KMONS:   6 = plant
+KITEM:  e = potion of flight w:9 / potion of poison w:6 /\ 
+            potion of degeneration w:3 / potion of restore abilities w:2 /\
+            scroll of identify w:5 / potion of curing w:2 /\
+            scroll of noise w:2 / scroll of random uselessness w:5 /\
+	    scroll of remove curse w:2 / scroll of curse armour w:2 /\
+	    scroll of curse jewellery w:2 / scroll of curse weapon w:2
+KITEM:  f = potion of curing w:8 / potion of heal wounds w:6 / potion of might w:4 /\
+        potion of magic w:4 / potion of speed w:3 / potion of brilliance w:3 /\
+        scroll of teleportation w:7 / scroll of fear w:4 / scroll of fog w:3 /\
+        scroll of blinking w:3 / scroll of magic mapping w:3 /\
+        scroll of recharging w:2 / scroll of amnesia w:1 / scroll of acquirement w:1
+KITEM:  g = potion of flight
+KITEM:   ! = any jewellery
+SUBST:   . = ....................6
+: sewer_setup(_G)
+MAP
+xxxxxxxxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxxxwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxxwwwWwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxxwwwWWWwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+xxxxxxxxxxxwwWWW.Wwwwwwwwxxxxxxxwwwwwwwwwwwwwwww
+xxxxxxxxxxwwWW.f!5WWwwwxxxxxxxxxxxxwwwwwwwwwwwww
+xxxxxxxxxxWWW.fff.Wwwxxxxxxxxxxxxxxxxxwwwwwwwwww
+xxxxxxxxxWW..fff.WWxxxxxxxxxxxxxxxxxxxxxwwwwwwww
+xxxxxxxxwW..fff.Wwxxxxxxxxxxxxxxxxxxxxxxxwwwwwww
+xxxxxxxxwW...f..WxxxxxxxwwWwwxxxxxxxxxxxxxwwwwww
+xxxxxxxxW......WxxxxxxwwW111Wwxxxxxxxxxxxxxwwwww
+xxxxxxxwW..3..WxxxxxwW1.......1Wxxxxxxxxxxxwwwww
+xxxxxxxwW....WwxxxxwW.3.........Wwxxxxxxxxxxwwww
+xxxxxxxWW....Wxxxxw...1WWWWW.....WWxxxxxxxxxxwww
+xxxxxxxW.....Wxxx2W..WxxxxxwW1.....Wxxxxxxxxxwww
+xxxxxxxW..3.1wxxx1..1xxxxxxxx2W....Wwxxxxxxxxwww
+xxxxxxxW....WwxxxW.Wxxw1WWwxxxxW..3.Wwxxxxxxxxww
+xxxxxxxW1...WwxxwWWxxwWwwW1WxxxwW....Wxxxxxxxxww
+xxxxxxx2W...WwxxwWWxwWwxxxwWWxxx1....Wwxxxxxxxww
+xxxxxxxwW....WxxwWWxx1xW1wxWWwxxwW3...Wxxxxxxxxw
+wxxxxxxx1..4.1xxxWWwxW1xw1xW.WxxxW....1xxxxxxxxw
+wxxxxxxxW....WwxxwWWwxxxwWx13WxxxW....Wxxxxxxxxw
+wwxxxxxxw.....WxxxwWW2wWWWxW.Wxxx1....Wwxxxxxxxw
+wwxxxxxxxW....WwxxxwWWWWwxxW.WxxxW....1wxxxxxxxx
+wwxxxxxxxwW....1wxxxwWWwxxW..wxxxW.....Wxxxxxxxx
+wwwxxxxxxxwW..3.WWwxxxxxwW..1xxxxW..3..Wxxxxxxxx
+wwwwxxxxxxxW......WWWwwWW..WwxxxxW....1wxxxxxxxx
+wwwwxxxxxxxxW..........3...WxxxxwW....Wwxxxxxxxx
+wwwwwxxxxxxxxwW..........WWxxxxxWw....Wxxxxxxxxx
+wwwwwwxxxxxxxxwW1WW...WWW2xxxxxwW.....Wxxxxxxxxx
+wwwwwwwxxxxxxxxxwwwWWWwwxxxxxxxWW.....Wxxxxxxxxx
+wwwwwwwwxxxxxxxxxxxxxxxxxxxxxxwW..e..Wwxxxxxxxxx
+wwwwwwwwwxxxxxxxxxxxxxxxxxxxxwWW.egeWWwxxxxxxxxx
+wwwwwwwwwwwxxxxxxxxxxxxxxxxwwWW.ege.Wwxxxxxxxxxx
+wwwwwwwwwwwwxxxxxxxxxxxxxwWWW<W..e.WWxxxxxxxxxxx
+wwwwwwwwwwwwwwxxxxxxxxwwwwwWWWA..WWWxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwww2wwWW.WWwwxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwWWWwwxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwww2Wwwxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxxxxxx
+wwwwwwwwwwwwwwwwwwwwwwwwwwwxxxxxxxxxxxxxxxxxxxxx
 ENDMAP

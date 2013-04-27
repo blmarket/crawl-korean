@@ -150,7 +150,7 @@ function init_aquarium(e)
     e.kmons('_ = w:' .. nothing_weight .. [[ nothing /
                  w:4  generate_awake ice beast /
                  w:1  generate_awake bat simulacrum
-                      name:ice_bat n_rpl n_des n_spe n_zom /
+                      name:얼음_박쥐 n_rpl n_des n_spe n_zom /
                  w:1  generate_awake red wasp simulacrum /
                  w:1  generate_awake orc simulacrum /
                  w:1  generate_awake yaktaur simulacrum /

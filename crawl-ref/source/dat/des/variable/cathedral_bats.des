@@ -18,7 +18,7 @@ function callback.cathedral_bats (data, triggerable, triggerer, marker, ev)
   if dgn.mons_at(x, y) then return end
 
   if (not dgn.create_monster(x, y,
-          "generate_awake bat name:megabat n_rpl n_spe n_des n_noc tile:mons_megabat / " ..
+          "generate_awake bat name:거대_박쥐 n_rpl n_spe n_des n_noc tile:mons_megabat / " ..
           "generate_awake w:2 fire bat")) then
     return
   end
@@ -26,7 +26,7 @@ function callback.cathedral_bats (data, triggerable, triggerer, marker, ev)
   data.bat_count = data.bat_count + 1
 
   if you.see_cell(x, y) then
-    crawl.mpr("A bat flies out of a crevice!")
+    crawl.mpr("틈 안으로 박쥐 한마리가 날아올랐다!")
   end
 end
 }}

@@ -17740,7 +17740,7 @@ msgid "autumn katana"
 msgstr "가을 카타나"
 
 msgid "shillelagh \"Devastator\""
-msgstr "몽둥이 \"완전한 파괴\""
+msgstr "막대기 \"완전한 파괴\""
 
 msgid "dragonskin cloak"
 msgstr "용가죽 망토"

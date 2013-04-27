@@ -95,19 +95,19 @@ function wizlab_portal (e)
             -- $F{xxx} will be substituted with the 'entity' property of the timed
             -- marker, or with the desc property (if entity is not set).
             messages = time_messages(timeout_turns_short,
-                            "$F{The} shimmers.",
-                            "$F{The} vibrates and hums gently.",
-                            "$F{The} is slightly opaque.",
-                            "$F{The} is almost invisible now.")
+                            "$F{The}이(가) 약하게 빛나기 시작했다.",
+                            "$F{The}이(가) 살며시 진동하기 시작했다.", 
+                            "$F{The}은(는) 살짝 투명해졌다.",
+                            "$F{The}이(가) 거의 사라져 형체를 잃어가고 있다.")
     }
 
     e.lua_marker('O',
       timed_marker {
-        disappear = "The portal disappears completely.",
-        desc = "magical portal",
+        disappear = "관문이 완전히 사라졌다.", 
+        desc = "마법의 관문",
         entity = 'portal',
         dst = 'WizLab',
-        overview = "magical portal",
+        overview = "마법의 관문",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "stone_arch",
@@ -124,14 +124,14 @@ function wizlab_setup (e, wizlab_desc)
     e.kfeat("< = exit_portal_vault")
     e.tile("< = no_random dngn_portal_wizard_lab")
     -- This is so that the note shows up properly.
-    e.set_feature_name("exit_portal_vault", "portal leading out of here")
+    e.set_feature_name("exit_portal_vault", "밖으로 나가는 관문")
     if wizlab_desc ~= "Eringya's Formal Garden" then
-      e.set_feature_name("stone_arch", "empty arch of stone")
+      e.set_feature_name("stone_arch", "텅 빈 아치형 돌무더기")
     end
 end
 
 function wizlab_milestone (e, wizlab_desc)
-    crawl.mark_milestone("br.enter", "entered " .. wizlab_desc .. ".", "parent")
+    crawl.mark_milestone("br.enter", wizlab_desc .. "에 입장.", "parent")
 end
 
 function tukima_machine (data, triggerable, triggerer, marker, ev)
@@ -144,9 +144,9 @@ function tukima_machine (data, triggerable, triggerer, marker, ev)
 
   if data.weapon_count >= 5 then
     if you.see_cell(x, y) then
-      crawl.mpr("The machine makes a dull noise.")
+      crawl.mpr("기계에서 둔탁한 소음이 들렸다.")
     else
-      crawl.mpr("You hear a distant, dull noise.")
+      crawl.mpr("멀리서 무언가 둔탁한 소음이 들려왔다.")
     end
     return
   end
@@ -163,9 +163,9 @@ function tukima_machine (data, triggerable, triggerer, marker, ev)
   data.weapon_count = data.weapon_count + 1
 
   if you.see_cell(x, y) then
-    crawl.mpr("The machine hisses, and spits out a dancing weapon!")
+    crawl.mpr("기계에서 찢어지는 듯한 소리와 함께, 날아다니는 무기들이 튀어나왔다!")
   else
-    crawl.mpr("You hear a distant hissing noise.")
+    crawl.mpr("멀리서 찢어지는 듯한 소음이 들렸다.")
   end
 end
 
@@ -188,7 +188,7 @@ function wizlab_eringya_grow(data, triggerable, triggerer, marker, ev)
       end
     end
     if count > 0 then
-      crawl.mpr("Fruit sprouts up around you!")
+      crawl.mpr("주위에 과일들이 자나랐다!")
     end
   else
     for spot in iter.adjacent_iterator() do
@@ -199,7 +199,7 @@ function wizlab_eringya_grow(data, triggerable, triggerer, marker, ev)
       end
     end
     if count > 0 then
-      crawl.mpr("Toadstools sprout up around you!")
+      crawl.mpr("주위에 버섯들이 자라났다!")
     end
   end
 end
@@ -213,22 +213,22 @@ function wizlab_doroklohe_convert_boxes(data, triggerable, triggerer,
   if data.phase == 1 then
     data.phase = data.phase + 1
     if you.silenced() then
-      crawl.mpr("The ground shakes.", "warning")
+      crawl.mpr("땅이 흔들렸다.", "warning")
     else
-      crawl.mpr("There is a faint hissing noise.", "warning")
+      crawl.mpr("희미하면서도 째지는 듯한 소음이 들렸다.", "warning")
     end
     return
   elseif data.phase == 2 then
     data.phase = data.phase + 1
     if you.silenced() then
-      crawl.mpr("The ground shakes.", "warning")
+      crawl.mpr("땅이 흔들렸다.", "warning")
     else
-      crawl.mpr("There is a loud grinding noise.", "warning")
+      crawl.mpr("무엇인가 갈려나가는 요란스러운 소음이 들렸다.", "warning")
     end
     return
   elseif data.phase == 3 then
     data.phase = data.phase + 1
-    crawl.mpr("The walls fall away. The entombed are set free!", "warning")
+    crawl.mpr("갑자기 벽이 무너져내렸고, 갇혀 있던 존재들이 뛰쳐나왔다!", "warning")
     for _, i in ipairs(dgn.find_marker_positions_by_prop("wall_drop", 1)) do
       dgn.terrain_changed(i.x, i.y, "floor", false, false, false)
       dgn.place_cloud(i.x, i.y, "black smoke", 2)
@@ -282,9 +282,9 @@ function wizlab_zonguldrok_killed_zombie(data, triggerable, triggerer,
         dgn.terrain_changed(x, y, "closed_door", false, false, false)
         data.door_appeared = true
         if you.see_cell(x, y) then
-            crawl.mpr("A door appears!")
+            crawl.mpr("문이 나타났다!")
         else
-            crawl.mpr("The walls vibrate.")
+            crawl.mpr("벽이 진동했다.")
         end
     end
 end
@@ -297,7 +297,7 @@ function wizlab_zonguldrok_awaken_wizard(data, triggerable,
 
     local pos = dgn.find_marker_positions_by_prop("wizard_grave", 1)[1]
     local lich = dgn.create_monster(pos.x, pos.y, "generate_awake ancient lich "
-                 .."col:brown name:antique_lich name_replace name_descriptor"
+                 .."col:brown name:존굴드로크의_리치 name_replace name_descriptor"
                  .." tile:mons_zonguldrok_lich")
     if lich then
         data.awoke = true
@@ -318,31 +318,31 @@ function wizlab_wucad_msgfn(data, triggerable, triggerer, marker, ev)
   end
 
   if data.spot == 1 then
-    crawl.mpr("Strange, shadowy figures dance through the air in front of you.", "talk_visual")
+    crawl.mpr("기이한 그림자 형체들이 눈 앞에서 춤추듯 나타났다가 곧 사라졌다.", "talk_visual")
     data.trig = true
   elseif data.spot == 2 then
-    crawl.mpr("This room is filled with shadowy figures, quietly meditating.", "talk_visual")
+    crawl.mpr("이 방은 그림자의 형체들로 사라졌다. 꼭 명상을 하고 있는 모습이다.", "talk_visual")
     data.trig = true
   elseif data.spot == 3 then
-    crawl.mpr("Here, spectral monks perform complicated, martial routines; they fade quickly.", "talk_visual")
+    crawl.mpr("유령 수도승들이 꼭 무술과 같은 복잡한 자세를 취하다가, 순식간에 사라져 없어졌다.", "talk_visual")
     data.trig = true
   elseif data.spot == 4 then
     if you.silenced() then
       return
     end
-    crawl.mpr("Faint laughter comes from somewhere. Too faint to be real.", "talk_visual")
+    crawl.mpr("어디선가 희미한 웃음소리가 들려왔다. 너무 희미해, 진짜였는지 환청이었는지도 헷갈린다.", "talk_visual")
     data.trig = true
   elseif data.spot == 5 then
     if you.silenced() then
       return
     end
-    crawl.mpr("There is a faint scream of pain from a crouched figure. This too fades quickly.", "talk_visual")
+    crawl.mpr("희미한 고통의 비명이 쭈그리고 앉은 형상으로부터 새어나왔다. 이 소리 역시, 빠르게 사라졌다.", "talk_visual")
     data.trig = true
   elseif data.spot == 6 then
-    crawl.mpr("Grey monks gather around the fountain. They do not speak, nor look at each other.", "talk_visual")
+    crawl.mpr("회색빛의 수도승들이 분수 주변을 돌아다닌다. 그들은 아무 말도 하지 않고, 서로를 쳐다보지도 않는다.", "talk_visual")
     data.trig = true
   elseif data.spot == 7 then
-    crawl.mpr("A figure sits in silent meditation. It spots you, gestures wildly, and disappears.", "talk_visual")
+    crawl.mpr("석상 하나가 자리에 앉고 조용히 명상을 시작한다. 이것은 당신을 가리키고는, 격렬한 손동작을 취하고, 곧 사라졌다.", "talk_visual")
     data.trig = true
   end
 end
@@ -363,10 +363,10 @@ function wizlab_wucad_summon_monks(data, triggerable, triggerer, marker, ev)
     return
   end
 
-  local msp = "human name:monk n_suf col:white hd:10 dur:2 sum:shadow_creatures" ..
-            " nas:old_memories tile:mons_human_monk seen / deep troll name:monk n_suf"..
+  local msp = "human name:수도승 n_suf col:white hd:10 dur:2 sum:shadow_creatures" ..
+            " nas:old_memories tile:mons_human_monk seen / deep troll name:수도승 n_suf"..
             " dur:2 seen sum:shadow_creatures nas:old_memories tile:mons_deep_troll_monk" ..
-            " / iron troll name:monk n_suf col:white dur:2 sum:shadow_creatures " ..
+            " / iron troll name:수도승 n_suf col:white dur:2 sum:shadow_creatures " ..
             " nas:old_memories seen tile:mons_iron_troll_monk w:5"
 
   local count = 0
@@ -383,16 +383,16 @@ function wizlab_wucad_summon_monks(data, triggerable, triggerer, marker, ev)
   crawl.redraw_view()
 
   if count == 1 then
-    crawl.mpr("One of the shadowy figures appears more solid!", "warning")
+    crawl.mpr("그림자 하나가, 자신의 형체를 찾아가기 시작했다!", "warning")
   elseif count > 1 then
-    crawl.mpr("Shadows coalesce into solid form.", "warning")
+    crawl.mpr("그림자는 자신의 형체를 찾았다.", "warning")
   end
 end
 
 function callback.wizlab_wucad_wucad_died(data, triggerable,
                                            triggerer, marker, ev)
   dgn.persist.wucad_mu_died = true
-  crawl.mpr("The shadows inhabiting this place fade forever.", "talk_visual")
+  crawl.mpr("그림자들은 이 곳에서 사라져, 영원히 떠났다.", "talk_visual")
 end
 
 function teleporter_golubria_switch_fn(data, triggerable, triggerer, marker, ev)
@@ -401,9 +401,9 @@ function teleporter_golubria_switch_fn(data, triggerable, triggerer, marker, ev)
                                                 data.teleport_spot)
 
   if you.teleport_to(my_slaves[1].x, my_slaves[1].y, true) then
-    crawl.mpr("Your surroundings suddenly seem different!")
+    crawl.mpr("당신 주변의 모습이 갑자기 변화했다!")
   else
-    crawl.mpr("There is a strange hissing noise.")
+    crawl.mpr("어디선가 날카로운 쇳소리가 들렸다.")
   end
 end
 
@@ -717,25 +717,25 @@ LFLOORTILE: floor_pebble_white
 COLOUR:     mMV = silver
 TILE:       m = dngn_mirror_wall
 KMONS:      8 = ice statue col:silver spells:blink_other;blink_other;blink_other;\
-                    blink_other;blink_other name:strange_machine \
+                    blink_other;blink_other name:이상한_기계 \
                     name_replace name_descriptor hd:13 hp:120 \
                     tile:mons_statue_guardian
 # please make sure this is the book with Tukima's Dance
 KITEM:      8 = book of enchantments
 KMONS:      9 = ice statue col:silver spells:blink_other;blink_other;blink_other;\
-                    blink_other;blink_other name:strange_machine \
+                    blink_other;blink_other name:이상한_기계 \
                     name_replace name_descriptor hd:13 hp:120 \
                     tile:mons_statue_guardian
 KITEM:      9 = scroll of acquirement
-:           set_feature_name("clear_rock_wall", "crystal clear mirror")
-:           set_feature_name("granite_statue", "strange machine")
-:           set_feature_name("dry_fountain_blue", "glistening fountain")
-:           set_feature_name("stone_wall", "black marble wall")
-:           set_feature_name("floor", "marble floor")
+:           set_feature_name("clear_rock_wall", "투명한 수정 거울")
+:           set_feature_name("granite_statue", "이상한 기계")
+:           set_feature_name("dry_fountain_blue", "반짝이는 분수")
+:           set_feature_name("stone_wall", "검은 대리석 벽")
+:           set_feature_name("floor", "대리석 바닥")
 :           set_random_mon_list("dancing weapon")
-:           wizlab_setup(_G, "Tukima's Studio")
+:           wizlab_setup(_G, "투키마의 공방")
 epilogue{{
-            wizlab_milestone(_G, "Tukima's Studio")
+            wizlab_milestone(_G, "투키마의 공방")
 }}
 MAP
                 ccccccc
@@ -788,7 +788,7 @@ ORIENT:     encompass
 TAGS:       no_item_gen no_monster_gen no_rotate allow_dup
 MONS:       centaur col:green, centaur warrior col:lightgreen
 MONS:       oklob plant
-MONS:       stone golem name:vine_covered name_adjective col:lightgreen \
+MONS:       stone golem name:덩굴로_덮인 name_adjective col:lightgreen \
             tile:mons_vine_golem
 MONS:       toadstool
 SUBST:      y = ct
@@ -812,14 +812,14 @@ grow_marker:add_triggerer(DgnTriggerer:new { type="turn",
 lua_marker("_", grow_marker)
 }}
 :           set_border_fill_type("stone_wall")
-:           wizlab_setup(_G, "Eringya's Formal Garden")
-:           set_feature_name("stone_arch", "rose-covered archway")
-:           set_feature_name("granite_statue", "vine-covered statue")
-:           set_feature_name("stone_wall", "crumbling stone wall")
-:           set_feature_name("floor", "the grass-covered ground")
+:           wizlab_setup(_G, "에리냐의 정원")
+:           set_feature_name("stone_arch", "장미들이 핀 아치")
+:           set_feature_name("granite_statue", "장미덩굴 석상")
+:           set_feature_name("stone_wall", "부스러진 돌벽")
+:           set_feature_name("floor", "잔디 바닥")
 :           set_random_mon_list ("oklob plant / centaur / centaur warrior")
 epilogue{{
-            wizlab_milestone(_G, "Eringya's Formal Garden")
+            wizlab_milestone(_G, "에리냐의 정원")
 }}
 MAP
 ccccccccccccccccccccccccccccccccccccccccccccc
@@ -1026,12 +1026,12 @@ box_marker:add_triggerer(DgnTriggerer:new { type="turn",
 
 lua_marker("A", box_marker)
 }}
-:           set_feature_name("rock_wall", "strange rock wall")
-:           set_feature_name("stone_wall", "highly decorated stone wall")
-:           set_feature_name("floor", "rough-hewn floor")
-:           wizlab_setup(_G, "Doroklohe's Tomb")
+:           set_feature_name("rock_wall", "기이한 암벽")
+:           set_feature_name("stone_wall", "빽빽히 장식된 벽")
+:           set_feature_name("floor", "거칠게 다듬어진 바닥")
+:           wizlab_setup(_G, "도로크로흐의 무덤")
 epilogue{{
-            wizlab_milestone(_G, "Doroklohe's Tomb")
+            wizlab_milestone(_G, "도로크로흐의 무덤")
 }}
 MAP
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1095,27 +1095,27 @@ ORIENT:     encompass
 TAGS:       no_item_gen no_monster_gen no_rotate allow_dup
 KPROP:      . = w:1 bloody / w:15 nothing
 KPROP:      ' = bloody / w:5 nothing
-KMONS:      a = human name:sickly dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human / \
-            human name:monstrous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
-            human name:deformed dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human   / \
-            human name:twisted dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
-            human name:grotesque dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
-            human name:hideous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
-            human name:febrile dbname:deformed_humanoid n_adj n_noc tile:mons_deformed_human
-KMONS:      b = elf name:sickly dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf     / \
-            elf name:monstrous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf      / \
-            elf name:deformed dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf       / \
-            elf name:twisted dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf        / \
-            elf name:grotesque dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf      / \
-            elf name:hideous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf        / \
-            elf name:febrile dbname:deformed_humanoid n_adj n_spe n_noc tile:mons_deformed_elf
-KMONS:      d = orc name:sickly dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc     / \
-            orc name:monstrous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc      / \
-            orc name:deformed dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc       / \
-            orc name:twisted dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc        / \
-            orc name:grotesque dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc      / \
-            orc name:hideous dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc        / \
-            orc name:febrile dbname:deformed_humanoid n_adj n_noc tile:mons_deformed_orc
+KMONS:      a = human name:고통으로_울부짖는 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human / \
+            human name:기형 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
+            human name:기이하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human   / \
+            human name:온_몸이_꼬인 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
+            human name:그로테크크한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
+            human name:끔찍하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
+            human name:뒤틀린 dbname:deformed_humanoid n_adj n_noc tile:mons_deformed_human
+KMONS:      b = elf name:고통으로_울부짖는 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf     / \
+            elf name:기형 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf      / \
+            elf name:기이하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf       / \
+            elf name:온_몸이_꼬인 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf        / \
+            elf name:그로테스크한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf      / \
+            elf name:끔찍하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf        / \
+            elf name:장기가_튀어나온 dbname:deformed_humanoid n_adj n_spe n_noc tile:mons_deformed_elf
+KMONS:      d = orc name:고통으로_울부짖는 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc     / \
+            orc name:기형 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc      / \
+            orc name:기이하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc       / \
+            orc name:녹아내린듯한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc        / \
+            orc name:그로테스크한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc      / \
+            orc name:끔찍하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_orc        / \
+            orc name:온_몸이_뒤틀린 dbname:deformed_humanoid n_adj n_noc tile:mons_deformed_orc
 KMONS:      u = ugly thing / w:2 very ugly thing
 KMONS:      U = very ugly thing
 KMONS:      J = pulsating lump
@@ -1123,9 +1123,9 @@ KMONS:      x = small abomination
 KMONS:      X = large abomination
 KMONS:      e = generate_awake giant eyeball
 SUBST:      " = J:1 / .:6
-KMONS:      8 = col:red clay golem name:flesh_golem name_replace \
+KMONS:      8 = col:red clay golem name:살점_골렘 name_replace \
             tile:mons_flesh_golem name_descriptor
-KMONS:      M = col:mutagenic tentacled monstrosity name:Cigotuvi's_Monster \
+KMONS:      M = col:mutagenic tentacled monstrosity name:시고트비의_괴물 \
             name_replace hp:250 tile:mons_cigotuvis_monster
 MARKER:     ! = lua:fog_machine { \
                  pow_max = 10, delay_min = 10, delay_max = 40, \
@@ -1146,21 +1146,21 @@ TILE:       + = no_random dngn_fleshy_orifice
 COLOUR:     m = yellow
 COLOUR:     c+ = lightred
 COLOUR:     W = green
-:           set_feature_name("shallow_water", "Viscous fluid")
-:           set_feature_name("stone_wall", "sinewy wall")
-:           set_feature_name("clear_rock_wall", "thin membrane")
-:           set_feature_name("floor", "pulsating floor")
+:           set_feature_name("shallow_water", "끈적이는 체액")
+:           set_feature_name("stone_wall", "힘줄이 선 살점")
+:           set_feature_name("clear_rock_wall", "얇은 세포막")
+:           set_feature_name("floor", "박동하는 바닥")
 : lua_marker('+', props_marker {
-:           door_description_noun="fleshy orifice",
-:           door_berserk_verb_open="You part the %s%s",
-:           door_berserk_adjective="with a squelch!",
-:           door_berserk_verb_close="You squeeze the %s%s closed",
-:           door_noisy_verb_open="You part the %s%s with a squelch!",
-:           door_noisy_verb_close="You squeeze the %s%s closed with a squelch!",
-:           door_airborne_verb_open="You reach down and part the %s%s.",
-:           door_airborne_verb_close="You reach down and squeeze the %s%s closed.",
-:           door_verb_open="You part the %s%s.",
-:           door_verb_close="You squeeze the %s%s shut."
+:           door_description_noun="살점 사이의 구멍",
+:           door_berserk_verb_open="당신은 %s%s을(를) 찢어냈다",
+:           door_berserk_adjective="!",
+:           door_berserk_verb_close="당신은 %s%s을(를) 움츠려 닫았다.",
+:           door_noisy_verb_open="%s%s이(가) 쩍소리와 함께 갈라졌다!", 
+:           door_noisy_verb_close="%s%s이(가) 쩍소리와 함께 움츠려져 닫혔다!", 
+:           door_airborne_verb_open="아래로 손을 뻗어, %s%s을(를) 갈라냈다.",
+:           door_airborne_verb_close="아래로 손을 뻗어, %s%s을(를) 움츠려 닫았디.",
+:           door_verb_open="당신은 %s%s을(를) 갈라냈다.",
+:           door_verb_close="당신은 %s%s을(를) 움츠려 닫았다."
 :           })
 KITEM:      $ = w:45 potion of mutation / w:5 potion of gain strength / \
             w:5 potion of gain dexterity / w:5 potion of gain intelligence / \
@@ -1172,10 +1172,10 @@ KITEM:      ^ = book of transfigurations / randbook disc:transmutation
 KITEM:      | = staff of death
 KITEM:      l = scroll of summoning
 NSUBST:     L = 1:| / *:l
-:           wizlab_setup(_G, "Cigotuvi's Fleshworks")
+:           wizlab_setup(_G, "시고트비의 생체 실험실")
 :           set_random_mon_list("pulsating lump / small abomination / ugly thing / very ugly thing")
 epilogue{{
-            wizlab_milestone(_G, "Cigotuvi's Fleshworks")
+            wizlab_milestone(_G, "시고트비의 생체 실험실")
 }}
 MAP
 ccccccccccccccccccccccccccccccccccccccccccccc
@@ -1228,7 +1228,7 @@ ENDMAP
 NAME:       wizlab_iskenderun
 ORIENT:     encompass
 TAGS:       no_item_gen no_monster_gen no_rotate allow_dup patrolling
-:           wizlab_setup(_G, "Iskenderun's Mystic Tower")
+:           wizlab_setup(_G, "이스킨데룬의 신비의 탑")
 MONS:       purple draconian / deep elf mage spells:iskenderun's_mystic_blast \
             / nothing
 MONS:       statue tile:mons_statue_mage spells:iskenderun's_mystic_blast;orb_of\
@@ -1254,7 +1254,7 @@ KFEAT:      _ = altar_vehumet
 SHUFFLE:    DEF
 :           set_random_mon_list("purple draconian / deep elf mage")
 epilogue{{
-            wizlab_milestone(_G, "Iskenderun's Mystic Tower")
+            wizlab_milestone(_G, "이스킨데룬의 신비의 탑")
 }}
 MAP
 ccccccccccccccccccccccccccccccccccccccccccc
@@ -1293,13 +1293,13 @@ ENDMAP
 NAME:       wizlab_zonguldrok
 ORIENT:     encompass
 TAGS:       no_item_gen no_monster_gen no_rotate allow_dup
-:           wizlab_setup(_G, "Zonguldrok's Shrine")
+:           wizlab_setup(_G, "존굴드로크의 성지")
 SUBST:      ? = txxx
 SUBST:      ! = t..
 SUBST:      G = G...
 NSUBST:     Z = Z / .
 MONS:       patrolling skeletal warrior
-MONS:       generate_awake ancient lich  col:brown name:antique_lich name_replace \
+MONS:       generate_awake ancient lich  col:brown name:존굴드로크의_리치 name_replace \
             name_descriptor tile:mons_zonguldrok_lich
 COLOUR:     t = darkgrey / lightgrey
 TILE:       t = dngn_tree_dead
@@ -1311,7 +1311,7 @@ ITEM:       long sword unrand:sword_of_zonguldrok
 {{
 lua_marker("G", portal_desc { grave = 1 })
 lua_marker("Z", portal_desc { wizard_grave = 1})
-lua_marker("W", portal_desc { desc="Zonguldrok's gravestone",
+lua_marker("W", portal_desc { desc="존굴드로크의 비석",
         veto_fragmentation="veto", veto_disintegrate="veto", veto_shatter="veto" })
 
 local zombies_appear_marker = TriggerableFunction:new {
@@ -1356,8 +1356,8 @@ lua_marker("D", zombies_killed_marker)
 lua_marker("L", Triggerable.synchronized_markers(wizard_appear_marker))
 
 }}
-:           set_feature_name("granite_statue", "gravestone")
-:           set_feature_name("floor", "the ground")
+:           set_feature_name("granite_statue", "이름 모를 비석")
+:           set_feature_name("floor", "땅")
 SUBST:      M = x
 SUBST:      D = c
 COLOUR:     W = yellow
@@ -1370,7 +1370,7 @@ LROCKTILE:  wall_hall_darkgray
 TILE:       c = wall_stone_gray
 :           set_random_mon_list("human zombie / skeletal warrior")
 epilogue{{
-            wizlab_milestone(_G, "Zonguldrok's Shrine")
+            wizlab_milestone(_G, "존굴드로크의 성지")
 }}
 MAP
 M   xxxxxxxxxxxxxxxxxxx
@@ -1410,7 +1410,7 @@ NAME:       wizlab_wucad
 ORIENT:     encompass
 TAGS:       no_item_gen no_monster_gen no_rotate allow_dup
 SUBST:      T = t.
-KMONS:      8 = orange crystal statue name:Statue_of_Wucad_Mu n_rpl n_the \
+KMONS:      8 = orange crystal statue name:우카드_무_석상 n_rpl n_the \
                 hd:20 hp:300 tile:mons_wucad_mu_statue
 KITEM:      8 = staff of channeling unrand:staff_of_wucad_mu, book of enchantments
 COLOUR:     =c = darkgrey
@@ -1436,10 +1436,10 @@ ITEM:       potion of experience, manual of fighting / manual of armour / manual
             potion of gain dexterity / potion of gain strength / potion of gain \
             intelligence
 LFLOORCOL:  white
-KMONS:      F = human name:monk n_suf col:white hd:10 dur:2 sum:shadow_creatures \
-            nas:old_memories tile:mons_human_monk seen / deep troll name:monk n_suf \
+KMONS:      F = human name:수도승 n_suf col:white hd:10 dur:2 sum:shadow_creatures \
+            nas:old_memories tile:mons_human_monk seen / deep troll name:수도승 n_suf \
             dur:2 seen sum:shadow_creatures nas:old_memories tile:mons_deep_troll_monk \
-            / iron troll name:monk n_suf col:white dur:2 sum:shadow_creatures \
+            / iron troll name:수도승 n_suf col:white dur:2 sum:shadow_creatures \
             nas:old_memories seen tile:mons_iron_troll_monk w:5
 {{
 dgn.persist.wucad_mu_died = false
@@ -1472,7 +1472,7 @@ local wucad_marker = TriggerableFunction:new ({
     repeated=false })
 
 wucad_marker:add_triggerer(DgnTriggerer:new {type="monster_dies",
-    target="Statue of Wucad Mu"})
+    target="우카드 무 석상"})
 
 lua_marker('A', summon_marker)
 lua_marker('A', wucad_marker)
@@ -1490,15 +1490,15 @@ MARKER:     c = lua:props_marker {veto_fragmentation="veto", veto_disintegrate="
                                   veto_shatter="veto" }
 MARKER:     t = lua:props_marker {veto_fragmentation="veto", veto_disintegrate="veto", \
                                   veto_shatter="veto", veto_fire="veto" }
-:           wizlab_setup(_G, "Wucad Mu's Monastery")
+:           wizlab_setup(_G, "우카드 무의 수도원")
 :           set_border_fill_type("tree")
 :           set_random_mon_list("shadow / phantom w:1 / flayed ghost w:1 / hungry ghost w:1")
-:           set_feature_name("tree", "autumnal tree")
-:           set_feature_name("stone_wall", "crumbled stone wall")
-:           set_feature_name("granite_statue", "strange statue")
-:           set_feature_name("floor", "timeless floor")
+:           set_feature_name("tree", "단풍나무")
+:           set_feature_name("stone_wall", "부스러진 암벽")
+:           set_feature_name("granite_statue", "기이한 석상")
+:           set_feature_name("floor", "오래된 지면")
 epilogue{{
-            wizlab_milestone(_G, "Wucad Mu's Monastery")
+            wizlab_milestone(_G, "우카드 무의 수도원")
 }}
 MAP
 tttttttttttttttttttttttttttttttttttttttt
@@ -1674,13 +1674,13 @@ set_random_mon_list([[rakshasa w:15 / deep elf summoner w:15 / wizard w:15 / spa
                     golden eye w:5 / executioner w:2 / shadow demon w:2 / tormentor w:2 / ]])
 
 set_border_fill_type('permarock_wall')
-set_feature_name("permarock_wall", "The dimension's edge")
-set_feature_name("green_crystal_wall", "wall of crystal")
-wizlab_setup(_G, "The Roulette of Golubria")
+set_feature_name("permarock_wall", "차원의 가장자리")
+set_feature_name("green_crystal_wall", "수정 벽")
+wizlab_setup(_G, "골루브리아의 룰렛")
 }}
 
 epilogue{{
-            wizlab_milestone(_G, "The Roulette of Golubria")
+            wizlab_milestone(_G, "골루브리아의 룰렛")
 }}
 MAP
                DDDDDDDDDD   DDDDDDDDDD
@@ -1753,11 +1753,15 @@ TAGS:       no_item_gen no_monster_gen no_rotate allow_dup
 {{
 wizname = crawl.make_name()
 
-kmons ("    1 = patrolling Cloud Mage dbname:Cloud_Mage name:" .. string.gsub(wizname, " ", "_")
-         .. " ; robe unrand:robe_of_clouds . quick blade ego:electrocution |"
+kmons ("    1 = patrolling Cloud Mage dbname:Cloud_Mage name:구름의_마법사 name_replace"
+         .. " spells:mephitic_cloud;freezing_cloud;poisonous_cloud;"
+         .. "airstrike;blink_range;blink_range hd:20 hp:150 ;"
          .. " quick blade ego:freezing | dagger ego:speed | dagger ego:electrocution"
-         .. " | dagger ego:freezing")
+         .. " | dagger ego:freezing . robe unrand:robe_of_clouds")
 }}
+MARKER:     1 = lua:MonPropsMarker:new {description="이 기이한 마법사는 " \ 
+            .. "구름에 대한 모든 것을 터득하였으며, 그의 신비하면서도 " \ 
+            .. "능수능란한 손놀림을 보고 있자니 왠지 모르게 불길한 예감이 든다.\n"}
 KMONS:      * = w:5 vapour / w:20 air elemental
 KMONS:      v = twister
 SUBST:      . = .:120 *
@@ -1786,13 +1790,13 @@ TILE:       b = dngn_crystal_white
 COLOUR:     wWv# = silver
 :           set_border_fill_type('open_sea')
 :           set_random_mon_list("vapour / air elemental")
-:           wizlab_setup(_G, "The Chambers of " .. wizname .. " the Cloud Mage")
-:           set_feature_name("floor", "damp floor")
-:           set_feature_name("green_crystal_wall", "wall of white crystal")
-:           set_feature_name("clear_permarock_wall", "wall of transparent white crystal")
+:           wizlab_setup(_G, "구름의 마법사의 방") 
+:           set_feature_name("floor", "축축한 바닥")
+:           set_feature_name("green_crystal_wall", "흰 수정 벽")
+:           set_feature_name("clear_permarock_wall", "투명한 수정 벽")
 
 epilogue{{
-            wizlab_milestone(_G, "The Chambers of " .. wizname .. " the Cloud Mage")
+            wizlab_milestone(_G, "구름의 마법사의 방") 
 }}
 #           Map is ugly because border_fill_type doesn't allow for (yet)
 #           recolouring.
@@ -1924,8 +1928,11 @@ KMONS:      5 = balrug / green death / cacodemon
 {{
 wizname = crawl.make_name()
 
-kmons     ("1 = patrolling Hellbinder dbname:Hellbinder name:" .. string.gsub(wizname, " ", "_"))
+kmons     ("1 = patrolling Hellbinder dbname:Hellbinder name:헬바인더 name_replace")
 }}
+MARKER:     1 = lua:MonPropsMarker:new {description="강력한 마법사로, 마력장이 마법사의 주위를 휘감고 있다. 당신이 지금까지 들어본 " \  
+            .. "것 중에 가장 불경한 주문을 웅얼거리고 있다." \  
+            .. ".\n"}  
 KITEM:      $ = gold / w:1 scroll of torment / w:1 scroll of summoning
 KITEM:      i = rod of demonology / ring of fire / ring of protection from fire /\
             amulet of conservation / scroll of torment / scroll of summoning /\
@@ -1935,12 +1942,12 @@ KITEM:      B = randbook disc:summoning
 NSUBST:     i = 2:B / *:i
 :           set_random_mon_list([[crimson imp / shadow imp / lemure / iron imp / quasit / white imp / ]]
 :                        .. [[ufetubus / red devil / rotting devil / orange demon / ]])
-:           wizlab_setup(_G, "The Hall of " .. wizname .. " the Hellbinder")
-:           set_feature_name("floor", "hot floor")
-:           set_feature_name("stone_wall", "black wall")
-:           set_feature_name("rock_wall", "carved rock wall")
+:           wizlab_setup(_G, "헬바인더의 회랑") 
+:           set_feature_name("floor", "뜨거운 바닥")
+:           set_feature_name("stone_wall", "검은 벽")
+:           set_feature_name("rock_wall", "조각된 암벽")
 epilogue{{
-            wizlab_milestone(_G, "The Hall of " .. wizname .. " the Hellbinder")
+            wizlab_milestone(_G, "헬바인더의 회랑") 
 }}
 MAP
 cccccccccccccccccccccccccccccccccccccccccccccc

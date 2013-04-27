@@ -91,20 +91,20 @@ function arena_sprint_end_round(data)
 
     -- Place orb / rune
     if arena_sprint_is_boss_round(data.round_id) then
-        crawl.mpr("A rune of Zot has appeared.", "orb")
+        crawl.mpr("조트의 룬이 나타났다.", "orb")
         dgn.create_item(you_x, you_y, data.monster_set[3])
         data.time_left = 1500 + crawl.random2(500)
         if data.round_id > 27 then
             local p = dgn.find_marker_positions_by_prop("centre_point", 1)[1]
             dgn.grid(p.x, p.y, "exit_dungeon")
             if data.round_id < 42 then
-                crawl.mpr("The exit has re-opened... for now.", "orb")
+                crawl.mpr("출구가 다시 열렸다... 일단 지금은.", "orb")
             else
-                crawl.mpr("The exit has re-opened.", "orb")
+                crawl.mpr("출구가 다시 열렸다.", "orb")
             end
         end
     elseif data.round_id == 27 then
-        crawl.mpr("The Orb of Zot has appeared in the centre of the arena!", "orb")
+        crawl.mpr("아레나 중앙에 조트의 오브가 나타났다!", "orb")
         local p = dgn.find_marker_positions_by_prop("centre_point", 1)[1]
         dgn.create_item(p.x, p.y, "orb of zot")
         data.time_left = 1500 + crawl.random2(500)
@@ -124,24 +124,24 @@ function arena_sprint_end_round(data)
     if data.num_killed >= data.round_enemies or data.lightning_round then
         data.style_mult = data.style_mult + 1
         if arena_sprint_is_boss_round(data.round_id) then
-            crawl.mpr("<yellow>You have won a prize for killing the boss!</yellow>", "warning")
+            crawl.mpr("<yellow>당신은 보스를 처치하고 보상을 받았다!</yellow>", "warning")
             -- Extra score multiplier for killing the boss.
             data.style_mult = data.style_mult + 1
             -- Reward for boss kills. Doesn't come identified...
             dgn.create_item(you_x, you_y, "acquire any")
             dgn.create_item(you_x, you_y, "potion of experience ident:all")
         else
-            crawl.mpr("<yellow>Victory!</yellow>", "warning")
+            crawl.mpr("<yellow>승리!</yellow>", "warning")
         end
-        crawl.mpr("Score multiplier: " .. data.style_mult .. "x", "intrinsic_gain")
+        crawl.mpr("점수 배율: " .. data.style_mult .. "x", "intrinsic_gain")
         -- Gold multiplier is capped at 5x
         gold_gain = gold_gain * math.min(data.style_mult, 5)
     else
         if you.have_orb() and data.style_mult > 27 then
             data.style_mult = 27
-            crawl.mpr("Score multiplier reset to 27x", "intrinsic_gain")
+            crawl.mpr("점수 배율이 27x로 돌아왔다.", "intrinsic_gain")
         elseif data.style_mult > 1 then
-            crawl.mpr("You lost your score multiplier.", "intrinsic_gain")
+            crawl.mpr("점수 배율이 다시 처음으로 돌아갔다.", "intrinsic_gain")
             data.style_mult = 1
         end
     end
@@ -150,12 +150,12 @@ function arena_sprint_end_round(data)
     local style_points = dgn.persist.arena_style_points + style_gain
     dgn.persist.arena_style_points = style_points
     if style_points > 1 then
-        crawl.mpr("You now have " .. style_points .. " arena points " ..
-                  "(gained " .. style_gain .. ").", "intrinsic_gain")
+        crawl.mpr("당신은 이제 " .. style_points .. "아레나 포인트를 가지고 있다" ..
+                  "(" .. style_gain .. " 얻음).", "intrinsic_gain")
     else
-        crawl.mpr("You now have 1 arena point.", "intrinsic_gain")
+        crawl.mpr("당신은 이제 1 아레나 포인트를 가직 있다.", "intrinsic_gain")
     end
-    crawl.take_note("Arena points: " .. style_points ..
+    crawl.take_note("아레나 포인트: " .. style_points ..
                     " (+" .. style_gain .. ") [x" .. data.style_mult .. "]",
                     "intrinsic_gain")
 
@@ -174,9 +174,9 @@ function arena_sprint_end_round(data)
     end
 
     if data.round_id == 42 then
-        crawl.mpr("<white>The arena falls silent. Everyone but you is dead.</white>")
-        crawl.mpr("<white>There is nothing to do now but take the Orb and leave.</white>")
-        crawl.mpr("<white>Congratulations, champion.</white>")
+        crawl.mpr("<white>아레나는 고요함에 잠겼다. 당신을 제외한 모든 것이 죽음을 맞이했다.</white>")
+        crawl.mpr("<white>이제 당신이 할 일은, 오브를 줍고 이 곳을 탈출하는 것 뿐이다.</white>")
+        crawl.mpr("<white>수고 많았다, 용사여. 축하한다.</white>")
         data.finished = true
     else
         data.round_id = data.round_id + 1
@@ -196,13 +196,13 @@ function arena_sprint_ominous_countdown(time_left, waiting)
         then
             crawl.mpr(time_left / 10 .. "...", "duration")
         elseif time_left <= 0 then
-            crawl.mpr("Time's up!", "duration")
+            crawl.mpr("시간 종료!", "duration")
             --crawl.more()
-            crawl.mpr("The arena falls silent.")
+            crawl.mpr("아레나는 고요함에 잠겼다.")
         end
     elseif time_left == 20 and waiting then
         -- There was more of a countdown here, but it felt too spammy.
-        crawl.mpr("<yellow>Get ready!</yellow>", "warning")
+        crawl.mpr("<yellow>준비!</yellow>", "warning")
     end
 end
 
@@ -283,7 +283,7 @@ function arena_sprint_get_monster_set(round, boss)
                 "gnoll / gnoll shaman / gnoll sergeant / hound / war dog",
                 -- Gimmicks
                 "brain worm", "giant spore hd:3", "orc priest", "vampire bat",
-                "kobold name:kamikaze_kobold n_rpl n_noc n_des perm_ench:inner_flame"
+                "kobold name:자폭_코볼트 n_rpl n_noc n_des perm_ench:inner_flame"
              }
         elseif round <= 10 then
             mon_set = {
@@ -332,8 +332,8 @@ function arena_sprint_get_monster_set(round, boss)
                 "polar bear / grizzly bear",
                 -- Gimmicks
                 "brain worm", "giant spore hd:3", "deep elf priest always_corpse",
-                "kobold name:kamikaze_kobold n_rpl n_noc n_des perm_ench:inner_flame",
-                "dwarf name:drunken n_adj n_des n_noc perm_ench:confusion",
+                "kobold name:자폭_코볼트 n_rpl n_noc n_des perm_ench:inner_flame",
+                "dwarf name:술취한 n_adj n_des n_noc perm_ench:confusion",
                 "hungry ghost"
             }
         elseif round <= 15 then
@@ -604,13 +604,13 @@ function arena_sprint_get_monster_set(round, boss)
                 -- Aaaarggghhhhh!
                 "daeva / w:15 angel",
                 "greater mummy / mummy priest / guardian mummy",
-                "air elemental name:greater n_adj perm_ench:tornado col:lightcyan / air elemental w:20",
-                "elephant slug col:magenta name:orb_slug n_rpl n_des n_spe spells:orb_of_destruction",
+                "air elemental name:거대 n_adj perm_ench:tornado col:lightcyan / air elemental w:20",
+                "elephant slug col:magenta name:오브_민달팽이 n_rpl n_des n_spe spells:orb_of_destruction",
                 "brimstone fiend / ice fiend / shadow fiend / executioner / hell sentinel",
                 "titan / spriggan air mage / blizzard demon / w:20 sky beast",
                 "sphinx / place:Tomb:3",
-                "orb of fire / w:5 orb of fire name:orb_of_ice n_rpl n_des spells:ice_storm col:lightblue tile:mons_orb_of_ice /\
-                  orb of fire name:orb_of_electricity n_rpl n_des spells:chain_lightning col:yellow tile:mons_orb_of_electricity /\
+                "orb of fire / w:5 orb of fire name:냉기의_구 n_rpl n_des spells:ice_storm col:lightblue tile:mons_orb_of_ice /\
+                  orb of fire name:번개의_구 n_rpl n_des spells:chain_lightning col:yellow tile:mons_orb_of_electricity /\
                   w:5 silver star",
                 "hellion / w:5 efreet"
             }
@@ -678,13 +678,13 @@ function arena_sprint_get_monster_set(round, boss)
                 -- Just die already!
                 "daeva",
                 "greater mummy / mummy priest",
-                "air elemental name:greater n_adj perm_ench:tornado col:lightcyan",
-                "elephant slug col:magenta name:orb_slug n_rpl n_des n_spe spells:orb_of_destruction",
+                "air elemental name:거대 n_adj perm_ench:tornado col:lightcyan",
+                "elephant slug col:magenta name:오브_민달팽이 n_rpl n_des n_spe spells:orb_of_destruction",
                 "brimstone fiend / ice fiend / shadow fiend w:5 / hell sentinel",
                 "titan / spriggan air mage / blizzard demon",
                 "sphinx",
-                "orb of fire / orb of fire name:orb_of_ice n_rpl n_des spells:ice_storm col:lightblue tile:mons_orb_of_ice /\
-                  orb of fire name:orb_of_electricity n_rpl n_des spells:chain_lightning col:yellow tile:mons_orb_of_electricity /\
+                "orb of fire / orb of fire name:냉기의_구 n_rpl n_des spells:ice_storm col:lightblue tile:mons_orb_of_ice /\
+                  orb of fire name:번개의_구 n_rpl n_des spells:chain_lightning col:yellow tile:mons_orb_of_electricity /\
                   w:20 silver star",
                 "hellion"
             }
@@ -718,35 +718,35 @@ function arena_sprint_init_boss_table()
     local bs = {}
     if crawl.coinflip() then
         bs[1] = {"place:Snake", "aizul hd:7 hp:120 /\
-                 naga warrior name:naga_warlord n_rpl n_des n_noc col:cyan hp:130 /\
-                 anaconda name:giant n_adj n_noc hp:130 col:lightred /\
-                 black mamba name:dark n_adj n_noc col:darkgrey hp:130 /\
-                 naga mage name:naga_archmage n_rpl n_des n_noc col:magenta hp:130",
+                 naga warrior name:나가_워로드 n_rpl n_des n_noc col:cyan hp:130 /\
+                 anaconda name:거대 n_adj n_noc hp:130 col:lightred /\
+                 black mamba name:어둠의 n_adj n_noc col:darkgrey hp:130 /\
+                 naga mage name:나가_대마법사 n_rpl n_des n_noc col:magenta hp:130",
                  "serpentine rune of zot"}
     else
         bs[1] = {"place:Swamp", "the lernaean hydra /\
-                 swamp dragon name:elder n_adj n_noc col:cyan hp:130 /\
-                 swamp drake name:stinky n_adj n_noc col:cyan hp:130 /\
-                 wizard name:witch n_rpl n_des n_noc col:green hp:130 \
+                 swamp dragon name:고대의 n_adj n_noc col:cyan hp:130 /\
+                 swamp drake name:악취나는 n_adj n_noc col:cyan hp:130 /\
+                 wizard name:마녀 n_rpl n_des n_noc col:green hp:130 \
                     spells:mephitic_cloud;.;summon_hydra;.;invisibility;teleport_self /\
-                 bog body name:big n_adj n_noc col:blue hp:130",
+                 bog body name:커다란 n_adj n_noc col:blue hp:130",
                  "decaying rune of zot"}
     end
 
     if crawl.coinflip() then
         bs[2] = {"place:Spider", "arachne hp:250 /\
-                 wolf spider name:dire n_adj n_noc col:blue hp:300 /\
-                 emperor scorpion name:ancient n_adj n_noc hp:250 /\
-                 ghost moth name:greater n_adj n_noc col:lightmagenta hp:200 /\
-                 jumping spider name:phase_spider n_rpl n_des never_corpse \
+                 wolf spider name:굶주린 n_adj n_noc col:blue hp:300 /\
+                 emperor scorpion name:고대의 n_adj n_noc hp:250 /\
+                 ghost moth name:거대 n_adj n_noc col:lightmagenta hp:200 /\
+                 jumping spider name:차원_거미 n_rpl n_des never_corpse \
                     col:lightgreen spells:teleport_self hp:300",
                  "gossamer rune of zot"}
     else
         bs[2] = {"place:Shoals", "polyphemus hp:350 / ilsuiw hp:250 /\
-                 siren name:succubus tile:mons_succubus n_rpl n_des n_spe \
+                 siren name:몽마 tile:mons_succubus n_rpl n_des n_spe \
                      col:lightmagenta hp:300 spells:malign_gateway perm_ench:flight /\
-                 harpy name:queen n_suf n_noc col:lightgreen hp:260 /\
-                 manticore name:hardcore n_adj n_noc col:lightred hp:400",
+                 harpy name:여왕 n_suf n_noc col:lightgreen hp:260 /\
+                 manticore name:끈질긴 n_adj n_noc col:lightred hp:400",
                  "barnacled rune of zot"}
     end
 
@@ -756,7 +756,7 @@ function arena_sprint_init_boss_table()
                  deep elf master archer / deep elf annihilator / deep elf high priest",
                  "fannar hp:400 hd:14 /\
                  col:flash deep elf sorcerer hp:400 \
-                     name:deep_elf_elementalist n_rpl n_des n_noc tile:mons_deep_elf_elementalist \
+                     name:딥_엘프_정령술사 n_rpl n_des n_noc tile:mons_deep_elf_elementalist \
                      spells:iron_shot;summon_air_elementals;sticky_flame_range;summon_water_elementals;haste;blink actual_spells \
                      ; robe ego:fire_resistance race:elven | \
                      robe ego:cold_resistance race:elven | \
@@ -770,11 +770,11 @@ function arena_sprint_init_boss_table()
     end
 
     bs[4] = {"place:Slime", "dissolution hp:430 /\
-             acid blob name:sulfuric n_adj col:white hp:450 /\
-             great orb of eyes name:greater_orb_of_eyes n_rpl n_des n_noc col:green hp:600",
+             acid blob name:황산_덩어리 n_rpl col:white hp:450 /\
+             great orb of eyes name:비홀더 n_rpl n_des n_noc col:green hp:600",
              "slimy rune of zot"}
     bs[5] = {"vault guard / place:Vaults", "mennas hp:250 / mara hp:300 /\
-             vault guard name:captain n_suf n_noc col:lightcyan hp:800 hd:26",
+             vault guard name:보물창고_수호자 n_rpl n_noc col:lightcyan hp:800 hd:26",
              "silver rune of zot"}
     if crawl.coinflip() then
         bs[5], bs[4] = bs[4], bs[5]
@@ -808,7 +808,7 @@ function arena_sprint_init_boss_table()
 
     -- Final (and tenth) boss
     bs[10] = {"pandemonium lord",
-              "ancient lich name:Master_Blaster n_rpl hd:30 hp:1500 col:lightmagenta \
+              "ancient lich name:힘센_이끼 n_rpl hd:30 hp:1500 col:lightmagenta \
               spells:fire_storm;fire_storm;ice_storm;miasma;teleport_self", "demonic rune of zot"}
     return bs
 end
@@ -852,16 +852,16 @@ function thing_do_arena(data, triggerable, triggerer, marker, ev)
             arena_sprint_ominous_countdown(data.time_left, data.between_rounds)
 
             if data.time_left <= 0 then
-                crawl.take_note("Round " .. data.round_id .. ".")
-                crawl.mpr("ROUND " .. data.round_id .. "!", "warning")
+                crawl.take_note("라운드 " .. data.round_id .. ".")
+                crawl.mpr("라운드 " .. data.round_id .. "!", "warning")
                 if data.round_id == 42 then
-                    crawl.mpr("FINAL BOSS!", "warning")
+                    crawl.mpr("최종 보스전!", "warning")
                 elseif arena_sprint_is_boss_round(data.round_id) then
-                    crawl.mpr("BOSS ROUND!", "warning")
+                    crawl.mpr("보스전 돌입!", "warning")
                 elseif data.round_id == 27 then
-                    crawl.mpr("ZOT ROUND!", "orb")
+                    crawl.mpr("조트 라운드!", "orb")
                 else
-                    crawl.mpr("FIGHT!", "warning")
+                    crawl.mpr("시작!", "warning")
                 end
 
                 data.time_left = 510 + crawl.random2(200)
@@ -880,7 +880,7 @@ function thing_do_arena(data, triggerable, triggerer, marker, ev)
                 then
                     data.spawn_rate = 1
                     data.lightning_round = true
-                    crawl.mpr("LIGHTNING ROUND!", "warning")
+                    crawl.mpr("번개 라운드!", "warning")
                 else
                     data.spawn_rate = math.ceil((1000 + crawl.random2(500)) / data.round_enemies)
                 end
@@ -897,7 +897,7 @@ function thing_do_arena(data, triggerable, triggerer, marker, ev)
                     local p = dgn.find_marker_positions_by_prop("centre_point", 1)[1]
                     if feat.is_stair(p.x, p.y) then
                         dgn.grid(p.x, p.y, "floor")
-                        crawl.mpr("The exit has been sealed! It will re-open when you get the next rune.")
+                        crawl.mpr("출구가 봉인되었다! 다음 룬을 획득해야 출구가 다시 열릴 것이다.")
                     end
                 end
 
@@ -906,7 +906,7 @@ function thing_do_arena(data, triggerable, triggerer, marker, ev)
                 if crawl.coinflip() then
                     local directions = {"north", "east", "south", "west"}
                     data.spawn_dir = directions[crawl.random2(#directions) + 1]
-                    crawl.mpr("You sense a tension in the " .. data.spawn_dir .. ".")
+                    crawl.mpr(data.spawn_dir .. "(으)로부터 긴장감이 느껴졌다.")
                 else
                     data.spawn_dir = "spawn_point"
                 end
@@ -956,7 +956,7 @@ end
 
 NAME:       arena_sprint
 TAGS:       sprint no_item_gen no_trap_gen no_monster_gen no_rotate no_hmirror no_vmirror
-DESC:       Sprint VI: "Thunderdome"
+DESC:       던전 돌파 VI: "썬더돔" 
 ORIENT:     encompass
 LROCKTILE:  wall_hall
 {{
@@ -1011,12 +1011,12 @@ LROCKTILE:  wall_hall
     lua_marker("!", portal_desc { spawn_point = 1, south = 1, west = 1 })
     lua_marker("?", portal_desc { spawn_point = 1, south = 1, east = 1 })
 
-    set_feature_name("permadry_fountain", "spawn point")
+    set_feature_name("permadry_fountain", "리스폰 장소")
 
-    crawl.mpr("<cyan>You have entered the arena!\n" ..
-              "You will win if you kill everything that spawns (including allies).\n" ..
-              "If it is a boss round, you only need to kill the boss in order to win.\n" ..
-              "If it is a lightning round, you only need to survive!</cyan>")
+    crawl.mpr("<cyan>당신은 아레나에 입장했다!\n" ..
+              "당신의 임무는, 아레나에 들어오는 모든 것들을 처치하는 것이다(동료 포함).\n" ..
+              "중간 중간 보스전도 존재하며, 보스를 처치해야 해당 라운드에서 승리할 수 있으며\n" ..
+              "살아남는것만이 목적인 번개 라운드도 존재한다!</cyan>")
 }}
 # No ash or beogh, although both gods are still allowed (just harder to get).
 # Both would be rather useless if you picked them, though. Positions are random,

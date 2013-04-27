@@ -16,8 +16,8 @@ function dk_xom_monty_hall(door_char, sheep_char)
     str = str:sub(r, r)
   end
 
-  crawl.god_speaks("Xom", "You feel as though Xom is toying with you.")
-  crawl.mpr("Suddenly, the walls become transparent!")
+  crawl.god_speaks("Xom", "별안간 좀에게 이용당하고 있다는 느낌이 들었다.") 
+  crawl.mpr("갑자기, 벽들이 투명해졌다!") 
   for slave in iter.slave_iterator('char', str) do
     dgn.terrain_changed(slave.x, slave.y, "clear_rock_wall", false, false, false)
   end

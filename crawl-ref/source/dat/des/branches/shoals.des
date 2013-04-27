@@ -20,7 +20,7 @@ end
 -- When the kraken dies, the tides will control the water, so the items will
 -- be accessible!
 function shoals_atoll_kraken_death(data, triggerable, triggerer, marker, ev)
-    crawl.mpr("The surface of the water froths suddenly, and then rushes away.",
+    crawl.mpr("갑자기 수면 위에 거품이 일었고, 곧 물살이 쓸려 빠져나갔다.",
               "warning")
 
     local points = dgn.find_marker_positions_by_prop("water_marker", 1)
@@ -291,7 +291,7 @@ ENDMAP
 
 NAME:   african_american_sheep
 DEPTH:  Shoals
-MONS:   sheep, sheep name:black n_adj n_spe col:darkgrey tile:mons_black_sheep
+MONS:   sheep, sheep name:검은 n_adj n_spe col:darkgrey tile:mons_black_sheep
 MAP
   ....
  ..11..

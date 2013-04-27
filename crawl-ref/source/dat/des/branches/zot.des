@@ -32,7 +32,7 @@ function callback.grunt_zot_stairs_overgrown_start(data, triggerable,
     return
   end
 
-  crawl.mpr("You have a sense of imminent foreboding.", "warning")
+  crawl.mpr("당신은 무언가 불길한 예감을 느꼈다.", "warning")
   dgn.persist.grunt_zot_stairs_overgrown_started = true
 end
 
@@ -77,9 +77,9 @@ function callback.grunt_zot_stairs_overgrown_oklobify(data, triggerable,
 
   if not data.warned then
     data.warned = true
-    crawl.mpr("One of the plants suddenly grows acid sacs!", "warning")
+    crawl.mpr("식물들 중 하나에 산성 주머니가 자라났다!", "warning")
   else
-    crawl.mpr("Another plant grows acid sacs!", "warning")
+    crawl.mpr("또다흔 식물들에 산성 주머니가 자라났다!", "warning")
   end
 end
 
@@ -110,7 +110,7 @@ function callback.grunt_zot_stairs_roulette_door_open(data, triggerable,
 
   data.triggered = true
 
-  crawl.mpr("Several panes of glass retract into the floor.")
+  crawl.mpr("몇몇 유리창들이 땅 속으로 꺼져 들어갔다.")
   for p in iter.slave_iterator("hidden_door", 1) do
     dgn.terrain_changed(p.x, p.y, "floor", false, false, false)
   end
@@ -120,9 +120,9 @@ function callback.grunt_zot_stairs_roulette_teleport(data, triggerable,
                                                      triggerer, marker, ev)
   slave = dgn.find_marker_positions_by_prop("dest", data.dest)
   if you.teleport_to(slave[1].x, slave[1].y) then
-      crawl.mpr("Your surroundings suddenly seem different.")
+      crawl.mpr("주변 모습이 갑자기 변화했다.")
   else
-      crawl.mpr("There is a strange hissing noise.")
+      crawl.mpr("무언가 긁히는듯한 이상한 소리가 들렸다.")
   end
 end
 }}

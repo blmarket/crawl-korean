@@ -7,35 +7,35 @@
 {{
 
   local bag_of_meat =
-    "orc hp:400 hd:30 name:bag_of_meat n_rpl n_des n_spe n_zom \
+    "orc hp:400 hd:30 name:고깃자루 n_rpl n_des n_spe n_zom \
     col:red generate_awake ; ring of slaying plus:27000 plus2:30 \
     not_cursed ident:all no_pickup . war axe plus:9 plus2:9 \
     not_cursed ego:none race:no_race ident:all no_pickup"
 
   local meat_berserker =
-    "ogre hp:500 hd:50 name:meat_berserker n_rpl n_des n_spe n_zom \
+    "ogre hp:500 hd:50 name:고기_광전사 n_rpl n_des n_spe n_zom \
     always_corpse col:red perm_ench:berserk generate_awake \
     ; ring of slaying plus:27000 plus2:30 not_cursed ident:all \
     no_pickup . battleaxe plus:9 plus2:9 not_cursed ego:none race:no_race \
     ident:all no_pickup"
 
   local tyrant =
-    "lich hp:500 hd:35 name:tyrant n_rpl n_des n_spe n_zom \
+    "lich hp:500 hd:35 name:폭군 n_rpl n_des n_spe n_zom \
     never_corpse col:lightred generate_awake \
     spells:haste;haste;airstrike;summon_horrible_things;summon_horrible_things"
 
   local meat_hydra =
-    "eight-headed hydra hp:1000 hd:30 name:meat_hydra n_rpl n_des \
+    "eight-headed hydra hp:1000 hd:30 name:고기_히드라 n_rpl n_des \
      n_spe always_corpse col:lightred generate_awake spells:symbol_of_torment \
      dbname:meat_hydra"
 
   local dread =
-    "wraith hp:500 hd:50 name:dread n_rpl n_des n_spe \
+    "wraith hp:500 hd:50 name:두려움 n_rpl n_des n_spe \
     never_corpse generate_awake \
     col:lightred spells:symbol_of_torment;hellfire;hellfire_burst"
 
   local large_bag =
-    "hill giant hp:400 hd:40 name:large_bag_of_meat n_rpl n_des \
+    "hill giant hp:400 hd:40 name:커다란_고깃자루 n_rpl n_des \
     n_spe n_zom  col:red generate_awake perm_ench:inner_flame \
     ; ring of slaying plus:27000 plus2:100 not_cursed ident:all \
     no_pickup . \
@@ -43,19 +43,19 @@
     ident:all no_pickup"
 
   local destroyer =
-    "vampire knight hp:500 hd:40 name:destroyer n_rpl n_des n_spe \
+    "vampire knight hp:500 hd:40 name:파괴자 n_rpl n_des n_spe \
     never_corpse col:red generate_awake \
     spells:blink_close;blink_close;blink_close;blink_close;blink_close \
     ; ring of slaying plus:27000 plus2:200 not_cursed ident:all \
     no_pickup . great sword plus:9 plus2:9 ego:vorpal ident:all no_pickup"
 
   local plague =
-    "sea snake hp:500 hd:30 name:scourge n_rpl n_des n_spe \
+    "sea snake hp:500 hd:30 name:역병의_뱀 n_rpl n_des n_spe \
     never_corpse col:lightred generate_awake \
     spells:poison_arrow;venom_bolt;poisonous_cloud"
 
   local sculptor =
-    "skeletal warrior hp:500 hd:30 name:sculptor_of_flesh n_rpl \
+    "skeletal warrior hp:500 hd:30 name:살점_조각가 n_rpl \
     n_des n_spe n_zom never_corpse col:red generate_awake \
     spells:twisted_resurrection;twisted_resurrection;twisted_resurrection \
     ; ring of slaying plus:27000 plus2:250 not_cursed ident:all \
@@ -63,28 +63,28 @@
     ident:all no_pickup"
 
   local observer =
-    "great orb of eyes hp:2000 hd:30 name:observer n_rpl n_des \
+    "great orb of eyes hp:2000 hd:30 name:주시자 n_rpl n_des \
     n_spe never_corpse col:red generate_awake \
     spells:bolt_of_fire;fireball;fireball;smiting;smiting \
     perm_ench:invis perm_ench:haste"
 
   local accursed =
-    "greater mummy hp:500 hd:40 name:accursed n_rpl n_des n_spe \
+    "greater mummy hp:500 hd:40 name:저주받은_자 n_rpl n_des n_spe \
     never_corpse col:red generate_awake \
     spells:smiting;smiting;smiting;smiting;smiting"
 
   local meat_beast =
-    "hell beast hp:1000 hd:40 name:meat_beast n_rpl n_des n_spe \
+    "hell beast hp:1000 hd:40 name:고기_짐승 n_rpl n_des n_spe \
     col:red generate_awake perm_ench:haste"
 
   local lost_soul =
-    "phantom hp:500 hd:50 name:lost_soul n_rpl n_des n_spe \
+    "phantom hp:500 hd:50 name:잃어버린_영혼 n_rpl n_des n_spe \
     never_corpse col:lightred generate_awake \
     spells:bolt_of_draining;bolt_of_draining;dispel_undead;dispel_undead \
     perm_ench:invis"
 
   local fleshlord =
-    "hell knight hp:3000 hd:60 name:fleshlord n_rpl n_des n_spe never_corpse \
+    "hell knight hp:3000 hd:60 name:살점왕 n_rpl n_des n_spe never_corpse \
     col:lightmagenta generate_awake \
     spells:slow;haste \
     ; ring of slaying plus:27000 plus2:400 not_cursed ident:all \
@@ -92,20 +92,20 @@
     ident:all no_pickup"
 
   local vile =
-    "molten gargoyle hp:7000 hd:80 name:vile n_rpl n_des n_spe never_corpse \
+    "molten gargoyle hp:7000 hd:80 name:비도덕 n_rpl n_des n_spe never_corpse \
     col:lightred generate_awake perm_ench:haste \
     spells:dig;confuse;confuse;miasma;hellfire_burst"
 
   -- Uniques --
   local servant =
-    "harold hp:650 hd:40 name:The_Servant n_rpl col:yellow \
+    "harold hp:650 hd:40 name:따르는_자 n_rpl col:yellow \
     generate_awake never_corpse spells:.;.;.;. \
     ; ring of slaying plus:27000 plus2:130 not_cursed ident:all \
     no_pickup . glaive plus:9 plus2:9 not_cursed ego:flaming race:no_race \
     ident:all no_pickup"
 
   local captor =
-    "sigmund hp:850 hd:40 name:The_Captor n_rpl col:lightcyan \
+    "sigmund hp:850 hd:40 name:구속하는_자 n_rpl col:lightcyan \
     generate_awake never_corpse \
     spells:sentinel's_mark;haste;ensnare \
     ; ring of slaying plus:27000 plus2:200 not_cursed ident:all \
@@ -113,7 +113,7 @@
     ident:all no_pickup"
 
   local defiler =
-    "edmund hp:1000 hd:50 name:The_Defiler n_rpl col:white \
+    "edmund hp:1000 hd:50 name:파멸을_부르는_자 n_rpl col:white \
     generate_awake never_corpse \
     spells:fireball;fireball;fireball;poisonous_cloud \
     ; ring of slaying plus:27000 plus2:250 not_cursed ident:all \
@@ -124,7 +124,7 @@
 
   -- Meatlord shadow creatures will be shadow fiends
   local meatlord =
-    "dispater hp:10000 hd:60 name:The_Meatlord n_rpl col:lightmagenta \
+    "dispater hp:10000 hd:60 name:고기왕 n_rpl col:lightmagenta \
     generate_awake never_corpse \
     spells:shadow_creatures;shadow_creatures;airstrike;airstrike;conjure_ball_lightning \
     ; ring of slaying plus:27000 plus2:27000 not_cursed ident:all \
@@ -134,7 +134,7 @@
   -- Unspeakable shadow creatures will be (a lot of) starcursed masses
   -- This is the secret boss.
   local avatar =
-    "slime creature hp:10000 hd:100 name:The_Unspeakable \
+    "slime creature hp:10000 hd:100 name:말할수_없는_그것 \
     n_rpl col:jewel generate_awake perm_ench:haste \
     spells:shadow_creatures;shadow_creatures;shadow_creatures;airstrike;smiting;death's_door"
 
@@ -179,14 +179,14 @@
     if triggerer.type == "monster_dies" then
       crawl.more()
       crawl.mpr("<red>" .. border_top .. "" ..
-      "--                    </red><lightred>You have destroyed The Meatlord.</lightred><red>                      --\n" ..
+      "--                    </red><lightred>당신은 고기왕을 처치했다.</lightred><red>                      --\n" ..
       "" .. border_bottom .. "</red>")
       crawl.more()
       crawl.mpr("<red>" .. border_top .. "" ..
-      "--                        </red><lightred>You will die a champion.</lightred><red>                          --\n" ..
+      "--                        </red><lightred>당신은 이제 용사의 이름으로 최후를 맞을 수 있다.</lightred><red>                          --\n" ..
       "" .. border_bottom .. "</red>")
       crawl.more()
-      crawl.mpr("The Orb of Zot has appeared underneath you.", "orb")
+      crawl.mpr("조트의 오브가, 당신의 발 아래에 나타났다.", "orb")
       dgn.create_item(you_x, you_y, "orb of zot")
       crawl.more()
       return
@@ -199,10 +199,10 @@
     if triggerer.type == "monster_dies" then
       crawl.more()
       crawl.mpr("<red>" .. border_top .. "" ..
-      "--                    </red><lightred>You have destroyed The Unspeakable.</lightred><red>                   --\n" ..
+      "--                    </red><lightred>당신은 말할 수 없는 그것을 파괴했다.</lightred><red>                   --\n" ..
       "" .. border_bottom .. "</red>")
       crawl.more()
-      crawl.mpr("<lightgreen>The slimy rune of Zot has appeared underneath you.</lightgreen>")
+      crawl.mpr("<lightgreen>슬라임의 조트의 룬이 당신의 발 밑에 나타났다.</lightgreen>")
       dgn.create_item(you_x, you_y, "slimy rune of zot")
       return
     end
@@ -291,7 +291,7 @@
           dgn.create_monster(m_x, m_y, meatlord)
           crawl.more()
           crawl.mpr("<red>" .. border_top .. "" ..
-          "--                      </red><lightred>The Meatlord has descended...</lightred><red>                       --\n" ..
+          "--                      </red><lightred>고기왕이 오고있어...</lightred><red>                       --\n" ..
           "" .. border_bottom .. "</red>")
           crawl.more()
     elseif data.spawn_count == 300 then
@@ -317,7 +317,7 @@ NAME:      meatsprint
 TAGS:      sprint no_rotate no_hmirror no_vmirror
 TAGS:      no_monster_gen no_item_gen no_trap_gen no_pool_fixup
 ORIENT:    encompass
-DESC:      Sprint VIII: "Arena of Blood"
+DESC:      던전 돌파 VIII: "피의 결투장"
 KFEAT:     { = {
 LROCKCOL:  red
 LFLOORCOL: red
@@ -367,18 +367,18 @@ NSUBST:    ' = 1:& / *:.
     "------------------------------------------------------------------------------\n" ..
     "------------------------------------------------------------------------------\n" ..
     "--                                                                          --\n" ..
-    "--                            The Arena Of Blood                            --\n" ..
+    "--                                피의 결투장                               --\n" ..
     "--                                                                          --\n" ..
     "--                                                                          --" ..
     "</red>")
   crawl.more()
   crawl.mpr("<red>" ..
     "--                                                                          --\n" ..
-    "--                You descend into the pit of gibs and meat,                --\n" ..
-    "--                    The sunken abyss of the depraved,                     --\n" ..
-    "--                       The mill of turgid gutspawn.                       --\n" ..
-    "--                The writhen instruments serve in adoration,               --\n" ..
-    "--                     Immured beneath a rotten throne.                     --" ..
+    "--                당신은 고기와 쐐기의 구렁텅이로 내려간다.                 --\n" ..
+    "--                    타락과 비도덕으로 얼룩진 깊은 심연,                   --\n" ..
+    "--                    인외마경이 잉태되는 도살장 속으로.                    --\n" ..
+    "--               비뚤어져버린 기구들은 썩어버린 왕좌 아래를 향해,           --\n" ..
+    "--                     한결같은 경외를 표하고 있었도다.                     --" ..
     "</red>")
   crawl.more()
   crawl.mpr("<red>" ..
@@ -392,11 +392,11 @@ NSUBST:    ' = 1:& / *:.
   crawl.more()
   crawl.mpr("<red>" ..
     "--                                                                          --\n" ..
-    "--                            Vessel of Makhleb,                            --\n" ..
-    "--                           You are the unmaker,                           --\n" ..
-    "--                          You bring the rapture,                          --\n" ..
-    "--                     The murmurs of the thralls rise...                   --\n" ..
-    "--                       The theatre of blood begins.                       --\n" ..
+    "--                             마크레브의 혈관,                             --\n" ..
+    "--                        당신은 존재를 부정하는 자,                        --\n" ..
+    "--                         황홀을 불러오는 당신으로,                        --\n" ..
+    "--                    속박된 자들의 중얼거림이 고조될지니,                  --\n" ..
+    "--                      피의 무대가 이제 곧 시작되느니라.                   --\n" ..
     "--                                                                          --\n" ..
     "------------------------------------------------------------------------------\n" ..
     "------------------------------------------------------------------------------" ..

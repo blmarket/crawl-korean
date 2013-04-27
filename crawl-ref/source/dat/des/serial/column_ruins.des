@@ -42,7 +42,7 @@ function init_column_ruins(e)
   e.tile('G = dngn_crumbled_column')
   e.colour('G = lightgrey')
   e.subst('_ = .')
-  e.set_feature_name("granite_statue", "broken pillar")
+  e.set_feature_name("granite_statue", "부러진 기둥")
 end
 
 function init_column_ruins_hut(e)

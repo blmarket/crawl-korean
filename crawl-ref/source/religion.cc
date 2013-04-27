@@ -3614,8 +3614,8 @@ void god_pitch(god_type which_god)
     if (you.religion == GOD_OKAWARU
         && player_mutation_level(MUT_DEMONIC_GUARDIAN))
     {
-        mpr("Your demonic guardian will not assist you as long as you worship "
-            "Okawaru.", MSGCH_GOD);
+        mpr("당신의 악마 수호자들은, 당신이 오카와루를 숭배하는 이상 "
+            "당신을 돕지 않을 것이다.", MSGCH_GOD);
     }
 
     // When you start worshipping a good god, you make all non-hostile

@@ -29,7 +29,7 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
      end
    end
    if seen_plants ~= true and plants>0 then
-     crawl.mpr("Green shoots are pushing up through the earth!")
+     crawl.mpr("녹색 새싹들이 땅에서 솟아나왔다!") 
      return true
    end
    return seen_plants
@@ -49,7 +49,7 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
      end
    end
    if seen_plants ~= true and plants>0 then
-     crawl.mpr("Bushes burst out of the ground!")
+     crawl.mpr("수풀들이 땅 속으로부터 솟아나듯 자라났다!") 
      return true
    end
    return seen_plants
@@ -70,7 +70,7 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
      end
    end
    if seen_plants ~= true and plants>0 then
-     crawl.mpr("Huge trees erupt suddenly from the floor!")
+     crawl.mpr("거대한 나무들이 별안간 지면을 뚫고 자라났다!") 
      return true
    end
    return seen_plants
@@ -90,10 +90,10 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
    end
    if seen_oklob ~= true and plants > 0 then
      if plants == 1 then
-       crawl.mpr("A plant begins to grow acid sacs!")
+       crawl.mpr("식물에게서 산성 물질 주머니들이 자라나기 시작했다!")
      end
      if plants > 1 then
-       crawl.mpr("Some of the plants begin to grow acid sacs!")
+       crawl.mpr("식물들에게서 산성 물질 주머니들이 자라나기 시작했다!")
      end
    end
    for _, p in ipairs(gslaves) do
@@ -122,10 +122,10 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
    if seen_oklob ~= true and plants > 0 then
      seen_oklob = true
      if plants == 1 then
-       crawl.mpr("The sapling grows bigger and tougher!")
+       crawl.mpr("새싹이 더욱 크고 튼튼하게 자라났다!") 
      end
      if plants > 1 then
-       crawl.mpr("The saplings grow bigger and tougher!")
+       crawl.mpr("식물들에게서 산성 물질 주머니들이 자라나기 시작했다!") 
      end
    end
    for _, p in ipairs(gslaves) do
@@ -159,10 +159,10 @@ function callback.fedhas_growing_garden_grow(data, triggerable,
      end
    end
    if fruits==1 then
-     crawl.mpr("A fruit falls from the tree!")
+     crawl.mpr("나무에서 열매가 떨어졌다!") 
    end
    if fruits>1 then
-     crawl.mpr("Fruits fall from the boughs of the trees!")
+     crawl.mpr("나무에서 열매들이 떨어졌다!") 
    end
  end
 

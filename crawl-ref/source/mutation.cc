@@ -1563,8 +1563,8 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
     case MUT_DEMONIC_GUARDIAN:
         if (you.religion == GOD_OKAWARU)
         {
-            mpr("Your demonic guardian will not assist you as long as you "
-                "worship Okawaru.", MSGCH_MUTATION);
+            mpr("당신의 악마 수호자들은, 당신이 오카와루를 숭배하는 이상 "
+                "당신을 돕지 않을 것이다.", MSGCH_MUTATION);
         }
         break;
 

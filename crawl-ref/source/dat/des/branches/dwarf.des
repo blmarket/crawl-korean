@@ -15,8 +15,8 @@ dhfh.monster_from_statue = function(monster)
     local mod = MonsterOnTrigger:new {
         target="auto",
         new_monster="generate_awake " .. monster,
-        message_seen="The granite statue comes to life!",
-        message_unseen="You hear a distant wail.",
+        message_seen="화강암 석상이 살아 움직인다!!", 
+        message_unseen="멀리서 울부짖는 소리가 들렸다.", 
         master_name="statue" .. dhfh.statues_idx
     }
     return mod
@@ -44,7 +44,7 @@ dhfh.hall_setup = function(e, glyph)
         mod = dhfh.monster_from_statue(new_monster)
         mod:add_triggerer( dhfh.new_trigger("item_pickup") )
     end
-    e.lua_marker("G", portal_desc { desc="granite statue of a fallen hero",
+    e.lua_marker("G", portal_desc { desc="타락한 영웅의 석상",
             slaved_to="statue" .. dhfh.statues_idx})
     e.lua_marker(glyph, mod)
 end

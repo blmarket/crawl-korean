@@ -880,7 +880,7 @@ MARKER: V = lua:fog_machine { \
             }
 # Final subst
 SUBST:  MV = .
-:       set_feature_name("granite_statue", "iron statue")
+:       set_feature_name("granite_statue", "철의 상")
 :       dgn.delayed_decay(_G, '%', 'human corpse / human skeleton')
 veto {{
     if you.uniques("Jory") then
@@ -931,22 +931,22 @@ ORIENT:  north
 TAGS:    no_monster_gen
 DEPTH:   D:12-20, Elf
 SHUFFLE: 12, 34, 56, 89
-MONS: statue name:archer name_adjective tile:mons_statue_crossbow ; crossbow \
+MONS: statue name:궁수 name_adjective tile:mons_statue_crossbow ; crossbow \
       ego:flame . bolt q:30
-MONS: statue name:archer name_adjective tile:mons_statue_crossbow ; crossbow \
+MONS: statue name:궁수 name_adjective tile:mons_statue_crossbow ; crossbow \
       ego:frost . bolt q:30
-MONS: statue name:warrior name_adjective tile:mons_statue_axe ; battleaxe \
+MONS: statue name:전사 name_adjective tile:mons_statue_axe ; battleaxe \
       ego:flaming good_item
-MONS: statue name:warrior name_adjective tile:mons_statue_axe ; battleaxe \
+MONS: statue name:전사 name_adjective tile:mons_statue_axe ; battleaxe \
       ego:freezing good_item
-MONS: statue name:warrior name_adjective tile:mons_statue_mace ; great mace \
+MONS: statue name:전사 name_adjective tile:mons_statue_mace ; great mace \
       ego:flaming good_item
-MONS: statue name:warrior name_adjective tile:mons_statue_mace ; great mace \
+MONS: statue name:전사 name_adjective tile:mons_statue_mace ; great mace \
       ego:freezing good_item
 MONS: silver statue
-KMONS: 8 = statue name:wizard name_adjective tile:mons_statue_mage \
+KMONS: 8 = statue name:마법사 name_adjective tile:mons_statue_mage \
            spells:lehudib's_crystal_spear;iskenderun's_mystic_blast;slow;stone_arrow
-KMONS: 9 = statue name:wizard name_adjective tile:mons_statue_mage \
+KMONS: 9 = statue name:마법사 name_adjective tile:mons_statue_mage \
            spells:freezing_cloud;mephitic_cloud;throw_icicle;confuse
 MAP
   cccccccccccccc
@@ -999,7 +999,7 @@ MONS:   draconian shifter / draconian annihilator / lich  / \
         deep elf annihilator / deep elf demonologist
 NSUBST: 4 = 6:5 / *:4
 MONS:   ancient lich
-MONS:   human name:sacrificial n_adj n_noc att:neutral
+MONS:   human name:제물이_된 n_adj n_noc att:neutral
 NSUBST: 4 = 1:7 / *:4
 ITEM:   acquire any
 SUBST:  - = .
@@ -1065,7 +1065,7 @@ NSUBST: 3 = 1:3 / 1:9
 : elseif you.absdepth() < 24 then
 NSUBST: 4 = 2:4 / 1:5
 : end
-MONS:   human name:sacrificial n_adj n_spe att:neutral
+MONS:   human name:제물이_된 n_adj n_spe att:neutral
 KMONS:  7 = patrolling hell knight
 ITEM:   acquire any
 SUBST:  '" = ., b = v
@@ -1256,7 +1256,7 @@ MARKER: ! = lua:fog_machine { \
 KFEAT:  _ = altar_vehumet
 ## Made to be always the same hd for consistency. - HangedMan
 MONS:   statue hd:12 spells:orb_of_destruction tile:mons_statue_mage col:vehumet \
-        name:conjurer n_adj
+        name:파괴술사 n_adj
 : if you.absdepth() < 22 then
 MONS:   w:6 deep elf conjurer / w:2 wizard / w:1 spriggan air mage / w:1 deep elf annihilator
 MONS:   w:3 deep elf annihilator / w:1 deep elf conjurer

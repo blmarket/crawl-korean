@@ -16,12 +16,12 @@ function callback.grunt_lady_of_the_lake_trigger(data, triggerable, triggerer,
 
     data.triggered = true
     if you.see_cell(b.x, b.y) then
-      crawl.mpr("A figure emerges from the depths of the water!", "warning");
+      crawl.mpr("물 속 깊은 곳에서 어떠한 형상 하나가 만들어졌다!", "warning");
     else
-      crawl.mpr("The water ripples visibly.", "visual");
+      crawl.mpr("물에서 잔물결이 일었다.", "visual");
     end
   else
-    crawl.mpr("The water ripples visibly.", "visual");
+    crawl.mpr("물에서 잔물결이 일었다.", "visual");
   end
 end
 }}
@@ -405,8 +405,8 @@ ENDMAP
 NAME:    st_shrine_of_shade
 DEPTH:   Swamp:1-4
 MONS:    bog body w:20 / necrophage w:5 / ghoul w:5 / nothing w:25, shadow
-KMONS:   P = w:2 col:darkgrey plant name:withered name_adjective             \
-           tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:   P = w:2 col:darkgrey plant name:메마른 name_adjective             \
+           tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
            name_adjective tile:mons_withered_plant
 SUBST:   p = Pp, p = PP., o = P..
 MAP
@@ -573,11 +573,11 @@ ENDMAP
 NAME: grunt_witch_cave
 DEPTH: Swamp
 : if crawl.coinflip() then
-MONS: wizard hd:10 name:witch n_rpl n_des n_noc col:lightgreen \
+MONS: wizard hd:10 name:마녀 n_rpl n_des n_noc col:lightgreen \
       spells:poisonous_cloud;summon_hydra;cause_fear;slow;.;. ; \
       robe . quarterstaff . ring of poison resistance
 : else
-MONS: wizard hd:10 name:witch n_rpl n_des n_noc col:lightgreen \
+MONS: wizard hd:10 name:마녀 n_rpl n_des n_noc col:lightgreen \
       spells:venom_bolt;summon_hydra;mesmerise;confuse;.;. ; \
       robe . quarterstaff . ring of poison resistance
 : end

@@ -571,7 +571,7 @@ NAME:      pitsprint
 TAGS:      sprint
 LFLOORCOL: lightgrey
 ORIENT:    encompass
-DESC:      Sprint VII: "The Pits"
+DESC:      던전 돌파 VII: "구렁텅이"
 SUBVAULT:  A : the_storerooms
 SUBVAULT:  B : the_entrance_hall
 SUBVAULT:  C : the_vault_of_metal

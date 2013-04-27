@@ -55,9 +55,9 @@ function callback.wall_jericho_tick(data, triggerable, triggerer, marker, ev)
         dgn.place_cloud(slave.x, slave.y, "grey smoke", crawl.random2(15) + 5)
         dgn.noisy(35, slave.x, slave.y)
         if (you.see_cell(slave.x, slave.y)) then
-            crawl.mpr("The walls come tumbling down!")
+            crawl.mpr("벽들이 무너져내렸다!")
         else
-            crawl.mpr("The ground quakes!")
+            crawl.mpr("지면이 격하게 흔들렸다!")
         end
     end
     data.triggered = true

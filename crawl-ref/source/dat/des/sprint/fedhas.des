@@ -1,6 +1,6 @@
 NAME:   dungeon_sprint_fedhas
 TAGS:   sprint no_item_gen no_trap_gen no_monster_gen no_pool_fixup no_rotate no_hmirror no_vmirror
-DESC:   Sprint IV: "Fedhas' Mad Dash"
+DESC:   던전 돌파 IV:  "페다스 매드 대쉬"
 ORIENT: encompass
 SUBVAULT: o : temple
 KMONS:  A = fungus

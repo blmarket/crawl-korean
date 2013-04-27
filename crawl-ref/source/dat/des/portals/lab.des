@@ -12,13 +12,13 @@
 function lab_portal(e)
   local messager =
     timed_msg {
-      initmsg = { "You hear a distant snort.",
-                  "Hark! There is an entrance to a minotaur's labyrinth "
-                  .. "on this level. Find the entrance quickly before "
-                  .. "the gate is sealed!" },
-      finalmsg = "You hear the last, dying ticks of the clock.",
-      verb = 'ticking',
-      noisemaker = 'clock'
+      initmsg = { "멀리서 콧방귀 소리가 들려왔다.",
+                  "잘 듣게! 이 층 어딘가에는, 미노타우르스가 지키고 있는 "
+                  .. "미궁의 입구가 어딘가에 위치하고 있다네. 미궁이 닫혀 버리기 전에 " 
+                  .. "입구를 찾아 보도록 하게나!" },
+      finalmsg = "마치 죽어가는 듯한, 마지막 시계 소리가 들려왔다.", 
+      verb = '째깍거리는',
+      noisemaker = '시계소리'
     }
 
     e.lua_marker('O',

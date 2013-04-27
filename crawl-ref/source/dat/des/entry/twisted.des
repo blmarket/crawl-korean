@@ -147,7 +147,7 @@ ITEM:    stone q:1 w:5 / nothing
 ITEM:    stone q:1 w:1 / nothing w:20
 TILE:    G = dngn_granite_stump
 SHUFFLE: {[(
-:        set_feature_name("granite_statue", "granite stump")
+:        set_feature_name("granite_statue", "화강암 받침대")
 MAP
    xxxxxxx
   xx.....xx
@@ -746,9 +746,9 @@ ORIENT:  float
 SHUFFLE: ABC
 KFEAT:   ABC = floor
 KMONS:  A = gnome ; nothing
-KMONS:  B = elf col:darkgrey name:grey n_adj n_spe n_des ; nothing
-KMONS:  C = dwarf name:hill n_adj n_spe n_des ; nothing
-KMONS:  D = dwarf name:mountain n_adj n_spe n_des ; nothing
+KMONS:  B = elf col:darkgrey name:그레이 n_adj n_spe n_des ; nothing
+KMONS:  C = dwarf name:힐 n_adj n_spe n_des ; nothing
+KMONS:  D = dwarf name:마운틴 n_adj n_spe n_des ; nothing
 FTILE:  .m+T = floor_vault
 TILE:   X = wall_vines
 COLOUR: .= lightgrey

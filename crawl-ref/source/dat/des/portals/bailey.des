@@ -22,22 +22,22 @@ function bailey_portal(e, ptype, trowel)
       -- $F{xxx} will be substituted with the 'entity' property of the timed
       -- marker, or with the desc property (if entity is not set).
       messages = time_messages(timeout_turns_short,
-                               "$F{The} is being lowered.",
-                               "$F{The} is being lowered.",
-                               "$F{The} is being lowered.",
-                               "$F{The} is close to the ground.")
+                               "$F이(가) 지면 속으로 가라앉기 시작한다.", 
+                               "$F이(가) 지면 속으로 가라앉기 시작한다.", 
+                               "$F이(가) 지면 속으로 가라앉기 시작한다.", 
+                               "$F은(는) 지면 속으로 사라졌다.")
     }
 
   dgn.persist.bailey_type = "bailey_" .. ptype
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The portal closes with a thud.",
-        desc = "flagged portal",
+        disappear = "관문이 사라져버렸다.",
+        desc = "깃발이 보이는 관문",
         entity = 'oriflamme',
         dst = "Bailey",
         bailey_type = ptype,
-        overview = "flagged portal",
+        overview = "깃발이 보이는 관문",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "stone_arch",

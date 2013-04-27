@@ -41,15 +41,15 @@ function callback.boulder_grate_trap_stepped(data, triggerable, triggerer, marke
     -- Monster is in the way, don't do anything
     if (dgn.mons_at(p.x, p.y) ~= nil or p == you.pos()) then
       if (you.see_cell(x, y)) then
-        crawl.mpr("A part of the floor depresses, but nothing seems to happen.")
+        crawl.mpr("바닥에 있는 무언가를 누른 듯한 느낌을 받았지만, 아무 일도 없는 듯 보인다.")
         return
       end
     end
     dgn.grid(p.x, p.y, "iron_grate")
     if (you.see_cell(p.x, p.y)) then
-      crawl.mpr("An iron grate slams shut!")
+      crawl.mpr("철창이 닫혀벼렸다!")
     else
-      crawl.mpr("You hear a soft click.")
+      crawl.mpr("철컹 하는 소리가 들렸다.")
     end
   end
   -- Use trap position as default target

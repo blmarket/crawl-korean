@@ -18,15 +18,15 @@ function callback.ancient_champions_mu_skele_death(data, triggerable,
 
   local wall_pos = get_slave(data.skele_number)
   if wall_pos == nil then
-    crawl.mpr("Couldn't find a slave!")
+    crawl.mpr("노예를 찾을 수 없다!")
   end
 
   dgn.terrain_changed(wall_pos.x, wall_pos.y, "floor", false, false, false)
 
   if you.see_cell(wall_pos.x, wall_pos.y) then
-    crawl.mpr("As the champion is destroyed, a metal wall slides away!")
+    crawl.mpr("고대의 투사가 파과되자, 철벽이 미끄러지며 열렸다!")
   else
-    crawl.mpr("As the champion is destroyed, you hear a distant grinding noise.")
+    crawl.mpr("고대의 투사가 파괴되자, 어디선가 금속이 끌리는 소리가 들려왔다.")
   end
 end
 }}
@@ -37,26 +37,26 @@ ORIENT:  float
 TAGS:    no_item_gen no_monster_gen
 KFEAT:   ABCDEFG = metal_wall
   ## This is for Gretell's benefit, not actually used.
-  KMONS: Z = col:gold skeletal warrior name:ancient_champion name_replace \
+  KMONS: Z = col:gold skeletal warrior name:고대의_투사 name_replace \
   name_descriptor spells:iron_shot;.;haste;pain;.;. \
   spells:bolt_of_draining;.;haste;throw_frost;.;. \
   spells:venom_bolt;.;haste;haunt;.;. \
   spells:iskenderun's_mystic_blast;slow;haste;.;.;. actual_spells
-KMONS:   1 = col:gold skeletal warrior name:ancient_champion name_replace tile:mons_ancient_champion \
+KMONS:   1 = col:gold skeletal warrior name:고대의_투사 name_replace tile:mons_ancient_champion \
          name_descriptor spells:iron_shot;.;haste;pain;.;. actual_spells \
          ; plate armour ego:fire_resistance | plate armour ego:cold_resistance . \
          great sword ego:pain | great sword ego:draining | great sword \
          ego:flaming | w:3 triple sword ego:vorpal
-KMONS:   2 = col:gold skeletal warrior name:ancient_champion name_replace tile:mons_ancient_champion \
+KMONS:   2 = col:gold skeletal warrior name:고대의_투사 name_replace tile:mons_ancient_champion \
          name_descriptor spells:bolt_of_draining;.;haste;throw_frost;.;. \
          actual_spells ; plate armour ego:fire_resistance | plate armour \
          ego:cold_resistance . great mace ego:vorpal | great mace ego:draining
-KMONS:   3 = col:gold skeletal warrior name:ancient_champion name_replace tile:mons_ancient_champion \
+KMONS:   3 = col:gold skeletal warrior name:고대의_투사 name_replace tile:mons_ancient_champion \
          name_descriptor spells:venom_bolt;.;haste;haunt;.;. actual_spells \
          ; plate armour ego:fire_resistance | plate armour ego:cold_resistance . \
          battleaxe ego:vorpal | battleaxe ego:pain | \
          w:3 executioner's axe ego:vorpal
-KMONS:   4 = col:gold skeletal warrior name:ancient_champion name_replace tile:mons_ancient_champion \
+KMONS:   4 = col:gold skeletal warrior name:고대의_투사 name_replace tile:mons_ancient_champion \
          name_descriptor spells:iskenderun's_mystic_blast;slow;haste;.;.;. \
          actual_spells ; plate armour ego:fire_resistance | plate armour \
          ego:cold_resistance . great sword ego:pain | great sword ego:draining \
@@ -87,7 +87,7 @@ local skele_death_marker = TriggerableFunction:new {
 
 skele_death_marker:add_triggerer(DgnTriggerer:new {
   type="monster_dies",
-  target="ancient champion" })
+  target="고대의 투사" })
 
 lua_marker("]", skele_death_marker)
 }}
