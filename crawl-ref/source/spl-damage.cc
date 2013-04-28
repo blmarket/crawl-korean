@@ -148,7 +148,7 @@ spret_type cast_fire_storm(int pow, bolt &beam, bool fail)
 bool cast_hellfire_burst(int pow, bolt &beam)
 {
     beam.name              = M_("burst of hellfire");
-    beam.aux_source        = "burst of hellfire";
+    beam.aux_source        = _(M_("burst of hellfire"));
     beam.ex_size           = 1;
     beam.flavour           = BEAM_HELLFIRE;
     beam.real_flavour      = beam.flavour;
@@ -193,7 +193,7 @@ spret_type cast_chain_lightning(int pow, const actor *caster, bool fail)
 
     // initialise beam structure
     beam.name           = M_("lightning arc");
-    beam.aux_source     = "chain lightning";
+    beam.aux_source     = _(M_("chain lightning"));
     beam.beam_source    = caster->mindex();
     beam.thrower        = caster->is_player() ? KILL_YOU_MISSILE : KILL_MON_MISSILE;
     beam.range          = 8;
@@ -1788,7 +1788,7 @@ bool setup_fragmentation_beam(bolt &beam, int pow, const actor *caster,
     beam.hit         = AUTOMATIC_HIT;
 
     beam.source_name = caster->name(DESC_PLAIN, true);
-    beam.aux_source = "by Lee's Rapid Deconstruction"; // for direct attack
+    beam.aux_source = _(M_("by Lee's Rapid Deconstruction")); // for direct attack
 
     beam.target = target;
 
@@ -2228,7 +2228,7 @@ spret_type cast_thunderbolt(actor *caster, int pow, coord_def aim, bool fail)
                               : caster->props["thunderbolt_mana"].get_int();
     bolt beam;
     beam.name              = M_("lightning");
-    beam.aux_source        = "rod of lightning";
+    beam.aux_source        = _(M_("rod of lightning"));
     beam.flavour           = BEAM_ELECTRICITY;
     beam.glyph             = dchar_glyph(DCHAR_FIRED_BURST);
     beam.colour            = LIGHTCYAN;

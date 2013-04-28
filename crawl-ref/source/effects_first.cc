@@ -2854,9 +2854,9 @@ void handle_time()
                 beam.damage       = dice_def(3, you.magic_contamination
                                              * (you.is_undead ? 4 : 2) / 4);
                 beam.target       = you.pos();
-                beam.name         = "magical storm";
+                beam.name         = M_("magical storm");
                 beam.beam_source  = NON_MONSTER;
-                beam.aux_source   = "a magical explosion";
+                beam.aux_source   = _("a magical explosion");
                 beam.ex_size      = std::max(1, std::min(9,
                                         you.magic_contamination / 15));
                 beam.ench_power   = you.magic_contamination * 5;

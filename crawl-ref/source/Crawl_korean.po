@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-26 22:01+0900\n"
+"POT-Creation-Date: 2013-04-27 23:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5058,7 +5058,7 @@ msgstr "당신은 사악한 에너지의 격동을 느꼈다."
 msgid "Your body is wracked with pain!"
 msgstr "당신의 육체가 고통으로 경련을 일으켰다!"
 
-#: effects.cc:374 effects.cc:374 effects.cc:375
+#: effects.cc:374 effects.cc:374 effects.cc:375 beam.cc:4426
 msgid "scroll of immolation"
 msgstr "제물의 두루마리"
 
@@ -5660,7 +5660,7 @@ msgid "Your body shudders with the violent release of wild energies!"
 msgstr "당신의 육체는 격렬하게 방출된 에너지로 떨렸다!"
 
 #: effects.cc:2316 effects.cc:2316 effects.cc:2308 effects.cc:2186
-#: effects.cc:2245 effects.cc:2249
+#: effects.cc:2245 effects.cc:2249 effects_first.cc:2859
 msgid "a magical explosion"
 msgstr "마력 폭발"
 
@@ -6303,14 +6303,14 @@ msgstr "(M)이 마법을 암기한다.(T)"
 #: cloud.cc:824 cloud.cc:826
 #, c-format
 msgid "%s %s in the rain."
-msgstr "%s는 빗속에서 %s다."
+msgstr "%1$s은(는) 빗속에서 수증기를 내뿜고 있다.%2$.0s"
 
 #. / 한글화 하기 어려움. 일단 내비둘것.
 #: cloud.cc:1372 cloud.cc:1371 cloud.cc:1371 cloud.cc:1362 cloud.cc:1293
 #: cloud.cc:1294 cloud.cc:1296 cloud.cc:1299
 #, c-format
 msgid "%s %s standing in the rain."
-msgstr "%s는 빗속에서 서 %s다."
+msgstr "%1$s은(는) 빗속에 서 있다.%2$.0s"
 
 # (deceit) 액터, bask(s) 또는 are engulfed, 구름 이름
 #. / 한글화 하기 몹시 어려움. 내비둘것.
@@ -15390,6 +15390,18 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531
 msgid "The fire roars with new energy!"
@@ -23926,7 +23938,7 @@ msgstr "%s이(가) 폭발했다!"
 #: beam.cc:5229 beam.cc:5251 beam.cc:5295 beam.cc:5166 beam.cc:5183
 #: beam.cc:5205 beam.cc:5230 beam.cc:5247 beam.cc:5269 beam.cc:5227
 #: beam.cc:5244 beam.cc:5266 beam.cc:5239 beam.cc:5256 beam.cc:5278
-#: beam.cc:5231 beam.cc:5248 beam.cc:5270
+#: beam.cc:5231 beam.cc:5248 beam.cc:5270 mon-stuff.cc:1047
 msgid "You hear an explosion!"
 msgstr "폭발 소리가 들렸다!"
 
@@ -31184,6 +31196,18 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032 decks.cc:1732 decks.cc:2966 decks.cc:3033 decks.cc:2960
@@ -34959,12 +34983,12 @@ msgctxt "silversears"
 msgid "!"
 msgstr "을(를) 그슬렸다!"
 
-#: throw.cc:2376
+#: throw.cc:2376 throw.cc:2356
 #, c-format
 msgid "Shot with a%s %s by %s"
 msgstr "%3$s이(가) 발사한 %2$s%1$.0s"
 
-#: throw.cc:2382
+#: throw.cc:2382 throw.cc:2362
 #, c-format
 msgid "Hit by a%s %s thrown by %s"
 msgstr "%3$s이(가) 던진 %2$s에 맞음%1$.0s"
@@ -36485,7 +36509,7 @@ msgstr " 공중을 떠다닌다"
 msgid " who is covered in oozing lacerations"
 msgstr " 점액이 흘러나오는 열상이 온 몸에 가득하다"
 
-#: describe.cc:1054 describe.cc:1061 describe.cc:1055
+#: describe.cc:1054 describe.cc:1061 describe.cc:1055 describe.cc:1445
 msgid ""
 "\n"
 "It can be maximally enchanted to +"
@@ -36493,7 +36517,7 @@ msgstr ""
 "\n"
 "이것은 최대 +"
 
-#: describe.cc:1061
+#: describe.cc:1061 describe.cc:1447
 msgctxt "wenench2"
 msgid "."
 msgstr " 까지 강화가 가능하다."
@@ -38634,3 +38658,31 @@ msgstr "흡수"
 #, c-format
 msgid "%s unmelds from your body."
 msgstr "%s이(가) 당신에게서 떨어져 나갔다."
+
+#: beam.cc:4514
+msgid "your miscasting"
+msgstr "주문 실패"
+
+#: main.cc:4377
+msgid "You're too terrified to move while being watched!"
+msgstr "당신은 그 곳으로 움직이기에는 너무 공포에 질려있다!"
+
+#: mon-info.cc:717
+msgctxt "moninfo"
+msgid "held by "
+msgstr "에게 잡힘"
+
+#: mon-info.cc:718
+msgctxt "moninfo"
+msgid "constricted by "
+msgstr "의 조이기에 갖힘"
+
+#: mon-info.cc:734
+msgctxt "moninfo"
+msgid "constricting "
+msgstr "을(를) 조이고 있음"
+
+#: mon-info.cc:735
+msgctxt "moninfo"
+msgid "holding "
+msgstr "을(를) 잡고 있음"

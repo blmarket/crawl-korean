@@ -440,7 +440,7 @@ void conduct_electricity(coord_def where, actor *attacker)
     beam.name          = M_("electric current");
     beam.hit_verb      = pgettext("beam","shocks");
     beam.colour        = ETC_ELECTRICITY;
-    beam.aux_source    = N_("arcing electricity");
+    beam.aux_source    = _("arcing electricity");
     beam.ex_size       = 1;
     beam.is_explosion  = true;
     beam.effect_known  = true;
@@ -604,7 +604,7 @@ void direct_effect(monster* source, spell_type spell,
 
         pbolt.name       = M_("smiting");
         pbolt.flavour    = BEAM_MISSILE;
-        pbolt.aux_source = N_("by divine providence");
+        pbolt.aux_source = _("by divine providence");
         damage_taken     = 7 + random2avg(11, 2);
         break;
 
@@ -622,7 +622,7 @@ void direct_effect(monster* source, spell_type spell,
 
         pbolt.name       = M_("airstrike");
         pbolt.flavour    = BEAM_AIR;
-        pbolt.aux_source = N_("by the air");
+        pbolt.aux_source = _("by the air");
 
         damage_taken     = 10 + 2 * source->hit_dice;
 
@@ -2242,7 +2242,7 @@ void handle_time()
                 beam.target       = you.pos();
                 beam.name         = M_("magical storm");
                 beam.beam_source  = NON_MONSTER;
-                beam.aux_source   = N_("a magical explosion");
+                beam.aux_source   = _("a magical explosion");
                 beam.ex_size      = max(1, min(9, you.magic_contamination / 15));
                 beam.ench_power   = you.magic_contamination * 5;
                 beam.is_explosion = true;

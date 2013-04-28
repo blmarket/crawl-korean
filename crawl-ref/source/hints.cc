@@ -3059,11 +3059,11 @@ formatted_string hints_abilities_info()
 {
     ostringstream text;
     text << "<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
-    string broken = "This screen shows your character's set of talents. "
-        "You can gain new abilities via certain items, through religion or by "
-        "way of mutations. Activation of an ability usually comes at a cost, "
-        "e.g. nutrition or Magic power. Press '<w>!</w>' or '<w>?</w>' to "
-        "toggle between ability selection and description.";
+    string broken = "이 창은 당신의 특수 능력들을 보여줍니다. "
+        "당신은 어떤 아이템이나 종교, 돌연변이를 통해 새로운 능력을 "
+        "얻을 수 있습니다. 이러한 능력들의 사용에는 보통 대가가 필요합니다. "
+        "예를 들자면, 만복도 또는 마나가 소모되죠. '<w>!</w>' 또는 '<w>?</w>' 키를  "
+        "눌러서 특수 능력을 사용하거나 그 설명을 볼 수 있습니다.";
     linebreak_string(broken, _get_hints_cols());
     text << broken;
 
@@ -3079,15 +3079,15 @@ string hints_skills_info()
     textcolor(channel_to_colour(MSGCH_TUTORIAL));
     ostringstream text;
     text << "<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
-    string broken = "This screen shows the skill set of your character. "
-        "The number next to the skill is your current level, the higher the "
-        "better. The <brown>brown percent value</brows> shows how much "
-        "experience is allocated to go towards that skill. "
-        "You can toggle which skills to train by "
-        "pressing their slot letters. A <darkgrey>greyish</darkgrey> skill "
-        "will not be trained and ease the training of others. "
-        "Press <w>!</w> to learn about skill training and <w>?</w> to read "
-        "your skills' descriptions.";
+    string broken = "이 창은 당신의 스킬 목록을 보여줍니다. "
+        "능력 옆에 있는 숫자는 현재 스킬의 레벨이며, "
+        "높을수록 좋습니다. <brown>갈색 퍼센트 수치</brows>는 "
+        "그 스킬을 기르기 위해 할당된 경험치를 나타냅니다. "
+        "원하는 스킬을 숙련하려면 "
+		"해당하는 문자를 누르세요. <darkgrey>회색의</darkgrey> 스킬은 "
+        "숙련도를 높일 수 없으며 다른 스킬의 숙련도로 경험치가 분배됩니다. "
+        "<w>!</w> 키를 눌러 숙련도에 대해 배울 수 있고 <w>?</w>키를 눌러"
+        "당신의 스킬에 대한 설명을 볼 수 있습니다.";
     text << broken;
     text << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
@@ -3099,11 +3099,11 @@ string hints_skill_training_info()
     textcolor(channel_to_colour(MSGCH_TUTORIAL));
     ostringstream text;
     text << "<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
-    string broken = "The training percentage (in <brown>brown</brown>) "
-        "shows the relative amount of the experience gained which will be "
-        "used to train each skill. It is automatically set depending on "
-        "which skills you have used recently. Disabling a skill sets the "
-        "training rate to 0.";
+    string broken = "숙련 백분율(in <brown>brown</brown>)은 "
+        "스킬을 숙련할 때 사용될 획득 경험치의 상대적인 "
+        "수치를 보여줍니다. 이것은 당신이 최근에 어떤 스킬을"
+        "사용했는지에 따라 자동으로 정해집니다. 스킬 잠금은 숙련도를 "
+        "0으로 조정합니다.";
     text << broken;
     text << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
@@ -3115,9 +3115,9 @@ string hints_skills_description_info()
     textcolor(channel_to_colour(MSGCH_TUTORIAL));
     ostringstream text;
     text << "<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
-    string broken = "This screen shows the skill set of your character. "
-                    "Press the letter of a skill to read its description, or "
-                    "press <w>?</w> again to return to the skill selection.";
+    string broken = "이 창은 당신의 스킬 목록를 보여줍니다. "
+                    "스킬의 글자를 누르면 그것에 대한 설명을 볼 수 있으며, "
+                    "다시 <w>?</w>키를 누르면 스킬 선택창으로 돌아갈 수 있습니다.";
 
     linebreak_string(broken, _get_hints_cols());
     text << broken;
@@ -3130,12 +3130,12 @@ string hints_skills_description_info()
 static string _hints_target_mode(bool spells = false)
 {
     string result;
-    result = "then be taken to target mode with the nearest monster or "
-             "previous target already targeted. You can also cycle through "
-             "all hostile monsters in sight with <w>+</w> or <w>-</w>. "
-             "Once you're aiming at the correct monster, simply hit "
-             "<w>f</w>, <w>Enter</w> or <w>.</w> to shoot at it. "
-             "If you miss, <w>";
+    result = "가장 가까운 몬스터 또는 이전 표적이 "
+             "타겟으로 설정됩니다. 또한 당신은 시야 내의 모든 적대적인 몬스터들을 "
+             "<w>+</w> 또는 <w>-</w>로 순차 표적 설정할 수 있습니다. "
+             "올바른 대상을 겨누었다면, "
+             "<w>f</w>, <w>Enter</w> 또는 <w>.</w>키를 눌러 발사합시다. "
+             "만약 공격이 빗나가면, <w>";
 
     command_type cmd;
     if (spells)
@@ -3149,7 +3149,7 @@ static string _hints_target_mode(bool spells = false)
         cmd = CMD_FIRE;
     }
 
-    result += "</w> fires at the same target again.";
+    result += "</w>(으)로 동일 대상에게 다시 발사합니다.";
     insert_commands(result, cmd, 0);
 
     return result;
@@ -3157,7 +3157,7 @@ static string _hints_target_mode(bool spells = false)
 
 static string _hints_abilities(const item_def& item)
 {
-    string str = "To do this, ";
+    string str = "그러기 위해서는, ";
 
     vector<command_type> cmd;
     if (!item_is_equipped(item))
@@ -3165,26 +3165,26 @@ static string _hints_abilities(const item_def& item)
         switch (item.base_type)
         {
         case OBJ_WEAPONS:
-            str += "first <w>%</w>ield it";
+            str += "먼저 그것을 장착(<w>%</w>)하세요";
             cmd.push_back(CMD_WIELD_WEAPON);
             break;
         case OBJ_ARMOUR:
-            str += "first <w>%</w>ear it";
+            str += "먼저 그것을 장비(<w>%</w>)하세요";
             cmd.push_back(CMD_WEAR_ARMOUR);
             break;
         case OBJ_JEWELLERY:
-            str += "first <w>%</w>ut it on";
+            str += "먼저 그것을 착용(<w>%</w>)하세요";
             cmd.push_back(CMD_WEAR_JEWELLERY);
             break;
         default:
             str += "<r>(BUG! this item shouldn't give an ability)</r>";
             break;
         }
-        str += ", then ";
+        str += ". 그러면, ";
     }
-    str += "enter the ability menu with <w>%</w>, and then "
-           "choose the corresponding ability. Note that such an attempt of "
-           "activation, especially by the untrained, is likely to fail.";
+    str += "<w>%</w>키로 능력 메뉴에 들어갑니다. "
+           "알맞은 능력을 고르세요. 특히 숙련되지 않은 능력으로 "
+           "스킬을 발동시키는 것은 실패할 가능성이 큽니다.";
     cmd.push_back(CMD_USE_ABILITY);
 
     insert_commands(str, cmd);
@@ -3195,14 +3195,14 @@ static string _hints_throw_stuff(const item_def &item)
 {
     string result;
 
-    result  = "To do this, type <w>%</w> to fire, then <w>";
+    result  = "그러기 위해서는, <w>%</w>키를 입력하여 발사하세요, <w>";
     result += item.slot;
-    result += "</w> for ";
-    result += (item.quantity > 1 ? "these" : "this");
+    result += "</w>키를 눌러 ";
+    result += (item.quantity > 1 ? "이 " : "이 ");
     result += " ";
     result += item_base_name(item);
-    result += (item.quantity > 1? "s" : "");
-    result += ". You'll ";
+    result += (item.quantity > 1? "들" : "");
+    result += "(으)로, ";
     result += _hints_target_mode();
 
     insert_commands(result, CMD_FIRE, 0);
@@ -3250,8 +3250,8 @@ void hints_describe_item(const item_def &item)
                     && wherey() <= get_number_of_lines() - 5)
                 {
                     // You can activate it.
-                    ostr << "When wielded, some weapons (such as this one) "
-                            "offer certain abilities you can activate. ";
+                    ostr << "어떤 무기들은, 착용할 때 (이것과 같은) "
+                            "특수 능력을 제공하기도 합니다. ";
                     ostr << _hints_abilities(item);
                     break;
                 }
@@ -3259,14 +3259,13 @@ void hints_describe_item(const item_def &item)
                          && wherey() <= get_number_of_lines() - 3)
                 {
                     // It grants a resistance.
-                    ostr << "\nThis weapon offers its wearer protection from "
-                            "certain sources. For an overview of your "
-                            "resistances (among other things) type <w>%</w>"
+                    ostr << "\n이 무기는 착용자에게 어느 근원에서 오는 방어 효과를"
+                            "제공합니다. 당신의 저항력을 "
+                            "살펴보려면 (다른 것들 사이의) <w>%</w>을 입력"
 #ifdef USE_TILE
-                            " or click on your avatar with the <w>right mouse "
-                            "button</w>"
+                            "하시거나, 당신의 캐릭터를 마우스 <w>오른쪽 버튼으로 클릭"
 #endif
-                            ".";
+                            "하세요.";
                     cmd.push_back(CMD_RESISTS_SCREEN);
                     break;
                 }
@@ -3279,9 +3278,9 @@ void hints_describe_item(const item_def &item)
 
             if (!wielded)
             {
-                ostr << "You can wield this weapon with <w>%</w>, or use "
-                        "<w>%</w> to switch between the weapons in slot "
-                        "a and b. (Use <w>%i</w> to adjust item slots.)";
+                ostr << "당신은 이 무기를 <w>%</w>키로 장착할 수 있고 또는 "
+                        "<w>%</w>키를 사용하여 a와 b 슬롯에 있는 무기로"
+                        "손쉽게 바꿀 수 있습니다. (<w>%i</w>를 사용하여 아이템 슬롯을 조정할 수 있습니다.)";
                 cmd.push_back(CMD_WIELD_WEAPON);
                 cmd.push_back(CMD_WEAPON_SWAP);
                 cmd.push_back(CMD_ADJUST_INVENTORY);
@@ -3308,13 +3307,13 @@ void hints_describe_item(const item_def &item)
 
                 if (you.skills[curr_wpskill] + 2 < you.skills[best_wpskill])
                 {
-                    ostr << "\nOn second look, you've been training in <w>"
+                    ostr << "\n다시 한 번 보자면, 당신은 <w>"
                          << skill_name(best_wpskill)
-                         << "</w> for a while, so maybe you should "
-                            "continue training that rather than <w>"
+                         << "</w>을(를) 수련하고 있습니다. 이제 당분간은, "
+                            "<w>"
                          << skill_name(curr_wpskill)
-                         << "</w>. (Type <w>%</w> to see the skill "
-                            "management screen for the actual numbers.)";
+                         << "</w>을(를) 수련하는 것이 현명할 것입니다. (<w>%</w>을 입력하여"
+                            " 스킬 관리창을 실제 수치로 볼 수 있습니다.)";
 
                     cmd.push_back(CMD_DISPLAY_SKILLS);
                     long_text = true;
@@ -3324,30 +3323,30 @@ void hints_describe_item(const item_def &item)
             {
                 if (is_range_weapon(item))
                 {
-                    ostr << "To attack a monster, ";
+                    ostr << "몬스터를 공격하려면, ";
 #ifdef USE_TILE
-                    ostr << "if you have appropriate ammo quivered you can "
-                            "<w>left mouse click</w> on the monster while "
-                            "prssing the <w>Shift key</w>. Alternatively, "
-                            "you can <w>left mouse click</w> on the tile for "
-                            "the ammo you wish to fire, and then <w>left "
-                            "mouse click</w> on the monster.\n\n";
-                    ostr << "To launch ammunition using the keyboard, ";
+                    ostr << "그리고 만약 당신이 적당한 발사체를 갖고 있다면"
+                            "당신은 몬스터를 <w>마우스 좌클릭</w>할 수 있습니다. "
+							"(<w>쉬프트키</w>를 누른 채로) 다른 방법으로는, "
+                            "당신은 곳을 <w>마우스 좌클릭</w>하여"
+                            "발사할수도 있고, 또 몬스터에 <w>아우스 "
+                            "좌클릭</w>하여 발사하는 것도 가능합니다.\n\n";
+                    ostr << "탄약을 발사하려면 키보드를 이용하세요. ";
 #endif
-                    ostr << "you only need to "
-                            "<w>%</w>ire the appropriate type of ammunition. "
-                            "You'll ";
+                    ostr << "당신은 오직 "
+					     	"발사 도구에 맞는 발사체만을 발사(<w>%</w>)할 수 있습니다. "
+                            "그러면, ";
                     ostr << _hints_target_mode();
                     cmd.push_back(CMD_FIRE);
                 }
                 else
-                    ostr << "To attack a monster, you can simply walk into it.";
+                    ostr << "몬스터를 공격하려면, 몬스터를 향해 걸어가기만 하면 됩니다.";
             }
 
             if (is_throwable(&you, item) && !long_text)
             {
-                ostr << "\n\nSome weapons (including this one), can also be "
-                        "<w>%</w>ired. ";
+                ostr << "\n\n어떤 무기들은 (이것도 포함), "
+                        "발사(<w>%</w>)하는 것이 가능합니다. ";
                 cmd.push_back(CMD_FIRE);
                 ostr << _hints_throw_stuff(item);
                 long_text = true;
@@ -3356,21 +3355,21 @@ void hints_describe_item(const item_def &item)
                 && (is_artefact(item)
                     || get_equip_desc(item) != ISFLAG_NO_DESC))
             {
-                ostr << "\n\nWeapons and armour that have unusual descriptions "
-                     << "like this are much more likely to be of higher "
-                     << "enchantment or have special properties, good or bad.";
+                ostr << "\n\n이것처럼 특이한 설명을 가진 무기와 방어구들은 "
+                     << "더 높은 수준의 강화가 이루어질 수 있으며 "
+                     << "또는 좋든 나쁘든 특별한 속성을 갖고 있을 수 있습니다.";
 
                 Hints.hints_events[HINT_SEEN_RANDART] = false;
             }
             if (item_known_cursed(item) && !long_text)
             {
-                ostr << "\n\nOnce wielded, a cursed weapon won't leave your "
-                        "hands again until the curse has been lifted by "
-                        "reading a scroll of remove curse or one of the "
-                        "enchantment scrolls.";
+                ostr << "\n\n일단 착용하면, 저주받은 무기는 해제할 수 없으며 "
+                        "강화 마법 두루마리나 저주 해제 마법 두루마리를 사용하여 "
+                        "저주를 풀어주어야 "
+                        "장비 해제가 가능합니다. ";
 
                 if (!wielded && is_throwable(&you, item))
-                    ostr << " (Throwing it is safe, though.)";
+                    ostr << " (이것을 던지는 건 안전합니다, 그래도.)";
 
                 Hints.hints_events[HINT_YOU_CURSED] = false;
             }
@@ -3381,42 +3380,42 @@ void hints_describe_item(const item_def &item)
             if (is_throwable(&you, item))
             {
                 ostr << item.name(true, DESC_YOUR)
-                     << gettext(" can be <w>%</w>ired without the use of a launcher. ");
+                     << gettext("은(는) 발사도구가 없어도 발사(<w>%</w>)할 수 있습니다. ");
                 ostr << _hints_throw_stuff(item);
                 cmd.push_back(CMD_FIRE);
             }
             else if (is_launched(&you, you.weapon(), item))
             {
-                ostr << "As you're already wielding the appropriate launcher, "
-                        "you can simply ";
+                ostr << "당신은 이미 적당한 발사도구를 착용하고 있어서, "
+                        "그저";
 #ifdef USE_TILE
-                ostr << "<w>left mouse click</w> on the monster you want "
-                        "to hit while pressing the <w>Shift key</w>. "
-                        "Alternatively, you can <w>left mouse click</w> on "
-                        "this tile of the ammo you want to fire, and then "
-                        "<w>left mouse click</w> on the monster you want "
-                        "to hit.\n\n"
+                ostr << "공격하고 싶은 몬스터를 <w>왼쪽 마우스 버튼 클릭</w>하기만 하면 됩니다. "
+                        "<w>쉬프트키</w>를 누른 상태에서. "
+                        "대신에, 당신은 <w>마우스 왼쪽 클릭</w>해서 "
+                        "발사하고 싶은 장소를 골라, "
+                        "<w>마우스 왼쪽 클릭</w> 하여 몬스터를"
+                        "공격할 수 있습니다.\n\n"
 
-                        "To launch this ammo using the keyboard, you can "
-                        "simply ";
+                        "키보드를 사용하여 탄약을 몬스터에게 발사하려면 "
+                        "간단히";
 #endif
 
-                ostr << "<w>%</w>ire "
-                     << (item.quantity > 1 ? "these" : "this")
-                     << " " << item.name(false, DESC_BASENAME)
-                     << (item.quantity > 1? "s" : "")
-                     << ". You'll ";
+                ostr << "발사 키(<w>%</w>)을 (눌러) "
+                     << (item.quantity > 1 ? "이 " : "이 ")
+                     << " " << item.name(true, DESC_BASENAME)
+                     << (item.quantity > 1? "을(를) " : "을(를) ")
+                     << "발사할 수 있습니다. 그럼 ";
                 ostr << _hints_target_mode();
                 cmd.push_back(CMD_FIRE);
             }
             else
             {
-                ostr << "To shoot "
-                     << (item.quantity > 1 ? "these" : "this")
-                     << " " << item.name(false, DESC_BASENAME)
-                     << (item.quantity > 1? "s" : "")
-                     << ", first you need to <w>%</w>ield an appropriate "
-                        "launcher.";
+                ostr << " "
+                     << (item.quantity > 1 ? "이 " : "이 ")
+                     << " " << item.name(true, DESC_BASENAME)
+                     << (item.quantity > 1? "을(를) " : "을(를) ")
+                     << "발사하기 위해서는, 당신은 적절한 발사체를 착용(<w>%</w>) "
+                        "해야 합니다.";
                 cmd.push_back(CMD_WIELD_WEAPON);
             }
             Hints.hints_events[HINT_SEEN_MISSILES] = false;
@@ -3427,37 +3426,37 @@ void hints_describe_item(const item_def &item)
             bool wearable = true;
             if (you.species == SP_CENTAUR && item.sub_type == ARM_BOOTS)
             {
-                ostr << "As a Centaur you cannot wear boots. "
-                        "(Type <w>%</w> to see a list of your mutations and "
-                        "innate abilities.)";
+                ostr << "켄타우로스인 당신은 신발을 신을 수 없습니다. "
+                        "(<w>%</w>를 입력하여 당신의 돌연변이와 고유 능력을 "
+                        "볼 수 있습니다.)";
                 cmd.push_back(CMD_DISPLAY_MUTATIONS);
                 wearable = false;
             }
             else if (you.species == SP_MINOTAUR && is_hard_helmet(item))
             {
-                ostr << "As a Minotaur you cannot wear helmets. "
-                        "(Type <w>%</w> to see a list of your mutations and "
-                        "innate abilities.)";
+                ostr << "미노타우루스인 당신은 투구를 착용할 수 없습니다. "
+                        "(<w>%</w> 를 입력하여 당신의 돌연변이와 고유 능력을"
+                        "볼 수 있습니다.)";
                 cmd.push_back(CMD_DISPLAY_MUTATIONS);
                 wearable = false;
             }
             else if (item.sub_type == ARM_CENTAUR_BARDING)
             {
-                ostr << "Only centaurs can wear centaur barding.";
+                ostr << "켄타우로스만이 켄타우로스 마갑을 입을 수 있습니다.";
                 wearable = false;
             }
             else if (item.sub_type == ARM_NAGA_BARDING)
             {
-                ostr << "Only nagas can wear naga barding.";
+                ostr << "나가만이 나가 꼬리갑옷을 입을 수 있습니다.";
                 wearable = false;
             }
             else
             {
-                ostr << "You can wear pieces of armour with <w>%</w> and take "
-                        "them off again with <w>%</w>"
+                ostr << "당신은 <w>%</w>으로 부위별 방어구를 입을 수 있고"
+                        "<w>%</w>으로 그것들을 다시 벗을 수 있습니다"
 #ifdef USE_TILE
-                        ", or, alternatively, simply click on their tiles to "
-                        "perform either action."
+                        ", 또는, 대신에, 그것들의 아이콘을 클릭하는 것만으로"
+                        "이러한 행동을 수행할 수 있습니다."
 #endif
                         ".";
                 cmd.push_back(CMD_WEAR_ARMOUR);
@@ -3468,33 +3467,33 @@ void hints_describe_item(const item_def &item)
                 && get_armour_slot(item) == EQ_BODY_ARMOUR
                 && !is_effectively_light_armour(&item))
             {
-                ostr << "\nNote that body armour with high evasion penalties "
-                        "may hinder your ability to learn and cast spells. "
-                        "Light armour such as robes, leather armour or any "
-                        "elven armour will be generally safe for any aspiring "
-                        "spellcaster.";
+                ostr << "\n회피율 감소 수치가 큰 방어구들은"
+                        "당신이 주문을 배우거나 외우는 것을 방해할 수 있습니다. "
+                        "로브나, 가죽 갑옷, 엘븐제 갑옷과 같은 경갑은"
+                        "대개 주문 시전술사 지망자들이 "
+                        "큰 무리 없이 주문을 외우도록 해 줄 것입니다.";
             }
             else if (Hints.hints_type == HINT_MAGIC_CHAR
                      && is_shield(item))
             {
-                ostr << "\nNote that shields will hinder you ability to "
-                        "cast spells; the larger the shield, the bigger "
-                        "the penalty.";
+                ostr << "\n방패는 당신의 주문 시전을 방해할 것이며 "
+                        "방패가 크고 무거울수록 "
+                        "페널티도 커진다는 것을 알아두세요.";
             }
             else if (Hints.hints_type == HINT_RANGER_CHAR
                      && is_shield(item))
             {
-                ostr << "\nNote that wearing a shield will greatly decrease "
-                        "the speed at which you can shoot arrows.";
+                ostr << "\n방패 착용은 당신이 활을 쏘는 속도를 "
+                        "대폭 감소시킨다는 것을 알아두세요.";
             }
 
             if (!item_type_known(item)
                 && (is_artefact(item)
                     || get_equip_desc(item) != ISFLAG_NO_DESC))
             {
-                ostr << "\n\nWeapons and armour that have unusual descriptions "
-                     << "like this are much more likely to be of higher "
-                     << "enchantment or have special properties, good or bad.";
+                ostr << "\n\n이것처럼 특이한 설명을 가진 무기와 방어구들은 "
+                     << "더 높은 수준의 강화가 이루어질 수 있으며, "
+                     << "또는 좋든 나쁘든 특별한 속성을 갖고 있을 수 있습니다.";
 
                 Hints.hints_events[HINT_SEEN_RANDART] = false;
             }
@@ -3502,28 +3501,28 @@ void hints_describe_item(const item_def &item)
             {
                 if (item_known_cursed(item))
                 {
-                    ostr << "\nA cursed piece of armour, once worn, cannot be "
-                            "removed again until the curse has been lifted by "
-                            "reading a scroll of remove curse or enchant "
-                            "armour.";
+                    ostr << "\n저주받은 방어구는 한 번 착용하면 "
+                            "해제할 수 없으며, 저주 해제스크롤이나 "
+                            "방어구 강화 스크롤을 사용하여 저주를 해제해야 "
+                            "방어구를 해제할 수 있습니다.";
                 }
                 if (gives_resistance(item))
                 {
-                    ostr << "\n\nThis armour offers its wearer protection from "
-                            "certain sources. For an overview of your"
-                            " resistances (among other things) type <w>%</w>"
+                    ostr << "\n\n이 방어구는 착용자에게 원소 공격에 대한 방어 효과를 "
+                            "제공합니다. 당신의 저항력을 살펴보려면, "
+                            "<w>%</w>키를 입력하세요"
 #ifdef USE_TILE
-                            " or click on your avatar with the <w>right mouse "
-                            "button</w>"
+                            "또는 당신의 캐릭터를<w>마우스 오른쪽"
+                            "버튼</w>으로 클릭하셔도 됩니다."
 #endif
                             ".";
                     cmd.push_back(CMD_RESISTS_SCREEN);
                 }
                 if (gives_ability(item))
                 {
-                    ostr << "\n\nWhen worn, some types of armour (such as "
-                            "this one) offer certain <w>%</w>bilities you can "
-                            "activate. ";
+                    ostr << "\n\n이 것과 같은 어떠한 방어구들은 "
+						"<w>%</w>키를 눌러 당신이 사용할 수 있는 능력을 "
+                            "부여합니다. ";
                     ostr << _hints_abilities(item);
                     cmd.push_back(CMD_USE_ABILITY);
                 }
@@ -3532,26 +3531,26 @@ void hints_describe_item(const item_def &item)
             break;
         }
         case OBJ_WANDS:
-            ostr << "The magic within can be unleashed by evoking "
-                    "(<w>%</w>) it.";
+            ostr << "(<w>%</w>)키를 눌러, 마법봉에 담겨 있는 마법을 "
+                    "사용할 수 있습니다.";
             cmd.push_back(CMD_EVOKE);
 #ifdef USE_TILE
-            ostr << " Alternatively, you can 1) <w>left mouse click</w> on "
-                    "the monster you wish to target (or your player character "
-                    "to target yourself) while pressing the <w>";
+            ostr << "또한, 당신은 1) <w>마우스 왼쪽 버튼 클릭</w>하여 "
+                    "쉬프트 키를 누른 상태에서 몬스터를 (또는 당신 캐릭터 자신을 "
+                    "표적으로 삼거나) 표적으로 삼을 수 있습니다. (<w>";
 #ifdef USE_TILE_WEB
-            ostr << "Ctrl + Shift keys";
+            ostr << "컨트롤 + 쉬프트 키";
 #else
 #if defined(UNIX) && defined(USE_TILE_LOCAL)
             if (!tiles.is_fullscreen())
-              ostr << "Ctrl + Shift keys";
+              ostr << "컨트롤 + 쉬프트 키";
             else
 #endif
-              ostr << "Alt key";
+              ostr << "알트 키";
 #endif
-            ostr << "</w> and pick the wand from the menu, or 2) "
-                    "<w>left mouse click</w> on the wand tile and then "
-                    "<w>left mouse click</w> on your target.";
+            ostr << "</w>) 그리고 메뉴에서 지팡이를 고르거나, 또는 2) "
+                    "<w>마우스 왼쪽 버튼 클릭</w>하여 마법봉의 아이콘을 선택하고 "
+                    "표적을 <w>마우스 왼쪽 버튼 클릭</w>하세요.";
 #endif
             Hints.hints_events[HINT_SEEN_WAND] = false;
             break;
@@ -3559,38 +3558,38 @@ void hints_describe_item(const item_def &item)
         case OBJ_FOOD:
             if (food_is_rotten(item) && !player_mutation_level(MUT_SAPROVOROUS))
             {
-                ostr << "You can't eat rotten chunks, so you might just as "
-                        "well ";
+                ostr << "당신은 썩은 고기를 먹을 수 없습니다. "
+                        "이 고기는 ";
                 if (!in_inventory(item))
-                    ostr << "ignore them. ";
+                    ostr << "무시하는 게 좋겠군요. ";
                 else
                 {
-                    ostr << "<w>%</w>rop this. Use <w>%&</w> to select all "
-                            "skeletons, corpses and rotten chunks in your "
-                            "inventory. ";
+                    ostr << "<w>%</w>키를 눌러, 이 고기를 버립시다. <w>%&</w>키를 눌러 당신의"
+                            "소지품창에 있는 모든 뼈, 시체, 썩은 고기를"
+                            "선택할 수 있습니다. ";
                     cmd.push_back(CMD_DROP);
                     cmd.push_back(CMD_DROP);
                 }
             }
             else
             {
-                ostr << "Food can simply be <w>%</w>aten"
+                ostr << "또한 음식을 먹으려면(<w>%</w>키), "
 #ifdef USE_TILE
-                        ", something you can also do by <w>left clicking</w> "
-                        "on it"
+                        "음식의 아이콘을 <w>마우스 왼쪽 버튼 클릭</w "
+                        "하셔도 됩니다."
 #endif
                         ". ";
                 cmd.push_back(CMD_EAT);
 
                 if (item.sub_type == FOOD_CHUNK)
                 {
-                    ostr << "Note that most species refuse to eat raw meat "
-                            "unless really hungry. ";
+                    ostr << "대부분의 종족은 날고기를 먹기 싫어한다는 것을 알아두세요."
+                            "정말로 배고프지 않는 이상은 말이죠. ";
 
                     if (food_is_rotten(item))
                     {
-                        ostr << "Even fewer can safely digest rotten meat, and "
-                             "you're probably not part of that group.";
+                        ostr << "일부 소수 종족은 썩은 고기를 소화해낼 수 있지만,"
+                             "당신은 아마 그러한 부류는 아닐겁니다.";
                     }
                 }
             }
@@ -3598,9 +3597,9 @@ void hints_describe_item(const item_def &item)
             break;
 
         case OBJ_SCROLLS:
-            ostr << "Type <w>%</w> to read this scroll"
+            ostr << "<w>%</w>키를 입력하여 두루마리를 읽거나"	
 #ifdef USE_TILE
-                    "or simply click on it with your <w>left mouse button</w>"
+                    "<w>마우스 왼쪽 버튼 클릭</w>하셔서 읽으실 수 있습니다"
 #endif
                     ".";
             cmd.push_back(CMD_READ);
@@ -3610,11 +3609,11 @@ void hints_describe_item(const item_def &item)
 
         case OBJ_JEWELLERY:
         {
-            ostr << "Jewellery can be <w>%</w>ut on or <w>%</w>emoved "
-                    "again"
+            ostr << "장신구는 착용(<w>%</w>)하거나 다시 해제<w>%</w>할 수"
+                    "있고"
 #ifdef USE_TILE
-                    ", though in Tiles, either can be done by clicking on the "
-                    "item in your inventory"
+                    ", 당신의 소지품창에 있는 아이콘을 클릭하는 것으로"
+                    "탈착할 수 있습니다"
 #endif
                     ".";
             cmd.push_back(CMD_WEAR_JEWELLERY);
@@ -3622,29 +3621,29 @@ void hints_describe_item(const item_def &item)
 
             if (item_known_cursed(item))
             {
-                ostr << "\nA cursed piece of jewellery will cling to its "
-                        "unfortunate wearer's neck or fingers until the curse "
-                        "is finally lifted when he or she reads a scroll of "
-                        "remove curse.";
+                ostr << "\n저주받은 장신구는 불운한 착용자의 목이나 "
+                        "손가락에 착 달라붙어서 저주 해제 두루마리를 "
+                        "사용할 때까지는 계속 "
+                        "달라 붙어있을 겁니다.";
             }
             if (gives_resistance(item))
             {
-                    ostr << "\n\nThis "
-                         << (item.sub_type < NUM_RINGS ? "ring" : "amulet")
-                         << " offers its wearer protection "
-                            "from certain sources. For an overview of your "
-                            "resistances (among other things) type <w>%</w>"
+                    ostr << "\n\n이 "
+                         << (item.sub_type < NUM_RINGS ? "반지" : "부적")
+                         << "은(는) 착용자에게 원소 공격으로부터의 "
+                            "저항력을 제공합니다. 당신의 저항력을"
+                            "살펴보려면 <w>%</w>키를 입력하세요."
 #ifdef USE_TILE
-                            " or click on your avatar with the <w>right mouse "
-                            "button</w>"
+                            " 혹은 당신의 캐릭터를 <w>마우스 오른쪽"
+                            "버튼 클릭</w>하셔도 됩니다"
 #endif
                             ".";
                 cmd.push_back(CMD_RESISTS_SCREEN);
             }
             if (gives_ability(item))
             {
-                ostr << "\n\nWhen worn, some types of jewellery (such as this "
-                        "one) offer certain <w>%</w>bilities you can activate. ";
+                ostr << "\n\n이것과 같은, 특정한 종류의 장신구들은 "
+                        "<w>%</w>키를 눌러 사용할 수 있는 특수한 능력을 제공합니다. ";
                 cmd.push_back(CMD_USE_ABILITY);
                 ostr << _hints_abilities(item);
             }
@@ -3652,9 +3651,9 @@ void hints_describe_item(const item_def &item)
             break;
         }
         case OBJ_POTIONS:
-            ostr << "Type <w>%</w> to quaff this potion"
+            ostr << "<w>%</w>키를 입력하여 이 물약을 마실 수 있습니다"
 #ifdef USE_TILE
-                    "or simply click on it with your <w>left mouse button</w>"
+                    ". 또는 <w>마우스 왼쪽 버튼</w>으로 물약을 클릭하기만 해도 되죠"
 #endif
                     ".";
             cmd.push_back(CMD_QUAFF);
@@ -3664,10 +3663,10 @@ void hints_describe_item(const item_def &item)
         case OBJ_BOOKS:
             if (item.sub_type == BOOK_MANUAL)
             {
-                ostr << "A manual can greatly help you in training a skill. "
-                        "To use it, just <w>%</w>ead it. As long as you are "
-                        "carrying it, the skill in question will be trained "
-                        "more efficiently and will level up faster.";
+                ostr << "스킬 설명서는 당신의 스킬 숙련에 굉장한 도움을 줄 수 있습니다. "
+					"사용하려면, 그냥 읽으면(<w>%</w>키) 됩니다. 당신이 설명서를 "
+                        "오래 소지할수록, 배우기 어려운 스킬들도 더욱 효율적으로 수련하고"
+                        "더 빠르게 스킬의 레벨을 향상시킬 수 있을 것입니다..";
                 cmd.push_back(CMD_READ);
             }
             else // It's a spellbook!
@@ -3678,74 +3677,74 @@ void hints_describe_item(const item_def &item)
                 {
                     if (!item_ident(item, ISFLAG_KNOW_TYPE))
                     {
-                        ostr << "It's a book, you can <w>%</w>ead it.";
+                        ostr << "이것은 책입니다. 당신은 이것을 <w>%</w>키를 입력하여 읽을 수 있습니다.";
                         cmd.push_back(CMD_READ);
                     }
                     else
                     {
-                        ostr << "A spellbook! You could <w>%</w>emorise some "
-                                "spells and then cast them with <w>%</w>.";
+                        ostr << "이건 마법서였군요! 당신은 몇몇 주문을 기억(<w>%</w>키)하고 "
+                                "<w>%</w>키를 눌러 기억한 주문을 시전할 수 있습니다.";
                         cmd.push_back(CMD_MEMORISE_SPELL);
                         cmd.push_back(CMD_CAST_SPELL);
                     }
-                    ostr << "\nAs a worshipper of "
-                         << god_name(GOD_TROG)
-                         << ", though, you might instead wish to burn this "
-                            "tome of hated magic by using the corresponding "
-                            "<w>%</w>bility. "
-                            "Note that this only works on books that are lying "
-                            "on the floor and not on your current square. ";
+                    ostr << "\n 당신은"
+                         << _(god_name(GOD_TROG).c_str())
+                         << "을 숭배하는군요. 당신은 주문을 외우는 대신, 당신의 신이 혐오하는 이러한 마법서들을"
+                            "붙태워버리고 싶을지도 모릅니다."
+							"(<w>%</w>키)"
+                            "이는 바닥에 놓여있는 책에게만 효과가 있으며"
+                            "당신이 현재 있는 자리에는 효과가 없다는 것을 알아두세요. ";
                     cmd.push_back(CMD_USE_ABILITY);
                 }
                 else if (!item_ident(item, ISFLAG_KNOW_TYPE))
                 {
-                    ostr << "It's a book, you can <w>%</w>ead it"
+                    ostr << "이것은 책입니다. 당신은 이것을 읽을(<w>%</w>키)수 있습니다."
 #ifdef USE_TILE
-                            ", something that can also be achieved by clicking "
-                            "on its tile in your inventory."
+                            "그리고 우측 소지품창의 책 아이콘을 클릭하셔도"
+                            "읽는 것이 가능합니다."
 #endif
                             ".";
                     cmd.push_back(CMD_READ);
                 }
                 else if (item.sub_type == BOOK_DESTRUCTION)
                 {
-                    ostr << "This magical item can cause great destruction "
-                            "- to you, or your surroundings. Use with care!";
+                    ostr << "이 마법서에는 강한 위력의 파괴 마법들이 수록되어 있군요."
+                            "이러한 마법은 적 뿐만 아니라, 당신이나 동료에게도 큰 피해를 줄 수 있습니다. 조심히 사용하세요!";
                 }
                 else
                 {
                     if (player_can_memorise(item))
                     {
-                        ostr << "Such a <lightblue>highlighted "
-                                "spell</lightblue> can be <w>%</w>emorised "
-                                "right away. ";
+                        ostr << "이러한 <lightblue>강조된 "
+							"주문</lightblue>은 당장에라도 기억(<w>%</w>키)할 수"
+                                "있습니다. ";
                         cmd.push_back(CMD_MEMORISE_SPELL);
                     }
                     else
                     {
-                        ostr << "You cannot memorise any "
-                             << (you.spell_no ? "more " : "")
-                             << "spells right now. This will change as you "
-                                "grow in levels and Spellcasting proficiency. ";
+                        ostr << "당신은 현재 어떠한 주문도"
+                             << (you.spell_no ? "더 이상 " : "")
+                             << "기억할 수 없습니다. 경험치를 쌓아 "
+                                "플레이어 레벨과 주문시전 레벨이 올라갈수록, 더 많은 주문을 기억할 수 있습니다.";
                     }
 
                     if (you.spell_no)
                     {
-                        ostr << "\n\nTo do magic, ";
+                        ostr << "\n\n주문을 시전하려면, ";
 #ifdef USE_TILE
-                        ostr << "you can <w>left mouse click</w> on the "
-                                "monster you wish to target (or on your "
-                                "player character to cast a spell on "
-                                "yourself) while pressing the <w>Control "
-                                "key</w>, and then select a spell from the "
-                                "menu. Or you can switch to the spellcasting "
-                                "display by <w>clicking on the</w> "
-                                "corresponding <w>tab</w>."
-                                "\n\nAlternatively, ";
+                        ostr << "당신은 <w>마우스 왼쪽 버튼/w>을 클릭하여"
+                                "표적으로 삼을 몬스터를 지정합니다. (또는"
+                                "자기 자신을 클릭하여 자신에게 주문을 "
+                                "시전할 수 있습니다.) <w>Ctrl"
+                                "키</w>를 누르고 있어야합니다. 그런 후, 메뉴에서 주문을 "
+                                "고릅니다. 또는 당신은 우측 커맨드 인터페이스에서, "
+                                "알맞은 <w>탭</w>을 클릭하여 가지고 있는 주문 아이콘을 클릭한 후,"
+                                "해당 주문 아이콘을 클릭하고 대상을 선택하여 주문을 시전할 수도 있습니다."
+                                "\n\n또는, ";
 #endif
-                        ostr << "you can type <w>%</w> and choose a "
-                                "spell, e.g. <w>a</w> (check with <w>?</w>). "
-                                "For attack spells you'll ";
+                        ostr << "<w>%</w>키를 눌러 주문을 선택하고 "
+                                "시전하실 수 있습니다. 예를 들면 <w>a</w> (<w>?</w>로 확인합니다.)를 눌러"
+                                "당신이 시전할 주문을 확인할 수 있죠.";
                         cmd.push_back(CMD_CAST_SPELL);
                         ostr << _hints_target_mode(true);
                     }
@@ -3760,69 +3759,66 @@ void hints_describe_item(const item_def &item)
 
             if (item.sub_type == CORPSE_SKELETON)
             {
-                ostr << "Skeletons can be used as components for certain "
-                        "necromantic spells. Apart from that, they are "
-                        "largely useless.";
+                ostr << "뼈는 특정한 강령술 주문에 필요한 재료로 쓰일 수 있습니다. "
+                        "사실 뼈는 강령술 주문에 사용하는 것 외에는 "
+                        "거의 다른 용도가 없죠.";
 
                 if (in_inventory(item))
                 {
-                    ostr << " In the drop menu you can select all skeletons, "
-                            "corpses, and rotten chunks in your inventory "
-                            "at once with <w>%&</w>.";
+                    ostr << " 아이템 버리기 메뉴에서 당신은"
+                            "모든 뼈, 시체, 썩은 고기를"
+                            "<w>%&</w>를 눌러 한번에 선택할 수 있습니다.";
                     cmd.push_back(CMD_DROP);
                 }
                 break;
             }
 
-            ostr << "Corpses lying on the floor can be <w>%</w>hopped up to "
-                    "produce chunks for food (though they may be unhealthy)";
+            ostr << "바닥에 놓인 시체는 <w>%</w>키를 눌러 해체하여, "
+                    "고기로 만들 수 있습니다. 시체가 독이 있거나 오염된 시체와는 관계가 없이 해체가 가능하죠";
             cmd.push_back(CMD_BUTCHER);
 
             if (!food_is_rotten(item) && god_likes_fresh_corpses(you.religion))
             {
-                ostr << ", or offered as a sacrifice to "
-                     << god_name(you.religion)
-                     << " <w>%</w>raying over them.";
+                ostr << ". 아니면, 시체를 공양받는 신에게 시체를 제물로 바칠 수 있습니다. 마침 당신이 믿고 있는 신 "
+                     << _(god_name(you.religion).c_str())
+                     << "은(는) 신선한 시체를 제물로 받는군요, 시체 위에서 기도(<w>%</w>키)하여 그 시체를 제물로 바칠 수 있습니다";
                 cmd.push_back(CMD_PRAY);
             }
             ostr << ". ";
 
             if (food_is_rotten(item))
             {
-                ostr << "Rotten corpses won't be of any use to you, though, so "
-                        "you might just as well ";
+                ostr << "썩은 시체는 당신에게 아무 쓸모도 없을 것이니, "
+                        "무시하고 지나치도록 ";
                 if (!in_inventory(item))
-                    ostr << "ignore them. ";
+                    ostr << "합시다. ";
                 else
                 {
-                    ostr << "<w>%</w>rop this. Use <w>%&</w> to select all "
-                            "skeletons and rotten chunks or corpses in your "
-                            "inventory. ";
+                    ostr << "합시다. 이미 주운 썩은 시체는 <w>%</w>키를 눌러 버립시다. <w>%&</w>키를 입력하여"
+                            "당신의 인벤토리에 있는 모든 뼈, 썩은 고기, 시체를 "
+                            "고를 수 있습니다. ";
                     cmd.push_back(CMD_DROP);
                     cmd.push_back(CMD_DROP);
                 }
-                ostr << "No god will accept such rotten sacrifice, either.";
+                ostr << "어떠한 신도 그런 썩은 제물은 받아들이지 않을 겁니다.";
             }
             else
             {
 #ifdef USE_TILE
-                ostr << " For an individual corpse in your inventory, the most "
-                        "practical way to chop it up is to drop it by clicking "
-                        "on it with your <w>left mouse button</w> while "
-                        "<w>Shift</w> is pressed, and then repeat that command "
-                        "for the corpse tile now lying on the floor.";
+                ostr << " 당신의 소지품창에 있는 시체 한 구를 가장 간단하게 "
+                        "해체하는 방법은, <w>쉬프트키</w>를 누른 상태에서"
+                        "시체 아이콘을 <w>마우스 왼쪽 버튼 클릭</w>하여 떨어뜨린 후,"
+                        "바닥에 놓인 시체에 "
+                        "같은 명령어를 반복하면 됩니다.";
 #endif
             }
             if (!in_inventory(item))
                 break;
 
-            ostr << "\n\nIf there are several items in your inventory you'd "
-                    "like to drop, the most convenient way is to use the "
-                    "<w>%</w>rop menu. On a related note, butchering "
-                    "several corpses on a floor square is facilitated by "
-                    "using the <w>%</w>hop prompt where <w>c</w> is a "
-                    "valid synonym for <w>y</w>es or you can directly chop "
-                    "<w>a</w>ll corpses.";
+            ostr << "\n\n만약 당신의 소지품 중 떨어뜨리고 싶은 물건들이 있다면,  "
+				"가장 간편한 방법은 아이템 버리기 메뉴(<w>%</w>키)를 이용하는 것입니다."
+                    "관련된 사항으로, 바닥에 놓인 시체를"
+                    "해체하는 것은 <w>%</w>키를 입력하는 것으로도 가능합니다. ";
             cmd.push_back(CMD_DROP);
             cmd.push_back(CMD_BUTCHER);
             break;
@@ -3830,21 +3826,21 @@ void hints_describe_item(const item_def &item)
         case OBJ_RODS:
             if (!item_ident(item, ISFLAG_KNOW_TYPE))
             {
-                ostr << "\n\nTo find out what this rod might do, you have "
-                        "to <w>%</w>ield it to see if you can use the "
-                        "spells hidden within, then e<w>%</w>oke it to "
-                        "actually do so"
+                ostr << "\n\n이 막대가 어떤 성능을 보여줄지 알아내려면, 당신은"
+                        "이것을 <w>%</w>키로 장착하여 이 막대에 숨겨진 마법을 확인할 수 있습니다."
+                        "한 번, 이 막대를 발동("
+						"<w>%</w>키)하여, 어떠한 마법들이 들어 있는지 확인해보세요"
 #ifdef USE_TILE
-                        ", both of which can be done by clicking on it"
+                        ". 막대 아이콘을 마우스 왼쪽 버튼으로 클릭하는 것으로도 가능합니다"
 #endif
                         ".";
             }
             else
             {
-                ostr << "\n\nYou can use this rod's magic by "
-                        "<w>%</w>ielding and e<w>%</w>oking it"
+                ostr << "\n\n당신은 이 막대의 마법을"
+					"착용(<w>%</w>키)하고, 발동(<w>%</w>키)시켜서 사용할 수 있습니다"
 #ifdef USE_TILE
-                        ", both of which can be achieved by clicking on it"
+                        ". 막대 아이콘을 마우스 왼쪽 버튼으로 클릭하는 것으로도 가능합니다"
 #endif
                         ".";
             }
@@ -3854,18 +3850,18 @@ void hints_describe_item(const item_def &item)
             break;
 
         case OBJ_STAVES:
-            ostr << "This staff can enhance your spellcasting, possibly "
-                    "making a certain spell school more powerful, or "
-                    "making difficult magic easier to cast. ";
+            ostr << "이 지팡이는 당신의 주문 시전 능력을 강화하며,"
+                    "특정 마법 학파의 마법을 더욱 강력하게 만들어 주거나, "
+                    "어려운 마법을 쉽게 사용할 수 있게 만드는 등의 기능을 합니다";
 
             if (gives_resistance(item))
             {
-                ostr << "It also offers its wielder protection from "
-                        "certain sources. For an overview of your "
-                        "resistances (among other things) type <w>%</w>"
+                ostr << "이것은 또한 착용자에게 특정한 원소 공격에 대한 "
+                        "방어 효과를 제공합니다. 당신의 저항력을 "
+                        "확인하려면 <w>%</w>키를 입력하거나"
 #ifdef USE_TILE
-                        " or click on your avatar with the <w>right mouse "
-                        "button</w>"
+                        "당신의 캐릭터를 <w>마우스 오른쪽"
+                        "버튼</w>으로 클릭하면 됩니다"
 #endif
                         ".";
 
@@ -3873,11 +3869,11 @@ void hints_describe_item(const item_def &item)
             }
             else if (you.religion == GOD_TROG)
             {
-                ostr << "\n\nSeeing how "
-                     << god_name(GOD_TROG, false)
-                     << " frowns upon the use of magic, this staff will be "
-                        "of little use to you and you might just as well "
-                        "<w>%</w>rop it now.";
+                ostr << "\n\n당신은 "
+                     << _(god_name(GOD_TROG, false).c_str())
+                     << "이(가) 마법 사용을 금지하는 것을 알고 있을 것입니다. "
+                        "즉, 이 지팡이는 지금 당신에게는 도움이 되지 못합니다. 때에 따라선 이것을"
+                        "버리는(<w>%</w>키)것도 고려해 보세요.";
                 cmd.push_back(CMD_DROP);
             }
             Hints.hints_events[HINT_SEEN_STAFF] = false;
@@ -3886,24 +3882,24 @@ void hints_describe_item(const item_def &item)
         case OBJ_MISCELLANY:
             if (is_deck(item))
             {
-                ostr << "Decks of cards are powerful but dangerous magical "
-                        "items. Try <w>%</w>ielding and e<w>%</w>oking it"
+                ostr << "카드 덱은 강력하지만, 위험한"
+					"마법아이템입니다. 한 번 착용(<w>%</w>키)하거나 발동(<w>%</w>)시켜 보세요."
 #ifdef USE_TILE
-                        ", either of which can be done by clicking on it"
+                        ", 마우스 아이콘으로 카드 덱을 클릭하는 것도 같은 기능을 합니다."
 #endif
-                        ". If you use a scroll of identify on the deck you "
-                        "can discover the name of the top card, making the "
-                        "deck less risky to draw from. You can read about the "
-                        "effect of a card by searching the game's database "
-                        "with <w>%/c</w>.";
+                        " 감정의 두루마리를 카드 덱에 사용하면, "
+                        "윗 장에 어떠한 카드가 있는지를 알아낼 수 있음과 동시에 "
+                        "해당 카드 덱이 어떠한 종류인지를 알 수 있습니다. 이것은 카드를 뽑을 때의 위험을 "
+                        "줄이고 카드를 적재적소에 사용하는 데 도움을 주죠. 각각 카드가 어떠한 효과를 가지는지는 "
+                        "<w>%/c</w>키를 눌러 카드의 DB를 확인해보세요.";
                 cmd.push_back(CMD_WIELD_WEAPON);
                 cmd.push_back(CMD_EVOKE_WIELDED);
                 cmd.push_back(CMD_DISPLAY_COMMANDS);
             }
             else
             {
-                ostr << "Miscellaneous items sometimes harbour magical powers "
-                        "that can be harnessed by e<w>%</w>oking the item.";
+                ostr << "다양한 아이템들은 이따금씩 마법의 힘을 품고 있습니다."
+                        "이러한 아이템들은 <w>%</w>키를 눌러 발동시켜 사용할 수 있습니다.";
                 cmd.push_back(CMD_EVOKE);
             }
 
@@ -3936,16 +3932,16 @@ void hints_inscription_info(string prompt)
     if (wherey() <= get_number_of_lines() - 8)
     {
         text << "\n"
-         "Inscriptions are a powerful concept of Dungeon Crawl.\n"
-         "You can inscribe items to differentiate them, or to comment on them, \n"
-         "but also to set rules for item interaction. If you are new to Crawl, \n"
-         "you can safely ignore this feature, though.";
+         "아이템에 문장을 새기는 것은 던전 크롤의 특징 중 하나입니다.\n"
+         "당신은 아이템에 간단한 글을 새겨 다른 아이템과 구분할 수 있으며, \n"
+         "몇몇 특정한 문장을 새기는 것으로, 아이템의 사용이나 다른 상호작용 규칙을 바꾸는 것도 가능합니다. \n"
+         "이는 아주 고급 기능이니, 던전 크롤에 아직 익숙하지 않으시다면 무난하게 이 특징을 무시하셔도 지장은 없습니다.";
 
         longtext = true;
     }
 
     text << "\n"
-       "(In the main screen, press <w>?6</w> for more information.)\n";
+       "(주 화면에서, <w>?6</w>키를 눌러 더 많은 정보를 확인해보세요.)\n";
     text << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
     formatted_string::parse_string(text.str()).display();
@@ -4021,124 +4017,126 @@ static void _hints_describe_feature(int x, int y)
     {
        case DNGN_ORCISH_IDOL:
        case DNGN_GRANITE_STATUE:
-            ostr << "It's just a harmless statue - or is it?\nEven if not "
-                    "a danger by themselves, statues often mark special "
-                    "areas, dangerous ones or ones harbouring treasure.";
+            ostr << "이건 단순히 무해한 석상입니다. 아닌가?\n이것은 일단 "
+                    "위험한 석상은 아니지만, 몇몇 석상은 위험하고, 자동으로 탐험 예외지역이"
+                    "석상 주변으로 설정됩니다. 이러한 석상은 종종 보물을 숨기고 있기도 합니다.";
             break;
 
        case DNGN_TRAP_MAGICAL:
        case DNGN_TRAP_MECHANICAL:
-            ostr << "These nasty constructions can do physical damage (with "
-                    "darts or needles, for example) or have other, more "
-                    "magical effects. ";
+            ostr << "이 위험한 구조물들은 물리 공격을 가할 수 있습니다. (예를 들면, "
+                    "다트나 바늘 등.) 또는 마법 효과를 가진 공격을"
+                    "할 수도 있죠. ";
 
             if (feat == DNGN_TRAP_MECHANICAL)
             {
-                ostr << "You can attempt to deactivate the mechanical type by "
-                        "standing next to it and then pressing <w>Ctrl</w> "
-                        "and the direction of the trap. Note that this usually "
-                        "causes the trap to go off, so it can be quite a "
-                        "dangerous task.\n\n"
+                ostr << "당신은 이러한 기계 장치들을 작동 해제시킬 수 있습니다."
+                        "에 서서 <w>컨트롤</w>키를 누른 채로 방향키를 함정 쪽으로 누르세요 "
+                        "다만, 함정를 해제하는 도중 함정이 발동될 수도 있으니 "
+                        "때에 따라 꽤 위험한 일이 될 수도 있음을 "
+                        "알아두세요.\n\n"
 
-                        "You can safely pass over a mechanical trap if "
-                        "you're flying.";
+                        "당신은 안전하게 함정을 지나칠 수 있습니다. "
+                        "당신이 날고 있다면요.";
             }
             else
             {
-                ostr << "Magical traps can't be disarmed, and unlike "
-                        "mechanical traps you can't avoid tripping them "
-                        "by flying over them.";
+                ostr << "마법 함정은 기계장치 함정과는 달리, "
+                        "작동을 멈출 수 없으며, 함정 위로 날아서 피할 수도 "
+                        "없습니다.";
             }
             Hints.hints_events[HINT_SEEN_TRAP] = false;
             break;
 
        case DNGN_TRAP_NATURAL: // only shafts for now
-            ostr << "The dungeon contains a number of natural obstacles such "
-                    "as shafts, which lead one to three levels down. They "
-                    "can't be disarmed, but once you know the shaft is there, "
-                    "you can safely step over it.\n"
-                    "If you want to jump down there, use <w>></w> to do so. "
-                    "Be warned that getting back here might be difficult.";
+            ostr << "던전은 수많은 자연적 장애물을 갖고 있습니다. "
+                    "가령, 구멍난 바닥에 빠질 경우, 현재 층에서 3층 아래로 떨어지게 됩니다. "
+                    "생각만 해도 아찔하죠? 이러한 자연적인 함정은 해제할 수 없지만, "
+                    "구멍이 있다는 것을 알면 안전하게 "
+                    "위로 지나갈 수 있습니다. \n"
+                    "만약 구멍 아래로 내려가고 싶으시다면, <w>></w>키로 구멍 아래로 내려갈 수 있습니다만, "
+					"아주 위험한 일이 된다는 것을 명심하세요.";
             Hints.hints_events[HINT_SEEN_TRAP] = false;
             break;
 
        case DNGN_TRAP_WEB:
-            ostr << "Some areas of the dungeon, such as Spiders Nest, may "
-                    "be strewn with giant webs that may ensnare you for a short "
-                    "time and notify nearby spiders of your location. "
-                    "You can attempt to clear away the web by "
-                    "standing next to it and then pressing <w>Ctrl</w> "
-                    "and the direction of the web. Note that this often "
-                    "results in just getting entangled anyway, so it can be "
-                    "quite a dangerous task.\n\n"
+            ostr << "던전의 어떤 영역, 가령 거미 소굴과 같은 곳은 "
+                    "때때로 커다란 거미줄에 당신을 걸리게 하여, 당신의 이동을 제약하고 "
+                    "근처에 있는 거미들에게 당신의 위치를 알리게 됩니다. "
+                    "당신은 이러한 거미줄을 헤쳐나갈 수 있습니다. "
+                    "옆에 서서 <w>컨트롤</w>키를 누른 채로 방향키를 거미줄 방향으로 누르세요. "
+                    "거미줄을 해체하는 도중, 거미줄이 당신을 휘감을 수도 있기 때문에 "
+                    "때에 따라 꽤 위험한 일이 될 수도 있다는 것을 "
+                    "알아두세요. \n\n"
 
-                    "Players in Spider Form can safely navigate the webs (as "
-                    "can incorporeal entities and various oozes). ";
+                    "거미 형태의 플레이어는 안전하게 거미줄을 지나갈 수 있습니다. "
+                    "혹은 일정한 형체가 없는 슬라임이나 젤리류로 변신 중일때도 마찬가지입니다. ";
             Hints.hints_events[HINT_SEEN_WEB] = false;
             break;
 
        case DNGN_STONE_STAIRS_DOWN_I:
        case DNGN_STONE_STAIRS_DOWN_II:
        case DNGN_STONE_STAIRS_DOWN_III:
-            ostr << "You can enter the next (deeper) level by following them "
-                    "down (<w>></w>). To get back to this level again, "
-                    "press <w><<</w> while standing on the upstairs.";
+            ostr << "당신은 다음 층으로 (더 깊은 곳으로) 입장할 수 있습니다."
+                    "(<w>></w>)키를 눌러, 계단 아래로 내려갈 수 있습니다. 원래의 층으로 다시 돌아오려면, "
+                    "내려갔던 계단 위에 서서 <w><<</w>키를 누르세요.";
 #ifdef USE_TILE
-            ostr << " In Tiles, you can achieve the same, in either direction, "
-                    "by clicking the <w>left mouse button</w> while pressing "
-                    "<w>Shift</w>. ";
+            ostr << "또한, 당신은 <w>쉬프트</w>를 누른 상태에서"
+                    "<w>마우스 왼쪽 버튼</w>을 클릭하여"
+                    "똑같은 동작을 수행할 수 있습니다. ";
 #endif
 
             if (is_unknown_stair(where))
             {
-                ostr << "\n\nYou have not yet passed through this particular "
-                        "set of stairs. ";
+                ostr << "\n\n당신은 아직 이러한 특정 계단을"
+                        "지나오지 않았습니다. ";
             }
 
             Hints.hints_events[HINT_SEEN_STAIRS] = false;
             break;
 
        case DNGN_EXIT_DUNGEON:
-            ostr << "These stairs lead out of the dungeon. Following them "
-                    "will end the game. The only way to win is to "
-                    "transport the fabled Orb of Zot outside.";
+            ostr << "이 계단은 던전 밖으로 이어집니다. 던전 크롤 밖으로 나가면, "
+				    "다시는 던전으로 돌아올 수 없습니다. 즉, 게임을 끝내려면 "
+                    "이 출구로 나가 도망칠 수 있습니다. 게임에서 승리하는 방법은 오직"
+                    "전설의 '조트의 오브'를 던전 어딘가에서 찾아, 밖으로 갖고 나가는 것입니다.";
             break;
 
        case DNGN_STONE_STAIRS_UP_I:
        case DNGN_STONE_STAIRS_UP_II:
        case DNGN_STONE_STAIRS_UP_III:
-            ostr << "You can enter the previous (shallower) level by "
-                    "following these up (<w><<</w>). This is ideal for "
-                    "retreating or finding a safe resting spot, since the "
-                    "previous level will have less monsters and monsters "
-                    "on this level can't follow you up unless they're "
-                    "standing right next to you. To get back to this "
-                    "level again, press <w>></w> while standing on the "
-                    "downstairs.";
+            ostr << "당신은 윗층(더 얕은 층)으로 입장할 수 있습니다. 이 계단을"
+                    "따라가세요. (<w><<</w>키). 윗층으로 다시 이동하는 것은, 후퇴하거나, "
+                    "휴식을 취할 만한 안전한 곳을 확보하는 데 좋습니다."
+                    "그리고 몬스터들은 보통 "
+                    "당신 바로 옆에 서있지 않는 이상, 당신을 따라"
+                    "올라갈 수 없습니다. 원래의 층으로"
+                    "돌아오려면, 내려가는 계단 위에 서서 <w>></w>키를"
+                    "누르시면 됩니다. ";
 #ifdef USE_TILE
-            ostr << " In Tiles, you can perform either action simply by "
-                    "clicking the <w>left mouse button</w> while pressing "
-                    "<w>Shift</w> instead. ";
+            ostr << "또한, 당신은 <w>쉬프트</w>를 누른 상태에서"
+                    "<w>마우스 왼쪽 버튼</w>을 클릭하여"
+                    "똑같은 동작을 수행할 수 있습니다. ";
 #endif
             if (is_unknown_stair(where))
             {
-                ostr << "\n\nYou have not yet passed through this "
-                        "particular set of stairs. ";
+                ostr << "\n\n당신은 아직 이러한 특정 계단을"
+                        "지나오지 않았습니다. ";
             }
             Hints.hints_events[HINT_SEEN_STAIRS] = false;
             break;
 
        case DNGN_ESCAPE_HATCH_DOWN:
        case DNGN_ESCAPE_HATCH_UP:
-            ostr << "Escape hatches can be used to quickly leave a level with "
-                    "<w><<</w> and <w>></w>, respectively. Note that you will "
-                    "usually be unable to return right away.";
+            ostr << "비상구는 계단과 같이 <w><<</w>키나 <w>></w>키로 오르내릴 수 있으며, "
+                    "위급한 상황에서 빠르게 다른 층으로 피신할 때 사용할 수 있습니다. 계단과 다르게, "
+                    "비상구로 층을 이동하였을 경우 곧바로 다시 되돌아올 수 없다는 것을 알아두세요. ";
 
             Hints.hints_events[HINT_SEEN_ESCAPE_HATCH] = false;
             break;
 
        case DNGN_ENTER_PORTAL_VAULT:
-            ostr << "This " << _describe_portal(where);
+            ostr << "저기 보이는 관문" << _describe_portal(where);
             Hints.hints_events[HINT_SEEN_PORTAL] = false;
             break;
 
@@ -4146,13 +4144,13 @@ static void _hints_describe_feature(int x, int y)
        case DNGN_RUNED_DOOR:
             if (!Hints.hints_explored)
             {
-                ostr << "\nTo avoid accidentally opening a door you'd rather "
-                        "remain closed during travel or autoexplore, you can "
-                        "mark it with an exclusion from the map view "
-                        "(<w>X</w>) with <w>ee</w> while your cursor is on the "
-                        "grid in question. Such an exclusion will prevent "
-                        "autotravel from ever entering that grid until you "
-                        "remove the exclusion with another press of <w>Xe</w>.";
+                ostr << "\n자동 탐험 중에 실수로 문을 여는 것을 방지하기 위해,"
+                        "당신은 맵에 탐험 제외 지역을  "
+                        "설정하실 수 있습니다. <w>X</w>키를 눌러, 지도 탐색 모드로 전환한 후, 당신의 마우스 커서를 "
+                        "문제가 되는 지형 위에 둔 채로 <w>e</w>키를 한 번 혹은 두 번 누릅니다."
+                        "그러면 탐험 예외지역이 설정되며, 자동 탐험/이동 중 탐험 "
+                        "예외 지역 안으로 자동으로 이동하는 것을 방지할 수 있습니다. "
+                        "같은 방법으로, X키와 e키를 이용하여 탐험 예외 지역을 해제하는 것도 가능합니다.";
             }
             break;
 
@@ -4167,26 +4165,26 @@ static void _hints_describe_feature(int x, int y)
                 if (altar_god == GOD_SIF_MUNA
                     && !player_can_join_god(altar_god))
                 {
-                    ostr << "As <w>p</w>raying on the altar will tell you, "
-                         << god_name(altar_god) << " only accepts worship from "
-                            "those who have already dabbled in magic. You can "
-                            "find out more about this god by searching the "
-                            "database with <w>?/g</w>.\n"
-                            "For other gods, you'll be able to join the faith "
-                            "by <w>p</w>raying at their altar.";
+                    ostr << "<w>p</w>키를 눌러 신전 위에서 기도를 드리면, 신 '"
+                         << _(god_name(altar_god).c_str()) << "'은 마법을 전혀 모르는 "
+                            "자들을 자신의 신도로 허락하지 않는다는 것을 알 수 있습니다. "
+                            "이 신에 대해 조금 더 자세한 정보를 얻고 싶으시다면, "
+                            "w>?/g</w>키를 눌러 도움말 DB를 찾아보세요.\n"
+                            "대부분의 신들의 경우, 그들의 제단 위에서 "
+                            "<w>p</w>키를 눌러, 기도를 드림으로써 그들의 신도가 될 수 있습니다.";
                 }
                 else if (you.religion == GOD_NO_GOD)
                 {
-                    ostr << "This is your chance to join a religion! In "
-                            "general, the gods will help their followers, "
-                            "bestowing powers of all sorts upon them, but many "
-                            "of them demand a life of dedication, constant "
-                            "tributes or entertainment in return.\n"
-                            "You can get information about <w>"
-                         << god_name(altar_god)
-                         << "</w> by pressing <w>p</w> while standing on the "
-                            "altar. Before taking up the responding faith "
-                            "you'll be asked for confirmation.";
+                    ostr << "당신이 신앙을 가질 좋은 기회가 왔군요!"
+                            "보통, 신들은 숭배자들에게 각자 자신이 가진 권능을 "
+                            "부여하여 그들을 돕습니다. 하지만 "
+                            "대부분의 신들은 살아있는 제물이나, 정기적인 "
+                            "공물 또는 보답으로 그들을 즐겁게 해주기를 원합니다.\n"
+                            "이 제단에 해당하는 신, '<w>"
+                         << _(god_name(altar_god).c_str())
+                         << "</w>에 대한 정보를 얻고 싶으시다면, 제단 위에서 일단 <w>p</w>키를 눌러 기도를 드리세요. "
+                            "단순히 기도를 드리는 것만으로 이 신의 신도가 되지는 않습니다. 신앙을 갖기 전에, "
+                            "당신은 자신의 신앙을 확실히 결정했는지 재차 질문 받습니다.";
                 }
                 else if (you.religion == altar_god)
                 {
@@ -4195,21 +4193,21 @@ static void _hints_describe_feature(int x, int y)
                 }
                 else
                 {
-                    ostr << god_name(you.religion)
-                         << " probably won't like it if you switch allegiance, "
-                            "but having a look won't hurt: to get information "
-                            "on <w>";
-                    ostr << god_name(altar_god);
-                    ostr << "</w>, press <w>p</w> while standing on the "
-                            "altar. Before taking up the responding faith (and "
-                            "abandoning your current one!) you'll be asked for "
-                            "confirmation."
-                            "\nTo see your current standing with "
-                         << god_name(you.religion)
-                         << " press <w>^</w>"
+                    ostr << _(god_name(you.religion).c_str())
+                         << "은(는) 아마도 당신이 다른 신으로 종교를 갈아타는 것을 "
+                            "반기지는 않을 것입니다만, 한번 쯤 구경만 하는것은 괜찮습니다. "
+                            "<w>'";
+                    ostr << _(god_name(altar_god).c_str());
+                    ostr << "'</w>에 관한 정보를 더 얻고 싶으시다면, 신전 위에서 <w>p</w>키를 "
+                            "눌러 기도를 드리세요. 신앙을 갖기 전에(그리고 "
+                            "지금 신앙을 파기할 때!) 당신은 "
+                            "확실히 종교를 갖거나 버리기를 결정했는지 재차 질문을 받습니다."
+                            "\n당신이 믿고 있는 신에 대한 정보를 확인하려면, "
+                         
+                         << "<w>^</w>키를 누르거나"
 #ifdef USE_TILE
-                            ", or click with your <w>right mouse button</w> "
-                            "on your avatar while pressing <w>Shift</w>"
+                            ", 또는 당신 캐릭터에 <w>마우스 오른쪽 버튼</w>을 "
+                            "<w>쉬프트</w>를 누른 상태에서 누르세요"
 #endif
                             ".";
                 }
@@ -4219,10 +4217,10 @@ static void _hints_describe_feature(int x, int y)
             else if (feat >= DNGN_ENTER_FIRST_BRANCH
                      && feat <= DNGN_ENTER_LAST_BRANCH)
             {
-                ostr << "An entryway into one of the many dungeon branches in "
-                        "Crawl. ";
+                ostr << "던전 크롤의 수많은 서브던전들 중 하나로 이어지는"
+                        "입구의 통로. ";
                 if (feat != DNGN_ENTER_TEMPLE)
-                    ostr << "Beware, sometimes these can be deadly!";
+                    ostr << "조심하세요, 이러한 곳으로 입장하는 것은 때로는 매우 위험할 수 있습니다!";
                 break;
             }
             else
@@ -4239,11 +4237,10 @@ static void _hints_describe_feature(int x, int y)
         if (!boring)
             ostr << "\n\n";
 
-        ostr << "Many forms of combat and some forms of magical attack "
-                "will splatter the surroundings with blood (if the victim has "
-                "any blood, that is). Some monsters can smell blood from "
-                "a distance and will come looking for whatever the blood "
-                "was spilled from.";
+        ostr << "대부분의 근접 전투나, 몇몇 마법 공격은 "
+                "주변에 피를 튀길 것입니다. 물론 공격을 받는 플레이어나 몬스터가 "
+                "붉은 피를 갖고 있을 경우에 한해서지만요. 일부 몬스터는 멀리서 "
+                "피 냄새를 맡아, 피를 흘린 근원을 추적해올 수도 있습니다.";
     }
 
     ostr << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
@@ -4265,12 +4262,12 @@ static void _hints_describe_cloud(int x, int y)
 
     ostr << "\n\n<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
-    ostr << "The " << cname << " ";
+    ostr << "이 " << _(cname.c_str()) << " ";
 
     if (ends_with(cname, "s"))
-        ostr << "are ";
+        ostr << "들은 ";
     else
-        ostr << "is ";
+        ostr << "은(는) ";
 
     bool need_cloud = false;
     switch (ctype)
@@ -4283,30 +4280,30 @@ static void _hints_describe_cloud(int x, int y)
     case CLOUD_MIST:
     case CLOUD_MAGIC_TRAIL:
     case CLOUD_DUST_TRAIL:
-        ostr << "harmless. ";
+        ostr << "일단은 무해합니다. ";
         break;
 
     default:
         if (!is_damaging_cloud(ctype, true))
         {
-            ostr << "currently harmless, but that could change at some point. "
-                    "Check the overview screen (<w>%</w>) to view your "
-                    "resistances.";
+            ostr << "지금은 당신에게 무해하지만, 때에 따라 유해할수도, 무해할수도 있습니다. "
+                    "(<w>%</w>)키를 눌러, 캐릭터 정보 창에서 "
+                    "당신의 저항력을 확인해 보세요.";
             need_cloud = true;
         }
         else
         {
-            ostr << "probably dangerous, and you should stay out of it if you "
-                    "can. ";
+            ostr << "대부분 위험하며, 될 수 있는대로 이러한 구름들을 "
+                    "피해야 합니다. ";
         }
     }
 
     if (is_opaque_cloud(env.cgrid[x][y]))
     {
-        ostr << (need_cloud? "\nThis cloud" : "It")
-             << " is opaque. If two or more opaque clouds are between "
-                "you and a square you won't be able to see anything in that "
-                "square.";
+        ostr << (need_cloud? "\n이 구름" : "이것")
+             << "은(는) 아주 자욱하여, 당신의 시야를 차단합니다. 이러한 구름이 둘 또는 그 이상이 당신을 "
+                "둘러싸고 있으면 당신은 이 구름 너머로 "
+                "아무것도 볼 수 없을 것입니다.";
     }
 
     ostr << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
@@ -4325,11 +4322,11 @@ static void _hints_describe_disturbance(int x, int y)
 
     ostr << "\n\n<" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
-    ostr << "The strange disturbance means that there's a monster hiding "
-            "under the surface of the shallow water. Submerged monsters will "
-            "not be autotargeted when doing a ranged attack while there are "
-            "other, visible targets in sight. Of course you can still target "
-            "it manually if you wish to.";
+    ostr << "'보이지 않는 적대적인 존재'는 몬스터가 수면 아래에 "
+            "숨어있다는 것을 의미합니다. 원거리 공격을 할 때 "
+            "시야에 보이는 표적이 있어도, 물 속에 숨은 몬스터는 "
+            "자동 표적의 대상이 되지 않습니다. 물론 원한다면, 수동으로 "
+            "물 속 대상을 조준할 수는 있지만요.";
 
     ostr << "</" << colour_to_str(channel_to_colour(MSGCH_TUTORIAL)) << ">";
 
@@ -4371,16 +4368,17 @@ void hints_describe_monster(const monster_info& mi, bool has_stat_desc)
     bool dangerous = false;
     if (mons_is_unique(mi.type))
     {
-        ostr << "Did you think you were the only adventurer in the dungeon? "
-                "Well, you thought wrong! These unique adversaries often "
-                "possess skills that normal monster wouldn't, so be "
-                "careful.\n\n";
+        ostr << "당신만이 이 던전의 유일한 모험가라 생각했나요? "
+                "그렇다면 그것은 틀린 생각입니다! 당신 외에도 조트의 오브를 찾으러 던전에 들어온 모험가들이 많습니다."
+				"이러한 라이벌 모험가들은 거의 모두 당신에게 적대적일 것이며, 일반 몬스터들에게서는 보기 힘든 "
+                "독특한 스킬이나 마법등을 사용해오는 경우도 있으니 조심하는 것이 좋습니다."
+                "\n\n";
         dangerous = true;
     }
     else if (mi.type == MONS_PLAYER_GHOST)
     {
-        ostr << "The ghost of a deceased adventurer, it would like nothing "
-                "better than to send you the same way.\n\n";
+        ostr << "죽은 모험가의 유령은, 당신을 자신과 같은 죽은 망령으로 "
+                "만드는 생각밖에 하지 않습니다.\n\n";
         dangerous = true;
     }
     else
@@ -4388,14 +4386,14 @@ void hints_describe_monster(const monster_info& mi, bool has_stat_desc)
         const char ch = mons_base_char(mi.type);
         if (ch >= '1' && ch <= '5')
         {
-            ostr << "This monster is a demon of the "
-                 << (ch == '1' ? "highest" :
-                     ch == '2' ? "second-highest" :
-                     ch == '3' ? "middle" :
-                     ch == '4' ? "second-lowest" :
-                     ch == '5' ? "lowest"
+            ostr << "이 몬스터는 "
+                 << (ch == '1' ? "최상급의 1급 악마" :
+                     ch == '2' ? "고위급의 2급 악마" :
+                     ch == '3' ? "중간급의 3급 악마" :
+                     ch == '4' ? "하위급의 4급 악마" :
+                     ch == '5' ? "최하위급의 5급 악마"
                                : "buggy")
-                 << " tier.\n\n";
+                 << " 몬스터입니다.\n\n";
         }
 
         // Don't call friendly monsters dangerous.
@@ -4403,12 +4401,12 @@ void hints_describe_monster(const monster_info& mi, bool has_stat_desc)
         {
             if (mi.threat == MTHRT_NASTY)
             {
-                ostr << "This monster appears to be really dangerous!\n";
+                ostr << "이 몬스터는 당신에게는 엄청나게 위험해 보이는군요!\n";
                 dangerous = true;
             }
             else if (mi.threat == MTHRT_TOUGH)
             {
-                ostr << "This monster appears to be quite dangerous.\n";
+                ostr << "이 몬스터는 당신이 상대하기에 꽤 위험한 몬스터입니다.\n";
                 dangerous = true;
             }
         }
@@ -4416,58 +4414,58 @@ void hints_describe_monster(const monster_info& mi, bool has_stat_desc)
 
     if (mi.is(MB_BERSERK))
     {
-        ostr << "A berserking monster is bloodthirsty and fighting madly. "
-                "Such a blood rage makes it particularly dangerous!\n\n";
+        ostr << "광폭화된 몬스터는 피를 갈구하며 미친듯이 싸웁니다. "
+                "유저의 광폭화와 마찬가지로, 광폭화된 몬스터는 원래보다 훨씬 강하고 빠릅니다!\n\n";
         dangerous = true;
     }
 
     // Monster is highlighted.
     if (mi.attitude == ATT_FRIENDLY)
     {
-        ostr << "Friendly monsters will follow you around and attempt to aid "
-                "you in battle. You can order your allies by <w>t</w>alking "
-                "to them.";
+        ostr << "우호적인 몬스터는 당신 주변을 맴돌며, 당신의 전투를 "
+                "도우려고 할 것입니다. 당신은 당신의 동료들을 지휘할 수 있습니다. 그들에게 <w>t</w>키를 눌러 "
+                "명령을 내려보세요.";
 
         if (!mons_att_wont_attack(mi.attitude))
         {
-            ostr << "\n\nHowever, it is only <w>temporarily</w> friendly, "
-                    "and will become dangerous again when this friendliness "
-                    "wears off.";
+            ostr << "\n\n그러나, 이 몬스터는 <w>일시적으로</w> 우호적인 상태이며, "
+                    "언제금 우호적인 태도를 버리고, 다시 적대심을 드러낼 수 있으니 "
+                    "조심하는 것이 좋습니다.";
         }
     }
     else if (dangerous)
     {
         if (!Hints.hints_explored && (mi.is(MB_WANDERING) || mi.is(MB_UNAWARE)))
         {
-            ostr << "You can easily mark its square as dangerous to avoid "
-                    "accidentally entering into its field of view when using "
-                    "auto-explore or auto-travel. To do so, enter targetting "
-                    "mode with <w>x</w> and then press <w>e</w> when your "
-                    "cursor is hovering over the monster's grid. Doing so will "
-                    "mark this grid and all surrounding ones within a radius "
-                    "of 8 as \"excluded\" ones that explore or travel modes "
-                    "won't enter.";
+            ostr << "당신은 손쉽게 특정 지형에 위험 표시, '탐험 예외 지역'을 설정할 수 있습니다. "
+                    "이는 자동탐험 도중에 실수로 그 지역에 들어서는 것을 방지합니다. "
+                    "텀험 예외 지역을 설정하려면, <w>x</w>키를 눌러 타게팅 모드로 전환하여, "
+                    "당신의 마우스 커서를 몬스터 위에 두고 <w>e</w>키를 "
+                    "누르면 됩니다. 그러면 "
+					"이 몬스터나 지형 주위로 X표시가 생기고, 해당 표시로부터 반경 8(시야)의 거리 내로 \"차단된\" 지역이 되어 탐험할 때 "
+                    "\"탐험 예외 지역\"이 되어, 자동 탐험이나 자동 이동 시 "
+                    "이 안으로 들어가지 않을 것입니다.";
         }
         else
         {
-            ostr << "This might be a good time to run away";
+            ostr << "도망가기 좋은 시간인 것 같군요";
 
             if (you.religion == GOD_TROG && you.can_go_berserk())
-                ostr << " or apply your Berserk <w>a</w>bility";
+                ostr << ". 아니면 광폭화 능력(<w>a</w>키)을 쓰세요";
             ostr << ".";
         }
     }
     else if (Options.stab_brand != CHATTR_NORMAL
              && mi.is(MB_STABBABLE))
     {
-        ostr << "Apparently it has not noticed you - yet. Note that you do "
-                "not have to engage every monster you meet. Sometimes, "
-                "discretion is the better part of valour.";
+        ostr << "저기 보이는 몬스터는 아직 당신을 인식하지 못했습니다. "
+                "눈에 보이는 모든 몬스터와 교전한다는 건 어리석은 생각입니다. "
+                "신중하게 행동하는 것은 저돌적인 태도보다 여러모로 좋습니다.";
     }
     else if (Options.may_stab_brand != CHATTR_NORMAL
              && mi.is(MB_DISTRACTED))
     {
-        ostr << "Apparently it has been distracted by something. You could "
+        ostr << "보아하니 무언가가 저 몬스터는. You could "
                 "use this opportunity to sneak up on this monster - or to "
                 "sneak away.";
     }

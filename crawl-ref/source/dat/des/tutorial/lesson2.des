@@ -23,7 +23,7 @@ end
 
 NAME:    tutorial_lesson2
 TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial
-DESC:    "Lesson 2: Monsters and Combat"
+DESC:    "2장: 몬스터와 전투"
 ORIENT:  encompass
 KFEAT:   BCDFG = .
 KFEAT:   AE = +
@@ -31,12 +31,12 @@ KFEAT:   n = iron_grate
 COLOUR:  deBCDFG = lightblue
 RTILE:   c = wall_vines
 FTILE:   dBCDFG = tutorial_pad
-ITEM:    quarterstaff mundane not_cursed
+ITEM:    quarterstaff mundane not_cursed plus:1 plus2:1
 SHUFFLE: 34
 MONS:    training dummy hp:10 ; whip mundane not_cursed
 MONS:    rat always_corpse
-MONS:    wyvern
-MONS:    ooze hp:10
+MONS:    war dog / yak / wyvern / slime creature / storm dragon
+MONS:    jackal / ooze hp:10 / quokka / giant newt
 MARKER:  d = lua:tutorial2.msg("pickup_weapon")
 MARKER:  A = lua:tutorial2.msg("melee")
 MARKER:  B = lua:tutorial2.msg("resting")

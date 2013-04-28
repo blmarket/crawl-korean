@@ -2815,7 +2815,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
         // Setup tracer.
         beem.name        = M_("glob of lava");
-        beem.aux_source  = "glob of lava";
+        beem.aux_source  = _(M_("glob of lava"));
         beem.range       = 6;
         beem.damage      = dice_def(3, 10);
         beem.hit         = 20;
@@ -2851,7 +2851,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
         // Setup tracer.
         beem.name        = M_("bolt of electricity");
-        beem.aux_source  = "bolt of electricity";
+        beem.aux_source  = _(M_("bolt of electricity"));
         beem.range       = 8;
         beem.damage      = dice_def(3, 6);
         beem.hit         = 35;
@@ -3079,7 +3079,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
         // Set up the beam.
         beem.name        = M_("volley of spikes");
-        beem.aux_source  = "volley of spikes";
+        beem.aux_source  = _(M_("volley of spikes"));
         beem.range       = 6;
         beem.hit         = 14;
         beem.damage      = dice_def(2, 10);

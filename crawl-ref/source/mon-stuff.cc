@@ -1044,7 +1044,7 @@ static void _setup_base_explosion(bolt & beam, const monster& origin)
     beam.source       = origin.pos();
     beam.source_name  = origin.base_name(DESC_BASENAME);
     beam.target       = origin.pos();
-    beam.noise_msg    = "You hear an explosion!";
+    beam.noise_msg    = _("You hear an explosion!");
 
     if (!crawl_state.game_is_arena() && origin.attitude == ATT_FRIENDLY
         && !origin.is_summoned())
@@ -1159,7 +1159,7 @@ static bool _explode_monster(monster* mons, killer_type killer,
         mons->flags    |= MF_EXPLODE_KILL;
         sanct_msg       = gettext("By Zin's power, the fiery explosion "
                           "is contained.");
-        beam.aux_source = "exploding inner flame";
+        beam.aux_source = _(M_("exploding inner flame"));
     }
     else
     {
@@ -1172,9 +1172,9 @@ static bool _explode_monster(monster* mons, killer_type killer,
     if (beam.aux_source.empty())
     {
         if (YOU_KILL(killer))
-            beam.aux_source = "set off by themself";
+            beam.aux_source = _(M_("set off by themself"));
         else if (pet_kill)
-            beam.aux_source = "set off by their pet";
+            beam.aux_source = _(M_("set off by their pet"));
     }
 
     bool saw = false;

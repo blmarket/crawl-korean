@@ -1442,9 +1442,9 @@ static string _describe_armour(const item_def &item, bool verbose)
         }
         else if (item.plus < max_ench || !item_ident(item, ISFLAG_KNOW_PLUSES))
         {
-            description += "\nIt can be maximally enchanted to +";
+            description += _("\nIt can be maximally enchanted to +");
             _append_value(description, max_ench, false);
-            description += ".";
+            description += pgettext("wenench2",".");
         }
         else
             description += gettext("\nIt cannot be enchanted further.");

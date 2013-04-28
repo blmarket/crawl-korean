@@ -23,7 +23,7 @@ end
 
 NAME:    tutorial_lesson3
 TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial
-DESC:    "Lesson 3: Items and Inventory"
+DESC:    "3장: 아이템과 소지품창"
 ORIENT:  encompass
 KFEAT:   ABC = .
 COLOUR:  defgABC = lightblue
@@ -93,12 +93,12 @@ KFEAT:   A = .
 COLOUR:  Adefghi = lightblue
 FTILE:   Adefghi = tutorial_pad
 RTILE:   c = wall_vines
-ITEM:    potion of curing q:2
+ITEM:    potion of curing q:5
 ITEM:    cloak unrand:ratskin_cloak
-ITEM:    wand of flame charges:9 ident:all
+ITEM:    wand of flame charges:15 ident:all
 ITEM:    wand of digging charges:15 ident:all
 ITEM:    amulet of inaccuracy mundane not_cursed
-ITEM:    scroll of identify q:1
+ITEM:    scroll of identify q:3
 MONS:    goblin ; sling ego:none not_cursed . stone q:30 . dagger ego:none not_cursed
 MONS:    gnoll ; spear mundane
 MARKER:  ^ = lua:props_marker {poisoned_needle_trap="true", force_hit="true"}
@@ -156,11 +156,11 @@ FTILE:   ABCde = tutorial_pad
 FTILE:   c = wall_vines
 KFEAT:   S = general shop use_all ; \
              ring of flight mundane not_cursed | potion of curing | \
-             potion of heal wounds | potion of heal wounds q:2 | \
-             potion of might | wand of paralysis | ring mail | \
-             buckler ego:none | ring of slaying | scroll of enchant weapon II
+             potion of heal wounds | potion of heal wounds q:3 | \
+             potion of might | wand of paralysis charges:10 | ring mail plus:1 | \
+             buckler ego:none plus:1 | ring of slaying | scroll of enchant weapon I| potion of speed |
 ITEM:    gold q:40
-ITEM:    gold q:220
+ITEM:    gold q:800
 MONS:    gnoll ; flail ego:none | morningstar ego:none | spear ego:none . \
          leather armour | ring mail
 MONS:    crimson imp

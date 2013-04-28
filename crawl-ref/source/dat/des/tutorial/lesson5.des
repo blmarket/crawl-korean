@@ -23,7 +23,7 @@ end
 
 NAME:    tutorial_lesson5
 TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial
-DESC:    "Lesson 5: Gods and Divine Abilities"
+DESC:    "5장: 신앙과 신의 권능"
 ORIENT:  encompass
 KFEAT:   bABCDEHIJ = .
 KFEAT:   F = +
@@ -32,7 +32,7 @@ FTILE:   ABCDEHIJ = tutorial_pad
 KPROP:   b_ = bloody / nothing
 KFEAT:   _ = altar_trog
 NSUBST:  M = 2:= / *:m
-ITEM:    mace ego:none not_cursed
+ITEM:    mace ego:none not_cursed plus:2 plus2:2 ident:all
 ITEM:    book of clouds
 MONS:    rat always_corpse
 MONS:    hobgoblin ; short sword ego:none not_cursed | w:5 mace ego:none not_cursed

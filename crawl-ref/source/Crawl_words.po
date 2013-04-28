@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-26 22:01+0900\n"
+"POT-Creation-Date: 2013-04-27 23:52+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -430,19 +430,19 @@ msgstr "불사조"
 
 #: mon-data.h:350 mon-data.h:351 mon-data.h:362 mon-data.h:327 mon-data.h:329
 msgid "centaur"
-msgstr "센타우르"
+msgstr "켄타우로스"
 
 #: mon-data.h:362 mon-data.h:363 mon-data.h:374 mon-data.h:339 mon-data.h:341
 msgid "centaur warrior"
-msgstr "센타우르 전사"
+msgstr "켄타우로스 전사"
 
 #: mon-data.h:374 mon-data.h:375 mon-data.h:386 mon-data.h:351 mon-data.h:353
 msgid "yaktaur"
-msgstr "야크타우어"
+msgstr "야크타우로스"
 
 #: mon-data.h:386 mon-data.h:387 mon-data.h:398 mon-data.h:363 mon-data.h:365
 msgid "yaktaur captain"
-msgstr "야크타우어 캡틴"
+msgstr "야크타우로스 대장"
 
 #. draconians ('d')
 #. Base draconian - for use like MONS_HUMAN, MONS_ELF although we
@@ -7818,7 +7818,7 @@ msgstr "장화"
 #. monster types (monsters don't differentiate between torso and general).
 #: itemprop.cc:140 itemprop.cc:140 itemprop.cc:142 itemprop.cc:139
 msgid "centaur barding"
-msgstr "센타우르 마갑"
+msgstr "켄타우로스 마갑"
 
 #: itemprop.cc:142 itemprop.cc:142 itemprop.cc:144 itemprop.cc:141
 msgid "naga barding"
@@ -12266,6 +12266,14 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -13471,7 +13479,8 @@ msgstr "번개의 화살"
 msgid "great blast of cold"
 msgstr "맹렬한 냉기 폭풍"
 
-#: mon-cast.cc:538 spl-damage.cc:154 spl-damage.cc:150
+#: mon-cast.cc:538 spl-damage.cc:154 spl-damage.cc:150 mon-cast.cc:537
+#: spl-damage.cc:151
 msgid "burst of hellfire"
 msgstr "맹렬한 지옥불"
 
@@ -13489,7 +13498,7 @@ msgstr "힘의 화살"
 msgid "bolt of negative energy"
 msgstr "흡성의 화살"
 
-#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599
+#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599 beam.cc:2301
 msgid "orb of energy"
 msgstr "마력의 구체"
 
@@ -13555,7 +13564,7 @@ msgid "bolt of dispelling energy"
 msgstr "항마의 화살"
 
 #. fiend's hellfire
-#: mon-cast.cc:816 mon-cast.cc:755
+#: mon-cast.cc:816 mon-cast.cc:755 mon-cast.cc:756
 msgid "blast of hellfire"
 msgstr "지옥불의 폭발"
 
@@ -16563,13 +16572,13 @@ msgstr "조여짐"
 
 #. Setup tracer.
 #: mon-abil.cc:2356 mon-abil.cc:2806 mon-abil.cc:2814 mon-abil.cc:2822
-#: mon-abil.cc:2817
+#: mon-abil.cc:2817 mon-abil.cc:2818
 msgid "glob of lava"
 msgstr "용암 덩어리"
 
 #. Setup tracer.
 #: mon-abil.cc:2392 mon-abil.cc:2842 mon-abil.cc:2850 mon-abil.cc:2858
-#: mon-abil.cc:2853
+#: mon-abil.cc:2853 mon-abil.cc:2854
 msgid "bolt of electricity"
 msgstr "전격의 화살"
 
@@ -16577,7 +16586,7 @@ msgstr "전격의 화살"
 #. easy to set up and doesn't involve inventory.
 #. Set up the beam.
 #: mon-abil.cc:2620 mon-abil.cc:3070 mon-abil.cc:3078 mon-abil.cc:3086
-#: mon-abil.cc:3081
+#: mon-abil.cc:3081 mon-abil.cc:3082
 msgid "volley of spikes"
 msgstr "가시 사격"
 
@@ -17851,3 +17860,70 @@ msgstr "공간이동 제어 발동"
 #: beam.cc:5287 beam.cc:5291
 msgid "ice storm"
 msgstr "맹렬한 냉기의 폭풍"
+
+#: beam.cc:2884 mon-stuff.cc:1162
+msgid "exploding inner flame"
+msgstr "잠재 불씨의 폭발"
+
+#: beam.cc:3434
+msgid "by nerve-wracking pain"
+msgstr "신경까지 파괴하는 극심한 고통에 의해"
+
+#: beam.cc:3468
+msgid "by dispel undead"
+msgstr "언데드 퇴치에 의해"
+
+#: beam.cc:3488
+msgid "disintegration bolt"
+msgstr "분해의 힘"
+
+#: mon-cast.cc:109
+msgid "blast of searing breath"
+msgstr "작열하는 불꽃의 숨결"
+
+#: mon-cast.cc:115
+msgid "blast of chilling breath"
+msgstr "작열하는 냉기의 숨결"
+
+#: mon-cast.cc:123
+msgid "blast of draining breath"
+msgstr "작열하는 흡성 숨결"
+
+#: mon-cast.cc:792
+msgid "blast of fiery breath"
+msgstr "작열하는 불꽃의 숨결"
+
+#: mon-cast.cc:802
+msgid "blast of chaotic breath"
+msgstr "작열하는 혼돈의 숨결"
+
+#: mon-cast.cc:812
+msgid "blast of icy breath"
+msgstr "작열하는 냉기의 숨결"
+
+#: mon-stuff.cc:1175
+msgid "set off by themself"
+msgstr ""
+
+#: mon-stuff.cc:1177
+msgid "set off by their pet"
+msgstr ""
+
+#: spl-damage.cc:196
+msgid "chain lightning"
+msgstr "연쇄 번개"
+
+#: spl-damage.cc:1791
+msgid "by Lee's Rapid Deconstruction"
+msgstr "순간 해체술에 의해"
+
+#: spl-damage.cc:2231
+msgid "rod of lightning"
+msgstr "번개의 마법 막대"
+
+#: xom.cc:1947
+msgid "Xom's lightning strike"
+msgstr "좀의 번개"
+
+msgid "exit from the tutorial"
+msgstr "튜토리얼로부터 나가는 출구"

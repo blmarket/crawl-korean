@@ -28,7 +28,7 @@ end
 
 NAME:    tutorial_lesson4
 TAGS:    no_rotate no_monster_gen no_item_gen no_hmirror no_vmirror no_trap_gen no_pool_fixup tutorial
-DESC:    "Lesson 4: Magic and Spellcasting"
+DESC:    "4장: 마법과 주문 시전"
 ORIENT:  encompass
 KFEAT:   ABCDE = .
 COLOUR:  ABCDdefgh = lightblue
@@ -38,7 +38,7 @@ ITEM:    ring of magical power not_cursed
 ITEM:    staff of wizardry not_cursed
 ITEM:    potion of experience ident:type
 ITEM:    bread ration
-MONS:    training dummy ; stone q:20
+MONS:    training dummy hp:3 ; stone q:20
 MONS:    bat skeleton, goblin skeleton
 MONS:    rat, goblin
 MARKER:  d = lua:tutorial4.msg("spellbook")
