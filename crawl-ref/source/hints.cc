@@ -3380,7 +3380,7 @@ void hints_describe_item(const item_def &item)
             if (is_throwable(&you, item))
             {
                 ostr << item.name(true, DESC_YOUR)
-                     << gettext("은(는) 발사도구가 없어도 발사(<w>%</w>)할 수 있습니다. ");
+                     << "은(는) 발사도구가 없어도 발사(<w>%</w>)할 수 있습니다. ";
                 ostr << _hints_throw_stuff(item);
                 cmd.push_back(CMD_FIRE);
             }

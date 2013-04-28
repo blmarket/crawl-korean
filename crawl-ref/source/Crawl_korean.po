@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-27 23:52+0900\n"
+"POT-Creation-Date: 2013-04-28 15:27+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6822,7 +6822,7 @@ msgstr "남음: "
 #: itemname.cc:1849 itemname.cc:1856 itemname.cc:1857 itemname.cc:1864
 #: itemname.cc:1844 itemname.cc:1744 itemname.cc:1747 itemname.cc:1776
 #: itemname.cc:1788 itemname.cc:1790 itemname.cc:1795 itemname.cc:1829
-#: itemname.cc:1838
+#: itemname.cc:1838 itemname.cc:1833
 #, c-format
 msgid "%s%smanual"
 msgstr "%s%s설명서"
@@ -6831,7 +6831,7 @@ msgstr "%s%s설명서"
 #: itemname.cc:1849 itemname.cc:1856 itemname.cc:1857 itemname.cc:1864
 #: itemname.cc:1844 itemname.cc:1744 itemname.cc:1747 itemname.cc:1776
 #: itemname.cc:1788 itemname.cc:1790 itemname.cc:1795 itemname.cc:1829
-#: itemname.cc:1838
+#: itemname.cc:1838 itemname.cc:1833
 #, c-format
 msgid "%s%sbook"
 msgstr "%s%s마법서"
@@ -7970,6 +7970,7 @@ msgstr "은(는) 당신이 카드를 낭비한 것을 기분 좋게 생각하지
 
 #: decks.cc:3248 decks.cc:3247 decks.cc:3247 decks.cc:3201 decks.cc:3252
 #: decks.cc:3257 decks.cc:3270 decks.cc:3277 decks.cc:3278 decks.cc:3272
+#: decks.cc:3279
 msgid "You hear Nemelex Xobeh chuckle."
 msgstr "'네멜렉스 죠베'는 당신에게 방긋 미소를 지었다."
 
@@ -8464,7 +8465,7 @@ msgid "%s resists."
 msgstr "%s은(는) 저항해냈다."
 
 #: ouch.cc:454 ouch.d.cc:454 ouch.cc:497 items.cc:4172 items.cc:4174
-#: items.cc:4148 items.cc:4151
+#: items.cc:4148 items.cc:4151 items.cc:4152
 #, c-format
 msgid "The acid corrodes %s!"
 msgstr "강한 산이 %s을(를) 부식시켜 손상시켰다!"
@@ -8971,7 +8972,7 @@ msgstr "%s이(가) 갑자기 나타났다!"
 
 #: mon-stuff.cc:3242 mon-stuff.d.cc:3242 tmp.cc:3222 mon-stuff.cc:3136
 #: mon-stuff.cc:3194 mon-stuff.cc:3218 items.cc:4183 items.cc:4185
-#: items.cc:4159 items.cc:4162
+#: items.cc:4159 items.cc:4162 items.cc:4163
 #, c-format
 msgid "The acid corrodes %s %s!"
 msgstr "강한 산이 %s %s을(를) 부식시켰다!"
@@ -15402,6 +15403,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531
 msgid "The fire roars with new energy!"
@@ -17799,7 +17803,7 @@ msgstr ""
 
 #: command.cc:2242 command.cc:2518 command.cc:2519 command.cc:2219
 #: command.cc:2496 command.cc:2122 command.cc:2404 command.cc:2111
-#: command.cc:2387 command.cc:2102 command.cc:2378
+#: command.cc:2387 command.cc:2102 command.cc:2378 command.cc:2384
 msgid ""
 "<h>Movement:\n"
 "To move in a direction or to attack, \n"
@@ -17813,7 +17817,7 @@ msgstr ""
 
 #: command.cc:2259 command.cc:2542 command.cc:2543 command.cc:2236
 #: command.cc:2520 command.cc:2139 command.cc:2428 command.cc:2128
-#: command.cc:2411 command.cc:2119 command.cc:2402
+#: command.cc:2411 command.cc:2119 command.cc:2402 command.cc:2408
 msgid "<h>Rest/Search:\n"
 msgstr "<h>휴식/탐색:\n"
 
@@ -18068,22 +18072,22 @@ msgid "edit player doll"
 msgstr "플레이어 아바타 편집"
 
 #: command.cc:2377 command.cc:2354 command.cc:2257 command.cc:2240
-#: command.cc:2231
+#: command.cc:2231 command.cc:2237
 msgid "read messages (online play only)"
 msgstr "메시지 읽기 (웹 버전 전용)"
 
 #: command.cc:2382 command.cc:2359 command.cc:2262 command.cc:2245
-#: command.cc:2236
+#: command.cc:2236 command.cc:2242
 msgid "<h>Game Saving and Quitting:\n"
 msgstr "<h>세이브/종료:\n"
 
 #: command.cc:2385 command.cc:2362 command.cc:2265 command.cc:2248
-#: command.cc:2239
+#: command.cc:2239 command.cc:2245
 msgid "Save game and exit"
 msgstr "세이브 후 종료"
 
 #: command.cc:2386 command.cc:2363 command.cc:2266 command.cc:2249
-#: command.cc:2240
+#: command.cc:2240 command.cc:2246
 msgid "Save and exit without query"
 msgstr "세이브 후 종료(다시 묻지 않음)"
 
@@ -18092,42 +18096,42 @@ msgid "Quit without saving"
 msgstr "현재 게임을 포기"
 
 #: command.cc:2391 command.cc:2368 command.cc:2273 command.cc:2256
-#: command.cc:2247
+#: command.cc:2247 command.cc:2253
 msgid "<h>Player Character Information:\n"
 msgstr "<h>플레이어 캐릭터 정보:\n"
 
 #: command.cc:2394 command.cc:2371 command.cc:2276 command.cc:2259
-#: command.cc:2250
+#: command.cc:2250 command.cc:2256
 msgid "display character status"
 msgstr "캐릭터 상태 확인"
 
 #: command.cc:2395 command.cc:2372 command.cc:2277 command.cc:2260
-#: command.cc:2251
+#: command.cc:2251 command.cc:2257
 msgid "show skill screen"
 msgstr "스킬창 확인"
 
 #: command.cc:2396 command.cc:2373 command.cc:2278 command.cc:2261
-#: command.cc:2252
+#: command.cc:2252 command.cc:2258
 msgid "show resistances"
 msgstr "캐릭터 세부정보 확인"
 
 #: command.cc:2397 command.cc:2374 command.cc:2279 command.cc:2262
-#: command.cc:2253
+#: command.cc:2253 command.cc:2259
 msgid "show religion screen"
 msgstr "신앙 화면 표시"
 
 #: command.cc:2398 command.cc:2375 command.cc:2280 command.cc:2263
-#: command.cc:2254
+#: command.cc:2254 command.cc:2260
 msgid "show Abilities/mutations"
 msgstr "선천적 능력/변이 표시"
 
 #: command.cc:2399 command.cc:2376 command.cc:2281 command.cc:2264
-#: command.cc:2255
+#: command.cc:2255 command.cc:2261
 msgid "show item knowledge"
 msgstr "확인한 아이템 일람"
 
 #: command.cc:2400 command.cc:2401 command.cc:2378 command.cc:2283
-#: command.cc:2266 command.cc:2257
+#: command.cc:2266 command.cc:2257 command.cc:2263
 msgid "display worn armour"
 msgstr "장착중인 방어구 확인"
 
@@ -18136,52 +18140,52 @@ msgid "display current weapons"
 msgstr "현재 무기 확인"
 
 #: command.cc:2402 command.cc:2403 command.cc:2380 command.cc:2284
-#: command.cc:2267 command.cc:2258
+#: command.cc:2267 command.cc:2258 command.cc:2264
 msgid "display worn jewellery"
 msgstr "현재 장신구 확인"
 
 #: command.cc:2403 command.cc:2404 command.cc:2381 command.cc:2285
-#: command.cc:2268 command.cc:2259
+#: command.cc:2268 command.cc:2259 command.cc:2265
 msgid "display gold in possession"
 msgstr "소지금 확인"
 
 #: command.cc:2404 command.cc:2405 command.cc:2382 command.cc:2286
-#: command.cc:2269 command.cc:2260
+#: command.cc:2269 command.cc:2260 command.cc:2266
 msgid "display experience info"
 msgstr "경험치 정보 확인"
 
 #: command.cc:2408 command.cc:2409 command.cc:2386 command.cc:2290
-#: command.cc:2273 command.cc:2264
+#: command.cc:2273 command.cc:2264 command.cc:2270
 msgid "<h>Dungeon Interaction and Information:\n"
 msgstr "<h>던전 상호작용 관련 명령:\n"
 
 #: command.cc:2411 command.cc:2412 command.cc:2389 command.cc:2293
-#: command.cc:2276 command.cc:2267
+#: command.cc:2276 command.cc:2267 command.cc:2273
 msgid "<w>%</w>/<w>%</w> : Open/Close door"
 msgstr "<w>%</w>/<w>%</w> : 문 열기/닫기"
 
 #: command.cc:2413 command.cc:2414 command.cc:2391 command.cc:2295
-#: command.cc:2278 command.cc:2269
+#: command.cc:2278 command.cc:2269 command.cc:2275
 msgid "<w>%</w>/<w>%</w> : use staircase"
 msgstr "<w>%</w>/<w>%</w> : 계단 오르내리기"
 
 #: command.cc:2417 command.cc:2418 command.cc:2395 command.cc:2299
-#: command.cc:2282 command.cc:2273
+#: command.cc:2282 command.cc:2273 command.cc:2279
 msgid "examine occupied tile and"
 msgstr "현재 지면 확인 또는"
 
 #: command.cc:2418 command.cc:2419 command.cc:2396 command.cc:2300
-#: command.cc:2283 command.cc:2274
+#: command.cc:2283 command.cc:2274 command.cc:2280
 msgid "         pickup part of a single stack\n"
 msgstr "         일부 아이템 줍기\n"
 
 #: command.cc:2422 command.cc:2423 command.cc:2400 command.cc:2303
-#: command.cc:2286 command.cc:2277
+#: command.cc:2286 command.cc:2277 command.cc:2283
 msgid "eXamine surroundings/targets"
 msgstr "주변 환경/타겟 확인"
 
 #: command.cc:2423 command.cc:2424 command.cc:2401 command.cc:2304
-#: command.cc:2287 command.cc:2278
+#: command.cc:2287 command.cc:2278 command.cc:2284
 msgid "eXamine level map (<w>%?</w> for help)"
 msgstr "레벨 지도 확인 (<w>%?</w>:도움말)"
 
@@ -18190,173 +18194,173 @@ msgid "list monsters, items, features in view"
 msgstr "시야 내 몬스터,아이템,지형 일람"
 
 #: command.cc:2426 command.cc:2427 command.cc:2404 command.cc:2312
-#: command.cc:2295 command.cc:2286
+#: command.cc:2295 command.cc:2286 command.cc:2292
 msgid "show dungeon Overview"
 msgstr "지역 정보 확인"
 
 #: command.cc:2427 command.cc:2428 command.cc:2405 command.cc:2313
-#: command.cc:2296 command.cc:2287
+#: command.cc:2296 command.cc:2287 command.cc:2293
 msgid "toggle auto-pickup"
 msgstr "아이템 자동 줍기 설정/해제"
 
 #: command.cc:2428 command.cc:2429 command.cc:2406 command.cc:2314
-#: command.cc:2297 command.cc:2288
+#: command.cc:2297 command.cc:2288 command.cc:2294
 msgid "change ally pickup behaviour"
 msgstr "아군의 아이템 습득 설정"
 
 #: command.cc:2432 command.cc:2433 command.cc:2410 command.cc:2318
-#: command.cc:2301 command.cc:2292
+#: command.cc:2301 command.cc:2292 command.cc:2298
 msgid "<h>Item Interaction (inventory):\n"
 msgstr "<h>아이템 관련 명령 (소지품창):\n"
 
 #: command.cc:2435 command.cc:2436 command.cc:2413 command.cc:2321
-#: command.cc:2304 command.cc:2295
+#: command.cc:2304 command.cc:2295 command.cc:2301
 msgid "show Inventory list"
 msgstr "소지품창 보기"
 
 #: command.cc:2436 command.cc:2437 command.cc:2414 command.cc:2322
-#: command.cc:2305 command.cc:2296
+#: command.cc:2305 command.cc:2296 command.cc:2302
 msgid "show inventory of equipped items"
 msgstr "장비한 아이템 일람"
 
 #: command.cc:2437 command.cc:2438 command.cc:2415 command.cc:2323
-#: command.cc:2306 command.cc:2297
+#: command.cc:2306 command.cc:2297 command.cc:2303
 msgid "inscribe item"
 msgstr "아이템 문장 새기기"
 
 #: command.cc:2438 command.cc:2439 command.cc:2416 command.cc:2324
-#: command.cc:2307 command.cc:2298
+#: command.cc:2307 command.cc:2298 command.cc:2304
 msgid "Fire next appropriate item"
 msgstr "적절한 발사 아이템 발사"
 
 #: command.cc:2439 command.cc:2440 command.cc:2417 command.cc:2325
-#: command.cc:2308 command.cc:2299
+#: command.cc:2308 command.cc:2299 command.cc:2305
 msgid "select an item and Fire it"
 msgstr "발사 아이템 선택 후 발사"
 
 #: command.cc:2440 command.cc:2441 command.cc:2418 command.cc:2326
-#: command.cc:2309 command.cc:2300
+#: command.cc:2309 command.cc:2300 command.cc:2306
 msgid "select item slot to be quivered"
 msgstr "보조무기 선택"
 
 #: command.cc:2443 command.cc:2444 command.cc:2421 command.cc:2329
-#: command.cc:2312 command.cc:2303
+#: command.cc:2312 command.cc:2303 command.cc:2309
 msgid "Drain corpses"
 msgstr "시체 흡수"
 
 #: command.cc:2444 command.cc:2445 command.cc:2422 command.cc:2330
-#: command.cc:2313 command.cc:2304
+#: command.cc:2313 command.cc:2304 command.cc:2310
 msgid "Eat food"
 msgstr "음식 섭취"
 
 #: command.cc:2445 command.cc:2446 command.cc:2423 command.cc:2331
-#: command.cc:2314 command.cc:2305
+#: command.cc:2314 command.cc:2305 command.cc:2311
 msgid " (tries floor first)\n"
 msgstr " (바닥에 떨어진 것 우선)\n"
 
 #: command.cc:2449 command.cc:2450 command.cc:2427 command.cc:2335
-#: command.cc:2318 command.cc:2309
+#: command.cc:2318 command.cc:2309 command.cc:2315
 msgid "Quaff a potion"
 msgstr "물약 복용하기"
 
 #: command.cc:2450 command.cc:2451 command.cc:2428 command.cc:2336
-#: command.cc:2319 command.cc:2310
+#: command.cc:2319 command.cc:2310 command.cc:2316
 msgid "Read a scroll or book"
 msgstr "책이나 두루마리 읽기"
 
 #: command.cc:2451 command.cc:2452 command.cc:2429 command.cc:2337
-#: command.cc:2320 command.cc:2311
+#: command.cc:2320 command.cc:2311 command.cc:2317
 msgid "Memorise a spell from a book"
 msgstr "책에서 주문 기억하기"
 
 #: command.cc:2452 command.cc:2453 command.cc:2430 command.cc:2338
-#: command.cc:2321 command.cc:2312
+#: command.cc:2321 command.cc:2312 command.cc:2318
 msgid "Wield an item (<w>-</w> for none)"
 msgstr "아이템 쥐기 (<w>-</w>:맨손)"
 
 #: command.cc:2453 command.cc:2454 command.cc:2431 command.cc:2339
-#: command.cc:2322 command.cc:2313
+#: command.cc:2322 command.cc:2313 command.cc:2319
 msgid "wield item a, or switch to b"
 msgstr "a/b키 간의 아이템 전환"
 
 #: command.cc:2455 command.cc:2456 command.cc:2433 command.cc:2341
-#: command.cc:2324 command.cc:2315
+#: command.cc:2324 command.cc:2315 command.cc:2321
 msgid "    (use <w>%</w> to assign slots)"
 msgstr "    (<w>%</w>키로 먼저 아이템 키를 설정하세요.)"
 
 #: command.cc:2458 command.cc:2459 command.cc:2436 command.cc:2344
-#: command.cc:2327 command.cc:2318
+#: command.cc:2327 command.cc:2318 command.cc:2324
 msgid "eVoke power of wielded item"
 msgstr "장착한 아이템의 특수능력 발동"
 
 #: command.cc:2459 command.cc:2460 command.cc:2437 command.cc:2345
-#: command.cc:2328 command.cc:2319
+#: command.cc:2328 command.cc:2319 command.cc:2325
 msgid "eVoke wand and miscellaneous item"
 msgstr "마법봉이나 기타 아이템 발동"
 
 #: command.cc:2461 command.cc:2462 command.cc:2439 command.cc:2347
-#: command.cc:2330 command.cc:2321
+#: command.cc:2330 command.cc:2321 command.cc:2327
 msgid "<w>%</w>/<w>%</w> : Wear or Take off armour"
 msgstr "<w>%</w>/<w>%</w> : 방어구 장착,해제"
 
 #: command.cc:2463 command.cc:2464 command.cc:2441 command.cc:2349
-#: command.cc:2332 command.cc:2323
+#: command.cc:2332 command.cc:2323 command.cc:2329
 msgid "<w>%</w>/<w>%</w> : Put on or Remove jewellery"
 msgstr "<w>%</w>/<w>%</w> : 장신구 장착,해제"
 
 #: command.cc:2468 command.cc:2469 command.cc:2446 command.cc:2354
-#: command.cc:2337 command.cc:2328
+#: command.cc:2337 command.cc:2328 command.cc:2334
 msgid "<h>Item Interaction (floor):\n"
 msgstr "<h>아이템 관련 명령 (바닥):\n"
 
 #: command.cc:2471 command.cc:2472 command.cc:2449 command.cc:2357
-#: command.cc:2340 command.cc:2331
+#: command.cc:2340 command.cc:2331 command.cc:2337
 msgid "pick up items (also <w>g</w>)"
 msgstr "아이템 줍기 (또는 <w>g</w>)"
 
 #: command.cc:2474 command.cc:2475 command.cc:2452 command.cc:2360
-#: command.cc:2343 command.cc:2334
+#: command.cc:2343 command.cc:2334 command.cc:2340
 msgid "    (press twice for pick up menu)\n"
 msgstr "    (두번 눌러 줍기 메뉴)\n"
 
 #: command.cc:2477 command.cc:2478 command.cc:2455 command.cc:2363
-#: command.cc:2346 command.cc:2337
+#: command.cc:2346 command.cc:2337 command.cc:2343
 msgid "Drop an item"
 msgstr "아이템 버리기"
 
 #: command.cc:2478 command.cc:2479 command.cc:2456 command.cc:2364
-#: command.cc:2347 command.cc:2338
+#: command.cc:2347 command.cc:2338 command.cc:2344
 msgid "<w>%#</w>: Drop exact number of items"
 msgstr "<w>%#</w>: 지정한 수 만큼 버리기"
 
 #: command.cc:2480 command.cc:2481 command.cc:2458 command.cc:2366
-#: command.cc:2349 command.cc:2340
+#: command.cc:2349 command.cc:2340 command.cc:2346
 msgid "Drop the last item(s) you picked up"
 msgstr "가장 최근에 주운 아이템 버리기"
 
 #: command.cc:2481 command.cc:2482 command.cc:2459 command.cc:2367
-#: command.cc:2350 command.cc:2341
+#: command.cc:2350 command.cc:2341 command.cc:2347
 msgid "Chop up a corpse"
 msgstr "시체 해체하기"
 
 #: command.cc:2484 command.cc:2485 command.cc:2462 command.cc:2370
-#: command.cc:2353 command.cc:2344
+#: command.cc:2353 command.cc:2344 command.cc:2350
 msgid "Drain corpses on"
 msgstr "시체 흡수 "
 
 #: command.cc:2485 command.cc:2486 command.cc:2463 command.cc:2371
-#: command.cc:2354 command.cc:2345
+#: command.cc:2354 command.cc:2345 command.cc:2351
 msgid "Eat food from"
 msgstr "음식 섭취 "
 
 #: command.cc:2486 command.cc:2487 command.cc:2464 command.cc:2372
-#: command.cc:2355 command.cc:2346
+#: command.cc:2355 command.cc:2346 command.cc:2352
 msgctxt "command"
 msgid " floor\n"
 msgstr "(바닥)\n"
 
 #: command.cc:2492 command.cc:2493 command.cc:2470 command.cc:2378
-#: command.cc:2361 command.cc:2352
+#: command.cc:2361 command.cc:2352 command.cc:2358
 msgid "<h>Additional help:\n"
 msgstr "<h>추가 도움말:\n"
 
@@ -18373,22 +18377,22 @@ msgstr ""
 "w>),특수능력 (<w>%!</w>)화면에서도 가능합니다."
 
 #: command.cc:2534 command.cc:2535 command.cc:2512 command.cc:2420
-#: command.cc:2403 command.cc:2394
+#: command.cc:2403 command.cc:2394 command.cc:2400
 msgid "<w>Shift-Dir.</w> runs into one direction"
 msgstr "<w>Shift-Dir.</w> 해당 방향으로 계속 이동"
 
 #: command.cc:2536 command.cc:2537 command.cc:2514 command.cc:2422
-#: command.cc:2405 command.cc:2396
+#: command.cc:2405 command.cc:2396 command.cc:2402
 msgid "<w>%</w> or <w>%</w> : ascend/descend the stairs"
 msgstr "<w>%</w> 또는 <w>%</w> : 계단 오르내리기"
 
 #: command.cc:2538 command.cc:2539 command.cc:2516 command.cc:2424
-#: command.cc:2407 command.cc:2398
+#: command.cc:2407 command.cc:2398 command.cc:2404
 msgid "autoexplore"
 msgstr "자동 탐색"
 
 #: command.cc:2561 command.cc:2562 command.cc:2539 command.cc:2447
-#: command.cc:2425 command.cc:2416
+#: command.cc:2425 command.cc:2416 command.cc:2422
 msgid ""
 "\n"
 "<h>Attacking monsters\n"
@@ -18401,7 +18405,7 @@ msgstr ""
 "장비하고 있는 무기(또는 맨손)으로 몬스터를 공격합니다."
 
 #: command.cc:2568 command.cc:2569 command.cc:2546 command.cc:2454
-#: command.cc:2432 command.cc:2423
+#: command.cc:2432 command.cc:2423 command.cc:2429
 msgid ""
 "\n"
 "<h>Ranged combat and magic\n"
@@ -18410,22 +18414,22 @@ msgstr ""
 "<h>원거리 공격과, 마법 사용\n"
 
 #: command.cc:2571 command.cc:2572 command.cc:2549 command.cc:2457
-#: command.cc:2435 command.cc:2426
+#: command.cc:2435 command.cc:2426 command.cc:2432
 msgid "<w>%</w> to throw/fire missiles"
 msgstr "<w>%</w> 발사체를 던지거나 발사"
 
 #: command.cc:2573 command.cc:2574 command.cc:2551 command.cc:2459
-#: command.cc:2437 command.cc:2428
+#: command.cc:2437 command.cc:2428 command.cc:2434
 msgid "<w>%</w>/<w>%</w> to cast spells (<w>%?/%</w> lists spells)"
 msgstr "<w>%</w>/<w>%</w> 주문 시전 (<w>%?/%</w> 주문 일람)"
 
 #: command.cc:2577 command.cc:2578 command.cc:2555 command.cc:2463
-#: command.cc:2441 command.cc:2432
+#: command.cc:2441 command.cc:2432 command.cc:2438
 msgid "Memorise a new spell"
 msgstr "새로운 주문 기억하기"
 
 #: command.cc:2578 command.cc:2579 command.cc:2556 command.cc:2464
-#: command.cc:2442 command.cc:2433
+#: command.cc:2442 command.cc:2433 command.cc:2439
 msgid "read a book to forget a spell"
 msgstr "책을 읽어 주문을 잊기"
 
@@ -18475,62 +18479,62 @@ msgid "staves and rods (<w>%</w>ield and e<w>%</w>oke)"
 msgstr "지팡이와 마법막대 (<w>%</w> 장비 <w>%</w> 발동)"
 
 #: command.cc:2665 command.cc:2666 command.cc:2643 command.cc:2529
-#: command.cc:2507 command.cc:2498
+#: command.cc:2507 command.cc:2498 command.cc:2504
 msgid "list inventory (select item to view it)"
 msgstr "소지품창 보기 (아이템 설명 보기)"
 
 #: command.cc:2666 command.cc:2667 command.cc:2644 command.cc:2530
-#: command.cc:2508 command.cc:2499
+#: command.cc:2508 command.cc:2499 command.cc:2505
 msgid "pick up item from ground (also <w>g</w>)"
 msgstr "지면에서 아이템 줍기 (혹은 <w>g</w>)"
 
 #: command.cc:2667 command.cc:2668 command.cc:2645 command.cc:2531
-#: command.cc:2509 command.cc:2500
+#: command.cc:2509 command.cc:2500 command.cc:2506
 msgid "drop item"
 msgstr "아이템 떨어트리기"
 
 #: command.cc:2668 command.cc:2669 command.cc:2646 command.cc:2532
-#: command.cc:2510 command.cc:2501
+#: command.cc:2510 command.cc:2501 command.cc:2507
 msgid "drop the last item(s) you picked up"
 msgstr "가장 최근에 주운 아이템 버리기"
 
 #: command.cc:2672 command.cc:2673 command.cc:2650 command.cc:2536
-#: command.cc:2514 command.cc:2505
+#: command.cc:2514 command.cc:2505 command.cc:2511
 msgid "<h>Additional important commands\n"
 msgstr "<h>추가 주요 기능들\n"
 
 #: command.cc:2675 command.cc:2676 command.cc:2653 command.cc:2539
-#: command.cc:2517 command.cc:2508
+#: command.cc:2517 command.cc:2508 command.cc:2514
 msgid "Save the game and exit"
 msgstr "게임을 저장하고 종료"
 
 #: command.cc:2676 command.cc:2677 command.cc:2654 command.cc:2540
-#: command.cc:2518 command.cc:2509
+#: command.cc:2518 command.cc:2509 command.cc:2515
 msgid "show previous messages"
 msgstr "이전 메시지 확인"
 
 #: command.cc:2677 command.cc:2678 command.cc:2655 command.cc:2541
-#: command.cc:2519 command.cc:2510
+#: command.cc:2519 command.cc:2510 command.cc:2516
 msgid "use an ability"
 msgstr "특수능력 사용"
 
 #: command.cc:2678 command.cc:2679 command.cc:2656 command.cc:2542
-#: command.cc:2520 command.cc:2511
+#: command.cc:2520 command.cc:2511 command.cc:2517
 msgid "show character overview"
 msgstr "캐릭터 정보 확인"
 
 #: command.cc:2679 command.cc:2680 command.cc:2657 command.cc:2543
-#: command.cc:2521 command.cc:2512
+#: command.cc:2521 command.cc:2512 command.cc:2518
 msgid "show religion overview"
 msgstr "신앙 정보 확인"
 
 #: command.cc:2680 command.cc:2681 command.cc:2658 command.cc:2544
-#: command.cc:2522 command.cc:2513
+#: command.cc:2522 command.cc:2513 command.cc:2519
 msgid "show map of the whole level"
 msgstr "현재 층의 지도 확인"
 
 #: command.cc:2681 command.cc:2682 command.cc:2659 command.cc:2545
-#: command.cc:2523 command.cc:2514
+#: command.cc:2523 command.cc:2514 command.cc:2520
 msgid "show dungeon overview"
 msgstr "던전 지역 정보 확인"
 
@@ -18729,7 +18733,7 @@ msgstr ""
 "<w>?</w>      : 위저드 명령어 표시\n"
 
 #: command.cc:2582 command.cc:2583 command.cc:2560 command.cc:2468
-#: command.cc:2446 command.cc:2437
+#: command.cc:2446 command.cc:2437 command.cc:2443
 msgid "<h>Item types (and common commands)\n"
 msgstr "<h>아이템 타입 (자주 쓰는 명령어)\n"
 
@@ -25150,7 +25154,7 @@ msgid "%s jumps down from %s now dead mount."
 msgstr "%s은(는) 죽은 몬스터 아래로 뛰어내렸다."
 
 #: command.cc:2400 command.cc:2377 command.cc:2282 command.cc:2265
-#: command.cc:2256
+#: command.cc:2256 command.cc:2262
 msgid "show runes collected"
 msgstr "획득한 조트의 룬 확인"
 
@@ -30759,31 +30763,31 @@ msgstr ""
 "<w>5</w>.      버프와 상태이상\n"
 "<w>6</w>.      문장 새기기\n"
 
-#: command.cc:2267 command.cc:2250 command.cc:2241
+#: command.cc:2267 command.cc:2250 command.cc:2241 command.cc:2247
 msgid "Suicide the current character"
 msgstr "현재 진행중인 게임을 포기"
 
-#: command.cc:2268 command.cc:2251 command.cc:2242
+#: command.cc:2268 command.cc:2251 command.cc:2242 command.cc:2248
 msgid "         and quit the game\n"
 msgstr "        그리고 게임을 종료\n"
 
-#: command.cc:2306 command.cc:2289 command.cc:2280
+#: command.cc:2306 command.cc:2289 command.cc:2280 command.cc:2286
 msgid "list monsters, items, features"
 msgstr "몬스터, 아이템, 지형지물 목록 "
 
-#: command.cc:2307 command.cc:2290 command.cc:2281
+#: command.cc:2307 command.cc:2290 command.cc:2281 command.cc:2287
 msgid "         in view\n"
 msgstr "         (보기) \n"
 
-#: command.cc:2309 command.cc:2292 command.cc:2283
+#: command.cc:2309 command.cc:2292 command.cc:2283 command.cc:2289
 msgid "toggle terrain-only view"
 msgstr "지형만 보기 전환       "
 
-#: command.cc:2311 command.cc:2294 command.cc:2285
+#: command.cc:2311 command.cc:2294 command.cc:2285 command.cc:2291
 msgid "colour monsters in view by HP"
 msgstr "HP에 따른 몬스터 색 구분    "
 
-#: command.cc:2382 command.cc:2365 command.cc:2356
+#: command.cc:2382 command.cc:2365 command.cc:2356 command.cc:2362
 msgid ""
 "Many commands have context sensitive help, among them <w>%</w>, <w>%</w>, <w>"
 "%</w> (or any form of targetting), <w>%</w>, and <w>%</w>.\n"
@@ -30796,7 +30800,7 @@ msgstr ""
 "당신은 주문 (<w>%</w>), 스킬 (<w>%?</w>) 특수능력 (<w>%!</w>)에 대해 더 자세"
 "한 설명을 읽는 것도 가능합니다."
 
-#: command.cc:2549 command.cc:2527 command.cc:2518
+#: command.cc:2549 command.cc:2527 command.cc:2518 command.cc:2524
 msgid ""
 "\n"
 "<h>Targetting\n"
@@ -31097,6 +31101,9 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -33543,19 +33550,19 @@ msgstr ""
 
 #: itemname.cc:2372 itemname.cc:2375 itemname.cc:2409 itemname.cc:2421
 #: itemname.cc:2426 itemname.cc:2431 itemname.cc:2465 itemname.cc:2477
-#: itemname.cc:2483 itemname.cc:2468
+#: itemname.cc:2483 itemname.cc:2468 itemname.cc:2475
 msgid "Items not yet recognised: (toggle with -)"
 msgstr "감정되지 않은 아이템: (- 키로 전환)"
 
 #: itemname.cc:2374 itemname.cc:2377 itemname.cc:2411 itemname.cc:2423
 #: itemname.cc:2428 itemname.cc:2433 itemname.cc:2467 itemname.cc:2479
-#: itemname.cc:2485 itemname.cc:2470
+#: itemname.cc:2485 itemname.cc:2470 itemname.cc:2477
 msgid "Recognised items. (- for unrecognised, select to toggle autopickup)"
 msgstr "감정된 아이템. (- 키로 미감정 아이템 확인과, 자동 줍기 여부 설정)"
 
 #: itemname.cc:2376 itemname.cc:2379 itemname.cc:2413 itemname.cc:2425
 #: itemname.cc:2430 itemname.cc:2435 itemname.cc:2469 itemname.cc:2481
-#: itemname.cc:2487 itemname.cc:2472
+#: itemname.cc:2487 itemname.cc:2472 itemname.cc:2479
 msgid "You recognise all items. (Select to toggle autopickup)"
 msgstr ""
 "당신은 모든 아이템을 감정했습니다. (아이템을 선택하여, 자동 줍기 여부 설정)"
@@ -33563,12 +33570,13 @@ msgstr ""
 #: itemname.cc:2379 invent.cc:414 itemname.cc:2382 itemname.cc:2416
 #: itemname.cc:2428 invent.cc:413 itemname.cc:2433 itemname.cc:2438
 #: itemname.cc:2472 itemname.cc:2484 itemname.cc:2490 itemname.cc:2475
+#: itemname.cc:2482
 msgid "(_ for help)"
 msgstr "(_ 키: 도움말)"
 
 #: itemname.cc:2438 itemname.cc:2441 itemname.cc:2474 itemname.cc:2486
 #: itemname.cc:2491 itemname.cc:2496 itemname.cc:2530 itemname.cc:2542
-#: itemname.cc:2548 itemname.cc:2533
+#: itemname.cc:2548 itemname.cc:2533 itemname.cc:2540
 msgid "You haven't found any runes yet."
 msgstr "당신은 아직 아무 룬도 찾지 못했다."
 
@@ -33854,13 +33862,13 @@ msgid "# turns away from rotting? [ENTER for fully fresh] "
 msgstr "부패로 부터 몇 턴 만큼? [ENTER키로 신선한 고기] "
 
 #: items.cc:4090 items.cc:4088 items.cc:4089 items.cc:4091 items.cc:4065
-#: items.cc:4068
+#: items.cc:4068 items.cc:4069
 #, c-format
 msgid "[%c] random"
 msgstr "[%c] 무작위"
 
 #: items.cc:4092 items.cc:4090 items.cc:4091 items.cc:4093 items.cc:4067
-#: items.cc:4070
+#: items.cc:4070 items.cc:4071
 msgid ""
 "\n"
 "What kind of item mimic? "
@@ -36173,6 +36181,7 @@ msgstr "늘씬한 "
 
 #: itemname.cc:2480 itemname.cc:2492 itemname.cc:2497 itemname.cc:2502
 #: itemname.cc:2536 itemname.cc:2548 itemname.cc:2554 itemname.cc:2539
+#: itemname.cc:2546
 #, c-format
 msgid "Runes of Zot: %d/%d"
 msgstr "조트의 룬: %d/%d"
@@ -36259,14 +36268,17 @@ msgid "%s repels the %s!"
 msgstr "%s은(는) %s을(를) 방어해냈다!"
 
 #: command.cc:2131 command.cc:2414 command.cc:2122 command.cc:2405
+#: command.cc:2411
 msgid "wait a turn (also <w>.</w>, <w>Del</w>)"
 msgstr "한 턴 대기  (also <w>.</w>, <w>Del</w>)"
 
 #: command.cc:2132 command.cc:2415 command.cc:2123 command.cc:2406
+#: command.cc:2412
 msgid "rest and long wait; stops when"
 msgstr "휴식을 취하거나 길게 대기;    "
 
 #: command.cc:2135 command.cc:2418 command.cc:2126 command.cc:2409
+#: command.cc:2415
 msgid ""
 "    Health or Magic become full,\n"
 "    something is detected, or after\n"
@@ -36276,7 +36288,7 @@ msgstr ""
 "    무엇인가 시야 내에 들어오거나, 100턴이 \n"
 "    경과했을 경우 종료 (<w>numpad-5</w>)\n"
 
-#: command.cc:2568 command.cc:2559
+#: command.cc:2568 command.cc:2559 command.cc:2565
 msgid ""
 "<yellow>Player stats</yellow>\n"
 "<w>A</w>      : set all skills to level\n"
@@ -36372,7 +36384,7 @@ msgstr ""
 "<w>Ctrl-R</w> : 현재 층 재생성\n"
 "<w>P</w>      : 특수지형 기반 층 생성\n"
 
-#: command.cc:2617 command.cc:2608
+#: command.cc:2617 command.cc:2608 command.cc:2614
 msgid ""
 "<yellow>Other player related effects</yellow>\n"
 "<w>c</w>      : card effect\n"
@@ -38686,3 +38698,7 @@ msgstr "을(를) 조이고 있음"
 msgctxt "moninfo"
 msgid "holding "
 msgstr "을(를) 잡고 있음"
+
+#: command.cc:2233
+msgid "<w>F12</w> : read messages (online play only)"
+msgstr "<w>F12</w> : 메시지 확인 (온라인 플레이 전용)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-27 23:52+0900\n"
+"POT-Creation-Date: 2013-04-28 15:27+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6144,7 +6144,7 @@ msgstr "알 수 없는 기타 아이템(버그)"
 #: itemname.cc:1692 itemname.cc:857 itemname.cc:1695 itemname.cc:1724
 #: itemname.cc:897 itemname.cc:1736 itemname.cc:1738 itemname.cc:899
 #: itemname.cc:1743 itemname.cc:931 itemname.cc:1777 itemname.cc:938
-#: itemname.cc:1786
+#: itemname.cc:1786 itemname.cc:1778
 msgid "deck of cards"
 msgstr "카드 덱"
 
@@ -6955,7 +6955,7 @@ msgstr "반지"
 #: itemname.cc:1741 itemname.cc:1740 itemname.cc:1744 itemname.cc:1769
 #: itemname.cc:1773 itemname.cc:1781 itemname.cc:1785 itemname.cc:1783
 #: itemname.cc:1787 itemname.cc:1788 itemname.cc:1792 itemname.cc:1822
-#: itemname.cc:1826 itemname.cc:1831 itemname.cc:1835
+#: itemname.cc:1826 itemname.cc:1831 itemname.cc:1835 itemname.cc:1830
 msgid "book"
 msgstr "마법서"
 
@@ -6965,7 +6965,7 @@ msgstr "마법서"
 #: itemname.cc:1850 itemname.cc:1865 itemname.cc:1872 itemname.cc:1841
 #: itemname.cc:1851 itemname.cc:1741 itemname.cc:1744 itemname.cc:1773
 #: itemname.cc:1785 itemname.cc:1787 itemname.cc:1792 itemname.cc:1826
-#: itemname.cc:1835
+#: itemname.cc:1835 itemname.cc:1830
 msgid "manual"
 msgstr "설명서"
 
@@ -8300,7 +8300,7 @@ msgstr "파괴의"
 #: itemname.cc:1865 itemname.cc:1893 itemname.cc:1895 itemname.cc:1902
 #: itemname.cc:1903 itemname.cc:1910 itemname.cc:1889 itemname.cc:1773
 #: itemname.cc:1776 itemname.cc:1805 itemname.cc:1817 itemname.cc:1819
-#: itemname.cc:1824 itemname.cc:1858 itemname.cc:1867
+#: itemname.cc:1824 itemname.cc:1858 itemname.cc:1867 itemname.cc:1862
 msgid "rod"
 msgstr "마법 막대"
 
@@ -8311,7 +8311,7 @@ msgstr "마법 막대"
 #: itemname.cc:1903 itemname.cc:1910 invent.cc:989 itemname.cc:1889
 #: itemprop.cc:342 itemname.cc:1810 itemprop.cc:323 itemname.cc:1813
 #: itemname.cc:1842 itemprop.cc:327 itemname.cc:1854 itemname.cc:1856
-#: itemname.cc:1861 itemname.cc:1904
+#: itemname.cc:1861 itemname.cc:1904 itemname.cc:1899
 msgid "staff"
 msgstr "지팡이"
 
@@ -8323,7 +8323,7 @@ msgstr "공중폭격"
 #: itemname.cc:1924 itemname.cc:1952 itemname.cc:1954 itemname.cc:1961
 #: itemname.cc:1962 itemname.cc:1969 itemname.cc:1948 itemname.cc:1855
 #: spl-summoning.cc:1548 itemname.cc:1858 itemname.cc:1887 itemname.cc:1899
-#: itemname.cc:1904 itemname.cc:1909 itemname.cc:1943
+#: itemname.cc:1904 itemname.cc:1909 itemname.cc:1943 itemname.cc:1947
 msgid "corpse"
 msgstr "의 시체"
 
@@ -8332,6 +8332,7 @@ msgstr "의 시체"
 #: mon-info.cc:927 spl-summoning.cc:1548 itemname.cc:1860 itemname.cc:1889
 #: mon-info.cc:938 itemname.cc:1901 itemname.cc:1906 mon-info.cc:949
 #: mon-data.h:2445 itemname.cc:1911 itemname.cc:1945 mon-data.h:2439
+#: itemname.cc:1949
 msgid "skeleton"
 msgstr "의 해골"
 
@@ -12007,13 +12008,13 @@ msgstr "금화"
 
 #: itemname.cc:2001 itemname.cc:1888 itemname.cc:1891 itemname.cc:1920
 #: itemname.cc:1932 itemname.cc:1937 itemname.cc:1942 itemname.cc:1976
-#: itemname.cc:1985
+#: itemname.cc:1985 itemname.cc:1980
 msgid " [fire]"
 msgstr " [화염]"
 
 #: itemname.cc:2004 itemname.cc:1891 itemname.cc:1894 itemname.cc:1923
 #: itemname.cc:1935 itemname.cc:1940 itemname.cc:1945 itemname.cc:1979
-#: itemname.cc:1988
+#: itemname.cc:1988 itemname.cc:1983
 msgid " [ice]"
 msgstr " [얼음]"
 
@@ -12076,6 +12077,8 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -13369,11 +13372,13 @@ msgstr " [거의 찢어짐]"
 
 #: itemname.cc:1781 itemname.cc:1784 itemname.cc:1813 itemname.cc:1825
 #: itemname.cc:1827 itemname.cc:1832 itemname.cc:1866 itemname.cc:1875
+#: itemname.cc:1870
 msgid "lightning rod"
 msgstr "번개의 마법 막대"
 
 #: itemname.cc:1894 itemname.cc:1897 itemname.cc:1926 itemname.cc:1938
 #: itemname.cc:1943 itemname.cc:1948 itemname.cc:1982 itemname.cc:1991
+#: itemname.cc:1986
 msgid " [lightning,fireball,iron]"
 msgstr " [번개,화염구,강철]"
 

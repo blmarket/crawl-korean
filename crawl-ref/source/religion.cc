@@ -901,6 +901,7 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
     case GOD_ZIN:
         dislikes.push_back("자기 자신을 고의적으로 변이시키는 행위"); 
 		really_dislikes.push_back("다른 존재를 변이시키는 행위");
+        really_dislikes.push_back("변신 주문을 외우는 행위");
 		really_dislikes.push_back("불경하거나 혼돈스러운 주문이나 아이템을 사용하는 행위"); 
         really_dislikes.push_back("지성이 있는 존재의 고기를 먹는 행위");
         dislikes.push_back("성지 위에서, 당신 혹은 당신의 동료가 " 
