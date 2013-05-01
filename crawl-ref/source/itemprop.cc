@@ -59,87 +59,85 @@ struct armour_def
 static int Armour_index[NUM_ARMOURS];
 static const armour_def Armour_prop[NUM_ARMOURS] =
 {
-    { ARM_ANIMAL_SKIN,          M_("animal skin"),            2,  0,  100,
+    { ARM_ANIMAL_SKIN,          M_("animal skin"),            2,   0,  100,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_ROBE,                 M_("robe"),                   2,  0,   60,
+    { ARM_ROBE,                 M_("robe"),                   2,   0,   60,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_BIG },
-    { ARM_LEATHER_ARMOUR,       M_("leather armour"),         3, -1,  150,
+    { ARM_LEATHER_ARMOUR,       M_("leather armour"),         3,  -4,  150,
         true,  EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
 
-    { ARM_RING_MAIL,            M_("ring mail"),              5, -2,  250,
+    { ARM_RING_MAIL,            M_("ring mail"),              5,  -7,  250,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_SCALE_MAIL,           M_("scale mail"),             6, -3,  350,
+    { ARM_SCALE_MAIL,           M_("scale mail"),             6, -11,  350,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_CHAIN_MAIL,           M_("chain mail"),             7, -4,  400,
+    { ARM_CHAIN_MAIL,           M_("chain mail"),             8, -15,  400,
         false, EQ_BODY_ARMOUR, SIZE_SMALL,  SIZE_MEDIUM },
-    { ARM_SPLINT_MAIL,          M_("splint mail"),            8, -5,  550,
+    { ARM_PLATE_ARMOUR,         M_("plate armour"),          10, -19,  650,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
-    { ARM_PLATE_ARMOUR,         M_("plate armour"),          10, -6,  650,
-        false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
-    { ARM_CRYSTAL_PLATE_ARMOUR, M_("crystal plate armour"),  14, -8, 1200,
+    { ARM_CRYSTAL_PLATE_ARMOUR, M_("crystal plate armour"),  14, -24, 1200,
         false, EQ_BODY_ARMOUR, SIZE_SMALL, SIZE_MEDIUM },
 
-    { ARM_TROLL_HIDE,           M_("troll hide"),             2, -1,  220,
+    { ARM_TROLL_HIDE,           M_("troll hide"),             2,  -4,  220,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_TROLL_LEATHER_ARMOUR, M_("troll leather armour"),   4, -1,  220,
+    { ARM_TROLL_LEATHER_ARMOUR, M_("troll leather armour"),   4,  -4,  220,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STEAM_DRAGON_HIDE,    M_("steam dragon hide"),      2,  0,  120,
+    { ARM_STEAM_DRAGON_HIDE,    M_("steam dragon hide"),      2,   0,  120,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STEAM_DRAGON_ARMOUR,  M_("steam dragon armour"),    5,  0,  120,
+    { ARM_STEAM_DRAGON_ARMOUR,  M_("steam dragon armour"),    5,   0,  120,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_MOTTLED_DRAGON_HIDE,  M_("mottled dragon hide"),    3, -1,  150,
+    { ARM_MOTTLED_DRAGON_HIDE,  M_("mottled dragon hide"),    3,  -4,  150,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_MOTTLED_DRAGON_ARMOUR,M_("mottled dragon armour"),  6, -1,  150,
+    { ARM_MOTTLED_DRAGON_ARMOUR, M_("mottled dragon armour"),  6,  -4,  150,
         true,  EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_SWAMP_DRAGON_HIDE,    M_("swamp dragon hide"),      3, -2,  200,
+    { ARM_SWAMP_DRAGON_HIDE,    M_("swamp dragon hide"),      3,  -7,  200,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_SWAMP_DRAGON_ARMOUR,  M_("swamp dragon armour"),    7, -2,  200,
+    { ARM_SWAMP_DRAGON_ARMOUR,  M_("swamp dragon armour"),    7,  -7,  200,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_FIRE_DRAGON_HIDE,     M_("fire dragon hide"),       3, -3,  350,
+    { ARM_FIRE_DRAGON_HIDE,     M_("fire dragon hide"),       3, -11,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_FIRE_DRAGON_ARMOUR,   M_("fire dragon armour"),     8, -3,  350,
+    { ARM_FIRE_DRAGON_ARMOUR,   M_("fire dragon armour"),     8, -11,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_ICE_DRAGON_HIDE,      M_("ice dragon hide"),        4, -3,  350,
+    { ARM_ICE_DRAGON_HIDE,      M_("ice dragon hide"),        4, -11,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_ICE_DRAGON_ARMOUR,    M_("ice dragon armour"),      9, -3,  350,
+    { ARM_ICE_DRAGON_ARMOUR,    M_("ice dragon armour"),      9, -11,  350,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_PEARL_DRAGON_HIDE,    M_("pearl dragon hide"),      3, -3,  400,
+    { ARM_PEARL_DRAGON_HIDE,    M_("pearl dragon hide"),      3, -11,  400,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_PEARL_DRAGON_ARMOUR,  M_("pearl dragon armour"),   10, -3,  400,
+    { ARM_PEARL_DRAGON_ARMOUR,  M_("pearl dragon armour"),   10, -11,  400,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STORM_DRAGON_HIDE,    M_("storm dragon hide"),      4, -3,  600,
+    { ARM_STORM_DRAGON_HIDE,    M_("storm dragon hide"),      4, -11,  600,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_STORM_DRAGON_ARMOUR,  M_("storm dragon armour"),   10, -5,  600,
+    { ARM_STORM_DRAGON_ARMOUR,  M_("storm dragon armour"),   10, -17,  600,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_GOLD_DRAGON_HIDE,     M_("gold dragon hide"),       4, -5, 1100,
+    { ARM_GOLD_DRAGON_HIDE,     M_("gold dragon hide"),       4, -17, 1100,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
-    { ARM_GOLD_DRAGON_ARMOUR,   M_("gold dragon armour"),    12, -9, 1100,
+    { ARM_GOLD_DRAGON_ARMOUR,   M_("gold dragon armour"),    12, -27, 1100,
         false, EQ_BODY_ARMOUR, SIZE_LITTLE, SIZE_GIANT },
 
-    { ARM_CLOAK,                M_("cloak"),                  1,  0,   40,
+    { ARM_CLOAK,                M_("cloak"),                  1,   0,   40,
         true,  EQ_CLOAK,       SIZE_LITTLE, SIZE_BIG },
-    { ARM_GLOVES,               M_("gloves"),                 1,  0,   20,
+    { ARM_GLOVES,               M_("gloves"),                 1,   0,   20,
         true,  EQ_GLOVES,      SIZE_SMALL,  SIZE_MEDIUM },
 
-    { ARM_HELMET,               M_("helmet"),                 1,  0,   80,
+    { ARM_HELMET,               M_("helmet"),                 1,   0,   80,
         false, EQ_HELMET,      SIZE_SMALL,  SIZE_MEDIUM },
 
-    { ARM_CAP,                  M_("cap"),                    0,  0,   40,
+    { ARM_CAP,                  M_("cap"),                    0,   0,   40,
         true,  EQ_HELMET,      SIZE_LITTLE, SIZE_LARGE },
 
-    { ARM_WIZARD_HAT,           M_("wizard hat"),             0,  0,   40,
+    { ARM_WIZARD_HAT,           M_("wizard hat"),             0,   0,   40,
         true,  EQ_HELMET,      SIZE_LITTLE, SIZE_LARGE },
 
     // Note that barding size is compared against torso so it currently
     // needs to fit medium, but that doesn't matter as much as race
     // and shapeshift status.
-    { ARM_BOOTS,                M_("boots"),                  1,  0,   30,
+    { ARM_BOOTS,                M_("boots"),                  1,   0,   30,
         true,  EQ_BOOTS,       SIZE_SMALL,  SIZE_MEDIUM },
     // Changed max. barding size to large to allow for the appropriate
     // monster types (monsters don't differentiate between torso and general).
-    { ARM_CENTAUR_BARDING,      M_("centaur barding"),        4, -2,  100,
+    { ARM_CENTAUR_BARDING,      M_("centaur barding"),        4,  -6,  100,
         true,  EQ_BOOTS,       SIZE_MEDIUM, SIZE_LARGE },
-    { ARM_NAGA_BARDING,         M_("naga barding"),           4, -2,  100,
+    { ARM_NAGA_BARDING,         M_("naga barding"),           4,  -6,  100,
         true,  EQ_BOOTS,       SIZE_MEDIUM, SIZE_LARGE },
 
     // Note: shields use ac-value as sh-value, EV pen is used as the basis
@@ -839,12 +837,8 @@ void set_equip_race(item_def &item, iflags_t flags)
             }
             break;
         case OBJ_ARMOUR:
-            if (item.sub_type == ARM_SPLINT_MAIL
-                || item.sub_type == ARM_PLATE_ARMOUR
-                || is_hard_helmet(item))
-            {
+            if (item.sub_type == ARM_PLATE_ARMOUR || is_hard_helmet(item))
                 return;
-            }
             break;
         case OBJ_MISSILES:
             if (item.sub_type == MI_BOLT)
@@ -971,14 +965,15 @@ void set_helmet_random_desc(item_def &item)
 
 short get_gloves_desc(const item_def &item)
 {
-    ASSERT(item.base_type == OBJ_ARMOUR && item.sub_type == ARM_GLOVES);
-
+    ASSERT(item.base_type == OBJ_ARMOUR);
+    ASSERT(item.sub_type == ARM_GLOVES);
     return item.plus2;
 }
 
 void set_gloves_random_desc(item_def &item)
 {
-    ASSERT(item.base_type == OBJ_ARMOUR && item.sub_type == ARM_GLOVES);
+    ASSERT(item.base_type == OBJ_ARMOUR);
+    ASSERT(item.sub_type == ARM_GLOVES);
 
     item.plus2 = coinflip() ? TGLOV_DESC_GLOVES : TGLOV_DESC_GAUNTLETS;
     if (get_armour_ego_type(item) == SPARM_ARCHERY)
@@ -1197,7 +1192,7 @@ bool check_armour_size(const item_def &item, size_type size)
 // Returns whether a wand or rod can be charged.
 // If hide_charged is true, wands known to be full will return false.
 // (This distinction is necessary because even full wands/rods give a message.)
-bool item_is_rechargeable(const item_def &it, bool hide_charged, bool weapons)
+bool item_is_rechargeable(const item_def &it, bool hide_charged)
 {
     // These are obvious...
     if (it.base_type == OBJ_WANDS)

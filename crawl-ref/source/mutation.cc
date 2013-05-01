@@ -108,7 +108,8 @@ void init_mut_index()
     for (unsigned int i = 0; i < ARRAYSZ(mut_data); ++i)
     {
         const mutation_type mut = mut_data[i].mutation;
-        ASSERT(mut >= 0 && mut < NUM_MUTATIONS);
+        ASSERT(mut >= 0);
+        ASSERT(mut < NUM_MUTATIONS);
         ASSERT(mut_index[mut] == -1);
         mut_index[mut] = i;
         total_rarity[MT_ALL] += mut_data[i].rarity;
@@ -118,7 +119,8 @@ void init_mut_index()
 
 static const mutation_def* _seek_mutation(mutation_type mut)
 {
-    ASSERT(mut >= 0 && mut < NUM_MUTATIONS);
+    ASSERT(mut >= 0);
+    ASSERT(mut < NUM_MUTATIONS);
     if (mut_index[mut] == -1)
         return NULL;
     else
@@ -839,6 +841,9 @@ static int _calc_mutation_amusement_value(mutation_type which_mutation)
     case MUT_MUTATION_RESISTANCE:
     case MUT_ROBUST:
     case MUT_HIGH_MAGIC:
+    case MUT_MANA_SHIELD:
+    case MUT_MANA_REGENERATION:
+    case MUT_MANA_LINK:
         amusement /= 2;  // not funny
         break;
 
@@ -1545,6 +1550,14 @@ bool mutate(mutation_type which_mutation, const string &reason, bool failMsg,
         update_vision_range();
         break;
 
+    case MUT_DEMONIC_GUARDIAN:
+        if (you.religion == GOD_OKAWARU)
+        {
+            mpr("Your demonic guardian will not assist you as long as you "
+                "worship Okawaru.", MSGCH_MUTATION);
+        }
+        break;
+
     default:
         break;
     }
@@ -1972,6 +1985,8 @@ static const facet_def _demon_facets[] =
     { 2, { MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN, MUT_POWERED_BY_PAIN },
       { -33, 0, 0 } },
     { 2, { MUT_SAPROVOROUS, MUT_FOUL_STENCH, MUT_FOUL_STENCH },
+      { -33, 0, 0 } },
+    { 2, { MUT_MANA_SHIELD, MUT_MANA_REGENERATION, MUT_MANA_LINK },
       { -33, 0, 0 } },
     // Tier 3 facets
     { 3, { MUT_CONSERVE_SCROLLS, MUT_HEAT_RESISTANCE, MUT_HURL_HELLFIRE },

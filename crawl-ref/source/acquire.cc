@@ -266,7 +266,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
             {
                 const armour_type armours[] = { ARM_ROBE, ARM_LEATHER_ARMOUR,
                                                 ARM_RING_MAIL, ARM_SCALE_MAIL,
-                                                ARM_CHAIN_MAIL, ARM_SPLINT_MAIL,
+                                                ARM_CHAIN_MAIL,
                                                 ARM_PLATE_ARMOUR };
 
                 result = static_cast<armour_type>(RANDOM_ELEMENT(armours));
@@ -282,8 +282,7 @@ static armour_type _acquirement_armour_subtype(bool divine)
                 const armour_type armours[] =
                     { ARM_ANIMAL_SKIN, ARM_ROBE, ARM_LEATHER_ARMOUR,
                       ARM_RING_MAIL, ARM_SCALE_MAIL, ARM_CHAIN_MAIL,
-                      ARM_SPLINT_MAIL, ARM_PLATE_ARMOUR,
-                      ARM_CRYSTAL_PLATE_ARMOUR };
+                      ARM_PLATE_ARMOUR, ARM_CRYSTAL_PLATE_ARMOUR };
 
                 const int num_arms = ARRAYSZ(armours);
 
@@ -906,7 +905,8 @@ static int _spell_weight(spell_type spell)
 // weights of all unknown spells in the book.
 static int _book_weight(book_type book)
 {
-    ASSERT(book >= 0 && book <= MAX_FIXED_BOOK);
+    ASSERT(book >= 0);
+    ASSERT(book <= MAX_FIXED_BOOK);
 
     int total_weight = 0;
     for (int i = 0; i < SPELLBOOK_SIZE; i++)

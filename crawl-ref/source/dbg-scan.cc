@@ -371,7 +371,7 @@ void debug_mons_scan()
                     mprf(MSGCH_WARN, "Also at (%d, %d): %s, midx = %d",
                          pos.x, pos.y, full.c_str(), j);
                 }
-                else if (m2->type != -1)
+                else if (m2->type != MONS_NO_MONSTER)
                 {
                     mprf(MSGCH_WARN, "Dead mon also at (%d, %d): %s,"
                                      "midx = %d",
@@ -586,7 +586,10 @@ void check_map_validity()
         find_trap(*ri); // this has all needed asserts already
 
         if (shop_struct *shop = get_shop(*ri))
-            ASSERT(shop->type >= 0 && shop->type < NUM_SHOPS);
+        {
+            ASSERT(shop->type >= 0);
+            ASSERT(shop->type < NUM_SHOPS);
+        }
 
         // border must be impassable
         if (!in_bounds(*ri))

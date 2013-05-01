@@ -13,7 +13,6 @@
 #include "cloud.h"
 #include "colour.h"
 #include "coordit.h"
-#include "debug.h"
 #include "decks.h"
 #include "delay.h"
 #include "describe.h"
@@ -121,6 +120,18 @@ bool can_wield(item_def *weapon, bool say_reason,
     if (you.species == SP_FELID && is_weapon(*weapon))
     {
         SAY(mpr(_("You can't use weapons.")));
+        return false;
+    }
+
+    if (weapon->base_type == OBJ_ARMOUR)
+    {
+        SAY(mpr("You can't wield armour."));
+        return false;
+    }
+
+    if (weapon->base_type == OBJ_JEWELLERY)
+    {
+        SAY(mpr("You can't wield jewellery."));
         return false;
     }
 
@@ -299,7 +310,7 @@ bool wield_weapon(bool auto_wield, int slot, bool show_weff_messages,
             item_slot = prompt_invent_item(
                             gettext("Wield which item (- for none, * to show all)?"),
                             MT_INVLIST, OSEL_WIELD,
-                            true, true, true, '-', -1, NULL, OPER_WIELD, false, true);
+                            true, true, true, '-', -1, NULL, OPER_WIELD);
         }
         else
             item_slot = SLOT_BARE_HANDS;
@@ -463,19 +474,6 @@ void warn_shield_penalties()
 
     if (is_range_weapon(*weapon))
         _warn_launcher_shield_slowdown(*weapon);
-}
-
-void warn_armour_penalties()
-{
-    const int penalty = 3 * you.unadjusted_body_armour_penalty() - you.strength();
-
-    if (penalty > 0)
-    {
-        mprf(MSGCH_WARN, gettext("Your low strength makes using this armour %smore difficult."),
-             (penalty < 3) ? pgettext("item_use","a little ") :
-             (penalty < 5) ? "" :
-                             pgettext("item_use","a lot "));
-    }
 }
 
 bool item_is_worn(int inv_slot)
@@ -1232,7 +1230,8 @@ static bool _swap_rings(int ring_slot)
     // putting on the ring at all.  If it becomes possible for just
     // one ring slot to be melded, the subsequent code will need to
     // be revisited, so prevent that, too.
-    ASSERT(!you.melded[EQ_LEFT_RING] && !you.melded[EQ_RIGHT_RING]);
+    ASSERT(!you.melded[EQ_LEFT_RING]);
+    ASSERT(!you.melded[EQ_RIGHT_RING]);
 
     if (lring->cursed() && rring->cursed())
     {
@@ -2701,9 +2700,9 @@ static bool _scroll_modify_item(item_def scroll)
 {
     ASSERT(scroll.base_type == OBJ_SCROLLS);
 
-    // Get the slot of the scroll just read.
-    int item_slot = scroll.link;
+    int item_slot;
 
+retry:
     do
     {
         // Get the slot of the item the scroll is to be used on.
@@ -2727,6 +2726,17 @@ static bool _scroll_modify_item(item_def scroll)
 
     item_def &item = you.inv[item_slot];
 
+    if (item_is_melded(you.inv[item_slot]))
+    {
+        mpr("This item is melded into your body!");
+        if (Options.auto_list)
+            more();
+        goto retry;
+    }
+
+    bool show_msg = true;
+    const char* id_prop = nullptr;
+
     switch (scroll.sub_type)
     {
     case SCR_IDENTIFY:
@@ -2736,26 +2746,15 @@ static bool _scroll_modify_item(item_def scroll)
             return true;
         }
         else
-        {
-            you.type_id_props["SCR_ID"] = item.name(false, DESC_PLAIN, false,
-                                                    false, false);
-        }
+            id_prop = "SCR_ID";
         break;
+
     case SCR_RECHARGING:
-        if (item_is_rechargeable(item, false, true))
-        {
-            if (recharge_wand(item_slot, false))
-                return true;
-            you.type_id_props["SCR_RC"] = item.name(false, DESC_PLAIN, false,
-                                                    false, false);
-            return false;
-        }
-        else
-        {
-            you.type_id_props["SCR_RC"] = item.name(false, DESC_PLAIN, false,
-                                                    false, false);
-        }
+        if (item_is_rechargeable(item) && recharge_wand(item_slot, false))
+            return true;
+        id_prop = "SCR_RC";
         break;
+
     case SCR_ENCHANT_ARMOUR:
         if (is_enchantable_armour(item, true))
         {
@@ -2763,23 +2762,23 @@ static bool _scroll_modify_item(item_def scroll)
             // (If so, already prints the "Nothing happens" message.)
             if (_handle_enchant_armour(item_slot) > 0)
                 return true;
-            you.type_id_props["SCR_EA"] = item.name(false, DESC_PLAIN, false,
-                                                    false, false);
-            return false;
+            show_msg = false;
         }
-        else
-        {
-            you.type_id_props["SCR_EA"] = item.name(false, DESC_PLAIN, false,
-                                                    false, false);
-        }
+
+        id_prop = "SCR_EA";
         break;
+
     default:
         mprf("Buggy scroll %d can't modify item!", scroll.sub_type);
         break;
     }
 
+    if (id_prop)
+        you.type_id_props[id_prop] = item.name(false, DESC_PLAIN, false, false, false);
+
     // Oops, wrong item...
-    canned_msg(MSG_NOTHING_HAPPENS);
+    if (show_msg)
+        canned_msg(MSG_NOTHING_HAPPENS);
     return false;
 }
 

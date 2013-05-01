@@ -18,14 +18,18 @@ function bailey_portal(e, ptype, trowel)
 
   local messager =
     timed_msg {
-      visible = true,
-      -- $F{xxx} will be substituted with the 'entity' property of the timed
-      -- marker, or with the desc property (if entity is not set).
-      messages = time_messages(timeout_turns_short,
-                               "$F{The} is being lowered.",
-                               "$F{The} is being lowered.",
-                               "$F{The} is being lowered.",
-                               "$F{The} is close to the ground.")
+      initmsg = { "You hear the roar of battle.",
+                  "There is an entrance to a bailey on this level. "
+                  .. "Hurry and find it before the portal closes forever!" },
+      finalmsg = "$F{The} is probably going to close soon.",
+
+      verb = 'creaking',
+      noisemaker = 'oriflamme',
+        ranges = {
+          { 5000, 'faint ' },  { 4000, '' },
+          { 2500, 'steady ' }, { 1500, 'rapid ' },
+          { 0, 'frantic ' }
+      }
     }
 
   dgn.persist.bailey_type = "bailey_" .. ptype
@@ -105,7 +109,7 @@ function orc_with_polearm(e)
           halberd    | halberd race:orcish .\
           scale mail race:orcish  | scale mail |\
           ring mail race:orcish   | ring mail |\
-          splint mail race:orcish | splint mail")
+          chain mail race:orcish  | chain mail")
 end
 
 function orc_warrior_with_polearm(e)
@@ -117,7 +121,7 @@ function orc_warrior_with_polearm(e)
           bardiche w:1 | bardiche w:1 race:orcish .\
           scale mail race:orcish    | scale mail |\
           ring mail race:orcish     | ring mail |\
-          splint mail race:orcish   | splint mail |\
+          chain mail race:orcish    | chain mail |\
           plate armour race:orcish  | plate armour |\
           crystal plate armour w:1")
 end
@@ -129,7 +133,7 @@ function orc_knight_with_polearm(e)
           glaive       | glaive race:orcish |\
           bardiche w:1 | bardiche w:1 race:orcish .\
           ring mail race:orcish     | ring mail |\
-          splint mail race:orcish   | splint mail |\
+          chain mail race:orcish    | chain mail |\
           chain mail race:orcish    | chain mail |\
           plate armour race:orcish  | plate armour |\
           crystal plate armour w:1")
@@ -141,9 +145,8 @@ function orc_warlord_with_polearm(e)
           halberd      | halberd race:orcish |\
           glaive       | glaive race:orcish |\
           bardiche w:1 | bardiche w:1 race:orcish . \
-          splint mail race:orcish   | splint mail |\
-          chain mail race:orcish    | chain mail |\
-          plate armour race:orcish  | plate armour |\
+          chain mail race:orcish w:20 | chain mail w:20 |\
+          plate armour race:orcish    | plate armour |\
           crystal plate armour w:1")
 end
 

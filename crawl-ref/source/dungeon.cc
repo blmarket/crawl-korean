@@ -1740,12 +1740,13 @@ static bool _add_connecting_escape_hatches()
     if (branches[you.where_are_you].branch_flags & BFLAG_ISLANDED)
         return true;
 
+    // Veto D:1 or Pan if there are disconnected areas.
+    if (player_in_branch(BRANCH_PANDEMONIUM)
+        || (player_in_branch(BRANCH_MAIN_DUNGEON) && you.depth == 1))
+        return (dgn_count_disconnected_zones(false) == 1);
+
     if (!player_in_connected_branch())
         return true;
-
-    // Veto D:1 if there are disconnected areas.
-    if (player_in_branch(BRANCH_MAIN_DUNGEON) && you.depth == 1)
-        return (dgn_count_disconnected_zones(false) == 1);
 
     if (at_branch_bottom())
         return (dgn_count_disconnected_zones(true) == 0);
@@ -2336,43 +2337,6 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
         _fixup_hell_stairs();
 }
 
-void dgn_set_colours_from_monsters()
-{
-    env.floor_colour = LIGHTGREY;
-    env.rock_colour = LIGHTRED;
-    int floor_m = -1;
-
-    for (int m = 9; m >= 0; --m)
-    {
-        if (env.mons_alloc[m] <= 0 || env.mons_alloc[m] >= NUM_MONSTERS)
-            continue;
-        colour_t col = mons_class_colour(env.mons_alloc[m]);
-
-        // Don't use silence or halo colours, or elemental floors.
-        if (col == BLACK || col == CYAN || col == YELLOW || col > WHITE)
-            continue;
-
-        floor_m = m;
-        env.floor_colour = col;
-        break;
-    }
-
-    for (int m = 9; m >= 0; --m)
-    {
-        if (m == floor_m)
-            continue; // don't use the same mon for floor and rock
-        if (env.mons_alloc[m] <= 0 || env.mons_alloc[m] >= NUM_MONSTERS)
-            continue;
-        colour_t col = mons_class_colour(env.mons_alloc[m]);
-
-        if (col == BLACK || col == LIGHTGREY)
-            continue;
-
-        env.rock_colour = col;
-        break;
-    }
-}
-
 static void _dgn_set_floor_colours()
 {
     colour_t old_floor_colour = env.floor_colour;
@@ -2381,9 +2345,6 @@ static void _dgn_set_floor_colours()
     const int youbranch = you.where_are_you;
     env.floor_colour    = branches[youbranch].floor_colour;
     env.rock_colour     = branches[youbranch].rock_colour;
-
-    if (player_in_branch(BRANCH_PANDEMONIUM) || player_in_branch(BRANCH_ABYSS))
-        dgn_set_colours_from_monsters();
 
     if (old_floor_colour != BLACK)
         env.floor_colour = old_floor_colour;
@@ -2409,7 +2370,8 @@ static void _check_doors()
             if (feat_is_solid(grd(*rai)))
                 solid_count++;
 
-        _set_grd(*ri, solid_count < 2 ? DNGN_FLOOR : DNGN_CLOSED_DOOR);
+        if (solid_count < 2)
+            _set_grd(*ri, DNGN_FLOOR);
     }
 }
 
@@ -2475,6 +2437,16 @@ static bool _pan_level()
     int which_demon = -1;
     PlaceInfo &place_info = you.get_place_info();
     bool all_demons_generated = true;
+
+    if (you.props.exists("force_map"))
+    {
+        const map_def *vault =
+            find_map_by_name(you.props["force_map"].get_string());
+        ASSERT(vault);
+
+        _dgn_ensure_vault_placed(_build_primary_vault(vault), true);
+        return (vault->orient != MAP_ENCOMPASS);
+    }
 
     for (int i = 0; i < 4; i++)
     {
@@ -4454,7 +4426,7 @@ monster* dgn_place_monster(mons_spec &mspec, coord_def where,
                            bool force_pos, bool generate_awake, bool patrolling)
 {
 #if TAG_MAJOR_VERSION == 34
-    if (mspec.type == -1) // or rebuild the des cache
+    if ((int)mspec.type == -1) // or rebuild the des cache
         return 0;
 #endif
     if (mspec.type == MONS_NO_MONSTER)
@@ -5048,7 +5020,8 @@ vector<coord_def> dgn_join_the_dots_pathfind(const coord_def &from,
             path.push_back(curr);
 
         const int dist = travel_point_distance[curr.x][curr.y];
-        ASSERT(dist < 0 && dist != -1000);
+        ASSERT(dist < 0);
+        ASSERT(dist != -1000);
         curr += coord_def(-dist / 4 - 2, (-dist % 4) - 2);
     }
     if (!map_masked(curr, mapmask))

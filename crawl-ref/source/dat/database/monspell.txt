@@ -161,14 +161,6 @@ unseen Sunray cast
 
 강렬한 빛이, 잠시 당신의 눈을 멀게 했다.
 %%%%
-Summon Holies cast
-
-@The_monster@은(는) 성스러운 동료들을 불러냈다!
-%%%%
-unseen Summon Holies cast
-
-성스러운 존재들이 눈앞에 나타났다!
-%%%%
 Holy Flames cast
 
 @The_monster@은(는) 정화의 불꽃을 일으켰다!

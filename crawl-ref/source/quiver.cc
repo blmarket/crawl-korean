@@ -182,11 +182,12 @@ void choose_item_for_quiver()
         mpr(_("You can't grasp things well enough to throw them."));
         return;
     }
+
     int slot = prompt_invent_item(_("Quiver which item? (- for none, * to show all)"),
                                   MT_INVLIST,
                                   OSEL_THROWABLE, true, true, true, '-',
                                   you.equip[EQ_WEAPON], NULL, OPER_QUIVER,
-                                  false, true);
+                                  false);
 
     if (prompt_failed(slot))
         return;
@@ -487,7 +488,8 @@ void player_quiver::load(reader& inf)
 
     unmarshallItem(inf, m_last_weapon);
     m_last_used_type = (ammo_t)unmarshallInt(inf);
-    ASSERT(m_last_used_type >= AMMO_THROW && m_last_used_type < NUM_AMMO);
+    ASSERT(m_last_used_type >= AMMO_THROW);
+    ASSERT(m_last_used_type < NUM_AMMO);
 
     const unsigned int count = unmarshallInt(inf);
     ASSERT(count <= ARRAYSZ(m_last_used_of_type));

@@ -65,6 +65,7 @@
 #include "player-stats.h"
 #include "player.h"
 #include "religion.h"
+#include "shopping.h"
 #include "shout.h"
 #include "skills.h"
 #include "skills2.h"
@@ -787,7 +788,7 @@ int recharge_wand(int item_slot, bool known, string *pre_msg)
 
         item_def &wand = you.inv[ item_slot ];
 
-        if (!item_is_rechargeable(wand, known, true))
+        if (!item_is_rechargeable(wand, known))
         {
             mpr(gettext("Choose an item to recharge, or Esc to abort."));
             if (Options.auto_list)
@@ -3084,6 +3085,8 @@ static void _update_corpses(int elapsedTime)
 
         if (it.base_type == OBJ_POTIONS)
         {
+            if (is_shop_item(it))
+                continue;
             maybe_coagulate_blood_potions_floor(c);
             continue;
         }

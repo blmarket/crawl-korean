@@ -50,7 +50,6 @@
 #include "database.h"
 #include "dbg-scan.h"
 #include "dbg-util.h"
-#include "debug.h"
 #include "delay.h"
 #include "describe.h"
 #include "dgn-overview.h"
@@ -1004,6 +1003,7 @@ static bool _cmd_is_repeatable(command_type cmd, bool is_again = false)
     // Miscellaneous non-repeatable commands.
     case CMD_TOGGLE_AUTOPICKUP:
     case CMD_TOGGLE_FRIENDLY_PICKUP:
+    case CMD_TOGGLE_TRAVEL_SPEED:
     case CMD_ADJUST_INVENTORY:
     case CMD_QUIVER_ITEM:
     case CMD_REPLAY_MESSAGES:
@@ -1771,6 +1771,18 @@ static void _toggle_friendly_pickup()
     _print_friendly_pickup_setting(true);
 }
 
+static void _toggle_travel_speed()
+{
+    you.travel_ally_pace = !you.travel_ally_pace;
+    if (you.travel_ally_pace)
+        mpr("You pace your travel speed to your slowest ally.");
+    else
+    {
+        mpr("You travel at normal speed.");
+        you.running.travel_speed = 0;
+    }
+}
+
 static void _do_rest()
 {
     if (you.hunger_state == HS_STARVING && !you_min_hunger())
@@ -1945,6 +1957,7 @@ void process_command(command_type cmd)
 
     case CMD_TOGGLE_FRIENDLY_PICKUP:     _toggle_friendly_pickup(); break;
     case CMD_TOGGLE_VIEWPORT_MONSTER_HP: toggle_viewport_monster_hp(); break;
+    case CMD_TOGGLE_TRAVEL_SPEED:        _toggle_travel_speed(); break;
 
 
         // Map commands.
@@ -2936,6 +2949,11 @@ static void _check_sanctuary()
     decrease_sanctuary_radius();
 }
 
+// cjo: Handles player hp and mp regeneration. If the counter you.hit_points_regeneration
+// is over 100, a loop restores 1 hp and decreases the counter by 100 (so you can regen
+// more than 1 hp per turn). If the counter is below 100, it is increased by a variable
+// calculated from delay, BASELINE_DELAY, and your regeneration rate. MP regeneration happens
+// similarly, but the countup depends on delay, BASELINE_DELAY, and you.max_magic_points
 static void _regenerate_hp_and_mp(int delay)
 {
     if (crawl_state.disables[DIS_PLAYER_REGEN])
@@ -2953,11 +2971,19 @@ static void _regenerate_hp_and_mp(int delay)
 
     while (tmp >= 100)
     {
-        inc_hp(1);
+        // at low mp, "mana link" restores mp in place of hp
+        if (you.mutation[MUT_MANA_LINK]
+            && !x_chance_in_y(you.magic_points, you.max_magic_points))
+        {
+            inc_mp(1);
+        }
+        else // standard hp regeneration
+            inc_hp(1);
         tmp -= 100;
     }
 
-    ASSERT(tmp >= 0 && tmp < 100);
+    ASSERT(tmp >= 0);
+    ASSERT(tmp < 100);
     you.hit_points_regeneration = tmp;
 
     // XXX: Don't let DD use guardian spirit for free HP, since their
@@ -2972,7 +2998,10 @@ static void _regenerate_hp_and_mp(int delay)
     if (you.magic_points < you.max_magic_points)
     {
         const int base_val = 7 + you.max_magic_points / 2;
-        tmp += div_rand_round(base_val * delay, BASELINE_DELAY);
+        int mp_regen_countup = div_rand_round(base_val * delay, BASELINE_DELAY);
+        if (you.mutation[MUT_MANA_REGENERATION])
+            mp_regen_countup *= 2;
+        tmp += mp_regen_countup;
     }
 
     while (tmp >= 100)
@@ -2981,7 +3010,8 @@ static void _regenerate_hp_and_mp(int delay)
         tmp -= 100;
     }
 
-    ASSERT(tmp >= 0 && tmp < 100);
+    ASSERT(tmp >= 0);
+    ASSERT(tmp < 100);
     you.magic_points_regeneration = tmp;
 }
 
@@ -3548,18 +3578,9 @@ static bool _untrap_target(const coord_def move, bool check_confused)
         {
             bool do_msg = true;
 
-            // Press trigger/switch/button in wall.
-            if (feat_is_solid(feat))
-            {
-                dgn_event event(DET_WALL_HIT, target);
-                event.arg1  = NON_MONSTER;
-
-                // Listener can veto the event to prevent the "You swing at
-                // nothing" message.
-                do_msg =
-                    dungeon_events.fire_vetoable_position_event(event,
-                                                                target);
-            }
+            // Don't waste a turn if feature is solid.
+            if (feat_is_solid(feat) && !you.confused())
+                return true;
             else
             {
                 list<actor*> cleave_targets;
@@ -4200,8 +4221,8 @@ static void _move_player(coord_def move)
 
         if (dangerous != DNGN_FLOOR || bad_mons)
         {
-            string prompt = _("Are you sure you want to move while confused "
-                            "and next to ");
+            string prompt = _("Are you sure you want to stumble around while "
+                            "confused and next to ");
 
             if (dangerous != DNGN_FLOOR)
             {   
@@ -4219,6 +4240,10 @@ static void _move_player(coord_def move)
 				prompt += " 옆에 있는 상태에서 움직일 것인가?";
             }
             prompt += "?";
+
+            monster* targ = monster_at(you.pos() + move);
+            if (targ && !targ->wont_attack() && you.can_see(targ))
+                prompt += " (Use ctrl+direction to attack without moving)";
 
             if (!crawl_state.disables[DIS_CONFIRMATIONS]
                 && !yesno(prompt.c_str(), false, 'n'))
@@ -4282,11 +4307,10 @@ static void _move_player(coord_def move)
         monster* current = monster_at(you.pos());
         if (!current || !fedhas_passthrough(current))
         {
-            // Probably need better messages. -cao
-            if (mons_genus(targ_monst->type) == MONS_FUNGUS)
-                mprf(_("You walk carefully through the fungus."));
-            else
-                mprf(gettext("You walk carefully through the plants."));
+            // Probably need a better message. -cao
+            mprf(_("You walk carefully through the %s."),
+                 mons_genus(targ_monst->type) == MONS_FUNGUS ? pgettext("moveplayer","fungus")
+                                                             : pgettext("moveplayer","plants"));
         }
         targ_monst = NULL;
     }
@@ -4373,6 +4397,7 @@ static void _move_player(coord_def move)
     {
         if (you.made_nervous_by(targ))
         {
+            mpr("You're too terrified to move while being watched!");
             moving = false;
             you.turn_is_over = false;
             return;
@@ -4440,6 +4465,12 @@ static void _move_player(coord_def move)
 
         you.time_taken *= player_movement_speed();
         you.time_taken = div_rand_round(you.time_taken, 10);
+
+        if (you.running && you.running.travel_speed)
+        {
+            you.time_taken = max(you.time_taken,
+                                 div_round_up(100, you.running.travel_speed));
+        }
 
 #ifdef EUCLIDEAN
         if (move.abs() == 2)

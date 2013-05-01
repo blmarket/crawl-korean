@@ -870,12 +870,8 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
     if (max_units <= 0)
     {
         if (item_is_orb(item))
-        {
             orb_pickup_noise(where, 30);
-            mpr(gettext("The mass is resisting your pull."));
-        }
-        else
-            mpr(gettext("The mass is resisting your pull."));
+        mpr(_("The mass is resisting your pull."));
 
         return SPRET_SUCCESS;
     }

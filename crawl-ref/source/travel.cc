@@ -605,9 +605,25 @@ bool is_resting()
     return you.running.is_rest();
 }
 
+static int _slowest_ally_speed()
+{
+    vector<monster* > followers = get_on_level_followers();
+    int min_speed = INT_MAX;
+    for (vector<monster* >::iterator fol = followers.begin();
+         fol != followers.end(); ++fol)
+    {
+        int speed = (*fol)->speed * BASELINE_DELAY
+                    / (*fol)->action_energy(EUT_MOVE);
+        if (speed < min_speed)
+            min_speed = speed;
+    }
+    return min_speed;
+}
+
 static void _start_running()
 {
     _userdef_run_startrunning_hook();
+    you.running.init_travel_speed();
 
     if (you.running < 0)
         start_delay(DELAY_TRAVEL, 1);
@@ -959,6 +975,8 @@ command_type travel()
         // and we need to figure out where to travel to next.
         if (!_find_transtravel_square(level_target.p) || !you.running.pos.x)
             stop_running();
+        else
+            you.running.init_travel_speed();
     }
 
     if (you.running < 0)
@@ -3592,7 +3610,8 @@ void LevelInfo::load(reader& inf, int minorVersion)
     unmarshallExcludes(inf, minorVersion, excludes);
 
     int n_count = unmarshallByte(inf);
-    ASSERT(n_count >= 0 && n_count <= NUM_DA_COUNTERS);
+    ASSERT(n_count >= 0);
+    ASSERT(n_count <= NUM_DA_COUNTERS);
     for (int i = 0; i < n_count; i++)
         da_counters[i] = unmarshallShort(inf);
 }
@@ -3943,6 +3962,7 @@ void runrest::initialise(int dir, int mode)
     // Note HP and MP for reference.
     hp = you.hp;
     mp = you.magic_points;
+    init_travel_speed();
 
     if (dir == RDIR_REST)
     {
@@ -3951,7 +3971,8 @@ void runrest::initialise(int dir, int mode)
     }
     else
     {
-        ASSERT(dir >= 0 && dir <= 7);
+        ASSERT(dir >= 0);
+        ASSERT(dir <= 7);
 
         pos = Compass[dir];
         runmode = mode;
@@ -3970,6 +3991,14 @@ void runrest::initialise(int dir, int mode)
         start_delay(DELAY_REST, 1);
     else
         start_delay(DELAY_RUN, 1);
+}
+
+void runrest::init_travel_speed()
+{
+    if (you.travel_ally_pace)
+        travel_speed = _slowest_ally_speed();
+    else
+        travel_speed = 0;
 }
 
 runrest::operator int () const
@@ -4124,7 +4153,7 @@ void runrest::clear()
 {
     runmode = RMODE_NOT_RUNNING;
     pos.reset();
-    mp = hp = 0;
+    mp = hp = travel_speed = 0;
 
     _reset_zigzag_info();
 }

@@ -20,7 +20,6 @@
 #include "beam.h"
 #include "cloud.h"
 #include "database.h"
-#include "debug.h"
 #include "delay.h"
 #include "effects.h"
 #include "env.h"
@@ -1923,7 +1922,9 @@ void melee_attack::set_attack_verb()
             else
             {
                 const char* pierce_desc[][2] = {{pgettext("verb", "spit"), N_("like a pig")},
-                                                {pgettext("verb", "skewer"), N_("like a kebab")}};
+                                                {pgettext("verb", "skewer"), N_("like a kebab")},
+                                                {pgettext("verb", "stick"), N_("like a pincushion")},
+                                                {pgettext("verb", "perforate"), N_("like a sieve")}};
                 const int choice = random2(ARRAYSZ(pierce_desc));
                 attack_verb = pierce_desc[choice][0];
                 verb_degree = pierce_desc[choice][1];
@@ -1946,11 +1947,18 @@ void melee_attack::set_attack_verb()
             attack_verb = pgettext("verb", "fracture");
             verb_degree = N_("into splinters");
         }
+        else if (defender_genus == MONS_HOG)
+        {
+            attack_verb = "carve";
+            verb_degree = "like a proverbial ham";
+        }
         else
         {
-            const char* pierce_desc[][2] = {{pgettext("verb", "open"),    N_("like a pillowcase")},
-                                            {pgettext("verb2", "slice"),   N_("like a ripe choko")},
-                                            {pgettext("verb", "cut"),     N_("into ribbons")}};
+            const char* pierce_desc[][2] = {{pgettext("verb","open"),    N_("like a pillowcase")},
+                                            {pgettext("verb2","slice"),   N_("like a ripe choko")},
+                                            {pgettext("verb2","cut"),     N_("into ribbons")},
+                                            {pgettext("verb2","carve"),   N_("like a ham")},
+                                            {pgettext("verb2","chop"),    N_("into pieces")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
             verb_degree = pierce_desc[choice][1];
@@ -1969,10 +1977,12 @@ void melee_attack::set_attack_verb()
         }
         else
         {
+
             const char* pierce_desc[][2] = {{pgettext("verb", "crush"),   N_("like a grape")},
                                             {pgettext("verb", "beat"),    N_("like a drum")},
                                             {pgettext("verb", "hammer"),  N_("like a gong")},
-                                            {pgettext("verb2", "pound"),   N_("like an anvil")}};
+                                            {pgettext("verb2", "pound"),   N_("like an anvil")},
+                                            {pgettext("verb2", "flatten"), N_("like a pancake")}};
             const int choice = random2(ARRAYSZ(pierce_desc));
             attack_verb = pierce_desc[choice][0];
             verb_degree = pierce_desc[choice][1];
@@ -2572,7 +2582,8 @@ void melee_attack::chaos_affects_defender()
     {
     case CHAOS_CLONE:
     {
-        ASSERT(can_clone && clone_chance > 0);
+        ASSERT(can_clone);
+        ASSERT(clone_chance > 0);
         ASSERT(defender->is_monster());
 
         if (monster *clone = clone_mons(defender->as_monster(), true,
@@ -2596,12 +2607,14 @@ void melee_attack::chaos_affects_defender()
     }
 
     case CHAOS_POLY:
-        ASSERT(can_poly && poly_chance > 0);
+        ASSERT(can_poly);
+        ASSERT(poly_chance > 0);
         beam.flavour = BEAM_POLYMORPH;
         break;
 
     case CHAOS_POLY_UP:
-        ASSERT(can_poly && poly_up_chance > 0);
+        ASSERT(can_poly);
+        ASSERT(poly_up_chance > 0);
         ASSERT(defender->is_monster());
 
         obvious_effect = you.can_see(defender);
@@ -2610,7 +2623,8 @@ void melee_attack::chaos_affects_defender()
 
     case CHAOS_MAKE_SHIFTER:
     {
-        ASSERT(can_poly && shifter_chance > 0);
+        ASSERT(can_poly);
+        ASSERT(shifter_chance > 0);
         ASSERT(!is_shifter);
         ASSERT(defender->is_monster());
 
@@ -2651,7 +2665,8 @@ void melee_attack::chaos_affects_defender()
     }
 
     case CHAOS_RAGE:
-        ASSERT(can_rage && rage_chance > 0);
+        ASSERT(can_rage);
+        ASSERT(rage_chance > 0);
         defender->go_berserk(false);
         obvious_effect = you.can_see(defender);
         break;
@@ -2835,7 +2850,8 @@ void melee_attack::do_miscast()
         return;
 
     ASSERT(miscast_target != NULL);
-    ASSERT(miscast_level >= 0 && miscast_level <= 3);
+    ASSERT(miscast_level >= 0);
+    ASSERT(miscast_level <= 3);
     ASSERT(count_bits(miscast_type) == 1);
 
     if (!miscast_target->alive())
@@ -3927,19 +3943,18 @@ int melee_attack::calc_attack_delay(bool random, bool scaled)
         if (!scaled)
             return final_delay;
 
+        int scaling = you.time_taken;
+
         if (you.duration[DUR_FINESSE])
         {
             ASSERT(!you.duration[DUR_BERSERK]);
             // Need to undo haste by hand.
             if (you.duration[DUR_HASTE])
-                you.time_taken = haste_mul(you.time_taken);
-            you.time_taken = div_rand_round(you.time_taken, 2);
+                scaling = haste_mul(scaling);
+            scaling = div_rand_round(scaling, 2);
         }
 
-        dprf(DIAG_COMBAT, "Weapon speed: %d; min: %d; attack time: %d",
-             final_delay, min_delay, you.time_taken);
-
-        return max(2, div_rand_round(you.time_taken * final_delay, 10));
+        return max(2, div_rand_round(scaling * final_delay, 10));
     }
     else
     {
@@ -4368,9 +4383,33 @@ void melee_attack::splash_defender_with_acid(int strength)
     }
 }
 
+static void _print_resist_messages(actor* defender, int base_damage,
+                                   beam_type flavour)
+{
+    // check_your_resists is used for the player case to get additional
+    // effects such as Xom amusement, melting of icy effects, etc.
+    // mons_adjust_flavoured is used for the monster case to get all of the
+    // special message handling ("The ice beast melts!") correct.
+    // XXX: there must be a nicer way to do this, especially because we're
+    // basically calculating the damage twice in the case where messages
+    // are needed.
+    if (defender->is_player())
+        (void)check_your_resists(base_damage, flavour, "");
+    else
+    {
+        bolt beam;
+        beam.flavour = flavour;
+        (void)mons_adjust_flavoured(defender->as_monster(),
+                                    beam,
+                                    base_damage,
+                                    true);
+    }
+}
+
 void melee_attack::mons_apply_attack_flavour()
 {
     // Most of this is from BWR 4.1.2.
+    int base_damage = 0;
 
     attack_flavour flavour = attk_flavour;
     if (flavour == AF_CHAOS)
@@ -4422,6 +4461,8 @@ void melee_attack::mons_apply_attack_flavour()
         break;
 
     case AF_FIRE:
+        base_damage = attacker->get_experience_level()
+                      + random2(attacker->get_experience_level());
         if (attacker->type == MONS_FIRE_VORTEX)
             attacker->as_monster()->suicide(-10);
 
@@ -4429,29 +4470,33 @@ void melee_attack::mons_apply_attack_flavour()
             resist_adjust_damage(defender,
                                  BEAM_FIRE,
                                  defender->res_fire(),
-                                 attacker->get_experience_level()
-                                 + random2(attacker->get_experience_level()));
+                                 base_damage);
+        special_damage_flavour = BEAM_FIRE;
 
-        if (needs_message && special_damage)
+        if (needs_message && base_damage)
         {
             mprf(gettext("%s %s engulfed in flames%s"),
                  def_name(DESC_THE).c_str(),
                  defender->conj_verb("are").c_str(),
                  special_attack_punctuation().c_str());
+
+            _print_resist_messages(defender, base_damage, BEAM_FIRE);
         }
 
         defender->expose_to_element(BEAM_FIRE, 2);
         break;
 
     case AF_COLD:
+        base_damage = attacker->get_experience_level()
+                      + random2(2 * attacker->get_experience_level());
         special_damage =
             resist_adjust_damage(defender,
                                  BEAM_COLD,
                                  defender->res_cold(),
-                                 attacker->get_experience_level() +
-                                 random2(2 * attacker->get_experience_level()));
+                                 base_damage);
+        special_damage_flavour = BEAM_COLD;
 
-        if (needs_message && special_damage)
+        if (needs_message && base_damage)
         {
             mprf(pgettext("freezeattack","%s %s %s%s"),
                  atk_name(DESC_PLAIN).c_str(),
@@ -4459,28 +4504,32 @@ void melee_attack::mons_apply_attack_flavour()
                  defender_name().c_str(),
                  special_attack_punctuation().c_str());
 
+            _print_resist_messages(defender, base_damage, BEAM_COLD);
         }
 
         defender->expose_to_element(BEAM_COLD, 2);
         break;
 
     case AF_ELEC:
+        base_damage = attacker->get_experience_level()
+                      + random2(attacker->get_experience_level() / 2);
+
         special_damage =
-            resist_adjust_damage(
-                defender,
-                BEAM_ELECTRICITY,
-                defender->res_elec(),
-                attacker->get_experience_level() +
-                random2(attacker->get_experience_level() / 2));
+            resist_adjust_damage(defender,
+                                 BEAM_ELECTRICITY,
+                                 defender->res_elec(),
+                                 base_damage);
         special_damage_flavour = BEAM_ELECTRICITY;
 
-        if (needs_message && special_damage)
+        if (needs_message && base_damage)
         {
             mprf(pgettext("shockattack","%s %s %s%s"),
                  atk_name(DESC_PLAIN).c_str(),
                  attacker->conj_verb("shock").c_str(),
                  defender_name().c_str(),
                  special_attack_punctuation().c_str());
+
+            _print_resist_messages(defender, base_damage, BEAM_ELECTRICITY);
         }
 
         dprf(DIAG_COMBAT, "Shock damage: %d", special_damage);
@@ -4791,6 +4840,7 @@ void melee_attack::tendril_disarm()
 
     if (you.mutation[MUT_TENDRILS]
         && attacker->alive()
+        && mon->type != MONS_DANCING_WEAPON
         && adjacent(you.pos(), mon->pos())
         && you.can_see(mon)
         && one_chance_in(5)
@@ -4815,7 +4865,7 @@ void melee_attack::do_spines()
         const int mut = (you.form == TRAN_PORCUPINE) ? 3
                         : player_mutation_level(MUT_SPINY);
 
-        if (mut && attacker->alive() && one_chance_in(evp + 1))
+        if (mut && attacker->alive() && one_chance_in(evp / 3 + 1))
         {
             if (test_hit(random2(3 + 4 * mut), attacker->melee_evasion(defender), true) < 0)
             {
@@ -4825,7 +4875,7 @@ void melee_attack::do_spines()
             }
 
             int dmg = roll_dice(mut, 6);
-            int hurt = attacker->apply_ac(dmg) - evp;
+            int hurt = attacker->apply_ac(dmg) - evp / 3;
 
             dprf(DIAG_COMBAT, "Spiny: dmg = %d hurt = %d", dmg, hurt);
 

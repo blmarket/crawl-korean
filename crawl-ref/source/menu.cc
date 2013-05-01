@@ -1118,7 +1118,8 @@ bool PlayerMenuEntry::get_tiles(vector<tile_def>& tileset) const
         if (idx == 0 || idx == TILEP_SHOW_EQUIP || flags[p] == TILEP_FLAG_HIDE)
             continue;
 
-        ASSERT(idx >= TILE_MAIN_MAX && idx < TILEP_PLAYER_MAX);
+        ASSERT(idx >= TILE_MAIN_MAX);
+        ASSERT(idx < TILEP_PLAYER_MAX);
 
         int ymax = TILE_Y;
 
@@ -1603,6 +1604,26 @@ void Menu::webtiles_write_item(int index, const MenuEntry* me) const
 
     tiles.json_close_object();
 }
+
+void Menu::webtiles_update_section_boundaries()
+{
+    if (first_entry < webtiles_section_start()
+        || webtiles_section_end() <= first_entry)
+    {
+        _webtiles_section_start = first_entry;
+        while (_webtiles_section_start > 0
+               && items[_webtiles_section_start]->level != MEL_TITLE)
+        {
+            _webtiles_section_start--;
+        }
+        _webtiles_section_end = first_entry + 1;
+        while (_webtiles_section_end < (int) items.size()
+               && items[_webtiles_section_end]->level != MEL_TITLE)
+        {
+            _webtiles_section_end++;
+        }
+    }
+}
 #endif // USE_TILE_WEB
 
 /////////////////////////////////////////////////////////////////
@@ -1674,7 +1695,8 @@ void column_composer::add_formatted(int ncol,
                                     bool (*tfilt)(const string &),
                                     int  margin)
 {
-    ASSERT(ncol >= 0 && ncol < (int) columns.size());
+    ASSERT(ncol >= 0);
+    ASSERT(ncol < (int) columns.size());
 
     column &col = columns[ncol];
     vector<string> segs = split_string("\n", s, false, true);
@@ -1859,22 +1881,7 @@ bool formatted_scroller::jump_to(int i)
         first_entry = i - 1;
 
 #ifdef USE_TILE_WEB
-    if (first_entry < webtiles_section_start()
-        || webtiles_section_end() <= first_entry)
-    {
-        _webtiles_section_start = first_entry;
-        while (_webtiles_section_start > 0
-               && items[_webtiles_section_start]->level != MEL_TITLE)
-        {
-            _webtiles_section_start--;
-        }
-        _webtiles_section_end = first_entry + 1;
-        while (_webtiles_section_end < (int) items.size()
-               && items[_webtiles_section_end]->level != MEL_TITLE)
-        {
-            _webtiles_section_end++;
-        }
-    }
+    webtiles_update_section_boundaries();
     webtiles_write_menu(true);
 #endif
 
@@ -1960,12 +1967,8 @@ vector<MenuEntry *> formatted_scroller::show(bool reuse_selections)
 {
 #ifdef USE_TILE_WEB
     _webtiles_section_start = 0;
-    _webtiles_section_end = 1;
-    while (_webtiles_section_end < (int) items.size()
-           && items[_webtiles_section_end]->level != MEL_TITLE)
-    {
-        _webtiles_section_end++;
-    }
+    _webtiles_section_end = 0;
+    webtiles_update_section_boundaries();
 #endif
     return Menu::show(reuse_selections);
 }
@@ -3049,7 +3052,8 @@ void SaveMenuItem::_pack_doll()
         if (idx == 0 || idx == TILEP_SHOW_EQUIP || flags[p] == TILEP_FLAG_HIDE)
             continue;
 
-        ASSERT(idx >= TILE_MAIN_MAX && idx < TILEP_PLAYER_MAX);
+        ASSERT(idx >= TILE_MAIN_MAX);
+        ASSERT(idx < TILEP_PLAYER_MAX);
 
         int ymax = TILE_Y;
 

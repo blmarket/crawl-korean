@@ -82,7 +82,7 @@ static const char* _interesting_origin(const item_def &item)
 {
     if (origin_is_god_gift(item))
         return "god gift";
-    switch (item.orig_monnum - 1)
+    switch (item.orig_monnum)
     {
     case MONS_SONJA:
         if (weapon_skill(item) == SK_SHORT_BLADES)
@@ -1779,7 +1779,8 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         }
         else
         {
-            if (is_deck(*this))
+            // NUM_MISCELLANY indicates unidentified deck for item_info
+            if (is_deck(*this) || item_typ == NUM_MISCELLANY)
             {
                 if (basename)
                 {
@@ -1794,7 +1795,10 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
                 if (!dbname)
                     buff << check_gettext(deck_rarity_name(deck_rarity(*this))) << ' ';
             }
-            buff << check_gettext(misc_type_name(item_typ, know_type));
+            if (item_typ == NUM_MISCELLANY)
+                buff << check_gettext(misc_type_name(MISC_DECK_OF_ESCAPE, false));
+            else
+                buff << check_gettext(misc_type_name(item_typ, know_type));
             if (is_deck(*this) && !dbname
                 && (top_card_is_known(*this) || plus2 != 0))
             {
@@ -2366,6 +2370,9 @@ void check_item_knowledge(bool unknown_items)
 
             if (i == OBJ_JEWELLERY && j == AMU_CONTROLLED_FLIGHT)
                 continue;
+
+            if (i == OBJ_STAVES && j == STAFF_ENCHANTMENT)
+                continue;
 #endif
 
             if (unknown_items ? you.type_ids[i][j] != ID_KNOWN_TYPE
@@ -2424,6 +2431,11 @@ void check_item_knowledge(bool unknown_items)
         // Missiles
         for (int i = 0; i < NUM_MISSILES; i++)
         {
+#if TAG_MAJOR_VERSION == 34
+            if (i == MI_PIE)
+                continue;
+#endif
+
             item_def* ptmp = new item_def;
             if (ptmp != 0)
             {

@@ -3246,10 +3246,6 @@ static tileidx_t _tileidx_armour_base(const item_def &item)
             return TILE_ARM_CHAIN_MAIL_ORC;
         return TILE_ARM_CHAIN_MAIL;
 
-    case ARM_SPLINT_MAIL:
-        return TILE_ARM_SPLINT_MAIL;
-
-
     case ARM_PLATE_ARMOUR:
         if (race == ISFLAG_ORCISH)
             return TILE_ARM_PLATE_ARMOUR_ORC;
@@ -4519,6 +4515,10 @@ tileidx_t tileidx_cloud(const cloud_info &cl, bool disturbance)
             case CLOUD_CHAOS:
                 ch = TILE_CLOUD_CHAOS;
                 ch += random2(tile_main_count(ch));
+                break;
+
+            case CLOUD_FOREST_FIRE:
+                ch = TILE_CLOUD_FOREST_FIRE;
                 break;
 
             default:

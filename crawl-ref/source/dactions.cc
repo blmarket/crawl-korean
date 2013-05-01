@@ -8,7 +8,6 @@
 #include "dactions.h"
 
 #include "coordit.h"
-#include "debug.h"
 #include "decks.h"
 #include "dungeon.h"
 #include "env.h"
@@ -23,6 +22,8 @@
 #include "state.h"
 #include "travel.h"
 #include "view.h"
+
+static void _daction_hog_to_human(monster *mon);
 
 #ifdef DEBUG_DIAGNOSTICS
 static const char *daction_names[] =
@@ -216,7 +217,7 @@ void apply_daction_to_mons(monster* mon, daction_type act, bool local)
             break;
 
         case DACT_KIRKE_HOGS:
-            daction_hog_to_human(mon);
+            _daction_hog_to_human(mon);
             break;
 
         // The other dactions do not affect monsters directly.
@@ -227,7 +228,8 @@ void apply_daction_to_mons(monster* mon, daction_type act, bool local)
 
 static void _apply_daction(daction_type act)
 {
-    ASSERT(act >= 0 && act < NUM_DACTIONS);
+    ASSERT(act >= 0);
+    ASSERT(act < NUM_DACTIONS);
     dprf("applying delayed action: %s", daction_names[act]);
 
     switch (act)
@@ -293,7 +295,7 @@ unsigned int query_da_counter(daction_type c)
     return travel_cache.query_da_counter(c) + count_daction_in_transit(c);
 }
 
-void daction_hog_to_human(monster *mon)
+static void _daction_hog_to_human(monster *mon)
 {
     // Hogs to humans
     monster orig;

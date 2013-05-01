@@ -24,7 +24,6 @@
 #include "cio.h"
 #include "clua.h"
 #include "command.h"
-#include "debug.h"
 #include "decks.h"
 #include "delay.h"
 #include "directn.h"
@@ -1270,11 +1269,8 @@ void append_armour_stats(string &description, const item_def &item)
     _append_value(description, property(item, PARM_AC), false);
     description += "       ";
 
-    if (get_armour_slot(item) == EQ_BODY_ARMOUR)
-        description += _("Base evasion modifier: ");
-    else
-        description += _("Evasion modifier: ");
-    _append_value(description, property(item, PARM_EVASION), true);
+    description += _("Encumbrance rating: ");
+    _append_value(description, -property(item, PARM_EVASION), false);
 }
 
 void append_missile_info(string &description)
@@ -1986,8 +1982,8 @@ string get_item_description(const item_def &item, bool verbose,
             case CE_CONTAMINATED:
                 if (player_mutation_level(MUT_SAPROVOROUS) < 3)
                 {
-                    description << _("\n\nMeat like this may occasionally cause "
-                                   "nausea.");
+                    description << _("\n\nMeat like this tastes awful and "
+                                   "provides far less nutrition.");
                 }
                 break;
             case CE_POISON_CONTAM:
@@ -2448,15 +2444,15 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
     int keyin;
     vector<command_type> actions;
     actions.push_back(CMD_ADJUST_INVENTORY);
+    if (item_equip_slot(item) == EQ_WEAPON)
+        actions.push_back(CMD_UNWIELD_WEAPON);
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
     case OBJ_STAVES:
     case OBJ_RODS:
     case OBJ_MISCELLANY:
-        if (item_is_equipped(item))
-            actions.push_back(CMD_UNWIELD_WEAPON);
-        else
+        if (!item_is_equipped(item))
         {
             if (item_is_wieldable(item))
                 actions.push_back(CMD_WIELD_WEAPON);
@@ -2579,7 +2575,8 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
 #endif
 
     int slot = item.link;
-    ASSERT(slot >= 0 && slot < ENDOFPACK);
+    ASSERT(slot >= 0);
+    ASSERT(slot < ENDOFPACK);
 
     switch (action)
     {
@@ -4027,7 +4024,7 @@ static int _piety_level(int piety)
            (piety >=  75) ? 4 :
            (piety >=  50) ? 3 :
            (piety >=  30) ? 2 :
-           (piety >    5) ? 1
+           (piety >    0) ? 1
                           : 0;
 }
 

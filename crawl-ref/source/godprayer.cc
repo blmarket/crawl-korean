@@ -492,7 +492,8 @@ static int _leading_sacrifice_group()
 
 static void _give_sac_group_feedback(int which)
 {
-    ASSERT(which >= 0 && which < 5);
+    ASSERT(which >= 0);
+    ASSERT(which < 5);
     const char* names[] = {
         M_("Escape"), M_("Destruction"), M_("Dungeons"), M_("Summoning"), M_("Wonder")
     };
@@ -545,7 +546,7 @@ static piety_gain_t _sac_corpse(const item_def& item)
     if (you.religion == GOD_OKAWARU)
     {
         monster dummy;
-        dummy.type = (monster_type)(item.orig_monnum ? item.orig_monnum - 1
+        dummy.type = (monster_type)(item.orig_monnum ? item.orig_monnum
                                                      : item.plus);
         if (item.props.exists(MONSTER_NUMBER))
             dummy.number   = item.props[MONSTER_NUMBER].get_short();
@@ -640,7 +641,7 @@ static piety_gain_t _sacrifice_one_item_noncount(const item_def& item,
 
     case GOD_BEOGH:
     {
-        const int item_orig = item.orig_monnum - 1;
+        const int item_orig = item.orig_monnum;
 
         int chance = 4;
 

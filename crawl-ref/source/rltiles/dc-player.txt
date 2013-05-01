@@ -360,8 +360,6 @@ vest_red VEST_RED
 vest_red2 VEST_RED2
 bplate_green BPLATE_GREEN
 bplate_metal1 BPLATE_METAL1
-splint SPLINT
-splint2 SPLINT2
 armor_blue_gold
 ringmail RINGMAIL
 chainmail3 CHAINMAIL
@@ -590,6 +588,7 @@ nunchaku NUNCHAKU
 
 ## polearms
 spear SPEAR
+spear2
 spear_two SPEAR2
 spear_three SPEAR3
 spear_four SPEAR4
@@ -612,6 +611,7 @@ scythe_slant SCYTHE_SLANT
 pike PIKE
 staff STAFF
 quarterstaff QUARTERSTAFF1
+quarterstaff2
 quarterstaff_two QUARTERSTAFF2
 quarterstaff_three QUARTERSTAFF3
 quarterstaff_four QUARTERSTAFF4

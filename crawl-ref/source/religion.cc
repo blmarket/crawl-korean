@@ -26,7 +26,6 @@
 #include "chardump.h"
 #include "coordit.h"
 #include "database.h"
-#include "debug.h"
 #include "decks.h"
 #include "delay.h"
 #include "describe.h"
@@ -899,9 +898,10 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
     switch (which_god)
     {
     case GOD_ZIN:
-        dislikes.push_back("자기 자신을 고의적으로 변이시키는 행위"); 
-		really_dislikes.push_back("다른 존재를 변이시키는 행위");
-		really_dislikes.push_back("불경하거나 혼돈스러운 주문이나 아이템을 사용하는 행위"); 
+        dislikes.push_back("자기 자신을 고의적으로 변이시키는 행위");
+        really_dislikes.push_back("다른 존재를 변이시키는 행위");
+        really_dislikes.push_back("고의적으로 변신하는 행위");
+        really_dislikes.push_back("불경하거나 혼돈스러운 주문이나 아이템을 사용하는 행위");
         really_dislikes.push_back("지성이 있는 존재의 고기를 먹는 행위");
         dislikes.push_back("성지 위에서, 당신 혹은 당신의 동료가 " 
                            "몬스터를 공격하는 행위");
@@ -3611,6 +3611,13 @@ void god_pitch(god_type which_god)
     if (you.religion == GOD_ELYVILON)
         you.start_train.insert(SK_INVOCATIONS);
 
+    if (you.religion == GOD_OKAWARU
+        && player_mutation_level(MUT_DEMONIC_GUARDIAN))
+    {
+        mpr("Your demonic guardian will not assist you as long as you worship "
+            "Okawaru.", MSGCH_GOD);
+    }
+
     // When you start worshipping a good god, you make all non-hostile
     // unholy and evil beings hostile; when you start worshipping Zin,
     // you make all non-hostile unclean and chaotic beings hostile; and
@@ -4210,7 +4217,7 @@ int piety_rank(int piety)
         die("INT_MAX is no good");
     }
 
-    const int breakpoints[] = { 161, 120, 100, 75, 50, 30, 6 };
+    const int breakpoints[] = { 161, 120, 100, 75, 50, 30, 1 };
     const int numbreakpoints = ARRAYSZ(breakpoints);
 
     for (int i = 0; i < numbreakpoints; ++i)

@@ -120,7 +120,7 @@ static void _create_monster_hide(const item_def corpse)
 
     do_uncurse_item(item, false);
     const monster_type montype =
-        static_cast<monster_type>(corpse.orig_monnum - 1);
+        static_cast<monster_type>(corpse.orig_monnum);
     if (!invalid_monster_type(montype) && mons_is_unique(montype))
         item.inscription = mons_type_name(montype, DESC_PLAIN);
 
@@ -142,7 +142,8 @@ int get_max_corpse_chunks(monster_type mons_class)
 
 void turn_corpse_into_skeleton(item_def &item)
 {
-    ASSERT(item.base_type == OBJ_CORPSES && item.sub_type == CORPSE_BODY);
+    ASSERT(item.base_type == OBJ_CORPSES);
+    ASSERT(item.sub_type == CORPSE_BODY);
 
     // Some monsters' corpses lack the structure to leave skeletons
     // behind.
@@ -171,7 +172,8 @@ static void _maybe_bleed_monster_corpse(const item_def corpse)
 void turn_corpse_into_chunks(item_def &item, bool bloodspatter,
                              bool make_hide)
 {
-    ASSERT(item.base_type == OBJ_CORPSES && item.sub_type == CORPSE_BODY);
+    ASSERT(item.base_type == OBJ_CORPSES);
+    ASSERT(item.sub_type == CORPSE_BODY);
     const item_def corpse = item;
     const int max_chunks = get_max_corpse_chunks(item.mon_type);
 
@@ -380,7 +382,8 @@ void maybe_coagulate_blood_potions_floor(int obj)
     {
         // Now that coagulating is necessary, check square for
         // !coagulated blood.
-        ASSERT(blood.pos.x >= 0 && blood.pos.y >= 0);
+        ASSERT(blood.pos.x >= 0);
+        ASSERT(blood.pos.y >= 0);
         for (stack_iterator si(blood.pos); si; ++si)
         {
             if (si->base_type == OBJ_POTIONS
@@ -865,8 +868,10 @@ void merge_blood_potion_stacks(item_def &source, item_def &dest, int quant)
     if (!source.defined() || !dest.defined())
         return;
 
-    ASSERT(quant > 0 && quant <= source.quantity);
-    ASSERT(is_blood_potion(source) && is_blood_potion(dest));
+    ASSERT(quant > 0);
+    ASSERT(quant <= source.quantity);
+    ASSERT(is_blood_potion(source));
+    ASSERT(is_blood_potion(dest));
 
     CrawlHashTable &props = source.props;
     if (!props.exists("timer"))
@@ -2017,7 +2022,7 @@ void timeout_door_seals(int duration, bool force)
         seal->duration -= duration;
 
         monster* mon_src = monster_by_mid(seal->mon_num);
-        if (seal->duration <= 0 || !mon_src || !mon_src->alive())
+        if (seal->duration <= 0 || !mon_src || !mon_src->alive() || mon_src->pacified())
         {
             grd(seal->pos) = seal->old_feature;
             set_terrain_changed(seal->pos);

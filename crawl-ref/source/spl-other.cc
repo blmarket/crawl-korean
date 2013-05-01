@@ -192,19 +192,7 @@ void start_recall(int type)
     you.recall_list.clear();
     for (monster_iterator mi; mi; ++mi)
     {
-        if (mi->type == MONS_NO_MONSTER)
-            continue;
-
-        if (!mi->friendly())
-            continue;
-
-        if (mons_class_is_stationary(mi->type)
-            || mons_is_conjured(mi->type))
-        {
-            continue;
-        }
-
-        if (!monster_habitable_grid(*mi, DNGN_FLOOR))
+        if (!mons_is_recallable(&you, *mi))
             continue;
 
         if (type == 1) // undead
@@ -244,6 +232,25 @@ void start_recall(int type)
         mpr(_("Nothing appears to have answered your call."));
 }
 
+// Remind a recalled ally (or one skipped due to proximity) not to run
+// away or wander off.
+void recall_orders(monster *mons)
+{
+    // FIXME: is this okay for berserk monsters? We still want them to
+    // stick around...
+
+    // Don't patrol
+    mons->patrol_point = coord_def(0, 0);
+
+    // Don't wander
+    mons->behaviour = BEH_SEEK;
+
+    // Don't persue distant enemies
+    const actor *foe = mons->get_foe();
+    if (foe && !you.can_see(foe))
+        mons->foe = MHITYOU;
+}
+
 // Attempt to recall a single monster by mid, which might be either on or off
 // our current level. Returns whether this monster was successfully recalled.
 static bool _try_recall(mid_t mid)
@@ -258,6 +265,7 @@ static bool _try_recall(mid_t mid)
         if (mons->pos().distance_from(you.pos()) < 3
             && mons->see_cell_no_trans(you.pos()))
         {
+            recall_orders(mons);
             return false;
         }
         else
@@ -266,6 +274,7 @@ static bool _try_recall(mid_t mid)
             if (find_habitable_spot_near(you.pos(), mons_base_type(mons), 3, false, empty)
                 && mons->move_to_pos(empty))
             {
+                recall_orders(mons);
                 simple_monster_message(mons, _(" is recalled."));
                 return true;
             }

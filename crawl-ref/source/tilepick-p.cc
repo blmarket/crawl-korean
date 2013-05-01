@@ -325,7 +325,6 @@ tileidx_t tilep_equ_armour(const item_def &item)
     case ARM_RING_MAIL:          return TILEP_BODY_RINGMAIL;
     case ARM_CHAIN_MAIL:         return TILEP_BODY_CHAINMAIL;
     case ARM_SCALE_MAIL:         return TILEP_BODY_SCALEMAIL;
-    case ARM_SPLINT_MAIL:        return TILEP_BODY_SPLINT;
     case ARM_PLATE_ARMOUR:       return TILEP_BODY_PLATE_BLACK;
     case ARM_CRYSTAL_PLATE_ARMOUR:
         return tileidx_enchant_equ(item, TILEP_BODY_CRYSTAL_PLATE, true);
@@ -1208,7 +1207,8 @@ void tilep_print_parts(char *fbuf, const dolls_data &doll)
             else if (idx != 0)
             {
                 idx = doll.parts[p] - tile_player_part_start[p] + 1;
-                if (idx < 0 || idx > tile_player_part_count[p])
+                ASSERT(idx >= 0);
+                if (idx > tile_player_part_count[p])
                     idx = 0;
             }
         }

@@ -677,7 +677,8 @@ void bolt::initialise_fire()
     }
 
     ASSERT(in_bounds(source));
-    ASSERT(flavour > BEAM_NONE && flavour < BEAM_FIRST_PSEUDO);
+    ASSERT(flavour > BEAM_NONE);
+    ASSERT(flavour < BEAM_FIRST_PSEUDO);
     ASSERT(!drop_item || item && item->defined());
     ASSERT(range >= 0);
     ASSERT(!aimed_at_feet || source == target);
@@ -945,6 +946,7 @@ static bool _nuke_wall_msg(dungeon_feature_type feat, const coord_def& p)
     case DNGN_GRANITE_STATUE:
     case DNGN_CLOSED_DOOR:
     case DNGN_RUNED_DOOR:
+    case DNGN_SEALED_DOOR:
         // XXX: When silenced, features disappear without message.
         // XXX: For doors, we only issue a sound where the beam hit.
         //      If someone wants to improve on the door messaging,
@@ -1032,6 +1034,7 @@ void bolt::nuke_wall_effect()
 
     case DNGN_CLOSED_DOOR:
     case DNGN_RUNED_DOOR:
+    case DNGN_SEALED_DOOR:
     {
         set<coord_def> doors = connected_doors(pos());
         set<coord_def>::iterator it;
@@ -1159,17 +1162,6 @@ bool bolt::hit_wall()
         }
 
         // Well, we warned them.
-    }
-
-    // Press trigger/switch/button in wall if hit by something solid
-    // or solid-ish.
-    if (in_bounds(pos()) && !is_explosion && !is_tracer && !monster_at(pos())
-        && (flavour == BEAM_MISSILE || flavour == BEAM_MMISSILE))
-    {
-        dgn_event event(DET_WALL_HIT, pos());;
-        event.arg1  = beam_source;
-
-        dungeon_events.fire_vetoable_position_event(event, target);
     }
 
     if (in_bounds(pos()) && can_affect_wall(feat))
@@ -2533,7 +2525,8 @@ bool bolt::stop_at_target() const
 
 void bolt::drop_object()
 {
-    ASSERT(item != NULL && item->defined());
+    ASSERT(item != NULL);
+    ASSERT(item->defined());
 
     // Conditions: beam is missile and not tracer.
     if (is_tracer || !was_missile)
@@ -2690,7 +2683,8 @@ maybe_bool bolt::affects_wall(dungeon_feature_type wall) const
             || wall == DNGN_GRANITE_STATUE
             || wall == DNGN_ORCISH_IDOL
             || wall == DNGN_CLOSED_DOOR
-            || wall == DNGN_RUNED_DOOR)
+            || wall == DNGN_RUNED_DOOR
+            || wall == DNGN_SEALED_DOOR)
         {
             return B_TRUE;
         }
@@ -2843,7 +2837,7 @@ void bolt::affect_place_explosion_clouds()
 void bolt::internal_ouch(int dam)
 {
     monster* monst = NULL;
-    if (!invalid_monster_index(beam_source) && menv[beam_source].type != -1)
+    if (!invalid_monster_index(beam_source))
         monst = &menv[beam_source];
 
     const char *what = aux_source.empty() ? name.c_str() : aux_source.c_str();
@@ -3033,7 +3027,8 @@ bool bolt::harmless_to_player() const
         return (player_prot_life(false) >= 3);
 
     case BEAM_POISON:
-        return (player_res_poison(false) >= 3);
+        return (player_res_poison(false) >= 3
+                || is_big_cloud && player_res_poison(false) > 0);
 
     case BEAM_MEPHITIC:
         return (player_res_poison(false) > 0 || you.clarity(false)

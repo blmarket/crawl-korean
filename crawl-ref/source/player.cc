@@ -337,8 +337,11 @@ void moveto_location_effects(dungeon_feature_type old_feat,
 
         if (feat_is_water(new_grid) && !you.can_swim() && !beogh_water_walk())
         {
-            you.time_taken *= 13 + random2(8);
-            you.time_taken /= 10;
+            if (stepped)
+            {
+                you.time_taken *= 13 + random2(8);
+                you.time_taken /= 10;
+            }
             const bool will_cling = you.can_cling_to_walls()
                                     && cell_is_clingable(you.pos());
 
@@ -2366,7 +2369,7 @@ static int _player_armour_racial_bonus(const item_def& item)
 bool is_effectively_light_armour(const item_def *item)
 {
     return (!item
-            || (abs(property(*item, PARM_EVASION)) < 2));
+            || (abs(property(*item, PARM_EVASION)) < 6));
 }
 
 bool player_effectively_in_light_armour()
@@ -2417,7 +2420,7 @@ static int _player_adjusted_evasion_penalty(const int scale)
 
         // [ds] Evasion modifiers for armour are negatives, change
         // those to positive for penalty calc.
-        const int penalty = -property(you.inv[you.equip[i]], PARM_EVASION);
+        const int penalty = (-property(you.inv[you.equip[i]], PARM_EVASION))/3;
         if (penalty > 0)
             piece_armour_evasion_penalty += penalty;
     }
@@ -2540,9 +2543,10 @@ int player_evasion(ev_ignore_type evit)
     // 1 instead of 0.5 so that leather armour is fully discounted.
     // The 1 EVP of leather armour may still incur an
     // adjusted_evasion_penalty, however.
-    const int armour_dodge_penalty =
-        max(0, (30 * you.adjusted_body_armour_penalty(scale, true) - 30 * scale)
-               / max(1, (int) you.strength()));
+    const int armour_dodge_penalty = max(0,
+        (10 * you.adjusted_body_armour_penalty(scale, true)
+         - 30 * scale)
+        / max(1, (int) you.strength()));
 
     // Adjust dodge bonus for the effects of being suited up in armour.
     const int armour_adjusted_dodge_bonus =
@@ -3423,6 +3427,7 @@ void level_change(bool skip_attribute_increase)
 
                             gave_message = true;
                         }
+
                         perma_mutate(you.demonic_traits[i].mutation, 1,
                                      "demonic ancestry");
                     }
@@ -3758,8 +3763,9 @@ int check_stealth(void)
         if (arm)
         {
             // [ds] New stealth penalty formula from rob: SP = 6 * (EP^2)
+            // Now 2 * EP^2 / 3 after EP rescaling.
             const int ep = -property(*arm, PARM_EVASION);
-            const int penalty = 6 * ep * ep;
+            const int penalty = 2 * ep * ep / 3;
     #if 0
             dprf("Stealth penalty for armour (ep: %d): %d", ep, penalty);
     #endif
@@ -3893,7 +3899,6 @@ int get_expiration_threshold(duration_type dur)
         return (15 * BASELINE_DELAY);
 
     case DUR_CONFUSING_TOUCH:
-    case DUR_NAUSEA:
         return (20 * BASELINE_DELAY);
 
     default:
@@ -4152,7 +4157,6 @@ void display_char_status()
         STATUS_NET,
         DUR_POISONING,
         STATUS_SICK,
-        DUR_NAUSEA,
         STATUS_ROT,
         STATUS_CONTAMINATION,
         DUR_CONFUSING_TOUCH,
@@ -5270,7 +5274,7 @@ void dec_haste_player(int delay)
 
 void dec_disease_player(int delay)
 {
-    if (you.disease || you.duration[DUR_NAUSEA])
+    if (you.disease)
     {
         int rr = 50;
 
@@ -5292,18 +5296,12 @@ void dec_disease_player(int delay)
 
         rr = div_rand_round(rr * delay, 50);
 
-        if (you.disease)
-        {
-            you.disease -= rr;
-            if (you.disease < 0)
-                you.disease = 0;
+        you.disease -= rr;
+        if (you.disease < 0)
+            you.disease = 0;
 
-            if (you.disease == 0)
-                mpr(_("You feel your health improve."), MSGCH_RECOVERY);
-        }
-
-        if (you.duration[DUR_NAUSEA] && (you.duration[DUR_NAUSEA] -= rr) <= 0)
-            end_nausea();
+        if (you.disease == 0)
+            mpr(_("You feel your health improve."), MSGCH_RECOVERY);
     }
 }
 
@@ -5590,7 +5588,6 @@ void player::init()
     vault_list.clear();
 
     global_info = PlaceInfo();
-    global_info.make_global();
     global_info.assert_validity();
 
     if (m_quiver)
@@ -5621,6 +5618,7 @@ void player::init()
     travel_z         = level_id();
 
     running.clear();
+    travel_ally_pace = false;
     received_weapon_warning = false;
     received_noskill_warning = false;
     ash_init_bondage(this);
@@ -6017,10 +6015,11 @@ int player::adjusted_body_armour_penalty(int scale, bool use_size) const
                       - size_bonus_factor * base_ev_penalty);
     }
 
-    return ((base_ev_penalty
-             + max(0, 3 * base_ev_penalty - strength()))
+    // New formula for effect of str on aevp: (2/5) * evp^2 / (str+3)
+    return (2 * base_ev_penalty * base_ev_penalty
             * (450 - skill(SK_ARMOUR, 10))
             * scale
+            / (5 * (strength() + 3))
             / 450);
 }
 

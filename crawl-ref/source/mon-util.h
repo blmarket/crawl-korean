@@ -427,6 +427,7 @@ monster *monster_by_mid(mid_t m);
 bool mons_is_tentacle(monster_type mc);
 bool mons_is_tentacle_segment(monster_type mc);
 bool mons_is_tentacle_head(monster_type mc);
+bool mons_is_recallable(actor* caller, monster* targ);
 monster* mons_get_parent_monster(monster* mons);
 void init_anon();
 actor *find_agent(mid_t m, kill_category kc);
@@ -440,6 +441,7 @@ mon_threat_level_type mons_threat_level(const monster *mon,
                                         bool real = false);
 
 bool mons_foe_is_marked(const monster* mons);
+vector<monster* > get_on_level_followers();
 
 void reset_all_monsters();
 #endif

@@ -6922,7 +6922,7 @@ cherub
 #################################
 # Monsters who worship Zin
 #################################
-glowing angel
+zin angel
 
 w:40
 @The_monster@은(는) @_axioms_of_law_@을(를) 암송했다.

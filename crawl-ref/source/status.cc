@@ -144,7 +144,8 @@ void init_duration_index()
     for (unsigned i = 0; i < ARRAYSZ(duration_data); ++i)
     {
         duration_type dur = duration_data[i].dur;
-        ASSERT(dur >= 0 && dur < NUM_DURATIONS);
+        ASSERT(dur >= 0);
+        ASSERT(dur < NUM_DURATIONS);
         ASSERT(duration_index[dur] == -1);
         duration_index[dur] = i;
     }
@@ -152,7 +153,8 @@ void init_duration_index()
 
 static const duration_def* _lookup_duration(duration_type dur)
 {
-    ASSERT(dur >= 0 && dur < NUM_DURATIONS);
+    ASSERT(dur >= 0);
+    ASSERT(dur < NUM_DURATIONS);
     if (duration_index[dur] == -1)
         return NULL;
     else
@@ -217,7 +219,6 @@ static void _describe_hunger(status_info* inf);
 static void _describe_regen(status_info* inf);
 static void _describe_rotting(status_info* inf);
 static void _describe_sickness(status_info* inf);
-static void _describe_nausea(status_info* inf);
 static void _describe_speed(status_info* inf);
 static void _describe_sage(status_info* inf);
 static void _describe_poison(status_info* inf);
@@ -347,10 +348,6 @@ bool fill_status_info(int status, status_info* inf)
 
     case STATUS_SICK:
         _describe_sickness(inf);
-        break;
-
-    case DUR_NAUSEA:
-        _describe_nausea(inf);
         break;
 
     case STATUS_SPEED:
@@ -803,19 +800,6 @@ static void _describe_sickness(status_info* inf)
         inf->short_text = mod + pgettext("Sick", "diseased");
         inf->long_text  = make_stringf(gettext("You are %sdiseased."), mod.c_str());
     }
-}
-
-static void _describe_nausea(status_info* inf)
-{
-    if (!you.duration[DUR_NAUSEA])
-        return;
-
-    inf->light_colour = you.is_undead == US_UNDEAD ? DARKGREY : BROWN;
-    inf->light_text   = _(M_("Nausea"));
-    inf->short_text   = _(M_("nauseated"));
-    inf->long_text    = (you.hunger_state <= HS_NEAR_STARVING) ?
-                _("You would have trouble eating anything.") :
-                _("You cannot eat right now.");
 }
 
 static void _describe_burden(status_info* inf)

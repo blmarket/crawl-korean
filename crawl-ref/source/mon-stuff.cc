@@ -262,7 +262,7 @@ monster_type fill_out_corpse(const monster* mons,
     corpse.sub_type    = CORPSE_BODY;
     corpse.special     = FRESHEST_CORPSE;  // rot time
     corpse.quantity    = 1;
-    corpse.orig_monnum = mtype + 1;
+    corpse.orig_monnum = mtype;
 
     if (mtype == MONS_ROTTING_HULK)
         corpse.special = ROTTING_CORPSE;
@@ -1042,7 +1042,7 @@ static void _setup_base_explosion(bolt & beam, const monster& origin)
     beam.beam_source  = origin.mindex();
     beam.glyph        = dchar_glyph(DCHAR_FIRED_BURST);
     beam.source       = origin.pos();
-    beam.source_name  = origin.base_name(DESC_BASENAME);
+    beam.source_name  = origin.base_name(DESC_BASENAME, true);
     beam.target       = origin.pos();
     beam.noise_msg    = "You hear an explosion!";
 

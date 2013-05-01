@@ -1476,8 +1476,7 @@ static bool _check_ability_possible(const ability_def& abil,
             && you.strength(false) == you.max_strength()
             && you.intel(false) == you.max_intel()
             && you.dex(false) == you.max_dex()
-            && !player_rotted()
-            && !you.duration[DUR_NAUSEA])
+            && !player_rotted())
         {
             if (!quiet)
                 mpr(_("Nothing ails you!"));
@@ -1948,7 +1947,7 @@ static bool _do_ability(const ability_def& abil)
     }
 
     case ABIL_RECHARGING:
-        if (recharge_wand(-1) <= 0)
+        if (recharge_wand() <= 0)
             return false; // fail message is already given
         break;
 

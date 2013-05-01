@@ -61,6 +61,7 @@
 
     function random_wall_material(e)
         if not you.in_branch("Lair") and not you.in_branch("Zot")
+           and not you.in_branch("Dis")
            and you.absdepth() >= 4 and crawl.one_chance_in(20) then
             e.subst('x : ccv')
         end
@@ -213,13 +214,11 @@ ENDMAP
 # room with some number of pillars in the middle. The stairs
 # are generally all grouped together.
 #
-
 NAME: layout_big_octagon
 DEPTH:   Pan, 4-22, !Dis, !Geh
 WEIGHT:  6 (Pan), 10
 ORIENT:  encompass
 TAGS:    overwritable layout no_primary_vault allow_dup unrand
-
 {{
     -- Step 1: Big octagon.
 
@@ -621,6 +620,12 @@ TAGS: overwritable layout allow_dup unrand
 MAP
 ENDMAP
 
+##############################################################
+# layout_caves
+#
+# One (sometimes more) large open caverns with irregular
+# walls.
+#
 NAME: layout_caves
 DEPTH: 9-22, !Dis, !Geh, Orc, Slime
 CHANCE: 100% (Orc), 100% (Slime)
@@ -643,7 +648,7 @@ TAGS: overwritable layout allow_dup unrand
             iterations = 600 + crawl.random2(600)
             connected = true
         else
-            iterations = 200 + crawl.random2(500)
+            iterations = 100 + crawl.random2(500)
         end
     else
         -- Normal branches
@@ -658,9 +663,14 @@ TAGS: overwritable layout allow_dup unrand
       zonify.map_fill_zones(_G, 1, 'x')
     end
 }}
+# Enforce minimum floor size - otherwise we get very tiny floors sometimes
+validate {{
+    return count_feature_in_box { feat="." } > 600
+}}
 MAP
 ENDMAP
 
+##############################################################
 # A long winding cavern of roughly constant width, snaking around all the
 # level.  It forks from time to time, but never for long.
 NAME: layout_twisted_cavern
@@ -689,6 +699,7 @@ TAGS: overwritable layout allow_dup unrand
     end
 }}
 
+##############################################################
 ## This replaces dungeon.cc:_roguey_level.
 NAME: layout_roguey
 DEPTH: 2-, !Pan, !Zot, !Dis, !Geh
@@ -1179,6 +1190,9 @@ TAGS: overwritable layout allow_dup unrand
 {{
     local subdivide_threshold = 12
 
+    -- Create the alternate version?
+    local alt = crawl.x_chance_in_y(2,3)
+
     function room(x1, y1, x2, y2)
         if x1 < x2 and y1 < y2 then
            local floor_type = '.'
@@ -1188,10 +1202,15 @@ TAGS: overwritable layout allow_dup unrand
               -- decorative statues
               local x3 = crawl.random_range(x1+2, x2-2)
               local y3 = crawl.random_range(y1+2, y2-2)
-              mapgrd[x3][y3] = 'G'
-              mapgrd[x1+x2-x3][y3] = 'G'
-              mapgrd[x3][y1+y2-y3] = 'G'
-              mapgrd[x1+x2-x3][y1+y2-y3] = 'G'
+              local x4 = x1+x2-x3
+              local y4 = y1+y2-y3
+
+              if math.abs(x3 - x4) ~= 1 and math.abs(y3 - y4) ~= 1 then
+                  mapgrd[x3][y3] = 'G'
+                  mapgrd[x4][y3] = 'G'
+                  mapgrd[x3][y4] = 'G'
+                  mapgrd[x4][y4] = 'G'
+               end
            end
 
            if (x1+x2) % 2 == 0 and (y1+y2) % 2 == 0
@@ -1214,7 +1233,9 @@ TAGS: overwritable layout allow_dup unrand
                local x3 = x1 + 4 + crawl.random2(x2 - x1 - 7)
                fill(x1, y1, x3, y2, 1)
                fill(x3, y1, x2, y2, 1)
-               replace_random { x1=x3, y1=y1+1, x2=x3, y2=y2-1, find='x', replace='+' }
+               if not alt then
+                   replace_random { x1=x3, y1=y1+1, x2=x3, y2=y2-1, find='x', replace='+' }
+               end
            end
         else
             if y2 - y1 < subdivide_threshold then
@@ -1227,10 +1248,14 @@ TAGS: overwritable layout allow_dup unrand
                local y3 = y1 + 4 + crawl.random2(y2 - y1 - 7)
                fill(x1, y1, x2, y3, 0)
                fill(x1, y3, x2, y2, 0)
-               replace_random { x1=x1+1, y1=y3, x2=x2-1, y2=y3, find='x', replace='+' }
-           end
+               if not alt then
+                   replace_random { x1=x1+1, y1=y3, x2=x2-1, y2=y3, find='x', replace='+' }
+               end
+            end
         end
     end
+
+    layout_type "rooms"
 
     local gxm, gym = dgn.max_bounds()
     extend_map{width = gxm, height = gym, fill = 'x'}
@@ -1239,9 +1264,25 @@ TAGS: overwritable layout allow_dup unrand
     fill_area { x1=8, y1=8, x2=gxm-9, y2=gym-9, fill="." }
 
     fill(7, 7, gxm-8, gym-8, 0)
+
+    local border,fill = 'x','.'
+    local connection = crawl.random_element({[fill] = 1, ["+"] = 4})
+
+    -- Alternate version, connect rooms at the end.
+    if alt then
+        connect_adjacent_rooms { max = crawl.random_range(500, 750),
+                                 min = 250, replace = '+', check_empty = true }
+        zonify.map_fill_zones(_G, 1, 'x')
+    end
+}}
+# Enforce minimum floor size - this is important with the alt version
+validate {{
+    return count_feature_in_box { feat="." } > 1200
 }}
 COLOUR:  G : cyan
 TILE:    G = dngn_statue_iron_golem
+MAP
+ENDMAP
 
 # Dummy layouts that just call C++ functions that do all the work.
 NAME: layout_basic

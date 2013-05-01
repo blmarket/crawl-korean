@@ -299,7 +299,7 @@ static int _fire_prompt_for_item()
     int slot = prompt_invent_item(_("Fire/throw which item? (* to show all)"),
                                    MT_INVLIST,
                                    OSEL_THROWABLE, true, true, true, 0, -1,
-                                   NULL, OPER_FIRE, false, true);
+                                   NULL, OPER_FIRE);
 
     if (slot == PROMPT_ABORT || slot == PROMPT_NOTHING)
         return -1;
@@ -822,7 +822,8 @@ static int _blowgun_power_roll(bolt &beam)
         blowgun = agent->weapon();
     }
 
-    ASSERT(blowgun && blowgun->sub_type == WPN_BLOWGUN);
+    ASSERT(blowgun);
+    ASSERT(blowgun->sub_type == WPN_BLOWGUN);
 
     return (base_power + blowgun->plus);
 }
@@ -845,7 +846,8 @@ static bool _blowgun_check(bolt &beam, actor* victim, bool message = true)
 
     const int skill = you.skill_rdiv(SK_THROWING);
     const item_def* wp = agent->weapon();
-    ASSERT(wp && wp->sub_type == WPN_BLOWGUN);
+    ASSERT(wp);
+    ASSERT(wp->sub_type == WPN_BLOWGUN);
     const int enchantment = wp->plus;
 
     // You have a really minor chance of hitting with no skills or good

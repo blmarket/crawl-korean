@@ -25,7 +25,6 @@
 #include "art-enum.h"
 #include "artefact.h"
 #include "branch.h"
-#include "debug.h"
 #include "describe.h"
 #include "dgn-overview.h"
 #include "dungeon.h"
@@ -1220,7 +1219,8 @@ static string _describe_action_subtype(caction_type type, int subtype)
         return uppercase_first(_(base_type_string((object_class_type)subtype).c_str()));
     case CACT_STAB:
         COMPILE_CHECK(ARRAYSZ(_stab_names) == NUM_UCAT);
-        ASSERT(subtype >= 1 && subtype < NUM_UCAT);
+        ASSERT(subtype >= 1);
+        ASSERT(subtype < NUM_UCAT);
         return _stab_names[subtype];
     default:
         return "Error";

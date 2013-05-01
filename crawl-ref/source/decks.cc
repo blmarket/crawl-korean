@@ -1460,7 +1460,7 @@ static void _portal_card(int power, deck_rarity_type rarity)
     if (x_chance_in_y(control_level, 2))
         controlled = true;
 
-    int threshold = 6;
+    int threshold = 9;
     const bool was_controlled = player_control_teleport();
     const bool short_control = (you.duration[DUR_CONTROL_TELEPORT] > 0
                                 && you.duration[DUR_CONTROL_TELEPORT]
@@ -3126,7 +3126,8 @@ bool bad_deck(const item_def &item)
 
 deck_rarity_type deck_rarity(const item_def &item)
 {
-    ASSERT(is_deck(item));
+    // NUM_MISCELLANY indicates unidentified deck for item_info
+    ASSERT(item.sub_type == NUM_MISCELLANY || is_deck(item));
 
     return static_cast<deck_rarity_type>(item.special);
 }

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-13 15:46+0900\n"
+"POT-Creation-Date: 2013-05-01 23:28+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,76 +20,77 @@ msgstr ""
 #. adj doesn't care about exact species
 #. adj doesn't care about exact species
 #: species.cc:172 species.cc:189 species.cc:189 species.cc:124 species.cc:141
-#: species.cc:122 species.cc:139
+#: species.cc:122 species.cc:139 species.cc:125 species.cc:142
 msgid "Draconian"
 msgstr "드라코니언"
 
-#: species.cc:177 species.cc:177 species.cc:129 species.cc:127
+#: species.cc:177 species.cc:177 species.cc:129 species.cc:127 species.cc:130
 msgid "Red Draconian"
 msgstr "붉은 드라코니언"
 
-#: species.cc:178 species.cc:178 species.cc:130 species.cc:128
+#: species.cc:178 species.cc:178 species.cc:130 species.cc:128 species.cc:131
 msgid "White Draconian"
 msgstr "흰 드라코니언"
 
-#: species.cc:179 species.cc:179 species.cc:131 species.cc:129
+#: species.cc:179 species.cc:179 species.cc:131 species.cc:129 species.cc:132
 msgid "Green Draconian"
 msgstr "녹색 드라코니언"
 
-#: species.cc:180 species.cc:180 species.cc:132 species.cc:130
+#: species.cc:180 species.cc:180 species.cc:132 species.cc:130 species.cc:133
 msgid "Yellow Draconian"
 msgstr "노란 드라코니언"
 
-#: species.cc:181 species.cc:181 species.cc:133 species.cc:131
+#: species.cc:181 species.cc:181 species.cc:133 species.cc:131 species.cc:134
 msgid "Grey Draconian"
 msgstr "회색 드라코니언"
 
-#: species.cc:182 species.cc:182 species.cc:134 species.cc:132
+#: species.cc:182 species.cc:182 species.cc:134 species.cc:132 species.cc:135
 msgid "Black Draconian"
 msgstr "검은 드라코니언"
 
-#: species.cc:183 species.cc:183 species.cc:135 species.cc:133
+#: species.cc:183 species.cc:183 species.cc:135 species.cc:133 species.cc:136
 msgid "Purple Draconian"
 msgstr "보랏빛 드라코니언"
 
-#: species.cc:184 species.cc:184 species.cc:136 species.cc:134
+#: species.cc:184 species.cc:184 species.cc:136 species.cc:134 species.cc:137
 msgid "Mottled Draconian"
 msgstr "얼룩무늬 드라코니언"
 
-#: species.cc:185 species.cc:185 species.cc:137 species.cc:135
+#: species.cc:185 species.cc:185 species.cc:137 species.cc:135 species.cc:138
 msgid "Pale Draconian"
 msgstr "무색 드라코니언"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
-#: species.cc:196 species.cc:196 species.cc:148 species.cc:146
+#: species.cc:196 species.cc:196 species.cc:148 species.cc:146 species.cc:149
 msgid "Elven"
 msgstr "엘프족"
 
 #: species.cc:198 species.cc:206 species.cc:206 species.cc:150 species.cc:158
-#: species.cc:148 species.cc:156
+#: species.cc:148 species.cc:156 species.cc:151 species.cc:159
 msgid "Elf"
 msgstr "엘프"
 
-#: species.cc:203 species.cc:203 species.cc:155 species.cc:153
+#: species.cc:203 species.cc:203 species.cc:155 species.cc:153 species.cc:156
 msgid "High Elf"
 msgstr "하이 엘프"
 
-#: species.cc:204 species.cc:204 species.cc:156 species.cc:154
+#: species.cc:204 species.cc:204 species.cc:156 species.cc:154 species.cc:157
 msgid "Deep Elf"
 msgstr "딥 엘프"
 
-#: species.cc:205 species.cc:205 species.cc:157 species.cc:155
+#: species.cc:205 species.cc:205 species.cc:157 species.cc:155 species.cc:158
 msgid "Sludge Elf"
 msgstr "슬럿지 엘프"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
-#: species.cc:212 species.cc:212 species.cc:178 species.cc:180
+#: species.cc:212 species.cc:212 species.cc:178 species.cc:180 species.cc:181
 msgid "Dwarven"
 msgstr "드워프족"
 
 #: species.cc:214 species.cc:221 species.cc:221 species.cc:178 species.cc:180
+#: species.cc:181
 msgid "Dwarf"
 msgstr "드워프"
 
@@ -97,39 +98,39 @@ msgstr "드워프"
 msgid "Mountain Dwarf"
 msgstr "마운틴 드워프"
 
-#: species.cc:220 species.cc:220 species.cc:178 species.cc:180
+#: species.cc:220 species.cc:220 species.cc:178 species.cc:180 species.cc:181
 msgid "Deep Dwarf"
 msgstr "딥 드워프"
 
-#: species.cc:229 species.cc:229 species.cc:166 species.cc:164
+#: species.cc:229 species.cc:229 species.cc:166 species.cc:164 species.cc:167
 msgid "Human"
 msgstr "인간"
 
-#: species.cc:230 species.cc:230 species.cc:167 species.cc:165
+#: species.cc:230 species.cc:230 species.cc:167 species.cc:165 species.cc:168
 msgid "Halfling"
 msgstr "하플링"
 
-#: species.cc:231 species.cc:231 species.cc:168 species.cc:166
+#: species.cc:231 species.cc:231 species.cc:168 species.cc:166 species.cc:169
 msgid "Kobold"
 msgstr "코볼트"
 
-#: species.cc:232 species.cc:232 species.cc:169 species.cc:167
+#: species.cc:232 species.cc:232 species.cc:169 species.cc:167 species.cc:170
 msgid "Mummy"
 msgstr "미라"
 
-#: species.cc:233 species.cc:233 species.cc:170 species.cc:168
+#: species.cc:233 species.cc:233 species.cc:170 species.cc:168 species.cc:171
 msgid "Naga"
 msgstr "나가"
 
-#: species.cc:234 species.cc:234 species.cc:171 species.cc:169
+#: species.cc:234 species.cc:234 species.cc:171 species.cc:169 species.cc:172
 msgid "Centaur"
 msgstr "켄타우로스"
 
-#: species.cc:235 species.cc:235 species.cc:172 species.cc:170
+#: species.cc:235 species.cc:235 species.cc:172 species.cc:170 species.cc:173
 msgid "Spriggan"
 msgstr "스프리건"
 
-#: species.cc:236 species.cc:236 species.cc:173 species.cc:171
+#: species.cc:236 species.cc:236 species.cc:173 species.cc:171 species.cc:174
 msgid "Minotaur"
 msgstr "미노타우르스"
 
@@ -137,95 +138,111 @@ msgstr "미노타우르스"
 msgid "Kenku"
 msgstr "켄쿠"
 
-#: species.cc:240 species.cc:240 species.cc:177 species.cc:175
+#: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
 msgid "Orcish"
 msgstr "오크족"
 
-#: species.cc:240 species.cc:240 species.cc:177 species.cc:175
+#: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
 msgid "Orc"
 msgstr "오크"
 
-#: species.cc:240 species.cc:240 species.cc:177 species.cc:175
+#: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
 msgid "Hill Orc"
 msgstr "힐 오크"
 
 #: species.cc:243 species.cc:243 species.cc:194 species.cc:187 species.cc:189
+#: species.cc:190
 msgid "Ogreish"
 msgstr "오우거"
 
 #: species.cc:243 species.cc:243 species.cc:194 species.cc:187 species.cc:189
+#: species.cc:190
 msgid "Ogre"
 msgstr "오우거"
 
 #: species.cc:244 species.cc:244 species.cc:195 species.cc:188 species.cc:190
+#: species.cc:191
 msgid "Trollish"
 msgstr "트롤"
 
 #: species.cc:244 species.cc:244 species.cc:195 species.cc:188 species.cc:190
+#: species.cc:191
 msgid "Troll"
 msgstr "트롤"
 
 #: species.cc:245 species.cc:245 species.cc:196 species.cc:189 species.cc:191
+#: species.cc:192
 msgid "Divine"
 msgstr "디바인"
 
 #: species.cc:245 species.cc:245 species.cc:196 species.cc:189 species.cc:191
+#: species.cc:192
 msgid "Demigod"
 msgstr "반신족"
 
 #: species.cc:246 species.cc:246 species.cc:197 species.cc:190 species.cc:192
+#: species.cc:193
 msgid "Demonic"
 msgstr "데몬스폰"
 
 #: species.cc:246 species.cc:246 species.cc:197 species.cc:190 species.cc:192
+#: species.cc:193
 msgid "Demonspawn"
 msgstr "데몬스폰"
 
 #: species.cc:247 species.cc:247 species.cc:198 species.cc:191 species.cc:193
+#: species.cc:194
 msgid "Ghoulish"
 msgstr "구울"
 
 #: species.cc:247 species.cc:247 species.cc:198 species.cc:191 species.cc:193
+#: species.cc:194
 msgid "Ghoul"
 msgstr "구울"
 
 #: species.cc:248 species.cc:248 species.cc:199 species.cc:192 species.cc:194
+#: species.cc:195
 msgid "Merfolkian"
 msgstr "머포크"
 
 #: species.cc:248 species.cc:248 species.cc:199 species.cc:192 species.cc:194
+#: species.cc:195
 msgid "Merfolk"
 msgstr "머포크"
 
 #: species.cc:249 species.cc:249 species.cc:200 species.cc:193 species.cc:195
+#: species.cc:196
 msgid "Vampiric"
 msgstr "뱀파이어"
 
 #: species.cc:249 species.cc:249 species.cc:200 species.cc:193 species.cc:195
+#: species.cc:196
 msgid "Vampire"
 msgstr "뱀파이어"
 
-#: species.cc:250 species.cc:250 species.cc:181 species.cc:183
+#: species.cc:250 species.cc:250 species.cc:181 species.cc:183 species.cc:184
 msgid "Feline"
 msgstr "펠리드"
 
-#: species.cc:250 species.cc:250 species.cc:181 species.cc:183
+#: species.cc:250 species.cc:250 species.cc:181 species.cc:183 species.cc:184
 msgid "Felid"
 msgstr "펠리드"
 
-#: species.cc:251 species.cc:251 species.cc:184 species.cc:186
+#: species.cc:251 species.cc:251 species.cc:184 species.cc:186 species.cc:187
 msgid "Octopoid"
 msgstr "옥토퍼드족"
 
-#: species.cc:251 species.cc:251 species.cc:184 species.cc:186
+#: species.cc:251 species.cc:251 species.cc:184 species.cc:186 species.cc:187
 msgid "Octopode"
 msgstr "옥토퍼드"
 
 #: species.cc:252 species.cc:252 species.cc:201 species.cc:194 species.cc:196
+#: species.cc:197
 msgid "Yakish"
 msgstr "야크"
 
 #: species.cc:252 species.cc:252 species.cc:201 species.cc:194 species.cc:196
+#: species.cc:197
 msgid "Yak"
 msgstr "야크"
 
@@ -353,7 +370,7 @@ msgstr "죽음의 기사"
 msgid "Abyssal Knight"
 msgstr "심연의 기사"
 
-#: jobs.cc:70 jobs.cc:70 jobs.cc:71 jobs.cc:58 jobs.cc:64
+#: jobs.cc:70 jobs.cc:70 jobs.cc:71 jobs.cc:58 jobs.cc:64 jobs.cc:65
 msgid "Unemployed"
 msgstr "무직자"
 
@@ -1001,7 +1018,7 @@ msgstr "황제 전갈"
 
 #: mon-data.h:1920 mon-data.h:1921 mon-data.h:1956 mon-data.h:1907
 #: transform.cc:738 transform.cc:786 transform.cc:880 transform.cc:796
-#: transform.cc:897
+#: transform.cc:897 transform.cc:798 transform.cc:899
 msgid "spider"
 msgstr "거미"
 
@@ -1295,7 +1312,7 @@ msgstr "와이번"
 
 #: mon-data.h:2626 mon-data.h:2627 mon-data.h:2701 mon-data.h:2708
 #: transform.cc:765 mon-data.h:2760 transform.cc:813 transform.cc:823
-#: mon-data.h:2796 mon-data.h:2790
+#: mon-data.h:2796 mon-data.h:2790 transform.cc:825
 msgid "dragon"
 msgstr "용"
 
@@ -1484,7 +1501,7 @@ msgstr "셰두"
 
 #: mon-data.h:3111 mon-data.h:3100 mon-data.h:3174 mon-data.h:3193
 #: transform.cc:760 mon-data.h:3246 transform.cc:808 transform.cc:818
-#: mon-data.h:3282 mon-data.h:3278 mon-data.h:3268
+#: mon-data.h:3282 mon-data.h:3278 mon-data.h:3268 transform.cc:820
 msgid "ice beast"
 msgstr "얼음 짐승"
 
@@ -1500,7 +1517,7 @@ msgstr "진흙괴물"
 
 #: mon-data.h:3148 mon-data.h:3137 mon-data.h:3211 mon-data.h:3230
 #: mon-data.h:3283 transform.cc:875 transform.cc:892 mon-data.h:3319
-#: mon-data.h:3315 mon-data.h:3305
+#: mon-data.h:3315 mon-data.h:3305 transform.cc:894
 msgid "jelly"
 msgstr "젤리"
 
@@ -1558,7 +1575,7 @@ msgstr "코볼트 악마술사"
 
 #: mon-data.h:3296 mon-data.h:3285 mon-data.h:3359 mon-data.h:3378
 #: transform.cc:771 mon-data.h:3431 transform.cc:819 transform.cc:829
-#: mon-data.h:3467 mon-data.h:3463 mon-data.h:3453
+#: mon-data.h:3467 mon-data.h:3463 mon-data.h:3453 transform.cc:831
 msgid "lich"
 msgstr "리치"
 
@@ -1883,7 +1900,8 @@ msgstr "크라켄"
 #: mon-data.h:4214 monster.cc:2689 monster.cc:2832 monster.cc:2888
 #: monster.cc:2690 monster.cc:2833 mon-data.h:4370 monster.cc:2693
 #: monster.cc:2836 player-act.cc:427 player-act.cc:507 mon-data.h:4406
-#: mon-data.h:4402 monster.cc:2892 mon-data.h:4392
+#: mon-data.h:4402 monster.cc:2892 mon-data.h:4392 player-act.cc:428
+#: player-act.cc:508
 msgid "tentacle"
 msgstr "촉수"
 
@@ -1996,6 +2014,7 @@ msgstr "하플링"
 #. Gold mimics are the only mimics that actually use their name. - bwr
 #. Gold mimics are the only mimics that actually use their name. - bwr
 #: mon-data.h:4396 mon-data.h:4385 mon-util.cc:971 mon-util.cc:966
+#: mon-util.cc:973
 msgid "pile of gold coins"
 msgstr "금화 미믹"
 
@@ -2293,6 +2312,7 @@ msgstr "주황빛 수정상"
 #: mon-data.h:5171 mon-data.h:5183 mon-data.h:5172 mon-data.h:5129
 #: mon-data.h:5217 transform.cc:750 mon-data.h:5411 transform.cc:798
 #: transform.cc:808 mon-data.h:5447 mon-data.h:5443 mon-data.h:5433
+#: transform.cc:810
 msgid "statue"
 msgstr "석상"
 
@@ -2637,7 +2657,7 @@ msgstr "고대의 히드라"
 #: mon-info.cc:613 itemname.cc:1564 itemprop.cc:426 mon-info.cc:784
 #: itemname.cc:1567 itemname.cc:1596 itemprop.cc:429 mon-info.cc:794
 #: itemname.cc:1608 itemname.cc:1610 mon-info.cc:799 itemname.cc:1615
-#: itemname.cc:1649 itemprop.cc:430
+#: itemname.cc:1649 itemprop.cc:430 itemprop.cc:428
 msgid "royal jelly"
 msgstr "로얄 젤리"
 
@@ -2653,6 +2673,7 @@ msgstr "INVALID MONSTER"
 
 #: mon-data.h:277 mon-data.h:278 mon-data.h:289 mon-data.h:254
 #: transform.cc:777 mon-data.h:244 transform.cc:825 transform.cc:835
+#: transform.cc:837
 msgid "bat"
 msgstr "박쥐"
 
@@ -3277,7 +3298,7 @@ msgstr "화염 마술"
 #: status.cc:767 status.cc:768 itemname.cc:1004 spl-util.cc:904 status.cc:819
 #: itemname.cc:936 spl-util.cc:859 status.cc:883 itemname.cc:975
 #: spl-util.cc:851 status.cc:862 itemname.cc:977 status.cc:867
-#: itemname.cc:1011 itemname.cc:1018 status.cc:868
+#: itemname.cc:1011 itemname.cc:1018 status.cc:868 status.cc:852
 msgid "Ice"
 msgstr "얼음 마술"
 
@@ -3290,7 +3311,7 @@ msgstr "변이술"
 #: skills2.cc:100 itemname.cc:1014 spl-util.cc:908 itemname.cc:946
 #: skills2.cc:97 spl-util.cc:863 itemname.cc:985 spl-util.cc:855
 #: itemname.cc:987 itemname.cc:1021 itemname.cc:1028 skills2.cc:102
-#: spl-book.cc:2525 spl-book.cc:2569
+#: spl-book.cc:2525 spl-book.cc:2569 spl-book.cc:2575
 msgid "Necromancy"
 msgstr "강령술"
 
@@ -3300,6 +3321,7 @@ msgstr "신성"
 
 #: spl-util.cc:913 decks.cc:334 decks.cc:334 spl-util.cc:912 spl-util.cc:865
 #: godprayer.cc:525 spl-util.cc:857 godprayer.cc:502 godprayer.cc:497
+#: godprayer.cc:498
 msgid "Summoning"
 msgstr "소환술"
 
@@ -3443,7 +3465,7 @@ msgstr "무덤"
 
 #: decks.cc:322 decks.cc:322 decks.cc:319 status.cc:941 status.cc:945
 #: status.cc:940 status.cc:944 status.cc:949 status.cc:950 status.cc:954
-#: status.cc:951 status.cc:955
+#: status.cc:951 status.cc:955 status.cc:935 status.cc:939
 msgid "Water"
 msgstr "물"
 
@@ -3936,6 +3958,7 @@ msgstr "송장 일으키기"
 #: abl-show.cc:333 abl-show.cc:333 spl-data.h:2867 abl-show.cc:332
 #: spl-data.h:2860 abl-show.cc:337 spl-data.h:2734 abl-show.cc:282
 #: abl-show.cc:284 spl-data.h:2740 spl-data.h:2742 abl-show.cc:285
+#: spl-data.h:2727
 msgid "Drain Life"
 msgstr "생명력 흡수"
 
@@ -4359,7 +4382,7 @@ msgstr "수류탄 생성"
 
 #: abl-show.cc:465 abl-show.cc:465 status.cc:86 abl-show.cc:462
 #: abl-show.cc:474 abl-show.cc:419 abl-show.cc:421 status.cc:731 status.cc:736
-#: abl-show.cc:423 abl-show.cc:424 status.cc:737
+#: abl-show.cc:423 abl-show.cc:424 status.cc:737 status.cc:734
 msgid "Sage"
 msgstr "현자"
 
@@ -4397,7 +4420,7 @@ msgstr "보존 식량"
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
 #: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
 #: mon-util.cc:3720 mon-util.cc:3692 actor.cc:722 mon-util.cc:3679
-#: mon-util.cc:3687 mon-util.cc:3684
+#: mon-util.cc:3687 mon-util.cc:3684 actor.cc:729
 msgid "You"
 msgstr "당신"
 
@@ -4409,7 +4432,8 @@ msgstr "당신"
 #: mon-util.cc:3527 misc.cc:2778 player-act.cc:369 player-act.cc:381
 #: terrain.cc:1011 terrain.cc:1019 misc.cc:2781 mon-util.cc:3719 misc.cc:2776
 #: mon-util.cc:3691 misc.cc:2789 mon-util.cc:3678 misc.cc:2797
-#: mon-util.cc:3686 misc.cc:2739 mon-util.cc:3683
+#: mon-util.cc:3686 misc.cc:2739 mon-util.cc:3683 misc.cc:2744
+#: player-act.cc:370 player-act.cc:382 player-act.cc:385
 msgid "you"
 msgstr "당신"
 
@@ -4422,11 +4446,12 @@ msgstr "당신의"
 #: player-act.cc:377 player-act.cc:360 player-act.cc:360 player-act.cc:368
 #: player-act.cc:385 player-act.cc:375 mon-util.cc:3526 player-act.cc:372
 #: player-act.cc:382 mon-util.cc:3718 mon-util.cc:3690 mon-util.cc:3677
-#: mon-util.cc:3685 mon-util.cc:3682
+#: mon-util.cc:3685 mon-util.cc:3682 player-act.cc:373 player-act.cc:383
 msgid "your"
 msgstr "당신의"
 
 #: player-act.cc:378 player-act.cc:378 player-act.cc:386 player-act.cc:383
+#: player-act.cc:384
 msgid "yourself"
 msgstr "당신 자신"
 
@@ -4444,7 +4469,7 @@ msgstr "그것"
 #: mon-util.cc:3121 monster.cc:2257 travel.cc:864 mon-util.cc:3113
 #: mon-util.cc:3125 monster.cc:2523 travel.cc:818 monster.cc:2543
 #: travel.cc:817 mon-util.cc:3311 mon-util.cc:3323 monster.cc:2546
-#: travel.cc:822 monster.cc:2549 travel.cc:856
+#: travel.cc:822 monster.cc:2549 travel.cc:856 travel.cc:872
 msgid "it"
 msgstr "그것"
 
@@ -4472,7 +4497,7 @@ msgstr "자기 자신"
 #: mon-act.cc:3796 fight.cc:416 mon-act.cc:3848 mon-place.cc:1207
 #: mon-act.cc:3563 mon-place.cc:1143 mon-act.cc:3566 mon-act.cc:3726
 #: mon-place.cc:1193 mon-place.cc:1041 mon-place.cc:1043 mon-place.cc:1052
-#: mon-act.cc:3731 mon-place.cc:1066
+#: mon-act.cc:3731 mon-place.cc:1066 mon-act.cc:3747
 msgid "Something"
 msgstr "무언가"
 
@@ -4694,7 +4719,7 @@ msgstr "어둠"
 #: player-stats.cc:542 itemname.cc:533 player-stats.cc:540 itemname.cc:482
 #: player-stats.cc:210 player-stats.cc:211 itemname.cc:495 player-stats.cc:244
 #: transform.cc:907 player-stats.cc:489 transform.cc:924 itemname.cc:497
-#: itemname.cc:529
+#: itemname.cc:529 transform.cc:926
 msgid "strength"
 msgstr "힘"
 
@@ -4703,7 +4728,7 @@ msgstr "힘"
 #: player-stats.cc:546 itemname.cc:534 player-stats.cc:544 itemname.cc:483
 #: player-stats.cc:212 player-stats.cc:213 itemname.cc:496 player-stats.cc:246
 #: transform.cc:907 player-stats.cc:493 transform.cc:924 itemname.cc:498
-#: itemname.cc:530
+#: itemname.cc:530 transform.cc:926
 msgid "dexterity"
 msgstr "민첩"
 
@@ -4821,7 +4846,7 @@ msgstr "치료"
 #: itemname.cc:555 itemname.cc:1053 cloud.cc:1177 cloud.cc:1179
 #: itemname.cc:1055 itemname.cc:557 itemname.cc:1057 describe.cc:413
 #: itemname.cc:589 itemname.cc:1091 itemname.cc:593 itemname.cc:1098
-#: cloud.cc:1182
+#: cloud.cc:1182 describe.cc:412
 msgid "fire"
 msgstr "화염"
 
@@ -4831,7 +4856,7 @@ msgstr "화염"
 #: itemname.cc:1082 describe.cc:447 itemname.cc:547 itemname.cc:1013
 #: describe.cc:420 itemname.cc:556 itemname.cc:1054 itemname.cc:1056
 #: itemname.cc:558 itemname.cc:1058 describe.cc:414 itemname.cc:590
-#: itemname.cc:1092 itemname.cc:594 itemname.cc:1099
+#: itemname.cc:1092 itemname.cc:594 itemname.cc:1099 describe.cc:413
 msgid "cold"
 msgstr "냉기"
 
@@ -4853,6 +4878,7 @@ msgstr "굴착"
 #: itemname.cc:602 itemname.cc:551 mon-cast.cc:513 spl-clouds.cc:42
 #: spl-miscast.cc:2172 zap-data.h:219 itemname.cc:560 mon-cast.cc:512
 #: spl-miscast.cc:2165 itemname.cc:562 itemname.cc:594 itemname.cc:598
+#: spl-miscast.cc:2170
 msgid "fireball"
 msgstr "화염구"
 
@@ -5359,7 +5385,7 @@ msgstr "방어구 강화"
 #: effects.cc:265 itemname.cc:668 itemname.cc:679 itemname.cc:686
 #: effects.cc:266 itemname.cc:712 effects.cc:247 itemname.cc:657
 #: itemname.cc:665 itemname.cc:667 itemname.cc:699 itemname.cc:706
-#: effects.cc:248
+#: effects.cc:248 effects.cc:249
 msgid "torment"
 msgstr "고문"
 
@@ -5390,7 +5416,7 @@ msgstr "장신구 저주"
 #: effects.cc:365 itemname.cc:673 itemname.cc:684 itemname.cc:691
 #: effects.cc:366 itemname.cc:717 effects.cc:353 itemname.cc:662
 #: itemname.cc:670 itemname.cc:672 itemname.cc:704 itemname.cc:711
-#: effects.cc:354
+#: effects.cc:354 effects.cc:355
 msgid "immolation"
 msgstr "희생"
 
@@ -5445,7 +5471,7 @@ msgstr "*무기강화*"
 #: effects.cc:101 itemname.cc:682 itemname.cc:693 itemname.cc:700
 #: effects.cc:102 itemname.cc:726 effects.cc:100 itemname.cc:671
 #: effects.cc:104 itemname.cc:679 itemname.cc:681 itemname.cc:713
-#: itemname.cc:720 effects.cc:105
+#: itemname.cc:720 effects.cc:105 effects.cc:106
 msgid "holy word"
 msgstr "신성한 언어"
 
@@ -5837,6 +5863,7 @@ msgstr "세모난 "
 #: itemname.cc:808 itemname.cc:1559 describe.cc:602 itemname.cc:1571
 #: itemname.cc:1573 itemname.cc:810 itemname.cc:1578 describe.cc:596
 #: itemname.cc:842 itemname.cc:1612 itemname.cc:849 itemname.cc:1621
+#: describe.cc:595
 msgid "lumpy "
 msgstr "우둘투둘한 "
 
@@ -5952,7 +5979,7 @@ msgstr "심연"
 #. special pandemonium runes:
 #: itemname.cc:844 itemname.cc:855 itemname.cc:862 itemname.cc:862
 #: itemname.cc:888 itemname.cc:833 itemname.cc:873 status.cc:300
-#: itemname.cc:875 itemname.cc:907 itemname.cc:914
+#: itemname.cc:875 itemname.cc:907 itemname.cc:914 status.cc:301
 msgid "glowing"
 msgstr "빛"
 
@@ -6138,7 +6165,7 @@ msgstr "알 수 없는 기타 아이템(버그)"
 #: itemname.cc:1692 itemname.cc:857 itemname.cc:1695 itemname.cc:1724
 #: itemname.cc:897 itemname.cc:1736 itemname.cc:1738 itemname.cc:899
 #: itemname.cc:1743 itemname.cc:931 itemname.cc:1777 itemname.cc:938
-#: itemname.cc:1786
+#: itemname.cc:1786 itemname.cc:1787
 msgid "deck of cards"
 msgstr "카드 덱"
 
@@ -6476,7 +6503,7 @@ msgstr "칼날"
 #: itemname.cc:1530 itemname.cc:1531 itemname.cc:1538 itemname.cc:1539
 #: itemname.cc:1546 itemprop.cc:123 itemname.cc:1439 itemprop.cc:120
 #: itemname.cc:1442 itemname.cc:1483 itemname.cc:1488 itemname.cc:1490
-#: itemname.cc:1495 itemname.cc:1529 itemname.cc:1538
+#: itemname.cc:1495 itemname.cc:1529 itemname.cc:1538 itemprop.cc:119
 msgid "gloves"
 msgstr "장갑"
 
@@ -6569,7 +6596,7 @@ msgstr "침전물이 있는 "
 #: itemname.cc:1626 itemname.cc:1633 itemname.cc:1634 itemname.cc:1641
 #: itemname.cc:1625 itemname.cc:1530 itemname.cc:1533 itemname.cc:1560
 #: describe.cc:596 itemname.cc:1572 itemname.cc:1574 itemname.cc:1579
-#: describe.cc:590 itemname.cc:1613 itemname.cc:1622
+#: describe.cc:590 itemname.cc:1613 itemname.cc:1622 describe.cc:589
 msgid "metallic "
 msgstr "금속빛이 나는 "
 
@@ -6601,7 +6628,7 @@ msgstr "기름진 "
 #: itemname.cc:1627 itemname.cc:1634 itemname.cc:1635 itemname.cc:1642
 #: itemname.cc:1626 itemname.cc:1531 itemname.cc:1534 itemname.cc:1561
 #: describe.cc:594 itemname.cc:1573 itemname.cc:1575 itemname.cc:1580
-#: describe.cc:588 itemname.cc:1614 itemname.cc:1623
+#: describe.cc:588 itemname.cc:1614 itemname.cc:1623 describe.cc:587
 msgid "slimy "
 msgstr "덩어리진 "
 
@@ -6665,7 +6692,7 @@ msgstr "보라색"
 #: itemname.cc:1537 itemname.cc:1568 itemprop.cc:413 itemname.cc:1540
 #: itemname.cc:1569 itemname.cc:1600 itemprop.cc:416 itemname.cc:1581
 #: itemname.cc:1612 itemname.cc:1583 itemname.cc:1614 itemname.cc:1588
-#: itemname.cc:1622 itemprop.cc:417
+#: itemname.cc:1622 itemprop.cc:417 itemprop.cc:415
 msgid "orange"
 msgstr "주홍색"
 
@@ -6681,6 +6708,7 @@ msgstr "칠흑색"
 #: itemname.cc:1632 itemname.cc:1537 item_use.cc:3102 itemname.cc:1540
 #: itemname.cc:1570 itemname.cc:1582 itemname.cc:1584 item_use.cc:3124
 #: itemname.cc:1589 item_use.cc:3123 itemname.cc:1623 item_use.cc:3121
+#: item_use.cc:3120
 msgid "red"
 msgstr "빨간색"
 
@@ -6696,6 +6724,7 @@ msgstr "노란색"
 #: itemname.cc:1632 itemname.cc:1537 item_use.cc:3098 itemname.cc:1540
 #: itemname.cc:1570 itemname.cc:1582 itemname.cc:1584 item_use.cc:3120
 #: itemname.cc:1589 item_use.cc:3119 itemname.cc:1623 item_use.cc:3117
+#: item_use.cc:3116
 msgid "green"
 msgstr "녹색"
 
@@ -6721,6 +6750,7 @@ msgid "white"
 msgstr "흰색"
 
 #: item_use.cc:3106 item_use.cc:3128 item_use.cc:3127 item_use.cc:3125
+#: item_use.cc:3124
 msgid "bright yellow"
 msgstr "밝은 노란색"
 
@@ -6729,7 +6759,7 @@ msgstr "밝은 노란색"
 #: itemname.cc:1669 itemname.cc:1653 itemprop.cc:424 itemname.cc:1558
 #: itemprop.cc:405 itemname.cc:1561 itemname.cc:1590 itemprop.cc:408
 #: itemname.cc:1602 itemname.cc:1604 itemname.cc:1609 itemname.cc:1643
-#: itemprop.cc:409
+#: itemprop.cc:409 itemprop.cc:407
 msgid "meat ration"
 msgstr "휴대용 고기"
 
@@ -6738,7 +6768,7 @@ msgstr "휴대용 고기"
 #: itemname.cc:1670 itemname.cc:1654 itemprop.cc:429 itemname.cc:1559
 #: itemprop.cc:410 itemname.cc:1562 itemname.cc:1591 itemprop.cc:413
 #: itemname.cc:1603 itemname.cc:1605 itemname.cc:1610 itemname.cc:1644
-#: itemprop.cc:414
+#: itemprop.cc:414 itemprop.cc:412
 msgid "bread ration"
 msgstr "휴대용 빵"
 
@@ -6747,7 +6777,7 @@ msgstr "휴대용 빵"
 #: itemname.cc:1671 itemname.cc:1655 itemprop.cc:435 itemname.cc:1560
 #: itemprop.cc:416 itemname.cc:1563 itemname.cc:1592 itemprop.cc:419
 #: itemname.cc:1604 itemname.cc:1606 itemname.cc:1611 itemname.cc:1645
-#: itemprop.cc:420
+#: itemprop.cc:420 itemprop.cc:418
 msgid "pear"
 msgstr "배"
 
@@ -6756,7 +6786,7 @@ msgstr "배"
 #: itemname.cc:1672 itemname.cc:1656 itemprop.cc:436 itemname.cc:1561
 #: itemprop.cc:417 itemname.cc:1564 itemname.cc:1593 itemprop.cc:420
 #: itemname.cc:1605 itemname.cc:1607 itemname.cc:1612 itemname.cc:1646
-#: itemprop.cc:421
+#: itemprop.cc:421 itemprop.cc:419
 msgid "apple"
 msgstr "사과"
 
@@ -6765,7 +6795,7 @@ msgstr "사과"
 #: itemname.cc:1673 itemname.cc:1657 itemprop.cc:438 itemname.cc:1562
 #: itemprop.cc:419 itemname.cc:1565 itemname.cc:1594 itemprop.cc:422
 #: itemname.cc:1606 itemname.cc:1608 itemname.cc:1613 itemname.cc:1647
-#: itemprop.cc:423
+#: itemprop.cc:423 itemprop.cc:421
 msgid "choko"
 msgstr "초코 열매"
 
@@ -6774,7 +6804,7 @@ msgstr "초코 열매"
 #: itemname.cc:1674 itemname.cc:1658 itemprop.cc:446 itemname.cc:1563
 #: itemprop.cc:427 itemname.cc:1566 itemname.cc:1595 itemprop.cc:430
 #: itemname.cc:1607 itemname.cc:1609 itemname.cc:1614 itemname.cc:1648
-#: itemprop.cc:431
+#: itemprop.cc:431 itemprop.cc:429
 msgid "honeycomb"
 msgstr "벌집"
 
@@ -6783,7 +6813,7 @@ msgstr "벌집"
 #: itemname.cc:1676 itemname.cc:1660 itemprop.cc:431 itemname.cc:1565
 #: itemprop.cc:412 itemname.cc:1568 itemname.cc:1597 itemprop.cc:415
 #: itemname.cc:1609 itemname.cc:1611 itemname.cc:1616 itemname.cc:1650
-#: itemprop.cc:416
+#: itemprop.cc:416 itemprop.cc:414
 msgid "snozzcumber"
 msgstr "덩쿨오이"
 
@@ -6799,7 +6829,7 @@ msgstr "피자 조각"
 #: itemname.cc:1678 itemname.cc:1662 itemprop.cc:437 itemname.cc:1567
 #: itemprop.cc:418 itemname.cc:1570 itemname.cc:1599 itemprop.cc:421
 #: itemname.cc:1611 itemname.cc:1613 itemname.cc:1618 itemname.cc:1652
-#: itemprop.cc:422
+#: itemprop.cc:422 itemprop.cc:420
 msgid "apricot"
 msgstr "살구"
 
@@ -6810,7 +6840,7 @@ msgstr "살구"
 #: itemname.cc:1680 itemname.cc:1664 itemprop.cc:433 itemname.cc:1569
 #: itemprop.cc:414 itemname.cc:1572 itemname.cc:1601 itemprop.cc:417
 #: itemname.cc:1613 itemname.cc:1615 itemname.cc:1620 itemname.cc:1654
-#: itemprop.cc:418
+#: itemprop.cc:418 itemprop.cc:416
 msgid "banana"
 msgstr "바나나"
 
@@ -6819,7 +6849,7 @@ msgstr "바나나"
 #: itemname.cc:1681 itemname.cc:1665 itemprop.cc:441 itemname.cc:1570
 #: itemprop.cc:422 itemname.cc:1573 itemname.cc:1602 itemprop.cc:425
 #: itemname.cc:1614 itemname.cc:1616 itemname.cc:1621 itemname.cc:1655
-#: itemprop.cc:426
+#: itemprop.cc:426 itemprop.cc:424
 msgid "strawberry"
 msgstr "딸기"
 
@@ -6828,7 +6858,7 @@ msgstr "딸기"
 #: itemname.cc:1682 itemname.cc:1666 itemprop.cc:439 itemname.cc:1571
 #: itemprop.cc:420 itemname.cc:1574 itemname.cc:1603 itemprop.cc:423
 #: itemname.cc:1615 itemname.cc:1617 itemname.cc:1622 itemname.cc:1656
-#: itemprop.cc:424
+#: itemprop.cc:424 itemprop.cc:422
 msgid "rambutan"
 msgstr "람부탄"
 
@@ -6837,7 +6867,7 @@ msgstr "람부탄"
 #: itemname.cc:1683 itemname.cc:1667 itemprop.cc:434 itemname.cc:1572
 #: itemprop.cc:415 itemname.cc:1575 itemname.cc:1604 itemprop.cc:418
 #: itemname.cc:1616 itemname.cc:1618 itemname.cc:1623 itemname.cc:1657
-#: itemprop.cc:419
+#: itemprop.cc:419 itemprop.cc:417
 msgid "lemon"
 msgstr "레몬"
 
@@ -6846,7 +6876,7 @@ msgstr "레몬"
 #: itemname.cc:1684 itemname.cc:1668 itemprop.cc:442 itemname.cc:1573
 #: itemprop.cc:423 itemname.cc:1576 itemname.cc:1605 itemprop.cc:426
 #: itemname.cc:1617 itemname.cc:1619 itemname.cc:1624 itemname.cc:1658
-#: itemprop.cc:427
+#: itemprop.cc:427 itemprop.cc:425
 msgid "grape"
 msgstr "포도"
 
@@ -6855,7 +6885,7 @@ msgstr "포도"
 #: itemname.cc:1685 itemname.cc:1669 itemprop.cc:443 itemname.cc:1574
 #: itemprop.cc:424 itemname.cc:1577 itemname.cc:1606 itemprop.cc:427
 #: itemname.cc:1618 itemname.cc:1620 itemname.cc:1625 itemname.cc:1659
-#: itemprop.cc:428
+#: itemprop.cc:428 itemprop.cc:426
 msgid "sultana"
 msgstr "건포도"
 
@@ -6864,7 +6894,7 @@ msgstr "건포도"
 #: itemname.cc:1686 itemname.cc:1670 itemprop.cc:440 itemname.cc:1575
 #: itemprop.cc:421 itemname.cc:1578 itemname.cc:1607 itemprop.cc:424
 #: itemname.cc:1619 itemname.cc:1621 itemname.cc:1626 itemname.cc:1660
-#: itemprop.cc:425
+#: itemprop.cc:425 itemprop.cc:423
 msgid "lychee"
 msgstr "라이치"
 
@@ -6873,7 +6903,7 @@ msgstr "라이치"
 #: itemname.cc:1687 itemname.cc:1671 itemprop.cc:427 itemname.cc:1576
 #: itemprop.cc:408 itemname.cc:1579 itemname.cc:1608 itemprop.cc:411
 #: itemname.cc:1620 itemname.cc:1622 itemname.cc:1627 itemname.cc:1661
-#: itemprop.cc:412
+#: itemprop.cc:412 itemprop.cc:410
 msgid "beef jerky"
 msgstr "육포"
 
@@ -6882,7 +6912,7 @@ msgstr "육포"
 #: itemname.cc:1688 itemname.cc:1672 itemprop.cc:448 itemname.cc:1577
 #: itemprop.cc:429 itemname.cc:1580 itemname.cc:1609 itemprop.cc:432
 #: itemname.cc:1621 itemname.cc:1623 itemname.cc:1628 itemname.cc:1662
-#: itemprop.cc:433
+#: itemprop.cc:433 itemprop.cc:431
 msgid "cheese"
 msgstr "치즈"
 
@@ -6891,7 +6921,7 @@ msgstr "치즈"
 #: itemname.cc:1689 itemname.cc:1673 itemprop.cc:425 itemname.cc:1578
 #: itemprop.cc:406 itemname.cc:1581 itemname.cc:1610 itemprop.cc:409
 #: itemname.cc:1622 itemname.cc:1624 itemname.cc:1629 itemname.cc:1663
-#: itemprop.cc:410
+#: itemprop.cc:410 itemprop.cc:408
 msgid "sausage"
 msgstr "소세지"
 
@@ -6925,7 +6955,7 @@ msgstr "마법 두루마리"
 #: monster.cc:5488 itemname.cc:1666 itemprop.cc:2798 monster.cc:5482
 #: itemname.cc:1671 player-equip.cc:1445 itemname.cc:1705 itemprop.cc:2807
 #: monster.cc:5494 itemname.cc:1714 itemprop.cc:2813 player-equip.cc:1437
-#: player-equip.cc:1435
+#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436
 msgid "amulet"
 msgstr "부적"
 
@@ -6937,7 +6967,7 @@ msgstr "부적"
 #: monster.cc:5488 itemname.cc:1668 itemprop.cc:2798 monster.cc:5482
 #: itemname.cc:1673 player-equip.cc:1445 itemname.cc:1707 itemprop.cc:2807
 #: monster.cc:5494 itemname.cc:1716 itemprop.cc:2813 player-equip.cc:1437
-#: player-equip.cc:1435
+#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436
 msgid "ring"
 msgstr "반지"
 
@@ -6949,7 +6979,7 @@ msgstr "반지"
 #: itemname.cc:1741 itemname.cc:1740 itemname.cc:1744 itemname.cc:1769
 #: itemname.cc:1773 itemname.cc:1781 itemname.cc:1785 itemname.cc:1783
 #: itemname.cc:1787 itemname.cc:1788 itemname.cc:1792 itemname.cc:1822
-#: itemname.cc:1826 itemname.cc:1831 itemname.cc:1835
+#: itemname.cc:1826 itemname.cc:1831 itemname.cc:1835 itemname.cc:1839
 msgid "book"
 msgstr "마법서"
 
@@ -6959,7 +6989,7 @@ msgstr "마법서"
 #: itemname.cc:1850 itemname.cc:1865 itemname.cc:1872 itemname.cc:1841
 #: itemname.cc:1851 itemname.cc:1741 itemname.cc:1744 itemname.cc:1773
 #: itemname.cc:1785 itemname.cc:1787 itemname.cc:1792 itemname.cc:1826
-#: itemname.cc:1835
+#: itemname.cc:1835 itemname.cc:1839
 msgid "manual"
 msgstr "설명서"
 
@@ -7031,7 +7061,7 @@ msgstr "냉기 저항"
 #: describe.cc:447 describe.cc:448 godpassive.cc:110 describe.cc:455
 #: describe.cc:450 describe.cc:3120 describe.cc:3117 describe.cc:3103
 #: describe.cc:423 describe.cc:3110 describe.cc:417 describe.cc:3104
-#: describe.cc:3106
+#: describe.cc:3106 describe.cc:416
 msgid "negative energy"
 msgstr "음에너지"
 
@@ -7135,7 +7165,7 @@ msgstr "자연적 함정"
 
 #: directn.cc:3035 directn.cc:3035 directn.cc:3038 directn.cc:3049
 #: directn.cc:3015 travel.cc:4342 directn.cc:3032 travel.cc:4401
-#: travel.cc:4418 directn.cc:3033
+#: travel.cc:4418 directn.cc:3033 travel.cc:4447
 msgid "shop"
 msgstr "상점"
 
@@ -7483,7 +7513,7 @@ msgstr "알람 함정"
 
 #: directn.cc:2935 directn.cc:2935 directn.cc:2938 directn.cc:2945
 #: directn.cc:2913 describe.cc:556 directn.cc:2929 describe.cc:524
-#: describe.cc:518 directn.cc:2930
+#: describe.cc:518 directn.cc:2930 describe.cc:517
 msgid "shaft"
 msgstr "구덩이"
 
@@ -7504,7 +7534,7 @@ msgstr "골루브리아의 통로"
 
 #: directn.cc:2943 directn.cc:2943 directn.cc:2946 directn.cc:2953
 #: directn.cc:2921 describe.cc:556 directn.cc:2937 describe.cc:524
-#: describe.cc:518 directn.cc:2938
+#: describe.cc:518 directn.cc:2938 describe.cc:517
 msgid "pressure plate"
 msgstr "압착 발판"
 
@@ -7589,7 +7619,7 @@ msgstr "철창"
 #. perhaps M_("mangrove") or such?
 #: directn.cc:2986 directn.cc:2986 directn.cc:2989 directn.cc:2998
 #: directn.cc:2965 directn.cc:2982 transform.cc:886 transform.cc:903
-#: directn.cc:2983
+#: directn.cc:2983 transform.cc:905
 msgid "tree"
 msgstr "나무"
 
@@ -7708,35 +7738,35 @@ msgstr "판금 갑옷"
 msgid "crystal plate mail"
 msgstr "수정 판금 갑옷"
 
-#: itemprop.cc:81 itemprop.cc:81 itemprop.cc:84 itemprop.cc:82
+#: itemprop.cc:81 itemprop.cc:81 itemprop.cc:84 itemprop.cc:82 itemprop.cc:80
 msgid "troll hide"
 msgstr "트롤 가죽"
 
-#: itemprop.cc:83 itemprop.cc:83 itemprop.cc:86 itemprop.cc:84
+#: itemprop.cc:83 itemprop.cc:83 itemprop.cc:86 itemprop.cc:84 itemprop.cc:82
 msgid "troll leather armour"
 msgstr "트롤 가죽 갑옷"
 
-#: itemprop.cc:85 itemprop.cc:85 itemprop.cc:88 itemprop.cc:86
+#: itemprop.cc:85 itemprop.cc:85 itemprop.cc:88 itemprop.cc:86 itemprop.cc:84
 msgid "steam dragon hide"
 msgstr "증기 용의 가죽"
 
-#: itemprop.cc:87 itemprop.cc:87 itemprop.cc:90 itemprop.cc:88
+#: itemprop.cc:87 itemprop.cc:87 itemprop.cc:90 itemprop.cc:88 itemprop.cc:86
 msgid "steam dragon armour"
 msgstr "증기 용 갑옷"
 
-#: itemprop.cc:89 itemprop.cc:89 itemprop.cc:92 itemprop.cc:90
+#: itemprop.cc:89 itemprop.cc:89 itemprop.cc:92 itemprop.cc:90 itemprop.cc:88
 msgid "mottled dragon hide"
 msgstr "얼룩무늬 용의 가죽"
 
-#: itemprop.cc:91 itemprop.cc:91 itemprop.cc:94 itemprop.cc:92
+#: itemprop.cc:91 itemprop.cc:91 itemprop.cc:94 itemprop.cc:92 itemprop.cc:90
 msgid "mottled dragon armour"
 msgstr "얼룩무늬 용 갑옷"
 
-#: itemprop.cc:94 itemprop.cc:94 itemprop.cc:96 itemprop.cc:93
+#: itemprop.cc:94 itemprop.cc:94 itemprop.cc:96 itemprop.cc:93 itemprop.cc:92
 msgid "swamp dragon hide"
 msgstr "늪지 용의 가죽"
 
-#: itemprop.cc:96 itemprop.cc:96 itemprop.cc:98 itemprop.cc:95
+#: itemprop.cc:96 itemprop.cc:96 itemprop.cc:98 itemprop.cc:95 itemprop.cc:94
 msgid "swamp dragon armour"
 msgstr "늪지 용 갑옷"
 
@@ -7749,50 +7779,62 @@ msgid "dragon armour"
 msgstr "용 갑옷"
 
 #: itemprop.cc:102 itemprop.cc:102 itemprop.cc:104 itemprop.cc:101
+#: itemprop.cc:100
 msgid "ice dragon hide"
 msgstr "얼음 용의 가죽"
 
 #: itemprop.cc:104 itemprop.cc:104 itemprop.cc:106 itemprop.cc:103
+#: itemprop.cc:102
 msgid "ice dragon armour"
 msgstr "얼음 용 갑옷"
 
 #: itemprop.cc:106 itemprop.cc:106 itemprop.cc:108 itemprop.cc:105
+#: itemprop.cc:104
 msgid "pearl dragon hide"
 msgstr "진주 용의 가죽"
 
 #: itemprop.cc:108 itemprop.cc:108 itemprop.cc:110 itemprop.cc:107
+#: itemprop.cc:106
 msgid "pearl dragon armour"
 msgstr "진주 용 갑옷"
 
 #: itemprop.cc:110 itemprop.cc:110 itemprop.cc:112 itemprop.cc:109
+#: itemprop.cc:108
 msgid "storm dragon hide"
 msgstr "폭풍 용의 가죽"
 
 #: itemprop.cc:112 itemprop.cc:112 itemprop.cc:114 itemprop.cc:111
+#: itemprop.cc:110
 msgid "storm dragon armour"
 msgstr "폭풍 용 갑옷"
 
 #: itemprop.cc:114 itemprop.cc:114 itemprop.cc:116 itemprop.cc:113
+#: itemprop.cc:112
 msgid "gold dragon hide"
 msgstr "황금 용의 가죽"
 
 #: itemprop.cc:116 itemprop.cc:116 itemprop.cc:118 itemprop.cc:115
+#: itemprop.cc:114
 msgid "gold dragon armour"
 msgstr "황금 용 갑옷"
 
 #: itemprop.cc:119 itemprop.cc:119 itemprop.cc:121 itemprop.cc:118
+#: itemprop.cc:117
 msgid "cloak"
 msgstr "망토"
 
 #: itemprop.cc:124 itemprop.cc:124 itemprop.cc:126 itemprop.cc:123
+#: itemprop.cc:122
 msgid "helmet"
 msgstr "철모"
 
 #: itemprop.cc:127 itemprop.cc:127 itemprop.cc:129 itemprop.cc:126
+#: itemprop.cc:125
 msgid "cap"
 msgstr "모자"
 
 #: itemprop.cc:130 itemprop.cc:130 itemprop.cc:132 itemprop.cc:129
+#: itemprop.cc:128
 msgid "wizard hat"
 msgstr "마법사의 모자"
 
@@ -7803,6 +7845,7 @@ msgstr "마법사의 모자"
 #. needs to fit medium, but that doesn't matter as much as race
 #. and shapeshift status.
 #: itemprop.cc:136 itemprop.cc:136 itemprop.cc:138 itemprop.cc:135
+#: itemprop.cc:134
 msgid "boots"
 msgstr "장화"
 
@@ -7811,10 +7854,12 @@ msgstr "장화"
 #. Changed max. barding size to large to allow for the appropriate
 #. monster types (monsters don't differentiate between torso and general).
 #: itemprop.cc:140 itemprop.cc:140 itemprop.cc:142 itemprop.cc:139
+#: itemprop.cc:138
 msgid "centaur barding"
 msgstr "센타우르 마갑"
 
 #: itemprop.cc:142 itemprop.cc:142 itemprop.cc:144 itemprop.cc:141
+#: itemprop.cc:140
 msgid "naga barding"
 msgstr "나가 꼬리갑옷"
 
@@ -7823,37 +7868,44 @@ msgstr "나가 꼬리갑옷"
 #. Note: shields use ac-value as sh-value, EV pen is used as the basis
 #. to calculate adjusted shield penalty.
 #: itemprop.cc:147 itemprop.cc:147 itemprop.cc:149 itemprop.cc:146
+#: itemprop.cc:145
 msgid "buckler"
 msgstr "작은 원형 방패"
 
 #: itemprop.cc:149 itemprop.cc:149 godpassive.cc:384 godpassive.cc:385
-#: itemprop.cc:151 itemprop.cc:148
+#: itemprop.cc:151 itemprop.cc:148 itemprop.cc:147
 msgid "shield"
 msgstr "방패"
 
 #: itemprop.cc:151 itemprop.cc:151 itemprop.cc:153 itemprop.cc:150
+#: itemprop.cc:149
 msgid "large shield"
 msgstr "대형 방패"
 
 #. Maces & Flails
 #. Maces & Flails
 #: itemprop.cc:179 itemprop.cc:179 itemprop.cc:181 itemprop.cc:178
+#: itemprop.cc:177
 msgid "club"
 msgstr "곤봉"
 
 #: itemprop.cc:182 itemprop.cc:182 itemprop.cc:184 itemprop.cc:181
+#: itemprop.cc:180
 msgid "whip"
 msgstr "채찍"
 
 #: itemprop.cc:185 itemprop.cc:185 itemprop.cc:187 itemprop.cc:184
+#: itemprop.cc:183
 msgid "hammer"
 msgstr "망치"
 
 #: itemprop.cc:188 itemprop.cc:188 itemprop.cc:190 itemprop.cc:187
+#: itemprop.cc:186
 msgid "mace"
 msgstr "메이스"
 
 #: itemprop.cc:191 itemprop.cc:191 itemprop.cc:193 itemprop.cc:190
+#: itemprop.cc:189
 msgid "flail"
 msgstr "플레일"
 
@@ -7862,17 +7914,17 @@ msgid "ankus"
 msgstr "앙쿠스"
 
 #: itemprop.cc:197 itemprop.cc:197 itemprop.cc:199 itemprop.cc:193
-#: itemprop.cc:194
+#: itemprop.cc:194 itemprop.cc:192
 msgid "morningstar"
 msgstr "모닝스타"
 
 #: itemprop.cc:200 itemprop.cc:200 itemprop.cc:202 itemprop.cc:196
-#: itemprop.cc:197
+#: itemprop.cc:197 itemprop.cc:195
 msgid "demon whip"
 msgstr "악마의 채찍"
 
 #: itemprop.cc:203 itemprop.cc:203 itemprop.cc:205 itemprop.cc:199
-#: itemprop.cc:200
+#: itemprop.cc:200 itemprop.cc:198
 msgid "sacred scourge"
 msgstr "성령의 천벌"
 
@@ -7882,27 +7934,27 @@ msgid "spiked flail"
 msgstr "못 박힌 플레일"
 
 #: itemprop.cc:209 itemprop.cc:209 itemprop.cc:211 itemprop.cc:205
-#: itemprop.cc:208
+#: itemprop.cc:208 itemprop.cc:206
 msgid "dire flail"
 msgstr "다이어 플레일"
 
 #: itemprop.cc:212 itemprop.cc:212 itemprop.cc:214 itemprop.cc:208
-#: itemprop.cc:211
+#: itemprop.cc:211 itemprop.cc:209
 msgid "eveningstar"
 msgstr "이브닝스타"
 
 #: itemprop.cc:215 itemprop.cc:215 itemprop.cc:217 itemprop.cc:211
-#: itemprop.cc:214
+#: itemprop.cc:214 itemprop.cc:212
 msgid "great mace"
 msgstr "대형 메이스"
 
 #: itemprop.cc:218 itemprop.cc:218 itemprop.cc:220 itemprop.cc:214
-#: itemprop.cc:217
+#: itemprop.cc:217 itemprop.cc:215
 msgid "giant club"
 msgstr "거대 곤봉"
 
 #: itemprop.cc:221 itemprop.cc:221 itemprop.cc:223 itemprop.cc:217
-#: itemprop.cc:220
+#: itemprop.cc:220 itemprop.cc:218
 msgid "giant spiked club"
 msgstr "가시박힌 거대 곤봉"
 
@@ -7912,58 +7964,58 @@ msgstr "나이프"
 
 #. Short Blades
 #: itemprop.cc:231 itemprop.cc:231 itemprop.cc:233 itemprop.cc:222
-#: itemprop.cc:225
+#: itemprop.cc:225 itemprop.cc:223
 msgid "dagger"
 msgstr "단도"
 
 #: itemprop.cc:234 itemprop.cc:234 itemprop.cc:236 itemprop.cc:225
-#: itemprop.cc:228
+#: itemprop.cc:228 itemprop.cc:226
 msgid "quick blade"
 msgstr "퀵 블레이드"
 
 #: itemprop.cc:237 itemprop.cc:237 itemprop.cc:239 itemprop.cc:228
-#: itemprop.cc:231
+#: itemprop.cc:231 itemprop.cc:229
 msgid "short sword"
 msgstr "단검"
 
 #: itemprop.cc:240 itemprop.cc:240 itemprop.cc:242 itemprop.cc:231
-#: itemprop.cc:234
+#: itemprop.cc:234 itemprop.cc:232
 msgid "sabre"
 msgstr "세이버"
 
 #. Long Blades
 #. Long Blades
 #: itemprop.cc:245 itemprop.cc:245 itemprop.cc:247 itemprop.cc:236
-#: itemprop.cc:239
+#: itemprop.cc:239 itemprop.cc:237
 msgid "falchion"
 msgstr "팔치온"
 
 #. or perhaps DAMV_CHOPPING is more apt?
 #. or perhaps DAMV_CHOPPING is more apt?
 #: itemprop.cc:248 itemprop.cc:248 itemprop.cc:250 itemprop.cc:239
-#: itemprop.cc:242
+#: itemprop.cc:242 itemprop.cc:240
 msgid "blessed falchion"
 msgstr "축복받은 팔치온"
 
 #. or perhaps DAMV_CHOPPING is more apt?
 #. or perhaps DAMV_CHOPPING is more apt?
 #: itemprop.cc:251 itemprop.cc:251 itemprop.cc:253 itemprop.cc:242
-#: itemprop.cc:245
+#: itemprop.cc:245 itemprop.cc:243
 msgid "long sword"
 msgstr "장검"
 
 #: itemprop.cc:254 itemprop.cc:254 itemprop.cc:256 itemprop.cc:245
-#: itemprop.cc:248
+#: itemprop.cc:248 itemprop.cc:246
 msgid "blessed long sword"
 msgstr "축복받은 장검"
 
 #: itemprop.cc:257 itemprop.cc:257 itemprop.cc:259 itemprop.cc:248
-#: itemprop.cc:251
+#: itemprop.cc:251 itemprop.cc:249
 msgid "scimitar"
 msgstr "시미터"
 
 #: itemprop.cc:260 itemprop.cc:260 itemprop.cc:262 itemprop.cc:251
-#: itemprop.cc:254
+#: itemprop.cc:254 itemprop.cc:252
 msgid "blessed scimitar"
 msgstr "축복받은 시미터"
 
@@ -7976,69 +8028,69 @@ msgid "blessed katana"
 msgstr "축복받은 카타나"
 
 #: itemprop.cc:269 itemprop.cc:269 itemprop.cc:273 itemprop.cc:254
-#: itemprop.cc:257
+#: itemprop.cc:257 itemprop.cc:255
 msgid "demon blade"
 msgstr "악마의 칼날"
 
 #: itemprop.cc:272 itemprop.cc:272 itemprop.cc:276 itemprop.cc:257
-#: itemprop.cc:260
+#: itemprop.cc:260 itemprop.cc:258
 msgid "eudemon blade"
 msgstr "성령의 검"
 
 #: itemprop.cc:275 itemprop.cc:275 itemprop.cc:279 itemprop.cc:260
-#: itemprop.cc:263
+#: itemprop.cc:263 itemprop.cc:261
 msgid "double sword"
 msgstr "이중검"
 
 #: itemprop.cc:278 itemprop.cc:278 itemprop.cc:282 itemprop.cc:263
-#: itemprop.cc:266
+#: itemprop.cc:266 itemprop.cc:264
 msgid "blessed double sword"
 msgstr "축복받은 이중검"
 
 #: itemprop.cc:281 itemprop.cc:281 itemprop.cc:285 itemprop.cc:266
-#: itemprop.cc:269
+#: itemprop.cc:269 itemprop.cc:267
 msgid "great sword"
 msgstr "대검"
 
 #: itemprop.cc:284 itemprop.cc:284 itemprop.cc:288 itemprop.cc:269
-#: itemprop.cc:272
+#: itemprop.cc:272 itemprop.cc:270
 msgid "blessed great sword"
 msgstr "축복받은 대검"
 
 #: itemprop.cc:287 itemprop.cc:287 itemprop.cc:291 itemprop.cc:272
-#: itemprop.cc:275
+#: itemprop.cc:275 itemprop.cc:273
 msgid "triple sword"
 msgstr "삼중검"
 
 #: itemprop.cc:290 itemprop.cc:290 itemprop.cc:294 itemprop.cc:275
-#: itemprop.cc:278
+#: itemprop.cc:278 itemprop.cc:276
 msgid "blessed triple sword"
 msgstr "축복받은 삼중검"
 
 #. Axes
 #. Axes
 #: itemprop.cc:295 itemprop.cc:295 itemprop.cc:299 itemprop.cc:280
-#: itemprop.cc:283
+#: itemprop.cc:283 itemprop.cc:281
 msgid "hand axe"
 msgstr "손 도끼"
 
 #: itemprop.cc:298 itemprop.cc:298 itemprop.cc:302 itemprop.cc:283
-#: itemprop.cc:286
+#: itemprop.cc:286 itemprop.cc:284
 msgid "war axe"
 msgstr "군용 도끼"
 
 #: itemprop.cc:301 itemprop.cc:301 itemprop.cc:305 itemprop.cc:286
-#: itemprop.cc:289
+#: itemprop.cc:289 itemprop.cc:287
 msgid "broad axe"
 msgstr "대형 도끼"
 
 #: itemprop.cc:304 itemprop.cc:304 itemprop.cc:308 itemprop.cc:289
-#: itemprop.cc:292
+#: itemprop.cc:292 itemprop.cc:290
 msgid "battleaxe"
 msgstr "전투 도끼"
 
 #: itemprop.cc:307 itemprop.cc:307 itemprop.cc:311 itemprop.cc:292
-#: itemprop.cc:295
+#: itemprop.cc:295 itemprop.cc:293
 msgid "executioner's axe"
 msgstr "집행인의 도끼"
 
@@ -8046,53 +8098,54 @@ msgstr "집행인의 도끼"
 #. Polearms
 #: itemprop.cc:312 itemprop.cc:312 itemprop.cc:316 itemprop.cc:297
 #: describe.cc:553 itemprop.cc:300 describe.cc:521 describe.cc:515
+#: describe.cc:514 itemprop.cc:298
 msgid "spear"
 msgstr "창"
 
 #: itemprop.cc:315 itemprop.cc:315 itemprop.cc:319 itemprop.cc:300
-#: itemprop.cc:303
+#: itemprop.cc:303 itemprop.cc:301
 msgid "trident"
 msgstr "삼지창"
 
 #: itemprop.cc:318 itemprop.cc:318 itemprop.cc:322 itemprop.cc:303
-#: itemprop.cc:306
+#: itemprop.cc:306 itemprop.cc:304
 msgid "halberd"
 msgstr "할버드"
 
 #: itemprop.cc:321 itemprop.cc:321 itemprop.cc:325 itemprop.cc:306
-#: itemprop.cc:309
+#: itemprop.cc:309 itemprop.cc:307
 msgid "scythe"
 msgstr "큰 낫"
 
 #: itemprop.cc:324 itemprop.cc:324 itemprop.cc:328 itemprop.cc:309
-#: itemprop.cc:312
+#: itemprop.cc:312 itemprop.cc:310
 msgid "demon trident"
 msgstr "악마의 삼지창"
 
 #: itemprop.cc:327 itemprop.cc:327 itemprop.cc:331 itemprop.cc:312
-#: itemprop.cc:315
+#: itemprop.cc:315 itemprop.cc:313
 msgid "trishula"
 msgstr "트리슈라"
 
 #: itemprop.cc:330 itemprop.cc:330 itemprop.cc:334 itemprop.cc:315
-#: itemprop.cc:318
+#: itemprop.cc:318 itemprop.cc:316
 msgid "glaive"
 msgstr "글레이브"
 
 #: itemprop.cc:333 itemprop.cc:333 itemprop.cc:337 itemprop.cc:318
-#: itemprop.cc:321
+#: itemprop.cc:321 itemprop.cc:319
 msgid "bardiche"
 msgstr "바르디슈"
 
 #. Staves
 #. Staves
 #: itemprop.cc:338 itemprop.cc:338 itemprop.cc:345 itemprop.cc:326
-#: itemprop.cc:330
+#: itemprop.cc:330 itemprop.cc:328
 msgid "quarterstaff"
 msgstr "육척봉"
 
 #: itemprop.cc:341 itemprop.cc:341 itemprop.cc:348 itemprop.cc:329
-#: itemprop.cc:333
+#: itemprop.cc:333 itemprop.cc:331
 msgid "lajatang"
 msgstr "라자탕"
 
@@ -8114,87 +8167,91 @@ msgstr "라자탕"
 #. - slings get a bonus from dex, not str (as tension is meaningless)
 #. - str weight is used for speed and applying dex to skill
 #: itemprop.cc:351 itemprop.cc:351 itemprop.cc:358 itemprop.cc:339
-#: itemprop.cc:342
+#: itemprop.cc:342 itemprop.cc:340
 msgid "blowgun"
 msgstr "블로우 건"
 
 #: itemprop.cc:354 itemprop.cc:354 itemprop.cc:361 itemprop.cc:342
-#: itemprop.cc:345
+#: itemprop.cc:345 itemprop.cc:343
 msgid "sling"
 msgstr "투석기"
 
 #: itemprop.cc:357 itemprop.cc:357 itemprop.cc:364 itemprop.cc:345
-#: itemprop.cc:348
+#: itemprop.cc:348 itemprop.cc:346
 msgid "crossbow"
 msgstr "쇠뇌"
 
 #: itemprop.cc:360 itemprop.cc:360 itemprop.cc:367 itemprop.cc:348
-#: itemprop.cc:351
+#: itemprop.cc:351 itemprop.cc:349
 msgid "bow"
 msgstr "활"
 
 #: itemprop.cc:363 itemprop.cc:363 itemprop.cc:370 itemprop.cc:351
-#: itemprop.cc:354
+#: itemprop.cc:354 itemprop.cc:352
 msgid "longbow"
 msgstr "장궁"
 
 #: itemprop.cc:380 itemprop.cc:380 itemprop.cc:387 itemprop.cc:368
 #: describe.cc:555 itemprop.cc:371 describe.cc:523 describe.cc:517
+#: describe.cc:516 itemprop.cc:369
 msgid "needle"
 msgstr "바늘"
 
 #: itemprop.cc:381 itemprop.cc:381 itemprop.cc:388 itemprop.cc:369
-#: itemprop.cc:372
+#: itemprop.cc:372 itemprop.cc:370
 msgid "stone"
 msgstr "작은 돌"
 
 #: itemprop.cc:382 itemprop.cc:382 itemprop.cc:389 itemprop.cc:370
 #: describe.cc:553 itemprop.cc:373 describe.cc:521 describe.cc:515
+#: describe.cc:514 itemprop.cc:371
 msgid "dart"
 msgstr "다트"
 
 #: itemprop.cc:383 itemprop.cc:383 itemprop.cc:390 itemprop.cc:371
 #: describe.cc:553 itemprop.cc:374 describe.cc:521 describe.cc:515
+#: describe.cc:514 itemprop.cc:372
 msgid "arrow"
 msgstr "화살"
 
 #: itemprop.cc:384 itemprop.cc:384 itemprop.cc:391 itemprop.cc:372
 #: describe.cc:555 itemprop.cc:375 describe.cc:523 describe.cc:517
+#: describe.cc:516 itemprop.cc:373
 msgid "bolt"
 msgstr "볼트"
 
 #: itemprop.cc:385 itemprop.cc:385 itemprop.cc:392 itemprop.cc:373
-#: itemprop.cc:376
+#: itemprop.cc:376 itemprop.cc:374
 msgid "large rock"
 msgstr "바위"
 
 #: itemprop.cc:386 itemprop.cc:386 itemprop.cc:393 itemprop.cc:374
-#: itemprop.cc:377
+#: itemprop.cc:377 itemprop.cc:375
 msgid "sling bullet"
 msgstr "투석기용 돌"
 
 #: itemprop.cc:387 itemprop.cc:387 itemprop.cc:394 itemprop.cc:375
-#: itemprop.cc:378
+#: itemprop.cc:378 itemprop.cc:376
 msgid "javelin"
 msgstr "투창"
 
 #: itemprop.cc:388 itemprop.cc:388 itemprop.cc:395 itemprop.cc:376
-#: itemprop.cc:379
+#: itemprop.cc:379 itemprop.cc:377
 msgid "throwing net"
 msgstr "투척용 그물"
 
 #: itemprop.cc:419 itemprop.cc:419 itemprop.cc:426 itemprop.cc:407
-#: itemprop.cc:410 itemprop.cc:411
+#: itemprop.cc:410 itemprop.cc:411 itemprop.cc:409
 msgid "chunk"
 msgstr "날고기 조각"
 
 #: itemprop.cc:440 itemprop.cc:440 itemprop.cc:447 itemprop.cc:428
-#: itemprop.cc:431 itemprop.cc:432
+#: itemprop.cc:431 itemprop.cc:432 itemprop.cc:430
 msgid "pizza"
 msgstr "피자"
 
 #: itemprop.cc:442 itemprop.cc:442 itemprop.cc:449 itemprop.cc:430
-#: itemprop.cc:433 itemprop.cc:434
+#: itemprop.cc:433 itemprop.cc:434 itemprop.cc:432
 msgid "ambrosia"
 msgstr "암브로시아"
 
@@ -8263,7 +8320,7 @@ msgstr "결계의"
 
 #: effects.cc:726 itemname.cc:1098 itemname.cc:1105 itemname.cc:1105
 #: effects.cc:732 itemname.cc:1096 effects.cc:599 effects.cc:605
-#: effects.cc:609
+#: effects.cc:609 effects.cc:610
 msgid "smiting"
 msgstr "천벌의"
 
@@ -8294,7 +8351,7 @@ msgstr "파괴의"
 #: itemname.cc:1865 itemname.cc:1893 itemname.cc:1895 itemname.cc:1902
 #: itemname.cc:1903 itemname.cc:1910 itemname.cc:1889 itemname.cc:1773
 #: itemname.cc:1776 itemname.cc:1805 itemname.cc:1817 itemname.cc:1819
-#: itemname.cc:1824 itemname.cc:1858 itemname.cc:1867
+#: itemname.cc:1824 itemname.cc:1858 itemname.cc:1867 itemname.cc:1871
 msgid "rod"
 msgstr "마법 막대"
 
@@ -8305,19 +8362,19 @@ msgstr "마법 막대"
 #: itemname.cc:1903 itemname.cc:1910 invent.cc:989 itemname.cc:1889
 #: itemprop.cc:342 itemname.cc:1810 itemprop.cc:323 itemname.cc:1813
 #: itemname.cc:1842 itemprop.cc:327 itemname.cc:1854 itemname.cc:1856
-#: itemname.cc:1861 itemname.cc:1904
+#: itemname.cc:1861 itemname.cc:1904 itemname.cc:1908 itemprop.cc:325
 msgid "staff"
 msgstr "지팡이"
 
 #: effects.cc:744 effects.cc:744 effects.cc:750 effects.cc:617 effects.cc:623
-#: effects.cc:627
+#: effects.cc:627 effects.cc:628
 msgid "airstrike"
 msgstr "공중폭격"
 
 #: itemname.cc:1924 itemname.cc:1952 itemname.cc:1954 itemname.cc:1961
 #: itemname.cc:1962 itemname.cc:1969 itemname.cc:1948 itemname.cc:1855
 #: spl-summoning.cc:1548 itemname.cc:1858 itemname.cc:1887 itemname.cc:1899
-#: itemname.cc:1904 itemname.cc:1909 itemname.cc:1943
+#: itemname.cc:1904 itemname.cc:1909 itemname.cc:1943 itemname.cc:1956
 msgid "corpse"
 msgstr "의 시체"
 
@@ -8326,6 +8383,7 @@ msgstr "의 시체"
 #: mon-info.cc:927 spl-summoning.cc:1548 itemname.cc:1860 itemname.cc:1889
 #: mon-info.cc:938 itemname.cc:1901 itemname.cc:1906 mon-info.cc:949
 #: mon-data.h:2445 itemname.cc:1911 itemname.cc:1945 mon-data.h:2439
+#: itemname.cc:1958
 msgid "skeleton"
 msgstr "의 해골"
 
@@ -8335,19 +8393,19 @@ msgstr ""
 
 #: itemname.cc:193 itemname.cc:220 itemname.cc:224 itemname.cc:224
 #: misc.cc:2310 misc.cc:2338 misc.cc:2341 misc.cc:2336 misc.cc:2340
-#: misc.cc:2344 misc.cc:2345
+#: misc.cc:2344 misc.cc:2345 misc.cc:2350
 msgid "the "
 msgstr ""
 
 #: itemname.cc:194 itemname.cc:223 itemname.cc:227 itemname.cc:227
-#: item_use.cc:2505 item_use.cc:2506 item_use.cc:2504
+#: item_use.cc:2505 item_use.cc:2506 item_use.cc:2504 item_use.cc:2503
 msgid "Your "
 msgstr "당신의 "
 
 #: itemname.cc:195 itemname.cc:224 itemname.cc:228 itemname.cc:228
 #: misc.cc:2266 misc.cc:2267 misc.cc:2274 abl-show.cc:2681 misc.cc:2302
 #: abl-show.cc:2669 misc.cc:2305 misc.cc:2297 misc.cc:2301 abl-show.cc:2682
-#: abl-show.cc:2696 misc.cc:2303
+#: abl-show.cc:2696 misc.cc:2303 abl-show.cc:2695 misc.cc:2308
 msgid "your "
 msgstr "당신의 "
 
@@ -8424,12 +8482,13 @@ msgid "him"
 msgstr "그"
 
 #: spl-book.cc:170 spl-book.cc:170 skills2.cc:113 skills2.cc:110
-#: spl-book.cc:158 spl-book.cc:156 skills2.cc:115
+#: spl-book.cc:158 spl-book.cc:156 skills2.cc:115 spl-book.cc:155
 msgid "Evocations"
 msgstr "발동술"
 
 #: spl-book.cc:463 spl-book.cc:465 spl-book.cc:465 spl-book.cc:424
-#: spl-book.cc:426 spl-book.cc:437 spl-book.cc:439
+#: spl-book.cc:426 spl-book.cc:437 spl-book.cc:439 spl-book.cc:440
+#: spl-book.cc:442
 msgid "highlevel"
 msgstr "고수준"
 
@@ -8552,17 +8611,17 @@ msgid "Perfect"
 msgstr "완벽함"
 
 #: travel.cc:875 travel.cc:875 travel.cc:863 travel.cc:817 travel.cc:816
-#: travel.cc:821 travel.cc:855
+#: travel.cc:821 travel.cc:855 travel.cc:871
 msgid "an item"
 msgstr "아이템"
 
 #: travel.cc:875 travel.cc:875 travel.cc:863 travel.cc:817 travel.cc:816
-#: travel.cc:821 travel.cc:855
+#: travel.cc:821 travel.cc:855 travel.cc:871
 msgid "some items"
 msgstr "몇몇 아이템"
 
 #: travel.cc:876 travel.cc:876 travel.cc:864 travel.cc:818 travel.cc:817
-#: travel.cc:822 travel.cc:856
+#: travel.cc:822 travel.cc:856 travel.cc:872
 msgid "them"
 msgstr "그것들"
 
@@ -8580,75 +8639,75 @@ msgstr "전기"
 #: player.cc:250 terrain.cc:1342 mon-util.cc:3810 main.cc:4204
 #: mon-util.cc:3782 player.cc:251 main.cc:4209 mon-stuff.cc:3973 main.cc:4203
 #: mon-util.cc:3769 main.cc:4208 mon-util.cc:3777 mon-stuff.cc:3966
-#: mon-util.cc:3774
+#: mon-util.cc:3774 main.cc:4229
 msgid "lava"
 msgstr "용암"
 
 #: player.cc:271 main.cc:4033 main.cc:4033 main.cc:4035 main_backup.cc:4036
 #: main.cc:4069 player.cc:270 player.cc:273 player.cc:250 main.cc:4204
-#: player.cc:251 main.cc:4209 main.cc:4203 main.cc:4208
+#: player.cc:251 main.cc:4209 main.cc:4203 main.cc:4208 main.cc:4229
 msgid "deep water"
 msgstr "깊은 물"
 
 #: player.cc:3831 player.cc:3831 player.cc:3922 player.cc:4014 player.cc:4038
-#: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044
+#: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044 player.cc:4049
 msgid "extremely slow"
 msgstr "극히 느리다"
 
 #: player.cc:3832 player.cc:3832 player.cc:3923 player.cc:4015 player.cc:4039
-#: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045
+#: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045 player.cc:4050
 msgid "very slow"
 msgstr "매우 느리다"
 
 #: player.cc:3833 player.cc:3833 player.cc:3924 player.cc:4016 player.cc:4040
-#: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046
+#: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046 player.cc:4051
 msgid "quite slow"
 msgstr "느리다"
 
 #: player.cc:3834 player.cc:3834 player.cc:3925 player.cc:4017 player.cc:4041
-#: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047
+#: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047 player.cc:4052
 msgid "below average"
 msgstr "평균 이하이다"
 
 #: player.cc:3835 player.cc:3835 player.cc:3926 player.cc:4018 player.cc:4042
-#: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048
+#: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048 player.cc:4053
 msgid "average"
 msgstr "보통이다"
 
 #: player.cc:3836 player.cc:3836 player.cc:3927 player.cc:4019 player.cc:4043
-#: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049
+#: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049 player.cc:4054
 msgid "above average"
 msgstr "평균 이상이다"
 
 #: player.cc:3837 player.cc:3837 player.cc:3928 player.cc:4020 player.cc:4044
-#: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050
+#: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050 player.cc:4055
 msgid "quite fast"
 msgstr "빠르다"
 
 #: player.cc:3838 player.cc:3838 player.cc:3929 player.cc:4021 player.cc:4045
-#: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051
+#: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051 player.cc:4056
 msgid "very fast"
 msgstr "매우 빠르다"
 
 #: player.cc:3839 player.cc:3839 player.cc:3930 player.cc:4022 player.cc:4046
-#: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052
+#: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052 player.cc:4057
 msgid "extremely fast"
 msgstr "극히 빠르다"
 
 #: player.cc:3840 player.cc:3840 player.cc:3931 player.cc:4023 player.cc:4047
-#: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053
+#: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053 player.cc:4058
 msgid "blindingly fast"
 msgstr "번개같이 빠르다"
 
 # 아래 player.cc에서 사용하는 두 단어는 중복가능성이 있으므로
 # 다른 곳에서 참조한다면 나눠야할듯 (deceit, 110817)
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
-#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824
+#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4828
 msgid "more"
 msgstr "더해졌음"
 
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
-#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824
+#: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4828
 msgid "less"
 msgstr "줄어들었음"
 
@@ -8662,17 +8721,18 @@ msgid "very "
 msgstr "강한 "
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465
+#: transform.cc:456 transform.cc:465 transform.cc:467
 msgid "paws"
 msgstr "발"
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465
+#: transform.cc:456 transform.cc:465 transform.cc:467
 msgid "front paws"
 msgstr "앞발"
 
 #: transform.cc:404 transform.cc:404 transform.cc:384 transform.cc:428
-#: transform.cc:459 player-act.cc:431 transform.cc:468
+#: transform.cc:459 player-act.cc:431 transform.cc:468 player-act.cc:432
+#: transform.cc:470
 msgid "hands"
 msgstr "손"
 
@@ -8750,10 +8810,12 @@ msgid "death channel"
 msgstr "죽음의 영매"
 
 #: status.cc:48 status.cc:965 status.cc:970 status.cc:975 status.cc:976
+#: status.cc:960
 msgid "DMsl"
 msgstr "튕김"
 
 #: status.cc:48 status.cc:966 status.cc:971 status.cc:976 status.cc:977
+#: status.cc:961
 msgid "deflect missiles"
 msgstr "미사일류 방어"
 
@@ -8838,10 +8900,12 @@ msgid "praying"
 msgstr "기도 중"
 
 #: status.cc:78 status.cc:975 status.cc:980 status.cc:985 status.cc:986
+#: status.cc:970
 msgid "RMsl"
 msgstr "편향"
 
 #: status.cc:78 status.cc:976 status.cc:981 status.cc:986 status.cc:987
+#: status.cc:971
 msgid "repel missiles"
 msgstr "미사일류 방어"
 
@@ -8917,7 +8981,7 @@ msgstr "사라짐"
 msgid "Quad"
 msgstr "*쿼드*"
 
-#: status.cc:116 status.cc:522 status.cc:534
+#: status.cc:116 status.cc:522 status.cc:534 status.cc:531
 msgid "Sil"
 msgstr "침묵"
 
@@ -8982,27 +9046,27 @@ msgid "mesmerised"
 msgstr "매료됨"
 
 #: status.cc:309 status.cc:310 status.cc:326 status.cc:327 status.cc:512
-#: status.cc:329 status.cc:508 status.cc:520
+#: status.cc:329 status.cc:508 status.cc:520 status.cc:330 status.cc:517
 msgid "Held"
 msgstr "그물"
 
 #: status.cc:310 status.cc:311 status.cc:327 status.cc:328 status.cc:513
-#: status.cc:330 status.cc:509 status.cc:521
+#: status.cc:330 status.cc:509 status.cc:521 status.cc:331 status.cc:518
 msgid "held"
 msgstr "그물"
 
 #: status.cc:367 status.cc:368 status.cc:388 status.cc:408 status.cc:410
-#: status.cc:422
+#: status.cc:422 status.cc:419
 msgid "Invis"
 msgstr "투명"
 
 #: status.cc:368 status.cc:369 status.cc:389 status.cc:409 status.cc:411
-#: status.cc:423
+#: status.cc:423 status.cc:420
 msgid "invisible"
 msgstr "투명화"
 
 #: status.cc:386 status.cc:387 status.cc:407 status.cc:427 status.cc:429
-#: status.cc:441
+#: status.cc:441 status.cc:438
 msgid "Regen+"
 msgstr "재생+"
 
@@ -9011,22 +9075,23 @@ msgid "bonded with blade"
 msgstr "확실한 칼날"
 
 #: status.cc:434 status.cc:435 status.cc:455 status.cc:474 status.cc:470
-#: status.cc:482
+#: status.cc:482 status.cc:479
 msgid "Cling"
 msgstr "매달림"
 
 #: status.cc:435 status.cc:436 directn.cc:3485 status.cc:456 status.cc:475
 #: directn.cc:3438 status.cc:471 directn.cc:3457 status.cc:483 directn.cc:3458
+#: status.cc:480
 msgid "clinging"
 msgstr "매달림"
 
 #: status.cc:462 status.cc:463 status.cc:483 status.cc:502 status.cc:498
-#: status.cc:510
+#: status.cc:510 status.cc:507
 msgid "Fball"
 msgstr "화염구"
 
 #: status.cc:463 status.cc:464 status.cc:484 status.cc:503 status.cc:499
-#: status.cc:511
+#: status.cc:511 status.cc:508
 msgid "delayed fireball"
 msgstr "축적된 화염구"
 
@@ -9039,62 +9104,62 @@ msgid "missing status"
 msgstr "스테이터스 상실"
 
 #: status.cc:488 status.cc:489 status.cc:509 status.cc:552 status.cc:569
-#: status.cc:581
+#: status.cc:581 status.cc:578
 msgid "Alive"
 msgstr "과식"
 
 #: status.cc:488 status.cc:489 status.cc:509 status.cc:552 status.cc:569
-#: status.cc:581
+#: status.cc:581 status.cc:578
 msgid "Engorged"
 msgstr "과식"
 
 #: status.cc:492 status.cc:493 status.cc:513 status.cc:556 status.cc:573
-#: status.cc:585
+#: status.cc:585 status.cc:582
 msgid "Very Full"
 msgstr "매우 배부름"
 
 #: status.cc:496 status.cc:497 status.cc:517 status.cc:560 status.cc:577
-#: status.cc:589
+#: status.cc:589 status.cc:586
 msgid "Full"
 msgstr "배부름"
 
 #: status.cc:500 status.cc:501 status.cc:521 status.cc:564 status.cc:581
-#: status.cc:593
+#: status.cc:593 status.cc:590
 msgid "Thirsty"
 msgstr "갈증"
 
 #: status.cc:500 status.cc:501 status.cc:521 status.cc:564 status.cc:581
-#: status.cc:593
+#: status.cc:593 status.cc:590
 msgid "Hungry"
 msgstr "배고픔"
 
 #: status.cc:504 status.cc:505 status.cc:525 status.cc:568 status.cc:585
-#: status.cc:597
+#: status.cc:597 status.cc:594
 msgid "Very Thirsty"
 msgstr "심한 갈증"
 
 #: status.cc:504 status.cc:505 status.cc:525 status.cc:568 status.cc:585
-#: status.cc:597
+#: status.cc:597 status.cc:594
 msgid "Very Hungry"
 msgstr "매우 배고픔"
 
 #: status.cc:508 status.cc:509 status.cc:529 status.cc:572 status.cc:589
-#: status.cc:601
+#: status.cc:601 status.cc:598
 msgid "Near Bloodless"
 msgstr "빈혈"
 
 #: status.cc:508 status.cc:509 status.cc:529 status.cc:572 status.cc:589
-#: status.cc:601
+#: status.cc:601 status.cc:598
 msgid "Near Starving"
 msgstr "굶주림"
 
 #: status.cc:512 status.cc:513 status.cc:533 status.cc:576 status.cc:593
-#: status.cc:605
+#: status.cc:605 status.cc:602
 msgid "Bloodless"
 msgstr "심한 빈혈"
 
 #: status.cc:512 status.cc:513 status.cc:533 status.cc:576 status.cc:593
-#: status.cc:605
+#: status.cc:605 status.cc:602
 msgid "Starving"
 msgstr "매우 굶주림"
 
@@ -9103,27 +9168,27 @@ msgid "Glow"
 msgstr "발광"
 
 #: status.cc:560 status.cc:561 status.cc:599 status.cc:642 status.cc:639
-#: status.cc:651 status.cc:652
+#: status.cc:651 status.cc:652 status.cc:649
 msgid "Regen"
 msgstr "재생"
 
 #: status.cc:562 status.cc:563 status.cc:601 status.cc:644 status.cc:641
-#: status.cc:653 status.cc:654
+#: status.cc:653 status.cc:654 status.cc:651
 msgid " MR"
 msgstr " MR"
 
 #: status.cc:569 status.cc:570 status.cc:608 status.cc:650 status.cc:647
-#: status.cc:659 status.cc:660
+#: status.cc:659 status.cc:660 status.cc:657
 msgid "non-regenerating"
 msgstr "재생중이 아님"
 
 #: status.cc:575 status.cc:576 status.cc:614 status.cc:655 status.cc:652
-#: status.cc:664 status.cc:665
+#: status.cc:664 status.cc:665 status.cc:662
 msgid "recuperating"
 msgstr "회복 중"
 
 #: status.cc:580 status.cc:581 status.cc:619 status.cc:660 status.cc:657
-#: status.cc:669 status.cc:670
+#: status.cc:669 status.cc:670 status.cc:667
 msgid "regenerating"
 msgstr "재생 중"
 
@@ -9132,32 +9197,32 @@ msgid "Pois"
 msgstr "독"
 
 #: status.cc:615 status.cc:616 status.cc:654 status.cc:696 status.cc:693
-#: status.cc:705 status.cc:706
+#: status.cc:705 status.cc:706 status.cc:703
 msgid "Fast+Slow"
 msgstr "가속+감속"
 
 #: status.cc:616 status.cc:617 status.cc:655 status.cc:697 status.cc:694
-#: status.cc:706 status.cc:707
+#: status.cc:706 status.cc:707 status.cc:704
 msgid "hasted and slowed"
 msgstr "가속+감속"
 
 #: status.cc:622 status.cc:623 spl-data.h:209 status.cc:661 status.cc:703
-#: status.cc:700 status.cc:712 status.cc:713
+#: status.cc:700 status.cc:712 status.cc:713 status.cc:710
 msgid "Slow"
 msgstr "감속"
 
 #: status.cc:623 status.cc:624 status.cc:662 status.cc:704 status.cc:701
-#: status.cc:713 status.cc:714
+#: status.cc:713 status.cc:714 status.cc:711
 msgid "slowed"
 msgstr "감속"
 
 #: status.cc:629 status.cc:630 status.cc:668 status.cc:710 status.cc:707
-#: status.cc:719 status.cc:720
+#: status.cc:719 status.cc:720 status.cc:717
 msgid "Fast"
 msgstr "가속"
 
 #: status.cc:630 status.cc:631 status.cc:669 status.cc:711 status.cc:708
-#: status.cc:720 status.cc:721
+#: status.cc:720 status.cc:721 status.cc:718
 msgid "hasted"
 msgstr "가속"
 
@@ -9183,123 +9248,123 @@ msgid "levitating"
 msgstr "공중 부양"
 
 #: status.cc:675 status.cc:676 status.cc:714 status.cc:773 status.cc:759
-#: status.cc:764 status.cc:765
+#: status.cc:764 status.cc:765 status.cc:762
 msgid "Rot"
 msgstr "부패"
 
 #: status.cc:680 status.cc:681 status.cc:719 describe.cc:3118 status.cc:778
 #: describe.cc:3115 describe.cc:3101 status.cc:764 describe.cc:3108
-#: status.cc:769 describe.cc:3102 describe.cc:3104 status.cc:770
+#: status.cc:769 describe.cc:3102 describe.cc:3104 status.cc:770 status.cc:767
 msgid "rotting"
 msgstr "부패"
 
 #: status.cc:702 status.cc:703 status.cc:741 status.cc:805 status.cc:791
-#: status.cc:796 status.cc:797
+#: status.cc:796 status.cc:797 status.cc:794
 msgid "Sick"
 msgstr "병"
 
 #: status.cc:719 status.cc:720 status.cc:771 status.cc:835 status.cc:821
-#: status.cc:826 status.cc:827
+#: status.cc:826 status.cc:827 status.cc:811
 msgid "Overloaded"
 msgstr "중량초과"
 
 #: status.cc:720 status.cc:721 status.cc:772 status.cc:836 status.cc:822
-#: status.cc:827 status.cc:828
+#: status.cc:827 status.cc:828 status.cc:812
 msgid "overloaded"
 msgstr "중량초과"
 
 #: status.cc:725 status.cc:726 status.cc:777 status.cc:841 status.cc:827
-#: status.cc:832 status.cc:833
+#: status.cc:832 status.cc:833 status.cc:817
 msgid "Burdened"
 msgstr "중량부담"
 
 #: status.cc:726 status.cc:727 status.cc:778 status.cc:842 status.cc:828
-#: status.cc:833 status.cc:834
+#: status.cc:833 status.cc:834 status.cc:818
 msgid "burdened"
 msgstr "중량부담"
 
 #: status.cc:749 status.cc:750 status.cc:801 status.cc:865 status.cc:844
-#: status.cc:849 status.cc:850
+#: status.cc:849 status.cc:850 status.cc:834
 msgid "Bat"
 msgstr "박쥐"
 
 #: status.cc:750 status.cc:751 status.cc:802 status.cc:866 status.cc:845
-#: status.cc:850 status.cc:851
+#: status.cc:850 status.cc:851 status.cc:835
 msgid "bat-form"
 msgstr "박쥐 변신"
 
 #: status.cc:757 status.cc:758 status.cc:809 status.cc:873 status.cc:852
-#: status.cc:857 status.cc:858
+#: status.cc:857 status.cc:858 status.cc:842
 msgid "Blades"
 msgstr "칼날의 손"
 
 #: status.cc:762 status.cc:763 status.cc:814 status.cc:878 status.cc:857
-#: status.cc:862 status.cc:863
+#: status.cc:862 status.cc:863 status.cc:847
 msgid "Dragon"
 msgstr "용"
 
 #: status.cc:763 status.cc:764 status.cc:815 status.cc:879 status.cc:858
-#: status.cc:863 status.cc:864
+#: status.cc:863 status.cc:864 status.cc:848
 msgid "dragon-form"
 msgstr "용 변신"
 
 #: status.cc:768 status.cc:769 status.cc:820 status.cc:884 status.cc:863
-#: status.cc:868 status.cc:869
+#: status.cc:868 status.cc:869 status.cc:853
 msgid "ice-form"
 msgstr "얼음괴물 변신"
 
 #: status.cc:772 status.cc:773 status.cc:824 status.cc:888 status.cc:867
-#: status.cc:872 status.cc:873
+#: status.cc:872 status.cc:873 status.cc:857
 msgid "Lich"
 msgstr "리치"
 
 #: status.cc:773 status.cc:774 status.cc:825 status.cc:889 status.cc:868
-#: status.cc:873 status.cc:874
+#: status.cc:873 status.cc:874 status.cc:858
 msgid "lich-form"
 msgstr "죽은자의 몸"
 
 #: status.cc:777 status.cc:778 status.cc:829 status.cc:893 status.cc:872
-#: status.cc:877 status.cc:878
+#: status.cc:877 status.cc:878 status.cc:862
 msgid "Pig"
 msgstr "돼지"
 
 #: status.cc:778 status.cc:779 status.cc:830 status.cc:894 status.cc:873
-#: status.cc:878 status.cc:879
+#: status.cc:878 status.cc:879 status.cc:863
 msgid "pig-form"
 msgstr "돼지 변신"
 
 #: status.cc:782 status.cc:783 status.cc:834 status.cc:898 status.cc:877
-#: status.cc:882 status.cc:883
+#: status.cc:882 status.cc:883 status.cc:867
 msgid "Spider"
 msgstr "거미"
 
 #: status.cc:783 status.cc:784 status.cc:835 status.cc:899 status.cc:878
-#: status.cc:883 status.cc:884
+#: status.cc:883 status.cc:884 status.cc:868
 msgid "spider-form"
 msgstr "거미 변신"
 
 #: status.cc:787 status.cc:788 status.cc:839 status.cc:903 status.cc:882
-#: status.cc:887 status.cc:888
+#: status.cc:887 status.cc:888 status.cc:872
 msgid "Statue"
 msgstr "석상"
 
 #: status.cc:788 status.cc:789 status.cc:840 status.cc:904 status.cc:883
-#: status.cc:888 status.cc:889
+#: status.cc:888 status.cc:889 status.cc:873
 msgid "statue-form"
 msgstr "석상 변신"
 
 #: status.cc:799 status.cc:800 status.cc:856 status.cc:920 status.cc:919
-#: status.cc:924 status.cc:929 status.cc:930
+#: status.cc:924 status.cc:929 status.cc:930 status.cc:914
 msgid "Collapse"
 msgstr "붕괴"
 
 #: status.cc:799 status.cc:800 status.cc:856 status.cc:920 status.cc:919
-#: status.cc:924 status.cc:929 status.cc:930
+#: status.cc:924 status.cc:929 status.cc:930 status.cc:914
 msgid "Brainless"
 msgstr "질식"
 
 #: status.cc:799 status.cc:800 status.cc:856 status.cc:920 status.cc:919
-#: status.cc:924 status.cc:929 status.cc:930
+#: status.cc:924 status.cc:929 status.cc:930 status.cc:914
 msgid "Clumsy"
 msgstr "자멸"
 
@@ -10639,7 +10704,7 @@ msgid "Projected Noise"
 msgstr "소음 방출"
 
 #: spl-data.h:1380 spl-data.h:1382 spl-data.h:1271 spl-data.h:1286
-#: status.cc:540 spl-data.h:1288 status.cc:552
+#: status.cc:540 spl-data.h:1288 status.cc:552 status.cc:549
 msgid "Recall"
 msgstr "소집"
 
@@ -10902,27 +10967,27 @@ msgid "Orb of Destruction"
 msgstr "파괴의 구"
 
 #: spl-data.h:2880 spl-data.h:2873 spl-data.h:2747 spl-data.h:2753
-#: spl-data.h:2755
+#: spl-data.h:2755 spl-data.h:2740
 msgid "Leda's Liquefaction"
 msgstr "레다의 용해술"
 
 #: spl-data.h:2958 spl-data.h:2951 spl-data.h:2825 spl-data.h:2831
-#: spl-data.h:2833
+#: spl-data.h:2833 spl-data.h:2818
 msgid "Petrifying Cloud"
 msgstr "석화 구름"
 
 #: spl-data.h:2971 spl-data.h:2964 spl-data.h:2838 spl-data.h:2844
-#: spl-data.h:2846
+#: spl-data.h:2846 spl-data.h:2831
 msgid "Shroud of Golubria"
 msgstr "골루브리아의 장막"
 
 #: spl-data.h:2984 spl-data.h:2977 spl-data.h:2851 spl-data.h:2857
-#: spl-data.h:2859
+#: spl-data.h:2859 spl-data.h:2844
 msgid "Inner Flame"
 msgstr "잠재의 불씨"
 
 #: spl-data.h:2906 spl-data.h:2899 spl-data.h:2773 spl-data.h:2779
-#: spl-data.h:2781
+#: spl-data.h:2781 spl-data.h:2766
 msgid "Darkness"
 msgstr "어둠"
 
@@ -10932,7 +10997,7 @@ msgid "Metabolic Englaciation"
 msgstr "신진대사의 동결"
 
 #: spl-data.h:2893 spl-data.h:2886 spl-data.h:2760 spl-data.h:2766
-#: spl-data.h:2768
+#: spl-data.h:2768 spl-data.h:2753
 msgid "Summon Hydra"
 msgstr "히드라 소환"
 
@@ -11230,7 +11295,7 @@ msgid "Holy Word"
 msgstr ""
 
 #: spl-data.h:2802 spl-data.h:2795 spl-data.h:2669 spl-data.h:2688
-#: spl-data.h:2690
+#: spl-data.h:2690 spl-data.h:2675
 msgid "Heal Other"
 msgstr ""
 
@@ -11239,32 +11304,32 @@ msgid "Sacrifice"
 msgstr ""
 
 #: spl-data.h:2828 spl-data.h:2821 spl-data.h:2695 spl-data.h:2701
-#: spl-data.h:2703
+#: spl-data.h:2703 spl-data.h:2688
 msgid "Holy Flames"
 msgstr ""
 
 #: spl-data.h:2841 spl-data.h:2834 spl-data.h:2708 spl-data.h:2714
-#: spl-data.h:2716
+#: spl-data.h:2716 spl-data.h:2701
 msgid "Holy Breath"
 msgstr ""
 
 #: spl-data.h:2854 spl-data.h:2847 spl-data.h:2721 spl-data.h:2727
-#: spl-data.h:2729
+#: spl-data.h:2729 spl-data.h:2714
 msgid "Mirror Damage"
 msgstr ""
 
 #: spl-data.h:2919 spl-data.h:2912 spl-data.h:2786 spl-data.h:2792
-#: spl-data.h:2794
+#: spl-data.h:2794 spl-data.h:2779
 msgid "Mesmerise"
 msgstr ""
 
 #: spl-data.h:2932 spl-data.h:2925 spl-data.h:2799 spl-data.h:2805
-#: spl-data.h:2807
+#: spl-data.h:2807 spl-data.h:2792
 msgid "melee"
 msgstr ""
 
 #: spl-data.h:2945 spl-data.h:2938 spl-data.h:2812 spl-data.h:2818
-#: spl-data.h:2820
+#: spl-data.h:2820 spl-data.h:2805
 msgid "Fire Summon"
 msgstr ""
 
@@ -11274,7 +11339,7 @@ msgstr ""
 
 #: effects.cc:278 effects.cc:278 spl-data.h:1511 effects.cc:279
 #: spl-data.h:1513 effects.cc:260 spl-data.h:1402 spl-data.h:1417
-#: spl-data.h:1419 effects.cc:261
+#: spl-data.h:1419 effects.cc:261 effects.cc:262
 msgid "Symbol of Torment"
 msgstr "고통의 주문"
 
@@ -11283,18 +11348,22 @@ msgstr "고통의 주문"
 #. XXX: If we ever make any other weapon / randart eligible
 #. to torment, this will be incorrect.
 #: effects.cc:284 effects.cc:284 effects.cc:285 effects.cc:266 effects.cc:267
+#: effects.cc:268
 msgid "Sceptre of Torment"
 msgstr "고통의 지팡이"
 
 #: effects.cc:288 effects.cc:288 effects.cc:289 effects.cc:270 effects.cc:271
+#: effects.cc:272
 msgid "scroll of torment"
 msgstr "고문의 마법 두루마리"
 
 #: effects.cc:293 effects.cc:293 effects.cc:294 effects.cc:275 effects.cc:276
+#: effects.cc:277
 msgid "Xom's torment"
 msgstr "좀의 장난"
 
 #: effects.cc:297 effects.cc:297 effects.cc:298 effects.cc:279 effects.cc:280
+#: effects.cc:281
 msgid "Kikubaaqudgha's torment"
 msgstr "키쿠바쿠드하의 사악한 고통"
 
@@ -11339,7 +11408,7 @@ msgid "Deafening"
 msgstr "던전 전체를 울림"
 
 #: misc.cc:1638 misc.cc:1639 misc.cc:1657 misc.cc:1675 misc.cc:1670
-#: misc.cc:1671 misc.cc:1663 misc.cc:1667 misc.cc:1668
+#: misc.cc:1671 misc.cc:1663 misc.cc:1667 misc.cc:1668 misc.cc:1673
 msgid "A mimic"
 msgstr "미믹"
 
@@ -11347,12 +11416,13 @@ msgstr "미믹"
 #: fight.cc:3534 monster.cc:2353 monster.cc:2513 monster.cc:2627
 #: monster.cc:2787 monster.cc:2647 monster.cc:2807 monster.cc:2648
 #: monster.cc:2808 monster.cc:2651 monster.cc:2811 player-act.cc:425
+#: player-act.cc:426
 msgid "claw"
 msgstr "손톱"
 
 #: misc.cc:2207 misc.cc:2214 misc.cc:2208 misc.cc:2215 monster.cc:2407
 #: monster.cc:2441 monster.cc:2715 monster.cc:2735 monster.cc:2736
-#: monster.cc:2739 player-act.cc:431
+#: monster.cc:2739 player-act.cc:431 player-act.cc:432
 msgid "hand"
 msgstr "손"
 
@@ -11361,20 +11431,20 @@ msgstr "손"
 #: monster.cc:2506 monster.cc:2768 monster.cc:2772 monster.cc:2780
 #: monster.cc:2788 monster.cc:2792 monster.cc:2800 monster.cc:2789
 #: monster.cc:2793 monster.cc:2801 monster.cc:2796 monster.cc:2804
-#: player-act.cc:410 player-act.cc:423
+#: player-act.cc:410 player-act.cc:423 player-act.cc:411 player-act.cc:424
 msgid "paw"
 msgstr "발"
 
 # (deceit, 110831) 원래 뜻은 '앞다리'죠. 돼지로 변신당했을때인데, 재미삼아 이렇게 번역해봅니다.
-#: misc.cc:2222 misc.cc:2223 player-act.cc:408
+#: misc.cc:2222 misc.cc:2223 player-act.cc:408 player-act.cc:409
 msgid "front leg"
 msgstr "앞다리"
 
-#: misc.cc:2226 misc.cc:2227 player-act.cc:406
+#: misc.cc:2226 misc.cc:2227 player-act.cc:406 player-act.cc:407
 msgid "foreclaw"
 msgstr "이빨"
 
-#: misc.cc:2229 misc.cc:2230 player-act.cc:412
+#: misc.cc:2229 misc.cc:2230 player-act.cc:412 player-act.cc:413
 msgid "scythe-like blade"
 msgstr "칼날의 손"
 
@@ -11484,14 +11554,14 @@ msgstr "다리"
 #: monster.cc:2770 monster.cc:2780 monster.cc:2788 monster.cc:2796
 #: monster.cc:2771 monster.cc:2781 monster.cc:2789 monster.cc:2797
 #: monster.cc:2774 monster.cc:2784 monster.cc:2792 monster.cc:2800
-#: player-act.cc:460
+#: player-act.cc:460 player-act.cc:461
 msgid "hoof"
 msgstr "발굽"
 
 #: monster.cc:2446 monster.cc:2484 monster.cc:2480 monster.cc:2518
 #: monster.cc:2754 monster.cc:2792 monster.cc:2774 monster.cc:2812
 #: monster.cc:2775 monster.cc:2813 monster.cc:2778 monster.cc:2816
-#: player-act.cc:475
+#: player-act.cc:475 player-act.cc:476
 msgid "tail"
 msgstr "꼬리"
 
@@ -11499,12 +11569,12 @@ msgstr "꼬리"
 #: monster.cc:2500 monster.cc:2508 monster.cc:2768 monster.cc:2774
 #: monster.cc:2782 monster.cc:2788 monster.cc:2794 monster.cc:2802
 #: monster.cc:2789 monster.cc:2795 monster.cc:2803 monster.cc:2792
-#: monster.cc:2798 monster.cc:2806 player-act.cc:462
+#: monster.cc:2798 monster.cc:2806 player-act.cc:462 player-act.cc:463
 msgid "talon"
 msgstr "발톱"
 
 #: monster.cc:2489 monster.cc:2523 monster.cc:2797 monster.cc:2817
-#: monster.cc:2818 monster.cc:2821 player-act.cc:451
+#: monster.cc:2818 monster.cc:2821 player-act.cc:451 player-act.cc:452
 msgid "root"
 msgstr "뿌리"
 
@@ -11519,21 +11589,22 @@ msgid "pseudopod"
 msgstr "위족"
 
 #: monster.cc:2511 monster.cc:2545 monster.cc:2819 monster.cc:2839
-#: monster.cc:2840 monster.cc:2843 player-act.cc:455
+#: monster.cc:2840 monster.cc:2843 player-act.cc:455 player-act.cc:456
 msgid "underside"
 msgstr "아랫쪽"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2850
-#: monster.cc:2851 monster.cc:2854 player-act.cc:481
+#: monster.cc:2851 monster.cc:2854 player-act.cc:481 player-act.cc:482
 msgid "feet"
 msgstr "발"
 
 #: monster.cc:2522 monster.cc:2556 monster.cc:2830 monster.cc:2850
-#: monster.cc:2851 monster.cc:2854 player-act.cc:481
+#: monster.cc:2851 monster.cc:2854 player-act.cc:481 player-act.cc:482
 msgid "foot"
 msgstr "발"
 
 #: monster.cc:2552 monster.cc:2870 player-act.cc:498 monster.cc:2874
+#: player-act.cc:499
 msgid "arm"
 msgstr "팔"
 
@@ -12001,13 +12072,13 @@ msgstr "금화"
 
 #: itemname.cc:2001 itemname.cc:1888 itemname.cc:1891 itemname.cc:1920
 #: itemname.cc:1932 itemname.cc:1937 itemname.cc:1942 itemname.cc:1976
-#: itemname.cc:1985
+#: itemname.cc:1985 itemname.cc:1989
 msgid " [fire]"
 msgstr " [화염]"
 
 #: itemname.cc:2004 itemname.cc:1891 itemname.cc:1894 itemname.cc:1923
 #: itemname.cc:1935 itemname.cc:1940 itemname.cc:1945 itemname.cc:1979
-#: itemname.cc:1988
+#: itemname.cc:1988 itemname.cc:1992
 msgid " [ice]"
 msgstr " [얼음]"
 
@@ -12051,7 +12122,7 @@ msgstr "사용함"
 
 #: mon-util.cc:3575 mon-util.cc:3623 travel.cc:4343 mon-util.cc:3814
 #: mon-util.cc:3786 travel.cc:4402 mon-util.cc:3773 travel.cc:4419
-#: mon-util.cc:3781 mon-util.cc:3778
+#: mon-util.cc:3781 mon-util.cc:3778 travel.cc:4448
 msgid "altar"
 msgstr "제단"
 
@@ -12069,6 +12140,8 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -12565,7 +12638,7 @@ msgid "Tartarus"
 msgstr "타르타로스"
 
 #: branch-data.h:194 describe.cc:555 branch-data.h:201 describe.cc:523
-#: describe.cc:517
+#: describe.cc:517 describe.cc:516
 msgid "Zot"
 msgstr "조트"
 
@@ -12628,7 +12701,7 @@ msgstr "거대한 관문"
 msgid "sanctuary"
 msgstr "성지"
 
-#: directn.cc:1419 status.cc:523 status.cc:535
+#: directn.cc:1419 status.cc:523 status.cc:535 status.cc:532
 msgid "silenced"
 msgstr "정적화됨"
 
@@ -12829,24 +12902,25 @@ msgstr "연기를 피우는 "
 msgid "axe"
 msgstr "도끼"
 
-#: describe.cc:554 describe.cc:522 describe.cc:516
+#: describe.cc:554 describe.cc:522 describe.cc:516 describe.cc:515
 msgid "teleport"
 msgstr "공간이동"
 
-#: describe.cc:554 describe.cc:522 describe.cc:516
+#: describe.cc:554 describe.cc:522 describe.cc:516 describe.cc:515
 msgid "alarm"
 msgstr "알람"
 
-#: describe.cc:554 describe.cc:522 describe.cc:516
+#: describe.cc:554 describe.cc:522 describe.cc:516 describe.cc:515
 msgid "blade"
 msgstr "칼날"
 
 #: misc.cc:2487 describe.cc:555 misc.cc:2530 misc.cc:2525 describe.cc:523
-#: describe.cc:517 misc.cc:2529 misc.cc:2536 misc.cc:2537
+#: describe.cc:517 misc.cc:2529 misc.cc:2536 misc.cc:2537 describe.cc:516
+#: misc.cc:2542
 msgid "net"
 msgstr "그물"
 
-#: describe.cc:556 describe.cc:524 describe.cc:518
+#: describe.cc:556 describe.cc:524 describe.cc:518 describe.cc:517
 msgid "passage"
 msgstr "통로"
 
@@ -12893,11 +12967,11 @@ msgstr "과식"
 msgid "completely stuffed"
 msgstr "과식"
 
-#: chardump.cc:1158 status.cc:606
+#: chardump.cc:1158 status.cc:606 status.cc:603
 msgid "bloodless"
 msgstr "심한 빈혈"
 
-#: chardump.cc:1158 status.cc:606
+#: chardump.cc:1158 status.cc:606 status.cc:603
 msgid "starving"
 msgstr "매우 굶주림"
 
@@ -12949,7 +13023,7 @@ msgstr "음식 "
 #: directn.cc:2955 directn.cc:3047 directn.cc:2923 directn.cc:3013
 #: misc.cc:2487 describe.cc:556 directn.cc:2939 directn.cc:3030 misc.cc:2530
 #: misc.cc:2525 describe.cc:524 describe.cc:518 misc.cc:2529 misc.cc:2536
-#: directn.cc:2940 directn.cc:3031 misc.cc:2537
+#: directn.cc:2940 directn.cc:3031 misc.cc:2537 describe.cc:517 misc.cc:2542
 msgid "web"
 msgstr "거미줄"
 
@@ -12984,36 +13058,38 @@ msgstr "회복"
 msgid "Debilitation"
 msgstr "약화"
 
-#: itemprop.cc:79 itemprop.cc:76 itemprop.cc:77
+#: itemprop.cc:79 itemprop.cc:76 itemprop.cc:77 itemprop.cc:75
 msgid "plate armour"
 msgstr "판금 갑옷"
 
-#: itemprop.cc:81 itemprop.cc:78 itemprop.cc:79
+#: itemprop.cc:81 itemprop.cc:78 itemprop.cc:79 itemprop.cc:77
 msgid "crystal plate armour"
 msgstr "수정 판금 갑옷"
 
-#: itemprop.cc:100 itemprop.cc:97 itemprop.cc:98
+#: itemprop.cc:100 itemprop.cc:97 itemprop.cc:98 itemprop.cc:96
 msgid "fire dragon hide"
 msgstr "화룡 가죽"
 
-#: itemprop.cc:102 itemprop.cc:99 itemprop.cc:100
+#: itemprop.cc:102 itemprop.cc:99 itemprop.cc:100 itemprop.cc:98
 msgid "fire dragon armour"
 msgstr "화룡 갑옷"
 
-#: species.cc:174 species.cc:172
+#: species.cc:174 species.cc:172 species.cc:175
 msgid "Tengu"
 msgstr "텐구"
 
 #: status.cc:549 status.cc:592 status.cc:609 status.cc:621 status.cc:622
+#: status.cc:619
 msgid "Contam"
 msgstr "오염"
 
 #: status.cc:844 status.cc:908 status.cc:887 status.cc:892 status.cc:893
+#: status.cc:877
 msgid "App"
 msgstr "야수"
 
 #: status.cc:845 status.cc:909 transform.cc:794 status.cc:888 transform.cc:842
-#: transform.cc:852 status.cc:893 status.cc:894
+#: transform.cc:852 status.cc:893 status.cc:894 status.cc:878 transform.cc:854
 msgid "appendage"
 msgstr "야수화"
 
@@ -13113,14 +13189,17 @@ msgid "golem"
 msgstr "골렘"
 
 #: spl-data.h:2743 spl-data.h:2615 spl-data.h:2675 spl-data.h:2677
+#: spl-data.h:2662
 msgid "Holy Light"
 msgstr "성스러운 빛"
 
 #: spl-data.h:2990 spl-data.h:2864 spl-data.h:2870 spl-data.h:2872
+#: spl-data.h:2857
 msgid "Beastly Appendage"
 msgstr "야수의 흉기"
 
 #: spl-data.h:3003 spl-data.h:2877 spl-data.h:2883 spl-data.h:2885
+#: spl-data.h:2870
 msgid "Silver Blast"
 msgstr "은빛의 폭발"
 
@@ -13190,7 +13269,7 @@ msgstr "탐지된 제단"
 msgid "detected shop or portal"
 msgstr "탐지된 상점/관문"
 
-#: effects.cc:360 effects.cc:361
+#: effects.cc:360 effects.cc:361 effects.cc:362
 msgid "a scroll of immolation"
 msgstr "희생의 두루마리"
 
@@ -13201,12 +13280,12 @@ msgstr "희생의 두루마리"
 # msgid "fiery explosion"
 # msgstr ""
 #: effects.cc:364 effects.cc:368 effects.cc:378 food.cc:1817 food.cc:1818
-#: food.cc:1916 food.cc:1919 food.cc:1926 food.cc:1928
+#: food.cc:1916 food.cc:1919 food.cc:1926 food.cc:1928 food.cc:1882
 msgid "mutagenic meat"
 msgstr "돌연변이 유발 고기"
 
 #: food.cc:2177 food.cc:2178 food.cc:2285 food.cc:2288 food.cc:2295
-#: food.cc:2287
+#: food.cc:2287 food.cc:2213
 msgid "mutagenic blood"
 msgstr "돌연변이 "
 
@@ -13215,6 +13294,7 @@ msgid "unholy creation"
 msgstr "부정한 소환"
 
 #: melee_attack.cc:203 melee_attack.cc:207 melee_attack.cc:213
+#: melee_attack.cc:212
 msgid "your electric unarmed attack"
 msgstr "전기가 부여된 맨손"
 
@@ -13292,24 +13372,24 @@ msgstr "판나르"
 msgid "Arachne"
 msgstr "아라크네"
 
-#: spl-data.h:2890 spl-data.h:2896 spl-data.h:2898
+#: spl-data.h:2890 spl-data.h:2896 spl-data.h:2898 spl-data.h:2883
 msgid "Ensnare"
 msgstr "인스네어"
 
-#: spl-data.h:2903 spl-data.h:2909 spl-data.h:2911
+#: spl-data.h:2903 spl-data.h:2909 spl-data.h:2911 spl-data.h:2896
 msgid "Thunderbolt"
 msgstr "번개 화살"
 
-#: effects.cc:364 effects.cc:365
+#: effects.cc:364 effects.cc:365 effects.cc:366
 msgid "a fiery explosion"
 msgstr "화염의 폭발"
 
-#: effects.cc:368 effects.cc:369
+#: effects.cc:368 effects.cc:369 effects.cc:370
 msgid "an exploding Tome of Destruction"
 msgstr "파괴의 학술서의 폭발"
 
 #: effects.cc:378 effects_first.cc:484 mon-stuff.cc:1083 effects_first.cc:488
-#: mon-stuff.cc:1102 effects.cc:379
+#: mon-stuff.cc:1102 effects.cc:379 effects.cc:380
 msgid "fiery explosion"
 msgstr "화염의 폭발"
 
@@ -13342,11 +13422,13 @@ msgstr " [거의 찢어짐]"
 
 #: itemname.cc:1781 itemname.cc:1784 itemname.cc:1813 itemname.cc:1825
 #: itemname.cc:1827 itemname.cc:1832 itemname.cc:1866 itemname.cc:1875
+#: itemname.cc:1879
 msgid "lightning rod"
 msgstr "번개의 마법 막대"
 
 #: itemname.cc:1894 itemname.cc:1897 itemname.cc:1926 itemname.cc:1938
 #: itemname.cc:1943 itemname.cc:1948 itemname.cc:1982 itemname.cc:1991
+#: itemname.cc:1995
 msgid " [lightning,fireball,iron]"
 msgstr " [번개,화염구,강철]"
 
@@ -13354,20 +13436,22 @@ msgstr " [번개,화염구,강철]"
 msgid "unimportant"
 msgstr "중요하지 않은"
 
-#: beam.cc:2277 beam.cc:2300 beam.cc:2302 beam.cc:2298
+#: beam.cc:2277 beam.cc:2300 beam.cc:2302 beam.cc:2298 beam.cc:2290
 msgid "mystic blast"
 msgstr "신비한 폭발"
 
 #: effects.cc:440 effects_first.cc:541 effects_first.cc:545 effects.cc:441
+#: effects.cc:442
 msgid "electric current"
 msgstr "고압 전류"
 
 #: effects.cc:489 effects_first.cc:598 effects_first.cc:602 effects.cc:490
+#: effects.cc:491
 msgid "golden flame"
 msgstr "황금빛 불꽃"
 
 #: effects.cc:2184 effects_first.cc:2857 effects_first.cc:2861 effects.cc:2243
-#: effects.cc:2247
+#: effects.cc:2247 effects.cc:2248
 msgid "magical storm"
 msgstr "마력의 폭풍"
 
@@ -13593,7 +13677,7 @@ msgid "explosion of spores"
 msgstr "포자의 폭발"
 
 #: mon-stuff.cc:1069 xom.cc:2019 xom.cc:1937 mon-stuff.cc:1076 xom.cc:2021
-#: xom.cc:2020 xom.cc:1943
+#: xom.cc:2020 xom.cc:1943 xom.cc:1944
 msgid "blast of lightning"
 msgstr "전격의 방출"
 
@@ -13661,7 +13745,7 @@ msgstr "수정 파편"
 msgid "blast of sapphire shards"
 msgstr "사파이어 파편"
 
-#: spl-miscast.cc:872 spl-miscast.cc:896
+#: spl-miscast.cc:872 spl-miscast.cc:896 spl-miscast.cc:901
 msgid "explosion"
 msgstr "폭발"
 
@@ -13673,7 +13757,7 @@ msgstr "밀어낸 계단"
 msgid "Mass Abjuration"
 msgstr "해방의 선서"
 
-#: transform.cc:787 transform.cc:835 transform.cc:845
+#: transform.cc:787 transform.cc:835 transform.cc:845 transform.cc:847
 msgid "pig"
 msgstr "돼지"
 
@@ -13821,7 +13905,7 @@ msgid "talons"
 msgstr "발톱"
 
 #: mutation-data.h:837 transform.cc:427 transform.cc:458 player-act.cc:465
-#: transform.cc:467
+#: transform.cc:467 player-act.cc:466 transform.cc:469
 msgid "tentacles"
 msgstr "촉수"
 
@@ -13866,25 +13950,27 @@ msgid "powered by pain"
 msgstr "고통으로부터의 힘"
 
 #: mutation-data.h:1131 mutation-data.h:1137 mutation-data.h:1139
+#: mutation-data.h:1169
 msgid "translucent skin"
 msgstr "반투명 피부"
 
 #: mutation-data.h:1149 mutation-data.h:1155 mutation-data.h:1157
+#: mutation-data.h:1187
 msgid "pseudopods"
 msgstr "종양"
 
 #: mutation-data.h:1167 mutation-data.h:1173 mutation-data.h:1174
-#: mutation-data.h:1176
+#: mutation-data.h:1176 mutation-data.h:1206
 msgid "spawn jellies when eating"
 msgstr "식사시 젤리 소환"
 
 #: mutation-data.h:1177 mutation-data.h:1183 mutation-data.h:1185
-#: mutation-data.h:1187
+#: mutation-data.h:1187 mutation-data.h:1217
 msgid "acidic bite"
 msgstr "산성 침"
 
 #: mutation-data.h:1386 mutation-data.h:1392 mutation-data.h:1394
-#: mutation-data.h:1396
+#: mutation-data.h:1396 mutation-data.h:1426
 msgid "camouflage"
 msgstr "보호색"
 
@@ -13914,10 +14000,12 @@ msgid "50% torment resistance"
 msgstr "고통 저항"
 
 #: mutation-data.h:1410 mutation-data.h:1412 mutation-data.h:1414
+#: mutation-data.h:1444
 msgid "ignite blood"
 msgstr "피의 점화"
 
 #: mutation-data.h:1420 mutation-data.h:1422 mutation-data.h:1424
+#: mutation-data.h:1454
 msgid "foul stench"
 msgstr "악취"
 
@@ -15544,223 +15632,227 @@ msgid "You feel completely energised by your suffering."
 msgstr "고통 자체가 슬슬 즐거워짐을 느꼈다."
 
 #: mutation-data.h:1097 mutation-data.h:1159 mutation-data.h:1103
-#: mutation-data.h:1105
+#: mutation-data.h:1105 mutation-data.h:1135
 msgid "Your rubbery body absorbs attacks (AC +1)."
 msgstr "당신은 충격을 흡수하는 고무 같은 몸을 가지고 있다. (AC +1)"
 
 #: mutation-data.h:1098 mutation-data.h:1160 mutation-data.h:1104
-#: mutation-data.h:1106
+#: mutation-data.h:1106 mutation-data.h:1136
 msgid "Your pliable body absorbs attacks (AC +1, EV +1)."
 msgstr ""
 "당신은 충격을 흡수하는 유연한 고무 같은 몸을 가지고 있다. (AC +1, EV +1)"
 
 #: mutation-data.h:1099 mutation-data.h:1161 mutation-data.h:1105
-#: mutation-data.h:1107
+#: mutation-data.h:1107 mutation-data.h:1137
 msgid "Your gelatinous body deflects attacks (AC +2, EV +2)."
 msgstr "당신은 충격을 흘려버리는 젤라틴질의 몸을 가지고 있다. (AC +2, EV +2)"
 
 #: mutation-data.h:1101 mutation-data.h:1163 mutation-data.h:1107
-#: mutation-data.h:1109
+#: mutation-data.h:1109 mutation-data.h:1139
 msgid "Your body becomes stretchy."
 msgstr "온 몸이 늘어짐을 느꼈다."
 
 #: mutation-data.h:1102 mutation-data.h:1164 mutation-data.h:1108
-#: mutation-data.h:1110
+#: mutation-data.h:1110 mutation-data.h:1140
 msgid "Your body becomes more malleable."
 msgstr "온 몸이 더욱 유연해지고 부드러워졌음을 느꼈다."
 
 #: mutation-data.h:1103 mutation-data.h:1165 mutation-data.h:1109
-#: mutation-data.h:1111
+#: mutation-data.h:1111 mutation-data.h:1141
 msgid "Your body becomes viscous."
 msgstr "온 몸이 끈적끈적해졌음을 느꼈다."
 
 #: mutation-data.h:1105 mutation-data.h:1167 mutation-data.h:1111
-#: mutation-data.h:1113
+#: mutation-data.h:1113 mutation-data.h:1143
 msgid "Your body returns to its normal consistency."
 msgstr "온 몸이 원래대로 돌아감을 느꼈다."
 
 #: mutation-data.h:1106 mutation-data.h:1107 mutation-data.h:1168
 #: mutation-data.h:1169 mutation-data.h:1113 mutation-data.h:1115
+#: mutation-data.h:1145
 msgid "Your body becomes less viscous."
 msgstr "온 몸이 덜 끈적해졌음을 느꼈다."
 
 #: mutation-data.h:1115 mutation-data.h:1177 mutation-data.h:1121
-#: mutation-data.h:1123
+#: mutation-data.h:1123 mutation-data.h:1153
 msgid "Your body is partially covered in golden eyeballs (Acc +3)."
 msgstr "당신의 몸의 일부에는 황금색 눈알들이 덮여있다. (명중률 +3)"
 
 #: mutation-data.h:1116 mutation-data.h:1178 mutation-data.h:1122
-#: mutation-data.h:1124
+#: mutation-data.h:1124 mutation-data.h:1154
 msgid "Your body is mostly covered in golden eyeballs (Acc +5)."
 msgstr "당신의 몸의 상당 부분에 황금색 눈알들이 덮여있다. (명중률 +5)"
 
 #: mutation-data.h:1117 mutation-data.h:1179 mutation-data.h:1123
-#: mutation-data.h:1125
+#: mutation-data.h:1125 mutation-data.h:1155
 msgid "Your body is completely covered in golden eyeballs (Acc +7, SInv)."
 msgstr "당신의 몸은 황금색 눈알들로 완전히 덮여있다. (명중률 +7, 투명 감지)"
 
 #: mutation-data.h:1119 mutation-data.h:1181 mutation-data.h:1125
-#: mutation-data.h:1127
+#: mutation-data.h:1127 mutation-data.h:1157
 msgid "Eyeballs grow over part of your body."
 msgstr "몸에 황금색 눈알들이 자라났다."
 
 #: mutation-data.h:1120 mutation-data.h:1182 mutation-data.h:1126
-#: mutation-data.h:1128
+#: mutation-data.h:1128 mutation-data.h:1158
 msgid "Eyeballs cover a large portion of your body."
 msgstr "몸에 황금색 눈알들이 더욱 많이 자라났다."
 
 #: mutation-data.h:1121 mutation-data.h:1183 mutation-data.h:1127
-#: mutation-data.h:1129
+#: mutation-data.h:1129 mutation-data.h:1159
 msgid "Eyeballs cover you completely."
 msgstr "온 몸이 황금색 눈알들로 완전히 덮였다."
 
 #: mutation-data.h:1123 mutation-data.h:1185 mutation-data.h:1129
-#: mutation-data.h:1131
+#: mutation-data.h:1131 mutation-data.h:1161
 msgid "The eyeballs on your body disappear."
 msgstr "몸에 자라난 황금색 눈알들이 사라졌다."
 
 #: mutation-data.h:1124 mutation-data.h:1125 mutation-data.h:1186
 #: mutation-data.h:1187 mutation-data.h:1130 mutation-data.h:1131
-#: mutation-data.h:1132 mutation-data.h:1133
+#: mutation-data.h:1132 mutation-data.h:1133 mutation-data.h:1162
+#: mutation-data.h:1163
 msgid "The eyeballs on your body recede somewhat."
 msgstr "몸에 자라난 황금색 눈알들이 일부 사라져 줄어들었다."
 
 #: mutation-data.h:1133 mutation-data.h:1195 mutation-data.h:1139
-#: mutation-data.h:1141
+#: mutation-data.h:1141 mutation-data.h:1171
 msgid "Your skin is partially translucent."
 msgstr "당신의 피부는 부분적으로 반투명하다."
 
 #: mutation-data.h:1134 mutation-data.h:1196 mutation-data.h:1140
-#: mutation-data.h:1142
+#: mutation-data.h:1142 mutation-data.h:1172
 msgid "Your skin is mostly translucent (Stlth)."
 msgstr "당신의 피부는 대부분 반투명하다. (은밀+)"
 
 #: mutation-data.h:1135 mutation-data.h:1197 mutation-data.h:1141
-#: mutation-data.h:1143
+#: mutation-data.h:1143 mutation-data.h:1173
 msgid "Your transparent skin reduces the accuracy of your foes (Stlth)."
 msgstr "당신의 피부는 투명하여, 적들이 맞추기 힘들다. (은밀+)"
 
 #: mutation-data.h:1137 mutation-data.h:1199 mutation-data.h:1143
-#: mutation-data.h:1145
+#: mutation-data.h:1145 mutation-data.h:1175
 msgid "Your skin becomes partially translucent."
 msgstr "피부가 일부 반투명해진것을 느꼈다."
 
 #: mutation-data.h:1138 mutation-data.h:1200 mutation-data.h:1144
-#: mutation-data.h:1146
+#: mutation-data.h:1146 mutation-data.h:1176
 msgid "Your skin becomes more translucent."
 msgstr "피부가 일부 투명해진것을 느꼈다."
 
 #: mutation-data.h:1139 mutation-data.h:1201 mutation-data.h:1145
-#: mutation-data.h:1147
+#: mutation-data.h:1147 mutation-data.h:1177
 msgid "Your skin becomes completely transparent."
 msgstr "피부가 완전히 투명해진 것을 느꼈다."
 
 #: mutation-data.h:1141 mutation-data.h:1203 mutation-data.h:1147
-#: mutation-data.h:1149
+#: mutation-data.h:1149 mutation-data.h:1179
 msgid "Your skin returns to its normal opacity."
 msgstr "반투명한 피부가 원래대로 돌아갔다."
 
 #: mutation-data.h:1142 mutation-data.h:1204 mutation-data.h:1148
-#: mutation-data.h:1150
+#: mutation-data.h:1150 mutation-data.h:1180
 msgid "Your skin's translucency fades."
 msgstr "피부의 반투명함이 약해졌다."
 
 #: mutation-data.h:1143 mutation-data.h:1205 mutation-data.h:1149
-#: mutation-data.h:1151
+#: mutation-data.h:1151 mutation-data.h:1181
 msgid "Your skin's transparency fades."
 msgstr "피부가 반투명하게 돌아갔다."
 
 #: mutation-data.h:1151 mutation-data.h:1213 mutation-data.h:1157
-#: mutation-data.h:1159
+#: mutation-data.h:1159 mutation-data.h:1189
 msgid "Armour fits poorly on your pseudopods."
 msgstr "온 몸의 종양 때문에 갑옷이 잘 맞지 않는다."
 
 #: mutation-data.h:1152 mutation-data.h:1214 mutation-data.h:1158
-#: mutation-data.h:1160
+#: mutation-data.h:1160 mutation-data.h:1190
 msgid "Armour fits poorly on your large pseudopods."
 msgstr "온 몸의 커다란 종양 때문에 갑옷이 잘 맞지 않는다."
 
 #: mutation-data.h:1153 mutation-data.h:1215 mutation-data.h:1159
-#: mutation-data.h:1161
+#: mutation-data.h:1161 mutation-data.h:1191
 msgid "Armour fits poorly on your massive pseudopods."
 msgstr "온 몸에 난 심각한 종양 때문에 갑옷이 거의 맞지 않는다."
 
 #: mutation-data.h:1155 mutation-data.h:1217 mutation-data.h:1161
-#: mutation-data.h:1163
+#: mutation-data.h:1163 mutation-data.h:1193
 msgid "Pseudopods emerge from your body."
 msgstr "당신의 몸에 종양들이 자라났다."
 
 #: mutation-data.h:1156 mutation-data.h:1157 mutation-data.h:1218
 #: mutation-data.h:1219 mutation-data.h:1162 mutation-data.h:1163
-#: mutation-data.h:1164 mutation-data.h:1165
+#: mutation-data.h:1164 mutation-data.h:1165 mutation-data.h:1194
+#: mutation-data.h:1195
 msgid "Your pseudopods grow in size."
 msgstr "당신 몸의 종양들이 자라나 커졌다."
 
 #: mutation-data.h:1159 mutation-data.h:1221 mutation-data.h:1165
-#: mutation-data.h:1167
+#: mutation-data.h:1167 mutation-data.h:1197
 msgid "Your pseudopods retract into your body."
 msgstr "몸의 종양들이 떨어져나갔다."
 
 #: mutation-data.h:1160 mutation-data.h:1161 mutation-data.h:1222
 #: mutation-data.h:1223 mutation-data.h:1166 mutation-data.h:1167
-#: mutation-data.h:1168 mutation-data.h:1169
+#: mutation-data.h:1168 mutation-data.h:1169 mutation-data.h:1198
+#: mutation-data.h:1199
 msgid "Your pseudopods become smaller."
 msgstr "몸의 종양들이 작아졌다."
 
 #: mutation-data.h:1169 mutation-data.h:1231 mutation-data.h:1175
-#: mutation-data.h:1176 mutation-data.h:1178
+#: mutation-data.h:1176 mutation-data.h:1178 mutation-data.h:1208
 msgid "You occasionally spawn a jelly by eating."
 msgstr "당신은 무언가를 섭취함으로써, 가끔 젤리를 몸에서 배출할 수 있다."
 
 #: mutation-data.h:1170 mutation-data.h:1232 mutation-data.h:1176
-#: mutation-data.h:1177 mutation-data.h:1179
+#: mutation-data.h:1177 mutation-data.h:1179 mutation-data.h:1209
 msgid "You feel more connected to the slimes."
 msgstr "슬라임과의 동화감을 느꼈다."
 
 #: mutation-data.h:1171 mutation-data.h:1233 mutation-data.h:1177
-#: mutation-data.h:1178 mutation-data.h:1180
+#: mutation-data.h:1178 mutation-data.h:1180 mutation-data.h:1210
 msgid "Your connection to the slimes vanishes."
 msgstr "슬라임과의 동화감이 사라진 것을 느꼈다."
 
 #: mutation-data.h:1179 mutation-data.h:1241 mutation-data.h:1185
-#: mutation-data.h:1187 mutation-data.h:1189
+#: mutation-data.h:1187 mutation-data.h:1189 mutation-data.h:1219
 msgid "You have acidic saliva."
 msgstr "당신은 강산성의 타액을 가지고 있다."
 
 #: mutation-data.h:1180 mutation-data.h:1242 mutation-data.h:1186
-#: mutation-data.h:1188 mutation-data.h:1190
+#: mutation-data.h:1188 mutation-data.h:1190 mutation-data.h:1220
 msgid "Acid begins to drip from your mouth."
 msgstr "당신의 입에서 산성 물질이 흘러나오기 시작했다."
 
 #: mutation-data.h:1181 mutation-data.h:1243 mutation-data.h:1187
-#: mutation-data.h:1189 mutation-data.h:1191
+#: mutation-data.h:1189 mutation-data.h:1191 mutation-data.h:1221
 msgid "Your mouth feels dry."
 msgstr "입 안이 바싹 마른 걸 느꼈다."
 
 #: mutation-data.h:1190 mutation-data.h:1252 mutation-data.h:1196
-#: mutation-data.h:1198 mutation-data.h:1200
+#: mutation-data.h:1198 mutation-data.h:1200 mutation-data.h:1230
 msgid "You are surrounded by a mild repulsion field (EV +2)."
 msgstr "당신은 완만한 반발 필드에 덮여 있다. (EV +2)"
 
 #: mutation-data.h:1191 mutation-data.h:1253 mutation-data.h:1197
-#: mutation-data.h:1199 mutation-data.h:1201
+#: mutation-data.h:1199 mutation-data.h:1201 mutation-data.h:1231
 msgid "You are surrounded by a moderate repulsion field (EV +3)."
 msgstr "당신은 반발 필드에 덮여 있다. (EV +3)"
 
 #: mutation-data.h:1192 mutation-data.h:1254 mutation-data.h:1198
-#: mutation-data.h:1200 mutation-data.h:1202
+#: mutation-data.h:1200 mutation-data.h:1202 mutation-data.h:1232
 msgid "You are surrounded by a strong repulsion field (EV +4, rMsl)."
 msgstr "당신은 강력한 반발 필드에 덮여 있다. (EV +4, 미사일류 방어)"
 
 #: mutation-data.h:1194 mutation-data.h:1256 mutation-data.h:1200
-#: mutation-data.h:1202 mutation-data.h:1204
+#: mutation-data.h:1202 mutation-data.h:1204 mutation-data.h:1234
 msgid "You begin to radiate repulsive energy."
 msgstr "주위에 반발력이 생기기 시작했다."
 
 #: mutation-data.h:1195 mutation-data.h:1196 mutation-data.h:1257
 #: mutation-data.h:1258 mutation-data.h:1201 mutation-data.h:1202
 #: mutation-data.h:1203 mutation-data.h:1204 mutation-data.h:1205
-#: mutation-data.h:1206
+#: mutation-data.h:1206 mutation-data.h:1235 mutation-data.h:1236
 msgid "Your repulsive radiation grows stronger."
 msgstr "당신 주위의 반발력이 더욱 강해졌다."
 
@@ -15768,7 +15860,8 @@ msgstr "당신 주위의 반발력이 더욱 강해졌다."
 #: mutation-data.h:1260 mutation-data.h:1261 mutation-data.h:1262
 #: mutation-data.h:1204 mutation-data.h:1205 mutation-data.h:1206
 #: mutation-data.h:1207 mutation-data.h:1208 mutation-data.h:1209
-#: mutation-data.h:1210
+#: mutation-data.h:1210 mutation-data.h:1238 mutation-data.h:1239
+#: mutation-data.h:1240
 msgid "You feel less repulsive."
 msgstr "당신 주위의 반발력이 약해진 것을 느꼈다."
 
@@ -15795,7 +15888,7 @@ msgid "Your colourless scales turn blue and spread over more of your body."
 msgstr "무색의 비늘이 몸을 더욱 덮었고, 파랗게 빛을 띄기 시작했다."
 
 #: mutation-data.h:1214 mutation-data.h:1276 mutation-data.h:1220
-#: mutation-data.h:1222 mutation-data.h:1224
+#: mutation-data.h:1222 mutation-data.h:1224 mutation-data.h:1254
 msgid "Icy blue scales cover your body completely."
 msgstr "파란 비늘이 당신의 몸을 완전하게 덮었다."
 
@@ -15807,54 +15900,54 @@ msgstr "당신의 무색 비늘이 사라졌다."
 #: mutation-data.h:1217 mutation-data.h:1218 mutation-data.h:1279
 #: mutation-data.h:1280 mutation-data.h:1223 mutation-data.h:1224
 #: mutation-data.h:1225 mutation-data.h:1226 mutation-data.h:1227
-#: mutation-data.h:1228
+#: mutation-data.h:1228 mutation-data.h:1257 mutation-data.h:1258
 msgid "Your icy blue scales recede somewhat."
 msgstr "당신의 무색 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1226 mutation-data.h:1288 mutation-data.h:1232
-#: mutation-data.h:1234 mutation-data.h:1236
+#: mutation-data.h:1234 mutation-data.h:1236 mutation-data.h:1266
 msgid "You are partially covered in iridescent scales (AC +4)."
 msgstr "당신은 무지개빛의 비늘로 부분적으로 덮여 있다. (AC +4)"
 
 #: mutation-data.h:1227 mutation-data.h:1289 mutation-data.h:1233
-#: mutation-data.h:1235 mutation-data.h:1237
+#: mutation-data.h:1235 mutation-data.h:1237 mutation-data.h:1267
 msgid "You are mostly covered in iridescent scales (AC +6)."
 msgstr "당신은 무지개빛의 비늘로 대부분 덮여 있다. (AC +6)"
 
 #: mutation-data.h:1228 mutation-data.h:1290 mutation-data.h:1234
-#: mutation-data.h:1236 mutation-data.h:1238
+#: mutation-data.h:1236 mutation-data.h:1238 mutation-data.h:1268
 msgid "You are completely covered in iridescent scales (AC +8)."
 msgstr "당신은 무지개빛의 비늘로 완전히 덮여 있다. (AC +8)"
 
 #: mutation-data.h:1230 mutation-data.h:1292 mutation-data.h:1236
-#: mutation-data.h:1238 mutation-data.h:1240
+#: mutation-data.h:1238 mutation-data.h:1240 mutation-data.h:1270
 msgid "Iridescent scales grow over part of your body."
 msgstr "무지개빛의 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1231 mutation-data.h:1293 mutation-data.h:1237
-#: mutation-data.h:1239 mutation-data.h:1241
+#: mutation-data.h:1239 mutation-data.h:1241 mutation-data.h:1271
 msgid "Iridescent scales spread over more of your body."
 msgstr "무지개빛의 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1232 mutation-data.h:1294 mutation-data.h:1238
-#: mutation-data.h:1240 mutation-data.h:1242
+#: mutation-data.h:1240 mutation-data.h:1242 mutation-data.h:1272
 msgid "Iridescent scales cover you completely."
 msgstr "무지개빛의 비늘이 당신의 몸을 완전하게 덮었다."
 
 #: mutation-data.h:1234 mutation-data.h:1296 mutation-data.h:1240
-#: mutation-data.h:1242 mutation-data.h:1244
+#: mutation-data.h:1242 mutation-data.h:1244 mutation-data.h:1274
 msgid "Your iridescent scales disappear."
 msgstr "당신의 무지개빛 비늘이 사라졌다."
 
 #: mutation-data.h:1235 mutation-data.h:1236 mutation-data.h:1297
 #: mutation-data.h:1298 mutation-data.h:1241 mutation-data.h:1242
 #: mutation-data.h:1243 mutation-data.h:1244 mutation-data.h:1245
-#: mutation-data.h:1246
+#: mutation-data.h:1246 mutation-data.h:1275 mutation-data.h:1276
 msgid "Your iridescent scales recede somewhat."
 msgstr "당신의 무지개빛 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1244 mutation-data.h:1306 mutation-data.h:1250
-#: mutation-data.h:1252 mutation-data.h:1254
+#: mutation-data.h:1252 mutation-data.h:1254 mutation-data.h:1284
 msgid "You are partially covered in large bone plates (AC +2, SH +2)."
 msgstr "당신은 커다란 뼈 갑옷으로 부분적으로 덮여 있다. (AC +2, SH +2)"
 
@@ -15867,29 +15960,29 @@ msgid "You are completely covered in large bone plates (AC +4, SH +4)."
 msgstr "당신은 커다란 뼈 갑옷으로 완전히 덮여 있다. (AC +4, SH +4)"
 
 #: mutation-data.h:1248 mutation-data.h:1310 mutation-data.h:1254
-#: mutation-data.h:1256 mutation-data.h:1258
+#: mutation-data.h:1256 mutation-data.h:1258 mutation-data.h:1288
 msgid "Large bone plates grow over parts of your arms."
 msgstr "커다란 뼈 갑옷이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1249 mutation-data.h:1311 mutation-data.h:1255
-#: mutation-data.h:1257 mutation-data.h:1259
+#: mutation-data.h:1257 mutation-data.h:1259 mutation-data.h:1289
 msgid "Large bone plates spread over more of your arms."
 msgstr "커다란 뼈 갑옷이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1250 mutation-data.h:1312 mutation-data.h:1256
-#: mutation-data.h:1258 mutation-data.h:1260
+#: mutation-data.h:1258 mutation-data.h:1260 mutation-data.h:1290
 msgid "Large bone plates cover your arms completely."
 msgstr "커다란 뼈 갑옷이 당신의 몸을 완전하게 덮었다."
 
 #: mutation-data.h:1252 mutation-data.h:1314 mutation-data.h:1258
-#: mutation-data.h:1260 mutation-data.h:1262
+#: mutation-data.h:1260 mutation-data.h:1262 mutation-data.h:1292
 msgid "Your large bone plates disappear."
 msgstr "당신의 뼈 갑옷이 사라졌다."
 
 #: mutation-data.h:1253 mutation-data.h:1254 mutation-data.h:1315
 #: mutation-data.h:1316 mutation-data.h:1259 mutation-data.h:1260
 #: mutation-data.h:1261 mutation-data.h:1262 mutation-data.h:1263
-#: mutation-data.h:1264
+#: mutation-data.h:1264 mutation-data.h:1293 mutation-data.h:1294
 msgid "Your large bone plates recede somewhat."
 msgstr "당신의 뼈 갑옷이 일부 사라졌다."
 
@@ -15906,56 +15999,56 @@ msgid "Your colourless scales turn molten and spread over more of your body."
 msgstr "무색의 비늘이 몸을 더욱 덮었고, 얼룩무늬의 빛을 띄기 시작했다."
 
 #: mutation-data.h:1268 mutation-data.h:1330 mutation-data.h:1274
-#: mutation-data.h:1276 mutation-data.h:1278
+#: mutation-data.h:1276 mutation-data.h:1278 mutation-data.h:1308
 msgid "Molten scales cover your body completely."
 msgstr "얼룩무늬의 비늘이 당신의 몸을 완전하게 덮었다."
 
 #: mutation-data.h:1271 mutation-data.h:1272 mutation-data.h:1333
 #: mutation-data.h:1334 mutation-data.h:1277 mutation-data.h:1278
 #: mutation-data.h:1279 mutation-data.h:1280 mutation-data.h:1281
-#: mutation-data.h:1282
+#: mutation-data.h:1282 mutation-data.h:1311 mutation-data.h:1312
 msgid "Your molten scales recede somewhat."
 msgstr "당신의 얼룩무늬 비늘이 일부 사라졌다."
 
 #: mutation-data.h:1280 mutation-data.h:1342 mutation-data.h:1286
-#: mutation-data.h:1288 mutation-data.h:1290
+#: mutation-data.h:1288 mutation-data.h:1290 mutation-data.h:1320
 msgid "You are partially covered in rough black scales (AC +4, Dex -1)."
 msgstr "당신은 거친 검은색 비늘로 부분적으로 덮여 있다. (AC +4, 민첩 -1)"
 
 #: mutation-data.h:1281 mutation-data.h:1343 mutation-data.h:1287
-#: mutation-data.h:1289 mutation-data.h:1291
+#: mutation-data.h:1289 mutation-data.h:1291 mutation-data.h:1321
 msgid "You are mostly covered in rough black scales (AC +7, Dex -2)."
 msgstr "당신은 거친 검은색 비늘로 대부분 덮여 있다. (AC +7, 민첩 -2)"
 
 #: mutation-data.h:1282 mutation-data.h:1344 mutation-data.h:1288
-#: mutation-data.h:1290 mutation-data.h:1292
+#: mutation-data.h:1290 mutation-data.h:1292 mutation-data.h:1322
 msgid "You are completely covered in rough black scales (AC +10, Dex -3)."
 msgstr "당신은 거친 검은색 비늘로 대부분 덮여 있다. (AC +10, 민첩 -3)"
 
 #: mutation-data.h:1284 mutation-data.h:1346 mutation-data.h:1290
-#: mutation-data.h:1292 mutation-data.h:1294
+#: mutation-data.h:1292 mutation-data.h:1294 mutation-data.h:1324
 msgid "Rough black scales grow over part of your body."
 msgstr "거친 검은색 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1285 mutation-data.h:1347 mutation-data.h:1291
-#: mutation-data.h:1293 mutation-data.h:1295
+#: mutation-data.h:1293 mutation-data.h:1295 mutation-data.h:1325
 msgid "Rough black scales spread over more of your body."
 msgstr "거친 검은색 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1286 mutation-data.h:1348 mutation-data.h:1292
-#: mutation-data.h:1294 mutation-data.h:1296
+#: mutation-data.h:1294 mutation-data.h:1296 mutation-data.h:1326
 msgid "Rough black scales cover you completely."
 msgstr "거친 검은색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1288 mutation-data.h:1350 mutation-data.h:1294
-#: mutation-data.h:1296 mutation-data.h:1298
+#: mutation-data.h:1296 mutation-data.h:1298 mutation-data.h:1328
 msgid "Your rough black scales disappear."
 msgstr "당신의 거친 검은색 비늘이 사라졌다."
 
 #: mutation-data.h:1289 mutation-data.h:1290 mutation-data.h:1351
 #: mutation-data.h:1352 mutation-data.h:1295 mutation-data.h:1296
 #: mutation-data.h:1297 mutation-data.h:1298 mutation-data.h:1299
-#: mutation-data.h:1300
+#: mutation-data.h:1300 mutation-data.h:1329 mutation-data.h:1330
 msgid "Your rough black scales recede somewhat."
 msgstr "당신의 거친 검은색 비늘이 일부 사라졌다."
 
@@ -15964,7 +16057,7 @@ msgid "You are partially covered in rugged brown scales (AC +2, +3% HP)."
 msgstr "당신은 질긴 갈색 비늘로 부분적으로 덮여 있다. (AC +2, HP +3%)"
 
 #: mutation-data.h:1299 mutation-data.h:1361 mutation-data.h:1305
-#: mutation-data.h:1307 mutation-data.h:1309
+#: mutation-data.h:1307 mutation-data.h:1309 mutation-data.h:1339
 msgid "You are mostly covered in rugged brown scales (AC +2, +5% HP)."
 msgstr "당신은 질긴 갈색 비늘로 대부분 덮여 있다. (AC+2, HP +5%)"
 
@@ -15973,29 +16066,29 @@ msgid "You are completely covered in rugged brown scales (AC +2, +7% HP)."
 msgstr "당신은 질긴 갈색 비늘로 완전히 덮여 있다. (AC +2, HP +7%)"
 
 #: mutation-data.h:1302 mutation-data.h:1364 mutation-data.h:1308
-#: mutation-data.h:1310 mutation-data.h:1312
+#: mutation-data.h:1310 mutation-data.h:1312 mutation-data.h:1342
 msgid "Rugged brown scales grow over part of your body."
 msgstr "질긴 갈색 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1303 mutation-data.h:1365 mutation-data.h:1309
-#: mutation-data.h:1311 mutation-data.h:1313
+#: mutation-data.h:1311 mutation-data.h:1313 mutation-data.h:1343
 msgid "Rugged brown scales spread over more of your body."
 msgstr "질긴 갈색 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1304 mutation-data.h:1366 mutation-data.h:1310
-#: mutation-data.h:1312 mutation-data.h:1314
+#: mutation-data.h:1312 mutation-data.h:1314 mutation-data.h:1344
 msgid "Rugged brown scales cover you completely."
 msgstr "질긴 갈색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1306 mutation-data.h:1368 mutation-data.h:1312
-#: mutation-data.h:1314 mutation-data.h:1316
+#: mutation-data.h:1314 mutation-data.h:1316 mutation-data.h:1346
 msgid "Your rugged brown scales disappear."
 msgstr "당신의 질긴 갈색 비늘이 사라졌다."
 
 #: mutation-data.h:1307 mutation-data.h:1308 mutation-data.h:1369
 #: mutation-data.h:1370 mutation-data.h:1313 mutation-data.h:1314
 #: mutation-data.h:1315 mutation-data.h:1316 mutation-data.h:1317
-#: mutation-data.h:1318
+#: mutation-data.h:1318 mutation-data.h:1347 mutation-data.h:1348
 msgid "Your rugged brown scales recede somewhat."
 msgstr "당신의 질긴 갈색 비늘이 일부 사라졌다."
 
@@ -16012,14 +16105,14 @@ msgid "Your colourless scales turn green and spread over more of your body."
 msgstr "무색의 비늘이 몸을 더욱 덮었고, 녹색으로 빛을 띄기 시작했다."
 
 #: mutation-data.h:1322 mutation-data.h:1384 mutation-data.h:1328
-#: mutation-data.h:1330 mutation-data.h:1332
+#: mutation-data.h:1330 mutation-data.h:1332 mutation-data.h:1362
 msgid "Slimy green scales cover your body completely."
 msgstr "미끈한 녹색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1325 mutation-data.h:1326 mutation-data.h:1387
 #: mutation-data.h:1388 mutation-data.h:1331 mutation-data.h:1332
 #: mutation-data.h:1333 mutation-data.h:1334 mutation-data.h:1335
-#: mutation-data.h:1336
+#: mutation-data.h:1336 mutation-data.h:1365 mutation-data.h:1366
 msgid "Your slimy green scales recede somewhat."
 msgstr "미끈한 녹색 비늘이 일부 사라졌다."
 
@@ -16036,14 +16129,14 @@ msgid "Your colourless scales are metallic and spread over more of your body."
 msgstr "무색의 비늘이 몸을 더욱 덮었고, 금속빛을 띄기 시작했다"
 
 #: mutation-data.h:1340 mutation-data.h:1402 mutation-data.h:1346
-#: mutation-data.h:1348 mutation-data.h:1350
+#: mutation-data.h:1348 mutation-data.h:1350 mutation-data.h:1380
 msgid "Thin metallic scales cover your body completely."
 msgstr "얇은 금속빛의 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1343 mutation-data.h:1344 mutation-data.h:1405
 #: mutation-data.h:1406 mutation-data.h:1349 mutation-data.h:1350
 #: mutation-data.h:1351 mutation-data.h:1352 mutation-data.h:1353
-#: mutation-data.h:1354
+#: mutation-data.h:1354 mutation-data.h:1383 mutation-data.h:1384
 msgid "Your thin metallic scales recede somewhat."
 msgstr "당신의 얇은 금속빛 비늘이 일부 사라졌다."
 
@@ -16062,29 +16155,29 @@ msgstr ""
 "당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -3, 은밀)"
 
 #: mutation-data.h:1356 mutation-data.h:1418 mutation-data.h:1362
-#: mutation-data.h:1364 mutation-data.h:1366
+#: mutation-data.h:1364 mutation-data.h:1366 mutation-data.h:1396
 msgid "Your bones become slightly less dense."
 msgstr "당신의 골격이 유연해진 것을 느꼈다."
 
 #: mutation-data.h:1357 mutation-data.h:1419 mutation-data.h:1363
-#: mutation-data.h:1365 mutation-data.h:1367
+#: mutation-data.h:1365 mutation-data.h:1367 mutation-data.h:1397
 msgid "Your bones become somewhat less dense."
 msgstr "당신의 골격이 얇아진 것을 느꼈다."
 
 #: mutation-data.h:1358 mutation-data.h:1420 mutation-data.h:1364
-#: mutation-data.h:1366 mutation-data.h:1368
+#: mutation-data.h:1366 mutation-data.h:1368 mutation-data.h:1398
 msgid "Your bones become less dense."
 msgstr "온 몸의 뼈들이 가벼워진 느낌이다."
 
 #: mutation-data.h:1360 mutation-data.h:1422 mutation-data.h:1366
-#: mutation-data.h:1368 mutation-data.h:1370
+#: mutation-data.h:1368 mutation-data.h:1370 mutation-data.h:1400
 msgid "Your skeletal structure returns to normal."
 msgstr "골격이 뻣뻣해졌지만, 더욱 튼튼해진걸 느꼈다."
 
 #: mutation-data.h:1361 mutation-data.h:1362 mutation-data.h:1423
 #: mutation-data.h:1424 mutation-data.h:1367 mutation-data.h:1368
 #: mutation-data.h:1369 mutation-data.h:1370 mutation-data.h:1371
-#: mutation-data.h:1372
+#: mutation-data.h:1372 mutation-data.h:1401 mutation-data.h:1402
 msgid "Your skeletal structure densifies."
 msgstr "온 몸의 뼈들이 뻣뻣해진것을 느꼈다."
 
@@ -16101,14 +16194,14 @@ msgid "Your colourless scales turn yellow and spread over more of your body."
 msgstr "무색의 비늘이 몸을 더욱 덮었고, 노란색으로 빛을 띄기 시작했다."
 
 #: mutation-data.h:1376 mutation-data.h:1438 mutation-data.h:1382
-#: mutation-data.h:1384 mutation-data.h:1386
+#: mutation-data.h:1384 mutation-data.h:1386 mutation-data.h:1416
 msgid "Yellow scales cover you completely."
 msgstr "노란색 비늘이 완전히 몸을 덮었다."
 
 #: mutation-data.h:1379 mutation-data.h:1380 mutation-data.h:1441
 #: mutation-data.h:1442 mutation-data.h:1385 mutation-data.h:1386
 #: mutation-data.h:1387 mutation-data.h:1388 mutation-data.h:1389
-#: mutation-data.h:1390
+#: mutation-data.h:1390 mutation-data.h:1419 mutation-data.h:1420
 msgid "Your yellow scales recede somewhat."
 msgstr "당신의 노란색 비늘이 일부 사라졌다."
 
@@ -16117,36 +16210,36 @@ msgid "Your skin changes color to match your surroundings (Stlth)."
 msgstr "당신의 피부는 주변의 색에 맞추어서 보호색을 띈다. (은밀+)"
 
 #: mutation-data.h:1389 mutation-data.h:1451 mutation-data.h:1395
-#: mutation-data.h:1397 mutation-data.h:1399
+#: mutation-data.h:1397 mutation-data.h:1399 mutation-data.h:1429
 msgid "Your skin blends seamlessly with your surroundings (Stlth)."
 msgstr "당신의 피부는 주변의 색에 맞추어서 빠르게 조화된다. (은밀+) "
 
 #: mutation-data.h:1390 mutation-data.h:1452 mutation-data.h:1396
-#: mutation-data.h:1398 mutation-data.h:1400
+#: mutation-data.h:1398 mutation-data.h:1400 mutation-data.h:1430
 msgid "Your skin perfectly mimics your surroundings (Stlth)."
 msgstr "당신은 주변의 사물을 거의 똑같이 흉내낼 수 있다. (은밀+)"
 
 #: mutation-data.h:1392 mutation-data.h:1454 mutation-data.h:1398
-#: mutation-data.h:1400 mutation-data.h:1402
+#: mutation-data.h:1400 mutation-data.h:1402 mutation-data.h:1432
 msgid "Your skin functions as natural camouflage."
 msgstr "당신의 피부가 보호색을 띄기 시작했다."
 
 #: mutation-data.h:1393 mutation-data.h:1394 mutation-data.h:1455
 #: mutation-data.h:1456 mutation-data.h:1399 mutation-data.h:1400
 #: mutation-data.h:1401 mutation-data.h:1402 mutation-data.h:1403
-#: mutation-data.h:1404
+#: mutation-data.h:1404 mutation-data.h:1433 mutation-data.h:1434
 msgid "Your natural camouflage becomes more effective."
 msgstr "당신의 피부는 더욱 효과적으로 보호색을 띄기 시작했다."
 
 #: mutation-data.h:1396 mutation-data.h:1458 mutation-data.h:1402
-#: mutation-data.h:1404 mutation-data.h:1406
+#: mutation-data.h:1404 mutation-data.h:1406 mutation-data.h:1436
 msgid "Your skin no longer functions as natural camouflage."
 msgstr "당신의 피부는 더 이상 주변 환경에 따라 변하지 않는다."
 
 #: mutation-data.h:1397 mutation-data.h:1398 mutation-data.h:1459
 #: mutation-data.h:1460 mutation-data.h:1403 mutation-data.h:1404
 #: mutation-data.h:1405 mutation-data.h:1406 mutation-data.h:1407
-#: mutation-data.h:1408
+#: mutation-data.h:1408 mutation-data.h:1437 mutation-data.h:1438
 msgid "Your natural camouflage becomes less effective."
 msgstr "당신의 피부의 보호색이 약해졌음을 느꼈다."
 
@@ -16300,39 +16393,47 @@ msgstr "몸 속에 힘이 질주하는 느낌을 받았다."
 msgid "You feel saturated with power."
 msgstr "강력한 힘에 사로잡힌 느낌을 받았다."
 
-#: mutation-data.h:1112 mutation-data.h:1114
+#: mutation-data.h:1112 mutation-data.h:1114 mutation-data.h:1144
 msgid "Your body becomes less malleable."
 msgstr "온 몸의 유연성이 덜해짐을 느꼈다."
 
 #: mutation-data.h:1214 mutation-data.h:1216 mutation-data.h:1218
+#: mutation-data.h:1248
 msgid "You are partially covered in icy blue scales (AC +1)."
 msgstr "당신은 얼음빛의 파란 비늘로 부분적으로 덮여 있다. (AC +1)"
 
 #: mutation-data.h:1218 mutation-data.h:1220 mutation-data.h:1222
+#: mutation-data.h:1252
 msgid "Icy blue scales grow over part of your body."
 msgstr "얼음빛의 비늘이 몸의 일부에 자라났다"
 
 #: mutation-data.h:1219 mutation-data.h:1221 mutation-data.h:1223
+#: mutation-data.h:1253
 msgid "Icy blue scales spread over more of your body."
 msgstr "얼음빛의 비늘이 몸을 더욱 덮었고, 더욱 파란 빛을 띄기 시작했다."
 
 #: mutation-data.h:1222 mutation-data.h:1224 mutation-data.h:1226
+#: mutation-data.h:1256
 msgid "Your icy blue scales disappear."
 msgstr "당신의 얼음빛 비늘이 사라졌다."
 
 #: mutation-data.h:1268 mutation-data.h:1270 mutation-data.h:1272
+#: mutation-data.h:1302
 msgid "You are partially covered in molten scales (AC +1)."
 msgstr "당신은 얼룩색의 비늘로 부분적으로 덮여 있다. (AC +1)"
 
 #: mutation-data.h:1272 mutation-data.h:1274 mutation-data.h:1276
+#: mutation-data.h:1306
 msgid "Molten scales grow over part of your body."
 msgstr "얼룩색의 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1273 mutation-data.h:1275 mutation-data.h:1277
+#: mutation-data.h:1307
 msgid "Molten scales spread over more of your body."
 msgstr "얼룩색의 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1276 mutation-data.h:1278 mutation-data.h:1280
+#: mutation-data.h:1310
 msgid "Your molten scales disappear."
 msgstr "당신의 얼룩색 비늘이 사라졌다."
 
@@ -16349,14 +16450,17 @@ msgid "You are completely covered in slimy green scales (AC +3, rPois)."
 msgstr "당신은 미끈한 녹색 비늘로 완전히 덮여 있다. (AC +3, 독저항)"
 
 #: mutation-data.h:1326 mutation-data.h:1328 mutation-data.h:1330
+#: mutation-data.h:1360
 msgid "Slimy green scales grow over part of your body."
 msgstr "미끈한 녹색 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1327 mutation-data.h:1329 mutation-data.h:1331
+#: mutation-data.h:1361
 msgid "Slimy green scales spread over more of your body."
 msgstr "미끈한 녹색 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1330 mutation-data.h:1332 mutation-data.h:1334
+#: mutation-data.h:1364
 msgid "Your slimy green scales disappear."
 msgstr "당신의 녹색 비늘이 사라졌다."
 
@@ -16365,14 +16469,17 @@ msgid "You are partially covered in thin metallic scales (AC +1)."
 msgstr "당신은 얇은 금속빛 비늘로 부분적으로 덮여 있다. (AC +1)"
 
 #: mutation-data.h:1344 mutation-data.h:1346 mutation-data.h:1348
+#: mutation-data.h:1378
 msgid "Thin metallic scales grow over part of your body."
 msgstr "얇은 금속빛 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1345 mutation-data.h:1347 mutation-data.h:1349
+#: mutation-data.h:1379
 msgid "Thin metallic scales spread over more of your body."
 msgstr "얇은 금속빛 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1348 mutation-data.h:1350 mutation-data.h:1352
+#: mutation-data.h:1382
 msgid "Your thin metallic scales disappear."
 msgstr "당신의 금속빛 비늘이 사라졌다."
 
@@ -16389,42 +16496,52 @@ msgid "You are completely covered in yellow scales (AC +3, rCorr)."
 msgstr "당신은 노란색 비늘로 완전히 덮여 있다. (AC +3, 부식저항)"
 
 #: mutation-data.h:1380 mutation-data.h:1382 mutation-data.h:1384
+#: mutation-data.h:1414
 msgid "Yellow scales grow over part of your body."
 msgstr "노란색 비늘이 몸의 일부에 자라났다."
 
 #: mutation-data.h:1381 mutation-data.h:1383 mutation-data.h:1385
+#: mutation-data.h:1415
 msgid "Yellow scales spread over more of your body."
 msgstr "노란색 비늘이 몸을 더욱 덮었다."
 
 #: mutation-data.h:1384 mutation-data.h:1386 mutation-data.h:1388
+#: mutation-data.h:1418
 msgid "Your yellow scales disappear."
 msgstr "당신의 노란색 비늘이 사라졌다."
 
 #: mutation-data.h:1394 mutation-data.h:1396 mutation-data.h:1398
+#: mutation-data.h:1428
 msgid "Your skin changes colour to match your surroundings (Stlth)."
 msgstr "당신의 피부는 주변의 색에 맞추어서 보호색을 띈다. (은밀+)"
 
 #: mutation-data.h:1412 mutation-data.h:1414 mutation-data.h:1416
+#: mutation-data.h:1446
 msgid "Your demonic aura causes spilled blood to erupt in flames."
 msgstr "당신의 악마적 기운은 흩뿌려진 핏자국을 화염으로 불태울 수 있다."
 
 #: mutation-data.h:1413 mutation-data.h:1415 mutation-data.h:1417
+#: mutation-data.h:1447
 msgid "Your blood runs red-hot!"
 msgstr "당신의 피가 붉고 뜨겁게 끓어올랐다!"
 
 #: mutation-data.h:1422 mutation-data.h:1424 mutation-data.h:1426
+#: mutation-data.h:1456
 msgid "You emit a foul stench, and are resistant to rotting and decay."
 msgstr "당신은 부패한 악취를 내뿜으며, 부패와 부식에 저항을 가진다."
 
 #: mutation-data.h:1423 mutation-data.h:1425 mutation-data.h:1427
+#: mutation-data.h:1457
 msgid "You radiate miasma, and are resistant to rotting and decay."
 msgstr "당신은 강한 독기를 방출하며, 부패와 부식에 저항을 가진다."
 
 #: mutation-data.h:1426 mutation-data.h:1428 mutation-data.h:1430
+#: mutation-data.h:1460
 msgid "You begin to emit a foul stench of rot and decay."
 msgstr "당신에게서 부패의 기운이 담긴 악취가 나기 시작했다."
 
 #: mutation-data.h:1427 mutation-data.h:1429 mutation-data.h:1431
+#: mutation-data.h:1461
 msgid "You begin to radiate miasma."
 msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 
@@ -16433,11 +16550,11 @@ msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 msgid "nothing"
 msgstr "없음"
 
-#: species.cc:181 species.cc:183
+#: species.cc:181 species.cc:183 species.cc:184
 msgid "Cat"
 msgstr "고양이"
 
-#: species.cc:184 species.cc:186
+#: species.cc:184 species.cc:186 species.cc:187
 msgid "Octopus"
 msgstr "문어족"
 
@@ -16461,19 +16578,19 @@ msgstr "반대의 서 : 모든 악마와 언데드의 해악"
 msgid "Alliances (blesses intelligent allies)"
 msgstr "동맹의 서 : 지성 있는 동료들에게 축복을"
 
-#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497
+#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497 godprayer.cc:498
 msgid "Escape"
 msgstr "탈출"
 
-#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497
+#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497 godprayer.cc:498
 msgid "Destruction"
 msgstr "파괴"
 
-#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497
+#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497 godprayer.cc:498
 msgid "Dungeons"
 msgstr "던전"
 
-#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497
+#: godprayer.cc:525 godprayer.cc:502 godprayer.cc:497 godprayer.cc:498
 msgid "Wonder"
 msgstr "불가사의"
 
@@ -16489,14 +16606,17 @@ msgstr "불가사의"
 #. "shout"
 #. Tweak volume for different kinds of vocalisation.
 #: effects.cc:1059 player.cc:6055 effects.cc:935 effects.cc:964 effects.cc:968
+#: effects.cc:969
 msgid "roar"
 msgstr "포효"
 
 #: effects.cc:1061 player.cc:6057 effects.cc:937 effects.cc:966 effects.cc:970
+#: effects.cc:971
 msgid "hiss"
 msgstr "쉭~소리"
 
 #: effects.cc:1063 player.cc:6059 effects.cc:939 effects.cc:968 effects.cc:972
+#: effects.cc:973
 msgid "squeak"
 msgstr "찍소리"
 
@@ -16516,13 +16636,13 @@ msgstr "갸울"
 msgid "shout"
 msgstr "외치기"
 
-#: player.cc:6070 effects.cc:943 effects.cc:972 effects.cc:976
+#: player.cc:6070 effects.cc:943 effects.cc:972 effects.cc:976 effects.cc:977
 msgid "yell"
 msgstr "고함"
 
 #. level == 3
 #: player.cc:6072 effects.cc:945 effects.cc:960 effects.cc:974 effects.cc:991
-#: effects.cc:978 effects.cc:995
+#: effects.cc:978 effects.cc:995 effects.cc:979 effects.cc:996
 msgid "scream"
 msgstr "비명"
 
@@ -16530,24 +16650,27 @@ msgstr "비명"
 #: melee_attack.cc:1544 melee_attack.cc:1571 melee_attack.cc:1607
 #: melee_attack.cc:1576 melee_attack.cc:1612 melee_attack.cc:1596
 #: melee_attack.cc:1632 spl-goditem.cc:724 spl-goditem.cc:762
+#: melee_attack.cc:1595 melee_attack.cc:1631
 msgid "armour"
 msgstr "방어구"
 
-#: status.cc:512 status.cc:508 status.cc:520
+#: status.cc:512 status.cc:508 status.cc:520 status.cc:517
 msgid "Constr"
 msgstr "조임"
 
-#: status.cc:513 status.cc:509 status.cc:521
+#: status.cc:513 status.cc:509 status.cc:521 status.cc:518
 msgid "constricted"
 msgstr "조여짐"
 
 #. Setup tracer.
 #: mon-abil.cc:2356 mon-abil.cc:2806 mon-abil.cc:2814 mon-abil.cc:2822
+#: mon-abil.cc:2823
 msgid "glob of lava"
 msgstr "용암 덩어리"
 
 #. Setup tracer.
 #: mon-abil.cc:2392 mon-abil.cc:2842 mon-abil.cc:2850 mon-abil.cc:2858
+#: mon-abil.cc:2859
 msgid "bolt of electricity"
 msgstr "전격의 화살"
 
@@ -16555,6 +16678,7 @@ msgstr "전격의 화살"
 #. easy to set up and doesn't involve inventory.
 #. Set up the beam.
 #: mon-abil.cc:2620 mon-abil.cc:3070 mon-abil.cc:3078 mon-abil.cc:3086
+#: mon-abil.cc:3087
 msgid "volley of spikes"
 msgstr "가시 사격"
 
@@ -16576,19 +16700,19 @@ msgstr "섬뜩한 덩어리"
 msgid "moth of suppression"
 msgstr "항마의 나방"
 
-#: travel.cc:4341 travel.cc:4400 travel.cc:4417
+#: travel.cc:4341 travel.cc:4400 travel.cc:4417 travel.cc:4446
 msgid "item"
 msgstr "아이템"
 
-#: travel.cc:4344 travel.cc:4403 travel.cc:4420
+#: travel.cc:4344 travel.cc:4403 travel.cc:4420 travel.cc:4449
 msgid "portal"
 msgstr "관문"
 
-#: travel.cc:4345 travel.cc:4404 travel.cc:4421
+#: travel.cc:4345 travel.cc:4404 travel.cc:4421 travel.cc:4450
 msgid "stair"
 msgstr "계단"
 
-#: describe.cc:556 describe.cc:524 describe.cc:518
+#: describe.cc:556 describe.cc:524 describe.cc:518 describe.cc:517
 msgid "gas"
 msgstr "가스"
 
@@ -16657,14 +16781,15 @@ msgid "mimic"
 msgstr "미믹"
 
 #: status.cc:949 status.cc:948 status.cc:953 status.cc:958 status.cc:959
+#: status.cc:943
 msgid "Lava"
 msgstr "용암"
 
-#: items.cc:1084 items.cc:1087
+#: items.cc:1084 items.cc:1087 items.cc:1067
 msgid "a player ghost"
 msgstr "플레이어의 망령"
 
-#: items.cc:1086 items.cc:1089
+#: items.cc:1086 items.cc:1089 items.cc:1069
 msgid "a pandemonium lord"
 msgstr "판데모니움의 군주"
 
@@ -16866,6 +16991,7 @@ msgid "Evoke Fog"
 msgstr "안개 발동"
 
 #: directn.cc:2966 travel.cc:4405 travel.cc:4422 directn.cc:2967
+#: travel.cc:4451
 msgid "runed door"
 msgstr "룬이 새겨진 문"
 
@@ -17146,39 +17272,39 @@ msgstr "혼돈의 숨결"
 msgid "Might Other"
 msgstr "타인 힘 부여"
 
-#: spl-data.h:2922 spl-data.h:2924
+#: spl-data.h:2922 spl-data.h:2924 spl-data.h:2909
 msgid "Iskenderun's Battlesphere"
 msgstr "이스킨데룬의 비전력 구체"
 
-#: spl-data.h:2935 spl-data.h:2937
+#: spl-data.h:2935 spl-data.h:2937 spl-data.h:2922
 msgid "Summon Minor Demon"
 msgstr "하급 악마 소환"
 
-#: spl-data.h:2948 spl-data.h:2950
+#: spl-data.h:2948 spl-data.h:2950 spl-data.h:2935
 msgid "Malmutate"
 msgstr "맬뮤테이트"
 
-#: spl-data.h:2961 spl-data.h:2963
+#: spl-data.h:2961 spl-data.h:2963 spl-data.h:2948
 msgid "Summon Twister"
 msgstr "트위스터 소환"
 
-#: spl-data.h:2974 spl-data.h:2976
+#: spl-data.h:2974 spl-data.h:2976 spl-data.h:2961
 msgid "Dazzling Spray"
 msgstr "섬광 분사"
 
-#: spl-data.h:2987 spl-data.h:2989
+#: spl-data.h:2987 spl-data.h:2989 spl-data.h:2974
 msgid "Force Lance"
 msgstr "힘의 창살"
 
-#: spl-data.h:3000 spl-data.h:3002
+#: spl-data.h:3000 spl-data.h:3002 spl-data.h:2987
 msgid "Sentinel's Mark"
 msgstr "파수꾼의 표식"
 
-#: spl-data.h:3014 spl-data.h:3016
+#: spl-data.h:3014 spl-data.h:3016 spl-data.h:3001
 msgid "Word of Recall"
 msgstr "소집의 문장"
 
-#: spl-data.h:3027 spl-data.h:3029
+#: spl-data.h:3027 spl-data.h:3029 spl-data.h:3014
 msgid "Injury Bond"
 msgstr "피의 상처"
 
@@ -17194,7 +17320,7 @@ msgstr "힘의 창살"
 msgid "blast of energy"
 msgstr "마력의 폭발"
 
-#: transform.cc:892 transform.cc:909
+#: transform.cc:892 transform.cc:909 transform.cc:911
 msgid "wisp"
 msgstr "위습"
 
@@ -17223,149 +17349,169 @@ msgid "Your magical and physical power is greatly enhanced at high health."
 msgstr "당신은 체력이 높은 상태일 경우, 마법적, 물리적인 힘이 크게 향상된다."
 
 #: mutation-data.h:1215 mutation-data.h:1217 mutation-data.h:1219
+#: mutation-data.h:1249
 msgid "You are mostly covered in icy blue scales (AC +3, EV -1)."
 msgstr "당신은 얼음빛의 파란 비늘로 대부분 덮여 있다. (AC +3, EV -1)"
 
 #: mutation-data.h:1216 mutation-data.h:1218 mutation-data.h:1220
+#: mutation-data.h:1250
 msgid "You are completely covered in icy blue scales (AC +4, EV -1, rC+)."
 msgstr ""
 "당신은 얼음빛의 파란 비늘로 완전히 덮여 있다. (AC +4, EV -1, 냉기저항+)"
 
 #: mutation-data.h:1251 mutation-data.h:1253 mutation-data.h:1255
+#: mutation-data.h:1285
 msgid "You are mostly covered in large bone plates (AC +3, SH +4)."
 msgstr "당신은 커다란 뼈 갑옷으로 부분적으로 덮여 있다. (AC +3, SH +4)"
 
 #: mutation-data.h:1252 mutation-data.h:1254 mutation-data.h:1256
+#: mutation-data.h:1286
 msgid "You are completely covered in large bone plates (AC +4, SH +6)."
 msgstr "당신은 커다란 뼈 갑옷으로 완전히 덮여 있다. (AC +4, SH +6)"
 
 #: mutation-data.h:1269 mutation-data.h:1271 mutation-data.h:1273
+#: mutation-data.h:1303
 msgid "You are mostly covered in molten scales (AC +3, EV -1)."
 msgstr "당신은 얼룩무늬의 비늘로 대부분 덮여 있다. (AC +3, EV -1)"
 
 #: mutation-data.h:1270 mutation-data.h:1272 mutation-data.h:1274
+#: mutation-data.h:1304
 msgid "You are completely covered in molten scales (AC +4, EV -1, rF+)."
 msgstr "당신은 얼룩무늬의 비늘로 완전히 덮여 있다. (AC +4, EV -1, 불저항+)"
 
 #: mutation-data.h:1304 mutation-data.h:1306 mutation-data.h:1308
+#: mutation-data.h:1338
 msgid "You are partially covered in rugged brown scales (AC +1, +3% HP)."
 msgstr "당신은 질긴 갈색 비늘로 부분적으로 덮여 있다. (AC +1, HP +3%)"
 
 #: mutation-data.h:1306 mutation-data.h:1308 mutation-data.h:1310
+#: mutation-data.h:1340
 msgid "You are completely covered in rugged brown scales (AC +3, +7% HP)."
 msgstr "당신은 질긴 갈색 비늘로 완전히 덮여 있다. (AC +3, HP +7%)"
 
 #: mutation-data.h:1322 mutation-data.h:1324 mutation-data.h:1326
+#: mutation-data.h:1356
 msgid "You are partially covered in slimy green scales (AC +2)."
 msgstr "당신은 미끈한 녹색 비늘로 부분적으로 덮여 있다. (AC+2)"
 
 #: mutation-data.h:1323 mutation-data.h:1325 mutation-data.h:1327
+#: mutation-data.h:1357
 msgid "You are mostly covered in slimy green scales (AC +3)."
 msgstr "당신은 미끈한 녹색 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1324 mutation-data.h:1326 mutation-data.h:1328
+#: mutation-data.h:1358
 msgid "You are completely covered in slimy green scales (AC +4, rPois)."
 msgstr "당신은 미끈한 녹색 비늘로 완전히 덮여 있다. (AC +3, EV -2, 독저항+)"
 
 #: mutation-data.h:1340 mutation-data.h:1342 mutation-data.h:1344
+#: mutation-data.h:1374
 msgid "You are partially covered in thin metallic scales (AC +2)."
 msgstr "당신은 금속빛의 비늘로 부분적으로 덮여 있다. (AC +2)"
 
 #: mutation-data.h:1341 mutation-data.h:1343 mutation-data.h:1345
+#: mutation-data.h:1375
 msgid "You are mostly covered in thin metallic scales (AC +3)."
 msgstr "당신은 금속빛의 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1342 mutation-data.h:1344 mutation-data.h:1346
+#: mutation-data.h:1376
 msgid "You are completely covered in thin metallic scales (AC +4, rElec)."
 msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +4, 전기저항+)"
 
 #: mutation-data.h:1358 mutation-data.h:1360 mutation-data.h:1362
+#: mutation-data.h:1392
 msgid "You have a somewhat thin skeletal structure (Dex +2, Stlth)."
 msgstr "당신은 약간 마른 골격 구조를 가지고 있다. (민첩 +2, 은밀)"
 
 #: mutation-data.h:1359 mutation-data.h:1361 mutation-data.h:1363
+#: mutation-data.h:1393
 msgid "You have a moderately thin skeletal structure (Dex +4, Str -1, Stlth)."
 msgstr "당신은 마른 골격 구조를 가지고 있다. (민첩 +4, 힘 -1, 은밀)"
 
 #: mutation-data.h:1360 mutation-data.h:1362 mutation-data.h:1364
+#: mutation-data.h:1394
 msgid ""
 "You have an unnaturally thin skeletal structure (Dex +6, Str -2, Stlth)."
 msgstr ""
 "당신은 비정상적으로 마른 골격 구조를 가지고 있다. (민첩 +6, 힘 -2, 은밀)"
 
 #: mutation-data.h:1376 mutation-data.h:1378 mutation-data.h:1380
+#: mutation-data.h:1410
 msgid "You are partially covered in yellow scales (AC +2)."
 msgstr "당신은 노란색의 비늘로 부분적으로 덮여 있다. (AC +2)"
 
 #: mutation-data.h:1377 mutation-data.h:1379 mutation-data.h:1381
+#: mutation-data.h:1411
 msgid "You are mostly covered in yellow scales (AC +3)."
 msgstr "당신은 노란색의 비늘로 대부분 덮여 있다. (AC +3)"
 
 #: mutation-data.h:1378 mutation-data.h:1380 mutation-data.h:1382
+#: mutation-data.h:1412
 msgid "You are completely covered in yellow scales (AC +4, rCorr)."
 msgstr "당신은 금속빛의 비늘로 완전히 덮여 있다. (AC +4, 부식저항+)"
 
-#: player-act.cc:414
+#: player-act.cc:414 player-act.cc:415
 msgid "branch"
 msgstr "나뭇가지"
 
-#: player-act.cc:416
+#: player-act.cc:416 player-act.cc:417
 msgid "misty tendril"
 msgstr "옅은 덩굴손"
 
-#: player-act.cc:418
+#: player-act.cc:418 player-act.cc:419
 msgid "bump"
 msgstr "몸통박치기"
 
-#: player-act.cc:449
+#: player-act.cc:449 player-act.cc:450
 msgid "hind leg"
 msgstr "뒷다리"
 
-#: player-act.cc:453
+#: player-act.cc:453 player-act.cc:454
 msgid "strand"
 msgstr "가닥"
 
-#: player-act.cc:470
+#: player-act.cc:470 player-act.cc:471
 msgid "underbelly"
 msgstr "아랫배"
 
-#: player-act.cc:501 monster.cc:2880
+#: player-act.cc:501 monster.cc:2880 player-act.cc:502
 msgid "scaled"
 msgstr "비늘로 덮인"
 
-#: player-act.cc:503 monster.cc:2884
+#: player-act.cc:503 monster.cc:2884 player-act.cc:504
 msgid "feathered"
 msgstr "깃털 달린"
 
-#: player-act.cc:505 monster.cc:2888
+#: player-act.cc:505 monster.cc:2888 player-act.cc:506
 msgid "bandage-wrapped"
 msgstr "붕대가 감긴"
 
-#: player-act.cc:510 monster.cc:2897
+#: player-act.cc:510 monster.cc:2897 player-act.cc:511
 msgid "bony"
 msgstr "뼈골격"
 
-#: player-act.cc:523
+#: player-act.cc:523 player-act.cc:524
 msgid "Nothing wielded"
 msgstr "무장하지 않음"
 
-#: player-act.cc:526 player-act.cc:552
+#: player-act.cc:526 player-act.cc:552 player-act.cc:527 player-act.cc:553
 msgid "Teeth and claws"
 msgstr "이빨과 손톱"
 
-#: player-act.cc:528
+#: player-act.cc:528 player-act.cc:529
 msgid "Claws"
 msgstr "손톱"
 
-#: player-act.cc:530
+#: player-act.cc:530 player-act.cc:531
 msgid "Tentacles"
 msgstr "촉수"
 
-#: player-act.cc:535
+#: player-act.cc:535 player-act.cc:536
 msgid "Fangs (venom)"
 msgstr "독니"
 
-#: player-act.cc:538
+#: player-act.cc:538 player-act.cc:539
 msgid "Blade "
 msgstr "칼날 "
 
@@ -17381,79 +17527,79 @@ msgstr "칼날의 촉수"
 msgid "Blade hands"
 msgstr "칼날의 손"
 
-#: player-act.cc:542
+#: player-act.cc:542 player-act.cc:543
 msgid "Stone claws"
 msgstr "돌 손톱"
 
-#: player-act.cc:544
+#: player-act.cc:544 player-act.cc:545
 msgid "Stone tentacles"
 msgstr "돌 촉수"
 
-#: player-act.cc:546
+#: player-act.cc:546 player-act.cc:547
 msgid "Stone fists"
 msgstr "돌 주먹"
 
-#: player-act.cc:549
+#: player-act.cc:549 player-act.cc:550
 msgid "Ice fists (freeze)"
 msgstr "냉기 주먹"
 
-#: player-act.cc:560
+#: player-act.cc:560 player-act.cc:561
 msgid "Teeth"
 msgstr "이빨"
 
-#: player-act.cc:563
+#: player-act.cc:563 player-act.cc:564
 msgid "Branches"
 msgstr "나뭇가지"
 
-#: status.cc:309
+#: status.cc:309 status.cc:310
 msgid "Umbra"
 msgstr "그림자"
 
-#: status.cc:319
+#: status.cc:319 status.cc:320
 msgid "Suppress"
 msgstr "억제"
 
-#: status.cc:532 status.cc:544
+#: status.cc:532 status.cc:544 status.cc:541
 msgid "-cTele"
 msgstr "전이-"
 
-#: status.cc:541 status.cc:553
+#: status.cc:541 status.cc:553 status.cc:550
 msgid "recalling"
 msgstr "소집"
 
-#: status.cc:732 status.cc:737 status.cc:738
+#: status.cc:732 status.cc:737 status.cc:738 status.cc:735
 msgid "sage ["
 msgstr "현자 ["
 
-#: status.cc:892 status.cc:897 status.cc:902 status.cc:903
+#: status.cc:892 status.cc:897 status.cc:902 status.cc:903 status.cc:887
 msgid "Tree"
 msgstr "나무"
 
-#: status.cc:893 status.cc:898 status.cc:903 status.cc:904
+#: status.cc:893 status.cc:898 status.cc:903 status.cc:904 status.cc:888
 msgid "tree-form"
 msgstr "나무 변신"
 
-#: status.cc:897 status.cc:902 status.cc:907 status.cc:908
+#: status.cc:897 status.cc:902 status.cc:907 status.cc:908 status.cc:892
 msgid "Jelly"
 msgstr "젤리"
 
-#: status.cc:898 status.cc:903 status.cc:908 status.cc:909
+#: status.cc:898 status.cc:903 status.cc:908 status.cc:909 status.cc:893
 msgid "jelly-form"
 msgstr "젤리 변신"
 
-#: status.cc:902 status.cc:907 status.cc:912 status.cc:913
+#: status.cc:902 status.cc:907 status.cc:912 status.cc:913 status.cc:897
 msgid "Porc"
 msgstr "고슴도치"
 
-#: status.cc:903 status.cc:908 status.cc:913 status.cc:914
+#: status.cc:903 status.cc:908 status.cc:913 status.cc:914 status.cc:898
 msgid "porcupine-form"
 msgstr "고슴도치 변신"
 
-#: status.cc:907 status.cc:912 status.cc:917 status.cc:918
+#: status.cc:907 status.cc:912 status.cc:917 status.cc:918 status.cc:902
 msgid "Wisp"
 msgstr "위습"
 
-#: status.cc:908 status.cc:913 status.cc:918 status.cc:919
+#: status.cc:908 status.cc:913 status.cc:918 status.cc:919 status.cc:903
 msgid "wisp-form"
 msgstr "위습 변신"
 
@@ -17766,7 +17912,7 @@ msgstr "실명"
 msgid "beneficial mutation"
 msgstr "이로운 변이"
 
-#: itemprop.cc:380
+#: itemprop.cc:380 itemprop.cc:378
 msgid "pie"
 msgstr "파이"
 
@@ -17778,45 +17924,45 @@ msgstr "광대"
 msgid "Stop recall"
 msgstr "소집 중단"
 
-#: mutation-data.h:1438 mutation-data.h:1440
+#: mutation-data.h:1438 mutation-data.h:1440 mutation-data.h:1470
 msgid "tendrils"
 msgstr "덩굴손"
 
-#: mutation-data.h:1440 mutation-data.h:1442
+#: mutation-data.h:1440 mutation-data.h:1442 mutation-data.h:1472
 msgid "Thin tendrils of slime have grown from your body."
 msgstr "당신의 몸에는 얇은 점액질의 덩굴손이 자라나 있다."
 
-#: mutation-data.h:1441 mutation-data.h:1443
+#: mutation-data.h:1441 mutation-data.h:1443 mutation-data.h:1473
 msgid "Thin, slimy tendrils emerge from your body."
 msgstr "얇은 점액질의 덩굴손이 당신의 몸에 자라났다."
 
-#: mutation-data.h:1442 mutation-data.h:1444
+#: mutation-data.h:1442 mutation-data.h:1444 mutation-data.h:1474
 msgid "Your tendrils retract into your body."
 msgstr "당신의 덩굴손이 몸 안으로 움츠려져 들어가버렸다."
 
-#: mutation-data.h:1448 mutation-data.h:1450
+#: mutation-data.h:1448 mutation-data.h:1450 mutation-data.h:1480
 msgid "a jelly is attached to you"
 msgstr "작은 젤리"
 
-#: mutation-data.h:1450 mutation-data.h:1452
+#: mutation-data.h:1450 mutation-data.h:1452 mutation-data.h:1482
 msgid "You have a small jelly attached to you that senses nearby items."
 msgstr "주변의 아이템을 감지할 수 있는 작은 젤리들이 당신의 몸에 자라나 있다."
 
 #: mutation-data.h:1451 mutation-data.h:1461 mutation-data.h:1453
-#: mutation-data.h:1463
+#: mutation-data.h:1463 mutation-data.h:1483 mutation-data.h:1493
 msgid "Your body partially splits into a small jelly."
 msgstr "당신의 몸 속에서 작은 젤리들이 자라났다."
 
 #: mutation-data.h:1452 mutation-data.h:1462 mutation-data.h:1454
-#: mutation-data.h:1464
+#: mutation-data.h:1464 mutation-data.h:1484 mutation-data.h:1494
 msgid "The jelly growth is reabsorbed into your body."
 msgstr "몸에 자라난 젤리들이 몸 속으로 다시 흡수되었다."
 
-#: mutation-data.h:1458 mutation-data.h:1460
+#: mutation-data.h:1458 mutation-data.h:1460 mutation-data.h:1490
 msgid "absorbing missiles"
 msgstr "발사체 흡수"
 
-#: mutation-data.h:1460 mutation-data.h:1462
+#: mutation-data.h:1460 mutation-data.h:1462 mutation-data.h:1492
 msgid ""
 "You have a small jelly attached to you that may absorb incoming projectiles."
 msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다."

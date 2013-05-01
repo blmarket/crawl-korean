@@ -58,7 +58,8 @@ bool monster::blink_to(const coord_def& dest, bool quiet)
         return false;
 
     bool was_constricted = false;
-    const bool jump = type == MONS_JUMPING_SPIDER;
+    const bool jump = type == MONS_JUMPING_SPIDER
+                      && crawl_state.which_mon_acting() == this;
     const string verb = (jump ? "멀리 뛰어올랐다" : "사라졌다");
 
     if (is_constricted())

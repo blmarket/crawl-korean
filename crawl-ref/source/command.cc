@@ -21,7 +21,6 @@
 #include "cio.h"
 #include "colour.h"
 #include "database.h"
-#include "debug.h"
 #include "decks.h"
 #include "describe.h"
 #include "directn.h"
@@ -2228,7 +2227,13 @@ static void _add_formatted_keyhelp(column_composer &cols)
 #ifdef USE_TILE_LOCAL
     _add_command(cols, 0, CMD_EDIT_PLAYER_TILE, gettext("edit player doll"), 2);
 #else
-    _add_command(cols, 0, CMD_READ_MESSAGES, gettext("read messages (online play only)"), 2);
+#ifdef USE_TILE_WEB
+    if (tiles.is_controlled_from_web())
+        cols.add_formatted(0, "<w>F12</w> : read messages (online play only)",
+                           false);
+    else
+#endif
+    _add_command(cols, 0, CMD_READ_MESSAGES, _("read messages (online play only)"), 2);
 #endif
 
     cols.add_formatted(
@@ -2286,6 +2291,9 @@ static void _add_formatted_keyhelp(column_composer &cols)
     _add_command(cols, 1, CMD_DISPLAY_OVERMAP, _("show dungeon Overview"));
     _add_command(cols, 1, CMD_TOGGLE_AUTOPICKUP, _("toggle auto-pickup"));
     _add_command(cols, 1, CMD_TOGGLE_FRIENDLY_PICKUP, _("change ally pickup behaviour"));
+    _add_command(cols, 1, CMD_TOGGLE_TRAVEL_SPEED, _("set your travel speed to your"));
+    cols.add_formatted(1, _("         slowest ally\n"),
+                           false, true, _cmdhelp_textfilter);
 
     cols.add_formatted(
             1,

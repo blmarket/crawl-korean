@@ -28,6 +28,7 @@
 #include "libutil.h"
 #include "macro.h"
 #include "menu.h"
+#include "misc.h"
 #include "notes.h"
 #include "options.h"
 #include "place.h"
@@ -501,11 +502,6 @@ static string _shop_print_stock(const vector<int>& stock,
         else
             cprintf("%c - ", c);
 
-        const bool unknown = item_type_has_ids(item.base_type)
-                             && item_type_known(item)
-                             && get_ident_type(item) != ID_KNOWN_TYPE
-                             && !is_artefact(item);
-
         // Colour stock according to menu colours.
         const string colprf = item_prefix(item);
         const int col = menu_colour(item.name(false, DESC_A),
@@ -513,7 +509,7 @@ static string _shop_print_stock(const vector<int>& stock,
         textcolor(col != -1 ? col : LIGHTGREY);
 
         string item_name = item.name(true, DESC_PLAIN, false, id);
-        if (unknown)
+        if (shop_item_unknown(item))
             item_name += " (unknown)";
 
         cprintf("%s%5d gold", chop_string(item_name, 56).c_str(), gp_value);
@@ -1057,6 +1053,9 @@ static bool _purchase(int shop, int item_got, int cost, bool id)
         set_ident_type(item, ID_KNOWN_TYPE);
         set_ident_flags(item, ISFLAG_IDENT_MASK);
     }
+
+    if (is_blood_potion(item))
+        init_stack_blood_potions(item, -1);
 
     const int quant = item.quantity;
     // Note that item will be invalidated if num == item.quantity.
@@ -1609,10 +1608,6 @@ unsigned int item_value(item_def item, bool ident)
         case ARM_CENTAUR_BARDING:
         case ARM_NAGA_BARDING:
             valued += 150;
-            break;
-
-        case ARM_SPLINT_MAIL:
-            valued += 140;
             break;
 
         case ARM_TROLL_HIDE:
@@ -2378,8 +2373,10 @@ shop_struct *get_shop(const coord_def& where)
         return NULL;
 
     unsigned short t = env.tgrid(where);
-    ASSERT(t != NON_ENTITY && t < MAX_SHOPS);
-    ASSERT(env.shop[t].pos == where && env.shop[t].type != SHOP_UNASSIGNED);
+    ASSERT(t != NON_ENTITY);
+    ASSERT(t < MAX_SHOPS);
+    ASSERT(env.shop[t].pos == where);
+    ASSERT(env.shop[t].type != SHOP_UNASSIGNED);
 
     return (&env.shop[t]);
 }
@@ -2510,6 +2507,14 @@ bool is_shop_item(const item_def &item)
     return (item.pos.x == 0 && item.pos.y >= 5 && item.pos.y < (MAX_SHOPS + 5));
 }
 
+bool shop_item_unknown(const item_def &item)
+{
+    return (item_type_has_ids(item.base_type)
+            && item_type_known(item)
+            && get_ident_type(item) != ID_KNOWN_TYPE
+            && !is_artefact(item));
+}
+
 ////////////////////////////////////////////////////////////////////////
 
 // TODO:
@@ -2608,7 +2613,8 @@ bool ShoppingList::is_on_list(string desc, const level_pos* _pos) const
 
 void ShoppingList::del_thing_at_index(int idx)
 {
-    ASSERT(idx >= 0 && idx < list->size());
+    ASSERT(idx >= 0);
+    ASSERT(idx < list->size());
     list->erase(idx);
     refresh();
 }
@@ -2972,17 +2978,21 @@ void ShoppingList::fill_out_menu(Menu& shopmenu)
     menu_letter hotkey;
     for (unsigned i = 0; i < list->size(); ++i, ++hotkey)
     {
-        CrawlHashTable &thing = (*list)[i];
-        level_pos      pos    = thing_pos(thing);
-        int            cost   = thing_cost(thing);
+        CrawlHashTable &thing  = (*list)[i];
+        level_pos      pos     = thing_pos(thing);
+        int            cost    = thing_cost(thing);
+        bool           unknown = false;
+
+        if (thing_is_item(thing))
+            unknown = shop_item_unknown(get_thing_item(thing));
 
         if (you.duration[DUR_BARGAIN])
             cost = _bargain_cost(cost);
 
         string etitle =
-            make_stringf("[%s] %s (%d gp)", short_place_name(pos.id).c_str(),
+            make_stringf("[%s] %s%s (%d gp)", short_place_name(pos.id).c_str(),
                          name_thing(thing, DESC_PLAIN).c_str(),
-                         cost);
+                         unknown ? " (unknown)" : "", cost);
 
         MenuEntry *me = new MenuEntry(etitle, MEL_ITEM, 1, hotkey);
         me->data = &thing;

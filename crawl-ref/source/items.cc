@@ -26,7 +26,6 @@
 #include "dactions.h"
 #include "describe.h"
 #include "dbg-util.h"
-#include "debug.h"
 #include "decks.h"
 #include "delay.h"
 #include "dgnevent.h"
@@ -982,7 +981,7 @@ void origin_set_monster(item_def &item, const monster* mons)
     if (!origin_known(item))
     {
         if (!item.orig_monnum)
-            item.orig_monnum = mons->type + 1;
+            item.orig_monnum = mons->type;
         item.orig_place = get_packed_place();
     }
 }
@@ -1006,19 +1005,6 @@ void origin_set_inventory(void (*oset)(item_def &item))
     for (int i = 0; i < ENDOFPACK; ++i)
         if (you.inv[i].defined())
             oset(you.inv[i]);
-}
-
-static int _first_corpse_monnum(const coord_def& where)
-{
-    // We could look for a corpse on this square and assume that the
-    // items belonged to it, but that is unsatisfactory.
-
-    // Actually, it would be easy to add the monster type to a corpse
-    // (or to another item) by setting orig_monnum when the monster dies
-    // (already done for unique monsters to get named zombies), but
-    // personally, I rather like the way the player can't tell where an
-    // item came from if he just finds it lying on the floor. (jpeg)
-    return 0;
 }
 
 static string _milestone_rune(const item_def &item)
@@ -1055,15 +1041,12 @@ static void _check_note_item(item_def &item)
 
 void origin_set(const coord_def& where)
 {
-    int monnum = _first_corpse_monnum(where);
     unsigned short pplace = get_packed_place();
     for (stack_iterator si(where); si; ++si)
     {
         if (origin_known(*si))
             continue;
 
-        if (!si->orig_monnum)
-            si->orig_monnum = static_cast<short>(monnum);
         si->orig_place  = pplace;
     }
 }
@@ -1072,9 +1055,6 @@ static void _origin_freeze(item_def &item, const coord_def& where)
 {
     if (!origin_known(item))
     {
-        if (!item.orig_monnum && where.x != -1 && where.y != -1)
-            item.orig_monnum = _first_corpse_monnum(where);
-
         item.orig_place = get_packed_place();
         _check_note_item(item);
     }
@@ -1082,7 +1062,7 @@ static void _origin_freeze(item_def &item, const coord_def& where)
 
 static string _origin_monster_name(const item_def &item)
 {
-    const monster_type monnum = static_cast<monster_type>(item.orig_monnum - 1);
+    const monster_type monnum = static_cast<monster_type>(item.orig_monnum);
     if (monnum == MONS_PLAYER_GHOST)
         return _(M_("a player ghost"));
     else if (monnum == MONS_PANDEMONIUM_LORD)
@@ -1098,7 +1078,7 @@ static string _origin_place_desc(const item_def &item)
 bool origin_describable(const item_def &item)
 {
     return (origin_known(item)
-            && (item.orig_place != 0xFFFFU || item.orig_monnum == -1)
+            && item.orig_place != 0xFFFFU
             && !is_stackable_item(item)
             && item.quantity == 1
             && item.base_type != OBJ_CORPSES
@@ -1191,8 +1171,8 @@ string origin_desc(const item_def &item)
                 break;
             }
         }
-        else if (item.orig_monnum - 1 == MONS_DANCING_WEAPON)
-            desc += gettext("You subdued it ");
+        else if (item.orig_monnum == MONS_DANCING_WEAPON)
+            desc += _("You subdued it ");
         else
         {
             desc += make_stringf(gettext("You took %s off %s "),
@@ -1452,7 +1432,8 @@ void merge_item_stacks(item_def &source, item_def &dest, int quant)
     if (quant == -1)
         quant = source.quantity;
 
-    ASSERT(quant > 0 && quant <= source.quantity);
+    ASSERT(quant > 0);
+    ASSERT(quant <= source.quantity);
 
     if (is_blood_potion(source) && is_blood_potion(dest))
        merge_blood_potion_stacks(source, dest, quant);
@@ -2728,13 +2709,13 @@ static bool _interesting_explore_pickup(const item_def& item)
         return true;
     }
 
-    vector<text_pattern> &ignore = Options.explore_stop_pickup_ignore;
-    if (!ignore.empty())
+    vector<text_pattern> &ignores = Options.explore_stop_pickup_ignore;
+    if (!ignores.empty())
     {
         const string name = item.name(false, DESC_PLAIN);
 
-        for (unsigned int i = 0; i < ignore.size(); i++)
-            if (ignore[i].matches(name))
+        for (unsigned int i = 0; i < ignores.size(); i++)
+            if (ignores[i].matches(name))
                 return false;
     }
 
@@ -3928,6 +3909,9 @@ item_info get_item_info(const item_def& item)
         if (ii.sub_type == MISC_RUNE_OF_ZOT)
             ii.plus = item.plus; // which rune
 
+        if (ii.sub_type == NUM_MISCELLANY)
+            ii.special = item.special; // deck rarity
+
         if (is_deck(item))
         {
             ii.special = item.special;
@@ -3994,7 +3978,8 @@ item_info get_item_info(const item_def& item)
     const char* copy_props[] = {ARTEFACT_APPEAR_KEY, KNOWN_PROPS_KEY,
                                 CORPSE_NAME_KEY, CORPSE_NAME_TYPE_KEY,
                                 "drawn_cards", "item_tile", "item_tile_name",
-                                "worn_tile", "worn_tile_name"};
+                                "worn_tile", "worn_tile_name",
+                                "needs_autopickup"};
     for (unsigned i = 0; i < ARRAYSZ(copy_props); ++i)
     {
         if (item.props.exists(copy_props[i]))

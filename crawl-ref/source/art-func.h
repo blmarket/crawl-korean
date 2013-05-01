@@ -138,7 +138,8 @@ static void _curses_miscast(actor* victim, int power, int fail)
 static void _CURSES_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
     _equip_mpr(show_msgs, "A shiver runs down your spine.");
-    _curses_miscast(&you, random2(9), random2(70));
+    if (!unmeld)
+        _curses_miscast(&you, random2(9), random2(70));
 }
 
 static void _CURSES_world_reacts(item_def *item)
@@ -588,7 +589,7 @@ static void _DEMON_AXE_melee_effect(item_def* item, actor* attacker,
                                     actor* defender, bool mondied, int dam)
 {
     if (one_chance_in(10))
-        cast_summon_demon(50+random2(100), attacker->deity());
+        cast_summon_demon(50+random2(100));
 
     if (attacker->is_player())
         did_god_conduct(DID_UNHOLY, 3);
@@ -719,9 +720,7 @@ static void _BRILLIANCE_unequip(item_def *item, bool *show_msgs)
 ///////////////////////////////////////////////////
 static void _DEVASTATOR_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    if (unmeld)
-        return;
-    mpr("Time to introduce the shillelagh law.");
+    _equip_mpr(show_msgs, "Time to introduce the shillelagh law.");
 }
 
 

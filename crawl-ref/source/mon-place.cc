@@ -2475,7 +2475,7 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
 
     case MONS_IRONHEART_PRESERVER:
         natural_leader = true;
-        switch(random2(3))
+        switch (random2(3))
         {
             case 0:
                 band = BAND_DEEP_ELF_HIGH_PRIEST;
@@ -3606,7 +3606,7 @@ static void _get_vault_mon_list(vector<mons_spec> &list)
         mons_spec spec;
 
 #if TAG_MAJOR_VERSION == 34
-        if (type == -1)
+        if ((int)type == -1)
             type = MONS_NO_MONSTER;
 #endif
         if (type == MONS_NO_MONSTER && base != MONS_NO_MONSTER)

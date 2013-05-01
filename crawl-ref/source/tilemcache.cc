@@ -289,7 +289,6 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
     case TILEP_MONS_MERFOLK_IMPALER:
     case TILEP_MONS_MERFOLK_IMPALER_WATER:
     case TILEP_MONS_TENGU:
-    case TILEP_MONS_TENGU_CONJURER:
         *ofs_x = -2;
         *ofs_y = 0;
         break;
@@ -340,6 +339,7 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
         *ofs_y = -2;
         break;
     case TILEP_MONS_RED_DEVIL:
+    case TILEP_MONS_LAMIA:
         *ofs_x = 0;
         *ofs_y = -3;
         break;
@@ -350,7 +350,6 @@ bool mcache_monster::get_weapon_offset(tileidx_t mon_tile,
     case TILEP_MONS_NAGA_WARRIOR:
     case TILEP_MONS_GUARDIAN_SERPENT:
     case TILEP_MONS_NAGA_MAGE:
-    case TILEP_MONS_LAMIA:
     case TILEP_MONS_THE_ENCHANTRESS:
     case TILEP_MONS_DEEP_DWARF:
     case TILEP_MONS_DEEP_DWARF_SCION:
@@ -678,12 +677,10 @@ mcache_ghost::mcache_ghost(const monster_info& mon)
 
     if (ac > 25)
         m_doll.parts[TILEP_PART_BODY] = TILEP_BODY_PLATE_BLACK;
-    else if (ac > 20)
-        m_doll.parts[TILEP_PART_BODY]= TILEP_BODY_SPLINT;
-    else if (ac > 15)
-        m_doll.parts[TILEP_PART_BODY]= TILEP_BODY_SCALEMAIL;
-    else if (ac > 10)
+    else if (ac > 18)
         m_doll.parts[TILEP_PART_BODY]= TILEP_BODY_CHAINMAIL;
+    else if (ac > 12)
+        m_doll.parts[TILEP_PART_BODY]= TILEP_BODY_SCALEMAIL;
     else if (ac > 5)
         m_doll.parts[TILEP_PART_BODY]= TILEP_BODY_LEATHER_HEAVY;
     else
