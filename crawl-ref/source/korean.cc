@@ -54,5 +54,325 @@ const char * pgettext_expr(const char *msgctxt, const char *msgid)
     return msgid;
 }
 
+// 여기서부터는 메시지 보정 함수들. (영어 관사 제거 / 은는이가 보정)
+#ifdef KR
+
+#include <tchar.h>
+#include <Windows.h>
+#include "libutil.h"
+
+#define CORRECTION_BRACKET true
+
+wchar_t* ga(wchar_t* str){
+	wchar_t* ret_i=L"이";
+	wchar_t* ret_ga=L"가";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_ga;
+	return ret_i;
+}
+
+wchar_t* rul(wchar_t* str){
+	wchar_t* ret_ul=L"을";
+	wchar_t* ret_rul=L"를";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_rul;
+	return ret_ul;
+}
+
+wchar_t* ro(wchar_t* str){
+	wchar_t* ret_uro=L"으로";
+	wchar_t* ret_ro=L"로";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_ro;
+	return ret_uro;
+}
+
+wchar_t* nun(wchar_t* str){
+    wchar_t* ret_un=L"은";
+    wchar_t* ret_nun=L"는";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_nun;
+	return ret_un;
+}
+
+wchar_t* da(wchar_t* str){
+    wchar_t* ret_un=L"이다";
+    wchar_t* ret_nun=L"다";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_nun;
+	return ret_un;
+}
+
+wchar_t* iro(wchar_t* str){
+	wchar_t* ret_uro=L"이로";
+	wchar_t* ret_ro=L"로";
+
+	int index;
+	index = str[0] - 0xAC00;
+	index = (index % 588) % 28;
+
+	if(!index)
+		return ret_ro;
+	return ret_uro;
+}
+
+int find_bracket(wchar_t* str, int start){
+	int i;
+	int size = wcslen(str);
+	for(i=start; i<size; i++){
+		if(str[i]==TEXT('('))	break;
+	}
+	if(i==size) i = -1;
+	return i;
+}
+
+void strparse(wchar_t* result, wchar_t* str, int* p_next_index, int b_index, int back, int len, int mode){
+	wchar_t pre_ch[2];
+	
+	pre_ch[1] = 0;
+	wcsncat(result, str+*p_next_index, b_index-*p_next_index-back);
+	pre_ch[0] = str[b_index-back-1];
+
+	switch(mode){
+	case 0://가
+		wcsncat(result, ga(pre_ch), sizeof(ga(pre_ch)));
+		break;
+	case 1://를
+		wcsncat(result, rul(pre_ch), sizeof(rul(pre_ch)));
+		break;
+	case 2://는
+		wcsncat(result, nun(pre_ch), sizeof(nun(pre_ch)));
+		break;
+	case 3://로
+		wcsncat(result, ro(pre_ch), sizeof(ro(pre_ch)));
+		break;
+	case 4://다
+		wcsncat(result, da(pre_ch), sizeof(da(pre_ch)));
+		break;
+	case 5://(이)로
+		wcsncat(result, iro(pre_ch), sizeof(iro(pre_ch)));
+		break;
+	}
+	*p_next_index = b_index+len-back;
+}
+
+char result_conv [2000];
+
+char* josa(const char* str){
+	wchar_t result[1000];
+	wchar_t str_conv[1000];
+
+	int b_index = 0, next_index = 0;
+	memset(result, '\0', 1000);
+	memset(result_conv, '\0', 2000);
+	memset(str_conv, '\0', sizeof(wchar_t)*1000);
+
+	MultiByteToWideChar(CP_UTF8, 0, str, strlen(str), str_conv, 1000);
+
+	while(b_index >= 0){
+		b_index = find_bracket(str_conv, b_index);
+
+		if(b_index<0) break;
+		if(b_index >= 0){
+
+			// 이(가) 변경 루틴 
+			if(wcsncmp(str_conv+b_index-2, L" 이(가)",5)==0){  //str_conv+b_index-(괄호가나타나는위치), "",(전체문자열수)
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 0); // (괄호가나타나는위치), (전체문자열수), (조사인덱스))
+			}
+			else if(wcsncmp(str_conv+b_index-2, L" 가(이)",5)==0 &&
+				    wcsncmp(str_conv+b_index-2, L" 가(이)가",6)!=0 &&
+					wcsncmp(str_conv+b_index-2, L" 가(이)다",6)!=0 &&
+					wcsncmp(str_conv+b_index-2, L" 가(이)로",6)!=0){ // (deceit, 110907) 충돌방지
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 0);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"이(가)",4)==0){ 
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 0);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"가(이)",4)==0 &&
+				    wcsncmp(str_conv+b_index-1, L"가(이)가",5)!=0 &&
+				    wcsncmp(str_conv+b_index-1, L"가(이)다",5)!=0 &&
+					wcsncmp(str_conv+b_index-1, L"가(이)로",5)!=0){ // (deceit, 110907) 충돌방지
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 0);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (가)이",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 0);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(가)이",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 0);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (이)가",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 0);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(이)가",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 0);
+			} 
 
 
+			// 을(를) 변경 루틴 
+			if(wcsncmp(str_conv+b_index-2, L" 을(를)",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 1);
+			}
+			else if(wcsncmp(str_conv+b_index-2, L" 를(을)",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 1);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"을(를)",4)==0){ 
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 1);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"를(을)",4)==0){ 
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 1);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (를)을",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 1);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(를)을",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 1);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (을)를",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 1);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(을)를",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 1);
+			} 
+
+			// 은(는) 변경 루틴 
+			if(wcsncmp(str_conv+b_index-2, L" 은(는)",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 2);
+			}
+			else if(wcsncmp(str_conv+b_index-2, L" 는(은)",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 2, 5, 2);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"은(는)",4)==0){ 
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 2);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L"는(은)",4)==0){ 
+				strparse(result, str_conv, &next_index, b_index, 1, 4, 2);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (는)은",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 2);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(는)은",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 2);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (은)는",5)==0){
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 2);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(은)는",4)==0){
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 2);
+			} 
+
+			// (으)로 변경 루틴
+			if(wcsncmp(str_conv+b_index-1, L" (으)로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 3);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(으)로",4)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 3);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (로)으로",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 3);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(로)으로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 3);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (으로)로",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 3);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(으로)로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 3);
+			} 
+
+			// (이)다 변경 루틴 
+			if(wcsncmp(str_conv+b_index-1, L" (이)다",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 4);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(이)다",4)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 4);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (다)이다",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 4);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(다)이다",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 4);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (이다)다",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 4);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(이다)다",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 4);
+			}
+
+			// (이)로 변경 루틴
+			if(wcsncmp(str_conv+b_index-1, L" (이)로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 5, 5);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(이)로",4)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 4, 5);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (로)이로",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 5);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(로)이로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 5);
+			}
+			else if(wcsncmp(str_conv+b_index-1, L" (이로)로",6)==0){  
+				strparse(result, str_conv, &next_index, b_index, 1, 6, 5);
+			}
+			else if(wcsncmp(str_conv+b_index, L"(이로)로",5)==0){  
+				strparse(result, str_conv, &next_index, b_index, 0, 5, 5);
+			}
+
+
+		}
+		b_index++;
+	}
+
+	wcscat(result, str_conv+next_index);
+	WideCharToMultiByte(CP_UTF8, 0, result, 2000, result_conv, 2000, NULL, NULL);
+	return result_conv;
+}
+
+std::string kill_article(std::string input)
+{
+	if(input.substr(0,1) == "a " || input.substr(0,1) == "A ") input = input.substr(2, input.length());
+	if(input.substr(0,2) == "an " || input.substr(0,2) == "An ") input = input.substr(3, input.length());
+	if(input.substr(0,3) == "the " || input.substr(0,3) == "The ") input = input.substr(4, input.length());
+
+	input = replace_all(input, " a ", " ");
+	input = replace_all(input, " A ", " ");
+	input = replace_all(input, " an ", " ");
+	input = replace_all(input, " An ", " ");
+	input = replace_all(input, " the ", " ");
+	input = replace_all(input, " The ", " ");
+	return input;
+}
+
+std::string message_correction(std::string str)
+{
+	if(CORRECTION_BRACKET) str = josa(str.c_str());
+	return str;
+}
+#endif
