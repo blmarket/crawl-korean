@@ -1586,8 +1586,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "<w>%</w>키, <w>%</w>키를 눌러 이러한 비상구를 이용하면 "
                 "윗층이나 아래층으로 피신할 수 있죠. "
 #ifdef USE_TILE
-                "(or by using your <w>left mouse button</w> in combination "
-                "with the <w>Shift key</w>)"
+                " (또는 <w>마우스 왼쪽 버튼</w>과 "
+                "<w>쉬프트키</w>의 조합으로도 사용할수 있고요.)"
 #endif
                 "하지만, 비상구는 계단과 달리 내려간 후 곧바로 다시 올라오거나 내려갈 수 없답니다. 꼭 필요한 경우가 아니면, 층을 이동할떄는 비상구보단 계단을 이용하는게 좋아요.";
         cmd.push_back(CMD_GO_UPSTAIRS);
@@ -1856,6 +1856,14 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     case HINT_NEW_LEVEL:
         if (you.skills[SK_SPELLCASTING])
         {
+            if (!crawl_state.game_is_hints())
+            {
+                text << "Gaining an experience level allows you to learn more "
+                        "difficult spells. However, you don't have any level "
+                        "two spells in your current spellbook, so you'll just "
+                        "have to keep exploring!";
+                break;
+            }
             text << "Gaining an experience level allows you to learn more "
                     "difficult spells. Time to memorise your second spell "
                     "with <w>%</w>"
@@ -1896,10 +1904,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         text << "One of your skills just passed a whole integer point. The "
                 "skills you use are automatically trained whenever you gain "
                 "experience (by killing monsters). By default, experience goes "
-                "towards skill you actively use, although you may choose "
-                "otherwise. You can train your skills or pick up new ones by "
-                "performing the corresponding actions. To view or manage your "
-                "skill set, type <w>%</w>.";
+                "towards skills you actively use, although you may choose "
+                "otherwise. To view or manage your skill set, type <w>%</w>.";
 
         cmd.push_back(CMD_DISPLAY_SKILLS);
         break;
@@ -1954,8 +1960,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         text << "Chunks that are described as <brown>contaminated</brown> will "
                 "occasionally make you nauseated when eaten. However, since food is "
                 "scarce in the dungeon, you'll often have to risk it.\n"
-                "While nauseated, you can't stomach anything, and your attributes "
-                "may occasionally decrease. Just go around, hunt for better food.";
+                "While nauseated, you can't stomach anything else unless you're "
+                "almost starving.";
             break;
 
     case HINT_YOU_SICK:
@@ -2118,9 +2124,9 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         }
         text << "One or more of the chunks or corpses you carry has started "
                 "to rot. Few species can digest these, so you might just as "
-                "well <w>%</w>rop them now."
+                "well <w>%</w>rop them now. "
                 "When selecting items from a menu, there's a shortcut "
-                "(<w>&</w>) to select all items in your inventory at once "
+                "(<w>,</w>) to select all items in your inventory at once "
                 "that are useless to you.";
         cmd.push_back(CMD_DROP);
         break;
@@ -3778,13 +3784,14 @@ void hints_describe_item(const item_def &item)
             cmd.push_back(CMD_BUTCHER);
 
             if (!food_is_rotten(item) && god_likes_fresh_corpses(you.religion))
-            {
-                ostr << ". 아니면, 시체를 공양받는 신에게 시체를 제물로 바칠 수 있습니다. 마침 당신이 믿고 있는 신 "
-                     << _(god_name(you.religion).c_str())
-                     << "은(는) 신선한 시체를 제물로 받는군요, 시체 위에서 기도(<w>%</w>키)하여 그 시체를 제물로 바칠 수 있습니다";
-                cmd.push_back(CMD_PRAY);
-            }
-            ostr << ". ";
+			{
+
+				ostr << ". 아니면, 시체를 공양받는 신에게 시체를 제물로 바칠 수 있습니다. 마침 당신이 믿고 있는 신 "
+					<< _(god_name(you.religion).c_str())
+					<< "은(는) 신선한 시체를 제물로 받는군요, 시체 위에서 기도(<w>%</w>키)하여 그 시체를 제물로 바칠 수 있습니다";
+				cmd.push_back(CMD_PRAY);
+			}
+			ostr << ". ";
 
             if (food_is_rotten(item))
             {
