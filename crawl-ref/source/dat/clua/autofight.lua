@@ -51,12 +51,12 @@ local function vector_move(dx, dy)
 end
 
 local function have_reaching()
-  local wp = items.equipped_at("weapon")
+  local wp = items.equipped_at("무기")
   return wp and wp.reach_range == 8 and not wp.is_melded
 end
 
 local function have_ranged()
-  local wp = items.equipped_at("weapon")
+  local wp = items.equipped_at("무기")
   return wp and wp.is_ranged and not wp.is_melded
 end
 
@@ -172,9 +172,16 @@ local function is_candidate_for_attack(x,y)
       or m:name() == "orb of destruction" then
     return false
   end
+  if m:name() == "나비"
+      or m:name() == "파괴의 구" then
+    return false
+  end
   if m:is_firewood() then
   --crawl.mpr("... is firewood.")
     if string.find(m:name(), "ballistomycete") then
+      return true
+    end
+    if string.find(m:name(), "발리스토마이") then
       return true
     end
     return false

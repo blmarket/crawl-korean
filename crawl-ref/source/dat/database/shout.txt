@@ -328,7 +328,7 @@ VISUAL:@The_monster@이(가) 당신에게로 눈자루를 홱 돌렸다.
 %%%%
 'cap-J'
 
-VISUAL:@The_monster@ quivers.
+VISUAL:@The_monster@이(가) 몸을 떨었다.
 ########################################
 # Shouts for specific monsters
 ########################################

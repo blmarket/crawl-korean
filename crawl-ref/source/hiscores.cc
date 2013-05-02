@@ -998,12 +998,8 @@ void scorefile_entry::set_base_xlog_fields() const
     fields->add_field("ev", "%d", ev);
     fields->add_field("sh", "%d", sh);
 
-    // Don't write No God to save some space.
-    if (god != -1)
-    {
-        fields->add_field("god", "%s", god == GOD_NO_GOD? "" :
-                          god_name(god).c_str());
-    }
+    fields->add_field("god", "%s", god == GOD_NO_GOD? "" :
+                      god_name(god).c_str());
 
     if (wiz_mode)
         fields->add_field("wiz", "%d", wiz_mode);
@@ -1164,7 +1160,7 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             || death_type == KILLED_BY_REFLECTION
             || death_type == KILLED_BY_ROLLING)
         && !invalid_monster_index(death_source)
-        && menv[death_source].type != -1)
+        && menv[death_source].type != MONS_NO_MONSTER)
     {
         const monster* mons = &menv[death_source];
 
@@ -1780,7 +1776,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
         desc = _append_sentence_delimiter(desc, "일에 마감했다.");
         desc += _hiscore_newline_string();
 
-        if (race != SP_DEMIGOD && god != -1)
+        if (race != SP_DEMIGOD && god != GOD_NO_GOD)
         {
             if (god == GOD_XOM)
             {
@@ -1790,7 +1786,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
                 desc += scratch;
                 desc += _hiscore_newline_string();
             }
-            else if (god != GOD_NO_GOD)
+            else
             {
                 // Not exactly the same as the religion screen, but
                 // good enough to fill this slot for now.
