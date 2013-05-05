@@ -1,230 +1,351 @@
 Stone Soup 0.12 (20130501)
 --------------------------
 
-0.12 highlights
----------------
-* Axes have a cleaving attack, hitting up to 7 enemies around you.
-* The Vaults branch is five levels deep, with a distinct layout and several new
-  types of guards.
-* Abyss has multiple levels of increasing difficulty, more varied terrain, and
-  many new thematic monsters.
-* Conjurers get a new starting book of offensive non-elemental spells.
-* Beogh and Yredelemnul let you recall allies across dungeon levels.
-* Major changes to Vehumet.
-* Friendly summons no longer attack out of sight.
-* Secret doors are no more.
+0.12 주요 변경점
+----------------
+* 도끼류 무기는 이제 '넓은 베기'공격을 합니다. 공격한 대상과 반대방향의
+  적을 제외한, 플레이어 주변의 7명의 적을 동시에 공격하는 것이 가능합니다.
 
-Branches, environment
----------------------
-* The Hall of Blades layout has been adjusted, and now contains two weapons
-  with "interesting brands" instead of just one.
-* The Abyss is revamped yet again. It now contains five (still infinite)
-  levels of increasing difficulty. Each level is composed of regions with
-  different layouts, most of which are more static than before. The rune
-  appears only at the third level and below, more frequently at deeper levels.
-* The Abyssal rune always appears in a vault, never lying around on the floor.
-* Having the Abyssal rune greatly increases the generation of Abyss exits.
-* Many Ziggurat floors have more fine-tuned monster-sets, and a few monster
-  sets have been replaced entirely.
-* Three new Sprint maps: "Thunderdome" by evilmike, "The Pits" and "Arena of
-  Blood" both by st.
-* The Abyss no longer exists in Sprint.
-* New layouts for Cocytus, Gehenna, Snake, and the main Dungeon.
-* More layouts allowed in Zot.
-* New Lair branch ending vaults, and many other new vaults.
-* More decorative vaults are now placed.
-* "Special rooms" (kobold/orc rooms, beehives, morgues, jelly pits) have been
-  adjusted, now appear at more appropriate depths and layouts, and no longer
-  place doors.
-* A new "special room" - the mythical zoo, with standard high fantasy beasts.
-* New "runed door" feature: won't be opened by auto-explore or by monsters.
-  Becomes a regular door when opened.
-* Alarm traps only trigger once, but make monsters swarm towards you for some
-  time.
+* 보물창고는 이제 총 5층으로 이루어져 있으며, 다른 던전과 다른 보물창고만의
+  던전 구조를 가지게 됩니다. 또한, 몇몇 종류의 보물창고 감시자 몬스터들도 
+  추가되었습니다.
 
-Character
----------
-* Stalker is removed.
-* Berserkers may choose their starting weapon.
-* Gladiator no longer starts with a buckler, gets more Dodging to compensate.
-* Traps are spotted (or not) deterministically based on skill level and a
-  few other factors: spending more time does not help.
-* Levitation and controlled flight are no more - all flight is controlled.
-* Flying no longer increases carrying capacity.
-* Tengu receive their movement speed bonus when flying, regardless of burden.
-* Black draconians gain permanent flight (like Tengu but without the speed
-  boost) at XL 14.
-* Removed the hidden special cost of Spellcasting, Stealth, Evocations and
-  Invocations. Aptitudes adjusted.
-* Experience aptitude uses the same scale as skill aptitudes. This scale is
-  coarser than the old one, so most races now require slightly more or less
-  experience to gain levels than before.
-* Deep Elves are better at Earth magic than Air.
-* Hill Orcs are better at Axes, worse at gaining levels.
-* Tengu are better at gaining levels.
-* Levels 1 and 2 of the teleportitis mutation teleport you only a limited
-  distance.
-* The augmentation and powered by pain Demonspawn mutations have been improved.
+* 어비스는 이제 여러 층으로 구성되며, 깊은 곳으로 내려갈수록 난이도도 
+  높아집니다. 더욱 다양한 어비스 지형과, 어비스 테마의 다양한 추가 몬스터들을
+  만나보실 수 있습니다.
 
-Monsters
---------
-* Removed: ant larvae, bumblebees, blessed toes, rock trolls, wood golems.
-* New monster: moth of suppression. Generates an aura that prevents evocation
-  and suppresses the magical effects of wielded/worn equipment.
-* New abyssal monsters:
-    - Wretched star: bestows temporary mutations.
-    - Tentacled starspawn: has constricting tentacles and a nasty attack.
-    - Ancient zyme: causes sickness when near the player.
-    - Lurking horror: stalks like a wandering mushroom, then explodes for
-      torment.
-    - Starcursed mass: proliferates when ignored, re-merges when damaged.
-      Has a smite-targeted psychic scream that becomes more powerful as
-      more masses become visible.
-    - Apocalypse crab: breathes clouds of chaos.
-    - Thrashing horror: moves like a bat, tramples, and frenzies.
-    - Spatial maelstrom: incorporeal vortex that turns walls into spatial
-      vortices.
-* New deep troll specialist monsters, appearing in late-D deep troll packs:
-    - Deep troll shamans: cast Might Other and Haste Other on their
-      accompanying deep troll packs.
-    - Deep troll earth mages: cast Dig and LRD to allow the rest of the deep
-      troll pack to pursue their opponent.
-* New vaults monsters:
-    - Vault sentinels, with a signal horn that generates a lot of noise and
-      the Sentinel's Mark spell which alerts all creatures on the level to
-      the player's location.
-    - Vault wardens, with the ability to close and seal doors near the player
-      for a time or until they are killed.
-    - Ironbrand convokers, with the ability to recall other monsters on the
-      level to their location. Also cast Might Other.
-    - Ironheart preservers, with the ability to take some damage in place of
+* 파괴술사(구 요술사)들은, 새로운 무속성 마법들이 담겨있는 새로운 마법서를 가지고 시작합니다.
+
+* 베오그와 이레데렘눌의 신자들은, 이제 다른 층에 있는 동료들도 곁으로 소집할 수 있습니다.
+
+* 베후메트의 권능과 선물이 대거 조정되었습니다.
+
+* 당신의 우호적인 소환물들은, 당신의 시야 밖을 이제 더 이상 공격하지 못합니다.
+
+* 비밀문 개념이 사라집니다.
+
+
+던전, 환경 관련 변경점
+----------------------
+* 칼날의 방의 구조가 조정되었습니다. 또한 이제 칼날의 방에 등장하는 
+  "특이한 속성"의 무기는 기존의 2개에서, 이제부턴 1개만 등장하게 됩니다.
+
+* 어비스가 전격 개편되었습니다. 어비스는 이제 5층으로 이루어져 있으나, 
+  한층한층은 여전히 무한하며, 더 깊은 어비스로 들어갈수록 더욱 강한 몬스터들이
+  등장합니다. 각각의 층은 수많은 구조의 구역들로 이루어지며, 예전보다는 지형의
+  변화는 더뎌졌습니다. 어비스의 룬은 어비스 3층 이하에서만 등장하며, 
+  더 깊은 곳으로 들어갈수록 어비스의 룬이 등장할 확률이 높아집니다.
+
+* 어비스의 룬이 이제 어비스의 엉뚱하고도 뜬금없는 곳에 덩그러니 놓여있는 일은
+  없습니다. 어비스의 룬은 어비스에서 만날 수 있는, 몬스터들이 지키고 있는 
+  특수 지형을 통해서 등장하게 됩니다.
+
+* 어비스의 룬을 획득시, 어비스에서 탈출구를 찾을 확률이 대폭 상승하게 됩니다.
+
+* 많은 지구라트의 몬스터 조합이 변경되었습니다. 몇몇 몬스터 조합은 완전히
+  바뀐 것도 있습니다.
+
+* 3종류의 던전 돌파 맵이 추가되었습니다: "썬더돔", "구렁텅이," "피의 결투장"
+
+* 이제 던전 돌파 모드에서는 더 이상 어비스로 떨어지지 않습니다.
+
+* 코큐투스, 게헨나, 뱀 소굴, 조트의 렐름, 메인 던전에 새로운 던전 생성 규칙이 
+  추가되었습니다.
+
+* 짐승굴의 마지막 8층의 고정 특수 지형들이 추가되었습니다. 막층을 제외해도
+  몇몇 특수 지형들이 전체적으로 추가되었습니다.
+
+* 그 외 여러가지 '장식적인' 특수 지형들이 추가되었습니다.
+
+* 메인 던전 등지에서 종종 찾아볼 수 있는 "특수한 방". 예를 들자면, 코볼트나 
+  오크 방, 벌집, 무덤, 젤리소굴 등이 우글우글한 방들이, 이제는 던전에서 너무
+  일찍 나오거나, 혹은 너무 늦게 나오는 일이 없이 적절한 층수에서 나오도록
+  조정됩니다. 그리고, 이제 그러한 방들에는 문이 달려있지 않습니다.
+
+* 몇몇 "특수한 방"들도 추가됩니다. 예를 들면, '신화적인 동물원' 같은 것이죠.
+  신화 속에서나 나올만한 동물 몬스터들로 가득한 방입니다!
+
+* 비밀문 개념이 사라진 대신, 새로운 "룬이 새겨진 문" 개념이 등장합니다.
+  룬이 새겨진 문은 자동 탐색,이동이나, 혹은 몬스터들에 의해 열리지 않습니다.
+  한 번 열리면 일반적인 문으로 바뀝니다.
+
+* 알람 함정은 이제 단 한 번만 작동합니다. 다만 예전보다 훨씬 큰 소리로 울려,
+  주변 몬스터들을 몰고올 것입니다!
+  
+캐릭터 관련 변경점
+-------------------
+* '추적자' 직업이 사라졌습니다.
+
+* 광전사 직업은 이제 시작시, 자신의 무기를 선택할 수 있습니다.
+
+* 검투사 직업은 시작시 더 이상 원형 방패를 들고 나오지 않지만, 예전보다
+  회피 스킬이 좀 더 높은 상태에서 시작합니다.
+
+* 함정을 찾아내는 확률은 이제 함정 근처에서 얼마나 오랫동안 탐색하느냐가 아닌,
+  당신의 함정 기술에 따라 찾아내느냐, 혹은 못 찾아내느냐가 결정됩니다.
+
+* 공중부양과 비행 제어 기술 개념이 없어집니다. 이제 모든 공중부양은
+  제어 가능한 '비행'으로 통합됩니다.
+
+* 비행은 이제 더 이상 소지 한도를 늘려주지 않습니다.
+
+* 텐구 종족은 중량 부담에 상관 없이 비행시 속도 보너스를 받게 됩니다.
+
+* 검은 드라코니언 종족은 레벨 14에 도달하면, 비행 기술을 얻게 됩니다.
+  다만 텐구와는 달리 속도 보너스를 받지는 못합니다.
+
+* 주문 시전술, 은밀 기술, 발동술, 기도술의 숨겨져 있던 경험치 보정치
+  (주문시전은 다른 스킬의 130%, 은밀,발동,기도는 70%)가 사라집니다.
+  대신 모든 종족의 주문 시전 적성이 -1, 은밀,발동,기도술은 +1씩 올라갑니다.
+ 
+* 위 경험치 보정이 사라짐에 따라, 모든 스킬들은 적성치가 같을 경우 똑같은
+  경험치를 필요로 합니다. 몇몇 종족들은, 이에 따라 특정 스킬에 필요한 경험치가
+  약간 더 많거나 적어질 수 있습니다.
+
+* 딥 엘프들은 이제 대기 마법보다 대지 마법에 능합니다.
+
+* 힐 오크들의 도끼 기술 적성이 좋아졌지만, 예전보다 레벨업에 필요한 경험치가
+  늘어납니다.
+
+* 텐구들의 레벨업시 필요한 경험치가 적어집니다.
+
+* 공간이동 변이 (때때로 당신 주변의 공간이 일그러진다) 1단계 혹은 2단계일 시,
+  변이에 의한 의도치 않은 공간이동 발생시, 공간이동 하는 거리의 제한이 생깁니다. 
+
+* 현재 HP에 따라 추가적인 힘을 얻는 데몬스폰 변이가 상향되었습니다.
+
+몬스터 관련 변경점
+------------------
+* 사라진 몬스터 : 개미 애벌레, 호박벌, 축복받은 발가락, 바위 트롤, 나무 골렘.
+
+* 새로운 몬스터 : 항마의 나방 - 주변의 모든 마법 효과를 억제하는 오오라를
+      내는 나방입니다. 이 오오라 안에서는, 장비품의 마법 효과도 무효화됩니다.
+
+* 새로운 어비스 몬스터:
+    - 비통의 별: 당신에게 일시적인 변이를 겁니다.
+    - 스타스폰: 대상을 조이는 길다란 촉수를 이용한 위협적인 공격을 가합니다.
+    - 고대의 병원균: 주변으로 각종 질병을 일으킵니다.
+    - 숨어있는 공포: 당신에게 몰래 접근하여, 파괴되며 지옥의 고통을 일으킵니다.
+    - 저주받은 덩어리: 신경쓰지 않는다면 빠르게 분열하며, 피해를 받으면 다시
+      합치려 하는 성질이 있습니다. 플레이어에게 저항하기 힘든 날카로운 정신적
+      공격을 하며, 많은 덩어리들이 시야에 있으면 더욱 큰 피해를 줍니다.
+    - 묵시의 게: 꽃게의 혼돈 버전입니다. 혼돈 구름을 내뿜습니다.
+    - 요동치는 공포: 불규칙하게 돌아다니며, 만나는 것들을 짓밟고, 발광합니다.
+    - 시공간의 소용돌이 : 무형의 소용돌이로, 주변의 벽들을 시공의 소용돌이로
+      바꿔 버립니다.
+
+* 새로운 딥 트롤 종족 몬스터 :
+    - 딥 트롤 주술사 : 동료 트롤들에게 '힘 증가' 마법과 '가속' 마법을 사용합니다.
+    - 딥 트롤 대지술사 : '굴착' 마법과 '리의 순간 해체술' 마법으로, 그들의
+                         적에게 대항합니다.
+
+* 새로운 보물창고 몬스터 :
+    - 보물창고 감시자: 휴대하고 있는 뿔피리를 불어, 보물창고의 다른 동료와 몬스
+      터들에게, 당신의 위치를 알려 줄 것입니다.
+    - 보물창고 관리자: 보물창고의 지리에 빠삭한 관리자들입니다. 당신이 보물창고
+      의 방에 들어오면, 당신이 그 방 안의 몬스터들을 전멸시킬 때까지 문을 봉인
+      시킬 것입니다.
+    - 철제의 소집자: 보물창고의 다른 몬스터들을 자신의 주변으로 소환하는 능력을
+      가지고 있습니다. '힘 증가' 마법도 가지고 있습니다.
+    - 강철심장 수호자: with the ability to take some damage in place of
       an enemy the player is currently attacking.
-* New uniques:
-    - Jorgrun, a deep dwarven earth elementalist.
-    - Lamia, queen of the nagas.
-* Friendly summoned monsters do not attack things unless the player has line
-  of sight to both the summon and the victim. Glass does not count as line of
-  sight for this purpose.
-* Summoned monsters do not cast spells that create permanent allies.
-* Only a select few monsters flee at low HP.
-* Ereshkigal has more HP, and can now cast Silence and Major Healing.
-* Changed monsters: Frances, Joseph, Polyphemus, bone dragons, soul eaters,
-  vampires, vampire knights.
-* Rotting corpses no longer spawn toadstools for non-Fedhasites.
-* Monsters can now use wands of digging, and cast Dig in more circumstances.
-* Allies summoned with the Mercenary card can pick up and use equipment.
 
-Spells
-------
-* Removed: Fulsome Distillation, Evaporate, Cigotuvi's Degeneration, See
-  Invisible and Insulation.
-* New spells:
-    - Force Lance (level 2 Conjuration). Fires a short-range single-target
-      projectile that can knock monsters backwards.
-    - Dazzling Spray (level 3 Conjuration/Hexes). Fires a spread of energy
-      bolts that can blind creatures.
-    - Iskenderun's Battlesphere (level 4 Conjuration/Charms). Creates an
-      autonomous globe that shoots at enemies in sync with your conjurations.
-    - Fulminant Prism (level 5 Conjuration/Hexes). Creates a time bomb at a
-      smite-targetted location.
-    - Disjunction (level 8 Translocation). Has a duration, during which it
-      blinks away nearby monsters. Causes contamination.
-* Conjurers have a new book with non-elemental spells (including the new
-  conjurations).
-* Spell memorisation failure is no more. As long as the failure chance is
-  not 100%, the spell can be memorized. There is a warning prompt if the
-  chance of a miscast is high.
-* Some spellbooks have been reorganized.
-* Condensation Shield's SH bonus no longer cares about Shields skill or
-  intelligence.
-* The blinking component of the Dispersal spell is irresistible.
-* Venom Bolt and Bolt of Magma do more damage; Teleport Other works more often.
-* Recall is now gradual instead of instant: one ally is recalled every 3-6
-  aut.
+* 새로운 네임드 몬스터:
+    - 딥 드워프 대지술사, "요르그륀"
+    - 나가 여왕, "라미아"
 
-Items
------
-* Axes have a cleaving attack: they hit up to seven targets with a single
-  swing (all directions except directly opposite the direction of attack,
-  but not if a wall is in the way). These secondary attacks do only 75%
-  damage and do not hit allies. Base damage for the larger axes is reduced
-  to compensate.
-* One-handed maces and flails have been improved: flails and eveningstars get
-  a one point damage increase, and morningstars get a +3/-1 damage/accuracy
-  boost to replace spiked flails.
-* The wand of polymorph other is now the wand of polymorph; use of it against
-  the player will turn them into a random form (including several new forms -
-  tree form, wisp form, porcupine form and fungus form).
-* Scroll of unholy creation is replaced with scroll of summoning, which
-  summons a few level-appropriate monsters.
-* Removed items: spiked flail, potion of water, staff of enchantment, plain
-  (non-magic, non-quarter-) staves
-* Potion of decay rots HP immediately rather than giving the "Rot" status.
-* Potions and rings of levitation are now "of flight"; boots of levitation
-  are now "of flying"; and the +Lev artefact property is now +Fly.
-* Amulet of controlled flight is removed; Amulet of the Air now grants
-  passive Repel Missiles and inaccuracy instead.
-* Amulet of inaccuracy correctly affects ranged weapons.
-* Amulet of clarity prevents mesmerisation.
-* Some rods were changed to have a more focused spell set.
-* The "Contam" artefact property no longer causes contamination over time,
-  but only when the item is unequipped.
-* The "*Rage" artefact property triggers much less often (except for Wrath of
-  Trog).
-* Improved fixedarts: Spear of the Botono, Robe of Night, Cloak of the Thief,
-  Robe of Folly, plutonium sword.
-* The hand-and-a-half weapon category is gone; such weapons are now
-  one-handed for normal-size races.
+* 소환된 우호적인 몬스터들은, 더 이상 플레이어의 시야 밖에 있는 적을 공격하지 
+  않습니다. 
 
-Gods
-----
-* Followers of worshippers of Beogh and Yredelemnul can now be recalled across
-  levels.
-* Followers of Beoghites now share experience when the player scores kills.
-* Yredelemnul gives a small amount of piety for desecrating holy remains.
-* Vehumet is overhauled: Now grants damaging spells one-at-a-time (available
-  from the (M)emorization screen), partially based on your elemental skills.
-  No longer supports summoning, accepts ally kills, or reduces spell MP cost.
-* Zin's Imprisonment placement is much more forgiving, pushing adjacent
-  monsters out of the way if possible.
-* Lugonu's Enter the Abyss no longer reduces maximum HP or MP.
-* Lugonu no longer gives piety for anything in the Abyss.
-* Mobile Fedhas-granted allies follow you across levels en masse.
-* New Xom effects: loud noises, blink monsters, enchant monster (petrify,
-  slow, paralysis, enslavement; haste, might, invisibility), summon shadow
-  creatures.
-* Xom does not reduce stats as drastically, unless bored.
-* Xom will not animate or swap weapons in the Abyss, and will not hostilely
-  animate your weapon at all anymore.
+* 소환된 몬스터들은 더 이상 영구적인 소환물을 부르는 주문을 사용하지 않습니다.
 
-Interface
----------
-* Many updated tiles.
-* A new Android port with touch-screen support.
-* New options: auto_sacrifice, dump_on_save, item_glyph, monster_list_colour,
-  tile_cell_pixels, tile_filter_scaling.
-* Removed options: sacrifice_before_explore (now part of auto_sacrifice),
+* 몇몇 지정된 몬스터들만, HP가 낮아졌을 경우 도망을 시도합니다.
+
+* 에레쉬키갈의 HP가 높아지고, 이제 정적과 대치료 마법을 사용합니다.
+
+* 다음 몬스터들의 스펙이 변화되었습니다: 프랜시스, 요셉, 폴리페모스, 
+  해골 용, 영혼을 먹는 악마, 뱀파이어, 뱀파이어 기사.
+
+* 플레이어가 페다스의 신자가 아닌 이상, 더 이상 썩은 시체로부터 버섯이 자라나지
+  않습니다.
+
+* 이제 몬스터들도 굴착의 마법봉을 사용할 줄 알게 되었습니다. 굴착 마법을 사용할
+  수 있던 몬스터들은, 좀 더 다양한 상황에서 굴착을 사용합니다.
+
+* 'the Mercenary'카드로 소환된 몬스터는 이제 장비를 집어들어 장착할 수 있습니다.
+
+마법 관련 변경점
+----------------
+* 사라진 주문 : 독물의 추출, 증산, 시고트비의 타락, 투명 감지, 절연.
+
+* 새로운 주문 :
+    - 힘의 창살 (레벨2 파괴마법) : 짧은 거리의 단일 공격 마법으로,
+      적을 반대 방향으로 밀어냅니다.
+    - 섬광 분사 (레벨3 파괴/저주) : 적의 눈을 일시적으로 멀게 하는
+      마력 화살들을 분사합니다.
+    - 이스킨데룬의 비전력 구체 (레벨4 파괴/주술) : 하나의 독립된 작은
+      마력의 구체를 소환합니다. 이 마력의 구체는 당신이 적에게 파괴 마법을
+      사용할 경우, 그 적에게 동시에 공격을 퍼부을 것입니다.
+    - 폭발성 분광기 (레벨5 파괴/저주) : 시간이 지나면 폭발하는 폭발성
+      분광기를 하나 만들어내는 주문입니다.
+    - 차단 (레벨8 전이마법) - 일정 시간 동안, 플레이어 주변의 적들을 무작위로
+      순간이동시키는 마법입니다. 마법 오염을 유발합니다.
+
+* 파괴술사들은 이제 새로운 무속성 공격 마법들이 담겨 있는 새로운 마법서를
+  가지고 시작합니다.
+
+* 중간에 방해를 받지 않는 이상, 이제 주문 습득은 더 이상 실패하지 않습니다.
+  다만 실패율 100% 마법은 예외입니다. 또한, 실패율이 높은 주문을 새로 외우려
+  시도할 시, 경고 메시지가 표시됩니다.
+
+* 몇몇 마법서들이 담고 있는 주문들이 조정되었습니다.
+
+* 응결 방패의 SH 증가 보너스는 이제 더 이상 플레이어의 방패 기술이나 지력에
+  영향을 받지 않습니다.
+
+* 전송 마법의 순간이동 요소는 이제 저항 불가능이 됩니다.
+
+* '독액 화살'과 '용암 화살'의 대미지가 증가하였고, '타인 공간이동'의 
+  성공률도 상향 조정되었습니다.
+
+* '소집' 주문은 이제 한 번에 모든 동료를 소집하는 것이 아닌, 3-6턴 정도에
+  걸쳐 서서히 동료들을 불러오는 것으로 변경됩니다.
+
+아이템 관련 변경점
+------------------
+* 도끼류 무기는 이제 '넓은 베기' 공격을 합니다.
+  도끼는 이제 플레이어가 공격한 적과, 그리고 플레이어가 공격한 적의 바로
+  반대방향을 제외한 플레이어 주변의 6칸, 총 7칸을 한 번에 공격합니다.
+  플레이어가 직접 공격하지 않은 6칸에 있는 적들에게는 75%의 대미지를 가하며
+  플레이어 주변으로 벽이 있을 경우 그 벽에 막히는 적에게는 베기 공격이 가해
+  지지 않습니다. 다만, 베기 공격이 추가된 대신 도끼 무기류의 기본 공격력이
+  낮아집니다.
+
+* 한손 둔기와 플레일류가 상향되었습니다. 플레일과 이브닝스타는 각각 무기의
+  기본 공격력이 1씩 높아졌으며, 모닝스타는 기본 공격력이 3 상승하고, 기본
+  명중률이 1 하락하여, 가시박힌 플레일을 대체하게 됩니다.
+
+* '타겟 변신의 마법봉'은 이제 '변신의 마법봉'으로 개편됩니다.
+  플레이어에게 변신의 마법봉을 사용할 시, 무작위의 한 가지 형태로 일시적으로
+  변신합니다. 이 변신 형태에는 이전에는 볼 수 없었던 새로운 변신 형태들이
+  추가되어 있습니다. (나무, 위습, 고슴도치, 버섯 변신 형태)
+
+* '부정한 소환의 두루마리'는 '소환의 두루마리'로 개편되었습니다.
+  언데드나 어보미네이션을 소환하는 대신, 해당 던전 층에서 볼 수 있는 다수의
+  몬스터들을 소환합니다.
+
+* 몇몇 아이템들이 사라졌습니다. : 가시박힌 플레일, 맹물 물약, 주술 지팡이,
+  무옵 지팡이(아무런 부과 효과가 없는 순수한 지팡이)
+
+* 부패의 포션은 플레이어를 부패상태로 만드는 대신, 먹는 즉시 플레이어의
+  최대 생명력을 낮춥니다.
+
+* '공중부양 포션'은 '비행 포션', '공중부양 반지'는 '비행 반지'로 개편되었습니다.
+  이제 공중부양 대신 비행 능력을 제공합니다.
+
+* 비행 제어 부적은 사라졌습니다. 고정 아티팩트 '대기의 부적'은, 플레이어에게
+  '원거리 공격의 방어' 능력을 새로 제공하는 대신 플레이어의 명중률을 낮추는
+  '부정확' 옵션이 추가됩니다.
+
+* '부정확의 부적'이 원거리 무기에도 적용됩니다.
+
+* '명석함의 부적'이 '환각(mesmerisation)' 상태도 방어해줍니다.
+
+* 몇몇 마법 막대들은 좀 더 집중적인 마법 집합으로 바뀌었습니다.
+
+* '변이를 유발하는 방사능을 방출하는' 아티팩트 아이템들은, 이제 착용하고 있을
+  경우에는 플레이어에게 해를 가하지 않지만, 플레이어가 이러한 아티팩트트 장비를
+  벗을 때, 플레이어에게 높은 마법 오염을 가합니다.
+
+* '뜻하지 않은 광폭화를' 유발하는 아티팩트들이, 광폭화를 유발하는 확률이 대폭
+  낮아집니다. (다만, 고정 아티팩트 '트로그의 분노'는 빼고요.)
+
+* 몇몇 고정 아티팩트가 상향됩니다 : 부두인형의 창, 암야의 로브, 도둑의 망토,
+  우둔의 로브, 방사능 검.
+
+* 한손-양손 겸용 무기의 개념이 사라집니다. 이러한 무기들은 평균적인 크기의
+  종족에게는 일반적인 한손 무기로 적용됩니다.
+
+신 관련 변경점
+--------------
+* 베오그와 이레데넴눌의 신도는 이제 다른 층에 있는 동료도 '동료 소집' 능력으로
+  불러올 수 있습니다.
+
+* 베오그의 추종자 동료들은 이제 플레이어가 다수의 적을 처치해도 경험치를 나눠
+  공유하게 됩니다.
+
+* 성스러운 존재의 시체를 훼손하는 것으로, 이레데렘눌의 신앙도를 소량 얻을 수 
+  있게 됩니다.
+
+* 베후메트는 하향 조정되었습니다. 이제 마법서를 선물로 주는 대신, 공격 마법을 하나씩
+  가르쳐줍니다. (M 키를 눌러 주문 기억 메뉴에서 배울 수 있습니다.) 이 스킬들은
+  당신의 원소 마법 스킬을 일부 참조하여 내려집니다. 또한 베후메트는 이제 더
+  이상 소환 마법을 지원해주지 않으며, 동료가 적을 잡는 것으로는 신앙심을 
+  얻을 수 없고, 공격 마법의 마나 소모 감소 능력은 사라졌습니다.
+
+* 진의 구속 능력은 더욱 너그러워졌습니다. 가능하다면, 주변의 길을 가로 막는
+  몬스터들을 밀쳐내게 됩니다.
+
+* 루고누의 어비스 입장 권능은 이제 더 이상 최대 HP, MP를 소모하지 않습니다.
+
+* 어비스 안에서는 더 이상 루고누의 신앙도를 얻을 수 없습니다.
+
+* 이동 가능한 페다스 권능 기반 동료들은, 이제 층을 내려갈 경우 당신을
+  따라오게 됩니다.
+
+* 새로운 좀의 장난질들이 추가되었습니다: 큰 소음 내기, 몬스터 순간이동시키기,
+  몬스터에게 상태이상 혹은 버프 걸기 (석화, 감속, 마비, 매료, 가속, 힘 증가, 투명화),
+  '어둠의 존재' 소환마법.
+
+* 좀은 지루하지 않은 이상, 당신의 능력치를 급격히 감소시키지 않습니다.
+
+* 좀은 이제 더 이상 어비스에서 당신의 무기를 적의 무기와 바꾸거나, 혹은 당신의 무기를
+  살아 움직이게 하지 않습니다. 또한 당신의 무기를 살아 움직이게 했을때, 이 무기는
+  더 이상 당신에게 적대적이지 않습니다.
+
+
+인터페이스 관련 변경점
+----------------------
+* 많은 타일 그래픽들이 변경되었습니다.
+
+* 터치 스크린을 지원하는 새로운 안드로이드 포트가 지원됩니다.
+
+* 새로운 옵션 : auto_sacrifice, dump_on_save, item_glyph, monster_list_colour,
+                tile_cell_pixels, tile_filter_scaling.
+
+* 사라진 옵션 : sacrifice_before_explore (now part of auto_sacrifice),
   annotate_item_class, annotate_item_dropped, autoinscribe_artefacts,
   show_no_ctele, menu_colour_prefix_class, menu_colour_shops, list_rotten.
-* Player action counts and generated vaults are now included in dumps by
-  default.
-* List options can be prepended to with ^=.
-* The "evil_eating" and "evil_item" menu-colouring prefixes are renamed to
-  "forbidden".
+
+* 플레이어의 행동 횟수와, 던전 구조 정보는 이제 캐릭터 덤프에 기본 사항으로
+  추가됩니다.
+
+* 리스트 옵션은 ^=. 으로도 사용할수 있습니다.
+
+* "evil_eating", "evil_item" 메뉴 컬러링 접두어는 "forbidden"으로 통합됩니다.
+
 * Explosion and cloud spells will try to target a spot adjacent to an
   out-of-range monster before falling back to the player's position,
   but will ignore plants.
+
 * It is possible to restrict a ctrl-f stash search to the current level by
   prefixing it with "@".
-* Swap the cycle ammunition commands. '(' = backward, ')' = forward.
+
+* 발사체를 손쉽게 전환할 수 있는 명령어가 추가되었습니다.
+  '(' = 이전 발사체 선택, ')' = 다음 발사체 선택.
+
 * Webtiles supports real-time animations, toggleable via F10.
+
 * Webtiles displays miniature health and MP bars on the player.
+
 * Allies can now be ordered to retreat in a specific direction.
 
 Technical
 ---------
-* Numerous crash fixes.
-* Crashes during level transition no longer result in broken saves.
+* 여러 버그들이 수정되었습니다.
+
+* 다른 층으로 이동하는 순간 던전 크롤이 비정상적으로 종료되었을 때,
+  종종 세이브 파일이 손상되던 문제가 수정되었습니다.
 
 Stone Soup 0.11.2 (20130125)
 ----------------------------

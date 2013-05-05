@@ -2764,7 +2764,7 @@ static void _gain_piety_point()
     if (you.religion == GOD_CHEIBRIADOS
         && che_stat_boost(old_piety) < che_stat_boost())
     {
-        simple_god_message(" raises the support of your attributes as your movement slows.");
+        simple_god_message("은(는) 당신의 움직임이 느려짐에 따라, 당신의 능력치를 증가시켜주었다.");
         notify_stat_change("Cheibriados piety gain");
     }
 
@@ -3274,7 +3274,7 @@ void nemelex_death_message()
     const piety_gain_t piety_gain = static_cast<piety_gain_t>
             (min(random2(you.piety) / 30, (int)PIETY_LOTS));
     mpr(_sacrifice_message(_Sacrifice_Messages[GOD_NEMELEX_XOBEH][piety_gain],
-                           "Your body", you.backlit(), false, piety_gain));
+                           "당신의 육체", you.backlit(), false, piety_gain));
 }
 
 bool god_hates_attacking_friend(god_type god, const actor *fr)
