@@ -125,13 +125,13 @@ bool can_wield(item_def *weapon, bool say_reason,
 
     if (weapon->base_type == OBJ_ARMOUR)
     {
-        SAY(mpr("You can't wield armour."));
+        SAY(mpr(_("You can't wield armour.")));
         return false;
     }
 
     if (weapon->base_type == OBJ_JEWELLERY)
     {
-        SAY(mpr("You can't wield jewellery."));
+        SAY(mpr(_("You can't wield jewellery.")));
         return false;
     }
 
@@ -2728,7 +2728,7 @@ retry:
 
     if (item_is_melded(you.inv[item_slot]))
     {
-        mpr("This item is melded into your body!");
+        mpr(_("This item is melded into your body!"));
         if (Options.auto_list)
             more();
         goto retry;

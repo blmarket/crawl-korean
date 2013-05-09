@@ -17209,11 +17209,11 @@ msgstr "보물창고 관리자"
 
 #: mon-data.h:4676 mon-data.h:4712 mon-data.h:4708 mon-data.h:4698
 msgid "ironbrand convoker"
-msgstr "ironbrand convoker"
+msgstr "철제의 소집자"
 
 #: mon-data.h:4688 mon-data.h:4724 mon-data.h:4720 mon-data.h:4710
 msgid "ironheart preserver"
-msgstr "ironheart preserver"
+msgstr "강철 심장 수호자"
 
 #: mon-data.h:4751 mon-data.h:4787 mon-data.h:4783 mon-data.h:4773
 msgid "ravenous item mimic"

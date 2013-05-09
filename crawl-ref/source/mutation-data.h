@@ -1099,30 +1099,30 @@
 },
 
 { MUT_MANA_SHIELD,                    0,  1, false, false, false,
-  "mana shield",
+  M_("mana shield"),
 
-  {"When hurt, damage is shared between your health and your mana reserves.", "", ""},
-  {"You feel your magical essence form a protective shroud around your flesh.", "", ""},
+  {M_("When hurt, damage is shared between your health and your mana reserves."), "", ""},
+  {M_("You feel your magical essence form a protective shroud around your flesh."), "", ""},
   {"", "", ""},
 
   "mana shield"
 },
 
 { MUT_MANA_REGENERATION,              0,  1, false, false, false,
-  "mana regeneration",
+  M_("mana regeneration"),
 
-  {"You regenerate mana rapidly.", "", ""},
-  {"You feel your mana shroud grow more resilient.", "", ""},
+  {M_("You regenerate mana rapidly."), "", ""},
+  {M_("You feel your mana shroud grow more resilient."), "", ""},
   {"", "", ""},
 
   "mana regeneration"
 },
 
 { MUT_MANA_LINK,                      0,  1, false, false, false,
-  "mana link",
+  M_("mana link"),
 
-  {"When low on mana, you restore mana in place of health.", "", ""},
-  {"You feel your life force and your magical essence meld.", "", ""},
+  {M_("When low on mana, you restore mana in place of health."), "", ""},
+  {M_("You feel your life force and your magical essence meld."), "", ""},
   {"", "", ""},
 
   "mana link"

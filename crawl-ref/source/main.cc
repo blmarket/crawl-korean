@@ -1775,10 +1775,10 @@ static void _toggle_travel_speed()
 {
     you.travel_ally_pace = !you.travel_ally_pace;
     if (you.travel_ally_pace)
-        mpr("You pace your travel speed to your slowest ally.");
+        mpr(_("You pace your travel speed to your slowest ally."));
     else
     {
-        mpr("You travel at normal speed.");
+        mpr(_("You travel at normal speed."));
         you.running.travel_speed = 0;
     }
 }
@@ -4243,7 +4243,7 @@ static void _move_player(coord_def move)
 
             monster* targ = monster_at(you.pos() + move);
             if (targ && !targ->wont_attack() && you.can_see(targ))
-                prompt += " (Use ctrl+direction to attack without moving)";
+                prompt += _(" (Use ctrl+direction to attack without moving)");
 
             if (!crawl_state.disables[DIS_CONFIRMATIONS]
                 && !yesno(prompt.c_str(), false, 'n'))
@@ -4397,7 +4397,7 @@ static void _move_player(coord_def move)
     {
         if (you.made_nervous_by(targ))
         {
-            mpr("You're too terrified to move while being watched!");
+            mpr(_("You're too terrified to move while being watched!"));
             moving = false;
             you.turn_is_over = false;
             return;
