@@ -404,6 +404,10 @@ unseen dragon cast
 
 당신은 울부짖는 소리를 들었다.
 %%%%
+drake cast targeted
+
+@dragon cast targeted@
+%%%%
 curse skull cast
 
 @The_monster@은(는) 이빨을 달그락 소리를 내며 부딪혀댔다.

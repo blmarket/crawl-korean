@@ -21,6 +21,7 @@
 #include "coordit.h"
 #include "dbg-maps.h"
 #include "dungeon.h"
+#include "endianness.h"
 #include "env.h"
 #include "enum.h"
 #include "files.h"
@@ -38,16 +39,13 @@
 #include "tags.h"
 #include "terrain.h"
 
-#ifdef __ANDROID__
-  #include <sys/endian.h>
-#endif
 #ifndef BYTE_ORDER
 # error BYTE_ORDER is not defined
 #endif
 #if BYTE_ORDER == LITTLE_ENDIAN
-# define WORD_LEN sizeof(long)
+# define WORD_LEN (int8_t)sizeof(long)
 #else
-# define WORD_LEN -sizeof(long)
+# define WORD_LEN -(int8_t)sizeof(long)
 #endif
 
 static map_section_type _write_vault(map_def &mdef,

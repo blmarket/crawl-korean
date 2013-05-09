@@ -238,20 +238,7 @@ TAGS: overwritable layout allow_dup unrand
   fphase = procedural.translate(procedural.scale(fphase,math.min(gxm,gym)/2-2),gxm/2,gym/2)
 
   if you.in_branch("Snake") then
-    -- Apply distortion
-    -- TODO: This whole distortion function is pretty awesome and needs to be in a library
-    local fdsx = procedural.simplex3d { scale = util.random_range_real(0.1,1), unit = false }
-    local fdsy = procedural.simplex3d { scale = util.random_range_real(0.1,1), unit = false }
-    -- Distort more at the edge of the map
-    -- TODO: Will work even better with a less linear easing function
-    local fbox = procedural.box{}
-    local fedge = function(x,y)
-      return math.max(0,1-fbox(x,y))
-    end
-    local fdx = procedural.mul(fdsx,fedge)
-    local fdy = procedural.mul(fdsy,fedge)
-
-    fphase = procedural.distort { source = fphase, scale = crawl.random_range(4,8), offsetx = fdx, offsety = fdy }
+    fphase = procedural.transform.damped_distortion(fphase)
   end
 
   procedural.render_map(_G, fphase, function(v) return (v > wall_break and '.' or 'x') end)
@@ -268,7 +255,7 @@ ENDMAP
 # in the centre and spreading out in a branching way, like particle diffusion.
 NAME:   layout_catacombs
 DEPTH:  Crypt,Tar
-WEIGHT: 50, 100 (Tar)
+WEIGHT: 50, 50 (Tar)
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{
@@ -373,20 +360,7 @@ TAGS: overwritable layout allow_dup unrand
   end
 
   if you.in_branch("Snake") then
-
-    -- Apply distortion
-    local fdsx = procedural.simplex3d { scale = util.random_range_real(0.1,1), unit = false }
-    local fdsy = procedural.simplex3d { scale = util.random_range_real(0.1,1), unit = false }
-    -- Distort more at the edge of the map
-    local fbox = procedural.box{}
-    local fedge = function(x,y)
-      return math.max(0,1-fbox(x,y))
-    end
-    local fdx = procedural.mul(fdsx,fedge)
-    local fdy = procedural.mul(fdsy,fedge)
-
-    frings = procedural.distort { source = frings, scale = crawl.random_range(5,15), offsetx = fdx, offsety = fdy }
-
+    frings = procedural.transform.damped_distortion(frings)
   end
 
   -- Generate the interference pattern by combining two coords
@@ -463,7 +437,7 @@ ENDMAP
 # it applies a polar transform producing something sometimes like a spiderweb.
 NAME:   layout_cathedral_of_symmetry
 DEPTH:  Zot,Tar
-WEIGHT: 20, 100(Tar)
+WEIGHT: 20, 50(Tar)
 ORIENT: encompass
 TAGS: overwritable layout allow_dup unrand
 {{

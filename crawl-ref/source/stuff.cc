@@ -483,10 +483,10 @@ void canned_msg(canned_message_type which_message)
         mpr(gettext("You don't know any spells."));
         break;
     case MSG_MANA_INCREASE:
-        mpr(gettext("You feel your mana capacity increase."));
+        mpr(_("You feel your magic capacity increase."));
         break;
     case MSG_MANA_DECREASE:
-        mpr(gettext("You feel your mana capacity decrease."));
+        mpr(_("You feel your magic capacity decrease."));
         break;
     case MSG_DISORIENTED:
         mpr(gettext("You feel momentarily disoriented."));
@@ -774,24 +774,24 @@ int letter_to_index(int the_letter)
 
 maybe_bool frombool(bool b)
 {
-    return (b ? B_TRUE : B_FALSE);
+    return (b ? MB_TRUE : MB_FALSE);
 }
 
 bool tobool(maybe_bool mb)
 {
-    ASSERT(mb != B_MAYBE);
-    return (mb == B_TRUE);
+    ASSERT(mb != MB_MAYBE);
+    return (mb == MB_TRUE);
 }
 
 bool tobool(maybe_bool mb, bool def)
 {
     switch (mb)
     {
-    case B_TRUE:
+    case MB_TRUE:
         return true;
-    case B_FALSE:
+    case MB_FALSE:
         return false;
-    case B_MAYBE:
+    case MB_MAYBE:
     default:
         return def;
     }

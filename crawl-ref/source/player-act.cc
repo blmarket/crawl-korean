@@ -73,15 +73,6 @@ void player::moveto(const coord_def &c, bool clear_net)
     set_position(c);
 
     clear_far_constrictions();
-
-    if (you.duration[DUR_QUAD_DAMAGE])
-        invalidate_agrid(true);
-
-    if (player_has_orb())
-    {
-        env.orb_pos = c;
-        invalidate_agrid(true);
-    }
 }
 
 bool player::move_to_pos(const coord_def &c, bool clear_net)
@@ -113,6 +104,15 @@ void player::set_position(const coord_def &c)
     {
         reset_prev_move();
         dungeon_events.fire_position_event(DET_PLAYER_MOVED, c);
+
+        if (you.duration[DUR_QUAD_DAMAGE])
+            invalidate_agrid(true);
+
+        if (player_has_orb())
+        {
+            env.orb_pos = c;
+            invalidate_agrid(true);
+        }
     }
 }
 
@@ -599,13 +599,19 @@ void player::attacking(actor *other)
 {
     ASSERT(!crawl_state.game_is_arena());
 
-    if (other && other->is_monster())
+    if (!other) {
+        return;
+    }
+
+    if (other->is_monster())
     {
         const monster* mon = other->as_monster();
         if (!mon->friendly() && !mon->neutral())
             pet_target = mon->mindex();
     }
-
+    if (mons_is_firewood((monster*) other)) {
+        return;
+    }
     const int chance = pow(3, player_mutation_level(MUT_BERSERK) - 1);
     if (player_mutation_level(MUT_BERSERK) && x_chance_in_y(chance, 100))
         go_berserk(false);

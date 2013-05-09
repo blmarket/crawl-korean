@@ -1286,6 +1286,10 @@ static void _input()
         if (!you_are_delayed())
             update_can_train();
 
+#ifdef USE_TILE_WEB
+        tiles.flush_messages();
+#endif
+
         return;
     }
 

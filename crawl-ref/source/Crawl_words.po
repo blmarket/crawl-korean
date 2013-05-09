@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-01 23:28+0900\n"
+"POT-Creation-Date: 2013-05-09 22:13+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1018,7 +1018,8 @@ msgstr "황제 전갈"
 
 #: mon-data.h:1920 mon-data.h:1921 mon-data.h:1956 mon-data.h:1907
 #: transform.cc:738 transform.cc:786 transform.cc:880 transform.cc:796
-#: transform.cc:897 transform.cc:798 transform.cc:899
+#: transform.cc:897 transform.cc:798 transform.cc:899 transform.cc:802
+#: transform.cc:903
 msgid "spider"
 msgstr "거미"
 
@@ -1312,7 +1313,7 @@ msgstr "와이번"
 
 #: mon-data.h:2626 mon-data.h:2627 mon-data.h:2701 mon-data.h:2708
 #: transform.cc:765 mon-data.h:2760 transform.cc:813 transform.cc:823
-#: mon-data.h:2796 mon-data.h:2790 transform.cc:825
+#: mon-data.h:2796 mon-data.h:2790 transform.cc:825 transform.cc:829
 msgid "dragon"
 msgstr "용"
 
@@ -1502,6 +1503,7 @@ msgstr "셰두"
 #: mon-data.h:3111 mon-data.h:3100 mon-data.h:3174 mon-data.h:3193
 #: transform.cc:760 mon-data.h:3246 transform.cc:808 transform.cc:818
 #: mon-data.h:3282 mon-data.h:3278 mon-data.h:3268 transform.cc:820
+#: transform.cc:824
 msgid "ice beast"
 msgstr "얼음 짐승"
 
@@ -1517,7 +1519,7 @@ msgstr "진흙괴물"
 
 #: mon-data.h:3148 mon-data.h:3137 mon-data.h:3211 mon-data.h:3230
 #: mon-data.h:3283 transform.cc:875 transform.cc:892 mon-data.h:3319
-#: mon-data.h:3315 mon-data.h:3305 transform.cc:894
+#: mon-data.h:3315 mon-data.h:3305 transform.cc:894 transform.cc:898
 msgid "jelly"
 msgstr "젤리"
 
@@ -1576,6 +1578,7 @@ msgstr "코볼트 악마술사"
 #: mon-data.h:3296 mon-data.h:3285 mon-data.h:3359 mon-data.h:3378
 #: transform.cc:771 mon-data.h:3431 transform.cc:819 transform.cc:829
 #: mon-data.h:3467 mon-data.h:3463 mon-data.h:3453 transform.cc:831
+#: transform.cc:835
 msgid "lich"
 msgstr "리치"
 
@@ -2312,7 +2315,7 @@ msgstr "주황빛 수정상"
 #: mon-data.h:5171 mon-data.h:5183 mon-data.h:5172 mon-data.h:5129
 #: mon-data.h:5217 transform.cc:750 mon-data.h:5411 transform.cc:798
 #: transform.cc:808 mon-data.h:5447 mon-data.h:5443 mon-data.h:5433
-#: transform.cc:810
+#: transform.cc:810 transform.cc:814
 msgid "statue"
 msgstr "석상"
 
@@ -2673,7 +2676,7 @@ msgstr "INVALID MONSTER"
 
 #: mon-data.h:277 mon-data.h:278 mon-data.h:289 mon-data.h:254
 #: transform.cc:777 mon-data.h:244 transform.cc:825 transform.cc:835
-#: transform.cc:837
+#: transform.cc:837 transform.cc:841
 msgid "bat"
 msgstr "박쥐"
 
@@ -4420,7 +4423,7 @@ msgstr "보존 식량"
 #: player-act.cc:374 player-act.cc:352 player-act.cc:352 player-act.cc:360
 #: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
 #: mon-util.cc:3720 mon-util.cc:3692 actor.cc:722 mon-util.cc:3679
-#: mon-util.cc:3687 mon-util.cc:3684 actor.cc:729
+#: mon-util.cc:3687 mon-util.cc:3684 actor.cc:729 mon-util.cc:3699
 msgid "You"
 msgstr "당신"
 
@@ -4433,7 +4436,8 @@ msgstr "당신"
 #: terrain.cc:1011 terrain.cc:1019 misc.cc:2781 mon-util.cc:3719 misc.cc:2776
 #: mon-util.cc:3691 misc.cc:2789 mon-util.cc:3678 misc.cc:2797
 #: mon-util.cc:3686 misc.cc:2739 mon-util.cc:3683 misc.cc:2744
-#: player-act.cc:370 player-act.cc:382 player-act.cc:385
+#: player-act.cc:370 player-act.cc:382 player-act.cc:385 mon-util.cc:3698
+#: spl-damage.cc:455 terrain.cc:1015 terrain.cc:1023
 msgid "you"
 msgstr "당신"
 
@@ -4447,6 +4451,7 @@ msgstr "당신의"
 #: player-act.cc:385 player-act.cc:375 mon-util.cc:3526 player-act.cc:372
 #: player-act.cc:382 mon-util.cc:3718 mon-util.cc:3690 mon-util.cc:3677
 #: mon-util.cc:3685 mon-util.cc:3682 player-act.cc:373 player-act.cc:383
+#: mon-util.cc:3697
 msgid "your"
 msgstr "당신의"
 
@@ -4497,13 +4502,13 @@ msgstr "자기 자신"
 #: mon-act.cc:3796 fight.cc:416 mon-act.cc:3848 mon-place.cc:1207
 #: mon-act.cc:3563 mon-place.cc:1143 mon-act.cc:3566 mon-act.cc:3726
 #: mon-place.cc:1193 mon-place.cc:1041 mon-place.cc:1043 mon-place.cc:1052
-#: mon-act.cc:3731 mon-place.cc:1066 mon-act.cc:3747
+#: mon-act.cc:3731 mon-place.cc:1066 mon-act.cc:3747 mon-act.cc:3749
 msgid "Something"
 msgstr "무언가"
 
 #: fight.cc:432 fight.cc:425 fight.cc:425 fight.cc:428 mon-util.cc:3556
 #: mon-util.cc:3748 mon-util.cc:3720 mon-util.cc:3707 mon-util.cc:3715
-#: mon-util.cc:3712
+#: mon-util.cc:3712 mon-util.cc:3727
 msgid "something"
 msgstr "무언가"
 
@@ -4513,7 +4518,7 @@ msgstr "무언가"
 #: itemname.cc:539 mon-cast.cc:396 zap-data.h:813 cloud.cc:1174
 #: itemname.cc:378 itemname.cc:548 cloud.cc:1175 mon-cast.cc:395 cloud.cc:1177
 #: itemname.cc:550 itemname.cc:407 itemname.cc:582 itemname.cc:586
-#: cloud.cc:1180
+#: cloud.cc:1180 mon-cast.cc:393
 msgid "flame"
 msgstr "화염"
 
@@ -4719,7 +4724,7 @@ msgstr "어둠"
 #: player-stats.cc:542 itemname.cc:533 player-stats.cc:540 itemname.cc:482
 #: player-stats.cc:210 player-stats.cc:211 itemname.cc:495 player-stats.cc:244
 #: transform.cc:907 player-stats.cc:489 transform.cc:924 itemname.cc:497
-#: itemname.cc:529 transform.cc:926
+#: itemname.cc:529 transform.cc:926 transform.cc:930
 msgid "strength"
 msgstr "힘"
 
@@ -4728,7 +4733,7 @@ msgstr "힘"
 #: player-stats.cc:546 itemname.cc:534 player-stats.cc:544 itemname.cc:483
 #: player-stats.cc:212 player-stats.cc:213 itemname.cc:496 player-stats.cc:246
 #: transform.cc:907 player-stats.cc:493 transform.cc:924 itemname.cc:498
-#: itemname.cc:530 transform.cc:926
+#: itemname.cc:530 transform.cc:926 transform.cc:930
 msgid "dexterity"
 msgstr "민첩"
 
@@ -4878,7 +4883,7 @@ msgstr "굴착"
 #: itemname.cc:602 itemname.cc:551 mon-cast.cc:513 spl-clouds.cc:42
 #: spl-miscast.cc:2172 zap-data.h:219 itemname.cc:560 mon-cast.cc:512
 #: spl-miscast.cc:2165 itemname.cc:562 itemname.cc:594 itemname.cc:598
-#: spl-miscast.cc:2170
+#: spl-miscast.cc:2170 mon-cast.cc:510 spl-miscast.cc:2180
 msgid "fireball"
 msgstr "화염구"
 
@@ -4895,6 +4900,7 @@ msgstr "공간이동"
 #: spl-damage.cc:2092 itemname.cc:562 itemname.cc:1076 spl-damage.cc:2230
 #: itemname.cc:1078 itemname.cc:564 itemname.cc:1080 itemname.cc:596
 #: itemname.cc:1114 itemname.cc:600 itemname.cc:1121 spl-damage.cc:2228
+#: spl-damage.cc:2517
 msgid "lightning"
 msgstr "번개"
 
@@ -5261,7 +5267,7 @@ msgstr "부패"
 #: terrain.cc:1428 mon-stuff.cc:3928 terrain.cc:1429 mon-util.cc:3621
 #: mon-stuff.cc:3970 terrain.cc:1343 mon-util.cc:3812 mon-util.cc:3784
 #: mon-stuff.cc:3973 mon-util.cc:3771 mon-util.cc:3779 mon-stuff.cc:3966
-#: mon-util.cc:3776
+#: mon-util.cc:3776 mon-util.cc:3791 terrain.cc:1347
 msgid "water"
 msgstr "물"
 
@@ -6708,7 +6714,7 @@ msgstr "칠흑색"
 #: itemname.cc:1632 itemname.cc:1537 item_use.cc:3102 itemname.cc:1540
 #: itemname.cc:1570 itemname.cc:1582 itemname.cc:1584 item_use.cc:3124
 #: itemname.cc:1589 item_use.cc:3123 itemname.cc:1623 item_use.cc:3121
-#: item_use.cc:3120
+#: item_use.cc:3120 item_use.cc:3174
 msgid "red"
 msgstr "빨간색"
 
@@ -6724,7 +6730,7 @@ msgstr "노란색"
 #: itemname.cc:1632 itemname.cc:1537 item_use.cc:3098 itemname.cc:1540
 #: itemname.cc:1570 itemname.cc:1582 itemname.cc:1584 item_use.cc:3120
 #: itemname.cc:1589 item_use.cc:3119 itemname.cc:1623 item_use.cc:3117
-#: item_use.cc:3116
+#: item_use.cc:3116 item_use.cc:3170
 msgid "green"
 msgstr "녹색"
 
@@ -6750,7 +6756,7 @@ msgid "white"
 msgstr "흰색"
 
 #: item_use.cc:3106 item_use.cc:3128 item_use.cc:3127 item_use.cc:3125
-#: item_use.cc:3124
+#: item_use.cc:3124 item_use.cc:3178
 msgid "bright yellow"
 msgstr "밝은 노란색"
 
@@ -6955,7 +6961,7 @@ msgstr "마법 두루마리"
 #: monster.cc:5488 itemname.cc:1666 itemprop.cc:2798 monster.cc:5482
 #: itemname.cc:1671 player-equip.cc:1445 itemname.cc:1705 itemprop.cc:2807
 #: monster.cc:5494 itemname.cc:1714 itemprop.cc:2813 player-equip.cc:1437
-#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436
+#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436 monster.cc:5497
 msgid "amulet"
 msgstr "부적"
 
@@ -6967,7 +6973,7 @@ msgstr "부적"
 #: monster.cc:5488 itemname.cc:1668 itemprop.cc:2798 monster.cc:5482
 #: itemname.cc:1673 player-equip.cc:1445 itemname.cc:1707 itemprop.cc:2807
 #: monster.cc:5494 itemname.cc:1716 itemprop.cc:2813 player-equip.cc:1437
-#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436
+#: player-equip.cc:1435 itemprop.cc:2808 player-equip.cc:1436 monster.cc:5497
 msgid "ring"
 msgstr "반지"
 
@@ -7619,7 +7625,7 @@ msgstr "철창"
 #. perhaps M_("mangrove") or such?
 #: directn.cc:2986 directn.cc:2986 directn.cc:2989 directn.cc:2998
 #: directn.cc:2965 directn.cc:2982 transform.cc:886 transform.cc:903
-#: directn.cc:2983 transform.cc:905
+#: directn.cc:2983 transform.cc:905 transform.cc:909
 msgid "tree"
 msgstr "나무"
 
@@ -8272,7 +8278,7 @@ msgstr "마력"
 #: itemname.cc:1086 itemname.cc:1093 itemname.cc:1093 itemname.cc:1084
 #: itemname.cc:1015 mon-cast.cc:601 mon-cast.cc:662 itemname.cc:1056
 #: mon-cast.cc:600 mon-cast.cc:661 itemname.cc:1058 itemname.cc:1060
-#: itemname.cc:1094 itemname.cc:1101
+#: itemname.cc:1094 itemname.cc:1101 mon-cast.cc:598 mon-cast.cc:659
 msgid "energy"
 msgstr "에너지"
 
@@ -8399,6 +8405,7 @@ msgstr ""
 
 #: itemname.cc:194 itemname.cc:223 itemname.cc:227 itemname.cc:227
 #: item_use.cc:2505 item_use.cc:2506 item_use.cc:2504 item_use.cc:2503
+#: item_use.cc:2557
 msgid "Your "
 msgstr "당신의 "
 
@@ -8639,63 +8646,74 @@ msgstr "전기"
 #: player.cc:250 terrain.cc:1342 mon-util.cc:3810 main.cc:4204
 #: mon-util.cc:3782 player.cc:251 main.cc:4209 mon-stuff.cc:3973 main.cc:4203
 #: mon-util.cc:3769 main.cc:4208 mon-util.cc:3777 mon-stuff.cc:3966
-#: mon-util.cc:3774 main.cc:4229
+#: mon-util.cc:3774 main.cc:4229 main.cc:4233 mon-util.cc:3789 terrain.cc:1346
 msgid "lava"
 msgstr "용암"
 
 #: player.cc:271 main.cc:4033 main.cc:4033 main.cc:4035 main_backup.cc:4036
 #: main.cc:4069 player.cc:270 player.cc:273 player.cc:250 main.cc:4204
 #: player.cc:251 main.cc:4209 main.cc:4203 main.cc:4208 main.cc:4229
+#: main.cc:4233
 msgid "deep water"
 msgstr "깊은 물"
 
 #: player.cc:3831 player.cc:3831 player.cc:3922 player.cc:4014 player.cc:4038
 #: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044 player.cc:4049
+#: player.cc:4048
 msgid "extremely slow"
 msgstr "극히 느리다"
 
 #: player.cc:3832 player.cc:3832 player.cc:3923 player.cc:4015 player.cc:4039
 #: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045 player.cc:4050
+#: player.cc:4049
 msgid "very slow"
 msgstr "매우 느리다"
 
 #: player.cc:3833 player.cc:3833 player.cc:3924 player.cc:4016 player.cc:4040
 #: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046 player.cc:4051
+#: player.cc:4050
 msgid "quite slow"
 msgstr "느리다"
 
 #: player.cc:3834 player.cc:3834 player.cc:3925 player.cc:4017 player.cc:4041
 #: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047 player.cc:4052
+#: player.cc:4051
 msgid "below average"
 msgstr "평균 이하이다"
 
 #: player.cc:3835 player.cc:3835 player.cc:3926 player.cc:4018 player.cc:4042
 #: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048 player.cc:4053
+#: player.cc:4052
 msgid "average"
 msgstr "보통이다"
 
 #: player.cc:3836 player.cc:3836 player.cc:3927 player.cc:4019 player.cc:4043
 #: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049 player.cc:4054
+#: player.cc:4053
 msgid "above average"
 msgstr "평균 이상이다"
 
 #: player.cc:3837 player.cc:3837 player.cc:3928 player.cc:4020 player.cc:4044
 #: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050 player.cc:4055
+#: player.cc:4054
 msgid "quite fast"
 msgstr "빠르다"
 
 #: player.cc:3838 player.cc:3838 player.cc:3929 player.cc:4021 player.cc:4045
 #: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051 player.cc:4056
+#: player.cc:4055
 msgid "very fast"
 msgstr "매우 빠르다"
 
 #: player.cc:3839 player.cc:3839 player.cc:3930 player.cc:4022 player.cc:4046
 #: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052 player.cc:4057
+#: player.cc:4056
 msgid "extremely fast"
 msgstr "극히 빠르다"
 
 #: player.cc:3840 player.cc:3840 player.cc:3931 player.cc:4023 player.cc:4047
 #: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053 player.cc:4058
+#: player.cc:4057
 msgid "blindingly fast"
 msgstr "번개같이 빠르다"
 
@@ -8721,18 +8739,18 @@ msgid "very "
 msgstr "강한 "
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465 transform.cc:467
+#: transform.cc:456 transform.cc:465 transform.cc:467 transform.cc:471
 msgid "paws"
 msgstr "발"
 
 #: transform.cc:401 transform.cc:401 transform.cc:381 transform.cc:425
-#: transform.cc:456 transform.cc:465 transform.cc:467
+#: transform.cc:456 transform.cc:465 transform.cc:467 transform.cc:471
 msgid "front paws"
 msgstr "앞발"
 
 #: transform.cc:404 transform.cc:404 transform.cc:384 transform.cc:428
 #: transform.cc:459 player-act.cc:431 transform.cc:468 player-act.cc:432
-#: transform.cc:470
+#: transform.cc:470 transform.cc:474
 msgid "hands"
 msgstr "손"
 
@@ -11368,42 +11386,42 @@ msgid "Kikubaaqudgha's torment"
 msgstr "키쿠바쿠드하의 사악한 고통"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "Silent"
 msgstr "무음"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "Almost silent"
 msgstr "매우 조용함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "Quiet"
 msgstr "조용함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "A bit loud"
 msgstr "약간 요란함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "Loud"
 msgstr "요란함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
-#: spl-cast.cc:1849
+#: spl-cast.cc:1849 spl-cast.cc:1847
 msgid "Very loud"
 msgstr "매우 요란함"
 
 #: spl-cast.cc:1817 spl-cast.cc:1777 spl-cast.cc:1805 spl-cast.cc:1846
-#: spl-cast.cc:1850
+#: spl-cast.cc:1850 spl-cast.cc:1848
 msgid "Extremely loud"
 msgstr "극히 요란함"
 
 #: spl-cast.cc:1817 spl-cast.cc:1777 spl-cast.cc:1805 spl-cast.cc:1846
-#: spl-cast.cc:1850
+#: spl-cast.cc:1850 spl-cast.cc:1848
 msgid "Deafening"
 msgstr "던전 전체를 울림"
 
@@ -12122,12 +12140,12 @@ msgstr "사용함"
 
 #: mon-util.cc:3575 mon-util.cc:3623 travel.cc:4343 mon-util.cc:3814
 #: mon-util.cc:3786 travel.cc:4402 mon-util.cc:3773 travel.cc:4419
-#: mon-util.cc:3781 mon-util.cc:3778 travel.cc:4448
+#: mon-util.cc:3781 mon-util.cc:3778 travel.cc:4448 mon-util.cc:3793
 msgid "altar"
 msgstr "제단"
 
 #: mon-util.cc:3577 mon-util.cc:3625 mon-util.cc:3816 mon-util.cc:3788
-#: mon-util.cc:3775 mon-util.cc:3783 mon-util.cc:3780
+#: mon-util.cc:3775 mon-util.cc:3783 mon-util.cc:3780 mon-util.cc:3795
 msgid "ground"
 msgstr "지면"
 
@@ -12137,9 +12155,14 @@ msgstr "지면"
 #: mon-util.cc:3952 mon-util.cc:3970 mon-util.cc:3974 mon-util.cc:3939
 #: mon-util.cc:3957 mon-util.cc:3961 mon-util.cc:3947 mon-util.cc:3965
 #: mon-util.cc:3969 mon-util.cc:3944 mon-util.cc:3962 mon-util.cc:3966
+#: mon-util.cc:3959 mon-util.cc:3977 mon-util.cc:3981
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -12325,17 +12348,17 @@ msgstr "은(는) 말했다"
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
 #: mon-util.cc:3940 mon-util.cc:3942 mon-util.cc:3962 mon-util.cc:3948
 #: mon-util.cc:3950 mon-util.cc:3970 mon-util.cc:3945 mon-util.cc:3947
-#: mon-util.cc:3967
+#: mon-util.cc:3967 mon-util.cc:3960 mon-util.cc:3982
 msgid "shouts"
 msgstr "이(가) 소리쳤다"
 
 #: mon-util.cc:3731 mon-util.cc:3791 mon-util.cc:3982 mon-util.cc:3954
-#: mon-util.cc:3941 mon-util.cc:3949 mon-util.cc:3946
+#: mon-util.cc:3941 mon-util.cc:3949 mon-util.cc:3946 mon-util.cc:3961
 msgid "barks"
 msgstr "이(가) 짖었다"
 
 #: mon-util.cc:3733 mon-util.cc:3793 mon-util.cc:3984 mon-util.cc:3956
-#: mon-util.cc:3943 mon-util.cc:3951 mon-util.cc:3948
+#: mon-util.cc:3943 mon-util.cc:3951 mon-util.cc:3948 mon-util.cc:3963
 msgid "roars"
 msgstr "이(가) 으르렁댔다"
 
@@ -12343,86 +12366,86 @@ msgstr "이(가) 으르렁댔다"
 #: mon-util.cc:3734 mon-util.cc:3752 mon-util.cc:3794 mon-util.cc:3813
 #: mon-util.cc:3985 mon-util.cc:4004 mon-util.cc:3957 mon-util.cc:3976
 #: mon-util.cc:3944 mon-util.cc:3963 mon-util.cc:3952 mon-util.cc:3971
-#: mon-util.cc:3949 mon-util.cc:3968
+#: mon-util.cc:3949 mon-util.cc:3968 mon-util.cc:3964 mon-util.cc:3983
 msgid "screams"
 msgstr "은(는) 비명을 질렀다"
 
 #: mon-util.cc:3735 mon-util.cc:3795 mon-util.cc:3986 mon-util.cc:3958
-#: mon-util.cc:3945 mon-util.cc:3953 mon-util.cc:3950
+#: mon-util.cc:3945 mon-util.cc:3953 mon-util.cc:3950 mon-util.cc:3965
 msgid "bellows"
 msgstr "은(는) 고함쳤다"
 
 #: mon-util.cc:3736 mon-util.cc:3796 mon-util.cc:3987 mon-util.cc:3959
-#: mon-util.cc:3946 mon-util.cc:3954 mon-util.cc:3951
+#: mon-util.cc:3946 mon-util.cc:3954 mon-util.cc:3951 mon-util.cc:3966
 msgid "trumpets"
 msgstr "은(는) 울부짖었다"
 
 #: mon-util.cc:3737 mon-util.cc:3797 mon-util.cc:3988 mon-util.cc:3960
-#: mon-util.cc:3947 mon-util.cc:3955 mon-util.cc:3952
+#: mon-util.cc:3947 mon-util.cc:3955 mon-util.cc:3952 mon-util.cc:3967
 msgid "screeches"
 msgstr "은(는) 날카로운 소리를 냈다"
 
 #: mon-util.cc:3738 mon-util.cc:3798 mon-util.cc:3989 mon-util.cc:3961
-#: mon-util.cc:3948 mon-util.cc:3956 mon-util.cc:3953
+#: mon-util.cc:3948 mon-util.cc:3956 mon-util.cc:3953 mon-util.cc:3968
 msgid "buzzes"
 msgstr "은(는) 윙윙거리는 소리를 냈다"
 
 #: mon-util.cc:3739 mon-util.cc:3799 mon-util.cc:3990 mon-util.cc:3962
-#: mon-util.cc:3949 mon-util.cc:3957 mon-util.cc:3954
+#: mon-util.cc:3949 mon-util.cc:3957 mon-util.cc:3954 mon-util.cc:3969
 msgid "moans"
 msgstr "은(는) 투덜거렸다"
 
 #: mon-util.cc:3740 mon-util.cc:3800 mon-util.cc:3991 mon-util.cc:3963
-#: mon-util.cc:3950 mon-util.cc:3958 mon-util.cc:3955
+#: mon-util.cc:3950 mon-util.cc:3958 mon-util.cc:3955 mon-util.cc:3970
 msgid "gurgles"
 msgstr "은(는) 쏴~ 하는 소리를 냈다"
 
 #: mon-util.cc:3741 mon-util.cc:3801 mon-util.cc:3992 mon-util.cc:3964
-#: mon-util.cc:3951 mon-util.cc:3959 mon-util.cc:3956
+#: mon-util.cc:3951 mon-util.cc:3959 mon-util.cc:3956 mon-util.cc:3971
 msgid "whines"
 msgstr "은(는) 칭얼거렸다"
 
 #: mon-util.cc:3742 mon-util.cc:3802 mon-util.cc:3993 mon-util.cc:3965
-#: mon-util.cc:3952 mon-util.cc:3960 mon-util.cc:3957
+#: mon-util.cc:3952 mon-util.cc:3960 mon-util.cc:3957 mon-util.cc:3972
 msgid "croaks"
 msgstr "은(는) 개굴개굴거렸다"
 
 #: mon-util.cc:3743 mon-util.cc:3803 mon-util.cc:3994 mon-util.cc:3966
-#: mon-util.cc:3953 mon-util.cc:3961 mon-util.cc:3958
+#: mon-util.cc:3953 mon-util.cc:3961 mon-util.cc:3958 mon-util.cc:3973
 msgid "growls"
 msgstr "은(는) 으르렁댔다"
 
 #: mon-util.cc:3744 mon-util.cc:3804 mon-util.cc:3995 mon-util.cc:3967
-#: mon-util.cc:3954 mon-util.cc:3962 mon-util.cc:3959
+#: mon-util.cc:3954 mon-util.cc:3962 mon-util.cc:3959 mon-util.cc:3974
 msgid "hisses"
 msgstr "은(는) 쉬익~ 하는 소리를 냈다"
 
 #: mon-util.cc:3745 mon-util.cc:3805 mon-util.cc:3996 mon-util.cc:3968
-#: mon-util.cc:3955 mon-util.cc:3963 mon-util.cc:3960
+#: mon-util.cc:3955 mon-util.cc:3963 mon-util.cc:3960 mon-util.cc:3975
 msgid "sneers"
 msgstr "은(는) 비웃었다"
 
 #. S_DEMON_TAUNT
 #: mon-util.cc:3746 mon-util.cc:3806 mon-util.cc:3997 mon-util.cc:3969
-#: mon-util.cc:3956 mon-util.cc:3964 mon-util.cc:3961
+#: mon-util.cc:3956 mon-util.cc:3964 mon-util.cc:3961 mon-util.cc:3976
 msgid "caws"
 msgstr "은(는) 까악거리고 울었다"
 
 #. S_CHERUB -- they just speak normally.
 #: mon-util.cc:3747 mon-util.cc:3808 mon-util.cc:3999 mon-util.cc:3971
-#: mon-util.cc:3958 mon-util.cc:3966 mon-util.cc:3963
+#: mon-util.cc:3958 mon-util.cc:3966 mon-util.cc:3963 mon-util.cc:3978
 msgid "buggily says"
 msgstr "은(는) 이것이 버그라고 말했다"
 
 #. NUM_SHOUTS
 #: mon-util.cc:3748 mon-util.cc:3809 mon-util.cc:4000 mon-util.cc:3972
-#: mon-util.cc:3959 mon-util.cc:3967 mon-util.cc:3964
+#: mon-util.cc:3959 mon-util.cc:3967 mon-util.cc:3964 mon-util.cc:3979
 msgid "breathes"
 msgstr "은(는) 호흡했다"
 
 #. S_VERY_SOFT
 #: mon-util.cc:3749 mon-util.cc:3810 mon-util.cc:4001 mon-util.cc:3973
-#: mon-util.cc:3960 mon-util.cc:3968 mon-util.cc:3965
+#: mon-util.cc:3960 mon-util.cc:3968 mon-util.cc:3965 mon-util.cc:3980
 msgid "whispers"
 msgstr "은(는) 속삭였다"
 
@@ -13090,6 +13113,7 @@ msgstr "야수"
 
 #: status.cc:845 status.cc:909 transform.cc:794 status.cc:888 transform.cc:842
 #: transform.cc:852 status.cc:893 status.cc:894 status.cc:878 transform.cc:854
+#: transform.cc:858
 msgid "appendage"
 msgstr "야수화"
 
@@ -13437,6 +13461,7 @@ msgid "unimportant"
 msgstr "중요하지 않은"
 
 #: beam.cc:2277 beam.cc:2300 beam.cc:2302 beam.cc:2298 beam.cc:2290
+#: beam.cc:2292
 msgid "mystic blast"
 msgstr "신비한 폭발"
 
@@ -13459,89 +13484,90 @@ msgstr "마력의 폭풍"
 msgid "debug lightning beam"
 msgstr "졸라 짱센 디버그용 100만볼트 레이져빔"
 
-#: mon-cast.cc:104 mon-cast.cc:108
+#: mon-cast.cc:104 mon-cast.cc:108 mon-cast.cc:106
 msgid "searing blast"
 msgstr "화염의 숨결"
 
-#: mon-cast.cc:110 mon-cast.cc:114
+#: mon-cast.cc:110 mon-cast.cc:114 mon-cast.cc:112
 msgid "chilling blast"
 msgstr "얼어붙는 숨결"
 
 #. draconians only
-#: mon-cast.cc:118 mon-cast.cc:122
+#: mon-cast.cc:118 mon-cast.cc:122 mon-cast.cc:120
 msgid "blast of negative energy"
 msgstr "음에너지의 폭발"
 
-#: mon-cast.cc:302 zap-data.h:75 mon-cast.cc:296
+#: mon-cast.cc:302 zap-data.h:75 mon-cast.cc:296 mon-cast.cc:294
 msgid "magic dart"
 msgstr "마법의 다트"
 
-#: mon-cast.cc:310 zap-data.h:11 mon-cast.cc:304
+#: mon-cast.cc:310 zap-data.h:11 mon-cast.cc:304 mon-cast.cc:302
 msgid "puff of flame"
 msgstr "화염 덩어리"
 
-#: mon-cast.cc:318 zap-data.h:27 mon-cast.cc:312
+#: mon-cast.cc:318 zap-data.h:27 mon-cast.cc:312 mon-cast.cc:310
 msgid "puff of frost"
 msgstr "냉기 덩어리"
 
-#: mon-cast.cc:326 zap-data.h:845 mon-cast.cc:320
+#: mon-cast.cc:326 zap-data.h:845 mon-cast.cc:320 mon-cast.cc:318
 msgid "rocky blast"
 msgstr "모래 폭풍"
 
-#: mon-cast.cc:405 zap-data.h:283 mon-cast.cc:404
+#: mon-cast.cc:405 zap-data.h:283 mon-cast.cc:404 mon-cast.cc:402
 msgid "bolt of poison"
 msgstr "독화살"
 
-#: mon-cast.cc:414 zap-data.h:893 mon-cast.cc:413
+#: mon-cast.cc:414 zap-data.h:893 mon-cast.cc:413 mon-cast.cc:411
 msgid "poison arrow"
 msgstr "맹독의 화살"
 
-#: mon-cast.cc:423 zap-data.h:877 mon-cast.cc:422
+#: mon-cast.cc:423 zap-data.h:877 mon-cast.cc:422 mon-cast.cc:420
 msgid "bolt of magma"
 msgstr "용암의 화살"
 
-#: mon-cast.cc:432 zap-data.h:123 mon-cast.cc:431
+#: mon-cast.cc:432 zap-data.h:123 mon-cast.cc:431 mon-cast.cc:429
 msgid "bolt of fire"
 msgstr "맹화의 화살"
 
-#: mon-cast.cc:441 zap-data.h:749 mon-cast.cc:440
+#: mon-cast.cc:441 zap-data.h:749 mon-cast.cc:440 mon-cast.cc:438
 msgid "shard of ice"
 msgstr "얼음조각"
 
-#: mon-cast.cc:449 zap-data.h:139 mon-cast.cc:448
+#: mon-cast.cc:449 zap-data.h:139 mon-cast.cc:448 mon-cast.cc:446
 msgid "bolt of cold"
 msgstr "동결의 화살"
 
-#: mon-cast.cc:458 zap-data.h:331 mon-cast.cc:457
+#: mon-cast.cc:458 zap-data.h:331 mon-cast.cc:457 mon-cast.cc:455
 msgid "narrow beam of energy"
 msgstr "얇은 마력의 빛줄기"
 
-#: mon-cast.cc:467 zap-data.h:155 mon-cast.cc:466
+#: mon-cast.cc:467 zap-data.h:155 mon-cast.cc:466 mon-cast.cc:464
 msgid "great wave of water"
 msgstr "몰아치는 파도"
 
-#: mon-cast.cc:480 mon-cast.cc:479
+#: mon-cast.cc:480 mon-cast.cc:479 mon-cast.cc:477
 msgid "freezing blast"
 msgstr "얼어붙는 냉기"
 
-#: mon-cast.cc:490 zap-data.h:539 mon-cast.cc:489
+#: mon-cast.cc:490 zap-data.h:539 mon-cast.cc:489 mon-cast.cc:487
 msgid "zap"
 msgstr "전격"
 
-#: mon-cast.cc:499 zap-data.h:251 mon-cast.cc:498
+#: mon-cast.cc:499 zap-data.h:251 mon-cast.cc:498 mon-cast.cc:496
 msgid "bolt of lightning"
 msgstr "번개의 화살"
 
-#: mon-cast.cc:527 zap-data.h:765 mon-cast.cc:526
+#: mon-cast.cc:527 zap-data.h:765 mon-cast.cc:526 mon-cast.cc:524
 msgid "great blast of cold"
 msgstr "맹렬한 냉기 폭풍"
 
-#: mon-cast.cc:538 spl-damage.cc:154 spl-damage.cc:150
+#: mon-cast.cc:538 spl-damage.cc:154 spl-damage.cc:150 mon-cast.cc:536
+#: spl-damage.cc:151
 msgid "burst of hellfire"
 msgstr "맹렬한 지옥불"
 
 #. was splinters
-#: mon-cast.cc:567 zap-data.h:315 mon-cast.cc:566
+#: mon-cast.cc:567 zap-data.h:315 mon-cast.cc:566 mon-cast.cc:564
 msgid "crystal spear"
 msgstr "수정창"
 
@@ -13550,56 +13576,57 @@ msgid "force bolt"
 msgstr "힘의 화살"
 
 #. negative energy
-#: mon-cast.cc:590 zap-data.h:299 mon-cast.cc:589
+#: mon-cast.cc:590 zap-data.h:299 mon-cast.cc:589 mon-cast.cc:587
 msgid "bolt of negative energy"
 msgstr "흡성의 화살"
 
-#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599
+#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599 mon-cast.cc:597
 msgid "orb of energy"
 msgstr "마력의 구체"
 
-#: mon-cast.cc:609 zap-data.h:733 mon-cast.cc:608
+#: mon-cast.cc:609 zap-data.h:733 mon-cast.cc:608 mon-cast.cc:606
 msgid "ball of steam"
 msgstr "증기 구체"
 
-#: mon-cast.cc:634 zap-data.h:395 mon-cast.cc:633
+#: mon-cast.cc:634 zap-data.h:395 mon-cast.cc:633 mon-cast.cc:631
 msgid "sticky flame"
 msgstr "끈적이는 화염"
 
-#: mon-cast.cc:640 mon-cast.cc:639
+#: mon-cast.cc:640 mon-cast.cc:639 mon-cast.cc:637
 msgid "noxious blast"
 msgstr "유독 가스의 폭발"
 
-#: mon-cast.cc:650 mon-cast.cc:649
+#: mon-cast.cc:650 mon-cast.cc:649 mon-cast.cc:647
 msgid "blast of poison"
 msgstr "독액의 폭발"
 
-#: mon-cast.cc:661 zap-data.h:669 mon-cast.cc:660
+#: mon-cast.cc:661 zap-data.h:669 mon-cast.cc:660 mon-cast.cc:658
 msgid "bolt of energy"
 msgstr "마력의 화살"
 
-#: mon-cast.cc:671 zap-data.h:459 mon-cast.cc:670
+#: mon-cast.cc:671 zap-data.h:459 mon-cast.cc:670 mon-cast.cc:668
 msgid "sting"
 msgstr "독침"
 
-#: mon-cast.cc:679 zap-data.h:491 mon-cast.cc:678
+#: mon-cast.cc:679 zap-data.h:491 mon-cast.cc:678 mon-cast.cc:676
 msgid "iron shot"
 msgstr "강철의 화살"
 
-#: mon-cast.cc:688 zap-data.h:523 mon-cast.cc:687
+#: mon-cast.cc:688 zap-data.h:523 mon-cast.cc:687 mon-cast.cc:685
 msgid "stone arrow"
 msgstr "암석의 화살"
 
-#: mon-cast.cc:697 zap-data.h:571 mon-cast.cc:696
+#: mon-cast.cc:697 zap-data.h:571 mon-cast.cc:696 mon-cast.cc:694
 msgid "splash of poison"
 msgstr "독액 물보라"
 
-#: mon-cast.cc:705 mon-cast.cc:704
+#: mon-cast.cc:705 mon-cast.cc:704 mon-cast.cc:702
 msgid "splash of acid"
 msgstr "산성 액체"
 
 #. death drake
-#: mon-cast.cc:729 mon-cast.cc:725 mon-cast.cc:736
+#: mon-cast.cc:729 mon-cast.cc:725 mon-cast.cc:736 mon-cast.cc:723
+#: mon-cast.cc:734
 msgid "foul vapour"
 msgstr "부패 구름"
 
@@ -13615,16 +13642,16 @@ msgstr "화염의 구름"
 msgid "cloud of poison"
 msgstr "독구름"
 
-#: mon-cast.cc:808 mon-cast.cc:747
+#: mon-cast.cc:808 mon-cast.cc:747 mon-cast.cc:745
 msgid "bolt of dispelling energy"
 msgstr "항마의 화살"
 
 #. fiend's hellfire
-#: mon-cast.cc:816 mon-cast.cc:755
+#: mon-cast.cc:816 mon-cast.cc:755 mon-cast.cc:753
 msgid "blast of hellfire"
 msgstr "지옥불의 폭발"
 
-#: mon-cast.cc:827 mon-cast.cc:766
+#: mon-cast.cc:827 mon-cast.cc:766 mon-cast.cc:764
 msgid "spray of metal splinters"
 msgstr "흩뿌려진 금속 파편"
 
@@ -13632,43 +13659,43 @@ msgstr "흩뿌려진 금속 파편"
 msgid "metal splinters"
 msgstr "금속 파편"
 
-#: mon-cast.cc:852 mon-cast.cc:791
+#: mon-cast.cc:852 mon-cast.cc:791 mon-cast.cc:789
 msgid "blast of flame"
 msgstr "화염의 폭발"
 
-#: mon-cast.cc:862 mon-cast.cc:811
+#: mon-cast.cc:862 mon-cast.cc:811 mon-cast.cc:809
 msgid "blast of cold"
 msgstr "냉기의 폭발"
 
-#: mon-cast.cc:873 mon-cast.cc:822
+#: mon-cast.cc:873 mon-cast.cc:822 mon-cast.cc:820
 msgid "blast of cleansing flame"
 msgstr "정화의 불꽃"
 
-#: mon-cast.cc:889 zap-data.h:925 mon-cast.cc:838
+#: mon-cast.cc:889 zap-data.h:925 mon-cast.cc:838 mon-cast.cc:836
 msgid "porkalator"
 msgstr "강제 돼지 변신"
 
-#: mon-cast.cc:907 zap-data.h:974 mon-cast.cc:856
+#: mon-cast.cc:907 zap-data.h:974 mon-cast.cc:856 mon-cast.cc:854
 msgid "ray of light"
 msgstr "강한 빛줄기"
 
-#: mon-cast.cc:914 mon-cast.cc:863
+#: mon-cast.cc:914 mon-cast.cc:863 mon-cast.cc:861
 msgid "blast of calcifying dust"
 msgstr "석회가루의 폭발"
 
-#: mon-cast.cc:924 mon-cast.cc:873
+#: mon-cast.cc:924 mon-cast.cc:873 mon-cast.cc:871
 msgid "beam of golden light"
 msgstr "황금빛 빛줄기"
 
-#: mon-cast.cc:934 mon-cast.cc:883
+#: mon-cast.cc:934 mon-cast.cc:883 mon-cast.cc:881
 msgid "silver bolt"
 msgstr "은빛 화살"
 
-#: mon-cast.cc:943 mon-cast.cc:892
+#: mon-cast.cc:943 mon-cast.cc:892 mon-cast.cc:890
 msgid "ensnaring beam"
 msgstr "거미줄 발사"
 
-#: mon-cast.cc:977 zap-data.h:701 mon-cast.cc:940
+#: mon-cast.cc:977 zap-data.h:701 mon-cast.cc:940 mon-cast.cc:938
 msgid "agony"
 msgstr "고통"
 
@@ -13681,16 +13708,16 @@ msgstr "포자의 폭발"
 msgid "blast of lightning"
 msgstr "전격의 방출"
 
-#: spl-damage.cc:94 spl-damage.cc:90
+#: spl-damage.cc:94 spl-damage.cc:90 spl-damage.cc:91
 msgid "great blast of fire"
 msgstr "맹렬한 화염의 폭발"
 
 #. initialise beam structure
-#: spl-damage.cc:199 spl-damage.cc:195
+#: spl-damage.cc:199 spl-damage.cc:195 spl-damage.cc:196
 msgid "lightning arc"
 msgstr "방출된 번개"
 
-#: spl-damage.cc:1126 spl-damage.cc:1194
+#: spl-damage.cc:1126 spl-damage.cc:1194 spl-damage.cc:1483
 msgid "shillelagh"
 msgstr "둔기"
 
@@ -13698,20 +13725,22 @@ msgstr "둔기"
 #: spl-damage.cc:1670 spl-damage.cc:1736 spl-damage.cc:1840 spl-damage.cc:1915
 #: spl-damage.cc:1809 spl-damage.cc:1859 spl-damage.cc:1965 spl-damage.cc:2041
 #: spl-damage.cc:1807 spl-damage.cc:1857 spl-damage.cc:1963 spl-damage.cc:2039
+#: spl-damage.cc:2096 spl-damage.cc:2146 spl-damage.cc:2252 spl-damage.cc:2328
 msgid "blast of rock fragments"
 msgstr "암석 파편"
 
 #: spl-damage.cc:1678 spl-damage.cc:1777 spl-damage.cc:1817 spl-damage.cc:1900
-#: spl-damage.cc:1815 spl-damage.cc:1898
+#: spl-damage.cc:1815 spl-damage.cc:1898 spl-damage.cc:2104 spl-damage.cc:2187
 msgid "blast of petrified fragments"
 msgstr "석화 파편"
 
 #: spl-damage.cc:1685 spl-damage.cc:1784 spl-damage.cc:1824 spl-damage.cc:1907
-#: spl-damage.cc:1822 spl-damage.cc:1905
+#: spl-damage.cc:1822 spl-damage.cc:1905 spl-damage.cc:2111 spl-damage.cc:2194
 msgid "icy blast"
 msgstr "얼음의 폭발"
 
 #: spl-damage.cc:1693 spl-damage.cc:1792 spl-damage.cc:1915 spl-damage.cc:1913
+#: spl-damage.cc:2202
 msgid "blast of bone shards"
 msgstr "뼛조각의 산탄"
 
@@ -13719,33 +13748,33 @@ msgstr "뼛조각의 산탄"
 msgid "blast of splinters"
 msgstr "나무 파편"
 
-#: spl-damage.cc:1717 spl-damage.cc:1841 spl-damage.cc:1839
+#: spl-damage.cc:1717 spl-damage.cc:1841 spl-damage.cc:1839 spl-damage.cc:2128
 msgid "blast of toenail fragments"
 msgstr "손톱 파편"
 
 #: spl-damage.cc:1725 spl-damage.cc:1872 spl-damage.cc:1848 spl-damage.cc:1997
-#: spl-damage.cc:1846 spl-damage.cc:1995
+#: spl-damage.cc:1846 spl-damage.cc:1995 spl-damage.cc:2135 spl-damage.cc:2284
 msgid "blast of metal fragments"
 msgstr "금속 파편"
 
-#: spl-damage.cc:1749 spl-damage.cc:1872 spl-damage.cc:1870
+#: spl-damage.cc:1749 spl-damage.cc:1872 spl-damage.cc:1870 spl-damage.cc:2159
 msgid "blast of silver fragments"
 msgstr "은조각 파편"
 
-#: spl-damage.cc:1754 spl-damage.cc:1877 spl-damage.cc:1875
+#: spl-damage.cc:1754 spl-damage.cc:1877 spl-damage.cc:1875 spl-damage.cc:2164
 msgid "blast of orange crystal shards"
 msgstr "주황색 수정 파편"
 
 #: spl-damage.cc:1759 spl-damage.cc:1889 spl-damage.cc:1882 spl-damage.cc:2014
-#: spl-damage.cc:1880 spl-damage.cc:2012
+#: spl-damage.cc:1880 spl-damage.cc:2012 spl-damage.cc:2169 spl-damage.cc:2301
 msgid "blast of crystal shards"
 msgstr "수정 파편"
 
-#: spl-damage.cc:1764 spl-damage.cc:1887 spl-damage.cc:1885
+#: spl-damage.cc:1764 spl-damage.cc:1887 spl-damage.cc:1885 spl-damage.cc:2174
 msgid "blast of sapphire shards"
 msgstr "사파이어 파편"
 
-#: spl-miscast.cc:872 spl-miscast.cc:896 spl-miscast.cc:901
+#: spl-miscast.cc:872 spl-miscast.cc:896 spl-miscast.cc:901 spl-miscast.cc:911
 msgid "explosion"
 msgstr "폭발"
 
@@ -13758,6 +13787,7 @@ msgid "Mass Abjuration"
 msgstr "해방의 선서"
 
 #: transform.cc:787 transform.cc:835 transform.cc:845 transform.cc:847
+#: transform.cc:851
 msgid "pig"
 msgstr "돼지"
 
@@ -13905,7 +13935,7 @@ msgid "talons"
 msgstr "발톱"
 
 #: mutation-data.h:837 transform.cc:427 transform.cc:458 player-act.cc:465
-#: transform.cc:467 player-act.cc:466 transform.cc:469
+#: transform.cc:467 player-act.cc:466 transform.cc:469 transform.cc:473
 msgid "tentacles"
 msgstr "촉수"
 
@@ -17308,11 +17338,11 @@ msgstr "소집의 문장"
 msgid "Injury Bond"
 msgstr "피의 상처"
 
-#: mon-cast.cc:801
+#: mon-cast.cc:801 mon-cast.cc:799
 msgid "blast of chaos"
 msgstr "혼돈의 폭발"
 
-#: mon-cast.cc:901
+#: mon-cast.cc:901 mon-cast.cc:899
 msgid "lance of force"
 msgstr "힘의 창살"
 
@@ -17320,7 +17350,7 @@ msgstr "힘의 창살"
 msgid "blast of energy"
 msgstr "마력의 폭발"
 
-#: transform.cc:892 transform.cc:909 transform.cc:911
+#: transform.cc:892 transform.cc:909 transform.cc:911 transform.cc:915
 msgid "wisp"
 msgstr "위습"
 
@@ -17604,6 +17634,7 @@ msgid "wisp-form"
 msgstr "위습 변신"
 
 #: spl-summoning.cc:2688 spl-summoning.cc:2704 spl-summoning.cc:2716
+#: spl-summoning.cc:2722
 msgid "barrage of energy"
 msgstr "발사된 마력"
 
@@ -17896,7 +17927,7 @@ msgstr "루비 셉터"
 msgid "short-range portal"
 msgstr "단거리 관문"
 
-#: mon-cast.cc:575
+#: mon-cast.cc:575 mon-cast.cc:573
 msgid "concussive force"
 msgstr "천벌의 일격"
 
@@ -17970,3 +18001,47 @@ msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다
 #: abl-show.cc:252
 msgid "Evoke Teleport Control"
 msgstr "공간이동 제어 발동"
+
+#: mutation-data.h:1102
+msgid "magic shield"
+msgstr "수호정령 변이"
+
+#: mutation-data.h:1104
+msgid ""
+"When hurt, damage is shared between your health and your magic reserves."
+msgstr ""
+"당신은 받은 피해의 일부를 마력을 소모하여 감소시킨다."
+
+#: mutation-data.h:1105
+msgid ""
+"You feel your magical essence form a protective shroud around your flesh."
+msgstr ""
+"마력의 정수가 당신의 육체를 보호하는듯한 느낌을 받았다."
+
+#: mutation-data.h:1112
+msgid "magic regeneration"
+msgstr "마력 재생"
+
+#: mutation-data.h:1114
+msgid "You regenerate magic rapidly."
+msgstr "당신의 마력 재생은 빠르다."
+
+#: mutation-data.h:1115
+msgid "You feel your magic shroud grow more resilient."
+msgstr "마력이 빠르게 회복되는 느낌이 전해져왔다."
+
+#: mutation-data.h:1122
+msgid "magic link"
+msgstr "마력 연결"
+
+#: mutation-data.h:1124
+msgid "When low on magic, you restore magic in place of health."
+msgstr "당신은 마력이 낮을 때, 당신의 생명력 일부를 마력으로 대체할 수 있다."
+
+#: mutation-data.h:1125
+msgid "You feel your life force and your magical essence meld."
+msgstr "생명력과 마력의 정수가 융합되는 느낌을 받았다."
+
+#: spl-data.h:446
+msgid "Summon Small Mammal"
+msgstr "작은 동물 소환"

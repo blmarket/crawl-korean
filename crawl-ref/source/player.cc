@@ -1461,7 +1461,7 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
             rf += you.scan_artefacts(ARTP_FIRE, calc_unid);
 
             // dragonskin cloak: 0.5 to draconic resistances
-            if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
                 rf++;
         }
     }
@@ -1486,7 +1486,6 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
         // transformations:
         switch (you.form)
         {
-        case TRAN_FUNGUS:
         case TRAN_TREE:
             if (you.religion == GOD_FEDHAS && !player_under_penance())
                 break;
@@ -1620,7 +1619,7 @@ int player_res_cold(bool calc_unid, bool temp, bool items)
             rc += you.scan_artefacts(ARTP_COLD, calc_unid);
 
             // dragonskin cloak: 0.5 to draconic resistances
-            if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
                 rc++;
         }
     }
@@ -1649,7 +1648,7 @@ bool player::res_corr(bool calc_unid, bool items) const
     if (items && !suppressed())
     {
         // dragonskin cloak: 0.5 to draconic resistances
-        if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN)
+        if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN)
             && coinflip())
         {
             return true;
@@ -1711,7 +1710,7 @@ int player_res_electricity(bool calc_unid, bool temp, bool items)
             re += you.scan_artefacts(ARTP_ELECTRICITY, calc_unid);
 
             // dragonskin cloak: 0.5 to draconic resistances
-            if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
                 re++;
         }
     }
@@ -1802,7 +1801,7 @@ int player_res_poison(bool calc_unid, bool temp, bool items)
             rp += you.scan_artefacts(ARTP_POISON, calc_unid);
 
             // dragonskin cloak: 0.5 to draconic resistances
-            if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
                 rp++;
         }
     }
@@ -1888,7 +1887,7 @@ int player_res_sticky_flame(bool calc_unid, bool temp, bool items)
             rsf++;
 
         // dragonskin cloak: 0.5 to draconic resistances
-        if (items && calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+        if (items && calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
             rsf++;
     }
 
@@ -2015,7 +2014,7 @@ int player_spec_hex()
     if (!you.suppressed())
     {
         // Unrands
-        if (player_equip_unrand_effect(UNRAND_BOTONO))
+        if (player_equip_unrand(UNRAND_BOTONO))
             sh++;
     }
 
@@ -2052,7 +2051,7 @@ int player_spec_poison()
         // Staves
         sp += you.wearing(EQ_STAFF, STAFF_POISON);
 
-        if (player_equip_unrand_effect(UNRAND_OLGREB))
+        if (player_equip_unrand(UNRAND_OLGREB))
             sp++;
     }
 
@@ -2153,7 +2152,7 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
 
             // dragonskin cloak: 0.5 to draconic resistances
             // this one is dubious (no pearl draconians)
-            if (calc_unid && player_equip_unrand_effect(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
                 pl++;
 
             pl += you.wearing(EQ_STAFF, STAFF_DEATH, calc_unid);
@@ -3064,7 +3063,7 @@ static void _felid_extra_life()
     }
 }
 
-void level_change(bool skip_attribute_increase)
+void level_change(int source, const char* aux, bool skip_attribute_increase)
 {
     const bool wiz_cmd = crawl_state.prev_cmd == CMD_WIZARD
                       || crawl_state.repeat_cmd == CMD_WIZARD;
@@ -3074,7 +3073,7 @@ void level_change(bool skip_attribute_increase)
     you.redraw_experience = true;
 
     while (you.experience < exp_needed(you.experience_level))
-        lose_level();
+        lose_level(source, aux);
 
     while (you.experience_level < 27
            && you.experience >= exp_needed(you.experience_level + 1))
@@ -4307,7 +4306,7 @@ unsigned int exp_needed(int lev, int exp_apt)
     if (exp_apt == -99)
         exp_apt = species_exp_modifier(you.species);
 
-    return (unsigned int) ((level - 1) * exp(-log(2) * (exp_apt - 1) / 4));
+    return (unsigned int) ((level - 1) * exp(-log(2.0) * (exp_apt - 1) / 4));
 }
 
 // returns bonuses from rings of slaying, etc.
@@ -5080,7 +5079,7 @@ bool miasma_player(string source, string source_aux)
     return success;
 }
 
-bool napalm_player(int amount)
+bool napalm_player(int amount, string source, string source_aux)
 {
     ASSERT(!crawl_state.game_is_arena());
 
@@ -5092,6 +5091,9 @@ bool napalm_player(int amount)
 
     if (you.duration[DUR_LIQUID_FLAMES] > old_value)
         mpr(gettext("You are covered in liquid flames!"), MSGCH_WARN);
+
+    you.props["napalmer"] = source;
+    you.props["napalm_aux"] = source_aux;
 
     return true;
 }
@@ -5107,6 +5109,8 @@ void dec_napalm_player(int delay)
         else
             mpr(_("You dip into the water, and the flames go out!"), MSGCH_WARN);
         you.duration[DUR_LIQUID_FLAMES] = 0;
+        you.props.erase("napalmer");
+        you.props.erase("napalm_aux");
         return;
     }
 
@@ -5142,6 +5146,11 @@ void dec_napalm_player(int delay)
         remove_ice_armour();
 
     you.duration[DUR_LIQUID_FLAMES] -= delay;
+    if (you.duration[DUR_LIQUID_FLAMES] <= 0)
+    {
+        you.props.erase("napalmer");
+        you.props.erase("napalm_aux");
+    }
 }
 
 bool slow_player(int turns)
@@ -5424,7 +5433,7 @@ void player::init()
     position.reset();
 
 #ifdef WIZARD
-    wizard = (Options.wiz_mode == WIZ_YES) ? true : false;
+    wizard = Options.wiz_mode == WIZ_YES;
 #else
     wizard = false;
 #endif
@@ -6722,9 +6731,9 @@ bool player::rot(actor *who, int amount, int immediate, bool quiet)
     return true;
 }
 
-bool player::drain_exp(actor *who, bool quiet, int pow)
+bool player::drain_exp(actor *who, const char *aux, bool quiet, int pow)
 {
-    return ::drain_exp();
+    return ::drain_exp(!quiet, who->mindex(), aux);
 }
 
 void player::confuse(actor *who, int str)

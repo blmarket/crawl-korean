@@ -807,7 +807,7 @@ ITEM:   any potion
 ITEM:   Young Poisoner's Handbook / book of Changes / \
         randbook disc:Poison disc2:Transmutation slevels:8 w:5 / \
         randbook numspells:5 title:Nature \
-        spells:beastly_appendage|summon_small_mammals|sticks_to_snakes|call_canine_familiar|spider_form
+        spells:beastly_appendage|summon_small_mammal|sticks_to_snakes|call_canine_familiar|spider_form
 : else
 ITEM:   randbook numspells:5 title:Nature \
         spells:beastly_appendage|sting|sticks_to_snakes|cure_poison|spider_form
@@ -869,7 +869,7 @@ ITEM:   any potion
 ITEM:   Young Poisoner's Handbook / book of Changes / \
         randbook disc:Poison disc2:Transmutation slevels:8 w:5 / \
         randbook numspells:5 title:Nature \
-        spells:beastly_appendage|summon_small_mammals|sticks_to_snakes|call_canine_familiar|spider_form
+        spells:beastly_appendage|summon_small_mammal|sticks_to_snakes|call_canine_familiar|spider_form
 : else
 ITEM:   randbook numspells:5 title:Nature \
         spells:beastly_appendage|sting|sticks_to_snakes|cure_poison|spider_form
@@ -1346,11 +1346,12 @@ cccccccnccc
        @
 ENDMAP
 
+# Inspired by the Jorge Luis Borges' story "The Library of Babel".
 NAME:   bh_babel_library
 DEPTH:  D:14-20
 KFEAT:  ^ : known shaft trap
 KMONS:  1 : wizard
-ITEM:   randbook numspells:5 title:Dhcmrlchtdj
+ITEM:   randbook numspells:5 title:Dhcmrlchtdj / randbook numspells:5 title:Combed_Thunderclap disc:air / randbook numspells:5 title:Plaster_Cramp disc:earth / randbook numspells:5 title:Axaxaxas_mlö / randbook numspells:5 title:Forking_Paths owner:Ts'ui_Pên disc:hexes disc2:charms
 ITEM:   bread ration
 MAP
     xxx@@xxx
@@ -5288,7 +5289,7 @@ NAME:  minivault_12
 DEPTH: D:8-26
 MAP
 ............
-.GxxxxxxxxG.
+.mxxxxxxxxm.
 .x>9$9$9$<x.
 .x.$9$9$.$x.
 .x$.****$.x.
@@ -5297,7 +5298,7 @@ MAP
 .x.$****.$x.
 .x$9$9$9$.x.
 .x<$9$9$9>x.
-.GxxxxxxxxG.
+.mxxxxxxxxm.
 ............
 ENDMAP
 

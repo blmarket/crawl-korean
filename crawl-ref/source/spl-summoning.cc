@@ -83,35 +83,25 @@ spret_type cast_summon_butterflies(int pow, god_type god, bool fail)
     return SPRET_SUCCESS;
 }
 
-spret_type cast_summon_small_mammals(int pow, god_type god, bool fail)
+spret_type cast_summon_small_mammal(int pow, god_type god, bool fail)
 {
     fail_check();
-    bool success = false;
 
     monster_type mon = MONS_PROGRAM_BUG;
 
-    int count = (pow == 25) ? 2 : 1;
+    if (x_chance_in_y(10, pow + 1))
+        mon = coinflip() ? MONS_BAT : MONS_RAT;
+    else
+        mon = coinflip() ? MONS_QUOKKA : MONS_GREY_RAT;
 
-    for (int i = 0; i < count; ++i)
+    if (!create_monster(
+            mgen_data(mon, BEH_FRIENDLY, &you,
+                      3, SPELL_SUMMON_SMALL_MAMMAL,
+                      you.pos(), MHITYOU,
+                      0, god)))
     {
-        if (x_chance_in_y(10, pow + 1))
-            mon = coinflip() ? MONS_BAT : MONS_RAT;
-        else
-            mon = coinflip() ? MONS_QUOKKA : MONS_GREY_RAT;
-
-        if (create_monster(
-                mgen_data(mon, BEH_FRIENDLY, &you,
-                          3, SPELL_SUMMON_SMALL_MAMMALS,
-                          you.pos(), MHITYOU,
-                          0, god)))
-        {
-            success = true;
-        }
-
-    }
-
-    if (!success)
         canned_msg(MSG_NOTHING_HAPPENS);
+    }
 
     return SPRET_SUCCESS;
 }
@@ -1758,7 +1748,7 @@ spret_type cast_animate_skeleton(god_type god, bool fail)
             && mons_skeleton(si->mon_type)
             && mons_class_can_be_zombified(si->mon_type))
         {
-            butcher_corpse(*si, B_TRUE);
+            butcher_corpse(*si, MB_TRUE);
             mpr(_("Before your eyes, flesh is ripped from the corpse!"));
             if (Options.chunks_autopickup)
                 request_autopickup();
@@ -2550,19 +2540,35 @@ bool aim_battlesphere(actor* agent, spell_type spell, int powc, bolt& beam)
 
         // If the player beam is targeted at a creature, aim at this creature.
         // Otherwise, aim at the furthest creature in the player beam path
-        bolt testbeam;
-        zappy(spell_to_zap(spell), powc, testbeam);
+        bolt testbeam = beam;
+
+        if (agent->is_player())
+            testbeam.thrower = KILL_YOU_MISSILE;
+        else
+        {
+            testbeam.thrower = KILL_MON_MISSILE;
+            testbeam.beam_source = agent->mindex();
+        }
+
+        testbeam.is_tracer = true;
+        zap_type ztype = spell_to_zap(spell);
+
+        // Fallback for non-standard spell zaps
+        if (ztype == NUM_ZAPS)
+            ztype = ZAP_MAGIC_DART;
+
+        // This is so that reflection and pathing rules for the parent beam
+        // will be obeyed when figuring out what is being aimed at
+        zappy(ztype, powc, testbeam);
 
         battlesphere->props["firing_target"] = beam.target;
         battlesphere->props.erase("foe");
         if (!actor_at(beam.target))
         {
-            beam.is_tracer = true;
-            beam.fire();
-            beam.is_tracer = false;
+            testbeam.fire();
 
-            for (vector<coord_def>::const_reverse_iterator i = beam.path_taken.rbegin();
-                i != beam.path_taken.rend(); ++i)
+            for (vector<coord_def>::const_reverse_iterator i = testbeam.path_taken.rbegin();
+                i != testbeam.path_taken.rend(); ++i)
             {
                 if (*i != battlesphere->pos() && monster_at(*i))
                 {
@@ -2841,7 +2847,7 @@ spret_type cast_fulminating_prism(int pow, const coord_def& where, bool fail)
     int hd = div_rand_round(pow, 10);
 
     mgen_data prism_data = mgen_data(MONS_FULMINANT_PRISM, BEH_FRIENDLY, &you,
-                                  3, SPELL_SUMMON_SMALL_MAMMALS,
+                                  3, SPELL_FULMINANT_PRISM,
                                   where, MHITYOU, MG_FORCE_PLACE);
     prism_data.hd = hd;
     monster *prism = create_monster(prism_data);

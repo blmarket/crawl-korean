@@ -1584,7 +1584,7 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
                 "<w>%</w>키, <w>%</w>키를 눌러 이러한 비상구를 이용하면 "
                 "윗층이나 아래층으로 피신할 수 있죠. "
 #ifdef USE_TILE
-                "(or by using your <w>left mouse button</w> in combination "
+                " (or by using your <w>left mouse button</w> in combination "
                 "with the <w>Shift key</w>)"
 #endif
                 "하지만, 비상구는 계단과 달리 내려간 후 곧바로 다시 올라오거나 내려갈 수 없답니다. 꼭 필요한 경우가 아니면, 층을 이동할떄는 비상구보단 계단을 이용하는게 좋아요.";
@@ -1854,6 +1854,14 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
     case HINT_NEW_LEVEL:
         if (you.skills[SK_SPELLCASTING])
         {
+            if (!crawl_state.game_is_hints())
+            {
+                text << "Gaining an experience level allows you to learn more "
+                        "difficult spells. However, you don't have any level "
+                        "two spells in your current spellbook, so you'll just "
+                        "have to keep exploring!";
+                break;
+            }
             text << "Gaining an experience level allows you to learn more "
                     "difficult spells. Time to memorise your second spell "
                     "with <w>%</w>"
@@ -1894,10 +1902,8 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         text << "One of your skills just passed a whole integer point. The "
                 "skills you use are automatically trained whenever you gain "
                 "experience (by killing monsters). By default, experience goes "
-                "towards skill you actively use, although you may choose "
-                "otherwise. You can train your skills or pick up new ones by "
-                "performing the corresponding actions. To view or manage your "
-                "skill set, type <w>%</w>.";
+                "towards skills you actively use, although you may choose "
+                "otherwise. To view or manage your skill set, type <w>%</w>.";
 
         cmd.push_back(CMD_DISPLAY_SKILLS);
         break;
@@ -2108,9 +2114,9 @@ void learned_something_new(hints_event_type seen_what, coord_def gc)
         }
         text << "One or more of the chunks or corpses you carry has started "
                 "to rot. Few species can digest these, so you might just as "
-                "well <w>%</w>rop them now."
+                "well <w>%</w>rop them now. "
                 "When selecting items from a menu, there's a shortcut "
-                "(<w>&</w>) to select all items in your inventory at once "
+                "(<w>,</w>) to select all items in your inventory at once "
                 "that are useless to you.";
         cmd.push_back(CMD_DROP);
         break;
@@ -3575,7 +3581,7 @@ void hints_describe_item(const item_def &item)
                 if (item.sub_type == FOOD_CHUNK)
                 {
                     ostr << "Note that most species refuse to eat raw meat "
-                            "unless really hungry. ";
+                            "unless hungry. ";
 
                     if (food_is_rotten(item))
                     {
@@ -3772,7 +3778,7 @@ void hints_describe_item(const item_def &item)
             {
                 ostr << ", or offered as a sacrifice to "
                      << god_name(you.religion)
-                     << " <w>%</w>raying over them.";
+                     << " by <w>%</w>raying over them";
                 cmd.push_back(CMD_PRAY);
             }
             ostr << ". ";

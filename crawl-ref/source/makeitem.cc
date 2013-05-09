@@ -94,6 +94,9 @@ static int _weapon_colour(const item_def &item)
     if (is_artefact(item))
         return _exciting_colour();
 
+    if (is_demonic(item))
+        return LIGHTRED;
+
     if (is_range_weapon(item))
     {
         switch (range_skill(item))
@@ -127,7 +130,7 @@ static int _weapon_colour(const item_def &item)
             item_colour = LIGHTCYAN;
             break;
         case SK_AXES:
-            item_colour = DARKGREY;
+            item_colour = MAGENTA;
             break;
         case SK_MACES_FLAILS:
             item_colour = LIGHTGREY;
@@ -174,7 +177,7 @@ static int _missile_colour(const item_def &item)
         item_colour = RED;
         break;
     case MI_THROWING_NET:
-        item_colour = DARKGREY;
+        item_colour = MAGENTA;
         break;
     case MI_PIE:
         item_colour = YELLOW;
@@ -206,10 +209,8 @@ static int _armour_colour(const item_def &item)
         break;
       case ARM_CAP:
       case ARM_WIZARD_HAT:
-        item_colour = MAGENTA;
-        break;
       case ARM_HELMET:
-        item_colour = DARKGREY;
+        item_colour = MAGENTA;
         break;
       case ARM_BOOTS:
         item_colour = BLUE;
@@ -250,10 +251,7 @@ void item_colour(item_def &item)
     switch (item.base_type)
     {
     case OBJ_WEAPONS:
-        if (is_demonic(item))
-            item.colour = random_uncommon_colour();
-        else
-            item.colour = _weapon_colour(item);
+        item.colour = _weapon_colour(item);
         break;
 
     case OBJ_MISSILES:

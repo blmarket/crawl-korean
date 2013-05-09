@@ -282,8 +282,8 @@ bool player_tracer(zap_type ztype, int power, bolt &pbolt, int range)
 
     // Special cases so that tracers behave properly.
     if (pbolt.name != "orb of energy"
-        && pbolt.affects_wall(DNGN_TREE) == B_FALSE
-        && pbolt.affects_wall(DNGN_MANGROVE) == B_FALSE)
+        && pbolt.affects_wall(DNGN_TREE) == MB_FALSE
+        && pbolt.affects_wall(DNGN_MANGROVE) == MB_FALSE)
     {
         pbolt.name = M_("unimportant");
     }
@@ -411,6 +411,8 @@ void init_zap_index()
 
 static const zap_info* _seek_zap(zap_type z_type)
 {
+    ASSERT(z_type >= 0);
+    ASSERT(z_type < NUM_ZAPS);
     if (zap_index[z_type] == -1)
         return NULL;
     else
@@ -1655,7 +1657,7 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
             if (mons->observable())
                 pbolt.obvious_effect = true;
 
-            mons->drain_exp(pbolt.agent());
+            mons->drain_exp(pbolt.agent(), pbolt.aux_source.c_str());
 
             if (YOU_KILL(pbolt.thrower))
                 did_god_conduct(DID_NECROMANCY, 2, pbolt.effect_known);
@@ -2661,20 +2663,20 @@ maybe_bool bolt::affects_wall(dungeon_feature_type wall) const
         && (wall == DNGN_ROCK_WALL || wall == DNGN_CLEAR_ROCK_WALL
             || wall == DNGN_SLIMY_WALL || wall == DNGN_GRATE))
     {
-        return B_TRUE;
+        return MB_TRUE;
     }
 
     if (is_fiery() && feat_is_tree(wall))
-        return (is_superhot() ? B_TRUE : is_beam ? B_MAYBE : B_FALSE);
+        return (is_superhot() ? MB_TRUE : is_beam ? MB_MAYBE : MB_FALSE);
 
     if (flavour == BEAM_ELECTRICITY && feat_is_tree(wall))
-        return (is_superhot() ? B_TRUE : B_MAYBE);
+        return (is_superhot() ? MB_TRUE : MB_MAYBE);
 
     if (flavour == BEAM_DISINTEGRATION && damage.num >= 3
         || flavour == BEAM_NUKE)
     {
         if (feat_is_tree(wall))
-            return B_TRUE;
+            return MB_TRUE;
 
         if (wall == DNGN_ROCK_WALL
             || wall == DNGN_SLIMY_WALL
@@ -2686,23 +2688,23 @@ maybe_bool bolt::affects_wall(dungeon_feature_type wall) const
             || wall == DNGN_RUNED_DOOR
             || wall == DNGN_SEALED_DOOR)
         {
-            return B_TRUE;
+            return MB_TRUE;
         }
     }
 
     // Lee's Rapid Deconstruction
     if (flavour == BEAM_FRAG)
-        return B_TRUE; // smite targetting, we don't care
+        return MB_TRUE; // smite targetting, we don't care
 
-    return B_FALSE;
+    return MB_FALSE;
 }
 
 bool bolt::can_affect_wall(dungeon_feature_type feat) const
 {
     maybe_bool ret = affects_wall(feat);
 
-    return (ret == B_TRUE)  ? true :
-           (ret == B_MAYBE) ? is_tracer || coinflip()
+    return (ret == MB_TRUE)  ? true :
+           (ret == MB_MAYBE) ? is_tracer || coinflip()
                             : false;
 }
 
@@ -2869,7 +2871,7 @@ void bolt::internal_ouch(int dam)
             if (aimed_at_feet && effect_known)
                 ouch(dam, NON_MONSTER, KILLED_BY_SELF_AIMED, name.c_str());
             else
-                ouch(dam, NON_MONSTER, KILLED_BY_TARGETTING);
+                ouch(dam, NON_MONSTER, KILLED_BY_TARGETTING, name.c_str());
         }
     }
     else if (MON_KILL(thrower) || aux_source == "exploding inner flame")
@@ -3698,14 +3700,14 @@ void bolt::affect_player()
     {
         if (!player_res_sticky_flame())
         {
-            napalm_player(random2avg(7, 3) + 1);
+            napalm_player(random2avg(7, 3) + 1, get_source_name(), aux_source);
             was_affected = true;
         }
     }
 
     // Acid.
     if (flavour == BEAM_ACID)
-        splash_with_acid(5, affects_items);
+        splash_with_acid(5, beam_source, affects_items);
 
     if (flavour == BEAM_ENSNARE)
         was_affected = ensnare(&you) || was_affected;
@@ -3978,8 +3980,8 @@ void bolt::tracer_nonenchantment_affect_monster(monster* mon)
     if (!determine_damage(mon, preac, post, final, messages))
         return;
 
-    // Check only if actual damage.
-    if (final > 0)
+    // Check only if actual damage and the monster is worth caring about.
+    if (final > 0 && !mons_is_firewood(mon))
     {
         ASSERT(preac > 0);
 

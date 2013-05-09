@@ -4106,8 +4106,10 @@ god_type monster::deity() const
     return god;
 }
 
-bool monster::drain_exp(actor *agent, bool quiet, int pow)
+bool monster::drain_exp(actor *agent, const char *aux, bool quiet, int pow)
 {
+    UNUSED(aux);
+
     if (x_chance_in_y(res_negative_energy(), 3))
         return false;
 
@@ -4819,7 +4821,8 @@ bool monster::visible_to(const actor *looker) const
     bool blind = looker->is_monster()
                  && looker->as_monster()->has_ench(ENCH_BLIND);
 
-    bool vis = (sense_invis && adjacent(pos(), looker->pos()))
+    bool vis = (looker->is_player() && friendly())
+               || (sense_invis && adjacent(pos(), looker->pos()))
                || (!blind && (!invisible() || looker->can_see_invisible()));
 
     return (vis && (this == looker || !submerged()));

@@ -1159,6 +1159,9 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             || death_type == KILLED_BY_HEADBUTT
             || death_type == KILLED_BY_BEAM
             || death_type == KILLED_BY_DISINT
+            || death_type == KILLED_BY_ACID
+            || death_type == KILLED_BY_DRAINING
+            || death_type == KILLED_BY_BURNING
             || death_type == KILLED_BY_SPORE
             || death_type == KILLED_BY_CLOUD
             || death_type == KILLED_BY_ROTTING
@@ -1266,6 +1269,12 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
     {
         death_source_name = you.props["poisoner"].get_string();
         auxkilldata = you.props["poison_aux"].get_string();
+    }
+
+    if (death_type == KILLED_BY_BURNING)
+    {
+        death_source_name = you.props["napalmer"].get_string();
+        auxkilldata = you.props["napalm_aux"].get_string();
     }
 }
 
@@ -2093,7 +2102,23 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         break;
 
     case KILLED_BY_DRAINING:
-        desc += terse? "흡수" : "모든 생명력을 흡수당해 죽었다.";
+        if (terse)
+            desc += "흡수";
+        else
+        {
+            //desc += "모든 생명력을 흡수당해 죽었다.";
+            if (!death_source_desc().empty())
+            {
+                desc += _(death_source_desc().c_str()) + string("에게 ");
+
+                if (!auxkilldata.empty())
+                    needs_beam_cause_line = true;
+            }
+            else if (!auxkilldata.empty())
+                desc += _(auxkilldata.c_str()) + string("에 ");
+
+			desc += "모든 생명력을 흡수당해 죽었다.";
+        }
         break;
 
     case KILLED_BY_STARVATION:
@@ -2106,7 +2131,18 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         break;
 
     case KILLED_BY_BURNING:     // sticky flame
-        desc += terse? "분사" : "불에 타 죽었다.";
+        if (terse)
+            desc += "분사";
+        else if (!death_source_desc().empty())
+        {
+            desc += _(death_source_desc().c_str()) + string("에 타 죽었다.");
+
+            if (!auxkilldata.empty())
+                needs_beam_cause_line = true;
+        }
+        else
+            desc += "불타 재가 되었다.";
+
         needs_damage = true;
         break;
 
@@ -2148,7 +2184,16 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         break;
 
     case KILLED_BY_TARGETTING:
-        desc += terse? "조준 실수" : "조준 실수로 죽었다.";
+        if (terse)
+            desc += "조준 실수";
+        else
+        {
+            //desc += "Killed themself with ";
+            if (auxkilldata.empty())
+                desc += "조준 실수로 죽었다";
+            else
+                desc += string("잘못 조준된 ") + _(auxkilldata.c_str()) + string("에 죽었다");
+        }
         needs_damage = true;
         break;
 
@@ -2255,7 +2300,16 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         break;
 
     case KILLED_BY_ACID:
-        desc += terse? "acid" : "Splashed by acid";
+        if (terse)
+            desc += "acid";
+        else if (!death_source_desc().empty())
+        {
+            desc += "Splashed by "
+                    + apostrophise(death_source_desc())
+                    + " acid";
+        }
+        else
+            desc += "Splashed with acid";
         needs_damage = true;
         break;
 

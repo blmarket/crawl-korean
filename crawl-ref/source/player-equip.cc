@@ -517,7 +517,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
             if ((you.max_magic_points + 13) *
                 (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
             {
-                mpr(_("You feel your mana capacity is already quite full."));
+                mpr(_("You feel your magic capacity is already quite full."));
             }
             else
                 canned_msg(MSG_MANA_INCREASE);
@@ -644,7 +644,7 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                         break;
                     }
 
-                    if (you.is_undead == US_ALIVE)
+                    if (you.is_undead == US_ALIVE && !you_foodless())
                     {
                         mpr(gettext("You feel a dreadful hunger."));
                         // takes player from Full to Hungry
@@ -1273,7 +1273,7 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         if ((you.max_magic_points + 9) *
             (1.0+player_mutation_level(MUT_HIGH_MAGIC)/10.0) > 50)
         {
-            mpr(_("You feel your mana capacity is already quite full."));
+            mpr(_("You feel your magic capacity is already quite full."));
         }
         else
             canned_msg(MSG_MANA_INCREASE);

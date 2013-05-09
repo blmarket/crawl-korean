@@ -3171,7 +3171,7 @@ enum spell_type
     SPELL_DEATHS_DOOR,
     SPELL_MASS_CONFUSION,
     SPELL_SMITING,
-    SPELL_SUMMON_SMALL_MAMMALS,
+    SPELL_SUMMON_SMALL_MAMMAL,
     SPELL_ABJURATION,
     SPELL_SUMMON_SCORPIONS,
     SPELL_BOLT_OF_DRAINING,
@@ -3572,9 +3572,9 @@ enum montravel_target_type
 
 enum maybe_bool
 {
-    B_FALSE,
-    B_MAYBE,
-    B_TRUE,
+    MB_FALSE,
+    MB_MAYBE,
+    MB_TRUE,
 };
 
 enum reach_type

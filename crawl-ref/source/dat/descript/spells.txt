@@ -756,9 +756,9 @@ Summon Scorpions spell
 This spell summons one or more scorpions (some of which may not be bound to the
 caster's service).
 %%%%
-Summon Small Mammals spell
+Summon Small Mammal spell
 
-시전자를 따를 하나 한두마리의 작은 동물을 소환한다.
+This spell summons a small creature to the caster's aid.
 %%%%
 Summon Swarm spell
 
