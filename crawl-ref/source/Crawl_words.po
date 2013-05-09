@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 22:13+0900\n"
+"POT-Creation-Date: 2013-05-09 22:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4437,7 +4437,7 @@ msgstr "당신"
 #: mon-util.cc:3691 misc.cc:2789 mon-util.cc:3678 misc.cc:2797
 #: mon-util.cc:3686 misc.cc:2739 mon-util.cc:3683 misc.cc:2744
 #: player-act.cc:370 player-act.cc:382 player-act.cc:385 mon-util.cc:3698
-#: spl-damage.cc:455 terrain.cc:1015 terrain.cc:1023
+#: spl-damage.cc:455 terrain.cc:1015 terrain.cc:1023 spl-damage.cc:506
 msgid "you"
 msgstr "당신"
 
@@ -12343,6 +12343,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -13774,7 +13776,9 @@ msgstr "수정 파편"
 msgid "blast of sapphire shards"
 msgstr "사파이어 파편"
 
+#. mainly explosions
 #: spl-miscast.cc:872 spl-miscast.cc:896 spl-miscast.cc:901 spl-miscast.cc:911
+#: spl-miscast.cc:2866
 msgid "explosion"
 msgstr "폭발"
 
@@ -18009,14 +18013,12 @@ msgstr "수호정령 변이"
 #: mutation-data.h:1104
 msgid ""
 "When hurt, damage is shared between your health and your magic reserves."
-msgstr ""
-"당신은 받은 피해의 일부를 마력을 소모하여 감소시킨다."
+msgstr "당신은 받은 피해의 일부를 마력을 소모하여 감소시킨다."
 
 #: mutation-data.h:1105
 msgid ""
 "You feel your magical essence form a protective shroud around your flesh."
-msgstr ""
-"마력의 정수가 당신의 육체를 보호하는듯한 느낌을 받았다."
+msgstr "마력의 정수가 당신의 육체를 보호하는듯한 느낌을 받았다."
 
 #: mutation-data.h:1112
 msgid "magic regeneration"

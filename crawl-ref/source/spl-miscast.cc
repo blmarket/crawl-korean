@@ -2863,7 +2863,7 @@ void MiscastEffect::_zot()
     switch (random2(4))
     {
     case 0:    // mainly explosions
-        beam.name = "explosion";
+        beam.name = M_("explosion");
         beam.damage = dice_def(3, 20);
         beam.ex_size = coinflip() ? 1 : 2;
         beam.glyph   = dchar_glyph(DCHAR_FIRED_BURST);
@@ -2871,45 +2871,45 @@ void MiscastEffect::_zot()
         {
         case 0:
         case 1:
-            all_msg = "There is a sudden explosion of magical energy!";
+            all_msg = _("There is a sudden explosion of magical energy!");
             beam.flavour = BEAM_MISSILE;
             beam.colour  = random_colour();
             _explosion();
             break;
         case 2:
         case 3:
-            all_msg = "There is a sudden explosion of flames!";
+            all_msg = _("There is a sudden explosion of flames!");
             beam.flavour = BEAM_FIRE;
             beam.colour  = RED;
             _explosion();
             break;
         case 4:
         case 5:
-            all_msg = "There is a sudden explosion of frost!";
+            all_msg = _("There is a sudden explosion of frost!");
             beam.flavour = BEAM_COLD;
             beam.colour  = WHITE;
             _explosion();
             break;
         case 6:
-            all_msg = "There is a sudden explosion of flying shrapnel!";
+            all_msg = _("There is a sudden explosion of flying shrapnel!");
             beam.flavour = BEAM_FRAG;
             beam.colour  = CYAN;
             _explosion();
             break;
         case 7:
-            all_msg = "There is a sudden explosion of electrical discharges!";
+            all_msg = _("There is a sudden explosion of electrical discharges!");
             beam.flavour = BEAM_ELECTRICITY;
             beam.colour  = LIGHTBLUE;
             _explosion();
             break;
         case 8:
             if (_create_monster(MONS_BALL_LIGHTNING, 3))
-                all_msg = "A ball of electricity appears!";
+                all_msg = _("A ball of electricity appears!");
             do_msg();
             break;
         case 9:
             if (_create_monster(MONS_TWISTER, 1))
-                all_msg = "A huge vortex of air appears!";
+                all_msg = _("A huge vortex of air appears!");
             do_msg();
             break;
         }
@@ -2921,24 +2921,24 @@ void MiscastEffect::_zot()
         case 0:
             if (_create_monster(MONS_SOUL_EATER, 4, true))
             {
-                you_msg        = "Something reaches out for you...";
-                mon_msg_seen   = "Something reaches out for @the_monster@...";
-                mon_msg_unseen = "Something reaches out from thin air...";
+                you_msg        = _("Something reaches out for you...");
+                mon_msg_seen   = _("Something reaches out for @the_monster@...");
+                mon_msg_unseen = _("Something reaches out from thin air...");
             }
             do_msg();
             break;
         case 1:
             if (_create_monster(MONS_REAPER, 4, true))
             {
-                you_msg        = "Death has come for you...";
-                mon_msg_seen   = "Death has come for @the_monster@...";
-                mon_msg_unseen = "Death appears from thin air...";
+                you_msg        = _("Death has come for you...");
+                mon_msg_seen   = _("Death has come for @the_monster@...");
+                mon_msg_unseen = _("Death appears from thin air...");
             }
             do_msg();
             break;
         case 2:
             if (_create_monster(summon_any_demon(RANDOM_DEMON_GREATER), 0, true))
-                all_msg = "You sense a hostile presence.";
+                all_msg = _("You sense a hostile presence.");
             do_msg();
             break;
         case 3:
@@ -2950,9 +2950,9 @@ void MiscastEffect::_zot()
             }
             if (success)
             {
-                you_msg = "Something turns its malign attention towards "
-                          "you...";
-                mon_msg = "You sense a malign presence.";
+                you_msg = _("Something turns its malign attention towards "
+                          "you...");
+                mon_msg = _("You sense a malign presence.");
                 do_msg();
             }
             break;
@@ -2964,9 +2964,9 @@ void MiscastEffect::_zot()
             }
             if (success && neither_end_silenced())
             {
-                you_msg        = "A chorus of chattering voices calls out to"
-                                 " you!";
-                mon_msg        = "A chorus of chattering voices calls out!";
+                you_msg        = _("A chorus of chattering voices calls out to"
+                                 " you!");
+                mon_msg        = _("A chorus of chattering voices calls out!");
                 msg_ch         = MSGCH_SOUND;
                 sound_loudness = 3;
                 do_msg();
@@ -2981,7 +2981,7 @@ void MiscastEffect::_zot()
             }
             if (success)
             {
-                all_msg = "Wisps of shadow whirl around...";
+                all_msg = _("Wisps of shadow whirl around...");
                 do_msg();
             }
             break;
@@ -3011,8 +3011,8 @@ void MiscastEffect::_zot()
                 goto reroll_2;
             break;
         case 4:
-            you_msg      = "You feel incredibly sick.";
-            mon_msg_seen = "@The_monster@ looks incredibly sick.";
+            you_msg      = _("You feel incredibly sick.");
+            mon_msg_seen = _("@The_monster@ looks incredibly sick.");
             _do_poison(10 + random2avg(19, 2));
             do_msg();
             break;
@@ -3021,13 +3021,13 @@ void MiscastEffect::_zot()
                 target->polymorph(0);
             else if (coinflip())
             {
-                you_msg = "You feel very strange.";
+                you_msg = _("You feel very strange.");
                 delete_mutation(RANDOM_MUTATION, cause, true, false, false, false);
                 do_msg();
             }
             else
             {
-                you_msg = "Your body is distorted in a weirdly horrible way!";
+                you_msg = _("Your body is distorted in a weirdly horrible way!");
                 give_bad_mutation(cause, false, false);
                 if (coinflip())
                     give_bad_mutation(cause, false, false);
@@ -3043,9 +3043,9 @@ void MiscastEffect::_zot()
                 _potion_effect(POT_SLOWING, 15);
             if (roll != 2)
             {
-                you_msg        = "Space warps around you!";
-                mon_msg_seen   = "Space warps around @the_monster@!";
-                mon_msg_unseen = "A piece of empty space twists and writhes.";
+                you_msg        = _("Space warps around you!");
+                mon_msg_seen   = _("Space warps around @the_monster@!");
+                mon_msg_unseen = _("A piece of empty space twists and writhes.");
                 _ouch(5 + random2avg(9, 2));
                 if (target->alive())
                 {
@@ -3070,7 +3070,7 @@ void MiscastEffect::_zot()
             if (you.magic_points > 0)
             {
                 dec_mp(10 + random2(21));
-                mpr("You suddenly feel drained of magical energy!", MSGCH_WARN);
+                mpr(_("You suddenly feel drained of magical energy!"), MSGCH_WARN);
             }
             break;
         case 11:
@@ -3078,7 +3078,7 @@ void MiscastEffect::_zot()
             _lose_stat(STAT_RANDOM, 1 + random2avg((coinflip() ? 7 : 4), 2));
             break;
         case 13:
-            mpr("An unnatural silence engulfs you.");
+            mpr(_("An unnatural silence engulfs you."));
             you.increase_duration(DUR_SILENCE, 10 + random2(21), 30);
             invalidate_agrid(true);
             break;

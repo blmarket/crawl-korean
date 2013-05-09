@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 22:13+0900\n"
+"POT-Creation-Date: 2013-05-09 22:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5606,7 +5606,7 @@ msgstr "돌연, 왜소하고 약해진 것 같다."
 #: spl-miscast.cc:1418 spl-miscast.cc:1407 spl-summoning.cc:2325
 #: spl-miscast.cc:1392 spl-summoning.cc:2317 spl-summoning.cc:2276
 #: spl-summoning.cc:2292 spl-summoning.cc:2304 spl-miscast.cc:1397
-#: spl-summoning.cc:2294
+#: spl-summoning.cc:2294 spl-miscast.cc:2941
 msgid "You sense a hostile presence."
 msgstr "적대적인 존재를 느꼈다."
 
@@ -15534,7 +15534,7 @@ msgid "You are recovering from loss of %s."
 msgstr "당신은 %s의 결핍으로부터 회복중이다."
 
 #: status.cc:809 status.cc:810 status.cc:866 status.cc:930 status.cc:929
-#: status.cc:934 status.cc:939 status.cc:940 status.cc:924
+#: status.cc:934 status.cc:939 status.cc:940 status.cc:924 item_use.cc:654
 #, c-format
 msgid "You have no %s!"
 msgstr "당신은 %s이(가) 없다!"
@@ -15592,6 +15592,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -20980,7 +20983,7 @@ msgid "You feel very cold."
 msgstr "얼어붙는듯한 추위를 느꼈다."
 
 #: spl-damage.cc:507 spl-damage.cc:473 spl-damage.cc:499 spl-damage.cc:503
-#: spl-damage.cc:496
+#: spl-damage.cc:496 spl-damage.cc:494
 #, c-format
 msgid "%s %s frozen."
 msgstr "%s은(는) 얼어붙었다."
@@ -22414,7 +22417,7 @@ msgid "@The_monster@ is blasted with magical energy!"
 msgstr "@The_monster@은(는) 마법 에너지의 방출에 휩쓸렸다!"
 
 #: spl-miscast.cc:891 spl-miscast.cc:892 spl-miscast.cc:890 spl-miscast.cc:896
-#: spl-miscast.cc:906
+#: spl-miscast.cc:906 spl-miscast.cc:2874
 msgid "There is a sudden explosion of magical energy!"
 msgstr "마법 에너지가 갑자기 폭발했다!"
 
@@ -22610,18 +22613,18 @@ msgstr "@The_monster@은(는) 강력한 국지적 공간 왜곡의 장소에 붙
 #: spl-miscast.cc:1165 spl-miscast.cc:1173 spl-miscast.cc:1169
 #: spl-miscast.cc:1177 spl-miscast.cc:1164 spl-miscast.cc:1171
 #: spl-miscast.cc:1149 spl-miscast.cc:1156 spl-miscast.cc:1154
-#: spl-miscast.cc:1161
+#: spl-miscast.cc:1161 spl-miscast.cc:3048
 msgid "A piece of empty space twists and writhes."
 msgstr "주변의 광범위한 공간이 소용돌이치며 일그러졌다."
 
 #: spl-miscast.cc:1171 godwrath.cc:879 spl-miscast.cc:1175 godwrath.cc:855
 #: spl-miscast.cc:1169 godwrath.cc:857 spl-miscast.cc:1154 godwrath.cc:852
-#: spl-miscast.cc:1159
+#: spl-miscast.cc:1159 spl-miscast.cc:3046
 msgid "Space warps around you!"
 msgstr "당신 주변의 공간이 일그려졌다!"
 
 #: spl-miscast.cc:1172 spl-miscast.cc:1176 spl-miscast.cc:1170
-#: spl-miscast.cc:1155 spl-miscast.cc:1160
+#: spl-miscast.cc:1155 spl-miscast.cc:1160 spl-miscast.cc:3047
 msgid "Space warps around @the_monster@!"
 msgstr "@the_monster@ 주변의 공간들이 일그러졌다!"
 
@@ -22733,12 +22736,12 @@ msgid "Something forms from out of thin air!"
 msgstr "갑자기 어딘가에서 무엇인가가 나타났다!"
 
 #: spl-miscast.cc:1386 spl-miscast.cc:1390 spl-miscast.cc:1379
-#: spl-miscast.cc:1364 spl-miscast.cc:1369
+#: spl-miscast.cc:1364 spl-miscast.cc:1369 spl-miscast.cc:2967
 msgid "A chorus of chattering voices calls out to you!"
 msgstr "재잘재잘거리는 소리의 합창이 당신을 부르고 있다!"
 
 #: spl-miscast.cc:1388 spl-miscast.cc:1392 spl-miscast.cc:1381
-#: spl-miscast.cc:1366 spl-miscast.cc:1371
+#: spl-miscast.cc:1366 spl-miscast.cc:1371 spl-miscast.cc:2969
 msgid "A chorus of chattering voices calls out!"
 msgstr "재잘재잘거리는 소리의 합창이 들려왔다!"
 
@@ -22748,12 +22751,12 @@ msgid "Something forms from out of thin air."
 msgstr "갑자기 어딘가에서 무엇인가 나타났다."
 
 #: spl-miscast.cc:1431 spl-miscast.cc:1435 spl-miscast.cc:1424
-#: spl-miscast.cc:1409 spl-miscast.cc:1414
+#: spl-miscast.cc:1409 spl-miscast.cc:1414 spl-miscast.cc:2953
 msgid "Something turns its malign attention towards you..."
 msgstr "무언가 악의 있는 존재가 당신을 주시하기 시작했다..."
 
 #: spl-miscast.cc:1433 spl-miscast.cc:1437 spl-miscast.cc:1426
-#: spl-miscast.cc:1411 spl-miscast.cc:1416
+#: spl-miscast.cc:1411 spl-miscast.cc:1416 spl-miscast.cc:2955
 msgid "You sense a malign presence."
 msgstr "당신은 적대적인 존재를 감지했다."
 
@@ -22814,7 +22817,7 @@ msgstr "당신은 집중력을 잃었다."
 #: spl-miscast.cc:1530 spl-miscast.cc:1546 godwrath.cc:848 spl-miscast.cc:1534
 #: spl-miscast.cc:1550 spl-miscast.cc:1524 spl-miscast.cc:1540 godwrath.cc:825
 #: spl-miscast.cc:1509 spl-miscast.cc:1525 godwrath.cc:827 godwrath.cc:822
-#: spl-miscast.cc:1514
+#: spl-miscast.cc:1514 spl-miscast.cc:3073
 msgid "You suddenly feel drained of magical energy!"
 msgstr "마력이 어딘가로 빨려 들어간 것을 느꼈다!"
 
@@ -23024,31 +23027,37 @@ msgstr "@The_monster@은(는) 잠시 공포에 사로잡힌 듯 보인다."
 
 #: spl-miscast.cc:1838 spl-miscast.cc:1845 spl-miscast.cc:1836
 #: spl-miscast.cc:1820 spl-miscast.cc:1825 spl-miscast.cc:1835
+#: spl-miscast.cc:2924
 msgid "Something reaches out for you..."
 msgstr "무엇인가가 당신을 향해 기어나왔다..."
 
 #: spl-miscast.cc:1839 spl-miscast.cc:1846 spl-miscast.cc:1837
 #: spl-miscast.cc:1821 spl-miscast.cc:1826 spl-miscast.cc:1836
+#: spl-miscast.cc:2925
 msgid "Something reaches out for @the_monster@..."
 msgstr "무엇인가가 @the_monster@을(를) 향해 기어나왔다..."
 
 #: spl-miscast.cc:1840 spl-miscast.cc:1847 spl-miscast.cc:1838
 #: spl-miscast.cc:1822 spl-miscast.cc:1827 spl-miscast.cc:1837
+#: spl-miscast.cc:2926
 msgid "Something reaches out from thin air..."
 msgstr "무엇인가가 갑자기 기어나왔다..."
 
 #: spl-miscast.cc:1848 spl-miscast.cc:1855 spl-miscast.cc:1846
 #: spl-miscast.cc:1830 spl-miscast.cc:1835 spl-miscast.cc:1845
+#: spl-miscast.cc:2933
 msgid "Death has come for you..."
 msgstr "사신이 당신을 맞이하러 왔다..."
 
 #: spl-miscast.cc:1849 spl-miscast.cc:1856 spl-miscast.cc:1847
 #: spl-miscast.cc:1831 spl-miscast.cc:1836 spl-miscast.cc:1846
+#: spl-miscast.cc:2934
 msgid "Death has come for @the_monster@..."
 msgstr "사신이 @the_monster@을(를) 맞이하러 왔다..."
 
 #: spl-miscast.cc:1850 spl-miscast.cc:1857 spl-miscast.cc:1848
 #: spl-miscast.cc:1832 spl-miscast.cc:1837 spl-miscast.cc:1847
+#: spl-miscast.cc:2935
 msgid "Death appears from thin air..."
 msgstr "사신이 나타났다..."
 
@@ -23100,11 +23109,13 @@ msgstr "@The_monster@의 육체는 왜곡의 에너지로 넘쳐흘렀다!"
 
 #: spl-miscast.cc:2011 spl-miscast.cc:2018 spl-miscast.cc:2009
 #: spl-miscast.cc:1998 spl-miscast.cc:2003 spl-miscast.cc:2013
+#: spl-miscast.cc:3024
 msgid "You feel very strange."
 msgstr "매우 기묘한 기분이 들었다."
 
 #: spl-miscast.cc:2029 spl-miscast.cc:2036 spl-miscast.cc:2027
 #: spl-miscast.cc:2018 spl-miscast.cc:2023 spl-miscast.cc:2033
+#: spl-miscast.cc:3030
 msgid "Your body is distorted in a weirdly horrible way!"
 msgstr "당신의 육체는 기괴하고 무시무시한 모양으로 일그러졌다!"
 
@@ -23739,6 +23750,7 @@ msgstr "유독한 가스가 공중에서 새어나왔다!"
 
 #: spl-miscast.cc:2685 spl-miscast.cc:2692 spl-miscast.cc:2683
 #: spl-miscast.cc:2676 spl-miscast.cc:2681 spl-miscast.cc:2691
+#: spl-miscast.cc:2907
 msgid "A ball of electricity appears!"
 msgstr "전기의 구체가 나타났다!"
 
@@ -23754,6 +23766,7 @@ msgstr "공기가 한 곳에서 매섭게 휘몰아쳤다."
 
 #: spl-miscast.cc:2696 spl-miscast.cc:2703 spl-miscast.cc:2694
 #: spl-miscast.cc:2687 spl-miscast.cc:2692 spl-miscast.cc:2702
+#: spl-miscast.cc:2912
 msgid "A huge vortex of air appears!"
 msgstr "거대한 회오리가 나타났다!"
 
@@ -23869,11 +23882,13 @@ msgstr "@The_monster@은(는) 괴로운 듯 보인다."
 
 #: spl-miscast.cc:2820 spl-miscast.cc:2827 spl-miscast.cc:2818
 #: spl-miscast.cc:2811 spl-miscast.cc:2816 spl-miscast.cc:2826
+#: spl-miscast.cc:3014
 msgid "You feel incredibly sick."
 msgstr "탈진할 정도로, 몸 상태가 좋지 않다."
 
 #: spl-miscast.cc:2821 spl-miscast.cc:2828 spl-miscast.cc:2819
 #: spl-miscast.cc:2812 spl-miscast.cc:2817 spl-miscast.cc:2827
+#: spl-miscast.cc:3015
 msgid "@The_monster@ looks incredibly sick."
 msgstr "@The_monster@은(는) 쓰러질 듯 비틀비틀거렸다."
 
@@ -26562,6 +26577,7 @@ msgid "You draw life from your surroundings."
 msgstr "당신은 주변으로부터 생명력을 흡수했다."
 
 #: godabil.cc:1693 godabil.cc:1686 godabil.cc:1683 godabil.cc:1684
+#: spl-damage.cc:615
 #, c-format
 msgid "You draw life from %s."
 msgstr "당신은 %s(으)로부터 생명력을 흡수했다."
@@ -31724,6 +31740,9 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -39336,7 +39355,8 @@ msgstr "이 아이템은 당신의 몸과 일체화되었다!"
 
 #: main.cc:1782
 msgid "You pace your travel speed to your slowest ally."
-msgstr "당신은 이제 가장 느린 동료의 움직임에, 자동 이동 속도를 맞추어 이동한다."
+msgstr ""
+"당신은 이제 가장 느린 동료의 움직임에, 자동 이동 속도를 맞추어 이동한다."
 
 #: main.cc:1785
 msgid "You travel at normal speed."
@@ -39374,3 +39394,52 @@ msgstr "마력이 늘어난 느낌이 들었다."
 #: stuff.cc:489
 msgid "You feel your magic capacity decrease."
 msgstr "마력이 줄어들은 느낌이 들었다."
+
+#: item_use.cc:631
+msgid "You have no feet."
+msgstr "당신은 발이 없다."
+
+#: item_use.cc:645
+#, c-format
+msgid "You'd need your %s free."
+msgstr "우선 %s이(가) 자유로워야 한다."
+
+#: item_use.cc:653
+#, c-format
+msgid "The hauberk won't fit your %s."
+msgstr "그 호버크는 당신의 %s에 맞지 않는다."
+
+#: item_use.cc:669
+msgid "You can't wear this over your hauberk."
+msgstr "이건 호버크 위로 입을 수 없다."
+
+#. Exclamation mark to suggest that a lot of creatures were
+#. affected.
+#: spl-damage.cc:503
+#, c-format
+msgid "The monsters around %s are frozen!"
+msgstr "%s 주변의 몬스터들이 얼어붙었다!"
+
+#: spl-miscast.cc:2881
+msgid "There is a sudden explosion of flames!"
+msgstr "갑자기 불꽃의 폭발이 일어났다!"
+
+#: spl-miscast.cc:2888
+msgid "There is a sudden explosion of frost!"
+msgstr "갑자기 냉기의 폭발이 일어났다!"
+
+#: spl-miscast.cc:2894
+msgid "There is a sudden explosion of flying shrapnel!"
+msgstr "갑자기 파편 조각들의 폭발이 일어났다!"
+
+#: spl-miscast.cc:2900
+msgid "There is a sudden explosion of electrical discharges!"
+msgstr "갑자기 전기가 방출되며 폭발이 일어났다!"
+
+#: spl-miscast.cc:2984
+msgid "Wisps of shadow whirl around..."
+msgstr "그림자들이 당신 선회하기 시작했다..."
+
+#: spl-miscast.cc:3081
+msgid "An unnatural silence engulfs you."
+msgstr "부자연스러울 정도의 고요함이 당신을 감쌌다."

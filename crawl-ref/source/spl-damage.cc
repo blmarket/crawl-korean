@@ -491,8 +491,8 @@ static void _pre_refrigerate(actor* agent, bool player,
         counted_monster_list mons_list =
             _counted_monster_list_from_vector(affected_monsters);
         const string message =
-            make_stringf("%s %s frozen.",
-                         mons_list.describe().c_str(),
+            make_stringf(_("%s %s frozen."),
+                         _(mons_list.describe().c_str()),
                          mons_list.count() == 1? "is" : "are");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
@@ -500,10 +500,10 @@ static void _pre_refrigerate(actor* agent, bool player,
         {
             // Exclamation mark to suggest that a lot of creatures were
             // affected.
-            mprf("The monsters around %s are frozen!",
+            mprf(_("The monsters around %s are frozen!"),
                  agent && agent->is_monster() && you.can_see(agent)
-                 ? agent->as_monster()->name(DESC_THE).c_str()
-                 : "you");
+                 ? _(agent->as_monster()->name(DESC_THE).c_str())
+                 : _(M_("you")));
         }
     }
 }
@@ -612,8 +612,8 @@ static int _drain_monster(actor* agent, monster* target, int pow, int avg,
     {
         if (agent->is_player())
         {
-            mprf("You draw life from %s.",
-                 target->name(DESC_THE).c_str());
+            mprf(_("You draw life from %s."),
+                 _(target->name(DESC_THE).c_str()));
         }
 
         behaviour_event(target, ME_WHACK, agent, agent->pos());

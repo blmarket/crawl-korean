@@ -628,7 +628,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         if (!player_has_feet(!ignore_temporary))
         {
             if (verbose)
-                mpr("You have no feet.");
+                mpr(_("You have no feet."));
             return false;
         }
 
@@ -642,7 +642,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
                 if (you.equip[s] != -1)
                 {
                     if (verbose)
-                        mprf("You'd need your %s free.", parts[s - EQ_HELMET]);
+                        mprf(_("You'd need your %s free."), _(parts[s - EQ_HELMET]));
                     return false;
                 }
 
@@ -650,9 +650,9 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
                 {
                     if (verbose)
                     {
-                        mprf(you_tran_can_wear(s) ? "The hauberk won't fit your %s."
-                                                  : "You have no %s!",
-                             parts[s - EQ_HELMET]);
+                        mprf(you_tran_can_wear(s) ? _("The hauberk won't fit your %s.")
+                                                  : _("You have no %s!"),
+                             _(parts[s - EQ_HELMET]));
                     }
                     return false;
                 }
@@ -666,7 +666,7 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
         // The explanation is iffy for loose headgear, especially crowns:
         // kings loved hooded hauberks, according to portraits.
         if (verbose)
-            mpr("You can't wear this over your hauberk.");
+            mpr(_("You can't wear this over your hauberk."));
         return false;
     }
 
