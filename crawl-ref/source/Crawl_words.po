@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-28 15:27+0900\n"
+"POT-Creation-Date: 2013-05-06 21:45+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2510,7 +2510,7 @@ msgid "snorg"
 msgstr "스노그"
 
 msgid "purgy"
-msgstr "퍼지"
+msgstr "퍼기"
 
 msgid "jory"
 msgstr "조리"
@@ -2519,7 +2519,7 @@ msgid "nellie"
 msgstr "넬리"
 
 msgid "murray"
-msgstr "머레이"
+msgstr "머리"
 
 msgid "ignacio"
 msgstr "이그나시오"
@@ -2564,7 +2564,7 @@ msgid "jozef"
 msgstr "요제프"
 
 msgid "maud"
-msgstr "마우드"
+msgstr "모드"
 
 msgid "louise"
 msgstr "루이즈"
@@ -2987,7 +2987,7 @@ msgstr "스노그"
 #: mon-data.h:5988 mon-data.h:6261 mon-data.h:6297 mon-data.h:6293
 #: mon-data.h:6283
 msgid "Purgy"
-msgstr "퍼지"
+msgstr "퍼기"
 
 #: mon-data.h:5893 mon-data.h:5905 mon-data.h:5894 mon-data.h:5851
 #: mon-data.h:6002 mon-data.h:6275 mon-data.h:6311 mon-data.h:6307
@@ -3005,7 +3005,7 @@ msgstr "넬리"
 #: mon-data.h:6031 mon-data.h:6304 mon-data.h:6340 mon-data.h:6336
 #: mon-data.h:6326
 msgid "Murray"
-msgstr "머레이"
+msgstr "머리"
 
 #: mon-data.h:5935 mon-data.h:5947 mon-data.h:5936 mon-data.h:5893
 #: mon-data.h:6044 mon-data.h:6317 mon-data.h:6353 mon-data.h:6349
@@ -3097,7 +3097,7 @@ msgstr "요제프"
 #: mon-data.h:6206 mon-data.h:6479 mon-data.h:6515 mon-data.h:6511
 #: mon-data.h:6501
 msgid "Maud"
-msgstr "마우드"
+msgstr "모드"
 
 #: mon-data.h:6122 mon-data.h:6134 mon-data.h:6123 mon-data.h:6080
 #: mon-data.h:6218 mon-data.h:6491 mon-data.h:6527 mon-data.h:6523
@@ -11427,7 +11427,7 @@ msgstr "을(를) 베어 잘라냈"
 
 #: mon-project.cc:225 mon-project.cc:255 mon-project.cc:261
 msgid "weakly hits"
-msgstr "을(를) 약하게 공격했"
+msgstr "에게 불완전하게 명중했다"
 
 #: monster.cc:1057 monster.cc:1077 monster.cc:1194 monster.cc:1180
 msgid "some gold"
@@ -12077,201 +12077,6 @@ msgstr "지면"
 msgid "says"
 msgstr "은(는) 말했다"
 
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
-#. S_NORMAL
-#. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
@@ -13503,7 +13308,7 @@ msgstr "힘의 화살"
 msgid "bolt of negative energy"
 msgstr "흡성의 화살"
 
-#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599 beam.cc:2301
+#: mon-cast.cc:600 zap-data.h:347 mon-cast.cc:599 beam.cc:2301 beam.cc:2303
 msgid "orb of energy"
 msgstr "마력의 구체"
 
@@ -13626,7 +13431,7 @@ msgid "explosion of spores"
 msgstr "포자의 폭발"
 
 #: mon-stuff.cc:1069 xom.cc:2019 xom.cc:1937 mon-stuff.cc:1076 xom.cc:2021
-#: xom.cc:2020 xom.cc:1943
+#: xom.cc:2020 xom.cc:1943 xom.cc:1944
 msgid "blast of lightning"
 msgstr "전격의 방출"
 
@@ -16537,6 +16342,9 @@ msgstr "찍소리"
 msgid "squeal"
 msgstr "꿀꿀"
 
+msgid "oink"
+msgstr "꾸웩"
+
 #: player.cc:6064
 msgid "meow"
 msgstr "야옹"
@@ -17495,6 +17303,7 @@ msgid "wisp-form"
 msgstr "위습 변신"
 
 #: spl-summoning.cc:2688 spl-summoning.cc:2704 spl-summoning.cc:2716
+#: spl-summoning.cc:2732
 msgid "barrage of energy"
 msgstr "발사된 마력"
 
@@ -17862,23 +17671,23 @@ msgstr "발사체를 흡수하는 젤리들이 당신의 몸에 자라나 있다
 msgid "Evoke Teleport Control"
 msgstr "공간이동 제어 발동"
 
-#: beam.cc:5287 beam.cc:5291
+#: beam.cc:5287 beam.cc:5291 beam.cc:5293
 msgid "ice storm"
 msgstr "맹렬한 냉기의 폭풍"
 
-#: beam.cc:2884 mon-stuff.cc:1162
+#: beam.cc:2884 mon-stuff.cc:1162 beam.cc:2886
 msgid "exploding inner flame"
 msgstr "잠재 불씨의 폭발"
 
-#: beam.cc:3434
+#: beam.cc:3434 beam.cc:3436
 msgid "by nerve-wracking pain"
 msgstr "신경까지 파괴하는 극심한 고통에 의해"
 
-#: beam.cc:3468
+#: beam.cc:3468 beam.cc:3470
 msgid "by dispel undead"
 msgstr "언데드 퇴치에 의해"
 
-#: beam.cc:3488
+#: beam.cc:3488 beam.cc:3490
 msgid "disintegration bolt"
 msgstr "분해의 힘"
 
@@ -17926,9 +17735,12 @@ msgstr "순간 해체술에 의해"
 msgid "rod of lightning"
 msgstr "번개의 마법 막대"
 
-#: xom.cc:1947
+#: xom.cc:1947 xom.cc:1948
 msgid "Xom's lightning strike"
 msgstr "좀의 번개"
 
 msgid "exit from the tutorial"
 msgstr "튜토리얼로부터 나가는 출구"
+
+msgid "Spray of energy"
+msgstr "빛줄기의 분사"

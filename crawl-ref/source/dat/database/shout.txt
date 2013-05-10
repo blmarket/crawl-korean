@@ -144,7 +144,7 @@ SOUND:@The_monster@이(가) '슈~' 하는 험악한 소리를 냈다.
 %%%%
 __DEMON_TAUNT
 
-@The_monster@은(는) @says@. "@demon_taunt@"
+@The_monster@@says@. "@demon_taunt@"
 %%%%
 __CAW seen
 
@@ -345,7 +345,7 @@ imp
 # Shout one half the time, taunt the other half.
 @__SHOUT@
 
-SOUND:@The_monster@은(는) @says@. "@imp_taunt@"
+SOUND:@The_monster@@says@. "@imp_taunt@"
 %%%%
 moth of wrath
 

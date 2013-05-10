@@ -39,14 +39,14 @@ function TollStair:check_shopping_list(marker, first_time)
   end
 
   crawl.redraw_screen()
-  if crawl.yesno("Add " .. ask_name .. " to shopping list? (y/N)",
+  if crawl.yesno(ask_name .. "을(를) 쇼핑 리스트에 추가합니까? (y/N)",
                  true, "n")
   then
     local verb = self.props.shop_verb or "enter"
 
     you.shopping_list_add(name, verb, self.props.amount, marker)
 
-    crawl.mpr("You can access your shopping list by pressing <w>$</w>.")
+    crawl.mpr("<w>$</w>키를 눌러, 당신의 쇼핑 리스트를 확인할 수 있다.")
   end
 end
 
@@ -83,23 +83,23 @@ function TollStair:check_veto(marker, pname)
   local needed = self.props.amount
 
   if gold < needed then
-    crawl.mpr("This portal charges " .. needed .. " gold for entry; " ..
-              "you have only " .. gold .. " gold.")
+    crawl.mpr("이 관문을 통과하려면, 금화 " .. needed .. "이 필요하다; " ..
+              "당신은 금화 " .. gold .. "만을 가지고 있다.")
     self:check_shopping_list(marker)
     return "veto"
   end
 
   if pname == "veto_stair" then
     -- Ok, ask if the player wants to spend the $$$.
-    if not crawl.yesno("This portal charges " .. needed ..
-                       " gold for entry. Pay?", true, "n") then
+    if not crawl.yesno("이 관문을 통과하려면 금화 " .. needed ..
+                       "을(를) 지불해야 한다. 금화를 내겠는가?", true, "n") then
       self:check_shopping_list(marker)
       return "veto"
     end
   elseif pname == "veto_level_change" then
     local name = self.props.overview
     if you.shopping_list_has(name, marker) then
-      crawl.mpr("Removing " .. name .. " from shopping list.")
+      crawl.mpr(name .. "을(를) 쇼핑 리스트에서 제거했다.")
       you.shopping_list_del(name, marker)
     end
 

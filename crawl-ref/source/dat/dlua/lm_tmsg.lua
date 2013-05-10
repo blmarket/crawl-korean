@@ -38,9 +38,9 @@ function TimedMessaging:init(tmarker, cm, verbose)
 
   if not self.ranges and not self.visible and not self.messages then
     self.ranges = {
-      { 5000, 'stately ' }, { 4000, '' },
-      { 2500, 'brisk ' },   { 1500, 'urgent ' },
-      { 0, 'frantic ' }
+      { 5000, '느긋하게 ' }, { 4000, '' },
+      { 2500, '점점 빨라지는 듯 ' },   { 1500, '급박하게 ' },
+      { 0, '정신 없이 빠르게 ' }
     }
   end
 
@@ -50,9 +50,9 @@ function TimedMessaging:init(tmarker, cm, verbose)
     end
 
     self.range_adjectives = {
-      { sqr(30), '$F, a long way away' },
-      { sqr(15), 'distant' },
-      { sqr(7), '$F nearby' },
+      { sqr(30), '아주 먼 곳의 ' },
+      { sqr(15), '먼 곳의 ' },
+      { sqr(7), '근처의 ' },
       { 0, '$F' }
     }
   end
@@ -151,13 +151,13 @@ function TimedMessaging:say_message(cm, dur)
   end
 
   local noisemaker =
-    self.noisemaker and self:range_adjective(cm, self.noisemaker)
+    self.noisemaker
 
   self:proc_ranges(self.ranges, dur,
                    function (chk)
                      self:emit_message(nil,
-                                       "You hear the " .. chk[2] .. self.verb
-                                       .. " of " .. noisemaker .. ".")
+                                       "당신은 " .. chk[2] .. self.verb .. ' '
+                                       .. noisemaker .. "을(를) 들었다.")
                    end)
 
   self:proc_ranges(self.messages, dur,

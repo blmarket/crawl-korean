@@ -5481,7 +5481,7 @@ w:3
 %%%%
 _Psyche_common_
 
-@The_monster@ laughs secretively.
+@The_monster@은(는) 입을 다문 채로 큭큭대며 웃었다.
 %%%%
 _Psyche_medium_
 

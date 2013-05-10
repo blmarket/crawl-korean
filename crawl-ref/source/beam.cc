@@ -4135,7 +4135,7 @@ static bool _dazzle_monster(monster* mons, actor* act)
 
     if (x_chance_in_y(85 - mons->hit_dice * 3 , 100))
     {
-        simple_monster_message(mons, " is dazzled.");
+        simple_monster_message(mons, _(" is dazzled."));
         mons->add_ench(mon_enchant(ENCH_BLIND, 1, act, 40 + random2(40)));
         return true;
     }
@@ -4235,7 +4235,7 @@ void bolt::beam_hits_actor(actor *act)
                 mprf(gettext("%s %s knocked back by the %s."),
                      act->name(DESC_THE).c_str(),
                      act->conj_verb("are").c_str(),
-                     name.c_str());
+                     _(name.c_str()));
             }
         }
 

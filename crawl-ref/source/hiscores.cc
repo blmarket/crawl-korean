@@ -1726,7 +1726,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
     // Please excuse the following bit of mess in the name of flavour ;)
     if (verbose)
     {
-        snprintf(buf, HIGHSCORE_SIZE, "%8d \"%s\", %s (level %d",
+        snprintf(buf, HIGHSCORE_SIZE, "%8d \"%s\", %s (레벨 %d",
                   points, name.c_str(),
                   skill_title(best_skill, best_skill_lvl,
                                race, str, dex, god, piety).c_str(),
@@ -1735,7 +1735,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
     }
     else
     {
-        snprintf(buf, HIGHSCORE_SIZE, "%8d \"%s\", %s %s (레벨 %d",
+        snprintf(buf, HIGHSCORE_SIZE, "%8d %s %s \"%s\" (레벨 %d",
                   points, _(species_name(static_cast<species_type>(race)).c_str()),                   
                   _job_name(job), name.c_str(),
 				   lvl);

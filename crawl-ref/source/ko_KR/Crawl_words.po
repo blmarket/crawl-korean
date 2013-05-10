@@ -7013,7 +7013,7 @@ msgstr "'페다스'의 꽃들이 만개한 제단"
 #: directn.cc:3154 directn.cc:3154 directn.cc:3157 directn.cc:3175
 #: directn.cc:3143 directn.cc:3155
 msgid "snail-covered altar of Cheibriados"
-msgstr "'체브리아도스'의 달팽이집에 덮인 제단"
+msgstr "'체이브리아도스'의 달팽이집에 덮인 제단"
 
 #: directn.cc:3156 directn.cc:3156 directn.cc:3159 directn.cc:3177
 #: directn.cc:3145 directn.cc:3157
@@ -11259,7 +11259,7 @@ msgstr "페다스"
 
 #: religion.cc:2301
 msgid "Cheibriados"
-msgstr "체브리아도스"
+msgstr "체이브리아도스"
 
 #: religion.cc:2304
 msgid "Ashenzari"

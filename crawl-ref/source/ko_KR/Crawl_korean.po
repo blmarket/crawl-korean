@@ -10669,7 +10669,7 @@ msgstr "빠져나오기 위해서는 출구를 찾아내야만 한다."
 
 #: stairs.cc:1107 stairs.cc:1107 stairs.cc:1124 stairs.cc:907 stairs.cc:902
 msgid "You feel Cheibriados slowing down the madness of this place."
-msgstr "'체브리아도스'는 어비스의 광기의 진행을 늦추었다."
+msgstr "'체이브리아도스'는 어비스의 광기의 진행을 늦추었다."
 
 #: stairs.cc:1115 stairs.cc:1115 stairs.cc:1133 stairs.cc:916 stairs.cc:911
 msgid "You pass into a different region of Pandemonium."

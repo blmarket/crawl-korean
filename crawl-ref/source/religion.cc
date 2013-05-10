@@ -3674,8 +3674,8 @@ void god_pitch(god_type which_god)
 
     if (is_good_god(you.religion) && is_good_god(old_god))
     {
-		std::string good_god_temp1 = ((old_god == GOD_ELYVILON) ? "네요" : ((old_god == GOD_SHINING_ONE) ? "군" : "네"));
-		std::string good_god_temp2 = ((old_god == GOD_ELYVILON) ? "세요" : ((old_god == GOD_SHINING_ONE) ? "거라" : "게나"));
+		std::string good_god_temp1 = ((old_god == GOD_ELYVILON) ? "니라" : ((old_god == GOD_SHINING_ONE) ? "군" : "네"));
+		std::string good_god_temp2 = ((old_god == GOD_ELYVILON) ? "어라" : ((old_god == GOD_SHINING_ONE) ? "거라" : "게나"));
         // Some feedback that piety moved over.
         switch (you.religion)
         {
@@ -3703,7 +3703,7 @@ void god_pitch(god_type which_god)
     if (old_god != GOD_ELYVILON && you.penance[GOD_ELYVILON]
         && god_hates_your_god(GOD_ELYVILON, you.religion))
     {
-        simple_god_message("은(는) 말했다. \"당신의 악행은 용서받지 못할거에요!\"",
+        simple_god_message("은(는) 말했다. \"네 악행은 용서받지 못할것이니라!\"",
                            GOD_ELYVILON);
     }
     if (old_god != GOD_SHINING_ONE && you.penance[GOD_SHINING_ONE]

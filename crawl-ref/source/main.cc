@@ -3181,7 +3181,7 @@ static void _player_reacts_to_monsters()
     }
 
     if (what != "")
-        mprf(MSGCH_DURATION, gettext("The heat melts your icy %s."), what.c_str());
+        mprf(MSGCH_DURATION, gettext("The heat melts your icy %s."), _(what.c_str()));
 
     handle_starvation();
     _decrement_paralysis(you.time_taken);
