@@ -48,28 +48,28 @@ function volcano_portal (e)
 
     local messager =
       timed_msg {
-        initmsg = { "You feel an oppressive heat about you.",
-                    "There is an entrance to a volcano on this level. "
-                    .. "Hurry and find it before the entrance collapses!" },
-        finalmsg = "The sound of falling rocks suddenly begins to subside.",
+        initmsg = { "숨 막힐듯한 열기가 느껴져왔다.",
+                    "<lightred>이 층 어딘가에 화산으로 통하는 입구가 있다. "
+                    .. "입구가 완전히 무너져 내리기 전에 서둘러 입구를 찾아야 할 것이다!</lightred>" },
+        finalmsg = "바위가 무너져내리는 소리가 진정되었다.",
 
-        verb = 'rumble',
-        noisemaker = 'avalanche of rocks',
+        verb = '소리내며',
+        noisemaker = '무너져내리는 바위 소리',
         ranges = {
-          { 5000, 'slow ' },  { 4000, '' },
-          { 2500, 'brisk ' }, { 1500, 'quick ' },
-          { 0, 'rapid ' }
+          { 5000, '천천히 ' },  { 4000, '' },
+          { 2500, '바쁘게 ' }, { 1500, '빠르게 ' },
+          { 0, '급속히 ' }
         }
       }
 
     e.lua_marker('O',
       timed_marker {
-        disappear = "There is a deep roar from within the tunnel. Moments " ..
-                    "later, a river of lava pours forth, sealing it permanently.",
-        desc = "dark tunnel",
-        entity = 'tunnel',
+        disappear = "동굴 안에서 깊게 울리는 소리가 났다. 곧이어, " ..
+                    "용암이 솟구쳐 올라 터널 속으로 들이차고, 입구를 영구적으로 막아버렸다.",
+        desc = "어두운 동굴",
+        entity = '동굴',
         dst = "Volcano",
-        overview = "dark tunnel",
+        overview = "어두운 동굴",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "expired_portal",
@@ -101,8 +101,8 @@ function volcano_setup (e)
     e.colour("c = lightred")
     e.colour("G = lightred")
     e.colour("= = lightred")
-    e.set_feature_name("exit_portal_vault", "rocky tunnel leading out of this place")
-    e.set_feature_name("stone_arch", "rock-blocked tunnel")
+    e.set_feature_name("exit_portal_vault", "던전으로 돌아가는 암석 동굴")
+    e.set_feature_name("stone_arch", "바위로 막힌 동굴")
 end
 
 -- "Volcano" functions. While the sizes may appear extreme, they are carefully
@@ -111,13 +111,13 @@ function callback.volcano_in_radius_12(x, y)
   return dgn.point_in_radius(dgn.point(x, y), dgn.point(you.pos()), 12)
 end
 
-local large_warning = tw_machine(3, "The air gets thick with the scent of sulphur.",
-                                 "In the distance, the volcano erupts with a roar.",
-                                 "The volcano comes to life with a roar!")
+local large_warning = tw_machine(3, "대기가 자욱한 유황으로 덮이기 시작했다.",
+                                 "멀리서 화산이 우르릉거리며 분출하는 소리가 들렸다.",
+                                 "화산이 커다란 소리를 내며 활동을 시작했다!")
 
-local small_warning = tw_machine(3, nil, nil, nil, "The volcano roars to life, " ..
-                                 "belching forth lava!", "The air gets thick with " ..
-                                 "the scent of sulphur.",
+local small_warning = tw_machine(3, nil, nil, nil, "화산 활동이 시작되고, " ..
+                                 "용암이 흘러나오기 시작했다!", "대기가 자욱한 " ..
+                                 "유황으로 덮이기 시작했다.",
                                  "callback.volcano_in_radius_12")
 
 function place_large_volcano(e)
@@ -350,15 +350,15 @@ function volcano_caves_collapse_doorways(data, triggerable, triggerer,
   local you_x, you_y = you.pos()
 
   if you_x == x and you_y == y then
-    crawl.mpr("There is a rumble as the volcano erupts. The roof shakes.",
+    crawl.mpr("굉음과 함께 화산이 분출하는 조짐이 느껴고, 천장과 바닥이 심하게 흔들리기 시작했다.",
               "warning")
     return
   end
 
   if you.see_cell(marker:pos()) then
-    crawl.mpr("The volcano erupts! Nearby, a roof collapses.", "warning")
+    crawl.mpr("화산이 폭발했다! 근처의 천장이 무너져내리기 시작한다.", "warning")
   else
-    crawl.mpr("There is a rumble as the volcano erupts. The roof shakes.",
+    crawl.mpr("굉음과 함께 화산이 분출하는 조짐이 느껴졌고, 천장과 바닥이 심하게 흔들리기 시작했다.",
               "warning")
   end
   dgn.terrain_changed(x, y, "stone_wall", false, false, false)
@@ -395,29 +395,29 @@ function volcano_overflow_convert_lava(data, triggerable,
   end
 
   if lp == 1 then
-    crawl.mpr("The ground shudders ominously.", "warning")
+    crawl.mpr("딛고 있는 바닥이 살짝 흔들렸다.", "warning")
   elseif lp == 2 then
     my_slaves = dgn.find_marker_positions_by_prop("lava_phase", 2)
-    crawl.mpr("In the distance, the volcano explodes with a roar! Lava spreads "
-               .. "onto the path.", "warning")
+    crawl.mpr("저 멀리, 화산이 격렬하게 폭발하고 용암이 사방에 "
+               .. "흩날렸다.", "warning")
     convert_slaves_to_lava(my_slaves)
   elseif lp == 3 then
-    crawl.mpr("The air is thick with the scent of sulphur.", "warning")
+    crawl.mpr("유황이 공기 중으로 자욱하게 깔렸다.", "warning")
   elseif lp == 4 then
     my_slaves = dgn.find_marker_positions_by_prop("lava_phase", 4)
-    crawl.mpr("There is another distant roar. More lava overflows!", "warning")
+    crawl.mpr("또다시 멀리서 천둥이 치는 듯한 소리가 났다. 용암이 계속 넘쳐흐른다!", "warning")
     convert_slaves_to_lava(my_slaves)
   elseif lp == 5 then
-    crawl.mpr("The ground moves violently!", "warning")
+    crawl.mpr("땅이 격렬하게 흔들린다!", "warning")
   elseif lp == 6 then
     my_slaves = dgn.find_marker_positions_by_prop("lava_phase", 6)
-    crawl.mpr("The volcano erupts again! A thin layer of lava overflows to " ..
-              "fill the cavern.", "warning")
+    crawl.mpr("화산이 또다시 폭발했다! 용암이 겹겹히 넘쳐 흘러 " ..
+              "공굴을 메우기 시작한다.", "warning")
     convert_slaves_to_lava(my_slaves)
   elseif lp == 7 then
     my_slaves = dgn.find_marker_positions_by_prop("lava_phase", 6)
-    crawl.mpr("The ground shudders. Some of the lava has hardened enough to walk " ..
-              "over!", "warning")
+    crawl.mpr("땅이 흔들렸다. 몇몇 용암은 차갑게 식어버려, 그 위로 걸어 갈 수도 있을 듯 " ..
+              "보인다!", "warning")
     convert_slaves_to_lava(my_slaves, true)
   end
 end
@@ -655,10 +655,10 @@ KFEAT:  _ = altar_makhleb / altar_trog / altar_vehumet
 :       fiery_guardians(_G)
 #       Not sure if this one should be an actual_spellcaster - the caster
 #       statues in statue_cache aren't, so I'm taking that as a precedent.
-KMONS:  G = statue name:firespitter name_adjective \
+KMONS:  G = statue name:불을_뿜는 name_adjective \
         tile:mons_firespitter_statue generate_awake \
         spells:throw_flame;sticky_flame_range;.;bolt_of_magma;fireball;.
-MARKER: G = lua:MonPropsMarker:new { description = "Statue of a large head of a humanoid. Its mouth is blackened with scorch-marks. There is a faint ember glow in its empty eyes." }
+MARKER: G = lua:MonPropsMarker:new { description = "회색 반려암을 이용해 대충 조각한, 인간의 머리 형상을 한 큰 석상이다. 입 부분은 검게 그을린 흔적이 있으며, 두 눈에는 희미하게 불씨가 빛나고 있다." }
 #       Loot: 12 items, 6 gold.
 :       volcano_setup(_G)
 MAP
@@ -681,10 +681,10 @@ TAGS:   volcano_grotto_subvault no_item_gen no_monster_gen no_vmirror
 KFEAT:  _ = altar_makhleb / altar_trog / altar_vehumet
 #       Sets up the temple guardians.
 :       fiery_guardians(_G)
-KMONS:  F = statue name:firespitter name_adjective \
+KMONS:  F = statue name:불을_뿜는 name_adjective \
         tile:mons_firespitter_statue generate_awake \
         spells:throw_flame;sticky_flame_range;.;bolt_of_magma;fireball;.
-MARKER: F = lua:MonPropsMarker:new { description = "Statue of a large dragon. Its mouth is blackened with scorch-marks. There is a faint ember glow in its empty eyes." }
+MARKER: F = lua:MonPropsMarker:new { description = "회색 반려암을 이용해 대충 조각한, 커다란 용의 형상을 한 큰 석상이다. 입 부분은 검게 그을린 흔적이 있으며, 두 눈에는 희미하게 불씨가 빛나고 있다." }
 #       Loot: 10 items.
 :       volcano_setup(_G)
 MAP
@@ -707,7 +707,7 @@ TAGS:   volcano_grotto_subvault no_item_gen no_monster_gen no_vmirror
 KFEAT:  _ = altar_makhleb / altar_trog / altar_vehumet
 #       Sets up the temple guardians.
 :       fiery_guardians(_G)
-KMONS:  G = statue name:lasher name_adjective \
+KMONS:  G = statue name:채찍을_든 name_adjective \
         tile:mons_statue_whip \
         generate_awake ; whip ego:flaming
 KMONS:  4 = lava snake / lava fish w:20 / lava worm
@@ -1073,7 +1073,7 @@ COLOUR:     + = cyan
 MONS:       human ; robe ego:fire_resistance ident:type
 MONS:       toenail golem
 :           place_chained_volcano(_G)
-:           set_feature_name("clear_rock_wall", "glass window")
+:           set_feature_name("clear_rock_wall", "유리창")
 KFEAT:      K = .
 MARKER:     K = lua:fog_machine ( { cloud_type = "rain", walk_dist=3, pow_max=2, \
                                     delay=300, size=3 } )

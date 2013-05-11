@@ -2389,14 +2389,14 @@ bool mons_throw(monster* mons, bolt &beam, int msl)
     // hiscores.cc (scorefile_entry::terse_missile_cause()) to match.
     if (projected == LRET_LAUNCHED)
     {
-        beam.aux_source = make_stringf("Shot with a%s %s by %s",
-                 (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
+        beam.aux_source = make_stringf(_("Shot with a%s %s by %s"),
+                 (is_vowel(beam.name[0]) ? "n" : ""), _(beam.name.c_str()),
                  mons->name(DESC_PLAIN).c_str());
     }
     else
     {
-        beam.aux_source = make_stringf("Hit by a%s %s thrown by %s",
-                 (is_vowel(beam.name[0]) ? "n" : ""), beam.name.c_str(),
+        beam.aux_source = make_stringf(_("Hit by a%s %s thrown by %s"),
+                 (is_vowel(beam.name[0]) ? "n" : ""), _(beam.name.c_str()),
                  mons->name(DESC_PLAIN).c_str());
     }
 

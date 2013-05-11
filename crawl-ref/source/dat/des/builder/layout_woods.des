@@ -34,25 +34,25 @@ TAGS: overwritable layout allow_dup unrand
     streams = false
     tile("t = dngn_tree_dead")
     colour("t = w:5 red / w:10 darkgrey / w:5 lightgrey / w:2 brown")
-    set_feature_name("tree", "iron tree")
+    set_feature_name("tree", "강철 나무")
     water_glyph = "l"
     deep_water_glyph = "l"
   elseif you.in_branch("tar") then
     tree_feature = "G"
     plant_mons = "plant name:petrified n_adj col:lightgrey tile:mons_withered_plant / nothing"
     colour("G = w:5 lightgrey / w:5 darkgrey")
-    set_feature_name("granite_statue", "petrified tree")
+    set_feature_name("granite_statue", "석화된 나무")
     streams = false
     lakes = false
   elseif you.in_branch("crypt") then
     streams = false
     scale = 0.5
     plant_mons = "w:2 col:darkgrey plant name:withered name_adjective               \
-                  tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+                  tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른    \
                   name_adjective tile:mons_withered_plant"
     kmons("1 = " .. plant_mons)
     colour("t = w:5 lightgrey / w:5 darkgrey / brown")
-    set_feature_name("tree", "dead tree")
+    set_feature_name("tree", "시든 나무")
     lakes = false
     -- TODO: Graves instead of lakes
   end

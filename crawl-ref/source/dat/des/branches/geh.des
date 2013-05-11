@@ -15,8 +15,8 @@ function geh_setup(e)
    e.lfloorcol("lightgrey")
    e.lfloortile("floor_pebble_darkgray")
    e.colour("v = red")
-   e.set_feature_name("floor", "Ashen ground")
-   e.set_feature_name("metal_wall", "tempered metal wall")
+   e.set_feature_name("floor", "재로 덮인 지면")
+   e.set_feature_name("metal_wall", "달구어진 철벽")
 end
 
 -- the Serpent should appear in exactly one hell end
@@ -49,7 +49,7 @@ function callback.grunt_iron_hall_animate(data,triggerable,trigger,marker,ev)
                                "patrolling iron golem generate_awake")
         end
     end
-    crawl.mpr("You hear the creaking of ancient metal!", "warning")
+    crawl.mpr("고대의 철기들이 삐걱대는 소리가 들렸다!", "warning")
     end
 end
 

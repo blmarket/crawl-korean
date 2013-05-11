@@ -969,7 +969,7 @@ FTILE:  ._+OAL = floor_crystal_squares
 NSUBST: A = 2:L / *:.
 SUBST:  ' = .
 KMONS:  O = tentacled monstrosity / large abomination / chaos spawn
-KMONS:  L = wizard hd:16 name:mad_acolyte_of_Lugonu n_rpl n_des col:lightgreen \
+KMONS:  L = wizard hd:16 name:루고누의_광신도 n_rpl n_des col:lightgreen \
             tile:mons_hell_wizard priest_spells \
             spells:smiting;blink_other;invisibility;malign_gateway;blink ; \
             robe . quarterstaff ego:distortion | dagger ego:distortion
@@ -994,7 +994,7 @@ KITEM:  O = abyssal rune of Zot
 KFEAT:  _ = altar_lugonu
 FTILE:  ._+OL = floor_crystal_squares
 SUBST:  ' = .
-KMONS:  L = wizard hd:16 name:mad_acolyte_of_Lugonu n_rpl n_des col:lightgreen \
+KMONS:  L = wizard hd:16 name:루고누의_광신도 n_rpl n_des col:lightgreen \
             tile:mons_hell_wizard priest_spells \
             spells:smiting;blink_other;invisibility;malign_gateway;blink ; \
             robe . quarterstaff ego:distortion | dagger ego:distortion
@@ -1305,7 +1305,7 @@ NAME:  evilmike_abyss_exit_plants
 TAGS:  abyss_exit
 SUBST: 1 = 112.
 SUBST: . = .:100 1
-MONS:  plant col:random name:demonic name_adjective tile:mons_demonic_plant
+MONS:  plant col:random name:악마적 name_adjective tile:mons_demonic_plant
 MONS:  bush
 : init_abyss_exit(_G, "O")
 MAP

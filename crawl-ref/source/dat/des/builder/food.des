@@ -27,12 +27,12 @@ CHANCE: 100% (D:14), 15%
 TAGS:   uniq_second_food extra chance_second_food
 ITEM:   bread ration q:2
 : if crawl.one_chance_in(8) then
-:   dgn.delayed_decay(_G, 'e', 'spriggan name:baked n_adj n_spe n_des corpse')
+:   dgn.delayed_decay(_G, 'e', 'spriggan name:잘_구워진 n_adj n_spe n_des corpse')
 : else
 SUBST: =e = x
 : end
 SUBST: = = +
-MONS:   spriggan col:white name:baker n_suf ; robe . dagger
+MONS:   spriggan col:white name:제빵사 n_suf ; robe . dagger
 MAP
 xxxxxx
 xdd=ex

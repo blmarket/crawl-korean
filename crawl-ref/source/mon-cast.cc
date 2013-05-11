@@ -104,13 +104,13 @@ static void _scale_draconian_breath(bolt& beam, int drac_type)
     {
     case MONS_RED_DRACONIAN:
         beam.name       = M_("searing blast");
-        beam.aux_source = "blast of searing breath";
+        beam.aux_source = _(M_("blast of searing breath"));
         scaling         = 65;
         break;
 
     case MONS_WHITE_DRACONIAN:
         beam.name       = M_("chilling blast");
-        beam.aux_source = "blast of chilling breath";
+        beam.aux_source = _(M_("blast of chilling breath"));
         beam.short_name = "frost";
         scaling         = 65;
         beam.ac_rule    = AC_NONE;
@@ -118,7 +118,7 @@ static void _scale_draconian_breath(bolt& beam, int drac_type)
 
     case MONS_PLAYER_GHOST: // draconians only
         beam.name       = M_("blast of negative energy");
-        beam.aux_source = "blast of draining breath";
+        beam.aux_source = _(M_("blast of draining breath"));
         beam.flavour    = BEAM_NEG;
         beam.colour     = DARKGREY;
         scaling         = 65;
@@ -532,7 +532,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_HELLFIRE_BURST:
-        beam.aux_source   = "burst of hellfire";
+        beam.aux_source   = _(M_("burst of hellfire"));
         beam.name         = M_("burst of hellfire");
         beam.ex_size      = 1;
         beam.flavour      = BEAM_HELLFIRE;
@@ -751,7 +751,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_HELLFIRE:           // fiend's hellfire
         beam.name         = M_("blast of hellfire");
-        beam.aux_source   = "blast of hellfire";
+        beam.aux_source   = _(M_("blast of hellfire"));
         beam.colour       = RED;
         beam.damage       = dice_def(3, 20);
         beam.hit          = 24;
@@ -762,7 +762,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_METAL_SPLINTERS:
         beam.name       = M_("spray of metal splinters");
-        beam.short_name = "metal splinters";
+        beam.short_name = _(M_("metal splinters"));
         beam.damage     = dice_def(3, 20 + power / 20);
         beam.colour     = CYAN;
         beam.flavour    = BEAM_FRAG;
@@ -787,7 +787,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_FIRE_BREATH:
         beam.name       = M_("blast of flame");
-        beam.aux_source = "blast of fiery breath";
+        beam.aux_source = _(M_("blast of fiery breath"));
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
         beam.colour     = RED;
         beam.hit        = 30;
@@ -797,7 +797,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_CHAOS_BREATH:
         beam.name       = M_("blast of chaos");
-        beam.aux_source = "blast of chaotic breath";
+        beam.aux_source = _(M_("blast of chaotic breath"));
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
         beam.colour     = ETC_RANDOM;
         beam.hit        = 30;
@@ -807,7 +807,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_COLD_BREATH:
         beam.name       = M_("blast of cold");
-        beam.aux_source = "blast of icy breath";
+        beam.aux_source = _(M_("blast of icy breath"));
         beam.short_name = "frost";
         beam.damage     = dice_def(3, (mons->hit_dice * 2));
         beam.colour     = WHITE;

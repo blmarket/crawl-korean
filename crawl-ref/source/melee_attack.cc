@@ -3418,14 +3418,14 @@ bool melee_attack::chop_hydra_head(int dam,
 
     if (dam_type == DVORP_CLAWING)
     {
-        static const char *claw_verbs[] = { "rip", "tear", "claw" };
+        static const char *claw_verbs[] = { "을(를) 찢어 잘라냈", "을(를) 찢어 베었", "을(를) 찢어냈" };
         verb = RANDOM_ELEMENT(claw_verbs);
     }
     else
     {
         static const char *slice_verbs[] =
         {
-            "slice", "lop", "chop", "hack"
+            "을(를) 베었", "을(를) 잘라냈", "을(를) 찍어 잘라냈", "을(를) 베어 잘라냈"
         };
         verb = RANDOM_ELEMENT(slice_verbs);
     }

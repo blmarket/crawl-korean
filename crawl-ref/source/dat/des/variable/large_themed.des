@@ -880,7 +880,7 @@ MARKER: V = lua:fog_machine { \
             }
 # Final subst
 SUBST:  MV = .
-:       set_feature_name("granite_statue", "iron statue")
+:       set_feature_name("granite_statue", "철의 상")
 :       dgn.delayed_decay(_G, '%', 'human corpse / human skeleton')
 veto {{
     if you.uniques("Jory") then
@@ -1212,7 +1212,7 @@ MARKER: ! = lua:fog_machine { \
 KFEAT:  _ = altar_vehumet
 ## Made to be always the same hd for consistency. - HangedMan
 MONS:   statue hd:12 spells:orb_of_destruction tile:mons_statue_mage col:vehumet \
-        name:conjurer n_adj
+        name:파괴술사 n_adj
 : if you.absdepth() < 22 then
 MONS:   w:6 deep elf conjurer / w:2 wizard / w:1 spriggan air mage / w:1 deep elf annihilator
 MONS:   w:3 deep elf annihilator / w:1 deep elf conjurer

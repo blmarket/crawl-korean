@@ -24,7 +24,7 @@ function callback.spider_trap_stepped(data, triggerable, triggerer, marker, ev)
     end
   end
  if (spiders > 0) then
-   crawl.mpr("A basket of spiders falls from above!")
+   crawl.mpr("거미들이 천장에서 쏟아져내렸다!")
  end
 end
 }}

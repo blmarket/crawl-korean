@@ -713,9 +713,9 @@ monster_info::monster_info(const monster* m, int milev)
         actor * const constrictor = actor_by_mid(m->constricted_by);
         if (constrictor)
         {
-            constrictor_name = (m->held == HELD_MONSTER ? "held by "
-                                                        : "constricted by ")
-                               + constrictor->name(DESC_A, true);
+            constrictor_name = constrictor->name(DESC_PLAIN, true) +  
+                               (m->held == HELD_MONSTER ? pgettext("moninfo","held by ") 
+                                                        : pgettext("moninfo","constricted by ")); 
         }
     }
 
@@ -730,9 +730,9 @@ monster_info::monster_info(const monster* m, int milev)
             if (constrictee)
             {
                 constricting_name.push_back(
-                                (m->constriction_damage() ? "constricting "
-                                                          : "holding ")
-                                + constrictee->name(DESC_A, true));
+					            constrictee->name(DESC_PLAIN, true) +
+                                (m->constriction_damage() ? pgettext("moninfo","constricting ")
+                                                          : pgettext("moninfo","holding ")));                               
             }
         }
     }

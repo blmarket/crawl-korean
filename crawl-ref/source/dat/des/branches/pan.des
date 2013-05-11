@@ -20,16 +20,16 @@
 {{
 function pan_lord_epilogue(name)
     local msgs = {
-        Mnoleg = "The air here is shimmering with an eerie glow.",
-        ['Lom Lobon'] = "You sense a powerful magical presence. It is not pleased.",
-        Cerebov = "Searing heat pours from the floors and walls of this place.",
-        ['Gloorx Vloq'] = "Shadowy figures dance across your vision."
+        Mnoleg = "이 곳의 공기는 기묘한 빛으로 반짝인다",
+        ['Lom Lobon'] = "강력한 마력의 존재가 느껴졌다. 기분 좋은 느낌은 아니다.",
+        Cerebov = "이글거리는 열기가 바닥과 벽으로부터 뿜어져 나오고 있다.",
+        ['Gloorx Vloq'] = "그림자와 같은 형상들이 눈 앞에서 이리저리 흔들린다." 
     }
 
     crawl.mpr(msgs[name], "warning")
-    crawl.mpr("The mighty Pandemonium lord " .. name .. " resides here.", "warning")
-    crawl.take_note('Entered the realm of ' .. name .. '.')
-    crawl.mark_milestone('br.enter', 'entered the realm of ' .. name .. '.', "")
+    crawl.mpr("강력한 판데모니움의 군주가 이 곳 어딘가에 있음이 틀림없다.", "warning")
+    crawl.take_note(name .. '의 렐름에 입장.')
+    crawl.mark_milestone('br.enter', name .. '의 렐름에 입장함.', "")
 end
 
 function pan_lord_setup(_G, name)
@@ -2213,9 +2213,9 @@ local function swineherd_die(monster, killer_type, killer_index, silent, wizard)
   end
   dgn.grid(p.x, p.y, "floor")
   if (you.see_cell(p.x, p.y)) then
-    crawl.mpr("The grate goes up!")
+    crawl.mpr("철창이 위로 올라갔다!")
   else
-    crawl.mpr("You hear a sound of rusty metal sliding.")
+    crawl.mpr("녹슨 금속들이 끌리는 소리가 들렸다.")
   end
 end
 }}
@@ -2242,11 +2242,11 @@ COLOUR: D = random
 COLOUR: .x = disco
 COLOUR: 0123456789 = disco
 KFEAT:  D = granite_statue
-: set_feature_name("granite_statue", "weirdly glowing ball")
+: set_feature_name("granite_statue", "반짝이는 기묘한 구체")
 MARKER: D = lua:props_marker { veto_fragmentation="veto", \
                                veto_disintegrate="veto", \
                                veto_shatter="veto" }
-MONS:   col:random name:demonic name_adjective plant tile:mons_demonic_plant
+MONS:   col:random name:악마적 name_adjective plant tile:mons_demonic_plant
 MONS:   red devil ; demon trident good_item ego:distortion
 MONS:   red devil ; lajatang good_item ego:distortion
 MONS:   red devil ; demon blade good_item ego:distortion
@@ -2334,8 +2334,8 @@ FTILE:  "E0 = floor_grass
 COLOUR: "0 = green
 FTILE:  -ZBghi&v = floor_vault
 SUBST:  D& = +, '"- = ., H = G, C = c
-: set_feature_name("granite_statue", "golden statue")
-: set_feature_name("metal_wall", "silver wall")
+: set_feature_name("granite_statue", "황금의 상")
+: set_feature_name("metal_wall", "은빛 벽")
 : set_random_mon_list("angel / cherub / ophan / daeva / phoenix / " ..
 :                     "apis / paladin / apis / shedu band / angel")
 # Do not place if you are with a holy god. It's just free loot in that case.

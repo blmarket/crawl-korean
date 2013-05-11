@@ -51,12 +51,12 @@ local function vector_move(dx, dy)
 end
 
 local function have_reaching()
-  local wp = items.equipped_at("weapon")
+  local wp = items.equipped_at("무기")
   return wp and wp.reach_range == 8 and not wp.is_melded
 end
 
 local function have_ranged()
-  local wp = items.equipped_at("weapon")
+  local wp = items.equipped_at("무기")
   return wp and wp.is_ranged and not wp.is_melded
 end
 
@@ -108,7 +108,7 @@ local function move_towards(dx, dy)
     if move == nil then move = try_move(sign(dx), 0) end
   end
   if move == nil then
-    crawl.mpr("Failed to move towards target.")
+    crawl.mpr("대상으로의 이동을 실패했다.")
   else
     crawl.process_keys(move)
   end
@@ -172,9 +172,16 @@ local function is_candidate_for_attack(x,y)
       or m:name() == "orb of destruction" then
     return false
   end
+  if m:name() == "나비"
+      or m:name() == "파괴의 구" then
+    return false
+  end
   if m:is_firewood() then
   --crawl.mpr("... is firewood.")
     if string.find(m:name(), "ballistomycete") then
+      return true
+    end
+    if string.find(m:name(), "발리스토마이") then
       return true
     end
     return false
@@ -238,13 +245,13 @@ function attack(allow_movement)
   local x, y, info = get_target(not allow_movement)
   local caught = you.caught()
   if you.confused() then
-    crawl.mpr("You are too confused!")
+    crawl.mpr("당신은 너무 혼란스럽다!")
   elseif caught then
-    crawl.mpr("You are " .. caught .. "!")
+    crawl.mpr("당신은 " .. caught .. "(이)다!")
   elseif hp_is_low() then
-    crawl.mpr("You are too injured to fight recklessly!")
+    crawl.mpr("자동 공격을 하기엔 부상이 크다!")
   elseif info == nil then
-    crawl.mpr("No target in view!")
+    crawl.mpr("시야 내에 대상이 보이지 않는다!")
   elseif info.attack_type == 3 then
     attack_fire(x,y)
   elseif info.attack_type == 2 then
@@ -254,7 +261,7 @@ function attack(allow_movement)
   elseif allow_movement then
     move_towards(x,y)
   else
-    crawl.mpr("No target in range!")
+    crawl.mpr("사정거리 내에 대상이 없다!")
   end
 end
 
@@ -268,7 +275,7 @@ end
 
 function toggle_autothrow()
   AUTOFIGHT_THROW = not AUTOFIGHT_THROW
-  crawl.mpr(AUTOFIGHT_THROW and "Enabling autothrow." or "Disabling autothrow.")
+  crawl.mpr(AUTOFIGHT_THROW and "자동 사격 시작." or "자동 사격 해제.")
 end
 
 chk_lua_option.autofight_stop = set_stop_level

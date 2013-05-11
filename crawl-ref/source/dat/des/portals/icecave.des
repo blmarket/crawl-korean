@@ -20,16 +20,16 @@ function ice_cave_portal(e)
 
   local messager =
     timed_msg {
-      initmsg = { "You feel a wave of frost pass over you.",
-                  "There is an entrance to an ice cave on this level. "
-                  .. "Hurry and find it before the portal melts!" },
-      finalmsg = "The crackling of melting ice is subsiding rapidly.",
-      verb = 'crackling',
-      noisemaker = 'melting archway',
+      initmsg = { "냉기의 흐름이 느껴졌다.",
+                  "<cyan>이 층 어디인가에 얼음 동굴로 향하는 입구가 있을 것이다. "
+                  .. "서둘러 도착하지 않으면, 동굴 입구는 녹아 내려 없어질 것이다!<cyan>" },
+      finalmsg = "얼음이 녹아 내리며 부서지는 소리가 급속히 멈췄다.",
+      verb = '녹아 내리며 부서지는',
+      noisemaker = '얼음소리',
       ranges = {
-        { 5000, 'faint ' },  { 4000, '' },
-        { 2500, 'steady ' }, { 1500, 'rapid ' },
-        { 0, 'loud ' }
+        { 5000, '희미하게 ' },  { 4000, '' },
+        { 2500, '조용히  ' }, { 1500, '크게 ' },
+        { 0, '요란하게 ' }
       }
     }
 
@@ -37,12 +37,12 @@ function ice_cave_portal(e)
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The archway melts and disappears.",
-        desc = "frozen archway",
-        entity = 'archway',
+        disappear = "관문이 완전히 녹아 사라졌다.",
+        desc = "얼어붙은 관문",
+        entity = '얼음 관문',
         dst = "IceCv",
-        dstname = "ice_cave",
-        overview = "frozen archway",
+        dstname = "얼음_동굴",
+        overview = "얼어붙은 관문",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "expired_portal",
@@ -113,12 +113,12 @@ function ice_cave_appearance(e)
   e.kprop("w = no_rtele_into")
 
   -- Alter short feature descriptions for all ice cave destination vaults.
-  e.set_feature_name("rock_wall", "ice covered rock wall")
+  e.set_feature_name("rock_wall", "얼음으로 덮인 암벽")
   e.set_feature_name("exit_portal_vault",
-                             "ice covered gate leading back out of here")
-  e.set_feature_name("stone_arch", "ice choked empty arch of ancient stone")
-  e.set_feature_name("shallow_water", "Some ice crusted shallow water")
-  e.set_feature_name("deep_water", "Some ice crusted deep water")
+                             "얼음으로 덮인 던전으로 돌아가는 관문")
+  e.set_feature_name("stone_arch", "얼음으로 덮인 오래된 아치형 문")
+  e.set_feature_name("shallow_water", "얼음이 떠다니는 얕은 물")
+  e.set_feature_name("deep_water", "얼음이 떠다니는 깊은 물")
 end
 }}
 

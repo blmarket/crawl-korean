@@ -66,20 +66,20 @@ end
 function TroveMarker:fdesc_long (marker)
   local state
   if self.props.toll_item.base_type == "miscellaneous" then
-    state = "\nThis portal requires the presence of " ..
-            self:item_name() .. " to function.\n"
+    state = "\n이 관문을 통과하려면, " ..
+            self:item_name() .. "을(를) 얻어 당신의 강함을 증명해야 한다.\n"
   else
-    state = "\nThis portal needs " ..
-            self:item_name() .. " to function.\n"
+    state = "\n이 관문을 통과혀면, " ..
+            self:item_name() .. "을(를) 얻어 이 관문에 넣어야 한다.\n"
   end
   return state
 end
 
 function TroveMarker:overview_note (marker)
   if self.props.toll_item.base_type == "miscellaneous" then
-    return "show " .. self:item_name(false)
+    return self:item_name(false) .. "을(를) 보임"
   else
-    return "give " .. self:item_name(false)
+    return self:item_name(false) .. "을(를) 바침"
   end
 end
 
@@ -87,11 +87,11 @@ function TroveMarker:debug_portal (marker)
   local _x, _y = marker:pos()
   if #dgn.items_at(_x, _y) ~= 0 then
     new_item = dgn.items_at(_x, _y)[1]
-    if crawl.yesno("Switch Trove to " .. new_item.name() .. " instead?", true, "n") then
+    if crawl.yesno("관문이 요구하는 아이템을 " .. new_item.name() .. "(으)로 바꾸는가?", true, "n") then
       self.toll_item = trove.get_trove_item(nil, 0, new_item)
-      crawl.mpr("Switched to a new item.")
+      crawl.mpr("새로운 아이템으로 교체했다.")
     else
-      crawl.mpr("Ignoring " .. new_item.name())
+      crawl.mpr("다음을 무시한다 : " .. new_item.name())
     end
   end
 
@@ -482,9 +482,9 @@ end
 function TroveMarker:accept_item (it)
   -- We don't take misc items away from people.
   if it == nil or it.base_type == "miscellaneous" then
-    crawl.mpr("The portal draws power from the presence of the item" .. self:plural() .. " and buzzes to life!")
+    crawl.mpr("관문 앞에 룬을 보이자, 관문 안쪽으로 빛나는 길이 뻗어나가기 시작했다!")
   else
-    crawl.mpr("The portal accepts the item" .. self:plural() .. " and buzzes to life!")
+    crawl.mpr("관문 안에 아이템을 던져 넣자, 관문 안쪽으로 빛나는 길이 뻗어나가기 시작했다!")
     it.dec_quantity(self.props.toll_item.quantity)
   end
   return true
@@ -506,26 +506,25 @@ function TroveMarker:check_veto(marker, pname)
 
   -- The message is slightly different for items that aren't actually taken by the trove (currently misc items).
   if self.props.toll_item.base_type == "miscellaneous" then
-    if crawl.yesno("This trove requires the presence of " .. self:item_name() ..
-                 " to function. Show it the item" ..
-                 self:plural() .. "?", true, "n") then
+    if crawl.yesno("이 비밀 창고로 향하는 관문을 통과하려면, " .. self:item_name() ..
+                 "을(를) 보여어 당신의 강함을 증명해야 한다. 아이템을 보이겠는가?"
+                 , true, "n") then
     if self:check_item(marker, pname, "inventory") == true then
       return
     else
-      crawl.mpr("You don't have " .. self:item_name() ..
-                " with you.")
+      crawl.mpr("당신은 아직 " .. self:item_name() ..
+                "이(가) 없다.")
       return "veto"
     end
   end
   else
-  if crawl.yesno("This trove needs " .. self:item_name() ..
-                 " to function. Give it the item" ..
-                 self:plural() .. "?", true, "n") then
+  if crawl.yesno("이 비밀 창고로 향하는 관문을 통과하려면, " .. self:item_name() ..
+                 "을(를) 얻어 이 관문에 바쳐야 한다. 아이템을 바치는가?"
+                 , true, "n") then
     if self:check_item(marker, pname, "inventory") == true then
       return
     else
-      crawl.mpr("You don't have the item" .. self:plural() ..
-                " to give! Perhaps you haven't completely identified the item yet?")
+      crawl.mpr("당신은 아직 그 아이템이 없다. 강화도가 부족하거나, 아니면 완전히 감정된 것이 아닌지 확인해보는것이 좋겠다.")
       return "veto"
     end
   end
@@ -541,8 +540,7 @@ function TroveMarker:note_payed(name)
     toll_desc = "at " .. crawl.article_a(self.props.desc)
   end
 
-  crawl.take_note("You paid a toll of " .. name .. " " ..
-                  toll_desc .. ".")
+  crawl.take_note("당신은 관문에 " .. name .. "을(를) 던져넣었다.")
 end
 
 function trove_marker(pars)

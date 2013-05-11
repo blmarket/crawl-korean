@@ -1011,7 +1011,7 @@ LROCKTILE:  wall_hall
     lua_marker("!", portal_desc { spawn_point = 1, south = 1, west = 1 })
     lua_marker("?", portal_desc { spawn_point = 1, south = 1, east = 1 })
 
-    set_feature_name("permadry_fountain", "spawn point")
+    set_feature_name("permadry_fountain", "스폰 포인트")
 
     crawl.mpr("<cyan>You have entered the arena!\n" ..
               "You will win if you kill everything that spawns (including allies).\n" ..

@@ -20,7 +20,7 @@ function callback.rats_trap_stepped(data, triggerable, triggerer, marker, ev)
     else
       data.triggered = true
       dgn.grid(x,y,"floor")
-      crawl.mpr("You hear a faint click.")
+      crawl.mpr("희미하게 딸깍거리는 소리가 들렸다.")
       return
     end
   end
@@ -33,13 +33,13 @@ function callback.rats_trap_stepped(data, triggerable, triggerer, marker, ev)
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
         dgn.create_item(slave.x, slave.y, "stone q:3 / stone q:2 / stone")
       else
-        crawl.mpr("You hear a click.")
+        crawl.mpr("딸깍거리는 소리가 들렸다.")
         return
       end
   end
 
-  crawl.mpr("You step on to a pressure plate.")
-  crawl.mpr("Suddenly a wall slides open!")
+  crawl.mpr("당신은 압착 발판을 밟았다.")
+  crawl.mpr("갑자기 벽이 미끄러지며 열렸다!")
 
 end
 

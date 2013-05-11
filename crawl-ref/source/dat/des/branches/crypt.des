@@ -13,7 +13,7 @@ function crypt_drop_grates(data, triggerable, triggerer, marker, ev)
         data.trig = true
     end
 
-    crawl.mpr("There is a click. Suddenly, the liches are set free!", "warning")
+    crawl.mpr("딸깍거리는 소리가 들림과 동시에, 리치들이 풀려났다!", "warning")
     for slave in iter.slave_iterator("wall_phase", 1) do
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
     end
@@ -30,11 +30,11 @@ function callback.grunt_crypt_arrival_guards_awaken(data,triggerable,trigger,mar
         end
     end
     if seen then
-        crawl.mpr("Something awakens from inside the sarcophagi!", "warning")
+        crawl.mpr("석관 속에서 무엇인가가 살아 일어났다!", "warning")
     elseif you.silenced() then
-        crawl.mpr("The ground shakes!", "warning")
+        crawl.mpr("땅이 흔들렸다!", "warning")
     else
-        crawl.mpr("You hear grinding stone!", "warning");
+        crawl.mpr("돌이 갈리리는 소리가 들렸다!", "warning");
     end
     for slave in iter.slave_iterator("trap_sarcophagus", 1) do
         if dgn.feature_name(dgn.grid(slave.x, slave.y)) == "granite_statue" then
@@ -389,7 +389,7 @@ SUBST:  HI = G
                                 veto_fragmentation="veto",
                                 veto_disintegrate="veto",
                                 veto_shatter="veto"})
-  set_feature_name("granite_statue", "sarcophagus")
+  set_feature_name("granite_statue", "석관")
 }}
 KFEAT:  G = granite_statue no_mimic
 SUBST:  J = V
@@ -496,8 +496,8 @@ DEPTH:  Crypt
 MONS:   death ooze
 KFEAT:  f = .
 # "withered plant" instead of "plant"
-KMONS:  f = w:2 col:darkgrey plant name:withered name_adjective               \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:  f = w:2 col:darkgrey plant name:메마른 name_adjective               \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant
 SUBST:  p = f:2 .:1
 SUBST:  1 = 1:3 .:1
@@ -673,8 +673,8 @@ DEPTH:  Crypt
 MONS:   flying skull band, lich
 KMONS:  3 = curse skull
 KMONS:  4 = lich / ancient lich
-KMONS:  P = w:2 col:darkgrey plant name:withered name_adjective             \
-          tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:  P = w:2 col:darkgrey plant name:메마른 name_adjective             \
+          tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
           name_adjective tile:mons_withered_plant
 KFEAT:  4 = |
 SUBST:  p = Pp, p = PP., o = P..
@@ -1080,8 +1080,8 @@ SUBST:  F = f ?
 SUBST:  f = p:1 .:1
 KFEAT:  p = .
 # "withered plant" instead of "plant"
-KMONS:  p = w:2 col:darkgrey plant name:withered name_adjective               \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:  p = w:2 col:darkgrey plant name:메마른 name_adjective               \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant
 ####### hidden skeleton; sometimes good pain weapon, but draining short sword
 KFEAT:  ! = .
@@ -1238,8 +1238,8 @@ COLOUR: x'D = white
 COLOUR: G = lightgrey
 COLOUR: "2 = brown
 NSUBST: . = 68:f / *:.
-KMONS:  f = col:darkgrey plant name:withered name_adjective               \
-            tile:mons_withered_plant / col:lightgrey plant name:withered  \
+KMONS:  f = col:darkgrey plant name:메마른 name_adjective               \
+            tile:mons_withered_plant / col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant
 FTILE:  .tT5f?<8 = FLOOR_GREY_DIRT, "G2{[( = FLOOR_PEBBLE_BROWN
 FTILE:  '_D = FLOOR_SANDSTONE
@@ -1283,8 +1283,8 @@ KMONS:  F = patrolling reaper
 : end
 SUBST:  n : ncc
 KFEAT: ABCEFH = .
-: set_feature_name("granite_statue", "gravestone")
-: set_feature_name("tree", "dead tree")
+: set_feature_name("granite_statue", "비석")
+: set_feature_name("tree", "시든 나무")
 MAP
 tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
@@ -1498,7 +1498,7 @@ KMONS:   I = ancient lich
 KMONS:   hi = phantasmal warrior / freezing wraith / shadow wraith / wraith
 KMONS:   J = deep dwarf death knight
 KMONS:   j = death cob / skeletal warrior / flayed ghost / flaming corpse
-KMONS:   K = skeletal warrior col:gold name:ancient_champion n_rpl n_des \
+KMONS:   K = skeletal warrior col:gold name:고대의_투사 n_rpl n_des \
              tile:mons_ancient_champion \
              spells:iron_shot;.;haste;pain;.;. \
              spells:bolt_of_draining;.;haste;throw_frost;.;. \

@@ -158,8 +158,8 @@ function trove.portal(e)
         return trove_marker  {
             toll_item = item,
             entity = "portal",
-            toll_desc = "to enter a treasure trove",
-            desc = "portal to a secret trove of treasure",
+            toll_desc = "비밀 창고로 입장", 
+            desc = "비밀의 금은 창고로 이어지는 관문",
             overview = "Trove",
             dst = "Trove",
             floor = "expired_portal",

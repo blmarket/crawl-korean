@@ -65,7 +65,7 @@ end
 -- Macroable
 function rememberkit()
     local kit = scan_kit()
-    crawl.mpr("Is this (T)ravel or (B)attle kit? ", "prompt")
+    crawl.mpr("(T)여행 키트 인가, 아니면 (B)전투 키트인가? ", "prompt")
     local answer = getkey("tb")
     crawl.mesclr()
     if answer == "escape" then
@@ -171,23 +171,23 @@ function wearkit(kit)
     end
 
     if noop then
-        crawl.mpr("Nothing to do.")
+        crawl.mpr("할 게 없다.")
     end
 end
 
 -- Macroable
 function swapkit()
     if not g_kit_battle and not g_kit_travel then
-        crawl.mpr("You need to define a gear set first")
+        crawl.mpr("기어 셋을 먼저 설정해야 한다.")
         return false
     end
 
     local kit = scan_kit()
     if matchkit(kit, g_kit_travel) < matchkit(kit, g_kit_battle) then
-        crawl.mpr("Switching to travel kit")
+        crawl.mpr("여행 키트로 전환")
         wearkit(g_kit_travel)
     else
-        crawl.mpr("Switching to battle kit")
+        crawl.mpr("전투 키트로 전환")
         wearkit(g_kit_battle)
     end
 end

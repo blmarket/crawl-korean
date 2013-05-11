@@ -1982,7 +1982,7 @@ function elephant_statue()
   return
 end
 
-set_feature_name("granite_statue", "elephant-shaped statue")
+set_feature_name("granite_statue", "코끼리 석상")
 }}
 MARKER: o = lua:portal_desc { slaved_to="elephant" }
 MARKER: G = lua:props_marker { veto_fragmentation="veto", \
@@ -1992,8 +1992,8 @@ COLOUR: oG = green
 TILE:   oG = dngn_statue_elephant_jade
 MARKER: o = lua:monster_on_death { \
             target="anaconda_guard", new_monster="generate_awake dire elephant", \
-            message_seen="The elephant guardians awaken!", \
-            message_unseen="You hear a distant trumpeting.", \
+            message_seen="수호자 코끼리들이 깨어났다!", \
+            message_unseen="어디선가 묵직하게 발 구르는 소리가 들려왔다.", \
             master_name="elephant", \
             veto_fragmentation="veto", veto_disintegrate="veto", \
             veto_shatter="veto", \
@@ -2232,7 +2232,7 @@ NAME:   minmay_lair_end_enchanted_forest
 PLACE:  Lair:$
 ORIENT: northwest
 MONS:   black bear / grizzly bear, wolf, spriggan
-MONS:   spriggan rider / spriggan druid n_adj n_noc name:young hd:8
+MONS:   spriggan rider / spriggan druid n_adj n_noc name:어린 hd:8
 SUBST:  T : T:20 .:1 t:1
 SUBST:  T = t.
 # These can't be substituted with floor because it might be disconnected, but if
@@ -2289,7 +2289,7 @@ MONS:   death yak / w:5 yak, death yak w:5 / yak
 MONS:   sheep / yak / death yak
 NSUBST: 3 = 1:1 / *:2
 # These are still living plants for all intents and purposes...
-MONS:   plant perm_ench:petrified dbname:petrified_plant col:lightgrey tile:mons_withered_plant / nothing
+MONS:   plant perm_ench:petrified dbname:석화된_식물 col:lightgrey tile:mons_withered_plant / nothing
 SUBST:  - = .
 MAP
 xxxxxxcccxxxxxxxxxxxxxxxx

@@ -4,8 +4,8 @@
 {{
 function callback.dk_vehumet_trees_move(data, triggerable, triggerer, marker, ev)
   if not dgn.persist.dk_vt_stepped and not dgn.persist.dk_vt_tree_died then
-    crawl.god_speaks("Vehumet", "Vehumet offers to free you in exchange " ..
-                                "for your devotion to destruction.")
+    crawl.god_speaks("Vehumet", "보아 하니 베후메트는 이 나무들을 뚫고 지나갈 수 있을만한 " ..
+                                "파괴 마법을 가진 자를 신도로 삼고 싶은 생각인 것 같다.")
     dgn.persist.dk_vt_stepped = true
   end
 end
@@ -19,7 +19,7 @@ end
 
 function callback.dk_vehumet_trees_los(data, triggerable, triggerer, marker, ev)
   if not dgn.persist.dk_vt_tree_died and you.god() == "Vehumet" then
-    crawl.mpr("Suddenly, the trees start to burn!")
+    crawl.mpr("갑자기, 나무들이 불타오르기 시작했다!") 
     for slave in iter.slave_iterator("tree", 1) do
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
         dgn.place_cloud(slave.x, slave.y, "flame", crawl.random2(15) + 5)

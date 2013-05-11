@@ -147,7 +147,7 @@ ITEM:    stone q:1 w:5 / nothing
 ITEM:    stone q:1 w:1 / nothing w:20
 TILE:    G = dngn_granite_stump
 SHUFFLE: {[(
-:        set_feature_name("granite_statue", "granite stump")
+:        set_feature_name("granite_statue", "화강암 받침대")
 MAP
    xxxxxxx
   xx.....xx

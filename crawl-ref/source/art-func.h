@@ -88,16 +88,16 @@ static bool _evoke_sceptre_of_asmodeus()
 
     if (m)
     {
-        mpr("The Sceptre summons one of its servants.");
+        mpr(_("The Sceptre summons one of its servants."));
         did_god_conduct(DID_UNHOLY, 3);
 
         m->add_ench(mon_enchant(ENCH_FAKE_ABJURATION, 6));
 
         if (!player_angers_monster(m))
-            mpr("You don't feel so good about this...");
+            mpr(_("You don't feel so good about this..."));
     }
     else
-        mpr("The air shimmers briefly.");
+        mpr(_("The air shimmers briefly."));
 
     return true;
 }
@@ -137,7 +137,7 @@ static void _curses_miscast(actor* victim, int power, int fail)
 
 static void _CURSES_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "A shiver runs down your spine.");
+    _equip_mpr(show_msgs, _("A shiver runs down your spine."));
     if (!unmeld)
         _curses_miscast(&you, random2(9), random2(70));
 }
@@ -171,7 +171,7 @@ static bool _DISPATER_evoke(item_def *item, int* pract, bool* did_work,
 {
     if (you.duration[DUR_DEATHS_DOOR] || !enough_hp(11, true))
     {
-        mpr("You're too close to death to use this item.");
+        mpr(_("You're too close to death to use this item."));
         *unevokable = true;
         return true;
     }
@@ -191,7 +191,7 @@ static bool _DISPATER_evoke(item_def *item, int* pract, bool* did_work,
         return false;
     }
 
-    mpr("You feel the staff feeding on your energy!");
+    mpr(_("You feel the staff feeding on your energy!"));
     dec_hp(5 + random2avg(19, 2), false);
     dec_mp(2 + random2avg(5, 2));
     make_hungry(100, false, true);
@@ -216,9 +216,9 @@ static void _olgreb_pluses(item_def *item)
 static void _OLGREB_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
     if (you.can_smell())
-        _equip_mpr(show_msgs, "You smell chlorine.");
+        _equip_mpr(show_msgs, _("You smell chlorine."));
     else
-        _equip_mpr(show_msgs, "The staff glows a sickly green.");
+        _equip_mpr(show_msgs, _("The staff glows a sickly green."));
 
     _olgreb_pluses(item);
 }
@@ -226,9 +226,9 @@ static void _OLGREB_equip(item_def *item, bool *show_msgs, bool unmeld)
 static void _OLGREB_unequip(item_def *item, bool *show_msgs)
 {
     if (you.can_smell())
-        _equip_mpr(show_msgs, "The smell of chlorine vanishes.");
+        _equip_mpr(show_msgs, _("The smell of chlorine vanishes."));
     else
-        _equip_mpr(show_msgs, "The staff's sickly green glow vanishes.");
+        _equip_mpr(show_msgs, _("The staff's sickly green glow vanishes."));
 }
 
 static void _OLGREB_world_reacts(item_def *item)
@@ -287,7 +287,7 @@ static void _power_pluses(item_def *item)
 
 static void _POWER_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "You sense an aura of extreme power.");
+    _equip_mpr(show_msgs, _("You sense an aura of extreme power."));
     _power_pluses(item);
 }
 
@@ -314,15 +314,15 @@ static void _SINGING_SWORD_equip(item_def *item, bool *show_msgs, bool unmeld)
         item->props["ss_welcome"].get_bool() = true;
     }
     else
-        mpr("The Singing Sword hums in delight!", MSGCH_TALK);
+        mpr(_("The Singing Sword hums in delight!"), MSGCH_TALK);
 
     *show_msgs = false;
 }
 
 static void _SINGING_SWORD_unequip(item_def *item, bool *show_msgs)
 {
-    set_artefact_name(*item, "Singing Sword");
-    _equip_mpr(show_msgs, "The Singing Sword sighs.", MSGCH_TALK);
+    set_artefact_name(*item, _("Singing Sword"));
+    _equip_mpr(show_msgs, _("The Singing Sword sighs."), MSGCH_TALK);
 }
 
 static void _SINGING_SWORD_world_reacts(item_def *item)
@@ -334,11 +334,11 @@ static void _SINGING_SWORD_world_reacts(item_def *item)
     string old_name = get_artefact_name(*item);
     string new_name;
     if (silent)
-        new_name = "Sulking Sword";
+        new_name = _("Sulking Sword");
     else if (tier < 3)
-        new_name = "Singing Sword";
+        new_name = _("Singing Sword");
     else
-        new_name = "Screaming Sword";
+        new_name = _("Screaming Sword");
     if (old_name != new_name)
     {
         set_artefact_name(*item, new_name);
@@ -377,7 +377,7 @@ static void _SINGING_SWORD_world_reacts(item_def *item)
 
 static void _PRUNE_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "You feel pruney.");
+    _equip_mpr(show_msgs, _("You feel pruney."));
 }
 
 static void _PRUNE_world_reacts(item_def *item)
@@ -390,7 +390,7 @@ static void _PRUNE_world_reacts(item_def *item)
 
 static void _TORMENT_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "A terribly searing pain shoots up your arm!");
+    _equip_mpr(show_msgs, _("A terribly searing pain shoots up your arm!"));
 }
 
 static void _TORMENT_world_reacts(item_def *item)
@@ -416,12 +416,12 @@ static void _TORMENT_melee_effect(item_def* weapon, actor* attacker,
 
 static void _TROG_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "You feel bloodthirsty!");
+    _equip_mpr(show_msgs, _("You feel bloodthirsty!"));
 }
 
 static void _TROG_unequip(item_def *item, bool *show_msgs)
 {
-    _equip_mpr(show_msgs, "You feel less violent.");
+    _equip_mpr(show_msgs, _("You feel less violent."));
 }
 
 ////////////////////////////////////////////////////
@@ -437,7 +437,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
 {
     if (you.magic_points == you.max_magic_points)
     {
-        mpr("Your reserves of magic are full.");
+        mpr(_("Your reserves of magic are full."));
         *unevokable = true;
         return true;
     }
@@ -451,7 +451,7 @@ static bool _WUCAD_MU_evoke(item_def *item, int* pract, bool* did_work,
         return false;
     }
 
-    mpr("Magical energy flows into your mind!");
+    mpr(_("Magical energy flows into your mind!"));
 
     inc_mp(3 + random2(5) + you.skill_rdiv(SK_EVOCATIONS, 1, 3));
     make_hungry(50, false, true);
@@ -472,14 +472,14 @@ static void _VAMPIRES_TOOTH_equip(item_def *item, bool *show_msgs, bool unmeld)
     if (you.is_undead == US_ALIVE)
     {
         _equip_mpr(show_msgs,
-                   "You feel a strange hunger, and smell blood in the air...");
+                   _("You feel a strange hunger, and smell blood in the air..."));
         if (!unmeld)
             make_hungry(4500, false, false);
     }
     else if (you.species == SP_VAMPIRE)
-        _equip_mpr(show_msgs, "You feel a bloodthirsty glee!");
+        _equip_mpr(show_msgs, _("You feel a bloodthirsty glee!"));
     else
-        _equip_mpr(show_msgs, "You feel strangely empty.");
+        _equip_mpr(show_msgs, _("You feel strangely empty."));
 }
 
 ///////////////////////////////////////////////////
@@ -511,7 +511,7 @@ static void _VARIABILITY_world_reacts(item_def *item)
 
 static void _ZONGULDROK_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "You sense an extremely unholy aura.");
+    _equip_mpr(show_msgs, _("You sense an extremely unholy aura."));
 }
 
 static void _ZONGULDROK_world_reacts(item_def *item)
@@ -554,7 +554,7 @@ static void _GONG_melee_effect(item_def* item, actor* wearer,
 
     string msg = getSpeakString("shield of the gong");
     if (msg.empty())
-        msg = "You hear a strange loud sound.";
+        msg = _("You hear a strange loud sound.");
     mpr(msg.c_str(), MSGCH_SOUND);
 
     noisy(40, wearer->pos());
@@ -580,7 +580,7 @@ static void _RCLOUDS_world_reacts(item_def *item)
 
 static void _RCLOUDS_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "A thin mist springs up around you!");
+    _equip_mpr(show_msgs, _("A thin mist springs up around you!"));
 }
 
 ///////////////////////////////////////////////////
@@ -615,7 +615,7 @@ found:
 
     if (!you.beheld_by(closest))
     {
-        mprf("Visions of slaying %s flood into your mind.",
+        mprf(_("Visions of slaying %s flood into your mind."),
              closest->name(DESC_THE).c_str());
 
         // The monsters (if any) currently mesmerising the player do not include
@@ -627,7 +627,7 @@ found:
 
     if (you.confused())
     {
-        mpr("Your confusion fades away as the thirst for blood takes over your mind.");
+        mpr(_("Your confusion fades away as the thirst for blood takes over your mind."));
         you.duration[DUR_CONF] = 0;
     }
 
@@ -643,7 +643,7 @@ static void _DEMON_AXE_unequip(item_def *item, bool *show_msgs)
         // it costs scrolls of rem curse, we might say getting the demon away is
         // enough of a shock to get you back to senses.
         you.clear_beholders();
-        mpr("Your thirst for blood fades away.");
+        mpr(_("Your thirst for blood fades away."));
     }
 }
 
@@ -652,8 +652,8 @@ static void _DEMON_AXE_unequip(item_def *item, bool *show_msgs)
 static void _WYRMBANE_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
     _equip_mpr(show_msgs, player_genus(GENPC_DRACONIAN) || you.form == TRAN_DRAGON
-                            ? "You feel an overwhelming desire to commit suicide."
-                            : "You feel an overwhelming desire to slay dragons!");
+                            ? _("You feel an overwhelming desire to commit suicide.")
+                            : _("You feel an overwhelming desire to slay dragons!"));
 }
 
 static void _WYRMBANE_melee_effect(item_def* weapon, actor* attacker,
@@ -669,7 +669,7 @@ static void _WYRMBANE_melee_effect(item_def* weapon, actor* attacker,
     if (defender->is_player())
     {
         // can't currently happen even on a death blow
-        mpr("<green>You see the lance glow as it kills you.</green>");
+        mpr(_("<green>You see the lance glow as it kills you.</green>"));
         return;
     }
     // The cap can be reached by:
@@ -687,7 +687,7 @@ static void _WYRMBANE_melee_effect(item_def* weapon, actor* attacker,
         weapon->plus2++, boosted = true;
     if (boosted)
     {
-        mpr("<green>The lance glows as it skewers the body.</green>");
+        mpr(_("<green>The lance glows as it skewers the body.</green>"));
         you.wield_change = true;
     }
 }
@@ -699,7 +699,7 @@ static void _UNDEADHUNTER_melee_effect(item_def* item, actor* attacker,
 {
     if (defender->holiness() == MH_UNDEAD && !one_chance_in(3) && !mondied)
     {
-        mprf("%s %s blasted by disruptive energy!",
+        mprf(_("%s %s blasted by disruptive energy!"),
               defender->name(DESC_THE).c_str(),
               defender->is_player() ? "are" : "is");
         defender->hurt(attacker, random2avg((1 + (dam * 3)), 3));
@@ -720,7 +720,7 @@ static void _BRILLIANCE_unequip(item_def *item, bool *show_msgs)
 ///////////////////////////////////////////////////
 static void _DEVASTATOR_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "Time to introduce the shillelagh law.");
+    _equip_mpr(show_msgs, _("Time to introduce the shillelagh law."));
 }
 
 
@@ -734,12 +734,12 @@ static void _DEVASTATOR_melee_effect(item_def* item, actor* attacker,
 ///////////////////////////////////////////////////
 static void _DRAGONSKIN_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
-    _equip_mpr(show_msgs, "You feel oddly protected from the elements.");
+    _equip_mpr(show_msgs, _("You feel oddly protected from the elements."));
 }
 
 static void _DRAGONSKIN_unequip(item_def *item, bool *show_msgs)
 {
-    _equip_mpr(show_msgs, "You no longer feel protected from the elements.");
+    _equip_mpr(show_msgs, _("You no longer feel protected from the elements."));
 }
 
 ///////////////////////////////////////////////////
@@ -753,13 +753,13 @@ static void _BLACK_KNIGHT_HORSE_world_reacts(item_def *item)
 static void _NIGHT_equip(item_def *item, bool *show_msgs, bool unmeld)
 {
     update_vision_range();
-    _equip_mpr(show_msgs, "The light fades from your surroundings.");
+    _equip_mpr(show_msgs, _("The light fades from your surroundings."));
 }
 
 static void _NIGHT_unequip(item_def *item, bool *show_msgs)
 {
     update_vision_range();
-    _equip_mpr(show_msgs, "The light returns to your surroundings.");
+    _equip_mpr(show_msgs, _("The light returns to your surroundings."));
 }
 
 ///////////////////////////////////////////////////
@@ -775,7 +775,7 @@ static void _PLUTONIUM_SWORD_melee_effect(item_def* weapon, actor* attacker,
 {
     if (!mondied && one_chance_in(5))
     {
-        mpr("Mutagenic energy flows through the plutonium sword!");
+        mpr(_("Mutagenic energy flows through the plutonium sword!"));
         _plutonium_sword_miscast(defender, random2(9), random2(70));
 
         if (attacker->is_player())
@@ -791,18 +791,18 @@ static void _WOE_melee_effect(item_def* weapon, actor* attacker,
     const char *verb = "bugger", *adv = "";
     switch (random2(8))
     {
-    case 0: verb = "cleave", adv = " in twain"; break;
-    case 1: verb = "pulverise", adv = " into thin bloody mist"; break;
-    case 2: verb = "hew", adv = " savagely"; break;
-    case 3: verb = "fatally mangle", adv = ""; break;
-    case 4: verb = "dissect", adv = " like a pig carcass"; break;
-    case 5: verb = "chop", adv = " into pieces"; break;
-    case 6: verb = "butcher", adv = " messily"; break;
-    case 7: verb = "slaughter", adv = " joyfully"; break;
+    case 0: verb = pgettext("woe","cleave"), adv = pgettext("woe"," in twain"); break;
+    case 1: verb = pgettext("woe","pulverise"), adv = pgettext("woe"," into thin bloody mist"); break;
+    case 2: verb = pgettext("woe","hew"), adv = pgettext("woe"," savagely"); break;
+    case 3: verb = pgettext("woe","fatally mangle"), adv = ""; break;
+    case 4: verb = pgettext("woe","dissect"), adv = pgettext("woe"," like a pig carcass"); break;
+    case 5: verb = pgettext("woe","chop"), adv = pgettext("woe"," into pieces"); break;
+    case 6: verb = pgettext("woe","butcher"), adv = pgettext("woe"," messily"); break;
+    case 7: verb = pgettext("woe","slaughter"), adv = pgettext("woe"," joyfully"); break;
     }
     if (you.see_cell(attacker->pos()) || you.see_cell(defender->pos()))
     {
-        mprf("%s %s%s %s%s.", attacker->name(DESC_THE).c_str(), verb,
+        mprf(pgettext("woe","%s %s%s %s%s."), attacker->name(DESC_THE).c_str(), verb,
             attacker->is_player() ? "" : "s", defender->name(DESC_THE).c_str(),
             adv);
     }

@@ -51,9 +51,9 @@ function callback.grunt_gauntlet_trap_activate(data,triggerable,trigger,marker,e
         dgn.terrain_changed(slave.x, slave.y, "stone_wall", false, false, false)
         dgn.colour_at(slave.x, slave.y, "lightmagenta")
     end
-    crawl.mpr("You hear an unearthly scream, and the grinding of stone!",
+    crawl.mpr("기이하고도 섬뜩한 비명이 들렸고, 주변 벽과 바닥이 갈라졌다!",
              "warning")
-    crawl.mpr("The path is suddenly blocked!", "warning")
+    crawl.mpr("순식간에 이 통로가 막혀버렸다!", "warning")
     end
 end
 
@@ -67,8 +67,8 @@ end
 NAME:   lemuel_nasty_pond
 DEPTH:  Tar:*
 TAGS:   no_pool_fixup no_rotate
-MONS:   w:2 col:darkgrey plant name:withered name_adjective               \
-        tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+MONS:   w:2 col:darkgrey plant name:메마른 name_adjective               \
+        tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
         name_adjective tile:mons_withered_plant
 MONS:   oklob plant, death ooze, rotting devil, blizzard demon / green death
 SUBST:  W:w.

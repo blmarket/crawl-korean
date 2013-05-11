@@ -1800,7 +1800,7 @@ bool check_warning_inscriptions(const item_def& item,
                 return true;
         }
 
-        string prompt = pgettext("invent","Really ") + _operation_verb(oper) + " ";
+        string prompt = pgettext("invent","Really "); // + _operation_verb(oper) + " ";
         //prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
         //                              : item.name(true, DESC_PLAIN));
         if (_nasty_stasis(item, oper))
@@ -1809,7 +1809,7 @@ bool check_warning_inscriptions(const item_def& item,
                          you.duration[DUR_SLOW] ? pgettext("invent","slowed") : pgettext("invent","hasted"));
         //prompt += "?";
 		prompt += (in_inventory(item) ? item.name(true, DESC_INVENTORY)
-                                      : item.name(true, DESC_PLAIN)) + _operation_verb(oper);
+                                      : item.name(true, DESC_PLAIN)); // + _operation_verb(oper);
 		prompt += _operation_verb(oper) + "?";
         return (yesno(prompt.c_str(), false, 'n')
                 && check_old_item_warning(item, oper));

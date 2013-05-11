@@ -1134,16 +1134,16 @@ ENDMAP
 # D3_1, branching
 NAME:  sprint_mu_d3_branching
 TAGS:  sprint_mu_d3 no_rotate no_hmirror no_vmirror no_dup
-KMONS: a = col:red generate_awake statue name:fire_elementalist name_adjective hp:50 \
+KMONS: a = col:red generate_awake statue name:불의_정령 name_adjective hp:50 \
  spells:summon_fire_elementals;cantrip \
  tile:mons_fire_elementalist_statue
-KMONS: H = col:blue generate_awake statue name:water_elementalist name_adjective hp:50 \
+KMONS: H = col:blue generate_awake statue name:물의_정령 name_adjective hp:50 \
  spells:summon_water_elementals;cantrip \
  tile:mons_water_elementalist_statue
-KMONS: O = col:brown generate_awake statue name:earth_elementalist name_adjective hp:70 \
+KMONS: O = col:brown generate_awake statue name:대지의_정령 name_adjective hp:70 \
  spells:summon_earth_elementals;cantrip \
  tile:mons_earth_elementalist_statue
-KMONS: d = col:lightgrey generate_awake statue name:air_elementalist name_adjective hp:25 \
+KMONS: d = col:lightgrey generate_awake statue name:바람의_정령 name_adjective hp:25 \
  spells:summon_air_elementals;cantrip \
  tile:mons_air_elementalist_statue
 KMONS: e = col:gold skeletal warrior name:ancient_champion name_replace \

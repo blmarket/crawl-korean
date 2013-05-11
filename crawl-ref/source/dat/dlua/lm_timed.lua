@@ -91,8 +91,8 @@ function TimedMarker:timeout(marker, verbose, affect_player)
 
   if x == yx and y == yy and you.taking_stairs() then
     if verbose then
-      crawl.mpr( dgn.feature_desc_at(x, y, "The") .. " vanishes " ..
-                "just as you enter it!")
+      crawl.mpr( "당신이 진입하자, " .. dgn.feature_desc_at(x, y, "The") .. "은(는) " ..
+                "사라져버렸다")
       return
     end
   end
@@ -100,9 +100,9 @@ function TimedMarker:timeout(marker, verbose, affect_player)
   if verbose then
     if you.see_cell(marker:pos()) then
       crawl.mpr( util.expand_entity(self.props.entity, self.props.disappear) or
-                 dgn.feature_desc_at(x, y, "The") .. " disappears!")
+                 dgn.feature_desc_at(x, y, "The") .. "이(가) 사라졌다!")
     else
-      crawl.mpr("The walls and floor vibrate strangely for a moment.")
+      crawl.mpr("바닥과 벽이 잠시 기이하게 진동했다.")
     end
   end
 

@@ -422,7 +422,7 @@ public:
 
     unsigned int out_width() const
     {
-        return (width() - (use_first_col() ? 1 : 0));
+        return (width() - (use_first_col() ? 1 : 0)) - (width()/10); 
     }
 
     unsigned int out_height() const

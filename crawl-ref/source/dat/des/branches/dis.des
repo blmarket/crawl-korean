@@ -12,7 +12,7 @@ function dis_setup(e)
    e.lflags("no_tele_control")
 -- turn granite statues into iron statues
 -- you still have to colour the statues, if desired
-   e.set_feature_name("granite_statue", "iron statue")
+   e.set_feature_name("granite_statue", "철의 상")
 end
 
 function dis_rune(e)
@@ -50,7 +50,7 @@ function callback.grunt_iron_hall_animate(data,triggerable,trigger,marker,ev)
                                "patrolling iron golem generate_awake")
         end
     end
-    crawl.mpr("You hear the creaking of ancient metal!", "warning")
+    crawl.mpr("고대의 철기들이 삐걱대는 소리가 들렸다!", "warning")
     end
 end
 
@@ -139,7 +139,7 @@ MONS: iron devil / nothing, iron imp / nothing
                                   veto_fragmentation="veto",
                                   veto_disintegrate="veto",
                                   veto_shatter="veto"})
-    set_feature_name("granite_statue", "iron statue")
+    set_feature_name("granite_statue", "철의 상")
 }}
 COLOUR: G = cyan
 TILE: G = dngn_statue_iron_golem
@@ -218,7 +218,7 @@ SUBST:   I = G, ~ : wv., ` : wv., ^ = ., % : %:9 .:1, % = %:499 |:1
 : if you.branch() == "Dis" then
 TILE:    G = dngn_statue_iron
 COLOUR:  G = cyan
-: set_feature_name("granite_statue", "iron statue")
+: set_feature_name("granite_statue", "철의 상")
 : end
 MAP
 .........................
@@ -399,15 +399,15 @@ TILE:    o = dngn_statue_iron_golem
 # Use master/slave setup.
 MARKER:  o = lua:monster_on_death { \
             death_monster="Dispater", new_monster="generate_awake iron golem", \
-            message_seen="The iron statue comes to life!", \
-            message_unseen="You hear a grinding sound.", \
+            message_seen="철의 상이 살아 움직이기 시작한다!", \
+            message_unseen="무엇인가 갈아 없어지는 소리가 들렸다.", \
             monster_place_feature=dgn.fnum("granite_statue"), \
             veto_fragmentation="veto", veto_disintegrate="veto", \
             veto_shatter="veto" \
          }
 KITEM:   | = superb_item no_pickup
 KITEM:   $ = gold no_pickup
-: set_feature_name("granite_statue", "iron statue")
+: set_feature_name("granite_statue", "철의 상")
 MAP
 ....................................................................
 ...............................................v5v..v5v.............

@@ -5160,7 +5160,7 @@ bool slow_player(int turns)
     if (turns <= 0)
         return false;
 
-    if (stasis_blocks_effect(true, true, "%s rumbles.", 20, "%s rumbles."))
+    if (stasis_blocks_effect(true, true, _("%s rumbles."), 20, _("%s rumbles.")))
         return false;
 
     // Doubling these values because moving while slowed takes twice the
@@ -6755,7 +6755,7 @@ void player::paralyse(actor *who, int str, string source)
     ASSERT(!crawl_state.game_is_arena());
 
     // The shock is too mild to do damage.
-    if (stasis_blocks_effect(true, true, "%s gives you a mild electric shock."))
+    if (stasis_blocks_effect(true, true, _("%s gives you a mild electric shock.")))
         return;
 
     if (!(who && who->as_monster() && who->as_monster()->type == MONS_RED_WASP)

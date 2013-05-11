@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 22:39+0900\n"
+"POT-Creation-Date: 2013-05-11 07:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -447,19 +447,19 @@ msgstr "불사조"
 
 #: mon-data.h:350 mon-data.h:351 mon-data.h:362 mon-data.h:327 mon-data.h:329
 msgid "centaur"
-msgstr "센타우르"
+msgstr "켄타우로스"
 
 #: mon-data.h:362 mon-data.h:363 mon-data.h:374 mon-data.h:339 mon-data.h:341
 msgid "centaur warrior"
-msgstr "센타우르 전사"
+msgstr "켄타우로스 전사"
 
 #: mon-data.h:374 mon-data.h:375 mon-data.h:386 mon-data.h:351 mon-data.h:353
 msgid "yaktaur"
-msgstr "야크타우어"
+msgstr "야크타우로스"
 
 #: mon-data.h:386 mon-data.h:387 mon-data.h:398 mon-data.h:363 mon-data.h:365
 msgid "yaktaur captain"
-msgstr "야크타우어 캡틴"
+msgstr "야크타우로스 대장"
 
 #. draconians ('d')
 #. Base draconian - for use like MONS_HUMAN, MONS_ELF although we
@@ -1568,7 +1568,7 @@ msgstr "코볼트"
 #: mon-data.h:3271 mon-data.h:3260 mon-data.h:3334 mon-data.h:3353
 #: mon-data.h:3406 mon-data.h:3442 mon-data.h:3438 mon-data.h:3428
 msgid "big kobold"
-msgstr "거대한 코볼트"
+msgstr "덩치 큰 코볼트"
 
 #: mon-data.h:3283 mon-data.h:3272 mon-data.h:3346 mon-data.h:3365
 #: mon-data.h:3418 mon-data.h:3454 mon-data.h:3450 mon-data.h:3440
@@ -1870,7 +1870,7 @@ msgstr "큰 환영"
 #: mon-data.h:4060 mon-data.h:4049 mon-data.h:4111 mon-data.h:4137
 #: mon-data.h:4293 mon-data.h:4329 mon-data.h:4325 mon-data.h:4315
 msgid "big fish"
-msgstr "거대한 물고기"
+msgstr "커다란 물고기"
 
 #: mon-data.h:4072 mon-data.h:4061 mon-data.h:4123 mon-data.h:4149
 #: mon-data.h:4305 mon-data.h:4341 mon-data.h:4337 mon-data.h:4327
@@ -2113,7 +2113,7 @@ msgstr "그림자 임프"
 #: mon-data.h:4673 mon-data.h:4662 mon-data.h:4655 mon-data.h:4756
 #: mon-data.h:4963 mon-data.h:4999 mon-data.h:4995 mon-data.h:4985
 msgid "red devil"
-msgstr "레드 데빌"
+msgstr "빨간 악마"
 
 #: mon-data.h:4685 mon-data.h:4674 mon-data.h:4667 mon-data.h:4768
 #: mon-data.h:4975 mon-data.h:5011 mon-data.h:5007 mon-data.h:4997
@@ -2530,7 +2530,7 @@ msgid "snorg"
 msgstr "스노그"
 
 msgid "purgy"
-msgstr "퍼지"
+msgstr "퍼기"
 
 msgid "jory"
 msgstr "조리"
@@ -2539,7 +2539,7 @@ msgid "nellie"
 msgstr "넬리"
 
 msgid "murray"
-msgstr "머레이"
+msgstr "머리"
 
 msgid "ignacio"
 msgstr "이그나시오"
@@ -2584,7 +2584,7 @@ msgid "jozef"
 msgstr "요제프"
 
 msgid "maud"
-msgstr "마우드"
+msgstr "모드"
 
 msgid "louise"
 msgstr "루이즈"
@@ -3007,7 +3007,7 @@ msgstr "스노그"
 #: mon-data.h:5988 mon-data.h:6261 mon-data.h:6297 mon-data.h:6293
 #: mon-data.h:6283
 msgid "Purgy"
-msgstr "퍼지"
+msgstr "퍼기"
 
 #: mon-data.h:5893 mon-data.h:5905 mon-data.h:5894 mon-data.h:5851
 #: mon-data.h:6002 mon-data.h:6275 mon-data.h:6311 mon-data.h:6307
@@ -3025,7 +3025,7 @@ msgstr "넬리"
 #: mon-data.h:6031 mon-data.h:6304 mon-data.h:6340 mon-data.h:6336
 #: mon-data.h:6326
 msgid "Murray"
-msgstr "머레이"
+msgstr "머리"
 
 #: mon-data.h:5935 mon-data.h:5947 mon-data.h:5936 mon-data.h:5893
 #: mon-data.h:6044 mon-data.h:6317 mon-data.h:6353 mon-data.h:6349
@@ -7862,7 +7862,7 @@ msgstr "장화"
 #: itemprop.cc:140 itemprop.cc:140 itemprop.cc:142 itemprop.cc:139
 #: itemprop.cc:138
 msgid "centaur barding"
-msgstr "센타우르 마갑"
+msgstr "켄타우로스 마갑"
 
 #: itemprop.cc:142 itemprop.cc:142 itemprop.cc:144 itemprop.cc:141
 #: itemprop.cc:140
@@ -11508,7 +11508,7 @@ msgstr "을(를) 베어 잘라냈"
 
 #: mon-project.cc:225 mon-project.cc:255 mon-project.cc:261
 msgid "weakly hits"
-msgstr "을(를) 약하게 공격했"
+msgstr "에게 불완전하게 명중했다"
 
 #: monster.cc:1057 monster.cc:1077 monster.cc:1194 monster.cc:1180
 msgid "some gold"
@@ -12345,6 +12345,8 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -12972,7 +12974,7 @@ msgstr "파편"
 msgid "enslave soul"
 msgstr "영혼 지배"
 
-#: mon-util.cc:3705 mon-util.cc:3708
+#: mon-util.cc:3705 mon-util.cc:3708 mon-util.cc:3929
 msgid "a god"
 msgstr "신"
 
@@ -17898,7 +17900,7 @@ msgid "autumn katana"
 msgstr "가을 카타나"
 
 msgid "shillelagh \"Devastator\""
-msgstr "몽둥이 \"완전한 파괴\""
+msgstr "막대기 \"완전한 파괴\""
 
 msgid "dragonskin cloak"
 msgstr "용가죽 망토"
@@ -18047,3 +18049,79 @@ msgstr "생명력과 마력의 정수가 융합되는 느낌을 받았다."
 #: spl-data.h:446
 msgid "Summon Small Mammal"
 msgstr "작은 동물 소환"
+
+msgid "ice storm"
+msgstr "맹렬한 냉기의 폭풍"
+
+#: beam.cc:2884 mon-stuff.cc:1162 beam.cc:2886
+msgid "exploding inner flame"
+msgstr "잠재 불씨의 폭발"
+
+#: beam.cc:3434 beam.cc:3436
+msgid "by nerve-wracking pain"
+msgstr "신경까지 파괴하는 극심한 고통에 의해"
+
+#: beam.cc:3468 beam.cc:3470
+msgid "by dispel undead"
+msgstr "언데드 퇴치에 의해"
+
+#: beam.cc:3488 beam.cc:3490
+msgid "disintegration bolt"
+msgstr "분해의 힘"
+
+#: mon-cast.cc:109
+msgid "blast of searing breath"
+msgstr "작열하는 불꽃의 숨결"
+
+#: mon-cast.cc:115
+msgid "blast of chilling breath"
+msgstr "작열하는 냉기의 숨결"
+
+#: mon-cast.cc:123
+msgid "blast of draining breath"
+msgstr "작열하는 흡성 숨결"
+
+#: mon-cast.cc:792
+msgid "blast of fiery breath"
+msgstr "작열하는 불꽃의 숨결"
+
+#: mon-cast.cc:802
+msgid "blast of chaotic breath"
+msgstr "작열하는 혼돈의 숨결"
+
+#: mon-cast.cc:812
+msgid "blast of icy breath"
+msgstr "작열하는 냉기의 숨결"
+
+#: mon-stuff.cc:1175
+msgid "set off by themself"
+msgstr ""
+
+#: mon-stuff.cc:1177
+msgid "set off by their pet"
+msgstr ""
+
+#: spl-damage.cc:196
+msgid "chain lightning"
+msgstr "연쇄 번개"
+
+#: spl-damage.cc:1791
+msgid "by Lee's Rapid Deconstruction"
+msgstr "순간 해체술에 의해"
+
+#: spl-damage.cc:2231
+msgid "rod of lightning"
+msgstr "번개의 마법 막대"
+
+#: xom.cc:1947 xom.cc:1948
+msgid "Xom's lightning strike"
+msgstr "좀의 번개"
+
+msgid "exit from the tutorial"
+msgstr "튜토리얼로부터 나가는 출구"
+
+msgid "Spray of energy"
+msgstr "빛줄기의 분사"
+
+msgid "oink"  
+msgstr "꾸웩"

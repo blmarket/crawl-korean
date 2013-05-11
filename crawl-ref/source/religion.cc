@@ -2601,7 +2601,7 @@ void dock_piety(int piety_loss, int penance)
         if (last_penance_lecture != you.num_turns) // (130203) godspeak.txt의 신들의 대사(성격)와 같아지도록 이 부분은 따로 수정한 부분.
         {										   // 영문판은 어투가 따로 없지만 한글판의 경우는 존재하니 이 부분이 어색하더라고요.
             god_speaks(you.religion,
-					   (you.religion == GOD_TROG || you.religion == GOD_BEOGH || you.religion == GOD_SHINING_ONE) ? "\"네 놈은 지금 한 짓거리의 대가를 똑똑히 치를 것이다!\"" : (you.religion == GOD_ZIN || you.religion == GOD_SIF_MUNA) ? "\"자네는 자네의 업보의 대가를 치르게 될 것이네!\"" : (you.religion == GOD_ELYVILON ? "\"당신은 이제 업보의 대가를 치르게 될 것이에요!\"" : "\"너는 네 업보의 대가를 치르게 될 것이다!\""));
+					   (you.religion == GOD_TROG || you.religion == GOD_BEOGH || you.religion == GOD_SHINING_ONE) ? "\"네 놈은 지금 한 짓거리의 대가를 똑똑히 치를 것이다!\"" : (you.religion == GOD_ZIN || you.religion == GOD_SIF_MUNA) ? "\"자네는 자네의 업보의 대가를 치르게 될 것이네!\"" : (you.religion == GOD_ELYVILON ? "\"넌 이제 업보의 대가를 치르게 될 것이다!\"" : "\"너는 네 업보의 대가를 치르게 될 것이다!\""));
         }
         last_penance_lecture = you.num_turns;
         _inc_penance(penance);
@@ -2763,7 +2763,7 @@ static void _gain_piety_point()
     if (you.religion == GOD_CHEIBRIADOS
         && che_stat_boost(old_piety) < che_stat_boost())
     {
-        simple_god_message(" raises the support of your attributes as your movement slows.");
+        simple_god_message("은(는) 당신의 움직임이 느려짐에 따라, 당신의 능력치를 증가시켜주었다.");
         notify_stat_change("Cheibriados piety gain");
     }
 
@@ -3273,7 +3273,7 @@ void nemelex_death_message()
     const piety_gain_t piety_gain = static_cast<piety_gain_t>
             (min(random2(you.piety) / 30, (int)PIETY_LOTS));
     mpr(_sacrifice_message(_Sacrifice_Messages[GOD_NEMELEX_XOBEH][piety_gain],
-                           "Your body", you.backlit(), false, piety_gain));
+                           "당신의 육체", you.backlit(), false, piety_gain));
 }
 
 bool god_hates_attacking_friend(god_type god, const actor *fr)
@@ -3673,8 +3673,8 @@ void god_pitch(god_type which_god)
 
     if (is_good_god(you.religion) && is_good_god(old_god))
     {
-		std::string good_god_temp1 = ((old_god == GOD_ELYVILON) ? "네요" : ((old_god == GOD_SHINING_ONE) ? "군" : "네"));
-		std::string good_god_temp2 = ((old_god == GOD_ELYVILON) ? "세요" : ((old_god == GOD_SHINING_ONE) ? "거라" : "게나"));
+		std::string good_god_temp1 = ((old_god == GOD_ELYVILON) ? "니라" : ((old_god == GOD_SHINING_ONE) ? "군" : "네"));
+		std::string good_god_temp2 = ((old_god == GOD_ELYVILON) ? "어라" : ((old_god == GOD_SHINING_ONE) ? "거라" : "게나"));
         // Some feedback that piety moved over.
         switch (you.religion)
         {
@@ -3702,7 +3702,7 @@ void god_pitch(god_type which_god)
     if (old_god != GOD_ELYVILON && you.penance[GOD_ELYVILON]
         && god_hates_your_god(GOD_ELYVILON, you.religion))
     {
-        simple_god_message("은(는) 말했다. \"당신의 악행은 용서받지 못할거에요!\"",
+        simple_god_message("은(는) 말했다. \"네 악행은 용서받지 못할 것이니라!\"",
                            GOD_ELYVILON);
     }
     if (old_god != GOD_SHINING_ONE && you.penance[GOD_SHINING_ONE]

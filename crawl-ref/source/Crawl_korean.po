@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-09 22:39+0900\n"
+"POT-Creation-Date: 2013-05-11 07:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6371,14 +6371,14 @@ msgstr "(M)이 마법을 암기한다.(T)"
 #: cloud.cc:824 cloud.cc:826
 #, c-format
 msgid "%s %s in the rain."
-msgstr "%s는 빗속에서 %s다."
+msgstr "%1$s은(는) 빗속에서 수증기를 내뿜고 있다.%2$.0s"
 
 #. / 한글화 하기 어려움. 일단 내비둘것.
 #: cloud.cc:1372 cloud.cc:1371 cloud.cc:1371 cloud.cc:1362 cloud.cc:1293
 #: cloud.cc:1294 cloud.cc:1296 cloud.cc:1299
 #, c-format
 msgid "%s %s standing in the rain."
-msgstr "%s는 빗속에서 서 %s다."
+msgstr "%1$s은(는) 빗속에 서 있다.%2$.0s"
 
 # (deceit) 액터, bask(s) 또는 are engulfed, 구름 이름
 #. / 한글화 하기 몹시 어려움. 내비둘것.
@@ -10951,7 +10951,7 @@ msgstr "당신의 마법 오염이 모두 사라졌다."
 #: player.cc:4808 player.cc:4821 player.cc:4826 player.cc:4823 player.cc:4827
 #, c-format
 msgid "You feel %s contaminated with magical energies."
-msgstr "당신은 마력의 에너지에 의한 오염이 %s을(를) 느꼈다"
+msgstr "당신은 마력의 에너지에 의한 오염이 %s을(를) 느꼈다."
 
 #: player.cc:4668 player.cc:4668 player.cc:4763 player.cc:5010 player.cc:5034
 #: player.cc:4818 player.cc:4831 player.cc:4836 player.cc:4833 player.cc:4837
@@ -15592,6 +15592,9 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -22083,7 +22086,7 @@ msgstr "이 지역은 정적으로 가려있다."
 #: directn.cc:3810 directn.cc:3805 directn.cc:3831 directn.cc:3832
 #, c-format
 msgid "There is a cloud of %s here."
-msgstr "여기에는 %s 구름이 떠다닌다."
+msgstr "여기에는 %s이(가) 떠다닌다."
 
 #: directn.cc:3832 directn.cc:3842 directn.cc:3849 directn.cc:3805
 #: directn.cc:3812 directn.cc:3829 directn.cc:3821 directn.cc:1526
@@ -24014,7 +24017,7 @@ msgstr "은(는) 완벽하게 저항했다."
 #: beam.cc:1821 beam.cc:1506 beam.cc:1551 beam.cc:1592 beam.cc:1611
 #: beam.cc:1700 beam.cc:1780 beam.cc:1813 beam.cc:1508 beam.cc:1553
 #: beam.cc:1578 beam.cc:1594 beam.cc:1613 beam.cc:1702 beam.cc:1782
-#: beam.cc:1815
+#: beam.cc:1815 beam.cc:1726
 msgid " appears unharmed."
 msgstr "에게 아무런 손상을 입히지 못했다."
 
@@ -31833,6 +31836,9 @@ msgstr "뽑았다"
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #: decks.cc:1722 decks.cc:2937 decks.cc:3004 decks.cc:1727 decks.cc:2942
 #: decks.cc:3009 decks.cc:1731 decks.cc:2958 decks.cc:3025 decks.cc:2965
 #: decks.cc:3032 decks.cc:1732 decks.cc:2966 decks.cc:3033 decks.cc:2960
@@ -33508,7 +33514,7 @@ msgid "You resist the pull of the Abyss."
 msgstr "당신은 어비스 추방에 저항했다."
 
 #. The shock is too mild to do damage.
-#: player.cc:6964
+#: player.cc:6964 player.cc:6758
 #, c-format
 msgid "%s gives you a mild electric shock."
 msgstr "%s이(가) 당신에게 약한 전기 충격을 주었다."
@@ -35273,11 +35279,11 @@ msgid "%s suddenly disappears!"
 msgstr "%s이(가) 갑자기 사라졌다!"
 
 #. behaviour_event(mons, ME_CORNERED);
-#: mon-abil.cc:2590
+#: mon-abil.cc:2590 mon-abil.cc:3057
 msgid " curls into a ball and rolls away!"
 msgstr "은(는) 몸을 둥그렇게 말아 굴러 도망쳤다!"
 
-#: mon-abil.cc:2598
+#: mon-abil.cc:2598 mon-abil.cc:3065
 msgid " curls into a ball and starts rolling!"
 msgstr "은(는) 몸을 둥그렇게 말아 굴러가기 시작했다!"
 
@@ -35832,7 +35838,7 @@ msgstr "디폴트로 바꿀 아이템을 선택: "
 
 #: mon-project.cc:256 mon-project.cc:253 mon-project.cc:259
 msgid "wavering "
-msgstr "요동치는 "
+msgstr "흔들거리는 "
 
 #: directn.cc:3508 directn.cc:3515 directn.cc:3532 directn.cc:3551
 #: directn.cc:3552
@@ -37443,7 +37449,7 @@ msgstr "거대한 "
 #, c-format
 msgctxt "splcast"
 msgid "You feel %s %s"
-msgstr "당신은 %s%s"
+msgstr "당신은 %2$s%1$.0s"
 
 #: spl-damage.cc:2351 spl-damage.cc:2349 spl-damage.cc:2638
 msgid "@foe@ @is@ waved at by a branch."
@@ -37698,7 +37704,7 @@ msgid ""
 " here.\n"
 "\n"
 msgstr ""
-" 구름이 떠다닌다.\n"
+"이(가) 떠다닌다.\n"
 "\n"
 
 #: effects.cc:1164 effects.cc:1168 effects.cc:1169
@@ -39366,10 +39372,6 @@ msgstr "당신은 원래 속도로 자동 이동한다."
 msgid " (Use ctrl+direction to attack without moving)"
 msgstr "(Ctrl+방향키를 이용하여, 공격하지 않고 이동)"
 
-#: main.cc:4404
-msgid "You're too terrified to move while being watched!"
-msgstr "당신은 움직이기에는 너무 공포에 사로잡혀있다!"
-
 #: player-equip.cc:520 player-equip.cc:1276
 msgid "You feel your magic capacity is already quite full."
 msgstr "마력은 이미 충만한 것 같다."
@@ -39438,8 +39440,174 @@ msgstr "갑자기 전기가 방출되며 폭발이 일어났다!"
 
 #: spl-miscast.cc:2984
 msgid "Wisps of shadow whirl around..."
-msgstr "그림자들이 당신 선회하기 시작했다..."
+msgstr "그림자들이 당신 주변을 선회하기 시작했다..."
 
 #: spl-miscast.cc:3081
 msgid "An unnatural silence engulfs you."
 msgstr "부자연스러울 정도의 고요함이 당신을 감쌌다."
+
+#: beam.cc:1733 beam.cc:1727
+msgid " is seared!"
+msgstr "은(는) 불에 그을렸다!"
+
+#: player.cc:5153 player.cc:5163
+#, c-format
+msgid "%s rumbles."
+msgstr "%s이(가) 우르릉거리는 소리를 냈다."
+
+#: art-func.h:173 aaaa.cc:173
+msgid "You're too close to death to use this item."
+msgstr "당신은 이 아이템을 사용하기엔 죽음과 너무 가까워졌다."
+
+#: art-func.h:312 aaaa.cc:312
+msgid "The sword says, \"Hi! I'm the Singing Sword!\""
+msgstr "검이 말했다. \"안녕! 난 노래하는 검이야!\""
+
+#: art-func.h:392 aaaa.cc:392
+msgid "A terribly searing pain shoots up your arm!"
+msgstr "끔찍한 고통이 당신의 팔을 타며 작열했다!"
+
+#: art-func.h:439 aaaa.cc:439
+msgid "Your reserves of magic are full."
+msgstr "당신의 마력이 가득찼다."
+
+#: art-func.h:701 aaaa.cc:701
+#, c-format
+msgid "%s %s blasted by disruptive energy!"
+msgstr "%s은(는) 파열하는 마력으로 온 몸이 격렬하게 경련하였다!%2$.0s"
+
+#: art-func.h:724 aaaa.cc:724
+msgid "Time to introduce the shillelagh law."
+msgstr "이 무기의 위력을 시험해 볼 시간이다."
+
+#: art-func.h:738 aaaa.cc:738
+msgid "You feel oddly protected from the elements."
+msgstr "원소 공격으로부터, 무언가 낯설게 보호받는 듯한 느낌을 느꼈다."
+
+#: art-func.h:743 aaaa.cc:743
+msgid "You no longer feel protected from the elements."
+msgstr "원소 마법으로부터 보호받는 느낌이 사라졌다."
+
+#: art-func.h:757 aaaa.cc:757
+msgid "The light fades from your surroundings."
+msgstr "주변이 어두워지기 시작했다."
+
+#: art-func.h:763 aaaa.cc:763
+msgid "The light returns to your surroundings."
+msgstr "주위가 다시 밝아졌다."
+
+#: art-func.h:779 aaaa.cc:779
+msgid "Mutagenic energy flows through the plutonium sword!"
+msgstr "방사능 검으로부터 돌연변이의 마력이 뿜어져나왔다!"
+
+#: art-func.h:795 aaaa.cc:795
+msgctxt "woe"
+msgid "cleave"
+msgstr "두동강냈다"
+
+#: art-func.h:795 aaaa.cc:795
+msgctxt "woe"
+msgid " in twain"
+msgstr "을(를) 수직으로 "
+
+#: art-func.h:796 aaaa.cc:796
+msgctxt "woe"
+msgid "pulverise"
+msgstr "찢어발겼다"
+
+#: art-func.h:796 aaaa.cc:796
+msgctxt "woe"
+msgid " into thin bloody mist"
+msgstr "을(를) 핏빛 안개로 "
+
+#: art-func.h:797 aaaa.cc:797
+msgctxt "woe"
+msgid "hew"
+msgstr "갈기갈기 찢어냈다"
+
+#: art-func.h:797 aaaa.cc:797
+msgctxt "woe"
+msgid " savagely"
+msgstr "의 온 몸을 "
+
+#: art-func.h:798 aaaa.cc:798
+msgctxt "woe"
+msgid "fatally mangle"
+msgstr "을(를) 형체도 알수 없도록 분쇄해버렸다"
+
+#: art-func.h:799 aaaa.cc:799
+msgctxt "woe"
+msgid "dissect"
+msgstr "수평으로 두동강냈다"
+
+#: art-func.h:799 aaaa.cc:799
+msgctxt "woe"
+msgid " like a pig carcass"
+msgstr "을(를) 마치 종이를 자르듯 "
+
+#: art-func.h:800 aaaa.cc:800
+msgctxt "woe"
+msgid "chop"
+msgstr "조각난 육편들로 만들어버렸다"
+
+#: art-func.h:800 aaaa.cc:800
+msgctxt "woe"
+msgid " into pieces"
+msgstr "을(를) 한 번에 "
+
+#: art-func.h:801 aaaa.cc:801
+msgctxt "woe"
+msgid "butcher"
+msgstr "고깃덩이를 다지듯 박살냈다"
+
+#: art-func.h:801 aaaa.cc:801
+msgctxt "woe"
+msgid " messily"
+msgstr "의 몸체를 "
+
+#: art-func.h:802 aaaa.cc:802
+msgctxt "woe"
+msgid "slaughter"
+msgstr "손쉽게 베어냈다"
+
+#: art-func.h:802 aaaa.cc:802
+msgctxt "woe"
+msgid " joyfully"
+msgstr "을(를) "
+
+#: art-func.h:806 aaaa.cc:806
+#, c-format
+msgctxt "woe"
+msgid "%s %s%s %s%s."
+msgstr "%1$s은(는) %4$s%5$s%2$s.%3$.0s"
+
+#beam.cc:4514  
+msgid "your miscasting"  
+msgstr "주문 실패"  
+
+#: main.cc:4377  
+msgid "You're too terrified to move while being watched!"  
+msgstr "당신은 그 곳으로 움직이기에는 너무 공포에 질려있다!"  
+
+#: mon-info.cc:717  
+msgctxt "moninfo"  
+msgid "held by "  
+msgstr "에게 잡힘"  
+ 
+#: mon-info.cc:718  
+msgctxt "moninfo"  
+msgid "constricted by "  
+msgstr "의 조이기에 갖힘"  
+ 
+#: mon-info.cc:734  
+msgctxt "moninfo"  
+msgid "constricting "  
+msgstr "을(를) 조이고 있음"  
+
+#: mon-info.cc:735  
+msgctxt "moninfo"  
+msgid "holding "  
+msgstr "을(를) 잡고 있음"  
+
+msgid " is dazzled."  
+msgstr "은(는) 잠시 시력을 잃었다." 

@@ -1945,7 +1945,7 @@ static int _xom_throw_divine_lightning(bool debug = false)
     beam.colour       = LIGHTCYAN;
     beam.thrower      = KILL_MISC;
     beam.beam_source  = NON_MONSTER;
-    beam.aux_source   = "Xom's lightning strike";
+    beam.aux_source   = _(M_("Xom's lightning strike"));
     beam.ex_size      = 2;
     beam.is_explosion = true;
 

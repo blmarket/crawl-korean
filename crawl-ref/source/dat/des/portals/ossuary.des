@@ -18,28 +18,28 @@ function ossuary_portal(e)
 
   local messager =
     timed_msg {
-      initmsg = { "You hear the hiss of flowing sand.",
-                  "There is an entrance to an ossuary on this level. "
-                  .. "Hurry and find it before the portal is buried!" },
-      finalmsg = "The hiss of flowing sand is almost imperceptible now.",
+      initmsg = { "어디선가 모래들이 솟아 넘치는 소리가 들려왔다.",
+                  "<brown>...이 층 어디에는 작은 납골당으로 통하는 입구가 있노라..."
+                  .. "서둘러 입구를 찾지 않으면... 입구는 모래 속으로 영원히 묻혀버릴 것이니라...</brown>" },
+      finalmsg = "모래 소리가 이제 더 이상 들려오지 않는다.",
 
-      verb = 'hiss',
+      verb = '들려오는',
       -- This is always preceeded by an article, so...
-      noisemaker = 'avalanche of sand',
+      noisemaker = '모래 쌓이는 소리',
       ranges = {
-        { 5000, 'rapid ' },  { 4000, '' },
-        { 2500, 'slow ' }, { 1500, 'irregular ' },
-        { 0, 'erratic ' }
+        { 5000, '급속히 ' },  { 4000, '' },
+        { 2500, '천천히 ' }, { 1500, '불규칙적인 ' },
+        { 0, '매우 불규칙적인 ' }
       }
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The hiss of flowing sand is gone.",
-        desc = "sand-covered staircase",
-        entity = 'staircase',
+        disappear = "모래가 내려가는 계단을 완전히 덮어버렸다.",
+        desc = "모래 덮인 계단",
+        entity = '계단',
         dst = "Ossuary",
-        overview = "sand-covered staircase",
+        overview = "모래 덮인 계단",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "expired_portal",
@@ -546,9 +546,9 @@ SUBST:   EFKGHL : d
 SUBST:   CDJ = 1112
 MONS:    generate_awake zombie place:D:6 /\
          w:5 generate_awake mummy
-MONS:    plant col:darkgrey name:withered n_adj tile:mons_withered_plant /\
-         bog body hd:3 spells:throw_frost;slow;corpse_rot name:decayed n_adj n_noc /\
-         w:5 plant col:lightgrey name:withered n_adj tile:mons_withered_plant /\
+MONS:    plant col:darkgrey name:메마른 n_adj tile:mons_withered_plant /\
+         bog body hd:3 spells:throw_frost;slow;corpse_rot name:메마른 n_adj n_noc /\
+         w:5 plant col:lightgrey name:메마른 n_adj tile:mons_withered_plant /\
          w:5 nothing
 ITEM:    any potion / any scroll / any jewellery w:1
 : ossuary_setup_features(_G)
@@ -688,7 +688,7 @@ ITEM:    any scroll / any potion / nothing
 KITEM:   x = any scroll / any potion
 KMONS:   x = guardian mummy
 : ossuary_setup_features(_G)
-: crawl.mpr("You feel the presence of a powerful and evil guardian...", "warning")
+: crawl.mpr("강력하고 사악한 수호자의 존재를 느꼈다...", "warning")
 MAP
 ccccccccccccccccccccccccccccc
 ccccccccccccccccccccccccccccc

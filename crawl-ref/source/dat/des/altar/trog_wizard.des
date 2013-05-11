@@ -31,8 +31,8 @@ function callback.trog_wizard_convert_wizard(data, triggerable,
     end
 
     dgn.place_cloud(_x, _y, "flame", 15)
-    crawl.god_speaks("Trog", "Flames erupt from the bowels of the wizard! "
-                          .. "Trog roars with satisfaction!")
+    crawl.god_speaks("Trog", "불꽃이 마법사의 몸 속으로부터 피어올랐다! "
+                          .. "트로그는 만족감에 찬 함성을 질렀다!") 
     data.triggered = true
   end
 end
@@ -59,7 +59,7 @@ KFEAT:  1 = .
 # A terrified wizard whose spells have been taken away
 # (he refused to convert)
 MARKER: 1 = lua:portal_desc {slave_name="trog_wizard"}
-MARKER: 1 = lua:MonPropsMarker:new {description="With wild eyes, the wizard frantically mouths words and waves his arms, but is unable to cast a single spell.\n"}
+MARKER: 1 = lua:MonPropsMarker:new {description="초조한 눈빛을 하고 있는 마법사다. 무언가를 미친듯이 중얼거리며 팔을 움직이는 모습이 매우 당황스러운 듯 보이지만, 현재는 아무 주문도 쓸 수 없는 듯 보인다.\n"}
 KMONS:  1 = wizard spells:. ; nothing
 KPROP:  1 = no_rtele_into
 KFEAT:  # = iron_grate

@@ -1485,7 +1485,7 @@ DEPTH:  D, Lair
 FTILE:  .t0@*123 = floor_moss
 : if you.absdepth()>15 then
 :   if you.branch()=="Lair" then
-MONS:   spriggan, spriggan druid n_adj n_noc name:young hd:8, spriggan rider
+MONS:   spriggan, spriggan druid n_adj n_noc name:어린 hd:8, spriggan rider
 :   else
 MONS:   spriggan, spriggan druid, spriggan rider
 :   end
@@ -2356,7 +2356,7 @@ KFEAT:  _ = altar_yredelemnul
 MARKER: _ = lua:fog_machine { cloud_type = "foul pestilence", \
                               pow_min = 5, pow_max = 10, delay = 30, \
                               size = 1, walk_dist = 0, excl_rad = 0 }
-: set_feature_name("tree", "dead tree")
+: set_feature_name("tree", "시든 나무")
 MAP
 @@xxxxxxxxxxxx
 @..t....xxxxxxx
@@ -2464,7 +2464,7 @@ ENDMAP
 
 NAME:  minmay_dual_archer_statues
 DEPTH: D:10-26
-MONS:  statue tile:mons_statue_archer name:archer name_adjective; \
+MONS:  statue tile:mons_statue_archer name:궁수 name_adjective; \
        longbow . arrow q:30
 MONS:  bush
 MAP
@@ -4854,7 +4854,7 @@ NAME:   minmay_guarded_unrand_dyrovepreva
 TAGS:   no_monster_gen no_item_gen
 DEPTH:  D:14-
 WEIGHT: 3
-MONS:   patrolling crystal golem name:crystal_guardian n_rpl n_des spells:bolt_of_fire;bolt_of_cold
+MONS:   patrolling crystal golem name:수정의_수호자 n_rpl n_des spells:bolt_of_fire;bolt_of_cold
 MONS:   orange crystal statue
 ITEM:   cap unrand:crown_of_dyrovepreva
 KPROP:  12d' = no_rtele_into

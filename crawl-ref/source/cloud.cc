@@ -826,7 +826,7 @@ bool _actor_apply_cloud_side_effects(actor *act,
                 mprf(gettext("%s %s in the rain."),
                      act->name(DESC_THE).c_str(),
                      act->conj_verb(silenced(act->pos())?
-                                    V_("steam") : V_("sizzle")).c_str());
+                                    "steam" : "sizzle").c_str());
             }
         }
         if (player)
@@ -1298,7 +1298,7 @@ void cloud_struct::announce_actor_engulfed(const actor *act,
             {
                 mprf(gettext("%s %s standing in the rain."),
                      act->name(DESC_THE).c_str(),
-                     act->conj_verb(V_("are")).c_str());
+                     act->conj_verb("are").c_str());
             }
         }
         else

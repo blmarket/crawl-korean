@@ -18,17 +18,17 @@ function bailey_portal(e, ptype, trowel)
 
   local messager =
     timed_msg {
-      initmsg = { "You hear the roar of battle.",
-                  "There is an entrance to a bailey on this level. "
-                  .. "Hurry and find it before the portal closes forever!" },
-      finalmsg = "$F{The} is probably going to close soon.",
+      initmsg = { "어디선가 전투의 함성이 들려왔다.",
+                  "<yellow>이 층 어딘가에 성채로 향하는 관문이 있는 모양이다. "
+                  .. "관문이 영원히 닫혀버리기 전에 서둘러 입구를 찾는 것이 좋겠다!</yellow>" },
+      finalmsg = "$F{The}은(는) 곧 닫혀버릴 모양이다.",
 
-      verb = 'creaking',
-      noisemaker = 'oriflamme',
+      verb = '불려오는 ',
+      noisemaker = '군가 소리',
         ranges = {
-          { 5000, 'faint ' },  { 4000, '' },
-          { 2500, 'steady ' }, { 1500, 'rapid ' },
-          { 0, 'frantic ' }
+          { 5000, '느긋하게 ' },  { 4000, '' },
+          { 2500, '점점 빨라지는 듯 ' }, { 1500, '급박하게 ' },
+          { 0, '정신 없이 빠르게 ' }
       }
     }
 
@@ -36,12 +36,12 @@ function bailey_portal(e, ptype, trowel)
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The portal closes with a thud.",
+        disappear = "관문은 둔탁한 소리를 내며 닫혔다.",
         desc = "flagged portal",
         entity = 'oriflamme',
         dst = "Bailey",
         bailey_type = ptype,
-        overview = "flagged portal",
+        overview = "깃발이 보이는 관문",
         turns = timeout_turns_long,
         turns_short = timeout_turns_short,
         floor = "stone_arch",

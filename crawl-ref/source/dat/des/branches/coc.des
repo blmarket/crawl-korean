@@ -16,9 +16,9 @@ function coc_setup(e)
    e.lfloorcol("white")
    e.lfloortile("floor_ice")
    e.colour("c = lightblue")
-   e.set_feature_name("rock_wall", "ice-covered rock wall")
-   e.set_feature_name("stone_wall", "ice-covered stone wall")
-   e.set_feature_name("floor", "Frost-covered floor")
+   e.set_feature_name("rock_wall", "얼음 암벽")
+   e.set_feature_name("stone_wall", "얼음 돌벽")
+   e.set_feature_name("floor", "눈 덮인 지면")
 end
 
 -- the Serpent should appear in exactly one hell end

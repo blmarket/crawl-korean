@@ -505,15 +505,15 @@ void show_hiscore_table()
 static const char *_range_type_verb(const char *const aux)
 {
     if (strncmp(aux, "Shot ", 5) == 0)                // launched
-        return "shot";
+        return "의 원거리 공격에";
     else if (aux[0] == 0                                // unknown
              || strncmp(aux, "Hit ", 4) == 0          // thrown
              || strncmp(aux, "volley ", 7) == 0)      // manticore spikes
     {
-        return "hit from afar";
+        return "의 사격에 ";
     }
 
-    return "blasted";                                 // spells, wands
+    return "의 원거리 공격에";                      // spells, wands
 }
 
 string hiscores_format_single(const scorefile_entry &se)
@@ -1191,13 +1191,13 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
             // Setting this is redundant for dancing weapons, however
             // we do care about the above indentification. -- bwr
             if (mons->type != MONS_DANCING_WEAPON)
-                auxkilldata = mitm[mons->inv[MSLOT_WEAPON]].name(true, DESC_A);
+                auxkilldata = mitm[mons->inv[MSLOT_WEAPON]].name(true, DESC_PLAIN);
         }
 
         const bool death = you.hp <= 0;
 
         const description_level_type desc =
-            death_type == KILLED_BY_SPORE ? DESC_PLAIN : DESC_A;
+            death_type == KILLED_BY_SPORE ? DESC_PLAIN : DESC_PLAIN;
 
         death_source_name = mons->name(desc, death);
 
@@ -1740,7 +1740,7 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
     // Please excuse the following bit of mess in the name of flavour ;)
     if (verbose)
     {
-        snprintf(buf, HIGHSCORE_SIZE, "%8d %s the %s (level %d",
+        snprintf(buf, HIGHSCORE_SIZE, "%8d \"%s\", %s (레벨 %d",
                   points, name.c_str(),
                   skill_title(best_skill, best_skill_lvl,
                                race, str, dex, god, piety).c_str(),
@@ -1749,10 +1749,10 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
     }
     else
     {
-        snprintf(buf, HIGHSCORE_SIZE, "%8d %s the %s %s (level %d",
-                  points, name.c_str(),
-                  species_name(static_cast<species_type>(race)).c_str(),
-                  _job_name(job), lvl);
+        snprintf(buf, HIGHSCORE_SIZE, "%8d %s %s \"%s\" (레벨 %d",
+                  points, _(species_name(static_cast<species_type>(race)).c_str()),   
+                  _job_name(job), name.c_str(), 
+                  lvl); 
         desc = buf;
     }
 
@@ -1770,32 +1770,32 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
         desc += " HPs";
     }
 
-    desc += wiz_mode? ") *WIZ*" : ")";
+    desc += wiz_mode? ") *위저드 모드*" : ")";
     desc += _hiscore_newline_string();
 
     if (verbose)
     {
-        string srace = species_name(static_cast<species_type>(race));
-        snprintf(scratch, INFO_SIZE, "Began as a%s %s %s",
-                 is_vowel(srace[0]) ? "n" : "",
+        string srace = _(species_name(static_cast<species_type>(race)).c_str());
+        snprintf(scratch, INFO_SIZE, "%s %s %s",
+                 is_vowel(srace[0]) ? "" : "",
                  srace.c_str(),
                  _job_name(job));
         desc += scratch;
 
         ASSERT(birth_time);
-        desc += " on ";
+        desc += "의 삶(임무)을 ";
         _hiscore_date_string(birth_time, scratch);
         desc += scratch;
 
-        desc = _append_sentence_delimiter(desc, ".");
+        desc = _append_sentence_delimiter(desc, "일에 마감했다.");
         desc += _hiscore_newline_string();
 
         if (race != SP_DEMIGOD && god != GOD_NO_GOD)
         {
             if (god == GOD_XOM)
             {
-                snprintf(scratch, INFO_SIZE, "Was a %sPlaything of Xom.",
-                                   (lvl >= 20) ? "Favourite " : "");
+                snprintf(scratch, INFO_SIZE, "그(그녀)는 좀%s 장난감이었다.",
+                                   (lvl >= 20) ? "이 가장 좋아하는" : "의");
 
                 desc += scratch;
                 desc += _hiscore_newline_string();
@@ -1804,16 +1804,16 @@ scorefile_entry::character_description(death_desc_verbosity verbosity) const
             {
                 // Not exactly the same as the religion screen, but
                 // good enough to fill this slot for now.
-                snprintf(scratch, INFO_SIZE, "Was %s of %s%s",
-                             (piety >  160) ? "the Champion" :
-                             (piety >= 120) ? "a High Priest" :
-                             (piety >= 100) ? "an Elder" :
-                             (piety >=  75) ? "a Priest" :
-                             (piety >=  50) ? "a Believer" :
-                             (piety >=  30) ? "a Follower"
-                                            : "an Initiate",
-                          god_name(god).c_str(),
-                             (penance > 0) ? " (penitent)." : ".");
+                snprintf(scratch, INFO_SIZE, "그(그녀)는 %s의 %s%s", _(god_name(god).c_str()),
+                             (piety >  160) ? "화신" :
+                             (piety >= 120) ? "장로" :
+                             (piety >= 100) ? "사제" :
+                             (piety >=  75) ? "수행자" :
+                             (piety >=  50) ? "신자" :
+                             (piety >=  30) ? "추종자"
+                                            : "수련생",
+                          
+                             (penance > 0) ? " (으)로서 참회의 길을 걷고 있었다." : "(이)였다.");
 
                 desc += scratch;
                 desc += _hiscore_newline_string();
@@ -1849,11 +1849,11 @@ string scorefile_entry::death_place(death_desc_verbosity verbosity) const
 
     // add appropriate prefix
     if (placename.find("Level") == 0)
-        place += " on ";
+        place += "에서 ";
     else
-        place += " in ";
+        place += "에서 ";
 
-    place += placename;
+    place = placename + name;
 
     if (!mapdesc.empty())
         place += make_stringf(" (%s)", mapdesc.c_str());
@@ -1861,7 +1861,7 @@ string scorefile_entry::death_place(death_desc_verbosity verbosity) const
     if (verbose && death_time
         && !_hiscore_same_day(birth_time, death_time))
     {
-        place += " on ";
+        place += "에서 ";
         _hiscore_date_string(death_time, scratch);
         place += scratch;
     }
@@ -1980,10 +1980,11 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         if (oneline || semiverbose)
         {
             // keeping this short to leave room for the deep elf spellcasters:
-            snprintf(scratch, sizeof(scratch), "%s by ",
+            snprintf(scratch, sizeof(scratch), "%s죽었다.",
                       _range_type_verb(auxkilldata.c_str()));
             desc += scratch;
-            desc += death_source_desc();
+            desc = " " + death_source_desc() + desc;  
+	        desc = replace_all(desc, " 의", "의");  
 
             if (semiverbose)
             {
@@ -2015,12 +2016,14 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
         {
             // Note: This is also used for the "by" cases in non-verbose
             //       mode since listing the monster is more imporatant.
-            if (semiverbose)
-                desc += "Killed by ";
-            else if (!terse)
-                desc += "Killed from afar by ";
+			desc += death_source_desc(); 
 
-            desc += death_source_desc();
+            if (semiverbose)
+                desc += "에게 죽었다.";
+            else if (!terse)
+                desc += "의 원거리 공격에 죽었다.";
+
+            //desc += death_source_desc();
 
             if (!auxkilldata.empty())
                 needs_beam_cause_line = true;

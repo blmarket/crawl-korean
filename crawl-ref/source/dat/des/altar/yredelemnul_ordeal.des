@@ -7,8 +7,8 @@ function callback.dk_yredelemnul_ordeal_los(data, triggerable, triggerer, marker
   if data.triggered == true then
     return
   end
-  crawl.god_speaks("Yredelemnul", "You sense Yredelemnul urging you " ..
-                                  "to kill the trapped human.")
+  crawl.god_speaks("Yredelemnul", "이레데넴눌은, 저기 갇혀 있는 인간을 " .. 
+                                  "살해할 베짱이 있다면, 제단으로 오는 길을 열어주겠다고 속삭였다.")
   data.triggered = true
 end
 
@@ -20,11 +20,11 @@ function callback.dk_yredelemnul_ordeal(data, triggerable, triggerer, marker, ev
         dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
         dgn.place_cloud(slave.x, slave.y, "foul pestilence", crawl.random2(15) + 5)
       else
-        crawl.mpr("You feel a numb sensation.")
+        crawl.mpr("멍한 느낌을 받았다.")
         return
       end
   end
-  crawl.mpr("You hear a strange fizzling.")
+  crawl.mpr("불타는 듯한 기이한 소리가 들렸다.")
 end
 }}
 

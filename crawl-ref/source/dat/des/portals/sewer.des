@@ -19,27 +19,27 @@ function sewer_portal(e)
 
   local messager =
     timed_msg {
-       initmsg = { "You hear the sound of rushing water.",
-                   "There is an entrance to a sewer on this level. "
-                   .. "Hurry and find it before the portal rusts away!" },
-      finalmsg = "You hear the drain falling apart.",
+       initmsg = { "어디선가 물이 흐르는 소리가 들려왔다.",
+                   "<lightgreen>이 층 어딘가에 배수로로 통하는 입구가 있을 것이다. "
+                   .. "배수로가 부식되어 사라지기 전에 서둘러 입구를 찾는 것이 좋을 것이다!</lightgreen>" },
+      finalmsg = "배수로가 무너지는 소리가 들려왔다.",
 
-      verb = 'rusting',
-      noisemaker = 'drain',
+      verb = '부식되는',
+      noisemaker = '배수로 소리',
       ranges = {
-        { 5000, 'slow ' },  { 4000, '' },
-        { 2500, 'brisk ' }, { 1500, 'quick ' },
-        { 0, 'rapid ' }
+        { 5000, '천천히 ' },  { 4000, '' },
+        { 2500, '조금 빠르게 ' }, { 1500, '빠르게 ' },
+        { 0, '급속히 ' }
       }
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "The drain falls to bits.",
-        desc = "glowing drain",
+        disappear = "배수로는 무너져 사라졌다.", 
+        desc = "반짝이는 배수로", 
         entity = 'drain',
         dst = "Sewer",
-        overview = "glowing drain",
+        overview = "반짝이는 배수로", 
         turns = timeout_turns,
         floor = "expired_portal",
         feat_tile = "dngn_portal_sewer_rusted",
@@ -344,7 +344,7 @@ ITEM:   potion of curing / potion of heal wounds / potion of might w:4 /\
         potion of brilliance w:4 / potion of agility w:4 /\
         potion of flight w:4 / any scroll w:7 / any armour w:2 / any weapon w:2
 : sewer_setup(_G)
-: set_feature_name("clear_stone_wall", "large window")
+: set_feature_name("clear_stone_wall", "커다란 창")
 KFEAT:  C = deep_water
 MAP
 vvvvxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxvvvv
@@ -820,8 +820,8 @@ NAME:   sewer_sea
 TAGS:   no_item_gen no_monster_gen no_rotate no_pool_fixup
 ORIENT: encompass
 MONS:   rat w:3 / grey rat w:1 / nothing w:1, rat / grey rat / green rat
-KMONS:  G = mermaid hd:3 name:malarious name_adjective name_species
-KMONS:  H = siren hd:3 name:sickly name_adjective name_species
+KMONS:  G = mermaid hd:3 name:감염된 name_adjective name_species
+KMONS:  H = siren hd:3 name:연약한 name_adjective name_species
 KMONS:  hJ = giant newt / ball python / adder / nothing w:2
 KMONS:  g = giant newt / ball python / giant mite / giant cockroach / \
             giant gecko / nothing w:7

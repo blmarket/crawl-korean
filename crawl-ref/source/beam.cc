@@ -1723,8 +1723,8 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
         if (doFlavouredEffects)
         {
             simple_monster_message(mons,
-                                   hurted == 0 ? " appears unharmed."
-                                               : " is seared!");
+                                   hurted == 0 ? _(" appears unharmed.")
+                                               : _(" is seared!"));
         }
         break;
     }
@@ -2290,7 +2290,7 @@ static void _imb_explosion(bolt *parent, coord_def center)
         return;
     bolt beam;
     beam.name           = M_("mystic blast");
-    beam.aux_source     = "orb of energy";
+    beam.aux_source     = _(M_("orb of energy"));
     beam.beam_source    = parent->beam_source;
     beam.thrower        = parent->thrower;
     beam.attitude       = parent->attitude;
@@ -2874,7 +2874,7 @@ void bolt::internal_ouch(int dam)
                 ouch(dam, NON_MONSTER, KILLED_BY_TARGETTING, name.c_str());
         }
     }
-    else if (MON_KILL(thrower) || aux_source == "exploding inner flame")
+    else if (MON_KILL(thrower) || aux_source == "exploding inner flame" || aux_source == _(M_("exploding inner flame")))
         ouch(dam, beam_source, KILLED_BY_BEAM, aux_source.c_str(), true,
              source_name.empty() ? NULL : source_name.c_str());
     else // KILL_MISC || (YOU_KILL && aux_source)
@@ -3424,7 +3424,7 @@ void bolt::affect_player_enchantment()
         }
 
         if (aux_source.empty())
-            aux_source = "by nerve-wracking pain";
+            aux_source = _(M_("by nerve-wracking pain"));
 
         if (name.find("agony") != string::npos)
         {
@@ -3458,7 +3458,7 @@ void bolt::affect_player_enchantment()
         mpr(gettext("You convulse!"));
 
         if (aux_source.empty())
-            aux_source = "by dispel undead";
+            aux_source = _(M_("by dispel undead"));
 
         if (you.is_undead == US_SEMI_UNDEAD)
         {
@@ -3478,7 +3478,7 @@ void bolt::affect_player_enchantment()
         mpr(pgettext("beam","You are blasted!"));
 
         if (aux_source.empty())
-            aux_source = "disintegration bolt";
+            aux_source = _(M_("disintegration bolt"));
 
         {
             int amt = damage.roll();
@@ -4138,7 +4138,7 @@ static bool _dazzle_monster(monster* mons, actor* act)
 
     if (x_chance_in_y(85 - mons->hit_dice * 3 , 100))
     {
-        simple_monster_message(mons, " is dazzled.");
+        simple_monster_message(mons, _(" is dazzled."));
         mons->add_ench(mon_enchant(ENCH_BLIND, 1, act, 40 + random2(40)));
         return true;
     }
@@ -4238,7 +4238,7 @@ void bolt::beam_hits_actor(actor *act)
                 mprf(gettext("%s %s knocked back by the %s."),
                      act->name(DESC_THE).c_str(),
                      act->conj_verb("are").c_str(),
-                     name.c_str());
+                     _(name.c_str()));
             }
         }
 
@@ -4428,7 +4428,7 @@ void bolt::affect_monster(monster* mon)
             // ?immolation.
             const bool okay =
                 (!you.can_see(mon)
-                    || aux_source == "scroll of immolation" && !effect_known);
+                    || (aux_source == "scroll of immolation" || aux_source == _("scroll of immolation")) && !effect_known);
 
             if (is_sanctuary(mon->pos()) || is_sanctuary(you.pos()))
                 remove_sanctuary(true);
@@ -4516,7 +4516,7 @@ void bolt::affect_monster(monster* mon)
     if (you.religion == GOD_FEDHAS
         && (flavour == BEAM_SPORE
             || beam_source == NON_MONSTER
-               && aux_source.find("your miscasting") != string::npos))
+               && (aux_source.find("your miscasting") || aux_source.find(_("your miscasting"))) != string::npos))
     {
         conducts[0].enabled = false;
     }

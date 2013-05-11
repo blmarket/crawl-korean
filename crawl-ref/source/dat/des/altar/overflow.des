@@ -532,8 +532,8 @@ COLOUR: '!@ = green
 : if you.race() ~= "Mummy" and you.race() ~= "Ghoul"
 :   and you.race() ~= "Vampire"
 : then
-MARKER:  ! = lua:message_at_spot("Fedhas urges you to decompose the vile \
-                                 beasts imprisoned behind the altar.", \
+MARKER:  ! = lua:message_at_spot("페다스는 제단 주위의 불경스러운 존재들을 \ 
+                                 거름으로 만들어줄 것을 당신에게 제안해왔다.", \ 
                                  "god")
 : end
 NSUBST: 3 = 3:3 / 3 = 3 4:25 / 3 = 4 .:25 / *:.
@@ -600,8 +600,8 @@ ENDMAP
 NAME:   kiku_gazebo_garden_becter
 TAGS:   temple_overflow_kikubaaqudgha transparent mini_float
 DEPTH:  D:2-9
-KMONS:  f = w:2 col:darkgrey plant name:withered name_adjective               \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:  f = w:2 col:darkgrey plant name:메마른 name_adjective               \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant
 KFEAT:  _ = altar_kikubaaqudgha
 SUBST:  ` = f....
@@ -883,7 +883,7 @@ COLOUR: 'b = silver
 TILE:   x = wall_pebble_red
 TILE:   b = dngn_crystal_white
 : interest_check(_G)
-: set_feature_name("green_crystal_wall", "wall of white crystal")
+: set_feature_name("green_crystal_wall", "흰 수정 벽")
 MAP
     ...
    ..x..
@@ -1367,9 +1367,9 @@ NAME:    vehumet_statue
 DEPTH:   D:4-10
 TAGS:    temple_overflow_vehumet
 SHUFFLE: 12
-MONS:    statue name:charred name_adjective tile:mons_statue_mage \
+MONS:    statue name:새까맣게_탄 name_adjective tile:mons_statue_mage \
              hp:12 hd:3 spells:throw_flame
-MONS:    statue name:frost-covered name_adjective tile:mons_statue_mage \
+MONS:    statue name:서리에_덮인 name_adjective tile:mons_statue_mage \
              hp:12 hd:3 spells:throw_frost
 KFEAT:   _ = altar_vehumet
 MAP
@@ -1595,8 +1595,8 @@ NAME:   yredelemnul_altar_generic
 TAGS:   uniq_altar_yredelemnul temple_overflow_yredelemnul decor
 DEPTH:  D:2-20
 KFEAT:  C = altar_yredelemnul
-KMONS:  f = w:2 col:darkgrey plant name:withered name_adjective               \
-            tile:mons_withered_plant / w:1 col:lightgrey plant name:withered  \
+KMONS:  f = w:2 col:darkgrey plant name:메마른 name_adjective               \
+            tile:mons_withered_plant / w:1 col:lightgrey plant name:메마른  \
             name_adjective tile:mons_withered_plant
 : interest_check(_G)
 MAP

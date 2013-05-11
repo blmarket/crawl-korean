@@ -38,13 +38,13 @@ function callback.ldierk_geyser(data, triggerable, triggerer, marker, ev)
     dgn.grid(x, y, ftype)
     if (you.see_cell(x, y)) then
       if (ftype == "fountain_blue") then
-        crawl.mpr("A fountain of clear blue water erupts!")
+        crawl.mpr("맑은 물의 샘이 솟아났다!")
       else
-        crawl.mpr("A fountain of sparkling water erupts!")
+        crawl.mpr("거품이 이는 샘이 솟아났다!")
       end
     else
       if not you.silenced() and crawl.one_chance_in(4) then
-        crawl.mpr("You hear a distant splash.")
+        crawl.mpr("어디선가 물이 흐르는 소리가 들려왔다.")
       end
     end
     dgn.apply_area_cloud(x, y, 15, 25, 2, 2, "steam", "other", 10)
@@ -54,10 +54,10 @@ function callback.ldierk_geyser(data, triggerable, triggerer, marker, ev)
   else
     dgn.grid(data.x, data.y, "shallow_water")
     if (you.see_cell(data.x, data.y)) then
-      crawl.mpr("The fountain becomes smaller until it vanishes.")
+      crawl.mpr("분수는 점점 작아졌고, 결국 사라져버렸다.")
     else
       if not you.silenced() and crawl.one_chance_in(4) then
-        crawl.mpr("You hear a distant splash.")
+        crawl.mpr("어디선가 물이 흐르는 소리가 들려왔다.")
       end
     end
     data.action = "add"

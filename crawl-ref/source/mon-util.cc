@@ -3926,7 +3926,7 @@ string do_mon_str_replacements(const string &in_msg, const monster* mons,
     }
     else if (mons->god == GOD_NAMELESS)
     {
-        msg = replace_all(msg, "@God@", "a god");
+        msg = replace_all(msg, "@God@", _(M_("a god")));
         const string possessive = mons->pronoun(PRONOUN_POSSESSIVE) + " god";
         msg = replace_all(msg, "@possessive_God@", possessive.c_str());
 
