@@ -59,8 +59,8 @@ KFEAT:  1 = .
 # A terrified wizard whose spells have been taken away
 # (he refused to convert)
 MARKER: 1 = lua:portal_desc {slave_name="trog_wizard"}
+KMONS:  1 = wizard perm_ench:mute spells:. dbname:붙잡힌_마법사 ; nothing
 MARKER: 1 = lua:MonPropsMarker:new {description="초조한 눈빛을 하고 있는 마법사다. 무언가를 미친듯이 중얼거리며 팔을 움직이는 모습이 매우 당황스러운 듯 보이지만, 현재는 아무 주문도 쓸 수 없는 듯 보인다.\n"}
-KMONS:  1 = wizard spells:. ; nothing
 KPROP:  1 = no_rtele_into
 KFEAT:  # = iron_grate
 MAP

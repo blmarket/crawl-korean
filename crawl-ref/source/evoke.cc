@@ -771,7 +771,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr(_("You're too confused."));
+            canned_msg(MSG_TOO_CONFUSED);
             return false;
         }
 
@@ -786,7 +786,7 @@ bool evoke_item(int slot)
 
     case OBJ_STAVES:
         ASSERT(wielded);
-        if (item.sub_type != STAFF_CHANNELING)
+        if (item.sub_type != STAFF_ENERGY)
         {
             unevokable = true;
             break;
@@ -794,7 +794,7 @@ bool evoke_item(int slot)
 
         if (you.confused())
         {
-            mpr(_("You're too confused."));
+            canned_msg(MSG_TOO_CONFUSED);
             return false;
         }
 

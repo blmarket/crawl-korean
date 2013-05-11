@@ -419,6 +419,9 @@ void canned_msg(canned_message_type which_message)
         mpr(gettext("You are too berserk!"));
         crawl_state.cancel_cmd_repeat();
         break;
+    case MSG_TOO_CONFUSED:
+        mpr(_("You're too confused!"));
+        break;
     case MSG_PRESENT_FORM:
         mpr(gettext("You can't do that in your present form."));
         crawl_state.cancel_cmd_repeat();

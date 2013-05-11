@@ -1107,8 +1107,7 @@ static const char* staff_type_name(int stafftype)
     case STAFF_AIR:         return M_("air");
     case STAFF_EARTH:       return M_("earth");
     case STAFF_SUMMONING:   return M_("summoning");
-    case STAFF_CHANNELING:  return M_("channeling");
-    default:                return M_("bugginess");
+    default:                return "bugginess";
     }
 }
 
@@ -2373,6 +2372,9 @@ void check_item_knowledge(bool unknown_items)
 
             if (i == OBJ_STAVES && j == STAFF_ENCHANTMENT)
                 continue;
+
+            if (i == OBJ_STAVES && j == STAFF_CHANNELING)
+                continue;
 #endif
 
             if (unknown_items ? you.type_ids[i][j] != ID_KNOWN_TYPE
@@ -3130,8 +3132,7 @@ bool is_dangerous_item(const item_def &item, bool temp)
 
 static bool _invisibility_is_useless(const bool temp)
 {
-    // If you're Corona'd or a TSO-ite, this is always useless.
-    return (temp ? you.backlit(true)
+    return (temp ? you.backlit(true, true, false)
                  : you.haloed() && you.religion == GOD_SHINING_ONE);
 
 }
@@ -3395,13 +3396,6 @@ bool is_useless_item(const item_def &item, bool temp)
             return true;
         if (!item_type_known(item))
             return false;
-        if (item.sub_type == STAFF_ENERGY && you.species == SP_MUMMY)
-            return true;
-        if (item.sub_type == STAFF_ENERGY && temp && (you.form == TRAN_LICH
-            || you.species == SP_VAMPIRE && you.hunger_state == HS_STARVING))
-        {
-            return true;
-        }
         break;
 
     case OBJ_FOOD:

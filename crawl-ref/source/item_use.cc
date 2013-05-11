@@ -2887,7 +2887,7 @@ void read_scroll(int slot)
 
     if (you.confused())
     {
-        mpr(_("You're too confused."));
+        canned_msg(MSG_TOO_CONFUSED);
         return;
     }
 
