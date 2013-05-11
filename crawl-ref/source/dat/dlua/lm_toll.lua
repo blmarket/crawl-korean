@@ -112,8 +112,8 @@ function TollStair:check_veto(marker, pname)
     else
         toll_desc = "at " .. crawl.article_a(self.props.desc)
     end
-    crawl.take_note("You paid a toll of " .. needed .. " gold " ..
-                    toll_desc .. ".")
+    crawl.take_note(needed .. "골드를 " ..
+                    toll_desc .. "에 지불했다.")
     return
   end
 end
@@ -131,7 +131,7 @@ function TollStair:property(marker, pname)
 end
 
 function TollStair:feature_description_long(marker)
-  return "The portal charges " .. self.props.amount .. " for entry.\n"
+  return "이 관문은 " .. self.props.amount .. "골드로 입장할 수 있다.\n"
 end
 
 function TollStair:write(marker, th)

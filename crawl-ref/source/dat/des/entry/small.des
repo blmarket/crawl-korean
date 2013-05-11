@@ -2817,7 +2817,7 @@ COLOUR:  ' = brown / darkgrey
 COLOUR:  t = darkgrey
 COLOUR:  G = white
 SUBST:   t = t.
-: set_feature_name("granite_statue", "¸ğÇè°¡ÀÇ ºñ¼®")
+: set_feature_name("granite_statue", "ëª¨í—˜ê°€ì˜ ë¹„ì„")
 MAP
     ....'....
   ...'....'..

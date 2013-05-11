@@ -515,7 +515,7 @@ KFEAT:      o = granite_statue
 FTILE:      WU.Oo = floor_rough_magenta
 TILE:       b = dngn_crystal_magenta
 :           wizlab_portal(_G)
-: set_feature_name("green_crystal_wall", "wall of crystal")
+: set_feature_name("green_crystal_wall", "수정 벽")
 MAP
 bbbbbbbbbbb
 bbbb...bbbb
@@ -1099,7 +1099,7 @@ KMONS:      a = human name:고통으로_울부짖는 dbname:deformed_humanoid n_
             human name:기형 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
             human name:기이하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human   / \
             human name:온_몸이_꼬인 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
-            human name:그로테크크한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
+            human name:그로테스크한 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human  / \
             human name:끔찍하게_변형된 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_human    / \
             human name:뒤틀린 dbname:deformed_humanoid n_adj n_noc tile:mons_deformed_human
 KMONS:      b = elf name:고통으로_울부짖는 dbname:deformed_humanoid n_adj n_spe tile:mons_deformed_elf     / \
