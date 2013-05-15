@@ -406,6 +406,10 @@ static bool _abyss_check_place_feat(coord_def p,
             && _abyss_place_vault_tagged(abyss_genlevel_mask, "abyss_exit"))
         {
             *use_map = false;
+
+            // Link the vault-placed items.
+            fixup_misplaced_items();
+            link_items();
         }
         else
             grd(p) = which_feat;
@@ -1210,7 +1214,7 @@ static void _abyss_apply_terrain(const map_bitmask &abyss_genlevel_mask,
                                 _abyss_pick_altar(),
                                 abyss_genlevel_mask)
         ||
-        (level_id::current().depth < 5 &&
+        (level_id::current().depth < brdepth[BRANCH_ABYSS] &&
         _abyss_check_place_feat(p, _abyssal_stair_chance(), NULL, NULL,
                                 DNGN_ABYSSAL_STAIR,
                                 abyss_genlevel_mask)));

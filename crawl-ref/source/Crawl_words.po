@@ -17813,7 +17813,7 @@ msgid "skin of Zhor"
 msgstr "즈홀의 가죽"
 
 msgid "salamander hide armour"
-msgstr "샐러맨더의 가봉ㅅ"
+msgstr "샐러맨더의 갑옷"
 
 msgid "gauntlets of War"
 msgstr "전쟁의 건틀렛"

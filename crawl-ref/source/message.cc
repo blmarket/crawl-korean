@@ -31,6 +31,7 @@
 #include "view.h"
 #include "shout.h"
 #include "viewgeom.h"
+#include "korean.h"
 
 #include <sstream>
 
@@ -1199,6 +1200,8 @@ void mpr(string text, msg_channel_type channel, int param, bool nojoin, bool cap
     // Ugly hack.
     if (channel == MSGCH_DIAGNOSTICS || channel == MSGCH_ERROR)
         cap = false;
+
+	text = message_correction(text);
 
     msg_colour_type colour = prepare_message(text, channel, param);
 

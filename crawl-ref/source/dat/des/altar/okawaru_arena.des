@@ -7,9 +7,9 @@ function callback.oka_start_challange(data, triggerable, triggerer, marker, ev)
   for slave in iter.slave_iterator("cage_doors", 1) do
     dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
   end
-  crawl.mpr("The portcullises are lifted away, releasing the combatants.",
+  crawl.mpr("쇠창살이 걷히고, 적들이 풀려나기 시작했다.",
             "warning")
-  crawl.mpr("The doors seal shut behind you!", "warning")
+  crawl.mpr("문이 큰 소리를 내며 봉인어 닫혔다!", "warning")
   -- Close the door.
   for slave in iter.slave_iterator("iron_doors", 1) do
     dgn.terrain_changed(slave.x, slave.y, "metal_wall", false, false, false)
@@ -25,7 +25,7 @@ function callback.oka_monsters_death (data, triggerable, triggerer, marker, ev)
     end
 
     crawl.god_speaks("Okawaru",
-                     "Okawaru booms, \"Excellent! You may choose a reward.\"")
+                     "오카와루는 말했다, \"훌륭하도다! 그대는 이제 보상을 선택할지어니...\"")
     -- Open exit.
     for slave in iter.slave_iterator("iron_doors", 1) do
       dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
@@ -34,7 +34,7 @@ function callback.oka_monsters_death (data, triggerable, triggerer, marker, ev)
     for slave in iter.slave_iterator("loot_doors", 1) do
       dgn.terrain_changed(slave.x, slave.y, "floor", false, false, false)
     end
-    crawl.mpr("The gates behind the altar rise, and the entry reopens.")
+    crawl.mpr("계단 뒤의 철창이 올라왔고, 입구가 다시 열렸다.")
   end
 end
 
@@ -106,7 +106,7 @@ KFEAT:  M = escape_hatch_down
 KFEAT:  E = runed_door
 KFEAT:  Kk = altar_okawaru
 KFEAT:  - = floor
-COLOUR: t-EMLlv = cyan
+COLOUR: -EMLlv = cyan
 
 {{
 local tlos_door = TriggerableFunction:new{
@@ -149,18 +149,15 @@ lua_marker("G", portal_desc { cage_doors=1 })
 lua_marker("o", tlos_door)
 lua_marker("E", portal_desc { iron_doors=1,
                               door_open_prompt=
-                                "It reads,\n"
-                                .. "\"Warrior's weapon\n"
-                                .. " gracefully paints petals red.\n"
-                                .. " Honourable art.\"\n"
-                                .. "Proceed?" })
+                                "문에 글귀가 쓰여있다: \n"
+                                .. "\"전사의 무기는 우아하게, \n"
+                                .. " 꽃잎들을 붉게 물들였도다.\n"
+                                .. " 고결한 예술인지라...\"\n"
+                                .. "문을 열 것인가?" })
 lua_marker("L", tloot_grab)
 lua_marker("l", tloot_grab2)
 lua_marker("v", portal_desc { lava_spout=1 })
 lua_marker("R", portal_desc { loot_doors=1 })
-lua_marker("t", portal_desc { veto_fire="veto", veto_disintegrate="veto" })
-set_feature_name("tree", "강철 나무")
-
 dgn.persist.oka_arena_cages = false
 }}
 

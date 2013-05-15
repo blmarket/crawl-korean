@@ -19,27 +19,27 @@ function sewer_portal(e)
 
   local messager =
     timed_msg {
-       initmsg = { "¾îµğ¼±°¡ ¹°ÀÌ Èå¸£´Â ¼Ò¸®°¡ µé·Á¿Ô´Ù.",
-                   "<lightgreen>ÀÌ Ãş ¾îµò°¡¿¡ ¹è¼ö·Î·Î ÅëÇÏ´Â ÀÔ±¸°¡ ÀÖÀ» °ÍÀÌ´Ù. "
-                   .. "¹è¼ö·Î°¡ ºÎ½ÄµÇ¾î »ç¶óÁö±â Àü¿¡ ¼­µÑ·¯ ÀÔ±¸¸¦ Ã£´Â °ÍÀÌ ÁÁÀ» °ÍÀÌ´Ù!</lightgreen>" },
-      finalmsg = "¹è¼ö·Î°¡ ¹«³ÊÁö´Â ¼Ò¸®°¡ µé·Á¿Ô´Ù.",
+       initmsg = { "ì–´ë””ì„ ê°€ ë¬¼ì´ íë¥´ëŠ” ì†Œë¦¬ê°€ ë“¤ë ¤ì™”ë‹¤.",
+                   "<lightgreen>ì´ ì¸µ ì–´ë”˜ê°€ì— ë°°ìˆ˜ë¡œë¡œ í†µí•˜ëŠ” ì…êµ¬ê°€ ìˆì„ ê²ƒì´ë‹¤. "
+                   .. "ë°°ìˆ˜ë¡œê°€ ë¶€ì‹ë˜ì–´ ì‚¬ë¼ì§€ê¸° ì „ì— ì„œë‘˜ëŸ¬ ì…êµ¬ë¥¼ ì°¾ëŠ” ê²ƒì´ ì¢‹ì„ ê²ƒì´ë‹¤!</lightgreen>" },
+      finalmsg = "ë°°ìˆ˜ë¡œê°€ ë¬´ë„ˆì§€ëŠ” ì†Œë¦¬ê°€ ë“¤ë ¤ì™”ë‹¤.",
 
-      verb = 'ºÎ½ÄµÇ´Â',
-      noisemaker = '¹è¼ö·Î ¼Ò¸®',
+      verb = 'ë¶€ì‹ë˜ëŠ”',
+      noisemaker = 'ë°°ìˆ˜ë¡œ ì†Œë¦¬',
       ranges = {
-        { 5000, 'ÃµÃµÈ÷ ' },  { 4000, '' },
-        { 2500, 'Á¶±İ ºü¸£°Ô ' }, { 1500, 'ºü¸£°Ô ' },
-        { 0, '±Ş¼ÓÈ÷ ' }
+        { 5000, 'ì²œì²œíˆ ' },  { 4000, '' },
+        { 2500, 'ì¡°ê¸ˆ ë¹ ë¥´ê²Œ ' }, { 1500, 'ë¹ ë¥´ê²Œ ' },
+        { 0, 'ê¸‰ì†íˆ ' }
       }
     }
 
   e.lua_marker('O',
       timed_marker {
-        disappear = "¹è¼ö·Î´Â ¹«³ÊÁ® »ç¶óÁ³´Ù.", 
-        desc = "¹İÂ¦ÀÌ´Â ¹è¼ö·Î", 
+        disappear = "ë°°ìˆ˜ë¡œëŠ” ë¬´ë„ˆì ¸ ì‚¬ë¼ì¡Œë‹¤.", 
+        desc = "ë°˜ì§ì´ëŠ” ë°°ìˆ˜ë¡œ", 
         entity = 'drain',
         dst = "Sewer",
-        overview = "¹İÂ¦ÀÌ´Â ¹è¼ö·Î", 
+        overview = "ë°˜ì§ì´ëŠ” ë°°ìˆ˜ë¡œ", 
         turns = timeout_turns,
         floor = "expired_portal",
         feat_tile = "dngn_portal_sewer_rusted",
@@ -344,7 +344,7 @@ ITEM:   potion of curing / potion of heal wounds / potion of might w:4 /\
         potion of brilliance w:4 / potion of agility w:4 /\
         potion of flight w:4 / any scroll w:7 / any armour w:2 / any weapon w:2
 : sewer_setup(_G)
-: set_feature_name("clear_stone_wall", "Ä¿´Ù¶õ Ã¢")
+: set_feature_name("clear_stone_wall", "ì»¤ë‹¤ë€ ì°½")
 KFEAT:  C = deep_water
 MAP
 vvvvxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxvvvv
@@ -820,8 +820,8 @@ NAME:   sewer_sea
 TAGS:   no_item_gen no_monster_gen no_rotate no_pool_fixup
 ORIENT: encompass
 MONS:   rat w:3 / grey rat w:1 / nothing w:1, rat / grey rat / green rat
-KMONS:  G = mermaid hd:3 name:°¨¿°µÈ name_adjective name_species
-KMONS:  H = siren hd:3 name:¿¬¾àÇÑ name_adjective name_species
+KMONS:  G = mermaid hd:3 name:ê°ì—¼ëœ name_adjective name_species
+KMONS:  H = siren hd:3 name:ì—°ì•½í•œ name_adjective name_species
 KMONS:  hJ = giant newt / ball python / adder / nothing w:2
 KMONS:  g = giant newt / ball python / giant mite / giant cockroach / \
             giant gecko / nothing w:7
