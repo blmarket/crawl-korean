@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-18 15:58+0900\n"
+"POT-Creation-Date: 2013-05-18 16:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12426,6 +12426,10 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -18214,3 +18218,6 @@ msgstr "빛줄기의 분사"
 
 msgid "oink"
 msgstr "꾸웩"
+
+msgid "Lear's hauberk"
+msgstr "리어 왕의 전신 갑옷"

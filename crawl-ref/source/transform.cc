@@ -709,7 +709,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         // May need to be updated if transform_uncancellable is used for
         // other uses.
         if (!just_check)
-            mpr("You are stuck in your current form!");
+            mpr(_("You are stuck in your current form!"));
         return false;
     }
 
@@ -1228,7 +1228,7 @@ void untransform(bool skip_wielding, bool skip_move)
         break;
 
     case TRAN_FUNGUS:
-        mpr("You stop sporulating.", MSGCH_DURATION);
+        mpr(_("You stop sporulating."), MSGCH_DURATION);
         you.set_duration(DUR_CONFUSING_TOUCH, 0);
         break;
     case TRAN_TREE:

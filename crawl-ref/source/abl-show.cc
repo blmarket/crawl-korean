@@ -1417,7 +1417,7 @@ static bool _check_ability_possible(const ability_def& abil,
         if (tal.is_invocation)
         {
             if (!quiet)
-                mprf("You cannot call out to %s while silenced.",
+                mprf(_("You cannot call out to %s while silenced."),
                      _(god_name(you.religion).c_str()));
             return false;
         }
@@ -1534,7 +1534,7 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_ASHENZARI_TRANSFER_KNOWLEDGE:
         if (all_skills_maxed(true))
         {
-            mpr("You have nothing more to learn.");
+            mpr(_("You have nothing more to learn."));
             return false;
         }
         return true;
@@ -2208,7 +2208,7 @@ static bool _do_ability(const ability_def& abil)
         break;
 
     case ABIL_EVOKE_FOG:     // cloak of the Thief
-        mpr("With a swish of your cloak, you release a cloud of fog.");
+        mpr(_("With a swish of your cloak, you release a cloud of fog."));
         big_cloud(random_smoke_type(), &you, you.pos(), 50, 8 + random2(8));
         break;
 
@@ -2272,7 +2272,7 @@ static bool _do_ability(const ability_def& abil)
 
         if (mons->friendly() || mons->good_neutral())
         {
-            mpr("You cannot imprison a law-abiding creature!");
+            mpr(_("You cannot imprison a law-abiding creature!"));
             return false;
         }
 

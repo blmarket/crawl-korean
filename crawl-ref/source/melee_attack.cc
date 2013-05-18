@@ -760,7 +760,7 @@ bool melee_attack::handle_phase_damaged()
 
         if (create_monster(mg))
         {
-            mpr("Your attached jelly is knocked off by the blow!");
+            mpr(_("Your attached jelly is knocked off by the blow!"));
             you.mutation[MUT_JELLY_GROWTH] = 0;
         }
     }
@@ -1947,7 +1947,7 @@ void melee_attack::set_attack_verb()
         }
         else if (defender_genus == MONS_HOG)
         {
-            attack_verb = "carve";
+            attack_verb = pgettext("verb2","carve");
             verb_degree = "like a proverbial ham";
         }
         else

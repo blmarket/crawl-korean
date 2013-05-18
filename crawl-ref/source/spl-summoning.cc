@@ -1727,7 +1727,7 @@ spret_type cast_animate_skeleton(god_type god, bool fail)
 
     if (!found)
     {
-        mpr("There is nothing here that can be animated!");
+        mpr(_("There is nothing here that can be animated!"));
         return SPRET_ABORT;
     }
 

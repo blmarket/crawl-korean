@@ -1727,7 +1727,7 @@ void direction_chooser::handle_wizard_command(command_type key_command,
 
     case CMD_TARGET_WIZARD_HURT_MONSTER:
         m->hit_points = 1;
-        mpr("Brought monster down to 1 HP.");
+        mpr(_("Brought monster down to 1 HP."));
         flush_prev_message();
         break;
 
@@ -3903,7 +3903,7 @@ static void _describe_cell(const coord_def& where, bool in_range)
 #endif
 
     if (where == you.pos() && !crawl_state.arena_suspended)
-        mpr("You.", MSGCH_EXAMINE_FILTER);
+        mpr(_("You."), MSGCH_EXAMINE_FILTER);
 
     if (const monster* mon = monster_at(where))
     {

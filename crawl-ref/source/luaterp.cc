@@ -113,7 +113,7 @@ static void _run_dlua_interpreter(lua_State *ls)
     _luaterp_running = true;
 
     int status;
-    mpr("[Hit ESC to exit interpreter.]");
+    mpr(_("[Hit ESC to exit interpreter.]"));
     while ((status = _loadline(ls)) != -1)
     {
         if (status == 0)

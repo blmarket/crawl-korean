@@ -764,7 +764,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
         if (!Options.show_gold_turns)
         {
             /// Wizard 모드이니 번역하지 않음.
-            mprf("You now have %d gold piece%s.",
+            mprf(_("You now have %d gold piece%s."),
                  you.gold, you.gold != 1 ? "s" : "");
         }
         break;
@@ -780,16 +780,16 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
         if (player_in_branch(BRANCH_ABYSS))
             wizard_set_abyss();
         else
-            mpr("You can only abyss_teleport() inside the Abyss.");
+            mpr(_("You can only abyss_teleport() inside the Abyss."));
         break;
 
     case ']':
         if (!wizard_add_mutation())
-            mpr("Failure to give mutation.");
+            mpr(_("Failure to give mutation."));
         break;
 
     case '=':
-        mprf("Cost level: %d  Total experience: %d  Next cost level: %d Skill cost: %d",
+        mprf(_("Cost level: %d  Total experience: %d  Next cost level: %d Skill cost: %d"),
               you.skill_cost_level, you.total_experience,
               skill_cost_needed(you.skill_cost_level + 1),
               calc_skill_cost(you.skill_cost_level));
@@ -813,7 +813,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
         if (player_in_branch(BRANCH_LABYRINTH))
             change_labyrinth(true);
         else
-            mpr("This only makes sense in a labyrinth!");
+            mpr(_("This only makes sense in a labyrinth!"));
         break;
 
     case 'Z':
@@ -824,7 +824,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
             you.redraw_experience = true;
         }
         else
-            mpr("But you're not in Zot Defence!");
+            mpr(_("But you're not in Zot Defence!"));
         break;
 
 	case '!':  
@@ -837,7 +837,7 @@ static void _do_wizard_command(int wiz_command, bool silent_fail)
         if (!silent_fail)
         {
             formatted_mpr(formatted_string::parse_string(
-                              "Not a <magenta>Wizard</magenta> Command."));
+                              _("Not a <magenta>Wizard</magenta> Command.")));
         }
         break;
     }

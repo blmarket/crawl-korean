@@ -3754,7 +3754,7 @@ static void _handle_accidental_death(const int orig_hp,
         break;
     }
 
-    mpr("You die...");
+    mpr(_("You die..."));
     god_speaks(GOD_XOM, _get_xom_speech(speech_type).c_str());
     god_speaks(GOD_XOM, _get_xom_speech("resurrection").c_str());
 

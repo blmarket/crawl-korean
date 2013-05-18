@@ -357,7 +357,7 @@ static string _skill_names(skill_set &skills)
     for (skill_set_iter it = skills.begin(); it != skills.end(); ++it)
     {
         ++i;
-        s += skill_name(*it);
+        s += _(skill_name(*it));
         if (i == size)
             s += ".";
         else if (i == size - 1)

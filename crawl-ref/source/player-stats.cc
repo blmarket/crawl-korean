@@ -508,7 +508,7 @@ bool lose_stat(stat_type which_stat, int stat_loss, bool force,
     {
         if (you.duration[DUR_DIVINE_STAMINA] > 0)
         {
-            mprf("Your divine stamina protects you from %s loss.",
+            mprf(_("Your divine stamina protects you from %s loss."),
                  _(_stat_name(which_stat).c_str()));
             return false;
         }

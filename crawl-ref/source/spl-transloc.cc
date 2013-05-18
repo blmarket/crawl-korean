@@ -188,7 +188,7 @@ int blink(int pow, bool high_level_controlled_blink, bool wizard_blink,
 
             if (crawl_state.seen_hups)
             {
-                mpr("Cancelling blink due to HUP.");
+                mpr(_("Cancelling blink due to HUP."));
                 return -1;
             }
 

@@ -1230,7 +1230,7 @@ bool show_map(level_pos &lpos,
 
                 if (!is_map_persistent())
                 {
-                    mpr("You can't annotate this level.");
+                    mpr(_("You can't annotate this level."));
                     more();
                 }
                 else

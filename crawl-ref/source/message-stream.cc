@@ -85,7 +85,7 @@ namespace msg
 
         if (internal_count + 3 > INTERNAL_LENGTH)
         {
-            mpr("oops, hit overflow", MSGCH_ERROR);
+            mpr(_("oops, hit overflow"), MSGCH_ERROR);
             internal_count = 0;
             return streambuf::traits_type::eof();
         }

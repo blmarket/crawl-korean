@@ -707,7 +707,7 @@ static void _lose_level_abilities()
     {
         you.increase_duration(DUR_FLIGHT, 50, 100);
         you.attribute[ATTR_PERM_FLIGHT] = 0;
-        mpr("You feel your flight won't last long.", MSGCH_WARN);
+        mpr(_("You feel your flight won't last long."), MSGCH_WARN);
     }
 }
 

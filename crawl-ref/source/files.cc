@@ -1043,7 +1043,7 @@ static void _grab_followers()
         {
             // XXX: This assumes that the only monsters that are
             // incapable of using stairs are zombified.
-            mprf("Your mindless thrall%s stay%s behind.",
+            mprf(_("Your mindless thrall%s stay%s behind."),
                  non_stair_using_allies > 1 ? "s" : "",
                  non_stair_using_allies > 1 ? ""  : "s");
         }
@@ -1413,7 +1413,7 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
         && !get_level_annotation().empty()
         && !crawl_state.level_annotation_shown)
     {
-        mprf(MSGCH_PLAIN, YELLOW, "Level annotation: %s",
+        mprf(MSGCH_PLAIN, YELLOW, _("Level annotation: %s"),
              get_level_annotation().c_str());
     }
 
@@ -1478,14 +1478,14 @@ bool load_level(dungeon_feature_type stair_taken, load_mode_type load_mode,
                 if (coinflip()
                     && slide_feature_over(you.pos(), coord_def(-1, -1), false))
                 {
-                    mprf("%s slides away from you right after you %s it!",
+                    mprf(_("%s slides away from you right after you %s it!"),
                          stair_str.c_str(), verb.c_str());
                 }
 
                 if (coinflip())
                 {
                     // Stairs stop fleeing from you now you actually caught one.
-                    mprf("%s settles down.", stair_str.c_str());
+                    mprf(_("%s settles down."), stair_str.c_str());
                     you.duration[DUR_REPEL_STAIRS_MOVE]  = 0;
                     you.duration[DUR_REPEL_STAIRS_CLIMB] = 0;
                 }

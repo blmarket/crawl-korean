@@ -4447,7 +4447,7 @@ void describe_god(god_type which_god, bool give_title)
                                   (you.piety >=  50) ? pgettext("tso_shield","sometimes") :
                                                        pgettext("tso_shield","occasionally");
 
-                cprintf("%s %s shields your consumables from destruction.\n",
+                cprintf(_("%s %s shields your consumables from destruction.\n"),
                         uppercase_first(_(god_name(which_god).c_str())).c_str(), how);
             }
             if (you.piety >= piety_breakpoint(2))

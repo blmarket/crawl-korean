@@ -994,7 +994,7 @@ void yell(bool force)
         if (force)
         {
             if (!form_has_mouth())
-                mpr("You have no mouth, and you must scream!");
+                mpr(_("You have no mouth, and you must scream!"));
             else if (shout_verb == "__NONE" || you.paralysed())
             {
                 // 1. 비명, 고함, 괴성
@@ -1012,7 +1012,7 @@ void yell(bool force)
             }
         }
         else if (!form_has_mouth())
-            mpr("You have no mouth!");
+            mpr(_("You have no mouth!"));
         else
             mpr(gettext("You are unable to make a sound!"));
 

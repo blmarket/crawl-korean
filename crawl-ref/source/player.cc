@@ -2936,7 +2936,7 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
 
         if (you.sage_xp[which_sage] <= 0 || you.skills[skill] == 27)
         {
-            mprf("You feel less studious about %s.", skill_name(skill));
+            mprf(_("You feel less studious about %s."), skill_name(skill));
             erase_any(you.sage_skills, which_sage);
             erase_any(you.sage_xp, which_sage);
             erase_any(you.sage_bonus, which_sage);

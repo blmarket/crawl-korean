@@ -1340,7 +1340,7 @@ static spret_type _do_cast(spell_type spell, int powc,
         return SPRET_ABORT;
 
     case SPELL_CIGOTUVIS_DEGENERATION:
-        mpr("Sorry, this spell has degenerated away!");
+        mpr(_("Sorry, this spell has degenerated away!"));
         return SPRET_ABORT;
 #endif
 

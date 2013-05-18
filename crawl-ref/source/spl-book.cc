@@ -692,7 +692,7 @@ static bool _get_mem_list(spell_list &mem_spells,
     if (you.form == TRAN_WISP)
     {
         if (!just_check)
-            mpr("You can't handle any books in this form.", MSGCH_PROMPT);
+            mpr(_("You can't handle any books in this form."), MSGCH_PROMPT);
         return false;
     }
 
@@ -856,8 +856,8 @@ static bool _get_mem_list(spell_list &mem_spells,
     }
     else
     {
-        mpr("You can't memorise any new spells for an unknown reason; "
-            "please file a bug report.", MSGCH_PROMPT);
+        mpr(_("You can't memorise any new spells for an unknown reason; "
+            "please file a bug report."), MSGCH_PROMPT);
     }
 
     if (num_unreadable)
@@ -1220,7 +1220,7 @@ static bool _learn_spell_checks(spell_type specspell)
 
     if (spell_fail(specspell) >= 100 && !vehumet_is_offering(specspell))
     {
-        mpr("This spell is too difficult to memorise!");
+        mpr(_("This spell is too difficult to memorise!"));
         return false;
     }
 

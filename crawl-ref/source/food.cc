@@ -770,7 +770,7 @@ bool prompt_eat_inventory_item(int slot)
         {
             // Allowing eating it would be natural, but we don't want to
             // let folks get rid of curses or distortion a scummy way.
-            mpr("It's melded into your body!");
+            mpr(_("It's melded into your body!"));
             return false;
         }
     }

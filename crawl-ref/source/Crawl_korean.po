@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-18 15:58+0900\n"
+"POT-Creation-Date: 2013-05-18 16:54+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -8151,7 +8151,7 @@ msgstr "무언가 알 수 없는 예감을 느꼈다!"
 #. / 1. 신의 이름.
 #. / 1. 신의 이름.
 #: decks.cc:2379 decks.cc:2378 decks.cc:2378 decks.cc:2350 decks.cc:2346
-#: decks.cc:2351 decks.cc:2358 decks.cc:2359
+#: decks.cc:2351 decks.cc:2358 decks.cc:2359 zotdef.cc:980
 #, c-format
 msgid "An altar to %s grows from the floor before you!"
 msgstr "딛고 있는 바닥에서, %s의 제단이 솟아나왔다!"
@@ -8588,7 +8588,8 @@ msgstr ""
 
 #. / 1. 골드 수량, 2. 골드가 1이 아니면 s가 붙음.
 #. / 1. 골드 수량, 2. 골드가 1이 아니면 s가 붙음.
-#: items.cc:1613 items.cc:1613 items.cc:1614
+#. / Wizard 모드이니 번역하지 않음.
+#: items.cc:1613 items.cc:1613 items.cc:1614 main.cc:767
 #, c-format
 msgid "You now have %d gold piece%s."
 msgstr "당신은 이제 %d개의 금화를 가지고 있다."
@@ -8905,7 +8906,7 @@ msgstr "무언가 (%d)"
 #: ouch.cc:1310 ouch.cc:1414 ouch.d.cc:1310 ouch.d.cc:1414 tutorial.cc:91
 #: ouch.cc:1358 ouch.cc:1462 tutorial.cc:69 ouch.cc:1356 ouch.cc:1450
 #: xom.cc:4066 ouch.cc:1290 ouch.cc:1379 ouch.cc:1303 ouch.cc:1392 xom.cc:4152
-#: xom.cc:4146 xom.cc:4147 ouch.cc:1311 ouch.cc:1400 xom.cc:4148
+#: xom.cc:4146 xom.cc:4147 ouch.cc:1311 ouch.cc:1400 xom.cc:4148 xom.cc:3757
 msgid "You die..."
 msgstr "죽었다..."
 
@@ -15859,6 +15860,12 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
 #. Reinforce the cloud but not too much. It must be a fire cloud from a previous test.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
 #. Reinforce the cloud.
@@ -30609,7 +30616,7 @@ msgstr ""
 "\n"
 "<green>주석</green>\n"
 
-#: dgn-overview.cc:1026
+#: dgn-overview.cc:1026 viewmap.cc:1233
 msgid "You can't annotate this level."
 msgstr "이 층에는 주석을 달 수 없다."
 
@@ -31597,7 +31604,7 @@ msgstr "당신의 %1$s(이)가 사라졌다.%2$.0s"
 #. At the very least the player has "Renounce Religion", but
 #. cannot use it in silence.
 #: abl-show.cc:1359 abl-show.cc:1304 abl-show.cc:1303 abl-show.cc:1311
-#: abl-show.cc:1313 abl-show.cc:1318
+#: abl-show.cc:1313 abl-show.cc:1318 abl-show.cc:1420
 #, c-format
 msgid "You cannot call out to %s while silenced."
 msgstr "정적 상태에서는 %s을(를) 부를 수 없다."
@@ -32121,6 +32128,12 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -33909,7 +33922,7 @@ msgstr "약간의 불안정함을 %s느꼈다."
 
 #: player-equip.cc:1306 player-equip.cc:1314 player-equip.cc:1303
 #: player-equip.cc:1305 player-equip.cc:1298 player-equip.cc:1299
-#: player-equip.cc:1296
+#: player-equip.cc:1296 player-equip.cc:1302
 msgctxt "teleport"
 msgid "more "
 msgstr "더 "
@@ -35154,7 +35167,7 @@ msgstr "예외 지역을 해제헸다."
 msgid "Reduced exclusion size to a single square."
 msgstr "예외 지역의 크기를 1칸으로 줄였다."
 
-#: directn.cc:3864 directn.cc:3871 directn.cc:3888
+#: directn.cc:3864 directn.cc:3871 directn.cc:3888 directn.cc:3906
 msgid "You."
 msgstr "당신."
 
@@ -35869,7 +35882,7 @@ msgstr "불꽃과의 조화가 강해짐을 느꼈다."
 msgid "You feel more attuned to ice."
 msgstr "얼음과의 조화가 강해짐을 느꼈다."
 
-#: player-stats.cc:477
+#: player-stats.cc:477 player-stats.cc:511
 #, c-format
 msgid "Your divine stamina protects you from %s loss."
 msgstr "신성한 원기가 당신을 %s의 감소로부터 보호했다."
@@ -35958,7 +35971,7 @@ msgstr "당신은 적어도 하나의 스킬을 수련해야한다."
 msgid "You cannot train any new skill."
 msgstr "당신은 더 이상 새로운 스킬을 수련할 수 없다."
 
-#: spl-book.cc:803
+#: spl-book.cc:803 spl-book.cc:859
 msgid ""
 "You can't memorise any new spells for an unknown reason; please file a bug "
 "report."
@@ -36497,7 +36510,7 @@ msgstr "은(는) 정신적 고통으로 부터 영향을 받지 않는 듯 보�
 msgid " looks uneasy for a moment."
 msgstr "의 모습이 잠시 불안정해 보였다."
 
-#: describe.cc:4474
+#: describe.cc:4474 describe.cc:4450
 #, c-format
 msgid "%s %s shields your consumables from destruction.\n"
 msgstr "%s은(는) 당신의 소비품을 파괴로부터 %s 보호한다.\n"
@@ -38931,7 +38944,7 @@ msgid "You conjure a prism of explosive energy!"
 msgstr "당신은 폭발성 에너지의 분광기를 만들어냈다!"
 
 #: spl-transloc.cc:1057 spl-transloc.cc:1059 spl-transloc.cc:1053
-#: spl-transloc.cc:1055 spl-transloc.cc:1051
+#: spl-transloc.cc:1055 spl-transloc.cc:1051 spl-transloc.cc:191
 msgid "Cancelling blink due to HUP."
 msgstr "HUP 신호로 인하여, 순간이동이 취소되었다."
 
@@ -39798,7 +39811,7 @@ msgctxt "verb2"
 msgid "cut"
 msgstr "을(를) 리본을 자르듯 잘라버렸"
 
-#: melee_attack.cc:1960 melee_attack.cc:1958
+#: melee_attack.cc:1960 melee_attack.cc:1958 melee_attack.cc:1950
 msgctxt "verb2"
 msgid "carve"
 msgstr "을(를) 마치 햄을 썰듯 조각냈"
@@ -39909,11 +39922,11 @@ msgstr "우선 %s이(가) 자유로워야 한다."
 #: item_use.cc:653
 #, c-format
 msgid "The hauberk won't fit your %s."
-msgstr "그 호버크는 당신의 %s에 맞지 않는다."
+msgstr "그 전신 갑옷은 당신의 %s에 맞지 않는다."
 
 #: item_use.cc:669
 msgid "You can't wear this over your hauberk."
-msgstr "이건 호버크 위로 입을 수 없다."
+msgstr "이건 전신 갑옷 위로 입을 수 없다."
 
 #. Exclamation mark to suggest that a lot of creatures were
 #. affected.
@@ -40121,8 +40134,8 @@ msgid ""
 "You can't see any susceptible monsters within range! (Use <w>Z</w> to cast "
 "anyway.)"
 msgstr ""
-"사정거리 내에 적합한 대상을 찾을 수 없다! (<w>Z</w>키를 눌러 "
-"강제로 주문 시전)"
+"사정거리 내에 적합한 대상을 찾을 수 없다! (<w>Z</w>키를 눌러 강제로 주문 시"
+"전)"
 
 #: transform.cc:1023
 msgid " makes you hardy against extreme temperatures."
@@ -40132,3 +40145,166 @@ msgstr "은(는) 당신에게 극한의 온도에 대한 저항력을 제공해�
 #: effects.cc:545
 msgid "You are banished to a different region of the Abyss."
 msgstr "당신은 어비스의 다른 지역으로 빠져들었다."
+
+#: abl-show.cc:1537
+msgid "You have nothing more to learn."
+msgstr "당신은 더 이상 배울 것이 없다."
+
+#. cloak of the Thief
+#: abl-show.cc:2211
+msgid "With a swish of your cloak, you release a cloud of fog."
+msgstr "당신의 망토가 쉬익 하는 소리를 내며, 당신 주변으로 안개구름을 뿜어냈다."
+
+#: abl-show.cc:2275
+msgid "You cannot imprison a law-abiding creature!"
+msgstr "변치 않는 질서의 생명체는 가둘 수 없다!"
+
+#: delay.cc:1535
+msgid "Lua not initialised"
+msgstr "Lua 스크립트가 초기화되지 않음"
+
+#: delay.cc:1550
+#, c-format
+msgid "Lua error: %s"
+msgstr "Lua 스크립트 에러 : %s"
+
+#: directn.cc:1730
+msgid "Brought monster down to 1 HP."
+msgstr "몬스터의 HP를 1로 줄였다."
+
+#: effects.cc:997
+msgid "You have no mouth, and you must scream!"
+msgstr "당신은 입이 없지만, 외쳐야 한다!"
+
+#: effects.cc:1015
+msgid "You have no mouth!"
+msgstr "당신은 입이 없다!"
+
+#. XXX: This assumes that the only monsters that are
+#. incapable of using stairs are zombified.
+#: files.cc:1046
+#, c-format
+msgid "Your mindless thrall%s stay%s behind."
+msgstr "당신의 감정 없는 부하들은 따라오지 못했다."
+
+#: files.cc:1481
+#, c-format
+msgid "%s slides away from you right after you %s it!"
+msgstr "당신이 %1$s에 접근하자, 그것은 미끄러져 당신에게 도망쳤다! %2.0$s"
+
+#. Stairs stop fleeing from you now you actually caught one.
+#: files.cc:1488
+#, c-format
+msgid "%s settles down."
+msgstr "%s은(는) 도망을 멈추었다."
+
+#. Allowing eating it would be natural, but we don't want to
+#. let folks get rid of curses or distortion a scummy way.
+#: food.cc:773
+msgid "It's melded into your body!"
+msgstr "그것은 당신의 몸과 일체화되었다!"
+
+#: godcompanions.cc:194
+msgid "You have no companions."
+msgstr "당신은 동료가 없다."
+
+#: luaterp.cc:116
+msgid "[Hit ESC to exit interpreter.]"
+msgstr "[ESC키를 눌러 인터프리터를 종료합니다.]"
+
+#: main.cc:783
+msgid "You can only abyss_teleport() inside the Abyss."
+msgstr "당신은 오직 abyss_teleport()를 통해 어비스에 진입할 수 있다."
+
+#: main.cc:788
+msgid "Failure to give mutation."
+msgstr "변이를 주는 데 실패했다."
+
+#: main.cc:792
+#, c-format
+msgid ""
+"Cost level: %d  Total experience: %d  Next cost level: %d Skill cost: %d"
+msgstr ""
+"필요 레벨: %d  총 경험치: %d  다음 필요 경험치: %d 필요 스킬: %d"
+
+#: main.cc:816
+msgid "This only makes sense in a labyrinth!"
+msgstr "이것은 미궁에서만 작동한다!"
+
+#: main.cc:827
+msgid "But you're not in Zot Defence!"
+msgstr "당신은 조트 디펜스 중이 아니다!"
+
+#: main.cc:840
+msgid "Not a <magenta>Wizard</magenta> Command."
+msgstr "<magenta>위저드</magenta> 명령이 아니다."
+
+#: melee_attack.cc:763
+msgid "Your attached jelly is knocked off by the blow!"
+msgstr "당신에게 붙은 젤리들이 떨어져나갔다!"
+
+#: message-stream.cc:88
+msgid "oops, hit overflow"
+msgstr "이런, hit overflow."
+
+#: mon-project.cc:419
+msgid "The boulders collide with a stupendous crash!"
+msgstr "거대한 파열음과 함께 바위들이 무너져내렸다!"
+
+#: mon-project.cc:421
+msgid "You hear a loud crashing sound!"
+msgstr "어디선가 커다란 파열음이 들렸다!"
+
+#: ouch.cc:710
+msgid "You feel your flight won't last long."
+msgstr "비행 시간이 얼마 남지 않음을 느꼈다."
+
+#: player-equip.cc:1301
+#, c-format
+msgid "You feel %scontrolled for a moment."
+msgstr "당신은 잠깐 %s안정된 제어감을 느꼈다."
+
+#: player.cc:2939
+#, c-format
+msgid "You feel less studious about %s."
+msgstr "%s에 대해 무지해져가는 것이 느껴졌다."
+
+#: spl-book.cc:695
+msgid "You can't handle any books in this form."
+msgstr "이 형태에서는 책을 들 수 없다."
+
+#: spl-book.cc:1223
+msgid "This spell is too difficult to memorise!"
+msgstr "그 주문은 당신이 배우기엔 너무 어렵다!"
+
+#: spl-cast.cc:1343
+msgid "Sorry, this spell has degenerated away!"
+msgstr "유감이지만, 그 주문은 이제 쓰지 않는다네!"
+
+#: spl-summoning.cc:1730
+msgid "There is nothing here that can be animated!"
+msgstr "여기에는 불러 일으킬 존재가 없다!"
+
+#: transform.cc:712
+msgid "You are stuck in your current form!"
+msgstr "당신은 지금 다른 형태로 변이할 수 없다!"
+
+#: transform.cc:1231
+msgid "You stop sporulating."
+msgstr "당신은 포자를 내는 걸 멈추었다."
+
+#: zotdef.cc:922
+msgid "You can't create a trap there!"
+msgstr "그 곳에는 함정을 설치할 수 없다!"
+
+#: zotdef.cc:969
+msgid "That god doesn't seem to be taking followers today."
+msgstr "그 신은 오늘은 새로운 신자를 받지 않을 모양이다."
+
+#: zotdef.cc:991
+msgid "The place is too crowded already!"
+msgstr "그 장소는 이미 너무 혼잡하다!"
+
+#: zotdef.cc:1016
+msgid "You can't create it there!"
+msgstr "그곳에는 생성할 수 없다!"

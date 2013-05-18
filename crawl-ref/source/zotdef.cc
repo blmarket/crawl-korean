@@ -919,7 +919,7 @@ bool create_trap(trap_type spec_type)
     // only try to create on floor squares
     if (grd(abild.target) != DNGN_FLOOR)
     {
-        mpr("You can't create a trap there!");
+        mpr(_("You can't create a trap there!"));
         return false;
     }
     bool result = place_specific_trap(abild.target, spec_type);
@@ -966,7 +966,7 @@ bool zotdef_create_altar(bool wizmode)
 
     if (god == GOD_NO_GOD)
     {
-        mpr("That god doesn't seem to be taking followers today.");
+        mpr(_("That god doesn't seem to be taking followers today."));
         return false;
     }
     else
@@ -977,7 +977,7 @@ bool zotdef_create_altar(bool wizmode)
         if (wizmode)
             pray();
         else
-            mprf("An altar to %s grows from the floor before you!",
+            mprf(_("An altar to %s grows from the floor before you!"),
                  god_name(god).c_str());
 
         return true;
@@ -988,7 +988,7 @@ bool create_zotdef_ally(monster_type mtyp, const char *successmsg)
 {
     if (count_allies() > MAX_MONSTERS / 2)
     {
-        mpr("The place is too crowded already!");
+        mpr(_("The place is too crowded already!"));
         return false;
     }
 
@@ -1013,7 +1013,7 @@ bool create_zotdef_ally(monster_type mtyp, const char *successmsg)
     if (!mons_place(mgen_data(mtyp, BEH_FRIENDLY, &you, 0, 0, abild.target,
                    you.pet_target)))
     {
-        mpr("You can't create it there!");
+        mpr(_("You can't create it there!"));
         return false;
     }
     mpr(successmsg);

@@ -1298,8 +1298,8 @@ static void _equip_jewellery_effect(item_def &item, bool unmeld)
         break;
 
     case RING_TELEPORT_CONTROL:
-        mprf("You feel %scontrolled for a moment.",
-              you.duration[DUR_CONTROL_TELEPORT] ? "more " : "");
+        mprf(_("You feel %scontrolled for a moment."),
+              you.duration[DUR_CONTROL_TELEPORT] ? pgettext("teleport","more ") : "");
         ident = ID_KNOWN_TYPE;
         break;
 

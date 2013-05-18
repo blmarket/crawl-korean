@@ -416,9 +416,9 @@ move_again:
         if (mons && mons_is_boulder(&mon) && mons_is_boulder(mons))
         {
             if (mon.observable())
-                mpr("The boulders collide with a stupendous crash!");
+                mpr(_("The boulders collide with a stupendous crash!"));
             else
-                noisy(20, pos, "You hear a loud crashing sound!");
+                noisy(20, pos, _("You hear a loud crashing sound!"));
 
             // Remove ROLLING and add DAZED
             _iood_stop(mon);
