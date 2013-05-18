@@ -1013,8 +1013,6 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_FUNGUS:
-        if (you.religion == GOD_FEDHAS)
-            simple_god_message(" smiles upon you.");
         // ignore hunger_state (but don't reset hunger)
         you.hunger_state = HS_SATIATED;
         set_redraw_status(REDRAW_HUNGER);
@@ -1022,7 +1020,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
 
     case TRAN_TREE:
         if (you.religion == GOD_FEDHAS)
-            simple_god_message(_(" smiles upon you."));
+            simple_god_message(_(" makes you hardy against extreme temperatures."));
         // ignore hunger_state (but don't reset hunger)
         you.hunger_state = HS_SATIATED;
         set_redraw_status(REDRAW_HUNGER);

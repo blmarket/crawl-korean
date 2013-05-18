@@ -880,8 +880,7 @@ bool melee_attack::attack()
             && ev_margin >= 0
             && one_chance_in(20))
         {
-            simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
-            dec_penance(GOD_ELYVILON, 1);
+            simple_god_message(_(" blocks your attack."), GOD_ELYVILON);
             handle_phase_end();
             return false;
         }
@@ -1353,8 +1352,7 @@ bool melee_attack::player_aux_test_hit()
         && to_hit >= evasion
         && one_chance_in(20))
     {
-        simple_god_message(gettext(" blocks your attack."), GOD_ELYVILON);
-        dec_penance(GOD_ELYVILON, 1);
+        simple_god_message(_(" blocks your attack."), GOD_ELYVILON);
         return false;
     }
 
