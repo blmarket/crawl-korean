@@ -214,6 +214,7 @@ string josa(const char* str){
                 }
             }
         }
+        index++;
     }
 
     ri = 0;
