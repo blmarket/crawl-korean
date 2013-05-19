@@ -192,7 +192,7 @@ static bool _check_moveto_trap(const coord_def& p, const string &move_verb)
             move_verb.c_str(),
             (trap->type == TRAP_ALARM || trap->type == TRAP_PLATE) ? "onto"
                                                                    : "into",
-            feature_description_at(true, p, "", DESC_BASENAME, false).c_str());
+            feature_description_at(true, p, false, DESC_BASENAME, false).c_str());
 
         if (!yesno(prompt.c_str(), true, 'n'))
         {
@@ -2925,6 +2925,13 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
         int which_sage = random2(you.sage_skills.size());
         skill_type skill = you.sage_skills[which_sage];
 
+#if TAG_MAJOR_VERSION > 35
+        // These are supposed to be purged from the sage lists in
+        // _change_skill_level()
+        ASSERT(you.skills[skill] < 27)
+#endif
+
+        // FIXME: shouldn't use more XP than needed to max the skill
         const int old_avail = you.exp_available;
         // Bonus skill training from Sage.
         you.exp_available =
@@ -2934,7 +2941,11 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
         you.exp_available = old_avail;
         exp_gained = div_rand_round(exp_gained, 2);
 
-        if (you.sage_xp[which_sage] <= 0 || you.skills[skill] == 27)
+        if (you.sage_xp[which_sage] <= 0
+#if TAG_MAJOR_VERSION == 34
+            || you.skills[skill] == 27
+#endif
+            )
         {
             mprf(_("You feel less studious about %s."), skill_name(skill));
             erase_any(you.sage_skills, which_sage);

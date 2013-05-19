@@ -1167,7 +1167,7 @@ void disarm_trap(const coord_def& where)
     if (_disarm_is_deadly(trap))
     {
         string prompt = make_stringf(_("Really try disarming that %s?"),
-                                     feature_description_at(true, where, "",
+                                     feature_description_at(true, where, false,
                                                             DESC_BASENAME,
                                                             false).c_str());
 
