@@ -3207,8 +3207,8 @@ static string _monster_stat_description(const monster_info& mi)
 
     if (mons_is_statue(mi.type, true))
     {
-        result << uppercase_first(pronoun) << " is very brittle "
-               << "and susceptible to disintegration.\n";
+        result << uppercase_first(pronoun) << _(" is very brittle ")
+               << _("and susceptible to disintegration.\n");
     }
 
     // Is monster susceptible to anything? (On a new line.)

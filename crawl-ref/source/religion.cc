@@ -878,7 +878,7 @@ string get_god_dislikes(god_type which_god, bool /*verbose*/)
         break;
 
     case GOD_NEMELEX_XOBEH:
-        really_dislikes.push_back("you destroy decks");
+        really_dislikes.push_back("카드 덱을 파괴하는 행위");
         break;
 
     default:

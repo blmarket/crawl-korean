@@ -852,9 +852,9 @@ DEPTH: Crypt
 WEIGHT: 3
 TAGS: no_monster_gen no_item_gen no_trap_gen
 SUBST: D = dw, W = wp
-KMONS: d = col:darkgrey plant name:withered n_adj tile:mons_withered_plant / \
+KMONS: d = col:darkgrey plant name:메마른 n_adj tile:mons_withered_plant / \
         nothing w:20
-KMONS: w = col:lightgrey plant name:withered n_adj \
+KMONS: w = col:lightgrey plant name:메마른 n_adj \
        tile:mons_withered_plant w:20 / nothing
 KMONS: p = plant
 KFEAT: _ = altar_fedhas

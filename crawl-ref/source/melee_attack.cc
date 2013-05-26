@@ -2323,8 +2323,8 @@ void melee_attack::rot_defender(int amount, int immediate)
         if (defender->is_player())
         {
             special_damage_message =
-                make_stringf("You feel your flesh %s away!",
-                             immediate > 0 ? "rotting" : "start to rot");
+                make_stringf(_("You feel your flesh %s away!"),
+                             immediate > 0 ? pgettext("player::rot","rotting") : pgettext("player::rot","start to rot"));
         }
         else if (defender->is_monster() && defender_visible)
         {
