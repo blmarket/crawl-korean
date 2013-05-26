@@ -214,12 +214,12 @@ static void _turn_corpse_into_skeleton_and_chunks(item_def &item, bool prefer_ch
         turn_corpse_into_skeleton(item);
     }
 
-    copy_item_to_grid(copy, item_pos(item));
+    copy_item_to_grid(copy, item_pos(item), MHITYOU);
 }
 
 void butcher_corpse(item_def &item, maybe_bool skeleton, bool chunks)
 {
-    item_was_destroyed(item);
+    item_was_destroyed(item, MHITYOU);
     if (!mons_skeleton(item.mon_type))
         skeleton = MB_FALSE;
     if (skeleton == MB_TRUE || skeleton == MB_MAYBE && one_chance_in(3))
@@ -989,7 +989,7 @@ void turn_corpse_into_skeleton_and_blood_potions(item_def &item)
     if (o != NON_ITEM)
     {
         turn_corpse_into_blood_potions(blood_potions);
-        copy_item_to_grid(blood_potions, you.pos());
+        copy_item_to_grid(blood_potions, you.pos(), MHITYOU);
     }
 }
 
@@ -2330,8 +2330,12 @@ bool bad_attack(const monster *mon, string& adj, string& suffix)
 }
 
 bool stop_attack_prompt(const monster* mon, bool beam_attack,
-                        coord_def beam_target, bool autohit_first)
+                        coord_def beam_target, bool autohit_first,
+                        bool *prompted)
 {
+    if (prompted)
+        *prompted = false;
+
     if (crawl_state.disables[DIS_CONFIRMATIONS])
         return false;
 
@@ -2372,6 +2376,9 @@ bool stop_attack_prompt(const monster* mon, bool beam_attack,
 
     snprintf(info, INFO_SIZE, pgettext("stop_attack","Really %s%s%s?"),
              verb.c_str(), mon_name.c_str(), suffix.c_str());
+
+    if (prompted)
+        *prompted = true;
 
     if (yesno(info, false, 'n'))
         return false;

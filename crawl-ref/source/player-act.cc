@@ -103,7 +103,6 @@ void player::set_position(const coord_def &c)
     if (real_move)
     {
         reset_prev_move();
-        dungeon_events.fire_position_event(DET_PLAYER_MOVED, c);
 
         if (you.duration[DUR_QUAD_DAMAGE])
             invalidate_agrid(true);
@@ -113,6 +112,8 @@ void player::set_position(const coord_def &c)
             env.orb_pos = c;
             invalidate_agrid(true);
         }
+
+        dungeon_events.fire_position_event(DET_PLAYER_MOVED, c);
     }
 }
 

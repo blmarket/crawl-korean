@@ -900,7 +900,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_PORCUPINE:
-        tran_name = M_("spider");
+        tran_name = M_("porcupine");
         str       = -3;
         msg      += make_stringf(msg.c_str(), _("a spiny porcupine."));
         break;
@@ -1019,7 +1019,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_TREE:
-        if (you.religion == GOD_FEDHAS)
+        if (you.religion == GOD_FEDHAS && !player_under_penance())
             simple_god_message(_(" makes you hardy against extreme temperatures."));
         // ignore hunger_state (but don't reset hunger)
         you.hunger_state = HS_SATIATED;
@@ -1108,7 +1108,8 @@ bool transform(int pow, transformation_type which_trans, bool force,
     // This only has an effect if the transformation happens passively,
     // for example if Xom decides to transform you while you're busy
     // running around or butchering corpses.
-    stop_delay();
+    // If you're turned into a tree, you stop taking stairs.
+    stop_delay(which_trans == TRAN_TREE);
 
     if (crawl_state.which_god_acting() == GOD_XOM)
        you.transform_uncancellable = true;

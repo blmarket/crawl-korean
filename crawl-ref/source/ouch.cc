@@ -1041,7 +1041,7 @@ static void _place_player_corpse(bool explode)
     corpse.props["ac"].get_int() = you.armour_class();
     mitm[o] = corpse;
 
-    move_item_to_grid(&o, you.pos(), !you.in_water());
+    move_item_to_grid(&o, you.pos(), MHITYOU, !you.in_water());
 }
 
 
@@ -1353,6 +1353,7 @@ string morgue_name(string char_name, time_t when_crawl_got_even)
 // Delete save files on game end.
 static void _delete_files()
 {
+    crawl_state.need_save = false;
     you.save->unlink();
     delete you.save;
     you.save = 0;

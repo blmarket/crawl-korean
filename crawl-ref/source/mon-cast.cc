@@ -1715,8 +1715,8 @@ static void _mons_set_priest_wizard_god(monster* mons, bool& priest,
 
     // Permanent wizard summons of Yred should have the same god even
     // though they aren't priests. This is so that e.g. the zombies of
-    // Yred's skeletal warriors or enslaved souls will properly turn on
-    // you if you abandon Yred.
+    // Yred's enslaved souls will properly turn on you if you abandon
+    // Yred.
     if (mons->god == GOD_YREDELEMNUL)
         god = mons->god;
 }
@@ -1999,9 +1999,7 @@ bool handle_mon_spell(monster* mons, bolt &beem)
                 // Setup spell.
                 // If we're in the last attempt, try the self-enchantment.
                 if (loopy == 4 && coinflip())
-                {
                     spell_cast = hspell_pass[2];
-                }
                 // Monsters that are fleeing or pacified and leaving the
                 // level will always try to choose their emergency spell.
                 else if (mons_is_fleeing(mons) || mons->pacified())

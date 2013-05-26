@@ -711,7 +711,7 @@ Niblungs_. 1891.
 Snorg
 
 A particularly corpulent troll with a short temper and a sizable gut.
-Uninterested in the Orb, Snorg delights in the endless parade of adventurers -
+Uninterested in the Orb, Snorg delights in the endless parade of adventurers –
 that is, easy meals — it attracts.
 %%%%
 Sonja
@@ -2122,7 +2122,7 @@ accompanied by other unsavoury beings of its ilk.
 hell knight:quote
 
 “Ok, let’s review. It’s up to the fair young maiden to rescue the dragon from
-the fire breathing knights in shining armor.”
+the fire breathing knights in shining armour.”
     -Exiern
 %%%%
 hell hog
@@ -2900,7 +2900,7 @@ formed of carbon and oxygen in the proportion of one part of the former to two
 of the latter chemically combined. It is a colorless gas, having an acid taste
 and smell; is soluble in water; weighs one-half more than air and can be poured
 from one vessel to another, as a liquid may be; 100 parts of water dissolve 106
-parts of this gas, and it is from this source that the roots -of plants derive
+parts of this gas, and it is from this source that the roots of plants derive
 the needed supplies of it.”
     -Henry Stuart, _The Culture of Farm Crops: A Manual of the Science of
     Agriculture, and a Hand-book of Practice for American Farmers_, ch X. 1887.
@@ -2946,8 +2946,6 @@ orange crystal statue
 An intricately carved idol of some nameless godling, hewn of translucent orange
 crystal. Its lifeless eyes seem to glitter uncannily with a wicked
 intelligence.
-
-This statue is very brittle; it will disintegrate at once.
 %%%%
 orange demon
 
@@ -3573,8 +3571,6 @@ silver statue
 
 A beautiful statue of an unknown malignant creature, glistening with a silvery
 hue. Its eyes glow with an otherworldly radiance.
-
-This statue is very brittle; it will disintegrate at once.
 %%%%
 simulacrum
 
@@ -3725,7 +3721,7 @@ A hideous mass of body parts, part animated dead flesh, part demon.
 small abomination:quote
 
 “No — it wasn't that way at all. It was everywhere — a gelatin — a slime yet it
-had shapes, a thousand shapes of horror beyond all memory. There were eyes -
+had shapes, a thousand shapes of horror beyond all memory. There were eyes –
 and a blemish. It was the pit — the maelstrom — the ultimate abomination.
 Carter, it was the unnamable!”
     -H.P. Lovecraft, _The Unnamable_. 1925.
@@ -4503,8 +4499,6 @@ Statue of Wucad Mu
 This statue, made of a fine glassy orange crystal, depicts a mystic known as
 Wucad Mu, who mastered the matters of the mind. Beware of the statue's powers,
 as you have no chance in mental combat against it.
-
-This statue is very brittle; it will disintegrate at once.
 %%%%
 air elementalist statue
 

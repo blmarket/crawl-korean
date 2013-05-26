@@ -25,6 +25,7 @@ enum lang_t
     LANG_KO,
     LANG_LT,
     LANG_LV,
+    LANG_NL,
     LANG_PL,
     LANG_PT,
     LANG_RU,
@@ -990,6 +991,7 @@ enum conduct_type
     DID_EXPLORATION,                      // Ashenzari, wrath timers
     DID_DESECRATE_HOLY_REMAINS,           // Zin/Ely/TSO/Yredelemnul
     DID_SEE_MONSTER,                      // TSO
+    DID_DESTROY_DECK,                     // Nemelex
 
     NUM_CONDUCTS
 };
@@ -3711,7 +3713,7 @@ enum tag_pref
     TAGPREF_ENEMY,    // display text tags on enemy named monsters
     TAGPREF_MAX,
 };
-enum tile_flags
+enum tile_flags ENUM_INT64
 {
     //// Foreground flags
 
@@ -3732,7 +3734,7 @@ enum tile_flags
 
     TILE_FLAG_NET        = 0x00400000ULL,
     TILE_FLAG_POISON     = 0x00800000ULL,
-    TILE_FLAG_ANIM_WEP   = 0x01000000ULL,
+    TILE_FLAG_WEB        = 0x01000000ULL,
     TILE_FLAG_GLOWING    = 0x02000000ULL,
     TILE_FLAG_STICKY_FLAME = 0x04000000ULL,
     TILE_FLAG_BERSERK    = 0x08000000ULL,
@@ -3745,6 +3747,7 @@ enum tile_flags
     TILE_FLAG_PETRIFYING = 0x80000000000ULL,
     TILE_FLAG_PETRIFIED  = 0x100000000000ULL,
     TILE_FLAG_BLIND      = 0x200000000000ULL,
+    TILE_FLAG_ANIM_WEP   = 0x400000000000ULL,
 
     // MDAM has 5 possibilities, so uses 3 bits.
     TILE_FLAG_MDAM_MASK  = 0x1C0000000ULL,

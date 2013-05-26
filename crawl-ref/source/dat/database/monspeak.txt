@@ -3235,8 +3235,6 @@ Lugonu Donald
 w:50
 @_generic_Donald_@
 
-@The_monster@은(는) 말했다. "내가 너였다면 둔기에 축복을 걸었을 텐데 말야."
-
 @The_monster@은(는) 말했다. "대체 왜 어비스를 가려고 하는 거야? 휴가라도 가?"
 
 @The_monster@은(는) 말했다. "순간이동이 고통을 수반한다는 건 전혀 몰랐는데."

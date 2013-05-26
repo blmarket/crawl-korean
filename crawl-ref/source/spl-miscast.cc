@@ -1730,11 +1730,7 @@ void MiscastEffect::_necromancy(int severity)
                     all_msg = gettext("You smell decay.");
                 }
 
-                if (target->is_player())
-                    you.rotting++;
-                else
-                    target_as_monster()->add_ench(mon_enchant(ENCH_ROT, 1,
-                                                              guilty));
+                target->rot(act_source, 1, 0, true);
             }
             else if (you.species == SP_MUMMY)
             {

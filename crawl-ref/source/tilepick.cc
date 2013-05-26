@@ -531,11 +531,12 @@ tileidx_t tileidx_out_of_bounds(int branch)
         return (TILE_DNGN_UNSEEN | TILE_FLAG_UNSEEN);
 }
 
-void tileidx_out_of_los(tileidx_t *fg, tileidx_t *bg, const coord_def& gc)
+void tileidx_out_of_los(tileidx_t *fg, tileidx_t *bg, tileidx_t *cloud, const coord_def& gc)
 {
     // Player memory.
     tileidx_t mem_fg = env.tile_bk_fg(gc);
     tileidx_t mem_bg = env.tile_bk_bg(gc);
+    tileidx_t mem_cloud = env.tile_bk_cloud(gc);
 
     // Detected info is just stored in map_knowledge and doesn't get
     // written to what the player remembers.  We'll feather that in here.
@@ -559,6 +560,8 @@ void tileidx_out_of_los(tileidx_t *fg, tileidx_t *bg, const coord_def& gc)
         *fg = tileidx_item(*cell.item());
     else
         *fg = mem_fg;
+
+    *cloud = mem_cloud;
 }
 
 static tileidx_t _zombie_tile_to_spectral(const tileidx_t z_tile)
@@ -1725,7 +1728,7 @@ static tileidx_t _tileidx_monster_base(int type, bool in_water, int colour,
     case MONS_KILLER_KLOWN:
         return _mon_mod(TILEP_MONS_KILLER_KLOWN, colour);
     case MONS_SLAVE:
-        return _mon_mod(TILEP_MONS_SLAVE, tile_num_prop);
+        return TILEP_MONS_SLAVE;
     case MONS_DEMONSPAWN:
         return TILEP_MONS_DEMONSPAWN;
     case MONS_DEMIGOD:
@@ -2627,6 +2630,8 @@ static tileidx_t _tileidx_monster_no_props(const monster_info& mon)
             return TILEP_MONS_YAKTAUR + _bow_offset(mon);
         case MONS_YAKTAUR_CAPTAIN:
             return TILEP_MONS_YAKTAUR_CAPTAIN + _bow_offset(mon);
+        case MONS_SLAVE:
+            return TILEP_MONS_SLAVE + (mon.mname == "freed slave" ? 1 : 0);
         case MONS_BUSH:
             if (env.map_knowledge(mon.pos).cloud() == CLOUD_FIRE)
                 return TILEP_MONS_BUSH_BURNING;
@@ -2750,9 +2755,10 @@ tileidx_t tileidx_monster(const monster_info& mons)
 
     if (!mons.ground_level() && !_tentacle_tile_not_flying(ch))
         ch |= TILE_FLAG_FLYING;
-    // FIXME: should probably have a different tile flag for being webbed
-    if (mons.is(MB_CAUGHT) || mons.is(MB_WEBBED))
+    if (mons.is(MB_CAUGHT))
         ch |= TILE_FLAG_NET;
+    if (mons.is(MB_WEBBED))
+        ch |= TILE_FLAG_WEB;
     if (mons.is(MB_POISONED))
         ch |= TILE_FLAG_POISON;
     if (mons.is(MB_BURNING))
@@ -4557,6 +4563,8 @@ tileidx_t tileidx_cloud(const cloud_info &cl, bool disturbance)
         ch += tile_main_count(ch);
     }
 
+    // XXX: Should be no need for TILE_FLAG_FLYING anymore since clouds are
+    // drawn in a separate layer but I'll leave it for now in case anything changes --mumra
     return (ch | TILE_FLAG_FLYING);
 }
 
@@ -5523,7 +5531,7 @@ tileidx_t tileidx_enchant_equ(const item_def &item, tileidx_t tile, bool player)
     return tile;
 }
 
-string tile_debug_string(tileidx_t fg, tileidx_t bg, char prefix)
+string tile_debug_string(tileidx_t fg, tileidx_t bg, tileidx_t cloud, char prefix)
 {
     tileidx_t fg_idx = fg & TILE_FLAG_MASK;
     tileidx_t bg_idx = bg & TILE_FLAG_MASK;

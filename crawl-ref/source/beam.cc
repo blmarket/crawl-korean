@@ -654,35 +654,16 @@ void bolt::initialise_fire()
         use_target_as_pos = true;
     }
 
-    if (range == -1)
-    {
-#ifdef DEBUG
-        if (is_tracer)
-        {
-            mpr("Tracer with range == -1, skipping.", MSGCH_ERROR);
-            return;
-        }
-
-        string item_name = item ? item->name(false, DESC_PLAIN, false, true) : "none";
-
-        string dbg_source_name = "unknown";
-        if (beam_source == NON_MONSTER && source == you.pos())
-            dbg_source_name = "player";
-        else if (!invalid_monster_index(beam_source))
-            dbg_source_name = menv[beam_source].name(DESC_PLAIN, true);
-
-        mprf(MSGCH_ERROR, "beam '%s' (source '%s', item '%s') has range -1; "
-                          "setting to LOS_RADIUS",
-             name.c_str(), dbg_source_name.c_str(), item_name.c_str());
-#endif
-        range = you.current_vision;
-    }
-
     ASSERT(in_bounds(source));
     ASSERT(flavour > BEAM_NONE);
     ASSERT(flavour < BEAM_FIRST_PSEUDO);
     ASSERT(!drop_item || item && item->defined());
-    ASSERT(range >= 0);
+    ASSERTM(range >= 0, "beam '%s', source '%s', item '%s'; has range -1",
+            name.c_str(),
+            ((beam_source == NON_MONSTER && source == you.pos()) ? "player"
+             : (!invalid_monster_index(beam_source)
+                ? menv[beam_source].name(DESC_PLAIN, true) : "unknown")).c_str(),
+            (item ? item->name(false, DESC_PLAIN, false, true) : "none").c_str());
     ASSERT(!aimed_at_feet || source == target);
 
     real_flavour = flavour;
@@ -2565,10 +2546,10 @@ void bolt::drop_object()
             }
         }
 
-        copy_item_to_grid(*item, pos(), 1);
+        copy_item_to_grid(*item, pos(), agent()->mindex(), 1);
     }
     else
-        item_was_destroyed(*item, NON_MONSTER);
+        item_was_destroyed(*item, agent()->mindex());
 }
 
 // Returns true if the beam hits the player, fuzzing the beam if necessary
@@ -3306,6 +3287,8 @@ void bolt::affect_player_enchantment()
 
     bool nasty = true, nice = false;
 
+    const bool blame_player = effect_known && YOU_KILL(thrower);
+
     switch (flavour)
     {
     case BEAM_HIBERNATION:
@@ -3333,12 +3316,12 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_SLOW:
-        potion_effect(POT_SLOWING, ench_power);
+        potion_effect(POT_SLOWING, ench_power, false, blame_player);
         obvious_effect = true;
         break;
 
     case BEAM_HASTE:
-        potion_effect(POT_SPEED, ench_power, false, effect_known);
+        potion_effect(POT_SPEED, ench_power, false, blame_player);
         contaminate_player(1, effect_known);
         obvious_effect = true;
         nasty = false;
@@ -3346,14 +3329,14 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_HEALING:
-        potion_effect(POT_HEAL_WOUNDS, ench_power);
+        potion_effect(POT_HEAL_WOUNDS, ench_power, false, blame_player);
         obvious_effect = true;
         nasty = false;
         nice  = true;
         break;
 
     case BEAM_MIGHT:
-        potion_effect(POT_MIGHT, ench_power);
+        potion_effect(POT_MIGHT, ench_power, false, blame_player);
         obvious_effect = true;
         nasty = false;
         nice  = true;
@@ -3361,7 +3344,7 @@ void bolt::affect_player_enchantment()
 
     case BEAM_INVISIBILITY:
         you.attribute[ATTR_INVIS_UNCANCELLABLE] = 1;
-        potion_effect(POT_INVISIBILITY, ench_power);
+        potion_effect(POT_INVISIBILITY, ench_power, false, blame_player);
         contaminate_player(1 + random2(2), effect_known);
         obvious_effect = true;
         nasty = false;
@@ -3379,7 +3362,7 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_CONFUSION:
-        potion_effect(POT_CONFUSION, ench_power);
+        potion_effect(POT_CONFUSION, ench_power, false, blame_player);
         obvious_effect = true;
         break;
 
@@ -3405,7 +3388,7 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_ENSLAVE:
-        potion_effect(POT_CONFUSION, ench_power);
+        potion_effect(POT_CONFUSION, ench_power, false, blame_player);
         obvious_effect = true;
         break;     // enslavement - confusion?
 
@@ -3504,7 +3487,7 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_BERSERK:
-        potion_effect(POT_BERSERK_RAGE, ench_power);
+        potion_effect(POT_BERSERK_RAGE, ench_power, false, blame_player);
         obvious_effect = true;
         break;
 
@@ -3593,8 +3576,16 @@ void bolt::affect_player()
     if (!YOU_KILL(thrower))
         interrupt_activity(AI_MONSTER_ATTACKS);
 
+    const bool engulfs = is_explosion || is_big_cloud;
+
     if (is_enchantment())
     {
+        if (real_flavour == BEAM_CHAOS || real_flavour == BEAM_RANDOM)
+        {
+            if (hit_verb.empty())
+                hit_verb = engulfs ? "engulfs" : "hits";
+            mprf("The %s %s you!", name.c_str(), hit_verb.c_str());
+        }
         affect_player_enchantment();
         return;
     }
@@ -3603,8 +3594,6 @@ void bolt::affect_player()
 
     if (misses_player())
         return;
-
-    const bool engulfs = is_explosion || is_big_cloud;
 
     // FIXME: Lots of duplicated code here (compare handling of
     // monsters)
@@ -3658,7 +3647,8 @@ void bolt::affect_player()
         && you.holiness() != MH_UNDEAD
         && !you.is_unbreathing())
     {
-        potion_effect(POT_CONFUSION, 1);
+        potion_effect(POT_CONFUSION, 1, false,
+                      effect_known && YOU_KILL(thrower));
     }
 
     // handling of missiles
@@ -3955,21 +3945,21 @@ void bolt::handle_stop_attack_prompt(monster* mon)
     if ((thrower == KILL_YOU_MISSILE || thrower == KILL_YOU)
         && !is_harmless(mon))
     {
-        if (friend_info.count == 1 && !friend_info.dont_stop
-            || foe_info.count == 1 && !foe_info.dont_stop)
+        if (!friend_info.dont_stop || !foe_info.dont_stop)
         {
             const bool autohit_first = (hit == AUTOMATIC_HIT);
-            if (stop_attack_prompt(mon, true, target, autohit_first))
+            bool prompted = false;
+
+            if (stop_attack_prompt(mon, true, target, autohit_first, &prompted))
             {
                 beam_cancelled = true;
                 finish_beam();
             }
-            else
+
+            if (prompted)
             {
-                if (friend_info.count == 1)
-                    friend_info.dont_stop = true;
-                else if (foe_info.count == 1)
-                    foe_info.dont_stop = true;
+                friend_info.dont_stop = true;
+                foe_info.dont_stop = true;
             }
         }
     }
@@ -4385,8 +4375,22 @@ void bolt::affect_monster(monster* mon)
     if (handle_statue_disintegration(mon))
         return;
 
+    // Explosions always 'hit'.
+    const bool engulfs = (is_explosion || is_big_cloud);
+
     if (is_enchantment())
     {
+        if (real_flavour == BEAM_CHAOS || real_flavour == BEAM_RANDOM)
+        {
+            if (hit_verb.empty())
+                hit_verb = engulfs ? "engulfs" : "hits";
+            if (mons_near(mon))
+                mprf("The %s %s %s.", name.c_str(), hit_verb.c_str(),
+                     mon->observable() ? mon->name(DESC_THE).c_str()
+                                       : "something");
+            else if (heard && !noise_msg.empty())
+                mprf(MSGCH_SOUND, "%s", noise_msg.c_str());
+        }
         // no to-hit check
         enchantment_affect_monster(mon);
         return;
@@ -4439,9 +4443,6 @@ void bolt::affect_monster(monster* mon)
             set_attack_conducts(conducts, mon, !okay);
         }
     }
-
-    // Explosions always 'hit'.
-    const bool engulfs = (is_explosion || is_big_cloud);
 
     if (engulfs && flavour == BEAM_SPORE
         && mon->holiness() == MH_NATURAL
@@ -5616,7 +5617,7 @@ void bolt::determine_affected_cells(explosion_map& m, const coord_def& delta,
             continue;
 
         // If we were at a wall, only move to visible squares.
-        if (at_wall && !cell_see_cell(you.pos(), loc + Compass[i], LOS_SOLID))
+        if (at_wall && !cell_see_cell(you.pos(), loc + Compass[i], LOS_NO_TRANS))
             continue;
 
         int cadd = 5;

@@ -402,7 +402,7 @@ void you_teleport(void)
             mpr(_("You feel the power of the Abyss delaying your translocation."));
             teleport_delay += 5 + random2(10);
         }
-        else if (orb_haloed(you.pos()) && coinflip())
+        else if (orb_haloed(you.pos()))
         {
             mpr(gettext("You feel the orb delaying this translocation!"), MSGCH_ORB);
             teleport_delay += 5 + random2(5);
@@ -963,7 +963,7 @@ spret_type cast_apportation(int pow, bolt& beam, bool fail)
 
     if (max_units < item.quantity)
     {
-        if (!copy_item_to_grid(item, new_spot, max_units))
+        if (!copy_item_to_grid(item, new_spot, MHITYOU, max_units))
         {
             // Always >1 item.
             mpr(gettext("They abruptly stop in place!"));

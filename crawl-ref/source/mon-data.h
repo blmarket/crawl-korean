@@ -157,7 +157,7 @@ static monsterentry mondata[] = {
     // id, glyph, colour, name
     MONS_PROGRAM_BUG, 'B', LIGHTRED, M_("program bug"),
     // monster flags
-    M_NO_EXP_GAIN | M_NO_POLY_TO,
+    M_NO_EXP_GAIN | M_CANT_SPAWN,
     // resistance flags
     MR_NO_FLAGS,
     // mass, xp modifier, genus, species, holiness, magic resistance
@@ -181,7 +181,7 @@ static monsterentry mondata[] = {
 #define AXED_MON(id) \
 { \
     id, 'X', LIGHTRED, "removed "#id, \
-    M_NO_EXP_GAIN | M_NO_POLY_TO | M_UNFINISHED, \
+    M_NO_EXP_GAIN | M_CANT_SPAWN | M_UNFINISHED, \
     MR_NO_FLAGS, \
     0, 10, MONS_PROGRAM_BUG, MONS_PROGRAM_BUG, MH_NONLIVING, -3, \
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK }, \
@@ -910,7 +910,7 @@ static monsterentry mondata[] = {
     400, 10, MONS_GNOME, MONS_GNOME, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 10}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 3, 5, 0 },
-    2, 12, MST_NO_SPELLS, CE_CONTAMINATED, Z_NOZOMBIE, S_SHOUT,
+    2, 12, MST_NO_SPELLS, CE_CONTAMINATED, Z_SMALL, S_SHOUT,
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_SMALL
 },
@@ -1189,7 +1189,7 @@ static monsterentry mondata[] = {
 // lizards ('l')
 { // dummy for giant lizard genus
     MONS_GIANT_LIZARD, 'l', LIGHTGREY, M_("giant lizard"),
-    M_COLD_BLOOD | M_NO_POLY_TO,
+    M_COLD_BLOOD | M_CANT_SPAWN,
     MR_NO_FLAGS,
     170, 10, MONS_GIANT_LIZARD, MONS_GIANT_LIZARD, MH_NATURAL, -3,
     { {AT_BITE, AF_PLAIN, 3}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -1262,7 +1262,7 @@ static monsterentry mondata[] = {
 // drakes (also 'l', but dragon-like)
 { // dummy for drake genus
     MONS_DRAKE, 'l', WHITE, M_("drake"),
-    M_WARM_BLOOD | M_FLEES | M_NO_POLY_TO,
+    M_WARM_BLOOD | M_FLEES | M_CANT_SPAWN,
     MR_RES_POISON,
     900, 16, MONS_DRAKE, MONS_DRAKE, MH_NATURAL, -3,
     { {AT_BITE, AF_PLAIN, 14}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -1398,36 +1398,36 @@ static monsterentry mondata[] = {
 // rotting monsters ('n')
 {
     MONS_BOG_BODY, 'n', GREEN, M_("bog body"),
-    M_SPELLCASTER | M_ACTUAL_SPELLS,
+    M_NO_ZOMBIE | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_RES_FIRE | MR_RES_COLD,
     500, 16, MONS_GHOUL, MONS_BOG_BODY, MH_UNDEAD, -5,
     { {AT_HIT, AF_PLAIN, 25}, {AT_TOUCH, AF_COLD, 4}, AT_NO_ATK, AT_NO_ATK },
     { 6, 5, 3, 0 },
-    1, 9, MST_BOG_BODY, CE_ROT, Z_NOZOMBIE, S_SILENT,
+    1, 9, MST_BOG_BODY, CE_ROT, Z_SMALL, S_SILENT,
     I_NORMAL, HT_AMPHIBIOUS, FL_NONE, 10, SWIM_ENERGY(14),
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_MEDIUM
 },
 
 {
     MONS_NECROPHAGE, 'n', LIGHTGREY, M_("necrophage"),
-    M_NO_FLAGS,
+    M_NO_ZOMBIE,
     MR_RES_COLD,
     500, 12, MONS_GHOUL, MONS_NECROPHAGE, MH_UNDEAD, -5,
     { {AT_HIT, AF_ROT, 8}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 3, 5, 0 },
-    2, 10, MST_NO_SPELLS, CE_ROT, Z_NOZOMBIE, S_SILENT,
+    2, 10, MST_NO_SPELLS, CE_ROT, Z_SMALL, S_SILENT,
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_CORPSES, SIZE_MEDIUM
 },
 
 {
     MONS_GHOUL, 'n', RED, M_("ghoul"),
-    M_NO_FLAGS,
+    M_NO_ZOMBIE,
     MR_RES_COLD,
     500, 10, MONS_GHOUL, MONS_GHOUL, MH_UNDEAD, -5,
     { {AT_HIT, AF_ROT, 30}, {AT_CLAW, AF_ROT, 30}, AT_NO_ATK, AT_NO_ATK },
     { 14, 8, 5, 0 },
-    4, 10, MST_NO_SPELLS, CE_ROT, Z_NOZOMBIE, S_SILENT,
+    4, 10, MST_NO_SPELLS, CE_ROT, Z_SMALL, S_SILENT,
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_CORPSES, SIZE_MEDIUM
 },
@@ -1663,7 +1663,7 @@ static monsterentry mondata[] = {
 // never spawned as a monster.
 {
     MONS_PLAYER, '@', LIGHTGREY, M_("player"),
-    M_SPEAKS | M_NO_POLY_TO,
+    M_SPEAKS | M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 15, MONS_PLAYER_ILLUSION, MONS_PLAYER_ILLUSION, MH_NATURAL, -5,
     { {AT_HIT, AF_PLAIN, 5}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -1999,7 +1999,7 @@ static monsterentry mondata[] = {
     { {AT_HIT, AF_PLAIN, 13}, {AT_HIT, AF_PLAIN, 13}, {AT_HIT, AF_PLAIN, 13},
        AT_NO_ATK },
     { 9, 4, 5, 0 },
-    10, 6, MST_NO_SPELLS, CE_POISON_CONTAM, Z_NOZOMBIE, S_SCREAM,
+    10, 6, MST_NO_SPELLS, CE_POISON_CONTAM, Z_BIG, S_SCREAM,
     I_INSECT, HT_LAND, FL_NONE, 13, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_BIG
 },
@@ -2112,7 +2112,7 @@ static monsterentry mondata[] = {
     600, 10, MONS_UGLY_THING, MONS_UGLY_THING, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 12}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 8, 3, 5, 0 },
-    3, 10, MST_NO_SPELLS, CE_MUTAGEN, Z_NOZOMBIE, S_GURGLE,
+    3, 10, MST_NO_SPELLS, CE_MUTAGEN, Z_SMALL, S_GURGLE,
     I_ANIMAL, HT_LAND, FL_NONE, 11, ACTION_ENERGY(11),
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_MEDIUM
 },
@@ -2124,7 +2124,7 @@ static monsterentry mondata[] = {
     830, 10, MONS_UGLY_THING, MONS_VERY_UGLY_THING, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 17}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 12, 3, 5, 0 },
-    4, 10, MST_NO_SPELLS, CE_MUTAGEN, Z_NOZOMBIE, S_GURGLE,
+    4, 10, MST_NO_SPELLS, CE_MUTAGEN, Z_BIG, S_GURGLE,
     I_ANIMAL, HT_LAND, FL_NONE, 11, ACTION_ENERGY(11),
     MONUSE_OPEN_DOORS, MONEAT_NOTHING, SIZE_LARGE
 },
@@ -2353,7 +2353,7 @@ static monsterentry mondata[] = {
     200, 10, MONS_VAMPIRE_MOSQUITO, MONS_VAMPIRE_MOSQUITO, MH_UNDEAD, -3,
     { {AT_BITE, AF_VAMPIRIC, 13}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 3, 5, 0 },
-    2, 15, MST_NO_SPELLS, CE_ROT, Z_NOZOMBIE, S_BUZZ,
+    2, 15, MST_NO_SPELLS, CE_ROT, Z_SMALL, S_BUZZ,
     I_PLANT, HT_LAND, FL_WINGED, 19, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LITTLE
 },
@@ -2372,7 +2372,7 @@ static monsterentry mondata[] = {
 
 {   // dummy for moth genus
     MONS_MOTH, 'y', WHITE, M_("moth"),
-    M_NO_SKELETON | M_NO_POLY_TO,
+    M_NO_SKELETON | M_CANT_SPAWN,
     MR_NO_FLAGS,
     300, 10, MONS_MOTH, MONS_MOTH, MH_NATURAL, -3,
     { {AT_BITE, AF_PLAIN, 25}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -2509,12 +2509,12 @@ static monsterentry mondata[] = {
 
 {
     MONS_SKELETAL_WARRIOR, 'z', CYAN, M_("skeletal warrior"),
-    M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS,
+    M_FIGHTER,
     MR_RES_COLD,
     0, 10, MONS_SKELETAL_WARRIOR, MONS_SKELETAL_WARRIOR, MH_UNDEAD, -7,
     { {AT_HIT, AF_PLAIN, 25}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 10, 5, 3, 0 },
-    15, 10, MST_SKELETAL_WARRIOR, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
+    15, 10, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SILENT,
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
 },
@@ -2523,7 +2523,7 @@ static monsterentry mondata[] = {
     MONS_FLYING_SKULL, 'z', WHITE, M_("flying skull"),
     M_NO_FLAGS,
     MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC,
-    0, 10, MONS_SKELETON_SMALL, MONS_FLYING_SKULL, MH_UNDEAD, -3,
+    0, 10, MONS_SKELETON, MONS_FLYING_SKULL, MH_UNDEAD, -3,
     { {AT_HIT, AF_PLAIN, 7}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 2, 3, 5, 0 },
     10, 17, MST_NO_SPELLS, CE_NOCORPSE, Z_NOZOMBIE, S_SCREAM,
@@ -2676,7 +2676,7 @@ static monsterentry mondata[] = {
 // cyclopes and giants ('C')
 { // dummy for the genus, never spawns
     MONS_GIANT, 'C', LIGHTGREY, M_("giant"),
-    M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
+    M_WARM_BLOOD | M_SPEAKS | M_CANT_SPAWN,
     MR_NO_FLAGS,
     1700, 7, MONS_GIANT, MONS_GIANT, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 30}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -2955,7 +2955,7 @@ static monsterentry mondata[] = {
 // elementals (E)
 { // dummy for the genus, never spawns
     MONS_ELEMENTAL, 'E', LIGHTGREY, M_("elemental"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 13, MONS_ELEMENTAL, MONS_ELEMENTAL, MH_NONLIVING, MAG_IMMUNE,
     { {AT_HIT, AF_PLAIN, 40}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -3283,7 +3283,7 @@ static monsterentry mondata[] = {
     480, 13, MONS_SKY_BEAST, MONS_SKY_BEAST, MH_NATURAL, -3,
     { {AT_HIT, AF_ELEC, 5}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 5, 3, 5, 0 },
-    3, 13, MST_NO_SPELLS, CE_MUTAGEN, Z_NOZOMBIE, S_SILENT,
+    3, 13, MST_NO_SPELLS, CE_MUTAGEN, Z_BIG, S_SILENT,
     I_ANIMAL, HT_LAND, FL_WINGED, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
@@ -3327,7 +3327,7 @@ static monsterentry mondata[] = {
 
 {   // not an actual monster, it's here just to allow recoloring
     MONS_MERGED_SLIME_CREATURE, 'J', LIGHTGREEN, M_("merged slime creature"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_RES_POISON | MR_RES_ASPHYX,
     0, 5, MONS_JELLY, MONS_SLIME_CREATURE, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 22}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -3351,12 +3351,12 @@ static monsterentry mondata[] = {
 
 {
     MONS_GIANT_AMOEBA, 'J', BLUE, M_("giant amoeba"),
-    M_NO_SKELETON | M_SENSE_INVIS,
+    M_NO_SKELETON | M_NO_ZOMBIE | M_SENSE_INVIS,
     MR_RES_POISON | MR_RES_ASPHYX,
     700, 7, MONS_JELLY, MONS_GIANT_AMOEBA, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 25}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 12, 3, 5, 0 },
-    0, 4, MST_NO_SPELLS, CE_POISON_CONTAM, Z_NOZOMBIE, S_SILENT,
+    0, 4, MST_NO_SPELLS, CE_POISON_CONTAM, Z_BIG, S_SILENT,
     I_PLANT, HT_AMPHIBIOUS, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_NOTHING, MONEAT_NOTHING, SIZE_LARGE
 },
@@ -3679,7 +3679,7 @@ static monsterentry mondata[] = {
 
 {   // dummy for transformed display
     MONS_ANIMATED_TREE, '7', ETC_TREE, M_("animated tree"),
-    M_STATIONARY | M_NO_POLY_TO,
+    M_STATIONARY | M_CANT_SPAWN,
     MR_RES_POISON | MR_VUL_FIRE,
     0, 10, MONS_PLANT, MONS_ANIMATED_TREE, MH_PLANT, MAG_IMMUNE,
     { {AT_HIT, AF_CRUSH, 30}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -3831,7 +3831,7 @@ static monsterentry mondata[] = {
 #if TAG_MAJOR_VERSION == 34
 {
     MONS_ROCK_TROLL, 'T', LIGHTGREY, M_("rock troll"),
-    M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
+    M_WARM_BLOOD | M_SPEAKS | M_CANT_SPAWN,
     MR_NO_FLAGS,
     1600, 11, MONS_TROLL, MONS_ROCK_TROLL, MH_NATURAL, -4,
     { {AT_BITE, AF_PLAIN, 30}, {AT_CLAW, AF_PLAIN, 20},
@@ -3899,7 +3899,7 @@ static monsterentry mondata[] = {
 // bears ('U')
 { // dummy for the genus, never spawns
     MONS_BEAR, 'U', LIGHTGREY, M_("bear"),
-    M_WARM_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS | M_NO_POLY_TO,
+    M_WARM_BLOOD | M_SPELLCASTER | M_FAKE_SPELLS | M_CANT_SPAWN,
     MR_NO_FLAGS,
     1100, 10, MONS_BEAR, MONS_BEAR, MH_NATURAL, -3,
     { {AT_BITE, AF_PLAIN, 12}, {AT_CLAW, AF_PLAIN, 8}, {AT_CLAW, AF_PLAIN, 8},
@@ -5308,7 +5308,7 @@ static monsterentry mondata[] = {
 // golems ('8')
 { // dummy for the genus, never spawns
     MONS_GOLEM, '8', LIGHTGREY, M_("golem"),
-    M_SEE_INVIS | M_ARTIFICIAL | M_NO_POLY_TO,
+    M_SEE_INVIS | M_ARTIFICIAL | M_CANT_SPAWN,
     mrd(MR_RES_POISON | MR_RES_FIRE | MR_RES_COLD | MR_RES_ELEC, 3),
     0, 10, MONS_GOLEM, MONS_GOLEM, MH_NONLIVING, MAG_IMMUNE,
     { {AT_HIT, AF_PLAIN, 11}, {AT_HIT, AF_PLAIN, 11}, AT_NO_ATK, AT_NO_ATK },
@@ -5546,7 +5546,7 @@ static monsterentry mondata[] = {
 // Demon in hell.  Currently only used as genus/species for hell guardians.
 { // dummy, never spawns
     MONS_HELL_LORD, '&', BLACK, M_("hell lord"),
-    M_FIGHTER | M_SPELLCASTER | M_SPEAKS | M_NO_POLY_TO,
+    M_FIGHTER | M_SPELLCASTER | M_SPEAKS | M_CANT_SPAWN,
     MR_RES_POISON,
     0, 14, MONS_HELL_LORD, MONS_HELL_LORD, MH_DEMONIC, -5,
     { {AT_HIT, AF_PLAIN, 5}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -5733,7 +5733,7 @@ static monsterentry mondata[] = {
     3500, 10, MONS_GIANT, MONS_IRON_GIANT, MH_NATURAL, -4,
     { {AT_HIT, AF_PLAIN, 60}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 22, 0, 0, 220 },
-    18, 2, MST_IRON_GIANT, CE_CONTAMINATED, Z_NOZOMBIE, S_SHOUT,
+    18, 2, MST_IRON_GIANT, CE_CONTAMINATED, Z_BIG, S_SHOUT,
     I_NORMAL, HT_LAND, FL_NONE, 10, DEFAULT_ENERGY,
     MONUSE_STARTING_EQUIPMENT, MONEAT_NOTHING, SIZE_GIANT
 },
@@ -6753,7 +6753,7 @@ static monsterentry mondata[] = {
 // an unspecified monster
 {
     MONS_SENSED, '{', LIGHTRED, M_("sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -6765,7 +6765,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SENSED_FRIENDLY, '{', GREEN, M_("friendly sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -6777,7 +6777,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SENSED_TRIVIAL, '{', LIGHTGRAY, M_("trivial sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -6789,7 +6789,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SENSED_EASY, '{', BROWN, M_("easy sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -6801,7 +6801,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SENSED_TOUGH, '{', RED, M_("tough sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
@@ -6813,7 +6813,7 @@ static monsterentry mondata[] = {
 
 {
     MONS_SENSED_NASTY, '{', LIGHTRED, M_("nasty sensed monster"),
-    M_NO_POLY_TO,
+    M_CANT_SPAWN,
     MR_NO_FLAGS,
     0, 0, MONS_SENSED, MONS_SENSED, MH_NONLIVING, 0,
     { AT_NO_ATK, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },

@@ -1336,7 +1336,7 @@ bool monster::drop_item(int eslot, int near)
                  pitem->name(true, DESC_PLAIN).c_str());
         }
 
-        if (!move_item_to_grid(&item_index, pos(), swimming()))
+        if (!move_item_to_grid(&item_index, pos(), mindex(), swimming()))
         {
             // Re-equip item if we somehow failed to drop it.
             if (was_unequipped)
@@ -5005,7 +5005,7 @@ void monster::check_redraw(const coord_def &old, bool clear_tiles) const
 #ifdef USE_TILE
             if (clear_tiles && !see_old)
             {
-                tile_clear_monster(old);
+                tile_reset_fg(old);
                 if (mons_is_feat_mimic(type))
                     tile_reset_feat(old);
             }
@@ -5284,7 +5284,7 @@ void monster::lose_energy(energy_use_type et, int div, int mult)
     // Randomize movement cost slightly, to make it less predictable,
     // and make pillar-dancing not entirely safe.
     // No randomization for allies following you to avoid traffic jam
-    if ((et == EUT_MOVE || et == EUT_SWIM) && (!friendly() or foe != MHITYOU))
+    if ((et == EUT_MOVE || et == EUT_SWIM) && (!friendly() || foe != MHITYOU))
         energy_loss += random2(3) - 1;
 
     speed_increment -= energy_loss;

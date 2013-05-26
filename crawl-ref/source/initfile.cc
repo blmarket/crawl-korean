@@ -167,7 +167,7 @@ static const string message_channel_names[] =
     "intrinsic_gain", "mutation", "monster_spell", "monster_enchant",
     "friend_spell", "friend_enchant", "monster_damage", "monster_target",
     "banishment", "rotten_meat", "equipment", "floor", "multiturn", "examine",
-    "examine_filter", "diagnostic", "error", "tutorial", "orb"
+    "examine_filter", "diagnostic", "error", "tutorial", "orb", "timed_portal"
 };
 
 // returns -1 if unmatched else returns 0--(NUM_MESSAGE_CHANNELS-1)
@@ -2396,6 +2396,8 @@ void game_options::read_option_line(const string &str, bool runscript)
         {
             lang = LANG_LV, lang_name = "lv";
         }
+        else if (field == "nl" || field == "dutch" || field == "nederlands")
+            lang = LANG_NL, lang_name = "nl";
         else if (field == "pl" || field == "polish" || field == "polski")
             lang = LANG_PL, lang_name = "pl";
         else if (field == "pt" || field == "portuguese" || field == "português" || field == "portugues")

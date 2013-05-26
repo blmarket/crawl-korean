@@ -114,8 +114,8 @@ static void _moveto_maybe_repel_stairs()
     {
         if (slide_feature_over(you.pos(), coord_def(-1, -1), false))
         {
-            string stair_str = feature_description_at(true, you.pos(), "",
-                                                      DESC_PLAIN, false);
+            string stair_str = feature_description_at(true, you.pos(), false,
+                                                      DESC_THE, false);
             string prep = feat_preposition(new_grid, true, &you);
 
             mprf(gettext("%s slides away as you move %s it!"), stair_str.c_str(),
@@ -2117,11 +2117,11 @@ int player_prot_life(bool calc_unid, bool temp, bool items)
         switch (you.form)
         {
         case TRAN_STATUE:
-        case TRAN_WISP:
             pl++;
             break;
         case TRAN_FUNGUS:
         case TRAN_TREE:
+        case TRAN_WISP:
         case TRAN_LICH:
             pl += 3;
             break;
@@ -2277,10 +2277,15 @@ int player_speed(void)
     else if (you.duration[DUR_HASTE])
         ps = haste_div(ps);
 
-    if (you.form == TRAN_STATUE || you.form == TRAN_TREE
-        || you.duration[DUR_PETRIFYING])
+    if (you.form == TRAN_STATUE || you.duration[DUR_PETRIFYING])
     {
         ps *= 15;
+        ps /= 10;
+    }
+
+    if (you.form == TRAN_TREE)
+    {
+        ps *= 15 - you.experience_level / 5;
         ps /= 10;
     }
 
@@ -2925,10 +2930,10 @@ void gain_exp(unsigned int exp_gained, unsigned int* actual_gain)
         int which_sage = random2(you.sage_skills.size());
         skill_type skill = you.sage_skills[which_sage];
 
-#if TAG_MAJOR_VERSION > 35
+#if TAG_MAJOR_VERSION > 34
         // These are supposed to be purged from the sage lists in
         // _change_skill_level()
-        ASSERT(you.skills[skill] < 27)
+        ASSERT(you.skills[skill] < 27);
 #endif
 
         // FIXME: shouldn't use more XP than needed to max the skill
@@ -6205,7 +6210,7 @@ int player::armour_class() const
             break;
 
         case TRAN_WISP:
-            AC += 1000;
+            AC += 500 + 50 * you.experience_level;
             break;
         case TRAN_FUNGUS:
             AC += 1200;
@@ -6222,7 +6227,7 @@ int player::armour_class() const
             break;
 
         case TRAN_TREE: // extreme bonus, no EV
-            AC += 2500;
+            AC += 2000 + 50 * you.experience_level;
             break;
         }
     }
@@ -6726,8 +6731,11 @@ bool player::rot(actor *who, int amount, int immediate, bool quiet)
 
     // Either this, or the actual rotting message should probably
     // be changed so that they're easier to tell apart. -- bwr
-    mprf(MSGCH_WARN, _("You feel your flesh %s away!"),
-         (rotting > 0 || immediate) ? pgettext("player::rot", "rotting") : pgettext("player::rot", "start to rot"));
+    if (!quiet)
+    {
+        mprf(MSGCH_WARN, _("You feel your flesh %s away!"),
+             (rotting > 0 || immediate) ? pgettext("player::rot","rotting") : pgettext("player::rot","start to rot"));
+    }
 
     rotting += amount;
 
