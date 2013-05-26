@@ -3298,9 +3298,9 @@ string feature_description_at(bool allow_translate, const coord_def& where, bool
         if (door_desc_veto.empty() || door_desc_veto != "veto")
         {
             if (grid == DNGN_OPEN_DOOR)
-                desc += ((!allow_translate) ? "detected secret " : pgettext("featuredesc","detected secret "));
-            else if (grid == DNGN_RUNED_DOOR)
                 desc += ((!allow_translate) ? "open " : pgettext("featuredesc","open "));
+            else if (grid == DNGN_RUNED_DOOR)
+                desc += ((!allow_translate) ? "runed " : pgettext("featuredesc","runed "));
             else if (grid == DNGN_SEALED_DOOR)
                 desc += ((!allow_translate) ? "sealed " : pgettext("featuredesc","sealed "));
             else

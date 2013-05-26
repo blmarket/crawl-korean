@@ -31464,7 +31464,7 @@ msgstr "수동 수련 모드에서는, 당신이 수련할 스킬들을 수동�
 #: skills.cc:446 skills.cc:422 skills.cc:425 skills.cc:427
 #, c-format
 msgid "You stop training %s"
-msgstr "%s 수련을 중단했다."
+msgstr "수련을 중단했다 : %s"
 
 #: spl-miscast.cc:984 spl-miscast.cc:982 spl-miscast.cc:983 spl-miscast.cc:988
 #: spl-miscast.cc:998
@@ -40308,3 +40308,7 @@ msgstr "그 장소는 이미 너무 혼잡하다!"
 #: zotdef.cc:1016
 msgid "You can't create it there!"
 msgstr "그곳에는 생성할 수 없다!"
+
+msgctxt "featuredesc"
+msgid "runed "
+msgstr "룬이 새겨진 "

@@ -7656,7 +7656,7 @@ msgstr "닫힌 문"
 #: directn.cc:2971 directn.cc:2971 directn.cc:2974 directn.cc:2983
 #: directn.cc:2951
 msgid "detected secret door"
-msgstr "감지된 비밀문"
+msgstr "문"
 
 #: directn.cc:2973 directn.cc:2973 directn.cc:2976 directn.cc:2985
 #: directn.cc:2953 directn.cc:2970 directn.cc:2971
