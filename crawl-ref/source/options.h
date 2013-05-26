@@ -11,7 +11,8 @@ enum option_value {
     OPT_NO,
     OPT_YES,
     OPT_PROMPT,
-    OPT_BEFORE_EXPLORE
+    OPT_BEFORE_EXPLORE,
+    OPT_PROMPT_IGNORE
 };
 
 struct message_filter
@@ -253,6 +254,7 @@ public:
     bool        pickup_thrown;  // Pickup thrown missiles
     int         travel_delay;   // How long to pause between travel moves
     int         explore_delay;  // How long to pause between explore moves
+    int         rest_delay;     // How long to pause between rest moves
 
     bool        show_travel_trail;
 

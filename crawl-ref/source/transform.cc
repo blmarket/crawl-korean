@@ -895,7 +895,7 @@ bool transform(int pow, transformation_type which_trans, bool force,
         break;
 
     case TRAN_PORCUPINE:
-        tran_name = M_("spider");
+        tran_name = M_("porcupine");
         str       = -3;
         msg      += make_stringf(msg.c_str(), _("a spiny porcupine."));
         break;
