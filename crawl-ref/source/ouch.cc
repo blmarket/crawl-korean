@@ -130,7 +130,12 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         hurted = resist_adjust_damage(&you, flavour,
                                       you.res_water_drowning(), hurted, true);
         if (!hurted && doEffects)
-            mpr(gettext("You shrug off the wave."));
+            mpr(_("You shrug off the wave."));
+        else if (hurted > original && doEffects)
+        {
+            mpr(_("The water douses you terribly!"));
+            xom_is_stimulated(200);
+        }
         break;
 
     case BEAM_STEAM:
@@ -155,6 +160,17 @@ int check_your_resists(int hurted, beam_type flavour, string source,
             mpr(gettext("The fire burns you terribly!"));
             xom_is_stimulated(200);
         }
+        break;
+
+    case BEAM_HELLFIRE:
+        if (you.species == SP_DJINNI)
+        {
+            hurted = 0;
+            if (doEffects)
+                mpr("You resist completely.");
+        }
+        // Inconsistency: no penalty for rF-, unlike monsters.  That's
+        // probably good, and monsters should be changed.
         break;
 
     case BEAM_COLD:
@@ -351,6 +367,27 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         else if (you.flight_mode())
             hurted += hurted / 2;
         break;
+    }
+
+    case BEAM_GHOSTLY_FLAME:
+    {
+        if (you.holiness() == MH_UNDEAD)
+        {
+            if (doEffects)
+            {
+                you.heal(roll_dice(2, 9));
+                mpr("You are bolstered by the flame.");
+            }
+            hurted = 0;
+        }
+        else
+        {
+            hurted = resist_adjust_damage(&you, flavour,
+                                          you.res_negative_energy(),
+                                          hurted, true);
+            if (hurted < original && doEffects)
+                canned_msg(MSG_YOU_PARTIALLY_RESIST);
+        }
     }
 
     default:
@@ -1109,10 +1146,20 @@ void ouch(int dam, int death_source, kill_method_type death_type,
     }
 
     if (dam != INSTANT_DEATH)
-        if (you.petrified())
+        if (you.species == SP_GROTESK && (you.petrified() || you.petrifying()))
+        {
+            you.grotesk_damage_reduction =
+                max(you.grotesk_damage_reduction, dam + 1 / 2);
             dam /= 2;
+        }
+        else if (you.petrified())
+        {
+            dam /= 2;
+        }
         else if (you.petrifying())
+        {
             dam = dam * 10 / 15;
+        }
 
     ait_hp_loss hpl(dam, death_type);
     interrupt_activity(AI_HP_LOSS, &hpl);

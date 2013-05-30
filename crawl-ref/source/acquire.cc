@@ -713,21 +713,14 @@ static int _acquirement_misc_subtype()
         result = MISC_BOTTLED_EFREET;
     if (one_chance_in(4) && !you.seen_misc[MISC_DISC_OF_STORMS])
         result = MISC_DISC_OF_STORMS;
-    if (x_chance_in_y(you.skills[SK_FIRE_MAGIC], 27)
-        && !you.seen_misc[MISC_LAMP_OF_FIRE])
-    {
+    if (one_chance_in(4) && !you.seen_misc[MISC_LAMP_OF_FIRE])
         result = MISC_LAMP_OF_FIRE;
-    }
-    if (x_chance_in_y(you.skills[SK_AIR_MAGIC], 27)
-        && !you.seen_misc[MISC_AIR_ELEMENTAL_FAN])
-    {
-        result = MISC_AIR_ELEMENTAL_FAN;
-    }
-    if (one_chance_in(4)
-        && !you.seen_misc[MISC_STONE_OF_EARTH_ELEMENTALS])
-    {
-        result = MISC_STONE_OF_EARTH_ELEMENTALS;
-    }
+    if (one_chance_in(4) && !you.seen_misc[MISC_FAN_OF_GALES])
+        result = MISC_FAN_OF_GALES;
+    if (one_chance_in(4) && !you.seen_misc[MISC_STONE_OF_TREMORS])
+        result = MISC_STONE_OF_TREMORS;
+    if (one_chance_in(4) && !you.seen_misc[MISC_PHIAL_OF_FLOODS])
+        result = MISC_PHIAL_OF_FLOODS;
     if (one_chance_in(4) && !you.seen_misc[MISC_LANTERN_OF_SHADOWS])
         result = MISC_LANTERN_OF_SHADOWS;
     if (x_chance_in_y(you.skills[SK_EVOCATIONS], 27)
@@ -1611,6 +1604,36 @@ bool acquirement(object_class_type class_wanted, int agent,
 {
     ASSERT(!crawl_state.game_is_arena());
 
+    FixedBitVector<NUM_OBJECT_CLASSES> bad_class;
+    if (you.species == SP_FELID)
+    {
+        bad_class.set(OBJ_WEAPONS);
+        bad_class.set(OBJ_MISSILES);
+        bad_class.set(OBJ_ARMOUR);
+        bad_class.set(OBJ_WANDS);
+        bad_class.set(OBJ_STAVES);
+        bad_class.set(OBJ_RODS);
+    }
+    bad_class.set(OBJ_FOOD, you_foodless());
+
+    static struct { object_class_type type; const char* name; } acq_classes[] =
+    {
+        { OBJ_WEAPONS,    "Weapon" },
+        { OBJ_ARMOUR,     "Armour" },
+        { OBJ_JEWELLERY,  "Jewellery" },
+        { OBJ_BOOKS,      "Book" },
+        { OBJ_STAVES,     "Staff" },
+        { OBJ_WANDS,      "Wand" },
+        { OBJ_MISCELLANY, "Miscellaneous" },
+        { OBJ_FOOD,       0 }, // amended below
+        { OBJ_GOLD,       "Gold" },
+        { OBJ_MISSILES,   "Ammunition" },
+    };
+    ASSERT(acq_classes[7].type == OBJ_FOOD);
+    acq_classes[7].name = you.religion == GOD_FEDHAS ? "Fruit":
+                          you.species == SP_VAMPIRE  ? "Blood":
+                                                       "Food";
+
     int thing_created = NON_ITEM;
 
     if (item_index == NULL)
@@ -1622,30 +1645,34 @@ bool acquirement(object_class_type class_wanted, int agent,
     {
         ASSERT(!quiet);
         mesclr();
-        mprf(_("%-29s[c] Jewellery [d] Book%s"),
-            you.species == SP_FELID ? "" : _("[a] Weapon [b] Armour"),
-            you.species == SP_FELID ? "" : _(" [e] Staff"));
-        mprf(_("%-11s[g] Miscellaneous %-9s     [i] Gold %s"),
-            you.species == SP_FELID ? "" : _("[f] Wand"),
-            you.species == SP_MUMMY ? "" : you.religion == GOD_FEDHAS ? _("[h] Fruit") : _("[h] Food "),
-            you.species == SP_FELID ? "" : _("[j] Ammunition"));
+
+        string line;
+        for (unsigned int i = 0; i < ARRAYSZ(acq_classes); i++)
+        {
+            int len = max(strlen(acq_classes[i].name),
+                          strlen(acq_classes[(i + ARRAYSZ(acq_classes) / 2)
+                                             % ARRAYSZ(acq_classes)].name));
+            if (bad_class[acq_classes[i].type])
+                line += make_stringf("     %-*s", len, "");
+            else
+                line += make_stringf(" [%c] %-*s", i + 'a', len, _(acq_classes[i].name));
+
+            if (i == ARRAYSZ(acq_classes) / 2 - 1 || i == ARRAYSZ(acq_classes) - 1)
+            {
+                line.erase(0, 1);
+                mpr(line.c_str());
+                line.clear();
+            }
+        }
         mpr(_("What kind of item would you like to acquire? (\\ to view known items)"), MSGCH_PROMPT);
 
         const int keyin = toalower(get_ch());
-        switch (keyin)
+        if (keyin >= 'a' && keyin < 'a' + (int)ARRAYSZ(acq_classes))
+            class_wanted = acq_classes[keyin - 'a'].type;
+        else if (keyin == '\\')
+            check_item_knowledge(), redraw_screen();
+        else
         {
-        case 'a':    class_wanted = OBJ_WEAPONS;    break;
-        case 'b':    class_wanted = OBJ_ARMOUR;     break;
-        case 'c':    class_wanted = OBJ_JEWELLERY;  break;
-        case 'd':    class_wanted = OBJ_BOOKS;      break;
-        case 'e':    class_wanted = OBJ_STAVES;     break;
-        case 'f':    class_wanted = OBJ_WANDS;      break;
-        case 'g':    class_wanted = OBJ_MISCELLANY; break;
-        case 'h':    class_wanted = OBJ_FOOD;       break;
-        case 'i':    class_wanted = OBJ_GOLD;       break;
-        case 'j':    class_wanted = OBJ_MISSILES;   break;
-        case '\\':   check_item_knowledge(); redraw_screen(); break;
-        default:
             // Lets wizards escape out of accidently choosing acquirement.
             if (agent == AQ_WIZMODE)
             {
@@ -1661,16 +1688,10 @@ bool acquirement(object_class_type class_wanted, int agent,
                 you.turn_is_over = false;
                 return false;
             }
-            break;
         }
 
-        if (you.species == SP_FELID
-            && (class_wanted == OBJ_WEAPONS || class_wanted == OBJ_ARMOUR
-                || class_wanted == OBJ_STAVES  || class_wanted == OBJ_WANDS)
-            || you.species == SP_MUMMY && class_wanted == OBJ_FOOD)
-        {
+        if (class_wanted >= NUM_OBJECT_CLASSES || bad_class[class_wanted])
             class_wanted = OBJ_RANDOM;
-        }
     }
 
     *item_index = acquirement_create_item(class_wanted, agent, quiet,

@@ -31,6 +31,8 @@ static duration_def duration_data[] =
 {
     { DUR_AGILITY, false,
       0, "", P_("status","agile"), N_("You are agile.") },
+    { DUR_ANTIMAGIC, true,
+      RED, P_("status","-Mag"), P_("status","antimagic"), N_("You have trouble accessing your magic.") },
     { DUR_BARGAIN, true,
       BLUE, P_("status","Brgn"), P_("status","charismatic"), N_("You get a bargain in shops.") },
     { DUR_BERSERK, true,
@@ -132,6 +134,14 @@ static duration_def duration_data[] =
       BLUE, P_("status", "Disjoin"), P_("status","disjoining"), N_("You are disjoining your surroundings.") },
     { DUR_SENTINEL_MARK, true,
       MAGENTA, P_("status","Mark"), P_("status","marked"), N_("You are marked for hunting.") },
+    { DUR_FLAYED, true,
+      RED, P_("status","Flay"), P_("status","flayed"), N_("You are covered in terrible wounds.") },
+    { DUR_RETCHING, true,
+      RED, P_("status","Retch"), P_("status","retching"), N_("You are retching with violent nausea.") },
+    { DUR_WEAK, false,
+      RED, P_("status","Weak"), P_("status","weakened"), N_("Your attacks are enfeebled.") },
+    { DUR_DIMENSION_ANCHOR, false,
+      RED, P_("status","-TELE"), P_("status","cannot translocate"), N_("You are firmly anchored to this plane.") },
 };
 
 static int duration_index[NUM_DURATIONS];
@@ -490,6 +500,16 @@ bool fill_status_info(int status, status_info* inf)
         }
         break;
 
+    case STATUS_HOVER:
+        if (is_hovering())
+        {
+            inf->light_colour = RED;
+            inf->light_text   = "Hover";
+            inf->short_text   = "hovering above liquid";
+            inf->long_text    = "You are exerting yourself to hover high above the liquid.";
+        }
+        break;
+
     case STATUS_STR_ZERO:
         _describe_stat_zero(inf, STAT_STR);
         break;
@@ -549,6 +569,25 @@ bool fill_status_info(int status, status_info* inf)
             inf->light_text   = _(M_("Recall"));
             inf->short_text   = _(M_("recalling"));
             inf->long_text    = _("You are recalling your allies.");
+        }
+        break;
+
+    case DUR_WATER_HOLD:
+        inf->light_text   = "Engulf";
+        if (you.res_water_drowning())
+        {
+            inf->short_text   = "engulfed";
+            inf->long_text    = "You are engulfed in water.";
+            if (you.can_swim())
+                inf->light_colour = DARKGREY;
+            else
+                inf->light_colour = YELLOW;
+        }
+        else
+        {
+            inf->short_text   = "engulfed (cannot breathe)";
+            inf->long_text    = "You are engulfed in water and unable to breathe.";
+            inf->light_colour = RED;
         }
         break;
 
@@ -616,7 +655,8 @@ static void _describe_glow(status_info* inf)
         inf->light_colour = DARKGREY;
         if (cont > 1)
             inf->light_colour = _bad_ench_colour(cont, 2, 3);
-        inf->light_text = gettext(M_("Contam"));
+        if (cont > 1 || you.species != SP_DJINNI)
+            inf->light_text = gettext(M_("Contam"));
     }
 
     if (cont > 0)

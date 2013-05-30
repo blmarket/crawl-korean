@@ -936,9 +936,6 @@ static void _tile_place_cloud(const coord_def &gc, const cloud_info &cl)
     }
     else
         env.tile_bk_cloud(gc) = tileidx_cloud(cl, disturbance);
-
-    if (env.map_knowledge(gc).item())
-        _tile_place_item_marker(gc, *env.map_knowledge(gc).item());
 }
 
 unsigned int num_tile_rays = 0;
@@ -999,6 +996,8 @@ void tile_draw_map_cell(const coord_def& gc, bool foreground_only)
     // Always place clouds now they have their own layer
     if (cell.cloud() != CLOUD_NONE)
         _tile_place_cloud(gc, *cell.cloudinfo());
+    else
+        env.tile_bk_cloud(gc) = 0;
 }
 
 void tile_wizmap_terrain(const coord_def &gc)
@@ -1326,6 +1325,9 @@ void tile_apply_properties(const coord_def &gc, packed_cell &cell)
 
     if (mc.flags & MAP_ORB_HALOED)
         cell.orb_glow = get_orb_phase(gc) ? 2 : 1;
+
+    if (mc.flags & MAP_HOT)
+        cell.heat_aura = 1 + random2(3);
 
     if (mc.flags & MAP_QUAD_HALOED)
         cell.quad_glow = true;

@@ -1388,6 +1388,8 @@ void elyvilon_purification()
     you.duration[DUR_CONF] = 0;
     you.duration[DUR_SLOW] = 0;
     you.duration[DUR_PETRIFYING] = 0;
+    you.duration[DUR_RETCHING] = 0;
+    you.duration[DUR_WEAK] = 0;
     restore_stat(STAT_ALL, 0, false);
     unrot_hp(9999);
 }
@@ -1411,7 +1413,12 @@ bool elyvilon_divine_vigour()
         calc_hp();
         inc_hp((you.hp_max * you.hp + old_hp_max - 1)/old_hp_max - you.hp);
         calc_mp();
-        inc_mp((you.max_magic_points * you.magic_points + old_mp_max - 1)/old_mp_max - you.magic_points);
+        if (old_mp_max > 0)
+        {
+            inc_mp((you.max_magic_points * you.magic_points + old_mp_max - 1)
+                     / old_mp_max
+                   - you.magic_points);
+        }
 
         success = true;
     }
@@ -1713,7 +1720,6 @@ void yred_make_enslaved_soul(monster* mon, bool force_hostile)
     }
 
     mon->colour = ETC_UNHOLY;
-    mon->speed  = mons_class_base_speed(mon->base_monster);
 
     mon->flags |= MF_NO_REWARD;
     mon->flags |= MF_ENSLAVED_SOUL;

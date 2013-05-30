@@ -672,11 +672,10 @@ bool MiscastEffect::avoid_lethal(int dam)
 
     if (recursion_depth == MAX_RECURSE)
     {
-#if defined(DEBUG_DIAGNOSTICS) || defined(DEBUG_MISCAST)
-        mpr("Couldn't avoid lethal miscast: too much recursion.",
-            MSGCH_ERROR);
-#endif
-        return false;
+        // Any possible miscast would kill you, now that's interesting.
+        if (you.religion == GOD_XOM)
+            simple_god_message(" watches you with interest.");
+        return true;
     }
 
     if (did_msg)
@@ -1517,11 +1516,11 @@ void MiscastEffect::_divination_you(int severity)
                 mpr(gettext("You have a terrible headache."));
             break;
         case 1:
-            mpr(gettext("You lose your focus."));
-            if (you.magic_points > 0)
+            mpr(_("You lose your focus."));
+            if (you.magic_points > 0 || you.species == SP_DJINNI)
             {
-                dec_mp(3 + random2(10));
-                mpr(gettext("You suddenly feel drained of magical energy!"), MSGCH_WARN);
+                drain_mp(3 + random2(10));
+                mpr(_("You suddenly feel drained of magical energy!"), MSGCH_WARN);
             }
             break;
         }
@@ -1533,11 +1532,11 @@ void MiscastEffect::_divination_you(int severity)
         switch (random2(2))
         {
         case 0:
-            mpr(gettext("You lose concentration completely!"));
-            if (you.magic_points > 0)
+            mpr(_("You lose concentration completely!"));
+            if (you.magic_points > 0 || you.species == SP_DJINNI)
             {
-                dec_mp(5 + random2(20));
-                mpr(gettext("You suddenly feel drained of magical energy!"), MSGCH_WARN);
+                drain_mp(5 + random2(20));
+                mpr(_("You suddenly feel drained of magical energy!"), MSGCH_WARN);
             }
             break;
         case 1:
@@ -1750,7 +1749,7 @@ void MiscastEffect::_necromancy(int severity)
         {
             bool success = false;
 
-            for (int i = random2(3); i >= 0; --i)
+            for (int i = random2(2); i >= 0; --i)
             {
                 if (_create_monster(MONS_SHADOW, 2, true))
                     success = true;
@@ -2030,12 +2029,12 @@ void MiscastEffect::_transmutation(int severity)
                 // We don't need messages when the mutation fails,
                 // because we give our own (which is justified anyway as
                 // you take damage).
-                give_bad_mutation(cause, false, false);
+                mutate(RANDOM_BAD_MUTATION, cause, false, false);
                 if (coinflip())
-                    give_bad_mutation(cause, false, false);
+                    mutate(RANDOM_BAD_MUTATION, cause, false, false);
             }
             else
-                target->mutate(cause);
+                target->malmutate(cause);
             _ouch(5 + random2avg(23, 2));
             break;
         }
@@ -3024,9 +3023,9 @@ void MiscastEffect::_zot()
             else
             {
                 you_msg = _("Your body is distorted in a weirdly horrible way!");
-                give_bad_mutation(cause, false, false);
+                mutate(RANDOM_BAD_MUTATION, cause, false, false);
                 if (coinflip())
-                    give_bad_mutation(cause, false, false);
+                    mutate(RANDOM_BAD_MUTATION, cause, false, false);
                 do_msg();
             }
             break;

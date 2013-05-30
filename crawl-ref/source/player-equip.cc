@@ -593,9 +593,9 @@ static void _equip_weapon_effect(item_def& item, bool showMsgs, bool unmeld)
                     break;
 
                 case SPWPN_ORC_SLAYING:
-                    mpr((you.species == SP_HILL_ORC)
-                            ? gettext("You feel a sudden desire to commit suicide.")
-                            : gettext("You feel a sudden desire to kill orcs!"));
+                    mpr(player_genus(GENPC_ORCISH)
+                            ? _("You feel a sudden desire to commit suicide.")
+                            : _("You feel a sudden desire to kill orcs!"));
                     break;
 
                 case SPWPN_DRAGON_SLAYING:

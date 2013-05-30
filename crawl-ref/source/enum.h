@@ -73,6 +73,8 @@ enum ability_type
     ABIL_BOTTLE_BLOOD,
     // Deep Dwarves
     ABIL_RECHARGING,
+    // Grotesks
+    ABIL_SELF_PETRIFY,
 
     ABIL_MAX_INTRINSIC = ABIL_RECHARGING,
 
@@ -291,6 +293,9 @@ enum attribute_type
                                // will be removed
     ATTR_NEXT_RECALL_TIME,     // aut remaining until next ally will be recalled
     ATTR_NEXT_RECALL_INDEX,    // index+1 into recall_list for next recall
+#if TAG_MAJOR_VERSION == 34
+    ATTR_EVOKER_XP,            // How much xp remaining until next evoker charge
+#endif
     NUM_ATTRIBUTES
 };
 
@@ -345,6 +350,7 @@ enum beam_type                  // bolt::flavour
     BEAM_LIGHT,
     BEAM_RANDOM,                  // currently translates into FIRE..ACID
     BEAM_CHAOS,
+    BEAM_GHOSTLY_FLAME,
 
     // Enchantments
     BEAM_SLOW,
@@ -376,7 +382,8 @@ enum beam_type                  // bolt::flavour
     BEAM_SLEEP,
     BEAM_INNER_FLAME,
     BEAM_SENTINEL_MARK,
-    BEAM_LAST_ENCHANTMENT = BEAM_SENTINEL_MARK,
+    BEAM_DIMENSION_ANCHOR,
+    BEAM_LAST_ENCHANTMENT = BEAM_DIMENSION_ANCHOR,
 
     BEAM_MEPHITIC,
     BEAM_GLOOM,
@@ -613,6 +620,7 @@ enum cloud_type
     CLOUD_MAGIC_TRAIL,
     CLOUD_TORNADO,
     CLOUD_DUST_TRAIL,
+    CLOUD_GHOSTLY_FLAME,
     NUM_CLOUD_TYPES,
 
     CLOUD_OPAQUE_FIRST = CLOUD_BLACK_SMOKE,
@@ -1186,6 +1194,13 @@ enum dungeon_char_type
     DCHAR_FIRED_MISSILE,
     DCHAR_EXPLOSION,
 
+    DCHAR_FRAME_HORIZ,
+    DCHAR_FRAME_VERT,
+    DCHAR_FRAME_TL,
+    DCHAR_FRAME_TR,
+    DCHAR_FRAME_BL,
+    DCHAR_FRAME_BR,
+
     NUM_DCHAR_TYPES
 };
 
@@ -1488,6 +1503,13 @@ enum duration_type
 #endif
     DUR_SENTINEL_MARK,
     DUR_SICKENING,
+    DUR_WATER_HOLD,
+    DUR_WATER_HOLD_IMMUNITY,
+    DUR_FLAYED,
+    DUR_RETCHING,
+    DUR_WEAK,
+    DUR_DIMENSION_ANCHOR,
+    DUR_ANTIMAGIC,
     NUM_DURATIONS
 };
 
@@ -1578,7 +1600,13 @@ enum enchant_type
     ENCH_SCREAMED,      // Starcursed scream timer
     ENCH_WORD_OF_RECALL,// Chanting word of recall
     ENCH_INJURY_BOND,
-    // Update enchantment names in monster.cc when adding or removing
+    ENCH_WATER_HOLD,      // Silence and asphyxiation damage
+    ENCH_FLAYED,
+    ENCH_HAUNTING,
+    ENCH_RETCHING,
+    ENCH_WEAK,
+    ENCH_DIMENSION_ANCHOR,
+    // Update enchantment names in mon-ench.cc when adding or removing
     // enchantments.
     NUM_ENCHANTMENTS
 };
@@ -1913,9 +1941,23 @@ enum map_marker_type
     MAT_MALIGN,
     MAT_PHOENIX,
     MAT_POSITION,
+#if TAG_MAJOR_VERSION == 34
     MAT_DOOR_SEAL,
+#endif
+    MAT_TERRAIN_CHANGE,
+    MAT_CLOUD_SPREADER,
     NUM_MAP_MARKER_TYPES,
     MAT_ANY,
+};
+
+enum terrain_change_type
+{
+    TERRAIN_CHANGE_GENERIC,
+    TERRAIN_CHANGE_FLOOD,
+    TERRAIN_CHANGE_TOMB,
+    TERRAIN_CHANGE_IMPRISON,
+    TERRAIN_CHANGE_DOOR_SEAL,
+    NUM_TERRAIN_CHANGE_TYPES
 };
 
 enum map_feature
@@ -2389,7 +2431,7 @@ enum monster_type                      // menv[].type
     MONS_MACABRE_MASS,
 
     // Undead:
-    MONS_ROTTING_HULK,
+    MONS_PLAGUE_SHAMBLER,
     MONS_NECROPHAGE,
     MONS_GHOUL,
     MONS_FLAMING_CORPSE,
@@ -2589,6 +2631,29 @@ enum monster_type                      // menv[].type
     MONS_SKELETON,
     MONS_SIMULACRUM,
 
+    MONS_ANCIENT_CHAMPION,
+    MONS_REVENANT,
+    MONS_LOST_SOUL,
+    MONS_JIANGSHI,
+
+    MONS_DJINNI,
+    MONS_LAVA_ORC,
+
+    MONS_DRYAD,
+    MONS_FOREST_DRAKE,
+    MONS_FAUN,
+    MONS_SATYR,
+
+    MONS_PAN,
+
+    MONS_TENGU_WARRIOR,
+    MONS_TENGU_CONJURER,
+    MONS_TENGU_REAVER,
+
+    MONS_SPRIGGAN_ENCHANTER,
+
+    MONS_SOJOBO,
+
     NUM_MONSTERS,               // used for polymorph
 
     // MONS_NO_MONSTER can get put in savefiles, so it shouldn't change
@@ -2779,6 +2844,8 @@ enum mutation_type
     MUT_MANA_SHIELD,
     MUT_MANA_REGENERATION,
     MUT_MANA_LINK,
+    MUT_PETRIFICATION_RESISTANCE,
+    MUT_SELF_PETRIFICATION,
     NUM_MUTATIONS,
 
     RANDOM_MUTATION,
@@ -3122,6 +3189,10 @@ enum species_type
     SP_DEEP_DWARF,
     SP_FELID,
     SP_OCTOPODE,
+    SP_DJINNI,
+    SP_LAVA_ORC,
+    SP_GROTESK,
+      LAST_VALID_SPECIES = SP_GROTESK,
 // The high scores viewer still needs enums for removed species.
     SP_ELF,                            // (placeholder)
     SP_HILL_DWARF,                     // (placeholder)
@@ -3129,6 +3200,7 @@ enum species_type
     SP_GREY_ELF,                       // (placeholder)
     SP_GNOME,                          // (placeholder)
     SP_MOUNTAIN_DWARF,                 // (placeholder)
+
     NUM_SPECIES,                       // always after the last species
 
     SP_UNKNOWN  = 100,
@@ -3399,6 +3471,11 @@ enum spell_type
     SPELL_SENTINEL_MARK,
     SPELL_WORD_OF_RECALL,
     SPELL_INJURY_BOND,
+    SPELL_GHOSTLY_FLAMES,
+    SPELL_GHOSTLY_FIREBALL,
+    SPELL_CALL_LOST_SOUL,
+    SPELL_DIMENSION_ANCHOR,
+    SPELL_BLINK_ALLIES_ENCIRCLE,
     NUM_SPELLS
 };
 
@@ -3630,6 +3707,7 @@ enum disable_type
     DIS_DEATH,
     DIS_DELAY,
     DIS_CONFIRMATIONS,
+    DIS_AFFLICTIONS,
     NUM_DISABLEMENTS
 };
 
@@ -3648,6 +3726,7 @@ enum seen_context_type
     SC_UNCHARM,
     SC_DOOR,            // they opened a door
     SC_GATE,            // ... or a big door
+    SC_LEAP_IN,         // leaps into view
 };
 
 enum los_type
@@ -3748,6 +3827,7 @@ enum tile_flags ENUM_INT64
     TILE_FLAG_PETRIFIED  = 0x100000000000ULL,
     TILE_FLAG_BLIND      = 0x200000000000ULL,
     TILE_FLAG_ANIM_WEP   = 0x400000000000ULL,
+    TILE_FLAG_SUMMONED   = 0x800000000000ULL,
 
     // MDAM has 5 possibilities, so uses 3 bits.
     TILE_FLAG_MDAM_MASK  = 0x1C0000000ULL,

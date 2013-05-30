@@ -1531,9 +1531,9 @@ static bool _raise_remains(const coord_def &pos, int corps, beh_type beha,
 
     monster_type mon = item.sub_type == CORPSE_BODY ? MONS_ZOMBIE : MONS_SKELETON;
     const monster_type monnum = static_cast<monster_type>(item.orig_monnum);
-    if (mon == MONS_ZOMBIE && !mons_zombifiable(monnum))
+    if (mon == MONS_ZOMBIE && !mons_zombifiable(zombie_type))
     {
-        ASSERT(mons_skeleton(monnum));
+        ASSERT(mons_skeleton(zombie_type));
         mpr("The flesh is too rotten for a proper zombie; only a skeleton remains.");
         mon = MONS_SKELETON;
     }
@@ -1817,11 +1817,7 @@ spret_type cast_simulacrum(int pow, god_type god, bool fail)
 {
     const item_def* flesh = you.weapon();
 
-    if (!flesh || flesh->base_type != OBJ_FOOD
-        || flesh->sub_type != FOOD_CHUNK
-           && flesh->sub_type != FOOD_BEEF_JERKY
-           && flesh->sub_type != FOOD_MEAT_RATION
-           && flesh->sub_type != FOOD_SAUSAGE)
+    if (!flesh || flesh->base_type != OBJ_FOOD || !food_is_meaty(*flesh))
     {
         mpr(_("You need to wield a piece of raw flesh for this spell to be "
             "effective!"));
@@ -2248,6 +2244,11 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
         mpr(_("An evil force gathers, but it quickly dissipates."));
         return SPRET_SUCCESS; // still losing a turn
     }
+    else if (m->wont_attack())
+    {
+        mpr("You cannot haunt those who bear you no hostility.");
+        return SPRET_ABORT;
+    }
 
     int mi = m->mindex();
     ASSERT(!invalid_monster_index(mi));
@@ -2264,14 +2265,14 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
 
     while (to_summon--)
     {
-        const int chance = random2(25);
-        monster_type mon = ((chance > 22) ? MONS_PHANTOM :            //  8%
-                            (chance > 20) ? MONS_HUNGRY_GHOST :       //  8%
-                            (chance > 18) ? MONS_FLAYED_GHOST :       //  8%
-                            (chance > 16) ? MONS_SHADOW_WRAITH:       //  8%
-                            (chance >  6) ? MONS_WRAITH :             // 40%
-                            (chance >  2) ? MONS_FREEZING_WRAITH      // 16%
-                                          : MONS_PHANTASMAL_WARRIOR); // 12%
+        const monster_type mon =
+            random_choose_weighted(1, MONS_PHANTOM,
+                                   1, MONS_HUNGRY_GHOST,
+                                   1, MONS_SHADOW_WRAITH,
+                                   5, MONS_WRAITH,
+                                   2, MONS_FREEZING_WRAITH,
+                                   2, MONS_PHANTASMAL_WARRIOR,
+                                   0);
 
         if (monster *mons = create_monster(
                 mgen_data(mon,
@@ -2283,6 +2284,11 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
 
             if (player_angers_monster(mons))
                 friendly = false;
+            else
+            {
+                mons->add_ench(mon_enchant(ENCH_HAUNTING, 1, m, INFINITE_DURATION));
+                mons->foe = mi;
+            }
         }
     }
 

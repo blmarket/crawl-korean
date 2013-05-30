@@ -553,7 +553,7 @@ static bool _find_mon_place_near_stairs(coord_def& pos,
         }
         else if (branches[i].exit_stairs == feat)
         {
-            place = level_id(branches[i].parent_branch, startdepth[i]);
+            place = level_id(parent_branch((branch_type)i), startdepth[i]);
             break;
         }
     }
@@ -1329,9 +1329,12 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
         {
             mon->god = GOD_TROG;
         }
-        // Deep dwarf death knights belong to Yredelemnul.
-        else if (mg.cls == MONS_DEEP_DWARF_DEATH_KNIGHT)
+        // Profane servitors and deep dwarf death knights belong to Yredelemnul.
+        else if (mg.cls == MONS_PROFANE_SERVITOR
+                 || mg.cls == MONS_DEEP_DWARF_DEATH_KNIGHT)
+        {
             mon->god = GOD_YREDELEMNUL;
+        }
         // Wiglaf belongs to Okawaru.
         else if (mg.cls == MONS_WIGLAF)
             mon->god = GOD_OKAWARU;
@@ -1344,9 +1347,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
                 break;
             case MONS_JELLY:
                 mon->god = GOD_JIYVA;
-                break;
-            case MONS_PROFANE_SERVITOR:
-                mon->god = GOD_YREDELEMNUL;
                 break;
             case MONS_MUMMY:
             case MONS_DRACONIAN:
@@ -1466,10 +1466,10 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     if (mons_class_flag(mg.cls, M_CONFUSED))
         mon->add_ench(ENCH_CONFUSION);
 
-    if (mg.cls == MONS_SHAPESHIFTER)
+    if (montype == MONS_SHAPESHIFTER)
         mon->add_ench(ENCH_SHAPESHIFTER);
 
-    if (mg.cls == MONS_GLOWING_SHAPESHIFTER)
+    if (montype == MONS_GLOWING_SHAPESHIFTER)
         mon->add_ench(ENCH_GLOWING_SHAPESHIFTER);
 
     if (mg.cls == MONS_SPIRIT)
@@ -1495,9 +1495,6 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
 
     if (!crawl_state.game_is_arena() && you.misled())
         update_mislead_monster(mon);
-
-    if (monster_can_submerge(mon, grd(fpos)) && !one_chance_in(5))
-        mon->add_ench(ENCH_SUBMERGED);
 
     mon->flags |= MF_JUST_SUMMONED;
 
@@ -1557,6 +1554,9 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
             mon->max_hit_points *= mg.number;
         }
     }
+
+    if (monster_can_submerge(mon, grd(fpos)) && !one_chance_in(5) && !summoned)
+        mon->add_ench(ENCH_SUBMERGED);
 
     if (mons_is_mimic(mg.cls))
         mon->props = mg.props;
@@ -1640,11 +1640,8 @@ static monster* _place_monster_aux(const mgen_data &mg, const monster *leader,
     {
         blame_prefix = "called by ";
     }
-    else if (mg.cls == MONS_KRAKEN_TENTACLE
-             || mg.cls == MONS_STARSPAWN_TENTACLE)
-    {
+    else if (mons_is_child_tentacle(mg.cls))
         blame_prefix = "attached to ";
-    }
     else
         blame_prefix = "created by ";
 
@@ -1802,6 +1799,8 @@ static bool _unfitting_zombie(monster_type mt)
     // Zombifiability in general.
     if (mons_species(mt) != mt)
         return true;
+    if (mons_class_flag(mt, M_NO_GEN_DERIVED))
+        return true;
     if (!mons_zombie_size(mt) || mons_is_unique(mt))
         return true;
     if (mons_class_holiness(mt) != MH_NATURAL)
@@ -1951,7 +1950,9 @@ void define_zombie(monster* mon, monster_type ztype, monster_type cs)
     mon->base_monster = base;
 
     mon->colour       = mons_class_colour(mon->type);
-    mon->speed        = mons_class_zombie_base_speed(mon->base_monster);
+    mon->speed        = (cs == MONS_SPECTRAL_THING
+                            ? mons_class_base_speed(mon->base_monster)
+                            : mons_class_zombie_base_speed(mon->base_monster));
 
     // Turn off all melee ability flags except dual-wielding.
     mon->flags       &= (~MF_MELEE_MASK | MF_TWO_WEAPONS);
@@ -2093,11 +2094,24 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
         band_size = 4 + random2(4);
         break;
     case MONS_JOSEPHINE:
+        band_size = 1 + random2(2);
+        // intentional fall-through
     case MONS_NECROMANCER:
-    case MONS_VAMPIRE_MAGE:
         natural_leader = true;
         band = BAND_NECROMANCER;
-        band_size = 4 + random2(4);
+        band_size += 3 + random2(3);
+        break;
+    case MONS_VAMPIRE_MAGE:
+        if (one_chance_in(3))
+        {
+            natural_leader = true;
+            band = BAND_JIANGSHI;
+            band_size = 2 + random2(2);
+        }
+        break;
+    case MONS_JIANGSHI:
+        band = BAND_JIANGSHI;
+        band_size = random2(3);
         break;
     case MONS_GNOLL:
         if (!player_in_branch(BRANCH_MAIN_DUNGEON) || you.depth > 1)
@@ -2113,12 +2127,19 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
         break;
     case MONS_DEEP_DWARF_SCION:
         band = BAND_DEEP_DWARF;
-        band_size = (one_chance_in(5)? 2: 1) + random2(3);
+        band_size = (one_chance_in(5) ? 2 : 1) + random2(3);
         break;
     case MONS_DEEP_DWARF_ARTIFICER:
-    case MONS_DEEP_DWARF_DEATH_KNIGHT:
         band = BAND_DEEP_DWARF;
         band_size = 3 + random2(4);
+        break;
+    case MONS_DEEP_DWARF_DEATH_KNIGHT:
+        if (x_chance_in_y(2, 3))
+        {
+            natural_leader = true;
+            band = BAND_DEATH_KNIGHT;
+            band_size = 3 + random2(2);
+        }
         break;
     case MONS_GRUM:
         natural_leader = true;
@@ -2303,6 +2324,12 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
         band_size = 2 + random2(3);
         break;
 
+    case MONS_ANCIENT_CHAMPION:
+        if (coinflip())
+            break;
+
+        natural_leader = true;
+        // Intentional fallthrough
     case MONS_SKELETAL_WARRIOR:
         band = BAND_SKELETAL_WARRIORS;
         band_size = 2 + random2(3);
@@ -2500,6 +2527,51 @@ static band_type _choose_band(monster_type mon_type, int &band_size,
         }
         break;
 
+    case MONS_SATYR:
+        natural_leader = true;
+    case MONS_FAUN:
+        band = BAND_FAUNS;
+        band_size = 2 + random2(4);
+        break;
+
+    case MONS_PAN:
+        natural_leader = true;
+        band = BAND_PAN;
+        band_size = 4 + random2(4);
+        break;
+
+    case MONS_TENGU_CONJURER:
+    case MONS_TENGU_WARRIOR:
+        natural_leader = true;
+    case MONS_TENGU:
+        if (coinflip())
+            break;
+        band = BAND_TENGU;
+        band_size = 3 + random2(4);
+        break;
+
+    case MONS_SOJOBO:
+        natural_leader = true;
+        band = BAND_SOJOBO;
+        band_size = 5 + random2(4);
+        break;
+
+    case MONS_SPRIGGAN_AIR_MAGE:
+    case MONS_SPRIGGAN_BERSERKER:
+    case MONS_SPRIGGAN_DRUID:
+    case MONS_SPRIGGAN_RIDER:
+        natural_leader = true;
+    case MONS_SPRIGGAN:
+        band = BAND_SPRIGGANS;
+        band_size = 2 + random2(3);
+        break;
+
+    case MONS_SPRIGGAN_DEFENDER:
+        natural_leader = true;
+        band = BAND_SPRIGGAN_ELITES;
+        band_size = 3 + random2(4);
+        break;
+
     default: ;
     }
 
@@ -2603,7 +2675,7 @@ static monster_type _band_member(band_type band, int which)
     case BAND_NECROMANCER:
         return random_choose_weighted(6, MONS_ZOMBIE,
                                       6, MONS_SKELETON,
-                                      1, MONS_NECROPHAGE,
+                                      3, MONS_SIMULACRUM,
                                       0);
 
     case BAND_BALRUG:
@@ -2712,7 +2784,10 @@ static monster_type _band_member(band_type band, int which)
     case BAND_SHEEP:
         return MONS_SHEEP;
     case BAND_GHOULS:
-        return coinflip() ? MONS_GHOUL : MONS_NECROPHAGE;
+        return random_choose_weighted(4, MONS_GHOUL,
+                                      3, MONS_NECROPHAGE,
+                                      2, MONS_PLAGUE_SHAMBLER,
+                                      0);
     case BAND_DEEP_TROLLS:
         if (one_chance_in(3))
             return random_choose(MONS_DEEP_TROLL_EARTH_MAGE,
@@ -2733,7 +2808,6 @@ static monster_type _band_member(band_type band, int which)
         return MONS_BLINK_FROG;
     case BAND_WIGHTS:
         return MONS_WIGHT;
-        break;
     case BAND_SKELETAL_WARRIORS:
         return MONS_SKELETAL_WARRIOR;
 
@@ -2781,7 +2855,7 @@ static monster_type _band_member(band_type band, int which)
 
     case BAND_MERFOLK_AQUAMANCER:
         return random_choose_weighted( 8, MONS_MERFOLK,
-                                      10, MONS_ICE_BEAST,
+                                      10, MONS_WATER_ELEMENTAL,
                                        0);
 
     case BAND_MERFOLK_IMPALER:
@@ -2838,6 +2912,50 @@ static monster_type _band_member(band_type band, int which)
                                            0);
         else
             return MONS_VAULT_GUARD;
+
+    case BAND_DEATH_KNIGHT:
+        if (which == 1 && coinflip())
+            return (coinflip() ? MONS_GHOUL : MONS_FLAYED_GHOST);
+        else
+            return random_choose_weighted(5, MONS_WRAITH,
+                                          6, MONS_FREEZING_WRAITH,
+                                          3, MONS_PHANTASMAL_WARRIOR,
+                                          2, MONS_FLAMING_CORPSE,
+                                          3, MONS_SKELETAL_WARRIOR,
+                                          0);
+
+    case BAND_JIANGSHI:
+        return MONS_JIANGSHI;
+
+    case BAND_PAN:
+        if (which <= 2 || coinflip())
+            return MONS_SATYR;
+        // deliberate fall-through
+    case BAND_FAUNS:
+        return MONS_FAUN;
+
+    case BAND_TENGU:
+        return MONS_TENGU;
+
+    case BAND_SOJOBO:
+        if (which <= 2)
+            return MONS_TENGU_REAVER;
+        else
+            return random_choose_weighted( 8, MONS_TENGU_WARRIOR,
+                                          16, MONS_TENGU_CONJURER,
+                                          24, MONS_TENGU,
+                                           0);
+
+    case BAND_SPRIGGAN_ELITES:
+        if (which <= 2 || one_chance_in(5))
+            return random_choose(MONS_SPRIGGAN_AIR_MAGE,
+                                 MONS_SPRIGGAN_BERSERKER,
+                                 MONS_SPRIGGAN_DRUID,
+                                 MONS_SPRIGGAN_RIDER,
+                                 -1);
+        // deliberate fall-through
+    case BAND_SPRIGGANS:
+        return MONS_SPRIGGAN;
 
     default:
         die("unhandled band type %d", band);
@@ -2904,13 +3022,11 @@ static monster_type _pick_zot_exit_defender()
     }
 
     return random_choose_weighted(
-        91, RANDOM_DEMON_COMMON,
-        80, RANDOM_DEMON,
-        26, MONS_HELL_HOUND,
-        24, MONS_ABOMINATION_LARGE,
-        21, MONS_ABOMINATION_SMALL,
-        20, MONS_RED_DEVIL,
-        14, MONS_HELL_SENTINEL,
+        30, RANDOM_DEMON_COMMON,
+        30, RANDOM_DEMON,
+        20, pick_monster_no_rarity(BRANCH_PANDEMONIUM),
+        15, MONS_ORB_GUARDIAN,
+        5, RANDOM_DEMON_GREATER,
         0);
 }
 

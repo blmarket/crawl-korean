@@ -906,7 +906,8 @@ static bool _follows_orders(monster* mon)
             && mon->type != MONS_GIANT_SPORE
             && mon->type != MONS_BATTLESPHERE
             && !mon->berserk()
-            && !mon->is_projectile());
+            && !mon->is_projectile()
+            && !mon->has_ench(ENCH_HAUNTING));
 }
 
 // Sets foe target of friendly monsters.
@@ -961,6 +962,12 @@ static void _set_allies_withdraw(const coord_def &target)
 void yell(bool force)
 {
     ASSERT(!crawl_state.game_is_arena());
+
+    if (you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
+    {
+        mpr("You cannot shout while unable to breathe!");
+        return;
+    }
 
     bool targ_prev = false;
     int mons_targd = MHITNOT;
@@ -2192,6 +2199,12 @@ void handle_time()
     if (you.duration[DUR_FINESSE] && x_chance_in_y(4, 10))
         added_contamination++;
 
+    if (you.duration[DUR_REGENERATION] && you.species == SP_DJINNI
+        && x_chance_in_y(6, 10))
+    {
+        added_contamination++;
+    }
+
     // The Orb adds .25 points per turn (effectively halving dissipation),
     // but won't cause glow on its own -- otherwise it'd spam the player
     // with messages about contamination oscillating near zero.
@@ -2210,9 +2223,11 @@ void handle_time()
     if (coinflip())
     {
         // [ds] Move magic contamination effects closer to b26 again.
-        const bool glow_effect =
-            (get_contamination_level() > 1
-             && x_chance_in_y(you.magic_contamination, 12));
+        const bool glow_effect = you.species == SP_DJINNI ?
+            get_contamination_level() > 2
+                && x_chance_in_y(you.magic_contamination, 24):
+            get_contamination_level() > 1
+                && x_chance_in_y(you.magic_contamination, 12);
 
         if (glow_effect && is_sanctuary(you.pos()))
         {
@@ -2248,10 +2263,11 @@ void handle_time()
             }
 
             // We want to warp the player, not do good stuff!
-            if (one_chance_in(5))
-                mutate(RANDOM_MUTATION, "mutagenic glow");
-            else
-                give_bad_mutation("mutagenic glow", true, coinflip());
+            mutate(one_chance_in(5) ? RANDOM_MUTATION : RANDOM_BAD_MUTATION,
+                   "mutagenic glow", true,
+                   coinflip(),
+                   false, false, false, false,
+                   you.species == SP_DJINNI);
 
             // we're meaner now, what with explosions and whatnot, but
             // we dial down the contamination a little faster if its actually
@@ -2264,7 +2280,8 @@ void handle_time()
     handle_god_time();
 
     if (player_mutation_level(MUT_SCREAM)
-        && x_chance_in_y(3 + player_mutation_level(MUT_SCREAM) * 3, 100))
+        && x_chance_in_y(3 + player_mutation_level(MUT_SCREAM) * 3, 100)
+        && !(you.duration[DUR_WATER_HOLD] && !you.res_water_drowning()))
     {
         yell(true);
     }
@@ -3197,5 +3214,31 @@ void slime_wall_damage(actor* act, int delay)
                   mon->name(DESC_THE).c_str());
         }
         mon->hurt(NULL, dam, BEAM_ACID);
+    }
+}
+
+void recharge_elemental_evokers(int exp)
+{
+    vector<item_def*> evokers;
+    for (int item = 0; item < ENDOFPACK; ++item)
+    {
+        if (is_elemental_evoker(you.inv[item]) && you.inv[item].plus2 > 0)
+            evokers.push_back(&you.inv[item]);
+    }
+
+    int xp_factor = max(min((int)exp_needed(you.experience_level+1, 0) * 2 / 7,
+                             you.experience_level * 425),
+                        you.experience_level*4 + 30)
+                    / (3 + you.skill_rdiv(SK_EVOCATIONS, 2, 7));
+
+    for (unsigned int i = 0; i < evokers.size(); ++i)
+    {
+        item_def* evoker = evokers[i];
+        evoker->plus2 -= div_rand_round(exp, xp_factor);
+        if (evoker->plus2 <= 0)
+        {
+            evoker->plus2 = 0;
+            mprf(_("Your %s has recharged."), evoker->name(true, DESC_QUALNAME).c_str());
+        }
     }
 }

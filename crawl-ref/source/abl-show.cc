@@ -221,6 +221,8 @@ static const ability_def Ability_List[] =
 
     { ABIL_SPIT_ACID, M_("Spit Acid"), 0, 0, 125, 0, 0, ABFLAG_BREATH},
 
+    { ABIL_SELF_PETRIFY, M_("Self Petrify"), 0, 0, 0, 0, 0, ABFLAG_NONE},
+
     { ABIL_FLY, M_("Fly"), 3, 0, 100, 0, 0, ABFLAG_NONE},
     { ABIL_STOP_FLYING, M_("Stop Flying"), 0, 0, 0, 0, 0, ABFLAG_NONE},
     { ABIL_HELLFIRE, M_("Hellfire"), 0, 150, 200, 0, 0, ABFLAG_NONE},
@@ -640,143 +642,75 @@ static int _zp_cost(const ability_def& abil)
 const string make_cost_description(ability_type ability)
 {
     const ability_def& abil = get_ability_def(ability);
-    ostringstream ret;
+    string ret;
+    int ep = 0;
     if (abil.mp_cost)
-    {
-        ret << abil.mp_cost;
-        if (abil.flags & ABFLAG_PERMANENT_MP)
-            /// (영구적) MP
-            ret << gettext(" Permanent MP");
+        if (you.species == SP_DJINNI)
+        {
+            ep += abil.mp_cost * DJ_MP_RATE;
+            ASSERT(!(abil.flags & ABFLAG_PERMANENT_MP));
+        }
         else
-            ret << gettext(" MP");
-    }
+        {
+            ret += make_stringf(", %d %sMP", abil.mp_cost,
+                abil.flags & ABFLAG_PERMANENT_MP ? pgettext("ability","Permanent ") : "");
+        }
 
-    if (abil.hp_cost)
+    if (abil.hp_cost || ep)
     {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << abil.hp_cost.cost(you.hp_max);
-        if (abil.flags & ABFLAG_PERMANENT_HP)
-            ret << gettext(" Permanent HP");
-        else
-            ret << gettext(" HP");
+        ret += make_stringf(", %d %s%s", ep + (int)abil.hp_cost,
+            abil.flags & ABFLAG_PERMANENT_HP ? pgettext("ability","Permanent ") : "",
+            you.species == SP_DJINNI ? "EP" : "HP");
     }
 
     if (abil.zp_cost)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
+        ret += make_stringf(", %d ZP", (int)_zp_cost(abil));
 
-        ret << _zp_cost(abil);
-        ret << " ZP";
-    }
-
-    if (abil.food_cost && !you_foodless()
+    if (abil.food_cost && !you_foodless(true)
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        /// 걍 만복도라고 번역할 것인가!
-        ret << gettext(M_("Food"));   // randomised and exact amount hidden from player
+        if (you.species == SP_DJINNI)
+            ret += _(", Glow");
+        else
+            ret += _(", Food"); // randomised and exact amount hidden from player
     }
 
-    if (abil.piety_cost)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        /// 신앙도
-        ret << gettext(M_("Piety"));  // randomised and exact amount hidden from player
-    }
+    if (abil.piety_cost || abil.flags & ABFLAG_PIETY)
+        ret += _(", Piety"); // randomised and exact amount hidden from player
 
     if (abil.flags & ABFLAG_BREATH)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Breath"));
-    }
+        ret += _(", Breath");
 
     if (abil.flags & ABFLAG_DELAY)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Delay"));
-    }
+        ret += _(", Delay");
 
     if (abil.flags & ABFLAG_PAIN)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Pain"));
-    }
-
-    if (abil.flags & ABFLAG_PIETY)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Piety"));
-    }
+        ret += _(", Pain");
 
     if (abil.flags & ABFLAG_EXHAUSTION)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Exhaustion"));
-    }
+        ret += _(", Exhaustion");
 
     if (abil.flags & ABFLAG_INSTANT)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        /// 비용이 아니라, 즉시 시전임을 알려주는 단어.
-        ret << gettext(M_("Instant")); // not really a cost, more of a bonus - bwr
-    }
+        ret += _(", Instant"); // not really a cost, more of a bonus - bwr
 
     if (abil.flags & ABFLAG_FRUIT)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Fruit"));
-    }
+        ret += _(", Fruit");
 
     if (abil.flags & ABFLAG_VARIABLE_FRUIT)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Fruit or Piety"));
-    }
+        ret += _(", Fruit or Piety");
 
     if (abil.flags & ABFLAG_LEVEL_DRAIN)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Level drain"));
-    }
+        ret += _(", Level drain");
 
     if (abil.flags & ABFLAG_STAT_DRAIN)
-    {
-        if (!ret.str().empty())
-            ret << ", ";
-
-        ret << gettext(M_("Stat drain"));
-    }
+        ret += _(", Stat drain");
 
     // If we haven't output anything so far, then the effect has no cost
-    if (ret.str().empty())
-        ret << gettext(M_("None"));
+    if (ret.empty())
+        return _(M_("None"));
 
-    return ret.str();
+    ret.erase(0, 2);
+    return ret;
 }
 
 static string _get_piety_amount_str(int value)
@@ -822,11 +756,14 @@ static const string _detailed_cost_description(ability_type ability)
         ret << abil.zp_cost;
     }
 
-    if (abil.food_cost && !you_foodless()
+    if (abil.food_cost && !you_foodless(true)
         && (you.is_undead != US_SEMI_UNDEAD || you.hunger_state > HS_STARVING))
     {
         have_cost = true;
-        ret << gettext("\nHunger : ");
+        if (you.species == SP_DJINNI)
+            ret << _("\nGlow : ");
+        else
+            ret << _("\nHunger : ");
         ret << hunger_cost_string(abil.food_cost + abil.food_cost / 2);
     }
 
@@ -1481,7 +1418,9 @@ static bool _check_ability_possible(const ability_def& abil,
             && you.strength(false) == you.max_strength()
             && you.intel(false) == you.max_intel()
             && you.dex(false) == you.max_dex()
-            && !player_rotted())
+            && !player_rotted()
+            && !you.duration[DUR_RETCHING]
+            && !you.duration[DUR_WEAK])
         {
             if (!quiet)
                 mpr(_("Nothing ails you!"));
@@ -1572,6 +1511,15 @@ static bool _check_ability_possible(const ability_def& abil,
     case ABIL_TROG_BERSERK:
         return (you.can_go_berserk(true, false, true)
                 && (quiet || berserk_check_wielded_weapon()));
+
+    case ABIL_SELF_PETRIFY:
+        if (you.duration[DUR_EXHAUSTED])
+        {
+            if (!quiet)
+                mpr("You're too exhausted to transform.");
+            return false;
+        }
+        return true;
 
     case ABIL_EVOKE_FOG:
         if (env.cgrid(you.pos()) != EMPTY_CLOUD)
@@ -2172,6 +2120,11 @@ static bool _do_ability(const ability_def& abil)
             cast_fly(you.experience_level * 4);
         break;
 
+    // Grotesk
+    case ABIL_SELF_PETRIFY:
+        you.petrify(&you, true);
+        break;
+
     // DEMONIC POWERS:
     case ABIL_HELLFIRE:
         if (your_spells(SPELL_HELLFIRE,
@@ -2768,7 +2721,6 @@ static bool _do_ability(const ability_def& abil)
         }
         break;
 
-
     case ABIL_NON_ABILITY:
         mpr(gettext("Sorry, you can't do that."));
         break;
@@ -3150,6 +3102,11 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
              || you.species == SP_NAGA)
     {
         _add_talent(talents, ABIL_SPIT_POISON, check_confused);
+    }
+
+    if (you.species == SP_GROTESK && !form_changed_physiology())
+    {
+        _add_talent(talents, ABIL_SELF_PETRIFY, check_confused);
     }
 
     if (player_genus(GENPC_DRACONIAN))

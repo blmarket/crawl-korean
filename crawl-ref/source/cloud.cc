@@ -22,9 +22,12 @@
 #include "godconduct.h"
 #include "los.h"
 #include "losglobal.h"
+#include "mapmark.h"
 #include "melee_attack.h"
+#include "mgen_data.h"
 #include "misc.h"
 #include "mon-behv.h"
+#include "mon-place.h"
 #include "mutation.h"
 #include "ouch.h"
 #include "random.h"
@@ -288,6 +291,47 @@ static void _dissipate_cloud(int cloudidx, int dissipate)
         delete_cloud(cloudidx);
 }
 
+static void _handle_ghostly_flame(const cloud_struct& cloud)
+{
+    if (actor_at(cloud.pos))
+        return;
+
+    int countn = 0;
+    for (distance_iterator di(cloud.pos, false, false, 2); di; ++di)
+    {
+        if (monster_at(*di) && monster_at(*di)->type == MONS_SPECTRAL_THING)
+            countn++;
+    }
+
+    int rate[5] = {650, 175, 45, 20, 0};
+    int chance = rate[(min(4, countn))];
+
+    if (!x_chance_in_y(chance, you.time_taken * 600))
+        return;
+
+    monster_type basetype = random_choose_weighted(4,   MONS_ANACONDA,
+                                                   6,   MONS_HYDRA,
+                                                   8,   MONS_ROCK_WORM,
+                                                   3,   MONS_SNAPPING_TURTLE,
+                                                   2,   MONS_ALLIGATOR_SNAPPING_TURTLE,
+                                                   100, RANDOM_MONSTER,
+                                                   0);
+
+    if (basetype == RANDOM_MONSTER && one_chance_in(4))
+    {
+        do
+            basetype = pick_random_zombie();
+        while (!monster_habitable_grid(basetype, grd(cloud.pos)));
+    }
+
+    monster* agent = monster_by_mid(cloud.source);
+    create_monster(mgen_data(MONS_SPECTRAL_THING,
+                             (cloud.whose == KC_OTHER ? BEH_HOSTILE : BEH_FRIENDLY),
+                             NULL, 1, SPELL_GHOSTLY_FLAMES, cloud.pos,
+                             (agent ? agent->foe : MHITYOU), MG_FORCE_PLACE,
+                             GOD_NO_GOD, basetype));
+}
+
 void manage_clouds()
 {
     for (int i = 0; i < MAX_CLOUDS; ++i)
@@ -332,6 +376,8 @@ void manage_clouds()
             else
                 dissipate /= 20;
         }
+        else if (cloud.type == CLOUD_GHOSTLY_FLAME)
+            _handle_ghostly_flame(cloud);
 
         _cloud_interacts_with_terrain(cloud);
         expose_items_to_element(_cloud2beam(cloud.type), cloud.pos, 2);
@@ -366,8 +412,9 @@ static void _maybe_leave_water(const cloud_struct& c)
         if (grd(c.pos) != feat)
         {
             if (you.pos() == c.pos && you.ground_level())
-                mpr(gettext("The rain has left you waist-deep in water!"));
-            dungeon_terrain_changed(c.pos, feat);
+                mpr(_("The rain has left you waist-deep in water!"));
+            temp_change_terrain(c.pos, feat, random_range(500, 1000),
+                                TERRAIN_CHANGE_FLOOD);
         }
     }
 }
@@ -715,6 +762,8 @@ static int _cloud_base_damage(const actor *act,
     case CLOUD_STEAM:
         return _cloud_damage_calc(_steam_cloud_damage(cloud.decay), 2, 0,
                                   maximum_damage);
+    case CLOUD_GHOSTLY_FLAME:
+        return _cloud_damage_calc(15, 3, 4, maximum_damage);
     default:
         return 0;
     }
@@ -748,8 +797,10 @@ static bool _actor_cloud_immune(const actor *act, const cloud_struct &cloud)
     case CLOUD_FIRE:
     case CLOUD_FOREST_FIRE:
         return act->is_fiery()
-                || (player && you.duration[DUR_FIRE_SHIELD])
-                || (player && you.mutation[MUT_IGNITE_BLOOD]);
+                || player &&
+                   (you.duration[DUR_FIRE_SHIELD]
+                    || you.mutation[MUT_IGNITE_BLOOD]
+                    || you.species == SP_DJINNI);
     case CLOUD_HOLY_FLAMES:
         return act->res_holy_fire() > 0;
     case CLOUD_COLD:
@@ -767,6 +818,8 @@ static bool _actor_cloud_immune(const actor *act, const cloud_struct &cloud)
         return act->res_rotting() > 0;
     case CLOUD_PETRIFY:
         return act->res_petrify();
+    case CLOUD_GHOSTLY_FLAME:
+        return act->holiness() == MH_UNDEAD;
     default:
         return false;
     }
@@ -926,13 +979,11 @@ bool _actor_apply_cloud_side_effects(actor *act,
         {
             if (player)
             {
-                mpr(gettext("Strange energies course through your body."));
-                if (one_chance_in(3))
-                    return you.mutate("mutagenic cloud");
-                else
-                    return give_bad_mutation("mutagenic cloud");
+                mpr(_("Strange energies course through your body."));
+                return mutate(one_chance_in(5) ? RANDOM_MUTATION : RANDOM_BAD_MUTATION,
+                              "mutagenic cloud");
             }
-            else if (mons->mutate("mutagenic cloud"))
+            else if (mons->malmutate("mutagenic cloud"))
             {
                 if (you.religion == GOD_ZIN && cloud.whose == KC_YOU)
                     did_god_conduct(DID_DELIBERATE_MUTATING, 5 + random2(3));
@@ -1004,6 +1055,7 @@ static int _actor_cloud_damage(actor *act,
     case CLOUD_HOLY_FLAMES:
     case CLOUD_COLD:
     case CLOUD_STEAM:
+    case CLOUD_GHOSTLY_FLAME:
         final_damage =
             _cloud_damage_output(act, _cloud2beam(cloud.type), resist,
                                  cloud_base_damage,
@@ -1185,7 +1237,7 @@ static const char *_terse_cloud_names[] =
     M_("blessed fire"), M_("foul pestilence"), M_("thin mist"),
     M_("seething chaos"), M_("rain"), M_("mutagenic fog"), M_("magical condensation"),
     M_("raging winds"),
-    M_("sparse dust"),
+    M_("sparse dust"), M_("ghostly flame")
 };
 
 static const char *_verbose_cloud_names[] =
@@ -1198,7 +1250,7 @@ static const char *_verbose_cloud_names[] =
     M_("calcifying dust"),
     M_("blessed fire"), M_("dark miasma"), M_("thin mist"), M_("seething chaos"), M_("the rain"),
     M_("mutagenic fog"), M_("magical condensation"), M_("raging winds"),
-    M_("sparse dust"),
+    M_("sparse dust"), M_("ghostly flame"),
 };
 
 string cloud_type_name(cloud_type type, bool terse)
@@ -1404,6 +1456,10 @@ int get_cloud_colour(int cloudno)
         which_colour = WHITE;
         break;
 
+    case CLOUD_GHOSTLY_FLAME:
+        which_colour = ETC_ELECTRICITY;
+        break;
+
     default:
         which_colour = LIGHTGREY;
         break;
@@ -1434,4 +1490,76 @@ void remove_tornado_clouds(mid_t whose)
     for (int i = 0; i < MAX_CLOUDS; i++)
         if (env.cloud[i].type == CLOUD_TORNADO && env.cloud[i].source == whose)
             delete_cloud(i);
+}
+
+static void _spread_cloud(coord_def pos, cloud_type type, int radius, int pow,
+                          int &remaining, int ratio = 10,
+                          mid_t agent_mid = NON_ENTITY, kill_category kcat = KC_OTHER)
+{
+    bolt beam;
+    beam.target = pos;
+    beam.use_target_as_pos = true;
+    explosion_map exp_map;
+    exp_map.init(INT_MAX);
+    beam.determine_affected_cells(exp_map, coord_def(), 0,
+                                  radius, true, true);
+
+    coord_def centre(9,9);
+    for (distance_iterator di(pos, true, false); di; ++di)
+    {
+        if (di.radius() > radius)
+            return;
+
+        if ((exp_map(*di - pos + centre) < INT_MAX) && env.cgrid(*di) == EMPTY_CLOUD
+            && (di.radius() < radius || x_chance_in_y(ratio, 100)))
+        {
+            place_cloud(type, *di, pow + random2(pow), NULL);
+            --remaining;
+
+            // Setting this way since the agent of the cloud may be dead before
+            // cloud is placed, so no agent exists to pass to place_cloud (though
+            // proper blame should still be assigned)
+            if (env.cgrid(*di) != EMPTY_CLOUD)
+            {
+                env.cloud[env.cgrid(*di)].source = agent_mid;
+                env.cloud[env.cgrid(*di)].whose = kcat;
+            }
+        }
+
+        // Placed all clouds for this spreader
+        if (remaining == 0)
+            return;
+    }
+}
+
+void run_cloud_spreaders(int dur)
+{
+    if (!dur)
+        return;
+
+    vector<map_marker*> markers = env.markers.get_all(MAT_CLOUD_SPREADER);
+
+    for (int i = 0, size = markers.size(); i < size; ++i)
+    {
+        map_cloud_spreader_marker *mark = dynamic_cast<map_cloud_spreader_marker*>(markers[i]);
+
+        mark->speed_increment += dur;
+        int rad = min(mark->speed_increment / mark->speed, mark->max_rad - 1) + 1;
+        int ratio = (mark->speed_increment - ((rad - 1) * mark->speed))
+                    * 100 / mark->speed;
+
+        if (ratio == 0)
+        {
+            rad--;
+            ratio = 100;
+        }
+
+        _spread_cloud(mark->pos, mark->ctype, rad, mark->duration,
+                        mark->remaining, ratio, mark->agent_mid, mark->kcat);
+        if ((rad >= mark->max_rad && ratio >= 100) || mark->remaining == 0)
+        {
+            env.markers.remove(mark);
+            break;
+        }
+    }
 }

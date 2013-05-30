@@ -718,10 +718,10 @@ bool can_wear_armour(const item_def &item, bool verbose, bool ignore_temporary)
             return false;
         }
 
-        if (you.species == SP_NAGA)
+        if (you.species == SP_NAGA || you.species == SP_DJINNI)
         {
             if (verbose)
-                mpr(_("You can't wear that!"));
+                mpr(_("You have no legs!"));
             return false;
         }
 
@@ -2075,7 +2075,7 @@ static void _vampire_corpse_help()
 
 void drink(int slot)
 {
-    if (you_foodless())
+    if (you_foodless(true))
     {
         if (you.form == TRAN_TREE)
             mpr(_("It'd take too long for a potion to reach your roots."));
@@ -2109,6 +2109,12 @@ void drink(int slot)
     {
         canned_msg(MSG_PRESENT_FORM);
         _vampire_corpse_help();
+        return;
+    }
+
+    if (you.duration[DUR_RETCHING])
+    {
+        mpr("You can't gag anything down in your present state!");
         return;
     }
 
@@ -2480,7 +2486,7 @@ static bool _vorpalise_weapon(bool already_known)
 
     case SPWPN_ANTIMAGIC:
         mprf(_("%s repels your magic."), itname.c_str());
-        dec_mp(you.magic_points);
+        drain_mp(you.species == SP_DJINNI ? 100 : you.magic_points);
         success = false;
         break;
 
@@ -2702,6 +2708,12 @@ static void _handle_read_book(int item_slot)
         return;
     }
 
+    if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
+    {
+        mpr("You'd burn any book you tried to read!");
+        return;
+    }
+
     item_def& book(you.inv[item_slot]);
 
     if (book.sub_type == BOOK_DESTRUCTION)
@@ -2891,9 +2903,21 @@ void read_scroll(int slot)
         return;
     }
 
+    if (you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
+    {
+        mpr("You cannot read scrolls while unable to breathe!");
+        return;
+    }
+
     if (inv_count() < 1)
     {
         canned_msg(MSG_NOTHING_CARRIED);
+        return;
+    }
+
+    if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
+    {
+        mpr("You'd burn any scroll you tried to read!");
         return;
     }
 

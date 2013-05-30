@@ -326,6 +326,7 @@ bool monster::can_drown() const
     {
     case HT_WATER:
     case HT_LAVA:
+    case HT_AMPHIBIOUS:
         return false;
     default:
         break;
@@ -334,7 +335,7 @@ bool monster::can_drown() const
     // Mummies can fall apart in water or be incinerated in lava.
     // Ghouls and vampires can drown in water or lava.  Others just
     // "sink like a rock", to never be seen again.
-    return (!res_water_drowning()
+    return (!is_unbreathing()
             || mons_genus(type) == MONS_MUMMY
             || mons_genus(type) == MONS_GHOUL
             || mons_genus(type) == MONS_VAMPIRE);
@@ -394,6 +395,8 @@ int monster::body_weight(bool /*base*/) const
         case MONS_CURSE_SKULL:
         case MONS_BONE_DRAGON:
         case MONS_SKELETAL_WARRIOR:
+        case MONS_ANCIENT_CHAMPION:
+        case MONS_REVENANT:
             weight /= 2;
             break;
 
@@ -1433,6 +1436,10 @@ static bool _is_signature_weapon(monster* mons, const item_def &weapon)
 {
     if (mons->type == MONS_DEEP_DWARF_ARTIFICER)
         return (weapon.base_type == OBJ_RODS);
+
+    // Don't pick up items that would interfere with our special ability
+    if (mons->type == MONS_RED_DEVIL)
+        return (weapon_skill(weapon) == SK_POLEARMS);
 
     // Some other uniques have a signature weapon, usually because they
     // always spawn with it, or because it is referenced in their speech
@@ -2894,6 +2901,8 @@ string monster::arm_name(bool plural, bool *can_plural) const
 
     case MONS_LICH:
     case MONS_SKELETAL_WARRIOR:
+    case MONS_ANCIENT_CHAMPION:
+    case MONS_REVENANT:
         adj = _(M_("bony"));
         break;
 
@@ -3362,9 +3371,12 @@ int monster::melee_evasion(const actor *act, ev_ignore_type evit) const
 {
     int evasion = ev;
 
-    // Phase Shift EV is already included.
-    if (evit & EV_IGNORE_PHASESHIFT && mons_class_flag(type, M_PHASE_SHIFT))
+    // Phase Shift EV is already included (but ignore if dimension anchored)
+    if (mons_class_flag(type, M_PHASE_SHIFT)
+        && ((evit & EV_IGNORE_PHASESHIFT) || has_ench(ENCH_DIMENSION_ANCHOR)))
+    {
         evasion -= 8;
+    }
 
     if (evit & EV_IGNORE_HELPLESS)
         return max(evasion, 0);
@@ -3742,7 +3754,7 @@ int monster::res_asphyx() const
 
 int monster::res_water_drowning() const
 {
-    if (is_unbreathing())
+    if (is_unbreathing() || get_mons_resist(this, MR_RES_ASPHYX))
         return 1;
 
     switch (mons_habitat(this))
@@ -4020,7 +4032,7 @@ bool monster::no_tele(bool calc_unid, bool permit_id, bool blinking) const
         return true;
 
     // Might be better to teleport the whole kraken instead...
-    if (mons_is_tentacle(type))
+    if (mons_is_tentacle_or_tentacle_segment(type))
         return true;
 
     if (check_stasis(!permit_id, calc_unid))
@@ -4258,7 +4270,7 @@ int monster::hurt(const actor *agent, int amount, beam_type flavour,
         react_to_damage(agent, amount, flavour);
 
         if (has_ench(ENCH_MIRROR_DAMAGE))
-            (new mirror_damage_fineff(agent, this, amount))->schedule();
+            (new mirror_damage_fineff(agent, this, amount * 2 / 3))->schedule();
 
         blame_damage(agent, amount);
         behaviour_event(this, ME_HURT);
@@ -4288,7 +4300,7 @@ void monster::paralyse(actor *atk, int strength, string cause)
     enchant_monster_with_flavour(this, atk, BEAM_PARALYSIS, strength);
 }
 
-void monster::petrify(actor *atk)
+void monster::petrify(actor *atk, bool force)
 {
     enchant_monster_with_flavour(this, atk, BEAM_PETRIFY);
 }
@@ -4636,14 +4648,14 @@ kill_category monster::kill_alignment() const
     return (friendly() ? KC_FRIENDLY : KC_OTHER);
 }
 
-bool monster::sicken(int amount, bool unused)
+bool monster::sicken(int amount, bool unused, bool quiet)
 {
     UNUSED(unused);
 
     if (res_rotting() || (amount /= 2) < 1)
         return false;
 
-    if (!has_ench(ENCH_SICK) && you.can_see(this))
+    if (!has_ench(ENCH_SICK) && you.can_see(this) && !quiet)
     {
         // Yes, could be confused with poisoning.
         mprf(_("%s looks sick."), name(DESC_THE).c_str());
@@ -4752,7 +4764,7 @@ int monster::foe_distance() const
 
 bool monster::can_go_berserk() const
 {
-    if (holiness() != MH_NATURAL || mons_is_tentacle(type))
+    if (holiness() != MH_NATURAL || mons_is_tentacle_or_tentacle_segment(type))
         return false;
 
     if (mons_intel(this) == I_PLANT)
@@ -4848,7 +4860,7 @@ bool monster::has_lifeforce() const
 
 bool monster::can_mutate() const
 {
-    if (mons_is_tentacle(type))
+    if (mons_is_tentacle_or_tentacle_segment(type))
         return false;
 
     // embodiment of Zinniness
@@ -4875,7 +4887,7 @@ bool monster::can_bleed(bool /*allow_tran*/) const
     return mons_has_blood(type);
 }
 
-bool monster::mutate(const string &reason)
+bool monster::malmutate(const string &reason)
 {
     if (!can_mutate())
         return false;
@@ -4960,6 +4972,8 @@ static bool _mons_is_skeletal(int mc)
     return (mc == MONS_SKELETON
             || mc == MONS_BONE_DRAGON
             || mc == MONS_SKELETAL_WARRIOR
+            || mc == MONS_ANCIENT_CHAMPION
+            || mc == MONS_REVENANT
             || mc == MONS_FLYING_SKULL
             || mc == MONS_CURSE_SKULL
             || mc == MONS_MURRAY);
@@ -5205,6 +5219,15 @@ void monster::put_to_sleep(actor *attacker, int strength)
     add_ench(ENCH_SLEEPY);
 }
 
+void monster::weaken(actor *attacker, int pow)
+{
+    if (!has_ench(ENCH_WEAK))
+        simple_monster_message(this, " looks weaker.");
+
+    add_ench(mon_enchant(ENCH_WEAK, 1, attacker,
+                         (pow * 10 + random2(pow * 10 + 30))));
+}
+
 void monster::check_awaken(int)
 {
     // XXX
@@ -5254,6 +5277,10 @@ int monster::action_energy(energy_use_type et) const
 
         if (run())
             move_cost -= 2;
+
+        // Shadows move more quickly when blended with the darkness
+        if (type == MONS_SHADOW && invisible())
+            move_cost -= 3;
 
         // Floundering monsters get the same penalty as the player, except that
         // player get penalty on entering water, while monster get the penalty
@@ -5313,7 +5340,8 @@ bool monster::can_drink_potion(potion_type ptype) const
     // These monsters cannot drink.
     if (is_skeletal() || is_insubstantial()
         || mons_species() == MONS_LICH || mons_genus(type) == MONS_MUMMY
-        || type == MONS_GASTRONOK)
+        || type == MONS_GASTRONOK
+        || has_ench(ENCH_RETCHING))
     {
         return false;
     }
@@ -5554,7 +5582,8 @@ void monster::react_to_damage(const actor *oppressor, int damage,
                            damage * BASELINE_DELAY);
     }
 
-    if (mons_is_tentacle(type) && type != MONS_ELDRITCH_TENTACLE
+    if (mons_is_tentacle_or_tentacle_segment(type)
+            && type != MONS_ELDRITCH_TENTACLE
             && flavour != BEAM_TORMENT_DAMAGE
             && !invalid_monster_index(number)
             && menv[number].is_parent_monster_of(this))
@@ -5633,8 +5662,11 @@ void monster::react_to_damage(const actor *oppressor, int damage,
 reach_type monster::reach_range() const
 {
     const mon_attack_def attk(mons_attack_spec(this, 0));
-    if (attk.flavour == AF_REACH && attk.damage)
+    if ((attk.flavour == AF_REACH || attk.type == AT_REACH_STING)
+        && attk.damage)
+    {
         return REACH_TWO;
+    }
 
     const item_def *wpn = primary_weapon();
     if (wpn)
@@ -5960,9 +5992,7 @@ bool monster::is_child_tentacle_segment() const
 
 bool monster::is_child_monster() const
 {
-    return (type == MONS_KRAKEN_TENTACLE || type == MONS_STARSPAWN_TENTACLE
-            || type == MONS_KRAKEN_TENTACLE_SEGMENT
-            || type == MONS_STARSPAWN_TENTACLE_SEGMENT);
+    return (is_child_tentacle() || is_child_tentacle_segment());
 }
 
 bool monster::is_child_tentacle_of(const monster* mons) const

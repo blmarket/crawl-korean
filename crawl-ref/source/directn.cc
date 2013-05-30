@@ -18,6 +18,7 @@
 #include "externs.h"
 #include "options.h"
 
+#include "branch.h"
 #include "cio.h"
 #include "cloud.h"
 #include "colour.h"
@@ -2984,7 +2985,7 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_MANGROVE:
         return (M_("mangrove"));
     case DNGN_ORCISH_IDOL:
-        if (you.species == SP_HILL_ORC)
+        if (player_genus(GENPC_ORCISH))
             return (M_("idol of Beogh"));
         else
             return (M_("orcish idol"));
@@ -3107,7 +3108,6 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
     case DNGN_RETURN_FROM_LAIR:
     case DNGN_RETURN_FROM_VAULTS:
     case DNGN_RETURN_FROM_TEMPLE:
-    case DNGN_RETURN_FROM_FOREST:
         return (M_("staircase back to the Dungeon"));
     case DNGN_RETURN_FROM_SLIME_PITS:
     case DNGN_RETURN_FROM_SNAKE_PIT:
@@ -3118,10 +3118,13 @@ static string _base_feature_desc(dungeon_feature_type grid, trap_type trap)
         return (M_("crawl-hole back to the Lair"));
     case DNGN_RETURN_FROM_CRYPT:
     case DNGN_RETURN_FROM_HALL_OF_BLADES:
+    case DNGN_RETURN_FROM_FOREST:
         return (M_("staircase back to the Vaults"));
     case DNGN_RETURN_FROM_ELVEN_HALLS:
         return (M_("staircase back to the Mines"));
     case DNGN_RETURN_FROM_TOMB:
+        if (parent_branch(BRANCH_TOMB) == BRANCH_FOREST)
+            return (M_("staircase back to the Forest"));
         return (M_("staircase back to the Crypt"));
     case DNGN_RETURN_FROM_ZOT:
         return (M_("gate leading back out of this place"));

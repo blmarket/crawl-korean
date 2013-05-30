@@ -2078,6 +2078,16 @@ string get_item_description(const item_def &item, bool verbose,
     case OBJ_MISCELLANY:
         if (is_deck(item))
             description << _describe_deck(item);
+        if (is_elemental_evoker(item))
+        {
+            description << "\nOnce released, the spirits within this device "
+                           "will dissipate, leaving it inert, though new ones "
+                           "may be attracted as its bearer battles through the "
+                           "dungeon and grows in power and wisdom.";
+
+            if (!evoker_is_charged(item))
+                description << "\n\nThe device is presently inert.";
+        }
         break;
 
     case OBJ_POTIONS:
@@ -3228,8 +3238,11 @@ static string _monster_stat_description(const monster_info& mi)
                                magic_res_adjective(mr).c_str());
     }
 
-    if (mons_class_flag(mi.type, M_STATIONARY) && !mons_is_tentacle(mi.type))
-        result << uppercase_first(pronoun) << gettext(" cannot move.\n");
+    if (mons_class_flag(mi.type, M_STATIONARY)
+        && !mons_is_tentacle_or_tentacle_segment(mi.type))
+    {
+        result << uppercase_first(pronoun) << _(" cannot move.\n");
+    }
 
     // Monsters can glow from both light and radiation.
     if (mons_class_flag(mi.type, M_GLOWS_LIGHT))
@@ -3683,6 +3696,7 @@ string get_ghost_description(const monster_info &mi, bool concise)
     case SP_OGRE:
     case SP_MINOTAUR:
     case SP_HILL_ORC:
+    case SP_LAVA_ORC:
     case SP_CENTAUR:
     case SP_NAGA:
     case SP_MUMMY:

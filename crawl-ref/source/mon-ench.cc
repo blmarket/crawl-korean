@@ -25,11 +25,13 @@
 #include "mon-behv.h"
 #include "mon-cast.h"
 #include "mon-death.h"
+#include "mon-iter.h"
 #include "mon-place.h"
 #include "religion.h"
 #include "spl-damage.h"
 #include "spl-summoning.h"
 #include "state.h"
+#include "stuff.h"
 #include "terrain.h"
 #include "traps.h"
 #include "view.h"
@@ -505,7 +507,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
             // This should only happen because of fleeing sanctuary
             snprintf(info, INFO_SIZE, _(" stops retreating."));
         }
-        else if (!mons_is_tentacle(type))
+        else if (!mons_is_tentacle_or_tentacle_segment(type))
         {
             snprintf(info, INFO_SIZE, _(" seems to regain %s courage."),
                      pronoun(PRONOUN_POSSESSIVE, true).c_str());
@@ -530,7 +532,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         // Note: Invisible monsters are not forced to stay invisible, so
         // that they can properly have their invisibility removed just
         // before being polymorphed into a non-invisible monster.
-        if (mons_near(this) && !you.can_see_invisible()
+        if (mons_near(this) && !you.can_see_invisible() && !backlit()
             && !has_ench(ENCH_SUBMERGED))
         {
             if (!quiet)
@@ -686,6 +688,11 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
                          _("%s leaps out from its hiding place under the floor!"),
                          name(DESC_PLAIN, true).c_str());
                 }
+                else if (type == MONS_LOST_SOUL)
+                {
+                    mprf(channel, "%s flickers into view.",
+                                  name(DESC_A).c_str());
+                }
                 else if (crawl_state.game_is_arena())
                     mprf(_("%s surfaces."), name(DESC_PLAIN, true).c_str());
             }
@@ -799,6 +806,24 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
         }
         break;
 
+    case ENCH_FLAYED:
+        heal_flayed_effect(this);
+        break;
+
+    case ENCH_HAUNTING:
+    {
+        mon_enchant abj = get_ench(ENCH_ABJ);
+        abj.degree = 1;
+        abj.duration = min(5 + random2(30), abj.duration);
+        update_ench(abj);
+        break;
+    }
+
+    case ENCH_WEAK:
+        if (!quiet)
+            simple_monster_message(this, " is no longer weakened.");
+        break;
+
     default:
         break;
     }
@@ -906,6 +931,7 @@ void monster::timeout_enchantments(int levels)
         case ENCH_ROUSED: case ENCH_BREATH_WEAPON: case ENCH_DEATHS_DOOR:
         case ENCH_OZOCUBUS_ARMOUR: case ENCH_WRETCHED: case ENCH_SCREAMED:
         case ENCH_BLIND: case ENCH_WORD_OF_RECALL: case ENCH_INJURY_BOND:
+        case ENCH_FLAYED:
             lose_ench_levels(i->second, levels);
             break;
 
@@ -1115,6 +1141,7 @@ void monster::apply_enchantment(const mon_enchant &me)
     case ENCH_OZOCUBUS_ARMOUR:
     case ENCH_WRETCHED:
     case ENCH_SCREAMED:
+    case ENCH_WEAK:
     // case ENCH_ROLLING:
         decay_enchantment(me);
         break;
@@ -1724,6 +1751,48 @@ void monster::apply_enchantment(const mon_enchant &me)
             decay_enchantment(me);
         break;
 
+    case ENCH_WATER_HOLD:
+        if (!me.agent()
+            || (me.agent() && !adjacent(me.agent()->as_monster()->pos(), pos())))
+        {
+            del_ench(ENCH_WATER_HOLD);
+        }
+        else
+        {
+            if (!res_water_drowning())
+            {
+                lose_ench_duration(me, -speed_to_duration(speed));
+                int dam = div_rand_round((50 + stepdown((float)me.duration, 30.0))
+                                          * speed_to_duration(speed),
+                            BASELINE_DELAY * 10);
+                hurt(me.agent(), dam);
+            }
+        }
+        break;
+
+    case ENCH_FLAYED:
+    {
+        bool near_ghost = false;
+        for (monster_iterator mi; mi; ++mi)
+        {
+            if (mi->type == MONS_FLAYED_GHOST && !mons_aligned(this, *mi)
+                && see_cell(mi->pos()))
+            {
+                near_ghost = true;
+                break;
+            }
+        }
+        if (!near_ghost)
+            decay_enchantment(me);
+
+        break;
+    }
+
+    case ENCH_HAUNTING:
+        if (!me.agent() || !me.agent()->alive())
+            del_ench(ENCH_HAUNTING);
+        break;
+
     default:
         break;
     }
@@ -1855,6 +1924,7 @@ static const char *enchant_names[] =
     "dazed", "mute", "blind", "dumb", "mad", "silver_corona", "recite timer",
     "inner_flame", "roused", "breath timer", "deaths_door", "rolling",
     "ozocubus_armour", "wretched", "screamed", "rune_of_recall", "injury bond",
+    "drowning", "flayed", "haunting", "retching", "weak", "dimension_anchor",
     "buggy",
 };
 

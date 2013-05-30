@@ -2260,6 +2260,9 @@ static void _build_dungeon_level(dungeon_feature_type dest_stairs_type)
         } while (depth > 0);
     }
 
+    if (player_in_branch(BRANCH_FOREST))
+        _add_plant_clumps(2);
+
     const unsigned nvaults = env.level_vaults.size();
 
     // Any further vaults must make sure not to disrupt level layout.
@@ -3362,7 +3365,7 @@ static void _place_branch_entrances(bool use_vaults)
                            && one_chance_in(FEATURE_MIMIC_CHANCE);
 
         if (b->entry_stairs != NUM_FEATURES
-            && player_in_branch(b->parent_branch)
+            && player_in_branch(parent_branch((branch_type)i))
             && (you.depth == startdepth[i] || mimic))
         {
             // Placing a stair.
@@ -3600,6 +3603,44 @@ static void _place_aquatic_monsters()
     }
 }
 
+// For Crypt, adds a bunch of skeletons and zombies that do not respect
+// absdepth (and thus tend to be varied and include several types that
+// would not otherwise spawn there).
+static void _place_assorted_zombies()
+{
+    int num_zombies = random_range(6, 12, 3);
+    for (int i = 0; i < num_zombies; ++i)
+    {
+        bool skel = coinflip();
+        monster_type z_base;
+        do
+            z_base = pick_random_zombie();
+        while (skel && !mons_skeleton(z_base));
+
+        mgen_data mg;
+        mg.cls = (skel ? MONS_SKELETON : MONS_ZOMBIE);
+        mg.base_type = z_base;
+        mg.behaviour              = BEH_SLEEP;
+        mg.map_mask              |= MMT_NO_MONS;
+        mg.preferred_grid_feature = DNGN_FLOOR;
+
+        place_monster(mg);
+    }
+}
+
+static void _place_lost_souls()
+{
+    int nsouls = random2avg(you.depth + 2, 3);
+    for (int i = 0; i < nsouls; ++i)
+    {
+        mgen_data mg;
+        mg.cls = MONS_LOST_SOUL;
+        mg.behaviour              = BEH_HOSTILE;
+        mg.preferred_grid_feature = DNGN_FLOOR;
+        place_monster(mg);
+    }
+}
+
 bool door_vetoed(const coord_def pos)
 {
     return env.markers.property_at(pos, MAT_ANY, "veto_open") == "veto";
@@ -3645,6 +3686,11 @@ static void _builder_monsters()
 
     if (!player_in_branch(BRANCH_CRYPT)) // No water creatures in the Crypt.
         _place_aquatic_monsters();
+    else
+    {
+        _place_assorted_zombies();
+        _place_lost_souls();
+    }
 }
 
 static void _builder_items()
@@ -4031,7 +4077,8 @@ _build_vault_impl(const map_def *vault,
     if (!make_no_exits)
     {
         const bool spotty = player_in_branch(BRANCH_ORCISH_MINES)
-                            || player_in_branch(BRANCH_SLIME_PITS);
+                            || player_in_branch(BRANCH_SLIME_PITS)
+                            || player_in_branch(BRANCH_FOREST);
         place.connect(spotty);
     }
 
@@ -4070,19 +4117,22 @@ static void _build_postvault_level(vault_placement &place)
     }
 }
 
-static const object_class_type _acquirement_item_classes[] =
+static object_class_type _acquirement_object_class()
 {
-    OBJ_JEWELLERY,
-    OBJ_BOOKS,
-    OBJ_MISCELLANY,
-    OBJ_WEAPONS,
-    OBJ_ARMOUR,
-    OBJ_WANDS,
-    OBJ_STAVES,
-};
+    static const object_class_type classes[] =
+    {
+        OBJ_JEWELLERY,
+        OBJ_BOOKS,
+        OBJ_MISCELLANY, // Felids stop here
+        OBJ_WEAPONS,
+        OBJ_ARMOUR,
+        OBJ_WANDS,
+        OBJ_STAVES,
+    };
 
-#define NC_KITTEHS           3
-#define NC_LESSER_LIFE_FORMS ARRAYSZ(_acquirement_item_classes)
+    const int nc = (you.species == SP_FELID) ? 3 : ARRAYSZ(classes);
+    return classes[random2(nc)];
+}
 
 static int _dgn_item_corpse(const item_spec &ispec, const coord_def where)
 {
@@ -4240,6 +4290,19 @@ static bool _apply_item_props(item_def &item, const item_spec &spec,
     return true;
 }
 
+static object_class_type _superb_object_class()
+{
+    return random_choose_weighted(
+            20, OBJ_WEAPONS,
+            10, OBJ_ARMOUR,
+            10, OBJ_JEWELLERY,
+            10, OBJ_BOOKS,
+            9, OBJ_STAVES,
+            1, OBJ_RODS,
+            10, OBJ_MISCELLANY,
+            0);
+}
+
 int dgn_place_item(const item_spec &spec,
                    const coord_def &where,
                    int level)
@@ -4258,7 +4321,7 @@ int dgn_place_item(const item_spec &spec,
         level = spec.level;
     else
     {
-        bool adjust_type = true;
+        bool adjust_type = false;
         switch (spec.level)
         {
         case ISPEC_DAMAGED:
@@ -4270,13 +4333,14 @@ int dgn_place_item(const item_spec &spec,
             level = 5 + level * 2;
             break;
         case ISPEC_SUPERB:
+            adjust_type = true;
             level = MAKE_GOOD_ITEM;
             break;
         case ISPEC_ACQUIREMENT:
+            adjust_type = true;
             acquire = true;
             break;
         default:
-            adjust_type = false;
             break;
         }
 
@@ -4284,9 +4348,8 @@ int dgn_place_item(const item_spec &spec,
             base_type = get_random_item_mimic_type();
         else if (adjust_type && base_type == OBJ_RANDOM)
         {
-            base_type = _acquirement_item_classes[random2(
-                            (you.species == SP_FELID && acquire) ? NC_KITTEHS :
-                            NC_LESSER_LIFE_FORMS)];
+            base_type = acquire ? _acquirement_object_class()
+                                : _superb_object_class();
         }
     }
 
@@ -4838,15 +4901,7 @@ static void _vault_grid_glyph(vault_placement &place, const coord_def& where,
             which_class = OBJ_GOLD;
         else if (vgrid == '|')
         {
-            which_class = random_choose_weighted(
-                            20, OBJ_WEAPONS,
-                            10, OBJ_ARMOUR,
-                            10, OBJ_JEWELLERY,
-                            10, OBJ_BOOKS,
-                             9, OBJ_STAVES,
-                             1, OBJ_RODS,
-                            10, OBJ_MISCELLANY,
-                             0);
+            which_class = _superb_object_class();
             which_depth = MAKE_GOOD_ITEM;
         }
         else if (vgrid == '*')
@@ -5477,7 +5532,8 @@ static bool _spotty_seed_ok(const coord_def& p)
 static bool _feat_is_wall_floor_liquid(dungeon_feature_type feat)
 {
     return (feat_is_water(feat) || feat_is_lava(feat) || feat_is_wall(feat)
-            || feat == DNGN_FLOOR);
+            || feat == DNGN_FLOOR
+            || (player_in_branch(BRANCH_FOREST) && feat == DNGN_TREE));
 }
 
 // Connect vault exit "from" to dungeon floor by growing a spotty chamber.

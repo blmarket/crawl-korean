@@ -177,6 +177,10 @@ Silver Blast cast
 
 @The_monster@은(는) 은빛의 화살을 발사했다!
 %%%%
+Call Lost Soul cast
+
+@The_monster@ beckons forth a restless soul!
+%%%%
 #####################################################
 # Individual innate spells (breathing and spitting).
 #####################################################
@@ -329,6 +333,12 @@ Ensnare Arachne cast
 unseen Ensnare Arachne cast
 
 어딘가에서 희끄무레한 줄기가 쏘아져나왔다.
+%%%%
+Pan cast
+
+@The_monster@ weaves a haunting melody.
+
+@The_monster@ plays an eerie tune.
 %%%%
 ########################################################################
 # Individual monsters

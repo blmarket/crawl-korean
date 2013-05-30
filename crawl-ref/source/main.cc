@@ -88,6 +88,7 @@
 #include "misc.h"
 #include "mislead.h"
 #include "mon-act.h"
+#include "mon-abil.h"
 #include "mon-cast.h"
 #include "mon-iter.h"
 #include "mon-stuff.h"
@@ -1414,7 +1415,7 @@ static bool _can_take_stairs(dungeon_feature_type ftype, bool down,
     // Held
     if (you.attribute[ATTR_HELD])
     {
-        mprf(_("You can't do that while %s."), held_status());
+        mprf(_("You can't do that while %s."), _(held_status()));
         return false;
     }
 
@@ -2268,6 +2269,21 @@ static void _decrement_petrification(int delay)
 {
     if (_decrement_a_duration(DUR_PETRIFIED, delay) && !you.paralysed())
     {
+        if (you.species == SP_GROTESK)
+        {
+            int possible_loss = 4;
+            if (player_sust_abil())
+                possible_loss -= 1;
+
+            for (int i = 0; i < possible_loss; ++i)
+            {
+                if (x_chance_in_y(you.grotesk_damage_reduction, you.hp_max))
+                    lose_stat(STAT_RANDOM, 1, true, "massive damage");
+            }
+            int dur = (200 * you.grotesk_damage_reduction / you.hp_max) / 10;
+            you.increase_duration(DUR_EXHAUSTED, dur);
+            you.grotesk_damage_reduction = 0;
+        }
         you.redraw_evasion = true;
         mprf(MSGCH_DURATION, gettext("You turn to %s and can move again."),
              you.form == TRAN_LICH ? pgettext("_decrement_petrification", "bone") :
@@ -2529,8 +2545,11 @@ static void _decrement_durations()
         you.redraw_armour_class = true;
     }
 
-    if (_decrement_a_duration(DUR_STONESKIN, delay, gettext("Your skin feels tender.")))
-        you.redraw_armour_class = true;
+    // Lava orcs don't have stoneskin decay like normal.
+    if (you.species != SP_LAVA_ORC
+        || (you.species == SP_LAVA_ORC && temperature_effect(LORC_STONESKIN)))
+        if (_decrement_a_duration(DUR_STONESKIN, delay, _("Your skin feels tender.")))
+            you.redraw_armour_class = true;
 
     if (_decrement_a_duration(DUR_TELEPORT, delay))
     {
@@ -2670,6 +2689,9 @@ static void _decrement_durations()
 
         if (!you.duration[DUR_PARALYSIS] && !you.petrified())
             mpr(gettext("You are exhausted."), MSGCH_WARN);
+
+        if (you.species == SP_LAVA_ORC)
+            mpr("You feel less hot-headed.");
 
         // This resets from an actual penalty or from NO_BERSERK_PENALTY.
         you.berserk_penalty = 0;
@@ -2870,7 +2892,41 @@ static void _decrement_durations()
     _decrement_a_duration(DUR_SENTINEL_MARK, delay,
                           _("The sentinel's mark upon you fades away."));
 
+    _decrement_a_duration(DUR_WEAK, delay,
+                          "Your attacks no longer feel as feeble.");
+
+    _decrement_a_duration(DUR_DIMENSION_ANCHOR, delay,
+                          "You are no longer firmly anchored in space.");
+
     _decrement_a_duration(DUR_SICKENING, delay);
+
+    _decrement_a_duration(DUR_ANTIMAGIC, delay,
+                          "You regain control over your magic.");
+
+    _decrement_a_duration(DUR_WATER_HOLD_IMMUNITY, delay);
+    if (you.duration[DUR_WATER_HOLD])
+        handle_player_drowning(delay);
+
+    if (you.duration[DUR_FLAYED])
+    {
+        bool near_ghost = false;
+        for (monster_iterator mi; mi; ++mi)
+        {
+            if (mi->type == MONS_FLAYED_GHOST && !mi->wont_attack()
+                && you.see_cell(mi->pos()))
+            {
+                near_ghost = true;
+                break;
+            }
+        }
+        if (!near_ghost)
+        {
+            if (_decrement_a_duration(DUR_FLAYED, delay))
+                heal_flayed_effect(&you);
+        }
+    }
+
+    _decrement_a_duration(DUR_RETCHING, delay, "Your fit of retching subsides.");
 
     if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
         do_recall(delay);
@@ -3051,6 +3107,9 @@ static void _player_reacts()
 
     if (you.attribute[ATTR_SHADOWS])
         shadow_lantern_effect();
+
+    if (you.species == SP_LAVA_ORC)
+        temperature_check();
 
     if (player_mutation_level(MUT_DEMONIC_GUARDIAN))
         check_demonic_guardian();
@@ -4420,6 +4479,19 @@ static void _move_player(coord_def move)
             stop_running();
             you.turn_is_over = false;
             return;
+        }
+
+        if (you.duration[DUR_WATER_HOLD])
+        {
+            if (you.can_swim())
+                mpr("You deftly slip free of the water engulfing you.");
+            else //Unless you're a natural swimmer, this takes longer than normal
+            {
+                mpr("With effort, you pull free of the water engulfing you.");
+                you.time_taken = you.time_taken * 3 / 2;
+            }
+            you.duration[DUR_WATER_HOLD] = 1;
+            you.props.erase("water_holder");
         }
 
         if (swap)

@@ -467,6 +467,14 @@ fantastic arabesque — invisible to their eyes, but dreadful nonetheless — in
 the unfamiliar numeral under whose menace they lived.”
     -Bruno Schulz, “The Brilliant Epoch”. 1937.
 %%%%
+lost soul
+
+The echo of a unmourned soul, flickering in and out of the mortal world. Though
+the memories of its living self are long-faded, it is drawn to the moment of
+death by some lingering instinct. So powerful is its drive for self and purpose
+that it seizes upon the passage of other souls, losing the last vestiges of its
+being in the memories of another's life.
+%%%%
 Louise
 
 A mighty sorceress, clad from head to toe in heavy armour. Once an adventurer
@@ -609,6 +617,11 @@ Norris:quote
 negative.”
     -Georges Poulet
 %%%%
+Pan
+
+The lord of all satyrs. With his flute, he produces music said to cloud the
+mind beyond all hope of return.
+%%%%
 Pikel
 
 While kobolds are normally slaves, Pikel's rough life, selfish ambition and
@@ -718,6 +731,10 @@ Sonja
 
 A graceful kobold assassin. Admire her graceful pirouettes, thrill at her
 daring leaps! But watch out for her knives!
+%%%%
+Sojobo
+
+King of the tengu, with legendary skill in swordsmanship, tactics, and magic.
 %%%%
 Terence
 
@@ -978,8 +995,9 @@ A greater demon, wreathed in snow and lightning.
 %%%%
 blue devil
 
-A peculiar, horned humanoid figure originating from some frigid hell. It is
-repulsed by fire and flames.
+A muscular horned humanoid figure originating from some frigid hell. It swoops
+through the air on powerful wings, taking sadistic joy from harrying those who
+would try to flee its grasp.
 %%%%
 blue devil:quote
 
@@ -1407,6 +1425,11 @@ dire elephant
 A huge pachyderm, wilder and fiercer than normal elephants, with a very thick
 hide, powerful legs, and a memory to die for.
 %%%%
+djinni
+
+A blue-skinned fellow without legs who hovers here, with not the slightest
+hint of having an urge to fulfill your wishes.
+%%%%
 draconian
 
 A bipedal reptilian creature slightly larger than a human. Draconians have
@@ -1458,6 +1481,11 @@ dragon
 A great reptilian beast with powerful claws on its limbs, covered in thick
 green scales and with two huge bat-like wings. Little trails of smoke spill
 from its toothy maw.
+%%%%
+dryad
+
+A spirit of nature, bound to the forest in which it resides. It is capable
+of calling upon the trees to defend against incursions.
 %%%%
 dwarf
 
@@ -1602,6 +1630,12 @@ eye of draining
 
 A hovering horror that waxes strong on magic.
 %%%%
+faun
+
+A hybrid with the torso of a man atop the forelegs of a goat. They are fabled
+for their ability to play with the minds of those who intrude into their
+domains.
+%%%%
 feature mimic
 
 A vicious beast masquerading as an ordinary dungeon feature.
@@ -1660,7 +1694,8 @@ dungeon, seeking to share its fate with others.
 flayed ghost
 
 A hideous floating undead creature, the anguished spirit of a tortured victim,
-with torn skin hanging from an emaciated body.
+with torn skin hanging from an emaciated body. It restlessly stalks the
+dungeon, inflicting the anguish it felt in life upon those still living.
 %%%%
 flying skull
 
@@ -1679,6 +1714,11 @@ freed slave
 
 A human who has just been released from magical enslavement. It tries to stand
 proudly before you, despite its lingering fear and unkempt appearance.
+%%%%
+forest drake
+
+A small but powerful dragon, quite comfortable weaving through the trees
+that comprise its home. It can exhale powerful blasts of wind.
 %%%%
 freezing wraith
 
@@ -2419,6 +2459,12 @@ waves high upon the shores of Japan.”
     -“The Jellyfish and the Monkey”, adapted by Yei Theodora Ozaki, _Young
      Folk's Treasury_, vol. II. 1909.
 %%%%
+jiangshi
+
+A vampiric thrall bound into servitude by esoteric rituals. Though its rigid
+limbs give it an awkward gait, it moves with surprising speed, leaping upon its
+victims and drinking their life essence with its vicious claws.
+%%%%
 jumping spider
 
 A large venomous spider, which weaves webs between its front legs and leaps at
@@ -2437,6 +2483,19 @@ tengu:quote
  He bit an Angleworm in halves
  And ate the fellow, raw”
     -Emily Dickinson, “A Bird came down the Walk”. ca. 1865.
+%%%%
+tengu conjurer
+
+One of many tengu with a talent for the destructive magical arts.
+%%%%
+tengu reaver
+
+An elite, ferocious tengu highly skilled with both steel and spells.
+%%%%
+tengu warrior
+
+A particularly bloodthirsty tengu who has opted to hone their skill in
+fighting and weaponry instead of spellcasting.
 %%%%
 killer bee
 
@@ -2518,6 +2577,37 @@ piece of lava. This fish is also noteworthy for having envenomed spines in the
 fin on its back.”
     -Jordan, Kellogg and Heath, _Animal Studies: A Text-book of Elementary
      Zoology_. 1903.
+%%%%
+lava orc
+
+A tall, muscular humanoid strongly in tune with the elemental forces of fire
+and earth. These distant relatives of cave orcs are possessed of passionate
+hearts, and their inner temperature is closely linked to their emotions.
+%%%%
+lava orc berserker
+
+This massive axe-wielding orc looks like a statue commemorating the carnage
+about to ensue. It is coated head to toe in war paint - or maybe blood?
+%%%%
+lava orc warrior
+
+A particularly brutish lava orc that commands fear by its strength.
+%%%%
+lava orc elementalist
+
+A svelte specimen with skin of rough grey granite sparkling with quartz
+inclusions. It gazes hatefully at you through the smoke coiling from its
+nostrils.
+%%%%
+lava orc warlord
+
+A truly mighty leader among the lava orcs, commanding great armies and even
+greater wealth.
+%%%%
+lava orc transmuter
+
+A lava orc who uses magic to augment its martial prowess. Its obsidian skin is
+dotted with snowflake patterns that shift as you watch.
 %%%%
 lava snake
 
@@ -2950,7 +3040,7 @@ intelligence.
 orange demon
 
 An amber-coloured demon with a tail not unlike that of a scorpion. It contains
-a venom most potent, one that attacks not only the body but the mind as well.
+a potent venom that can render its victims weak and their blows feeble.
 %%%%
 orange demon:quote
 
@@ -3080,7 +3170,9 @@ its claws burn with the sear of holy wrath.
 phantasmal warrior
 
 A hideous translucent green spirit of a warrior fallen in battle and recalled
-to this plane by unholy magic.
+to this plane by unholy magic. The blade it wields is ethereal, passing easily
+through shields and armour, and rendering those it strikes more susceptible to
+magic.
 %%%%
 phantom
 
@@ -3138,6 +3230,12 @@ LORD out of heaven; And he overthrew those cities, and all the plain, and all
 the inhabitants of the cities, and that which grew upon the ground. But his
 wife looked back from behind him, and she became a pillar of salt.”
     -KJV Bible, Gen. XIX, 24-6.
+%%%%
+plague shambler
+
+A shambling reanimated corpse. Trapped by evil spellweaving in a grotesque
+parody of life, this infected decaying body lurches about, seeking retribution
+on the living.
 %%%%
 plant
 
@@ -3314,8 +3412,9 @@ reaper
 %%%%
 red devil
 
-A muscular demon covered in spikes and horns. Two short wings sprout from its
-shoulders.
+A larger cousin of the common imp, with a fiendish grin and two short wings
+sprouting from its shoulders. They favor barbed tridents, often taunting their
+victims as they prod them from afar then nimbly retreat from pursuit.
 %%%%
 red draconian
 
@@ -3330,6 +3429,11 @@ redback
 
 A vicious black spider with a splash of red on its swollen abdomen. Its
 mandibles drip with lethal poison.
+%%%%
+revenant
+
+A skeletal form wreathed in cold blue fire, standing astride this life and the
+next. Echoes of the lingering dead flicker within its ghostly flames.
 %%%%
 rock worm
 
@@ -3367,12 +3471,6 @@ rotting devil:quote
  That wrap their rotting souls about.“
     -John Davidson, ”A Ballad of Heaven". Late 19th cent.
 %%%%
-rotting hulk
-
-A shambling reanimated corpse. Trapped by evil spellweaving in a grotesque
-parody of life, this infected decaying body lurches about, seeking retribution
-on the living.
-%%%%
 the royal jelly
 
 아주 호화로운 금빛을 한 젤라틴 덩어리다.
@@ -3395,6 +3493,11 @@ the haire will fall off: and the part so touched will change the colour of the
 skin to the white morphew.”
     -Gaius Plinius Secundus, _Naturalis Historia_, Book X, ch. LXVII. 79 A.D.
      trans. Philemon Holland, 1601.
+%%%%
+satyr
+
+A more intelligent relative of the faun, often found in their company, and far
+more unforgiving of - and dangerous to - interlopers.
 %%%%
 scorpion
 
@@ -3431,8 +3534,9 @@ the whole earth is full of his glory.”
 %%%%
 shadow
 
-A wisp of unliving shadow, drifting on the edge of vision. It consumes the
-puissance of living beings.
+A wisp of unliving shadow, slipping in and out of the darkness of the dungeon.
+It moves swiftly and silently from one pool of shade to another, striking
+unerringly from the blind spots of those who cannot see it.
 %%%%
 shadow:quote
 
@@ -3889,6 +3993,11 @@ A spriggan whose connection with the birds and the beasts is exceptionally
 strong. Revelling in nature, these protectors of forests are the doom of anyone
 who so much as snaps a twig.
 %%%%
+spriggan enchanter
+
+A spriggan particularly skilled in the arts of hexes and charms - and,
+apparently, lethal with a quick blade.
+%%%%
 spriggan rider
 
 Mounted on giant fireflies, these riders make sure no one who dares to intrude
@@ -4283,7 +4392,8 @@ orcs.
 water elemental
 
 A spirit drawn from the elemental plane of water. It exists on this world as
-part of a body of water.
+part of a body of water and can engulf other beings in its form, depriving them
+of breath and voice.
 %%%%
 water moccasin
 
@@ -4957,7 +5067,7 @@ You see the unseen, you stare and they stare back. They whisper and laugh, they
 grin and cry, they leer at you with contempt and gaze at you in adoration. They
 are the observers, they are the judge of your worth and will decide your end.
 %%%%
-lost soul
+meat lost soul
 
 A spectre, struggling to leave the mortal world it is incarcerated in. It
 drains life and unlife from all those it comes into contact with.

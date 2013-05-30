@@ -1178,9 +1178,9 @@ static void _inc_gift_timeout(int val)
 static monster_type _yred_servants[] =
 {
     MONS_MUMMY, MONS_WIGHT, MONS_FLYING_SKULL, MONS_WRAITH,
-    MONS_ROTTING_HULK, MONS_FREEZING_WRAITH, MONS_PHANTASMAL_WARRIOR,
-    MONS_FLAMING_CORPSE, MONS_FLAYED_GHOST, MONS_SKELETAL_WARRIOR,
-    MONS_DEATH_COB, MONS_GHOUL, MONS_BONE_DRAGON, MONS_PROFANE_SERVITOR,
+    MONS_FREEZING_WRAITH, MONS_FLAMING_CORPSE, MONS_PHANTASMAL_WARRIOR,
+    MONS_SKELETAL_WARRIOR, MONS_FLAYED_GHOST, MONS_DEATH_COB,
+    MONS_GHOUL, MONS_BONE_DRAGON, MONS_PROFANE_SERVITOR,
 };
 
 #define MIN_YRED_SERVANT_THRESHOLD 3
@@ -3499,6 +3499,11 @@ void god_pitch(god_type which_god)
         if (which_god == GOD_SIF_MUNA)
         {
             simple_god_message("은(는) 당신과 같은 무지한 자로부터의 숭배는 받아들이지 않는다!",
+                               which_god);
+        }
+        else if (which_god == GOD_BEOGH && you.species == SP_LAVA_ORC)
+        {
+            simple_god_message(" booms: Go away, foul mockery of the chosen race!",
                                which_god);
         }
         else if (!_transformed_player_can_join_god(which_god))

@@ -226,7 +226,7 @@ bool trap_def::is_safe(actor* act) const
         act = &you;
 
     // Shaft and mechanical traps are safe when flying or clinging.
-    if ((act->airborne() || act->can_cling_to(pos))
+    if ((act->airborne() || act->can_cling_to(pos) || you.species == SP_DJINNI)
         && category() != DNGN_TRAP_MAGICAL)
     {
         return true;
@@ -803,13 +803,15 @@ void trap_def::trigger(actor& triggerer, bool flat_footed)
                 triggered = true;
 
                 if (in_sight)
+                {
                     if (m->visible_to(&you))
                     {
                         mprf(gettext("A large net falls down onto %s!"),
                              m->name(DESC_THE).c_str());
                     }
                     else
-                        mpr(gettext("A large net falls down!"));
+                        mpr(_("A large net falls down!"));
+                }
 
                 // FIXME: Fake a beam for monster_caught_in_net().
                 bolt beam;
@@ -1895,7 +1897,7 @@ void place_webs(int num, bool is_second_phase)
                 return;
             if (env.trap[slot].type == TRAP_UNASSIGNED)
                 break;
-        };
+        }
         trap_def& ts(env.trap[slot]);
 
         int tries;

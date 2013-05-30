@@ -31,6 +31,7 @@
 #include "libutil.h"
 #include "makeitem.h"
 #include "mon-util.h"
+#include "mon-stuff.h"
 #include "notes.h"
 #include "player.h"
 #include "religion.h"
@@ -955,14 +956,15 @@ static const char* misc_type_name(int type, bool known)
 #if TAG_MAJOR_VERSION == 34
     case MISC_EMPTY_EBONY_CASKET:        return M_("empty ebony casket");
 #endif
-    case MISC_AIR_ELEMENTAL_FAN:         return M_("air elemental fan");
+    case MISC_FAN_OF_GALES:              return M_("fan of gales");
     case MISC_LAMP_OF_FIRE:              return M_("lamp of fire");
     case MISC_LANTERN_OF_SHADOWS:        return M_("lantern of shadows");
     case MISC_HORN_OF_GERYON:            return M_("horn of Geryon");
     case MISC_DISC_OF_STORMS:            return M_("disc of storms");
     case MISC_BOTTLED_EFREET:            return M_("bottled efreet");
-    case MISC_STONE_OF_EARTH_ELEMENTALS: return M_("stone of earth elementals");
+    case MISC_STONE_OF_TREMORS:          return M_("stone of tremors");
     case MISC_QUAD_DAMAGE:               return M_("quad damage");
+    case MISC_PHIAL_OF_FLOODS:           return M_("phial of floods");
 
     case MISC_RUNE_OF_ZOT:
     default:
@@ -1673,9 +1675,20 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         case FOOD_CHUNK:
             if (!basename && !dbname)
             {
-                buff << make_stringf(check_gettext("%schunk of %s flesh"), 
-                    (food_is_rotten(*this) && it_plus != MONS_ROTTING_HULK) ? check_gettext(M_("rotting ")) : "",
-                    check_gettext(mons_type_name(static_cast<monster_type>(it_plus), DESC_PLAIN).c_str()));
+                if (food_is_rotten(*this) && it_plus != MONS_PLAGUE_SHAMBLER)
+                    buff << check_gettext(M_("rotting "));
+
+				if(!translate_flag)
+				{
+					buff << "chunk of "
+                     << mons_type_name(static_cast<monster_type>(it_plus),
+                                       DESC_PLAIN)
+                     << " flesh";
+				}
+				else
+				{
+					buff << _(mons_type_name(static_cast<monster_type>(it_plus), DESC_PLAIN).c_str()) << " 고기";
+				}
             }
             else
                 buff << check_gettext("chunk of flesh");
@@ -1823,6 +1836,11 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
 
                 buff << "}";
             }
+            else if (is_elemental_evoker(*this) && !evoker_is_charged(*this)
+                     && !dbname)
+            {
+                buff << " (inert)";
+            }
         }
         break;
 
@@ -1927,7 +1945,7 @@ string item_def::name_aux(description_level_type desc, bool terse, bool ident,
         if (dbname && item_typ == CORPSE_SKELETON)
             return "decaying skeleton";
 
-        if (food_is_rotten(*this) && !dbname && it_plus != MONS_ROTTING_HULK)
+        if (food_is_rotten(*this) && !dbname && it_plus != MONS_PLAGUE_SHAMBLER)
             buff << check_gettext("rotting ");
 
         uint64_t name_type, name_flags = 0;
@@ -2219,10 +2237,21 @@ public:
 
         if (item->base_type == OBJ_FOOD)
         {
-            if (item->sub_type == FOOD_CHUNK)
+            switch (item->sub_type)
+            {
+            case FOOD_CHUNK:
                 name = "고기";
-            else
+                break;
+            case FOOD_MEAT_RATION:
                 name = "보존 식량";
+                break;
+            case FOOD_PEAR:
+                name = "과일";
+                break;
+            default:
+                name = "기타 식량";
+                break;
+            }
         }
         else if (item->base_type == OBJ_MISCELLANY)
         {
@@ -2231,8 +2260,14 @@ public:
             else
                 name = "기타";
         }
-        else if (item->base_type == OBJ_BOOKS || item->base_type == OBJ_RODS
-                 || item->base_type == OBJ_GOLD)
+        else if (item->base_type == OBJ_BOOKS)
+        {
+            if (item->sub_type == BOOK_MANUAL)
+                name = "설명서";
+            else
+                name = "마법서";
+        }
+        else if (item->base_type == OBJ_RODS || item->base_type == OBJ_GOLD)
         {
             name = lowercase_string(_(item_class_name(item->base_type).c_str()));
             // name = pluralise(PLU_DEFAULT, name);
@@ -2454,12 +2489,18 @@ void check_item_knowledge(bool unknown_items)
             }
         }
         // Misc.
-        object_class_type misc_list[] = {OBJ_FOOD, OBJ_FOOD, OBJ_BOOKS,
-                                         OBJ_RODS, OBJ_GOLD, OBJ_MISCELLANY,
-                                         OBJ_MISCELLANY};
-        int misc_ST_list[] = {FOOD_CHUNK, NUM_FOODS, NUM_BOOKS, NUM_RODS,
-                              1, MISC_RUNE_OF_ZOT, NUM_MISCELLANY};
-        for (unsigned i = 0; i < sizeof(misc_list)/sizeof(object_class_type); i++)
+        static const object_class_type misc_list[] = {
+            OBJ_FOOD, OBJ_FOOD, OBJ_FOOD, OBJ_FOOD,
+            OBJ_BOOKS, OBJ_BOOKS, OBJ_RODS, OBJ_GOLD,
+            OBJ_MISCELLANY, OBJ_MISCELLANY
+        };
+        static const int misc_ST_list[] = {
+            FOOD_CHUNK, FOOD_MEAT_RATION, FOOD_PEAR, FOOD_HONEYCOMB,
+            NUM_BOOKS, BOOK_MANUAL, NUM_RODS, 1, MISC_RUNE_OF_ZOT,
+            NUM_MISCELLANY
+        };
+        COMPILE_CHECK(ARRAYSZ(misc_list) == ARRAYSZ(misc_ST_list));
+        for (unsigned i = 0; i < ARRAYSZ(misc_list); i++)
         {
             item_def* ptmp = new item_def;
             if (ptmp != 0)
@@ -3215,6 +3256,9 @@ bool is_useless_item(const item_def &item, bool temp)
         if (is_bad_item(item, temp))
             return true;
 
+        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
+            return (true);
+
         switch (item.sub_type)
         {
         case SCR_RANDOM_USELESSNESS:
@@ -3287,7 +3331,7 @@ bool is_useless_item(const item_def &item, bool temp)
         case POT_PORRIDGE:
         case POT_BLOOD:
         case POT_BLOOD_COAGULATED:
-            return !can_ingest(item, true, false);
+            return !can_ingest(item, true, false) || you.species == SP_DJINNI;
         case POT_POISON:
         case POT_STRONG_POISON:
             // If you're poison resistant, poison is only useless.
@@ -3332,11 +3376,14 @@ bool is_useless_item(const item_def &item, bool temp)
                                                  // contaminated
                     || player_mutation_level(MUT_GOURMAND) > 0
                     || player_mutation_level(MUT_HERBIVOROUS) == 3
-                    || you.is_undead
-                        && you.species != SP_GHOUL);
+                    || you.is_undead && you.species != SP_GHOUL
+                    || you.species == SP_DJINNI);
 
         case AMU_FAITH:
             return (you.species == SP_DEMIGOD && !you.religion);
+
+        case AMU_GUARDIAN_SPIRIT:
+            return you.species == SP_DJINNI;
 
         case RING_LIFE_PROTECTION:
             return (player_prot_life(false, temp, false) == 3);
@@ -3401,7 +3448,19 @@ bool is_useless_item(const item_def &item, bool temp)
     case OBJ_FOOD:
         if (item.sub_type == NUM_FOODS)
             break;
-        if (!is_inedible(item))
+
+        if (you.species == SP_DJINNI)
+        {
+            // Only comestibles with effects beyond nutrition have an use.
+            if (item.sub_type == FOOD_AMBROSIA
+                || item.sub_type == FOOD_ROYAL_JELLY
+                || item.sub_type == FOOD_CHUNK
+                   && mons_corpse_effect(item.mon_type) == CE_MUTAGEN)
+            {
+                return false;
+            }
+        }
+        else if (!is_inedible(item))
             return false;
 
         if (item.sub_type == FOOD_CHUNK
@@ -3411,14 +3470,8 @@ bool is_useless_item(const item_def &item, bool temp)
             return false;
         }
 
-        if (you.has_spell(SPELL_SIMULACRUM)
-            && (item.sub_type == FOOD_CHUNK
-             || item.sub_type == FOOD_BEEF_JERKY
-             || item.sub_type == FOOD_MEAT_RATION
-             || item.sub_type == FOOD_SAUSAGE))
-        {
+        if (food_is_meaty(item) && you.has_spell(SPELL_SIMULACRUM))
             return false;
-        }
 
         if (is_fruit(item) && you.religion == GOD_FEDHAS)
             return false;
@@ -3446,10 +3499,6 @@ bool is_useless_item(const item_def &item, bool temp)
         case MISC_EMPTY_EBONY_CASKET:
             return item_type_known(item);
 #endif
-        case MISC_LAMP_OF_FIRE:
-            return !you.skill(SK_FIRE_MAGIC);
-        case MISC_AIR_ELEMENTAL_FAN:
-            return !you.skill(SK_AIR_MAGIC);
         case MISC_HORN_OF_GERYON:
             return item.plus2;
         default:
@@ -3457,6 +3506,8 @@ bool is_useless_item(const item_def &item, bool temp)
         }
 
     case OBJ_BOOKS:
+        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
+            return true;
         if (item.sub_type != BOOK_MANUAL || !item_type_known(item))
             return false;
         if (you.skills[item.plus] >= 27)
