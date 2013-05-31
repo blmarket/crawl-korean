@@ -2691,7 +2691,7 @@ static void _decrement_durations()
             mpr(gettext("You are exhausted."), MSGCH_WARN);
 
         if (you.species == SP_LAVA_ORC)
-            mpr("You feel less hot-headed.");
+            mpr(_("You feel less hot-headed."));
 
         // This resets from an actual penalty or from NO_BERSERK_PENALTY.
         you.berserk_penalty = 0;
@@ -2893,15 +2893,15 @@ static void _decrement_durations()
                           _("The sentinel's mark upon you fades away."));
 
     _decrement_a_duration(DUR_WEAK, delay,
-                          "Your attacks no longer feel as feeble.");
+                          _("Your attacks no longer feel as feeble."));
 
     _decrement_a_duration(DUR_DIMENSION_ANCHOR, delay,
-                          "You are no longer firmly anchored in space.");
+                          _("You are no longer firmly anchored in space."));
 
     _decrement_a_duration(DUR_SICKENING, delay);
 
     _decrement_a_duration(DUR_ANTIMAGIC, delay,
-                          "You regain control over your magic.");
+                          _("You regain control over your magic."));
 
     _decrement_a_duration(DUR_WATER_HOLD_IMMUNITY, delay);
     if (you.duration[DUR_WATER_HOLD])
@@ -2926,7 +2926,7 @@ static void _decrement_durations()
         }
     }
 
-    _decrement_a_duration(DUR_RETCHING, delay, "Your fit of retching subsides.");
+    _decrement_a_duration(DUR_RETCHING, delay, _("Your fit of retching subsides."));
 
     if (you.attribute[ATTR_NEXT_RECALL_INDEX] > 0)
         do_recall(delay);
@@ -4484,10 +4484,10 @@ static void _move_player(coord_def move)
         if (you.duration[DUR_WATER_HOLD])
         {
             if (you.can_swim())
-                mpr("You deftly slip free of the water engulfing you.");
+                mpr(_("You deftly slip free of the water engulfing you."));
             else //Unless you're a natural swimmer, this takes longer than normal
             {
-                mpr("With effort, you pull free of the water engulfing you.");
+                mpr(_("With effort, you pull free of the water engulfing you."));
                 you.time_taken = you.time_taken * 3 / 2;
             }
             you.duration[DUR_WATER_HOLD] = 1;

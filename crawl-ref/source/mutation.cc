@@ -555,10 +555,10 @@ string describe_mutations(bool center_title)
         break;
 
     case SP_DJINNI:
-        result += "You are immune to all types of fire, even holy and hellish.\n";
-        result += "You are especially vulnerable to cold.\n";
-        result += "You need no food.\n";
-        result += "You have no legs.\n";
+        result += "당신은 모든 형태의 불(신성한 불, 지옥불 포함)에 대해 면역이다.\n";
+        result += "당신은 냉기에 특히 취약하다.\n";
+        result += "당신은 음식을 먹을 필요가 없다.\n";
+        result += "당신은 하체가 없다.\n";
         have_any = true;
         break;
 
@@ -568,19 +568,19 @@ string describe_mutations(bool center_title)
         std::string col = "darkgrey";
 
         col = (temperature_effect(LORC_STONESKIN)) ? "lightgrey" : "darkgrey";
-        result += "<" + col + ">You have stony skin.</" + col + ">\n";
+        result += "<" + col + ">당신의 피부는 암석처럼 단단하다.</" + col + ">\n";
 
         if (temperature_effect(LORC_FAST_MOVE))
         {
             // Fast move
             col = "lightred";
-            result += "<" + col + ">You cover ground quickly.</" + col + ">\n";
+            result += "<" + col + ">당신은 지면 위를 빠르게 움직인다.</" + col + ">\n";
         }
         else
         {
             // Slow or normal move
             col = (temperature_effect(LORC_SLOW_MOVE)) ? "lightgrey" : "darkgrey";
-            result += "<" + col + ">You cover ground slowly.</" + col + ">\n";
+            result += "<" + col + ">당신은 지면 위를 느리게 움직인다.</" + col + ">\n";
         }
 
         // Fire res
@@ -589,38 +589,38 @@ string describe_mutations(bool center_title)
               (temperature_effect(LORC_FIRE_RES_I))   ? "lightgrey"    : "bugged";
 
         result += "<" + col + ">";
-        result += (temperature_effect(LORC_FIRE_RES_III)) ? "Your flesh is almost immune to the effects of heat." :
-                  (temperature_effect(LORC_FIRE_RES_II))  ? "Your flesh is very heat resistant." :
-                  (temperature_effect(LORC_FIRE_RES_I))   ? "Your flesh is heat resistant." : "bugged";
+        result += (temperature_effect(LORC_FIRE_RES_III)) ? "당신의 피부는 열기로부터 거의 손상을 받지 않는다." :
+                  (temperature_effect(LORC_FIRE_RES_II))  ? "당신의 피부는 열에 상당한 내성이 있다." :
+                  (temperature_effect(LORC_FIRE_RES_I))   ? "당신의 피부는 열에 내성이 있다." : "bugged";
         result += "</" + col + ">\n";
 
         // Lava/fire boost
         if (temperature_effect(LORC_LAVA_BOOST))
         {
             col = "white";
-            result += "<" + col + ">Your lava-based spells are more powerful.<" + col + ">\n";
+            result += "<" + col + ">당신의 더욱 강력한 용암 관련 주문들을 시전한다.<" + col + ">\n";
         }
         else if (temperature_effect(LORC_FIRE_BOOST))
         {
             col = "lightred";
-            result += "<" + col + ">Your fire spells are more powerful.<" + col + ">\n";
+            result += "<" + col + ">당신의 더욱 강력한 불의 마법 주문들을 시전한다.<" + col + ">\n";
         }
 
         // Cold vulnerability
         col = (temperature_effect(LORC_COLD_VULN)) ? "red" : "darkgrey";
-        result += "<" + col + ">Your flesh is vulnerable to cold.</" + col + ">\n";
+        result += "<" + col + ">당신의 피부는 냉기에 취약하다.</" + col + ">\n";
 
         // Passive heat
         col = (temperature_effect(LORC_PASSIVE_HEAT)) ? "lightred" : "darkgrey";
-        result += "<" + col + ">Your heat harms attackers.</" + col + ">\n";
+        result += "<" + col + ">당신은 강한 열기로 당신을 공격한 자들에게 피해를 입힐 수 있다.</" + col + ">\n";
 
         // Heat aura
         col = (temperature_effect(LORC_HEAT_AURA)) ? "lightred" : "darkgrey";
-        result += "<" + col + ">You bathe your surroundings in blazing heat.</" + col + ">\n";
+        result += "<" + col + ">당신은 당신 주변을 화염으로 불태운다.</" + col + ">\n";
 
         // No scrolls
         col = (temperature_effect(LORC_NO_SCROLLS)) ? "red" : "darkgrey";
-        result += "<" + col + ">You are too hot to use scrolls or read books.</" + col + ">\n";
+        result += "<" + col + ">당신의 몸은 너무 뜨거워, 마법 두루마리나 책을 읽을 수 없다.</" + col + ">\n";
 
         break;
     }
@@ -756,12 +756,12 @@ static const string _vampire_Ascreen_footer = (
 
 static const std::string _lava_orc_Ascreen_footer = (
 #ifndef USE_TILE_LOCAL
-    "Press '<w>!</w>'"
+    "'<w>!</w>' 키"
 #else
     "<w>Right-click</w>"
 #endif
-    " to toggle between mutations and properties depending on your\n"
-    "temperature.\n");
+    "을 통해, 돌연변이 상태 화면과, 당신 몸의 온도 수치에 따른\n"
+    "특징 변화 화면을 전화할 수 있다.\n");
 
 static void _display_vampire_attributes()
 {
@@ -870,7 +870,7 @@ static void _display_temperature()
 
     std::string result;
 
-    std::string title = "Temperature Effects";
+    std::string title = "체온 변화에 따른 효과";
 
     // center title
     int offset = 39 - strwidth(title) / 2;
@@ -924,7 +924,7 @@ static void _display_temperature()
 
     result += "\n";
 
-    result += "You get hot in tense situations, when berserking, or when you enter lava. You \ncool down when your rage ends or when you enter water.";
+    result += "당신은 광폭화 상태에 돌입하거나, 용암에 들어갔을 경우 체온이 상승하며, \n반대로 광폭화 상태가 끝나거나 물에 들어갈 경우 체온이 하강한다.";
     result += "\n";
     result += "\n";
 

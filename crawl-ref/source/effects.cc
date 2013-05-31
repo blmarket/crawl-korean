@@ -965,7 +965,7 @@ void yell(bool force)
 
     if (you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
     {
-        mpr("You cannot shout while unable to breathe!");
+        mpr(_("You cannot shout while unable to breathe!"));
         return;
     }
 

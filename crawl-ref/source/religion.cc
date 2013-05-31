@@ -3503,7 +3503,7 @@ void god_pitch(god_type which_god)
         }
         else if (which_god == GOD_BEOGH && you.species == SP_LAVA_ORC)
         {
-            simple_god_message(" booms: Go away, foul mockery of the chosen race!",
+            simple_god_message("은(는) 소리쳤다. \"저리 꺼져라, 선택받은 나의 종족을 어설프게 흉내낸 것에 불과한, 더럽고 역겨운 녀석아!\"",
                                which_god);
         }
         else if (!_transformed_player_can_join_god(which_god))

@@ -5322,24 +5322,23 @@ w:5
 @_Pan_rare_@
 %%%%
 _Pan_common_
-VISUAL:@The_monster@ leers at @foe@.
+VISUAL:@The_monster@은(는) 당신을 음흉하게 쳐다보았다.
 
-VISUAL:@The_monster@ twirls @possessive@ pipes idly.
+VISUAL:@The_monster@은(는) 한가한 듯 파이프를 손 안에서 빙빙 돌렸다.
 
-VISUAL:@The_monster@ raises @possessive@ pipes, ready for another tune.
+VISUAL:@The_monster@은(는) 파이프를 지켜들며, 다른 곡조를 준비했다.
 
-VISUAL:@The_monster@ ties some reeds together.
+VISUAL:@The_monster@은(는) 갈대들을 손 안에서 엮어냈다.
 
-VISUAL:@The_monster@ licks @possessive@ lips.
+VISUAL:@The_monster@은(는) 혀를 날름거렸다.
 %%%%
 _Pan_rare_
 
-@The_monster@ sighs @at_foe@, "Seen any nymphs lately?"
+@The_monster@은(는) 한숨쉬었다. "최근에 님프들은 만나보았는가?"
 
-@The_monster@ stares at @possessive@ pipes for a moment, mumbling, "No, that's
-not how it goes..."
+@The_monster@은(는) 파이프 담배를 잠시 응시하며 잠시 중얼거렸다, "아니, 그게 원인은 아닐텐데..."
 
-@The_monster@ says @to_foe@, "Put on a good show for me!"
+@The_monster@은(는) 말했다. "나에게 좋은 쇼를 보여 보는게 어떠한가!"
 ### END Pan
 %%%%
 ############ Pikel ######## A big kobold slaver!

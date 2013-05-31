@@ -525,9 +525,9 @@ static void _print_stats_temperature(int x, int y)
 
     cgotoxy(x, y, GOTO_STAT);
     textcolor(HUD_CAPTION_COLOUR);
-    cprintf("Temperature: ");
+    cprintf("체온:       ");
 
-    Temp_Bar.draw(19, y, temperature(), TEMP_MAX, true);
+    Temp_Bar.draw(17, y, temperature(), TEMP_MAX, true);
 }
 
 static void _print_stats_mp(int x, int y)
@@ -1389,9 +1389,9 @@ void draw_border(void)
     //CGOTOXY(1, 3, GOTO_STAT); CPRINTF("Hp:");
     CGOTOXY(1, mp_pos, GOTO_STAT);
     if (you.species == SP_DJINNI)
-        CPRINTF("오염  :");
+        CPRINTF("오염:");
     else
-        CPRINTF("마력 :");
+        CPRINTF("MP  :");
     CGOTOXY(1, ac_pos, GOTO_STAT); CPRINTF("AC:");
     CGOTOXY(1, ev_pos, GOTO_STAT); CPRINTF("EV:");
     CGOTOXY(1, sh_pos, GOTO_STAT); CPRINTF("SH:");

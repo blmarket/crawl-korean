@@ -1785,19 +1785,19 @@ static bool _flay_creature(monster* mon, actor* victim)
         switch (msg_type)
         {
             case 0:
-                mprf(MSGCH_MONSTER_SPELL, "%s moans in silent anguish.",
+                mprf(MSGCH_MONSTER_SPELL, _("%s moans in silent anguish."),
                     mon->name(DESC_THE).c_str());
                 break;
             case 1:
-                mprf(MSGCH_MONSTER_SPELL, "%s stares at %s with tortured malice.",
-                    mon->name(DESC_THE).c_str(), victim->name(DESC_THE).c_str());
+                mprf(MSGCH_MONSTER_SPELL, _("%s stares at %s with tortured malice."),
+                    mon->name(DESC_THE).c_str(), victim->name(DESC_PLAIN).c_str());
                 break;
             case 2:
-                mprf(MSGCH_MONSTER_SPELL, "%s cries, \"Suffer as I suffered!\"",
+                mprf(MSGCH_MONSTER_SPELL, _("%s cries, \"Suffer as I suffered!\""),
                     mon->name(DESC_THE).c_str());
                 break;
             case 3:
-                mprf(MSGCH_MONSTER_SPELL, "%s cries, \"Feel what I felt!\"",
+                mprf(MSGCH_MONSTER_SPELL, _("%s cries, \"Feel what I felt!\""),
                     mon->name(DESC_THE).c_str());
                 break;
         }
@@ -1807,13 +1807,13 @@ static bool _flay_creature(monster* mon, actor* victim)
     {
         if (was_flayed)
         {
-            mprf("Terrible wounds spread across more of %s body!",
-                 victim->name(DESC_ITS).c_str());
+            mprf(_("Terrible wounds spread across more of %s body!"),
+                 victim->name(DESC_PLAIN).c_str());
         }
         else
         {
-            mprf("Terrible wounds open up all over %s body!",
-                 victim->name(DESC_ITS).c_str());
+            mprf(_("Terrible wounds open up all over %s body!"),
+                 victim->name(DESC_PLAIN).c_str());
         }
     }
 
@@ -1859,8 +1859,8 @@ void heal_flayed_effect(actor* act, bool quiet, bool blood_only)
 
         if (you.can_see(act) && !quiet)
         {
-            mprf("The terrible wounds on %s body vanish.",
-                 act->name(DESC_ITS).c_str());
+            mprf(_("The terrible wounds on %s body vanish."),
+                 act->name(DESC_PLAIN).c_str());
         }
 
         act->heal(act->props["flay_damage"].get_int());
@@ -1910,7 +1910,7 @@ static bool _lost_soul_teleport(monster* mons)
             mons->foe = MHITNOT;
             if (seen)
             {
-                mprf("%s flickers out of the living world.",
+                mprf(_("%s flickers out of the living world."),
                         mons->name(DESC_THE, true).c_str());
             }
             return true;
@@ -1923,7 +1923,7 @@ static bool _lost_soul_teleport(monster* mons)
     {
         if (seen)
         {
-            mprf("%s flickers out of the living world.",
+            mprf(_("%s flickers out of the living world."),
                         mons->name(DESC_THE, true).c_str());
         }
         monster_die(mons, KILL_MISC, -1, true);
@@ -1947,13 +1947,13 @@ bool lost_soul_revive(monster* mons)
 
             if (you.can_see(*mi))
             {
-                mprf("%s sacrifices itself to reknit %s!",
+                mprf(_("%s sacrifices itself to reknit %s!"),
                      mi->name(DESC_THE).c_str(),
                      mons->name(DESC_THE).c_str());
             }
             else if (you.can_see(mons))
             {
-                mprf("Necromantic energies suffuse and reknit %s!",
+                mprf(_("Necromantic energies suffuse and reknit %s!"),
                      mons->name(DESC_THE).c_str());
             }
 
@@ -1982,9 +1982,9 @@ bool lost_soul_spectralize(monster* mons)
 
             if (you.can_see(*mi))
             {
-                mprf("The lost soul assumes the form of %s%s!",
+                mprf(_("The lost soul assumes the form of %s%s!"),
                      mons->name(DESC_THE).c_str(),
-                     (mi->is_summoned() ? " and becomes anchored to this world"
+                     (mi->is_summoned() ? _(" and becomes anchored to this world")
                                         : ""));
             }
 
@@ -2052,7 +2052,7 @@ static bool _swoop_attack(monster* mons, actor* defender)
                 {
                     if (you.can_see(mons))
                     {
-                        mprf("%s swoops through the air toward %s!",
+                        mprf(_("%s swoops through the air toward %s!"),
                              mons->name(DESC_THE).c_str(),
                              defender->name(DESC_THE).c_str());
                     }
@@ -3874,7 +3874,7 @@ bool mon_special_ability(monster* mons, bolt & beem)
 
             if (found && mons->move_to_pos(hopspot))
             {
-                simple_monster_message(mons, " hops backward while attacking.");
+                simple_monster_message(mons, _(" hops backward while attacking."));
                 fight_melee(mons, mons->get_foe());
                 mons->speed_increment -= 2; // Add a small extra delay
                 return true; // Energy has already been deducted via melee

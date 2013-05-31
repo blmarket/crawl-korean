@@ -544,7 +544,7 @@ static bool _can_cast()
 
     if (you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
     {
-        mpr("You cannot cast spells while unable to breathe!");
+        mpr(_("You cannot cast spells while unable to breathe!"));
         return false;
     }
 
@@ -918,11 +918,11 @@ bool spell_is_uncastable(spell_type spell, string &msg)
     if (_too_hot_to_cast(spell))
     {
         if (spell == SPELL_STONESKIN && temperature_effect(LORC_STONESKIN))
-            msg = "Your skin is already made of stone.";
+            msg = _("Your skin is already made of stone.");
         else if (spell == SPELL_STONESKIN && !temperature_effect(LORC_STONESKIN))
-            msg = "Your skin is already made of molten stone.";
+            msg = _("Your skin is already made of molten stone.");
         else
-            msg = "Your temperature is too high to benefit from that spell.";
+            msg = _("Your temperature is too high to benefit from that spell.");
         return (true);
     }
 
@@ -1215,7 +1215,7 @@ spret_type your_spells(spell_type spell, int powc,
     if (allow_fail && you.duration[DUR_ANTIMAGIC]
         && x_chance_in_y(DUR_ANTIMAGIC / 3, you.hp_max))
     {
-        mpr("You fail to access your magic.");
+        mpr(_("You fail to access your magic."));
         fail = antimagic = true;
     }
     else if (allow_fail)

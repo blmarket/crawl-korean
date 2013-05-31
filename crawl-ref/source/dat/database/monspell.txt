@@ -179,7 +179,7 @@ Silver Blast cast
 %%%%
 Call Lost Soul cast
 
-@The_monster@ beckons forth a restless soul!
+@The_monster@은(는) 들썩이는 영혼들을 밖으로 불러냈다!
 %%%%
 #####################################################
 # Individual innate spells (breathing and spitting).
@@ -336,9 +336,9 @@ unseen Ensnare Arachne cast
 %%%%
 Pan cast
 
-@The_monster@ weaves a haunting melody.
+@The_monster@은(는) 소름끼치는 곡조를 연주했다.
 
-@The_monster@ plays an eerie tune.
+@The_monster@은(는) 으스스한 멜로디를 연주했다.
 %%%%
 ########################################################################
 # Individual monsters

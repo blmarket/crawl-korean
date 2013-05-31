@@ -1459,7 +1459,7 @@ bool go_berserk(bool intentional, bool potion)
 
     if (you.species == SP_LAVA_ORC)
     {
-        mpr("You burn with rage!");
+        mpr(_("You burn with rage!"));
         // This will get sqrt'd later, so.
         you.temperature = TEMP_MAX;
     }
@@ -2793,12 +2793,12 @@ string counted_monster_list::describe(description_level_type desc)
         if (i != list.begin())
         {
             ++i;
-            out += (i == list.end() ? " and " : ", ");
+            out += (i == list.end() ? _(" and ") : ", ");
         }
         else
             ++i;
 
-        out += cm.second > 1 ? pluralise(PLU_DEFAULT, cm.first->name(desc))
+        out += cm.second > 1 ? pluralise(PLU_MON, cm.first->name(desc))
                              : cm.first->name(desc);
     }
     return out;

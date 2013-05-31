@@ -2114,7 +2114,7 @@ void drink(int slot)
 
     if (you.duration[DUR_RETCHING])
     {
-        mpr("You can't gag anything down in your present state!");
+        mpr(_("You can't gag anything down in your present state!"));
         return;
     }
 
@@ -2710,7 +2710,7 @@ static void _handle_read_book(int item_slot)
 
     if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
     {
-        mpr("You'd burn any book you tried to read!");
+        mpr(_("You'd burn any book you tried to read!"));
         return;
     }
 
@@ -2905,7 +2905,7 @@ void read_scroll(int slot)
 
     if (you.duration[DUR_WATER_HOLD] && !you.res_water_drowning())
     {
-        mpr("You cannot read scrolls while unable to breathe!");
+        mpr(_("You cannot read scrolls while unable to breathe!"));
         return;
     }
 
@@ -2917,7 +2917,7 @@ void read_scroll(int slot)
 
     if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
     {
-        mpr("You'd burn any scroll you tried to read!");
+        mpr(_("You'd burn any scroll you tried to read!"));
         return;
     }
 

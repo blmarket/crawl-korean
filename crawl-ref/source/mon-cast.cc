@@ -911,7 +911,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
         break;
 
     case SPELL_GHOSTLY_FLAMES:
-        beam.name     = "ghostly flame";
+        beam.name     = M_("ghostly flame");
         beam.damage   = dice_def(0, 1);
         beam.colour   = CYAN;
         beam.flavour  = BEAM_GHOSTLY_FLAME;
@@ -922,7 +922,7 @@ bolt mons_spell_beam(monster* mons, spell_type spell_cast, int power,
 
     case SPELL_GHOSTLY_FIREBALL:
         beam.colour   = CYAN;
-        beam.name     = "ghostly fireball";
+        beam.name     = M_("ghostly fireball");
         beam.damage   = dice_def(3, 7 + power / 15);
         beam.hit      = 40;
         beam.flavour  = BEAM_GHOSTLY_FLAME;
@@ -3110,7 +3110,7 @@ static void _blink_allies_encircle(const monster* mon)
                 if (!(allies[i]->flags & MF_WAS_IN_VIEW)
                     && allies[i]->flags & MF_SEEN)
                 {
-                    simple_monster_message(allies[i], " blinks into view!");
+                    simple_monster_message(allies[i], _(" blinks into view!"));
                 }
                 allies[i]->behaviour = BEH_SEEK;
                 allies[i]->foe = mon->foe;
@@ -4373,9 +4373,9 @@ void mons_cast(monster* mons, bolt &pbolt, spell_type spell_cast,
 
     case SPELL_ENGLACIATION:
         if (you.can_see(mons))
-            simple_monster_message(mons, " radiates an aura of cold.");
+            simple_monster_message(mons, _(" radiates an aura of cold."));
         else if (mons->see_cell_no_trans(you.pos()))
-            mpr("A wave of cold passes over you.");
+            mpr(_("A wave of cold passes over you."));
         apply_area_visible(englaciate, min(12 * mons->hit_dice, 200), mons);
         return;
     }

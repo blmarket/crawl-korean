@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 01:07+0900\n"
+"POT-Creation-Date: 2013-06-01 01:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16451,6 +16451,12 @@ msgstr "무언가 보이지 않는 물체가 이곳에 위치하고 있었고, �
 #. Reinforce the cloud.
 #. Reinforce the cloud - but not too much.
 #. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
+#. Reinforce the cloud.
+#. Reinforce the cloud - but not too much.
+#. It must be a fire cloud from a previous test.
 #: spl-clouds.cc:110 godabil.cc:1545 spl-clouds.cc:123 spl-clouds.cc:112
 #: godabil.cc:1533 godabil.cc:1530 godabil.cc:1531 godabil.cc:1534
 #: godabil.cc:1541
@@ -17271,7 +17277,7 @@ msgstr "이(가) 있으니 조심하게."
 #: directn.cc:3787 describe.cc:4106 describe.cc:4108 directn.cc:3400
 #: directn.cc:3788 describe.cc:4103 describe.cc:4109 directn.cc:3407
 #: directn.cc:3795 skills.cc:376 describe.cc:4123 directn.cc:3410
-#: directn.cc:3798
+#: directn.cc:3798 misc.cc:2796
 msgid " and "
 msgstr " 그리고 "
 
@@ -22165,7 +22171,7 @@ msgstr "앞쪽의 "
 #: beam.cc:1749 beam.cc:1765 beam.cc:1640 beam.cc:1751 beam.cc:1767
 #: beam.cc:1636 beam.cc:1747 beam.cc:1763 beam.cc:1628 beam.cc:1755
 #: beam.cc:1630 beam.cc:1741 beam.cc:1757 beam.cc:1611 beam.cc:1722
-#: beam.cc:1738
+#: beam.cc:1738 beam.cc:1847
 msgid " partially resists."
 msgstr "은(는) 약간 저항했다."
 
@@ -25279,7 +25285,7 @@ msgstr "%s은(는) 당신의 시야 밖에서 나타났다."
 #: beam.cc:1645 beam.cc:1669 beam.cc:1779 beam.cc:1507 beam.cc:1552
 #: beam.cc:1577 beam.cc:1593 beam.cc:1612 beam.cc:1647 beam.cc:1671
 #: beam.cc:1781 beam.cc:1488 beam.cc:1533 beam.cc:1574 beam.cc:1628
-#: beam.cc:1652 beam.cc:1762 beam.cc:1489
+#: beam.cc:1652 beam.cc:1762 beam.cc:1489 beam.cc:1854
 msgid " completely resists."
 msgstr "은(는) 완벽하게 저항했다."
 
@@ -25297,6 +25303,7 @@ msgstr "은(는) 완벽하게 저항했다."
 #: beam.cc:1578 beam.cc:1594 beam.cc:1613 beam.cc:1702 beam.cc:1782
 #: beam.cc:1815 beam.cc:1726 beam.cc:1489 beam.cc:1534 beam.cc:1575
 #: beam.cc:1683 beam.cc:1707 beam.cc:1763 beam.cc:1796 beam.cc:1490
+#: beam.cc:1855
 msgid " appears unharmed."
 msgstr "에게 아무런 손상을 입히지 못했다."
 
@@ -33386,6 +33393,12 @@ msgstr "뽑았다"
 #. / 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. / 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
+#. 1. dealt or drawn, 2. card name
+#. / 1. dealt or draw 2. card name
+#. 1. drawn/dealt 2. card_name
 #. 1. dealt or drawn, 2. card name
 #. / 1. dealt or draw 2. card name
 #. 1. drawn/dealt 2. card_name
@@ -42096,11 +42109,500 @@ msgstr "당신은 이 장소에 묶여 있어, 전이가 불가능하다."
 
 #: transform.cc:1214
 msgid "You revert to a slightly less stony form."
-msgstr ""
+msgstr "당신은 암석 형태에서 조금 벗어났다."
 
 #: transform.cc:1230
 msgid "Your icy form melts away into molten rock."
 msgstr "당신 몸의 얼음이 녹아 내려 암석으로 되돌아갔다."
+
+#: abl-show.cc:1519
+msgid "You're too exhausted to transform."
+msgstr "당신은 변신하기에는 너무 지쳐있다."
+
+#: beam.cc:3537
+msgid "You feel firmly anchored in space."
+msgstr "공간에 확고하게 묶였다는 느낌을 받았다."
+
+#: beam.cc:3542
+msgid "Your teleport is interrupted."
+msgstr "어떠한 힘이 당신의 전이를 방해했다."
+
+#: beam.cc:4266
+msgid " is bolstered by the flame."
+msgstr "은(는) 화염으로부터 힘을 얻었다."
+
+#: beam.cc:4413
+#, c-format
+msgid "The %s passes through %s"
+msgstr "%s이(가) %s을(를) 통과해 지나갔다."
+
+#: beam.cc:5200
+msgid " is firmly anchored in space."
+msgstr "은(는) 공간에 확고히 묶였다."
+
+#: beam.cc:5410
+msgid "The ghostly flame explodes!"
+msgstr "도깨비불이 폭발했다!"
+
+#: beam.cc:5411
+msgid "You hear the shriek of haunting fire!"
+msgstr "날카롭게 울리는, 으스스한 화염 소리를 들었다!"
+
+#: describe.cc:2083
+msgid ""
+"\n"
+"Once released, the spirits within this device will dissipate, leaving it "
+"inert, though new ones may be attracted as its bearer battles through the "
+"dungeon and grows in power and wisdom."
+msgstr ""
+"\n"
+"일단 발동했을 경우, 이 장치 안에 있는 영혼들은 소멸하게 된다. 이 장치를 발동"
+"하지 않고 있을 경우에는, 이 장치의 소지자가 던전 내에서 전투를 하며 끌어들인 "
+"새로운 영혼들이 이 장치 안에 들어오게 되며, 소지자의 힘과 지력을 통해 성장하"
+"게 된다."
+
+#: describe.cc:2089
+msgid ""
+"\n"
+"\n"
+"The device is presently inert."
+msgstr ""
+"\n"
+"\n"
+"이 장비는 현재 활성화되어 있지 않다.."
+
+#: effects.cc:968
+msgid "You cannot shout while unable to breathe!"
+msgstr "숨을 쉴 수 없을 때는 외칠 수 없다!"
+
+#: evoke.cc:900
+msgid "Aim the lamp in which direction?"
+msgstr "어느 방향으로 등잔을 조준하는가?"
+
+#: evoke.cc:902
+msgid "The flames dance!"
+msgstr "불꽃들이 춤을 추었다!"
+
+#: evoke.cc:1141
+msgid "A mighty gale blasts forth from the fan!"
+msgstr "부채에서 강한 돌풍이 불어져나왔다!"
+
+#: evoke.cc:1143
+msgid "A fierce wind blows from the fan."
+msgstr "맹렬한 바람이 부채에서 불어져나왔다."
+
+#: evoke.cc:1148
+msgid " exhales a fierce blast of wind!"
+msgstr "은(는) 맹렬한 바람을 불어 일으켰다!"
+
+#: evoke.cc:1154
+msgid "You are blown backwards!"
+msgstr "당신은 바람에 날려 뒤로 날아갔다!"
+
+#: evoke.cc:1159
+#, c-format
+msgid "%s %s blown away by the wind."
+msgstr "%1$s은(는) 바람에 날려 뒤로 날아가버렸다.%2$.0s"
+
+#: evoke.cc:1165
+msgid "The monsters around you are blown away!"
+msgstr "당신 주변의 몬스터들이 바람에 날아가버렸다!"
+
+#: evoke.cc:1199
+msgid "The winds coalesce and take form."
+msgstr "바람들이 합쳐져 형태를 갖추었다."
+
+#: evoke.cc:1345
+msgid "The door collapses!"
+msgstr "문이 무너려내렸다!"
+
+#: evoke.cc:1403
+msgid "The rubble rises up and takes form."
+msgstr "돌무더기가 솟아나와 형태를 갖추었다."
+
+#: evoke.cc:1413
+msgid "Press the stone against what?"
+msgstr "어느 것에 돌을 누르겠는가?"
+
+#: evoke.cc:1419
+msgid "You cannot induce a tremor in that!"
+msgstr "그것에는 지진을 유도할 수 없다!"
+
+#: evoke.cc:1424
+msgid "Shockwaves run through the rock!"
+msgstr "바위로부터 충격파가 퍼져나갔다!"
+
+#: evoke.cc:1446
+msgid "Aim the phial where?"
+msgstr "어디로 유리병을 겨누겠는가?"
+
+#: evoke.cc:1484
+msgid "The water rises up and takes form."
+msgstr "물들이 쏟아져 나와 형태를 갖추었다."
+
+#: evoke.cc:1659 evoke.cc:1670 evoke.cc:1683 evoke.cc:1695
+msgid "That is presently inert."
+msgstr "그건 현재 비활성화되어있다."
+
+#: food.cc:844
+msgid "You couldn't keep anything down in your present state!"
+msgstr "구역질이 너무 심해, 어떤 것도 먹을 수가 없다!"
+
+#: item_use.cc:2117
+msgid "You can't gag anything down in your present state!"
+msgstr "구역질이 너무 심해, 어떤 것도 마실 수가 없다"
+
+#: item_use.cc:2713 spl-book.cc:1145
+msgid "You'd burn any book you tried to read!"
+msgstr "현재 상태에서 책에 손을 댔다가는, 책을 불태워버릴 것이다!"
+
+#: item_use.cc:2908
+msgid "You cannot read scrolls while unable to breathe!"
+msgstr "호흡을 할 수 없을 때는, 두루마리도 읽을 수 없다!"
+
+#: item_use.cc:2920
+msgid "You'd burn any scroll you tried to read!"
+msgstr "현재 상태에서 두루마리에 손을 댔다가는, 두루마리를 불태워버릴 것이다!"
+
+#: main.cc:2694
+msgid "You feel less hot-headed."
+msgstr "체온이 떨어지는 것을 느꼈다."
+
+#: main.cc:2896
+msgid "Your attacks no longer feel as feeble."
+msgstr "당신의 공격은 원래의 위력을 되찾았다."
+
+#: main.cc:2899
+msgid "You are no longer firmly anchored in space."
+msgstr "당신은 더 이상 현재 공간에 묶여있지 않다."
+
+#: main.cc:2904
+msgid "You regain control over your magic."
+msgstr "당신은 이제 마력을 다시 제어할 수 있다."
+
+#: main.cc:2929
+msgid "Your fit of retching subsides."
+msgstr "당신의 구역질이 가라앉았다."
+
+#: main.cc:4487
+msgid "You deftly slip free of the water engulfing you."
+msgstr "당신은 당신을 감싼 물로부터 재빠르게 빠져나왔다."
+
+#: main.cc:4490
+msgid "With effort, you pull free of the water engulfing you."
+msgstr "당신은 당신을 감싼 물로부터 힘겹게 빠져나왔다."
+
+#: melee_attack.cc:409
+#, c-format
+msgid "%s strikes at %s from the darkness!"
+msgstr "%s은(는) 어둠으로부터 %s을(를) 타격했다!"
+
+#: melee_attack.cc:4214
+#, c-format
+msgid "%s blade passes through %s shield."
+msgstr "%s의 칼날이 %s의 방패를 뚫고 지나갔다."
+
+#: melee_attack.cc:4842
+#, c-format
+msgid "%s %s %s in water!"
+msgstr "%1$s은(는) %3$s을(를) 물로 에워쌌다!%2$.0s"
+
+#: melee_attack.cc:4864
+#, c-format
+msgctxt "purefire"
+msgid "%s %s %s!"
+msgstr "%1$s은(는) %3$s을(를) 불태웠다!%2$.0s"
+
+#: melee_attack.cc:4880
+#, c-format
+msgid "%s %s %s vigor!"
+msgstr "%1$s은(는) %3$s의 정기를 흡수했다!%2$.0s"
+
+#: melee_attack.cc:4911
+#, c-format
+msgid "%s magical defenses are stripped away!"
+msgstr "%s의 마법적인 방어가 벗겨져나갔다!"
+
+#: melee_attack.cc:4923
+msgid "You feel violently ill."
+msgstr "격렬한 병세가 느껴졌다."
+
+#: melee_attack.cc:4931
+msgid " looks violently ill."
+msgstr "은(는) 강력한 병에 걸린 듯 보인다."
+
+#: melee_attack.cc:5012
+msgid " is singed by your heat."
+msgstr "은(는) 당신의 열기에 그을렸다."
+
+#: misc.cc:1462
+msgid "You burn with rage!"
+msgstr "당신은 분노로 불타올랐다!"
+
+#: mon-abil.cc:1788
+#, c-format
+msgid "%s moans in silent anguish."
+msgstr "%s은(는) 고통으로 희미한 신음 소리를 냈다."
+
+#: mon-abil.cc:1792
+#, c-format
+msgid "%s stares at %s with tortured malice."
+msgstr "%s은(는) %s을(를) 악의적인 고통으로 응시했다."
+
+#: mon-abil.cc:1796
+#, c-format
+msgid "%s cries, \"Suffer as I suffered!\""
+msgstr "%s은(는) 울부짖었다, \"내가 느낀 고통을, 너도 느껴봐라!\""
+
+#: mon-abil.cc:1800
+#, c-format
+msgid "%s cries, \"Feel what I felt!\""
+msgstr "%s은(는) 울부짖었다. \"내가 느낀 것을 너도 똑똑히 느껴봐라!\""
+
+#: mon-abil.cc:1810
+#, c-format
+msgid "Terrible wounds spread across more of %s body!"
+msgstr "끔찍한 상처들이 %s의 몸에 더욱 퍼져나갔다!"
+
+#: mon-abil.cc:1815
+#, c-format
+msgid "Terrible wounds open up all over %s body!"
+msgstr "%s의 몸에 끔찍한 상처들이 생겨났다!"
+
+#: mon-abil.cc:1862
+#, c-format
+msgid "The terrible wounds on %s body vanish."
+msgstr "%s의 몸에 난 상처들이 사라졌다."
+
+#: mon-abil.cc:1913 mon-abil.cc:1926
+#, c-format
+msgid "%s flickers out of the living world."
+msgstr "%s은(는) 깜박거리며 이 세계에서 사라졌다."
+
+#: mon-abil.cc:1950
+#, c-format
+msgid "%s sacrifices itself to reknit %s!"
+msgstr "%s은(는) 스스로를 희생하여, %s을(를) 재결합했다!"
+
+#: mon-abil.cc:1956
+#, c-format
+msgid "Necromantic energies suffuse and reknit %s!"
+msgstr "강령술의 마력이 퍼져나가, %s을(를) 재결합했다!"
+
+#: mon-abil.cc:1985
+#, c-format
+msgid "The lost soul assumes the form of %s%s!"
+msgstr "잃어버린 영혼이 %2$s의 형태를 취했%1$s다!"
+
+#: mon-abil.cc:1987
+msgid " and becomes anchored to this world"
+msgstr "고, 이 세계에 자신의 존재를 확고히 자리잡았"
+
+#: mon-abil.cc:2055
+#, c-format
+msgid "%s swoops through the air toward %s!"
+msgstr "%s은(는) 공기 중을 통해 %s을(를) 덮쳤다!"
+
+#: mon-abil.cc:3877
+msgid " hops backward while attacking."
+msgstr "은(는) 공격을 하며, 뒤로 껑충 뛰었다."
+
+#: mon-act.cc:146
+msgid " pulls free of the water."
+msgstr "은(는) 물 밖으로 벗어났다."
+
+#: mon-act.cc:3974
+#, c-format
+msgid "%s is %s by your radiant heat."
+msgstr "%1$s은(는) 당신의 열기로 불타올랐다.%2$.0s"
+
+#: mon-cast.cc:3113
+msgid " blinks into view!"
+msgstr "이(가) 시야 내에 나타났다!"
+
+#: mon-cast.cc:4376
+msgid " radiates an aura of cold."
+msgstr "은(는) 냉기 기운을 내뿜었다."
+
+#: mon-cast.cc:4378
+msgid "A wave of cold passes over you."
+msgstr "냉기의 파동이 당신을 덮치고 지나갔다."
+
+#: mon-ench.cc:693
+#, c-format
+msgid "%s flickers into view."
+msgstr "%s이(가) 깜박이며 시야 내로 들어왔다."
+
+#: mon-ench.cc:824
+msgid " is no longer weakened."
+msgstr "은(는) 다시 힘을 얻었다."
+
+#: mon-stuff.cc:2468
+#, c-format
+msgid "Miasma billows from the fallen %s!"
+msgstr "쓰러진 %s(으)로부터 부패의 기운이 피어올랐다!"
+
+#: mon-stuff.cc:4837 player.cc:343
+msgid "The lava instantly superheats you."
+msgstr "용암에 의해 당신의 체온은 급격히 상승했다."
+
+#: mon-stuff.cc:4913
+msgid "Your movements quicken."
+msgstr "당신의 움직임이 빨라졌다."
+
+#: mon-stuff.cc:4932
+msgid "Your stony skin melts."
+msgstr "당신의 암석 피부가 흐물흐물해졌다."
+
+#: mon-stuff.cc:4938
+msgid "You're getting fired up."
+msgstr "당신의 육체가 불타오르기 시작했다."
+
+#: mon-stuff.cc:4943
+msgid "You blaze with the fury of an erupting volcano!"
+msgstr "당신은 분출하는 화산과 같이 맹렬하게 불타올랐다!"
+
+#: mon-stuff.cc:4950
+msgid "The intensity of your heat diminishes."
+msgstr "당신의 육체의 열기가 식기 시작했다."
+
+#: mon-stuff.cc:4954
+msgid "You're cooling off."
+msgstr "몸에 붙은 불이 꺼지기 시작했다."
+
+#: mon-stuff.cc:4960
+msgid "Your skin cools and hardens."
+msgstr "당신의 피부가 식어버렸고, 단단해졌다."
+
+#: mon-stuff.cc:4966
+msgid "Your movements slow."
+msgstr "당신의 움직임이 느려졌다."
+
+#: mon-stuff.cc:5056
+msgid "Normal movement speed"
+msgstr "평균적인 이동 속도"
+
+#: mon-stuff.cc:5058
+msgid "rF++; lava magic boost; Stoneskin melts"
+msgstr "rF++; 용암 마법 강화; 녹아내린 암석 피부"
+
+#: mon-stuff.cc:5060
+msgid "rF+++; rC-; fire magic boost"
+msgstr "rF+++; rC-; 화염 마법 강화"
+
+#: mon-stuff.cc:5062
+msgid "Fast movement speed; burn attackers"
+msgstr "빠른 이동속도; 당신을 공격한 자를 불태움"
+
+#: mon-stuff.cc:5064
+msgid "Burn surroundings; cannot read books or scrolls"
+msgstr "주변을 불태움; 책과 두루마리 사용 불가"
+
+#: monster.cc:5225
+msgid " looks weaker."
+msgstr "은(는) 약해진 듯 보인다."
+
+#: ouch.cc:170
+msgid "You resist completely."
+msgstr "당신은 완벽하게 저항했다."
+
+#: ouch.cc:379
+msgid "You are bolstered by the flame."
+msgstr "당신은 화염으로부터 힘을 얻었다."
+
+#: player.cc:331
+msgid "Gloop!"
+msgstr "질퍽!"
+
+#: player.cc:333
+#, c-format
+msgid "You %s lava."
+msgstr "당신은 용암%s."
+
+#: player.cc:334
+msgid "slowly immerse yourself in the"
+msgstr " 안으로 천천히 몸을 담갔다."
+
+#: player.cc:334
+msgid "fall into the"
+msgstr "에 빠졌다"
+
+#: player.cc:349
+msgid "You slowly pull yourself out of the lava."
+msgstr "당신은 천천히 용암 밖으로 나왔다."
+
+#: player.cc:410
+#, c-format
+msgid "You heave yourself high above the %s."
+msgstr "당신은 %s 위로 떠올랐다."
+
+#: player.cc:5536 player.cc:5547
+msgid "You gasp with relief as air once again reaches your lungs."
+msgstr ""
+
+#: player.cc:5545
+msgid "The water engulfing you falls away."
+msgstr "당신을 휘감은 물이 말라 사라졌다."
+
+#: player.cc:5565
+msgid "Your lungs strain for air!"
+msgstr "당신은 숨이 막혔다!"
+
+#: player.cc:7810
+msgid "You feel yourself grow feeble."
+msgstr "온 몸의 힘이 빠지는 느낌을 받았다."
+
+#: player.cc:7812
+msgid "You feel as though you will be weak longer."
+msgstr "약화가 더욱 오래 지속되는 느낌을 받았다."
+
+#: spl-cast.cc:547
+msgid "You cannot cast spells while unable to breathe!"
+msgstr "숨이 막히는 상황에선 주문을 외울 수 없다!"
+
+#: spl-cast.cc:921
+msgid "Your skin is already made of stone."
+msgstr "당신의 피부는 이미 돌처럼 단단하다."
+
+#: spl-cast.cc:923
+msgid "Your skin is already made of molten stone."
+msgstr "당신의 피부는 이미 돌과 같다. 녹아내린 돌이지만."
+
+#: spl-cast.cc:925
+msgid "Your temperature is too high to benefit from that spell."
+msgstr "당신의 체온은 너무 높아, 그 주문을 외우기엔 적합하지 않다."
+
+#: spl-cast.cc:1218
+msgid "You fail to access your magic."
+msgstr "당신은 마력을 제어하지 못했다."
+
+#: spl-miscast.cc:677
+msgid " watches you with interest."
+msgstr "은(는) 당신을 흥미롭게 지켜보았다."
+
+#: spl-other.cc:107
+msgid "Draw from your essence to power your essence... yeah right."
+msgstr "정수를 소모해서 정수를 보충한다라... 음 그래."
+
+#: spl-other.cc:329
+msgid "You are anchored firmly to the material plane!"
+msgstr "당신은 물질적인 차원에 확고히 묶여 있는 상태이다!"
+
+#: spl-summoning.cc:2249
+msgid "You cannot haunt those who bear you no hostility."
+msgstr "적대감을 드러내지 않는 존재로부터는 소집할 수 없다."
+
+#: status.cc:509
+msgid "You are exerting yourself to hover high above the liquid."
+msgstr "당신은 물이나 용암 혹은 액화된 대지 위를 떠다니며 이동한다."
+
+#: status.cc:580
+msgid "You are engulfed in water."
+msgstr "당신은 물 속에 갖혀 있다."
+
+#: status.cc:589
+msgid "You are engulfed in water and unable to breathe."
+msgstr "당신은 물 속에 갖혀 있어, 호흡을 할 수 없다."
 
 
 #. adj doesn't care about exact species
@@ -42260,7 +42762,7 @@ msgid "Orc"
 msgstr "오크"
 
 #: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
-#: species.cc:195
+#: species.cc:195 species.cc:173
 msgid "Hill Orc"
 msgstr "힐 오크"
 
@@ -51456,7 +51958,7 @@ msgstr "마비됨"
 msgid "Stone"
 msgstr "석화"
 
-#: status.cc:72
+#: status.cc:72 mutation-data.h:1511
 msgid "petrified"
 msgstr "석화됨"
 
@@ -54960,6 +55462,10 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -57041,42 +57547,42 @@ msgstr "안정감을 느꼈다."
 #: mutation-data.h:300 mutation-data.h:301 mutation-data.h:303
 #: mutation-data.h:304
 msgid "You are resistant to hostile enchantments."
-msgstr "당신은 적대적인 주술에 대해 저항력이 있다."
+msgstr "당신은 상태 이상에 대해 저항력이 있다."
 
 #: mutation-data.h:301 mutation-data.h:302 mutation-data.h:304
 #: mutation-data.h:305
 msgid "You are highly resistant to hostile enchantments."
-msgstr "당신은 적대적인 주술에 대해 상당한 저항력이 있다."
+msgstr "당신은 상태 이상에 대해 상당한 저항력이 있다."
 
 #: mutation-data.h:302 mutation-data.h:303 mutation-data.h:305
 #: mutation-data.h:306
 msgid "You are extremely resistant to the effects of hostile enchantments."
-msgstr "당신은 적대적인 주술에 거의 영향을 받지 않는다."
+msgstr "당신은 상태 이상에 거의 영향을 받지 않는다."
 
 #: mutation-data.h:304 mutation-data.h:305 mutation-data.h:307
 #: mutation-data.h:308
 msgid "You feel resistant to hostile enchantments."
-msgstr "적대적인 주술에 저항력이 생긴것을 느꼈다."
+msgstr "상태 이상에 저항력이 생긴것을 느꼈다."
 
 #: mutation-data.h:305 mutation-data.h:306 mutation-data.h:308
 #: mutation-data.h:309
 msgid "You feel more resistant to hostile enchantments."
-msgstr "적대적인 주술에 저항력이 더욱 생긴 것을 느꼈다."
+msgstr "상태 이상에 저항력이 더욱 생긴 것을 느꼈다."
 
 #: mutation-data.h:306 mutation-data.h:307 mutation-data.h:309
 #: mutation-data.h:310
 msgid "You feel almost impervious to the effects of hostile enchantments."
-msgstr "적대적인 주술이 거의 영향을 주지 않는다는것을 느꼈다."
+msgstr "상태 이상이 거의 영향을 주지 않는다는것을 느꼈다."
 
 #: mutation-data.h:308 mutation-data.h:309 mutation-data.h:310
 #: mutation-data.h:311 mutation-data.h:312 mutation-data.h:313
 msgid "You feel less resistant to hostile enchantments."
-msgstr "적대적인 주술에 대해 저항력이 약해진 것을 느꼈다."
+msgstr "상태 이상에 대해 저항력이 약해진 것을 느꼈다."
 
 #: mutation-data.h:310 mutation-data.h:311 mutation-data.h:313
 #: mutation-data.h:314
 msgid "You feel vulnerable to magic hostile enchantments."
-msgstr "적대적인 주술에 대해 취약해진것을 느꼈다."
+msgstr "상태 이상에 대해 취약해진것을 느꼈다."
 
 #: mutation-data.h:318 mutation-data.h:319 mutation-data.h:321
 #: mutation-data.h:322
@@ -60996,7 +61502,7 @@ msgstr "리어 왕의 전신 갑옷"
 msgid "Self Petrify"
 msgstr "자가 석화"
 
-#: cloud.cc:1240 cloud.cc:1253
+#: cloud.cc:1240 cloud.cc:1253 mon-cast.cc:914
 msgid "ghostly flame"
 msgstr "도깨비불"
 
@@ -61043,6 +61549,130 @@ msgstr "고대의 투사"
 #: mon-data.h:5763
 msgid "lost soul"
 msgstr "잃어버린 영혼"
+
+#: evoke.cc:920
+msgid "trail of fire"
+msgstr "화염의 자취"
+
+#: evoke.cc:1322
+msgid "falling rubble"
+msgstr "떨어지는 돌무더기"
+
+#: evoke.cc:1441
+msgid "flood of elemental water"
+msgstr "홍수"
+
+#: mon-cast.cc:925
+msgid "ghostly fireball"
+msgstr "도깨비불 덩어리"
+
+#: status.cc:507
+msgid "Hover"
+msgstr "부유"
+
+#: status.cc:508
+msgid "hovering above liquid"
+msgstr "액체 위로 부유"
+
+#: status.cc:576
+msgid "Engulf"
+msgstr "빠짐"
+
+#: status.cc:579
+msgid "engulfed"
+msgstr "빠짐"
+
+#: status.cc:588
+msgid "engulfed (cannot breathe)"
+msgstr "빠짐 (호흡 불가)"
+
+#: mon-data.h:377
+msgid "faun"
+msgstr "파우누스"
+
+#: mon-data.h:389
+msgid "satyr"
+msgstr "사티로스"
+
+#: mon-data.h:1079
+msgid "spriggan assassin"
+msgstr "스프리건 암살자"
+
+#: mon-data.h:1091
+msgid "spriggan enchanter"
+msgstr "스프리건 주술사"
+
+#: mon-data.h:1461
+msgid "dryad"
+msgstr "드라이어드"
+
+#: mon-data.h:1622
+msgid "lava orc"
+msgstr "라바 오크"
+
+#: mon-data.h:3355
+msgid "tengu conjurer"
+msgstr "텐구 파괴술사"
+
+#: mon-data.h:3368
+msgid "tengu warrior"
+msgstr "텐구 전사"
+
+#: mon-data.h:3381
+msgid "tengu reaver"
+msgstr "텐구 약탈자"
+
+#: mon-data.h:5726
+msgid "djinni"
+msgstr "지니"
+
+#: mutation-data.h:1501
+msgid "petrification resistance"
+msgstr "석화 저항"
+
+#: mutation-data.h:1503
+msgid "You are immune to involuntary petrification."
+msgstr "당신은 타의에 의한 석화로부터 면역이다."
+
+#: mutation-data.h:1504
+msgid "Your body vibrates."
+msgstr "당신의 육체가 진동했다."
+
+#: mutation-data.h:1505
+msgid "You briefly stop moving."
+msgstr "당신은 잠시 동안 움직임을 멈추었다."
+
+#: mutation-data.h:1513
+msgid "You can quickly petrify yourself."
+msgstr "당신은 급속히 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1514
+msgid "You can petrify yourself."
+msgstr "당신은 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1515
+msgid "You can slowly petrify yourself."
+msgstr "당신은 천천히 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1516
+msgid "Your flesh becomes firm."
+msgstr "당신의 피부가 굳어졌다."
+
+#: mutation-data.h:1516
+msgid "Your flesh hardens."
+msgstr "당신의 피부는 단단함을 더했다."
+
+#: mutation-data.h:1516
+msgid "Your flesh becomes rocky."
+msgstr "당신의 피부가 돌처럼 단단해졌다."
+
+#: mutation-data.h:1517
+msgid "Your flesh softens."
+msgstr "당신의 피부가 부드러워졌다."
+
+#: species.cc:174
+msgid "Lava Orc"
+msgstr "라바 오크"
 
 # (deceit) 110813 동사형을 오리던크와 같게 수정함. 
 msgid "hit-verb"

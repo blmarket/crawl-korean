@@ -143,7 +143,7 @@ static void _escape_water_hold(monster* mons)
         {
             mons->speed_increment -= 5;
         }
-        simple_monster_message(mons, " pulls free of the water.");
+        simple_monster_message(mons, _(" pulls free of the water."));
         mons->del_ench(ENCH_WATER_HOLD);
     }
 }
@@ -3971,7 +3971,7 @@ static void _heated_area(monster* mons)
     if (final_damage > 0)
     {
         if (mons->observable())
-            mprf("%s is %s by your radiant heat.",
+            mprf(_("%s is %s by your radiant heat."),
                  mons->name(DESC_THE).c_str(),
                  (final_damage) > 10 ? "blasted" : "burned");
 

@@ -841,7 +841,7 @@ static bool _eat_check(bool check_hunger = true, bool silent = false)
     {
         if (!silent)
         {
-            mpr("You couldn't keep anything down in your present state!");
+            mpr(_("You couldn't keep anything down in your present state!"));
             crawl_state.zero_turns_taken();
         }
         return false;

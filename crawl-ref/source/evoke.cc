@@ -897,9 +897,9 @@ static bool _lamp_of_fire()
     const int pow = 12 + you.skill(SK_EVOCATIONS, 2);
     if (spell_direction(target, base_beam, DIR_TARGET, TARG_ANY, 8,
                         true, true, false, NULL,
-                        "Aim the lamp in which direction?", true, NULL))
+                        _("Aim the lamp in which direction?"), true, NULL))
     {
-        mpr("The flames dance!");
+        mpr(_("The flames dance!"));
 
         vector<bolt> beams;
         vector<coord_def> elementals;
@@ -917,7 +917,7 @@ static bool _lamp_of_fire()
             beams[n].beam_source = MHITYOU;
             beams[n].thrower     = KILL_YOU;
             beams[n].is_beam     = true;
-            beams[n].name        = "trail of fire";
+            beams[n].name        = M_("trail of fire");
             beams[n].hit         = 10 + (pow/8);
             beams[n].damage      = dice_def(2, 4 + pow/4);
             beams[n].ench_power  = (pow/8);
@@ -1138,31 +1138,31 @@ void wind_blast(actor* agent, int pow, coord_def target)
     if (agent->is_player())
     {
         if (pow > 120)
-            mpr("A mighty gale blasts forth from the fan!");
+            mpr(_("A mighty gale blasts forth from the fan!"));
         else
-            mpr("A fierce wind blows from the fan.");
+            mpr(_("A fierce wind blows from the fan."));
     }
     else
     {
         simple_monster_message(agent->as_monster(),
-                            " exhales a fierce blast of wind!");
+                            _(" exhales a fierce blast of wind!"));
     }
 
     noisy(8, agent->pos());
 
     if (player_affected)
-        mpr("You are blown backwards!");
+        mpr(_("You are blown backwards!"));
 
     if (!affected_monsters.empty())
     {
         const string message =
-            make_stringf("%s %s blown away by the wind.",
+            make_stringf(_("%s %s blown away by the wind."),
                          affected_monsters.describe().c_str(),
                          affected_monsters.count() == 1? "is" : "are");
         if (strwidth(message) < get_number_of_cols() - 2)
             mpr(message.c_str());
         else
-            mpr("The monsters around you are blown away!");
+            mpr(_("The monsters around you are blown away!"));
     }
 }
 
@@ -1196,7 +1196,7 @@ static void _fan_of_gales_elementals()
             created = true;
     }
     if (created)
-        mpr("The winds coalesce and take form.");
+        mpr(_("The winds coalesce and take form."));
 }
 
 static bool _list_contains(coord_def pos, const vector<coord_def>& spaces)
@@ -1319,7 +1319,7 @@ static void _tremor_at(coord_def start, coord_def delta)
     }
 
     bolt rubble;
-    rubble.name        = "falling rubble";
+    rubble.name        = M_("falling rubble");
     rubble.range       = 1;
     rubble.hit         = 10 + you.skill_rdiv(SK_EVOCATIONS, 1, 4);
     rubble.damage      = dice_def(3, 5 + you.skill_rdiv(SK_EVOCATIONS, 2, 3));
@@ -1342,7 +1342,7 @@ static void _tremor_at(coord_def start, coord_def delta)
                 if (feat_is_closed_door(grd(path[j][i])))
                 {
                     if (cell_see_cell(you.pos(), path[j][i], LOS_DEFAULT))
-                        mpr("The door collapses!");
+                        mpr(_("The door collapses!"));
                     nuke_wall(path[j][i]);
                 }
                 if (grd(path[j][i]) == DNGN_FLOOR)
@@ -1400,7 +1400,7 @@ static void _tremor_at(coord_def start, coord_def delta)
             created = true;
     }
     if (created)
-        mpr("The rubble rises up and takes form.");
+        mpr(_("The rubble rises up and takes form."));
 }
 
 static bool _stone_of_tremors()
@@ -1410,18 +1410,18 @@ static bool _stone_of_tremors()
 
     if (spell_direction(target, beam, DIR_TARGET, TARG_ANY, 1,
                         true, true, false, "Prompt?",
-                        "Press the stone against what?", true, NULL))
+                        _("Press the stone against what?"), true, NULL))
     {
         coord_def targ = beam.target;
         dungeon_feature_type feat = grd(targ);
         if (!_is_rock(feat))
         {
-            mpr("You cannot induce a tremor in that!");
+            mpr(_("You cannot induce a tremor in that!"));
             return false;
         }
         else
         {
-            mpr("Shockwaves run through the rock!");
+            mpr(_("Shockwaves run through the rock!"));
             _tremor_at(you.pos(), targ-you.pos());
             return true;
         }
@@ -1438,12 +1438,12 @@ static bool _phial_of_floods()
     zappy(ZAP_PRIMAL_WAVE, 25 + you.skill(SK_EVOCATIONS, 8), beam);
     beam.range = LOS_RADIUS;
     beam.thrower = KILL_YOU;
-    beam.name = "flood of elemental water";
+    beam.name = M_("flood of elemental water");
     beam.aimed_at_spot = true;
 
     if (spell_direction(target, beam, DIR_NONE, TARG_HOSTILE,
                         LOS_RADIUS, true, true, false, NULL,
-                        "Aim the phial where?"))
+                        _("Aim the phial where?")))
     {
         beam.fire();
 
@@ -1481,7 +1481,7 @@ static bool _phial_of_floods()
                 created = true;
         }
         if (created)
-            mpr("The water rises up and takes form.");
+            mpr(_("The water rises up and takes form."));
 
         return true;
     }
@@ -1656,7 +1656,7 @@ bool evoke_item(int slot)
         case MISC_FAN_OF_GALES:
             if (!evoker_is_charged(item))
             {
-                mpr("That is presently inert.");
+                mpr(_("That is presently inert."));
                 return false;
             }
             wind_blast(&you, you.skill(SK_EVOCATIONS, 10), coord_def());
@@ -1667,7 +1667,7 @@ bool evoke_item(int slot)
         case MISC_LAMP_OF_FIRE:
             if (!evoker_is_charged(item))
             {
-                mpr("That is presently inert.");
+                mpr(_("That is presently inert."));
                 return false;
             }
             if (_lamp_of_fire())
@@ -1680,7 +1680,7 @@ bool evoke_item(int slot)
         case MISC_STONE_OF_TREMORS:
             if (!evoker_is_charged(item))
             {
-                mpr("That is presently inert.");
+                mpr(_("That is presently inert."));
                 return false;
             }
             if (_stone_of_tremors())
@@ -1692,7 +1692,7 @@ bool evoke_item(int slot)
         case MISC_PHIAL_OF_FLOODS:
             if (!evoker_is_charged(item))
             {
-                mpr("That is presently inert.");
+                mpr(_("That is presently inert."));
                 return false;
             }
             if (_phial_of_floods())

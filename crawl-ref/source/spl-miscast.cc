@@ -674,7 +674,7 @@ bool MiscastEffect::avoid_lethal(int dam)
     {
         // Any possible miscast would kill you, now that's interesting.
         if (you.religion == GOD_XOM)
-            simple_god_message(" watches you with interest.");
+            simple_god_message(_(" watches you with interest."));
         return true;
     }
 

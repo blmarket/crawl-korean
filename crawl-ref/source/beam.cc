@@ -1844,15 +1844,15 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
             if (hurted < original)
             {
                 if (doFlavouredEffects)
-                    simple_monster_message(mons, " partially resists.");
+                    simple_monster_message(mons, _(" partially resists."));
             }
             if (!hurted)
             {
                 if (doFlavouredEffects)
                 {
                     simple_monster_message(mons,
-                                        (original > 0) ? " completely resists."
-                                                       : " appears unharmed.");
+                                        (original > 0) ? _(" completely resists.")
+                                                       : _(" appears unharmed."));
                 }
             }
         }
@@ -3534,12 +3534,12 @@ void bolt::affect_player_enchantment()
         break;
 
     case BEAM_DIMENSION_ANCHOR:
-        mpr("You feel firmly anchored in space.");
+        mpr(_("You feel firmly anchored in space."));
         you.increase_duration(DUR_DIMENSION_ANCHOR, 12 + random2(15), 50);
         if (you.duration[DUR_TELEPORT])
         {
             you.duration[DUR_TELEPORT] = 0;
-            mpr("Your teleport is interrupted.");
+            mpr(_("Your teleport is interrupted."));
         }
         you.duration[DUR_PHASE_SHIFT] = 0;
         you.redraw_evasion = true;
@@ -4263,7 +4263,7 @@ void bolt::monster_post_hit(monster* mon, int dmg)
     if (flavour == BEAM_GHOSTLY_FLAME && mon->holiness() == MH_UNDEAD)
     {
         if (mon->heal(roll_dice(3, 10)))
-            simple_monster_message(mon, " is bolstered by the flame.");
+            simple_monster_message(mon, _(" is bolstered by the flame."));
     }
 
 }
@@ -4410,7 +4410,7 @@ void bolt::affect_monster(monster* mon)
     if (flavour == BEAM_WATER && mon->type == MONS_WATER_ELEMENTAL && !is_tracer)
     {
         if (you.see_cell(mon->pos()))
-            mprf("The %s passes through %s", name.c_str(), mon->name(DESC_THE).c_str());
+            mprf(_("The %s passes through %s"), _(name.c_str()), mon->name(DESC_THE).c_str());
     }
 
     if (ignores_monster(mon))
@@ -5197,7 +5197,7 @@ mon_resist_type bolt::apply_enchantment_to_monster(monster* mon)
         if (!mon->has_ench(ENCH_DIMENSION_ANCHOR)
             && mon->add_ench(mon_enchant(ENCH_DIMENSION_ANCHOR, 0, agent())))
         {
-            if (simple_monster_message(mon, " is firmly anchored in space."))
+            if (simple_monster_message(mon, _(" is firmly anchored in space.")))
                 obvious_effect = true;
         }
         return MON_AFFECTED;
@@ -5407,8 +5407,8 @@ void bolt::refine_for_explosion()
 
     if (name == "ghostly fireball")
     {
-        seeMsg  = "The ghostly flame explodes!";
-        hearMsg = "You hear the shriek of haunting fire!";
+        seeMsg  = _("The ghostly flame explodes!");
+        hearMsg = _("You hear the shriek of haunting fire!");
 
         glyph   = dchar_glyph(DCHAR_FIRED_BURST);
         ex_size = 1;

@@ -374,7 +374,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FAUN, 'c', GREEN, "faun",
+    MONS_FAUN, 'c', GREEN, M_("faun"),
     M_WARM_BLOOD | M_SPEAKS | M_ARCHER | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_NO_FLAGS,
     550, 10, MONS_FAUN, MONS_FAUN, MH_NATURAL, -3,
@@ -386,7 +386,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SATYR, 'c', LIGHTGREEN, "satyr",
+    MONS_SATYR, 'c', LIGHTGREEN, M_("satyr"),
     M_WARM_BLOOD | M_SPEAKS | M_ARCHER | M_SPELLCASTER | M_ACTUAL_SPELLS,
     MR_NO_FLAGS,
     550, 10, MONS_SATYR, MONS_SATYR, MH_NATURAL, -3,
@@ -1076,7 +1076,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_ASSASSIN, 'i', BROWN, "spriggan assassin",
+    MONS_SPRIGGAN_ASSASSIN, 'i', BROWN, M_("spriggan assassin"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_FIGHTER | M_STABBER,
     MR_NO_FLAGS,
     200, 10, MONS_SPRIGGAN, MONS_SPRIGGAN, MH_NATURAL, -7,
@@ -1088,7 +1088,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SPRIGGAN_ENCHANTER, 'i', MAGENTA, "spriggan enchanter",
+    MONS_SPRIGGAN_ENCHANTER, 'i', MAGENTA, M_("spriggan enchanter"),
     M_WARM_BLOOD | M_SPEAKS | M_SEE_INVIS | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_FIGHTER | M_STABBER,
     MR_NO_FLAGS,
@@ -1458,7 +1458,7 @@ static monsterentry mondata[] = {
 
 // Using 'm' for this is a bit of a stretch; suggestions are welcome.
 {
-    MONS_DRYAD, 'm', GREEN, "dryad",
+    MONS_DRYAD, 'm', GREEN, M_("dryad"),
     M_SPELLCASTER | M_WARM_BLOOD | M_SPEAKS | M_ACTUAL_SPELLS
         | M_MAINTAIN_RANGE,
     MR_VUL_FIRE,
@@ -1619,7 +1619,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_LAVA_ORC, 'o', RED, "lava orc",
+    MONS_LAVA_ORC, 'o', RED, M_("lava orc"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     mrd(MR_RES_FIRE, 3),
     600, 15, MONS_ORC, MONS_LAVA_ORC, MH_NATURAL, -3,
@@ -3352,7 +3352,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TENGU_CONJURER, 'H', BLUE, "tengu conjurer",
+    MONS_TENGU_CONJURER, 'H', BLUE, M_("tengu conjurer"),
     M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 13, MONS_TENGU, MONS_TENGU, MH_NATURAL, -3,
@@ -3365,7 +3365,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TENGU_WARRIOR, 'H', CYAN, "tengu warrior",
+    MONS_TENGU_WARRIOR, 'H', CYAN, M_("tengu warrior"),
     M_FIGHTER | M_WARM_BLOOD | M_SPEAKS,
     MR_NO_FLAGS,
     550, 13, MONS_TENGU, MONS_TENGU, MH_NATURAL, -3,
@@ -3378,7 +3378,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_TENGU_REAVER, 'H', LIGHTMAGENTA, "tengu reaver",
+    MONS_TENGU_REAVER, 'H', LIGHTMAGENTA, M_("tengu reaver"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SENSE_INVIS | M_WARM_BLOOD
         | M_SPEAKS | M_DEFLECT_MISSILES,
     MR_NO_FLAGS,
@@ -5723,7 +5723,7 @@ static monsterentry mondata[] = {
 
 // djinn ('&')
 {
-    MONS_DJINNI, '&', LIGHTBLUE, "djinni",
+    MONS_DJINNI, '&', LIGHTBLUE, M_("djinni"),
     M_WARM_BLOOD | M_SPEAKS | M_NO_POLY_TO,
     MR_RES_HELLFIRE | MR_VUL_COLD,
     0, 10, MONS_DJINNI, MONS_DJINNI, MH_NATURAL /* FIXME */, -3,

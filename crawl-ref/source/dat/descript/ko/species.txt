@@ -1,4 +1,4 @@
-%%%%
+﻿%%%%
 Centaur
 
 빠르고, 강하고, 큰 몸집을 지닌 종족이다. 이들은 살아가는데 다른 종족들보다 더
@@ -123,4 +123,17 @@ Troll
 Vampire
 
 생과 사의 상태를 넘나드는 종족으로, 암살과 마법에 뛰어난 기량을 보인다.
+%%%%
+%%%%
+Djinni
+
+The Djinn are spirits of fire, for whom magic is the very essence of life.
+%%%%
+Grotesk
+
+Made of living stone, Grotesks have a preternatural affinity for the earth.
+%%%%
+Lava Orc
+
+These masters of earth and fire magic come from deep below the Dungeon. Their abilities change with their temperature.
 %%%%

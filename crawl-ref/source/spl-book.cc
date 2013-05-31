@@ -1142,7 +1142,7 @@ bool can_learn_spell(bool silent)
     if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
     {
         if (!silent)
-            mpr("You'd burn any book you tried to read!");
+            mpr(_("You'd burn any book you tried to read!"));
         return (false);
     }
 

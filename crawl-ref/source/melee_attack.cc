@@ -406,7 +406,7 @@ bool melee_attack::handle_phase_attempted()
     if (attk_flavour == AF_SHADOWSTAB && defender && !defender->can_see(attacker))
     {
         if (you.see_cell(attacker->pos()))
-            mprf("%s strikes at %s from the darkness!",
+            mprf(_("%s strikes at %s from the darkness!"),
                  attacker->name(DESC_THE, true).c_str(),
                  defender->name(DESC_THE).c_str());
         to_hit = AUTOMATIC_HIT;
@@ -4211,9 +4211,9 @@ bool melee_attack::attack_shield_blocked(bool verbose)
         {
             if (needs_message && verbose)
             {
-                mprf("%s blade passes through %s shield.",
-                    atk_name(DESC_ITS).c_str(),
-                    def_name(DESC_ITS).c_str());
+                mprf(_("%s blade passes through %s shield."),
+                    atk_name(DESC_PLAIN).c_str(),
+                    def_name(DESC_PLAIN).c_str());
                 return false;
             }
         }
@@ -4221,9 +4221,9 @@ bool melee_attack::attack_shield_blocked(bool verbose)
         if (needs_message && verbose)
         {
             mprf(gettext("%s %s %s attack."),
-                 def_name(DESC_THE).c_str(),
+                 _(def_name(DESC_THE).c_str()),
                  defender->conj_verb(pgettext("verb", "block")).c_str(),
-                 atk_name(DESC_ITS).c_str());
+                 _(atk_name(DESC_ITS).c_str()));
         }
 
         defender->shield_block_succeeded(attacker);
@@ -4839,7 +4839,7 @@ void melee_attack::mons_apply_attack_flavour()
 
             if (needs_message)
             {
-                mprf("%s %s %s in water!",
+                mprf(_("%s %s %s in water!"),
                      atk_name(DESC_THE).c_str(),
                      attacker->conj_verb("engulf").c_str(),
                      defender_name().c_str());
@@ -4861,7 +4861,7 @@ void melee_attack::mons_apply_attack_flavour()
 
         if (needs_message && special_damage)
         {
-            mprf("%s %s %s!",
+            mprf(pgettext("purefire","%s %s %s!"),
                     atk_name(DESC_THE).c_str(),
                     attacker->conj_verb("burn").c_str(),
                     def_name(DESC_THE).c_str());
@@ -4877,10 +4877,10 @@ void melee_attack::mons_apply_attack_flavour()
         {
             if (needs_message)
             {
-                mprf("%s %s %s vigor!",
+                mprf(_("%s %s %s vigor!"),
                      atk_name(DESC_THE).c_str(),
                      attacker->conj_verb("drain").c_str(),
-                     def_name(DESC_ITS).c_str());
+                     def_name(DESC_PLAIN).c_str());
             }
 
             special_damage = 1 + random2(damage_done) / 2;
@@ -4908,8 +4908,8 @@ void melee_attack::mons_apply_attack_flavour()
 
             if (needs_message && visible_effect)
             {
-                mprf("%s magical defenses are stripped away!",
-                     def_name(DESC_ITS).c_str());
+                mprf(_("%s magical defenses are stripped away!"),
+                     def_name(DESC_PLAIN).c_str());
             }
         }
         break;
@@ -4920,7 +4920,7 @@ void melee_attack::mons_apply_attack_flavour()
             if (defender->is_player())
             {
                 you.increase_duration(DUR_RETCHING, 7 + random2(9), 25);
-                mpr("You feel violently ill.");
+                mpr(_("You feel violently ill."));
             }
             else
             {
@@ -4928,7 +4928,7 @@ void melee_attack::mons_apply_attack_flavour()
                     && you.can_see(defender))
                 {
                     simple_monster_message(defender->as_monster(),
-                                           " looks violently ill.");
+                                           _(" looks violently ill."));
                 }
                 defender->as_monster()->add_ench(ENCH_RETCHING);
             }
@@ -5009,7 +5009,7 @@ void melee_attack::do_passive_heat()
         if (!hurted)
             return;
 
-        simple_monster_message(mon, " is singed by your heat.");
+        simple_monster_message(mon, _(" is singed by your heat."));
 
 #ifndef USE_TILE
         flash_monster_colour(mon, LIGHTRED, 200);

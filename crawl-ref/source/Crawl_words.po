@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-31 01:07+0900\n"
+"POT-Creation-Date: 2013-06-01 01:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgid "Orc"
 msgstr "오크"
 
 #: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
-#: species.cc:195
+#: species.cc:195 species.cc:173
 msgid "Hill Orc"
 msgstr "힐 오크"
 
@@ -9370,7 +9370,7 @@ msgstr "마비됨"
 msgid "Stone"
 msgstr "석화"
 
-#: status.cc:72
+#: status.cc:72 mutation-data.h:1511
 msgid "petrified"
 msgstr "석화됨"
 
@@ -12874,6 +12874,10 @@ msgstr "은(는) 말했다"
 #. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
+#. actually S_SILENT
+#. S_NORMAL
 #: mon-util.cc:3730 mon-util.cc:3732 mon-util.cc:3751 mon-util.cc:3790
 #: mon-util.cc:3792 mon-util.cc:3812 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:4003 mon-util.cc:3953 mon-util.cc:3955 mon-util.cc:3975
@@ -14955,42 +14959,42 @@ msgstr "안정감을 느꼈다."
 #: mutation-data.h:300 mutation-data.h:301 mutation-data.h:303
 #: mutation-data.h:304
 msgid "You are resistant to hostile enchantments."
-msgstr "당신은 적대적인 주술에 대해 저항력이 있다."
+msgstr "당신은 상태 이상에 대해 저항력이 있다."
 
 #: mutation-data.h:301 mutation-data.h:302 mutation-data.h:304
 #: mutation-data.h:305
 msgid "You are highly resistant to hostile enchantments."
-msgstr "당신은 적대적인 주술에 대해 상당한 저항력이 있다."
+msgstr "당신은 상태 이상에 대해 상당한 저항력이 있다."
 
 #: mutation-data.h:302 mutation-data.h:303 mutation-data.h:305
 #: mutation-data.h:306
 msgid "You are extremely resistant to the effects of hostile enchantments."
-msgstr "당신은 적대적인 주술에 거의 영향을 받지 않는다."
+msgstr "당신은 상태 이상에 거의 영향을 받지 않는다."
 
 #: mutation-data.h:304 mutation-data.h:305 mutation-data.h:307
 #: mutation-data.h:308
 msgid "You feel resistant to hostile enchantments."
-msgstr "적대적인 주술에 저항력이 생긴것을 느꼈다."
+msgstr "상태 이상에 저항력이 생긴것을 느꼈다."
 
 #: mutation-data.h:305 mutation-data.h:306 mutation-data.h:308
 #: mutation-data.h:309
 msgid "You feel more resistant to hostile enchantments."
-msgstr "적대적인 주술에 저항력이 더욱 생긴 것을 느꼈다."
+msgstr "상태 이상에 저항력이 더욱 생긴 것을 느꼈다."
 
 #: mutation-data.h:306 mutation-data.h:307 mutation-data.h:309
 #: mutation-data.h:310
 msgid "You feel almost impervious to the effects of hostile enchantments."
-msgstr "적대적인 주술이 거의 영향을 주지 않는다는것을 느꼈다."
+msgstr "상태 이상이 거의 영향을 주지 않는다는것을 느꼈다."
 
 #: mutation-data.h:308 mutation-data.h:309 mutation-data.h:310
 #: mutation-data.h:311 mutation-data.h:312 mutation-data.h:313
 msgid "You feel less resistant to hostile enchantments."
-msgstr "적대적인 주술에 대해 저항력이 약해진 것을 느꼈다."
+msgstr "상태 이상에 대해 저항력이 약해진 것을 느꼈다."
 
 #: mutation-data.h:310 mutation-data.h:311 mutation-data.h:313
 #: mutation-data.h:314
 msgid "You feel vulnerable to magic hostile enchantments."
-msgstr "적대적인 주술에 대해 취약해진것을 느꼈다."
+msgstr "상태 이상에 대해 취약해진것을 느꼈다."
 
 #: mutation-data.h:318 mutation-data.h:319 mutation-data.h:321
 #: mutation-data.h:322
@@ -18910,7 +18914,7 @@ msgstr "리어 왕의 전신 갑옷"
 msgid "Self Petrify"
 msgstr "자가 석화"
 
-#: cloud.cc:1240 cloud.cc:1253
+#: cloud.cc:1240 cloud.cc:1253 mon-cast.cc:914
 msgid "ghostly flame"
 msgstr "도깨비불"
 
@@ -18957,3 +18961,127 @@ msgstr "고대의 투사"
 #: mon-data.h:5763
 msgid "lost soul"
 msgstr "잃어버린 영혼"
+
+#: evoke.cc:920
+msgid "trail of fire"
+msgstr "화염의 자취"
+
+#: evoke.cc:1322
+msgid "falling rubble"
+msgstr "떨어지는 돌무더기"
+
+#: evoke.cc:1441
+msgid "flood of elemental water"
+msgstr "홍수"
+
+#: mon-cast.cc:925
+msgid "ghostly fireball"
+msgstr "도깨비불 덩어리"
+
+#: status.cc:507
+msgid "Hover"
+msgstr "부유"
+
+#: status.cc:508
+msgid "hovering above liquid"
+msgstr "액체 위로 부유"
+
+#: status.cc:576
+msgid "Engulf"
+msgstr "빠짐"
+
+#: status.cc:579
+msgid "engulfed"
+msgstr "빠짐"
+
+#: status.cc:588
+msgid "engulfed (cannot breathe)"
+msgstr "빠짐 (호흡 불가)"
+
+#: mon-data.h:377
+msgid "faun"
+msgstr "파우누스"
+
+#: mon-data.h:389
+msgid "satyr"
+msgstr "사티로스"
+
+#: mon-data.h:1079
+msgid "spriggan assassin"
+msgstr "스프리건 암살자"
+
+#: mon-data.h:1091
+msgid "spriggan enchanter"
+msgstr "스프리건 주술사"
+
+#: mon-data.h:1461
+msgid "dryad"
+msgstr "드라이어드"
+
+#: mon-data.h:1622
+msgid "lava orc"
+msgstr "라바 오크"
+
+#: mon-data.h:3355
+msgid "tengu conjurer"
+msgstr "텐구 파괴술사"
+
+#: mon-data.h:3368
+msgid "tengu warrior"
+msgstr "텐구 전사"
+
+#: mon-data.h:3381
+msgid "tengu reaver"
+msgstr "텐구 약탈자"
+
+#: mon-data.h:5726
+msgid "djinni"
+msgstr "지니"
+
+#: mutation-data.h:1501
+msgid "petrification resistance"
+msgstr "석화 저항"
+
+#: mutation-data.h:1503
+msgid "You are immune to involuntary petrification."
+msgstr "당신은 타의에 의한 석화로부터 면역이다."
+
+#: mutation-data.h:1504
+msgid "Your body vibrates."
+msgstr "당신의 육체가 진동했다."
+
+#: mutation-data.h:1505
+msgid "You briefly stop moving."
+msgstr "당신은 잠시 동안 움직임을 멈추었다."
+
+#: mutation-data.h:1513
+msgid "You can quickly petrify yourself."
+msgstr "당신은 급속히 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1514
+msgid "You can petrify yourself."
+msgstr "당신은 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1515
+msgid "You can slowly petrify yourself."
+msgstr "당신은 천천히 자기자신을 석화시킬 수 있다."
+
+#: mutation-data.h:1516
+msgid "Your flesh becomes firm."
+msgstr "당신의 피부가 굳어졌다."
+
+#: mutation-data.h:1516
+msgid "Your flesh hardens."
+msgstr "당신의 피부는 단단함을 더했다."
+
+#: mutation-data.h:1516
+msgid "Your flesh becomes rocky."
+msgstr "당신의 피부가 돌처럼 단단해졌다."
+
+#: mutation-data.h:1517
+msgid "Your flesh softens."
+msgstr "당신의 피부가 부드러워졌다."
+
+#: species.cc:174
+msgid "Lava Orc"
+msgstr "라바 오크"

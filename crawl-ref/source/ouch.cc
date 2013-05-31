@@ -167,7 +167,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         {
             hurted = 0;
             if (doEffects)
-                mpr("You resist completely.");
+                mpr(_("You resist completely."));
         }
         // Inconsistency: no penalty for rF-, unlike monsters.  That's
         // probably good, and monsters should be changed.
@@ -376,7 +376,7 @@ int check_your_resists(int hurted, beam_type flavour, string source,
             if (doEffects)
             {
                 you.heal(roll_dice(2, 9));
-                mpr("You are bolstered by the flame.");
+                mpr(_("You are bolstered by the flame."));
             }
             hurted = 0;
         }

@@ -1516,7 +1516,7 @@ static bool _check_ability_possible(const ability_def& abil,
         if (you.duration[DUR_EXHAUSTED])
         {
             if (!quiet)
-                mpr("You're too exhausted to transform.");
+                mpr(_("You're too exhausted to transform."));
             return false;
         }
         return true;

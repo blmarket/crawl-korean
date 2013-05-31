@@ -690,8 +690,8 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
                 }
                 else if (type == MONS_LOST_SOUL)
                 {
-                    mprf(channel, "%s flickers into view.",
-                                  name(DESC_A).c_str());
+                    mprf(channel, _("%s flickers into view."),
+                                  name(DESC_PLAIN).c_str());
                 }
                 else if (crawl_state.game_is_arena())
                     mprf(_("%s surfaces."), name(DESC_PLAIN, true).c_str());
@@ -821,7 +821,7 @@ void monster::remove_enchantment_effect(const mon_enchant &me, bool quiet)
 
     case ENCH_WEAK:
         if (!quiet)
-            simple_monster_message(this, " is no longer weakened.");
+            simple_monster_message(this, _(" is no longer weakened."));
         break;
 
     default:

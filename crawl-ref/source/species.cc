@@ -170,8 +170,8 @@ string species_name(species_type speci, bool genus, bool adj)
         {
             switch (speci)
             {
-            case SP_HILL_ORC: res = "Hill Orc"; break;
-            case SP_LAVA_ORC: res = "Lava Orc"; break;
+            case SP_HILL_ORC: res = M_("Hill Orc"); break;
+            case SP_LAVA_ORC: res = M_("Lava Orc"); break;
             default:          res = "Orc";      break;
             }
         }

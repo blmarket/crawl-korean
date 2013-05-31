@@ -2465,7 +2465,7 @@ int monster_die(monster* mons, killer_type killer,
              && !mons->pacified() && (!summoned || duration > 0) && !wizard)
     {
         if (you.can_see(mons))
-            mprf("Miasma billows from the fallen %s!", mons->name(DESC_PLAIN).c_str());
+            mprf(_("Miasma billows from the fallen %s!"), mons->name(DESC_PLAIN).c_str());
 
         map_cloud_spreader_marker *marker =
             new map_cloud_spreader_marker(mons->pos(), CLOUD_MIASMA, 10,
@@ -4834,7 +4834,7 @@ void temperature_check()
         // but otherwise it lets you know you're being
         // brought up to max temp.
         if (temperature() <= TEMP_FIRE)
-            mpr("The lava instantly superheats you.");
+            mpr(_("The lava instantly superheats you."));
         you.temperature = TEMP_MAX;
         ignore_cap = true;
         // Otherwise, your temperature naturally decays.
@@ -4910,7 +4910,7 @@ void temperature_changed(float change)
 
     // Warmed up enough to lose slow movement.
     if (change > pos_threshold && temperature_tier(TEMP_COOL))
-        mpr("Your movements quicken.", MSGCH_DURATION);
+        mpr(_("Your movements quicken."), MSGCH_DURATION);
 
     // Check these no-nos every turn.
     if (you.temperature >= TEMP_WARM)
@@ -4929,41 +4929,41 @@ void temperature_changed(float change)
     // Just reached the temp that kills off stoneskin.
     if (change > pos_threshold && temperature_tier(TEMP_WARM))
     {
-        mpr("Your stony skin melts.", MSGCH_DURATION);
+        mpr(_("Your stony skin melts."), MSGCH_DURATION);
         you.redraw_armour_class = true;
     }
 
     // Passive heat stuff.
     if (change > pos_threshold && temperature_tier(TEMP_FIRE))
-        mpr("You're getting fired up.", MSGCH_DURATION);
+        mpr(_("You're getting fired up."), MSGCH_DURATION);
 
     // Heat aura stuff.
     if (change > pos_threshold && temperature_tier(TEMP_MAX))
     {
-        mpr("You blaze with the fury of an erupting volcano!", MSGCH_DURATION);
+        mpr(_("You blaze with the fury of an erupting volcano!"), MSGCH_DURATION);
         invalidate_agrid(true);
     }
 
     // For DECREMENTS (reverse order):
     if (change < neg_threshold && temperature_tier(TEMP_MAX))
     {
-        mpr("The intensity of your heat diminishes.", MSGCH_DURATION);
+        mpr(_("The intensity of your heat diminishes."), MSGCH_DURATION);
     }
 
     if (change < neg_threshold && temperature_tier(TEMP_FIRE))
-        mpr("You're cooling off.", MSGCH_DURATION);
+        mpr(_("You're cooling off."), MSGCH_DURATION);
 
     // Cooled down enough for stoneskin to kick in again.
     if (change < neg_threshold && temperature_tier(TEMP_WARM))
     {
             you.set_duration(DUR_STONESKIN, 500);
-            mpr("Your skin cools and hardens.", MSGCH_DURATION);
+            mpr(_("Your skin cools and hardens."), MSGCH_DURATION);
             you.redraw_armour_class = true;
     }
 
     // Cooled down enough for slow movement.
     if (change < neg_threshold && temperature_tier(TEMP_COOL))
-        mpr("Your movements slow.", MSGCH_DURATION);
+        mpr(_("Your movements slow."), MSGCH_DURATION);
 
     // If we're in this function, temperature changed, anyways.
     you.redraw_temperature = true;
@@ -5053,15 +5053,15 @@ std::string temperature_text(int temp)
         case TEMP_MIN:
             return "rF+";
         case TEMP_COOL:
-            return "Normal movement speed";
+            return _("Normal movement speed");
         case TEMP_WARM:
-            return "rF++; lava magic boost; Stoneskin melts";
+            return _("rF++; lava magic boost; Stoneskin melts");
         case TEMP_HOT:
-            return "rF+++; rC-; fire magic boost";
+            return _("rF+++; rC-; fire magic boost");
         case TEMP_FIRE:
-            return "Fast movement speed; burn attackers";
+            return _("Fast movement speed; burn attackers");
         case TEMP_MAX:
-            return "Burn surroundings; cannot read books or scrolls";
+            return _("Burn surroundings; cannot read books or scrolls");
         default:
             return "";
     }

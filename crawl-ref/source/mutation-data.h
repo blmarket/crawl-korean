@@ -1498,23 +1498,23 @@
 },
 
 { MUT_PETRIFICATION_RESISTANCE,            3,  1, false, false, false,
-  "petrification resistance",
+  M_("petrification resistance"),
 
-  {"You are immune to involuntary petrification.", "", ""},
-  {"Your body vibrates.", "", ""},
-  {"You briefly stop moving.", "", ""},
+  {M_("You are immune to involuntary petrification."), "", ""},
+  {M_("Your body vibrates."), "", ""},
+  {M_("You briefly stop moving."), "", ""},
 
   "petrification resistance"
 },
 
 { MUT_SELF_PETRIFICATION,                  0,  3, false, false, false,
-  "petrified",
+  M_("petrified"),
 
-  {"You can quickly petrify yourself.",
-   "You can petrify yourself.",
-   "You can slowly petrify yourself."},
-  {"Your flesh becomes firm.", "Your flesh hardens.", "Your flesh becomes rocky."},
-  {"Your flesh softens.", "Your flesh softens.", "Your flesh softens."},
+  {M_("You can quickly petrify yourself."),
+   M_("You can petrify yourself."),
+   M_("You can slowly petrify yourself.")},
+  {M_("Your flesh becomes firm."), M_("Your flesh hardens."), M_("Your flesh becomes rocky.")},
+  {M_("Your flesh softens."), M_("Your flesh softens."), M_("Your flesh softens.")},
 
   "petrify"
 },

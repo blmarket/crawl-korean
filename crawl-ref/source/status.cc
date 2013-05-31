@@ -504,9 +504,9 @@ bool fill_status_info(int status, status_info* inf)
         if (is_hovering())
         {
             inf->light_colour = RED;
-            inf->light_text   = "Hover";
-            inf->short_text   = "hovering above liquid";
-            inf->long_text    = "You are exerting yourself to hover high above the liquid.";
+            inf->light_text   = _(M_("Hover"));
+            inf->short_text   = _(M_("hovering above liquid"));
+            inf->long_text    = _("You are exerting yourself to hover high above the liquid.");
         }
         break;
 
@@ -573,11 +573,11 @@ bool fill_status_info(int status, status_info* inf)
         break;
 
     case DUR_WATER_HOLD:
-        inf->light_text   = "Engulf";
+        inf->light_text   = _(M_("Engulf"));
         if (you.res_water_drowning())
         {
-            inf->short_text   = "engulfed";
-            inf->long_text    = "You are engulfed in water.";
+            inf->short_text   = _(M_("engulfed"));
+            inf->long_text    = _("You are engulfed in water.");
             if (you.can_swim())
                 inf->light_colour = DARKGREY;
             else
@@ -585,8 +585,8 @@ bool fill_status_info(int status, status_info* inf)
         }
         else
         {
-            inf->short_text   = "engulfed (cannot breathe)";
-            inf->long_text    = "You are engulfed in water and unable to breathe.";
+            inf->short_text   = _(M_("engulfed (cannot breathe)"));
+            inf->long_text    = _("You are engulfed in water and unable to breathe.");
             inf->light_colour = RED;
         }
         break;

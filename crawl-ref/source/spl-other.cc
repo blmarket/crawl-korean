@@ -104,7 +104,7 @@ spret_type cast_sublimation_of_blood(int pow, bool fail)
                 "coming into effect."));
         }
         else if (you.species == SP_DJINNI)
-            mpr("Draw from your essence to power your essence... yeah right.");
+            mpr(_("Draw from your essence to power your essence... yeah right."));
         else if (!you.can_bleed(false))
         {
             mpr(gettext("You don't have enough blood to draw power from your "
@@ -326,7 +326,7 @@ spret_type cast_phase_shift(int pow, bool fail)
 {
     if (you.duration[DUR_DIMENSION_ANCHOR])
     {
-        mpr("You are anchored firmly to the material plane!");
+        mpr(_("You are anchored firmly to the material plane!"));
         return SPRET_ABORT;
     }
 

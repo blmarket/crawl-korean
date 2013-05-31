@@ -328,10 +328,10 @@ void moveto_location_effects(dungeon_feature_type old_feat,
             if (feat_is_lava(new_grid) && !feat_is_lava(old_feat))
             {
                 if (!stepped)
-                    noisy(4, you.pos(), "Gloop!");
+                    noisy(4, you.pos(), _("Gloop!"));
 
-                mprf("You %s lava.",
-                     (stepped) ? "slowly immerse yourself in the" : "fall into the");
+                mprf(_("You %s lava."),
+                     (stepped) ? _("slowly immerse yourself in the") : _("fall into the"));
 
                 // Extra time if you stepped in.
                 if (stepped)
@@ -340,13 +340,13 @@ void moveto_location_effects(dungeon_feature_type old_feat,
                 // This gets called here because otherwise you wouldn't heat
                 // until your second turn in lava.
                 if (temperature() < TEMP_FIRE)
-                    mpr("The lava instantly superheats you.");
+                    mpr(_("The lava instantly superheats you."));
                 you.temperature = TEMP_MAX;
             }
 
             else if (!feat_is_lava(new_grid) && feat_is_lava(old_feat))
             {
-                mpr("You slowly pull yourself out of the lava.");
+                mpr(_("You slowly pull yourself out of the lava."));
                 you.time_taken *= 2;
             }
         }
@@ -407,7 +407,7 @@ void moveto_location_effects(dungeon_feature_type old_feat,
     else if (you.species == SP_DJINNI && !feat_has_dry_floor(new_grid)
              && feat_has_dry_floor(old_feat))
     {
-        mprf("You heave yourself high above the %s.", feat_type_name(new_grid));
+        mprf(_("You heave yourself high above the %s."), _(feat_type_name(new_grid)));
     }
 
     const bool was_clinging = you.is_wall_clinging();
@@ -5533,7 +5533,7 @@ void handle_player_drowning(int delay)
     if (you.duration[DUR_WATER_HOLD] == 1)
     {
         if (!you.res_water_drowning())
-            mpr("You gasp with relief as air once again reaches your lungs.");
+            mpr(_("You gasp with relief as air once again reaches your lungs."));
         _end_water_hold();
     }
     else
@@ -5542,9 +5542,9 @@ void handle_player_drowning(int delay)
         if (!mons || mons && !adjacent(mons->pos(), you.pos()))
         {
             if (you.res_water_drowning())
-                mpr("The water engulfing you falls away.");
+                mpr(_("The water engulfing you falls away."));
             else
-                mpr("You gasp with relief as air once again reaches your lungs.");
+                mpr(_("You gasp with relief as air once again reaches your lungs."));
 
             _end_water_hold();
 
@@ -5562,7 +5562,7 @@ void handle_player_drowning(int delay)
                                 * delay,
                                 BASELINE_DELAY * 10);
             ouch(dam, NON_MONSTER, KILLED_BY_WATER);
-            mpr("Your lungs strain for air!", MSGCH_WARN);
+            mpr(_("Your lungs strain for air!"), MSGCH_WARN);
         }
     }
 }
@@ -7807,9 +7807,9 @@ bool player::made_nervous_by(const coord_def &p)
 void player::weaken(actor *attacker, int pow)
 {
     if (!duration[DUR_WEAK])
-        mpr("You feel yourself grow feeble.", MSGCH_WARN);
+        mpr(_("You feel yourself grow feeble."), MSGCH_WARN);
     else
-        mpr("You feel as though you will be weak longer.", MSGCH_WARN);
+        mpr(_("You feel as though you will be weak longer."), MSGCH_WARN);
 
     you.increase_duration(DUR_WEAK, pow + random2(pow + 3), 50);
 }

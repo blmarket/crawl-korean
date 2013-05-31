@@ -2246,7 +2246,7 @@ spret_type cast_haunt(int pow, const coord_def& where, god_type god, bool fail)
     }
     else if (m->wont_attack())
     {
-        mpr("You cannot haunt those who bear you no hostility.");
+        mpr(_("You cannot haunt those who bear you no hostility."));
         return SPRET_ABORT;
     }
 
