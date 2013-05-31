@@ -1346,7 +1346,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_FOREST_DRAKE, 'l', GREEN, M_("forest drake"),
+    MONS_FOREST_DRAKE, 'l', LIGHTGREEN, M_("forest drake"),
     M_WARM_BLOOD | M_FAKE_SPELLS,
     MR_VUL_FIRE,
     1000, 10, MONS_DRAGON, MONS_FOREST_DRAKE, MH_NATURAL, -3,
@@ -1458,7 +1458,7 @@ static monsterentry mondata[] = {
 
 // Using 'm' for this is a bit of a stretch; suggestions are welcome.
 {
-    MONS_DRYAD, 'm', GREEN, M_("dryad"),
+    MONS_DRYAD, 'm', BROWN, M_("dryad"),
     M_SPELLCASTER | M_WARM_BLOOD | M_SPEAKS | M_ACTUAL_SPELLS
         | M_MAINTAIN_RANGE,
     MR_VUL_FIRE,
@@ -3383,7 +3383,7 @@ static monsterentry mondata[] = {
         | M_SPEAKS | M_DEFLECT_MISSILES,
     MR_NO_FLAGS,
     550, 13, MONS_TENGU, MONS_TENGU, MH_NATURAL, -3,
-    { {AT_HIT, AF_PLAIN, 16}, {AT_PECK, AF_PLAIN, 8}, {AT_CLAW, AF_PLAIN, 8},
+    { {AT_HIT, AF_PLAIN, 24}, {AT_PECK, AF_PLAIN, 12}, {AT_CLAW, AF_PLAIN, 12},
        AT_NO_ATK },
     { 15, 3, 5, 0 },
     2, 17, MST_NO_SPELLS, CE_CLEAN, Z_NOZOMBIE, S_SHOUT,
@@ -5908,7 +5908,7 @@ static monsterentry mondata[] = {
     M_WARM_BLOOD | M_SPEAKS | M_ARCHER | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_SPEAKS | M_UNIQUE,
     MR_NO_FLAGS,
-    550, 10, MONS_SATYR, MONS_SATYR, MH_NATURAL, -3,
+    550, 13, MONS_SATYR, MONS_SATYR, MH_NATURAL, -3,
     { {AT_HIT, AF_PLAIN, 35}, AT_NO_ATK, AT_NO_ATK, AT_NO_ATK },
     { 18, 0, 0, 240 },
     3, 25, MST_PAN, CE_CONTAMINATED, Z_SMALL, S_SHOUT,
@@ -6166,10 +6166,10 @@ static monsterentry mondata[] = {
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SENSE_INVIS | M_WARM_BLOOD
         | M_SPEAKS | M_DEFLECT_MISSILES | M_UNIQUE,
     MR_NO_FLAGS,
-    550, 13, MONS_TENGU, MONS_TENGU, MH_NATURAL, -3,
-    { {AT_HIT, AF_PLAIN, 24}, {AT_PECK, AF_PLAIN, 12}, {AT_CLAW, AF_PLAIN, 12},
+    550, 18, MONS_TENGU, MONS_TENGU, MH_NATURAL, -3,
+    { {AT_HIT, AF_PLAIN, 32}, {AT_PECK, AF_PLAIN, 16}, {AT_CLAW, AF_PLAIN, 16},
        AT_NO_ATK },
-    { 18, 0, 0, 200 },
+    { 18, 0, 0, 150 },
     2, 22, MST_SOJOBO, CE_CLEAN, Z_NOZOMBIE, S_SHOUT,
     I_HIGH, HT_LAND, FL_LEVITATE, 10, MOVE_ENERGY(9),
     MONUSE_WEAPONS_ARMOUR, MONEAT_NOTHING, SIZE_MEDIUM
@@ -6329,7 +6329,7 @@ static monsterentry mondata[] = {
     M_UNIQUE | M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SEE_INVIS
         | M_WARM_BLOOD | M_SPEAKS,
     MR_RES_POISON,
-    1000, 11, MONS_NAGA, MONS_NAGA, MH_NATURAL, MAG_IMMUNE,
+    1000, 20, MONS_NAGA, MONS_NAGA, MH_NATURAL, MAG_IMMUNE,
     { {AT_HIT, AF_PLAIN, 40}, {AT_CONSTRICT, AF_CRUSH, 12},
        AT_NO_ATK, AT_NO_ATK },
     { 18, 0, 0, 200 },

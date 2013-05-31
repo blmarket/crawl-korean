@@ -2120,7 +2120,7 @@ static bool _do_ability(const ability_def& abil)
             cast_fly(you.experience_level * 4);
         break;
 
-    // Grotesk
+    // Gargoyle
     case ABIL_SELF_PETRIFY:
         you.petrify(&you, true);
         break;
@@ -3104,10 +3104,8 @@ vector<talent> your_talents(bool check_confused, bool include_unusable)
         _add_talent(talents, ABIL_SPIT_POISON, check_confused);
     }
 
-    if (you.species == SP_GROTESK && !form_changed_physiology())
-    {
+    if (you.species == SP_GARGOYLE && !form_changed_physiology())
         _add_talent(talents, ABIL_SELF_PETRIFY, check_confused);
-    }
 
     if (player_genus(GENPC_DRACONIAN))
     {

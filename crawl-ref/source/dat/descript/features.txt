@@ -462,6 +462,10 @@ A staircase back to the Dungeon
 
 익숙한 메인 던전으로 돌아가는 계단이다.
 %%%%
+A staircase back to the Forest
+
+These stairs lead back to the relative safety of the Forest.
+%%%%
 A staircase back to the Lair
 
 짐승 소굴로 돌아가는 계단이다.

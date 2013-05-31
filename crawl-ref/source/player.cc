@@ -221,7 +221,9 @@ static bool _check_moveto_dangerous(const coord_def& p, const string& msg,
         mpr(_("You cannot swim in your current form."));
     else if (you.species == SP_LAVA_ORC && feat_is_lava(env.grid(p))
              && is_feat_dangerous(env.grid(p)))
+    {
         mpr(_("You cannot enter lava in your current form."));
+    }
     else
         canned_msg(MSG_UNTHINKING_ACT);
 
@@ -1513,8 +1515,11 @@ int player_res_fire(bool calc_unid, bool temp, bool items)
             rf += you.scan_artefacts(ARTP_FIRE, calc_unid);
 
             // dragonskin cloak: 0.5 to draconic resistances
-            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN) && coinflip())
+            if (calc_unid && player_equip_unrand(UNRAND_DRAGONSKIN)
+                && coinflip())
+            {
                 rf++;
+            }
         }
     }
 
@@ -1654,9 +1659,8 @@ int player_res_cold(bool calc_unid, bool temp, bool items)
                 rc++;
         }
 
-        if (you.species == SP_LAVA_ORC)
-            if (temperature_effect(LORC_COLD_VULN))
-                rc--;
+        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_COLD_VULN))
+            rc--;
     }
 
     // All effects negated by magical suppression should go in here.
@@ -2039,8 +2043,12 @@ int player_spec_cold()
         sc += you.wearing(EQ_RINGS, RING_ICE);
     }
 
-    if (you.species == SP_LAVA_ORC && (temperature_effect(LORC_LAVA_BOOST) || temperature_effect(LORC_FIRE_BOOST)))
+    if (you.species == SP_LAVA_ORC
+        && (temperature_effect(LORC_LAVA_BOOST)
+            || temperature_effect(LORC_FIRE_BOOST)))
+    {
         sc--;
+    }
 
     return sc;
 }
@@ -2281,7 +2289,7 @@ int player_movement_speed(bool ignore_burden)
     if (you.liquefied_ground())
         mv += 3;
 
-    if (you.species == SP_GROTESK && you.petrifying())
+    if (you.species == SP_GARGOYLE && you.petrifying())
         mv += 3;
 
     // armour
@@ -2366,7 +2374,7 @@ int player_speed(void)
         ps = haste_div(ps);
 
     if (you.form == TRAN_STATUE
-            || (you.duration[DUR_PETRIFYING] && you.species != SP_GROTESK))
+            || (you.duration[DUR_PETRIFYING] && you.species != SP_GARGOYLE))
     {
         ps *= 15;
         ps /= 10;
@@ -3304,6 +3312,7 @@ void level_change(int source, const char* aux, bool skip_attribute_increase)
                 break;
 
             case SP_HILL_ORC:
+            case SP_LAVA_ORC:
                 if (!(you.experience_level % 5))
                     modify_stat(STAT_STR, 1, false, "level gain");
                 break;
@@ -3543,7 +3552,7 @@ void level_change(int source, const char* aux, bool skip_attribute_increase)
                     modify_stat(STAT_STR, 1, false, "level gain");
                 break;
 
-            case SP_GROTESK:
+            case SP_GARGOYLE:
                 if (you.experience_level == 7 || you.experience_level == 13)
                     perma_mutate(MUT_SELF_PETRIFICATION, 1, "level gain");
                 if (!(you.experience_level % 4))
@@ -6337,7 +6346,8 @@ int player::armour_class() const
     if (duration[DUR_ICY_ARMOUR])
         AC += 400 + skill(SK_ICE_MAGIC, 100) / 3;    // max 13
 
-    if (duration[DUR_STONESKIN]) {
+    if (duration[DUR_STONESKIN])
+    {
         int boost = 200 + skill(SK_EARTH_MAGIC, 20); // max 7
         if (you.species == SP_LAVA_ORC)
             boost = std::max(boost, 200 + 100 * you.experience_level / 5); // max 7
@@ -6562,7 +6572,7 @@ bool player::is_chaotic() const
 
 bool player::is_artificial() const
 {
-    return (form == TRAN_STATUE || petrified());
+    return (species == SP_GARGOYLE || form == TRAN_STATUE || petrified());
 }
 
 bool player::is_unbreathing() const
@@ -7059,7 +7069,8 @@ void player::petrify(actor *who, bool force)
 
     you.duration[DUR_PETRIFYING] = 3 * BASELINE_DELAY;
 
-    if (you.mutation[MUT_SELF_PETRIFICATION] > 0) {
+    if (you.mutation[MUT_SELF_PETRIFICATION] > 0)
+    {
         you.duration[DUR_PETRIFYING] *=
             1 + you.mutation[MUT_SELF_PETRIFICATION] + coinflip();
     }

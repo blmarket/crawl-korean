@@ -4946,9 +4946,7 @@ void temperature_changed(float change)
 
     // For DECREMENTS (reverse order):
     if (change < neg_threshold && temperature_tier(TEMP_MAX))
-    {
         mpr(_("The intensity of your heat diminishes."), MSGCH_DURATION);
-    }
 
     if (change < neg_threshold && temperature_tier(TEMP_FIRE))
         mpr(_("You're cooling off."), MSGCH_DURATION);

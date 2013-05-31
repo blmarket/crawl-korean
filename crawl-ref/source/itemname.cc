@@ -3257,7 +3257,7 @@ bool is_useless_item(const item_def &item, bool temp)
             return true;
 
         if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
-            return (true);
+            return true;
 
         switch (item.sub_type)
         {
@@ -3479,13 +3479,26 @@ bool is_useless_item(const item_def &item, bool temp)
         return true;
 
     case OBJ_CORPSES:
-        if (item.sub_type != CORPSE_SKELETON)
+        if (item.sub_type != CORPSE_SKELETON && !you_foodless())
             return false;
+
+        if (item.sub_type == CORPSE_BODY && you.species == SP_DJINNI
+            && mons_corpse_effect(item.mon_type) == CE_MUTAGEN
+            && !is_inedible(item))
+        {
+            return false;
+        }
 
         if (you.has_spell(SPELL_ANIMATE_DEAD)
             || you.has_spell(SPELL_ANIMATE_SKELETON)
             || you.religion == GOD_YREDELEMNUL && !you.penance[GOD_YREDELEMNUL]
                && you.piety >= piety_breakpoint(0))
+        {
+            return false;
+        }
+
+        if (you.has_spell(SPELL_SUBLIMATION_OF_BLOOD)
+            || you.has_spell(SPELL_SIMULACRUM))
         {
             return false;
         }

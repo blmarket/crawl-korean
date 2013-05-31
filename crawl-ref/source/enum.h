@@ -73,7 +73,7 @@ enum ability_type
     ABIL_BOTTLE_BLOOD,
     // Deep Dwarves
     ABIL_RECHARGING,
-    // Grotesks
+    // Gargoyles
     ABIL_SELF_PETRIFY,
 
     ABIL_MAX_INTRINSIC = ABIL_RECHARGING,
@@ -367,7 +367,6 @@ enum beam_type                  // bolt::flavour
     BEAM_MALMUTATE,
     BEAM_ENSLAVE,
     BEAM_BANISH,
-    BEAM_DEGENERATE,
     BEAM_ENSLAVE_SOUL,
     BEAM_PAIN,
     BEAM_DISPEL_UNDEAD,
@@ -3159,7 +3158,9 @@ enum species_type
     SP_HUMAN,
     SP_HIGH_ELF,
     SP_DEEP_ELF,
+#if TAG_MAJOR_VERSION == 34
     SP_SLUDGE_ELF,
+#endif
     SP_HALFLING,
     SP_HILL_ORC,
     SP_KOBOLD,
@@ -3191,8 +3192,8 @@ enum species_type
     SP_OCTOPODE,
     SP_DJINNI,
     SP_LAVA_ORC,
-    SP_GROTESK,
-      LAST_VALID_SPECIES = SP_GROTESK,
+    SP_GARGOYLE,
+      LAST_VALID_SPECIES = SP_GARGOYLE,
 // The high scores viewer still needs enums for removed species.
     SP_ELF,                            // (placeholder)
     SP_HILL_DWARF,                     // (placeholder)
@@ -3200,6 +3201,9 @@ enum species_type
     SP_GREY_ELF,                       // (placeholder)
     SP_GNOME,                          // (placeholder)
     SP_MOUNTAIN_DWARF,                 // (placeholder)
+#if TAG_MAJOR_VERSION > 34
+    SP_SLUDGE_ELF,                     // (placeholder)
+#endif
 
     NUM_SPECIES,                       // always after the last species
 
@@ -3593,7 +3597,6 @@ enum zap_type
     ZAP_STICKY_FLAME_RANGE,
     ZAP_DISPEL_UNDEAD,
     ZAP_BANISHMENT,
-    ZAP_CIGOTUVIS_DEGENERATION,
     ZAP_STING,
     ZAP_HELLFIRE,
     ZAP_IRON_SHOT,

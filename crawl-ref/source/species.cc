@@ -19,9 +19,9 @@
 static species_type species_order[] = {
     // comparatively human-like looks
     SP_HUMAN,          SP_HIGH_ELF,
-    SP_DEEP_ELF,       SP_SLUDGE_ELF,
+    SP_DEEP_ELF,
     SP_DEEP_DWARF,     SP_HILL_ORC,
-    SP_LAVA_ORC, SP_MERFOLK,
+    SP_LAVA_ORC,       SP_MERFOLK,
     // small species
     SP_HALFLING,       SP_KOBOLD,
     SP_SPRIGGAN,
@@ -29,7 +29,7 @@ static species_type species_order[] = {
     SP_NAGA,           SP_CENTAUR,
     SP_OGRE,           SP_TROLL,
     SP_MINOTAUR,       SP_TENGU,
-    SP_BASE_DRACONIAN, SP_GROTESK,
+    SP_BASE_DRACONIAN, SP_GARGOYLE,
     // celestial species
     SP_DEMIGOD,        SP_DEMONSPAWN,
     SP_DJINNI,
@@ -55,14 +55,22 @@ species_type get_species(const int index)
 }
 
 static const char * Species_Abbrev_List[NUM_SPECIES] =
-    { "Hu", "HE", "DE", "SE", "Ha",
-      "HO", "Ko", "Mu", "Na", "Og", "Tr",
+{
+      "Hu", "HE", "DE",
+#if TAG_MAJOR_VERSION == 34
+      "SE",
+#endif
+      "Ha", "HO", "Ko", "Mu", "Na", "Og", "Tr",
       // the draconians
       "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr", "Dr",
       "Ce", "Dg", "Sp", "Mi", "Ds", "Gh", "Te", "Mf", "Vp", "DD",
       "Fe", "Op", "Dj", "LO", "Gr",
       // placeholders
-      "El", "HD", "OM", "GE", "Gn", "MD", };
+      "El", "HD", "OM", "GE", "Gn", "MD",
+#if TAG_MAJOR_VERSION > 34
+      "SE",
+#endif
+};
 
 const char *get_species_abbrev(species_type which_species)
 {
@@ -156,7 +164,9 @@ string species_name(species_type speci, bool genus, bool adj)
             {
             case SP_HIGH_ELF:   res = M_("High Elf");   break;
             case SP_DEEP_ELF:   res = M_("Deep Elf");   break;
+#if TAG_MAJOR_VERSION == 34
             case SP_SLUDGE_ELF: res = M_("Sludge Elf"); break;
+#endif
             default:            res = M_("Elf");        break;
             }
         }
@@ -189,7 +199,7 @@ string species_name(species_type speci, bool genus, bool adj)
         case SP_SPRIGGAN:   res = M_("Spriggan");                          break;
         case SP_MINOTAUR:   res = M_("Minotaur");                          break;
         case SP_TENGU:      res = M_("Tengu");                             break;
-        case SP_GROTESK:    res = M_("Grotesk");                           break;
+        case SP_GARGOYLE:   res = M_("Gargoyle");                          break;
 
         case SP_HILL_ORC:
             res = (adj ? M_("Orcish") : genus ? M_("Orc") : M_("Hill Orc"));
@@ -358,7 +368,7 @@ monster_type player_species_to_mons_species(species_type species)
         return MONS_MINOTAUR;
     case SP_DEMONSPAWN:
         return MONS_DEMONSPAWN;
-    case SP_GROTESK:
+    case SP_GARGOYLE:
         return MONS_GARGOYLE;
     case SP_GHOUL:
         return MONS_GHOUL;
@@ -413,7 +423,7 @@ int species_exp_modifier(species_type species)
     case SP_MERFOLK:
     case SP_OCTOPODE:
     case SP_TENGU:
-    case SP_GROTESK:
+    case SP_GARGOYLE:
         return 0;
     case SP_SPRIGGAN:
     case SP_DEEP_DWARF:
@@ -478,7 +488,7 @@ int species_hp_modifier(species_type species)
     case SP_PURPLE_DRACONIAN:
     case SP_MOTTLED_DRACONIAN:
     case SP_PALE_DRACONIAN:
-    case SP_GROTESK:
+    case SP_GARGOYLE:
     case SP_GHOUL:
     case SP_HILL_ORC:
     case SP_LAVA_ORC:
