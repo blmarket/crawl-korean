@@ -974,7 +974,7 @@ void job_group::attach(const newgame_def* ng, const newgame_def& defaults,
             && job_allowed(ng->species, job) == CC_BANNED)
         {
             text = "N/A ";
-            text += get_job_name(job);
+            text += _(get_job_name(job));
             tmp->set_fg_colour(DARKGRAY);
             tmp->set_highlight_colour(RED);
         }

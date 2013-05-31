@@ -616,7 +616,7 @@ static void _print_stats_contam(int x, int y)
         Contam_Bar.vdraw(6, 10, contam, max_contam);
     else
 #endif
-    Contam_Bar.draw(19, y, contam, max_contam);
+    Contam_Bar.draw(17, y, contam, max_contam);
 }
 
 static void _print_stats_hp(int x, int y)

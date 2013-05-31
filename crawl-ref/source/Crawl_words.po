@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-01 01:02+0900\n"
+"POT-Creation-Date: 2013-06-01 01:40+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,92 +21,92 @@ msgstr ""
 #. adj doesn't care about exact species
 #: species.cc:172 species.cc:189 species.cc:189 species.cc:124 species.cc:141
 #: species.cc:122 species.cc:139 species.cc:125 species.cc:142 species.cc:126
-#: species.cc:143
+#: species.cc:143 species.cc:134 species.cc:151
 msgid "Draconian"
 msgstr "드라코니언"
 
 #: species.cc:177 species.cc:177 species.cc:129 species.cc:127 species.cc:130
-#: species.cc:131
+#: species.cc:131 species.cc:139
 msgid "Red Draconian"
 msgstr "붉은 드라코니언"
 
 #: species.cc:178 species.cc:178 species.cc:130 species.cc:128 species.cc:131
-#: species.cc:132
+#: species.cc:132 species.cc:140
 msgid "White Draconian"
 msgstr "흰 드라코니언"
 
 #: species.cc:179 species.cc:179 species.cc:131 species.cc:129 species.cc:132
-#: species.cc:133
+#: species.cc:133 species.cc:141
 msgid "Green Draconian"
 msgstr "녹색 드라코니언"
 
 #: species.cc:180 species.cc:180 species.cc:132 species.cc:130 species.cc:133
-#: species.cc:134
+#: species.cc:134 species.cc:142
 msgid "Yellow Draconian"
 msgstr "노란 드라코니언"
 
 #: species.cc:181 species.cc:181 species.cc:133 species.cc:131 species.cc:134
-#: species.cc:135
+#: species.cc:135 species.cc:143
 msgid "Grey Draconian"
 msgstr "회색 드라코니언"
 
 #: species.cc:182 species.cc:182 species.cc:134 species.cc:132 species.cc:135
-#: species.cc:136
+#: species.cc:136 species.cc:144
 msgid "Black Draconian"
 msgstr "검은 드라코니언"
 
 #: species.cc:183 species.cc:183 species.cc:135 species.cc:133 species.cc:136
-#: species.cc:137
+#: species.cc:137 species.cc:145
 msgid "Purple Draconian"
 msgstr "보랏빛 드라코니언"
 
 #: species.cc:184 species.cc:184 species.cc:136 species.cc:134 species.cc:137
-#: species.cc:138
+#: species.cc:138 species.cc:146
 msgid "Mottled Draconian"
 msgstr "얼룩무늬 드라코니언"
 
 #: species.cc:185 species.cc:185 species.cc:137 species.cc:135 species.cc:138
-#: species.cc:139
+#: species.cc:139 species.cc:147
 msgid "Pale Draconian"
 msgstr "무색 드라코니언"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
 #: species.cc:196 species.cc:196 species.cc:148 species.cc:146 species.cc:149
-#: species.cc:150
+#: species.cc:150 species.cc:158
 msgid "Elven"
 msgstr "엘프족"
 
 #: species.cc:198 species.cc:206 species.cc:206 species.cc:150 species.cc:158
 #: species.cc:148 species.cc:156 species.cc:151 species.cc:159 species.cc:152
-#: species.cc:160
+#: species.cc:160 species.cc:170
 msgid "Elf"
 msgstr "엘프"
 
 #: species.cc:203 species.cc:203 species.cc:155 species.cc:153 species.cc:156
-#: species.cc:157
+#: species.cc:157 species.cc:165
 msgid "High Elf"
 msgstr "하이 엘프"
 
 #: species.cc:204 species.cc:204 species.cc:156 species.cc:154 species.cc:157
-#: species.cc:158
+#: species.cc:158 species.cc:166
 msgid "Deep Elf"
 msgstr "딥 엘프"
 
 #: species.cc:205 species.cc:205 species.cc:157 species.cc:155 species.cc:158
-#: species.cc:159
+#: species.cc:159 species.cc:168
 msgid "Sludge Elf"
 msgstr "슬럿지 엘프"
 
 #. doesn't care about species/genus
 #. doesn't care about species/genus
 #: species.cc:212 species.cc:212 species.cc:178 species.cc:180 species.cc:181
-#: species.cc:198
+#: species.cc:198 species.cc:208
 msgid "Dwarven"
 msgstr "드워프족"
 
 #: species.cc:214 species.cc:221 species.cc:221 species.cc:178 species.cc:180
-#: species.cc:181 species.cc:198
+#: species.cc:181 species.cc:198 species.cc:208
 msgid "Dwarf"
 msgstr "드워프"
 
@@ -115,47 +115,47 @@ msgid "Mountain Dwarf"
 msgstr "마운틴 드워프"
 
 #: species.cc:220 species.cc:220 species.cc:178 species.cc:180 species.cc:181
-#: species.cc:198
+#: species.cc:198 species.cc:208
 msgid "Deep Dwarf"
 msgstr "딥 드워프"
 
 #: species.cc:229 species.cc:229 species.cc:166 species.cc:164 species.cc:167
-#: species.cc:183
+#: species.cc:183 species.cc:193
 msgid "Human"
 msgstr "인간"
 
 #: species.cc:230 species.cc:230 species.cc:167 species.cc:165 species.cc:168
-#: species.cc:184
+#: species.cc:184 species.cc:194
 msgid "Halfling"
 msgstr "하플링"
 
 #: species.cc:231 species.cc:231 species.cc:168 species.cc:166 species.cc:169
-#: species.cc:185
+#: species.cc:185 species.cc:195
 msgid "Kobold"
 msgstr "코볼트"
 
 #: species.cc:232 species.cc:232 species.cc:169 species.cc:167 species.cc:170
-#: species.cc:186
+#: species.cc:186 species.cc:196
 msgid "Mummy"
 msgstr "미라"
 
 #: species.cc:233 species.cc:233 species.cc:170 species.cc:168 species.cc:171
-#: species.cc:187
+#: species.cc:187 species.cc:197
 msgid "Naga"
 msgstr "나가"
 
 #: species.cc:234 species.cc:234 species.cc:171 species.cc:169 species.cc:172
-#: species.cc:188
+#: species.cc:188 species.cc:198
 msgid "Centaur"
 msgstr "켄타우로스"
 
 #: species.cc:235 species.cc:235 species.cc:172 species.cc:170 species.cc:173
-#: species.cc:189
+#: species.cc:189 species.cc:199
 msgid "Spriggan"
 msgstr "스프리건"
 
 #: species.cc:236 species.cc:236 species.cc:173 species.cc:171 species.cc:174
-#: species.cc:190
+#: species.cc:190 species.cc:200
 msgid "Minotaur"
 msgstr "미노타우르스"
 
@@ -164,117 +164,117 @@ msgid "Kenku"
 msgstr "켄쿠"
 
 #: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
-#: species.cc:195
+#: species.cc:195 species.cc:205
 msgid "Orcish"
 msgstr "오크족"
 
 #: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
-#: species.cc:195
+#: species.cc:195 species.cc:205
 msgid "Orc"
 msgstr "오크"
 
 #: species.cc:240 species.cc:240 species.cc:177 species.cc:175 species.cc:178
-#: species.cc:195 species.cc:173
+#: species.cc:195 species.cc:173 species.cc:183 species.cc:205
 msgid "Hill Orc"
 msgstr "힐 오크"
 
 #: species.cc:243 species.cc:243 species.cc:194 species.cc:187 species.cc:189
-#: species.cc:190 species.cc:207
+#: species.cc:190 species.cc:207 species.cc:217
 msgid "Ogreish"
 msgstr "오우거"
 
 #: species.cc:243 species.cc:243 species.cc:194 species.cc:187 species.cc:189
-#: species.cc:190 species.cc:207
+#: species.cc:190 species.cc:207 species.cc:217
 msgid "Ogre"
 msgstr "오우거"
 
 #: species.cc:244 species.cc:244 species.cc:195 species.cc:188 species.cc:190
-#: species.cc:191 species.cc:208
+#: species.cc:191 species.cc:208 species.cc:218
 msgid "Trollish"
 msgstr "트롤"
 
 #: species.cc:244 species.cc:244 species.cc:195 species.cc:188 species.cc:190
-#: species.cc:191 species.cc:208
+#: species.cc:191 species.cc:208 species.cc:218
 msgid "Troll"
 msgstr "트롤"
 
 #: species.cc:245 species.cc:245 species.cc:196 species.cc:189 species.cc:191
-#: species.cc:192 species.cc:209
+#: species.cc:192 species.cc:209 species.cc:219
 msgid "Divine"
 msgstr "디바인"
 
 #: species.cc:245 species.cc:245 species.cc:196 species.cc:189 species.cc:191
-#: species.cc:192 species.cc:209
+#: species.cc:192 species.cc:209 species.cc:219
 msgid "Demigod"
 msgstr "반신족"
 
 #: species.cc:246 species.cc:246 species.cc:197 species.cc:190 species.cc:192
-#: species.cc:193 species.cc:210
+#: species.cc:193 species.cc:210 species.cc:220
 msgid "Demonic"
 msgstr "데몬스폰"
 
 #: species.cc:246 species.cc:246 species.cc:197 species.cc:190 species.cc:192
-#: species.cc:193 species.cc:210
+#: species.cc:193 species.cc:210 species.cc:220
 msgid "Demonspawn"
 msgstr "데몬스폰"
 
 #: species.cc:247 species.cc:247 species.cc:198 species.cc:191 species.cc:193
-#: species.cc:194 species.cc:211
+#: species.cc:194 species.cc:211 species.cc:221
 msgid "Ghoulish"
 msgstr "구울"
 
 #: species.cc:247 species.cc:247 species.cc:198 species.cc:191 species.cc:193
-#: species.cc:194 species.cc:211
+#: species.cc:194 species.cc:211 species.cc:221
 msgid "Ghoul"
 msgstr "구울"
 
 #: species.cc:248 species.cc:248 species.cc:199 species.cc:192 species.cc:194
-#: species.cc:195 species.cc:212
+#: species.cc:195 species.cc:212 species.cc:222
 msgid "Merfolkian"
 msgstr "머포크"
 
 #: species.cc:248 species.cc:248 species.cc:199 species.cc:192 species.cc:194
-#: species.cc:195 species.cc:212
+#: species.cc:195 species.cc:212 species.cc:222
 msgid "Merfolk"
 msgstr "머포크"
 
 #: species.cc:249 species.cc:249 species.cc:200 species.cc:193 species.cc:195
-#: species.cc:196 species.cc:213
+#: species.cc:196 species.cc:213 species.cc:223
 msgid "Vampiric"
 msgstr "뱀파이어"
 
 #: species.cc:249 species.cc:249 species.cc:200 species.cc:193 species.cc:195
-#: species.cc:196 species.cc:213
+#: species.cc:196 species.cc:213 species.cc:223
 msgid "Vampire"
 msgstr "뱀파이어"
 
 #: species.cc:250 species.cc:250 species.cc:181 species.cc:183 species.cc:184
-#: species.cc:201
+#: species.cc:201 species.cc:211
 msgid "Feline"
 msgstr "펠리드"
 
 #: species.cc:250 species.cc:250 species.cc:181 species.cc:183 species.cc:184
-#: species.cc:201
+#: species.cc:201 species.cc:211
 msgid "Felid"
 msgstr "펠리드"
 
 #: species.cc:251 species.cc:251 species.cc:184 species.cc:186 species.cc:187
-#: species.cc:204
+#: species.cc:204 species.cc:214
 msgid "Octopoid"
 msgstr "옥토퍼드족"
 
 #: species.cc:251 species.cc:251 species.cc:184 species.cc:186 species.cc:187
-#: species.cc:204
+#: species.cc:204 species.cc:214
 msgid "Octopode"
 msgstr "옥토퍼드"
 
 #: species.cc:252 species.cc:252 species.cc:201 species.cc:194 species.cc:196
-#: species.cc:197 species.cc:215
+#: species.cc:197 species.cc:215 species.cc:225
 msgid "Yakish"
 msgstr "야크"
 
 #: species.cc:252 species.cc:252 species.cc:201 species.cc:194 species.cc:196
-#: species.cc:197 species.cc:215
+#: species.cc:197 species.cc:215 species.cc:225
 msgid "Yak"
 msgstr "야크"
 
@@ -4780,7 +4780,7 @@ msgstr "보존 식량"
 #: player-act.cc:382 actor.cc:526 actor.cc:527 mon-util.cc:3528 actor.cc:718
 #: mon-util.cc:3720 mon-util.cc:3692 actor.cc:722 mon-util.cc:3679
 #: mon-util.cc:3687 mon-util.cc:3684 actor.cc:729 mon-util.cc:3699
-#: mon-util.cc:3705 mon-util.cc:3763
+#: mon-util.cc:3705 mon-util.cc:3763 mon-util.cc:3761
 msgid "You"
 msgstr "당신"
 
@@ -4797,7 +4797,7 @@ msgstr "당신"
 #: spl-damage.cc:455 terrain.cc:1015 terrain.cc:1023 spl-damage.cc:506
 #: misc.cc:2751 mon-util.cc:3704 player-act.cc:371 player-act.cc:386
 #: terrain.cc:1016 terrain.cc:1024 misc.cc:2721 mon-util.cc:3762
-#: terrain.cc:1027
+#: terrain.cc:1027 mon-util.cc:3760
 msgid "you"
 msgstr "당신"
 
@@ -4812,7 +4812,7 @@ msgstr "당신의"
 #: player-act.cc:382 mon-util.cc:3718 mon-util.cc:3690 mon-util.cc:3677
 #: mon-util.cc:3685 mon-util.cc:3682 player-act.cc:373 player-act.cc:383
 #: mon-util.cc:3697 mon-util.cc:3703 player-act.cc:374 player-act.cc:384
-#: mon-util.cc:3761
+#: mon-util.cc:3761 mon-util.cc:3759
 msgid "your"
 msgstr "당신의"
 
@@ -4871,6 +4871,7 @@ msgstr "무언가"
 #: fight.cc:432 fight.cc:425 fight.cc:425 fight.cc:428 mon-util.cc:3556
 #: mon-util.cc:3748 mon-util.cc:3720 mon-util.cc:3707 mon-util.cc:3715
 #: mon-util.cc:3712 mon-util.cc:3727 mon-util.cc:3733 mon-util.cc:3791
+#: mon-util.cc:3789
 msgid "something"
 msgstr "무언가"
 
@@ -5674,7 +5675,7 @@ msgstr "부패"
 #: mon-stuff.cc:3973 mon-util.cc:3771 mon-util.cc:3779 mon-stuff.cc:3966
 #: mon-util.cc:3776 mon-util.cc:3791 terrain.cc:1347 mon-stuff.cc:3951
 #: mon-stuff.cc:3953 mon-util.cc:3797 terrain.cc:1348 mon-stuff.cc:4045
-#: mon-util.cc:3855 terrain.cc:1351
+#: mon-util.cc:3855 terrain.cc:1351 mon-util.cc:3853
 msgid "water"
 msgstr "물"
 
@@ -9111,74 +9112,75 @@ msgstr "전기"
 #: mon-util.cc:3774 main.cc:4229 main.cc:4233 mon-util.cc:3789 terrain.cc:1346
 #: mon-stuff.cc:3951 main.cc:4200 mon-stuff.cc:3953 mon-util.cc:3795
 #: terrain.cc:1347 main.cc:4259 mon-stuff.cc:4045 mon-util.cc:3853
-#: player.cc:256 terrain.cc:1350
+#: player.cc:256 terrain.cc:1350 main.cc:4264 mon-util.cc:3851 player.cc:258
 msgid "lava"
 msgstr "용암"
 
 #: player.cc:271 main.cc:4033 main.cc:4033 main.cc:4035 main_backup.cc:4036
 #: main.cc:4069 player.cc:270 player.cc:273 player.cc:250 main.cc:4204
 #: player.cc:251 main.cc:4209 main.cc:4203 main.cc:4208 main.cc:4229
-#: main.cc:4233 main.cc:4200 main.cc:4259 player.cc:256
+#: main.cc:4233 main.cc:4200 main.cc:4259 player.cc:256 main.cc:4264
+#: player.cc:258
 msgid "deep water"
 msgstr "깊은 물"
 
 #: player.cc:3831 player.cc:3831 player.cc:3922 player.cc:4014 player.cc:4038
 #: player.cc:4030 player.cc:4043 player.cc:4047 player.cc:4044 player.cc:4049
-#: player.cc:4048 player.cc:4039 player.cc:4055 player.cc:4165
+#: player.cc:4048 player.cc:4039 player.cc:4055 player.cc:4165 player.cc:4174
 msgid "extremely slow"
 msgstr "극히 느리다"
 
 #: player.cc:3832 player.cc:3832 player.cc:3923 player.cc:4015 player.cc:4039
 #: player.cc:4031 player.cc:4044 player.cc:4048 player.cc:4045 player.cc:4050
-#: player.cc:4049 player.cc:4040 player.cc:4056 player.cc:4166
+#: player.cc:4049 player.cc:4040 player.cc:4056 player.cc:4166 player.cc:4175
 msgid "very slow"
 msgstr "매우 느리다"
 
 #: player.cc:3833 player.cc:3833 player.cc:3924 player.cc:4016 player.cc:4040
 #: player.cc:4032 player.cc:4045 player.cc:4049 player.cc:4046 player.cc:4051
-#: player.cc:4050 player.cc:4041 player.cc:4057 player.cc:4167
+#: player.cc:4050 player.cc:4041 player.cc:4057 player.cc:4167 player.cc:4176
 msgid "quite slow"
 msgstr "느리다"
 
 #: player.cc:3834 player.cc:3834 player.cc:3925 player.cc:4017 player.cc:4041
 #: player.cc:4033 player.cc:4046 player.cc:4050 player.cc:4047 player.cc:4052
-#: player.cc:4051 player.cc:4042 player.cc:4058 player.cc:4168
+#: player.cc:4051 player.cc:4042 player.cc:4058 player.cc:4168 player.cc:4177
 msgid "below average"
 msgstr "평균 이하이다"
 
 #: player.cc:3835 player.cc:3835 player.cc:3926 player.cc:4018 player.cc:4042
 #: player.cc:4034 player.cc:4047 player.cc:4051 player.cc:4048 player.cc:4053
-#: player.cc:4052 player.cc:4043 player.cc:4059 player.cc:4169
+#: player.cc:4052 player.cc:4043 player.cc:4059 player.cc:4169 player.cc:4178
 msgid "average"
 msgstr "보통이다"
 
 #: player.cc:3836 player.cc:3836 player.cc:3927 player.cc:4019 player.cc:4043
 #: player.cc:4035 player.cc:4048 player.cc:4052 player.cc:4049 player.cc:4054
-#: player.cc:4053 player.cc:4044 player.cc:4060 player.cc:4170
+#: player.cc:4053 player.cc:4044 player.cc:4060 player.cc:4170 player.cc:4179
 msgid "above average"
 msgstr "평균 이상이다"
 
 #: player.cc:3837 player.cc:3837 player.cc:3928 player.cc:4020 player.cc:4044
 #: player.cc:4036 player.cc:4049 player.cc:4053 player.cc:4050 player.cc:4055
-#: player.cc:4054 player.cc:4045 player.cc:4061 player.cc:4171
+#: player.cc:4054 player.cc:4045 player.cc:4061 player.cc:4171 player.cc:4180
 msgid "quite fast"
 msgstr "빠르다"
 
 #: player.cc:3838 player.cc:3838 player.cc:3929 player.cc:4021 player.cc:4045
 #: player.cc:4037 player.cc:4050 player.cc:4054 player.cc:4051 player.cc:4056
-#: player.cc:4055 player.cc:4046 player.cc:4062 player.cc:4172
+#: player.cc:4055 player.cc:4046 player.cc:4062 player.cc:4172 player.cc:4181
 msgid "very fast"
 msgstr "매우 빠르다"
 
 #: player.cc:3839 player.cc:3839 player.cc:3930 player.cc:4022 player.cc:4046
 #: player.cc:4038 player.cc:4051 player.cc:4055 player.cc:4052 player.cc:4057
-#: player.cc:4056 player.cc:4047 player.cc:4063 player.cc:4173
+#: player.cc:4056 player.cc:4047 player.cc:4063 player.cc:4173 player.cc:4182
 msgid "extremely fast"
 msgstr "극히 빠르다"
 
 #: player.cc:3840 player.cc:3840 player.cc:3931 player.cc:4023 player.cc:4047
 #: player.cc:4039 player.cc:4052 player.cc:4056 player.cc:4053 player.cc:4058
-#: player.cc:4057 player.cc:4048 player.cc:4064 player.cc:4174
+#: player.cc:4057 player.cc:4048 player.cc:4064 player.cc:4174 player.cc:4183
 msgid "blindingly fast"
 msgstr "번개같이 빠르다"
 
@@ -9186,13 +9188,13 @@ msgstr "번개같이 빠르다"
 # 다른 곳에서 참조한다면 나눠야할듯 (deceit, 110817)
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
 #: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4828
-#: player.cc:4840 player.cc:4975
+#: player.cc:4840 player.cc:4975 player.cc:4984
 msgid "more"
 msgstr "더해졌음"
 
 #: player.cc:4659 player.cc:4659 player.cc:4754 player.cc:5001 player.cc:5025
 #: player.cc:4809 player.cc:4822 player.cc:4827 player.cc:4824 player.cc:4828
-#: player.cc:4840 player.cc:4975
+#: player.cc:4840 player.cc:4975 player.cc:4984
 msgid "less"
 msgstr "줄어들었음"
 
@@ -11871,41 +11873,49 @@ msgstr "키쿠바쿠드하의 사악한 고통"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "Silent"
 msgstr "무음"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "Almost silent"
 msgstr "매우 조용함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "Quiet"
 msgstr "조용함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "A bit loud"
 msgstr "약간 요란함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "Loud"
 msgstr "요란함"
 
 #: spl-cast.cc:1816 spl-cast.cc:1776 spl-cast.cc:1804 spl-cast.cc:1845
 #: spl-cast.cc:1849 spl-cast.cc:1847 spl-cast.cc:1848 spl-cast.cc:1909
+#: spl-cast.cc:1910
 msgid "Very loud"
 msgstr "매우 요란함"
 
 #: spl-cast.cc:1817 spl-cast.cc:1777 spl-cast.cc:1805 spl-cast.cc:1846
 #: spl-cast.cc:1850 spl-cast.cc:1848 spl-cast.cc:1849 spl-cast.cc:1910
+#: spl-cast.cc:1911
 msgid "Extremely loud"
 msgstr "극히 요란함"
 
 #: spl-cast.cc:1817 spl-cast.cc:1777 spl-cast.cc:1805 spl-cast.cc:1846
 #: spl-cast.cc:1850 spl-cast.cc:1848 spl-cast.cc:1849 spl-cast.cc:1910
+#: spl-cast.cc:1911
 msgid "Deafening"
 msgstr "던전 전체를 울림"
 
@@ -12654,12 +12664,13 @@ msgstr "사용함"
 #: mon-util.cc:3786 travel.cc:4402 mon-util.cc:3773 travel.cc:4419
 #: mon-util.cc:3781 mon-util.cc:3778 travel.cc:4448 mon-util.cc:3793
 #: travel.cc:4454 mon-util.cc:3799 mon-util.cc:3857 travel.cc:4455
+#: mon-util.cc:3855
 msgid "altar"
 msgstr "제단"
 
 #: mon-util.cc:3577 mon-util.cc:3625 mon-util.cc:3816 mon-util.cc:3788
 #: mon-util.cc:3775 mon-util.cc:3783 mon-util.cc:3780 mon-util.cc:3795
-#: mon-util.cc:3801 mon-util.cc:3859
+#: mon-util.cc:3801 mon-util.cc:3859 mon-util.cc:3857
 msgid "ground"
 msgstr "지면"
 
@@ -12671,9 +12682,12 @@ msgstr "지면"
 #: mon-util.cc:3969 mon-util.cc:3944 mon-util.cc:3962 mon-util.cc:3966
 #: mon-util.cc:3959 mon-util.cc:3977 mon-util.cc:3981 mon-util.cc:3983
 #: mon-util.cc:3987 mon-util.cc:4023 mon-util.cc:4041 mon-util.cc:4045
+#: mon-util.cc:4021 mon-util.cc:4039 mon-util.cc:4043
 msgid "says"
 msgstr "은(는) 말했다"
 
+#. actually S_SILENT
+#. S_NORMAL
 #. actually S_SILENT
 #. S_NORMAL
 #. actually S_SILENT
@@ -12885,19 +12899,19 @@ msgstr "은(는) 말했다"
 #: mon-util.cc:3950 mon-util.cc:3970 mon-util.cc:3945 mon-util.cc:3947
 #: mon-util.cc:3967 mon-util.cc:3960 mon-util.cc:3982 mon-util.cc:3966
 #: mon-util.cc:3968 mon-util.cc:3988 mon-util.cc:4024 mon-util.cc:4026
-#: mon-util.cc:4046
+#: mon-util.cc:4046 mon-util.cc:4022 mon-util.cc:4044
 msgid "shouts"
 msgstr "이(가) 소리쳤다"
 
 #: mon-util.cc:3731 mon-util.cc:3791 mon-util.cc:3982 mon-util.cc:3954
 #: mon-util.cc:3941 mon-util.cc:3949 mon-util.cc:3946 mon-util.cc:3961
-#: mon-util.cc:3967 mon-util.cc:4025
+#: mon-util.cc:3967 mon-util.cc:4025 mon-util.cc:4023
 msgid "barks"
 msgstr "이(가) 짖었다"
 
 #: mon-util.cc:3733 mon-util.cc:3793 mon-util.cc:3984 mon-util.cc:3956
 #: mon-util.cc:3943 mon-util.cc:3951 mon-util.cc:3948 mon-util.cc:3963
-#: mon-util.cc:3969 mon-util.cc:4027
+#: mon-util.cc:3969 mon-util.cc:4027 mon-util.cc:4025
 msgid "roars"
 msgstr "이(가) 으르렁댔다"
 
@@ -12907,100 +12921,101 @@ msgstr "이(가) 으르렁댔다"
 #: mon-util.cc:3944 mon-util.cc:3963 mon-util.cc:3952 mon-util.cc:3971
 #: mon-util.cc:3949 mon-util.cc:3968 mon-util.cc:3964 mon-util.cc:3983
 #: mon-util.cc:3970 mon-util.cc:3989 mon-util.cc:4028 mon-util.cc:4047
+#: mon-util.cc:4026 mon-util.cc:4045
 msgid "screams"
 msgstr "은(는) 비명을 질렀다"
 
 #: mon-util.cc:3735 mon-util.cc:3795 mon-util.cc:3986 mon-util.cc:3958
 #: mon-util.cc:3945 mon-util.cc:3953 mon-util.cc:3950 mon-util.cc:3965
-#: mon-util.cc:3971 mon-util.cc:4029
+#: mon-util.cc:3971 mon-util.cc:4029 mon-util.cc:4027
 msgid "bellows"
 msgstr "은(는) 고함쳤다"
 
 #: mon-util.cc:3736 mon-util.cc:3796 mon-util.cc:3987 mon-util.cc:3959
 #: mon-util.cc:3946 mon-util.cc:3954 mon-util.cc:3951 mon-util.cc:3966
-#: mon-util.cc:3972 mon-util.cc:4030
+#: mon-util.cc:3972 mon-util.cc:4030 mon-util.cc:4028
 msgid "trumpets"
 msgstr "은(는) 울부짖었다"
 
 #: mon-util.cc:3737 mon-util.cc:3797 mon-util.cc:3988 mon-util.cc:3960
 #: mon-util.cc:3947 mon-util.cc:3955 mon-util.cc:3952 mon-util.cc:3967
-#: mon-util.cc:3973 mon-util.cc:4031
+#: mon-util.cc:3973 mon-util.cc:4031 mon-util.cc:4029
 msgid "screeches"
 msgstr "은(는) 날카로운 소리를 냈다"
 
 #: mon-util.cc:3738 mon-util.cc:3798 mon-util.cc:3989 mon-util.cc:3961
 #: mon-util.cc:3948 mon-util.cc:3956 mon-util.cc:3953 mon-util.cc:3968
-#: mon-util.cc:3974 mon-util.cc:4032
+#: mon-util.cc:3974 mon-util.cc:4032 mon-util.cc:4030
 msgid "buzzes"
 msgstr "은(는) 윙윙거리는 소리를 냈다"
 
 #: mon-util.cc:3739 mon-util.cc:3799 mon-util.cc:3990 mon-util.cc:3962
 #: mon-util.cc:3949 mon-util.cc:3957 mon-util.cc:3954 mon-util.cc:3969
-#: mon-util.cc:3975 mon-util.cc:4033
+#: mon-util.cc:3975 mon-util.cc:4033 mon-util.cc:4031
 msgid "moans"
 msgstr "은(는) 투덜거렸다"
 
 #: mon-util.cc:3740 mon-util.cc:3800 mon-util.cc:3991 mon-util.cc:3963
 #: mon-util.cc:3950 mon-util.cc:3958 mon-util.cc:3955 mon-util.cc:3970
-#: mon-util.cc:3976 mon-util.cc:4034
+#: mon-util.cc:3976 mon-util.cc:4034 mon-util.cc:4032
 msgid "gurgles"
 msgstr "은(는) 쏴~ 하는 소리를 냈다"
 
 #: mon-util.cc:3741 mon-util.cc:3801 mon-util.cc:3992 mon-util.cc:3964
 #: mon-util.cc:3951 mon-util.cc:3959 mon-util.cc:3956 mon-util.cc:3971
-#: mon-util.cc:3977 mon-util.cc:4035
+#: mon-util.cc:3977 mon-util.cc:4035 mon-util.cc:4033
 msgid "whines"
 msgstr "은(는) 칭얼거렸다"
 
 #: mon-util.cc:3742 mon-util.cc:3802 mon-util.cc:3993 mon-util.cc:3965
 #: mon-util.cc:3952 mon-util.cc:3960 mon-util.cc:3957 mon-util.cc:3972
-#: mon-util.cc:3978 mon-util.cc:4036
+#: mon-util.cc:3978 mon-util.cc:4036 mon-util.cc:4034
 msgid "croaks"
 msgstr "은(는) 개굴개굴거렸다"
 
 #: mon-util.cc:3743 mon-util.cc:3803 mon-util.cc:3994 mon-util.cc:3966
 #: mon-util.cc:3953 mon-util.cc:3961 mon-util.cc:3958 mon-util.cc:3973
-#: mon-util.cc:3979 mon-util.cc:4037
+#: mon-util.cc:3979 mon-util.cc:4037 mon-util.cc:4035
 msgid "growls"
 msgstr "은(는) 으르렁댔다"
 
 #: mon-util.cc:3744 mon-util.cc:3804 mon-util.cc:3995 mon-util.cc:3967
 #: mon-util.cc:3954 mon-util.cc:3962 mon-util.cc:3959 mon-util.cc:3974
-#: mon-util.cc:3980 mon-util.cc:4038
+#: mon-util.cc:3980 mon-util.cc:4038 mon-util.cc:4036
 msgid "hisses"
 msgstr "은(는) 쉬익~ 하는 소리를 냈다"
 
 #: mon-util.cc:3745 mon-util.cc:3805 mon-util.cc:3996 mon-util.cc:3968
 #: mon-util.cc:3955 mon-util.cc:3963 mon-util.cc:3960 mon-util.cc:3975
-#: mon-util.cc:3981 mon-util.cc:4039
+#: mon-util.cc:3981 mon-util.cc:4039 mon-util.cc:4037
 msgid "sneers"
 msgstr "은(는) 비웃었다"
 
 #. S_DEMON_TAUNT
 #: mon-util.cc:3746 mon-util.cc:3806 mon-util.cc:3997 mon-util.cc:3969
 #: mon-util.cc:3956 mon-util.cc:3964 mon-util.cc:3961 mon-util.cc:3976
-#: mon-util.cc:3982 mon-util.cc:4040
+#: mon-util.cc:3982 mon-util.cc:4040 mon-util.cc:4038
 msgid "caws"
 msgstr "은(는) 까악거리고 울었다"
 
 #. S_CHERUB -- they just speak normally.
 #: mon-util.cc:3747 mon-util.cc:3808 mon-util.cc:3999 mon-util.cc:3971
 #: mon-util.cc:3958 mon-util.cc:3966 mon-util.cc:3963 mon-util.cc:3978
-#: mon-util.cc:3984 mon-util.cc:4042
+#: mon-util.cc:3984 mon-util.cc:4042 mon-util.cc:4040
 msgid "buggily says"
 msgstr "은(는) 이것이 버그라고 말했다"
 
 #. NUM_SHOUTS
 #: mon-util.cc:3748 mon-util.cc:3809 mon-util.cc:4000 mon-util.cc:3972
 #: mon-util.cc:3959 mon-util.cc:3967 mon-util.cc:3964 mon-util.cc:3979
-#: mon-util.cc:3985 mon-util.cc:4043
+#: mon-util.cc:3985 mon-util.cc:4043 mon-util.cc:4041
 msgid "breathes"
 msgstr "은(는) 호흡했다"
 
 #. S_VERY_SOFT
 #: mon-util.cc:3749 mon-util.cc:3810 mon-util.cc:4001 mon-util.cc:3973
 #: mon-util.cc:3960 mon-util.cc:3968 mon-util.cc:3965 mon-util.cc:3980
-#: mon-util.cc:3986 mon-util.cc:4044
+#: mon-util.cc:3986 mon-util.cc:4044 mon-util.cc:4042
 msgid "whispers"
 msgstr "은(는) 속삭였다"
 
@@ -13542,7 +13557,7 @@ msgid "enslave soul"
 msgstr "영혼 지배"
 
 #: mon-util.cc:3705 mon-util.cc:3708 mon-util.cc:3929 mon-util.cc:3935
-#: mon-util.cc:3993
+#: mon-util.cc:3993 mon-util.cc:3991
 msgid "a god"
 msgstr "신"
 
@@ -13673,7 +13688,7 @@ msgstr "화룡 가죽"
 msgid "fire dragon armour"
 msgstr "화룡 갑옷"
 
-#: species.cc:174 species.cc:172 species.cc:175 species.cc:191
+#: species.cc:174 species.cc:172 species.cc:175 species.cc:191 species.cc:201
 msgid "Tengu"
 msgstr "텐구"
 
@@ -17288,11 +17303,11 @@ msgstr "당신에게서 강한 독기가 방출되기 시작했다."
 msgid "nothing"
 msgstr "없음"
 
-#: species.cc:181 species.cc:183 species.cc:184 species.cc:201
+#: species.cc:181 species.cc:183 species.cc:184 species.cc:201 species.cc:211
 msgid "Cat"
 msgstr "고양이"
 
-#: species.cc:184 species.cc:186 species.cc:187 species.cc:204
+#: species.cc:184 species.cc:186 species.cc:187 species.cc:204 species.cc:214
 msgid "Octopus"
 msgstr "문어족"
 
@@ -18410,7 +18425,7 @@ msgstr "위습 변신"
 
 #: spl-summoning.cc:2688 spl-summoning.cc:2704 spl-summoning.cc:2716
 #: spl-summoning.cc:2722 spl-summoning.cc:2723 spl-summoning.cc:2726
-#: spl-summoning.cc:2732
+#: spl-summoning.cc:2732 spl-summoning.cc:2733
 msgid "barrage of energy"
 msgstr "발사된 마력"
 
@@ -18938,11 +18953,11 @@ msgstr "홍수의 유리병"
 msgid "Grotesk"
 msgstr "그로테스크"
 
-#: species.cc:214
+#: species.cc:214 species.cc:224
 msgid "Djinn"
 msgstr "지니"
 
-#: species.cc:214
+#: species.cc:214 species.cc:224
 msgid "Djinni"
 msgstr "지니"
 
@@ -18966,11 +18981,11 @@ msgstr "잃어버린 영혼"
 msgid "trail of fire"
 msgstr "화염의 자취"
 
-#: evoke.cc:1322
+#: evoke.cc:1322 evoke.cc:1323
 msgid "falling rubble"
 msgstr "떨어지는 돌무더기"
 
-#: evoke.cc:1441
+#: evoke.cc:1441 evoke.cc:1442
 msgid "flood of elemental water"
 msgstr "홍수"
 
@@ -19082,6 +19097,10 @@ msgstr "당신의 피부가 돌처럼 단단해졌다."
 msgid "Your flesh softens."
 msgstr "당신의 피부가 부드러워졌다."
 
-#: species.cc:174
+#: species.cc:174 species.cc:184
 msgid "Lava Orc"
 msgstr "라바 오크"
+
+#: species.cc:202
+msgid "Gargoyle"
+msgstr "가고일"
