@@ -1312,6 +1312,13 @@ int player_regen()
             rr += 10; // Bonus regeneration for full vampires.
     }
 
+    // Compared to other races, a starting djinni would have regen of 4 (hp)
+    // plus 17 (mp).  So let's compensate them early; they can stand getting
+    // shafted on the total regen rates later on.
+    if (you.species == SP_DJINNI)
+        if (you.hp_max < 100)
+            rr += (100 - you.hp_max) / 6;
+
     // Slow heal mutation.  Each level reduces your natural healing by
     // one third.
     if (player_mutation_level(MUT_SLOW_HEALING) > 0)
@@ -6523,8 +6530,11 @@ bool player::heal(int amount, bool max_too)
 
 mon_holy_type player::holiness() const
 {
-    if (form == TRAN_STATUE || form == TRAN_WISP || petrified())
+    if (species == SP_GARGOYLE || form == TRAN_STATUE || form == TRAN_WISP
+        || petrified())
+    {
         return MH_NONLIVING;
+    }
 
     if (is_undead)
         return MH_UNDEAD;
