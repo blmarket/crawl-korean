@@ -1397,8 +1397,8 @@ void draw_border(void)
     CGOTOXY(1, sh_pos, GOTO_STAT); CPRINTF("SH:");
 
     CGOTOXY(19, str_pos, GOTO_STAT); CPRINTF("힘 :");
-    CGOTOXY(19, int_pos, GOTO_STAT); CPRINTF("민 :");
-    CGOTOXY(19, dex_pos, GOTO_STAT); CPRINTF("지 :");
+    CGOTOXY(19, int_pos, GOTO_STAT); CPRINTF("지 :");
+    CGOTOXY(19, dex_pos, GOTO_STAT); CPRINTF("민 :");
 
     if (Options.show_gold_turns)
     {
