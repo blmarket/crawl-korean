@@ -822,8 +822,8 @@ menu_letter InvMenu::load_items(const vector<const item_def*> &mitems,
                 {
                     // longest string
                     const string str = _("Magical Staves ");
-                    subtitle += string(strwidth(str) - strwidth(subtitle),
-                                       ' ');
+                    //subtitle += string(strwidth(str) - strwidth(subtitle),
+                    //                   ' '); (130601, 이부분에서 item drop시 튕기는 오류가 있습니다. 한글판에선 필요없으니 삭제)
                     subtitle += _("(select all with <w>");
                     for (unsigned int k = 0; k < glyphs.size(); ++k)
                          subtitle += glyphs[k];
