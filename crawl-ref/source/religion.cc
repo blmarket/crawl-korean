@@ -3470,7 +3470,7 @@ static void _god_welcome_identify_gear()
 void god_pitch(god_type which_god)
 {
     if (which_god == GOD_BEOGH && grd(you.pos()) != DNGN_ALTAR_BEOGH)
-        mpr("You bow before the missionary of Beogh.");
+        mpr("당신은 베오그의 선교자에게 절을 올렸다.");
     else
     {
         mprf("당신은 %s의 제단%s, 기도를 드렸다.", _(god_name(which_god).c_str()),

@@ -3404,10 +3404,10 @@ void spare_beogh_convert()
     you.one_time_ability_used.set(GOD_BEOGH);
 
     if (witc == 1)
-        mpr("The priest welcomes you and lets you live.");
+        mpr(_("The priest welcomes you and lets you live."));
     else
     {
-        mprf("With a roar of approval, the orcs welcome you as one of their own, "
-             "and spare your life.");
+        mprf(_("With a roar of approval, the orcs welcome you as one of their own, "
+             "and spare your life."));
     }
 }

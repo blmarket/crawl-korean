@@ -2952,7 +2952,7 @@ void read_scroll(int slot)
     if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
     {
         crawl_state.zero_turns_taken();
-        return mpr("You'd burn any scroll you tried to read!");
+        return mpr(_("You'd burn any scroll you tried to read!"));
     }
 
     const scroll_type which_scroll = static_cast<scroll_type>(scroll.sub_type);

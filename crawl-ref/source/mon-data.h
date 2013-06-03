@@ -5902,7 +5902,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_PAN, 'c', LIGHTMAGENTA, "Pan",
+    MONS_PAN, 'c', LIGHTMAGENTA, M_("Pan"),
     M_WARM_BLOOD | M_SPEAKS | M_ARCHER | M_SPELLCASTER | M_ACTUAL_SPELLS
         | M_SPEAKS | M_UNIQUE,
     MR_NO_FLAGS,
@@ -6160,7 +6160,7 @@ static monsterentry mondata[] = {
 },
 
 {
-    MONS_SOJOBO, 'H', LIGHTGREEN, "Sojobo",
+    MONS_SOJOBO, 'H', LIGHTGREEN, M_("Sojobo"),
     M_FIGHTER | M_SPELLCASTER | M_ACTUAL_SPELLS | M_SENSE_INVIS | M_WARM_BLOOD
         | M_SPEAKS | M_DEFLECT_MISSILES | M_UNIQUE,
     MR_NO_FLAGS,

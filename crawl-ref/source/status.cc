@@ -567,7 +567,7 @@ bool fill_status_info(int status, status_info* inf)
         if (env.level_state & LSTATE_BEOGH && can_convert_to_beogh())
         {
             inf->light_colour = WHITE;
-            inf->light_text = "Beogh";
+            inf->light_text = pgettext("status","Beogh");
         }
         break;
 

@@ -6964,28 +6964,28 @@ beogh_converted_orc_reaction_speech_follower
 ####
 orc_priest_apostate
 
-The priest shouts, "Disloyal scoundrel, leave my sight!"
+사제는 외쳤다. "독실하지 않은 악당이여, 내 눈 앞에서 사라져라!"
 
-The priest snarls, "I'll spare you only if you run away! Begone!"
+사제는 씩씩대며 말했다. "지금 당장 내 눈 앞에서 사라진다면 한 번은 눈감아주지! 꺼져라!"
 
-The priest curses, "Your faithless show of piety disgusts me!"
+사제는 악담을 내뱉었다. "신앙심이라곤 눈꼽만큼도 없는 네 모습은 정말로 꼴불견이군!"
 
-The priest sneers, "Beogh may forgive you, but I don't!"
+사제는 악의적으로 말했다. "베오그님은 널 용서해 주실지 몰라도, 난 아냐!"
 
-The priest shouts, "You had your chance, apostate scum!"
+사제는 외쳤다. "넌 네 기회조차 차버렸다, 쓰레기 같은 변절자 놈아!"
 %%%%
 #######################################################
 #
 ####
 orc_priest_preaching
 
-@The_monster@ shouts, "Join the one true god or die!"
+@The_monster@은(는) 외쳤다. "단 하나뿐인 진실을 추종하지 않는 자들에겐, 죽음만이 있으리!"
 
-@The_monster@ shouts, "Beogh is our master! Accept the truth or die!"
+@The_monster@은(는) 외쳤다. "베오그님은 우리의 구세주이다! 진실을 받아들이지 않는 자들에겐 죽음뿐이리!"
 
-@The_monster@ shouts, "Surrender to Beogh and we'll let you live!"
+@The_monster@은(는) 외쳤다. "항복하라. 그리고 베오그님을 따르라. 그럼 기꺼이 살려주겠다!"
 
-@The_monster@ threatens, "By the altar or by the axe, you will meet Beogh!"
+@The_monster@은(는) 위협했다. "넌 곧 베오그님을 뵙게 될 것이다. 제단에서, 아니면 이 도끼에서!"
 %%%%
 #################################
 # Cherubs.

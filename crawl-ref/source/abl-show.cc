@@ -2856,10 +2856,10 @@ int choose_ability_menu(const vector<talent>& talents)
     {
         // Hack like the one in spl-cast.cc:list_spells() to align the title.
         ToggleableMenuEntry* me =
-            new ToggleableMenuEntry("  Ability - do what?                 "
-                                    "Cost                       Failure",
-                                    "  Ability - describe what?           "
-                                    "Cost                       Failure",
+            new ToggleableMenuEntry(_("  Ability - do what?                 "
+                                    "Cost                       Failure"),
+                                    _("  Ability - describe what?           "
+                                    "Cost                       Failure"),
                                     MEL_ITEM);
         me->colour = BLUE;
         abil_menu.add_entry(me);
@@ -2886,8 +2886,8 @@ int choose_ability_menu(const vector<talent>& talents)
     else
     {
         abil_menu.set_more(formatted_string::parse_string(gettext(
-                           "Press '<w>!</w>' or '<w>?</w>' to toggle "
-                           "between ability selection and description.")));
+                           _("Press '<w>!</w>' or '<w>?</w>' to toggle "
+                           "between ability selection and description."))));
     }
 
     int numbers[52];
@@ -2953,8 +2953,8 @@ int choose_ability_menu(const vector<talent>& talents)
     {
 #ifdef USE_TILE_LOCAL
         ToggleableMenuEntry* subtitle =
-            new ToggleableMenuEntry("    Invocations - ",
-                                    "    Invocations - ", MEL_ITEM);
+            new ToggleableMenuEntry(_("    Invocations - "),
+                                    _("    Invocations - "), MEL_ITEM);
         subtitle->colour = BLUE;
         abil_menu.add_entry(subtitle);
 #else
