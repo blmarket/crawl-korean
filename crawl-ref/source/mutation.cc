@@ -620,7 +620,7 @@ string describe_mutations(bool center_title)
 
         // No scrolls
         col = (temperature_effect(LORC_NO_SCROLLS)) ? "red" : "darkgrey";
-        result += "<" + col + ">당신의 몸은 너무 뜨거워, 마법 두루마리나 책을 읽을 수 없다.</" + col + ">\n";
+        result += "<" + col + ">당신의 몸은 너무 뜨거워, 마법 두루마리를 읽을 수 없다.</" + col + ">\n";
 
         break;
     }

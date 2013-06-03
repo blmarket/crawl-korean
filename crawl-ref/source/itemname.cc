@@ -2994,6 +2994,9 @@ bool is_emergency_item(const item_def &item)
         case SCR_FEAR:
         case SCR_FOG:
             return true;
+        case SCR_IMMOLATION:
+            if (you.species == SP_DJINNI)
+                return true;
         default:
             return false;
         }
@@ -3410,6 +3413,9 @@ bool is_useless_item(const item_def &item, bool temp)
             return (player_res_poison(false, temp, false) > 0
                     && (temp || you.species != SP_VAMPIRE));
 
+        case RING_PROTECTION_FROM_FIRE:
+            return you.species == SP_DJINNI;
+
 #if TAG_MAJOR_VERSION == 34
         case AMU_CONTROLLED_FLIGHT:
             return (player_genus(GENPC_DRACONIAN)
@@ -3523,8 +3529,6 @@ bool is_useless_item(const item_def &item, bool temp)
         }
 
     case OBJ_BOOKS:
-        if (you.species == SP_LAVA_ORC && temperature_effect(LORC_NO_SCROLLS))
-            return true;
         if (item.sub_type != BOOK_MANUAL || !item_type_known(item))
             return false;
         if (you.skills[item.plus] >= 27)

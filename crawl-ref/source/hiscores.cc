@@ -817,6 +817,7 @@ enum old_job_type
     OLD_JOB_REAVER       = -4,
     OLD_JOB_STALKER      = -5,
     OLD_JOB_JESTER       = -6,
+    OLD_JOB_PRIEST       = -7,
     NUM_OLD_JOBS
 };
 
@@ -839,6 +840,8 @@ static const char* _job_name(int job)
         return "추적자";
     case OLD_JOB_JESTER:
         return "광대";
+    case OLD_JOB_PRIEST:
+        return "사제";
     default:
         return "잉여백수";
     }
@@ -863,6 +866,8 @@ static const char* _job_abbrev(int job)
         return "St";
     case OLD_JOB_JESTER:
         return "Jr";
+    case OLD_JOB_PRIEST:
+        return "Pr";
     default:
         return "??";
     }

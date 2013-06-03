@@ -4219,6 +4219,9 @@ void seen_monster(monster* mons)
     {
         did_god_conduct(DID_SEE_MONSTER, mons->hit_dice, true, mons);
     }
+
+    if (mons_allows_beogh(mons))
+        env.level_state |= LSTATE_BEOGH;
 }
 
 //---------------------------------------------------------------
@@ -5063,7 +5066,7 @@ std::string temperature_text(int temp)
         case TEMP_FIRE:
             return _("Fast movement speed; burn attackers");
         case TEMP_MAX:
-            return _("Burn surroundings; cannot read books or scrolls");
+            return _("Burn surroundings; cannot read scrolls");
         default:
             return "";
     }

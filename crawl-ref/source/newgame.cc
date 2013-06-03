@@ -186,7 +186,7 @@ static bool _is_job_valid_choice(job_type job)
         return false;
 
 #if TAG_MAJOR_VERSION == 34
-    if (job == JOB_STALKER || job == JOB_JESTER)
+    if (job == JOB_STALKER || job == JOB_JESTER || job == JOB_PRIEST)
         return false;
 #endif
 
@@ -1027,7 +1027,7 @@ static void _construct_backgrounds_menu(const newgame_def* ng,
             P_("Jobgroup", "Zealot"),
             coord_def(15, 0), 20,
             {JOB_BERSERKER, JOB_ABYSSAL_KNIGHT, JOB_CHAOS_KNIGHT,
-             JOB_DEATH_KNIGHT, JOB_PRIEST, JOB_HEALER, JOB_UNKNOWN,
+             JOB_DEATH_KNIGHT, JOB_HEALER, JOB_UNKNOWN, JOB_UNKNOWN,
              JOB_UNKNOWN, JOB_UNKNOWN}
         },
         {

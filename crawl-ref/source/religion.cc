@@ -3093,6 +3093,8 @@ void excommunication(god_type new_god)
             remove_all_companions(GOD_BEOGH);
         }
 
+        env.level_state |= LSTATE_BEOGH;
+
         _set_penance(old_god, 50);
         break;
 
@@ -3467,7 +3469,11 @@ static void _god_welcome_identify_gear()
 
 void god_pitch(god_type which_god)
 {
-    mprf("당신은 %s의 제단%s, 기도를 드렸다.", _(god_name(which_god).c_str()),
+    if (which_god == GOD_BEOGH && grd(you.pos()) != DNGN_ALTAR_BEOGH)
+        mpr("You bow before the missionary of Beogh.");
+    else
+    {
+        mprf("당신은 %s의 제단%s, 기도를 드렸다.", _(god_name(which_god).c_str()),
          you.form == TRAN_WISP   ? " 주위를 맴돌며," :
          you.form == TRAN_BAT    ? " 위에 걸터앉아" :
          you.flight_mode()       ? " 위에서 침착히 떠다니며" :
@@ -3482,11 +3488,10 @@ void god_pitch(god_type which_god)
          you.form == TRAN_JELLY  ? "앞에서 침착하게 몸을 떨며" :
          you.species == SP_NAGA  ? "에 몸을 말고 앉아" :
          // < TGWi> you curl up on the altar and go to sleep
-            /// You %s the altar...
          you.species == SP_FELID ? "에 다소곳이 앉아"
-            /// You %s the altar...
                                  : "에 무릎꿇어"
-         );
+								 );
+    }
     more();
 
     // Note: using worship we could make some gods not allow followers to
