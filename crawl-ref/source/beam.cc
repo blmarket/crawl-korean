@@ -411,8 +411,7 @@ void init_zap_index()
 
 static const zap_info* _seek_zap(zap_type z_type)
 {
-    ASSERT(z_type >= 0);
-    ASSERT(z_type < NUM_ZAPS);
+    ASSERT_RANGE(z_type, 0, NUM_ZAPS);
     if (zap_index[z_type] == -1)
         return NULL;
     else
@@ -639,7 +638,7 @@ void bolt::initialise_fire()
 
     if (chose_ray)
     {
-        ASSERT(in_bounds(ray.pos()));
+        ASSERT_IN_BOUNDS(ray.pos());
 
         if (source == coord_def())
             source = ray.pos();
@@ -654,9 +653,8 @@ void bolt::initialise_fire()
         use_target_as_pos = true;
     }
 
-    ASSERT(in_bounds(source));
-    ASSERT(flavour > BEAM_NONE);
-    ASSERT(flavour < BEAM_FIRST_PSEUDO);
+    ASSERT_IN_BOUNDS(source);
+    ASSERT_RANGE(flavour, BEAM_NONE + 1, BEAM_FIRST_PSEUDO);
     ASSERT(!drop_item || item && item->defined());
     ASSERTM(range >= 0, "beam '%s', source '%s', item '%s'; has range -1",
             name.c_str(),
@@ -1692,20 +1690,23 @@ int mons_adjust_flavoured(monster* mons, bolt &pbolt, int hurted,
         int dam = 0;
         // Those naturally chaotic/unclean get hit fully, those who merely
         // dabble in things Zin hates get partial resistance.
-        if (mons->is_chaotic() || !mons->is_unclean(false))
-            dam = 3;
+        if (mons->is_chaotic() || mons->is_unclean(false))
+            dam = 60;
         else if (mons->is_unclean(true))
-            dam = 2;
+            dam = 40;
         // a bit of damage to those you can recite against
         else if (mons->is_unholy() || mons->is_evil())
-            dam = 1;
-        // if monster mutations get added, here's the place for partial damage
+            dam = 20;
+        else if (mons->has_ench(ENCH_WRETCHED))
+            dam = 3 * mons->get_ench(ENCH_WRETCHED).degree;
+        // if non-abstract monster mutations get added, let's handle them too
 
-        hurted = hurted * dam / 3;
+        hurted = hurted * dam / 60;
         if (doFlavouredEffects)
         {
             simple_monster_message(mons,
-                                   hurted == 0 ? _(" appears unharmed.")
+                                   hurted == 0 ? _(" appears unharmed.") :
+                                   dam > 30    ? _(" is terribly seared!")
                                                : _(" is seared!"));
         }
         break;
@@ -2243,14 +2244,16 @@ static coord_def _random_point_hittable_from(const coord_def &c,
 }
 
 static void _create_feat_splash(coord_def center,
-                                dungeon_feature_type overwriteable,
-                                dungeon_feature_type newfeat,
                                 int radius,
                                 int nattempts)
 {
-    // Always affect center.
-    temp_change_terrain(center, DNGN_SHALLOW_WATER, 100 + random2(100),
-                        TERRAIN_CHANGE_FLOOD);
+    // Always affect center, if compatible
+    if ((grd(center) == DNGN_FLOOR || grd(center) == DNGN_SHALLOW_WATER))
+    {
+        temp_change_terrain(center, DNGN_SHALLOW_WATER, 100 + random2(100),
+                            TERRAIN_CHANGE_FLOOD);
+    }
+
     for (int i = 0; i < nattempts; ++i)
     {
         const coord_def newp(_random_point_hittable_from(center, radius));
@@ -2486,7 +2489,10 @@ void bolt::affect_endpoint()
 
     if (!is_explosion && !noise_generated && loudness)
     {
-        noisy(loudness, pos(), beam_source);
+        // Digging can target squares on the map boundary, though it
+        // won't remove them of course.
+        const coord_def noise_position = clamp_in_bounds(pos());
+        noisy(loudness, noise_position, beam_source);
         noise_generated = true;
     }
 
@@ -2499,11 +2505,7 @@ void bolt::affect_endpoint()
         }
         else
             noisy(25, pos(), _("You hear a splash."));
-        _create_feat_splash(pos(),
-                            DNGN_FLOOR,
-                            DNGN_SHALLOW_WATER,
-                            2,
-                            random_range(3, 12, 2));
+        _create_feat_splash(pos(), 2, random_range(3, 12, 2));
     }
 
     // FIXME: why don't these just have is_explosion set?
@@ -2695,8 +2697,7 @@ maybe_bool bolt::affects_wall(dungeon_feature_type wall) const
             || wall == DNGN_GRANITE_STATUE
             || wall == DNGN_ORCISH_IDOL
             || wall == DNGN_CLOSED_DOOR
-            || wall == DNGN_RUNED_DOOR
-            || wall == DNGN_SEALED_DOOR)
+            || wall == DNGN_RUNED_DOOR)
         {
             return MB_TRUE;
         }
@@ -5504,7 +5505,11 @@ bool bolt::explode(bool show_more, bool hole_in_the_middle)
     {
         loudness = 10 + 5 * r;
 
-        bool heard_expl = noisy(loudness, pos(), beam_source);
+        // Lee's Rapid Deconstruction can target the tiles on the map
+        // boundary.
+        const coord_def noise_position = clamp_in_bounds(pos());
+        bool heard_expl = noisy(loudness, noise_position, beam_source);
+
         heard = heard || heard_expl;
 
         if (heard_expl && !noise_msg.empty() && !you.see_cell(pos()))

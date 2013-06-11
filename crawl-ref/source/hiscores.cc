@@ -1202,7 +1202,7 @@ void scorefile_entry::init_death_cause(int dam, int dsrc,
                 auxkilldata = mitm[mons->inv[MSLOT_WEAPON]].name(true, DESC_PLAIN);
         }
 
-        const bool death = you.hp <= 0;
+        const bool death = (you.hp <= 0 || death_type == KILLED_BY_DRAINING);
 
         const description_level_type desc =
             death_type == KILLED_BY_SPORE ? DESC_PLAIN : DESC_PLAIN;
@@ -2475,6 +2475,11 @@ string scorefile_entry::death_description(death_desc_verbosity verbosity) const
                     desc += auxkilldata;
                     desc += _hiscore_newline_string();
                     needs_damage = true;
+                }
+                else if (death_type == KILLED_BY_DRAINING
+                         || death_type == KILLED_BY_BURNING)
+                {
+                    desc += make_stringf(" (%s)", auxkilldata.c_str());
                 }
             }
             else if (needs_called_by_monster_line)

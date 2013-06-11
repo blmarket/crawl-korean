@@ -50,7 +50,10 @@ static bool _confirm_pray_sacrifice(god_type god)
                     si->name(true, DESC_PLAIN).c_str());
 
             if (!yesno(prompt.c_str(), false, 'n'))
+            {
+                canned_msg(MSG_OK);
                 return false;
+            }
         }
     }
 
@@ -94,7 +97,10 @@ static bool _bless_weapon(god_type god, brand_type brand, int colour)
     prompt += "?";
 
     if (!yesno(prompt.c_str(), true, 'n'))
+    {
+        canned_msg(MSG_OK);
         return false;
+    }
 
     you.duration[DUR_WEAPON_BRAND] = 0;     // just in case
 
@@ -250,7 +256,10 @@ static bool _altar_prayer()
 
             // If not, ask if the player wants a Necronomicon.
             if (!yesno(_("Do you wish to receive the Necronomicon?"), true, 'n'))
+            {
+                canned_msg(MSG_OK);
                 return false;
+            }
         }
 
         int thing_created = items(1, OBJ_BOOKS, BOOK_NECRONOMICON, true, 1,
@@ -419,7 +428,10 @@ static bool _zin_donate_gold()
     }
 
     if (!yesno(_("Do you wish to donate half of your money?"), true, 'n'))
+    {
+        canned_msg(MSG_OK);
         return false;
+    }
 
     const int donation_cost = (you.gold / 2) + 1;
     const int donation = _gold_to_donation(donation_cost);
@@ -492,8 +504,7 @@ static int _leading_sacrifice_group()
 
 static void _give_sac_group_feedback(int which)
 {
-    ASSERT(which >= 0);
-    ASSERT(which < 5);
+    ASSERT_RANGE(which, 0, 5);
     const char* names[] = {
         M_("Escape"), M_("Destruction"), M_("Dungeons"), M_("Summoning"), M_("Wonder")
     };

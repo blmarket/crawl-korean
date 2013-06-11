@@ -4,6 +4,7 @@
 
 #include "areas.h"
 #include "env.h"
+#include "evoke.h"
 #include "godabil.h"
 #include "libutil.h"
 #include "misc.h"
@@ -155,8 +156,7 @@ void init_duration_index()
     for (unsigned i = 0; i < ARRAYSZ(duration_data); ++i)
     {
         duration_type dur = duration_data[i].dur;
-        ASSERT(dur >= 0);
-        ASSERT(dur < NUM_DURATIONS);
+        ASSERT_RANGE(dur, 0, NUM_DURATIONS);
         ASSERT(duration_index[dur] == -1);
         duration_index[dur] = i;
     }
@@ -164,8 +164,7 @@ void init_duration_index()
 
 static const duration_def* _lookup_duration(duration_type dur)
 {
-    ASSERT(dur >= 0);
-    ASSERT(dur < NUM_DURATIONS);
+    ASSERT_RANGE(dur, 0, NUM_DURATIONS);
     if (duration_index[dur] == -1)
         return NULL;
     else
@@ -455,13 +454,15 @@ bool fill_status_info(int status, status_info* inf)
         break;
 
     case STATUS_MANUAL:
-        if (!is_invalid_skill(you.manual_skill))
+    {
+        string skills = manual_skill_names();
+        if (!skills.empty())
         {
-            string sk = skill_name(you.manual_skill);
-            inf->short_text = make_stringf(_("studying %s"), sk.c_str());
-            inf->long_text = make_stringf(_("You are %s."), inf->short_text.c_str());
+            inf->short_text = make_stringf(_("studying %s"), manual_skill_names(true).c_str());
+            inf->long_text = make_stringf(_("You are studying %s."), skills.c_str());
         }
         break;
+    }
 
     case DUR_SURE_BLADE:
     {

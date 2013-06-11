@@ -83,17 +83,21 @@ function TollStair:check_veto(marker, pname)
   local needed = self.props.amount
 
   if gold < needed then
-    crawl.mpr("이 관문을 통과하려면, 금화 " .. needed .. "이 필요하다; " ..
-              "당신은 금화 " .. gold .. "만을 가지고 있다.")
-    self:check_shopping_list(marker)
+    crawl.mpr("This portal charges " .. needed .. " gold for entry; " ..
+              "you have only " .. gold .. " gold.")
+    if not you.in_branch("Pan") then
+      self:check_shopping_list(marker)
+    end
     return "veto"
   end
 
   if pname == "veto_stair" then
     -- Ok, ask if the player wants to spend the $$$.
-    if not crawl.yesno("이 관문을 통과하려면 금화 " .. needed ..
-                       "을(를) 지불해야 한다. 금화를 내겠는가?", true, "n") then
-      self:check_shopping_list(marker)
+    if not crawl.yesno("This portal charges " .. needed ..
+                       " gold for entry. Pay?", true, "n") then
+      if not you.in_branch("Pan") then
+        self:check_shopping_list(marker)
+      end
       return "veto"
     end
   elseif pname == "veto_level_change" then

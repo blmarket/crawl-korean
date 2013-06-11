@@ -248,7 +248,9 @@ bool interrupt_cmd_repeat(activity_interrupt_type ai,
         if (ai == AI_FULL_MP)
             crawl_state.cancel_cmd_repeat(_("Magic restored."));
         else if (ai == AI_FULL_HP)
-            crawl_state.cancel_cmd_repeat(_("HP restored."));
+        {
+            crawl_state.cancel_cmd_repeat(you.species == SP_DJINNI ? _("EP restored") : _("HP restored"));
+        }
         else
             crawl_state.cancel_cmd_repeat(_("Command repetition interrupted."));
 

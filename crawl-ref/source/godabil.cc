@@ -952,7 +952,7 @@ bool zin_recite_to_single_monster(const coord_def& where,
     case RECITE_UNHOLY:
         if (check < 5)
         {
-            if (mons_intel(mon) > I_PLANT && coinflip())
+            if (mons_intel(mon) > I_INSECT && coinflip())
                 effect = ZIN_DAZE;
             else
                 effect = ZIN_CONFUSE;
@@ -1471,12 +1471,17 @@ bool trog_burn_spellbooks()
 
     god_acting gdact;
 
-    for (stack_iterator si(you.pos()); si; ++si)
+    // XXX: maybe this should be allowed with less than immunity.
+    if (player_res_fire(false) <= 3)
     {
-        if (item_is_spellbook(*si))
+        for (stack_iterator si(you.pos()); si; ++si)
         {
-            mpr(_("Burning your own feet might not be such a smart idea!"));
-            return false;
+            if (item_is_spellbook(*si))
+            {
+                mprf(_("Burning your own %s might not be such a smart idea!"),
+                        you.foot_name(true).c_str());
+                return false;
+            }
         }
     }
 
@@ -1484,7 +1489,7 @@ bool trog_burn_spellbooks()
     int totalblocked = 0;
     vector<coord_def> mimics;
 
-    for (radius_iterator ri(you.pos(), LOS_RADIUS, true, true, true); ri; ++ri)
+    for (radius_iterator ri(you.pos(), LOS_RADIUS, true, true, false); ri; ++ri)
     {
         // This code has been rearranged a bit from its original form so that
         // with the new handling of spellbook destruction god conducts, the
@@ -3310,11 +3315,14 @@ bool ashenzari_end_transfer(bool finished, bool force)
 {
     if (!force && !finished)
     {
-        mprf(gettext("You are currently transferring knowledge from %s to %s."),
-             gettext(skill_name(you.transfer_from_skill)),
-             gettext(skill_name(you.transfer_to_skill)));
-        if (!yesno(gettext("Are you sure you want to cancel the transfer?"), false, 'n'))
+        mprf(_("You are currently transferring knowledge from %s to %s."),
+             _(skill_name(you.transfer_from_skill)),
+             _(skill_name(you.transfer_to_skill)));
+        if (!yesno(_("Are you sure you want to cancel the transfer?"), false, 'n'))
+        {
+            canned_msg(MSG_OK);
             return false;
+        }
     }
 
     mprf(gettext("You %s forgetting about %s and learning about %s."),
@@ -3336,10 +3344,8 @@ bool can_convert_to_beogh()
 
     for (radius_iterator ri(you.pos(), LOS_RADIUS); ri; ++ri)
     {
-        const monster *mon = monster_at(*ri);
-        if (!mon || !you.can_see(mon))
-            continue;
-        if (mons_allows_beogh(mon) && !silenced(*ri))
+        const monster * const mon = monster_at(*ri);
+        if (mons_allows_beogh_now(mon))
             return true;
     }
 
@@ -3364,7 +3370,7 @@ void spare_beogh_convert()
         // An invis player converting is ok, for simplicity.
         if (!mon || !cell_see_cell(you.pos(), *ri, LOS_DEFAULT))
             continue;
-        if (mon->wont_attack())
+        if (mon->attitude != ATT_HOSTILE)
             continue;
         if (mons_genus(mon->type) != MONS_ORC)
             continue;
@@ -3381,7 +3387,7 @@ void spare_beogh_convert()
                     continue;
                 if (mons_genus(orc->type) != MONS_ORC)
                     continue;
-                if (orc->wont_attack())
+                if (mon->attitude != ATT_HOSTILE)
                     continue;
                 witnesses.insert(orc->mid);
             }
@@ -3397,6 +3403,7 @@ void spare_beogh_convert()
             continue;
 
         ++witc;
+        orc->del_ench(ENCH_CHARM);
         mons_pacify(orc, ATT_GOOD_NEUTRAL, true);
     }
 

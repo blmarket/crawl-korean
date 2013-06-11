@@ -496,9 +496,8 @@ bool is_unavailable_god(god_type god)
     if (god == GOD_FEDHAS && crawl_state.game_is_zotdef())
         return true;
 
-    // No Ashenzari, too -- nothing to explore, can't use his abilities,
-    // piety for runes won't give you reskilling on time.  We could give some
-    // piety for every wave, but there's little point.
+    // No Ashenzari, too -- nothing to explore, can't use his abilities.
+    // We could give some piety for every wave, but there's little point.
     if (god == GOD_ASHENZARI && crawl_state.game_is_zotdef())
         return true;
 
@@ -623,10 +622,6 @@ string get_god_likes(god_type which_god, bool verbose)
         snprintf(info, INFO_SIZE, "%s아이템을 바치는 것", 
                  verbose ? "아이템 위에서 <w>기도(p)</w>를 함으로써 " : ""); 
         likes.push_back(info);
-        break;
-
-    case GOD_ASHENZARI:
-        likes.push_back("'조트의 오브'를 획득하는 것"); 
         break;
 
     default:
@@ -2079,7 +2074,7 @@ static spell_type _vehumet_find_spell_gift(set<spell_type> excluded_spells)
         if (x_chance_in_y(this_weight, total_weight))
             spell = *it;
     }
-    return (spell);
+    return spell;
 }
 
 static set<spell_type> _vehumet_get_spell_gifts()
@@ -3488,9 +3483,11 @@ void god_pitch(god_type which_god)
          you.form == TRAN_JELLY  ? "앞에서 침착하게 몸을 떨며" :
          you.species == SP_NAGA  ? "에 몸을 말고 앉아" :
          // < TGWi> you curl up on the altar and go to sleep
-         you.species == SP_FELID ? "에 다소곳이 앉아"
-                                 : "에 무릎꿇어"
-								 );
+         you.species == SP_FELID ? "앞에 앉아" :
+         // duplicated because of forms
+         you.species == SP_DJINNI ? "앞에 엄숙하게 떠서" :
+                                   "에 무릎꿇어",
+         god_name(which_god).c_str());
     }
     more();
 

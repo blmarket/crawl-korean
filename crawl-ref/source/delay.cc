@@ -86,8 +86,7 @@ static const char *_activity_interrupt_name(activity_interrupt_type ai);
 
 static int _zin_recite_to_monsters(coord_def where, int prayertype, int, actor *)
 {
-    ASSERT(prayertype >= 0);
-    ASSERT(prayertype < NUM_RECITE_TYPES);
+    ASSERT_RANGE(prayertype, 0, NUM_RECITE_TYPES);
     return zin_recite_to_single_monster(where, (recite_type)prayertype);
 }
 
@@ -1855,7 +1854,7 @@ bool interrupt_activity(activity_interrupt_type ai,
     const delay_queue_item &item = you.delay_queue.front();
 
     if (ai == AI_FULL_HP)
-        mpr(gettext("HP restored."));
+        mpr(you.species == SP_DJINNI ? _("EP restored.") : _("HP restored."));
     else if (ai == AI_FULL_MP)
         mpr(gettext("Magic restored."));
 

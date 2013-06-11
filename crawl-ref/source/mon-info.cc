@@ -834,10 +834,6 @@ string monster_info::_core_name() const
             s = _(ugly_thing_colour_name(colour).c_str()) + std::string(" ") + s;
             break;
 
-        case MONS_LABORATORY_RAT:
-            s = _(adjective_for_labrat_colour(colour).c_str()) + std::string(" ") + s;
-            break;
-
         case MONS_DRACONIAN_CALLER:
         case MONS_DRACONIAN_MONK:
         case MONS_DRACONIAN_ZEALOT:
@@ -1257,8 +1253,7 @@ string monster_info::pluralised_name(bool fullname) const
     else if (mons_genus(type) == MONS_DRACONIAN)
         return pluralise(PLU_DEFAULT, mons_type_name(MONS_DRACONIAN, DESC_PLAIN));
     else if (type == MONS_UGLY_THING || type == MONS_VERY_UGLY_THING
-             || type == MONS_DANCING_WEAPON || type == MONS_LABORATORY_RAT
-             || !fullname)
+             || type == MONS_DANCING_WEAPON || !fullname)
     {
         return pluralise(PLU_DEFAULT, mons_type_name(type, DESC_PLAIN));
     }

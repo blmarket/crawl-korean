@@ -318,19 +318,19 @@ int check_your_resists(int hurted, beam_type flavour, string source,
         // For mutation damage, we want to count innate mutations for
         // the demonspawn, but not for other species.
         int mutated = how_mutated(you.species == SP_DEMONSPAWN, true);
-        int multiplier = min(mutated * 5, 100);
+        int multiplier = min(mutated * 3, 60);
         if (you.is_chaotic() || player_is_shapechanged())
-            multiplier = 100; // full damage
+            multiplier = 60; // full damage
         else if (you.is_undead || is_chaotic_god(you.religion))
-            multiplier = max(multiplier, 33);
+            multiplier = max(multiplier, 20);
 
-        hurted = hurted * multiplier / 100;
+        hurted = hurted * multiplier / 60;
 
         if (doEffects)
         {
             if (hurted <= 0)
                 canned_msg(MSG_YOU_RESIST);
-            else if (multiplier > 50)
+            else if (multiplier > 30)
                 mpr(_("The blast sears you terribly!"));
             else
                 mpr(_("The blast sears you!"));
@@ -1146,17 +1146,12 @@ void ouch(int dam, int death_source, kill_method_type death_type,
     }
 
     if (dam != INSTANT_DEATH)
-        if (you.species == SP_GARGOYLE && (you.petrified() || you.petrifying()))
-        {
-            you.gargoyle_damage_reduction =
-                max(you.gargoyle_damage_reduction, (dam + 1) / 2);
-            dam /= 2;
-        }
-        else if (you.petrified())
+    {
+        if (you.petrified())
             dam /= 2;
         else if (you.petrifying())
             dam = dam * 10 / 15;
-
+    }
     ait_hp_loss hpl(dam, death_type);
     interrupt_activity(AI_HP_LOSS, &hpl);
 
@@ -1175,7 +1170,8 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
     if (dam != INSTANT_DEATH)
     {
-        if (you.spirit_shield() && death_type != KILLED_BY_POISON)
+        if (you.spirit_shield() && death_type != KILLED_BY_POISON
+            && !(aux && strstr(aux, "flay_damage")))
         {
             // round off fairly (important for taking 1 damage at a time)
             int mp = div_rand_round(dam * you.magic_points,
@@ -1315,6 +1311,7 @@ void ouch(int dam, int death_source, kill_method_type death_type,
 
             if (crawl_state.test || !yesno(_("Die?"), false, 'n'))
             {
+                mpr("Thought so.");
                 take_note(Note(NOTE_DEATH, you.hp, you.hp_max,
                                 death_desc.c_str()), true);
                 _wizard_restore_life();

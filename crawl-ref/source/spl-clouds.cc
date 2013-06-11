@@ -300,7 +300,10 @@ spret_type cast_corpse_rot(bool fail)
             if (si->base_type == OBJ_CORPSES && si->sub_type == CORPSE_BODY)
             {
                 if (!yesno(("정말로 " + si->name(true, DESC_PLAIN) + " 위에서 피의 승화를 사용할 것인가?").c_str(), false, 'n')) // "Really cast Corpse Rot while standing on "
+                {
+                    canned_msg(MSG_OK);
                     return SPRET_ABORT;
+                }
                 break;
             }
         }

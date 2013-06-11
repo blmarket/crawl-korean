@@ -390,6 +390,9 @@ thrashing horror cast
 
 @The_monster@이(가) 격렬하게 뒤틀렸다!
 %%%%
+Airstrike wind drake cast
+
+@The_monster@ flaps its wings at @target@.
 ########################################################################
 # Monster species and genus messages.
 ########################################################################

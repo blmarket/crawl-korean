@@ -29,7 +29,7 @@ const tile_colour &tile_colour::operator=(const tile_colour &rhs)
     b = rhs.b;
     a = rhs.a;
 
-    return (*this);
+    return *this;
 }
 
 unsigned char &tile_colour::operator[](int idx)
@@ -64,7 +64,7 @@ int tile_colour::get_hue() const
     int min_rgb = get_min_rgb();
 
     if (max_rgb == min_rgb)
-        return (0);
+        return 0;
 
     int diff = max_rgb - min_rgb;
 
@@ -79,13 +79,13 @@ int tile_colour::get_hue() const
 int tile_colour::get_max_rgb() const
 {
     int max_rgb = max(max(r, g), b);
-    return (max_rgb);
+    return max_rgb;
 }
 
 int tile_colour::get_min_rgb() const
 {
     int min_rgb = min(min(r, g), b);
-    return (min_rgb);
+    return min_rgb;
 }
 
 void tile_colour::set_hue(int h)
@@ -176,7 +176,7 @@ float tile_colour::get_sat() const
     else
         sat = (max_rgb - min_rgb) / (float)(min_rgb + max_rgb);
 
-    return (sat);
+    return sat;
 }
 
 void tile_colour::set_from_hsl(int hue, float sat, float lum)
@@ -254,19 +254,19 @@ bool write_png(const char *filename, tile_colour *pixels,
     if (!fp)
     {
         fprintf(stderr, "Error: Can't open file '%s' for write.\n", filename);
-        return (false);
+        return false;
     }
 
     png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING,
                                                   NULL, NULL, NULL);
     if (!png_ptr)
-        return (false);
+        return false;
 
     png_infop info_ptr = png_create_info_struct(png_ptr);
     if (!info_ptr)
     {
         png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
-        return (false);
+        return false;
     }
 
     png_init_io(png_ptr, fp);
@@ -294,6 +294,6 @@ bool write_png(const char *filename, tile_colour *pixels,
     free(row_pointers);
     fclose(fp);
 
-    return (true);
+    return true;
 }
 #endif

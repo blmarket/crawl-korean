@@ -70,8 +70,7 @@ int calc_skill_cost(int skill_cost_level)
                          240, 248, 250, 250, 250,  // 21-25
                          250, 250 };
 
-    ASSERT(skill_cost_level >= 1);
-    ASSERT(skill_cost_level <= 27);
+    ASSERT_RANGE(skill_cost_level, 1, 27 + 1);
     return cost[skill_cost_level - 1];
 }
 
@@ -361,7 +360,7 @@ static void _check_abil_skills()
     }
 }
 
-static string _skill_names(skill_set &skills)
+string skill_names(skill_set &skills)
 {
     string s;
     int i = 0;
@@ -370,12 +369,13 @@ static string _skill_names(skill_set &skills)
     {
         ++i;
         s += _(skill_name(*it));
-        if (i == size)
-            s += ".";
-        else if (i == size - 1)
-            s += _(" and ");
-        else
-            s+= ", ";
+        if (i < size)
+        {
+            if (i == size - 1)
+                s += _(" and ");
+            else
+                s+= ", ";
+        }
     }
     return s;
 }
@@ -404,7 +404,7 @@ static void _check_start_train()
             ++it;
 
     if (!skills.empty())
-        mpr(std::string(_("You resume training ")) + _(_skill_names(skills).c_str()));
+        mpr(std::string(_("You resume training ")) + skill_names(skills) + ".");
 
     you.start_train.clear();
 }
@@ -416,9 +416,6 @@ static void _check_stop_train()
     _check_spell_skills();
     _check_abil_skills();
 
-    if (you.manual_skill != SK_NONE)
-        you.stop_train.erase(you.manual_skill);
-
     if (you.stop_train.empty())
         return;
 
@@ -428,6 +425,8 @@ static void _check_stop_train()
     {
         if (is_invalid_skill(*it))
             continue;
+        if (skill_has_manual(*it))
+            continue;
 
         if (skill_trained(*it) && you.training[*it])
             skills.insert(*it);
@@ -436,7 +435,7 @@ static void _check_stop_train()
 
     if (!skills.empty())
     {
-        mprf(_("You stop training %s"), _skill_names(skills).c_str());
+        mpr(_("You stop training ") + skill_names(skills) + ".");
         check_selected_skills();
     }
 
@@ -978,14 +977,17 @@ static int _train(skill_type exsk, int &max_exp, bool simu)
         return 0;
 
     // Bonus from manual
-    if (exsk == you.manual_skill)
+    int slot;
+    int bonus_left = skill_inc;
+    while (bonus_left > 0 && (slot = manual_slot_for_skill(exsk)) != -1)
     {
-        item_def& manual(you.inv[you.manual_index]);
-        const int bonus = min<int>(skill_inc, manual.plus2);
+        item_def& manual(you.inv[slot]);
+        const int bonus = min<int>(bonus_left, manual.plus2);
         skill_inc += bonus;
+        bonus_left -= bonus;
         manual.plus2 -= bonus;
         if (!manual.plus2 && !simu)
-            stop_studying_manual(true);
+            finish_manual(slot);
     }
 
     const skill_type old_best_skill = best_skill(SK_FIRST_SKILL, SK_LAST_SKILL);

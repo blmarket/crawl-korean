@@ -1884,9 +1884,6 @@ string get_item_description(const item_def &item, bool verbose,
         break;
 
     case OBJ_BOOKS:
-        if (item_is_active_manual(item))
-            description << _("\nYou are currently studying this manual.");
-
         if (!player_can_memorise_from_spellbook(item))
         {
             description << gettext("\nThis book is beyond your current level of "
@@ -2484,7 +2481,8 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
         break;
     case OBJ_SCROLLS:
     case OBJ_BOOKS: // only unknown ones
-        actions.push_back(CMD_READ);
+        if (item.sub_type != BOOK_MANUAL)
+            actions.push_back(CMD_READ);
         break;
     case OBJ_JEWELLERY:
         if (item_is_equipped(item))
@@ -2583,8 +2581,7 @@ static bool _actions_prompt(item_def &item, bool allow_inscribe)
 #endif
 
     int slot = item.link;
-    ASSERT(slot >= 0);
-    ASSERT(slot < ENDOFPACK);
+    ASSERT_RANGE(slot, 0, ENDOFPACK);
 
     switch (action)
     {
@@ -3481,8 +3478,8 @@ void get_monster_db_desc(const monster_info& mi, describe_info &inf,
                  << gettext(" is incapable of using stairs.\n");
     }
 
-    if (mi.intel() == I_PLANT)
-        inf.body << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE)) << gettext(" is mindless.\n");
+    if (mi.intel() <= I_INSECT)
+        inf.body << uppercase_first(mi.pronoun(PRONOUN_SUBJECTIVE)) << _(" is mindless.\n");
 
     if (mi.is(MB_CHAOTIC))
     {

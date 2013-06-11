@@ -46,12 +46,20 @@ function volcano_portal (e)
     local timeout_turns_long = crawl.random_range(2700, 3300)
     local timeout_turns_short = timeout_turns_long/10
 
+    -- If you make one of these not start with a vowel, fix "an" below.
+    local adj = "oppressive"
+    if you.race() == "Lava Orc" then
+        adj = "invigorating"
+    elseif you.res_fire() > 3 then
+        adj = "agreeable"
+    end
+
     local messager =
       timed_msg {
-        initmsg = { "숨 막힐듯한 열기가 느껴져왔다.",
-                    "<lightred>이 층 어딘가에 화산으로 통하는 입구가 있다. "
-                    .. "입구가 완전히 무너져 내리기 전에 서둘러 입구를 찾아야 할 것이다!</lightred>" },
-        finalmsg = "바위가 무너져내리는 소리가 진정되었다.",
+        initmsg = { "You feel an " .. adj .. " heat about you.",
+                    "There is an entrance to a volcano on this level. "
+                    .. "Hurry and find it before the entrance collapses!" },
+        finalmsg = "The sound of falling rocks suddenly begins to subside.",
 
         verb = '소리내며',
         noisemaker = '무너져내리는 바위 소리',

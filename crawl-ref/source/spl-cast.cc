@@ -755,6 +755,7 @@ bool cast_a_spell(bool check_range, spell_type spell)
             _("Casting this spell will put you into penance. Really cast?"),
             true, 'n'))
         {
+            canned_msg(MSG_OK);
             crawl_state.zero_turns_taken();
             return false;
         }
@@ -875,16 +876,16 @@ static bool _vampire_cannot_cast(spell_type spell)
 static bool _too_hot_to_cast(spell_type spell)
 {
     if (you.species != SP_LAVA_ORC)
-        return (false);
+        return false;
 
     // Lava orcs can never benefit from casting stoneskin.
     if (spell == SPELL_STONESKIN)
-        return (true);
+        return true;
 
     // Lava orcs have no restrictions if their skin is
     // non-molten.
     if (temperature_effect(LORC_STONESKIN))
-        return (false);
+        return false;
 
     // If it is, though, they lose out on these spells:
     switch (spell)
@@ -894,9 +895,9 @@ static bool _too_hot_to_cast(spell_type spell)
     case SPELL_ICE_FORM:
     case SPELL_OZOCUBUS_ARMOUR:
     case SPELL_CONDENSATION_SHIELD:
-        return (true);
+        return true;
     default:
-        return (false);
+        return false;
     }
 }
 
@@ -933,7 +934,7 @@ bool spell_is_uncastable(spell_type spell, string &msg)
             msg = _("Your skin is already made of molten stone.");
         else
             msg = _("Your temperature is too high to benefit from that spell.");
-        return (true);
+        return true;
     }
 
     return false;

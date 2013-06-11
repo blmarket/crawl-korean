@@ -1398,7 +1398,7 @@ static bool _feat_is_flanked_by_walls(const coord_def &p)
 // also have to be floor flanked by walls.
 //
 //   czd
-//   a.b   -> if (a, b == walls) then (c, d == walls) or return (false)
+//   a.b   -> if (a, b == walls) then (c, d == walls) or return false
 //   #X#
 //    .
 //
@@ -2445,6 +2445,7 @@ static void _catchup_monster_moves(monster* mon, int turns)
         x = 500;
         break;
     case I_ANIMAL:
+    case I_REPTILE:
     case I_INSECT:
         x = 250;
         break;
